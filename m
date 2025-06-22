@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11278C7115C
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 00:24:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8E9C7115C
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 00:29:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uT8VS-0001Y9-Rx; Sat, 21 Jun 2025 20:24:22 -0400
+	id 1uT8aO-0002uz-5p; Sat, 21 Jun 2025 20:29:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT8VQ-0001VS-NH
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 20:24:20 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1uT8aL-0002uX-CB
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 20:29:25 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT8VP-0003dq-2u
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 20:24:20 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-747e41d5469so3140489b3a.3
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 17:24:18 -0700 (PDT)
+ id 1uT8aJ-00044y-Er
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 20:29:25 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2350b1b9129so21957365ad.0
+ for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 17:29:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750551858; x=1751156658; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750552161; x=1751156961; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=fUMTEZ1BwxUOR28q7J/eZfsZGNbFfiRvVaDy6HjLs4E=;
- b=XVvjSMptzDI4pNZIZ7Af+yJtnt5dzbsTZCRGNLxsWiHubFwRBz68VDlcLez+NrdisM
- ork12ZjCrQxgP9WlGYlhaEGmXZgKyJH1jb/nstWLgvqLddSL/pDUtGt7/FSpiJKQBTfh
- 6mtZH01uWGvB25ISvFQOi8bAoMtl6u8G6DZKPoC4GI5pmfR1RsoXMJm0DbHAycVAIdDa
- 0wcB2opTeT2j7W9qnNjq2SRRIwH1fCyR422ATm3Mdw5wQGJb92lomSn5bghBtH0i6SqS
- KWUxhMrEUiheBdqFmUBktbCC++iCZqv7noEbykCOsBFVtNXs6Rw0wtuHcIaiv/ioVsUf
- EuoA==
+ bh=6cWYkdPfJ24ZEJ77Qa9kPyD3q6m7Fo+pVUIL8GxyhW8=;
+ b=grvUKrUt75gUK9CKOgcuXHGj2B3Lt3OfUyip7PttchuBk+Kff27j74/fwHFzpwuSw5
+ HDrJBCdmxPuDVExSdWkgxpi3Sx8vB8OGl7bSVh6RhzvzNqqeGP6tPFAONScdakQrDBkb
+ r1Jls13A4eGMo5G8bLvLL0ylOBajHNeDeTYc2h3OCpbR4eu/OLrZjjli0yRxr8a8emS3
+ AR17xP/jUxwE36R7od8bivd3TwKnhBrrIwDmg+/iK/jmH2qE3eMoCtEcEHnrdtdxTTjV
+ xNdofJd0f8C2v99Q8WMpHY/oB6s/fqKpJvoa4/3TDxnESDYZHcC9gPoTsI6XE1eo+RQP
+ mQLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750551858; x=1751156658;
+ d=1e100.net; s=20230601; t=1750552161; x=1751156961;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fUMTEZ1BwxUOR28q7J/eZfsZGNbFfiRvVaDy6HjLs4E=;
- b=uxuNJoZE+/Ig/jkhNDKk5lA3qDj6LaHiNpB5iWaK5AGmEo3Mu7kR2A92UMWf26RSFL
- yqfXa+2A4xAGxtqFJ54YE80PaqYs7t+JkrvB98Pd5tsNm7l5NEWV47sGZEhtHTemWygr
- hP7m74NHC4+PzG+VaYpPqI5THrXA2Nl9tyNAvG6WE9u/90VhLOrOm1e5hQ04uJd6rMz6
- qTNQWQvVZ82uah5yDhVa+syxRgZ/Tp8xhd4LM180rYIdtqktVCV2Y2KFsP08iCTu3+MK
- zExPd7cDv0xnKlvN9Nb8gR0a8x1wYajAONGuwkyf6pkYTt+Vf8jFyGgtAtQv94Am+54b
- G0Hg==
+ bh=6cWYkdPfJ24ZEJ77Qa9kPyD3q6m7Fo+pVUIL8GxyhW8=;
+ b=U8a3um+OVK+4z4YbK1+VUTpTDuwt1awAAWh7PdsVFc5wWQRbWYArvCec/xoqGDLq2Z
+ nS+pX+MSR9bn1TEX2/UIGeFn6S6o1phvq/CgS4VdcLMvdr6lFLvO+YY/xwfBn79wyC7X
+ /rmTDVPhuLi02pVE3hYnOVemd+gva91m4AOJnmk1WgVrAKXJGUsRTWVPUr7k38LwlUTW
+ K7bF2sOReUIkNfg3mzxP8OUkmyh4vE9HrOM5lRK5GX0toDoLSuspV6uXOK0i5dVTFfwn
+ w/kk88O6jc6VcUvag+G0Jxgw91Xr0uR8bJln0DUmkgMfyi14IzO1L7gbAP8DfC1TYHdS
+ zyuQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV+Ao9tkOsx0SdyIznAt7APzumhDHrWOIF5xECRvo+E8IixgUiNApn3iV4dC13+71iBIcMjRvRZLnDd@nongnu.org
-X-Gm-Message-State: AOJu0YwAnnu7gDBugCdQ2bb97RfRdGWMIyn9+U/a68EF/+KQBkl+pm81
- zl76CzyH8n5aFjHKnBghc91qESa0tWWLHmCz657jota4t90PDEYCU63kXnmduh7SK1hpx9nYkjE
- nkzEq6CI=
-X-Gm-Gg: ASbGncuGYFaMtV5K+98e1H4OkFBWUENcQLDFq/DofQH66bzGlXg8L1ZqG6GbrQJfyc2
- M+TzJnLoTsV/1H2TMWz14GbSJfDqoZYFnt9XCAXmujPh6ib/n8epl4EyEAkn2PoI2k9xnsKsuVR
- qZOLJEUeVb6IQEMcd7+RdDoCTR6KZQ5y2RbW37A/YHaALZnzGtSAce9Mtu4uAehyX+IIZ4tquKO
- ZwarIC6Krs/zmQIH8mCJjKcHvXMc3sk6eGlCKdz4mX4/jFVFkxE/+hqAgK8YKT1u2WNutsbZetG
- 20JLSlrAtD0Zwxau003i0ZIH1ADFEuxU2NxNTiIMseyVaA9BfC+i6m9G6lITuXF/AZdCBY8Xqex
- G9OTGmpw6ajQ6o/NRYXMB3XSrQR2wTu2BNNyYWkU=
-X-Google-Smtp-Source: AGHT+IEoMNIGK+lYwHIqKJNg2ijMI3y1RYRgOxz4zgn5nhu/vEBX9/VYH2RgGZaBS/ulwbS1KwM4kA==
-X-Received: by 2002:a05:6a20:3d83:b0:1f5:9024:324f with SMTP id
- adf61e73a8af0-22026ecb493mr15393319637.31.1750551857758; 
- Sat, 21 Jun 2025 17:24:17 -0700 (PDT)
+ AJvYcCU3ueSXFeltBreaZ+EPLAinbuf6TclX8uUus4RzzXQUo6PivFofDveK7ttEDu33qzj4PkRHkc14fMwd@nongnu.org
+X-Gm-Message-State: AOJu0YwA5S8FAt3ztUhdFL/pmzzbGSN/q78qGBjYR5xqe+xU9v5KtoJR
+ BebykaNObKUviiHnpR9lMg3aUthd9KMDwAIrlslP9iyi2GdV5Yq3webN3dMePKmvBeM=
+X-Gm-Gg: ASbGncsjKZ55YsmKtlfeHxWWSES+LKHhag9H5f4XhpIar32UVz6miufkjlko9EC04Wc
+ YqxFWjQKvqqgTlIhwOqJ3V9Lb+JycY8rZ49DnKdbb3xa6UHZR9pZ3iDcXK2m04wnIt4WW53pyxD
+ HZWY1l6IOdE6uaaMcztOXfGfvC0wNJktT0tNPrF/yuKSp2rphJSx7ZhamDUdANQVVsUF6TuSHyw
+ 1BzEPsyifwLe50yV27Bf5nhhiYWUmIwldn0+Bm7quqYV6TcBXXZeQQZm9CP+st45oChZkbTBffi
+ EYLo0V7AWFuJ9EFQLaIbaYDJf5XJq/RHkNq5vqNuPgsWnpN5NcN2mIpryhER5sdGLEux2o4uEqP
+ ysRO3zN/GA9QkirhBtbETRegvEr+E
+X-Google-Smtp-Source: AGHT+IEQaQTX+zKwqEdHUQNTOsmRvqFXt0DVol4H/7ZQUh7ZhXB1E233zgxNQberd58FoHmwc2tCSA==
+X-Received: by 2002:a17:903:1c1:b0:225:adf8:8634 with SMTP id
+ d9443c01a7336-237d9a78bdfmr127945215ad.51.1750552161460; 
+ Sat, 21 Jun 2025 17:29:21 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b31f11a20c8sm4642605a12.27.2025.06.21.17.24.17
+ d9443c01a7336-237d839379bsm50183115ad.51.2025.06.21.17.29.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 21 Jun 2025 17:24:17 -0700 (PDT)
-Message-ID: <371afd83-91fe-45fa-a119-b6b3414422ab@linaro.org>
-Date: Sat, 21 Jun 2025 17:24:16 -0700
+ Sat, 21 Jun 2025 17:29:21 -0700 (PDT)
+Message-ID: <1816cfba-771b-4504-9b54-ac104b734f6b@linaro.org>
+Date: Sat, 21 Jun 2025 17:29:19 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 16/26] accel/hvf: Add hvf_arch_cpu_realize() stubs
+Subject: Re: [PATCH v2 18/26] target/arm/hvf: Trace host processor features
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20250620130709.31073-1-philmd@linaro.org>
- <20250620130709.31073-17-philmd@linaro.org>
+ <20250620130709.31073-19-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250620130709.31073-17-philmd@linaro.org>
+In-Reply-To: <20250620130709.31073-19-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,19 +104,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/20/25 06:06, Philippe Mathieu-Daudé wrote:
-> Implement HVFAccelOpsClass::cpu_target_realize() hook as
-> empty stubs. Target implementations will come separately.
+On 6/20/25 06:07, Philippe Mathieu-Daudé wrote:
+> Tracing an Apple M1 (Icestorm core, ARMv8.4-A):
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   include/system/hvf.h      | 3 +++
->   accel/hvf/hvf-accel-ops.c | 2 ++
->   target/arm/hvf/hvf.c      | 5 +++++
->   target/i386/hvf/hvf.c     | 5 +++++
->   4 files changed, 15 insertions(+)
+>    hvf_processor_feature_register EL0: 1
+>    hvf_processor_feature_register EL1: 1
+>    hvf_processor_feature_register EL2: 0
+>    hvf_processor_feature_register FP: 1
+>    hvf_processor_feature_register AdvSIMD: 1
+>    hvf_processor_feature_register GIC: 0
+>    hvf_processor_feature_register SVE: 0
+>    hvf_processor_feature_register MTE: 0
+>    hvf_processor_feature_register SME: 0
+> 
+> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+I'm not sure why you want this? When you asked if you could emulate aarch32, I suggested 
+you have gdb stop after the host probe and examine the values. I'm not sure why you'd want 
+to keep this logging around forever.
+
+Anyway, from EL0/EL1, the answer is no, the M1 only supports aarch64.
 
 r~
+
 
