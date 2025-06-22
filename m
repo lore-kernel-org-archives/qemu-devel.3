@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 194D1C7115C
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 02:38:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35181C71157
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 02:46:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTAb1-0006FG-1n; Sat, 21 Jun 2025 22:38:15 -0400
+	id 1uTAiV-0007Ro-2K; Sat, 21 Jun 2025 22:45:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTAaz-0006F6-Ix
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 22:38:13 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1uTAiS-0007RN-KH
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 22:45:56 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTAay-00060s-0q
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 22:38:13 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-b3182c6d03bso3683392a12.0
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 19:38:11 -0700 (PDT)
+ id 1uTAiR-0007Hv-3c
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 22:45:56 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-235d6de331fso44139435ad.3
+ for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 19:45:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750559890; x=1751164690; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750560353; x=1751165153; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Kqy37Ck226xeMR96muH7nbiknorEdBg2NCi6Mgisofg=;
- b=iF8PYgHjscpVo3d3Zj0BfG1gpcX6fWPS7PPGMlFnr6JsskGlVrEy96mNX8u1wB/mC+
- KPFssO2KLFRzHHlxz5+bnPJpBXIoDDXUZDHZDeWcGSeuyfoMpy05PRHZ5QL0mtc2p3KE
- AEYh/0AutENBKypPxBPKRWrMtUGYEgAs09tHrHOcjFqeYPqBPlEZIWczo/YD9d47Elq5
- NrhuOLTcwGJ2Bqr3tk4tCzcfq9FiIO8fcxKbQu5U4lsN6NmUPvo+F/zZ9dir70yEvOWl
- V+hzP4rDzOAqe0zoUbIxe89SWgDh7GlgCXpr366vKAkM7IIVgJXvsDrRi4yNG77DyNnP
- 6w5A==
+ bh=dWK5nCj/j7XBIAquT2HAX95vHkEjLar22zTZrphDxNA=;
+ b=m9Nse0/R1M+leT980cPX7+Cmw3praWRs9ZAHdMbkdvE9zgk8F4PVC668lRtqIeLko3
+ ZlUfWAUMvbvBN/gcmkWOz/wl4aF83ETHCwWKuSQfpYjzaH3idT2eZR8V2qiYU+Y2TC2S
+ AzRuewymw9jG38ccO5oP6IIQWR+PKaX1JiRQyPfdFLK7nTB9y1ZrrrsF/eybmT4Y7p8X
+ bVCT85UzqRBfx3y84Q16AopiJQLy1Lt3VIAOW3+VQOuLETlXf2n679sulNtB9d3bqc2S
+ WYzvp+bTleR7mVeSRlxsuhapCvbXICupP98D7EIW6UAW4VodoUPOBTaUlaEqLyu0Z5Ft
+ /eRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750559890; x=1751164690;
+ d=1e100.net; s=20230601; t=1750560353; x=1751165153;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Kqy37Ck226xeMR96muH7nbiknorEdBg2NCi6Mgisofg=;
- b=anm5KTL2lBwvVQGwhl36UzEUTtH6NfYI+FC+2y7dWKHaeiPr3dPuwKeZGXS6S78O1R
- 6/wzBnkihEldIUQGN1oHWo+4ooMYNpluq4cgW3pQnyLqdrTcStwARM0XfjZzRtptmBWq
- MTdXkJbB34LdiCN9wnXXp00QkFt51TTgQ4tMfKu0O5AAol3okTcIMKrgtpYHkavfefHK
- ExD0HixHqEC66nokgRvb/ZYCTwi4hG7cmW+bx6QNq69VZTyLPpkQ+SZD4RmV5QH8qBJj
- u9+G/5YwF1KkGGNduF//WA8vTIBK7delzDe3zG9hAqPeCb/k/KA9C8L+tVqu0C8qeZGk
- 5e8A==
+ bh=dWK5nCj/j7XBIAquT2HAX95vHkEjLar22zTZrphDxNA=;
+ b=kT+i2odW/M+OEvb/MY7vPGYimQYAAsjQJXvtpCOSHSRjqQiS3t/U/cUGllnsgQYAcD
+ nOKsbGKtbp3Z7QS1tQZlhERrld0G7xLrXICRde0TNR1UA/6uui430EJeIVHTbyTecADT
+ D7xcvs8vlfFfl1eWergwe152mtzN6iBReMEiU1gyHqPqGY6D1ru9BUjc/uf3kQYezR4j
+ CQmPoC58XOCF371zmNvSgd0f5c7az8Pm3riTxks9YM2o7v6eQiTTIg8g2v5fSy/nHTja
+ 8bWOjidsmw6LUDzLVRX/pbVpbGk8rhEpZg2ErD93Ve1gh5GNvgO0E4cdr1NcSLO5I52L
+ 4S/w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXHP9s+yp87VWMYVoQehr8MxQJIwO5Kl6Zc43EEmXpws7HGxUuLdD0ghC3RusVwUI4Zlh9clZhXtD02@nongnu.org
-X-Gm-Message-State: AOJu0YwYDNq3rU29sZ5dVsPLjNWdPd691hc8gYaRilkdAm2pMsRNgB5b
- 3iuKrZAHA93Qm9QoEAAqA76193K2jG6Kx4FLmALaRkCv6C0CXjUL0MbJcrR5+Lt2vvFNz0ozTW5
- YFhsyMok=
-X-Gm-Gg: ASbGncul8oeJBYIPyZjQmIcU03hV29ZMKkXBAvY9PFb7Q82hTDjSLADyIIH9RlzsdKN
- xXUhilYvg7xo5jWhEqsbZFt5v4MGkYpI/HLtpF8UiKmyBHxJps0yvW0Ad1anvZgKtSDi5zCBplA
- RnYp0+zGf4n9iPCHehXaTS3hZ1jZXVzH7Zia0Tvrkoy/Yc7dVxoB2P+JWFizdMQ3bXzYDJGuFXQ
- ElzXDVWpYpDqPXXaIEtBeAi0rwEKvlbgZ1EDe/X/1ucxNT/lty/nVUKxzud5xtL/9Z9TVv1aLYY
- BbwwGWc2LmJjjYmWWCsBupsGllfnK6/XvMou+qWuwxizj4oESucJcCcfEEnMV9RIj/RWHd8Hq0Q
- KJlSICbO2k34J1nxUQu6mKuvydIVs
-X-Google-Smtp-Source: AGHT+IE1US1pGJIi+XFeUDA8NCLiobcX51qZsNLyU6bhv6i29KeenKCahnFD1NfKu6wDujlSyKu2nw==
-X-Received: by 2002:a05:6a21:7014:b0:1f5:8eec:e517 with SMTP id
- adf61e73a8af0-22026d6456bmr10154964637.9.1750559890647; 
- Sat, 21 Jun 2025 19:38:10 -0700 (PDT)
+ AJvYcCWsMe4d71eBDX0d+2/M6CKTYMHCrly5ATNCsEwgUwQaQ5bB7Nf2okS5ahiB6hgNLlbtIXEkLFbckvry@nongnu.org
+X-Gm-Message-State: AOJu0YzimAPbsJg6sfqc+NYEA4kAP3c0OQ8CRNufhMtbCN+GC9uAiQj8
+ LXD6nKR5rr470d8cjOeJOwB+hP7LCmPihKUGEBEoj3bv3W9bQRI4hfOj5b1wCMS4o8U=
+X-Gm-Gg: ASbGnct0nwjxDbkFxa+UpvwbsmB/JWCvg6nylFXQm4RUh7l8fXU9z5kKsim5jiyawoj
+ iHR+gl+Xnb4UmASdNlhkQw5u+1Mx4ijYjZzQlqABWx3bCEDsZzDt9wUoj4PeWQe9wEcH5o4ZjTQ
+ is8O4z17+yPAtr2GDo9RKNVol+cAosnY1Z6Lr1eJcNxayKWTrhgTtFylduXVn9JTORyIC2Oh/t+
+ MNsrzJ8fciOOFqFHAoN9R1ec2YmFXj0UJu8VM1S0W8Hq+t1gd9iNczLIVKUwnd28Rq/igNln2fq
+ nnPSCYk1o/JQnuwlVLm3OWWy9f25Y/0C4itV8IwcyrFg6v/a97LlNhp0bY+24xk+W1JaahzYpNJ
+ Lo1Rw2ZKaVJd/o8RR4ve//C4wW97tEzg5ee+nw6Q=
+X-Google-Smtp-Source: AGHT+IFfXoWEYXpTV6z/pQKwktAZ+FZGmjhwZE+G8PRsVKPJrCmRRltPcYN+jyiFyQHgd9Os6N+BKw==
+X-Received: by 2002:a17:902:c94a:b0:235:ef67:b595 with SMTP id
+ d9443c01a7336-237d9acc6e7mr133067065ad.35.1750560352966; 
+ Sat, 21 Jun 2025 19:45:52 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b31f12583b9sm4739963a12.53.2025.06.21.19.38.10
+ d9443c01a7336-237d860a761sm51015085ad.122.2025.06.21.19.45.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 21 Jun 2025 19:38:10 -0700 (PDT)
-Message-ID: <363f2fa8-aee3-4cba-ab19-b6634bd5564e@linaro.org>
-Date: Sat, 21 Jun 2025 19:38:09 -0700
+ Sat, 21 Jun 2025 19:45:52 -0700 (PDT)
+Message-ID: <1b16b519-381a-45e9-b37a-10dd4c98d366@linaro.org>
+Date: Sat, 21 Jun 2025 19:45:51 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH RESEND 11/42] accel/split: Register MTTCG
+Subject: Re: [RFC PATCH RESEND 12/42] accel/split: Have thread routine ready
+ to dispatch over HW/SW
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20250620172751.94231-1-philmd@linaro.org>
- <20250620172751.94231-12-philmd@linaro.org>
+ <20250620172751.94231-13-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250620172751.94231-12-philmd@linaro.org>
+In-Reply-To: <20250620172751.94231-13-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,18 +106,28 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/20/25 10:27, Philippe Mathieu-Daudé wrote:
-> FIXME: Use sw-hooks?
+> @@ -49,10 +56,12 @@ static void *split_cpu_thread_routine(void *arg)
+>       cpu->exit_request = 1;
+>   
+>       do {
+> -        r = 0;
+> -
+>           if (cpu_can_run(cpu)) {
+> -            r = 0; /* TODO: exec_vcpu_thread() */
+> +            if (acs->use_hw) {
+> +                r = hwops->exec_vcpu_thread(cpu);
+> +            } else {
+> +                r = swops->exec_vcpu_thread(cpu);
+> +            }
 
-I'm OK with hard-coding tcg for sw, especially for now.
+Maybe
 
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   accel/split/split-accel-ops.c | 5 +++++
->   1 file changed, 5 insertions(+)
+   AccelOpsClass *curops = acs->use_hw ? hwops : swops;
+   r = curops->exec_vcpu_thread(cpu);
 
+Anyway,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-r~
 
+r~
 
