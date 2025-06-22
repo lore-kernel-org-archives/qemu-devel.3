@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76474C7115C
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 02:21:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99FBDC71157
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 02:22:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTAKD-00070c-3c; Sat, 21 Jun 2025 22:20:53 -0400
+	id 1uTALV-0007br-HO; Sat, 21 Jun 2025 22:22:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTAKA-00070D-S7
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 22:20:51 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1uTALU-0007bY-4o
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 22:22:12 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTAK9-00035q-Ar
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 22:20:50 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2363e973db1so21490215ad.0
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 19:20:48 -0700 (PDT)
+ id 1uTALS-0003Av-9J
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 22:22:11 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-879d2e419b9so2512194a12.2
+ for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 19:22:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750558848; x=1751163648; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750558929; x=1751163729; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=XwuwNh+koy2VQwdfNjbtk/bKBYSVtwkZKZ8/lJpV/kY=;
- b=hnURfRXMS1iI6Z39gltAMuEl8TBj7BARW7GnieF22/w/0s9PAwcSZ3tv5q2gTlUkAt
- x6koINVHAdf/C5xQU7nbIaQke44SSLz4mk3JB8gowJ4SuVub7Z1EYzLzTuOM3U5BBApn
- 6RxHixhcVivOYw9AllPt2z/Ek258R8HOxO1LCp3oeoniNCd30kNGmHojDciGOB37Jyr9
- eNg4dxefsoRif21a6rsmyWYLsIKODHOnE4hiz3aT4UYn23rhsR0A9odOY9J+MtltlRbO
- l+SrIfnH1HjX98kuxHG2UnkLfI486THCu+TxLAUUKvTSGQERhOfwZC7jakzHd7oI2jaW
- kViw==
+ bh=4ai9BsdwETi6+ehW6rBJNG7toHrbuCk78kyq6snD53E=;
+ b=oeEt7QmffGG+qTEa6NbDsjUe6CpUJtqEkexKmpot019KN3ssHy97Bunvj6CHxqGHbD
+ TLwzKqwaeAsEgL8H9CPaGL/1rPpVhK667bzO6XwPWNQF0mW5epDoMUMNSaauX+dCRP2W
+ Lcv1M5641VuhNfqh2xp7Lsflj2YQ/vnraGYoluiDWz3qtGOK2tGjRUEAS8LkzrUnWigx
+ 0quPHqMdLzDxWMiyV0an/miZmCnLsmMI2C5lpycf+8lOR0phLb64Ev2m3i+gYEsNCp5k
+ koZALus6g4gA44YIUz9IFRCeXsnNnkDfwfS9OLue+Tt/TIlN2NQrh4GQXSiZgPNFs/Sa
+ EUXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750558848; x=1751163648;
+ d=1e100.net; s=20230601; t=1750558929; x=1751163729;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XwuwNh+koy2VQwdfNjbtk/bKBYSVtwkZKZ8/lJpV/kY=;
- b=hkNMZ6dy9N1TzmYiyfbmBPQyCLx77rK4RV9MV1rfyGD+hckSqCV3T+ZcOzWHaolKyh
- FAqxRRnYvDjC+eFR3WiAsASbMIHhLLUIB2YLE2GNfVSVWF3WFgMPyPqLmvzqH/OI7ygo
- Fay35QyuOwWDE8gWmTUzSXdRXlRY/CwTO6VVzomigtX5RbyqZcGvvwbfzNeKHj0oQd49
- +8Iv/TaQSPuAZO1NIgosvq7EYE3F6mYLdnYwSFZI1RIqrygBtQJZqtn+YZpAdsWeZjqF
- Du3RngEecPLn2HOxSFDrkV4Pg96fGwuk6UJ+B7ptv8aPR28e8hlzTA68BohuSCzd+v9b
- F1ag==
+ bh=4ai9BsdwETi6+ehW6rBJNG7toHrbuCk78kyq6snD53E=;
+ b=avjUUsj5o4QJLWZPRVxXkyvGnzrCV0xrdMlcvA9xXuxMXSKNtr/Cx3p6YkBU+rewZn
+ U2K+nDKHPxIN/XLHKg4xVevXpPmE8bTb6sFJO4L45AQsKteO3xXiim2+mFiT71CuoKBb
+ ZsDywJaJ7JkpiXn4CneRJJkrmwsDNgGIHnf7QAM1y/CsgGCJ5i/WjalnFZe8uQwyDPxt
+ dNhIxzjaTL+IiVaNw9wBqhVUs2ai3MlbO7OV5kcdI2o2dGkH88vxv7BlJ1POk3cSeU+q
+ bHnSNIC6ERljXFp5ORz6zQjKa1Q/hP0Ou8+7LRh3/buPycxGu7+UaGEsrBHa2X+sphNA
+ +hSw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWXeLeaNPuFl3BftH1xQyG5AGG8tRRE+h3jmTSIWjMqbFUtV6Gd7uPNlaVNpl2dspHslX33Ds72hYkL@nongnu.org
-X-Gm-Message-State: AOJu0Yyqa/6M9Vfufe9nzlSLXegH7x1vsmPObRjJtSwFrsaRlEl58xf4
- FoCe18S0IG/g2JICfxQa4c6VzzKZ9pMoQTbln40TwDXKCYg4lY5zhF2HfDbCq+xLze0=
-X-Gm-Gg: ASbGncuu9lLtd6Yal3cpTo2pzG4/77wwl/R6cpz/2kUk/dRjaery3p8eGAOgCIuoA0D
- FgQKBOvtGC6KemxL67va94Len3pvu0VsWd376LEVbq4Amm/cn7geZD13v4ANjIf4FlOCJpuMZcE
- HwJEdNIFLcC+gIIuOC/jEIGiGiV15acdvz20rO7oENViZizS5UUw4+mMomrFip7WutDxaYX5D62
- LM97Jo9rrsYvDgB6Lj1/9SBmNlDHNkbgONg+UQCj5YX/+2AGUka8Qsv39rr87FZ0HSUrz56GLOq
- ZqRXzuUAxGNloUIJHqB5VtLytivxvR2dyBI8ChlO/sgpLJBsdPf5sv7rmGTml0MMUluTXY9tQZe
- /V2xhJ9PqerO09IPGKfpjUsVwr2Fs
-X-Google-Smtp-Source: AGHT+IFmMdGTiw1qqxx3zyH/7DaGGhfFTg41sn9KExjj+U+8VX/dp8F54K7fG27lvD93zjqnpoWybw==
-X-Received: by 2002:a17:903:120f:b0:236:15b7:62e3 with SMTP id
- d9443c01a7336-237dafbc416mr111541685ad.9.1750558847668; 
- Sat, 21 Jun 2025 19:20:47 -0700 (PDT)
+ AJvYcCXMuCcj9ohmrm3JLs9bmB7mQUu7eCIlfoBlpAp6rsjK6wR0DUz/1oVo4QLTP7ROSyeB0q6QbrseEEvg@nongnu.org
+X-Gm-Message-State: AOJu0Yy3oCJyvbKEmZfUg7fifJUeJdRyRbR6vS+fm4MISmF6IVeZWAKP
+ rKqobpJXPN/WcO6qXUbDFT0WRaj7qoiQaS5amaVT0jhqbT0F1z9ICC24bHSXyD4mX+g=
+X-Gm-Gg: ASbGncuDA2T0USch5xbIVknVI9ZvVDqbHj5KF1LZVIcf4FKt19+ErMZfu3mvwip28zq
+ TaK4hkx27VmPkUPofmIWWvd153lPIu5nluahMUUQgUZlqnM2+u0ArgXtrZkRy5m1y204pgWmtYT
+ p9g7iKfMIHq0SgaMZsueRbmjyJPPeSmTKE3gCP3WbQ/GxycwmNorrK2PaPMCdzUitTQAJpi2vp7
+ MHQAJPTpCV+3kpOrZ1H2ulZzRq2zVWtLbhD9nLm+Undak/Zc/bXC/YQHSxxWT1iz63q0NtgLHz9
+ J3pjfhBWgTBVrx5IghGm9GuMfocA3UToJQ0urONr1pu+jpHHb8BxyyWU6WVrPDgjwmd88gCFMJy
+ LBpQDMcaALm05UVocZN6Zv2cW2vkL
+X-Google-Smtp-Source: AGHT+IG5AkLBgqZNjipRA4v2tOPcZlJjtzlvT0mQBeOHBXCB8NVtt1SA9N9qr26hU46b2zOHmmZADw==
+X-Received: by 2002:a17:902:e88f:b0:234:bca7:292e with SMTP id
+ d9443c01a7336-237d973b345mr107720555ad.14.1750558928728; 
+ Sat, 21 Jun 2025 19:22:08 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-237d8610ac2sm51400315ad.135.2025.06.21.19.20.47
+ d9443c01a7336-237d867c0d9sm49511775ad.177.2025.06.21.19.22.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 21 Jun 2025 19:20:47 -0700 (PDT)
-Message-ID: <a19eac04-824e-438c-adeb-a5cd456cadd6@linaro.org>
-Date: Sat, 21 Jun 2025 19:20:45 -0700
+ Sat, 21 Jun 2025 19:22:08 -0700 (PDT)
+Message-ID: <6b127dab-1d94-4b6a-8506-91a1fef448b5@linaro.org>
+Date: Sat, 21 Jun 2025 19:22:07 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH RESEND 03/42] accel/split: Implement
- cpus_are_resettable()
+Subject: Re: [RFC PATCH RESEND 04/42] accel/split: Implement
+ accel_init_machine()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20250620172751.94231-1-philmd@linaro.org>
- <20250620172751.94231-4-philmd@linaro.org>
+ <20250620172751.94231-5-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250620172751.94231-4-philmd@linaro.org>
+In-Reply-To: <20250620172751.94231-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,35 +106,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/20/25 10:27, Philippe Mathieu-Daudé wrote:
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   accel/split/split-all.c | 13 ++++++++++++-
->   1 file changed, 12 insertions(+), 1 deletion(-)
+> Force to TCG + HVF for now.
 > 
-> diff --git a/accel/split/split-all.c b/accel/split/split-all.c
-> index 6bc95c7a7c8..c86d0e8583a 100644
-> --- a/accel/split/split-all.c
-> +++ b/accel/split/split-all.c
-> @@ -30,7 +30,18 @@ static bool split_has_memory(MachineState *ms, AddressSpace *as,
->   
->   static bool split_cpus_are_resettable(AccelState *as)
->   {
-> -    g_assert_not_reached();
-> +    SplitAccelState *sas = SPLIT_ACCEL(as);
-> +    AccelClass *hwc = ACCEL_GET_CLASS(sas->hw);
-> +    AccelClass *swc = ACCEL_GET_CLASS(sas->sw);
-> +    bool rv = false;
-> +
-> +    if (hwc->cpus_are_resettable) {
-> +        rv |= hwc->cpus_are_resettable(sas->hw);
-> +    }
-> +    if (swc->cpus_are_resettable) {
-> +        rv |= swc->cpus_are_resettable(sas->sw);
-> +    }
-> +    return rv;
->   }
->   
->   static bool split_supports_guest_debug(AccelState *as)
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   accel/split/split-accel.h |  3 +++
+>   accel/split/split-all.c   | 30 +++++++++++++++++++++++++++++-
+>   2 files changed, 32 insertions(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
