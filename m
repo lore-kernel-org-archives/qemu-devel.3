@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9E7BC7115C
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 02:36:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 194D1C7115C
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 02:38:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTAYn-0005W8-TO; Sat, 21 Jun 2025 22:35:58 -0400
+	id 1uTAb1-0006FG-1n; Sat, 21 Jun 2025 22:38:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTAYk-0005V8-Gj
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 22:35:54 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1uTAaz-0006F6-Ix
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 22:38:13 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTAYi-0005uK-Px
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 22:35:54 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-b31d592bbe8so2079746a12.2
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 19:35:52 -0700 (PDT)
+ id 1uTAay-00060s-0q
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 22:38:13 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-b3182c6d03bso3683392a12.0
+ for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 19:38:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750559751; x=1751164551; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750559890; x=1751164690; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FueuyjpSWwRxISKss69t5CsjSOmJ1/9sSnRI9jCahm8=;
- b=Woo4DfTSL1AwwlrRy9DAf9u8hSyedzRtAULks+rcaoOw143mFD/Mx6NqZVUeAvFCW6
- j1xor9LZ0GVhlWZwlwA+AfniAbhUutivCbEIWZLrcWU7Z/osuCGZzHEldGBnvNuL6KIa
- kEyNr5t5gbLHMesd/tcQSWlUXgrIZMDp/ycA6XjqMtcisMnInNetH2wEzEeGsvet1xwS
- C70M5Ll+hRan4VQcDedGj+5vrs9vWmTdMMMQQhYYdkkxE8VFkj6QXIYAjbIbknuoJzGR
- qSJIL8YByKoyHyxDiCnufPQ2bg2YndSY0aMaLA5skFsw40fx4lrmLf0CfNOSNxM57XXi
- FFgQ==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Kqy37Ck226xeMR96muH7nbiknorEdBg2NCi6Mgisofg=;
+ b=iF8PYgHjscpVo3d3Zj0BfG1gpcX6fWPS7PPGMlFnr6JsskGlVrEy96mNX8u1wB/mC+
+ KPFssO2KLFRzHHlxz5+bnPJpBXIoDDXUZDHZDeWcGSeuyfoMpy05PRHZ5QL0mtc2p3KE
+ AEYh/0AutENBKypPxBPKRWrMtUGYEgAs09tHrHOcjFqeYPqBPlEZIWczo/YD9d47Elq5
+ NrhuOLTcwGJ2Bqr3tk4tCzcfq9FiIO8fcxKbQu5U4lsN6NmUPvo+F/zZ9dir70yEvOWl
+ V+hzP4rDzOAqe0zoUbIxe89SWgDh7GlgCXpr366vKAkM7IIVgJXvsDrRi4yNG77DyNnP
+ 6w5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750559751; x=1751164551;
+ d=1e100.net; s=20230601; t=1750559890; x=1751164690;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FueuyjpSWwRxISKss69t5CsjSOmJ1/9sSnRI9jCahm8=;
- b=pU1xW3SrUqcLNKzUm3hClhMwUr+M6CJIgamijo/y1wEEl074/SsrNYn+IexJb8ET1n
- Oo8lGoHTIsTn8/0yOk2HDfPvlPzVJ3WkjsiR2kdEG3774Z1ncuPmjZGZR7GvTRRIPKPt
- y6T+nSSmT1h+EHMJgvbwQSzKum8e7ow40lp/x07Ttsf8fvYjlFymitHL5dWgZKU1245P
- 2Q+V39j7xmup38+8xZ8eEnGhB7RTF45fx9pfeu659CWgc+GnEaZMCY+khC/C/MB41AiU
- VM1hIvyH8bNl6wCObFkm7JT+66K7dIvVdjU72z1+fKZxE6dqWYZTLyAjGLrAUW3/BD4/
- v0vw==
+ bh=Kqy37Ck226xeMR96muH7nbiknorEdBg2NCi6Mgisofg=;
+ b=anm5KTL2lBwvVQGwhl36UzEUTtH6NfYI+FC+2y7dWKHaeiPr3dPuwKeZGXS6S78O1R
+ 6/wzBnkihEldIUQGN1oHWo+4ooMYNpluq4cgW3pQnyLqdrTcStwARM0XfjZzRtptmBWq
+ MTdXkJbB34LdiCN9wnXXp00QkFt51TTgQ4tMfKu0O5AAol3okTcIMKrgtpYHkavfefHK
+ ExD0HixHqEC66nokgRvb/ZYCTwi4hG7cmW+bx6QNq69VZTyLPpkQ+SZD4RmV5QH8qBJj
+ u9+G/5YwF1KkGGNduF//WA8vTIBK7delzDe3zG9hAqPeCb/k/KA9C8L+tVqu0C8qeZGk
+ 5e8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU6M6a0S6k3BMTio8OmxQLfWlJGElfk6BZG8kSfE8ENFucg2UEqhGfEIs4++UTPHPA5XdJUFupnH3uz@nongnu.org
-X-Gm-Message-State: AOJu0YxW38CZTx+KJtIteoBGG73uOQLfAuGcWYQ1bzh0aYXgC/Sj+EOF
- 2Srb9fubUlloZzAkxxm96VuyRQ3rDO9gfmLueNAe4/IklsgYqJOaqF5Iyz14VmRug1c=
-X-Gm-Gg: ASbGnct8G3q8rrdyGdebtiQ48XoEWMjZ4UuepPfP6bz4sVvs3Se1nLJ+Ns2LojpwFWl
- CVSgMzKbOyXtuoktJh6d3DGe0AMBKsCwzkaObBh3f0j25XWqdci+HPEifdWGJbtQiC9SaaRlW6k
- qc6+WqRA/Uc42mPIktDgTIOGDDvPGHza+R0r3GThAYMLfzhWdCBMGU/LproY5BSnVJM+HPTRYII
- ZDOfkCyTXiWcXe/a+dKPz2LUrAi8QDtn+dZJ5tcEDV0RYvcCJMSaPZ/3YxmPuhiKJqBGvkwQYFi
- 9QQRyo31niu4gJm0RXFl8NRhsjltiP5rs31eMI7AJjbsGya4iK6ePeNKEF8S/bK3xi8ChBTnaDz
- XL7+J7ZH3Q6SVnJFkmf2fvjx0Y2sTwno9J/p0pgI=
-X-Google-Smtp-Source: AGHT+IHGnc/vQ6iES5IPULIFIMYMEejrL9T+G/3oAISivNsz0I8FK1vuUYhG6tUOurByNwwXB/gdgw==
-X-Received: by 2002:a05:6a20:e687:b0:201:4061:bd94 with SMTP id
- adf61e73a8af0-22026f58b82mr12295444637.19.1750559751314; 
- Sat, 21 Jun 2025 19:35:51 -0700 (PDT)
+ AJvYcCXHP9s+yp87VWMYVoQehr8MxQJIwO5Kl6Zc43EEmXpws7HGxUuLdD0ghC3RusVwUI4Zlh9clZhXtD02@nongnu.org
+X-Gm-Message-State: AOJu0YwYDNq3rU29sZ5dVsPLjNWdPd691hc8gYaRilkdAm2pMsRNgB5b
+ 3iuKrZAHA93Qm9QoEAAqA76193K2jG6Kx4FLmALaRkCv6C0CXjUL0MbJcrR5+Lt2vvFNz0ozTW5
+ YFhsyMok=
+X-Gm-Gg: ASbGncul8oeJBYIPyZjQmIcU03hV29ZMKkXBAvY9PFb7Q82hTDjSLADyIIH9RlzsdKN
+ xXUhilYvg7xo5jWhEqsbZFt5v4MGkYpI/HLtpF8UiKmyBHxJps0yvW0Ad1anvZgKtSDi5zCBplA
+ RnYp0+zGf4n9iPCHehXaTS3hZ1jZXVzH7Zia0Tvrkoy/Yc7dVxoB2P+JWFizdMQ3bXzYDJGuFXQ
+ ElzXDVWpYpDqPXXaIEtBeAi0rwEKvlbgZ1EDe/X/1ucxNT/lty/nVUKxzud5xtL/9Z9TVv1aLYY
+ BbwwGWc2LmJjjYmWWCsBupsGllfnK6/XvMou+qWuwxizj4oESucJcCcfEEnMV9RIj/RWHd8Hq0Q
+ KJlSICbO2k34J1nxUQu6mKuvydIVs
+X-Google-Smtp-Source: AGHT+IE1US1pGJIi+XFeUDA8NCLiobcX51qZsNLyU6bhv6i29KeenKCahnFD1NfKu6wDujlSyKu2nw==
+X-Received: by 2002:a05:6a21:7014:b0:1f5:8eec:e517 with SMTP id
+ adf61e73a8af0-22026d6456bmr10154964637.9.1750559890647; 
+ Sat, 21 Jun 2025 19:38:10 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7490a62636bsm5312107b3a.107.2025.06.21.19.35.50
+ 41be03b00d2f7-b31f12583b9sm4739963a12.53.2025.06.21.19.38.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 21 Jun 2025 19:35:50 -0700 (PDT)
-Message-ID: <4f844970-0fa9-418d-a0bf-8f96851a10d8@linaro.org>
-Date: Sat, 21 Jun 2025 19:35:49 -0700
+ Sat, 21 Jun 2025 19:38:10 -0700 (PDT)
+Message-ID: <363f2fa8-aee3-4cba-ab19-b6634bd5564e@linaro.org>
+Date: Sat, 21 Jun 2025 19:38:09 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH RESEND 10/42] accel/split: Define and allocate
- AccelCPUState
+Subject: Re: [RFC PATCH RESEND 11/42] accel/split: Register MTTCG
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Alexander Graf <agraf@csgraf.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Julian Armistead <julian.armistead@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Mark Burton <mburton@qti.qualcomm.com>,
- Thomas Huth <thuth@redhat.com>, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20250620172751.94231-1-philmd@linaro.org>
- <20250620172751.94231-11-philmd@linaro.org>
+ <20250620172751.94231-12-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250620172751.94231-11-philmd@linaro.org>
+In-Reply-To: <20250620172751.94231-12-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,77 +106,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/20/25 10:27, Philippe Mathieu-Daudé wrote:
-> AccelCPUState is where we store per-vCPU accelerator
-> related information.
-> 
-> FIXME: structures might clash so add padding (ok with TCG+HVF)
+> FIXME: Use sw-hooks?
+
+I'm OK with hard-coding tcg for sw, especially for now.
+
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   accel/split/split-accel.h     | 7 +++++++
->   accel/split/split-accel-ops.c | 9 ++++++++-
->   2 files changed, 15 insertions(+), 1 deletion(-)
-> 
-> diff --git a/accel/split/split-accel.h b/accel/split/split-accel.h
-> index 19fb530f207..87a08454ce6 100644
-> --- a/accel/split/split-accel.h
-> +++ b/accel/split/split-accel.h
-> @@ -38,4 +38,11 @@ struct SplitAccelState {
->       char *sw_name;
->   };
->   
-> +struct AccelCPUState {
-> +    char pad[128];
+>   accel/split/split-accel-ops.c | 5 +++++
+>   1 file changed, 5 insertions(+)
 
-That's a pretty big fixme.
-Is this a problem of name overloading?
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
-
-> +
-> +    AccelState *accel;
-> +    bool use_hw;
-> +};
-> +
->   #endif /* SPLIT_ACCEL_H */
-> diff --git a/accel/split/split-accel-ops.c b/accel/split/split-accel-ops.c
-> index 294ea79420e..efef0d60fde 100644
-> --- a/accel/split/split-accel-ops.c
-> +++ b/accel/split/split-accel-ops.c
-> @@ -12,10 +12,13 @@
->   #include "exec/cpu-common.h"
->   #include "system/accel-ops.h"
->   #include "system/cpus.h"
-> +#include "split-accel.h"
->   
->   static void *split_cpu_thread_routine(void *arg)
->   {
-> +    AccelState *as = current_accel();
->       CPUState *cpu = arg;
-> +    AccelCPUState *acs;
->       int r;
->   
->       /* TODO: check accel allowed */
-> @@ -29,7 +32,10 @@ static void *split_cpu_thread_routine(void *arg)
->       current_cpu = cpu;
->   
->       /* TODO: init_vcpu_thread() */
-> -    /* TODO: allocate AccelCPUState */
-> +    cpu->accel = g_renew(AccelCPUState, cpu->accel, 1); /* XXX only with current TCG */
-> +    acs = cpu->accel;
-> +    acs->accel = as;
-> +    acs->use_hw = false;
->   
->       /* signal CPU creation */
->       cpu_thread_signal_created(cpu);
-> @@ -60,6 +66,7 @@ static void *split_cpu_thread_routine(void *arg)
->                    */
->                   break;
->               case EXCP_ATOMIC:
-> +                assert(!acs->use_hw);
->                   bql_unlock();
->                   cpu_exec_step_atomic(cpu);
->                   bql_lock();
 
 
