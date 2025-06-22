@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8BC5C7115C
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 03:28:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69E99C7115A
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 03:34:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTBNp-0006Tj-9C; Sat, 21 Jun 2025 23:28:41 -0400
+	id 1uTBSZ-0007Zv-CN; Sat, 21 Jun 2025 23:33:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTBNn-0006TK-8b
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 23:28:39 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1uTBSY-0007Zi-Dp
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 23:33:34 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTBNl-00070A-Nc
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 23:28:39 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2366e5e4dbaso25064395ad.1
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 20:28:37 -0700 (PDT)
+ id 1uTBSW-0000Ca-58
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 23:33:34 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-235ea292956so32254815ad.1
+ for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 20:33:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750562916; x=1751167716; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750563210; x=1751168010; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ifHCU7SazBmp7ZnCg0PHUIWq4JazF0kgFO73JKChXrY=;
- b=AbVUa4Mr+RS6XeOLTzgHuk6gqq2e8z8CP+AETI3Wxui4bOq0W6F8mImzFDcOoUmvcs
- l5oLO7R9n6dkjWvmPSs2XNdrOUoYm1lNzKxPJ0ioHa22JBOUq6D8jrzRitIl0XixaxNC
- wKr2CuGhIERBliDi9Ga6v38harJytv2aW2auOOhGaQOtPCOm6twP780b9ZwzvP1IFzvr
- 8Fij9CdHB3gqcGoubwkyKpIAr6266X/Xnfwd+hFEGKwxcP4tdFtJ9wuhemOyWGOnMCCa
- loe/Xlk26bV+mv5UAioSLATtUS4UBsAXksUtlg49U1KYJ8whZqUfKErP/VxAQ1BayxW0
- bXtw==
+ bh=vwNHcQd2k+U3TzgUh4s36VuQGLGCz6YFa3Xxapo8SPM=;
+ b=qo9Am0f4ntTrkOLiaovzgicgRhDRgjTe0VWbYky2kYVoMFEdpFz36zxTJq2URSXoVc
+ Mxgd3ZnFI5GG9CuZQ2maEGCd2FtZ1oNB/h85u7oI8nehTbACeZUF7Cope20Gw/SyFjUL
+ nJXk+lb1gc6x9OG4XL/otV7k+RkI/uimcZJV2v0p3jrreldzgxdISXQ2RbixiysHdz6C
+ ggXDVnyGaOdTrWGwHW2ASyZN73qNzE7lzfRo6m/i35gX1Y5Cu8xKWS2oPBtwbAbtDu+P
+ dFK6YIhDdi+6JDbhOJGkZOUa7uRhUJYeORLng3aDEWrEcxDmRVR7Hwr/VaavctAjYewv
+ 1A+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750562916; x=1751167716;
+ d=1e100.net; s=20230601; t=1750563210; x=1751168010;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ifHCU7SazBmp7ZnCg0PHUIWq4JazF0kgFO73JKChXrY=;
- b=C7KrpgfWd2MR+MBkBGDmzWZgUgf4dyXBisJeQ4yRknGAW3RhlwBVlgxePpxPH6UAf9
- nmC2r8ZBz7Qzn4Q1L3L6WWx4pS24sB4X4znTL7jVAhpZE0/vA5+3j06w+XYB/u2sjZBr
- qlAw12eBUGNocmt6ZyBXguoNK0r18niD0dUFmE98icwOW0tP58nvAifeqYaAMhF0SzDH
- dbakRGV1nVlY596QMgF99dF8obbwcCt1/kztFnjbIdM8b+04mHUT3LsyLeEo1EXdiq3W
- xbshrZHFOUtDjLQeokxIZGMPo9HWSkosODLb2n3xtJVtoktrEuPASkRhhGuZrEKswAqC
- mRww==
+ bh=vwNHcQd2k+U3TzgUh4s36VuQGLGCz6YFa3Xxapo8SPM=;
+ b=rHsQLfgETo+KYUxfsPCLuI2jpOCkUFapyD0WwRvrloY7ox1l7DYzSHmT6t0H0i64qD
+ Nl4gw+JPkpw8YibO5h/oDC6sZiMjcjawMPr3xx1wCnUmkr7gUdScJqiDioWBoQc7Od9P
+ ME8xTddee0XToO3X737V0Zs0jvloUdL9KS9s3gIA52UOTz3OaDcOZQQ+XYTA2RqQdO7z
+ wNE4w6YDRlWWJDJ8N6fmupNTYuraXMJPw4YrBp/HC5IPuT+rc+B8qBAjghdP9XcYKzYm
+ tqcOzuUSW1iPgyRHNt9xRZX12gs69KpT4pRn8ORoz6/aTfESzDSPR1ecNhoLFym/oBB8
+ EqUA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWCWkiRxV+sOOGEpHvcPyf4ibAkQ4cMdaSEK+IdgsSkcagQGYH8A8MlTHOhlukYw2HCACfRXVsI1v1P@nongnu.org
-X-Gm-Message-State: AOJu0YzVgr9VzvedxZp90XWOwsb/CQmMq4L5R4xJNzx3nD4x0Z+J73o2
- oSbulvd6A7G8Ju9TbjXEZCZZb6efq3OqqFuHgKpQLvV80Un7mf9ExqLo7njE5STF2k4=
-X-Gm-Gg: ASbGncvm6PqEYaN+jl0pKDa5PLgfL9B/gXqA7C6Lk8x4ZDquGT0HxO/871IaHdixCql
- vbEoYI1/vRP4ixqpR3hP1IaB9Ol73rFbAzwi1B3qQ7t7s5/pBucZdlhSPJh164DCkm0ysHPdaRH
- a8ryyxxfkDSW6ZgGWtmUM3z1CHm1XcSeXv64aiICnfDDMGNFzUCCLO5+XRQ2wzD4sjdyif8fPzS
- xfn9cUbYMooNPKvS1H3yQTLGxeDkSnnZmE/9EOpUdELFiyHUghUaBRYSMVh7VVW8E8xzbCoOJrd
- lEjtbE0jZjZABWsYu4TBWyWFi28lIi+ezl3ck0eY5iYvheNjKFjh5IkoDsCDqyvqf9Jy6MzhetR
- bFHA6Tj0rHWcghfw/5Nvv76/WweXD
-X-Google-Smtp-Source: AGHT+IF9InTXR9Tl4pziPnES6qmHIWe8NN2hs1BeD6WK+FOjl6LhUqQaaGRVe2UdFcZ6+e+eNKEG0g==
-X-Received: by 2002:a17:902:d50a:b0:215:b1e3:c051 with SMTP id
- d9443c01a7336-237dafecd35mr109623285ad.11.1750562916156; 
- Sat, 21 Jun 2025 20:28:36 -0700 (PDT)
+ AJvYcCUlFmiRGtvhR8aS5FUi+lYWg/B3WZgEk7M0h6Ok7E6NCoK4XO5lDgWAkmlPwuYLCc3xyb1KVyDU/swf@nongnu.org
+X-Gm-Message-State: AOJu0YyHI/B6yJlGRapY0ejRlGkml3HWoDI+rjdWeuA6NGbCL5Kftj+i
+ gQTYiynZgfUEXPxJL5XyKsPSRvmMq/m3xhek8YTB5b8/gC5JJoZlIv3Jd7OC+PHvbvM=
+X-Gm-Gg: ASbGncv16TeLNXtfDgUMuu4Un0tXA4KRc70L/RAhL++H3uu/ZyVFgSqKGMUk2ym8t7N
+ hAYyAJN53RT3BBOeiNrqii7z4gxSbxsgoL+CBQl24EMU0aFr5XRWafT75MwuAC8XyH9XfElSQse
+ vTzu3CX012cb2cABw/kQGDVSet1Feefj3DfOz0RDqOB9lprtqQBnkaEYV5lTSS9YEaoXUTOOoZS
+ uIQDCy4lb3wS4VyFaDsW1R6b4qOkWJASrU4cL9iaPybr7rFdRDm8iH1mv0d9SU3oP/L8G2O+kvh
+ sX4e2U1ey0KpDeX6K845mZyDBEaqmclq1NIQCVpVJiCFWR5rcYHNn9gnE9LtC+rDGjlhJXXOqBG
+ W8UrWF5GQDkpQwTRYjlzxjRhuuxwS
+X-Google-Smtp-Source: AGHT+IGcOYyQ3WqxAOpH3uXuOCCcILdyDGQTfTXzeAIay9HeId4pKB8Ovfo1mZ9KEQVg8tjpaYPagg==
+X-Received: by 2002:a17:903:1111:b0:235:880:cf70 with SMTP id
+ d9443c01a7336-237d97f8c47mr103241395ad.14.1750563210561; 
+ Sat, 21 Jun 2025 20:33:30 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-237d873b5b2sm51588275ad.245.2025.06.21.20.28.35
+ d9443c01a7336-237d875c1f7sm51812565ad.257.2025.06.21.20.33.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 21 Jun 2025 20:28:35 -0700 (PDT)
-Message-ID: <4bd8e983-d10f-437a-94fd-1cda26478e56@linaro.org>
-Date: Sat, 21 Jun 2025 20:28:34 -0700
+ Sat, 21 Jun 2025 20:33:30 -0700 (PDT)
+Message-ID: <730b4fca-e0fa-4e99-a092-f63aadfa57d9@linaro.org>
+Date: Sat, 21 Jun 2025 20:33:28 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH RESEND 37/42] accel/hvf: Emulate HVC at EL2
+Subject: Re: [RFC PATCH RESEND 38/42] accel/tcg: Introduce
+ TCGCPUOps::rebuild_tb_hflags handler
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Alexander Graf <agraf@csgraf.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
@@ -81,14 +82,14 @@ Cc: Alexander Graf <agraf@csgraf.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  Thomas Huth <thuth@redhat.com>, "Edgar E. Iglesias"
  <edgar.iglesias@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20250620172751.94231-1-philmd@linaro.org>
- <20250620172751.94231-38-philmd@linaro.org>
+ <20250620172751.94231-39-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250620172751.94231-38-philmd@linaro.org>
+In-Reply-To: <20250620172751.94231-39-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,46 +113,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/20/25 10:27, Philippe Mathieu-Daudé wrote:
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/arm/hvf/hvf.c | 6 ++++++
->   1 file changed, 6 insertions(+)
-> 
-> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> index 3907ea8791e..a4f823f834d 100644
-> --- a/target/arm/hvf/hvf.c
-> +++ b/target/arm/hvf/hvf.c
-> @@ -17,6 +17,7 @@
->   #include "system/hvf.h"
->   #include "system/hvf_int.h"
->   #include "system/hw_accel.h"
-> +#include "system/tcg.h"
->   #include "hvf_arm.h"
->   #include "cpregs.h"
+> index 29ebcf45928..20999033c89 100644
+> --- a/include/system/accel-ops.h
+> +++ b/include/system/accel-ops.h
+> @@ -71,6 +71,14 @@ struct AccelOpsClass {
+>       void (*synchronize_pre_loadvm)(CPUState *cpu);
+>       void (*synchronize_pre_resume)(bool step_pending);
 >   
-> @@ -1117,6 +1118,8 @@ static void hvf_raise_exception(CPUState *cpu, uint32_t excp,
->       env->exception.syndrome = syndrome;
->   
->       arm_cpu_do_interrupt(cpu);
-> +    cpu->interrupt_request &= ~CPU_INTERRUPT_EXITTB;
+> +    /**
+> +     * rebuild_tcg_tb_flags:
+> +     *
+> +     * Used to rebuild TCG TB flags when a hardware accelerator transitions
+> +     * to TCG, prior to calling TCG %exec_vcpu_thread() handler.
+> +     */
+> +    void (*rebuild_tcg_tb_flags)(CPUState *cpu);
 
-Why is this needed?
+I think this isn't right.  This should be part of synchronize between hw/sw.
+
 
 r~
-
-> +    cpu->exception_index = -1;
->   }
->   
->   static void hvf_psci_cpu_off(ARMCPU *arm_cpu)
-> @@ -2090,6 +2093,9 @@ int hvf_vcpu_exec(CPUState *cpu)
->                   /* SMCCC 1.3 section 5.2 says every unknown SMCCC call returns -1 */
->                   env->xregs[0] = -1;
->               }
-> +        } else if (tcg_enabled()) {
-> +            /* FIXME check we are called from EL1 (so EL0 -> UDEF) ? */
-> +            hvf_raise_exception(cpu, EXCP_HVC, syn_aa64_hvc(0), 2);
->           } else {
->               trace_hvf_unknown_hvc(env->pc, env->xregs[0]);
->               hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized(), 1);
-
 
