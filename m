@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69E99C7115A
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 03:34:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F421C7115C
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 03:34:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTBSZ-0007Zv-CN; Sat, 21 Jun 2025 23:33:35 -0400
+	id 1uTBTg-00088L-C2; Sat, 21 Jun 2025 23:34:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTBSY-0007Zi-Dp
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 23:33:34 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1uTBTd-000887-Tl
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 23:34:41 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTBSW-0000Ca-58
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 23:33:34 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-235ea292956so32254815ad.1
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 20:33:31 -0700 (PDT)
+ id 1uTBTa-0000IB-Ag
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 23:34:39 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-b26df8f44e6so3634886a12.2
+ for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 20:34:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750563210; x=1751168010; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750563277; x=1751168077; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vwNHcQd2k+U3TzgUh4s36VuQGLGCz6YFa3Xxapo8SPM=;
- b=qo9Am0f4ntTrkOLiaovzgicgRhDRgjTe0VWbYky2kYVoMFEdpFz36zxTJq2URSXoVc
- Mxgd3ZnFI5GG9CuZQ2maEGCd2FtZ1oNB/h85u7oI8nehTbACeZUF7Cope20Gw/SyFjUL
- nJXk+lb1gc6x9OG4XL/otV7k+RkI/uimcZJV2v0p3jrreldzgxdISXQ2RbixiysHdz6C
- ggXDVnyGaOdTrWGwHW2ASyZN73qNzE7lzfRo6m/i35gX1Y5Cu8xKWS2oPBtwbAbtDu+P
- dFK6YIhDdi+6JDbhOJGkZOUa7uRhUJYeORLng3aDEWrEcxDmRVR7Hwr/VaavctAjYewv
- 1A+w==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=BwxD2iPz6rDfpuej8EkZP9xWHI+e/mJimQ1uYo1hg6k=;
+ b=aj74jdS4acMW3WXuSmlYlPTLb/TW0Lkj2fgSRM6Wxm1O8YHyBBZcrAz4Nc8W+jT+Xl
+ V5aXTZqZHmVJ7y3p5sdLlsRxxZfxI5u081WypBAlTFVW22zi7SNyVPhTT3oCFO9EuuPx
+ gnsRO9ClRRsRBClYydPYyIwHT2A6MVM4ecVtk4n067vXf3eQ/Dsy5T1xRVKVrISwGrkZ
+ hxAKZMgOsNAXaXR/RNC4CyiE+/rWDZME9M1mDT75Wl4TD29CuXAlT5Pn+QQptqoGardv
+ St1f5Fzz7S++QTZt7FhP0oCHTSxPQudaf5tXhq5U6fvRo/LoaNqqlITtDmuK/bRgTm74
+ TFyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750563210; x=1751168010;
+ d=1e100.net; s=20230601; t=1750563277; x=1751168077;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vwNHcQd2k+U3TzgUh4s36VuQGLGCz6YFa3Xxapo8SPM=;
- b=rHsQLfgETo+KYUxfsPCLuI2jpOCkUFapyD0WwRvrloY7ox1l7DYzSHmT6t0H0i64qD
- Nl4gw+JPkpw8YibO5h/oDC6sZiMjcjawMPr3xx1wCnUmkr7gUdScJqiDioWBoQc7Od9P
- ME8xTddee0XToO3X737V0Zs0jvloUdL9KS9s3gIA52UOTz3OaDcOZQQ+XYTA2RqQdO7z
- wNE4w6YDRlWWJDJ8N6fmupNTYuraXMJPw4YrBp/HC5IPuT+rc+B8qBAjghdP9XcYKzYm
- tqcOzuUSW1iPgyRHNt9xRZX12gs69KpT4pRn8ORoz6/aTfESzDSPR1ecNhoLFym/oBB8
- EqUA==
+ bh=BwxD2iPz6rDfpuej8EkZP9xWHI+e/mJimQ1uYo1hg6k=;
+ b=sv7mfHWwqUgU84LvcUasJBhcwz/SUIMMnFPzj4WwXwPZK/ELPvuImo8r32wuXSm1ue
+ ydPwiPUQJRPRtToEMGvVu1DH770yMWQ9t1rz2jAhxLPSn4YBhmqZC2+VoyYmuWUd4pYx
+ OmfV73Lv5jsO4loZC5C6j8CWDBIC84qHhqO9VOa6M0QSC55bJDkdbeg96hjIxanyauWg
+ uzAaZ173oHFizGBQIltRDp36WZ9xSAdWSXSmCgwrjYF/DPY8c1o500lcx+qPLwU6nP5T
+ IyU3GMpM35x3FOwjpf1CyZ/5XriY6Hf7FjgumRtNQBx2lDkgtO4wNOmQy5XwxZk8pMoa
+ Jhmw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUlFmiRGtvhR8aS5FUi+lYWg/B3WZgEk7M0h6Ok7E6NCoK4XO5lDgWAkmlPwuYLCc3xyb1KVyDU/swf@nongnu.org
-X-Gm-Message-State: AOJu0YyHI/B6yJlGRapY0ejRlGkml3HWoDI+rjdWeuA6NGbCL5Kftj+i
- gQTYiynZgfUEXPxJL5XyKsPSRvmMq/m3xhek8YTB5b8/gC5JJoZlIv3Jd7OC+PHvbvM=
-X-Gm-Gg: ASbGncv16TeLNXtfDgUMuu4Un0tXA4KRc70L/RAhL++H3uu/ZyVFgSqKGMUk2ym8t7N
- hAYyAJN53RT3BBOeiNrqii7z4gxSbxsgoL+CBQl24EMU0aFr5XRWafT75MwuAC8XyH9XfElSQse
- vTzu3CX012cb2cABw/kQGDVSet1Feefj3DfOz0RDqOB9lprtqQBnkaEYV5lTSS9YEaoXUTOOoZS
- uIQDCy4lb3wS4VyFaDsW1R6b4qOkWJASrU4cL9iaPybr7rFdRDm8iH1mv0d9SU3oP/L8G2O+kvh
- sX4e2U1ey0KpDeX6K845mZyDBEaqmclq1NIQCVpVJiCFWR5rcYHNn9gnE9LtC+rDGjlhJXXOqBG
- W8UrWF5GQDkpQwTRYjlzxjRhuuxwS
-X-Google-Smtp-Source: AGHT+IGcOYyQ3WqxAOpH3uXuOCCcILdyDGQTfTXzeAIay9HeId4pKB8Ovfo1mZ9KEQVg8tjpaYPagg==
-X-Received: by 2002:a17:903:1111:b0:235:880:cf70 with SMTP id
- d9443c01a7336-237d97f8c47mr103241395ad.14.1750563210561; 
- Sat, 21 Jun 2025 20:33:30 -0700 (PDT)
+ AJvYcCVigu6Korl9W9h2syILZYr4LWnYMcSJHxftmrgXpxeX3KHom+NPEmtqNrtk4p2EvWduEhUctZ90am3N@nongnu.org
+X-Gm-Message-State: AOJu0Yz1dPs3eMVQpfeiVP+EL80fbwZICrRwOMzTFXiGexnLs89BP20J
+ HovwZ5kB6ngkHtBXR8Up2o9a53LvrtBqp4+6FetnSs4wnN7FrzrMvaBWjXaDQ4fs7aQ=
+X-Gm-Gg: ASbGncvInQhh644D6WXr9Y28F+zdh2B7NGtadAXOjMyoAYYskeQfHul/rTsyf532QKa
+ Q27ML4IU4J9baPYoVZue7VPhvt2nQ53DZEAzcVS0wLCM7K8anTCpmiKcOPy3Va9lz/3UtCkRlkF
+ 57zRSa0lDfxlqZzyczTiOYSTwP2Qlkeom7Y1WydHb1zVPvQI9PR0w99+w3BmmyikmYnNbytSFHr
+ JBZZum/VUPRuvLhEbhdt2vpyA0OIwCjN+fqpWdqW7OtBtZidn1RsHggR3VwgThyRW7sC+pW8SBr
+ fsLZc84RYzAcEbRa+ixf3wxw1989AxicTuBkqTV9b2f++BM4uq3jGhUCx9N2i3bAAwPKztQUGqO
+ uMiTOQ8cijQKiiWB0cHCWu/Yslj7W
+X-Google-Smtp-Source: AGHT+IGGSHRG01Z6hi6JD7IsJMsNWPh6D09yy8kR+xZuam7gr1N36m82e/OBex1xxPbdTnxR5fjO1w==
+X-Received: by 2002:a17:902:d48b:b0:235:c781:c305 with SMTP id
+ d9443c01a7336-237d991825amr168864865ad.24.1750563276639; 
+ Sat, 21 Jun 2025 20:34:36 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-237d875c1f7sm51812565ad.257.2025.06.21.20.33.29
+ d9443c01a7336-237d8393541sm52376785ad.27.2025.06.21.20.34.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 21 Jun 2025 20:33:30 -0700 (PDT)
-Message-ID: <730b4fca-e0fa-4e99-a092-f63aadfa57d9@linaro.org>
-Date: Sat, 21 Jun 2025 20:33:28 -0700
+ Sat, 21 Jun 2025 20:34:36 -0700 (PDT)
+Message-ID: <c40413cb-0697-4672-abcf-36a2b06f2058@linaro.org>
+Date: Sat, 21 Jun 2025 20:34:34 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH RESEND 38/42] accel/tcg: Introduce
- TCGCPUOps::rebuild_tb_hflags handler
+Subject: Re: [RFC PATCH RESEND 40/42] accel/split: Call
+ TCGCPUOps::rebuild_tb_hflags()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Alexander Graf <agraf@csgraf.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Julian Armistead <julian.armistead@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Mark Burton <mburton@qti.qualcomm.com>,
- Thomas Huth <thuth@redhat.com>, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20250620172751.94231-1-philmd@linaro.org>
- <20250620172751.94231-39-philmd@linaro.org>
+ <20250620172751.94231-41-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250620172751.94231-39-philmd@linaro.org>
+In-Reply-To: <20250620172751.94231-41-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,22 +106,35 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/20/25 10:27, Philippe Mathieu-Daudé wrote:
-> index 29ebcf45928..20999033c89 100644
-> --- a/include/system/accel-ops.h
-> +++ b/include/system/accel-ops.h
-> @@ -71,6 +71,14 @@ struct AccelOpsClass {
->       void (*synchronize_pre_loadvm)(CPUState *cpu);
->       void (*synchronize_pre_resume)(bool step_pending);
+> Call TCG rebuild_tb_hflags() when transitioning from
+> hardware accelerator to TCG.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   accel/split/split-accel-ops.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/accel/split/split-accel-ops.c b/accel/split/split-accel-ops.c
+> index 615faf1d96b..4b058034252 100644
+> --- a/accel/split/split-accel-ops.c
+> +++ b/accel/split/split-accel-ops.c
+> @@ -40,6 +40,8 @@ static void *split_cpu_thread_routine(void *arg)
+>       assert(swc->allowed);
+>       assert(hwc->allowed);
 >   
-> +    /**
-> +     * rebuild_tcg_tb_flags:
-> +     *
-> +     * Used to rebuild TCG TB flags when a hardware accelerator transitions
-> +     * to TCG, prior to calling TCG %exec_vcpu_thread() handler.
-> +     */
-> +    void (*rebuild_tcg_tb_flags)(CPUState *cpu);
+> +    assert(swops->rebuild_tcg_tb_flags);
+> +
+>       rcu_register_thread();
+>       sw_force_rcu = mttcg_vcpu_register(cpu);
+>   
+> @@ -69,6 +71,7 @@ static void *split_cpu_thread_routine(void *arg)
+>                   r = hwops->exec_vcpu_thread(cpu);
+>                   trace_accel_split_exec_vcpu_thread_hw(r);
+>               } else {
+> +                swops->rebuild_tcg_tb_flags(cpu);
+>                   r = swops->exec_vcpu_thread(cpu)
 
-I think this isn't right.  This should be part of synchronize between hw/sw.
+You should not need to do this before every exec, only on transitions.
 
 
 r~
