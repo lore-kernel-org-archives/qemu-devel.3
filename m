@@ -4,84 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1CD8C7115C
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 03:13:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B92DC7115C
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 03:15:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTB8N-0000ET-Lg; Sat, 21 Jun 2025 23:12:43 -0400
+	id 1uTB9v-0000rD-FW; Sat, 21 Jun 2025 23:14:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTB8M-0000EL-6M
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 23:12:42 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1uTB9t-0000qm-FL
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 23:14:17 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTB8K-0004BB-JX
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 23:12:41 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-22c33677183so27545985ad.2
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 20:12:40 -0700 (PDT)
+ id 1uTB9s-0004Gy-2n
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 23:14:17 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-b2c4476d381so2287606a12.0
+ for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 20:14:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750561959; x=1751166759; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750562054; x=1751166854; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=anbwKe2eJ90BIWlsYa+Yu/LYDHfqTin3eW9lYYMIlmA=;
- b=v/9i3MOjmyVOodwIi889zDleJqPTY+JM03UN6oG+Y63YAr9X7RyKfrmoVG/Ox2mnPL
- of0M3dMVTQBjeblC/IdfDZ9rt853S/9TW8fmVj1IJxbfqCtqZp1eNDY89B0IqJSHkip8
- vrAyCt8GYeHXu8xnCWMj3LPpC4eYOXO70r3zYDydR0lxs9vilvZ+0Ofp4DwQZw9JwbqL
- doVDJ/ncZskwH+TL+nClHx2wk2YKzA4L9G8vAjkub9VpnzG7fDh07T7hgE5s/7XAceF0
- ghP6PX7ISwSlRrRYxJhI1BEmrtiIOz43dVjcwwv6nYbj0ZVpA2PQLekXnMbSVY2OvXdy
- E8Qg==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=MUcVUHjGLbIIehp8UlYC5tIoXdAVuj8PsnbcIAYwVPg=;
+ b=lZFR9vcF85WXdsK8HgBfGuaERKI+jtC0MLBENZJEHdmV/qampNcJwC9aKN3VcFmAXC
+ xPFbbHmxxw24wBQk2LV1kKOvGWKZqWdKHRV8WyXV+wvb1D01/YKY4OqxUPrM7E3tHhCP
+ F+qsTzNWETmgOx831adzIno/D8+ZB/UEPZhPg8/uKAedEW7Uopp2MmO8sbN2jtwinxFz
+ nb2aJ+CeQ2I7r9vWLhnD3S4tSUsuFo4mRNrIxPiJfyWMa/VW8IlfDt2rcZbZAcSKDJJ4
+ vuQnh8XAj+VPqqSgajaymf6/y7GIuPYAgn+yCIdeBRPUkyHW9ZmWCAHwVhMAGsmpKIVb
+ Edww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750561959; x=1751166759;
+ d=1e100.net; s=20230601; t=1750562054; x=1751166854;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=anbwKe2eJ90BIWlsYa+Yu/LYDHfqTin3eW9lYYMIlmA=;
- b=J1gjCdONcIN/d0eQSVlp1GrswZbdbaZVSpSqE1nip36bJdq+Coy3lAH0FMXPtG3SNp
- Wqtm+37QV7JaNG3C+HsUQUi7RG6Mn++uA8CYubqOeLXeGpsQFoo5Y9WzfKvifB2tkNJh
- qr/+mo45GV7Vf7gkC1mQWzkCERkWm96Ol2g3Ggjc4N08q+3HuvF1q15CmrZNS1gq5iBh
- PRjWOJy311Y6yF2zpkhntNlnjnYXdJYIj44khR5O9OnYBxS+fdTHHIqi47zW1kwYDp0X
- 1SCKLVM8xmRQ8pUKNqLwsly+qJYw2+hBVlmdAhSAQPhmOZzzSOKrjejfmF9nWNfzW2t2
- Igrw==
+ bh=MUcVUHjGLbIIehp8UlYC5tIoXdAVuj8PsnbcIAYwVPg=;
+ b=ZO6MDthxOaqyNCBIXg7Ivo74Ebwie8/l4BUgVNxmOCnNRWV982GPD5nkTyNxHn4Mra
+ TDoZ41NN1s2bRWvbupDLsGXfhIToPxAoQgQ15TwIEedQ9vZ0UCcWW/K5WMX1CWHDMmOJ
+ xmbeD6YDsofIIcoVD0CJ7IoYyIn+H5PoodxcGrr/PaM/xmgoBzpFmdUQiTjvCDeRGTFc
+ KyMU4U2W4lBZb5HO8AOBH3uVkHSgMrWD5YiPge1x9JTdOQuEc5tQb6ufXar/mdZGTumm
+ 3VqG4MTuXSMaxdzYYk2Dk2Ue/aUksdeysgSX2ftfnHgLheeZpo+r+Tgk/kVJertT1gX7
+ bVPQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXdeKmHCaRJQKzQw7b270VpcAm6WgkyIvegn4bteasJ1pHfXrZLBJr6dMyTzrOqApeUMOb2GQxHA1E4@nongnu.org
-X-Gm-Message-State: AOJu0YwK1nzUsqH9w0g6m0Re9eIn7eiFX3zbvoKqX+OUsVW0wwOfFtHr
- nFMMdsDr+Ydm1cry7bougONKePCQq36IvYr8gW/Vsg3VnOKi6NkSb+LH79MEBrObzyw=
-X-Gm-Gg: ASbGncvOnwnAskaT9T5IruHbMAUeU7Aei+34VYFDstC+OIeR1YduMF+qCJo68T1lfCo
- d70LbcnsWVMYW2H//ropIJC2OY/fFMDpKQ+VHLVZDI/XTP/M/q2jcpmPXlxRi9HbLE2N/H0MaOC
- y3l3HLRa3UiMjXTZ9AlmzP1LrzDeQG06QAQN/3c99uY7WNh1VakH66E+adTLdwAVWYf+HANZ5kX
- f34soYQYWRWI35SqFZoyDf7at6MZDkkrsAu2ur2o+Tz0hKQcjsWZJgV97IFnEMRqhLjM8SR+Ztw
- PUSbJRM9Umue4WURUi3K5qeHTgzi57cS66tKkXIYQUpqt/LGz6vIm7K1+i/jujrxWO7Kbmm0Hyy
- I1BDecLyHHqGH9xoVKxRRprePK3zUpqtFEpqpDSY=
-X-Google-Smtp-Source: AGHT+IGyZkBMA3wEvOzOg15/P+OPVL00JzHFHM/kil17u15GhaEP/g3WOg+FBf2xwcuK0zEjTTnmJg==
-X-Received: by 2002:a17:903:4b07:b0:234:e7bb:963b with SMTP id
- d9443c01a7336-237d97eff8cmr120456385ad.16.1750561959013; 
- Sat, 21 Jun 2025 20:12:39 -0700 (PDT)
+ AJvYcCUQLBOPG8Su2ZGKw/DGnFRE2P/MFDjx48WqgAHYo5GaHl3t4nYPKLJtmB5b6lJuxboce258DxioM+Es@nongnu.org
+X-Gm-Message-State: AOJu0Yxd0TPVqhVk5MTtwvQ5x1p7JrRsuyet+KaLws/knNS3FckiWSAN
+ sLYScsw+sGsTsWZwYGBzarOygr1kBcGHL/M/IlkxWsiQZ3/7b4vBWlpDMG7lOJTOdBw=
+X-Gm-Gg: ASbGncvCzbOe8AjyuGLkB5w/wB37NkeLsJL9qTc8XJbsPbIu6vRX6ZzX4dg4/Q4XdvW
+ S6xVwUQ11AYZ7rbqmG2tg+/vWJIkQ5ZJbUQNVo0DsT7XBE/YF6h+bY4wfXg3ma4HKSsjainpdKK
+ y3vYihrj+ctyTp7fjdqeIryLeNMKsZMwgI25UMMPBIs9Rd0M1PJWC5jukV5fQPOCWlhpk215tLS
+ ACEfRe16DWjnw4xrY7AiMlKlJcrJ6P7kzZynkUSsHqp0JGDKufovNth2gnOn49QuQOQshmoYWaH
+ BfceM6svYq80renC6NWKxZvqBQNQw9A9ViJD3S1uCZQn34fMxJCTxQhJwLYl5QyOv0LsASp1Fah
+ kFnp616FIGDnJrOKQPWNDG06BNC81
+X-Google-Smtp-Source: AGHT+IHhZ4YnWZlN2q8OzeX9uAluqiCwHNLJ2+NplsGDE01jHtmduIZs/lOnJ764NMfmqntJCIg/nQ==
+X-Received: by 2002:a17:90b:43:b0:313:d7ec:b7b7 with SMTP id
+ 98e67ed59e1d1-3159f516c35mr11496129a91.13.1750562053773; 
+ Sat, 21 Jun 2025 20:14:13 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-237d86d77b4sm51509035ad.205.2025.06.21.20.12.38
+ 98e67ed59e1d1-3158a23e190sm7508644a91.13.2025.06.21.20.14.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 21 Jun 2025 20:12:38 -0700 (PDT)
-Message-ID: <fc91e38f-11e8-40e7-b3f3-4b33c401dfa5@linaro.org>
-Date: Sat, 21 Jun 2025 20:12:37 -0700
+ Sat, 21 Jun 2025 20:14:13 -0700 (PDT)
+Message-ID: <826c2ef3-affd-46bf-9e98-799682c2fdae@linaro.org>
+Date: Sat, 21 Jun 2025 20:14:11 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH RESEND 27/42] accel/split: Empty get_elapsed_ticks()
+Subject: Re: [RFC PATCH RESEND 28/42] accel/split: Empty cpu_thread_is_idle()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
+Cc: Alexander Graf <agraf@csgraf.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Julian Armistead <julian.armistead@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Mark Burton <mburton@qti.qualcomm.com>,
+ Thomas Huth <thuth@redhat.com>, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20250620172751.94231-1-philmd@linaro.org>
- <20250620172751.94231-28-philmd@linaro.org>
+ <20250620172751.94231-29-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250620172751.94231-28-philmd@linaro.org>
+In-Reply-To: <20250620172751.94231-29-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,36 +114,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 6/20/25 10:27, Philippe Mathieu-Daudé wrote:
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   accel/split/split-accel-ops.c | 7 -------
->   1 file changed, 7 deletions(-)
+>   accel/split/split-accel-ops.c | 6 ------
+>   1 file changed, 6 deletions(-)
+
+Why does this not defer to the current sub-accel?
+
+r~
+
 > 
 > diff --git a/accel/split/split-accel-ops.c b/accel/split/split-accel-ops.c
-> index d19b4641a2e..034b5ebc96c 100644
+> index 034b5ebc96c..e1d91ace2fa 100644
 > --- a/accel/split/split-accel-ops.c
 > +++ b/accel/split/split-accel-ops.c
-> @@ -255,11 +255,6 @@ static void split_handle_interrupt(CPUState *cpu, int mask)
+> @@ -166,11 +166,6 @@ static void split_kick_vcpu_thread(CPUState *cpu)
 >       }
 >   }
 >   
-> -static int64_t split_get_elapsed_ticks(void)
+> -static bool split_cpu_thread_is_idle(CPUState *cpu)
 > -{
 > -    g_assert_not_reached();
 > -}
 > -
->   static int split_update_guest_debug(CPUState *cpu)
+>   static void split_synchronize_post_reset(CPUState *cpu)
 >   {
->       g_assert_not_reached();
-> @@ -307,8 +302,6 @@ static void split_accel_ops_class_init(ObjectClass *oc, const void *data)
->       ops->handle_interrupt = split_handle_interrupt;
->       ops->get_vcpu_stats = split_get_vcpu_stats;
+>       SplitAccelState *sas = SPLIT_ACCEL(cpu->accel->accel);
+> @@ -291,7 +286,6 @@ static void split_accel_ops_class_init(ObjectClass *oc, const void *data)
+>       ops->cpu_reset_hold = split_cpu_reset_hold;
+>       ops->cpu_thread_routine = split_cpu_thread_routine;
+>       ops->kick_vcpu_thread = split_kick_vcpu_thread;
+> -    ops->cpu_thread_is_idle = split_cpu_thread_is_idle;
 >   
-> -    ops->get_elapsed_ticks = split_get_elapsed_ticks;
-> -
->       ops->update_guest_debug = split_update_guest_debug;
->       ops->insert_breakpoint = split_insert_breakpoint;
->       ops->remove_breakpoint = split_remove_breakpoint;
+>       ops->synchronize_post_reset = split_synchronize_post_reset;
+>       ops->synchronize_post_init = split_synchronize_post_init;
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-r~
 
