@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 994ADC71157
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 00:13:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 453EBC7115C
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 00:17:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uT8KW-0004nL-DR; Sat, 21 Jun 2025 20:13:04 -0400
+	id 1uT8Ob-0006ue-E7; Sat, 21 Jun 2025 20:17:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT8KR-0004mU-0w
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 20:13:02 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1uT8OW-0006tz-BZ
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 20:17:13 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT8KP-00015o-7E
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 20:12:58 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-31332cff2d5so2088230a91.1
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 17:12:56 -0700 (PDT)
+ id 1uT8OU-0001ck-PB
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 20:17:12 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-7490702fc7cso1384677b3a.1
+ for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 17:17:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750551175; x=1751155975; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750551429; x=1751156229; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=uqjVeEuyJkOet9IDIqrGC3I5TxTmuqJPg+2ced0I1G4=;
- b=S9+9tOI62P8+C7m023hHvoxrmLpJ8REY47WI5qQb79g6a4jm8qfOMvY9/u9GhjCu7B
- Im3Lkggfb5YzbOrluDAhWsAYUZnOus3rCjN8JmEhkPwdqXi7+dmczKFW0BSDBmJAH5QR
- t///MSbMXsQn5CYJP4xicWxl8D36mw1g0h+FF6v0JI2YoRSljDsAP46iHse+Qp7YfAyL
- eGc7A776eo+K0Q7HNP52imRPUJWCc9vBjm4sczSRWL348U+F7Vt1IuaY+rqmuCUxGlp1
- jCwp/KIu61Q7PPsQ8N86VtjGUvhHOiGDaQyF7YVsf9Mhy+gkQbQOU6leAlk1vIQz88y6
- HTLg==
+ bh=HE1HeDrI0VmYM4t2Ldfk6yqPqGFYnQaxHkxJMDv/BQE=;
+ b=PlSHKcveB1BCaDAECrk2Y9LBq1Al/qcgU8Me662pje7f7jlgutGM0n8CRqGN3h/LBL
+ Sl+CxcRtWOxtk8uvI3NaKGE31pt9Wc9LqWKtDN6Rme3tUZ7qRHJt5WCGUjZe82x/cnWw
+ HBnSoqO0Vya4/000bXrGvsCqMfrSFuQfoRl6pDn2xaAJcFx+06EWIfKsdpgNyR52aAGI
+ B/OxQDb2eYf7tt0Mm2x/LjYST0OjuHkkz1UJSqTh2+2Z24Eep7le6Wl+1cMBm+UHfmqI
+ 0FlRDSqzztroiS3D9SNu9jeWpK+XS2zE/4fTt2754+X76IEGx+ffTqu1UnhUi6s69uxs
+ JEUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750551175; x=1751155975;
+ d=1e100.net; s=20230601; t=1750551429; x=1751156229;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uqjVeEuyJkOet9IDIqrGC3I5TxTmuqJPg+2ced0I1G4=;
- b=h2X8FjtQC5XcWMxx95LzBbUcsi5g7pV6eLyqev7T8V3GXOtmN/5Cst4Qw1yBO2NakA
- 4NPba0zCgrlgFWPJaLjjOsWpOc6zecS3Gv9wnrdF8E/gjYN51gEqLEWsR0mQs4a6an5+
- QwwUyF8ijz7w/sEB2enma9wpRwA5uNQcc6pzRH9VQcCVo5/KqrcccoPDGXlB1vdy7Z5U
- tqkuT7+nmSxlkunHKSpxjffNKoNm0NRVziU6GRtmPly+AVtE3tWZPDaxkDuSwO09Ldh/
- CiIkgXcbr6ltiZdZnrnZrtdklYQWiuP346hwkaOdhKw08ifS/m061M10kB5cbGqIFQOY
- UzXw==
+ bh=HE1HeDrI0VmYM4t2Ldfk6yqPqGFYnQaxHkxJMDv/BQE=;
+ b=CpIvhthUnE3tzwKKYvyIa+Omj26IAeTxNoGO7hYPxvjFra5e1UoriUHR/PxTRzo6me
+ C91X+mpSB+18MR8DpiNCJ2TwpWFuVjPmmMbTEE9mzSH0DXccq66YGORIB+4jgNpYRUyB
+ P5A5BgGUZAI6YW+1OQlf8WqQ9TU3FGzHWWxlVUAAoCLLU+KSWJiRGFQWR07P9GRkw2cm
+ YFoa29f49EVscw5DGMZNR7UlRUskcfSyzGn7tw/2z/0qUFoo86UxVRXKEwFTWLc51rqT
+ Bo9ZlnMXTbv93Qcju3fVprvUUOWY0YtBX2WgbmScm7cvW83SqgdPzVMxWpSqUA0YyUsI
+ sX0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXp9ZflE7cTzJZXsVFpp0J5MO+RwMcxyGg85wdARBVzlDljRc/0Yo00Dz87PbpfNbUAKtP6zv8qvCV7@nongnu.org
-X-Gm-Message-State: AOJu0YwUUOF0oXFLQCgXafKinJrS12agTso0bV1multb8k1yIz8BDzAw
- k0eYVIssbvijutMFvWEKpvnFUZTk3LCnizIB0CQW2YhtlQxQhSZ50EImp+h7mkfyf94=
-X-Gm-Gg: ASbGncsecjyNsY89/VUsUdLdfYhtjOABM8ZRVIMOrRmfBfG1YlfQmTae6IGetlGCBYb
- U9ijE1jksEIRj3t633ZR/q3LYOw6bgnVM+YqrlTF2+uicC6PJK2/IlGjnM0F8EVo+MtP03qNITW
- mYLXe0gnHGDfu15yi2TWutZB/hBblh4DHgs+AU7Bf7VeBTJb9EgyA2riG52tMYrknFw89fkNEtC
- 5srswGC5muyKARW52z98krTSOo/NTLhaCesvRZ7qFywX70Yl2D+nftOzKaBaafefWr2VrY9gOz4
- p515b8fC6OCm5fp24EASHoKz5nBu0fDP4rOAXz70yExNsHfwu8uuvF4YJActyytidNArQpvLgpS
- sfjwwoYP0IyyAdJfvGuzmoNcGKBA8v8SPQdlWYew=
-X-Google-Smtp-Source: AGHT+IF5QPOYK/2PE3n+TQtjJUFmiCT+A+5zkLN96Bymb4e5SGBv7IsEms/SnEwwF9QGiTJnAxAtbg==
-X-Received: by 2002:a17:90b:4b42:b0:311:d670:a0e9 with SMTP id
- 98e67ed59e1d1-3159d8c603bmr10992850a91.21.1750551175485; 
- Sat, 21 Jun 2025 17:12:55 -0700 (PDT)
+ AJvYcCWm/Z+npGfRWbSEhDPDLfAsVQSBGpEhNYbuDg+mlUOTuk4XzjTqt4i61Xl21dXXegy6kF8Y7YVZCOaq@nongnu.org
+X-Gm-Message-State: AOJu0YwCpDZEKZvfe2iOKm8Qf0AkNcR1ZhSJvPDhzmWF5fxtD7W94r5I
+ uHQlnGCN84RNlJjd2cfdl1+1mebTBOnrTNkZX3Idju4i3de1gg4E1FAgwS5fTAFqLdU=
+X-Gm-Gg: ASbGnctAV50LUq770gQ+knkZTCjYTdBD1roM7Is2gOmmIaI4Fb/gvt1892k7iFvgk/x
+ uekUZBYqysBbH8vOtOLLilKVMfEm0zgDD6aKk9wnMu18eF1oLd5xltH5Qo3DinqA30LVVb/zAUu
+ Wv/L4QjNsOi6EWzWOdiQb1S3ysbK+dT4CWMHRY3FRj3ZAjQ8xAhi8rjwPll2ONANr9sG6HfCTaY
+ LDgdtqRI2sUawzneEO1MtPbMtjl3m6ftjU5CEKLjIwt/UvbXdsM5dO6bTsK9USI+eZPo+35CAUe
+ hmyWLR0XXI8uKPteTIBTN+NmvCa4EKaSufdPzX7LtulHk92uhi6dCEWj/TA87j46ibjA0aGB0uQ
+ Kha8XkRYeLJaq7CMmcDCiNLFrciTd
+X-Google-Smtp-Source: AGHT+IEIUYXVuagpnJo62Fkt0y1lM40mFH7i5WzJNe4x7dCDdnJoadPIO6V2rb0Qaug42Eh5jgb2xQ==
+X-Received: by 2002:a05:6a00:3cd4:b0:748:e38d:fecc with SMTP id
+ d2e1a72fcca58-7490d71c76amr8973009b3a.22.1750551428979; 
+ Sat, 21 Jun 2025 17:17:08 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3158a318749sm7148152a91.39.2025.06.21.17.12.55
+ d2e1a72fcca58-7490a621ceasm5186576b3a.97.2025.06.21.17.17.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 21 Jun 2025 17:12:55 -0700 (PDT)
-Message-ID: <09ac62fc-64a8-468e-8779-193b8bd51435@linaro.org>
-Date: Sat, 21 Jun 2025 17:12:53 -0700
+ Sat, 21 Jun 2025 17:17:08 -0700 (PDT)
+Message-ID: <67b76a0e-eb29-4f34-8b06-066bae4ac1a6@linaro.org>
+Date: Sat, 21 Jun 2025 17:17:07 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/26] accel/hvf: Trace VM memory mapping
+Subject: Re: [PATCH v2 09/26] target/arm: Correct KVM & HVF dtb_compatible
+ value
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20250620130709.31073-1-philmd@linaro.org>
- <20250620130709.31073-8-philmd@linaro.org>
+ <20250620130709.31073-10-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250620130709.31073-8-philmd@linaro.org>
+In-Reply-To: <20250620130709.31073-10-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,19 +106,24 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/20/25 06:06, Philippe Mathieu-Daudé wrote:
-> Trace memory mapped / unmapped in the guest.
+> Linux kernel knows how to parse "arm,armv8", not "arm,arm-v8".
 > 
+> See arch/arm64/boot/dts/foundation-v8.dts:
+> 
+>    https://github.com/torvalds/linux/commit/90556ca1ebdd
+> 
+> Fixes: 26861c7ce06 ("target-arm: Add minimal KVM AArch64 support")
+> Fixes: 585df85efea ("hvf: arm: Implement -cpu host")
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   meson.build               | 1 +
->   accel/hvf/trace.h         | 2 ++
->   accel/hvf/hvf-accel-ops.c | 6 ++++++
->   accel/hvf/trace-events    | 7 +++++++
->   4 files changed, 16 insertions(+)
->   create mode 100644 accel/hvf/trace.h
->   create mode 100644 accel/hvf/trace-events
+>   target/arm/hvf/hvf.c | 2 +-
+>   target/arm/kvm.c     | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
 
+Cc: qemu-stable@nongnu.org
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
+
 r~
+
 
