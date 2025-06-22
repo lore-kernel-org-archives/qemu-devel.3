@@ -4,93 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86963C7115C
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 01:35:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 539D7C71157
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 01:36:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uT9cM-0006hr-IB; Sat, 21 Jun 2025 21:35:34 -0400
+	id 1uT9cr-0006rn-MO; Sat, 21 Jun 2025 21:36:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT9cK-0006hf-Tl
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 21:35:32 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1uT9cp-0006rU-MN
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 21:36:03 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT9cI-00023l-SW
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 21:35:32 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-3141f9ce4d1so2722059a91.2
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 18:35:30 -0700 (PDT)
+ id 1uT9co-00025m-4P
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 21:36:03 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-311bd8ce7e4so2477114a91.3
+ for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 18:36:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750556129; x=1751160929; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750556161; x=1751160961; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oH+ldliLM/S8FU5G+2VWE91Ruc8AmpnIlzGpx/IndAY=;
- b=f60ORUnv09oWExDJAgXWOlITCCUI2ljF/T/UmcGX8S80zi1j8Kf4mTOdnVqKz4bkGA
- 3g/zX3m4k0PmTSq5xRIWl+6wG5EKbkvLfN6NnB2zJWlu/mAkHZw0Ade8IMrbPRfbhbxQ
- kIQo941ui/vylmbYZjJswPpfvLBMXyxKp3mARGw0zx2rJUA4gb0UkjizgSsdkt6fmKsT
- BQC+3NQQpTkkLgkKfkww9F9lKxFXqWybkZ7VhYk6xBQZ9y7nNlwbYVc1uYT//RskyodF
- bCn8MwtLXwElYu9ngus37ePEfqLK9EBrHUsiPgasbGMU/F0nwYIqCTRP0/1XxC/Umh40
- WjZw==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=SqHAVHRHxJPOQlXK7gvsaUya4nYW273nqXP/wa03Yvo=;
+ b=vNi6L9J+tDpse3nokWcRkVJ7ASShdLnVUVTwe0PYxetkHyJtNFgeR+eeqEQWLWVLl/
+ bTWT1RsMuanrl3M7PsKPpCyMP+HM5UJFEaeV1oVRMXactm7w5R1byaMBY7M+2u42O2Zo
+ 1XUGX6sBkeTBdJpjT6cjSVae83c3IcjtpkCpKpJIx7qBBYlp5LHbUh4oGGIvwLhEq29B
+ dZ2aIn1vuCN56wI1HL+FE9ylGCBsp9u0EWzyqrLWRDzrvr0M+sOGPpyIVyConEYU/C5/
+ Qu07nAPY4oWmWo5VVZ1NM8DG7EG056qKGTvZzMZ0OQvdsIX920b6ue4dmAO+vhYUr7I3
+ Ab+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750556129; x=1751160929;
+ d=1e100.net; s=20230601; t=1750556161; x=1751160961;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oH+ldliLM/S8FU5G+2VWE91Ruc8AmpnIlzGpx/IndAY=;
- b=KSuDu8u0SJosXcAE80DD49Fc0NMVsptms+rimFAwcCJIq0bcqgM39iEDiPWnQGJGLs
- uJ6YYKqA/RczgkQ2ZraQ++tvkQePXF/shrpSQLaeuLR2Bb+BK7B55o79QrdhyD9MaPZe
- Zn8cBmwm5WT6TzGQKCZywkvML7mfmaKRyiLi2hJZJityQN5WJh4u4zyXINq/v1s02MTZ
- 3A2td4i64AJ244Fr25pG1wFeLMEyqkGaGpHvO1NpSijkzg7AQBMPyXzyWE3+XkKIxCfI
- 7HwHdWaknBOMVk9p8WXMCPFbhqJ7sDLTWdtz357Ns2aqYDCx0TfMd9MVHEf95nJXvH5j
- zc4g==
+ bh=SqHAVHRHxJPOQlXK7gvsaUya4nYW273nqXP/wa03Yvo=;
+ b=AZrOX9su63nTWtnvTxXp50H4B79AZMY5SaCPUAJ0mz7BpJlBki4xrEfnct7TcwXlDQ
+ ci8Kh1wI2WQ8NwT4B4CC0aIXA2yT3AklJnS9ht3/Ajf08uCALYN6yXq/uhpmISDWhGs5
+ Ru6KBR07i5hZXmfVYsJ/2oyMm6S+iO3jdGieHC2u2mJBx6wrDVaFBU/s7GkD2NfKtYiF
+ rLu2qjQYwJ/GLDNsyTTJYxh6RQ28BsEefuhje2bZIQ6lnF+VsKPK/AUliseQjNDmRh+9
+ owTeFYe/NWT5znqwB1bRXrA29bIJwqvU+S9VONELe+/3bmhUP+XV74v6YJyfvEyNVkM0
+ O4pA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXf+yn3gYoYyKI8xtX89LgI02qZtqx+h5xlCdTX/lkma2ZyjB1Ynu5sfvWKoOHBwdqwvSCoroSIjDHu@nongnu.org
-X-Gm-Message-State: AOJu0YzbJkUYliZuVOIIAM/F9tEBycBb/8fSdVmNU6vw6cyav6nKS987
- DNcrzMK5Gc/hMmpqXfC+DSdQaIzlO7ad22ylPRqkQXN2otoWIOw65mldvBKjO5/laP8=
-X-Gm-Gg: ASbGncuvotztf8YLyT4EoMzxtM2mLHu80LnY6vlxoDQusMgRQu1gICjXUBhRWUobzXH
- BofijC4HTVK8t1/FRRxMvfCIX2afO+xCREamlooq4huy83i4NMV3IU1V869I3igTLqtN/BXSDdK
- beATOtcPNSRwlCiGH07SX9SjeW09p26SCwRCC0iRu0UZtv4R/d9nVX+SPgpDZzqikVDlZ2zWG/+
- uwNR4oKiH/+l8057Lc248zYbAiEau9muELy9lkzc6qglwhpiZBQogknWRbsDqdf17LdQDg+OhC1
- h6VSm9BLFRxY462XwJOzYJCHB3wbuoQhOD5sIIvxi6RDgZ3aWNXfG0Y/dUBe1D3+KenFt8ldVr+
- o9jdEupUkTrBrlt7vrYKVKBCzmhrz
-X-Google-Smtp-Source: AGHT+IHkzo0Fhcgd/b9X2ndv4KY8CCt50XkcxVBEXfckZC5mHGuYGXmRlLnjPj6g5Q6akh2Ooejpdg==
-X-Received: by 2002:a17:90b:2584:b0:311:ffe8:20e2 with SMTP id
- 98e67ed59e1d1-3159d6209e0mr11796192a91.4.1750556129125; 
- Sat, 21 Jun 2025 18:35:29 -0700 (PDT)
+ AJvYcCXgLWv4RFKfLBwrQ/iWqWXT1UTdBibKDoHDE/+9mW+ROQmFgzb6wc7mfl03sW1ShvYBJgruzDXDx5Km@nongnu.org
+X-Gm-Message-State: AOJu0YwgqkpNxgKhfQVr+sV+pSbg7DVrwkqxxhSJlIpP7BZIjBa0naTI
+ tSNIJw0Y6BAwsF5KsuOM+mALpGHZ9U9hnB28vNM7PrfW0gekYYUDVY3E7ROzLGdSltApkSF6kzt
+ RuEQ3Hs0=
+X-Gm-Gg: ASbGncs3datOPY9uzcXRPHbFfu6liA4lUmq+NQAUISjj9XC2jeSXQ9KTaC92T42KO1+
+ YrpRWoWTw4n6qvGXYy/bRQOeqbGVvNXjt9SqnxRB8R6I7q2Svy557SCSP7nKcBBA0hl0OddnxSK
+ M+H/Ijc0vOvmvcnPBpOrYDV1ul4YZmcbrV3TuiKybi28NjRb8pq9NSJ3OfN4vbnYCWopBrKKT+w
+ g1GinlYfQzf2EC67XpygBpDPvJ8jVDE4PZuvKYsjdh3Ww1h7CJ6GLMeoU0GaGEXKmFbGEi50Q0W
+ ySlTDJnEmslmwPd4ZnnROv3NHsbY2iAQiAJf6r3dRfAkJ7DOmHVIlSHNixEuWa9dtJaG4+qu7WX
+ 0Ai6nNQt0CJBW6Py+KXZHuyVnQYrd
+X-Google-Smtp-Source: AGHT+IF/1Fyn57arfIdtXmr9GAKlh+oojTlhHkx7Nl+gaXtvvQipmxkn3z5ysmP5WZqbyG52RvXSew==
+X-Received: by 2002:a17:90b:57e7:b0:311:ad7f:3281 with SMTP id
+ 98e67ed59e1d1-3159d64e39dmr15130367a91.12.1750556160636; 
+ Sat, 21 Jun 2025 18:36:00 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3159e0483cfsm4841084a91.28.2025.06.21.18.35.28
+ d9443c01a7336-237d83d0bedsm49808155ad.67.2025.06.21.18.36.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 21 Jun 2025 18:35:28 -0700 (PDT)
-Message-ID: <d3b975ac-c85a-449d-98e0-705313ac04c7@linaro.org>
-Date: Sat, 21 Jun 2025 18:35:27 -0700
+ Sat, 21 Jun 2025 18:36:00 -0700 (PDT)
+Message-ID: <c8675659-678b-44ad-b529-d7000bdfcc19@linaro.org>
+Date: Sat, 21 Jun 2025 18:35:58 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 20/48] cpus: Rename 'vcpu_dirty' field as negated
- 'hwaccel_synchronized'
+Subject: Re: [RFC PATCH v2 24/48] accel/kvm: Remove
+ kvm_cpu_synchronize_state() stub
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexander Graf <agraf@csgraf.de>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- Cameron Esfahani <dirty@apple.com>,
- Julian Armistead <julian.armistead@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 References: <20250620171342.92678-1-philmd@linaro.org>
- <20250620171342.92678-21-philmd@linaro.org>
+ <20250620171342.92678-25-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250620171342.92678-21-philmd@linaro.org>
+In-Reply-To: <20250620171342.92678-25-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,35 +107,33 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/20/25 10:13, Philippe Mathieu-Daudé wrote:
-> Try to better describe which side is dirty (QEMU process or
-> hardware accelerator) by renaming as @hwaccel_synchronized.
+> Since commit 57038a92bb0 ("cpus: extract out kvm-specific code
+> to accel/kvm") the kvm_cpu_synchronize_state() stub is not
+> necessary.
 > 
+> Fixes: e0715f6abce ("kvm: remove kvm specific functions from global includes")
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/hw/core/cpu.h |  4 ++--
->   accel/kvm/kvm-all.c   | 20 ++++++++++----------
->   target/mips/kvm.c     |  4 ++--
->   3 files changed, 14 insertions(+), 14 deletions(-)
+>   accel/stubs/kvm-stub.c | 4 ----
+>   1 file changed, 4 deletions(-)
 > 
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index 69ea425c458..d5f82609943 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -441,7 +441,7 @@ struct qemu_work_item;
->    * @opaque: User data.
->    * @mem_io_pc: Host Program Counter at which the memory was accessed.
->    * @accel: Pointer to accelerator specific state.
-> - * @vcpu_dirty: Hardware accelerator is not synchronized with QEMU state
-> + * @hwaccel_synchronized: Hardware accelerator is synchronized with QEMU state
+> diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
+> index b9b4427c919..68cd33ba973 100644
+> --- a/accel/stubs/kvm-stub.c
+> +++ b/accel/stubs/kvm-stub.c
+> @@ -29,10 +29,6 @@ void kvm_flush_coalesced_mmio_buffer(void)
+>   {
+>   }
+>   
+> -void kvm_cpu_synchronize_state(CPUState *cpu)
+> -{
+> -}
+> -
+>   bool kvm_has_sync_mmu(void)
+>   {
+>       return false;
 
-Is this change really helpful?  It isn't to me...
-
-If you want to change anything, this could be a tri-state enum:
-
-   - qemu state is current
-   - hwaccel state is current
-   - qemu+hwaccel are synced
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
