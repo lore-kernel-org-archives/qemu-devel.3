@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3DA9C71157
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 03:20:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0FF4C7115A
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 03:27:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTBG7-0004qc-Fj; Sat, 21 Jun 2025 23:20:43 -0400
+	id 1uTBMY-0005tH-7S; Sat, 21 Jun 2025 23:27:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTBG5-0004qE-KB
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 23:20:41 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1uTBMW-0005so-Av
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 23:27:20 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTBG3-0006PW-Vx
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 23:20:41 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2352400344aso31270505ad.2
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 20:20:39 -0700 (PDT)
+ id 1uTBMU-0006wE-FO
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 23:27:20 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-739b3fe7ce8so2138280b3a.0
+ for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 20:27:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750562438; x=1751167238; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750562836; x=1751167636; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=R3mbxnJiXCoiociAsXeyCnH+9nL+9UnVQduFnfCwU6Q=;
- b=b/5hddwNpJenEBboYDF0KZh4kD8AxPQA9SQf+yl0ha1Ubtfz/GmrhctWOS5qC4aL4O
- iMTZlUAbNNkNNNOGR8DnNPc7LIhHZ7u0la/nFhgywq90vPaKpWUW1GsUJWrz6/p/3Uk9
- o1Vpiz8HHzPBdJgG+904mIR6bxhGWvunu/1nruUcBi8KH/ZguqYjYllMqiITXFGTVGD+
- auoQMnc47X/ZBpPklRijP/1eIY3Rb/A53grE5XHKIIkRUBhiQhh0Ao+ejCMS3gbjYIg6
- lumhCEzT9PDC2zxbc9nyZASV6p7hZPG8OwSjEc8rtymUgeq5XdQ/Ghn2Q9gJcRY/GOh1
- RNKw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=goN4rsH8eHiM6YY22SlvRQE/BaTzvPhgMQg5iJHTcy0=;
+ b=DYYsHlmY6SbLvU/p7UtBmhWBT1VDw4it3x+zEzsg9HY4Kr3grLy5XUjdYHCzPB3dao
+ XdO1+KIogiA9g93KaZVgP1xYpCWr3I3U24/+NWgaTjXZAjMpi6zwXpxz6BNzu9ibuink
+ UT57H22+xq3ipdFKSIVR14UN3v4UNXUfZm/5P3+24n0s2YgO5+iPfK9Z83EBZzvX7YlQ
+ 0VY/BqHCVPwqWVMCEIdvuo7I2xdicH/CH+i6dk3oS2sQurP++Hz68tBvhzUJD3hUl2J8
+ oP2E+za272aVlJyyjxj0cRWWWZBsiMGJ/N8+VZgVLlhbXfhHmaOHymqlcOw1kmAjJl9y
+ aEWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750562438; x=1751167238;
+ d=1e100.net; s=20230601; t=1750562836; x=1751167636;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=R3mbxnJiXCoiociAsXeyCnH+9nL+9UnVQduFnfCwU6Q=;
- b=TYZ7YbZ213Fc1CgJwqGTr7ZOIztoyHbagXG8R16yFlqGWuy5U27+6NyHMkXgnsJHtg
- DCAyAqvXYEug7WkmMYKr2RVBVtcIoI5Gkrdgo4Yzd1RD65jxuq+3+63Y8j9/V0oh3fZw
- vXeL57oE5POl9lJd5HinN4CFceqWovCkXmUfjSY5WSjc+DyYVeRNeCXyrOLuwA/pJnD6
- Hjl3EHpWFWY8NZOE8nrPp9jSeMlDp98miGO4gRNI5sTRuOroNH2Yeh2aCoiVUKKXekrS
- x97M8VXoVxS/aLiFLs8t9GNTYQZ/hBq2d7gaegwQVYTWf1Fd8GTRy6arDicSV/oZHYiy
- HpVw==
+ bh=goN4rsH8eHiM6YY22SlvRQE/BaTzvPhgMQg5iJHTcy0=;
+ b=rq/lYBQ29BuvoK/cQWbD6/UXeoW7s2yvXZB8icUir9V2v5BBi91U5VyUCWBMi1zQRI
+ JXKbQfurejZeEqT68sXHG3UTlFXZoQlPC4zuvfKiHiVrm9XrUq1HIy79Hsa3crdj2qfa
+ s8inVd3a8ESMwviFU1FR7RxVRlIfuHqeq9EIroLaf19ZFBwiZHq0OhcbpyIFKEVQJCA1
+ iuj2zxtPO7P3CDv/P5yqL7G3of36m6GD1TlfsGbkyizJx3zwc93N2H5lNzk5RG9HgcVV
+ 83PQ3352YW4wIEem2Coiel8AUnA+Gwuix1eideuJwoaah589A4DWyt0ahMMikQj5WYTq
+ 47Ag==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX5T81qSEL1cJlC0bR8FCAuQY9o52VZgDDzSiS3XxqtvxOU+n+7VndQE/O8Y/UPuCGDop11ppC0bQ9O@nongnu.org
-X-Gm-Message-State: AOJu0YxcdxKGwT5YMJ9VZJka6wZ7WDBfliDic/TZGv9YTdH4N2SdIaRp
- O2nnPhlqXQf6si7ZiwivzIBLaka5RqSdCPjII8kxL6LqCrFrQD+wTR875Xlg8iEN/UxzbbGmaOH
- kzltuMFk=
-X-Gm-Gg: ASbGnculjUtCNHWDL8Ths3zs30iQ5rIzqbYPpOJ//SVaxlahYcgtrsakNgvL8q1yt2g
- Ih2Vn6aTgYzqJ++pZS6cfSuwzIDwGKK89I+4iqu4aj1XJljqGXs+54zmnFWZ5oBmGn24uJjYOsi
- HQzjJkTDm2+Rstey9B/BvEJ56ThaBHMu77RWnwLACg4L4hoTOOpD27k3x1TReJW7NYKTjqVcpe5
- tKs8ItUBZ2ZlLsYLC6+GKh9zcVI00eajM4nj0M8xAy3UO//CElrd8PSY7gkTp6Aemx5M3A6ZJpZ
- JPdCIdBZaVyrXOz6XVHQKy41vHR2TKC3LW/S6CyA49mUMIepU7lOaZMPLdEL+Rfm6jH8KpYem81
- 0g7HB2ei2hPuPxFsifYfso7TTsf8y
-X-Google-Smtp-Source: AGHT+IHf9T2nfiWvEY/54e0nzedi1KG4ouXPkTHTqBrguKikBFybc4F/l3svrYXtxZoHFXPvw9dlUg==
-X-Received: by 2002:a17:902:d541:b0:235:f3e6:4680 with SMTP id
- d9443c01a7336-237d989699dmr120202935ad.21.1750562438436; 
- Sat, 21 Jun 2025 20:20:38 -0700 (PDT)
+ AJvYcCUfXfEsuuyRXeUFhrYuvwJhJOsmYygkBNeqLF+auvf0+viNVCwY2et9pupFS6YnsXIzPjW2P+QVK2eB@nongnu.org
+X-Gm-Message-State: AOJu0YyO4IbHJSmX+rlUldJuHsXDQQzbHtK/T+HAe09zMyi6UtyVfyaG
+ 5ZrR+pgRUdBDXoYjXfLQFN9QLkEc0KkCTwF8W0VlBcGNz+XPnbcoMHHeCetbVxHdHfw=
+X-Gm-Gg: ASbGncvBV5EBwzBDJjei1n92gT6Bx4V89LJExjkF128Tvp2um2HDoq6DD10VeNma7A5
+ HxMNGRhyjid3u8Zmt/Qrj5iajDgiGcgAxAAeCYX4LM19jikpiZ9sfNjlZbXRGMbW7MXCwauB3ia
+ Josw9+09mfsOGdP4Ev/zH+WBHsuIsOlafqV5HM63Ri8n4JvikN2qToYkvWMV7LuQ+B5GB/TJZWl
+ O69Q6I0XoZStTHJGqjA3WqhwVT3oYJfi3yRLBqzBAx76TAosp4yEKyiaVg8F58I4vb9kZczgdFA
+ AHeaq/uQ38NfpKiL41XNVgcTDUpXt+rfcGAkfIX3PXMOf3ejqNl49/VXLPb8fcxKgCMjwruHJrR
+ zmA3KE/wAM3R7/qjhBnPTJgYGdFtx
+X-Google-Smtp-Source: AGHT+IGSNt93t4vpnW+SKOShDriDquOrfjP5u0ZwsQyN2hYhtid3fDN17w7MgsEPrh6S/p9vWy6mnw==
+X-Received: by 2002:a05:6a00:b45:b0:740:9d7c:aeb9 with SMTP id
+ d2e1a72fcca58-7490db42aa9mr11831678b3a.21.1750562836335; 
+ Sat, 21 Jun 2025 20:27:16 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-237d86d5efasm52488105ad.208.2025.06.21.20.20.37
+ d2e1a72fcca58-7490a62763fsm5251003b3a.98.2025.06.21.20.27.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 21 Jun 2025 20:20:38 -0700 (PDT)
-Message-ID: <b0ae7077-720a-4943-9c76-42614cccd2dc@linaro.org>
-Date: Sat, 21 Jun 2025 20:20:36 -0700
+ Sat, 21 Jun 2025 20:27:16 -0700 (PDT)
+Message-ID: <eb0c300d-5103-4f66-87d7-e3a11e6d22a7@linaro.org>
+Date: Sat, 21 Jun 2025 20:27:14 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH RESEND 35/42] target/arm: Emulate EL2 under TCG
+Subject: Re: [RFC PATCH RESEND 36/42] target/arm: Have ERET switch to hw accel
+ for EL0/EL1
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
+Cc: Alexander Graf <agraf@csgraf.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Julian Armistead <julian.armistead@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Mark Burton <mburton@qti.qualcomm.com>,
+ Thomas Huth <thuth@redhat.com>, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20250620172751.94231-1-philmd@linaro.org>
- <20250620172751.94231-36-philmd@linaro.org>
+ <20250620172751.94231-37-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250620172751.94231-36-philmd@linaro.org>
+In-Reply-To: <20250620172751.94231-37-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,47 +113,48 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/20/25 10:27, Philippe Mathieu-Daudé wrote:
-> When using hardware acceleration and TCG is available,
-> expose EL2 and EL3 features as available (they will be
-> emulated).
+> When hardware accelerator available, use it to
+> directly run EL0 and EL1.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/arm/cpu64.c | 7 +++++--
->   1 file changed, 5 insertions(+), 2 deletions(-)
+>   target/arm/tcg/helper-a64.c | 9 +++++++++
+>   1 file changed, 9 insertions(+)
 > 
-> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-> index 200da1c489b..b5c2796f3a1 100644
-> --- a/target/arm/cpu64.c
-> +++ b/target/arm/cpu64.c
-> @@ -738,20 +738,23 @@ static void aarch64_a53_initfn(Object *obj)
+> diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+> index 4f618ae390e..5962cff4e7a 100644
+> --- a/target/arm/tcg/helper-a64.c
+> +++ b/target/arm/tcg/helper-a64.c
+> @@ -29,6 +29,7 @@
+>   #include "internals.h"
+>   #include "qemu/crc32c.h"
+>   #include "exec/cpu-common.h"
+> +#include "system/hw_accel.h"
+>   #include "accel/tcg/cpu-ldst.h"
+>   #include "accel/tcg/helper-retaddr.h"
+>   #include "accel/tcg/probe.h"
+> @@ -761,6 +762,14 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
+>       arm_call_el_change_hook(cpu);
+>       bql_unlock();
 >   
->   static void aarch64_host_initfn(Object *obj)
->   {
-> -#if defined(CONFIG_KVM)
->       ARMCPU *cpu = ARM_CPU(obj);
-> +#if defined(CONFIG_KVM)
->       kvm_arm_set_cpu_features_from_host(cpu);
->       if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
->           aarch64_add_sve_properties(obj);
->           aarch64_add_pauth_properties(obj);
->       }
->   #elif defined(CONFIG_HVF)
-> -    ARMCPU *cpu = ARM_CPU(obj);
->       hvf_arm_set_cpu_features_from_host(cpu);
->       aarch64_add_pauth_properties(obj);
->   #else
->       g_assert_not_reached();
->   #endif
-> +    if (tcg_enabled()) {
-> +        set_feature(&cpu->env, ARM_FEATURE_EL2);
-> +        set_feature(&cpu->env, ARM_FEATURE_EL3);
-> +    }
->   }
->   
->   static void aarch64_max_initfn(Object *obj)
+> +    if (new_el < 2 && hwaccel_enabled()) {
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Because you're raising EXCP_HWACCEL, I really think this should be
+
+   if (split_enabled() && arm_cpu_can_accelerate(cs))
+
 
 r~
+
+> +        CPUState *cs = env_cpu(env);
+> +
+> +        cs->exception_index = EXCP_HWACCEL;
+> +        cs->exit_request = 1;
+> +        cpu_loop_exit(cs);
+> +        /* never returns */
+> +    }
+>       return;
+>   
+>   illegal_return:
+
 
