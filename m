@@ -4,56 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92133C7115C
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 13:00:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E1B9C7115A
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 13:00:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTKIs-0005a5-W8; Sun, 22 Jun 2025 09:00:11 -0400
+	id 1uTKIp-0005UW-1T; Sun, 22 Jun 2025 09:00:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <damien@zamaudio.com>)
- id 1uTJum-0002WE-6G
- for qemu-devel@nongnu.org; Sun, 22 Jun 2025 08:35:17 -0400
-Received: from mail-0201.mail-europe.com ([51.77.79.158])
+ (Exim 4.90_1) (envelope-from <mclark@anarch128.org>)
+ id 1uTDZ2-0007Hy-DO
+ for qemu-devel@nongnu.org; Sun, 22 Jun 2025 01:48:35 -0400
+Received: from anarch128.org ([2001:4801:7825:104:be76:4eff:fe10:52ae])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <damien@zamaudio.com>)
- id 1uTJuh-0007nq-W5
- for qemu-devel@nongnu.org; Sun, 22 Jun 2025 08:35:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zamaudio.com;
- s=protonmail; t=1750595705; x=1750854905;
- bh=v80er9m3aqYundIhzd3eulAhE74whECdgdz/q2Kqci0=;
- h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
- Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=ZimmrM2lkwMyWFzYyjjVGbfOh55gUTTTlBEfjvZMHIloTA0+hQuod+upz79bRNF0A
- 2l62N4VuBTrOAj2Zj+ELRbpwkZfnFZMGG+f8mg8cPwS/9iZGcJ6G72HbcLtmMvHH7t
- wQJfzmF9mmmoKtV/OpX4fbjnz66si50BvpWJMtbCxpoKD3oj3aFTEK1PlCU9HzrhzG
- kk/KLuXlBlO1E241NsezeSXueJKFORV1LotG2yPQec6LH8KysoRukxMvvOyAtiOt2O
- ygDIB0r0fauQ76GXCruXZSVhNLtPXfNQTgPw88jxx4ZYdu8V407bpiJGWSWiMKRare
- dhYHzkxfa85GQ==
-Date: Sun, 22 Jun 2025 12:35:02 +0000
-To: "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org
-From: Damien Zammit <damien@zamaudio.com>
-Subject: [PATCH] hw/i386/pc_piix.c: Add IRQs 14,15 as MADT overrides
-Message-ID: <20250622123401.211412-1-damien@zamaudio.com>
-Feedback-ID: 43209410:user:proton
-X-Pm-Message-ID: b7effeb76110a7e125a0014000b4ad66d6e2ea75
+ (Exim 4.90_1) (envelope-from <mclark@anarch128.org>)
+ id 1uTDZ0-00081I-Db
+ for qemu-devel@nongnu.org; Sun, 22 Jun 2025 01:48:24 -0400
+Received: from [192.168.1.4] (dynamic-cpe-pool.orcon.net.nz [121.99.116.25]
+ (may be forged)) (authenticated bits=0)
+ by anarch128.org (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTPSA id
+ 55M5m7Qm3751675
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
+ Sun, 22 Jun 2025 05:48:10 GMT
+Authentication-Results: anarch128.org; auth=pass;
+ dkim=pass (2048-bit rsa key sha256) header.d=anarch128.org
+ header.i=@anarch128.org header.b=c1luRnUR header.a=rsa-sha256 header.s=100003;
+ x-return-mx=pass header.domain=anarch128.org policy.is_org=yes (MX Records
+ found: mail.anarch128.org); 
+ x-return-mx=pass smtp.domain=anarch128.org policy.is_org=yes (MX Records
+ found: mail.anarch128.org)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=anarch128.org;
+ s=100003; t=1750571291;
+ bh=75qRPSqE0IRcLzXvjNkPrHwZqT53Z7bcQBGrgxOuTJc=;
+ h=Date:To:From:Subject:From;
+ b=c1luRnURAuA7+dUcRKo64gI016PL389DdlBzwUfiQOt4ABffglywwMt+c2VyRwVuF
+ 45oleLs+cA2ky2/ARX34AI9I+VkOzQOWzMngFSHk8Hw0UR7oLhYK1+BvB0Q/pva6ln
+ tawnUQ2pdBFTrgaICWwqUwICXigx63ESWuA+jXKBYHUCRekoCtCNA3hFY966o8CGNb
+ xtDBCiifRonPxto8KVphEHZCGv4Fye/dlXBoaSvH8cUAeQlqW+X5XkUrvv+Zy8zewr
+ E514MVtjJ7BRMoAfK4OFdaI32CqQSjskJ02vHfzSUVcQBy/37X3aq+sJkBmi4Kmazv
+ ly+4JVnrlV1zw==
+Message-ID: <ab97be8b-70b4-441c-ad1e-148327f10afb@anarch128.org>
+Date: Sun, 22 Jun 2025 17:48:01 +1200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=51.77.79.158; envelope-from=damien@zamaudio.com;
- helo=mail-0201.mail-europe.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: qemu-devel <qemu-devel@nongnu.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+From: Michael Clark <mclark@anarch128.org>
+Subject: page coloring and accelerated shadow paging
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4801:7825:104:be76:4eff:fe10:52ae;
+ envelope-from=mclark@anarch128.org; helo=anarch128.org
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 22 Jun 2025 08:59:50 -0400
+X-Mailman-Approved-At: Sun, 22 Jun 2025 08:59:45 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,35 +80,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When PIIX3 IDE is used, these two interrupts are
-active-low level-triggered but are not set as MADT overrides.
-Since the default for legacy interrupts is on rising edge,
-these two extra MADT isa irq overrides are needed.
+Hi QEMU Folks,
 
-Signed-off-by: Damien Zammit <damien@zamaudio.com>
----
- hw/i386/pc_piix.c | 5 +++++
- 1 file changed, 5 insertions(+)
+# background
 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index ea7572e783..7320563890 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -181,6 +181,11 @@ static void pc_init1(MachineState *machine, const char=
- *pci_type)
-         }
-     }
-=20
-+    /* Add IRQ 14,15 to MADT overrides for PIIX3 IDE */
-+    if (pcmc->pci_enabled) {
-+        x86ms->pci_irq_mask |=3D (1<<14) | (1<<15);
-+    }
-+
-     pc_machine_init_sgx_epc(pcms);
-     x86_cpus_init(x86ms, pcmc->default_cpu_version);
-=20
---=20
-2.30.2
+I'm sending this out here because if I was a QEMU developer I'd like
+to read about this, as it is informed by working on QEMU and other
+simulators and emulators. this work is by-no-means complete. in fact,
+it is just the beginning, but there is enough present for feedback.
+in particular an early revision of the virtual memory system design.
 
+# overview
 
+a new system that is not yet in a simulator but documents some
+interesting concepts such as canonicalized 'translation addresses'
+possessing address space prefixes to ease meta-circular emulation of
+physical and virtual memory. the core is designed to make shadow-paging
+efficient as a foreign page table architecture, but there are
+extended 'features' that would need to be in hardware to be fast.
+the intention is that the address space prefixes are in registers to
+address the "address space narrowing problem". there is also an
+intention to add an as yet undefined MIPS-inspired TLB miss handler,
+so that the page walker logic can be in software. this is to to make
+adding support for foreign page table formats much easier. and when
+translated to native code most of it will be cache miss latency anyway.
+
+btw this started as a sketch in a gist in June 20th of last year:
+
+https://gist.github.com/michaeljclark/8f9b81e5e40488035dc252c9da3ecc2e
+
+# the glyph architecture
+
+current: https://metaparadigm.com/~mclark/glyph.pdf
+latest: https://metaparadigm.com/~mclark/glyph-20250622.pdf
+
+a clean-slate, portable virtual machine designed for efficient binary
+translation to X86 system mode targeting features like SMAP, SMEP,
+APIC, TSC, and PCI-style message signaled interrupts, with a system
+model that favors simplicity e.g., only supervisor/user modes and no
+interrupt delegation. the fundamental architectural design elements,
+such as the variable length instruction packet format and split
+instruction and constant streams are in place, the 16-bit compressed
+opcodes are fully specified, and there is now the beginnings of a
+system or protected mode. yet there is still a lot of work for it to
+virtualize a target like X86+AVX-512 with address translation.
+
+## address translation
+
+adopts a page table format desgined for shadow paging on X86. the page
+translation system has a physical address permission check feature and
+adds PTE.T (translate bit) for optional hardware zoning of translation
+pages. in addition to virtual memory, the translation system performs
+optional per-page physical permission checks, and physical self-mapping
+validation with zoning for PTE pages that have the PTE.T bit set.
+
+the architecture introduces the concept of a translation address which
+are addresses boxed with an address space prefix (AS) designed to
+provide a canonical address form for user and supervisor virtual
+addresses as well as physical addresses, to make it easier to implement
+meta-circular emulation for nested page translation with translation
+agnostic source and destination address spaces.
+
+## capabilities checks
+
+adds overlay permissions for page table colors 'colorperms' which cause
+faults during address translation. also 'colorcaps' and 'colormatrix'
+add capability checks at execute time and are not part of page table
+translation. colorcaps is used to control use of system instructions
+based on page color. colormatrix is used to control source and target
+page capabilities for loads, stores, and branches. goal: allow load,
+store, and branch permission restrictions via source and destination
+page color pair forwarding. requires the micro-architecture to track
+source:target page colors for branch retirement permission checks.
+
+## toolchain and debug strategy
+
+developing three simulators (Python, C, Go) for cross-validation, with
+plans for a Python assembler mainly to avoid binutils during early
+bring-up. the assembler and linker need to support capabilities with
+graph coloring to augment section permissions with section colors.
+operating system kernels and runtime loaders will also need support.
+
+Regards,
+Michael.
 
