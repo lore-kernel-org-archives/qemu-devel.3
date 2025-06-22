@@ -4,98 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40FABC7115A
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 03:36:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB35AC7115A
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 08:57:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTBVO-0000W6-4R; Sat, 21 Jun 2025 23:36:30 -0400
+	id 1uTGVI-0005vp-TX; Sun, 22 Jun 2025 04:56:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTBVL-0000Vh-Tz
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 23:36:28 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTBVK-0000YK-Hi
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 23:36:27 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-74931666cbcso304803b3a.0
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 20:36:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750563385; x=1751168185; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rJIlL8Mtrx5FhbRhRVVMaqxeE24s5msq06JFBkTg5Oc=;
- b=YqLOmYYLP+dxbrH4cZfJVm6lZLLSJbNZv6haBBwbKLzsoouAx4KjH5SpOsfeXU/Fgl
- wnKaJefsKoqKO57jfitoRtm2bxr18VYz/Iby7uviAex0CXKFdS64A55pig+bOKBuDdss
- N6CBzKNzeGLMjpwdYald8KKut6YcU4uYPmdcqXFvEhlOlKfoy6qb0uETQLO1T7BBUsHx
- ftR84ccheSydEdO4DgOqnylgjodkhrsVLkXHjj3HrVBgyQoXwuuiNnwZEmEc+SPVf88u
- YRBIZ9dr0DRHdkUrQ3swqw0u1g1VXMq2dbO7Bb+ySQPT1Nxac0P+/9AKqmERONbIKH4F
- 4yNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750563385; x=1751168185;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rJIlL8Mtrx5FhbRhRVVMaqxeE24s5msq06JFBkTg5Oc=;
- b=xKj3KCUmmyYLh/DsPK2nxOvma+C8m36Hu207v/8U8Ss08RYYlh/Brk751ie7xiZrZv
- tqbSqbaGI2bV+29v0K/V2ZxvFqH8ZYH+BsYLobEaIwStMS9s5bRVym6XWVZo4/eIDHAJ
- ABFF5lR6XYZrFnLFQv3qkB6I1F3TVgtq1GqoJHc0ISQBgIC+ou7LAvayxk0hb/eFUTVL
- ZtSZh1IiEkp8yaGMNCiR1Mu7CHh7Ovybdw1lxUXu4KvN3hYhhwWR/xyRpvUJ34J9AHHr
- rNsalTxOSYo3gb6Ee761ABi8+fX5DTGDcIr4QIEHyQNsUmt8+MR3wOH2zhhxhqtojjFL
- 7JmA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCViWQviFxOzDu0daudscPHNMzRXApbFoI2DV+SQKp3qThGIlKf7tFBKDnuo78REmhg7JL8C3vlj7qpp@nongnu.org
-X-Gm-Message-State: AOJu0YzdubOy5QEAIVmDWc+nIsl3XI4H5qAp9J2YSbseqG1YD9v72BP5
- naTL0NVmBTQFWwNouOAxRLvmYQeY3K2EnEDBls6IkOgYSTyy71o9+xwEm3vgwk59AgM=
-X-Gm-Gg: ASbGnctpRXWlFrH3H7t+OqU24w+UmFQtXheVlvVa5tlrxVpJ3/WuXqECxQOaooLRHYr
- kWnUzYZY495u+BRfYWCVOGie9eeOGGlHUJOHmqfMUCOliIUYW3Be4fFrr+JF1czwvk4jPVxA82i
- DYuplUYJqeg3XsejB6WeditzU68FVIisULiXFs9NLZp+HsKh2ZqurENQITF+4Y/W8mq3XN0gaAh
- k25Td5+Ny2Q3iBwTfC2LgS6XWZbJpqKTAUYNULdTaqUgmVF8QuQWOmoRcJoutzVAFnhWpDd8Ydm
- U9kpSjI1uuwwtFAbUR4JgjESgDR36Lv3TYDW0nFdRpbZmUKgDew4jq9mMRxj1Bxfybd3X8H+/PT
- gEvuLyogyyB5bvT9QZ+gsTeLxCKfd
-X-Google-Smtp-Source: AGHT+IEbBfvG7UGU1HZDhaKB1u0hpDyBJ46AJ5uvOkw9/6PC/L+PpiO5mfAVu6+Ps877OdbuiM/LTQ==
-X-Received: by 2002:a05:6a00:1817:b0:748:34a4:ab13 with SMTP id
- d2e1a72fcca58-7490d4b89e5mr12613017b3a.6.1750563384991; 
- Sat, 21 Jun 2025 20:36:24 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-67-243.tukw.qwest.net. [174.21.67.243])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7490a4a2eb0sm5393398b3a.65.2025.06.21.20.36.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 21 Jun 2025 20:36:24 -0700 (PDT)
-Message-ID: <aa5b2ed6-16fe-459d-bab3-9d9a5855a729@linaro.org>
-Date: Sat, 21 Jun 2025 20:36:22 -0700
+ (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
+ id 1uTGVH-0005vR-0P
+ for qemu-devel@nongnu.org; Sun, 22 Jun 2025 04:56:43 -0400
+Received: from out-189.mta1.migadu.com ([2001:41d0:203:375::bd])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
+ id 1uTGVD-0007ok-As
+ for qemu-devel@nongnu.org; Sun, 22 Jun 2025 04:56:42 -0400
+Message-ID: <816aeea6-34c3-461c-b596-f8701a9d1557@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1750582594;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=I5+wsnavqjrNt65TA2neNKeG2mkyqrA9F4stbFQXeNQ=;
+ b=ppO4HumKtmF+/3pfesOhkTQhbwGUzUx5gXbHFKbXMXbHkiz8goZwK0YkYfTLw49jCNheaN
+ HWErfSsDYuADtvoNzfpea50bWaXF3gTbnCmPCaKuRq7uFUtVskbGXi/8Rm0AlDnvKOQUIN
+ E2G/2VHLPIWkLNGD+KXv0MmbWAanUqo=
+Date: Sun, 22 Jun 2025 16:56:27 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH RESEND 41/42] tests/functional: Add split_available()
- helper
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Alexander Graf <agraf@csgraf.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Julian Armistead <julian.armistead@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Mark Burton <mburton@qti.qualcomm.com>,
- Thomas Huth <thuth@redhat.com>, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250620172751.94231-1-philmd@linaro.org>
- <20250620172751.94231-42-philmd@linaro.org>
+Subject: Re: [PATCH] hvf: arm: Emulate ICC_RPR_EL1 accesses properly
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Zenghui Yu <zenghui.yu@linux.dev>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, agraf@csgraf.de
+References: <20250315132030.95209-1-zenghui.yu@linux.dev>
+ <CAFEAcA9YUmXA=bA4FERwqSEP86RFUhUKUcLvVVSV64p_QJKnbA@mail.gmail.com>
+ <d9c8d200-4453-48d7-b14a-8e15a7cf6602@linux.dev>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250620172751.94231-42-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+In-Reply-To: <d9c8d200-4453-48d7-b14a-8e15a7cf6602@linux.dev>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=2001:41d0:203:375::bd;
+ envelope-from=zenghui.yu@linux.dev; helo=out-189.mta1.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,12 +70,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/20/25 10:27, Philippe Mathieu-Daudé wrote:
-> +    return 'split' in list_accel(qemu_bin) \
-> +           and tcg_available(qemu_bin) \
-> +           and hvf_available(qemu_bin)
+Hi Peter,
 
-Do you really need 3 checks?  Kconfig gates on this already.
+Sorry for the long delay..
 
-r~
+On 2025/3/21 00:55, Zenghui Yu wrote:
+> On 2025/3/19 00:56, Peter Maydell wrote:
+> >
+> > ICC_RPR_EL1 is a read-only register.
+> 
+> Yup! Writes to it should result in an UNDEFINED exception. I completely
+> missed that point..
+> 
+> > But hvf_sysreg_read_cp()
+> > and hvf_sysreg_write_cp() do not check the .access field of the
+> > ARMCPRegInfo to ensure that they forbid writes to registers that
+> > are marked with a .access field that says they're read-only
+> > (and ditto reads to write-only registers). So either we should
+> > not list ICC_RPR_EL1 in this list in hvf_sysreg_write(), or
+> > else we should add the .access checks to hvf_sysreg_read_cp()
+> > and hvf_sysreg_write_cp().
+> >
+> > I would favour the second of those two options, because it's
+> > more robust and means we only need to care about the access
+> > permissions of a register in one place. Plus we already get
+> > this wrong for some registers: for instance ICC_SGI1R_EL1
+> > is write-only but we will permit the guest to read it.
+> >
+> > So I suggest a 2-patch series:
+> >  * patch 1: add the checks on .access to hvf_sysreg_read_cp()
+> >    and hvf_sysreg_write_cp(): they need to call
+> >    cp_access_ok() to check this
+> 
+> Thanks for your detailed suggestion Peter! I come up with something like
+> 
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index 650b7f4256..a7ca7975e0 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -1264,6 +1264,9 @@ static bool hvf_sysreg_read_cp(CPUState *cpu, uint32_t reg, uint64_t *val)
+> 
+>      ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_reg2cp_reg(reg));
+>      if (ri) {
+> +        if (!cp_access_ok(arm_current_el(env), ri, true)) {
+
+I wonder if arm_current_el() can be used at it to determine the current
+exception EL.
+
+|static inline int arm_current_el(CPUARMState *env)
+|{
+|    // ...
+|
+|    if (is_a64(env)) {
+|        return extract32(env->pstate, 2, 2);
+|    }
+
+I failed to find where env->pstate gets updated on vcpu exit. Please fix
+me up if I've missed any obvious points.
+
+> +            return false;
+> +        }
+>          if (ri->accessfn) {
+>              if (ri->accessfn(env, ri, true) != CP_ACCESS_OK) {
+>                  return false;
+> @@ -1545,6 +1548,9 @@ static bool hvf_sysreg_write_cp(CPUState *cpu, uint32_t reg, uint64_t val)
+>      ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_reg2cp_reg(reg));
+> 
+>      if (ri) {
+> +        if (!cp_access_ok(arm_current_el(env), ri, false)) {
+> +            return false;
+> +        }
+>          if (ri->accessfn) {
+>              if (ri->accessfn(env, ri, false) != CP_ACCESS_OK) {
+>                  return false;
+
+Thanks,
+Zenghui
 
