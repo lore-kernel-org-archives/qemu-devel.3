@@ -4,95 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 827FDC77B7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 18:55:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0679C77B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 18:57:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTmJW-0000N6-Fv; Mon, 23 Jun 2025 14:54:42 -0400
+	id 1uTmMG-0001KP-Q4; Mon, 23 Jun 2025 14:57:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uTmJV-0000Mq-7s
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 14:54:41 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uTmMB-0001J3-BO
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 14:57:28 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uTmJS-0002y7-CT
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 14:54:40 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-748e378ba4fso5661531b3a.1
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 11:54:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uTmM7-0003SP-IM
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 14:57:25 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-607cc1a2bd8so6866818a12.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 11:57:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750704877; x=1751309677; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3/IXpHCAIwAHF2+6D0xIvAg7uvuJY4X9jPtJNi9WglY=;
- b=KKWYpaXoyJBxmyxNVeXBmFVkzLKY4BHXMUt3joIZEAIMnUinZRUZTVT8zfstcAey60
- ryX44WXWT84kb1aX1aKTLf3SdH09DtjicaolYcV29RHJdB0R2i+k9OnYWcjBbiwvfCZD
- j2q72z6k+qB/HOyZxuUKuCvRmBkbmRvCkv+vySyvWM+fy6NKHrgPipxhzhYAaRaCE88E
- B4+k+559lNTh79yfs+xVs5ql3G25JMfL1ylam0g6h6wETdi7uEyWf3Ti4geRa9ZjpxIO
- Pmp+ziJSFb4nA3+8d1jUnozDHnoVRkzkDIATqkX8oRRQIFcGQ5qKraZDc+MJemycnPsE
- 1b7Q==
+ d=gmail.com; s=20230601; t=1750705042; x=1751309842; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IePmnhFWPzfq70LYD7TQTuQEBHLP9rp9SgpYyu0g/4I=;
+ b=OS0CULiCxgkuKpr7lfmumBi6EO71Pqs1CoHp7qCYAnSvJBK+ubikRwewRpOMPuumN/
+ FZe1fhoCW8P3q5GWB3G9tZT4a66X2Npk0fytWjnCMsALrNTOzYjTv060exojm/1vzV1y
+ oiYaJkpA7yhITtezThkx0oQ/BzyJjqKltLGOjfybtQPZ6m6utZGdWnIY8xHZ9xvfeHO7
+ 8WaqAOYV0c5m6iaJninACt6KqPk7dmRxN/6ThQ53n9JC6PCc/tPFsHumy3EqLN9VdRvh
+ /sCpQVyfCHVtVUHecVFgZnVtPJ5jfyXTdYU42mirm0flKqc9vL7L6YPsTNbn8dtefOdy
+ qgsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750704877; x=1751309677;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3/IXpHCAIwAHF2+6D0xIvAg7uvuJY4X9jPtJNi9WglY=;
- b=jlwBhk2xoWhyPQ8WHX4g6tXJMEMSj149rCLTIN7B7iQvABWiTG5dL3o1DkGk/spOXA
- zL9ZGJ7vOaRYTwfVWYNDvyt4R6l80doNLmPtxEAJPgcU6zvO7ytyzwpSFb70KhAHx9tv
- F7q+ulCnmf0c62hojgVXupsx2cBw/LO7UwKl7LLU6l/hcYr2kCG8cyF1g4T0Naonc8j3
- JRKBADNbxJi+O2TnG1dcmHB+7k73NvabAx9J6WvrIayPisRhTqgR1o46oYzKtklbpR6K
- ddGa+VW+1wXFIMVkjlIEaV1+6MSBqKOyKJFLQo5iBcCq6bqq/seyy7D8DitFr1C5eEjo
- 8BYg==
+ d=1e100.net; s=20230601; t=1750705042; x=1751309842;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=IePmnhFWPzfq70LYD7TQTuQEBHLP9rp9SgpYyu0g/4I=;
+ b=QOAmYttsBgqHcMjTAT+4rJdzzo+5pt1G9CGES9KNkxg70oeMY88SrRYGrFMRZIdQJ/
+ aTazGPfI89D1PdWYiKlxCco8TNgdlspuxkqpzTkMjIG4G7+9yWg3AlcXIPojeZme18DR
+ rrXvo34TyBL6EOOnHtvHTeixr0Pu+OUlZ4td0Z8+UmbnVvqplJZeMzD8mUOdGqlKJzgR
+ 9MYEOCEwaZvlTmLJ7+wKjM8e+79mdLHME7R+LNd5WrR0q4YbChm+40P+3pc2QOvu9ZEx
+ rztUAR9GSsldzUemJmESuXrVhbIDMXG9bvO+Dc3tA8Jvcb8zcnY1OUTRcQjvGKSNIvJc
+ 3jaQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVeQ3UNSxJh87+WHJnhbuANei/ORs5G1GEWxCM919emt3MtGnjbY5DNtKcR2zVBK3B8SJHWW2R7JN1T@nongnu.org
-X-Gm-Message-State: AOJu0YzTEYkLAgRMAjtF8HGnwX3UizOU30etTxl4xf533LVVTTX9WOo2
- cc2/KBrLGUl03F20ebk98mSIAeuQruk97NeES+MZLY/v/lT3/5w42Kbw7jHHOXnLgCg=
-X-Gm-Gg: ASbGncvL4GK5UeSJTs9DELwmSjwNWxHPkKpZmJMGW8LjaeHv9iFjxg6zOzqBHFIo7Dn
- cukuX8uK5hESDn08GtxJtK2Elne/bU0p/Wn3Cdmth/mFAg+5F+Ee8YC1w7fg1J/De9fWH+pSQ5X
- KGHyqF9q2I6WZcPoUEbvvW+yy1tfyLGPlnm164o53ZjKkjgHSfAFDgjJUHOer9R3quTwu1rDd6T
- 2CfcS5NayWd9kxAyFaw7N6z9ApYlGQ/HccX3EMlqn4/ciuZP2M7zscC7FdsOlMHE5ND6xmoGSl1
- JGayyaXT/8lTHp+wrbR8SzkMlIY9fZ9XjVmIldQnjaPjtPdTSOnfVvf+m2FZzAlTaQkGhbA34g=
- =
-X-Google-Smtp-Source: AGHT+IGut3T4373OR4+gus/ZZuHmpKmrLMdXpTr/TRLKWekKznOPkH/RicRBUxdBuXtzAQxKKpSYxQ==
-X-Received: by 2002:a05:6a00:cd4:b0:748:e772:f952 with SMTP id
- d2e1a72fcca58-7490d651b3bmr18132635b3a.17.1750704876835; 
- Mon, 23 Jun 2025 11:54:36 -0700 (PDT)
-Received: from [192.168.0.102] ([186.215.58.88])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b31f125d668sm7351529a12.54.2025.06.23.11.54.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Jun 2025 11:54:36 -0700 (PDT)
-Message-ID: <99b8c58a-e570-4ab6-8abe-541fd89efec6@linaro.org>
-Date: Mon, 23 Jun 2025 15:54:51 -0300
+ AJvYcCX2+CnjiGe0EBt0vCLxCLCTtqRrdKEsHXuMLIMbvhL6lsG5x8gcWLqHj/AxtKuUilwvAN8QOdbgRBEm@nongnu.org
+X-Gm-Message-State: AOJu0YypLUTjnez/sStQOobfEAGoI5YY0zuJkuogZ5gja6XLvd9ICi8D
+ imCVowLB0vYeA766bUdotRH96fbIZ2uYKAm96j9uMGK7JWj/OkCrQEsd9HEdwVvUxfoAc/HJT7O
+ FOHynnpOwkdl6LQlcbFin1Zc0b5iuzvI=
+X-Gm-Gg: ASbGncvILUkQxfqfl03HwLWZpxvYfRqI92OurV3EfJJrocv7Wa22qyH1g2opBX/jxtw
+ 66LuivuEu3QUbe1YVVW6kDqtMn8Hm1w42c2Pk0eYNMy0bV4xM0/kmRgOw72SKydm6T8vb9WgT1w
+ g2LKegwblwx6AHvR1R7MIJCu+pd9JgP2vzRDxlAveNuA==
+X-Google-Smtp-Source: AGHT+IER0Kq4o15DIo2Kht0Je1loxzol3aJ1FjSntSWDqGbeQRbHlsmSvjUuKrRmJy69UnlU8+LbKqtP81g1duXaUCE=
+X-Received: by 2002:a05:6402:2692:b0:604:a869:67e9 with SMTP id
+ 4fb4d7f45d1cf-60a1cd2bdd5mr13254267a12.22.1750705041972; Mon, 23 Jun 2025
+ 11:57:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 v4 0/8] hw/arm: GIC 'its=off' ACPI table fixes
-To: eric.auger@redhat.com, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, udo@hypervisor.org,
- ajones@ventanamicro.com, peter.maydell@linaro.org, imammedo@redhat.com,
- anisinha@redhat.com, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
- Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-References: <20250616131824.425315-1-gustavo.romero@linaro.org>
- <5b0f2250-e521-4172-870c-0384c5ef2382@redhat.com>
- <36ac7f90-d946-439f-ab20-123f542291b6@linaro.org>
- <cd38280c-6f5e-4c58-b40c-3391d121e557@redhat.com>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <cd38280c-6f5e-4c58-b40c-3391d121e557@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x429.google.com
+References: <20250620164053.579416-1-pbonzini@redhat.com>
+ <20250620164053.579416-25-pbonzini@redhat.com>
+ <b8171c39-6a92-4078-a59a-a63d7452e1e9@kaod.org>
+ <4ffdb62b-8fe4-4b34-9efa-aecff7f8e77b@intel.com>
+ <aFkKL-TQTcrBtXuK@redhat.com>
+ <CAJSP0QUgirgNX71MwGgYbdDhVUrd3MWsetx66_+GsER8BfoSbg@mail.gmail.com>
+ <aFlR6CTLRzSpS1fr@redhat.com>
+In-Reply-To: <aFlR6CTLRzSpS1fr@redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 23 Jun 2025 14:57:09 -0400
+X-Gm-Features: AX0GCFsi_MTZBVOxjtkB3HS5PlSAa98W4GH3s18uI3imZaaRa4fVP9OT4_CtqkI
+Message-ID: <CAJSP0QUVuXRK9nyXw=HcEV6Qi5HaE+TzVp1QOiGp7c7pX=Z=Hw@mail.gmail.com>
+Subject: Re: [PULL 24/24] i386/tdx: handle TDG.VP.VMCALL<GetQuote>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
+ Isaku Yamahata <isaku.yamahata@intel.com>,
+ Chenyi Qiang <chenyi.qiang@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,111 +105,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
+On Mon, Jun 23, 2025 at 9:09=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Mon, Jun 23, 2025 at 09:04:33AM -0400, Stefan Hajnoczi wrote:
+> > On Mon, Jun 23, 2025 at 4:04=E2=80=AFAM Daniel P. Berrang=C3=A9 <berran=
+ge@redhat.com> wrote:
+> > >
+> > > On Mon, Jun 23, 2025 at 03:03:19PM +0800, Xiaoyao Li wrote:
+> > > > On 6/23/2025 2:43 PM, C=C3=A9dric Le Goater wrote:
+> > > > > Hello,
+> > > > >
+> > > > > On 6/20/25 18:40, Paolo Bonzini wrote:
+> > > > > > From: Isaku Yamahata <isaku.yamahata@intel.com>
+> > > > > >
+> > > > > > Add property "quote-generation-socket" to tdx-guest, which is a=
+ property
+> > > > > > of type SocketAddress to specify Quote Generation Service(QGS).
+> > > > > >
+> > > > > > On request of GetQuote, it connects to the QGS socket, read req=
+uest
+> > > > > > data from shared guest memory, send the request data to the QGS=
+,
+> > > > > > and store the response into shared guest memory, at last notify
+> > > > > > TD guest by interrupt.
+> > > > > >
+> > > > > > command line example:
+> > > > > >    qemu-system-x86_64 \
+> > > > > >      -object '{"qom-type":"tdx-guest","id":"tdx0","quote-genera=
+tion-
+> > > > > > socket":{"type":"unix", "path":"/var/run/tdx-qgs/qgs.socket"}}'=
+ \
+> > > > > >      -machine confidential-guest-support=3Dtdx0
+> > > > > >
+> > > > > > Note, above example uses the unix socket. It can be other types=
+,
+> > > > > > like vsock,
+> > > > > > which depends on the implementation of QGS.
+> > > > > >
+> > > > > > To avoid no response from QGS server, setup a timer for the tra=
+nsaction.
+> > > > > > If timeout, make it an error and interrupt guest. Define the th=
+reshold of
+> > > > > > time to 30s at present, maybe change to other value if not appr=
+opriate.
+> > > > > >
+> > > > > > Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
+> > > > > > Co-developed-by: Chenyi Qiang <chenyi.qiang@intel.com>
+> > > > > > Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+> > > > > > Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> > > > > > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> > > > > > Tested-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> > > > > > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> > > > > > ---
+> > > > > >   qapi/qom.json                         |   8 +-
+> > > > > >   target/i386/kvm/tdx-quote-generator.h |  82 +++++++
+> > > > > >   target/i386/kvm/tdx.h                 |  10 +
+> > > > > >   target/i386/kvm/kvm.c                 |   3 +
+> > > > > >   target/i386/kvm/tdx-quote-generator.c | 300 +++++++++++++++++=
++++++++++
+> > > > > >   target/i386/kvm/tdx-stub.c            |   4 +
+> > > > > >   target/i386/kvm/tdx.c                 | 176 ++++++++++++++-
+> > > > > >   target/i386/kvm/meson.build           |   2 +-
+> > > > > >   8 files changed, 582 insertions(+), 3 deletions(-)
+> > > > > >   create mode 100644 target/i386/kvm/tdx-quote-generator.h
+> > > > > >   create mode 100644 target/i386/kvm/tdx-quote-generator.c
+> > > > >
+> > > > > These changes broke the build on 32-bit host.
+> > > > >
+> > > > > Could you please send a patch to avoid compiling TDX in such envi=
+ronment ?
+> > > >
+> > > > Paolo is on vacation.
+> > > >
+> > > > I would like to help, but I don't have 32-bit host environment on h=
+and. Do
+> > > > you know how to set up such environment quickly? (I tried to set up=
+ within a
+> > > > 32-bit VM but the 32-bit OS is too old and I didn't get it work to =
+install
+> > > > the required package for building QEMU)
+> > >
+> > > You should be able to use QEMU's docker containers to get yourself a
+> > > Debian i386 container, on a x86_64 host.
+> >
+> > The cross-i686-system (Debian) build CI job succeeded:
+> > https://gitlab.com/qemu-project/qemu/-/jobs/10423776600
+> >
+> > I wonder why the CI didn't catch the issue?
+>
+> It didn't build the x86_64 target:
+>
+>   --target-list-exclude=3D"arm-softmmu i386-softmmu microblaze-softmmu mi=
+ps-softmmu mipsel-softmmu mips64-softmmu ppc-softmmu riscv32-softmmu sh4-so=
+ftmmu sparc-softmmu xtensa-softmmu $CROSS_SKIP_TARGETS"
+>
+> so in turn didn't build any TDX code
 
-On 6/17/25 10:26, Eric Auger wrote:
-> Hi Gustavo,
-> 
-> On 6/17/25 3:01 PM, Gustavo Romero wrote:
->> Hi Eric,
->>
->> Thanks a lot for doing a first pass on this series!
->>
->> On 6/17/25 06:35, Eric Auger wrote:
->>> Hi Gustavo,
->>>
->>> On 6/16/25 3:18 PM, Gustavo Romero wrote:
->>>> Since v2:
->>>> - Fixed no_tcg_its inverted logic (rth)
->>>>
->>>> Since v3:
->>>> - Fixed remappings in the IORT table when ITS is no present
->>>> - Rebased on master and resoled conflics, like no more "no_its"
->>>>     flag in VirtMachineClass
->>>> - Dropped patch 1/9 because we actually want the instance flags,
->>>>     not only the class flags, and the instance flags are the ones
->>>>     to be used often when deciding about the presence/absence of a
->>>>     machine feature, instead of the negated class flags ("no_*")
->>>> - Adapted the other patches that depended on 1/9
->>>> - Dropped patch 4/9 in favor of using the instance flag for
->>>>     checking if ITS is on or off
->>>> - Simplified VM options for the new "its=off" test
->>>>
->>>> v1: https://lists.gnu.org/archive/html/qemu-devel/2025-03/msg07080.html
->>>> v2:
->>>> https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg00495.html
->>>> (Patches 6/14 -> 14/14 in the series)
->>>> v3: https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg00567.html
->>>>
->>>> Fix ACPI tables for '-M its=off' CLI option and resolve the issue:
->>>>
->>>> https://gitlab.com/qemu-project/qemu/-/issues/2886
->>>
->>> One first comment is that this series will collide with Shameer's SMMU
->>> multi instance series which has been lunder review for quite some time
->>> (adding him in TO):
->>>
->>> I think it may be more future proof if you could rebase on it - I know
->>> it is a pain ;-( -. Or if sbdy objects for Shameer's series please raise
->>> your voice now.
->>>
->>> [PATCH v4 0/7] hw/arm/virt: Add support for user creatable SMMUv3
->>> device
->>> <https://lore.kernel.org/all/20250613144449.60156-1-shameerali.kolothum.thodi@huawei.com/#r>
->>>
->>> https://lore.kernel.org/all/20250613144449.60156-1-shameerali.kolothum.thodi@huawei.com/
->>>
->>
->> ayayay, life is never that easy! :)
->>
->> Thanks for point that out. Sure, I can rebase it on Shameer's series,
->> but also
->> I'd like to have this ITS fix for 10.1, so I think it's a matter of
->> understanding
->> if Shameer's series will make the 10.1 release (thanks for asking the
->> reviewers if they
->> have any current objection so we have an idea if it's close to get
->> accepted
->> or not)?
-> Peter was the most annoyed by the usage of -device arm-smmuv3 option
-> line. We'd better ask him.
+Here are the targets that were built by the CI job:
 
-I've talked to Peter via IRC and he said that since this is a fix it could
-be merged first than Shameer's SMMU series.
+  target list : avr-softmmu m68k-softmmu microblazeel-softmmu
+or1k-softmmu rx-softmmu sh4eb-softmmu tricore-softmmu xtensaeb-softmmu
 
-In any case, I'm wondering if you could review v5 of this series, which I
-published earlier today, specially patch 8/9 "Fix ACPI IORT and MADT tables
-when its=off", since it's the main patch in the series and currently it has
-no R-bs. I've addressed all your comments on v4.
+64-bit targets are not supported on 32-bit hosts since commit
+acce728cbc6c ("meson: Disallow 64-bit on 32-bit emulation"). I don't
+think the x86_64 target can be built on 32-bit hosts.
 
-Thanks a lot!
+But notice that i386-softmmu is missing from the target list. That
+could be why the CI job succeeded.
 
+C=C3=A9dric: What were your ./configure options?
 
-Cheers,
-Gustavo
+Stefan
 
-[v5] https://lists.nongnu.org/archive/html/qemu-devel/2025-06/msg03793.html
-
-> On my end I don't see how we can achieve this more elegantly.
->>
->> Meanwhile, I'm pretty keen on if I'm correctly generating the IORT
->> table pruned from ITS
->> (patch 7/8 in this series), like, are the remappings for the RC and
->> SMMU nodes correct? That
->> would make me more comfortable to start working on a rebase.
-> sure looking at it...
-> 
-> Eric
->>
->>
->>> Also I understood Shameer intended to write some new bios-tables-test.
->>
->> I see.
->>
->>
->> Cheers,
->> Gustavo
->>
-> 
-
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
+>
 
