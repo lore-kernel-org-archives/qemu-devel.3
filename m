@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71E3DC77B7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 16:15:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59E5DC7115B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 16:18:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTjpI-00088F-4K; Mon, 23 Jun 2025 12:15:20 -0400
+	id 1uTjsR-0000is-9J; Mon, 23 Jun 2025 12:18:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uTjpF-00086K-Hr
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 12:15:17 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ id 1uTjsP-0000iW-3J
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 12:18:33 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uTjpC-00026n-V7
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 12:15:17 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-70f94fe1e40so43373107b3.1
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 09:15:14 -0700 (PDT)
+ id 1uTjsM-0002uk-TV
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 12:18:32 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-70e5e6ab7b8so40858287b3.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 09:18:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750695313; x=1751300113; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750695508; x=1751300308; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1EwVq7H4nIvlJdgHTBPUOhnsZB0/hJ7ARBlef90T1qA=;
- b=MlkAE16NiCqonH4Bc+TJ25abrr0R159L9YDqAf+8U9w1mnD4ZP+DKTazBchNFa33tl
- 1Kv5ji71D1254JUAooIQ6ldTMNk8tsda5hvJlgJ2tvmNcTSSx3lB8gP5CAIyhFC7MGo9
- EskUD4gGfdp5wKze/anIO/7bn9b3bFIB5L+7KjfgDeRENdJD2I6cmklqKD58K3+lJN7e
- tfkhGeaQ586VXsuO3Pln4fqo2bd2wAqAFdarPvflkjrXxsSMYwnx9lM0W5q32kzh18YF
- eF9oMXCqZCMWfU0Q7/dgZ9MZOJbEcWP+dcoEaB2uRbQ3LP84KJWFPZzQWc5Fm7Qp1dbP
- 0sSA==
+ bh=jvaAp0VqsvIRd95DgtmRTIcpKwgBigICYEpFv7mxFHs=;
+ b=w2roisMvdK17EQ9DvqTSQqi1FDVW1BQer0XqthwqnaYC+O3lBs3NUH/JQjcTx5e5vb
+ /gscvGcWQiqW0Fh391fbb+T6LrJNAQn2dHUJLEvvOD9tH2AzSXqas6jtVNF5mkzZEbs1
+ vRqxSpaTh5W5VzLrP2lDRI6grTEnt55voGRQuIncQgTtRoeFPx2g1bfeuBXThrpkAdIc
+ hbjkPubZWy6WHpnisaxsNwcNfXoBkd91CYG8tLgadD86aVOjBp/kMGJrvTjzkpRhMwb/
+ 869MYobNQ3vI3DphQv5Z3q7TLgBerDdgU5d9lNZBxfE3Awv1NqAGIZDfiYVP47WW+DSS
+ VMNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750695313; x=1751300113;
+ d=1e100.net; s=20230601; t=1750695508; x=1751300308;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=1EwVq7H4nIvlJdgHTBPUOhnsZB0/hJ7ARBlef90T1qA=;
- b=mLvFz4gk/HgK2/DVs5I/J3IkkjyV6fQp0Gp398tZlaBjCAASeKTEIKwJlmcgwaxapI
- jhnNjxOzbaeEpri663UEhVOhS7HH4aBMFbCdeCzcEN2ZlHgHQ6krVAJqUeOuM88YiUVs
- tGsrYhS4yLF5pDzqQ2xs6OWuhOoE80HXLS1bGJHE98FnAaOunMuufS8bJDPZXc78rjIY
- 2twlSLL1AxWWW5lCxX2axN+uKwQ7ruekn3qkZWVxNcVhEwTXEdVufAIcS/35ggzzLfkH
- jQ+2zF0KYh0Usfpm0JhijMOqS9/mgCGPG259gRTYs9Yyv+TWb3Upp8foUMUiYcVuZ8wM
- zElw==
-X-Gm-Message-State: AOJu0YxwYxphBd4P9S1WO+lWbNq01wKyuMMA+u6NSumWJsXG05b9HPfL
- Cy4+GZupOmn5fucODzKe2Qt3ln2iZEdyJJiMcwVmW/TS/seu4lFA0NoIVQYWERhwgDw5E+JEbqv
- JcD6gsCgkddecD9ROnrfjxWrshZ7VYFqZmk4BUCkSHA==
-X-Gm-Gg: ASbGncv7FyW+9cI0DTC1aIt8Yaa24yJu/14I4ag3ffPLTnayQ4DhSyrHCjBuA5jHiFt
- 60oCpXIMvmCunnzZsmxTYwmnnUlXbzMBptdUts8G6nZdDowrOrOOrb+/+aTBST+HH4LPrP+vKm8
- +AMuV14Mky56E1Bd+gLcBA98dEkWV1TwRYzyf1oNV+Tbjh
-X-Google-Smtp-Source: AGHT+IEjn+s7g60f49/hGE+E8eEJEIr+AfJ2sfD29FtpAiITF8pkmm/tAbwAteCcvYi+WjDYtJ2tzZDEK/iNASCTKcc=
-X-Received: by 2002:a05:690c:fd5:b0:6f9:4c00:53ae with SMTP id
- 00721157ae682-713f679eeadmr1686847b3.8.1750695312994; Mon, 23 Jun 2025
- 09:15:12 -0700 (PDT)
+ bh=jvaAp0VqsvIRd95DgtmRTIcpKwgBigICYEpFv7mxFHs=;
+ b=vJtGYuT667pY1cJ3+B3Srz8jsAfymbw2IhyeDaBtaKH+Eb/QyqxglP33b+6EywJjQM
+ 4SXAJgk76jj3gW8bZtx3+QFESfRvMIvVH2GM0AIBVfl0e2/YH2EIJliPuGgzRQoO/5hE
+ 8N5r3RiQwpTMk9NhSmEfcg+tqkyEWy5cGMdytGJxf9CNeG2mIwLNDLoHGP5N/2xCzjnx
+ hzUfD+77xaWMPFKFSjGzEfNlP8Z+NWK5tgLqtavzpa58H46I9dT4ydO99rz5ovapTuqN
+ uiQ4Ezqfpl9igt0dHmfoRrzHiX5Cdfbb2GQl+nqGGGr4ZZ40Io42l+UwUnLlkxy+2Vk5
+ 8K4A==
+X-Gm-Message-State: AOJu0YycyA9k5k3yDt0N4BISahq5e4qXcsJ7iDwAg9z1pUNaEdgQwXbI
+ iL0rbkvOwvVt33U7N7UNaxbEWLpsmXtyXuPvyVsmVZ5jw2eA7BPsLk4SyZLG38uvBtZiZUlCKsM
+ /V86Hf3sGoCwLNavyJjM9p9iCMuB/c3Kn3QiD9a056GLeqsbTLWr/
+X-Gm-Gg: ASbGncsuCbyaucNFiOtcDV5BGxFlzkUG9HnE35lry2IsL3TIAzYFtGGXxecN/ylCdZG
+ Haxi4oP9WH/vvKRCMRL5RX5X8ZC5o7fguqw77k+YdVHU1SfK/sCZzne887ghihHbtNZJJGV0pPb
+ jhoVX9q1+qQRqhlcZMbmYH+evyWR2aEHyaWtIKFTBt5ssyIj4lYS1LfUY=
+X-Google-Smtp-Source: AGHT+IHbV4McqlCsJZ+JluQCsoit8GIUUO3cSqoIw+2yJVuB8Xne3zRUo/3QUSslxphPWBZekVLbp+y/ymLurXoBu4E=
+X-Received: by 2002:a05:690c:6d01:b0:70d:f237:6a6a with SMTP id
+ 00721157ae682-712c63edaeemr201986387b3.11.1750695508052; Mon, 23 Jun 2025
+ 09:18:28 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250621235037.74091-1-richard.henderson@linaro.org>
- <20250621235037.74091-32-richard.henderson@linaro.org>
-In-Reply-To: <20250621235037.74091-32-richard.henderson@linaro.org>
+ <20250621235037.74091-33-richard.henderson@linaro.org>
+In-Reply-To: <20250621235037.74091-33-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Jun 2025 17:15:01 +0100
-X-Gm-Features: AX0GCFsBkTUTI1kDhvYKx_-mNJ1GrsqCUhoatIN69dMb_47ElWl1iCUq15glL70
-Message-ID: <CAFEAcA_t-tL-P+uLrkfX19VMY1oL3A6qnUFO0Z9Nh3jzXPGi7A@mail.gmail.com>
-Subject: Re: [PATCH v2 031/101] target/arm: Implement SME2 ADD/SUB (array
- results, multiple and single vector)
+Date: Mon, 23 Jun 2025 17:18:15 +0100
+X-Gm-Features: AX0GCFsDnySqDWbSZeLNrAH8uM5oHVOIZM2TJd3ALk7wy-l-H7rwQRJ60CdNRB4
+Message-ID: <CAFEAcA8ZdARa9epX=rUipcvQtMhhA1vWHN8FK1QT-z_z3BN0MA@mail.gmail.com>
+Subject: Re: [PATCH v2 032/101] target/arm: Implement SME2 ADD/SUB (array
+ results, multiple vectors)
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,16 +93,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 22 Jun 2025 at 00:57, Richard Henderson
+On Sun, 22 Jun 2025 at 00:56, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  target/arm/tcg/translate.h     |  2 ++
->  target/arm/tcg/translate-sme.c | 29 +++++++++++++++++++++++++++++
->  target/arm/tcg/sme.decode      | 15 +++++++++++++++
->  3 files changed, 46 insertions(+)
+>  target/arm/tcg/translate-sme.c | 31 +++++++++++++++++++++++++++++++
+>  target/arm/tcg/sme.decode      | 20 ++++++++++++++++++++
+>  2 files changed, 51 insertions(+)
+>
+> diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+> index 09a4da1725..8aae70201c 100644
+> --- a/target/arm/tcg/translate-sme.c
+> +++ b/target/arm/tcg/translate-sme.c
+> @@ -692,6 +692,7 @@ static gen_helper_gvec_3_ptr * const f_vector_fminnm[4] = {
+>  TRANS_FEAT(FMINNM_n1, aa64_sme2, do_z2z_n1_fpst, a, f_vector_fminnm)
+>  TRANS_FEAT(FMINNM_nn, aa64_sme2, do_z2z_nn_fpst, a, f_vector_fminnm)
+>
+> +/* Add/Sub vector Z[m] to each Z[n*N] with result in ZA[d*N]. */
+>  static bool do_azz_n1(DisasContext *s, arg_azz_n *a, int esz,
+>                        GVecGen3FnVar *fn)
+>  {
 
+This hunk belongs in the previous patch.
+
+Otherwise
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
