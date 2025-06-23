@@ -4,84 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11109C7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 19:14:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0EC2C7115B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 19:31:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTmcW-0005rY-Ch; Mon, 23 Jun 2025 15:14:20 -0400
+	id 1uTmsO-00088L-0k; Mon, 23 Jun 2025 15:30:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uTmcR-0005qS-U7
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 15:14:16 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1uTmsL-000885-5M
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 15:30:41 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uTmcP-0005ZT-6s
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 15:14:15 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-6097b404f58so8250204a12.3
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 12:14:12 -0700 (PDT)
+ id 1uTmsI-0007dJ-MS
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 15:30:40 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-607cc1a2bd8so6913676a12.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 12:30:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750706051; x=1751310851; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1750707036; x=1751311836; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pfTP6Pxc2LTi7dNCqHTyrs2OuMzLO6Tl0OLgRBNknQM=;
- b=GOOB0FrBrVA+35AQyLaq3rwrs7JOqplbxoglUXctsab5rIB1vT+QbAfWSPltfWr7W+
- JZ76LzeIGG+OalR7I41fAG/qvfyWKj8k68l700gZwUrZLFT5n1QQD0BQlYUveUGe7Kmb
- 2xPzVJZHik+UPo77QYg7qZs4SWeX4N663mMoInnHRHT4d+854etvW9Vjxy6E4GYzr2um
- JFzeQEAKmj+BGyt4SW5uyfs0uacoUYwfY4NFBS9BRp3zR8mBq3ODWLT+Z+zdBI1oEvvE
- J+ODJ+mQlbOMsghxPUKHMjc+7/pF6B/piyCqKrRiXtaGYvbo2wyBRvpgfCONlT5bCUlU
- dHgg==
+ bh=bEtMSXrNDxpUtZIIh+Y09rP/tmIdJ2AwBKCMtmK3JmA=;
+ b=TdxaoJpsbxbQOgqh33my1MpoqxkcFXz7fqRIWhe/Zb2EwDc0HuaSqglYrUSvO/cVM7
+ /ZBUxoFcpO4YkAdivutoCNiyZg+wP+QJioEq1Bq89EWA4J4zPb24PcHymw73HiQYN6ad
+ 9NOcF0dOcQxZI54CHfjSYT+zxxc49tNWTYx5MJS34aWosn+homlEWaJ9qtGsHhgPKiQS
+ voyt/25SKFLCUrRbmA2LVXdR+BgCzF6q2ceazeLpxzY9tXyg1LqREFE+duoGu23MN+UP
+ WLIA9RphF5O1coDJBAefAUHimweRCA9478pGUI3DRFklQeygouB45miDwlLi8G+AtSiO
+ KORA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750706051; x=1751310851;
+ d=1e100.net; s=20230601; t=1750707036; x=1751311836;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pfTP6Pxc2LTi7dNCqHTyrs2OuMzLO6Tl0OLgRBNknQM=;
- b=IIOhuWpHGSFa0+l6qH93eEJtHgr8OiG8Xqsh7Pr0jbIWpJgiUVWXcC/VbzPCLiN6Y1
- HfcELFJCnOBix6boyJcesoVKX//ls6Y6NaHLQnhuCydRHrNbJQL97Lxuh8L6ehyHnIfr
- hhFsfBX6l1bXvj6K7hVaFC2Q74Y7S6zvD4TkV0T7sE9NQj4jmBev+bzqk9RcfGdQTYuO
- ukW+qo0S68w/pa58TW0oILMgXcuq7WTMtIhwpALuEN67H4ItQhIjdPbZc6v6xbg4Aem9
- gpQ4MXy3rxl/mkaAbUS168sG4jRV2oHmNCJuYsWupzvPPY32em6DVTFpxdLry0VZFrkh
- IEVw==
-X-Gm-Message-State: AOJu0YwnwquP8UCgZkpgN0WLpNuJQoHdSwiZZW/3hsNolMQYfA/WIFUt
- pT2Eeau037oYT6kVGCeiU3LRkwHvgZMe9K/gWBR6sP/JqKkNb8+aczmrVqccSWODsqCsabddm+I
- Vh+aUAngzV5WuuNt+SkwJFlzsEnB8G7321w==
-X-Gm-Gg: ASbGncu40FxShNVGlH8D83kuI0qM/R5190hO9dxOQ4GPyf5esCmGcOsvFyXKvd8JU/e
- j8yXgn63YOyE0CGgSoqeN7ni6Xs/rKgO2X7uqUAprQ00YhHiNjjktE/xndatBk8jUlaN95vB2X9
- KJHHzghcpJPjQIcODO7jfZnKxDGD9kJMWb2GkQZBuV6C/TI2HRIrnJ
-X-Google-Smtp-Source: AGHT+IFE3th4+MC9+hIUK+s89d7U9KUfztc+mtBq5Kw3FWl2iDxnzsO47inTD6yFnqIl95LsPeFlmoc1Bf+JPa5/iTs=
-X-Received: by 2002:a05:6402:348e:b0:60c:1a20:1cc with SMTP id
- 4fb4d7f45d1cf-60c1a200860mr559621a12.27.1750706050751; Mon, 23 Jun 2025
- 12:14:10 -0700 (PDT)
+ bh=bEtMSXrNDxpUtZIIh+Y09rP/tmIdJ2AwBKCMtmK3JmA=;
+ b=VswEcYJDjgG2bebojhOwVRd+Wem6YV3PjwWmv6JAo/JXDhxlPpF6GWe8lVmgXsor7Z
+ WF+eEho9Bcw6wr6YS7+75Yw7+9fVoKVpz+TFM+IB8fbDotUGEw5Cl9Mx1QyZa/1B2Mdu
+ zCtC90g7jyAZ1s1+wJEjoJy3p2ZxdvoseA7gdSSFjBWSseUo+wc5JY0HSu9818rj5KAy
+ BUxOqVZqX2YFGgAlZZU0mHR6fUXJd/BHdFTs36hk+J8SprVfJVSVHDUMCMDNloykfPf4
+ zQro2qG5lPKxQWF5lV9xuB9pIiENXZ0holrbkyOGl+FvRooI0HfQ2XvpBVE9KbdpG45j
+ M/pg==
+X-Gm-Message-State: AOJu0YyPfgUoKaccochQ3d1N9CSUoeegYUa657mayq9Rv/9CATZdnMhW
+ TecsRYJeDL2psGDjDyEffFTQbypYpsDFFWpVjv49HlAYI9q8ZgkLu8wgPQa8LyY1CbDcb6zh65V
+ UG31u+fr1+jIdzriQ/Je3qR8QQkPWsFk=
+X-Gm-Gg: ASbGncsCcPBYlSu4GtLJ8lr+ovh0q7ylJoH/DpYEb9kO51ndPl5rHXVRf0PIZ7Cc9sL
+ 2CqqeL/jTu+DESq3oakKO7YMwOz3vgS7GfvdZYBIiRz/wzfBXltdatSktOlGsO81MWrC2Y05ouD
+ v4l9PxwWV4Ie4L/1C4PIwvXA0O7PPxCCMX3l1rgNFySA==
+X-Google-Smtp-Source: AGHT+IGadOv8prPe2PFWnrEwZdlHNQul2ysb1a7swRAbTLmzpBjM05FGLerZNnBMOKT997KpZRg3057rkdW7H+LGd3Y=
+X-Received: by 2002:a05:6402:13ce:b0:5fb:e868:8730 with SMTP id
+ 4fb4d7f45d1cf-60a1ccbcbe9mr13276116a12.10.1750707036126; Mon, 23 Jun 2025
+ 12:30:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250619082817.1517996-1-gaosong@loongson.cn>
- <CAJSP0QWsFx8qcR4k4nb2fBH0Q1aFWwCUU4JEs+NFCGHKhSphMA@mail.gmail.com>
- <b9f57a29-b13b-cd94-dc92-bc9ea45cc077@loongson.cn>
- <CAJSP0QXGg9_hcdNVJ4LyVNB8ujFSX5jMfYSwbsfX2xQ2XAJdCw@mail.gmail.com>
- <79e720ca-ef28-c7cd-9226-00f9264da81e@loongson.cn>
-In-Reply-To: <79e720ca-ef28-c7cd-9226-00f9264da81e@loongson.cn>
+References: <20250616092241.212898-1-armbru@redhat.com>
+In-Reply-To: <20250616092241.212898-1-armbru@redhat.com>
 From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 23 Jun 2025 15:13:58 -0400
-X-Gm-Features: AX0GCFupWVtqhJRRExfNDOTeMzRUrBztQoHAUdaecTbcikyPPET9rug03PP9pgM
-Message-ID: <CAJSP0QUhCHqEReRw7SJ=L+YQ8UJW6P9WhPoPwg-QhY5w2R=4cQ@mail.gmail.com>
-Subject: Re: [PULL 00/14] loongarch-to-apply queue
-To: gaosong <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
+Date: Mon, 23 Jun 2025 15:30:23 -0400
+X-Gm-Features: AX0GCFuBO0XOIMpFALGqMCpIMw9iszeSj5X8lBdWDbfI4ErL7XB1gihBRqelJWU
+Message-ID: <CAJSP0QV=mfmUt7s+iBkJtZsLiNd1v2c6tNrZeG8htBs58JHhrA@mail.gmail.com>
+Subject: Re: [PATCH v5 0/3] docs: define policy forbidding use of "AI" / LLM
+ code generators
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,99 +104,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Jun 22, 2025 at 10:39=E2=80=AFPM gaosong <gaosong@loongson.cn> wrot=
-e:
+On Mon, Jun 16, 2025 at 5:27=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 >
-> =E5=9C=A8 2025/6/21 =E4=B8=8A=E5=8D=882:12, Stefan Hajnoczi =E5=86=99=E9=
-=81=93:
-> > On Thu, Jun 19, 2025 at 11:11=E2=80=AFPM gaosong <gaosong@loongson.cn> =
-wrote:
-> >> =E5=9C=A8 2025/6/20 =E4=B8=8A=E5=8D=884:39, Stefan Hajnoczi =E5=86=99=
-=E9=81=93:
-> >>> gpg:                using RSA key CA473C44D6A09C189A193FCD452B96852B2=
-68216
-> >>> gpg: Can't check signature: No public key
-> >>>
-> >>> Why has the GPG key changed? Your previous pull request was signed
-> >>> with key B8FF1DA0D2FDCB2DA09C6C2C40A2FFF239263EDF.
-> >>>
-> >>> If you would like to change keys, please sign your new key using your
-> >>> old key and upload the new key to the key servers again. That way I
-> >>> know that the new key really belongs to you.
-> >> Hi, Stefan
-> >>
-> >> I had  sign  new key using old key and send to the key server again
-> >> should I need pull again?
-> > Thanks!
-> >
-> > The pull request does not need to be resent.
-> but I find the pull  key not sign wi/th the  old key. /
-> > I wasn't able to fetch your new key with the signature from the
-> > keyservers though. Did you `gpg --send-keys 0x452B96852B268216`?
-> yes,  and I send it and tested recv the key
+> More than a year ago, Daniel posted patches to put an AI policy in
+> writing.  Reception was mostly positive.  A v2 to address feedback
+> followed with some delay.  But no pull request.
 >
-> gpg --keyserver hkp://keys.openpgp.org --search-keys 0x452B96852B268216
-> gpg: data source:http://keys.openpgp.org:11371  <http://keys.openpgp.org:=
-11371/>
-> (1)     Song Gao <gaosong@loongson.cn>
->           1024 bit RSA key 452B96852B268216, created: 2022-09-16
-> Keys 1-1 of 1 for "0x452B96852B268216".  Enter number(s), N)ext, or Q)uit=
- > s
-> gaosong@loongson-pc:~$ gpg --recv-keys 0x452B96852B268216
-> gpg: key 452B96852B268216: "Song Gao <gaosong@loongson.cn>" not changed
-> gpg: Total number processed: 1
-> gpg:              unchanged: 1
+> I asked Daniel why, and he told me he was concerned it might go too
+> far in its interpretation of the DCO requirements.  After a bit of
+> discussion, I think Daniel's text is basically fine.  The policy it
+> describes is simple and strict.  Relaxing policy is easier than
+> tightening it.  I softened the phrasing slightly, addressed open
+> review comments, and fixed a few minor things I found myself.
 >
-> > Alternatively, you could attach your new signed gpg key and send it as
-> > an email attachment.
+> Here's Daniel's cover letter for v2:
 >
-> Attached is the key I exported
+> This patch kicks the hornet's nest of AI / LLM code generators.
+>
+> With the increasing interest in code generators in recent times,
+> it is inevitable that QEMU contributions will include AI generated
+> code. Thus far we have remained silent on the matter. Given that
+> everyone knows these tools exist, our current position has to be
+> considered tacit acceptance of the use of AI generated code in QEMU.
+>
+> The question for the project is whether that is a good position for
+> QEMU to take or not ?
+>
+> IANAL, but I like to think I'm reasonably proficient at understanding
+> open source licensing. I am not inherantly against the use of AI tools,
+> rather I am anti-risk. I also want to see OSS licenses respected and
+> complied with.
+>
+> AFAICT at its current state of (im)maturity the question of licensing
+> of AI code generator output does not have a broadly accepted / settled
+> legal position. This is an inherant bias/self-interest from the vendors
+> promoting their usage, who tend to minimize/dismiss the legal questions.
+> >From my POV, this puts such tools in a position of elevated legal risk.
+>
+> Given the fuzziness over the legal position of generated code from
+> such tools, I don't consider it credible (today) for a contributor
+> to assert compliance with the DCO terms (b) or (c) (which is a stated
+> pre-requisite for QEMU accepting patches) when a patch includes (or is
+> derived from) AI generated code.
+>
+> By implication, I think that QEMU must (for now) explicitly decline
+> to (knowingly) accept AI generated code.
+>
+> Perhaps a few years down the line the legal uncertainty will have
+> reduced and we can re-evaluate this policy.
+>
+> Discuss...
 
-For some reason I still don't see the signature when receiving the key
-from hkp://keys.openpgp.org/, but your email attachment worked.
-Thanks!
+Any final comments before I merge this?
 
 Stefan
 
 >
-> Thanks.
-> Song Gao
+> Changes in v4 [Markus Armbruster]:
+>  * PATCH 2:
+>    - Drop "follow a deterministic process" clause [Peter]
 >
-> > Stefan
-> >
-> >> Thanks.
-> >> Song Gao
-> >>
-> >> gpg --list-signatures
-> >> /home/gaosong/.gnupg/pubring.kbx
-> >> --------------------------------Attached is the key I exported
-> >> pub   rsa1024 2022-09-16 [SC]
-> >>         B8FF1DA0D2FDCB2DA09C6C2C40A2FFF239263EDF
-> >> uid           [ =E6=9C=AA=E7=9F=A5 ] Song Gao <m17746591750@163.com>
-> >> sig 3        40A2FFF239263EDF 2022-09-16  Song Gao <m17746591750@163.c=
-om>
-> >> sig          452B96852B268216 2025-06-20  Song Gao <gaosong@loongson.c=
-n>
-> >>
-> >> pub   rsa1024 2022-09-16 [SC]
-> >>         CA473C44D6A09C189A193FCD452B96852B268216
-> >> uid           [ =E6=9C=AA=E7=9F=A5 ] Song Gao <gaosong@loongson.cn>
-> >> sig 3        452B96852B268216 2022-09-16  Song Gao <gaosong@loongson.c=
-n>
-> >> sig          40A2FFF239263EDF 2025-06-20  Song Gao <m17746591750@163.c=
-om>
-> >>
-> >>
-> >> gpg --send-keys CA473C44D6A09C189A193FCD452B96852B268216
-> >> gpg: =E6=AD=A3=E5=9C=A8=E5=8F=91=E9=80=81=E5=AF=86=E9=92=A5 452B96852B=
-268216 =E5=88=B0 hkps://keys.openpgp.org
-> >> gpg --recv-keys CA473C44D6A09C189A193FCD452B96852B268216
-> >> gpg: =E5=AF=86=E9=92=A5 452B96852B268216=EF=BC=9A=E2=80=9CSong Gao <ga=
-osong@loongson.cn>=E2=80=9D =E6=9C=AA=E6=94=B9=E5=8F=98
-> >> gpg: =E5=A4=84=E7=90=86=E7=9A=84=E6=80=BB=E6=95=B0=EF=BC=9A1
-> >> gpg:              =E6=9C=AA=E6=94=B9=E5=8F=98=EF=BC=9A1
-> >>
-> >>
-> >>
+> Changes in v4 [Markus Armbruster]:
+>  * PATCH 1:
+>    - Revert v3's "known identity", and instead move existing paragraph
+>      from submitting-a-patch.rst to code-provenance.rst [Philippe]
+>    - Add a paragraph on recording maintainer modifications [Alex]
+>  * PATCH 3:
+>    - Talk about "AI-assisted software development", "AI content
+>      generators", and "content", not just "AI code generators" and
+>      "code" [Stefan, Daniel]
+>    - Fix spelling of Copilot, and mention Claude [Stefan]
+>    - Fix link text for reference to the DCO
+>    - Reiterate the policy does not apply to other uses of AI [Stefan,
+>      Daniel]
+>    - Add agents to the examples of tools impacted by the policy
+>      [Daniel]
+>
+> Changes in v3 [Markus Armbruster]:
+>
+>  * PATCH 1:
+>    - Require "known identity" (phrasing stolen from Linux kernel docs)
+>      [Peter]
+>    - Clarify use of multiple addresses [Michael]
+>    - Improve markup
+>    - Fix a few misspellings
+>    - Left for later: explain our use of Message-Id: [Alex]
+>  * PATCH 2:
+>    - Minor phrasing tweaks and spelling fixes
+>  * PATCH 3:
+>    - Don't claim DCO compliance is currently impossible, do point out
+>      it's unclear how, and that we consider the legal risk not
+>      acceptable.
+>    - Stress that the policy is open to revision some more by adding
+>      "as AI tools mature".  Also rephrase the commit message.
+>    - Improve markup
+>
+> Changes in v2 [Daniel Berrang=C3=A9]:
+>
+>  * Fix a huge number of typos in docs
+>  * Clarify that maintainers should still add R-b where relevant, even
+>    if they are already adding their own S-oB.
+>  * Clarify situation when contributor re-starts previously abandoned
+>    work from another contributor.
+>  * Add info about Suggested-by tag
+>  * Add new docs section dealing with the broad topic of "generated
+>    files" (whether code generators or compilers)
+>  * Simplify the section related to prohibition of AI generated files
+>    and give further examples of tools considered covered
+>  * Remove repeated references to "LLM" as a specific technology, just
+>    use the broad "AI" term, except for one use of LLM as an example.
+>  * Add note that the policy may evolve if the legal clarity improves
+>  * Add note that exceptions can be requested on case-by-case basis
+>    if contributor thinks they can demonstrate a credible copyright
+>    and licensing status
+>
+> Daniel P. Berrang=C3=A9 (3):
+>   docs: introduce dedicated page about code provenance / sign-off
+>   docs: define policy limiting the inclusion of generated files
+>   docs: define policy forbidding use of AI code generators
+>
+>  docs/devel/code-provenance.rst    | 338 ++++++++++++++++++++++++++++++
+>  docs/devel/index-process.rst      |   1 +
+>  docs/devel/submitting-a-patch.rst |  23 +-
+>  3 files changed, 341 insertions(+), 21 deletions(-)
+>  create mode 100644 docs/devel/code-provenance.rst
+>
+> --
+> 2.49.0
+>
 >
 
