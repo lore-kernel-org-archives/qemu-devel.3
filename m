@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5519DC77B7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 09:45:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D74D8C77B7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 09:45:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTdjJ-0006eM-S4; Mon, 23 Jun 2025 05:44:45 -0400
+	id 1uTdjj-0007YX-OQ; Mon, 23 Jun 2025 05:45:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uTdjI-0006aG-2W; Mon, 23 Jun 2025 05:44:44 -0400
+ id 1uTdjP-0006zL-24; Mon, 23 Jun 2025 05:44:54 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uTdjA-0002iG-As; Mon, 23 Jun 2025 05:44:43 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bQjlz2HPDz6HJc8;
- Mon, 23 Jun 2025 17:42:07 +0800 (CST)
+ id 1uTdjN-0002jM-8v; Mon, 23 Jun 2025 05:44:50 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bQjpC3gJ7z6M51k;
+ Mon, 23 Jun 2025 17:44:03 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 05ECF1402E9;
- Mon, 23 Jun 2025 17:44:34 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 05D03140277;
+ Mon, 23 Jun 2025 17:44:46 +0800 (CST)
 Received: from A2303104131.china.huawei.com (10.203.177.241) by
  frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 23 Jun 2025 11:44:25 +0200
+ 15.1.2507.39; Mon, 23 Jun 2025 11:44:36 +0200
 To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
 CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
  <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
@@ -35,9 +35,9 @@ CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
  <smostafa@google.com>, <gustavo.romero@linaro.org>, <linuxarm@huawei.com>,
  <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
  <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: [PATCH v5 08/11] qemu-options.hx: Document the arm-smmuv3 device
-Date: Mon, 23 Jun 2025 10:42:27 +0100
-Message-ID: <20250623094230.76084-9-shameerali.kolothum.thodi@huawei.com>
+Subject: [PATCH v5 09/11] bios-tables-test: Allow for smmuv3 test data.
+Date: Mon, 23 Jun 2025 10:42:28 +0100
+Message-ID: <20250623094230.76084-10-shameerali.kolothum.thodi@huawei.com>
 X-Mailer: git-send-email 2.12.0.windows.1
 In-Reply-To: <20250623094230.76084-1-shameerali.kolothum.thodi@huawei.com>
 References: <20250623094230.76084-1-shameerali.kolothum.thodi@huawei.com>
@@ -75,31 +75,44 @@ From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that arm,virt can have user-creatable smmuv3 devices, document it.
+The tests to be added exercises both legacy(iommu=smmuv3) and new
+-device arm-smmuv3,.. cases.
 
 Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 ---
- qemu-options.hx | 7 +++++++
- 1 file changed, 7 insertions(+)
+ tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev    | 0
+ tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy | 0
+ tests/data/acpi/aarch64/virt/IORT.smmuv3-dev    | 0
+ tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy | 0
+ tests/qtest/bios-tables-test-allowed-diff.h     | 4 ++++
+ 5 files changed, 4 insertions(+)
+ create mode 100644 tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev
+ create mode 100644 tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy
+ create mode 100644 tests/data/acpi/aarch64/virt/IORT.smmuv3-dev
+ create mode 100644 tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 7eb8e02b4b..7d1a12f7ef 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -1226,6 +1226,13 @@ SRST
-     ``aw-bits=val`` (val between 32 and 64, default depends on machine)
-         This decides the address width of the IOVA address space.
- 
-+``-device arm-smmuv3,primary-bus=id``
-+    This is only supported by ``-machine virt`` (ARM).
-+
-+    ``primary-bus=id``
-+        Accepts either the default root complex (pcie.0) or a
-+        pxb-pcie based root complex.
-+
- ERST
- 
- DEF("name", HAS_ARG, QEMU_OPTION_name,
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev b/tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy b/tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/tests/data/acpi/aarch64/virt/IORT.smmuv3-dev b/tests/data/acpi/aarch64/virt/IORT.smmuv3-dev
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy b/tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..2e3e3ccdce 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,5 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy",
++"tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev",
++"tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy",
++"tests/data/acpi/aarch64/virt/IORT.smmuv3-dev",
 -- 
 2.34.1
 
