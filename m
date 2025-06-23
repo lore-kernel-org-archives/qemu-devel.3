@@ -4,101 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 059A1C7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 06:45:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F426C7115B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 07:04:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTavd-0005Qn-EV; Mon, 23 Jun 2025 02:45:17 -0400
+	id 1uTbDn-0001Dy-DO; Mon, 23 Jun 2025 03:04:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Zqu3=ZG=kaod.org=clg@ozlabs.org>)
- id 1uTavb-0005QA-Ba; Mon, 23 Jun 2025 02:45:15 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uTbDk-0001D9-4j
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 03:04:00 -0400
+Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Zqu3=ZG=kaod.org=clg@ozlabs.org>)
- id 1uTavZ-0003DP-0V; Mon, 23 Jun 2025 02:45:15 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bQdqm2KYlz4x47;
- Mon, 23 Jun 2025 16:45:08 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bQdqh6dTgz4x3q;
- Mon, 23 Jun 2025 16:45:02 +1000 (AEST)
-Message-ID: <ccf89b7e-9daf-489b-a05f-4bb70d9a09c4@kaod.org>
-Date: Mon, 23 Jun 2025 08:45:00 +0200
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uTbDh-0005Da-SC
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 03:03:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1750662238; x=1782198238;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=/5kJrZkidYndVUj0ftyAdJNTNVDkKRZ3ymWBvpOsvNc=;
+ b=m+R004bD02Pqn0ezdq8bXTq3ShJza3q4KHo+IgCwWtlGPT8nwmULUy16
+ uRiT3aT5z62JP3xqAnqZw3w28247VFShWodWBOUpwqHhZZ2q0KKyymoGT
+ 14CE1sl/bNt3deMGPUJtRdB/IA48mXeGq5j1N9Oww0TwF3ehabXttt6Fw
+ CH85MGvZoydRXWy0OtoY1N5ZoO6E0LEUIqXoy1yAUNIzLTQzVfuv6txVz
+ oqcb+5912MiwR8BTSgMZXIiFfS83vMpF5D1q2N6rXjumf1gjVkjpw46wH
+ dBZU0SyjXg7hAB3Rqt2Kx1WjAe1vJWR6k4pxwnXkm3v3xDJe6BGLbpoCV g==;
+X-CSE-ConnectionGUID: ME4eWUk6SsOEDrJ0BwSLbQ==
+X-CSE-MsgGUID: XU7nFDgiTDGE+XxH0RunIw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11472"; a="63462909"
+X-IronPort-AV: E=Sophos;i="6.16,258,1744095600"; d="scan'208";a="63462909"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Jun 2025 00:03:26 -0700
+X-CSE-ConnectionGUID: ORy9CO55QRinZ64AK3wTXQ==
+X-CSE-MsgGUID: /K6bd4ADT9+j3g+ajbvABA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,258,1744095600"; d="scan'208";a="182385052"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Jun 2025 00:03:24 -0700
+Message-ID: <4ffdb62b-8fe4-4b34-9efa-aecff7f8e77b@intel.com>
+Date: Mon, 23 Jun 2025 15:03:19 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v5 0/4] Add QEMU model for ASPEED OTP memory and integrate
- with SoCs
-To: Kane Chen <kane_chen@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20250619064115.4182202-1-kane_chen@aspeedtech.com>
- <7abd4507-46e3-4848-8f54-928998c64565@kaod.org>
- <SI6PR06MB7631674C7B714E76F25E78A2F779A@SI6PR06MB7631.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <SI6PR06MB7631674C7B714E76F25E78A2F779A@SI6PR06MB7631.apcprd06.prod.outlook.com>
+Subject: Re: [PULL 24/24] i386/tdx: handle TDG.VP.VMCALL<GetQuote>
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Isaku Yamahata <isaku.yamahata@intel.com>,
+ Chenyi Qiang <chenyi.qiang@intel.com>
+References: <20250620164053.579416-1-pbonzini@redhat.com>
+ <20250620164053.579416-25-pbonzini@redhat.com>
+ <b8171c39-6a92-4078-a59a-a63d7452e1e9@kaod.org>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <b8171c39-6a92-4078-a59a-a63d7452e1e9@kaod.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=Zqu3=ZG=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=192.198.163.11; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,31 +89,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Kane,
-
-On 6/23/25 05:23, Kane Chen wrote:
-> Hi Cédric,
+On 6/23/2025 2:43 PM, Cédric Le Goater wrote:
+> Hello,
 > 
-> Sure, I will submit a follow-up patch that includes the following changes:
+> On 6/20/25 18:40, Paolo Bonzini wrote:
+>> From: Isaku Yamahata <isaku.yamahata@intel.com>
+>>
+>> Add property "quote-generation-socket" to tdx-guest, which is a property
+>> of type SocketAddress to specify Quote Generation Service(QGS).
+>>
+>> On request of GetQuote, it connects to the QGS socket, read request
+>> data from shared guest memory, send the request data to the QGS,
+>> and store the response into shared guest memory, at last notify
+>> TD guest by interrupt.
+>>
+>> command line example:
+>>    qemu-system-x86_64 \
+>>      -object '{"qom-type":"tdx-guest","id":"tdx0","quote-generation- 
+>> socket":{"type":"unix", "path":"/var/run/tdx-qgs/qgs.socket"}}' \
+>>      -machine confidential-guest-support=tdx0
+>>
+>> Note, above example uses the unix socket. It can be other types, like 
+>> vsock,
+>> which depends on the implementation of QGS.
+>>
+>> To avoid no response from QGS server, setup a timer for the transaction.
+>> If timeout, make it an error and interrupt guest. Define the threshold of
+>> time to 30s at present, maybe change to other value if not appropriate.
+>>
+>> Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
+>> Co-developed-by: Chenyi Qiang <chenyi.qiang@intel.com>
+>> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+>> Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>> Tested-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>> ---
+>>   qapi/qom.json                         |   8 +-
+>>   target/i386/kvm/tdx-quote-generator.h |  82 +++++++
+>>   target/i386/kvm/tdx.h                 |  10 +
+>>   target/i386/kvm/kvm.c                 |   3 +
+>>   target/i386/kvm/tdx-quote-generator.c | 300 ++++++++++++++++++++++++++
+>>   target/i386/kvm/tdx-stub.c            |   4 +
+>>   target/i386/kvm/tdx.c                 | 176 ++++++++++++++-
+>>   target/i386/kvm/meson.build           |   2 +-
+>>   8 files changed, 582 insertions(+), 3 deletions(-)
+>>   create mode 100644 target/i386/kvm/tdx-quote-generator.h
+>>   create mode 100644 target/i386/kvm/tdx-quote-generator.c
 > 
-> 1. Introduce a new OTP memory device model, which provides in-memory storage and implements basic MMIO read/write via address space.
-> 2. Initialize the OTP memory device as a child of the SBC controller.
-> 3. Add command handling logic in the SBC to operate on the OTP memory, supporting both read and program operations.
-> 4. Introduce TYPE_ASPEED_AST2600_SBC to support OTP memory attachment via the SBC class attribute in the AST2600 SoC.
-> 5. Add trace events to facilitate debugging and tracing of OTP memory operations.
+> These changes broke the build on 32-bit host.
 > 
-> As requested, the BlockBackend integration, the otpmem machine property, and the related alias handling will be removed.
-> Please let me know if there is anything else that should be adjusted.
+> Could you please send a patch to avoid compiling TDX in such environment ?
 
+Paolo is on vacation.
 
-Looks good.
+I would like to help, but I don't have 32-bit host environment on hand. 
+Do you know how to set up such environment quickly? (I tried to set up 
+within a 32-bit VM but the 32-bit OS is too old and I didn't get it work 
+to install the required package for building QEMU)
 
-Then, we will re-introduce the BlockBackend and last, the 'otpmem'
-machine property.
-
-Thanks,
-
-C.
-
+> Thanks,
+> 
+> C.
 
 
