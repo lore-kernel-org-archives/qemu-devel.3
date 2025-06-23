@@ -4,121 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FF48C7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 13:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 299FBC77B7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 13:59:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uThZQ-00072F-Ht; Mon, 23 Jun 2025 09:50:49 -0400
+	id 1uThgw-0008E2-PT; Mon, 23 Jun 2025 09:58:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1uThZN-00071j-Kx
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 09:50:45 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1uThZK-000637-9u
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 09:50:45 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55NBMEqt007523;
- Mon, 23 Jun 2025 13:50:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=00rZ/v
- B+GiQOBvr+MCQoAA+AZOOxQtSQ34RvG4VCl9g=; b=UT1GezeMVM9LnPM0O92c1O
- 5g60g8JPpRPNThFcuDMG5819NA1tdXZmQzrqNAOVILI6zc7aMqwvO36S0/1pi7nk
- QOm/faf4JymymZh+mrziJv59dJqW0C5HWMrlRKNAsX/yysYUlllHmJOlakS55hbW
- dFDOYoga0XxrbvC+xcve5hIdiFpxhgIFQyeF4o7aWpb8T1VgvbIc9UM/Bj5lkxOO
- lDWQ+Nzpd/9uPv2s4cYpSbx6il0kRsWmPKj5zTb3vNKjE2+u54CEjFtC9qB4r3jO
- JHNhALmBQGsJwwkpV1wE55niNt6urEq0LcwWgrJyR0DdmAqyzKOFsRNqiHQts4Uw
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47dmf2t53e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 23 Jun 2025 13:50:35 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 55NDCqRU023145;
- Mon, 23 Jun 2025 13:50:35 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47dmf2t538-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 23 Jun 2025 13:50:35 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55NCb9Vo014748;
- Mon, 23 Jun 2025 13:50:34 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 47e9s26q4h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 23 Jun 2025 13:50:34 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 55NDoSD129753996
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 23 Jun 2025 13:50:28 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 82D775805B;
- Mon, 23 Jun 2025 13:50:33 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 51D2258055;
- Mon, 23 Jun 2025 13:50:32 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.77.138]) by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 23 Jun 2025 13:50:32 +0000 (GMT)
-Message-ID: <0a0ff51b023df5e627981225bf229b4de0f9112b.camel@linux.ibm.com>
-Subject: Re: [PATCH V5 27/38] vfio/iommufd: add vfio_device_free_name
-From: Eric Farman <farman@linux.ibm.com>
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>, Cedric Le Goater	
- <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>, Eric Auger
- <eric.auger@redhat.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Marcel Apfelbaum	
- <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>, Fabiano Rosas	
- <farosas@suse.de>
-Date: Mon, 23 Jun 2025 09:50:31 -0400
-In-Reply-To: <1749569991-25171-28-git-send-email-steven.sistare@oracle.com>
-References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
- <1749569991-25171-28-git-send-email-steven.sistare@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-1.fc42) 
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uThgv-0008DF-2r
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 09:58:33 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uThgt-0007Gn-Ia
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 09:58:32 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-74264d1832eso5342673b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 06:58:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1750687110; x=1751291910; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Nlo8as5e/cpldlYDplp41yosw6ZzdGOstiWraYoHkls=;
+ b=oHRKiiECvDy/vU8G3L3PgadJZcssOkVlPB3T8PRyvtC+CYcCv2ExkaXwJmT5XBLz5y
+ o0xMIYjy1J/P4+RyM123QGUTzxXXOZyHpq0QKz7ePus01mw0YgHhonokjENr7lbigfEZ
+ J8DlN5L16w3lk0bsWf+aTLenSiJ2Vi7f6Xtff0DqDp6cztOEW2pumZ+M0FiyiYM/Ho9w
+ epSB1MxH7vPv5PvrbcgXCnIAbgFLh1DdNj27nEJnE2jYGU5Ybox/coGRNF+bmYcyUa2o
+ FtOoW4KYUcjEAzNobujdA02PQrSY0MeUI2DGQe3PQkx2eQ3VcSDkWKOq5XFRUjo2Kc0P
+ EC0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750687110; x=1751291910;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Nlo8as5e/cpldlYDplp41yosw6ZzdGOstiWraYoHkls=;
+ b=ifNnFAIjRk0W7lEZldkoO7R16DUbhSoQt+bHLMp8HMhHtRCup+MrXKOxaFcpqKJ3ZZ
+ hIHHuuznjsq2lMnA1pbzcyNl29O3P1y9RVsXKVXrxKGiIhZZRDs3dqWQoVLGuKrCD62S
+ mC1xEkGl8U7Q3JqVxFTLDwHxCQMpCpuUYmR7bwf+wPauNL82VuSqcrXWFfvepfkCcyaK
+ mlFl7QPqvawXDdwNltypEtuQcYIrPCvukyzkRom4Oq4hnYcyoacIyJPq0FIUD6ikEkSU
+ WH8vU+y+daohc6wMGktID9TuquT38R73x/1H5c4CqZNYracFe4Hc5idyPxbLoTGDnjAS
+ r1vQ==
+X-Gm-Message-State: AOJu0YysBwPNo2j2QynvGtpjfW+Hq0IOd9TyWWaiVdjVoix6GaNAIT/l
+ zjACgJEqJKWqDnM0Xw1VJPQzI4rVhCXRoUQCz6ph8ZrpZZKeFkkhKRp2yZV+CV0L4fl46GrHyzM
+ QiuFB
+X-Gm-Gg: ASbGncss3y1KICTbsMwCJFOlyMMgzXfyhBNCERjfFxoi8tQVAqzW2gtgDK8XX0QxSec
+ rkFjkz8Q5OF5CJQXDN0MQ7OY8f9MjA6DGIsl582fHujn210IH0xgYxlxbHknLv4poAJw3wgo2gj
+ blK4QY6HcwciS41mCa1VKBc1PKpot38V3lBYO0bW2ifpyYf5LkCYwyP1Gftxs2pHd86Be8edaTh
+ zwVUs7ig9Ql7mLTdZo+9xxnPv9UIScyNbBSSJFKvooqlps0+RPvhGe9MxtIF4BoTS6iNcRaMF5C
+ k+jM8VWYmCJ3SEXoufq1GFWG1TEJXd2dKd4fsQSqHULgwI/5lsBBMyJd9/AnUR9nP4l5rLdGMAu
+ iZg==
+X-Google-Smtp-Source: AGHT+IGg0Hu01Sq7RKr8UgZ1A7DHPgd6q0vY0ikfWBIFKs7+PyeEB47pid34WctGwhJJz5vwK28x2A==
+X-Received: by 2002:a05:6300:614:20b0:220:2a67:14a5 with SMTP id
+ adf61e73a8af0-2202a671568mr16673077637.32.1750687109875; 
+ Mon, 23 Jun 2025 06:58:29 -0700 (PDT)
+Received: from gromero0.. ([186.215.58.88]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b31f119eb64sm8063490a12.31.2025.06.23.06.58.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 23 Jun 2025 06:58:29 -0700 (PDT)
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: qemu-devel@nongnu.org, eric.auger@redhat.com, philmd@linaro.org,
+ mst@redhat.com
+Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, gustavo.romero@linaro.org,
+ udo@hypervisor.org, ajones@ventanamicro.com, peter.maydell@linaro.org,
+ imammedo@redhat.com, anisinha@redhat.com
+Subject: [PATCH v5 2/9] hw/arm/virt: Simplify logic for setting instance's
+ 'tcg_its' variable
+Date: Mon, 23 Jun 2025 13:57:42 +0000
+Message-Id: <20250623135749.691137-3-gustavo.romero@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250623135749.691137-1-gustavo.romero@linaro.org>
+References: <20250623135749.691137-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=M5FNKzws c=1 sm=1 tr=0 ts=68595bab cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=SK52Fxje_ui11fC3wEIA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjIzMDA4MiBTYWx0ZWRfX09lhJLmvEL3y
- 9LiTkWdbK8Jkb7Jd7l02XOdyxZlfx5I1LkF82LFkyPfSYl7l5++Wm8SDYvWNHpw8gbuQj5Zi+Si
- INjQA02dZTVMYT43nfsUr40IqMU2yEgrd6K9pLV9tdTpw6FndgOjXygoH7UwvlEvpG+w+Wh/wMt
- HDbfFYSTg4l7THiNmCYPUxaFVA2fPjmQgTMPVG/H9qql9P6XkeyqQI5bTgymkQ65X6uWOqd03+D
- a7YH8ayq+ezuFua4nlw1aBQvsqKATpkcAXA2qz4kZ2XqsRSwzkJcuTT1/kt+iT9BQLj3LcGNC5p
- v69J25UuJkt4cct1tnHd0WXC83WqcZbADJ0uFea25xfIZBSzU9citya9rIdfmSU4ss2et7ZV8GY
- 3mzNFdWwrLyIE4HPiETGulGRyU/YURT1pgUK8K9jqcDbWHALLRiDp0x1uxFq/NKldPK/fny8
-X-Proofpoint-GUID: NxSbDFh3LBLaEtOHAzWZyF6t_4_jFxYv
-X-Proofpoint-ORIG-GUID: 8rsiJx9_qIoXp7v9WFPLaGdyXfnfLsjl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-23_04,2025-06-23_05,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0
- priorityscore=1501 phishscore=0 spamscore=0 clxscore=1011 adultscore=0
- mlxscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506230082
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,72 +104,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2025-06-10 at 08:39 -0700, Steve Sistare wrote:
-> Define vfio_device_free_name to free the name created by
-> vfio_device_get_name.  A subsequent patch will do more there.
-> No functional change.
->=20
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->  include/hw/vfio/vfio-device.h | 1 +
->  hw/vfio/ap.c                  | 2 +-
->  hw/vfio/ccw.c                 | 2 +-
->  hw/vfio/device.c              | 5 +++++
->  hw/vfio/pci.c                 | 2 +-
->  hw/vfio/platform.c            | 2 +-
->  6 files changed, 10 insertions(+), 4 deletions(-)
->=20
-> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.=
-h
-> index 6eb6f21..321b442 100644
-> --- a/include/hw/vfio/vfio-device.h
-> +++ b/include/hw/vfio/vfio-device.h
-> @@ -227,6 +227,7 @@ int vfio_device_get_irq_info(VFIODevice *vbasedev, in=
-t index,
-> =20
->  /* Returns 0 on success, or a negative errno. */
->  bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
-> +void vfio_device_free_name(VFIODevice *vbasedev);
->  void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **e=
-rrp);
->  void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops=
-,
->                        DeviceState *dev, bool ram_discard);
-> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-> index 785c0a0..013bd59 100644
-> --- a/hw/vfio/ap.c
-> +++ b/hw/vfio/ap.c
-> @@ -180,7 +180,7 @@ static void vfio_ap_realize(DeviceState *dev, Error *=
-*errp)
-> =20
->  error:
->      error_prepend(errp, VFIO_MSG_PREFIX, vbasedev->name);
-> -    g_free(vbasedev->name);
-> +    vfio_device_free_name(vbasedev);
->  }
-> =20
->  static void vfio_ap_unrealize(DeviceState *dev)
+Because 'tcg_its' in the machine instance is set based on the machine
+class’s negated variable 'no_tcg_its', 'tcg_its' is the opposite of
+'no_tcg_its' and hence the code in question can be simplified as:
+tcg_its = !no_tcg_its.
 
-^^^
-I suspect you want to convert the g_free call of the VFIODevice name here a=
-s well.
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+---
+ hw/arm/virt.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-> index cea9d6e..903b8b0 100644
-> --- a/hw/vfio/ccw.c
-> +++ b/hw/vfio/ccw.c
-> @@ -619,7 +619,7 @@ out_io_notifier_err:
->  out_region_err:
->      vfio_device_detach(vbasedev);
->  out_attach_dev_err:
-> -    g_free(vbasedev->name);
-> +    vfio_device_free_name(vbasedev);
->  out_unrealize:
->      if (cdc->unrealize) {
->          cdc->unrealize(cdev);
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 9a6cd085a3..19f85d0abf 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -3337,12 +3337,8 @@ static void virt_instance_init(Object *obj)
+ 
+     /* Default allows ITS instantiation */
+     vms->its = true;
+-
+-    if (vmc->no_tcg_its) {
+-        vms->tcg_its = false;
+-    } else {
+-        vms->tcg_its = true;
+-    }
++    /* Allow ITS emulation if the machine version supports it */
++    vms->tcg_its = !vmc->no_tcg_its;
+ 
+     /* Default disallows iommu instantiation */
+     vms->iommu = VIRT_IOMMU_NONE;
+-- 
+2.34.1
 
-Similarly, the matching g_free call in vfio_ccw_unrealize
-
-Thanks,
-Eric
 
