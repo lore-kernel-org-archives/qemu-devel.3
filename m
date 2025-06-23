@@ -4,102 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FEAFC7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 11:55:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DF94C77B7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 11:56:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTfl4-0001P5-0L; Mon, 23 Jun 2025 07:54:42 -0400
+	id 1uTfm8-0002lJ-I7; Mon, 23 Jun 2025 07:55:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTfkz-0001Ol-9m
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 07:54:37 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTfkx-0005Hf-Bj
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 07:54:36 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3a6cd1a6fecso3557513f8f.3
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 04:54:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750679672; x=1751284472; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mA1bPn5/VKcYzEd4AJcMgbdM29kFbTpL6cqkZBp0IqU=;
- b=r6pcCw2DKxDbWNQOxQhi35uvyo10bYRwiIu3lXm2xlHkPQhEZTKksuqhPqqbXvWMk0
- 2A/gyQgjQaN7+XeyPDuq2fIVIhevXPsuJnEruzDfHtBqHQ6aU8U4DrWo4jxoJCohdxql
- OaQzbjc49hd5bjsI9HSPjEQfG5D/+le/IMCdAg8yvhbJx2Zcu0q6zdv+1/FTWgvWmpMr
- 760yomcmyjgdYGy552GDhB2vhEZYpj4GUpk7VeNJpwUq7pFLI/G7iRm8oLVI4QN5thB5
- CwWJMDRi+jeS+OZFrhiqp369PSZQNlQIIvC3fD6lqilXMWuF8Eye46Ti+0wBpadVXvs8
- gqAw==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uTfm4-0002kn-66
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 07:55:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uTflx-0005eI-W3
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 07:55:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750679734;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Y2+BVcScn3BcK7P3HbciYU0Xg+g1eIHrvNYux3XcxRw=;
+ b=hG3BHAuelIF5O9lIe9LOOsu/6S3vzpU/vzyKvaoPKzL8HXnNMt00fzJyVb9Ki8Du59/LXm
+ qjOcDWU3cSULqcal59fgoXFo6zd0p2Nkj5f5jZcrMvZFYn5HY4SGCg0vLsQOcSea6VHVWc
+ 8D8NVG72nkYbEGXdz1KmYYyBp2Aj9AM=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-515-4LsRf-kfMVqXM-sNLNxbew-1; Mon, 23 Jun 2025 07:55:28 -0400
+X-MC-Unique: 4LsRf-kfMVqXM-sNLNxbew-1
+X-Mimecast-MFC-AGG-ID: 4LsRf-kfMVqXM-sNLNxbew_1750679727
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43eed325461so24765395e9.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 04:55:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750679672; x=1751284472;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mA1bPn5/VKcYzEd4AJcMgbdM29kFbTpL6cqkZBp0IqU=;
- b=rh890lIHje2r0VFpfFENTbCt+jJHYa/6IaakpYSzZnWfmDPS0u7nA4xfxq94rwVjZ1
- GYcrK8ExKrsJudeiy70Dhydg/wBDbekovmfNUamo/v74DGTLvgGHKG344/2JpF6IMQop
- MyysRlpubERCu7lafGqtt7RSsHjIfF0EroHcuGXPPszbcii5EAFi94F7Wm8fbbaIfRfA
- H7Oa+sekaFKR/N51ScnAuIRNCnrsKBjSWGnmJXMNWapX3IAVjefc7wprWxPS6m3+4kzc
- pzmAE5YTZprmPJ/lHykvnk3Vf2iLFTT2+th7FHd6dHiTFcQMOp2C3tqtt5Doh0ax5ZWU
- 3Ylg==
+ d=1e100.net; s=20230601; t=1750679727; x=1751284527;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Y2+BVcScn3BcK7P3HbciYU0Xg+g1eIHrvNYux3XcxRw=;
+ b=ZHHkD3erZgcT4hz82CWCkzfl2gYCIb/oyCsmwXEGHnQatLk8fuxHpy/iJDNepNg4Bo
+ sVnpwoES/qwYVVU3jgwm0RHjuLe9NWNv7OMkyYWFa0SzvTrB2+it7arN7WlpnVZUpmM6
+ GGekCtUFqBqDpbJqwA7UkjJ0w8AMsCx7HfWV7C8dvgLnlHwcjpnBBZApO7yx7IksE+3g
+ r1CcRFX3LUG29xdVFD0o0ySr+xv3tNDz199AbswxZjAmLxeUEyzRy8l/nq/oCaAXRA7+
+ HJXJPm53ky9RldS1NJ+5IU/NWMwbG1T2/yVuqGLLIv/PSMb/p7YfDWZNVeYcw/eqiVAc
+ YIdw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW7Tn5G466pske2y7LSMY/fJHrbEnLdzbUB3oxEeP3FYG0qK7RStvwRsXUw7RpoG72CpQDBvIU+Ynyp@nongnu.org
-X-Gm-Message-State: AOJu0Yw5bvTru4zIepSq29pRe5uEsyYIUF3yKLx65s6Y6XV6GvbI8HLw
- jFQllo+pc460duOYKACwS2R+ipJrzfmgHWopb8csvflT8/sXxAA2TNlsYMHQ2MxO0po=
-X-Gm-Gg: ASbGncswzhftzb/Neglyf8dIIGhibXltogMbGHk3STHTTVsXlOW16Ucb3DwCJZZxi8T
- 5kAsZm34Anq5msepceH9FG2GUuxnSTXExhMx7M9x9EPzH7Pu9delc4y4Z341eO75MM4Q9rNxSPv
- hfS/ZEwbF3iXvGgS1f3P9Mu8RXxw1fZo7rIkn0lgYbDd90WBDF97UEDW4yppy9sGk+DNTyZtKvK
- 7hYAYpMZ090VfRme5G/qxrG+XdLWD8qZWsioE4yXtgGGHyrHmXd4gmZJSec0XnbX9FvwHi/v3qi
- 8V3c0RRAq0cyYIrBVxHW/2pEn5OKcq/sx4nSOlzWKlRoD1l04N4VsCSbrt3P2l7A3ZH7XncmKK8
- 2tXZT6saHoiaR87KA+WcbBBh0CeUcDQ==
-X-Google-Smtp-Source: AGHT+IECw1gIHOR0QOBsHa/SDc+jBWm8t+IURqICdiK8HE4kWpV03x7yosYd71lVv5bIijrW7Li9TQ==
-X-Received: by 2002:adf:9c8c:0:b0:3a4:f7af:db9c with SMTP id
- ffacd0b85a97d-3a6d1318226mr9569094f8f.59.1750679672219; 
- Mon, 23 Jun 2025 04:54:32 -0700 (PDT)
-Received: from [192.168.69.167] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6d0f19b30sm9469755f8f.37.2025.06.23.04.54.30
+ AJvYcCWGHzGOnOqDP5a9X//TqfKLMfcQsaOK1LwYJbJnYCX8OX0Drs5IaHTnjuOrQeFZJ7DUxxe9PRC7rDsh@nongnu.org
+X-Gm-Message-State: AOJu0YzdJPREcswi4x/djnnYIv4ClLoS27B3vkwpPLor1qfSzx/KnZLk
+ l/gHz5RdYJTco/zR5hRU595fVafMOE2jFPePPjgO4DEOERkH4R4ocCL/pyR26WLFOMvWiDzj/D1
+ hP7xbGI7kG/zxPFmT1lOTNVo80pK84YiX++kRIYs73a/wgTDErmgxnSQw
+X-Gm-Gg: ASbGncsDJFr1F2Ho3+gidYTIDJ7INy2hHa5ptf3UPC/eweAnoKW+xnoeCk3WQBtvJrA
+ FJlo1FfAUeet3VI1wdlpiT11/sv96URC1eLEIUSCAGMyI/ZkwOhgYuJIVNZUdq1YQ7uy6XKBKa0
+ ZZ0NEDqgXi8fGj2f/QCfHOhZ5F3a+HSlgea/eyz1GyOiHy0gph6hsxKkA/OEC3ooq954P+eKy0J
+ Iti99KADumGVl06edhkOO3ZHX/KTJv9MBeVYDZZcryW7SMK1kHuthfNkLhxpKm7vxnSQCqRxKhK
+ KMlUfsut+ED0130frBEI9zHO7XDzCR7fKuVeWoQOzxDrNLbc8TET0QaC44yurSydAVZCHw==
+X-Received: by 2002:a05:6000:230d:b0:3a4:fbaf:749e with SMTP id
+ ffacd0b85a97d-3a6d12e5e11mr8970999f8f.49.1750679726861; 
+ Mon, 23 Jun 2025 04:55:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGWTSYeQAVjiD9/mBm6S4+1F8qFbI8rg+Q6aPb9nZSlZ6bJpY6F9BoJO6MT4O1ncC9xbvnm0Q==
+X-Received: by 2002:a05:6000:230d:b0:3a4:fbaf:749e with SMTP id
+ ffacd0b85a97d-3a6d12e5e11mr8970987f8f.49.1750679726488; 
+ Mon, 23 Jun 2025 04:55:26 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a6d0f1d868sm9229381f8f.44.2025.06.23.04.55.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Jun 2025 04:54:31 -0700 (PDT)
-Message-ID: <76730787-f153-474d-859f-0f51ede79e93@linaro.org>
-Date: Mon, 23 Jun 2025 13:54:30 +0200
+ Mon, 23 Jun 2025 04:55:25 -0700 (PDT)
+Message-ID: <e402a485-66be-44d4-9cc5-aa7157511f76@redhat.com>
+Date: Mon, 23 Jun 2025 13:55:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 24/26] tests/functional: Require TCG to run Aarch64
- imx8mp-evk test
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Radoslaw Biernacki <rad@semihalf.com>, Alexander Graf <agraf@csgraf.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Bernhard Beschow <shentey@gmail.com>,
- Cleber Rosa <crosa@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, kvm@vger.kernel.org,
- qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, John Snow <jsnow@redhat.com>
-References: <20250620130709.31073-1-philmd@linaro.org>
- <20250620130709.31073-25-philmd@linaro.org>
- <3896c4a8-8b25-45e0-978c-1539648ab4cc@redhat.com>
+Subject: Re: [PATCH v2 12/19] intel_iommu: Introduce a new pasid cache
+ invalidation type FORCE_RESET
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <3896c4a8-8b25-45e0-978c-1539648ab4cc@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
+ Yi Sun <yi.y.sun@linux.intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20250620071813.55571-1-zhenzhong.duan@intel.com>
+ <20250620071813.55571-13-zhenzhong.duan@intel.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250620071813.55571-13-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,30 +121,122 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/6/25 10:19, Thomas Huth wrote:
-> On 20/06/2025 15.07, Philippe Mathieu-Daudé wrote:
->> The imx8mp-evk machine is only built when TCG is available.
-> 
-> The rationale here sounds wrong. If the machine is only built with TCG, 
-> then the set_machine() should be good enough to check whether it's 
-> available.
-> So I'd rather say:
-> 
-> "The imx8mp-evk machine can only run with the TCG accelerator".
+Hi Zhenzhong,
 
-Yes, you are correct.
-> 
-> With that update:
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-
-Thanks :)
-
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   tests/functional/test_aarch64_imx8mp_evk.py | 1 +
->>   1 file changed, 1 insertion(+)
+On 6/20/25 9:18 AM, Zhenzhong Duan wrote:
+> FORCE_RESET is different from GLOBAL_INV which updates pasid cache if
+> underlying pasid entry is still valid, it drops all the pasid caches.
+>
+> FORCE_RESET isn't a VTD spec defined invalidation type for pasid cache,
+> only used internally in system level reset.
+this comment shall be put in the code, along with the VTDPCInvType
+because the reader may look for that cmd in the spec.
+>
+> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  hw/i386/intel_iommu_internal.h |  2 ++
+>  hw/i386/intel_iommu.c          | 28 ++++++++++++++++++++++++++++
+>  hw/i386/trace-events           |  1 +
+>  3 files changed, 31 insertions(+)
+>
+> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+> index 025787b3b9..5ed76864be 100644
+> --- a/hw/i386/intel_iommu_internal.h
+> +++ b/hw/i386/intel_iommu_internal.h
+> @@ -564,6 +564,8 @@ typedef struct VTDRootEntry VTDRootEntry;
+>  #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL1      0xffffffffffe00000ULL
+>  
+>  typedef enum VTDPCInvType {
+> +    /* Force reset all */
+> +    VTD_PASID_CACHE_FORCE_RESET = 0,
+>      /* pasid cache invalidation rely on guest PASID entry */
+>      VTD_PASID_CACHE_GLOBAL_INV, /* pasid cache global invalidation */
+>      VTD_PASID_CACHE_DOMSI,      /* pasid cache domain selective invalidation */
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index f4273dc640..ed71bb8ec7 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -87,6 +87,8 @@ struct vtd_iotlb_key {
+>  static void vtd_address_space_refresh_all(IntelIOMMUState *s);
+>  static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n);
+>  
+> +static void vtd_pasid_cache_reset_locked(IntelIOMMUState *s);
+> +
+>  static void vtd_panic_require_caching_mode(void)
+>  {
+>      error_report("We need to set caching-mode=on for intel-iommu to enable "
+> @@ -391,6 +393,7 @@ static void vtd_reset_caches(IntelIOMMUState *s)
+>      vtd_iommu_lock(s);
+>      vtd_reset_iotlb_locked(s);
+>      vtd_reset_context_cache_locked(s);
+> +    vtd_pasid_cache_reset_locked(s);
+>      vtd_iommu_unlock(s);
+>  }
+>  
+> @@ -3196,6 +3199,8 @@ static gboolean vtd_flush_pasid(gpointer key, gpointer value,
+>      }
+>  
+>      switch (pc_info->type) {
+> +    case VTD_PASID_CACHE_FORCE_RESET:
+> +        goto remove;
+>      case VTD_PASID_CACHE_PASIDSI:
+>          if (pc_info->pasid != pasid) {
+>              return false;
+> @@ -3251,6 +3256,26 @@ remove:
+>      return true;
+>  }
+>  
+> +/* Caller of this function should hold iommu_lock */
+> +static void vtd_pasid_cache_reset_locked(IntelIOMMUState *s)
+> +{
+> +    VTDPASIDCacheInfo pc_info = {};
+> +
+> +    trace_vtd_pasid_cache_reset();
+> +
+> +    pc_info.type = VTD_PASID_CACHE_FORCE_RESET;
+> +
+> +    /*
+> +     * Reset pasid cache is a big hammer, so use g_hash_table_foreach_remove
+> +     * which will free the vtd_as instances. Also, as a big hammer, use
+> +     * VTD_PASID_CACHE_FORCE_RESET to ensure all the vtd_as instances are
+> +     * dropped, meanwhile the change will be passed to host if
+> +     * HostIOMMUDeviceIOMMUFD is available.
+> +     */
+> +    g_hash_table_foreach_remove(s->vtd_address_spaces,
+> +                                vtd_flush_pasid, &pc_info);
+> +}
+> +
+>  static void vtd_sm_pasid_table_walk_one(IntelIOMMUState *s,
+>                                          dma_addr_t pt_base,
+>                                          int start,
+> @@ -3377,6 +3402,9 @@ static void vtd_replay_guest_pasid_bindings(IntelIOMMUState *s,
+>      case VTD_PASID_CACHE_GLOBAL_INV:
+>          /* loop all assigned devices */
+>          break;
+> +    case VTD_PASID_CACHE_FORCE_RESET:
+> +        /* For force reset, no need to go further replay */
+> +        return;
+>      default:
+>          error_report("invalid pc_info->type for replay");
+>          abort();
+> diff --git a/hw/i386/trace-events b/hw/i386/trace-events
+> index ae5bbfcdc0..c8a936eb46 100644
+> --- a/hw/i386/trace-events
+> +++ b/hw/i386/trace-events
+> @@ -24,6 +24,7 @@ vtd_inv_qi_head(uint16_t head) "read head %d"
+>  vtd_inv_qi_tail(uint16_t head) "write tail %d"
+>  vtd_inv_qi_fetch(void) ""
+>  vtd_context_cache_reset(void) ""
+> +vtd_pasid_cache_reset(void) ""
+>  vtd_pasid_cache_gsi(void) ""
+>  vtd_pasid_cache_dsi(uint16_t domain) "Domain selective PC invalidation domain 0x%"PRIx16
+>  vtd_pasid_cache_psi(uint16_t domain, uint32_t pasid) "PASID selective PC invalidation domain 0x%"PRIx16" pasid 0x%"PRIx32
+Eric
 
 
