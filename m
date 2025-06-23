@@ -4,100 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EA48C7115D
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 07:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE1B0C7115B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 08:02:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTbr5-0007PF-G8; Mon, 23 Jun 2025 03:44:39 -0400
+	id 1uTc7I-0002ps-Qe; Mon, 23 Jun 2025 04:01:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Zqu3=ZG=kaod.org=clg@ozlabs.org>)
- id 1uTbr2-0007P4-7w
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 03:44:36 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uTc79-0002oJ-BP
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 04:01:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Zqu3=ZG=kaod.org=clg@ozlabs.org>)
- id 1uTbqz-0002r1-MR
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 03:44:36 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bQg8C5pZ0z4wy6;
- Mon, 23 Jun 2025 17:44:27 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uTc75-0005Dh-4Z
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 04:01:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750665668;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=uSFiVmD3iydCFALw+FaJ6tJEIjOyj7GAzxJTKypkQLY=;
+ b=EpG9ft0qO48oPPDp7XuUcLXjSHUHuIlgYenvIVP03NI2C+qjlmvVkoQf9WV/sSyICoGD9Q
+ RsssWPMAea1tQBA58Q7B60LilfJ3xEnIMfyRQ5KjED9YenNwNJpopXH4oTNjNnKzlHpuVw
+ Rn9Vc78vQUOAdQAJvgUqD0AJuBLfk4o=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-388-5rn2c_s-MbWhFSQ0o-jj4w-1; Mon,
+ 23 Jun 2025 04:01:03 -0400
+X-MC-Unique: 5rn2c_s-MbWhFSQ0o-jj4w-1
+X-Mimecast-MFC-AGG-ID: 5rn2c_s-MbWhFSQ0o-jj4w_1750665661
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bQg8B07WMz4wxx;
- Mon, 23 Jun 2025 17:44:25 +1000 (AEST)
-Message-ID: <ec83c950-c214-429c-943c-b80ffb54fc8a@kaod.org>
-Date: Mon, 23 Jun 2025 09:44:22 +0200
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DC5661955E90; Mon, 23 Jun 2025 08:01:00 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.95])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6E8C21956096; Mon, 23 Jun 2025 08:00:55 +0000 (UTC)
+Date: Mon, 23 Jun 2025 09:00:51 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com,
+ richard.henderson@linaro.org, david@redhat.com, pbonzini@redhat.com,
+ walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 02/28] crypto/x509-utils: Add helper functions for
+ certificate store
+Message-ID: <aFkJszNVDFYwHDSU@redhat.com>
+References: <20250604215657.528142-1-zycai@linux.ibm.com>
+ <20250604215657.528142-3-zycai@linux.ibm.com>
+ <87sejyskgj.fsf@pond.sub.org>
+ <41e788ad-77e2-46d2-a384-2c8f524391c2@linux.ibm.com>
+ <87wm99r3rh.fsf@pond.sub.org>
+ <935581ef-1cb2-4e2f-9c3f-23203b556ca8@linux.ibm.com>
+ <87ikkndlvv.fsf@pond.sub.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 24/24] i386/tdx: handle TDG.VP.VMCALL<GetQuote>
-To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Isaku Yamahata <isaku.yamahata@intel.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>
-References: <20250620164053.579416-1-pbonzini@redhat.com>
- <20250620164053.579416-25-pbonzini@redhat.com>
- <b8171c39-6a92-4078-a59a-a63d7452e1e9@kaod.org>
- <4ffdb62b-8fe4-4b34-9efa-aecff7f8e77b@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <4ffdb62b-8fe4-4b34-9efa-aecff7f8e77b@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=Zqu3=ZG=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87ikkndlvv.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,75 +93,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/23/25 09:03, Xiaoyao Li wrote:
-> On 6/23/2025 2:43 PM, Cédric Le Goater wrote:
->> Hello,
->>
->> On 6/20/25 18:40, Paolo Bonzini wrote:
->>> From: Isaku Yamahata <isaku.yamahata@intel.com>
->>>
->>> Add property "quote-generation-socket" to tdx-guest, which is a property
->>> of type SocketAddress to specify Quote Generation Service(QGS).
->>>
->>> On request of GetQuote, it connects to the QGS socket, read request
->>> data from shared guest memory, send the request data to the QGS,
->>> and store the response into shared guest memory, at last notify
->>> TD guest by interrupt.
->>>
->>> command line example:
->>>    qemu-system-x86_64 \
->>>      -object '{"qom-type":"tdx-guest","id":"tdx0","quote-generation- socket":{"type":"unix", "path":"/var/run/tdx-qgs/qgs.socket"}}' \
->>>      -machine confidential-guest-support=tdx0
->>>
->>> Note, above example uses the unix socket. It can be other types, like vsock,
->>> which depends on the implementation of QGS.
->>>
->>> To avoid no response from QGS server, setup a timer for the transaction.
->>> If timeout, make it an error and interrupt guest. Define the threshold of
->>> time to 30s at present, maybe change to other value if not appropriate.
->>>
->>> Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
->>> Co-developed-by: Chenyi Qiang <chenyi.qiang@intel.com>
->>> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
->>> Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
->>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->>> Tested-by: Xiaoyao Li <xiaoyao.li@intel.com>
->>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->>> ---
->>>   qapi/qom.json                         |   8 +-
->>>   target/i386/kvm/tdx-quote-generator.h |  82 +++++++
->>>   target/i386/kvm/tdx.h                 |  10 +
->>>   target/i386/kvm/kvm.c                 |   3 +
->>>   target/i386/kvm/tdx-quote-generator.c | 300 ++++++++++++++++++++++++++
->>>   target/i386/kvm/tdx-stub.c            |   4 +
->>>   target/i386/kvm/tdx.c                 | 176 ++++++++++++++-
->>>   target/i386/kvm/meson.build           |   2 +-
->>>   8 files changed, 582 insertions(+), 3 deletions(-)
->>>   create mode 100644 target/i386/kvm/tdx-quote-generator.h
->>>   create mode 100644 target/i386/kvm/tdx-quote-generator.c
->>
->> These changes broke the build on 32-bit host.
->>
->> Could you please send a patch to avoid compiling TDX in such environment ?
+On Mon, Jun 23, 2025 at 08:15:16AM +0200, Markus Armbruster wrote:
+> Zhuoying Cai <zycai@linux.ibm.com> writes:
 > 
-> Paolo is on vacation.
-> > I would like to help, but I don't have 32-bit host environment on hand. Do you know how to set up such environment quickly? (I tried to set up within a 32-bit VM but the 32-bit OS is too old and I didn't get it work to install the required package for building QEMU)
+> > On 6/18/25 1:57 AM, Markus Armbruster wrote:
+> >> Zhuoying Cai <zycai@linux.ibm.com> writes:
+> >> 
+> >>> On 6/17/25 6:58 AM, Markus Armbruster wrote:
+> >>>> Zhuoying Cai <zycai@linux.ibm.com> writes:
+> >>>>
+> >>>>> Add helper functions for x509 certificate which will be used in the next
+> >>>>> patch for the certificate store.
+> >>>>>
+> >>>>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> >> 
+> >> [...]
+> >> 
+> >>>> Ignorant question: why are these QAPI enums?
+> >>>>
+> >>>> If they need to be QAPI enums, then I'll have some requests on the doc
+> >>>> comments.
+> >>>>
+> >>>
+> >>> Hi, thanks for the feedback.
+> >>>
+> >>> The helper functions in x509-utils.c either take QAPI enum values as
+> >>> parameters or return them. These enums are used later within QEMU.
+> >> 
+> >> Let's look at the first one I found:
+> >> 
+> >>     int qcrypto_check_x509_cert_fmt(uint8_t *cert, size_t size,
+> >>                                     QCryptoCertFmt fmt, Error **errp)
+> >>     {
+> >>         int rc;
+> >>         int ret = -1;
+> >>         gnutls_x509_crt_t crt;
+> >>         gnutls_datum_t datum = {.data = cert, .size = size};
+> >> 
+> >>         if (fmt >= G_N_ELEMENTS(qcrypto_to_gnutls_cert_fmt_map)) {
+> >>             error_setg(errp, "Unknown certificate format");
+> >>             return ret;
+> >>         }
+> >> 
+> >>         if (gnutls_x509_crt_init(&crt) < 0) {
+> >>             error_setg(errp, "Failed to initialize certificate");
+> >>             return ret;
+> >>         }
+> >> 
+> >>         rc = gnutls_x509_crt_import(crt, &datum, qcrypto_to_gnutls_cert_fmt_map[fmt]);
+> >>         if (rc == GNUTLS_E_ASN1_TAG_ERROR) {
+> >>             goto cleanup;
+> >>         }
+> >> 
+> >>         ret = 0;
+> >> 
+> >>     cleanup:
+> >>         gnutls_x509_crt_deinit(crt);
+> >>         return ret;
+> >>     }
+> >> 
+> >> All it does with its @fmt argument is map it to the matching
+> >> GNUTLS_X509_FMT_*.
+> >> 
+> >> There's just one caller, init_cert_x509_der() in hw/s390x/cert-store.c:
+> >> 
+> >>     is_der = qcrypto_check_x509_cert_fmt((uint8_t *)raw, size,
+> >>                                          QCRYPTO_CERT_FMT_DER, &err);
+> >> 
+> >> QCRYPTO_CERT_FMT_DER gets mapped to GNUTLS_X509_FMT_DER.  Why not pass
+> >> that directly?  We don't need enum QCryptoCertFmt then.
+> >> 
+> >
+> > I received feedback on a previous patch series that directly using
+> > GNUTLS in QEMU code is discouraged, except for under the crypto/
+> > directory. Internal APIs should be defined to access GNUTLS
+> > functionality instead.
+> >
+> >> If we need enum QCryptoCertFmt for some reason I can't see, why does it
+> >> have to be a QAPI type?  Why not a plain C enum?
+> >
+> > While implementing the new helper functions, I referred to
+> > qcrypto_get_x509_cert_fingerprint() in crypto/x509-utils.c, which takes
+> > QCryptoHashAlgo as a parameter. Following this, I added corresponding
+> > QCRYPTO enums to map to GNUTLS enums.
+> >
+> > If using plain C enums is preferred, I can update the code accordingly
+> > in the next version.
+> 
+> Use plain C enums when practical.
+> 
+> Reasons for making a type a QAPI type include:
+> 
+> * Some QAPI command or event needs it.
+> 
+> * Something (typically QOM property accessors) needs the generated
+>   visitor.
+> 
+> * For enums: something could use the generated QEnumLookup / ENUM_str()
+>   macro.
 
-debian should work fine :
+Any time a method only accepts a subset of enum values, and needs to report
+an error message, it should always use ENUM_str in the error message, rather
+than the raw int value, to make the error message human friendly and invariant
+to enum ordering.  IOW, ENUM_str should be relatively frequently used/needed.
 
-   $ uname -a
-   Linux vm15 6.10.12-686-pae #1 SMP PREEMPT_DYNAMIC Debian 6.10.12-1 (2024-10-01) i686 GNU/Linux
-   $ cat /etc/os-release
-   PRETTY_NAME="Debian GNU/Linux trixie/sid"
-   NAME="Debian GNU/Linux"
-   ...
-
-
-Thanks,
-
-C.
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
