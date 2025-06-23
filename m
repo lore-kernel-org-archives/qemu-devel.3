@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10C6CC77B7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 09:32:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45247C7115B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 09:34:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTdWy-0001Po-Av; Mon, 23 Jun 2025 05:32:00 -0400
+	id 1uTdZ3-0002ow-1m; Mon, 23 Jun 2025 05:34:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uTdWw-0001KF-8x
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 05:31:58 -0400
+ id 1uTdZ1-0002oY-Qo
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 05:34:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uTdWu-00016G-GI
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 05:31:58 -0400
+ id 1uTdYy-0001DE-Hn
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 05:34:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750671115;
+ s=mimecast20190719; t=1750671243;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0i9D7n3jAD+mFQ7jAPCCEum/OJW1AkCc/E04brWmxw4=;
- b=ZsaKAVyYNuEd4ouvhrHHmqEXZE0+fedsVnjJE7qU35o5aV+nwviHV1MU/ipuLQEJw77vVU
- OsY3/5A+RYfzt6szZ+cIlGPzvR7UbnazY50ZArdPTdWO7w8XbQJtRMg2jlDk2hxF5uqBAW
- yHt70au4ATS15PIaB0ZYzK1t/FtfEL8=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=v9fYRQSvbOhgYrjZc60FJtL49g6dy5/w7D39+7XpydY=;
+ b=FHZ8WeBSe6Rv7v1kBRGLU1w3PTEjChP4n0MODfhJVdonrd8NmdJDDJgMI4TsoJtbyPMMAc
+ 2Krlk1haSEdbS/g94yfu6vaTpFGxMaOXOl7Kh39QeKJn28Ftq9Ukfe5huNwBQWBZkiKgAE
+ aMwP2MzizSFrXzZHNiaOM+qb2dcKgO0=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-15-uE_AU_DKNlWt45mfsFLpFA-1; Mon, 23 Jun 2025 05:31:52 -0400
-X-MC-Unique: uE_AU_DKNlWt45mfsFLpFA-1
-X-Mimecast-MFC-AGG-ID: uE_AU_DKNlWt45mfsFLpFA_1750671111
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-451ecc3be97so19879925e9.0
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 02:31:51 -0700 (PDT)
+ us-mta-59-vQRIzxPFNbuVp9a6P-kqNw-1; Mon, 23 Jun 2025 05:34:00 -0400
+X-MC-Unique: vQRIzxPFNbuVp9a6P-kqNw-1
+X-Mimecast-MFC-AGG-ID: vQRIzxPFNbuVp9a6P-kqNw_1750671239
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4535d300d2dso30872595e9.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 02:34:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750671111; x=1751275911;
+ d=1e100.net; s=20230601; t=1750671239; x=1751276039;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=0i9D7n3jAD+mFQ7jAPCCEum/OJW1AkCc/E04brWmxw4=;
- b=S4cBKqRQ8DuLj0FlV85q3JMdiK2vUxDs0cF4hz78RgbeopyWSJlK/zoh3gBeYxOqyc
- U4AUe2M/qLTfdSf0TbmpfsoUcl9/bsrIh0lRgHtZiEAJQZ57tK6pQS3W+LN31eKl4TPT
- l6TdFHy+wEeOx7tQTSi3g5imyQNj1PZxyAPe0MICn746i+ENkiEc2AyZFzwpeAYCiWS9
- gjmyZT6d72yZFhWzH77bXndCIC2XrQHiK7a3mjL3emDzmVD9HCoJ3hcG1CnQRWVhCq3n
- pS/MQjpwjS5/ezSnp/XIxopEOKo9onNPQXnaSoEkqzAvp54YYoeCV1WKO+jKZXmX0Us4
- fUiw==
+ bh=v9fYRQSvbOhgYrjZc60FJtL49g6dy5/w7D39+7XpydY=;
+ b=wL8jp3YcSpQ2xCNvfW4GRscxW8YAGI9Y7m8FuSJ5Lf79uoVrlxe15gX852DueSAJlP
+ QRTW8jOw3T57fVmcCVOpy38bUSdmveDTf+3A31imcwc7JdDrXIhPYB/+v9v0JbKPoife
+ u/HNMLPKQksLf5Hl9IBuCnMSN946oQ71Ag7WTwr5sVovdjWjdoixx0I6LiJ7EsyYpYuM
+ 3vgP+MEQ97YvAZJcFX7opOLpfi06XEta/81koJpfNJAWYeQ97c5EtpS/4zYmu24c0d0o
+ D2lwqhzOozevUTlToFs7R8aMz0v0y/wnACDLbBjk/dhEY/1HYqYXKvUyKbJl1y7VxgCh
+ 7zLA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXNhTlgBporXeKQZVEwCVfl8KArqVwVrYYsOaO+raXGBQVcNSyo014kluOvWOOeT25W4ClzRKwnLusN@nongnu.org
-X-Gm-Message-State: AOJu0YzDHCUS0oU6sPYLoAV0+a2NllNUSCUmBCI+/O6qnwQEMb7xwXgJ
- CJiNvfC1la/Wj8r0qr2F8xVH8LspKdqorqXUuKrbzhaHPtqU+xJMB2w0FgXrufyqAIzN7vZm/RQ
- mpcbLWdY1Fz+2MVdHDHsZMjkkpc4F4JeMIK4NfYXbFClnV7wg6Cz4Z2zW
-X-Gm-Gg: ASbGncu3f+Ar0/ToRxxriOXOXYY1Q+MwK3oU/61Muv8b+4wDRjY6AgSgAkABdKRD6wu
- OgwyagyfDlcHE2S3bo1bq74CwQUCk1j3JmxLIlBSf2t3Z4c/6NuAuNA6RX2cUzx435GlO9ayv6P
- R4AIvQYinM5H28xDfQ8Sc3PgRaYgnlclsVRQf5aIk1Qjqf9MBcXh1S7JUVrgT96AnfZvfZw/kJr
- BgT0pz8Rka+h/TUwRb328xzEJOoMbzyaM5R4oCz5J9yttquu9P3ogtR0LRjjIMG4Yk7uOJcSc8D
- 3B6JZrDRc3yVmSYzHmcVa7v68lk3xOYBWvqV92xzSZLmqxqZG7Sc9aDubdkhOvcUs/WeLA==
-X-Received: by 2002:a05:600c:3e8c:b0:43c:f81d:34 with SMTP id
- 5b1f17b1804b1-4536e087050mr63113615e9.9.1750671110664; 
- Mon, 23 Jun 2025 02:31:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGnmmHLExx6x+HhVwCqQcajMyIT/2JjEeSp8B/Jq4OtEm60lvywVX29zWqBn3sekziEUt8jBA==
-X-Received: by 2002:a05:600c:3e8c:b0:43c:f81d:34 with SMTP id
- 5b1f17b1804b1-4536e087050mr63113245e9.9.1750671110212; 
- Mon, 23 Jun 2025 02:31:50 -0700 (PDT)
+ AJvYcCUtEyW0fO1E31c2qmzYnkIoyd1TKj1zXnbrIlKKaD4ThHfwLSHq9wXThMlsIvcnen3HpAd3qQwUNSA+@nongnu.org
+X-Gm-Message-State: AOJu0Yz9EJcqcOcFAvh0S8oIH0SVlR2PycZMuNMgNNM1XuJVACIPfoC+
+ p8shY6udIjwKF5HFRfvp6IW/UIeZEVsovuDhOH6Gdwkb8XIlS5Fn2ffjCcMI8tllrGx4D+srNf7
+ YYnaW02QRJ+83enNXO/wN0JnI4V0mmJxfnBNilblABEHmU1lM8bVv4eyR
+X-Gm-Gg: ASbGncsjoW7cSTNLCNBcohNSihI0/Lk7NYyNlFL2qEpqaLnPn6wAez/lbtRFwAAratq
+ uM23cANkWSEqGameI7nwGD1XWPIrOR7fQtumS+s9MSpZ9InLVVXuoBPpDT++hW+hV6OzZWiygoo
+ gZlOEVxq1Ka6mDQ7Mpx2l/kUQ6sQtawkr/bIiidAt3Kn6btfctBiHXDTp6fS15fz7fgrIukb+cq
+ ckBGKAgLcKv1xsB0k43Jm3MH3n36sHNAmod3AYqi+oufSkqAd3Rm7oOEeM69ySMXqO5prG/BoSE
+ DBarqJlfH/EBH6FQihs0nIPETcpDdElQpsudjnZ4JW8jgw/Wk+LCA0gOfw0EE94BYDtoJA==
+X-Received: by 2002:a05:600c:1da0:b0:451:833f:483c with SMTP id
+ 5b1f17b1804b1-453653d4544mr102886375e9.7.1750671239315; 
+ Mon, 23 Jun 2025 02:33:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGRpLj37EO78ufF10z5GLzphmoDFxtE2zgGZtgepOagfuMmgYVUueaQo31eaP5WpshYg2n7rQ==
+X-Received: by 2002:a05:600c:1da0:b0:451:833f:483c with SMTP id
+ 5b1f17b1804b1-453653d4544mr102885975e9.7.1750671238787; 
+ Mon, 23 Jun 2025 02:33:58 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4535ead202asm138005765e9.27.2025.06.23.02.31.48
+ 5b1f17b1804b1-45374582452sm29336945e9.31.2025.06.23.02.33.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Jun 2025 02:31:49 -0700 (PDT)
-Message-ID: <e3c392ba-d3f7-4c5b-bd42-024a42ff1d73@redhat.com>
-Date: Mon, 23 Jun 2025 11:31:48 +0200
+ Mon, 23 Jun 2025 02:33:58 -0700 (PDT)
+Message-ID: <64ed418b-3e9e-4f8b-b513-874fc71f6873@redhat.com>
+Date: Mon, 23 Jun 2025 11:33:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/19] hw/pci: Export pci_device_get_iommu_bus_devfn()
- and return bool
+Subject: Re: [PATCH v2 18/19] Workaround for ERRATA_772415_SPR17
 Content-Language: en-US
 To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
@@ -96,14 +95,13 @@ Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
  "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
  "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
  "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
- "Peng, Chao P" <chao.p.peng@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+ "Peng, Chao P" <chao.p.peng@intel.com>
 References: <20250620071813.55571-1-zhenzhong.duan@intel.com>
- <20250620071813.55571-6-zhenzhong.duan@intel.com>
- <6d472e7f-864f-4456-a036-1b5f61516aaa@redhat.com>
- <IA3PR11MB9136E06A48EC0FAF421522959279A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <20250620071813.55571-19-zhenzhong.duan@intel.com>
+ <ec96eb95-f0d7-4d9e-986c-46367afef7fa@redhat.com>
+ <IA3PR11MB91366EF1B3F2D45D1EEC1D859279A@IA3PR11MB9136.namprd11.prod.outlook.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <IA3PR11MB9136E06A48EC0FAF421522959279A@IA3PR11MB9136.namprd11.prod.outlook.com>
+In-Reply-To: <IA3PR11MB91366EF1B3F2D45D1EEC1D859279A@IA3PR11MB9136.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124;
@@ -134,51 +132,179 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 6/23/25 4:47 AM, Duan, Zhenzhong wrote:
+On 6/23/25 5:29 AM, Duan, Zhenzhong wrote:
 >
 >> -----Original Message-----
 >> From: Eric Auger <eric.auger@redhat.com>
->> Subject: Re: [PATCH v2 05/19] hw/pci: Export pci_device_get_iommu_bus_devfn()
->> and return bool
+>> Subject: Re: [PATCH v2 18/19] Workaround for ERRATA_772415_SPR17
 >>
 >> Hi Zhenzhong,
 >>
->> On 6/20/25 9:17 AM, Zhenzhong Duan wrote:
->>> Returns true if PCI device is aliased or false otherwise. This will be
->>> used in following patch to determine if a PCI device is under a PCI
->>> bridge.
->>>
->>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->>> ---
->>>  include/hw/pci/pci.h |  2 ++
->>>  hw/pci/pci.c         | 12 ++++++++----
->>>  2 files changed, 10 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
->>> index 829757b2c2..3029cdf26f 100644
->>> --- a/include/hw/pci/pci.h
->>> +++ b/include/hw/pci/pci.h
->>> @@ -640,6 +640,8 @@ typedef struct PCIIOMMUOps {
->>>                              bool is_write);
->>>  } PCIIOMMUOps;
->>>
->>> +bool pci_device_get_iommu_bus_devfn(PCIDevice *dev, PCIBus
->> **piommu_bus,
->>> +                                    PCIBus **aliased_bus, int *aliased_devfn);
->> if I am correct you have a single caller of the helper using the
->> returned value, in intel_iommu.c, whereas all the existing callers are
->> not using the returned value. You may simply pass a non NULL aliased_bus
->> and aliased_devfn and check whether they differ from the original
->> bus/devfn. Besides the patch looks ok to me.
-> I do this way initially, but it doesn't work if PCI device is the first device under
-> PCIE-to-PCI bridge, e.g., 01:00.0, in this case aliased BDF==real BDF.
-I see.
-
-Thank you for the explanation
+>> On 6/20/25 9:18 AM, Zhenzhong Duan wrote:
+>>> On a system influenced by ERRATA_772415,
+>> IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17
+>>> is repored by IOMMU_DEVICE_GET_HW_INFO. Due to this errata, even the
+>> readonly
+>>> range mapped on stage-2 page table could still be written.
+>> I would split this patch into a vfio only patch and an iommu one that
+>> sets bcontainer->readonly according to the fetched info.
+> Will do.
+>
+>>> Reference from 4th Gen Intel Xeon Processor Scalable Family Specification
+>>> Update, Errata Details, SPR17.
+>>> https://www.intel.com/content/www/us/en/content-details/772415/content-
+>> details.html
+>> the link does not work for me.
+> That's strange, what about:
+>
+> https://edc.intel.com/content/www/us/en/design/products-and-solutions/processors-and-chipsets/eagle-stream/sapphire-rapids-specification-update/
+yes this link works for me.
+>
+>> Please could you explain in english what the errata is about and what
+>> actions need to be taken care in VFIO?
+>>
+>> Sorry I failed to understand "
+>>
+>> Due to this errata, even the readonly
+>> range mapped on stage-2 page table could still be written.
+> Copy the explanation in above link:
+>
+> "SPR17. Remapping Hardware May Set Access/Dirty Bits in a First-stage
+> Page-table Entry
+>
+> Problem: When remapping hardware is configured by system software in
+> scalable mode as Nested (PGTT=011b) and with PWSNP field Set in the
+> PASID-table-entry, it may Set Accessed bit and Dirty bit (and Extended
+> Access bit if enabled) in first-stage page-table entries even when
+> second-stage mappings indicate that corresponding first-stage page-table
+> is Read-Only.
+>
+> Implication: Due to this erratum, pages mapped as Read-only in second-stage
+> page-tables may be modified by remapping hardware Access/Dirty bit updates.
+>
+> Workaround: None identified. System software enabling nested translations
+> for a VM should ensure that there are no read-only pages in the
+> corresponding second-stage mappings."
+OK this definitively helps. I will further look at the patch with that
+background
 
 Eric
 >
-> Thanks
-> Zhenzhong
+>> "
+>>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>>> ---
+>>>  include/hw/vfio/vfio-container-base.h |  1 +
+>>>  hw/vfio/iommufd.c                     |  8 +++++++-
+>>>  hw/vfio/listener.c                    | 13 +++++++++----
+>>>  3 files changed, 17 insertions(+), 5 deletions(-)
+>>>
+>>> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-
+>> container-base.h
+>>> index f0232654ee..e5c51a51ac 100644
+>>> --- a/include/hw/vfio/vfio-container-base.h
+>>> +++ b/include/hw/vfio/vfio-container-base.h
+>>> @@ -51,6 +51,7 @@ typedef struct VFIOContainerBase {
+>>>      QLIST_HEAD(, VFIODevice) device_list;
+>>>      GList *iova_ranges;
+>>>      NotifierWithReturn cpr_reboot_notifier;
+>>> +    bool bypass_ro;
+>>>  } VFIOContainerBase;
+>>>
+>>>  typedef struct VFIOGuestIOMMU {
+>>> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+>>> index 83a632bdee..23839a511a 100644
+>>> --- a/hw/vfio/iommufd.c
+>>> +++ b/hw/vfio/iommufd.c
+>>> @@ -306,6 +306,7 @@ static bool
+>> iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>>>  {
+>>>      ERRP_GUARD();
+>>>      IOMMUFDBackend *iommufd = vbasedev->iommufd;
+>>> +    struct iommu_hw_info_vtd vtd;
+>> = {}; ?
+> Will do.
+>
+>>>      uint32_t type, flags = 0;
+>>>      uint64_t hw_caps;
+>>>      VFIOIOASHwpt *hwpt;
+>>> @@ -345,10 +346,15 @@ static bool
+>> iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>>>       * instead.
+>>>       */
+>>>      if (!iommufd_backend_get_device_info(vbasedev->iommufd, vbasedev-
+>>> devid,
+>>> -                                         &type, NULL, 0, &hw_caps, errp)) {
+>>> +                                         &type, &vtd, sizeof(vtd), &hw_caps,
+>>> +                                         errp)) {
+>>>          return false;
+>>>      }
+>>>
+>>> +    if (vtd.flags & IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17) {
+>>> +        container->bcontainer.bypass_ro = true;
+>>> +    }
+>>> +
+>>>      if (hw_caps & IOMMU_HW_CAP_DIRTY_TRACKING) {
+>>>          flags = IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
+>>>      }
+>>> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+>>> index f498e23a93..c64aa4539e 100644
+>>> --- a/hw/vfio/listener.c
+>>> +++ b/hw/vfio/listener.c
+>>> @@ -364,7 +364,8 @@ static bool
+>> vfio_known_safe_misalignment(MemoryRegionSection *section)
+>>>      return true;
+>>>  }
+>>>
+>>> -static bool vfio_listener_valid_section(MemoryRegionSection *section,
+>>> +static bool vfio_listener_valid_section(VFIOContainerBase *bcontainer,
+>>> +                                        MemoryRegionSection *section,
+>>>                                          const char *name)
+>>>  {
+>>>      if (vfio_listener_skipped_section(section)) {
+>>> @@ -375,6 +376,10 @@ static bool
+>> vfio_listener_valid_section(MemoryRegionSection *section,
+>>>          return false;
+>>>      }
+>>>
+>>> +    if (bcontainer && bcontainer->bypass_ro && section->readonly) {
+>>> +        return false;
+>>> +    }
+>>> +
+>>>      if (unlikely((section->offset_within_address_space &
+>>>                    ~qemu_real_host_page_mask()) !=
+>>>                   (section->offset_within_region & ~qemu_real_host_page_mask()))) {
+>>> @@ -494,7 +499,7 @@ void vfio_container_region_add(VFIOContainerBase
+>> *bcontainer,
+>>>      int ret;
+>>>      Error *err = NULL;
+>>>
+>>> -    if (!vfio_listener_valid_section(section, "region_add")) {
+>>> +    if (!vfio_listener_valid_section(bcontainer, section, "region_add")) {
+>>>          return;
+>>>      }
+>>>
+>>> @@ -655,7 +660,7 @@ static void vfio_listener_region_del(MemoryListener
+>> *listener,
+>>>      int ret;
+>>>      bool try_unmap = true;
+>>>
+>>> -    if (!vfio_listener_valid_section(section, "region_del")) {
+>>> +    if (!vfio_listener_valid_section(bcontainer, section, "region_del")) {
+>>>          return;
+>>>      }
+>>>
+>>> @@ -812,7 +817,7 @@ static void vfio_dirty_tracking_update(MemoryListener
+>> *listener,
+>>>          container_of(listener, VFIODirtyRangesListener, listener);
+>>>      hwaddr iova, end;
+>>>
+>>> -    if (!vfio_listener_valid_section(section, "tracking_update") ||
+>>> +    if (!vfio_listener_valid_section(NULL, section, "tracking_update") ||
+>>>          !vfio_get_section_iova_range(dirty->bcontainer, section,
+>>>                                       &iova, &end, NULL)) {
+>>>          return;
+>> Thanks
+>>
+>> Eric
 
 
