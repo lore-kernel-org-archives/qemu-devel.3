@@ -4,74 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF043C77B7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 13:09:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F076C77B7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 13:16:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTgvH-0003vQ-5Y; Mon, 23 Jun 2025 09:09:19 -0400
+	id 1uTh1n-0005jx-Vq; Mon, 23 Jun 2025 09:16:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uTgvC-0003uz-Lk
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 09:09:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uTh1j-0005jc-4e
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 09:16:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uTgvA-0007Up-Ff
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 09:09:14 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uTh1b-0000K8-Sw
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 09:15:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750684149;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1750684549;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Oq2BKv+F5UUxOOqJ+y6KDqYWIhpDHACsueYjOK3DeGA=;
- b=DWFGgjP1S5b+JhP5AdsA28tqvytOzebn5EcpKJ/xjFaMmgdvyUbT4+HDc0/Joc0Kk6siac
- qeomnC6ZXHDUqWik70rP19Z8+fds4QmZvvaQbcjOc2fGCdBwfVTr0R0kOrUkzpEEE1umlU
- YIf8i0AzLxjq9ZSTm4K1XCX5SzSRXzU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-645-rL1teO38NZyCdm8VBx-7hA-1; Mon,
- 23 Jun 2025 09:09:03 -0400
-X-MC-Unique: rL1teO38NZyCdm8VBx-7hA-1
-X-Mimecast-MFC-AGG-ID: rL1teO38NZyCdm8VBx-7hA_1750684142
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 183BA1800290; Mon, 23 Jun 2025 13:09:02 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.95])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 935CA19560A3; Mon, 23 Jun 2025 13:08:59 +0000 (UTC)
-Date: Mon, 23 Jun 2025 14:08:56 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Isaku Yamahata <isaku.yamahata@intel.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: Re: [PULL 24/24] i386/tdx: handle TDG.VP.VMCALL<GetQuote>
-Message-ID: <aFlR6CTLRzSpS1fr@redhat.com>
-References: <20250620164053.579416-1-pbonzini@redhat.com>
- <20250620164053.579416-25-pbonzini@redhat.com>
- <b8171c39-6a92-4078-a59a-a63d7452e1e9@kaod.org>
- <4ffdb62b-8fe4-4b34-9efa-aecff7f8e77b@intel.com>
- <aFkKL-TQTcrBtXuK@redhat.com>
- <CAJSP0QUgirgNX71MwGgYbdDhVUrd3MWsetx66_+GsER8BfoSbg@mail.gmail.com>
+ bh=ts7A3Mt6g28i4RPuMJV6b/tojgzTyxOZZHL95hWKL5o=;
+ b=P9vy4dmzGS7SmsIzQOFe7DXq78G9n7G+wqNOwqf/FCr0bnQ5DtFO7lbfAR4YABeJmJRJ0b
+ xcj6rgCHgOOQMNHVOyN66xZcyMPv6yJT7JKV2W875l8aj7u7G/lpNwaytCRZvl42uBJ7BA
+ 9rJHQpjQ9yF1spNOOjiAoIAxYuRm2IQ=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-606-S9OsVJ4xP6aV31avOLPt1g-1; Mon, 23 Jun 2025 09:15:48 -0400
+X-MC-Unique: S9OsVJ4xP6aV31avOLPt1g-1
+X-Mimecast-MFC-AGG-ID: S9OsVJ4xP6aV31avOLPt1g_1750684548
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7d09ed509aaso607360085a.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 06:15:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750684548; x=1751289348;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ts7A3Mt6g28i4RPuMJV6b/tojgzTyxOZZHL95hWKL5o=;
+ b=h/s1D6XajWc9RpPn+uD3lC5xZsn+FOLrc++x/3H+IV45M3cxT2ezvF3hejDOZUQc1/
+ Oyz3HxHBNk3+c8wuHP8/JKK1BokOkG/pD/SLrs0c/5m6rZ6milrUGwTLrxKTzDFlxuGx
+ fVlg06rbboMxaQoNvJVvP89dezyzfuRKrsXgI+YPmqOGSCDMqWF+8LzBu65FKvKW7BgN
+ ThGtDDIRm9QJ4Xq8WSY7nrWth1Uy51U0v8NaaWuCUANgNQNcrXFS1kVw8KqA2kKRrLwk
+ n8s/+8Zwo7kawadwAcM+6fI7/7WHQC96vQRIOLo5kSnkniDQAimxXhV28pMBq3a+27TJ
+ U1oQ==
+X-Gm-Message-State: AOJu0Yx+aaz6zmpH2hjNJC7SYAmqYdW+AewYpNApL/hXOBRWVDLQFcqx
+ P5cDRDSielj2g44y1mSZUcAHbDZHmPqxa7rCKC17WTa/HXX8hm1cAPQMcm1dmjBZXJacYhFK2g7
+ vL5wU0D+/1X8NxlFO+qDUDCjU7IcWA2ISW5YTwViqnGJmysZ4SNkGUtvjRErEX647
+X-Gm-Gg: ASbGncsm1aEDlgHDYXyqrBEobyg5voDDQilUJ442xP2dzw9uSugVfdFhfmsyH5QFrgH
+ FYL8YPAKeV9C5W1+WONdDXezQd4igdUBYt1L+MuJ8sp+00s90hneRXo5I1qItUF+2oc9sIDAvxP
+ /6yN+2G3uwRMGijLymSfD6uJGCZpHBzUSzRlzC0p516zz+BTMVeJy4OA3Q233RdoWekmqYOYhY2
+ mSv6jAqshpYrCiGm91BUbulGYuTELbB7oyWdNnHJuOAmK5AaMqK9BY3xSL30ktXIsR6mXWLbEr4
+ xpFmwUxn/TIHPw==
+X-Received: by 2002:a05:6214:5081:b0:6fa:fe02:81ff with SMTP id
+ 6a1803df08f44-6fd0a43b6a8mr191051556d6.3.1750684547523; 
+ Mon, 23 Jun 2025 06:15:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFcQJgXCC48/xNSgvpGU4DGTnrnL032LX1AxGSFFBI42enGRCY/wS1JQbfbAVvTPZNl5zv+EA==
+X-Received: by 2002:a05:6214:5081:b0:6fa:fe02:81ff with SMTP id
+ 6a1803df08f44-6fd0a43b6a8mr191051006d6.3.1750684546940; 
+ Mon, 23 Jun 2025 06:15:46 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6fd09456a98sm44490936d6.49.2025.06.23.06.15.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 23 Jun 2025 06:15:46 -0700 (PDT)
+Date: Mon, 23 Jun 2025 09:15:43 -0400
+From: Peter Xu <peterx@redhat.com>
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "david@redhat.com" <david@redhat.com>,
+ "philmd@linaro.org" <philmd@linaro.org>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ Ethan MILON <ethan.milon@eviden.com>
+Subject: Re: [PATCH 0/2] Memory and PCI definitions for emulated ATS
+Message-ID: <aFlTf-El8TefWoQa@x1.local>
+References: <20250620055620.133027-1-clement.mathieu--drif@eviden.com>
+ <aFVxwG_O2QkryM6P@x1.local>
+ <7ba298b6-13d3-44b4-bc67-5516893a6cb4@eviden.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJSP0QUgirgNX71MwGgYbdDhVUrd3MWsetx66_+GsER8BfoSbg@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <7ba298b6-13d3-44b4-bc67-5516893a6cb4@eviden.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -93,92 +107,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 23, 2025 at 09:04:33AM -0400, Stefan Hajnoczi wrote:
-> On Mon, Jun 23, 2025 at 4:04 AM Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >
-> > On Mon, Jun 23, 2025 at 03:03:19PM +0800, Xiaoyao Li wrote:
-> > > On 6/23/2025 2:43 PM, Cédric Le Goater wrote:
-> > > > Hello,
-> > > >
-> > > > On 6/20/25 18:40, Paolo Bonzini wrote:
-> > > > > From: Isaku Yamahata <isaku.yamahata@intel.com>
-> > > > >
-> > > > > Add property "quote-generation-socket" to tdx-guest, which is a property
-> > > > > of type SocketAddress to specify Quote Generation Service(QGS).
-> > > > >
-> > > > > On request of GetQuote, it connects to the QGS socket, read request
-> > > > > data from shared guest memory, send the request data to the QGS,
-> > > > > and store the response into shared guest memory, at last notify
-> > > > > TD guest by interrupt.
-> > > > >
-> > > > > command line example:
-> > > > >    qemu-system-x86_64 \
-> > > > >      -object '{"qom-type":"tdx-guest","id":"tdx0","quote-generation-
-> > > > > socket":{"type":"unix", "path":"/var/run/tdx-qgs/qgs.socket"}}' \
-> > > > >      -machine confidential-guest-support=tdx0
-> > > > >
-> > > > > Note, above example uses the unix socket. It can be other types,
-> > > > > like vsock,
-> > > > > which depends on the implementation of QGS.
-> > > > >
-> > > > > To avoid no response from QGS server, setup a timer for the transaction.
-> > > > > If timeout, make it an error and interrupt guest. Define the threshold of
-> > > > > time to 30s at present, maybe change to other value if not appropriate.
-> > > > >
-> > > > > Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
-> > > > > Co-developed-by: Chenyi Qiang <chenyi.qiang@intel.com>
-> > > > > Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
-> > > > > Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> > > > > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> > > > > Tested-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> > > > > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> > > > > ---
-> > > > >   qapi/qom.json                         |   8 +-
-> > > > >   target/i386/kvm/tdx-quote-generator.h |  82 +++++++
-> > > > >   target/i386/kvm/tdx.h                 |  10 +
-> > > > >   target/i386/kvm/kvm.c                 |   3 +
-> > > > >   target/i386/kvm/tdx-quote-generator.c | 300 ++++++++++++++++++++++++++
-> > > > >   target/i386/kvm/tdx-stub.c            |   4 +
-> > > > >   target/i386/kvm/tdx.c                 | 176 ++++++++++++++-
-> > > > >   target/i386/kvm/meson.build           |   2 +-
-> > > > >   8 files changed, 582 insertions(+), 3 deletions(-)
-> > > > >   create mode 100644 target/i386/kvm/tdx-quote-generator.h
-> > > > >   create mode 100644 target/i386/kvm/tdx-quote-generator.c
-> > > >
-> > > > These changes broke the build on 32-bit host.
-> > > >
-> > > > Could you please send a patch to avoid compiling TDX in such environment ?
-> > >
-> > > Paolo is on vacation.
-> > >
-> > > I would like to help, but I don't have 32-bit host environment on hand. Do
-> > > you know how to set up such environment quickly? (I tried to set up within a
-> > > 32-bit VM but the 32-bit OS is too old and I didn't get it work to install
-> > > the required package for building QEMU)
-> >
-> > You should be able to use QEMU's docker containers to get yourself a
-> > Debian i386 container, on a x86_64 host.
+On Mon, Jun 23, 2025 at 05:43:06AM +0000, CLEMENT MATHIEU--DRIF wrote:
+> Hi Peter
 > 
-> The cross-i686-system (Debian) build CI job succeeded:
-> https://gitlab.com/qemu-project/qemu/-/jobs/10423776600
+> On 20/06/2025 4:35 pm, Peter Xu wrote:
+> > Caution: External email. Do not open attachments or click links, unless this email comes from a known sender and you know the content is safe.
+> > 
+> > 
+> > On Fri, Jun 20, 2025 at 05:56:49AM +0000, CLEMENT MATHIEU--DRIF wrote:
+> >> This short series adds the 'address type' bit (concept from PCIe) to the
+> >> memory attributes and extends the IOMMUAccessFlags enum. This
+> >> will be required to implement ATS support for the virtual IOMMUs.
+> >>
+> >> Address type: Field present in the PCIe R/W requests, it allows devices to
+> >> tell the IOMMU if the address provided in the request is physical or not.
+> >> In other words, it allows the devices to use a physical address obtained
+> >> via ATS and to prevent the IOMMU from trying to remap it on the fly.
+> > 
+> > Two pure questions on the flags, could be relevant to spec:
+> > 
+> >>
+> >> Additional IOMMU access flags:
+> >>      - Execute Requested
+> > 
+> > Does this mean that we can start to put code into DMA regions so that
+> > device can run some day (even if the device may have a core that is totally
+> > different arch v.s. the host's 
+> AFAIU, the spec is so nonrestrictive about this flag that heterogeneous 
+> arch should not be an issue.
 > 
-> I wonder why the CI didn't catch the issue?
+> "The definition of what it means for a Function to execute code is 
+> outside the scope of this specification"
+> 
+> > 
+> >>      - Privileged Mode Requested
+> >>      - Global
+> >>      - Untranslated Only (cannot be used with 'Address type = translated')
+> > 
+> > I can understand this with patch 1, but not yet with patch 2.
+> > 
+> > Patch 1 makes sense to me, IIUC it means the addresses to be used in a pcie
+> > request will be translated addresses which should bypass IOMMU DMAR.
+> > 
+> > OTOH, patch 2 added it into iotlb access permissions, which I'm not sure
+> > what does it mean.  Perhaps those addresses can only be translated by ATS
+> > pre-translation requests, so that DMA on top of them (in IOVA address
+> > space) will directly fail?
+> 
+> I put this here because the ATS API returns IOMMUTLBEntry structures, 
+> which contain these flags.
+> 
+> The untranslated-only bit is set in ATS responses to inform the device 
+> that the requested address cannot be pre-translated and should be 
+> translated on the fly by the DMA remapping engine. The interrupt range 
+> commonly falls into this category.
 
-It didn't build the x86_64 target:
+Ah I see.  Yes this makes sense.
 
-  --target-list-exclude="arm-softmmu i386-softmmu microblaze-softmmu mips-softmmu mipsel-softmmu mips64-softmmu ppc-softmmu riscv32-softmmu sh4-softmmu sparc-softmmu xtensa-softmmu $CROSS_SKIP_TARGETS"
+> 
+> > 
+> > Side note, it might still be more reasonable to put these changes into the
+> > ATS series as the first user of flags.
+> 
+> Yes, I can do that.
+> However, the ATS series will contain ~10/~12 patches, is it a concern?
 
-so in turn didn't build any TDX code
+Considering the size of this series, IMHO it should be better to stick with
+when they're uesd.
 
-With regards,
-Daniel
+Thanks,
+
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Peter Xu
 
 
