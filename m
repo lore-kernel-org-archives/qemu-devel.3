@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9E60C7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 14:48:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7E5CC77B7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 14:53:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTiSP-0007yi-DJ; Mon, 23 Jun 2025 10:47:37 -0400
+	id 1uTiXp-0001gz-Kx; Mon, 23 Jun 2025 10:53:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uTiSL-0007yL-C2
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 10:47:33 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ id 1uTiXm-0001g3-6I
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 10:53:11 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uTiSJ-0006B7-Sg
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 10:47:33 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-70e78e04e48so32674747b3.1
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 07:47:28 -0700 (PDT)
+ id 1uTiXk-0006hL-S6
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 10:53:09 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-70e4b1acf41so32933227b3.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 07:53:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750690047; x=1751294847; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750690387; x=1751295187; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=TdnORn1g8xxV/rO1zitVTw4Odv6o6xFdVqP7q87wL5A=;
- b=UF4uaSb8Liu1Mda237XXdqbqBItw/ZRgUDelDBxrNdXFfEIoV1Vtp0UPKfREp4MeRM
- kvt9HfD6Np9UxL8IX2FIpiNrA2+e18xyh1OU4DzNLn5MMevaZGYPxsURWzzfOsE02gf9
- 3FWtjOSUThsnk2uP7Q4P7A92KwKq2tbEX5NExzNLLeApLRJfgLtyFoBGZFXa4YYLg+H2
- tNhTWfaOYSpTDxx6wY3PoBFh6VwdhxTf8wXOn/Btu7QskFFqcRAsu0uZoGGktOb04uZV
- 8lEDcGZxgbyOqx1xtCzuVVpqkEaq3WQ6TvysFo9cFrZCrtrly3HviDqMIUQvNEdw+AEi
- uwBQ==
+ bh=SECh/VJzh4swiyiDe5aK9fxlDNm1/UjDTBUB9rkCxE0=;
+ b=g+jvIUop59Bkityo3Yd5R95YBu8F8emiuiYYy8M5owb103V49VYbIZX0rmFjCpAxEm
+ WPx41VBgaYA/OIQP3mWT9QgGJBsEYodOqA7cjjHyu2Sw8JrCNc+UvpR+ozcvbA8TS7gR
+ AKryvUiAsVdcD2a9SbQNfa/o8DtAApLznmDbRHaeJEpL5hsmxbeD1G68HAUCV2iTyNwf
+ sRoecJgtI6gMhTYYtDpptD0KDuz+980DYf8Vs4e35dXNp8M/b1QBsv1Cfw2lvnM3ve8y
+ W0zQclepvB6BAAltgY4msapVdEjD9saWOpFDh92LaUPd+1aS+1LZVnIq8YzuIg/9K1Bi
+ ksJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750690047; x=1751294847;
+ d=1e100.net; s=20230601; t=1750690387; x=1751295187;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=TdnORn1g8xxV/rO1zitVTw4Odv6o6xFdVqP7q87wL5A=;
- b=rap8YoYTUoMiHaowYEGaBAme28IPKRwynJmyZxsLttLR2pnm1adnnFSoWy/yLhE761
- braDmZcN08064PQ5Cxglm0AehUXfgMD6BnlyR7I7Pd5aMQtfaYJ53IAmoEW5lNWiq03r
- F0YwwhRAlxva4Em9oi9m9rsiwXdVNA/AeBc5pcWlFfisW7Kw4FJq+2aC4MxFpiUIn7i6
- +61wC8MmsqQZghayI0rzQanZmFGmP6IzTpq6du1yEf4BDsQ6hD2OF49Ml/PGiWROVbu+
- XsMQMRwqVR51L/vIViHupuiTBg4svjHVdIfAIwm1Npca7J8+Y3GbNpwLut5JmosRI7Pu
- Vheg==
-X-Gm-Message-State: AOJu0YzNBjXquQdRH+8jpaVFU1zNbSky5pHruTaD5Q2CJSdsHIBJdpFz
- n/UvpCyq1VmrIbSqJQKRZHKPGJ0GyBTSlVb1rAzjr5WNvJRpzNy90IdrGA90hlYgJewohqsYU4Y
- Tvi9TGw6DqPZocZCl0q8HgGy99/O44iXpX0l3vta+5A==
-X-Gm-Gg: ASbGncsTT4bPkyTnNzb/jJxA7FQnG8DB3sOe6nSu38CvdlkgkVgU0X2kUWmc7J7808x
- 8FOwcDIjeVpMyquJfscvIz3IAGfAs/7dAqHdyBbvUZspnsrdr78R072QtKuS+OehvFnu0eueEcY
- t/Q9o82CTQGak4G76+lJFwrJ6Yon6EzsDjQKIbsdrT54+u
-X-Google-Smtp-Source: AGHT+IEy2Nf1HXnnfWpoIcXt/gyvN4mlaza5h+V9KN8jR3qm+tLHyihmE+xt0GnFF1YHCrK9EiLmW0OkEDE8N5KsM7A=
-X-Received: by 2002:a05:690c:6c12:b0:70e:404:85e5 with SMTP id
- 00721157ae682-712c63beecbmr210297477b3.11.1750690047424; Mon, 23 Jun 2025
- 07:47:27 -0700 (PDT)
+ bh=SECh/VJzh4swiyiDe5aK9fxlDNm1/UjDTBUB9rkCxE0=;
+ b=NJc5vMXicdNJozQy0kVITdVsJ/qHxuAWmzPJwCDq0KGVGWkkE5Y7S+Rmo4AB/673zc
+ +ATwSj3FkpbQ11WDO1WYB31nGoUk1Q6xJqjPI+bjDOTWK8iJSLw4GkDM6T82x4MQeAyZ
+ SXzBo5VqtEk96BAxgbXGqX9Jbq367w+5FJppbUTN+f7TPalz8KZ0VtvfjskAeOLbmssg
+ Guyh0mVo/4r/eUc/ArmKe4xbrzgOqRqIRjY5XW+fS4uwnusJTDWYg+Dyx18fGhDPYZi8
+ eF5/PDgEUfSxW5JiKmZmK3sVtIUd7Au6Ft2I8r6+b8hKJlwyJmD7UrrbQVIyvtcInRUJ
+ KRRA==
+X-Gm-Message-State: AOJu0Yz1FXSkFs8ZDoXjeYjgd8+0f7zSnyn05ZDppZHe9WlIMm97Zn5i
+ /GSsjOjijNfv95tUESjSbgGmeSmwgKCNg8LLnRxhfRwUkjJ2HKY/GjG1iPEJspAYUMH0D64ILPO
+ cpG5/FsugewytD4ZAlW+MFCroF01RAMBDsQqeN5dA2A==
+X-Gm-Gg: ASbGncsjjIWgE4H5Fv7B3QmEabgoCUK/7mEDhXaZXQADDdYXIc0zTU9HUKb/N5oCaof
+ LPerx7Oi/koDCxfES0aF2J0ncwVnqz8tuUl1DQwaLMzTuZzInkYqNfw2opvRc90ZQwC2pWq3Da3
+ kjJhtNtuSUw/tgcxPN5eE/S4SvUGTfwZz1PMiN36NKZJJtKznjx/XPIlQ=
+X-Google-Smtp-Source: AGHT+IFpNAmCezQoRtLrWMZrawINtV8fHTUFlYb77+lZev5Nlnl5/spq1TgS05MbQyxrPPp0Htts+Skr2e5tX2QFqA0=
+X-Received: by 2002:a05:690c:7401:b0:70e:2cba:868c with SMTP id
+ 00721157ae682-712c63c55e5mr204313377b3.11.1750690386939; Mon, 23 Jun 2025
+ 07:53:06 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250621235037.74091-1-richard.henderson@linaro.org>
- <20250621235037.74091-27-richard.henderson@linaro.org>
-In-Reply-To: <20250621235037.74091-27-richard.henderson@linaro.org>
+ <20250621235037.74091-28-richard.henderson@linaro.org>
+In-Reply-To: <20250621235037.74091-28-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Jun 2025 15:47:16 +0100
-X-Gm-Features: AX0GCFvABinr7eAC-hrwfjVVgxW0n5okn4IbcjMRtTob5tZ9GxWN6HQkUWOIfdw
-Message-ID: <CAFEAcA_zH43_H=bsLpJJh1G3=Vi9XHKdgVv7PoTdHMqCo0hG3w@mail.gmail.com>
-Subject: Re: [PATCH v2 026/101] target/arm: Implement SME2 BMOPA
+Date: Mon, 23 Jun 2025 15:52:55 +0100
+X-Gm-Features: AX0GCFseRPH1T7CNTcNfIQ5FgUoW0ngX7p6rQOsjXTCf7wFQ4huqO4cApDSGsZM
+Message-ID: <CAFEAcA9_hGOPAN=Q_hLZMs1qXbdRhUUWp-NfW+=ikJTwwte0=Q@mail.gmail.com>
+Subject: Re: [PATCH v2 027/101] target/arm: Implement SME2 SMOPS, UMOPS (2-way)
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,10 +92,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 22 Jun 2025 at 00:52, Richard Henderson
+On Sun, 22 Jun 2025 at 00:55, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/helper-sme.h    |  4 ++++
+>  target/arm/tcg/sme_helper.c    | 37 +++++++++++++++++++++++++---------
+>  target/arm/tcg/translate-sme.c |  2 ++
+>  target/arm/tcg/sme.decode      |  2 ++
+>  4 files changed, 35 insertions(+), 10 deletions(-)
+>
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
