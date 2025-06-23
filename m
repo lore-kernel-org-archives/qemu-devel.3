@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41A0DC7EE2A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 19:09:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E73A6C77B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 19:12:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTmXg-0003m7-Pd; Mon, 23 Jun 2025 15:09:20 -0400
+	id 1uTma2-0004w9-Td; Mon, 23 Jun 2025 15:11:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTmXf-0003lr-3C
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 15:09:19 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1uTma0-0004vj-Dh
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 15:11:44 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTmXc-0004zU-GW
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 15:09:18 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-74264d1832eso5792456b3a.0
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 12:09:15 -0700 (PDT)
+ id 1uTmZy-0005MX-H2
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 15:11:44 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-748e63d4b05so2719533b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 12:11:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750705754; x=1751310554; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750705901; x=1751310701; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ZWA00bdu/egrXwNGQU5NGoComP7aVR7SWR7O/a2cZE0=;
- b=aqKKHpnlPwVayBpKSzR6L1GIabU3hf+bRGKmmjXK98adv3j/rVNsJPFP4I6fZ71CGw
- avr+xsO++1OQz2r0fUPgOvk3znkU8z8x2Ha2J96r2Drxkq4wE6nNw0ggis59VPotdm5Y
- f8MHbFhfOVp3X/7Osuf6APe2ZaKRgD33nU7FRToRVfa3RHAz3ngT9t/orkCgzjxZVq47
- WUte05dphPMrmIfxiCci7z32uOC5vOwMn+hRv0niBfGmrqgfcpCy9pQm9BnkTonFGIRt
- Uk2bGCJE8FFxSCyPJvudnH8F3nk0p3TDHLF8pfmoApc6vu0uc2XGvzDv24YdEn0dHbcJ
- zUSA==
+ bh=DHiwJfnthY4SOgskpiApv91qyy0EhaXUMalYCaS82/4=;
+ b=tiJAVCElGpv2sjCbY4Xx0s9ZqfPYHVMsNyp3VfC+ylAfaKJ6LmF/NHm5unYJMn1tgO
+ jrs+0m25WZLHxPkNE9uptu/SBgR1LlnpRCL75BcUJ/MCgQm4nkzJRe5Qef1i8/P84yJi
+ US4EZxBllmZaLm3BgvtcdSTvocQ/orp7NN/6/abI9RTwshQOeXK6DHiHzH8A9Iq4qH/4
+ zVuj2gw2p6ggP1cNg7RdFcaIuBw9uBNo9WVTuWTEHpJwvMj+9KQcCYNx21Bb2HBapw6l
+ 3gWG18VlR02RTzkX9s2gLs9BRbmo0Rm3C6Qw0CXcm05Z8BrfuIbr9y4fnbvr/1reFtus
+ 2kDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750705754; x=1751310554;
+ d=1e100.net; s=20230601; t=1750705901; x=1751310701;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZWA00bdu/egrXwNGQU5NGoComP7aVR7SWR7O/a2cZE0=;
- b=Nwp8em5aZWlffC+wKMqc5LCN4SwsvnctEGV6vSxHAE0EweANoOTOGIO70ajcRYKPzx
- g2TMlqzDtl0Q86cDFfdZLuJANATMn8aZiFfJq6NXMFAxkoIrobLYUUBTN1/uAoQnqLpe
- Vxko+KsvGylxnZdEVEphDfKn00SaEZt3zjJzgbWCGpQCyrwUyObqhnLcxXaOWtbj7bez
- KGqyeWGRJ9N0mnCwr5bBqSEY5W7pyyyLBn9YoSfXzuTEITXrDSnvvQIdCTc4KsnRG2dE
- 3irBtWjZM1Qv7r3L+lpntY8siJG+LXjKd5s4keWZhmQtBVWtUkI/LngE6dUOeGGc5JFA
- WuTg==
-X-Gm-Message-State: AOJu0YxmHx+XjRexROWNpZlQJMhJwhsUF0PA6Smk/6SN7741I+RLbD1i
- cS2GyJau0J+O7N09X99KFvWBaKDeyW0x1+fnBmnYvXub4KkpvL+rEl07cT1Gd08NLNX2qWHiKco
- xWwgomOA=
-X-Gm-Gg: ASbGncuutb8JMeYNLl3aDke9vdPeNfxckzMDe2xsgpR2NsX4reVOysKxRw5vPAglgqv
- 7r8EnhypDh2z6ZFk/5kzduD2O4RZzvZkOPtnUVkG+PMGZmDTv3Kz+aaXV4vAzmqzy5qB+r2kgBs
- 2Wy57GICKkpICXUDL/lNx2A4veYmP19OOigkwDDiu6nG+zEnZfA3G2RRsPF7Z1R3EmJ1ppsWixo
- c082gHRbmDp1XK/NjQfiUzxhUDh6n89dd9chfsTgUuhASUB6IgUxUaQCQwq2d/6mG2PGhJ3XHmk
- qxGc+5DPP+OGVnYgTbUFvQX0/avFY+ZCO3cdZVrwXvuh0hOSHedYa8JoiGyy42DxBNAz+VB7tZ2
- xGDbpmpQlaGhxbQgT11QFULDdITWJ
-X-Google-Smtp-Source: AGHT+IHlz7qMh/0TTZIqA1bpK/1ZHHHbif0nVlOjpPLHb9ZFuFi76I5h3yGYYcQoBTqZ4m3eyfbjQA==
-X-Received: by 2002:a05:6a21:ea0b:b0:220:37a7:578f with SMTP id
- adf61e73a8af0-22037a75af9mr12363653637.2.1750705754416; 
- Mon, 23 Jun 2025 12:09:14 -0700 (PDT)
+ bh=DHiwJfnthY4SOgskpiApv91qyy0EhaXUMalYCaS82/4=;
+ b=LfvRqIK7VdPjorrk03fmXEMkdsCjfZ20S891AgnPgkU3FSyjFDPAz/9Nz4+qY5TCD7
+ EljTnqH6aVtfz9MVJKYtTGal++ptOQ4XbBlVGrat80E8srO2U9ALgwUPTn1OaVfTRYtz
+ vfK1oapu+XS68zEU274X8I1eUNhfUNVfvEjgBbjitQ8ooscPTj88VOKsCs2D9+SKOE8a
+ 7CnwrXml5NpLS4DpLyPfeUP6gNtX5ShBMaufrjpcMp7pmSozrvsnU87A05zrNEKgK8s4
+ 4iq+F+sQ3sVn3ns3hN8WWfX57DoDFfR36M5M6WtN4WdBjkMFk9o2h0TvHkoHlZS0T4k+
+ xsqA==
+X-Gm-Message-State: AOJu0YziWnLx5xAxxioeEIgL/oIpTqJ9kf/ZEjs9JDE5X02KXlQD2MIl
+ Tv6z2LSYA73Xv+Rhd9Yicd6g9PtqD2PwZd+gs4NXXeBgWHs78RAaXGsLeLokZ9GHrsHwwsKzO7z
+ 2tA27Rjs=
+X-Gm-Gg: ASbGncsuyVkQYrnRJHGhpll8iJJlW2KogxxtlB1rgFBPrMCSwyk9aCiecupCrd7Iw9w
+ aXCV4paN4PO5pxBK89mW3lI9z9olEldQBHzgr+m8lPpEvSxba80mBKd5W6Yz3NXdy+8MS0X/ABT
+ 3e8P3y46Zu4OuDk5PZX8hFq8KDHEcb4hqVGqkPG8058Zy931RlWfjsxZakK2o/Inc8H94zHdEVY
+ aH2K+0OAUWwzBLk/umM3FKd5KEiKwqyi/hznUyNZFKPcHorCarrrBFTsyulvY1MNzaoH3DSn3gC
+ HXSe2zdjL7bYer5LsvIDU+X748F53yJtgaCA4FOMy3EuqywQvi2+GtdpVMbZj2ToOTzjdd6/RiL
+ FI/cJnZzLPTRjF0atSE7pMppP60RV
+X-Google-Smtp-Source: AGHT+IF0MlaV2DBnZff03sH+K15H2V4EmdbOOuPztTMKv2jtb/5TOkxINz1KccSlFvneyzeElMBV3w==
+X-Received: by 2002:a05:6a20:9191:b0:218:bb70:bd23 with SMTP id
+ adf61e73a8af0-22026f11d79mr20523162637.42.1750705900791; 
+ Mon, 23 Jun 2025 12:11:40 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7490a674eb6sm9293138b3a.144.2025.06.23.12.09.13
+ d2e1a72fcca58-7490a498b5bsm9262482b3a.54.2025.06.23.12.11.40
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Jun 2025 12:09:14 -0700 (PDT)
-Message-ID: <7705c58c-4105-454b-ad5c-e3d9c8027c50@linaro.org>
-Date: Mon, 23 Jun 2025 12:09:12 -0700
+ Mon, 23 Jun 2025 12:11:40 -0700 (PDT)
+Message-ID: <f8b6c667-d105-4852-a4ba-3d86e603823b@linaro.org>
+Date: Mon, 23 Jun 2025 12:11:39 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] linux-user: Add syscall dispatch support
+Subject: Re: [PATCH v2] linux-user: fix resource leaks in gen-vdso
 To: qemu-devel@nongnu.org
-References: <20250604121437.28176-4-floss@arusekk.pl>
+References: <20250513150346.1328217-1-berrange@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250604121437.28176-4-floss@arusekk.pl>
+In-Reply-To: <20250513150346.1328217-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,212 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/4/25 05:00, Arusekk wrote:
-> --- a/linux-user/i386/signal.c
-> +++ b/linux-user/i386/signal.c
-> @@ -865,3 +865,12 @@ void setup_sigtramp(abi_ulong sigtramp_page)
->       unlock_user(tramp, sigtramp_page, 2 * 8);
->   }
->   #endif
-> +
-> +bool is_vdso_sigreturn(abi_ulong pc)
-> +{
-> +#ifndef TARGET_X86_64
-> +    if (pc == default_sigreturn + 8 || pc == default_rt_sigreturn + 7)
-> +        return true;
-> +#endif
-> +    return false;
-> +}
+On 5/13/25 08:03, Daniel P. Berrangé wrote:
+> There are a number of resource leaks in gen-vdso. In theory they are
+> harmless because this is a short lived process, but when building QEMU
+> with --extra-cflags="-fsanitize=address" problems ensure. The gen-vdso
+> program is run as part of the build, and that aborts due to the
+> sanitizer identifying memory leaks, leaving QEMU unbuildable.
+> 
+> FAILED: libqemu-x86_64-linux-user.a.p/vdso.c.inc
+> /var/home/berrange/src/virt/qemu/build/linux-user/gen-vdso -o libqemu-x86_64-linux-user.a.p/vdso.c.inc ../linux-user/x86_64/vdso.so
+> 
+> =================================================================
+> ==1696332==ERROR: LeakSanitizer: detected memory leaks
+> 
+> Direct leak of 2968 byte(s) in 1 object(s) allocated from:
+>      #0 0x56495873f1f3  (/var/home/berrange/src/virt/qemu/build/linux-user/gen-vdso+0xa11f3) (BuildId: b69e241ad44719b6f3934f3c71dfc6727e8bdb12)
+>      #1 0x564958780b90  (/var/home/berrange/src/virt/qemu/build/linux-user/gen-vdso+0xe2b90) (BuildId: b69e241ad44719b6f3934f3c71dfc6727e8bdb12)
+> 
+> This complaint is about the 'buf' variable, however, the FILE objects
+> are also leaked in some error scenarios, so this fix refactors the
+> cleanup paths to fix all leaks. For completeness it also reports an
+> error if fclose() fails on 'inf'.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
 
-Braces required.
-
-> --- a/linux-user/mips/signal.c
-> +++ b/linux-user/mips/signal.c
-> @@ -393,3 +393,12 @@ void setup_sigtramp(abi_ulong sigtramp_page)
->   
->       unlock_user(tramp, sigtramp_page, 2 * 8);
->   }
-> +
-> +bool is_vdso_sigreturn(abi_ulong pc)
-> +{
-> +#ifdef TARGET_ARCH_HAS_SETUP_FRAME
-> +    if (pc == default_sigreturn + 8)
-> +        return true;
-> +#endif
-
-Likewise.
-
-> +++ b/linux-user/ppc/signal.c
-> @@ -730,3 +730,12 @@ void setup_sigtramp(abi_ulong sigtramp_page)
->   
->       unlock_user(tramp, sigtramp_page, 2 * 8);
->   }
-> +
-> +bool is_vdso_sigreturn(abi_ulong pc)
-> +{
-> +#ifdef TARGET_ARCH_HAS_SETUP_FRAME
-> +    if (pc == default_sigreturn + 8)
-> +        return true;
-> +#endif
-
-Likewise.
-
-> +++ b/linux-user/sparc/signal.c
-> @@ -789,3 +789,12 @@ do_sigsegv:
->       force_sig(TARGET_SIGSEGV);
->   }
->   #endif /* TARGET_SPARC64 */
-> +
-> +bool is_vdso_sigreturn(abi_ulong pc)
-> +{
-> +#ifdef TARGET_ABI32
-> +    if (pc == default_sigreturn + 8 || pc == default_rt_sigreturn + 8)
-> +        return true;
-> +#endif
-
-Likewise.
-
-> +++ b/linux-user/qemu.h
-> @@ -161,6 +161,11 @@ struct TaskState {
->       /* This thread's sigaltstack, if it has one */
->       struct target_sigaltstack sigaltstack_used;
->   
-> +    /* This thread's SYSCALL_USER_DISPATCH state, len=~0 means disabled */
-> +    abi_ulong sys_dispatch;
-> +    abi_ulong sys_dispatch_len;
-> +    abi_ulong sys_dispatch_selector;
-
-dispatch and selector should probably be "vaddr" for self-documentation.
-
-> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index fc37028597..027e4237b9 100644
-> --- a/linux-user/syscall.c
-> +++ b/linux-user/syscall.c
-> @@ -6340,6 +6340,10 @@ abi_long do_arch_prctl(CPUX86State *env, int code, abi_ulong addr)
->   #endif
->   #ifndef PR_SET_SYSCALL_USER_DISPATCH
->   # define PR_SET_SYSCALL_USER_DISPATCH 59
-> +# define PR_SYS_DISPATCH_OFF 0
-> +# define PR_SYS_DISPATCH_ON 1
-> +# define SYSCALL_DISPATCH_FILTER_ALLOW 0
-> +# define SYSCALL_DISPATCH_FILTER_BLOCK 1
->   #endif
->   #ifndef PR_SME_SET_VL
->   # define PR_SME_SET_VL  63
-> @@ -6469,6 +6473,37 @@ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
->       case PR_SET_UNALIGN:
->           return do_prctl_set_unalign(env, arg2);
->   
-> +    case PR_SET_SYSCALL_USER_DISPATCH:
-> +        {
-> +            TaskState *ts = get_task_state(env_cpu(env));
-> +            switch (arg2) {
-> +            case PR_SYS_DISPATCH_OFF:
-> +                if (arg3 || arg4 || arg5) {
-> +                    return -TARGET_EINVAL;
-> +                }
-> +                ts->sys_dispatch_len = (abi_ulong)~0ULL;
-> +                return 0;
-> +            case PR_SYS_DISPATCH_ON:
-> +                {
-> +                    uint8_t sb;
-> +
-> +                    if (arg3 && arg3 + arg4 <= arg3) {
-> +                        return -TARGET_EINVAL;
-> +                    }
-> +                    if (arg5 && get_user_u8(sb, arg5)) {
-
-Use access_ok, just like the kernel.
-
-> +                        return -TARGET_EFAULT;
-> +                    }
-> +                    (void)sb;  /* used later, only checked for access */
-> +                    ts->sys_dispatch = arg3;
-> +                    ts->sys_dispatch_len = arg4;
-> +                    ts->sys_dispatch_selector = arg5;
-> +                    return 0;
-> +                }
-> +            default:
-> +                return -TARGET_EINVAL;
-> +            }
-> +        }
-
-I think this should be split out to do_prctl_syscall_user_dispatch().
-
-> +
->       case PR_CAP_AMBIENT:
->       case PR_CAPBSET_READ:
->       case PR_CAPBSET_DROP:
-> @@ -6523,7 +6558,6 @@ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
->       case PR_SET_MM:
->       case PR_GET_SECCOMP:
->       case PR_SET_SECCOMP:
-> -    case PR_SET_SYSCALL_USER_DISPATCH:
->       case PR_GET_THP_DISABLE:
->       case PR_SET_THP_DISABLE:
->       case PR_GET_TSC:
-> @@ -13881,12 +13915,37 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
->       return ret;
->   }
->   
-> +static bool sys_dispatch(abi_ulong pc, TaskState *ts)
-> +{
-
-Move pc - offset < len check here.
-
-> +    if (unlikely(is_vdso_sigreturn(pc))) {
-> +        return false;
-> +    }
-> +    if (likely(ts->sys_dispatch_selector)) {
-> +        uint8_t sb;
-> +        if (get_user_u8(sb, ts->sys_dispatch_selector)) {
-> +            force_sig(TARGET_SIGSEGV);
-> +            return true;
-> +        }
-> +        if (likely(sb == SYSCALL_DISPATCH_FILTER_ALLOW)) {
-> +            return false;
-> +        }
-> +        if (unlikely(sb != SYSCALL_DISPATCH_FILTER_BLOCK)) {
-> +            force_sig(TARGET_SIGSYS);
-> +            return true;
-> +        }
-> +    }
-> +    force_sig_fault(TARGET_SIGSYS, TARGET_SYS_USER_DISPATCH, pc);
-> +    return true;
-> +}
-> +
->   abi_long do_syscall(CPUArchState *cpu_env, int num, abi_long arg1,
->                       abi_long arg2, abi_long arg3, abi_long arg4,
->                       abi_long arg5, abi_long arg6, abi_long arg7,
->                       abi_long arg8)
->   {
->       CPUState *cpu = env_cpu(cpu_env);
-> +    TaskState *ts = get_task_state(cpu);
-> +    vaddr pc = cpu->cc->get_pc(cpu);
->       abi_long ret;
->   
->   #ifdef DEBUG_ERESTARTSYS
-> @@ -13903,6 +13962,12 @@ abi_long do_syscall(CPUArchState *cpu_env, int num, abi_long arg1,
->       }
->   #endif
->   
-> +    if (unlikely(pc - ts->sys_dispatch >= ts->sys_dispatch_len)) {
-
-This isn't correct.  The kernel expression is gated by a bit in the work flags.
-
-> +        if (sys_dispatch(pc, ts)) {
-> +            return -QEMU_ESIGRETURN;
-> +        }
-> +    }
-
-Better as:
-
-     if (unlikely(ts->sys_dispatch_len != ~0)) {
-         vaddr pc = cpu->cc->get_pc(cpu);
-         if (sys_dispatch(pc, ts)) {
-             return -QEMU_ESIGRETURN;
-         }
-     }
+Queued, thanks.
 
 
 r~
