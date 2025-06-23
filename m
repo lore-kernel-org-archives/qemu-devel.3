@@ -4,91 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0EC2C7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 19:31:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A0EDC77B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 20:07:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTmsO-00088L-0k; Mon, 23 Jun 2025 15:30:44 -0400
+	id 1uTnRc-0005xy-M5; Mon, 23 Jun 2025 16:07:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uTmsL-000885-5M
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 15:30:41 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uTmsI-0007dJ-MS
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 15:30:40 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-607cc1a2bd8so6913676a12.2
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 12:30:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750707036; x=1751311836; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bEtMSXrNDxpUtZIIh+Y09rP/tmIdJ2AwBKCMtmK3JmA=;
- b=TdxaoJpsbxbQOgqh33my1MpoqxkcFXz7fqRIWhe/Zb2EwDc0HuaSqglYrUSvO/cVM7
- /ZBUxoFcpO4YkAdivutoCNiyZg+wP+QJioEq1Bq89EWA4J4zPb24PcHymw73HiQYN6ad
- 9NOcF0dOcQxZI54CHfjSYT+zxxc49tNWTYx5MJS34aWosn+homlEWaJ9qtGsHhgPKiQS
- voyt/25SKFLCUrRbmA2LVXdR+BgCzF6q2ceazeLpxzY9tXyg1LqREFE+duoGu23MN+UP
- WLIA9RphF5O1coDJBAefAUHimweRCA9478pGUI3DRFklQeygouB45miDwlLi8G+AtSiO
- KORA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uTnRb-0005xj-9a
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 16:07:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uTnRZ-0003TX-Fh
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 16:07:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750709224;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=EAQgpEBtNd61PFcFDZwuAl96RIgWN8ZVT+yu/6lUlPg=;
+ b=dwVGaYkJ9Y5lYmsJ/+s11R/e+uEV6l1JNOMfQ/bzKmqE6/ePCaHeLpaEukXwUWKCv36yAa
+ 5rlZQyP1x8ved0kCZjzL3kTExvb80vP8X+QH9VulQhRxHn20SmqQWaGQcIG/vnzW65v2bn
+ oSSESyRGrF7Am6BUcvYnnlGwoIxLi9M=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-91-eYv-padIMDqFLYfLqa8pfg-1; Mon, 23 Jun 2025 16:07:02 -0400
+X-MC-Unique: eYv-padIMDqFLYfLqa8pfg-1
+X-Mimecast-MFC-AGG-ID: eYv-padIMDqFLYfLqa8pfg_1750709222
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6fabb9286f9so101368776d6.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 13:07:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750707036; x=1751311836;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1750709221; x=1751314021;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bEtMSXrNDxpUtZIIh+Y09rP/tmIdJ2AwBKCMtmK3JmA=;
- b=VswEcYJDjgG2bebojhOwVRd+Wem6YV3PjwWmv6JAo/JXDhxlPpF6GWe8lVmgXsor7Z
- WF+eEho9Bcw6wr6YS7+75Yw7+9fVoKVpz+TFM+IB8fbDotUGEw5Cl9Mx1QyZa/1B2Mdu
- zCtC90g7jyAZ1s1+wJEjoJy3p2ZxdvoseA7gdSSFjBWSseUo+wc5JY0HSu9818rj5KAy
- BUxOqVZqX2YFGgAlZZU0mHR6fUXJd/BHdFTs36hk+J8SprVfJVSVHDUMCMDNloykfPf4
- zQro2qG5lPKxQWF5lV9xuB9pIiENXZ0holrbkyOGl+FvRooI0HfQ2XvpBVE9KbdpG45j
- M/pg==
-X-Gm-Message-State: AOJu0YyPfgUoKaccochQ3d1N9CSUoeegYUa657mayq9Rv/9CATZdnMhW
- TecsRYJeDL2psGDjDyEffFTQbypYpsDFFWpVjv49HlAYI9q8ZgkLu8wgPQa8LyY1CbDcb6zh65V
- UG31u+fr1+jIdzriQ/Je3qR8QQkPWsFk=
-X-Gm-Gg: ASbGncsCcPBYlSu4GtLJ8lr+ovh0q7ylJoH/DpYEb9kO51ndPl5rHXVRf0PIZ7Cc9sL
- 2CqqeL/jTu+DESq3oakKO7YMwOz3vgS7GfvdZYBIiRz/wzfBXltdatSktOlGsO81MWrC2Y05ouD
- v4l9PxwWV4Ie4L/1C4PIwvXA0O7PPxCCMX3l1rgNFySA==
-X-Google-Smtp-Source: AGHT+IGadOv8prPe2PFWnrEwZdlHNQul2ysb1a7swRAbTLmzpBjM05FGLerZNnBMOKT997KpZRg3057rkdW7H+LGd3Y=
-X-Received: by 2002:a05:6402:13ce:b0:5fb:e868:8730 with SMTP id
- 4fb4d7f45d1cf-60a1ccbcbe9mr13276116a12.10.1750707036126; Mon, 23 Jun 2025
- 12:30:36 -0700 (PDT)
+ bh=EAQgpEBtNd61PFcFDZwuAl96RIgWN8ZVT+yu/6lUlPg=;
+ b=I3+44qxXVC91Zg3rQJ/GZUaTA8AbyS4gwtkjV4+Nmz7DcZGdBW/H9A9yFeby2wwgep
+ 6c9Zv6nZctVxQP/A5sQOF6Bar2+4gfxLY1hvt5wADeXv5rAL3M9F6HWLr+XU7IpmZMTD
+ YfvfQSTYtlWMZcsX7Da2mXdR5PVFUUDmgveFAdzoziE/PLjkRKeVbF+mq13zeDf8OUrf
+ S9hl9Ji9fj6Bs7SmYTHiK5N3fe/HZUPBI3jD7VCf0KBeKx+ckPaBLuQx4EmZiS5NvHhE
+ +9/LPjw4rHph7DkWjTcBRjDhtLeDnl4Tv4zXRTsYDTRHyDkrDWClw8L7V48fkVMO31Nk
+ tTuw==
+X-Gm-Message-State: AOJu0Yx/hNjRdwA9q4Y47N3wZoghvT8+RRipLjtDmsi7eE6ac+WqClEG
+ 2FE1UazIEQG+RSkua87xGrEcHGpzItzyxbcTgKB6079OWwI9k1hoB49hNVG+KAB0IStNKEp6Tpr
+ FjqMGyoaJsMe8zkMql7l/bqk9JE0tFPbKiY4KoLwWDcYWE66wFzj2hl7vkSaiKY5km6gD6GNfVW
+ d8/9oBmlQYTQVde1q8JA9sfDBe7foPVm0kEEvLXQ==
+X-Gm-Gg: ASbGncu461A7VmbG5sgrbzvrTQ1sZMnsSl/1jx4vksuL5GMH0Ll2qcZbe1RLe3ZtUtm
+ dP1i5IaNWI/K7n7GVIOGzU9M6wiSvEDFgr+G3+EGsQHW4yg+WSmnpaqOouW4UoC9KUFccx07zu/
+ yhTKujjNE85dlupuU6Hv230Ud78B/kCwvT85d4AHVHW7hSeyq/UAR05aXMImN4fSNuLnnueh7Uc
+ 3nnRpWGP3NQ7L5IgvZebrn+t2pjHlpOqps5r35LvHoYur/zjAtv8q/J9AzinR2cOfppTOSacRk6
+ tbOUQYOFlCE=
+X-Received: by 2002:a05:6214:2427:b0:6fb:43d:65b7 with SMTP id
+ 6a1803df08f44-6fd0a5c1776mr253069626d6.36.1750709221528; 
+ Mon, 23 Jun 2025 13:07:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFvtDS3RNGAUkS/Uvi1RMDCbRBsjpqYwzYqvh4v0pkgYN9iN3kzYE4+MlZ/Vnl6oWYqWjkHlA==
+X-Received: by 2002:a05:6214:2427:b0:6fb:43d:65b7 with SMTP id
+ 6a1803df08f44-6fd0a5c1776mr253069156d6.36.1750709221025; 
+ Mon, 23 Jun 2025 13:07:01 -0700 (PDT)
+Received: from x1.com ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6fd095a775bsm48427976d6.112.2025.06.23.13.06.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 23 Jun 2025 13:07:00 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org,
+	Stefan Hajnoczi <stefanha@redhat.com>
+Cc: peterx@redhat.com, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Yanfei Xu <yanfei.xu@bytedance.com>
+Subject: [PULL 01/11] migration/ram: avoid to do log clear in the last round
+Date: Mon, 23 Jun 2025 16:06:46 -0400
+Message-ID: <20250623200656.1882674-2-peterx@redhat.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250623200656.1882674-1-peterx@redhat.com>
+References: <20250623200656.1882674-1-peterx@redhat.com>
 MIME-Version: 1.0
-References: <20250616092241.212898-1-armbru@redhat.com>
-In-Reply-To: <20250616092241.212898-1-armbru@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 23 Jun 2025 15:30:23 -0400
-X-Gm-Features: AX0GCFuBO0XOIMpFALGqMCpIMw9iszeSj5X8lBdWDbfI4ErL7XB1gihBRqelJWU
-Message-ID: <CAJSP0QV=mfmUt7s+iBkJtZsLiNd1v2c6tNrZeG8htBs58JHhrA@mail.gmail.com>
-Subject: Re: [PATCH v5 0/3] docs: define policy forbidding use of "AI" / LLM
- code generators
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x535.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,134 +108,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 16, 2025 at 5:27=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> More than a year ago, Daniel posted patches to put an AI policy in
-> writing.  Reception was mostly positive.  A v2 to address feedback
-> followed with some delay.  But no pull request.
->
-> I asked Daniel why, and he told me he was concerned it might go too
-> far in its interpretation of the DCO requirements.  After a bit of
-> discussion, I think Daniel's text is basically fine.  The policy it
-> describes is simple and strict.  Relaxing policy is easier than
-> tightening it.  I softened the phrasing slightly, addressed open
-> review comments, and fixed a few minor things I found myself.
->
-> Here's Daniel's cover letter for v2:
->
-> This patch kicks the hornet's nest of AI / LLM code generators.
->
-> With the increasing interest in code generators in recent times,
-> it is inevitable that QEMU contributions will include AI generated
-> code. Thus far we have remained silent on the matter. Given that
-> everyone knows these tools exist, our current position has to be
-> considered tacit acceptance of the use of AI generated code in QEMU.
->
-> The question for the project is whether that is a good position for
-> QEMU to take or not ?
->
-> IANAL, but I like to think I'm reasonably proficient at understanding
-> open source licensing. I am not inherantly against the use of AI tools,
-> rather I am anti-risk. I also want to see OSS licenses respected and
-> complied with.
->
-> AFAICT at its current state of (im)maturity the question of licensing
-> of AI code generator output does not have a broadly accepted / settled
-> legal position. This is an inherant bias/self-interest from the vendors
-> promoting their usage, who tend to minimize/dismiss the legal questions.
-> >From my POV, this puts such tools in a position of elevated legal risk.
->
-> Given the fuzziness over the legal position of generated code from
-> such tools, I don't consider it credible (today) for a contributor
-> to assert compliance with the DCO terms (b) or (c) (which is a stated
-> pre-requisite for QEMU accepting patches) when a patch includes (or is
-> derived from) AI generated code.
->
-> By implication, I think that QEMU must (for now) explicitly decline
-> to (knowingly) accept AI generated code.
->
-> Perhaps a few years down the line the legal uncertainty will have
-> reduced and we can re-evaluate this policy.
->
-> Discuss...
+From: Yanfei Xu <yanfei.xu@bytedance.com>
 
-Any final comments before I merge this?
+There won't be any ram sync after the stage of save_complete, therefore
+it's unnecessary to do manually protect for dirty pages being sent. Skip
+to do this in last round can reduce noticeable downtime.
 
-Stefan
+Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+Tested-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/20250514115827.3216082-1-yanfei.xu@bytedance.com
+[peterx: add comments]
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/ram.c | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
->
-> Changes in v4 [Markus Armbruster]:
->  * PATCH 2:
->    - Drop "follow a deterministic process" clause [Peter]
->
-> Changes in v4 [Markus Armbruster]:
->  * PATCH 1:
->    - Revert v3's "known identity", and instead move existing paragraph
->      from submitting-a-patch.rst to code-provenance.rst [Philippe]
->    - Add a paragraph on recording maintainer modifications [Alex]
->  * PATCH 3:
->    - Talk about "AI-assisted software development", "AI content
->      generators", and "content", not just "AI code generators" and
->      "code" [Stefan, Daniel]
->    - Fix spelling of Copilot, and mention Claude [Stefan]
->    - Fix link text for reference to the DCO
->    - Reiterate the policy does not apply to other uses of AI [Stefan,
->      Daniel]
->    - Add agents to the examples of tools impacted by the policy
->      [Daniel]
->
-> Changes in v3 [Markus Armbruster]:
->
->  * PATCH 1:
->    - Require "known identity" (phrasing stolen from Linux kernel docs)
->      [Peter]
->    - Clarify use of multiple addresses [Michael]
->    - Improve markup
->    - Fix a few misspellings
->    - Left for later: explain our use of Message-Id: [Alex]
->  * PATCH 2:
->    - Minor phrasing tweaks and spelling fixes
->  * PATCH 3:
->    - Don't claim DCO compliance is currently impossible, do point out
->      it's unclear how, and that we consider the legal risk not
->      acceptable.
->    - Stress that the policy is open to revision some more by adding
->      "as AI tools mature".  Also rephrase the commit message.
->    - Improve markup
->
-> Changes in v2 [Daniel Berrang=C3=A9]:
->
->  * Fix a huge number of typos in docs
->  * Clarify that maintainers should still add R-b where relevant, even
->    if they are already adding their own S-oB.
->  * Clarify situation when contributor re-starts previously abandoned
->    work from another contributor.
->  * Add info about Suggested-by tag
->  * Add new docs section dealing with the broad topic of "generated
->    files" (whether code generators or compilers)
->  * Simplify the section related to prohibition of AI generated files
->    and give further examples of tools considered covered
->  * Remove repeated references to "LLM" as a specific technology, just
->    use the broad "AI" term, except for one use of LLM as an example.
->  * Add note that the policy may evolve if the legal clarity improves
->  * Add note that exceptions can be requested on case-by-case basis
->    if contributor thinks they can demonstrate a credible copyright
->    and licensing status
->
-> Daniel P. Berrang=C3=A9 (3):
->   docs: introduce dedicated page about code provenance / sign-off
->   docs: define policy limiting the inclusion of generated files
->   docs: define policy forbidding use of AI code generators
->
->  docs/devel/code-provenance.rst    | 338 ++++++++++++++++++++++++++++++
->  docs/devel/index-process.rst      |   1 +
->  docs/devel/submitting-a-patch.rst |  23 +-
->  3 files changed, 341 insertions(+), 21 deletions(-)
->  create mode 100644 docs/devel/code-provenance.rst
->
-> --
-> 2.49.0
->
->
+diff --git a/migration/ram.c b/migration/ram.c
+index d26dbd37c4..fd8d83b63c 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -831,14 +831,22 @@ static inline bool migration_bitmap_clear_dirty(RAMState *rs,
+     bool ret;
+ 
+     /*
+-     * Clear dirty bitmap if needed.  This _must_ be called before we
+-     * send any of the page in the chunk because we need to make sure
+-     * we can capture further page content changes when we sync dirty
+-     * log the next time.  So as long as we are going to send any of
+-     * the page in the chunk we clear the remote dirty bitmap for all.
+-     * Clearing it earlier won't be a problem, but too late will.
++     * During the last stage (after source VM stopped), resetting the write
++     * protections isn't needed as we know there will be either (1) no
++     * further writes if migration will complete, or (2) migration fails
++     * at last then tracking isn't needed either.
+      */
+-    migration_clear_memory_region_dirty_bitmap(rb, page);
++    if (!rs->last_stage) {
++        /*
++         * Clear dirty bitmap if needed.  This _must_ be called before we
++         * send any of the page in the chunk because we need to make sure
++         * we can capture further page content changes when we sync dirty
++         * log the next time.  So as long as we are going to send any of
++         * the page in the chunk we clear the remote dirty bitmap for all.
++         * Clearing it earlier won't be a problem, but too late will.
++         */
++        migration_clear_memory_region_dirty_bitmap(rb, page);
++    }
+ 
+     ret = test_and_clear_bit(page, rb->bmap);
+     if (ret) {
+-- 
+2.49.0
+
 
