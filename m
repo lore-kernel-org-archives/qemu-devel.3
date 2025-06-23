@@ -4,94 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1696C7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 22:26:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A68CC7115B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 22:38:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTpc2-000611-Ix; Mon, 23 Jun 2025 18:26:02 -0400
+	id 1uTpnK-00087M-T7; Mon, 23 Jun 2025 18:37:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uTpc1-00060q-0n
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 18:26:01 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uTpnG-00086t-9m
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 18:37:39 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uTpbx-00021r-2a
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 18:25:58 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-ade4679fba7so899653466b.2
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 15:25:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uTpnE-0003Qw-I8
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 18:37:38 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-73c17c770a7so5335012b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 15:37:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750717554; x=1751322354; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FI9gHoaT60rkMRvJB7b1gpL6DSPWBs9h7J+VYqCjA1I=;
- b=AwQF10ObbsaNgtCekvfhJbzs9qXrfQTv0mKGN/viwfIrRqMaoTq/OS3thgDSxC7Kxj
- o8feA07Hthh1mYEU0WKSjpTBT5vvlfd5u/q3RBNqua371tuq8j7fu0+736c3jXZbkWQj
- Ge7kB3xulhztoESw0mRcXgyUrwTj/BbkpWRjQEZDM83JklUbco/Jd7ia6+EB1NYXh9gh
- tzgXte4dY6FDUnPvownqmIVzf9ttwlUnJ3HuJXLIyGN4sl5BKa5ikI+vajdQiEv88sVD
- 0+Z8nBaMbdY0uh4R1Y/Dn5oPQ85ij6K1gkeVWUX+wL1qzkkmiiISo3OJ3nXxcpKiOcVr
- 7jGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750717554; x=1751322354;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ d=linaro.org; s=google; t=1750718253; x=1751323053; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=FI9gHoaT60rkMRvJB7b1gpL6DSPWBs9h7J+VYqCjA1I=;
- b=Y3s91uieHuTfm4aReLYojbv/CNjqJFLcsJkB6cYxGLSHWTUCxrqU/hFC8F2mP3F7ve
- KBNn0DV0823LLMFxuokn+gFUB6Lg5+aJ796XIzZT1yNbfwR3ZEo+gKTUW0HkOQQ+7ggf
- 4YaFmtGQYnqCGMu3qxpHhz45zNRicI/46iO8xzwgopvviotFtzE4ixavEjzrZ1AlrR3m
- Il/ex4Y/9ZHLsT6ikyxwWCgHTmNLBF9RdkvZ5UwNvb/GkPBlNd9oDbxhVZOjURYZCos4
- lgyfIuVA4lXpZlWWUKSY/LIOYsqRzMM6TB8uY+WzCG9lEWRSQ/2QOqLJ8GgPpTenCFV7
- 6SmA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWVFxgX/PvLPfCGUFVzc4VidVg1H2Dk0hnQXkkQtMd3epwzST41G/UkCNqsfShlpCqHzM2Y3uoa8R1z@nongnu.org
-X-Gm-Message-State: AOJu0YwBb20auU7/K4ws+eD66eEv/jTLkOc9lnxHvWng1ZVtRl7oSB3Z
- 0ecd0/Wz/XvWh2Yd81+WIB/lYn0cmts6k0UsdS5ZT+aHhY0KUBxG9kO4bZpVOD0Ijus=
-X-Gm-Gg: ASbGncvwgB33qN8T+67cyxdQDi23gzPmMufEcJWooiRl+TaIPU3OeUFtS5ZWoo1K6v5
- NPBiSsguRBjwU5x9lQLJ+2hzMNbFq3xIXLBfvILi4Lr7nWTthhfOUm89lGPamNx95nHNNRJ3Bhp
- 3iAPFcqLm5EFPT6xFmJ59RIV3zL67xkIK4aUzQQvDc0QrT+pzfp0HfDpWfuOCUpfs3zeZf0bCla
- WZHqGBwCrNun11BZm9mpM2QXAMYhEcV3+Gf9gD81Sih/ISEZYn3PQ+nQn/RDb8ledObd3MeWCqJ
- ce380pj8w59fv36FQSV8ZTi6yEP9GhvVa8trC5PXBFWrC+YOo8uPCRDuApT2VpU=
-X-Google-Smtp-Source: AGHT+IHNHS03kaj3hj0wHuOP3rzytlCASQ/hVwTxwh9TDm7Wey+7pn/5++mXRI8ZzyLEXmLIDWrZBg==
-X-Received: by 2002:a17:907:3fa5:b0:ad5:5302:4023 with SMTP id
- a640c23a62f3a-ae057b3b6femr1489967066b.44.1750717553756; 
- Mon, 23 Jun 2025 15:25:53 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae053e7c6fdsm763230666b.3.2025.06.23.15.25.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Jun 2025 15:25:52 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0A9515F80E;
- Mon, 23 Jun 2025 23:25:52 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,  Daniel P
- . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Thomas Huth
- <thuth@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,  Gerd Hoffmann
- <kraxel@redhat.com>,  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Kevin Wolf
- <kwolf@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Alexander
- Graf <agraf@csgraf.de>,  Paolo Bonzini <pbonzini@redhat.com>,  Richard
- Henderson <richard.henderson@linaro.org>,  Peter Maydell
- <peter.maydell@linaro.org>
-Subject: Re: [PATCH v5 0/3] docs: define policy forbidding use of "AI" / LLM
- code generators
-In-Reply-To: <CAJSP0QV=mfmUt7s+iBkJtZsLiNd1v2c6tNrZeG8htBs58JHhrA@mail.gmail.com>
- (Stefan Hajnoczi's message of "Mon, 23 Jun 2025 15:30:23 -0400")
-References: <20250616092241.212898-1-armbru@redhat.com>
- <CAJSP0QV=mfmUt7s+iBkJtZsLiNd1v2c6tNrZeG8htBs58JHhrA@mail.gmail.com>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Mon, 23 Jun 2025 23:25:51 +0100
-Message-ID: <87h60614eo.fsf@draig.linaro.org>
+ bh=ie/Jbtqrmn2Uur88ykWORcPz57J0/Ee1pl9bf2eBIq8=;
+ b=C4xb4DghCB8Yfctu9nkH5lpyvpDuog3LMBtlw85vQqKa2/iX4fMjxANwsCPNj4HWft
+ BJDcIRlncUqUDmdpUh7HTZG4QUp+tCDQWMEB4sVll/XpvDGrkSVRJWSFP/CIaHExoR9s
+ iqPTOQwTrR1njnvrtzeDe/lEVHc+qeGPC1TqDi9HDurd/GwU0VbSkJm0NwcvaAehAWsU
+ PNAtNH4/FbsBlUThEYRlLd7FGf9ZpeRTp0X9c0covpOUkWsnceK1nr5g9auQZb/12u8L
+ YbfYZwjokl7DS29V3H5s6ByAwWAf+/sMTuepWpiD8TA4u4NOf552g5CJsDvhr6eBIHkU
+ zNow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750718253; x=1751323053;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ie/Jbtqrmn2Uur88ykWORcPz57J0/Ee1pl9bf2eBIq8=;
+ b=KOXKfBDJTkHzEKAjvxB3qnl9i2+Ixuod8aeCtJRbpC68bbkwYRN1gVdKvVV4vFAnoc
+ MPOlTAEQBGhzSWW13D5ARBi4dZe4OFd0rTnxmqmVCi3NJt+cJC/9MvhotiA5z/nImRuU
+ K/Gzm9DXvwEyb+n4zof614EuzVT+xmMvRPcFdExARbDUnGrDLyNtKMt6LlVrCYJc0xmt
+ OV0xqQsu6tTST3VC05t+4MS9D5UPxTF0uhtLo2WjOhx+jGz+u7nbXhVXdi3LfKyhnk3o
+ AxQqSvbhmGM3TaFVD38ovpUpFzy+z4ZGhqHP/pS+1QWsqWXCEICVP7+ogPEAyWhycq88
+ siDQ==
+X-Gm-Message-State: AOJu0YwpPb/15+JULbdBN1Vm7Ka73cF1z5iCjYK0OWJjraKTbSA0iApa
+ JNF7v3n8kHVkRMASFaAARGjZSqI+WDXd9qDo7SEJLO0Y6fqcB7YjkcKJxljy73f+PBSzdByqLDw
+ P0HfAL94=
+X-Gm-Gg: ASbGnctWFzm0o8bmn9Lu9qGYW1lwEM+1E/PtvUmzZbBHXQEAw4lGdwD77FKTQWdSpTL
+ dGYUMUVpoc6ZEnKgRkESkeWsu2e8HQeA7r57Kf6OpjFJ9XLv1qEDUaT9FhWObUr7EtI7jUDbXAF
+ 17zXOmksK0Z3l/lHZd74VvzxVK0DQ80+tVjoXPoCDvmeEWrkISWrzxh+UJD4CCjsF5VhC1IJwKB
+ d2jxep6D01dnOsAlFRpobLQfRJdXtdboiGx/Rcym6YF56sh3jkbOk9zJfXP674VhF4DzxOmG9Xd
+ E4C6+05Z0e5ck6zrxGoAlZdJrP2dCZknU3pNryXTvw2LoUQM+ka8lfdU30hMAxe3ISHQgbE+ie0
+ nhVjj0Qp7k4K8g5sIoB9qgcjBIcE5
+X-Google-Smtp-Source: AGHT+IGDEGs3E+/QsaHcUWWckXf/cCVsgTaEPs+sc3Sd+gzOB8MxEKbro70k4FM54jdq8GmcNrau9Q==
+X-Received: by 2002:a05:6a00:2789:b0:730:95a6:3761 with SMTP id
+ d2e1a72fcca58-7490d4f533amr26003608b3a.3.1750718253507; 
+ Mon, 23 Jun 2025 15:37:33 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-67-243.tukw.qwest.net. [174.21.67.243])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-749b5e42a8esm196623b3a.69.2025.06.23.15.37.33
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 23 Jun 2025 15:37:33 -0700 (PDT)
+Message-ID: <ed51d1e6-8e81-412f-9ad0-03726aa27fb4@linaro.org>
+Date: Mon, 23 Jun 2025 15:37:31 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] hw/s390x: Use preferred API call for IPLB chain write
+To: qemu-devel@nongnu.org
+References: <20250623201216.721130-1-jrossi@linux.ibm.com>
+ <20250623201216.721130-2-jrossi@linux.ibm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250623201216.721130-2-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,65 +103,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stefan Hajnoczi <stefanha@gmail.com> writes:
+On 6/23/25 13:12, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+> 
+> Replace a recently introduced legacy API call with the preferred API call.
+> 
+> fixes: 0927875 (hw/s390x: Build an IPLB for each boot device)
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+> ---
+>   hw/s390x/ipl.c | 10 +++++++++-
+>   1 file changed, 9 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+> index 2f082396c7..f2606303e6 100644
+> --- a/hw/s390x/ipl.c
+> +++ b/hw/s390x/ipl.c
+> @@ -399,8 +399,16 @@ static uint64_t s390_ipl_map_iplb_chain(IplParameterBlock *iplb_chain)
+>       uint16_t count = be16_to_cpu(ipl->qipl.chain_len);
+>       uint64_t len = sizeof(IplParameterBlock) * count;
+>       uint64_t chain_addr = find_iplb_chain_addr(ipl->bios_start_addr, count);
+> +    MemTxResult ret;
+> +
+> +    ret = address_space_write(&address_space_memory, chain_addr,
+> +            MEMTXATTRS_UNSPECIFIED, iplb_chain, len);
+> +
+> +    if (ret != MEMTX_OK) {
+> +        error_report("Failed to map IPLB chain.");
+> +        exit(1);
+> +    }
 
-> On Mon, Jun 16, 2025 at 5:27=E2=80=AFAM Markus Armbruster <armbru@redhat.=
-com> wrote:
->>
->> More than a year ago, Daniel posted patches to put an AI policy in
->> writing.  Reception was mostly positive.  A v2 to address feedback
->> followed with some delay.  But no pull request.
->>
->> I asked Daniel why, and he told me he was concerned it might go too
->> far in its interpretation of the DCO requirements.  After a bit of
->> discussion, I think Daniel's text is basically fine.  The policy it
->> describes is simple and strict.  Relaxing policy is easier than
->> tightening it.  I softened the phrasing slightly, addressed open
->> review comments, and fixed a few minor things I found myself.
->>
->> Here's Daniel's cover letter for v2:
->>
->> This patch kicks the hornet's nest of AI / LLM code generators.
->>
->> With the increasing interest in code generators in recent times,
->> it is inevitable that QEMU contributions will include AI generated
->> code. Thus far we have remained silent on the matter. Given that
->> everyone knows these tools exist, our current position has to be
->> considered tacit acceptance of the use of AI generated code in QEMU.
->>
->> The question for the project is whether that is a good position for
->> QEMU to take or not ?
->>
->> IANAL, but I like to think I'm reasonably proficient at understanding
->> open source licensing. I am not inherantly against the use of AI tools,
->> rather I am anti-risk. I also want to see OSS licenses respected and
->> complied with.
->>
->> AFAICT at its current state of (im)maturity the question of licensing
->> of AI code generator output does not have a broadly accepted / settled
->> legal position. This is an inherant bias/self-interest from the vendors
->> promoting their usage, who tend to minimize/dismiss the legal questions.
->> >From my POV, this puts such tools in a position of elevated legal risk.
->>
->> Given the fuzziness over the legal position of generated code from
->> such tools, I don't consider it credible (today) for a contributor
->> to assert compliance with the DCO terms (b) or (c) (which is a stated
->> pre-requisite for QEMU accepting patches) when a patch includes (or is
->> derived from) AI generated code.
->>
->> By implication, I think that QEMU must (for now) explicitly decline
->> to (knowingly) accept AI generated code.
->>
->> Perhaps a few years down the line the legal uncertainty will have
->> reduced and we can re-evaluate this policy.
->>
->> Discuss...
->
-> Any final comments before I merge this?
+I'm certain you should not exit for a guest error.
 
-It's well reviewed lets get it merged.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+r~
+
+>   
+> -    cpu_physical_memory_write(chain_addr, iplb_chain, len);
+>       return chain_addr;
+>   }
+>   
+
 
