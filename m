@@ -4,89 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E73A6C77B7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 19:12:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11109C7115B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 19:14:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTma2-0004w9-Td; Mon, 23 Jun 2025 15:11:47 -0400
+	id 1uTmcW-0005rY-Ch; Mon, 23 Jun 2025 15:14:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTma0-0004vj-Dh
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 15:11:44 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uTmcR-0005qS-U7
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 15:14:16 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTmZy-0005MX-H2
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 15:11:44 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-748e63d4b05so2719533b3a.2
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 12:11:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uTmcP-0005ZT-6s
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 15:14:15 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-6097b404f58so8250204a12.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 12:14:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750705901; x=1751310701; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=DHiwJfnthY4SOgskpiApv91qyy0EhaXUMalYCaS82/4=;
- b=tiJAVCElGpv2sjCbY4Xx0s9ZqfPYHVMsNyp3VfC+ylAfaKJ6LmF/NHm5unYJMn1tgO
- jrs+0m25WZLHxPkNE9uptu/SBgR1LlnpRCL75BcUJ/MCgQm4nkzJRe5Qef1i8/P84yJi
- US4EZxBllmZaLm3BgvtcdSTvocQ/orp7NN/6/abI9RTwshQOeXK6DHiHzH8A9Iq4qH/4
- zVuj2gw2p6ggP1cNg7RdFcaIuBw9uBNo9WVTuWTEHpJwvMj+9KQcCYNx21Bb2HBapw6l
- 3gWG18VlR02RTzkX9s2gLs9BRbmo0Rm3C6Qw0CXcm05Z8BrfuIbr9y4fnbvr/1reFtus
- 2kDw==
+ d=gmail.com; s=20230601; t=1750706051; x=1751310851; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pfTP6Pxc2LTi7dNCqHTyrs2OuMzLO6Tl0OLgRBNknQM=;
+ b=GOOB0FrBrVA+35AQyLaq3rwrs7JOqplbxoglUXctsab5rIB1vT+QbAfWSPltfWr7W+
+ JZ76LzeIGG+OalR7I41fAG/qvfyWKj8k68l700gZwUrZLFT5n1QQD0BQlYUveUGe7Kmb
+ 2xPzVJZHik+UPo77QYg7qZs4SWeX4N663mMoInnHRHT4d+854etvW9Vjxy6E4GYzr2um
+ JFzeQEAKmj+BGyt4SW5uyfs0uacoUYwfY4NFBS9BRp3zR8mBq3ODWLT+Z+zdBI1oEvvE
+ J+ODJ+mQlbOMsghxPUKHMjc+7/pF6B/piyCqKrRiXtaGYvbo2wyBRvpgfCONlT5bCUlU
+ dHgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750705901; x=1751310701;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DHiwJfnthY4SOgskpiApv91qyy0EhaXUMalYCaS82/4=;
- b=LfvRqIK7VdPjorrk03fmXEMkdsCjfZ20S891AgnPgkU3FSyjFDPAz/9Nz4+qY5TCD7
- EljTnqH6aVtfz9MVJKYtTGal++ptOQ4XbBlVGrat80E8srO2U9ALgwUPTn1OaVfTRYtz
- vfK1oapu+XS68zEU274X8I1eUNhfUNVfvEjgBbjitQ8ooscPTj88VOKsCs2D9+SKOE8a
- 7CnwrXml5NpLS4DpLyPfeUP6gNtX5ShBMaufrjpcMp7pmSozrvsnU87A05zrNEKgK8s4
- 4iq+F+sQ3sVn3ns3hN8WWfX57DoDFfR36M5M6WtN4WdBjkMFk9o2h0TvHkoHlZS0T4k+
- xsqA==
-X-Gm-Message-State: AOJu0YziWnLx5xAxxioeEIgL/oIpTqJ9kf/ZEjs9JDE5X02KXlQD2MIl
- Tv6z2LSYA73Xv+Rhd9Yicd6g9PtqD2PwZd+gs4NXXeBgWHs78RAaXGsLeLokZ9GHrsHwwsKzO7z
- 2tA27Rjs=
-X-Gm-Gg: ASbGncsuyVkQYrnRJHGhpll8iJJlW2KogxxtlB1rgFBPrMCSwyk9aCiecupCrd7Iw9w
- aXCV4paN4PO5pxBK89mW3lI9z9olEldQBHzgr+m8lPpEvSxba80mBKd5W6Yz3NXdy+8MS0X/ABT
- 3e8P3y46Zu4OuDk5PZX8hFq8KDHEcb4hqVGqkPG8058Zy931RlWfjsxZakK2o/Inc8H94zHdEVY
- aH2K+0OAUWwzBLk/umM3FKd5KEiKwqyi/hznUyNZFKPcHorCarrrBFTsyulvY1MNzaoH3DSn3gC
- HXSe2zdjL7bYer5LsvIDU+X748F53yJtgaCA4FOMy3EuqywQvi2+GtdpVMbZj2ToOTzjdd6/RiL
- FI/cJnZzLPTRjF0atSE7pMppP60RV
-X-Google-Smtp-Source: AGHT+IF0MlaV2DBnZff03sH+K15H2V4EmdbOOuPztTMKv2jtb/5TOkxINz1KccSlFvneyzeElMBV3w==
-X-Received: by 2002:a05:6a20:9191:b0:218:bb70:bd23 with SMTP id
- adf61e73a8af0-22026f11d79mr20523162637.42.1750705900791; 
- Mon, 23 Jun 2025 12:11:40 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-67-243.tukw.qwest.net. [174.21.67.243])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7490a498b5bsm9262482b3a.54.2025.06.23.12.11.40
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Jun 2025 12:11:40 -0700 (PDT)
-Message-ID: <f8b6c667-d105-4852-a4ba-3d86e603823b@linaro.org>
-Date: Mon, 23 Jun 2025 12:11:39 -0700
+ d=1e100.net; s=20230601; t=1750706051; x=1751310851;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pfTP6Pxc2LTi7dNCqHTyrs2OuMzLO6Tl0OLgRBNknQM=;
+ b=IIOhuWpHGSFa0+l6qH93eEJtHgr8OiG8Xqsh7Pr0jbIWpJgiUVWXcC/VbzPCLiN6Y1
+ HfcELFJCnOBix6boyJcesoVKX//ls6Y6NaHLQnhuCydRHrNbJQL97Lxuh8L6ehyHnIfr
+ hhFsfBX6l1bXvj6K7hVaFC2Q74Y7S6zvD4TkV0T7sE9NQj4jmBev+bzqk9RcfGdQTYuO
+ ukW+qo0S68w/pa58TW0oILMgXcuq7WTMtIhwpALuEN67H4ItQhIjdPbZc6v6xbg4Aem9
+ gpQ4MXy3rxl/mkaAbUS168sG4jRV2oHmNCJuYsWupzvPPY32em6DVTFpxdLry0VZFrkh
+ IEVw==
+X-Gm-Message-State: AOJu0YwnwquP8UCgZkpgN0WLpNuJQoHdSwiZZW/3hsNolMQYfA/WIFUt
+ pT2Eeau037oYT6kVGCeiU3LRkwHvgZMe9K/gWBR6sP/JqKkNb8+aczmrVqccSWODsqCsabddm+I
+ Vh+aUAngzV5WuuNt+SkwJFlzsEnB8G7321w==
+X-Gm-Gg: ASbGncu40FxShNVGlH8D83kuI0qM/R5190hO9dxOQ4GPyf5esCmGcOsvFyXKvd8JU/e
+ j8yXgn63YOyE0CGgSoqeN7ni6Xs/rKgO2X7uqUAprQ00YhHiNjjktE/xndatBk8jUlaN95vB2X9
+ KJHHzghcpJPjQIcODO7jfZnKxDGD9kJMWb2GkQZBuV6C/TI2HRIrnJ
+X-Google-Smtp-Source: AGHT+IFE3th4+MC9+hIUK+s89d7U9KUfztc+mtBq5Kw3FWl2iDxnzsO47inTD6yFnqIl95LsPeFlmoc1Bf+JPa5/iTs=
+X-Received: by 2002:a05:6402:348e:b0:60c:1a20:1cc with SMTP id
+ 4fb4d7f45d1cf-60c1a200860mr559621a12.27.1750706050751; Mon, 23 Jun 2025
+ 12:14:10 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] linux-user: fix resource leaks in gen-vdso
-To: qemu-devel@nongnu.org
-References: <20250513150346.1328217-1-berrange@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250513150346.1328217-1-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+References: <20250619082817.1517996-1-gaosong@loongson.cn>
+ <CAJSP0QWsFx8qcR4k4nb2fBH0Q1aFWwCUU4JEs+NFCGHKhSphMA@mail.gmail.com>
+ <b9f57a29-b13b-cd94-dc92-bc9ea45cc077@loongson.cn>
+ <CAJSP0QXGg9_hcdNVJ4LyVNB8ujFSX5jMfYSwbsfX2xQ2XAJdCw@mail.gmail.com>
+ <79e720ca-ef28-c7cd-9226-00f9264da81e@loongson.cn>
+In-Reply-To: <79e720ca-ef28-c7cd-9226-00f9264da81e@loongson.cn>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 23 Jun 2025 15:13:58 -0400
+X-Gm-Features: AX0GCFupWVtqhJRRExfNDOTeMzRUrBztQoHAUdaecTbcikyPPET9rug03PP9pgM
+Message-ID: <CAJSP0QUhCHqEReRw7SJ=L+YQ8UJW6P9WhPoPwg-QhY5w2R=4cQ@mail.gmail.com>
+Subject: Re: [PULL 00/14] loongarch-to-apply queue
+To: gaosong <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,33 +97,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/13/25 08:03, Daniel P. Berrangé wrote:
-> There are a number of resource leaks in gen-vdso. In theory they are
-> harmless because this is a short lived process, but when building QEMU
-> with --extra-cflags="-fsanitize=address" problems ensure. The gen-vdso
-> program is run as part of the build, and that aborts due to the
-> sanitizer identifying memory leaks, leaving QEMU unbuildable.
-> 
-> FAILED: libqemu-x86_64-linux-user.a.p/vdso.c.inc
-> /var/home/berrange/src/virt/qemu/build/linux-user/gen-vdso -o libqemu-x86_64-linux-user.a.p/vdso.c.inc ../linux-user/x86_64/vdso.so
-> 
-> =================================================================
-> ==1696332==ERROR: LeakSanitizer: detected memory leaks
-> 
-> Direct leak of 2968 byte(s) in 1 object(s) allocated from:
->      #0 0x56495873f1f3  (/var/home/berrange/src/virt/qemu/build/linux-user/gen-vdso+0xa11f3) (BuildId: b69e241ad44719b6f3934f3c71dfc6727e8bdb12)
->      #1 0x564958780b90  (/var/home/berrange/src/virt/qemu/build/linux-user/gen-vdso+0xe2b90) (BuildId: b69e241ad44719b6f3934f3c71dfc6727e8bdb12)
-> 
-> This complaint is about the 'buf' variable, however, the FILE objects
-> are also leaked in some error scenarios, so this fix refactors the
-> cleanup paths to fix all leaks. For completeness it also reports an
-> error if fclose() fails on 'inf'.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
+On Sun, Jun 22, 2025 at 10:39=E2=80=AFPM gaosong <gaosong@loongson.cn> wrot=
+e:
+>
+> =E5=9C=A8 2025/6/21 =E4=B8=8A=E5=8D=882:12, Stefan Hajnoczi =E5=86=99=E9=
+=81=93:
+> > On Thu, Jun 19, 2025 at 11:11=E2=80=AFPM gaosong <gaosong@loongson.cn> =
+wrote:
+> >> =E5=9C=A8 2025/6/20 =E4=B8=8A=E5=8D=884:39, Stefan Hajnoczi =E5=86=99=
+=E9=81=93:
+> >>> gpg:                using RSA key CA473C44D6A09C189A193FCD452B96852B2=
+68216
+> >>> gpg: Can't check signature: No public key
+> >>>
+> >>> Why has the GPG key changed? Your previous pull request was signed
+> >>> with key B8FF1DA0D2FDCB2DA09C6C2C40A2FFF239263EDF.
+> >>>
+> >>> If you would like to change keys, please sign your new key using your
+> >>> old key and upload the new key to the key servers again. That way I
+> >>> know that the new key really belongs to you.
+> >> Hi, Stefan
+> >>
+> >> I had  sign  new key using old key and send to the key server again
+> >> should I need pull again?
+> > Thanks!
+> >
+> > The pull request does not need to be resent.
+> but I find the pull  key not sign wi/th the  old key. /
+> > I wasn't able to fetch your new key with the signature from the
+> > keyservers though. Did you `gpg --send-keys 0x452B96852B268216`?
+> yes,  and I send it and tested recv the key
+>
+> gpg --keyserver hkp://keys.openpgp.org --search-keys 0x452B96852B268216
+> gpg: data source:http://keys.openpgp.org:11371  <http://keys.openpgp.org:=
+11371/>
+> (1)     Song Gao <gaosong@loongson.cn>
+>           1024 bit RSA key 452B96852B268216, created: 2022-09-16
+> Keys 1-1 of 1 for "0x452B96852B268216".  Enter number(s), N)ext, or Q)uit=
+ > s
+> gaosong@loongson-pc:~$ gpg --recv-keys 0x452B96852B268216
+> gpg: key 452B96852B268216: "Song Gao <gaosong@loongson.cn>" not changed
+> gpg: Total number processed: 1
+> gpg:              unchanged: 1
+>
+> > Alternatively, you could attach your new signed gpg key and send it as
+> > an email attachment.
+>
+> Attached is the key I exported
 
-Queued, thanks.
+For some reason I still don't see the signature when receiving the key
+from hkp://keys.openpgp.org/, but your email attachment worked.
+Thanks!
 
+Stefan
 
-r~
+>
+> Thanks.
+> Song Gao
+>
+> > Stefan
+> >
+> >> Thanks.
+> >> Song Gao
+> >>
+> >> gpg --list-signatures
+> >> /home/gaosong/.gnupg/pubring.kbx
+> >> --------------------------------Attached is the key I exported
+> >> pub   rsa1024 2022-09-16 [SC]
+> >>         B8FF1DA0D2FDCB2DA09C6C2C40A2FFF239263EDF
+> >> uid           [ =E6=9C=AA=E7=9F=A5 ] Song Gao <m17746591750@163.com>
+> >> sig 3        40A2FFF239263EDF 2022-09-16  Song Gao <m17746591750@163.c=
+om>
+> >> sig          452B96852B268216 2025-06-20  Song Gao <gaosong@loongson.c=
+n>
+> >>
+> >> pub   rsa1024 2022-09-16 [SC]
+> >>         CA473C44D6A09C189A193FCD452B96852B268216
+> >> uid           [ =E6=9C=AA=E7=9F=A5 ] Song Gao <gaosong@loongson.cn>
+> >> sig 3        452B96852B268216 2022-09-16  Song Gao <gaosong@loongson.c=
+n>
+> >> sig          40A2FFF239263EDF 2025-06-20  Song Gao <m17746591750@163.c=
+om>
+> >>
+> >>
+> >> gpg --send-keys CA473C44D6A09C189A193FCD452B96852B268216
+> >> gpg: =E6=AD=A3=E5=9C=A8=E5=8F=91=E9=80=81=E5=AF=86=E9=92=A5 452B96852B=
+268216 =E5=88=B0 hkps://keys.openpgp.org
+> >> gpg --recv-keys CA473C44D6A09C189A193FCD452B96852B268216
+> >> gpg: =E5=AF=86=E9=92=A5 452B96852B268216=EF=BC=9A=E2=80=9CSong Gao <ga=
+osong@loongson.cn>=E2=80=9D =E6=9C=AA=E6=94=B9=E5=8F=98
+> >> gpg: =E5=A4=84=E7=90=86=E7=9A=84=E6=80=BB=E6=95=B0=EF=BC=9A1
+> >> gpg:              =E6=9C=AA=E6=94=B9=E5=8F=98=EF=BC=9A1
+> >>
+> >>
+> >>
+>
 
