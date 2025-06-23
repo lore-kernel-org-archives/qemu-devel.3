@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30F8DC77B7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 10:36:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA35CC7115B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 10:45:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTeWY-0004JP-UG; Mon, 23 Jun 2025 06:35:39 -0400
+	id 1uTefV-000606-Fj; Mon, 23 Jun 2025 06:44:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uTeWX-0004JG-Tw
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 06:35:37 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ id 1uTefT-0005zD-UB
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 06:44:51 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uTeWT-0002IC-Ng
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 06:35:36 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-711a3dda147so40611227b3.2
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 03:35:31 -0700 (PDT)
+ id 1uTefO-0003FS-Hf
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 06:44:51 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-711d4689084so40483777b3.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 03:44:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750674930; x=1751279730; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750675485; x=1751280285; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nl/T1HN4gMljf1MMB4hIuu0EUCO20D2saFsY4/mlfUI=;
- b=kMhqsQfEwHx6Q3Ca+xP7xhEESuo5yMY+6WvH7H2Nt4PuiEXLqZQ+U8/+5Ahi6t8KvU
- x6RnoJXU5C33om5gdrjUtmxK9uY7xBFAT58pdRDT49Qexi+9RPJ7C62z36qOHVTiyzdV
- cW41ssLRI6ob2LwpZckufyZnWHAbwoxQwIg0aULj7AGyOusFHv7dF7qbe7THlfmNPqrt
- md10hU4bnUd6pRYDnl6e3OcDCjporrbgLCcXD9oc/dhP+B+RjfugPNf8msUpJ3ODtNT7
- V4l0LNXHfbDaOf8Cspo2rcAydiMRk3jY33FkSU50+uTbBxhYyV0TTLE5HqXd6o/EpPzZ
- gRPA==
+ bh=W07pgc47ZblesW2OIZ47UFpwON5zet/C11t6LuhqptI=;
+ b=LeUcHp7K1OPMs25qCP6CRrwJwS00tZx+zqc3jCFmKp9Chku6yt3fFKYe6/SRk/DRcm
+ PAzOY5t01eO43y10P6Vl8060xjHsaUC5ad4Y/G2X/gQoTUQloLsN81DPLBIPwTc8hqPg
+ mqdDbZiht8kZ7dPl7oqLVqWW4DND7mR2FVNQtMLhzomrBFDedUmsrxlr3fORm5zImDGl
+ vWChaDBq/GTNIFH6AoT30iz9AJKhqf0+DI3lPrzzlG+s3Vdl0BQH2p9JUxLHvJJUgqjz
+ Duj0q4ix8CJ/hEqG9puOHF4WIRvEjG6akZx67fP1DOsB/omaiud9tVyYC4Pq3hCqQttc
+ nEPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750674930; x=1751279730;
+ d=1e100.net; s=20230601; t=1750675485; x=1751280285;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nl/T1HN4gMljf1MMB4hIuu0EUCO20D2saFsY4/mlfUI=;
- b=utrhb6CamX1s3Df/NQmkbCzm+7wLWBhqAyE05k8QN4E1X0ZvHCIAmnIiC7fbEhTCqm
- YgDpYAca8e6nJAqD8igBwLACiiyhEeJMsphZHHxf8DoIrDrWlcWBKviIg6hvkVoulk6p
- pIG6+jc4Bem+yI3aFVKysGglK7OujsIni6IB4Mt1v+ypntk9j9muWKZ4hd43fiKsVavv
- 6ec1y6+SHZ1yAma//n79SfECzvyygUG7SNYyqU+/QVDUsyC75XdYVxcOn2VtCHrsN7Jv
- pW4N2VHSc6ifxoA3yLCBSJOedYCIjLcsA9DBj0kVjTVHV1P/7lRA4dIWZ5c1Sn2SOjXx
- eR/g==
-X-Gm-Message-State: AOJu0YyIwIbE6lO80RrUgSR4Jcsuj/2gj4n2ohinMIKfdaWNgFnDDSc1
- syYFro5keQuLBPe7JUz8pC5f9YyhDWGcOdAliMa4+RO1pHtZ/sE6H4w8m2nq4KprD09veos+H4n
- B/Q4zDDySHQp64i96hnPzjl64wis2g4rgAr2TYsfJ1ZMRFIqFA3Sp
-X-Gm-Gg: ASbGncsRkdAgudOVE6CHbZfirTJ7u+oJPsdi7wDjOgMufNllRyshVVY1I5z6CAksVeQ
- seykCftGCH5ozq7BIZrYyzhQJC3bWwu1o72Hw7MMMWW85HKAeQTj0K/GIyU3Sgfn8L7Yl15Fuyr
- HLaDY3kRwNjW844fy1PjlKS6npL0ZYY8E7M7Rsd6tQifuZ
-X-Google-Smtp-Source: AGHT+IGn8BN/n0nTWVz3tiKLINqOgWYrnPWq4NlXjInAag/ltbVdVKh+LJLTzShXWBfYk/gPkHgi9rGmgjPuxtxIq6I=
-X-Received: by 2002:a05:690c:3586:b0:70e:17ec:ce52 with SMTP id
- 00721157ae682-712c654c97fmr179300637b3.26.1750674930432; Mon, 23 Jun 2025
- 03:35:30 -0700 (PDT)
+ bh=W07pgc47ZblesW2OIZ47UFpwON5zet/C11t6LuhqptI=;
+ b=GzgJZqrR0wgVEnl8MTC7SFcNt2YmHDQPgcQV1VFdmk0/bDdp8OHY4S9Dycae5vSVLM
+ Lzfr8N7he47pXMS/I9F6nIqy9IEuFNZo3NFmOCsczPGPHhkCRHCxoZQRyl+2qyeLznxH
+ 6CD/+GNVLK6bU5JKYvjBYSn3QnqhvsYydM/MxjL86dA4IBRgeYblH0dEuW2MAKU47otX
+ w/uIKaskiWtPGtXdbzZNYpEQcpERxQqU1WfCQ6cfXu6aUZszotH0jOX2XJEpoVevEGgz
+ hUrOSx7j6vAWHgLgWfL8W5otSTpVBtf0psA7fxR/2SfAbl6EfvYCh1ShtA2aGZr5jZ6y
+ 8fBQ==
+X-Gm-Message-State: AOJu0Yw7hgWnxWrzVJzTP/mMd0/48vUt7BxpwVBAABch466X9lNTYTuB
+ v7E341tfxGJDvCgLi4fqjbPy/cMX7MAc1jCAs7iWlVM/BaXPHQIO09VBfGaRhP0A72ygmERfDzv
+ cD5A67ms5ccKXlHDMpALhdAzKcPSuzN4QkRCJFOMJNShpDVvS1j0w
+X-Gm-Gg: ASbGnctx5qdmVCV31+j80a+37F4oWeopf+2aTwtyFaf7A3zPyfAzDPjuAwTuzHi919K
+ ZglzU4DqynA9jO5lehUe+qwB+siyaEFUzZlv4mRaWzVojxAwGiXulHYUlBOmiK/cMUsGdaz2rcj
+ WWElwtFTkvfKXX945pQH4DcV12MVaAYq0fRSWBlfmCbONR
+X-Google-Smtp-Source: AGHT+IGJNBt8if9LrTuA3eyhXPbeviTT6ArT2UTpstv61gF3eKx24Yh/tWeOVDTg1fTXcm6/4T+lokg8FO9Ejj2Jzzs=
+X-Received: by 2002:a05:690c:a9a:b0:70b:6651:b3e2 with SMTP id
+ 00721157ae682-712c63b17f4mr178308687b3.6.1750675485068; Mon, 23 Jun 2025
+ 03:44:45 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250621235037.74091-1-richard.henderson@linaro.org>
- <20250621235037.74091-15-richard.henderson@linaro.org>
-In-Reply-To: <20250621235037.74091-15-richard.henderson@linaro.org>
+ <20250621235037.74091-16-richard.henderson@linaro.org>
+In-Reply-To: <20250621235037.74091-16-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Jun 2025 11:35:19 +0100
-X-Gm-Features: AX0GCFvVp2V1OVAoUvXGQ2kluojiotGbwyqymMy1GXTfRATix7EpHC1PubwZdwU
-Message-ID: <CAFEAcA_rq=047yKY3VnitrRy_aTtYSze=jtsYmMx92QNWF4eEg@mail.gmail.com>
-Subject: Re: [PATCH v2 014/101] target/arm: Rename zarray to za_state.za
+Date: Mon, 23 Jun 2025 11:44:33 +0100
+X-Gm-Features: AX0GCFt7CTCBVNlmqlasLmvWrxm8Ecrvjg8GFmo-ruYd8lzzhJraowwRC50LHGs
+Message-ID: <CAFEAcA-VMzZZSsXij0wuyT142vZppEfjXWUd0z=zW=x51z3mAg@mail.gmail.com>
+Subject: Re: [PATCH v2 015/101] target/arm: Add isar feature tests for SME2,
+ SVE2p1
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,16 +93,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 22 Jun 2025 at 00:53, Richard Henderson
+On Sun, 22 Jun 2025 at 00:52, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> The whole ZA state will also contain ZT0.
-> Make things easier in aarch64_set_svcr to zero both
-> by wrapping them in a common structure.
->
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/cpu-features.h | 55 +++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 55 insertions(+)
+>
+> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+> index 4452e7c21e..650abcb054 100644
+> --- a/target/arm/cpu-features.h
+> +++ b/target/arm/cpu-features.h
+> @@ -931,6 +931,11 @@ static inline bool isar_feature_aa64_sve2(const ARMISARegisters *id)
+>      return FIELD_EX64(id->id_aa64zfr0, ID_AA64ZFR0, SVEVER) != 0;
+>  }
+>
+> +static inline bool isar_feature_aa64_sve2p1(const ARMISARegisters *id)
+> +{
+> +    return FIELD_EX64(id->id_aa64zfr0, ID_AA64ZFR0, SVEVER) >= 2;
+> +}
+> +
+>  static inline bool isar_feature_aa64_sve2_aes(const ARMISARegisters *id)
+>  {
+>      return FIELD_EX64(id->id_aa64zfr0, ID_AA64ZFR0, AES) != 0;
+> @@ -976,6 +981,11 @@ static inline bool isar_feature_aa64_sve_f64mm(const ARMISARegisters *id)
+>      return FIELD_EX64(id->id_aa64zfr0, ID_AA64ZFR0, F64MM) != 0;
+>  }
+>
+> +static inline bool isar_feature_aa64_sve_b16b16(const ARMISARegisters *id)
+> +{
+> +    return FIELD_EX64(id->id_aa64zfr0, ID_AA64ZFR0, B16B16) != 0;
+> +}
+> +
+>  static inline bool isar_feature_aa64_sme_f64f64(const ARMISARegisters *id)
+>  {
+>      return FIELD_EX64(id->id_aa64smfr0, ID_AA64SMFR0, F64F64);
+> @@ -991,6 +1001,51 @@ static inline bool isar_feature_aa64_sme_fa64(const ARMISARegisters *id)
+>      return FIELD_EX64(id->id_aa64smfr0, ID_AA64SMFR0, FA64);
+>  }
+>
+> +static inline bool isar_feature_aa64_sme2(const ARMISARegisters *id)
+> +{
+> +    return FIELD_EX64(id->id_aa64smfr0, ID_AA64SMFR0, SMEVER) != 0;
+> +}
+> +
+> +static inline bool isar_feature_aa64_sme2p1(const ARMISARegisters *id)
+> +{
+> +    return FIELD_EX64(id->id_aa64smfr0, ID_AA64SMFR0, SMEVER) >= 2;
+> +}
+> +
+> +static inline bool isar_feature_aa64_sme2_i16i64(const ARMISARegisters *id)
+> +{
+> +    return isar_feature_aa64_sme2(id) && isar_feature_aa64_sme_i16i64(id);
+> +}
 
+I think we should put these "utility" functions that are
+testing for a combination of architectural features in their
+own section of this header, in the same way that we separate
+out 'Feature tests for "does this exist in either 32-bit or 64-bit?"'.
+(I assume the reason we want them rather than just having the
+caller open-code the "sme2 && i64i64" is so we can use them in
+a macro or something later on?)
+
+> +
+> +static inline bool isar_feature_aa64_sme2_f64f64(const ARMISARegisters *id)
+> +{
+> +    return isar_feature_aa64_sme2(id) && isar_feature_aa64_sme_f64f64(id);
+> +}
+> +
+> +static inline bool isar_feature_aa64_sme2_b16b16(const ARMISARegisters *id)
+> +{
+> +    return FIELD_EX64(id->id_aa64smfr0, ID_AA64SMFR0, B16B16) != 0;
+> +}
+
+This is FEAT_SME_B16B16, not FEAT_SME2_B16B16; we should follow the
+architectural feature name in our function name here, I think.
+
+> +
+> +static inline bool isar_feature_aa64_sme2_f16f16(const ARMISARegisters *id)
+> +{
+> +    return FIELD_EX64(id->id_aa64smfr0, ID_AA64SMFR0, F16F16) != 0;
+> +}
+
+Similarly, sme_f16f16.
+
+> +
+> +static inline bool isar_feature_aa64_sme_or_sve2p1(const ARMISARegisters *id)
+> +{
+> +    return isar_feature_aa64_sme(id) || isar_feature_aa64_sve2p1(id);
+> +}
+> +
+> +static inline bool isar_feature_aa64_sme2_or_sve2p1(const ARMISARegisters *id)
+> +{
+> +    return isar_feature_aa64_sme2(id) || isar_feature_aa64_sve2p1(id);
+> +}
+> +
+> +static inline bool isar_feature_aa64_sme2p1_or_sve2p1(const ARMISARegisters *id)
+> +{
+> +    return isar_feature_aa64_sme2p1(id) || isar_feature_aa64_sve2p1(id);
+> +}
+
+Otherwise
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
 
 thanks
 -- PMM
