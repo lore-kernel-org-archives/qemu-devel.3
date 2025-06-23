@@ -4,92 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39A90C7EE2A
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 12:30:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05CD4C7115B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 12:31:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTgCZ-0005SZ-6E; Mon, 23 Jun 2025 08:23:07 -0400
+	id 1uTgKO-0003s1-Og; Mon, 23 Jun 2025 08:31:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTgAV-0003a2-80
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:21:00 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTgKM-0003rO-Jw
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:31:11 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTgAT-00017t-5Q
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:20:58 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-451dbe494d6so47711665e9.1
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 05:20:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTgKK-0002je-8I
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:31:10 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3a528243636so2466386f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 05:31:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750681255; x=1751286055; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uYUPy6c9pCrsEaCpnIHygEtzD7GwjrL4VzsD7TAXMX4=;
- b=k8xT4zvzkwxHX7rXPIOG4kXTie7djOwtkXy2+psn46jLX0a2lB/9k7uMx4pzfvOhB+
- TQPrISjxxCW3MgpeiWyKccTAXLcLr5GgSFD4TVtah/yE9MqBgXR7GNhsQmAzBLpDk2Jj
- fgsAd51v1mejvlClPuOLiQSSjRv9i351wh9vyjglajtJKIByuzd19tdBkA4uRlrywzYO
- wIqhjFv54ijtH8KWVLrnP96JGgt/B158k+osDl+jO4DCrWFlqzN8bqD6K5m1umMii6U4
- nQ4kbpX+7vhNO1lDP89IX/f0W305p9/z/x3yZ9zvlLRA6NnfVnR3a6+4R4u/5zme3TlY
- rm/w==
+ d=linaro.org; s=google; t=1750681865; x=1751286665; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=e6T+S3DH7mevcc/k2QK2yw+D4ezZENLPQlUBpjJQQz4=;
+ b=I6Lpgxq/o3ql7/e4S008Qr0IxvoLOTbKpntEoyRQjYWxCEYd5/Fpev0XOTxNHBk8jz
+ TNv9fRpAxukjXf0dA2kFmcdb3XNcZ9eVmqZLc/klfV67XtOjNoF80Opylde4d23d8xz9
+ gvoWvnIyz7+2Z5Z8I2I5k0uivrx+A2pmOZQYCvaWZgALcyrW6R2nhlDwfP4c/o6x8bwP
+ ZrzPgA1q127EdlNCEJMVeu4Xr1qs9qjemV57HVqBPtYPc2NV62qfY/9JNOnJ3DKFwbzA
+ bB/XC6XG/gQtckXTReayX9o3kih5VnuvJmP9yYYdqmgwrG8KsdfwF8fzwRr+pJLoC9+Q
+ /N4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750681255; x=1751286055;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=uYUPy6c9pCrsEaCpnIHygEtzD7GwjrL4VzsD7TAXMX4=;
- b=oNZoPMpS6y5kwgpEdw86Rj/UxFapFgC56/eKluHk5shTek12/FTzAHLzKlHaMl0btn
- nmMS2Sbhcc7sNS83NdciYglWWPUoGXUJoODr6Vc1CtPCRt6Zsp5qOGo7hSj4JGqtn+Im
- zCNkVhT32jmr1X6SGfC+BpNesjIES93KG/P5hSsvFUyP+EjBJRLQ2IgChHEJNMzkwN2e
- Kil9HBXxLUntw6P27Ds3e8rCL2ElFbeY9AIyfYmN+5SsWXmvWwiYsC7+d2fgKQgFbCjX
- POfp8sUrXSq60Yg+XQ7xT7XS/BRl8/co+DQ1Fo9OjVLGML1MlaYA6WHe/XHQ/9wgHwr/
- w8MQ==
-X-Gm-Message-State: AOJu0YxCl6VDSXtcN6QRWkeJiDXmo5XKBMopifQZRyrfWQrt0GB5wrV+
- ywXwvpNYTTjyk2zanCcOEsMY6Oin9OPrPJSstlEVCW/2fXeuduQ7K9ruBgGXAmtX/E3p/jW8/TQ
- Lu45o
-X-Gm-Gg: ASbGncv5wLr2AzomlHSUAWD3jCMITj5pgZFYVt6ugZxEyIe1+xrhovc6mBjvAeLblzg
- stSaXpG6IdAMbaz8asevQy8LYdRGcjGaZyUKJywI9Lc8WTl8FGFLc35ytQi6aW+tyx4EqValEYm
- 2PcVx/6KQH0dtMIp5EXK1fUNyegOEPd27FCHKhN+lbCEJ9CyAIUAyvSP1Ze0P92dXe9BH8Lv7EX
- vo/uxjyAoMYHGJjDpv/x7ehxpn2eNizccVs/aHyw+QJFNKoxVHCgIYiHoVvjBbdRK1MKel6BSKS
- e1tkx2k99rd0TKxS+LIL//+KXShMo+7CH+PqaYzqrhPp4TY3orMRpFIY2xrt/TICqtNuLpumYiU
- /e8FVT48Nba8kt5aPJH6LauV/wyUS3SlE4Txc0ju68npcW8o=
-X-Google-Smtp-Source: AGHT+IGT6YWtiD9z6rC4lmVWjBSvzyqzKhJAfYphN1oZr29sjiHZbaoLUEt5rTgirbEWO1WecJkvgA==
-X-Received: by 2002:a05:600c:4512:b0:453:5c30:a1d0 with SMTP id
- 5b1f17b1804b1-4536e0da765mr56200145e9.21.1750681255141; 
- Mon, 23 Jun 2025 05:20:55 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1750681865; x=1751286665;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=e6T+S3DH7mevcc/k2QK2yw+D4ezZENLPQlUBpjJQQz4=;
+ b=sTrozG52PDseMFa5tHIZDK174AfI9Ldlrtf0GItDINo3w3X+4R6m9+Je3MfVu18kJp
+ 0H8EmJ+p1mRs1uNXtfJeLqmRysIVkczMqz+E/kc35H7ZWcc7nAeEkI/p62EV+APLIvcw
+ /FLsOEP7kJDZN5XE37y424dIyI8cC/ziPpA5RcqVMIxIodggRHWFBU9JkHp+/t+szbY1
+ BRgIUFJgwUNvWEaHSI0QtKv+nZAYZrWzCmRBhTTcRv96cBgTy3M/nEFX4FD4MRyDRETe
+ kyd2+8Y+JBxQjRUwfAQHg5jRrw3kAhBRlntq5kSca2HDepF4pRL7gRxdZTwvF3TNS4Jc
+ iLfQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVhPoRRG6M54jbiN6+ku/hl1gVHDkZ/Vjg5jo9FrfqMldopwYZxt8iSvHicjL7LkKqZEZMUYNGyffND@nongnu.org
+X-Gm-Message-State: AOJu0YwvzwL/QneOn4mQsR5H+Z/ObdZWwErRL8SkA2AolLORWTXP0DSL
+ 68ndcbun+aZ415mCguu5Gm9IiNfHR0CcsCOh+5Dx/6DKr2DkwTvUAxJ1OIb3ouv6NBe/qYdt92k
+ KAEIz
+X-Gm-Gg: ASbGncuwhEhW9s/PKUayRRM+z2575TZqAILlxqiEOSZOZB0L/Op6Q+FTnm3aEJE4/vV
+ 37gbrT8MOnV0u5bEjATxTokuLo817/rYqIVZW/Ew1nr9JAop1Qswc/F4tsQg8ZvcbYRVRuZReT+
+ XpdzhC/MMFAwbIIaYlajMSbJgX9cGgL9MkQtH7lqkUeJBaHO3clOrl9hyw7vfjRn8FifJrQpO9k
+ 0iyci2CLDdoFUZQ+l1IXluhe3N6Ls/vyA5OxIkkhDANcnYEglPTb8Tg9Yd9GEfkc/zkPWUfmqy/
+ WxvlYUshXbq+9Ek338yfnHQ4qHvDDhvg/Blu0CZc3IDuqyREqIlVG+hZg2DkkIvIesejEGe5Gvr
+ uGOjrP4nrwJrBkOekAX1SMU7D6TL6bQ==
+X-Google-Smtp-Source: AGHT+IGzBqco9DKIYjh4MXJCKrKgpLYdGBh+g+t+Koip/rW1bv5+OuPTxAXCHQG+2QT1+jouI1mMsw==
+X-Received: by 2002:a05:6000:2dc2:b0:3a4:dc2a:924e with SMTP id
+ ffacd0b85a97d-3a6d1192830mr8428292f8f.6.1750681865471; 
+ Mon, 23 Jun 2025 05:31:05 -0700 (PDT)
+Received: from [192.168.69.167] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6e2036094sm2263838f8f.99.2025.06.23.05.20.53
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 23 Jun 2025 05:20:54 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>, qemu-arm@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Alexander Graf <agraf@csgraf.de>, Bernhard Beschow <shentey@gmail.com>,
- John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- kvm@vger.kernel.org, Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Cleber Rosa <crosa@redhat.com>,
- Radoslaw Biernacki <rad@semihalf.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v3 25/26] tests/functional: Add hvf_available() helper
-Date: Mon, 23 Jun 2025 14:18:44 +0200
-Message-ID: <20250623121845.7214-26-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250623121845.7214-1-philmd@linaro.org>
-References: <20250623121845.7214-1-philmd@linaro.org>
+ ffacd0b85a97d-3a6d1187e5fsm9357040f8f.70.2025.06.23.05.31.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 23 Jun 2025 05:31:04 -0700 (PDT)
+Message-ID: <76bd9e17-8350-42a0-aefd-ed96137c5955@linaro.org>
+Date: Mon, 23 Jun 2025 14:31:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 36/48] accel/whpx: Convert to
+ AccelOpsClass::cpu_thread_routine
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250620171342.92678-1-philmd@linaro.org>
+ <20250620171342.92678-37-philmd@linaro.org>
+ <aea4e119-1ac5-4b03-9639-0dc277375365@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <aea4e119-1ac5-4b03-9639-0dc277375365@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,69 +104,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
----
- python/qemu/utils/__init__.py          | 2 +-
- python/qemu/utils/accel.py             | 8 ++++++++
- tests/functional/qemu_test/testcase.py | 6 ++++--
- 3 files changed, 13 insertions(+), 3 deletions(-)
+On 22/6/25 04:10, Richard Henderson wrote:
+> On 6/20/25 10:13, Philippe Mathieu-Daudé wrote:
+>> By converting to AccelOpsClass::cpu_thread_routine we can
+>> let the common accel_create_vcpu_thread() create the thread.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/i386/whpx/whpx-accel-ops.c | 12 +-----------
+>>   1 file changed, 1 insertion(+), 11 deletions(-)
+>>
+>> diff --git a/target/i386/whpx/whpx-accel-ops.c b/target/i386/whpx/ 
+>> whpx-accel-ops.c
+>> index b8bebe403c9..c1b27d1b89d 100644
+>> --- a/target/i386/whpx/whpx-accel-ops.c
+>> +++ b/target/i386/whpx/whpx-accel-ops.c
+>> @@ -61,16 +61,6 @@ static void *whpx_cpu_thread_fn(void *arg)
+>>       return NULL;
+>>   }
+>> -static void whpx_start_vcpu_thread(CPUState *cpu)
+>> -{
+>> -    char thread_name[VCPU_THREAD_NAME_SIZE];
+>> -
+>> -    snprintf(thread_name, VCPU_THREAD_NAME_SIZE, "CPU %d/WHPX",
+>> -             cpu->cpu_index);
+>> -    qemu_thread_create(cpu->thread, thread_name, whpx_cpu_thread_fn,
+>> -                       cpu, QEMU_THREAD_JOINABLE);
+>> -}
+>> -
+>>   static void whpx_kick_vcpu_thread(CPUState *cpu)
+>>   {
+>>       if (!qemu_cpu_is_self(cpu)) {
+>> @@ -87,7 +77,7 @@ static void whpx_accel_ops_class_init(ObjectClass 
+>> *oc, const void *data)
+>>   {
+>>       AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
+>> -    ops->create_vcpu_thread = whpx_start_vcpu_thread;
+>> +    ops->cpu_thread_routine = whpx_cpu_thread_fn;
+>>       ops->kick_vcpu_thread = whpx_kick_vcpu_thread;
+>>       ops->cpu_thread_is_idle = whpx_vcpu_thread_is_idle;
+> 
+> After this, create_vcpu_thread is unused, correct?
 
-diff --git a/python/qemu/utils/__init__.py b/python/qemu/utils/__init__.py
-index 017cfdcda75..d2fe5db223c 100644
---- a/python/qemu/utils/__init__.py
-+++ b/python/qemu/utils/__init__.py
-@@ -23,7 +23,7 @@
- from typing import Optional
- 
- # pylint: disable=import-error
--from .accel import kvm_available, list_accel, tcg_available
-+from .accel import hvf_available, kvm_available, list_accel, tcg_available
- 
- 
- __all__ = (
-diff --git a/python/qemu/utils/accel.py b/python/qemu/utils/accel.py
-index 386ff640ca8..376d1e30005 100644
---- a/python/qemu/utils/accel.py
-+++ b/python/qemu/utils/accel.py
-@@ -82,3 +82,11 @@ def tcg_available(qemu_bin: str) -> bool:
-     @param qemu_bin (str): path to the QEMU binary
-     """
-     return 'tcg' in list_accel(qemu_bin)
-+
-+def hvf_available(qemu_bin: str) -> bool:
-+    """
-+    Check if HVF is available.
-+
-+    @param qemu_bin (str): path to the QEMU binary
-+    """
-+    return 'hvf' in list_accel(qemu_bin)
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index 50c401b8c3c..2082c6fce43 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -23,7 +23,7 @@
- import uuid
- 
- from qemu.machine import QEMUMachine
--from qemu.utils import kvm_available, tcg_available
-+from qemu.utils import hvf_available, kvm_available, tcg_available
- 
- from .archive import archive_extract
- from .asset import Asset
-@@ -317,7 +317,9 @@ def require_accelerator(self, accelerator):
-         :type accelerator: str
-         """
-         checker = {'tcg': tcg_available,
--                   'kvm': kvm_available}.get(accelerator)
-+                   'kvm': kvm_available,
-+                   'hvf': hvf_available,
-+                  }.get(accelerator)
-         if checker is None:
-             self.skipTest("Don't know how to check for the presence "
-                           "of accelerator %s" % accelerator)
--- 
-2.49.0
+Only RR left, which is a bit different:
+
+339 void rr_start_vcpu_thread(CPUState *cpu)
+340 {
+341     char thread_name[VCPU_THREAD_NAME_SIZE];
+342     static QemuCond *single_tcg_halt_cond;
+343     static QemuThread *single_tcg_cpu_thread;
+344
+345     tcg_vcpu_thread_precreate(cpu);
+346
+347     if (!single_tcg_cpu_thread) {
+348         single_tcg_halt_cond = cpu->halt_cond;
+349         single_tcg_cpu_thread = cpu->thread;
+350
+351         /* share a single thread for all cpus with TCG */
+352         snprintf(thread_name, VCPU_THREAD_NAME_SIZE, "ALL CPUs/TCG");
+353         qemu_thread_create(cpu->thread, thread_name,
+354                            rr_cpu_thread_fn,
+355                            cpu, QEMU_THREAD_JOINABLE);
+356     } else {
+357         /* we share the thread, dump spare data */
+358         g_free(cpu->thread);
+359         qemu_cond_destroy(cpu->halt_cond);
+360         g_free(cpu->halt_cond);
+361         cpu->thread = single_tcg_cpu_thread;
+362         cpu->halt_cond = single_tcg_halt_cond;
+363
+364         /* copy the stuff done at start of rr_cpu_thread_fn */
+365         cpu->thread_id = first_cpu->thread_id;
+366         cpu->neg.can_do_io = 1;
+367         cpu->created = true;
+368     }
+369 }
 
 
