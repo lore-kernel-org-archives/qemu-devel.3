@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15E4EC7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 10:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4528BC77B7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 10:27:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTeNs-0005xY-8M; Mon, 23 Jun 2025 06:26:40 -0400
+	id 1uTeNv-00060J-0v; Mon, 23 Jun 2025 06:26:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uTeNp-0005wS-3K
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 06:26:37 -0400
+ id 1uTeNr-0005xa-Fu
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 06:26:39 -0400
 Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uTeNl-0000l4-VM
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 06:26:36 -0400
+ id 1uTeNp-0000l4-FV
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 06:26:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1750674394; x=1782210394;
+ t=1750674397; x=1782210397;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=TC0z9Q1FwXllaKpGPNdMbhIi47tz2jGUovh6tzE2h5w=;
- b=AuZGz5A1nKnTGLUsXEgE85OUcO2tNxFcirPQs+fh2Mt0nDgLZROLfSss
- YmE1vz/6atEqo7IMHUxDAqAJ4ggNCeypFRWJdFzIZGV4svbYOdxZYUWhL
- BFWAmuAT3HYk8fc2saRhhaVQ7DVGUzG0tXwbjf5G6ZMxognx2iMsGGoS6
- zWZAOAxHEm/1R/KNpGgNoQhVu/Nmr9wCX8uxB3op1W4MJNvKUcBZ/KsP3
- gjTK7tsgatcJob1esZAYc0Ol8WfwQwJ16SqGNSUSNJdFYPFLR2kWhlksv
- y30PIJsZi790JlZac98h/DgW6GBPdaYiZOo+Hukzpu8kmFiTsm+DLdmus w==;
-X-CSE-ConnectionGUID: Eh/H8FeOTeyWF/zfZ8RG7A==
-X-CSE-MsgGUID: ssAOnNHXRCWDKo/wusNEeQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11472"; a="63565451"
-X-IronPort-AV: E=Sophos;i="6.16,258,1744095600"; d="scan'208";a="63565451"
+ bh=yr+7s6bCyo7u5kYfwpM0Ju13ecCPRGK8h7Rg4MDQSfo=;
+ b=Svv0LQcoKQDqOsyT+Pi+w0EfZH81wbiZpftqDLxO9nGrpI+AasxtESjt
+ ifkDOWjMZet9j+6P0wLPjw8IfHUdcWu40GGcsl5mwuCGpy44TSgO3vNY1
+ e5TWO/G9n+6JQsWc44gGXzKK8syldhrg8GIrkZS4qlmE9tQIyxj5FS5BE
+ 2qhnlLpIpTmuOO0t2zFx36UGdvjig3Rpe4isw/Ko8htlJZyLBalGHz914
+ vz5q0EzS5KEbj1zgebg+OZed7RkgQTsKu9DZZdW2iJBKYk8hyXOSjoKjJ
+ FaZ6coruPjRqwZyCfmvvXzHeaRtcp4APpTpHMuumolSRqS/rnYveM5Ve3 Q==;
+X-CSE-ConnectionGUID: s4N7/rkAS7Cjj87Ho+ChBQ==
+X-CSE-MsgGUID: vRKklP2kSHaPmeMw1HpfCw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11472"; a="63565466"
+X-IronPort-AV: E=Sophos;i="6.16,258,1744095600"; d="scan'208";a="63565466"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Jun 2025 03:26:31 -0700
-X-CSE-ConnectionGUID: oZo9Bd+CTFG2X1mhhzNnLw==
-X-CSE-MsgGUID: QLsLFPmCRgi1Y2qnxV1G4w==
+ 23 Jun 2025 03:26:35 -0700
+X-CSE-ConnectionGUID: WO350kWCQ4iXP3VsYRCxKg==
+X-CSE-MsgGUID: KPKd2TP6TjWhrK3WTDys4Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,258,1744095600"; d="scan'208";a="182427937"
+X-IronPort-AV: E=Sophos;i="6.16,258,1744095600"; d="scan'208";a="182427954"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Jun 2025 03:26:29 -0700
+ 23 Jun 2025 03:26:33 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  steven.sistare@oracle.com, chao.p.peng@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH 1/4] vfio/container: Fix SIGSEGV when open container file fails
-Date: Mon, 23 Jun 2025 18:22:32 +0800
-Message-Id: <20250623102235.94877-2-zhenzhong.duan@intel.com>
+Subject: [PATCH 3/4] vfio/container: Fix potential SIGSEGV when recover from
+ unmap-all-vaddr failure
+Date: Mon, 23 Jun 2025 18:22:34 +0800
+Message-Id: <20250623102235.94877-4-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250623102235.94877-1-zhenzhong.duan@intel.com>
 References: <20250623102235.94877-1-zhenzhong.duan@intel.com>
@@ -84,31 +85,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When open /dev/vfio/vfio fails, SIGSEGV triggers because
-vfio_listener_unregister() doesn't support a NULL bcontainer
-pointer.
+cpr.saved_dma_map isn't initialized in source qemu which lead to vioc->dma_map
+assigned a NULL value, this will trigger SIGSEGV.
 
-Fixes: a1f267a7d4d9 ("vfio/container: reform vfio_container_connect cleanup")
+Fix it by save and restore vioc->dma_map locally.
+
+Fixes: eba1f657cbb1 ("vfio/container: recover from unmap-all-vaddr failure")
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/vfio/container.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/hw/vfio/vfio-cpr.h | 8 +++++---
+ hw/vfio/cpr-legacy.c       | 3 ++-
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 3e8d645ebb..2853f6f08b 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -710,7 +710,9 @@ static bool vfio_container_connect(VFIOGroup *group, AddressSpace *as,
-     return true;
+diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
+index 8bf85b9f4e..aef542e93c 100644
+--- a/include/hw/vfio/vfio-cpr.h
++++ b/include/hw/vfio/vfio-cpr.h
+@@ -16,14 +16,16 @@ struct VFIOContainer;
+ struct VFIOContainerBase;
+ struct VFIOGroup;
  
- fail:
--    vfio_listener_unregister(bcontainer);
-+    if (new_container) {
-+        vfio_listener_unregister(bcontainer);
-+    }
++typedef int (*DMA_MAP_FUNC)(const struct VFIOContainerBase *bcontainer,
++                            hwaddr iova, ram_addr_t size, void *vaddr,
++                            bool readonly, MemoryRegion *mr);
++
+ typedef struct VFIOContainerCPR {
+     Error *blocker;
+     bool vaddr_unmapped;
+     NotifierWithReturn transfer_notifier;
+     MemoryListener remap_listener;
+-    int (*saved_dma_map)(const struct VFIOContainerBase *bcontainer,
+-                         hwaddr iova, ram_addr_t size,
+-                         void *vaddr, bool readonly, MemoryRegion *mr);
++    DMA_MAP_FUNC saved_dma_map;
+ } VFIOContainerCPR;
  
-     if (group_was_added) {
-         vfio_container_group_del(container, group);
+ typedef struct VFIODeviceCPR {
+diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
+index a84c3247b7..100a8db74d 100644
+--- a/hw/vfio/cpr-legacy.c
++++ b/hw/vfio/cpr-legacy.c
+@@ -148,6 +148,7 @@ static int vfio_cpr_fail_notifier(NotifierWithReturn *notifier,
+          */
+ 
+         VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
++        DMA_MAP_FUNC saved_dma_map = vioc->dma_map;
+         vioc->dma_map = vfio_legacy_cpr_dma_map;
+ 
+         container->cpr.remap_listener = (MemoryListener) {
+@@ -158,7 +159,7 @@ static int vfio_cpr_fail_notifier(NotifierWithReturn *notifier,
+                                  bcontainer->space->as);
+         memory_listener_unregister(&container->cpr.remap_listener);
+         container->cpr.vaddr_unmapped = false;
+-        vioc->dma_map = container->cpr.saved_dma_map;
++        vioc->dma_map = saved_dma_map;
+     }
+     return 0;
+ }
 -- 
 2.34.1
 
