@@ -4,77 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F334AC77B7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 09:23:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F684C7115B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 09:23:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTdOH-0006G8-EP; Mon, 23 Jun 2025 05:23:02 -0400
+	id 1uTdOR-0006Jc-EC; Mon, 23 Jun 2025 05:23:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uTdOC-0006BB-42
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 05:22:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1uTdOL-0006IC-FR
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 05:23:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uTdOA-0008NI-JF
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 05:22:55 -0400
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1uTdOI-0008OU-CE
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 05:23:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750670573;
+ s=mimecast20190719; t=1750670581;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=C1KXzJpOuSAyUhLyD/nxSRKG7fsnQJrcNpgC/Mkhpco=;
- b=TR3tpAXatihJBJR9Xu/L3PDmuxUYDV5bmLVmfaIjujBmtgg+T5JKYNFqQlRlyeAiKJeUwa
- 3+pUhfMeO+K0yJun4m2bGvI7hLsng5GAGapzKPXLVOoGuO6V2luZ+CQdLo3Sj0kzFvrwMj
- BfSVrdqBlHR9s3RDfO+p/uXz+d/aSz4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-387-MxTAxiTuNFuT9fA5K4RcUQ-1; Mon,
- 23 Jun 2025 05:22:44 -0400
-X-MC-Unique: MxTAxiTuNFuT9fA5K4RcUQ-1
-X-Mimecast-MFC-AGG-ID: MxTAxiTuNFuT9fA5K4RcUQ_1750670562
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 09919189C322; Mon, 23 Jun 2025 09:22:35 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4E1E51956066; Mon, 23 Jun 2025 09:22:34 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8D0C921E6A27; Mon, 23 Jun 2025 11:22:31 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Zhuoying Cai <zycai@linux.ibm.com>,  thuth@redhat.com,
- richard.henderson@linaro.org,  david@redhat.com,  pbonzini@redhat.com,
- walling@linux.ibm.com,  jjherne@linux.ibm.com,  jrossi@linux.ibm.com,
- pasic@linux.ibm.com,  borntraeger@linux.ibm.com,  farman@linux.ibm.com,
- iii@linux.ibm.com,  eblake@redhat.com,  qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 02/28] crypto/x509-utils: Add helper functions for
- certificate store
-In-Reply-To: <aFkJszNVDFYwHDSU@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Mon, 23 Jun 2025 09:00:51 +0100")
-References: <20250604215657.528142-1-zycai@linux.ibm.com>
- <20250604215657.528142-3-zycai@linux.ibm.com>
- <87sejyskgj.fsf@pond.sub.org>
- <41e788ad-77e2-46d2-a384-2c8f524391c2@linux.ibm.com>
- <87wm99r3rh.fsf@pond.sub.org>
- <935581ef-1cb2-4e2f-9c3f-23203b556ca8@linux.ibm.com>
- <87ikkndlvv.fsf@pond.sub.org> <aFkJszNVDFYwHDSU@redhat.com>
-Date: Mon, 23 Jun 2025 11:22:31 +0200
-Message-ID: <87pleulsmg.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=7VSgSGwq8wrw3DnPUbktkgQZidTx6uhtariuiUH0CA0=;
+ b=OHxlUTTTq7pBl1qB4rk/iptE4lSponruiCpAVONV6tTPsauRFDAK6GxcnhjN79AzrNUgPp
+ 1Xl8zyxwpnhmsFaLhAkSayrAjpXI1Vkc1hZSAIRirSFS9hSokYtAyAeqyElJLhQ82C/n6L
+ h4oJaGdiOIuY/aaliWkplhrIwm37gkc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-96-HGBb6LQVMlqC0iJlYx-_MA-1; Mon, 23 Jun 2025 05:21:01 -0400
+X-MC-Unique: HGBb6LQVMlqC0iJlYx-_MA-1
+X-Mimecast-MFC-AGG-ID: HGBb6LQVMlqC0iJlYx-_MA_1750670457
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45359bfe631so21439985e9.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 02:20:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750670456; x=1751275256;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7VSgSGwq8wrw3DnPUbktkgQZidTx6uhtariuiUH0CA0=;
+ b=R+cycFyLjfXT+PwmvNmtRKCfUfwZ4iARi419siHLMZxWY/+wyOCqA6ajzkHprXpVoS
+ k1i+Jh1SCg8eVDG1m2iwjMkTEFeiGsa3el84XRWk2Ng6tlxzlQU/+gatPxMEXAVhsTCB
+ OWg/JnCkJetmBWnOqOwaaTid8YjutaYU0N2gBkGyOudX3mlM6DYjI2bu6VfP4sYyPnNE
+ T5pcn1f14QPBGBDV0R3FO75PSjNSm0x12T6dKUXwA/BhsQY3CohHC0HDM9zHiXl19HEn
+ QkeozpQVioJtmxLIY77WayXBzC4GXnXF4D6g1a5givL+fhSz44ymucvu3ioMa6f8sPFp
+ oDAg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVfbPbKgFZB3wAu1dtZ0q2zDj5xvcB37b7UipxdNloF28ExkzI5aitg4tIuedEWZZhzNdGmU3mfK67i@nongnu.org
+X-Gm-Message-State: AOJu0YzuXhd+zf+t5YWr4QtDWHAAvqNWZOPt6tFkPjyOY0FnhevYUZxD
+ QiQnBFGQ6vc6pTGaIJrtvWuAmhn/DSVXCUri7/VCEZD+UbnAd7PtNpIFCz7FqQh/1yfHROrO3Qn
+ hKfv7eq0p99jr2lTG9YVhX9eiw5ILMQTfYVyPR3xlop/2sdDPxN4ywCmY
+X-Gm-Gg: ASbGncvnz0UMQLhACZLkX96xXtrsxA7RYCBdLmlBK2b7dvJebSE+uZFQ71KFOhUFyP1
+ I8uTlwcJD9FjXQmZw99QSu1W23BsP9Wm09iYUBuOw6MwECtObY3XthVawzpfnnGG7O4pRtFgFea
+ apUIyuGMHRgvXUVw99cCqiKLqZS+abR7AtEr6+bviW7ZyEfgb+73qLu1fLzElLUznalmLChD5aQ
+ bFWf3eUWo7AfDwKbgTxm5UMjzVzfgX32Lm+EIyfsZKpnTNvNt7LCploG7Zd6RPnsBT+p0fu00NY
+ nxnyB4Ca8dKLVMiwqwaI5SdIOTvVPG9nAYCGwO8XODbGSEEBxlfPOIMxcyzit1Ik
+X-Received: by 2002:a05:6000:22c1:b0:3a5:3b03:3bc6 with SMTP id
+ ffacd0b85a97d-3a6d1322bdcmr10431204f8f.28.1750670456494; 
+ Mon, 23 Jun 2025 02:20:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGq7mAeNuppUuYYV3/demhTJt4ngGSI7EwbRRfvcoZScbGRcZGkDlpTd8fLvB1XFXiCuPxYfQ==
+X-Received: by 2002:a05:6000:22c1:b0:3a5:3b03:3bc6 with SMTP id
+ ffacd0b85a97d-3a6d1322bdcmr10431179f8f.28.1750670456068; 
+ Mon, 23 Jun 2025 02:20:56 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4535eac8e0asm137760265e9.23.2025.06.23.02.20.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 23 Jun 2025 02:20:55 -0700 (PDT)
+Message-ID: <8c1870b3-d13d-4918-b0f6-6f41659a807d@redhat.com>
+Date: Mon, 23 Jun 2025 11:20:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/2] ramfb: Add property to control if load the romfile
+Content-Language: en-US
+To: Shaoqin Huang <shahuang@redhat.com>, qemu-arm@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+References: <20250617030521.2109305-1-shahuang@redhat.com>
+ <20250617030521.2109305-2-shahuang@redhat.com>
+From: Eric Auger <eauger@redhat.com>
+In-Reply-To: <20250617030521.2109305-2-shahuang@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eauger@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -83,7 +98,7 @@ X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,34 +114,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+Hi Shaoqin,
+On 6/17/25 5:05 AM, Shaoqin Huang wrote:
+> Now the ramfb will load the vgabios-ramfb.bin unconditionally, but only
+Currently the ramfb device loads ...
+> the x86 need the vgabios-ramfb.bin, this can cause that when use the
+> release package on arm64 it can't find the vgabios-ramfb.bin.
+> 
+> Because only seabios will use the vgabios-ramfb.bin, load the rom logic
+> is x86-specific. For other !x86 platforms, the edk2 ships an EFI driver
+> for ramfb, so they don't need to load the romfile.
+> 
+> So add a new property use_legacy_x86_rom in both ramfb and vfio_pci
+was renamed with - instead of _
+> device, because the vfio display also use the ramfb_setup() to load
+> the vgabios-ramfb.bin file.
+> 
+> After have this property, the machine type can set the compatibility to
+> not load the vgabios-ramfb.bin if the arch doesn't need it.
 
-> On Mon, Jun 23, 2025 at 08:15:16AM +0200, Markus Armbruster wrote:
+Please add in the commit message that for now the default value is true
+but it will be turned off by default in subsequent patch when compats
+get properly handled.
+> 
+> Signed-off-by: Shaoqin Huang <shahuang@redhat.com>
+> ---
+>  hw/display/ramfb-standalone.c | 4 +++-
+>  hw/display/ramfb-stubs.c      | 2 +-
+>  hw/display/ramfb.c            | 6 ++++--
+>  hw/vfio/display.c             | 4 ++--
+>  hw/vfio/pci.c                 | 1 +
+>  hw/vfio/pci.h                 | 1 +
+>  include/hw/display/ramfb.h    | 2 +-
+>  7 files changed, 13 insertions(+), 7 deletions(-)
+> 
+> diff --git a/hw/display/ramfb-standalone.c b/hw/display/ramfb-standalone.c
+> index 1be106b57f..af1175bf96 100644
+> --- a/hw/display/ramfb-standalone.c
+> +++ b/hw/display/ramfb-standalone.c
+> @@ -17,6 +17,7 @@ struct RAMFBStandaloneState {
+>      QemuConsole *con;
+>      RAMFBState *state;
+>      bool migrate;
+> +    bool use_legacy_x86_rom;
+>  };
+>  
+>  static void display_update_wrapper(void *dev)
+> @@ -39,7 +40,7 @@ static void ramfb_realizefn(DeviceState *dev, Error **errp)
+>      RAMFBStandaloneState *ramfb = RAMFB(dev);
+>  
+>      ramfb->con = graphic_console_init(dev, 0, &wrapper_ops, dev);
+> -    ramfb->state = ramfb_setup(errp);
+> +    ramfb->state = ramfb_setup(ramfb->use_legacy_x86_rom, errp);
+>  }
+>  
+>  static bool migrate_needed(void *opaque)
+> @@ -62,6 +63,7 @@ static const VMStateDescription ramfb_dev_vmstate = {
+>  
+>  static const Property ramfb_properties[] = {
+>      DEFINE_PROP_BOOL("x-migrate", RAMFBStandaloneState, migrate,  true),
+> +    DEFINE_PROP_BOOL("use-legacy-x86-rom", RAMFBStandaloneState, use_legacy_x86_rom, true),
+>  };
+>  
+>  static void ramfb_class_initfn(ObjectClass *klass, void *data)
+> diff --git a/hw/display/ramfb-stubs.c b/hw/display/ramfb-stubs.c
+> index cf64733b10..b83551357b 100644
+> --- a/hw/display/ramfb-stubs.c
+> +++ b/hw/display/ramfb-stubs.c
+> @@ -8,7 +8,7 @@ void ramfb_display_update(QemuConsole *con, RAMFBState *s)
+>  {
+>  }
+>  
+> -RAMFBState *ramfb_setup(Error **errp)
+> +RAMFBState *ramfb_setup(bool romfile, Error **errp)
+>  {
+>      error_setg(errp, "ramfb support not available");
+>      return NULL;
+> diff --git a/hw/display/ramfb.c b/hw/display/ramfb.c
+> index 8c0f907673..9a17d97d07 100644
+> --- a/hw/display/ramfb.c
+> +++ b/hw/display/ramfb.c
+> @@ -135,7 +135,7 @@ const VMStateDescription ramfb_vmstate = {
+>      }
+>  };
+>  
+> -RAMFBState *ramfb_setup(Error **errp)
+> +RAMFBState *ramfb_setup(bool romfile, Error **errp)
+>  {
+>      FWCfgState *fw_cfg = fw_cfg_find();
+>      RAMFBState *s;
+> @@ -147,7 +147,9 @@ RAMFBState *ramfb_setup(Error **errp)
+>  
+>      s = g_new0(RAMFBState, 1);
+>  
+> -    rom_add_vga("vgabios-ramfb.bin");
+> +    if (romfile) {
+> +        rom_add_vga("vgabios-ramfb.bin");
+> +    }
+>      fw_cfg_add_file_callback(fw_cfg, "etc/ramfb",
+>                               NULL, ramfb_fw_cfg_write, s,
+>                               &s->cfg, sizeof(s->cfg), false);
+> diff --git a/hw/vfio/display.c b/hw/vfio/display.c
+> index ea87830fe0..8bfd8eb1e3 100644
+> --- a/hw/vfio/display.c
+> +++ b/hw/vfio/display.c
+> @@ -365,7 +365,7 @@ static bool vfio_display_dmabuf_init(VFIOPCIDevice *vdev, Error **errp)
+>                                            &vfio_display_dmabuf_ops,
+>                                            vdev);
+>      if (vdev->enable_ramfb) {
+> -        vdev->dpy->ramfb = ramfb_setup(errp);
+> +        vdev->dpy->ramfb = ramfb_setup(vdev->use_legacy_x86_rom, errp);
+>          if (!vdev->dpy->ramfb) {
+>              return false;
+>          }
+> @@ -494,7 +494,7 @@ static bool vfio_display_region_init(VFIOPCIDevice *vdev, Error **errp)
+>                                            &vfio_display_region_ops,
+>                                            vdev);
+>      if (vdev->enable_ramfb) {
+> -        vdev->dpy->ramfb = ramfb_setup(errp);
+> +        vdev->dpy->ramfb = ramfb_setup(vdev->use_legacy_x86_rom, errp);
+>          if (!vdev->dpy->ramfb) {
+>              return false;
+>          }
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 7f1532fbed..ff0d93fae0 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -3564,6 +3564,7 @@ static const TypeInfo vfio_pci_dev_info = {
+>  
+>  static const Property vfio_pci_dev_nohotplug_properties[] = {
+>      DEFINE_PROP_BOOL("ramfb", VFIOPCIDevice, enable_ramfb, false),
+> +    DEFINE_PROP_BOOL("use-legacy-x86-rom", VFIOPCIDevice, use_legacy_x86_rom, true),
+>      DEFINE_PROP_ON_OFF_AUTO("x-ramfb-migrate", VFIOPCIDevice, ramfb_migrate,
+>                              ON_OFF_AUTO_AUTO),
+>  };
+> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+> index d94ecaba68..713956157e 100644
+> --- a/hw/vfio/pci.h
+> +++ b/hw/vfio/pci.h
+> @@ -177,6 +177,7 @@ struct VFIOPCIDevice {
+>      bool no_kvm_ioeventfd;
+>      bool no_vfio_ioeventfd;
+>      bool enable_ramfb;
+> +    bool use_legacy_x86_rom;
+>      OnOffAuto ramfb_migrate;
+>      bool defer_kvm_irq_routing;
+>      bool clear_parent_atomics_on_exit;
+> diff --git a/include/hw/display/ramfb.h b/include/hw/display/ramfb.h
+> index a7e0019144..172aa6dc89 100644
+> --- a/include/hw/display/ramfb.h
+> +++ b/include/hw/display/ramfb.h
+> @@ -6,7 +6,7 @@
+>  /* ramfb.c */
+>  typedef struct RAMFBState RAMFBState;
+>  void ramfb_display_update(QemuConsole *con, RAMFBState *s);
+> -RAMFBState *ramfb_setup(Error **errp);
+> +RAMFBState *ramfb_setup(bool romfile, Error **errp);
+>  
+>  extern const VMStateDescription ramfb_vmstate;
+>  
+Thanks
 
-[...]
-
->> Use plain C enums when practical.
->>=20
->> Reasons for making a type a QAPI type include:
->>=20
->> * Some QAPI command or event needs it.
->>=20
->> * Something (typically QOM property accessors) needs the generated
->>   visitor.
->>=20
->> * For enums: something could use the generated QEnumLookup / ENUM_str()
->>   macro.
->
-> Any time a method only accepts a subset of enum values, and needs to repo=
-rt
-> an error message, it should always use ENUM_str in the error message, rat=
-her
-> than the raw int value, to make the error message human friendly and inva=
-riant
-> to enum ordering.  IOW, ENUM_str should be relatively frequently used/nee=
-ded.
-
-Unless the enum exists at the user interface, such an error message is
-almost certainly sub-par.
+Eric
 
 
