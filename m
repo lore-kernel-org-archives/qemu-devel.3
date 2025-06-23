@@ -4,72 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C8AFC7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 14:56:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28411C7115B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 15:06:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTiap-0003o5-Cn; Mon, 23 Jun 2025 10:56:19 -0400
+	id 1uTij8-0006jU-Iy; Mon, 23 Jun 2025 11:04:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uTian-0003nr-1t
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 10:56:17 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uTij3-0006ic-Sw
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 11:04:50 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uTial-00074f-D0
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 10:56:16 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-710bbd7a9e2so39511287b3.0
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 07:56:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uTij2-0007wa-Ac
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 11:04:49 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3a54690d369so3582430f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 08:04:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750690574; x=1751295374; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=unRATwUijFCVixAbI9xUnnuP2XYDSs3BDxn+OMqjuLk=;
- b=Zua7qm+JBh9xiELHpzbSrlc4f+RIF2j1uORftFuBjyzPN2dXX0eU1DahsGpFbEQYrC
- yOmTWDcYFjSs9sKYZ2cejaqDFRoh5Cw4NUrUSDbunBU9OIAZqyse0JTqXQA657xhst75
- tyLmBO4tR3pZsqnw/4ycudZnWCaQ+lwlrmPtmDjPmhIZszxL68johTkjEqWT+XMfkBEx
- bPEDye+/2ILgpwp9OpDnZhu4gG07ixjnvTdzwQOEuVvkBTw0T600WSYZ15zxH6l3Oc7t
- fJ7Hx9MONoPDfFRVVyy30blvmUqhi4suwrWPMueNPfZvKBeStCUk3wpYsXFoiTytn1af
- 4wUQ==
+ d=linaro.org; s=google; t=1750691086; x=1751295886; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=V8zMI2s6Y6MpClbneq9AHqx2k+dCWAsICo/Yr3AGJ9s=;
+ b=pSNxvEetGL6lEfTagrzO41yybnHpwaqHL1zKaXYwiQ6FMmobzwhQkIANQTEiIGPvU7
+ ot++u1QtRE2eB+IwsSjy3QH/CcLI+l5EElnoEEAV/g8+xMbWkcoNohpjnSUzBK5mo5Gs
+ L5iHEe6scQpwas4g2+Iz4hhd8aNUPFgQgqWTIOtyKGJJFP20P2sPBLFvei4rsQwBP2s2
+ PHsZz8dLz5FfaktQdkCrmogyQ3/TbFiPYW+jbbkPM2SsYHj0r0uQPX8ZTsQ0Qx8J9NdK
+ cWLiUc+xLQBPgXm5fajWEFHr+M0Lm8hW5OqRvtqMBDsNWM9wFSmXzwZS8+J2CwF7SKA3
+ AApA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750690574; x=1751295374;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=unRATwUijFCVixAbI9xUnnuP2XYDSs3BDxn+OMqjuLk=;
- b=gvP7KLwVVZnll8XvVVwTJ9CSzjfj6U2kK8RWp+S+onhr4qGZoJtn4WZlwed3F4dJHS
- oQzNm9uuSWEVRQyyWtAGBa5uckZRvFX3Jxis+gZcI47yaVuBT9Ua6u7mKa+C5gdHFqdg
- oJSxkOjX5CAVfcwrlflz6tAO+H0mz7c6r6Rl2mXFSekMwztleGFhOj3d3ugIapBDL1PD
- lC5zxEqOE1PEHWKHhuNcMCJvOrpX22jPfOgxauYxxtaU+SyISXXcywi9tf7Rvp1aeKPw
- Lufvgd2gi/3+Pf7VT6a/V75PVc75FtM2mP7+qGmRJfRRaPDmCKNK6UgI/4ESBWmgkKEc
- Sk2Q==
-X-Gm-Message-State: AOJu0YztulApujaZFge87LvGTFv2SM9W553vtAZ1JxmHIoNtY4Dd5I6y
- dQTfMW1wureHGFDKEviKD508pXUbOyw/vm9qw3RpZV3Cl1HUvde2oltj5YYNBX7TRsdBcBbA15z
- 8+bnNcQN9C5RLGMqzE3vx3KcEQa25y8tzd2On/k6i0gaGl2xVBYhL
-X-Gm-Gg: ASbGncuEr0RqvxegC6KH5p0zL6EfMfIu/F0JFciZ/zRylLeuh/5FghdfHkG1T9EcJAr
- 1uMgGoppjDdm/252TRSyTzAZAnquyFdIxuGi8Gip+809cHDjEB9ao+HBdcyJrIFk9um5KrxMWeT
- 3zJO9Ydqi4PjDrT+Bj3za8Aj/k5sMvm+NJj6r+Bn7lDBaF/zR6hfCT0+k=
-X-Google-Smtp-Source: AGHT+IFM+O1nb+8LZ8hr+ZtZGrmVgh51NfndPuMDr9UPDFIGcFOKN6t5bwxpbdywOWD92c9FeN9VX626IYkEYrrSlNI=
-X-Received: by 2002:a05:690c:4b90:b0:712:c55c:4e48 with SMTP id
- 00721157ae682-712c631235cmr183761477b3.8.1750690574111; Mon, 23 Jun 2025
- 07:56:14 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1750691086; x=1751295886;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=V8zMI2s6Y6MpClbneq9AHqx2k+dCWAsICo/Yr3AGJ9s=;
+ b=iCszcfiEg1s6KH8zCnQx0t03FjSLDBcKzdMDZwVAWo/2pZOA+/lseX0wTSEBltCSXn
+ JgOWqb7vUVbnCR07C3riK56n7kR2AhtDuX2e1WVJi0eMroSo06/kDPG3b9cZogN4He9n
+ hUaVnjhAtG4SmwuB5Wx9bV6oTybnR4ee7NhPj7bMmgxNR5I4fqhPRsT+cCOrnu6NsyI/
+ C4zm0sZxM29GMf1iJPPqQoa9Hp1u0vbN9iQLOvyGwNkojlkD9NOQZuzAuphCJhqb1hPq
+ WKCeNoc5/N1jawiC5tNZTdp6KCjDmCRNPnKDYrxchoCvc/uOqKJPUkymZChnkECwlrIR
+ Cdrw==
+X-Gm-Message-State: AOJu0YyuQMqcp3HfxLIrImLN0Sc3v8h/tkwQywHmipiwSXXQoutNsBfc
+ aMbK+YI7FzTRWjRmR9k9qAO47Lza3TXBPKviU4hRst59WZn6NOVDKushbs/KK1ZmGS8=
+X-Gm-Gg: ASbGncth38ZJ9EZtz88P45G3veh+7XlFw6F8RNYcDPzQblUjeJKCMvVPR4ABD3GO4SU
+ xN82PDS+HZIpF9J442ELL+RMsSUIAiYnH8GP4tbm6qkrrGdUaNozGiWXpTD6CdTJAUdKHDJiLtA
+ 8y/GoXNzsQ/mWmp8czAWTs1U9c7ksZ+jZwDeUHL27O7qtvyONV2gLtTMquGahhLVSFIdfCheRRX
+ 5/P02t46BLpjfwGrbvizWAw/NieRxgPZDAbt/13XoR8jHYITW0Q2RS37bVi17cYWEQChPZkCwbA
+ mHHSIro1PU/9cLaOgINtwQMpSEHKnZ/hlfTtBjw+2sYdFZ8JU4og0nFaE/06uVg=
+X-Google-Smtp-Source: AGHT+IF81vENs0EgcK259ls/C3BBEjJyA7ZVfvf/sID9WFrwkOQ+AYgC28uslSdud8D7fSIs4GtErw==
+X-Received: by 2002:a05:6000:4906:b0:3a4:f661:c3e0 with SMTP id
+ ffacd0b85a97d-3a6d12e6a3emr9777983f8f.45.1750691086171; 
+ Mon, 23 Jun 2025 08:04:46 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a6d1193792sm9790132f8f.97.2025.06.23.08.04.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 23 Jun 2025 08:04:45 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 0B6EA5F815;
+ Mon, 23 Jun 2025 16:04:44 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
+ qemu-arm@nongnu.org,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Roman
+ Bolshakov <rbolshakov@ddn.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Alexander Graf <agraf@csgraf.de>,  Bernhard Beschow <shentey@gmail.com>,
+ John Snow <jsnow@redhat.com>,  Thomas Huth <thuth@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ kvm@vger.kernel.org, Eric Auger <eric.auger@redhat.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Cameron Esfahani <dirty@apple.com>,  Cleber
+ Rosa <crosa@redhat.com>,  Radoslaw Biernacki <rad@semihalf.com>,  Phil
+ Dennis-Jordan <phil@philjordan.eu>,  Richard Henderson
+ <richard.henderson@linaro.org>
+Subject: Re: [PATCH v3 26/26] tests/functional: Expand Aarch64 SMMU tests to
+ run on HVF accelerator
+In-Reply-To: <20250623121845.7214-27-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 23 Jun 2025 14:18:45
+ +0200")
+References: <20250623121845.7214-1-philmd@linaro.org>
+ <20250623121845.7214-27-philmd@linaro.org>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Mon, 23 Jun 2025 16:04:43 +0100
+Message-ID: <87sejq1otw.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20250621235037.74091-1-richard.henderson@linaro.org>
- <20250621235037.74091-29-richard.henderson@linaro.org>
-In-Reply-To: <20250621235037.74091-29-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Jun 2025 15:56:02 +0100
-X-Gm-Features: AX0GCFvtua89KvTci_c8zw0uMISJZE1MIskBY_AUOK3sZ5YoOAQDZsiQWUqg4YU
-Message-ID: <CAFEAcA_hVBER10s_LVNj0zWYMp_8+sjTLbNPU4X=DQpQi-mDug@mail.gmail.com>
-Subject: Re: [PATCH v2 028/101] target/arm: Introduce gen_gvec_sve2_sqdmulh
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,15 +116,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 22 Jun 2025 at 00:52, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> To be used by both SVE2 and SME2.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  tests/functional/test_aarch64_smmu.py | 12 +++++++++---
+>  1 file changed, 9 insertions(+), 3 deletions(-)
+>
+> diff --git a/tests/functional/test_aarch64_smmu.py b/tests/functional/tes=
+t_aarch64_smmu.py
+> index c65d0f28178..e0f4a922176 100755
+> --- a/tests/functional/test_aarch64_smmu.py
+> +++ b/tests/functional/test_aarch64_smmu.py
+> @@ -17,7 +17,7 @@
+>=20=20
+>  from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_=
+pattern
+>  from qemu_test import BUILD_DIR
+> -from qemu.utils import kvm_available
+> +from qemu.utils import kvm_available, hvf_available
+>=20=20
+>=20=20
+>  class SMMU(LinuxKernelTest):
+> @@ -45,11 +45,17 @@ def set_up_boot(self, path):
+>          self.vm.add_args('-device', 'virtio-net,netdev=3Dn1' + self.IOMM=
+U_ADDON)
+>=20=20
+>      def common_vm_setup(self, kernel, initrd, disk):
+> -        self.require_accelerator("kvm")
+> +        if hvf_available(self.qemu_bin):
+> +            accel =3D "hvf"
+> +        elif kvm_available(self.qemu_bin):
+> +            accel =3D "kvm"
+> +        else:
+> +            self.skipTest("Neither HVF nor KVM accelerator is available")
+> +        self.require_accelerator(accel)
 
-thanks
--- PMM
+I think this is fine so:
+
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+However I wonder if something like:
+
+        hwaccel =3D self.require_hw_accelerator()=20
+
+Could fetch the appropriate platform accelerator for use in -accel bellow?
+
+>          self.require_netdev('user')
+>          self.set_machine("virt")
+>          self.vm.add_args('-m', '1G')
+> -        self.vm.add_args("-accel", "kvm")
+> +        self.vm.add_args("-accel", accel)
+>          self.vm.add_args("-cpu", "host")
+>          self.vm.add_args("-machine", "iommu=3Dsmmuv3")
+>          self.vm.add_args("-d", "guest_errors")
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
