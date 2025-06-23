@@ -4,41 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29A34C7115D
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 06:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 059A1C7115B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 06:45:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTatl-0004TK-Cw; Mon, 23 Jun 2025 02:43:21 -0400
+	id 1uTavd-0005Qn-EV; Mon, 23 Jun 2025 02:45:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Zqu3=ZG=kaod.org=clg@ozlabs.org>)
- id 1uTath-0004Sq-Fx
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 02:43:19 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ id 1uTavb-0005QA-Ba; Mon, 23 Jun 2025 02:45:15 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Zqu3=ZG=kaod.org=clg@ozlabs.org>)
- id 1uTatf-0002p5-5z
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 02:43:17 -0400
+ id 1uTavZ-0003DP-0V; Mon, 23 Jun 2025 02:45:15 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bQdnQ2YQQz4x3J;
- Mon, 23 Jun 2025 16:43:06 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bQdqm2KYlz4x47;
+ Mon, 23 Jun 2025 16:45:08 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bQdnN2JHqz4wy6;
- Mon, 23 Jun 2025 16:43:04 +1000 (AEST)
-Message-ID: <b8171c39-6a92-4078-a59a-a63d7452e1e9@kaod.org>
-Date: Mon, 23 Jun 2025 08:43:00 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bQdqh6dTgz4x3q;
+ Mon, 23 Jun 2025 16:45:02 +1000 (AEST)
+Message-ID: <ccf89b7e-9daf-489b-a05f-4bb70d9a09c4@kaod.org>
+Date: Mon, 23 Jun 2025 08:45:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 24/24] i386/tdx: handle TDG.VP.VMCALL<GetQuote>
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Isaku Yamahata <isaku.yamahata@intel.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>
-References: <20250620164053.579416-1-pbonzini@redhat.com>
- <20250620164053.579416-25-pbonzini@redhat.com>
+Subject: Re: [RFC v5 0/4] Add QEMU model for ASPEED OTP memory and integrate
+ with SoCs
+To: Kane Chen <kane_chen@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20250619064115.4182202-1-kane_chen@aspeedtech.com>
+ <7abd4507-46e3-4848-8f54-928998c64565@kaod.org>
+ <SI6PR06MB7631674C7B714E76F25E78A2F779A@SI6PR06MB7631.apcprd06.prod.outlook.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -83,17 +88,16 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250620164053.579416-25-pbonzini@redhat.com>
+In-Reply-To: <SI6PR06MB7631674C7B714E76F25E78A2F779A@SI6PR06MB7631.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=Zqu3=ZG=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,56 +114,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Hello Kane,
 
-On 6/20/25 18:40, Paolo Bonzini wrote:
-> From: Isaku Yamahata <isaku.yamahata@intel.com>
+On 6/23/25 05:23, Kane Chen wrote:
+> Hi Cédric,
 > 
-> Add property "quote-generation-socket" to tdx-guest, which is a property
-> of type SocketAddress to specify Quote Generation Service(QGS).
+> Sure, I will submit a follow-up patch that includes the following changes:
 > 
-> On request of GetQuote, it connects to the QGS socket, read request
-> data from shared guest memory, send the request data to the QGS,
-> and store the response into shared guest memory, at last notify
-> TD guest by interrupt.
+> 1. Introduce a new OTP memory device model, which provides in-memory storage and implements basic MMIO read/write via address space.
+> 2. Initialize the OTP memory device as a child of the SBC controller.
+> 3. Add command handling logic in the SBC to operate on the OTP memory, supporting both read and program operations.
+> 4. Introduce TYPE_ASPEED_AST2600_SBC to support OTP memory attachment via the SBC class attribute in the AST2600 SoC.
+> 5. Add trace events to facilitate debugging and tracing of OTP memory operations.
 > 
-> command line example:
->    qemu-system-x86_64 \
->      -object '{"qom-type":"tdx-guest","id":"tdx0","quote-generation-socket":{"type":"unix", "path":"/var/run/tdx-qgs/qgs.socket"}}' \
->      -machine confidential-guest-support=tdx0
-> 
-> Note, above example uses the unix socket. It can be other types, like vsock,
-> which depends on the implementation of QGS.
-> 
-> To avoid no response from QGS server, setup a timer for the transaction.
-> If timeout, make it an error and interrupt guest. Define the threshold of
-> time to 30s at present, maybe change to other value if not appropriate.
-> 
-> Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
-> Co-developed-by: Chenyi Qiang <chenyi.qiang@intel.com>
-> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
-> Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Tested-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   qapi/qom.json                         |   8 +-
->   target/i386/kvm/tdx-quote-generator.h |  82 +++++++
->   target/i386/kvm/tdx.h                 |  10 +
->   target/i386/kvm/kvm.c                 |   3 +
->   target/i386/kvm/tdx-quote-generator.c | 300 ++++++++++++++++++++++++++
->   target/i386/kvm/tdx-stub.c            |   4 +
->   target/i386/kvm/tdx.c                 | 176 ++++++++++++++-
->   target/i386/kvm/meson.build           |   2 +-
->   8 files changed, 582 insertions(+), 3 deletions(-)
->   create mode 100644 target/i386/kvm/tdx-quote-generator.h
->   create mode 100644 target/i386/kvm/tdx-quote-generator.c
+> As requested, the BlockBackend integration, the otpmem machine property, and the related alias handling will be removed.
+> Please let me know if there is anything else that should be adjusted.
 
-These changes broke the build on 32-bit host.
 
-Could you please send a patch to avoid compiling TDX in such environment ?
+Looks good.
+
+Then, we will re-introduce the BlockBackend and last, the 'otpmem'
+machine property.
 
 Thanks,
 
 C.
+
+
 
