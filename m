@@ -4,99 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41B42C7EE2A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 910E3C77B7F
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 12:23:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTg9z-0002Li-GS; Mon, 23 Jun 2025 08:20:27 -0400
+	id 1uTgCO-0004ti-Ok; Mon, 23 Jun 2025 08:22:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTg9n-00022D-Ku
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:20:23 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uTgB6-0004BG-2A
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:21:40 -0400
+Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTg9k-0000t6-DS
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:20:14 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4536b8c183cso10208715e9.0
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 05:20:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uTgB4-0001Fr-02
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:21:35 -0400
+Received: by mail-yb1-xb31.google.com with SMTP id
+ 3f1490d57ef6-e733cd55f9eso3393828276.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 05:21:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750681210; x=1751286010; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+zn98SRXtaFwoihOhnAeEFS9N5zUhWDF7TNyGo/TLss=;
- b=kSJ0gjZnx0yOTCKTTQOLPN/Gd2ncbknKSir+rJgpmyGzmvzVPpWAIQ0zE6Vl+CpWnc
- OpF3jKw59AjYvrUN6ODLwNNMjHSlhjPNV57gGLvHmxuz6qn3DZ3OsLjb0C3ybLoDmOiU
- adFJknYEUBlSUhAO12XtexnOTwGJzOGLvNp2r1cBTPqw2yEo5ozGlZLkCd7I86lRfPsk
- eOsXAeY1anWA2hNYe2AsxuJor/97WGSKVamUe73ikHtES1HGm/1NX2ODA8SO9YuIDWgc
- NeCC07cSfpWsAOg0VWlw9lV548psaBl2CNwgKbW3BzCoo76/iKo9LcAx0D0SweaN7Pjd
- uPbQ==
+ d=linaro.org; s=google; t=1750681292; x=1751286092; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Rb0Nma2Ov+KRCaB1a/tt2nPEQS4hhjWwzL/eYwV/cWM=;
+ b=XyvbtL6sOGGRtuQc30PUGfX6DFAOE8+9B/l34feMOerYrmH2Y4k9z7srHsOzbuahY2
+ HReiNiP2WaXmZfranBQNfye5dOrT+m8cuVIV+M0MDLMy9N1fsy01vJi5wmIZ/0KkflAn
+ MOMdnWDSrr+xBiL1SP4IYgrFg6yFHQoHRQbX4wbPiosVVTw0pcscVISoZ9tt0w+EQx9y
+ E618teqrs600ANrzMYUBYWYCSkzAZz6b+UrH5rARK8Em42Gpkxw8HGwN1HrvvbEkeDjW
+ wLYmMymqPBWkLB11VjMo1QYAH4PtFE35c0T2NaKlSXeHjpQwNrESA4/ypGVFiSOVDh4t
+ WCqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750681210; x=1751286010;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+zn98SRXtaFwoihOhnAeEFS9N5zUhWDF7TNyGo/TLss=;
- b=dsJ5PxTmmbuHKU0aDXkgmKHZD6bovBKu6M/ZF3woZFqpS4rhGDbaVOAf+ZgQNIJ4J3
- FgDIKVH1PhPHcZnHHRjXvscsIOS6zsu5vTrvZh6Qcnq5hJucDA/TJJJb+A0PBchrXDm4
- /68jW6XC1jXRZmfiJJcjLX49FyuvqPud/Mydqq5ctjULqYbAggWROJHplI5JSm0VqmnO
- cQF93VAoD5NN3qEhLFJqgD70d29NxjJ2wFqQJ3vfrmw351D46wg0XvCBZfKhXnymkcDX
- HVr3DxmOl6g5UhoXirvZno/TdPw5tbc6FncIba7WHCZJy1I48UcxaACqfpP66tJHactE
- YrqQ==
-X-Gm-Message-State: AOJu0YzD/xFBMHpcwHiAsDjybHY/lvidcDYnafthBZdSvGPNvKHQktcQ
- qb9HiP42XcZDNfzSQ27zh3DuHIMP5fjPmOja3Dp4CSKuwCnI6l22vERc7e7VuL8msLHzDM20iIb
- Mtgyg
-X-Gm-Gg: ASbGncs2GiU1e7oIJdjTXI1W0tc46xaJesJjxjghDqbRsM+Mek1S8GxI25nA0HvbjHq
- vAQUafZyhr1L10M15QS/zYRmGjlaEFovD4s+81EhPuJcK20x0J5VoSPy60s98IumX5mf8JcdwUC
- h37WYyY8ltvCNHzsTNj9lkOdHu3ozpgqAOKOo7NjJlA0FYrpIhNcrDIIhWz4hIYpLsILzoK81jn
- HHyhXwBMb+i9HcL6IdKKaLhG5rRJF+LdpZXF8/9FlUAL3HQnUTDjae2Wv37s0jVa26+Jk2LJN6+
- yzbdeNEZ0KQjCLuOLrzhBYYzTG1bsFs5o3UBf0CU7IVTtXeUPok9/mYPp+gB4qDkKARm2SZvOoq
- 8QZRp+HP/meM10HckSogmc9UlBoAgOjD77vMX
-X-Google-Smtp-Source: AGHT+IFhxvf0pVdM4spy0FqKxphN+wj0nPLNYA/H7sLORxDSPVaYXm5uBRM12Jr6vzicVX+Kk0gVwg==
-X-Received: by 2002:a05:600c:3b19:b0:442:d9fb:d9a5 with SMTP id
- 5b1f17b1804b1-45365e5e41dmr102028495e9.9.1750681209616; 
- Mon, 23 Jun 2025 05:20:09 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6d0f1d168sm9202901f8f.40.2025.06.23.05.20.08
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 23 Jun 2025 05:20:09 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>, qemu-arm@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Alexander Graf <agraf@csgraf.de>, Bernhard Beschow <shentey@gmail.com>,
- John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- kvm@vger.kernel.org, Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Cleber Rosa <crosa@redhat.com>,
- Radoslaw Biernacki <rad@semihalf.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v3 16/26] accel/hvf: Add hvf_arch_cpu_realize() stubs
-Date: Mon, 23 Jun 2025 14:18:35 +0200
-Message-ID: <20250623121845.7214-17-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250623121845.7214-1-philmd@linaro.org>
-References: <20250623121845.7214-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1750681292; x=1751286092;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Rb0Nma2Ov+KRCaB1a/tt2nPEQS4hhjWwzL/eYwV/cWM=;
+ b=IVYCdLIGXx+Uan/eU9ej3+j4zEVrF0yBrcXjqDefdtsZgwK2lCrGtG0RDVbGpt5VWC
+ FNO0IKlm2RyLoWYPAB0R5BPoU+DB1G3EiXbeAc7St8RiYNpXcgRRXSM/EWz4nSHj/Kgf
+ Ufwr4SF7BSglqClndrqg2jj8iAggA5vqLWaXnBIgx6AWtJwn/RfytnsWlTEdwxYa8uGT
+ n0k86bcHCYP6fZmszmY0zu9fneUQZoFVHDnzUZ/RTDz6VumdhwJwhy51u7XHD8a+6NPZ
+ bXCODHbrIQ8b3arylnnkoblbpe/kClrFt/8rqmS7+6gUaq8m0hJOPAo2XXUvNrv4f/sg
+ wgFg==
+X-Gm-Message-State: AOJu0YxV9oA7wmDyquKtmkxWev3ZXThonYh2Rm1Vt15FDICSayVQZSx+
+ Cbq3LlXQTXtNt1iIweysNhyKYzSbtnq7vYrPDDJisPyfGPEoEup4UNTD1A9pG2exxIbxwAsdb94
+ t0ISOQtzTbEOylvpjdzwdY7ubysBrkIfHGJ9N4c+kyA==
+X-Gm-Gg: ASbGnctc2r1lokeojVeA2IynkVrID+zE6HNuZIzmNS6aaR/w5FKtFrAUn0x7c3aq9Ic
+ etd2iIAv1DAXWJl1fIj5VdNt6NEokB2dm+sZmQSPJAnklqCl9Wj0x4GRgYupOv2jSM51AceI3J8
+ srqOqChKigXDHUmyRJugK8ulv6pLMmS0HGKDqNVJ2E/JW6kLdiBbjkcKA=
+X-Google-Smtp-Source: AGHT+IEWkEOs1FUN9pDS+WmPfJkRUoV4mUwdi+3ZOeedhjKVQ/rBpaVhv3/yppF2m2JWfb118GKbaNDnn+FapzSA5i0=
+X-Received: by 2002:a05:690c:48c8:b0:710:f470:154f with SMTP id
+ 00721157ae682-712c68cc6f4mr166474107b3.34.1750681292144; Mon, 23 Jun 2025
+ 05:21:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+References: <20250621235037.74091-1-richard.henderson@linaro.org>
+ <20250621235037.74091-20-richard.henderson@linaro.org>
+In-Reply-To: <20250621235037.74091-20-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 23 Jun 2025 13:21:20 +0100
+X-Gm-Features: AX0GCFtUox1z6NVCNoCfZ5etV7T-qLXfCYfxh8rYKhT4qotk1lO8Ll5HWWXSRd8
+Message-ID: <CAFEAcA98aZhdE6=564tB0bn8DvStzHrM6ihn=duvdTJhoodwOA@mail.gmail.com>
+Subject: Re: [PATCH v2 019/101] target/arm: Implement SME2 LDR/STR ZT0
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,78 +92,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement HVF AccelOpsClass::cpu_target_realize() hook as
-empty stubs. Target implementations will come separately.
+On Sun, 22 Jun 2025 at 00:52, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/translate-sme.c | 12 ++++++++++++
+>  target/arm/tcg/sme.decode      |  6 ++++++
+>  2 files changed, 18 insertions(+)
+>
+> diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+> index 37f4d341f0..8b0a33e2ae 100644
+> --- a/target/arm/tcg/translate-sme.c
+> +++ b/target/arm/tcg/translate-sme.c
+> @@ -291,6 +291,18 @@ static bool do_ldst_r(DisasContext *s, arg_ldstr *a, GenLdStR *fn)
+>  TRANS_FEAT(LDR, aa64_sme, do_ldst_r, a, gen_sve_ldr)
+>  TRANS_FEAT(STR, aa64_sme, do_ldst_r, a, gen_sve_str)
+>
+> +static bool do_ldst_zt0(DisasContext *s, arg_ldstzt0 *a, GenLdStR *fn)
+> +{
+> +    if (sme2_zt0_enabled_check(s)) {
+> +        fn(s, tcg_env, offsetof(CPUARMState, za_state.zt0),
+> +           sizeof_field(CPUARMState, za_state.zt0), a->rn, 0);
+> +    }
+> +    return true;
+> +}
+> +
+> +TRANS_FEAT(LDR_zt0, aa64_sme2, do_ldst_zt0, a, gen_sve_ldr)
+> +TRANS_FEAT(STR_zt0, aa64_sme2, do_ldst_zt0, a, gen_sve_str)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/system/hvf.h      | 3 +++
- accel/hvf/hvf-accel-ops.c | 2 ++
- target/arm/hvf/hvf.c      | 5 +++++
- target/i386/hvf/hvf.c     | 5 +++++
- 4 files changed, 15 insertions(+)
+The alignment check the pseudocode requires happens inside
+gen_sve_ldr/str, right? I don't entirely understand why, though,
+because those functions don't seem to use MO_ALIGN.
 
-diff --git a/include/system/hvf.h b/include/system/hvf.h
-index a9a502f0c8f..8c4409a13f1 100644
---- a/include/system/hvf.h
-+++ b/include/system/hvf.h
-@@ -72,6 +72,9 @@ void hvf_arch_update_guest_debug(CPUState *cpu);
-  * Return whether the guest supports debugging.
-  */
- bool hvf_arch_supports_guest_debug(void);
-+
-+bool hvf_arch_cpu_realize(CPUState *cpu, Error **errp);
-+
- #endif /* COMPILING_PER_TARGET */
- 
- #endif
-diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
-index b38977207d2..b9511103a75 100644
---- a/accel/hvf/hvf-accel-ops.c
-+++ b/accel/hvf/hvf-accel-ops.c
-@@ -588,6 +588,8 @@ static void hvf_accel_ops_class_init(ObjectClass *oc, const void *data)
- {
-     AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
- 
-+    ops->cpu_target_realize = hvf_arch_cpu_realize;
-+
-     ops->create_vcpu_thread = hvf_start_vcpu_thread;
-     ops->kick_vcpu_thread = hvf_kick_vcpu_thread;
- 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index b932134a833..fd493f45af1 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1082,6 +1082,11 @@ int hvf_arch_init_vcpu(CPUState *cpu)
-     return 0;
- }
- 
-+bool hvf_arch_cpu_realize(CPUState *cs, Error **errp)
-+{
-+    return true;
-+}
-+
- void hvf_kick_vcpu_thread(CPUState *cpu)
- {
-     cpus_kick_thread(cpu);
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index 99e37a33e50..28484496710 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -367,6 +367,11 @@ int hvf_arch_init_vcpu(CPUState *cpu)
-     return 0;
- }
- 
-+bool hvf_arch_cpu_realize(CPUState *cs, Error **errp)
-+{
-+    return true;
-+}
-+
- static void hvf_store_events(CPUState *cpu, uint32_t ins_len, uint64_t idtvec_info)
- {
-     X86CPU *x86_cpu = X86_CPU(cpu);
--- 
-2.49.0
+Anyway, given that these insns have the same alignment
+check requirement as the SVE LDR (vector) and SME LDR (array vector)
+this patch is fine:
 
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
