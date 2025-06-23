@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 693FEC7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 10:03:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64630C77B7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 10:07:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTe0j-0006qD-LL; Mon, 23 Jun 2025 06:02:45 -0400
+	id 1uTe4a-0007zW-8G; Mon, 23 Jun 2025 06:06:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uTe0h-0006pl-3v
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 06:02:43 -0400
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ id 1uTe4Y-0007yy-7i
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 06:06:42 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uTe0f-0005FT-Iv
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 06:02:42 -0400
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-70e3e0415a7so32749577b3.0
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 03:02:40 -0700 (PDT)
+ id 1uTe4W-0005qq-Kb
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 06:06:41 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-71173646662so37249247b3.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 03:06:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750672960; x=1751277760; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750673199; x=1751277999; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=78fy4h/5DONFEq1PaGzYHU37nQCxK6zQT32QBSfMpNk=;
- b=Z+V7eMIf6/BJCqGtowdjo5R9uUGYGykBBED8AnfsYv/q/tTSlCa2jdMBBbMiRei14p
- n8zqGtlWY193ZlC/2PoRvh9gTBU7kH74xSK1VnpYjOSz/7npyLSzqbvcDdOkEFx05GG8
- kChotELMM9CHbcTfMmo7r4EDkJ5EDnKRhP0fGcG9kAhRZJ5UO/7+2fp+uGJnF/kjqVwr
- iuiLHuhWwnF235ucYFLT1z70FNOUdOFT1nurcntiA24zC5lMpCTkkd4OnKQ1AOSl3/GJ
- ZSWoYw8nmTai+mM64K86nDpd3qgh7str9rCpAa6zkCBAodx2qzfvaYs4KMvUIJ37fI8W
- NQLQ==
+ bh=Nt3sm8GY0gYw53ety0eK2MQ1IIUX822iA/TXsx9xzlM=;
+ b=Gwzb9zQRzibUJYXyqhjA9O4wVMlztLC31+Ya3FlhBsnPxHb+PwZ5nZKEz6F3LgYk00
+ x918cufIjHhLqL7HHnF1ZmR+vbptJQUz+CS+WrvXjJ2NWtDhZzjQBoihBgJwUFPw10sB
+ us6Fl8oE5JmO/4P0O/wE6g5kUBsod+9v+b8ih2WUp9KYDHS1AQwvWUHaqy/Q3bbopDeT
+ +URoZvhEDOMxk+BZ5N50RCECnn5s9KOMoqlFcl1VwFZZrZigkVQOUCD6nzTk3NBzUh7u
+ ZlTI7TInN1dCJn6UQ4zu+OJSRN8gpXRFsv+SZboK8xHYHvK2p75FdqEXqTnnNNTqSlSy
+ b85w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750672960; x=1751277760;
+ d=1e100.net; s=20230601; t=1750673199; x=1751277999;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=78fy4h/5DONFEq1PaGzYHU37nQCxK6zQT32QBSfMpNk=;
- b=s1STsXTQ+tDtrrrPlf7goR7hcJV8Ijl581FXdfG6c5PkJjXRT7aN70CFI19s+aO0TB
- vlWvNoJtJYbVhAGCXb5rBI74vHtgeHEFQG/PUijGPsyOc5O3/L8tyhFOTbF+e4IyFj2W
- oJogkjAbdr0N/bpancGs6E/emNRwC1jPpbJb/keQYq0wS6uss8+6PtmqZCf4SmEB7l7W
- 9MJiPELBYUmKcQsGWJ9NJy0OEcHmTFRZCrKZN1XTt9+EewvNXlNpPobNRb1/OAlOD2vG
- 3TJo758Igsw9RpBBfVedmNrXWtWIgqGTUkwMsrZuxe1i4yiB6/82fmCXN6hG2p+r+umf
- 3lmw==
-X-Gm-Message-State: AOJu0YxDR8pOfmxoaZpsbManFYFR+7X/77FXKj9zkCmuSNp9Px6HDPRt
- k3P2X6Gznq9nDocNfPJHBE6wJRfnGnsh33s/qVzCDDAPvZc0BvR4lYaKuzJ3lbXJ8LPIHt6m0mY
- GouWzO9V6Jq9bcsrePTiXd2DnTXxg8N0BOeV5VEZno+rteIAlg7pT
-X-Gm-Gg: ASbGncvcRaJ0fx0NimCukqsEixEG8pbGWsj9mG65r8/XFPB2ZGiymlwudBIKnZY6xA9
- KSccsZ6gKJ8hjkai387cn1N//hLwsWWDiCgLHwQiPBK6rHTLozAr2yh3ryxHx8i1U+4T3yipayx
- bq9qUa3THABx6AVJVlK6ewUUHg39SN9Xva5U1oo5STvi3R/6bI5rQJrJo=
-X-Google-Smtp-Source: AGHT+IFYkVOgLgYpiQBShHD/FAj7zSQazM4MZqASJkBypFGXLOrqeFwix9Urg58Gj19/i0IlN+B7+80Win/PntxcZ4g=
-X-Received: by 2002:a05:690c:6910:b0:70e:2daa:65b7 with SMTP id
- 00721157ae682-712ca3d9b80mr173876427b3.12.1750672959824; Mon, 23 Jun 2025
- 03:02:39 -0700 (PDT)
+ bh=Nt3sm8GY0gYw53ety0eK2MQ1IIUX822iA/TXsx9xzlM=;
+ b=Ovr/pZbmEjNWrr1ElxzEkIuKk7eap6MOuHDZrG1/Vi88a8P71L13QLcnG7UZcKKCYY
+ kcxkip+nrDMSv118rwbOtVHSFpETsuiT9a4rUOk6+3ILoMGymipx5zfCfxxayVp2GrNZ
+ ylhzkuAfhTpo9oSqT+59jIsYZnBAk88N6ZnTLmSS9+sbaiu5LBhs/0IcPpxAKtjYe+YL
+ M6Rt13cB3HhEei6J3P6QRYbMeAcNdu5g0swQ0I5FyW6X6syqn2ijMlbE49NF3euURyT4
+ ef+KaVo6X+NwYOXEVV/l+r0L25F9UV2ARq5dLT+KnMhy66XMoavNn0Evj/xKUw4dk4gR
+ vmIw==
+X-Gm-Message-State: AOJu0YzD8mIpUG5STttYxzTbqFr9ZXcuGCixJ8vPB8tAPuk1jljMYieS
+ kjxvXd99qj2Qc83e8Zas9O+/3oHUj5EwMzmQyKWMExWeuUQxeaXXaKCx68VShxI2M/nleeZs6ft
+ jHqNP5b9D3M3ZT+l6xF9+U5yzCarc/fbW23khomnmfSgTZv3FtnuH
+X-Gm-Gg: ASbGncspdPchu+h234uhvtNL81q2Rxwbq6J73hACs+fAiV3gEyGYeHJWlku8wnwIqus
+ T7ThwDluIkAe6XRMnvuLQzkjP8E0dG1SNtYze2d9mQqBaoWAUuuY8NVUZSxD/2jyDu2fxRwsaFk
+ 1N6ikAc4li67JITuh6bgejtO8jjYuty9sb1RlTiaWOEy2xqa+jHsdotmU=
+X-Google-Smtp-Source: AGHT+IESF8bLvBd+QsDwhiCxWSMykj+v76TlQpR7ysR7myUCqp28xuRAVqccFtVM8hqhqH6dDHRpLBCdxCvnKsW82TY=
+X-Received: by 2002:a05:690c:23c2:b0:702:d85:5347 with SMTP id
+ 00721157ae682-712c67758afmr168019487b3.36.1750673199041; Mon, 23 Jun 2025
+ 03:06:39 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250621235037.74091-1-richard.henderson@linaro.org>
- <20250621235037.74091-4-richard.henderson@linaro.org>
-In-Reply-To: <20250621235037.74091-4-richard.henderson@linaro.org>
+ <20250621235037.74091-5-richard.henderson@linaro.org>
+In-Reply-To: <20250621235037.74091-5-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Jun 2025 11:02:27 +0100
-X-Gm-Features: AX0GCFvnltQBVauDowHiof-If3x0AKCN-Q0W7SXvDqQQpCnAzTFcuxwL8uJLpDI
-Message-ID: <CAFEAcA8FswfdKnPjkjguY-HiHHUhTV4qMGzf-i54thJnnNT5+g@mail.gmail.com>
-Subject: Re: [PATCH v2 003/101] tcg: Add dbase argument to expand_clr
+Date: Mon, 23 Jun 2025 11:06:27 +0100
+X-Gm-Features: AX0GCFvrxWuyOIOq0bdMCUXpiR8dC76GyqzeUddW4JhWHSfLfY6zIdq6SnpJzEs
+Message-ID: <CAFEAcA-Zu8O6gGKdSUg57Sw0Q3VtfnQ5RnQWw0WDCKp3mietbA@mail.gmail.com>
+Subject: Re: [PATCH v2 004/101] tcg: Add base arguments to check_overlap_[234]
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,14 +92,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 22 Jun 2025 at 00:51, Richard Henderson
+On Sun, 22 Jun 2025 at 00:58, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  tcg/tcg-op-gvec.c | 36 ++++++++++++++++++------------------
->  1 file changed, 18 insertions(+), 18 deletions(-)
+>  tcg/tcg-op-gvec.c | 55 ++++++++++++++++++++++++++---------------------
+>  1 file changed, 31 insertions(+), 24 deletions(-)
+>
+> diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
+> index c26cfb24cc..54304d08cc 100644
+> --- a/tcg/tcg-op-gvec.c
+> +++ b/tcg/tcg-op-gvec.c
+> @@ -58,29 +58,34 @@ static void check_size_align(uint32_t oprsz, uint32_t maxsz, uint32_t ofs)
+>  }
+>
+>  /* Verify vector overlap rules for two operands.  */
+> -static void check_overlap_2(uint32_t d, uint32_t a, uint32_t s)
+> +static void check_overlap_2(TCGv_ptr dbase, uint32_t d,
+> +                            TCGv_ptr abase, uint32_t a, uint32_t s)
+>  {
+> -    tcg_debug_assert(d == a || d + s <= a || a + s <= d);
+> +    tcg_debug_assert(dbase != abase || d == a || d + s <= a || a + s <= d);
+>  }
 
+This is now a looser check than the actual requirements, right?
+(in that it's possible but wrong to specify overlapping
+vectors via getting dbase and abase wrong). Might be worth
+noting that in the comment.
+
+Otherwise
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
