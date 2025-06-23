@@ -4,105 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA9B2C7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 12:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05B43C77B7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 12:20:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTfwZ-0007T8-2X; Mon, 23 Jun 2025 08:06:37 -0400
+	id 1uTg8v-0001KL-NJ; Mon, 23 Jun 2025 08:19:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTfvp-0007KJ-J3
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:05:51 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTg8o-0001JO-Bf
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:19:14 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTfvh-0006hR-Jn
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:05:48 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3a4e742dc97so3029150f8f.0
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 05:05:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTg8h-0000Rd-Em
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:19:14 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-450dd065828so29515055e9.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 05:19:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750680337; x=1751285137; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=LhVmC7Ptr86082iSVP3tCUv3mxHNuSnJ7XLqXn+lKmI=;
- b=rvtZ//nS7KVdXEBg2bBDstD3Fc6/HMuW70+dA+T3AdmM+qCCMR49nZmKkJ/Um+VINq
- GB5NErfvi7OF7szvajnslPWU6JLPJOm3YPqRhOvRpRrFGGA7ZNJahFWmA5MqMOOP+rBq
- 6T2fuYT9FxO8CRwQ/5QdUicgJvGdvMYCqhvuZ6F0wMMYZyRPh1Gz5m61ch+Hjqn1EfX/
- 2xITOaQ/QZmGsi5W2nVauztUcDtysnjOd7+h3LzPEQ9yChBSTbzljr+yQNr7FYkJCRh6
- Z02q5PlpB/fXSk4CjvfkeLPuB4JTNH/aYmqB9cG5SyqAfiAkW+AHvMiLFqbD/QpgxH9d
- u8sA==
+ d=linaro.org; s=google; t=1750681143; x=1751285943; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=g4jpPoIjWAnN20gltB2a/vOsrmaIk3+mmplMj5/YsrY=;
+ b=yy93QNq4f+Oejjx68IoiEyOi3BqS4na1cZuzt3g1EOhgE82x/1QYEy4B15U1Y5EHzA
+ dn5Ni2fVzhAtjTDVfXxD9xjQumlzZfCqF3Ev1xQ3XVMNR6Pwh2ePEAIxIn7/EO4bzREU
+ dnnmfekN9qXnbKUdOJlNKRjD+hGjzMFbQSAtb4vd1EVW40kHNCPShG7sv1cBU4dxHHG6
+ bQuVd58pKAiBeFVVCxmrGajXngjgmE8xo691dz9PkP1oDlaXFUOeqXlg4x9Ulo+h+zLy
+ y50L0ZnlF7F8PVXkMPu5s8HPpLo4F9174F9el4eRvfBe0o1ZDv43DFMd/tyczDzHgBf3
+ SgMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750680337; x=1751285137;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LhVmC7Ptr86082iSVP3tCUv3mxHNuSnJ7XLqXn+lKmI=;
- b=H5O1D+y9bU/0GlZ/+yUhW9X7plpcH4Id72zeVe17EYQ/DGmvlaBkgCh9gc1N7dGOYv
- IZMqwiNnr6kQy7Htxlb4JxN4u+cZw5U84JhPXcWaC7PaXXUUsE6nsuBQe7P7BXzDMvkn
- eU4kblnRgYt9Ty2+DcdUnIqbmzv6AnbzueprjEO4YbwWYHebFU+nr4dZZqkriUw//rCB
- a+6OVKCeBdRKqLmMUTQUD4u2NfRprKjKKjs9oYenIBLX7LTo7717Z8byHdfeVF4ObP/S
- oCA0vRD0xQ46sTtkkrM9tuKgHjFS1J7DWmDHO/8W0GzAhMt6UyjSzKLlO7ocWm/Hr42J
- hgfw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXIY512LTBkOqrp8IBJ5+SL/vsKdJlDRWSfGlF3jKc9adhd05/a74naAokYobL5HN4WjOYgRWMY/PG@nongnu.org
-X-Gm-Message-State: AOJu0Yy5AtobUtlszrhnfStFk2bvYyYioluxxWG2Q0lJkx1SlcUY/hXV
- MDF9ouSuS+weoPVFYQeDU9xNl77ruAMEXXsFP0b9LWJak3+y3tsq9LZcrRubLFLiONQ=
-X-Gm-Gg: ASbGncuSbVcQyIsThcYrrfOJIFy5Uny1Zi1EcGFTjUr38ygb+0NgbtbyCCStA9fk3VU
- N7aMdDV7dMrkq9BUWTNs1iQ3tumbrTm/Q7z0+rqIvcXrFb/vu8679Un8Ecjdy1YnUwLyJaFCxjM
- Iu0wCSrndjTAWxxPmqddlNV42Zyxn6xi4JqNpW5ZEq+zES8fAvTgiApS7/NZN9pL/itMmS/pRJp
- sdAepLRgxXfBSVi25uQRu1Oyzf6YEHTIf8TRPqU8HKyCb6/EGqcRBTkoxU04boIGrCif/Lxu1aE
- dMJxAKtcDsKhFHJ+ya4KMOCgUneH/WirFXZMm64IU98cI5ZNiQTYyZMSJ0ZHMf5Isf8GRSjKfLR
- 76aFefqVkvmji9Y4xkBgjM7gqNAXmZQ==
-X-Google-Smtp-Source: AGHT+IFqbtwF21H6pWk34kjB74g+vaQ792b2mQtfrzzfV/L7m1oPbaWH1vPXMofzQKaBoxU+8UO20g==
-X-Received: by 2002:a5d:5f93:0:b0:3a4:e238:6496 with SMTP id
- ffacd0b85a97d-3a6d27e17c2mr9044838f8f.18.1750680336753; 
- Mon, 23 Jun 2025 05:05:36 -0700 (PDT)
-Received: from [192.168.69.167] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1750681143; x=1751285943;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=g4jpPoIjWAnN20gltB2a/vOsrmaIk3+mmplMj5/YsrY=;
+ b=xLAMgS2lgqGmoqSu7q8WGHY7E4l0zkyRSwcifwjw2jHl7KNoD+c8Zxve9xEUxZUodP
+ BbgEiuI1gSTxrArMO0jdvwcFWnrRIf6/+PN1lYMqwm30g3BzLLzFKcYk0yJJZECxqQgh
+ INXPHPE4viDpQnbxYZWvYWAMEbPl3tWC+Wrbr1AWHYNmhM2fgpT+lCM7VsNK0SWiH+Gi
+ hYCx9oHD8rN9d2o/oEwi7ipqI7rpBxrhA6Q1HAfocpLWcQK0MaKnOY2Fk0dX2L8GFe0C
+ yvgJOdZOcbGGAxrmWebFNHECELdYyauS6Gcmh5eZMhjsejpom2cqrW4iZ6J0DGxuyvfE
+ v7rQ==
+X-Gm-Message-State: AOJu0YzaymN4PJ5ECGVFqfZFhg70d46+nIwg/Vtj9g6g52fgp51i+eQe
+ xbnQDaHdB/lJL8juZjrby8sFHwhjdel3D6RZnLETsjESr9CUwA3moSBplAozcnZnS8iCa74BWpZ
+ wIuOH
+X-Gm-Gg: ASbGncuFB4HVJ94QEZ4wLfYwwOoDg1F373BUlF7ADt1silyIPIuyO60yIlH1J+3HaVV
+ qCrQrn0nWHmEQ2zh88sw6Bjw//WO2Olv2qy1luKUyEml1FMAcRuWhFWCGInn8hJ2PfixwzNCa2o
+ 48t8ZbKNNt4D4UOF6x1d0kbQEUUcmPJLxzOQrFIK9ON1jAIBP0HGzYduhqEMWEZRqoSIzkm4yJR
+ fdIPZSJoweAoBUQLHGay9ItQd33j8YDBTPvcMYz8p32v0v5mM8cj7SQ6Mlfvigee+Gmmb3rhk76
+ XjlMjkSss4BHm1qWzQ1Sunna1wxAL/OMwY+M6vY2RTZzFIQAlDVV9stud1nDg6HgfPKlM3frVyZ
+ SMh7XYuntRC1W2oi0A+6k+8EJwc7Gdxo1kHYZTnmXHcY/z/8=
+X-Google-Smtp-Source: AGHT+IErlri5hkyOBSvRe8fCS9DDCc0yz8mXpTeS1g951cmKKKfzy6/tEWFiO/Q3SrTle+JMSQITVA==
+X-Received: by 2002:a05:600c:3ac7:b0:450:d019:263 with SMTP id
+ 5b1f17b1804b1-453659aef70mr119085105e9.18.1750681143141; 
+ Mon, 23 Jun 2025 05:19:03 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4535e97a908sm142235035e9.4.2025.06.23.05.05.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Jun 2025 05:05:36 -0700 (PDT)
-Message-ID: <424c91ee-f5cb-40a1-b1bd-3f0648ae83f5@linaro.org>
-Date: Mon, 23 Jun 2025 14:05:35 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 23/26] tests/functional: Restrict nexted Aarch64 Xen
- test to TCG
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>,
- David Woodhouse <dwmw2@infradead.org>
-Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
+ ffacd0b85a97d-3a6d0f189cdsm9443362f8f.35.2025.06.23.05.19.01
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 23 Jun 2025 05:19:02 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Alexander Graf <agraf@csgraf.de>, Bernhard Beschow <shentey@gmail.com>,
+ John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ kvm@vger.kernel.org, Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Cleber Rosa <crosa@redhat.com>,
+ Radoslaw Biernacki <rad@semihalf.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
  Richard Henderson <richard.henderson@linaro.org>,
- Radoslaw Biernacki <rad@semihalf.com>, Alexander Graf <agraf@csgraf.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Bernhard Beschow <shentey@gmail.com>,
- Cleber Rosa <crosa@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, kvm@vger.kernel.org,
- qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, John Snow <jsnow@redhat.com>
-References: <20250620130709.31073-1-philmd@linaro.org>
- <20250620130709.31073-24-philmd@linaro.org>
- <497fc7b1-dfd2-49ad-938c-47fca1153590@redhat.com>
- <be71c7cc-a5ba-4ba5-b697-60814b712eea@linaro.org>
-Content-Language: en-US
-In-Reply-To: <be71c7cc-a5ba-4ba5-b697-60814b712eea@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v3 03/26] target/arm: Unify gen_exception_internal()
+Date: Mon, 23 Jun 2025 14:18:22 +0200
+Message-ID: <20250623121845.7214-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250623121845.7214-1-philmd@linaro.org>
+References: <20250623121845.7214-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,43 +112,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/6/25 13:59, Philippe Mathieu-Daudé wrote:
-> On 23/6/25 10:11, Thomas Huth wrote:
->> On 20/06/2025 15.07, Philippe Mathieu-Daudé wrote:
->>> On macOS this test fails:
->>>
->>>    qemu-system-aarch64: mach-virt: HVF does not support providing 
->>> Virtualization extensions to the guest CPU
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>   tests/functional/test_aarch64_xen.py | 1 +
->>>   1 file changed, 1 insertion(+)
->>>
->>> diff --git a/tests/functional/test_aarch64_xen.py b/tests/functional/ 
->>> test_aarch64_xen.py
->>> index 339904221b0..261d796540d 100755
->>> --- a/tests/functional/test_aarch64_xen.py
->>> +++ b/tests/functional/test_aarch64_xen.py
->>> @@ -33,6 +33,7 @@ def launch_xen(self, xen_path):
->>>           """
->>>           Launch Xen with a dom0 guest kernel
->>>           """
->>> +        self.require_accelerator("tcg") # virtualization=on
->>
->> What about kvm (or xen) as accelerator? Would that work?
-> 
-> IIUC this tests boots a nested Xen guest running at Aarch64 EL2,
-> and at this point we can only run EL2/EL3 on TCG. HVF and KVM
-> can not for now (we are working on it).
+Same code, use the generic variant.
 
-I'll update the description with:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/translate.h     | 1 +
+ target/arm/tcg/translate-a64.c | 6 ------
+ target/arm/tcg/translate.c     | 2 +-
+ 3 files changed, 2 insertions(+), 7 deletions(-)
 
-   Currently QEMU only support accelerating EL0 and EL1, so features
-   requiring EL2 (like virtualization) or EL3 must be emulated with TCG.
-
-> I don't know if Xen can accelerate EL2, it would need support for
-> such hardware (like the Apple Silicon M4). Cc'ing Xen folks to
-> figure it out.
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index 1bfdb0fb9bb..0004a97219b 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -347,6 +347,7 @@ void arm_jump_cc(DisasCompare *cmp, TCGLabel *label);
+ void arm_gen_test_cc(int cc, TCGLabel *label);
+ MemOp pow2_align(unsigned i);
+ void unallocated_encoding(DisasContext *s);
++void gen_exception_internal(int excp);
+ void gen_exception_insn_el(DisasContext *s, target_long pc_diff, int excp,
+                            uint32_t syn, uint32_t target_el);
+ void gen_exception_insn(DisasContext *s, target_long pc_diff,
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index ac80f572a2d..7c79b8c4401 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -433,12 +433,6 @@ static void gen_rebuild_hflags(DisasContext *s)
+     gen_helper_rebuild_hflags_a64(tcg_env, tcg_constant_i32(s->current_el));
+ }
+ 
+-static void gen_exception_internal(int excp)
+-{
+-    assert(excp_is_internal(excp));
+-    gen_helper_exception_internal(tcg_env, tcg_constant_i32(excp));
+-}
+-
+ static void gen_exception_internal_insn(DisasContext *s, int excp)
+ {
+     gen_a64_update_pc(s, 0);
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 9962f43b1d0..f7d6d8ce196 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -372,7 +372,7 @@ static void gen_rebuild_hflags(DisasContext *s, bool new_el)
+     }
+ }
+ 
+-static void gen_exception_internal(int excp)
++void gen_exception_internal(int excp)
+ {
+     assert(excp_is_internal(excp));
+     gen_helper_exception_internal(tcg_env, tcg_constant_i32(excp));
+-- 
+2.49.0
 
 
