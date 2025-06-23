@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 247E8C77B7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 14:00:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6B97C7115B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 14:00:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uThhc-0008WO-1Q; Mon, 23 Jun 2025 09:59:16 -0400
+	id 1uThh6-0008Fv-10; Mon, 23 Jun 2025 09:58:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uThhC-0008HD-4g
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 09:58:51 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1uThh4-0008FS-AY
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 09:58:42 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uThh8-0007Ia-1x
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 09:58:49 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-7406c6dd2b1so3233670b3a.0
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 06:58:45 -0700 (PDT)
+ id 1uThh0-0007Hj-Qw
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 09:58:42 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-7490702fc7cso2138162b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 06:58:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750687124; x=1751291924; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750687117; x=1751291917; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ad2Ktqpr9QplRBLnhaKfV79oFe1du+hxPOeNvvhDj1A=;
- b=JS5c5B86BIYZmNM6yvij/Ze8pzHgJdf22ZvxggSKMNfzlATmnadziJUcPuujNtFaVW
- 0QHqVeS4JWnsJYdOkXmBXsAvFR47fmVju7/Iw7A6c+vbG0kecYjUfzQwCLpFITfP19i9
- 19yfKqQjK+5RAKrSgkC12K5YsPIYVmtsk1fozSni9Rvw5qvFnZuuNUBcywzsAyLr3acl
- IBj+cPBNmKmhRU3zZqsVNNLWBALEg5l05kfC6PI6W8oRvTQlw08RU9d1KxVkVOYClDBR
- qSJ6ywLZmBl0RC3ds8Zs9P6gn52WPlhhQg9XxgqQvaqVVV6h2gbWzN95dmscb7ZMMSCn
- 34Pg==
+ bh=QHmEaaRegYwFGlGoVTGRYvzmrkIrypDwOG7loJLMkas=;
+ b=Tv2cBmAONAeOiVmp3jTu7az+lR9QWIVg4qa4HOZ2BxWaiYPgUOLSuXtWpJPvjMp1W4
+ JmCBvzCAb1dQocbavhLpZ1/Qh1/3wUBcrXGsU21iahi+lQ3jatDp3bbnx9v9FgT6y773
+ FCBiQKe6TBdgEbfmRd6vQAtjRa2TTznDZqrqxPvzc1A7LC8gv27lghtFCr87+DP2ZRZS
+ 1e0/8CyLH9QADC9xC6ka8oegbYHL+e/MzgFM1aWsozbtq4hi+Mp9r63H19Gq28TCdiCf
+ QhvsOqHDXXdkl+8w3Wy2Wz6Jj4uP4Owwnx/2zpJBwxkPYNEJPEMwBv9AIUSQ+IOLb/d7
+ 7BAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750687124; x=1751291924;
+ d=1e100.net; s=20230601; t=1750687117; x=1751291917;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ad2Ktqpr9QplRBLnhaKfV79oFe1du+hxPOeNvvhDj1A=;
- b=rLqqx7QCis5EGlc6FDUavtMtJZ70F1OOfEo6fAUkbQ5STRjO6W9CjKhR0RWoMV8BKB
- 7ukVaC7vRS9aL6UGl+eucWjVtC+ILjVw8ONWK4h9JnHVPG9t8stNv6pS6Is8y83gfMOh
- Y/MpU2OfV1qpL72DrsqwfXhDmsog9HSrN9/2CL3NHbzb+lg0JmeKTQMRIqX3WhxpVJAg
- AGfNPLo8YQ+pSIB2Dy0TjJ1r12CToEpLYuPuoDmUzUC6ErHTQlhsU/uASDhEPpPe6SH5
- zq6/IlbhHLogampAcATa20jOnQVs26b0QrOrE7PpwToyQp4Cuaxz1j2CC2YX3pj9ODqV
- PgQg==
-X-Gm-Message-State: AOJu0Yylei2iBZ5z+NnhyxeCKhOjiPvjwgQb6Kr5bKoU/nlDdrEmkHBW
- HVbxLGrgJmerhumibFJ6dlj1vw2npby3uXOVKfjHeTjfDq4U0UzjYPZ1rmfAy9m9KSUvO6JLZ4z
- EyMJd
-X-Gm-Gg: ASbGncupi4FYDlhrOkiBuwJ2pUEVyZTt9/+DzdESo1tr2PO9bAHOoxRiMYLzW+zBCs+
- AW6+fyrkIedu3Qdn4oYuqsu+hR7dCwAj+yaL9gUIYy7EuKJnrs3s23xckrcu5ofdCORjyfo1tXM
- 4IMeUnZ+T8PfsnhJvu8RdoX/q2a+l8552T3HGU5YL7iKJ4Kg4JLKuOy5SMQVLJP2RNTYwqwu/Dz
- OgStJz5/GRJU4pm9P5QStO5vZzwymbAROt9GEpAsYtyqP5Kok2evBWemipkeJz/4b/AGs39AZ1D
- ja9nkX3ScUxr7aGTPgFphSYHTf3pifXFaYyy2CLj1blf1h1+0VEkDlO3dbxad11t2SA=
-X-Google-Smtp-Source: AGHT+IE+A2RXkl1fsGxBWrMkhEYdvlQZUcrsUy1N77xAoHF9Tti6WGIFDvE++UYLoNNJyoOBrxVgQg==
-X-Received: by 2002:a05:6a20:a106:b0:21c:fa68:9da6 with SMTP id
- adf61e73a8af0-220291cdb15mr18609786637.8.1750687124354; 
- Mon, 23 Jun 2025 06:58:44 -0700 (PDT)
+ bh=QHmEaaRegYwFGlGoVTGRYvzmrkIrypDwOG7loJLMkas=;
+ b=lR7MShJ4rQMqiPnQHPKtHV8Tw0cN/VpQ5QIja+ZPUu1UxRsntGYQsl321d5lsvOMHi
+ M2e7h1o2wkrIg01a30zPA3VjCFdZJNYfMDyr4JHc6/wrOTyVGz1kgmLKzm7o7+Oi8vCY
+ 5Xv2XQB9BkrWLUgD5vuvzCWNPYLdALX9Xow+Eqbm2nfF6mGZeUP/tz8KGL2aksO+x98g
+ p60LYxnfRo+opz3QgKPaxRdpadGwypBPFj5OtCzUSEV/oXLlzIDjh0ZoQDa8tmty5Rse
+ oykQ7QiV/KgYK0m09wWXbBP9XhBB17T8EL+YrRfygzeE3lzCQ2KzC3WOpiecvMv/OdS1
+ RrWg==
+X-Gm-Message-State: AOJu0Yw+4HyiFbZPLk8pbvohf70dpCgF8FLZ1qv5rJ9WljEg6m2AM7+W
+ 9gZkc0h4sN6azmICPMiDr+9sWSZ7BTcwIRQEOnI6AnPL6qIu9HouOIIx0oD9ou4m9WrEB9Bi6I0
+ utSrV
+X-Gm-Gg: ASbGnctdcMt/PPOnrxuB/Zes+WQMDfibtU1MsYz21UmvIJGI0tIdGvgjgueugsc67cd
+ R1FqiUdlG8cwO1r0oU8pNrW/gxaelJnUKFAtopmGh4OhclhzB07CvGELlgoHDlGamd+3wnYbnY5
+ aOB6o4mpG7aOrnLec9zjW7br0knmNhRGvlGqwEcoojzcmNGCZGi50jRF5nJ2WFVJANK+qTyr4T1
+ vliW/eXjz6o+yYAnmJ/MWw+ZMxS7S0N4BWqnefvy//8KEnmsQsWzNmZJn/6JdZBHakblkHg8mdr
+ It/NeR/bhJyvcYXEYw9gstDDOMGt89PDZT7btNxxPCrAH4JQ34mqFN7t2OfiP2/GpXM=
+X-Google-Smtp-Source: AGHT+IErWAFwMzcz/MjBmkN38EukFVknW17niV69zGOxvdKP40Jbzg6+ebXlnwGxu8z2XQPLIQXvZw==
+X-Received: by 2002:a05:6a21:a342:b0:21f:53a9:b72c with SMTP id
+ adf61e73a8af0-22026e9c88cmr19082150637.38.1750687117248; 
+ Mon, 23 Jun 2025 06:58:37 -0700 (PDT)
 Received: from gromero0.. ([186.215.58.88]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b31f119eb64sm8063490a12.31.2025.06.23.06.58.41
+ 41be03b00d2f7-b31f119eb64sm8063490a12.31.2025.06.23.06.58.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Jun 2025 06:58:43 -0700 (PDT)
+ Mon, 23 Jun 2025 06:58:36 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org, eric.auger@redhat.com, philmd@linaro.org,
  mst@redhat.com
 Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, gustavo.romero@linaro.org,
  udo@hypervisor.org, ajones@ventanamicro.com, peter.maydell@linaro.org,
  imammedo@redhat.com, anisinha@redhat.com
-Subject: [PATCH v5 6/9] qtest/bios-tables-test: Add test for when ITS is off
- on aarch64
-Date: Mon, 23 Jun 2025 13:57:46 +0000
-Message-Id: <20250623135749.691137-7-gustavo.romero@linaro.org>
+Subject: [PATCH v5 4/9] hw/arm/virt-acpi-build: Improve comment in build_iort
+Date: Mon, 23 Jun 2025 13:57:44 +0000
+Message-Id: <20250623135749.691137-5-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250623135749.691137-1-gustavo.romero@linaro.org>
 References: <20250623135749.691137-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,76 +101,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+When building the Root Complex table, the comment about the code that
+maps the RC node to SMMU node is misleading because it reads
+"RC -> SMMUv3 -> ITS", but the code is only mapping the RCs IDs to the
+SMMUv3 node. The step of mapping from the SMMUv3 IDs to the ITS Group
+node is actually defined in another table (in the SMMUv3 node). So
+change the comment to read "RC -> SMMUv3" instead.
 
-Arm64 GIC ITS (Interrupt Translation Service) is an optional piece of
-hardware introduced in GICv3 and, being optional, it can be disabled
-in QEMU aarch64 VMs that support it using machine option "its=off",
-like, for instance: "-M virt,its=off".
-
-In ACPI, the ITS is advertised, if present, in the MADT (aka APIC)
-table, while the ID mappings from the Root Complex (RC) and from the
-SMMU nodes to the ITS Group nodes are described in the IORT table.
-
-This new test verifies that when the "its=off" option is passed to the
-machine the ITS-related data is correctly pruned from the ACPI tables.
-
-The new blobs for this test will be added in a following commit.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Signed-off-by Gustavo Romero <gustavo.romero@linaro.org>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h |  2 ++
- tests/qtest/bios-tables-test.c              | 21 +++++++++++++++++++++
- 2 files changed, 23 insertions(+)
+ hw/arm/virt-acpi-build.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..a88198d5c2 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,3 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/aarch64/virt/APIC.its_off",
-+"tests/data/acpi/aarch64/virt/IORT.its_off",
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index 0b2bdf9d0d..4dbc07ec5e 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -2146,6 +2146,25 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
-     free_test_data(&data);
- }
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index 9eee284c80..e9cd3fb351 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -370,7 +370,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+         /* DeviceID mapping index (ignored since interrupts are GSIV based) */
+         build_append_int_noprefix(table_data, 0, 4);
  
-+static void test_acpi_aarch64_virt_tcg_its_off(void)
-+{
-+    test_data data = {
-+        .machine = "virt",
-+        .arch = "aarch64",
-+        .variant = ".its_off",
-+        .tcg_only = true,
-+        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
-+        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-+        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
-+        .ram_start = 0x40000000ULL,
-+        .scan_len = 128ULL * 1024 * 1024,
-+    };
-+
-+    test_acpi_one("-cpu cortex-a57 "
-+                  "-M gic-version=3,iommu=smmuv3,its=off", &data);
-+    free_test_data(&data);
-+}
-+
- static void test_acpi_q35_viot(void)
- {
-     test_data data = {
-@@ -2577,6 +2596,8 @@ int main(int argc, char *argv[])
-                            test_acpi_aarch64_virt_tcg_acpi_hmat);
-             qtest_add_func("acpi/virt/topology",
-                            test_acpi_aarch64_virt_tcg_topology);
-+            qtest_add_func("acpi/virt/its_off",
-+                           test_acpi_aarch64_virt_tcg_its_off);
-             qtest_add_func("acpi/virt/numamem",
-                            test_acpi_aarch64_virt_tcg_numamem);
-             qtest_add_func("acpi/virt/memhp", test_acpi_aarch64_virt_tcg_memhp);
+-        /* output IORT node is the ITS group node (the first node) */
++        /* Output IORT node is the ITS Group node (the first node) */
+         build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
+     }
+ 
+@@ -407,23 +407,36 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+     if (vms->iommu == VIRT_IOMMU_SMMUV3) {
+         AcpiIortIdMapping *range;
+ 
+-        /* translated RIDs connect to SMMUv3 node: RC -> SMMUv3 -> ITS */
++        /*
++         * Map RIDs (input) from RC to SMMUv3 nodes: RC -> SMMUv3.
++         *
++         * N.B.: The mapping from SMMUv3 to ITS Group node (SMMUv3 -> ITS) is
++         * defined in the SMMUv3 table, where all SMMUv3 IDs are mapped to the
++         * ITS Group node.
++         */
+         for (i = 0; i < smmu_idmaps->len; i++) {
+             range = &g_array_index(smmu_idmaps, AcpiIortIdMapping, i);
+-            /* output IORT node is the smmuv3 node */
++            /* Output IORT node is the SMMUv3 node. */
+             build_iort_id_mapping(table_data, range->input_base,
+                                   range->id_count, smmu_offset);
+         }
+ 
+-        /* bypassed RIDs connect to ITS group node directly: RC -> ITS */
++        /*
++         * Map bypassed (don't go throught the SMMU) RIDs (input) to ITS Group
++         * node directly: RC -> ITS.
++         */
+         for (i = 0; i < its_idmaps->len; i++) {
+             range = &g_array_index(its_idmaps, AcpiIortIdMapping, i);
+-            /* output IORT node is the ITS group node (the first node) */
++            /* Output IORT node is the ITS Group node (the first node). */
+             build_iort_id_mapping(table_data, range->input_base,
+                                   range->id_count, IORT_NODE_OFFSET);
+         }
+     } else {
+-        /* output IORT node is the ITS group node (the first node) */
++        /*
++         * Map all RIDs (input) to ITS Group node directly, since there is no
++         * SMMU: RC -> ITS.
++         * Output IORT node is the ITS Group node (the first node).
++         */
+         build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
+     }
+ 
 -- 
 2.34.1
 
