@@ -4,65 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 538C7C77B7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 20:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 634BDC77B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 21:05:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTo12-0005et-T9; Mon, 23 Jun 2025 16:43:44 -0400
+	id 1uToLY-0008JK-14; Mon, 23 Jun 2025 17:04:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mclark@anarch128.org>)
- id 1uTo10-0005ed-FP
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 16:43:42 -0400
-Received: from anarch128.org ([2001:4801:7825:104:be76:4eff:fe10:52ae])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1uToLV-0008Ik-Mo; Mon, 23 Jun 2025 17:04:53 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mclark@anarch128.org>)
- id 1uTo0y-0007Vw-GI
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 16:43:42 -0400
-Received: from [192.168.1.4] (dynamic-cpe-pool.orcon.net.nz [121.99.116.25]
- (may be forged)) (authenticated bits=0)
- by anarch128.org (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTPSA id
- 55NKhRTW3857775
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO)
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 20:43:30 GMT
-Authentication-Results: anarch128.org; auth=pass;
- dkim=pass (2048-bit rsa key sha256) header.d=anarch128.org
- header.i=@anarch128.org header.b=fjQN8mj2 header.a=rsa-sha256 header.s=100003;
- x-return-mx=pass header.domain=anarch128.org policy.is_org=yes (MX Records
- found: mail.anarch128.org); 
- x-return-mx=pass smtp.domain=anarch128.org policy.is_org=yes (MX Records
- found: mail.anarch128.org)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=anarch128.org;
- s=100003; t=1750711411;
- bh=cmegmHhQZCHQU4kgU3vgO5ur5t4ZLU1mp0ZaQn0nX04=;
- h=Date:Subject:From:To:References:In-Reply-To:From;
- b=fjQN8mj2KNRe3YPeSs629vn0ioD4q5FtfTI1TQ6DDA7OU3DxO9ByNMJKYc5EdvoYE
- LNpkJ5hP3tQ1JTf5osa74JamGLeK519qBzq50RutEg/BMgQ7gX+LXJe+FlZxgv/nMH
- zkdAzGLEKc+VyiklYNIKcsCWEdMAEChhQQl6llO4TR7D+HxC/npjSGOI4fePo9r3e3
- j/sxpl3q+991SWoXIetIOGFwQIf5T+sBz9xVdLYCs0KJMmpvkI4Uob3KKVSkiPrss7
- 4xPYoPv6ZsR4gRP3zrdsCKOBbupeorkuW5KBvPmPR996yWqHKxTgcddYehO3wK0OFk
- zB7uwZtt4lN0Q==
-Message-ID: <39e96cbe-16f6-401c-a401-5eeb791eeab1@anarch128.org>
-Date: Tue, 24 Jun 2025 08:43:21 +1200
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1uToLT-0001GV-OA; Mon, 23 Jun 2025 17:04:53 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55NF4HIA009252;
+ Mon, 23 Jun 2025 21:04:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=sUZ5AR
+ 8TDskfdgfdwROHTbtFTR4PjI2nYL5YC41QM8M=; b=LyGAiNTTzcaFAhJNuVg06o
+ sPtQMSu8Xv3GD3JEYbiUSI7oSvTokJkG79NtPGd3We5Vbzgp9ch4BbZRUFHvkyli
+ 3tQIVFk61w9KEZYG0MsgCww0Jqxnu4OnpGVpXYScKHbeRevHmfaK9D3+eRj5GwQm
+ ICg+uTWbO5WPtp8ZZs38Rw14/aNBlcqGbY1nLE3H0fMMfVmRgDtTJSTeG9XOfg6C
+ 4s8nqbGjKK/0rh/k0d5o2Pp48aUwoeBH90ZO+AyYlOuq4XtFwUxj0oL4VDQ2ELji
+ dAx6zheztK4lToXhwjr9BhNahdfloMT4dBz7oviH174bZerQp6CN841g8Z6V0RVA
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47dmf2vdn6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 23 Jun 2025 21:04:49 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55NIvaT7014748;
+ Mon, 23 Jun 2025 21:04:48 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 47e9s28dvy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 23 Jun 2025 21:04:48 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 55NL4lZn22938206
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 23 Jun 2025 21:04:47 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8113658052;
+ Mon, 23 Jun 2025 21:04:47 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F0A0F58045;
+ Mon, 23 Jun 2025 21:04:46 +0000 (GMT)
+Received: from [9.61.145.51] (unknown [9.61.145.51])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 23 Jun 2025 21:04:46 +0000 (GMT)
+Message-ID: <f31a48c6-f7e1-4462-b785-b0af6d4736b9@linux.ibm.com>
+Date: Mon, 23 Jun 2025 17:04:46 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: page coloring and accelerated shadow paging
-From: Michael Clark <mclark@anarch128.org>
-To: qemu-devel <qemu-devel@nongnu.org>
-References: <8fcfc520-e3e1-46d9-aeed-30ba6486f82a@anarch128.org>
+Subject: Re: [PATCH 1/1] hw/s390x: Use preferred API call for IPLB chain write
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ thuth@redhat.com, philmd@linaro.org
+References: <20250623201216.721130-1-jrossi@linux.ibm.com>
+ <20250623201216.721130-2-jrossi@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <8fcfc520-e3e1-46d9-aeed-30ba6486f82a@anarch128.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <20250623201216.721130-2-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4801:7825:104:be76:4eff:fe10:52ae;
- envelope-from=mclark@anarch128.org; helo=anarch128.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=M5FNKzws c=1 sm=1 tr=0 ts=6859c171 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=o164naMlAKljxEPHmDsA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjIzMDEzOCBTYWx0ZWRfXxVF3q8nIU/OB
+ VmpmBxMbbvZQ/3D6aO+WfVSOjZ8mJJi2QbsMYez7tLJsrvgjCK1fhx6RhJA3BEI1I1WqB6qj4hK
+ km3Xe/h7HCnnWdl0HgSpfOvcU/IKwHV8JyWjKxnOHaDTYcvHC4T+q5Kf0oC75jQALi7idXPlKAx
+ 9fZ3hEM/LguMapoJm8SpRYJMZKs7fZmZgu0Zv0GC6fc5uujRA8l72D3PFXnU39gaMNDNlwOqshK
+ JAK9rywQhoZY0eKNo2yY5zY23CkQGOZj/CJiNia9y+Gu4flxqEFKVh6lICeqHjWtZjEvJrq9wfj
+ ZVml0v12G6dGYe3SvxUJpDBvW/CIToCxwGs300J8oINFlYC1GU6uiwnJk2VG4HDmo+5FI8u7/BH
+ BdrVZQWwKETwjON9KaoB0OABMAJZo7cGl3/X/kEwNns0c7o2/QJU4GK1O6vuqAuOrgDO/P6P
+X-Proofpoint-GUID: WFFtWahGmYln1XD8ykk95Y6sE9-W_K6S
+X-Proofpoint-ORIG-GUID: WFFtWahGmYln1XD8ykk95Y6sE9-W_K6S
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-23_07,2025-06-23_07,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 clxscore=1011 adultscore=0
+ mlxscore=0 mlxlogscore=765 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506230138
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,65 +121,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi All,
-
-On 6/23/25 08:47, Michael Clark wrote:
-[snipped]
-
-> btw this started as a sketch in a gist in June 20th of last year:
+On 6/23/25 4:12 PM, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
 > 
-> https://gist.github.com/michaeljclark/8f9b81e5e40488035dc252c9da3ecc2e
+> Replace a recently introduced legacy API call with the preferred API call.
 > 
-> # the glyph architecture
+> fixes: 0927875 (hw/s390x: Build an IPLB for each boot device)
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+> ---
+>  hw/s390x/ipl.c | 10 +++++++++-
+>  1 file changed, 9 insertions(+), 1 deletion(-)
 > 
-> current: https://metaparadigm.com/~mclark/glyph.pdf
-> latest: https://metaparadigm.com/~mclark/glyph-20250622.pdf
-> 
-> a clean-slate, portable virtual machine designed for efficient binary
-> translation to X86 system mode targeting features like SMAP, SMEP,
-> APIC, TSC, and PCI-style message signaled interrupts, with a system
-> model that favors simplicity e.g., only supervisor/user modes and no
-> interrupt delegation. the fundamental architectural design elements,
-> such as the variable length instruction packet format and split
-> instruction and constant streams are in place, the 16-bit compressed
-> opcodes are fully specified, and there is now the beginnings of a
-> system or protected mode. yet there is still a lot of work for it to
-> virtualize a target like X86+AVX-512 with address translation.
-> 
-> ## address translation
-> 
-> adopts a page table format designed for shadow paging on X86. the page
-> translation system has a physical address permission check feature and
-> adds PTE.T (translate bit) for optional hardware zoning of translation
-> pages. in addition to virtual memory, the translation system performs
-> optional per-page physical permission checks, and physical self-mapping
-> validation with zoning for PTE pages that have the PTE.T bit set.
-> 
-> the architecture introduces the concept of a translation address which
-> are addresses boxed with an address space prefix (AS) designed to
-> provide a canonical address form for user and supervisor virtual
-> addresses as well as physical addresses, to make it easier to implement
-> meta-circular emulation for nested page translation with translation
-> agnostic source and destination address spaces.
+> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+> index 2f082396c7..f2606303e6 100644
+> --- a/hw/s390x/ipl.c
+> +++ b/hw/s390x/ipl.c
+> @@ -399,8 +399,16 @@ static uint64_t s390_ipl_map_iplb_chain(IplParameterBlock *iplb_chain)
+>      uint16_t count = be16_to_cpu(ipl->qipl.chain_len);
+>      uint64_t len = sizeof(IplParameterBlock) * count;
+>      uint64_t chain_addr = find_iplb_chain_addr(ipl->bios_start_addr, count);
+> +    MemTxResult ret;
+> +
+> +    ret = address_space_write(&address_space_memory, chain_addr,
+> +            MEMTXATTRS_UNSPECIFIED, iplb_chain, len);
 
-there were some errata related to the spec yesterday but the bones and
-intention is there. as I haven't seen page tables deployed in this way
-to check self maps in a physical tree; and the primary intent, which is
-to set permission for PTE zones and page table page monitoring. so
-there may be some more bugs when we try to test it out in a simulator.
+Just a small nit: the indentation seems a bit off.
 
-- https://github.com/michaeljclark/glyph/
-- https://metaparadigm.com/~mclark/glyph-20250623.pdf
+> +
+> +    if (ret != MEMTX_OK) {
+> +        error_report("Failed to map IPLB chain.");
+> +        exit(1);
+> +    }
+>  
+> -    cpu_physical_memory_write(chain_addr, iplb_chain, len);
+>      return chain_addr;
+>  }
+>  
 
-errata:
-
-- swap the supervisor and physical address space prefixes
-   to be consistent with Linux kernel address space on x86-64.
-- physical permission self-mapping check is only on leaf entries
-- fix rename P bit to T bit in 64-bit page table entry structure
-
-turns out that if we add an 'internal' AS it would be ..FFFE0000..
-so we could think about adding an internal address space prefix.
-
-Michael.
+Regards,
+Joy
 
