@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25028C77B7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 09:16:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DAC5C77B7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 09:19:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTdHr-0004IL-CQ; Mon, 23 Jun 2025 05:16:23 -0400
+	id 1uTdKz-00050S-7U; Mon, 23 Jun 2025 05:19:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uTdHp-0004Hw-9l
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 05:16:21 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uTdKn-0004zg-QI
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 05:19:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uTdHm-0007Bs-8j
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 05:16:21 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 827D112F7B8;
- Mon, 23 Jun 2025 12:15:50 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9F45D22BED1;
- Mon, 23 Jun 2025 12:15:57 +0300 (MSK)
-Message-ID: <defb307c-36ed-4bd3-838e-d4987b70813a@tls.msk.ru>
-Date: Mon, 23 Jun 2025 12:15:57 +0300
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uTdKh-0007eH-Ja
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 05:19:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750670355;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ resent-to:resent-from:resent-message-id:in-reply-to:in-reply-to:
+ references:references; bh=nGTT93GFIgi0onFBnIob8qgmJSfPXq9LCtC+ny3feUU=;
+ b=PHz7oMgK2cMYyUkvzp1r60p96H68HkdfXJ/XaDXErWx6CMLvU6CH+aIBLsZtzMZxhI0/5P
+ 2PMCrpTtXQxpEwm/7kTfTxgZR7ox5mYwv2yL0Lho2daJYym6SgWGYlzt1E7TU3kYtd+t3D
+ S4mdqwI3i0TiPPLMJeylQnJMtfoVwXI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-eGe_iNTWNtGa7j7qOrlIQw-1; Mon,
+ 23 Jun 2025 05:19:12 -0400
+X-MC-Unique: eGe_iNTWNtGa7j7qOrlIQw-1
+X-Mimecast-MFC-AGG-ID: eGe_iNTWNtGa7j7qOrlIQw_1750670350
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3E6C51809C85; Mon, 23 Jun 2025 09:19:10 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B304C30001A1; Mon, 23 Jun 2025 09:19:09 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 412EE21E6A27; Mon, 23 Jun 2025 11:19:07 +0200 (CEST)
+Resent-To: richard.henderson@linaro.org, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, iii@linux.ibm.com, jjherne@linux.ibm.com,
+ jrossi@linux.ibm.com, pasic@linux.ibm.com, walling@linux.ibm.com,
+ zycai@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Resent-From: Markus Armbruster <armbru@redhat.com>
+Resent-Date: Mon, 23 Jun 2025 11:19:07 +0200
+Resent-Message-ID: <871pran7ck.fsf@pond.sub.org>
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhuoying Cai <zycai@linux.ibm.com>
+Cc: Markus Armbruster <armbru@redhat.com>,  thuth@redhat.com,
+ berrange@redhat.com,  richard.henderson@linaro.org,  david@redhat.com,
+ pbonzini@redhat.com,  walling@linux.ibm.com,  jjherne@linux.ibm.com,
+ jrossi@linux.ibm.com,  pasic@linux.ibm.com,  borntraeger@linux.ibm.com,
+ farman@linux.ibm.com,  iii@linux.ibm.com,  eblake@redhat.com,
+ qemu-s390x@nongnu.org,  qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 02/28] crypto/x509-utils: Add helper functions for
+ certificate store
+In-Reply-To: <935581ef-1cb2-4e2f-9c3f-23203b556ca8@linux.ibm.com> (Zhuoying
+ Cai's message of "Wed, 18 Jun 2025 11:34:17 -0400")
+References: <20250604215657.528142-1-zycai@linux.ibm.com>
+ <20250604215657.528142-3-zycai@linux.ibm.com>
+ <87sejyskgj.fsf@pond.sub.org>
+ <41e788ad-77e2-46d2-a384-2c8f524391c2@linux.ibm.com>
+ <87wm99r3rh.fsf@pond.sub.org>
+ <935581ef-1cb2-4e2f-9c3f-23203b556ca8@linux.ibm.com>
+Date: Mon, 23 Jun 2025 08:15:16 +0200
+Message-ID: <87ikkndlvv.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/27] refresh qemu-img options handling
-To: qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <20250531171609.197078-1-mjt@tls.msk.ru>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250531171609.197078-1-mjt@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,82 +102,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping once again?
+Zhuoying Cai <zycai@linux.ibm.com> writes:
 
-Please let's move with this one.  Either it should be accepted,
-maybe with some tweaks, or dropped entirely.  There's enough
-silence already - it's been there for over 2 years.
+> On 6/18/25 1:57 AM, Markus Armbruster wrote:
+>> Zhuoying Cai <zycai@linux.ibm.com> writes:
+>> 
+>>> On 6/17/25 6:58 AM, Markus Armbruster wrote:
+>>>> Zhuoying Cai <zycai@linux.ibm.com> writes:
+>>>>
+>>>>> Add helper functions for x509 certificate which will be used in the next
+>>>>> patch for the certificate store.
+>>>>>
+>>>>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>> 
+>> [...]
+>> 
+>>>> Ignorant question: why are these QAPI enums?
+>>>>
+>>>> If they need to be QAPI enums, then I'll have some requests on the doc
+>>>> comments.
+>>>>
+>>>
+>>> Hi, thanks for the feedback.
+>>>
+>>> The helper functions in x509-utils.c either take QAPI enum values as
+>>> parameters or return them. These enums are used later within QEMU.
+>> 
+>> Let's look at the first one I found:
+>> 
+>>     int qcrypto_check_x509_cert_fmt(uint8_t *cert, size_t size,
+>>                                     QCryptoCertFmt fmt, Error **errp)
+>>     {
+>>         int rc;
+>>         int ret = -1;
+>>         gnutls_x509_crt_t crt;
+>>         gnutls_datum_t datum = {.data = cert, .size = size};
+>> 
+>>         if (fmt >= G_N_ELEMENTS(qcrypto_to_gnutls_cert_fmt_map)) {
+>>             error_setg(errp, "Unknown certificate format");
+>>             return ret;
+>>         }
+>> 
+>>         if (gnutls_x509_crt_init(&crt) < 0) {
+>>             error_setg(errp, "Failed to initialize certificate");
+>>             return ret;
+>>         }
+>> 
+>>         rc = gnutls_x509_crt_import(crt, &datum, qcrypto_to_gnutls_cert_fmt_map[fmt]);
+>>         if (rc == GNUTLS_E_ASN1_TAG_ERROR) {
+>>             goto cleanup;
+>>         }
+>> 
+>>         ret = 0;
+>> 
+>>     cleanup:
+>>         gnutls_x509_crt_deinit(crt);
+>>         return ret;
+>>     }
+>> 
+>> All it does with its @fmt argument is map it to the matching
+>> GNUTLS_X509_FMT_*.
+>> 
+>> There's just one caller, init_cert_x509_der() in hw/s390x/cert-store.c:
+>> 
+>>     is_der = qcrypto_check_x509_cert_fmt((uint8_t *)raw, size,
+>>                                          QCRYPTO_CERT_FMT_DER, &err);
+>> 
+>> QCRYPTO_CERT_FMT_DER gets mapped to GNUTLS_X509_FMT_DER.  Why not pass
+>> that directly?  We don't need enum QCryptoCertFmt then.
+>> 
+>
+> I received feedback on a previous patch series that directly using
+> GNUTLS in QEMU code is discouraged, except for under the crypto/
+> directory. Internal APIs should be defined to access GNUTLS
+> functionality instead.
+>
+>> If we need enum QCryptoCertFmt for some reason I can't see, why does it
+>> have to be a QAPI type?  Why not a plain C enum?
+>
+> While implementing the new helper functions, I referred to
+> qcrypto_get_x509_cert_fingerprint() in crypto/x509-utils.c, which takes
+> QCryptoHashAlgo as a parameter. Following this, I added corresponding
+> QCRYPTO enums to map to GNUTLS enums.
+>
+> If using plain C enums is preferred, I can update the code accordingly
+> in the next version.
 
-Thanks,
+Use plain C enums when practical.
 
-/mjt
+Reasons for making a type a QAPI type include:
 
-On 31.05.2025 20:15, Michael Tokarev wrote:
-> This is another iteration of this patch series, which tries
-> to add missing command-line options, --help output, make it
-> all more or less consistent, etc.
-> 
-> I addressed (hopefully) all comments so far, mostly by Kevin.
-> I ended up (so far) with a bit different wording somewhere.
-> 
-> The manpage (and the separate documentation) hasn't changed
-> much, but I intend to use the same wording there as in --help
-> output.   An example of the separate documentation change is
-> provided with "create" subcommand only, as a PoC.
-> 
-> I tried to rename a few existing options to make them more
-> consistent.  This is an RFC, so to say, - I'd love to make
-> more changes but it isn't really possible because the names
-> I want to use are already used for different purpose.  All
-> such changes (3 in total) are marked with "(short option change)"
-> suffix in the patch subject.  In particular, I tried to use
-> -b for backing-file, and -B for backing-format, in all places.
-> Maybe it's too late to change that though.
-> 
-> All subcommands now have --object option.  I wonder why we
-> haven't done it in common place, before a subcommand.  Maybe
-> it's a good idea (and I think it is) to add it to the common
-> (before-subcomman) place, document it there, and remove the
-> --object mentions from individual commands --help output.
-> 
-> Thanks,
-> 
-> /mjt
-> 
-> Michael Tokarev (27):
->    qemu-img: measure: convert img_size to signed, simplify handling
->    qemu-img: create: convert img_size to signed, simplify handling
->    qemu-img: global option processing and error printing
->    qemu-img: pass current cmd info into command handlers
->    qemu-img: create: refresh options/--help (short option change)
->    qemu-img: factor out parse_output_format() and use it in the code
->    qemu-img: check: refresh options/--help
->    qemu-img: simplify --repair error message
->    qemu-img: commit: refresh options/--help
->    qemu-img: compare: use helper function for --object
->    qemu-img: compare: refresh options/--help
->    qemu-img: convert: refresh options/--help (short option change)
->    qemu-img: info: refresh options/--help
->    qemu-img: map: refresh options/--help
->    qemu-img: snapshot: allow specifying -f fmt
->    qemu-img: snapshot: make -l (list) the default, simplify option handling
->    qemu-img: snapshot: refresh options/--help
->    qemu-img: rebase: refresh options/--help (short option change)
->    qemu-img: resize: do not always eat last argument
->    qemu-img: resize: refresh options/--help
->    qemu-img: amend: refresh options/--help
->    qemu-img: bench: refresh options/--help
->    qemu-img: bitmap: refresh options/--help
->    qemu-img: dd: refresh options/--help
->    qemu-img: measure: refresh options/--help
->    qemu-img: implement short --help, remove global help() function
->    qemu-img: extend cvtnum() and use it in more places
-> 
->   docs/tools/qemu-img.rst    |   18 +-
->   qemu-img-cmds.hx           |    4 +-
->   qemu-img.c                 | 1782 +++++++++++++++++++++---------------
->   tests/qemu-iotests/049.out |    9 +-
->   4 files changed, 1082 insertions(+), 731 deletions(-)
-> 
+* Some QAPI command or event needs it.
+
+* Something (typically QOM property accessors) needs the generated
+  visitor.
+
+* For enums: something could use the generated QEnumLookup / ENUM_str()
+  macro.
+
+>> Similar questions for the other QAPI enums added in this series.
 
 
