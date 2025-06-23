@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0679C77B7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 18:57:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41A0DC7EE2A
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 19:09:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTmMG-0001KP-Q4; Mon, 23 Jun 2025 14:57:32 -0400
+	id 1uTmXg-0003m7-Pd; Mon, 23 Jun 2025 15:09:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uTmMB-0001J3-BO
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 14:57:28 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uTmXf-0003lr-3C
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 15:09:19 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uTmM7-0003SP-IM
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 14:57:25 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-607cc1a2bd8so6866818a12.2
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 11:57:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uTmXc-0004zU-GW
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 15:09:18 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-74264d1832eso5792456b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 12:09:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750705042; x=1751309842; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IePmnhFWPzfq70LYD7TQTuQEBHLP9rp9SgpYyu0g/4I=;
- b=OS0CULiCxgkuKpr7lfmumBi6EO71Pqs1CoHp7qCYAnSvJBK+ubikRwewRpOMPuumN/
- FZe1fhoCW8P3q5GWB3G9tZT4a66X2Npk0fytWjnCMsALrNTOzYjTv060exojm/1vzV1y
- oiYaJkpA7yhITtezThkx0oQ/BzyJjqKltLGOjfybtQPZ6m6utZGdWnIY8xHZ9xvfeHO7
- 8WaqAOYV0c5m6iaJninACt6KqPk7dmRxN/6ThQ53n9JC6PCc/tPFsHumy3EqLN9VdRvh
- /sCpQVyfCHVtVUHecVFgZnVtPJ5jfyXTdYU42mirm0flKqc9vL7L6YPsTNbn8dtefOdy
- qgsg==
+ d=linaro.org; s=google; t=1750705754; x=1751310554; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ZWA00bdu/egrXwNGQU5NGoComP7aVR7SWR7O/a2cZE0=;
+ b=aqKKHpnlPwVayBpKSzR6L1GIabU3hf+bRGKmmjXK98adv3j/rVNsJPFP4I6fZ71CGw
+ avr+xsO++1OQz2r0fUPgOvk3znkU8z8x2Ha2J96r2Drxkq4wE6nNw0ggis59VPotdm5Y
+ f8MHbFhfOVp3X/7Osuf6APe2ZaKRgD33nU7FRToRVfa3RHAz3ngT9t/orkCgzjxZVq47
+ WUte05dphPMrmIfxiCci7z32uOC5vOwMn+hRv0niBfGmrqgfcpCy9pQm9BnkTonFGIRt
+ Uk2bGCJE8FFxSCyPJvudnH8F3nk0p3TDHLF8pfmoApc6vu0uc2XGvzDv24YdEn0dHbcJ
+ zUSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750705042; x=1751309842;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IePmnhFWPzfq70LYD7TQTuQEBHLP9rp9SgpYyu0g/4I=;
- b=QOAmYttsBgqHcMjTAT+4rJdzzo+5pt1G9CGES9KNkxg70oeMY88SrRYGrFMRZIdQJ/
- aTazGPfI89D1PdWYiKlxCco8TNgdlspuxkqpzTkMjIG4G7+9yWg3AlcXIPojeZme18DR
- rrXvo34TyBL6EOOnHtvHTeixr0Pu+OUlZ4td0Z8+UmbnVvqplJZeMzD8mUOdGqlKJzgR
- 9MYEOCEwaZvlTmLJ7+wKjM8e+79mdLHME7R+LNd5WrR0q4YbChm+40P+3pc2QOvu9ZEx
- rztUAR9GSsldzUemJmESuXrVhbIDMXG9bvO+Dc3tA8Jvcb8zcnY1OUTRcQjvGKSNIvJc
- 3jaQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX2+CnjiGe0EBt0vCLxCLCTtqRrdKEsHXuMLIMbvhL6lsG5x8gcWLqHj/AxtKuUilwvAN8QOdbgRBEm@nongnu.org
-X-Gm-Message-State: AOJu0YypLUTjnez/sStQOobfEAGoI5YY0zuJkuogZ5gja6XLvd9ICi8D
- imCVowLB0vYeA766bUdotRH96fbIZ2uYKAm96j9uMGK7JWj/OkCrQEsd9HEdwVvUxfoAc/HJT7O
- FOHynnpOwkdl6LQlcbFin1Zc0b5iuzvI=
-X-Gm-Gg: ASbGncvILUkQxfqfl03HwLWZpxvYfRqI92OurV3EfJJrocv7Wa22qyH1g2opBX/jxtw
- 66LuivuEu3QUbe1YVVW6kDqtMn8Hm1w42c2Pk0eYNMy0bV4xM0/kmRgOw72SKydm6T8vb9WgT1w
- g2LKegwblwx6AHvR1R7MIJCu+pd9JgP2vzRDxlAveNuA==
-X-Google-Smtp-Source: AGHT+IER0Kq4o15DIo2Kht0Je1loxzol3aJ1FjSntSWDqGbeQRbHlsmSvjUuKrRmJy69UnlU8+LbKqtP81g1duXaUCE=
-X-Received: by 2002:a05:6402:2692:b0:604:a869:67e9 with SMTP id
- 4fb4d7f45d1cf-60a1cd2bdd5mr13254267a12.22.1750705041972; Mon, 23 Jun 2025
- 11:57:21 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1750705754; x=1751310554;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZWA00bdu/egrXwNGQU5NGoComP7aVR7SWR7O/a2cZE0=;
+ b=Nwp8em5aZWlffC+wKMqc5LCN4SwsvnctEGV6vSxHAE0EweANoOTOGIO70ajcRYKPzx
+ g2TMlqzDtl0Q86cDFfdZLuJANATMn8aZiFfJq6NXMFAxkoIrobLYUUBTN1/uAoQnqLpe
+ Vxko+KsvGylxnZdEVEphDfKn00SaEZt3zjJzgbWCGpQCyrwUyObqhnLcxXaOWtbj7bez
+ KGqyeWGRJ9N0mnCwr5bBqSEY5W7pyyyLBn9YoSfXzuTEITXrDSnvvQIdCTc4KsnRG2dE
+ 3irBtWjZM1Qv7r3L+lpntY8siJG+LXjKd5s4keWZhmQtBVWtUkI/LngE6dUOeGGc5JFA
+ WuTg==
+X-Gm-Message-State: AOJu0YxmHx+XjRexROWNpZlQJMhJwhsUF0PA6Smk/6SN7741I+RLbD1i
+ cS2GyJau0J+O7N09X99KFvWBaKDeyW0x1+fnBmnYvXub4KkpvL+rEl07cT1Gd08NLNX2qWHiKco
+ xWwgomOA=
+X-Gm-Gg: ASbGncuutb8JMeYNLl3aDke9vdPeNfxckzMDe2xsgpR2NsX4reVOysKxRw5vPAglgqv
+ 7r8EnhypDh2z6ZFk/5kzduD2O4RZzvZkOPtnUVkG+PMGZmDTv3Kz+aaXV4vAzmqzy5qB+r2kgBs
+ 2Wy57GICKkpICXUDL/lNx2A4veYmP19OOigkwDDiu6nG+zEnZfA3G2RRsPF7Z1R3EmJ1ppsWixo
+ c082gHRbmDp1XK/NjQfiUzxhUDh6n89dd9chfsTgUuhASUB6IgUxUaQCQwq2d/6mG2PGhJ3XHmk
+ qxGc+5DPP+OGVnYgTbUFvQX0/avFY+ZCO3cdZVrwXvuh0hOSHedYa8JoiGyy42DxBNAz+VB7tZ2
+ xGDbpmpQlaGhxbQgT11QFULDdITWJ
+X-Google-Smtp-Source: AGHT+IHlz7qMh/0TTZIqA1bpK/1ZHHHbif0nVlOjpPLHb9ZFuFi76I5h3yGYYcQoBTqZ4m3eyfbjQA==
+X-Received: by 2002:a05:6a21:ea0b:b0:220:37a7:578f with SMTP id
+ adf61e73a8af0-22037a75af9mr12363653637.2.1750705754416; 
+ Mon, 23 Jun 2025 12:09:14 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-67-243.tukw.qwest.net. [174.21.67.243])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7490a674eb6sm9293138b3a.144.2025.06.23.12.09.13
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 23 Jun 2025 12:09:14 -0700 (PDT)
+Message-ID: <7705c58c-4105-454b-ad5c-e3d9c8027c50@linaro.org>
+Date: Mon, 23 Jun 2025 12:09:12 -0700
 MIME-Version: 1.0
-References: <20250620164053.579416-1-pbonzini@redhat.com>
- <20250620164053.579416-25-pbonzini@redhat.com>
- <b8171c39-6a92-4078-a59a-a63d7452e1e9@kaod.org>
- <4ffdb62b-8fe4-4b34-9efa-aecff7f8e77b@intel.com>
- <aFkKL-TQTcrBtXuK@redhat.com>
- <CAJSP0QUgirgNX71MwGgYbdDhVUrd3MWsetx66_+GsER8BfoSbg@mail.gmail.com>
- <aFlR6CTLRzSpS1fr@redhat.com>
-In-Reply-To: <aFlR6CTLRzSpS1fr@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 23 Jun 2025 14:57:09 -0400
-X-Gm-Features: AX0GCFsi_MTZBVOxjtkB3HS5PlSAa98W4GH3s18uI3imZaaRa4fVP9OT4_CtqkI
-Message-ID: <CAJSP0QUVuXRK9nyXw=HcEV6Qi5HaE+TzVp1QOiGp7c7pX=Z=Hw@mail.gmail.com>
-Subject: Re: [PULL 24/24] i386/tdx: handle TDG.VP.VMCALL<GetQuote>
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
- Isaku Yamahata <isaku.yamahata@intel.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] linux-user: Add syscall dispatch support
+To: qemu-devel@nongnu.org
+References: <20250604121437.28176-4-floss@arusekk.pl>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250604121437.28176-4-floss@arusekk.pl>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,128 +102,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 23, 2025 at 9:09=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
->
-> On Mon, Jun 23, 2025 at 09:04:33AM -0400, Stefan Hajnoczi wrote:
-> > On Mon, Jun 23, 2025 at 4:04=E2=80=AFAM Daniel P. Berrang=C3=A9 <berran=
-ge@redhat.com> wrote:
-> > >
-> > > On Mon, Jun 23, 2025 at 03:03:19PM +0800, Xiaoyao Li wrote:
-> > > > On 6/23/2025 2:43 PM, C=C3=A9dric Le Goater wrote:
-> > > > > Hello,
-> > > > >
-> > > > > On 6/20/25 18:40, Paolo Bonzini wrote:
-> > > > > > From: Isaku Yamahata <isaku.yamahata@intel.com>
-> > > > > >
-> > > > > > Add property "quote-generation-socket" to tdx-guest, which is a=
- property
-> > > > > > of type SocketAddress to specify Quote Generation Service(QGS).
-> > > > > >
-> > > > > > On request of GetQuote, it connects to the QGS socket, read req=
-uest
-> > > > > > data from shared guest memory, send the request data to the QGS=
-,
-> > > > > > and store the response into shared guest memory, at last notify
-> > > > > > TD guest by interrupt.
-> > > > > >
-> > > > > > command line example:
-> > > > > >    qemu-system-x86_64 \
-> > > > > >      -object '{"qom-type":"tdx-guest","id":"tdx0","quote-genera=
-tion-
-> > > > > > socket":{"type":"unix", "path":"/var/run/tdx-qgs/qgs.socket"}}'=
- \
-> > > > > >      -machine confidential-guest-support=3Dtdx0
-> > > > > >
-> > > > > > Note, above example uses the unix socket. It can be other types=
-,
-> > > > > > like vsock,
-> > > > > > which depends on the implementation of QGS.
-> > > > > >
-> > > > > > To avoid no response from QGS server, setup a timer for the tra=
-nsaction.
-> > > > > > If timeout, make it an error and interrupt guest. Define the th=
-reshold of
-> > > > > > time to 30s at present, maybe change to other value if not appr=
-opriate.
-> > > > > >
-> > > > > > Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
-> > > > > > Co-developed-by: Chenyi Qiang <chenyi.qiang@intel.com>
-> > > > > > Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
-> > > > > > Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> > > > > > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> > > > > > Tested-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> > > > > > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> > > > > > ---
-> > > > > >   qapi/qom.json                         |   8 +-
-> > > > > >   target/i386/kvm/tdx-quote-generator.h |  82 +++++++
-> > > > > >   target/i386/kvm/tdx.h                 |  10 +
-> > > > > >   target/i386/kvm/kvm.c                 |   3 +
-> > > > > >   target/i386/kvm/tdx-quote-generator.c | 300 +++++++++++++++++=
-+++++++++
-> > > > > >   target/i386/kvm/tdx-stub.c            |   4 +
-> > > > > >   target/i386/kvm/tdx.c                 | 176 ++++++++++++++-
-> > > > > >   target/i386/kvm/meson.build           |   2 +-
-> > > > > >   8 files changed, 582 insertions(+), 3 deletions(-)
-> > > > > >   create mode 100644 target/i386/kvm/tdx-quote-generator.h
-> > > > > >   create mode 100644 target/i386/kvm/tdx-quote-generator.c
-> > > > >
-> > > > > These changes broke the build on 32-bit host.
-> > > > >
-> > > > > Could you please send a patch to avoid compiling TDX in such envi=
-ronment ?
-> > > >
-> > > > Paolo is on vacation.
-> > > >
-> > > > I would like to help, but I don't have 32-bit host environment on h=
-and. Do
-> > > > you know how to set up such environment quickly? (I tried to set up=
- within a
-> > > > 32-bit VM but the 32-bit OS is too old and I didn't get it work to =
-install
-> > > > the required package for building QEMU)
-> > >
-> > > You should be able to use QEMU's docker containers to get yourself a
-> > > Debian i386 container, on a x86_64 host.
-> >
-> > The cross-i686-system (Debian) build CI job succeeded:
-> > https://gitlab.com/qemu-project/qemu/-/jobs/10423776600
-> >
-> > I wonder why the CI didn't catch the issue?
->
-> It didn't build the x86_64 target:
->
->   --target-list-exclude=3D"arm-softmmu i386-softmmu microblaze-softmmu mi=
-ps-softmmu mipsel-softmmu mips64-softmmu ppc-softmmu riscv32-softmmu sh4-so=
-ftmmu sparc-softmmu xtensa-softmmu $CROSS_SKIP_TARGETS"
->
-> so in turn didn't build any TDX code
+On 6/4/25 05:00, Arusekk wrote:
+> --- a/linux-user/i386/signal.c
+> +++ b/linux-user/i386/signal.c
+> @@ -865,3 +865,12 @@ void setup_sigtramp(abi_ulong sigtramp_page)
+>       unlock_user(tramp, sigtramp_page, 2 * 8);
+>   }
+>   #endif
+> +
+> +bool is_vdso_sigreturn(abi_ulong pc)
+> +{
+> +#ifndef TARGET_X86_64
+> +    if (pc == default_sigreturn + 8 || pc == default_rt_sigreturn + 7)
+> +        return true;
+> +#endif
+> +    return false;
+> +}
 
-Here are the targets that were built by the CI job:
+Braces required.
 
-  target list : avr-softmmu m68k-softmmu microblazeel-softmmu
-or1k-softmmu rx-softmmu sh4eb-softmmu tricore-softmmu xtensaeb-softmmu
+> --- a/linux-user/mips/signal.c
+> +++ b/linux-user/mips/signal.c
+> @@ -393,3 +393,12 @@ void setup_sigtramp(abi_ulong sigtramp_page)
+>   
+>       unlock_user(tramp, sigtramp_page, 2 * 8);
+>   }
+> +
+> +bool is_vdso_sigreturn(abi_ulong pc)
+> +{
+> +#ifdef TARGET_ARCH_HAS_SETUP_FRAME
+> +    if (pc == default_sigreturn + 8)
+> +        return true;
+> +#endif
 
-64-bit targets are not supported on 32-bit hosts since commit
-acce728cbc6c ("meson: Disallow 64-bit on 32-bit emulation"). I don't
-think the x86_64 target can be built on 32-bit hosts.
+Likewise.
 
-But notice that i386-softmmu is missing from the target list. That
-could be why the CI job succeeded.
+> +++ b/linux-user/ppc/signal.c
+> @@ -730,3 +730,12 @@ void setup_sigtramp(abi_ulong sigtramp_page)
+>   
+>       unlock_user(tramp, sigtramp_page, 2 * 8);
+>   }
+> +
+> +bool is_vdso_sigreturn(abi_ulong pc)
+> +{
+> +#ifdef TARGET_ARCH_HAS_SETUP_FRAME
+> +    if (pc == default_sigreturn + 8)
+> +        return true;
+> +#endif
 
-C=C3=A9dric: What were your ./configure options?
+Likewise.
 
-Stefan
+> +++ b/linux-user/sparc/signal.c
+> @@ -789,3 +789,12 @@ do_sigsegv:
+>       force_sig(TARGET_SIGSEGV);
+>   }
+>   #endif /* TARGET_SPARC64 */
+> +
+> +bool is_vdso_sigreturn(abi_ulong pc)
+> +{
+> +#ifdef TARGET_ABI32
+> +    if (pc == default_sigreturn + 8 || pc == default_rt_sigreturn + 8)
+> +        return true;
+> +#endif
 
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
-ge :|
-> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
-om :|
-> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
-ge :|
->
+Likewise.
+
+> +++ b/linux-user/qemu.h
+> @@ -161,6 +161,11 @@ struct TaskState {
+>       /* This thread's sigaltstack, if it has one */
+>       struct target_sigaltstack sigaltstack_used;
+>   
+> +    /* This thread's SYSCALL_USER_DISPATCH state, len=~0 means disabled */
+> +    abi_ulong sys_dispatch;
+> +    abi_ulong sys_dispatch_len;
+> +    abi_ulong sys_dispatch_selector;
+
+dispatch and selector should probably be "vaddr" for self-documentation.
+
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index fc37028597..027e4237b9 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -6340,6 +6340,10 @@ abi_long do_arch_prctl(CPUX86State *env, int code, abi_ulong addr)
+>   #endif
+>   #ifndef PR_SET_SYSCALL_USER_DISPATCH
+>   # define PR_SET_SYSCALL_USER_DISPATCH 59
+> +# define PR_SYS_DISPATCH_OFF 0
+> +# define PR_SYS_DISPATCH_ON 1
+> +# define SYSCALL_DISPATCH_FILTER_ALLOW 0
+> +# define SYSCALL_DISPATCH_FILTER_BLOCK 1
+>   #endif
+>   #ifndef PR_SME_SET_VL
+>   # define PR_SME_SET_VL  63
+> @@ -6469,6 +6473,37 @@ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
+>       case PR_SET_UNALIGN:
+>           return do_prctl_set_unalign(env, arg2);
+>   
+> +    case PR_SET_SYSCALL_USER_DISPATCH:
+> +        {
+> +            TaskState *ts = get_task_state(env_cpu(env));
+> +            switch (arg2) {
+> +            case PR_SYS_DISPATCH_OFF:
+> +                if (arg3 || arg4 || arg5) {
+> +                    return -TARGET_EINVAL;
+> +                }
+> +                ts->sys_dispatch_len = (abi_ulong)~0ULL;
+> +                return 0;
+> +            case PR_SYS_DISPATCH_ON:
+> +                {
+> +                    uint8_t sb;
+> +
+> +                    if (arg3 && arg3 + arg4 <= arg3) {
+> +                        return -TARGET_EINVAL;
+> +                    }
+> +                    if (arg5 && get_user_u8(sb, arg5)) {
+
+Use access_ok, just like the kernel.
+
+> +                        return -TARGET_EFAULT;
+> +                    }
+> +                    (void)sb;  /* used later, only checked for access */
+> +                    ts->sys_dispatch = arg3;
+> +                    ts->sys_dispatch_len = arg4;
+> +                    ts->sys_dispatch_selector = arg5;
+> +                    return 0;
+> +                }
+> +            default:
+> +                return -TARGET_EINVAL;
+> +            }
+> +        }
+
+I think this should be split out to do_prctl_syscall_user_dispatch().
+
+> +
+>       case PR_CAP_AMBIENT:
+>       case PR_CAPBSET_READ:
+>       case PR_CAPBSET_DROP:
+> @@ -6523,7 +6558,6 @@ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
+>       case PR_SET_MM:
+>       case PR_GET_SECCOMP:
+>       case PR_SET_SECCOMP:
+> -    case PR_SET_SYSCALL_USER_DISPATCH:
+>       case PR_GET_THP_DISABLE:
+>       case PR_SET_THP_DISABLE:
+>       case PR_GET_TSC:
+> @@ -13881,12 +13915,37 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+>       return ret;
+>   }
+>   
+> +static bool sys_dispatch(abi_ulong pc, TaskState *ts)
+> +{
+
+Move pc - offset < len check here.
+
+> +    if (unlikely(is_vdso_sigreturn(pc))) {
+> +        return false;
+> +    }
+> +    if (likely(ts->sys_dispatch_selector)) {
+> +        uint8_t sb;
+> +        if (get_user_u8(sb, ts->sys_dispatch_selector)) {
+> +            force_sig(TARGET_SIGSEGV);
+> +            return true;
+> +        }
+> +        if (likely(sb == SYSCALL_DISPATCH_FILTER_ALLOW)) {
+> +            return false;
+> +        }
+> +        if (unlikely(sb != SYSCALL_DISPATCH_FILTER_BLOCK)) {
+> +            force_sig(TARGET_SIGSYS);
+> +            return true;
+> +        }
+> +    }
+> +    force_sig_fault(TARGET_SIGSYS, TARGET_SYS_USER_DISPATCH, pc);
+> +    return true;
+> +}
+> +
+>   abi_long do_syscall(CPUArchState *cpu_env, int num, abi_long arg1,
+>                       abi_long arg2, abi_long arg3, abi_long arg4,
+>                       abi_long arg5, abi_long arg6, abi_long arg7,
+>                       abi_long arg8)
+>   {
+>       CPUState *cpu = env_cpu(cpu_env);
+> +    TaskState *ts = get_task_state(cpu);
+> +    vaddr pc = cpu->cc->get_pc(cpu);
+>       abi_long ret;
+>   
+>   #ifdef DEBUG_ERESTARTSYS
+> @@ -13903,6 +13962,12 @@ abi_long do_syscall(CPUArchState *cpu_env, int num, abi_long arg1,
+>       }
+>   #endif
+>   
+> +    if (unlikely(pc - ts->sys_dispatch >= ts->sys_dispatch_len)) {
+
+This isn't correct.  The kernel expression is gated by a bit in the work flags.
+
+> +        if (sys_dispatch(pc, ts)) {
+> +            return -QEMU_ESIGRETURN;
+> +        }
+> +    }
+
+Better as:
+
+     if (unlikely(ts->sys_dispatch_len != ~0)) {
+         vaddr pc = cpu->cc->get_pc(cpu);
+         if (sys_dispatch(pc, ts)) {
+             return -QEMU_ESIGRETURN;
+         }
+     }
+
+
+r~
 
