@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1593C77B7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 11:36:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54BE5C7115B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 11:40:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTfT0-0002FS-Of; Mon, 23 Jun 2025 07:36:02 -0400
+	id 1uTfWc-0003rG-To; Mon, 23 Jun 2025 07:39:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uTfSs-0002BK-UJ; Mon, 23 Jun 2025 07:35:56 -0400
+ id 1uTfWW-0003qH-Ub; Mon, 23 Jun 2025 07:39:40 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uTfSn-00034t-E9; Mon, 23 Jun 2025 07:35:54 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bQmDC6KzWz6HJxW;
- Mon, 23 Jun 2025 19:33:15 +0800 (CST)
+ id 1uTfWU-0003Ju-TL; Mon, 23 Jun 2025 07:39:40 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bQmLf6Xztz6LD7L;
+ Mon, 23 Jun 2025 19:38:50 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id C71BF1402E9;
- Mon, 23 Jun 2025 19:35:42 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 863B81402F6;
+ Mon, 23 Jun 2025 19:39:33 +0800 (CST)
 Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
  (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 23 Jun
- 2025 13:35:41 +0200
-Date: Mon, 23 Jun 2025 12:35:39 +0100
+ 2025 13:39:32 +0200
+Date: Mon, 23 Jun 2025 12:39:30 +0100
 To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
  <linuxarm@huawei.com>
 CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
@@ -38,11 +38,12 @@ CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
  <gustavo.romero@linaro.org>, <wangzhou1@hisilicon.com>,
  <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
  <zhangfei.gao@linaro.org>
-Subject: Re: [PATCH v5 05/11] hw/arm/virt: Add an SMMU_IO_LEN macro
-Message-ID: <20250623123525.0000607b@huawei.com>
-In-Reply-To: <20250623094230.76084-6-shameerali.kolothum.thodi@huawei.com>
+Subject: Re: [PATCH v5 06/11] hw/pci: Introduce pci_setup_iommu_per_bus()
+ for per-bus IOMMU ops retrieval
+Message-ID: <20250623123903.00007aff@huawei.com>
+In-Reply-To: <20250623094230.76084-7-shameerali.kolothum.thodi@huawei.com>
 References: <20250623094230.76084-1-shameerali.kolothum.thodi@huawei.com>
- <20250623094230.76084-6-shameerali.kolothum.thodi@huawei.com>
+ <20250623094230.76084-7-shameerali.kolothum.thodi@huawei.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -78,48 +79,85 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Jun 2025 10:42:24 +0100
+On Mon, 23 Jun 2025 10:42:25 +0100
 Shameer Kolothum <shameerali.kolothum.thodi@huawei.com> wrote:
 
-> From: Nicolin Chen <nicolinc@nvidia.com>
+> Currently, pci_setup_iommu() registers IOMMU ops for a given PCIBus.
+> However, when retrieving IOMMU ops for a device using
+> pci_device_get_iommu_bus_devfn(), the function checks the parent_dev
+> and fetches IOMMU ops from the parent device, even if the current
+> bus does not have any associated IOMMU ops.
 > 
-> This is useful as the subsequent support for new SMMUv3 dev will also
-> use the same.
+> This behavior works for now because QEMU's IOMMU implementations are
+> globally scoped, and host bridges rely on the bypass_iommu property
+> to skip IOMMU translation when needed.
 > 
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Reviewed-by: Donald Dutile <ddutile@redhat.com>
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Tested-by: Nathan Chen <nathanc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> However, this model will break with the soon to be introduced
+> arm-smmuv3 device, which allows users to associate the IOMMU
+> with a specific PCIe root complex (e.g., the default pcie.0
+> or a pxb-pcie root complex).
+> 
+> For example, consider the following setup with multiple root
+> complexes:
+> 
+> -device arm-smmuv3,primary-bus=pcie.0,id=smmuv3.0 \
+> ...
+> -device pxb-pcie,id=pcie.1,bus_nr=8,bus=pcie.0 \
+> -device pcie-root-port,id=pcie.port1,bus=pcie.1 \
+> -device virtio-net-pci,bus=pcie.port1
+> 
+> In Qemu, pxb-pcie acts as a special root complex whose parent is
+> effectively the default root complex(pcie.0). Hence, though pcie.1
+> has no associated SMMUv3 as per above, pci_device_get_iommu_bus_devfn()
+> will incorrectly return the IOMMU ops from pcie.0 due to the fallback
+> via parent_dev.
+> 
+> To fix this, introduce a new helper pci_setup_iommu_per_bus() that
+> explicitly sets the new iommu_per_bus field in the PCIBus structure.
+
+Maybe call out where this will later be called from?
+
+Otherwise seems like a reasonable solution to me.
+
+One trivial comment inline.
 
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 
-> ---
->  hw/arm/virt.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+
+> Update pci_device_get_iommu_bus_devfn() to use this when determining
+> the correct IOMMU ops, ensuring accurate behavior for per-bus IOMMUs.
 > 
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 71b923f786..ae30320c38 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -146,6 +146,9 @@ static void arm_virt_compat_set(MachineClass *mc)
->  #define LEGACY_RAMLIMIT_GB 255
->  #define LEGACY_RAMLIMIT_BYTES (LEGACY_RAMLIMIT_GB * GiB)
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> ---
+> Please refer cover letter for more details on the issue that
+> this is trying to fix.
+> ---
+>  hw/pci/pci.c             | 25 +++++++++++++++++++++++++
+>  include/hw/pci/pci.h     |  2 ++
+>  include/hw/pci/pci_bus.h |  1 +
+>  3 files changed, 28 insertions(+)
+> 
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index c70b5ceeba..e1940c05d9 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+
+> @@ -3169,6 +3182,18 @@ void pci_setup_iommu(PCIBus *bus, const PCIIOMMUOps *ops, void *opaque)
+>      bus->iommu_opaque = opaque;
+>  }
 >  
-> +/* MMIO region size for SMMUv3 */
-> +#define SMMU_IO_LEN 0x20000
-> +
->  /* Addresses and sizes of our components.
->   * 0..128MB is space for a flash device so we can run bootrom code such as UEFI.
->   * 128MB..256MB is used for miscellaneous device I/O.
-> @@ -177,7 +180,7 @@ static const MemMapEntry base_memmap[] = {
->      [VIRT_FW_CFG] =             { 0x09020000, 0x00000018 },
->      [VIRT_GPIO] =               { 0x09030000, 0x00001000 },
->      [VIRT_UART1] =              { 0x09040000, 0x00001000 },
-> -    [VIRT_SMMU] =               { 0x09050000, 0x00020000 },
-> +    [VIRT_SMMU] =               { 0x09050000, SMMU_IO_LEN },
->      [VIRT_PCDIMM_ACPI] =        { 0x09070000, MEMORY_HOTPLUG_IO_LEN },
->      [VIRT_ACPI_GED] =           { 0x09080000, ACPI_GED_EVT_SEL_LEN },
->      [VIRT_NVDIMM_ACPI] =        { 0x09090000, NVDIMM_ACPI_IO_LEN},
+> +/*
+> + * This is same as pci_setup_iommu() except it sets the iommu_per_bus
+> + * to true indicating the iommu is specific to this bus and
+
+Trivial: Odd line wrap.  At least not can go up a line.
+
+> + * not applicable to any parent or child.
+> + */
+> +void pci_setup_iommu_per_bus(PCIBus *bus, const PCIIOMMUOps *ops,
+> +                             void *opaque)
+> +{
+> +    pci_setup_iommu(bus, ops, opaque);
+> +    bus->iommu_per_bus = true;
 
 
