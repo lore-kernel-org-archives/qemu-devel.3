@@ -4,79 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 910E3C77B7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 12:23:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC883C77B7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 12:23:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTgCO-0004ti-Ok; Mon, 23 Jun 2025 08:22:59 -0400
+	id 1uTg9c-0001nj-KQ; Mon, 23 Jun 2025 08:20:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uTgB6-0004BG-2A
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:21:40 -0400
-Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTg9R-0001Zt-MS
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:19:57 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uTgB4-0001Fr-02
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:21:35 -0400
-Received: by mail-yb1-xb31.google.com with SMTP id
- 3f1490d57ef6-e733cd55f9eso3393828276.1
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 05:21:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTg9K-0000ap-9M
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:19:52 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3a50956e5d3so3235203f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 05:19:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750681292; x=1751286092; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Rb0Nma2Ov+KRCaB1a/tt2nPEQS4hhjWwzL/eYwV/cWM=;
- b=XyvbtL6sOGGRtuQc30PUGfX6DFAOE8+9B/l34feMOerYrmH2Y4k9z7srHsOzbuahY2
- HReiNiP2WaXmZfranBQNfye5dOrT+m8cuVIV+M0MDLMy9N1fsy01vJi5wmIZ/0KkflAn
- MOMdnWDSrr+xBiL1SP4IYgrFg6yFHQoHRQbX4wbPiosVVTw0pcscVISoZ9tt0w+EQx9y
- E618teqrs600ANrzMYUBYWYCSkzAZz6b+UrH5rARK8Em42Gpkxw8HGwN1HrvvbEkeDjW
- wLYmMymqPBWkLB11VjMo1QYAH4PtFE35c0T2NaKlSXeHjpQwNrESA4/ypGVFiSOVDh4t
- WCqg==
+ d=linaro.org; s=google; t=1750681184; x=1751285984; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YG0rGkpeQcTfIwjCevzyaz+W/QtJY+1YJlHHFNrDtaE=;
+ b=PujxoB1yYXuFkDNbAS01UCCuAdTHJgIjRx/zU7zQAqtDykGf9oO3ekLeEVfOdHFKeg
+ ClNh78UCW3PhS3C8vWdupnFctW5SGMw4t/xJKQysLRWg33lL3IQ0qbVjwZ1Jlnh9+zca
+ EU8kVny9efKRv3VZ6OkH6U+II/u0fhDRr8U7SfA77O0/pV4Go8bySFcuQ+YLnO9dUjvB
+ mAvhRquv80UFqzGSXY3tHv/NBJH+CVAJlWQTCzrFtSnTWCrAZjP9RBHpKcbwMeKGUot4
+ x7Hgkyc9EbgokMT09mVLzP1U8S+CBG/4RRsRAX6MRERDGp3DMUbOQWIgoj5mJi+1YcO1
+ srGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750681292; x=1751286092;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Rb0Nma2Ov+KRCaB1a/tt2nPEQS4hhjWwzL/eYwV/cWM=;
- b=IVYCdLIGXx+Uan/eU9ej3+j4zEVrF0yBrcXjqDefdtsZgwK2lCrGtG0RDVbGpt5VWC
- FNO0IKlm2RyLoWYPAB0R5BPoU+DB1G3EiXbeAc7St8RiYNpXcgRRXSM/EWz4nSHj/Kgf
- Ufwr4SF7BSglqClndrqg2jj8iAggA5vqLWaXnBIgx6AWtJwn/RfytnsWlTEdwxYa8uGT
- n0k86bcHCYP6fZmszmY0zu9fneUQZoFVHDnzUZ/RTDz6VumdhwJwhy51u7XHD8a+6NPZ
- bXCODHbrIQ8b3arylnnkoblbpe/kClrFt/8rqmS7+6gUaq8m0hJOPAo2XXUvNrv4f/sg
- wgFg==
-X-Gm-Message-State: AOJu0YxV9oA7wmDyquKtmkxWev3ZXThonYh2Rm1Vt15FDICSayVQZSx+
- Cbq3LlXQTXtNt1iIweysNhyKYzSbtnq7vYrPDDJisPyfGPEoEup4UNTD1A9pG2exxIbxwAsdb94
- t0ISOQtzTbEOylvpjdzwdY7ubysBrkIfHGJ9N4c+kyA==
-X-Gm-Gg: ASbGnctc2r1lokeojVeA2IynkVrID+zE6HNuZIzmNS6aaR/w5FKtFrAUn0x7c3aq9Ic
- etd2iIAv1DAXWJl1fIj5VdNt6NEokB2dm+sZmQSPJAnklqCl9Wj0x4GRgYupOv2jSM51AceI3J8
- srqOqChKigXDHUmyRJugK8ulv6pLMmS0HGKDqNVJ2E/JW6kLdiBbjkcKA=
-X-Google-Smtp-Source: AGHT+IEWkEOs1FUN9pDS+WmPfJkRUoV4mUwdi+3ZOeedhjKVQ/rBpaVhv3/yppF2m2JWfb118GKbaNDnn+FapzSA5i0=
-X-Received: by 2002:a05:690c:48c8:b0:710:f470:154f with SMTP id
- 00721157ae682-712c68cc6f4mr166474107b3.34.1750681292144; Mon, 23 Jun 2025
- 05:21:32 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1750681184; x=1751285984;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YG0rGkpeQcTfIwjCevzyaz+W/QtJY+1YJlHHFNrDtaE=;
+ b=eF7c7rBN/ZBk+E9iadteShShdHWxGylDFSKoYWRHVXr8zZGrC7OryhZoJ+5pMNDB9d
+ QIsYcGx2sLa4CFa+Z4efW7zcYDDR3r6QP2p2d7coPwr/CcESc6NM38c5ZKaQc6M5iGS0
+ MSbd2i+LuORSApcscxq1JNblXwHkA41fsf/QWhbQWU8kEHcoHXyFgBlUZRgGv5aDLmt/
+ HaYgGinIf+JM/u/gzoWjDldVTkGnKIwL7OInwTwwjvJhX6bzvgmI+1+rnQhdM83eK8G0
+ ImK7Dp/UFBs1EQZz6Ma4G5IDXXyaqEWrRpNZ1xpeh7sqY5EOsp6K/Egt1wVlavjyMUEm
+ Wn9w==
+X-Gm-Message-State: AOJu0Ywq3cgZ4d9Y1crnYDTP7/aFwlsvSnqR1zY9KzV07698hw6KcQt1
+ zCt4w3D4CRATtwkySdSlSbRwVdDyqWNtVcvC42njw94NBFEU34s1J75WzDWL2CCIAE8MdYCUsv6
+ 1jX/t
+X-Gm-Gg: ASbGncu1aEBAUJCYH6u5MwO2gfz+BULkzjhQ6CBznFBsI8aUenaO2Ud8VlV1qmCa4h4
+ gYbfXVYYO0h4IkaByMJ+1nuXuRnyfjKKTsEG2qoH+XRZoAghlK2pjCoeHNQvl2/xzKSQWysDbWW
+ kot27uAJJPkBXp6mTS3g7mn36U7VLFruzjrbkSiIyyiY8pU7svx+Ryu43JnR48M/eDM94+mFga6
+ nOeYkqXvFEaqgd8HlUTz3k6aICF1rdlrUFkP357N7IdBphzqdAlueBqScXWSCh2JlZDEHwBGhcT
+ EadNoZNsxxBXBejney4wtfx9Mm6jKNIGJy9sSFYmC/0Dcre1LLbKjgwAhH6q1MlhzBOnwJfKe2w
+ nnAqpczMGP0/KcKXOdJwprj3a0X6bMh1yznFz
+X-Google-Smtp-Source: AGHT+IHTcK8NRdR7PNArgyYQkG0nUCVoom+k7oQ1rJFLDhrBWTeykxYJUpFWrxkFgsUFr33IXybNlg==
+X-Received: by 2002:a5d:64ce:0:b0:3a4:f513:7f03 with SMTP id
+ ffacd0b85a97d-3a6d1303b0fmr9477486f8f.44.1750681183940; 
+ Mon, 23 Jun 2025 05:19:43 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-453646d14f3sm108727095e9.13.2025.06.23.05.19.42
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 23 Jun 2025 05:19:43 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Alexander Graf <agraf@csgraf.de>, Bernhard Beschow <shentey@gmail.com>,
+ John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ kvm@vger.kernel.org, Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Cleber Rosa <crosa@redhat.com>,
+ Radoslaw Biernacki <rad@semihalf.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v3 11/26] target/arm/hvf: Pass @target_el argument to
+ hvf_raise_exception()
+Date: Mon, 23 Jun 2025 14:18:30 +0200
+Message-ID: <20250623121845.7214-12-philmd@linaro.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250623121845.7214-1-philmd@linaro.org>
+References: <20250623121845.7214-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20250621235037.74091-1-richard.henderson@linaro.org>
- <20250621235037.74091-20-richard.henderson@linaro.org>
-In-Reply-To: <20250621235037.74091-20-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Jun 2025 13:21:20 +0100
-X-Gm-Features: AX0GCFtUox1z6NVCNoCfZ5etV7T-qLXfCYfxh8rYKhT4qotk1lO8Ll5HWWXSRd8
-Message-ID: <CAFEAcA98aZhdE6=564tB0bn8DvStzHrM6ihn=duvdTJhoodwOA@mail.gmail.com>
-Subject: Re: [PATCH v2 019/101] target/arm: Implement SME2 LDR/STR ZT0
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb31.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,45 +113,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 22 Jun 2025 at 00:52, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/tcg/translate-sme.c | 12 ++++++++++++
->  target/arm/tcg/sme.decode      |  6 ++++++
->  2 files changed, 18 insertions(+)
->
-> diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-> index 37f4d341f0..8b0a33e2ae 100644
-> --- a/target/arm/tcg/translate-sme.c
-> +++ b/target/arm/tcg/translate-sme.c
-> @@ -291,6 +291,18 @@ static bool do_ldst_r(DisasContext *s, arg_ldstr *a, GenLdStR *fn)
->  TRANS_FEAT(LDR, aa64_sme, do_ldst_r, a, gen_sve_ldr)
->  TRANS_FEAT(STR, aa64_sme, do_ldst_r, a, gen_sve_str)
->
-> +static bool do_ldst_zt0(DisasContext *s, arg_ldstzt0 *a, GenLdStR *fn)
-> +{
-> +    if (sme2_zt0_enabled_check(s)) {
-> +        fn(s, tcg_env, offsetof(CPUARMState, za_state.zt0),
-> +           sizeof_field(CPUARMState, za_state.zt0), a->rn, 0);
-> +    }
-> +    return true;
-> +}
-> +
-> +TRANS_FEAT(LDR_zt0, aa64_sme2, do_ldst_zt0, a, gen_sve_ldr)
-> +TRANS_FEAT(STR_zt0, aa64_sme2, do_ldst_zt0, a, gen_sve_str)
+In preparation of raising exceptions at EL2, add the 'target_el'
+argument to hvf_raise_exception().
 
-The alignment check the pseudocode requires happens inside
-gen_sve_ldr/str, right? I don't entirely understand why, though,
-because those functions don't seem to use MO_ALIGN.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/hvf/hvf.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-Anyway, given that these insns have the same alignment
-check requirement as the SVE LDR (vector) and SME LDR (array vector)
-this patch is fine:
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 5169bf6e23c..b932134a833 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -1089,13 +1089,13 @@ void hvf_kick_vcpu_thread(CPUState *cpu)
+ }
+ 
+ static void hvf_raise_exception(CPUState *cpu, uint32_t excp,
+-                                uint32_t syndrome)
++                                uint32_t syndrome, int target_el)
+ {
+     ARMCPU *arm_cpu = ARM_CPU(cpu);
+     CPUARMState *env = &arm_cpu->env;
+ 
+     cpu->exception_index = excp;
+-    env->exception.target_el = 1;
++    env->exception.target_el = target_el;
+     env->exception.syndrome = syndrome;
+ 
+     arm_cpu_do_interrupt(cpu);
+@@ -1454,7 +1454,7 @@ static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint64_t *val)
+                                     SYSREG_CRN(reg),
+                                     SYSREG_CRM(reg),
+                                     SYSREG_OP2(reg));
+-    hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized());
++    hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized(), 1);
+     return 1;
+ }
+ 
+@@ -1760,7 +1760,7 @@ static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
+                                      SYSREG_CRN(reg),
+                                      SYSREG_CRM(reg),
+                                      SYSREG_OP2(reg));
+-    hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized());
++    hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized(), 1);
+     return 1;
+ }
+ 
+@@ -1963,7 +1963,7 @@ int hvf_vcpu_exec(CPUState *cpu)
+         if (!hvf_find_sw_breakpoint(cpu, env->pc)) {
+             /* Re-inject into the guest */
+             ret = 0;
+-            hvf_raise_exception(cpu, EXCP_BKPT, syn_aa64_bkpt(0));
++            hvf_raise_exception(cpu, EXCP_BKPT, syn_aa64_bkpt(0), 1);
+         }
+         break;
+     }
+@@ -2074,7 +2074,7 @@ int hvf_vcpu_exec(CPUState *cpu)
+             }
+         } else {
+             trace_hvf_unknown_hvc(env->pc, env->xregs[0]);
+-            hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized());
++            hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized(), 1);
+         }
+         break;
+     case EC_AA64_SMC:
+@@ -2089,7 +2089,7 @@ int hvf_vcpu_exec(CPUState *cpu)
+             }
+         } else {
+             trace_hvf_unknown_smc(env->xregs[0]);
+-            hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized());
++            hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized(), 1);
+         }
+         break;
+     default:
+-- 
+2.49.0
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
 
