@@ -4,73 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16ADCC77B7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 16:22:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 007B6C77B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 16:23:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTjvn-0001xc-Ro; Mon, 23 Jun 2025 12:22:03 -0400
+	id 1uTjwa-0002iY-MD; Mon, 23 Jun 2025 12:22:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uTjvl-0001ws-Ib
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 12:22:01 -0400
-Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uTjwX-0002gR-FM
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 12:22:50 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uTjvi-00040n-TN
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 12:22:01 -0400
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-e8275f110c6so3299630276.2
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 09:21:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uTjwV-00048u-RC
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 12:22:49 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-7490702fc7cso2291281b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 09:22:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750695717; x=1751300517; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1+2Aza83jIseJFByeU1BU+0/ukEAJZYh9RPpphHgJ94=;
- b=QamZeoFHtHscFskwPIGVqDVy3YidGU6enZ2wyed0lMvVd69DeMbU860kxn8r6gtb0W
- +fXcYQE5ZOssKgGZI1Du7raLXAyoXb6DoaJNdgtP36zt/TYL2o0f9e8oEzs1ZEvUthR/
- +BSLG9M4DBCvG/TlY7Qd3+43OGVJ9p7Y3M2dK3mFPQYjQC8mmWMpSBAWTTqi+Qv4Ozws
- 92tq4EGOFdv7ma+YVsxesSy0y7AdhjVI0So8idsHDUc67APfG3uqEtiyb4lf8HTBVAnE
- caqCgVKKNzVmfGxyKXAKk+7z4OPkQfECxLq/njQcbOvwQQipNGNa/MeGDTxinZ+F1un+
- KGkA==
+ d=linaro.org; s=google; t=1750695766; x=1751300566; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nuuRzpg3CvEoh/9sFHUW5U4XIUcatWG8jYPtClYSAmM=;
+ b=ZTsIUuMzEvqvrxPRH98xLPVHcwN4fxyDCrOaltc/rGaUNT2M3GUD6cIhVFIlqNUgG2
+ BuqyV9BXe8qPP8NqmaTDrGsxtF9vvcEjOmrssfZyxJyap18J7F39lalsBujThFEC2xbB
+ mrKS7pHmGUKWNUXgX+OH6fqBOVqWEr7dGe9ppkJLq6GzdTY5Ktn/q3anoo2jhNwXxykw
+ h+imD4TNueR6ZacvziOCIFEKw/V8D1Y/K4lS0nLWlWxndgQp/eQmEEP59WyeUpVI4aIh
+ N8YhUrgto8b2St+UvL8Dv+jqpVIi09QgO1lOWp8ktfRjjI+h6Ko9i4dNmVzCefOVarb5
+ NfHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750695717; x=1751300517;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1+2Aza83jIseJFByeU1BU+0/ukEAJZYh9RPpphHgJ94=;
- b=d7+G7eB8tPnZX6lfIcTYHLkhuA3Nvzj6YbyMFM3Zw/PjWmL3256/HWdmacU5iG/+oj
- HNKnIHr04IAVpgbonH6E+O+VWUB9YEtvn0jao0p7Kxt5QX3Dm1wAck5wE/DnIhhEJhrx
- IRWnIV0xozz3U+waAkWVwJfP2uncOf9aOr4TFzcwUHJh3J+Mx2qLdF9m27gUf+5bUVtz
- AwopTy5ln7oHWpYq/zsLNadVZ7FA/AUmyPh78fgIKsgqHayIEBIr79CfkH0Jvee9CsTD
- A2HstcIdSLiSr8dA9yWd/1yt1Ssca9qkx4TU05pRw2X9DwIRINYO17CHP2VpXslOFGaR
- t72g==
-X-Gm-Message-State: AOJu0YwAmKCLPeygreOBew12ozcg8nllWhq+aehZpp7Z6jvqV7ioV/Gx
- Luexo1DaPkYREoz56IIxjAffGHGxGB8xT+rJEunTHWYoGKcY9anFWNPWv1QJ7Y4oeU5DBcU3Kr2
- 6x0J5MOrU7hlgDL7mES3KH56myUGFGVxrid42dKWKpsbBQl+nfxYI
-X-Gm-Gg: ASbGncvhjFVwKX8vQ1H4e9BGECIIFchVvPX6/YFI8BDxChUFy7syLXAzVfc9h0kP6CG
- 3NnH81C2wDtNNBwHq5pBmnLR7Ze449MquVHCO3DuMvfrMHYDor13NwvSJRtn14K0oLQhUSfzF5y
- GKK8hmJ/1p26rXof3xh9moHk0F0J73h4EHxDsCiqZDYdTY
-X-Google-Smtp-Source: AGHT+IE5caHd+tX4+QyRfUoFx4OUk8IMdJOnFC4US0UCD9I4N6yG4a5Gfit9nq4pC8cBdEoi9Hme0WneIQ4+hps60mQ=
-X-Received: by 2002:a05:690c:498b:b0:70e:731f:d4c7 with SMTP id
- 00721157ae682-712c6389c0amr188827317b3.8.1750695717061; Mon, 23 Jun 2025
- 09:21:57 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1750695766; x=1751300566;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nuuRzpg3CvEoh/9sFHUW5U4XIUcatWG8jYPtClYSAmM=;
+ b=qoGOU1MuhlCyAXeLjBo4xIfxkqW/MLDeYs0I48Vlr6dFwky216kiyvrDkD0HrX1Lsb
+ tNqIT6bh+5+lStu0VNWV3gc1I/RzPIz4y3U5VXoSO8FpFxCa76Xw5ObCOinrFt5HT3bU
+ JBXiGwGxp/5a2zPvgQ0W0/jQWYLtlEtdImhbT3YsFO6kxRsSH6/c0ZoIiB1qRvGD92t8
+ zImjzmK3FCi4kgd8Hm3iQQ1nGJiIW2itpLW/ck27R08klD2ZLApFG8egr72jkUnb0enI
+ Wwg0sGpYb9W5ifX9GFM9EEKOEmwlYT6ZkcjRVv4iBS0yp8Fh4uO7g1AvowiSSV3+wWC7
+ Rvtw==
+X-Gm-Message-State: AOJu0YxcJuibs2QLU/xkXSrfJ99C9FADV9LSJ8Z7K6JwgT04IkQjLBzL
+ UyZWsZc/mipKVvrBWu/+UGFIOaQg01G3qSEKQs+K052QKngf1UhambVtQrz16CaY3co=
+X-Gm-Gg: ASbGnctbUrmCX9Da6F1vFb6IEUoTqUJ+IVCzeC+2L2PEXAq9zbXYX5omTfbCY3RFIYo
+ htlVKzwazyAimmKWL2qnQf7YZdO0Vwo6A6rq2/dwCJLJc0PvBlGqynQnFLoskKMW+JNUrfAUXSB
+ FzcbcGw3X0JoKBBAXN/IMwqluFt7nUhuGeg7fxYnnHAf6lPq6rhyP+0O7E+JOZstWKprGUtXtXk
+ P0z897TtuNh4jMAGc9J96CSmn4dV+rR0kD4ZyKmDcpC8ftPoNVYCgmDAb10u9cvjIthniRn9Omu
+ H76Y5OCn10od6KZsbuyzvSG6R/4W6rHaLRe/C2uppPLdfE6V/V7SLJFcCtRVGzOpZxggpmAqMWM
+ rnPi4wYjyoSfAUqDWK/JwIFSKyoAN
+X-Google-Smtp-Source: AGHT+IG88iRjE51iYlr1I5ayFl5RDN/EdXgSzy9IKr912kTVfXi0QHmIiE2iba7xG2Yjpx9ktEedbg==
+X-Received: by 2002:a05:6a00:3cd4:b0:748:e38d:fecc with SMTP id
+ d2e1a72fcca58-7490d71c76amr15436617b3a.22.1750695766302; 
+ Mon, 23 Jun 2025 09:22:46 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-67-243.tukw.qwest.net. [174.21.67.243])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7490a62874csm9042199b3a.94.2025.06.23.09.22.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 23 Jun 2025 09:22:46 -0700 (PDT)
+Message-ID: <b71a2e42-489a-499d-b6b0-afde744a5ada@linaro.org>
+Date: Mon, 23 Jun 2025 09:22:44 -0700
 MIME-Version: 1.0
-References: <20250621235037.74091-1-richard.henderson@linaro.org>
- <20250621235037.74091-34-richard.henderson@linaro.org>
-In-Reply-To: <20250621235037.74091-34-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Jun 2025 17:21:45 +0100
-X-Gm-Features: AX0GCFvcrKpLMV1l2skbldPblubHJgwySWFtmp2S7ea6XpduAYM6KCj8fTk284k
-Message-ID: <CAFEAcA9YcT+ridRA0ZHPm1oVXOxXMh7HSmr8icb-3QRO4_yzjg@mail.gmail.com>
-Subject: Re: [PATCH v2 033/101] target/arm: Pass ZA to
- helper_sve2_fmlal_zz[zx]w_s
-To: Richard Henderson <richard.henderson@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 004/101] tcg: Add base arguments to check_overlap_[234]
+To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
+References: <20250621235037.74091-1-richard.henderson@linaro.org>
+ <20250621235037.74091-5-richard.henderson@linaro.org>
+ <CAFEAcA-Zu8O6gGKdSUg57Sw0Q3VtfnQ5RnQWw0WDCKp3mietbA@mail.gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAFEAcA-Zu8O6gGKdSUg57Sw0Q3VtfnQ5RnQWw0WDCKp3mietbA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,68 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 22 Jun 2025 at 00:55, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Indicate whether to use FPST_FPCR or FPST_ZA via bit 2 of
-> simd_data(desc).  For SVE, this bit remains zero.
-> For do_FMLAL_zzzw, this requires no change.
-> For do_FMLAL_zzxw, move the index up one bit.
->
-> Read fz16 directly from env->fpcr.
+On 6/23/25 03:06, Peter Maydell wrote:
+> On Sun, 22 Jun 2025 at 00:58, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   tcg/tcg-op-gvec.c | 55 ++++++++++++++++++++++++++---------------------
+>>   1 file changed, 31 insertions(+), 24 deletions(-)
+>>
+>> diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
+>> index c26cfb24cc..54304d08cc 100644
+>> --- a/tcg/tcg-op-gvec.c
+>> +++ b/tcg/tcg-op-gvec.c
+>> @@ -58,29 +58,34 @@ static void check_size_align(uint32_t oprsz, uint32_t maxsz, uint32_t ofs)
+>>   }
+>>
+>>   /* Verify vector overlap rules for two operands.  */
+>> -static void check_overlap_2(uint32_t d, uint32_t a, uint32_t s)
+>> +static void check_overlap_2(TCGv_ptr dbase, uint32_t d,
+>> +                            TCGv_ptr abase, uint32_t a, uint32_t s)
+>>   {
+>> -    tcg_debug_assert(d == a || d + s <= a || a + s <= d);
+>> +    tcg_debug_assert(dbase != abase || d == a || d + s <= a || a + s <= d);
+>>   }
+> 
+> This is now a looser check than the actual requirements, right?
 
-This line of the commit message doesn't seem related to the change?
-We were already reading fz16 from env->fpcr.
+Correct.  If dbase and abase are different pointers, and their runtime values incorrectly 
+overlap, we can't detect that at compile-time.
 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/tcg/translate-sve.c | 2 +-
->  target/arm/tcg/vec_helper.c    | 8 +++++---
->  2 files changed, 6 insertions(+), 4 deletions(-)
->
-> diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-> index 87b6e4a88e..7f8ca78a91 100644
-> --- a/target/arm/tcg/translate-sve.c
-> +++ b/target/arm/tcg/translate-sve.c
-> @@ -7168,7 +7168,7 @@ static bool do_FMLAL_zzxw(DisasContext *s, arg_rrxr_esz *a, bool sub, bool sel)
->  {
->      return gen_gvec_ptr_zzzz(s, gen_helper_sve2_fmlal_zzxw_s,
->                               a->rd, a->rn, a->rm, a->ra,
-> -                             (a->index << 2) | (sel << 1) | sub, tcg_env);
-> +                             (a->index << 3) | (sel << 1) | sub, tcg_env);
->  }
->
->  TRANS_FEAT(FMLALB_zzxw, aa64_sve2, do_FMLAL_zzxw, a, false, false)
-> diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
-> index 671777ce52..16ddd35239 100644
-> --- a/target/arm/tcg/vec_helper.c
-> +++ b/target/arm/tcg/vec_helper.c
-> @@ -2191,7 +2191,8 @@ void HELPER(sve2_fmlal_zzzw_s)(void *vd, void *vn, void *vm, void *va,
->      intptr_t i, oprsz = simd_oprsz(desc);
->      bool is_s = extract32(desc, SIMD_DATA_SHIFT, 1);
->      intptr_t sel = extract32(desc, SIMD_DATA_SHIFT + 1, 1) * sizeof(float16);
-> -    float_status *status = &env->vfp.fp_status[FPST_A64];
-> +    bool za = extract32(desc, SIMD_DATA_SHIFT + 2, 1);
-> +    float_status *status = &env->vfp.fp_status[za ? FPST_ZA : FPST_A64];
->      bool fz16 = env->vfp.fpcr & FPCR_FZ16;
->      int negx = 0, negf = 0;
->
-> @@ -2274,8 +2275,9 @@ void HELPER(sve2_fmlal_zzxw_s)(void *vd, void *vn, void *vm, void *va,
->      intptr_t i, j, oprsz = simd_oprsz(desc);
->      bool is_s = extract32(desc, SIMD_DATA_SHIFT, 1);
->      intptr_t sel = extract32(desc, SIMD_DATA_SHIFT + 1, 1) * sizeof(float16);
-> -    intptr_t idx = extract32(desc, SIMD_DATA_SHIFT + 2, 3) * sizeof(float16);
-> -    float_status *status = &env->vfp.fp_status[FPST_A64];
-> +    bool za = extract32(desc, SIMD_DATA_SHIFT + 2, 1);
-> +    intptr_t idx = extract32(desc, SIMD_DATA_SHIFT + 3, 3) * sizeof(float16);
-> +    float_status *status = &env->vfp.fp_status[za ? FPST_ZA : FPST_A64];
->      bool fz16 = env->vfp.fpcr & FPCR_FZ16;
->      int negx = 0, negf = 0;
->
+> (in that it's possible but wrong to specify overlapping
+> vectors via getting dbase and abase wrong). Might be worth
+> noting that in the comment.
 
-Otherwise
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Done.
 
-thanks
--- PMM
+r~
 
