@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09382C7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 09:44:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCC50C77B7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 09:44:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTdiw-00055h-Ol; Mon, 23 Jun 2025 05:44:22 -0400
+	id 1uTdiT-0004rJ-Uo; Mon, 23 Jun 2025 05:43:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uTdim-0004zR-8O; Mon, 23 Jun 2025 05:44:12 -0400
+ id 1uTdiP-0004qE-Em; Mon, 23 Jun 2025 05:43:49 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uTdik-0002fX-3b; Mon, 23 Jun 2025 05:44:11 -0400
+ id 1uTdiN-0002dJ-6z; Mon, 23 Jun 2025 05:43:49 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bQjnS0RR2z6M52q;
- Mon, 23 Jun 2025 17:43:24 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bQjl065tCz6HJqc;
+ Mon, 23 Jun 2025 17:41:16 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 8B93E1402F4;
- Mon, 23 Jun 2025 17:44:06 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 889091402E9;
+ Mon, 23 Jun 2025 17:43:43 +0800 (CST)
 Received: from A2303104131.china.huawei.com (10.203.177.241) by
  frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 23 Jun 2025 11:43:57 +0200
+ 15.1.2507.39; Mon, 23 Jun 2025 11:43:34 +0200
 To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
 CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
  <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
@@ -35,10 +35,10 @@ CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
  <smostafa@google.com>, <gustavo.romero@linaro.org>, <linuxarm@huawei.com>,
  <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
  <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: [PATCH v5 06/11] hw/pci: Introduce pci_setup_iommu_per_bus() for
- per-bus IOMMU ops retrieval
-Date: Mon, 23 Jun 2025 10:42:25 +0100
-Message-ID: <20250623094230.76084-7-shameerali.kolothum.thodi@huawei.com>
+Subject: [PATCH v5 04/11] hw/arm/virt: Factor out common SMMUV3 dt bindings
+ code
+Date: Mon, 23 Jun 2025 10:42:23 +0100
+Message-ID: <20250623094230.76084-5-shameerali.kolothum.thodi@huawei.com>
 X-Mailer: git-send-email 2.12.0.windows.1
 In-Reply-To: <20250623094230.76084-1-shameerali.kolothum.thodi@huawei.com>
 References: <20250623094230.76084-1-shameerali.kolothum.thodi@huawei.com>
@@ -76,119 +76,99 @@ From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, pci_setup_iommu() registers IOMMU ops for a given PCIBus.
-However, when retrieving IOMMU ops for a device using
-pci_device_get_iommu_bus_devfn(), the function checks the parent_dev
-and fetches IOMMU ops from the parent device, even if the current
-bus does not have any associated IOMMU ops.
+No functional changes intended. This will be useful when we
+add support for user-creatable smmuv3 device.
 
-This behavior works for now because QEMU's IOMMU implementations are
-globally scoped, and host bridges rely on the bypass_iommu property
-to skip IOMMU translation when needed.
-
-However, this model will break with the soon to be introduced
-arm-smmuv3 device, which allows users to associate the IOMMU
-with a specific PCIe root complex (e.g., the default pcie.0
-or a pxb-pcie root complex).
-
-For example, consider the following setup with multiple root
-complexes:
-
--device arm-smmuv3,primary-bus=pcie.0,id=smmuv3.0 \
-...
--device pxb-pcie,id=pcie.1,bus_nr=8,bus=pcie.0 \
--device pcie-root-port,id=pcie.port1,bus=pcie.1 \
--device virtio-net-pci,bus=pcie.port1
-
-In Qemu, pxb-pcie acts as a special root complex whose parent is
-effectively the default root complex(pcie.0). Hence, though pcie.1
-has no associated SMMUv3 as per above, pci_device_get_iommu_bus_devfn()
-will incorrectly return the IOMMU ops from pcie.0 due to the fallback
-via parent_dev.
-
-To fix this, introduce a new helper pci_setup_iommu_per_bus() that
-explicitly sets the new iommu_per_bus field in the PCIBus structure.
-Update pci_device_get_iommu_bus_devfn() to use this when determining
-the correct IOMMU ops, ensuring accurate behavior for per-bus IOMMUs.
-
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Nathan Chen <nathanc@nvidia.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 ---
-Please refer cover letter for more details on the issue that
-this is trying to fix.
----
- hw/pci/pci.c             | 25 +++++++++++++++++++++++++
- include/hw/pci/pci.h     |  2 ++
- include/hw/pci/pci_bus.h |  1 +
- 3 files changed, 28 insertions(+)
+ hw/arm/virt.c | 54 +++++++++++++++++++++++++++------------------------
+ 1 file changed, 29 insertions(+), 25 deletions(-)
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index c70b5ceeba..e1940c05d9 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -2909,6 +2909,19 @@ static void pci_device_get_iommu_bus_devfn(PCIDevice *dev,
-             }
-         }
- 
-+        /*
-+         * When multiple PCI Express Root Buses are defined using pxb-pcie,
-+         * the IOMMU configuration may be specific to each root bus. However,
-+         * pxb-pcie acts as a special root complex whose parent is effectively
-+         * the default root complex(pcie.0). Ensure that we retrieve the
-+         * correct IOMMU ops(if any) in such cases.
-+         */
-+        if (pci_bus_is_express(iommu_bus) && pci_bus_is_root(iommu_bus)) {
-+            if (!iommu_bus->iommu_per_bus && parent_bus->iommu_per_bus) {
-+                break;
-+            }
-+        }
-+
-         iommu_bus = parent_bus;
-     }
- 
-@@ -3169,6 +3182,18 @@ void pci_setup_iommu(PCIBus *bus, const PCIIOMMUOps *ops, void *opaque)
-     bus->iommu_opaque = opaque;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 73bd2bd5f2..71b923f786 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -1412,19 +1412,43 @@ static void create_pcie_irq_map(const MachineState *ms,
+                            0x7           /* PCI irq */);
  }
  
-+/*
-+ * This is same as pci_setup_iommu() except it sets the iommu_per_bus
-+ * to true indicating the iommu is specific to this bus and
-+ * not applicable to any parent or child.
-+ */
-+void pci_setup_iommu_per_bus(PCIBus *bus, const PCIIOMMUOps *ops,
-+                             void *opaque)
++static void create_smmuv3_dt_bindings(const VirtMachineState *vms, hwaddr base,
++                                      hwaddr size, int irq)
 +{
-+    pci_setup_iommu(bus, ops, opaque);
-+    bus->iommu_per_bus = true;
++    char *node;
++    const char compat[] = "arm,smmu-v3";
++    const char irq_names[] = "eventq\0priq\0cmdq-sync\0gerror";
++    MachineState *ms = MACHINE(vms);
++
++    node = g_strdup_printf("/smmuv3@%" PRIx64, base);
++    qemu_fdt_add_subnode(ms->fdt, node);
++    qemu_fdt_setprop(ms->fdt, node, "compatible", compat, sizeof(compat));
++    qemu_fdt_setprop_sized_cells(ms->fdt, node, "reg", 2, base, 2, size);
++
++    qemu_fdt_setprop_cells(ms->fdt, node, "interrupts",
++            GIC_FDT_IRQ_TYPE_SPI, irq    , GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
++            GIC_FDT_IRQ_TYPE_SPI, irq + 1, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
++            GIC_FDT_IRQ_TYPE_SPI, irq + 2, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
++            GIC_FDT_IRQ_TYPE_SPI, irq + 3, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI);
++
++    qemu_fdt_setprop(ms->fdt, node, "interrupt-names", irq_names,
++                     sizeof(irq_names));
++
++    qemu_fdt_setprop(ms->fdt, node, "dma-coherent", NULL, 0);
++    qemu_fdt_setprop_cell(ms->fdt, node, "#iommu-cells", 1);
++    qemu_fdt_setprop_cell(ms->fdt, node, "phandle", vms->iommu_phandle);
++    g_free(node);
 +}
 +
- static void pci_dev_get_w64(PCIBus *b, PCIDevice *dev, void *opaque)
+ static void create_smmu(const VirtMachineState *vms,
+                         PCIBus *bus)
  {
-     Range *range = opaque;
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index df3cc7b875..a3e0870a15 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -764,6 +764,8 @@ int pci_iommu_unregister_iotlb_notifier(PCIDevice *dev, uint32_t pasid,
-  */
- void pci_setup_iommu(PCIBus *bus, const PCIIOMMUOps *ops, void *opaque);
+     VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+-    char *node;
+-    const char compat[] = "arm,smmu-v3";
+     int irq =  vms->irqmap[VIRT_SMMU];
+     int i;
+     hwaddr base = vms->memmap[VIRT_SMMU].base;
+     hwaddr size = vms->memmap[VIRT_SMMU].size;
+-    const char irq_names[] = "eventq\0priq\0cmdq-sync\0gerror";
+     DeviceState *dev;
+-    MachineState *ms = MACHINE(vms);
  
-+void pci_setup_iommu_per_bus(PCIBus *bus, const PCIIOMMUOps *ops, void *opaque);
-+
- pcibus_t pci_bar_address(PCIDevice *d,
-                          int reg, uint8_t type, pcibus_t size);
+     if (vms->iommu != VIRT_IOMMU_SMMUV3 || !vms->iommu_phandle) {
+         return;
+@@ -1443,27 +1467,7 @@ static void create_smmu(const VirtMachineState *vms,
+         sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
+                            qdev_get_gpio_in(vms->gic, irq + i));
+     }
+-
+-    node = g_strdup_printf("/smmuv3@%" PRIx64, base);
+-    qemu_fdt_add_subnode(ms->fdt, node);
+-    qemu_fdt_setprop(ms->fdt, node, "compatible", compat, sizeof(compat));
+-    qemu_fdt_setprop_sized_cells(ms->fdt, node, "reg", 2, base, 2, size);
+-
+-    qemu_fdt_setprop_cells(ms->fdt, node, "interrupts",
+-            GIC_FDT_IRQ_TYPE_SPI, irq    , GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
+-            GIC_FDT_IRQ_TYPE_SPI, irq + 1, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
+-            GIC_FDT_IRQ_TYPE_SPI, irq + 2, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
+-            GIC_FDT_IRQ_TYPE_SPI, irq + 3, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI);
+-
+-    qemu_fdt_setprop(ms->fdt, node, "interrupt-names", irq_names,
+-                     sizeof(irq_names));
+-
+-    qemu_fdt_setprop(ms->fdt, node, "dma-coherent", NULL, 0);
+-
+-    qemu_fdt_setprop_cell(ms->fdt, node, "#iommu-cells", 1);
+-
+-    qemu_fdt_setprop_cell(ms->fdt, node, "phandle", vms->iommu_phandle);
+-    g_free(node);
++    create_smmuv3_dt_bindings(vms, base, size, irq);
+ }
  
-diff --git a/include/hw/pci/pci_bus.h b/include/hw/pci/pci_bus.h
-index 2261312546..c738446788 100644
---- a/include/hw/pci/pci_bus.h
-+++ b/include/hw/pci/pci_bus.h
-@@ -35,6 +35,7 @@ struct PCIBus {
-     enum PCIBusFlags flags;
-     const PCIIOMMUOps *iommu_ops;
-     void *iommu_opaque;
-+    bool iommu_per_bus;
-     uint8_t devfn_min;
-     uint32_t slot_reserved_mask;
-     pci_set_irq_fn set_irq;
+ static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
 -- 
 2.34.1
 
