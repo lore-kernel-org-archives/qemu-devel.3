@@ -4,79 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 391C6C7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 11:50:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 177C2C7115B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 11:54:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTfh1-0000J5-3Q; Mon, 23 Jun 2025 07:50:31 -0400
+	id 1uTfkd-0001M5-1E; Mon, 23 Jun 2025 07:54:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uTfgr-0000FN-1l
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 07:50:22 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTfkI-0001KC-OJ
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 07:54:01 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uTfgo-0004wA-Pj
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 07:50:20 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-70e3c6b88dbso28585317b3.0
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 04:50:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTfkC-0005Ab-Io
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 07:53:53 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3a6d1369d4eso1486320f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 04:53:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750679416; x=1751284216; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=R6G6AHQ5JO83imH+f9MvoISSS5+J1L/rrZuJI2gKIN8=;
- b=hq4uUIEGHgoV0VeIB0dM4zmJvo3XD9c47JaM33c03KMZ7wUcMQ1vf8WmIQdm5wc6wG
- 4qOB98I18VynUjwS+NSB/w820wCF2rpFum4AVlbuUQfYR60HbPdcJNvk5zauplObTWOk
- f2L47XoIA/V4B0xfoBU+9f4q9QJImwPZg/xullQvbIrB1nb/B0+sUpXz9gDEAvzaMFP1
- h/bD1UErFdSh5fW1z6oS41f9xZ1WWgjuzfM+qGBdmqpxPLFTySHg+8LrFT3vspBjvvx+
- fMyhcpYB1BXuqhrpfwH1nTSMuLRDL1AeRid8zw5hERxKwLVC0OApFIKq23aLYrrbLmIT
- hf4A==
+ d=linaro.org; s=google; t=1750679619; x=1751284419; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4UkoQNG73kAls5FXW8j8XArdkpFVe7XI2g2lDPVsTBA=;
+ b=s7FbqoBa9B8WgVuCquZEsE6ULobJvE/oIDkNWN1XC1gXePVulijdDiw3XgbUIIbR8N
+ I7tjsbUlnJeE9FvsMUnxEjbGBGuTAf/pp55ZwyzubgDjjvIPpN/gY/fYL59ebT7UoHRC
+ caKJjogCjiXmy6+vXR7e4Y1NI22oGh6ZWxuut2WJWB/BdxS9bV23MIsU7WCwJqIbpOKF
+ WO3NTh5qDk1EEFD1FQ4lftRzCRSH7WDxMrxPH+ja44lMpX/iqtN5rpFHGEYyqBup14Gd
+ MehfF3BgLAa89ACeZrdoaBQJNPhgrvCiH4FeKeye82KfvB0AdQ7k816ZCbDo41m8kYbB
+ 7wpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750679416; x=1751284216;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=R6G6AHQ5JO83imH+f9MvoISSS5+J1L/rrZuJI2gKIN8=;
- b=KBOP4PapMYFeA8Q7Y4uJh5FMDCce6aa6+mgv9g6CsgA3ldhQj+ZHR7NKaor5NnXaPU
- oFde3WdbXFOCE87tpoX4XMnPo6BX8PM7fsc77b+4IblsYa0ewdSgjvf5VyrC8RSS/27+
- M8MaNq/J/bNu/XChSQR3IewBcZttVzMitjudqzJ8ag/ZbKCm7JJrFmyzxvyJDj+Eu09T
- 3GppOxnth3g2k9HUt3wC8zePoPIFBgpc5eDzfkSgzLROsiHcROOV+8Wuo9kVXOx2PFRn
- NfxKvMQMxXL/Q4nzZo8BLbaEdAFZ09t9iKqqEyGzQG497PX6+AEq2NR6OAuMrBFFYesv
- MJnA==
-X-Gm-Message-State: AOJu0YzswuxKU/HJ5Vm3Flm+2OmeUW3mTDX/VjuNG82YzlzcobHax1+g
- 47Bsu+oq9NeSmqNlCYGmC31+GH9p/O1VV/DGaNwVaBxNvUPNx2HBNBkipRDSeIVQ/hF491xBx+l
- hr/lVhJBQhZWhi7PQOFM/VdCyR9ytUTIoJmWZqWu/Hw==
-X-Gm-Gg: ASbGncu4aLLws1f3wcA5L7pgi+NLk/46i+KeLIawcwj4X6mvSWRcPlqsLYIFgV27bcS
- Eu7/zGJT24e9i1q3MBpMYTTnypCUa2jyAvX64InFEHn0FT6OipfAtiXiVSvX6WY9RvSRC8ZXxbW
- 3ANR+e4CjQmTgE0UMoa1FB8sDwAOhwn/IqO+BBOkeuuzeaib5TUpbMoqE=
-X-Google-Smtp-Source: AGHT+IEc3ILu+gouK5roA9RD2ekSa5Ks8UEz9LRJqWJEMNR7CS6EwRJcb5WKglA7VSRtSICulWYyh3+59MylxlIFrio=
-X-Received: by 2002:a05:690c:4d4a:b0:70d:f237:6a53 with SMTP id
- 00721157ae682-712c63b79d9mr158863447b3.9.1750679415665; Mon, 23 Jun 2025
- 04:50:15 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1750679619; x=1751284419;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4UkoQNG73kAls5FXW8j8XArdkpFVe7XI2g2lDPVsTBA=;
+ b=pNIoz3RTBTFbXl9AhmnmYaJYpGTgH6MCxp/tZqCV1xcOFUBOtgPWupFtRavc1n8PmF
+ 8+3c4GYtKxw2Ne4bedgV08eZ4P0GygIyQabO7tSBxWiSwyM35b1khO90iR/ZVUXid1z1
+ K/QynPkCNGtMbCHOwT4vZeIG98exKbOjIBlCQHN50djWYySrIMfBPeyDKgDu8L6rKBQS
+ U7kNfWlHEZNm6RTsn69HhhUgqXLrlu18k3fWIthRQRKeHV1A3FyMDE+88NQ24l7Xa0wj
+ ZMqyElr6th4bXMKXA6ExMSpc3ZrVMpIBPcy+/qvC/bXy4ncUuUzkr0lm1/S80mcwqmhI
+ gyrw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUGolKVisUDes5Yd4keCweExtwwWSI15RNySjzvnV5Ze4OL4wAmGQGQLuO2P5nIJyEEGCNJzQbi7J5X@nongnu.org
+X-Gm-Message-State: AOJu0YzHbokq5U4apA3qlMWRxteO4qfBk3UBxd0N3inSZajSvL4sKbvA
+ BFHbO+ob//PxCOpfmdYT9kOFaSklqSZq2THL6dvY1LvsfqdAsUvYE0hmrTwvhgRoh1XXKLgb1So
+ D4EJK
+X-Gm-Gg: ASbGncsr9f689FzbOk5LIPmiRAN3w0jDI/JT6jNn8RJURHQg1/nS/PGznvLoDjn/K5a
+ HxBJkwW248njwnr9wQZCrFcFWHCijAldfhFNMOAEc+Me+CTmntSZ48GbK4Be3oOcjU1C6N99B3i
+ /Gjd8v6dLdOZMI4WfNvNVzE3zpCPulxcfHewHr8Iv0k419466Lgzal5lLIfFj/fqd8zqu7uTiU0
+ I7V/YZPMSfM62nyLx+bdmBcuGgB1sWDDyAzBKEjtj5C3kfQnNVzv3C6eAenPfE4puOe42Ub64aT
+ 4XRCvO81Oi3QK11EejXAEbAfH/JoD5HRXgBVtPqyzCuSdeBjaraU7wnsNjLhmre8CrlQ1+I38+3
+ geRUCwcGDCwB285xmv71I9TC+RdJGOA==
+X-Google-Smtp-Source: AGHT+IGRCN6iUoyXqRv7gWL3CyrqT7BwgRkI/KO/oALd94G+AMGsRYNNsEs1oFkM62KVQ+Wcsduwjw==
+X-Received: by 2002:a05:6000:230e:b0:3a4:ef48:23db with SMTP id
+ ffacd0b85a97d-3a6d12f9af7mr10786713f8f.59.1750679618956; 
+ Mon, 23 Jun 2025 04:53:38 -0700 (PDT)
+Received: from [192.168.69.167] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4536466596asm112628545e9.0.2025.06.23.04.53.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 23 Jun 2025 04:53:38 -0700 (PDT)
+Message-ID: <94d6e871-fcf1-448a-8a6a-f6a7f7720882@linaro.org>
+Date: Mon, 23 Jun 2025 13:53:36 +0200
 MIME-Version: 1.0
-References: <20250621235037.74091-1-richard.henderson@linaro.org>
- <20250621235037.74091-17-richard.henderson@linaro.org>
-In-Reply-To: <20250621235037.74091-17-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 23 Jun 2025 12:50:04 +0100
-X-Gm-Features: AX0GCFvOQsLj2E4uexw8LsZkPtzJTGPv9K1aVDWOSeKyS1e9L9cPkwi-ha4DREQ
-Message-ID: <CAFEAcA_XgjWbHKPTJuj9coxYK5UccDBx+Gg_kvMNtEFsdC=+Ag@mail.gmail.com>
-Subject: Re: [PATCH v2 016/101] target/arm: Add ZT0
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 26/26] tests/functional: Expand Aarch64 SMMU tests to
+ run on HVF accelerator
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Radoslaw Biernacki <rad@semihalf.com>, Alexander Graf <agraf@csgraf.de>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Bernhard Beschow <shentey@gmail.com>,
+ Cleber Rosa <crosa@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, kvm@vger.kernel.org,
+ qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, John Snow <jsnow@redhat.com>
+References: <20250620130709.31073-1-philmd@linaro.org>
+ <20250620130709.31073-27-philmd@linaro.org>
+ <c8d2da2b-f44b-46ab-baca-de8b9a4c25e5@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <c8d2da2b-f44b-46ab-baca-de8b9a4c25e5@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,67 +116,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 22 Jun 2025 at 00:55, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> This is a 512-bit array introduced with SME2.
-> Save it only when ZA is in use.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/cpu.h     |  3 +++
->  target/arm/machine.c | 20 ++++++++++++++++++++
->  2 files changed, 23 insertions(+)
->
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index 052ca20283..465fc188d0 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -715,6 +715,9 @@ typedef struct CPUArchState {
->      uint64_t scxtnum_el[4];
->
->      struct {
-> +        /* SME2 ZT0 -- 512 bit array, with data ordered like ARMVectorReg. */
-> +        uint64_t zt0[512 / 64] QEMU_ALIGNED(16);
-> +
->          /*
->           * SME ZA storage -- 256 x 256 byte array, with bytes in host
->           * word order, as we do with vfp.zregs[].  This corresponds to
-> diff --git a/target/arm/machine.c b/target/arm/machine.c
-> index 6e73368ef9..6986915bee 100644
-> --- a/target/arm/machine.c
-> +++ b/target/arm/machine.c
-> @@ -321,6 +321,25 @@ static const VMStateDescription vmstate_za = {
->      }
->  };
->
-> +static bool zt0_needed(void *opaque)
-> +{
-> +    ARMCPU *cpu = opaque;
-> +
-> +    return za_needed(cpu) && cpu_isar_feature(aa64_sme2, cpu);
-> +}
-> +
-> +static const VMStateDescription vmstate_zt0 = {
-> +    .name = "cpu/zt0",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = zt0_needed,
-> +    .fields = (VMStateField[]) {
-> +        VMSTATE_UINT64_ARRAY(env.za_state.zt0, ARMCPU,
-> +                             ARRAY_SIZE(((CPUARMState *)0)->za_state.zt0)),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
+On 23/6/25 10:23, Thomas Huth wrote:
+> On 20/06/2025 15.07, Philippe Mathieu-Daudé wrote:
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   tests/functional/test_aarch64_smmu.py | 9 +++++++--
+>>   1 file changed, 7 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/tests/functional/test_aarch64_smmu.py b/tests/functional/ 
+>> test_aarch64_smmu.py
+>> index c65d0f28178..59b62a55a9e 100755
+>> --- a/tests/functional/test_aarch64_smmu.py
+>> +++ b/tests/functional/test_aarch64_smmu.py
+>> @@ -22,6 +22,7 @@
+>>   class SMMU(LinuxKernelTest):
+>> +    accel = 'kvm'
+>>       default_kernel_params = ('earlyprintk=pl011,0x9000000 
+>> no_timer_check '
+>>                                'printk.time=1 rd_NO_PLYMOUTH 
+>> net.ifnames=0 '
+>>                                'console=ttyAMA0 rd.rescue')
+>> @@ -45,11 +46,11 @@ def set_up_boot(self, path):
+>>           self.vm.add_args('-device', 'virtio-net,netdev=n1' + 
+>> self.IOMMU_ADDON)
+>>       def common_vm_setup(self, kernel, initrd, disk):
+> 
+> Wouldn't it be more straight-forward to do something like this here:
+> 
+>      if hvf_available():
+>          accel = "hvf"
+>      else:
+>          accel = "kvm"
+> 
+> ... IMHO that's nicer than duplicating the test classes below.
 
-I wonder if we should have an ARRAY_FIELD_SIZE(), to do
-the equivalent of sizeof_field()... Though we have no
-uses of the written-out form currently, so it might be
-a bit too niche.
+Good idea, thank you :)
 
-Anyway
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
 
