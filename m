@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C919C7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 12:20:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4481C77B7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 12:20:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTg9H-0001UE-Bh; Mon, 23 Jun 2025 08:19:45 -0400
+	id 1uTg8k-0001CH-6W; Mon, 23 Jun 2025 08:19:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTg9E-0001Ti-QO
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:19:40 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTg8e-0001B0-Lq
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:19:04 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTg9B-0000Yn-6H
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:19:40 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3a522224582so1926345f8f.3
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 05:19:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTg8c-0000Qp-Qi
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:19:04 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3a531fcaa05so1700116f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 05:19:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750681174; x=1751285974; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750681138; x=1751285938; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MgoMlu6luU8uPkDpvUPvEjZTODhHkmT/W4wpYdZo59E=;
- b=CVzpMz23T4COrgXR/FdUdeKQ7hB4B/qjzXRMc+ISoeE3M7QadJWaF1CiWM3U2xXtIm
- FygfI1UKpaITWHHPN+ubloPdrTzFEEvSwSU7QmX85Nh7MDWeEqsP4wURUAMYRcwevGwu
- BN4xeoOXMLhfyPoBzdkkipmqpQDG/VEB7F09g+QyjKmITcGeFlcgmYUUtJEKDsrfVStM
- BiiAiR9A7kqEbXDY3zws6VBmaZQNmyagHSUBUu8NHlh+UpFx0ebWUWIZ26IRmrMJ7Uv0
- QqrzNTuo/AWMxm1D93sCEGJ64aoSwMhLQAH2GU3LV1k4tPViCzHpiFfciz5+Q9itTmz+
- taZg==
+ bh=33tTruwtHJUDsLE1NQEO6k6TPJwHdavbHWnexaTt8VY=;
+ b=Ev26ZtJKAnfkdhhRupkf9cmjH5yX27jKjx5+6zAcw06BZG8aqAPUcuapGZTCydGd7/
+ J+BkDBFDqq/3fzA9ZZsZfAnCtpil/CGgZgHNCSmEUL0czXq+XBW4tKf4YCGwvWlX7pLe
+ tHDnP/BQ6iqyqx9RzuAO/xTd9a3m4CKNw5oWsFc3Zq6bQifnmMnXGZSwjEfsLZVk1gOW
+ ZB/kGx5u5x/Rih0p+mkGm0ycZ5xSWAMqPRUlcGgcNk9xuS0QGfseQSAHlNycaS8ex8f9
+ 3QJcdVWq/2b8zxQjBTNAcVZ2HrpnmtCZg1vMUaPObepmKtTsUAMJwHDMuWg5AiNprfH0
+ HTLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750681174; x=1751285974;
+ d=1e100.net; s=20230601; t=1750681138; x=1751285938;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MgoMlu6luU8uPkDpvUPvEjZTODhHkmT/W4wpYdZo59E=;
- b=QOsqDOoI5TwvR7J+9T7TSr8cYpLmIPNQA6ngueWcijvJvRDj9a6UKvByJddoM0+Nq2
- qr6lgp7jqRqC+zKyqDflqaernRzrao5BL2rchLBVT1pksYRabkcylbIW+Dq4qX7BBdzc
- 0bcsW7bLiq6AXQHuONvkGx8dGP/uCICUqoj8tKgctfXXHniLFaBYKdPMN57UX/5wNHDW
- BjNBhF5ABs+w8NzN86pq8f+gsDL2jJbecuxpyHscHonrN/0D/TpQo0G04atEQ66GM1fW
- QM7NpGcVeMLiWpUjbBj65EEYYqTs4Gcn6oI1iweoQvLG+FdcrYQFZNUV+lxWcRUJUKmx
- mdOQ==
-X-Gm-Message-State: AOJu0Yw1yhlmoVWgmB6LK2VfLlI98/1aryBx67VEbxh+Fjg6yfC+Orh3
- YRPKNw56SpicoFMZ4UhYxKnhvYBzeQ0MlH4GAprg/rEipRQ1qwPK9FXcAuYaasAfrga8zez9tJU
- 6LH37
-X-Gm-Gg: ASbGncs2CT9rZTora7rdQCJIe5IgdRQf0nQSdBuDSn7Y/aRACVYbKhr3Tcd/v/D208O
- THIM5Zti6RqZvvr6DRsN0Tpa5du5JFOqnbkMehcGsCtspwDnqZgHbHjczqsd3HUH8cwcJ2H8vqH
- wWSPku13kO45tIUcGrVzmF5eRcSXUW/qOX6SDrkpHiA4Q2HjBnOg86Bf/KqXkQLLDu8UzQjfJ5F
- QCbBt+6efOoDizArjD9vlzSy2klWE0/pvZJzSYAluB2HFmWE9+HcN+M/gz+p0s/WMtjKOPfoKSY
- QNPugvzQgWp8vbfq8WPdqziD9S2PolYbfpwQq1hNpSv4fJxB6KCABMvpas9gRAnBOxfjXBujyRI
- HZJcKQXGA6xnMDWooprrfV0h/A2PuNPLk8ZOi
-X-Google-Smtp-Source: AGHT+IH5nN0Buqju33OA312k0qD0vKiMOH8kEulBGzTvtfmPtg2jIEiKfCSnA60Z3UW/VHNqpVWLLw==
-X-Received: by 2002:a5d:584c:0:b0:3a4:e6bb:2d32 with SMTP id
- ffacd0b85a97d-3a6d12a2416mr9606493f8f.22.1750681173855; 
- Mon, 23 Jun 2025 05:19:33 -0700 (PDT)
+ bh=33tTruwtHJUDsLE1NQEO6k6TPJwHdavbHWnexaTt8VY=;
+ b=eOPjyQPGjkEf++MeY+abJqcCAIhDWHK2ol4VMlKJei9AKI7PEP4D+cqr9aNRXUBlrO
+ pgQAt2CYZQS/6bQtjYbexuNGZmx2q0v2scEloY88MCt0/cuI2k/QmWV2vS1dGaPsEalY
+ zLuFe3yWvZ3VBGq8pxiV0a9dnDkSGR2eLMNW4IoXvm/ectkRWyyrZ0giR9c+AFc9cUvQ
+ NEDH/rgSt/dDuaLWkszbb9mv9RA0BGvrqZ8qVY41T7TmDBEC3qcvYRINLnu7XQSN7qbm
+ KXsEBV2iUSMMOsCV8YGs0xWA+ERvxkxybiDp9mmrxHnj6PS/LzSQBHaNy62a2j9TbdMX
+ m2jw==
+X-Gm-Message-State: AOJu0YzoW9RgT7IyRSsrSyQGC0muJUqwjFXy516aCQJQAElsu5QqfMOJ
+ Umjbu6DtjiESKLzj1i2nKRud+6Dx8DZbHI/H8uR6vgMDzLzTSOQsVtwy+xMQ1jTyYGXJ90C0ppM
+ rgHGC
+X-Gm-Gg: ASbGncsFagQ7Ovfk5x+TDpSD+5Fc+jZW7o87jfBXxeyEZjoRPgHYAo5NtsML2E0LwLH
+ LM5s/ULFR2IrWdnmvDrkhaqcYEho5+IGkvpvNge46zRgKUqdJwKi+Mb+umQQpVExxPEGA9VCoyR
+ rh/7q4S8KQ1i/HU8Dt8+DCFhHHmu+PLjLt2/ZdSWklvEnWPnUH/PpCjm07TQJEhqGu2tOmUZZkc
+ q2NpUD/fhwhql9AenWNJnoILqpUIIo14mIkX3vqQXBf+ydOuiYJ7OclJSb2WLKDEi3e0j53944r
+ zDUbGjxiVmaOGYyZQQ3qbg6FU9NLBW0QLxivzD7gKdXC0y7L+OpnCHb1mHeNttQijZrfaZ9TtBX
+ fNkJoJCav4pmg8y/zwXUJm2JH0Jo5oOb8UBoit58nfdEIaeQ=
+X-Google-Smtp-Source: AGHT+IEjVwbsAMNAS5by9E9W3i2mS1agngW0TG97TbFd4Y+XoqUdKx/v5toxL2DXWSaOw2EUWfZl2A==
+X-Received: by 2002:a05:6000:471e:b0:3a4:dfc2:bb60 with SMTP id
+ ffacd0b85a97d-3a6d12a9a5amr7627210f8f.26.1750681138080; 
+ Mon, 23 Jun 2025 05:18:58 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6d0f1054bsm9217868f8f.9.2025.06.23.05.19.32
+ ffacd0b85a97d-3a6d118a1f2sm9166243f8f.83.2025.06.23.05.18.56
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 23 Jun 2025 05:19:33 -0700 (PDT)
+ Mon, 23 Jun 2025 05:18:57 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>, qemu-arm@nongnu.org,
@@ -78,19 +78,19 @@ Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>, qemu-arm@nongnu.org,
  Radoslaw Biernacki <rad@semihalf.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-stable@nongnu.org
-Subject: [PATCH v3 09/26] target/arm: Correct KVM & HVF dtb_compatible value
-Date: Mon, 23 Jun 2025 14:18:28 +0200
-Message-ID: <20250623121845.7214-10-philmd@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v3 02/26] target/arm: Reduce arm_cpu_post_init() declaration
+ scope
+Date: Mon, 23 Jun 2025 14:18:21 +0200
+Message-ID: <20250623121845.7214-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250623121845.7214-1-philmd@linaro.org>
 References: <20250623121845.7214-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,48 +113,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Linux kernel knows how to parse "arm,armv8", not "arm,arm-v8".
+arm_cpu_post_init() is only used within the same file unit.
 
-See arch/arm64/boot/dts/foundation-v8.dts:
-
-  https://github.com/torvalds/linux/commit/90556ca1ebdd
-
-Cc: qemu-stable@nongnu.org
-Fixes: 26861c7ce06 ("target-arm: Add minimal KVM AArch64 support")
-Fixes: 585df85efea ("hvf: arm: Implement -cpu host")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/hvf/hvf.c | 2 +-
- target/arm/kvm.c     | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ target/arm/cpu.h | 2 --
+ target/arm/cpu.c | 2 +-
+ 2 files changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index d4c58516e8b..bf59b17dcb9 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -879,7 +879,7 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-     hv_vcpu_exit_t *exit;
-     int i;
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 302c24e2324..c31f69912b8 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1150,8 +1150,6 @@ void arm_gt_sel2vtimer_cb(void *opaque);
+ unsigned int gt_cntfrq_period_ns(ARMCPU *cpu);
+ void gt_rme_post_el_change(ARMCPU *cpu, void *opaque);
  
--    ahcf->dtb_compatible = "arm,arm-v8";
-+    ahcf->dtb_compatible = "arm,armv8";
-     ahcf->features = (1ULL << ARM_FEATURE_V8) |
-                      (1ULL << ARM_FEATURE_NEON) |
-                      (1ULL << ARM_FEATURE_AARCH64) |
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 74fda8b8090..9a1b031556a 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -266,7 +266,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+-void arm_cpu_post_init(Object *obj);
+-
+ #define ARM_AFF0_SHIFT 0
+ #define ARM_AFF0_MASK  (0xFFULL << ARM_AFF0_SHIFT)
+ #define ARM_AFF1_SHIFT 8
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index e025e241eda..eb0639de719 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1713,7 +1713,7 @@ static void arm_cpu_propagate_feature_implications(ARMCPU *cpu)
      }
+ }
  
-     ahcf->target = init.target;
--    ahcf->dtb_compatible = "arm,arm-v8";
-+    ahcf->dtb_compatible = "arm,armv8";
+-void arm_cpu_post_init(Object *obj)
++static void arm_cpu_post_init(Object *obj)
+ {
+     ARMCPU *cpu = ARM_CPU(obj);
  
-     err = read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64pfr0,
-                          ARM64_SYS_REG(3, 0, 0, 4, 0));
 -- 
 2.49.0
 
