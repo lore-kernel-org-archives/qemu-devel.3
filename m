@@ -4,89 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36897C7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 17:22:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F05F3C7115B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 17:31:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTkrg-0004Uv-5q; Mon, 23 Jun 2025 13:21:53 -0400
+	id 1uTl0r-00089U-Kf; Mon, 23 Jun 2025 13:31:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uTkrR-0004Rn-Cs
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 13:21:38 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uTkrP-0006E2-9J
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 13:21:37 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-b2fd091f826so3399552a12.1
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 10:21:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1750699293; x=1751304093; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ghnsqsuTP2eOK0pz8lkELt9NeubIcUGu0srdYwhqGo0=;
- b=e0QnvmOccgoIae82scl+dOWRHpwcsjGnwMk/aJxtpv7xAwwr/7rbv+xs/bw1F3h1sd
- g84jY50my21g1kO+/aWaDYBRzkKUhRPUcY1exo7qCDEMnGPBxLBbzhssfe4C+7REsiV1
- duIkDhzAZaaX8zKZtb2WwBA/8UmR0UhYSfB+MHs5HnwGOMXtaCZ1POxzVUVcjs4UvlR6
- UYtcFde33AC3wif9HlgY/MRfZJMHPW9EmpMt3wGbL/CuttnNJO8P8ZtbejYCBnYSHCzR
- En3TfC7nRk+4FsT5fqiVuftuwCFnWgEQr1dcxAlc6U/ofDGtN++Q8daCNFaGPAnlrT/k
- MSTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750699293; x=1751304093;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ghnsqsuTP2eOK0pz8lkELt9NeubIcUGu0srdYwhqGo0=;
- b=qdILnH6QmMFeFV1YMC6ak2LEPo1Ie0uGZiCAD4Nw56MHk2PrSffD5nRbtNl7lRo11p
- gnol3kJ7ojSoW4xFFV4LHvnbeEIXztohaTd5ZWk8lQyAAfKQGIvowNYSI2dng78jwuUg
- 4DUF4T54kKM3l/qgu18eJw3tHL3JGnRMHhrtv0zAEMliz46gl+OeA708F3j4mTEO8zmg
- wfTjEKm9d0/l76etMtvvJ2xaD/eFfLYwbmLAtBa1vM1bV+d3i81Z5PTe/heICP3uzUtV
- jX0R+PRMdxs5Kg4iDCvAE8kXluTkkscfSnjXsa9YMadz0V/ypW7ME185j1+1XNkQfWJF
- eUUQ==
-X-Gm-Message-State: AOJu0YzuGfNfRhx/us6q85HEPYg/X62meolgMn6H6GMRntNA5g8AHDW4
- ZHl5NBsyLIyNol+SdMDpnKicY7fL9O0n78wu5IqusKQX3vbDYYrjkEzhXZPETr4CzIrKY2HvzCC
- ZDkZmKMQ=
-X-Gm-Gg: ASbGncunMiSQgWIy3UefIrKA5cQ5HFAwBfJCxsEkHwugrlRFeeVVu++fEL/Ts9z3BSz
- UJl68BW1pK0GcKHWyt2HzoxbT/6o2oLQCstCbHqJk2pUH4qjtqQm+Kj/ZT4K6r8soKP0LP++Vq7
- sU57xrjH4gn2zHvsEcntImjdXkJ6wVH0KSPP/7HRT0JqoT979byRmx2tK+lWllnTo5jh9m+jMbT
- tDggiTraUm6YU012aCeHE8GaMYY4NCCqC0aUjEAY+iA+KfQVE5ptOzS9IULXtFmYkWaQ4lUznjj
- q8k/jUmOqMDieTLCiaNwxXkkhqpEwhoI58Vrv6jJjLlrNJVA9ZEBI9x+FIHcOcqK4kqSU88tRdw
- =
-X-Google-Smtp-Source: AGHT+IFK04sa0p5ov4RETysY0BD2GYY07uznPn5FOVaf/tnK0nmIeC10L9o06hevZcIJGAf0ASkgRw==
-X-Received: by 2002:a17:902:b417:b0:231:c3c1:babb with SMTP id
- d9443c01a7336-2380249777emr3446225ad.18.1750699293228; 
- Mon, 23 Jun 2025 10:21:33 -0700 (PDT)
-Received: from grind.. ([191.255.35.152]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-237d873845esm90847525ad.243.2025.06.23.10.21.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Jun 2025 10:21:32 -0700 (PDT)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH 3/3] target/riscv: print all available CSRs in
- riscv_cpu_dump_state()
-Date: Mon, 23 Jun 2025 14:21:19 -0300
-Message-ID: <20250623172119.997166-4-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250623172119.997166-1-dbarboza@ventanamicro.com>
-References: <20250623172119.997166-1-dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1uTl0l-000893-Ss; Mon, 23 Jun 2025 13:31:17 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1uTl0j-0007rf-1p; Mon, 23 Jun 2025 13:31:15 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55NHUjZu014097;
+ Mon, 23 Jun 2025 17:31:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=XeEOlv
+ rrXpCHwPa7yPwLnUi/UyfmZzniBkF7xEGEGTs=; b=QU50tqSvnYbYxHCGjcnn08
+ tDCmq81eUrNnMRpJTGkmhQnE3ltlxfTQxrfKuUSfRz3/SZ2cVAPH+o+e2IcGSMOe
+ e3fELh4QBVpKIFr+MDOrtejc4Ah1tCXZsB3CiqjDbzbC0yNygpluDzsorBOj2rEp
+ 6Ukp55ij9GJJJSgbWTfkQi2wRPMWo4KEPKKW59xOYaOYKugZcotvbagcuaKBCaiK
+ WysY8tWOCvIHbRd1TEe+6d0VJCZw2+lpDqQgqiEvYvbNUbAhxCHwDVwbDdp/f6ZQ
+ zGy/QF1pB2YaoJo0Nv8y2fxQ5mQzoMc3dzBiwoQ87uipuoCbzH48HB4+rZ8D7Ybg
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47dk63kp44-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 23 Jun 2025 17:31:05 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55NEC539002568;
+ Mon, 23 Jun 2025 17:31:04 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47e8jkyujt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 23 Jun 2025 17:31:04 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 55NHV2vf19792596
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 23 Jun 2025 17:31:03 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D9F9058063;
+ Mon, 23 Jun 2025 17:31:02 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C83095804B;
+ Mon, 23 Jun 2025 17:31:01 +0000 (GMT)
+Received: from [9.61.75.155] (unknown [9.61.75.155])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 23 Jun 2025 17:31:01 +0000 (GMT)
+Message-ID: <52edfcad-fbd3-4eb3-90ac-bd3b8c555ff7@linux.ibm.com>
+Date: Mon, 23 Jun 2025 13:31:00 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: add reviewers for some s390 areas
+To: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
+Cc: thuth@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, alifm@linux.ibm.com, jjherne@linux.ibm.com,
+ walling@linux.ibm.com, qemu-devel@nongnu.org, zycai@linux.ibm.com
+References: <20250623160030.98281-1-mjrosato@linux.ibm.com>
+Content-Language: en-US
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <20250623160030.98281-1-mjrosato@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjIzMDEwNiBTYWx0ZWRfX8GkkkLbf3WRV
+ 5gsRsD4xsZUBKE2EYLwf5TvSJtduDeU6SYFOViz+GVA6MCCivsKZyUxXf0FTYLExjzycQ9vv3yi
+ BhHkw8893XLmDxjXIngFabcDYBLrZpD6DH2fsmDMpqRCVw5G5aKZJSkMplleUN4+xNGRBWoagLG
+ psoMz8mkVj7lrzOvhl5dc+HFk5C35MXaFssL+ntznNEXKxEVB//QeGpICb0DKibOTW7XFtMg51S
+ /a0g/ROqDzEEGKHdwMNNOiZeMzwdr+3e3wobNpnVmROqV0WKeUP0KsHSPM5nc6IkCEjoOLaJ6IQ
+ YKup/9D24DQLAa7t7hZQY00DmGVwYKVF37eTWQwHmxW0u0cTm8Ns8G68LM62xrdrMypJobSAidJ
+ fUdqui54lHvbyUmdlEWssOrxzyNXuKkMk/2DJFVZ7ywF9LPcy/JWYNnkK/vtbK5rmMUIgTzS
+X-Proofpoint-ORIG-GUID: IWogzEIHnqICt22aJVVEOimy4Ve2_mMw
+X-Proofpoint-GUID: IWogzEIHnqICt22aJVVEOimy4Ve2_mMw
+X-Authority-Analysis: v=2.4 cv=BfvY0qt2 c=1 sm=1 tr=0 ts=68598f59 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
+ a=20KFwNOVAAAA:8 a=pw3nJ7SLLKdmeAyoHEEA:9
+ a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-23_05,2025-06-23_07,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1011 suspectscore=0 adultscore=0 spamscore=0
+ impostorscore=0 mlxlogscore=999 malwarescore=0 phishscore=0 bulkscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506230106
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,137 +123,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At this moment we're printing a small selection of CSRs. There's no
-particular reason to not print all of them.
+On 6/23/25 12:00 PM, Matthew Rosato wrote:
 
-We're ignoring the note about CSR_SSTATUS being ommited because it can
-be read via CSR_MSTATUS. There's a huge list of CSRs that would fall in
-this category and it would be an extra burden to manage them, not
-mentioning having to document "we're not listing X because it's the same
-value as Y" to users.
+> To improve review coverage, assign additional people as reviewers for
+> multiple s390 sections.
+>
+> Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
 
-Remove 'dump_csrs' and use the existing 'csr_ops' array to print all
-available CSRs. Create two helpers in csr.c to identify FPU and VPU CSRs
-and skip them - they'll be printed in the FPU/VPU blocks later.
+Acked-by: Jared Rossi <jrossi@linux.ibm.com>
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/cpu.c | 55 ++++++++++++++++------------------------------
- target/riscv/cpu.h |  2 ++
- target/riscv/csr.c | 18 +++++++++++++++
- 3 files changed, 39 insertions(+), 36 deletions(-)
-
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 95d0b88937..ed1bf18625 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -544,44 +544,27 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
- #endif
-     qemu_fprintf(f, " %s " TARGET_FMT_lx "\n", "pc      ", env->pc);
- #ifndef CONFIG_USER_ONLY
--    {
--        static const int dump_csrs[] = {
--            CSR_MHARTID,
--            CSR_MSTATUS,
--            CSR_MSTATUSH,
--            /*
--             * CSR_SSTATUS is intentionally omitted here as its value
--             * can be figured out by looking at CSR_MSTATUS
--             */
--            CSR_HSTATUS,
--            CSR_VSSTATUS,
--            CSR_MIP,
--            CSR_MIE,
--            CSR_MIDELEG,
--            CSR_HIDELEG,
--            CSR_MEDELEG,
--            CSR_HEDELEG,
--            CSR_MTVEC,
--            CSR_STVEC,
--            CSR_VSTVEC,
--            CSR_MEPC,
--            CSR_SEPC,
--            CSR_VSEPC,
--            CSR_MCAUSE,
--            CSR_SCAUSE,
--            CSR_VSCAUSE,
--            CSR_MTVAL,
--            CSR_STVAL,
--            CSR_HTVAL,
--            CSR_MTVAL2,
--            CSR_MSCRATCH,
--            CSR_SSCRATCH,
--            CSR_SATP,
--        };
-+    for (i = 0; i < ARRAY_SIZE(csr_ops); i++) {
-+        int csrno = i;
- 
--        for (i = 0; i < ARRAY_SIZE(dump_csrs); ++i) {
--            riscv_dump_csr(env, dump_csrs[i], f);
-+        /*
-+         * Early skip when possible since we're going
-+         * through a lot of NULL entries.
-+         */
-+        if (csr_ops[csrno].predicate == NULL) {
-+            continue;
-         }
-+
-+        /*
-+         * FPU and VPU CSRs will be printed in the
-+         * CPU_DUMP_FPU/CPU_DUMP_VPU blocks later.
-+         */
-+        if (riscv_csr_is_fpu(csrno) ||
-+            riscv_csr_is_vpu(csrno)) {
-+            continue;
-+        }
-+
-+        riscv_dump_csr(env, csrno, f);
-     }
- #endif
- 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 4a862da615..ecdf709c2d 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -967,6 +967,8 @@ bool riscv_cpu_accelerator_compatible(RISCVCPU *cpu);
- 
- /* CSR function table */
- extern riscv_csr_operations csr_ops[CSR_TABLE_SIZE];
-+bool riscv_csr_is_fpu(int csrno);
-+bool riscv_csr_is_vpu(int csrno);
- 
- extern const bool valid_vm_1_10_32[], valid_vm_1_10_64[];
- 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 6296ecd1e1..229257b31b 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -5799,6 +5799,24 @@ static RISCVException write_jvt(CPURISCVState *env, int csrno,
-     return RISCV_EXCP_NONE;
- }
- 
-+bool riscv_csr_is_fpu(int csrno)
-+{
-+    if (!csr_ops[csrno].predicate) {
-+        return false;
-+    }
-+
-+    return csr_ops[csrno].predicate == fs;
-+}
-+
-+bool riscv_csr_is_vpu(int csrno)
-+{
-+    if (!csr_ops[csrno].predicate) {
-+        return false;
-+    }
-+
-+    return csr_ops[csrno].predicate == vs;
-+}
-+
- /*
-  * Control and Status Register function table
-  * riscv_csr_operations::predicate() must be provided for an implemented CSR
--- 
-2.49.0
+> ---
+>   MAINTAINERS | 12 ++++++++++++
+>   1 file changed, 12 insertions(+)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 94c4076127..3ce6fce8ce 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -459,6 +459,8 @@ F: target/ppc/kvm.c
+>   S390 KVM CPUs
+>   M: Halil Pasic <pasic@linux.ibm.com>
+>   M: Christian Borntraeger <borntraeger@linux.ibm.com>
+> +R: Eric Farman <farman@linux.ibm.com>
+> +R: Matthew Rosato <mjrosato@linux.ibm.com>
+>   S: Supported
+>   F: target/s390x/kvm/
+>   F: target/s390x/machine.c
+> @@ -1771,6 +1773,7 @@ S390 Virtio-ccw
+>   M: Halil Pasic <pasic@linux.ibm.com>
+>   M: Christian Borntraeger <borntraeger@linux.ibm.com>
+>   M: Eric Farman <farman@linux.ibm.com>
+> +R: Matthew Rosato <mjrosato@linux.ibm.com>
+>   S: Supported
+>   F: hw/s390x/
+>   F: include/hw/s390x/
+> @@ -1782,6 +1785,8 @@ L: qemu-s390x@nongnu.org
+>   S390-ccw boot
+>   M: Christian Borntraeger <borntraeger@linux.ibm.com>
+>   M: Thomas Huth <thuth@redhat.com>
+> +R: Jared Rossi <jrossi@linux.ibm.com>
+> +R: Zhuoying Cai <zycai@linux.ibm.com>
+>   S: Supported
+>   F: hw/s390x/ipl.*
+>   F: pc-bios/s390-ccw/
+> @@ -1802,6 +1807,7 @@ S390 channel subsystem
+>   M: Halil Pasic <pasic@linux.ibm.com>
+>   M: Christian Borntraeger <borntraeger@linux.ibm.com>
+>   M: Eric Farman <farman@linux.ibm.com>
+> +R: Farhan Ali <alifm@linux.ibm.com>
+>   S: Supported
+>   F: hw/s390x/ccw-device.[ch]
+>   F: hw/s390x/css.c
+> @@ -1822,6 +1828,7 @@ L: qemu-s390x@nongnu.org
+>   S390 SCLP-backed devices
+>   M: Halil Pasic <pasic@linux.ibm.com>
+>   M: Christian Borntraeger <borntraeger@linux.ibm.com>
+> +R: Jason Herne <jjherne@linux.ibm.com>
+>   S: Supported
+>   F: include/hw/s390x/event-facility.h
+>   F: include/hw/s390x/sclp.h
+> @@ -2809,6 +2816,7 @@ F: include/hw/timer/mips_gictimer.h
+>   S390 3270 device
+>   M: Halil Pasic <pasic@linux.ibm.com>
+>   M: Christian Borntraeger <borntraeger@linux.ibm.com>
+> +R: Collin Walling <walling@linux.ibm.com>
+>   S: Odd fixes
+>   F: include/hw/s390x/3270-ccw.h
+>   F: hw/char/terminal3270.c
+> @@ -2818,6 +2826,7 @@ L: qemu-s390x@nongnu.org
+>   S390 diag 288 watchdog
+>   M: Halil Pasic <pasic@linux.ibm.com>
+>   M: Christian Borntraeger <borntraeger@linux.ibm.com>
+> +R: Collin Walling <walling@linux.ibm.com>
+>   S: Supported
+>   F: hw/watchdog/wdt_diag288.c
+>   F: include/hw/watchdog/wdt_diag288.h
+> @@ -2826,6 +2835,7 @@ L: qemu-s390x@nongnu.org
+>   S390 storage key device
+>   M: Halil Pasic <pasic@linux.ibm.com>
+>   M: Christian Borntraeger <borntraeger@linux.ibm.com>
+> +R: Jason Herne <jjherne@linux.ibm.com>
+>   S: Supported
+>   F: hw/s390x/storage-keys.h
+>   F: hw/s390x/s390-skeys*.c
+> @@ -2834,6 +2844,7 @@ L: qemu-s390x@nongnu.org
+>   S390 storage attribute device
+>   M: Halil Pasic <pasic@linux.ibm.com>
+>   M: Christian Borntraeger <borntraeger@linux.ibm.com>
+> +R: Jason Herne <jjherne@linux.ibm.com>
+>   S: Supported
+>   F: hw/s390x/storage-attributes.h
+>   F: hw/s390x/s390-stattrib*.c
+> @@ -2843,6 +2854,7 @@ S390 floating interrupt controller
+>   M: Halil Pasic <pasic@linux.ibm.com>
+>   M: Christian Borntraeger <borntraeger@linux.ibm.com>
+>   M: David Hildenbrand <david@redhat.com>
+> +R: Jason Herne <jjherne@linux.ibm.com>
+>   S: Supported
+>   F: hw/intc/s390_flic*.c
+>   F: include/hw/s390x/s390_flic.h
 
 
