@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB200C7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 12:24:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88225C7EE30
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 12:25:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTgCU-0005Ak-7d; Mon, 23 Jun 2025 08:23:02 -0400
+	id 1uTgCe-0005qo-KZ; Mon, 23 Jun 2025 08:23:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTgAR-0003Ud-GK
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:20:57 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTgAd-0003wM-6N
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:21:09 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTgAP-00016k-Lj
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:20:55 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4535fbe0299so21239125e9.3
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 05:20:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTgAY-00018W-Vq
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 08:21:06 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-450cf214200so37523495e9.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 05:21:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750681250; x=1751286050; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750681260; x=1751286060; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/XMJ0zIICEYOJOmZnjjg6la4eos6APBolhDpaT3Vg7M=;
- b=dn8/lNAXyiU6RgrIIOdcgb3JdUGQf2O8D6bpKprEPKb/dQvne94iBsSo4gaVEKuKIF
- V2Gj+vJQosn4ZO3w592sc3G/491ubQL6FftxaJh6DWhqs+U49QMFXsPpk/PJDAAlGsHg
- 8s/MMFxB9XOccBAJM/kBodgzl079Tei/oxsEBt/CneNeCF8BKEw5qC13V7aswsJEVmiB
- WAXNE2gsD0o5pVK48fFHyTHjK4GGoKB1UZ53eCKm+S+J12CoABMRrbuwcSVmGZoT76dx
- VG87fZlQz4YMgvhR/Jf+VanbkrbJB3UBspqVJoCGu0zNfGaZqhDASe8XDpdGfZvqqMb6
- iZmg==
+ bh=udXllEXY1gPSi8pgPr+YWAsY2WGcZfddjVlJVNiCuOE=;
+ b=p4iThvalXLPbHqb4TmUXgPVR6yY51PhtEWDHf+AVUILJsIDbybhuvI/ZID0LsZofuB
+ 8tyPatkaum8NYxOs8zfoQFgX5yZJqHzOmhQ1gUjhVh8FWFPTbMON52EYB/xdwHbyk1bz
+ m4/+GGG8n+K6xybfo5clXVdhgUu6t8cRKZmZz4mfpoKG1QYlrlxTUptqlF6wHg64eZ4D
+ FjAkCj2zniBEkbed1x802DDXjxm5DfRqff2Ko6cIfJcuKbHDT5up13+tXX4IDS/x4Tdk
+ ljVarDLayp87kBV7PTXTJS5kIbmjBSfT8mssYaKDiOfXKsQvVp3+lwDIB1EzC+g8Fiyx
+ ftgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750681250; x=1751286050;
+ d=1e100.net; s=20230601; t=1750681260; x=1751286060;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/XMJ0zIICEYOJOmZnjjg6la4eos6APBolhDpaT3Vg7M=;
- b=LSPfGpzXdeb97FXC4wqiROHP/DKk8dLtGpL/PdAJaGEltP5XoJTgqRKba132nFWtCY
- MbvM8wiJ2qOohymM/lPe+PyTokRJL6qkxU6p60e+9YFpSJ6BnPIEW6YDvld6mj44jz+L
- /SrJTB9H45BIQeD9DRDk836NQAt52Ou5BnGIbNiISIKmL4DyymJSfVDBT2t70x2NQh/w
- KJx9IZYh9/pJjzrRQpFlsxBvsbGcFPcwzQZ7l7/niC4u+X9X9UNaDEF95aYzeEmKGZFp
- +jJdLdcsMLb9dzb+u6U5BgaRREgpbp9PxKzyJo02CSizptYfvwW7mwvBlL7lAne7I1oz
- GxlQ==
-X-Gm-Message-State: AOJu0YztFSH+3Nw0jD7+PipG2iSYjsEVuZMLf7TwUDAvZgkf2ICgS5GV
- oVbrezNrS1VthcJ95S72PDNgdzhcyNdSgPPos3WG3IKl66M/2yVEnLbEgduKV3zUU9WRvg53Qso
- DpDce
-X-Gm-Gg: ASbGncuffAU0Xhs99n3kkwQvsHsiUs1O99sqRsNXtC/CCS1JPwFxveXtgFrkNQIh92N
- wx0wDfEUt/qSlejoG9hkpxe6xwQK2XKf8z9SNFFRScEauqUN0Y1R8MLnA+14cM4O9TlVb9tlaRu
- QKat83AtD3MZoW42I+B7hbQhdwhQcfnsmQWcqwQyOpyeTepBkp9pP8pXYPjC0mHEPaAVg7YPROM
- ZE6OkfVJrz/4fIGUrJTQRTgRxXhwNzae5cT4Ykxjl8Ak0rZ0LQq43V7B9a6npMzbwAHuDscUoeI
- yhCZDSMHTYxejbqVnVXZkQRnQUEfN8gakZdlD8hHUJ+RPRCUgf1r94LnudIcHKaH/Mp8aLLIINZ
- FMt2DMbXaVzJPLdjAwPLt9Nd7OfHz7wOvD2N+
-X-Google-Smtp-Source: AGHT+IEa/iknzQpht+lrSGEcOk6XAtkG3t/fuyvBomWpFBo82CfJvaf+wwRcGbgYUNKrlTzMZ6RvuA==
-X-Received: by 2002:a05:600c:5024:b0:442:f482:c42d with SMTP id
- 5b1f17b1804b1-453659c9c39mr118467105e9.9.1750681250095; 
- Mon, 23 Jun 2025 05:20:50 -0700 (PDT)
+ bh=udXllEXY1gPSi8pgPr+YWAsY2WGcZfddjVlJVNiCuOE=;
+ b=Aa1IF5ohJJkn35X1r1W9RIoQjDUVrJxnayqibD+zYgD4YQMH6co89X/J4Q8zBxm296
+ MOTw/G/PhqjO1/o52v431H6XfbBh29m6MYVqaSwJUM46tekqWwBq8+P4okkaMxwWw9lH
+ TFr+Z/Nvk5NJcf9pyp+02XohFAVptFsY4Mt6ChX2z86SoJ2gu8CyoxsBXjqilxC6gLIX
+ is4SP9fL22GABGU3DQk+HccPmJt5l2vRZHqxkP9l3+JLJvJ9lqnGlFmosIvxJddxHg+I
+ OF8+1YZeN0JBd8BXUJ/2md+qZkG1aEHHG2gE6fO/xE/LVYE0qlrcvQE6ib2Y39wFedyI
+ 8GAw==
+X-Gm-Message-State: AOJu0YwZFputHv5xnR4zBxnWTqoqgxqRZputHOcpd7ybcF3WmJM9T1EF
+ zyS08YgXsXSxOwd4unZHShm1rkQtnVUCdPmENbpZPm/ihi8DTTJ8tVhgOUo63TA6Kt7bc3LJJW8
+ NgJd2
+X-Gm-Gg: ASbGncvr1nITaBupmn701OEvxVHnuXG3a2o3PVebmxO9jJU2i6MM69JfwHrFQGdtxZk
+ rcHowBfC8uBUQ9teWvz4Owwdk3dxV5INFfyBMKjVBR9zKMdWBZGP7bw68IU3UJv/h1nEQ1dt9od
+ thNm/6VUEgBNsj2RH5Z9bbhRuyqCcjeCg4W7R39dJmmb36s/XX7xSNtBqe/RwjtSTV5vFj8toGE
+ t4V3sWBo6o59ZUywLv6LH9HJBCZdXrJKHGFBRCuKLz9tT9FluqvdUl5kza3DwUZqlqLVruLcXkW
+ lEcUsYoHYPPoPzu9ZAjZiHGJ9uLQZA7wiYVvnETUHi+QO36VT7fNS7aghZmEY44IBrFJN8sOgPu
+ JIVvm6rS3M/RDj5SUsSiAdNWAtrefbcLJxW+j
+X-Google-Smtp-Source: AGHT+IGSZgVi8a4ONdtjF7+uNRguyN8Xn3B71Lmx7xCfC5fcG/JmZoeL4oP6TQwKjqTxGU0oRlOa5A==
+X-Received: by 2002:a05:6000:2d11:b0:3a4:e1e1:7779 with SMTP id
+ ffacd0b85a97d-3a6d130707cmr5965156f8f.32.1750681260192; 
+ Mon, 23 Jun 2025 05:21:00 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6d0f10138sm9313250f8f.3.2025.06.23.05.20.48
+ ffacd0b85a97d-3a6d0ec947fsm9340220f8f.0.2025.06.23.05.20.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 23 Jun 2025 05:20:49 -0700 (PDT)
+ Mon, 23 Jun 2025 05:20:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>, qemu-arm@nongnu.org,
@@ -79,18 +79,18 @@ Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>, qemu-arm@nongnu.org,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v3 24/26] tests/functional: Require TCG to run Aarch64
- imx8mp-evk test
-Date: Mon, 23 Jun 2025 14:18:43 +0200
-Message-ID: <20250623121845.7214-25-philmd@linaro.org>
+Subject: [PATCH v3 26/26] tests/functional: Expand Aarch64 SMMU tests to run
+ on HVF accelerator
+Date: Mon, 23 Jun 2025 14:18:45 +0200
+Message-ID: <20250623121845.7214-27-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250623121845.7214-1-philmd@linaro.org>
 References: <20250623121845.7214-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,27 +113,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The imx8mp-evk machine can only run with the TCG accelerator.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/test_aarch64_imx8mp_evk.py | 1 +
- 1 file changed, 1 insertion(+)
+ tests/functional/test_aarch64_smmu.py | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/tests/functional/test_aarch64_imx8mp_evk.py b/tests/functional/test_aarch64_imx8mp_evk.py
-index 638bf9e1310..99ddcdef835 100755
---- a/tests/functional/test_aarch64_imx8mp_evk.py
-+++ b/tests/functional/test_aarch64_imx8mp_evk.py
-@@ -49,6 +49,7 @@ def setUp(self):
-                      self.DTB_OFFSET, self.DTB_SIZE)
+diff --git a/tests/functional/test_aarch64_smmu.py b/tests/functional/test_aarch64_smmu.py
+index c65d0f28178..e0f4a922176 100755
+--- a/tests/functional/test_aarch64_smmu.py
++++ b/tests/functional/test_aarch64_smmu.py
+@@ -17,7 +17,7 @@
  
-     def test_aarch64_imx8mp_evk_usdhc(self):
-+        self.require_accelerator("tcg")
-         self.set_machine('imx8mp-evk')
-         self.vm.set_console(console_index=1)
-         self.vm.add_args('-m', '2G',
+ from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
+ from qemu_test import BUILD_DIR
+-from qemu.utils import kvm_available
++from qemu.utils import kvm_available, hvf_available
+ 
+ 
+ class SMMU(LinuxKernelTest):
+@@ -45,11 +45,17 @@ def set_up_boot(self, path):
+         self.vm.add_args('-device', 'virtio-net,netdev=n1' + self.IOMMU_ADDON)
+ 
+     def common_vm_setup(self, kernel, initrd, disk):
+-        self.require_accelerator("kvm")
++        if hvf_available(self.qemu_bin):
++            accel = "hvf"
++        elif kvm_available(self.qemu_bin):
++            accel = "kvm"
++        else:
++            self.skipTest("Neither HVF nor KVM accelerator is available")
++        self.require_accelerator(accel)
+         self.require_netdev('user')
+         self.set_machine("virt")
+         self.vm.add_args('-m', '1G')
+-        self.vm.add_args("-accel", "kvm")
++        self.vm.add_args("-accel", accel)
+         self.vm.add_args("-cpu", "host")
+         self.vm.add_args("-machine", "iommu=smmuv3")
+         self.vm.add_args("-d", "guest_errors")
 -- 
 2.49.0
 
