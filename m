@@ -4,75 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F09D0C77B7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 20:41:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 538C7C77B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 20:44:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTnyV-0004E0-Ja; Mon, 23 Jun 2025 16:41:09 -0400
+	id 1uTo12-0005et-T9; Mon, 23 Jun 2025 16:43:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uTny2-0004Bh-Up
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 16:40:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mclark@anarch128.org>)
+ id 1uTo10-0005ed-FP
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 16:43:42 -0400
+Received: from anarch128.org ([2001:4801:7825:104:be76:4eff:fe10:52ae])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uTny0-0007Hp-SW
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 16:40:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750711235;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5WfDlh6oLa/hsPnbFUrpXBUJn7SwJaUhTExm6UmG10k=;
- b=byQQNCAOUUCLKsS9OnFzjk5xhnJDDBtGJx76Bh9FKMV6yI4CoO0TkDBHlX4qpF75Pzb6XE
- gSfr9wZb/UWOImmh8bdhSk8UXx4tMYEDZd7rkgDrfAmCqsxjr4CR8ujzCJWMGLmk+auqp+
- 6wLzxD3AdRMeZ3nvCNE/o2EFQPp/RQQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-262-pNk0I4JQM3mq034_5dptoA-1; Mon,
- 23 Jun 2025 16:40:31 -0400
-X-MC-Unique: pNk0I4JQM3mq034_5dptoA-1
-X-Mimecast-MFC-AGG-ID: pNk0I4JQM3mq034_5dptoA_1750711230
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 505FB19560AA; Mon, 23 Jun 2025 20:40:30 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.111])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DFD2230001A1; Mon, 23 Jun 2025 20:40:26 +0000 (UTC)
-Date: Mon, 23 Jun 2025 15:40:23 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>, Stefan Weil <sw@weilnetz.de>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Stefano Garzarella <sgarzare@redhat.com>, qemu-block@nongnu.org,
- Aarushi Mehta <mehta.aaru20@gmail.com>, hibriansong@gmail.com
-Subject: Re: [PATCH v2 12/12] block/io_uring: use non-vectored read/write
- when possible
-Message-ID: <smkbvvqfmn4lxcmjaqr3ola3v7mabm6miqrp75q3lr4sxko4iw@jjgi7dosecfw>
-References: <20250620000829.1426291-1-stefanha@redhat.com>
- <20250620000829.1426291-13-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <mclark@anarch128.org>)
+ id 1uTo0y-0007Vw-GI
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 16:43:42 -0400
+Received: from [192.168.1.4] (dynamic-cpe-pool.orcon.net.nz [121.99.116.25]
+ (may be forged)) (authenticated bits=0)
+ by anarch128.org (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTPSA id
+ 55NKhRTW3857775
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO)
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 20:43:30 GMT
+Authentication-Results: anarch128.org; auth=pass;
+ dkim=pass (2048-bit rsa key sha256) header.d=anarch128.org
+ header.i=@anarch128.org header.b=fjQN8mj2 header.a=rsa-sha256 header.s=100003;
+ x-return-mx=pass header.domain=anarch128.org policy.is_org=yes (MX Records
+ found: mail.anarch128.org); 
+ x-return-mx=pass smtp.domain=anarch128.org policy.is_org=yes (MX Records
+ found: mail.anarch128.org)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=anarch128.org;
+ s=100003; t=1750711411;
+ bh=cmegmHhQZCHQU4kgU3vgO5ur5t4ZLU1mp0ZaQn0nX04=;
+ h=Date:Subject:From:To:References:In-Reply-To:From;
+ b=fjQN8mj2KNRe3YPeSs629vn0ioD4q5FtfTI1TQ6DDA7OU3DxO9ByNMJKYc5EdvoYE
+ LNpkJ5hP3tQ1JTf5osa74JamGLeK519qBzq50RutEg/BMgQ7gX+LXJe+FlZxgv/nMH
+ zkdAzGLEKc+VyiklYNIKcsCWEdMAEChhQQl6llO4TR7D+HxC/npjSGOI4fePo9r3e3
+ j/sxpl3q+991SWoXIetIOGFwQIf5T+sBz9xVdLYCs0KJMmpvkI4Uob3KKVSkiPrss7
+ 4xPYoPv6ZsR4gRP3zrdsCKOBbupeorkuW5KBvPmPR996yWqHKxTgcddYehO3wK0OFk
+ zB7uwZtt4lN0Q==
+Message-ID: <39e96cbe-16f6-401c-a401-5eeb791eeab1@anarch128.org>
+Date: Tue, 24 Jun 2025 08:43:21 +1200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250620000829.1426291-13-stefanha@redhat.com>
-User-Agent: NeoMutt/20250510
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: page coloring and accelerated shadow paging
+From: Michael Clark <mclark@anarch128.org>
+To: qemu-devel <qemu-devel@nongnu.org>
+References: <8fcfc520-e3e1-46d9-aeed-30ba6486f82a@anarch128.org>
+Content-Language: en-US
+In-Reply-To: <8fcfc520-e3e1-46d9-aeed-30ba6486f82a@anarch128.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4801:7825:104:be76:4eff:fe10:52ae;
+ envelope-from=mclark@anarch128.org; helo=anarch128.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,44 +78,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 19, 2025 at 08:08:28PM -0400, Stefan Hajnoczi wrote:
-> The io_uring_prep_readv2/writev2() man pages recommend using the
-> non-vectored read/write operations when possible for performance
-> reasons.
-> 
-> I didn't measure a significant difference but it doesn't hurt to have
-> this optimization in place.
-> 
-> Suggested-by: Eric Blake <eblake@redhat.com>
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->  block/io_uring.c | 29 ++++++++++++++++++++++++-----
->  1 file changed, 24 insertions(+), 5 deletions(-)
-> 
-> diff --git a/block/io_uring.c b/block/io_uring.c
-> index dd930ee57e..bbefbddcc0 100644
-> --- a/block/io_uring.c
-> +++ b/block/io_uring.c
-> @@ -49,12 +49,24 @@ static void luring_prep_sqe(struct io_uring_sqe *sqe, void *opaque)
->  #ifdef HAVE_IO_URING_PREP_WRITEV2
->      {
->          int luring_flags = (flags & BDRV_REQ_FUA) ? RWF_DSYNC : 0;
-> -        io_uring_prep_writev2(sqe, fd, qiov->iov,
-> -                              qiov->niov, offset, luring_flags);
-> +        if (luring_flags != 0 || qiov->niov > 1) {
-> +            io_uring_prep_writev2(sqe, fd, qiov->iov,
-> +                                  qiov->niov, offset, luring_flags);
-> +        } else {
-> +            /* The man page says non-vectored is faster than vectored */
-> +            struct iovec *iov = qiov->iov;
-> +            io_uring_prep_write(sqe, fd, iov->iov_base, iov->iov_len, offset);
-> +        }
+Hi All,
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
+On 6/23/25 08:47, Michael Clark wrote:
+[snipped]
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+> btw this started as a sketch in a gist in June 20th of last year:
+> 
+> https://gist.github.com/michaeljclark/8f9b81e5e40488035dc252c9da3ecc2e
+> 
+> # the glyph architecture
+> 
+> current: https://metaparadigm.com/~mclark/glyph.pdf
+> latest: https://metaparadigm.com/~mclark/glyph-20250622.pdf
+> 
+> a clean-slate, portable virtual machine designed for efficient binary
+> translation to X86 system mode targeting features like SMAP, SMEP,
+> APIC, TSC, and PCI-style message signaled interrupts, with a system
+> model that favors simplicity e.g., only supervisor/user modes and no
+> interrupt delegation. the fundamental architectural design elements,
+> such as the variable length instruction packet format and split
+> instruction and constant streams are in place, the 16-bit compressed
+> opcodes are fully specified, and there is now the beginnings of a
+> system or protected mode. yet there is still a lot of work for it to
+> virtualize a target like X86+AVX-512 with address translation.
+> 
+> ## address translation
+> 
+> adopts a page table format designed for shadow paging on X86. the page
+> translation system has a physical address permission check feature and
+> adds PTE.T (translate bit) for optional hardware zoning of translation
+> pages. in addition to virtual memory, the translation system performs
+> optional per-page physical permission checks, and physical self-mapping
+> validation with zoning for PTE pages that have the PTE.T bit set.
+> 
+> the architecture introduces the concept of a translation address which
+> are addresses boxed with an address space prefix (AS) designed to
+> provide a canonical address form for user and supervisor virtual
+> addresses as well as physical addresses, to make it easier to implement
+> meta-circular emulation for nested page translation with translation
+> agnostic source and destination address spaces.
 
+there were some errata related to the spec yesterday but the bones and
+intention is there. as I haven't seen page tables deployed in this way
+to check self maps in a physical tree; and the primary intent, which is
+to set permission for PTE zones and page table page monitoring. so
+there may be some more bugs when we try to test it out in a simulator.
+
+- https://github.com/michaeljclark/glyph/
+- https://metaparadigm.com/~mclark/glyph-20250623.pdf
+
+errata:
+
+- swap the supervisor and physical address space prefixes
+   to be consistent with Linux kernel address space on x86-64.
+- physical permission self-mapping check is only on leaf entries
+- fix rename P bit to T bit in 64-bit page table entry structure
+
+turns out that if we add an 'internal' AS it would be ..FFFE0000..
+so we could think about adding an internal address space prefix.
+
+Michael.
 
