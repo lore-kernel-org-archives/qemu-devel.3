@@ -4,104 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDBC6C7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 12:00:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D43E2C7115B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 12:00:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTfpn-00044h-SB; Mon, 23 Jun 2025 07:59:35 -0400
+	id 1uTfqV-0004g2-MG; Mon, 23 Jun 2025 08:00:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTfpm-00044F-9b
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 07:59:34 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uTfpf-0005re-7w
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 07:59:33 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3a4fd1ba177so2599893f8f.0
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 04:59:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750679965; x=1751284765; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZNl0GNUoL+pUzh6aZuBV7rBwC2JelgKVfHJY1PQe040=;
- b=sEl3dQpogD4Ig1BvAOtVDwLyRJQCfaPEHko9SONaYPqhq2ktlvrmG5PeLZVp96+NeH
- 3gcoFyop6mT6QhkaIAJeWLAp7o6QlFH24zM3f1mHf2fBYt3cki90uzLA879LyAhUyixA
- aJfQIsEQ1OPPkLPjIlNJWPrJ9W37IlqBI6Ffb10vkofNN7nf267wbSBxmnL5XfQaxU4V
- F01lfXimTfhk7jFHcggd3DZNCfP0zvoug/TKLaSzzD0J0Ao5jSuFW27W1Cs6OLp2V5na
- wyuJ7FyH0DhaoCMksPbP1yyMlTaRjeZUNW6CzD0epAwDZvF5xtacVF1EIFI75g2fvaKx
- DOMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750679965; x=1751284765;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZNl0GNUoL+pUzh6aZuBV7rBwC2JelgKVfHJY1PQe040=;
- b=YFk2qDBeVqic8SrqIo2cT4sw/wINm/HqWAy0EeFOz6uBILnpVmnzLDVFD1Hc9y1qkq
- aB4nKI88XsDA0lEcxoMH2ngupYATSI6bE0wwjMCqwtf1ts3Sg6SVEnDjrG/KcPS358t2
- KYTjq0mln7N8fo++gxCKvtXyefACSBT7ByyloZRDdcyg4Q1wcFe7ecJX2bsNvOUpcxAU
- OSWruUXn/+YuRPNvtEPPxGO3CGXo2WswCau4S5HuhDm3vM7dDjgYxXQkzjdLN6iH11DS
- beQgciyCfqfrgwmFwVe30E+p8ogYIy0mHTVDFNcJqVTLKZcZRmqbeuaYNvlE1vsIzgEq
- c6kw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXKuVXazi4nuRRfBRHRnj849+1l3jEedvYqyG66NbCALQxTjzeDKjWPn/vD9B4nT+xPKfNUA/H9oGVG@nongnu.org
-X-Gm-Message-State: AOJu0YxjSrfuDlscXkDfksKFS/VtoldF08LEng9pVuuJhyAyZjkEBzrg
- vLb1bO02JQUWXo5WzyzOR+nIO9hb8HCD6regexyA3Ed2eFx/86kcj2caOwCt7RaPHUA=
-X-Gm-Gg: ASbGncs89UQVu8bRuw/V2hEnuOva/TxaZwwdO+Pl9K6bLWuKyG+NTuVsuGfO3LfEysU
- Z7pojFIdL1Q4K1LnbIbDK6faarJpTD8+OX8YQ6Q5nu8U42+Y/RbZvT02F7jJuqS2CeOWKZdfSob
- TYPJxzWHH6XyXKGgiB93yCtEDqEGe2sV4+FE3V4mcULsRF3DBj24DPrdIRYu4TFEW/cj+pJLEaR
- Z0latoFC1SmgQXEaasrLDr34aS8JW/IpyHbWcZpr9tdqwUqDjIn2uDgum6xRckZ0A3ANZ4Lxw/V
- 4H8uevX/TNcaT9m6hDBUGDYSRBtrQrGZAuXwj1Ym1oF7DZUfvuP+FaX7+TeGTSqxvqffi8x1q3q
- DR8p/ajSyfYeLDSUDeUlMzB6IfQF2ZOIUZ+eTGIq3
-X-Google-Smtp-Source: AGHT+IHOxtkdXSM3EMBB+rtXAYT6HLDRhKe1XTMmCY2e3R+6NO7I2w8zqwom52rHbrwAtgyuUqWVsQ==
-X-Received: by 2002:a05:6000:2010:b0:3a3:598f:5a97 with SMTP id
- ffacd0b85a97d-3a6d2799df4mr8969438f8f.9.1750679964791; 
- Mon, 23 Jun 2025 04:59:24 -0700 (PDT)
-Received: from [192.168.69.167] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6d128cf7asm9177773f8f.100.2025.06.23.04.59.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Jun 2025 04:59:24 -0700 (PDT)
-Message-ID: <be71c7cc-a5ba-4ba5-b697-60814b712eea@linaro.org>
-Date: Mon, 23 Jun 2025 13:59:22 +0200
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uTfqT-0004cF-1W; Mon, 23 Jun 2025 08:00:17 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uTfqR-00066b-0P; Mon, 23 Jun 2025 08:00:16 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bQmmT12txz6HK0P;
+ Mon, 23 Jun 2025 19:57:45 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 1E09A1402EF;
+ Mon, 23 Jun 2025 20:00:12 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 23 Jun
+ 2025 14:00:11 +0200
+Date: Mon, 23 Jun 2025 13:00:09 +0100
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ <linuxarm@huawei.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <jgg@nvidia.com>, <nicolinc@nvidia.com>,
+ <ddutile@redhat.com>, <berrange@redhat.com>, <imammedo@redhat.com>,
+ <nathanc@nvidia.com>, <mochs@nvidia.com>, <smostafa@google.com>,
+ <gustavo.romero@linaro.org>, <wangzhou1@hisilicon.com>,
+ <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
+ <zhangfei.gao@linaro.org>
+Subject: Re: [PATCH v5 11/11] qtest/bios-tables-test: Update tables for
+ smmuv3 tests
+Message-ID: <20250623130009.0000238d@huawei.com>
+In-Reply-To: <20250623094230.76084-12-shameerali.kolothum.thodi@huawei.com>
+References: <20250623094230.76084-1-shameerali.kolothum.thodi@huawei.com>
+ <20250623094230.76084-12-shameerali.kolothum.thodi@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 23/26] tests/functional: Restrict nexted Aarch64 Xen
- test to TCG
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>,
- David Woodhouse <dwmw2@infradead.org>
-Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Radoslaw Biernacki <rad@semihalf.com>, Alexander Graf <agraf@csgraf.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Bernhard Beschow <shentey@gmail.com>,
- Cleber Rosa <crosa@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, kvm@vger.kernel.org,
- qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, John Snow <jsnow@redhat.com>
-References: <20250620130709.31073-1-philmd@linaro.org>
- <20250620130709.31073-24-philmd@linaro.org>
- <497fc7b1-dfd2-49ad-938c-47fca1153590@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <497fc7b1-dfd2-49ad-938c-47fca1153590@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100005.china.huawei.com (7.191.160.25) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,39 +74,18 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/6/25 10:11, Thomas Huth wrote:
-> On 20/06/2025 15.07, Philippe Mathieu-Daudé wrote:
->> On macOS this test fails:
->>
->>    qemu-system-aarch64: mach-virt: HVF does not support providing 
->> Virtualization extensions to the guest CPU
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   tests/functional/test_aarch64_xen.py | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/tests/functional/test_aarch64_xen.py b/tests/functional/ 
->> test_aarch64_xen.py
->> index 339904221b0..261d796540d 100755
->> --- a/tests/functional/test_aarch64_xen.py
->> +++ b/tests/functional/test_aarch64_xen.py
->> @@ -33,6 +33,7 @@ def launch_xen(self, xen_path):
->>           """
->>           Launch Xen with a dom0 guest kernel
->>           """
->> +        self.require_accelerator("tcg") # virtualization=on
-> 
-> What about kvm (or xen) as accelerator? Would that work?
+On Mon, 23 Jun 2025 10:42:30 +0100
+Shameer Kolothum <shameerali.kolothum.thodi@huawei.com> wrote:
 
-IIUC this tests boots a nested Xen guest running at Aarch64 EL2,
-and at this point we can only run EL2/EL3 on TCG. HVF and KVM
-can not for now (we are working on it).
+> For the legacy smmuv3 test case, IORT has a single SMMUV3 node and
+> a Root Complex node with three ID mappings of which two points to
+> the SMMUv3 node and the remaining one points to ITS.
+I haven't checked the blobs line by line but looks correct to me.
 
-I don't know if Xen can accelerate EL2, it would need support for
-such hardware (like the Apple Silicon M4). Cc'ing Xen folks to
-figure it out.
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 
