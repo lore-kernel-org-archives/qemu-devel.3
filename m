@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B9A4C77B7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50C6EC7115B
 	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 20:08:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTnRj-000602-Gk; Mon, 23 Jun 2025 16:07:15 -0400
+	id 1uTnRp-00062x-Vf; Mon, 23 Jun 2025 16:07:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uTnRi-0005zn-7d
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 16:07:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uTnRo-00062P-Bg
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 16:07:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uTnRg-0003Wa-PW
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 16:07:13 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uTnRm-0003YK-H8
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 16:07:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750709232;
+ s=mimecast20190719; t=1750709237;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JPAbS7kbUQ6XF3VFXAZzn4GVMjZi6hGPV20GzFZdjtU=;
- b=eeI58a7I0UJOSOOuU3DaSGa0X9r5IXBQ9bPtqLBzZJfVaWckudUq+CtMBp3gT3TKOoAjPN
- f+7vaufxYsjQ+45Ud3PrXfM5yEwglEyD5O2Y/B5XN7P+gFAaPWKqrXGyzB8ChrBNNoAq5M
- H1v57v0YKjmMRetGIVqGYJXQXmT+syk=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UfapCsZl0kYjzSD6EX3sg9lpxnZK3jQJXXQJ8voRQa8=;
+ b=L4Aot1g3HEj43XB42V+pvWVTk3yDLVg8U5V/3jhs8fDMddEKjNnLYhSzmmePtyHGts0bxy
+ 6ATnZkOcpWoE6huid88ThpfUC5v4oQbeEDNJ0tszD6SavFZoeEHisCuvqhETnEL6a6lGf4
+ tSwTvp9H55Mv1e+JjdDFkV5OgxhOcdU=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-198-g1OqxblbOemHS4cXVOnwpw-1; Mon, 23 Jun 2025 16:07:10 -0400
-X-MC-Unique: g1OqxblbOemHS4cXVOnwpw-1
-X-Mimecast-MFC-AGG-ID: g1OqxblbOemHS4cXVOnwpw_1750709229
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6fb4eed1914so101735176d6.0
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 13:07:09 -0700 (PDT)
+ us-mta-113-xa774GB-MpqDT_LNxgq0kQ-1; Mon, 23 Jun 2025 16:07:16 -0400
+X-MC-Unique: xa774GB-MpqDT_LNxgq0kQ-1
+X-Mimecast-MFC-AGG-ID: xa774GB-MpqDT_LNxgq0kQ_1750709235
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6fb32203ca6so99042556d6.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 13:07:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750709228; x=1751314028;
+ d=1e100.net; s=20230601; t=1750709235; x=1751314035;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JPAbS7kbUQ6XF3VFXAZzn4GVMjZi6hGPV20GzFZdjtU=;
- b=qDxaQc3qHa1pQCLJQaAvvolvdH0GLhmXEUfUEl6svJmT3z4mEB/lfr8gmkm8IhexuZ
- +6AVT/znLBuXda27GloR9wrsyT5R41N5JNRklPfiMU3Zhyt4Dn6YNMn2FWz6JQ6PLl2T
- 2ObFzv+VQiSZDyHLfhtmMIql/fjp/XvvMFWPkSBfYwUd1Zp8934R30nt+Ny3VdVdzSOc
- Jb2QGh7BMsjHdVKImg34heZk63ryZK2sPCV+GMaslVpAKgZuiKFy5tmYwT+4L6Ucm/lR
- OAVs8q/WXgYuDl7H7wSR7sqLST+6d6SKV7UvXNhjvq2RSfvFk6vg9H5iPsxORJ370ccN
- yGbA==
-X-Gm-Message-State: AOJu0YxzQwwTfUWkR7Gm+X4iyh1Qg/Zyckit2QrEmXVLU7oOgtPTgzFD
- V7n8eXcpWv2WPAaV4XkXDyx2gjajP0j0X0z8OKah/ynVSXG1uUAFK0/GK5E+VrpTgBHxNM2sut4
- Ptjo+tCXOTILwwVOrr66nPMVZNdYyuHYjGYHJS+R/hQWDeIfvq8hf/wWQgNQViyHvyxgUvX7QFF
- pafUXiDAcVLX174tH1EcZmrPdzfmX5y4p+478UXg==
-X-Gm-Gg: ASbGncsCrBFbgEwjWooR3xGkWP8cN7zeLSikXkMeiXqWD7H62iGV4del1psOOTMUQVN
- Q6HTdbR9QhNntAqKdZKinYAewqb5x0ALawZ5dHv59pOclDs4U5nc5gRdpFg4Wzp6QPtXkfMC/q+
- D/0GC9Km7XUBS+8O+IF9c5EEaGSHVqlqnMASq/apKs6Mi55sBrRpXRYUb6LwY5lbIcytMv4g+by
- 37HSFehXIKiizioldHAZ5dPKCrVfiUlMHfTUaLfv7rwD4ouJnz3REIJzn5tRx+NlRsvI/MJhnv+
- BEb4ZZ3O+IE=
-X-Received: by 2002:a05:6214:4b11:b0:6f5:426c:1d1 with SMTP id
- 6a1803df08f44-6fd0a57a411mr228481396d6.34.1750709228583; 
- Mon, 23 Jun 2025 13:07:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGdEHpYd1fnxyu2z6UdQOpxBhS4MkasrO9OTK306GaXLjJou91TYcK6DhaU5cTT5riboBG2HQ==
-X-Received: by 2002:a05:6214:4b11:b0:6f5:426c:1d1 with SMTP id
- 6a1803df08f44-6fd0a57a411mr228481036d6.34.1750709228131; 
- Mon, 23 Jun 2025 13:07:08 -0700 (PDT)
+ bh=UfapCsZl0kYjzSD6EX3sg9lpxnZK3jQJXXQJ8voRQa8=;
+ b=vQMaQ8CWmmP1DQ6O2SA3MAQ8IgCAodRMdhWLhNVPohIMGA2w5JYCZA9A4LX6/TFob/
+ FtKgiE39Ermh9OrthZoPF1eC5K1oZB/4pj37SGnP7yVmRL43+ElWq7ZR/JB73Qr6R4HX
+ 18S41nQxlni7iHUcUiZ4rm48Jw4fP3lD3Qi++nBeNt8p8HjCWuLx/RqiaSjc9vSxIUGW
+ TT8IFDZGrYFt0u6Xcb+6pyGK2sQtvBE3v20eop9T8X8pT4SMuFC05t0syRjCG6+i3rhC
+ kIEKpFSZ/ST96XRnUTW6h52PEUkZwQq+Q67HwkjyXreADh5TrtCb/I4czB6AtqQ2edj9
+ AF1A==
+X-Gm-Message-State: AOJu0YwpRaRY0cFTXEOxDLOwOrwbDvPHpiiUcKJJ1asTFKpkH2N/laF6
+ 2LVjHwjYRj31UyC08gYTRP56o7Tm5aOmEEefbH1dEWFm0hbKBocAg5VyL/PTo8PM4bIwxpU8DHs
+ JMj/UmIFZFeV37nS9AijGuqKEM2bPxnbx/sIQcFi+4gNNIP6kv8hLA+VqgGrwNdYWSz9mHQL31u
+ wWW+ckt8M1UPfsA9NlQuhmphDE5WTNZzdPICe/9Q==
+X-Gm-Gg: ASbGnctvov+kK+u5XQZmV4iXRnFRMwLXEciYagQFCKqlxnYJh8dWsP1eu4oyPs9lzXH
+ WFnc2bFeej9KVW3R7ynXPpZNqv5YczUFuL+7//7eOYd23dzGubZaoSW8H4rg+XciVoTaJMkALFP
+ R4lTQzhfmFvdBGLqInA8VetO93NlLXxROcWz00h/+1CPCN2QTMF6kL/h8yLHtGhcE6+lQDchA62
+ EIIg76zkv7p0o+uy2Rc4d0Nmf9QswFj3djCuUlDk7zB38mThn9LNuyE3S6nZEgrAskmjB088AxS
+ 8LZ+Ia3PwhU=
+X-Received: by 2002:a05:6214:2f92:b0:6fa:c3e4:4251 with SMTP id
+ 6a1803df08f44-6fd0a48c2b9mr239956496d6.15.1750709235260; 
+ Mon, 23 Jun 2025 13:07:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEWyP1V/g+yzfyABeqhnxTNWZcPgH7gHU3iOvPv6n7FaHcfi+1VPnEz6HlCV6QxBELaHZc66w==
+X-Received: by 2002:a05:6214:2f92:b0:6fa:c3e4:4251 with SMTP id
+ 6a1803df08f44-6fd0a48c2b9mr239955876d6.15.1750709234802; 
+ Mon, 23 Jun 2025 13:07:14 -0700 (PDT)
 Received: from x1.com ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6fd095a775bsm48427976d6.112.2025.06.23.13.07.07
+ 6a1803df08f44-6fd095a775bsm48427976d6.112.2025.06.23.13.07.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Jun 2025 13:07:07 -0700 (PDT)
+ Mon, 23 Jun 2025 13:07:14 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org,
 	Stefan Hajnoczi <stefanha@redhat.com>
 Cc: peterx@redhat.com, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- "Chaney, Ben" <bchaney@akamai.com>
-Subject: [PULL 06/11] migration: Don't sync volatile memory after migration
- completes
-Date: Mon, 23 Jun 2025 16:06:51 -0400
-Message-ID: <20250623200656.1882674-7-peterx@redhat.com>
+ Chenyi Qiang <chenyi.qiang@intel.com>, Alexey Kardashevskiy <aik@amd.com>
+Subject: [PULL 11/11] physmem: Support coordinated discarding of RAM with
+ guest_memfd
+Date: Mon, 23 Jun 2025 16:06:56 -0400
+Message-ID: <20250623200656.1882674-12-peterx@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250623200656.1882674-1-peterx@redhat.com>
 References: <20250623200656.1882674-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -109,35 +109,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Chaney, Ben" <bchaney@akamai.com>
+From: Chenyi Qiang <chenyi.qiang@intel.com>
 
-Syncing volatile memory provides no benefit, instead it can cause
-performance issues in some cases.  Only sync memory that is marked as
-non-volatile after migration completes on destination.
+A new field, attributes, was introduced in RAMBlock to link to a
+RamBlockAttributes object, which centralizes all guest_memfd related
+information (such as fd and status bitmap) within a RAMBlock.
 
-Signed-off-by: Ben Chaney <bchaney@akamai.com>
-Fixes: bd108a44bc29 (migration: ram: Switch to ram block writeback)
-Link: https://lore.kernel.org/r/1CC43F59-336F-4A12-84AD-DB89E0A17A95@akamai.com
+Create and initialize the RamBlockAttributes object upon ram_block_add().
+Meanwhile, register the object in the target RAMBlock's MemoryRegion.
+After that, guest_memfd-backed RAMBlock is associated with the
+RamDiscardManager interface, and the users can execute RamDiscardManager
+specific handling. For example, VFIO will register the
+RamDiscardListener and get notifications when the state_change() helper
+invokes.
+
+As coordinate discarding of RAM with guest_memfd is now supported, only
+block uncoordinated discard.
+
+Tested-by: Alexey Kardashevskiy <aik@amd.com>
+Reviewed-by: Alexey Kardashevskiy <aik@amd.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+Link: https://lore.kernel.org/r/20250612082747.51539-6-chenyi.qiang@intel.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/ram.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/system/ramblock.h |  1 +
+ accel/kvm/kvm-all.c       |  9 +++++++++
+ system/physmem.c          | 23 +++++++++++++++++++++--
+ 3 files changed, 31 insertions(+), 2 deletions(-)
 
-diff --git a/migration/ram.c b/migration/ram.c
-index fd8d83b63c..024d8b3d03 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -3680,7 +3680,9 @@ static int ram_load_cleanup(void *opaque)
-     RAMBlock *rb;
+diff --git a/include/system/ramblock.h b/include/system/ramblock.h
+index 1bab9e2dac..87e847e184 100644
+--- a/include/system/ramblock.h
++++ b/include/system/ramblock.h
+@@ -46,6 +46,7 @@ struct RAMBlock {
+     int fd;
+     uint64_t fd_offset;
+     int guest_memfd;
++    RamBlockAttributes *attributes;
+     size_t page_size;
+     /* dirty bitmap used during migration */
+     unsigned long *bmap;
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index a31778341c..d095d1b98f 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -3091,6 +3091,15 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
+     addr = memory_region_get_ram_ptr(mr) + section.offset_within_region;
+     rb = qemu_ram_block_from_host(addr, false, &offset);
  
-     RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
--        qemu_ram_block_writeback(rb);
-+        if (memory_region_is_nonvolatile(rb->mr)) {
-+            qemu_ram_block_writeback(rb);
++    ret = ram_block_attributes_state_change(RAM_BLOCK_ATTRIBUTES(mr->rdm),
++                                            offset, size, to_private);
++    if (ret) {
++        error_report("Failed to notify the listener the state change of "
++                     "(0x%"HWADDR_PRIx" + 0x%"HWADDR_PRIx") to %s",
++                     start, size, to_private ? "private" : "shared");
++        goto out_unref;
++    }
++
+     if (to_private) {
+         if (rb->page_size != qemu_real_host_page_size()) {
+             /*
+diff --git a/system/physmem.c b/system/physmem.c
+index a8a9ca309e..ff0ca40222 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1916,7 +1916,7 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+         }
+         assert(new_block->guest_memfd < 0);
+ 
+-        ret = ram_block_discard_require(true);
++        ret = ram_block_coordinated_discard_require(true);
+         if (ret < 0) {
+             error_setg_errno(errp, -ret,
+                              "cannot set up private guest memory: discard currently blocked");
+@@ -1931,6 +1931,24 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+             goto out_free;
+         }
+ 
++        /*
++         * The attribute bitmap of the RamBlockAttributes is default to
++         * discarded, which mimics the behavior of kvm_set_phys_mem() when it
++         * calls kvm_set_memory_attributes_private(). This leads to a brief
++         * period of inconsistency between the creation of the RAMBlock and its
++         * mapping into the physical address space. However, this is not
++         * problematic, as no users rely on the attribute status to perform
++         * any actions during this interval.
++         */
++        new_block->attributes = ram_block_attributes_create(new_block);
++        if (!new_block->attributes) {
++            error_setg(errp, "Failed to create ram block attribute");
++            close(new_block->guest_memfd);
++            ram_block_coordinated_discard_require(false);
++            qemu_mutex_unlock_ramlist();
++            goto out_free;
 +        }
++
+         /*
+          * Add a specific guest_memfd blocker if a generic one would not be
+          * added by ram_block_add_cpr_blocker.
+@@ -2287,8 +2305,9 @@ static void reclaim_ramblock(RAMBlock *block)
      }
  
-     xbzrle_load_cleanup();
+     if (block->guest_memfd >= 0) {
++        ram_block_attributes_destroy(block->attributes);
+         close(block->guest_memfd);
+-        ram_block_discard_require(false);
++        ram_block_coordinated_discard_require(false);
+     }
+ 
+     g_free(block);
 -- 
 2.49.0
 
