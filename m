@@ -4,102 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AF8BC7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 17:47:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C47E4C77B7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 17:56:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTlFE-000466-0X; Mon, 23 Jun 2025 13:46:12 -0400
+	id 1uTlOP-0005fs-S9; Mon, 23 Jun 2025 13:55:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1uTlFB-00045e-NH; Mon, 23 Jun 2025 13:46:09 -0400
+ (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
+ id 1uTlON-0005fe-5P
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 13:55:39 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1uTlF9-0001HB-Ko; Mon, 23 Jun 2025 13:46:09 -0400
+ (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
+ id 1uTlOK-0002I0-PG
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 13:55:38 -0400
 Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55NHCBR6018940;
- Mon, 23 Jun 2025 17:45:45 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55NGU79f025695;
+ Mon, 23 Jun 2025 17:55:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=rcWHz7
- E/XgYMd68/LGNfYeXaxE5OvGxBI5/cieZfMYU=; b=UZpOer67mR9NUOGAEwhMwD
- XMtU2AQc1CpYOPjC2O0IpbuacoTROJzg/84f/O0q1pMNtEvMYRYvSpbSq9ysceDt
- Ilz6CWmfBZrqOnR7BlrnDi2Aodb5AIqOo4J/J/K7iM4LsOUOoM+tFCzDrJm8Ri+Z
- kNa0lJFvjzjQbiYVmylzuUxH17kfNCzQghUj/hevzT0xdzAQajW/QOncrSfj1jnT
- NOwMBZUpnX1EaownNjG9KibGfELw2u/Bg0ihw42+Tspu/LTZPiSlE3r/RpGHOoR/
- yu4FEb7MyhHItEp0UAW1WUSLB9K/IULQAMIYxXirNLOxTesS19ijZyDUs4KNyZsA
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Rsx21n
+ LCfQc7Y795lacGxwmeztx5pYhEMDk8lZrOryk=; b=EtkMTOpJWO9qf3v9r3CuqS
+ E7VqQ4mG/UgsjIt3eRACL75AsIHdMfDPxR8z+Q4PpEl8wGMl78rmkl+KKPCuZF4K
+ s5MxwXhqm4ga3SgjBJ2s5T4ZEBf0jzPwj/lvd5/jRhptSaQneXNG5bc6xCKVuadN
+ tERZ3oPCKjOt2eJmgrs8OjXchElf/qlVjeC1E7G1ZTn+iVLU9ehrre8CwCOQWV9t
+ tDiAHgmPkE6xlv9nq1e2F8K+Y0tIRUKP/6s1f2OyA8/Xj3Nm1D6hEqqg6vsBVR5x
+ JtNN8MV8H6XVlbiOCXdu09y0gjbZLel1dgKa6gHQTKjIUMLnTVAUeXQWQkb6foYw
  ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47dm8j3s49-1
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47dm8j3ta3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 23 Jun 2025 17:45:45 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55NGjBZE030487;
- Mon, 23 Jun 2025 17:45:43 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47e7eyr4ex-1
+ Mon, 23 Jun 2025 17:55:33 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55NF7CfK014748;
+ Mon, 23 Jun 2025 17:55:32 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 47e9s27qra-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 23 Jun 2025 17:45:43 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 55NHjgFJ8651470
+ Mon, 23 Jun 2025 17:55:32 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 55NHtWZK28508842
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 23 Jun 2025 17:45:42 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7BB7F58043;
- Mon, 23 Jun 2025 17:45:42 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 715B55805D;
- Mon, 23 Jun 2025 17:45:41 +0000 (GMT)
-Received: from [9.67.56.107] (unknown [9.67.56.107])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 23 Jun 2025 17:45:41 +0000 (GMT)
-Message-ID: <b3d7e1e0-7424-4348-af2d-0ea45e0883d4@linux.ibm.com>
-Date: Mon, 23 Jun 2025 13:45:40 -0400
+ Mon, 23 Jun 2025 17:55:32 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EBE995805B;
+ Mon, 23 Jun 2025 17:55:31 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F00A658058;
+ Mon, 23 Jun 2025 17:55:29 +0000 (GMT)
+Received: from [9.61.246.2] (unknown [9.61.246.2])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 23 Jun 2025 17:55:29 +0000 (GMT)
+Message-ID: <657a0179-c51f-4e26-9ade-a0efbed732bb@linux.ibm.com>
+Date: Mon, 23 Jun 2025 23:25:28 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: add reviewers for some s390 areas
-To: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
-Cc: thuth@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, alifm@linux.ibm.com, jjherne@linux.ibm.com,
- jrossi@linux.ibm.com, qemu-devel@nongnu.org, zycai@linux.ibm.com
-References: <20250623160030.98281-1-mjrosato@linux.ibm.com>
+Subject: Re: virsh migrate fails when --copy-storage-all option is given!
+To: Peter Krempa <pkrempa@redhat.com>, Kevin Wolf <kwolf@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, farosas@suse.de,
+ devel@lists.libvirt.org
+References: <31711771-7caa-4ea3-b763-45db6930e28e@linux.ibm.com>
+ <aDctC8i7U2J5bmyw@x1.local> <aEA_EtAKVnk0oYej@redhat.com>
+ <aEBJxUIYRaOKBiCL@angien.pipo.sk>
 Content-Language: en-US
-From: Collin Walling <walling@linux.ibm.com>
-In-Reply-To: <20250623160030.98281-1-mjrosato@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Anushree Mathur <anushree.mathur@linux.ibm.com>
+In-Reply-To: <aEBJxUIYRaOKBiCL@angien.pipo.sk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjIzMDEwNiBTYWx0ZWRfX29u4b0PSk4aP
- +qNoaW3qlFFhyJgFDubkIgx7zkT58bfhWtB1GQxDAPknx5gF51epfaQt9mH0jpf1/BZjXmDTgLy
- q0KtKDBjsO9msMfyvdAA755uWB7PWkMgpFynl6XkayJL5NtTumdqQG4JKvaF9UiwaZKtQFAbrR0
- CzmNKA4AZkw3BUZRRTCbW6SAWlJTHkb0TtwW28CHzpeQVW9OSILLK1vWTMMd266vQkM5iJPygxf
- 0qzudoACqy1O085m94WC1wdQddp4tDXv8CwGBr42hbi3u9pTXYf1WewyLvO4DkfhAz0vP12IZWI
- 78c5LHm15+1yOvLbmilScBdpzeJ8B7CpGMzPD943h3ktSXJ2q07LRkYEr4qDqIc5my3Yzidotjn
- VXMxE7f9gIS6zMTeYT4l2o3ojS/xUOAS+ENrFVMKEdN7Nb2dYloRXMJfS7Iqv51vza0yzsYj
-X-Proofpoint-GUID: DjKXjAwThVXP-1uTjx2gJj9wVhcnmOPN
-X-Proofpoint-ORIG-GUID: DjKXjAwThVXP-1uTjx2gJj9wVhcnmOPN
-X-Authority-Analysis: v=2.4 cv=combk04i c=1 sm=1 tr=0 ts=685992c9 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
- a=20KFwNOVAAAA:8 a=9OYD-WBTCgW4Bk79CNoA:9
- a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjIzMDExMCBTYWx0ZWRfX0kqrZw02yyue
+ 9cdRY5eS0khFmkCpSnQmS2j5Nl7tXeyqlOoJt8Ci3wS0BKPxju0Li6ad8vrbRzi+3WV7xN7gONX
+ xbFmDhwDZxuv7ycn7sh1aoDbLbx9CPNUEtIVAnowkWCvm7a77Hs15ZXZoaHEaMSE/5J4m57fbYT
+ Srz12wLmYHDO1UHqIf7+oCJlSCnf9B0qGUXlxyi9QWVeSs9U9mKhS7vHAEogTTvmau1w8RdDNbY
+ lnkC9zZwnFJX24xEUvLE/L3Wh9xGQmILKbjlgTUpBOpGndizyXe99DZNV0Ua9DnxIJdYtG08xF5
+ DgaE910HswQ9wMYELosenJJZMakc9PRf/3bQY+cdDvWM+XC/Z/YjorQuVAsH3SmgxwkEP662Lu8
+ soFc+KCxOcXDU2FlSMOLbdAiFa8ss4Dk4gG9UtQ1ikesEvLBLC/84tHZSemqRatSTpyWA3eO
+X-Proofpoint-GUID: DubDgxQnFJp1dTaQ5XjCWhRI2w3u9ZRg
+X-Proofpoint-ORIG-GUID: DubDgxQnFJp1dTaQ5XjCWhRI2w3u9ZRg
+X-Authority-Analysis: v=2.4 cv=combk04i c=1 sm=1 tr=0 ts=68599515 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=SqMvC5kiAAAA:8 a=VwQbUJbxAAAA:8
+ a=mu_pSlw8ttt8Xw8YjK4A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=ISsoRvfnYWsA:10 a=8sT2JCJfbWsA:10
+ a=_o8VnCo6Hb5Oqlm6Mk7M:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-06-23_05,2025-06-23_07,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  priorityscore=1501
- malwarescore=0 spamscore=0 adultscore=0 mlxlogscore=999 clxscore=1015
+ malwarescore=0 spamscore=0 adultscore=0 mlxlogscore=999 clxscore=1011
  impostorscore=0 suspectscore=0 mlxscore=0 phishscore=0 lowpriorityscore=0
  bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
  adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506230106
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ definitions=main-2506230110
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=anushree.mathur@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -123,107 +127,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/23/25 12:00 PM, Matthew Rosato wrote:
-> To improve review coverage, assign additional people as reviewers for
-> multiple s390 sections.
-> 
-> Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
-> ---
+CC: libvirt devel list
 
-Acked-by: Collin Walling <walling@linux.ibm.com>
+Hi Kevin/Peter,
 
->  MAINTAINERS | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 94c4076127..3ce6fce8ce 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -459,6 +459,8 @@ F: target/ppc/kvm.c
->  S390 KVM CPUs
->  M: Halil Pasic <pasic@linux.ibm.com>
->  M: Christian Borntraeger <borntraeger@linux.ibm.com>
-> +R: Eric Farman <farman@linux.ibm.com>
-> +R: Matthew Rosato <mjrosato@linux.ibm.com>
->  S: Supported
->  F: target/s390x/kvm/
->  F: target/s390x/machine.c
-> @@ -1771,6 +1773,7 @@ S390 Virtio-ccw
->  M: Halil Pasic <pasic@linux.ibm.com>
->  M: Christian Borntraeger <borntraeger@linux.ibm.com>
->  M: Eric Farman <farman@linux.ibm.com>
-> +R: Matthew Rosato <mjrosato@linux.ibm.com>
->  S: Supported
->  F: hw/s390x/
->  F: include/hw/s390x/
-> @@ -1782,6 +1785,8 @@ L: qemu-s390x@nongnu.org
->  S390-ccw boot
->  M: Christian Borntraeger <borntraeger@linux.ibm.com>
->  M: Thomas Huth <thuth@redhat.com>
-> +R: Jared Rossi <jrossi@linux.ibm.com>
-> +R: Zhuoying Cai <zycai@linux.ibm.com>
->  S: Supported
->  F: hw/s390x/ipl.*
->  F: pc-bios/s390-ccw/
-> @@ -1802,6 +1807,7 @@ S390 channel subsystem
->  M: Halil Pasic <pasic@linux.ibm.com>
->  M: Christian Borntraeger <borntraeger@linux.ibm.com>
->  M: Eric Farman <farman@linux.ibm.com>
-> +R: Farhan Ali <alifm@linux.ibm.com>
->  S: Supported
->  F: hw/s390x/ccw-device.[ch]
->  F: hw/s390x/css.c
-> @@ -1822,6 +1828,7 @@ L: qemu-s390x@nongnu.org
->  S390 SCLP-backed devices
->  M: Halil Pasic <pasic@linux.ibm.com>
->  M: Christian Borntraeger <borntraeger@linux.ibm.com>
-> +R: Jason Herne <jjherne@linux.ibm.com>
->  S: Supported
->  F: include/hw/s390x/event-facility.h
->  F: include/hw/s390x/sclp.h
-> @@ -2809,6 +2816,7 @@ F: include/hw/timer/mips_gictimer.h
->  S390 3270 device
->  M: Halil Pasic <pasic@linux.ibm.com>
->  M: Christian Borntraeger <borntraeger@linux.ibm.com>
-> +R: Collin Walling <walling@linux.ibm.com>
->  S: Odd fixes
->  F: include/hw/s390x/3270-ccw.h
->  F: hw/char/terminal3270.c
-> @@ -2818,6 +2826,7 @@ L: qemu-s390x@nongnu.org
->  S390 diag 288 watchdog
->  M: Halil Pasic <pasic@linux.ibm.com>
->  M: Christian Borntraeger <borntraeger@linux.ibm.com>
-> +R: Collin Walling <walling@linux.ibm.com>
->  S: Supported
->  F: hw/watchdog/wdt_diag288.c
->  F: include/hw/watchdog/wdt_diag288.h
-> @@ -2826,6 +2835,7 @@ L: qemu-s390x@nongnu.org
->  S390 storage key device
->  M: Halil Pasic <pasic@linux.ibm.com>
->  M: Christian Borntraeger <borntraeger@linux.ibm.com>
-> +R: Jason Herne <jjherne@linux.ibm.com>
->  S: Supported
->  F: hw/s390x/storage-keys.h
->  F: hw/s390x/s390-skeys*.c
-> @@ -2834,6 +2844,7 @@ L: qemu-s390x@nongnu.org
->  S390 storage attribute device
->  M: Halil Pasic <pasic@linux.ibm.com>
->  M: Christian Borntraeger <borntraeger@linux.ibm.com>
-> +R: Jason Herne <jjherne@linux.ibm.com>
->  S: Supported
->  F: hw/s390x/storage-attributes.h
->  F: hw/s390x/s390-stattrib*.c
-> @@ -2843,6 +2854,7 @@ S390 floating interrupt controller
->  M: Halil Pasic <pasic@linux.ibm.com>
->  M: Christian Borntraeger <borntraeger@linux.ibm.com>
->  M: David Hildenbrand <david@redhat.com>
-> +R: Jason Herne <jjherne@linux.ibm.com>
->  S: Supported
->  F: hw/intc/s390_flic*.c
->  F: include/hw/s390x/s390_flic.h
+Thank you so much for addressing this issue. I tried out few more things and
+here is my analysis:
+
+Even when I removed the readonly option from guest xml I was still seeing the
+issue in migration,In the qemu-commandline I could still see auto-read-only
+option being set as true by default.
+
+Then I tried giving the auto-read-only as false in the guest xml with
+qemu-commandline param, it was actually getting set to false and the migration
+worked!
 
 
--- 
-Regards,
-  Collin
+Steps I tried:
+
+1) Started the guest with adding the snippet in the guest xml with parameters
+as:
+
+   <qemu:commandline>
+     <qemu:arg value='-blockdev'/>
+     <qemu:arg value='driver=file,filename=/disk_nfs/nfs/migrate_root.qcow2,node-name=drivefile,auto-read-only=false'/>
+     <qemu:arg value='-blockdev'/>
+     <qemu:arg value='driver=qcow2,file=drivefile,node-name=drive0'/>
+     <qemu:arg value='-device'/>
+     <qemu:arg value='virtio-blk-pci,drive=drive0,id=virtio-disk0,bus=pci.0,addr=0x5'/>
+   </qemu:commandline>
+
+2) Started the migration and it worked.
+
+Could anyone please clarify from libvirt side what is the change required?
+
+Thanks,
+Anushree-Mathur
+
+
+On 04/06/25 6:57 PM, Peter Krempa wrote:
+> On Wed, Jun 04, 2025 at 14:41:54 +0200, Kevin Wolf wrote:
+>> Am 28.05.2025 um 17:34 hat Peter Xu geschrieben:
+>>> Copy Kevin.
+>>>
+>>> On Wed, May 28, 2025 at 07:21:12PM +0530, Anushree Mathur wrote:
+>>>> Hi all,
+>>>>
+>>>>
+>>>> When I am trying to migrate the guest from host1 to host2 with the command
+>>>> line as follows:
+>>>>
+>>>> date;virsh migrate --live --domain guest1 qemu+ssh://dest/system --verbose
+>>>> --undefinesource --persistent --auto-converge --postcopy
+>>>> --copy-storage-all;date
+>>>>
+>>>> and it fails with the following error message-
+>>>>
+>>>> error: internal error: unable to execute QEMU command 'block-export-add':
+>>>> Block node is read-only
+>>>>
+>>>> HOST ENV:
+>>>>
+>>>> qemu : QEMU emulator version 9.2.2
+>>>> libvirt : libvirtd (libvirt) 11.1.0
+>>>> Seen with upstream qemu also
+>>>>
+>>>> Steps to reproduce:
+>>>> 1) Start the guest1
+>>>> 2) Migrate it with the command as
+>>>>
+>>>> date;virsh migrate --live --domain guest1 qemu+ssh://dest/system --verbose
+>>>> --undefinesource --persistent --auto-converge --postcopy
+>>>> --copy-storage-all;date
+>>>>
+>>>> 3) It fails as follows:
+>>>> error: internal error: unable to execute QEMU command 'block-export-add':
+>>>> Block node is read-only
+>> I assume this is about an inactive block node. Probably on the
+>> destination, but that's not clear to me from the error message.
+> Yes this would be on the destination. Libvirt exports the nodes on
+> destination, source connects and does the blockjob.
+>
+> The destination side is configured the same way as the source side so
+> if the source disk is configured as read-write the destination should be
+> as well
+>
+>>>> Things I analyzed-
+>>>> 1) This issue is not happening if I give --unsafe option in the virsh
+>>>> migrate command
+> This is weird; this shouldn't have any impact.
+>
+>> What does this translate to on the QEMU command line?
+>>
+>>>> 2) O/P of qemu-monitor command also shows ro as false
+>>>>
+>>>> virsh qemu-monitor-command guest1 --pretty --cmd '{ "execute": "query-block"
+> it'd be impossible to execute this on the guest due to timing; you'll
+> need to collect libvirt debug logs to do that:
+>
+> https://www.libvirt.org/kbase/debuglogs.html#tl-dr-enable-debug-logs-for-most-common-scenario
+>
+> I also thing this should be eventually filed in a
+>
+>>>> }'
+>>>> {
+>>>>    "return": [
+>>>>      {
+>>>>        "io-status": "ok",
+>>>>        "device": "",
+>>>>        "locked": false,
+>>>>        "removable": false,
+>>>>        "inserted": {
+>>>>          "iops_rd": 0,
+>>>>          "detect_zeroes": "off",
+>>>>          "image": {
+>>>>            "virtual-size": 21474836480,
+>>>>            "filename": "/home/Anu/guest_anu.qcow2",
+>>>>            "cluster-size": 65536,
+>>>>            "format": "qcow2",
+>>>>            "actual-size": 5226561536,
+>>>>            "format-specific": {
+>>>>              "type": "qcow2",
+>>>>              "data": {
+>>>>                "compat": "1.1",
+>>>>                "compression-type": "zlib",
+>>>>                "lazy-refcounts": false,
+>>>>                "refcount-bits": 16,
+>>>>                "corrupt": false,
+>>>>                "extended-l2": false
+>>>>              }
+>>>>            },
+>>>>            "dirty-flag": false
+>>>>          },
+>>>>          "iops_wr": 0,
+>>>>          "ro": false,
+>>>>          "node-name": "libvirt-1-format",
+>>>>          "backing_file_depth": 0,
+>>>>          "drv": "qcow2",
+>>>>          "iops": 0,
+>>>>          "bps_wr": 0,
+>>>>          "write_threshold": 0,
+>>>>          "encrypted": false,
+>>>>          "bps": 0,
+>>>>          "bps_rd": 0,
+>>>>          "cache": {
+>>>>            "no-flush": false,
+>>>>            "direct": false,
+>>>>            "writeback": true
+>>>>          },
+>>>>          "file": "/home/Anu/guest_anu.qcow2"
+>>>>        },
+>>>>        "qdev": "/machine/peripheral/virtio-disk0/virtio-backend",
+>>>>        "type": "unknown"
+>>>>      }
+>>>>    ],
+>>>>    "id": "libvirt-26"
+>>>> }
+>> I assume this is still from the source where the image is still active.
+> Yes; on the destination the process wouldn't be around long enough to
+> call 'virsh qemu-monitor-command'
+>
+>> Also it doesn't contain the "active" field yet that was recently
+>> introduced, which could show something about this. I believe you would
+>> still get "read-only": false for an inactive image if it's supposed to
+>> be read-write after the migration completes.
+>>
+>>>> 3) Guest doesn't have any readonly
+>>>>
+>>>> virsh dumpxml guest1 | grep readonly
+>>>>
+>>>> 4) Tried giving the proper permissions also
+>>>>
+>>>> -rwxrwxrwx. 1 qemu qemu 4.9G Apr 28 15:06 guest_anu.qcow
+> Is this on the destination? did you pre-create it yourself? otherwise
+> libvirt is pre-creating that image for-non-shared-storage migration
+> (--copy-storage-all) which should have proper permissions when it's
+> created
+>
+>>>> 5) Checked for the permission of the pool also that is also proper!
+>>>>
+>>>> 6) Found 1 older bug similar to this, pasting the link for reference:
+>>>>
+>>>>
+>>>> https://patchwork.kernel.org/project/qemu-devel/patch/20170811164854.GG4162@localhost.localdomain/
+>> What's happening in detail is more of a virsh/libvirt question. CCing
+>> Peter Krempa, he might have an idea.
+> Please collect the debug log; at least from the destination side of
+> migration. That should show  how the VM is prepared and qemu invoked.
+>
+
 
