@@ -4,113 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCBA8C7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 09:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25028C77B7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 09:16:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTdEJ-0003Sc-Co; Mon, 23 Jun 2025 05:12:43 -0400
+	id 1uTdHr-0004IL-CQ; Mon, 23 Jun 2025 05:16:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uTdEI-0003SO-BN
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 05:12:42 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uTdEG-0006eA-Bl
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 05:12:41 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-60789b450ceso7597889a12.2
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 02:12:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750669957; x=1751274757; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=qvJ705RtX2y6NsTIGGtos6Z2y+BXv5yy3WZCSsPvnL4=;
- b=Qgg6qbeAmE/NJcApXUT+K5EtNhTfQ302zkrVpDw6pqaUXG1qlgKYrVX8VNmewwrV7P
- 7cuFs9FUfI6FWeGEHdb/mrk161pE5u/OfD30D4zhnbtnlFHHzu4pfuKy8C7JA70BOJur
- zgPFVAxNxmumfB+pPMein9kKrtP1sMahzFdam6nWyl87AvrDilYlY7JLuxLFhgAN6jS4
- Dk+MOluf5J1rye2VK94YL61qr9VEFVUKuhMqBia1ENleRgOCwHh9M5lMMinjQmXw2kEw
- 8Ml5GlxDXB+lKmTgcKKXVDA5Pi4BP7pB19G/t7a/JfmfhklSgfuhjhwzZhFt11CqwbGF
- xP9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750669957; x=1751274757;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qvJ705RtX2y6NsTIGGtos6Z2y+BXv5yy3WZCSsPvnL4=;
- b=n54iR/oL4o/g+NjX5150p/LTL7E5nKKPWz5FEipzpasEQw+4nBi5ZIywli4W/h+bIQ
- U+LzeKvKd2lRGWf0Ld9bW8To8NGXa1p3mKvJPHwklKIJDf/Aw4CvqrzUaZH1BW1ONQbz
- 18tbfznVVh1oZXUknpRk2Fsl3GMw7uLbd+KWIjPeHZb7CDRo+LnHARaAEsqD3IGR1liH
- oeRgxAH46iV7BV/DTWyyoRSSrbGQ5idbvIqHFjsX1jZ7nhLX859oRkgj8J/j2MNfVm/D
- xF34LBbycMV8eEEU3ytutysDsM19I7V4KaMrxQ5uyod3wvQh6qF/vxre82DY41wKfwnr
- ubEA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUWg4V3CDgfz8sbLyURP2QA9iR4K2TxHj38xIQgSOD/2fGVIx+EFSCf0gemavc/BKgGNBZDqtoyQ9xy@nongnu.org
-X-Gm-Message-State: AOJu0YwXmtYLTXqoiBvQwyH8+phSQS0XJEjC0JmhyGUKtZCvtKOGZq0r
- zGaDMyEdgEjFCsKHtBRY6W+l0KlJs4Bpf3BfS2dX6yuThq2e8pVFz64ftNtsN322Lso=
-X-Gm-Gg: ASbGncud7UmoQZEWhsEVp0q+GYVXgvU11Hos2fn6FdVP/FPXwOPsAUW1/cJg+eIfYq0
- 0/kLNlRHXvQdb4wvDq1DOMuB2+FC0A3hDG//KAs+dbvxxqqIjAjtMpDVqkM965XHkPsNhewmD4X
- 2yfx11sX/RsVmyUlePeC9maci6Pi0VZ7kfBSsLb0PIYWWcuu8wTXPL9bVKtHBgycrxL7+0cWXt7
- 9uLQakhMqs63Hm1w82ZiPTdMXuygxtFUux+5QP7sUG4eAnz6M3TYaCdMZ9axy3X4MabPCb1h79H
- XExb64R0jjN8R/DJWD5rxuL9tOwR0y571MEZl6wcANgZPxf2Bd+6dMUlbV09EvPOoQqrZ+rjjg=
- =
-X-Google-Smtp-Source: AGHT+IGIB9xVfqXO57oA5XepWaycxgy4mPR9jP7lLIGozb+CltyVikCu3K0f+bEhayd8gNJd4UOGLQ==
-X-Received: by 2002:a05:6402:3594:b0:607:ec09:d462 with SMTP id
- 4fb4d7f45d1cf-60a1cca909cmr11166664a12.7.1750669956807; 
- Mon, 23 Jun 2025 02:12:36 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-60a185795b8sm5814716a12.33.2025.06.23.02.12.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Jun 2025 02:12:35 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 127FA5F815;
- Mon, 23 Jun 2025 10:12:35 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Alessandro Di Federico <ale@rev.ng>, Alistair Francis
- <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
- Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
- Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
- cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- cw@f00f.org,
- dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, Eduardo Habkost
- <eduardo@habkost.net>, Elena Ufimtseva <elena.ufimtseva@oracle.com>, Auger
- Eric <eric.auger@redhat.com>, felipe@nutanix.com, iggy@theiggy.com, Warner
- Losh <imp@bsdimp.com>, Jan Kiszka <jan.kiszka@web.de>, Jason Gunthorpe
- <jgg@nvidia.com>, jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>,
- Joao Martins <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
- <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>, Max Chou <max.chou@sifive.com>, Mark
- Burton <mburton@qti.qualcomm.com>, mdean@redhat.com,
- mimu@linux.vnet.ibm.com, "Ho, Nelson" <nelson.ho@windriver.com>, Paul
- Walmsley <paul.walmsley@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Phil =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>, QEMU Developers <qemu-devel@nongnu.org>, Roberto
- Campesato <rbc@meta.com>, Richard Henderson
- <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
- <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
- <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
- <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>, z.huo@139.com, LIU
- Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
-Subject: KVM/QEMU community call 24/06/2025 agenda items?
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Mon, 23 Jun 2025 10:12:34 +0100
-Message-ID: <87ms9y3jp9.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uTdHp-0004Hw-9l
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 05:16:21 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uTdHm-0007Bs-8j
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 05:16:21 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 827D112F7B8;
+ Mon, 23 Jun 2025 12:15:50 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9F45D22BED1;
+ Mon, 23 Jun 2025 12:15:57 +0300 (MSK)
+Message-ID: <defb307c-36ed-4bd3-838e-d4987b70813a@tls.msk.ru>
+Date: Mon, 23 Jun 2025 12:15:57 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: 37
-X-Spam_score: 3.7
-X-Spam_bar: +++
-X-Spam_report: (3.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 00/27] refresh qemu-img options handling
+To: qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <20250531171609.197078-1-mjt@tls.msk.ru>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250531171609.197078-1-mjt@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,18 +102,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Ping once again?
 
-Hi,
+Please let's move with this one.  Either it should be accepted,
+maybe with some tweaks, or dropped entirely.  There's enough
+silence already - it's been there for over 2 years.
 
-The KVM/QEMU community call is at:
+Thanks,
 
-https://meet.jit.si/kvmcallmeeting
-@
-24/06/2025 14:00 UTC
+/mjt
 
-Are there any agenda items for the sync-up?
+On 31.05.2025 20:15, Michael Tokarev wrote:
+> This is another iteration of this patch series, which tries
+> to add missing command-line options, --help output, make it
+> all more or less consistent, etc.
+> 
+> I addressed (hopefully) all comments so far, mostly by Kevin.
+> I ended up (so far) with a bit different wording somewhere.
+> 
+> The manpage (and the separate documentation) hasn't changed
+> much, but I intend to use the same wording there as in --help
+> output.   An example of the separate documentation change is
+> provided with "create" subcommand only, as a PoC.
+> 
+> I tried to rename a few existing options to make them more
+> consistent.  This is an RFC, so to say, - I'd love to make
+> more changes but it isn't really possible because the names
+> I want to use are already used for different purpose.  All
+> such changes (3 in total) are marked with "(short option change)"
+> suffix in the patch subject.  In particular, I tried to use
+> -b for backing-file, and -B for backing-format, in all places.
+> Maybe it's too late to change that though.
+> 
+> All subcommands now have --object option.  I wonder why we
+> haven't done it in common place, before a subcommand.  Maybe
+> it's a good idea (and I think it is) to add it to the common
+> (before-subcomman) place, document it there, and remove the
+> --object mentions from individual commands --help output.
+> 
+> Thanks,
+> 
+> /mjt
+> 
+> Michael Tokarev (27):
+>    qemu-img: measure: convert img_size to signed, simplify handling
+>    qemu-img: create: convert img_size to signed, simplify handling
+>    qemu-img: global option processing and error printing
+>    qemu-img: pass current cmd info into command handlers
+>    qemu-img: create: refresh options/--help (short option change)
+>    qemu-img: factor out parse_output_format() and use it in the code
+>    qemu-img: check: refresh options/--help
+>    qemu-img: simplify --repair error message
+>    qemu-img: commit: refresh options/--help
+>    qemu-img: compare: use helper function for --object
+>    qemu-img: compare: refresh options/--help
+>    qemu-img: convert: refresh options/--help (short option change)
+>    qemu-img: info: refresh options/--help
+>    qemu-img: map: refresh options/--help
+>    qemu-img: snapshot: allow specifying -f fmt
+>    qemu-img: snapshot: make -l (list) the default, simplify option handling
+>    qemu-img: snapshot: refresh options/--help
+>    qemu-img: rebase: refresh options/--help (short option change)
+>    qemu-img: resize: do not always eat last argument
+>    qemu-img: resize: refresh options/--help
+>    qemu-img: amend: refresh options/--help
+>    qemu-img: bench: refresh options/--help
+>    qemu-img: bitmap: refresh options/--help
+>    qemu-img: dd: refresh options/--help
+>    qemu-img: measure: refresh options/--help
+>    qemu-img: implement short --help, remove global help() function
+>    qemu-img: extend cvtnum() and use it in more places
+> 
+>   docs/tools/qemu-img.rst    |   18 +-
+>   qemu-img-cmds.hx           |    4 +-
+>   qemu-img.c                 | 1782 +++++++++++++++++++++---------------
+>   tests/qemu-iotests/049.out |    9 +-
+>   4 files changed, 1082 insertions(+), 731 deletions(-)
+> 
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
