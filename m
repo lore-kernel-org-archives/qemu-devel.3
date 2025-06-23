@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11B62C7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 11:33:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1593C77B7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 11:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTfPh-0000ef-HR; Mon, 23 Jun 2025 07:32:38 -0400
+	id 1uTfT0-0002FS-Of; Mon, 23 Jun 2025 07:36:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uTfPZ-0000eC-8Z; Mon, 23 Jun 2025 07:32:29 -0400
+ id 1uTfSs-0002BK-UJ; Mon, 23 Jun 2025 07:35:56 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uTfPW-0002aV-DU; Mon, 23 Jun 2025 07:32:28 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bQm8441cVz6HJxV;
- Mon, 23 Jun 2025 19:29:40 +0800 (CST)
+ id 1uTfSn-00034t-E9; Mon, 23 Jun 2025 07:35:54 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bQmDC6KzWz6HJxW;
+ Mon, 23 Jun 2025 19:33:15 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 741AE1402F6;
- Mon, 23 Jun 2025 19:32:07 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id C71BF1402E9;
+ Mon, 23 Jun 2025 19:35:42 +0800 (CST)
 Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
  (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 23 Jun
- 2025 13:32:06 +0200
-Date: Mon, 23 Jun 2025 12:32:04 +0100
+ 2025 13:35:41 +0200
+Date: Mon, 23 Jun 2025 12:35:39 +0100
 To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
  <linuxarm@huawei.com>
 CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
@@ -38,12 +38,11 @@ CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
  <gustavo.romero@linaro.org>, <wangzhou1@hisilicon.com>,
  <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
  <zhangfei.gao@linaro.org>
-Subject: Re: [PATCH v5 01/11] hw/arm/smmu-common: Check SMMU has PCIe Root
- Complex association
-Message-ID: <20250623123149.0000703f@huawei.com>
-In-Reply-To: <20250623094230.76084-2-shameerali.kolothum.thodi@huawei.com>
+Subject: Re: [PATCH v5 05/11] hw/arm/virt: Add an SMMU_IO_LEN macro
+Message-ID: <20250623123525.0000607b@huawei.com>
+In-Reply-To: <20250623094230.76084-6-shameerali.kolothum.thodi@huawei.com>
 References: <20250623094230.76084-1-shameerali.kolothum.thodi@huawei.com>
- <20250623094230.76084-2-shameerali.kolothum.thodi@huawei.com>
+ <20250623094230.76084-6-shameerali.kolothum.thodi@huawei.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -79,16 +78,48 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Jun 2025 10:42:20 +0100
+On Mon, 23 Jun 2025 10:42:24 +0100
 Shameer Kolothum <shameerali.kolothum.thodi@huawei.com> wrote:
 
-> We only allow default PCIe Root Complex(pcie.0) or pxb-pcie based extra
-> root complexes to be associated with SMMU.
+> From: Nicolin Chen <nicolinc@nvidia.com>
 > 
-> Although this change does not affect functionality at present, it is
-> required when we add support for user-creatable SMMUv3 devices in
-> future patches.
+> This is useful as the subsequent support for new SMMUv3 dev will also
+> use the same.
 > 
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Reviewed-by: Donald Dutile <ddutile@redhat.com>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Tested-by: Nathan Chen <nathanc@nvidia.com>
 > Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+
+> ---
+>  hw/arm/virt.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 71b923f786..ae30320c38 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -146,6 +146,9 @@ static void arm_virt_compat_set(MachineClass *mc)
+>  #define LEGACY_RAMLIMIT_GB 255
+>  #define LEGACY_RAMLIMIT_BYTES (LEGACY_RAMLIMIT_GB * GiB)
+>  
+> +/* MMIO region size for SMMUv3 */
+> +#define SMMU_IO_LEN 0x20000
+> +
+>  /* Addresses and sizes of our components.
+>   * 0..128MB is space for a flash device so we can run bootrom code such as UEFI.
+>   * 128MB..256MB is used for miscellaneous device I/O.
+> @@ -177,7 +180,7 @@ static const MemMapEntry base_memmap[] = {
+>      [VIRT_FW_CFG] =             { 0x09020000, 0x00000018 },
+>      [VIRT_GPIO] =               { 0x09030000, 0x00001000 },
+>      [VIRT_UART1] =              { 0x09040000, 0x00001000 },
+> -    [VIRT_SMMU] =               { 0x09050000, 0x00020000 },
+> +    [VIRT_SMMU] =               { 0x09050000, SMMU_IO_LEN },
+>      [VIRT_PCDIMM_ACPI] =        { 0x09070000, MEMORY_HOTPLUG_IO_LEN },
+>      [VIRT_ACPI_GED] =           { 0x09080000, ACPI_GED_EVT_SEL_LEN },
+>      [VIRT_NVDIMM_ACPI] =        { 0x09090000, NVDIMM_ACPI_IO_LEN},
+
 
