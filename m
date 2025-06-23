@@ -4,77 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD31BC77B7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 20:29:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 581E9C7115B
+	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 20:38:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTnmp-0008Pu-BL; Mon, 23 Jun 2025 16:29:03 -0400
+	id 1uTnux-0002Ku-I2; Mon, 23 Jun 2025 16:37:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1uTnmm-0008Pd-Ms
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 16:29:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=Zqu3=ZG=kaod.org=clg@ozlabs.org>)
+ id 1uTnuv-0002KZ-C0
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 16:37:25 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1uTnmj-00063W-4v
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 16:29:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750710534;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+BI2m464vLV+kNnCq5NtBdzYpXMkRrUvy0tvXeFjgX0=;
- b=QJHZWQUFcMWCdakNTOQFKOmadMzLeMubCcffzr3NymfFUG3M0L8ESLIrm7hQ52f7lqg1bz
- sZo4MU9QAiZiuYTMgomDcf4ibF46IRq2kcvxe5IdiygkNHqEHgdaDQ3zGwTbUfGeheYJdV
- fLzhjj1TBzidAEwQuc8D5kjUK240eIM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-bpT-t7oPMLOQmGmYnrzm3g-1; Mon,
- 23 Jun 2025 16:28:50 -0400
-X-MC-Unique: bpT-t7oPMLOQmGmYnrzm3g-1
-X-Mimecast-MFC-AGG-ID: bpT-t7oPMLOQmGmYnrzm3g_1750710529
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (Exim 4.90_1) (envelope-from <SRS0=Zqu3=ZG=kaod.org=clg@ozlabs.org>)
+ id 1uTnus-0006yb-Lu
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 16:37:25 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bR0Hx2sMGz4wcm;
+ Tue, 24 Jun 2025 06:37:17 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7075119560AD; Mon, 23 Jun 2025 20:28:49 +0000 (UTC)
-Received: from angien.pipo.sk (unknown [10.45.242.5])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EE5E41956048; Mon, 23 Jun 2025 20:28:46 +0000 (UTC)
-Date: Mon, 23 Jun 2025 22:28:43 +0200
-From: Peter Krempa <pkrempa@redhat.com>
-To: Anushree Mathur <anushree.mathur@linux.ibm.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, Peter Xu <peterx@redhat.com>,
- qemu-devel@nongnu.org, farosas@suse.de, devel@lists.libvirt.org
-Subject: Re: virsh migrate fails when --copy-storage-all option is given!
-Message-ID: <aFm4-yMStBCqGei0@angien.pipo.sk>
-References: <31711771-7caa-4ea3-b763-45db6930e28e@linux.ibm.com>
- <aDctC8i7U2J5bmyw@x1.local> <aEA_EtAKVnk0oYej@redhat.com>
- <aEBJxUIYRaOKBiCL@angien.pipo.sk>
- <657a0179-c51f-4e26-9ade-a0efbed732bb@linux.ibm.com>
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bR0Ht3wrYz4wvb;
+ Tue, 24 Jun 2025 06:37:14 +1000 (AEST)
+Message-ID: <32c86014-8e28-4100-bb87-9072acdc01cb@kaod.org>
+Date: Mon, 23 Jun 2025 22:37:10 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 24/24] i386/tdx: handle TDG.VP.VMCALL<GetQuote>
+To: Stefan Hajnoczi <stefanha@gmail.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org, Isaku Yamahata <isaku.yamahata@intel.com>,
+ Chenyi Qiang <chenyi.qiang@intel.com>
+References: <20250620164053.579416-1-pbonzini@redhat.com>
+ <20250620164053.579416-25-pbonzini@redhat.com>
+ <b8171c39-6a92-4078-a59a-a63d7452e1e9@kaod.org>
+ <4ffdb62b-8fe4-4b34-9efa-aecff7f8e77b@intel.com>
+ <aFkKL-TQTcrBtXuK@redhat.com>
+ <CAJSP0QUgirgNX71MwGgYbdDhVUrd3MWsetx66_+GsER8BfoSbg@mail.gmail.com>
+ <aFlR6CTLRzSpS1fr@redhat.com>
+ <CAJSP0QUVuXRK9nyXw=HcEV6Qi5HaE+TzVp1QOiGp7c7pX=Z=Hw@mail.gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <CAJSP0QUVuXRK9nyXw=HcEV6Qi5HaE+TzVp1QOiGp7c7pX=Z=Hw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <657a0179-c51f-4e26-9ade-a0efbed732bb@linux.ibm.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pkrempa@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=Zqu3=ZG=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,239 +118,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 23, 2025 at 23:25:28 +0530, Anushree Mathur wrote:
-> CC: libvirt devel list
+On 6/23/25 20:57, Stefan Hajnoczi wrote:
+> On Mon, Jun 23, 2025 at 9:09â€¯AM Daniel P. BerrangÃ© <berrange@redhat.com> wrote:
+>>
+>> On Mon, Jun 23, 2025 at 09:04:33AM -0400, Stefan Hajnoczi wrote:
+>>> On Mon, Jun 23, 2025 at 4:04â€¯AM Daniel P. BerrangÃ© <berrange@redhat.com> wrote:
+>>>>
+>>>> On Mon, Jun 23, 2025 at 03:03:19PM +0800, Xiaoyao Li wrote:
+>>>>> On 6/23/2025 2:43 PM, CÃ©dric Le Goater wrote:
+>>>>>> Hello,
+>>>>>>
+>>>>>> On 6/20/25 18:40, Paolo Bonzini wrote:
+>>>>>>> From: Isaku Yamahata <isaku.yamahata@intel.com>
+>>>>>>>
+>>>>>>> Add property "quote-generation-socket" to tdx-guest, which is a property
+>>>>>>> of type SocketAddress to specify Quote Generation Service(QGS).
+>>>>>>>
+>>>>>>> On request of GetQuote, it connects to the QGS socket, read request
+>>>>>>> data from shared guest memory, send the request data to the QGS,
+>>>>>>> and store the response into shared guest memory, at last notify
+>>>>>>> TD guest by interrupt.
+>>>>>>>
+>>>>>>> command line example:
+>>>>>>>     qemu-system-x86_64 \
+>>>>>>>       -object '{"qom-type":"tdx-guest","id":"tdx0","quote-generation-
+>>>>>>> socket":{"type":"unix", "path":"/var/run/tdx-qgs/qgs.socket"}}' \
+>>>>>>>       -machine confidential-guest-support=tdx0
+>>>>>>>
+>>>>>>> Note, above example uses the unix socket. It can be other types,
+>>>>>>> like vsock,
+>>>>>>> which depends on the implementation of QGS.
+>>>>>>>
+>>>>>>> To avoid no response from QGS server, setup a timer for the transaction.
+>>>>>>> If timeout, make it an error and interrupt guest. Define the threshold of
+>>>>>>> time to 30s at present, maybe change to other value if not appropriate.
+>>>>>>>
+>>>>>>> Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
+>>>>>>> Co-developed-by: Chenyi Qiang <chenyi.qiang@intel.com>
+>>>>>>> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+>>>>>>> Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>>>>>>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>>>>>>> Tested-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>>>>>>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>>>>>>> ---
+>>>>>>>    qapi/qom.json                         |   8 +-
+>>>>>>>    target/i386/kvm/tdx-quote-generator.h |  82 +++++++
+>>>>>>>    target/i386/kvm/tdx.h                 |  10 +
+>>>>>>>    target/i386/kvm/kvm.c                 |   3 +
+>>>>>>>    target/i386/kvm/tdx-quote-generator.c | 300 ++++++++++++++++++++++++++
+>>>>>>>    target/i386/kvm/tdx-stub.c            |   4 +
+>>>>>>>    target/i386/kvm/tdx.c                 | 176 ++++++++++++++-
+>>>>>>>    target/i386/kvm/meson.build           |   2 +-
+>>>>>>>    8 files changed, 582 insertions(+), 3 deletions(-)
+>>>>>>>    create mode 100644 target/i386/kvm/tdx-quote-generator.h
+>>>>>>>    create mode 100644 target/i386/kvm/tdx-quote-generator.c
+>>>>>>
+>>>>>> These changes broke the build on 32-bit host.
+>>>>>>
+>>>>>> Could you please send a patch to avoid compiling TDX in such environment ?
+>>>>>
+>>>>> Paolo is on vacation.
+>>>>>
+>>>>> I would like to help, but I don't have 32-bit host environment on hand. Do
+>>>>> you know how to set up such environment quickly? (I tried to set up within a
+>>>>> 32-bit VM but the 32-bit OS is too old and I didn't get it work to install
+>>>>> the required package for building QEMU)
+>>>>
+>>>> You should be able to use QEMU's docker containers to get yourself a
+>>>> Debian i386 container, on a x86_64 host.
+>>>
+>>> The cross-i686-system (Debian) build CI job succeeded:
+>>> https://gitlab.com/qemu-project/qemu/-/jobs/10423776600
+>>>
+>>> I wonder why the CI didn't catch the issue?
+>>
+>> It didn't build the x86_64 target:
+>>
+>>    --target-list-exclude="arm-softmmu i386-softmmu microblaze-softmmu mips-softmmu mipsel-softmmu mips64-softmmu ppc-softmmu riscv32-softmmu sh4-softmmu sparc-softmmu xtensa-softmmu $CROSS_SKIP_TARGETS"
+>>
+>> so in turn didn't build any TDX code
 > 
-> Hi Kevin/Peter,
+> Here are the targets that were built by the CI job:
 > 
-> Thank you so much for addressing this issue. I tried out few more things and
-> here is my analysis:
+>    target list : avr-softmmu m68k-softmmu microblazeel-softmmu
+> or1k-softmmu rx-softmmu sh4eb-softmmu tricore-softmmu xtensaeb-softmmu
 > 
-> Even when I removed the readonly option from guest xml I was still seeing the
-> issue in migration,In the qemu-commandline I could still see auto-read-only
-> option being set as true by default.
-
-'auto-read-only' is very likely not the problem here. Due to the name
-it's often suspected but it's really a red herring mostly.
-
-What it does is that it instructs qemu just to automatically switch
-between read-only and read-write as it did in the pre-blockdev era.
-
-> Then I tried giving the auto-read-only as false in the guest xml with
-> qemu-commandline param, it was actually getting set to false and the migration
-> worked!
-
-Okay, based on what you've wrote I'm now even more confused what you
-wanted to do.
-
-Based on previous report [1] you wanted to migrate with non-shared
-storage (presence of --copy-storage-all which copies all read-write
-disks to destination).
-
-But now ...
-
-> Steps I tried:
+> 64-bit targets are not supported on 32-bit hosts since commit
+> acce728cbc6c ("meson: Disallow 64-bit on 32-bit emulation"). I don't
+> think the x86_64 target can be built on 32-bit hosts.
 > 
-> 1) Started the guest with adding the snippet in the guest xml with parameters
-> as:
+> But notice that i386-softmmu is missing from the target list. That
+> could be why the CI job succeeded.
 > 
->   <qemu:commandline>
->     <qemu:arg value='-blockdev'/>
->     <qemu:arg value='driver=file,filename=/disk_nfs/nfs/migrate_root.qcow2,node-name=drivefile,auto-read-only=false'/>
+> CÃ©dric: What were your ./configure options?
 
-... this looks like shared storage ...
+Just :
 
->     <qemu:arg value='-blockdev'/>
->     <qemu:arg value='driver=qcow2,file=drivefile,node-name=drive0'/>
->     <qemu:arg value='-device'/>
->     <qemu:arg value='virtio-blk-pci,drive=drive0,id=virtio-disk0,bus=pci.0,addr=0x5'/>
->   </qemu:commandline>
-> 
-> 2) Started the migration and it worked.
+   --target-list=arm-softmmu,ppc-softmmu,i386-softmmu
 
-... and especially since you added it via the qemu:arg backdoor, which
-libvirt doesn't in any way interpret, it'd mean that --copy-storage-all
-fully ignores what was declared here.
+C.
 
-Thus it's weird that this would actually help anything especially when
-you originally used option meant for non-shared storage.
-
-So, how did you migrate this? What did you want to achieve?
-
-> Could anyone please clarify from libvirt side what is the change required?
-
-You need to first clarify what you are actually doing. This seems to be
-different from what you tried last time.
-
-For any further investigation I'll need:
-
- - the full XML of the VM
- - debug logs from the source [2]
- - debug logs from the destination
- - description what you are trying to achieve
-
-> 
-> Thanks,
-> Anushree-Mathur
-
-
-[2] https://www.libvirt.org/kbase/debuglogs.html
-
-> 
-> 
-> On 04/06/25 6:57 PM, Peter Krempa wrote:
-> > On Wed, Jun 04, 2025 at 14:41:54 +0200, Kevin Wolf wrote:
-> > > Am 28.05.2025 um 17:34 hat Peter Xu geschrieben:
-> > > > Copy Kevin.
-> > > > 
-> > > > On Wed, May 28, 2025 at 07:21:12PM +0530, Anushree Mathur wrote:
-> > > > > Hi all,
-> > > > > 
-> > > > > 
-> > > > > When I am trying to migrate the guest from host1 to host2 with the command
-> > > > > line as follows:
-> > > > > 
-> > > > > date;virsh migrate --live --domain guest1 qemu+ssh://dest/system --verbose
-> > > > > --undefinesource --persistent --auto-converge --postcopy
-> > > > > --copy-storage-all;date
-> > > > > 
-> > > > > and it fails with the following error message-
-> > > > > 
-> > > > > error: internal error: unable to execute QEMU command 'block-export-add':
-> > > > > Block node is read-only
-> > > > > 
-> > > > > HOST ENV:
-> > > > > 
-> > > > > qemu : QEMU emulator version 9.2.2
-> > > > > libvirt : libvirtd (libvirt) 11.1.0
-> > > > > Seen with upstream qemu also
-> > > > > 
-> > > > > Steps to reproduce:
-> > > > > 1) Start the guest1
-> > > > > 2) Migrate it with the command as
-> > > > > 
-> > > > > date;virsh migrate --live --domain guest1 qemu+ssh://dest/system --verbose
-> > > > > --undefinesource --persistent --auto-converge --postcopy
-> > > > > --copy-storage-all;date
-
-[1]
-
-> > > > > 
-> > > > > 3) It fails as follows:
-> > > > > error: internal error: unable to execute QEMU command 'block-export-add':
-> > > > > Block node is read-only
-> > > I assume this is about an inactive block node. Probably on the
-> > > destination, but that's not clear to me from the error message.
-> > Yes this would be on the destination. Libvirt exports the nodes on
-> > destination, source connects and does the blockjob.
-> > 
-> > The destination side is configured the same way as the source side so
-> > if the source disk is configured as read-write the destination should be
-> > as well
-> > 
-> > > > > Things I analyzed-
-> > > > > 1) This issue is not happening if I give --unsafe option in the virsh
-> > > > > migrate command
-> > This is weird; this shouldn't have any impact.
-> > 
-> > > What does this translate to on the QEMU command line?
-> > > 
-> > > > > 2) O/P of qemu-monitor command also shows ro as false
-> > > > > 
-> > > > > virsh qemu-monitor-command guest1 --pretty --cmd '{ "execute": "query-block"
-> > it'd be impossible to execute this on the guest due to timing; you'll
-> > need to collect libvirt debug logs to do that:
-> > 
-> > https://www.libvirt.org/kbase/debuglogs.html#tl-dr-enable-debug-logs-for-most-common-scenario
-> > 
-> > I also thing this should be eventually filed in a
-> > 
-> > > > > }'
-> > > > > {
-> > > > >    "return": [
-> > > > >      {
-> > > > >        "io-status": "ok",
-> > > > >        "device": "",
-> > > > >        "locked": false,
-> > > > >        "removable": false,
-> > > > >        "inserted": {
-> > > > >          "iops_rd": 0,
-> > > > >          "detect_zeroes": "off",
-> > > > >          "image": {
-> > > > >            "virtual-size": 21474836480,
-> > > > >            "filename": "/home/Anu/guest_anu.qcow2",
-> > > > >            "cluster-size": 65536,
-> > > > >            "format": "qcow2",
-> > > > >            "actual-size": 5226561536,
-> > > > >            "format-specific": {
-> > > > >              "type": "qcow2",
-> > > > >              "data": {
-> > > > >                "compat": "1.1",
-> > > > >                "compression-type": "zlib",
-> > > > >                "lazy-refcounts": false,
-> > > > >                "refcount-bits": 16,
-> > > > >                "corrupt": false,
-> > > > >                "extended-l2": false
-> > > > >              }
-> > > > >            },
-> > > > >            "dirty-flag": false
-> > > > >          },
-> > > > >          "iops_wr": 0,
-> > > > >          "ro": false,
-> > > > >          "node-name": "libvirt-1-format",
-> > > > >          "backing_file_depth": 0,
-> > > > >          "drv": "qcow2",
-> > > > >          "iops": 0,
-> > > > >          "bps_wr": 0,
-> > > > >          "write_threshold": 0,
-> > > > >          "encrypted": false,
-> > > > >          "bps": 0,
-> > > > >          "bps_rd": 0,
-> > > > >          "cache": {
-> > > > >            "no-flush": false,
-> > > > >            "direct": false,
-> > > > >            "writeback": true
-> > > > >          },
-> > > > >          "file": "/home/Anu/guest_anu.qcow2"
-> > > > >        },
-> > > > >        "qdev": "/machine/peripheral/virtio-disk0/virtio-backend",
-> > > > >        "type": "unknown"
-> > > > >      }
-> > > > >    ],
-> > > > >    "id": "libvirt-26"
-> > > > > }
-> > > I assume this is still from the source where the image is still active.
-> > Yes; on the destination the process wouldn't be around long enough to
-> > call 'virsh qemu-monitor-command'
-> > 
-> > > Also it doesn't contain the "active" field yet that was recently
-> > > introduced, which could show something about this. I believe you would
-> > > still get "read-only": false for an inactive image if it's supposed to
-> > > be read-write after the migration completes.
-> > > 
-> > > > > 3) Guest doesn't have any readonly
-> > > > > 
-> > > > > virsh dumpxml guest1 | grep readonly
-> > > > > 
-> > > > > 4) Tried giving the proper permissions also
-> > > > > 
-> > > > > -rwxrwxrwx. 1 qemu qemu 4.9G Apr 28 15:06 guest_anu.qcow
-> > Is this on the destination? did you pre-create it yourself? otherwise
-> > libvirt is pre-creating that image for-non-shared-storage migration
-> > (--copy-storage-all) which should have proper permissions when it's
-> > created
-> > 
-> > > > > 5) Checked for the permission of the pool also that is also proper!
-> > > > > 
-> > > > > 6) Found 1 older bug similar to this, pasting the link for reference:
-> > > > > 
-> > > > > 
-> > > > > https://patchwork.kernel.org/project/qemu-devel/patch/20170811164854.GG4162@localhost.localdomain/
-> > > What's happening in detail is more of a virsh/libvirt question. CCing
-> > > Peter Krempa, he might have an idea.
-> > Please collect the debug log; at least from the destination side of
-> > migration. That should show  how the VM is prepared and qemu invoked.
-> > 
-> 
 
 
