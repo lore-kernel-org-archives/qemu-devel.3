@@ -4,144 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 872ECC77B7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 16:55:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 707AAC77B7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 17:16:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uU6uy-0005aC-P9; Tue, 24 Jun 2025 12:54:44 -0400
+	id 1uU7Fj-00017l-An; Tue, 24 Jun 2025 13:16:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uU6uw-0005Zz-Rw
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 12:54:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uU6uu-0002Kj-Ur
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 12:54:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750784076;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Cfd0IOO2lmRirvCv4jaQ6IkBX99pWPSXixaI5CXUgC8=;
- b=e6kAlpJfyBv5NxwaqzdJ3a25sdwDCRBJCaYnfBVrdOWEk1HT8pDNT03WE+MPJjqQrhEL3I
- CjH04uOrG29l3XcX4k+QHPj9Ou38x87p1G1FbbzrulJV8lOQglYEXue+jtc5o6dEnEW7Xy
- +MkJCl/BV7HhSg3bjbHouQKKKhm3Vzs=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-16-VHSNffBMMRmd2tiQ-A43Qw-1; Tue, 24 Jun 2025 12:54:35 -0400
-X-MC-Unique: VHSNffBMMRmd2tiQ-A43Qw-1
-X-Mimecast-MFC-AGG-ID: VHSNffBMMRmd2tiQ-A43Qw_1750784074
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4536962204aso14214205e9.3
- for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 09:54:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750784074; x=1751388874;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uU7Fe-00017F-FW; Tue, 24 Jun 2025 13:16:09 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uU7Fc-0005Kv-Ne; Tue, 24 Jun 2025 13:16:06 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-6077dea37easo10644836a12.3; 
+ Tue, 24 Jun 2025 10:16:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1750785363; x=1751390163; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Cfd0IOO2lmRirvCv4jaQ6IkBX99pWPSXixaI5CXUgC8=;
- b=V+96cfDu/QXLQ+wS4lfG1mWsaeT43TP4GrMj9YC9DQdhQLRHOvn1fKjz8lMr3VMpJr
- 88smg50TcFHLzhzQXZuRlQ4x6C0Fekcstw4I/gnZClK0giY7HWcspNIXcEumxI4mXBtC
- 5acmeQ1EiuWu1ThYryytPbHSTojvPgkuvq2Woq1D+ukTSw49rWS1kSNqZS8h6JtZIQWj
- R4V9HGluU070kLox8a9SRy1nmPViQYjXoTGM3WDo1HAa4Of7zjAQUNlMg1qu/fQYbt72
- zc+9V0qBinsvjt58obbsH5q5nT7yrGImylVAUVtAFJEXOTnotxYN82MBNFNljN2Ms1L2
- ZJwQ==
+ bh=stPEICxxjD0hh28faYD0ik1IUgLNtnuvShlfWporoJA=;
+ b=kCIkKV5iwD4hlZNFu5NuciuC+40WKRy5/8/TdMaOwW0mWmZ5PeMlrmYdU/n8L+BLq8
+ P6FA780dHzdWc8IiPOln1LlB+1RP7IHU1trvXfUUpjHlkF7lM7gYywCgYKq1KL1spkMZ
+ 0HRgXCCt9NnGGUIxbncxmFVo4C5A3HTTc7DXVdBJHXH3LT0x80Jed7lVNb10Jw1+GRpS
+ w+dn0fW/8mvZPmdeZi98auKxjAHDu+2GwlP6H+wjRneAnuco/sdQbQj7vTfOVP25UYGx
+ QUVJLT8LUsQ2TDjb3yi0vjPK+cF7rBbzZUONopu+LXEMIt0syUVhnpV9vnPAmv/Rmzq3
+ u8ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750785363; x=1751390163;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=stPEICxxjD0hh28faYD0ik1IUgLNtnuvShlfWporoJA=;
+ b=aMw6DYlelbWRoj9sHW54PTmGQkf7qQdsGwAkWVV6Z6JLZkgkYpCl3r8f3nDdnAvEQf
+ AGt0cUFMRD90ID/LdrJT41zbbt6ontIq6JZuRA6KvJkYahdf7SPi3rYE5kCBkYz3dSJk
+ MG70M2RkNyeaf0NXg6/0gXc7f4lVy89NB/ku888Cc9ozrC0UESdZ8YbE09f0OIUXjvDR
+ ymK1pnfgaKW6cuW2dfu23kSN45Re3T7dD18BOkPZwh4mO0zrU7phhwalWI8cnfd4ltz3
+ amkHGXzCJkNVn5TOQWhs662f1A8ZaA/dXh/nVXLfto9VNqnRRhP6G5+9mNb04KTZyaMP
+ +S9Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVe/giA1SnDyydQiPxu1y+QHKqaYPiaxaggCIzg1NLcPqGU7eNZt/e55IsudJbVbPdeD1kymJL7tpZt@nongnu.org
-X-Gm-Message-State: AOJu0YzLgUbwi0FcclX2eXxSAQOJ4lFjPMAWNVKvGNQ4YY82ZvrPBUMN
- hl1vZMegr9pG8A1GeDnDwr0svOMve/gksVqDW4GVAs0YkkW7+I5Oh7qdEw6nxxm0YF2DwUdUv+M
- v1RsJj+Dz9ONRlmYLwDppI1ENU24Zj1Fe8nUIxe9046grOdKbh9lC/9WY
-X-Gm-Gg: ASbGncvAdQkCO3mPuY18ghPAvHrXVATOfqA9rlXuLSH9/rmVTdCmvtmb9YbeYYg80H6
- FopuEQ21MfaIuDRDnYM0aLBJ0Zh8IiXrNPLxOIWsK1KAjDKcNxYMEe5fL4oNw5mUVfpAfZvDCbb
- 8MbCXoApeQdQ2Ebcftoxd9YX0VEpz/NIYsCdFB9h8ugt5MfHZxL/O9aGwsNz1z8veuTPCATJtff
- RXOh83FuMk2sNINpYDmDke0wD5vL81A0GxQO+PcQDVdDsCDC4gCWeR+SkF8xEV35zBrFA1D9C36
- /uoP1QOqhwErrd0bMQVDa5mrIjsno94pm3m+uWAEJkY/ziYqGG1lrM4aozp5
-X-Received: by 2002:a05:600c:34c4:b0:450:d30e:ff96 with SMTP id
- 5b1f17b1804b1-453647921f8mr197826185e9.0.1750784074196; 
- Tue, 24 Jun 2025 09:54:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHmh3Bb+L1ytY8CJnrkST2Gy4OKKXOQ9jeqeCJ5YcWFZTp89Ne898jk1UEENoEbhbpwcTgp9g==
-X-Received: by 2002:a05:600c:34c4:b0:450:d30e:ff96 with SMTP id
- 5b1f17b1804b1-453647921f8mr197825845e9.0.1750784073761; 
- Tue, 24 Jun 2025 09:54:33 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4536470826fsm145416475e9.36.2025.06.24.09.54.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Jun 2025 09:54:33 -0700 (PDT)
-Message-ID: <9479b426-c725-4b8c-baa9-246d0d7d1fa1@redhat.com>
-Date: Tue, 24 Jun 2025 18:54:32 +0200
+ AJvYcCUTwHBowlyt8ffR1Q85V4jIUdirF+apUs4YZbqAI5mHTEeqHrs+GerVMgyroSXW2PDr2FlDV2wz1w==@nongnu.org,
+ AJvYcCVsuwFmrQpwQNKxo+aFyRY4UrShaVYdjO0pGmX8lxF9aAQCaqpQA64eSmsyVKnFUtHW7gvlvg3+7cGX0g==@nongnu.org
+X-Gm-Message-State: AOJu0YxTLb9lzXrlzv1jtuaQX3nzhoD+own8scH2dpc++5gsa8DvAB/5
+ Hi+kJFfkhH2hM/8kPy9qISP5/ZDQ3MRwcDybga7r+EqOW1aoIs2vMT3toiWNJJQrlIzks1H1t6Y
+ 8xXl0KnUVLD7tK4tDhTepXEFSeTeBHHo=
+X-Gm-Gg: ASbGnctQGY1/2GDSEr2Wt00FAVJRApj+q7glwCt1rl6cKT312sK7Gjoh50k9eNM2I4D
+ I9kSqMn3oTLOBo/GwfbKfEZfH6XwzFXYvTPvzDCwxOyLPo1kTw70NS9NXvCy10yF8NbqkuRtBv3
+ Rsf8fYx92xuHviFVoPMW1qQ/SBn6vSzEUMwIjeg0OcpQ==
+X-Google-Smtp-Source: AGHT+IFxTFECbvdUVn7Ki5JMQKPOKFEEfWttU96BZFV81h2BvmZZP9kVDuTkzwFKIhKGOl8OBVWgEnBta0Xl2hrVwNM=
+X-Received: by 2002:a05:6402:2746:b0:602:3e3:dada with SMTP id
+ 4fb4d7f45d1cf-60a1d18eb87mr14798817a12.25.1750785362301; Tue, 24 Jun 2025
+ 10:16:02 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] vfio/container: Fix potential SIGSEGV when recover
- from unmap-all-vaddr failure
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com,
- steven.sistare@oracle.com, chao.p.peng@intel.com
-References: <20250623102235.94877-1-zhenzhong.duan@intel.com>
- <20250623102235.94877-4-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250623102235.94877-4-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <CAJSP0QU=v_jN5oBDBefg0mB=Qv3SvD4ZdJzz2LT-cu5ZL7pK0Q@mail.gmail.com>
+ <CAJSP0QXe1L2P24oUrABO1eUzn1JFc=BJWEfakrQ5u3Ek5LkfKg@mail.gmail.com>
+ <CANCZdfqfFNAYcF3BEDucyR3YN1PXwyEmzE5LPcJCyshCXwhe6Q@mail.gmail.com>
+ <9bac4585-255a-4805-b24d-b3b75d2ca9c3@redhat.com>
+ <CANCZdfq6+R=VgyYdcdJCmDBTCgLSxDJuqd8h=ehb5F+v-HPT+g@mail.gmail.com>
+In-Reply-To: <CANCZdfq6+R=VgyYdcdJCmDBTCgLSxDJuqd8h=ehb5F+v-HPT+g@mail.gmail.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Tue, 24 Jun 2025 13:15:50 -0400
+X-Gm-Features: Ac12FXwTC60e3gyDQi7IDOdYMdtwHot_gdlpHicbrJuQ6I3r0sEJaPOMbzQ_J_k
+Message-ID: <CAJSP0QWSVhAYBtxKV+WDubmif2m=jxTYd-BK=d7ExZXWUNUYXA@mail.gmail.com>
+Subject: Re: FreeBSD 14.1 aarch64 iso URL is down
+To: Warner Losh <imp@bsdimp.com>
+Cc: Thomas Huth <thuth@redhat.com>, Radoslaw Biernacki <rad@semihalf.com>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Leif Lindholm <leif.lindholm@oss.qualcomm.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,77 +103,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/23/25 12:22, Zhenzhong Duan wrote:
-> cpr.saved_dma_map isn't initialized in source qemu which lead to vioc->dma_map
-> assigned a NULL value, this will trigger SIGSEGV.
+On Tue, Jun 24, 2025 at 12:28=E2=80=AFPM Warner Losh <imp@bsdimp.com> wrote=
+:
+>
+> On Tue, Jun 24, 2025 at 10:02=E2=80=AFAM Thomas Huth <thuth@redhat.com> w=
+rote:
+> >
+> > On 22/06/2025 03.46, Warner Losh wrote:
+> > >
+> > >
+> > > On Sat, Jun 21, 2025, 6:01=E2=80=AFPM Stefan Hajnoczi <stefanha@gmail=
+.com
+> > > <mailto:stefanha@gmail.com>> wrote:
+> > >
+> > >     On Sat, Jun 21, 2025 at 7:59=E2=80=AFPM Stefan Hajnoczi <stefanha=
+@gmail.com
+> > >     <mailto:stefanha@gmail.com>> wrote:
+> > >
+> > >     (I forgot to CC qemu-devel)
+> > >
+> > >      >
+> > >      > Hi,
+> > >      > This might only be temporary, but the CI is getting HTTP 404 N=
+ot Found
+> > >      > for the following URL:
+> > >      > https://download.freebsd.org/releases/arm64/aarch64/ISO-IMAGES=
+/14.1/
+> > >     FreeBSD-14.1-RELEASE-arm64-aarch64-bootonly.iso <https://
+> > >     download.freebsd.org/releases/arm64/aarch64/ISO-IMAGES/14.1/
+> > >     FreeBSD-14.1-RELEASE-arm64-aarch64-bootonly.iso>
+> > >      >
+> > >      > https://gitlab.com/qemu-project/qemu/-/jobs/10424901718#L848
+> > >     <https://gitlab.com/qemu-project/qemu/-/jobs/10424901718#L848>
+> > >      >
+> > >      > Stefan
+> > >
+> > >
+> > > Time to bump the version to 14.3.
+> >
+> > Hmm, while we're used to refresh the CI images for the *host* environme=
+nts,
+> > it's rather ugly to see images for the *guests* of the functional tests
+> > disappear. Maybe we should rather remove that test if the URL is not st=
+able?
+>
+> Yes. Most of our images have a shelf life of about a year to 18 months. A=
+nd QEMU
+> should be testing all the 'supported' FreeBSD images, just like for
+> other projects.
+> The question becomes how can we, the FreeBSD Project, remove the friction=
+ that's
+> here now because we timeout / move the older images as they pass out of s=
+upport.
+>
+> We've also just shifted to a more frequent release cadence, so the
+> releases have gone
+> from living for  18-24 months down to just 12. We just released
+> FreeBSD 14.3, and 14.1
+> is only a year old. So what's the best way of dealing with this? We
+> could have a 14-latest
+> but the md5 would change...
+>
+> So I'm open to making a change, but I need help crafting something
+> that will work, since
+> I'm not clever enough to suggest something here.
 
-I don't understand the scenario. Could you please explain more ?
+A test run should be repeatable. If a test passes on a given qemu.git
+commit then it should continue to pass when run again. Using -latest
+breaks this property, so let's avoid it.
 
+Ideas:
+1. FreeBSD provides convenient permanent URLs.
+2. QEMU uses a permanent FreeBSD ISO mirror URL instead. Need to find
+a mirror that is fast and reliable.
+3. Someone agrees to regularly update the URL in QEMU's test suite so
+that breakage isn't exposed. IMO the least desirable solution because
+an old copy of the test will start failing after 12 months.
 
-> Fix it by save and restore vioc->dma_map locally.
-
-Steve, this is cpr territory. Is it still an issue with the rest
-of the patches applied ?
-
-
-Thanks,
-
-C.
-
-
-
-> 
-> Fixes: eba1f657cbb1 ("vfio/container: recover from unmap-all-vaddr failure")
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   include/hw/vfio/vfio-cpr.h | 8 +++++---
->   hw/vfio/cpr-legacy.c       | 3 ++-
->   2 files changed, 7 insertions(+), 4 deletions(-)
-> 
-> diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
-> index 8bf85b9f4e..aef542e93c 100644
-> --- a/include/hw/vfio/vfio-cpr.h
-> +++ b/include/hw/vfio/vfio-cpr.h
-> @@ -16,14 +16,16 @@ struct VFIOContainer;
->   struct VFIOContainerBase;
->   struct VFIOGroup;
->   
-> +typedef int (*DMA_MAP_FUNC)(const struct VFIOContainerBase *bcontainer,
-> +                            hwaddr iova, ram_addr_t size, void *vaddr,
-> +                            bool readonly, MemoryRegion *mr);
-> +
->   typedef struct VFIOContainerCPR {
->       Error *blocker;
->       bool vaddr_unmapped;
->       NotifierWithReturn transfer_notifier;
->       MemoryListener remap_listener;
-> -    int (*saved_dma_map)(const struct VFIOContainerBase *bcontainer,
-> -                         hwaddr iova, ram_addr_t size,
-> -                         void *vaddr, bool readonly, MemoryRegion *mr);
-> +    DMA_MAP_FUNC saved_dma_map;
->   } VFIOContainerCPR;
->   
->   typedef struct VFIODeviceCPR {
-> diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
-> index a84c3247b7..100a8db74d 100644
-> --- a/hw/vfio/cpr-legacy.c
-> +++ b/hw/vfio/cpr-legacy.c
-> @@ -148,6 +148,7 @@ static int vfio_cpr_fail_notifier(NotifierWithReturn *notifier,
->            */
->   
->           VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-> +        DMA_MAP_FUNC saved_dma_map = vioc->dma_map;
->           vioc->dma_map = vfio_legacy_cpr_dma_map;
->   
->           container->cpr.remap_listener = (MemoryListener) {
-> @@ -158,7 +159,7 @@ static int vfio_cpr_fail_notifier(NotifierWithReturn *notifier,
->                                    bcontainer->space->as);
->           memory_listener_unregister(&container->cpr.remap_listener);
->           container->cpr.vaddr_unmapped = false;
-> -        vioc->dma_map = container->cpr.saved_dma_map;
-> +        vioc->dma_map = saved_dma_map;
->       }
->       return 0;
->   }
-
+Stefan
 
