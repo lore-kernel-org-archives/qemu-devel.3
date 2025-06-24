@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BE34C77B7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 22:21:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3072EC77B7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 22:39:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUC0y-0001nQ-OM; Tue, 24 Jun 2025 18:21:16 -0400
+	id 1uUCHR-0004dg-IQ; Tue, 24 Jun 2025 18:38:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uUC0x-0001n0-2R
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 18:21:15 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1uUCHP-0004dH-MO
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 18:38:15 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uUC0v-0007pV-FO
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 18:21:14 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-7490cb9a892so400491b3a.0
- for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 15:21:12 -0700 (PDT)
+ id 1uUCHO-0005sB-6X
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 18:38:15 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2366e5e4dbaso3531965ad.1
+ for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 15:38:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750803671; x=1751408471; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750804692; x=1751409492; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=u2RtVo/99MxAe4lWx/LDKX+rRlYczxFUn8btimGsQ4E=;
- b=C3xt+MbnKEq+6oYzxbiiojfdff8cuvo2Ww2lEi4qFsfrfIqg6sDnjsFPwV2MGfpcFE
- NEMBQ27Rq6Wjb6F6xkB/b1zZfqy2Ac0//2qvG1ov77mqXLFL+vpZSHELimt1qfc+Fdy7
- y+i/MFIfrbTyyw08CHM23GHbFznPs36PkIV7G+ZAEmiNn+YzEdN105gEY2QoZw/zsuYU
- SZ1eNUJ6hl3eAil3a9Q76TnZnMc09d0Q/Uab8+vn5IeSLytXWNqSIecW49xHW5WnWJhE
- 7/6s4Sy+Qi5Xi71eYsFuq36gEU2NttLwzraxIsDT4dzBJ8r+Q8vsVHsRbuAguwc7Ajqw
- TDTQ==
+ bh=8mW7NLiMtRYcX0zQJNUOMwzpTlmVuc0fZs5xMOdQlEc=;
+ b=MXHxYqChLWrES5CFyH4Rhu5g2eC1xVhhyO0kiRKf5j6HObCxydC5zyLOT0GAYFI3Ke
+ 0rM8eRoS9jUc8YS5bBxPjnQfIPq00ph357+BHMC6pXt2h85JeOw03OqwJfC1tfwvpRG0
+ f5MUV3g3er4LMNmFMIogBT3LKhSt/eFwCvGMu2hAaLijps6h+/5fKJ/APan4/wrQ5EIu
+ PUyAjihyZVw/7Cvn91gEH5TJEVZ+YmDgvqqjwaPY9LFJSIPjiu/VQHOGFQ9ZWmAE6rDq
+ 5aGCyLqMDO01EtqSiAWUE1NaL4Vj2lsdh/SlhSosCbPnSowCFNcLSfOIhX51mI2RRdnI
+ j0ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750803671; x=1751408471;
+ d=1e100.net; s=20230601; t=1750804692; x=1751409492;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=u2RtVo/99MxAe4lWx/LDKX+rRlYczxFUn8btimGsQ4E=;
- b=BrQA4IsFueoiaCbqiwksR0xNdApZhy8RRJEemmgHFFcAxNNxBeEjYzLsBG6dY0BEJD
- hz0pLayfxAYbhZc0dHzQpZgX54D8eaTE/G0YJeN11yxa4FUrRlwHjpYor5HvmfIi1KSQ
- iwnqZA8U9v1UBvo/KKrNdtF3T4IPX2wVgpsmtZaRRDmHVkANxMv5B9tSn+PzfumMvLbg
- UwEERaF+da+rhrUPYj9riLhGrNQreOQDjLI+O8h/9jqXFtV9DKmuMfbb2NO3TRK9EGiC
- RdRVqqmUB2R0pas28pQCRuOW8MxRAYIHUasCcOavL4axtg899omt5miWyoD+xlu/M0V7
- CtbQ==
+ bh=8mW7NLiMtRYcX0zQJNUOMwzpTlmVuc0fZs5xMOdQlEc=;
+ b=NWtZ/NUaoRqlV5jpojjPqHEBgHzZRxecRbE8oYjr6dpbZ+nd20c7DwgBmvy7NMDfae
+ EyoG0CiY5fvRB18ryS1Gr84LUVt98yKEADfeyAW9mSjz4HpLZVCB79loKUlXpWTyj7Uc
+ Ge6w4D4U0nU3n8dlTtqi+xIO9c0k4TfqZ4tYlr0Jj/hJgo/mPjNtvrTDWKoFwue3xWGi
+ WN622vr9dfTSlpsCkgwj0E/iA3udUCQcHyj/Gu2d+fuCwqLe28Q+BEBQ98thx1eHcz48
+ g/6gVit/atLwMihiHNm3/kO9jfLlMQluMv1iBDVk1OgCzaxFsbV0ADUA8ruAtoNHnENw
+ 2ldQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWAxlX9ysGCLQF9oaXrdLwm6PT9bivd+nhrZXQTTMX3+y85YuuiBjZx7mwoCpXW99rovZqJWebQ9NPK@nongnu.org
-X-Gm-Message-State: AOJu0Yzj5jNaqnBBXUY1ht76W3qd4Rhy1KR8Y8sDyBpwaKD5L9ZaS200
- PAeMGRR1H9kRViwjFrJi7O4rrhBKUR+u8xzf0aWx9ifOenlve/Ee+mxjvu3i9imxELI=
-X-Gm-Gg: ASbGncuvkYhqoHCdD0RjGRHabv6UI1zqRqXzHz8zZErPjXVv+95M9AB/AevL70E2/Z0
- 7aNn9N8Mc0pPje2Py3pAkmxsnzAE68ZBhKgn8jsIqkwC9HHquXJEcGH7y2+AZRL4Z5ViQE5rAAk
- Km/y+PtphcH5ax/RGXOwob+sBEbFdF0Sl6DZEL6DmxtNU4ranYVvAbKfJHrRwbdOFWafEwoDEgV
- Ty5bLdFsSYoW4/pIxlF/PNhX78YBO6TgYsnLIxxYJjfaixLbuKUVbczUm5INMOA2oovFOLDhCqP
- nv9mfF+PMuXRiWmQls/zPLHj7PxgA6Fee6PA3PgBo14Sv3Nu6k1YQypE0nK9FPOYoRkiYTokHcU
+ AJvYcCWSzURPpdRj/LYqCjUhseCr0I6ETOS8tBsTQlynXqxf4VHHVFvZCG+HFTeLUPpI7AjRIsxY5cYeYpEv@nongnu.org
+X-Gm-Message-State: AOJu0YyscIKGzjk+aARu7WjlYsuucMdqF5SahMuSXqHbtvgpg+5fekSg
+ CZ32l2kynPaHtt6SIdZoQFy3/TjuFpmMrOASAg1ZFi8rjMfDNaaIKXFNrIXJJMX//Nc=
+X-Gm-Gg: ASbGncuV3ibubteIeUq+IbIZFqrjy1V+qEezmaZr+ZrYtk9a+dSQcpwzYiQbsMHF3AR
+ rixrM+GBeapbeVRaZrygIpXC9edTSa4lUVcqYYemRUGGhwpnbT4iV52nLjcH/AD4W5S1l4S7lPs
+ XcEnfC735HgG0U3J52/xGdx3/rc1yp2fg9uxNgi7Jc9z25Qccs9yMN7aFuf8JShXSKJv091CnWy
+ HQcPyh2fVC3Z6uygddMVjMeOex+8IwnJ210qwb0kJxXrJQGmTMouPO1uGMjl1k6pnuOojCu7fsQ
+ 4c97ne8XT/pLw2UK+MC+m0QL9A5oN2yJ0y3X373Xy34A6FugoquyeNgtbtaeJfgI/c6d/a98M3I
  =
-X-Google-Smtp-Source: AGHT+IFjliYWPSupR8d6aFGX/0nRh1nlB+gmhH9bF1l1AjVDqO/HV1vav8pkx6SRNfQmoJx/yIPTWw==
-X-Received: by 2002:a05:6a00:2ea3:b0:748:323f:ba21 with SMTP id
- d2e1a72fcca58-74ad446244dmr1120265b3a.1.1750803670655; 
- Tue, 24 Jun 2025 15:21:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEQsCjpcSeMc6Seagw51rdXmwnwPSZUWjIIsP1XkuGFsCXug+j1AFaLEwSchXaiuUidvXm2jA==
+X-Received: by 2002:a17:902:ce8f:b0:231:ad5a:fe9c with SMTP id
+ d9443c01a7336-2382535bf6emr9860585ad.15.1750804692143; 
+ Tue, 24 Jun 2025 15:38:12 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-749c8850081sm2896294b3a.108.2025.06.24.15.21.09
+ d9443c01a7336-237f7579cddsm59825745ad.202.2025.06.24.15.38.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Jun 2025 15:21:10 -0700 (PDT)
-Message-ID: <9c403745-16f8-4a89-8369-ff36ac022acc@linaro.org>
-Date: Tue, 24 Jun 2025 15:21:09 -0700
+ Tue, 24 Jun 2025 15:38:11 -0700 (PDT)
+Message-ID: <744419e2-2425-4d1e-824c-a766a7a209cd@linaro.org>
+Date: Tue, 24 Jun 2025 15:38:10 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/20] tcg/optimize: Introduce arg_const_val
+Subject: Re: [PATCH 02/20] tcg/optimize: Add one's mask to TempOptInfo
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20250505202751.3510517-1-richard.henderson@linaro.org>
- <20250505202751.3510517-2-richard.henderson@linaro.org>
+ <20250505202751.3510517-3-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250505202751.3510517-2-richard.henderson@linaro.org>
+In-Reply-To: <20250505202751.3510517-3-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,14 +104,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/5/25 1:27 PM, Richard Henderson wrote:
-> Use arg_const_val instead of direct access to the TempOptInfo val
-> member.  Rename both val and is_const to catch all direct accesses.
+> Add o_mask mirroring z_mask, but for 1's instead of 0's.
+> Drop is_const and val fields, which now logically overlap.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   tcg/optimize.c | 78 ++++++++++++++++++++++++++------------------------
->   1 file changed, 41 insertions(+), 37 deletions(-)
->
+>   tcg/optimize.c | 51 ++++++++++++++++++++++++++++++++++++--------------
+>   1 file changed, 37 insertions(+), 14 deletions(-)
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
