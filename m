@@ -4,92 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B20EDC77B7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 17:55:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A714C77B7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 17:55:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uU7qY-00032n-Oi; Tue, 24 Jun 2025 13:54:14 -0400
+	id 1uU7q0-0002vC-4y; Tue, 24 Jun 2025 13:53:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uU7qP-0002yW-O1
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 13:54:08 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uU7qL-0002mf-3P
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 13:54:03 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-b31c978688dso604876a12.1
- for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 10:54:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750787639; x=1751392439; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Y+Cga35u/V2dpyJodTGHeWA+Et2BkhQsp9yfYqFvkQ8=;
- b=hU3fy2rSlV/jXgno1ORL5+A3KMTGDAo6NuxZ1TW5cnEbPTPywgQH5+O48m3HASmoUc
- /Y+FhAAVAzhkEh2OGS7RY298+kEmUn2xe8ajQ/mybxX3+T6RmPomfr9GuI1lhrii3giz
- MkpArKCG4aeZ+1weESdGLoE9kSXZOfOjOrUJvKErbP17vmsp3yXRWQ1g62ZBJv4+BsUT
- sgrWxMgi6u6hEF91LoRdifE/CS4fQI3yE972AVmdBxpbywoprDrT3gVePtYBwkN+PG2E
- yeNibQCaSg33BR7eyTOAIb+u22pn6kyx67r0tH2y/yuq0ibdtxUI+LkNYTiSe2udbpGY
- jTCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750787639; x=1751392439;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Y+Cga35u/V2dpyJodTGHeWA+Et2BkhQsp9yfYqFvkQ8=;
- b=dNOFYFXNh56Us734M8AYCyWQCa4wdAzUM10Y4lTpN2ZekeRY4R0/QsWxuKnTLOd1lh
- zw1nLionb1cRuryrJzui60pOlUqS1NRISEgie5aF4ADSgDSUpQyCRhoymFwj/upQNuXI
- rKI2FUZymo4alKWRO61LMSyVh3NfmqWwIW41d085DfUheq8Bj+BAXSIkdXxEq53Vv47M
- n7jHfTxxrJu6JvjoW1lWhvlm6kIwFc004UmA5naqCsDJa005y6CpAyVik7j5lJoA92yY
- 0bXz5SNLWWwG5M/y020AWNv1twfzxD0SE2xUMU2iMPwpcZXuRT0hVDPzlfGPV+jD8Bqx
- JCyQ==
-X-Gm-Message-State: AOJu0Yz0QQMRjgX/E9VBfYvK+zmpiBAumVp6NeH8uJkhBbDcnrJ3vkqa
- H/XzAMWggAjSJTg76cBajiD6g7xmsvqfJizKAKXrjnb8pWeXFHusJnKsU913eiA+7IA=
-X-Gm-Gg: ASbGncv3hPYxgabWwvD3SC6E3UzREeMchvYkSSbCuOp95lkcQQeiOcWT5DnSV2Rxv+4
- ihRrQ9vdwqoDMbl+Mqf49WEM/NofY5Ajlxe5dJ20OrShR2GCdlaQEfY49MQKBWX6eW4b4txlsps
- 9rvD2vwQgzhJwjTRtHxvKlNArjS2P4pgRqHNODvcnGklIXfp48F6OJnuoqJDeUXzWLGOxNEaucF
- ZwX0wI+XBpcArFAmJg443GRzVZP1ubb/lPfRLhhOAPFEo1AEMMTLVEHU1//pWtki90loOv0qZLA
- DYfhz32j8elfurlRhhlwPpL5343G3fEEfPwrGO+b1uETLxTsG6d6mhylkG+Mbg==
-X-Google-Smtp-Source: AGHT+IEss7mVJII0N/FGOaEP6zOohlbhIYoV5+9r+zw7gq4nhuk8dqVOYLq/Ro7YMz02bsi2WMJsHA==
-X-Received: by 2002:a05:6a21:100c:b0:220:41f6:7a6c with SMTP id
- adf61e73a8af0-2207cd6d697mr1059584637.40.1750787638842; 
- Tue, 24 Jun 2025 10:53:58 -0700 (PDT)
-Received: from shemhazi.lan ([50.46.174.34]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b31f12427b7sm9318153a12.40.2025.06.24.10.53.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Jun 2025 10:53:58 -0700 (PDT)
-From: Rowan Hart <rowanbhart@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Rowan Hart <rowanbhart@gmail.com>
-Subject: [PATCH v14 7/8] plugins: Add patcher plugin and test
-Date: Tue, 24 Jun 2025 10:53:50 -0700
-Message-ID: <20250624175351.440780-8-rowanbhart@gmail.com>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1uU7pp-0002sw-GI; Tue, 24 Jun 2025 13:53:29 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1uU7pn-0002jX-QE; Tue, 24 Jun 2025 13:53:29 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.98.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1uU7pl-00000005Wmh-2a5T; Tue, 24 Jun 2025 19:53:25 +0200
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+To: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Avihai Horon <avihaih@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH 3/3] vfio/migration: Add also max in-flight VFIO device state
+ buffers size limit
+Date: Tue, 24 Jun 2025 19:51:58 +0200
+Message-ID: <65a132db72807ec6341015e7079b10352d718b96.1750787338.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250624175351.440780-1-rowanbhart@gmail.com>
-References: <20250624175351.440780-1-rowanbhart@gmail.com>
+In-Reply-To: <cover.1750787338.git.maciej.szmigiero@oracle.com>
+References: <cover.1750787338.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=rowanbhart@gmail.com; helo=mail-pg1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,391 +62,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds a plugin that exercises the virtual and hardware memory
-read-write API functions added in a previous patch. The plugin takes a
-target and patch byte sequence, and will overwrite any instruction
-matching the target byte sequence with the patch.
+From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
+There's already a max in-flight VFIO device state buffers *count* limit,
+add also max queued buffers *size* limit.
+
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- tests/tcg/Makefile.target                 |   7 +-
- tests/tcg/plugins/meson.build             |   2 +-
- tests/tcg/plugins/patch.c                 | 241 ++++++++++++++++++++++
- tests/tcg/x86_64/Makefile.softmmu-target  |   7 +
- tests/tcg/x86_64/system/patch-target.c    |  22 ++
- tests/tcg/x86_64/system/validate-patch.py |  39 ++++
- 6 files changed, 316 insertions(+), 2 deletions(-)
- create mode 100644 tests/tcg/plugins/patch.c
- create mode 100644 tests/tcg/x86_64/system/patch-target.c
- create mode 100755 tests/tcg/x86_64/system/validate-patch.py
+ docs/devel/migration/vfio.rst |  8 +++++---
+ hw/vfio/migration-multifd.c   | 21 +++++++++++++++++++--
+ hw/vfio/pci.c                 |  9 +++++++++
+ include/hw/vfio/vfio-device.h |  1 +
+ 4 files changed, 34 insertions(+), 5 deletions(-)
 
-diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
-index 95ff76ea44..af68f11664 100644
---- a/tests/tcg/Makefile.target
-+++ b/tests/tcg/Makefile.target
-@@ -151,7 +151,12 @@ ifeq ($(CONFIG_PLUGIN),y)
- PLUGIN_SRC=$(SRC_PATH)/tests/tcg/plugins
- PLUGIN_LIB=../plugins
- VPATH+=$(PLUGIN_LIB)
--PLUGINS=$(patsubst %.c, lib%.so, $(notdir $(wildcard $(PLUGIN_SRC)/*.c)))
-+# Some plugins need to be disabled for all tests to avoid exponential explosion.
-+# For example, libpatch.so only needs to run against the arch-specific patch
-+# target test, so we explicitly run it in the arch-specific Makefile.
-+DISABLE_PLUGINS=libpatch.so
-+PLUGINS=$(filter-out $(DISABLE_PLUGINS), \
-+	$(patsubst %.c, lib%.so, $(notdir $(wildcard $(PLUGIN_SRC)/*.c))))
+diff --git a/docs/devel/migration/vfio.rst b/docs/devel/migration/vfio.rst
+index 7c9cb7bdbf87..127a1db35949 100644
+--- a/docs/devel/migration/vfio.rst
++++ b/docs/devel/migration/vfio.rst
+@@ -254,12 +254,14 @@ This means that a malicious QEMU source could theoretically cause the target
+ QEMU to allocate unlimited amounts of memory for such buffers-in-flight.
  
- # We need to ensure expand the run-plugin-TEST-with-PLUGIN
- # pre-requistes manually here as we can't use stems to handle it. We
-diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-index 029342282a..61a007d9e7 100644
---- a/tests/tcg/plugins/meson.build
-+++ b/tests/tcg/plugins/meson.build
-@@ -1,6 +1,6 @@
- t = []
- if get_option('plugins')
--  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall']
-+  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall', 'patch']
-     if host_os == 'windows'
-       t += shared_module(i, files(i + '.c') + '../../../contrib/plugins/win32_linker.c',
-                         include_directories: '../../../include/qemu',
-diff --git a/tests/tcg/plugins/patch.c b/tests/tcg/plugins/patch.c
-new file mode 100644
-index 0000000000..450fc51c88
---- /dev/null
-+++ b/tests/tcg/plugins/patch.c
-@@ -0,0 +1,241 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This plugin patches instructions matching a pattern to a different
-+ * instruction as they execute
-+ *
-+ */
-+
-+#include "glib.h"
-+#include "glibconfig.h"
-+
-+#include <qemu-plugin.h>
-+#include <string.h>
-+#include <stdio.h>
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-+
-+static bool use_hwaddr;
-+static GByteArray *target_data;
-+static GByteArray *patch_data;
-+
-+/**
-+ * Parse a string of hexadecimal digits into a GByteArray. The string must be
-+ * even length
-+ */
-+static GByteArray *str_to_bytes(const char *str)
-+{
-+    size_t len = strlen(str);
-+
-+    if (len == 0 || len % 2 != 0) {
-+        return NULL;
-+    }
-+
-+    GByteArray *bytes = g_byte_array_new();
-+    char byte[3] = {0};
-+    guint8 value = 0;
-+
-+    for (size_t i = 0; i < len; i += 2) {
-+        byte[0] = str[i];
-+        byte[1] = str[i + 1];
-+        value = (guint8)g_ascii_strtoull(byte, NULL, 16);
-+        g_byte_array_append(bytes, &value, 1);
-+    }
-+
-+    return bytes;
-+}
-+
-+static void patch_hwaddr(unsigned int vcpu_index, void *userdata)
-+{
-+    uint64_t addr = (uint64_t)userdata;
-+    g_autoptr(GString) str = g_string_new(NULL);
-+    g_string_printf(str, "patching: @0x%"
-+                    PRIx64 "\n",
-+                    addr);
-+    qemu_plugin_outs(str->str);
-+
-+    enum qemu_plugin_hwaddr_operation_result result =
-+        qemu_plugin_write_memory_hwaddr(addr, patch_data);
-+
-+
-+    if (result != QEMU_PLUGIN_HWADDR_OPERATION_OK) {
-+        g_autoptr(GString) errmsg = g_string_new(NULL);
-+        g_string_printf(errmsg, "Failed to write memory: %d\n", result);
-+        qemu_plugin_outs(errmsg->str);
-+        return;
-+    }
-+
-+    GByteArray *read_data = g_byte_array_new();
-+
-+    result = qemu_plugin_read_memory_hwaddr(addr, read_data,
-+                                            patch_data->len);
-+
-+    qemu_plugin_outs("Reading memory...\n");
-+
-+    if (result != QEMU_PLUGIN_HWADDR_OPERATION_OK) {
-+        g_autoptr(GString) errmsg = g_string_new(NULL);
-+        g_string_printf(errmsg, "Failed to read memory: %d\n", result);
-+        qemu_plugin_outs(errmsg->str);
-+        return;
-+    }
-+
-+    if (memcmp(patch_data->data, read_data->data, patch_data->len) != 0) {
-+        qemu_plugin_outs("Failed to read back written data\n");
-+    }
-+
-+    qemu_plugin_outs("Success!\n");
-+
-+    return;
-+}
-+
-+static void patch_vaddr(unsigned int vcpu_index, void *userdata)
-+{
-+    uint64_t addr = (uint64_t)userdata;
-+    uint64_t hwaddr = 0;
-+    if (!qemu_plugin_translate_vaddr(addr, &hwaddr)) {
-+        qemu_plugin_outs("Failed to translate vaddr\n");
-+        return;
-+    }
-+    g_autoptr(GString) str = g_string_new(NULL);
-+    g_string_printf(str, "patching: @0x%"
-+                    PRIx64 " hw: @0x%" PRIx64 "\n",
-+                    addr, hwaddr);
-+    qemu_plugin_outs(str->str);
-+
-+    qemu_plugin_outs("Writing memory (vaddr)...\n");
-+
-+    if (!qemu_plugin_write_memory_vaddr(addr, patch_data)) {
-+        qemu_plugin_outs("Failed to write memory\n");
-+        return;
-+    }
-+
-+    qemu_plugin_outs("Reading memory (vaddr)...\n");
-+
-+    g_autoptr(GByteArray) read_data = g_byte_array_new();
-+
-+    if (!qemu_plugin_read_memory_vaddr(addr, read_data, patch_data->len)) {
-+        qemu_plugin_outs("Failed to read memory\n");
-+        return;
-+    }
-+
-+    if (memcmp(patch_data->data, read_data->data, patch_data->len) != 0) {
-+        qemu_plugin_outs("Failed to read back written data\n");
-+    }
-+
-+    qemu_plugin_outs("Success!\n");
-+
-+    return;
-+}
-+
-+/*
-+ * Callback on translation of a translation block.
-+ */
-+static void vcpu_tb_trans_cb(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-+{
-+    uint64_t addr = 0;
-+    g_autoptr(GByteArray) insn_data = g_byte_array_new();
-+    for (size_t i = 0; i < qemu_plugin_tb_n_insns(tb); i++) {
-+        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
-+
-+        if (use_hwaddr) {
-+            uint64_t vaddr = qemu_plugin_insn_vaddr(insn);
-+            if (!qemu_plugin_translate_vaddr(vaddr, &addr)) {
-+                qemu_plugin_outs("Failed to translate vaddr\n");
-+                continue;
-+            }
-+        } else {
-+            addr = qemu_plugin_insn_vaddr(insn);
-+        }
-+
-+        g_byte_array_set_size(insn_data, qemu_plugin_insn_size(insn));
-+        qemu_plugin_insn_data(insn, insn_data->data, insn_data->len);
-+
-+        if (insn_data->len >= target_data->len &&
-+            !memcmp(insn_data->data, target_data->data,
-+                    MIN(target_data->len, insn_data->len))) {
-+            if (use_hwaddr) {
-+                qemu_plugin_register_vcpu_tb_exec_cb(tb, patch_hwaddr,
-+                                                     QEMU_PLUGIN_CB_NO_REGS,
-+                                                     (void *)addr);
-+            } else {
-+                qemu_plugin_register_vcpu_tb_exec_cb(tb, patch_vaddr,
-+                                                     QEMU_PLUGIN_CB_NO_REGS,
-+                                                     (void *)addr);
-+            }
-+        }
-+    }
-+}
-+
-+static void usage(void)
-+{
-+    fprintf(stderr, "Usage: <lib>,target=<bytes>,patch=<new_bytes>"
-+            "[,use_hwaddr=true|false]");
-+}
-+
-+/*
-+ * Called when the plugin is installed
-+ */
-+QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-+                                           const qemu_info_t *info, int argc,
-+                                           char **argv)
-+{
-+
-+    use_hwaddr = true;
-+    target_data = NULL;
-+    patch_data = NULL;
-+
-+    if (argc > 4) {
-+        usage();
-+        return -1;
-+    }
-+
-+    for (size_t i = 0; i < argc; i++) {
-+        char *opt = argv[i];
-+        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-+        if (g_strcmp0(tokens[0], "use_hwaddr") == 0) {
-+            if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &use_hwaddr)) {
-+                fprintf(stderr,
-+                        "Failed to parse boolean argument use_hwaddr\n");
-+                return -1;
-+            }
-+        } else if (g_strcmp0(tokens[0], "target") == 0) {
-+            target_data = str_to_bytes(tokens[1]);
-+            if (!target_data) {
-+                fprintf(stderr,
-+                         "Failed to parse target bytes.\n");
-+                return -1;
-+            }
-+        } else if (g_strcmp0(tokens[0], "patch") == 0) {
-+            patch_data = str_to_bytes(tokens[1]);
-+            if (!patch_data) {
-+                fprintf(stderr, "Failed to parse patch bytes.\n");
-+                return -1;
-+            }
-+        } else {
-+            fprintf(stderr, "Unknown argument: %s\n", tokens[0]);
-+            usage();
-+            return -1;
-+        }
-+    }
-+
-+    if (!target_data) {
-+        fprintf(stderr, "target argument is required\n");
-+        usage();
-+        return -1;
-+    }
-+
-+    if (!patch_data) {
-+        fprintf(stderr, "patch argument is required\n");
-+        usage();
-+        return -1;
-+    }
-+
-+    if (target_data->len != patch_data->len) {
-+        fprintf(stderr, "Target and patch data must be the same length\n");
-+        return -1;
-+    }
-+
-+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans_cb);
-+
-+    return 0;
-+}
-diff --git a/tests/tcg/x86_64/Makefile.softmmu-target b/tests/tcg/x86_64/Makefile.softmmu-target
-index d3e09708a5..9ea24257d2 100644
---- a/tests/tcg/x86_64/Makefile.softmmu-target
-+++ b/tests/tcg/x86_64/Makefile.softmmu-target
-@@ -33,3 +33,10 @@ memory: CFLAGS+=-DCHECK_UNALIGNED=1
+ The "x-migration-max-queued-buffers" property allows capping the maximum count
+-of these VFIO device state buffers queued at the destination.
++of these VFIO device state buffers queued at the destination while
++"x-migration-max-queued-buffers-size" property allows capping their total queued
++size.
  
- # Running
- QEMU_OPTS+=-device isa-debugcon,chardev=output -device isa-debug-exit,iobase=0xf4,iosize=0x4 -kernel
-+
-+run-plugin-patch-target-with-libpatch.so:		\
-+	PLUGIN_ARGS=$(COMMA)target=ffc0$(COMMA)patch=9090$(COMMA)use_hwaddr=true
-+run-plugin-patch-target-with-libpatch.so:		\
-+	CHECK_PLUGIN_OUTPUT_COMMAND=$(X64_SYSTEM_SRC)/validate-patch.py $@.out
-+run-plugin-patch-target-with-libpatch.so: patch-target libpatch.so
-+EXTRA_RUNS+=run-plugin-patch-target-with-libpatch.so
-diff --git a/tests/tcg/x86_64/system/patch-target.c b/tests/tcg/x86_64/system/patch-target.c
-new file mode 100644
-index 0000000000..8c2b6f4ba7
---- /dev/null
-+++ b/tests/tcg/x86_64/system/patch-target.c
-@@ -0,0 +1,22 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This test target increments a value 100 times. The patcher converts the
-+ * inc instruction to a nop, so it only increments the value once.
-+ *
-+ */
-+#include <minilib.h>
-+
-+int main(void)
-+{
-+    ml_printf("Running test...\n");
-+    unsigned int x = 0;
-+    for (int i = 0; i < 100; i++) {
-+        asm volatile (
-+            "inc %[x]"
-+            : [x] "+a" (x)
-+        );
+ Because a malicious QEMU source causing OOM on the target is not expected to be
+ a realistic threat in most of VFIO live migration use cases and the right value
+-depends on the particular setup by default this queued buffers limit is
+-disabled by setting it to UINT64_MAX.
++depends on the particular setup by default these queued buffers limits are
++disabled by setting them to UINT64_MAX.
+ 
+ Some host platforms (like ARM64) require that VFIO device config is loaded only
+ after all iterables were loaded.
+diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
+index a12ec1ead74a..c76f1f2181f9 100644
+--- a/hw/vfio/migration-multifd.c
++++ b/hw/vfio/migration-multifd.c
+@@ -82,6 +82,7 @@ typedef struct VFIOMultifd {
+     uint32_t load_buf_idx;
+     uint32_t load_buf_idx_last;
+     uint32_t load_buf_queued_pending_buffers;
++    size_t load_buf_queued_pending_buffers_size;
+ } VFIOMultifd;
+ 
+ static void vfio_state_buffer_clear(gpointer data)
+@@ -138,6 +139,7 @@ static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
+     VFIOMigration *migration = vbasedev->migration;
+     VFIOMultifd *multifd = migration->multifd;
+     VFIOStateBuffer *lb;
++    size_t data_size = packet_total_size - sizeof(*packet);
+ 
+     vfio_state_buffers_assert_init(&multifd->load_bufs);
+     if (packet->idx >= vfio_state_buffers_size_get(&multifd->load_bufs)) {
+@@ -164,8 +166,19 @@ static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
+         return false;
+     }
+ 
+-    lb->data = g_memdup2(&packet->data, packet_total_size - sizeof(*packet));
+-    lb->len = packet_total_size - sizeof(*packet);
++    multifd->load_buf_queued_pending_buffers_size += data_size;
++    if (multifd->load_buf_queued_pending_buffers_size >
++        vbasedev->migration_max_queued_buffers_size) {
++        error_setg(errp,
++                   "%s: queuing state buffer %" PRIu32
++                   " would exceed the size max of %" PRIu64,
++                   vbasedev->name, packet->idx,
++                   vbasedev->migration_max_queued_buffers_size);
++        return false;
 +    }
-+    ml_printf("Value: %d\n", x);
-+    return 0;
-+}
-diff --git a/tests/tcg/x86_64/system/validate-patch.py b/tests/tcg/x86_64/system/validate-patch.py
-new file mode 100755
-index 0000000000..700950eae5
---- /dev/null
-+++ b/tests/tcg/x86_64/system/validate-patch.py
-@@ -0,0 +1,39 @@
-+#!/usr/bin/env python3
-+#
-+# validate-patch.py: check the patch applies
-+#
-+# This program takes two inputs:
-+#   - the plugin output
-+#   - the binary output
-+#
-+# Copyright (C) 2024
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+import sys
-+from argparse import ArgumentParser
++    lb->data = g_memdup2(&packet->data, data_size);
++    lb->len = data_size;
+     lb->is_present = true;
+ 
+     return true;
+@@ -349,6 +362,9 @@ static bool vfio_load_state_buffer_write(VFIODevice *vbasedev,
+         assert(wr_ret <= buf_len);
+         buf_len -= wr_ret;
+         buf_cur += wr_ret;
 +
-+def main() -> None:
-+    """
-+    Process the arguments, injest the program and plugin out and
-+    verify they match up and report if they do not.
-+    """
-+    parser = ArgumentParser(description="Validate patch")
-+    parser.add_argument('test_output',
-+                        help="The output from the test itself")
-+    parser.add_argument('plugin_output',
-+                        help="The output from plugin")
-+    args = parser.parse_args()
-+
-+    with open(args.test_output, 'r') as f:
-+        test_data = f.read()
-+    with open(args.plugin_output, 'r') as f:
-+        plugin_data = f.read()
-+    if "Value: 1" in test_data:
-+        sys.exit(0)
-+    else:
-+        sys.exit(1)
-+
-+if __name__ == "__main__":
-+    main()
-+
--- 
-2.49.0
-
++        assert(multifd->load_buf_queued_pending_buffers_size >= wr_ret);
++        multifd->load_buf_queued_pending_buffers_size -= wr_ret;
+     }
+ 
+     trace_vfio_load_state_device_buffer_load_end(vbasedev->name,
+@@ -522,6 +538,7 @@ static VFIOMultifd *vfio_multifd_new(void)
+     multifd->load_buf_idx = 0;
+     multifd->load_buf_idx_last = UINT32_MAX;
+     multifd->load_buf_queued_pending_buffers = 0;
++    multifd->load_buf_queued_pending_buffers_size = 0;
+     qemu_cond_init(&multifd->load_bufs_buffer_ready_cond);
+ 
+     multifd->load_bufs_iter_done = false;
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 01e48e39de75..944813ee7bdb 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -3529,6 +3529,8 @@ static const Property vfio_pci_dev_properties[] = {
+                             ON_OFF_AUTO_AUTO),
+     DEFINE_PROP_UINT64("x-migration-max-queued-buffers", VFIOPCIDevice,
+                        vbasedev.migration_max_queued_buffers, UINT64_MAX),
++    DEFINE_PROP_SIZE("x-migration-max-queued-buffers-size", VFIOPCIDevice,
++                     vbasedev.migration_max_queued_buffers_size, UINT64_MAX),
+     DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
+                      vbasedev.migration_events, false),
+     DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
+@@ -3716,6 +3718,13 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, const void *data)
+                                           "destination when doing live "
+                                           "migration of device state via "
+                                           "multifd channels");
++    object_class_property_set_description(klass, /* 10.1 */
++                                          "x-migration-max-queued-buffers-size",
++                                          "Maximum size of in-flight VFIO "
++                                          "device state buffers queued at the "
++                                          "destination when doing live "
++                                          "migration of device state via "
++                                          "multifd channels");
+ }
+ 
+ static const TypeInfo vfio_pci_dev_info = {
+diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+index 359d553b916a..3e86d07347d6 100644
+--- a/include/hw/vfio/vfio-device.h
++++ b/include/hw/vfio/vfio-device.h
+@@ -68,6 +68,7 @@ typedef struct VFIODevice {
+     OnOffAuto migration_multifd_transfer;
+     OnOffAuto migration_load_config_after_iter;
+     uint64_t migration_max_queued_buffers;
++    uint64_t migration_max_queued_buffers_size;
+     bool migration_events;
+     bool use_region_fds;
+     VFIODeviceOps *ops;
 
