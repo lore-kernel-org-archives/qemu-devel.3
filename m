@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B91A7C77B7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 01:20:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1623C7115B
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 01:20:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTsJe-0000ac-Iz; Mon, 23 Jun 2025 21:19:14 -0400
+	id 1uTsJb-0000Zw-OF; Mon, 23 Jun 2025 21:19:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTsJZ-0000Yx-GR
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 21:19:09 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1uTsJa-0000ZW-L2
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 21:19:10 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTsJT-0005mz-Cs
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 21:19:09 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-73972a54919so3953444b3a.3
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 18:19:02 -0700 (PDT)
+ id 1uTsJY-0005oA-Ky
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 21:19:10 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-7481600130eso6024549b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 18:19:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750727941; x=1751332741; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750727947; x=1751332747; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iPdTg3mTyrHOh2KwK9/hiLGU0SNJfuYE0WsynkUI5MU=;
- b=xlXwoHnKve2EwpUGthO96x7DIRhtH5mZcnpZ4FgwAUCUklsTnF2px6FqMqXsgKdO7D
- IgzMg7OI9aSHS/+yCHZhHu7qGK1b7KZwXtVJE/CYlTRJy17drpkSV5+FSce2v4eDZlBK
- CjdqO4iUHSanqAxzH7nDyY0Px4lk0+bOjlPYArJG1oCn0bUi03C2CTUTQioPMmAwZAIV
- idjlY3frA6N/xi7JJWdK2GlLhpxwIg/8EResIHpXsDbCysHILqPUh98vn8Y3fR4GV+Ye
- nCdfW8pfjTrwwhAcFW7ZbJnocWNN0/1b7S5uu6hrbtBoHynplTkQBtYbOPBjkDrGqEWM
- omhg==
+ bh=iw3Inm/qmovJ+SsJA+SUz5rt3h/FMqvN9mRE2hwkWpQ=;
+ b=EWXMcFGkcNNaCI31ADo1d5MfnK/tEB0VBylecRVFDOykZk66KDMhpV5R8Bk83yACKt
+ nOm+PRWYxijMAPgRqSs0GeNgj5/eGqkxXvP9QZS0Zs8OAy41DwDMTQpM2zkozJI2ALXw
+ dCNCvpuTJb/UrlSe5ktr5pYtHDvGmfmiJnrwFxEMLdnThCbIjJJ0K0VPr0REBZHLZs/l
+ soAhCt9LyDBwfLDYjEdTIVaH6Xeq8Rk/Yz2r+sAVxQL1l8WPiw1a7TZqJkwx++RT0sg1
+ L6u65rj9+///ipGN8NPvBrdQLCA0kARfJvcIBHUcBB3Gy4P6RFUwBJLj5/kaGePdrf4j
+ 8WFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750727941; x=1751332741;
+ d=1e100.net; s=20230601; t=1750727947; x=1751332747;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iPdTg3mTyrHOh2KwK9/hiLGU0SNJfuYE0WsynkUI5MU=;
- b=MtRo9qRFhXe51oCsbBopMOnHGH4VMEoX1F6ZOhOuy8W0zT66txiFg+RftR034SqNcQ
- sMNti20jZYmM2whcxMQytyQcvHpIP9L2s4QJ3Tw3XQXkrsB+x1C0IumASxma40yQPgyt
- PvoQMbiVpehI6MTeAZIgBRyq5oMMp48KJjtTn9LietVqtWGHOw7RZSzivVIjQN9IRK2/
- ro+UdMYX/OqSd2W6Wz3Cr41ZTe0z64rLR0eeCbCcanj/3CEQVv5zv/P72S5954ekWRTz
- qXqEgRZm2ywQkwt1KbQNWgLoYyfupj82PnN1jXGOvqL0VzN4kHazAuzMIaf+DM9HyhM8
- tC9w==
-X-Gm-Message-State: AOJu0YwnMeMivDumuS93BhHZSS4DNSae/QElFsKjYpA/GtiDzyMqxbkp
- W5EB9WII9/lX1xqT7B7PvQh2K6rN4ofxecr04SdXdIvdCbNs+OuQtTOOI8lZA5Mi1SJfD2cP/4C
- z2+bKtic=
-X-Gm-Gg: ASbGnct/2LlsMw5EV1GJ4qV/fhA9KC0dPmyfeCPA0KxgFeg1EQC/RbdoLYq4E6yS8Rj
- RqUdblJPsGaeBLxgCvPjokanRnl73ai7Xn6MQt5afgyH+N9tIst0s85siivHxp6vAa0+IjGSzb5
- R9PI2wJ7fSWPRhIx+KC/VCjW7MvY7tvv8IkV9V/UYZGdSdX5g3pUpTAvHoteoo4ttUT1l1iZy1a
- 8uR7ZH+qEmenINGUORo58q5zHJKUejGnuAsWTUZ2+woIb23UyIY1k5YTXD6HexI4YgZKyHDwDB6
- mN+3OQ4c/otsHRbIqXx8O1/uhtPXx/NPkI49e266JwD6Il9dkfeYd0/YL7zXU+oE8mDZHH7jKfr
- N+eG93DmSz4KMqoKuAPIJ
-X-Google-Smtp-Source: AGHT+IHHxGSjJmp4QENNJrmSB1FsL8v/0NoXsxfJijq+9qyygZ1B6Tm5gkqso5C86fLPbKmcwFXnjA==
-X-Received: by 2002:a05:6a00:2789:b0:748:ff4d:b585 with SMTP id
- d2e1a72fcca58-7490db30e09mr20333697b3a.19.1750727941384; 
- Mon, 23 Jun 2025 18:19:01 -0700 (PDT)
+ bh=iw3Inm/qmovJ+SsJA+SUz5rt3h/FMqvN9mRE2hwkWpQ=;
+ b=h25KtFnnbbI5LugUK/a5uIy7fn8sxW5Z2Gv1OnxJkV/o4pIJBIFS/SDn/jTEmIcqBS
+ 7gJOk5aoekt+feOvwl5IdgC0q3PPNWBba6VypFXuuKfqy3Iw7j0nJPBqr0dEdaA+CJJ8
+ k6fZ2PwDNhDRk7GEzz+B0qIdbpWZ9/EBKgTLctBIsBGPOUiICr+VR5+09mdlI256Qtfw
+ s0xl2be/UEiZKaMoTmuh0MHKXHTXCZgATSz0KhuTSkRl1xLU3ZkvmGszHKwboffVJUs8
+ 3KwrpyW049qPl72DN8LjqmeedfmdQdoJw9MbyRH9ZIJGS2c6Ec9I7sXuxBGkDx2zGxe/
+ IeIQ==
+X-Gm-Message-State: AOJu0YyOmwJIeRAT+NRK6aJPf48Hn3CB9/txlrClqiOZa+KdffEoynrK
+ ASwmtdoYRgQsLJY5N9lupL0saXoM06BUNFjJWZyL5SShpw3gDTc8mCyJ5B3yRWean5pZRxDPE1P
+ x8hhMClI=
+X-Gm-Gg: ASbGncvavR0wfDIKuAVEQRos396482MFMgun8wV06yrFVi2BbbJToklQBsvXU8aR8X+
+ QosoKUsyHLQWWT3heZZPwzDwm/XM8xkIyCLmk/zUzxMGfl2vsCVvimXvU9LievncSEeRJ+Xaj6M
+ e3GLp49ViQ5+TOtKlfBtgwfISSuLj9GxDp0iJL4KaI3s0Kmr4ezut6DHYTxRH8iTSvqVoEyyhh9
+ RK0jj/MvMD98XjGY5K/9BaiHxwm/BHFiz9LjI2f9sI1Xw7rLRBmWm8dRKobCgYKeatI5rrlnpQw
+ m1+1ig7RmrEgC+rfMGvd6rDSZXWHAbYmYt3dQkBhGzFdk9OD2baPto/qBuLgRqomkS2Ado8+Y3t
+ kl/mvmb8Hox5s4OhtMrc0
+X-Google-Smtp-Source: AGHT+IFU+HaEQafWqUV3Eplay7FIHUvYyV1BcdtXVUMlGnqs5yQ2GYMKc5wf0KYTyHRYnfqkL1pk+g==
+X-Received: by 2002:a05:6a20:5481:b0:1f5:9024:3254 with SMTP id
+ adf61e73a8af0-22026e13463mr24798394637.6.1750727947131; 
+ Mon, 23 Jun 2025 18:19:07 -0700 (PDT)
 Received: from stoup.. (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-749b5e08d28sm412080b3a.28.2025.06.23.18.19.00
+ d2e1a72fcca58-749b5e08d28sm412080b3a.28.2025.06.23.18.19.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Jun 2025 18:19:01 -0700 (PDT)
+ Mon, 23 Jun 2025 18:19:06 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 01/11] tcg: Add dbase argument to do_dup_store
-Date: Mon, 23 Jun 2025 18:18:49 -0700
-Message-ID: <20250624011859.112010-2-richard.henderson@linaro.org>
+Subject: [PULL 10/11] linux-user/aarch64: Update hwcap bits from 6.14
+Date: Mon, 23 Jun 2025 18:18:58 -0700
+Message-ID: <20250624011859.112010-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250624011859.112010-1-richard.henderson@linaro.org>
 References: <20250624011859.112010-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,72 +103,130 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/tcg-op-gvec.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ linux-user/elfload.c | 75 ++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 72 insertions(+), 3 deletions(-)
 
-diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
-index d32a4f146d..1aad7b0864 100644
---- a/tcg/tcg-op-gvec.c
-+++ b/tcg/tcg-op-gvec.c
-@@ -483,8 +483,8 @@ static TCGType choose_vector_type(const TCGOpcode *list, unsigned vece,
-     return 0;
- }
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 82ebf6a212..2add1665c7 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -751,7 +751,23 @@ enum {
+     ARM_HWCAP_A64_SSBS          = 1 << 28,
+     ARM_HWCAP_A64_SB            = 1 << 29,
+     ARM_HWCAP_A64_PACA          = 1 << 30,
+-    ARM_HWCAP_A64_PACG          = 1UL << 31,
++    ARM_HWCAP_A64_PACG          = 1ULL << 31,
++    ARM_HWCAP_A64_GCS           = 1ULL << 32,
++    ARM_HWCAP_A64_CMPBR         = 1ULL << 33,
++    ARM_HWCAP_A64_FPRCVT        = 1ULL << 34,
++    ARM_HWCAP_A64_F8MM8         = 1ULL << 35,
++    ARM_HWCAP_A64_F8MM4         = 1ULL << 36,
++    ARM_HWCAP_A64_SVE_F16MM     = 1ULL << 37,
++    ARM_HWCAP_A64_SVE_ELTPERM   = 1ULL << 38,
++    ARM_HWCAP_A64_SVE_AES2      = 1ULL << 39,
++    ARM_HWCAP_A64_SVE_BFSCALE   = 1ULL << 40,
++    ARM_HWCAP_A64_SVE2P2        = 1ULL << 41,
++    ARM_HWCAP_A64_SME2P2        = 1ULL << 42,
++    ARM_HWCAP_A64_SME_SBITPERM  = 1ULL << 43,
++    ARM_HWCAP_A64_SME_AES       = 1ULL << 44,
++    ARM_HWCAP_A64_SME_SFEXPA    = 1ULL << 45,
++    ARM_HWCAP_A64_SME_STMOP     = 1ULL << 46,
++    ARM_HWCAP_A64_SME_SMOP4     = 1ULL << 47,
  
--static void do_dup_store(TCGType type, uint32_t dofs, uint32_t oprsz,
--                         uint32_t maxsz, TCGv_vec t_vec)
-+static void do_dup_store(TCGType type, TCGv_ptr dbase, uint32_t dofs,
-+                         uint32_t oprsz, uint32_t maxsz, TCGv_vec t_vec)
+     ARM_HWCAP2_A64_DCPODP       = 1 << 0,
+     ARM_HWCAP2_A64_SVE2         = 1 << 1,
+@@ -798,6 +814,25 @@ enum {
+     ARM_HWCAP2_A64_SME_F16F16   = 1ULL << 42,
+     ARM_HWCAP2_A64_MOPS         = 1ULL << 43,
+     ARM_HWCAP2_A64_HBC          = 1ULL << 44,
++    ARM_HWCAP2_A64_SVE_B16B16   = 1ULL << 45,
++    ARM_HWCAP2_A64_LRCPC3       = 1ULL << 46,
++    ARM_HWCAP2_A64_LSE128       = 1ULL << 47,
++    ARM_HWCAP2_A64_FPMR         = 1ULL << 48,
++    ARM_HWCAP2_A64_LUT          = 1ULL << 49,
++    ARM_HWCAP2_A64_FAMINMAX     = 1ULL << 50,
++    ARM_HWCAP2_A64_F8CVT        = 1ULL << 51,
++    ARM_HWCAP2_A64_F8FMA        = 1ULL << 52,
++    ARM_HWCAP2_A64_F8DP4        = 1ULL << 53,
++    ARM_HWCAP2_A64_F8DP2        = 1ULL << 54,
++    ARM_HWCAP2_A64_F8E4M3       = 1ULL << 55,
++    ARM_HWCAP2_A64_F8E5M2       = 1ULL << 56,
++    ARM_HWCAP2_A64_SME_LUTV2    = 1ULL << 57,
++    ARM_HWCAP2_A64_SME_F8F16    = 1ULL << 58,
++    ARM_HWCAP2_A64_SME_F8F32    = 1ULL << 59,
++    ARM_HWCAP2_A64_SME_SF8FMA   = 1ULL << 60,
++    ARM_HWCAP2_A64_SME_SF8DP4   = 1ULL << 61,
++    ARM_HWCAP2_A64_SME_SF8DP2   = 1ULL << 62,
++    ARM_HWCAP2_A64_POE          = 1ULL << 63,
+ };
+ 
+ #define ELF_HWCAP   get_elf_hwcap()
+@@ -886,7 +921,7 @@ uint64_t get_elf_hwcap2(void)
+ 
+ const char *elf_hwcap_str(uint32_t bit)
  {
-     uint32_t i = 0;
+-    static const char *hwcap_str[] = {
++    static const char * const hwcap_str[] = {
+     [__builtin_ctz(ARM_HWCAP_A64_FP      )] = "fp",
+     [__builtin_ctz(ARM_HWCAP_A64_ASIMD   )] = "asimd",
+     [__builtin_ctz(ARM_HWCAP_A64_EVTSTRM )] = "evtstrm",
+@@ -919,6 +954,22 @@ const char *elf_hwcap_str(uint32_t bit)
+     [__builtin_ctz(ARM_HWCAP_A64_SB      )] = "sb",
+     [__builtin_ctz(ARM_HWCAP_A64_PACA    )] = "paca",
+     [__builtin_ctz(ARM_HWCAP_A64_PACG    )] = "pacg",
++    [__builtin_ctzll(ARM_HWCAP_A64_GCS   )] = "gcs",
++    [__builtin_ctzll(ARM_HWCAP_A64_CMPBR )] = "cmpbr",
++    [__builtin_ctzll(ARM_HWCAP_A64_FPRCVT)] = "fprcvt",
++    [__builtin_ctzll(ARM_HWCAP_A64_F8MM8 )] = "f8mm8",
++    [__builtin_ctzll(ARM_HWCAP_A64_F8MM4 )] = "f8mm4",
++    [__builtin_ctzll(ARM_HWCAP_A64_SVE_F16MM)] = "svef16mm",
++    [__builtin_ctzll(ARM_HWCAP_A64_SVE_ELTPERM)] = "sveeltperm",
++    [__builtin_ctzll(ARM_HWCAP_A64_SVE_AES2)] = "sveaes2",
++    [__builtin_ctzll(ARM_HWCAP_A64_SVE_BFSCALE)] = "svebfscale",
++    [__builtin_ctzll(ARM_HWCAP_A64_SVE2P2)] = "sve2p2",
++    [__builtin_ctzll(ARM_HWCAP_A64_SME2P2)] = "sme2p2",
++    [__builtin_ctzll(ARM_HWCAP_A64_SME_SBITPERM)] = "smesbitperm",
++    [__builtin_ctzll(ARM_HWCAP_A64_SME_AES)] = "smeaes",
++    [__builtin_ctzll(ARM_HWCAP_A64_SME_SFEXPA)] = "smesfexpa",
++    [__builtin_ctzll(ARM_HWCAP_A64_SME_STMOP)] = "smestmop",
++    [__builtin_ctzll(ARM_HWCAP_A64_SME_SMOP4)] = "smesmop4",
+     };
  
-@@ -496,7 +496,7 @@ static void do_dup_store(TCGType type, uint32_t dofs, uint32_t oprsz,
-      * are misaligned wrt the maximum vector size, so do that first.
-      */
-     if (dofs & 8) {
--        tcg_gen_stl_vec(t_vec, tcg_env, dofs + i, TCG_TYPE_V64);
-+        tcg_gen_stl_vec(t_vec, dbase, dofs + i, TCG_TYPE_V64);
-         i += 8;
-     }
+     return bit < ARRAY_SIZE(hwcap_str) ? hwcap_str[bit] : NULL;
+@@ -926,7 +977,7 @@ const char *elf_hwcap_str(uint32_t bit)
  
-@@ -508,17 +508,17 @@ static void do_dup_store(TCGType type, uint32_t dofs, uint32_t oprsz,
-          * that e.g. size == 80 would be expanded with 2x32 + 1x16.
-          */
-         for (; i + 32 <= oprsz; i += 32) {
--            tcg_gen_stl_vec(t_vec, tcg_env, dofs + i, TCG_TYPE_V256);
-+            tcg_gen_stl_vec(t_vec, dbase, dofs + i, TCG_TYPE_V256);
-         }
-         /* fallthru */
-     case TCG_TYPE_V128:
-         for (; i + 16 <= oprsz; i += 16) {
--            tcg_gen_stl_vec(t_vec, tcg_env, dofs + i, TCG_TYPE_V128);
-+            tcg_gen_stl_vec(t_vec, dbase, dofs + i, TCG_TYPE_V128);
-         }
-         break;
-     case TCG_TYPE_V64:
-         for (; i < oprsz; i += 8) {
--            tcg_gen_stl_vec(t_vec, tcg_env, dofs + i, TCG_TYPE_V64);
-+            tcg_gen_stl_vec(t_vec, dbase, dofs + i, TCG_TYPE_V64);
-         }
-         break;
-     default:
-@@ -574,7 +574,7 @@ static void do_dup(unsigned vece, uint32_t dofs, uint32_t oprsz,
-         } else {
-             tcg_gen_dupi_vec(vece, t_vec, in_c);
-         }
--        do_dup_store(type, dofs, oprsz, maxsz, t_vec);
-+        do_dup_store(type, tcg_env, dofs, oprsz, maxsz, t_vec);
-         return;
-     }
+ const char *elf_hwcap2_str(uint32_t bit)
+ {
+-    static const char *hwcap_str[] = {
++    static const char * const hwcap_str[] = {
+     [__builtin_ctz(ARM_HWCAP2_A64_DCPODP       )] = "dcpodp",
+     [__builtin_ctz(ARM_HWCAP2_A64_SVE2         )] = "sve2",
+     [__builtin_ctz(ARM_HWCAP2_A64_SVEAES       )] = "sveaes",
+@@ -972,6 +1023,24 @@ const char *elf_hwcap2_str(uint32_t bit)
+     [__builtin_ctzll(ARM_HWCAP2_A64_SME_F16F16 )] = "smef16f16",
+     [__builtin_ctzll(ARM_HWCAP2_A64_MOPS       )] = "mops",
+     [__builtin_ctzll(ARM_HWCAP2_A64_HBC        )] = "hbc",
++    [__builtin_ctzll(ARM_HWCAP2_A64_SVE_B16B16 )] = "sveb16b16",
++    [__builtin_ctzll(ARM_HWCAP2_A64_LRCPC3     )] = "lrcpc3",
++    [__builtin_ctzll(ARM_HWCAP2_A64_LSE128     )] = "lse128",
++    [__builtin_ctzll(ARM_HWCAP2_A64_FPMR       )] = "fpmr",
++    [__builtin_ctzll(ARM_HWCAP2_A64_LUT        )] = "lut",
++    [__builtin_ctzll(ARM_HWCAP2_A64_FAMINMAX   )] = "faminmax",
++    [__builtin_ctzll(ARM_HWCAP2_A64_F8CVT      )] = "f8cvt",
++    [__builtin_ctzll(ARM_HWCAP2_A64_F8FMA      )] = "f8fma",
++    [__builtin_ctzll(ARM_HWCAP2_A64_F8DP4      )] = "f8dp4",
++    [__builtin_ctzll(ARM_HWCAP2_A64_F8DP2      )] = "f8dp2",
++    [__builtin_ctzll(ARM_HWCAP2_A64_F8E4M3     )] = "f8e4m3",
++    [__builtin_ctzll(ARM_HWCAP2_A64_F8E5M2     )] = "f8e5m2",
++    [__builtin_ctzll(ARM_HWCAP2_A64_SME_LUTV2  )] = "smelutv2",
++    [__builtin_ctzll(ARM_HWCAP2_A64_SME_F8F16  )] = "smef8f16",
++    [__builtin_ctzll(ARM_HWCAP2_A64_SME_F8F32  )] = "smef8f32",
++    [__builtin_ctzll(ARM_HWCAP2_A64_SME_SF8DP4 )] = "smesf8dp4",
++    [__builtin_ctzll(ARM_HWCAP2_A64_SME_SF8DP2 )] = "smesf8dp2",
++    [__builtin_ctzll(ARM_HWCAP2_A64_POE        )] = "poe",
+     };
  
-@@ -1731,7 +1731,7 @@ void tcg_gen_gvec_dup_mem(unsigned vece, uint32_t dofs, uint32_t aofs,
-         if (type != 0) {
-             TCGv_vec t_vec = tcg_temp_new_vec(type);
-             tcg_gen_dup_mem_vec(vece, t_vec, tcg_env, aofs);
--            do_dup_store(type, dofs, oprsz, maxsz, t_vec);
-+            do_dup_store(type, tcg_env, dofs, oprsz, maxsz, t_vec);
-         } else if (vece <= MO_32) {
-             TCGv_i32 in = tcg_temp_ebb_new_i32();
-             switch (vece) {
+     return bit < ARRAY_SIZE(hwcap_str) ? hwcap_str[bit] : NULL;
 -- 
 2.43.0
 
