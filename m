@@ -4,90 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 707AAC77B7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 17:16:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BCBAC77B7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 17:31:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uU7Fj-00017l-An; Tue, 24 Jun 2025 13:16:11 -0400
+	id 1uU7Td-0003hi-Me; Tue, 24 Jun 2025 13:30:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uU7Fe-00017F-FW; Tue, 24 Jun 2025 13:16:09 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uU7Fc-0005Kv-Ne; Tue, 24 Jun 2025 13:16:06 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-6077dea37easo10644836a12.3; 
- Tue, 24 Jun 2025 10:16:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750785363; x=1751390163; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=stPEICxxjD0hh28faYD0ik1IUgLNtnuvShlfWporoJA=;
- b=kCIkKV5iwD4hlZNFu5NuciuC+40WKRy5/8/TdMaOwW0mWmZ5PeMlrmYdU/n8L+BLq8
- P6FA780dHzdWc8IiPOln1LlB+1RP7IHU1trvXfUUpjHlkF7lM7gYywCgYKq1KL1spkMZ
- 0HRgXCCt9NnGGUIxbncxmFVo4C5A3HTTc7DXVdBJHXH3LT0x80Jed7lVNb10Jw1+GRpS
- w+dn0fW/8mvZPmdeZi98auKxjAHDu+2GwlP6H+wjRneAnuco/sdQbQj7vTfOVP25UYGx
- QUVJLT8LUsQ2TDjb3yi0vjPK+cF7rBbzZUONopu+LXEMIt0syUVhnpV9vnPAmv/Rmzq3
- u8ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750785363; x=1751390163;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=stPEICxxjD0hh28faYD0ik1IUgLNtnuvShlfWporoJA=;
- b=aMw6DYlelbWRoj9sHW54PTmGQkf7qQdsGwAkWVV6Z6JLZkgkYpCl3r8f3nDdnAvEQf
- AGt0cUFMRD90ID/LdrJT41zbbt6ontIq6JZuRA6KvJkYahdf7SPi3rYE5kCBkYz3dSJk
- MG70M2RkNyeaf0NXg6/0gXc7f4lVy89NB/ku888Cc9ozrC0UESdZ8YbE09f0OIUXjvDR
- ymK1pnfgaKW6cuW2dfu23kSN45Re3T7dD18BOkPZwh4mO0zrU7phhwalWI8cnfd4ltz3
- amkHGXzCJkNVn5TOQWhs662f1A8ZaA/dXh/nVXLfto9VNqnRRhP6G5+9mNb04KTZyaMP
- +S9Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUTwHBowlyt8ffR1Q85V4jIUdirF+apUs4YZbqAI5mHTEeqHrs+GerVMgyroSXW2PDr2FlDV2wz1w==@nongnu.org,
- AJvYcCVsuwFmrQpwQNKxo+aFyRY4UrShaVYdjO0pGmX8lxF9aAQCaqpQA64eSmsyVKnFUtHW7gvlvg3+7cGX0g==@nongnu.org
-X-Gm-Message-State: AOJu0YxTLb9lzXrlzv1jtuaQX3nzhoD+own8scH2dpc++5gsa8DvAB/5
- Hi+kJFfkhH2hM/8kPy9qISP5/ZDQ3MRwcDybga7r+EqOW1aoIs2vMT3toiWNJJQrlIzks1H1t6Y
- 8xXl0KnUVLD7tK4tDhTepXEFSeTeBHHo=
-X-Gm-Gg: ASbGnctQGY1/2GDSEr2Wt00FAVJRApj+q7glwCt1rl6cKT312sK7Gjoh50k9eNM2I4D
- I9kSqMn3oTLOBo/GwfbKfEZfH6XwzFXYvTPvzDCwxOyLPo1kTw70NS9NXvCy10yF8NbqkuRtBv3
- Rsf8fYx92xuHviFVoPMW1qQ/SBn6vSzEUMwIjeg0OcpQ==
-X-Google-Smtp-Source: AGHT+IFxTFECbvdUVn7Ki5JMQKPOKFEEfWttU96BZFV81h2BvmZZP9kVDuTkzwFKIhKGOl8OBVWgEnBta0Xl2hrVwNM=
-X-Received: by 2002:a05:6402:2746:b0:602:3e3:dada with SMTP id
- 4fb4d7f45d1cf-60a1d18eb87mr14798817a12.25.1750785362301; Tue, 24 Jun 2025
- 10:16:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1uU7TT-0003gH-37; Tue, 24 Jun 2025 13:30:23 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1uU7TP-0008FH-IJ; Tue, 24 Jun 2025 13:30:22 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55O9WDEN025036;
+ Tue, 24 Jun 2025 17:30:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=otPvO1
+ XodxdIBZhSJj7wep9HL1Bqw5nVnTA5HyLDMIU=; b=JkUITr5ZmzIg5s8Y+eqbKb
+ DGdx8e9ScNhDVmxC8ViDL9ZmYzrXs4Mx+Tpp171nM3ggAK42xrSQzK//mZYDAwbn
+ Icm75CSwexIvr0a42UaQJdE0CaN1zucLwdepsP8+93otrO1bSygKfjyr9VVfz5ZS
+ OaiUcNPY6EyBk1yNxaWakT1kXGAqMDGdD747h5D0x0K4Vk5wDxokfCYwYKUrUSM5
+ EiKKNhTy245/m9LhnOY4wqpTPkgeTGuwfSHsEHwFvGeKZU1/CuVGPA4O4w/MFOoy
+ TLYdZiFjsGIvXTxZT7KTdfJbu8565Oq60pUSQZi18xLElaxm8UdsRWgZRm0q+waw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47dk63t2ua-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 24 Jun 2025 17:30:13 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 55OHPCDL022774;
+ Tue, 24 Jun 2025 17:30:12 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47dk63t2u6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 24 Jun 2025 17:30:12 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55ODvWG0031277;
+ Tue, 24 Jun 2025 17:30:11 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47e7eyw8dm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 24 Jun 2025 17:30:11 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 55OHUAsT19530344
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 24 Jun 2025 17:30:10 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DCCE758061;
+ Tue, 24 Jun 2025 17:30:09 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7EC3F58060;
+ Tue, 24 Jun 2025 17:30:08 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 24 Jun 2025 17:30:08 +0000 (GMT)
+Message-ID: <e103dc28-46d9-4a74-9e03-bc16cf9061bb@linux.ibm.com>
+Date: Tue, 24 Jun 2025 13:30:08 -0400
 MIME-Version: 1.0
-References: <CAJSP0QU=v_jN5oBDBefg0mB=Qv3SvD4ZdJzz2LT-cu5ZL7pK0Q@mail.gmail.com>
- <CAJSP0QXe1L2P24oUrABO1eUzn1JFc=BJWEfakrQ5u3Ek5LkfKg@mail.gmail.com>
- <CANCZdfqfFNAYcF3BEDucyR3YN1PXwyEmzE5LPcJCyshCXwhe6Q@mail.gmail.com>
- <9bac4585-255a-4805-b24d-b3b75d2ca9c3@redhat.com>
- <CANCZdfq6+R=VgyYdcdJCmDBTCgLSxDJuqd8h=ehb5F+v-HPT+g@mail.gmail.com>
-In-Reply-To: <CANCZdfq6+R=VgyYdcdJCmDBTCgLSxDJuqd8h=ehb5F+v-HPT+g@mail.gmail.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Tue, 24 Jun 2025 13:15:50 -0400
-X-Gm-Features: Ac12FXwTC60e3gyDQi7IDOdYMdtwHot_gdlpHicbrJuQ6I3r0sEJaPOMbzQ_J_k
-Message-ID: <CAJSP0QWSVhAYBtxKV+WDubmif2m=jxTYd-BK=d7ExZXWUNUYXA@mail.gmail.com>
-Subject: Re: FreeBSD 14.1 aarch64 iso URL is down
-To: Warner Losh <imp@bsdimp.com>
-Cc: Thomas Huth <thuth@redhat.com>, Radoslaw Biernacki <rad@semihalf.com>, 
- Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>, 
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] backends/tpm: Propagate vTPM error on migration
+ failure
+To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20250624-propagate_tpm_error-v1-0-2171487a593d@redhat.com>
+ <20250624-propagate_tpm_error-v1-3-2171487a593d@redhat.com>
+Content-Language: en-US
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <20250624-propagate_tpm_error-v1-3-2171487a593d@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI0MDE0MyBTYWx0ZWRfX41rgzL/RBO76
+ CRyAE4sI3TJ5jUADPmbvW4CRNMu7PaoLrki6DFMse820xdLQHYzqvQY9lTsbs8O253sD9FvbTgu
+ lvq1SpEiNvxGGZEV7rDMaqZ2JMKz20fk1DR/EIgofYdhhNACKjjDTxF4+4mwCcKQYw7m+WaaShi
+ okB+RHfpGhqZZzeQMTxu3K4uOWMhpQxdB9LNAlPUtcJ33iYcEpa5bPRlxbSerZU/nFfsQCWUmuj
+ /EDFTefjIBQoht/3LVbEzCUFtJ7sWrhRHcHL2Rp/LbePivKTmtZC1gP5qlmFXlBjezjICtNmZNv
+ Wh9AzrbEwK97GOi+ggCzIDhaeZxVj23WqtsIdY0nUS5nBKJPxCbTrte9SooWh+oNKKWGT7eTkNT
+ AiZfw+OLdS40dFDLyDIX4IKReriQH/eG9p41FiaKbqFnkDXWZ82ftX6D5QciAYYoYe6aPWMz
+X-Proofpoint-ORIG-GUID: _3Qoc0mt85zGpr4644TH6KoAOi3ScIAv
+X-Proofpoint-GUID: GAWub4EsHlZ13ZnScBKd_XQpzoEfJWDP
+X-Authority-Analysis: v=2.4 cv=BfvY0qt2 c=1 sm=1 tr=0 ts=685ae0a5 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8
+ a=q8dJGX2VtPoojEl89u8A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-24_06,2025-06-23_07,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1011 suspectscore=0 adultscore=0 spamscore=0
+ impostorscore=0 mlxlogscore=999 malwarescore=0 phishscore=0 bulkscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506240143
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,82 +147,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 24, 2025 at 12:28=E2=80=AFPM Warner Losh <imp@bsdimp.com> wrote=
-:
->
-> On Tue, Jun 24, 2025 at 10:02=E2=80=AFAM Thomas Huth <thuth@redhat.com> w=
-rote:
-> >
-> > On 22/06/2025 03.46, Warner Losh wrote:
-> > >
-> > >
-> > > On Sat, Jun 21, 2025, 6:01=E2=80=AFPM Stefan Hajnoczi <stefanha@gmail=
-.com
-> > > <mailto:stefanha@gmail.com>> wrote:
-> > >
-> > >     On Sat, Jun 21, 2025 at 7:59=E2=80=AFPM Stefan Hajnoczi <stefanha=
-@gmail.com
-> > >     <mailto:stefanha@gmail.com>> wrote:
-> > >
-> > >     (I forgot to CC qemu-devel)
-> > >
-> > >      >
-> > >      > Hi,
-> > >      > This might only be temporary, but the CI is getting HTTP 404 N=
-ot Found
-> > >      > for the following URL:
-> > >      > https://download.freebsd.org/releases/arm64/aarch64/ISO-IMAGES=
-/14.1/
-> > >     FreeBSD-14.1-RELEASE-arm64-aarch64-bootonly.iso <https://
-> > >     download.freebsd.org/releases/arm64/aarch64/ISO-IMAGES/14.1/
-> > >     FreeBSD-14.1-RELEASE-arm64-aarch64-bootonly.iso>
-> > >      >
-> > >      > https://gitlab.com/qemu-project/qemu/-/jobs/10424901718#L848
-> > >     <https://gitlab.com/qemu-project/qemu/-/jobs/10424901718#L848>
-> > >      >
-> > >      > Stefan
-> > >
-> > >
-> > > Time to bump the version to 14.3.
-> >
-> > Hmm, while we're used to refresh the CI images for the *host* environme=
-nts,
-> > it's rather ugly to see images for the *guests* of the functional tests
-> > disappear. Maybe we should rather remove that test if the URL is not st=
-able?
->
-> Yes. Most of our images have a shelf life of about a year to 18 months. A=
-nd QEMU
-> should be testing all the 'supported' FreeBSD images, just like for
-> other projects.
-> The question becomes how can we, the FreeBSD Project, remove the friction=
- that's
-> here now because we timeout / move the older images as they pass out of s=
-upport.
->
-> We've also just shifted to a more frequent release cadence, so the
-> releases have gone
-> from living for  18-24 months down to just 12. We just released
-> FreeBSD 14.3, and 14.1
-> is only a year old. So what's the best way of dealing with this? We
-> could have a 14-latest
-> but the md5 would change...
->
-> So I'm open to making a change, but I need help crafting something
-> that will work, since
-> I'm not clever enough to suggest something here.
 
-A test run should be repeatable. If a test passes on a given qemu.git
-commit then it should continue to pass when run again. Using -latest
-breaks this property, so let's avoid it.
 
-Ideas:
-1. FreeBSD provides convenient permanent URLs.
-2. QEMU uses a permanent FreeBSD ISO mirror URL instead. Need to find
-a mirror that is fast and reliable.
-3. Someone agrees to regularly update the URL in QEMU's test suite so
-that breakage isn't exposed. IMO the least desirable solution because
-an old copy of the test will start failing after 12 months.
+On 6/24/25 8:23 AM, Arun Menon wrote:
+> - Introduce a new post_load_with_error() hook that will
+>    take in the Error object as a parameter.
+> - This error object is set if the loading of state fails.
+> - The error can then be retrieved using QMP command
+>    {"execute" : "query-migrate"}
+> 
+> Buglink: https://issues.redhat.com/browse/RHEL-82826
+> 
+> Signed-off-by: Arun Menon <armenon@redhat.com>
 
-Stefan
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+
+> ---
+>   backends/tpm/tpm_emulator.c | 39 ++++++++++++++++++++-------------------
+>   include/migration/vmstate.h |  1 +
+>   migration/vmstate.c         |  4 +++-
+>   3 files changed, 24 insertions(+), 20 deletions(-)
+> 
+> diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
+> index 4a234ab2c0b19b2604bf0dd8cb5f4540c72a9438..816134d7b4de00a75a3d0b928d160595b17be810 100644
+> --- a/backends/tpm/tpm_emulator.c
+> +++ b/backends/tpm/tpm_emulator.c
+> @@ -819,7 +819,8 @@ static int tpm_emulator_get_state_blobs(TPMEmulator *tpm_emu)
+>   static int tpm_emulator_set_state_blob(TPMEmulator *tpm_emu,
+>                                          uint32_t type,
+>                                          TPMSizedBuffer *tsb,
+> -                                       uint32_t flags)
+> +                                       uint32_t flags,
+> +                                       Error **errp)
+>   {
+>       ssize_t n;
+>       ptm_setstate pss;
+> @@ -838,17 +839,17 @@ static int tpm_emulator_set_state_blob(TPMEmulator *tpm_emu,
+>       /* write the header only */
+>       if (tpm_emulator_ctrlcmd(tpm_emu, CMD_SET_STATEBLOB, &pss,
+>                                offsetof(ptm_setstate, u.req.data), 0, 0) < 0) {
+> -        error_report("tpm-emulator: could not set state blob type %d : %s",
+> -                     type, strerror(errno));
+> +        error_setg(errp, "tpm-emulator: could not set state blob type %d : %s",
+> +                   type, strerror(errno));
+>           return -1;
+>       }
+> 
+>       /* now the body */
+>       n = qemu_chr_fe_write_all(&tpm_emu->ctrl_chr, tsb->buffer, tsb->size);
+>       if (n != tsb->size) {
+> -        error_report("tpm-emulator: Writing the stateblob (type %d) "
+> -                     "failed; could not write %u bytes, but only %zd",
+> -                     type, tsb->size, n);
+> +        error_setg(errp, "tpm-emulator: Writing the stateblob (type %d) "
+> +                   "failed; could not write %u bytes, but only %zd",
+> +                   type, tsb->size, n);
+>           return -1;
+>       }
+> 
+> @@ -856,17 +857,17 @@ static int tpm_emulator_set_state_blob(TPMEmulator *tpm_emu,
+>       n = qemu_chr_fe_read_all(&tpm_emu->ctrl_chr,
+>                                (uint8_t *)&pss, sizeof(pss.u.resp));
+>       if (n != sizeof(pss.u.resp)) {
+> -        error_report("tpm-emulator: Reading response from writing stateblob "
+> -                     "(type %d) failed; expected %zu bytes, got %zd", type,
+> -                     sizeof(pss.u.resp), n);
+> +        error_setg(errp, "tpm-emulator: Reading response from writing "
+> +                   "stateblob (type %d) failed; expected %zu bytes, "
+> +                   "got %zd", type, sizeof(pss.u.resp), n);
+>           return -1;
+>       }
+> 
+>       tpm_result = be32_to_cpu(pss.u.resp.tpm_result);
+>       if (tpm_result != 0) {
+> -        error_report("tpm-emulator: Setting the stateblob (type %d) failed "
+> -                     "with a TPM error 0x%x %s", type, tpm_result,
+> -                     tpm_emulator_strerror(tpm_result));
+> +        error_setg(errp, "tpm-emulator: Setting the stateblob (type %d) "
+> +                   "failed with a TPM error 0x%x %s", type, tpm_result,
+> +                   tpm_emulator_strerror(tpm_result));
+>           return -1;
+>       }
+> 
+> @@ -880,7 +881,7 @@ static int tpm_emulator_set_state_blob(TPMEmulator *tpm_emu,
+>    *
+>    * Returns a negative errno code in case of error.
+>    */
+> -static int tpm_emulator_set_state_blobs(TPMBackend *tb)
+> +static int tpm_emulator_set_state_blobs(TPMBackend *tb, Error **errp)
+>   {
+>       TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
+>       TPMBlobBuffers *state_blobs = &tpm_emu->state_blobs;
+> @@ -894,13 +895,13 @@ static int tpm_emulator_set_state_blobs(TPMBackend *tb)
+> 
+>       if (tpm_emulator_set_state_blob(tpm_emu, PTM_BLOB_TYPE_PERMANENT,
+>                                       &state_blobs->permanent,
+> -                                    state_blobs->permanent_flags) < 0 ||
+> +                                    state_blobs->permanent_flags, errp) < 0 ||
+>           tpm_emulator_set_state_blob(tpm_emu, PTM_BLOB_TYPE_VOLATILE,
+>                                       &state_blobs->volatil,
+> -                                    state_blobs->volatil_flags) < 0 ||
+> +                                    state_blobs->volatil_flags, errp) < 0 ||
+>           tpm_emulator_set_state_blob(tpm_emu, PTM_BLOB_TYPE_SAVESTATE,
+>                                       &state_blobs->savestate,
+> -                                    state_blobs->savestate_flags) < 0) {
+> +                                    state_blobs->savestate_flags, errp) < 0) {
+>           return -EIO;
+>       }
+> 
+> @@ -948,12 +949,12 @@ static void tpm_emulator_vm_state_change(void *opaque, bool running,
+>    *
+>    * Returns negative errno codes in case of error.
+>    */
+> -static int tpm_emulator_post_load(void *opaque, int version_id)
+> +static int tpm_emulator_post_load(void *opaque, int version_id, Error **errp)
+>   {
+>       TPMBackend *tb = opaque;
+>       int ret;
+> 
+> -    ret = tpm_emulator_set_state_blobs(tb);
+> +    ret = tpm_emulator_set_state_blobs(tb, errp);
+>       if (ret < 0) {
+>           return ret;
+>       }
+> @@ -969,7 +970,7 @@ static const VMStateDescription vmstate_tpm_emulator = {
+>       .name = "tpm-emulator",
+>       .version_id = 0,
+>       .pre_save = tpm_emulator_pre_save,
+> -    .post_load = tpm_emulator_post_load,
+> +    .post_load_with_error = tpm_emulator_post_load,
+>       .fields = (const VMStateField[]) {
+>           VMSTATE_UINT32(state_blobs.permanent_flags, TPMEmulator),
+>           VMSTATE_UINT32(state_blobs.permanent.size, TPMEmulator),
+> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+> index 056781b1c21e737583f081594d9f88b32adfd674..1c6e89c3b08a3914cde6dce3be5955978b6b7d0b 100644
+> --- a/include/migration/vmstate.h
+> +++ b/include/migration/vmstate.h
+> @@ -207,6 +207,7 @@ struct VMStateDescription {
+>       MigrationPriority priority;
+>       int (*pre_load)(void *opaque);
+>       int (*post_load)(void *opaque, int version_id);
+> +    int (*post_load_with_error)(void *opaque, int version_id, Error **errp);
+>       int (*pre_save)(void *opaque);
+>       int (*post_save)(void *opaque);
+>       bool (*needed)(void *opaque);
+> diff --git a/migration/vmstate.c b/migration/vmstate.c
+> index 3f8c3d3c1dcfe14d70bab1f43b827244eb4bb385..c5dfffd9bad7285e819d4769e055d47157caab34 100644
+> --- a/migration/vmstate.c
+> +++ b/migration/vmstate.c
+> @@ -232,7 +232,9 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+>           qemu_file_set_error(f, ret);
+>           return ret;
+>       }
+> -    if (vmsd->post_load) {
+> +    if (vmsd->post_load_with_error) {
+> +        ret = vmsd->post_load_with_error(opaque, version_id, errp);
+> +    } else if (vmsd->post_load) {
+>           ret = vmsd->post_load(opaque, version_id);
+>       }
+>       trace_vmstate_load_state_end(vmsd->name, "end", ret);
+> 
+
 
