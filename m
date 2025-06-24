@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5AC7C77B7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 19:47:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 937A0C77B7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 21:26:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uU9by-0003gu-Ta; Tue, 24 Jun 2025 15:47:18 -0400
+	id 1uUB8u-0002Bx-9E; Tue, 24 Jun 2025 17:25:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1uU9bw-0003gi-L5
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 15:47:16 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uUB8t-0002Bj-4j; Tue, 24 Jun 2025 17:25:23 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1uU9bt-0007Lg-Hj
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 15:47:15 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-b31d8dd18cbso1178037a12.3
- for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 12:47:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uUB8q-0007d8-VY; Tue, 24 Jun 2025 17:25:22 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-ae0b2ead33cso54416466b.0; 
+ Tue, 24 Jun 2025 14:25:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750794431; x=1751399231; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Dw2zabTft8ytTA3fL3MTQkbMY1IDA9wKLtkhoptW+GQ=;
- b=b0KplBoOZC0iKAy6hHyQT60bYsxDet/ZNoMVjUr7VZ8YTU8xWwkPgBhJTBIW39+pjI
- R0PP6QJZwouOq3ItTVuC0/mZJZgPr+ktfvrrJnsWGSr1GBkk9esTtfnrFiO5c3MdnnAn
- bk0pbbglvgkfaZ/0Q288tloSG6bfhAAneXokd8yvJeIJVfz1Dm9e2va5hA3JuWK7mT/h
- TlN5bRKaLjvkvTbiwE0WoAIQC4Ew8mLnYxXQ6V//32EA9RAC3LXgbtAsuuIp1L5VNxpr
- Aadbfw3cUR6/C80V0kScArxutt018M6PMZ/19xUJ7c2YJeuJxEfxbFtPgYZVbtQzT6Pz
- 7jPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750794431; x=1751399231;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1750800319; x=1751405119; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Dw2zabTft8ytTA3fL3MTQkbMY1IDA9wKLtkhoptW+GQ=;
- b=oil6Sgzm9VxZLTqnNq7DPyS9EceaU2yPyNFaNn2bfUEagTye2l2AR6mkZAw9mzZa6q
- lN5CQ2K1m3Ocs5OhYBSqbmJKPCYDOcimXmJJ8SRQz9k+z8OiGdQzwP1dhpbaxmRk6nWQ
- W+HiO++c21bzveYXM90rpbCRdINJ/sH7/3TuSpnngKJSx4lV4lYzCRCNZXX7t2BQaQkC
- 3w85BJzgsRRVXMxtMbDZQeqwT9alTlExibG0mcTGoe5rDcEK2pehyg5++M9dscbQkZiC
- P0WNin0AmOTVldlsyS/S6hycJvJpCXDm0kQKSbuUw8fymqIl3A2qmmGTQkNdfA0I2CM3
- rgug==
+ bh=arzMsKmBKr+DDHtgxOcCvkS5vdxEuoyKWO+dCCoShyw=;
+ b=ZRd88aMRg8HNSbQFfHdpkXulhRKJFIyzp8W8TC+utDEG4yGFo4yySr8nTix4IMJX/F
+ UFbCrFo8xYLUXR6RKb6nURbh7aVT39wtu0qmY/tibksWjrpdlt+GzLBfnnE6tT5ugsd7
+ 9KAaqew8QiIp59tWKIBVGmH4yQIUyhFV3Vb+nO33ksOgREQ968Jd4GK3XUNHoxxhDp4+
+ nr+sDEPQZABmhsjzxwDxX9suW+4Q48pgcvzWPJ+8QcfmvtSN9HeAFt5NeEL16he/JuUA
+ +NqyBQ1Nd7RZ4J/phC28gxmAMpbBlfsOo2it87nh7utMu2JwXS3Tiu6fZfquUW4/8PzY
+ 7CsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750800319; x=1751405119;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=arzMsKmBKr+DDHtgxOcCvkS5vdxEuoyKWO+dCCoShyw=;
+ b=v1BQDaInvh/FbRFnEhNI2sMsenGWVqVufPyTU8pY3gnoeZ1Kq+DQUF0v3baNn3AbMM
+ 4gkVNu3OKUlNAWsJfDSGzIaUbsvcXK5wOgmfWw6iqgtSJ5g1JEUMmx8egIP6/6wvk08+
+ GoQ8JPGeWqOgSEEKoto0skS9GuK6wej+C3TaehvBH+Fj9FsW4lRkocLrXfIc1kTwShcd
+ Uy+pYVYWsqzHW+wduphmpl4a+/+QC5Dw4NX2xErku6JE6yOMpkD4KWxWOWSCWB4eKe/f
+ fgoAB+XXwBkwIrnlr7xeMnhEiHzl0QZNU2rYbr2T8soe4zLjUF7A5fPf9aA9oBikPYPw
+ VLUA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVUTm2CWdZ1IJPAiFrv4p8WKzzP/eJ9KdWMI1Snk864S6uFf0hU4cuSbqoRoflLAN8liHyIz6Xh9wYU@nongnu.org
-X-Gm-Message-State: AOJu0YylLECgiM61ndi7SXXgJGDswe+ySZFTAO5O7zNWIl+HX6a1kgeS
- QbHXMEVsTSB8+6jWiAsvuIv1Z2e4iV8DH66yxHEmerqxORK5qNJcOdKG
-X-Gm-Gg: ASbGncuE3cLbQrTlPh9m1nhUvPGSG0Qm3XTE1XTejjVGd4Lm5jPA74eDAPxJjxdQFkD
- 9N6giV92oVJ2JcJs4shRQgbKArsvapUVN3Cw+FUAR8mmppQ6NfeCYy1mKc6QP+ckYLHtBraO9n/
- hpSKjNAH18XXYuldK1jS9By+24t93Ty1ff3MxaPuKi1uyGeUHXERCShGRf8BHv63kMN3VI5fwoE
- KHj1cYHwY2ADOvvE837E6GGPEjNnK6bTVNzKBh6hE7kM7iLclBjpDgVviz8g6G9YZxvQlwPhwte
- u/WYhePoRvd14Gbw7QObXN4hW3149bcjv1PjlvmLSEz75z6PcVG/HbQOkHs+O3UEuLfbUOm/+cO
- 8kUtfesl+9Idw
-X-Google-Smtp-Source: AGHT+IF7lYDRhARnDMYq24nnc73O+0EocNdrE7faxKdesAbTGA4vUFqH6FYOc4ysMz9ocH9337WTmA==
-X-Received: by 2002:a17:90b:1b06:b0:313:d6ce:6c6e with SMTP id
- 98e67ed59e1d1-315f25e394dmr187770a91.8.1750794431475; 
- Tue, 24 Jun 2025 12:47:11 -0700 (PDT)
-Received: from deb-101020-bm01.eng.stellus.in ([149.97.161.244])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3158a318733sm13598691a91.38.2025.06.24.12.47.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Jun 2025 12:47:11 -0700 (PDT)
-From: Anisa Su <anisa.su887@gmail.com>
-X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
-Date: Tue, 24 Jun 2025 19:47:09 +0000
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Klaus Jensen <k.jensen@samsung.com>, cminyard@mvista.com,
- Fan Ni <fan.ni@samsung.com>, qemu-devel@nongnu.org,
- linux-cxl@vger.kernel.org, mst@redhat.com, linuxarm@huawei.com,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [RFC PATCH qemu 0/5] hw/cxl/mctp/i2c/usb: MCTP for OoB control
- of CXL devices.
-Message-ID: <aFsAvZqMCocyUcQ9@deb-101020-bm01.eng.stellus.in>
-References: <20250609163334.922346-1-Jonathan.Cameron@huawei.com>
+ AJvYcCUQqtMZ1UIDUyfxRzK6YWC+ZHnM+tQASZJXroWDx6JiRoqAwEGgRcmIbk9DD2/2fxidUPPGwDxQww==@nongnu.org,
+ AJvYcCWkQ5M7fYAWQt4WmZEhX+zhsuSWD1lr+nkbFVzVfu3fVPYObn7Hazna7qMQHQyjqYNq2nJZ7aav9NOeCw==@nongnu.org
+X-Gm-Message-State: AOJu0YxJv5a9e5ZAtSwxfRsm1oOqsrcNl1vbyyqrQqfHXsuqOxHGg1Er
+ CPkXCfpjO/l3M4zbnIB2DgK/RDp0PNvT/bmo1Zo1FFtB5YTWgRaNI/TsljFrc5WI4z6k/v0e/zn
+ ihiOy9n3El8Hg/t4nRO85nYfUR8fChto=
+X-Gm-Gg: ASbGncv2lWGgRdLEpdHNq9nk4x40uFsjzH1w7nQmDfwDuSbzKxOf476i5Jd7snlkpP8
+ sIRfTkfrztv7wgKcm6OCp9PYVo4JBtint1x5y5vDYx9216g10T/EUvwd5uJisv0c+prOAVnGDcr
+ yRPbCzdu1hECmezhI5V2xVXLg+kKCzsTvYs0nONFw1+3fzMpkYUjtM
+X-Google-Smtp-Source: AGHT+IFPvojq7WQpa0dQgzTXe/5wdnsdEwl1geoBBE+e1lGKia994mkSW/DXD5jiBhWD3c8kE+QJwTkcwQMdPyFrkgc=
+X-Received: by 2002:a17:906:4c2:b0:ad5:7048:5177 with SMTP id
+ a640c23a62f3a-ae0a7442b51mr342490566b.23.1750800318496; Tue, 24 Jun 2025
+ 14:25:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250609163334.922346-1-Jonathan.Cameron@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=anisa.su887@gmail.com; helo=mail-pg1-x534.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+References: <CAJSP0QU=v_jN5oBDBefg0mB=Qv3SvD4ZdJzz2LT-cu5ZL7pK0Q@mail.gmail.com>
+ <CAJSP0QXe1L2P24oUrABO1eUzn1JFc=BJWEfakrQ5u3Ek5LkfKg@mail.gmail.com>
+ <CANCZdfqfFNAYcF3BEDucyR3YN1PXwyEmzE5LPcJCyshCXwhe6Q@mail.gmail.com>
+ <9bac4585-255a-4805-b24d-b3b75d2ca9c3@redhat.com>
+ <CANCZdfq6+R=VgyYdcdJCmDBTCgLSxDJuqd8h=ehb5F+v-HPT+g@mail.gmail.com>
+ <CAJSP0QWSVhAYBtxKV+WDubmif2m=jxTYd-BK=d7ExZXWUNUYXA@mail.gmail.com>
+ <CANCZdfqTKUMLbrT9HEXa-O7pyHqfcMWMmYx7iCq=ZU_ewgCaag@mail.gmail.com>
+In-Reply-To: <CANCZdfqTKUMLbrT9HEXa-O7pyHqfcMWMmYx7iCq=ZU_ewgCaag@mail.gmail.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Tue, 24 Jun 2025 17:25:05 -0400
+X-Gm-Features: Ac12FXxxsIz4bRQ-6IbXZL6FIe1mWAFzKo5edNsvzZzUjVQmtJnuXAGScxkiGZ0
+Message-ID: <CAJSP0QUKx+eLjF5J2+JGrry_x-jx1p5HStCOTfOgQg+3nOpSeg@mail.gmail.com>
+Subject: Re: FreeBSD 14.1 aarch64 iso URL is down
+To: Warner Losh <imp@bsdimp.com>
+Cc: Thomas Huth <thuth@redhat.com>, Radoslaw Biernacki <rad@semihalf.com>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Leif Lindholm <leif.lindholm@oss.qualcomm.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=stefanha@gmail.com; helo=mail-ej1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,185 +105,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 09, 2025 at 05:33:28PM +0100, Jonathan Cameron wrote:
-> This posting is primarily about sharing the USB device emulation to get some
-> early feedback.
-> 
-> RFC reasons:
-> - Known 'inaccuracies' in emulation (not obeying MTU in the to host direction for
->   example)./
-> - Not sure what to do wrt to Klaus' I2C MCTP support given that has been stalled
->   for some time. For now only the headers are really shared between the
->   two implementations.
-> - This is more of an FYI / request for testing than a formal suggestion that this
->   might be ready for upstream.
-> 
-> Why add a CXL FM-API over MCTP over USB device?
-> - Can be emulated on pretty much any host system as USB is discoverable and
->   expandable. If you want a giggle, see the hacks on i386/pc and arm/virt on
->   we've been using until now given only I2C controller that works is the aspeed
->   one. e.g. https://gitlab.com/jic23/qemu/-/commit/134c2e3952b
-> - Being able to talk to both the fabric management out of band interfaces
->   and the in band devices on the same host makes testing much simpler.
-> 
-> Background:
-> 
-> Back in 2022 I posted some support for controlling the CXL fabric via the
-> spec defined out of band interfaces (CXL Fabric Management API - FM-API)
-> over MCTP on I2C
-> 
-> https://lore.kernel.org/qemu-devel/20220520170128.4436-1-Jonathan.Cameron@huawei.com/
-> I reworked that on top of the NVME-MI work from Klauss.
-> 
-> To that end I hacked the aspeed-i2c controller onto both i386/pc and arm/virt
-> and posted kernel patches to enabled ACPI support for that device (more or less).
-> It worked and has been useful in the meantime, but adding that i2c controller
-> to those boards was obviously not going to be upstreamable - and to build
-> reliable tests against it I don't want to carry this out of tree for ever.
-> I messed around with a PCI hosted aspeed controller and might come back to
-> that at some point.
-> 
-> In the meantime, DMTF published a transport binding for MCTP over USB
-> https://www.dmtf.org/sites/default/files/standards/documents/DSP0283_1.0.1.pdf
-> 
-> Kernel support duly followed early this year: drivers/net/mctp/mctp-usb.c
-> https://codeconstruct.com.au/docs/mctp-over-usb/
-> 
-> Given the ease of adding a suitable USB controller on a PCI bus, emulating a
-> suitable endpoint provides what I think is an upstreamable solution.
-> 
-> To use this:
->  -device usb-ehci,id=ehci
->  -device usb-cxl-mctp,bus=ehci.0,id=fred,target=us0
-> 
-> where target is either a CXL switch upstream port, or a type 3 device.
-> 
-> Then install the mctp userspace tools in your guest and configure it with
-> 
->   mctp addr add 8 dev mctpusb0
->   mctp link set mctpusb0 net 11
->   mctp link set mctpusb0 up
-> 
->   systemctl start mctpd.service
->   busctl call au.com.codeconstruct.MCTP1 /au/com/codeconstruct/mctp1/interfaces/mctpusb0 au.com.codeconstruct.MCTP.BusOwner1 SetupEndpoint ay 0
-> 
-> I've been testing the CXL commands with
-> 
-> https://gitlab.com/jic23/cxl-fmapi-tests
-> (mostly because I still had them in my image from the i2c work)
-> but libcxlmi is probably a better bet
-> 
-I tested this patchset using libcxlmi with the following configuration:
-- kernel version: https://github.com/weiny2/linux-kernel/tree/dcd-v6-2025-04-13
-- QEMU: upstream ToT with MCTP USB CXL and FMAPI DCD support:
-  - MCTP USB CXL (https://lore.kernel.org/linux-cxl/20250609163334.922346-1-Jonathan.Cameron@huawei.com/T/#m21b9e0dfc689cb1890bb4d961710c23379e04902)
-	- note: I modified the condition on line hw/usb/dev-mctp.c:509 to allow
-	  the FMAPI DCD Management command set (0x56) to be processed
-  - FMAPI DCD Management patches (https://lore.kernel.org/linux-cxl/20250605234227.970187-1-anisa.su887@gmail.com/)
+On Tue, Jun 24, 2025 at 1:41=E2=80=AFPM Warner Losh <imp@bsdimp.com> wrote:
+>
+> On Tue, Jun 24, 2025 at 11:16=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.=
+com> wrote:
+> >
+> > On Tue, Jun 24, 2025 at 12:28=E2=80=AFPM Warner Losh <imp@bsdimp.com> w=
+rote:
+> > >
+> > > On Tue, Jun 24, 2025 at 10:02=E2=80=AFAM Thomas Huth <thuth@redhat.co=
+m> wrote:
+> > > >
+> > > > On 22/06/2025 03.46, Warner Losh wrote:
+> > > > >
+> > > > >
+> > > > > On Sat, Jun 21, 2025, 6:01=E2=80=AFPM Stefan Hajnoczi <stefanha@g=
+mail.com
+> > > > > <mailto:stefanha@gmail.com>> wrote:
+> > > > >
+> > > > >     On Sat, Jun 21, 2025 at 7:59=E2=80=AFPM Stefan Hajnoczi <stef=
+anha@gmail.com
+> > > > >     <mailto:stefanha@gmail.com>> wrote:
+> > > > >
+> > > > >     (I forgot to CC qemu-devel)
+> > > > >
+> > > > >      >
+> > > > >      > Hi,
+> > > > >      > This might only be temporary, but the CI is getting HTTP 4=
+04 Not Found
+> > > > >      > for the following URL:
+> > > > >      > https://download.freebsd.org/releases/arm64/aarch64/ISO-IM=
+AGES/14.1/
+> > > > >     FreeBSD-14.1-RELEASE-arm64-aarch64-bootonly.iso <https://
+> > > > >     download.freebsd.org/releases/arm64/aarch64/ISO-IMAGES/14.1/
+> > > > >     FreeBSD-14.1-RELEASE-arm64-aarch64-bootonly.iso>
+> > > > >      >
+> > > > >      > https://gitlab.com/qemu-project/qemu/-/jobs/10424901718#L8=
+48
+> > > > >     <https://gitlab.com/qemu-project/qemu/-/jobs/10424901718#L848=
+>
+> > > > >      >
+> > > > >      > Stefan
+> > > > >
+> > > > >
+> > > > > Time to bump the version to 14.3.
+> > > >
+> > > > Hmm, while we're used to refresh the CI images for the *host* envir=
+onments,
+> > > > it's rather ugly to see images for the *guests* of the functional t=
+ests
+> > > > disappear. Maybe we should rather remove that test if the URL is no=
+t stable?
+> > >
+> > > Yes. Most of our images have a shelf life of about a year to 18 month=
+s. And QEMU
+> > > should be testing all the 'supported' FreeBSD images, just like for
+> > > other projects.
+> > > The question becomes how can we, the FreeBSD Project, remove the fric=
+tion that's
+> > > here now because we timeout / move the older images as they pass out =
+of support.
+> > >
+> > > We've also just shifted to a more frequent release cadence, so the
+> > > releases have gone
+> > > from living for  18-24 months down to just 12. We just released
+> > > FreeBSD 14.3, and 14.1
+> > > is only a year old. So what's the best way of dealing with this? We
+> > > could have a 14-latest
+> > > but the md5 would change...
+> > >
+> > > So I'm open to making a change, but I need help crafting something
+> > > that will work, since
+> > > I'm not clever enough to suggest something here.
+> >
+> > A test run should be repeatable. If a test passes on a given qemu.git
+> > commit then it should continue to pass when run again. Using -latest
+> > breaks this property, so let's avoid it.
+> >
+> > Ideas:
+> > 1. FreeBSD provides convenient permanent URLs.
+> > 2. QEMU uses a permanent FreeBSD ISO mirror URL instead. Need to find
+> > a mirror that is fast and reliable.
+> > 3. Someone agrees to regularly update the URL in QEMU's test suite so
+> > that breakage isn't exposed. IMO the least desirable solution because
+> > an old copy of the test will start failing after 12 months.
+>
+> So there's two issues at play.
+>
+> FreeBSD does maintain all our archival releases forever. They never chang=
+e.
+> But, we don't have permanent links to them today. We start with one URL a=
+nd
+> then migrate to a second one when they transition from supported to unsup=
+ported.
+> We do this, in part, to make sure people upgrade. So in effect, this brea=
+kage
+> means that our notion is "working" in the sense that the FreeBSD project'=
+s goals
+> of making people "keep up to date."
+>
+> This does, I realize, clash with the views that QEMU wants to have some s=
+table
+> way to test images over time, even if the upstream's notion of supported =
+or not
+> changes.
+>
+> One easy idea might be to 'prestage' the 'legacy' releases when they
+> are supported
+> on the 'legacy' server so that tests can be written with the legacy
+> path so that these
+> tests always work, now and in the future.
+>
+> So, this is terrible from a FreeBSD point of view. We'd like it if
+> qemu always tested
+> all of our releases, as well as snapshots of the tip of the spear.
+> There's got to be some
+> way to have some shared responsibility that we can automate. FreeBSD coul=
+d test
+> the most recent release of qemu against a bunch of images in our CI
+> cluster. But we
+> don't actually have a CI cluster we could put that into (our focus is
+> just a little different)
+> today. Ideally, your (3) above would happen as we rotate in new
+> versions and out old
+> versions of FreeBSD. But honestly, I'm the person (or one of the
+> people) that should
+> be keeping his eye on the ball, but we see how well that has worked
+> out. So the question
+> becomes is this a management failure (eg, someone/something needs to prom=
+pt me
+> or others in the FreeBSD project to update it via reminders, release
+> checklists, etc)?
+> Or is it something that can fixed by automations somehow? I don't know...
 
-- Topology (1 DCD attached to downstream port of CXL Switch)
-	'-device usb-ehci,id=ehci \
-     -object memory-backend-file,id=cxl-mem1,mem-path=/tmp/t3_cxl1.raw,size=4G \
-     -object memory-backend-file,id=cxl-lsa1,mem-path=/tmp/t3_lsa1.raw,size=1M \
-     -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1,hdm_for_passthrough=true \
-     -device cxl-rp,port=0,bus=cxl.1,id=cxl_rp_port0,chassis=0,slot=2 \
-     -device cxl-upstream,port=2,sn=1234,bus=cxl_rp_port0,id=us0,addr=0.0,multifunction=on, \
-     -device cxl-switch-mailbox-cci,bus=cxl_rp_port0,addr=0.1,target=us0 \
-     -device cxl-downstream,port=0,bus=us0,id=swport0,chassis=0,slot=4 \
-     -device cxl-type3,bus=swport0,volatile-dc-memdev=cxl-mem1,id=cxl-dcd0,lsa=cxl-lsa1,num-dc-regions=2,sn=99 \
-     -device usb-cxl-mctp,bus=ehci.0,id=usb0,target=us0 \
-     -device usb-cxl-mctp,bus=ehci.0,id=usb1,target=cxl-dcd0\
-     -machine cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=1k'
+How about doing both:
+1. Making the "legacy" URL available immediately so that anything that
+needs a permalink can use it (but they will explicitly specify the
+word "legacy" in the URL, which is a hint that it's not the latest and
+greatest release).
+2. You set up a calendar reminder to send a patch updating QEMU's test
+suite to the latest FreeBSD release every 12 months. A shell script
+could perform the steps of updating the URL, committing the change,
+and sending a patch email.
 
-After creating the VM with the above topology, to configure the 2 MCTP EPs
-(mctpusb0 and mctpusb1):
+That way FreeBSD's latest release will be tested in a timely manner
+and a snapshot of the QEMU test suite will still pass after 12 months.
 
-	mctp link set mctpusb0 up
-	mctp addr add 50 dev mctpusb0
-	mctp link set mctpusb0 net 11
+What do you think?
 
-	mctp link set mctpusb1 up
-	mctp addr add 51 dev mctpusb1
-	mctp link set mctpusb0 net 12
-
-	systemctl stop mctpd.service
-	systemctl start mctpd.service
-	busctl call au.com.codeconstruct.MCTP1 /au/com/codeconstruct/mctp1/interfaces/mctpusb0 au.com.codeconstruct.MCTP.BusOwner1 SetupEndpoint ay 0
-	busctl call au.com.codeconstruct.MCTP1 /au/com/codeconstruct/mctp1/interfaces/mctpusb1 au.com.codeconstruct.MCTP.BusOwner1 SetupEndpoint ay 0
-
-
-To test this patchset, I used this program from libcxlmi:
-https://github.com/computexpresslink/libcxlmi/blob/main/examples/cxl-mctp.c
-
-To summarize, this program scans the D-bus for MCTP endpoints or takes the NID:EID
-of the endpoint you want to open as arguments, then sends a variety of commands
-(identify, supported logs, etc.) through the endpoint(s) and prints the results,
-which I verified. Both methods of opening endpoints are successful and shows
-the expected output.
-
-To ensure this works end-to-end with an FM workflow I also tested with
-this program, which allows users to interactively send the FMAPI Add/Release
-commands from the command line:
-https://github.com/computexpresslink/libcxlmi/blob/main/examples/fmapi-mctp.c
-
-First I created a DC Region using this ndctl command:
-cxl create-region -m mem0 -d decoder0.0 -s 1G -t dynamic_ram_a
-
-Then I ran the program to add an extent of 512MB and was able to successfully
-create a DAX Device using the following commands:
-
-daxctl create-device -r region0
-daxctl reconfigure-device dax0.1 -m system-ram
-
-The output of 'lsmem' shows 512M added:
-RANGE                                  SIZE  STATE REMOVABLE   BLOCK
-0x0000000000000000-0x000000007fffffff    2G online       yes    0-15
-0x0000000100000000-0x000000027fffffff    6G online       yes   32-79
-0x0000001290000000-0x00000012afffffff  512M online       yes 594-597
-
-> https://github.com/computexpresslink/libcxlmi
-> 
-> I'll post a tree with this on at gitlab.com/jic23/qemu shortly
-> (cxl-<latest date>).
-> 
-> Jonathan Cameron (3):
->   hw/cxl/i2c_mctp_cxl: Initial device emulation
->   docs: cxl: Add example commandline for MCTP CXL CCIs
->   usb/mctp/cxl: CXL FMAPI interface via MCTP over usb.
-> 
-> Klaus Jensen (2):
->   hw/i2c: add smbus pec utility function
->   hw/i2c: add mctp core
-> 
->  MAINTAINERS                               |   7 +
->  docs/system/devices/cxl.rst               |  27 +
->  include/hw/cxl/cxl_device.h               |   8 +
->  include/hw/i2c/mctp.h                     | 125 +++++
->  include/hw/i2c/smbus_master.h             |   2 +
->  include/hw/pci-bridge/cxl_upstream_port.h |   1 +
->  include/hw/usb.h                          |   1 +
->  include/net/mctp.h                        | 100 ++++
->  hw/cxl/cxl-mailbox-utils.c                |  49 ++
->  hw/cxl/i2c_mctp_cxl.c                     | 289 ++++++++++
->  hw/i2c/mctp.c                             | 414 ++++++++++++++
->  hw/i2c/smbus_master.c                     |  26 +
->  hw/usb/dev-mctp.c                         | 639 ++++++++++++++++++++++
->  hw/arm/Kconfig                            |   1 +
->  hw/cxl/Kconfig                            |   4 +
->  hw/cxl/meson.build                        |   4 +
->  hw/i2c/Kconfig                            |   4 +
->  hw/i2c/meson.build                        |   1 +
->  hw/i2c/trace-events                       |  14 +
->  hw/usb/Kconfig                            |   5 +
->  hw/usb/meson.build                        |   1 +
->  21 files changed, 1722 insertions(+)
->  create mode 100644 include/hw/i2c/mctp.h
->  create mode 100644 include/net/mctp.h
->  create mode 100644 hw/cxl/i2c_mctp_cxl.c
->  create mode 100644 hw/i2c/mctp.c
->  create mode 100644 hw/usb/dev-mctp.c
-> 
-> -- 
-> 2.48.1
-> 
+Stefan
 
