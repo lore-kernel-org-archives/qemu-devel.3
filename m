@@ -4,90 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A68CC7115B
-	for <qemu-devel@archiver.kernel.org>; Mon, 23 Jun 2025 22:38:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18F74C7115B
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 00:41:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTpnK-00087M-T7; Mon, 23 Jun 2025 18:37:42 -0400
+	id 1uTriR-00041u-5J; Mon, 23 Jun 2025 20:40:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTpnG-00086t-9m
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 18:37:39 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uTpnE-0003Qw-I8
- for qemu-devel@nongnu.org; Mon, 23 Jun 2025 18:37:38 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-73c17c770a7so5335012b3a.2
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 15:37:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750718253; x=1751323053; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ie/Jbtqrmn2Uur88ykWORcPz57J0/Ee1pl9bf2eBIq8=;
- b=C4xb4DghCB8Yfctu9nkH5lpyvpDuog3LMBtlw85vQqKa2/iX4fMjxANwsCPNj4HWft
- BJDcIRlncUqUDmdpUh7HTZG4QUp+tCDQWMEB4sVll/XpvDGrkSVRJWSFP/CIaHExoR9s
- iqPTOQwTrR1njnvrtzeDe/lEVHc+qeGPC1TqDi9HDurd/GwU0VbSkJm0NwcvaAehAWsU
- PNAtNH4/FbsBlUThEYRlLd7FGf9ZpeRTp0X9c0covpOUkWsnceK1nr5g9auQZb/12u8L
- YbfYZwjokl7DS29V3H5s6ByAwWAf+/sMTuepWpiD8TA4u4NOf552g5CJsDvhr6eBIHkU
- zNow==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1uTriP-00041X-Oq
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 20:40:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1uTriN-0001Wf-Gd
+ for qemu-devel@nongnu.org; Mon, 23 Jun 2025 20:40:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750725641;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=O8DaITRQMgokLAIEn+ttnua62MEt5STDpxRTt8b7wLg=;
+ b=ZUc+iVVVnzisl2yZGVKQQnpilHVJT1sQqLGoOEQEoZIah6+TeVOgVCn0ao7C33llLmQGNl
+ a6owpBoXsj5gJyjSBtxDp6WmTn5kE95Ee+pJ6Kt+fAhM+KHbIa5s4pQgxdpHrNuzGkXFpI
+ 7doG8cemCA3YIo83C8tR4YrsUj11K1k=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-442-UNPLatYvOEW6iW6KLwSVlw-1; Mon, 23 Jun 2025 20:40:39 -0400
+X-MC-Unique: UNPLatYvOEW6iW6KLwSVlw-1
+X-Mimecast-MFC-AGG-ID: UNPLatYvOEW6iW6KLwSVlw_1750725638
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-311a6b43ed7so4010358a91.1
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 17:40:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750718253; x=1751323053;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ie/Jbtqrmn2Uur88ykWORcPz57J0/Ee1pl9bf2eBIq8=;
- b=KOXKfBDJTkHzEKAjvxB3qnl9i2+Ixuod8aeCtJRbpC68bbkwYRN1gVdKvVV4vFAnoc
- MPOlTAEQBGhzSWW13D5ARBi4dZe4OFd0rTnxmqmVCi3NJt+cJC/9MvhotiA5z/nImRuU
- K/Gzm9DXvwEyb+n4zof614EuzVT+xmMvRPcFdExARbDUnGrDLyNtKMt6LlVrCYJc0xmt
- OV0xqQsu6tTST3VC05t+4MS9D5UPxTF0uhtLo2WjOhx+jGz+u7nbXhVXdi3LfKyhnk3o
- AxQqSvbhmGM3TaFVD38ovpUpFzy+z4ZGhqHP/pS+1QWsqWXCEICVP7+ogPEAyWhycq88
- siDQ==
-X-Gm-Message-State: AOJu0YwpPb/15+JULbdBN1Vm7Ka73cF1z5iCjYK0OWJjraKTbSA0iApa
- JNF7v3n8kHVkRMASFaAARGjZSqI+WDXd9qDo7SEJLO0Y6fqcB7YjkcKJxljy73f+PBSzdByqLDw
- P0HfAL94=
-X-Gm-Gg: ASbGnctWFzm0o8bmn9Lu9qGYW1lwEM+1E/PtvUmzZbBHXQEAw4lGdwD77FKTQWdSpTL
- dGYUMUVpoc6ZEnKgRkESkeWsu2e8HQeA7r57Kf6OpjFJ9XLv1qEDUaT9FhWObUr7EtI7jUDbXAF
- 17zXOmksK0Z3l/lHZd74VvzxVK0DQ80+tVjoXPoCDvmeEWrkISWrzxh+UJD4CCjsF5VhC1IJwKB
- d2jxep6D01dnOsAlFRpobLQfRJdXtdboiGx/Rcym6YF56sh3jkbOk9zJfXP674VhF4DzxOmG9Xd
- E4C6+05Z0e5ck6zrxGoAlZdJrP2dCZknU3pNryXTvw2LoUQM+ka8lfdU30hMAxe3ISHQgbE+ie0
- nhVjj0Qp7k4K8g5sIoB9qgcjBIcE5
-X-Google-Smtp-Source: AGHT+IGDEGs3E+/QsaHcUWWckXf/cCVsgTaEPs+sc3Sd+gzOB8MxEKbro70k4FM54jdq8GmcNrau9Q==
-X-Received: by 2002:a05:6a00:2789:b0:730:95a6:3761 with SMTP id
- d2e1a72fcca58-7490d4f533amr26003608b3a.3.1750718253507; 
- Mon, 23 Jun 2025 15:37:33 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-67-243.tukw.qwest.net. [174.21.67.243])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-749b5e42a8esm196623b3a.69.2025.06.23.15.37.33
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Jun 2025 15:37:33 -0700 (PDT)
-Message-ID: <ed51d1e6-8e81-412f-9ad0-03726aa27fb4@linaro.org>
-Date: Mon, 23 Jun 2025 15:37:31 -0700
+ d=1e100.net; s=20230601; t=1750725638; x=1751330438;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=O8DaITRQMgokLAIEn+ttnua62MEt5STDpxRTt8b7wLg=;
+ b=mT11nWIyp+g7tBY1pVjJsCaKV8F8Os7KdjHqNTAptv5HLrrjbHelPakAd7zInLJypl
+ ybzlmSlRPMC3dCRAY2CXvEDVLw6qQvunbtKm3xF00cbmSZYvdtAiWjZ70A5/IHHW2yKF
+ MEAp0OcW/tCp1f8bD2cytTpIBE0BFYYCHVkz2Fr9NCC32wj+elaxMVnRBuD+CYAnqzOb
+ 3ZhtIyb65xwTIgeifFqzOY1wXGKRp7itIOxeTXn/SzmPlYe8T06caUqmq0o+xf4Km7HM
+ jvIcnQtcPKohuREO9BWYM+nTi0MVVulTIfLwQXPSzdCXssOiGTfZvbUAAnoP1DyVvOZD
+ SfXQ==
+X-Gm-Message-State: AOJu0Yzy1783ZdO63amtDWH70EhweZdjtwlX2XqoUBHMouacgLqb4PL3
+ 90MoR/5fd3tCzsOAiaMSk/U8fvulU//5jHKxSAfyqq0AzUWTKSnyNAiPYUCWJZXNkBoAE0KWNbY
+ NCqlCIl79YYnIniODtznqniUTlJ2OxIr70IA3+8OHUy8iTmeMYh0govYiBwhhIr6t7phFpgpJkn
+ y/rK6WbreiLg2v2OAiUHjzBwvf9tEZAEM=
+X-Gm-Gg: ASbGncsS1OdZK69vFVgaNDEyg2NbzKPEIHDbNxCm2uIXcLNhaQSf4pq0MnL4RBTvFJo
+ zfA+MZm7A5qhAOY1RC60ijXSsFN82cQCfoqU75YRiDScLAHyLdDANDb+x0a27a8GEbuz4J1GM4Q
+ KEzey4
+X-Received: by 2002:a17:90b:4a83:b0:311:af8c:51cd with SMTP id
+ 98e67ed59e1d1-3159d8c80eemr28502012a91.18.1750725638430; 
+ Mon, 23 Jun 2025 17:40:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFx4toXAiEDtEogQjP4GauIpyVLa71cV8T7K7iATU880EWbtl1LEYgow8DBwUhP3M0HP5HWLf8hMr7Mi7BFaSY=
+X-Received: by 2002:a17:90b:4a83:b0:311:af8c:51cd with SMTP id
+ 98e67ed59e1d1-3159d8c80eemr28501970a91.18.1750725637971; Mon, 23 Jun 2025
+ 17:40:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] hw/s390x: Use preferred API call for IPLB chain write
-To: qemu-devel@nongnu.org
-References: <20250623201216.721130-1-jrossi@linux.ibm.com>
- <20250623201216.721130-2-jrossi@linux.ibm.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250623201216.721130-2-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+References: <20250618083930.451313-1-lvivier@redhat.com>
+ <CACGkMEv1r+-MUpoPZ2Va-b-dkjB2prHYhtZEtUB7-s1CZCBFdA@mail.gmail.com>
+ <b1a9b090-e8f2-4e80-943a-001db1229707@redhat.com>
+In-Reply-To: <b1a9b090-e8f2-4e80-943a-001db1229707@redhat.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Tue, 24 Jun 2025 08:40:26 +0800
+X-Gm-Features: AX0GCFvTrbxkQjsvnNMrgJk4TVkisKBu0t0nGYnTA-ET5wTE3SKL91zS568rQQA
+Message-ID: <CACGkMEutttY=+4GuMZxe5jigx4x_NVNqccqJvL2swYtP=B11dw@mail.gmail.com>
+Subject: Re: [PATCH 0/8] net: Add passt netdev backend
+To: Laurent Vivier <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Stefan Weil <sw@weilnetz.de>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Markus Armbruster <armbru@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,44 +111,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/23/25 13:12, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
-> 
-> Replace a recently introduced legacy API call with the preferred API call.
-> 
-> fixes: 0927875 (hw/s390x: Build an IPLB for each boot device)
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->   hw/s390x/ipl.c | 10 +++++++++-
->   1 file changed, 9 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-> index 2f082396c7..f2606303e6 100644
-> --- a/hw/s390x/ipl.c
-> +++ b/hw/s390x/ipl.c
-> @@ -399,8 +399,16 @@ static uint64_t s390_ipl_map_iplb_chain(IplParameterBlock *iplb_chain)
->       uint16_t count = be16_to_cpu(ipl->qipl.chain_len);
->       uint64_t len = sizeof(IplParameterBlock) * count;
->       uint64_t chain_addr = find_iplb_chain_addr(ipl->bios_start_addr, count);
-> +    MemTxResult ret;
-> +
-> +    ret = address_space_write(&address_space_memory, chain_addr,
-> +            MEMTXATTRS_UNSPECIFIED, iplb_chain, len);
-> +
-> +    if (ret != MEMTX_OK) {
-> +        error_report("Failed to map IPLB chain.");
-> +        exit(1);
-> +    }
+On Mon, Jun 23, 2025 at 4:10=E2=80=AFPM Laurent Vivier <lvivier@redhat.com>=
+ wrote:
+>
+> On 23/06/2025 10:03, Jason Wang wrote:
+> > On Wed, Jun 18, 2025 at 4:39=E2=80=AFPM Laurent Vivier <lvivier@redhat.=
+com> wrote:
+> >>
+> >> This series introduces support for passt as a new network backend for
+> >> QEMU.
+> >>
+> >> passt is a modern, unprivileged, user-mode networking solution that
+> >> provides guest connectivity by launching an external helper process. T=
+his
+> >> series adds the core backend and integrates it with vhost-user for
+> >> high-performance, accelerated networking.
+> >>
+> >> The series is structured to first improve the general networking code
+> >> before adding the new feature. The first patch extracts from the strea=
+m
+> >> backend the functions that will be reused in the passt backend. The
+> >> following patches are a preparatory refactoring to decouple the generi=
+c
+> >> vhost layer from specific backend implementations (tap, vhost-user, et=
+c.).
+> >> This is achieved by replacing hardcoded type checks with a callback-ba=
+sed
+> >> system in NetClientInfo, making the vhost infrastructure more modular =
+and
+> >> extensible.
+> >>
+> >> With the refactoring in place, subsequent patches introduce the passt
+> >> backend itself, reusing the generic stream handling logic. The final
+> >> patch adds vhost-user support to passt, which plugs cleanly into the
+> >> newly refactored vhost layer.
+> >>
+> >> Some benchmarks:
+> >>
+> >>   Reference '-net user':
+> >>
+> >>    -net user,hostfwd=3Dtcp::10001-:10001
+> >>
+> >>      iperf3 -c localhost -p 10001  -t 60 -4
+> >>
+> >>      [ ID] Interval           Transfer     Bitrate         Retr
+> >>      [  5]   0.00-60.00  sec  14.2 GBytes  2.03 Gbits/sec    1        =
+    sender
+> >>      [  5]   0.00-60.00  sec  14.2 GBytes  2.03 Gbits/sec             =
+     receiver
+> >>
+> >>   New backend '-netdev passt'
+> >>
+> >>    -netdev passt,vhost-user=3Doff,tcp-ports=3D10001
+> >>
+> >>      iperf3 -c localhost -p 10001  -t 60 -4
+> >>
+> >>      [ ID] Interval           Transfer     Bitrate         Retr
+> >>      [  5]   0.00-60.00  sec  27.1 GBytes  3.88 Gbits/sec    0        =
+    sender
+> >>      [  5]   0.00-60.03  sec  27.1 GBytes  3.88 Gbits/sec             =
+     receiver
+> >>
+> >>    -netdev passt,vhost-user=3Don,tcp-ports=3D10001
+> >>
+> >>      iperf3 -c localhost -p 10001  -t 60 -4
+> >>
+> >>      [ ID] Interval           Transfer     Bitrate         Retr
+> >>      [  5]   0.00-60.00  sec   224 GBytes  32.1 Gbits/sec    4        =
+    sender
+> >>      [  5]   0.00-60.05  sec   224 GBytes  32.0 Gbits/sec             =
+     receiver
+> >
+> > Do we have latency numbers of even PPS?
+>
+> Could you propose tools and tests I can run to have these numbers?
 
-I'm certain you should not exit for a guest error.
+For latency, we can use netperf -t TCP_RR.
+For PPS, we can use pktgen, kernel source has samples under
+samples/pktgen, pktgen_sample03_burst_single_flow.sh could be a good
+script, please make sure burst is used in the test to stress the
+virtio-net as much as possible.
+
+Thanks
 
 
-r~
-
->   
-> -    cpu_physical_memory_write(chain_addr, iplb_chain, len);
->       return chain_addr;
->   }
->   
+>
+> Thanks,
+> Laurent
+>
 
 
