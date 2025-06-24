@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB4A6C77B7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 09:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B478C77B7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 09:56:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uU0NA-00088d-Jl; Tue, 24 Jun 2025 05:55:24 -0400
+	id 1uU0NY-0008Fj-5q; Tue, 24 Jun 2025 05:55:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uU0N9-00088D-4g
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 05:55:23 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uU0NV-0008ET-Q8
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 05:55:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uU0N7-00046P-L9
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 05:55:22 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uU0NT-00048M-OJ
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 05:55:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750758920;
+ s=mimecast20190719; t=1750758942;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=D7yOt6IGR3jhbeUOSPv900W+3EpKABq/lyn/h9vrDMY=;
- b=NgnNh8JMOlvJRNG4tix7azNZq+LXNUnztu5yjPiI2rczcDTImWX0WofTbVIOOKLaNy0nDf
- ZYIwCfujbeUjd34pWActmnabMIQYlcmS7D05buWoCoUUI8AHgNo8ZN/j8Zi9lb1Xj2CSMR
- n7P67ePWkQ6043EILnh9DZ/px0hwR/c=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Tyq0vQiPhFKssc6Iyf+H9dyoBOJhIGExX+lOQ2aEmek=;
+ b=RaHKk+XbsBbjWweaegmYLfzjwggGH6DenUy6ia9z1K/5vTW8jkTOJr7LCs7GXqmIsiZuNK
+ hZw6aUrx0YhLA46OWnS0BMENvO9QwpKWtlqvLrkxTG25gok11O+2Mn+9v8EZDdauwnuTJ1
+ NDivyZFZaCPz6iO+l1B/gTHLZZ+aaIQ=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-595-etSa7l1TODyWanTI1YpzRQ-1; Tue, 24 Jun 2025 05:55:18 -0400
-X-MC-Unique: etSa7l1TODyWanTI1YpzRQ-1
-X-Mimecast-MFC-AGG-ID: etSa7l1TODyWanTI1YpzRQ_1750758917
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a58939191eso2129940f8f.0
- for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 02:55:17 -0700 (PDT)
+ us-mta-655-X6ypdTPAN92HeEZL42RMhQ-1; Tue, 24 Jun 2025 05:55:40 -0400
+X-MC-Unique: X6ypdTPAN92HeEZL42RMhQ-1
+X-Mimecast-MFC-AGG-ID: X6ypdTPAN92HeEZL42RMhQ_1750758939
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45311704d22so33531755e9.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 02:55:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750758917; x=1751363717;
+ d=1e100.net; s=20230601; t=1750758939; x=1751363739;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=D7yOt6IGR3jhbeUOSPv900W+3EpKABq/lyn/h9vrDMY=;
- b=v8BDBXoH0Kw8LRGDjfk5HkMMdVDcNB7e0Q+0sdU+KPNoPFEVDno3MhR31UQ/uts18g
- mYbX3OYlhugBIXUFex/KqJLQxn2fG6fyxrBs/eJNfQ5nRq1B+hHQO3U4RqgcaBF2UDhf
- gAOfQNNUfAoZ9XfO+xTnO91GUts1867Eh+0q2RVZFvaEZfONbxsuFnwX+vdZzIHbwPoh
- t1ZgFBQa4zD/2E4wVO23ZH2zgCDN0Apri5H95xEWRFAOulE3jeVTR5A6JCQ9k1X3JCHF
- ORkKLVRWORXk3+acJFTySuavtfeE8xzbH0oUvwVfFKetWMde63npn2T7kK5HHG7OWf6a
- drHw==
+ bh=Tyq0vQiPhFKssc6Iyf+H9dyoBOJhIGExX+lOQ2aEmek=;
+ b=FeGN53nv3GMc4yoDT8aEFQjjNztSfM6yfe8Xd5z1WTQLEQAJb7rXZ0HISumEhEdE+4
+ ZHZcnyqIlTVAnXD7ZI+r5sfylROANMDUQyTx1WeouFSfyRmRDzo0NQdvP1GyFf/JpSv3
+ 20qv9oortL0PGGQOeKmJYeBj+o915e7FzdEz8oPFNN16f9DqUakMmZ9dnikMCbY+PgKL
+ 8LxjI4IS3HWA01z1B7uMWw04YHQZcDMtYNxIQfiZvvkIO+o7ZVcDXl2goUH4ubV1ulVG
+ VXLjfKS2dcK9TPQLXcY2g9BA47vK3LJVS3iCI1FbWsx2moygQ8bAS+CkiGSqf0X0Jexx
+ cdgg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVvtbASFNAR/nwpIGWLoGUJHE7ZRbiGh9y17UUQOex3gCaXAvPzNk3eaqrWg2onDSdzetlkuuSVuRih@nongnu.org
-X-Gm-Message-State: AOJu0Yw5iFPd9LvxX1xYHmj6/gnyjU7dQ8dGbBUVdwFLOnAVp1R0rztE
- 3/Cpc5BfsNiNUxi6/8JjaVWpNPNGmA6zWJLDZpLK47L+MQvUIrIdjnHR6b1QgWPF9y9s81G2OUw
- H52AXYHuTAdgoQh/892NvjMsIV9kPKnr2P0HyldoTbVU6oZsIeR1uwONW
-X-Gm-Gg: ASbGncsh7FkvYKZxRjJe7F0Jn1a6z13t9P70ZLz+KY163aGAz0XwmAJAFU8hXmaRx5R
- B7HpYKfn9x17ibPTWTSDwPeOI95NwsWAa+s7kTqwZ/eO/3xUYwgUuEfA8x+WrecrJPljDwbiwTP
- qMXhI5kPxtS2UU4UtPmWFW9rPYOt2tT7Ulbc+fAaRTHEjd1wA1cKs6AT16KTlsyIfIMGYy3OBZ9
- aDKxHGleDvUSm/CC5fHcLiZ3jy0Iyj++OGmspdPLlKIZsA1kRLRJcasU05+L5NNThQ4upgUu5tq
- DE8mnrahiP/D/HyC7tYHlVIk5MaiM5XwYHsNAe6I+nUf222AmOrhRzkggoj9
-X-Received: by 2002:a05:6000:1a8f:b0:3a5:2d42:aa17 with SMTP id
- ffacd0b85a97d-3a6d12d53e2mr12756362f8f.31.1750758916748; 
- Tue, 24 Jun 2025 02:55:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGQOGQPX7mwPWmXWK9LCsQQGsDQOeUkXF6h4TdetkSuRqxplRXlYyRhUfnJxpW4jpimNcvrBA==
-X-Received: by 2002:a05:6000:1a8f:b0:3a5:2d42:aa17 with SMTP id
- ffacd0b85a97d-3a6d12d53e2mr12756345f8f.31.1750758916312; 
- Tue, 24 Jun 2025 02:55:16 -0700 (PDT)
+ AJvYcCW1LA669KeR4EIkhJaljJWwZpQ4A7F4Vp6JGKIF7V5pcrwhORRIKNGYW5oL/Dxo4mDg9X8MhUXHa88T@nongnu.org
+X-Gm-Message-State: AOJu0YyhHBo5V0KSfy+kIMn4a6+CGpuFzWBGG8CrAamlxYWTLG3JvGAS
+ obgsuBx4omMhBB2cRuCqanWxoCmvV920SzJ+ZlRvh/jWTsyj/LWicJ5U7BxBLeTL8jijLFvAziy
+ kgl3qKMhrMiWmYuUDCbiX4FFToyxZFwN5aDzzpISgK9mgpBs6VPL/vzf8
+X-Gm-Gg: ASbGncuA736C6/ZlLJBlZy8Gxsmf8sAISg5B3kltgIt6lLj2wuNGII49t9PO/bLLUTR
+ 4wtNw9q8aWeVrj5LXa6oHhj7XM6bSonS9KlgXhiyb0l/SHbW9uqvDJn5BiDDJeiiJ35JssdRLMi
+ gnHXCYjMF43ILsjW5QVZ1ull/e8hbTr6P47btvhT7AqfGTjpVkwhYwIj9dJKSVLAJEge4B8m9GE
+ v9pnSVcsPRl3q/giqXXBpbgn/k5WTI4ps/WIWxnPEdlBtSyIKmnk2X1xS+ETLbXpEJs8rD267QU
+ OFsj9pD2b2djMCGYoiYnExmc8QAChRmXEqQiu2LVLQVMLtLYcI0zDmtECP1Y
+X-Received: by 2002:a05:600c:8b70:b0:445:1984:247d with SMTP id
+ 5b1f17b1804b1-453653aa3afmr139666955e9.7.1750758939266; 
+ Tue, 24 Jun 2025 02:55:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGWM6YF6UblF1sg0x6oRE2gZ26aOwjGPJzlWAZgCiQCj6D1Gbekt5F/YqfmlEp/ARGF+di1dQ==
+X-Received: by 2002:a05:600c:8b70:b0:445:1984:247d with SMTP id
+ 5b1f17b1804b1-453653aa3afmr139666655e9.7.1750758938840; 
+ Tue, 24 Jun 2025 02:55:38 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6e8069d78sm1507001f8f.45.2025.06.24.02.55.15
+ 5b1f17b1804b1-453632312a3sm146903905e9.1.2025.06.24.02.55.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Jun 2025 02:55:15 -0700 (PDT)
-Message-ID: <7ad8cb88-e070-4ddc-83d1-fb29dfb8336a@redhat.com>
-Date: Tue, 24 Jun 2025 11:55:15 +0200
+ Tue, 24 Jun 2025 02:55:38 -0700 (PDT)
+Message-ID: <cb3ab990-9e19-45b5-be37-4add96cec010@redhat.com>
+Date: Tue, 24 Jun 2025 11:55:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio: add license tag to some files
-To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>
-References: <20250623093053.1495509-1-john.levon@nutanix.com>
+Subject: Re: [PATCH 1/4] vfio/container: Fix SIGSEGV when open container file
+ fails
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, eric.auger@redhat.com,
+ steven.sistare@oracle.com, chao.p.peng@intel.com
+References: <20250623102235.94877-1-zhenzhong.duan@intel.com>
+ <20250623102235.94877-2-zhenzhong.duan@intel.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -127,7 +129,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250623093053.1495509-1-john.levon@nutanix.com>
+In-Reply-To: <20250623102235.94877-2-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -155,10 +157,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/23/25 11:30, John Levon wrote:
-> Add SPDX-License-Identifier to some files missing it in hw/vfio/.
+On 6/23/25 12:22, Zhenzhong Duan wrote:
+> When open /dev/vfio/vfio fails, SIGSEGV triggers because
+> vfio_listener_unregister() doesn't support a NULL bcontainer
+> pointer.
 > 
-> Signed-off-by: John Levon <john.levon@nutanix.com>
+> Fixes: a1f267a7d4d9 ("vfio/container: reform vfio_container_connect cleanup")
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>   hw/vfio/container.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index 3e8d645ebb..2853f6f08b 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -710,7 +710,9 @@ static bool vfio_container_connect(VFIOGroup *group, AddressSpace *as,
+>       return true;
+>   
+>   fail:
+> -    vfio_listener_unregister(bcontainer);
+> +    if (new_container) {
+> +        vfio_listener_unregister(bcontainer);
+> +    }
+>   
+>       if (group_was_added) {
+>           vfio_container_group_del(container, group);
+
 
 
 Applied to vfio-next.
