@@ -4,90 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B1B8C77B7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 22:43:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91D65C77B7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 23:15:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUCLd-0006D5-Sw; Tue, 24 Jun 2025 18:42:37 -0400
+	id 1uUCqN-0002qa-5Q; Tue, 24 Jun 2025 19:14:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uUCLc-0006By-5i
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 18:42:36 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uUCLa-000855-Fv
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 18:42:35 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-74264d1832eso7024433b3a.0
- for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 15:42:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
+ id 1uUCqD-0002pS-8k; Tue, 24 Jun 2025 19:14:13 -0400
+Received: from pi.codeconstruct.com.au ([203.29.241.158]
+ helo=codeconstruct.com.au)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
+ id 1uUCqA-00038I-TL; Tue, 24 Jun 2025 19:14:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750804953; x=1751409753; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SBhKC9/39X/o7zlW5+H28DuKjKdckyOJo0S8qZBAt4w=;
- b=WdSG3SfqOlAsNCL90cQZLXfL/qpE0+uCXfoaT1vSldCGjKrwx/ryDQdPYzgJnnAYSJ
- x88ArHcG3KJITdxCN/8QxzpzSnBdihPeJjTC6IHtBx8V7CJ2qiocysQj9n22K8iq4LSh
- mdMIKwH+0hMadtgHRD2KBYzX5CesReO/NXvHZNmJK5aqzvuLuHEZI/OWUCAGUpjohqz6
- Urcom/zWAJInmYsjONp4taSV8gaDLK6b3W5J1+rdGvv/2uEIS1vuhUQEUb0loTZErCBr
- pPF1lMt7dd34EyeEKbSw4r9Y+QNc/fv9Q9xZGjShB+1Qnv5zRo5SJIIWeyyUmqQhlT3i
- zeUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750804953; x=1751409753;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SBhKC9/39X/o7zlW5+H28DuKjKdckyOJo0S8qZBAt4w=;
- b=qHbBc6V0XBTunYFkZ0bg9dzZjJIpTpVhq7JlOusj6riKfWzPYZF01sxJo80j7VfIji
- p36I1SaQIqY21oTLxUzqch/qfxxILcDpbO5UztkSDa3ErxgDQN7HP/fAW4lYJ7jUYBkJ
- E1ZzUhBeAEDZFwL6HjT8a28jAx4TprkcAqkanHShTxQpPhr6PaAOVVPv66aJ+8HBrPd9
- 9zpVAaHXkO9V4dzsl5zqprIC5cplflUHdUcuClYohZRY5WwT2TsDHNfqc0KP6Hvg64eS
- cNP6WK7ZD8vOmRXEG8eNkaYpm/jOpX3uVKB2hc9+KhFfRsz+dWmCsiCzA4L1JK4BCNyD
- dFaQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX9dxLxz7nlOooA8cd5Hi9hRIlNuMmeBlib+35HWWE20uNt2GwVyt/ZUPZCYNegl1nosYdpIMEYNZzf@nongnu.org
-X-Gm-Message-State: AOJu0YzTlbP1fgWYnzBMy83QYL4llZZvTQzTvJRcBat/zfu8h0kzrdXJ
- Tspmgq8RDEdfo6cMvWAEsElKcr9ukep1b3vK1jyL6quxWQA902DfYLMRVnuLdZ/Ah/s=
-X-Gm-Gg: ASbGncvBex9rmMJGOctTuJuwB9z4jcl2ZwiQA61amZ548vmEI7mM5j6QXTJFkU6dIiC
- n3t2gKs0pUioJdhyyxiEKKi/phLkAOxhiiIDA11VY67dbcTuxJ3yl1+bWvbg70f1gLZhvkDzF+f
- hXIbjKMuS2hYbxg+rtnjxxzg/04qIOpplu6Uoq5l7k7c8IJm4QoedN39/ZXHwk3akzrUg5z6mnO
- eZDwuyQ7ljwVV2wf4DcLNDjrlQlii2aqj6AXtk1jPHw8UwOFBNhzxZ/VquaiDhW20TwWEVdkpdM
- XZiUOWV/UKt+9d3rQW02kywcTLXKdiCotfutUMMBqoIMoj7HyRtL/U7kpZA+KNmpeDuSJJvW+oK
- vII7WLAJZPw==
-X-Google-Smtp-Source: AGHT+IHkaK5bte6ZkBoa2pdNzvZIJdNDE6Xn2iowC88apfVYvtd9iM16IELHxroLDh0bp+DNDmbCiQ==
-X-Received: by 2002:a05:6a00:4fc3:b0:748:2d1d:f7b7 with SMTP id
- d2e1a72fcca58-74ad45b9358mr1248694b3a.21.1750804952758; 
- Tue, 24 Jun 2025 15:42:32 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-749b5e08d06sm2843957b3a.29.2025.06.24.15.42.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Jun 2025 15:42:32 -0700 (PDT)
-Message-ID: <b510f569-e8c5-4bf8-ada8-bac889dd3546@linaro.org>
-Date: Tue, 24 Jun 2025 15:42:31 -0700
+ d=codeconstruct.com.au; s=2022a; t=1750806839;
+ bh=TZirEK5Lf+fDKpcU6BgJPmCkKx5LZZpaipXUQnEXOqA=;
+ h=Subject:From:To:Cc:Date:In-Reply-To:References;
+ b=HSt7LGDNXklGvwpXmUblXoU+PZ5LEP0Wbe2SErlgoNvX4ODjJnrktMbuX5w6EygvG
+ T837orcTvpJnF/q+Y3fxzpRnSI3GcNedG/FpsoegJrdVZTvOqsV6nC8sJkTXC6qnWS
+ O9lSu1iBG6Xkjh/xr0za+WYIHVqmQDcB8pnBSSFxn2MzZi6B5pkbSHNyaILqmho9wi
+ sH2cL3KQ3qN6Xy8/QJ4+O28CjNBMNv9mhZInMxxoUk0RvsOel7Zl7MPD/Hwm4DTArX
+ 5KQnduP1IzxMzwZoewirUcT7Gl+ydCF0mRToLGb6FMgMJORVH2S1+Xrnbo22HhtMeN
+ /NNhWup0iNjJQ==
+Received: from [192.168.68.112] (unknown [180.150.112.166])
+ by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 40423640CD;
+ Wed, 25 Jun 2025 07:13:56 +0800 (AWST)
+Message-ID: <2e5e17451b9e59cb8108fb6c2a88f40ba69be4ee.camel@codeconstruct.com.au>
+Subject: Re: aspeed: Split the machine definition into individual source files
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>, 
+ "'qemu-arm@nongnu.org'" <qemu-arm@nongnu.org>, "open list:All patches CC
+ here" <qemu-devel@nongnu.org>
+Cc: Joel Stanley <joel@jms.id.au>, 'Jamin Lin' <jamin_lin@aspeedtech.com>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Peter
+ Maydell <peter.maydell@linaro.org>, Patrick Williams <patrick@stwcx.xyz>
+Date: Wed, 25 Jun 2025 08:43:56 +0930
+In-Reply-To: <e2df1ff1-3ce4-4233-b32e-2bc680725c71@kaod.org>
+References: <e2df1ff1-3ce4-4233-b32e-2bc680725c71@kaod.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/20] tcg/optimize: Build and use o_bits in fold_and
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250505202751.3510517-1-richard.henderson@linaro.org>
- <20250505202751.3510517-4-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250505202751.3510517-4-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=203.29.241.158;
+ envelope-from=andrew@codeconstruct.com.au; helo=codeconstruct.com.au
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,12 +72,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/5/25 1:27 PM, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   tcg/optimize.c | 17 ++++++-----------
->   1 file changed, 6 insertions(+), 11 deletions(-)
+On Thu, 2025-06-19 at 11:23 +0200, C=C3=A9dric Le Goater wrote:
+> Hi,
+>=20
+> This is a follow up of a private discussion with Patrick.
+>=20
+> Aspeed modeling started nearly 10y ago with the palmetto-bmc machine.
+> We now have 5 SoCs and 25 machines which are mostly defined in
+> in a single aspeed.c file. Multi SoC machines, fby35 and ast2700fc,
+> are defined in fby35.c and aspeed_ast27x0-fc.c respectively.
+>=20
+> Since we started separating the SoCs :
+>=20
+> =C2=A0=C2=A0 hw/arm/aspeed_ast10x0.c
+> =C2=A0=C2=A0 hw/arm/aspeed_ast2400.c
+> =C2=A0=C2=A0 hw/arm/aspeed_ast2600.c
+> =C2=A0=C2=A0 hw/arm/aspeed_ast27x0.c
+> =C2=A0=C2=A0 hw/arm/aspeed_ast27x0-ssp.c
+> =C2=A0=C2=A0 hw/arm/aspeed_ast27x0-tsp.c
+>=20
+> We could do the same for the machines keeping an 'aspeed_ast<rev>'
+> prefix (and maybe avoid the 'bmc' suffix). I think this would ease
+> introduction of new machines. We would be able to get rid of
+> aspeed_eeprom.[ch] and move machine custom data in the machine source
+> file. Which seems cleaner.
+>=20
+> Timing is about right for code reshuffling, still 3w before soft
+> freeze, no important changes inflight, but if we start doing this
+> conversion, we should do it for all. See the list below for the
+> brave.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+My involvement has dropped off quite a bit, but for what it's worth,
+this seems sensible to me :)
 
+Andrew
 
