@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52E80C77B7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 09:21:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56F6FC77B7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 09:28:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTzqE-0006s3-Mf; Tue, 24 Jun 2025 05:21:22 -0400
+	id 1uTzwq-0007ru-FJ; Tue, 24 Jun 2025 05:28:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uTzqD-0006rt-7h
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 05:21:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uTzwn-0007r9-Lu
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 05:28:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uTzqB-00082m-MF
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 05:21:20 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uTzwi-0000V8-G5
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 05:28:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750756878;
+ s=mimecast20190719; t=1750757282;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dIdsKlja9YzbaYLsd1yetLx2VV7bJ52NM+kuOpVcSYk=;
- b=CZ3ccQS6nJzbiSBp34ud0+y+RU8I6jBMNHDfgVgC3al3BzR3QSEVdJoq/pztOeQ4n7qku6
- ZCBYzrdTXf5YDUo8S3lP0Cqu09vWQJNhtEeEg0sMxO/aUSA5pTQooJPwKYe3R0viiR80n3
- eKod84/ZUTqADWvpfE2A+U3OB2En4wk=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uKd0KsWxonFfTBoCHCKY2a8w6W3TFEuyr8dvtcAHkHY=;
+ b=UVvuX6sdkX6SbEfThd415GvvnJjRzc716YOXynABa3FXJEiFw0Ka2pO6OGgjfycpzX3+pG
+ YYTzQvkOnuC8bMOXbwx+l+Uyb66d8I6fKWayX60vi73MV9S9ulfIoOzQRNpRaVYSrtrK5Z
+ PQTvHkWbEmf4810DHD3H3Y5aGvFWWzY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-304--FtvsQHtP02DGivd6wiw-A-1; Tue, 24 Jun 2025 05:21:16 -0400
-X-MC-Unique: -FtvsQHtP02DGivd6wiw-A-1
-X-Mimecast-MFC-AGG-ID: -FtvsQHtP02DGivd6wiw-A_1750756875
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a50049f8eeso125696f8f.3
- for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 02:21:16 -0700 (PDT)
+ us-mta-607-haetuTnxPXCFp6M6fRCbbA-1; Tue, 24 Jun 2025 05:28:00 -0400
+X-MC-Unique: haetuTnxPXCFp6M6fRCbbA-1
+X-Mimecast-MFC-AGG-ID: haetuTnxPXCFp6M6fRCbbA_1750757279
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4530c186394so22738565e9.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 02:28:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750756875; x=1751361675;
+ d=1e100.net; s=20230601; t=1750757279; x=1751362079;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dIdsKlja9YzbaYLsd1yetLx2VV7bJ52NM+kuOpVcSYk=;
- b=DqY9rvigd9heI6qRCbcDwauBuWPulhi9eyE7pWv/GdFcPSgKFNcc1WyNbVOcTq2jkf
- HpFTA7QhFsOZeGX9SC9JWTyLMqMdT3DT6cW697ZS9cegzLJI2UzxG26EGMaVv6UjVruT
- K8BrI7uQ591cUNX47Pu2cX98oV461nj9fFAHTJ3jzSVgc4vqEPdJGrxIpDlZR7ruAnln
- yQpQALHj1BL05sz9XMwTasH+QUeuEg890LNRaFedCPDL9t/DMDRHKtp7np1p60sWgym5
- nsqgJcIZYDxzlybt0EsqC5zscW9sAhGaXHngGUGLubNZBgl1ubjm6Iy52Vku2XSuBngB
- BJGA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVycTZgpgn2AStksIqE5cCX4qNlUn7562quA6WZAD9JfCWUQGOYlUJzyfUVrE6SBN+okm+Hdi20fnBs@nongnu.org
-X-Gm-Message-State: AOJu0Yxr6R8MbhHScICBA+UQYepCWBSIpWG/yknwrOdYJ9KsEzJZAYx1
- tsoaOWj4KaVMnUxAbS/JvhPCJwRQtfGBREIJUTIVt4zpIOSSb16ZJsVcllXoV3Tmwp6ZQweOLaJ
- UtepAwgIiPO36I0I1kDp7+gkpMi8QpQX6aCO8R3thznPcTaG96WOusc+F
-X-Gm-Gg: ASbGncuhe7R1s51VMkYxkMZ2MC8TnxJ3nRSXgm/UyHo4j2IwRuIWXyUvHmf9H+cx1WN
- mHFBnm+lZdcniIWhDwj/3W4BTy0n4kc2IuyvWH/Y7Drk0awO0ZRxeL9g0Is/6+kpiD666T+8VYI
- Aq0aAfM0jwWAsR6NK8dT7Vc78Xv5fNQGlWyqIBcCuEmRWuoRLrAquCjNKpriN7MVTB9xiNKAkVs
- zcXNni9lKxs8FnoMOfBd7TOImkkev6Lq2TdTdeNjfcfORHJindFz9GcV5zuJP6pEslQa2frANfS
- oHmFBVdf9akRNrhSimSmGxYTKwh8nbE4tq1t7OI7qzq0kqMZyV8weJIcbdvt
-X-Received: by 2002:a05:6000:288d:b0:3a4:eec5:443d with SMTP id
- ffacd0b85a97d-3a6d12d8f21mr12380771f8f.29.1750756875027; 
- Tue, 24 Jun 2025 02:21:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFuCqlkErXSy2TOyeEuigR9JtweWc8cCzweUVBYpXbe9pqH1yid7CuN4mUIkyhT/v9UBuA1aw==
-X-Received: by 2002:a05:6000:288d:b0:3a4:eec5:443d with SMTP id
- ffacd0b85a97d-3a6d12d8f21mr12380739f8f.29.1750756874574; 
- Tue, 24 Jun 2025 02:21:14 -0700 (PDT)
+ bh=uKd0KsWxonFfTBoCHCKY2a8w6W3TFEuyr8dvtcAHkHY=;
+ b=nm6C9OurhXM+qHjlUhop8qjYP7NFL6HQDjnEGkGLgf23Zdob9fLdtHbM0v/xuRL9VB
+ x04wyDkT6tGUa7sEUCTk1Z3yEZvS6Nr7rRo5Nk7svsRsY/ywzaqi4wI6E+uFusehJqrM
+ 25+rqD7ksbI+7t1qQzsWllm0lZ8Zlf4YCaSnz/uj46VsJsSaexVJmBhSLlckmmyYqwJ5
+ 03GTKjCad+H0gVZ6aDgVUdPlbyRW/qj0N8ARF8UteKE3y6ko9bG7bCg/2U2/B5zsaGeS
+ JBJEWzbehJfL0EtPP5fGdFBN2pZn1nMKZ8hRZcW2MP0oOmuI4yycVU3Py61PMv5JfblI
+ E0Dw==
+X-Gm-Message-State: AOJu0Ywk4b6QB0hxbvVOu561c5nRtHqfWvetKUXCUpf+cI4zIV6DsfGk
+ u4wdJHYUTz12Kt4Ksec6TCGJ33nIlyoxTtM51w/u5YUBjyjDvH0rp/dTNYwh1qN7kRccsq22iio
+ dPHSYY3VgXXC843+syuP0ztUJ0RE7kW8LEjqYQdGWUurmis9606Ltg8uh
+X-Gm-Gg: ASbGnctJ+jgNPQrmWqNuNocQtLq4mXVjT0uJKhjaxxHCe2jQXxVjOuhUm/3bVH2Fm6C
+ 8BXTYg9Ouviqg8Om8hVuvvTz04+p7HBpD78JtxwzmUIAvEto7gmi4ny+8q+tBtuBlZyD16K05f6
+ pChqa3QZnVfbn492wBM0LQU/264jcLgMdZD/NJdRTtbiSLWO4PgWb+W9CgGM0V3xJFtuXWxqb56
+ aL+hYKnrRp/1idZw3daYzZgcp2p/Rxep2rcJwGtb8vwlI+Khv1WFdsvxF5RiwW8/473S9+FPZJE
+ WhJPKQIs0qOu1ZlA04ojTkA6wyJU9MNL5bpNmyp1yv2r+IYRl6fVasdM4L11
+X-Received: by 2002:a05:600c:468e:b0:43c:f629:66f4 with SMTP id
+ 5b1f17b1804b1-453653c748amr162341965e9.0.1750757279235; 
+ Tue, 24 Jun 2025 02:27:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF6DDCIP1uTIi9V/38Dx77E+tLB2D/BOp3I2w2F1nXIn5b/eJsDZJrCyJijEf3N3oTFTLOBsw==
+X-Received: by 2002:a05:600c:468e:b0:43c:f629:66f4 with SMTP id
+ 5b1f17b1804b1-453653c748amr162341635e9.0.1750757278780; 
+ Tue, 24 Jun 2025 02:27:58 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6e80f2b8fsm1440743f8f.59.2025.06.24.02.21.13
+ 5b1f17b1804b1-4537ab293d8sm27728715e9.28.2025.06.24.02.27.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Jun 2025 02:21:14 -0700 (PDT)
-Message-ID: <afc6b039-4569-460f-a15e-ac000bd44d5f@redhat.com>
-Date: Tue, 24 Jun 2025 11:21:13 +0200
+ Tue, 24 Jun 2025 02:27:58 -0700 (PDT)
+Message-ID: <00590277-eb13-48b2-afeb-f99134fb3265@redhat.com>
+Date: Tue, 24 Jun 2025 11:27:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] vfio/container: fails mdev hotplug if add migration
- blocker failed
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com,
- steven.sistare@oracle.com, chao.p.peng@intel.com
-References: <20250623102235.94877-1-zhenzhong.duan@intel.com>
- <20250623102235.94877-3-zhenzhong.duan@intel.com>
+Subject: Re: [PATCH] vfio: add license tag to some files
+To: John Levon <john.levon@nutanix.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+References: <20250623093053.1495509-1-john.levon@nutanix.com>
+ <78fc7bed-75cb-4d9a-b6e2-86b95319bcfa@redhat.com>
+ <aFpqaC8HGEK5A7dV@redhat.com> <aFptjwzxKjvwYUgP@lent>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -129,10 +128,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250623102235.94877-3-zhenzhong.duan@intel.com>
+In-Reply-To: <aFptjwzxKjvwYUgP@lent>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -141,7 +140,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,50 +156,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/23/25 12:22, Zhenzhong Duan wrote:
-> It's aggressive to abort a running QEMU process when hotplug a mdev
-> and it fails migration blocker adding.
+On 6/24/25 11:19, John Levon wrote:
+> On Tue, Jun 24, 2025 at 10:05:44AM +0100, Daniel P. Berrangé wrote:
 > 
-> Fix by just failing mdev hotplug itself.
+>> On Tue, Jun 24, 2025 at 10:34:40AM +0200, Cédric Le Goater wrote:
+>>> + Daniel
+>>>
+>>> On 6/23/25 11:30, John Levon wrote:
+>>>> Add SPDX-License-Identifier to some files missing it in hw/vfio/.
+>>>>
+>>>> Signed-off-by: John Levon <john.levon@nutanix.com>
+>>>> ---
+>>>>    hw/vfio/trace.h      | 3 +++
+>>>>    hw/vfio/Kconfig      | 2 ++
+>>>>    hw/vfio/meson.build  | 2 ++
+>>>>    hw/vfio/trace-events | 2 ++
+>>>>    4 files changed, 9 insertions(+)
+>>>
+>>> Daniel, What would be our position on such files ?
 > 
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   hw/vfio/container.c | 8 ++++++--
->   1 file changed, 6 insertions(+), 2 deletions(-)
+>> TL;DR: this patch looks reasonable, and we might as well take it, but
+>> there is no expectation that people need to extend this work across the
+>> code tree unless they love doing historical code tracing :-)
 > 
-> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index 2853f6f08b..68b4fdb401 100644
-> --- a/hw/vfio/container.c
-> +++ b/hw/vfio/container.c
-> @@ -992,12 +992,16 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
->       if (vbasedev->mdev) {
->           error_setg(&vbasedev->cpr.mdev_blocker,
->                      "CPR does not support vfio mdev %s", vbasedev->name);
-> -        migrate_add_blocker_modes(&vbasedev->cpr.mdev_blocker, &error_fatal,
-> -                                  MIG_MODE_CPR_TRANSFER, -1);
-> +        if (migrate_add_blocker_modes(&vbasedev->cpr.mdev_blocker, errp,
-> +                                      MIG_MODE_CPR_TRANSFER, -1)) {
+> I was required to send this patch, 
 
-migrate_add_blocker_modes() returns -errno. Testing with '< 0' would be
-better.
+?
 
+> as Cédric wanted the same files in
+> hw/vfio-user/ to have the identifier.
+
+SPDX tags are required for newly created files, the ones introduced
+under hw/vfio-user/.
+
+Old files don't have to be changed. It would require a legal due
+diligence which is a complex process.
 
 Thanks,
 
 C.
-
-
-
-> +            goto hiod_unref_exit;
-> +        }
->       }
->   
->       return true;
->   
-> +hiod_unref_exit:
-> +    object_unref(vbasedev->hiod);
->   device_put_exit:
->       vfio_device_put(vbasedev);
->   group_put_exit:
 
 
