@@ -4,74 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94D74C77B7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 06:46:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10728C7EE2A
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 07:00:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTxPm-0005JG-Ls; Tue, 24 Jun 2025 02:45:54 -0400
+	id 1uTxdY-00075y-9l; Tue, 24 Jun 2025 03:00:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uTxPj-0005Iw-8n
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 02:45:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uTxdU-00074X-OL; Tue, 24 Jun 2025 03:00:05 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uTxPh-0003M1-1U
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 02:45:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750747542;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+gl2eVRWupQxN9pftpts+krIIpMZ52R49Wt5Ud8ucIs=;
- b=I5ra0Nz5GUoGmRT2/CArOGcSvEWlbOSztz2RoLlELnPHN/8TrfSgOC0Wbpl1h1+ZK1uMTO
- 2+2Qh6uxA51pewywocQSrHOhtYKsjStyhy141ST//zbwV8sl6ZBa7ZqzWsS86DK8/t5eHp
- gzX56shyMv7W8F3EYykEQevd+OR867Y=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-172-CfMVev0oN0-fhEsBvXTeiw-1; Tue,
- 24 Jun 2025 02:45:35 -0400
-X-MC-Unique: CfMVev0oN0-fhEsBvXTeiw-1
-X-Mimecast-MFC-AGG-ID: CfMVev0oN0-fhEsBvXTeiw_1750747534
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5FBE118002E4; Tue, 24 Jun 2025 06:45:34 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F2C791956096; Tue, 24 Jun 2025 06:45:33 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4EE8421E6A27; Tue, 24 Jun 2025 08:45:31 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uTxdS-0008HF-Im; Tue, 24 Jun 2025 03:00:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1750748403; x=1782284403;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=RycR102Wtr4p7SMK586lhgFL+Zx3BzOWjdXsAILJ25s=;
+ b=ai88y5FNIuQhfyWeW5slVIu50WX20yEYm7035WRe1RFtM98oOyjBarT1
+ trjqfe/cQ9+bv6GzE/reK7MnGtfGETLoCpiiCwvcuRtZTjgi17k+DH9Um
+ 4SCtH4kdJyTJUrPrYy/nq3pIr5kadvhjTa0nDkynzK/aLyTQUVdzn18xG
+ 0hF5j882Q+NaJ7yCXhFPhEidcWaXh1QBim7EMqV8KM9xwT5hAetl2V3w4
+ UgfSv3d2itt9O3H5X9bJyia3qB+avgiwZ8nfoAA6YISXgCSpBedvsUWu8
+ P4HOlnnJjrGhZemtNWpJpyiuDe/6BV05ymLSTWg1Yn1g3BGbAA2N43Qro g==;
+X-CSE-ConnectionGUID: dJ/mKxytQjyqluTkM3+0RQ==
+X-CSE-MsgGUID: T+I8trecSjWiEGlAIc4iOQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11473"; a="70397824"
+X-IronPort-AV: E=Sophos;i="6.16,260,1744095600"; d="scan'208";a="70397824"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Jun 2025 00:00:00 -0700
+X-CSE-ConnectionGUID: olZOwTzrS/eWuP2XHptNQw==
+X-CSE-MsgGUID: bBLeFKxuTxymoVsO5Msp/A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,260,1744095600"; d="scan'208";a="152532379"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa010.fm.intel.com with ESMTP; 23 Jun 2025 23:59:58 -0700
+Date: Tue, 24 Jun 2025 15:21:19 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: John Snow <jsnow@redhat.com>,  qemu-devel <qemu-devel@nongnu.org>,
- Daniel =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: Re: Build platform guarantees, docs, tests, and snakes in the garden
-In-Reply-To: <23559c8d-149a-4ec6-adaa-fe0a8f8533f1@redhat.com> (Paolo
- Bonzini's message of "Wed, 18 Jun 2025 09:53:11 +0200")
-References: <CAFn=p-YuqzXvWF-cGLUc0LVVMe2Rinx9+LOjvpHRY-vRrPyJow@mail.gmail.com>
- <23559c8d-149a-4ec6-adaa-fe0a8f8533f1@redhat.com>
-Date: Tue, 24 Jun 2025 08:45:31 +0200
-Message-ID: <87qzz9myd0.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
+ manos.pitsidianakis@linaro.org, shentey@gmail.com
+Subject: Re: [PATCH] rust: log: implement io::Write
+Message-ID: <aFpR7+RMBlgt5DTD@intel.com>
+References: <20250617081213.115329-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250617081213.115329-1-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,60 +81,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+>  /// A macro to log messages conditionally based on a provided mask.
+> @@ -24,6 +96,8 @@ pub enum Log {
+>  /// log level and, if so, formats and logs the message. It is the Rust
+>  /// counterpart of the `qemu_log_mask()` macro in the C implementation.
+>  ///
+> +/// Errors from writing to the log are ignored.
+> +///
+>  /// # Parameters
+>  ///
+>  /// - `$mask`: A log level mask. This should be a variant of the `Log` enum.
+> @@ -62,12 +136,9 @@ macro_rules! log_mask_ln {
+>          if unsafe {
+>              (::qemu_api::bindings::qemu_loglevel & ($mask as std::os::raw::c_int)) != 0
+>          } {
+> -            let formatted_string = format!("{}\n", format_args!($fmt $($args)*));
+> -            let c_string = std::ffi::CString::new(formatted_string).unwrap();
+> -
+> -            unsafe {
+> -                ::qemu_api::bindings::qemu_log(c_string.as_ptr());
+> -            }
+> +            #[allow(unused_must_use)]
 
-> On 6/5/25 21:35, John Snow wrote:
->> However, if we take as iron-clad our commitment to the build platform promise -- *and* guarantee offline/tarball builds as well -- then Debian 12 (as an example) only offers Sphinx 5.3.0 and not newer unless we allow internet access to fetch Sphinx 6.2.1. This is not a problem for developer workstations at all, but I am unclear on what problems this may cause for tarball releases and downstream offline/isolated/ reproducible builds, if any.
->> In this case, we can (probably) "fix" the issue by continuing to allow older Sphinx while preferring a newer Sphinx version when it is missing, but then we lose the ability to make code cleanups and drop a lot of back-compat crud. If memory serves, there were other issues recently where older versions of Sphinx behaved differently from newer versions, causing intermittent failures that were hard to track down.
->
-> The *ideal* solution would be to:
->
-> - accept: 4.3.2 or newer, which is what Ubuntu 22.04 has
->
-> - install: 6.2.1, which is what supports Python 3.13
+I found this doesn't work :-( :
 
-I guess this relates to pythondeps.toml line
+error: unused `Result` that must be used
+   --> ../rust/hw/char/pl011/src/device.rs:281:21
+    |
+281 |                     log_mask_ln!(Log::Unimp, "pl011: DMA not implemented");
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: this `Result` may be an `Err` variant, which should be handled
+    = note: `-D unused-must-use` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(unused_must_use)]`
+    = note: this error originates in the macro `log_mask_ln` (in Nightly builds, run with -Z macro-backtrace for more info)
 
-    sphinx = { accepted = ">=3.4.3", installed = "5.3.0", canary = "sphinx-build" }
+I understand meson sets `-D warings` so that `allow` can't work...
 
-I further guess "accepted" means "reject anything older", and
-"installed" means "preferred version".
+What about just ignoring the return value? Afterall pl011 doesn't care
+the returned value.
 
-> This lets all supported distros build documentation if they use the default Python runtime.  It would still require a couple hacks in compat.py: SOURCE_LOCATION_FIX and nested_parse_with_titles().
->
-> I am not sure however whether to count the latter, for two reasons. First, it has this:
->
->     # necessary so that the child nodes get the right source/line set
->     content_node.document = directive.state.document
->
-> so it is not a pure compatibility hack.  Second, and opposite, currently none of the uses of nested_parse_with_titles() go through compat.py's version, therefore it probably can be removed altogether.
->
-> That leaves only SOURCE_LOCATION_FIX.
->
-> As an aside, if the compat.py hacks survive, I would add comments to document which distros need the hacks.
->
->> What I'd like to know is: what precisely are our options in this scenario? Do we consider it acceptable for some platforms to be unable to build docs offline?
->
-> Certainly for platforms not using the default Python runtime, which right now is only SLES.  For others...
->
->> How highly do we value the ability to locally build docs for any given release?
+@@ -136,8 +137,7 @@ macro_rules! log_mask_ln {
+         if unsafe {
+             (::qemu_api::bindings::qemu_loglevel & ($mask as std::os::raw::c_int)) != 0
+         } {
+-            #[allow(unused_must_use)]
+-            ::qemu_api::log::LogGuard::log_fmt(
++            let _ = ::qemu_api::log::LogGuard::log_fmt(
+                 format_args!("{}\n", format_args!($fmt $($args)*)));
+         }
+     }};
 
-Purely offline, or not?
+Thanks,
+Zhao
 
-> ... I think I value this a bit higher than Markus, but not really because of offline builds.  Rather, keeping the "accepted" key lower (i.e. supporting the packaged sphinx on a wide range of distros) makes it easier to bump the "installed" key when needed, as in this failure to run 5.3.0 under Python 3.13.
-
-Showing my ignorance again...  I don't understand how keeping "accepted"
-lower helps.
-
-> This time there was a version that works on both the oldest and newest Python that we support, but there may not always be one because sphinx is all too happy at dropping support for EOL'd versions of Python.
-
-Pretty strong hint we shouldn't try to support EOL'd versions of Python
-either.
-
-> Paolo
->
->> Before I throw my weight behind any given option, I just want to know what we consider our non-negotiable obligations to be.
->> Thanks,
->> --js
-
+> +            ::qemu_api::log::LogGuard::log_fmt(
+> +                format_args!("{}\n", format_args!($fmt $($args)*)));
+>          }
+>      }};
+>  }
+> -- 
+> 2.49.0
+> 
+> 
 
