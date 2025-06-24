@@ -4,79 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BE36C77B7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 14:30:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E27DC77B7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 14:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uU4e5-0007cI-W4; Tue, 24 Jun 2025 10:29:10 -0400
+	id 1uU4f4-00005M-Q1; Tue, 24 Jun 2025 10:30:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uU4dy-0007bY-V6
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 10:29:03 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uU4dw-0005BW-SG
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 10:29:02 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-70e5d953c0bso6306347b3.1
- for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 07:28:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750775336; x=1751380136; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MR1UTuktWKXd3AazgFHH4DPO8NwD0hwBqdt1Z10v6fg=;
- b=eVry0sUUChghza2iW+UEsZl9XVF64TFixUTyeRx0cp4PP4wWwn4/PElxyLwxL0koFD
- mKBQYTmWkqciGBF9IRzXiTYWrBoW3haUujA0XedYvCrPxlRPMKPKTC1gV7EKUASX2gRG
- CX17OCvJ4r+7ktbaXd/xPL8tVGAGxLVudpJJ6Ew0AepfTMlvGTGCfGd1BjK0jXkBoah0
- P1kCAtuJh8NlHuyH0jb1PJbOWPjooNsfPy+2oQwkV6yuPY3+Igp2QS8S5Cs9UR3iMaEr
- Z5xLZ48Xmb7He2gY0ZvQdK5gmxSjZhqExbOhMKTX32O+D0/fz/RQ4mspLeoRK59wO1d+
- 3dDA==
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1uU4ex-0008L6-7k
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 10:30:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1uU4ev-0005Lh-9c
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 10:30:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750775396;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qpNtBFjfB26Ws2iRNIWY/S/bkRwf4HfjQVJTt7gzC28=;
+ b=LDdbbTjym55tYBbgTAoBksPiTjvNm+Fvo/hV1GUYOwRXtQraEluEbUcWVpp5ZPRlRFFUEU
+ nGHpFSFrw/XzXVVhLeaFnmNV3k4bJhVZ4qfRwH8gcPOsEb0qa2uvTh+m2BZpg9pPduG2TV
+ ZpR5sGXSoKBrCqH2Zl4xTLqsFtjjdbo=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-561-yQHFAUfcNBumM_3fWA1N7w-1; Tue, 24 Jun 2025 10:29:54 -0400
+X-MC-Unique: yQHFAUfcNBumM_3fWA1N7w-1
+X-Mimecast-MFC-AGG-ID: yQHFAUfcNBumM_3fWA1N7w_1750775393
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-451ecc3be97so3240445e9.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 07:29:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750775336; x=1751380136;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MR1UTuktWKXd3AazgFHH4DPO8NwD0hwBqdt1Z10v6fg=;
- b=KU62hQVlBa6Y6PZ1hAloH94oRaORwqaK7n2vqWdtZwH27jrQis5xOIm6/0hqN8B3mo
- wOAdyFFSTqhCbGTaw5c5uPGpd9USJeG66vrWE0OebfYYBKxwZgZjzrjvIxbBeOu2AzsO
- 12G4MJTGomCloO7L7QMzspRfAMVI086tbnfOxYmHmCj4QJwHqG+MEDBfpEhQlPK6+Vqf
- fQPZCMVuYC+/b7dCT5fv5cYFxE4vKa/IGNuuA/y3cnFmPEfnP46zaYzSZVOcESpCgScK
- jmErcZjBJuMnPgs96M9vZ7dPH5XLLsL1Q24pbG3hvFwvCBz/Bm77U1Qf19NVQM+2cFZy
- /61A==
-X-Gm-Message-State: AOJu0YzIQK9UwnSl530UKnCjwIOhetD+MYw2gq7uY7GPSdocpGOU9MMV
- 4rgLzRyDeS8JO3Iok8ilNKu+Y15MtmzMMbU0FD0zkA5l5CrTOLNNuE90hnhThBPaGHwXpnwKH4x
- 0ALwnrzH+KogtxOb+0QNkWqDFwNKWrli7HWpvxqJCS2ULEf0KhW3V
-X-Gm-Gg: ASbGncuSeWvGdPhHTQpNgpswMGCgZiK0kS7RJQ1Mru0qPFG4bXN0+Hng0WHjeNv5+sg
- 8wVIYXeQS+MdZo5isr+Saub9RCtPq6tUG64f5CwfPhNYDJ140VH0RMI28836H8XuQJTxp/Gs8Zs
- qICDB3anBoz+7O4kRECyCdj2NVlbcBnqXjfL4QKY9jgsiE
-X-Google-Smtp-Source: AGHT+IHPtOBDUkObu9JeYou7XhHWcqcINFORYBYsYcH/9twz5UwcsKyRriAmnWZn58Vf4aEV6Tjb6Gw4KtNGuw9XC9o=
-X-Received: by 2002:a05:690c:881:b0:70e:5eda:4940 with SMTP id
- 00721157ae682-712c67540a7mr246749657b3.25.1750775336325; Tue, 24 Jun 2025
- 07:28:56 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1750775393; x=1751380193;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qpNtBFjfB26Ws2iRNIWY/S/bkRwf4HfjQVJTt7gzC28=;
+ b=hQ+eatYu6o+BN5unfZnwgtNlu57+N7zycvBP+tTrtffSOlG+KC5+8zXwT8FpnN70Hg
+ KIEjslX3PJNyxgyW0Qrh/7U70ZQMHs9wDuDtWd9G/4GozIUvswzpTqtnPe0pnHcsoG/j
+ rUgwVWl1uXhsTg4cctd+iWccigHHtoXwnF86ZUjd9LdhRtgFPppns/8H0PtCtWH763Hf
+ 5WgLRMvOh1LKMskeNtp5FK2UGQ+HWFdseE2zADOQHv0g7zeH42rJLVkUvAi1FxoJ7+5g
+ s0+nAXbSjtiSDdJRC62dZBRLvE4L/nNEUS4mfP6BUdoERnAr8zsK2WB1fgDxmxyZySRT
+ jyrw==
+X-Gm-Message-State: AOJu0YxmVfvwlU+vUcCdDvh7QYwkwEok9fFEe7qW2w/qf2ba3KS0tuwy
+ G2jWuj2zo3TWoZ8YwtGhC5l1jzxkcHpy2eA3NjhezgGnzNYoUx+irfzTwXfPTKGYADSNosbvA1d
+ KqqrBn4ZTtlXEQdmQaXYDyQ8OtFcrOKJrmOGRUpESdj361jnuOYmLKhGj
+X-Gm-Gg: ASbGncup063R4tVODjztL+J3yZgzji9rHbQzjWNkK7ujf+rVyp6mTuWw5Sso7IGyjTH
+ sq3J2lkIb9ztP78NnHIrMJNKiWVLLDSSy/4Ufe77pmla5QE13XCLe/bs1l4Z6oVqKfvovTt3YjU
+ 07RcnVPb06g/9c5e4q8J1UQYHch/dH9zO+RFQqE6TtjuYd8uwrTh9PUMs9AKVJxDmGCH9X9EFs3
+ PE4QMmn1+ca92vbX14FlNtOTFz8m7JVosXAGfIEPZsg1Kx1a8wNlfBRk+IYdXGypmbun77fRwQm
+ E3wu/jSSiNw=
+X-Received: by 2002:a05:600c:1910:b0:442:f482:c432 with SMTP id
+ 5b1f17b1804b1-453654c931amr169503175e9.18.1750775392926; 
+ Tue, 24 Jun 2025 07:29:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGqbERU1XEkqmnj3sjU8wUbB4/O7D3yiYGb+e/z5LUuu6X4wJdx1iUTJfSBtx6Zb0wYUJwMVQ==
+X-Received: by 2002:a05:600c:1910:b0:442:f482:c432 with SMTP id
+ 5b1f17b1804b1-453654c931amr169502885e9.18.1750775392553; 
+ Tue, 24 Jun 2025 07:29:52 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45374582452sm68444415e9.31.2025.06.24.07.29.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 24 Jun 2025 07:29:52 -0700 (PDT)
+Date: Tue, 24 Jun 2025 16:29:50 +0200
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Mario Casquero <mcasquer@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, "Dr . David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH v3 05/11] migration: Drop save_live_complete_postcopy hook
+Message-ID: <sf2anrqpglbflnavo2f2sgg27c7nooi3xfdf32su57qy6lnuas@bsbb5belv23x>
+References: <20250613140801.474264-1-peterx@redhat.com>
+ <20250613140801.474264-6-peterx@redhat.com>
 MIME-Version: 1.0
-References: <20250621235037.74091-1-richard.henderson@linaro.org>
- <20250621235037.74091-35-richard.henderson@linaro.org>
-In-Reply-To: <20250621235037.74091-35-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 24 Jun 2025 15:28:44 +0100
-X-Gm-Features: AX0GCFtMLg9P9PGQQV2-nWAbY8Qkl50TqsOoBCmiqDgZvsgsB3cBgCeXjRT1Nuw
-Message-ID: <CAFEAcA-FziWjBk6_QYVfcoyPkwOwnNOPNFugkSBBxsjCOPHEzA@mail.gmail.com>
-Subject: Re: [PATCH v2 034/101] target/arm: Implement SME2 FMLAL, BFMLAL
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250613140801.474264-6-peterx@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,45 +107,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 22 Jun 2025 at 00:55, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On 2025-06-13 10:07, Peter Xu wrote:
+> The hook is only defined in two vmstate users ("ram" and "block dirty
+> bitmap"), meanwhile both of them define the hook exactly the same as the
+> precopy version.  Hence, this postcopy version isn't needed.
+> 
+> No functional change intended.
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->  target/arm/tcg/translate-sme.c | 93 ++++++++++++++++++++++++++++++++++
->  target/arm/tcg/sme.decode      | 71 ++++++++++++++++++++++++++
->  2 files changed, 164 insertions(+)
->
-> diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-> index 8aae70201c..ec12bfd089 100644
-> --- a/target/arm/tcg/translate-sme.c
-> +++ b/target/arm/tcg/translate-sme.c
-> @@ -751,3 +751,96 @@ TRANS_FEAT(ADD_azz_nn_s, aa64_sme2, do_azz_nn, a, MO_32, tcg_gen_gvec_add_var)
->  TRANS_FEAT(SUB_azz_nn_s, aa64_sme2, do_azz_nn, a, MO_32, tcg_gen_gvec_sub_var)
->  TRANS_FEAT(ADD_azz_nn_d, aa64_sme2_i16i64, do_azz_nn, a, MO_64, tcg_gen_gvec_add_var)
->  TRANS_FEAT(SUB_azz_nn_d, aa64_sme2_i16i64, do_azz_nn, a, MO_64, tcg_gen_gvec_sub_var)
-> +
-> +/*
-> + * Expand array multi-vector single (n1), array multi-vector (nn),
-> + * and array multi-vector indexed (nx), for floating-point accumulate.
-> + *   multi: true for nn, false for n1.
-> + *   fpst: >= 0 to set ptr argument for FPST_*, < 0 for ENV.
-> + *   data: stuff for simd_data, including any index.
-> + */
-> +#define FPST_ENV  -1
-> +
-> +static bool do_azz_acc_fp(DisasContext *s, int nreg, int nsel,
-> +                          int rv, int off, int zn, int zm,
-> +                          int data, int shsel, bool multi, int fpst,
-> +                          gen_helper_gvec_4_ptr *fn)
-> +{
-> +    if (sme_sm_enabled_check(s)) {
 
-Looking more closely, this isn't the right check: these
-insns all call CheckStreamingSVEAndZAEnabled(), so we want
-sme_smza_enabled_check(). (Which makes sense, as we're
-accessing the zarray.)
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 
-thanks
--- PMM
 
