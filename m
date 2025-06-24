@@ -4,95 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BAA0C77B7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 10:42:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69BFBC77B7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 10:46:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uU16S-0003I7-14; Tue, 24 Jun 2025 06:42:12 -0400
+	id 1uU19r-0004L6-IU; Tue, 24 Jun 2025 06:45:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uU16P-0003Hi-SC
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 06:42:09 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uU16N-00028n-Kl
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 06:42:09 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-606fdbd20afso573759a12.1
- for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 03:42:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750761725; x=1751366525; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+5q/qHRew/xSCliJBobXgAw/rxETRai3tTqlUtQvQ4M=;
- b=TU2it0en3EL1fk+7ihM2VkS5tvFm3oOr3Tv9CgQ/uDc2BvWmrmGmE4KDoEEVyFUnOM
- 4DE09x4ZCKoOAsUeklcPsVqU/+DOgJ5PFoPCZIE33BBsmK00IJFYLZT9vLsGtloOWh6f
- kbZdRZ+emIjc3qnBY+28OV1M2aJvp593kp7si2DMugggWUtJLkIBzK1nzy0fSVniqljx
- MKl7t0JNmq8Z+6tiiUUeWjlzP6AkkjT8tyt+y5NTEy/ZbZ8SHRRIfcUX8yut1bwcwhLn
- lbRVfNy++22sL9SMJeIZsCo35u0o+l8Qjwx+aQFH5rXnRkqs8cKzy8jvyv/YV99Jw6W5
- fHxw==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uU19q-0004Kc-5M
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 06:45:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uU19o-0002X0-Ad
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 06:45:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750761932;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8uXz7IFzR9GjDa2zL4iy3OipDIrLrwmLD8LpsA1EGxc=;
+ b=XjXChPuFdYMAiI9PiY+uFtdQy0cQHdy+krFOx80NcDwEhDpBTkcaknjOwvV2IoXfwxO2CD
+ JWKhD8WmUdjz7uSJPamUgfnEY1NtoKSriLCUvesnbOcdAN/gRb4trUIXSAemQAr4V+jy9U
+ Vs+32My7mDCJMwj0CTBBuCz4nSvfzbk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-561-2agKMk_vNHu3hwaNqPln4Q-1; Tue, 24 Jun 2025 06:45:30 -0400
+X-MC-Unique: 2agKMk_vNHu3hwaNqPln4Q-1
+X-Mimecast-MFC-AGG-ID: 2agKMk_vNHu3hwaNqPln4Q_1750761929
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-451dda846a0so39313785e9.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 03:45:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750761725; x=1751366525;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1750761929; x=1751366729;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+5q/qHRew/xSCliJBobXgAw/rxETRai3tTqlUtQvQ4M=;
- b=o9S0xlIc8VQhI1kQQSnrFyO+UUW0UlQMdvUVcrTcT37MGSinl7w9bM00GG/aGLTiUH
- 4Umb3ROGD3is5yIhCXIQfbaVDJcJoD93rXmnE4v2stq8ROJWUJ96tgwru3fBtg83uI0V
- 4JG2I0tSkDq8eJlp2PSza+AHu+7TkC22xJQjADzRvth9uqPWKpwEhnNXJ73+8mTx5HPA
- FQQjU0lCH4BZPGwVVuaJowZLh7xLcD5/CJ1Yh5aFgwYNh4Ay/9bGQK7ZO8IRuBHFtxWp
- IHYSZGLUYhFSgHCRS8Si62PtWEiJUkx3jFnN8htP4kCPN6V0uIp3O59ydhnxGuxxMADT
- bEJg==
+ bh=8uXz7IFzR9GjDa2zL4iy3OipDIrLrwmLD8LpsA1EGxc=;
+ b=jAGjObOXJEgb3jXaxgjxBUTpmd46NB3PdKd9daZQSlLusI9NCMjvlyQ3cH9kBg0I66
+ Xvw+uDxjlmhjFBLxBvLq6UfWe2ekUvRI3xJYbz74gPXqVF6qTqqbbofkZO9gmYnB122Z
+ sHde5Z0q4GSfEf3qzLO3dWsdgvqt1+JLOxZfHMLKzcC5agO9SVOMRKrQiFY/ZOt45S/K
+ KkbLi5LuPP+7afrUe5+JybgkgWY3xxc71vqsTY0t8/ltfX6j9kt+SKezJZcmSU7q9p7l
+ YSq67Ds7IENpMdxITnILjniHxoVsvlxtKRRS+exkdKIKOM8aHI9zJenPw3pgkRVVciSi
+ evCg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUmeV7INX9FGpQHTSluENwTPo1p+L3/Dcvx9eeZaGqjWa0j9UUC7llgDdLb2D1xHEALb6m2FPQizfQ5@nongnu.org
-X-Gm-Message-State: AOJu0Yy0Bs6E1vG40ns9BxTobUdMa0UF9+fD8KItK45LXHCVvBRhJNTA
- eZZQuru1ZTr3B5+85vDRAgzsBxZa0wBjcce+ObxloYnRKdUUF4eCYJmtqLBEOagw2WjGTPJa6yZ
- 2dSFBqFcRlWoMB94NKpLGusEOA8jbLyo=
-X-Gm-Gg: ASbGncuxfvNB1PXm6XeWstEHz07v5AYSz57CTUj9W+m727rvjW9CxDrCCJCbUFyIkPo
- CydaiGNkDob86kORuTGO7CfttOnYWqYayWs+Vu0xvWn4gZNeDbQBUALT6gPB0BTq2XCFT7m2783
- ToSGbVZJXDvE0Oo2NKU+A2VFgGbZcPpdXW9E5z5vqeUQ==
-X-Google-Smtp-Source: AGHT+IEU9+VxnivJ0xt5DamFM9a/PlDOoNeGB4dpPgOxYxwe6gcoP7GAZekS2z7n23aeIpPMJU9tl17PL6UeLPyUWJY=
-X-Received: by 2002:a05:6402:35d4:b0:607:4500:2841 with SMTP id
- 4fb4d7f45d1cf-60a1cd33098mr14260680a12.25.1750761725168; Tue, 24 Jun 2025
- 03:42:05 -0700 (PDT)
+ AJvYcCUvwSYLGBBzBPWFi66XEaRM93jNTRLzd0xyPhW5t5w9iRoMqEFwZJ1F5BgVKsLOcGyHhz2XW1D/4hWT@nongnu.org
+X-Gm-Message-State: AOJu0Yw8LW5KhcqWlx+kXTS8FrgFjtnZyEVpJFoNAebTLWPV1tIv9YvF
+ B7LQ3wCrRoeJTRdxW7ymDzMknn1nrlCCN3o8esOh6OFbT1dOt8Z1Zd4KD/7okmdqZX0i5ZE6gn5
+ K4iqYDXUj9d8KD0qdoUkbO+PVPaZPHMDm7qrzBah8O4t97V99MGtc44gu
+X-Gm-Gg: ASbGncslmFAKNye3MO5i+VQbk1lz7zr4jfUX4nbQTsA5HG6QcpQAnaKxjMKaQMiWTx7
+ 815MNLY7kYhKycrVw3M+133cBsczUtwO/XpWwtuXUd6pWpVxq36jSHx9zzAhIDS629cKIP/0LVu
+ YB0FlduzoV4IXqQxHh0GetnrRf7HpNQMzLEUkNFLSIcE56+GqXkYcqzTDWheXbqRI5KeTDwcxVj
+ +1F8tXgwJkPGTTkpmt04Tyd4Wbqp83ahvHWPiWQaDNU+uFvYfYxXrADY9D2EJT9A7K56CY77K80
+ CIHF80Ap/5bi
+X-Received: by 2002:a5d:5850:0:b0:3a6:c95f:3f25 with SMTP id
+ ffacd0b85a97d-3a6d12a711fmr12440564f8f.20.1750761929436; 
+ Tue, 24 Jun 2025 03:45:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEt8tac+far+b9fVBERs5vsIbYlme25YHqgyqlGQ7gG7bqluiByD2sKjmD8QtiyKlxlLc/dHw==
+X-Received: by 2002:a5d:5850:0:b0:3a6:c95f:3f25 with SMTP id
+ ffacd0b85a97d-3a6d12a711fmr12440539f8f.20.1750761929020; 
+ Tue, 24 Jun 2025 03:45:29 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a6e805caf3sm1627851f8f.22.2025.06.24.03.45.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 24 Jun 2025 03:45:28 -0700 (PDT)
+Date: Tue, 24 Jun 2025 12:45:27 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, mst@redhat.com,
+ anisinha@redhat.com, elena.ufimtseva@oracle.com, jag.raman@oracle.com,
+ pbonzini@redhat.com, david@redhat.com, philmd@linaro.org
+Subject: Re: [PATCH 1/3] memory: reintroduce BQL-free fine-grained PIO/MMIO
+Message-ID: <20250624124527.656d567c@fedora>
+In-Reply-To: <uyuhe6pvmqtkb3ruywgsvwc3hh4hu27c454an4avme6xxfrls4@fwoathup2su4>
+References: <20250620151418.1166195-1-imammedo@redhat.com>
+ <20250620151418.1166195-2-imammedo@redhat.com>
+ <aFWR8rM7-4y1R0GG@x1.local> <20250623145146.4462bf59@fedora>
+ <aFlYRWc7rRwBGM8S@x1.local>
+ <uyuhe6pvmqtkb3ruywgsvwc3hh4hu27c454an4avme6xxfrls4@fwoathup2su4>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20250616092241.212898-1-armbru@redhat.com>
- <CAJSP0QV=mfmUt7s+iBkJtZsLiNd1v2c6tNrZeG8htBs58JHhrA@mail.gmail.com>
- <87h60614eo.fsf@draig.linaro.org> <871pr93f6s.fsf@pond.sub.org>
-In-Reply-To: <871pr93f6s.fsf@pond.sub.org>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Tue, 24 Jun 2025 06:41:53 -0400
-X-Gm-Features: Ac12FXxcvk8iAlCIFTnzEiJaNMVouu9s3E0ombucGiHODMkKw8PNaieoM3Y4lPA
-Message-ID: <CAJSP0QWPcXsuvdr8Zt8x_fnA1tepzaHJpAtFBbqjJR7odR0P4Q@mail.gmail.com>
-Subject: Re: [PATCH v5 0/3] docs: define policy forbidding use of "AI" / LLM
- code generators
-To: Markus Armbruster <armbru@redhat.com>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x536.google.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,20 +115,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 24, 2025 at 1:02=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
->
-> > Stefan Hajnoczi <stefanha@gmail.com> writes:
-> >
-> >> Any final comments before I merge this?
-> >
-> > It's well reviewed lets get it merged.
->
-> Stefan, would you like a PR from me?
+On Tue, 24 Jun 2025 09:07:11 +0200
+Gerd Hoffmann <kraxel@redhat.com> wrote:
 
-No, that won't be necessary. I will merge the series directly.
+>   Hi,
+> 
+> > Gerd mentioned this in the relevant bz:
+> > 
+> >         Note: root cause for the initrd issue noted in comment 5 is seabios
+> >         running into problems with ehci -> io errors -> corrupted initrd.
+> >         Sometimes it doesn't boot at all, probably in case the io errors
+> >         happen to hit the kernel not the initrd.
+> > 
+> > This seems to be the last piece of information we have had that is closest
+> > to the root cause.  
+> 
+> seabios used to prefer pmtimer back then for timekeeping then because it
+> has a fixed frequency.  Doing tsc calibration can easily be /way/ off in
+> a virtual machine on a loaded host.
+> 
+> Meanwhile seabios got support for reading the tsc frequency via cpuid
+> (if invtsc is available) or via kvmclock.  If that works seabios will
+> prefer the tsc for timekeeping.
+> 
+> So, when trying to reproduce the failure for analysis you have to either
+> use an old seabios version, or turn off kvmclock + invtsc support,
+> otherwise seabios will not use the pmtimer in the first place.
 
-Stefan
+thanks for the hint (I've been trying to reproduce with current seabios),
+I'll try to reproduce with the old seabios.
+
+> 
+> You should have this line in the firmware log:
+> 
+>     Using pmtimer, ioport 0x608
+> 
+> HTH & take care,
+>   Gerd
+> 
+
 
