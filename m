@@ -4,95 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFDF6C77B7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 17:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33962C77B7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 19:04:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uU7sw-0001bZ-6q; Tue, 24 Jun 2025 13:56:44 -0400
+	id 1uU8vr-0003he-96; Tue, 24 Jun 2025 15:03:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uU7sq-0001YX-15
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 13:56:36 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uU7so-0003D8-FN
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 13:56:35 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-3121aed2435so940217a91.2
- for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 10:56:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750787793; x=1751392593; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=iPurwVmlFL652YkXyzmyB3RAvsR9pd714uCu4sXgkPE=;
- b=CziWA4qR9s9LCIBy1b04+2Cq86HV3hCiZd5mDQHKjxNMxvVrL7x1sfqoYfBaXxuP27
- /oqreY6tErU3npk1ZOhvC+tSadWEQFECqPARqo976fRCra55+RBel4a35rMpCQfU4mjn
- C0rLEdyh7QjxllWbXiVoO9rkcQRA71ac5+FJbxssXYyBoTkgTk3PM6CDKyvhWn9WqRmw
- DL22pq5cvUGou7viqma0RigO3QUcCG3cNlUXza6Hm14I75cVfpy9R9LyAeDdpuUErHVk
- /RJdnJNjQ3G3vyWoHxOg6tL7yJyCrvv/mw8uAiPmiNosrorcJ4ECGeosKN7Oz7XT68oW
- EkRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750787793; x=1751392593;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iPurwVmlFL652YkXyzmyB3RAvsR9pd714uCu4sXgkPE=;
- b=L9Vgg53sseHvoq2sawBWOh8ImsdVsx+xWulIbLpNxyFbh3AVmWuSIaXd5X564TbJ3g
- il+OqfRwAmyuLSm2dXjuvAVHNUbIH2YHGr8E1WFdOEajrg8n6y732EX/VJalaqw5Dcna
- Pr2LvKfDBj4IoJ3bTWaD4EDZSi7Ohlh9o6qNx+T9ra1HyrVwxjSVRUEVBYiavWhCV+nR
- bErJU++dQ+ZU4hh4A3aTwI2wpsgRn0gGRif79yDibNeg+VNN+bk/keZsdLn7zY54OFtc
- M5/Kph/A4u8GJtaZIDtEihdiraVPBEwRAQXJZ3bwx1En9MUQ58zwTp+4oKWaczWLFuSU
- H+0A==
-X-Gm-Message-State: AOJu0YzKlu8fDjaaJ7OXTew2r/5HTfDaK1mpy1/o57CC4OWviOSc2DJh
- l+UXl8m49AnFN+Oe0RlEuk0RsMlMKe1Honwve13HtWeZghfKIC8v4dmI
-X-Gm-Gg: ASbGncuuHk931ZyKkx2S0ijgjBZfqY1TPJuW9dCKCXv4n+LiKsOAU1u7LWrLYIdArrW
- nnb8KZ+t2P/lz5SV/Oychw6kpcBBITUIZtvEvY350Qq7F4N30Ux8AgOUWPyPa2LVzW5RoQ3aY3T
- SmnFu2OfmMIMkudPW7vpSgrPzaQj65+SC398cQqZyX6ajBfll9RoPfM9FcZkifezOkEYXFEt5+j
- htiWA33KXrgD7+9Urg3DSfrBOK4BPdOACLwX5AeyMNBFDmhkd32OE7xVk8BGnqktIKdfuns2ezm
- MYqMXsQkgIxahH6+qHUTTQqqWE0kW9ycVROpId1jQLVY0+04f6bshY+vWUpxSbnRPQ==
-X-Google-Smtp-Source: AGHT+IGa9IEmuR5EaExENs5q0YIU4oA/Whz7dOXAZqV/zFvuw2XOiDfGnPFddA/M1VyYdgnUMEMUrQ==
-X-Received: by 2002:a17:90b:1f8b:b0:313:279d:665c with SMTP id
- 98e67ed59e1d1-3159d6196f0mr30574431a91.7.1750787792828; 
- Tue, 24 Jun 2025 10:56:32 -0700 (PDT)
-Received: from [192.168.1.119] ([50.46.174.34])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3159df71bbbsm12066527a91.9.2025.06.24.10.56.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Jun 2025 10:56:32 -0700 (PDT)
-Message-ID: <e381ef92-e814-4577-850e-839df47f43a3@gmail.com>
-Date: Tue, 24 Jun 2025 10:56:31 -0700
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uU8vo-0003hB-LI
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 15:03:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uU8vm-0003jF-Pd
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 15:03:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750791821;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fO5nzUSZsoPREty4nMDWd8v7wzhBUf5/F/5B5WNj480=;
+ b=SZ9n5rRrrnzizdLpecuRyF2S/yjzYgKnljKTE+GzGSezgVrdjo2Gh/cHSael+CO3AsIk+/
+ KhqLZN74Db+ZnBHb6kQRkLbxDq8tpCdqfEtRN5XoEShTrBtrw7/zTzdrGAEVslGeX+WG0M
+ Lb+eml22Kkv7X2dE9Zi61iXqPBs0Ys8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-eszjeGCKOvqmga1dnebsNw-1; Tue,
+ 24 Jun 2025 15:03:39 -0400
+X-MC-Unique: eszjeGCKOvqmga1dnebsNw-1
+X-Mimecast-MFC-AGG-ID: eszjeGCKOvqmga1dnebsNw_1750791818
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1620B18011FB; Tue, 24 Jun 2025 19:03:38 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.196])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5885030001A1; Tue, 24 Jun 2025 19:03:37 +0000 (UTC)
+Date: Tue, 24 Jun 2025 15:03:36 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Tanish Desai <tanishdesai37@gmail.com>
+Cc: qemu-devel@nongnu.org, Mads Ynddal <mads@ynddal.dk>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 2/3] tracetool: introduce generate_unconditional
+Message-ID: <20250624190336.GA19307@fedora>
+References: <20250620143720.3143-1-tanishdesai37@gmail.com>
+ <20250620143720.3143-3-tanishdesai37@gmail.com>
+ <20250624143701.GA5519@fedora>
+ <CAH_Y1jd9CSUZB502Vj4tYFXEsqymAGVJQ93TZ5oEZF726KGHKw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 0/7] Add additional plugin API functions to read and
- write memory and registers
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Zhao Liu
- <zhao1.liu@intel.com>, Richard Henderson <richard.henderson@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20250619161547.1401448-1-rowanbhart@gmail.com>
- <87bjqd1j33.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Rowan Hart <rowanbhart@gmail.com>
-In-Reply-To: <87bjqd1j33.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=rowanbhart@gmail.com; helo=mail-pj1-x1030.google.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="C6x+YL7oXhjK0+I2"
+Content-Disposition: inline
+In-Reply-To: <CAH_Y1jd9CSUZB502Vj4tYFXEsqymAGVJQ93TZ5oEZF726KGHKw@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,27 +88,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->    make[1]: *** No rule to make target 'patch-target', needed by 'run-plugin-patch-target-with-libpatch.so'.  Stop.
->    make: *** [/home/alex/lsrc/qemu.git/tests/Makefile.include:56: run-tcg-tests-x86_64-softmmu] Error 2
->
-> You need to ensure vpath is set, something like:
-Thanks for the note Alex. It turns out I'd been testing like `make -C 
-build -j$(nproc) run-tcg-tests-x86_64-softmmu`, making this succeed when 
-it shouldn't have. I updated it in v14.
 
-> novafacing (6):
->    gdbstub: Expose gdb_write_register function to consumers of gdbstub
->    plugins: Add register write API
->    plugins: Add memory virtual address write API
->    plugins: Add memory hardware address read/write API
->    plugins: Add patcher plugin and test
->    plugins: Update plugin version and add notes
-> Could you update the Author fields so the Author matches the s-o-b tags
-> please and is consistent please.
+--C6x+YL7oXhjK0+I2
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Absolutely, fixed this in v14 as well. One of my computers must have had 
-my alias set instead of real name, apologies!
+On Tue, Jun 24, 2025 at 11:07:34PM +0530, Tanish Desai wrote:
+> > 1. nocheck isn't necessary anymore. The body of nocheck could be inlined
+> >   here instead to simplify the generated code.
+> Yes I agree.I will remove nocheck and inline the body of nocheck in
+> trace-foo
+> > 2. "if (%(cond)s) {" is only useful for backends that implement
+> >   .generate(). For example, if only the dtrace backend is enabled then
+> >   "if (trace_event_get_state(...)) {}" will be emitted unnecessarily.
+> Yes, we should remove unnecessary if (trace_event_get_state(...)){}
+> blocks.
+>=20
+> But It is difficult because backend.generate() calls
+> _run_function("generate_%s", event, group) which in turn loops on all
+> backends.Format can't call generate for individual backends.I will need
+> to make this map in scripts/tracetool/backend/__init__.py:_run_function()=
+=2E(I
+> think this
+> will not be a good thing to do).
+>=20
+> possible fix would be to create in scripts/tracetool/backend/__init__.py
+> def is_conditional(self, cond_check):
+>     self._run_function("generate_%s_conditional", cond_check)
+> now cond_check will be passed to all backends and backend's will have
+> def is_h_conditional(cond_check):
+>     cond_check =3D cond_check or True
+>=20
+> Finally if cond_check=3D=3DTrue in h.py I will generate "if
+> (trace_event_get_state(...)) {"
+> else not. As the same condition is re-used this solution would work well.
+> Since h.py only handles reused/shared logic, it's safe to assume consiste=
+nt
+> conditions.
+> If a new backend requires a different condition, it's better handled
+> directly in backend/*.py.
 
--Rowan
+To me a generic solution that doesn't hard-code trace_event_get_state()
+is nicer, but it's okay if you want to introduce the concept of
+"conditional" meaning specifically trace_event_get_state() since there
+are no other cases where we want to merge two conditionals. I don't
+really mind.
+
+>=20
+>=20
+> On Tue, Jun 24, 2025 at 8:07=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.=
+com> wrote:
+>=20
+> > On Fri, Jun 20, 2025 at 02:37:19PM +0000, Tanish Desai wrote:
+> > > diff --git a/scripts/tracetool/format/h.py
+> > b/scripts/tracetool/format/h.py
+> > > index ea126b07ea..89d54b9aff 100644
+> > > --- a/scripts/tracetool/format/h.py
+> > > +++ b/scripts/tracetool/format/h.py
+> > > @@ -76,13 +76,17 @@ def generate(events, backend, group):
+> > >          out('',
+> > >              'static inline void %(api)s(%(args)s)',
+> > >              '{',
+> > > -            '    if (%(cond)s) {',
+> > > +            api=3De.api(),
+> > > +            args=3De.args)
+> > > +
+> > > +        if "disable" not in e.properties:
+> > > +            backend.generate_unconditional(e, group)
+> > > +
+> > > +        out('    if (%(cond)s) {',
+> > >              '        %(api_nocheck)s(%(names)s);',
+> > >              '    }',
+> > >              '}',
+> > > -            api=3De.api(),
+> > >              api_nocheck=3De.api(e.QEMU_TRACE_NOCHECK),
+> > > -            args=3De.args,
+> > >              names=3D", ".join(e.args.names()),
+> > >              cond=3Dcond)
+> >
+> > Two thoughts:
+> >
+> > 1. nocheck isn't necessary anymore. The body of nocheck could be inlined
+> >    here instead to simplify the generated code.
+> >
+> > 2. "if (%(cond)s) {" is only useful for backends that implement
+> >    .generate(). For example, if only the dtrace backend is enabled then
+> >    "if (trace_event_get_state(...)) {}" will be emitted unnecessarily.
+> >
+> > Maybe backends should have a .condition() interface so that
+> > scripts/tracetool/format/h.py:generate() can first collect a dict[cond]
+> > -> backend. Then it iterates over the map, calling backend.generate()
+> > within "if (%(cond)s) { ... }". That way only the conditions that are
+> > actually needed are generated and multiple backends that have the same
+> > condition will share the same if statement.
+> >
+> > Stefan
+> >
+
+--C6x+YL7oXhjK0+I2
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmha9ogACgkQnKSrs4Gr
+c8hLIgf8CSO89rROdyrCdLrKvq4uXgWG80m21z3eTpfdahAzJhVuAxb9pMgtH4Gm
+CCBEhB3riAurOrLOBHae/Tz62oKokqH/ZsWrd+jEymB1sR9VKeFedJkI3Fl7iAiN
+ZpMt6BdDlRSys4S3XqtaLDE4IFunpwhMVqrfh88sHRAg+AH81kw2nqxHWM1A6Xd5
+9LeBVaPsdum2oEgSxAGQxvLvhVWOFl+TRydz+nbUvWFgOlYVkMrBR68JPU93/XgA
+L3wZFY9yafXxIaA9cCCNH/28ApT9TzhLnHM7rkmIAeg+wACEp7vgYL+XYfzU1Mpw
+71GltIJUbzao5z3em/H8RNKOIXjQQw==
+=Hkox
+-----END PGP SIGNATURE-----
+
+--C6x+YL7oXhjK0+I2--
 
 
