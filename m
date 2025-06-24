@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1D90C77B7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 10:18:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3204C77B7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 10:27:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uU0ip-00059Z-0S; Tue, 24 Jun 2025 06:17:47 -0400
+	id 1uU0qt-0006mL-TE; Tue, 24 Jun 2025 06:26:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uU0ik-00058V-Gb
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 06:17:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uU0qr-0006m1-J3
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 06:26:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uU0ii-0006yB-EX
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 06:17:42 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uU0ql-00008n-J6
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 06:26:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750760257;
+ s=mimecast20190719; t=1750760757;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=nucLOPvugbnlgOytu47h5Dy46r17NN1YANb29bn3JBg=;
- b=QfXRXR/fBZnDUakswqOQnRSuFtLR/3APNckWUMY2E0FOmAFAVl/ENyxrg/U7wLgRJMydnm
- uDYiwEyJc+FKbSWm4hjr2IJUaArTfHiCmZUaoQ1JsqEXmgZa7osQs1dgzE8I6loYT68BHa
- WlSmhDqqWhv5ApfJA3TFWN8697BDqfI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=72N5xfQM4aa0Fc5JdZLxGhpO1UEcvjqw03VHb7V5pf4=;
+ b=JePUu0KTgSr7u19lowplt2WSujjPFJrnNPu0QPGe08g33kYVrQqxiNDQ/MnHGwlmvFvRDF
+ NVwAL83CwHfb/aXIXNT19MLhNp5G8EfKZQrz8h+QVRbmsVpg6/lLsBg4WQEobAc0pI9kfD
+ g6w8PBLfJJY1tBzNfwPTBreM7oKm8pM=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-440-AYDB4AGVNWKOwieHhK4vWA-1; Tue, 24 Jun 2025 06:17:35 -0400
-X-MC-Unique: AYDB4AGVNWKOwieHhK4vWA-1
-X-Mimecast-MFC-AGG-ID: AYDB4AGVNWKOwieHhK4vWA_1750760255
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45311704d22so33704165e9.2
- for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 03:17:35 -0700 (PDT)
+ us-mta-61-tYN0Q2HROiSRiCJmx0Ypjg-1; Tue, 24 Jun 2025 06:25:54 -0400
+X-MC-Unique: tYN0Q2HROiSRiCJmx0Ypjg-1
+X-Mimecast-MFC-AGG-ID: tYN0Q2HROiSRiCJmx0Ypjg_1750760753
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a4f7ebfd00so147665f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 03:25:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750760254; x=1751365054;
+ d=1e100.net; s=20230601; t=1750760753; x=1751365553;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nucLOPvugbnlgOytu47h5Dy46r17NN1YANb29bn3JBg=;
- b=LXMNkuEjVE3FqNDv19K0KuIFqhfNXwNRO5kbrSiE/0hZj/uzc5VpCVXl2FwsmI7pKa
- 9JGwtnX/2lKabD+s3Kp3kkbrgwyeFQ/WVs8LKWow1cuxwC6PaMAUesuPt99XJy8bwLq9
- 9af10XCP9wVZpoeFtIkAm2rPTjTGWSNR6/5vxrY1w65snNz8z7BQA1vihwt7PANZmuxz
- elpFfo9UwiIPOgqC5VgOcBTlRhPOilWKWoVoQbhMSU2OjGjKOeTWZlIkf1Gu980q+4+L
- mITRN62ojg1TjlLkDCCd95HVbEZ8vSO578cC83uxyhLZSc0IYqTBxYRpeLADO56r1hyv
- ta8Q==
+ bh=72N5xfQM4aa0Fc5JdZLxGhpO1UEcvjqw03VHb7V5pf4=;
+ b=sv+bUAZBd3/mX/q19idj0BFrido1u19iNHBVZ45KvwtRxMd79gMLPriwW997u1U1Q5
+ cWiLz2aQ+MMV/c4K91NZ/2pd6FAHu0sKnJDcmJFEDt5cgu0n9XWksk6bnsAUJfrFIK5h
+ WWxUVRkR59Z0TQrDnaUE5RAutRzCEbFtAUdHdynkKaup8oG1o/PxQ5/Vwydmty1bId6/
+ Jz6yoRXXMCES95ZtCews7JCaK9rpsIHWARpYghDQDMdTtLuu1fPhQlRb1CF71pFZX4NW
+ 46LGI73jQvZMIeXsk3lvxFIZk3B4qTJUmRwCzoGLYmz1WKj9O87YVYNvWDXq94gCWuFT
+ ouYQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUSdgLSkjdPkGCGgkQpKL8oNkYVHSjHps8sS7fe4x0Odpd+rVbSqjtniGyNZm1ATvFRr/yIpIPFDYfz@nongnu.org
-X-Gm-Message-State: AOJu0YxdktJYSnFlNinRBB00t4LFpWsGHvUXS1DWYnIt05Jki7T0pJZm
- Yedk94DFOa5XXd+dKH/KRB2b9CkCBfNxpegVLm8LHUsDPaW4JsbPda/RcScfw5/aQkinb1tMdM4
- n411lzfrVhu1I5cG/zjy/ApSmgDiGOnKk5PVIeE6Skd6mEVuPgXU6J/6z
-X-Gm-Gg: ASbGncvNPuGPp2ZnHe+3wg2jWiLuDH7uUazNr/alU0Vc0Cms/leBaXotdrXK2du+BA3
- PkjuKyp5bb/RN/fRSraswQPHorX4Qd86Jt9h5q2I4ohD747SkadNz0MtLeD/IPHEf9SDMRMb+0S
- YmGtLPzcTK5pt6aODT5REd4drTkDmJ2EwWbKKlFbJ2bycClb97A+KKX3I07S0KCRwJrsqwo9f/s
- OVrrw1HDd7H2RT3/wvaCb/WLechrXIdMeZnD6Vmv5nTIGd7rym6ec7IFf0mJfY8nQha5tDxijBj
- b0Rdj/KCyQrwyEKZxARk9yjYz9NIk+PhJ3HGc/Z2D4iGosiLacX0w8evFNrz0Ug=
-X-Received: by 2002:a05:600c:3b15:b0:450:cf46:5510 with SMTP id
- 5b1f17b1804b1-453656c3641mr162217365e9.29.1750760254664; 
- Tue, 24 Jun 2025 03:17:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFnhbKNI16Y5aVmiCsU8lbUHts19PTUhRWrjOk4WKe+LI04A1XsKUp0uCX/q0ccnRrpGg/l4w==
-X-Received: by 2002:a05:600c:3b15:b0:450:cf46:5510 with SMTP id
- 5b1f17b1804b1-453656c3641mr162217135e9.29.1750760254300; 
- Tue, 24 Jun 2025 03:17:34 -0700 (PDT)
+ AJvYcCXtSPXD6wUf67wm1TJyjJKd6WaG4ov9xfMsiDFbu6BRLMZy3VwNB0bySexSB/8AO6lapkg/jov8dsD3@nongnu.org
+X-Gm-Message-State: AOJu0YwpuoL9Y7ZlHG3eyD8aR8o0/a9AQpF+NRomzZXn5vAXDrziOCIj
+ 3DRdPvyGxJDM66iNWRVQKciq9n9kehK7bX+LJ44bkpdZ/z0HnEI9diAAkjUgKZ2pwXDcpipZWBS
+ Cz5CYcHz2kqQvGFj+obtB6NbezuxRm+wGKMPjTIfTVU8Rf/SY+UCVqkNf
+X-Gm-Gg: ASbGncvY+CxjVXI7F1NbInytkMg6UXJ6u5dbSvWwpUEYQzJX279nUk27gX5UaG5M3y8
+ x2iEOEX6YDNWuX8uPQc6eYuXBAIvBFnBFnv6W6a3z8reTUFLPACnV0eB3JIy1h4OMCiYxOKiAmQ
+ PNtElam4m95roDAJbkasuEur8JyrFxZJcDYWapFz65jiJtuyfH/cjqzN7Cl1s7MHlz4xaa94s+K
+ NeQ8MxWoDKwFpSqvczXJP0Hl8W0JBpz/Ph1UYV07zqag3nKkfI+qYq9ebYpAHOgdjudFtcyzR2W
+ ojRtpTAkTxeZYs7XgaeQ/GAldVQpPK6WRc6eq/WmKWe+nBJUjm/9WRPiybf/iYw=
+X-Received: by 2002:adf:9d92:0:b0:3a3:6e62:d8e8 with SMTP id
+ ffacd0b85a97d-3a6d1330e96mr11937245f8f.55.1750760753338; 
+ Tue, 24 Jun 2025 03:25:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEmGM+gO2HZMUGFu8N6DeSFf/cQL2gN5aY3GaYk4ZugRBZCuKf+MSj+kuiOUUE5PYzZiU05Yw==
+X-Received: by 2002:adf:9d92:0:b0:3a3:6e62:d8e8 with SMTP id
+ ffacd0b85a97d-3a6d1330e96mr11937222f8f.55.1750760752969; 
+ Tue, 24 Jun 2025 03:25:52 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-115-198.pools.arcor-ip.net.
  [47.64.115.198]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6e80f296bsm1554621f8f.60.2025.06.24.03.17.33
+ ffacd0b85a97d-3a6e80f259dsm1600287f8f.50.2025.06.24.03.25.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Jun 2025 03:17:33 -0700 (PDT)
-Message-ID: <c42f3c49-97f2-4168-bc31-4a9fcb07e243@redhat.com>
-Date: Tue, 24 Jun 2025 12:17:32 +0200
+ Tue, 24 Jun 2025 03:25:52 -0700 (PDT)
+Message-ID: <146a0cb2-e75d-4f2b-a1ef-c681185a6c16@redhat.com>
+Date: Tue, 24 Jun 2025 12:25:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/3] hw/s390x: add Control-Program Identification to QOM
+Subject: Re: [PATCH v6 0/3] Add SCLP event type CPI
 To: Shalini Chellathurai Saroja <shalini@linux.ibm.com>,
  qemu-s390x mailing list <qemu-s390x@nongnu.org>
 Cc: Daniel Berrange <berrange@redhat.com>,
@@ -84,7 +84,6 @@ Cc: Daniel Berrange <berrange@redhat.com>,
  Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
  Hendrik Brueckner <brueckner@linux.ibm.com>
 References: <20250616140107.990538-1-shalini@linux.ibm.com>
- <20250616140107.990538-3-shalini@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -129,10 +128,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250616140107.990538-3-shalini@linux.ibm.com>
+In-Reply-To: <20250616140107.990538-1-shalini@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -141,7 +140,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,82 +157,27 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 16/06/2025 16.01, Shalini Chellathurai Saroja wrote:
-> Add Control-Program Identification (CPI) data to the QEMU Object
-> Model (QOM), along with the timestamp in which the data was received
-> as shown below.
+> Implement the Service-Call Logical Processor (SCLP) event
+> type Control-Program Identification (CPI) in QEMU.
 > 
-> virsh # qemu-monitor-command vm --pretty '{"execute":"qom-list",
-> "arguments":{"path":"/machine/sclp/s390-sclp-event-facility/sclpcpi"}}'
-> {
->    "return": [
->      [...]
->      {
->        "name": "system_level",
->        "type": "uint64"
->      },
->      {
->        "name": "system_name",
->        "type": "string"
->      },
->      {
->        "name": "system_type",
->        "type": "string"
->      },
->      {
->        "name": "timestamp",
->        "type": "uint64"
->      },
->      {
->        "name": "sysplex_name",
->        "type": "string"
->      }
->    ],
->    "id": "libvirt-14"
-> }
-> 
-> Example CPI data:
-> virsh # qemu-monitor-command vm --pretty '{"execute":"qom-get",
-> "arguments":{"path":"/machine/sclp/s390-sclp-event-facility/sclpcpi",
-> "property":"system_type"}}'
-> {
->    "return": "LINUX   ",
->    "id": "libvirt-18"
-> }
-> virsh # qemu-monitor-command vm --pretty '{"execute":"qom-get",
-> "arguments":{"path":"/machine/sclp/s390-sclp-event-facility/sclpcpi",
-> "property":"system_name"}}'
-> {
->    "return": "TESTVM  ",
->    "id": "libvirt-19"
-> }
-> virsh # qemu-monitor-command vm --pretty '{"execute":"qom-get",
-> "arguments":{"path":"/machine/sclp/s390-sclp-event-facility/sclpcpi",
-> "property":"sysplex_name"}}'
-> {
->    "return": "PLEX    ",
->    "id": "libvirt-20"
-> }
-> virsh # qemu-monitor-command vm --pretty '{"execute":"qom-get",
-> "arguments":{"path":"/machine/sclp/s390-sclp-event-facility/sclpcpi",
-> "property":"system_level"}}'
-> {
->    "return": 74872343805430528,
->    "id": "libvirt-21"
-> }
-> virsh # qemu-monitor-command vm --pretty '{"execute":"qom-get",
-> "arguments":{"path":"/machine/sclp/s390-sclp-event-facility/sclpcpi",
-> "property":"timestamp"}}'
-> {
->    "return": 1748866753433923000,
->    "id": "libvirt-22"
-> }
-> 
-> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-> ---
->   hw/s390x/sclpcpi.c                | 74 +++++++++++++++++++++++++++++++
->   include/hw/s390x/event-facility.h |  5 +++
->   2 files changed, 79 insertions(+)
+> Changed since v5:
+> - Add identifiers as class properties instead of object properties
+> - Add description for all the class properties
+> - Remove S390ControlProgramId as it is not needed anymore
+> - Update description of system_level identifier
+> - Add Reviewed-by tags
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+  Hi Shalini!
+
+Thanks, I've picked this up for my next pull request.
+
+If you've got some spare time, could you maybe also look into writing a 
+regression test for this, e.g. by extending one of the tests in 
+tests/functional/test_s390x_ccw_virtio.py to see whether the guests provide 
+the expected information via CPI there? (I hope the guests in that test are 
+recent enough for this feature, otherwise we might want to update them)
+
+  Thanks,
+   Thomas
 
 
