@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6A1BC77B7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 06:41:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56E00C71157
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 06:44:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTxKV-0003UY-GJ; Tue, 24 Jun 2025 02:40:27 -0400
+	id 1uTxNy-0004Te-40; Tue, 24 Jun 2025 02:44:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=CPSq=ZH=kaod.org=clg@ozlabs.org>)
- id 1uTxKS-0003UF-4n; Tue, 24 Jun 2025 02:40:24 -0400
+ id 1uTxNv-0004T7-3I; Tue, 24 Jun 2025 02:43:59 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=CPSq=ZH=kaod.org=clg@ozlabs.org>)
- id 1uTxKP-000161-Bv; Tue, 24 Jun 2025 02:40:23 -0400
+ id 1uTxNs-0002VC-NI; Tue, 24 Jun 2025 02:43:58 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bRFgf3RFcz4x4m;
- Tue, 24 Jun 2025 16:40:14 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bRFlt0bdJz4x4m;
+ Tue, 24 Jun 2025 16:43:54 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bRFgZ6x7Fz4wbZ;
- Tue, 24 Jun 2025 16:40:10 +1000 (AEST)
-Message-ID: <87c4efbb-804f-460b-a896-c506003d4220@kaod.org>
-Date: Tue, 24 Jun 2025 08:40:09 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bRFlp62s2z4wbZ;
+ Tue, 24 Jun 2025 16:43:50 +1000 (AEST)
+Message-ID: <46cc6026-e7f3-4f94-92d9-005ec0660810@kaod.org>
+Date: Tue, 24 Jun 2025 08:43:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v6 2/3] hw/misc/aspeed_sbc: Connect ASPEED OTP memory device
- to SBC
+Subject: Re: [RFC v6 3/3] hw/arm: Integrate ASPEED OTP memory support into
+ AST2600 SoCs
 To: Kane Chen <kane_chen@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -42,7 +42,7 @@ To: Kane Chen <kane_chen@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com
 References: <20250624022219.3704712-1-kane_chen@aspeedtech.com>
- <20250624022219.3704712-3-kane_chen@aspeedtech.com>
+ <20250624022219.3704712-4-kane_chen@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,7 +87,7 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250624022219.3704712-3-kane_chen@aspeedtech.com>
+In-Reply-To: <20250624022219.3704712-4-kane_chen@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
@@ -116,260 +116,68 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 6/24/25 04:22, Kane Chen wrote:
 > From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 > 
-> This patch connects the aspeed.otpmem device to the ASPEED Secure Boot
-> Controller (SBC) model. It implements OTP memory access via the SBC's
-> command interface and enables emulation of secure fuse programming flows.
-> 
-> The following OTP commands are supported:
->    - READ: reads a 32-bit word from OTP memory into internal registers
->    - PROG: programs a 32-bit word value to the specified OTP address
-> 
-> Trace events are added to observe read/program operations and command
-> handling flow.
+> The has_otpmem attribute is enabled in the SBC subclasses for AST2600
+> to control the presence of OTP support per SoC type.
 > 
 > Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 > ---
->   hw/misc/aspeed_sbc.c         | 92 ++++++++++++++++++++++++++++++++++++
->   hw/misc/trace-events         |  7 +++
->   include/hw/misc/aspeed_sbc.h |  3 ++
->   3 files changed, 102 insertions(+)
+>   hw/arm/aspeed_ast2600.c      | 2 +-
+>   hw/misc/aspeed_sbc.c         | 2 ++
+>   include/hw/misc/aspeed_sbc.h | 2 ++
+>   3 files changed, 5 insertions(+), 1 deletion(-)
 > 
+> diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
+> index d12707f0ab..59ffd41a4a 100644
+> --- a/hw/arm/aspeed_ast2600.c
+> +++ b/hw/arm/aspeed_ast2600.c
+> @@ -261,7 +261,7 @@ static void aspeed_soc_ast2600_init(Object *obj)
+>   
+>       object_initialize_child(obj, "i3c", &s->i3c, TYPE_ASPEED_I3C);
+>   
+> -    object_initialize_child(obj, "sbc", &s->sbc, TYPE_ASPEED_SBC);
+> +    object_initialize_child(obj, "sbc", &s->sbc, TYPE_ASPEED_AST2600_SBC);
+
+I see that TYPE_ASPEED_AST2600_SBC was defined but never used :/
+
+>   
+>       object_initialize_child(obj, "iomem", &s->iomem, TYPE_UNIMPLEMENTED_DEVICE);
+>       object_initialize_child(obj, "video", &s->video, TYPE_UNIMPLEMENTED_DEVICE);
 > diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
-> index a7d101ba71..3bc5e37c6b 100644
+> index 3bc5e37c6b..f1e8747edd 100644
 > --- a/hw/misc/aspeed_sbc.c
 > +++ b/hw/misc/aspeed_sbc.c
-> @@ -15,9 +15,13 @@
->   #include "hw/misc/aspeed_sbc.h"
->   #include "qapi/error.h"
->   #include "migration/vmstate.h"
-> +#include "trace.h"
->   
->   #define R_PROT          (0x000 / 4)
-> +#define R_CMD           (0x004 / 4)
-> +#define R_ADDR          (0x010 / 4)
->   #define R_STATUS        (0x014 / 4)
-> +#define R_CAMP1         (0x020 / 4)
->   #define R_QSR           (0x040 / 4)
->   
->   /* R_STATUS */
-> @@ -41,6 +45,11 @@
->   #define QSR_RSA_MASK           (0x3 << 12)
->   #define QSR_HASH_MASK          (0x3 << 10)
->   
-> +typedef enum {
-> +    SBC_OTP_CMD_READ = 0x23b1e361,
-> +    SBC_OTP_CMD_PROG = 0x23b1e364,
-> +} SBC_OTP_Command;
-
-
-Change these values to define
-
->   static uint64_t aspeed_sbc_read(void *opaque, hwaddr addr, unsigned int size)
+> @@ -254,8 +254,10 @@ static const TypeInfo aspeed_sbc_info = {
+>   static void aspeed_ast2600_sbc_class_init(ObjectClass *klass, const void *data)
 >   {
->       AspeedSBCState *s = ASPEED_SBC(opaque);
-> @@ -57,6 +66,78 @@ static uint64_t aspeed_sbc_read(void *opaque, hwaddr addr, unsigned int size)
->       return s->regs[addr];
+>       DeviceClass *dc = DEVICE_CLASS(klass);
+> +    AspeedSBCClass *sc = ASPEED_SBC_CLASS(klass);
+>   
+>       dc->desc = "AST2600 Secure Boot Controller";
+> +    sc->has_otpmem = true;
 >   }
 >   
-> +static bool aspeed_sbc_otpmem_read(AspeedSBCState *s,
-> +                                   uint32_t otp_addr, Error **errp)
-
-errp looks unused.
-
-
-> +{
-> +    MemTxResult ret;
-> +    AspeedOTPMemState *otpmem = ASPEED_OTPMEM(s->otpmem);
-
-The QOM cast above is not needed.
-
-> +    uint32_t value;
-> +
-> +    if (otpmem == NULL) {
-> +        return true;
-> +    }
-
-no need to test otpmem.
-
-> +    ret = address_space_read(&otpmem->as, otp_addr, MEMTXATTRS_UNSPECIFIED,
-> +                             &value, sizeof(value));
-> +    if (ret != 0) {
-
-if (ret != MEMTX_OK) {
-
-> +        qemu_log_mask(LOG_GUEST_ERROR, "Failed to read OTP memory\n");
-
-May be log the address too
-
-> +        return false;
-> +    }
-> +    s->regs[R_CAMP1] = value;
-> +    trace_aspeed_sbc_otp_read(otp_addr, value);
-> +
-> +    return true;
-> +}
-> +
-> +static bool aspeed_sbc_otpmem_prog(AspeedSBCState *s,
-> +                                   uint32_t otp_addr, Error **errp)
-
-errp looks unused.
-
-> +{
-> +    AspeedOTPMemState *otpmem = ASPEED_OTPMEM(s->otpmem);
-> +    uint32_t value = 0x12345678;
-> +
-> +    if (otpmem == NULL) {
-> +        return true;
-> +    }
-
-no need to test otpmem.
-
-> +    address_space_write(&otpmem->as, otp_addr, MEMTXATTRS_UNSPECIFIED,
-> +                        &value, sizeof(value));
-
-Please test the return value.
-
-> +    trace_aspeed_sbc_otp_prog(otp_addr, value);
-> +
-> +    return true;
-> +}
-> +
-> +static void aspeed_sbc_handle_command(void *opaque, uint32_t cmd)
-> +{
-> +    AspeedSBCState *s = ASPEED_SBC(opaque);
-> +    Error *local_err = NULL;
-> +    bool ret = false;
-> +    uint32_t otp_addr;
-> +
-> +    s->regs[R_STATUS] &= ~(OTP_MEM_IDLE | OTP_IDLE);
-> +    otp_addr = s->regs[R_ADDR];
-> +
-> +    switch (cmd) {
-> +    case SBC_OTP_CMD_READ:
-> +        ret = aspeed_sbc_otpmem_read(s, otp_addr, &local_err);
-
-&local_err is unused. please remove.
-
-> +        break;
-> +    case SBC_OTP_CMD_PROG:
-> +        ret = aspeed_sbc_otpmem_prog(s, otp_addr, &local_err);
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: Unknown command 0x%x\n",
-> +                      __func__, cmd);
-> +        break;
-> +    }
-> +
-> +    trace_aspeed_sbc_handle_cmd(cmd, otp_addr, ret);
-> +    if (ret == false && local_err) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: %s\n",
-> +                      __func__, error_get_pretty(local_err));
-> +        error_free(local_err);
-> +    }
-> +    s->regs[R_STATUS] |= (OTP_MEM_IDLE | OTP_IDLE);
-> +}
-> +
->   static void aspeed_sbc_write(void *opaque, hwaddr addr, uint64_t data,
->                                 unsigned int size)
->   {
-> @@ -78,6 +159,9 @@ static void aspeed_sbc_write(void *opaque, hwaddr addr, uint64_t data,
->                         "%s: write to read only register 0x%" HWADDR_PRIx "\n",
->                         __func__, addr << 2);
->           return;
-> +    case R_CMD:
-> +        aspeed_sbc_handle_command(opaque, data);
-
-I would test sc->has_otpmem before calling aspeed_sbc_handle_command()
-and do a LOG_GUEST_ERROR if it shouldn't be called.
-
-> +        return;
->       default:
->           break;
->       }
-> @@ -119,11 +203,19 @@ static void aspeed_sbc_realize(DeviceState *dev, Error **errp)
->   {
->       AspeedSBCState *s = ASPEED_SBC(dev);
->       SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +    AspeedSBCClass *sc = ASPEED_SBC_GET_CLASS(s);
->   
->       memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_sbc_ops, s,
->               TYPE_ASPEED_SBC, 0x1000);
->   
->       sysbus_init_mmio(sbd, &s->iomem);
-> +
-> +    if (sc->has_otpmem) {
-> +        s->otpmem = ASPEED_OTPMEM(object_new(TYPE_ASPEED_OTPMEM));
-
-you don't need to allocate s->otpmem.
-  
-> +        object_initialize_child(OBJECT(s), "otp", s->otpmem,
-> +                                TYPE_ASPEED_OTPMEM);
-
-Please move object_initialize_child() under a instance_init handler
-which should be called only if sc->has_otpmem
-
-> +        qdev_realize(DEVICE(s->otpmem), NULL, errp);
-
-Please test the return value.
-
-
-> +    }
->   }
->   
->   static const VMStateDescription vmstate_aspeed_sbc = {
-> diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-> index e3f64c0ff6..0f6e2038cf 100644
-> --- a/hw/misc/trace-events
-> +++ b/hw/misc/trace-events
-> @@ -90,6 +90,13 @@ slavio_sysctrl_mem_readl(uint32_t ret) "Read system control 0x%08x"
->   slavio_led_mem_writew(uint32_t val) "Write diagnostic LED 0x%04x"
->   slavio_led_mem_readw(uint32_t ret) "Read diagnostic LED 0x%04x"
->   
-> +# aspped_sbc.c
-> +aspeed_sbc_otpmem_state(const char *enabled) "OTP Memory is %s"
-> +aspeed_sbc_ignore_cmd(uint32_t cmd) "Ignoring command 0x%" PRIx32
-> +aspeed_sbc_handle_cmd(uint32_t cmd, uint32_t addr, bool ret) "Handling command 0x%" PRIx32 " for OTP addr 0x%" PRIx32 " Result: %d"
-> +aspeed_sbc_otp_read(uint32_t addr, uint32_t value) "OTP Memory read: addr 0x%" PRIx32 " value 0x%" PRIx32
-> +aspeed_sbc_otp_prog(uint32_t addr, uint32_t value) "OTP Memory write: addr 0x%" PRIx32 " value 0x%" PRIx32
-> +
->   # aspeed_scu.c
->   aspeed_scu_write(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
->   aspeed_scu_read(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
+>   static const TypeInfo aspeed_ast2600_sbc_info = {
 > diff --git a/include/hw/misc/aspeed_sbc.h b/include/hw/misc/aspeed_sbc.h
-> index 405e6782b9..3191c6eb87 100644
+> index 3191c6eb87..f1e6f8148c 100644
 > --- a/include/hw/misc/aspeed_sbc.h
 > +++ b/include/hw/misc/aspeed_sbc.h
-> @@ -10,6 +10,7 @@
->   #define ASPEED_SBC_H
->   
->   #include "hw/sysbus.h"
-> +#include "hw/misc/aspeed_otpmem.h"
->   
->   #define TYPE_ASPEED_SBC "aspeed.sbc"
->   #define TYPE_ASPEED_AST2600_SBC TYPE_ASPEED_SBC "-ast2600"
-> @@ -36,6 +37,8 @@ struct AspeedSBCState {
->       MemoryRegion iomem;
->   
->       uint32_t regs[ASPEED_SBC_NR_REGS];
-> +
-> +    AspeedOTPMemState *otpmem;
-
-Please change to :
-
-    AspeedOTPMemState otpmem;
-
->   };
+> @@ -43,6 +43,8 @@ struct AspeedSBCState {
 >   
 >   struct AspeedSBCClass {
+>       SysBusDeviceClass parent_class;
+> +
+> +    bool has_otpmem;
 
-what about has_otpmem definition ? Without it, this patch won't compile
-and this breaks bisect.
+This change should be in the previous patch.
+
 
 Thanks,
 
 C.
 
+
+>   };
+>   
+>   #endif /* ASPEED_SBC_H */
 
 
