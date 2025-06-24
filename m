@@ -4,99 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52BDCC77B7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 15:51:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2BFEC77B7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 15:57:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uU5vV-0002He-Ia; Tue, 24 Jun 2025 11:51:13 -0400
+	id 1uU616-0003a4-8M; Tue, 24 Jun 2025 11:57:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uU5vT-0002HK-Nh
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 11:51:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uU614-0003Zl-3I
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 11:56:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uU5vS-0001M1-1k
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 11:51:11 -0400
+ id 1uU612-00021Y-Jp
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 11:56:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750780265;
+ s=mimecast20190719; t=1750780614;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4d6CwVf6CCbFw8g0kZm+MXmPsBgqxA+jVU2RZpVtP6o=;
- b=BUJ2lqMykHnKbNGGXD1HTGd83pOC8hmO7mM772GamIld1Tz+/ggHQKHl/zsSKfDSRC20hv
- MtKVJWqMIeIgLYCtNKp751yT+KD3jlPavZIordsSrUVCv4TpneG9eFKiElbkFmYpV1ATnf
- IiTPln0PRUOEAVGFA7qmbdbDBLGX3eU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/OSL/LcuHhu0TYe397VwHKcVqyQgV01Edt6gbFWcJXo=;
+ b=AHzZCCvDW0iuq3/dUrQG8zvb3E/7NYeraM7p/NRxHXEYqnOsi5CgyjdHB5z1ZjYbn+EGO0
+ SpBxGjYQnsLQUQ1fZIlvmrYhZPbgY3M5CoK2ZhdVPIFvdJB31ImIq/5SA1zewMTonuKS+U
+ XiShb5P6waIoEQDitEvHmlxBzm8v7Go=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-474-6U1jEuD0MnyswuvbIdox8w-1; Tue, 24 Jun 2025 11:51:04 -0400
-X-MC-Unique: 6U1jEuD0MnyswuvbIdox8w-1
-X-Mimecast-MFC-AGG-ID: 6U1jEuD0MnyswuvbIdox8w_1750780263
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-453018b4ddeso4757605e9.3
- for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 08:51:04 -0700 (PDT)
+ us-mta-657-UqIacU-qMH6Bfr_bSUyCsA-1; Tue, 24 Jun 2025 11:56:53 -0400
+X-MC-Unique: UqIacU-qMH6Bfr_bSUyCsA-1
+X-Mimecast-MFC-AGG-ID: UqIacU-qMH6Bfr_bSUyCsA_1750780612
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4535ee06160so39072115e9.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 08:56:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750780263; x=1751385063;
+ d=1e100.net; s=20230601; t=1750780612; x=1751385412;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=4d6CwVf6CCbFw8g0kZm+MXmPsBgqxA+jVU2RZpVtP6o=;
- b=iLw+Z1ZHzp6uZyc0iFbAJufEkpmpM/6FxuZ91qvm2IJNxlEcg+2qhjoRX9lloq/u7M
- o7/0aFW3GyyZsmjZek7oh446jiNuBIuGAYLU9p+yuS5qjIcePMYgKp7XzFNTUCxs5Bdn
- M+B0tmdCcCWRyUssqhBv5H2C+6+nKBhj3T7N/2cjOvbZkZqCkO6jNm4yahcq8IEDh1n1
- DF5LLE9Rp0cBrNwlNecQKQHjM+kOb530FbTVsXN6rXowqjqNOZcb796XvU1dptdmspXK
- vndaobWQGGPHIUsyQA2Xbu8I8kgsgRoyMzfTclIlb7z7FbufZcKv2oZJGEme6yYye49z
- SC9Q==
+ bh=/OSL/LcuHhu0TYe397VwHKcVqyQgV01Edt6gbFWcJXo=;
+ b=I++JnjVi2bbt3oTYHCyzhZVyOQvkiGHFv1zdB8fPKwCg65eFMh/bZFZogjkGZ9jeZd
+ 3bNse80UWcMBXTZRoMsrVudFJHZ5/6BwlHMuSCEd718G2jcVXC4YbwZh5dzuNi2f3bKx
+ UhZjUt3D2E1bKK1BHg0i0Q02VIVeL85BBhY4inIshlHJpM9Inpat0bbRvcHRq5s6W5EA
+ QnQskvmDTmx2CW4QRwkLMue54FgSnbSKCxQSO56EGd6hGqu8UB/Xl2aTT29vguX8Zr95
+ 5vJMQmO5qTauLidJ1IEiE1+NGhBETTxgd22MlgNlKND2+JdWlJCPPRMjBVn5bWuzQCu0
+ 54OA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUxOhzPL1JH8eYEwo0zEjVpAuLZsIUX1ogbNze9ERvx8GzqB/qoXTSiWYWweeCYcpouM+sjgkayBZfP@nongnu.org
-X-Gm-Message-State: AOJu0YzZ+7Osey3AgKJ06YjXCKm4RM60Ki5HJIdCoizS0+L12z3z6+Si
- g1joSF/VP6FiGexwtDk5+/om+DF6gL3/s07Yu0FmnXa9NwMpdC/h5FSLCeCzbkdodNrS3e1Zq2O
- DNVHD2ry5o7Q8uHIR3VoJ/5Xu4oD8MiqJLPvtv5kse3EkBeNDpAVZRIMc
-X-Gm-Gg: ASbGncucUgL8H02obFJkAnphA6/6ArHq+3XHzOcijESAL8MgwwunFrwj+4DfYciCS3E
- AhYwQg3LajklXW6fZWVbmlWhqx7X1519qmQMpTruLTAF2n+RJ+ynQfsNhBUVqnpjEbMpJyM//HM
- of81ifusg0VOTkWlvJOQek6cKueU/qWfIBragi/ILXPvmso8ffbZt91kqKnpFEJ1S830lMAmD83
- +GDhu/gJjOIhU6yuRB3AIpjZQqx5Shbb1/TaWtllXwhMQ5nPAYdfx6eXvkuZZOHjH3eyghz/GuO
- TVM/awwqg7qHyp+ns5YLyuIyXuOsO1RtGxgrJypUz/GQmIQUGm48r1y8LgRcW73MVeRW/g==
-X-Received: by 2002:a05:600c:3590:b0:44b:eb56:1d48 with SMTP id
- 5b1f17b1804b1-45381536414mr627005e9.4.1750780262911; 
- Tue, 24 Jun 2025 08:51:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFgdC9rTaZ4rf5rqF9I0NCo5RvgdT2diWkqeVRQinScjEb+HD6I0QDdDVK64jYjL39hfS2Mpw==
-X-Received: by 2002:a05:600c:3590:b0:44b:eb56:1d48 with SMTP id
- 5b1f17b1804b1-45381536414mr626615e9.4.1750780262415; 
- Tue, 24 Jun 2025 08:51:02 -0700 (PDT)
+ AJvYcCXRokik3D19tj92iGAT2r8I6E4NLWr/Rt0GI9pdAQqnw0TkhFYVGPC9mnA1J6W2fopBiJEh4ek6v8kT@nongnu.org
+X-Gm-Message-State: AOJu0YxJudpLov+2bsYVYMGIbaGkE3inJTaPL5iJiQPriXuoNzumjQcI
+ FPnVKiyS07u8YXoFJJoTGnjcCfd9twZn/1Gf0aTmobwJjENFWQPjw6blY41h0ofUUw5i8YjOUEh
+ UWLpdiZtBWity6/fXTYbKLEj6xuZrslBUTf0QHt0ssNM0kOUDO70a8Ob6
+X-Gm-Gg: ASbGncsfIB0W1vnduO9KEYacwgzZbtMwt5jRLgPuaPj1JhDyc3zEAYYSD6CkOyaMvfg
+ eJzimBxJdE7PVcUHRhfaNc2pJf3IvfR8o6WcQ7r0IWvvpAMTuwfwJVzBna7MtRmaOSpw5QWlXjI
+ 0gKxyZAaVt7QJCjSFVF1Qw0XFMVHdiAB9RD+Puh5wvdsL4p5Gwv4JhSAJ0D1+yzl0LmKi4z8Nfr
+ ORFFGK9hxZq3Sva+ILqRet/CSIayMZR2nAbdu8ZkBCn4LLtOa1VVYwb3KMLHvhnd1Hju/4gnAq0
+ LsCS8gaYVTj/+AUEghZOttoVWycQG5UuXSOYBg9cuxpowYr0Y/AFIhuXWAes7fBi9etZ7A==
+X-Received: by 2002:a05:600c:a07:b0:450:d3c6:84d8 with SMTP id
+ 5b1f17b1804b1-453659caaddmr176392245e9.14.1750780611622; 
+ Tue, 24 Jun 2025 08:56:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFT2wuQV+xY6X39q7WR56O8607PSHeG1qAceZ7tZtx5WiGejgpfdZYQD3de4cNPTQQubV/NOg==
+X-Received: by 2002:a05:600c:a07:b0:450:d3c6:84d8 with SMTP id
+ 5b1f17b1804b1-453659caaddmr176392065e9.14.1750780611217; 
+ Tue, 24 Jun 2025 08:56:51 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4535ead2339sm183308495e9.28.2025.06.24.08.51.01
+ 5b1f17b1804b1-4535ead2339sm183442545e9.28.2025.06.24.08.56.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Jun 2025 08:51:01 -0700 (PDT)
-Message-ID: <4545479f-749a-45e5-9743-13f7358c2a25@redhat.com>
-Date: Tue, 24 Jun 2025 17:51:00 +0200
+ Tue, 24 Jun 2025 08:56:50 -0700 (PDT)
+Message-ID: <8b09d9bf-a52e-4680-aeb5-71b6d6cb9925@redhat.com>
+Date: Tue, 24 Jun 2025 17:56:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 17/29] hw/arm/virt-acpi-build: Modify the DSDT ACPI
- table to enable ACPI PCI hotplug
+Subject: Re: [PATCH v3 19/29] hw/arm/virt: Pass the bus on the ged creation
 Content-Language: en-US
-To: Igor Mammedov <imammedo@redhat.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, gustavo.romero@linaro.org, anisinha@redhat.com,
- mst@redhat.com, shannon.zhaosl@gmail.com, pbonzini@redhat.com,
- philmd@linaro.org, alex.bennee@linaro.org
+ peter.maydell@linaro.org, imammedo@redhat.com, gustavo.romero@linaro.org,
+ anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com,
+ pbonzini@redhat.com, philmd@linaro.org, alex.bennee@linaro.org
 References: <20250616094903.885753-1-eric.auger@redhat.com>
- <20250616094903.885753-18-eric.auger@redhat.com>
- <20250620103538.000021c1@huawei.com> <20250620143822.7ab69038@fedora>
+ <20250616094903.885753-20-eric.auger@redhat.com>
+ <20250620103856.00006903@huawei.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250620143822.7ab69038@fedora>
+In-Reply-To: <20250620103856.00006903@huawei.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -105,7 +103,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,126 +120,43 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Jonathan,
 
-
-On 6/20/25 2:38 PM, Igor Mammedov wrote:
-> On Fri, 20 Jun 2025 10:35:38 +0100
-> Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+On 6/20/25 11:38 AM, Jonathan Cameron wrote:
+> On Mon, 16 Jun 2025 11:46:48 +0200
+> Eric Auger <eric.auger@redhat.com> wrote:
 >
->> On Mon, 16 Jun 2025 11:46:46 +0200
->> Eric Auger <eric.auger@redhat.com> wrote:
+>> The bus will be needed on ged realize for acpi pci hp setup.
 >>
->>> Modify the DSDT ACPI table to enable ACPI PCI hotplug.
->>>
->>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>>
->>> ---
->>> v2 -> v3:
->>> - use ACPI_PCIHP_SIZE instead of 0x1000 (Igor)
->>> - use cihp_state->use_acpi_hotplug_bridge  
->> pcihp_state
->>
->> Takes a bit of searching to find the various bits of the
->> same support on x86 but this seems to match up.
->> Exactly when things are built does vary but not I think
->> in a way that matters.  e.g. I think on x86 the
->> EDSM stuff is built whether or not we have pcihp enabled
->> whereas here you've made it conditional on using acpi
->> hp.  Perhaps a tiny bit more description on that would be
->> useful if you do a v4?
-> edsm should be built regardless of pcihp
-> (well intention was there, whether I messed it up or not I don't know)
->
-> idea is that non hotplug ports can have a static acpi-index,
-> so it doesn't depend on pcihp.
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> I guess doing this in separate patches for previous and this one
+> maybe makes it easier to backport the previous if someone just wants
+> to enable this on a different arch.  Otherwise I'd have smashed them
+> together.
 
-OK I can make it unconditional. The drawback is that it will oblige to
-rebuild reference blobs again with native pci hotplug.
+for me it is also a matter of maintainership/reviewer role separataion,
+virt and ged being maintained/reviewed by different people. So if you
+don't mind, I will keep it separate all the more so I collected R-b's on
+each ;-)
 
 Eric
 >
->> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+>> ---
+>>  hw/arm/virt.c | 1 +
+>>  1 file changed, 1 insertion(+)
 >>
->>
->>> ---
->>>  include/hw/acpi/pcihp.h  |  2 ++
->>>  include/hw/arm/virt.h    |  1 +
->>>  hw/arm/virt-acpi-build.c | 22 ++++++++++++++++++++++
->>>  hw/arm/virt.c            |  2 ++
->>>  hw/arm/Kconfig           |  2 ++
->>>  5 files changed, 29 insertions(+)
->>>
->>> diff --git a/include/hw/acpi/pcihp.h b/include/hw/acpi/pcihp.h
->>> index 5506a58862..9ff548650b 100644
->>> --- a/include/hw/acpi/pcihp.h
->>> +++ b/include/hw/acpi/pcihp.h
->>> @@ -38,6 +38,8 @@
->>>  #define ACPI_PCIHP_SEJ_BASE 0x8
->>>  #define ACPI_PCIHP_BNMR_BASE 0x10
->>>  
->>> +#define ACPI_PCIHP_SIZE 0x0018
->>> +
->>>  typedef struct AcpiPciHpPciStatus {
->>>      uint32_t up;
->>>      uint32_t down;
->>> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
->>> index 9a1b0f53d2..0ed2e6b732 100644
->>> --- a/include/hw/arm/virt.h
->>> +++ b/include/hw/arm/virt.h
->>> @@ -79,6 +79,7 @@ enum {
->>>      VIRT_ACPI_GED,
->>>      VIRT_NVDIMM_ACPI,
->>>      VIRT_PVTIME,
->>> +    VIRT_ACPI_PCIHP,
->>>      VIRT_LOWMEMMAP_LAST,
->>>  };
->>>  
->>> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
->>> index d7547c8d3b..a2e58288f8 100644
->>> --- a/hw/arm/virt-acpi-build.c
->>> +++ b/hw/arm/virt-acpi-build.c
->>> @@ -34,6 +34,7 @@
->>>  #include "hw/core/cpu.h"
->>>  #include "hw/acpi/acpi-defs.h"
->>>  #include "hw/acpi/acpi.h"
->>> +#include "hw/acpi/pcihp.h"
->>>  #include "hw/nvram/fw_cfg_acpi.h"
->>>  #include "hw/acpi/bios-linker-loader.h"
->>>  #include "hw/acpi/aml-build.h"
->>> @@ -809,6 +810,8 @@ static void
->>>  build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->>>  {
->>>      VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
->>> +    AcpiGedState *acpi_ged_state = ACPI_GED(vms->acpi_dev);
->>> +    AcpiPciHpState *pcihp_state = &acpi_ged_state->pcihp_state;
->>>      Aml *scope, *dsdt;
->>>      MachineState *ms = MACHINE(vms);
->>>      const MemMapEntry *memmap = vms->memmap;
->>> @@ -868,6 +871,25 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->>>  
->>>      aml_append(dsdt, scope);
->>>  
->>> +    if (pcihp_state->use_acpi_hotplug_bridge) {
->>> +        Aml *pci0_scope = aml_scope("\\_SB.PCI0");
->>> +
->>> +        aml_append(pci0_scope, aml_pci_edsm());
->>> +        build_acpi_pci_hotplug(dsdt, AML_SYSTEM_MEMORY,
->>> +                               memmap[VIRT_ACPI_PCIHP].base);
->>> +        build_append_pcihp_resources(pci0_scope,
->>> +                                     memmap[VIRT_ACPI_PCIHP].base,
->>> +                                     memmap[VIRT_ACPI_PCIHP].size);
->>> +
->>> +        /* Scan all PCI buses. Generate tables to support hotplug. */
->>> +        build_append_pci_bus_devices(pci0_scope, vms->bus);
->>> +        if (object_property_find(OBJECT(vms->bus), ACPI_PCIHP_PROP_BSEL)) {
->>> +            build_append_pcihp_slots(pci0_scope, vms->bus);
->>> +        }
->>> +        build_append_notification_callback(pci0_scope, vms->bus);
->>> +        aml_append(dsdt, pci0_scope);
->>> +    }
->>> +
->>>      /* copy AML table into ACPI tables blob */
->>>      g_array_append_vals(table_data, dsdt->buf->data, dsdt->buf->len);
->>>    
+>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+>> index 08bd808499..2f34877716 100644
+>> --- a/hw/arm/virt.c
+>> +++ b/hw/arm/virt.c
+>> @@ -696,6 +696,7 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
+>>  
+>>      dev = qdev_new(TYPE_ACPI_GED);
+>>      qdev_prop_set_uint32(dev, "ged-event", event);
+>> +    object_property_set_link(OBJECT(dev), "bus", OBJECT(vms->bus), &error_abort);
+>>      sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>>  
+>>      sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, vms->memmap[VIRT_ACPI_GED].base);
 
 
