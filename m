@@ -4,90 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DC03C77B7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 17:42:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 699BBC77B7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 17:54:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uU7ee-0008EO-JW; Tue, 24 Jun 2025 13:41:56 -0400
+	id 1uU7ps-0002tD-Ib; Tue, 24 Jun 2025 13:53:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1uU7eT-0008Cm-Tc
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 13:41:49 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1uU7eP-0001Jy-Go
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 13:41:44 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-7494999de5cso262989b3a.3
- for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 10:41:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1750786900; x=1751391700;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aA8ih3bAHdJTnR1IUhY/sl71KMFw0RsevXDXGItG9as=;
- b=GChvEuIsaETS0ftKUieX0jKG7/RNzSIb3nYnPp3auSdgD3+00TBTwjSBFbb4Ja1SAK
- 9zMw5RSyOJHLU8iCfg3v2D6NZkz6AqTacQpJ5szDJnKX0rdslT5IwQsbOuFNUlzdT2t0
- ww9xZ5B7mmT31PxNK1BSbq84ZixfEVtUuYxBTwOAAdAVCX/egcdntYGC1Y/ruFWNZqKU
- FpqClmVlBSSrjAOSkgY7jW2xRWd4dCJWscI/WF3C32oRK7s6z7+ZuoWzh80z5bOHPr0i
- yzdxVTDAfjs3IbYHVrNZ5LzoOmPKk9XF0BihbA0tWJKDVAmxZb/nj+jY/AXI6f4Mvarm
- amuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750786900; x=1751391700;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=aA8ih3bAHdJTnR1IUhY/sl71KMFw0RsevXDXGItG9as=;
- b=fG3yA44HiIyZzl/y9tkSQXQnX9RAewvFQCwxlw71I0g3zX5tYCgGERSxJzXgIqgRDx
- 0KBU1lrL1HSvX9vTm+b79TJYRa9kSHIwjU02CI61Ruthdqa4ykqMaa7iZKpDq1R4rcM8
- DH1B7DLSLwnL1YIAPIVXpex6pjfzoklwyZ3tTtISQzDN/Qt5ipU/TnE5ARHQTZHWRQC7
- cYOTxhBVZYljHYeJxQeooSKaFuGOixoeyeh1ywYu4e7DHNpmxcTfjLvqfOvHA9BXtUp9
- b4W5QoM2dq69MxF13wJ59gGqzsEuElUu8WTGaWYu4DSCmk15V7Q6A24cCLCzdNDD6anK
- RnMw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCURi1Kdk1TDh5N2ZhtFXb6J1ZtRJG4LRl/avRcskLCyd8SZH/X2s9YHMSSjziU7htE+ERrCSf5+R9sW@nongnu.org
-X-Gm-Message-State: AOJu0YyLg0fW8KLTPQRfRAvZbvWnQsuNmPZCbwQ/G8OkEs/1Iz4yVJdi
- iX4/lcTI9TknVUarSJAyOO5SJLh8uR8jCOEMxqbYkiShgQWvko3mMMh/21ZLcplYmAMX5ZAIUUI
- 9WRgjJ7F5NxylWlpGFHzJK1UvIzW1a8MTRmAN43swMA==
-X-Gm-Gg: ASbGnctACLf1OUkNK9kYMJWl3PK0V5zJEnMTaK0X+elA7O2Fjaci56MzgmOzmaD5lJ9
- zruh/LopdPGeW3Ym0Be2EQ+UsMJzcM86aFt8jYZiAAZq4HaeYyFcbjwxN4xxuNknQfWZVVneXTk
- PkjIJFeHyA90P7EOvwfAp/kFZgqdOhDUD8AZyxQHrebvOE
-X-Google-Smtp-Source: AGHT+IETZUAi3+DnNozCpNwKVrU7kEZ7rxnsg1FPAYCPKKfCHgDDSdGAkN0X6SLvZl/3tUzbbDgabX0G7H+097B3jIw=
-X-Received: by 2002:a17:90b:2590:b0:313:20d2:c99b with SMTP id
- 98e67ed59e1d1-3159d647127mr28596543a91.9.1750786899589; Tue, 24 Jun 2025
- 10:41:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1uU7pm-0002rt-Jv; Tue, 24 Jun 2025 13:53:26 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1uU7pk-0002in-J1; Tue, 24 Jun 2025 13:53:26 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.98.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1uU7pb-00000005WmI-1ZgI; Tue, 24 Jun 2025 19:53:15 +0200
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+To: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Avihai Horon <avihaih@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH 1/3] vfio/migration: Max in-flight VFIO device state buffer
+ count limit
+Date: Tue, 24 Jun 2025 19:51:56 +0200
+Message-ID: <0e88a253e06647f6c01bdeba45848501b3631bd3.1750787338.git.maciej.szmigiero@oracle.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <cover.1750787338.git.maciej.szmigiero@oracle.com>
+References: <cover.1750787338.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
-References: <CAJSP0QU=v_jN5oBDBefg0mB=Qv3SvD4ZdJzz2LT-cu5ZL7pK0Q@mail.gmail.com>
- <CAJSP0QXe1L2P24oUrABO1eUzn1JFc=BJWEfakrQ5u3Ek5LkfKg@mail.gmail.com>
- <CANCZdfqfFNAYcF3BEDucyR3YN1PXwyEmzE5LPcJCyshCXwhe6Q@mail.gmail.com>
- <9bac4585-255a-4805-b24d-b3b75d2ca9c3@redhat.com>
- <CANCZdfq6+R=VgyYdcdJCmDBTCgLSxDJuqd8h=ehb5F+v-HPT+g@mail.gmail.com>
- <CAJSP0QWSVhAYBtxKV+WDubmif2m=jxTYd-BK=d7ExZXWUNUYXA@mail.gmail.com>
-In-Reply-To: <CAJSP0QWSVhAYBtxKV+WDubmif2m=jxTYd-BK=d7ExZXWUNUYXA@mail.gmail.com>
-From: Warner Losh <imp@bsdimp.com>
-Date: Tue, 24 Jun 2025 11:41:28 -0600
-X-Gm-Features: AX0GCFtMWAW2_eHl3v0MdJ-bRUHJR4z_y5BJyj3ZrEBLkIb_5qEoxgjfw_El7mI
-Message-ID: <CANCZdfqTKUMLbrT9HEXa-O7pyHqfcMWMmYx7iCq=ZU_ewgCaag@mail.gmail.com>
-Subject: Re: FreeBSD 14.1 aarch64 iso URL is down
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Thomas Huth <thuth@redhat.com>, Radoslaw Biernacki <rad@semihalf.com>, 
- Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>, 
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: none client-ip=2607:f8b0:4864:20::42b;
- envelope-from=wlosh@bsdimp.com; helo=mail-pf1-x42b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,132 +62,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 24, 2025 at 11:16=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.co=
-m> wrote:
->
-> On Tue, Jun 24, 2025 at 12:28=E2=80=AFPM Warner Losh <imp@bsdimp.com> wro=
-te:
-> >
-> > On Tue, Jun 24, 2025 at 10:02=E2=80=AFAM Thomas Huth <thuth@redhat.com>=
- wrote:
-> > >
-> > > On 22/06/2025 03.46, Warner Losh wrote:
-> > > >
-> > > >
-> > > > On Sat, Jun 21, 2025, 6:01=E2=80=AFPM Stefan Hajnoczi <stefanha@gma=
-il.com
-> > > > <mailto:stefanha@gmail.com>> wrote:
-> > > >
-> > > >     On Sat, Jun 21, 2025 at 7:59=E2=80=AFPM Stefan Hajnoczi <stefan=
-ha@gmail.com
-> > > >     <mailto:stefanha@gmail.com>> wrote:
-> > > >
-> > > >     (I forgot to CC qemu-devel)
-> > > >
-> > > >      >
-> > > >      > Hi,
-> > > >      > This might only be temporary, but the CI is getting HTTP 404=
- Not Found
-> > > >      > for the following URL:
-> > > >      > https://download.freebsd.org/releases/arm64/aarch64/ISO-IMAG=
-ES/14.1/
-> > > >     FreeBSD-14.1-RELEASE-arm64-aarch64-bootonly.iso <https://
-> > > >     download.freebsd.org/releases/arm64/aarch64/ISO-IMAGES/14.1/
-> > > >     FreeBSD-14.1-RELEASE-arm64-aarch64-bootonly.iso>
-> > > >      >
-> > > >      > https://gitlab.com/qemu-project/qemu/-/jobs/10424901718#L848
-> > > >     <https://gitlab.com/qemu-project/qemu/-/jobs/10424901718#L848>
-> > > >      >
-> > > >      > Stefan
-> > > >
-> > > >
-> > > > Time to bump the version to 14.3.
-> > >
-> > > Hmm, while we're used to refresh the CI images for the *host* environ=
-ments,
-> > > it's rather ugly to see images for the *guests* of the functional tes=
-ts
-> > > disappear. Maybe we should rather remove that test if the URL is not =
-stable?
-> >
-> > Yes. Most of our images have a shelf life of about a year to 18 months.=
- And QEMU
-> > should be testing all the 'supported' FreeBSD images, just like for
-> > other projects.
-> > The question becomes how can we, the FreeBSD Project, remove the fricti=
-on that's
-> > here now because we timeout / move the older images as they pass out of=
- support.
-> >
-> > We've also just shifted to a more frequent release cadence, so the
-> > releases have gone
-> > from living for  18-24 months down to just 12. We just released
-> > FreeBSD 14.3, and 14.1
-> > is only a year old. So what's the best way of dealing with this? We
-> > could have a 14-latest
-> > but the md5 would change...
-> >
-> > So I'm open to making a change, but I need help crafting something
-> > that will work, since
-> > I'm not clever enough to suggest something here.
->
-> A test run should be repeatable. If a test passes on a given qemu.git
-> commit then it should continue to pass when run again. Using -latest
-> breaks this property, so let's avoid it.
->
-> Ideas:
-> 1. FreeBSD provides convenient permanent URLs.
-> 2. QEMU uses a permanent FreeBSD ISO mirror URL instead. Need to find
-> a mirror that is fast and reliable.
-> 3. Someone agrees to regularly update the URL in QEMU's test suite so
-> that breakage isn't exposed. IMO the least desirable solution because
-> an old copy of the test will start failing after 12 months.
+From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-So there's two issues at play.
+Allow capping the maximum count of in-flight VFIO device state buffers
+queued at the destination, otherwise a malicious QEMU source could
+theoretically cause the target QEMU to allocate unlimited amounts of memory
+for buffers-in-flight.
 
-FreeBSD does maintain all our archival releases forever. They never change.
-But, we don't have permanent links to them today. We start with one URL and
-then migrate to a second one when they transition from supported to unsuppo=
-rted.
-We do this, in part, to make sure people upgrade. So in effect, this breaka=
-ge
-means that our notion is "working" in the sense that the FreeBSD project's =
-goals
-of making people "keep up to date."
+Since this is not expected to be a realistic threat in most of VFIO live
+migration use cases and the right value depends on the particular setup
+disable the limit by default by setting it to UINT64_MAX.
 
-This does, I realize, clash with the views that QEMU wants to have some sta=
-ble
-way to test images over time, even if the upstream's notion of supported or=
- not
-changes.
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+---
+ docs/devel/migration/vfio.rst | 13 +++++++++++++
+ hw/vfio/migration-multifd.c   | 16 ++++++++++++++++
+ hw/vfio/pci.c                 |  9 +++++++++
+ include/hw/vfio/vfio-device.h |  1 +
+ 4 files changed, 39 insertions(+)
 
-One easy idea might be to 'prestage' the 'legacy' releases when they
-are supported
-on the 'legacy' server so that tests can be written with the legacy
-path so that these
-tests always work, now and in the future.
-
-So, this is terrible from a FreeBSD point of view. We'd like it if
-qemu always tested
-all of our releases, as well as snapshots of the tip of the spear.
-There's got to be some
-way to have some shared responsibility that we can automate. FreeBSD could =
-test
-the most recent release of qemu against a bunch of images in our CI
-cluster. But we
-don't actually have a CI cluster we could put that into (our focus is
-just a little different)
-today. Ideally, your (3) above would happen as we rotate in new
-versions and out old
-versions of FreeBSD. But honestly, I'm the person (or one of the
-people) that should
-be keeping his eye on the ball, but we see how well that has worked
-out. So the question
-becomes is this a management failure (eg, someone/something needs to prompt=
- me
-or others in the FreeBSD project to update it via reminders, release
-checklists, etc)?
-Or is it something that can fixed by automations somehow? I don't know...
-
-Warner
+diff --git a/docs/devel/migration/vfio.rst b/docs/devel/migration/vfio.rst
+index 673e354754c8..f4a6bfa4619b 100644
+--- a/docs/devel/migration/vfio.rst
++++ b/docs/devel/migration/vfio.rst
+@@ -247,3 +247,16 @@ The multifd VFIO device state transfer is controlled by
+ "x-migration-multifd-transfer" VFIO device property. This property defaults to
+ AUTO, which means that VFIO device state transfer via multifd channels is
+ attempted in configurations that otherwise support it.
++
++Since the target QEMU needs to load device state buffers in-order it needs to
++queue incoming buffers until they can be loaded into the device.
++This means that a malicious QEMU source could theoretically cause the target
++QEMU to allocate unlimited amounts of memory for such buffers-in-flight.
++
++The "x-migration-max-queued-buffers" property allows capping the maximum count
++of these VFIO device state buffers queued at the destination.
++
++Because a malicious QEMU source causing OOM on the target is not expected to be
++a realistic threat in most of VFIO live migration use cases and the right value
++depends on the particular setup by default this queued buffers limit is
++disabled by setting it to UINT64_MAX.
+diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
+index 850a31948878..f26c112090b4 100644
+--- a/hw/vfio/migration-multifd.c
++++ b/hw/vfio/migration-multifd.c
+@@ -56,6 +56,7 @@ typedef struct VFIOMultifd {
+     QemuMutex load_bufs_mutex; /* Lock order: this lock -> BQL */
+     uint32_t load_buf_idx;
+     uint32_t load_buf_idx_last;
++    uint32_t load_buf_queued_pending_buffers;
+ } VFIOMultifd;
+ 
+ static void vfio_state_buffer_clear(gpointer data)
+@@ -127,6 +128,17 @@ static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
+ 
+     assert(packet->idx >= multifd->load_buf_idx);
+ 
++    multifd->load_buf_queued_pending_buffers++;
++    if (multifd->load_buf_queued_pending_buffers >
++        vbasedev->migration_max_queued_buffers) {
++        error_setg(errp,
++                   "%s: queuing state buffer %" PRIu32
++                   " would exceed the max of %" PRIu64,
++                   vbasedev->name, packet->idx,
++                   vbasedev->migration_max_queued_buffers);
++        return false;
++    }
++
+     lb->data = g_memdup2(&packet->data, packet_total_size - sizeof(*packet));
+     lb->len = packet_total_size - sizeof(*packet);
+     lb->is_present = true;
+@@ -387,6 +399,9 @@ static bool vfio_load_bufs_thread(void *opaque, bool *should_quit, Error **errp)
+             goto thread_exit;
+         }
+ 
++        assert(multifd->load_buf_queued_pending_buffers > 0);
++        multifd->load_buf_queued_pending_buffers--;
++
+         if (multifd->load_buf_idx == multifd->load_buf_idx_last - 1) {
+             trace_vfio_load_state_device_buffer_end(vbasedev->name);
+         }
+@@ -423,6 +438,7 @@ static VFIOMultifd *vfio_multifd_new(void)
+ 
+     multifd->load_buf_idx = 0;
+     multifd->load_buf_idx_last = UINT32_MAX;
++    multifd->load_buf_queued_pending_buffers = 0;
+     qemu_cond_init(&multifd->load_bufs_buffer_ready_cond);
+ 
+     multifd->load_bufs_thread_running = false;
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index fa25bded25c5..2765a39f9df1 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -3524,6 +3524,8 @@ static const Property vfio_pci_dev_properties[] = {
+                 vbasedev.migration_multifd_transfer,
+                 vfio_pci_migration_multifd_transfer_prop, OnOffAuto,
+                 .set_default = true, .defval.i = ON_OFF_AUTO_AUTO),
++    DEFINE_PROP_UINT64("x-migration-max-queued-buffers", VFIOPCIDevice,
++                       vbasedev.migration_max_queued_buffers, UINT64_MAX),
+     DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
+                      vbasedev.migration_events, false),
+     DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
+@@ -3698,6 +3700,13 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, const void *data)
+                                           "x-migration-multifd-transfer",
+                                           "Transfer this device state via "
+                                           "multifd channels when live migrating it");
++    object_class_property_set_description(klass, /* 10.1 */
++                                          "x-migration-max-queued-buffers",
++                                          "Maximum count of in-flight VFIO "
++                                          "device state buffers queued at the "
++                                          "destination when doing live "
++                                          "migration of device state via "
++                                          "multifd channels");
+ }
+ 
+ static const TypeInfo vfio_pci_dev_info = {
+diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+index d45e5a68a24e..0ee34aaf668b 100644
+--- a/include/hw/vfio/vfio-device.h
++++ b/include/hw/vfio/vfio-device.h
+@@ -66,6 +66,7 @@ typedef struct VFIODevice {
+     bool ram_block_discard_allowed;
+     OnOffAuto enable_migration;
+     OnOffAuto migration_multifd_transfer;
++    uint64_t migration_max_queued_buffers;
+     bool migration_events;
+     bool use_region_fds;
+     VFIODeviceOps *ops;
 
