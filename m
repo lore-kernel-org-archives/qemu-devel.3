@@ -4,84 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96605C71157
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 06:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 357EAC71157
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 06:29:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uTx8Y-0007dC-6l; Tue, 24 Jun 2025 02:28:06 -0400
+	id 1uTx9J-00085S-KO; Tue, 24 Jun 2025 02:28:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uTx8T-0007bl-2P
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 02:28:01 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uTx9C-0007xd-PQ
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 02:28:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uTx8O-00086O-OR
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 02:27:59 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uTx96-00088o-UA
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 02:28:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750746474;
+ s=mimecast20190719; t=1750746515;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=gfnAkgi0MpkMFnH0sstCKq0ZQvham9aRSuxNOfK2hFA=;
- b=DUhn/WgBSzWvpOb1MR9Zdqo/nIEi7wD2YwbzZQjatZf+lGC6GBd3QNHEMzE6AsDSm8XyCl
- YcnGypgel70OCjTmlsAIxMPXpa5g2ArDvOgNKBevHDXpmZGmZCNfXNc5ondwPK3jTWgLox
- BNo1LX+sk9TKH8RbGYtNDSIEJgKdbgM=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XtS28GFK87UlefidfQAqXygXLsTgxyD6VYBMYrwE4DQ=;
+ b=d1WH8ZRljNCknZT2ybOVCy8fXAxlDPaJsUhRa8tU9kmucbsuC8JZIMB26PwXqTyCciPUWj
+ v22SMUViKOPjkNr/zCOXxeLohpyvgiwEqnhuyFi2glVec8dkDsyModzrsrPSXRxWeq2I82
+ iGRz+wcaQoDLoQusSDIuUhjQpbRkxYg=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-569-9LtRk70iPkeoqiXfrtepgw-1; Tue, 24 Jun 2025 02:27:52 -0400
-X-MC-Unique: 9LtRk70iPkeoqiXfrtepgw-1
-X-Mimecast-MFC-AGG-ID: 9LtRk70iPkeoqiXfrtepgw_1750746471
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a579058758so2095036f8f.1
- for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 23:27:52 -0700 (PDT)
+ us-mta-587-9SHPl2cnNnaGuZQpeZCvqw-1; Tue, 24 Jun 2025 02:28:33 -0400
+X-MC-Unique: 9SHPl2cnNnaGuZQpeZCvqw-1
+X-Mimecast-MFC-AGG-ID: 9SHPl2cnNnaGuZQpeZCvqw_1750746512
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a6d90929d6so917105f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 23 Jun 2025 23:28:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750746471; x=1751351271;
+ d=1e100.net; s=20230601; t=1750746512; x=1751351312;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gfnAkgi0MpkMFnH0sstCKq0ZQvham9aRSuxNOfK2hFA=;
- b=F9N94TauEuM43qMFBbwySBn0jwqSt56pdf6Ok1qh34zifrtcoIxoz2loE5cYHNwABl
- YoIcaG38j1i7KMaonG6Gs+kuMp7L3saHEr4/CViUHcGVG9om/F3ErmI0mtU/WpCf2pbr
- wJgVW4Zr7v9g+AenGTy7yRYeebaTuuDky4Or6kkEFsTEDiqTQZTzsfhOTMuG0wIVe1QH
- MrMuiLeGIA4cVVmHeaXFy7HceDcCIG5LAf+uMg/31moqeBtzyZkm+Zdcd8mCbdOK9Sdz
- HJs+xBF3eCUEIFcHTW02t14Jxj1hpEd+nghRw6+uFEZf5HfMpWUiOl/Y2KkyAwyBEt1F
- dnTw==
+ bh=XtS28GFK87UlefidfQAqXygXLsTgxyD6VYBMYrwE4DQ=;
+ b=rJYLXUXJVsoEQGarGJ2bAED9638VkxOZXrZinlxuuphaezqdZExLD8gqvWWS2WnkZ7
+ 3cqAGaI6EaAYwUIR9A4tp1ax4axnE1iu3el/VrgHBPDot35Upcn9rc+Jfh2hd3Jqsldm
+ BDsnd2HehcRpzUndKuFc401lc+NLIlTH7ZIBFCgTPl/GFsMMaK8gl0ZLlXlEjG1u0mha
+ czjk58zOlaSqGY0/MwgBL7MBod8T2oe5ls2LtG++mfzz7WYFZknItmfH71jcIRzI4H9q
+ SpPBKA+AWQXYy10Uvj/LdmD8HD6YlRIrclRq5xSg+qWHhu6F8QCpClVqbQ7u+1svDBMU
+ VgVA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWqFVOxgLglYTcCFTyJjykRNWFWnrrFWeWJBQcQEF0o8rGndl91p9yp35UBqOh/2id/yGgo/LQuBoTx@nongnu.org
-X-Gm-Message-State: AOJu0Yy2orv2r8eTJnPvmriMHFRK8SzUuLtfOTBcy0c1Idv4+NLJjjhi
- mtpixulkzWoXEWWVPze6cKTCtcBL8jl9poOGT3pjVzYTiqn19OGqNHTHicBPOI5SwiqqqBk0qLJ
- gkw0/fizaXFgF1ZbtIFNhlG0u0qX0WXhrX0alM3QvKU6lw/xklvBzCnnL
-X-Gm-Gg: ASbGnctIwJLRFGTSO2pU9mtbOCZKSsdxcaeP1T7j9967l9/j/gFtg4jP+T4zIPz6+/E
- fLC2T2kZoFCvDxHzdvs9/TuNkzX3FE1o72uOtnwqogH+JPE2tLLM5yq7VVq5/mWaS34sM0RJhL3
- AmSDnFI/3h5P+oVYqZs/3SVlzf7IQ3uytodfOiGEQ+sJsj0gYCRtgbCHjlnz+m5TMS8n/tl/i2J
- 6biotgvUJ0+J43wA22cZT0dsDKyX/TDm36VXvqEUqHpqbVHz2fq0STrYgFtgk9eU15QNXLRoey+
- NT14gGHtR/jBRrSEnGR1O08PCYqOfjqlIJC/EroKChhCRP3nj+c/kNzgHBoz+80=
-X-Received: by 2002:a05:6000:2012:b0:3a4:ead4:5ea4 with SMTP id
- ffacd0b85a97d-3a6d12a8ed3mr11961624f8f.24.1750746471065; 
- Mon, 23 Jun 2025 23:27:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEcb0KNJNOGtH3eP15CKD56LdXNsZ6WkWzTfx2ewX7mU0/Fx58IiGpWRckr3eWQameoj6HExg==
-X-Received: by 2002:a05:6000:2012:b0:3a4:ead4:5ea4 with SMTP id
- ffacd0b85a97d-3a6d12a8ed3mr11961603f8f.24.1750746470600; 
- Mon, 23 Jun 2025 23:27:50 -0700 (PDT)
+ AJvYcCWKG7XdsHcWm5gdmGuZ4i1exTqUi8eR5l+IPxld98y7GrKEsvRzpa4EJx9ioGwunibx2Pq5WHZeswUs@nongnu.org
+X-Gm-Message-State: AOJu0Yyv2P+z6G0o+CC1WUsfCrQh+w6M7gEGE2NX8AGeG/UUOOW68KFj
+ SFQHXi+UrXVlWGvKP/o0Mzh1xU1eb6nUJNDKdCLqRbS0fdVKR7CyixqV/PqXzvLbguqud0jkb4y
+ yfl0H+wkHuTyBfOqsYEyASQQMQTGm47q++vzZuUg9Xl8/hX40OnlIiXwm
+X-Gm-Gg: ASbGncvQOCGiav8Br4V67Hj9kHVDGSrXJGL6o6oDPOwk6CM35XjQsVkvJ3h8j5rdGgm
+ iG2S/4hZXQmzW1BQl/6Ki2E86WzGXx5/DqqO7VfZ1LVorNiJt9vPk+1pExSfnluLfbIGYjUADpY
+ VSj7EWqMAQErk02GF0Tv94IQt2BQduvwWIoDxiMr8g5DSsSvbbXNwozYZvzt7Ycesmaeq8TrHTM
+ c4CcYyCJjL7hy1cE5gFxsxOl7iTNaI0pNoqvrzaP2E6bHPOoVNdF/UlCEV7T5HZ+NVbYeChBB+9
+ HtNwKFqXDpX0sS7v9T5ugZB0mGzKImS3o+p9eWLccIDWCSYcYw4HzocKVT+S5lY=
+X-Received: by 2002:a5d:584d:0:b0:3a4:c8c1:aed8 with SMTP id
+ ffacd0b85a97d-3a6d130d4bdmr12805389f8f.39.1750746512092; 
+ Mon, 23 Jun 2025 23:28:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEnqW9y0uR9xN5g9yMaNRYLPm9tdUP8jj+Pu7YGXgyHfGO0IE7vEeg2M/ICZnN87uUUXYyrDA==
+X-Received: by 2002:a5d:584d:0:b0:3a4:c8c1:aed8 with SMTP id
+ ffacd0b85a97d-3a6d130d4bdmr12805357f8f.39.1750746511689; 
+ Mon, 23 Jun 2025 23:28:31 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-115-198.pools.arcor-ip.net.
  [47.64.115.198]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4535eac8c16sm163637125e9.19.2025.06.23.23.27.49
+ ffacd0b85a97d-3a6e8113b00sm1082420f8f.96.2025.06.23.23.28.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Jun 2025 23:27:50 -0700 (PDT)
-Message-ID: <4e95f3c7-8748-4cf5-ac21-78cf653bfd40@redhat.com>
-Date: Tue, 24 Jun 2025 08:27:48 +0200
+ Mon, 23 Jun 2025 23:28:31 -0700 (PDT)
+Message-ID: <e4e7a238-6438-481d-ae6c-8263730bc239@redhat.com>
+Date: Tue, 24 Jun 2025 08:28:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] hw/s390x: Use preferred API call for IPLB chain write
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- philmd@linaro.org
-Cc: zycai@linux.ibm.com
-References: <20250623201216.721130-1-jrossi@linux.ibm.com>
- <20250623201216.721130-2-jrossi@linux.ibm.com>
+Subject: Re: [PATCH] s390x: Fix leak in machine_set_loadparm
+To: Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Kevin Wolf <kwolf@redhat.com>
+References: <20250509174938.25935-1-farosas@suse.de>
+ <7a850346-8ae5-4dd2-b4ce-7ffb1cfeabd1@linaro.org>
+ <1cd816d0-5808-4caf-b38b-9e4ba10680b6@linaro.org> <87sel9et69.fsf@suse.de>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -126,9 +133,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250623201216.721130-2-jrossi@linux.ibm.com>
+In-Reply-To: <87sel9et69.fsf@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -138,7 +145,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,45 +161,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/06/2025 22.12, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
+On 12/05/2025 17.37, Fabiano Rosas wrote:
+> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
 > 
-> Replace a recently introduced legacy API call with the preferred API call.
+>> On 12/5/25 16:07, Philippe Mathieu-Daudé wrote:
+>>> On 9/5/25 19:49, Fabiano Rosas wrote:
+>>>> ASAN spotted a leaking string in machine_set_loadparm():
+>>
+>> What about ccw_device_set_loadparm() in hw/s390x/ccw-device.c?
+>>
 > 
-> fixes: 0927875 (hw/s390x: Build an IPLB for each boot device)
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->   hw/s390x/ipl.c | 10 +++++++++-
->   1 file changed, 9 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-> index 2f082396c7..f2606303e6 100644
-> --- a/hw/s390x/ipl.c
-> +++ b/hw/s390x/ipl.c
-> @@ -399,8 +399,16 @@ static uint64_t s390_ipl_map_iplb_chain(IplParameterBlock *iplb_chain)
->       uint16_t count = be16_to_cpu(ipl->qipl.chain_len);
->       uint64_t len = sizeof(IplParameterBlock) * count;
->       uint64_t chain_addr = find_iplb_chain_addr(ipl->bios_start_addr, count);
-> +    MemTxResult ret;
-> +
-> +    ret = address_space_write(&address_space_memory, chain_addr,
-> +            MEMTXATTRS_UNSPECIFIED, iplb_chain, len);
-> +
-> +    if (ret != MEMTX_OK) {
-> +        error_report("Failed to map IPLB chain.");
-> +        exit(1);
-> +    }
->   
-> -    cpu_physical_memory_write(chain_addr, iplb_chain, len);
+> Yep, that one as well. I'll send a patch. Thanks
 
-By using address_space_memory, you're basically open-coding 
-cpu_physical_memory_write() here. That does not make too much sense. If I 
-got Philippe right in 
-https://lore.kernel.org/qemu-devel/469f3e5a-897a-4456-bd02-185435129ec4@linaro.org/ 
-, he rather asked about a device specific address space instead. However, 
-that ipl device does not have its own address space as far as I can see, so 
-that request does not make much sense here (unless I missed something). Thus 
-I'd suggest to drop this patch here.
+Did you ever send it?
 
   Thomas
 
