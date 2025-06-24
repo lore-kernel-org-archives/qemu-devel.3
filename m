@@ -4,48 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A714C77B7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 17:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33A75C7EE2A
+	for <qemu-devel@archiver.kernel.org>; Tue, 24 Jun 2025 17:55:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uU7q0-0002vC-4y; Tue, 24 Jun 2025 13:53:40 -0400
+	id 1uU7qZ-00033p-Mf; Tue, 24 Jun 2025 13:54:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1uU7pp-0002sw-GI; Tue, 24 Jun 2025 13:53:29 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1uU7pn-0002jX-QE; Tue, 24 Jun 2025 13:53:29 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.98.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1uU7pl-00000005Wmh-2a5T; Tue, 24 Jun 2025 19:53:25 +0200
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-To: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Avihai Horon <avihaih@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Subject: [PATCH 3/3] vfio/migration: Add also max in-flight VFIO device state
- buffers size limit
-Date: Tue, 24 Jun 2025 19:51:58 +0200
-Message-ID: <65a132db72807ec6341015e7079b10352d718b96.1750787338.git.maciej.szmigiero@oracle.com>
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1uU7qL-0002x1-CH
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 13:54:01 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1uU7qH-0002lm-7I
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 13:54:00 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-73972a54919so4443273b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 10:53:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1750787633; x=1751392433; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=N6BRfAQFkVAoPWiGigXYDEjYpDmpp8gw4u19/+JOvLQ=;
+ b=kIXWXHpzCFjEabAoAtnEVOzjjP73hfGw0zae/qNQt5f+Uzn/zqVsLBwB6Toc3ChEQu
+ eIVoqM/3qB0v/EkvjUjAah2EXM83njb43Weu7KGAD2MlYe6T1iP7Artwkf4hwuIa3F86
+ oGerVqjLV8ANo63Wx2gBEeytIfDe6S+bXk6Xgt8rfJpvVV53dSiGdhs79V16M2FfEm71
+ CKiyo6Fg0NL9aP3q+3axkHN5X6mD0tkYGMarem/5Puyu/b0SzxTumAtJ4GOY6a9MDAZH
+ j6g0DtQKK4BlCBgFWZExYXCZGjF+nl+K2OL8iHqFldmJWQey/TyprJqrvRbrhURu/o9j
+ wQwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750787633; x=1751392433;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=N6BRfAQFkVAoPWiGigXYDEjYpDmpp8gw4u19/+JOvLQ=;
+ b=a9TaAwDGb8MKS7Q4x2/mY1krrGFeLfk0HwdIDwa3KTqoccZ/zZJ4d74CzRadrKj/g7
+ Lbx0WLLjZNozKl/tMNWkyWpy1myyK0jk701YXDvjHfQR6Qkv73dnnWIbZfS3ADQQdxyn
+ YSHfhzpcEB3CpBu/Httl7VHXiiwLPX/NSerOOBJRFihb+oL13b9/eOxrAxvUcJ/ENdSC
+ l20mKZve/HNI6GCjOuzWdyF3mSzdZTHZ0atQksZv5zwvbOQxYB2keo+zm7MOY7YLFWvi
+ Jfwu9DDD2Z4Ts8Cey4WkT7Er6XI3qPP/rvTM113epMpLVyoFRAgUBFgkyHHTrwWncDUZ
+ oV1g==
+X-Gm-Message-State: AOJu0Yy2+v1QlxUC6rsm3gJMEoZn9PdIz9wOxaiEbY1LlPBzT8lgzZMi
+ amA5m0KfWvqLXA3mgtNqSdgfh/TX8oeFcnfT+aUTP2hz3P+g4lFiBt4slBv3sXgiCgQ=
+X-Gm-Gg: ASbGncsDZLKvOtaBmssec+qNIGC+BZ+459+GhPraghjTxWFI07T0iIQ44IqKzSe6+y5
+ 3Qnq+rbuP5ACz7mD3M6UfjEFD8JJIRcM7XkJceaE+2DYbxbZNt1PaR/L7eee7+p7q8YkjVPVN+i
+ QCJa9X+6/SAi/KimxPFx23gE2ZdVd49KTxCQMHPb4WE9xwfxt56iYW3f7K7mfgdB8D/dHl7ccJU
+ xN8XSY8UzT9LJ1Qod3ST2CeCjnTEMCrK1wkmKEC/AB5qbFiTpzvO3tt0dv6yvM7oy37k1kO6nRc
+ kFy1QGEI+4kaLLVxV6ZpF72Eyec2zQXff2Zr2k7S+Y73EfXaSx+Iy1+ecuh/ew==
+X-Google-Smtp-Source: AGHT+IHZhzpH+JiePvWShzpGGXavWzZRpik3UDwzxjPi0NvKe+HpKilJL/WrMuQSJLU1fe+N61P13Q==
+X-Received: by 2002:a05:6a20:430b:b0:216:1476:f5c with SMTP id
+ adf61e73a8af0-22026f66c0cmr26913881637.25.1750787632944; 
+ Tue, 24 Jun 2025 10:53:52 -0700 (PDT)
+Received: from shemhazi.lan ([50.46.174.34]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b31f12427b7sm9318153a12.40.2025.06.24.10.53.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 24 Jun 2025 10:53:52 -0700 (PDT)
+From: Rowan Hart <rowanbhart@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Rowan Hart <rowanbhart@gmail.com>
+Subject: [PATCH v14 0/8] Add additional plugin API functions to read and write
+ memory and registers
+Date: Tue, 24 Jun 2025 10:53:43 -0700
+Message-ID: <20250624175351.440780-1-rowanbhart@gmail.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <cover.1750787338.git.maciej.szmigiero@oracle.com>
-References: <cover.1750787338.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=rowanbhart@gmail.com; helo=mail-pf1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -62,138 +105,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+This patch series adds several new API functions focused on enabling use
+cases around reading and writing guest memory from QEMU plugins. To support
+these new APIs, some utility functionality around retrieving information about
+address spaces is added as well.
 
-There's already a max in-flight VFIO device state buffers *count* limit,
-add also max queued buffers *size* limit.
+The new qemu_plugin_write_register utilizes gdb_write_register, which is now
+declared in gdbstub.h for this purpose instead of being static.
 
-Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
----
- docs/devel/migration/vfio.rst |  8 +++++---
- hw/vfio/migration-multifd.c   | 21 +++++++++++++++++++--
- hw/vfio/pci.c                 |  9 +++++++++
- include/hw/vfio/vfio-device.h |  1 +
- 4 files changed, 34 insertions(+), 5 deletions(-)
+qemu_plugin_write_memory_vaddr utilizes cpu_memory_rw_debug much the same as
+the existing read_memory_vaddr function does.
 
-diff --git a/docs/devel/migration/vfio.rst b/docs/devel/migration/vfio.rst
-index 7c9cb7bdbf87..127a1db35949 100644
---- a/docs/devel/migration/vfio.rst
-+++ b/docs/devel/migration/vfio.rst
-@@ -254,12 +254,14 @@ This means that a malicious QEMU source could theoretically cause the target
- QEMU to allocate unlimited amounts of memory for such buffers-in-flight.
- 
- The "x-migration-max-queued-buffers" property allows capping the maximum count
--of these VFIO device state buffers queued at the destination.
-+of these VFIO device state buffers queued at the destination while
-+"x-migration-max-queued-buffers-size" property allows capping their total queued
-+size.
- 
- Because a malicious QEMU source causing OOM on the target is not expected to be
- a realistic threat in most of VFIO live migration use cases and the right value
--depends on the particular setup by default this queued buffers limit is
--disabled by setting it to UINT64_MAX.
-+depends on the particular setup by default these queued buffers limits are
-+disabled by setting them to UINT64_MAX.
- 
- Some host platforms (like ARM64) require that VFIO device config is loaded only
- after all iterables were loaded.
-diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-index a12ec1ead74a..c76f1f2181f9 100644
---- a/hw/vfio/migration-multifd.c
-+++ b/hw/vfio/migration-multifd.c
-@@ -82,6 +82,7 @@ typedef struct VFIOMultifd {
-     uint32_t load_buf_idx;
-     uint32_t load_buf_idx_last;
-     uint32_t load_buf_queued_pending_buffers;
-+    size_t load_buf_queued_pending_buffers_size;
- } VFIOMultifd;
- 
- static void vfio_state_buffer_clear(gpointer data)
-@@ -138,6 +139,7 @@ static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
-     VFIOMigration *migration = vbasedev->migration;
-     VFIOMultifd *multifd = migration->multifd;
-     VFIOStateBuffer *lb;
-+    size_t data_size = packet_total_size - sizeof(*packet);
- 
-     vfio_state_buffers_assert_init(&multifd->load_bufs);
-     if (packet->idx >= vfio_state_buffers_size_get(&multifd->load_bufs)) {
-@@ -164,8 +166,19 @@ static bool vfio_load_state_buffer_insert(VFIODevice *vbasedev,
-         return false;
-     }
- 
--    lb->data = g_memdup2(&packet->data, packet_total_size - sizeof(*packet));
--    lb->len = packet_total_size - sizeof(*packet);
-+    multifd->load_buf_queued_pending_buffers_size += data_size;
-+    if (multifd->load_buf_queued_pending_buffers_size >
-+        vbasedev->migration_max_queued_buffers_size) {
-+        error_setg(errp,
-+                   "%s: queuing state buffer %" PRIu32
-+                   " would exceed the size max of %" PRIu64,
-+                   vbasedev->name, packet->idx,
-+                   vbasedev->migration_max_queued_buffers_size);
-+        return false;
-+    }
-+
-+    lb->data = g_memdup2(&packet->data, data_size);
-+    lb->len = data_size;
-     lb->is_present = true;
- 
-     return true;
-@@ -349,6 +362,9 @@ static bool vfio_load_state_buffer_write(VFIODevice *vbasedev,
-         assert(wr_ret <= buf_len);
-         buf_len -= wr_ret;
-         buf_cur += wr_ret;
-+
-+        assert(multifd->load_buf_queued_pending_buffers_size >= wr_ret);
-+        multifd->load_buf_queued_pending_buffers_size -= wr_ret;
-     }
- 
-     trace_vfio_load_state_device_buffer_load_end(vbasedev->name,
-@@ -522,6 +538,7 @@ static VFIOMultifd *vfio_multifd_new(void)
-     multifd->load_buf_idx = 0;
-     multifd->load_buf_idx_last = UINT32_MAX;
-     multifd->load_buf_queued_pending_buffers = 0;
-+    multifd->load_buf_queued_pending_buffers_size = 0;
-     qemu_cond_init(&multifd->load_bufs_buffer_ready_cond);
- 
-     multifd->load_bufs_iter_done = false;
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 01e48e39de75..944813ee7bdb 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3529,6 +3529,8 @@ static const Property vfio_pci_dev_properties[] = {
-                             ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_UINT64("x-migration-max-queued-buffers", VFIOPCIDevice,
-                        vbasedev.migration_max_queued_buffers, UINT64_MAX),
-+    DEFINE_PROP_SIZE("x-migration-max-queued-buffers-size", VFIOPCIDevice,
-+                     vbasedev.migration_max_queued_buffers_size, UINT64_MAX),
-     DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
-                      vbasedev.migration_events, false),
-     DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
-@@ -3716,6 +3718,13 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, const void *data)
-                                           "destination when doing live "
-                                           "migration of device state via "
-                                           "multifd channels");
-+    object_class_property_set_description(klass, /* 10.1 */
-+                                          "x-migration-max-queued-buffers-size",
-+                                          "Maximum size of in-flight VFIO "
-+                                          "device state buffers queued at the "
-+                                          "destination when doing live "
-+                                          "migration of device state via "
-+                                          "multifd channels");
- }
- 
- static const TypeInfo vfio_pci_dev_info = {
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 359d553b916a..3e86d07347d6 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -68,6 +68,7 @@ typedef struct VFIODevice {
-     OnOffAuto migration_multifd_transfer;
-     OnOffAuto migration_load_config_after_iter;
-     uint64_t migration_max_queued_buffers;
-+    uint64_t migration_max_queued_buffers_size;
-     bool migration_events;
-     bool use_region_fds;
-     VFIODeviceOps *ops;
+The read and write_hwaddr functions are the most different. These functions
+use address_space_rw, which works well in most cases. There is an important
+caveat that for writes, the page being written will be set dirty by the
+write operation. This dirty setting requires locking the page range,
+which can contend with an already held lock in page_collection_lock
+when called in a tb translate callback with a write to the instruction
+memory in the tb. The doc comments warn against doing this, and it's unlikely
+anyone would want to do this.
+
+I've also added two test plugins: one that implements a simple hypercall
+interface that guest code can use to communicate with the plugin in a
+structured way with a test to ensure that this hypercall works and writing
+virtual memory works. And one that implements a simple patch utility to patch
+memory at runtime. The test for the second plugin ensures the patch applies
+successfully to instruction memory, and can use both hw and vaddr methods.
+
+For v3, I've had a few comments from the last submission that I've addressed,
+and some that I haven't for one reason or another:
+
+- Enforce QEMU_PLUGIN_CB_ flags in register read/write operations: done!
+- Fix my commit messages and add long messages describing commits: done!
+- Un-expose AS internals: done! Functions operate on current vCPU, current AS.
+- Clean up use of current_cpu: done!
+- Make functions take a vcpu_idx: not done. May revisit but it allows footguns.
+  Even for translation, seems best to not do this now. We can easily add _vcpu
+  versions of these functions in the future if we change our minds!
+
+For v5, I've just updated the enforcement of the QEMU_PLUGIN_CB_ flags to just
+use immediate stores, which simplifies the implementation quite a lot and
+should be more efficient too. Thanks Pierrick for the suggestion!
+
+v6 is a formatting pass, I left some whitespace that needed removal, some
+license text was wrong, and so forth.
+
+v8 reverts a mistake I made extending the size of arrays of TCGHelperInfo
+structs, as I misunderstood their sizes. It preserves adding an explicit
+zero as the last entry for clarity, however.
+
+v9 fixes qemu_plugin_read_register to return -1 on parameter or flag state
+error instead of 0.
+
+In v10, I relaxed the restriction on when the register r/w functions can be
+called, allowing all them to be used from any callback where the CPU is not
+currently executing, with additional notes in the documentation for exceptions
+(atexit and flush, which do not operate on a specific CPU and in which
+current_cpu is not set).
+
+v11 makes the cb flags functions inline and fixes a typo where cpu was asserted
+but current_cpu was actually accessed.
+
+v12 removes the hypercalls plugin because the functions it tested are also
+tested by the patcher plugin, making it redundant. We'll circle back on a
+hypercalls API in the future as a part of the plugin API, not as a plugin
+itself.
+
+v13 fixes up some issues Alex pointed out with the patch test. Now, the patch
+target only runs with libpatch.so, and libpatch.so only runs with the patch
+test.
+
+v14 addresses a build issue Alex pointed out with the patch test, and removes
+a few vestigial lines according to Alex's suggestion. I split this out into
+another commit as it's not actually coupled to the patch test.
+
+Rowan Hart (8):
+  gdbstub: Expose gdb_write_register function to consumers of gdbstub
+  plugins: Add register write API
+  plugins: Add enforcement of QEMU_PLUGIN_CB flags in register R/W
+    callbacks
+  plugins: Add memory virtual address write API
+  plugins: Add memory hardware address read/write API
+  tests/tcg: Remove copy-pasted notes and from i386 and add x86_64
+    system tests to tests
+  plugins: Add patcher plugin and test
+  plugins: Update plugin version and add notes
+
+ accel/tcg/plugin-gen.c                    |  30 +++
+ gdbstub/gdbstub.c                         |   2 +-
+ include/exec/gdbstub.h                    |  14 ++
+ include/hw/core/cpu.h                     |   1 +
+ include/qemu/plugin.h                     |  15 ++
+ include/qemu/qemu-plugin.h                | 176 ++++++++++++++--
+ plugins/api.c                             | 135 +++++++++++-
+ plugins/core.c                            |  33 +++
+ tests/tcg/Makefile.target                 |   7 +-
+ tests/tcg/plugins/meson.build             |   2 +-
+ tests/tcg/plugins/patch.c                 | 241 ++++++++++++++++++++++
+ tests/tcg/x86_64/Makefile.softmmu-target  |  19 +-
+ tests/tcg/x86_64/system/patch-target.c    |  22 ++
+ tests/tcg/x86_64/system/validate-patch.py |  39 ++++
+ 14 files changed, 710 insertions(+), 26 deletions(-)
+ create mode 100644 tests/tcg/plugins/patch.c
+ create mode 100644 tests/tcg/x86_64/system/patch-target.c
+ create mode 100755 tests/tcg/x86_64/system/validate-patch.py
+
+-- 
+2.49.0
+
 
