@@ -4,63 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4578C7EE2A
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 14:23:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69B98C7EE30
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 14:32:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUR1s-0007P9-94; Wed, 25 Jun 2025 10:23:13 -0400
+	id 1uURAG-0000mS-Ug; Wed, 25 Jun 2025 10:31:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1uUR1j-0007MW-Iw
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 10:23:03 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uURAC-0000m2-30
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 10:31:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1uUR1c-0005HO-HH
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 10:23:02 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bS3qr5ylgz6K9Bp;
- Wed, 25 Jun 2025 22:20:08 +0800 (CST)
-Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id BD259140427;
- Wed, 25 Jun 2025 22:22:41 +0800 (CST)
-Received: from localhost (10.45.148.101) by frapeml500003.china.huawei.com
- (7.182.85.28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 25 Jun
- 2025 16:22:40 +0200
-Date: Wed, 25 Jun 2025 15:22:34 +0100
-To: <nifan.cxl@gmail.com>
-CC: <qemu-devel@nongnu.org>, <jonathan.cameron@huawei.com>,
- <linux-cxl@vger.kernel.org>, <gregory.price@memverge.com>,
- <ira.weiny@intel.com>, <dan.j.williams@intel.com>,
- <a.manzanares@samsung.com>, <dave@stgolabs.net>, <nmtadam.samsung@gmail.com>, 
- <jim.harris@samsung.com>, <Jorgen.Hansen@wdc.com>, <wj28.lee@gmail.com>,
- <armbru@redhat.com>, <mst@redhat.com>, <anisa.su887@gmail.com>
-Subject: Re: [PATCH v8 00/14] Enabling DCD emulation support in Qemu
-Message-ID: <20250625152234.0000159e.alireza.sanaee@huawei.com>
-In-Reply-To: <20240523174651.1089554-1-nifan.cxl@gmail.com>
-References: <20240523174651.1089554-1-nifan.cxl@gmail.com>
-Organization: Huawei
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uURA9-0007Jp-9f
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 10:31:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750861901;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DGXrAcauABsJvsDu0MTIOzKL5T58+phM6dr0hePCHLw=;
+ b=WjC+0Rw1rRRVnM73Qdx3J0d8W/N8VeQTy0WCc9vN+VBTuXqQXLKCU31A1EHdFsYD3Sp8oV
+ nZ87dJVq846/F85ouRsu+tDh2tYFq8mhupY6izgC4QmAUfMxSctJYHf5+32pLYHOuwIyEv
+ P6uNA5dSw+VLbH04/FL8Qkvq9JCEHvY=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-141-7TXcyBoHOZaebB4gTKx8kA-1; Wed, 25 Jun 2025 10:31:39 -0400
+X-MC-Unique: 7TXcyBoHOZaebB4gTKx8kA-1
+X-Mimecast-MFC-AGG-ID: 7TXcyBoHOZaebB4gTKx8kA_1750861898
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a5780e8137so540385f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 07:31:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750861898; x=1751466698;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DGXrAcauABsJvsDu0MTIOzKL5T58+phM6dr0hePCHLw=;
+ b=GD3Vy1PxNmUdcZHyJL35wOpEfU72c4rv7u7MDdwV1SdNYeTRTxwUMJFXGJEgTVJzHj
+ O1URsJTZyt1tEb8cq92GRp7szpu6fZtM7t3ULuxHml7CpCS4O1PzO1o1da3mf6oDTk16
+ lUs9TvI/lwL5XzGLlmsRALfpiImLX987WB0g7IBDrzXLCDEQl9RUwS9XSa4/JR+qHTVW
+ JmvxvIxc2sao0MsRnGVdLPJMxRO3AYQlxjsUFapE2kZ10VLqltj51kGam5tIdASrmsh9
+ BqqcPeFh0bU+cetVMi0J+0dyZyaqQZwIQClK8tIjLvEZ9hrKz+2muev1jTAICHKi0lP2
+ NM0Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWGBLipH+8JXnqdz5/HalqAUIKK5Z7WeV90T1TeYJiat8cMccFTbUWITLi8UMMBw3FNKO27OG3fGVlg@nongnu.org
+X-Gm-Message-State: AOJu0Yz96kUdwOa6M2F7NTxKFOLvu+3w49+KBzdZhA6StoOZGx/rmrD5
+ j8NyrNuv4v3IDGsP1hPd6dxF43inP/UhpKRaNo1sJ/cA0gOe1bfXdKMow7XZZc0tizajac/3PtB
+ vbDO4D3lPvaVgLpl3Z/TKVD09G9rTd+uBFy1dBHRor5Y7utJHcDrwcuzk
+X-Gm-Gg: ASbGncuO62GIsu2NZj3PkvucmyFjNEkN09t3qTp40YUv5qLOjIntxZQA51oEX9VLOKi
+ c1edOl0+J6fORhVDGVeC8+lXQx/oUUeeJuWFi9oIrJyS17jgRshhubW+aypH85Ij7RoE1TZO9cc
+ Et9HBLzpJLt0+tKH/w6Vz1HBIPQdoJeINcrxSmB5HgQvEolRKMknx3nlvw5Pzp900Hmk0Sq/715
+ q/PrN2dOBUX7APZaV5ZDK7aor1102bpLw0BrLqNAhVjavF393drKokyBK70krmYtKI9sVRr8PmE
+ 3sAmD1+QzKg5H3gPya64ODzsXiKwQkIWjVkwZppu5ST7vRVuAuQ7u0vYdAzwiwYzeu4nZQ==
+X-Received: by 2002:a05:6000:2089:b0:3a4:e1f5:41f4 with SMTP id
+ ffacd0b85a97d-3a6e71ff6ecmr6822167f8f.17.1750861898054; 
+ Wed, 25 Jun 2025 07:31:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGHtOmgA2peKooZaMq56zEbr9NpQzt2e43nlZzDoIIrQFAUj/PN8uFMuNzG6QOZq7NMx3ZUoQ==
+X-Received: by 2002:a05:6000:2089:b0:3a4:e1f5:41f4 with SMTP id
+ ffacd0b85a97d-3a6e71ff6ecmr6822102f8f.17.1750861897535; 
+ Wed, 25 Jun 2025 07:31:37 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4538233bd14sm22302765e9.2.2025.06.25.07.31.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 25 Jun 2025 07:31:36 -0700 (PDT)
+Message-ID: <c93670f8-f204-448d-b795-b893237c05f5@redhat.com>
+Date: Wed, 25 Jun 2025 16:31:35 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 20/29] hw/acpi/ged: Prepare the device to react to PCI
+ hotplug events
+Content-Language: en-US
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, imammedo@redhat.com, gustavo.romero@linaro.org,
+ anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com,
+ pbonzini@redhat.com, philmd@linaro.org, alex.bennee@linaro.org
+References: <20250616094903.885753-1-eric.auger@redhat.com>
+ <20250616094903.885753-21-eric.auger@redhat.com>
+ <20250620104445.000033d5@huawei.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250620104445.000033d5@huawei.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.45.148.101]
-X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
- frapeml500003.china.huawei.com (7.182.85.28)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,233 +117,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via <qemu-devel@nongnu.org>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 23 May 2024 10:44:40 -0700
-nifan.cxl@gmail.com wrote:
-
-> From: Fan Ni <nifan.cxl@gmail.com>
-> 
-> A git tree of this series can be found here (with one extra commit on
-> top for printing out accepted/pending extent list for testing): 
-> https://github.com/moking/qemu/tree/dcd-v8-qapi
-> 
-> v7->v8:
-> 
-> This version carries over the following two patches from Gregory.
-> 1. hw/cxl/mailbox: change CCI cmd set structure to be a member, not a
-> reference https://gitlab.com/jic23/qemu/-/commit/f44ebc5a455ccdd6535879b0c5824e0d76b04da5
-> 2. hw/cxl/mailbox: interface to add CCI commands to an existing CCI
-> https://gitlab.com/jic23/qemu/-/commit/00a4dd8b388add03c588298f665ee918626296a5
-> 
-> Note, the above two patches are not directly related to DCD emulation.
-> 
-> All the following patches in this series are built on top of
-> mainstream QEMU and the above two patches.
-> 
-> The most significant changes of v8 is in Patch 11 (Patch 9 in v7).
-> Based on feedback from Markus and Jonathan, the QMP interfaces for
-> adding and releasing DC extents have been redesigned and now they
-> look like below,
-> 
-> # add a 128MB extent at offset 0 to region 0
-> 	{ "execute": "cxl-add-dynamic-capacity",
-> 	  "arguments": {
-> 		  "path": "/machine/peripheral/cxl-memdev0",
->           "host-id":0,
->           "selection-policy": 'prescriptive',
-> 		  "region": 0,
->           "tag": "",
-> 		  "extents": [
-> 		  {
-> 			  "offset": 0,
-> 			  "len": 134217728
-> 		  }
-> 		  ]
-> 	  }
-> 	}
-> 
-> Note: tag is optional.
-> 
-> # Release a 128MB extent at offset 0 from region 0
->  { "execute": "cxl-release-dynamic-capacity",
-> 	  "arguments": {
-> 		  "path": "/machine/peripheral/cxl-memdev0",
->           "host-id":0,
->           "removal-policy":"prescriptive",
->           "forced-removal": false,
->           "sanitize-on-release": false,
->           "region": 0,
->           "tag": "",
-> 		  "extents": [
-> 		  {
-> 			  "offset": 0,
-> 			  "len": 134217728
-> 		  }
-> 		  ]
-> 	  }
-> 	}
->     
-> Note: removal-policy, sanitize-on-release and tag are optional.
->     
-> Other changes include,
-> 1. Applied tags to patches. 
-> 2. Replaced error_setq with error_append_hint for
-> cxl_create_dc_region error case in Patch 6 (Patch 4 in v7); (Zhijian
-> Li) 3. Updated the error message to include region size information in
->     cxl_create_dc_region.
-> 4. set range1_size_hi to 0 for DCD in build_dvsec. (Jonathan)
-> 5. Several minor format fixes.
-> 
-> Thanks Markus, Jonathan, Gregory, and Zhijian for reviewing v7 and
-> svetly Todorov for testing v7.
-> 
-> This series pass the same tests as v7 check the cover letter of v7 for
-> more details. Additionally, we tested the QAPI interface for
-> adding/releasing DC extents with optional input parameters.
->   
-> 
-> v7: https://lore.kernel.org/linux-cxl/5856b7a4-4082-465f-9f61-b1ec6c35ef0f@fujitsu.com/T/#mec4c85022ce28c80b241aaf2d5431cadaa45f097
-> 
-> 
-> Fan Ni (12):
->   hw/cxl/cxl-mailbox-utils: Add dc_event_log_size field to output
->     payload of identify memory device command
->   hw/cxl/cxl-mailbox-utils: Add dynamic capacity region representative
->     and mailbox command support
->   include/hw/cxl/cxl_device: Rename mem_size as static_mem_size for
->     type3 memory devices
->   hw/mem/cxl_type3: Add support to create DC regions to type3 memory
->     devices
->   hw/mem/cxl-type3: Refactor ct3_build_cdat_entries_for_mr to take mr
->     size instead of mr as argument
->   hw/mem/cxl_type3: Add host backend and address space handling for DC
->     regions
->   hw/mem/cxl_type3: Add DC extent list representative and get DC
-> extent list mailbox support
->   hw/cxl/cxl-mailbox-utils: Add mailbox commands to support
-> add/release dynamic capacity response
->   hw/cxl/events: Add qmp interfaces to add/release dynamic capacity
->     extents
->   hw/mem/cxl_type3: Add DPA range validation for accesses to DC
-> regions hw/cxl/cxl-mailbox-utils: Add superset extent release mailbox
-> support hw/mem/cxl_type3: Allow to release extent superset in QMP
-> interface
-> 
-> Gregory Price (2):
->   hw/cxl/mailbox: change CCI cmd set structure to be a member, not a
->     reference
->   hw/cxl/mailbox: interface to add CCI commands to an existing CCI
-> 
->  hw/cxl/cxl-mailbox-utils.c  | 658
-> +++++++++++++++++++++++++++++++++++- hw/mem/cxl_type3.c          |
-> 634 ++++++++++++++++++++++++++++++++-- hw/mem/cxl_type3_stubs.c    |
-> 25 ++ include/hw/cxl/cxl_device.h |  85 ++++-
->  include/hw/cxl/cxl_events.h |  18 +
->  qapi/cxl.json               | 143 ++++++++
->  6 files changed, 1511 insertions(+), 52 deletions(-)
-> 
-
-Hi Nifan,
-
-I am trying to test this patchset with Ira's set on DCD, and I am
-trying to work out everything by using sysfs rather than using tools
-instead. I am not sure where things are going of the rail.
-
-I am using this patchset
-(https://lore.kernel.org/qemu-devel/20240523174651.1089554-2-nifan.cxl@gmail.com/) with Ira's v9 https://lore.kernel.org/all/20250413-dcd-type2-upstream-v9-0-1d4911a0b365@intel.com/
-
-This my CXL config:
-return [
-    "-m",      "6G,maxmem=20G,slots=10",
-    "-object", "memory-backend-ram,id=vmem0,share=on,size=2G",
-    "-device", "pxb-cxl,bus_nr=23,bus=pcie.0,id=cxl.1",
-    "-device","cxl-rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2", 
-    "-device","cxl-type3,bus=root_port13,volatile-dc-memdev=vmem0,id=cxl-vmem0,num-dc-regions=2",
-    "-M", "cxl=on,cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G" 
-]
 
 
-This is how I create a new CXL DC Region ready to work with.
+On 6/20/25 11:44 AM, Jonathan Cameron wrote:
+> On Mon, 16 Jun 2025 11:46:49 +0200
+> Eric Auger <eric.auger@redhat.com> wrote:
+>
+>> QEMU will notify the OS about PCI hotplug/hotunplug events through
+>> GED interrupts. Let the GED device handle a new PCI hotplug event.
+>> On its occurrence it calls the \\_SB.PCI0.PCNT method with the BLCK
+>> mutex held.
+>>
+>> The GED device uses a dedicated MMIO region that will be mapped
+>> by the machine code.
+>>
+>> At this point the GED still does not support PCI device hotplug in
+>> its TYPE_HOTPLUG_HANDLER implementation. This will come in a
+>> subsequent patch.
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Been a little while since I looked at how all this fits together
+> but this looks right from what I can remember.  Hopefully others
+> can give a more definitive review!
+>
+> One stray change that belongs in an earlier patch though.
+> With that fixed up.
+>
+> So with that in mind.
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+thanks!
+>
+>
+>
+>> diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
+>> index e79a24b821..36492aa0d9 100644
+>> --- a/hw/acpi/pcihp.c
+>> +++ b/hw/acpi/pcihp.c
+>> @@ -43,7 +43,6 @@
+>>  #include "qobject/qnum.h"
+>>  #include "trace.h"
+>>  
+>> -#define ACPI_PCIHP_SIZE 0x0018
+> It goes away from here, but doesn't get added anywhere?
+>
+> Looks like this belongs in patch 17?
+removed from 17!
 
-# creating a region
-region=$(cat
-/sys/bus/cxl/devices/decoder0.0/create_dynamic_ram_a_region) 
-echo $region
-
-echo $region >
-/sys/bus/cxl/devices/decoder0.0/create_dynamic_ram_a_region 
-echo 256 > /sys/bus/cxl/devices/$region/interleave_granularity 
-echo 1 > /sys/bus/cxl/devices/$region/interleave_ways
-
-echo "dynamic_ram_a" > /sys/bus/cxl/devices/decoder2.0/mode
-echo $((256 << 20)) > /sys/bus/cxl/devices/decoder2.0/dpa_size
-
-echo $((256 << 20)) > /sys/bus/cxl/devices/$region/size
-echo "decoder2.0" > /sys/bus/cxl/devices/$region/target0
-echo 1 > /sys/bus/cxl/devices/$region/commit
-
-echo $region > /sys/bus/cxl/drivers/cxl_region/bind
-
-After this I have two things created, region0 and dax_region0:
-
-root@localhost:~# ls /sys/bus/cxl/devices/
-dax_region0/    decoder1.0/     decoder1.2/     decoder2.0/
-decoder2.2/     endpoint2/      nvdimm-bridge0/ region0/ decoder0.0/
- decoder1.1/     decoder1.3/     decoder2.1/     decoder2.3/     mem0/
-         port1/          root0/
-
-This is what I have in dax_region0:
-root@localhost:~# ls /sys/bus/cxl/devices/dax_region0/
-dax0.0  dax_region  devtype  driver  modalias  subsystem  uevent
-
-Now I want to add an extent, and this is how I am doing it:
-	
-	{ "execute": "cxl-add-dynamic-capacity",
-	  "arguments": {
-		  "path": "/machine/peripheral/cxl-memdev0",
-          "host-id":0,
-          "selection-policy": 'prescriptive',
-		  "region": 0,
-          "tag": "",
-		  "extents": [
-		  {
-			  "offset": 0,
-			  "len": 134217728
-		  }
-		  ]
-	  }
-	}
-
-Now I see the extent added in my region device:
-root@localhost:~# ls /sys/bus/cxl/devices/dax_region0/
-dax0.0  dax_region  devtype  driver  extent0.0  modalias  subsystem
-uevent root@localhost:~# ls /sys/bus/cxl/devices/dax_region0/extent0.0/
-length  offset  uevent
-
-This is where things will go off the rails, at this point I want to
-create a new dax device to use, but this part is unsuccessful. Here I
-first add some size to the dax region created before: 
-
-root@localhost:~# echo 67108864 > /sys/bus/dax/devices/dax0.0/size 
-[264.539280] dax:alloc_dev_dax_range:1015: dax dax0.0: alloc range[0]:
-0x0000000810000000:0x0000000813ffffff 
-
-When I check the size everything looks OK: 
-root@localhost:~# cat /sys/bus/dax/devices/dax0.0/size 
-67108864
-
-But when I want to bind it then it does not work:
-root@localhost:~# echo "dax0.0" > /sys/bus/dax/drivers/device_dax/bind
--bash: echo: write error: No such device
-
-I believe I am missing something here. Would be good if you can help
-out here.
-
-Thanks,
-Alireza
+Eric
+>
+>>  #define PCI_UP_BASE 0x0000
+>>  #define PCI_DOWN_BASE 0x0004
+>>  #define PCI_EJ_BASE 0x0008
 
 
