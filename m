@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 062DEC7115C
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 13:37:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 673A4C7EE30
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 13:37:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUQJ1-0008Vd-Nv; Wed, 25 Jun 2025 09:36:51 -0400
+	id 1uUQJS-0000FH-Ul; Wed, 25 Jun 2025 09:37:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uUQIo-0008Tx-Tu
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 09:36:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uUQJM-00009r-2t
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 09:37:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uUQIi-0000Cm-Hs
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 09:36:38 -0400
+ id 1uUQJH-0000KE-U8
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 09:37:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750858590;
+ s=mimecast20190719; t=1750858625;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PMZJJFewBzjS4sZACakgZFb5UPa9fqCPQkRci89iPsg=;
- b=ATRcnfxy7RyebwAIkDd/i/rEoY4LlpIzYkULwxoPASmGip/Gi1ihMSzMky3eOn+KtXtwuR
- lejk4jtPknnqWgSdMyuvjeBJf/8kvPdngpWWO4xOvhT4FbnpA+ryH7vEs0dQxaP2HAzKoY
- /0odEF1DsQoKSMbUZEPRi9vpbGsl0pU=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jaApqlhiblKm5r3TKdO6hVIekuhpSl6yTPCgdm7/cSk=;
+ b=LxdOlqud+y0onCyEhMYBQ2C9VIzL9J09QUQLo4nlsw7XOImIeWUI2HzgSTeYdiin5KH9z9
+ 6T3IArzpuD9enJv8O29z1IU7Vtdi31FL4ROiPOLRiwd6kkEeWPHVQGT78O3y6+/9nRn1Zc
+ KHmcxs5EK6oHnJvhz/VOjKGYlxNndXc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-683-I3KyF_G_NiKDp7jMh9dXAA-1; Wed, 25 Jun 2025 09:36:29 -0400
-X-MC-Unique: I3KyF_G_NiKDp7jMh9dXAA-1
-X-Mimecast-MFC-AGG-ID: I3KyF_G_NiKDp7jMh9dXAA_1750858588
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a6d1394b07so870139f8f.3
- for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 06:36:28 -0700 (PDT)
+ us-mta-606-i1BhsgHlMGW_WVRmKZ7l2g-1; Wed, 25 Jun 2025 09:37:04 -0400
+X-MC-Unique: i1BhsgHlMGW_WVRmKZ7l2g-1
+X-Mimecast-MFC-AGG-ID: i1BhsgHlMGW_WVRmKZ7l2g_1750858623
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45334219311so8364615e9.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 06:37:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750858587; x=1751463387;
+ d=1e100.net; s=20230601; t=1750858623; x=1751463423;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=PMZJJFewBzjS4sZACakgZFb5UPa9fqCPQkRci89iPsg=;
- b=WdWVJfFNVH/e1+sFtm3RyxyvJlZTBjaUt60bHcnkdj3Jfc1EqPt4+/TCuHuqDDxKtZ
- R7MtLG7aLpSJnPFRAGyT6qnq35Ls8FOb04s3QsHY3PUv1MSkwSMarVEOpUI8eZ6giA7l
- zjeC2QnH2j9eM/fBcNNihWbtnrBH7PfwZhsTO5EccZezGy7R9VhoI4mdR5B2O4bYi84K
- HhnFH9ZJ1RvP17bP9jIxCL9vbAuguI+LbsBmcbFCWXfLpIPsOWd48Rejyz6Bi8tnHkvQ
- HQbGi9A5UIqWpLNGbGc0aGyT5DZ1AYN0T0ZJJrsercs7+OZUKHVjB+LJ8l6ODjYBkdpr
- SOwQ==
+ bh=jaApqlhiblKm5r3TKdO6hVIekuhpSl6yTPCgdm7/cSk=;
+ b=tRGvM+xzCNH4/e6OOC/Xoq7is4QlZCyrM7APaLgSva+eroI/rPmELoB/iVFPjVY83L
+ w2QW31z00ZhvsMGixCHSYnUmNt246XYw5+tiAYqn3/zPCKXdHwFzxm9bHlwGyZLIwKm/
+ cS62H9uRoi9zmQNZP6tB7YviGfBGhFHHJuGQbEzknT7K75o0PHrJx339q8ypIqlW+Hat
+ J8z0cn25c4H1K91pZuJDUgaytKHcehg7pxfpRmuxNf3mFr4geNKpRwbQt9PSC/AtqaFm
+ 6a41LlpGKlN/TlYadR7eK85ZLn23BgV5DZfwh8w6jLh0uqqfxQJqzMbA+tk8bu6iJl3n
+ GkWA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWN27GmecP2jscVFwr7zPjLc5P60wCZVwzfvDqFPdF7NXWs2uI2WRTagXTvgbAzaZFMYeUDkTbhQCJR@nongnu.org
-X-Gm-Message-State: AOJu0YyrdGHLiE9DqlaXeUGEIUzw4EOxo8grS3AbpJzUGWeGcviVuAcb
- ftHQWFTVbRZGG5h0oLlxauozz8AH3KVPa28FUhGP/vQcGv/Qx3n8/EeLCe21v4B5O4hNuJuEVwv
- WDKeLt+x+PamVpI+A32ZvWA+fbS9BVwKfnDTpjga1Ifj8cgoE2/S1z8BEeGV4CoKt
-X-Gm-Gg: ASbGncuIDU9dQ1XfFYDjY842DoVZWolL0ob5BZ3z1xvI98D0nYvPsvWZH/nXT0XJ9um
- mTzCfQ/wLF/BLfo90qtWSrM9zpzLHNYfCiZ1q542aZgjFFP/GvyAyAM6WvgTdJLHSmxnO4FLjHY
- 21fUj9VDBu6YcP43+3+FMZZjVCblN2r0qTxe9gFfb5PVWTOBoN/ajBzPF3Tx2BrSVMb6qlydKOo
- csfi6hWwW4BK6TXoANHS0WGxwec1RbGxb05kha1he9saWL0xVrO0owpTaiMo0EVTbPwEU8ILVpy
- VKxzdQ0wquK2sI6Dj+3ndsiFgZxD5MkHQriN/8A5oTS5eyn68MYrNZVfJMor/zdd03wELA==
-X-Received: by 2002:a05:600c:8b2a:b0:43c:ed61:2c26 with SMTP id
- 5b1f17b1804b1-45381b0f38fmr34328245e9.17.1750858586853; 
- Wed, 25 Jun 2025 06:36:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF3EexqTQK3I72TlBjeIsO4GRe3IMZcznQleE/PNQb9uJ+uu6gNiSgT4L65YfkdZt4rq4hWQA==
-X-Received: by 2002:a05:600c:8b2a:b0:43c:ed61:2c26 with SMTP id
- 5b1f17b1804b1-45381b0f38fmr34327885e9.17.1750858586334; 
- Wed, 25 Jun 2025 06:36:26 -0700 (PDT)
+ AJvYcCXt+Ie6ymh7aIB+WERxl60iiavtCYSQKpT/n6fEMCkXe9WQZDiLVj1SHmJMExWtMWUAL4JwXqKHmYUQ@nongnu.org
+X-Gm-Message-State: AOJu0YwGGqHOujxfV1+wg888O8GclAXyPKWV7ylVC/9EeeBop8eI0ynD
+ ONNxqBjN8vIiQEWif8mIaPD6Eb2MQEnAk7oYE6dkTqQIDNwNRjHld7rLKIr+TsRQR0yQA+2zkRx
+ tpY/BHrWBdjkyUE7egD626EkV7+X1p+75cqNRFZQVuAL3PkFLDB0C8VmV
+X-Gm-Gg: ASbGncuQqT/hI+ZEnPsWPuMv3auS0xzj2/C05R6AcSvcZX2CjxI7g+UtNI0K5cazCTf
+ j22sTjwTpWTuryFH2qyx254saiOD2W2nL8tw6HnfS0aSRvoUSsVgcVPIHhLxHNfN+iAPSLPrEL+
+ S5+47Ept2LaqUqo94Ne1XI62iCA4gLFtGXIN+GQt2QVVBOHozkf9JKPlNzF/Pf72uQA7vFcn/oW
+ /dmxtDedeIXoTBg5eLdDqHVoJMG4alo5gzzwqZc+BIIeWUh3BpCtT1ty5GYQgW3nE1HY/t0im1o
+ 45KthIqKNn1hA2QVXbukHCx5eJEg4CdfNL8pencJ4FFVEvAIe4Gj3iI0UWimOOJaMt8R+w==
+X-Received: by 2002:a05:600c:8508:b0:451:dee4:cd08 with SMTP id
+ 5b1f17b1804b1-45381ae9db8mr27151115e9.23.1750858623057; 
+ Wed, 25 Jun 2025 06:37:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHpAevyhZsnp1X2UVaim4WOdyZNyUJUXnzjuOSPa84JSIIrAA94+wjYSrD4x4ljFHBfwqYevg==
+X-Received: by 2002:a05:600c:8508:b0:451:dee4:cd08 with SMTP id
+ 5b1f17b1804b1-45381ae9db8mr27150645e9.23.1750858622439; 
+ Wed, 25 Jun 2025 06:37:02 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-453823b6c21sm20479955e9.29.2025.06.25.06.36.24
+ ffacd0b85a97d-3a6e8063a5dsm4806861f8f.35.2025.06.25.06.37.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Jun 2025 06:36:25 -0700 (PDT)
-Message-ID: <8112ac0c-7fc6-4135-9024-830e83a1e1db@redhat.com>
-Date: Wed, 25 Jun 2025 15:36:24 +0200
+ Wed, 25 Jun 2025 06:37:01 -0700 (PDT)
+Message-ID: <f90d8aa1-74bc-46e1-b4a6-9a4f54854d86@redhat.com>
+Date: Wed, 25 Jun 2025 15:37:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 25/29] hw/arm/virt: Let virt support pci hotplug/unplug
  GED event
 Content-Language: en-US
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+To: Igor Mammedov <imammedo@redhat.com>
 Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, imammedo@redhat.com, gustavo.romero@linaro.org,
- anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com,
- pbonzini@redhat.com, philmd@linaro.org, alex.bennee@linaro.org
+ peter.maydell@linaro.org, gustavo.romero@linaro.org, anisinha@redhat.com,
+ mst@redhat.com, shannon.zhaosl@gmail.com, pbonzini@redhat.com,
+ Jonathan.Cameron@huawei.com, philmd@linaro.org, alex.bennee@linaro.org
 References: <20250616094903.885753-1-eric.auger@redhat.com>
  <20250616094903.885753-26-eric.auger@redhat.com>
- <20250620111745.00004018@huawei.com>
+ <20250620150648.09dab163@fedora>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250620111745.00004018@huawei.com>
+In-Reply-To: <20250620150648.09dab163@fedora>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -104,8 +104,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,9 +121,9 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jonathan,
+Hi Igor,
 
-On 6/20/25 12:17 PM, Jonathan Cameron wrote:
+On 6/20/25 3:06 PM, Igor Mammedov wrote:
 > On Mon, 16 Jun 2025 11:46:54 +0200
 > Eric Auger <eric.auger@redhat.com> wrote:
 >
@@ -137,23 +136,6 @@ On 6/20/25 12:17 PM, Jonathan Cameron wrote:
 >> v2 -> v3:
 >> - remove acpi_ged_state->pcihp_state.use_acpi_hotplug_bridge = true;
 >> - use sysbus_mmio_map_name for all regs (Igor)
-> I'm very much in favor of this change but maybe break them out to
-> a separate patch - perhaps even one that can run ahead of the rest
-> of this series?
-
-I split it in a separate patch.
-
-Thanks!
-
-Eric
->
-> Mind you if this is going to land shortly perhaps not worth the bother.
->
-> Either way
->
-> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
->
->
 >> - create_pcie left at its original place
 >>
 >> v1 -> v2:
@@ -197,6 +179,9 @@ Eric
 >> +    if (pcihp_state->use_acpi_hotplug_bridge) {
 >> +        event |= ACPI_GED_PCI_HOTPLUG_EVT;
 >> +    }
+> Doesn't it belong to ged_realize()?
+moved there
+>
 >>      qdev_prop_set_uint32(dev, "ged-event", event);
 >>      object_property_set_link(OBJECT(dev), "bus", OBJECT(vms->bus), &error_abort);
 >>      sbdev = SYS_BUS_DEVICE(dev);
@@ -208,6 +193,13 @@ Eric
 >> +    sysbus_mmio_map_name(sbdev, ACPI_MEMHP_REGION_NAME,
 >> +                         vms->memmap[VIRT_PCDIMM_ACPI].base);
 >> +    if (pcihp_state->use_acpi_hotplug_bridge) {
+> like elsewhere, use property accessor
+yup
+
+Thanks!
+
+Eric
+>
 >> +        int pcihp_region_index;
 >> +
 >> +        pcihp_region_index = sysbus_mmio_map_name(sbdev, ACPI_PCIHP_REGION_NAME,
