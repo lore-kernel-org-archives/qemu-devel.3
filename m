@@ -4,89 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18457C7115C
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 11:15:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 601ADC7115C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 11:32:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUO4q-0006y0-If; Wed, 25 Jun 2025 07:14:04 -0400
+	id 1uUOLv-0002rC-FM; Wed, 25 Jun 2025 07:31:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1uUO4o-0006xq-TD
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 07:14:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uUOLs-0002pD-HD
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 07:31:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1uUO4j-0004gn-TI
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 07:14:00 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uUOLo-00052m-Ra
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 07:31:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750850035;
+ s=mimecast20190719; t=1750851092;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=UoDexJdJ84RSr0qybJ+g66Wmp4M6sI3qTppitE0fOnY=;
- b=F9vyP+wuPw10oXYnUkJy33FPrsFzxLf1JwjrYkij2dg01+83mQnuia0ur51JUjinAz4ygg
- M7cz+c4r5NwUUB5JV6I4XyGFiOiJ18INV+t3pL3CUPivIEV0A3Xu20VZ7wyoX8u8WHNgeF
- KT5xEEowbkRmfjGm8C3Uv7QkvHMlqzw=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-399-LSqjqRBoMmawny2YeOHU-Q-1; Wed, 25 Jun 2025 07:13:53 -0400
-X-MC-Unique: LSqjqRBoMmawny2YeOHU-Q-1
-X-Mimecast-MFC-AGG-ID: LSqjqRBoMmawny2YeOHU-Q_1750850033
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a4e9252ba0so3480333f8f.0
- for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 04:13:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750850032; x=1751454832;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UoDexJdJ84RSr0qybJ+g66Wmp4M6sI3qTppitE0fOnY=;
- b=OxDHkTNzqglPykTWoGY6ng64X7S1q3H7HpJZ6U37AuMU05IRtWw9A4idVcs8jFse03
- dgpUG+s/X/g0x1g7fW4g8gsWd3kKbQCmrkPr8iLD0opAsgg82LccuX1xGC5t7vZiuAN8
- OGTvgKjY3eh1bPDnjM5EPAMHUIqEFdtgmWEXXnSZlrcM4FO7gOn6K+txAWmIVZJrRFn0
- qXsTBRSp8v5u0ZB1JQtuzqiikEnBtqUNQIk6A6FePtiUuBKJiKMentmc6FY26NQNMGN7
- BATnGs1i3ZxU67hZ4MIkTQ7p9nbEaF092vYlexxBsxpcFudt+D+0W0xSScM9AseOxkR4
- tXWQ==
-X-Gm-Message-State: AOJu0YzwtP7fCUz7zLr8u4wxy/ltMzB2VF+HeWPx5r9WvfYzTgBh0OpU
- /OdRzoaLO0dFFOx1GXl5NjlgyM5YnzLNHCc3ESpUU7iYwLMjkZH5iOWpFtDsjViKNbfMOS5gk3O
- cPzbH00AxR+LT43LmwcrsT8yceqaHKl8c0FxioxwOA5qSRpgRtMHEBGwV
-X-Gm-Gg: ASbGncupOSe6+szgSV/I7sAE2jGkogN14yxBCtlADrBJMo8l5ldejAEaTqgI2SLL4Kp
- lfrRlqjDtU/E9xcjqq/JfxE6G4tvw9fMVO1asqkUa3vsKFNU17IyFq060XMq5py0Tr+tSHQko5T
- FZTb9oege+puc1vpa/RdNlmakPyGn9BHOYvoDr5sjYiV+sQXUBpVccIOp/lYYhVUjcAav9M/tXx
- Pvkef6GZMgxgNnU0HMxYIwyeFj4vnGQghvz4cWSbEUkHtNh/077wL1xfxrFpi1Y39nIBcLBsW0B
- ULlX4G8or9in0e1HLucDsSGAYlvPQQNc5auZwA==
-X-Received: by 2002:a5d:5f01:0:b0:3a5:1c3c:8d8d with SMTP id
- ffacd0b85a97d-3a6ed652db1mr1882239f8f.55.1750850032503; 
- Wed, 25 Jun 2025 04:13:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEuA+tBNuFsStdF0KTa2We+nPhJVPxCBIUBlKouWepueAUY04vyEs0amwvTmQyVkaj7r4GOEQ==
-X-Received: by 2002:a5d:5f01:0:b0:3a5:1c3c:8d8d with SMTP id
- ffacd0b85a97d-3a6ed652db1mr1882159f8f.55.1750850031125; 
- Wed, 25 Jun 2025 04:13:51 -0700 (PDT)
-Received: from fedora (nat-pool-brq-u.redhat.com. [213.175.37.12])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45380705351sm23534125e9.0.2025.06.25.04.13.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Jun 2025 04:13:50 -0700 (PDT)
-Date: Wed, 25 Jun 2025 13:13:48 +0200
-From: Juraj Marcin <jmarcin@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Mario Casquero <mcasquer@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, "Dr . David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH v3 06/11] migration: Rename save_live_complete_precopy to
- save_complete
-Message-ID: <5wyhdft4ucul4wehkq76im56jkixfmyxrfrhezzjnf7qnkmu7i@e73pvqathnom>
-References: <20250613140801.474264-1-peterx@redhat.com>
- <20250613140801.474264-7-peterx@redhat.com>
- <oo4t2s5rz4uaivfm3vejlum5c7efsjiysbavtt24rinoefs2tk@ihtornpsiz5q>
- <aFrHF4hKTdAgRpfs@x1.local>
+ bh=aKix2Wzt8o657jjDmWRqjHEPGlgRMeKET/liRkISC8E=;
+ b=Cza46t8rIvEt/Ygl/U8aNhT8uPBopw89oMlKDSJ9f8+946aOhICMBapVQkTUJ7HsgEnetv
+ NJfX6tmChziUSxZLgagqMhSQr/nlBppM0fciYSi9N5k5Kh3F0Sn/eH6/5uqKKFa+NnUiO6
+ kvb47lkdW42lWzYUHqO66XEf95ucfUg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-390-LTtzQspHPBixy_lU4NSX4g-1; Wed,
+ 25 Jun 2025 07:31:31 -0400
+X-MC-Unique: LTtzQspHPBixy_lU4NSX4g-1
+X-Mimecast-MFC-AGG-ID: LTtzQspHPBixy_lU4NSX4g_1750851090
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 515E11808984; Wed, 25 Jun 2025 11:31:30 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B6A93300022A; Wed, 25 Jun 2025 11:31:29 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id E355F21E6A27; Wed, 25 Jun 2025 13:31:26 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Daniel P .
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Subject: Re: [PATCH 02/21] migration: Remove MigrateSetParameters
+In-Reply-To: <20250603013810.4772-3-farosas@suse.de> (Fabiano Rosas's message
+ of "Mon, 2 Jun 2025 22:37:51 -0300")
+References: <20250603013810.4772-1-farosas@suse.de>
+ <20250603013810.4772-3-farosas@suse.de>
+Date: Wed, 25 Jun 2025 13:31:26 +0200
+Message-ID: <87y0tg5a7l.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aFrHF4hKTdAgRpfs@x1.local>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -111,125 +86,408 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025-06-24 11:41, Peter Xu wrote:
-> On Tue, Jun 24, 2025 at 04:36:39PM +0200, Juraj Marcin wrote:
-> 
-> [...]
-> 
-> > There are still mentions of 'save_live_complete_precopy' in:
-> > 
-> >     include/migration/register.h:100
-> >         * parallel with @save_live_complete_precopy handlers.
-> >     docs/devel/migration/vfio.rst:78
-> >         * A ``save_live_complete_precopy`` function that sets the VFIO device in
-> >     docs/devel/migration/vfio.rst:198
-> >         .save_live_complete_precopy() is called for each active device
-> >     docs/devel/migration/vfio.rst:200
-> >         .save_live_complete_precopy() until
-> >     docs/devel/migration/main.rst:511
-> >         - A ``save_live_complete_precopy`` function that must transmit the
-> 
-> Good catch.  If I prepare this fixup to be squashed, can I get your R-b?
+Fabiano Rosas <farosas@suse.de> writes:
 
-Yes, with the fixup it looks good.
-
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
-
-> 
-> From 58147b11276fa193c25f35e63f41a8e34d444dd9 Mon Sep 17 00:00:00 2001
-> From: Peter Xu <peterx@redhat.com>
-> Date: Tue, 24 Jun 2025 11:38:17 -0400
-> Subject: [PATCH] fixup! migration: Rename save_live_complete_precopy to
->  save_complete
-> 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+> Now that the TLS options have been made the same between
+> migrate-set-parameters and query-migrate-parameters, a single type can
+> be used. Remove MigrateSetParameters.
+>
+> The TLS options documentation from MigrationParameters were replaced
+> with the ones from MigrateSetParameters which was more complete.
+>
+> I'm choosing to somewhat ignore any ambiguity between "query" and
+> "set" because other options' docs are already ambiguous in that
+> regard.
+>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->  docs/devel/migration/main.rst |  4 ++--
->  docs/devel/migration/vfio.rst | 12 ++++++------
->  include/migration/register.h  |  2 +-
->  3 files changed, 9 insertions(+), 9 deletions(-)
-> 
-> diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
-> index cdd4f4a6d7..6493c1d2bc 100644
-> --- a/docs/devel/migration/main.rst
-> +++ b/docs/devel/migration/main.rst
-> @@ -508,8 +508,8 @@ An iterative device must provide:
->      the point that stream bandwidth limits tell it to stop.  Each call
->      generates one section.
+>  migration/migration-hmp-cmds.c |   4 +-
+>  migration/options.c            |   6 +-
+>  qapi/migration.json            | 221 +++------------------------------
+>  3 files changed, 20 insertions(+), 211 deletions(-)
+>
+> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+> index bc8179c582..aacffdc532 100644
+> --- a/migration/migration-hmp-cmds.c
+> +++ b/migration/migration-hmp-cmds.c
+> @@ -490,7 +490,7 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDict *qdict)
+>      const char *param = qdict_get_str(qdict, "parameter");
+>      const char *valuestr = qdict_get_str(qdict, "value");
+>      Visitor *v = string_input_visitor_new(valuestr);
+> -    MigrateSetParameters *p = g_new0(MigrateSetParameters, 1);
+> +    MigrationParameters *p = g_new0(MigrationParameters, 1);
+>      uint64_t valuebw = 0;
+>      uint64_t cache_size;
+>      Error *err = NULL;
+> @@ -656,7 +656,7 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDict *qdict)
+>      qmp_migrate_set_parameters(p, &err);
 >  
-> -  - A ``save_live_complete_precopy`` function that must transmit the
-> -    last section for the device containing any remaining data.
-> +  - A ``save_complete`` function that must transmit the last section for
-> +    the device containing any remaining data.
+>   cleanup:
+> -    qapi_free_MigrateSetParameters(p);
+> +    qapi_free_MigrationParameters(p);
+>      visit_free(v);
+>      hmp_handle_error(mon, err);
+>  }
+> diff --git a/migration/options.c b/migration/options.c
+> index 45a95dc6da..e49d584a99 100644
+> --- a/migration/options.c
+> +++ b/migration/options.c
+> @@ -1227,7 +1227,7 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+>      return true;
+>  }
 >  
->    - A ``load_state`` function used to load sections generated by
->      any of the save functions that generate sections.
-> diff --git a/docs/devel/migration/vfio.rst b/docs/devel/migration/vfio.rst
-> index 673e354754..8ff5ab0c74 100644
-> --- a/docs/devel/migration/vfio.rst
-> +++ b/docs/devel/migration/vfio.rst
-> @@ -75,10 +75,10 @@ VFIO implements the device hooks for the iterative approach as follows:
->    in the non-multifd mode.
->    In the multifd mode it just emits either a dummy EOS marker.
+> -static void migrate_params_test_apply(MigrateSetParameters *params,
+> +static void migrate_params_test_apply(MigrationParameters *params,
+>                                        MigrationParameters *dest)
+>  {
+>      *dest = migrate_get_current()->parameters;
+> @@ -1350,7 +1350,7 @@ static void migrate_params_test_apply(MigrateSetParameters *params,
+>      }
+>  }
 >  
-> -* A ``save_live_complete_precopy`` function that sets the VFIO device in
-> -  _STOP_COPY state and iteratively copies the data for the VFIO device until
-> -  the vendor driver indicates that no data remains.
-> -  In the multifd mode it just emits a dummy EOS marker.
-> +* A ``save_complete`` function that sets the VFIO device in _STOP_COPY
-> +  state and iteratively copies the data for the VFIO device until the
-> +  vendor driver indicates that no data remains.  In the multifd mode it
-> +  just emits a dummy EOS marker.
+> -static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
+> +static void migrate_params_apply(MigrationParameters *params, Error **errp)
+>  {
+>      MigrationState *s = migrate_get_current();
 >  
->  * A ``save_live_complete_precopy_thread`` function that in the multifd mode
->    provides thread handler performing multifd device state transfer.
-> @@ -195,9 +195,9 @@ Live migration save path
->                                        |
->                  Then the VFIO device is put in _STOP_COPY state
->                       (FINISH_MIGRATE, _ACTIVE, _STOP_COPY)
-> -         .save_live_complete_precopy() is called for each active device
-> +               .save_complete() is called for each active device
->                For the VFIO device: in the non-multifd mode iterate in
-> -                        .save_live_complete_precopy() until
-> +                             .save_complete() until
->                                 pending data is 0
->  	          In the multifd mode this iteration is done in
->  	          .save_live_complete_precopy_thread() instead.
-> diff --git a/include/migration/register.h b/include/migration/register.h
-> index 0510534515..2a26e76a68 100644
-> --- a/include/migration/register.h
-> +++ b/include/migration/register.h
-> @@ -103,7 +103,7 @@ typedef struct SaveVMHandlers {
->       * Called at the end of a precopy phase from a separate worker thread
->       * in configurations where multifd device state transfer is supported
->       * in order to perform asynchronous transmission of the remaining data in
-> -     * parallel with @save_live_complete_precopy handlers.
-> +     * parallel with @save_complete handlers.
->       * When postcopy is enabled, devices that support postcopy will skip this
->       * step.
->       *
-> -- 
-> 2.49.0
-> 
-> 
-> > 
-> > Also, should we also drop "live" from
-> > 'save_live_complete_precopy_thread' as well? IIUC they are called
-> > together with (now) 'save_complete()' during precopy.
-> 
-> Agreed, though it's better done in a separate one.
-> 
-> If so, wanna send a patch? :)
+> @@ -1479,7 +1479,7 @@ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
+>      }
+>  }
+>  
+> -void qmp_migrate_set_parameters(MigrateSetParameters *params, Error **errp)
+> +void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
+>  {
+>      MigrationParameters tmp;
+>  
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index fa42d94810..080968993a 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -914,202 +914,6 @@
+>             'zero-page-detection',
+>             'direct-io'] }
+>  
+> -##
+> -# @MigrateSetParameters:
 
-Sure, I will send it today.
+Only use is argument type of migrate-set-parameters.  You're replacing
+it by MigrationParameters there.  Let's compare the deleted docs to
+their replacement.  I'll quote replacement docs exactly where they
+differ.
 
-> 
-> PS: would be nice if on top of this series, then I can collect them together.
-> 
-> Thanks!
-> 
-> -- 
-> Peter Xu
-> 
+   # @MigrationParameters:
+   #
+   # Migration parameters. Optional members are optional when used with
+   # an input command, otherwise mandatory.
+
+Figuring out which commands are input commands is left to the reader.
+Why not simply "optional with migrate-set-parameters"?
+
+However, it doesn't end there.  The paragraph creates a problem with
+John Snow's "inliner", which I hope to merge later this year.  Let me
+explain.
+
+Generated command documentation normally looks like this:
+
+    Command migrate-set-capabilities (Since: 1.2)
+
+       Enable/Disable the following migration capabilities (like xbzrle)
+
+       Arguments:
+          * **capabilities** ("[""MigrationCapabilityStatus""]") -- json
+            array of capability modifications to make
+
+Except when we happen to use a named type for the arguments.  This
+should be an implementation detail, and it is, except for generated
+documentation, which looks like
+
+    Command migrate-set-parameters (Since: 2.4)
+
+       Set various migration parameters.
+
+       Arguments:
+          * The members of "MigrationParameters".
+
+The arguments are hidden behind a link.  The "inliner" will show the
+them normally *always*, for better usability.  It will not, however,
+inline the introductory paragraph above.  I can explain why if
+necessary.
+
+To compensate for the loss of that paragraph, we'll have to add suitable
+text to migrate-set-parameters's doc comment.
+
+I think we could just as well do that *now*: scratch the paragraph here,
+add a suitable paragraph there.
+
+> -#
+> -# @announce-initial: Initial delay (in milliseconds) before sending
+> -#     the first announce (Since 4.0)
+> -#
+> -# @announce-max: Maximum delay (in milliseconds) between packets in
+> -#     the announcement (Since 4.0)
+> -#
+> -# @announce-rounds: Number of self-announce packets sent after
+> -#     migration (Since 4.0)
+> -#
+> -# @announce-step: Increase in delay (in milliseconds) between
+> -#     subsequent packets in the announcement (Since 4.0)
+> -#
+> -# @throttle-trigger-threshold: The ratio of bytes_dirty_period and
+> -#     bytes_xfer_period to trigger throttling.  It is expressed as
+> -#     percentage.  The default value is 50.  (Since 5.0)
+> -#
+> -# @cpu-throttle-initial: Initial percentage of time guest cpus are
+> -#     throttled when migration auto-converge is activated.  The
+> -#     default value is 20.  (Since 2.7)
+> -#
+
+   # @cpu-throttle-initial: Initial percentage of time guest cpus are
+   #     throttled when migration auto-converge is activated.  (Since
+   #     2.7)
+
+We no longer document the default value.
+
+> -# @cpu-throttle-increment: throttle percentage increase each time
+> -#     auto-converge detects that migration is not making progress.
+> -#     The default value is 10.  (Since 2.7)
+
+   # @cpu-throttle-increment: throttle percentage increase each time
+   #     auto-converge detects that migration is not making progress.
+   #     (Since 2.7)
+
+Likewise.
+
+> -#
+> -# @cpu-throttle-tailslow: Make CPU throttling slower at tail stage At
+> -#     the tail stage of throttling, the Guest is very sensitive to CPU
+> -#     percentage while the @cpu-throttle -increment is excessive
+> -#     usually at tail stage.  If this parameter is true, we will
+> -#     compute the ideal CPU percentage used by the Guest, which may
+> -#     exactly make the dirty rate match the dirty rate threshold.
+> -#     Then we will choose a smaller throttle increment between the one
+> -#     specified by @cpu-throttle-increment and the one generated by
+> -#     ideal CPU percentage.  Therefore, it is compatible to
+> -#     traditional throttling, meanwhile the throttle increment won't
+> -#     be excessive at tail stage.  The default value is false.  (Since
+> -#     5.1)
+> -#
+> -# @tls-creds: ID of the 'tls-creds' object that provides credentials
+> -#     for establishing a TLS connection over the migration data
+> -#     channel.  On the outgoing side of the migration, the credentials
+> -#     must be for a 'client' endpoint, while for the incoming side the
+> -#     credentials must be for a 'server' endpoint.  Setting this to a
+> -#     non-empty string enables TLS for all migrations.  An empty
+> -#     string means that QEMU will use plain text mode for migration,
+> -#     rather than TLS.  This is the default.  (Since 2.7)
+> -#
+> -# @tls-hostname: migration target's hostname for validating the
+> -#     server's x509 certificate identity.  If empty, QEMU will use the
+> -#     hostname from the migration URI, if any.  A non-empty value is
+> -#     required when using x509 based TLS credentials and the migration
+> -#     URI does not include a hostname, such as fd: or exec: based
+> -#     migration.  (Since 2.7)
+> -#
+> -#     Note: empty value works only since 2.9.
+> -#
+> -# @tls-authz: ID of the 'authz' object subclass that provides access
+> -#     control checking of the TLS x509 certificate distinguished name.
+> -#     This object is only resolved at time of use, so can be deleted
+> -#     and recreated on the fly while the migration server is active.
+> -#     If missing, it will default to denying access (Since 4.0)
+> -#
+> -# @max-bandwidth: maximum speed for migration, in bytes per second.
+> -#     (Since 2.8)
+> -#
+> -# @avail-switchover-bandwidth: to set the available bandwidth that
+> -#     migration can use during switchover phase.  NOTE!  This does not
+> -#     limit the bandwidth during switchover, but only for calculations
+> -#     when making decisions to switchover.  By default, this value is
+> -#     zero, which means QEMU will estimate the bandwidth
+> -#     automatically.  This can be set when the estimated value is not
+> -#     accurate, while the user is able to guarantee such bandwidth is
+> -#     available when switching over.  When specified correctly, this
+> -#     can make the switchover decision much more accurate.
+> -#     (Since 8.2)
+> -#
+> -# @downtime-limit: set maximum tolerated downtime for migration.
+> -#     maximum downtime in milliseconds (Since 2.8)
+> -#
+> -# @x-checkpoint-delay: The delay time (in ms) between two COLO
+> -#     checkpoints in periodic mode.  (Since 2.8)
+
+   # @x-checkpoint-delay: the delay time between two COLO checkpoints.
+   #     (Since 2.8)
+
+We no longer mention periodic mode.
+
+> -#
+> -# @multifd-channels: Number of channels used to migrate data in
+> -#     parallel.  This is the same number that the number of sockets
+> -#     used for migration.  The default value is 2 (since 4.0)
+> -#
+> -# @xbzrle-cache-size: cache size to be used by XBZRLE migration.  It
+> -#     needs to be a multiple of the target page size and a power of 2
+> -#     (Since 2.11)
+> -#
+> -# @max-postcopy-bandwidth: Background transfer bandwidth during
+> -#     postcopy.  Defaults to 0 (unlimited).  In bytes per second.
+> -#     (Since 3.0)
+> -#
+> -# @max-cpu-throttle: maximum cpu throttle percentage.  Defaults to 99.
+> -#     (Since 3.1)
+> -#
+> -# @multifd-compression: Which compression method to use.  Defaults to
+> -#     none.  (Since 5.0)
+> -#
+> -# @multifd-zlib-level: Set the compression level to be used in live
+> -#     migration, the compression level is an integer between 0 and 9,
+> -#     where 0 means no compression, 1 means the best compression
+> -#     speed, and 9 means best compression ratio which will consume
+> -#     more CPU.  Defaults to 1.  (Since 5.0)
+> -#
+> -# @multifd-qatzip-level: Set the compression level to be used in live
+> -#     migration. The level is an integer between 1 and 9, where 1 means
+> -#     the best compression speed, and 9 means the best compression
+> -#     ratio which will consume more CPU. Defaults to 1.  (Since 9.2)
+> -#
+> -# @multifd-zstd-level: Set the compression level to be used in live
+> -#     migration, the compression level is an integer between 0 and 20,
+> -#     where 0 means no compression, 1 means the best compression
+> -#     speed, and 20 means best compression ratio which will consume
+> -#     more CPU.  Defaults to 1.  (Since 5.0)
+> -#
+> -# @block-bitmap-mapping: Maps block nodes and bitmaps on them to
+> -#     aliases for the purpose of dirty bitmap migration.  Such aliases
+> -#     may for example be the corresponding names on the opposite site.
+> -#     The mapping must be one-to-one, but not necessarily complete: On
+> -#     the source, unmapped bitmaps and all bitmaps on unmapped nodes
+> -#     will be ignored.  On the destination, encountering an unmapped
+> -#     alias in the incoming migration stream will result in a report,
+> -#     and all further bitmap migration data will then be discarded.
+> -#     Note that the destination does not know about bitmaps it does
+> -#     not receive, so there is no limitation or requirement regarding
+> -#     the number of bitmaps received, or how they are named, or on
+> -#     which nodes they are placed.  By default (when this parameter
+> -#     has never been set), bitmap names are mapped to themselves.
+> -#     Nodes are mapped to their block device name if there is one, and
+> -#     to their node name otherwise.  (Since 5.2)
+> -#
+> -# @x-vcpu-dirty-limit-period: Periodic time (in milliseconds) of dirty
+> -#     limit during live migration.  Should be in the range 1 to
+> -#     1000ms.  Defaults to 1000ms.  (Since 8.1)
+> -#
+> -# @vcpu-dirty-limit: Dirtyrate limit (MB/s) during live migration.
+> -#     Defaults to 1.  (Since 8.1)
+> -#
+> -# @mode: Migration mode.  See description in @MigMode.  Default is
+> -#     'normal'.  (Since 8.2)
+> -#
+> -# @zero-page-detection: Whether and how to detect zero pages.
+> -#     See description in @ZeroPageDetection.  Default is 'multifd'.
+> -#     (since 9.0)
+> -#
+> -# @direct-io: Open migration files with O_DIRECT when possible.  This
+> -#     only has effect if the @mapped-ram capability is enabled.
+> -#     (Since 9.1)
+> -#
+> -# Features:
+> -#
+> -# @unstable: Members @x-checkpoint-delay and
+> -#     @x-vcpu-dirty-limit-period are experimental.
+> -#
+> -# TODO: either fuse back into MigrationParameters, or make
+> -#     MigrationParameters members mandatory
+
+The TODO is gone.  Makes sense.
+
+> -#
+> -# Since: 2.4
+> -##
+> -{ 'struct': 'MigrateSetParameters',
+> -  'data': { '*announce-initial': 'size',
+> -            '*announce-max': 'size',
+> -            '*announce-rounds': 'size',
+> -            '*announce-step': 'size',
+> -            '*throttle-trigger-threshold': 'uint8',
+> -            '*cpu-throttle-initial': 'uint8',
+> -            '*cpu-throttle-increment': 'uint8',
+> -            '*cpu-throttle-tailslow': 'bool',
+> -            '*tls-creds': 'StrOrNull',
+> -            '*tls-hostname': 'StrOrNull',
+> -            '*tls-authz': 'StrOrNull',
+> -            '*max-bandwidth': 'size',
+> -            '*avail-switchover-bandwidth': 'size',
+> -            '*downtime-limit': 'uint64',
+> -            '*x-checkpoint-delay': { 'type': 'uint32',
+> -                                     'features': [ 'unstable' ] },
+> -            '*multifd-channels': 'uint8',
+> -            '*xbzrle-cache-size': 'size',
+> -            '*max-postcopy-bandwidth': 'size',
+> -            '*max-cpu-throttle': 'uint8',
+> -            '*multifd-compression': 'MultiFDCompression',
+> -            '*multifd-zlib-level': 'uint8',
+> -            '*multifd-qatzip-level': 'uint8',
+> -            '*multifd-zstd-level': 'uint8',
+> -            '*block-bitmap-mapping': [ 'BitmapMigrationNodeAlias' ],
+> -            '*x-vcpu-dirty-limit-period': { 'type': 'uint64',
+> -                                            'features': [ 'unstable' ] },
+> -            '*vcpu-dirty-limit': 'uint64',
+> -            '*mode': 'MigMode',
+> -            '*zero-page-detection': 'ZeroPageDetection',
+> -            '*direct-io': 'bool' } }
+> -
+>  ##
+>  # @migrate-set-parameters:
+>  #
+> @@ -1124,12 +928,13 @@
+>  #     <- { "return": {} }
+>  ##
+>  { 'command': 'migrate-set-parameters', 'boxed': true,
+> -  'data': 'MigrateSetParameters' }
+> +  'data': 'MigrationParameters' }
+>  
+>  ##
+>  # @MigrationParameters:
+>  #
+> -# The optional members aren't actually optional.
+> +# Migration parameters. Optional members are optional when used with
+> +# an input command, otherwise mandatory.
+>  #
+>  # @announce-initial: Initial delay (in milliseconds) before sending
+>  #     the first announce (Since 4.0)
+> @@ -1172,21 +977,25 @@
+>  #     for establishing a TLS connection over the migration data
+>  #     channel.  On the outgoing side of the migration, the credentials
+>  #     must be for a 'client' endpoint, while for the incoming side the
+> -#     credentials must be for a 'server' endpoint.  An empty string
+> -#     means that QEMU will use plain text mode for migration, rather
+> -#     than TLS.  (Since 2.7)
+> -#
+> -#     Note: 2.8 omits empty @tls-creds instead.
+> +#     credentials must be for a 'server' endpoint.  Setting this to a
+> +#     non-empty string enables TLS for all migrations.  An empty
+> +#     string means that QEMU will use plain text mode for migration,
+> +#     rather than TLS.  This is the default.  (Since 2.7)
+>  #
+>  # @tls-hostname: migration target's hostname for validating the
+>  #     server's x509 certificate identity.  If empty, QEMU will use the
+> -#     hostname from the migration URI, if any.  (Since 2.7)
+> +#     hostname from the migration URI, if any.  A non-empty value is
+> +#     required when using x509 based TLS credentials and the migration
+> +#     URI does not include a hostname, such as fd: or exec: based
+> +#     migration.  (Since 2.7)
+>  #
+> -#     Note: 2.8 omits empty @tls-hostname instead.
+> +#     Note: empty value works only since 2.9.
+>  #
+>  # @tls-authz: ID of the 'authz' object subclass that provides access
+>  #     control checking of the TLS x509 certificate distinguished name.
+> -#     (Since 4.0)
+> +#     This object is only resolved at time of use, so can be deleted
+> +#     and recreated on the fly while the migration server is active.
+> +#     If missing, it will default to denying access (Since 4.0)
+>  #
+>  # @max-bandwidth: maximum speed for migration, in bytes per second.
+>  #     (Since 2.8)
 
 
