@@ -4,102 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA542C7115C
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 06:08:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40406C77B7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 06:25:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUJIC-0001a5-Py; Wed, 25 Jun 2025 02:07:32 -0400
+	id 1uUJYp-00042B-JY; Wed, 25 Jun 2025 02:24:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=0vdh=ZI=kaod.org=clg@ozlabs.org>)
- id 1uUJI3-0001Yr-9N; Wed, 25 Jun 2025 02:07:24 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=0vdh=ZI=kaod.org=clg@ozlabs.org>)
- id 1uUJHy-0002bB-Uj; Wed, 25 Jun 2025 02:07:21 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bRrv24VTsz4x5d;
- Wed, 25 Jun 2025 16:07:10 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bRrtz1JNZz4x04;
- Wed, 25 Jun 2025 16:07:06 +1000 (AEST)
-Message-ID: <cacdd727-c1e6-4c57-8266-6b369579de72@kaod.org>
-Date: Wed, 25 Jun 2025 08:07:03 +0200
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1uUJYm-00041e-KG
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 02:24:40 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1uUJYj-0001XC-1Z
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 02:24:40 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-ade4679fba7so214698866b.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Jun 2025 23:24:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1750832674; x=1751437474; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oi+k5ntCJ7ZQpOrFITAv/yNAoiH7BbKICRK3lEbvncg=;
+ b=OCkF3EDpTgSFBFgvru5ju4O1jGZZsovjpgMy2pkco/eNSBY19oylnKuxflzdYaUmGt
+ Hpnr4LLXqhND/tUGjM5sOdQsDK10feiI5ADxbfjKUOqLAcaT1hU2zMJk3+3hpBx884ry
+ T+6RhyjCp/OSaQrCmruuwrZJ9tdSK7Navx16lb+xTxEbEkm2w09NfeyufpWA2dBW8UX+
+ gl17K7OPd9uPOSFxtYLXgv7T6YOHJwrqmWNBZPmI4pbH9cOg2tOblPWJg2qNHSVjzbIw
+ awvJXZ4BJn76GOK1oyeUSePmRkFlHZXFmJVLvygBDEnWdVUGUj6Df2fspzhDKRXfG++e
+ 1ACw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750832674; x=1751437474;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=oi+k5ntCJ7ZQpOrFITAv/yNAoiH7BbKICRK3lEbvncg=;
+ b=If8d/IIaDMzSn/JARLGwxl5t5/i2FA5oUrXb36Q2fthJD7hO9ZzxgQKb2cMbXe6Q/f
+ b/2Rc5Dpzolo2ofEoCj3O8lp1gnh47g7eSPSgJPAtIyVakmoK9STY+7j5/IkMfQXaBNX
+ 39LT1kehM9Nc+s0TH6xdArFnuExx31empaSc6ZG8HDCoX7uywR3STlzK1rA6mWgY5nom
+ uYo24uTPvp1IpExk6TwywY8tn4FRdrHZUHqO/6GXyi1ciW97gQuSfddY9JSFsRTIN1dy
+ x0QojakCQmkKz/d1zcXp3IM1/62iQHK/yRu1xN0yQ11HXSTdeBWkVLDyxtSlg+PsBI30
+ 7CWw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVhSHT2sY+IQN3XLu/yNv5ZeMNmWvJ/HuKeE98O+GUwUQFQ2WBZvUPBl6RP7h6IyZHDGZRhfOJabRy0@nongnu.org
+X-Gm-Message-State: AOJu0YwHyyePk51ydfu2mWnUWjVtsHBm1jJzIbR8XSydPQ/+xjlcPCWz
+ 53hG0Fbl/jcGgv8aK1fYtDfw1TF+0Tv6sCjzlM4weLiB9Eo4h2F6z2cL44QYa6Q/naCMbVgYUZK
+ wRBHCavPWvIX0HqrY9uTrt3Ih+7NS3/UPyQ9YuaN5lA==
+X-Gm-Gg: ASbGncsZ5jK9xUZkK70/IhL2nAlcLdEfqpfqpbdy71InUeAz0Mb8HuOYP83GA4f/dDo
+ bJ7kRRYdSt/gl61b063tp3RBFsOQkmn24fgI9ykBmFqq1/ZPhSOYijBglc4iBZfZG5vWCFAk2my
+ EOR54blmMKe+hVe1jDDvZTPRnJoJnJKZKRo9Y/RnZCIN3jrg==
+X-Google-Smtp-Source: AGHT+IHiduQTSRJ1TbDS1QBo9unFP3PbpRivsySEGMlgvD7Rq8a0w1bRCEQRnf7ZD34qQgxzS0vRLa4joohT7VKSgX4=
+X-Received: by 2002:a17:907:3ccb:b0:ae0:ade2:606b with SMTP id
+ a640c23a62f3a-ae0bf019d57mr185217466b.19.1750832673930; Tue, 24 Jun 2025
+ 23:24:33 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v6 1/3] hw/misc/aspeed_otp: Add ASPEED OTP memory device
- model
-To: Kane Chen <kane_chen@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20250624022219.3704712-1-kane_chen@aspeedtech.com>
- <20250624022219.3704712-2-kane_chen@aspeedtech.com>
- <601cae7f-8203-4068-a7ec-7cd3e11519d8@kaod.org>
- <SI6PR06MB76316F7B660439BFEB5698FDF77BA@SI6PR06MB7631.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
- BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
- M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
- 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
- jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
- TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
- neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
- VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
- QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
- ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
- WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
- wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
- SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
- cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
- S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
- 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
- hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
- tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
- t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
- OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
- KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
- o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
- ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
- IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
- d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
- +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
- HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
- l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
- 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
- ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
- KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <SI6PR06MB76316F7B660439BFEB5698FDF77BA@SI6PR06MB7631.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=0vdh=ZI=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250623165329.2759651-1-rkrcmar@ventanamicro.com>
+ <20250623165329.2759651-2-rkrcmar@ventanamicro.com>
+ <0811914e-623e-41a2-a54b-8ce42f45740c@ventanamicro.com>
+ <DAUT771C07KV.2JZ4ZCRQ1MEQM@ventanamicro.com>
+In-Reply-To: <DAUT771C07KV.2JZ4ZCRQ1MEQM@ventanamicro.com>
+From: Jim Shu <jim.shu@sifive.com>
+Date: Wed, 25 Jun 2025 14:24:25 +0800
+X-Gm-Features: Ac12FXwQVt-wX-Sh-d8Y98iweHuxUFnomvShMPrALoMRZHxHj-WmiPkQd64vVZI
+Message-ID: <CALw707rf-7ftLs3xM2Btxz9H78E0nDj6D=1N18jWe5jroZ_7Zg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] target/riscv: disable *stimecmp interrupts without
+ *envcfg.STCE
+To: =?UTF-8?B?UmFkaW0gS3LEjW3DocWZ?= <rkrcmar@ventanamicro.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Atish Patra <atishp@rivosinc.com>, 
+ qemu-riscv-bounces+qemu-riscv=archiver.kernel.org@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=jim.shu@sifive.com; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,237 +103,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Kane,
+Hi Radim,
 
-On 6/25/25 07:59, Kane Chen wrote:
-> Hi Cédric,
-> 
-> Thanks for your review and helpful comments. I will update the code accordingly.
-> 
-> I also have a question regarding the OTP memory content initialization. Since the OTP memory only needs to be initialized once, I plan to move the initialization code into the reset function 
+Does your patchset want to resolve the same issue as my sstc patch [1]?
+My sstc patchset has been merged to "riscv-to-apply.next".
+Maybe you can review it or check if there is still any issue in the
+"riscv-to-apply.next" branch, thanks!
 
-It's not a reset function since the contents persist across resets.
-
-> and use a flag to ensure it runs only once. This way, the memory contents will be retained across device or machine resets.
-
-I would keep the contents initialization in the realize routine,
-same as m25p80_realize() does :
-
-         s->storage = blk_blockalign(NULL, s->size);
-         memset(s->storage, 0xFF, s->size);
+[1]  "[PATCH v3 4/4] target/riscv: Enable/Disable S/VS-mode Timer when
+STCE bit is changed"
+https://patchew.org/QEMU/20250519143518.11086-1-jim.shu@sifive.com/20250519=
+143518.11086-5-jim.shu@sifive.com/
 
 Thanks,
-
-C.
-
+Jim
 
 
-> 
-> Please let me know if you have any concerns or suggestions about this approach.
-> 
-> Best Regards,
-> Kane
->> -----Original Message-----
->> From: Cédric Le Goater <clg@kaod.org>
->> Sent: Tuesday, June 24, 2025 2:28 PM
->> To: Kane Chen <kane_chen@aspeedtech.com>; Peter Maydell
->> <peter.maydell@linaro.org>; Steven Lee <steven_lee@aspeedtech.com>; Troy
->> Lee <leetroy@gmail.com>; Jamin Lin <jamin_lin@aspeedtech.com>; Andrew
->> Jeffery <andrew@codeconstruct.com.au>; Joel Stanley <joel@jms.id.au>;
->> open list:ASPEED BMCs <qemu-arm@nongnu.org>; open list:All patches CC
->> here <qemu-devel@nongnu.org>
->> Cc: Troy Lee <troy_lee@aspeedtech.com>
->> Subject: Re: [RFC v6 1/3] hw/misc/aspeed_otp: Add ASPEED OTP memory
->> device model
->>
->> On 6/24/25 04:22, Kane Chen wrote:
->>> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
->>>
->>> Introduce a QEMU device model for ASPEED's One-Time Programmable
->> (OTP)
->>> memory.
->>>
->>> This model simulates a word-addressable OTP region used for secure
->>> fuse storage. The OTP memory can operate with an internal memory
->>> buffer.
->>>
->>> The OTP model provides a memory-like interface through a dedicated
->>> AddressSpace, allowing other device models (e.g., SBC) to issue
->>> transactions as if accessing a memory-mapped region.
->>>
->>> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
->>> ---
->>>    hw/misc/aspeed_otpmem.c         | 85
->> +++++++++++++++++++++++++++++++++
->>>    hw/misc/meson.build             |  1 +
->>>    include/hw/misc/aspeed_otpmem.h | 33 +++++++++++++
->>>    3 files changed, 119 insertions(+)
->>>    create mode 100644 hw/misc/aspeed_otpmem.c
->>>    create mode 100644 include/hw/misc/aspeed_otpmem.h
->>>
->>> diff --git a/hw/misc/aspeed_otpmem.c b/hw/misc/aspeed_otpmem.c new
->>> file mode 100644 index 0000000000..b13b87fae8
->>> --- /dev/null
->>> +++ b/hw/misc/aspeed_otpmem.c
->>> @@ -0,0 +1,85 @@
->>> +/*
->>> + *  ASPEED OTP (One-Time Programmable) memory
->>> + *
->>> + *  Copyright (C) 2025 Aspeed
->>> + *
->>> + *  SPDX-License-Identifier: GPL-2.0-or-later  */
->>> +
->>> +#include "qemu/osdep.h"
->>> +#include "qemu/log.h"
->>> +#include "qapi/error.h"
->>> +#include "trace.h"
->>> +#include "system/block-backend-global-state.h"
->>> +#include "system/block-backend-io.h"
->>> +#include "hw/misc/aspeed_otpmem.h"
->>> +
->>> +static uint64_t aspeed_otpmem_read(void *opaque, hwaddr offset,
->>> +unsigned size) {
->>> +    AspeedOTPMemState *s = opaque;
->>> +    uint64_t val = 0;
->>> +
->>> +    memcpy(&val, s->storage + offset, size);
->>> +
->>> +    return val;
->>> +}
->>> +
->>> +static void aspeed_otpmem_write(void *opaque, hwaddr offset,
->>> +                                uint64_t val, unsigned size) {
->>> +    AspeedOTPMemState *s = opaque;
->>> +
->>> +    memcpy(s->storage + offset, &val, size); }
->>> +
->>> +static const MemoryRegionOps aspeed_otpmem_ops = {
->>> +    .read = aspeed_otpmem_read,
->>> +    .write = aspeed_otpmem_write,
->>> +    .endianness = DEVICE_LITTLE_ENDIAN,
->>> +    .valid.min_access_size = 1,
->>> +    .valid.max_access_size = 4,
->>> +};
->>> +
->>> +static void aspeed_otpmem_realize(DeviceState *dev, Error **errp) {
->>> +    AspeedOTPMemState *s = ASPEED_OTPMEM(dev);
->>> +    const size_t size = OTPMEM_SIZE;
->>
->> Why not use s->size instead ? and a device property ?
->>
->>> +    int i, num;
->>> +    uint32_t *p;
->>> +
->>> +    s->storage = g_malloc(size);
->>> +    if (!s->storage) {
->>
->> if g_malloc() fails, the application will terminate. There is no need to test the
->> returned pointer.
->>
->>> +        error_setg(errp, "Failed to allocate OTP memory storage buffer");
->>> +        return;
->>> +    }
->>> +
->>> +    num = size / sizeof(uint32_t);
->>> +    p = (uint32_t *)s->storage;
->>> +    for (i = 0; i < num; i++) {
->>> +        p[i] = (i % 2 == 0) ? 0x00000000 : 0xFFFFFFFF;
->>> +    }
->>
->> The above initialization could be done in a
->> aspeed_otpmem_init_storage()routine.
->>
->> I understand that you want the values set at runtime to be kept after a
->> machine/device reset.
->>
->>> +    memory_region_init_io(&s->mmio, OBJECT(dev),
->> &aspeed_otpmem_ops,
->>> +                          s, "aspeed.otpmem", size);
->>> +    address_space_init(&s->as, &s->mmio, NULL); }
->>> +
->>> +static void aspeed_otpmem_class_init(ObjectClass *klass, const void
->>> +*data) {
->>> +    DeviceClass *dc = DEVICE_CLASS(klass);
->>> +    dc->realize = aspeed_otpmem_realize; }
->>> +
->>> +static const TypeInfo aspeed_otpmem_info = {
->>> +    .name          = TYPE_ASPEED_OTPMEM,
->>> +    .parent        = TYPE_DEVICE,
->>> +    .instance_size = sizeof(AspeedOTPMemState),
->>> +    .class_init    = aspeed_otpmem_class_init,
->>> +};
->>> +
->>> +static void aspeed_otpmem_register_types(void)
->>> +{
->>> +    type_register_static(&aspeed_otpmem_info);
->>> +}
->>> +
->>> +type_init(aspeed_otpmem_register_types)
->>> diff --git a/hw/misc/meson.build b/hw/misc/meson.build index
->>> 6d47de482c..ed1eaaa2ad 100644
->>> --- a/hw/misc/meson.build
->>> +++ b/hw/misc/meson.build
->>> @@ -136,6 +136,7 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC',
->> if_true: files(
->>>      'aspeed_sbc.c',
->>>      'aspeed_sdmc.c',
->>>      'aspeed_xdma.c',
->>> +  'aspeed_otpmem.c',
->>>      'aspeed_peci.c',
->>>      'aspeed_sli.c'))
->>>
->>> diff --git a/include/hw/misc/aspeed_otpmem.h
->>> b/include/hw/misc/aspeed_otpmem.h new file mode 100644 index
->>> 0000000000..a598e707a9
->>> --- /dev/null
->>> +++ b/include/hw/misc/aspeed_otpmem.h
->>
->> Please add to your .git/config file :
->>
->> [diff]
->> 	orderFile = /path/to/qemu/scripts/git.orderfile
->>
->>
->> Thanks,
->>
->> C.
->>
->>
->>
->>> @@ -0,0 +1,33 @@
->>> +/*
->>> + *  ASPEED OTP (One-Time Programmable) memory
->>> + *
->>> + *  Copyright (C) 2025 Aspeed
->>> + *
->>> + *  SPDX-License-Identifier: GPL-2.0-or-later  */
->>> +
->>> +#ifndef ASPEED_OTPMMEM_H
->>> +#define ASPEED_OTPMMEM_H
->>> +
->>> +#include "system/memory.h"
->>> +#include "hw/block/block.h"
->>> +#include "system/memory.h"
->>> +#include "system/address-spaces.h"
->>> +
->>> +#define OTPMEM_SIZE 0x4000
->>> +#define TYPE_ASPEED_OTPMEM "aspeed.otpmem"
->>> +OBJECT_DECLARE_SIMPLE_TYPE(AspeedOTPMemState,
->> ASPEED_OTPMEM)
->>> +
->>> +typedef struct AspeedOTPMemState {
->>> +    DeviceState parent_obj;
->>> +
->>> +    uint64_t size;
->>> +
->>> +    AddressSpace as;
->>> +
->>> +    MemoryRegion mmio;
->>> +
->>> +    uint8_t *storage;
->>> +} AspeedOTPMemState;
->>> +
->>> +#endif /* ASPEED_OTPMMEM_H */
-> 
-
+On Tue, Jun 24, 2025 at 9:49=E2=80=AFPM Radim Kr=C4=8Dm=C3=A1=C5=99 <rkrcma=
+r@ventanamicro.com> wrote:
+>
+> 2025-06-23T18:39:02-03:00, Daniel Henrique Barboza <dbarboza@ventanamicro=
+.com>:
+> > Hi Radim,
+> >
+> > It seems like this patch is breaking 'make check-functional':
+>
+> That is a nice command to know of, thanks!
+>
+> > 12/12 qemu:func-quick+func-riscv64 / func-riscv64-riscv_opensbi   TIMEO=
+UT         90.06s   killed by signal 15 SIGTERM
+> >
+> > Checking the logs I verified that the problem can be reproduced by runn=
+ing the
+> > 'spike' machine as follows:
+> >
+> > $ ./build/qemu-system-riscv64 -M spike   --nographic
+> > Segmentation fault (core dumped)
+> >
+> > The expected result is to boot opensbi. The problem can't be reproduced=
+ with
+> > the 'virt' board, so something that you did here impacted 'spike' in pa=
+rticular
+> > for some reason.
+>
+> Uff, mtimer is NULL on spike:
+>
+>   0x0000555555c46618 in riscv_timer_write_timecmp (env=3Denv@entry=3D0x55=
+5556888270, timer=3D0x5555568a61e0, timecmp=3D0, delta=3Ddelta@entry=3D0, t=
+imer_irq=3Dtimer_irq@entry=3D32) at ../target/riscv/time_helper.c:49
+>   49       uint32_t timebase_freq =3D mtimer->timebase_freq;
+>   (gdb) bt
+>   #0  0x0000555555c46618 in riscv_timer_write_timecmp (env=3Denv@entry=3D=
+0x555556888270, timer=3D0x5555568a61e0, timecmp=3D0, delta=3Ddelta@entry=3D=
+0, timer_irq=3Dtimer_irq@entry=3D32) at ../target/riscv/time_helper.c:49
+>   #1  0x0000555555c6eb9e in write_menvcfg (env=3D0x555556888270, csrno=3D=
+<optimized out>, val=3D<optimized out>, ra=3D140736012591329) at ../target/=
+riscv/csr.c:3214
+>   #2  0x0000555555c6a181 in riscv_csrrw_do64 (env=3Denv@entry=3D0x5555568=
+88270, csrno=3D<optimized out>, ret_value=3Dret_value@entry=3D0x0, new_valu=
+e=3D<optimized out>, write_mask=3D<optimized out>, ra=3D140736012591329) at=
+ ../target/riscv/csr.c:5579
+>   [...]
+>   (gdb) p mtimer
+>   $1 =3D (RISCVAclintMTimerState *) 0x0
+>   (gdb) p timer
+>   $2 =3D (QEMUTimer *) 0x5555568a61e0
+>   (gdb) p *timer
+>   $3 =3D {expire_time =3D -1, timer_list =3D 0x55555666b840, cb =3D 0x555=
+555c465d0 <riscv_stimer_cb>, opaque =3D 0x5555568856b0, next =3D 0x0, attri=
+butes =3D 0, scale =3D 1}
+>
+> I'll try to figure out is going on, but `make check-functional` passes
+> with this hack:
+>
+> diff --git a/target/riscv/time_helper.c b/target/riscv/time_helper.c
+> index 81a6a6394502..a2092206cb20 100644
+> --- a/target/riscv/time_helper.c
+> +++ b/target/riscv/time_helper.c
+> @@ -44,10 +44,8 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEM=
+UTimer *timer,
+>                                 uint64_t timecmp, uint64_t delta,
+>                                 uint32_t timer_irq)
+>  {
+> -    uint64_t diff, ns_diff, next;
+> +    uint64_t diff, ns_diff, next, timebase_freq, rtc_r;
+>      RISCVAclintMTimerState *mtimer =3D env->rdtime_fn_arg;
+> -    uint32_t timebase_freq =3D mtimer->timebase_freq;
+> -    uint64_t rtc_r =3D env->rdtime_fn(env->rdtime_fn_arg) + delta;
+>
+>      /*
+>       * *envcfg.STCE disables *stimecmp interrupts, but still allows high=
+er
+> @@ -59,6 +57,13 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEM=
+UTimer *timer,
+>          return;
+>      }
+>
+> +    if (!mtimer) {
+> +        return;
+> +    }
+> +
+> +    timebase_freq =3D mtimer->timebase_freq;
+> +    rtc_r =3D env->rdtime_fn(env->rdtime_fn_arg) + delta;
+> +
+>      if (timecmp <=3D rtc_r) {
+>          /*
+>           * If we're setting an stimecmp value in the "past",
+>
 
