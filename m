@@ -4,102 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73275C77B7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 20:49:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD02BC77B7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 21:09:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUX3h-0002zE-5J; Wed, 25 Jun 2025 16:49:29 -0400
+	id 1uUXMD-0006ni-MI; Wed, 25 Jun 2025 17:08:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uUX3g-0002z6-4V
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 16:49:28 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUXMA-0006nM-TA
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 17:08:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uUX3d-0005CU-NG
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 16:49:27 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUXM9-0004iJ-1K
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 17:08:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750884564;
+ s=mimecast20190719; t=1750885711;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IgjEuRgTFxHaoS/NtDjx44kWrVq89i+T3Ffek1Q7VJM=;
- b=fcUJEicqX1kGrOdEsW8Kv0wSIhSb9ous3XkRLurOZekny7oswoOkBTu03iPvalREmwLlAy
- x4CqA4aMv1jA+jQZTwvK9ssXrOHFx4682//CTHz5ps/0EmEt8Yqq37Tfz4ZHOnpEfQKmPF
- UL6JiSbooDzN+aJl0ZpqQfBcIr098WQ=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Ga9EfVwEHYTNrrWORLPgzkQzM2DSnBtXRrggnr3bFtI=;
+ b=QNM9zCPA+/SDA3dN8C5sQ4fXFcQX1lmUqYn4hmG5vMvVNBj8vGi8sEMkc2nm0KO+Ws6uld
+ ATiW6/7fQL4crT7q8mwbSicn6I6WGHtc6CVl0v+h8ElV61Vl5GmWUYb63hxmnj93dpdpgf
+ J211rZAExdffQ9BNFB2lwWUBspLl4Co=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-627-yrtR_2-HPcukPtchNP-G5A-1; Wed, 25 Jun 2025 16:49:22 -0400
-X-MC-Unique: yrtR_2-HPcukPtchNP-G5A-1
-X-Mimecast-MFC-AGG-ID: yrtR_2-HPcukPtchNP-G5A_1750884561
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a4f3796779so114415f8f.1
- for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 13:49:22 -0700 (PDT)
+ us-mta-633-KOz9XnpgMSiIee3Tk9biqg-1; Wed, 25 Jun 2025 17:08:29 -0400
+X-MC-Unique: KOz9XnpgMSiIee3Tk9biqg-1
+X-Mimecast-MFC-AGG-ID: KOz9XnpgMSiIee3Tk9biqg_1750885708
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-451d5600a54so1698765e9.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 14:08:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750884561; x=1751489361;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IgjEuRgTFxHaoS/NtDjx44kWrVq89i+T3Ffek1Q7VJM=;
- b=tjGttvppep2Fcuw6uJsPdUiYWLXl7rlU9teiLTuq8EE25mVOLUwooD87SckgO9LcYP
- 6+xhX/75XhPkyWU1RSJWZi/VvEpOdRq4obg594E0q51J6b0wAFNiNuJueY8sILW5y61m
- D9Lsy8lJkeALtzbU8GKZPL+AG8jQBet+b6dz6vewD7wpb/yTT4K8DBSuz2G1ekCHjdg5
- hLrAxJJYfrTmCuWas5U3yRF08cAtRhv07copNSCPMsqX7GhBNNc8gaC4xBrMdTaBJXZB
- kQHp3BgWc64hVljw5tOE/sMhII5GoxU4bAOXLJRVsjFcMj8c5fgPOLDgIBW6axTIBEMo
- sZdQ==
+ d=1e100.net; s=20230601; t=1750885708; x=1751490508;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Ga9EfVwEHYTNrrWORLPgzkQzM2DSnBtXRrggnr3bFtI=;
+ b=cc4USFVYpOs1e3OeXlDcPWHKp5/t1bqJ+UBBlE9Hnj+V3s3dWO3UM7cw7Nq0536GQB
+ oWCICGYiiWohPgvrhlhdqyNF4KM8LGjxB5M8OMqPCih+9ElM/8mOudEmBLxzuQ1DTd4T
+ wnkuGWl9NQpi/Q4BbfnCi7eRZRCjEZ4kMRzi1NR8jTDSnh3qD+G5wGlXYq3tVoeay8fJ
+ 38LsxzXSJ/f2Z3VOj4VgjogqwpyCsnch5+9FDtruEEfDnZqCQGaN3Z6071jtTU1twh+d
+ A5vu7CaKr1mX+xAuXLdxwMSjiLwHjx2Vrkf0ReRaGKFFSnWPWyIKFDLqdhJPRKDm+DPs
+ yLyw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUYjoI09kSmkCY0tvqjmb21/7Xeq4m/qBsCI4xyXAnLCoJbvxtF4m78moOyP+fubLWUOWd5sDdH0cct@nongnu.org
-X-Gm-Message-State: AOJu0YzMZ934DY62a0DmMR5s0ZJKSFL2BcVKxgU2PLjsCZ0mGgXkbBGa
- 30sCEW3CmOl7x+YPaNnNxJX62cDXWkTUNr7lkFCG87jB4gKFmKOu3O7f4tiOjABImd5qpfrxSM4
- fR0OuNFq8UzX45Stnxzg5Q1pgSZXucRtiXkFiM4lHKRv0kjoUD8ahQWhB
-X-Gm-Gg: ASbGncvNEJI8po99Lky1tVe97/GSL0FCW1kQRJWNHBNIJX2yYad1x2z+7XkolO60OWJ
- oGi36W/zSzKJ5F0bObQmuezrqd4VugGNwsxuCRbIA7Ka0PeEX9S+uI7eKgx5rKWCDavN3CY9W3S
- vfiUQMcL8mS1W+gYBE+nJ03c+U3qjS3euOgO5TQz5R3she0SjG3V6H/du093y6cc3Coq5i+wthR
- 88nsYJWCyKxFdgKcx7Ds/P2uLQxUYkAJ2sLGMz5pSZXtspMzhKfUJJUp2dVoKHp5ZZsNP1aoV+s
- lZeS+MxuAnC8Zgph
-X-Received: by 2002:a05:6000:1449:b0:3a4:dbac:2dc1 with SMTP id
- ffacd0b85a97d-3a6ed6506a3mr4214041f8f.54.1750884561287; 
- Wed, 25 Jun 2025 13:49:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEmPuSc+MUPsdKgJn0ypcQ7fy5LNnoerPJFWY/XgwG/Nxhg0M//QwuCVdfYLgF95AbM2VxGWA==
-X-Received: by 2002:a05:6000:1449:b0:3a4:dbac:2dc1 with SMTP id
- ffacd0b85a97d-3a6ed6506a3mr4214013f8f.54.1750884560818; 
- Wed, 25 Jun 2025 13:49:20 -0700 (PDT)
-Received: from redhat.com ([2a06:c701:73ea:4300:f7cc:3f8:48e8:2142])
+ AJvYcCWlxc+VburE4h7wL65g8PA/1Z6HJZkFcawgQ78ieAReMwrmqFoqCfWpXpw8vrmarSox340sJdju8aSh@nongnu.org
+X-Gm-Message-State: AOJu0YxMcpW9OvwwN3AYqrYLV70poYAk56WMWaID8y7f9qkEsBJ38Mrl
+ AiUJK2XjB7zw9iwl64ZDbje1Ygn0TSI6EdSV6u+NKKnyuBrVKwz+VmZRDzmxx94GxTasMTm0gNP
+ ttfq5fN9fXHy/EJRwuNXFlf4OjOpqmaZSw6alLH3gdcgVAX1sJncqCDNP
+X-Gm-Gg: ASbGncvUIAS3hk/DTdL2PXidgo3D6eVkcwsWbNjZFaRamy+mWjsDYGLfBoALGzPZbIg
+ gKjcnJjqF5BEhPrxB1Z50MDPXmIV41kmCxw2OR5Kqbz+JIfe0dOyjhWEXPFy14B84/2QXJYstoY
+ DY99Py2M+Go+HMwE88hSdSf2JsLKUkI+guYZAoJwTYE8xZMBm4uq8aux9rtTbqMAmmJUQX4b+7r
+ btaR725g6KctMserdQmDCeKI0JEy2o+MEvA+Sx6nrePCRA1iTJvaGoe1Iyx++/m0D4MsqDMz1Xy
+ 3rW81WZrHIEQXb37yqe2L8EPpxZ0PhjMEnpcWhV0ZRIuioiv5LNDO3vLxkst
+X-Received: by 2002:a05:600c:8714:b0:43c:efed:733e with SMTP id
+ 5b1f17b1804b1-45381af6270mr51644965e9.14.1750885708283; 
+ Wed, 25 Jun 2025 14:08:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGcpjPjwQXDCdcH04DQnRG98p4aoVheNSkYZDUDaP53oiqAQsZ3LLMH8Q4f+8NioCO/T7MjWA==
+X-Received: by 2002:a05:600c:8714:b0:43c:efed:733e with SMTP id
+ 5b1f17b1804b1-45381af6270mr51644815e9.14.1750885707849; 
+ Wed, 25 Jun 2025 14:08:27 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6e811724bsm5344208f8f.100.2025.06.25.13.49.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Jun 2025 13:49:20 -0700 (PDT)
-Date: Wed, 25 Jun 2025 16:49:17 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- qemu-devel@nongnu.org,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v5 3/3] docs: define policy forbidding use of AI code
- generators
-Message-ID: <20250625164902-mutt-send-email-mst@kernel.org>
-References: <20250616092241.212898-1-armbru@redhat.com>
- <20250616092241.212898-4-armbru@redhat.com>
- <20250625150941-mutt-send-email-mst@kernel.org>
- <aFxePYi6bzLQ8UvN@redhat.com>
- <CAJSP0QXG_QD+ZWsRgpxSNyXYBooMkfX+gSOOFE8XWghv1E-htw@mail.gmail.com>
+ 5b1f17b1804b1-4538234a1f1sm29479735e9.15.2025.06.25.14.08.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 25 Jun 2025 14:08:27 -0700 (PDT)
+Message-ID: <1e67c23c-6027-4fa2-bc9e-0bc9502265d2@redhat.com>
+Date: Wed, 25 Jun 2025 23:08:26 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] vfio/container: fails mdev hotplug if add migration
+ blocker failed
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, eric.auger@redhat.com,
+ steven.sistare@oracle.com, chao.p.peng@intel.com
+References: <20250623102235.94877-1-zhenzhong.duan@intel.com>
+ <20250623102235.94877-3-zhenzhong.duan@intel.com>
+ <afc6b039-4569-460f-a15e-ac000bd44d5f@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <afc6b039-4569-460f-a15e-ac000bd44d5f@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJSP0QXG_QD+ZWsRgpxSNyXYBooMkfX+gSOOFE8XWghv1E-htw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -124,83 +158,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 25, 2025 at 04:47:06PM -0400, Stefan Hajnoczi wrote:
-> On Wed, Jun 25, 2025 at 4:39 PM Kevin Wolf <kwolf@redhat.com> wrote:
-> >
-> > Am 25.06.2025 um 21:16 hat Michael S. Tsirkin geschrieben:
-> > > On Mon, Jun 16, 2025 at 11:22:41AM +0200, Markus Armbruster wrote:
-> > > > From: Daniel P. Berrangé <berrange@redhat.com>
-> > > >
-> > > > There has been an explosion of interest in so called AI code
-> > > > generators. Thus far though, this is has not been matched by a broadly
-> > > > accepted legal interpretation of the licensing implications for code
-> > > > generator outputs. While the vendors may claim there is no problem and
-> > > > a free choice of license is possible, they have an inherent conflict
-> > > > of interest in promoting this interpretation. More broadly there is,
-> > > > as yet, no broad consensus on the licensing implications of code
-> > > > generators trained on inputs under a wide variety of licenses
-> > > >
-> > > > The DCO requires contributors to assert they have the right to
-> > > > contribute under the designated project license. Given the lack of
-> > > > consensus on the licensing of AI code generator output, it is not
-> > > > considered credible to assert compliance with the DCO clause (b) or (c)
-> > > > where a patch includes such generated code.
-> > > >
-> > > > This patch thus defines a policy that the QEMU project will currently
-> > > > not accept contributions where use of AI code generators is either
-> > > > known, or suspected.
-> > > >
-> > > > These are early days of AI-assisted software development. The legal
-> > > > questions will be resolved eventually. The tools will mature, and we
-> > > > can expect some to become safely usable in free software projects.
-> > > > The policy we set now must be for today, and be open to revision. It's
-> > > > best to start strict and safe, then relax.
-> > > >
-> > > > Meanwhile requests for exceptions can also be considered on a case by
-> > > > case basis.
-> > > >
-> > > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > > > Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-> > > > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > > > Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-> > > > Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> > >
-> > > Sorry about only reacting now, was AFK.
-> > >
-> > > So one usecase that to me seems entirely valid, is refactoring.
-> > >
-> > > For example, change a function prototype, or a structure,
-> > > and have an LLM update all callers.
-> > >
-> > > The only part of the patch that is expressive is the
-> > > actual change, the rest is a technicality and has IMHO nothing to do with
-> > > copyright. LLMs can just do it with no hassle.
-> > >
-> > >
-> > > Can we soften this to only apply to expressive code?
-> > >
-> > > I feel a lot of cleanups would be enabled by this.
-> >
-> > Hasn't refactoring been a (deterministically) solved problem long before
-> > LLMs became capable to do the same with a good enough probability?
+On 6/24/25 11:21, Cédric Le Goater wrote:
+> On 6/23/25 12:22, Zhenzhong Duan wrote:
+>> It's aggressive to abort a running QEMU process when hotplug a mdev
+>> and it fails migration blocker adding.
+>>
+>> Fix by just failing mdev hotplug itself.
+>>
+>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>> ---
+>>   hw/vfio/container.c | 8 ++++++--
+>>   1 file changed, 6 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+>> index 2853f6f08b..68b4fdb401 100644
+>> --- a/hw/vfio/container.c
+>> +++ b/hw/vfio/container.c
+>> @@ -992,12 +992,16 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
+>>       if (vbasedev->mdev) {
+>>           error_setg(&vbasedev->cpr.mdev_blocker,
+>>                      "CPR does not support vfio mdev %s", vbasedev->name);
+>> -        migrate_add_blocker_modes(&vbasedev->cpr.mdev_blocker, &error_fatal,
+>> -                                  MIG_MODE_CPR_TRANSFER, -1);
+>> +        if (migrate_add_blocker_modes(&vbasedev->cpr.mdev_blocker, errp,
+>> +                                      MIG_MODE_CPR_TRANSFER, -1)) {
 > 
-> It's easier to describe a desired refactoring to an LLM in natural
-> language than to figure out the regexes, semantic patches, etc needed
-> for traditional refactoring tools.
+> migrate_add_blocker_modes() returns -errno. Testing with '< 0' would be
+> better.
 > 
-> Also, LLMs can perform higher level refactorings that might not be
-> supported by traditional tools. Things like "split this interface into
-> callbacks that take a Foo * argument and implement the callbacks for
-> both a.c and b.c".
-> 
-> I think what Daniel mentioned is a good guide: if it's something that
-> you think it copyrightable, then avoid it.
-> 
-> Stefan
 
-Right. Let's put that in the doc?
 
--- 
-MST
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+I changed the test on the value returned by migrate_add_blocker_modes().
+
+
+Thanks,
+
+C.
+
+
+
+> Thanks,
+> 
+> C.
+> 
+> 
+> 
+>> +            goto hiod_unref_exit;
+>> +        }
+>>       }
+>>       return true;
+>> +hiod_unref_exit:
+>> +    object_unref(vbasedev->hiod);
+>>   device_put_exit:
+>>       vfio_device_put(vbasedev);
+>>   group_put_exit:
+> 
 
 
