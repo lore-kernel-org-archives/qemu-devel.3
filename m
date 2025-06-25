@@ -4,96 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4581C77B7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 20:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73275C77B7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 20:49:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUX1n-0002A3-16; Wed, 25 Jun 2025 16:47:31 -0400
+	id 1uUX3h-0002zE-5J; Wed, 25 Jun 2025 16:49:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uUX1g-00029M-IL
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 16:47:26 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uUX1d-0004ku-H8
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 16:47:22 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-6070293103cso488196a12.0
- for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 13:47:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750884439; x=1751489239; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ChGxeV2s2rxLhbGNNk5igHv7YLLEZvhWSgpwwh0Vbrw=;
- b=Pk4rF4/VRS/1Y9NLb4RrRx+kRDwCuXYwI6Fi8dN5uI9TSss2BpDA8eGyCDK1BqvfQo
- D5LJlQGPIX8iPoORB7mBA6rmrmnlOnfUOcNlKA5K9csGZpUchBS93s+wHN0p5Xtxbtcp
- nsTxZy24o2/ZehSIt0RR35f/4mLhjqZyQjBYKD5y5b6ETlhOkmdSAPXi2uNFD/9EHRaJ
- BcfHWMT3zApQ2MaSZXMcpb4XTYWYbHmtjGgGhKs8TypoBuZykW//C9Q9VqzHZfFaeVsU
- Pnp6yal5cG6KLNYII3gkrH8Np/5t/EoU7J4HhSIVHRk/Y7FszSBi+ehVoYILR/77VcXB
- xmsw==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uUX3g-0002z6-4V
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 16:49:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uUX3d-0005CU-NG
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 16:49:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750884564;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IgjEuRgTFxHaoS/NtDjx44kWrVq89i+T3Ffek1Q7VJM=;
+ b=fcUJEicqX1kGrOdEsW8Kv0wSIhSb9ous3XkRLurOZekny7oswoOkBTu03iPvalREmwLlAy
+ x4CqA4aMv1jA+jQZTwvK9ssXrOHFx4682//CTHz5ps/0EmEt8Yqq37Tfz4ZHOnpEfQKmPF
+ UL6JiSbooDzN+aJl0ZpqQfBcIr098WQ=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-627-yrtR_2-HPcukPtchNP-G5A-1; Wed, 25 Jun 2025 16:49:22 -0400
+X-MC-Unique: yrtR_2-HPcukPtchNP-G5A-1
+X-Mimecast-MFC-AGG-ID: yrtR_2-HPcukPtchNP-G5A_1750884561
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a4f3796779so114415f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 13:49:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750884439; x=1751489239;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ChGxeV2s2rxLhbGNNk5igHv7YLLEZvhWSgpwwh0Vbrw=;
- b=X4NaHbUt2SdFaCcXZBhlMPAb0x2c1AFuS8iW0lZ0h+0Sj/28AgJJwmJvwgwhJRjg9U
- UGLXfKqktz8jewHZAAXxBpvzZ2pzQH4WdvtZtVy33PeMINIK5UkkkRExRTs/7Rp8MRn5
- t2zJNMRofNFnwl8glOIiI1iVNkDeO7CkIf30BE/qNXlD3vUIo+EO5rm2Ew9A4gA1ukNq
- Tmn+RJBg2G+J8rOZRjII1VyfaAodAkb1OX5J0b3hQHsCV7q09bWPaOA/HGjVZMEyrDAR
- L2mZFvF7+J/DJokJ8SnTiVvCCQ/ddIXTvzH51LCl035/HUtu6ab7exjs9o4fAPg9yo79
- xkVg==
+ d=1e100.net; s=20230601; t=1750884561; x=1751489361;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IgjEuRgTFxHaoS/NtDjx44kWrVq89i+T3Ffek1Q7VJM=;
+ b=tjGttvppep2Fcuw6uJsPdUiYWLXl7rlU9teiLTuq8EE25mVOLUwooD87SckgO9LcYP
+ 6+xhX/75XhPkyWU1RSJWZi/VvEpOdRq4obg594E0q51J6b0wAFNiNuJueY8sILW5y61m
+ D9Lsy8lJkeALtzbU8GKZPL+AG8jQBet+b6dz6vewD7wpb/yTT4K8DBSuz2G1ekCHjdg5
+ hLrAxJJYfrTmCuWas5U3yRF08cAtRhv07copNSCPMsqX7GhBNNc8gaC4xBrMdTaBJXZB
+ kQHp3BgWc64hVljw5tOE/sMhII5GoxU4bAOXLJRVsjFcMj8c5fgPOLDgIBW6axTIBEMo
+ sZdQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWW8/XUwXfrhRKOZvj2rMkkj81LCL4KBfd2oL47dnq7X7UubHg6dIbmGJqUOQvgFL6E622QRGMjpiCT@nongnu.org
-X-Gm-Message-State: AOJu0Yz4P0a+G1jcB0ChbTZnbonq6T0aiQcoJXbYXKTubee1x2mP/M17
- z/m1eh+aOGvDG77HcDo3scaN1jaWYaSxO2w8kZcUcSWLwVF1cnkic35iS+pKPKKy7hiFtUj5k74
- cAj1vrsyeBnSrHu7ICbpwy7Fsg2eIMPU=
-X-Gm-Gg: ASbGncsJPZIOV6X8PgCVTh4mxhNM+D3osdjFKa5ddXW3rzKGNE9QHr2iovgyJCvChy8
- IzDC3slFjx3+JtNEFro7gPSa4MNbHUDcEN4pShxXgrq/iCg9Rquohj50mXdoJOJvv1RZqxzZzkI
- PAGpLjUDvfb6zbbI3BWjjAed7+RIpfPKEGEfo4ZfRkvvpxVrEWoEgY
-X-Google-Smtp-Source: AGHT+IGZDckePmo1xiqwJb3ZIOG0toOBtG/MobDu4RzYfztDvW/iIOKaCXp4Ke4V9KPp8z6F1s5jq8KpZvIRe1izGYY=
-X-Received: by 2002:a05:6402:3514:b0:608:6754:ec67 with SMTP id
- 4fb4d7f45d1cf-60c4dee1430mr3987031a12.30.1750884439207; Wed, 25 Jun 2025
- 13:47:19 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250616092241.212898-1-armbru@redhat.com>
- <20250616092241.212898-4-armbru@redhat.com>
- <20250625150941-mutt-send-email-mst@kernel.org> <aFxePYi6bzLQ8UvN@redhat.com>
-In-Reply-To: <aFxePYi6bzLQ8UvN@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Wed, 25 Jun 2025 16:47:06 -0400
-X-Gm-Features: Ac12FXxL7uDrMRq8HJMznTH9vOXj18W6oireLSfdIYl2Knx1JTfCX0SfM32IGt4
-Message-ID: <CAJSP0QXG_QD+ZWsRgpxSNyXYBooMkfX+gSOOFE8XWghv1E-htw@mail.gmail.com>
+ AJvYcCUYjoI09kSmkCY0tvqjmb21/7Xeq4m/qBsCI4xyXAnLCoJbvxtF4m78moOyP+fubLWUOWd5sDdH0cct@nongnu.org
+X-Gm-Message-State: AOJu0YzMZ934DY62a0DmMR5s0ZJKSFL2BcVKxgU2PLjsCZ0mGgXkbBGa
+ 30sCEW3CmOl7x+YPaNnNxJX62cDXWkTUNr7lkFCG87jB4gKFmKOu3O7f4tiOjABImd5qpfrxSM4
+ fR0OuNFq8UzX45Stnxzg5Q1pgSZXucRtiXkFiM4lHKRv0kjoUD8ahQWhB
+X-Gm-Gg: ASbGncvNEJI8po99Lky1tVe97/GSL0FCW1kQRJWNHBNIJX2yYad1x2z+7XkolO60OWJ
+ oGi36W/zSzKJ5F0bObQmuezrqd4VugGNwsxuCRbIA7Ka0PeEX9S+uI7eKgx5rKWCDavN3CY9W3S
+ vfiUQMcL8mS1W+gYBE+nJ03c+U3qjS3euOgO5TQz5R3she0SjG3V6H/du093y6cc3Coq5i+wthR
+ 88nsYJWCyKxFdgKcx7Ds/P2uLQxUYkAJ2sLGMz5pSZXtspMzhKfUJJUp2dVoKHp5ZZsNP1aoV+s
+ lZeS+MxuAnC8Zgph
+X-Received: by 2002:a05:6000:1449:b0:3a4:dbac:2dc1 with SMTP id
+ ffacd0b85a97d-3a6ed6506a3mr4214041f8f.54.1750884561287; 
+ Wed, 25 Jun 2025 13:49:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEmPuSc+MUPsdKgJn0ypcQ7fy5LNnoerPJFWY/XgwG/Nxhg0M//QwuCVdfYLgF95AbM2VxGWA==
+X-Received: by 2002:a05:6000:1449:b0:3a4:dbac:2dc1 with SMTP id
+ ffacd0b85a97d-3a6ed6506a3mr4214013f8f.54.1750884560818; 
+ Wed, 25 Jun 2025 13:49:20 -0700 (PDT)
+Received: from redhat.com ([2a06:c701:73ea:4300:f7cc:3f8:48e8:2142])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a6e811724bsm5344208f8f.100.2025.06.25.13.49.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Jun 2025 13:49:20 -0700 (PDT)
+Date: Wed, 25 Jun 2025 16:49:17 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ qemu-devel@nongnu.org,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Alexander Graf <agraf@csgraf.de>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
 Subject: Re: [PATCH v5 3/3] docs: define policy forbidding use of AI code
  generators
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Alexander Graf <agraf@csgraf.de>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x529.google.com
+Message-ID: <20250625164902-mutt-send-email-mst@kernel.org>
+References: <20250616092241.212898-1-armbru@redhat.com>
+ <20250616092241.212898-4-armbru@redhat.com>
+ <20250625150941-mutt-send-email-mst@kernel.org>
+ <aFxePYi6bzLQ8UvN@redhat.com>
+ <CAJSP0QXG_QD+ZWsRgpxSNyXYBooMkfX+gSOOFE8XWghv1E-htw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJSP0QXG_QD+ZWsRgpxSNyXYBooMkfX+gSOOFE8XWghv1E-htw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,82 +124,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 25, 2025 at 4:39=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> wrote=
-:
->
-> Am 25.06.2025 um 21:16 hat Michael S. Tsirkin geschrieben:
-> > On Mon, Jun 16, 2025 at 11:22:41AM +0200, Markus Armbruster wrote:
-> > > From: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+On Wed, Jun 25, 2025 at 04:47:06PM -0400, Stefan Hajnoczi wrote:
+> On Wed, Jun 25, 2025 at 4:39 PM Kevin Wolf <kwolf@redhat.com> wrote:
+> >
+> > Am 25.06.2025 um 21:16 hat Michael S. Tsirkin geschrieben:
+> > > On Mon, Jun 16, 2025 at 11:22:41AM +0200, Markus Armbruster wrote:
+> > > > From: Daniel P. Berrangé <berrange@redhat.com>
+> > > >
+> > > > There has been an explosion of interest in so called AI code
+> > > > generators. Thus far though, this is has not been matched by a broadly
+> > > > accepted legal interpretation of the licensing implications for code
+> > > > generator outputs. While the vendors may claim there is no problem and
+> > > > a free choice of license is possible, they have an inherent conflict
+> > > > of interest in promoting this interpretation. More broadly there is,
+> > > > as yet, no broad consensus on the licensing implications of code
+> > > > generators trained on inputs under a wide variety of licenses
+> > > >
+> > > > The DCO requires contributors to assert they have the right to
+> > > > contribute under the designated project license. Given the lack of
+> > > > consensus on the licensing of AI code generator output, it is not
+> > > > considered credible to assert compliance with the DCO clause (b) or (c)
+> > > > where a patch includes such generated code.
+> > > >
+> > > > This patch thus defines a policy that the QEMU project will currently
+> > > > not accept contributions where use of AI code generators is either
+> > > > known, or suspected.
+> > > >
+> > > > These are early days of AI-assisted software development. The legal
+> > > > questions will be resolved eventually. The tools will mature, and we
+> > > > can expect some to become safely usable in free software projects.
+> > > > The policy we set now must be for today, and be open to revision. It's
+> > > > best to start strict and safe, then relax.
+> > > >
+> > > > Meanwhile requests for exceptions can also be considered on a case by
+> > > > case basis.
+> > > >
+> > > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > > > Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+> > > > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > > > Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> > > > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > > >
-> > > There has been an explosion of interest in so called AI code
-> > > generators. Thus far though, this is has not been matched by a broadl=
-y
-> > > accepted legal interpretation of the licensing implications for code
-> > > generator outputs. While the vendors may claim there is no problem an=
-d
-> > > a free choice of license is possible, they have an inherent conflict
-> > > of interest in promoting this interpretation. More broadly there is,
-> > > as yet, no broad consensus on the licensing implications of code
-> > > generators trained on inputs under a wide variety of licenses
+> > > Sorry about only reacting now, was AFK.
 > > >
-> > > The DCO requires contributors to assert they have the right to
-> > > contribute under the designated project license. Given the lack of
-> > > consensus on the licensing of AI code generator output, it is not
-> > > considered credible to assert compliance with the DCO clause (b) or (=
-c)
-> > > where a patch includes such generated code.
+> > > So one usecase that to me seems entirely valid, is refactoring.
 > > >
-> > > This patch thus defines a policy that the QEMU project will currently
-> > > not accept contributions where use of AI code generators is either
-> > > known, or suspected.
+> > > For example, change a function prototype, or a structure,
+> > > and have an LLM update all callers.
 > > >
-> > > These are early days of AI-assisted software development. The legal
-> > > questions will be resolved eventually. The tools will mature, and we
-> > > can expect some to become safely usable in free software projects.
-> > > The policy we set now must be for today, and be open to revision. It'=
-s
-> > > best to start strict and safe, then relax.
+> > > The only part of the patch that is expressive is the
+> > > actual change, the rest is a technicality and has IMHO nothing to do with
+> > > copyright. LLMs can just do it with no hassle.
 > > >
-> > > Meanwhile requests for exceptions can also be considered on a case by
-> > > case basis.
 > > >
-> > > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> > > Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-> > > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > > Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> > > Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> > > Can we soften this to only apply to expressive code?
+> > >
+> > > I feel a lot of cleanups would be enabled by this.
 > >
-> > Sorry about only reacting now, was AFK.
-> >
-> > So one usecase that to me seems entirely valid, is refactoring.
-> >
-> > For example, change a function prototype, or a structure,
-> > and have an LLM update all callers.
-> >
-> > The only part of the patch that is expressive is the
-> > actual change, the rest is a technicality and has IMHO nothing to do wi=
-th
-> > copyright. LLMs can just do it with no hassle.
-> >
-> >
-> > Can we soften this to only apply to expressive code?
-> >
-> > I feel a lot of cleanups would be enabled by this.
->
-> Hasn't refactoring been a (deterministically) solved problem long before
-> LLMs became capable to do the same with a good enough probability?
+> > Hasn't refactoring been a (deterministically) solved problem long before
+> > LLMs became capable to do the same with a good enough probability?
+> 
+> It's easier to describe a desired refactoring to an LLM in natural
+> language than to figure out the regexes, semantic patches, etc needed
+> for traditional refactoring tools.
+> 
+> Also, LLMs can perform higher level refactorings that might not be
+> supported by traditional tools. Things like "split this interface into
+> callbacks that take a Foo * argument and implement the callbacks for
+> both a.c and b.c".
+> 
+> I think what Daniel mentioned is a good guide: if it's something that
+> you think it copyrightable, then avoid it.
+> 
+> Stefan
 
-It's easier to describe a desired refactoring to an LLM in natural
-language than to figure out the regexes, semantic patches, etc needed
-for traditional refactoring tools.
+Right. Let's put that in the doc?
 
-Also, LLMs can perform higher level refactorings that might not be
-supported by traditional tools. Things like "split this interface into
-callbacks that take a Foo * argument and implement the callbacks for
-both a.c and b.c".
+-- 
+MST
 
-I think what Daniel mentioned is a good guide: if it's something that
-you think it copyrightable, then avoid it.
-
-Stefan
 
