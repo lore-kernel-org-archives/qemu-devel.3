@@ -4,107 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66609C7EE2A
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 14:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4578C7EE2A
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 14:23:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUR0M-0004vQ-W9; Wed, 25 Jun 2025 10:21:39 -0400
+	id 1uUR1s-0007P9-94; Wed, 25 Jun 2025 10:23:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uUR0I-0004Xs-83
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 10:21:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1uUR1j-0007MW-Iw
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 10:23:03 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uUR0F-0005Ag-Ud
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 10:21:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750861289;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=uLeoRO3qY2bDTFoaD7t9coh7zMYmVZ6hL7duH5Mrtmc=;
- b=P8bIh+TTbANvcHult5uJH+6d+/0xJTuOIUnTf6ivrnDZEka98NCJoQVqEvlpxh9YxvmCiI
- v7CD3p/SpKqVWCn0FSHoWs1RccYcy+mb2DY7oRGKnFHn2cgnWrC6A3Ug1tIwmHIFKS4jHW
- QseteB4T4Sxe7p58BmCztgvhcZc4DXo=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-259-56R3XdiNMruE7hxBZuuk6Q-1; Wed, 25 Jun 2025 10:21:27 -0400
-X-MC-Unique: 56R3XdiNMruE7hxBZuuk6Q-1
-X-Mimecast-MFC-AGG-ID: 56R3XdiNMruE7hxBZuuk6Q_1750861286
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45334219311so8651185e9.2
- for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 07:21:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750861286; x=1751466086;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=uLeoRO3qY2bDTFoaD7t9coh7zMYmVZ6hL7duH5Mrtmc=;
- b=Ki6haWjm+6Ir+lttTrU+YaCnLfAZBg9G0WcXXh86gHORW8bE4zYJ446g0z6kAHVvc2
- KUuFKaKVjdjPFlphgsnq1j0MJ+K6rZyEIQOdbMKjglw3sBCsj1gXWtAzkHcZQCVZQjRD
- Thy6uMtI9n1hINRhk8b3Ob3H7MAmLwKNb+Bw9t/oN7EAuDJrGt+ha0pMosxDPQrO4ETB
- 7HUpCzltxNi+EhWCKAYm8Az5VXfx7kZK/jrPYHxPErAnRE/Pz/pVdSrI8dg4KrX5Jbta
- XFyHlfWhEoAtm0tInUkOv+JZIg3/4dlOBj7ojQgE9cJkgUAfJHlqC2OcWG984d2nUCcz
- /c6w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU91Cz/J8XcKl+LnE5+NaslxFMlaua+UYQQU3AN5ZG7zRHJKxU5NKzIFSyJM2QorN1XjyPiMhKFGwmP@nongnu.org
-X-Gm-Message-State: AOJu0Yw9P5M2iHU01XBSzhlo2NxuuyiuXnNpDEHCylxiZf292QSyxV9X
- +St/ggdpLvJTiozGpi1sS0yWNIcv92fB/iLUPgTQCvdrEcZIMrLjy7U3m/kX3pcmQA12uwc9izm
- etI2JUgtYdUgYvHIimMGvT97dY3X8y/FoHGjuHJfP9NYmQhMGNxIgchK2
-X-Gm-Gg: ASbGncu2D6CCsr+ZJQ+Yrr/6GEPaAJFOl5yGq5qca1bTu5/3UxPGwspeW/e4rv/DhZH
- Mm71ACwzPieFCnRjNErvKSTbOhB7LQvWlGQCxLCesGFHsCqnghU7LjV+PruIxRiGQnyHKO5mhst
- bJpuTFUoD6DhBw0p7nv6F3KZrwwkAVfi5sI6uJKVNzrjprsKX3q4itDyTN7t3qVTlbF2j//U81N
- pu3JDOLiISPelxSnsSXrC2W/R/Isd2GOuqBAFgy+xDbv/IQysdv5vcWYlgnTG7CyorL/LD1zYCi
- LL0/51KHFA45snPQCSQjKZ5RRemwEluY8jHYE/UKTmvAN5W1z9dvR0PiWISJZopxzTfc2w==
-X-Received: by 2002:a05:600d:15a:10b0:442:e9eb:cb9e with SMTP id
- 5b1f17b1804b1-4538331236cmr14520825e9.26.1750861286125; 
- Wed, 25 Jun 2025 07:21:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEp9CKYTiWxbdtqhdvf++XOESOkJi0KZqi/p61WGu4snCk3bITdu7PTB/RdduV8RZnAreDX3Q==
-X-Received: by 2002:a05:600d:15a:10b0:442:e9eb:cb9e with SMTP id
- 5b1f17b1804b1-4538331236cmr14520665e9.26.1750861285654; 
- Wed, 25 Jun 2025 07:21:25 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4538235600csm21581305e9.20.2025.06.25.07.21.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Jun 2025 07:21:24 -0700 (PDT)
-Message-ID: <8e82a2d3-514b-4d3f-9c62-26062d243135@redhat.com>
-Date: Wed, 25 Jun 2025 16:21:23 +0200
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1uUR1c-0005HO-HH
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 10:23:02 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bS3qr5ylgz6K9Bp;
+ Wed, 25 Jun 2025 22:20:08 +0800 (CST)
+Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
+ by mail.maildlp.com (Postfix) with ESMTPS id BD259140427;
+ Wed, 25 Jun 2025 22:22:41 +0800 (CST)
+Received: from localhost (10.45.148.101) by frapeml500003.china.huawei.com
+ (7.182.85.28) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 25 Jun
+ 2025 16:22:40 +0200
+Date: Wed, 25 Jun 2025 15:22:34 +0100
+To: <nifan.cxl@gmail.com>
+CC: <qemu-devel@nongnu.org>, <jonathan.cameron@huawei.com>,
+ <linux-cxl@vger.kernel.org>, <gregory.price@memverge.com>,
+ <ira.weiny@intel.com>, <dan.j.williams@intel.com>,
+ <a.manzanares@samsung.com>, <dave@stgolabs.net>, <nmtadam.samsung@gmail.com>, 
+ <jim.harris@samsung.com>, <Jorgen.Hansen@wdc.com>, <wj28.lee@gmail.com>,
+ <armbru@redhat.com>, <mst@redhat.com>, <anisa.su887@gmail.com>
+Subject: Re: [PATCH v8 00/14] Enabling DCD emulation support in Qemu
+Message-ID: <20250625152234.0000159e.alireza.sanaee@huawei.com>
+In-Reply-To: <20240523174651.1089554-1-nifan.cxl@gmail.com>
+References: <20240523174651.1089554-1-nifan.cxl@gmail.com>
+Organization: Huawei
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 20/29] hw/acpi/ged: Prepare the device to react to PCI
- hotplug events
-Content-Language: en-US
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, gustavo.romero@linaro.org, anisinha@redhat.com,
- mst@redhat.com, shannon.zhaosl@gmail.com, pbonzini@redhat.com,
- Jonathan.Cameron@huawei.com, philmd@linaro.org, alex.bennee@linaro.org
-References: <20250616094903.885753-1-eric.auger@redhat.com>
- <20250616094903.885753-21-eric.auger@redhat.com>
- <20250620145714.0923f6c0@fedora>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250620145714.0923f6c0@fedora>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Originating-IP: [10.45.148.101]
+X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
+ frapeml500003.china.huawei.com (7.182.85.28)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,166 +73,233 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 23 May 2024 10:44:40 -0700
+nifan.cxl@gmail.com wrote:
+
+> From: Fan Ni <nifan.cxl@gmail.com>
+> 
+> A git tree of this series can be found here (with one extra commit on
+> top for printing out accepted/pending extent list for testing): 
+> https://github.com/moking/qemu/tree/dcd-v8-qapi
+> 
+> v7->v8:
+> 
+> This version carries over the following two patches from Gregory.
+> 1. hw/cxl/mailbox: change CCI cmd set structure to be a member, not a
+> reference https://gitlab.com/jic23/qemu/-/commit/f44ebc5a455ccdd6535879b0c5824e0d76b04da5
+> 2. hw/cxl/mailbox: interface to add CCI commands to an existing CCI
+> https://gitlab.com/jic23/qemu/-/commit/00a4dd8b388add03c588298f665ee918626296a5
+> 
+> Note, the above two patches are not directly related to DCD emulation.
+> 
+> All the following patches in this series are built on top of
+> mainstream QEMU and the above two patches.
+> 
+> The most significant changes of v8 is in Patch 11 (Patch 9 in v7).
+> Based on feedback from Markus and Jonathan, the QMP interfaces for
+> adding and releasing DC extents have been redesigned and now they
+> look like below,
+> 
+> # add a 128MB extent at offset 0 to region 0
+> 	{ "execute": "cxl-add-dynamic-capacity",
+> 	  "arguments": {
+> 		  "path": "/machine/peripheral/cxl-memdev0",
+>           "host-id":0,
+>           "selection-policy": 'prescriptive',
+> 		  "region": 0,
+>           "tag": "",
+> 		  "extents": [
+> 		  {
+> 			  "offset": 0,
+> 			  "len": 134217728
+> 		  }
+> 		  ]
+> 	  }
+> 	}
+> 
+> Note: tag is optional.
+> 
+> # Release a 128MB extent at offset 0 from region 0
+>  { "execute": "cxl-release-dynamic-capacity",
+> 	  "arguments": {
+> 		  "path": "/machine/peripheral/cxl-memdev0",
+>           "host-id":0,
+>           "removal-policy":"prescriptive",
+>           "forced-removal": false,
+>           "sanitize-on-release": false,
+>           "region": 0,
+>           "tag": "",
+> 		  "extents": [
+> 		  {
+> 			  "offset": 0,
+> 			  "len": 134217728
+> 		  }
+> 		  ]
+> 	  }
+> 	}
+>     
+> Note: removal-policy, sanitize-on-release and tag are optional.
+>     
+> Other changes include,
+> 1. Applied tags to patches. 
+> 2. Replaced error_setq with error_append_hint for
+> cxl_create_dc_region error case in Patch 6 (Patch 4 in v7); (Zhijian
+> Li) 3. Updated the error message to include region size information in
+>     cxl_create_dc_region.
+> 4. set range1_size_hi to 0 for DCD in build_dvsec. (Jonathan)
+> 5. Several minor format fixes.
+> 
+> Thanks Markus, Jonathan, Gregory, and Zhijian for reviewing v7 and
+> svetly Todorov for testing v7.
+> 
+> This series pass the same tests as v7 check the cover letter of v7 for
+> more details. Additionally, we tested the QAPI interface for
+> adding/releasing DC extents with optional input parameters.
+>   
+> 
+> v7: https://lore.kernel.org/linux-cxl/5856b7a4-4082-465f-9f61-b1ec6c35ef0f@fujitsu.com/T/#mec4c85022ce28c80b241aaf2d5431cadaa45f097
+> 
+> 
+> Fan Ni (12):
+>   hw/cxl/cxl-mailbox-utils: Add dc_event_log_size field to output
+>     payload of identify memory device command
+>   hw/cxl/cxl-mailbox-utils: Add dynamic capacity region representative
+>     and mailbox command support
+>   include/hw/cxl/cxl_device: Rename mem_size as static_mem_size for
+>     type3 memory devices
+>   hw/mem/cxl_type3: Add support to create DC regions to type3 memory
+>     devices
+>   hw/mem/cxl-type3: Refactor ct3_build_cdat_entries_for_mr to take mr
+>     size instead of mr as argument
+>   hw/mem/cxl_type3: Add host backend and address space handling for DC
+>     regions
+>   hw/mem/cxl_type3: Add DC extent list representative and get DC
+> extent list mailbox support
+>   hw/cxl/cxl-mailbox-utils: Add mailbox commands to support
+> add/release dynamic capacity response
+>   hw/cxl/events: Add qmp interfaces to add/release dynamic capacity
+>     extents
+>   hw/mem/cxl_type3: Add DPA range validation for accesses to DC
+> regions hw/cxl/cxl-mailbox-utils: Add superset extent release mailbox
+> support hw/mem/cxl_type3: Allow to release extent superset in QMP
+> interface
+> 
+> Gregory Price (2):
+>   hw/cxl/mailbox: change CCI cmd set structure to be a member, not a
+>     reference
+>   hw/cxl/mailbox: interface to add CCI commands to an existing CCI
+> 
+>  hw/cxl/cxl-mailbox-utils.c  | 658
+> +++++++++++++++++++++++++++++++++++- hw/mem/cxl_type3.c          |
+> 634 ++++++++++++++++++++++++++++++++-- hw/mem/cxl_type3_stubs.c    |
+> 25 ++ include/hw/cxl/cxl_device.h |  85 ++++-
+>  include/hw/cxl/cxl_events.h |  18 +
+>  qapi/cxl.json               | 143 ++++++++
+>  6 files changed, 1511 insertions(+), 52 deletions(-)
+> 
+
+Hi Nifan,
+
+I am trying to test this patchset with Ira's set on DCD, and I am
+trying to work out everything by using sysfs rather than using tools
+instead. I am not sure where things are going of the rail.
+
+I am using this patchset
+(https://lore.kernel.org/qemu-devel/20240523174651.1089554-2-nifan.cxl@gmail.com/) with Ira's v9 https://lore.kernel.org/all/20250413-dcd-type2-upstream-v9-0-1d4911a0b365@intel.com/
+
+This my CXL config:
+return [
+    "-m",      "6G,maxmem=20G,slots=10",
+    "-object", "memory-backend-ram,id=vmem0,share=on,size=2G",
+    "-device", "pxb-cxl,bus_nr=23,bus=pcie.0,id=cxl.1",
+    "-device","cxl-rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2", 
+    "-device","cxl-type3,bus=root_port13,volatile-dc-memdev=vmem0,id=cxl-vmem0,num-dc-regions=2",
+    "-M", "cxl=on,cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G" 
+]
 
 
-On 6/20/25 2:57 PM, Igor Mammedov wrote:
-> On Mon, 16 Jun 2025 11:46:49 +0200
-> Eric Auger <eric.auger@redhat.com> wrote:
->
->> QEMU will notify the OS about PCI hotplug/hotunplug events through
->> GED interrupts. Let the GED device handle a new PCI hotplug event.
->> On its occurrence it calls the \\_SB.PCI0.PCNT method with the BLCK
->> mutex held.
->>
->> The GED device uses a dedicated MMIO region that will be mapped
->> by the machine code.
->
->> At this point the GED still does not support PCI device hotplug in
->> its TYPE_HOTPLUG_HANDLER implementation. This will come in a
->> subsequent patch.
-> looks out of order, perhaps it should be before this patch
-done, swapped both patches.
+This is how I create a new CXL DC Region ready to work with.
 
-Eric
->
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>
->> ---
->> v2 -> v3:
->> - pcihp_init and reset are put in ged code instead of machine code
->>   (Igor)
->>
->> v1 -> v2:
->> - Introduce ACPI_PCIHP_REGION_NAME
->> ---
->>  include/hw/acpi/generic_event_device.h |  4 ++++
->>  hw/acpi/generic_event_device.c         | 26 ++++++++++++++++++++++++++
->>  hw/acpi/pcihp.c                        |  1 -
->>  3 files changed, 30 insertions(+), 1 deletion(-)
->>
->> diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
->> index f5ffa67a39..ec8e1abe0a 100644
->> --- a/include/hw/acpi/generic_event_device.h
->> +++ b/include/hw/acpi/generic_event_device.h
->> @@ -102,6 +102,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
->>  #define ACPI_GED_PWR_DOWN_EVT      0x2
->>  #define ACPI_GED_NVDIMM_HOTPLUG_EVT 0x4
->>  #define ACPI_GED_CPU_HOTPLUG_EVT    0x8
->> +#define ACPI_GED_PCI_HOTPLUG_EVT    0x10
->>  
->>  typedef struct GEDState {
->>      MemoryRegion evt;
->> @@ -109,6 +110,8 @@ typedef struct GEDState {
->>      uint32_t     sel;
->>  } GEDState;
->>  
->> +#define ACPI_PCIHP_REGION_NAME "pcihp container"
->> +
->>  struct AcpiGedState {
->>      SysBusDevice parent_obj;
->>      MemHotplugState memhp_state;
->> @@ -116,6 +119,7 @@ struct AcpiGedState {
->>      CPUHotplugState cpuhp_state;
->>      MemoryRegion container_cpuhp;
->>      AcpiPciHpState pcihp_state;
->> +    MemoryRegion container_pcihp;
->>      GEDState ged_state;
->>      uint32_t ged_event_bitmap;
->>      qemu_irq irq;
->> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
->> index ef1c1ec51f..b4eefb0106 100644
->> --- a/hw/acpi/generic_event_device.c
->> +++ b/hw/acpi/generic_event_device.c
->> @@ -12,6 +12,7 @@
->>  #include "qemu/osdep.h"
->>  #include "qapi/error.h"
->>  #include "hw/acpi/acpi.h"
->> +#include "hw/acpi/pcihp.h"
->>  #include "hw/acpi/generic_event_device.h"
->>  #include "hw/pci/pci.h"
->>  #include "hw/irq.h"
->> @@ -27,6 +28,7 @@ static const uint32_t ged_supported_events[] = {
->>      ACPI_GED_PWR_DOWN_EVT,
->>      ACPI_GED_NVDIMM_HOTPLUG_EVT,
->>      ACPI_GED_CPU_HOTPLUG_EVT,
->> +    ACPI_GED_PCI_HOTPLUG_EVT,
->>  };
->>  
->>  /*
->> @@ -122,6 +124,12 @@ void build_ged_aml(Aml *table, const char *name, HotplugHandler *hotplug_dev,
->>                             aml_notify(aml_name("\\_SB.NVDR"),
->>                                        aml_int(0x80)));
->>                  break;
->> +            case ACPI_GED_PCI_HOTPLUG_EVT:
->> +                aml_append(if_ctx,
->> +                           aml_acquire(aml_name("\\_SB.PCI0.BLCK"), 0xFFFF));
->> +                aml_append(if_ctx, aml_call0("\\_SB.PCI0.PCNT"));
->> +                aml_append(if_ctx, aml_release(aml_name("\\_SB.PCI0.BLCK")));
->> +                break;
->>              default:
->>                  /*
->>                   * Please make sure all the events in ged_supported_events[]
->> @@ -300,6 +308,8 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
->>          sel = ACPI_GED_NVDIMM_HOTPLUG_EVT;
->>      } else if (ev & ACPI_CPU_HOTPLUG_STATUS) {
->>          sel = ACPI_GED_CPU_HOTPLUG_EVT;
->> +    } else if (ev & ACPI_PCI_HOTPLUG_STATUS) {
->> +        sel = ACPI_GED_PCI_HOTPLUG_EVT;
->>      } else {
->>          /* Unknown event. Return without generating interrupt. */
->>          warn_report("GED: Unsupported event %d. No irq injected", ev);
->> @@ -433,6 +443,12 @@ static void acpi_ged_realize(DeviceState *dev, Error **errp)
->>              cpu_hotplug_hw_init(&s->container_cpuhp, OBJECT(dev),
->>                                  &s->cpuhp_state, 0);
->>              break;
->> +        case ACPI_GED_PCI_HOTPLUG_EVT:
->> +            memory_region_init(&s->container_pcihp, OBJECT(dev),
->> +                               ACPI_PCIHP_REGION_NAME, ACPI_PCIHP_SIZE);
->> +            sysbus_init_mmio(sbd, &s->container_pcihp);
->> +            acpi_pcihp_init(OBJECT(s), &s->pcihp_state,
->> +                            s->pcihp_state.root, &s->container_pcihp, 0);
->>          }
->>          ged_events--;
->>      }
->> @@ -474,6 +490,15 @@ static void acpi_ged_initfn(Object *obj)
->>      sysbus_init_mmio(sbd, &ged_st->regs);
->>  }
->>  
->> +static void ged_reset(DeviceState *dev)
->> +{
->> +    AcpiGedState *s = ACPI_GED(dev);
->> +
->> +    if (s->pcihp_state.use_acpi_hotplug_bridge) {
->> +        acpi_pcihp_reset(&s->pcihp_state);
->> +    }
->> +}
->> +
->>  static void acpi_ged_class_init(ObjectClass *class, const void *data)
->>  {
->>      DeviceClass *dc = DEVICE_CLASS(class);
->> @@ -488,6 +513,7 @@ static void acpi_ged_class_init(ObjectClass *class, const void *data)
->>      hc->plug = acpi_ged_device_plug_cb;
->>      hc->unplug_request = acpi_ged_unplug_request_cb;
->>      hc->unplug = acpi_ged_unplug_cb;
->> +    device_class_set_legacy_reset(dc, ged_reset);
->>  
->>      adevc->ospm_status = acpi_ged_ospm_status;
->>      adevc->send_event = acpi_ged_send_event;
->> diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
->> index e79a24b821..36492aa0d9 100644
->> --- a/hw/acpi/pcihp.c
->> +++ b/hw/acpi/pcihp.c
->> @@ -43,7 +43,6 @@
->>  #include "qobject/qnum.h"
->>  #include "trace.h"
->>  
->> -#define ACPI_PCIHP_SIZE 0x0018
->>  #define PCI_UP_BASE 0x0000
->>  #define PCI_DOWN_BASE 0x0004
->>  #define PCI_EJ_BASE 0x0008
+# creating a region
+region=$(cat
+/sys/bus/cxl/devices/decoder0.0/create_dynamic_ram_a_region) 
+echo $region
+
+echo $region >
+/sys/bus/cxl/devices/decoder0.0/create_dynamic_ram_a_region 
+echo 256 > /sys/bus/cxl/devices/$region/interleave_granularity 
+echo 1 > /sys/bus/cxl/devices/$region/interleave_ways
+
+echo "dynamic_ram_a" > /sys/bus/cxl/devices/decoder2.0/mode
+echo $((256 << 20)) > /sys/bus/cxl/devices/decoder2.0/dpa_size
+
+echo $((256 << 20)) > /sys/bus/cxl/devices/$region/size
+echo "decoder2.0" > /sys/bus/cxl/devices/$region/target0
+echo 1 > /sys/bus/cxl/devices/$region/commit
+
+echo $region > /sys/bus/cxl/drivers/cxl_region/bind
+
+After this I have two things created, region0 and dax_region0:
+
+root@localhost:~# ls /sys/bus/cxl/devices/
+dax_region0/    decoder1.0/     decoder1.2/     decoder2.0/
+decoder2.2/     endpoint2/      nvdimm-bridge0/ region0/ decoder0.0/
+ decoder1.1/     decoder1.3/     decoder2.1/     decoder2.3/     mem0/
+         port1/          root0/
+
+This is what I have in dax_region0:
+root@localhost:~# ls /sys/bus/cxl/devices/dax_region0/
+dax0.0  dax_region  devtype  driver  modalias  subsystem  uevent
+
+Now I want to add an extent, and this is how I am doing it:
+	
+	{ "execute": "cxl-add-dynamic-capacity",
+	  "arguments": {
+		  "path": "/machine/peripheral/cxl-memdev0",
+          "host-id":0,
+          "selection-policy": 'prescriptive',
+		  "region": 0,
+          "tag": "",
+		  "extents": [
+		  {
+			  "offset": 0,
+			  "len": 134217728
+		  }
+		  ]
+	  }
+	}
+
+Now I see the extent added in my region device:
+root@localhost:~# ls /sys/bus/cxl/devices/dax_region0/
+dax0.0  dax_region  devtype  driver  extent0.0  modalias  subsystem
+uevent root@localhost:~# ls /sys/bus/cxl/devices/dax_region0/extent0.0/
+length  offset  uevent
+
+This is where things will go off the rails, at this point I want to
+create a new dax device to use, but this part is unsuccessful. Here I
+first add some size to the dax region created before: 
+
+root@localhost:~# echo 67108864 > /sys/bus/dax/devices/dax0.0/size 
+[264.539280] dax:alloc_dev_dax_range:1015: dax dax0.0: alloc range[0]:
+0x0000000810000000:0x0000000813ffffff 
+
+When I check the size everything looks OK: 
+root@localhost:~# cat /sys/bus/dax/devices/dax0.0/size 
+67108864
+
+But when I want to bind it then it does not work:
+root@localhost:~# echo "dax0.0" > /sys/bus/dax/drivers/device_dax/bind
+-bash: echo: write error: No such device
+
+I believe I am missing something here. Would be good if you can help
+out here.
+
+Thanks,
+Alireza
 
 
