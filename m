@@ -4,67 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EF31C77B7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 08:29:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A424C77B7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 08:36:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uULUl-00054y-I6; Wed, 25 Jun 2025 04:28:39 -0400
+	id 1uULbz-0007Bs-0r; Wed, 25 Jun 2025 04:36:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uULUT-00053u-Kf
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 04:28:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uULUQ-00060n-C3
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 04:28:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750840096;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=5AUAYcGfRWYprJv275nmuF6gbXK19rGN9VLixUtbHGc=;
- b=YCLXDmN/5NR/gMz67GwlOoF4PF/Dazy9r/+vxcYgooAHkLZk0I6hJEUKmEOYWd5ajyjIP+
- zLtCKlbAZZrM04zwoYj8XxYUZWk3d+0MlWmMNx5lToM34tL/3vqt1XgOh8r+Y4OvPv2gM9
- hfD0BAU3T2awhjfoU0ID7Aw56QOAmcQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-31-dYGy9erBOK6W4Gz6e69bxQ-1; Wed,
- 25 Jun 2025 04:28:11 -0400
-X-MC-Unique: dYGy9erBOK6W4Gz6e69bxQ-1
-X-Mimecast-MFC-AGG-ID: dYGy9erBOK6W4Gz6e69bxQ_1750840089
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7F8EC180121D; Wed, 25 Jun 2025 08:28:09 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.45.225.230])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F3F95180045B; Wed, 25 Jun 2025 08:28:05 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, thuth@redhat.com, qemu-s390x@nongnu.org,
- qemu-trivial@nongnu.org
-Subject: [PATCH] hw/s390x/ccw-device: Fix memory leak in loadparm setter
-Date: Wed, 25 Jun 2025 10:27:51 +0200
-Message-ID: <20250625082751.24896-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1uULbv-0007BH-Dj
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 04:36:03 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1uULbp-0000jm-32
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 04:36:02 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8BxlmnhtFtomM4cAQ--.64114S3;
+ Wed, 25 Jun 2025 16:35:45 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowMCxLcXftFto1ugpAQ--.59117S3;
+ Wed, 25 Jun 2025 16:35:45 +0800 (CST)
+Subject: Re: [PATCH v2 4/9] target/loongarch: add msg interrupt CSR registers
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
+References: <20250619023944.1278716-1-gaosong@loongson.cn>
+ <20250619023944.1278716-5-gaosong@loongson.cn>
+ <4eef878f-8d08-74e2-ab40-f11680880d3e@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <911db29f-f724-c5a2-39d2-48075d332555@loongson.cn>
+Date: Wed, 25 Jun 2025 16:38:35 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <4eef878f-8d08-74e2-ab40-f11680880d3e@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Language: en-US
+X-CM-TRANSID: qMiowMCxLcXftFto1ugpAQ--.59117S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9xXoW7Xr4DGw15ZF1rZw47ZrW3CFX_yoW3KFc_Za
+ y3ZF1kZ3Z7Wa1Ykr40qryY9a45Gr18tF97ArWkAr48Cw48Jws5JrsIqas5J347KFW8Jrsx
+ Wws8X3Wa9FnFqosvyTuYvTs0mTUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUbx8YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_JrI_Jryl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVW5JVW7JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0
+ oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc02F4
+ 0EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_
+ Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4CEbI
+ xvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AK
+ xVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrx
+ kI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v2
+ 6r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8Jw
+ CI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j8yCJUUUUU
+ =
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.705,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,30 +83,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit bdf12f2a fixed the setter for the "loadparm" machine property,
-which gets a string from a visitor, passes it to s390_ipl_fmt_loadparm()
-and then forgot to free it. It left another instance of the same problem
-unfixed in the "loadparm" device property. Fix it.
+在 2025/6/20 下午3:05, Bibo Mao 写道:
+>> --- a/target/loongarch/machine.c
+>> +++ b/target/loongarch/machine.c
+>> @@ -231,6 +231,11 @@ const VMStateDescription vmstate_loongarch_cpu = {
+>>           VMSTATE_UINT64(env.CSR_DERA, LoongArchCPU),
+>>           VMSTATE_UINT64(env.CSR_DSAVE, LoongArchCPU),
+>>   +        /* Msg interrupt CSRs */
+>> +        VMSTATE_UINT64_ARRAY(env.CSR_MSGIS, LoongArchCPU, 4),
+>> +        VMSTATE_UINT64(env.CSR_MSGIR, LoongArchCPU),
+>> +        VMSTATE_UINT64(env.CSR_MSGIE, LoongArchCPU),
+>> +
+> Can it be appended with one subsection in the end of structure 
+> vmstate_loongarch_cpu?  So that it is compatible with old machine.
+>
+Yes,  I 'll add it on v3 .
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- hw/s390x/ccw-device.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/hw/s390x/ccw-device.c b/hw/s390x/ccw-device.c
-index 19c2238f76..8be1813b9e 100644
---- a/hw/s390x/ccw-device.c
-+++ b/hw/s390x/ccw-device.c
-@@ -57,7 +57,7 @@ static void ccw_device_set_loadparm(Object *obj, Visitor *v,
-                                  Error **errp)
- {
-     CcwDevice *dev = CCW_DEVICE(obj);
--    char *val;
-+    g_autofree char *val = NULL;
-     int index;
- 
-     index = object_property_get_int(obj, "bootindex", NULL);
--- 
-2.49.0
+Thanks.
+Song Gao
+> Regards
+> Bibo Mao 
 
 
