@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C297C77B7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 04:03:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABA5EC77B7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 04:04:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUHLP-00056o-KW; Wed, 25 Jun 2025 00:02:43 -0400
+	id 1uUHN4-0005nX-4V; Wed, 25 Jun 2025 00:04:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uUHLN-00056b-NB
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 00:02:41 -0400
-Received: from mgamail.intel.com ([192.198.163.15])
+ id 1uUHN1-0005nD-3P
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 00:04:23 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uUHLL-0003Lv-PY
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 00:02:41 -0400
+ id 1uUHMz-0003V8-Fp
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 00:04:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1750824160; x=1782360160;
+ t=1750824261; x=1782360261;
  h=from:to:cc:subject:date:message-id:mime-version:
  content-transfer-encoding;
- bh=42nRR0KrbdmqvkZGe4dz55Pz3JwJ3F4EGtg8zANaY3M=;
- b=GDtR/w3AQj9EBn1zMZ9Vd4xMNf6eLjT+pmBfZwePHjlJWgf46YDlGhvF
- SuOxDTUYa6iWshlCL9rH/07wRR4mbigA7sBq92bAAacG+xedA6/uG4vE/
- jBynBcziHVc82ywOCE12B/iYlciXRA65O+HxB62s98p5xwzR4dHK6Fizq
- c/vMx0k3O2Jt7qsO1tV8kP8tvqGvdGenzpVjodnEzn2eX2my70uJBwoyR
- JlC3UEDSe5egDNXAlk7T3mQ1iGNn6fJ+pIUjD9IBBp2XJtjZv1VAuvWLu
- GTR/OVz7gHblzAQIN1cy/WyfK/BCXnXMBNGaT8djQNw15nAdnyPWmngJm w==;
-X-CSE-ConnectionGUID: AtTAsko8RiaAftFSm0Ouig==
-X-CSE-MsgGUID: oDtpR8bGQ0mj6nCVS8eCZw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11474"; a="53222453"
-X-IronPort-AV: E=Sophos;i="6.16,263,1744095600"; d="scan'208";a="53222453"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jun 2025 21:02:14 -0700
-X-CSE-ConnectionGUID: VnTpLUnmQ7K7vQwQwWpYQQ==
-X-CSE-MsgGUID: eowW5MzbSCm6lRmrFqMETw==
+ bh=rbCZBZdQq2plak4InFDhfQuWEzP0uj6JlMmSwsNFzOM=;
+ b=cXUxmp8tDwIzBiZVfTCzYc06ofO48JvLDehdvjFL6/463oYVvOeY6Y9c
+ Tl6J9+5StwRDRqHY6NpDGZVW20YOD8PG5MigkUiK2kJDmxYW+Qvn2rU9B
+ UJFtVsUjpMYpD76QtGlIg+hWLPVaGdWJRIw0sdmARvtnVRjKafnsBlvX6
+ eBRXMrXBgzJEvgSJ4usOyO/AgKaur0+ZvuJHHQygn7CITazpx1k0f6SBj
+ Jzam1JZU06CG8MxbnGusUM5I5lDwrlBb3S4gmKMw9MjTlzbcX0/Qxfpja
+ BAn804ekAqp/MRlGmfi8eEZQBW/GjofBE3diXQH2Tdctop1uuGxMLhtvv A==;
+X-CSE-ConnectionGUID: PWPUJNcKTc2Sdg8Wt3gPzA==
+X-CSE-MsgGUID: ODysGu3hTympBR0XU5xWlQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11474"; a="52946973"
+X-IronPort-AV: E=Sophos;i="6.16,263,1744095600"; d="scan'208";a="52946973"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Jun 2025 21:04:19 -0700
+X-CSE-ConnectionGUID: b9MPWsIFQ3qagovt/dKegw==
+X-CSE-MsgGUID: 6KAOorOrQbGEzlQtL/nzzw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,263,1744095600"; d="scan'208";a="156380636"
+X-IronPort-AV: E=Sophos;i="6.16,263,1744095600"; d="scan'208";a="157859765"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa005.fm.intel.com with ESMTP; 24 Jun 2025 21:02:13 -0700
+ by orviesa005.jf.intel.com with ESMTP; 24 Jun 2025 21:04:19 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
-Cc: qemu-devel@nongnu.org,
-	xiaoyao.li@intel.com
-Subject: [PATCH] i386/tdx: Remove task->watch only when it's valid
-Date: Wed, 25 Jun 2025 11:55:05 +0800
-Message-ID: <20250625035505.2770580-1-xiaoyao.li@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: xiaoyao.li@intel.com,
+	qemu-devel@nongnu.org
+Subject: [PATCH] i386/tdx: Don't mask off CPUID_EXT_PDCM
+Date: Wed, 25 Jun 2025 11:57:10 +0800
+Message-ID: <20250625035710.2770679-1-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=xiaoyao.li@intel.com;
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
@@ -80,35 +80,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In some case (e.g., failed to connect to QGS socket),
-tdx_generate_quote_cleanup() is called with task->watch invalid. It
-triggers assertion of
+It gets below warning when booting TDX VMs:
 
-  qemu-system-x86_64: GLib: g_source_remove: assertion 'tag > 0' failed
+  warning: TDX forcibly sets the feature: CPUID[eax=01h].ECX.pdcm [bit 15]
 
-Fix it by checking task->watch.
+Because CPUID_EXT_PDCM is fixed1 for TDX, and MSR_IA32_PERF_CAPABILITIES is
+supported for TDX guest unconditioanlly.
 
-Fixes: 40da501d8989 ("i386/tdx: handle TDG.VP.VMCALL<GetQuote>")
+Don't mask off CPUID_EXT_PDCM for TDX.
+
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
- target/i386/kvm/tdx-quote-generator.c | 4 +++-
+ target/i386/cpu.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/kvm/tdx-quote-generator.c b/target/i386/kvm/tdx-quote-generator.c
-index f59715f61751..dee8334b27ac 100644
---- a/target/i386/kvm/tdx-quote-generator.c
-+++ b/target/i386/kvm/tdx-quote-generator.c
-@@ -75,7 +75,9 @@ static void tdx_generate_quote_cleanup(TdxGenerateQuoteTask *task)
- {
-     timer_del(&task->timer);
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 0d35e95430fe..b4cdebf85aac 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -28,6 +28,7 @@
+ #include "system/hvf.h"
+ #include "hvf/hvf-i386.h"
+ #include "kvm/kvm_i386.h"
++#include "kvm/tdx.h"
+ #include "sev.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+@@ -8338,7 +8339,8 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+         }
+     }
  
--    g_source_remove(task->watch);
-+    if (task->watch) {
-+        g_source_remove(task->watch);
-+    }
-     qio_channel_close(QIO_CHANNEL(task->sioc), NULL);
-     object_unref(OBJECT(task->sioc));
- 
+-    if (!cpu->enable_pmu) {
++    /* PDCM is fixed1 bit for TDX */
++    if (!cpu->enable_pmu && !is_tdx_vm()) {
+         mark_unavailable_features(cpu, FEAT_1_ECX,
+                                   env->user_features[FEAT_1_ECX] & CPUID_EXT_PDCM,
+                                   "This feature is not available due to PMU being disabled");
 -- 
 2.43.0
 
