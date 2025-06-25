@@ -4,101 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06D6DC77B7C
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 15:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 682A6C77B7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 15:42:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uURyJ-0000Ui-1j; Wed, 25 Jun 2025 11:23:35 -0400
+	id 1uUSGE-0003vT-HV; Wed, 25 Jun 2025 11:42:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uURyB-0000Ta-Qf
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 11:23:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUSGA-0003v1-AC
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 11:42:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uURy9-0006t9-37
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 11:23:27 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUSG6-0002cO-5i
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 11:42:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750865003;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1750866115;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sgqpt6+LkQyqIfK65io/n4s5hgmJ2bFQ+Ds8DGQQ5HM=;
- b=SuXxt7yyG3viJ8V8INfqCVmYCXB345Czv8uywr0frC6/k+7Xor3Xik+Px9qJI7rt0nzIYT
- ViglTkl9aa79mVxu+ad4fJlHcemtAv4cqpNi5pGu943UUVxijKKss4+eLkgG2PEL/Avf5F
- o46gzo3mq+DLgPw72vDzGCGmERUKRK0=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=CD9jbQlASpMo4p7WtGdW5QE1GhuTo12aUBgBWAl8fO0=;
+ b=AxQCZppAQh3OWkYJ+xGHIswdtqDw17oXOetnGjsrVANIyC/PYSD7zF/dTe68ASQ69dle7s
+ odScTcpoopynrqXBBM9A5rWJw0TQPwi0iQvaHYIrya7MMpQoFaMjCkZj7C4zHKlKNkZu4D
+ NB+MvEc6gm7PVGavJUL7RkKWtHAAYis=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-32-dIBDYqwTO4iw8sJ-_rJI-Q-1; Wed, 25 Jun 2025 11:23:19 -0400
-X-MC-Unique: dIBDYqwTO4iw8sJ-_rJI-Q-1
-X-Mimecast-MFC-AGG-ID: dIBDYqwTO4iw8sJ-_rJI-Q_1750864999
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4ff581df3so16039f8f.1
- for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 08:23:19 -0700 (PDT)
+ us-mta-9-35bg_r8gOfu5_HQB0nw_Vg-1; Wed, 25 Jun 2025 11:41:53 -0400
+X-MC-Unique: 35bg_r8gOfu5_HQB0nw_Vg-1
+X-Mimecast-MFC-AGG-ID: 35bg_r8gOfu5_HQB0nw_Vg_1750866112
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-606f504f228so5330251a12.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 08:41:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750864998; x=1751469798;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=sgqpt6+LkQyqIfK65io/n4s5hgmJ2bFQ+Ds8DGQQ5HM=;
- b=ZkBrtqbSIC2OEQx35rVpf61SWxI1u68huYUvXoQNQFiqTx6G4/qqbQa6GOQaIqRYph
- sSsgk6XDaoArIMU2EamAUSdMctIwP9d4FUBlPiG2wN4f+nkQG9GtIc54FoZ2QNjwI/DO
- LU7MEmS7Pa1j7B7jFwrJmyPeMAG/+z/oDLen0mW+bOhEPkCjDGEx3Vx/TEI6X6xpACtt
- /X+7iji1vHCxqv6ENjZ7NQCDHjWsZ38Pm9zcSMrmc28LFrLxsnUCVtjsVoBrFfOTe2DV
- 3+Y460Opvt2DaxfLCOUOIqhoHNZAFoorldHRLtJTxd4Gej9C9B1nEwyQCTf3ojIQAqh8
- UgbQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUCvbEFkW3wGKBZ0aiU2lYCvS1cOvfftkfg2AY14v8PzafBWDO00CSJfFESv6aMmhij6OL4tU5jvW9H@nongnu.org
-X-Gm-Message-State: AOJu0YyxVRrwe5Dhq3drE9Kn1/OUw+8LbQYQA4id6ZBXZTHF/3UK1B3E
- kMundkyOR2L6k0491jA2sNqGEQbeoTL2zigIDTHH1nG6LrksHAFtlyzodrZ/10wc8BLqUjqD/72
- ajO1Q3eYUbHKt3Wh6V6RfZgYUsPGxDIQ+uy8MPWli89gN5Yw0B1w+W8Jv
-X-Gm-Gg: ASbGncvNeubWe3lwXApWPvJhLNWJ64Y8b6qAcZviVn/ZU1oyRLZnhCTFzSuP5cIn8EN
- pq4UfyYgnNrg8kVEQ+crTJf9ZTuehXDt9A2ULFnhU17uk8kjf8ScTdrEAD2rEc4iFsY/ZGH4LpX
- ZWlVsxpk50X6mZf3nxWlORsrgT8Tm5xA40BemUkjK/J7x0RozQjqTfdx/DLP9fB4wmVTrAl+HvV
- MdVXvBobuMjLyaVtOb+K1t2XpFOKA07gZ6xOFc1AGhClX4+IHuliKSFbZG3ERa+Jf8d6/eSiBzk
- 2MDk7CUsNtJ9lto5uvvyCbKaDGgdJhKMs/xIkG2iIWHpOYYKzI7DQ8YP8VOm1gIAw6MQhA==
-X-Received: by 2002:a05:6000:2409:b0:3a6:daff:9e5 with SMTP id
- ffacd0b85a97d-3a6e71c5b54mr6453895f8f.7.1750864998389; 
- Wed, 25 Jun 2025 08:23:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFudJUWisH4I6Rr4is72hWB5dIi8bRjcn0xmDxtw/zvGFlgiuKmAO1Jz2lEYIDJjgxSGfL9Lw==
-X-Received: by 2002:a05:6000:2409:b0:3a6:daff:9e5 with SMTP id
- ffacd0b85a97d-3a6e71c5b54mr6453857f8f.7.1750864997815; 
- Wed, 25 Jun 2025 08:23:17 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45382363f7fsm23617965e9.27.2025.06.25.08.23.16
+ d=1e100.net; s=20230601; t=1750866112; x=1751470912;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=CD9jbQlASpMo4p7WtGdW5QE1GhuTo12aUBgBWAl8fO0=;
+ b=ZlTwiuEh0Q+3BjGiIPQAruIYWd4QN26xECLUUNVOw38u0HQtL492AxL6XrNUhNs1Ns
+ Q30/TH9FxgWxWMWBAEGtA3jURVjSoX5i15wO5XPVLhg9MINOfwWQpVoSmu6iVvDYRd9G
+ ppvCsMlPNsurpgNJaDA4U9shLGmdYC0Yk1RVgI/5/wd7NkcZoqfi2/8qX+im6wS3fNsk
+ Ec+PgJcgCf4aSokwlauvH3BB9t4pH8CE+ir8VGkhZR6jdVsV6DlF35p9T5m97/7BH6k7
+ G5fRn3C6yvs7muezHlVEww9OXrJ15Mwn2xVozJHop7mBVswUFZXUrGWSyLbIelpHuvZS
+ w+lg==
+X-Gm-Message-State: AOJu0YwJdJEvRxD+rtFlMKGfdhK2bbG7jZe86EASWCQd9YrUNEKnbs6m
+ YNPbwTvToAR8TUte1DXQh0FabY8pnDzXgt2ecGScPacYJexegccwLtC58Zgg/t/72PjAJ0fvDQ5
+ LTUymAxcFv3M41TkeFvKo7KYOS7btHf3fAUVZhHIk4fHR9XghxhRUVd+Xw0pQkFBYFKPvLgAiSI
+ zn1w61GhmnGorH3Ca5pZnf7prDbYD5DcidQ5NB
+X-Gm-Gg: ASbGncup0wqAVxwiLgvq+hvclAV6KRzIc0uI/igFiQ+wRpDl6RHKjhThgR7IkgmXY1A
+ eqcAVsCZJKC1UDEsQrsrT91uAyFrUHxGFTHh1LEyCFsZRsARQem3up08TJWtJEjDztzM7z2PHtN
+ /pNHwXAfH4GPlZ7F8Dp7LoAeR0lDgYjo1Z67jSHNyaeScGEvhBfhjBwCM31f4MJKLpLtUHlvXfi
+ 0jCeB0BrJwerAtT/oa9eCoVlsfj60hN6ERyN0KgplPwOFDUjJ4twvaki98oOnFKXFX6i0+F8p1g
+ Z7InqOuN0aDR0FRPxhfI45PqkivDw+kwYPujVtFo6Lqr80oCh8miECZ91yOeuHo=
+X-Received: by 2002:a05:6402:350d:b0:60c:3cca:651a with SMTP id
+ 4fb4d7f45d1cf-60c4debd454mr3048306a12.33.1750866111962; 
+ Wed, 25 Jun 2025 08:41:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHMhKUd2N5hEp5Q8eH+8tOKVsCiRfvuRVbaWTH2jFZyikWFcCD6Kltj9eAY0k2F1UrJf0WPJQ==
+X-Received: by 2002:a05:6402:350d:b0:60c:3cca:651a with SMTP id
+ 4fb4d7f45d1cf-60c4debd454mr3048269a12.33.1750866111482; 
+ Wed, 25 Jun 2025 08:41:51 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-115-198.pools.arcor-ip.net.
+ [47.64.115.198]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-60c2f46888dsm2729508a12.43.2025.06.25.08.41.50
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Jun 2025 08:23:17 -0700 (PDT)
-Message-ID: <13edf868-707a-4caa-9b83-8b7ac103ff0a@redhat.com>
-Date: Wed, 25 Jun 2025 17:23:15 +0200
+ Wed, 25 Jun 2025 08:41:50 -0700 (PDT)
+Message-ID: <b3b5bd3a-1040-4aeb-8a07-e9e771a9e503@redhat.com>
+Date: Wed, 25 Jun 2025 17:41:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 17/29] hw/arm/virt-acpi-build: Modify the DSDT ACPI
- table to enable ACPI PCI hotplug
+Subject: Re: [PATCH 01/12] COPYING: replace FSF postal address with licenses
+ URL
+To: qemu-devel@nongnu.org
+References: <20250613.qemu.patch@sean.taipei>
+ <20250613.qemu.patch.01@sean.taipei>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, gustavo.romero@linaro.org, anisinha@redhat.com,
- mst@redhat.com, shannon.zhaosl@gmail.com, pbonzini@redhat.com,
- philmd@linaro.org, alex.bennee@linaro.org
-References: <20250616094903.885753-1-eric.auger@redhat.com>
- <20250616094903.885753-18-eric.auger@redhat.com>
- <20250620103538.000021c1@huawei.com> <20250620143822.7ab69038@fedora>
- <20250620171351.00004cb0@huawei.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250620171351.00004cb0@huawei.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <20250613.qemu.patch.01@sean.taipei>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,7 +136,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,171 +149,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor, Jonathan,
+On 13/06/2025 18.33, Sean Wei wrote:
+> The license text in COPYING (GPLv2), COPYING.LIB (LGPLv2.1),
+> and the linux-headers/LICENSES/preferred/GPL-2.0 file are
+> referenced to the obsolete FSF postal address.
+> 
+> Replace it with the canonical GNU licenses URL recommended by the FSF:
+> https://www.gnu.org/licenses/
+> 
+> Signed-off-by: Sean Wei <me@sean.taipei>
+> ---
+>   COPYING                                  | 5 ++---
+>   COPYING.LIB                              | 5 ++---
+>   linux-headers/LICENSES/preferred/GPL-2.0 | 5 ++---
+>   3 files changed, 6 insertions(+), 9 deletions(-)
+> 
+> diff --git a/COPYING b/COPYING
+> index 00ccfbb628..8095135d50 100644
+> --- a/COPYING
+> +++ b/COPYING
+> @@ -2,7 +2,7 @@
+>   		       Version 2, June 1991
+>   
+>    Copyright (C) 1989, 1991 Free Software Foundation, Inc.,
+> - 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+> + <https://fsf.org/>
+>    Everyone is permitted to copy and distribute verbatim copies
+>    of this license document, but changing it is not allowed.
+>   
+> @@ -304,8 +304,7 @@ the "copyright" line and a pointer to where the full notice is found.
+>       GNU General Public License for more details.
+>   
+>       You should have received a copy of the GNU General Public License along
+> -    with this program; if not, write to the Free Software Foundation, Inc.,
+> -    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+> +    with this program; if not, see <https://www.gnu.org/licenses/>.
+>   
+>   Also add information on how to contact you by electronic and paper mail.
+>   
+> diff --git a/COPYING.LIB b/COPYING.LIB
+> index 4362b49151..99f47575b5 100644
+> --- a/COPYING.LIB
+> +++ b/COPYING.LIB
+> @@ -2,7 +2,7 @@
+>                          Version 2.1, February 1999
+>   
+>    Copyright (C) 1991, 1999 Free Software Foundation, Inc.
+> - 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+> + <https://fsf.org/>
+>    Everyone is permitted to copy and distribute verbatim copies
+>    of this license document, but changing it is not allowed.
+>   
+> @@ -484,8 +484,7 @@ convey the exclusion of warranty; and each file should have at least the
+>       Lesser General Public License for more details.
+>   
+>       You should have received a copy of the GNU Lesser General Public
+> -    License along with this library; if not, write to the Free Software
+> -    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+> +    License along with this library; if not, see <https://www.gnu.org/licenses/>.
+>   
+>   Also add information on how to contact you by electronic and paper mail.
+>   
+> diff --git a/linux-headers/LICENSES/preferred/GPL-2.0 b/linux-headers/LICENSES/preferred/GPL-2.0
+> index ff0812fd89..10248a619e 100644
+> --- a/linux-headers/LICENSES/preferred/GPL-2.0
+> +++ b/linux-headers/LICENSES/preferred/GPL-2.0
 
-On 6/20/25 6:13 PM, Jonathan Cameron wrote:
-> On Fri, 20 Jun 2025 14:38:22 +0200
-> Igor Mammedov <imammedo@redhat.com> wrote:
->
->> On Fri, 20 Jun 2025 10:35:38 +0100
->> Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
->>
->>> On Mon, 16 Jun 2025 11:46:46 +0200
->>> Eric Auger <eric.auger@redhat.com> wrote:
->>>   
->>>> Modify the DSDT ACPI table to enable ACPI PCI hotplug.
->>>>
->>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>>>
->>>> ---
->>>> v2 -> v3:
->>>> - use ACPI_PCIHP_SIZE instead of 0x1000 (Igor)
->>>> - use cihp_state->use_acpi_hotplug_bridge    
->>> pcihp_state
->>>
->>> Takes a bit of searching to find the various bits of the
->>> same support on x86 but this seems to match up.
->>> Exactly when things are built does vary but not I think
->>> in a way that matters.  e.g. I think on x86 the
->>> EDSM stuff is built whether or not we have pcihp enabled
->>> whereas here you've made it conditional on using acpi
->>> hp.  Perhaps a tiny bit more description on that would be
->>> useful if you do a v4?  
->> edsm should be built regardless of pcihp
->> (well intention was there, whether I messed it up or not I don't know)
->>
->> idea is that non hotplug ports can have a static acpi-index,
->> so it doesn't depend on pcihp.
-> That makes sense - so here should that edsm feature be enabled whether
-> or not we have pcihp_state->use_acpi_hotplug_bridge == true
->
-> i.e. is it really a separate thing from the rest of this series?
+The files in linux-headers are sync'ed by the script 
+scripts/update-linux-headers.sh ... so these changes will be reverted the 
+next time someone runs the script. I'd suggest to drop this part of the 
+patch - if you feel like contributing a patch to the Linux kernel, you could 
+fix it there instead.
 
-Further studying this comment,
-
-EDSM is invoked by code generated in aml_pci_static_endpoint_dsm() whcih
-itself is invoked by build_append_pci_bus_devices()
-
-So to me it means that if we generate edsm unconditionally we also need
-to call the following block unconditionnally
-
-+    aml_append(pci0_scope, build_pci_bridge_edsm());
-+    build_append_pci_bus_devices(pci0_scope, vms->bus);
-+    if (object_property_find(OBJECT(vms->bus), ACPI_PCIHP_PROP_BSEL)) {
-+        build_append_pcihp_slots(pci0_scope, vms->bus);
-+    }
-
-which seems to be done that way in hw/i386/acpi-build.c/build_dsdt()
-
-Igor, if I recall correctly you said that addition changes related to
-"S%.02X" could change the guest ABI. And in that case this wouldn't be
-guarded by any new option/compat. So that's annoying.
-
-By the way I tested static acpi-index on ARM with resulting code and it
-does not not seem to work - maybe I try with a wrong topology though
-(pcie root port + virtio-net acpi-index)-. I have not checked on x86 yet.
-
-So I wonder if it makes sense to do that refinement now. Maybe we can
-check try to improve that afterwards?
-
-What do you think?
-
-Eric
-
-
-
->
-> Thanks,
->
-> J
->>> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
->>>
->>>   
->>>> ---
->>>>  include/hw/acpi/pcihp.h  |  2 ++
->>>>  include/hw/arm/virt.h    |  1 +
->>>>  hw/arm/virt-acpi-build.c | 22 ++++++++++++++++++++++
->>>>  hw/arm/virt.c            |  2 ++
->>>>  hw/arm/Kconfig           |  2 ++
->>>>  5 files changed, 29 insertions(+)
->>>>
->>>> diff --git a/include/hw/acpi/pcihp.h b/include/hw/acpi/pcihp.h
->>>> index 5506a58862..9ff548650b 100644
->>>> --- a/include/hw/acpi/pcihp.h
->>>> +++ b/include/hw/acpi/pcihp.h
->>>> @@ -38,6 +38,8 @@
->>>>  #define ACPI_PCIHP_SEJ_BASE 0x8
->>>>  #define ACPI_PCIHP_BNMR_BASE 0x10
->>>>  
->>>> +#define ACPI_PCIHP_SIZE 0x0018
->>>> +
->>>>  typedef struct AcpiPciHpPciStatus {
->>>>      uint32_t up;
->>>>      uint32_t down;
->>>> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
->>>> index 9a1b0f53d2..0ed2e6b732 100644
->>>> --- a/include/hw/arm/virt.h
->>>> +++ b/include/hw/arm/virt.h
->>>> @@ -79,6 +79,7 @@ enum {
->>>>      VIRT_ACPI_GED,
->>>>      VIRT_NVDIMM_ACPI,
->>>>      VIRT_PVTIME,
->>>> +    VIRT_ACPI_PCIHP,
->>>>      VIRT_LOWMEMMAP_LAST,
->>>>  };
->>>>  
->>>> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
->>>> index d7547c8d3b..a2e58288f8 100644
->>>> --- a/hw/arm/virt-acpi-build.c
->>>> +++ b/hw/arm/virt-acpi-build.c
->>>> @@ -34,6 +34,7 @@
->>>>  #include "hw/core/cpu.h"
->>>>  #include "hw/acpi/acpi-defs.h"
->>>>  #include "hw/acpi/acpi.h"
->>>> +#include "hw/acpi/pcihp.h"
->>>>  #include "hw/nvram/fw_cfg_acpi.h"
->>>>  #include "hw/acpi/bios-linker-loader.h"
->>>>  #include "hw/acpi/aml-build.h"
->>>> @@ -809,6 +810,8 @@ static void
->>>>  build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->>>>  {
->>>>      VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
->>>> +    AcpiGedState *acpi_ged_state = ACPI_GED(vms->acpi_dev);
->>>> +    AcpiPciHpState *pcihp_state = &acpi_ged_state->pcihp_state;
->>>>      Aml *scope, *dsdt;
->>>>      MachineState *ms = MACHINE(vms);
->>>>      const MemMapEntry *memmap = vms->memmap;
->>>> @@ -868,6 +871,25 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->>>>  
->>>>      aml_append(dsdt, scope);
->>>>  
->>>> +    if (pcihp_state->use_acpi_hotplug_bridge) {
->>>> +        Aml *pci0_scope = aml_scope("\\_SB.PCI0");
->>>> +
->>>> +        aml_append(pci0_scope, aml_pci_edsm());
->>>> +        build_acpi_pci_hotplug(dsdt, AML_SYSTEM_MEMORY,
->>>> +                               memmap[VIRT_ACPI_PCIHP].base);
->>>> +        build_append_pcihp_resources(pci0_scope,
->>>> +                                     memmap[VIRT_ACPI_PCIHP].base,
->>>> +                                     memmap[VIRT_ACPI_PCIHP].size);
->>>> +
->>>> +        /* Scan all PCI buses. Generate tables to support hotplug. */
->>>> +        build_append_pci_bus_devices(pci0_scope, vms->bus);
->>>> +        if (object_property_find(OBJECT(vms->bus), ACPI_PCIHP_PROP_BSEL)) {
->>>> +            build_append_pcihp_slots(pci0_scope, vms->bus);
->>>> +        }
->>>> +        build_append_notification_callback(pci0_scope, vms->bus);
->>>> +        aml_append(dsdt, pci0_scope);
->>>> +    }
->>>> +
->>>>      /* copy AML table into ACPI tables blob */
->>>>      g_array_append_vals(table_data, dsdt->buf->data, dsdt->buf->len);
->>>>      
->>>   
->>
+  Thomas
 
 
