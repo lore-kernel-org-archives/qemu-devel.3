@@ -4,133 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08F12C7EE2A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 062DEC7115C
 	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 13:37:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUQIr-0008UG-5C; Wed, 25 Jun 2025 09:36:41 -0400
+	id 1uUQJ1-0008Vd-Nv; Wed, 25 Jun 2025 09:36:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUQIl-0008TR-Bu
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 09:36:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uUQIo-0008Tx-Tu
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 09:36:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUQIg-0000BD-U8
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 09:36:32 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uUQIi-0000Cm-Hs
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 09:36:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750858587;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1750858590;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=7BCOCbzDm2MeCoHk5tQ3Cz/favCS5gp+hfXzv3pgbN0=;
- b=UFGGbMh60n2w2GZapgtSphvm3X5YUobpVU79Y4ABNrOdfqogwtFGPt5OADpONtED+Uc0ij
- kew+QDM5/jIkBMTgZMFKnzrxEhcVCZOFbFidnXtG+QFJdjtrOryfM3r7TCDUKLxmVpfD0o
- PAoSRHw1oUaa1NcZGjUdwSb3oDA09aI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=PMZJJFewBzjS4sZACakgZFb5UPa9fqCPQkRci89iPsg=;
+ b=ATRcnfxy7RyebwAIkDd/i/rEoY4LlpIzYkULwxoPASmGip/Gi1ihMSzMky3eOn+KtXtwuR
+ lejk4jtPknnqWgSdMyuvjeBJf/8kvPdngpWWO4xOvhT4FbnpA+ryH7vEs0dQxaP2HAzKoY
+ /0odEF1DsQoKSMbUZEPRi9vpbGsl0pU=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-534-KEOABmNVMkKJdkIDpATDzA-1; Wed, 25 Jun 2025 09:36:25 -0400
-X-MC-Unique: KEOABmNVMkKJdkIDpATDzA-1
-X-Mimecast-MFC-AGG-ID: KEOABmNVMkKJdkIDpATDzA_1750858584
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-450eaae2934so55882555e9.2
- for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 06:36:25 -0700 (PDT)
+ us-mta-683-I3KyF_G_NiKDp7jMh9dXAA-1; Wed, 25 Jun 2025 09:36:29 -0400
+X-MC-Unique: I3KyF_G_NiKDp7jMh9dXAA-1
+X-Mimecast-MFC-AGG-ID: I3KyF_G_NiKDp7jMh9dXAA_1750858588
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a6d1394b07so870139f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 06:36:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750858584; x=1751463384;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=1e100.net; s=20230601; t=1750858587; x=1751463387;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=7BCOCbzDm2MeCoHk5tQ3Cz/favCS5gp+hfXzv3pgbN0=;
- b=Ts+dUu8ClwbJiXnZY1f4jNxxpXdk4YQAF8hrkwoB6imk7vqcJEasxcVcsHaojiJYfm
- ReG7+SUJnrKaV3dlU+QJ00LsA+eN1n9G3mV4lIlm28ic2r+urcAXoEMqE77hYL7J2lUc
- zS+zz5DtB49m0eofnaFrZkUCPXwhYsVWuvXbudvU4YWmMglFY3exo5ZiWT2ZYKfMPxZ7
- 04CZCxO6YsKNPxXLgvY2t/852gLHsUfZKw6Fz8O3b2up1d7u/uczwyOOGwBv3jvyqBs4
- t1PvDYkIjXYjR6buidjlb4def22nrIWaKmhV8kbcY9az/uc9q8rPZqKmlc7YCAck6VY/
- eU6w==
+ bh=PMZJJFewBzjS4sZACakgZFb5UPa9fqCPQkRci89iPsg=;
+ b=WdWVJfFNVH/e1+sFtm3RyxyvJlZTBjaUt60bHcnkdj3Jfc1EqPt4+/TCuHuqDDxKtZ
+ R7MtLG7aLpSJnPFRAGyT6qnq35Ls8FOb04s3QsHY3PUv1MSkwSMarVEOpUI8eZ6giA7l
+ zjeC2QnH2j9eM/fBcNNihWbtnrBH7PfwZhsTO5EccZezGy7R9VhoI4mdR5B2O4bYi84K
+ HhnFH9ZJ1RvP17bP9jIxCL9vbAuguI+LbsBmcbFCWXfLpIPsOWd48Rejyz6Bi8tnHkvQ
+ HQbGi9A5UIqWpLNGbGc0aGyT5DZ1AYN0T0ZJJrsercs7+OZUKHVjB+LJ8l6ODjYBkdpr
+ SOwQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVeDIKAGZupXn2Sl2Umgf7ETRjwrxsXSxR1PAJ12AKAh641q/aTLieFwLtL5e13HEPY9pEyxB+yvidt@nongnu.org
-X-Gm-Message-State: AOJu0YxLp5z7zpb0qvz1giVI6eSasA+dQbgUrE2HJd0rx/Bhp6M/ZkNO
- lZ+VbUh/Ng/xbXRaiyJ5RC/gpkGlxPtCufg4hOoNj6kXbh/RkWgEFh4WJggmg54+piskQpjhOpe
- KG9GP9rMwEkH2p8Ki6Kgs9+nOHdLmoRRPyAAQlGrlz3/Z+SQSXnlb9/Rv
-X-Gm-Gg: ASbGncvLaiUNSIlxSIfcx5UVYM7Mb3s+eUemKT1hQcaadxDKGSoeaAGMKbHpfhU/vyS
- BcweXxPF5g2tvlL3TOWI4aM68YmSgCVbPNGsdY/jufKqNrDxTvnl1gSrhBgIu/7a7amWgnL69Q+
- 2AMfu9HtLa7NQ6viG0FT201FrpFFWCqeKOVBhzOxXCVUGTAwNiUsVoDMHBmrHs+XEZqkQ9OyXLj
- +QTOL8h5NN5RXxUo8S0DWnYQSgTVvDGNJ2DD5ZFAiB1TbKIhPCEoX3ecnQ30nlGzOYUJ0EV5Zjx
- pCjKLSmyrLosHY2T3mmSPLhuWurMiB/2gPJVloMPc3FwjO4=
-X-Received: by 2002:a05:600c:4e8a:b0:450:d3c6:84d8 with SMTP id
- 5b1f17b1804b1-45381aaff08mr34050665e9.14.1750858584530; 
- Wed, 25 Jun 2025 06:36:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHuDEs0Of6VUXpQBUnPo+0CdAnZU22Y2LYVV5B6kfRufxinoiutzEZHbJnsaZCrwPXMRz3HvA==
-X-Received: by 2002:a05:600c:4e8a:b0:450:d3c6:84d8 with SMTP id
- 5b1f17b1804b1-45381aaff08mr34050285e9.14.1750858584086; 
- Wed, 25 Jun 2025 06:36:24 -0700 (PDT)
-Received: from [10.33.192.219] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ AJvYcCWN27GmecP2jscVFwr7zPjLc5P60wCZVwzfvDqFPdF7NXWs2uI2WRTagXTvgbAzaZFMYeUDkTbhQCJR@nongnu.org
+X-Gm-Message-State: AOJu0YyrdGHLiE9DqlaXeUGEIUzw4EOxo8grS3AbpJzUGWeGcviVuAcb
+ ftHQWFTVbRZGG5h0oLlxauozz8AH3KVPa28FUhGP/vQcGv/Qx3n8/EeLCe21v4B5O4hNuJuEVwv
+ WDKeLt+x+PamVpI+A32ZvWA+fbS9BVwKfnDTpjga1Ifj8cgoE2/S1z8BEeGV4CoKt
+X-Gm-Gg: ASbGncuIDU9dQ1XfFYDjY842DoVZWolL0ob5BZ3z1xvI98D0nYvPsvWZH/nXT0XJ9um
+ mTzCfQ/wLF/BLfo90qtWSrM9zpzLHNYfCiZ1q542aZgjFFP/GvyAyAM6WvgTdJLHSmxnO4FLjHY
+ 21fUj9VDBu6YcP43+3+FMZZjVCblN2r0qTxe9gFfb5PVWTOBoN/ajBzPF3Tx2BrSVMb6qlydKOo
+ csfi6hWwW4BK6TXoANHS0WGxwec1RbGxb05kha1he9saWL0xVrO0owpTaiMo0EVTbPwEU8ILVpy
+ VKxzdQ0wquK2sI6Dj+3ndsiFgZxD5MkHQriN/8A5oTS5eyn68MYrNZVfJMor/zdd03wELA==
+X-Received: by 2002:a05:600c:8b2a:b0:43c:ed61:2c26 with SMTP id
+ 5b1f17b1804b1-45381b0f38fmr34328245e9.17.1750858586853; 
+ Wed, 25 Jun 2025 06:36:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF3EexqTQK3I72TlBjeIsO4GRe3IMZcznQleE/PNQb9uJ+uu6gNiSgT4L65YfkdZt4rq4hWQA==
+X-Received: by 2002:a05:600c:8b2a:b0:43c:ed61:2c26 with SMTP id
+ 5b1f17b1804b1-45381b0f38fmr34327885e9.17.1750858586334; 
+ Wed, 25 Jun 2025 06:36:26 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45382349548sm20660475e9.10.2025.06.25.06.36.23
+ 5b1f17b1804b1-453823b6c21sm20479955e9.29.2025.06.25.06.36.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Jun 2025 06:36:23 -0700 (PDT)
-Message-ID: <0755e5fc-5887-42e6-8400-65418dd4fa96@redhat.com>
-Date: Wed, 25 Jun 2025 15:36:22 +0200
+ Wed, 25 Jun 2025 06:36:25 -0700 (PDT)
+Message-ID: <8112ac0c-7fc6-4135-9024-830e83a1e1db@redhat.com>
+Date: Wed, 25 Jun 2025 15:36:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/s390x/ccw-device: Fix memory leak in loadparm setter
-To: Kevin Wolf <kwolf@redhat.com>, qemu-devel@nongnu.org
-Cc: pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-trivial@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Eric Farman <farman@linux.ibm.com>
-References: <20250625082751.24896-1-kwolf@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v3 25/29] hw/arm/virt: Let virt support pci hotplug/unplug
+ GED event
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250625082751.24896-1-kwolf@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, imammedo@redhat.com, gustavo.romero@linaro.org,
+ anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com,
+ pbonzini@redhat.com, philmd@linaro.org, alex.bennee@linaro.org
+References: <20250616094903.885753-1-eric.auger@redhat.com>
+ <20250616094903.885753-26-eric.auger@redhat.com>
+ <20250620111745.00004018@huawei.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250620111745.00004018@huawei.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -138,7 +104,8 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,44 +118,104 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/06/2025 10.27, Kevin Wolf wrote:
-> Commit bdf12f2a fixed the setter for the "loadparm" machine property,
-> which gets a string from a visitor, passes it to s390_ipl_fmt_loadparm()
-> and then forgot to free it. It left another instance of the same problem
-> unfixed in the "loadparm" device property. Fix it.
-> 
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->   hw/s390x/ccw-device.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/s390x/ccw-device.c b/hw/s390x/ccw-device.c
-> index 19c2238f76..8be1813b9e 100644
-> --- a/hw/s390x/ccw-device.c
-> +++ b/hw/s390x/ccw-device.c
-> @@ -57,7 +57,7 @@ static void ccw_device_set_loadparm(Object *obj, Visitor *v,
->                                    Error **errp)
->   {
->       CcwDevice *dev = CCW_DEVICE(obj);
-> -    char *val;
-> +    g_autofree char *val = NULL;
->       int index;
+Hi Jonathan,
 
-I was able to reproduce the leak with a command line like this:
+On 6/20/25 12:17 PM, Jonathan Cameron wrote:
+> On Mon, 16 Jun 2025 11:46:54 +0200
+> Eric Auger <eric.auger@redhat.com> wrote:
+>
+>> Set up the IO registers used to communicate between QEMU
+>> and ACPI.
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>>
+>> ---
+>> v2 -> v3:
+>> - remove acpi_ged_state->pcihp_state.use_acpi_hotplug_bridge = true;
+>> - use sysbus_mmio_map_name for all regs (Igor)
+> I'm very much in favor of this change but maybe break them out to
+> a separate patch - perhaps even one that can run ahead of the rest
+> of this series?
 
-valgrind --trace-children=yes --track-origins=yes --leak-check=full \
-  --show-leak-kinds=definite ./qemu-system-s390x -nographic -accel kvm \
-   -drive if=none,file=/tmp/disk0.qcow2,format=qcow2,id=drive_image1 \
-   -device virtio-blk-ccw,drive="drive_image1",bootindex=0,loadparm=4 \
-   -device virtio-scsi-ccw
+I split it in a separate patch.
 
-And I can confirm that your patch fixes the issue, thank you!
+Thanks!
 
-Tested-by: Thomas Huth <thuth@redhat.com>
-
-I'll queue it for my next pull request.
+Eric
+>
+> Mind you if this is going to land shortly perhaps not worth the bother.
+>
+> Either way
+>
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+>
+>
+>> - create_pcie left at its original place
+>>
+>> v1 -> v2:
+>> - use ACPI_PCIHP_REGION_NAME
+>> ---
+>>  include/hw/acpi/generic_event_device.h |  1 +
+>>  hw/arm/virt.c                          | 19 +++++++++++++++++--
+>>  2 files changed, 18 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
+>> index ec8e1abe0a..8f5d903146 100644
+>> --- a/include/hw/acpi/generic_event_device.h
+>> +++ b/include/hw/acpi/generic_event_device.h
+>> @@ -111,6 +111,7 @@ typedef struct GEDState {
+>>  } GEDState;
+>>  
+>>  #define ACPI_PCIHP_REGION_NAME "pcihp container"
+>> +#define ACPI_MEMHP_REGION_NAME "memhp container"
+>>  
+>>  struct AcpiGedState {
+>>      SysBusDevice parent_obj;
+>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+>> index 41be8f6dbb..8c882e0794 100644
+>> --- a/hw/arm/virt.c
+>> +++ b/hw/arm/virt.c
+>> @@ -684,6 +684,8 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
+>>      DeviceState *dev;
+>>      MachineState *ms = MACHINE(vms);
+>>      SysBusDevice *sbdev;
+>> +    AcpiGedState *acpi_ged_state;
+>> +    AcpiPciHpState *pcihp_state;
+>>      int irq = vms->irqmap[VIRT_ACPI_GED];
+>>      uint32_t event = ACPI_GED_PWR_DOWN_EVT;
+>>  
+>> @@ -696,13 +698,26 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
+>>      }
+>>  
+>>      dev = qdev_new(TYPE_ACPI_GED);
+>> +    acpi_ged_state = ACPI_GED(dev);
+>> +    pcihp_state = &acpi_ged_state->pcihp_state;
+>> +    if (pcihp_state->use_acpi_hotplug_bridge) {
+>> +        event |= ACPI_GED_PCI_HOTPLUG_EVT;
+>> +    }
+>>      qdev_prop_set_uint32(dev, "ged-event", event);
+>>      object_property_set_link(OBJECT(dev), "bus", OBJECT(vms->bus), &error_abort);
+>>      sbdev = SYS_BUS_DEVICE(dev);
+>>      sysbus_realize_and_unref(sbdev, &error_fatal);
+>>  
+>> -    sysbus_mmio_map(sbdev, 0, vms->memmap[VIRT_ACPI_GED].base);
+>> -    sysbus_mmio_map(sbdev, 1, vms->memmap[VIRT_PCDIMM_ACPI].base);
+>> +    sysbus_mmio_map_name(sbdev, TYPE_ACPI_GED, vms->memmap[VIRT_ACPI_GED].base);
+>> +    sysbus_mmio_map_name(sbdev, ACPI_MEMHP_REGION_NAME,
+>> +                         vms->memmap[VIRT_PCDIMM_ACPI].base);
+>> +    if (pcihp_state->use_acpi_hotplug_bridge) {
+>> +        int pcihp_region_index;
+>> +
+>> +        pcihp_region_index = sysbus_mmio_map_name(sbdev, ACPI_PCIHP_REGION_NAME,
+>> +                                                  vms->memmap[VIRT_ACPI_PCIHP].base);
+>> +        assert(pcihp_region_index >= 0);
+>> +    }
+>>      sysbus_connect_irq(sbdev, 0, qdev_get_gpio_in(vms->gic, irq));
+>>  
+>>      return dev;
 
 
