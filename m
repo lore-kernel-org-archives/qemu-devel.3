@@ -4,99 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 673A4C7EE30
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 13:37:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72F8CC7EE2A
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 13:38:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUQJS-0000FH-Ul; Wed, 25 Jun 2025 09:37:18 -0400
+	id 1uUQKU-0001v8-Q4; Wed, 25 Jun 2025 09:38:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uUQJM-00009r-2t
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 09:37:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uUQKS-0001nl-Rc
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 09:38:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uUQJH-0000KE-U8
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 09:37:10 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uUQKQ-0000TB-V2
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 09:38:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750858625;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1750858697;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=jaApqlhiblKm5r3TKdO6hVIekuhpSl6yTPCgdm7/cSk=;
- b=LxdOlqud+y0onCyEhMYBQ2C9VIzL9J09QUQLo4nlsw7XOImIeWUI2HzgSTeYdiin5KH9z9
- 6T3IArzpuD9enJv8O29z1IU7Vtdi31FL4ROiPOLRiwd6kkEeWPHVQGT78O3y6+/9nRn1Zc
- KHmcxs5EK6oHnJvhz/VOjKGYlxNndXc=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=q5yR1c9+E9NTIZWZFC5WnWiCO1Mr4P9T/HZRarIgju8=;
+ b=TtKW6ya3J6Im4ghvjK2AFH4kSOCYhPtqFymWZHIge0mZxEec0raNQxAQZ1SMwGh3tHTM87
+ i5CEqjKAO3MM5mi8lK5wMKelsdHyinlogI+swQO+ZxnLrGHSwaVZvZ7dobR7WgsieMfR5M
+ 1ExAuYsESsfB+AEf5Qd5/hFO+++72F8=
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
+ [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-606-i1BhsgHlMGW_WVRmKZ7l2g-1; Wed, 25 Jun 2025 09:37:04 -0400
-X-MC-Unique: i1BhsgHlMGW_WVRmKZ7l2g-1
-X-Mimecast-MFC-AGG-ID: i1BhsgHlMGW_WVRmKZ7l2g_1750858623
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-45334219311so8364615e9.2
- for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 06:37:04 -0700 (PDT)
+ us-mta-301-bPxTi0y_MmOX8JuszuG6Qw-1; Wed, 25 Jun 2025 09:38:13 -0400
+X-MC-Unique: bPxTi0y_MmOX8JuszuG6Qw-1
+X-Mimecast-MFC-AGG-ID: bPxTi0y_MmOX8JuszuG6Qw_1750858692
+Received: by mail-pf1-f197.google.com with SMTP id
+ d2e1a72fcca58-7377139d8b1so4882645b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 06:38:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750858623; x=1751463423;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jaApqlhiblKm5r3TKdO6hVIekuhpSl6yTPCgdm7/cSk=;
- b=tRGvM+xzCNH4/e6OOC/Xoq7is4QlZCyrM7APaLgSva+eroI/rPmELoB/iVFPjVY83L
- w2QW31z00ZhvsMGixCHSYnUmNt246XYw5+tiAYqn3/zPCKXdHwFzxm9bHlwGyZLIwKm/
- cS62H9uRoi9zmQNZP6tB7YviGfBGhFHHJuGQbEzknT7K75o0PHrJx339q8ypIqlW+Hat
- J8z0cn25c4H1K91pZuJDUgaytKHcehg7pxfpRmuxNf3mFr4geNKpRwbQt9PSC/AtqaFm
- 6a41LlpGKlN/TlYadR7eK85ZLn23BgV5DZfwh8w6jLh0uqqfxQJqzMbA+tk8bu6iJl3n
- GkWA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXt+Ie6ymh7aIB+WERxl60iiavtCYSQKpT/n6fEMCkXe9WQZDiLVj1SHmJMExWtMWUAL4JwXqKHmYUQ@nongnu.org
-X-Gm-Message-State: AOJu0YwGGqHOujxfV1+wg888O8GclAXyPKWV7ylVC/9EeeBop8eI0ynD
- ONNxqBjN8vIiQEWif8mIaPD6Eb2MQEnAk7oYE6dkTqQIDNwNRjHld7rLKIr+TsRQR0yQA+2zkRx
- tpY/BHrWBdjkyUE7egD626EkV7+X1p+75cqNRFZQVuAL3PkFLDB0C8VmV
-X-Gm-Gg: ASbGncuQqT/hI+ZEnPsWPuMv3auS0xzj2/C05R6AcSvcZX2CjxI7g+UtNI0K5cazCTf
- j22sTjwTpWTuryFH2qyx254saiOD2W2nL8tw6HnfS0aSRvoUSsVgcVPIHhLxHNfN+iAPSLPrEL+
- S5+47Ept2LaqUqo94Ne1XI62iCA4gLFtGXIN+GQt2QVVBOHozkf9JKPlNzF/Pf72uQA7vFcn/oW
- /dmxtDedeIXoTBg5eLdDqHVoJMG4alo5gzzwqZc+BIIeWUh3BpCtT1ty5GYQgW3nE1HY/t0im1o
- 45KthIqKNn1hA2QVXbukHCx5eJEg4CdfNL8pencJ4FFVEvAIe4Gj3iI0UWimOOJaMt8R+w==
-X-Received: by 2002:a05:600c:8508:b0:451:dee4:cd08 with SMTP id
- 5b1f17b1804b1-45381ae9db8mr27151115e9.23.1750858623057; 
- Wed, 25 Jun 2025 06:37:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHpAevyhZsnp1X2UVaim4WOdyZNyUJUXnzjuOSPa84JSIIrAA94+wjYSrD4x4ljFHBfwqYevg==
-X-Received: by 2002:a05:600c:8508:b0:451:dee4:cd08 with SMTP id
- 5b1f17b1804b1-45381ae9db8mr27150645e9.23.1750858622439; 
- Wed, 25 Jun 2025 06:37:02 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6e8063a5dsm4806861f8f.35.2025.06.25.06.37.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Jun 2025 06:37:01 -0700 (PDT)
-Message-ID: <f90d8aa1-74bc-46e1-b4a6-9a4f54854d86@redhat.com>
-Date: Wed, 25 Jun 2025 15:37:00 +0200
+ d=1e100.net; s=20230601; t=1750858692; x=1751463492;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=q5yR1c9+E9NTIZWZFC5WnWiCO1Mr4P9T/HZRarIgju8=;
+ b=Q2rMiB6qm+XerGnQj3Y6cko/f00dObvEqFlTnPmoc4sgwmIHCmX0dZ3n7FMHSJsduA
+ DQoHZogyApfnaUEZm4QXbcUitOIlYjTIKhk9L6Yd+WdbOWa0VNkgdCaM0bImrFlfhnYe
+ FJ45wxxHjdZ08CqStnxMZJHL8hLa2TL1nMAriFiRRPa7XnxsTiQJTtZEqW/n5JAs5qO+
+ GpB3MrfIKCj2bUhBogroWM1nza3iTFtLZQGMM7ZHxww+RCl7Cqx94E3NPQHhtKwd1jJd
+ GraaPv96tA0ZujDCLtUh4t5URo3Tyjs4AFoV2dpfj8zSEw9nLHntiiRixNYBGwyKc4nc
+ Cadg==
+X-Gm-Message-State: AOJu0Yx3qFWvqvFEcaVyACLjhmtSyDIBPvAhz1Otn0TkjwkFMh76HtQ0
+ 5xhYL9ixIC6bLby0UOmDuLLDPFwPk/FY/0XAauamk7m26BlkjgAkkaax/msTgoKViCVZsRjjjxo
+ GzT7sNfG0yJKYqPxhTHgqX5+eDhrWx5f6zEZ3s9Ek6WCDLLX/f4JhcMn4
+X-Gm-Gg: ASbGnct//LtD93KFrLQeeErXJTqwD5M2ajk06xoTUKkMO9DVkNAhzcrNlbZFP6KUzHl
+ A3RMlLZ01OKi5PcheZI/9UuULfsg5suItrNVnk4zPdTNW/g2nM+KE03v0damMCNA70t2TLc2xeE
+ CutK0CZl4PvI7k3QEzmsRYCm2Uge+2PecNJDPf7hK/jhdsMSRGmGqrxD6cM2D0UoOfskZaUqaKA
+ aPxKQ/4AQnJYaIR5GoYap82nDxqMtzbliNQ6ZEnqWXN6S5gGCQXcQT4zf1U6xELazcqeL20CmRN
+ t1nSynZRgGHeLQ==
+X-Received: by 2002:a05:6a20:438e:b0:21e:f2c4:7743 with SMTP id
+ adf61e73a8af0-2207f1e5a52mr5260110637.7.1750858692223; 
+ Wed, 25 Jun 2025 06:38:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEVSAxQBXLPujqMBycA77Lg9+i+dU1YVJcCZlVqyMFiZ9LZlIWtLuMiJejCOJWhJbYYq/3XHQ==
+X-Received: by 2002:a05:6a20:438e:b0:21e:f2c4:7743 with SMTP id
+ adf61e73a8af0-2207f1e5a52mr5260071637.7.1750858691887; 
+ Wed, 25 Jun 2025 06:38:11 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b31f1242bfasm10660017a12.46.2025.06.25.06.38.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Jun 2025 06:38:11 -0700 (PDT)
+Date: Wed, 25 Jun 2025 09:38:06 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Juraj Marcin <jmarcin@redhat.com>
+Cc: qemu-devel@nongnu.org, Mario Casquero <mcasquer@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH v3 06/11] migration: Rename save_live_complete_precopy to
+ save_complete
+Message-ID: <aFv7vrfnOhtYDE0R@x1.local>
+References: <20250613140801.474264-1-peterx@redhat.com>
+ <20250613140801.474264-7-peterx@redhat.com>
+ <oo4t2s5rz4uaivfm3vejlum5c7efsjiysbavtt24rinoefs2tk@ihtornpsiz5q>
+ <aFrHF4hKTdAgRpfs@x1.local>
+ <5wyhdft4ucul4wehkq76im56jkixfmyxrfrhezzjnf7qnkmu7i@e73pvqathnom>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 25/29] hw/arm/virt: Let virt support pci hotplug/unplug
- GED event
-Content-Language: en-US
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, gustavo.romero@linaro.org, anisinha@redhat.com,
- mst@redhat.com, shannon.zhaosl@gmail.com, pbonzini@redhat.com,
- Jonathan.Cameron@huawei.com, philmd@linaro.org, alex.bennee@linaro.org
-References: <20250616094903.885753-1-eric.auger@redhat.com>
- <20250616094903.885753-26-eric.auger@redhat.com>
- <20250620150648.09dab163@fedora>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250620150648.09dab163@fedora>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5wyhdft4ucul4wehkq76im56jkixfmyxrfrhezzjnf7qnkmu7i@e73pvqathnom>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,7 +94,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,97 +107,17 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor,
+On Wed, Jun 25, 2025 at 01:13:48PM +0200, Juraj Marcin wrote:
+> Sure, I will send it today.
 
-On 6/20/25 3:06 PM, Igor Mammedov wrote:
-> On Mon, 16 Jun 2025 11:46:54 +0200
-> Eric Auger <eric.auger@redhat.com> wrote:
->
->> Set up the IO registers used to communicate between QEMU
->> and ACPI.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>
->> ---
->> v2 -> v3:
->> - remove acpi_ged_state->pcihp_state.use_acpi_hotplug_bridge = true;
->> - use sysbus_mmio_map_name for all regs (Igor)
->> - create_pcie left at its original place
->>
->> v1 -> v2:
->> - use ACPI_PCIHP_REGION_NAME
->> ---
->>  include/hw/acpi/generic_event_device.h |  1 +
->>  hw/arm/virt.c                          | 19 +++++++++++++++++--
->>  2 files changed, 18 insertions(+), 2 deletions(-)
->>
->> diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
->> index ec8e1abe0a..8f5d903146 100644
->> --- a/include/hw/acpi/generic_event_device.h
->> +++ b/include/hw/acpi/generic_event_device.h
->> @@ -111,6 +111,7 @@ typedef struct GEDState {
->>  } GEDState;
->>  
->>  #define ACPI_PCIHP_REGION_NAME "pcihp container"
->> +#define ACPI_MEMHP_REGION_NAME "memhp container"
->>  
->>  struct AcpiGedState {
->>      SysBusDevice parent_obj;
->> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->> index 41be8f6dbb..8c882e0794 100644
->> --- a/hw/arm/virt.c
->> +++ b/hw/arm/virt.c
->> @@ -684,6 +684,8 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
->>      DeviceState *dev;
->>      MachineState *ms = MACHINE(vms);
->>      SysBusDevice *sbdev;
->> +    AcpiGedState *acpi_ged_state;
->> +    AcpiPciHpState *pcihp_state;
->>      int irq = vms->irqmap[VIRT_ACPI_GED];
->>      uint32_t event = ACPI_GED_PWR_DOWN_EVT;
->>  
->> @@ -696,13 +698,26 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
->>      }
->>  
->>      dev = qdev_new(TYPE_ACPI_GED);
->> +    acpi_ged_state = ACPI_GED(dev);
->> +    pcihp_state = &acpi_ged_state->pcihp_state;
->> +    if (pcihp_state->use_acpi_hotplug_bridge) {
->> +        event |= ACPI_GED_PCI_HOTPLUG_EVT;
->> +    }
-> Doesn't it belong to ged_realize()?
-moved there
->
->>      qdev_prop_set_uint32(dev, "ged-event", event);
->>      object_property_set_link(OBJECT(dev), "bus", OBJECT(vms->bus), &error_abort);
->>      sbdev = SYS_BUS_DEVICE(dev);
->>      sysbus_realize_and_unref(sbdev, &error_fatal);
->>  
->> -    sysbus_mmio_map(sbdev, 0, vms->memmap[VIRT_ACPI_GED].base);
->> -    sysbus_mmio_map(sbdev, 1, vms->memmap[VIRT_PCDIMM_ACPI].base);
->> +    sysbus_mmio_map_name(sbdev, TYPE_ACPI_GED, vms->memmap[VIRT_ACPI_GED].base);
->> +    sysbus_mmio_map_name(sbdev, ACPI_MEMHP_REGION_NAME,
->> +                         vms->memmap[VIRT_PCDIMM_ACPI].base);
->> +    if (pcihp_state->use_acpi_hotplug_bridge) {
-> like elsewhere, use property accessor
-yup
+Thanks. In case it helps, can fetch head here:
 
-Thanks!
+https://gitlab.com/peterx/qemu/-/tree/migration-staging
 
-Eric
->
->> +        int pcihp_region_index;
->> +
->> +        pcihp_region_index = sysbus_mmio_map_name(sbdev, ACPI_PCIHP_REGION_NAME,
->> +                                                  vms->memmap[VIRT_ACPI_PCIHP].base);
->> +        assert(pcihp_region_index >= 0);
->> +    }
->>      sysbus_connect_irq(sbdev, 0, qdev_get_gpio_in(vms->gic, irq));
->>  
->>      return dev;
+-- 
+Peter Xu
 
 
