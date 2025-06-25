@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF71CC7EE2A
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 03:57:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F64FC7115C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 03:57:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUHFG-0002sx-CM; Tue, 24 Jun 2025 23:56:22 -0400
+	id 1uUHFI-0002tU-Re; Tue, 24 Jun 2025 23:56:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uUHFE-0002se-Ad
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 23:56:20 -0400
+ id 1uUHFF-0002so-DE
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 23:56:21 -0400
 Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uUHFC-0002EY-GY
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 23:56:20 -0400
+ id 1uUHFC-0002EG-AN
+ for qemu-devel@nongnu.org; Tue, 24 Jun 2025 23:56:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
  t=1750823778; x=1782359778;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Qynfft1D3oOHzHCeV9CxuYI60grWqkunhRCqIXpNJ6k=;
- b=lymCWWlvbwFNjYvZ7DC4ZkQC+fABTrZnGcA1/2MowosxndZew3f0/vUW
- ZetZL4ZhkK32fGYV/z0N2dMWDrkRq88gyT4BlH57BcPd6oivajIXfAWKW
- NNUQTLgfJVwLKwDgDifehIzX78v9MW91LS90UfBPu30BDDsbmlwqpbLRy
- 8bqzp5XkzTakmUn+efi4AhOVjsr0Vj/f/OvZ8CXKDbCzwi5Izl7Ia4soN
- GnK7G+rpJ63iaE8s0gfUjn/ocxuyM6+lliO4RcecAD1HkUO6wVWoGpcvP
- YB/4XGh8HxCdhZCnk3ivMjSFFa0cCC8QiTjpbo+xrJNp3tC6wioMXk0tF Q==;
-X-CSE-ConnectionGUID: VpUqlwzyQPWhWedxr27BaQ==
-X-CSE-MsgGUID: xD+7da4ITX+A3MPC5kJb/g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11474"; a="52800075"
-X-IronPort-AV: E=Sophos;i="6.16,263,1744095600"; d="scan'208";a="52800075"
+ bh=tpymHpn+nijunVKbBYR8Eum+TluOcNujC11ASkix3oo=;
+ b=Y8SaStIAZYPhL05M9KGQuJ6LozezrGFtYE/wrOCIGOdKQ6avAorpXFfS
+ DaGSj6FlfVeGAIbu7WrTn3s8dJuW6KmxdgW+UndlL3FwGJaCANCrZPbkI
+ +X858Xe3HLGJ2THl0Ro4rQWDEY6lAaRHk3102SKdU5MPq4RFqf4V94ni3
+ 1UYOJGsMBKUfO4nAVXlyhBX4PJfAKAKeRCeMUHzutt0eZs/v4Eiujmdn5
+ ICWqs+MMwLgK3ZYkOOQ5HcO5uhJw7Zr5uFPRU+c2ySdnzt6J1eKlOG3FJ
+ i0kcBKq8Bkl0SBazQC67xkDf3IzonhgtYTcyZH8E5BuVT8MtUiT7H6M+W Q==;
+X-CSE-ConnectionGUID: ZotafcejS9aaVuNBd89AFg==
+X-CSE-MsgGUID: IN2SsoHmSoKxXipNI/GAWw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11474"; a="52800071"
+X-IronPort-AV: E=Sophos;i="6.16,263,1744095600"; d="scan'208";a="52800071"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jun 2025 20:56:16 -0700
-X-CSE-ConnectionGUID: uMk9+b7ERd+C3ycx2YwpAg==
-X-CSE-MsgGUID: BcOAbfXdSledAxHk3fLgqQ==
+ 24 Jun 2025 20:56:14 -0700
+X-CSE-ConnectionGUID: Pd4ItP/zTcGzFqfvI88msQ==
+X-CSE-MsgGUID: o+wPGyVxRYWMuZVCfMAsTA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,263,1744095600"; d="scan'208";a="151848924"
+X-IronPort-AV: E=Sophos;i="6.16,263,1744095600"; d="scan'208";a="151848920"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa009.jf.intel.com with ESMTP; 24 Jun 2025 20:56:15 -0700
+ by orviesa009.jf.intel.com with ESMTP; 24 Jun 2025 20:56:13 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  xiaoyao.li@intel.com, qemu-devel@nongnu.org
-Subject: [PATCH 2/2] i386/tdx: Don't build TDX for 32bit target
-Date: Wed, 25 Jun 2025 11:49:03 +0800
-Message-ID: <20250625034903.2770272-3-xiaoyao.li@intel.com>
+Subject: [PATCH 1/2] i386/Kconfig: Make I386 and X86_64 independant
+Date: Wed, 25 Jun 2025 11:49:02 +0800
+Message-ID: <20250625034903.2770272-2-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250625034903.2770272-1-xiaoyao.li@intel.com>
 References: <20250625034903.2770272-1-xiaoyao.li@intel.com>
@@ -84,29 +84,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TDX cannot work on 32-bit host. It's also not worth supported TDX with
-32-bit QEMU.
+Commit 4921d0a7535b ('i386: switch boards to "default y"') makes
+CONIFG_X86_64 select CONFIG_I386, which makes it difficult to define
+X86_64 only configs, e.g., for TDX.
 
-Thus, make TDX depends on !I386.
+Decouple I386 from X86_64.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
- hw/i386/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/i386/Kconfig     | 10 +++++-----
+ target/i386/Kconfig |  1 -
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
 diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-index 6fc353930985..c58802462a45 100644
+index eb65bda6e071..6fc353930985 100644
 --- a/hw/i386/Kconfig
 +++ b/hw/i386/Kconfig
-@@ -13,7 +13,7 @@ config SGX
- config TDX
+@@ -74,7 +74,7 @@ config PC_ACPI
+ config I440FX
      bool
-     select X86_FW_OVMF
--    depends on KVM
-+    depends on KVM && !I386
+     default y
+-    depends on I386
++    depends on (I386 || X86_64)
+     imply E1000_PCI
+     imply VMPORT
+     imply VMMOUSE
+@@ -91,7 +91,7 @@ config I440FX
+ config ISAPC
+     bool
+     default y
+-    depends on I386
++    depends on (I386 || X86_64)
+     imply VGA_ISA
+     select ISA_BUS
+     select PC
+@@ -103,7 +103,7 @@ config ISAPC
+ config Q35
+     bool
+     default y
+-    depends on I386
++    depends on (I386 || X86_64)
+     imply VTD
+     imply AMD_IOMMU
+     imply E1000E_PCI_EXPRESS
+@@ -122,7 +122,7 @@ config Q35
+ config MICROVM
+     bool
+     default y
+-    depends on I386 && FDT
++    depends on (I386 || X86_64) && FDT
+     select DEVICE_TREE
+     select SERIAL_ISA # for serial_hds_isa_init()
+     select ISA_BUS
+@@ -168,4 +168,4 @@ config VMMOUSE
+ config XEN_EMU
+     bool
+     default y
+-    depends on KVM && I386
++    depends on KVM && (I386 || X86_64)
+diff --git a/target/i386/Kconfig b/target/i386/Kconfig
+index 6b0feef02997..f16efa7137d5 100644
+--- a/target/i386/Kconfig
++++ b/target/i386/Kconfig
+@@ -6,4 +6,3 @@ config I386
  
- config PC
+ config X86_64
      bool
+-    select I386
 -- 
 2.43.0
 
