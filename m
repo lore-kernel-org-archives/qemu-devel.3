@@ -4,58 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94F13C7EE30
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 08:51:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BF18C7115C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 08:57:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uULq9-0001Pk-Ed; Wed, 25 Jun 2025 04:50:45 -0400
+	id 1uULw8-0002gj-8Z; Wed, 25 Jun 2025 04:56:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uULq3-0001P9-GJ
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 04:50:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uULw6-0002gI-9s
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 04:56:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uULpx-0006uE-WB
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 04:50:38 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uULw3-0007X0-Lj
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 04:56:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750841430;
+ s=mimecast20190719; t=1750841809;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=EJLLXUVOvWGim8Qa+5LMrzn/aI7aT9BAX06rxi1rmDM=;
- b=RoPpTtrs83nwxNZRmj+z8Qy2AkuRGfOs4zjDN5BgFecH2xKjyHlu5HAuEQB7Z1Tr9j8tdG
- FlCrQ2xBUflPcdU3rLq3u8BYjkRiDmra7m4tJsjROjIsleOowqZ622ml/nPMop7rR5WGhn
- o7OLrlm/gxXjFuxXmTsotxKC9Re5x2M=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-398-m1xj5drANjCzqqF7XQ1P7Q-1; Wed,
- 25 Jun 2025 04:50:27 -0400
-X-MC-Unique: m1xj5drANjCzqqF7XQ1P7Q-1
-X-Mimecast-MFC-AGG-ID: m1xj5drANjCzqqF7XQ1P7Q_1750841426
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BEC3B1956086; Wed, 25 Jun 2025 08:50:25 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.45.225.230])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D949019560A3; Wed, 25 Jun 2025 08:50:22 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com, afaria@redhat.com, timao@redhat.com,
- qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Subject: [PATCH] file-posix: Fix aio=threads performance regression after
- enablign FUA
-Date: Wed, 25 Jun 2025 10:50:19 +0200
-Message-ID: <20250625085019.27735-1-kwolf@redhat.com>
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Ijliy0R7GP+Krff6a2E027m+IOjaJNQQPCopZpIFnA8=;
+ b=Myf9GM56mWaE/mjMUZUNi/edwvk6MfuhpzkoYW5o3ENuqBYiNluKe/W2Rii3kBiM06NXTU
+ MHglErUX6GmO70jEGqea/PWE+hlPk4nygpfNxUCRpwwkQSW9Ujmx5Gph6dcAND5yZHcYI1
+ OAqgqSTig1F+c0VJA5zyCdCWCx9KkAA=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-491-BADP9t5rMfqszyx2hdiX4A-1; Wed, 25 Jun 2025 04:56:47 -0400
+X-MC-Unique: BADP9t5rMfqszyx2hdiX4A-1
+X-Mimecast-MFC-AGG-ID: BADP9t5rMfqszyx2hdiX4A_1750841806
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a3696a0d3aso2840344f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 01:56:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750841806; x=1751446606;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ijliy0R7GP+Krff6a2E027m+IOjaJNQQPCopZpIFnA8=;
+ b=IL2OrkBX0STeCreDBSZM3m9O7NtIO/ZYBoATnFMSZCVCq4JuaYfWDtmXNOXi6NkvWf
+ ZaL3V0G/Ua0wFl2s+dPksQdcxouzsBvbN8oI87ERbUJR5X/y4+G8PQiYjvi381A0YXDV
+ ES0cAHlxr3QCkQfD6oLZsFH6uIliU66TRsGKrkUNvVn/ENHMEGcSCPwA6GfSt50k4Ph4
+ 3dCjCEy/usnH8tFvMgz16j4rD2T3uKHpbug2xbFfvKKfW0XCD6IB6pO0lmDONRMX3Kr/
+ 8m4FHsJMQDU8E2WwQ985dGQv9THoxRbp55WemROoU4FsRTTgwFlCQiqd1DDOC9PEU4/5
+ U20A==
+X-Gm-Message-State: AOJu0YzbhQoD9cuXUhMiMVFwxk+M0i9dw+BtLrL2xy+oKMgyOsSNZ+g8
+ zRRTpEh6sP15FC6dkU1si+37+b62cRuO0H8K+Q97n/Npkr9BDgpB0mQsOVYtYd0zRTcFEtAAK58
+ 7SG6wPvtT2hj1RV5aguFiO6oNaL2FsC4qOXfth0l/l0RpivHhJLxCEcya
+X-Gm-Gg: ASbGncsfBdvPpVNbMtk4UXSje76nNJ0QbNXIbUgVsBupQoHIPZBpP9OjREtVycjMQNT
+ ADkwuhnDsvytzPSIzcB6YIuxl7o2SbGXnSE5QdddJ/Rd7TL+3jNg/eTf1XcyqvjYHwHnfOhyrUD
+ PHpCRryXTZeqFNoHwe9OZrjW/6cVtKMWTGZkVdjKjtNvyT9/lEQESsOGBJUa8NMOU2aJxWfZ0Js
+ M60+EyLXfU4qu7qTRLdIL2PbjUxCL/5+kqGfuyrH5GXFNS0/RRohBn2QDpTxqxi7/ew8N6Xqy55
+ 7iCGWBxhZoWWjLFJ/UK8I46Ghgj5CevTMMVLvp4bxhASPoBKxxF0gKzuTzTg
+X-Received: by 2002:a05:6000:25ca:b0:3a6:d967:380e with SMTP id
+ ffacd0b85a97d-3a6ed5e5a39mr1614226f8f.3.1750841805791; 
+ Wed, 25 Jun 2025 01:56:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF2JrX4z/9c/BSdcTH4taBtindtzXre9Y/TAfZGdz50ClKx/zkBkR1XbzIP+7H/KtyQmU0O6w==
+X-Received: by 2002:a05:6000:25ca:b0:3a6:d967:380e with SMTP id
+ ffacd0b85a97d-3a6ed5e5a39mr1614195f8f.3.1750841805357; 
+ Wed, 25 Jun 2025 01:56:45 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a6e8050cc1sm4122402f8f.10.2025.06.25.01.56.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 25 Jun 2025 01:56:44 -0700 (PDT)
+Message-ID: <3a0b3dd9-af16-42dc-9be9-41445dd302a3@redhat.com>
+Date: Wed, 25 Jun 2025 10:56:44 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 00/19] vfio-user client
+To: John Levon <john.levon@nutanix.com>
+Cc: qemu-devel@nongnu.org, Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20250619133154.264786-1-john.levon@nutanix.com>
+ <3757d761-db62-4d22-b16e-c634f504bcb3@redhat.com> <aFabYdacLpv3RHu8@lent>
+ <84170782-ba25-4f9f-b0fd-3b77c3a98edc@redhat.com> <aFbGqm7n-xCFQdV8@lent>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <aFbGqm7n-xCFQdV8@lent>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -80,92 +159,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For aio=threads, we're currently not implementing REQ_FUA in any useful
-way, but just do a separate raw_co_flush_to_disk() call. This changes
-behaviour compared to the old state, which used bdrv_co_flush() with its
-optimisations. As a quick fix, call bdrv_co_flush() again like before.
-Eventually, we can use pwritev2() to make use of RWF_DSYNC if available,
-but we'll still have to keep this code path as a fallback, so this fix
-is required either way.
+On 6/21/25 16:50, John Levon wrote:
+> On Sat, Jun 21, 2025 at 04:25:24PM +0200, Cédric Le Goater wrote:
+> 
+>>> So please let me know what if anything needs to be fixed (and if I should make
+>>> the same retrospective fix to hw/vfio/ equivalent).
+>>
+>> Did you update the QEMU tree ?
+>>
+>>    $ git describe
+>>    v10.0.0-1657-g6e1571533fd9
+> 
+> My series is against vfio-next, but regardless, none of
+> 
+> hw/vfio/{Kconfig,meson.build,trace.h,trace-events}
+> 
+> have SPDX identifiers there. I will add it to all of them in a prepatory patch.
+> 
+> regards
+> john
+> 
 
-While the fix itself is a one-liner, some new graph locking annotations
-are needed to convince TSA that the locking is correct.
+John,
 
-Cc: qemu-stable@nongnu.org
-Fixes: 984a32f17e8d ("file-posix: Support FUA writes")
-Buglink: https://issues.redhat.com/browse/RHEL-96854
-Reported-by: Tingting Mao <timao@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- block/file-posix.c | 29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+Could you please send v5 this week ? I plan to merge it first as other
+proposals are knocking at the VFIO door and I am OOO on week 28.
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 9b5f08ccb2..8c738674ce 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -2564,9 +2564,9 @@ static inline bool raw_check_linux_aio(BDRVRawState *s)
- }
- #endif
- 
--static int coroutine_fn raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr,
--                                   uint64_t bytes, QEMUIOVector *qiov, int type,
--                                   int flags)
-+static int coroutine_fn GRAPH_RDLOCK
-+raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr, uint64_t bytes,
-+           QEMUIOVector *qiov, int type, int flags)
- {
-     BDRVRawState *s = bs->opaque;
-     RawPosixAIOData acb;
-@@ -2625,7 +2625,7 @@ static int coroutine_fn raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr,
-     ret = raw_thread_pool_submit(handle_aiocb_rw, &acb);
-     if (ret == 0 && (flags & BDRV_REQ_FUA)) {
-         /* TODO Use pwritev2() instead if it's available */
--        ret = raw_co_flush_to_disk(bs);
-+        ret = bdrv_co_flush(bs);
-     }
-     goto out; /* Avoid the compiler err of unused label */
- 
-@@ -2660,16 +2660,16 @@ out:
-     return ret;
- }
- 
--static int coroutine_fn raw_co_preadv(BlockDriverState *bs, int64_t offset,
--                                      int64_t bytes, QEMUIOVector *qiov,
--                                      BdrvRequestFlags flags)
-+static int coroutine_fn GRAPH_RDLOCK
-+raw_co_preadv(BlockDriverState *bs, int64_t offset, int64_t bytes,
-+              QEMUIOVector *qiov, BdrvRequestFlags flags)
- {
-     return raw_co_prw(bs, &offset, bytes, qiov, QEMU_AIO_READ, flags);
- }
- 
--static int coroutine_fn raw_co_pwritev(BlockDriverState *bs, int64_t offset,
--                                       int64_t bytes, QEMUIOVector *qiov,
--                                       BdrvRequestFlags flags)
-+static int coroutine_fn GRAPH_RDLOCK
-+raw_co_pwritev(BlockDriverState *bs, int64_t offset, int64_t bytes,
-+               QEMUIOVector *qiov, BdrvRequestFlags flags)
- {
-     return raw_co_prw(bs, &offset, bytes, qiov, QEMU_AIO_WRITE, flags);
- }
-@@ -3606,10 +3606,11 @@ static int coroutine_fn raw_co_zone_mgmt(BlockDriverState *bs, BlockZoneOp op,
- #endif
- 
- #if defined(CONFIG_BLKZONED)
--static int coroutine_fn raw_co_zone_append(BlockDriverState *bs,
--                                           int64_t *offset,
--                                           QEMUIOVector *qiov,
--                                           BdrvRequestFlags flags) {
-+static int coroutine_fn GRAPH_RDLOCK
-+raw_co_zone_append(BlockDriverState *bs,
-+                   int64_t *offset,
-+                   QEMUIOVector *qiov,
-+                   BdrvRequestFlags flags) {
-     assert(flags == 0);
-     int64_t zone_size_mask = bs->bl.zone_size - 1;
-     int64_t iov_len = 0;
--- 
-2.49.0
+I will have a few days in week 29 to take care of the rest (live update),
+which is currently lacking reviews.
+
+Thanks,
+
+C.
 
 
