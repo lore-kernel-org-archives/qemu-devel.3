@@ -4,62 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F64FC7115C
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 03:57:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C297C77B7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 04:03:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUHFI-0002tU-Re; Tue, 24 Jun 2025 23:56:24 -0400
+	id 1uUHLP-00056o-KW; Wed, 25 Jun 2025 00:02:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uUHFF-0002so-DE
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 23:56:21 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
+ id 1uUHLN-00056b-NB
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 00:02:41 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uUHFC-0002EG-AN
- for qemu-devel@nongnu.org; Tue, 24 Jun 2025 23:56:21 -0400
+ id 1uUHLL-0003Lv-PY
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 00:02:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1750823778; x=1782359778;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=tpymHpn+nijunVKbBYR8Eum+TluOcNujC11ASkix3oo=;
- b=Y8SaStIAZYPhL05M9KGQuJ6LozezrGFtYE/wrOCIGOdKQ6avAorpXFfS
- DaGSj6FlfVeGAIbu7WrTn3s8dJuW6KmxdgW+UndlL3FwGJaCANCrZPbkI
- +X858Xe3HLGJ2THl0Ro4rQWDEY6lAaRHk3102SKdU5MPq4RFqf4V94ni3
- 1UYOJGsMBKUfO4nAVXlyhBX4PJfAKAKeRCeMUHzutt0eZs/v4Eiujmdn5
- ICWqs+MMwLgK3ZYkOOQ5HcO5uhJw7Zr5uFPRU+c2ySdnzt6J1eKlOG3FJ
- i0kcBKq8Bkl0SBazQC67xkDf3IzonhgtYTcyZH8E5BuVT8MtUiT7H6M+W Q==;
-X-CSE-ConnectionGUID: ZotafcejS9aaVuNBd89AFg==
-X-CSE-MsgGUID: IN2SsoHmSoKxXipNI/GAWw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11474"; a="52800071"
-X-IronPort-AV: E=Sophos;i="6.16,263,1744095600"; d="scan'208";a="52800071"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jun 2025 20:56:14 -0700
-X-CSE-ConnectionGUID: Pd4ItP/zTcGzFqfvI88msQ==
-X-CSE-MsgGUID: o+wPGyVxRYWMuZVCfMAsTA==
+ t=1750824160; x=1782360160;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=42nRR0KrbdmqvkZGe4dz55Pz3JwJ3F4EGtg8zANaY3M=;
+ b=GDtR/w3AQj9EBn1zMZ9Vd4xMNf6eLjT+pmBfZwePHjlJWgf46YDlGhvF
+ SuOxDTUYa6iWshlCL9rH/07wRR4mbigA7sBq92bAAacG+xedA6/uG4vE/
+ jBynBcziHVc82ywOCE12B/iYlciXRA65O+HxB62s98p5xwzR4dHK6Fizq
+ c/vMx0k3O2Jt7qsO1tV8kP8tvqGvdGenzpVjodnEzn2eX2my70uJBwoyR
+ JlC3UEDSe5egDNXAlk7T3mQ1iGNn6fJ+pIUjD9IBBp2XJtjZv1VAuvWLu
+ GTR/OVz7gHblzAQIN1cy/WyfK/BCXnXMBNGaT8djQNw15nAdnyPWmngJm w==;
+X-CSE-ConnectionGUID: AtTAsko8RiaAftFSm0Ouig==
+X-CSE-MsgGUID: oDtpR8bGQ0mj6nCVS8eCZw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11474"; a="53222453"
+X-IronPort-AV: E=Sophos;i="6.16,263,1744095600"; d="scan'208";a="53222453"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Jun 2025 21:02:14 -0700
+X-CSE-ConnectionGUID: VnTpLUnmQ7K7vQwQwWpYQQ==
+X-CSE-MsgGUID: eowW5MzbSCm6lRmrFqMETw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,263,1744095600"; d="scan'208";a="151848920"
+X-IronPort-AV: E=Sophos;i="6.16,263,1744095600"; d="scan'208";a="156380636"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa009.jf.intel.com with ESMTP; 24 Jun 2025 20:56:13 -0700
+ by fmviesa005.fm.intel.com with ESMTP; 24 Jun 2025 21:02:13 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- xiaoyao.li@intel.com, qemu-devel@nongnu.org
-Subject: [PATCH 1/2] i386/Kconfig: Make I386 and X86_64 independant
-Date: Wed, 25 Jun 2025 11:49:02 +0800
-Message-ID: <20250625034903.2770272-2-xiaoyao.li@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
+Cc: qemu-devel@nongnu.org,
+	xiaoyao.li@intel.com
+Subject: [PATCH] i386/tdx: Remove task->watch only when it's valid
+Date: Wed, 25 Jun 2025 11:55:05 +0800
+Message-ID: <20250625035505.2770580-1-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250625034903.2770272-1-xiaoyao.li@intel.com>
-References: <20250625034903.2770272-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=xiaoyao.li@intel.com;
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
@@ -84,73 +80,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 4921d0a7535b ('i386: switch boards to "default y"') makes
-CONIFG_X86_64 select CONFIG_I386, which makes it difficult to define
-X86_64 only configs, e.g., for TDX.
+In some case (e.g., failed to connect to QGS socket),
+tdx_generate_quote_cleanup() is called with task->watch invalid. It
+triggers assertion of
 
-Decouple I386 from X86_64.
+  qemu-system-x86_64: GLib: g_source_remove: assertion 'tag > 0' failed
 
+Fix it by checking task->watch.
+
+Fixes: 40da501d8989 ("i386/tdx: handle TDG.VP.VMCALL<GetQuote>")
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
- hw/i386/Kconfig     | 10 +++++-----
- target/i386/Kconfig |  1 -
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ target/i386/kvm/tdx-quote-generator.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-index eb65bda6e071..6fc353930985 100644
---- a/hw/i386/Kconfig
-+++ b/hw/i386/Kconfig
-@@ -74,7 +74,7 @@ config PC_ACPI
- config I440FX
-     bool
-     default y
--    depends on I386
-+    depends on (I386 || X86_64)
-     imply E1000_PCI
-     imply VMPORT
-     imply VMMOUSE
-@@ -91,7 +91,7 @@ config I440FX
- config ISAPC
-     bool
-     default y
--    depends on I386
-+    depends on (I386 || X86_64)
-     imply VGA_ISA
-     select ISA_BUS
-     select PC
-@@ -103,7 +103,7 @@ config ISAPC
- config Q35
-     bool
-     default y
--    depends on I386
-+    depends on (I386 || X86_64)
-     imply VTD
-     imply AMD_IOMMU
-     imply E1000E_PCI_EXPRESS
-@@ -122,7 +122,7 @@ config Q35
- config MICROVM
-     bool
-     default y
--    depends on I386 && FDT
-+    depends on (I386 || X86_64) && FDT
-     select DEVICE_TREE
-     select SERIAL_ISA # for serial_hds_isa_init()
-     select ISA_BUS
-@@ -168,4 +168,4 @@ config VMMOUSE
- config XEN_EMU
-     bool
-     default y
--    depends on KVM && I386
-+    depends on KVM && (I386 || X86_64)
-diff --git a/target/i386/Kconfig b/target/i386/Kconfig
-index 6b0feef02997..f16efa7137d5 100644
---- a/target/i386/Kconfig
-+++ b/target/i386/Kconfig
-@@ -6,4 +6,3 @@ config I386
+diff --git a/target/i386/kvm/tdx-quote-generator.c b/target/i386/kvm/tdx-quote-generator.c
+index f59715f61751..dee8334b27ac 100644
+--- a/target/i386/kvm/tdx-quote-generator.c
++++ b/target/i386/kvm/tdx-quote-generator.c
+@@ -75,7 +75,9 @@ static void tdx_generate_quote_cleanup(TdxGenerateQuoteTask *task)
+ {
+     timer_del(&task->timer);
  
- config X86_64
-     bool
--    select I386
+-    g_source_remove(task->watch);
++    if (task->watch) {
++        g_source_remove(task->watch);
++    }
+     qio_channel_close(QIO_CHANNEL(task->sioc), NULL);
+     object_unref(OBJECT(task->sioc));
+ 
 -- 
 2.43.0
 
