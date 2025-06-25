@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48515C7115C
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 16:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39CAEC7115C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 16:04:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUSar-0002H0-99; Wed, 25 Jun 2025 12:03:25 -0400
+	id 1uUSbb-0002VK-MS; Wed, 25 Jun 2025 12:04:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUSal-0002GS-SH
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 12:03:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUSbZ-0002UO-WA
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 12:04:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUSak-0000WA-Ap
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 12:03:19 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUSbY-0001Ko-Dx
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 12:04:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750867395;
+ s=mimecast20190719; t=1750867447;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=gqf0m/qnxFL4xWvWtGjp2N15KSYOMBjlGEUOB2y2nHU=;
- b=LjzYkclECe+YqAz4yHm8ljI9js1WO0os0GaswHuzmNRF72ZGCPCS1q5T82qZmDSUAeMnQJ
- nj/+TYzfQ0/5kPuN501otLgeTBm/dlUH5zx/FLrxRuuF1buSclUl/7Y8sw1djmLfNAcCF+
- WokYB1fsKvlTjRJlTyxKNskb6eGmmcY=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=l7WoL2chUBJK64mJgDJcG1YShJxhwGwDXnKNJT/hIlA=;
+ b=hfVJDUsbMnRfrmlaHXqUyh9esNeWCYjPTJ5RXPqKi0vNvTyvOMud9LR73mdvQL51lrGt2H
+ ZFUdDUNHiS5JSbgvyluAFZCbTp2HKC4wpCA17Oglj8ulTEf9Wx71SxoOrx89JwnIQtz2Nj
+ 6uwYvM7hxjb3Fqp8eijy85vbZs80npY=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-623-EBXDTUcnNrS45AdNuUtwVw-1; Wed, 25 Jun 2025 12:02:57 -0400
-X-MC-Unique: EBXDTUcnNrS45AdNuUtwVw-1
-X-Mimecast-MFC-AGG-ID: EBXDTUcnNrS45AdNuUtwVw_1750867374
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4f6ba526eso4211594f8f.1
- for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 09:02:55 -0700 (PDT)
+ us-mta-357-TCsRkNyJMqmDg3st7vIVdw-1; Wed, 25 Jun 2025 12:04:05 -0400
+X-MC-Unique: TCsRkNyJMqmDg3st7vIVdw-1
+X-Mimecast-MFC-AGG-ID: TCsRkNyJMqmDg3st7vIVdw_1750867444
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a3696a0d3aso3087772f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 09:04:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750867366; x=1751472166;
+ d=1e100.net; s=20230601; t=1750867444; x=1751472244;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gqf0m/qnxFL4xWvWtGjp2N15KSYOMBjlGEUOB2y2nHU=;
- b=gbR+iNtQ11hbhIbGS8lvX9tHdu8WYVC3XoUNUE5rqUyVnyPpjTYYPPuaf78oZNDLV2
- ZMtp2xI5w4YRlXNWLWeLm0yTOF8nFVsAILKppl3Aqtjed5CpAGIb5SAd17Ql5zWF1pkI
- nGOV9e8EAUB5WFeoCGYrwP7b7g/pI9CZDLRDYl0UvVutaDN1EVDqSpEdU26/V7JR6/VQ
- a1jTNaosuyujpcpeSO1mjB9nZb98mNz/ObWkGqjT4c8fN6S8l3NL8xPtyBWbqLpPoT0A
- LcgnlxWQmGwxTeL8syr52LljzyPTeNNq9XvYR8bKVsDDwuBoVNTbauYAhJkWEB+s1rIK
- ALBg==
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=l7WoL2chUBJK64mJgDJcG1YShJxhwGwDXnKNJT/hIlA=;
+ b=L0psQCCYPHKKfcab/Zzpez5Dm/omMxd5lYH8NtEOPOJusqW6rDtzxwY0t51pGuuF4U
+ u4M3qacDTls1zpq9xjT9AvQzHervqNIKvcJpDAO83az7jj8SloxE/XsYim3rtc1sSExN
+ u3EuLOrJwGJn/zRmhRZ76nkysj98R769y9/rqUsxEIaeoYzROhCHb+7+fomRS4qCCpx3
+ dNy5uUiHPZC4VJz1lQwdXb/5mhJrOpRmpXk+TJNDVOmW0yOTz3C1FkImHdESed1zByXc
+ veIa5q0vdFlvIv++8IM/oI+fIPHAOJW4HjeavfFsqioEZ4PWWoFvzcXzoQ/8K0NYPKQK
+ N+eg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW8MB80bJRmrm7AuvLNS/I+fBvM+K8NNtYNbdY0mL8nxOw2dXAHTwH9sT+C+sUawLArMuAxGBmJNNxT@nongnu.org
-X-Gm-Message-State: AOJu0YwhxL7wfoC9i5ds1XTRo5nkzY9GBYbX+ewPeCvonnAacdRMGE1s
- 5D0jWkBOhBOK/LUI9jX57ieovfzaYbrHi0ZGSQEFQXkZECts9gWlZh1ib0sJWRpcls+/VSBPtTg
- N2qlffbEZrt3tH7JSPzLtRxahOUAlv9LXx1kNxxyuO0byZyYes/xiNclF
-X-Gm-Gg: ASbGncum6Yziwp9hRWbPhb5JyJ03uN6j2d3lg4BKmjro7hZuDJQlR9+GAwvWDYMGZv0
- M8WmDbJzOSUK+SjafKoSKyiWr3SCgbWQhxYppw8J1cn0b21CLih55bG96Id7mJ4FCIo6ASIjDw3
- AeeVEfO1CNuNmud4jQTb8D8iV6AcrRv4QzrA+bSeHS6D8O6Sbl6r/WpqxQGS5BBPkVcowpWPX2G
- YieIOXJiae09x6IITqvFfpVhi3p5xPQy+dWDjEB3k1qNDs4USLn7O8C0gE2FCwHN2OE5qbf12tS
- 0umWJ/3pL+Cn/U4TEK6Y16VcLykiXwXt97LlWekWDJ/Ag+55FrXjrlvwGsIxlXk=
-X-Received: by 2002:a05:600c:1c25:b0:442:f8e7:25ef with SMTP id
- 5b1f17b1804b1-45383371376mr27407375e9.11.1750867365472; 
- Wed, 25 Jun 2025 09:02:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHTdEBTgz75Gmf1IEeIE1EWcqqNKq3lIlRhYTynFwL3et9Jd7W8JHUNMyxcCAIS4/2M+Hhcaw==
-X-Received: by 2002:a05:600c:1c25:b0:442:f8e7:25ef with SMTP id
- 5b1f17b1804b1-45383371376mr27405015e9.11.1750867363395; 
- Wed, 25 Jun 2025 09:02:43 -0700 (PDT)
+ AJvYcCW2M3HFH696Yb75So0Da27Hg9Ramgk5Vw/m58aDP/CjAVkjNRbxf9dvpX6dFJPOIY3mAmZnJKlB+cdO@nongnu.org
+X-Gm-Message-State: AOJu0Ywr4COnHb0hGLhQvMxWQNWSecUT3rGDrCyLTfjJx0S+Tx2SQbJY
+ o6ACYXpD3azb7IpVnaNGDJzVaCRJgZYpPqgI5QfIQj2NR5G6jMtI6HHUByaLbuvb4qXZj0MC540
+ fiJaOZBQ/cR3x+gcy7XJ+3qa/IDny3QJHV16eo6ahk3OGo3e6xrsD4sV7
+X-Gm-Gg: ASbGnctDiDE0fjoF1J45htivk72xQOHAISCfpDCWC4o2l8KfkzmQcMu7RdMVQpH4JGS
+ t39REx62EEwtpKnV7D7G9UzrYF1HnSayKB1Td86BVPxu50ESONcLUGLDXCwo6ohaxfHfsClp42k
+ k7WdVlOit221KpZo6FJBxLRs8B6bvs8elUutOfM6nAyCo+DrRzfHMJg5RGJ9KqQpuwgHOnD2sH+
+ HDMT8FTD9PfksMNtYc9pWrmvbSQYtQW1XvcLnV0k3s7+L7hn0JVAc8KBUGvxKxltMyQQB+N3RTy
+ Hn92cXV9ymgCUP73k/dvBWGhKm1//+mm27X0QjP+B0OMSWurPo9zBGx+NtDNeoI=
+X-Received: by 2002:a05:6000:230c:b0:3a4:f902:3872 with SMTP id
+ ffacd0b85a97d-3a6ed604835mr2558508f8f.19.1750867444180; 
+ Wed, 25 Jun 2025 09:04:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGS0x/jPJJ+rcLlLRM4j2oQQVEJTK3E0NcGqVWlQAN3Sk7aGYrlzqGS5erpTULUbuB2EUhMPA==
+X-Received: by 2002:a05:6000:230c:b0:3a4:f902:3872 with SMTP id
+ ffacd0b85a97d-3a6ed604835mr2558452f8f.19.1750867443584; 
+ Wed, 25 Jun 2025 09:04:03 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-115-198.pools.arcor-ip.net.
  [47.64.115.198]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-453823ad247sm25057825e9.26.2025.06.25.09.02.41
+ ffacd0b85a97d-3a6e810b140sm4942117f8f.80.2025.06.25.09.04.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Jun 2025 09:02:41 -0700 (PDT)
-Message-ID: <23fc0d4e-f96a-4819-999c-df6db402bf12@redhat.com>
-Date: Wed, 25 Jun 2025 18:02:39 +0200
+ Wed, 25 Jun 2025 09:04:02 -0700 (PDT)
+Message-ID: <d087e9c7-9ff3-4125-bd84-27d874166bb9@redhat.com>
+Date: Wed, 25 Jun 2025 18:04:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/12] hw: replace FSF postal address with licenses URL
+Subject: Re: [PATCH 09/12] scripts: replace FSF postal address with licenses
+ URL
 To: Sean Wei <me@sean.taipei>, qemu-devel@nongnu.org
-Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fam Zheng <fam@euphon.net>
 References: <20250613.qemu.patch@sean.taipei>
- <20250613.qemu.patch.08@sean.taipei>
+ <20250613.qemu.patch.09@sean.taipei>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -127,7 +124,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250613.qemu.patch.08@sean.taipei>
+In-Reply-To: <20250613.qemu.patch.09@sean.taipei>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -155,8 +152,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/06/2025 18.50, Sean Wei wrote:
-> The GPLv2 boiler-plate in vmxnet3.h and vmw_pvscsi.h still
+On 13/06/2025 18.51, Sean Wei wrote:
+> The GPLv2 boiler-plate in scripts/device-crash-test still
 > contained the obsolete "51 Franklin Street" postal address.
 > 
 > Replace it with the canonical GNU licenses URL recommended by the FSF:
@@ -164,9 +161,23 @@ On 13/06/2025 18.50, Sean Wei wrote:
 > 
 > Signed-off-by: Sean Wei <me@sean.taipei>
 > ---
->   hw/net/vmxnet3.h     | 4 ++--
->   hw/scsi/vmw_pvscsi.h | 4 ++--
->   2 files changed, 4 insertions(+), 4 deletions(-)
+>   scripts/device-crash-test | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/scripts/device-crash-test b/scripts/device-crash-test
+> index da8b56edd9..1ecb9663ae 100755
+> --- a/scripts/device-crash-test
+> +++ b/scripts/device-crash-test
+> @@ -16,8 +16,7 @@
+>   # GNU General Public License for more details.
+>   #
+>   # You should have received a copy of the GNU General Public License along
+> -# with this program; if not, write to the Free Software Foundation, Inc.,
+> -# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+> +# with this program; if not, see <https://www.gnu.org/licenses/>.
+>   
+>   """
+>   Run QEMU with all combinations of -machine and -device types,
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
