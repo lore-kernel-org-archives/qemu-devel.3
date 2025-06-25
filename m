@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29D4EC7EE2A
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 15:54:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69818C7EE2A
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Jun 2025 15:59:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUSRa-0007ah-BI; Wed, 25 Jun 2025 11:53:50 -0400
+	id 1uUSWN-0000CT-QA; Wed, 25 Jun 2025 11:58:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUSRY-0007aT-CY
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 11:53:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUSWM-0000CH-6I
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 11:58:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUSRW-0006I8-Mr
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 11:53:48 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUSWK-0007d4-Cm
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 11:58:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750866825;
+ s=mimecast20190719; t=1750867122;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=giBDYv/wSgFGBKB1rSJPhyO88c7BKv5i72PPBBGGsQM=;
- b=a8u+7q12PnDntQ7dVVx5MrH7HLhGkJEyBNCsXp6eX2DdkLaJ+W4hg/JTDXJjtdOXO1xW7M
- iTMJZjbCWvyvuEdQowQhu5RsIAMXNsxU+t/ifdZBP1Sb4+oy35vvL8wBq/iggsu90IVg7M
- f/3PADErqoGGJVs3Ld2kpZTEimLgZMY=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7RVSD78j9uy0Q5xPCRsX/A0Z33ubtKISBrf8QS38r7w=;
+ b=GRSp39hgC1+/1QCn/yBDb2W7w7WDCAiA6T3E5Fa8jrlXSgWxWShs2xUshrcHve48qzC+9e
+ zUm8YH5mKlpwkLcpFjzN5ju6xduNrNLakD8xX8z5MMK8NW3xwOTnEsuqQXnOojscc1fk/H
+ sTpoLfKksuOttQ8Y+1qPdY9+omvxeWA=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-464-LRdQhOlPOHmlWnbjtMQOWg-1; Wed, 25 Jun 2025 11:53:42 -0400
-X-MC-Unique: LRdQhOlPOHmlWnbjtMQOWg-1
-X-Mimecast-MFC-AGG-ID: LRdQhOlPOHmlWnbjtMQOWg_1750866821
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4eec544c6so904876f8f.0
- for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 08:53:42 -0700 (PDT)
+ us-mta-597-5QiXHjjsM_GASlnkkXAkRA-1; Wed, 25 Jun 2025 11:58:40 -0400
+X-MC-Unique: 5QiXHjjsM_GASlnkkXAkRA-1
+X-Mimecast-MFC-AGG-ID: 5QiXHjjsM_GASlnkkXAkRA_1750867119
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a4ff581df3so32047f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 08:58:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750866821; x=1751471621;
+ d=1e100.net; s=20230601; t=1750867119; x=1751471919;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=giBDYv/wSgFGBKB1rSJPhyO88c7BKv5i72PPBBGGsQM=;
- b=eh8hIXMn+uvLzbjy3Txh3WuOR6CEJCGXenxf3KFxyIgV0hnEW0YyA+OnJk6DwZ35Es
- Zd2VbH3Gr5u11LftMLrBoRVIzY41pIsQ/9TyVkg6fMAkTRfJ9S8kZqCIGtDF+bA+hsuQ
- HJ8gysOVXNiEpF/qW9ex1vzEExs/jGDBWvy2yoKL/nuB7uT7PwcpnODLUSBxIsilZSLY
- PdFPHGed3XkF2OAVnxwzjva1iPUUtR1DVxR5EXCbbeZ1elgyrIZY20T3qrRNF5Ara7nC
- Mj2n1nZOfQe4ZPy8jCHxWrhqMwXbes9lAb6u4gSPjhJxBMAz6WiU7tfktidzGCuPBt4o
- T50A==
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7RVSD78j9uy0Q5xPCRsX/A0Z33ubtKISBrf8QS38r7w=;
+ b=Svxr+P8DNNfQnSkpdYTcuNWRqKzLYG8jjEyjz8gmq5ml9AMhfePM3gU7LwVkBo8wpp
+ Ngh6azv4s2fU88Tnor78URx+frK661129lgqFMB08RUaTG4H5aPBAMd8uxjOm96e+3tg
+ UWA04nZHgT40X/xokv9I+WpiUyrnU1Q7JGGpbCid4CU7tSA9eRYQ7ABwLhUe3tcJJVSa
+ WFsnhQsP1cLtbloBcsx9CSkSIY33HRKP8gOobev+ik7MJx5K7Tq9uJie9K2e9tw1RmEf
+ ox/GJ3Zi2I7MXhz5aeIJCX39ADO0MhbNU244IGKlM/VgGYGkGWqF/YjoDyQ8nIRL2omJ
+ 12uQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU/vreaVH49JU5apQ5wr0rbfxqqtZPdQplhLGQfhaKKdTl61h6s4UfiVASwjh7z8svGTosYlDKCmyV2@nongnu.org
-X-Gm-Message-State: AOJu0Yyr3W3N68JMP2IpefYhpgMMtXa3wNTdH3iLthZiJvEcC5paVmV1
- GyYTJ7fUdwr+m6DzTTiL61wIMMTy3GWGsFSMHeUxc/f6m0jBKZ3MuLhiZV/EnvQrRqRGsHZQSor
- zOVFvzcfVwAUeZt/5eXWTRiaNq+0g1G/BIfQQkeIgqYJXYoY10Bp2cI1+OW74XNCz
-X-Gm-Gg: ASbGncsjo1o8b4cZxBbn+7HMA/XkA6pSksSCwIAg11I/7HJp6Hi9C4LnYRN2Ab2sSun
- fzyjI0kTl6Lg5i65DpjlHYNipGfNzX/OsaVdnjlElj08QzQeb9lERbVReZ9+Co8sOrjih/J6bxx
- TUnO2Clr4zkPU7OTO89L5IRrvwgC5A4SjYFjcqswtjMETxyzPEgIQE5Y2OvAcVoHK3x8YLnVTXO
- XXvXjMc9PJUp0noMkexFr9B/1UDtNvByfIZalml0e32ZKLLvWUh0dMH7C8z9So1HjYlIDtq6X9t
- eCsb74eeVE9GzE099Eo153E9wIQLQGhO1vha0Pae5/vu7C++uAm318fhQBVlMPg=
-X-Received: by 2002:a05:6000:2409:b0:3a5:58a5:6a83 with SMTP id
- ffacd0b85a97d-3a6ed622316mr3285224f8f.13.1750866821312; 
- Wed, 25 Jun 2025 08:53:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFQCsRLrdCmMGn9Vv9J+XgRqkgE9zBoqrY5WIdOnbOkZR4/UPLxVU+xvnbd+bG5QYcKgdwfew==
-X-Received: by 2002:a05:6000:2409:b0:3a5:58a5:6a83 with SMTP id
- ffacd0b85a97d-3a6ed622316mr3285200f8f.13.1750866820976; 
- Wed, 25 Jun 2025 08:53:40 -0700 (PDT)
+ AJvYcCVt9Eu/Bzccxd7sgZO7MVda+io1O29V4MaU2WT+q01h4R4wwCOstZae1BLnRMEvCK9QQ4iKERIWMwCP@nongnu.org
+X-Gm-Message-State: AOJu0YxjQo0o+lbrLfEt/iRA99GcRQVwesMM/lOLkdttc7Es6ALlYs4X
+ L5DHCyQzcPFqA3lGLQ+wagVeSoUHI6+tdsAFt0nm5Lb2k5snQkvbOcKmA9mPX6PADE8J41kOPgp
+ zLigIHykqfCZSGb48eHyhkGSoLtA022GVuyhZiAJzJBignJjobuT/0h0k
+X-Gm-Gg: ASbGncvWLIzGxiURC+wkdZeDpLYwuA8b20ReRyMbt55JgeBpOuPXXekmYVMgB2pOhx8
+ LbNnmsENatoTVaBKAdlL9bvlf2pRZWXlBZYwEXvVOI72aNTEcELoZMJz0fDa1oTORQzqeOg3Iea
+ FiIR1q1NcEWeGStWN1Mc+czSx+nl6ZgoQ5fxyTo71AAwQnlwYs/CdCdH6Kj9vN7booRYKfN7wiX
+ cFNFeDBHYYIySTOgZ4GKbBp0zjECpHImYeCD3vS0TOkYeiiZ6vxVnGZtUGH1TXuX0YG8b1R+yVJ
+ CVYNxYYmW8HRBn7e2SWWAKbnRSfT7g2docrlhTZIcGU0QTrQnlMtrqqCIy3DmN0=
+X-Received: by 2002:a05:6000:310c:b0:3a4:ebfc:8c7 with SMTP id
+ ffacd0b85a97d-3a6f310ddffmr123324f8f.8.1750867119465; 
+ Wed, 25 Jun 2025 08:58:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEmrro5XgxucfNKNHfksVK1Kfa9mNg5XlqCP8Mv7b9hoia0vLzWKhfDI3QrLX2SjWEkbQlviQ==
+X-Received: by 2002:a05:6000:310c:b0:3a4:ebfc:8c7 with SMTP id
+ ffacd0b85a97d-3a6f310ddffmr123304f8f.8.1750867119135; 
+ Wed, 25 Jun 2025 08:58:39 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-115-198.pools.arcor-ip.net.
  [47.64.115.198]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6e80ff8b8sm4856092f8f.71.2025.06.25.08.53.40
+ ffacd0b85a97d-3a6e805174fsm4958478f8f.6.2025.06.25.08.58.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Jun 2025 08:53:40 -0700 (PDT)
-Message-ID: <aab42767-8ad9-4d2d-9f55-29fa6d31d57e@redhat.com>
-Date: Wed, 25 Jun 2025 17:53:39 +0200
+ Wed, 25 Jun 2025 08:58:38 -0700 (PDT)
+Message-ID: <2bf710c1-ddf0-4951-be88-13a01b422a0f@redhat.com>
+Date: Wed, 25 Jun 2025 17:58:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/12] include/libdecnumber: replace FSF postal address
- with licenses URL
+Subject: Re: [PATCH 06/12] include/qemu: replace FSF postal address with
+ licenses URL
 To: Sean Wei <me@sean.taipei>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
 References: <20250613.qemu.patch@sean.taipei>
- <20250613.qemu.patch.04@sean.taipei>
+ <20250613.qemu.patch.06@sean.taipei>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -124,10 +126,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250613.qemu.patch.04@sean.taipei>
+In-Reply-To: <20250613.qemu.patch.06@sean.taipei>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -152,25 +154,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/06/2025 18.43, Sean Wei wrote:
-> Some of the GPLv2 boiler-plate still contained the
-> obsolete "51 Franklin Street" postal address.
+On 13/06/2025 18.46, Sean Wei wrote:
+> The LGPLv2.1 boiler-plate in rcu.h and rcu_queue.h still
+> contained the obsolete "51 Franklin Street" postal address.
 > 
 > Replace it with the canonical GNU licenses URL recommended by the FSF:
 > https://www.gnu.org/licenses/
 > 
 > Signed-off-by: Sean Wei <me@sean.taipei>
 > ---
->   include/libdecnumber/dconfig.h             | 5 ++---
->   include/libdecnumber/decContext.h          | 5 ++---
->   include/libdecnumber/decDPD.h              | 5 ++---
->   include/libdecnumber/decNumber.h           | 5 ++---
->   include/libdecnumber/decNumberLocal.h      | 5 ++---
->   include/libdecnumber/dpd/decimal128.h      | 5 ++---
->   include/libdecnumber/dpd/decimal128Local.h | 5 ++---
->   include/libdecnumber/dpd/decimal32.h       | 5 ++---
->   include/libdecnumber/dpd/decimal64.h       | 5 ++---
->   9 files changed, 18 insertions(+), 27 deletions(-)
+>   include/qemu/rcu.h       | 4 ++--
+>   include/qemu/rcu_queue.h | 4 ++--
+>   2 files changed, 4 insertions(+), 4 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
