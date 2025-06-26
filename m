@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F1FFC7115B
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 05:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1D35C77B7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 05:55:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUfZ5-0003uk-EG; Thu, 26 Jun 2025 01:54:27 -0400
+	id 1uUfZP-00041G-Uv; Thu, 26 Jun 2025 01:54:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfYu-0003sg-2t
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfZO-00040b-Ef
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfYs-00016l-3W
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfZM-00019h-P8
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750917252;
+ s=mimecast20190719; t=1750917284;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=beiTYzLolLWC1w77300Ni0cgP1PrCshOFinWtzY635I=;
- b=i7+T/UsGYUmnBXNGT8n9v1ROZuMMmP9lDqT5rKcgJtnrMZpC9TqDRljdD1kwsm99YN0bv/
- 2TikYz3NqlUR8pQ0aBZVis7IgY52RKWT7xo8okOc5W9zGpq7cuPcq7iZAzsT3fZdHyMBdN
- sQz2Ok3sHDLkp9IP7Ayw0w9BJzeeImQ=
+ bh=a5VbMESPBvChD/KhYN2rZqzFyjFHgm9J5uEay01p7Ug=;
+ b=Gws3/WynTqZfAKFcZ+V3Ge3JZ55xwM4vry9KZdeXcM/p5dy2twJJTf1TZPwQICFx1/89g7
+ IQFTEV8xUbDZ6ShKnSyLNg24EweZ9BvE8oVT5Go66r6ty/akcUJbZzGJkOix5C1VNcm09m
+ H9Q7J9NTt+oIsJlCbDmheD8UrAYYbzE=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-26-vETODI_bPYOn-UMx_zDEEw-1; Thu,
- 26 Jun 2025 01:54:08 -0400
-X-MC-Unique: vETODI_bPYOn-UMx_zDEEw-1
-X-Mimecast-MFC-AGG-ID: vETODI_bPYOn-UMx_zDEEw_1750917248
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-421-a7PhhJU1N_GAX7Vve3BmmA-1; Thu,
+ 26 Jun 2025 01:54:41 -0400
+X-MC-Unique: a7PhhJU1N_GAX7Vve3BmmA-1
+X-Mimecast-MFC-AGG-ID: a7PhhJU1N_GAX7Vve3BmmA_1750917280
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BA0831800289; Thu, 26 Jun 2025 05:54:07 +0000 (UTC)
+ id 52BCC180120B; Thu, 26 Jun 2025 05:54:40 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.32.129])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4339A19560A3; Thu, 26 Jun 2025 05:54:05 +0000 (UTC)
+ id 5ACE519560A3; Thu, 26 Jun 2025 05:54:38 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Shalini Chellathurai Saroja <shalini@linux.ibm.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-Subject: [PULL 05/19] hw/s390x: support migration of CPI data
-Date: Thu, 26 Jun 2025 07:53:36 +0200
-Message-ID: <20250626055350.218271-6-thuth@redhat.com>
+	Sean Wei <me@sean.taipei>
+Subject: [PULL 15/19] hw: replace FSF postal address with licenses URL
+Date: Thu, 26 Jun 2025 07:53:46 +0200
+Message-ID: <20250626055350.218271-16-thuth@redhat.com>
 In-Reply-To: <20250626055350.218271-1-thuth@redhat.com>
 References: <20250626055350.218271-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -83,59 +82,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+From: Sean Wei <me@sean.taipei>
 
-Register Control-Program Identification data with the live
-migration infrastructure.
+The GPLv2 boiler-plate in vmxnet3.h and vmw_pvscsi.h still
+contained the obsolete "51 Franklin Street" postal address.
 
-Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Replace it with the canonical GNU licenses URL recommended by the FSF:
+https://www.gnu.org/licenses/
+
+Signed-off-by: Sean Wei <me@sean.taipei>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250616140107.990538-4-shalini@linux.ibm.com>
+Message-ID: <20250613.qemu.patch.08@sean.taipei>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/s390x/sclpcpi.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ hw/net/vmxnet3.h     | 4 ++--
+ hw/scsi/vmw_pvscsi.h | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/hw/s390x/sclpcpi.c b/hw/s390x/sclpcpi.c
-index 440a5ff1eb6..7aa039d5100 100644
---- a/hw/s390x/sclpcpi.c
-+++ b/hw/s390x/sclpcpi.c
-@@ -54,6 +54,7 @@
- #include "hw/s390x/event-facility.h"
- #include "hw/s390x/ebcdic.h"
- #include "qapi/qapi-visit-machine.h"
-+#include "migration/vmstate.h"
- 
- typedef struct Data {
-     uint8_t id_format;
-@@ -145,12 +146,26 @@ static void get_timestamp(Object *obj, Visitor *v, const char *name,
-     visit_type_uint64(v, name, &e->timestamp, errp);
- }
- 
-+static const VMStateDescription vmstate_sclpcpi = {
-+    .name = "s390_control_program_id",
-+    .version_id = 0,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT8_ARRAY(system_type, SCLPEventCPI, 8),
-+        VMSTATE_UINT8_ARRAY(system_name, SCLPEventCPI, 8),
-+        VMSTATE_UINT64(system_level, SCLPEventCPI),
-+        VMSTATE_UINT8_ARRAY(sysplex_name, SCLPEventCPI, 8),
-+        VMSTATE_UINT64(timestamp, SCLPEventCPI),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- static void cpi_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     SCLPEventClass *k = SCLP_EVENT_CLASS(klass);
- 
-     dc->user_creatable = false;
-+    dc->vmsd =  &vmstate_sclpcpi;
- 
-     k->can_handle_event = can_handle_event;
-     k->get_send_mask = send_mask;
+diff --git a/hw/net/vmxnet3.h b/hw/net/vmxnet3.h
+index f9283f9e7b6..dbc69d5fb66 100644
+--- a/hw/net/vmxnet3.h
++++ b/hw/net/vmxnet3.h
+@@ -63,8 +63,8 @@
+  * details.
+  *
+  * You should have received a copy of the GNU General Public License
+- * along with this program; if not, write to the Free Software
+- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
++ * along with this program; if not, see
++ * <https://www.gnu.org/licenses/>.
+  *
+  * The full GNU General Public License is included in this distribution in
+  * the file called "COPYING".
+diff --git a/hw/scsi/vmw_pvscsi.h b/hw/scsi/vmw_pvscsi.h
+index 17fcf662730..a3ae517e199 100644
+--- a/hw/scsi/vmw_pvscsi.h
++++ b/hw/scsi/vmw_pvscsi.h
+@@ -14,8 +14,8 @@
+  * details.
+  *
+  * You should have received a copy of the GNU General Public License
+- * along with this program; if not, write to the Free Software
+- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
++ * along with this program; if not, see
++ * <https://www.gnu.org/licenses/>.
+  *
+  * Maintained by: Arvind Kumar <arvindkumar@vmware.com>
+  *
 -- 
 2.50.0
 
