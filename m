@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72E32C7115B
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 07:49:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D88FCC77B7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 07:49:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUhJh-0005A6-Qs; Thu, 26 Jun 2025 03:46:41 -0400
+	id 1uUhJt-0005wA-5r; Thu, 26 Jun 2025 03:46:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUhJb-0004uM-Kq
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 03:46:37 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUhJm-0005Rr-2v
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 03:46:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUhJZ-0001zm-Jq
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 03:46:35 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUhJi-00021J-NZ
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 03:46:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750923991;
+ s=mimecast20190719; t=1750924001;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QwrYbNhZkajaewKca5Og/0GorUd7Ik/9Cud+ESMPAxA=;
- b=LY4NNxAK3amSNqjywCR7YkymwryLL/hToMNRA+MM59jE1gqsoLHIZ9WJYOiOuUW8CsuCco
- NxYrG+6FaaUuYk2i7qzdb5h3TfELaVJfrN1Zqbz2nvzs2/kavfUnk/9stIVDGxO3ywqrh4
- S3Hmq0bTWBET+fn8dQzfk6IlOLb+UYA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=ZTiYRdZHss2VOjKgyAJO7JfRn0HCz3tkkFa9ahC8avE=;
+ b=T8yV1n5YDoPRcQxKyDLOzyjc7/LWUU0sYMY2yRpD7bYs/vM3QIDwCdY0Y7yV7nkksfRqmu
+ vZsW8KQYypaOwcUNTezofG8gkqDaNdddaQpNYco6Hs7CVGWqFSRAN26/D2M8v51WScxuL3
+ gbm9hLVYqav6rk5qyhIkQO93YAG/JOs=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-yhnMQZoeP-aYKDBAr6-rbQ-1; Thu,
- 26 Jun 2025 03:46:27 -0400
-X-MC-Unique: yhnMQZoeP-aYKDBAr6-rbQ-1
-X-Mimecast-MFC-AGG-ID: yhnMQZoeP-aYKDBAr6-rbQ_1750923986
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-6-3fOjScONK6YRnujYSLaA-1; Thu,
+ 26 Jun 2025 03:46:37 -0400
+X-MC-Unique: 6-3fOjScONK6YRnujYSLaA-1
+X-Mimecast-MFC-AGG-ID: 6-3fOjScONK6YRnujYSLaA_1750923996
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9EEDE1800268; Thu, 26 Jun 2025 07:46:26 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1AC721956096; Thu, 26 Jun 2025 07:46:36 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.51])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 83FDD180045B; Thu, 26 Jun 2025 07:46:23 +0000 (UTC)
+ id AD8DF180035C; Thu, 26 Jun 2025 07:46:33 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -53,9 +53,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  Jagannathan Raman <jag.raman@oracle.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 18/25] vfio-user: implement VFIO_USER_DEVICE_RESET
-Date: Thu, 26 Jun 2025 09:45:22 +0200
-Message-ID: <20250626074529.1384114-19-clg@redhat.com>
+Subject: [PULL 21/25] vfio-user: add 'x-msg-timeout' option
+Date: Thu, 26 Jun 2025 09:45:25 +0200
+Message-ID: <20250626074529.1384114-22-clg@redhat.com>
 In-Reply-To: <20250626074529.1384114-1-clg@redhat.com>
 References: <20250626074529.1384114-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -89,96 +89,96 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Levon <john.levon@nutanix.com>
 
-Hook this call up to the legacy reset handler for vfio-user-pci.
+By default, the vfio-user subsystem will wait 5 seconds for a message
+reply from the server. Add an option to allow this to be configurable.
 
 Originally-by: John Johnson <john.g.johnson@oracle.com>
 Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
 Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
 Signed-off-by: John Levon <john.levon@nutanix.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250625193012.2316242-13-john.levon@nutanix.com
+Link: https://lore.kernel.org/qemu-devel/20250625193012.2316242-16-john.levon@nutanix.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio-user/device.h |  2 ++
- hw/vfio-user/device.c | 18 ++++++++++++++++++
- hw/vfio-user/pci.c    | 15 +++++++++++++++
- 3 files changed, 35 insertions(+)
+ hw/vfio-user/proxy.h | 1 +
+ hw/vfio-user/pci.c   | 5 +++++
+ hw/vfio-user/proxy.c | 7 ++++---
+ 3 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/hw/vfio-user/device.h b/hw/vfio-user/device.h
-index 619c0f3140650599f930eddeb6d8a4a9ebf10b97..d183a3950e26ea1defac870509265cdfe57a4026 100644
---- a/hw/vfio-user/device.h
-+++ b/hw/vfio-user/device.h
-@@ -17,6 +17,8 @@
- bool vfio_user_get_device_info(VFIOUserProxy *proxy,
-                                struct vfio_device_info *info, Error **errp);
- 
-+void vfio_user_device_reset(VFIOUserProxy *proxy);
-+
- extern VFIODeviceIOOps vfio_user_device_io_ops_sock;
- 
- #endif /* VFIO_USER_DEVICE_H */
-diff --git a/hw/vfio-user/device.c b/hw/vfio-user/device.c
-index f01b3925c5a5a22cd8f55303d48b36d9dface54c..3a118e73615a40d5d455dfb379115be66726627a 100644
---- a/hw/vfio-user/device.c
-+++ b/hw/vfio-user/device.c
-@@ -54,6 +54,24 @@ bool vfio_user_get_device_info(VFIOUserProxy *proxy,
-     return true;
- }
- 
-+void vfio_user_device_reset(VFIOUserProxy *proxy)
-+{
-+    Error *local_err = NULL;
-+    VFIOUserHdr hdr;
-+
-+    vfio_user_request_msg(&hdr, VFIO_USER_DEVICE_RESET, sizeof(hdr), 0);
-+
-+    if (!vfio_user_send_wait(proxy, &hdr, NULL, 0, &local_err)) {
-+        error_prepend(&local_err, "%s: ", __func__);
-+        error_report_err(local_err);
-+        return;
-+    }
-+
-+    if (hdr.flags & VFIO_USER_ERROR) {
-+        error_printf("reset reply error %d\n", hdr.error_reply);
-+    }
-+}
-+
- static int vfio_user_get_region_info(VFIOUserProxy *proxy,
-                                      struct vfio_region_info *info,
-                                      VFIOUserFDs *fds)
+diff --git a/hw/vfio-user/proxy.h b/hw/vfio-user/proxy.h
+index 39092c08c8d31ad315e1942ddd09134a8a4569a0..6b29cd7cd392ed5a1675dfc3f26fee691f2f9d44 100644
+--- a/hw/vfio-user/proxy.h
++++ b/hw/vfio-user/proxy.h
+@@ -67,6 +67,7 @@ typedef struct VFIOUserProxy {
+     uint64_t max_bitmap;
+     uint64_t migr_pgsize;
+     int flags;
++    uint32_t wait_time;
+     QemuCond close_cv;
+     AioContext *ctx;
+     QEMUBH *req_bh;
 diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
-index c0f00f15b10a80820606ff4ef0383d59ecd91670..49d12763aba73f780ec5b202dfd4d3dc98837491 100644
+index 040660d1977cf97d9c983985d30d9488e391e0c0..f260bea4900bd4648ba38db191cafe933ca64135 100644
 --- a/hw/vfio-user/pci.c
 +++ b/hw/vfio-user/pci.c
-@@ -263,6 +263,20 @@ static void vfio_user_instance_finalize(Object *obj)
+@@ -23,6 +23,7 @@ struct VFIOUserPCIDevice {
+     VFIOPCIDevice device;
+     SocketAddress *socket;
+     bool send_queued;   /* all sends are queued */
++    uint32_t wait_time; /* timeout for message replies */
+ };
+ 
+ /*
+@@ -267,6 +268,9 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
+         proxy->flags |= VFIO_PROXY_FORCE_QUEUED;
      }
- }
  
-+static void vfio_user_pci_reset(DeviceState *dev)
-+{
-+    VFIOPCIDevice *vdev = VFIO_PCI_BASE(dev);
-+    VFIODevice *vbasedev = &vdev->vbasedev;
++    /* user specified or 5 sec default */
++    proxy->wait_time = udev->wait_time;
 +
-+    vfio_pci_pre_reset(vdev);
-+
-+    if (vbasedev->reset_works) {
-+        vfio_user_device_reset(vbasedev->proxy);
-+    }
-+
-+    vfio_pci_post_reset(vdev);
-+}
-+
- static const Property vfio_user_pci_dev_properties[] = {
-     DEFINE_PROP_UINT32("x-pci-vendor-id", VFIOPCIDevice,
-                        vendor_id, PCI_ANY_ID),
-@@ -310,6 +324,7 @@ static void vfio_user_pci_dev_class_init(ObjectClass *klass, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     PCIDeviceClass *pdc = PCI_DEVICE_CLASS(klass);
+     if (!vfio_user_validate_version(proxy, errp)) {
+         goto error;
+     }
+@@ -398,6 +402,7 @@ static const Property vfio_user_pci_dev_properties[] = {
+     DEFINE_PROP_UINT32("x-pci-sub-device-id", VFIOPCIDevice,
+                        sub_device_id, PCI_ANY_ID),
+     DEFINE_PROP_BOOL("x-send-queued", VFIOUserPCIDevice, send_queued, false),
++    DEFINE_PROP_UINT32("x-msg-timeout", VFIOUserPCIDevice, wait_time, 5000),
+ };
  
-+    device_class_set_legacy_reset(dc, vfio_user_pci_reset);
-     device_class_set_props(dc, vfio_user_pci_dev_properties);
+ static void vfio_user_pci_set_socket(Object *obj, Visitor *v, const char *name,
+diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+index cb93d9a660605f6675a141a1645f2f3391e4aa8a..c3724ba212b437fb810a9ad82915b4b1fdf7a5bc 100644
+--- a/hw/vfio-user/proxy.c
++++ b/hw/vfio-user/proxy.c
+@@ -21,7 +21,6 @@
+ #include "qemu/main-loop.h"
+ #include "system/iothread.h"
  
-     object_class_property_add(klass, "socket", "SocketAddress", NULL,
+-static int wait_time = 5000;   /* wait up to 5 sec for busy servers */
+ static IOThread *vfio_user_iothread;
+ 
+ static void vfio_user_shutdown(VFIOUserProxy *proxy);
+@@ -686,7 +685,8 @@ bool vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
+ 
+     if (ok) {
+         while (!msg->complete) {
+-            if (!qemu_cond_timedwait(&msg->cv, &proxy->lock, wait_time)) {
++            if (!qemu_cond_timedwait(&msg->cv, &proxy->lock,
++                                     proxy->wait_time)) {
+                 VFIOUserMsgQ *list;
+ 
+                 list = msg->pending ? &proxy->pending : &proxy->outgoing;
+@@ -758,7 +758,8 @@ void vfio_user_wait_reqs(VFIOUserProxy *proxy)
+         msg->type = VFIO_MSG_WAIT;
+         proxy->last_nowait = NULL;
+         while (!msg->complete) {
+-            if (!qemu_cond_timedwait(&msg->cv, &proxy->lock, wait_time)) {
++            if (!qemu_cond_timedwait(&msg->cv, &proxy->lock,
++                                     proxy->wait_time)) {
+                 VFIOUserMsgQ *list;
+ 
+                 list = msg->pending ? &proxy->pending : &proxy->outgoing;
 -- 
 2.49.0
 
