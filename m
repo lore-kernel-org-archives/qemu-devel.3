@@ -4,144 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0928AC77B7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 06:02:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63D99C7115B
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 06:24:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUfgM-0006Xw-Do; Thu, 26 Jun 2025 02:02:00 -0400
+	id 1uUg1E-0004JG-MT; Thu, 26 Jun 2025 02:23:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfg9-0006OM-8K
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 02:01:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uUg1C-0004Ix-R7
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 02:23:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfg6-0002N1-Ph
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 02:01:44 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uUg19-0000Gb-BX
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 02:23:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750917700;
+ s=mimecast20190719; t=1750919004;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Q1jWGIOyAoDc81Q1gUvVIux0jXH0jqzlqnZ7CJjPgEM=;
- b=TgKwsiI9Ja7CFxst9LNNSryesdZiRpn9fs1wuI5nx3wdWCHPzrIDFvWwUkv8ImKy4JYMVR
- RxS6WqvAeQ5SsO785rCBAPmXLC55bpUVFOEugxgTh5QOjWm/AQbrPeXXUdtlEIOygtIzVL
- ONKCVDVxXFIcLUI5GvhMwiHn/QPZznc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-621-6Qz-CjLfOiOnHIFOMHZPkQ-1; Thu, 26 Jun 2025 02:01:39 -0400
-X-MC-Unique: 6Qz-CjLfOiOnHIFOMHZPkQ-1
-X-Mimecast-MFC-AGG-ID: 6Qz-CjLfOiOnHIFOMHZPkQ_1750917697
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4535ee06160so3553815e9.3
- for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 23:01:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750917697; x=1751522497;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Q1jWGIOyAoDc81Q1gUvVIux0jXH0jqzlqnZ7CJjPgEM=;
- b=oEJ4JIFYHZ/yhDmNWeJ6VQLB4AfVph3jHt/9D5ntagq9AF/Z3WKktKI5FwyNE5pCxz
- hn2o4+Weww5VSJgziAYMtYDzRUo9qqaMywOVpKxg8+nZh6yOFRUFpEAHgTjl8LmmgB41
- 8hh1CsNMWUlBzAWki+CLWJ+TsPNz1VRsJ4MFBqqSsJjrZm2GpjOCRb0+/xMql+crtGdQ
- ImnpvSYyJsM2ym4XjCVCAuPNsXkThb+ABO/lIcUFI8wUDAQjVoKgwQeu4Kd+v85JXThG
- Q9b+3+hV6QyPnHzsSb0G4kVtbQn+loEIX4gCauTxmvfQR9OwIg3f31xZB/bCbPioBkXw
- C5Xw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXmfc4mRgXpmEk/Bt2n1j5o5u3Cch3oMGIj2uQ5sgQePWHZRaaUHWIwfx4f/sIgXJSvVWj/ODcaSW+h@nongnu.org
-X-Gm-Message-State: AOJu0YwUbLEqwu8+RZWfIfIeL9oEYgPxo3ISy8FAUc+3ZHipx+ADC0XS
- gydeq6fQCqhJ0eHdaNIkmTz0WzTXbx+gy32bo1Ld3zgi7B5/prqruZedU8Tl0+CvKkCzBBx7kT7
- bLxje1QDTRApzKPBXZ2TFOjwQje16O4BHuZtmVSldOSfl9Lc9p3Gt4bd+
-X-Gm-Gg: ASbGnctudOhrsN7GdpcowkJqNPhUfwhFVnIYW8jsR6OmgLDi7UpJF7YaDQjYHbacoGU
- E60E6oh93pNBJVpc9Exd57HsqxFqQLOUUQpcqSfIEEtnXmjFr+Psbis+ZP2H2aae1MdrHsf5ZWd
- +23iA1I8/UK17f+dZ04ropY3HAuOZ3kwr3GNDIMDVJLOpsaxZIbkXGpmjuCtPC1aBEy/erYQxOe
- 41lW/GeQ1CTrpn2vPIFxMCkiZx8aIJNFi6rvpr7J2hQ/B3KRiNeKXCJzei4r+sZSsBIKxB6VAtc
- jiEfL9dgJq3k/zBljfDryu4jOVfQXk08rNP7SS7Fd98zhcr+xZKaU+15y1cm9uk=
-X-Received: by 2002:a05:6000:2207:b0:3a4:dfa9:ce28 with SMTP id
- ffacd0b85a97d-3a6ed5b880amr4756318f8f.5.1750917696873; 
- Wed, 25 Jun 2025 23:01:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHegrIfMcIA7VUPUaSoNOdMEKv2V4ovkpIkN/vPfBypTWhN3ZDIjwm8ftTy/x1xiLdK4+EtuQ==
-X-Received: by 2002:a05:6000:2207:b0:3a4:dfa9:ce28 with SMTP id
- ffacd0b85a97d-3a6ed5b880amr4756282f8f.5.1750917696436; 
- Wed, 25 Jun 2025 23:01:36 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-115-198.pools.arcor-ip.net.
- [47.64.115.198]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6e80695efsm6214837f8f.40.2025.06.25.23.01.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Jun 2025 23:01:35 -0700 (PDT)
-Message-ID: <5088018f-cfb5-4256-9f70-6a578a2d53b7@redhat.com>
-Date: Thu, 26 Jun 2025 08:01:34 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=KsucTw3XSzj7ba2Q5egV/ESlo5emHDv2cj2LQyRh6mg=;
+ b=Qh6VqzjcQDZyZXSmeT99LZFw5ZWbvD/zCRamqeebjmdAPTy2FzHa4pUHuDmJAGTdfx+qrg
+ E4kVulz9qvmUwvYEsmD7uN58NSNw9zY+64HyI4tgd+PLgfkSeGh1iP7U4IDSsXUaWHl/gp
+ 5fpbHRsXepSk12fWiYcWoLPcp7Np+40=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-oluSlUrdPiSNTaJa1RHsrA-1; Thu,
+ 26 Jun 2025 02:23:20 -0400
+X-MC-Unique: oluSlUrdPiSNTaJa1RHsrA-1
+X-Mimecast-MFC-AGG-ID: oluSlUrdPiSNTaJa1RHsrA_1750918999
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6B486180029E; Thu, 26 Jun 2025 06:23:19 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BE79918003FC; Thu, 26 Jun 2025 06:23:18 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3ADC621E6A27; Thu, 26 Jun 2025 08:23:16 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  qemu-devel
+ <qemu-devel@nongnu.org>,  Daniel =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Akihiko Odaki
+ <akihiko.odaki@daynix.com>
+Subject: Re: Build platform guarantees, docs, tests, and snakes in the garden
+In-Reply-To: <CAFn=p-Y1bN+VE+hLCVP-E7HcjOgO1QPQ6PUJWz91mcXEC75j=Q@mail.gmail.com>
+ (John Snow's message of "Wed, 25 Jun 2025 16:42:26 -0400")
+References: <CAFn=p-YuqzXvWF-cGLUc0LVVMe2Rinx9+LOjvpHRY-vRrPyJow@mail.gmail.com>
+ <23559c8d-149a-4ec6-adaa-fe0a8f8533f1@redhat.com>
+ <87qzz9myd0.fsf@pond.sub.org>
+ <CAFn=p-Y1bN+VE+hLCVP-E7HcjOgO1QPQ6PUJWz91mcXEC75j=Q@mail.gmail.com>
+Date: Thu, 26 Jun 2025 08:23:16 +0200
+Message-ID: <87o6ubyqaz.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: FreeBSD 14.1 aarch64 iso URL is down
-To: Warner Losh <imp@bsdimp.com>, Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Radoslaw Biernacki <rad@semihalf.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <CAJSP0QU=v_jN5oBDBefg0mB=Qv3SvD4ZdJzz2LT-cu5ZL7pK0Q@mail.gmail.com>
- <CAJSP0QXe1L2P24oUrABO1eUzn1JFc=BJWEfakrQ5u3Ek5LkfKg@mail.gmail.com>
- <CANCZdfqfFNAYcF3BEDucyR3YN1PXwyEmzE5LPcJCyshCXwhe6Q@mail.gmail.com>
- <9bac4585-255a-4805-b24d-b3b75d2ca9c3@redhat.com>
- <CANCZdfq6+R=VgyYdcdJCmDBTCgLSxDJuqd8h=ehb5F+v-HPT+g@mail.gmail.com>
- <CAJSP0QWSVhAYBtxKV+WDubmif2m=jxTYd-BK=d7ExZXWUNUYXA@mail.gmail.com>
- <CANCZdfqTKUMLbrT9HEXa-O7pyHqfcMWMmYx7iCq=ZU_ewgCaag@mail.gmail.com>
- <CAJSP0QUKx+eLjF5J2+JGrry_x-jx1p5HStCOTfOgQg+3nOpSeg@mail.gmail.com>
- <CANCZdfrxE=GScjtcd87cd-fgRf3uk87T=Ow718cFrB24=iC8iQ@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CANCZdfrxE=GScjtcd87cd-fgRf3uk87T=Ow718cFrB24=iC8iQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -150,7 +77,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,22 +93,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/06/2025 04.53, Warner Losh wrote:
-> [...] What's the
-> anticipated load, measured in downloads per day say, this testing
-> generates?
+John Snow <jsnow@redhat.com> writes:
 
-Ideally, the functional tests download the assets once and then cache them. 
-However, it's currently broken in the non-shared CI runners of the 
-qemu-project (it's working in forked repos with the shared runners), so 
-expect a fistful of downloads per day (I guess 5 downloads per day would be 
-a reasonable number to expect).
+> On Tue, Jun 24, 2025 at 2:45=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>
+>> Paolo Bonzini <pbonzini@redhat.com> writes:
+>>
+>> > On 6/5/25 21:35, John Snow wrote:
+>> >> However, if we take as iron-clad our commitment to the build platform
+>> promise -- *and* guarantee offline/tarball builds as well -- then Debian=
+ 12
+>> (as an example) only offers Sphinx 5.3.0 and not newer unless we allow
+>> internet access to fetch Sphinx 6.2.1. This is not a problem for develop=
+er
+>> workstations at all, but I am unclear on what problems this may cause for
+>> tarball releases and downstream offline/isolated/ reproducible builds, if
+>> any.
+>> >> In this case, we can (probably) "fix" the issue by continuing to allow
+>> older Sphinx while preferring a newer Sphinx version when it is missing,
+>> but then we lose the ability to make code cleanups and drop a lot of
+>> back-compat crud. If memory serves, there were other issues recently whe=
+re
+>> older versions of Sphinx behaved differently from newer versions, causing
+>> intermittent failures that were hard to track down.
+>> >
+>> > The *ideal* solution would be to:
+>> >
+>> > - accept: 4.3.2 or newer, which is what Ubuntu 22.04 has
+>> >
+>> > - install: 6.2.1, which is what supports Python 3.13
+>>
+>> I guess this relates to pythondeps.toml line
+>>
+>>     sphinx =3D { accepted =3D ">=3D3.4.3", installed =3D "5.3.0", canary=
+ =3D
+>> "sphinx-build" }
+>>
+>> I further guess "accepted" means "reject anything older", and
+>> "installed" means "preferred version".
+>
+> Yes. Accepted is what we'll tolerate if it's already installed, "installe=
+d"
+> is what we will prefer to install.
 
-> Speaking of which, has someone done the update? I'm a bit behind on my
-> qemu stuff and haven't been paying attention.
+Thanks!
 
-AFAICT nobody has sent a patch yet, so it's currently still broken.
+>> > This lets all supported distros build documentation if they use the
+>> > default Python runtime.  It would still require a couple hacks in
+>> > compat.py: SOURCE_LOCATION_FIX and nested_parse_with_titles().
+>> >
+>> > I am not sure however whether to count the latter, for two reasons.
+>> > First, it has this:
+>> >
+>> >     # necessary so that the child nodes get the right source/line set
+>> >     content_node.document =3D directive.state.document
+>> >
+>> > so it is not a pure compatibility hack.  Second, and opposite, current=
+ly
+>> > none of the uses of nested_parse_with_titles() go through compat.py's
+>> > version, therefore it probably can be removed altogether.
+>> >
+>> > That leaves only SOURCE_LOCATION_FIX.
+>> >
+>> > As an aside, if the compat.py hacks survive, I would add comments to
+>> > document which distros need the hacks.
+>> >
+>> >> What I'd like to know is: what precisely are our options in this
+>> >> scenario? Do we consider it acceptable for some platforms to be unabl=
+e to
+>> >> build docs offline?
+>> >
+>> > Certainly for platforms not using the default Python runtime, which
+>> > right now is only SLES.  For others...
+>> >
+>> >> How highly do we value the ability to locally build docs for any given
+>> >> release?
+>>
+>> Purely offline, or not?
+>
+>
+> Purely offline is my concern as it is the requirement I least understand.
+>
+> For developer builds from the git tree, it doesn't matter: you have PyPI,
+> and we have mkvenv.py to set up an environment we are confident will work
+> for the purposes of building QEMU and running tests.
 
-  Thomas
+Yes, things should work regardless of what we choose for "accepted" and
+"installed": if what the host got is "accepted", we use it, else we put
+"installed" in the environment.
+
+> For package builds in foreign lands, I grow less certain ...
+>
+> I know Fedora and RHEL et al build in a strictly isolated environment whe=
+re
+> we *cannot* pull PyPI packages.
+
+This makes sense.
+
+>                                 For Fedora this is generally less of a
+> problem as the distro repository usually has bleeding edge packages for us
+> to use. mkvenv.py still runs in RPM builds, it just happens to not need
+> anything it doesn't already have, so it succeeds.
+>
+> For RHEL it's slightly less of a concern as the version of QEMU packaged
+> tends to also be old, so the dependencies needed by that version should be
+> matched well by what's available in that distro repo.
+>
+> Where I am less certain is for various "streams" or "modules" or whatever
+> for e.g. RHEL that may package newer versions of QEMU but may not have
+> other bleeding edge requirements. I am also entirely unfamiliar with the
+> release cadence of Debian, Ubuntu, OpenSUSE, etc. I am concerned
+> (hypothetically) about cases where Python3.9 is available as an optional
+> package, but newer versions of e.g. Sphinx are not.
+>
+> Is that a problem? Do we care?
+
+If you want to package $software, you get to package its dependencies.
+Simple as that.
+
+Widening the version range of our dependencies can make this a bit
+easier.
+
+For a distribution's .0, current stable versions get packaged.  We
+better make this as easy as we can.  So the version range needs to
+include "current stable".  But why wouldn't it include that ever?
+
+Later on, a wider version range can enable "uneven" upgrades: upgrading
+to a new QEMU without also upgrading certain dependencies.
+
+How valuable is this for us?  The answer should inform our choice of
+version range.  Extending the range further back can be costly, and it
+better be worth it.
+
+I'm rather skeptical here.  Feels like a lot of angst about what
+distributions might possibly want to do, with precious little evidence
+for what they actually do.  Show me distribution package upgrades
+(uneven or not) we enabled by keeping our version range wide, and I'll
+reconsider.
+
+> In theory, it could affect not just documentation building but unit tests
+> as well, depending on where and how we "break" our promise.
+>
+> I suspect I won't really be able to figure out if it's an issue or not
+> until I just "yeehaw!" and do it and see who chirps, but I don't actually
+> like operating in such a cavalier manner as a maintainer ...
+>
+>
+>>
+>> > ... I think I value this a bit higher than Markus, but not really
+>> > because of offline builds.  Rather, keeping the "accepted" key lower (=
+i.e.
+>> > supporting the packaged sphinx on a wide range of distros) makes it ea=
+sier
+>> > to bump the "installed" key when needed, as in this failure to run 5.3=
+.0
+>> > under Python 3.13.
+>>
+>> Showing my ignorance again...  I don't understand how keeping "accepted"
+>> lower helps.
+>>
+>> > This time there was a version that works on both the oldest and newest
+>> > Python that we support, but there may not always be one because sphinx=
+ is
+>> > all too happy at dropping support for EOL'd versions of Python.
+>>
+>> Pretty strong hint we shouldn't try to support EOL'd versions of Python
+>> either.
+>>
+>
+> This is the problem I keep running into, generally. Our build platform
+> promise generally includes platforms that use EOL versions of Python by
+> default - which is not a problem in and of itself, however when combined
+> with our support for bleeding edge platforms, it becomes difficult to
+> support both an EOL'd version of Python *and* the latest releases, as they
+> are quite aggressive in dropping support for deprecated features and
+> libraries on the newer end.
+>
+> Add to that the difficulty of keeping the linters and type checkers happy
+> across such a wide matrix, and it becomes burdensome to keep things
+> humming. In general my impression is that linters, doc systems, type
+> systems etc are designed to be run under strictly pinned versions, not
+> "whatever the user happens to have available", which is at stark odds with
+> how we manage our build, doc and test system environment today.
+
+For development aids like linters and type checkers, graceful
+degradation can make sense.  They must work for developers (who we can
+expect to use a reasonably current development environment).  I can't
+see why they wouldn't work in a similarly current packaging environment
+(i.e. offline), and that's nice.  But I'd loathe to invest much in
+keeping development aids work in a non-current environment, especially
+not offline.
+
+> I do not know what the "solution" to that contrast is, but I do get the "=
+we
+> are doing something wrong" feeling a lot when managing our stack. I am
+> proud it works as well as it does and across such a diverse host of
+> platforms, but I get the sense we're one of the few or only projects out
+> there doing it like this.
+
+Bob is driving on the highway listening to the radio.  Suddenly the
+music stops for an announcement: there's a wrong-way driver on the
+highway!  "One?", Bob exclaims, "*hundreds* of them!"
+
+When nobody else does what we try to do, we might be pioneers, or we
+might be fools.
+
+> I would be as content as anyone else if Python didn't have such an
+> aggressive deprecation window and didn't *frequently* break the packaging
+> environment.
+
+We got to play the hand we're dealt.
+
+>> > Paolo
+>> >
+>> >> Before I throw my weight behind any given option, I just want to know
+>> >> what we consider our non-negotiable obligations to be.
+>> >>
+>> >> Thanks,
+>> >> --js
 
 
