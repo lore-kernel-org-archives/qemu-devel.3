@@ -4,107 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC2E0C7115B
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 08:17:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EEAAC7115B
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 08:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUhn0-0000SQ-35; Thu, 26 Jun 2025 04:16:58 -0400
+	id 1uUhon-0001Ur-CL; Thu, 26 Jun 2025 04:18:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uUhmw-0000QH-DX
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 04:16:54 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uUhol-0001UZ-FV
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 04:18:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uUhmt-0007it-Bo
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 04:16:53 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uUhoe-0000ju-2K
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 04:18:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750925808;
+ s=mimecast20190719; t=1750925918;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kLaCiP+fRMAVbTwIzpfwb5TGbUB5bgOHC/V9Yd1Bbls=;
- b=R5TiBkwZeqIE3P2zLrPzaZ3/JpAZdylWnDw9AqXCx/m8OjIavV6PRYEItE+t92mdBOU3I5
- 7hUGLAMUVePdb/yNkp0kdwT9/cTBpUokPvTs3ePYwz+6OGvrcjQuMx8OzZAVR3WtQAjdgI
- S0fm7BG+sjtFHh2pOBd+LAp+XVRz2R8=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-247-AZ61QhGSO02tAL35uLehOQ-1; Thu, 26 Jun 2025 04:16:46 -0400
-X-MC-Unique: AZ61QhGSO02tAL35uLehOQ-1
-X-Mimecast-MFC-AGG-ID: AZ61QhGSO02tAL35uLehOQ_1750925805
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-450d6768d4dso3853185e9.2
- for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 01:16:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750925805; x=1751530605;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kLaCiP+fRMAVbTwIzpfwb5TGbUB5bgOHC/V9Yd1Bbls=;
- b=ZIISFqeQg6I1oDMixUXlERDWP2OhW/CzBeDpVR2uucU35DXm1TGY1KNAmWIhBeZGCG
- bWQtoX24HqSplWZbkF/A0ylTxv2j90LhRZxOYNSxZasMLu89Ron4fJn3CyVrBDKNKGjR
- ZUUz+IBT8Xk2HJGupRYuT12BH2KTC+fXZKrJwfMvNMZ3UCmlxNmJxmOt6pePFDXUm9CZ
- LShMS/FJbkdBJeq3dNvYiRy6nfd7F5qVHd0pbgfwYVywN8TVdGlssoI91uWyNxRZW27k
- y36JypnTXkJW2XvTs0Rfb6RPUmZfOygtxacRWKSBFq7BXIFyUd5VZeynYqnjmNK245N/
- DZXg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVc/LokCRqcJKFOMeY+lJ1zUwywE/T6OYzDsQWF+mIAx0FtPHSMJ5dZccWmefRPFkr2XOQt++mXyrx9@nongnu.org
-X-Gm-Message-State: AOJu0Yw3lNPO/MN8ndEFsjz8VblCtOOBlMLEMax1IvWdb0HoiecZBwF/
- 7f675FYV7GZX+1e0Lbeh7nm7FHugkR7xZTrd/isOWP4QwRdmlF8+JBxLvyspyp2NiEUIIaafwlG
- 1XedP9lANyt08Au7ZhvPef8z2tzNNpOkLJvQn6qPlR8v/RFy0fafzrMUv
-X-Gm-Gg: ASbGncu80G+Dvy//nBllwHXXLKQV1OJcDQKUc1BvTSd+iXS4dviRt7aimr7NGDChP+M
- B6ziBFcYaGoW8hzuP+AfeIsIba9PS+S61H+q2a0hWfa+prbc4W0pLWgtXfrBdewt0LVjXEw0jo9
- f4jV//FaWbvAjXe/bBArR28hGvhxQnKdj3QhCdi6JSxGyeKfOntvBPA8S+CjZWHxuENejsu4EMJ
- lLmvKYpqNM6LGIkQpS3YwrcYxPzQ27oFbV3lU+PBr6zWorIpsrDkzhMCKfqVHCyw1XpT8wKHL3T
- 5v7565MiZyOvKCrKEqL5wCGjnSUNFw4mcMYa4U5Zst7pX2lrSX6F/WMI8lskmadJl+ItaQ==
-X-Received: by 2002:a05:600c:3496:b0:450:d012:df85 with SMTP id
- 5b1f17b1804b1-45381ae9033mr59825415e9.18.1750925804763; 
- Thu, 26 Jun 2025 01:16:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHiozj5IcJ+4br1H1IJUs6QwU0fIKaG5TRQeC5/o5PIdahzN3Zhaqdyu196taU0zAbD1wu8eQ==
-X-Received: by 2002:a05:600c:3496:b0:450:d012:df85 with SMTP id
- 5b1f17b1804b1-45381ae9033mr59825045e9.18.1750925804326; 
- Thu, 26 Jun 2025 01:16:44 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6e8069467sm6545380f8f.42.2025.06.26.01.16.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Jun 2025 01:16:43 -0700 (PDT)
-Message-ID: <e6dde520-e889-4102-aac9-9a5df3b57f5e@redhat.com>
-Date: Thu, 26 Jun 2025 10:16:42 +0200
+ bh=ZII6pwIZHcjn10bvI0HrhQOeLlFOkL2hrp0dcR05Mck=;
+ b=GoNtZ1+2Xb7xRhM8YV8QVHltZWGc2kKDMe8r18IiH4phsrRUBY6Hzv3A99lHVvt06r0hgb
+ FL2nc1qwuN1ayYe/TC4SqsmCcE0sHrtM6eG+oDp9YQMtc7UNccJ6PIsDGYGCfwXTVBazA7
+ mVL3cZH0bc+zWC4V8WcOulNzgQX+Rb8=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-447-qIyt81rDN_ufCZixBhOV3A-1; Thu,
+ 26 Jun 2025 04:18:34 -0400
+X-MC-Unique: qIyt81rDN_ufCZixBhOV3A-1
+X-Mimecast-MFC-AGG-ID: qIyt81rDN_ufCZixBhOV3A_1750925913
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A9C381954215; Thu, 26 Jun 2025 08:18:32 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.58])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4F2D419560B3; Thu, 26 Jun 2025 08:18:25 +0000 (UTC)
+Date: Thu, 26 Jun 2025 09:18:22 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ Thomas Huth <thuth@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Alexander Graf <agraf@csgraf.de>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v5 3/3] docs: define policy forbidding use of AI code
+ generators
+Message-ID: <aF0CTtZfBHFpolZM@redhat.com>
+References: <20250616092241.212898-1-armbru@redhat.com>
+ <20250616092241.212898-4-armbru@redhat.com>
+ <20250625150941-mutt-send-email-mst@kernel.org>
+ <aFxePYi6bzLQ8UvN@redhat.com>
+ <CAJSP0QXG_QD+ZWsRgpxSNyXYBooMkfX+gSOOFE8XWghv1E-htw@mail.gmail.com>
+ <20250625164902-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 26/29] hw/arm/virt: Plug pcihp hotplug/hotunplug
- callbacks
-Content-Language: en-US
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, gustavo.romero@linaro.org, anisinha@redhat.com,
- mst@redhat.com, shannon.zhaosl@gmail.com, pbonzini@redhat.com,
- Jonathan.Cameron@huawei.com, philmd@linaro.org, alex.bennee@linaro.org
-References: <20250616094903.885753-1-eric.auger@redhat.com>
- <20250616094903.885753-27-eric.auger@redhat.com>
- <20250620151033.7fedf673@fedora>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250620151033.7fedf673@fedora>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250625164902-mutt-send-email-mst@kernel.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,166 +100,95 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor,
+On Wed, Jun 25, 2025 at 04:49:17PM -0400, Michael S. Tsirkin wrote:
+> On Wed, Jun 25, 2025 at 04:47:06PM -0400, Stefan Hajnoczi wrote:
+> > On Wed, Jun 25, 2025 at 4:39 PM Kevin Wolf <kwolf@redhat.com> wrote:
+> > >
+> > > Am 25.06.2025 um 21:16 hat Michael S. Tsirkin geschrieben:
+> > > > On Mon, Jun 16, 2025 at 11:22:41AM +0200, Markus Armbruster wrote:
+> > > > > From: Daniel P. Berrangé <berrange@redhat.com>
+> > > > >
+> > > > > There has been an explosion of interest in so called AI code
+> > > > > generators. Thus far though, this is has not been matched by a broadly
+> > > > > accepted legal interpretation of the licensing implications for code
+> > > > > generator outputs. While the vendors may claim there is no problem and
+> > > > > a free choice of license is possible, they have an inherent conflict
+> > > > > of interest in promoting this interpretation. More broadly there is,
+> > > > > as yet, no broad consensus on the licensing implications of code
+> > > > > generators trained on inputs under a wide variety of licenses
+> > > > >
+> > > > > The DCO requires contributors to assert they have the right to
+> > > > > contribute under the designated project license. Given the lack of
+> > > > > consensus on the licensing of AI code generator output, it is not
+> > > > > considered credible to assert compliance with the DCO clause (b) or (c)
+> > > > > where a patch includes such generated code.
+> > > > >
+> > > > > This patch thus defines a policy that the QEMU project will currently
+> > > > > not accept contributions where use of AI code generators is either
+> > > > > known, or suspected.
+> > > > >
+> > > > > These are early days of AI-assisted software development. The legal
+> > > > > questions will be resolved eventually. The tools will mature, and we
+> > > > > can expect some to become safely usable in free software projects.
+> > > > > The policy we set now must be for today, and be open to revision. It's
+> > > > > best to start strict and safe, then relax.
+> > > > >
+> > > > > Meanwhile requests for exceptions can also be considered on a case by
+> > > > > case basis.
+> > > > >
+> > > > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > > > > Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+> > > > > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > > > > Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> > > > > Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> > > >
+> > > > Sorry about only reacting now, was AFK.
+> > > >
+> > > > So one usecase that to me seems entirely valid, is refactoring.
+> > > >
+> > > > For example, change a function prototype, or a structure,
+> > > > and have an LLM update all callers.
+> > > >
+> > > > The only part of the patch that is expressive is the
+> > > > actual change, the rest is a technicality and has IMHO nothing to do with
+> > > > copyright. LLMs can just do it with no hassle.
+> > > >
+> > > >
+> > > > Can we soften this to only apply to expressive code?
+> > > >
+> > > > I feel a lot of cleanups would be enabled by this.
+> > >
+> > > Hasn't refactoring been a (deterministically) solved problem long before
+> > > LLMs became capable to do the same with a good enough probability?
+> > 
+> > It's easier to describe a desired refactoring to an LLM in natural
+> > language than to figure out the regexes, semantic patches, etc needed
+> > for traditional refactoring tools.
+> > 
+> > Also, LLMs can perform higher level refactorings that might not be
+> > supported by traditional tools. Things like "split this interface into
+> > callbacks that take a Foo * argument and implement the callbacks for
+> > both a.c and b.c".
+> > 
+> > I think what Daniel mentioned is a good guide: if it's something that
+> > you think it copyrightable, then avoid it.
+> 
+> Right. Let's put that in the doc?
 
-On 6/20/25 3:10 PM, Igor Mammedov wrote:
-> On Mon, 16 Jun 2025 11:46:55 +0200
-> Eric Auger <eric.auger@redhat.com> wrote:
->
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> why do we still need this?
->
-> pcihp code should override native pcie bus handlers, and then
-> when device_add calls bus hotplug handlers it will be pcihp ones.
-It was needed because I did not call qbus_set_hotplug_handler() as done in
-ich9.c. So I think I should be able to get rid of this patch
+In terms of mitigating risk I think it is better to avoid saying that
+explicitly, and be seen to actively encourage acceptance of AI generated
+code. The boundary between copyrightable and non-copyrightable code is
+always pretty fuzzy and a matter of differing opinions.
 
-Thanks
-
-Eric
->
->> ---
->> v2 -> v3:
->> - fix cohabitation with virtio-mem-pci device and tested
->>   hotplug/unplug of this latter (Igor)
->> ---
->>  hw/arm/virt.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++++---
->>  1 file changed, 69 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->> index 8c882e0794..06b87e1050 100644
->> --- a/hw/arm/virt.c
->> +++ b/hw/arm/virt.c
->> @@ -1747,6 +1747,22 @@ static void virt_build_smbios(VirtMachineState *vms)
->>      }
->>  }
->>  
->> +static AcpiPciHpState *get_acpi_pcihp_state(VirtMachineState *vms)
->> +{
->> +    AcpiGedState *acpi_ged_state;
->> +    AcpiPciHpState *pcihp_state;
->> +
->> +    if (!vms->acpi_dev) {
->> +        return NULL;
->> +    }
->> +    acpi_ged_state = ACPI_GED(vms->acpi_dev);
->> +    pcihp_state = &acpi_ged_state->pcihp_state;
->> +    if (pcihp_state->use_acpi_hotplug_bridge) {
->> +        return pcihp_state;
->> +    }
->> +    return NULL;
->> +}
->> +
->>  static
->>  void virt_machine_done(Notifier *notifier, void *data)
->>  {
->> @@ -2907,6 +2923,13 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
->>  {
->>      VirtMachineState *vms = VIRT_MACHINE(hotplug_dev);
->>  
->> +    if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
->> +        if (get_acpi_pcihp_state(vms)) {
->> +            acpi_pcihp_device_pre_plug_cb(HOTPLUG_HANDLER(vms->acpi_dev),
->> +                                          dev, errp);
->> +        }
->> +    }
->> +
->>      if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
->>          virt_memory_pre_plug(hotplug_dev, dev, errp);
->>      } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
->> @@ -2961,6 +2984,15 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
->>          }
->>      }
->>  
->> +    if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
->> +        AcpiPciHpState *pcihp_state = get_acpi_pcihp_state(vms);
->> +
->> +        if (pcihp_state) {
->> +            acpi_pcihp_device_plug_cb(HOTPLUG_HANDLER(vms->acpi_dev),
->> +                                      pcihp_state, dev, errp);
->> +        }
->> +    }
->> +
->>      if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
->>          virt_memory_plug(hotplug_dev, dev, errp);
->>      } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
->> @@ -3017,12 +3049,27 @@ out:
->>  static void virt_machine_device_unplug_request_cb(HotplugHandler *hotplug_dev,
->>                                            DeviceState *dev, Error **errp)
->>  {
->> +    bool supported = false;
->> +
->>      if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
->>          virt_dimm_unplug_request(hotplug_dev, dev, errp);
->> +        supported = true;
->>      } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
->>          virtio_md_pci_unplug_request(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev),
->>                                       errp);
->> -    } else {
->> +        supported = true;
->> +    }
->> +    if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
->> +        VirtMachineState *vms = VIRT_MACHINE(hotplug_dev);
->> +        AcpiPciHpState *pcihp_state = get_acpi_pcihp_state(vms);
->> +
->> +        if (pcihp_state) {
->> +            acpi_pcihp_device_unplug_request_cb(HOTPLUG_HANDLER(vms->acpi_dev),
->> +                                                pcihp_state, dev, errp);
->> +            supported = true;
->> +        }
->> +    }
->> +    if (!supported) {
->>          error_setg(errp, "device unplug request for unsupported device"
->>                     " type: %s", object_get_typename(OBJECT(dev)));
->>      }
->> @@ -3031,11 +3078,27 @@ static void virt_machine_device_unplug_request_cb(HotplugHandler *hotplug_dev,
->>  static void virt_machine_device_unplug_cb(HotplugHandler *hotplug_dev,
->>                                            DeviceState *dev, Error **errp)
->>  {
->> +    bool supported = false;
->> +
->>      if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
->>          virt_dimm_unplug(hotplug_dev, dev, errp);
->> +        supported = true;
->>      } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
->>          virtio_md_pci_unplug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
->> -    } else {
->> +        supported = true;
->> +    }
->> +    if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
->> +        VirtMachineState *vms = VIRT_MACHINE(hotplug_dev);
->> +
->> +        AcpiPciHpState *pcihp_state = get_acpi_pcihp_state(vms);
->> +
->> +        if (pcihp_state) {
->> +            acpi_pcihp_device_unplug_cb(HOTPLUG_HANDLER(vms->acpi_dev),
->> +                                        pcihp_state, dev, errp);
->> +            supported = true;
->> +        }
->> +    }
->> +    if (!supported) {
->>          error_setg(errp, "virt: device unplug for unsupported device"
->>                     " type: %s", object_get_typename(OBJECT(dev)));
->>      }
->> @@ -3045,11 +3108,14 @@ static HotplugHandler *virt_machine_get_hotplug_handler(MachineState *machine,
->>                                                          DeviceState *dev)
->>  {
->>      MachineClass *mc = MACHINE_GET_CLASS(machine);
->> +    VirtMachineState *vms = VIRT_MACHINE(machine);
->>  
->>      if (device_is_dynamic_sysbus(mc, dev) ||
->>          object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM) ||
->>          object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI) ||
->> -        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
->> +        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
->> +        (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE) &&
->> +                             get_acpi_pcihp_state(vms))) {
->>          return HOTPLUG_HANDLER(machine);
->>      }
->>      return NULL;
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
