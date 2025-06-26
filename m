@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FA55C7115B
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 03:36:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BC12C7EE30
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 03:47:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUdOS-000823-IF; Wed, 25 Jun 2025 23:35:20 -0400
+	id 1uUdYl-00013P-DQ; Wed, 25 Jun 2025 23:45:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uUdOO-00080o-7Z
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 23:35:17 -0400
-Received: from mgamail.intel.com ([192.198.163.8])
+ (Exim 4.90_1) (envelope-from <shahuang@redhat.com>)
+ id 1uUdYk-00012R-6n
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 23:45:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uUdOJ-0006PB-GV
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 23:35:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1750908912; x=1782444912;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=llMrTR4+GZ084Esa1GOP/dHkfDy1q1kczNbbq9K6Exw=;
- b=D/+pcMYJ/NiazdI/YGTAkqADu8976wNHlgVhMUK2R9Y8+9oGyN6WB3Kt
- x+a/yz77RlS5u8ng1nBCip49WtMzGYXd/dqnm2XO+BdwVfn01hiV9VEqI
- iUFddMKS3az229i8mZ0B3whRPgYLk7mrqBj/qB4xBK/TMxIUYttjXXVUB
- zEn+fm/IFYs2Fm/BzHf0BcZH+dnMerbLo4pH5voJ6I94eGFrLkGuV7Ntu
- KlSq/3RqTXdR/Pcnq5fRsp6IcO8LruxaNgxrI9I+3tWBnVa9fhZj1lK9P
- H0L73jT8FnlvBeqKbmIp8rO7tiV8KRm1E4fVDCjHd6ucKi911HvUw46tF g==;
-X-CSE-ConnectionGUID: HFhO/QAQRsqFQILRH6coew==
-X-CSE-MsgGUID: Q/FjgLJXSOeVNSnVtqHOcw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11475"; a="70764904"
-X-IronPort-AV: E=Sophos;i="6.16,266,1744095600"; d="scan'208";a="70764904"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jun 2025 20:35:02 -0700
-X-CSE-ConnectionGUID: Ofs7Xa4jRUWVttfRa0Isug==
-X-CSE-MsgGUID: Ndr2fOsETMSmTf59cMIJpg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,266,1744095600"; d="scan'208";a="152516163"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa006.fm.intel.com with ESMTP; 25 Jun 2025 20:35:00 -0700
-Date: Thu, 26 Jun 2025 11:56:22 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] i386/tdx: Build TDX only for 64-bit target
-Message-ID: <aFzE5npAn+F1FvBX@intel.com>
-References: <20250625073310.2796298-1-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <shahuang@redhat.com>)
+ id 1uUdYg-00081F-Pi
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 23:45:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750909542;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=LS0Nj0pX9AHR5YWuZobcUnVkGlGLkmNu16VSLdY1xWM=;
+ b=Joi7xIL99nyV8Qjno3ilrA1WvE2CfjpBdjmi/H7pL2myq+FQ6qL0l5n1eNsWNgIQg8T9vV
+ IwmUsqX8VZGSlNLKky+dh60HgA/J4hpLxNtfocEU+76WSRLKxRK7u6S0LK74YhwDUhdPk5
+ fudcAloFLW9YzfHhjlrvDu7E67xtUjc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-180-tInWLXpmPAuWxqwuEZRFGA-1; Wed,
+ 25 Jun 2025 23:45:39 -0400
+X-MC-Unique: tInWLXpmPAuWxqwuEZRFGA-1
+X-Mimecast-MFC-AGG-ID: tInWLXpmPAuWxqwuEZRFGA_1750909537
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A961A1809C88; Thu, 26 Jun 2025 03:45:37 +0000 (UTC)
+Received: from virt-mtcollins-01.lab.eng.rdu2.redhat.com
+ (virt-mtcollins-01.lab.eng.rdu2.redhat.com [10.8.1.196])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7E5831956096; Thu, 26 Jun 2025 03:45:29 +0000 (UTC)
+From: Shaoqin Huang <shahuang@redhat.com>
+To: qemu-arm@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, Eric Auger <eauger@redhat.com>,
+ Shaoqin Huang <shahuang@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v5 0/2] ramfb: Add property to control if load the romfile
+Date: Wed, 25 Jun 2025 23:45:24 -0400
+Message-Id: <20250626034526.2136585-1-shahuang@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250625073310.2796298-1-xiaoyao.li@intel.com>
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=shahuang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,27 +90,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 25, 2025 at 03:33:10PM +0800, Xiaoyao Li wrote:
-> Date: Wed, 25 Jun 2025 15:33:10 +0800
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: [PATCH v2] i386/tdx: Build TDX only for 64-bit target
-> X-Mailer: git-send-email 2.43.0
-> 
-> Build errors related to TDX were reported when QEMU built on 32-bit
-> host[1][2].
-> 
-> Since TDX cannot work on 32-bit host and it's also not worth supporting
-> TDX with 32-bit QEMU, limit TDX to 64-bit target only.
-> 
-> [1] https://lore.kernel.org/qemu-devel/20250602173101.1052983-1-clg@redhat.com/
-> [2] https://lore.kernel.org/qemu-devel/b8171c39-6a92-4078-a59a-a63d7452e1e9@kaod.org/
-> 
-> Suggested-by: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> ---
->  hw/i386/Kconfig | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Currently the ramfb device loads the vgabios-ramfb.bin unconditionally, but only
+the x86 need the vgabios-ramfb.bin, this can cause that when use the
+release package on arm64 it can't find the vgabios-ramfb.bin.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Because only seabios will use the vgabios-ramfb.bin, load the rom logic
+is x86-specific. For other !x86 platforms, the edk2 ships an EFI driver
+for ramfb, so they don't need to load the romfile.
+
+So add a new property use-legacy-x86-rom in both ramfb and vfio_pci
+device, because the vfio display also use the ramfb_setup() to load
+the vgabios-ramfb.bin file.
+
+After have this property, the machine type can set the compatibility to
+not load the vgabios-ramfb.bin if the arch doesn't need it.
+
+Then I set the use_legacy_x86_rom property to false by default, and only set it
+to true on x86 since only x86 will need it.
+
+Changelog:
+---------
+v4 -> v5:
+  - Fix some typo error.
+  - Set the property in piix machine type.
+v3 -> v4:
+  - Set the new property to false by default, only set it to true on x86.
+v2 -> v3:
+  - Fix the underscore error.
+  - Add a new patch to set the property in arm compatibility.
+v1 -> v2:
+  - Change the property name.
+
+v4: https://lore.kernel.org/all/20250617030521.2109305-1-shahuang@redhat.com/
+v3: https://lore.kernel.org/all/20250609073408.2083831-1-shahuang@redhat.com/
+v2: https://lore.kernel.org/all/20250606070234.2063451-1-shahuang@redhat.com/
+v1: https://lore.kernel.org/all/20250605030351.2056571-1-shahuang@redhat.com/
+
+Shaoqin Huang (2):
+  ramfb: Add property to control if load the romfile
+  hw/i386: Add the ramfb romfile compatibility
+
+ hw/display/ramfb-standalone.c |  4 +++-
+ hw/display/ramfb-stubs.c      |  2 +-
+ hw/display/ramfb.c            |  6 ++++--
+ hw/i386/pc_piix.c             | 10 ++++++++++
+ hw/i386/pc_q35.c              |  3 +++
+ hw/vfio/display.c             |  4 ++--
+ hw/vfio/pci.c                 |  1 +
+ hw/vfio/pci.h                 |  1 +
+ include/hw/display/ramfb.h    |  2 +-
+ 9 files changed, 26 insertions(+), 7 deletions(-)
+
+-- 
+2.40.1
 
 
