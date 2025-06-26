@@ -4,62 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3516CC77B7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 07:47:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F14BC7115B
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 07:47:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUhJt-0005vh-36; Thu, 26 Jun 2025 03:46:53 -0400
+	id 1uUhJT-0004jl-VV; Thu, 26 Jun 2025 03:46:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUhJr-0005jf-DW
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 03:46:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUhJI-0004Yy-1S
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 03:46:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUhJk-00021f-Rh
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 03:46:49 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUhJF-0001xz-UW
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 03:46:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750924003;
+ s=mimecast20190719; t=1750923973;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=au1bmCam4tqlhslh9zeYcUNLFWP/u2nkLdhtzCcyHM8=;
- b=PWH+4LFpY0I5G8vJiFud47DLsWkRp/ZO4fXC80f2MG0S3xF/ctPFEU6/WN+YyPN+1RRbj8
- VS8RwZAU6vjIj8nz9eAmO8PM+Fkqe8Lem2LZHZzay0HvTT0XPYrzz0LmE1Q30y50NLL8uM
- eMsw/+oAVo8cMWOmpbJkDSrPDmhN4D4=
+ bh=zo5xwy24PzhkdmLZji8s8LCN5YV4P1Qb4+NP0OylSMY=;
+ b=fmdOMRmvqtVOsuEy9wRYPG8061GjrsXA3ub/OGFJnpR1h6ADP7KRxq7K+/JGww3KiMYhLu
+ X7e5QL3C7YZ9XBCXnX+MLLmHBFpu0e7xoKnTRxzS21U4eJFXeXGt4/KtVJlu/KOkk1xbDT
+ Co5TnMflZ7+oUnWxWYUuFsj/SjusAEg=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-25-DuI-HmlYPimwpTEWyNQ6ow-1; Thu,
- 26 Jun 2025 03:46:39 -0400
-X-MC-Unique: DuI-HmlYPimwpTEWyNQ6ow-1
-X-Mimecast-MFC-AGG-ID: DuI-HmlYPimwpTEWyNQ6ow_1750923998
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-274-ObDLe1bVOSCYo0yf-XNJ4g-1; Thu,
+ 26 Jun 2025 03:46:09 -0400
+X-MC-Unique: ObDLe1bVOSCYo0yf-XNJ4g-1
+X-Mimecast-MFC-AGG-ID: ObDLe1bVOSCYo0yf-XNJ4g_1750923968
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 533411801BD8; Thu, 26 Jun 2025 07:46:38 +0000 (UTC)
+ id 59F1E1808993; Thu, 26 Jun 2025 07:46:08 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.51])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 95E0A180035C; Thu, 26 Jun 2025 07:46:36 +0000 (UTC)
+ id AE3BB180045B; Thu, 26 Jun 2025 07:46:05 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  John Levon <john.levon@nutanix.com>,
+ John Johnson <john.g.johnson@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 22/25] vfio-user: support posted writes
-Date: Thu, 26 Jun 2025 09:45:26 +0200
-Message-ID: <20250626074529.1384114-23-clg@redhat.com>
+Subject: [PULL 12/25] vfio-user: implement VFIO_USER_DEVICE_GET_REGION_INFO
+Date: Thu, 26 Jun 2025 09:45:16 +0200
+Message-ID: <20250626074529.1384114-13-clg@redhat.com>
 In-Reply-To: <20250626074529.1384114-1-clg@redhat.com>
 References: <20250626074529.1384114-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,210 +89,196 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Levon <john.levon@nutanix.com>
 
-Support an asynchronous send of a vfio-user socket message (no wait for
-a reply) when the write is posted. This is only safe when no regions are
-mappable by the VM. Add an option to explicitly disable this as well.
+Add support for getting region info for vfio-user. As vfio-user has one
+fd per region, enable ->use_region_fds.
 
+Originally-by: John Johnson <john.g.johnson@oracle.com>
+Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
 Signed-off-by: John Levon <john.levon@nutanix.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250625193012.2316242-17-john.levon@nutanix.com
+Link: https://lore.kernel.org/qemu-devel/20250625193012.2316242-7-john.levon@nutanix.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio-user/proxy.h  |  6 ++++++
- hw/vfio-user/device.c | 45 +++++++++++++++++++++++++++++++++++++++----
- hw/vfio-user/pci.c    |  6 ++++++
- hw/vfio-user/proxy.c  | 12 ++++++++++--
- 4 files changed, 63 insertions(+), 6 deletions(-)
+ hw/vfio-user/device.h     |  2 ++
+ hw/vfio-user/protocol.h   | 14 ++++++++
+ hw/vfio-user/proxy.h      |  1 +
+ hw/vfio-user/device.c     | 74 +++++++++++++++++++++++++++++++++++++++
+ hw/vfio-user/pci.c        | 11 ++++++
+ hw/vfio-user/trace-events |  1 +
+ 6 files changed, 103 insertions(+)
 
-diff --git a/hw/vfio-user/proxy.h b/hw/vfio-user/proxy.h
-index 6b29cd7cd392ed5a1675dfc3f26fee691f2f9d44..0418f58bf156121d65d363fd647114ca0cfecec0 100644
---- a/hw/vfio-user/proxy.h
-+++ b/hw/vfio-user/proxy.h
-@@ -91,6 +91,7 @@ typedef struct VFIOUserProxy {
- /* VFIOProxy flags */
- #define VFIO_PROXY_CLIENT        0x1
- #define VFIO_PROXY_FORCE_QUEUED  0x4
-+#define VFIO_PROXY_NO_POST       0x8
+diff --git a/hw/vfio-user/device.h b/hw/vfio-user/device.h
+index ef3f71ee697da301baf6d556796850524ac4ef34..619c0f3140650599f930eddeb6d8a4a9ebf10b97 100644
+--- a/hw/vfio-user/device.h
++++ b/hw/vfio-user/device.h
+@@ -17,4 +17,6 @@
+ bool vfio_user_get_device_info(VFIOUserProxy *proxy,
+                                struct vfio_device_info *info, Error **errp);
  
- typedef struct VFIODevice VFIODevice;
- 
-@@ -104,6 +105,8 @@ bool vfio_user_validate_version(VFIOUserProxy *proxy, Error **errp);
- VFIOUserFDs *vfio_user_getfds(int numfds);
- void vfio_user_putfds(VFIOUserMsg *msg);
- 
-+void vfio_user_disable_posted_writes(VFIOUserProxy *proxy);
++extern VFIODeviceIOOps vfio_user_device_io_ops_sock;
 +
- void vfio_user_request_msg(VFIOUserHdr *hdr, uint16_t cmd,
-                            uint32_t size, uint32_t flags);
- void vfio_user_wait_reqs(VFIOUserProxy *proxy);
-@@ -111,6 +114,9 @@ bool vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-                          VFIOUserFDs *fds, int rsize, Error **errp);
- bool vfio_user_send_nowait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-                            VFIOUserFDs *fds, int rsize, Error **errp);
-+bool vfio_user_send_async(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-+                          VFIOUserFDs *fds, Error **errp);
-+
- void vfio_user_send_reply(VFIOUserProxy *proxy, VFIOUserHdr *hdr, int size);
- void vfio_user_send_error(VFIOUserProxy *proxy, VFIOUserHdr *hdr, int error);
- 
-diff --git a/hw/vfio-user/device.c b/hw/vfio-user/device.c
-index 3a118e73615a40d5d455dfb379115be66726627a..aa07eac3303aef07d32592f9a56a58e85011e6ab 100644
---- a/hw/vfio-user/device.c
-+++ b/hw/vfio-user/device.c
-@@ -110,10 +110,21 @@ static int vfio_user_get_region_info(VFIOUserProxy *proxy,
-     trace_vfio_user_get_region_info(msgp->index, msgp->flags, msgp->size);
- 
-     memcpy(info, &msgp->argsz, info->argsz);
-+
-+    /*
-+     * If at least one region is directly mapped into the VM, then we can no
-+     * longer rely on the sequential nature of vfio-user request handling to
-+     * ensure that posted writes are completed before a subsequent read. In this
-+     * case, disable posted write support. This is a per-device property, not
-+     * per-region.
-+     */
-+    if (info->flags & VFIO_REGION_INFO_FLAG_MMAP) {
-+        vfio_user_disable_posted_writes(proxy);
-+    }
-+
-     return 0;
- }
- 
--
- static int vfio_user_device_io_get_region_info(VFIODevice *vbasedev,
-                                                struct vfio_region_info *info,
-                                                int *fd)
-@@ -312,33 +323,58 @@ static int vfio_user_device_io_region_read(VFIODevice *vbasedev, uint8_t index,
-     return msgp->count;
- }
+ #endif /* VFIO_USER_DEVICE_H */
+diff --git a/hw/vfio-user/protocol.h b/hw/vfio-user/protocol.h
+index e0bba68739d05ee21282108946620e75dd11163d..db88f5fcb17647613151684894f72b2cc77a3c44 100644
+--- a/hw/vfio-user/protocol.h
++++ b/hw/vfio-user/protocol.h
+@@ -124,4 +124,18 @@ typedef struct {
+     uint32_t num_irqs;
+ } VFIOUserDeviceInfo;
  
 +/*
-+ * If this is a posted write, and VFIO_PROXY_NO_POST is not set, then we are OK
-+ * to send the write to the socket without waiting for the server's reply:
-+ * a subsequent read (of any region) will not pass the posted write, as all
-+ * messages are handled sequentially.
++ * VFIO_USER_DEVICE_GET_REGION_INFO
++ * imported from struct vfio_region_info
 + */
- static int vfio_user_device_io_region_write(VFIODevice *vbasedev, uint8_t index,
-                                             off_t off, unsigned count,
-                                             void *data, bool post)
- {
--    g_autofree VFIOUserRegionRW *msgp = NULL;
-+    VFIOUserRegionRW *msgp = NULL;
-     VFIOUserProxy *proxy = vbasedev->proxy;
-     int size = sizeof(*msgp) + count;
-     Error *local_err = NULL;
-+    int flags = 0;
-     int ret;
- 
-     if (count > proxy->max_xfer_size) {
-         return -EINVAL;
-     }
- 
-+    if (proxy->flags & VFIO_PROXY_NO_POST) {
-+        post = false;
-+    }
++typedef struct {
++    VFIOUserHdr hdr;
++    uint32_t argsz;
++    uint32_t flags;
++    uint32_t index;
++    uint32_t cap_offset;
++    uint64_t size;
++    uint64_t offset;
++} VFIOUserRegionInfo;
 +
-+    if (post) {
-+        flags |= VFIO_USER_NO_REPLY;
-+    }
-+
-     msgp = g_malloc0(size);
--    vfio_user_request_msg(&msgp->hdr, VFIO_USER_REGION_WRITE, size, 0);
-+    vfio_user_request_msg(&msgp->hdr, VFIO_USER_REGION_WRITE, size, flags);
-     msgp->offset = off;
-     msgp->region = index;
-     msgp->count = count;
-     memcpy(&msgp->data, data, count);
-     trace_vfio_user_region_rw(msgp->region, msgp->offset, msgp->count);
+ #endif /* VFIO_USER_PROTOCOL_H */
+diff --git a/hw/vfio-user/proxy.h b/hw/vfio-user/proxy.h
+index 837b02a8c486e9bf71d63b442a362a9a9610ff18..ba1c33aba8d08083c9afd2f203ed0a04a56cf70f 100644
+--- a/hw/vfio-user/proxy.h
++++ b/hw/vfio-user/proxy.h
+@@ -15,6 +15,7 @@
+ #include "qemu/queue.h"
+ #include "qemu/sockets.h"
+ #include "qemu/thread.h"
++#include "hw/vfio/vfio-device.h"
+ #include "hw/vfio-user/protocol.h"
  
--    /* Ignore post: all writes are synchronous/non-posted. */
-+    /* async send will free msg after it's sent */
-+    if (post) {
-+        if (!vfio_user_send_async(proxy, &msgp->hdr, NULL, &local_err)) {
-+            error_prepend(&local_err, "%s: ", __func__);
-+            error_report_err(local_err);
-+            return -EFAULT;
-+        }
-+
-+        return count;
-+    }
+ typedef struct {
+diff --git a/hw/vfio-user/device.c b/hw/vfio-user/device.c
+index 4212fefd44d7f8a5c1b9156765619047e54d7b1b..d90232a08f4b0d8320028796935b8c59506da69d 100644
+--- a/hw/vfio-user/device.c
++++ b/hw/vfio-user/device.c
+@@ -53,3 +53,77 @@ bool vfio_user_get_device_info(VFIOUserProxy *proxy,
  
-     if (!vfio_user_send_wait(proxy, &msgp->hdr, NULL, 0, &local_err)) {
-         error_prepend(&local_err, "%s: ", __func__);
-         error_report_err(local_err);
-+        g_free(msgp);
-         return -EFAULT;
-     }
- 
-@@ -348,6 +384,7 @@ static int vfio_user_device_io_region_write(VFIODevice *vbasedev, uint8_t index,
-         ret = count;
-     }
- 
-+    g_free(msgp);
-     return ret;
+     return true;
  }
- 
-diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
-index f260bea4900bd4648ba38db191cafe933ca64135..be71c777291f0c68b01b54029612c4dbc6aa86e2 100644
---- a/hw/vfio-user/pci.c
-+++ b/hw/vfio-user/pci.c
-@@ -24,6 +24,7 @@ struct VFIOUserPCIDevice {
-     SocketAddress *socket;
-     bool send_queued;   /* all sends are queued */
-     uint32_t wait_time; /* timeout for message replies */
-+    bool no_post;       /* all region writes are sync */
- };
- 
- /*
-@@ -268,6 +269,10 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
-         proxy->flags |= VFIO_PROXY_FORCE_QUEUED;
-     }
- 
-+    if (udev->no_post) {
-+        proxy->flags |= VFIO_PROXY_NO_POST;
-+    }
 +
-     /* user specified or 5 sec default */
-     proxy->wait_time = udev->wait_time;
- 
-@@ -403,6 +408,7 @@ static const Property vfio_user_pci_dev_properties[] = {
-                        sub_device_id, PCI_ANY_ID),
-     DEFINE_PROP_BOOL("x-send-queued", VFIOUserPCIDevice, send_queued, false),
-     DEFINE_PROP_UINT32("x-msg-timeout", VFIOUserPCIDevice, wait_time, 5000),
-+    DEFINE_PROP_BOOL("x-no-posted-writes", VFIOUserPCIDevice, no_post, false),
- };
- 
- static void vfio_user_pci_set_socket(Object *obj, Visitor *v, const char *name,
-diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
-index c3724ba212b437fb810a9ad82915b4b1fdf7a5bc..7ce8573abbb4337028ab67cd04562ab822c672d2 100644
---- a/hw/vfio-user/proxy.c
-+++ b/hw/vfio-user/proxy.c
-@@ -714,8 +714,8 @@ bool vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-  * In either case, ownership of @hdr and @fds is taken, and the caller must
-  * *not* free them itself.
-  */
--static bool vfio_user_send_async(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
--                                 VFIOUserFDs *fds, Error **errp)
-+bool vfio_user_send_async(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-+                          VFIOUserFDs *fds, Error **errp)
- {
-     VFIOUserMsg *msg;
- 
-@@ -844,6 +844,14 @@ void vfio_user_putfds(VFIOUserMsg *msg)
-     msg->fds = NULL;
- }
- 
-+void
-+vfio_user_disable_posted_writes(VFIOUserProxy *proxy)
++static int vfio_user_get_region_info(VFIOUserProxy *proxy,
++                                     struct vfio_region_info *info,
++                                     VFIOUserFDs *fds)
 +{
-+    WITH_QEMU_LOCK_GUARD(&proxy->lock) {
-+         proxy->flags |= VFIO_PROXY_NO_POST;
++    g_autofree VFIOUserRegionInfo *msgp = NULL;
++    Error *local_err = NULL;
++    uint32_t size;
++
++    /* data returned can be larger than vfio_region_info */
++    if (info->argsz < sizeof(*info)) {
++        error_printf("vfio_user_get_region_info argsz too small\n");
++        return -E2BIG;
 +    }
++    if (fds != NULL && fds->send_fds != 0) {
++        error_printf("vfio_user_get_region_info can't send FDs\n");
++        return -EINVAL;
++    }
++
++    size = info->argsz + sizeof(VFIOUserHdr);
++    msgp = g_malloc0(size);
++
++    vfio_user_request_msg(&msgp->hdr, VFIO_USER_DEVICE_GET_REGION_INFO,
++                          sizeof(*msgp), 0);
++    msgp->argsz = info->argsz;
++    msgp->index = info->index;
++
++    if (!vfio_user_send_wait(proxy, &msgp->hdr, fds, size, &local_err)) {
++        error_prepend(&local_err, "%s: ", __func__);
++        error_report_err(local_err);
++        return -EFAULT;
++    }
++
++    if (msgp->hdr.flags & VFIO_USER_ERROR) {
++        return -msgp->hdr.error_reply;
++    }
++    trace_vfio_user_get_region_info(msgp->index, msgp->flags, msgp->size);
++
++    memcpy(info, &msgp->argsz, info->argsz);
++    return 0;
 +}
 +
- static QLIST_HEAD(, VFIOUserProxy) vfio_user_sockets =
-     QLIST_HEAD_INITIALIZER(vfio_user_sockets);
++
++static int vfio_user_device_io_get_region_info(VFIODevice *vbasedev,
++                                               struct vfio_region_info *info,
++                                               int *fd)
++{
++    VFIOUserFDs fds = { 0, 1, fd};
++    int ret;
++
++    if (info->index > vbasedev->num_regions) {
++        return -EINVAL;
++    }
++
++    ret = vfio_user_get_region_info(vbasedev->proxy, info, &fds);
++    if (ret) {
++        return ret;
++    }
++
++    /* cap_offset in valid area */
++    if ((info->flags & VFIO_REGION_INFO_FLAG_CAPS) &&
++        (info->cap_offset < sizeof(*info) || info->cap_offset > info->argsz)) {
++        return -EINVAL;
++    }
++
++    return 0;
++}
++
++/*
++ * Socket-based io_ops
++ */
++VFIODeviceIOOps vfio_user_device_io_ops_sock = {
++    .get_region_info = vfio_user_device_io_get_region_info,
++};
+diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+index 61f525cf4a77f0dd0204d1cf28d213ef13824164..d704e3d390c71444c9d913e38c4dc064ff1c6625 100644
+--- a/hw/vfio-user/pci.c
++++ b/hw/vfio-user/pci.c
+@@ -12,6 +12,7 @@
  
+ #include "hw/qdev-properties.h"
+ #include "hw/vfio/pci.h"
++#include "hw/vfio-user/device.h"
+ #include "hw/vfio-user/proxy.h"
+ 
+ #define TYPE_VFIO_USER_PCI "vfio-user-pci"
+@@ -103,11 +104,21 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
+         goto error;
+     }
+ 
++    /*
++     * Use socket-based device I/O instead of vfio kernel driver.
++     */
++    vbasedev->io_ops = &vfio_user_device_io_ops_sock;
++
+     /*
+      * vfio-user devices are effectively mdevs (don't use a host iommu).
+      */
+     vbasedev->mdev = true;
+ 
++    /*
++     * Enable per-region fds.
++     */
++    vbasedev->use_region_fds = true;
++
+     as = pci_device_iommu_address_space(pdev);
+     if (!vfio_device_attach_by_iommu_type(TYPE_VFIO_IOMMU_USER,
+                                           vbasedev->name, vbasedev,
+diff --git a/hw/vfio-user/trace-events b/hw/vfio-user/trace-events
+index b7312d6d5928dc7d1d984fdb501b7146e2011a79..ef3f14c74dd5a6a3c0870795e9ab9291d26dc925 100644
+--- a/hw/vfio-user/trace-events
++++ b/hw/vfio-user/trace-events
+@@ -9,3 +9,4 @@ vfio_user_recv_request(uint16_t cmd) " command 0x%x"
+ vfio_user_send_write(uint16_t id, int wrote) " id 0x%x wrote 0x%x"
+ vfio_user_version(uint16_t major, uint16_t minor, const char *caps) " major %d minor %d caps: %s"
+ vfio_user_get_info(uint32_t nregions, uint32_t nirqs) " #regions %d #irqs %d"
++vfio_user_get_region_info(uint32_t index, uint32_t flags, uint64_t size) " index %d flags 0x%x size 0x%"PRIx64
 -- 
 2.49.0
 
