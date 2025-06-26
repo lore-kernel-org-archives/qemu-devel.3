@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 797CCC7115B
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 06:33:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7895C7115B
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 06:35:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUgAX-0005su-NO; Thu, 26 Jun 2025 02:33:09 -0400
+	id 1uUgCK-00078o-TD; Thu, 26 Jun 2025 02:35:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUgAW-0005sl-BO
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 02:33:08 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUgCI-00078a-Ne
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 02:35:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUgAQ-00024Z-VJ
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 02:33:08 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUgCH-0002OU-1t
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 02:34:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750919581;
+ s=mimecast20190719; t=1750919694;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ejDQeIgtQuPnipTiktX+rIMDFJ8jOGSnMkrWrCWMwtY=;
- b=MwWd2rM0Uz5KxRLrCgBXmcEkXqtfhgXxUJwqSgYeaDUXjwHP6knGuHsYRZMSktXkpebFRn
- y3cY7oIZC8GIcsQVH/EwVZvxOJd0qVxTB/Dv7n1NRb6TwdyXJjCLKKmRpv2P0ucOv166FK
- 7ALPeTv2f6iMQkRLed5Db7ZN0uCjPm0=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xWZ8yDv6a9F2BKMmPzcwJiEXwkuOY3IMqlNRSDI/2KE=;
+ b=QFznyAb8ewXAQbkZtLXsqFFesHYizqWE+wpaQicPSRm8Q69OWD7aVfFE5m0RtkNPDwQvA0
+ 8NBnj911LiCsyK0nytfD152kAkB3KrvDskpw3ZwAQ4uzmQCoPK6u4KuVi0l5bf/N3rNTQl
+ +eKloNfbnAnF2L3I1NGV4y3EnPm+37s=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-66-Iqxa4Dx-Mjul4nXQw4O5qQ-1; Thu, 26 Jun 2025 02:32:59 -0400
-X-MC-Unique: Iqxa4Dx-Mjul4nXQw4O5qQ-1
-X-Mimecast-MFC-AGG-ID: Iqxa4Dx-Mjul4nXQw4O5qQ_1750919578
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4532514dee8so4489775e9.0
- for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 23:32:59 -0700 (PDT)
+ us-mta-650-R0_cj_pfMa6TWe01npYQFA-1; Thu, 26 Jun 2025 02:34:53 -0400
+X-MC-Unique: R0_cj_pfMa6TWe01npYQFA-1
+X-Mimecast-MFC-AGG-ID: R0_cj_pfMa6TWe01npYQFA_1750919692
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43e9b0fd00cso3218265e9.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 23:34:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750919578; x=1751524378;
+ d=1e100.net; s=20230601; t=1750919692; x=1751524492;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ejDQeIgtQuPnipTiktX+rIMDFJ8jOGSnMkrWrCWMwtY=;
- b=kAl/w4LCuPkLxowIrPRiUhNSkH4K6yQAosWCkoqFPqFcB3rPCfrkVZTI2XwR9eT+Lt
- 3nJwhdFdIcAhOFIZ2Kl9UDrs2A5xDot63MoQO5qipqMborAcg/Rtf/75z6zylOG2VXVC
- vxqFD8Fu2XpM3AtcphQ9f6AXd5t5CxClXrw83mEqIeRyK2FfDtO/GrHTgOjrwNRnZQjm
- TTI1j+zqKntYFMgHlwFTIWHX40s52uhMGsC7W6xoc3UyIKivwsY6BococThzRz0WUyy6
- V0GrzxBuZvZENY8Mmx73CwQArIx4+jnra+ftP+8t9/1hqoMHwWWAI5v61IxMRNYUtI6x
- baZw==
+ bh=xWZ8yDv6a9F2BKMmPzcwJiEXwkuOY3IMqlNRSDI/2KE=;
+ b=KVkulWLzR5F8XGTXjL915gZTe4QQiRiFxDlON8zrY4bMJNfymGmTzO6R/XOg6qbEn7
+ Ko1wmOeHjKiP35tT865DE+EyNY7nST04Yj/by7tJkR59K6bfnY7X8nBcY+UJj6zhPfVb
+ V6Pd/0ytSernjd4zI/ZY+2jIsOLbSNbnfvcUXr+rmGZxV5vsC4jBjojODPwcWxLkqLwj
+ hoYEFQnFjgr/cGcXm8DSdsWTK7gJlWdiuhuBXxNnZ/2HytMNA3SMtu6FKtojdKu6DNh8
+ wg3cmr142q872iurDzot51ECvTECFmvv41N6E6X+J5dvd/zQiUzQGMISLYqJE7kUajaD
+ 0lVg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUs5P5ey8cV2AuwLzES1v6ce76E6w99hItLEVjfaZjOBO1n1bhHk4VTcsUdQHEHd1wAqO6Fq9p6KFHH@nongnu.org
-X-Gm-Message-State: AOJu0Yzn5Llg0XIXAAaiBDa0GLCzyE7SRb75tROf54HSm70Oa48hU07o
- BIlT2yeVZvYXyB1Fexx/2gLZDghEA31y7WVyNiw9aa3X5OwS4jpF8yj8QndSLmtU32ojTC9YDmX
- auJTe+ielNBemQiZJWM/+TSI6Es6mDVST60iEfU24ccMoF+5OnxQIoEf2
-X-Gm-Gg: ASbGncvb+YHnqZoKbsBbJlgBawwqkcBvvuoI+fOS5n8LPW1eaTMYLremmYGBePKr8Nr
- O0X4vj6Y4f2+w6U6AieQ7tvQcu1nqr3FPqIIEDKin+5VEZdvNqoMhMT8P2hgkhh0sYuo0x8ztwc
- hJd/H3CgpxxO8psyE2u5j3NL8SRaV77z0InM600BhRWSqBgukoe33IZtuyD0Dv0xJhlwyg6eMQf
- qzSkuve2uJfOWhBuwVuUagXZlFGtFKBecfRyztIGKrjpymX4Hh/uGAm7A9+zIvtuuMXtCiWAl3P
- s+K5CVgvDpzpgVZuQWD2ituwvycWFzvgxdN3rNmz96BAFwuQI6x8A8h88k82
-X-Received: by 2002:a05:600c:620a:b0:43d:4686:5cfb with SMTP id
- 5b1f17b1804b1-45381b20df6mr43406365e9.27.1750919578252; 
- Wed, 25 Jun 2025 23:32:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGkeRBYedWbQHKmgLB3EyLBmtnqiOzbci9rOECLlelKkBhILhYwDDDBlwhHa7CeIOm5CCJmVg==
-X-Received: by 2002:a05:600c:620a:b0:43d:4686:5cfb with SMTP id
- 5b1f17b1804b1-45381b20df6mr43406165e9.27.1750919577858; 
- Wed, 25 Jun 2025 23:32:57 -0700 (PDT)
+ AJvYcCVkZMddFdnFop1ZR64u5i+zRh4waJzdk+F8KnN+w05CaiwG79C5gN35BjQQQbotALxB0YqKqREx7Y3a@nongnu.org
+X-Gm-Message-State: AOJu0YxhP97if9HUKYGFw0qI3qtx+/+w4mjzYgKASDr4qRqj3/X6ns4m
+ z45FzMup1x/hjUuH0c4qaHUgmLahLf8y+TkD9+DtmOMiepWmIFCf5Vfb3dAseYHobGgKfLBfp0U
+ Sd/++eAzkSOY6CEAh92qn4gksMTqlIYKFtiKveZxjZVw4QbsB3P/JCxTe
+X-Gm-Gg: ASbGncuU1D7cX9gQp0SaxulB3eJGC87PYMKa41JhjuiXfRkikR9kJ8iAi5t2E+o0cDr
+ +pMRhIL9FJ6ez4Ol7eoXYysu/MrJQ1xts9AabbJ5pBg7NYi9n1wbTqFKouLQh/RzEgJMpHu0vwo
+ j41zMjtOuccx6+mZmoJvVDD4+kd985JGlpgmoKqBdiSBSje6FGf5+8QPPc2/pQwXtxhntI/t1SH
+ B6kw7URHsxf4ylaggGnwbD6cslhGm8yTH1WtRHzxrgMvP9aelL/L3v7eV4wjxZXa3zpyUqOX06X
+ FKMsH7nRn62Y+hOleowH1fzbaDIutQKbU/U88MAnUSssJOsjtvaxRhXCy4h8
+X-Received: by 2002:a05:600c:8184:b0:453:92e:a459 with SMTP id
+ 5b1f17b1804b1-4538ad600f0mr7439905e9.16.1750919691848; 
+ Wed, 25 Jun 2025 23:34:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEUhAG0tc3LlldTHqulryyCo1ffVH3W2rBplgRNvEqY4c/hjjCUuyPvBlNfQA2sRIZAIJhuMw==
+X-Received: by 2002:a05:600c:8184:b0:453:92e:a459 with SMTP id
+ 5b1f17b1804b1-4538ad600f0mr7439585e9.16.1750919691413; 
+ Wed, 25 Jun 2025 23:34:51 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-453823ad0f3sm40425135e9.19.2025.06.25.23.32.56
+ 5b1f17b1804b1-4538234be76sm39690355e9.15.2025.06.25.23.34.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Jun 2025 23:32:57 -0700 (PDT)
-Message-ID: <5392fbc9-5fd8-4585-b69c-d01add02d9b7@redhat.com>
-Date: Thu, 26 Jun 2025 08:32:56 +0200
+ Wed, 25 Jun 2025 23:34:50 -0700 (PDT)
+Message-ID: <3db96e51-75f1-4b15-a1d6-92c970f568be@redhat.com>
+Date: Thu, 26 Jun 2025 08:34:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 02/19] vfio-user: connect vfio proxy to remote server
+Subject: Re: [PATCH v5 03/19] vfio-user: implement message receive
+ infrastructure
 To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
@@ -89,7 +90,7 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  Jagannathan Raman <jag.raman@oracle.com>
 References: <20250625193012.2316242-1-john.levon@nutanix.com>
- <20250625193012.2316242-3-john.levon@nutanix.com>
+ <20250625193012.2316242-4-john.levon@nutanix.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -135,7 +136,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250625193012.2316242-3-john.levon@nutanix.com>
+In-Reply-To: <20250625193012.2316242-4-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -164,27 +165,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/25/25 21:29, John Levon wrote:
-> Introduce the vfio-user "proxy": this is the client code responsible for
-> sending and receiving vfio-user messages across the control socket.
-> 
-> The new files hw/vfio-user/proxy.[ch] contain some basic plumbing for
-> managing the proxy; initialize the proxy during realization of the
-> VFIOUserPCIDevice instance.
+> Add the basic implementation for receiving vfio-user messages from the
+> control socket.
 > 
 > Originally-by: John Johnson <john.g.johnson@oracle.com>
 > Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
 > Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
 > Signed-off-by: John Levon <john.levon@nutanix.com>
-> ---
->   hw/vfio-user/proxy.h          |  79 +++++++++++++++++
->   include/hw/vfio/vfio-device.h |   2 +
->   hw/vfio-user/pci.c            |  22 +++++
->   hw/vfio-user/proxy.c          | 162 ++++++++++++++++++++++++++++++++++
->   hw/vfio-user/meson.build      |   1 +
->   5 files changed, 266 insertions(+)
->   create mode 100644 hw/vfio-user/proxy.h
->   create mode 100644 hw/vfio-user/proxy.c
-> 
+
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
