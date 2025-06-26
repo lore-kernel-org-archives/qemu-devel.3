@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13C44C7EE30
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 19:55:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6191C7EE30
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 19:55:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUsg3-0000Vn-9m; Thu, 26 Jun 2025 15:54:32 -0400
+	id 1uUsfs-0000U7-AZ; Thu, 26 Jun 2025 15:54:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uUsg0-0000VH-Dj
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 15:54:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uUsfp-0000Sx-Vz
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 15:54:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uUsfs-00052M-9t
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 15:54:26 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uUsfk-0004zc-Im
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 15:54:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750967658;
+ s=mimecast20190719; t=1750967649;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=s2BU92/JmJpPM23SBk9X2BDMvF9ZFlbDcjsOGhUX+UU=;
- b=I9cTfI9jSRI1cEux0Hmpg8DN0d++gURyCIC7dZspzxx/F128qjSeiWBcct5O2BsMJKwsHE
- +xXCgpOKmbMh81qS17r/4ez0eMWqHbpgK/fGZ2jo8/S6RWWQT77kkWCMkJQsZHPNkZGI0F
- sPYy/m/BrNQ6GGjZgDFJ3USp58Z0uXM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=uKODmXhPDHkmnZ7tQP/XsV06+O6RfGOqyeXGqv1TdbY=;
+ b=c0BjK/NQkJwjLMirX4jSMpwTPgCbLbUcoupfQJwdvo+6ZL7ddgXp+5cCLIa+if7FzIAnfO
+ Rb+oPZYOM206n9URnN9Fyo6oYoXpGe+Z70ST3po1bbf9/YTuwdxysdGgt2Q7s1K0zfqAPT
+ w8xpuBoB+hkphSDj7ULciVKeEhUwISI=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-C1c1paxIPIWXHmjP-Cd0BA-1; Thu,
- 26 Jun 2025 15:54:14 -0400
-X-MC-Unique: C1c1paxIPIWXHmjP-Cd0BA-1
-X-Mimecast-MFC-AGG-ID: C1c1paxIPIWXHmjP-Cd0BA_1750967652
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-677-egjRh5t_M9OD1KHahm6QkQ-1; Thu,
+ 26 Jun 2025 15:54:04 -0400
+X-MC-Unique: egjRh5t_M9OD1KHahm6QkQ-1
+X-Mimecast-MFC-AGG-ID: egjRh5t_M9OD1KHahm6QkQ_1750967642
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1E5851955F3E; Thu, 26 Jun 2025 19:54:11 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D657519373D8; Thu, 26 Jun 2025 19:53:59 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.65.58])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 25A3F30002C0; Thu, 26 Jun 2025 19:54:00 +0000 (UTC)
+ id 922A830002C6; Thu, 26 Jun 2025 19:53:49 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -68,15 +68,15 @@ Cc: Jason Wang <jasowang@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org,
  Mads Ynddal <mads@ynddal.dk>
-Subject: [PATCH v5 2/4] docs, qapi: generate undocumented return sections
-Date: Thu, 26 Jun 2025 15:53:35 -0400
-Message-ID: <20250626195337.2158250-3-jsnow@redhat.com>
+Subject: [PATCH v5 1/4] docs/qapi-domain: add return-nodesc
+Date: Thu, 26 Jun 2025 15:53:34 -0400
+Message-ID: <20250626195337.2158250-2-jsnow@redhat.com>
 In-Reply-To: <20250626195337.2158250-1-jsnow@redhat.com>
 References: <20250626195337.2158250-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -101,108 +101,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch changes the qapidoc parser to generate stub Return value
-documentation for any command that has a return value but does not have
-a "Returns:" doc section.
+This form is used to annotate a return type without an accompanying
+description, for when there is no "Returns:" information in the source
+doc, but we have a return type we want to generate a cross-reference to.
 
-The stubs include just the type name, which will be rendered with a
-cross-reference link in the HTML output.
+The syntax is:
+
+:return-nodesc: TypeName
+
+It's primarily necessary because Sphinx always expects both a type and a
+description for the prior form and will format it accordingly. To have a
+reasonable rendering when the body is missing, we need to use a
+different info field list entirely.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 14 ++++++++------
- scripts/qapi/parser.py | 34 ++++++++++++++++++++++++++++++++++
- scripts/qapi/schema.py |  3 +++
- 3 files changed, 45 insertions(+), 6 deletions(-)
+ docs/devel/qapi-domain.rst | 30 ++++++++++++++++++++++++++++++
+ docs/sphinx/qapi_domain.py |  8 ++++++++
+ 2 files changed, 38 insertions(+)
 
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 8011ac9efaf..77e28a65cfc 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -255,16 +255,18 @@ def visit_feature(self, section: QAPIDoc.ArgSection) -> None:
-     def visit_returns(self, section: QAPIDoc.Section) -> None:
-         assert isinstance(self.entity, QAPISchemaCommand)
-         rtype = self.entity.ret_type
--        # q_empty can produce None, but we won't be documenting anything
--        # without an explicit return statement in the doc block, and we
--        # should not have any such explicit statements when there is no
--        # return value.
-+        # return statements will not be present (and won't be
-+        # autogenerated) for any command that doesn't return
-+        # *something*, so rtype will always be defined here.
-         assert rtype
+diff --git a/docs/devel/qapi-domain.rst b/docs/devel/qapi-domain.rst
+index 11238723c2d..204abb72ff4 100644
+--- a/docs/devel/qapi-domain.rst
++++ b/docs/devel/qapi-domain.rst
+@@ -242,6 +242,36 @@ Example::
+              }
  
-         typ = self.format_type(rtype)
-         assert typ
--        assert section.text
--        self.add_field("return", typ, section.text, section.info)
-+
-+        if section.text:
-+            self.add_field("return", typ, section.text, section.info)
-+        else:
-+            self.add_lines(f":return-nodesc: {typ}", section.info)
  
-     def visit_errors(self, section: QAPIDoc.Section) -> None:
-         # FIXME: the formatting for errors may be inconsistent and may
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index 949d9e8bff7..fc5174e3357 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -815,6 +815,40 @@ def connect_feature(self, feature: 'QAPISchemaFeature') -> None:
-                                % feature.name)
-         self.features[feature.name].connect(feature)
++``:return-nodesc:``
++-------------------
++
++Document the return type of a QAPI command, without an accompanying description.
++
++:availability: This field list is only available in the body of the
++               Command directive.
++:syntax: ``:return-nodesc: type``
++:type: `sphinx.util.docfields.Field
++       <https://pydoc.dev/sphinx/latest/sphinx.util.docfields.Field.html?private=1>`_
++
++
++Example::
++
++   .. qapi:command:: query-replay
++      :since: 5.2
++
++      Retrieve the record/replay information.  It includes current
++      instruction count which may be used for ``replay-break`` and
++      ``replay-seek`` commands.
++
++      :return-nodesc: ReplayInfo
++
++      .. qmp-example::
++
++          -> { "execute": "query-replay" }
++          <- { "return": {
++                 "mode": "play", "filename": "log.rr", "icount": 220414 }
++             }
++
+ ``:value:``
+ -----------
  
-+    def ensure_returns(self, info: QAPISourceInfo) -> None:
-+
-+        def _insert_after_kind(
-+            kind: QAPIDoc.Kind,
-+            new_sect: QAPIDoc.Section
-+        ) -> bool:
-+            for sect in filter(lambda sect: sect.kind == kind, reversed(
-+                    self.all_sections)):
-+                idx = self.all_sections.index(sect) + 1
-+                self.all_sections.insert(idx, new_sect)
-+                return True
-+            return False
-+
-+        if any(s.kind == QAPIDoc.Kind.RETURNS for s in self.all_sections):
-+            return
-+
-+        # Stub "Returns" section for undocumented returns value
-+        stub = QAPIDoc.Section(info, QAPIDoc.Kind.RETURNS)
-+
-+        if any(_insert_after_kind(kind, stub) for kind in (
-+                # 1. If arguments, right after those.
-+                QAPIDoc.Kind.MEMBER,
-+                # 2. Elif errors, right after those.
-+                QAPIDoc.Kind.ERRORS,
-+                # 3. Elif features, right after those.
-+                QAPIDoc.Kind.FEATURE,
-+        )):
-+            return
-+
-+        # Otherwise, it should go right after the intro. The intro
-+        # is always the first section and is always present (even
-+        # when empty), so we can insert directly at index=1 blindly.
-+        self.all_sections.insert(1, stub)
-+
-     def check_expr(self, expr: QAPIExpression) -> None:
-         if 'command' in expr:
-             if self.returns and 'returns' not in expr:
-diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-index cbe3b5aa91e..3abddea3525 100644
---- a/scripts/qapi/schema.py
-+++ b/scripts/qapi/schema.py
-@@ -1062,6 +1062,9 @@ def connect_doc(self, doc: Optional[QAPIDoc] = None) -> None:
-             if self.arg_type and self.arg_type.is_implicit():
-                 self.arg_type.connect_doc(doc)
+diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
+index ebc46a72c61..f561dc465f8 100644
+--- a/docs/sphinx/qapi_domain.py
++++ b/docs/sphinx/qapi_domain.py
+@@ -532,6 +532,14 @@ class QAPICommand(QAPIObject):
+                 names=("return",),
+                 can_collapse=True,
+             ),
++            # :return-nodesc: TypeName
++            CompatField(
++                "returnvalue",
++                label=_("Return"),
++                names=("return-nodesc",),
++                bodyrolename="type",
++                has_arg=False,
++            ),
+         ]
+     )
  
-+            if self.ret_type and self.info:
-+                doc.ensure_returns(self.info)
-+
-     def visit(self, visitor: QAPISchemaVisitor) -> None:
-         super().visit(visitor)
-         visitor.visit_command(
 -- 
 2.48.1
 
