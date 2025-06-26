@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F3FAC7115B
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 05:58:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E6FEC7115B
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 05:58:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUfZN-000400-ND; Thu, 26 Jun 2025 01:54:45 -0400
+	id 1uUfZh-0004IJ-5p; Thu, 26 Jun 2025 01:55:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfZM-0003z0-Hn
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:44 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfZX-00049m-Td
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfZK-00019I-VY
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:44 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfZR-0001AG-Vd
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750917281;
+ s=mimecast20190719; t=1750917288;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xC2rFKwkSnnzstno4tF6U3Akz3i5fiRQmEL8V+SmwoQ=;
- b=g7GmTbY/TH8g1fzD8c9hiDtkIgb+/8I8dnqtUyDfIWKxGVcJBKayAxR/iigl/XO7VOeguG
- tw9oHJsA4A8GKwK/ms5fA5zJyqrQGyqCOZjO2pm2nSyO8UZRXUtD0rz8OJX43pCZzEQ9gW
- SO8DuP5QHNNtWInrznfDSqwbhnlhP8M=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=r0QO8NqekrUXfzVPd61NePr8DXyv3zOBB+jtDEvgF6o=;
+ b=hgzavoietRHqPqQ4SGEj9cQxLJyybxn+7VNDQwrVRMoSU69eQSRN3xlKvCNhqhqhEkBFiu
+ bPyZBWukBDT/Y7Z7e2dBtyppRt21ReiuzlhXxrUSI+3yATYZtyMaRvnuefsbPus98bJ51l
+ 1AOIRB7AGMMDREPHPRu+HYecB+M+2Pw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-_E70XruZM3-sfK0gIF2BYA-1; Thu,
- 26 Jun 2025 01:54:36 -0400
-X-MC-Unique: _E70XruZM3-sfK0gIF2BYA-1
-X-Mimecast-MFC-AGG-ID: _E70XruZM3-sfK0gIF2BYA_1750917275
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-393-Say0KFuyNZaFxhlzPbvZiA-1; Thu,
+ 26 Jun 2025 01:54:44 -0400
+X-MC-Unique: Say0KFuyNZaFxhlzPbvZiA-1
+X-Mimecast-MFC-AGG-ID: Say0KFuyNZaFxhlzPbvZiA_1750917283
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A50819560B7; Thu, 26 Jun 2025 05:54:35 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 737D218002ED; Thu, 26 Jun 2025 05:54:43 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.32.129])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F3D2819560A3; Thu, 26 Jun 2025 05:54:32 +0000 (UTC)
+ id 504AC19560A3; Thu, 26 Jun 2025 05:54:40 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
 	Sean Wei <me@sean.taipei>
-Subject: [PULL 13/19] include/qemu: replace FSF postal address with licenses
- URL
-Date: Thu, 26 Jun 2025 07:53:44 +0200
-Message-ID: <20250626055350.218271-14-thuth@redhat.com>
+Subject: [PULL 16/19] scripts: replace FSF postal address with licenses URL
+Date: Thu, 26 Jun 2025 07:53:47 +0200
+Message-ID: <20250626055350.218271-17-thuth@redhat.com>
 In-Reply-To: <20250626055350.218271-1-thuth@redhat.com>
 References: <20250626055350.218271-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -85,7 +84,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Sean Wei <me@sean.taipei>
 
-The LGPLv2.1 boiler-plate in rcu.h and rcu_queue.h still
+The GPLv2 boiler-plate in scripts/device-crash-test still
 contained the obsolete "51 Franklin Street" postal address.
 
 Replace it with the canonical GNU licenses URL recommended by the FSF:
@@ -93,43 +92,26 @@ https://www.gnu.org/licenses/
 
 Signed-off-by: Sean Wei <me@sean.taipei>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250613.qemu.patch.06@sean.taipei>
+Message-ID: <20250613.qemu.patch.09@sean.taipei>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- include/qemu/rcu.h       | 4 ++--
- include/qemu/rcu_queue.h | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ scripts/device-crash-test | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/qemu/rcu.h b/include/qemu/rcu.h
-index fea058aa9f8..020dbe4d8b7 100644
---- a/include/qemu/rcu.h
-+++ b/include/qemu/rcu.h
-@@ -17,8 +17,8 @@
-  * Lesser General Public License for more details.
-  *
-  * You should have received a copy of the GNU Lesser General Public
-- * License along with this library; if not, write to the Free Software
-- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
-+ * License along with this library; if not, see
-+ * <https://www.gnu.org/licenses/>.
-  *
-  * IBM's contributions to this file may be relicensed under LGPLv2 or later.
-  */
-diff --git a/include/qemu/rcu_queue.h b/include/qemu/rcu_queue.h
-index 4e6298d4730..bfd5900fda0 100644
---- a/include/qemu/rcu_queue.h
-+++ b/include/qemu/rcu_queue.h
-@@ -17,8 +17,8 @@
-  * Lesser General Public License for more details.
-  *
-  * You should have received a copy of the GNU Lesser General Public
-- * License along with this library; if not, write to the Free Software
-- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
-+ * License along with this library; if not, see
-+ * <https://www.gnu.org/licenses/>.
-  *
-  * Copyright (c) 2013 Mike D. Day, IBM Corporation.
-  *
+diff --git a/scripts/device-crash-test b/scripts/device-crash-test
+index da8b56edd99..1ecb9663ae8 100755
+--- a/scripts/device-crash-test
++++ b/scripts/device-crash-test
+@@ -16,8 +16,7 @@
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License along
+-# with this program; if not, write to the Free Software Foundation, Inc.,
+-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
++# with this program; if not, see <https://www.gnu.org/licenses/>.
+ 
+ """
+ Run QEMU with all combinations of -machine and -device types,
 -- 
 2.50.0
 
