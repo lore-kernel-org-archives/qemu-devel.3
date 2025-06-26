@@ -4,83 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 946A2C7115B
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 07:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5C79C7EE32
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 07:57:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUhTa-0003gb-5i; Thu, 26 Jun 2025 03:56:54 -0400
+	id 1uUhUA-0003wC-Es; Thu, 26 Jun 2025 03:57:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uUhTW-0003g8-DD
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 03:56:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
+ id 1uUhU6-0003rT-RK; Thu, 26 Jun 2025 03:57:26 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uUhTT-0003fq-Af
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 03:56:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750924602;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=VV1PGB2bTK1MtnCFjk086EtAM3qSty3940ic0T5gedk=;
- b=U0irsZVY9e7Zgbsw072y+1hhajo6ir0ovdQzb8oqFIK/hqywPTKqyRLt27DVwftpySvEEU
- 28x50HpXMseyMDFUphZN2Xoh3ctEV3H2D/5htj0/sAFwmK82hkd7Y9kQRS+rmaVVtTNISv
- msfpvMuUSGZowUUAzdsI0I977JO8zLg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-149-tPHEIC7hPsShk43H2g_izg-1; Thu,
- 26 Jun 2025 03:56:39 -0400
-X-MC-Unique: tPHEIC7hPsShk43H2g_izg-1
-X-Mimecast-MFC-AGG-ID: tPHEIC7hPsShk43H2g_izg_1750924598
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1395518002EC; Thu, 26 Jun 2025 07:56:38 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.58])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 44BDC1956087; Thu, 26 Jun 2025 07:56:32 +0000 (UTC)
-Date: Thu, 26 Jun 2025 08:56:29 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v5 3/3] docs: define policy forbidding use of AI code
- generators
-Message-ID: <aFz9LT0r6aPVK3hn@redhat.com>
-References: <20250616092241.212898-1-armbru@redhat.com>
- <20250616092241.212898-4-armbru@redhat.com>
- <20250626023413-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
+ id 1uUhU3-0003xl-QM; Thu, 26 Jun 2025 03:57:26 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 26 Jun
+ 2025 15:57:11 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Thu, 26 Jun 2025 15:57:11 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
+Subject: [PATCH v1 0/3] Add QEMU model for ASPEED OTP memory and integrate
+ with SoC
+Date: Thu, 26 Jun 2025 15:57:07 +0800
+Message-ID: <20250626075711.1589039-1-kane_chen@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250626023413-mutt-send-email-mst@kernel.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=kane_chen@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,28 +60,49 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-to:  Kane Chen <kane_chen@aspeedtech.com>
+From:  Kane Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 26, 2025 at 02:34:57AM -0400, Michael S. Tsirkin wrote:
-> On Mon, Jun 16, 2025 at 11:22:41AM +0200, Markus Armbruster wrote:
-> > +The QEMU project thus requires that contributors refrain from using AI content
-> > +generators on patches intended to be submitted to the project, and will
-> > +decline any contribution if use of AI is either known or suspected.
-> 
-> What is this suspected thing by the way? Suspected by whom? You do not
-> think this is draconian?
+From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-Suspected as in, as a reviewer you see obvious signs of LLM slop and
-or hallucinations in the contributions, while the contributor has not
-declared such.
+This patch series introduces a QEMU model for the ASPEED OTP (One-Time
+Programmable) memory, along with its integration into the Secure Boot
+Controller (SBC) and supported SoC (AST2600).
 
-With regards,
-Daniel
+The OTP model emulates a simple fuse array used for secure boot or
+device configuration, implemented with internal buffers; external
+file/device support not included in this version. It exposes an
+AddressSpace to support transaction-based access from controllers
+like the SBC.
+
+This series includes:
+  - OTP memory device implementation
+  - SBC integration with command decoding (READ/PROG)
+  - Direct integration in AST2600 SoC without requiring user parameters
+
+Any feedback or suggestions are appreciated!
+
+---
+
+Kane-Chen-AS (3):
+  hw/misc/aspeed_otp: Add ASPEED OTP memory device model
+  hw/misc/aspeed_sbc: Connect ASPEED OTP memory device to SBC
+  hw/arm: Integrate ASPEED OTP memory support into AST2600 SoCs
+
+ include/hw/misc/aspeed_otpmem.h |  33 +++++++++
+ include/hw/misc/aspeed_sbc.h    |   5 ++
+ hw/arm/aspeed_ast2600.c         |   2 +-
+ hw/misc/aspeed_otpmem.c         |  91 +++++++++++++++++++++++++
+ hw/misc/aspeed_sbc.c            | 115 ++++++++++++++++++++++++++++++++
+ hw/misc/meson.build             |   1 +
+ hw/misc/trace-events            |   5 ++
+ 7 files changed, 251 insertions(+), 1 deletion(-)
+ create mode 100644 include/hw/misc/aspeed_otpmem.h
+ create mode 100644 hw/misc/aspeed_otpmem.c
+
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.43.0
 
 
