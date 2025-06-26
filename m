@@ -4,108 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C07CFC77B7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 08:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B1E3C7115B
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 08:10:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUhY7-0008CU-9D; Thu, 26 Jun 2025 04:01:35 -0400
+	id 1uUhgH-00020w-FN; Thu, 26 Jun 2025 04:10:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1uUhY5-0008Bl-9y
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 04:01:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uUhgF-00020L-05
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 04:09:59 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1uUhY2-0005Sp-FD
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 04:01:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750924887;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ewWo6Zakc4NuqMUKw6/WMwVuqLaBsbu3NFCk7+WCJL8=;
- b=XNMwhnLM/AO3RCJXSpMO7jKMY2r8RjrW/d0UdxLEODft0Cj7n1jytLngXnM9yxGcfjndSV
- T8qrS1+n+F7vpID8jXfizcjxvFlP6whayQ9LYS7LnXTeqP5RYNhfXTYs2FuO04TEjI+GVb
- flNqHouUJgfRBD0cY2FzECXcfK5MoHQ=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-232-dIeUqstYM322OGZuJodkDA-1; Thu, 26 Jun 2025 04:01:26 -0400
-X-MC-Unique: dIeUqstYM322OGZuJodkDA-1
-X-Mimecast-MFC-AGG-ID: dIeUqstYM322OGZuJodkDA_1750924885
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-452ff9e054eso2254245e9.2
- for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 01:01:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750924885; x=1751529685;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ewWo6Zakc4NuqMUKw6/WMwVuqLaBsbu3NFCk7+WCJL8=;
- b=Xo6jJhF6Jqpu4usWuOcNOPgKw62A71HcvEfSgfurXK/iPxsHzArrKspXkeOQFEBp0V
- M+tItcTsVgAzukRclPveRJUXDnNXyOWqL4AxCDof2ADW4sHm88RBm8s7g6FHPDpFBbGO
- 7DNps6ggXpZhZ4tnaE1h45wHq2OU2MhDtNenqSER+6DyT/uF/ewLkFDfBDjEWs7guGnD
- JJnVS8FQx53ejz2RTQLjWnZv3PhdY11N3wxM8GlYL9OnNMujqnleRPomqXDDQmIpfYV2
- SA6Nt1fbYa+Ho3L6UhMMIxN8xz2+HHGDMZssuvu1sR7ZjoIx/VlbSm8UzbNGIQMOnCRe
- PoLA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU40iJeeReDiHD9Bt7M3tWcRqDREvO4yuKE121qpv+yUlHyjzSftJqpyFMs5keSkxtBQGaWMYcFb16n@nongnu.org
-X-Gm-Message-State: AOJu0Yx8WZgoU+amWvRwG0irZFqBkBDjROp/2zFBZqQ9IuEqyX47a65Q
- qzOHcbkvGShuuRMwUrRtywZeG69alKY+LLUZ5bmCawjBoFkRbAFMggaCuOxiBMJVGDu7H1NBEth
- 0WvjQL8bAzoWTiuMkns0cGFCmhDRo7vypsX8xnZwqWE2GETYIZGSZ0f+w
-X-Gm-Gg: ASbGncvUcVUlDXo4jgqoKm/NVlad4j61jdlStvrIQh38+hTludPQM6uhbv6sD/9Dk5F
- uteT8QTQKJdT/4qNqnVsfgArxJmvSnTUnT9Km98uPQ2/kLVmp0ffckzgPuH3BwJlV0rfJSWiAr/
- XEmBUbQHuoFzA0LkZuAMWWQAob/IJEmWfQXJMM8w39NOkgbJpe88FgCveHyIq0dce4yfroitbBz
- AyNRJo2rgKChJbOEfYjUQjh/IlvRbyfK7eAksSv0kc4uLLmxjQJ8aUnKU9Q2WCGrx+ExwxW1XNP
- ZrEpbMNHP7pOASB+SbbhZUs+LiSaKytBicP+ILzIqTJhZ0QHcbWajprb/p/x+LVM
-X-Received: by 2002:a05:600c:35c9:b0:450:d00d:cc with SMTP id
- 5b1f17b1804b1-453886d53d9mr27473905e9.2.1750924884503; 
- Thu, 26 Jun 2025 01:01:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFsobZSvBdeLMxXpHmYRJoQzGZSgZrZgPrcNuW0wxHQbjNWDdOU7pXIfwYdoq7jr+vhn7UDwg==
-X-Received: by 2002:a05:600c:35c9:b0:450:d00d:cc with SMTP id
- 5b1f17b1804b1-453886d53d9mr27473105e9.2.1750924883811; 
- Thu, 26 Jun 2025 01:01:23 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-453823b6e9esm42310265e9.28.2025.06.26.01.01.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Jun 2025 01:01:22 -0700 (PDT)
-Message-ID: <8c3cce88-fab5-4bf1-bc6b-804730e9889d@redhat.com>
-Date: Thu, 26 Jun 2025 10:01:21 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uUhgB-0006NO-Cy
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 04:09:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1750925395; x=1782461395;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=nsT+o8sijLJ3WTu1qGfFz8Bohs2kVgJAMgkMylt5p2k=;
+ b=ThJeUklnG0D99hzxJV0QYOKhdezZ/9QFxFYMv2TStQgg1jAMjbJukEti
+ eYHfaHHJCoMfo5x9DLOrolWlzTpUryY+SYFU8TcZjoMVGqlHW4wqfK8Hc
+ p8dETIBu+Av2E6fZCXT4PLy9ANNarPg4WlnREBCNgP/14Al31GV4mlT6Y
+ zzG2YbA6M3yRtAuQcH8NWgcPoUmnigF69cWi6eETVbxyewkdZS7h7pwoB
+ fFUHQ8WURk4W9kmQNImM4enlL1Ag47HfGsW4/7nDpx0Yzcsi0n3tKwwXT
+ MMUlvQAhK85gAI1I6P/sg8c5Z5GKEGIOAx5xIVM92+iwWUN1Fu35pX7pQ A==;
+X-CSE-ConnectionGUID: 7ZXcqe5FRlWlGnJnQtnYLA==
+X-CSE-MsgGUID: wjxemMkoQTORW7UHda0Xrw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11475"; a="63902038"
+X-IronPort-AV: E=Sophos;i="6.16,267,1744095600"; d="scan'208";a="63902038"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Jun 2025 01:09:52 -0700
+X-CSE-ConnectionGUID: gCVQvhVHQ1miw5yeAFfJMw==
+X-CSE-MsgGUID: h26XFwwdRCy5+u/uVxyeVA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,267,1744095600"; d="scan'208";a="152949735"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by orviesa008.jf.intel.com with ESMTP; 26 Jun 2025 01:09:49 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+Cc: Ewan Hai <ewanhai-oc@zhaoxin.com>, Jason Zeng <jason.zeng@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Tao Su <tao1.su@intel.com>,
+ Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
+ Tejus GK <tejus.gk@nutanix.com>, Manish Mishra <manish.mishra@nutanix.com>,
+ qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 0/8] i386/cpu: Intel cache model & topo CPUID enhencement
+Date: Thu, 26 Jun 2025 16:30:57 +0800
+Message-Id: <20250626083105.2581859-1-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] hw/i386: Add the ramfb romfile compatatibility
-Content-Language: en-US
-To: Shaoqin Huang <shahuang@redhat.com>, qemu-arm@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-References: <20250617030521.2109305-1-shahuang@redhat.com>
- <20250617030521.2109305-3-shahuang@redhat.com>
- <aa4ef145-9e08-4ad9-a152-dd8fa2371436@redhat.com>
- <ba75ac62-db52-491e-8944-2bf27106d0a6@redhat.com>
-From: Eric Auger <eauger@redhat.com>
-In-Reply-To: <ba75ac62-db52-491e-8944-2bf27106d0a6@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eauger@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,112 +86,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi,
+
+Since the last RFC, this is now my official patch, trying to add cache
+models for Intel CPUs (and Ewai's YongFeng).
+
+This series is based on another series dedicated to cleaning up the
+legacy cache models:
+
+https://lore.kernel.org/qemu-devel/20250620092734.1576677-1-zhao1.liu@intel.com/
+
+And this series focuses only on improvements to the named CPU models:
+ * Add cache model for Intel CPUs (and YongFeng).
+ * Enable 0x1f CPUID leaf for specific Intel CPUs, which already have
+   this leaf on host by default.
 
 
-On 6/26/25 4:05 AM, Shaoqin Huang wrote:
-> Hi Eric,
-> 
-> On 6/23/25 5:20 PM, Eric Auger wrote:
->>
->>
->> On 6/17/25 5:05 AM, Shaoqin Huang wrote:
->>> Set the "use-legacy-x86-rom" property to false by default, and only set
->>> it to true on x86 since only x86 will need it.
->> s/compatatibility/compatibility in the title
-> 
-> Ok. Will fix it.
-> 
->>>
->>> Signed-off-by: Shaoqin Huang <shahuang@redhat.com>
->>> ---
->>>   hw/display/ramfb-standalone.c | 2 +-
->>>   hw/i386/pc_q35.c              | 3 +++
->>>   hw/vfio/pci.c                 | 2 +-
->>>   3 files changed, 5 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/hw/display/ramfb-standalone.c b/hw/display/ramfb-
->>> standalone.c
->>> index af1175bf96..ddbf42f181 100644
->>> --- a/hw/display/ramfb-standalone.c
->>> +++ b/hw/display/ramfb-standalone.c
->>> @@ -63,7 +63,7 @@ static const VMStateDescription ramfb_dev_vmstate = {
->>>     static const Property ramfb_properties[] = {
->>>       DEFINE_PROP_BOOL("x-migrate", RAMFBStandaloneState, migrate, 
->>> true),
->>> -    DEFINE_PROP_BOOL("use-legacy-x86-rom", RAMFBStandaloneState,
->>> use_legacy_x86_rom, true),
->>> +    DEFINE_PROP_BOOL("use-legacy-x86-rom", RAMFBStandaloneState,
->>> use_legacy_x86_rom, false),
->>>   };
->>>     static void ramfb_class_initfn(ObjectClass *klass, void *data)
->>> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
->>> index fd96d0345c..f6d89578d0 100644
->>> --- a/hw/i386/pc_q35.c
->>> +++ b/hw/i386/pc_q35.c
->>> @@ -45,6 +45,7 @@
->>>   #include "hw/i386/pc.h"
->>>   #include "hw/i386/amd_iommu.h"
->>>   #include "hw/i386/intel_iommu.h"
->>> +#include "hw/vfio/pci.h"
->>>   #include "hw/virtio/virtio-iommu.h"
->>>   #include "hw/display/ramfb.h"
->>>   #include "hw/ide/pci.h"
->>> @@ -67,6 +68,8 @@
->>>     static GlobalProperty pc_q35_compat_defaults[] = {
->>>       { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "39" },
->>> +    { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
->>> +    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "true" },
->> this will only keep the legacy behavior along with q35 machine type but
->> not on other machines being used for x86. what about pc-i440fx? Doesn't
->> it apply to it as well? Are there other machine types also impacted.
-> 
-> Ok I will also add it with pc-i440fx. I think only q35 and i440fx are
-> impacted.
-> 
->>
->> Also what about Daniel's comment in v3:
->> https://lore.kernel.org/all/aEak8utPPkHepVfR@redhat.com/
->> "For non-x86, historical versioned machine types will need
->> likely it set to true, in order to avoid the memory layout
->> being changed IIUC."
->>
->> Is it actually needed?
-> 
-> If those machine types need to set it to true. I think they can set it
-> after they have this property.
-nope it does not work like that. In case we really need to take care of
-this, this must be handled by compats.
+Change Log
+==========
 
-Thanks
+Changes since RFC (20250423114702.1529340-1-zhao1.liu@intel.com):
+ * Split CPUID fixes into another series.
+ * Since TDX was merged, rebase and rename 0x1f property to
+   "x-force-cpuid-0x1f". (Igor)
+ * Include cache model for YongFeng from Ewai.
 
-Eric
-> 
-> Thanks,
-> Shaoqin
-> 
->>
->> Thanks
->>
->> Eric
->>>   };
->>>   static const size_t pc_q35_compat_defaults_len =
->>>       G_N_ELEMENTS(pc_q35_compat_defaults);
->>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->>> index ff0d93fae0..a529500b70 100644
->>> --- a/hw/vfio/pci.c
->>> +++ b/hw/vfio/pci.c
->>> @@ -3564,7 +3564,7 @@ static const TypeInfo vfio_pci_dev_info = {
->>>     static const Property vfio_pci_dev_nohotplug_properties[] = {
->>>       DEFINE_PROP_BOOL("ramfb", VFIOPCIDevice, enable_ramfb, false),
->>> -    DEFINE_PROP_BOOL("use-legacy-x86-rom", VFIOPCIDevice,
->>> use_legacy_x86_rom, true),
->>> +    DEFINE_PROP_BOOL("use-legacy-x86-rom", VFIOPCIDevice,
->>> use_legacy_x86_rom, false),
->>>       DEFINE_PROP_ON_OFF_AUTO("x-ramfb-migrate", VFIOPCIDevice,
->>> ramfb_migrate,
->>>                               ON_OFF_AUTO_AUTO),
->>>   };
->>
-> 
+
+Intel Cache Model
+=================
+
+AMD has supports cache model for a long time. And this feature strats
+from the Eduardo's idea [1].
+
+Unfortunately, Intel does not support this, and I have received some
+feedback (from Tejus on mail list [2] and kvm forum, and from Jason).
+
+Additionally, after clearly defining the cache topology for QEMU's
+cache model, outdated cache models can easily raise more questions. For
+example, the default legacy cache model's L3 is per die, but SPR's
+real L3 is per socket. Users may question how the L3 topology changes
+when multiple dies are created (discussed with Daniel on [3]).
+
+So, in this series, I have added cache models for SRF, GNR, and SPR
+(because these are the only machines I can find at the moment :-) ).
+
+Note that the cache models are based on the Scalable Performance (SP)
+version, and the Xeon Advanced Performance (AP) version may have
+different cache sizes. However, SP is sufficient as the default cache
+model baseline. In the future, I will consider adding additional
+parameters in "smp-cache" to adjust cache sizes to meet different needs.
+
+[1]: https://lore.kernel.org/qemu-devel/20180320175427.GU3417@localhost.localdomain/
+[2]: https://lore.kernel.org/qemu-devel/6766AC1F-96D1-41F0-AAEB-CE4158662A51@nutanix.com/
+[3]: https://lore.kernel.org/qemu-devel/ZkTrsDdyGRFzVULG@redhat.com/
+
+0x1f CPUID by default (for some CPUs)
+=====================================
+
+Once the cache model can be clearly defined, another issue is the
+topology.
+
+Currently, the cache topology is actually tied to the CPU topology.
+However, in recent Intel CPUs (from cascadelake-AP - 2nd xeon [4]),
+CPU topology information is primarily expressed using the 0x1f leaf.
+
+Due to compatibility issues and historical reasons, the Guest's 0x1f
+is not unconditionally exposed.
+
+The discrepancy between having 0x1f on the Host but not on the Guest
+does indeed cause problems (Manish mentioned in [5]).
+
+Manish and Xiaoyao (for TDX) both attempted to enable 0x1f by default
+for Intel CPUs [6] [7], but following Igor's suggestion, it is more
+appropriate to enable it by default only for certain CPU models [8].
+
+So, as I update the CPU model at this time, I think it's time to revisit
+the community's idea.
+
+I enable the 0x1f leaf for SRF, GNR and SPR by default for better
+emulation of real silicons.
+
+[4]: https://lore.kernel.org/qemu-devel/ZpoWskY4XE%2F98jss@intel.com/
+[5]: https://lore.kernel.org/qemu-devel/PH0PR02MB738410511BF51B12DB09BE6CF6AC2@PH0PR02MB7384.namprd02.prod.outlook.com/
+[6]: https://lore.kernel.org/qemu-devel/20240722101859.47408-1-manish.mishra@nutanix.com/
+[7]: https://lore.kernel.org/qemu-devel/20240813033145.279307-1-xiaoyao.li@intel.com/
+[8]: https://lore.kernel.org/qemu-devel/20240723170321.0ef780c5@imammedo.users.ipa.redhat.com/
+[9]: https://lore.kernel.org/qemu-devel/20250401130205.2198253-34-xiaoyao.li@intel.com/
+
+Thanks and Best Regards,
+Zhao
+---
+Ewan Hai (1):
+  i386/cpu: Introduce cache model for YongFeng
+
+Manish Mishra (1):
+  i386/cpu: Add a "x-force-cpuid-0x1f" property
+
+Zhao Liu (6):
+  i386/cpu: Introduce cache model for SierraForest
+  i386/cpu: Introduce cache model for GraniteRapids
+  i386/cpu: Introduce cache model for SapphireRapids
+  i386/cpu: Enable 0x1f leaf for SierraForest by default
+  i386/cpu: Enable 0x1f leaf for GraniteRapids by default
+  i386/cpu: Enable 0x1f leaf for SapphireRapids by default
+
+ target/i386/cpu.c | 402 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 402 insertions(+)
+
+-- 
+2.34.1
 
 
