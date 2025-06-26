@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64060C7EE33
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 05:54:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0B3EC77B7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 05:54:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUfZB-0003wz-IK; Thu, 26 Jun 2025 01:54:33 -0400
+	id 1uUfZD-0003xS-TB; Thu, 26 Jun 2025 01:54:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfZ6-0003vB-Em
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:29 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfZ9-0003wI-Ev
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfZ4-00017d-RQ
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:28 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfZ7-00018A-FY
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750917264;
+ s=mimecast20190719; t=1750917268;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=a4a4SJ37Dzx1GR9kszHcP48UK0vjozj4/Ppd2Xg/XHs=;
- b=Ha86de+Qqk3Et4mlQRQAQYRtUWQEgM/vd6Ys6tGRa2jkWPxJPI0SOgsvxxzr0j1Hcps/5t
- qMwMmuYGYIAQsC7W6LU++93CMYXGEEQscXlqKeuJUS36lsnfBUAyFkQETeVsPwZGQvyv2v
- 2J1hUPiJ83QGSVYM5kGQ8xtYn/whX1k=
+ bh=XZ9QICknluBmUezrPCElYQwYs2ViKwqLAcd4ByFmfAg=;
+ b=b1BWloetYAeaZHWrjyfMg70Xjsm4aOSFRKPZEaYbCKpitmvBoNIa0+L8Aq3pV2EvTgiN5B
+ z1oa/mcnF1LmwuVvOkN9qDlEByY2izsGftAKRaQ3CGVXe/8pjlIwGOQU5jLP3y5IxcVX/k
+ B6adrqqt3uGbSpJSAI/c7z70qE6oLkw=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-259-8bDVRl-WMHi5-oocoGk6yg-1; Thu,
- 26 Jun 2025 01:54:21 -0400
-X-MC-Unique: 8bDVRl-WMHi5-oocoGk6yg-1
-X-Mimecast-MFC-AGG-ID: 8bDVRl-WMHi5-oocoGk6yg_1750917260
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-rfChUDFTNoSsDBZtRFAq2Q-1; Thu,
+ 26 Jun 2025 01:54:24 -0400
+X-MC-Unique: rfChUDFTNoSsDBZtRFAq2Q-1
+X-Mimecast-MFC-AGG-ID: rfChUDFTNoSsDBZtRFAq2Q_1750917263
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5B20A1955F37; Thu, 26 Jun 2025 05:54:20 +0000 (UTC)
+ id 5776519560BA; Thu, 26 Jun 2025 05:54:23 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.32.129])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6D43019560A3; Thu, 26 Jun 2025 05:54:17 +0000 (UTC)
+ id 2011B19560A3; Thu, 26 Jun 2025 05:54:20 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Haseung Bong <hasueng@gmail.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 08/19] tests/vm: update openbsd image to 7.7
-Date: Thu, 26 Jun 2025 07:53:39 +0200
-Message-ID: <20250626055350.218271-9-thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+	Sean Wei <me@sean.taipei>
+Subject: [PULL 09/19] COPYING: replace FSF postal address with licenses URL
+Date: Thu, 26 Jun 2025 07:53:40 +0200
+Message-ID: <20250626055350.218271-10-thuth@redhat.com>
 In-Reply-To: <20250626055350.218271-1-thuth@redhat.com>
 References: <20250626055350.218271-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -83,33 +82,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Haseung Bong <hasueng@gmail.com>
+From: Sean Wei <me@sean.taipei>
 
-Update tests/vm/openbsd to release 7.7
+The license text in COPYING (GPLv2), COPYING.LIB (LGPLv2.1),
+and the linux-headers/LICENSES/preferred/GPL-2.0 file are
+referenced to the obsolete FSF postal address.
 
-Signed-off-by: Haseung Bong <hasueng@gmail.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250615003249.310160-1-hasueng@gmail.com>
+Replace it with the canonical GNU licenses URL recommended by the FSF:
+https://www.gnu.org/licenses/
+
+Signed-off-by: Sean Wei <me@sean.taipei>
+Message-ID: <20250613.qemu.patch.01@sean.taipei>
+[thuth: dropped the changes to the linux-headers folder]
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/vm/openbsd | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ COPYING     | 5 ++---
+ COPYING.LIB | 5 ++---
+ 2 files changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/tests/vm/openbsd b/tests/vm/openbsd
-index 5e4f76f3988..2ea86a01bad 100755
---- a/tests/vm/openbsd
-+++ b/tests/vm/openbsd
-@@ -22,8 +22,8 @@ class OpenBSDVM(basevm.BaseVM):
-     name = "openbsd"
-     arch = "x86_64"
+diff --git a/COPYING b/COPYING
+index 00ccfbb6288..8095135d50d 100644
+--- a/COPYING
++++ b/COPYING
+@@ -2,7 +2,7 @@
+ 		       Version 2, June 1991
  
--    link = "https://cdn.openbsd.org/pub/OpenBSD/7.6/amd64/install76.iso"
--    csum = "60cba8cb391b50bba8fa10fc768bd0529636f5345d82133c93e22c798d8e5269"
-+    link = "https://cdn.openbsd.org/pub/OpenBSD/7.7/amd64/install77.iso"
-+    csum = "da0106e39463f015524dca806f407c37a9bdd17e6dfffe533b06a2dd2edd8a27"
-     size = "20G"
-     pkgs = [
-         # tools
+  Copyright (C) 1989, 1991 Free Software Foundation, Inc.,
+- 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
++ <https://fsf.org/>
+  Everyone is permitted to copy and distribute verbatim copies
+  of this license document, but changing it is not allowed.
+ 
+@@ -304,8 +304,7 @@ the "copyright" line and a pointer to where the full notice is found.
+     GNU General Public License for more details.
+ 
+     You should have received a copy of the GNU General Public License along
+-    with this program; if not, write to the Free Software Foundation, Inc.,
+-    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
++    with this program; if not, see <https://www.gnu.org/licenses/>.
+ 
+ Also add information on how to contact you by electronic and paper mail.
+ 
+diff --git a/COPYING.LIB b/COPYING.LIB
+index 4362b49151d..99f47575b5b 100644
+--- a/COPYING.LIB
++++ b/COPYING.LIB
+@@ -2,7 +2,7 @@
+                        Version 2.1, February 1999
+ 
+  Copyright (C) 1991, 1999 Free Software Foundation, Inc.
+- 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
++ <https://fsf.org/>
+  Everyone is permitted to copy and distribute verbatim copies
+  of this license document, but changing it is not allowed.
+ 
+@@ -484,8 +484,7 @@ convey the exclusion of warranty; and each file should have at least the
+     Lesser General Public License for more details.
+ 
+     You should have received a copy of the GNU Lesser General Public
+-    License along with this library; if not, write to the Free Software
+-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
++    License along with this library; if not, see <https://www.gnu.org/licenses/>.
+ 
+ Also add information on how to contact you by electronic and paper mail.
+ 
 -- 
 2.50.0
 
