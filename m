@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7868AC7EE30
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 22:30:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47E54C7EE30
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 22:30:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUv5L-0006Q5-Vd; Thu, 26 Jun 2025 18:28:48 -0400
+	id 1uUv5L-0006Q2-BE; Thu, 26 Jun 2025 18:28:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1uUv5C-0006M0-Rc
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 18:28:40 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1uUv5B-0006Lu-4S
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 18:28:39 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1uUv54-0000th-9I
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 18:28:38 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-236377f00easo20588895ad.1
- for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 15:28:27 -0700 (PDT)
+ id 1uUv54-0000tt-Su
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 18:28:36 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-237e6963f63so11298795ad.2
+ for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 15:28:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750976906; x=1751581706; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1750976908; x=1751581708; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zBps1tm/E0rqCasT+u+6aJlRaXwKKIUQT/6/1t5YR3A=;
- b=EhYMf0ZSAeKLkXgAEKIwUlANM3tPDNGYKHZjbGsbeCgvG+IxJ42+WOn2f2XF+0yQ8P
- k8dWpM3N3GPMW6tKeZ1vpkgpXaqOps1QEUd8yI+8s2Es4fp2DgCDeF2dKam3c0gP65f5
- FkbDnlNqM6Re6K9UocuDMu9tWiyDHOtpeCGAnecTp6yQVZEV2bMqU2sFSrsu5rlQrrkx
- 9PSFbxIed6quyy78bWk5M1BwhiTVunQZ11tDPBw2DlJjqQoYb+KCHv9AOiWyb5aGMUwT
- vq0XkBe59IdVpH8/IbbGNyZzQF/OiNsCcU2QqyVY3QeWQwQZGT0cFp9zSfUYWaKKDY5n
- 98TA==
+ bh=q4FJYJ8U4O5w3tqy5MpavB61ZpcaWiN2iAUIoKHfFUQ=;
+ b=Xiq5iIsKPiKHAkFt+Qmzv6L3hhWf9HtAFYK+YATmXyqOYl5c36QJVvRFrugaQxQlHl
+ B3oPXb5gkO0b7Nd3cQZRCgBqEElCApY8gKxStgM91jGXVmtaLlDPpitFtPDb7xmjPAh6
+ mmMzM1wPSoSQi62zEbcDkH3GezPPgeCgaRshoxJkGm67kra6IrTwCLkZV6ZReGvbVvAO
+ s0x7cb8cYz0STBbKWn1XhXiiCgSp8cJpry1waI9DyU40To9MqXSX3oQUsKfQ+GojifVZ
+ TS9JHZsZ1gtjQ9ejNLoyvXIuC8eLa3xDkLUBTUqwPzWOpT8eO13SA+Ibi5vGlTH4Bus9
+ A+6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750976906; x=1751581706;
+ d=1e100.net; s=20230601; t=1750976908; x=1751581708;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zBps1tm/E0rqCasT+u+6aJlRaXwKKIUQT/6/1t5YR3A=;
- b=nGbEqDfZa34Q1MjhLH4CJ0qXSWeeZ+YFcflfC0iZ6ZqTAfe3UgJsKoXwmQFNMI+K8X
- v/YSHq0z56ujlHouvZ9YRXls8zjX2jJGfXbgQGhMwQKSxmQqRzmSer5Z0V8t+omBSvWt
- mByeLm4nbSsXXQz9EKDEXxn9s7/QIpau/YoUTakpfWiJomPjXYMVEHka5Czyl6J7dMxw
- 8lY8/m6gD1ztK+IpQJ8LcXEPII3I2kzZPV3Wtz0RijNvr3hYVteZ6XJfjQQ8zF/M0cLE
- sos3ZJ9NE2YG9g16hQwyTiUP2Fd98x9Y/Szznhi1KvW/uWx2AkXRbqqJo28He+A3kkWF
- vxXA==
-X-Gm-Message-State: AOJu0YzDXvPkOJQiuYw8cVZNh5UH7gYvb7c+rC/ok3NrtXu9tHrhDVo+
- uGypKr9U29oAhbKa/DU9rSA0WBsd6nii81ehxPVp5Hm+DwzBcjZyGeM2bmXbig==
-X-Gm-Gg: ASbGnctOmfjn1WvT62SiOJV3mqENpusuH05Q0nJ/ndowyVuUgkxiNgXvCTOI6A/vVOF
- c2uA4pDLZfch8wLXOJ1TeCxB7RhoBo4a9WBTLXb7c9IlyT6sCrMf8PiBDwUm0qk52n4IEdWrR1T
- Ccl1D5qfp59UuEvYLQVEGP5r7Deublz9RTYIMmhandDSu8DvW8ZezUEzCUyb3p3MTv8u8aHIW0n
- qwhMmEFbjypNDTPOYI1CuCbL8Sow9HLq66KSNCCGrsEkb923kbdUUiJ4f9Sx4tbMOi87J/I8H3t
- lLkZNzIGG2vvy6Q3cn+07b8+O52Jb+hT55HcpymtVWfSOwPyKjxU7XVbG1Cg0pHUWX0GjPcSrsw
- HRUk1Lkukq2oodjavfA==
-X-Google-Smtp-Source: AGHT+IE0vEXNHth7oaL4diMn3sE9UxFbYJIMXP4uA3k28cRYItq0xgl7K501CLHx1FPhTKL//pIV7w==
-X-Received: by 2002:a17:902:f548:b0:237:e3a0:9d63 with SMTP id
- d9443c01a7336-23ac46344aemr14497665ad.43.1750976906080; 
- Thu, 26 Jun 2025 15:28:26 -0700 (PDT)
+ bh=q4FJYJ8U4O5w3tqy5MpavB61ZpcaWiN2iAUIoKHfFUQ=;
+ b=MpMO2o1LA7ET/5hSbej7UmMFAaS+drf+FVhK78UhNLRPZZcTrrpnTJjAgQ4I35pPof
+ EVZi8iYRwWlysMD9EvHA3lzXuWJJ6SOyLB2uYQzfE7dGmhgmdQpIxtiGKtexzZyLpj0h
+ isKn8NNwFKBTKQJ9hwHBuzuYGMrj9e9eAMXGbspAkCnz7dGm6ngj+ufRcBY7rvrmwgeu
+ jAzwAmlhPiDrpEn1A5Bn5Hc6GiV/NGa+eI5I5sT55zMshX19l+62bXZa6rE71N9DVY1Z
+ tDJm72lYdPC/rmovt+4j3nl8yLJVNG7UC5Cp3AMtk+u3iBPZaWP0T/TEOCvA57P7f75V
+ L2+Q==
+X-Gm-Message-State: AOJu0YwbY4+BunhOYHUj2UMrWqAU21c7xeTlcG952g7EZwMWj/Q0YcOb
+ bXifHob5OMSMWTfCvrJ1d/UKMNsfr+9dGcIBhfg/t0B9H7fRI2cpk8hp8HE4Ug==
+X-Gm-Gg: ASbGncsZWoXyHKhHUkqvioDdnGH3ky8nSercpUqii+hQ2imcWnodDC61hVLnFzOl8OD
+ cx9B8gIwVZt72nrvFON8lQPFtbMaSykM/xjpAK/2uBiN0XUwZUcAeveIsjoAmF8ZAFMdtx8peoV
+ uyxejGf+YlZ3O0iBOb9y0E2BxCwcRZ/2wFlfDmV7SC/ekXfWm8iTAM4cmQSLZJtR4AsBjeTDApU
+ hiLjq13MZLxK7UVtc5sap8pkF8I2HkSimaV8a5USDIBv4Gj+AnDo5rdVGRS9845GjLumL6xTdhj
+ Awqw4XZZL6MzthyowcNcpp7VpZo0mNMA66AZDi3z4CbYTkeA6Mjous2VVcGPJbtYRXXYkG3GGe5
+ UTkjBVv8=
+X-Google-Smtp-Source: AGHT+IFPGI/jENu1Opk6rzXQM1PGC5KaqM00tRrzeAzqShzQOnfmyVlrJeo/YfMr80WZPQXkgnxrGw==
+X-Received: by 2002:a17:903:1b6b:b0:234:8eeb:d834 with SMTP id
+ d9443c01a7336-23ac43d318dmr14505035ad.16.1750976908121; 
+ Thu, 26 Jun 2025 15:28:28 -0700 (PDT)
 Received: from deb-101020-bm01.dtc.local ([149.97.161.244])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23acb3c4b23sm870365ad.214.2025.06.26.15.28.25
+ d9443c01a7336-23acb3c4b23sm870365ad.214.2025.06.26.15.28.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Jun 2025 15:28:25 -0700 (PDT)
+ Thu, 26 Jun 2025 15:28:27 -0700 (PDT)
 From: anisa.su887@gmail.com
 To: qemu-devel@nongnu.org
 Cc: Jonathan.Cameron@huawei.com, nifan.cxl@gmail.com, dave@stgolabs.net,
  alok.a.tiwari@oracle.com, linux-cxl@vger.kernel.org,
  Anisa Su <anisa.su@samsung.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [QEMU PATCH v4 05/10] hw/cxl_type3: Add DC Region bitmap lock
-Date: Thu, 26 Jun 2025 22:23:28 +0000
-Message-ID: <20250626222743.1766404-6-anisa.su887@gmail.com>
+Subject: [QEMU PATCH v4 07/10] cxl-mailbox-utils: 0x5603 - FMAPI Get DC Region
+ Extent Lists
+Date: Thu, 26 Jun 2025 22:23:30 +0000
+Message-ID: <20250626222743.1766404-8-anisa.su887@gmail.com>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250626222743.1766404-1-anisa.su887@gmail.com>
 References: <20250626222743.1766404-1-anisa.su887@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=anisa.su887@gmail.com; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=anisa.su887@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -86,7 +87,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,70 +105,116 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Anisa Su <anisa.su@samsung.com>
 
-Add a lock on the bitmap of each CXLDCRegion in preparation for the next
-patch which implements FMAPI Set DC Region Configuration. This command
-can modify the block size, which means the region's bitmap must be updated
-accordingly.
-
-The lock becomes necessary when commands that add/release extents
-(meaning they update the bitmap too) are enabled on a different CCI than
-the CCI on which the FMAPI commands are enabled.
+FM DCD Management command 0x5603 implemented per CXL r3.2 Spec Section 7.6.7.6.4
+Very similar to previously implemented command 0x4801.
 
 Reviewed-by: Fan Ni <fan.ni@samsung.com>
 Signed-off-by: Anisa Su <anisa.su@samsung.com>
 ---
- hw/mem/cxl_type3.c          | 4 ++++
- include/hw/cxl/cxl_device.h | 1 +
- 2 files changed, 5 insertions(+)
+ hw/cxl/cxl-mailbox-utils.c | 76 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 76 insertions(+)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index cdd60079c4..b872a26173 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -692,6 +692,7 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
-         };
-         ct3d->dc.total_capacity += region->len;
-         region->blk_bitmap = bitmap_new(region->len / region->block_size);
-+        qemu_mutex_init(&region->bitmap_lock);
-     }
-     QTAILQ_INIT(&ct3d->dc.extents);
-     QTAILQ_INIT(&ct3d->dc.extents_pending);
-@@ -1020,6 +1021,7 @@ void ct3_set_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
-         return;
-     }
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 69c618383a..e3d54ed124 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -122,6 +122,7 @@ enum {
+         #define GET_DCD_INFO    0x0
+         #define GET_HOST_DC_REGION_CONFIG   0x1
+         #define SET_DC_REGION_CONFIG        0x2
++        #define GET_DC_REGION_EXTENT_LIST   0x3
+ };
  
-+    QEMU_LOCK_GUARD(&region->bitmap_lock);
-     bitmap_set(region->blk_bitmap, (dpa - region->base) / region->block_size,
-                len / region->block_size);
- }
-@@ -1046,6 +1048,7 @@ bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
-      * if bits between [dpa, dpa + len) are all 1s, meaning the DPA range is
-      * backed with DC extents, return true; else return false.
-      */
-+    QEMU_LOCK_GUARD(&region->bitmap_lock);
-     return find_next_zero_bit(region->blk_bitmap, nr + nbits, nr) == nr + nbits;
+ /* CCI Message Format CXL r3.1 Figure 7-19 */
+@@ -3466,6 +3467,79 @@ static CXLRetCode cmd_fm_set_dc_region_config(const struct cxl_cmd *cmd,
+     return CXL_MBOX_SUCCESS;
  }
  
-@@ -1067,6 +1070,7 @@ void ct3_clear_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
++/* CXL r3.2 section 7.6.7.6.4 Get DC Region Extent Lists (Opcode 5603h) */
++static CXLRetCode cmd_fm_get_dc_region_extent_list(const struct cxl_cmd *cmd,
++                                                   uint8_t *payload_in,
++                                                   size_t len_in,
++                                                   uint8_t *payload_out,
++                                                   size_t *len_out,
++                                                   CXLCCI *cci)
++{
++    struct {
++        uint16_t host_id;
++        uint8_t rsvd[2];
++        uint32_t extent_cnt;
++        uint32_t start_extent_id;
++    } QEMU_PACKED *in = (void *)payload_in;
++    struct {
++        uint16_t host_id;
++        uint8_t rsvd[2];
++        uint32_t start_extent_id;
++        uint32_t extents_returned;
++        uint32_t total_extents;
++        uint32_t list_generation_num;
++        uint8_t rsvd2[4];
++        CXLDCExtentRaw records[];
++    } QEMU_PACKED *out = (void *)payload_out;
++    QEMU_BUILD_BUG_ON(sizeof(*in) != 0xc);
++    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
++    CXLDCExtent *ent;
++    CXLDCExtentRaw *out_rec;
++    uint16_t record_count = 0, record_done = 0, i = 0;
++    uint16_t out_pl_len, max_size;
++
++    if (in->host_id != 0) {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++
++    if (in->start_extent_id > ct3d->dc.nr_extents_accepted) {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++
++    record_count = MIN(in->extent_cnt,
++                       ct3d->dc.nr_extents_accepted - in->start_extent_id);
++    max_size = CXL_MAILBOX_MAX_PAYLOAD_SIZE - sizeof(*out);
++    record_count = MIN(record_count, max_size / sizeof(out->records[0]));
++    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
++
++    stw_le_p(&out->host_id, in->host_id);
++    stl_le_p(&out->start_extent_id, in->start_extent_id);
++    stl_le_p(&out->extents_returned, record_count);
++    stl_le_p(&out->total_extents, ct3d->dc.nr_extents_accepted);
++    stl_le_p(&out->list_generation_num, ct3d->dc.ext_list_gen_seq);
++
++    if (record_count > 0) {
++        QTAILQ_FOREACH(ent, &ct3d->dc.extents, node) {
++            if (i++ < in->start_extent_id) {
++                continue;
++            }
++            out_rec = &out->records[record_done];
++            stq_le_p(&out_rec->start_dpa, ent->start_dpa);
++            stq_le_p(&out_rec->len, ent->len);
++            memcpy(&out_rec->tag, ent->tag, 0x10);
++            stw_le_p(&out_rec->shared_seq, ent->shared_seq);
++
++            record_done++;
++            if (record_done == record_count) {
++                break;
++            }
++        }
++    }
++
++    *len_out = out_pl_len;
++    return CXL_MBOX_SUCCESS;
++}
++
+ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+     [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
+         cmd_infostat_bg_op_abort, 0, 0 },
+@@ -3591,6 +3665,8 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
+          CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
+          CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
+          CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
++    [FMAPI_DCD_MGMT][GET_DC_REGION_EXTENT_LIST] = { "GET_DC_REGION_EXTENT_LIST",
++        cmd_fm_get_dc_region_extent_list, 12, 0 },
+ };
  
-     nr = (dpa - region->base) / region->block_size;
-     nbits = len / region->block_size;
-+    QEMU_LOCK_GUARD(&region->bitmap_lock);
-     bitmap_clear(region->blk_bitmap, nr, nbits);
- }
- 
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 397edcff4c..6a5025200c 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -547,6 +547,7 @@ typedef struct CXLDCRegion {
-     uint8_t flags;
-     unsigned long *blk_bitmap;
-     uint64_t supported_blk_size_bitmask;
-+    QemuMutex bitmap_lock;
-     /* Following bools make up dsmas flags, as defined in the CDAT */
-     bool nonvolatile;
-     bool sharable;
+ /*
 -- 
 2.47.2
 
