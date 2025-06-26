@@ -4,100 +4,200 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F3AFC7115B
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 08:28:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 067B3C77B7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 08:29:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUhx9-0004Ak-Tz; Thu, 26 Jun 2025 04:27:28 -0400
+	id 1uUhyS-0004s8-T8; Thu, 26 Jun 2025 04:28:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Iwxx=ZJ=kaod.org=clg@ozlabs.org>)
- id 1uUhx8-00049n-2m; Thu, 26 Jun 2025 04:27:26 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uUhyJ-0004mf-QF
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 04:28:42 -0400
+Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Iwxx=ZJ=kaod.org=clg@ozlabs.org>)
- id 1uUhx1-00029R-4t; Thu, 26 Jun 2025 04:27:25 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bSWy95SGqz4x4m;
- Thu, 26 Jun 2025 18:27:13 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bSWy63GsKz4wcm;
- Thu, 26 Jun 2025 18:27:10 +1000 (AEST)
-Message-ID: <3d491182-5984-49a1-999c-5e7cb70923da@kaod.org>
-Date: Thu, 26 Jun 2025 10:27:08 +0200
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uUhyG-0002Ej-HI
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 04:28:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1750926517; x=1782462517;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=ObPpK66iOXjqnBjNUDCGXm3NeEU2FqZVhcZREQxUBvw=;
+ b=TaS1KR3bAnHhivyMmKDftVbcO5xyBFin3BJ0ohhTgvW1VUJtvjaxNz0x
+ kq2dinn4lWVSN3PyuCVhHEQY3B/OYi0EluJmy3xcoACMrWLfZ5A2bRjGF
+ p7MnedNX7z2cnCt2yYZwNDT+VL9lYvhpVHhm5+GNf7b3h6YascgYQEPt6
+ NgJOcxSHqlLm2tjQAe+w6yVOv2vn7dc/QKbIx0j+6n7JgmCYYSOIgZzXL
+ ldotnV2t+ygmNTESgjLwBgJPMdzchwJtsAjKzrSKNZMmiZ+UEsTpBivo8
+ marOtZikUqjwMj19vMZhTJ6ekR/9BvZLi8cPpQm+V3abUOqrk8z5I2PTh w==;
+X-CSE-ConnectionGUID: hvJYme6ATEeBeOh0KSoRyg==
+X-CSE-MsgGUID: r1k18A6DTT2m7qwBVKQ67w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11475"; a="52330062"
+X-IronPort-AV: E=Sophos;i="6.16,267,1744095600"; d="scan'208";a="52330062"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Jun 2025 01:28:22 -0700
+X-CSE-ConnectionGUID: YMjzNrNjTsasW9MxkvA4dw==
+X-CSE-MsgGUID: +OtlaKZcRxG0nKSPttal3A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,267,1744095600"; d="scan'208";a="152956038"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+ by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Jun 2025 01:28:22 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Thu, 26 Jun 2025 01:28:21 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25 via Frontend Transport; Thu, 26 Jun 2025 01:28:21 -0700
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (40.107.220.42)
+ by edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Thu, 26 Jun 2025 01:28:21 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ih+EQIg7ufosYy9lwjfaXudlJwPkMLBm6BSbkGthp4wIKvGFVw3rjExMzdYTbUqBfUBGnPSb4XeuilHTXZNiDGR1WUuRYB4z73UqbaY7qEYvUYsnX+AVbHi5jrT0Oy6mDMsyH7eKcjQgoGr4cDypML2vDzPuZTx+eWNjMjj6zGqNb+QQAADTEhl8KwIZdwX00QMhcjUs6g7mblt1zjqQIOUy1I03mwRue+fUKpIHCyGmcecMehP97+vpeDcyzX4ywYTUnkm5RblbmcGbTAKc2hiSxRrzcue1s2zghieCvoLM36XWo0lcis+jHpRxh4Xk3j1UGCGNi177z5UQxCiHJA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ObPpK66iOXjqnBjNUDCGXm3NeEU2FqZVhcZREQxUBvw=;
+ b=DcczOOn6C1SwjJEp6IF3BuR3v3ecCuZVbjIUCcZ9dLE2kCGnuQWN5VjNGmu6dZQIXYmrYR+GigQpw6OR/p49GJMELtaOkyjiqZbbgQ4p+sP8KwSV9Ktxwu981IZohlBNrUDHwXbNasQJvCfIhEjXIhD8vB1wU6gAyF8G1EVOykVB5oi+xkxNDGTaOp7dcHoSJ1aBgtDsMR+g3yn61ZaoZAzsKs+cQs97MFPS69Oq7hFSrGWTS0uYOGP6z1lohgeGGE5pBQw69tLParWH7AUboZ2WXEaxuJEVfVRUAea6/UaslWKF/H2H33tLmrBW3XxRs0BZc4+a8eow4Ga1RnOs8g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by CO1PR11MB4834.namprd11.prod.outlook.com (2603:10b6:303:90::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8880.21; Thu, 26 Jun
+ 2025 08:28:06 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.8835.023; Thu, 26 Jun 2025
+ 08:28:05 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>, "peterx@redhat.com"
+ <peterx@redhat.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
+ <nicolinc@nvidia.com>, "shameerali.kolothum.thodi@huawei.com"
+ <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
+ <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
+ "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>, "Yi
+ Sun" <yi.y.sun@linux.intel.com>, Paolo Bonzini <pbonzini@redhat.com>, Richard
+ Henderson <richard.henderson@linaro.org>, Eduardo Habkost
+ <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: RE: [PATCH v2 12/19] intel_iommu: Introduce a new pasid cache
+ invalidation type FORCE_RESET
+Thread-Topic: [PATCH v2 12/19] intel_iommu: Introduce a new pasid cache
+ invalidation type FORCE_RESET
+Thread-Index: AQHb4bQyFldcg2x/bkqV8Er7xVHlpbQQp/8AgARdeiA=
+Date: Thu, 26 Jun 2025 08:28:05 +0000
+Message-ID: <IA3PR11MB91369900C5CEA3CE218F17D9927AA@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20250620071813.55571-1-zhenzhong.duan@intel.com>
+ <20250620071813.55571-13-zhenzhong.duan@intel.com>
+ <e402a485-66be-44d4-9cc5-aa7157511f76@redhat.com>
+In-Reply-To: <e402a485-66be-44d4-9cc5-aa7157511f76@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|CO1PR11MB4834:EE_
+x-ms-office365-filtering-correlation-id: c236b35b-e13b-4638-3ba3-08ddb48b5fb5
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|7416014|38070700018; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?0aN7bAn0r89mBqCIoKfNbpX9JVMZBYxc8ybG6enzrT0j6rOvF4C535eRq4wJ?=
+ =?us-ascii?Q?UmOJjVg+NdnOs4aVoDf98QPb/npHwnDux4m0BbckTONzAynDboQmol6IEkFy?=
+ =?us-ascii?Q?ei/UGCbSla6DSNOBBQNOjKlhX8VDyAqOSQJ0Ng8C9o5Sp76ms5akCLWzVPVN?=
+ =?us-ascii?Q?kW0Y7q3E1+YVnmL6fP0JdEVijXnm/IPCcWDGjnVHa9EiiNS7Zy2Ewb70P40x?=
+ =?us-ascii?Q?UmZK7HChAxTOibFi3dyjjMPXCVmXJ0jyDMk3dT0MVyjPfG5PYqgOLzM+ciq8?=
+ =?us-ascii?Q?PnQu+Mw/Ey4WaTRM4imAFR3V3lXgATuZhSH3Jkioxf+MRaedw1R/Zi9R5vAS?=
+ =?us-ascii?Q?DINU0mhhnwFM60vOP3oszdd1+NlFjw8q6JnZDqu3RemgVqbrX3XWQ1YWQT5c?=
+ =?us-ascii?Q?3k5sG41zZMs0emp+UUDFgoPxMXD2ook/rDH+FI0WswszfY4AKZ9GYPhpziH4?=
+ =?us-ascii?Q?OuyHW9AWH6XPU4nTtbRM7kiIIvTksTu7G/ys0T2e6SlarjNu/IpvMiyhTVm7?=
+ =?us-ascii?Q?/vWZZH5c5A+Ry709puY+YZMmotorsqgIXe5wMHRxhONtYMC9NHrsg60e5jc9?=
+ =?us-ascii?Q?2DuB1tDXKSEXrNrl0SZzeysR1v0GnOSjZ9qkz2/jX2nE4LeOMasSl72CjLhP?=
+ =?us-ascii?Q?Y5c6K2TiatDY69KJn9sbtFD7MJVLBM//3O+xGUkV4J288uF050hQsxlQ1zPc?=
+ =?us-ascii?Q?5t4wxGXYg0AwfFHX18uNFlVuq27hYSnjDJml1kcp/9X1fQPvUrUTdjsXuRJ5?=
+ =?us-ascii?Q?m8qQtlKwe5CftHOtV3N91h3nTAy5AtAN/DNFmW8AhmsYpR0E08lFyp8K3OLq?=
+ =?us-ascii?Q?QaBvZ5IXVqjlC80eqPakJD7UmkzH74jG6w2N3QJiPC8454kCQVmr/4zFMhd+?=
+ =?us-ascii?Q?OzRr9Z0FE2/tcu76CKiWIYyW0DHV9u7Mwwo8aII8ENRsn8epjemlMN6Rs2yn?=
+ =?us-ascii?Q?ab8hVZ7FO2CYubu5+aJOdWs3DWzOx6QLcoUHPRtuqF3XlTgqcWB3t3tBak6r?=
+ =?us-ascii?Q?blwM1fP7gVlXbV+4s2+0hgo5YIl3/BL6RCVovsxj7w/Y/wxvHe+BioGuFyR9?=
+ =?us-ascii?Q?22HPjA7jrdkpjSNVkD4Z08YXLLG986DdWl2hBpG0u2u89euu/7GzAyfDrzGe?=
+ =?us-ascii?Q?BBaEDb5bltussZvrCJ5qV2BMFbs4Xg8nyeQFkQ5R2/SFWtJ+xyWy8LNq66F7?=
+ =?us-ascii?Q?bKbGbWGUrS4JkGEQD5PHcpuGDwRzoZLdCTLIsg5X2LmJWnMzu+tIbvBs+U/P?=
+ =?us-ascii?Q?ZkWeR5i+c9Yu05dhbADhpic+UAF2XTfvL8gVGBVjle+Xgyyc7LZ6dYQx7yZa?=
+ =?us-ascii?Q?gtXQzNPKKemhYSXHpe9u8JOF5Cjs+wlS3KtBQ7fFPhzubNQKOI5DvGg0wMe7?=
+ =?us-ascii?Q?nU1dnFSZ0sxw5jXO/I4cTaX0j8+0j3KPbOXepn7SDTipDvt4gRJ2hzeBGhzo?=
+ =?us-ascii?Q?7CtyfLsXy24QM8qCxa1b0l8tr2aMC1h3mlrvxUTHLvugeYHYLAt+rDj7BB00?=
+ =?us-ascii?Q?pJl5AaiynXjlXbk=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(7416014)(38070700018); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?ApNISoMr4xn+rjo0diq0H2Ov9IhY45GgEVBrKRGjjdqHclo2EqXMetzkxBT+?=
+ =?us-ascii?Q?1FpvC4QjAzAHavPrJ07MOIKmQEVvepSNndm14jYGTmmlfgrHWuuVgBss7ewk?=
+ =?us-ascii?Q?FC3hNRMt8eOmUxKDbKY4QaFg10B4zYHcZ/5aAjAh7/E/s0xoGCcrJz7Lfs31?=
+ =?us-ascii?Q?c9Zujd0BVIsBi8MA7QWDFBV600Ldg60XddiBxTwJi0Fo0kWJgwmziLpD0Wjh?=
+ =?us-ascii?Q?Cjphrn+pmIj+y3IyvtRrDIksVWpqJ1TVt+0t5ka5NAuGD+Oehfr9fxh8reVU?=
+ =?us-ascii?Q?N1puIZwgIcyZeh2mQh5E3l/NDCGfO0hg9bW3eytRK42oC7jP4KJcFnUp+2Dk?=
+ =?us-ascii?Q?v4BDxMYwh8D2b5xXJXrmSaTX/QedSMfxb9xrpk2sbEdJTHCw3cxF1slNGah6?=
+ =?us-ascii?Q?K/IRTYZDiN1wzFhAJjMUCZnqOd4co7aXITBA9nHZGt9q+FIY5jj1k8SinN8x?=
+ =?us-ascii?Q?Wd7dbqv5pZ30mDFreRdeTPjWDkulNakQQzq2EhBw12ys4z8HM5HhGfyOGFJO?=
+ =?us-ascii?Q?Q+22YlYQoh9X1k6Vm8ON40374mVzQRYWs07Zfn+bgXT9wCmoQ0v5wqFkJLj+?=
+ =?us-ascii?Q?jMQZzQ+6atO7P7B4IIiwZCWMwM4iR7fkRNlgV9R0naCu48s5BbzElm3G2GZd?=
+ =?us-ascii?Q?tmCoZUSEq0MdRnHn8r96dyh2EnT/9PoD2hLAJE4XXBvYDHrkz/uO2Dd7FTiw?=
+ =?us-ascii?Q?eldkYRkIPduZKoTtSiZleVkoplty2E1I6MOlE0WQe/xy+Y+waxgF0850vPx3?=
+ =?us-ascii?Q?H6a1AqNi4JTbn4X1GoEsS9lAF6NtaXBmD1O7+F3EGjzMyqxLflLAUo+HO8YJ?=
+ =?us-ascii?Q?aDLN6RKb56mVE+r0FxX+XaR+UTsJtQm3xGcPXiZ1GZT2Xf9ZjDBelBbBpuBn?=
+ =?us-ascii?Q?1hmn+mY3L59gegzd2RPLWeWkYRy0V49u4u7clBu2yS0+fmgr5XOJwyVHwJHX?=
+ =?us-ascii?Q?Bkvecir8dsz3aPXjbsiVul6W/BkFpO7mqbvukJ3hk6PE5pPM0NpFEpV5lVfW?=
+ =?us-ascii?Q?81LLFQuboPnYVGHyYmVPak8I+xLUXjM5zcSBT+ZTPjt4J04768cARiV2wZsm?=
+ =?us-ascii?Q?zmz9xHlRZ8/MZqIQPNqvBrgXk/jykF6SVhywaT27DaGp6YbLUR6/3yTe0yG2?=
+ =?us-ascii?Q?iOeeGrvTww2ycqykfHM5AsNkXKCywTd7fGuFUPzEm7eN5D+N+/zzsBZd9FUZ?=
+ =?us-ascii?Q?l9ECcV+0NLdDhv26QjiCOxua2HVttCAwfPnrbNYlHmA9Jkglc9tZDhlmkLTw?=
+ =?us-ascii?Q?73jFJsiMsepTUXdPmDSuMSdT4/aww5qPTd91V1eAsEHpuz5r7LsZHpz7O5tA?=
+ =?us-ascii?Q?0cGqVFAHJ+3zuDuuLgInCixufw0+S/0mWqXDGfg/jzrj/VN5RYFHZbx8cEPx?=
+ =?us-ascii?Q?mrmbZ85+vduCqJxOtIfiaiDvPrkZAuBjMSdqMotFcg997Tq6r9uvu4DkmRW1?=
+ =?us-ascii?Q?VEQmNaPJjCltUEXB0amHWsdPTXsFbr5Bu5/hiPGQ1W/0alJ1A/fnFpQVDbr8?=
+ =?us-ascii?Q?mDSbGnMBjrLQCUeDNZUrGQiEjyoHrnRZS6rZNVDdCiAuvzkdU3ZwAHlSERer?=
+ =?us-ascii?Q?73SusN6vedeWIF8Yd2i0S8RygRCAqVev0q8G0oir?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/3] hw/misc/aspeed_sbc: Connect ASPEED OTP memory
- device to SBC
-To: Kane Chen <kane_chen@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com
-References: <20250626075711.1589039-1-kane_chen@aspeedtech.com>
- <20250626075711.1589039-3-kane_chen@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250626075711.1589039-3-kane_chen@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=Iwxx=ZJ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c236b35b-e13b-4638-3ba3-08ddb48b5fb5
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Jun 2025 08:28:05.5499 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: x7dZNTHlbECM1BRAiStiNNzTwWL6Qj7Yey5EaJoUCF3KlqeTXosow/3hkbrLrT08Tl6zxetALxTvR1edXFKVBffcUcYIh8901qI8AhY2ePY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR11MB4834
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.19;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,251 +213,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/26/25 09:57, Kane Chen wrote:
-> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
-> 
-> This patch connects the aspeed.otpmem device to the ASPEED Secure Boot
-> Controller (SBC) model. It implements OTP memory access via the SBC's
-> command interface and enables emulation of secure fuse programming flows.
-> 
-> The following OTP commands are supported:
->    - READ: reads a 32-bit word from OTP memory into internal registers
->    - PROG: programs a 32-bit word value to the specified OTP address
-> 
-> Trace events are added to observe read/program operations and command
-> handling flow.
-> 
-> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
-> ---
->   include/hw/misc/aspeed_sbc.h |   5 ++
->   hw/misc/aspeed_sbc.c         | 113 +++++++++++++++++++++++++++++++++++
->   hw/misc/trace-events         |   5 ++
->   3 files changed, 123 insertions(+)
-> 
-> diff --git a/include/hw/misc/aspeed_sbc.h b/include/hw/misc/aspeed_sbc.h
-> index 405e6782b9..667d6088c0 100644
-> --- a/include/hw/misc/aspeed_sbc.h
-> +++ b/include/hw/misc/aspeed_sbc.h
-> @@ -10,6 +10,7 @@
->   #define ASPEED_SBC_H
->   
->   #include "hw/sysbus.h"
-> +#include "hw/misc/aspeed_otpmem.h"
->   
->   #define TYPE_ASPEED_SBC "aspeed.sbc"
->   #define TYPE_ASPEED_AST2600_SBC TYPE_ASPEED_SBC "-ast2600"
-> @@ -36,10 +37,14 @@ struct AspeedSBCState {
->       MemoryRegion iomem;
->   
->       uint32_t regs[ASPEED_SBC_NR_REGS];
-> +
-> +    AspeedOTPMemState otpmem;
->   };
->   
->   struct AspeedSBCClass {
->       SysBusDeviceClass parent_class;
-> +
-> +    bool has_otpmem;
->   };
->   
->   #endif /* ASPEED_SBC_H */
-> diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
-> index a7d101ba71..5cbf55c216 100644
-> --- a/hw/misc/aspeed_sbc.c
-> +++ b/hw/misc/aspeed_sbc.c
-> @@ -15,9 +15,13 @@
->   #include "hw/misc/aspeed_sbc.h"
->   #include "qapi/error.h"
->   #include "migration/vmstate.h"
-> +#include "trace.h"
->   
->   #define R_PROT          (0x000 / 4)
-> +#define R_CMD           (0x004 / 4)
-> +#define R_ADDR          (0x010 / 4)
->   #define R_STATUS        (0x014 / 4)
-> +#define R_CAMP1         (0x020 / 4)
->   #define R_QSR           (0x040 / 4)
->   
->   /* R_STATUS */
-> @@ -41,6 +45,10 @@
->   #define QSR_RSA_MASK           (0x3 << 12)
->   #define QSR_HASH_MASK          (0x3 << 10)
->   
-> +/* OTP command */
-> +#define SBC_OTP_CMD_READ 0x23b1e361
-> +#define SBC_OTP_CMD_PROG 0x23b1e364
-> +
->   static uint64_t aspeed_sbc_read(void *opaque, hwaddr addr, unsigned int size)
->   {
->       AspeedSBCState *s = ASPEED_SBC(opaque);
-> @@ -57,6 +65,87 @@ static uint64_t aspeed_sbc_read(void *opaque, hwaddr addr, unsigned int size)
->       return s->regs[addr];
->   }
->   
-> +static bool aspeed_sbc_otpmem_read(AspeedSBCState *s,
-> +                                   uint32_t otp_addr, Error **errp)
-> +{
-> +    MemTxResult ret;
-> +    AspeedOTPMemState *otpmem = &s->otpmem;
-> +    uint32_t value, otp_offset;
-> +
-> +    otp_offset = otp_addr << 2;
-> +    ret = address_space_read(&otpmem->as, otp_offset, MEMTXATTRS_UNSPECIFIED,
-> +                             &value, sizeof(value));
-> +    if (ret != MEMTX_OK) {
-> +        error_setg(errp, "Failed to read OTP memory, addr = %x\n", otp_addr);
+Hi Eric,
 
-Since the error can not be propagated, doing directly here a :
-  
-    qemu_log_mask(LOG_GUEST_ERROR, ...)
+>-----Original Message-----
+>From: Eric Auger <eric.auger@redhat.com>
+>Subject: Re: [PATCH v2 12/19] intel_iommu: Introduce a new pasid cache
+>invalidation type FORCE_RESET
+>
+>Hi Zhenzhong,
+>
+>On 6/20/25 9:18 AM, Zhenzhong Duan wrote:
+>> FORCE_RESET is different from GLOBAL_INV which updates pasid cache if
+>> underlying pasid entry is still valid, it drops all the pasid caches.
+>>
+>> FORCE_RESET isn't a VTD spec defined invalidation type for pasid cache,
+>> only used internally in system level reset.
+>this comment shall be put in the code, along with the VTDPCInvType
+>because the reader may look for that cmd in the spec.
 
-seems cleaner. Same for address_space_write()
+Good idea, will do.
 
-
-> +        return false;
-> +    }
-> +    s->regs[R_CAMP1] = value;
-> +    trace_aspeed_sbc_otp_read(otp_addr, value);
-> +
-> +    return true;
-> +}
-> +
-> +static bool aspeed_sbc_otpmem_prog(AspeedSBCState *s,
-> +                                   uint32_t otp_addr, Error **errp)
-> +{
-> +    MemTxResult ret;
-> +    AspeedOTPMemState *otpmem = &s->otpmem;
-> +    uint32_t value = s->regs[R_CAMP1];;
-> +
-> +    ret = address_space_write(&otpmem->as, otp_addr, MEMTXATTRS_UNSPECIFIED,
-> +                        &value, sizeof(value));
-> +    if (ret != MEMTX_OK) {
-> +        error_setg(errp, "Failed to write OTP memory, addr = %x\n", otp_addr);
-> +        return false;
-> +    }
-> +
-> +    trace_aspeed_sbc_otp_prog(otp_addr, value);
-> +
-> +    return true;
-> +}
-> +
-> +static void aspeed_sbc_handle_command(void *opaque, uint32_t cmd)
-> +{
-> +    AspeedSBCState *s = ASPEED_SBC(opaque);
-> +    AspeedSBCClass *sc = ASPEED_SBC_GET_CLASS(opaque);
-> +    Error *local_err = NULL;
-> +    bool ret = false;
-> +    uint32_t otp_addr;
-> +
-> +    if (!sc->has_otpmem) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: OTP memory is not supported\n",
-> +                      __func__);
-> +        return;
-> +    }
-> +
-> +    s->regs[R_STATUS] &= ~(OTP_MEM_IDLE | OTP_IDLE);
-> +    otp_addr = s->regs[R_ADDR];
-> +
-> +    switch (cmd) {
-> +    case SBC_OTP_CMD_READ:
-> +        ret = aspeed_sbc_otpmem_read(s, otp_addr, &local_err);
-> +        break;
-> +    case SBC_OTP_CMD_PROG:
-> +        ret = aspeed_sbc_otpmem_prog(s, otp_addr, &local_err);
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: Unknown command 0x%x\n",
-> +                      __func__, cmd);
-> +        break;
-> +    }
-> +
-> +    trace_aspeed_sbc_handle_cmd(cmd, otp_addr, ret);
-> +    if (ret == false && local_err) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: %s\n",
-> +                      __func__, error_get_pretty(local_err));
-> +        error_free(local_err);
-> +    }
-> +    s->regs[R_STATUS] |= (OTP_MEM_IDLE | OTP_IDLE);
-> +}
-> +
->   static void aspeed_sbc_write(void *opaque, hwaddr addr, uint64_t data,
->                                 unsigned int size)
->   {
-> @@ -78,6 +167,9 @@ static void aspeed_sbc_write(void *opaque, hwaddr addr, uint64_t data,
->                         "%s: write to read only register 0x%" HWADDR_PRIx "\n",
->                         __func__, addr << 2);
->           return;
-> +    case R_CMD:
-> +        aspeed_sbc_handle_command(opaque, data);
-> +        return;
->       default:
->           break;
->       }
-> @@ -115,6 +207,26 @@ static void aspeed_sbc_reset(DeviceState *dev)
->       s->regs[R_QSR] = s->signing_settings;
->   }
->   
-> +static void aspeed_sbc_instance_init(Object *obj)
-> +{
-> +    AspeedSBCClass *sc = ASPEED_SBC_GET_CLASS(obj);
-> +    AspeedSBCState *s = ASPEED_SBC(obj);
-> +    Error *local_errp = NULL;
-> +    bool ret;
-> +
-> +    if (sc->has_otpmem) {
-> +        object_initialize_child(OBJECT(s), "otp", &s->otpmem,
-> +                                TYPE_ASPEED_OTPMEM);
-> +        ret = qdev_realize(DEVICE(&s->otpmem), NULL, &local_errp);
-
-
-The realize part should be done under aspeed_sbc_realize(). Before you
-could set the OTP object size too. As you wish.
-
-
-Thanks,
-
-C.
-
-
-
-> +        if (!ret && local_errp) {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "%s: %s\n",
-> +                          __func__, error_get_pretty(local_errp));
-> +            error_free(local_errp);
-> +        }
-> +    }
-> +}
-> +
->   static void aspeed_sbc_realize(DeviceState *dev, Error **errp)
->   {
->       AspeedSBCState *s = ASPEED_SBC(dev);
-> @@ -155,6 +267,7 @@ static const TypeInfo aspeed_sbc_info = {
->       .name = TYPE_ASPEED_SBC,
->       .parent = TYPE_SYS_BUS_DEVICE,
->       .instance_size = sizeof(AspeedSBCState),
-> +    .instance_init = aspeed_sbc_instance_init,
->       .class_init = aspeed_sbc_class_init,
->       .class_size = sizeof(AspeedSBCClass)
->   };
-> diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-> index e3f64c0ff6..6f216a77fd 100644
-> --- a/hw/misc/trace-events
-> +++ b/hw/misc/trace-events
-> @@ -90,6 +90,11 @@ slavio_sysctrl_mem_readl(uint32_t ret) "Read system control 0x%08x"
->   slavio_led_mem_writew(uint32_t val) "Write diagnostic LED 0x%04x"
->   slavio_led_mem_readw(uint32_t ret) "Read diagnostic LED 0x%04x"
->   
-> +# aspped_sbc.c
-> +aspeed_sbc_handle_cmd(uint32_t cmd, uint32_t addr, bool ret) "Handling command 0x%" PRIx32 " for OTP addr 0x%" PRIx32 " Result: %d"
-> +aspeed_sbc_otp_read(uint32_t addr, uint32_t value) "OTP Memory read: addr 0x%" PRIx32 " value 0x%" PRIx32
-> +aspeed_sbc_otp_prog(uint32_t addr, uint32_t value) "OTP Memory write: addr 0x%" PRIx32 " value 0x%" PRIx32
-> +
->   # aspeed_scu.c
->   aspeed_scu_write(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
->   aspeed_scu_read(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
+Thanks
+Zhenzhong
 
 
