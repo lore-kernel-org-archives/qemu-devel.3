@@ -4,91 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E085FC7EE30
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 18:27:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B5FAC7EE31
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 18:44:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUrJV-0003nN-Ip; Thu, 26 Jun 2025 14:27:09 -0400
+	id 1uUrZe-0006DZ-Ld; Thu, 26 Jun 2025 14:43:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1uUrJU-0003nF-Eh
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 14:27:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uUrZc-0006DA-7V
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 14:43:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1uUrJS-0000vT-5k
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 14:27:08 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uUrZX-0003Um-F9
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 14:43:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750962423;
+ s=mimecast20190719; t=1750963420;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4clI53HhHp7nAuGK6FEGiuar6XY3fN+YHyCHBP1DVhw=;
- b=YQAf8Wl5eX5xTc/H8/DBkOLCYQHFkowQWuNqFSsM8dPmGY/lFxrZD5q86BklNPXsjnzymN
- Z5F+NFNFj8SRsXjfTI7pXzMlNF85fAanFHOlDB7DiHj03Bit8ebZiW1FCjx14wWjI/pGDp
- ydOAotbyWH1iC392oKdvRO9ZxDzEgKA=
-Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
- [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-648-QqBIOLxUOf6xJ6T02X8sxw-1; Thu, 26 Jun 2025 14:27:01 -0400
-X-MC-Unique: QqBIOLxUOf6xJ6T02X8sxw-1
-X-Mimecast-MFC-AGG-ID: QqBIOLxUOf6xJ6T02X8sxw_1750962421
-Received: by mail-oa1-f69.google.com with SMTP id
- 586e51a60fabf-2e9b1c38495so166906fac.3
- for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 11:27:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750962421; x=1751567221;
- h=content-transfer-encoding:mime-version:organization:references
- :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4clI53HhHp7nAuGK6FEGiuar6XY3fN+YHyCHBP1DVhw=;
- b=tGrR3zqyvwua7zqEERWb225FsRoQvJf9nznEhsXSLb2KKwYmD2VWYMM4yCb/2IdgPq
- LiNdpi4bldXfJaAA2zoanlyQk7yCwFSI6Vdle1gQ0uZvWDU/c5ZznoCUGxyQ2BVf8eo6
- TQsKb1hYofQfl8Qs8osswiYWI6tHTuqwV4a3zM5+DqwdJ6HsC9jSgWLVqND5C3vHAJxK
- wp3R6wzkrvXejsWSdGye6hRo0WVzSHp5s4hlyQkd1E6fYRAofwJrDP5OG6vdDnnw2leM
- Nz31N/4UdIW3frhvC285wUkb4923n9aELQ10Ms6ND9Euehd1xKx7eEijjRB9Bfh5Zxsk
- 6+cA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW2Sy7yE2x2QMemRIGrJwxkgjmfzUW9kyocZAFuVcNaWKxqc7kuMa6LJFiD2h4iseuc3o/PFscW/676@nongnu.org
-X-Gm-Message-State: AOJu0YxaiWAgHvvEKhaQ07TlbT8tcpHigl3p5NBTSp3ITFFWBllXAZ+3
- dPTx7sgjrhCejMplaWAp16SCjy5DLKm8qLbFg6x7Usua5ihCSJdWqBhXz9JhwUiuQ/y4BLI5+/y
- CUOzrH+cbV/USPFxsLrkYTYbamSPx7lWyT5F0TpVTbKl4/f3Yzy0ufhpM
-X-Gm-Gg: ASbGncsw2YjWf3bR6tES+BeLa9ZJD8Kzz3mwAX6vSKhltmqf2KF26kFc5YWo8/X/dz8
- pgV45rJAtPrTSi8cQVy4CO2kSlfaeYKWKV9NM/j7lm/d3n2j5TKNqClrisgGMlMTA5Co+yoqw/p
- 2EBeZsbMmPIJi9HaaDl7Rhfbz2fdRZzfKxu+nJzZt06qUP+YnXBtKDRqz3XOT54cKwfPZOhILNO
- ByugXnVO6gaO+IXATc9nsi1OdGEJPI3oT+Qf0+jj73001zoG3nroOZIV/H05GTbWvlchQbQDpT0
- WaPrEhaIbaQC06Kd+h67FY2Gkg==
-X-Received: by 2002:a05:6820:a107:b0:611:a243:3889 with SMTP id
- 006d021491bc7-611b901c613mr65442eaf.1.1750962420902; 
- Thu, 26 Jun 2025 11:27:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGaOL67kMe0avYg3OC5VLJKmII9cZ0nHo/2R3x7WCHmVNwqiaVtvfdZ8mhULgQyQztJwiN7kw==
-X-Received: by 2002:a05:6820:a107:b0:611:a243:3889 with SMTP id
- 006d021491bc7-611b901c613mr65435eaf.1.1750962420476; 
- Thu, 26 Jun 2025 11:27:00 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-611b8474865sm46437eaf.1.2025.06.26.11.26.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Jun 2025 11:26:58 -0700 (PDT)
-Date: Thu, 26 Jun 2025 12:26:54 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Tomita Moeko <tomitamoeko@gmail.com>
-Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] vfio/pci: Introduce x-pci-class-code option
-Message-ID: <20250626122654.1d62f8c8.alex.williamson@redhat.com>
-In-Reply-To: <92845463-8315-4ad8-9eab-eb2f4972cbaa@gmail.com>
-References: <20250528155548.29344-1-tomitamoeko@gmail.com>
- <20250528123019.5ff938ed.alex.williamson@redhat.com>
- <d6c3adba-40a0-42ce-9578-2e0a4a68fe2b@gmail.com>
- <92845463-8315-4ad8-9eab-eb2f4972cbaa@gmail.com>
-Organization: Red Hat
+ bh=hM9iXESrITi5qXUgD0C966+7uVuon8MGl66zQpBrmXY=;
+ b=fasW6xohqzsv4AhItMgcZw441ik6oOhi3q/FsOcFMcDlDdLXSTWEmjCKsd13S0sNK4CWBf
+ U4uZRoVqMAOhJU13LvIoSMBTeXSJ9m0dQJ4DwDuK3G3TKfoS+Jbobwmdgn/WHo7RM9ZiRZ
+ LoFoKZIqBV6G4rH1aVzKNb82GMustng=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-625-Ujan1bDAN5qPzSK5Kl2T5g-1; Thu,
+ 26 Jun 2025 14:43:38 -0400
+X-MC-Unique: Ujan1bDAN5qPzSK5Kl2T5g-1
+X-Mimecast-MFC-AGG-ID: Ujan1bDAN5qPzSK5Kl2T5g_1750963417
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 45ABC1944A8D; Thu, 26 Jun 2025 18:43:37 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.90])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 97F5D30002C0; Thu, 26 Jun 2025 18:43:36 +0000 (UTC)
+Date: Thu, 26 Jun 2025 14:43:35 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Tanish Desai <tanishdesai37@gmail.com>
+Cc: qemu-devel@nongnu.org, mads@ynddal.dk, pbonzini@redhat.com
+Subject: Re: [PATCH v3] tracetool: generates conitional checks when needed
+Message-ID: <20250626184335.GA152840@fedora>
+References: <20250624190336.GA19307@fedora>
+ <20250625123023.33428-1-tanishdesai37@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=alex.williamson@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="3n//5Zgar1wd4WYt"
+Content-Disposition: inline
+In-Reply-To: <20250625123023.33428-1-tanishdesai37@gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -113,97 +85,261 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 17 Jun 2025 08:56:41 +0800
-Tomita Moeko <tomitamoeko@gmail.com> wrote:
 
-> On 2025/5/29 18:41, Tomita Moeko wrote:
-> > On 2025/5/29 2:30, Alex Williamson wrote:  
-> >> On Wed, 28 May 2025 23:55:48 +0800
-> >> Tomita Moeko <tomitamoeko@gmail.com> wrote:
-> >>  
-> >>> Introduce x-pci-class-code option to allow users to override PCI class
-> >>> code of a device, similar to the existing x-pci-vendor-id option. Only
-> >>> the lower 24 bits of this option are used, though a uint32 is used here
-> >>> for determining whether the value is valid and set by user.
-> >>>
-> >>> Additionally, to prevent exposing VGA ranges on non-VGA devices, the
-> >>> x-vga=on option requires x-pci-class-code is either unset or set to
-> >>> VGA controller class.
-> >>>
-> >>> This is mainly intended for IGD devices that expose themselves either
-> >>> as VGA controller (primary display) or Display controller (non-primary
-> >>> display). The UEFI GOP driver depends on the device reporting a VGA
-> >>> controller class code (0x030000).
-> >>>
-> >>> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
-> >>> ---
-> >>> v2:
-> >>> * Add vdev class code check in vfio_populate_vga().
-> >>> * Fix type in trace-events.
-> >>> Link: https://lore.kernel.org/all/20250524153102.19747-1-tomitamoeko@gmail.com/
-> >>>
-> >>>  hw/vfio/pci.c        | 25 +++++++++++++++++++++++++
-> >>>  hw/vfio/pci.h        |  1 +
-> >>>  hw/vfio/trace-events |  1 +
-> >>>  3 files changed, 27 insertions(+)
-> >>>
-> >>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> >>> index b1250d85bf..d57cb7356e 100644
-> >>> --- a/hw/vfio/pci.c
-> >>> +++ b/hw/vfio/pci.c
-> >>> @@ -2726,6 +2726,14 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
-> >>>          return false;
-> >>>      }
-> >>>  
-> >>> +    /* vdev class should be either unmodified (PCI_ANY_ID), or VGA controller */
-> >>> +    if ((vdev->class_code != PCI_ANY_ID) &&
-> >>> +        (vdev->class_code != (PCI_CLASS_DISPLAY_VGA << 8)) &&
-> >>> +        (vdev->class_code != (PCI_CLASS_NOT_DEFINED_VGA << 8))) {
-> >>> +        error_setg(errp, "vdev is not a VGA device");
-> >>> +        return false;
-> >>> +    }  
-> >>
-> >> I think we should follow the scheme used for vendor_id and device_id to
-> >> populate the struct field when not specified.  That let's us use it
-> >> more easily and consistently for things like this.  
-> > 
-> > Hi, Alex
-> > 
-> > The class code override takes place in vfio_pci_config_setup(), where
-> > is after vfio_populate_vga() is called in vfio_populate_device(). So
-> > I have to check if it equals to default or VGA class code here, and
-> > not initializing the sturct field with device value. If we decide to
-> > initialize it for other purpose, I personally think we should also
-> > save the subvendor/subdevice value as well.  
-> 
-> It have been several weeks, wondering if there is further comments.
+--3n//5Zgar1wd4WYt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hi Moeko,
+On Wed, Jun 25, 2025 at 12:30:23PM +0000, Tanish Desai wrote:
+> Adds generate_conditional, allowing backends to wrap generate()
+> output in a trace_event_get_state(...) check if needed.
+>=20
+> Removes no_check by inlining its logic into trace_foo(...).
+> Also ensures the generated code is formatted properly.
+>=20
+> Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
+> ---
+>  scripts/tracetool/backend/__init__.py |  3 +++
+>  scripts/tracetool/backend/ftrace.py   | 16 +++++++-------
+>  scripts/tracetool/backend/log.py      | 26 +++++++++++++----------
+>  scripts/tracetool/backend/simple.py   |  4 ++++
+>  scripts/tracetool/backend/syslog.py   |  4 ++++
+>  scripts/tracetool/format/h.py         | 30 ++++++++++-----------------
+>  6 files changed, 46 insertions(+), 37 deletions(-)
 
-Thank you for your patience.  I'm still a little confused how this
-works.  AIUI you have an GPU reported as a display controller, but you
-want to change the class code to VGA, despite there being no VGA region
-provided by vfio, right?  So the GOP driver only depends on the legacy
-VGA class code and not the VGA regions.
+This patch does not apply to qemu.git/master. When posting new revisions
+of patches, please resend the entire patch series that this belongs to
+or send it as a separate patch with the Based-on: <message-id> trailer
+to let people (and tools) know which unmerged patch series it depends
+on.
 
-vfio_populate_vga() initializes the vfio VGA region and calls
-pci_register_vga().  Therefore with the ability to modify the class
-code we only want to register the device as VGA if the class code is
-unmodified, where the VGA vfio regions will only exist if the device is
-VGA, or if the class override is VGA, where the VGA vfio regions again
-only exist if the device is actually VGA and therefore the override is
-a no-op.  But we only get to vfio_populate_vga() if the user specifies
-x-vga=on.  So I think we're really just trying to prevent a physical VGA
-device overridden as a non-VGA class code, but still specified with
-x-vga=on, from calling pci_register_vga(), right?
+>=20
+> diff --git a/scripts/tracetool/backend/__init__.py b/scripts/tracetool/ba=
+ckend/__init__.py
+> index c4456a5efd..dc0806f8d0 100644
+> --- a/scripts/tracetool/backend/__init__.py
+> +++ b/scripts/tracetool/backend/__init__.py
+> @@ -118,6 +118,9 @@ def generate_begin(self, events, group):
+>      def generate(self, event, group):
+>          self._run_function("generate_%s", event, group)
+> =20
+> +    def generate_conditional(self, hasCondition):
+> +        self._run_function("generate_%s_conditional", hasCondition)
+> +   =20
+>      def generate_unconditional(self, event, group):
+>          self._run_function("generate_%s_unconditional", event, group)
+>     =20
+> diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/back=
+end/ftrace.py
+> index 2d6d608add..d579139532 100644
+> --- a/scripts/tracetool/backend/ftrace.py
+> +++ b/scripts/tracetool/backend/ftrace.py
+> @@ -30,17 +30,15 @@ def generate_h(event, group):
+>      if len(event.args) > 0:
+>          argnames =3D ", " + argnames
+> =20
+> -    out('    {',
+> -        '        char ftrace_buf[MAX_TRACE_STRLEN];',
+> +    out('        char ftrace_buf[MAX_TRACE_STRLEN];',
+>          '        int unused __attribute__ ((unused));',
+>          '        int trlen;',
+>          '#line %(event_lineno)d "%(event_filename)s"',
+> -        '            trlen =3D snprintf(ftrace_buf, MAX_TRACE_STRLEN,',
+> -        '                             "%(name)s " %(fmt)s "\\n" %(argnam=
+es)s);',
+> +        '        trlen =3D snprintf(ftrace_buf, MAX_TRACE_STRLEN,',
+> +        '                         "%(name)s " %(fmt)s "\\n" %(argnames)s=
+);',
+>          '#line %(out_next_lineno)d "%(out_filename)s"',
+> -        '            trlen =3D MIN(trlen, MAX_TRACE_STRLEN - 1);',
+> -        '            unused =3D write(trace_marker_fd, ftrace_buf, trlen=
+);',
+> -        '    }',
+> +        '        trlen =3D MIN(trlen, MAX_TRACE_STRLEN - 1);',
+> +        '        unused =3D write(trace_marker_fd, ftrace_buf, trlen);',
+>          name=3Devent.name,
+>          args=3Devent.args,
+>          event_lineno=3Devent.lineno,
+> @@ -52,3 +50,7 @@ def generate_h(event, group):
+>  def generate_h_backend_dstate(event, group):
+>      out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
+>          event_id=3D"TRACE_" + event.name.upper())
+> +
+> +
+> +def generate_h_conditional(hasCondition):
+> +    hasCondition[0] =3D hasCondition[0] or True
+> diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend=
+/log.py
+> index 35a3aeee55..119e24af04 100644
+> --- a/scripts/tracetool/backend/log.py
+> +++ b/scripts/tracetool/backend/log.py
+> @@ -31,22 +31,22 @@ def generate_h(event, group):
+>      if len(event.args) > 0:
+>          argnames =3D ", " + argnames
+> =20
+> -    out('    if (qemu_loglevel_mask(LOG_TRACE)) {',
+> -        '        if (message_with_timestamp) {',
+> -        '            struct timeval _now;',
+> -        '            gettimeofday(&_now, NULL);',
+> +    out('        if (qemu_loglevel_mask(LOG_TRACE)) {',
+> +        '            if (message_with_timestamp) {',
+> +        '                struct timeval _now;',
+> +        '                gettimeofday(&_now, NULL);',
+>          '#line %(event_lineno)d "%(event_filename)s"',
+> -        '            qemu_log("%%d@%%zu.%%06zu:%(name)s " %(fmt)s "\\n",=
+',
+> -        '                     qemu_get_thread_id(),',
+> -        '                     (size_t)_now.tv_sec, (size_t)_now.tv_usec',
+> -        '                     %(argnames)s);',
+> +        '                qemu_log("%%d@%%zu.%%06zu:%(name)s " %(fmt)s "\=
+\n",',
+> +        '                         qemu_get_thread_id(),',
+> +        '                         (size_t)_now.tv_sec, (size_t)_now.tv_u=
+sec',
+> +        '                         %(argnames)s);',
+>          '#line %(out_next_lineno)d "%(out_filename)s"',
+> -        '        } else {',
+> +        '            } else {',
+>          '#line %(event_lineno)d "%(event_filename)s"',
+> -        '            qemu_log("%(name)s " %(fmt)s "\\n"%(argnames)s);',
+> +        '                qemu_log("%(name)s " %(fmt)s "\\n"%(argnames)s)=
+;',
+>          '#line %(out_next_lineno)d "%(out_filename)s"',
+> +        '            }',
+>          '        }',
+> -        '    }',
+>          event_lineno=3Devent.lineno,
+>          event_filename=3Dos.path.relpath(event.filename),
+>          name=3Devent.name,
+> @@ -57,3 +57,7 @@ def generate_h(event, group):
+>  def generate_h_backend_dstate(event, group):
+>      out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
+>          event_id=3D"TRACE_" + event.name.upper())
+> +
+> +   =20
+> +def generate_h_conditional(hasCondition):
+> +    hasCondition[0] =3D hasCondition[0] or True
+> diff --git a/scripts/tracetool/backend/simple.py b/scripts/tracetool/back=
+end/simple.py
+> index ce8036f5da..316f39727b 100644
+> --- a/scripts/tracetool/backend/simple.py
+> +++ b/scripts/tracetool/backend/simple.py
+> @@ -97,3 +97,7 @@ def generate_c(event, group):
+>      out('    trace_record_finish(&rec);',
+>          '}',
+>          '')
+> +
+> +
+> +def generate_h_conditional(hasCondition):
+> +    hasCondition[0] =3D hasCondition[0] or True
+> diff --git a/scripts/tracetool/backend/syslog.py b/scripts/tracetool/back=
+end/syslog.py
+> index f84cec641c..a224bd1922 100644
+> --- a/scripts/tracetool/backend/syslog.py
+> +++ b/scripts/tracetool/backend/syslog.py
+> @@ -43,3 +43,7 @@ def generate_h(event, group):
+>  def generate_h_backend_dstate(event, group):
+>      out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
+>          event_id=3D"TRACE_" + event.name.upper())
+> +
+> +
+> +def generate_h_conditional(hasCondition):
+> +    hasCondition[0] =3D hasCondition[0] or True
+> diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
+> index 7bbe6d3148..7a5a32d518 100644
+> --- a/scripts/tracetool/format/h.py
+> +++ b/scripts/tracetool/format/h.py
+> @@ -59,21 +59,10 @@ def generate(events, backend, group):
+> =20
+>          out('    false)')
+> =20
+> -        # tracer without checks
+> -        out('',
+> -            'static inline void %(api)s(%(args)s)',
+> -            '{',
+> -            api=3De.api(e.QEMU_TRACE_NOCHECK),
+> -            args=3De.args)
+> -
+> -        if "disable" not in e.properties:
+> -            backend.generate(e, group)
+> -
+> -        out('}')
+> -
+>          event_id =3D 'TRACE_' + e.name.upper()
+>          cond =3D "trace_event_get_state(%s)" % event_id
+> -
+> +        hasCondition =3D [False]
+> +        backend.generate_conditional(hasCondition)
+>          out('',
+>              'static inline void %(api)s(%(args)s)',
+>              '{',
+> @@ -83,13 +72,16 @@ def generate(events, backend, group):
+>          if "disable" not in e.properties:
+>              backend.generate_unconditional(e, group)
+> =20
+> -        out('    if (%(cond)s) {',
+> -            '        %(api_nocheck)s(%(names)s);',
+> -            '    }',
+> -            '}',
+> -            api_nocheck=3De.api(e.QEMU_TRACE_NOCHECK),
+> -            names=3D", ".join(e.args.names()),
+> +        if hasCondition[0]:
+> +            out('    if (%(cond)s) {',
+>              cond=3Dcond)
+> +       =20
+> +        if "disable" not in e.properties:
+> +            backend.generate(e, group)
+> +
+> +        if hasCondition[0]:
+> +            out('    }')
+> +        out('}')
 
-What if we just separate pci_register_vga() out of vfio_populate_vga()?
-Then we can continue the semantics of making class_code valid
-regardless of whether it's been specified and around the point where we
-call vfio_bars_register() we can also call pci_register_vga() if and
-only if the class code is VGA and vdev->vga is configured.  Does that
-make sense?  Thanks,
+This doesn't handle cases where some backends (like dtrace) do not want
+trace_event_get_state() but some backends (like simple) do. You can test
+that case with ./configure --enable-trace-backends=3Ddtrace,simple.
 
-Alex
+Both types of backends need to have their generate function
+called separately:
+
+   ...backends without the conditional...
+   if (trace_event_get_state(...)) {
+       ...backends with the conditional...
+   }
+
+The hasCondition list argument can be avoided by returning bool from
+generate_h_conditional() instead of modifying the argument. That's a
+little cleaner than the pass-by-reference trick where each backend has
+to logical-or in their value.
+
+The generate_h_conditional() function could also be replace with a
+module variable like the existing PUBLIC variable. That way backends can
+simply declare what they want instead of implementing a function:
+
+  CHECK_TRACE_EVENT_GET_STATE =3D True # or False
+
+And the code in h.py would know whether to call the generate function
+inside the conditional or not. (I snuck in another suggestion: changing
+the name from "conditional", which is a general term, to
+"check_trace_event_get_state" to be more specific about what it does.)
+
+Stefan
+
+--3n//5Zgar1wd4WYt
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmhdlNcACgkQnKSrs4Gr
+c8h8/QgAsFi0scHCffMnbpi3+H9Mykk64CkaB9OugmZJB+6UPt8lCvayLIZavu3r
+DATAEdoeFqsGyRNhWpM73wsWCyJY+HopOBSMFNj8a7B+Vg6H0/Si3dTJNy2Ta4Vx
+wUtHTuIY+HpriOoUoQtJiht0TRlrF7idlp8PqmQ52pXH1yCfKgUAvWh/J/eOUPBC
+9z875shC6sg9E9kpTJIkyJ4dtiLHDmEhxa5pYRbNnM/iIXUD1lqn1irSGJFX0OqK
+QACW4+NEUJ9aBXuHqBoqhKaEB5Ic3SOLM6C1Q099ikfR5xVVSWJpRlm/UxIZDjXZ
+mH94Df5+jZyV2JgVjGm+AuC55ldXhw==
+=gt4w
+-----END PGP SIGNATURE-----
+
+--3n//5Zgar1wd4WYt--
 
 
