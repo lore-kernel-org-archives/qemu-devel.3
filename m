@@ -4,90 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4081CC7EE30
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 16:21:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B2B9C7EE31
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 16:38:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUpLP-0008Il-Ml; Thu, 26 Jun 2025 12:20:59 -0400
+	id 1uUpbU-0002tH-Rv; Thu, 26 Jun 2025 12:37:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
- id 1uUpLN-0008GI-Sj
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 12:20:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
- id 1uUpLL-0006ff-PV
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 12:20:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750954853;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mibrzmvrz5XGlavJ78bUtxsGtdBP7YPz+yoHAlVEcb0=;
- b=OFjMR6J8+KfuTBLM2NTXocPUDE4Ec076cHZwGCV1SF4cZgh8g0nbAX4eAHapipmJeV1WoR
- NGSuXKr+AhUKd9Xg6ksinNUxUtO4IzQrhnTcbAdjBGfVCiYIHZ3JeaJFKatKPfPEllwoNG
- QBOpdggJgYFsNOAVdEpP+VzOYD9TZr4=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-249-o-FRlQ5HMHKWjxO97Sp0QA-1; Thu, 26 Jun 2025 12:20:50 -0400
-X-MC-Unique: o-FRlQ5HMHKWjxO97Sp0QA-1
-X-Mimecast-MFC-AGG-ID: o-FRlQ5HMHKWjxO97Sp0QA_1750954849
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7d097fd7b32so308540585a.2
- for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 09:20:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uUpbT-0002t7-FB
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 12:37:35 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uUpbR-0001G4-4X
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 12:37:35 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-451d54214adso8670285e9.3
+ for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 09:37:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1750955849; x=1751560649; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sYYWto7eRTjBwTGBrT/RpjPpZf99XCQPbMe+pvgjw00=;
+ b=ODrNS9sKYCJlRD9LHS3PNj/8jUgQ35oG9clK60gqFuOGnNyHxEX307Kf3dEivXSpab
+ unAzHqvnoTiGgLMc2h/2bZHrAc/npNH1kDiG6fRAPNLP8BdGCZ4ibHyJ6Y5/FwFvyTb/
+ vS9dMBiTJP6EoSgqmmTP02M73BAErxVItCjXNQ4bW4nnZIw4j8BBj7RKs+zZj/9zaA+O
+ KVJAEvfW0DTBJIZ7mrh39k92Q+I4UD2+j+BnolBQ9reuhUNPPzk9pACghLAlH5UANfPS
+ /TpTBvKDbS6D09FbfPkyJ5u7kB8LQwnLbPqMmOzVWxnkfqZnAc80LOdszGfbnVLdYH2g
+ gjYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750954849; x=1751559649;
- h=cc:to:subject:message-id:date:in-reply-to:mime-version:references
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mibrzmvrz5XGlavJ78bUtxsGtdBP7YPz+yoHAlVEcb0=;
- b=JC8qCfWWN63UDH8t8+G4lRvEKKkHXiRZR56L7TKFkNHBaglaWbftrLqwgws3KHsmjg
- U57N8CFC+8JYwl1py1jltlTMX3yt6QmhCbflbB7HbrpCZL0Bz4ywBGIpJugWgSC2nK/V
- VAo/ukGPtLDTihP5TvIj08ZVk5i2wu5eTzGL0v5GiGUZhMvef7IJv/8A47X478GItXz8
- YgaU0KrXkZ1IH9e5RmrMznFspY9aHkUUo+qibsazaUox7EGMoGwXQJcHXWFr0pRGG5Fd
- +e9uHHdvFaDQWx+CbSpRIhoc2xAm/N9GoUMLBvRoo00dcHvRsmiWStXuJ4qPG4Zb9i/x
- 9Zew==
-X-Gm-Message-State: AOJu0Yxpsyy93K9/YauK2mbD1DNpTITAMbBi/UOXV1m23vEPVGUViPpu
- c7OlDokbRT2GAbzrWlxuchfm/SUvZ74qchfNPO0zPXDBGarmt/wO67P9sdHxIShDyGAhcGH9GCe
- EwCIEh5g0jYF5WO4WnQGVUjMxN5+R1b7Xqn3HHg+qQt0Ut7Jnn11fttEiILHyUY8HlEwtic73IZ
- jNPjDVMfArFKi7sd5vCpIiy2YlhRJYfZU=
-X-Gm-Gg: ASbGnctWX8aewx121JHt8CzfBtndshNe3LvVu2K3aEVNRSa4LRINiwq5ff5u0jB7KXS
- 3/op9GGPAniDcNcbgEXYseJqpLjGnFCHpeWc4QG3KMqyxO3nwM2eMdVW0OReXcVM3npRxHlk6/5
- v2
-X-Received: by 2002:a05:620a:178e:b0:7d3:8ca0:65c6 with SMTP id
- af79cd13be357-7d44391a4e6mr19449085a.20.1750954849418; 
- Thu, 26 Jun 2025 09:20:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGMnZSXXyWIEgf88nbSd7nBnGzjB2XzZhexT5yHsUwuXJfs7G3qNiV3phVPOCcVqPO/ybZe+j6Od4vfplKahNg=
-X-Received: by 2002:a05:620a:178e:b0:7d3:8ca0:65c6 with SMTP id
- af79cd13be357-7d44391a4e6mr19445385a.20.1750954849023; Thu, 26 Jun 2025
- 09:20:49 -0700 (PDT)
-Received: from 744723338238 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 26 Jun 2025 09:20:48 -0700
-From: Andrea Bolognani <abologna@redhat.com>
-References: <20250415192515.232910-1-richard.henderson@linaro.org>
- <20250415192515.232910-94-richard.henderson@linaro.org>
- <CABJz62OFyaXitSdge4M9_oTk34a5aocLJLFYfkOGXc0BToOgVA@mail.gmail.com>
+ d=1e100.net; s=20230601; t=1750955849; x=1751560649;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=sYYWto7eRTjBwTGBrT/RpjPpZf99XCQPbMe+pvgjw00=;
+ b=xPlOo1kHVAFdQZU8u6PmBu0RDMmzNvYj/1gJZqBKjdW5eFVq/FPDeRWtz/ssOREwY6
+ bfnMkMQqBkMDYZLf1c0u0KbdYCdqdcbx+WlwAOS28KgaBue0aM4WFUFrcAPozcN5G1LP
+ hsdaPfmGd7RMQqPEzJLPXIpeORScb734ltRMRNDA3w6o8npi6eI+1exn39ktF+0MZIfn
+ HaBrrzUjSV+YfqHrnOk4ZSviF/+XGlqixu+uxEmTfKwlzI696fhhJoFHGziSoGSg8dY3
+ dV1llUk24lnlelhD+mcDimqK7fQ4iesNzCX8rBRd4A8FmpS161w9EX9lPDOa6nqmpmi0
+ C1dQ==
+X-Gm-Message-State: AOJu0YwqSXypwdVaJtoXYtAqGYtRpO/nsEVdNipHEbNEiU3ydIPOkhth
+ Bl8c2lc1EoFtngsJ4mrENWy7NG/+zPHjNOrw1XoDxRMXMWBLHwKwtlmgU/t6ndV657c=
+X-Gm-Gg: ASbGncuwM6/Gq+BfUyl2lQ+Qctz6zkJgKMtBAsxG87lNPhHwvrxoGywKmqkxiUVBAol
+ mACLww8C9fMrNFh6sbCydaghy5442sIExWE+Xa4//nIqs/+jaCio1Hrc2Y55zoKbAtUKlufCkUC
+ 0xpa8ukt9fMl1UTdp5DDFkIrcFUYY2eLV2QKyDqdxNxQ8HxfU/K1v3rR5VxZzA/NvPDZFUjzH2k
+ 6rOYhtwo6AHCNu8mgCmhFkU5gQtWtSx7UWfT3IH56VMU0xgS86xEZAMNGLCUyB4Hy9ooUpiGGN7
+ sEypuzQkK7Podgh6x3iN2xDQnumEsxZgrCms3CMp5n1RVtoWUbLyQFjjiZPwa4I=
+X-Google-Smtp-Source: AGHT+IEK8sFabI1UwufYaJkgbCPMf1Jayk9XnO9avenWIB8d7XRrv6N8Upgrj7vhyQBZ4KwAvf92hA==
+X-Received: by 2002:a05:6000:2082:b0:3a3:7ba5:93a5 with SMTP id
+ ffacd0b85a97d-3a8feb85191mr230989f8f.26.1750955848885; 
+ Thu, 26 Jun 2025 09:37:28 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-453814ae64fsm38429945e9.1.2025.06.26.09.37.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 26 Jun 2025 09:37:27 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 9A5ED5F847;
+ Thu, 26 Jun 2025 17:37:26 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Rowan Hart <rowanbhart@gmail.com>
+Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,  Mahmoud Mandour
+ <ma.mandourr@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  Yanan Wang
+ <wangyanan55@huawei.com>,  Alexandre Iooss <erdnaxe@crans.org>,  Eduardo
+ Habkost <eduardo@habkost.net>,  Zhao Liu <zhao1.liu@intel.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v14 0/8] Add additional plugin API functions to read and
+ write memory and registers
+In-Reply-To: <87o6ubzxfw.fsf@draig.linaro.org> ("Alex =?utf-8?Q?Benn=C3=A9?=
+ =?utf-8?Q?e=22's?= message of "Wed, 25 Jun 2025 15:51:31 +0100")
+References: <20250624175351.440780-1-rowanbhart@gmail.com>
+ <87o6ubzxfw.fsf@draig.linaro.org>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Thu, 26 Jun 2025 17:37:26 +0100
+Message-ID: <87cyaqzcft.fsf@draig.linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <CABJz62OFyaXitSdge4M9_oTk34a5aocLJLFYfkOGXc0BToOgVA@mail.gmail.com>
-Date: Thu, 26 Jun 2025 09:20:48 -0700
-X-Gm-Features: Ac12FXxBNO3k6BieMMEOTIDO0pBJZdkIDoF3AF3CD3HViVwezSpurTu2xAIhPlg
-Message-ID: <CABJz62OMmmbDjWpp6YkXu2d+hB4HeShgqaa05ZigAVqNQSwjZA@mail.gmail.com>
-Subject: Re: [PATCH v4 093/163] tcg: Convert extract to TCGOutOpExtract
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=abologna@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,59 +110,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 09, 2025 at 06:52:21AM -0700, Andrea Bolognani wrote:
-> On Tue, Apr 15, 2025 at 12:24:04PM -0700, Richard Henderson wrote:
-> > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> > ---
-> >  tcg/tcg.c                        | 20 +++++++++
-> >  tcg/aarch64/tcg-target.c.inc     | 28 +++++++-----
-> >  tcg/arm/tcg-target.c.inc         | 23 +++++-----
-> >  tcg/i386/tcg-target.c.inc        | 77 +++++++++++++++++---------------
-> >  tcg/loongarch64/tcg-target.c.inc | 33 +++++++-------
-> >  tcg/mips/tcg-target.c.inc        | 35 +++++++--------
-> >  tcg/ppc/tcg-target.c.inc         | 35 +++++++--------
-> >  tcg/riscv/tcg-target.c.inc       | 54 +++++++++++-----------
-> >  tcg/s390x/tcg-target.c.inc       | 14 +++---
-> >  tcg/sparc64/tcg-target.c.inc     | 16 ++++---
-> >  tcg/tci/tcg-target.c.inc         |  8 ++--
-> >  11 files changed, 191 insertions(+), 152 deletions(-)
->
-> Hi Richard,
->
-> this seems to have introduced a regression when running on a riscv64
-> host.
->
-> Before the change:
->
->   $ timeout --foreground 1 \
->     ./build/qemu-system-riscv64 -machine virt,accel=tcg \
->     -display none -serial stdio 2>&1 | grep -i opensbi
->   OpenSBI v1.5.1
->
-> After the change, no output is produced.
->
-> This causes the
->
->   qemu:func-quick+func-riscv64 / func-riscv64-riscv_opensbi
->
-> test to stall and eventually fail due to the built-in test suite
-> timeout kicking in.
->
-> Interestingly, I can't reproduce this by running the exact same
-> commands and using the exact same git commits on an x86_64 host.
->
-> Do you have any idea what could be going wrong? I'll happily
-> investigate further if you give me pointers.
+Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
 
-Hi,
+> Rowan Hart <rowanbhart@gmail.com> writes:
+>
+>> This patch series adds several new API functions focused on enabling use
+>> cases around reading and writing guest memory from QEMU plugins. To supp=
+ort
+>> these new APIs, some utility functionality around retrieving information=
+ about
+>> address spaces is added as well.
+>
+> Queued to plugins/next, thanks.
 
-this is still an issue as of f9a3def17b2a.
+So this fails a number of the CI tests, mostly due to 32 bit issues:
 
-Any idea where to look?
+  https://gitlab.com/stsquad/qemu/-/pipelines/1890883927/failures
 
-Thanks.
+The tci failure is easy enough:
 
--- 
-Andrea Bolognani / Red Hat / Virtualization
+--8<---------------cut here---------------start------------->8---
+modified   tests/tcg/x86_64/Makefile.softmmu-target
+@@ -34,9 +34,11 @@ memory: CFLAGS+=3D-DCHECK_UNALIGNED=3D1
+ # Running
+ QEMU_OPTS+=3D-device isa-debugcon,chardev=3Doutput -device isa-debug-exit,=
+iobase=3D0xf4,iosize=3D0x4 -kernel
+=20
++ifeq ($(CONFIG_PLUGIN),y)
+ run-plugin-patch-target-with-libpatch.so:		\
+ 	PLUGIN_ARGS=3D$(COMMA)target=3Dffc0$(COMMA)patch=3D9090$(COMMA)use_hwaddr=
+=3Dtrue
+ run-plugin-patch-target-with-libpatch.so:		\
+ 	CHECK_PLUGIN_OUTPUT_COMMAND=3D$(X64_SYSTEM_SRC)/validate-patch.py $@.out
+ run-plugin-patch-target-with-libpatch.so: patch-target libpatch.so
+ EXTRA_RUNS+=3Drun-plugin-patch-target-with-libpatch.so
++endif
+--8<---------------cut here---------------end--------------->8---
 
+The other problem is trying to stuff a uint64_t into a void * on 32 bit.
+We did disable plugins for 32 bit but then reverted because we were able
+to fixup the cases:
+
+ cf2a78cbbb (deprecation: don't enable TCG plugins by default on 32 bit hos=
+ts)
+ db7a06ade1 (configure: reenable plugins by default for 32-bit hosts)
+
+So I don't what is easier:
+
+ - re-deprecate for 32 bit systems
+ - only build libpatch on 64 bit systems
+ - fix libpatch to handle being built on 32 bit systems
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
