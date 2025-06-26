@@ -4,98 +4,206 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B48DAC7EE2A
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 00:26:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FEB1C7EE30
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 01:44:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUaQu-0004YF-A7; Wed, 25 Jun 2025 20:25:40 -0400
+	id 1uUbeg-0006fR-JO; Wed, 25 Jun 2025 21:43:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1uUaQm-0004XX-E8
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 20:25:34 -0400
-Received: from mx2.zhaoxin.com ([61.152.208.219])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uUbed-0006dU-Om
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 21:43:55 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1uUaQj-0001M1-Km
- for qemu-devel@nongnu.org; Wed, 25 Jun 2025 20:25:32 -0400
-X-ASG-Debug-ID: 1750897517-1eb14e1c381a7c0001-jgbH7p
-Received: from ZXSHMBX3.zhaoxin.com (ZXSHMBX3.zhaoxin.com [10.28.252.165]) by
- mx2.zhaoxin.com with ESMTP id f3HA5r8FA8vqbh79 (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Thu, 26 Jun 2025 08:25:17 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
-Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX3.zhaoxin.com
- (10.28.252.165) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Thu, 26 Jun
- 2025 08:25:17 +0800
-Received: from ZXSHMBX1.zhaoxin.com ([::1]) by ZXSHMBX1.zhaoxin.com
- ([fe80::2c07:394e:4919:4dc1%7]) with mapi id 15.01.2507.044; Thu, 26 Jun 2025
- 08:25:17 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
-Received: from [192.168.31.91] (10.28.66.62) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Wed, 25 Jun
- 2025 18:05:46 +0800
-Message-ID: <4833e1be-b38d-4f80-abb7-aff2782efcfb@zhaoxin.com>
-Date: Wed, 25 Jun 2025 18:05:46 +0800
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uUbeb-00039k-FN
+ for qemu-devel@nongnu.org; Wed, 25 Jun 2025 21:43:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1750902233; x=1782438233;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=NP+33l+HuE/5PDoEHmyqdIJ7d4CXyxbu+/gnxNNeMhI=;
+ b=gVZQeigFC/k3J3QpOSQ+j3vGj3q0x7LWoEmJynIwgBzi6eHgBoH8kQr4
+ eD6RQFHqN8WP7Mym2Edj6M3VfmyX80TEczfOrcYb6sW3S/Y+jva9CJSH1
+ pYftb0gwXSJzf7Y+Z2AJyAiLF7WQVRy2TGDb8tYBOMAkLzdhNJFaiIVGL
+ zyCnkIZ88cZwu5oz8yv7IKDgTf77vKaRVqkC9cpZJFVGXzBYYale8jFn3
+ Ut+Q0QdtiXsjEpfqzXF1fFS2643reS22oIgzNZafqGZ2mSCrmRtrVd6UG
+ 8AnN84Y1BrFrsgLCQDn6KgEFysLZWSiXScNFfKnYDQVRyRoP3kwD3jBv5 Q==;
+X-CSE-ConnectionGUID: F9TXURqNRBKXiw6Ss2qOMQ==
+X-CSE-MsgGUID: +FOqFESQTJmjikxDq/cYHw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11475"; a="78622831"
+X-IronPort-AV: E=Sophos;i="6.16,266,1744095600"; d="scan'208";a="78622831"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Jun 2025 18:43:48 -0700
+X-CSE-ConnectionGUID: ZsvLrCz9TyikidQ9zP42oA==
+X-CSE-MsgGUID: 5f0xLDlZTXinrTmvSKiq4Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,266,1744095600"; d="scan'208";a="189561640"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+ by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Jun 2025 18:43:48 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Wed, 25 Jun 2025 18:43:47 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25 via Frontend Transport; Wed, 25 Jun 2025 18:43:47 -0700
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (40.107.101.53)
+ by edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Wed, 25 Jun 2025 18:43:47 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=y5jc+JMCxRjzDnnPOihkrkneGawQ99w0n8Ru7f8RG+zpbhKDDrq4JFOxMfYE5D/3LUMK7Vpknl6InosZhft8hvmKVjZJ4qaSP6k+HlQVQzn6orWMMoU9DK56ReVKJ4HV4GG5g+R68DiBmDZq0RSxfKqpNQ/cEBPhbvuo1i73ELDi5xSI/9lR5pnhnatgc/hy6vYceH1K4Xe5Z5acsa26GLHJ/LX4Wa+qlvSvi1glaqTMSuS4YoaSryOHu+/9WEFE8iynhBj7sT8rW9AVryc1lPfcsQk0pzgZaF4w3mOnBT+PjreUZn69DOO2J5Yio5sgVH42pIg8lZAnVSOOVanC1A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NP+33l+HuE/5PDoEHmyqdIJ7d4CXyxbu+/gnxNNeMhI=;
+ b=AAOTwZtN9zqgDdI7bKS7mwgOqNmCBeSezJ1G1S2iXKGVy31PU+O+IO6JhDH9ah9sPJKw56lG4/G8A+G3G8+GXbydDmAew+nRkHCo4otyYwAcrMikjkSLjDt6JbvIrJKZgKblSKyiEHmVE/b06WqbYhw0JsheUI9YDgpbhd92ev+5UJEHFCVPuihTUQMEV/RCzb6oB1WSy95AfZMVL2tZKBapcJZT+VRkzXioTE3lpE+hWgkMjm/eYEhUd3WXqGpdo8KaZ1CwoK0E2HPgcJtcGNMSWZplJ0n2rfyejCMYfHWnpXRyURrcT07uPss3HxK7NewvUcIZTbqEnZpOkgZLUQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by PH7PR11MB6929.namprd11.prod.outlook.com (2603:10b6:510:204::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8857.30; Thu, 26 Jun
+ 2025 01:43:32 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.8835.023; Thu, 26 Jun 2025
+ 01:43:32 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "steven.sistare@oracle.com"
+ <steven.sistare@oracle.com>, "Peng, Chao P" <chao.p.peng@intel.com>
+Subject: RE: [PATCH 2/4] vfio/container: fails mdev hotplug if add migration
+ blocker failed
+Thread-Topic: [PATCH 2/4] vfio/container: fails mdev hotplug if add migration
+ blocker failed
+Thread-Index: AQHb5ClP2t47oj3id0qr97FPi8XWFbQSClWAgAJX7QCAAEwnsA==
+Date: Thu, 26 Jun 2025 01:43:32 +0000
+Message-ID: <IA3PR11MB913663657785F666C156C5B2927AA@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20250623102235.94877-1-zhenzhong.duan@intel.com>
+ <20250623102235.94877-3-zhenzhong.duan@intel.com>
+ <afc6b039-4569-460f-a15e-ac000bd44d5f@redhat.com>
+ <1e67c23c-6027-4fa2-bc9e-0bc9502265d2@redhat.com>
+In-Reply-To: <1e67c23c-6027-4fa2-bc9e-0bc9502265d2@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|PH7PR11MB6929:EE_
+x-ms-office365-filtering-correlation-id: 352167f0-5afd-456a-b129-08ddb452dba5
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|366016|1800799024|38070700018;
+x-microsoft-antispam-message-info: =?utf-8?B?YXlJU1RtWnVTWWtKQ3RjdU9PRTNXbDYvREFwaEg4clgrdWphSU9mNk1QNGdh?=
+ =?utf-8?B?YlIvQ0ZFQmNIQUN3SWp1L0RubHY3RU9lNC9GMTlTUU1RVjdpSC9hVW9IWVk0?=
+ =?utf-8?B?b2JzMXlLK080MGpQMTVQMFJnZG83ZU9wb2c4WS9wbjc3czlxeUdwVGFZN3RB?=
+ =?utf-8?B?bjRxVmI1Tk1FbHpFQlhVUnd3ZDdlZ21xMmg5TDhXaVdaYTgwVlpVTWVFc1lE?=
+ =?utf-8?B?cW5rYkdYSHNFb3kxRzQ4c3NWdHlqcVd0VjNQMUVsMm5sbUp6RC9RSmdkdHAr?=
+ =?utf-8?B?ZFJBekxReTQyVDJqMUZac205UXVqb2t5Yk56a0dEZ2hqZG5KVjY2T2tuOW5P?=
+ =?utf-8?B?Mk5XalFpNWhMbWF6NVc5eXlBMUx4NzVOd3dHemFvSlB4bE9WZ3F3L2Y3U1Bm?=
+ =?utf-8?B?ZmMwNmQvN2t5ZEowQTVPeHFiRGN6c0tLRUp2dUd2aXplMTJsVCtralZ2UGcv?=
+ =?utf-8?B?bk9EVmxObm0xSWs5ZXYzY3cwenNIZGJ2WFM4MHY2NUw1WWhXaUw2eFNyZW0w?=
+ =?utf-8?B?WFdubGd5QzNoYWpUM2l0WU9CUGE4Mzd6cDNydjBXdmFMekdQeSsra0wyWmth?=
+ =?utf-8?B?RytOaFp4czNsUGdLSC9CdFBwL2dROEc4SUJjVDBxL0VBVXNyL0dCVk9oRGlG?=
+ =?utf-8?B?MFNxZEIwOENabGlwOVRRMTlZVm9oRHZnMlo1bnNmemNQcmNNV2NXNStQMHpJ?=
+ =?utf-8?B?NWYxcW1RbXVQS2UxNGdETTFyMytKL0RjZzJoSDgwME1qQ2l5Zks0Y2I1Vm5F?=
+ =?utf-8?B?Z1F1czV1K2JBU3AvNnRVZXNLUVM0LzUxemFNQ3R1aENkbVNJVXdVcWczb2dk?=
+ =?utf-8?B?ZVFvSDk5RTM1QjJXWDRXYkY5RmhaT2p4RC8wWm1WV0wydGNneTBQdzV6WDZz?=
+ =?utf-8?B?b1RxWFJuQSthcUdicG8zdENNZ1haVUpOYktlUERHamcvYThiQzRYbVdRQm9R?=
+ =?utf-8?B?b0tocVhWS202aVJhdHVTaUFKbkF1Vll4eU10UkZmbTQ5UlpWOGpGQmZiMGYx?=
+ =?utf-8?B?T25yd3I4SjFDZVQvNmZsMUtDUkREZkx0TzdOTjZCbFRFaURUWVRrQSt5aHVx?=
+ =?utf-8?B?MFYvV0RzRitWT1hlUmpNU2VkZHNRZXRyYldaellqSkxpMlFjZzAxTGZhVmxt?=
+ =?utf-8?B?WUdidzZGNTI5eE1UZG9VaytpOXF3NlREbjBmT09ibm5QM2xnSGtnL3A1NmNJ?=
+ =?utf-8?B?ZDdqQTZLN1l4MWg3TzBBbkRSZ25kNHRLUzcxQVUwNnJGQnZJNk1jOWdRVEZo?=
+ =?utf-8?B?NEhkYnNLQ0lqSWVsdTFvNUFHNjl6aDhGemlpc3BwdElrYjlzaHUwN2tMd1hv?=
+ =?utf-8?B?NUZ4c1dqSVN5QnZTVkd2S0xIQUIrR28wdFlGWVhFNHA4YXhqNmlJR3I0OXBE?=
+ =?utf-8?B?eXJzVTd6VFY3YWVuZVhxQm80UmJmN3FSRU9JclRyaGtlRmY3cUVTMGd6MkYy?=
+ =?utf-8?B?cDJFSnZ0clZuS3ZqK1FDQ1lPaUZtQm9IeXZab3hwNVpYVEZrUTJwTkM2cFA0?=
+ =?utf-8?B?Rk91em5LdlJZRG53UWhzLzVQMXdjV29pQzErMS9oc2RJcU9HRmxlSTBaTG9l?=
+ =?utf-8?B?eU55RFRObkRyMzJxM1NZTkFMakRyS09NYklDUHpqU0s2ZHpKR25SVUc5S2tj?=
+ =?utf-8?B?N3grdlVYMnN2WUp4MWZkTjZGU0oyby9TMEczUkRPRGE3V2tjcUJ3N0hjdE1r?=
+ =?utf-8?B?RTF0UDl6UW9qMGY4dUw5UXRXU1QyYThPVlZ2L1hHVnFEdjgrelUydHRPYUxJ?=
+ =?utf-8?B?MXR5NjBGSGhhUjg5dUhUTXFHNzNCNGl6ZE85c1lxU3k1UThlMkFYNjFkYVJm?=
+ =?utf-8?B?SnFYZHBvMUNreDZqa2NxZ3hXRVowMmNCSTdwd0JYV0F5aUw1YXgyaEdLaW9a?=
+ =?utf-8?B?T1J3NGZweU9kVHkzRTNTNDk2cmVWaWZ2N1RtbS9aUHlkVmNqQ0RBYVJSRDJM?=
+ =?utf-8?B?dGlJaWg4bGlaQko3VklzUTlZSFBVN1JxcUN4VXkrTElBWDQ4eXZqSmxETGYr?=
+ =?utf-8?B?YVlrSFl5bENRPT0=?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(38070700018); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?VFRXZVIxSDlQeThuQUFvaFZXaEQ2TUFRb3k5VklGR3owanR1MVNTeWRMRmx4?=
+ =?utf-8?B?RDJuZjduRnRJYkh3UGRnVEdtNnpJOWx6OWd0b2lvQitqNWZ5QjNRd0FxYlY3?=
+ =?utf-8?B?U0ROdjhjZVkreWhQNHI1RXl0aGpCYW50UWl6SjFNdjNNZVp1cG9wbytLcFBM?=
+ =?utf-8?B?TTYxaGRrL0o3VkJQM0NpM2ZTUlFGVCsyTWp5OGxjTS9ua1dlWnVTb05vZTVE?=
+ =?utf-8?B?Vkkzd3NhbHpNUWt3QUN0UWF2c0pKMmc5TzN3WnphS0pSWGRjaSt4NG81dGVu?=
+ =?utf-8?B?OUJ1U2dIazQ5NFFXMkdXMlNXT1FRcmRLNnlkOGNLNDhzdzllUlZNUitKOUlL?=
+ =?utf-8?B?a1Y3NE80SkpUY3NtUmhPSVk4T2JlZjhHeUdqb2lPSDgrVWl4NDRaY1c2eDRm?=
+ =?utf-8?B?dno4dlVqNm5kclg1OUZvbXhEOWFzRDZjK1RFdk96Uld5eWFuMzduaGN6ekJo?=
+ =?utf-8?B?Z3hGSEM1K1V3L08rU3JTZVg4ZERTdTNJQnZKN0dndExGUFRQS0FCcnBFZDV3?=
+ =?utf-8?B?UHdOYXN4M05BQ256YnREMUE4dUxNeC9URnV6cU1kUElCR2F2T0l3ZVBDUmFD?=
+ =?utf-8?B?M2wrdDhUVmFjU3RkRm1IT24ycDZ3TGJqZEZleEtvUThLeEIwV2xoTnNIc2Ux?=
+ =?utf-8?B?b2NFWGgralUvc0pBTGZUMWRjT0hnaHlhaVRTamNzbWNjeUdDUXFJODFERGVT?=
+ =?utf-8?B?a29yMnlWTjFya1ZpTzRsVkp5aGcyVFVCZUdoTUpHZlF4QTkvZDQ5SmRLRGlj?=
+ =?utf-8?B?WDlwRURITmlzUzdJcXVKN0JJZVpFTmNnTkhxS0VabjhZZVphbzd2SVhoZVNQ?=
+ =?utf-8?B?ZEF1N28wNFRZeWtWY2Rzd2xSbzRKeXpNZ0JRYW1KUHd0S3dacjNqN1pqVEJH?=
+ =?utf-8?B?YkJ5SDduSHZ2VE5KaThYbS9iaWZCUi9CUnFTbGNrbGd5dERJejYxa3pTV0pG?=
+ =?utf-8?B?UXFadHZwNHdvT3I0aFNKMm1OVWtzbFlXZGhUTVVwaHYzbXRTckJoRWFUc3Yy?=
+ =?utf-8?B?Yk90VDkwZjZzMHovVmh4Tng3MVN5Ym85dmZ1clUwQXArMzI4TW1WYnlvcTJY?=
+ =?utf-8?B?c0Fwbnc0ZWRyeGdVYjk4RThNeEg0a296ODJZbkhadmhMZ0I2SVVYbEtFS1lF?=
+ =?utf-8?B?QVc4QXhnbzdsdWZXU2tNWmJ4Ynh4bS9kR0FhblF1ZnIvS2pOc3BZTWtPRjVt?=
+ =?utf-8?B?STdpeWNDU3RnWWxDMXlDRldlWDBWTVEyR0V5bGJWNTE2eGZKQ2xPbm03cysr?=
+ =?utf-8?B?Q21jN2Vlc2NaOXZBL3VaVG5iS0VVLzVZM3dETlRodXVDNmtlMHdVakw4R3pi?=
+ =?utf-8?B?Ti9IdTRKUGFoRjNIYkgwa3hoVmhTOGkzU1ZPbzZnRUJybVA0T0twOVg3TUFo?=
+ =?utf-8?B?THlCSFVkWEo5MU1ZY1J4bXVKeG5laEpxVlZUeGNKczJEdmE1QWlYK1oxV0JS?=
+ =?utf-8?B?YnQxbnIvcjFUOXdseXRnT3FVVlBaWWRVUnQ1SE9vVVBqeXBmZ3I5MkJSTTdm?=
+ =?utf-8?B?d1JXUTdlMzlzTk9nd2MvWXRaUzUvR054YmprZFk3T2E1VGU3TmQ0YUF5Vmhq?=
+ =?utf-8?B?VHRJRC9HeklaZXRSTlpXRGVYRWtEV0RoUTkyaHRWOW5Jd09rZ3RvSFd4Sy9M?=
+ =?utf-8?B?RXp5TlZ2elVWbk1UVG5yYVl0UWFUNEFqWEtrSG1ZZkxpNGFHcnkrOWQvVk9x?=
+ =?utf-8?B?dUtLU1dBK01sNlNmSnBIRGtRazJSY3R6bmtpSHpSYStlS1BTMmZtbmh1WTBx?=
+ =?utf-8?B?QjlDT2xXeG1VMEdsTVc3RXFtSFlaNzExWlVhWjZUdXBVWjUwTTdGcG0ybXVy?=
+ =?utf-8?B?cjUvWGVzeS8ydW5xQmdkZVJvdjdDL0FRcnhET0ZTMkcwM1NFTld5Q3dIdnAz?=
+ =?utf-8?B?cW91TzNrTXd3WnF2ZWlvWEZwZExwcWMyTzhzMWRjM0pVbWZ4Qk00TWpvSjZp?=
+ =?utf-8?B?emt0bGhRblJlMVczdDVsZWI5LzRYNFhJM1d2d0FUTkFPZmQxQzZNbGhTQUxU?=
+ =?utf-8?B?UXVZV1M5RFhocE1VMGFYSGl5UDJwRC91Z3RjQllMU3hoaVpVZXFCSXR6YnJm?=
+ =?utf-8?B?SVZPK1Bab1cwNDdYaHMzQjJudnVVcmR2Y1p2T3p3ZGh5RFJzZzBpUXFjWExR?=
+ =?utf-8?Q?yyxvhwbWkoqWRWuui/trXOXCw?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 01/10] i386/cpu: Mark CPUID[0x80000005] as reserved for Intel
-To: Zhao Liu <zhao1.liu@intel.com>
-X-ASG-Orig-Subj: Re: [RFC 01/10] i386/cpu: Mark CPUID[0x80000005] as reserved
- for Intel
-CC: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Babu Moger
- <babu.moger@amd.com>, Xiaoyao Li <xiaoyao.li@intel.com>, Tejus GK
- <tejus.gk@nutanix.com>, Jason Zeng <jason.zeng@intel.com>, Manish Mishra
- <manish.mishra@nutanix.com>, Tao Su <tao1.su@intel.com>,
- <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, <cobechen@zhaoxin.com>,
- <yeeli@zhaoxin.com>, <MaryFeng@zhaoxin.com>, <Runaguo@zhaoxin.com>,
- <Xanderchen@zhaoxin.com>
-References: <20250423114702.1529340-1-zhao1.liu@intel.com>
- <20250423114702.1529340-2-zhao1.liu@intel.com>
- <fa16f7a8-4917-4731-9d9f-7d4c10977168@zhaoxin.com>
- <aFu/EED7BNJgIXqH@intel.com>
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-In-Reply-To: <aFu/EED7BNJgIXqH@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.28.66.62]
-X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 6/26/2025 8:25:15 AM
-X-Barracuda-Connect: ZXSHMBX3.zhaoxin.com[10.28.252.165]
-X-Barracuda-Start-Time: 1750897517
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 3356
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -0.81
-X-Barracuda-Spam-Status: No,
- SCORE=-0.81 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=BSF_SC0_SA085b,
- DATE_IN_PAST_12_24, DATE_IN_PAST_12_24_2
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.143396
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
- 0.01 DATE_IN_PAST_12_24     Date: is 12 to 24 hours before Received: date
- 0.40 BSF_SC0_SA085b         Custom Rule SA085b
- 0.80 DATE_IN_PAST_12_24_2   DATE_IN_PAST_12_24_2
-Received-SPF: pass client-ip=61.152.208.219;
- envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 352167f0-5afd-456a-b129-08ddb452dba5
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Jun 2025 01:43:32.1450 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: XqwyJ+SZAyskvVEYKaEdKFw0zf1XcfBnXgLgOFAay0pViLRheAN0mlOjpC/okN4+GA9oFxv720OiCPauxw0evO9fNkezkvIDG970v4d0NG0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB6929
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.7;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,119 +219,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 6/25/25 5:19 PM, Zhao Liu wrote:
-> 
-> 
-> Just want to confirm with the "lines_per_tag" field, which is related
-> about how to handle current "assert(lines_per_tag > 0)":
-> 
->> --- patch prototype start ---
->>
->> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->> index 7b223642ba..8a17e5ffe9 100644
->> --- a/target/i386/cpu.c
->> +++ b/target/i386/cpu.c
->> @@ -2726,6 +2726,66 @@ static const CPUCaches xeon_srf_cache_info = {
->>       },
->>   };
->>
->> +static const CPUCaches yongfeng_cache_info = {
->> +    .l1d_cache = &(CPUCacheInfo) {
->> +        .type = DATA_CACHE,
->> +        .level = 1,
->> +        .size = 32 * KiB,
->> +        .line_size = 64,
->> +        .associativity = 8,
->> +        .partitions = 1,
->> +        .sets = 64,
->> +        .lines_per_tag = 1,
-> 
-> This fits AMD APM, and is fine.
-> 
->> +        .inclusive = false,
->> +        .self_init = true,
->> +        .no_invd_sharing = false,
->> +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
->> +    },
->> +    .l1i_cache = &(CPUCacheInfo) {
->> +        .type = INSTRUCTION_CACHE,
->> +        .level = 1,
->> +        .size = 64 * KiB,
->> +        .line_size = 64,
->> +        .associativity = 16,
->> +        .partitions = 1,
->> +        .sets = 64,
->> +        .lines_per_tag = 1,
-> 
-> Fine, too.
-> 
->> +        .inclusive = false,
->> +        .self_init = true,
->> +        .no_invd_sharing = false,
->> +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
->> +    },
->> +    .l2_cache = &(CPUCacheInfo) {
->> +        .type = UNIFIED_CACHE,
->> +        .level = 2,
->> +        .size = 256 * KiB,
->> +        .line_size = 64,
->> +        .associativity = 8,
->> +        .partitions = 1,
->> +        .sets = 512,
->> +        .lines_per_tag = 1,
-> 
-> SDM reserves this field:
-> 
-> For 0x80000006 ECX:
-> 
-> Bits 11-08: Reserved.
-> 
-> So I think this field should be 0, to align with "Reserved".
-
-I agree. For Zhaoxin, the "lines-per-tag" field appears only in CPUID leaf 
-0x80000005. Because Zhaoxin follows AMD behavior on this leaf, and the AMD 
-manual states that it reports L1 cache/TLB information, so any "lines-per-tag" 
-value for levels other than L1 should be omitted or set to zero.
-
-> 
-> In this patch:
-> 
-> https://lore.kernel.org/qemu-devel/20250620092734.1576677-9-zhao1.liu@intel.com/
-> 
-> I add an argument (lines_per_tag_supported) in encode_cache_cpuid80000006(),
-> and for the case that lines_per_tag_supported=false, I assert
-> "lines_per_tag == 0" to align with "Reserved".
-> 
->> +        .inclusive = true,
->> +        .self_init = true,
->> +        .no_invd_sharing = false,
->> +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
->> +    },
->> +    .l3_cache = &(CPUCacheInfo) {
->> +        .type = UNIFIED_CACHE,
->> +        .level = 3,
->> +        .size = 8 * MiB,
->> +        .line_size = 64,
->> +        .associativity = 16,
->> +        .partitions = 1,
->> +        .sets = 8192,
->> +        .lines_per_tag = 1,
-> 
-> The 0x80000006 EDX is also reserved in SDM. So I think this field should
-> be 0, too.
-> 
-> Do you agree?
-
-Ditto.>
->> +        .self_init = true,
->> +        .inclusive = true,
->> +        .no_invd_sharing = true,
->> +        .complex_indexing = false,
->> +        .share_level = CPU_TOPOLOGY_LEVEL_DIE,
->> +    },
->> +};
->> +
-
+DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IEPDqWRyaWMgTGUgR29hdGVy
+IDxjbGdAcmVkaGF0LmNvbT4NCj5TdWJqZWN0OiBSZTogW1BBVENIIDIvNF0gdmZpby9jb250YWlu
+ZXI6IGZhaWxzIG1kZXYgaG90cGx1ZyBpZiBhZGQgbWlncmF0aW9uDQo+YmxvY2tlciBmYWlsZWQN
+Cj4NCj5PbiA2LzI0LzI1IDExOjIxLCBDw6lkcmljIExlIEdvYXRlciB3cm90ZToNCj4+IE9uIDYv
+MjMvMjUgMTI6MjIsIFpoZW56aG9uZyBEdWFuIHdyb3RlOg0KPj4+IEl0J3MgYWdncmVzc2l2ZSB0
+byBhYm9ydCBhIHJ1bm5pbmcgUUVNVSBwcm9jZXNzIHdoZW4gaG90cGx1ZyBhIG1kZXYNCj4+PiBh
+bmQgaXQgZmFpbHMgbWlncmF0aW9uIGJsb2NrZXIgYWRkaW5nLg0KPj4+DQo+Pj4gRml4IGJ5IGp1
+c3QgZmFpbGluZyBtZGV2IGhvdHBsdWcgaXRzZWxmLg0KPj4+DQo+Pj4gU2lnbmVkLW9mZi1ieTog
+Wmhlbnpob25nIER1YW4gPHpoZW56aG9uZy5kdWFuQGludGVsLmNvbT4NCj4+PiAtLS0NCj4+PiDC
+oCBody92ZmlvL2NvbnRhaW5lci5jIHwgOCArKysrKystLQ0KPj4+IMKgIDEgZmlsZSBjaGFuZ2Vk
+LCA2IGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pDQo+Pj4NCj4+PiBkaWZmIC0tZ2l0IGEv
+aHcvdmZpby9jb250YWluZXIuYyBiL2h3L3ZmaW8vY29udGFpbmVyLmMNCj4+PiBpbmRleCAyODUz
+ZjZmMDhiLi42OGI0ZmRiNDAxIDEwMDY0NA0KPj4+IC0tLSBhL2h3L3ZmaW8vY29udGFpbmVyLmMN
+Cj4+PiArKysgYi9ody92ZmlvL2NvbnRhaW5lci5jDQo+Pj4gQEAgLTk5MiwxMiArOTkyLDE2IEBA
+IHN0YXRpYyBib29sIHZmaW9fbGVnYWN5X2F0dGFjaF9kZXZpY2UoY29uc3QgY2hhcg0KPipuYW1l
+LCBWRklPRGV2aWNlICp2YmFzZWRldiwNCj4+PiDCoMKgwqDCoMKgIGlmICh2YmFzZWRldi0+bWRl
+dikgew0KPj4+IMKgwqDCoMKgwqDCoMKgwqDCoCBlcnJvcl9zZXRnKCZ2YmFzZWRldi0+Y3ByLm1k
+ZXZfYmxvY2tlciwNCj4+PiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+ICJDUFIgZG9lcyBub3Qgc3VwcG9ydCB2ZmlvIG1kZXYgJXMiLCB2YmFzZWRldi0+bmFtZSk7DQo+
+Pj4gLcKgwqDCoMKgwqDCoMKgIG1pZ3JhdGVfYWRkX2Jsb2NrZXJfbW9kZXMoJnZiYXNlZGV2LT5j
+cHIubWRldl9ibG9ja2VyLA0KPiZlcnJvcl9mYXRhbCwNCj4+PiAtwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIE1JR19NT0RF
+X0NQUl9UUkFOU0ZFUiwgLTEpOw0KPj4+ICvCoMKgwqDCoMKgwqDCoCBpZiAobWlncmF0ZV9hZGRf
+YmxvY2tlcl9tb2RlcygmdmJhc2VkZXYtPmNwci5tZGV2X2Jsb2NrZXIsIGVycnAsDQo+Pj4gK8Kg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIE1JR19NT0RFX0NQUl9UUkFOU0ZFUiwgLTEpKSB7DQo+Pg0KPj4gbWln
+cmF0ZV9hZGRfYmxvY2tlcl9tb2RlcygpIHJldHVybnMgLWVycm5vLiBUZXN0aW5nIHdpdGggJzwg
+MCcgd291bGQgYmUNCj4+IGJldHRlci4NCj4+DQo+DQo+DQo+UmV2aWV3ZWQtYnk6IEPDqWRyaWMg
+TGUgR29hdGVyIDxjbGdAcmVkaGF0LmNvbT4NCj4NCg0KVGhhbmtzIEPDqWRyaWMuDQpJIGV2ZXIg
+cGxhbm5lZCB0byBzZW5kIGFuIHVwZGF0ZSBhZnRlciByZWNlaXZpbmcgY29tbWVudHMgZm9yIHBh
+dGNoMyw0Lg0KDQpCUnMsDQpaaGVuemhvbmcNCg==
 
