@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94957C7115B
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 05:56:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12080C77B7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 05:58:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUfZd-0004BI-0Y; Thu, 26 Jun 2025 01:55:01 -0400
+	id 1uUfZP-00040l-8h; Thu, 26 Jun 2025 01:54:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfZW-00049c-UR
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:55 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfZN-00040J-Qa
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfZV-0001AP-92
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:54 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfZL-00019b-9a
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750917292;
+ s=mimecast20190719; t=1750917282;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QkNb6p5uBWeANRO5aHP8EFwHxq0ZUdg57B2mI2Jm0sc=;
- b=gGrvXIbYbDI4RM3Rnmr7Za4MrN0oaoT0xrqYQ6VFaRQxvclJXFN1QBBAfdJivU+ZvlsrE2
- 0pPl6m+Lx1+NvQYD6FRO/+mtmr6DGJditsDc6iQtulx/P9jyJQB1WpkrrhOjrELLDodbMK
- Lxch6cW8pupgO7PLEpROquIaVkV+2rE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=fLJwgI6A92mPK6zLEffLxihRUJHX392illFzDqmo3wc=;
+ b=W0GWTosiJnSqMoY7I7PtnIrAkVqlAE2tBpoP294UMNHPkpIGTKxdPjvneQ/h24mb8E99Ae
+ L3Vp5gCGoMxEqIIhFW7GdPIfFiI+RewG6MSrwWQvoy2Jo7hXn9IrU7WxNA5nEDsi44d/L8
+ 7UV8m1xWfJ1C/W3gpLNR6iMQKy08Tug=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-146-phhzDMUAPdCMjyOUrKumeQ-1; Thu,
- 26 Jun 2025 01:54:48 -0400
-X-MC-Unique: phhzDMUAPdCMjyOUrKumeQ-1
-X-Mimecast-MFC-AGG-ID: phhzDMUAPdCMjyOUrKumeQ_1750917287
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-gkcyAda4Ncid1irIO_C_Cw-1; Thu,
+ 26 Jun 2025 01:54:38 -0400
+X-MC-Unique: gkcyAda4Ncid1irIO_C_Cw-1
+X-Mimecast-MFC-AGG-ID: gkcyAda4Ncid1irIO_C_Cw_1750917277
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 76D1D18089B6; Thu, 26 Jun 2025 05:54:47 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D0CF119560B6; Thu, 26 Jun 2025 05:54:37 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.32.129])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 63C1919560A3; Thu, 26 Jun 2025 05:54:43 +0000 (UTC)
+ id 2F97719560A3; Thu, 26 Jun 2025 05:54:35 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Sean Wei <me@sean.taipei>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PULL 17/19] contrib: replace FSF postal address with licenses URL
-Date: Thu, 26 Jun 2025 07:53:48 +0200
-Message-ID: <20250626055350.218271-18-thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+	Sean Wei <me@sean.taipei>
+Subject: [PULL 14/19] util/rcu.c: replace FSF postal address with licenses URL
+Date: Thu, 26 Jun 2025 07:53:45 +0200
+Message-ID: <20250626055350.218271-15-thuth@redhat.com>
 In-Reply-To: <20250626055350.218271-1-thuth@redhat.com>
 References: <20250626055350.218271-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -84,35 +84,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Sean Wei <me@sean.taipei>
 
-The LGPLv2.1 boiler-plate in pdb.c file still contained
+The LGPLv2.1 boiler-plate in util/rcu.c still contained
 the obsolete "51 Franklin Street" postal address.
 
 Replace it with the canonical GNU licenses URL recommended by the FSF:
 https://www.gnu.org/licenses/
 
 Signed-off-by: Sean Wei <me@sean.taipei>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-ID: <20250613.qemu.patch.10@sean.taipei>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20250613.qemu.patch.07@sean.taipei>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- contrib/elf2dmp/pdb.c | 4 ++--
+ util/rcu.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/elf2dmp/pdb.c b/contrib/elf2dmp/pdb.c
-index 492aca4434c..47c5126fb86 100644
---- a/contrib/elf2dmp/pdb.c
-+++ b/contrib/elf2dmp/pdb.c
-@@ -14,8 +14,8 @@
+diff --git a/util/rcu.c b/util/rcu.c
+index fa32c942e4b..b703c86f15a 100644
+--- a/util/rcu.c
++++ b/util/rcu.c
+@@ -20,8 +20,8 @@
   * Lesser General Public License for more details.
   *
   * You should have received a copy of the GNU Lesser General Public
 - * License along with this library; if not, write to the Free Software
-- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 + * License along with this library; if not, see
 + * <https://www.gnu.org/licenses/>.
+  *
+  * IBM's contributions to this file may be relicensed under LGPLv2 or later.
   */
- 
- #include "qemu/osdep.h"
 -- 
 2.50.0
 
