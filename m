@@ -4,57 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D287C77B7F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85A50C7115B
 	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 07:46:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUhIo-0004N2-DO; Thu, 26 Jun 2025 03:45:46 -0400
+	id 1uUhIl-0004Mb-Oa; Thu, 26 Jun 2025 03:45:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUhIm-0004Ms-Vu
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 03:45:45 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUhIk-0004MK-FB
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 03:45:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUhIk-0001uC-TQ
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 03:45:44 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUhIi-0001te-7u
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 03:45:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750923941;
+ s=mimecast20190719; t=1750923938;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Fu14M398cI1ijP/+NwiuzviF3yT2V0YhBy6jnzONO+w=;
- b=T/9D/o2NYN/l4hFPQ/EZx2bm3yzMZGlrpb5U9gKdBQjk/Da6Kr0k8ibWrb7LVyJEOLxOl7
- sU0JXxW32lFyQ9CVogmG6E7bhn4xKQGp3kFYxV+z/GncC7ECkKuapOwTDtcH7boWyRIcJf
- XQNLxVn9zYxB4bohSmw7FLyjXJUzaW8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=/Hmx7hHYO+FQFa7w8a59ububIYSGd0vgwTzGpL6L7+g=;
+ b=W/CZ8FKun6QdbZUD+8EZWfnoXywaMoiXCpCbQAcCVg3Of2ZVJyxz3uO/gUbTulm8RtOY/P
+ kyc5hMhmfbHfo9AY8rpZPwoO3Xtxe8Ux58gkUjMeemP0qi8yNzBdOlOZiMpVhOAS1QCRkU
+ fSIC8B6vmIqBFsti9FQz1eDZRR8txtE=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-76-XAR0f7DiNs6A9_b10qQjpQ-1; Thu,
- 26 Jun 2025 03:45:37 -0400
-X-MC-Unique: XAR0f7DiNs6A9_b10qQjpQ-1
-X-Mimecast-MFC-AGG-ID: XAR0f7DiNs6A9_b10qQjpQ_1750923937
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-652-WOPoPL9-PcSRnX_1eyaj3Q-1; Thu,
+ 26 Jun 2025 03:45:35 -0400
+X-MC-Unique: WOPoPL9-PcSRnX_1eyaj3Q-1
+X-Mimecast-MFC-AGG-ID: WOPoPL9-PcSRnX_1eyaj3Q_1750923934
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E0D2C1808993; Thu, 26 Jun 2025 07:45:36 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 48E141956086
+ for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 07:45:34 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.51])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C24EA180035C; Thu, 26 Jun 2025 07:45:34 +0000 (UTC)
+ id 6CF0E180035C; Thu, 26 Jun 2025 07:45:32 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Rorie Reyes <rreyes@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 01/25] hw/vfio/ap: attribute constructor for cfg_chg_events_lock
-Date: Thu, 26 Jun 2025 09:45:05 +0200
-Message-ID: <20250626074529.1384114-2-clg@redhat.com>
-In-Reply-To: <20250626074529.1384114-1-clg@redhat.com>
-References: <20250626074529.1384114-1-clg@redhat.com>
+Subject: [PULL 00/25] vfio queue
+Date: Thu, 26 Jun 2025 09:45:04 +0200
+Message-ID: <20250626074529.1384114-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,52 +81,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Rorie Reyes <rreyes@linux.ibm.com>
+The following changes since commit f9a3def17b2a57679902c33064cf7853263db0ef:
 
-Created an attribute constructor for cfg_chg_events_lock for locking
-mechanism when storing event information for an AP configuration change
-event
+  Merge tag 'pull-tcg-20250623' of https://gitlab.com/rth7680/qemu into staging (2025-06-24 10:38:38 -0400)
 
-Fixes: fd03360215 ("Storing event information for an AP configuration change event")
-Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250611211252.82107-1-rreyes@linux.ibm.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/vfio/ap.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+are available in the Git repository at:
 
-diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-index 874e0d1eaf1dafa105f9f42705e9973ffc719803..1df4438149d2a06ef176e03e358336381bfa4caa 100644
---- a/hw/vfio/ap.c
-+++ b/hw/vfio/ap.c
-@@ -52,6 +52,11 @@ static QTAILQ_HEAD(, APConfigChgEvent) cfg_chg_events =
- 
- static QemuMutex cfg_chg_events_lock;
- 
-+static void __attribute__((constructor)) vfio_ap_global_init(void)
-+{
-+    qemu_mutex_init(&cfg_chg_events_lock);
-+}
-+
- OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
- 
- static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
-@@ -230,13 +235,6 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
-     VFIOAPDevice *vapdev = VFIO_AP_DEVICE(dev);
-     VFIODevice *vbasedev = &vapdev->vdev;
- 
--    static bool lock_initialized;
--
--    if (!lock_initialized) {
--        qemu_mutex_init(&cfg_chg_events_lock);
--        lock_initialized = true;
--    }
--
-     if (!vfio_device_get_name(vbasedev, errp)) {
-         return;
-     }
--- 
-2.49.0
+  https://github.com/legoater/qemu/ tags/pull-vfio-20250626
+
+for you to fetch changes up to da198e8f0f99cd8539f3072ad2071f9dc01680d6:
+
+  vfio-user: introduce vfio-user protocol specification (2025-06-26 08:55:38 +0200)
+
+----------------------------------------------------------------
+vfio queue:
+
+* Added several small fixes and cleanups
+* Added support for vfio-user client device
+
+----------------------------------------------------------------
+John Levon (21):
+      vfio: add vfio_device_get_region_fd()
+      vfio: add documentation for posted write argument
+      vfio: add license tag to some files
+      vfio-user: add vfio-user class and container
+      vfio-user: connect vfio proxy to remote server
+      vfio-user: implement message receive infrastructure
+      vfio-user: implement message send infrastructure
+      vfio-user: implement VFIO_USER_DEVICE_GET_INFO
+      vfio-user: implement VFIO_USER_DEVICE_GET_REGION_INFO
+      vfio-user: implement VFIO_USER_REGION_READ/WRITE
+      vfio-user: set up PCI in vfio_user_pci_realize()
+      vfio-user: implement VFIO_USER_DEVICE_GET/SET_IRQ*
+      vfio-user: forward MSI-X PBA BAR accesses to server
+      vfio-user: set up container access to the proxy
+      vfio-user: implement VFIO_USER_DEVICE_RESET
+      vfio-user: implement VFIO_USER_DMA_MAP/UNMAP
+      vfio-user: implement VFIO_USER_DMA_READ/WRITE
+      vfio-user: add 'x-msg-timeout' option
+      vfio-user: support posted writes
+      vfio-user: add coalesced posted writes
+      docs: add vfio-user documentation
+
+Rorie Reyes (1):
+      hw/vfio/ap: attribute constructor for cfg_chg_events_lock
+
+Thanos Makatos (1):
+      vfio-user: introduce vfio-user protocol specification
+
+Zhenzhong Duan (2):
+      vfio/container: Fix SIGSEGV when open container file fails
+      vfio/container: fails mdev hotplug if add migration blocker failed
+
+ MAINTAINERS                           |   11 +-
+ docs/interop/index.rst                |    1 +
+ docs/interop/vfio-user.rst            | 1520 +++++++++++++++++++++++++++++++++
+ docs/system/device-emulation.rst      |    1 +
+ docs/system/devices/vfio-user.rst     |   26 +
+ meson.build                           |    1 +
+ hw/vfio-user/container.h              |   23 +
+ hw/vfio-user/device.h                 |   24 +
+ hw/vfio-user/protocol.h               |  242 ++++++
+ hw/vfio-user/proxy.h                  |  135 +++
+ hw/vfio-user/trace.h                  |    4 +
+ hw/vfio/pci.h                         |    1 +
+ hw/vfio/trace.h                       |    3 +
+ include/hw/vfio/vfio-container-base.h |    1 +
+ include/hw/vfio/vfio-device.h         |   15 +
+ hw/vfio-user/container.c              |  370 ++++++++
+ hw/vfio-user/device.c                 |  441 ++++++++++
+ hw/vfio-user/pci.c                    |  475 +++++++++++
+ hw/vfio-user/proxy.c                  | 1356 +++++++++++++++++++++++++++++
+ hw/vfio/ap.c                          |   12 +-
+ hw/vfio/container.c                   |   12 +-
+ hw/vfio/device.c                      |    7 +
+ hw/vfio/region.c                      |    5 +-
+ hw/Kconfig                            |    1 +
+ hw/meson.build                        |    1 +
+ hw/vfio-user/Kconfig                  |    7 +
+ hw/vfio-user/meson.build              |   11 +
+ hw/vfio-user/trace-events             |   20 +
+ hw/vfio/Kconfig                       |    2 +
+ hw/vfio/meson.build                   |    2 +
+ hw/vfio/trace-events                  |    2 +
+ 31 files changed, 4717 insertions(+), 15 deletions(-)
+ create mode 100644 docs/interop/vfio-user.rst
+ create mode 100644 docs/system/devices/vfio-user.rst
+ create mode 100644 hw/vfio-user/container.h
+ create mode 100644 hw/vfio-user/device.h
+ create mode 100644 hw/vfio-user/protocol.h
+ create mode 100644 hw/vfio-user/proxy.h
+ create mode 100644 hw/vfio-user/trace.h
+ create mode 100644 hw/vfio-user/container.c
+ create mode 100644 hw/vfio-user/device.c
+ create mode 100644 hw/vfio-user/pci.c
+ create mode 100644 hw/vfio-user/proxy.c
+ create mode 100644 hw/vfio-user/Kconfig
+ create mode 100644 hw/vfio-user/meson.build
+ create mode 100644 hw/vfio-user/trace-events
 
 
