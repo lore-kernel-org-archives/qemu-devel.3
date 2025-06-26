@@ -4,154 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68137C7EE32
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 00:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4A8EC7EE33
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 00:51:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUweV-0002R9-O7; Thu, 26 Jun 2025 20:09:12 -0400
+	id 1uUxIU-0007SL-LD; Thu, 26 Jun 2025 20:50:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aleksandar.rakic@htecgroup.com>)
- id 1uUweU-0002Qw-4S
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 20:09:10 -0400
-Received: from mail-francesouthazon11021092.outbound.protection.outlook.com
- ([40.107.130.92] helo=MRWPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1uUxIO-0007RD-C0
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 20:50:25 -0400
+Received: from mx1.zhaoxin.com ([210.0.225.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aleksandar.rakic@htecgroup.com>)
- id 1uUweS-0000f7-T8
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 20:09:09 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RzhIs8fx3uSMnLoHLbCD9gNGDP/qZRF9VmjK/NmXGn0RjuHUcu7cs9ohud1AkXeJT2j0zUU/H8cmLTs4yOoMJST/rr5dzvYvwm7hE+SZegFvPgdGd+0DOHbgr7pNAIZ99UyCNEI5c9s/GY4ZKFyAtZ+PZCU8THjxSTlMYreFBpqz+sBICLycJKy6XDaNqb33VGDrnTV4yQ0psR4HHlxLQxs9qfeZp2rXc/u0AIIk0pXj0am9xGWuq0BtQkeXNYo5zH292XuTl9SWhdVIufoSF7ovrSdc3H25ebCtrCZlMjpyP6VFAAQTJaEsT5vc3rGgqD6fifE2AdtmDG3t2v4HQw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iDaZvst2H2/CGz0YFtrqfXWE7pzWP0McvNphF1aASMw=;
- b=tZOTKoaFqNUqoV8Ha+IzfhPQWcNf+8PLzur1RubP53gl5+h3oYYBt1zVHIvou0ipTGQhm7DlbVFJzs0qMPxYhFTn2iMEOod6swkc3j+NX3nVoFjPQ1VVEkE4dDc2VbwBoVyzwzg4t+IZwoX/RNZwP92A4sArLeyScr5Q0AUb3opNhch/z7m6rVEn94cvrwCwu8XwDybad34bdtFLj3jxa1IW+d0WcpaC5NA0Ui0imi+R1UbZ4KqkK8Uz2Lz9DBYetZK/R133Rdd31pC+tXfsEo4qYOiL98bXVFXEWU53UF9X2tvpP87KyEaXQmZYtkpLBavnraVx/9nqhc0al2e7QQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=htecgroup.com; dmarc=pass action=none
- header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iDaZvst2H2/CGz0YFtrqfXWE7pzWP0McvNphF1aASMw=;
- b=CO8xNubqakqo4n5ZWk0BRgejMOgB/unwMNV1b6Gfqif3/qBvOkno2TAP3S/vXVROfcQ9evU9VfD0Q1ugs52BvVqHzHqouDtlAr6YqK5bIqjmFELCsDRh+l5CJ1gjVd5CcmebzhJD0dYSNb5IpIAx4rbwxh+JyBt7dwUZbKtRveQvyN4StuOlrq3w7JJrnxOyut04HnZvMG8z9LMS9gcgEuvrgtJLzgSTeAmf+ZMdSXXMrKoWQHHvMFRXn7guHSXXEufTfOhy28euIDtrIlSbEa3rZsal1Bjtq9XU3p65c3rUyM8KAeSCUgbKvsEYt2YYBpLLBhQuT60wJoZsbotKlQ==
-Received: from PA4PR09MB4864.eurprd09.prod.outlook.com (2603:10a6:102:ed::17)
- by VI0PR09MB6925.eurprd09.prod.outlook.com (2603:10a6:800:248::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8857.26; Fri, 27 Jun
- 2025 00:04:00 +0000
-Received: from PA4PR09MB4864.eurprd09.prod.outlook.com
- ([fe80::a02b:9d5c:eca5:e024]) by PA4PR09MB4864.eurprd09.prod.outlook.com
- ([fe80::a02b:9d5c:eca5:e024%4]) with mapi id 15.20.8857.026; Fri, 27 Jun 2025
- 00:04:00 +0000
-From: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>, "arikalo@gmail.com"
- <arikalo@gmail.com>, "cfu@mips.com" <cfu@mips.com>, Djordje Todorovic
- <Djordje.Todorovic@htecgroup.com>, "philmd@linaro.org" <philmd@linaro.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "berrange@redhat.com"
- <berrange@redhat.com>
-Subject: [PATCH v7 0/1] Add support for emulation of CRC32 instructions
-Thread-Topic: [PATCH v7 0/1] Add support for emulation of CRC32 instructions
-Thread-Index: AQHb5vb85YVcD5EnLkCvOH5v0yDaQw==
-Date: Fri, 27 Jun 2025 00:04:00 +0000
-Message-ID: <20250627000246.1811052-1-aleksandar.rakic@htecgroup.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=htecgroup.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PA4PR09MB4864:EE_|VI0PR09MB6925:EE_
-x-ms-office365-filtering-correlation-id: 6827d7c3-1f4f-40b9-996e-08ddb50e1e90
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700018;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?h2DxeqicKIMHNAQbrimGsZVII2KaZI17+JRt+GZ/RAOEimX4R3ncSc8ItZ?=
- =?iso-8859-1?Q?7DtITPzPdCbLGHAcUEakuAZUOL0Geiuym2wIBhXFBRTrta5yasEnKfZhLr?=
- =?iso-8859-1?Q?UQ+IBYqKX0h2Z73SSPHXmlDdFg9GgQNKxZy305QtEKbsT000Xh2lBEqu7g?=
- =?iso-8859-1?Q?LddGyXNNfPFhSydZstdpgMnY8cur6F5tfeHOsIeDY4M7JEETTtrK5/kaSu?=
- =?iso-8859-1?Q?+YZykdEwMDrqO+cNxqiT6lovvfke6im3G+5BD8CAhCY0gXuHgvPQkrn+Rj?=
- =?iso-8859-1?Q?JXGwD5FCTtNAZekjA4kw+9Y2hwknmIsnFpf/9v7MwUsRx5oMLoNo8SBrFN?=
- =?iso-8859-1?Q?ZkYb20yxDONLvSQ6pFsQy3/HOTZIhqxijQM8ep23QIl/eoSLDtM1FG32wA?=
- =?iso-8859-1?Q?jEk4S175Q9JKI2F+acHzykpcv/poNvU8gLw9jL7LMexNIkHA7h3m7zhna8?=
- =?iso-8859-1?Q?nrMyonLw9d6DUxLAQzkJ7cXzZxmZ+qHcdG632Qxb6udzLjgzB4W8rekaad?=
- =?iso-8859-1?Q?t1RY66NMqbu8B3d2Pyp7x8YReEyxJIUs+SOW3zVEtdi2Cuh/B3JBQTbMt4?=
- =?iso-8859-1?Q?TF7PCWs/NDtYN8h+tdVghPOe2K6jGJN5NPiTGkwPo6DJN+TNK5zm2Ug/lF?=
- =?iso-8859-1?Q?Z2QVbbniRda6gkVMbOKa36xRtOuOcfb2ocTcJtONkveHX6O7004Y1AjoMA?=
- =?iso-8859-1?Q?6SSOPLkRrm5h+RTtmYLH+MEFKbwLqPWF/yqcDkevftAZReEUxp2aUlJStU?=
- =?iso-8859-1?Q?fysOL0KgwBWQMX22d0ZGVEAptJr+zVDBa/AJyvszMzy7qhgcDWfxCB4qzH?=
- =?iso-8859-1?Q?vyYVRzpjJrLBQkZcq7mIvNun+qQQ5d7mJPwUOg9E7MAcXqvcdgHAgmyLaS?=
- =?iso-8859-1?Q?uHsOfCDTEPzCtMgzOIHyMMJxyZlQNMEDjImrssXjyLZVH+RUg3EpZZ0sVd?=
- =?iso-8859-1?Q?1dRv0rCMEBdWWR6V9njU+GTFGq/D0qI1vn3qx8RDvFLwLpq6atUfdSMZ3Y?=
- =?iso-8859-1?Q?DokT4S4gTLzWulkcZiiT5KcbYDm1oB3/PjXiXRijRIJcIchkuFS5czpb6M?=
- =?iso-8859-1?Q?iuCRISU5e6d4DQy5WHYVoPzMqC6UTJ3zEl1dePqfdkSEDm0pEQhwE73iq/?=
- =?iso-8859-1?Q?GpZAVh/FQgOGQKck4Si0C76hqGHrIX5GoAtSYUNtJWqpw4HyybovQdKhHI?=
- =?iso-8859-1?Q?5amxSdosocV0wiWtxmbXCgzYiNxLq5Z6ZqaAgAraGz6JHlImS88ZNYzJ7N?=
- =?iso-8859-1?Q?xiOLYOXd/LDuLQYEfifxGnc8RrDFysPLmPt30A7pos5LEt3sA88rtZdKr8?=
- =?iso-8859-1?Q?Xxt1Z2jyDBX9X+zc2w59xmm82eaVUkrcfJBDQZJV5auQQUN4fiNpH5Kx8R?=
- =?iso-8859-1?Q?amC+v2pj/nQhIfzBt/FyJhQGBDQe0mTpyZnQsIZvNNOZizT5iQr6HmV2q7?=
- =?iso-8859-1?Q?tgKXfYitDgBoZN7r7dqLisVhwf7odKC2TIIBkzJyWho9SKoVzR7cKtAA7u?=
- =?iso-8859-1?Q?3q6cQzLPSM5qOdJm7hdvHwjWp9ihYWK/Lg1mRBt/T6OQ=3D=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PA4PR09MB4864.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(38070700018); DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?7EsfgI1Y3Gawy1+sgCaMZhnl3RGSiqe5veW9brSp3X6w2+H2mcDG/uEER3?=
- =?iso-8859-1?Q?p1RFj1AYiYSPKFSm0Urrf+a1IxSdt9saOHTqv8n8v8aSegC/5pZ0fVh4Q2?=
- =?iso-8859-1?Q?dG7w8j6ncqfMnZfcCs9eV4DO9ZKqNA6TWOen7xIHu7fGGH0YfFbOPRkCIs?=
- =?iso-8859-1?Q?1UqzWG4z9RfDp3NkxXL/Dx2fulo+ffdAb67D6srD/1wV8CHWyiK4LeG0eg?=
- =?iso-8859-1?Q?vnJybMm+yRSU62bizirlXVQlx5Pud1daTQ7d8qGsoPS1kr8jKKJElBWq2H?=
- =?iso-8859-1?Q?QbzijCCvOSp+nF7DeSXR90saPLVj0J4rNZBMR4X3gSO0QaeJCqK+ZqT3QY?=
- =?iso-8859-1?Q?lBX3t0zi/b3Yg9l+ztLXenRa9+yhubFwZROYbauVmXyXy0EhyTPhn/55JR?=
- =?iso-8859-1?Q?+S7x47Qlq8eesIgElYNh3XwZmaleTou+ygIxapOvN12i1TSaG6DuzJHOsR?=
- =?iso-8859-1?Q?umm72EGAx2b0jKHCJOA9AjuJ9m06LOZBL8wncDlBB88gXUU4GUaqPl0Q35?=
- =?iso-8859-1?Q?7JyImlPw1Fk9RYXtLNjLAe4RVGQYcia+i86Q2wDkPKc1G0sieyXBRqhu0Z?=
- =?iso-8859-1?Q?1tEJ5VOhI2fDPxv/9zDDBRkv9eY9sulzGPQQQyP8Rb0V9vfcIo47RB1F23?=
- =?iso-8859-1?Q?JbgAjhGSBiAoPCbRsT0fjWlgslussSowgWQTZPZ76ylH3WwECWpzM9DEbN?=
- =?iso-8859-1?Q?FoihDuQDG9lnNPphKGOHolzM7mEvvap2Y4y3u8qeRRNaan0pIsA1z2SB19?=
- =?iso-8859-1?Q?vNjp5o3QBBIDmQnUNpPPuWa90oCAvBNNYf8e4uFpEtImAPCNLvz4+QqPGv?=
- =?iso-8859-1?Q?6xn3HZgg3BuGswMflUk/Uv/aRerV/f/N9lrx0gRjha54rInuNpLrRH5ypN?=
- =?iso-8859-1?Q?2iipg/aCa4kCa8HxPVGvy1ISVzEUA68/B8FqgX9SuOo6ht7KSLVExCU9dZ?=
- =?iso-8859-1?Q?7dsXflfLgHItdtg5MaoJ3+pFhR4GHu7bJpITVrygXrwBTOq1v9/A02uerB?=
- =?iso-8859-1?Q?j+yTt6VpdnydXisgGJ5BBDKl5bVRaficru5BhdV8Yy8erQWlmZLxv4pveQ?=
- =?iso-8859-1?Q?CBVSBgHd9ehVqo7TwYdh2rWvY3sGQxh+ydFZ0DIQ3hPi79eC1cuZHK+5zM?=
- =?iso-8859-1?Q?NK/eApedXsJZEATUzIJOa3bE/GF2OEaAj2hoIR28Bm6icw40OeMpABy9eX?=
- =?iso-8859-1?Q?pGAXhCp9/3ZydZYahdzb00uUKiFDpvWDv34HfvXpgim/butFOw7qOtP/hw?=
- =?iso-8859-1?Q?9DKGs8uAcIC+Dvia1lwbfmf8XvzaKH8xNw9zakSfj73rGfg32raNOKm6dk?=
- =?iso-8859-1?Q?GYyal/TvIpBwy3z6hut9Wo48iqpQus8B3jOdI+0qXHEljLV6PlO2IC0jI7?=
- =?iso-8859-1?Q?iNXxRegTveZYZpfWAtqjABRQColo9zXjvWIB+wWDCa4y3jlsNzY3z77S/y?=
- =?iso-8859-1?Q?O6K4AhD5W8EYuLl9QohQv0HAtVXQ7+abF1PkYisJ94XKkqv9QpEKt7opN6?=
- =?iso-8859-1?Q?VdvUIA5JbQZ6QV/4Urh3OfBYUnPiDKvwiU3RL0OWCVVMv6qSnHxtzIyokj?=
- =?iso-8859-1?Q?QFs0G5oSV5OsPKJPxdZwk7lq5T/xe19eSKJMUAl5yxgdCvcAzJ255GMm22?=
- =?iso-8859-1?Q?rpIi5R6Yq1u0T3fExlSFsWxlYeDC4F3FXCeysrzlZE68tgqEFu5z+mw/fI?=
- =?iso-8859-1?Q?xZsj0mSIpfvF0iZVe7A=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1uUxIK-00026Y-Lw
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 20:50:23 -0400
+X-ASG-Debug-ID: 1750985404-086e23278359f30001-jgbH7p
+Received: from ZXSHMBX3.zhaoxin.com (ZXSHMBX3.zhaoxin.com [10.28.252.165]) by
+ mx1.zhaoxin.com with ESMTP id xI0nD2rHPPIPkhLW (version=TLSv1.2
+ cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+ Fri, 27 Jun 2025 08:50:04 +0800 (CST)
+X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
+Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX3.zhaoxin.com
+ (10.28.252.165) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Fri, 27 Jun
+ 2025 08:50:03 +0800
+Received: from ZXSHMBX1.zhaoxin.com ([::1]) by ZXSHMBX1.zhaoxin.com
+ ([fe80::2c07:394e:4919:4dc1%7]) with mapi id 15.01.2507.044; Fri, 27 Jun 2025
+ 08:50:03 +0800
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
+Received: from [192.168.31.91] (10.28.66.62) by zxbjmbx1.zhaoxin.com
+ (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Thu, 26 Jun
+ 2025 20:10:52 +0800
+Message-ID: <fe3c59c0-446c-4e93-9a8b-32c5314df401@zhaoxin.com>
+Date: Thu, 26 Jun 2025 20:10:51 +0800
 MIME-Version: 1.0
-X-OriginatorOrg: htecgroup.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PA4PR09MB4864.eurprd09.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6827d7c3-1f4f-40b9-996e-08ddb50e1e90
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Jun 2025 00:04:00.2813 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: QtUzOShAQsY0uk9PmgaBzgHB/z5a3487OuP3QKfKhRMBffvHMTZHL2HUEPOfJT9lX3fK8oRkLqlhPa20/qX+QhA+FgZuCip//QzN2LWFZBc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR09MB6925
-Received-SPF: pass client-ip=40.107.130.92;
- envelope-from=aleksandar.rakic@htecgroup.com;
- helo=MRWPR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/16] i386/cpu: Consolidate CPUID 0x4 leaf
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>
+X-ASG-Orig-Subj: Re: [PATCH 05/16] i386/cpu: Consolidate CPUID 0x4 leaf
+CC: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Babu Moger
+ <babu.moger@amd.com>, Pu Wen <puwen@hygon.cn>, Tao Su <tao1.su@intel.com>,
+ "Yi Lai" <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
+ <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>
+References: <20250620092734.1576677-1-zhao1.liu@intel.com>
+ <20250620092734.1576677-6-zhao1.liu@intel.com>
+From: Ewan Hai <ewanhai-oc@zhaoxin.com>
+In-Reply-To: <20250620092734.1576677-6-zhao1.liu@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.28.66.62]
+X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
+ zxbjmbx1.zhaoxin.com (10.29.252.163)
+X-Moderation-Data: 6/27/2025 8:50:02 AM
+X-Barracuda-Connect: ZXSHMBX3.zhaoxin.com[10.28.252.165]
+X-Barracuda-Start-Time: 1750985404
+X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
+X-Barracuda-URL: https://10.28.252.35:4443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at zhaoxin.com
+X-Barracuda-Scan-Msg-Size: 4046
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
+X-Barracuda-Spam-Score: -2.02
+X-Barracuda-Spam-Status: No,
+ SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
+ QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.143446
+ Rule breakdown below
+ pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+Received-SPF: pass client-ip=210.0.225.12; envelope-from=EwanHai-oc@zhaoxin.com;
+ helo=mx1.zhaoxin.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,14 +104,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
 
-This patch adds support for emulation of CRC32 instructions for
-the Mips target in QEMU, adds tests, and enables CRC for mips64r6.
-The CRC32 instructions are available in MD00087 Revision 6.06.
-The disassembly for crc32 is hidden in commit 99029be1c28.
-New opcode is implemented in decodetree format as in v3.
 
-Kind regards,
-Aleksandar Rakic=
+On 6/20/25 5:27 PM, Zhao Liu wrote:
+> 
+> 
+> Modern Intel CPUs use CPUID 0x4 leaf to describe cache information
+> and leave space in 0x2 for prefetch and TLBs (even TLB has its own leaf
+> CPUID 0x18).
+> 
+> And 0x2 leaf provides a descriptor 0xFF to instruct software to check
+> cache information in 0x4 leaf instead.
+> 
+> Therefore, follow this behavior to encode 0xFF when Intel CPU has 0x4
+> leaf with "x-consistent-cache=true" for compatibility.
+> 
+> In addition, for older CPUs without 0x4 leaf, still enumerate the cache
+> descriptor in 0x2 leaf, except the case that there's no descriptor
+> matching the cache model, then directly encode 0xFF in 0x2 leaf. This
+> makes sense, as in the 0x2 leaf era, all supported caches should have
+> the corresponding descriptor.
+> 
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>   target/i386/cpu.c | 48 ++++++++++++++++++++++++++++++++++++-----------
+>   1 file changed, 37 insertions(+), 11 deletions(-)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 2f895bf13523..a06aa1d629dc 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -223,7 +223,7 @@ struct CPUID2CacheDescriptorInfo cpuid2_cache_descriptors[] = {
+>    * Return a CPUID 2 cache descriptor for a given cache.
+>    * If no known descriptor is found, return CACHE_DESCRIPTOR_UNAVAILABLE
+>    */
+> -static uint8_t cpuid2_cache_descriptor(CPUCacheInfo *cache)
+> +static uint8_t cpuid2_cache_descriptor(CPUCacheInfo *cache, bool *unmacthed)
+>   {
+>       int i;
+> 
+> @@ -240,9 +240,44 @@ static uint8_t cpuid2_cache_descriptor(CPUCacheInfo *cache)
+>               }
+>       }
+> 
+> +    *unmacthed |= true;
+>       return CACHE_DESCRIPTOR_UNAVAILABLE;
+>   }
+> 
+> +/* Encode cache info for CPUID[4] */
+
+Maybe this should be /* Encode cache info for CPUID[2] */ ?
+I'm not sure.
+
+> +static void encode_cache_cpuid2(X86CPU *cpu,
+> +                                uint32_t *eax, uint32_t *ebx,
+> +                                uint32_t *ecx, uint32_t *edx)
+> +{
+> +    CPUX86State *env = &cpu->env;
+> +    CPUCaches *caches = &env->cache_info_cpuid2;
+> +    int l1d, l1i, l2, l3;
+> +    bool unmatched = false;
+> +
+> +    *eax = 1; /* Number of CPUID[EAX=2] calls required */
+> +    *ebx = *ecx = *edx = 0;
+> +
+> +    l1d = cpuid2_cache_descriptor(caches->l1d_cache, &unmatched);
+> +    l1i = cpuid2_cache_descriptor(caches->l1i_cache, &unmatched);
+> +    l2 = cpuid2_cache_descriptor(caches->l2_cache, &unmatched);
+> +    l3 = cpuid2_cache_descriptor(caches->l3_cache, &unmatched);
+> +
+> +    if (!cpu->consistent_cache ||
+> +        (env->cpuid_min_level < 0x4 && !unmatched)) {
+> +        /*
+> +         * Though SDM defines code 0x40 for cases with no L2 or L3. It's
+> +         * also valid to just ignore l3's code if there's no l2.
+> +         */
+> +        if (cpu->enable_l3_cache) {
+> +            *ecx = l3;
+> +        }
+> +        *edx = (l1d << 16) | (l1i <<  8) | l2;
+> +    } else {
+> +        *ecx = 0;
+> +        *edx = CACHE_DESCRIPTOR_UNAVAILABLE;
+> +    }
+> +}
+> +
+>   /* CPUID Leaf 4 constants: */
+> 
+>   /* EAX: */
+> @@ -7451,16 +7486,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>               *eax = *ebx = *ecx = *edx = 0;
+>               break;
+>           }
+> -        *eax = 1; /* Number of CPUID[EAX=2] calls required */
+> -        *ebx = 0;
+> -        if (!cpu->enable_l3_cache) {
+> -            *ecx = 0;
+> -        } else {
+> -            *ecx = cpuid2_cache_descriptor(env->cache_info_cpuid2.l3_cache);
+> -        }
+> -        *edx = (cpuid2_cache_descriptor(env->cache_info_cpuid2.l1d_cache) << 16) |
+> -               (cpuid2_cache_descriptor(env->cache_info_cpuid2.l1i_cache) <<  8) |
+> -               (cpuid2_cache_descriptor(env->cache_info_cpuid2.l2_cache));
+> +        encode_cache_cpuid2(cpu, eax, ebx, ecx, edx);
+>           break;
+>       case 4:
+>           /* cache info: needed for Core compatibility */
+> --
+> 2.34.1
+> 
+
 
