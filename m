@@ -4,94 +4,171 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E231C7EE30
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 16:40:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF63DC7EE30
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 17:54:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUpdl-0003at-T4; Thu, 26 Jun 2025 12:39:57 -0400
+	id 1uUqmw-0006iW-4h; Thu, 26 Jun 2025 13:53:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uUpdj-0003af-Ji
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 12:39:55 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uUpdh-0001Ve-BU
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 12:39:55 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2349f096605so19793705ad.3
- for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 09:39:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750955991; x=1751560791; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=+26Zun43B2AxqYcDJBZegTuekWT1lFhWkNgQQqBWE+8=;
- b=UWtxBYn3UxnGCjU5ptF/ngIF3qMGsYRKk38kBL/2Vgr2ng1CMbxufLbYrWdKcR/Wk9
- sQpKY60GIXlM/g3eTgbequWDsjWU7I/eeOZuHdEQFCENjD1ysOA2XhHXG/mgiSkq2htX
- nJry34JKXXSqur6eKOh696iPDlEifyvF2bkpOTUQdYxGU97MwD73mzAsCflteo/JbOyZ
- 77wocB2vQgzvNqVzcraix+kSgyLD992SGbQdxbpfsscDhCWvU5VvckEgeCINoX7JARWF
- P0Kn873LExgwsiDDW2nowhugt+U9gsj2WpMx92pMtN9kTyOdoqLPN9H3dOeXw2Rx4uut
- xBGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750955991; x=1751560791;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+26Zun43B2AxqYcDJBZegTuekWT1lFhWkNgQQqBWE+8=;
- b=CEsDBe0QBRwBL1FjrCIwdgYTbqyvePe1g5kHaPXj/QPSUIFgWAfcT8IPNcqGbsbDdw
- gwqjSrR4l5Kng4QsYmEPXfaoXaWFStFih0V5u6aL8r28s0sUx2wnElsdwV3p61pVBGIJ
- PQwVkIeLguzLDfejy5g73vxSc/Pes7q1UhDfSqpBsnJ+oLhZTXl7fUIv6J3TG5KU9T5R
- VpF1Qg9gjXNkIfKDxtfnt7RmCr2pYr4asM3Ph1X5kAOmtskenSFzTgNnmzqUOumIuxbt
- LmQdIHcLNUSoeKewRA8CrBgeN53ZNF2gfJqv5AewD1ynpNrMLs3bgRHhUvZg5aps8Onl
- slRw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUu6ICcsA/JRBKuJutjjBTYNE5dExATRP/BAvK7wzSuJbgVqiOvUAlXfzy9BQA0VC0xiaaPpzAUpLid@nongnu.org
-X-Gm-Message-State: AOJu0Yw4WvZjZzpXs59I7OdqFo0wvRy9LLokfh2dcpw7jIWmPBrMr2TI
- ieO5s+6T///2cIAgX8voI/qBKYYH+52OdgUixaftg1wxV2+Rf7kDp7c6
-X-Gm-Gg: ASbGncuYOGhULxCKjbpGkd4dOAMv6fgpSeoJZaWODlmmpvFT7i3BAejpkqwvbVQjA8T
- nj1O3jGJbp3l7ifZJo5d8tY7/mF81Nu5ZzLWf8W/NUJjBFg68/jIfhE2m++YI4fYrHp6Di8MAzU
- uBdBXg/TpWOW7gk91AFVUdJ0bIf6rfzjJS0wFUmrQvPz4VKbDdKBo9fDt9CI+0uKZ0UK40YsPt1
- cxegfuZ2pfnBsah8arAbC7zq7LAllvFHb3Mz5NTgwimJw3KQpUlNb2gKGA/XUOWTD1v7u3NpgwB
- 2JIAPYWwTzRQZvOoEqK/yHE/pu15YxtBg0oLN4Pi+fNBHCoCT10B
-X-Google-Smtp-Source: AGHT+IEKF3fyyiTSPb7iOizIGQFwdW7z6sbjGfxSdS3gbTfwefLsi7KudG4dU1vMafwPPEeQt8yyBg==
-X-Received: by 2002:a17:902:da88:b0:234:a139:1216 with SMTP id
- d9443c01a7336-23824087149mr144328125ad.44.1750955990409; 
- Thu, 26 Jun 2025 09:39:50 -0700 (PDT)
-Received: from lg ([2601:646:8f03:9fee:9be8:283b:868f:19a1])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23abe3dc5a4sm1891465ad.135.2025.06.26.09.39.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Jun 2025 09:39:49 -0700 (PDT)
-From: Fan Ni <nifan.cxl@gmail.com>
-X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
-Date: Thu, 26 Jun 2025 09:39:46 -0700
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-Cc: nifan.cxl@gmail.com, qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
- linux-cxl@vger.kernel.org, gregory.price@memverge.com,
- ira.weiny@intel.com, dan.j.williams@intel.com,
- a.manzanares@samsung.com, dave@stgolabs.net,
- nmtadam.samsung@gmail.com, jim.harris@samsung.com,
- Jorgen.Hansen@wdc.com, wj28.lee@gmail.com, armbru@redhat.com,
- mst@redhat.com, anisa.su887@gmail.com
-Subject: Re: [PATCH v8 00/14] Enabling DCD emulation support in Qemu
-Message-ID: <aF130g16NVsHpx0E@lg>
-References: <20240523174651.1089554-1-nifan.cxl@gmail.com>
- <20250625152234.0000159e.alireza.sanaee@huawei.com>
+ (Exim 4.90_1) (envelope-from <Vasant.Hegde@amd.com>)
+ id 1uUqms-0006hh-PF
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 13:53:26 -0400
+Received: from mail-dm6nam11on2062f.outbound.protection.outlook.com
+ ([2a01:111:f403:2415::62f]
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Vasant.Hegde@amd.com>)
+ id 1uUqmq-00044E-Cj
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 13:53:26 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wzlzBNgSSXrOxF0jU/8JLD2V7Y9zaC8yJOATB7V4/BWe0QKuDWmXiWqlZeWj5YjB5ocEMAjy8GQDoGj2zSFR5+G+HwNhhM4/7qp4RcjayD74r6FxdLUxelI+XCxitULuuPcpAmGHswbLvxAFxKUx6Ops1q8wnM8MWC8IlHwDgYwxeM6HaS1vt3meuGtqL4cY7VC7nU+9yCxxzhMDRoKWTxoVfomlTkUtYG4ylMKoUU3GoCw/Xa6DxDMCGpyuBXD4v3+rO2fsjshROnskBRLZ++uHhZzm4jTZl1KPV0lsKu5Bbe0YNEg2YON27JZB+tLJI0gzgnzi3/HV/qCLCZ2kzQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=25vttU1EvvElR5nr89gLgX36/JLsKAg8wPjQjCVxgSA=;
+ b=PyqvxblC74HxslFwu/IYQLUvB+z9tjXmeApzITYXmXGgy+hrA50iVbGGAHucnpJiKH4HjVVUUjXCsg8bHlIMfFzLYDzNhCPSpO4TmICrsTMZU3EuDhpiku/apHAYWVlHHoBivXIwooDar3PowS2qxmafl9Wv5SSyovEA3ZrTjOBipA0opdrE+jqnDKHjiqgcoNQq95r7Naa5YrHMYRmJB6iJcSrM3Uh2EYLsnB/+BkeK4ZL7nrXHVVY9JcsKdhIDP0Yw+D9N0AELYiS2012AMSba6Au8HFYEtSE4hrNCtXJ5nkhkEnts/JTv3IxjeNsSJ8hNNeoBV7ySMCk/UgFhfA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=25vttU1EvvElR5nr89gLgX36/JLsKAg8wPjQjCVxgSA=;
+ b=ZsaHJ/6wuqesAs8xoNDWHd1vhMvWmYr24ApEvqyOqnsxn/7JjL4s6+LxKJNWut3u/iiSMmb+B8vosXZagdWCQu9jchh3QdMJIgSiqLcOiHtg3LPfvqbghzTrm9Tew9xmUzsqJ/W8100hLHHt961nC6Wpq4hi/cTyjN/UzlJ0rgQ=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DS7PR12MB6048.namprd12.prod.outlook.com (2603:10b6:8:9f::5) by
+ CH3PR12MB7620.namprd12.prod.outlook.com (2603:10b6:610:150::5) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8857.28; Thu, 26 Jun 2025 17:53:18 +0000
+Received: from DS7PR12MB6048.namprd12.prod.outlook.com
+ ([fe80::6318:26e5:357a:74a5]) by DS7PR12MB6048.namprd12.prod.outlook.com
+ ([fe80::6318:26e5:357a:74a5%5]) with mapi id 15.20.8857.022; Thu, 26 Jun 2025
+ 17:53:18 +0000
+Message-ID: <efd65188-5bd9-463e-af7d-6ec2fa6e1a9c@amd.com>
+Date: Thu, 26 Jun 2025 23:23:09 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/8] amd_iommu: Fix Miscellaneous Information Register
+ 0 encoding
+To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, qemu-devel@nongnu.org
+Cc: ethan.milon@eviden.com, mst@redhat.com, pbonzini@redhat.com,
+ mjt@tls.msk.ru, marcel.apfelbaum@gmail.com, richard.henderson@linaro.org,
+ eduardo@habkost.net, suravee.suthikulpanit@amd.com, santosh.shukla@amd.com,
+ sarunkod@amd.com, brijesh.singh@amd.com, joao.m.martins@oracle.com,
+ boris.ostrovsky@oracle.com, philmd@linaro.org
+References: <20250617150427.20585-1-alejandro.j.jimenez@oracle.com>
+ <20250617150427.20585-2-alejandro.j.jimenez@oracle.com>
+Content-Language: en-US
+From: Vasant Hegde <vasant.hegde@amd.com>
+In-Reply-To: <20250617150427.20585-2-alejandro.j.jimenez@oracle.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN4P287CA0129.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:c01:2b1::11) To DS7PR12MB6048.namprd12.prod.outlook.com
+ (2603:10b6:8:9f::5)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250625152234.0000159e.alireza.sanaee@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pl1-x632.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR12MB6048:EE_|CH3PR12MB7620:EE_
+X-MS-Office365-Filtering-Correlation-Id: b036ce6b-1336-41f2-0337-08ddb4da551d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|7416014|376014|366016|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?VkFKT3o3eEV5UUJwZngvdVFhQ0ppV2Y5KzZDSnZrUUtWS3RZOVZ2NUdYbGZZ?=
+ =?utf-8?B?QU0zMHFHUGNhOU5Id1lZdm56dWp5WjZWYUdFR20zZlhmYUkrZXFoVE1xa21k?=
+ =?utf-8?B?cDlzTisvYnI2TEJXVEhrbHZSQmpZaFVSRXdYOXVIQ0tOWDBQMkw5ZDFFUCtD?=
+ =?utf-8?B?MVkreGkzVlBpajREamhnaTlJT2FGY0pHaU9XVU9UaHZqMCtrVXVsTkU0VHE3?=
+ =?utf-8?B?OUtwZ3JWTEt2ZTFsb2NmdmFnWi9IUkJaZEc2Mmo2M2c1cjdmVnJCcGVxckZz?=
+ =?utf-8?B?WWNrOXdpcEh4OHFJYk9vaXN1d3hFUjB5SDRCZnR4YVpac04vUWs4QW8yd2x2?=
+ =?utf-8?B?T2J1TzVEUlUxNVpSTEsxdXlBKzhsYXRKTmhtMllIb2xPeVp5ZnUzbkdPUW9i?=
+ =?utf-8?B?UWhWeHRDdjFqd09NTmc5VWNRV1dYNUtsMlBKdHFtellyc3NYaEpEL3FjNTFE?=
+ =?utf-8?B?cXY0WmdQOWpVeWR1Um1EMDRqZksxSkM2L0ozYk1XWFNFZDhoaEw1Wk41MXRG?=
+ =?utf-8?B?cXZPaWRaT0NCSkpWM2FuaDI0UVZtUGZEM1lFQXd0TG1aMWZLSmVicVZSTGFo?=
+ =?utf-8?B?QW5KajEyUzhpSytEaFV1K1dYcUM4Mk9ST2FpcUpNcm0wRTdzNXVvNjU2UU5V?=
+ =?utf-8?B?ZjNUUXo5REI5SFhLRGpVSTJIa0V1a2Z1Z3RGa1lhVkNWakxRTEhXRE51WFU2?=
+ =?utf-8?B?YlFheHN1eS8wckNMdmhiVW5aelN2S3VjSzFLS0luaXRHeHlGUlRzSE03Y3p1?=
+ =?utf-8?B?QWxrdEJrQmp5Q3RmSHJ0Qjd2Tzl1Z2prUzZHenZKVm44dE1tSEdIbEluNTJ4?=
+ =?utf-8?B?Y01nQ1ZNYkZVTFlIQWtRYVJuNjZYWlI2MEpvQS9FZE1hZWNEUWVHZkoxWnFF?=
+ =?utf-8?B?NFJRUGVWSUc3NGFTVTgwRnBkbmo2NWV2NXNGbmZZNldveEQwT3lhYU90cWMr?=
+ =?utf-8?B?YVFWdWVpQ04wWEMrcjZTQ3dPN3JJc3Y4YkZMaDh2cDdOZXcxZDhySHNvN0Jk?=
+ =?utf-8?B?WXl2dzIzU2N4aGN5S0VEZE5OOFZGQzU0VUhhK1NXL3c4bnZoUE1qbWJwTUZZ?=
+ =?utf-8?B?R0tIV0w3TVA3WXNCaVlkbVVLa1Bqbjh6eDd1QW03eXo3SjdGcGhhSHlrbmli?=
+ =?utf-8?B?NFV6cHJjK291akpmQlJodEpwdmE1N3cydXN1QWM0aFlFb0xYVm0xanJxQkw5?=
+ =?utf-8?B?YkNkcEtORWNiOFhzVmlRVDVIOWhnNGdXYk13ZnVyaVRESUZwa2dycFJjUEZO?=
+ =?utf-8?B?NTJNTUxScUUybzMva080ZjFaL0lCaVlkTHlmMTNsalBOenhsbTRLa3lFN25z?=
+ =?utf-8?B?bm1FaE1XdmR6WWRtNUpDa29oSWVydzU3dUcxQ2dIeUdtcGxLcFVsYmxONHpl?=
+ =?utf-8?B?L2dWNTF1amYrZG5TZHR0WDZDUmxLdlkrM29MYmFXeDdkd1o5ckhNZ2NjSkNK?=
+ =?utf-8?B?TExPYmZEUlRmNWlvTlEwcExpc1ZOUFdhbmR0QWJadzEzVFI3em1CK2pGUFZv?=
+ =?utf-8?B?c2YwZDRZTDZSdllpL1JleDkwaXRCOC9TTWVaVlBWN2I1S3pzTlUveXVsZUIz?=
+ =?utf-8?B?Q1h2aGtJdzBKR2l6cnlqcXQzeEhFWVcvUTNKdXJCeUdYQU5CNjVQbnFKOVQy?=
+ =?utf-8?B?M0pRbXdkRVV4b2VlVjNTNm5TRll1ZWZtZGJaRXZsNEFlU2M5cFB5aW9pOHZi?=
+ =?utf-8?B?MkhpWWxJT0tMbFEzQnN1anBReWlPZ0JLTEZ2TXpOcHdIMVNIdXh1WGVJWUtE?=
+ =?utf-8?B?VVoyZkpUVVcyclFJV2pNVTdiQjdhMlM1d1Z2L0UyMUd4N1VzRUxvL3l5V043?=
+ =?utf-8?B?OXZMcEhFaUUzUTQrdHdVaThYK2lETDcraDA4MEFWL0l4MldtYkNlSHdaWjVG?=
+ =?utf-8?B?NDI2ZC85ZkRwSUZOdjdLWEhHY1Y4dytiOFFHK2hTS09yb3F0Tm5XVmR3Wksz?=
+ =?utf-8?Q?s+wBChgaB70=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS7PR12MB6048.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(7416014)(376014)(366016)(7053199007); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SVBCaHhOMUF3eG1hUGwwSkIvMVR3ZGZKcUpoVmc4NncwVnhuYVVjU3pJM2Yx?=
+ =?utf-8?B?eDh0YjN3RlNlQzlPM0NGbTFzd0NYVFpDZnF1dEo3SElVdHBoczhKdGYzS3cw?=
+ =?utf-8?B?WkpWakI5c0luV3AwWEZ5UnpueW96MDM0bjR2SDc0VnJoVXNwTU1UZXJzN1d5?=
+ =?utf-8?B?RW9mVjJmbW51dEFGYUVwbExSZld0cTdzalJ2RDRjeTU4NEFYNWE2TWsvdVFj?=
+ =?utf-8?B?eGFuakh5VTBBSWZJb0xUejRmZVR6RXIyM3k2dU5BK3lXcHJzWnorV2M0Vk1n?=
+ =?utf-8?B?eGM2Qk8xZmJ4MCtTenZ6Q0dxU3psTGpSMS9PeTc3VE00QzZKZDI5N2tESmpS?=
+ =?utf-8?B?VmF2dWJseExLSktOcUc0WjE5djFrUWQvYzdCZTJZNkVBZW9aS3A3VkdSeXY4?=
+ =?utf-8?B?YkdnWTRoby9UVGtYTVpzYXVEYU9zMWt4blRWZlhwTWJaNVpvWGpkcmdzdG1r?=
+ =?utf-8?B?dVVqU1B3OWY1cURkYUg2VmJ3a2x1N016d0ZFbzFZdS82Mlk5em9FcVpHUnR5?=
+ =?utf-8?B?ai9uYS91dVhXZTF3SFQyZmdteCtEZi93SkptYXd5V0doUEdERlR5VzA1MnBm?=
+ =?utf-8?B?bGRsbWZXL0FhZUFHZnZEUXhhMjEzTHpCczQ3RjlIWWJpSmU1bUJ6YjBwQ2FX?=
+ =?utf-8?B?ZUdzZUNhNEwxczhrdEszTkIrOVVHTU1MUHdTWk1XR0h4UEFneE5pSklZa3RI?=
+ =?utf-8?B?SFhwK3lzNDg1SXhnK0JrKzRqOUU4UWNsQ2FoWVdIS3FPTmVDbWZjdWFnaFZD?=
+ =?utf-8?B?cVJZZEk1SmdQbHBGTGswS3FsNHdsNURTbFlXQ2tXR0dMS0U2UC9tYUp4OXpa?=
+ =?utf-8?B?YjNEZmIzTDUwNWZJYnNIc29ZMUZYMmNsRVVZT1U0VWJKU3VJUE9tOFhLcDVH?=
+ =?utf-8?B?elVJNGM3SFpVZHhmK3U5aWE2SGF6VjkvTG40dXJvckdyWUYrQmx2NktWL1JC?=
+ =?utf-8?B?ejNIcE9jMnNkc25lUThyRnk3QWxlTmhyMHloaTBvTzM0ZTc1MVp5M0V0VlFW?=
+ =?utf-8?B?cjRhNlN6OW5tU2pLWmlWUHJXK3k4L29yS3RwVjZFSStrdktScjFyeUFBamFW?=
+ =?utf-8?B?UmRUT1A3TTVlT3RhZzFiMEZsZHRYVTk3SEtQRGVWSm9pZ0pOZ1pSTk5kTVQ3?=
+ =?utf-8?B?N3JKb3lBSVlZcGxmSzlvRGYwd0ZDZTRPWGhXa3dMUjAwdnd0R3Z0aDJwcjFM?=
+ =?utf-8?B?SUVFSkcwSnNneTVPakFSRWtjRlkvYjh3emRrL0FGZ3RReVVXN2lkRHFHVzNV?=
+ =?utf-8?B?ZnRuS1NkeGhrUHQrd0JDR0tkWENMcWY3ZW45VXhkNEwwMG1zSUphTHNmdlE0?=
+ =?utf-8?B?S0g1T1NSSStEV2F5c0l5WlYwclZlWjNDTXVwNmJVSmV1aWdISmVkZkUwZjdh?=
+ =?utf-8?B?ellVeWk5eDB4VmpFU3h1WlJGcFdrQjRyM0hPdFZ6T0toSGlGRDlNVUxJRkRm?=
+ =?utf-8?B?bktESnZoUmcvT3FEdXc0UDBTK2xNdFQ5RFd2bFBqK2Z4QnZwR0lUWnBPN01N?=
+ =?utf-8?B?dm45T1ZSMGFHMkZsY1NKY3NGbGJqL2dpSlNBWUIwNlBBa1RqZkZKRE01MEQ5?=
+ =?utf-8?B?Rzl3Wk5mSVIxREdpK0VJSWhCbTNtdE11TWVMWXRIdHIwTlRTT1hvTDY5T0VE?=
+ =?utf-8?B?azl5Rkd4S2phY05aTlhuSTJOeWF2SzNWSm5ac1pLV2F1SFp0OG85VDFGU2tU?=
+ =?utf-8?B?dVJwOXBGQ2NKUEN0STFvQXJxN25GSkJtd3lZQ0MrT3F3Rmx1alRxaHc1VWpZ?=
+ =?utf-8?B?TXVDKzFtL0pYZEdGTTdPYWMyY1dVZGN0R24zWjZxRGE5U3RDYnh5YW83b0Vh?=
+ =?utf-8?B?UGp6UjAzc3AwNDlja3NxbU1PNkNKK0lzR2ZUcE1mdHNpK01YZ1BCMGNqWThx?=
+ =?utf-8?B?VGk4TGd0Y1c1RnUvazF2bkNKd2ZYYmNDTnhHWFdjZUl3VWpPbE5XZzcrQzhz?=
+ =?utf-8?B?VG9UZzNrRzRCTGNSbm9ZRkdoem54dWlwbGF4WldnMmZTNHp2Z2dCSGErbHZ5?=
+ =?utf-8?B?ODBPcGJXTHJIL0NZV3VuNUphT3owTTVrVGE2S0dOc3N1dVloZ0M3TWFIZUVt?=
+ =?utf-8?B?SjRsZkNvbW0wcjNZQ1NXWjlxVUZJd2RFK2Zaa0EyQkZIRFBVR0JTNjh3LzB1?=
+ =?utf-8?Q?hvhzOy6Vary4TLGPzorotLpwt?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b036ce6b-1336-41f2-0337-08ddb4da551d
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB6048.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2025 17:53:18.3019 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: FyDowR/KdJIH5XshmklFhSzBkPuU/pN9Ht2y0j87r1UZ9PbFYzozsw/nnoi+6CjqOMci0evNBzprHdJBOsZ5QQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7620
+Received-SPF: permerror client-ip=2a01:111:f403:2415::62f;
+ envelope-from=Vasant.Hegde@amd.com;
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,249 +184,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 25, 2025 at 03:22:34PM +0100, Alireza Sanaee wrote:
-> On Thu, 23 May 2024 10:44:40 -0700
-> nifan.cxl@gmail.com wrote:
-> 
-> > From: Fan Ni <nifan.cxl@gmail.com>
-> > 
-> > A git tree of this series can be found here (with one extra commit on
-> > top for printing out accepted/pending extent list for testing): 
-> > https://github.com/moking/qemu/tree/dcd-v8-qapi
-> > 
-> > v7->v8:
-> > 
-> > This version carries over the following two patches from Gregory.
-> > 1. hw/cxl/mailbox: change CCI cmd set structure to be a member, not a
-> > reference https://gitlab.com/jic23/qemu/-/commit/f44ebc5a455ccdd6535879b0c5824e0d76b04da5
-> > 2. hw/cxl/mailbox: interface to add CCI commands to an existing CCI
-> > https://gitlab.com/jic23/qemu/-/commit/00a4dd8b388add03c588298f665ee918626296a5
-> > 
-> > Note, the above two patches are not directly related to DCD emulation.
-> > 
-> > All the following patches in this series are built on top of
-> > mainstream QEMU and the above two patches.
-> > 
-> > The most significant changes of v8 is in Patch 11 (Patch 9 in v7).
-> > Based on feedback from Markus and Jonathan, the QMP interfaces for
-> > adding and releasing DC extents have been redesigned and now they
-> > look like below,
-> > 
-> > # add a 128MB extent at offset 0 to region 0
-> > 	{ "execute": "cxl-add-dynamic-capacity",
-> > 	  "arguments": {
-> > 		  "path": "/machine/peripheral/cxl-memdev0",
-> >           "host-id":0,
-> >           "selection-policy": 'prescriptive',
-> > 		  "region": 0,
-> >           "tag": "",
-> > 		  "extents": [
-> > 		  {
-> > 			  "offset": 0,
-> > 			  "len": 134217728
-> > 		  }
-> > 		  ]
-> > 	  }
-> > 	}
-> > 
-> > Note: tag is optional.
-> > 
-> > # Release a 128MB extent at offset 0 from region 0
-> >  { "execute": "cxl-release-dynamic-capacity",
-> > 	  "arguments": {
-> > 		  "path": "/machine/peripheral/cxl-memdev0",
-> >           "host-id":0,
-> >           "removal-policy":"prescriptive",
-> >           "forced-removal": false,
-> >           "sanitize-on-release": false,
-> >           "region": 0,
-> >           "tag": "",
-> > 		  "extents": [
-> > 		  {
-> > 			  "offset": 0,
-> > 			  "len": 134217728
-> > 		  }
-> > 		  ]
-> > 	  }
-> > 	}
-> >     
-> > Note: removal-policy, sanitize-on-release and tag are optional.
-> >     
-> > Other changes include,
-> > 1. Applied tags to patches. 
-> > 2. Replaced error_setq with error_append_hint for
-> > cxl_create_dc_region error case in Patch 6 (Patch 4 in v7); (Zhijian
-> > Li) 3. Updated the error message to include region size information in
-> >     cxl_create_dc_region.
-> > 4. set range1_size_hi to 0 for DCD in build_dvsec. (Jonathan)
-> > 5. Several minor format fixes.
-> > 
-> > Thanks Markus, Jonathan, Gregory, and Zhijian for reviewing v7 and
-> > svetly Todorov for testing v7.
-> > 
-> > This series pass the same tests as v7 check the cover letter of v7 for
-> > more details. Additionally, we tested the QAPI interface for
-> > adding/releasing DC extents with optional input parameters.
-> >   
-> > 
-> > v7: https://lore.kernel.org/linux-cxl/5856b7a4-4082-465f-9f61-b1ec6c35ef0f@fujitsu.com/T/#mec4c85022ce28c80b241aaf2d5431cadaa45f097
-> > 
-> > 
-> > Fan Ni (12):
-> >   hw/cxl/cxl-mailbox-utils: Add dc_event_log_size field to output
-> >     payload of identify memory device command
-> >   hw/cxl/cxl-mailbox-utils: Add dynamic capacity region representative
-> >     and mailbox command support
-> >   include/hw/cxl/cxl_device: Rename mem_size as static_mem_size for
-> >     type3 memory devices
-> >   hw/mem/cxl_type3: Add support to create DC regions to type3 memory
-> >     devices
-> >   hw/mem/cxl-type3: Refactor ct3_build_cdat_entries_for_mr to take mr
-> >     size instead of mr as argument
-> >   hw/mem/cxl_type3: Add host backend and address space handling for DC
-> >     regions
-> >   hw/mem/cxl_type3: Add DC extent list representative and get DC
-> > extent list mailbox support
-> >   hw/cxl/cxl-mailbox-utils: Add mailbox commands to support
-> > add/release dynamic capacity response
-> >   hw/cxl/events: Add qmp interfaces to add/release dynamic capacity
-> >     extents
-> >   hw/mem/cxl_type3: Add DPA range validation for accesses to DC
-> > regions hw/cxl/cxl-mailbox-utils: Add superset extent release mailbox
-> > support hw/mem/cxl_type3: Allow to release extent superset in QMP
-> > interface
-> > 
-> > Gregory Price (2):
-> >   hw/cxl/mailbox: change CCI cmd set structure to be a member, not a
-> >     reference
-> >   hw/cxl/mailbox: interface to add CCI commands to an existing CCI
-> > 
-> >  hw/cxl/cxl-mailbox-utils.c  | 658
-> > +++++++++++++++++++++++++++++++++++- hw/mem/cxl_type3.c          |
-> > 634 ++++++++++++++++++++++++++++++++-- hw/mem/cxl_type3_stubs.c    |
-> > 25 ++ include/hw/cxl/cxl_device.h |  85 ++++-
-> >  include/hw/cxl/cxl_events.h |  18 +
-> >  qapi/cxl.json               | 143 ++++++++
-> >  6 files changed, 1511 insertions(+), 52 deletions(-)
-> > 
-> 
-> Hi Nifan,
-> 
-> I am trying to test this patchset with Ira's set on DCD, and I am
-> trying to work out everything by using sysfs rather than using tools
-> instead. I am not sure where things are going of the rail.
-> 
-> I am using this patchset
-> (https://lore.kernel.org/qemu-devel/20240523174651.1089554-2-nifan.cxl@gmail.com/) with Ira's v9 https://lore.kernel.org/all/20250413-dcd-type2-upstream-v9-0-1d4911a0b365@intel.com/
-> 
-> This my CXL config:
-> return [
->     "-m",      "6G,maxmem=20G,slots=10",
->     "-object", "memory-backend-ram,id=vmem0,share=on,size=2G",
->     "-device", "pxb-cxl,bus_nr=23,bus=pcie.0,id=cxl.1",
->     "-device","cxl-rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2", 
->     "-device","cxl-type3,bus=root_port13,volatile-dc-memdev=vmem0,id=cxl-vmem0,num-dc-regions=2",
->     "-M", "cxl=on,cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G" 
-> ]
-> 
-> 
-> This is how I create a new CXL DC Region ready to work with.
-> 
-> # creating a region
-> region=$(cat
-> /sys/bus/cxl/devices/decoder0.0/create_dynamic_ram_a_region) 
-> echo $region
-> 
-> echo $region >
-> /sys/bus/cxl/devices/decoder0.0/create_dynamic_ram_a_region 
-> echo 256 > /sys/bus/cxl/devices/$region/interleave_granularity 
-> echo 1 > /sys/bus/cxl/devices/$region/interleave_ways
-> 
-> echo "dynamic_ram_a" > /sys/bus/cxl/devices/decoder2.0/mode
-> echo $((256 << 20)) > /sys/bus/cxl/devices/decoder2.0/dpa_size
-> 
-> echo $((256 << 20)) > /sys/bus/cxl/devices/$region/size
-> echo "decoder2.0" > /sys/bus/cxl/devices/$region/target0
-> echo 1 > /sys/bus/cxl/devices/$region/commit
-> 
-> echo $region > /sys/bus/cxl/drivers/cxl_region/bind
-> 
-> After this I have two things created, region0 and dax_region0:
-> 
-> root@localhost:~# ls /sys/bus/cxl/devices/
-> dax_region0/    decoder1.0/     decoder1.2/     decoder2.0/
-> decoder2.2/     endpoint2/      nvdimm-bridge0/ region0/ decoder0.0/
->  decoder1.1/     decoder1.3/     decoder2.1/     decoder2.3/     mem0/
->          port1/          root0/
-> 
-> This is what I have in dax_region0:
-> root@localhost:~# ls /sys/bus/cxl/devices/dax_region0/
-> dax0.0  dax_region  devtype  driver  modalias  subsystem  uevent
-> 
-> Now I want to add an extent, and this is how I am doing it:
-> 	
-> 	{ "execute": "cxl-add-dynamic-capacity",
-> 	  "arguments": {
-> 		  "path": "/machine/peripheral/cxl-memdev0",
->           "host-id":0,
->           "selection-policy": 'prescriptive',
-> 		  "region": 0,
->           "tag": "",
-> 		  "extents": [
-> 		  {
-> 			  "offset": 0,
-> 			  "len": 134217728
-> 		  }
-> 		  ]
-> 	  }
-> 	}
-> 
-> Now I see the extent added in my region device:
-> root@localhost:~# ls /sys/bus/cxl/devices/dax_region0/
-> dax0.0  dax_region  devtype  driver  extent0.0  modalias  subsystem
-> uevent root@localhost:~# ls /sys/bus/cxl/devices/dax_region0/extent0.0/
-> length  offset  uevent
-> 
-> This is where things will go off the rails, at this point I want to
-> create a new dax device to use, but this part is unsuccessful. Here I
-> first add some size to the dax region created before: 
-> 
-> root@localhost:~# echo 67108864 > /sys/bus/dax/devices/dax0.0/size 
-> [264.539280] dax:alloc_dev_dax_range:1015: dax dax0.0: alloc range[0]:
-> 0x0000000810000000:0x0000000813ffffff 
-> 
-> When I check the size everything looks OK: 
-> root@localhost:~# cat /sys/bus/dax/devices/dax0.0/size 
-> 67108864
-> 
-> But when I want to bind it then it does not work:
-> root@localhost:~# echo "dax0.0" > /sys/bus/dax/drivers/device_dax/bind
-> -bash: echo: write error: No such device
-> 
-> I believe I am missing something here. Would be good if you can help
-> out here.
-> 
-> Thanks,
-> Alireza
 
-Hi Alireza,
 
-My test with this series is always with Ira's ndtcl repos,
-I have not tried to test by using sysfs directly.
-
-To understand what it is going wrong, we need to see what is the
-difference between the workflow of ndctl and that you use above.
-
-After that, usually when I see an error as above, I will try to gdb the kernel.
-Try to debug the step that fails and understand why.
-
-For example, the last step fails, try to gdb "bind_store" function in 
-drivers/base/bus.c.
-
-Fan
-
+On 6/17/2025 8:34 PM, Alejandro Jimenez wrote:
+> The definitions encoding the maximum Virtual, Physical, and Guest Virtual
+> Address sizes supported by the IOMMU are using incorrect offsets i.e. the
+> VASize and GVASize offsets are switched. The value in the GVAsize field is
+> also modified, since it was incorrectly encoded.
 > 
+> Cc: qemu-stable@nongnu.org
+> Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
+> Co-developed-by: Ethan MILON <ethan.milon@eviden.com>
+> Signed-off-by: Ethan MILON <ethan.milon@eviden.com>
+> Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
--- 
-Fan Ni
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+
+-Vasant
+
 
