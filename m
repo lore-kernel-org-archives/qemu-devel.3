@@ -4,110 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8786DC7EE31
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 14:52:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91329C7EE30
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 16:20:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUnwz-00021S-KT; Thu, 26 Jun 2025 10:51:41 -0400
+	id 1uUpKN-0007vP-0B; Thu, 26 Jun 2025 12:19:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uUnwx-00021I-2N
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 10:51:40 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uUnwu-00087Y-G5
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 10:51:38 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 4B6B32116D;
- Thu, 26 Jun 2025 14:51:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1750949491; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=sBI160HhSrNEejK2cx47Y0grp6tGE3tTYyrmmuTe4Qs=;
- b=N3HUUp8jP7gg2w8zfMYg1JnnLLO0QJkiLzlB/ebOiipn+DxWbUDMRBC9mKIf6YlGYIVId5
- /uS85fFaHn9/MGZ/ouBpcPK+cavydYQGvtKcTmy57pFolpM7HqxRhgrAdaDbFd1NDThEge
- 8G3fpRaOMNj8gawnOysj+YE7xXRB1f0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1750949491;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=sBI160HhSrNEejK2cx47Y0grp6tGE3tTYyrmmuTe4Qs=;
- b=aa4FdUMFVlEgvW3gSfRNkkT/SjlMuDkbJqahpyx8bl8tDr9fcvYnHRGRwv4xdxKKu7iAez
- Jr7Dw5VjZbAq2lBw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=N3HUUp8j;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=aa4FdUMF
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1750949491; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=sBI160HhSrNEejK2cx47Y0grp6tGE3tTYyrmmuTe4Qs=;
- b=N3HUUp8jP7gg2w8zfMYg1JnnLLO0QJkiLzlB/ebOiipn+DxWbUDMRBC9mKIf6YlGYIVId5
- /uS85fFaHn9/MGZ/ouBpcPK+cavydYQGvtKcTmy57pFolpM7HqxRhgrAdaDbFd1NDThEge
- 8G3fpRaOMNj8gawnOysj+YE7xXRB1f0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1750949491;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=sBI160HhSrNEejK2cx47Y0grp6tGE3tTYyrmmuTe4Qs=;
- b=aa4FdUMFVlEgvW3gSfRNkkT/SjlMuDkbJqahpyx8bl8tDr9fcvYnHRGRwv4xdxKKu7iAez
- Jr7Dw5VjZbAq2lBw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 97A0C138A7;
- Thu, 26 Jun 2025 14:51:30 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id ywBfFnJeXWhVNAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 26 Jun 2025 14:51:30 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org, Peter Xu
- <peterx@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH 01/21] migration: Normalize tls arguments
-In-Reply-To: <87o6uayh9r.fsf@pond.sub.org>
-References: <20250603013810.4772-1-farosas@suse.de>
- <20250603013810.4772-2-farosas@suse.de> <87cyas88gg.fsf@pond.sub.org>
- <878qlf7nc0.fsf@suse.de> <87o6uayh9r.fsf@pond.sub.org>
-Date: Thu, 26 Jun 2025 11:51:27 -0300
-Message-ID: <87zfdu5zf4.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1uUpKK-0007tI-Fq; Thu, 26 Jun 2025 12:19:52 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1uUpKH-0006Mb-LU; Thu, 26 Jun 2025 12:19:52 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55QBTrnP019605;
+ Thu, 26 Jun 2025 16:19:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=NK6sGk
+ 4kF/VKRLbO/wxSuJtxWOP8S8a9Pf5m5jDwQWQ=; b=ppSCoWROCaD5agNQlOky7t
+ lPNCWL0CST3mkYE7C3mYlpR4F/bow0RTePuHkG87l54PohiC6Oh4xBz7yuwjtnQH
+ o4CdpTv71hEucUUCuiZ9Yk52VyBdVSGuczEGquxno3A8+KxgNkQ5jX9BICWMW0bO
+ 3xQCSITQmtrtjD5qLOCzVFN22YRyCw2ByeHUYLPDOh6GxfeQiHTlW0T1pN0m90lc
+ 8lXUYnBD98oZKS0OsNPLPo7bXeIpdBKpsCHKlD2b+1K8yWPDhsAnYx5o969Em+Hi
+ I+DFabzRQVCIMRfg2+0/F/l0uhu8CWUDp7mOuzh7kptZSShRW1zDel7sK0iW8u0g
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47dmf3ffcu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 26 Jun 2025 16:19:41 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55QD1ulI002471;
+ Thu, 26 Jun 2025 16:19:40 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47e8jmfpr3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 26 Jun 2025 16:19:40 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 55QGJdVU30147232
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 26 Jun 2025 16:19:39 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3E90458059;
+ Thu, 26 Jun 2025 16:19:39 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E98F058058;
+ Thu, 26 Jun 2025 16:19:37 +0000 (GMT)
+Received: from [9.61.76.9] (unknown [9.61.76.9])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 26 Jun 2025 16:19:37 +0000 (GMT)
+Message-ID: <5c6f7f80-cfa3-432f-9ff3-ae57f8b4cf5a@linux.ibm.com>
+Date: Thu, 26 Jun 2025 12:19:37 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 4B6B32116D
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FROM_HAS_DN(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- MID_RHS_MATCH_FROM(0.00)[]; MISSING_XM_UA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v13 4/4] s390: implementing CHSC SEI for AP config
+ change
+To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, clg@redhat.com, thuth@redhat.com,
+ akrowiak@linux.ibm.com
+References: <20250609164418.17585-1-rreyes@linux.ibm.com>
+ <20250609164418.17585-5-rreyes@linux.ibm.com>
+Content-Language: en-US
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20250609164418.17585-5-rreyes@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=M5FNKzws c=1 sm=1 tr=0 ts=685d731d cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=jyqTrI2o756uUR7Zab8A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI2MDEzOCBTYWx0ZWRfX7Wguf+rQCnwg
+ Uz80nmX97HFl8ygpEdySpwwALIwkOYSMq+lZRGnbXYR6OQgEyw8nKSIz3j5p3Oo68EdXB3VSDLl
+ vMXAXJak/AhfZ7t88GHr/J1Q4azhKlyF2TzbH+CwvRRjUTfc9QLiD53HCc2Sjnb5293pdOkZiHu
+ IvmetOalCXsHvTUMauDdcqgsgElUBClhLc3NmvYqy7Ukgz6EwplihYQ8rSiFHXBPj4Li2kjq+Fc
+ XBMj4DUiLm1TsmlcxWhCC0e4VnbP6m3ULAywi5FmqdY09asV+3XREFXmSICctfdoyqy4dGGB5+Q
+ aQC1n/Th84xIRjkksByNd34bXxHsi8dGH/tlJ6p1xtIjVa0htjdHOQoXaQF/+axwo3h4iYRgmEm
+ 1QW6EJOt2cKuncbD1RqbTUUtmAE/ojM1uoX+GefIkBj4r7/QMFI2TD+4FXrxcVWU83ab/yno
+X-Proofpoint-GUID: ZiEaGTYLSM23JD0snoQWDwppe3Fh3OuB
+X-Proofpoint-ORIG-GUID: ZiEaGTYLSM23JD0snoQWDwppe3Fh3OuB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-26_06,2025-06-26_05,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 clxscore=1011 adultscore=0
+ mlxscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506260138
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,202 +127,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
+On 6/9/25 12:44 PM, Rorie Reyes wrote:
+> Handle interception of the CHSC SEI instruction for requests
+> indicating the guest's AP configuration has changed.
+> 
+> If configuring --without-default-devices, hw/s390x/ap-stub.c
+> was created to handle such circumstance. Also added the
+> following to hw/s390x/meson.build if CONFIG_VFIO_AP is
+> false, it will use the stub file.
+> 
+> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
+> Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-> Fabiano Rosas <farosas@suse.de> writes:
->
->> Markus Armbruster <armbru@redhat.com> writes:
->>
->>> Fabiano Rosas <farosas@suse.de> writes:
->>>
->>>> The migration parameters tls_creds, tls_authz and tls_hostname
->>>> currently have a non-uniform handling. When used as arguments to
->>>> migrate-set-parameters, their type is StrOrNull and when used as
->>>> return value from query-migrate-parameters, their type is a plain
->>>> string.
->>>>
->>>> Not only having to convert between the types is cumbersome, but it
->>>> also creates the issue of requiring two different QAPI types to be
->>>> used, one for each command. MigrateSetParameters is used for
->>>> migrate-set-parameters with the TLS arguments as StrOrNull while
->>>> MigrationParameters is used for query-migrate-parameters with the TLS
->>>> arguments as str.
->>>>
->>>> Since StrOrNull could be considered a superset of str, change the type
->>>> of the TLS arguments in MigrationParameters to StrOrNull and add a
->>>> helper to ensure they're never actually used as QTYPE_QNULL.
->>>
->>> The type of @tls_creds, @tls-hostname, @tls-authz changes from str to
->>> StrOrNull in introspection query-migrate-parameters.  Loss of precision.
->>> Introspection is already imprecise: it shows the members optional even
->>> though they aren't.  We accept the loss of precision to enable
->>> de-duplication.
->>>
->>> This should be worked into the commit message.
->>>
->>
->> Ack.
->>
->>>> This will allow the type duplication to be removed in the next
->>>> patches.
->>>>
->>>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->>>> ---
->>>>  migration/migration-hmp-cmds.c |   8 +-
->>>>  migration/migration.c          |   2 +
->>>>  migration/options.c            | 149 ++++++++++++++++++++-------------
->>>>  migration/options.h            |   1 +
->>>>  migration/tls.c                |   2 +-
->>>>  qapi/migration.json            |   6 +-
->>>>  6 files changed, 99 insertions(+), 69 deletions(-)
->>>>
->>>> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
->>>> index e8a563c7d8..bc8179c582 100644
->>>> --- a/migration/migration-hmp-cmds.c
->>>> +++ b/migration/migration-hmp-cmds.c
->>>> @@ -276,14 +276,12 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
->>>>          monitor_printf(mon, "%s: %u\n",
->>>>              MigrationParameter_str(MIGRATION_PARAMETER_MAX_CPU_THROTTLE),
->>>>              params->max_cpu_throttle);
->>>> -        assert(params->tls_creds);
->>>>          monitor_printf(mon, "%s: '%s'\n",
->>>>              MigrationParameter_str(MIGRATION_PARAMETER_TLS_CREDS),
->>>> -            params->tls_creds);
->>>> -        assert(params->tls_hostname);
->>>> +                       params->tls_creds ? params->tls_creds->u.s : "");
->>>>          monitor_printf(mon, "%s: '%s'\n",
->>>>              MigrationParameter_str(MIGRATION_PARAMETER_TLS_HOSTNAME),
->>>> -            params->tls_hostname);
->>>> +                       params->tls_hostname ? params->tls_hostname->u.s : "");
->>>>          assert(params->has_max_bandwidth);
->>>>          monitor_printf(mon, "%s: %" PRIu64 " bytes/second\n",
->>>>              MigrationParameter_str(MIGRATION_PARAMETER_MAX_BANDWIDTH),
->>>> @@ -319,7 +317,7 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
->>>>              params->max_postcopy_bandwidth);
->>>>          monitor_printf(mon, "%s: '%s'\n",
->>>>              MigrationParameter_str(MIGRATION_PARAMETER_TLS_AUTHZ),
->>>> -            params->tls_authz);
->>>> +                       params->tls_authz ? params->tls_authz->u.s : "");
->>>>  
->>>>          if (params->has_block_bitmap_mapping) {
->>>>              const BitmapMigrationNodeAliasList *bmnal;
->>>
->>> Before, the code assumes ->tls_creds, ->tls_hostname, and ->tls_authz
->>> are non-null.  It assert its assumption for the first two.
->>>
->>> Afterwards, it maps null to "".  Why is that necessary?  Hmm, see below.
->>>
->>
->> Maps NULL to "" because the intermediate type, MigrationParameters, has
->> been changed from str to StrOrNull. For the purposes of info
->> migrate_parameters and query-migrate-parameters the only valid values
->> are a non-empty string or an empty string.
->
-> But is NULL possible?  If you just change the type from str to StrOrNull
-> and no more, it isn't.
->
+FYI, this patch (or some part of this series) breaks hotplug for PCI devices on s390x.  I verified it breaks with both PCI passthrough and virtio-pci via virsh attach-device.
 
-Since the TLS options don't have a qdev property anymore, they also
-don't get set a default value. So s->parameters can indeed have the NULL
-value in it.
+I get greeted with the following message:
+qemu-system-s390x: ../util/qemu-thread-posix.c:92: qemu_mutex_lock_impl: Assertion `mutex->initialized' failed.
+2025-06-26 14:12:23.031+0000: shutting down, reason=crashed
 
-I could initialize them in migrate_params_init. It's all about choosing
-where to move the complexity. I'm leaning towards keeping it in the
-interface: query-migrate converts them to whatever it needs to output
-and set-migrate writes a normalized version into s->parameters.
+As a quick test, reverting this patch resolves the issue.  
 
->>>> diff --git a/migration/migration.c b/migration/migration.c
->>>> index 4697732bef..f65cb81b6d 100644
->>>> --- a/migration/migration.c
->>>> +++ b/migration/migration.c
->>>> @@ -4053,6 +4053,8 @@ static void migration_instance_finalize(Object *obj)
->>>>  {
->>>>      MigrationState *ms = MIGRATION_OBJ(obj);
->>>>  
->>>> +    migrate_tls_opts_free(&ms->parameters);
->>>
->>> Is this a bug fix?
->>>
->>
->> My new version is a little different, but I can make it a separate patch
->> if that happens to be the case.
->
-> Yes, please.
->
->>> As far as I can tell, the object gets destroyed only on QEMU shutdown.
->>> Freeing resources then is unnecessary, except it may help leak detection
->>> tools.
->>>
->>
->> From a maintenance perspective I consider any leak as a bug because I
->> don't have control over what kinds of leak detection tools are ran on
->> the code. To avoid spending time looking at such bug reports I have ASAN
->> automated in my testing and I fix early any leaks that it founds.
->>
->>>> +
->>>>      qemu_mutex_destroy(&ms->error_mutex);
->>>>      qemu_mutex_destroy(&ms->qemu_file_lock);
->>>>      qemu_sem_destroy(&ms->wait_unplug_sem);
->>>> diff --git a/migration/options.c b/migration/options.c
->>>> index 162c72cda4..45a95dc6da 100644
->>>> --- a/migration/options.c
->>>> +++ b/migration/options.c
->>>> @@ -162,9 +162,11 @@ const Property migration_properties[] = {
->>>>      DEFINE_PROP_SIZE("announce-step", MigrationState,
->>>>                        parameters.announce_step,
->>>>                        DEFAULT_MIGRATE_ANNOUNCE_STEP),
->>>> -    DEFINE_PROP_STRING("tls-creds", MigrationState, parameters.tls_creds),
->>>> -    DEFINE_PROP_STRING("tls-hostname", MigrationState, parameters.tls_hostname),
->>>> -    DEFINE_PROP_STRING("tls-authz", MigrationState, parameters.tls_authz),
->>>> +    /*
->>>> +     * tls-creds, tls-hostname and tls-authz are of type StrOrNull,
->>>> +     * which can't be easily handled (if at all) by qdev. So these
->>>> +     * will not be exposed as global migration options (-global).
->>>> +     */
->>>
->>> This is a compatibility break.
->>>
->>> The orthodox way to break it is deprecate, let the grace period expire,
->>> break.  Record in docs/about/deprecated.rst at the beginning, move the
->>> record to docs/about/removed-features.rst at the end.
->>>
->>> An argument could be made that the interface in question is
->>> accidental[*], not actually used by anything, and therefore breaking it
->>> without a grace period is fine.  But even then we should record the
->>> breakage in docs/about/removed-features.rst.
->>>
->>
->> Ok. Alternatively I could try a little harder to keep these
->> options. I'll see what I can do.
->
-> What do we think about this external interface?
->
-> If we think it's accidental and unused, then putting in more work to
-> keep it makes no sense.
->
-> If we think it's deliberate and/or used, we should either keep it, or
-> replace it the orthodox way.
->
+Another test shows that if I have a vfio-ap device attached to my guest before I try the zPCI hotplug, everything works fine (because vfio_ap_realize was driven -- see more info below).
 
-There are two external interfaces actually.
+I note in the failing call chain that in response to the hotplug event for a zPCI device we end up calling into hw/vfio/ap.c and getting some locks which seems wrong:
 
--global migration.some_compat_option=on (stored in MigrationState):
+(gdb) bt
+#0  __pthread_kill_implementation (threadid=<optimized out>, signo=signo@entry=6, no_tid=no_tid@entry=0) at pthread_kill.c:44
+#1  0x000003ffa85ad636 in __pthread_kill_internal (threadid=<optimized out>, signo=6) at pthread_kill.c:78
+#2  0x000003ffa8553c20 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
+#3  0x000003ffa8533e3c in __GI_abort () at abort.c:79
+#4  0x000003ffa854ac9a in __assert_fail_base
+    (fmt=<optimized out>, assertion=assertion@entry=0x2aa3fa76414 "mutex->initialized", file=file@entry=0x2aa3fa763f8 "../util/qemu-thread-posix.c", line=line@entry=92, function=function@entry=0x2aa3fa7647a <__PRETTY_FUNCTION__.23> "qemu_mutex_lock_impl") at assert.c:94
+#5  0x000003ffa854acf4 in __assert_fail
+    (assertion=0x2aa3fa76414 "mutex->initialized", file=0x2aa3fa763f8 "../util/qemu-thread-posix.c", line=92, function=0x2aa3fa7647a <__PRETTY_FUNCTION__.23> "qemu_mutex_lock_impl") at assert.c:103
+#6  0x000002aa3f83ef02 in qemu_mutex_lock_impl (mutex=0x2aa3fed9e08 <cfg_chg_events_lock>, file=0x2aa3f9e653e "/usr/src/qemu/include/qemu/lockable.h", line=56) at ../util/qemu-thread-posix.c:92
+#7  0x000002aa3f4c3a70 in qemu_lockable_mutex_lock (x=0x2aa3fed9e08 <cfg_chg_events_lock>) at /usr/src/qemu/include/qemu/lockable.h:56
+#8  0x000002aa3f4c3b00 in qemu_lockable_lock (x=0x3fd076f7730) at /usr/src/qemu/include/qemu/lockable.h:110
+#9  0x000002aa3f4c3b82 in qemu_lockable_auto_lock (x=0x3fd076f7730) at /usr/src/qemu/include/qemu/lockable.h:120
+#10 0x000002aa3f4c3f90 in ap_chsc_sei_nt0_get_event (res=0x3fd076f79b8) at ../hw/vfio/ap.c:110
+^^^^^^^^
+#11 0x000002aa3f3a59ea in chsc_sei_nt0_get_event (res=0x3fd076f79b8) at ../target/s390x/ioinst.c:579
+#12 0x000002aa3f3a5b76 in ioinst_handle_chsc_sei (req=0x3fd076f79a8, res=0x3fd076f79b8) at ../target/s390x/ioinst.c:620
+#13 0x000002aa3f3a6062 in ioinst_handle_chsc (cpu=0x2aa40cc9430, ipb=2097152, ra=0) at ../target/s390x/ioinst.c:708
+#14 0x000002aa3f4647d2 in handle_b2 (cpu=0x2aa40cc9430, run=0x3ffa4180000, ipa1=95 '_') at ../target/s390x/kvm/kvm.c:1218
+#15 0x000002aa3f465db2 in handle_instruction (cpu=0x2aa40cc9430, run=0x3ffa4180000) at ../target/s390x/kvm/kvm.c:1627
+#16 0x000002aa3f4661da in handle_intercept (cpu=0x2aa40cc9430) at ../target/s390x/kvm/kvm.c:1709
+#17 0x000002aa3f466c10 in kvm_arch_handle_exit (cs=0x2aa40cc9430, run=0x3ffa4180000) at ../target/s390x/kvm/kvm.c:1914
+#18 0x000002aa3f523c98 in kvm_cpu_exec (cpu=0x2aa40cc9430) at ../accel/kvm/kvm-all.c:3294
+#19 0x000002aa3f527f52 in kvm_vcpu_thread_fn (arg=0x2aa40cc9430) at ../accel/kvm/kvm-accel-ops.c:51
+#20 0x000002aa3f840002 in qemu_thread_start (args=0x2aa40ccd090) at ../util/qemu-thread-posix.c:393
+#21 0x000003ffa85ab622 in start_thread (arg=0x3fd076fe8c0) at pthread_create.c:448
+#22 0x000003ffa862b390 in thread_start () at ../sysdeps/unix/sysv/linux/s390/s390-64/clone3.S:71
 
-seems intentional and I believe we'd lose the ability to get out of some
-tricky situations if we ditched it.
 
--global migation.some_random_option=on (stored in MigrationParameters):
+Note that PCI devices were already using SEI before this series (e.g. see hw/s390x/s390-pci-bus.c:pci_chsc_sei_nt2_get_event()); I think the problem here is that nt0 events are looked for implicitly in the shared handler (ioinst_handle_chsc_sei()) which is fine -- but you cannot go acquiring locks from ap.c that might have never been initialized (cfg_chg_events_lock which is only initialized in vfio_ap_realize()); that's why we ultimately crash.
 
-has become a debugging *feature*, which I personally don't use, but
-others do. And worse: we don't know if anyone uses it in production.
+AFAICT this portion of the handler including mutex should be moved out of ap.c into chsc_sei_nt0_get_event().  When vfio_ap is not in use, we can't call into it.  Can't you also build without VFIO_AP?  I didn't try it but that sure seems like it would cause issues too.  
 
-We also arbitrarily put x- in front of options for some reason. There is
-an argument to drop those because x- is scary and no one should be using
-them.
+I guess the mutex and list would then need to be part of something common to s390x like S390CcwMachineState.
 
-I think it would be good to at least separate the responsibilities so
-when the time comes we can deprecate/remove/replace the offending
-interfaces. But I won't go into that now, there's already too much
-change going on for this release.
+Alternatively, you could leave those in vfio_ap but would need some kind of indicator that vfio_ap is "armed" for these kinds of events and only bother calling into vfio_ap to look at cfg_chg_events when that indicator has been set (e.g. vfio_ap_realize has been called once.  And it actually looks like you already do something like this via lock_initialized in ap.c). 
+Otherwise, we should always return EVENT_INFORMATION_NOT_STORED like the old code did (via return 1).
+
+Or maybe someone else has a better idea.
+
+
+> ---
+>  MAINTAINERS           |  1 +
+>  hw/s390x/ap-stub.c    | 21 +++++++++++++++++++++
+>  hw/s390x/meson.build  |  1 +
+>  target/s390x/ioinst.c | 11 +++++++++--
+>  4 files changed, 32 insertions(+), 2 deletions(-)
+>  create mode 100644 hw/s390x/ap-stub.c
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index aa6763077e..1e84bfeaee 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -112,6 +112,7 @@ F: hw/intc/s390_flic.c
+>  F: hw/intc/s390_flic_kvm.c
+>  F: hw/s390x/
+>  F: hw/vfio/ap.c
+> +F: hw/s390x/ap-stub.c
+>  F: hw/vfio/ccw.c
+>  F: hw/watchdog/wdt_diag288.c
+>  F: include/hw/s390x/
+> diff --git a/hw/s390x/ap-stub.c b/hw/s390x/ap-stub.c
+> new file mode 100644
+> index 0000000000..001fe5f8b0
+> --- /dev/null
+> +++ b/hw/s390x/ap-stub.c
+> @@ -0,0 +1,21 @@
+> +/*
+> + * VFIO based AP matrix device assignment
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Rorie Reyes <rreyes@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/s390x/ap-bridge.h"
+> +
+> +int ap_chsc_sei_nt0_get_event(void *res)
+> +{
+> +    return EVENT_INFORMATION_NOT_STORED;
+> +}
+> +
+> +bool ap_chsc_sei_nt0_have_event(void)
+> +{
+> +    return false;
+> +}
+> diff --git a/hw/s390x/meson.build b/hw/s390x/meson.build
+> index 3bbebfd817..99cbcbd7d6 100644
+> --- a/hw/s390x/meson.build
+> +++ b/hw/s390x/meson.build
+> @@ -33,6 +33,7 @@ s390x_ss.add(when: 'CONFIG_S390_CCW_VIRTIO', if_true: files(
+>  ))
+>  s390x_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('3270-ccw.c'))
+>  s390x_ss.add(when: 'CONFIG_VFIO', if_true: files('s390-pci-vfio.c'))
+> +s390x_ss.add(when: 'CONFIG_VFIO_AP', if_false: files('ap-stub.c'))
+>  
+>  virtio_ss = ss.source_set()
+>  virtio_ss.add(files('virtio-ccw.c'))
+> diff --git a/target/s390x/ioinst.c b/target/s390x/ioinst.c
+> index fe62ba5b06..2320dd4c12 100644
+> --- a/target/s390x/ioinst.c
+> +++ b/target/s390x/ioinst.c
+> @@ -18,6 +18,7 @@
+>  #include "trace.h"
+>  #include "hw/s390x/s390-pci-bus.h"
+>  #include "target/s390x/kvm/pv.h"
+> +#include "hw/s390x/ap-bridge.h"
+>  
+>  /* All I/O instructions but chsc use the s format */
+>  static uint64_t get_address_from_regs(CPUS390XState *env, uint32_t ipb,
+> @@ -574,13 +575,19 @@ out:
+>  
+>  static int chsc_sei_nt0_get_event(void *res)
+>  {
+> -    /* no events yet */
+> +    if (s390_has_feat(S390_FEAT_AP)) {
+> +        return ap_chsc_sei_nt0_get_event(res);
+> +    }
+> +
+>      return 1;
+>  }
+>  
+>  static int chsc_sei_nt0_have_event(void)
+>  {
+> -    /* no events yet */
+> +    if (s390_has_feat(S390_FEAT_AP)) {
+> +        return ap_chsc_sei_nt0_have_event();
+> +    }
+> +
+>      return 0;
+>  }
+>  
 
 
