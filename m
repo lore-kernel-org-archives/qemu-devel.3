@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1D35C77B7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 05:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D9CDC77B7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 05:56:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUfZP-00041G-Uv; Thu, 26 Jun 2025 01:54:47 -0400
+	id 1uUfZK-0003yY-8W; Thu, 26 Jun 2025 01:54:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfZO-00040b-Ef
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfZF-0003yF-Oi
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfZM-00019h-P8
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:46 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uUfZD-00018v-Sc
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 01:54:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750917284;
+ s=mimecast20190719; t=1750917275;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=a5VbMESPBvChD/KhYN2rZqzFyjFHgm9J5uEay01p7Ug=;
- b=Gws3/WynTqZfAKFcZ+V3Ge3JZ55xwM4vry9KZdeXcM/p5dy2twJJTf1TZPwQICFx1/89g7
- IQFTEV8xUbDZ6ShKnSyLNg24EweZ9BvE8oVT5Go66r6ty/akcUJbZzGJkOix5C1VNcm09m
- H9Q7J9NTt+oIsJlCbDmheD8UrAYYbzE=
+ bh=Tj9eQ8Fc2nbx4gT31uI4b5TqJrlHiBciXKe2NV+JKp4=;
+ b=QwEceukplXYluQkWwti7wAsBOyRzm4RkzZBxodw01LtQnd0wNXI1LRn54YvIUUUtixBIzC
+ JPox+I0JOKfbDCnF0U4QzJt8oVCbLSYox2MLT+LwwaKhEVUlanXfflGhTGOv+yH6IdYtc3
+ uJxHB/SSSCgqcAIRvES3hd96TaraxeQ=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-421-a7PhhJU1N_GAX7Vve3BmmA-1; Thu,
- 26 Jun 2025 01:54:41 -0400
-X-MC-Unique: a7PhhJU1N_GAX7Vve3BmmA-1
-X-Mimecast-MFC-AGG-ID: a7PhhJU1N_GAX7Vve3BmmA_1750917280
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-590-O9WubHfWPkqLnHReYuUv3g-1; Thu,
+ 26 Jun 2025 01:54:33 -0400
+X-MC-Unique: O9WubHfWPkqLnHReYuUv3g-1
+X-Mimecast-MFC-AGG-ID: O9WubHfWPkqLnHReYuUv3g_1750917272
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 52BCC180120B; Thu, 26 Jun 2025 05:54:40 +0000 (UTC)
+ id 49BFA180120B; Thu, 26 Jun 2025 05:54:32 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.32.129])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5ACE519560A3; Thu, 26 Jun 2025 05:54:38 +0000 (UTC)
+ id BFFF019560B2; Thu, 26 Jun 2025 05:54:29 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
-	Sean Wei <me@sean.taipei>
-Subject: [PULL 15/19] hw: replace FSF postal address with licenses URL
-Date: Thu, 26 Jun 2025 07:53:46 +0200
-Message-ID: <20250626055350.218271-16-thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Sean Wei <me@sean.taipei>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 12/19] include/hw: replace FSF postal address with licenses URL
+Date: Thu, 26 Jun 2025 07:53:43 +0200
+Message-ID: <20250626055350.218271-13-thuth@redhat.com>
 In-Reply-To: <20250626055350.218271-1-thuth@redhat.com>
 References: <20250626055350.218271-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -84,51 +85,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Sean Wei <me@sean.taipei>
 
-The GPLv2 boiler-plate in vmxnet3.h and vmw_pvscsi.h still
-contained the obsolete "51 Franklin Street" postal address.
+Some of the GPLv2 boiler-plate still contained the
+obsolete "51 Franklin Street" postal address.
 
 Replace it with the canonical GNU licenses URL recommended by the FSF:
 https://www.gnu.org/licenses/
 
 Signed-off-by: Sean Wei <me@sean.taipei>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250613.qemu.patch.08@sean.taipei>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Message-ID: <20250613.qemu.patch.05@sean.taipei>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/net/vmxnet3.h     | 4 ++--
- hw/scsi/vmw_pvscsi.h | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ include/hw/i2c/aspeed_i2c.h     | 3 +--
+ include/hw/pci/pci_bridge.h     | 4 ++--
+ include/hw/timer/aspeed_timer.h | 3 +--
+ 3 files changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/hw/net/vmxnet3.h b/hw/net/vmxnet3.h
-index f9283f9e7b6..dbc69d5fb66 100644
---- a/hw/net/vmxnet3.h
-+++ b/hw/net/vmxnet3.h
-@@ -63,8 +63,8 @@
-  * details.
+diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
+index 2c4c81bd209..2daacc10ce0 100644
+--- a/include/hw/i2c/aspeed_i2c.h
++++ b/include/hw/i2c/aspeed_i2c.h
+@@ -14,8 +14,7 @@
+  *  GNU General Public License for more details.
   *
-  * You should have received a copy of the GNU General Public License
-- * along with this program; if not, write to the Free Software
-- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-+ * along with this program; if not, see
-+ * <https://www.gnu.org/licenses/>.
-  *
-  * The full GNU General Public License is included in this distribution in
-  * the file called "COPYING".
-diff --git a/hw/scsi/vmw_pvscsi.h b/hw/scsi/vmw_pvscsi.h
-index 17fcf662730..a3ae517e199 100644
---- a/hw/scsi/vmw_pvscsi.h
-+++ b/hw/scsi/vmw_pvscsi.h
+  *  You should have received a copy of the GNU General Public License along
+- *  with this program; if not, write to the Free Software Foundation, Inc.,
+- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
++ *  with this program; if not, see <https://www.gnu.org/licenses/>.
+  */
+ 
+ #ifndef ASPEED_I2C_H
+diff --git a/include/hw/pci/pci_bridge.h b/include/hw/pci/pci_bridge.h
+index b0f5204d80f..8cdacbc4e16 100644
+--- a/include/hw/pci/pci_bridge.h
++++ b/include/hw/pci/pci_bridge.h
 @@ -14,8 +14,8 @@
-  * details.
+  * GNU General Public License for more details.
   *
   * You should have received a copy of the GNU General Public License
 - * along with this program; if not, write to the Free Software
-- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+- * Foundation, 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 + * along with this program; if not, see
 + * <https://www.gnu.org/licenses/>.
   *
-  * Maintained by: Arvind Kumar <arvindkumar@vmware.com>
+  * split out pci bus specific stuff from pci.[hc] to pci_bridge.[hc]
+  * Copyright (c) 2009 Isaku Yamahata <yamahata at valinux co jp>
+diff --git a/include/hw/timer/aspeed_timer.h b/include/hw/timer/aspeed_timer.h
+index 767cae4b05b..a850625a055 100644
+--- a/include/hw/timer/aspeed_timer.h
++++ b/include/hw/timer/aspeed_timer.h
+@@ -16,8 +16,7 @@
+  *  GNU General Public License for more details.
   *
+  *  You should have received a copy of the GNU General Public License along
+- *  with this program; if not, write to the Free Software Foundation, Inc.,
+- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
++ *  with this program; if not, see <https://www.gnu.org/licenses/>.
+  */
+ #ifndef ASPEED_TIMER_H
+ #define ASPEED_TIMER_H
 -- 
 2.50.0
 
