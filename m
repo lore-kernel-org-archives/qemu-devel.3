@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19ADAC7EE31
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 06:38:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99DD6C77B7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 06:41:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUgFU-00028s-8S; Thu, 26 Jun 2025 02:38:16 -0400
+	id 1uUgIA-0004RJ-Hx; Thu, 26 Jun 2025 02:41:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUgFR-000230-W0
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 02:38:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUgI8-0004Qt-UV
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 02:41:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUgFO-0002zu-75
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 02:38:13 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUgI1-0003UN-Qy
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 02:41:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750919888;
+ s=mimecast20190719; t=1750920051;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=6En0PJrnFAB8mM42B5Kx1i5ZQv4q43VMJfhNpsjWssM=;
- b=De6IOSO143kwhKYs17gRc87R4s756jDq5r5EYefmzYHXSpAzVnPfgxSskU66xY6A8iXFF4
- FQSrALIske+b8qyRWSD27tCUM3S9ErXycO8zurg37MvcKuxfThfznIpKQ6tArSb0evo3Lp
- FgYJOBhtA1d8kI8KxLkJX6nL/fKZA4w=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=WitCzWMujOvTH6JTyow1zMRQaLT/0v+9LpX+HVqVNHQ=;
+ b=FKnJs7RZcqFmc8zxbXoQuVBE6d8QzkKnY0o5K6+VXxyIUo7Ovz1267FixWx3wbZQjIBzl8
+ wfgnFM/RSwqTDQrFEI3gAteyF4wNI1wD5JsVO7aUYocJWHHMOmJWraxllXI3q3DRRI6cnj
+ T6LvzTjfsw0P86XtAm28EkEOdD0dfGo=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-574-cPV9GMQfPGWKAHUVkNy5Jg-1; Thu, 26 Jun 2025 02:38:06 -0400
-X-MC-Unique: cPV9GMQfPGWKAHUVkNy5Jg-1
-X-Mimecast-MFC-AGG-ID: cPV9GMQfPGWKAHUVkNy5Jg_1750919885
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a4f7ebfd00so287244f8f.2
- for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 23:38:05 -0700 (PDT)
+ us-mta-593-9bT8hSdLMO-HImVX0a2GdA-1; Thu, 26 Jun 2025 02:40:45 -0400
+X-MC-Unique: 9bT8hSdLMO-HImVX0a2GdA-1
+X-Mimecast-MFC-AGG-ID: 9bT8hSdLMO-HImVX0a2GdA_1750920043
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-450eaae2934so4463795e9.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 23:40:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750919885; x=1751524685;
+ d=1e100.net; s=20230601; t=1750920043; x=1751524843;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6En0PJrnFAB8mM42B5Kx1i5ZQv4q43VMJfhNpsjWssM=;
- b=JLpaDSVTUo+UoCOldtsIV+vL8z0lnsGj4T0RghCF8saR/+6PFBNBll9ekkLRBBtI1/
- dy6e/EcKPf6mtcznH4L4gXsT/J95yId51aF/hrrXZLEM6JnC9XM2hL577nmBb6SImAPa
- V0DdNKRIPIDwSpPDLCsVOE+HvLVOh+/a6rSH+RKZE6/PTsO87MDE1Vm2hv67hlsn5bjf
- dgOLSLe0HG4oXntuE7iVP+rU4cdqb2lnVGv+MxNcnfNdGVdBX2qWAddijgk2I3YvmEce
- 8h2iiZgWx4oo/LzM15b50XzU0rTkNcjA80edrUwQ7B8BMotVzZnL/r8aBZxEE0Cpa/4j
- RxpQ==
+ bh=WitCzWMujOvTH6JTyow1zMRQaLT/0v+9LpX+HVqVNHQ=;
+ b=YxU7MpUlJUjd35p3rHfnGqQaBp9xXKNsh1S2N/Jt0ZVwrbM0wN7fuu0EEI5+LTpi+1
+ m7xjzXQQ+AfqcXMgGoLLQD/KCk/c71cc5m8D0793gyz9H2gtEPziHd/kv/c+kihrh0y+
+ kefxRW5iJkljzEZzH+5uvBi30/Ps+NmVtROQheigUxWs71gKu/oes+KDiWVWpe9ie7Xq
+ JYEA+r43QcQKyq6vJ9j2h9e3vfGIT7apsuaKdUE++B8SbUs9G1yqz7cNXjYCJobAl4wh
+ 6lzMcfOb3xykNXq6DDbLeO+Hp5iuuzaGMiGU7S4azNxi2iPylUb42+zBb/TeP8gLylyo
+ yf8w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW0kXYPpT/z56VxdXUZIWHN4aRXLbhjj5xT0UgnOdSfG94/ffnqbWATZfZxVD8ARnBW5k4BiVxqxKQp@nongnu.org
-X-Gm-Message-State: AOJu0YxSMnPVpiErKabH+DDx9ySW8Rt8PwH5rd5Q86Kj6sgudU6tP7/j
- Eq8elOc9Guk25lnn/Vzv8tsq3iubfOClZXF07yk14iFUcppXt0DTV4YfJdyudJl39CVxFKRyJ/f
- 4G8tVC8TB7NUhOAJ/xUvIn075voTX/GaYKq3uoDY7UjRLa9EVWigJrXEI
-X-Gm-Gg: ASbGncv/cuQIIjb3UAs7wF9yDgpDqe5SiF7n7LOH5yC00aCZ8M1jgQGAlbhf4Zx2f4Z
- WhRe2wdbCoWEBXfH5To8wrTu95d9k9E/WaqcsKlMvk3tgJQXs/cNGjnym3FHd8idG8PbBFRhMvQ
- NTNHPDFhPxxbMzchVTo9lStRMYyq1cuyjAb8lmK6tnJ7/L31/oZVFkvNH4Y4A3S/xA+Glwwhwfd
- 7itmGZOQ/k2jK1CWbpz3Sdtu6hnx7GZmscyJprcEoDhg3mZtFeBql0C79t2/F6UYaiM7bGrxOVH
- dI4tL1DNOePNegxQvijRCSDwtsFXH70QImdAFQlhw3tTMFEvdYIpkYKjHKWi
-X-Received: by 2002:a5d:64c1:0:b0:3a5:5298:ce28 with SMTP id
- ffacd0b85a97d-3a6ed619218mr4220491f8f.4.1750919884688; 
- Wed, 25 Jun 2025 23:38:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFKnqpq9/0mVdJf/JwRJ9c1PUjw+Vf1z19SzCzY69eH55xBxExQ1WrB+FfmekOZK7TBboz2aA==
-X-Received: by 2002:a5d:64c1:0:b0:3a5:5298:ce28 with SMTP id
- ffacd0b85a97d-3a6ed619218mr4220361f8f.4.1750919882549; 
- Wed, 25 Jun 2025 23:38:02 -0700 (PDT)
+ AJvYcCVTS6ld+PN95cu0m1CTTlZEgNh76l02avav+pS8C5WkJDJggNbzNl6YrBZs3XH8F6HZAcwuin6nQ/jC@nongnu.org
+X-Gm-Message-State: AOJu0YxheJBsaH/iD9ryAqRKK666V4tL92zM/4j7tmwa2hibxY1OByu1
+ BOXgdFTSv00emqMQ5BuSmEkTys2KTNKNs8qW5mY8uQUpigkrc09sHZljJHdD/2Jjy7SsqcRodIL
+ zalw5JHqeQAdoOtyI76CK2HioMnR2dXvEZ3GjcMkT063lOfxAGiq2rWwg
+X-Gm-Gg: ASbGnctMt2rzCuP2kd+vFDmgQudQ7kytGhQ0dLZaYKwo4KZffxP8Tj9PPvReeZ5NMyI
+ 1w7XingYEJ71zhIsUgMduBgS/FZhcjK2OIMPhjsK2ZK68cFvzmlukqmtYTuvG36jnJZj9HZMqb3
+ x619pHqbwOEPKK2r+f6xz5bFqQDJCx3ujuQRydE0NHKsNXyjhp0RS7ULwAwJhCD6itKvqak5b/X
+ j31+KS967YesvMhOYjxyoc2gqT4TlkuhETH39+7jrQyXiXOQAXMDHuzT3OOnFTpxDsJB3ilOv79
+ i1Vgn/qzBdd39cRRButaGu6QavWjl+8BoGHD+/yxr41MgZvtagxt8yIdP45x
+X-Received: by 2002:a05:6000:985:b0:3a4:eb7a:2cda with SMTP id
+ ffacd0b85a97d-3a6ed637857mr3820077f8f.30.1750920043015; 
+ Wed, 25 Jun 2025 23:40:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGu+ebrLmHiNQfYoGiVZ7cU4U0BfyacJhtmgUBRL468Zw5GebFMVL1qJgFULSin/eQvP6ou4w==
+X-Received: by 2002:a05:6000:985:b0:3a4:eb7a:2cda with SMTP id
+ ffacd0b85a97d-3a6ed637857mr3820047f8f.30.1750920042616; 
+ Wed, 25 Jun 2025 23:40:42 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-453823b6fa2sm39994015e9.27.2025.06.25.23.38.01
+ 5b1f17b1804b1-4538233c49fsm39783185e9.7.2025.06.25.23.40.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Jun 2025 23:38:02 -0700 (PDT)
-Message-ID: <7e42ff4b-dd4f-4a72-a668-b3b2239d2d9f@redhat.com>
-Date: Thu, 26 Jun 2025 08:38:01 +0200
+ Wed, 25 Jun 2025 23:40:42 -0700 (PDT)
+Message-ID: <42193ef3-ed57-4a36-b9d8-360a05218859@redhat.com>
+Date: Thu, 26 Jun 2025 08:40:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 09/19] vfio-user: implement
- VFIO_USER_DEVICE_GET/SET_IRQ*
+Subject: Re: [PATCH v5 10/19] vfio-user: forward MSI-X PBA BAR accesses to
+ server
 To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
@@ -90,7 +90,7 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  Jagannathan Raman <jag.raman@oracle.com>
 References: <20250625193012.2316242-1-john.levon@nutanix.com>
- <20250625193012.2316242-10-john.levon@nutanix.com>
+ <20250625193012.2316242-11-john.levon@nutanix.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -136,10 +136,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250625193012.2316242-10-john.levon@nutanix.com>
+In-Reply-To: <20250625193012.2316242-11-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -165,28 +165,25 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/25/25 21:30, John Levon wrote:
-> IRQ setup uses the same semantics as the traditional vfio path, but we
-> need to share the corresponding file descriptors with the server as
-> necessary.
+> For vfio-user, the server holds the pending IRQ state; set up an I/O
+> region for the MSI-X PBA so we can ask the server for this state on a
+> PBA read.
 > 
 > Originally-by: John Johnson <john.g.johnson@oracle.com>
 > Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
 > Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
 > Signed-off-by: John Levon <john.levon@nutanix.com>
 > ---
->   hw/vfio-user/protocol.h   |  25 +++++++
->   hw/vfio-user/device.c     | 138 ++++++++++++++++++++++++++++++++++++++
->   hw/vfio-user/trace-events |   2 +
->   3 files changed, 165 insertions(+)
+>   hw/vfio/pci.h      |  1 +
+>   hw/vfio-user/pci.c | 64 ++++++++++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 65 insertions(+)
 > 
-
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
-
 
 
 
