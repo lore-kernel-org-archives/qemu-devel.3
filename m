@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A747C7EE32
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 08:11:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33566C77B7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 08:11:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUhgZ-0002AS-D2; Thu, 26 Jun 2025 04:10:19 -0400
+	id 1uUhh4-0002Tx-UO; Thu, 26 Jun 2025 04:10:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uUhgW-000287-BP
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 04:10:16 -0400
+ id 1uUhgx-0002Kr-UN
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 04:10:44 -0400
 Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uUhgS-0006aX-7Y
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 04:10:14 -0400
+ id 1uUhgq-0006kw-Hn
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 04:10:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1750925412; x=1782461412;
+ t=1750925436; x=1782461436;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=TXrg2Ggm8g3BZvlmS1ahWoo2Bu1wFVEK5fneLW/jRdE=;
- b=eRFJ+I3xhpP8qpgKGC6QuKVPLgeCSoHjtHHW0wcGV2wd6aO521xJMSsi
- sdlQlBkIYbdvUmbi77vLnvJ5bF+n0X84tVy+wLg38FPIjY0MpWeuRhUNq
- tSurQwFBjGTiy+giXonSYajKd2hroijJ7o5+14mIthOPaLL8ljaWY9BwI
- BgSZlpQZU/sKND6O4qECiMUu4L8iNvRN6N3/GlMcynqE4Ubw8F1t62Br/
- gskkkL8L6XxjmDCEs5kGbsVPlRfriVgTY3gwTQOqz8/1H9BB4D80JoCtY
- MSaZovjF9BQ9zmVfrMWL1lQBL4CSPi16aWU3p6agpnP6IPVB81Q5ey5iF A==;
-X-CSE-ConnectionGUID: 8XXNNsJwQPu6vdRgglaZpQ==
-X-CSE-MsgGUID: SufeMoxES9mZdwDOt7TopQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11475"; a="63902106"
-X-IronPort-AV: E=Sophos;i="6.16,267,1744095600"; d="scan'208";a="63902106"
+ bh=fy95SsWR+k9YnjcFEncJLYMMpYlqcTiT51Rkmu2E6nk=;
+ b=UAnr4c2ZMiq5eOso0Nv52FKCLoJ0o6hWh9NOcopzcDR8cEx3Wkjpn0DK
+ 7gWIK1U1VN6F3mDzZhDD13hMA4yOTXV/atDQFZhNqxsd8qyBPWZ1VtKXd
+ MrxM9/AEfwBKISddCZjCHR+nu7DYhY3+qFIsukjqb1XQZNmYOK8k0ef5e
+ DAU7vQdx/SCmXiZYWur1qnU2uw9W+3TDa28wsqJn2gUcDPebBfFRDqHhD
+ zWt9RPXqe4eNLGtHFg6GY/LLJ21FSh6YUYlZ5PET0/DgM+L/3h4WvrrgH
+ JHK5rjZ/0we3TYA7BTUkcsHun2+3wtqLQ3rOFlCkO2cV+39GQNc4+k2BY Q==;
+X-CSE-ConnectionGUID: 6b3rDxy+SQ+HNxehvx2naA==
+X-CSE-MsgGUID: d/cRK1WcTdeDx0gk8tPQLg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11475"; a="63902160"
+X-IronPort-AV: E=Sophos;i="6.16,267,1744095600"; d="scan'208";a="63902160"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Jun 2025 01:10:11 -0700
-X-CSE-ConnectionGUID: upNc2akQRKOqpSfeZZw8vw==
-X-CSE-MsgGUID: mOuKrrQRSU+JVHvsh9tZ9A==
+ 26 Jun 2025 01:10:23 -0700
+X-CSE-ConnectionGUID: T7PrfsLFRXqI6GIrlld7Rw==
+X-CSE-MsgGUID: DScySs4dS1CQnrHzbSnA7Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,267,1744095600"; d="scan'208";a="152949925"
+X-IronPort-AV: E=Sophos;i="6.16,267,1744095600"; d="scan'208";a="152950078"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa008.jf.intel.com with ESMTP; 26 Jun 2025 01:10:07 -0700
+ by orviesa008.jf.intel.com with ESMTP; 26 Jun 2025 01:10:20 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -54,9 +54,9 @@ Cc: Ewan Hai <ewanhai-oc@zhaoxin.com>, Jason Zeng <jason.zeng@intel.com>,
  Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
  Tejus GK <tejus.gk@nutanix.com>, Manish Mishra <manish.mishra@nutanix.com>,
  qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 5/8] i386/cpu: Add a "x-force-cpuid-0x1f" property
-Date: Thu, 26 Jun 2025 16:31:02 +0800
-Message-Id: <20250626083105.2581859-6-zhao1.liu@intel.com>
+Subject: [PATCH 8/8] i386/cpu: Enable 0x1f leaf for SapphireRapids by default
+Date: Thu, 26 Jun 2025 16:31:05 +0800
+Message-Id: <20250626083105.2581859-9-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250626083105.2581859-1-zhao1.liu@intel.com>
 References: <20250626083105.2581859-1-zhao1.liu@intel.com>
@@ -87,59 +87,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manish Mishra <manish.mishra@nutanix.com>
+Host SapphireRapids CPU has 0x1f leaf by default, so that enable it for
+Guest CPU by default as well.
 
-Add a "x-force-cpuid-0x1f" property so that CPU models can enable it and
-have 0x1f CPUID leaf natually as the Host CPU.
-
-The advantage is that when the CPU model's cache model is already
-consistent with the Host CPU, for example, SRF defaults to l2 per
-module & l3 per package, 0x1f can better help users identify the
-topology in the VM.
-
-Adding 0x1f for specific CPU models should not cause any trouble in
-principle. This property is only enabled for CPU models that already
-have 0x1f leaf on the Host, so software that originally runs normally on
-the Host won't encounter issues in the Guest with corresponding CPU
-model. Conversely, some software that relies on checking 0x1f might
-have problems in the Guest due to the lack of 0x1f [*]. In
-summary, adding 0x1f is also intended to further emulate the Host CPU
-environment.
-
-[*]: https://lore.kernel.org/qemu-devel/PH0PR02MB738410511BF51B12DB09BE6CF6AC2@PH0PR02MB7384.namprd02.prod.outlook.com/
-
-Signed-off-by: Manish Mishra <manish.mishra@nutanix.com>
-Co-authored-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-[Integrated and rebased 2 previous patches (ordered by post time)]
+Suggested-by: Igor Mammedov <imammedo@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Note:
-  This patch integrates the idea from 2 previous posted patches (ordered
-by post time)[1] [2], following the s-o-b policy of "Re-starting
-abandoned work" in docs/devel/code-provenance.rst.
-
-[1]: From Manish: https://lore.kernel.org/qemu-devel/20240722101859.47408-1-manish.mishra@nutanix.com/
-[2]: From Xiaoyao: https://lore.kernel.org/qemu-devel/20240813033145.279307-1-xiaoyao.li@intel.com/
----
 Changes since RFC:
- * Rebase and rename the property as "x-force-cpuid-0x1f". (Igor)
+ * Rename the property to "x-force-cpuid-0x1f". (Igor)
 ---
- target/i386/cpu.c | 1 +
- 1 file changed, 1 insertion(+)
+ target/i386/cpu.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 08c84ba90f52..ee36f7ee2ccc 100644
+index acf7e0de184d..c7f157a0f71c 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -9934,6 +9934,7 @@ static const Property x86_cpu_properties[] = {
-     DEFINE_PROP_BOOL("x-intel-pt-auto-level", X86CPU, intel_pt_auto_level,
-                      true),
-     DEFINE_PROP_BOOL("x-l1-cache-per-thread", X86CPU, l1_cache_per_core, true),
-+    DEFINE_PROP_BOOL("x-force-cpuid-0x1f", X86CPU, force_cpuid_0x1f, false),
- };
- 
- #ifndef CONFIG_USER_ONLY
+@@ -5084,8 +5084,11 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+             },
+             {
+                 .version = 4,
+-                .note = "with spr-sp cache model",
++                .note = "with spr-sp cache model and 0x1f leaf",
+                 .cache_info = &xeon_spr_cache_info,
++                .props = (PropValue[]) {
++                    { "x-force-cpuid-0x1f", "on" },
++                }
+             },
+             { /* end of list */ }
+         }
 -- 
 2.34.1
 
