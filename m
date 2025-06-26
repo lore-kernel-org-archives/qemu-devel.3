@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C168C7EE32
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 07:48:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA510C7115B
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 07:48:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUhJj-0005FA-D9; Thu, 26 Jun 2025 03:46:43 -0400
+	id 1uUhJk-0005MY-PA; Thu, 26 Jun 2025 03:46:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUhJY-0004qy-9p
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUhJU-0004kk-Po
  for qemu-devel@nongnu.org; Thu, 26 Jun 2025 03:46:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUhJT-0001zA-Pq
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 03:46:30 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUhJP-0001ys-Ji
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 03:46:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750923986;
+ s=mimecast20190719; t=1750923981;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZCSr4dPM/OB5HkYMabf3A1sfa8rX74gpdBjkUH/fH6Y=;
- b=Og+PzRy+lQPTMuuXr0H5w8mxT9680tKSpaianNelt7+wbQFb2ZIJ/LvBhBOoWa44aFOGgH
- NSMrUlfEyPtcyTu/ab65m8rNuefxsku5VYZ+MZMpKLRqZnOtHeVv8RVy7Gg9+tR4IxazoT
- QMfg94IwTX/0wVt+KYIj6VU4ZDteKRg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=otGVkjCf0opn+vETCAGncq2bMRafF3DOvc1cBsAO+2s=;
+ b=KEpINegZEm/0xlYZKWKFrW8uJL47kG9L0Ynuc/JACWRF0weeJREv1fxks/fPvbQvSq887d
+ KvLHSw1LB5ycZNVLoanCxQASsMxoYNp4S+763WO5CFRHEs8D2trWNGNdBkQsb0Wf7gli36
+ L9UkMsSJEAuD394KrRpaQIN4tUatX0A=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-170-41vcD9K3PCGhFUHlaM_fZg-1; Thu,
- 26 Jun 2025 03:46:24 -0400
-X-MC-Unique: 41vcD9K3PCGhFUHlaM_fZg-1
-X-Mimecast-MFC-AGG-ID: 41vcD9K3PCGhFUHlaM_fZg_1750923983
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-347-P1n4hmnePDiMmlmkC1o09g-1; Thu,
+ 26 Jun 2025 03:46:15 -0400
+X-MC-Unique: P1n4hmnePDiMmlmkC1o09g-1
+X-Mimecast-MFC-AGG-ID: P1n4hmnePDiMmlmkC1o09g_1750923974
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 00F7A18DA380; Thu, 26 Jun 2025 07:46:23 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 70D3A18001D1; Thu, 26 Jun 2025 07:46:14 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.51])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9AD6F180045B; Thu, 26 Jun 2025 07:46:20 +0000 (UTC)
+ id 06FA3180045B; Thu, 26 Jun 2025 07:46:11 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -53,16 +53,16 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  Jagannathan Raman <jag.raman@oracle.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 17/25] vfio-user: set up container access to the proxy
-Date: Thu, 26 Jun 2025 09:45:21 +0200
-Message-ID: <20250626074529.1384114-18-clg@redhat.com>
+Subject: [PULL 14/25] vfio-user: set up PCI in vfio_user_pci_realize()
+Date: Thu, 26 Jun 2025 09:45:18 +0200
+Message-ID: <20250626074529.1384114-15-clg@redhat.com>
 In-Reply-To: <20250626074529.1384114-1-clg@redhat.com>
 References: <20250626074529.1384114-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -89,151 +89,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Levon <john.levon@nutanix.com>
 
-The user container will shortly need access to the underlying vfio-user
-proxy; set this up.
+Re-use PCI setup functions from hw/vfio/pci.c to realize the vfio-user
+PCI device.
 
 Originally-by: John Johnson <john.g.johnson@oracle.com>
 Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
 Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
 Signed-off-by: John Levon <john.levon@nutanix.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250625193012.2316242-12-john.levon@nutanix.com
+Link: https://lore.kernel.org/qemu-devel/20250625193012.2316242-9-john.levon@nutanix.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio-user/container.h |  2 ++
- hw/vfio-user/container.c | 43 +++++++++++++++++++++++++++++++---------
- 2 files changed, 36 insertions(+), 9 deletions(-)
+ hw/vfio-user/pci.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/hw/vfio-user/container.h b/hw/vfio-user/container.h
-index e4a46d2c1b0f712cd7fc1ff62a65d889050de835..2bb1fa13431c280f595f52cd6510ccd141f1ffdb 100644
---- a/hw/vfio-user/container.h
-+++ b/hw/vfio-user/container.h
-@@ -10,10 +10,12 @@
- #include "qemu/osdep.h"
- 
- #include "hw/vfio/vfio-container-base.h"
-+#include "hw/vfio-user/proxy.h"
- 
- /* MMU container sub-class for vfio-user. */
- typedef struct VFIOUserContainer {
-     VFIOContainerBase bcontainer;
-+    VFIOUserProxy *proxy;
- } VFIOUserContainer;
- 
- OBJECT_DECLARE_SIMPLE_TYPE(VFIOUserContainer, VFIO_IOMMU_USER);
-diff --git a/hw/vfio-user/container.c b/hw/vfio-user/container.c
-index f5bfd5431675c3b8abfb3ba44098ac61201fde58..b4a5a840b089c5622ade83e632c2560475076e5b 100644
---- a/hw/vfio-user/container.c
-+++ b/hw/vfio-user/container.c
-@@ -49,15 +49,28 @@ static int vfio_user_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
- 
- static bool vfio_user_setup(VFIOContainerBase *bcontainer, Error **errp)
- {
--    error_setg_errno(errp, ENOTSUP, "Not supported");
--    return -ENOTSUP;
-+    VFIOUserContainer *container = container_of(bcontainer, VFIOUserContainer,
-+                                                bcontainer);
-+
-+    assert(container->proxy->dma_pgsizes != 0);
-+    bcontainer->pgsizes = container->proxy->dma_pgsizes;
-+    bcontainer->dma_max_mappings = container->proxy->max_dma;
-+
-+    /* No live migration support yet. */
-+    bcontainer->dirty_pages_supported = false;
-+    bcontainer->max_dirty_bitmap_size = container->proxy->max_bitmap;
-+    bcontainer->dirty_pgsizes = container->proxy->migr_pgsize;
-+
-+    return true;
- }
- 
--static VFIOUserContainer *vfio_user_create_container(Error **errp)
-+static VFIOUserContainer *vfio_user_create_container(VFIODevice *vbasedev,
-+                                                     Error **errp)
- {
-     VFIOUserContainer *container;
- 
-     container = VFIO_IOMMU_USER(object_new(TYPE_VFIO_IOMMU_USER));
-+    container->proxy = vbasedev->proxy;
-     return container;
- }
- 
-@@ -65,16 +78,18 @@ static VFIOUserContainer *vfio_user_create_container(Error **errp)
-  * Try to mirror vfio_container_connect() as much as possible.
-  */
- static VFIOUserContainer *
--vfio_user_container_connect(AddressSpace *as, Error **errp)
-+vfio_user_container_connect(AddressSpace *as, VFIODevice *vbasedev,
-+                            Error **errp)
- {
-     VFIOContainerBase *bcontainer;
-     VFIOUserContainer *container;
-     VFIOAddressSpace *space;
-     VFIOIOMMUClass *vioc;
-+    int ret;
- 
-     space = vfio_address_space_get(as);
- 
--    container = vfio_user_create_container(errp);
-+    container = vfio_user_create_container(vbasedev, errp);
-     if (!container) {
-         goto put_space_exit;
-     }
-@@ -85,11 +100,17 @@ vfio_user_container_connect(AddressSpace *as, Error **errp)
-         goto free_container_exit;
+diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+index d704e3d390c71444c9d913e38c4dc064ff1c6625..b49f42b980017d61a2676c5dd7e01a869a63ac50 100644
+--- a/hw/vfio-user/pci.c
++++ b/hw/vfio-user/pci.c
+@@ -126,10 +126,39 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
+         goto error;
      }
  
-+    ret = ram_block_uncoordinated_discard_disable(true);
-+    if (ret) {
-+        error_setg_errno(errp, -ret, "Cannot set discarding of RAM broken");
-+        goto unregister_container_exit;
++    if (!vfio_pci_populate_device(vdev, errp)) {
++        goto error;
 +    }
 +
-     vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-     assert(vioc->setup);
- 
-     if (!vioc->setup(bcontainer, errp)) {
--        goto unregister_container_exit;
-+        goto enable_discards_exit;
-     }
- 
-     vfio_address_space_insert(space, bcontainer);
-@@ -108,6 +129,9 @@ listener_release_exit:
-         vioc->release(bcontainer);
-     }
- 
-+enable_discards_exit:
-+    ram_block_uncoordinated_discard_disable(false);
++    if (!vfio_pci_config_setup(vdev, errp)) {
++        goto error;
++    }
 +
- unregister_container_exit:
-     vfio_cpr_unregister_container(bcontainer);
- 
-@@ -124,14 +148,15 @@ static void vfio_user_container_disconnect(VFIOUserContainer *container)
- {
-     VFIOContainerBase *bcontainer = &container->bcontainer;
-     VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-+    VFIOAddressSpace *space = bcontainer->space;
++    /*
++     * vfio_pci_config_setup will have registered the device's BARs
++     * and setup any MSIX BARs, so errors after it succeeds must
++     * use out_teardown
++     */
 +
-+    ram_block_uncoordinated_discard_disable(false);
++    if (!vfio_pci_add_capabilities(vdev, errp)) {
++        goto out_teardown;
++    }
++
++    if (!vfio_pci_interrupt_setup(vdev, errp)) {
++        goto out_teardown;
++    }
++
++    vfio_pci_register_err_notifier(vdev);
++    vfio_pci_register_req_notifier(vdev);
++
+     return;
  
-     vfio_listener_unregister(bcontainer);
-     if (vioc->release) {
-         vioc->release(bcontainer);
-     }
++out_teardown:
++    vfio_pci_teardown_msi(vdev);
++    vfio_pci_bars_exit(vdev);
+ error:
+     error_prepend(errp, VFIO_MSG_PREFIX, vdev->vbasedev.name);
++    vfio_pci_put_device(vdev);
+ }
  
--    VFIOAddressSpace *space = bcontainer->space;
--
-     vfio_cpr_unregister_container(bcontainer);
-     object_unref(container);
- 
-@@ -163,7 +188,7 @@ static bool vfio_user_device_attach(const char *name, VFIODevice *vbasedev,
- {
-     VFIOUserContainer *container;
- 
--    container = vfio_user_container_connect(as, errp);
-+    container = vfio_user_container_connect(as, vbasedev, errp);
-     if (container == NULL) {
-         error_prepend(errp, "failed to connect proxy");
-         return false;
+ static void vfio_user_instance_init(Object *obj)
 -- 
 2.49.0
 
