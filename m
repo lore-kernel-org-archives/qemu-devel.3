@@ -4,217 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78EC4C7EE33
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 09:28:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 179D3C7EE33
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 09:39:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUitn-0001zW-Om; Thu, 26 Jun 2025 05:28:03 -0400
+	id 1uUj45-0004yQ-MG; Thu, 26 Jun 2025 05:38:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uUitj-0001z0-OJ
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 05:27:59 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uUj41-0004vV-3b
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 05:38:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uUitg-0003o7-48
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 05:27:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1750930077; x=1782466077;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=c1QcER+UbGEATDBxXBqY63Mp3YmC20Liw+iikTVP4Kc=;
- b=RuXedgMl+7H24RiYXxXbtry4M9w8eon7nhnh77OPHXxsb0VZNmjzQphS
- w050x5pMCMbn1IRSTO6b4b0g8W0obWsZgsnfOiFvzy7+Vpx+CjSZCFAeP
- 3qsYgyIVfg/3VK61ZDvcpC6LI+aRJu+z9nAS8h5qRlB4YUh+mP+J2SH9m
- aYtUgheeZrDTI9zjboDFj+Xj8W3/QV1pNbPe9Ig8Om0d6oCY2iAZzQ0vv
- QiMDkNutSDadtBrGklzOtwVDp8dymybAn1Io9coTABnApDUh9z2vRZAj/
- 5N5ww0cYwgefV1Oncqx3px2ypZ5E7jsCAYeCzrfnLSFwi5RhEvrEipn3a g==;
-X-CSE-ConnectionGUID: wQmtT7L3QVmzkC5Q7ffasg==
-X-CSE-MsgGUID: lkw2CFpxRfGhbzb1LRU7rw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11475"; a="64280242"
-X-IronPort-AV: E=Sophos;i="6.16,267,1744095600"; d="scan'208";a="64280242"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Jun 2025 02:27:52 -0700
-X-CSE-ConnectionGUID: MSgv2dAJQhSYfJq5ZLwAGQ==
-X-CSE-MsgGUID: TVLDA5kRRXyhgVjOxZxCcg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,267,1744095600"; d="scan'208";a="151979720"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
- by orviesa006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Jun 2025 02:27:50 -0700
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Thu, 26 Jun 2025 02:27:50 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25 via Frontend Transport; Thu, 26 Jun 2025 02:27:50 -0700
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (40.107.223.83)
- by edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Thu, 26 Jun 2025 02:27:49 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vo6QblBMUvmSoTyqkg26yGdV2MvWgUzTHnHdhkqXK650BPpxwOj+Ry4om3F71j2cI8mN8p7TxGmQEdeiZvc5w/YAvPhjXT9/J6fND6iAkPxdo6whFFoeWo2O9eFjvIICNwdB6wk25G4/AlQmOnF5zaDe7CdMVc3nTGuG7Gr9sZyVx7ielcC/QhvIjNEPcAU1IhowBESrcMXVzqY4wVvM6cmdrG+UWFh1Jsmg3bMORJHT/XRVn2WL+Dveauoa35eorFyZ6neCTg7NZEvpZe05OQXoB+qYkNLv35oDqBkQlaRxcCGwm815SpP/EKr15w3Kztij+deOnWWt2ECU+XVX6w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=c1QcER+UbGEATDBxXBqY63Mp3YmC20Liw+iikTVP4Kc=;
- b=jGhE0woCHRb7SwO/F/wptmS+wLdFR/g/6Fc6X6oyrYhOnHv32pCtnY27+BLHURFdjPCYzBCun7IhA+qaYeG1kDo6qaV0tmr1ApMAARRZBca/leA3z+BmHqtCNPLP0yh2VxnSx1j9T0KTluwT5SobODFcMiswhETJNNTp9X6FCl8BIXhcan6AbGZfonAbEZbdbWozB71mrja80frHqzh8z0KjEF8Wqtirmr/41o0n+G+5l7+6neJA5uUktdEOBTtotyRqApGzDAmdt4WTK4loReBEzdJIROcOYB1zjmsWnxipdnaMcPOi62PUqtCtW+M8Xat6Ta8p4+Ho61l1lvNwcQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by LV8PR11MB8680.namprd11.prod.outlook.com (2603:10b6:408:208::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.24; Thu, 26 Jun
- 2025 09:27:47 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.8835.023; Thu, 26 Jun 2025
- 09:27:47 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>, "peterx@redhat.com"
- <peterx@redhat.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "shameerali.kolothum.thodi@huawei.com"
- <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
- <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
- "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>, "Yi
- Sun" <yi.y.sun@linux.intel.com>, Paolo Bonzini <pbonzini@redhat.com>, Richard
- Henderson <richard.henderson@linaro.org>, Eduardo Habkost
- <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: RE: [PATCH v2 15/19] intel_iommu: Replay pasid binds after context
- cache invalidation
-Thread-Topic: [PATCH v2 15/19] intel_iommu: Replay pasid binds after context
- cache invalidation
-Thread-Index: AQHb4bQ8e7DGwGUZpk+LwjHhTpVb27QQwREAgARySSA=
-Date: Thu, 26 Jun 2025 09:27:47 +0000
-Message-ID: <IA3PR11MB9136657FB506FD63A0425EAB927AA@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <20250620071813.55571-1-zhenzhong.duan@intel.com>
- <20250620071813.55571-16-zhenzhong.duan@intel.com>
- <b3a4374d-36c9-41ab-b7d6-4678ba9e9fd0@redhat.com>
-In-Reply-To: <b3a4374d-36c9-41ab-b7d6-4678ba9e9fd0@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|LV8PR11MB8680:EE_
-x-ms-office365-filtering-correlation-id: f4907217-8837-4ed1-4ed7-08ddb493b6dc
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|366016|38070700018; 
-x-microsoft-antispam-message-info: =?utf-8?B?aVdidXg2STBRSWZIUW9LTnZuOGpZSUIvZnIyZ21WN3cvZVkxa3R6YmtWYjVn?=
- =?utf-8?B?dVR1VDlVT1l1QW0rMnFCaFdhZ1NhSmdrTjYvTDZVc1BISTdmSC9KaU4xTE1w?=
- =?utf-8?B?Wm5kN1k2UEhIdUpCa1YvMElNZGlydWZIcG83LytDd2dJcktxYzlqWlRiY25J?=
- =?utf-8?B?YVFBV1lmSlplSEFqQjVnTWdhOTFVMkM0dkswZkNCQms1c24vWCtuaFdpa1dn?=
- =?utf-8?B?R3hvS0FXVTlYK3ZBWEt2MXRYKzRTTlpucnBLWElpSzBWdHZtemdNWjh1c0Zl?=
- =?utf-8?B?Y3BPcmZmUS9jZUJiNXRuUHZkSzhRZDc2YWVKbVl3UG9LWU5iS0QrOTlvZ1hI?=
- =?utf-8?B?cVE3VG1sSkYrQkJWMGd1YjhRcEJLZzQ5L0dQVGs1R01aVEZTSjBHbk5FSW5M?=
- =?utf-8?B?RmZTaWJQSEgzM0RvaFRJako4aUtYS2RYckRXOTBvZ0JhZmxEcWlQVkRKT0lu?=
- =?utf-8?B?SDhXSVlkU2xYR1ZFb3JkL1pyQVhIS3JCYzQ2TkNoVjdqOE5Bd3VCQmp4bzU4?=
- =?utf-8?B?RlRnZ2VXYW1QcWl5ZnlVVURweW9HWTVXSHdEM3RSZTNtY0wya0VSWGREVzVr?=
- =?utf-8?B?RWpvSHJhZXZiWmxmZ0w4T2JtOFljRUEzQUlQSFo2RDJKY3lHcnJBa1JxTlF5?=
- =?utf-8?B?ZnlhbC9mNlk3TERENVM4RmxCUGRScy9SblFBUkR4eWVyYmVYK3RuQVlZaEds?=
- =?utf-8?B?dG10cytoZHBuYjFFT2FjN1RxcHc5aXJza3RwWUE3d1lkNjRkMG0zOWZEZ3FO?=
- =?utf-8?B?Y21jOHV4aGFoMTI4YjJUWDdyeFBQdmZTbk9WR00vVm44R1lKVnYwUCtpNmRk?=
- =?utf-8?B?eWMxNVJYZ1N2UVBtbERvNzFENXRYbTJaSkpFWForbTA0SThodG1XRVdzQlBE?=
- =?utf-8?B?dDhRdnVBWlpsL3YwbmpKSk8wMk1vRzBWaFZPdTJTWmFVVnBvOVRwNEZ4cE1o?=
- =?utf-8?B?NUhzQTNXU2xsUy95RURxRUlzOUZuQmFVcS91cGVsa2ZFSmhUdlhPeDdLNUF6?=
- =?utf-8?B?ZjNkQ3lkY2VNcFlJWWlNdU5wa3hRS2pIK3g5eFc5OGtjdTFJQkRhSEswZWts?=
- =?utf-8?B?T2xLR1RrcXhmY29LMFFMVUdNTGI1dE5WL2JTYkc2M09JUUpzajl4allVbDdG?=
- =?utf-8?B?MWgzOTVSOVFLbCt1UkJSWG9ydEZ5K1FWQ1hwcFNpRTlzUEVEMG9udjdwRllv?=
- =?utf-8?B?bDJ0YW5JSlF5K0FDTFNCdnloc0RsTTBtcmh3NDdsWk5JMk9UWmFoWHZnQTZU?=
- =?utf-8?B?N0FNWHN1TVhSRTN2eVdxTDVESDVoOXVPdEhTOWsraEdEMnNUSEtkWXdNUGdq?=
- =?utf-8?B?M3lXa0F3WnFRNTEvUmRySEx3RDF6TWlyc0RRaTU5S3FKZTJTWGIwQ1M2eFha?=
- =?utf-8?B?b2F3SW0zOGRlUGZMdUs1Y0ZjZkp6WEN2dEMzK2p0UnNTU0hqZ1l0blVDVk1N?=
- =?utf-8?B?R0ZYMC81NEkvQ2V5U2NUZHY1UmttamJ4bjZhcEkrSnZKWGduVnE3WStiSDE1?=
- =?utf-8?B?T1dFRFNZTUhXLzQ4ckRPekNDK1BBMEZqUnhoblRvelptT0o1UjZycVdsaUMy?=
- =?utf-8?B?VTA0Yks1bmVMbmZLSkNZaEd1U0ZjYnJENlh2eGNuSnRyVHB1NU54aStKZUl1?=
- =?utf-8?B?d2JVeVE0bjlKUVZrVjh5RmtzNWVsNGU2QjBXR3hFTnYwb1E3YXVBeE9lN25m?=
- =?utf-8?B?Q1IzWTZqN2k5YWZmUmV2WkpHNWtjbUVJMU5qTVRpR1RPNkpqL05aVmdQOU5o?=
- =?utf-8?B?cXRTMnhudmdRVlYyRzJFd2wxVDljczJsTTB3TXVhd1JaTCs3U2JyN0ZlY1c4?=
- =?utf-8?B?NDRCaXdNb3o5bWxPZExSV0I0RllGamlZWTExN1ZVNWV5bGNGcFhlSDBLZGZB?=
- =?utf-8?B?YjFsM1c4YVFleFNMTWpBWEptY2NneEpWUmcrdW1NS2dqWiszcllIRUJlRmls?=
- =?utf-8?B?S0I2aGtHZ3pzM21JMUJTR0R4VzhVdGJVRFNWN1ZlRHMrU3UvZkFUdHpodWkw?=
- =?utf-8?Q?QM2sbbqCpw0Utg/TS1GgIj3Bc6IVE8=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(366016)(38070700018); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?REhXT0hwUDRIYTlqUERBVit5aUd1SGdaKzBrc3g1UU1yYk1CRzZSZVVWd0dh?=
- =?utf-8?B?WjhJemY2RXVLc0grTVNkNnJYNnRSbUorVWFReGx6d3FybmpQa1lLTmNKNTVQ?=
- =?utf-8?B?QVhGVzQycUdvN2xyRk4zY1A4S3NRM1ZOM2tSR3lvQXFKcDVTSVh1VHhGQits?=
- =?utf-8?B?S0tqb3QweThVVFM3dlVtMVVCT0NpM3ZWTHd4akVocExXZ1lla2JoelMrS3NC?=
- =?utf-8?B?S3FJV1BrenpWUkROL0VHUmRZNXRJRmxBQkVUN3V3VUF0dTRnU2Vod2VaNysz?=
- =?utf-8?B?a0RBeTFZRkFTUE12V2RjdHc2bEJTYlFFdEUrVmxPUXo2Rlg2U0thK0oyVmhJ?=
- =?utf-8?B?MWNvT29ucVhNMTR5aU1oNlgxbkhGbVdobzBrWHBYUk9SaTNxbWdqbGhMeEhw?=
- =?utf-8?B?Z25mN25xY0lpRTk4b3JOS3ltWnFBbndIUDcvZmg1bnl5dmRHSUQ0S0ZoWERQ?=
- =?utf-8?B?L3RBbGc5NEtuV2RYeVJ4OEx2UDBueVh2NVBwNnR2WnZLcEgzMUpscy9GanFL?=
- =?utf-8?B?TXZJY0RXTUxCMFliQk1zNGZLVzJxN2c4RlFJQ1VFVENLei9oNVhKY0tDS0oz?=
- =?utf-8?B?NXpvWkczdWZpS1N3OExQUERCdEUrTnExT082NENRamNobzlvWjZ0UEI1V2xG?=
- =?utf-8?B?dnZSc0ovcmJiWTlGc3dEc21KZ3NCN0pXU3JZc0tvVHFEUW5qKzdnb0t3S1By?=
- =?utf-8?B?eElMY25TeEZYM1FxdFB1MC9yNmJqMlh2RlB3NkdGQ2g4THlxQUpDY2I3dDU2?=
- =?utf-8?B?UnRFUmd5eXArTmdsc2JsbW9hMDY2SzEzYW5zcTV1bkF6TzNQQVhxbUNMTFIv?=
- =?utf-8?B?WDkwRWorMGUyay9sZXRCRGpHUGFKOGRVRWhhT1k1a1QxR1kvOTFyWmNTR1pY?=
- =?utf-8?B?V0dIRFJOa3B1bG9FKzhZL1lvSkw3Mi9yakk4Y053dUhybGxaa01raVZoK2ZC?=
- =?utf-8?B?ZHZGc3lxUlV2d0lGRUxkWWdyVC9KbDBraDlSQ3psVGhFTUJjQ3hxZjlJVVdx?=
- =?utf-8?B?b2pVZi9SdzVKYmVLMVozWGNTZkdueVl5eHZFWC9BOTJTUGhVdDlQcUVJdWlW?=
- =?utf-8?B?Y0ViT1pTTHN2K1pVKzNpWDVZQzZYOVNiZ3dEQW9KcE1SNHA5MzR1enZlRVdP?=
- =?utf-8?B?V0FrZXRuWFZLUXZWYjM3cmFrMjhGMFlXQ1hoZWg1Q1k2NHRnV0RuMDNSazV4?=
- =?utf-8?B?Zk5teDNoT2lZZTUwZHhSa3ovaDlVVGNKTFlqaDFZUWF5ZHF2TTM0MElkcEd6?=
- =?utf-8?B?eVh3cUZ1ZjlvRE94M1pQSTdRVzhWUWtiM3VueWNtdm9YTzM0V3Q3dFF4SlZW?=
- =?utf-8?B?Unp5OU9zR2xkV2tBR3pkT0xWalU2V25taE14VWJkbFRxTXJQOGtNWW94cFZt?=
- =?utf-8?B?aVV6V1I3aXl3RzQ3dHVXNHRjWnUxMjQycmRsOTFiaGVkT3NHOUhYWUFwaEpo?=
- =?utf-8?B?MnFpV1VKYis1QllEZkNrek9KK3FmYnhYL1RxV0xCaUNlNllzWmtmYXBhWkZw?=
- =?utf-8?B?NFFtVEV3bVc4M0trYlI5MUdheTloUlhFd2ozd3AzUTdjRXpscmFQa1VacCtT?=
- =?utf-8?B?Wm8xeWFQT2hXNTBGTmdtQjRhNklJWk1nRXBaNnV0NjRldUJCQ3VCTklXa21Q?=
- =?utf-8?B?b0k1b21tVyt6WUU3aXFwcXBwWjFwLzBVaGJ2YlcvZWpDODZJek1lVEtBUWJ6?=
- =?utf-8?B?RnYwZlN0NnJUaWtEWjB6T2JJMTN5SmtRdnV2Z09SaFA2cnMyUSthYTFLbUEy?=
- =?utf-8?B?dExHU1d2OFJjVlpTR2xtOEU5VkVQd0Z1OXFURkt1blFPQUp2enZKcHpCWWpv?=
- =?utf-8?B?bDh2cWwxL0JETGI1bmNmMHpRNTNTQ3FjMVJxM2J1TEVXUmx5V21pYUJuL3lI?=
- =?utf-8?B?MTY5RDZ2V0lpZk1LcG5aZ05BRTI2dG9xUVVubUhoWGN0L1VWMVNiWEhUT0Qy?=
- =?utf-8?B?aEpwK2V2M1Z2UlRvd25UMXBzNVU1TG51YmlNc1l6QXlPanhHeDRvTVVlVGxJ?=
- =?utf-8?B?OUhXZGZ5amRMYWsxYzFWUHdaa1hWOU05cFArUUhNS2tMMHRkMHVPa1hSNndK?=
- =?utf-8?B?V2JSTk9pNVZPU0k2TnJ3bXZPTGRRcVowZGpONWhzcG9SRk0waGxIZk9qQlVn?=
- =?utf-8?Q?fxo4cGRTu/viHUK/H8ojxuZKv?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uUj3x-00077H-SN
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 05:38:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750930711;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ovtkkJXqIZp6CZvQOJLpUdp8uPSb7RPjCj664+4ds50=;
+ b=ORdcMYvAUUuFUzLjp4jNWBFYk/C+3APK3tZRG4FVdwdL8ijG8lp8vzrdKu5/QFU07wP8+2
+ B2AdayDCbKQLtrhan9xT348Ni5l/ZzbbK2UKoPiXzZIcoaBF1NQJ5WCdB5fkC3RrCHF3TN
+ jtbKN6n8sUlH1eP/4kViJ8YaAoozMD0=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-618-SdpXTDnmNASeRBGylGFnJA-1; Thu,
+ 26 Jun 2025 05:38:29 -0400
+X-MC-Unique: SdpXTDnmNASeRBGylGFnJA-1
+X-Mimecast-MFC-AGG-ID: SdpXTDnmNASeRBGylGFnJA_1750930708
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 35C421955ECC; Thu, 26 Jun 2025 09:38:28 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 91CA919560AF; Thu, 26 Jun 2025 09:38:27 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C3B8B21E6A27; Thu, 26 Jun 2025 11:38:24 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,  Peter Xu
+ <peterx@redhat.com>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>
+Subject: Re: [PATCH 01/21] migration: Normalize tls arguments
+In-Reply-To: <878qlf7nc0.fsf@suse.de> (Fabiano Rosas's message of "Wed, 25 Jun
+ 2025 14:17:19 -0300")
+References: <20250603013810.4772-1-farosas@suse.de>
+ <20250603013810.4772-2-farosas@suse.de> <87cyas88gg.fsf@pond.sub.org>
+ <878qlf7nc0.fsf@suse.de>
+Date: Thu, 26 Jun 2025 11:38:24 +0200
+Message-ID: <87o6uayh9r.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f4907217-8837-4ed1-4ed7-08ddb493b6dc
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Jun 2025 09:27:47.7462 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Sm66R4StIE6nJG6Lq/tDd2LJINrJO7s/tCtl/M7DcBaMtIpAIUH0S/3VOq8OzJoyk755y+JBO+7ytCbIjWIq/62CcM8YydaBKhhv3SJ/7oY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR11MB8680
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.13;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -230,72 +88,391 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IEVyaWMgQXVnZXIgPGVyaWMu
-YXVnZXJAcmVkaGF0LmNvbT4NCj5TdWJqZWN0OiBSZTogW1BBVENIIHYyIDE1LzE5XSBpbnRlbF9p
-b21tdTogUmVwbGF5IHBhc2lkIGJpbmRzIGFmdGVyIGNvbnRleHQNCj5jYWNoZSBpbnZhbGlkYXRp
-b24NCj4NCj4NCj4NCj5PbiA2LzIwLzI1IDk6MTggQU0sIFpoZW56aG9uZyBEdWFuIHdyb3RlOg0K
-Pj4gRnJvbTogWWkgTGl1IDx5aS5sLmxpdUBpbnRlbC5jb20+DQo+Pg0KPj4gVGhpcyByZXBsYXlz
-IGd1ZXN0IHBhc2lkIGF0dGFjaG1lbnRzIGFmdGVyIGNvbnRleHQgY2FjaGUgaW52YWxpZGF0aW9u
-Lg0KPj4gVGhpcyBpcyBhIGJlaGF2aW9yIHRvIGVuc3VyZSBzYWZldHkuIEFjdHVhbGx5LCBwcm9n
-cmFtbWVyIHNob3VsZCBpc3N1ZQ0KPj4gcGFzaWQgY2FjaGUgaW52YWxpZGF0aW9uIHdpdGggcHJv
-cGVyIGdyYW51bGFyaXR5IGFmdGVyIGlzc3VpbmcgYSBjb250ZXh0DQo+PiBjYWNoZSBpbnZhbGlk
-YXRpb24uDQo+c28gaXMgaXQgbWFuZGF0ZWQgdG8gZG8gdGhlIGludmFsaWRhdGlvbiB0d2ljZT8N
-Cg0KWWVzLCBiZWNhdXNlIHdlIGRvbid0IGhhdmUgYSB3YXkgdG8ga25vdyBpZiBwYXNpZCBjYWNo
-ZSBpbnZhbGlkYXRpb24gZm9sbG93aW5nDQpjb250ZXh0IGNhY2hlIGludmFsaWRhdGlvbiBpcyBk
-dXBsaWNhdGUgb25lIGZyb20gZ3Vlc3QuDQoNCkl0IGRlcGVuZHMgb24gaWYgd2Ugd2FudCB0byBz
-dXBwb3J0IGEgZ3Vlc3Qgd2l0aCBzdWNoIGZsYXcsIGlmIG5vIG5lZWQgdG8gc3VwcG9ydCwNCndl
-IGNhbiBkcm9wIHRoaXMgcGF0Y2guDQoNCj4+DQo+PiBTaWduZWQtb2ZmLWJ5OiBZaSBMaXUgPHlp
-LmwubGl1QGludGVsLmNvbT4NCj4+IFNpZ25lZC1vZmYtYnk6IFlpIFN1biA8eWkueS5zdW5AbGlu
-dXguaW50ZWwuY29tPg0KPj4gU2lnbmVkLW9mZi1ieTogWmhlbnpob25nIER1YW4gPHpoZW56aG9u
-Zy5kdWFuQGludGVsLmNvbT4NCj4+IC0tLQ0KPj4gIGh3L2kzODYvaW50ZWxfaW9tbXVfaW50ZXJu
-YWwuaCB8ICAxICsNCj4+ICBody9pMzg2L2ludGVsX2lvbW11LmMgICAgICAgICAgfCA1MQ0KPisr
-KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrLS0NCj4+ICBody9pMzg2L3RyYWNlLWV2ZW50
-cyAgICAgICAgICAgfCAgMSArDQo+PiAgMyBmaWxlcyBjaGFuZ2VkLCA1MSBpbnNlcnRpb25zKCsp
-LCAyIGRlbGV0aW9ucygtKQ0KPj4NCj4+IGRpZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lvbW11
-X2ludGVybmFsLmgNCj5iL2h3L2kzODYvaW50ZWxfaW9tbXVfaW50ZXJuYWwuaA0KPj4gaW5kZXgg
-OTJhNTMzZGI1NC4uYjNlNGFhMjNmMSAxMDA2NDQNCj4+IC0tLSBhL2h3L2kzODYvaW50ZWxfaW9t
-bXVfaW50ZXJuYWwuaA0KPj4gKysrIGIvaHcvaTM4Ni9pbnRlbF9pb21tdV9pbnRlcm5hbC5oDQo+
-PiBAQCAtNTc1LDYgKzU3NSw3IEBAIHR5cGVkZWYgZW51bSBWVERQQ0ludlR5cGUgew0KPj4gICAg
-ICBWVERfUEFTSURfQ0FDSEVfRk9SQ0VfUkVTRVQgPSAwLA0KPj4gICAgICAvKiBwYXNpZCBjYWNo
-ZSBpbnZhbGlkYXRpb24gcmVseSBvbiBndWVzdCBQQVNJRCBlbnRyeSAqLw0KPj4gICAgICBWVERf
-UEFTSURfQ0FDSEVfR0xPQkFMX0lOViwgLyogcGFzaWQgY2FjaGUgZ2xvYmFsIGludmFsaWRhdGlv
-bg0KPiovDQo+PiArICAgIFZURF9QQVNJRF9DQUNIRV9ERVZTSSwgICAgICAvKiBwYXNpZCBjYWNo
-ZSBkZXZpY2Ugc2VsZWN0aXZlDQo+aW52YWxpZGF0aW9uICovDQo+PiAgICAgIFZURF9QQVNJRF9D
-QUNIRV9ET01TSSwgICAgICAvKiBwYXNpZCBjYWNoZSBkb21haW4gc2VsZWN0aXZlDQo+aW52YWxp
-ZGF0aW9uICovDQo+PiAgICAgIFZURF9QQVNJRF9DQUNIRV9QQVNJRFNJLCAgICAvKiBwYXNpZCBj
-YWNoZSBwYXNpZCBzZWxlY3RpdmUNCj5pbnZhbGlkYXRpb24gKi8NCj4+ICB9IFZURFBDSW52VHlw
-ZTsNCj4+IGRpZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lvbW11LmMgYi9ody9pMzg2L2ludGVs
-X2lvbW11LmMNCj4+IGluZGV4IDFjOTRhMDAzM2MuLjYyMWIwN2FhMDIgMTAwNjQ0DQo+PiAtLS0g
-YS9ody9pMzg2L2ludGVsX2lvbW11LmMNCj4+ICsrKyBiL2h3L2kzODYvaW50ZWxfaW9tbXUuYw0K
-Pj4gQEAgLTkyLDYgKzkyLDEwIEBAIHN0YXRpYyB2b2lkDQo+dnRkX2FkZHJlc3Nfc3BhY2VfcmVm
-cmVzaF9hbGwoSW50ZWxJT01NVVN0YXRlICpzKTsNCj4+ICBzdGF0aWMgdm9pZCB2dGRfYWRkcmVz
-c19zcGFjZV91bm1hcChWVERBZGRyZXNzU3BhY2UgKmFzLA0KPklPTU1VTm90aWZpZXIgKm4pOw0K
-Pj4NCj4+ICBzdGF0aWMgdm9pZCB2dGRfcGFzaWRfY2FjaGVfcmVzZXRfbG9ja2VkKEludGVsSU9N
-TVVTdGF0ZSAqcyk7DQo+PiArc3RhdGljIHZvaWQgdnRkX3Bhc2lkX2NhY2hlX3N5bmMoSW50ZWxJ
-T01NVVN0YXRlICpzLA0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFZURFBB
-U0lEQ2FjaGVJbmZvICpwY19pbmZvKTsNCj4+ICtzdGF0aWMgdm9pZCB2dGRfcGFzaWRfY2FjaGVf
-ZGV2c2koSW50ZWxJT01NVVN0YXRlICpzLA0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICBQQ0lCdXMgKmJ1cywgdWludDE2X3QgZGV2Zm4pOw0KPj4NCj4+ICBzdGF0aWMgdm9p
-ZCB2dGRfcGFuaWNfcmVxdWlyZV9jYWNoaW5nX21vZGUodm9pZCkNCj4+ICB7DQo+PiBAQCAtMjQz
-Nyw2ICsyNDQxLDggQEAgc3RhdGljIHZvaWQNCj52dGRfaW9tbXVfcmVwbGF5X2FsbChJbnRlbElP
-TU1VU3RhdGUgKnMpDQo+Pg0KPj4gIHN0YXRpYyB2b2lkIHZ0ZF9jb250ZXh0X2dsb2JhbF9pbnZh
-bGlkYXRlKEludGVsSU9NTVVTdGF0ZSAqcykNCj4+ICB7DQo+PiArICAgIFZURFBBU0lEQ2FjaGVJ
-bmZvIHBjX2luZm8gPSB7IC5lcnJvcl9oYXBwZW5lZCA9IGZhbHNlLCB9Ow0KPj4gKw0KPj4gICAg
-ICB0cmFjZV92dGRfaW52X2Rlc2NfY2NfZ2xvYmFsKCk7DQo+PiAgICAgIC8qIFByb3RlY3RzIGNv
-bnRleHQgY2FjaGUgKi8NCj4+ICAgICAgdnRkX2lvbW11X2xvY2socyk7DQo+PiBAQCAtMjQ1NCw2
-ICsyNDYwLDkgQEAgc3RhdGljIHZvaWQNCj52dGRfY29udGV4dF9nbG9iYWxfaW52YWxpZGF0ZShJ
-bnRlbElPTU1VU3RhdGUgKnMpDQo+PiAgICAgICAqIFZULWQgZW11bGF0aW9uIGNvZGVzLg0KPj4g
-ICAgICAgKi8NCj4+ICAgICAgdnRkX2lvbW11X3JlcGxheV9hbGwocyk7DQo+PiArDQo+PiArICAg
-IHBjX2luZm8udHlwZSA9IFZURF9QQVNJRF9DQUNIRV9HTE9CQUxfSU5WOw0KPj4gKyAgICB2dGRf
-cGFzaWRfY2FjaGVfc3luYyhzLCAmcGNfaW5mbyk7DQo+PiAgfQ0KPj4NCj4+ICAjaWZkZWYgQ09O
-RklHX0lPTU1VRkQNCj4+IEBAIC0yNjk2LDYgKzI3MDUsMjEgQEAgc3RhdGljIHZvaWQNCj52dGRf
-Y29udGV4dF9kZXZpY2VfaW52YWxpZGF0ZShJbnRlbElPTU1VU3RhdGUgKnMsDQo+PiAgICAgICAg
-ICAgICAgICogaGFwcGVuZWQuDQo+PiAgICAgICAgICAgICAgICovDQo+PiAgICAgICAgICAgICAg
-dnRkX2FkZHJlc3Nfc3BhY2Vfc3luYyh2dGRfYXMpOw0KPj4gKyAgICAgICAgICAgIC8qDQo+PiAr
-ICAgICAgICAgICAgICogUGVyIHNwZWMsIGNvbnRleHQgZmx1c2ggc2hvdWxkIGFsc28gZm9sbG93
-ZWQgd2l0aCBQQVNJRA0KPmJlIGZvbGxvd2VkDQo+PiArICAgICAgICAgICAgICogY2FjaGUgYW5k
-IGlvdGxiIGZsdXNoLiBSZWdhcmRzIHRvIGEgZGV2aWNlIHNlbGVjdGl2ZQ0KPnJlZ2FyZGluZyB0
-bz8NCj4+ICsgICAgICAgICAgICAgKiBjb250ZXh0IGNhY2hlIGludmFsaWRhdGlvbjoNCj4+ICsg
-ICAgICAgICAgICAgKiBpZiAoZW1hdWx0ZWRfZGV2aWNlKQ0KPmVtdWxhdGVkDQoNCldpbGwgZml4
-IGFib3ZlIHRocmVlLg0KDQpUaGFua3MNClpoZW56aG9uZw0K
+Fabiano Rosas <farosas@suse.de> writes:
+
+> Markus Armbruster <armbru@redhat.com> writes:
+>
+>> Fabiano Rosas <farosas@suse.de> writes:
+>>
+>>> The migration parameters tls_creds, tls_authz and tls_hostname
+>>> currently have a non-uniform handling. When used as arguments to
+>>> migrate-set-parameters, their type is StrOrNull and when used as
+>>> return value from query-migrate-parameters, their type is a plain
+>>> string.
+>>>
+>>> Not only having to convert between the types is cumbersome, but it
+>>> also creates the issue of requiring two different QAPI types to be
+>>> used, one for each command. MigrateSetParameters is used for
+>>> migrate-set-parameters with the TLS arguments as StrOrNull while
+>>> MigrationParameters is used for query-migrate-parameters with the TLS
+>>> arguments as str.
+>>>
+>>> Since StrOrNull could be considered a superset of str, change the type
+>>> of the TLS arguments in MigrationParameters to StrOrNull and add a
+>>> helper to ensure they're never actually used as QTYPE_QNULL.
+>>
+>> The type of @tls_creds, @tls-hostname, @tls-authz changes from str to
+>> StrOrNull in introspection query-migrate-parameters.  Loss of precision.
+>> Introspection is already imprecise: it shows the members optional even
+>> though they aren't.  We accept the loss of precision to enable
+>> de-duplication.
+>>
+>> This should be worked into the commit message.
+>>
+>
+> Ack.
+>
+>>> This will allow the type duplication to be removed in the next
+>>> patches.
+>>>
+>>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>>> ---
+>>>  migration/migration-hmp-cmds.c |   8 +-
+>>>  migration/migration.c          |   2 +
+>>>  migration/options.c            | 149 ++++++++++++++++++++-------------
+>>>  migration/options.h            |   1 +
+>>>  migration/tls.c                |   2 +-
+>>>  qapi/migration.json            |   6 +-
+>>>  6 files changed, 99 insertions(+), 69 deletions(-)
+>>>
+>>> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+>>> index e8a563c7d8..bc8179c582 100644
+>>> --- a/migration/migration-hmp-cmds.c
+>>> +++ b/migration/migration-hmp-cmds.c
+>>> @@ -276,14 +276,12 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+>>>          monitor_printf(mon, "%s: %u\n",
+>>>              MigrationParameter_str(MIGRATION_PARAMETER_MAX_CPU_THROTTLE),
+>>>              params->max_cpu_throttle);
+>>> -        assert(params->tls_creds);
+>>>          monitor_printf(mon, "%s: '%s'\n",
+>>>              MigrationParameter_str(MIGRATION_PARAMETER_TLS_CREDS),
+>>> -            params->tls_creds);
+>>> -        assert(params->tls_hostname);
+>>> +                       params->tls_creds ? params->tls_creds->u.s : "");
+>>>          monitor_printf(mon, "%s: '%s'\n",
+>>>              MigrationParameter_str(MIGRATION_PARAMETER_TLS_HOSTNAME),
+>>> -            params->tls_hostname);
+>>> +                       params->tls_hostname ? params->tls_hostname->u.s : "");
+>>>          assert(params->has_max_bandwidth);
+>>>          monitor_printf(mon, "%s: %" PRIu64 " bytes/second\n",
+>>>              MigrationParameter_str(MIGRATION_PARAMETER_MAX_BANDWIDTH),
+>>> @@ -319,7 +317,7 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+>>>              params->max_postcopy_bandwidth);
+>>>          monitor_printf(mon, "%s: '%s'\n",
+>>>              MigrationParameter_str(MIGRATION_PARAMETER_TLS_AUTHZ),
+>>> -            params->tls_authz);
+>>> +                       params->tls_authz ? params->tls_authz->u.s : "");
+>>>  
+>>>          if (params->has_block_bitmap_mapping) {
+>>>              const BitmapMigrationNodeAliasList *bmnal;
+>>
+>> Before, the code assumes ->tls_creds, ->tls_hostname, and ->tls_authz
+>> are non-null.  It assert its assumption for the first two.
+>>
+>> Afterwards, it maps null to "".  Why is that necessary?  Hmm, see below.
+>>
+>
+> Maps NULL to "" because the intermediate type, MigrationParameters, has
+> been changed from str to StrOrNull. For the purposes of info
+> migrate_parameters and query-migrate-parameters the only valid values
+> are a non-empty string or an empty string.
+
+But is NULL possible?  If you just change the type from str to StrOrNull
+and no more, it isn't.
+
+>>> diff --git a/migration/migration.c b/migration/migration.c
+>>> index 4697732bef..f65cb81b6d 100644
+>>> --- a/migration/migration.c
+>>> +++ b/migration/migration.c
+>>> @@ -4053,6 +4053,8 @@ static void migration_instance_finalize(Object *obj)
+>>>  {
+>>>      MigrationState *ms = MIGRATION_OBJ(obj);
+>>>  
+>>> +    migrate_tls_opts_free(&ms->parameters);
+>>
+>> Is this a bug fix?
+>>
+>
+> My new version is a little different, but I can make it a separate patch
+> if that happens to be the case.
+
+Yes, please.
+
+>> As far as I can tell, the object gets destroyed only on QEMU shutdown.
+>> Freeing resources then is unnecessary, except it may help leak detection
+>> tools.
+>>
+>
+> From a maintenance perspective I consider any leak as a bug because I
+> don't have control over what kinds of leak detection tools are ran on
+> the code. To avoid spending time looking at such bug reports I have ASAN
+> automated in my testing and I fix early any leaks that it founds.
+>
+>>> +
+>>>      qemu_mutex_destroy(&ms->error_mutex);
+>>>      qemu_mutex_destroy(&ms->qemu_file_lock);
+>>>      qemu_sem_destroy(&ms->wait_unplug_sem);
+>>> diff --git a/migration/options.c b/migration/options.c
+>>> index 162c72cda4..45a95dc6da 100644
+>>> --- a/migration/options.c
+>>> +++ b/migration/options.c
+>>> @@ -162,9 +162,11 @@ const Property migration_properties[] = {
+>>>      DEFINE_PROP_SIZE("announce-step", MigrationState,
+>>>                        parameters.announce_step,
+>>>                        DEFAULT_MIGRATE_ANNOUNCE_STEP),
+>>> -    DEFINE_PROP_STRING("tls-creds", MigrationState, parameters.tls_creds),
+>>> -    DEFINE_PROP_STRING("tls-hostname", MigrationState, parameters.tls_hostname),
+>>> -    DEFINE_PROP_STRING("tls-authz", MigrationState, parameters.tls_authz),
+>>> +    /*
+>>> +     * tls-creds, tls-hostname and tls-authz are of type StrOrNull,
+>>> +     * which can't be easily handled (if at all) by qdev. So these
+>>> +     * will not be exposed as global migration options (-global).
+>>> +     */
+>>
+>> This is a compatibility break.
+>>
+>> The orthodox way to break it is deprecate, let the grace period expire,
+>> break.  Record in docs/about/deprecated.rst at the beginning, move the
+>> record to docs/about/removed-features.rst at the end.
+>>
+>> An argument could be made that the interface in question is
+>> accidental[*], not actually used by anything, and therefore breaking it
+>> without a grace period is fine.  But even then we should record the
+>> breakage in docs/about/removed-features.rst.
+>>
+>
+> Ok. Alternatively I could try a little harder to keep these
+> options. I'll see what I can do.
+
+What do we think about this external interface?
+
+If we think it's accidental and unused, then putting in more work to
+keep it makes no sense.
+
+If we think it's deliberate and/or used, we should either keep it, or
+replace it the orthodox way.
+
+Trouble is a common answer for use of accidental interfaces is "beats
+me".  I wish we'd stop creating them.
+
+>> Aside: the interface in question is a hack (making the migration object
+>> a device) piled onto a hack (the way compat properties work, and how
+>> they spill into -global).  Past sins catching up with us...
+>>
+>
+> Hm, I've been experimenting with adding new objects (still TYPE_DEVICE)
+> to hold the compatibility options and parameters only. Not the entire
+> migration state. The MigrationState object would then be converted into
+> a regular struct.
+>
+> MigrationState => internal type holding migration state (a better name
+> could be used)
+> MigrationOptionsState => -global migration-options.foo=on
+> MigrationCompatState => -global migration foo=on
+>
+> But it's getting a little tricky due to s->parameters *also* containing
+> compat options, namely zero-page-detection.
+
+-global is a trap.  Heck, global configuration state is a trap.  See
+discussion in review of RFC v3.
+
+We can't always fill in the our spiked pits.  Sometimes the best we can
+do is to plank them and put up some "here be danger" signs.
+
+>>>      DEFINE_PROP_UINT64("x-vcpu-dirty-limit-period", MigrationState,
+>>>                         parameters.x_vcpu_dirty_limit_period,
+>>>                         DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT_PERIOD),
+>>> @@ -379,13 +381,6 @@ bool migrate_rdma(void)
+>>>      return s->rdma_migration;
+>>>  }
+>>>  
+>>> -bool migrate_tls(void)
+>>> -{
+>>> -    MigrationState *s = migrate_get_current();
+>>> -
+>>> -    return s->parameters.tls_creds && *s->parameters.tls_creds;
+>>> -}
+>>> -
+>>>  typedef enum WriteTrackingSupport {
+>>>      WT_SUPPORT_UNKNOWN = 0,
+>>>      WT_SUPPORT_ABSENT,
+>>> @@ -834,21 +829,44 @@ const char *migrate_tls_authz(void)
+>>>  {
+>>>      MigrationState *s = migrate_get_current();
+>>>  
+>>> -    return s->parameters.tls_authz;
+>>> +    if (s->parameters.tls_authz &&
+>>> +        s->parameters.tls_authz->type == QTYPE_QSTRING &&
+>>> +        *s->parameters.tls_authz->u.s) {
+>>> +        return s->parameters.tls_authz->u.s;
+>>> +    }
+>>> +
+>>> +    return NULL;
+>>>  }
+>>>  
+>>>  const char *migrate_tls_creds(void)
+>>>  {
+>>>      MigrationState *s = migrate_get_current();
+>>>  
+>>> -    return s->parameters.tls_creds;
+>>> +    if (s->parameters.tls_creds &&
+>>> +        s->parameters.tls_creds->type == QTYPE_QSTRING &&
+>>> +        *s->parameters.tls_creds->u.s) {
+>>> +        return s->parameters.tls_creds->u.s;
+>>> +    }
+>>> +
+>>> +    return NULL;
+>>>  }
+>>>  
+>>>  const char *migrate_tls_hostname(void)
+>>>  {
+>>>      MigrationState *s = migrate_get_current();
+>>>  
+>>> -    return s->parameters.tls_hostname;
+>>> +    if (s->parameters.tls_hostname &&
+>>> +        s->parameters.tls_hostname->type == QTYPE_QSTRING &&
+>>> +        *s->parameters.tls_hostname->u.s) {
+>>> +        return s->parameters.tls_hostname->u.s;
+>>> +    }
+>>> +
+>>> +    return NULL;
+>>> +}
+>>
+>> Again, the code changes to cope with null.  Why is that necessary?
+>> Again, see below.
+>>
+>
+> This is actually a bit roundabout indeed. In my new version I do:
+>
+> - migrate-set-parameters: always write either NULL or a non-empty
+>   QTYPE_QSTRING to s->parameters.
+>     
+> - query-migrate-parameters: always return a (possibly empty)
+>   QTYPE_QSTRING.
+>
+> With this, internal representation is: NULL for not present, non-empty
+> string for present.
+>
+>>> +
+>>> +bool migrate_tls(void)
+>>> +{
+>>> +    return !!migrate_tls_creds();
+>>>  }
+>>>  
+>>>  uint64_t migrate_vcpu_dirty_limit_period(void)
+>>> @@ -888,6 +906,36 @@ AnnounceParameters *migrate_announce_params(void)
+>>>      return &ap;
+>>>  }
+>>>  
+>>> +void migrate_tls_opts_free(MigrationParameters *params)
+>>> +{
+>>> +    qapi_free_StrOrNull(params->tls_creds);
+>>> +    qapi_free_StrOrNull(params->tls_hostname);
+>>> +    qapi_free_StrOrNull(params->tls_authz);
+>>> +}
+>>> +
+>>> +/* needs BQL if dst is part of s->parameters */
+>>> +static void tls_option_set_str(StrOrNull **dstp, StrOrNull *src)
+>>> +{
+>>> +    StrOrNull *dst = *dstp;
+>>> +
+>>> +    assert(!dst);
+>>> +
+>>> +    dst = *dstp = g_new0(StrOrNull, 1);
+>>> +    dst->type = QTYPE_QSTRING;
+>>> +
+>>> +    if (!src) {
+>>> +        dst->u.s = g_strdup("");
+>>> +        return;
+>>> +    }
+>>> +
+>>> +    if (src->type == QTYPE_QSTRING) {
+>>> +        dst->u.s = g_strdup(src->u.s);
+>>> +    } else {
+>>> +        assert(src->type == QTYPE_QNULL);
+>>> +        dst->u.s = g_strdup("");
+>>> +    }
+>>> +}
+>>
+>> Postcondition: dstp points to a StrOrNull containing a str,
+>> i.e. QTYPE_QSTRING.  Makes sense.
+>>
+>> I'd prefer something like
+>>
+>>        StrOrNull *dst = g_new0(StrOrNull, 1);
+>>
+>>        ... fill in members ...
+>>
+>>        assert(!*dstp);
+>>        *dstp = dst;
+>>
+>
+> This code is also reworked a bit on the next version, I'll see whether
+> the comment still applies.
+>
+>>> +
+>>>  MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+>>>  {
+>>>      MigrationParameters *params;
+>>> @@ -903,10 +951,11 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+>>>      params->cpu_throttle_increment = s->parameters.cpu_throttle_increment;
+>>>      params->has_cpu_throttle_tailslow = true;
+>>>      params->cpu_throttle_tailslow = s->parameters.cpu_throttle_tailslow;
+>>> -    params->tls_creds = g_strdup(s->parameters.tls_creds);
+>>> -    params->tls_hostname = g_strdup(s->parameters.tls_hostname);
+>>> -    params->tls_authz = g_strdup(s->parameters.tls_authz ?
+>>> -                                 s->parameters.tls_authz : "");
+>>> +
+>>> +    tls_option_set_str(&params->tls_creds, s->parameters.tls_creds);
+>>> +    tls_option_set_str(&params->tls_hostname, s->parameters.tls_hostname);
+>>> +    tls_option_set_str(&params->tls_authz, s->parameters.tls_authz);
+>>> +
+>>>      params->has_max_bandwidth = true;
+>>>      params->max_bandwidth = s->parameters.max_bandwidth;
+>>>      params->has_avail_switchover_bandwidth = true;
+>>> @@ -963,9 +1012,6 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+>>>  
+>>>  void migrate_params_init(MigrationParameters *params)
+>>>  {
+>>> -    params->tls_hostname = g_strdup("");
+>>> -    params->tls_creds = g_strdup("");
+>>> -
+>>
+>> Is this the reason why the code now needs to deal with null?
+>>
+>> I'm not objecting, just pointing out that the commit message didn't
+>> prepare me for such a change.
+>>
+>
+> I'll document it.
+>
+>>>      /* Set has_* up only for parameter checks */
+>>>      params->has_throttle_trigger_threshold = true;
+>>>      params->has_cpu_throttle_initial = true;
+>>
+>> I'm stopping here to ask: how exactly does the patch change quasi-global
+>> state, namely current_migration->parameters->tls_*?
+>>
+>
+> It makes sure the current_migration->parameters->tls_* options are
+> always QTYPE_QSTRING and either a non-empty or an empty string.
+>
+> The next version of the patch will instead use non-empty QTYPE_QSTRING
+> or NULL, which is cleaner from a C perspective.
+
+Agree.
+
+The struct members will have type StrOrNull, but only certain values can
+occur: non-empty string, and NULL.  Worth a comment, I think.  Also
+consider assertions.
+
+> Both versions ensure the query-* and set-* commands continue to expose
+> the same values. Query only shows non-empty or empty string and Set
+> accepts all values of a StrOrNull type.
+>
+>> [...]
+>>
+>>
+>> [*] We have oh so many accidental external interfaces.
+
 
