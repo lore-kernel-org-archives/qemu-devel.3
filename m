@@ -4,200 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 067B3C77B7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 08:29:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68E51C7115B
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 08:29:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUhyS-0004s8-T8; Thu, 26 Jun 2025 04:28:48 -0400
+	id 1uUhye-00053c-A9; Thu, 26 Jun 2025 04:29:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uUhyJ-0004mf-QF
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 04:28:42 -0400
-Received: from mgamail.intel.com ([192.198.163.19])
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1uUhyU-0004x2-Ow; Thu, 26 Jun 2025 04:28:51 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uUhyG-0002Ej-HI
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 04:28:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1750926517; x=1782462517;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=ObPpK66iOXjqnBjNUDCGXm3NeEU2FqZVhcZREQxUBvw=;
- b=TaS1KR3bAnHhivyMmKDftVbcO5xyBFin3BJ0ohhTgvW1VUJtvjaxNz0x
- kq2dinn4lWVSN3PyuCVhHEQY3B/OYi0EluJmy3xcoACMrWLfZ5A2bRjGF
- p7MnedNX7z2cnCt2yYZwNDT+VL9lYvhpVHhm5+GNf7b3h6YascgYQEPt6
- NgJOcxSHqlLm2tjQAe+w6yVOv2vn7dc/QKbIx0j+6n7JgmCYYSOIgZzXL
- ldotnV2t+ygmNTESgjLwBgJPMdzchwJtsAjKzrSKNZMmiZ+UEsTpBivo8
- marOtZikUqjwMj19vMZhTJ6ekR/9BvZLi8cPpQm+V3abUOqrk8z5I2PTh w==;
-X-CSE-ConnectionGUID: hvJYme6ATEeBeOh0KSoRyg==
-X-CSE-MsgGUID: r1k18A6DTT2m7qwBVKQ67w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11475"; a="52330062"
-X-IronPort-AV: E=Sophos;i="6.16,267,1744095600"; d="scan'208";a="52330062"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Jun 2025 01:28:22 -0700
-X-CSE-ConnectionGUID: YMjzNrNjTsasW9MxkvA4dw==
-X-CSE-MsgGUID: +OtlaKZcRxG0nKSPttal3A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,267,1744095600"; d="scan'208";a="152956038"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
- by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Jun 2025 01:28:22 -0700
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Thu, 26 Jun 2025 01:28:21 -0700
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25 via Frontend Transport; Thu, 26 Jun 2025 01:28:21 -0700
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (40.107.220.42)
- by edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Thu, 26 Jun 2025 01:28:21 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ih+EQIg7ufosYy9lwjfaXudlJwPkMLBm6BSbkGthp4wIKvGFVw3rjExMzdYTbUqBfUBGnPSb4XeuilHTXZNiDGR1WUuRYB4z73UqbaY7qEYvUYsnX+AVbHi5jrT0Oy6mDMsyH7eKcjQgoGr4cDypML2vDzPuZTx+eWNjMjj6zGqNb+QQAADTEhl8KwIZdwX00QMhcjUs6g7mblt1zjqQIOUy1I03mwRue+fUKpIHCyGmcecMehP97+vpeDcyzX4ywYTUnkm5RblbmcGbTAKc2hiSxRrzcue1s2zghieCvoLM36XWo0lcis+jHpRxh4Xk3j1UGCGNi177z5UQxCiHJA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ObPpK66iOXjqnBjNUDCGXm3NeEU2FqZVhcZREQxUBvw=;
- b=DcczOOn6C1SwjJEp6IF3BuR3v3ecCuZVbjIUCcZ9dLE2kCGnuQWN5VjNGmu6dZQIXYmrYR+GigQpw6OR/p49GJMELtaOkyjiqZbbgQ4p+sP8KwSV9Ktxwu981IZohlBNrUDHwXbNasQJvCfIhEjXIhD8vB1wU6gAyF8G1EVOykVB5oi+xkxNDGTaOp7dcHoSJ1aBgtDsMR+g3yn61ZaoZAzsKs+cQs97MFPS69Oq7hFSrGWTS0uYOGP6z1lohgeGGE5pBQw69tLParWH7AUboZ2WXEaxuJEVfVRUAea6/UaslWKF/H2H33tLmrBW3XxRs0BZc4+a8eow4Ga1RnOs8g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by CO1PR11MB4834.namprd11.prod.outlook.com (2603:10b6:303:90::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8880.21; Thu, 26 Jun
- 2025 08:28:06 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.8835.023; Thu, 26 Jun 2025
- 08:28:05 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>, "peterx@redhat.com"
- <peterx@redhat.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "shameerali.kolothum.thodi@huawei.com"
- <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
- <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
- "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>, "Yi
- Sun" <yi.y.sun@linux.intel.com>, Paolo Bonzini <pbonzini@redhat.com>, Richard
- Henderson <richard.henderson@linaro.org>, Eduardo Habkost
- <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: RE: [PATCH v2 12/19] intel_iommu: Introduce a new pasid cache
- invalidation type FORCE_RESET
-Thread-Topic: [PATCH v2 12/19] intel_iommu: Introduce a new pasid cache
- invalidation type FORCE_RESET
-Thread-Index: AQHb4bQyFldcg2x/bkqV8Er7xVHlpbQQp/8AgARdeiA=
-Date: Thu, 26 Jun 2025 08:28:05 +0000
-Message-ID: <IA3PR11MB91369900C5CEA3CE218F17D9927AA@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <20250620071813.55571-1-zhenzhong.duan@intel.com>
- <20250620071813.55571-13-zhenzhong.duan@intel.com>
- <e402a485-66be-44d4-9cc5-aa7157511f76@redhat.com>
-In-Reply-To: <e402a485-66be-44d4-9cc5-aa7157511f76@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|CO1PR11MB4834:EE_
-x-ms-office365-filtering-correlation-id: c236b35b-e13b-4638-3ba3-08ddb48b5fb5
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|7416014|38070700018; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?0aN7bAn0r89mBqCIoKfNbpX9JVMZBYxc8ybG6enzrT0j6rOvF4C535eRq4wJ?=
- =?us-ascii?Q?UmOJjVg+NdnOs4aVoDf98QPb/npHwnDux4m0BbckTONzAynDboQmol6IEkFy?=
- =?us-ascii?Q?ei/UGCbSla6DSNOBBQNOjKlhX8VDyAqOSQJ0Ng8C9o5Sp76ms5akCLWzVPVN?=
- =?us-ascii?Q?kW0Y7q3E1+YVnmL6fP0JdEVijXnm/IPCcWDGjnVHa9EiiNS7Zy2Ewb70P40x?=
- =?us-ascii?Q?UmZK7HChAxTOibFi3dyjjMPXCVmXJ0jyDMk3dT0MVyjPfG5PYqgOLzM+ciq8?=
- =?us-ascii?Q?PnQu+Mw/Ey4WaTRM4imAFR3V3lXgATuZhSH3Jkioxf+MRaedw1R/Zi9R5vAS?=
- =?us-ascii?Q?DINU0mhhnwFM60vOP3oszdd1+NlFjw8q6JnZDqu3RemgVqbrX3XWQ1YWQT5c?=
- =?us-ascii?Q?3k5sG41zZMs0emp+UUDFgoPxMXD2ook/rDH+FI0WswszfY4AKZ9GYPhpziH4?=
- =?us-ascii?Q?OuyHW9AWH6XPU4nTtbRM7kiIIvTksTu7G/ys0T2e6SlarjNu/IpvMiyhTVm7?=
- =?us-ascii?Q?/vWZZH5c5A+Ry709puY+YZMmotorsqgIXe5wMHRxhONtYMC9NHrsg60e5jc9?=
- =?us-ascii?Q?2DuB1tDXKSEXrNrl0SZzeysR1v0GnOSjZ9qkz2/jX2nE4LeOMasSl72CjLhP?=
- =?us-ascii?Q?Y5c6K2TiatDY69KJn9sbtFD7MJVLBM//3O+xGUkV4J288uF050hQsxlQ1zPc?=
- =?us-ascii?Q?5t4wxGXYg0AwfFHX18uNFlVuq27hYSnjDJml1kcp/9X1fQPvUrUTdjsXuRJ5?=
- =?us-ascii?Q?m8qQtlKwe5CftHOtV3N91h3nTAy5AtAN/DNFmW8AhmsYpR0E08lFyp8K3OLq?=
- =?us-ascii?Q?QaBvZ5IXVqjlC80eqPakJD7UmkzH74jG6w2N3QJiPC8454kCQVmr/4zFMhd+?=
- =?us-ascii?Q?OzRr9Z0FE2/tcu76CKiWIYyW0DHV9u7Mwwo8aII8ENRsn8epjemlMN6Rs2yn?=
- =?us-ascii?Q?ab8hVZ7FO2CYubu5+aJOdWs3DWzOx6QLcoUHPRtuqF3XlTgqcWB3t3tBak6r?=
- =?us-ascii?Q?blwM1fP7gVlXbV+4s2+0hgo5YIl3/BL6RCVovsxj7w/Y/wxvHe+BioGuFyR9?=
- =?us-ascii?Q?22HPjA7jrdkpjSNVkD4Z08YXLLG986DdWl2hBpG0u2u89euu/7GzAyfDrzGe?=
- =?us-ascii?Q?BBaEDb5bltussZvrCJ5qV2BMFbs4Xg8nyeQFkQ5R2/SFWtJ+xyWy8LNq66F7?=
- =?us-ascii?Q?bKbGbWGUrS4JkGEQD5PHcpuGDwRzoZLdCTLIsg5X2LmJWnMzu+tIbvBs+U/P?=
- =?us-ascii?Q?ZkWeR5i+c9Yu05dhbADhpic+UAF2XTfvL8gVGBVjle+Xgyyc7LZ6dYQx7yZa?=
- =?us-ascii?Q?gtXQzNPKKemhYSXHpe9u8JOF5Cjs+wlS3KtBQ7fFPhzubNQKOI5DvGg0wMe7?=
- =?us-ascii?Q?nU1dnFSZ0sxw5jXO/I4cTaX0j8+0j3KPbOXepn7SDTipDvt4gRJ2hzeBGhzo?=
- =?us-ascii?Q?7CtyfLsXy24QM8qCxa1b0l8tr2aMC1h3mlrvxUTHLvugeYHYLAt+rDj7BB00?=
- =?us-ascii?Q?pJl5AaiynXjlXbk=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(7416014)(38070700018); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?ApNISoMr4xn+rjo0diq0H2Ov9IhY45GgEVBrKRGjjdqHclo2EqXMetzkxBT+?=
- =?us-ascii?Q?1FpvC4QjAzAHavPrJ07MOIKmQEVvepSNndm14jYGTmmlfgrHWuuVgBss7ewk?=
- =?us-ascii?Q?FC3hNRMt8eOmUxKDbKY4QaFg10B4zYHcZ/5aAjAh7/E/s0xoGCcrJz7Lfs31?=
- =?us-ascii?Q?c9Zujd0BVIsBi8MA7QWDFBV600Ldg60XddiBxTwJi0Fo0kWJgwmziLpD0Wjh?=
- =?us-ascii?Q?Cjphrn+pmIj+y3IyvtRrDIksVWpqJ1TVt+0t5ka5NAuGD+Oehfr9fxh8reVU?=
- =?us-ascii?Q?N1puIZwgIcyZeh2mQh5E3l/NDCGfO0hg9bW3eytRK42oC7jP4KJcFnUp+2Dk?=
- =?us-ascii?Q?v4BDxMYwh8D2b5xXJXrmSaTX/QedSMfxb9xrpk2sbEdJTHCw3cxF1slNGah6?=
- =?us-ascii?Q?K/IRTYZDiN1wzFhAJjMUCZnqOd4co7aXITBA9nHZGt9q+FIY5jj1k8SinN8x?=
- =?us-ascii?Q?Wd7dbqv5pZ30mDFreRdeTPjWDkulNakQQzq2EhBw12ys4z8HM5HhGfyOGFJO?=
- =?us-ascii?Q?Q+22YlYQoh9X1k6Vm8ON40374mVzQRYWs07Zfn+bgXT9wCmoQ0v5wqFkJLj+?=
- =?us-ascii?Q?jMQZzQ+6atO7P7B4IIiwZCWMwM4iR7fkRNlgV9R0naCu48s5BbzElm3G2GZd?=
- =?us-ascii?Q?tmCoZUSEq0MdRnHn8r96dyh2EnT/9PoD2hLAJE4XXBvYDHrkz/uO2Dd7FTiw?=
- =?us-ascii?Q?eldkYRkIPduZKoTtSiZleVkoplty2E1I6MOlE0WQe/xy+Y+waxgF0850vPx3?=
- =?us-ascii?Q?H6a1AqNi4JTbn4X1GoEsS9lAF6NtaXBmD1O7+F3EGjzMyqxLflLAUo+HO8YJ?=
- =?us-ascii?Q?aDLN6RKb56mVE+r0FxX+XaR+UTsJtQm3xGcPXiZ1GZT2Xf9ZjDBelBbBpuBn?=
- =?us-ascii?Q?1hmn+mY3L59gegzd2RPLWeWkYRy0V49u4u7clBu2yS0+fmgr5XOJwyVHwJHX?=
- =?us-ascii?Q?Bkvecir8dsz3aPXjbsiVul6W/BkFpO7mqbvukJ3hk6PE5pPM0NpFEpV5lVfW?=
- =?us-ascii?Q?81LLFQuboPnYVGHyYmVPak8I+xLUXjM5zcSBT+ZTPjt4J04768cARiV2wZsm?=
- =?us-ascii?Q?zmz9xHlRZ8/MZqIQPNqvBrgXk/jykF6SVhywaT27DaGp6YbLUR6/3yTe0yG2?=
- =?us-ascii?Q?iOeeGrvTww2ycqykfHM5AsNkXKCywTd7fGuFUPzEm7eN5D+N+/zzsBZd9FUZ?=
- =?us-ascii?Q?l9ECcV+0NLdDhv26QjiCOxua2HVttCAwfPnrbNYlHmA9Jkglc9tZDhlmkLTw?=
- =?us-ascii?Q?73jFJsiMsepTUXdPmDSuMSdT4/aww5qPTd91V1eAsEHpuz5r7LsZHpz7O5tA?=
- =?us-ascii?Q?0cGqVFAHJ+3zuDuuLgInCixufw0+S/0mWqXDGfg/jzrj/VN5RYFHZbx8cEPx?=
- =?us-ascii?Q?mrmbZ85+vduCqJxOtIfiaiDvPrkZAuBjMSdqMotFcg997Tq6r9uvu4DkmRW1?=
- =?us-ascii?Q?VEQmNaPJjCltUEXB0amHWsdPTXsFbr5Bu5/hiPGQ1W/0alJ1A/fnFpQVDbr8?=
- =?us-ascii?Q?mDSbGnMBjrLQCUeDNZUrGQiEjyoHrnRZS6rZNVDdCiAuvzkdU3ZwAHlSERer?=
- =?us-ascii?Q?73SusN6vedeWIF8Yd2i0S8RygRCAqVev0q8G0oir?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1uUhyO-0002FG-UU; Thu, 26 Jun 2025 04:28:50 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55Q4AZma015779;
+ Thu, 26 Jun 2025 08:28:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=CMm4w+
+ CatWrXkAEKyyBGFaaMid+JMX0Gc3jPMEwPV2w=; b=tIGRvyGrV6dLibmxwR3kKO
+ dw0B/BVdMDcsT+5RqaP26pM+jnbTY6r94D9gxcHbz/GUheWZuXIQXBI6oyk89/1T
+ cEYqdXJy1hYMUfgANvrm7p7rHLbRfYOlfP6Dd2MG81Et2kjguVvyIOYCYUvlW/M/
+ k8HKOITZGsCJLthwsKFWr+PY8UzWZf4ye/AiT3+dh3sn4wpH1RFIFwAcrPlGLqjI
+ kcORw2VTdWD8bbRBJYk7W4I0c485G5ltWngyHhU6D8RzF4xQ0exphz1NVRMMs8kl
+ w+o+JnJinKCKUwk830Agi2oAQpgrekFwgIaAk+R6hy9nTEb9w7vG93rLpdggUkJA
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47dm8jn5uw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 26 Jun 2025 08:28:38 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55Q5xLiR014769;
+ Thu, 26 Jun 2025 08:28:37 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 47e9s2nksc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 26 Jun 2025 08:28:37 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 55Q8SaEi33358460
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 26 Jun 2025 08:28:36 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6143358059;
+ Thu, 26 Jun 2025 08:28:36 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0B24A58058;
+ Thu, 26 Jun 2025 08:28:36 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 26 Jun 2025 08:28:35 +0000 (GMT)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c236b35b-e13b-4638-3ba3-08ddb48b5fb5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Jun 2025 08:28:05.5499 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: x7dZNTHlbECM1BRAiStiNNzTwWL6Qj7Yey5EaJoUCF3KlqeTXosow/3hkbrLrT08Tl6zxetALxTvR1edXFKVBffcUcYIh8901qI8AhY2ePY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR11MB4834
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.19;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Date: Thu, 26 Jun 2025 10:28:35 +0200
+From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-s390x mailing list <qemu-s390x@nongnu.org>, Daniel Berrange
+ <berrange@redhat.com>, qemu-devel mailing list <qemu-devel@nongnu.org>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>, Hendrik Brueckner
+ <brueckner@linux.ibm.com>
+Subject: Re: [PATCH v6 0/3] Add SCLP event type CPI
+In-Reply-To: <146a0cb2-e75d-4f2b-a1ef-c681185a6c16@redhat.com>
+References: <20250616140107.990538-1-shalini@linux.ibm.com>
+ <146a0cb2-e75d-4f2b-a1ef-c681185a6c16@redhat.com>
+Message-ID: <8b65246e403c7adc9b560b580e986b65@linux.ibm.com>
+X-Sender: shalini@linux.ibm.com
+Organization: IBM Deutschland Research & Development GmbH
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI2MDA2OCBTYWx0ZWRfX3udxexiOGjqY
+ mqG4LqYiw87WzHTb/boa2cjEADKrfPwCwVEYPwdQnXS3HvDr+69El2SkWU0PVWyqqiIqNwKRJ09
+ YcnCuEDAtp2/6a0vMZZlUIbZN51qe/hfBEI5KpFRqN0nnDp7GIpwYnb6TzAbIAUsv0N8njLk+gQ
+ xnJ+xkRoenlntLe6CnMcSM8nA+mrzdMRo/9BN79vn9GN95S6+Ld8xol/aOMlFk5UAHQIf8Od4dH
+ nwZX6qbqUdfN30Q2ONpWvz2hanYmd6HiJ6pMhN8FOKMp6OQlZ9LzYHxIc2eE7AGUaXoG+u7cDOR
+ UavXSeXj2Onhpde+TscswujIw4q5kgIw5etlsmVX4Gy8Vv0ctTwCZYwK3B78R5F/tU9uzo3Hj5T
+ GI3ZUz+HaO0Ydk4cqS7HZlaHbfRHSDXTneEvph7Siwbp4ZKSHl+m3VBwtwaBso1Ui0DKGLSP
+X-Proofpoint-GUID: bB1SnAgGqDWunPxe2PmWsVYUg1_rXV1k
+X-Proofpoint-ORIG-GUID: bB1SnAgGqDWunPxe2PmWsVYUg1_rXV1k
+X-Authority-Analysis: v=2.4 cv=combk04i c=1 sm=1 tr=0 ts=685d04b6 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=FbzPmqBgP5TGeBcYFOsA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-26_04,2025-06-25_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 spamscore=0 adultscore=0 mlxlogscore=883 clxscore=1015
+ impostorscore=0 suspectscore=0 mlxscore=0 phishscore=0 lowpriorityscore=0
+ bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506260068
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=shalini@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -213,27 +125,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
+On 2025-06-24 12:25, Thomas Huth wrote:
+> On 16/06/2025 16.01, Shalini Chellathurai Saroja wrote:
+>> Implement the Service-Call Logical Processor (SCLP) event
+>> type Control-Program Identification (CPI) in QEMU.
+>> 
+>> Changed since v5:
+>> - Add identifiers as class properties instead of object properties
+>> - Add description for all the class properties
+>> - Remove S390ControlProgramId as it is not needed anymore
+>> - Update description of system_level identifier
+>> - Add Reviewed-by tags
+> 
+>  Hi Shalini!
+> 
+> Thanks, I've picked this up for my next pull request.
+> 
+> If you've got some spare time, could you maybe also look into writing
+> a regression test for this, e.g. by extending one of the tests in
+> tests/functional/test_s390x_ccw_virtio.py to see whether the guests
+> provide the expected information via CPI there? (I hope the guests in
+> that test are recent enough for this feature, otherwise we might want
+> to update them)
+> 
 
->-----Original Message-----
->From: Eric Auger <eric.auger@redhat.com>
->Subject: Re: [PATCH v2 12/19] intel_iommu: Introduce a new pasid cache
->invalidation type FORCE_RESET
->
->Hi Zhenzhong,
->
->On 6/20/25 9:18 AM, Zhenzhong Duan wrote:
->> FORCE_RESET is different from GLOBAL_INV which updates pasid cache if
->> underlying pasid entry is still valid, it drops all the pasid caches.
->>
->> FORCE_RESET isn't a VTD spec defined invalidation type for pasid cache,
->> only used internally in system level reset.
->this comment shall be put in the code, along with the VTDPCInvType
->because the reader may look for that cmd in the spec.
+Hello Thomas,
 
-Good idea, will do.
+Thank you very much. Yes, I will do so.
 
-Thanks
-Zhenzhong
+>  Thanks,
+>   Thomas
 
+-- 
+Mit freundlichen Grüßen / Kind regards
+Shalini Chellathurai Saroja
+Software Developer
+Linux on IBM Z & KVM Development
+IBM Deutschland Research & Development GmbH
+Dept 1419, Schoenaicher Str. 220, 71032 Boeblingen
+Vorsitzender des Aufsichtsrats: Wolfgang Wendt
+Geschäftsführung: David Faller
+Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht 
+Stuttgart, HRB 243294
 
