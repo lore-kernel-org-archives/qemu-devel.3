@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3080C77B7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 06:43:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B1ABC7115B
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 06:43:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUgKM-0006l5-UY; Thu, 26 Jun 2025 02:43:19 -0400
+	id 1uUgKD-0006Fj-Az; Thu, 26 Jun 2025 02:43:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUgJG-0005cN-I6
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 02:42:18 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUgJU-0005f7-72
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 02:42:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUgJD-0003e0-Db
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 02:42:09 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uUgJR-0003ec-QE
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 02:42:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750920125;
+ s=mimecast20190719; t=1750920140;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=xYSo6gYcqiN6HFhcbbu0JPeJ3TxtO2sk1R4D5YyDZE4=;
- b=dQvBB3FCMaLdpky2vpk/VVSpKTW7jy7NyHEkvYpcr3u7Fxuuy8/fwZ7VGsx+kjcgZSQD9Q
- eVLYGZ4khyu60cnDOuYDp7VPFoqqms7QZlckrspVEsiD3ZlWpgjR0NcOP+ZcN0seBWjLXN
- dggosDhTl0bL3svdyOY49rDPQA9IiTo=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KAZXdk40FLAd1559S0hIVauuh/w7lHZ2Iw4QxfarxE0=;
+ b=MVmE0igqSx3Q5ixpxInmotuSJdcIg2nQK6muXomtrEGSDVf6/32ghb4ScQM7JtoN7XbBE3
+ LA5snkYDzQi4v/slUfkbVJjxvVFN02LEnoTZmo6YnrTDWWaco7oir3wif+tvdAOPuNjjip
+ l2Me7zkbSJ8ifwc6NI7ZeZS9U4HnUpw=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-318-nwHeuj6gPTSJJ1zwu0FK0w-1; Thu, 26 Jun 2025 02:42:04 -0400
-X-MC-Unique: nwHeuj6gPTSJJ1zwu0FK0w-1
-X-Mimecast-MFC-AGG-ID: nwHeuj6gPTSJJ1zwu0FK0w_1750920123
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4532ff43376so4184055e9.3
- for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 23:42:03 -0700 (PDT)
+ us-mta-204-8JDHBAzrOpuhMsM_soUl7g-1; Thu, 26 Jun 2025 02:42:18 -0400
+X-MC-Unique: 8JDHBAzrOpuhMsM_soUl7g-1
+X-Mimecast-MFC-AGG-ID: 8JDHBAzrOpuhMsM_soUl7g_1750920137
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43e9b0fd00cso3253745e9.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Jun 2025 23:42:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750920123; x=1751524923;
+ d=1e100.net; s=20230601; t=1750920137; x=1751524937;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xYSo6gYcqiN6HFhcbbu0JPeJ3TxtO2sk1R4D5YyDZE4=;
- b=lpnvB4TPHMXKxXia+lV8upFkFsWEglLH73doHPrxResVBaIyAAbDsnPTSMd3b7Z0nJ
- j7FI1XHiiPET94LyXE8eepydcn6Evy+PZJzi1P6aIretAV8YPrLcv/Psvq2e5zkdAA6k
- 2fA2sx444Bl54IQWYeDkQHVpbLIlXbDLV7RzvnNMKVnWek8zoklTNlespMWXNPIxjGic
- q1BhRzZdyctdEwtpAojXsfUQ5h1ny/AAj173IL+nZzj3N6i3KBfsf+xPVeq2QDaxUYDW
- qNWXjlcVrZr2J+kraWmZRiOJbIgLVRgCXxOqsCsr3JirwBCryeca4AGaqJJWMS1cj8Oh
- qGTA==
+ bh=KAZXdk40FLAd1559S0hIVauuh/w7lHZ2Iw4QxfarxE0=;
+ b=WTGVIT8y4IytMj6K6JXK/ZxgVa8+jKUdYfHqVrrORDthDy8BXHyjXjxbfg8VtcxsW+
+ Gcu8YejNRR5yx73LiMVMTJDzfDVhWorV0TgmaaXcx+SXXftPJxc2NhJ4S6Cct7Zyt6i8
+ 4tZeo/RO/XlpHwZdI90V3VVKk85Gx/pQddCiOW4hgGAnjexrIPpyStsozyg3acfCf31v
+ KEONUf37dmki1l0KeNWAhRxrfOPPGZQzukYF/WmOJkyusHBGqISVjbOXcxHxSNZxp/Co
+ BQFC0MNs4jpytRPAEpVWq9yw1OZ+TwtXblmdd8hiER343SbclAKcKeX3iAiCgO/4Vlzf
+ Y5QQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVhL2KJSlsBa7fD/5YHwKhvkLqVtNoHR350ieQZHrDZarZdKlbPgPZNcwnFqy4qI/xP57t/7w6haLpf@nongnu.org
-X-Gm-Message-State: AOJu0YxbazmlypDfDe7TM2HP4QXUIiMAdRv0WULuhD/xZiU2lo+c4byE
- SDc0td9YbLSUV7TBmbuCveTPdsEu7u9fkH6BVJ6T6eSG8vcmmcR46vrLgC4ZWVTtz4LU6ffFsw4
- L21VNKUJHYaGdaW4XudUVORxSdhvnlJtjOaYamDFmdLqy5xkVkeL9Dj8s
-X-Gm-Gg: ASbGncuGH89458iQq96kt233tR4wBJFohaYQjdkOh/u9o1wBGgI2sy75vWYM+/SF4BL
- lIfa+pzqQfboNyG+RuyQQmEj47OO96zWS5S6DrhAypbOlnIVr3gqPaWbIu/Q8IYzV9qsnG0iUxj
- usy9TNnTiboGHVirsKeC3c2V8jFMwHWfhprkplAaoG3m+ATtH/ehbEP8s4KT0WHZSGJM4iqWpCA
- cJdDV8F6qWAMtjwCIVBpjc7Gb2nk/vdu99Pib8KdTJi/OHZhu+Zgi/QMm+RgL13nqexm05/r9bJ
- Pk8WpfpCQvm94WO8bYzrpjF1kpQ/EYlOAYxzMGzlcyUxLahKZmDfDoaIRcTg
-X-Received: by 2002:a5d:58cf:0:b0:3a4:f655:8c4d with SMTP id
- ffacd0b85a97d-3a6ed642557mr3825346f8f.27.1750920122656; 
- Wed, 25 Jun 2025 23:42:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEQjH+gPf3fcKiAZSe66cSIefy38XOAvlpGddAzih97QtCwNi9ysaG0BlzkeRlEr8uAcb7TlQ==
-X-Received: by 2002:a5d:58cf:0:b0:3a4:f655:8c4d with SMTP id
- ffacd0b85a97d-3a6ed642557mr3825334f8f.27.1750920122237; 
- Wed, 25 Jun 2025 23:42:02 -0700 (PDT)
+ AJvYcCWSY2/MLh7UueCc4tiRJhK9T6OLffteU7bwT/N1UdDasSVw3Ygnu0dtNxk0jbjBD8gxfFsFG/7sAp0y@nongnu.org
+X-Gm-Message-State: AOJu0Yy/eSQ8jm3ojbyhSGnCq6C54Tqpf/NPRI6Ma3MFi4/jO2/v5rIy
+ pm6nwhDnR+X6kVa9P/pFBf/st61aXcvSTNL7xMZXyLEbOlsLHjNVkdO7LD+k4YnMj8irhnocFhs
+ IartL/bTNCVCz1w4VpwkzoySNo+4GHuA2/HsInoqCnOOEXHKbK/VrzLOL
+X-Gm-Gg: ASbGncsD6tIhwl2kAvDmiMCRWhjD+bGxXpZFSHEhYV4NdgwWp7k5YoB0VkA2AY4JoS1
+ cuIRrsq1CY82LvQR0J4/KnwXyzG2dSVdVC8rdJk4VmE6W16LYm7oQTclsXPr29i77YgJhgQWdVU
+ epBhMGjej6IGO4HFpbDbI3fFr3wCHewq6sLomXnvq0Q/06G6rUYk0OGVczaxAs3dZFJ8hetvTNM
+ YauYBNs+ni0swaaGR6VRmJ5P9J8eWa+rUN1v/xfkfYBrznhC3+dq5ZplZ/5k7f5gK6DkS+velrG
+ WZfpNiptWH7P8xk1lSowUNyi1N3jNziy1Xvz8vtn3LFHJDZkUPyMzHTOmLHE
+X-Received: by 2002:a05:600c:a01:b0:451:df07:d8e0 with SMTP id
+ 5b1f17b1804b1-453889d0d93mr21357425e9.11.1750920137243; 
+ Wed, 25 Jun 2025 23:42:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGY0J6HsHX2S8AHS8618fx9buu3OgtoFLUeV+lzPYSAJrReDKVC54clGOpi5gpKFtlpzKlYxQ==
+X-Received: by 2002:a05:600c:a01:b0:451:df07:d8e0 with SMTP id
+ 5b1f17b1804b1-453889d0d93mr21357115e9.11.1750920136754; 
+ Wed, 25 Jun 2025 23:42:16 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6e8050e1fsm6402156f8f.8.2025.06.25.23.42.01
+ 5b1f17b1804b1-4538a3a5b7fsm9716235e9.10.2025.06.25.23.42.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Jun 2025 23:42:01 -0700 (PDT)
-Message-ID: <e73fde05-204b-4e9d-84de-02a6188a5deb@redhat.com>
-Date: Thu, 26 Jun 2025 08:42:01 +0200
+ Wed, 25 Jun 2025 23:42:16 -0700 (PDT)
+Message-ID: <215a0489-79b3-4e69-9235-4ad8853471ea@redhat.com>
+Date: Thu, 26 Jun 2025 08:42:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 18/19] docs: add vfio-user documentation
+Subject: Re: [PATCH v5 19/19] vfio-user: introduce vfio-user protocol
+ specification
 To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
@@ -86,7 +87,7 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20250625193012.2316242-1-john.levon@nutanix.com>
- <20250625193012.2316242-19-john.levon@nutanix.com>
+ <20250625193012.2316242-20-john.levon@nutanix.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -132,7 +133,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250625193012.2316242-19-john.levon@nutanix.com>
+In-Reply-To: <20250625193012.2316242-20-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -161,14 +162,25 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/25/25 21:30, John Levon wrote:
-> Add some basic documentation on vfio-user usage.
+> From: Thanos Makatos <thanos.makatos@nutanix.com>
 > 
+> This patch introduces the vfio-user protocol specification (formerly
+> known as VFIO-over-socket), which is designed to allow devices to be
+> emulated outside QEMU, in a separate process. vfio-user reuses the
+> existing VFIO defines, structs and concepts.
+> 
+> It has been earlier discussed as an RFC in:
+> "RFC: use VFIO over a UNIX domain socket to implement device offloading"
+> 
+> Signed-off-by: Thanos Makatos <thanos.makatos@nutanix.com>
 > Signed-off-by: John Levon <john.levon@nutanix.com>
 > ---
->   docs/system/device-emulation.rst  |  1 +
->   docs/system/devices/vfio-user.rst | 26 ++++++++++++++++++++++++++
->   2 files changed, 27 insertions(+)
->   create mode 100644 docs/system/devices/vfio-user.rst
+>   MAINTAINERS                |    3 +-
+>   docs/interop/index.rst     |    1 +
+>   docs/interop/vfio-user.rst | 1520 ++++++++++++++++++++++++++++++++++++
+>   3 files changed, 1523 insertions(+), 1 deletion(-)
+>   create mode 100644 docs/interop/vfio-user.rst
+
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
