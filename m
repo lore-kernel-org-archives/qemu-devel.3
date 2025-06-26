@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD762C7EE30
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 22:29:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA0DFC7EE30
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 22:30:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUv5G-0006NL-Br; Thu, 26 Jun 2025 18:28:42 -0400
+	id 1uUv5K-0006Om-GI; Thu, 26 Jun 2025 18:28:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1uUv4z-0006KZ-RH
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 18:28:26 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1uUv54-0006LJ-9N
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 18:28:39 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1uUv4x-0000t4-91
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 18:28:25 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-234b440afa7so18092575ad.0
- for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 15:28:20 -0700 (PDT)
+ id 1uUv51-0000tI-E3
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 18:28:30 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2363e973db1so23201615ad.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 15:28:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750976899; x=1751581699; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1750976903; x=1751581703; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/txe+GX1yelBZfnxrTVVuIYl+qM4L46oqnhDie7BELg=;
- b=CZfqinzJ1t587cGtfu9ExuQ6Ibv57oLgd7vk71EWwpvsENxmdlFSgL5gmu9AYI4d+O
- V0YSPJyTfAD9U74OZAena3S/lxVLsh3HChaYoPVqQFadyJJKvQJz9Xoqwe+4Tc7kBGxG
- TgR7TRkgUq9rXaj4P7uWz5MvfY35PbtYVlz0WsIHoJho7TzG5aIBuyXQUdZE+5DgH1n9
- ztuLVnpNItp8D6XnbgfSipTR1JB8vNl66AAO310gw6ID7udWTJWSxilv7eAlTCcKaSZ1
- Bs/xDKLDpWPbdAahEjR1fd7qdvXAH9YrHItP8SpziFT21toXPXhXUlqjI5IvHbGeg3IJ
- h6vQ==
+ bh=dlJ/ihmtY/Bs+6QNasQQE5ci8/VnkGAsX6ch1ZEqQ/Y=;
+ b=NBO7dvO9m2N8SgCq6oCaig59nFcTbCQnIGgb2WI1sSN7zP0drYklMQ1AYUWtX0/1VD
+ vYugRAg7feQRr+sGwxL4oYx3wKYkmjFCyRa94gXkSgi9lQlxIIZ7e6xke+mschaROGSl
+ NrANpHCcLiCQJYABWe0PWiFPTlDj8pVv+vVZ0L3XSjBpSrhemFFVUlcWsdSAvtpztVoW
+ ALDiWCZDvoEPNbejoulo8zZz9B1zvPNWn+JBKN8hvsWjNBj5yEaCQ0vLI09Rg4cs4JLF
+ 7Wpq/7k8sMLGptqYxp9/2y4f4Fr4M/aZycxHc6dQb7KvwagJQFL+HHyQZZCbt+1050o1
+ zj1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750976899; x=1751581699;
+ d=1e100.net; s=20230601; t=1750976903; x=1751581703;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/txe+GX1yelBZfnxrTVVuIYl+qM4L46oqnhDie7BELg=;
- b=qPEn+Y4yXWMD+86VF6MchS+i7kLzm0bj1qjUcbetXyI/0VkSGx3Nq/0cV2bBSv+CQ8
- EYEjzqDLbY9Kg/FTCzEm7lDB/IhFE8Vs0/N6phZ3vlH7v6vo4YpBqZoJvFazqGviisG4
- YBR0ef24Y53FLzUg7S5ZjAjm3/pw54M4K/C/IYxW8bDBbiUyx0CHbjglmIrBummN3QgH
- RL/Cg34jFA0fkdfqxSxyw+dwAOnoCbnqD1lWGcINoFhPxWLUsZGP7eJlhlXytgaeN0cS
- zS/Ei/9XwwU5P+FE7HZJhpEFaM+/XqjVkzhWt3BS8ixtIKOk1+1MuRtq3CmwkJag1K9n
- 9S2w==
-X-Gm-Message-State: AOJu0YwAuVRVqKFXxUyd0eOO5GuYXRwtZC+P8JALW1fDbK9jjTptOqSh
- gg5ttlNRcVE0nvE2g7OJ17qe/e2F/VxLb039LPPlanO5L9Q7JZH4cXCnv5yx/w==
-X-Gm-Gg: ASbGncuIGCF77k7dynJAaSmeQnLlNqxwnKHLzUehXQVaCWFg8SYVW1AppfSRURU0MoR
- wQeNJRMwsHO5HPy+GxJ9PMprJgIMQLPf6ij74IctvtJRtXrVWcRz7i8C5VoC8NNoB3Gr1yNrp2j
- 9la1/wBC697cno9YgszE1C2BdcM+yZl62ph9JLZ0mHMzscFroRnnKukoffOkXh17BIVx6Mty/5X
- Yn2sc3qBIqc+Vnnu6R8dhRAdehPOMc5UQzoXmDiUMAqVG9r/Mgv6crQWgnGeZ9AHi9UX3jBiksO
- oYhEyBhljBST2h5vreiyaKh+4xLiS3X7y4fogZt6vRiXPU7jfl3m6RR/nj2h9ylVncVjqsL3BwK
- +iKBN/dHMAa3sp3puqw==
-X-Google-Smtp-Source: AGHT+IGlta+/mPFCCDU/bXzB0MEGu5PRj9+kz3XbJlCrBwUqQ7GCFPAD+WOadorLND+c+51S6uQnzg==
-X-Received: by 2002:a17:902:e543:b0:235:779:edfe with SMTP id
- d9443c01a7336-23ac4653fc7mr14517155ad.43.1750976899056; 
- Thu, 26 Jun 2025 15:28:19 -0700 (PDT)
+ bh=dlJ/ihmtY/Bs+6QNasQQE5ci8/VnkGAsX6ch1ZEqQ/Y=;
+ b=htBNCAIv9lOFmxHnVP2N9Xb2OjnhFxAb2cXhXNVPdj3+sy9FxQT0XI15vOmp/XS6Kl
+ 98mTjCVJUDzbpLTKrzDDriOpWqMYX++OQ02inxXOiobqe+ONyS7GeZrvot+B3+dv71vC
+ NQnDicyu8hpRY/u1Y4zwwP1imrUMs5wRem90GYRSAoDJ/Kw6VK2Xjcy+ledr6EFViVGb
+ 2nMo6iwxyRKuaH2bca90njlwqzh0yP+WTzeK/hw0ifAox979n9DZd9dczS1knKmirWl7
+ kmSSXVaGkbZ2Vxu2huys8IWe5cp4yjaxXnX5smaZeMSeKJ1t/qSc6DMCr1fBcv4oSCn3
+ yyIg==
+X-Gm-Message-State: AOJu0YxKhk828wZk0G9INBAzaY064dctK5JLNwvIhAW+8y2h8TNsmgGq
+ bnnUDoiVoW0W3KDgLh+tEUR5spU5m4g4LfTM/InfR0OkhtDEHdg1gg3uM6lC+Q==
+X-Gm-Gg: ASbGncub5bp7/06VX1J1vi0JZhLmRfvNuNz8jM5tBqxGsHcsdOcdWHUH5u3SlmVQpw+
+ NE68UyUMNQkLDYikK++LRvyNPrLpQI2edUtrLU9yBW1XkEjh8MCdiSQuozWw0Eo6gLLt9UqtTug
+ /DwRyfo1NkB3ixaZ59IxXiJP0alUXnJqemdiIuq4oPAB9sDTmQn3HSvzamCS/lfJ4oW7W2jyq1X
+ OwV8mufafl0ABjKLGX54NP134LPxeM+/xYOLMQJPtNg3T9RXQFSE8OgBJE3V4arYAxgYoOKbRDA
+ NWLnY2JC1PEiLSdrqmEmnIFZIDDUYxkBfC2eRmq4rxlDW4Re2pKQ6Xvua+JDAhy75aFSztJ9rPL
+ JYS5svmg=
+X-Google-Smtp-Source: AGHT+IH3JDlsQy+VzeCP6XavKPgibPAly4QUpzv/KCtsAmiIQzL44pbquOf0jrrKRll8b2m1y7/L2g==
+X-Received: by 2002:a17:903:807:b0:234:1e11:95a3 with SMTP id
+ d9443c01a7336-2390a4a8832mr60381845ad.13.1750976903096; 
+ Thu, 26 Jun 2025 15:28:23 -0700 (PDT)
 Received: from deb-101020-bm01.dtc.local ([149.97.161.244])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23acb3c4b23sm870365ad.214.2025.06.26.15.28.18
+ d9443c01a7336-23acb3c4b23sm870365ad.214.2025.06.26.15.28.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Jun 2025 15:28:18 -0700 (PDT)
+ Thu, 26 Jun 2025 15:28:22 -0700 (PDT)
 From: anisa.su887@gmail.com
 To: qemu-devel@nongnu.org
 Cc: Jonathan.Cameron@huawei.com, nifan.cxl@gmail.com, dave@stgolabs.net,
  alok.a.tiwari@oracle.com, linux-cxl@vger.kernel.org,
  Anisa Su <anisa.su@samsung.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [QEMU PATCH v4 02/10] cxl/type3: Add dsmas_flags to CXLDCRegion struct
-Date: Thu, 26 Jun 2025 22:23:25 +0000
-Message-ID: <20250626222743.1766404-3-anisa.su887@gmail.com>
+Subject: [QEMU PATCH v4 04/10] cxl_events.h: Move definition for
+ dynamic_capacity_uuid and enum for DC event types
+Date: Thu, 26 Jun 2025 22:23:27 +0000
+Message-ID: <20250626222743.1766404-5-anisa.su887@gmail.com>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250626222743.1766404-1-anisa.su887@gmail.com>
 References: <20250626222743.1766404-1-anisa.su887@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=anisa.su887@gmail.com; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=anisa.su887@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,72 +105,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Anisa Su <anisa.su@samsung.com>
 
-Add booleans to DC Region struct to represent dsmas flags (defined in CDAT) in
-preparation for the next command, which returns the flags in the next mailbox
-command 0x5601.
+Move definition/enum to cxl_events.h for shared use in next patch
 
 Reviewed-by: Fan Ni <fan.ni@samsung.com>
 Signed-off-by: Anisa Su <anisa.su@samsung.com>
 ---
- hw/mem/cxl_type3.c          |  8 +++++++-
- include/hw/cxl/cxl_device.h | 15 +++++++++++++++
- 2 files changed, 22 insertions(+), 1 deletion(-)
+ hw/mem/cxl_type3.c          | 15 ---------------
+ include/hw/cxl/cxl_events.h | 15 +++++++++++++++
+ 2 files changed, 15 insertions(+), 15 deletions(-)
 
 diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index f608470362..0fccd22800 100644
+index 0fccd22800..cdd60079c4 100644
 --- a/hw/mem/cxl_type3.c
 +++ b/hw/mem/cxl_type3.c
-@@ -226,10 +226,16 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
-          * future.
-          */
-         for (i = 0; i < ct3d->dc.num_regions; i++) {
-+            ct3d->dc.regions[i].nonvolatile = false;
-+            ct3d->dc.regions[i].sharable = false;
-+            ct3d->dc.regions[i].hw_managed_coherency = false;
-+            ct3d->dc.regions[i].ic_specific_dc_management = false;
-+            ct3d->dc.regions[i].rdonly = false;
-             ct3_build_cdat_entries_for_mr(&(table[cur_ent]),
-                                           dsmad_handle++,
-                                           ct3d->dc.regions[i].len,
--                                          false, true, region_base);
-+                                          ct3d->dc.regions[i].nonvolatile,
-+                                          true, region_base);
-             ct3d->dc.regions[i].dsmadhandle = dsmad_handle - 1;
+@@ -1876,21 +1876,6 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+     }
+ }
  
-             cur_ent += CT3_CDAT_NUM_ENTRIES;
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 1170ac58a3..397edcff4c 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -133,6 +133,15 @@ typedef enum {
-     CXL_MBOX_MAX = 0x20
- } CXLRetCode;
+-/* CXL r3.1 Table 8-50: Dynamic Capacity Event Record */
+-static const QemuUUID dynamic_capacity_uuid = {
+-    .data = UUID(0xca95afa7, 0xf183, 0x4018, 0x8c, 0x2f,
+-                 0x95, 0x26, 0x8e, 0x10, 0x1a, 0x2a),
+-};
+-
+-typedef enum CXLDCEventType {
+-    DC_EVENT_ADD_CAPACITY = 0x0,
+-    DC_EVENT_RELEASE_CAPACITY = 0x1,
+-    DC_EVENT_FORCED_RELEASE_CAPACITY = 0x2,
+-    DC_EVENT_REGION_CONFIG_UPDATED = 0x3,
+-    DC_EVENT_ADD_CAPACITY_RSP = 0x4,
+-    DC_EVENT_CAPACITY_RELEASED = 0x5,
+-} CXLDCEventType;
+-
+ /*
+  * Check whether the range [dpa, dpa + len - 1] has overlaps with extents in
+  * the list.
+diff --git a/include/hw/cxl/cxl_events.h b/include/hw/cxl/cxl_events.h
+index 38cadaa0f3..758b075a64 100644
+--- a/include/hw/cxl/cxl_events.h
++++ b/include/hw/cxl/cxl_events.h
+@@ -184,4 +184,19 @@ typedef struct CXLEventDynamicCapacity {
+     uint32_t tags_avail;
+ } QEMU_PACKED CXLEventDynamicCapacity;
  
-+/* r3.2 Section 7.6.7.6.2 Table 7-66 DSMAS Flags Bits */
-+typedef enum {
-+    CXL_DSMAS_FLAGS_NONVOLATILE = 2,
-+    CXL_DSMAS_FLAGS_SHARABLE = 3,
-+    CXL_DSMAS_FLAGS_HW_MANAGED_COHERENCY = 4,
-+    CXL_DSMAS_FLAGS_IC_SPECIFIC_DC_MANAGEMENT = 5,
-+    CXL_DSMAS_FLAGS_RDONLY = 6,
-+} CXLDSMASFlags;
++/* CXL r3.1 Table 8-50: Dynamic Capacity Event Record */
++static const QemuUUID dynamic_capacity_uuid = {
++    .data = UUID(0xca95afa7, 0xf183, 0x4018, 0x8c, 0x2f,
++                 0x95, 0x26, 0x8e, 0x10, 0x1a, 0x2a),
++};
 +
- typedef struct CXLCCI CXLCCI;
- typedef struct cxl_device_state CXLDeviceState;
- struct cxl_cmd;
-@@ -538,6 +547,12 @@ typedef struct CXLDCRegion {
-     uint8_t flags;
-     unsigned long *blk_bitmap;
-     uint64_t supported_blk_size_bitmask;
-+    /* Following bools make up dsmas flags, as defined in the CDAT */
-+    bool nonvolatile;
-+    bool sharable;
-+    bool hw_managed_coherency;
-+    bool ic_specific_dc_management;
-+    bool rdonly;
- } CXLDCRegion;
- 
- typedef struct CXLSetFeatureInfo {
++typedef enum CXLDCEventType {
++    DC_EVENT_ADD_CAPACITY = 0x0,
++    DC_EVENT_RELEASE_CAPACITY = 0x1,
++    DC_EVENT_FORCED_RELEASE_CAPACITY = 0x2,
++    DC_EVENT_REGION_CONFIG_UPDATED = 0x3,
++    DC_EVENT_ADD_CAPACITY_RSP = 0x4,
++    DC_EVENT_CAPACITY_RELEASED = 0x5,
++} CXLDCEventType;
++
+ #endif /* CXL_EVENTS_H */
 -- 
 2.47.2
 
