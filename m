@@ -4,82 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2805C7EE31
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 19:31:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E28F6C7EE31
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 19:40:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUsJE-0003xf-75; Thu, 26 Jun 2025 15:30:56 -0400
+	id 1uUsRR-00061H-A1; Thu, 26 Jun 2025 15:39:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
- id 1uUsIw-0003vP-OO
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 15:30:52 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
- id 1uUsIn-0001uh-RZ
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 15:30:37 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-ade58ef47c0so304991766b.1
- for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 12:30:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750966224; x=1751571024; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=vJE06tnG0dlXGCSdZ8zdchHW1UBmff3Whee/A5+3REs=;
- b=JWIgn2XEYdh55Zereh7Zo3YbzDzCj7h0HHM6Gfj+Sp48SXzNzM9ay1vkgCR4G73W/X
- OZmQu2w8bL4T9H4RP91Q80X76cyebP2dfiVlbPDt1LIqbnbkGg6fHW/JPH/jW9mwSsBy
- LyGP/J0qRMwncHXQDe1HtDddts6lVlb+38f0TDHHwAJNqVZLw/ND5WIFjPmBUlr3G83B
- kGEHkLcAMazFlNpc8ot2f64jS9+XxLDoa4/qcFTxjarJG0duAAWiEJuTkrMajGnY9pbG
- scVUs57wfY/m0duZ8lc8wV7qjjftM65Qn2aV9o0RyCDvvHgfTggymla09XpiFi8PxTTg
- 14vA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750966224; x=1751571024;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vJE06tnG0dlXGCSdZ8zdchHW1UBmff3Whee/A5+3REs=;
- b=xA2SfCBqyhm+gvsy9JPkNxy/MXiiliEEcrdQX0zK55mIk2SM43nbhNGNK93NrUL5wF
- lTS3rlA7yhG9DhQb6E8fxdZXNJj6cvzn9KD+uLhKMD+ug77j9+Y4P+gtJCJR9RLu4wzY
- GemuVeLe6izvSyTUBnr681pqlmwpoNCO8ESGrxR8If7lV+pczQJtxC3IC9zBt/r7ozMi
- M6pUq9aFZza7o5BFvzkTCnJ0vgrqeTfyh9X46SOAkcziP1vHCfcYr9omKJZ4eA3UOYG/
- kTziDSsyKpopKo53LrThKaTXRzVDx7E2khPF2SLEvRPkTDxvL57GkskvEL+Murpc88oQ
- +H8A==
-X-Gm-Message-State: AOJu0YwuafxKee/Wvle2G4Bno6ZskLMy5roel67v5Y1YuS6dT0/qnFEX
- XgtmPMuU4z9vtpe0Jav6pzka/Wx9710yOeTvA/6WmivpykZqQWw8HbTK98xW2MT/AsO+Mrs6fpK
- sAicauMWm8pkwxl7eQ4drsiO+CbTY9EK4LOew3fA=
-X-Gm-Gg: ASbGncsR9p+9W+WJjn7BMZNJ3DWXOHwDeAvsmexHfeSy0csgTxIPWO4dQPRORA4DCfC
- /x6PuS5nwPPQ5en4R3eHJQ7L/eUoAurbaCQ1MRi/MPIUPUZzXuv+gwLaplwhbHfWJx4cbMIxzAB
- KuPA9t5dMyXLWpYA+Bgvk38gdDYmuX5RBKl3USBMRe3w==
-X-Google-Smtp-Source: AGHT+IFLYC1yXv5gXB8ImV5FG6UpdHtahHSui9Aie3GNJbdKaHSEczY/D0fJnKukh6pxpQNS6edsElcPtkf29DCbXEM=
-X-Received: by 2002:a17:907:9623:b0:ae0:d4ef:e35e with SMTP id
- a640c23a62f3a-ae350486cacmr20649266b.20.1750966224005; Thu, 26 Jun 2025
- 12:30:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <unisono@quyllur.org>)
+ id 1uUqjN-0006O0-SC
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 13:49:50 -0400
+Received: from quyllur.org ([185.247.226.42])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <unisono@quyllur.org>)
+ id 1uUqjK-0003My-Kw
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 13:49:49 -0400
+Received: from quyllur.org (localhost [127.0.0.1])
+ by quyllur.org (OpenSMTPD) with ESMTP id 44a084c1
+ for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 20:49:16 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=quyllur.org; h=message-id
+ :date:mime-version:to:from:subject:content-type
+ :content-transfer-encoding; s=dkimselector; bh=ohDy2Pb/0xkdaoDuu
+ /K+6q5Rzn8=; b=Ih5uf73lmMfCoHBu3QvWywqOkInAxZGtEeM3ErQ7ts1XnKuNl
+ PVUVBmpgUjR7eDmD5sR4Ya55x4gMjnGTXW24GXu8LcG36WlueA4O3vIjES0h2n+7
+ MgfEmF1yFAvfj2asj1ZZDILagnRfaViPmbp5JirgPzucXXpTHUGh1ayzjI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=quyllur.org; h=message-id
+ :date:mime-version:to:from:subject:content-type
+ :content-transfer-encoding; q=dns; s=dkimselector; b=w/b4rQMivFG
+ lTVKG74NJrmkHZ+bg9ryfVkgnQ4FHJ+GsUNQqxSu7FYpjQCvYG5rAj8m1t3t9xL7
+ igMH7As0onJUsh5mes/qLRHpLFZ4mQIGgYovgA3N9gLQmN+AENl61X8TZrstspF7
+ fPlhyyRPKw3dE8YSyzndrPI/QOI+iDhQ=
+Received: from [10.137.0.57] (<unknown> [185.65.134.217])
+ by quyllur.org (OpenSMTPD) with ESMTPSA id 16f0f22e
+ (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+ for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 20:49:05 +0300 (EEST)
+Message-ID: <76c629ab-7ffd-48e7-b442-1afe74e58180@quyllur.org>
+Date: Thu, 26 Jun 2025 12:48:59 -0500
 MIME-Version: 1.0
-References: <20250624190336.GA19307@fedora>
- <20250625123023.33428-1-tanishdesai37@gmail.com>
- <20250626184335.GA152840@fedora>
-In-Reply-To: <20250626184335.GA152840@fedora>
-From: Tanish Desai <tanishdesai37@gmail.com>
-Date: Fri, 27 Jun 2025 01:00:12 +0530
-X-Gm-Features: Ac12FXyV2BAJ4xwCbgDYL4pYT5h6Z-d7gFDJ9DGhh5lhfpnnSTg9l9NfAj-d-Nw
-Message-ID: <CAH_Y1jdswvVGdh-qYg3Pu7RjP_riR4LyMtByJ-8nM8Z2gBfirg@mail.gmail.com>
-Subject: Re: [PATCH v3] tracetool: generates conitional checks when needed
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, mads@ynddal.dk, pbonzini@redhat.com
-Content-Type: multipart/alternative; boundary="000000000000cbb40e06387e9776"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=tanishdesai37@gmail.com; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+From: Rot127 <unisono@quyllur.org>
+Subject: TCG plugins segfault for Sparc, seemingly related to -d plugin
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=185.247.226.42; envelope-from=unisono@quyllur.org;
+ helo=quyllur.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 26 Jun 2025 15:39:12 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,128 +74,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000cbb40e06387e9776
-Content-Type: text/plain; charset="UTF-8"
+Sparc QEMU segfaults directly if a TCG plugin is used but no logging is 
+specified via `-d plugin`.
+If logging is enabled it segfaults also. But a little later.
 
->
->
-> > This patch does not apply to qemu.git/master. When posting new revisions
-> > of patches, please resend the entire patch series that this belongs to
-> > or send it as a separate patch with the Based-on: <message-id> trailer
-> > to let people (and tools) know which unmerged patch series it depends
-> > on.
->
+I tested it also with PPC32 and Hexagon. They seem to work fine.
 
-Noted
+Host: Fedora 41 - Linux 6.12.25-1.qubes.fc37.x86_64
 
+Anyone had this problem before as well?
 
-> > The hasCondition list argument can be avoided by returning bool from
-> > generate_h_conditional() instead of modifying the argument. That's a
-> > little cleaner than the pass-by-reference trick where each backend has
-> > to logical-or in their value.
->
+## Steps to reproduce
 
-I thought of this earlier as well and even tried to implement but
-the problem
-with this is h.py calls backend.generate() which calls _run_function which
-inturn loops it for all backends and runs the respective generate function.
-Now if I want generate_h_conditional() to return that means I need to
-add a return in _run_function(..) and also need to add a return in
-generate_unconditional(..) as well.
-Adding a return statement to _run_function(..) didn't make much sense
-to me and then I would also need to find a way to merge all the return
-value(from individual backend) as well so I skipped this approach.
+Build
+```bash
+mkdir build
+cd build
+../configure --disable-capstone  --enable-plugins --enable-asan 
+--enable-debug 
+--target-list=sparc-linux-user,sparc64-linux-user,hexagon-linux-user,ppc-linux-user
+ninja
+```
 
-> The generate_h_conditional() function could also be replace with a
-> > module variable like the existing PUBLIC variable. That way backends can
-> > simply declare what they want instead of implementing a function:
-> >
-> >  CHECK_TRACE_EVENT_GET_STATE = True # or False
-> >
-> > And the code in h.py would know whether to call the generate function
-> > inside the conditional or not. (I snuck in another suggestion: changing
-> > the name from "conditional", which is a general term, to
-> > "check_trace_event_get_state" to be more specific about what it does.)
->
+Run with `execlog` plugin:
 
-Yes, I can do this.
-Wrapper Class has attribute check_trace_event_get_state which will
-be *"or"* of all CHECK_TRACE_EVENT_GET_STATE which is derived
-from getattr(module, "CHECK_TRACE_EVENT_GET_STATE", False)
-and finally in h.py I will have code like this
+```
+./qemu-sparc64 -plugin file=./contrib/plugins/libexeclog.so 
+~/Downloads/base77/bin/ls
+Segmentation fault (core dumped)
+./qemu-sparc64 -plugin file=./contrib/plugins/libexeclog.so -d plugin 
+~/Downloads/base77/bin/ls
+0, 0x7160e0600380, 0x10bc, "mov  %g0, %fp"
+0, 0x7160e0600384, 0xb0a0239c, "sub  %sp, 0xb0, %sp"
+0, 0x7160e0600388, 0xafa803a6, "add  %sp, 0x8af, %l3"
+# snip ...
+0, 0x7160e0600608, 0x440a180, "cmp  %g5, %g4"
+0, 0x7160e060060c, 0x19006008, "bleu,pn   %xcc, "
+0, 0x7160e0600610, 0xff3f1082, "mov  -1, %g1"
+0, 0x7160e0600614, 0x2070309b, "srlx  %g1, 0x20, %o5"
+0, 0x7160e0600618, 0x82059c6, "ldx  [ %g4 + 8 ], %g3"
+Segmentation fault (core dumped)
+```
 
-backend.generate_unconditional(...);
-> if backend.check_trace_event_get_state:
->    out("if(check_trace_event_get_state(...)){")
->         backend.generate_conditional(...);
->    out("}")
+Sparc binaries: 
+https://ftp2.eu.openbsd.org/pub/OpenBSD/7.7/sparc64/base77.tgz
+Gitlab issue: https://gitlab.com/qemu-project/qemu/-/issues/3008
 
---000000000000cbb40e06387e9776
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div class=3D"gmail_quote gmail_quote_container"><blockquo=
-te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
-solid rgb(204,204,204);padding-left:1ex"><br>&gt; This patch does not apply=
- to qemu.git/master. When posting new revisions<br>&gt; of patches, please =
-resend the entire patch series that this belongs to<br>&gt; or send it as a=
- separate patch with the Based-on: &lt;message-id&gt; trailer<br>&gt; to le=
-t people (and tools) know which unmerged patch series it depends<br>&gt; on=
-.<br></blockquote><div>=C2=A0</div><div><span style=3D"white-space:unset">N=
-oted</span></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">&gt; The hasCondition list argument can be avoided by returning =
-bool from<br>&gt; generate_h_conditional() instead of modifying the argumen=
-t. That&#39;s a<br>&gt; little cleaner than the pass-by-reference trick whe=
-re each backend has<br>&gt; to logical-or in their value.<br></blockquote><=
-div>=C2=A0</div><div>I thought of this earlier as well and even tried to im=
-plement but the=C2=A0problem</div><div>with this is h.py calls backend.gene=
-rate() which calls=C2=A0_run_function which <br>inturn loops it for all bac=
-kends and runs the respective generate function.<br>Now if I want=C2=A0<spa=
-n style=3D"white-space:unset">generate_h_conditional() to return that means=
- I need to=C2=A0<br>add a return in=C2=A0</span><span style=3D"white-space:=
-unset">_run_function(..)</span><span style=3D"white-space:unset">=C2=A0and =
-also need to add a return in=C2=A0</span></div><div><span style=3D"white-sp=
-ace:unset">generate_unconditional(..) as well.<br>Adding a return statement=
- to=C2=A0</span><span style=3D"white-space:unset">_run_function(..) didn&#3=
-9;t make much sense</span></div><div><span style=3D"white-space:unset">to m=
-e and then=C2=A0I would also need to find a way to merge all the return<br>=
-value(from individual backend) as=C2=A0</span><span style=3D"white-space:un=
-set">well=C2=A0</span><span style=3D"white-space:unset">so I</span><span st=
-yle=3D"white-space:unset"> skipped=C2=A0this approach.</span></div><div><sp=
-an style=3D"white-space:unset"><br></span></div><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
-204);padding-left:1ex">&gt; The generate_h_conditional() function could als=
-o be replace with a<br>&gt; module variable like the existing PUBLIC variab=
-le. That way backends can<br>&gt; simply declare what they want instead of =
-implementing a function:<br>
-&gt;<br>&gt;=C2=A0 CHECK_TRACE_EVENT_GET_STATE =3D True # or False<br>&gt;<=
-br>&gt; And the code in h.py would know whether to call the generate functi=
-on<br>&gt; inside the conditional or not. (I snuck in another suggestion: c=
-hanging<br>&gt; the name from &quot;conditional&quot;, which is a general t=
-erm, to<br>&gt; &quot;check_trace_event_get_state&quot; to be more specific=
- about what it does.)<br></blockquote><div><br></div><div>Yes, I can do thi=
-s.<br>Wrapper Class has attribute check_trace_event_get_state which will</d=
-iv><div>be <b>&quot;or&quot;</b> of all=C2=A0<span style=3D"white-space:uns=
-et">CHECK_TRACE_EVENT_GET_STATE which is derived=C2=A0</span></div><div><sp=
-an style=3D"white-space:unset">from=C2=A0</span><span style=3D"white-space:=
-unset">getattr(module, &quot;</span>CHECK_TRACE_EVENT_GET_STATE<span style=
-=3D"white-space:unset">&quot;, False)</span></div><div><span style=3D"white=
--space:unset">and finally in h.py I will have code like this</span></div><d=
-iv><span style=3D"white-space:unset"><br></span></div><div><blockquote clas=
-s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
-gb(204,204,204);padding-left:1ex"><span style=3D"white-space:unset"><font f=
-ace=3D"monospace">backend.generate_unconditional(...);<br></font></span><fo=
-nt face=3D"monospace"><span style=3D"white-space:unset">if backend.</span><=
-span style=3D"white-space:unset">check_trace_event_get_state:<br></span></f=
-ont><font face=3D"monospace"><span style=3D"white-space:unset">=C2=A0 =C2=
-=A0out(&quot;if(</span>check_trace_event_get_state(...)<span style=3D"white=
--space:unset">){&quot;)<br></span></font><font face=3D"monospace"><span sty=
-le=3D"white-space:unset">=C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0</span><span styl=
-e=3D"white-space:unset">backend.</span><span style=3D"white-space:unset">ge=
-nerate_conditional(...);<br></span></font><span style=3D"white-space:unset"=
-><font face=3D"monospace">=C2=A0 =C2=A0out(&quot;}&quot;)</font></span></bl=
-ockquote></div></div></div>
-
---000000000000cbb40e06387e9776--
 
