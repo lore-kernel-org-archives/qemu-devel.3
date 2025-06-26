@@ -4,90 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8F5FC7EE33
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5911C7EE30
 	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 22:29:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUv5M-0006QF-MY; Thu, 26 Jun 2025 18:28:48 -0400
+	id 1uUv4z-0006KV-KY; Thu, 26 Jun 2025 18:28:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1uUv5I-0006OM-1X
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 18:28:44 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1uUv4x-0006KD-U2
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 18:28:23 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1uUv56-0000tx-Sf
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 18:28:43 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-23633a6ac50so22416695ad.2
- for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 15:28:30 -0700 (PDT)
+ id 1uUv4o-0000sE-5g
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 18:28:23 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-236470b2dceso17376985ad.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 15:28:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750976909; x=1751581709; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fNzdswBVnpQdWNT16OCETeREezHNIv1SZz5MkHcTEn8=;
- b=UMs60P+xLmvhP7TzHDhN8Kmw0jftpLbvVUjd8bkIGJLOq/1JADpW6/NJsbRTxYd64Y
- djm3DHmVAYWEmIf6TrX8LLzly5FBVEwCSxcTOfoTEIYEU1eW0PmwQnFCVKKM05tmfQxk
- WSB2Gp9Nbm+f55Z8XPbIf3sBN8UZT91j2tUvVOUWYLNKyVKE8AhKh+x/0CeMBdXgcOKH
- MngROsW6rIv1C4ip/0qfWkZh8x/DlxUk9jBZvmY4grgGDAhRUCNjSus0RjTIDjtpJIX6
- 9mrB9ZBKnURgjluAKQZlyK729feXXKmtN9htuCAkWVj3bm+rcAi5d6kAYqsKnZ3TztB5
- TQFA==
+ d=gmail.com; s=20230601; t=1750976889; x=1751581689; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=XBvEswFRBQqL5L/YGfeRisUGWo6c5sSXSxbxfcjgW8Q=;
+ b=nSg8kJ4a2RUmSte1fO5hJ8cdJrjQoAvG73dvHnlX11HraP4+sOtj9e431Wuej/yiGV
+ Km5MjyaU5BXlh+l0bdg/TXnHqtdbNo76wrzqEGd5IZ99EgAMOWzlc64NzhPOoWtjn+5l
+ CccrU5ZWMtPqQ+MhVtvtHcreIqB0buCy7vrAVqsBhNtaNeZZ/YmKlszONtMya5VKp/rn
+ iR2nVYmR5jcM/9y6Ne++RvLXbinri1BOZiowDGtD/iVSjEQW/NOnksDLrvDPjUnbSgcJ
+ 1ngfAyl0x92tRnWqjFPk3yM1zRgeblzZzUDxq2Q0BkVHP2RiZNoPq5bPK7ow0XOvP5I0
+ T/VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750976909; x=1751581709;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=fNzdswBVnpQdWNT16OCETeREezHNIv1SZz5MkHcTEn8=;
- b=hil66k/VYkp7nMqOIxYX33zLQwn4G+K4K9qS2dy+10tnYcBgt7GNYjFr1Je2MV3qP6
- WX3BwlxG43my5H55/rBjnmb4sd1KJo2ZNj6XtD6CHzLqt1c2O7r36QXKq3F9vz92eX/U
- +v9CiHcow8wClvlhupwQXs9mxHN3nTYgIpZ0/zeiYFO4+YBrtL/MFUDXv6jK28uQ+dDe
- zfZyGE/m7+z3m0gXUlRB2eUG8p39vHaXgVoNyeAgtIRFVSKkwiANqP7itp8FLjyoSF8G
- l772kXF+DWk2RPgb2mECAUAnl1sumtiwY4yzJY2rYJ9KYZLsfPWhO3LwH7UUG0ZSfKf4
- 69cg==
-X-Gm-Message-State: AOJu0YwUgW7CfMToWyXvQ496lHg2lcMf75y5GVea5EXlHQT8TSYOvY5B
- iQeVEFjyQeGFmF93atXqxVLvL2OChAjttFdcou7ey60PUZ8723x9Tcx+iVyp6Q==
-X-Gm-Gg: ASbGncv5wTAEEAPjknOJ2RC9TzffFAyfFh3wSJ/XffGDve2PlIKzTAQkYevehVlNsuG
- IMiuRYiqO+KnaTSs3KGVhwfQoy2TKN0v8RcxhqYBYOSqRe+1g4+BoxseALcKQWFDOWwRNOiMmjy
- URkLv+eBkCDcFXQGwIH0jTeYYF3H2aVZzrmEk5VH+BBvNaA5mQ+d9lHJixrELoUwytvElmwPnbR
- GCISzPWBrK2oF7xU0hbOjgAgjdg+XluCmMlO6aVlJJNSqc08beJe76KcpRIC0rk+AIENRDxvAb3
- Zg8yeIUG6fZMIfHfoEfyX8Z7oVPsmxpAlnr1NqojGylM1pSP+4wwPRfg3Dq02rC6XbLU7iJBC6E
- Su3YlqvEZ3J9eY9Nkrg==
-X-Google-Smtp-Source: AGHT+IEoLN21IQhU3rd/hGmCc35DGpKEcYEcpyldg1wX32m6cPlhGIDY4ch+t8LStiJysEhJ+nzDOA==
-X-Received: by 2002:a17:902:ce11:b0:235:5a9:976f with SMTP id
- d9443c01a7336-23ac462451bmr16428175ad.24.1750976909069; 
- Thu, 26 Jun 2025 15:28:29 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1750976889; x=1751581689;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=XBvEswFRBQqL5L/YGfeRisUGWo6c5sSXSxbxfcjgW8Q=;
+ b=FebawPLkvKPnYT7AHPvJKU0XuBFjTKT7zfHCMAIVMGdzsZ3F6UFFC14avQW5j+Ecu6
+ EL2/tJwnF73V3+DSzzVMgj7mG8eQlR9IikEy4mIHfglARFBMH//5DV/y3JLUsfURADQ5
+ kZW4raxNRSCPppf4BFQlF+Ms4iANF+MXLuWC7T7KAk9yjoRDccd/yEu2NUptO3sT7vK5
+ pyO8WqNliYwls8zAZTN+B4xnOcQACcIeBLO8gylCHgLx6uEeWvDtTgXD54oqgrmNPbPS
+ UsUvH8D4tmT+FynSPfN7v1i+35WwWeJp9E9unBX+baXn+grr2pLCK1iR9VUGV4nh65xd
+ msag==
+X-Gm-Message-State: AOJu0YxKhPq8bdLXip5u95+Rpai60QnPNsoI8dPF38+vhHGL6e5RDE53
+ M+hvfEHFA5unILrWbZB/uxVegLL4xLXtFg/by6X+rwCMFODpQPjW+bZLj8yniw==
+X-Gm-Gg: ASbGncurGAUhMrfFsZ8vHhKa4BCCBK30O6JujVpaT2SeYOzh79owiR+6PE3tM0F3Hol
+ jr92Pg9t0E5SGNItXP6ePzjmWWXWX58MHPqJDNkyO7iLTWNAisdV1M8nznH0gKnFXYIyVEEkwyM
+ ElbO49hBTBfDyupnZPvhIduBbgIEDn16vYe6wRWOakA5xEY2A5K3if92qqL71riuDVAzWesNpvR
+ Jn7WKOD8igkAepEZ9Ayk+3Rmx2DLs8MRYjQMHlQOJGRxhTOoUAivqmQ6ebYCizgWtW3qZO/8Bfn
+ QRwZAFIQEF/DgIwenCXpyrF4aEUC8X8ynvuJT18vQaszFNbXwijxqnav97WLneir4dvXh8hYgl8
+ KycH5FNI=
+X-Google-Smtp-Source: AGHT+IF1iODfHE8fzSjYQHYGuvuHvcDNhOO3OqdyuwV7o34VK7Drc2bBOMI0nsIntVIGfCzv0pMHDg==
+X-Received: by 2002:a17:902:f90c:b0:234:f182:a735 with SMTP id
+ d9443c01a7336-23ac45e24a2mr9349075ad.34.1750976889205; 
+ Thu, 26 Jun 2025 15:28:09 -0700 (PDT)
 Received: from deb-101020-bm01.dtc.local ([149.97.161.244])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23acb3c4b23sm870365ad.214.2025.06.26.15.28.28
+ d9443c01a7336-23acb3c4b23sm870365ad.214.2025.06.26.15.28.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Jun 2025 15:28:28 -0700 (PDT)
+ Thu, 26 Jun 2025 15:28:08 -0700 (PDT)
 From: anisa.su887@gmail.com
 To: qemu-devel@nongnu.org
 Cc: Jonathan.Cameron@huawei.com, nifan.cxl@gmail.com, dave@stgolabs.net,
  alok.a.tiwari@oracle.com, linux-cxl@vger.kernel.org,
  Anisa Su <anisa.su@samsung.com>
-Subject: [QEMU PATCH v4 08/10] hw/cxl: create helper function to create DC
- Event Records from extents
-Date: Thu, 26 Jun 2025 22:23:31 +0000
-Message-ID: <20250626222743.1766404-9-anisa.su887@gmail.com>
+Subject: [QEMU PATCH v4 00/10] CXL: FMAPI DCD Management Commands 0x5600-0x5605
+Date: Thu, 26 Jun 2025 22:23:23 +0000
+Message-ID: <20250626222743.1766404-1-anisa.su887@gmail.com>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250626222743.1766404-1-anisa.su887@gmail.com>
-References: <20250626222743.1766404-1-anisa.su887@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=anisa.su887@gmail.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=anisa.su887@gmail.com; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,167 +100,147 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Anisa Su <anisa.su@samsung.com>
 
-Prepatory patch for following FMAPI Add/Release Patches. Refactors part
-of qmp_cxl_process_dynamic_capacity_prescriptive() into a helper
-function to create DC Event Records and insert in the event log.
+This patchset adds support for 6 FM API DCD Management commands (0x5600-0x5605)
+according to the CXL r3.2 Spec.
 
-Moves definition for CXL_NUM_EXTENTS_SUPPORTED to cxl.h so it can be
-accessed by cxl-mailbox-utils.c and cxl-events.c, where the helper
-function is defined.
+The code was tested with libcxlmi, which runs in the QEMU VM and sends 56xxh
+commands to the device (QEMU-emulated) through MCTP messages over USB.
 
-Signed-off-by: Anisa Su <anisa.su@samsung.com>
----
- hw/cxl/cxl-events.c         | 38 +++++++++++++++++++++++++++++++++++++
- hw/cxl/cxl-mailbox-utils.c  |  1 -
- hw/mem/cxl_type3.c          | 37 +-----------------------------------
- include/hw/cxl/cxl.h        |  1 +
- include/hw/cxl/cxl_device.h |  4 ++++
- 5 files changed, 44 insertions(+), 37 deletions(-)
+Test Configuration:
+ - Kernel:
+To perform end-to-end tests, both MCTP and DCD support are needed for the kernel.
+The kernel version used is Ira's latest DCD branch which is based on 6.15-rc2,
+which includes the upstreamed support for MCTP over USB:
+https://github.com/weiny2/linux-kernel/tree/dcd-v6-2025-04-13
 
-diff --git a/hw/cxl/cxl-events.c b/hw/cxl/cxl-events.c
-index 12dee2e467..724055f2cf 100644
---- a/hw/cxl/cxl-events.c
-+++ b/hw/cxl/cxl-events.c
-@@ -260,3 +260,41 @@ void cxl_event_irq_assert(CXLType3Dev *ct3d)
-         }
-     }
- }
-+
-+void cxl_create_dc_event_records_for_extents(CXLType3Dev *ct3d,
-+                                             CXLDCEventType type,
-+                                             CXLDCExtentRaw extents[],
-+                                             uint32_t ext_count)
-+{
-+    CXLEventDynamicCapacity event_rec = {};
-+    int i;
-+
-+    cxl_assign_event_header(&event_rec.hdr,
-+                            &dynamic_capacity_uuid,
-+                            (1 << CXL_EVENT_TYPE_INFO),
-+                            sizeof(event_rec),
-+                            cxl_device_get_timestamp(&ct3d->cxl_dstate));
-+    event_rec.type = type;
-+    event_rec.validity_flags = 1;
-+    event_rec.host_id = 0;
-+    event_rec.updated_region_id = 0;
-+    event_rec.extents_avail = CXL_NUM_EXTENTS_SUPPORTED -
-+                              ct3d->dc.total_extent_count;
-+
-+    for (i = 0; i < ext_count; i++) {
-+        memcpy(&event_rec.dynamic_capacity_extent,
-+               &extents[i],
-+               sizeof(CXLDCExtentRaw));
-+        event_rec.flags = 0;
-+        if (i < ext_count - 1) {
-+            /* Set "More" flag */
-+            event_rec.flags |= BIT(0);
-+        }
-+
-+        if (cxl_event_insert(&ct3d->cxl_dstate,
-+                             CXL_EVENT_TYPE_DYNAMIC_CAP,
-+                             (CXLEventRecordRaw *)&event_rec)) {
-+            cxl_event_irq_assert(ct3d);
-+        }
-+    }
-+}
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index e3d54ed124..382c41c025 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -27,7 +27,6 @@
- 
- #define CXL_CAPACITY_MULTIPLIER   (256 * MiB)
- #define CXL_DC_EVENT_LOG_SIZE 8
--#define CXL_NUM_EXTENTS_SUPPORTED 512
- #define CXL_NUM_TAGS_SUPPORTED 0
- #define CXL_ALERTS_LIFE_USED_WARN_THRESH (1 << 0)
- #define CXL_ALERTS_OVER_TEMP_WARN_THRESH (1 << 1)
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index ee554a77be..9c2b9d197b 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1957,15 +1957,11 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
-         CxlDynamicCapacityExtentList *records, Error **errp)
- {
-     Object *obj;
--    CXLEventDynamicCapacity dCap = {};
--    CXLEventRecordHdr *hdr = &dCap.hdr;
-     CXLType3Dev *dcd;
--    uint8_t flags = 1 << CXL_EVENT_TYPE_INFO;
-     uint32_t num_extents = 0;
-     CxlDynamicCapacityExtentList *list;
-     CXLDCExtentGroup *group = NULL;
-     g_autofree CXLDCExtentRaw *extents = NULL;
--    uint8_t enc_log = CXL_EVENT_TYPE_DYNAMIC_CAP;
-     uint64_t dpa, offset, len, block_size;
-     g_autofree unsigned long *blk_bitmap = NULL;
-     int i;
-@@ -2078,38 +2074,7 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
-         dcd->dc.total_extent_count += num_extents;
-     }
- 
--    /*
--     * CXL r3.1 section 8.2.9.2.1.6: Dynamic Capacity Event Record
--     *
--     * All Dynamic Capacity event records shall set the Event Record Severity
--     * field in the Common Event Record Format to Informational Event. All
--     * Dynamic Capacity related events shall be logged in the Dynamic Capacity
--     * Event Log.
--     */
--    cxl_assign_event_header(hdr, &dynamic_capacity_uuid, flags, sizeof(dCap),
--                            cxl_device_get_timestamp(&dcd->cxl_dstate));
--
--    dCap.type = type;
--    /* FIXME: for now, validity flag is cleared */
--    dCap.validity_flags = 0;
--    stw_le_p(&dCap.host_id, hid);
--    /* only valid for DC_REGION_CONFIG_UPDATED event */
--    dCap.updated_region_id = 0;
--    for (i = 0; i < num_extents; i++) {
--        memcpy(&dCap.dynamic_capacity_extent, &extents[i],
--               sizeof(CXLDCExtentRaw));
--
--        dCap.flags = 0;
--        if (i < num_extents - 1) {
--            /* Set "More" flag */
--            dCap.flags |= BIT(0);
--        }
--
--        if (cxl_event_insert(&dcd->cxl_dstate, enc_log,
--                             (CXLEventRecordRaw *)&dCap)) {
--            cxl_event_irq_assert(dcd);
--        }
--    }
-+    cxl_create_dc_event_records_for_extents(dcd, type, extents, num_extents);
- }
- 
- void qmp_cxl_add_dynamic_capacity(const char *path, uint16_t host_id,
-diff --git a/include/hw/cxl/cxl.h b/include/hw/cxl/cxl.h
-index 75e47b6864..3ae4303383 100644
---- a/include/hw/cxl/cxl.h
-+++ b/include/hw/cxl/cxl.h
-@@ -23,6 +23,7 @@
- #define CXL_DEVICE_REG_BAR_IDX 2
- 
- #define CXL_WINDOW_MAX 10
-+#define CXL_NUM_EXTENTS_SUPPORTED 512
- 
- typedef struct PXBCXLDev PXBCXLDev;
- 
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 82e3bc1a71..91ec1ba299 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -732,4 +732,8 @@ bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
- void cxl_assign_event_header(CXLEventRecordHdr *hdr,
-                              const QemuUUID *uuid, uint32_t flags,
-                              uint8_t length, uint64_t timestamp);
-+void cxl_create_dc_event_records_for_extents(CXLType3Dev *ct3d,
-+                                             CXLDCEventType type,
-+                                             CXLDCExtentRaw extents[],
-+                                             uint32_t ext_count);
- #endif
--- 
+- QEMU:
+To enable MCTP over USB in QEMU, Jonathan's RFC patches are applied on ToT master branch
+(https://lore.kernel.org/linux-cxl/20250609163334.922346-1-Jonathan.Cameron@huawei.com/T/#m21b9e0dfc689cb1890bb4d961710c23379e04902)
+
+For the tests of commands 0x5600 (Get DCD Info), 0x5601 (Get Host DC Region
+Config), and 0x5603 (Get DC Region Extent Lists), DCD kernel code is not involved.
+The libcxlmi test program is used to send the command to the device and results
+are collected and verified.
+
+For command 0x5602 (Set DC Region Config): device creates an event record with type
+DC_EVENT_REGION_CONFIG_UPDATED and triggers an interrupt to the host
+if the configuration changes as a result of the command. Currently, the kernel
+version used to test this only supports Add/Release type events. Thus, this
+request essentially gets ignored but did not cause problems besides the host
+not knowing about the configuration change when tested.
+
+For the command 0x5604 (Initiate DC Add) and 0x5605 (Initiate DC Release), the
+tests involve libcxlmi test program (acting as the FM), kernel DCD
+code (host) and QEMU device. The test workflow follows that in CXL r3.2 section
+7.6.7.6.5 and 7.6.7.6.6. More specifically, the tests involve following
+steps:
+1. Start a VM with CXL topology:
+
+ '-device usb-ehci,id=ehci \
+     -object memory-backend-file,id=cxl-mem1,mem-path=/tmp/t3_cxl1.raw,size=4G \
+     -object memory-backend-file,id=cxl-lsa1,mem-path=/tmp/t3_lsa1.raw,size=1M \
+     -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1,hdm_for_passthrough=true \
+     -device cxl-rp,port=0,bus=cxl.1,id=cxl_rp_port0,chassis=0,slot=2 \
+     -device cxl-upstream,port=2,sn=1234,bus=cxl_rp_port0,id=us0,addr=0.0,multifunction=on, \
+     -device cxl-switch-mailbox-cci,bus=cxl_rp_port0,addr=0.1,target=us0 \
+     -device cxl-downstream,port=0,bus=us0,id=swport0,chassis=0,slot=4 \
+     -device cxl-type3,bus=swport0,volatile-dc-memdev=cxl-mem1,id=cxl-dcd0,lsa=cxl-lsa1,num-dc-regions=2,sn=99 \
+     -device usb-cxl-mctp,bus=ehci.0,id=usb0,target=us0 \
+     -device usb-cxl-mctp,bus=ehci.0,id=usb1,target=cxl-dcd0\
+     -machine cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=1k'
+
+2. Load the CXL related drivers in the VM & configure MCTP endpoints:
+
+3. Create a DC region for the DCD device attached:
+
+cxl create-region -m mem0 -d decoder0.0 -s 1G -t dynamic_ram_a
+
+4. Add/release DC extents by sending 0x5604 and 0x5605 respectively through
+the following libcxlmi test program:
+
+https://github.com/computexpresslink/libcxlmi/blob/main/examples/fmapi-mctp.c
+
+5. Check and verify the extents by retrieving the extents list through
+command 0x5603 in the test program.
+
+6. Create a DAX Device from the extents added:
+
+daxctl create-device -r region0
+daxctl reconfigure-device dax0.1 -m system-ram
+
+The remaining 3 commands in this series (0x5606-0x5608) are related to tags
+and sharing, thus have not been implemented.
+
+v1: https://lore.kernel.org/linux-cxl/20250317164204.2299371-1-anisa.su887@gmail.com/
+v2: https://lore.kernel.org/linux-cxl/aD3jkRBHmbdc9QmD@deb-101020-bm01.eng.stellus.in/T/#t
+v3: https://lore.kernel.org/linux-cxl/20250605234227.970187-1-anisa.su887@gmail.com/
+
+v3 -> v4 Changes
+================================================================================
+1. Rebased on upstream ToT and retested with MCTP-over-UCB
+
+2. cxl-mailbox-utils: 0x5602 - FMAPI Set DC Region Config
+ - Move condition to return success if new block size == current block size
+ after bitmap checks because list of what should fail with unsupported doesn't
+ allow an exception for a noop request according to the spec
+ - Picked up Fan's review tag
+
+3. hw/cxl: create helper function to create DC Event Records from extents
+Based on Fan's feedback on the FM Add/Release patches from v3, reuse code from
+qmp_cxl_process_dynamic_capacity_prescriptive() to use in both qmp interface
+and mailbox commands.
+
+Created helper function to create DC event recs and insert into log from
+qmp_cxl_process_dynamic_capacity_prescriptive().
+
+4. cxl-mailbox-utils: 0x5604 - FMAPI Initiate DC Add
+- Fix local tmp array (CXLUpdateDCExtentListInPl *list) to be declared with
+ g_autofree/g_malloc0
+- Use helper method from refactored QMP code to create/insert DC Event Records
+ remove previously defined helper method cxl_mbox_create_dc_event_records_for_extents
+- Remove previously defined helper method cxl_mbox_dc_add_to_pending() because
+ it is not used by any other methods.
+- Removed unreachable return statement after default case in switch statement
+
+5. cxl-mailbox-utils: 0x5605 - FMAPI Initiate DC Release
+- Fix local tmp array (CXLUpdateDCExtentListInPl *list) to be declared with
+ g_autofree/g_malloc0
+- Use helper method from refactored QMP code to create/insert DC Event Records
+- Fix CXL_EXTENT_REMOVAL_POLICY_MASK definition to be 0x0f instead of 0x7.
+The removal policy should be bits[3:0] per the spec. 0x7 only covers bits[2:0]
+- Add missed check for if extent in the list covers a pending extent if Forced
+Removal Flag is not set
+- Removed unreachable return statement after default case in switch statement
+
+Status:
+First 6 patches have Fan's review tag
+(cxl-mailbox-utils: 0x5600 - FMAPI Get DCD Info ^.. cxl-mailbox-utils: 0x5603 - FMAPI Get DC Region Extent Lists)
+Last 3 still need review tag.
+
+
+Anisa Su (10):
+  cxl-mailbox-utils: 0x5600 - FMAPI Get DCD Info
+  cxl/type3: Add dsmas_flags to CXLDCRegion struct
+  cxl-mailbox-utils: 0x5601 - FMAPI Get Host Region Config
+  cxl_events.h: Move definition for dynamic_capacity_uuid and enum for
+    DC event types
+  hw/cxl_type3: Add DC Region bitmap lock
+  cxl-mailbox-utils: 0x5602 - FMAPI Set DC Region Config
+  cxl-mailbox-utils: 0x5603 - FMAPI Get DC Region Extent Lists
+  hw/cxl: create helper function to create DC Event Records from extents
+  cxl-mailbox-utils: 0x5604 - FMAPI Initiate DC Add
+  cxl-mailbox-utils: 0x5605 - FMAPI Initiate DC Release
+
+ hw/cxl/cxl-events.c          |  38 +++
+ hw/cxl/cxl-mailbox-utils.c   | 494 ++++++++++++++++++++++++++++++++++-
+ hw/mem/cxl_type3.c           |  82 ++----
+ include/hw/cxl/cxl.h         |   1 +
+ include/hw/cxl/cxl_device.h  |  28 ++
+ include/hw/cxl/cxl_events.h  |  15 ++
+ include/hw/cxl/cxl_mailbox.h |   6 +
+ 7 files changed, 604 insertions(+), 60 deletions(-)
+
+--
 2.47.2
 
 
