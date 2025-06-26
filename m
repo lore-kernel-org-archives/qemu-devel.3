@@ -4,72 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B5FAC7EE31
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 18:44:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2805C7EE31
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Jun 2025 19:31:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUrZe-0006DZ-Ld; Thu, 26 Jun 2025 14:43:50 -0400
+	id 1uUsJE-0003xf-75; Thu, 26 Jun 2025 15:30:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uUrZc-0006DA-7V
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 14:43:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uUrZX-0003Um-F9
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 14:43:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750963420;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hM9iXESrITi5qXUgD0C966+7uVuon8MGl66zQpBrmXY=;
- b=fasW6xohqzsv4AhItMgcZw441ik6oOhi3q/FsOcFMcDlDdLXSTWEmjCKsd13S0sNK4CWBf
- U4uZRoVqMAOhJU13LvIoSMBTeXSJ9m0dQJ4DwDuK3G3TKfoS+Jbobwmdgn/WHo7RM9ZiRZ
- LoFoKZIqBV6G4rH1aVzKNb82GMustng=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-625-Ujan1bDAN5qPzSK5Kl2T5g-1; Thu,
- 26 Jun 2025 14:43:38 -0400
-X-MC-Unique: Ujan1bDAN5qPzSK5Kl2T5g-1
-X-Mimecast-MFC-AGG-ID: Ujan1bDAN5qPzSK5Kl2T5g_1750963417
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 45ABC1944A8D; Thu, 26 Jun 2025 18:43:37 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.90])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 97F5D30002C0; Thu, 26 Jun 2025 18:43:36 +0000 (UTC)
-Date: Thu, 26 Jun 2025 14:43:35 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Tanish Desai <tanishdesai37@gmail.com>
-Cc: qemu-devel@nongnu.org, mads@ynddal.dk, pbonzini@redhat.com
-Subject: Re: [PATCH v3] tracetool: generates conitional checks when needed
-Message-ID: <20250626184335.GA152840@fedora>
+ (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
+ id 1uUsIw-0003vP-OO
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 15:30:52 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
+ id 1uUsIn-0001uh-RZ
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 15:30:37 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-ade58ef47c0so304991766b.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 12:30:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1750966224; x=1751571024; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=vJE06tnG0dlXGCSdZ8zdchHW1UBmff3Whee/A5+3REs=;
+ b=JWIgn2XEYdh55Zereh7Zo3YbzDzCj7h0HHM6Gfj+Sp48SXzNzM9ay1vkgCR4G73W/X
+ OZmQu2w8bL4T9H4RP91Q80X76cyebP2dfiVlbPDt1LIqbnbkGg6fHW/JPH/jW9mwSsBy
+ LyGP/J0qRMwncHXQDe1HtDddts6lVlb+38f0TDHHwAJNqVZLw/ND5WIFjPmBUlr3G83B
+ kGEHkLcAMazFlNpc8ot2f64jS9+XxLDoa4/qcFTxjarJG0duAAWiEJuTkrMajGnY9pbG
+ scVUs57wfY/m0duZ8lc8wV7qjjftM65Qn2aV9o0RyCDvvHgfTggymla09XpiFi8PxTTg
+ 14vA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750966224; x=1751571024;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vJE06tnG0dlXGCSdZ8zdchHW1UBmff3Whee/A5+3REs=;
+ b=xA2SfCBqyhm+gvsy9JPkNxy/MXiiliEEcrdQX0zK55mIk2SM43nbhNGNK93NrUL5wF
+ lTS3rlA7yhG9DhQb6E8fxdZXNJj6cvzn9KD+uLhKMD+ug77j9+Y4P+gtJCJR9RLu4wzY
+ GemuVeLe6izvSyTUBnr681pqlmwpoNCO8ESGrxR8If7lV+pczQJtxC3IC9zBt/r7ozMi
+ M6pUq9aFZza7o5BFvzkTCnJ0vgrqeTfyh9X46SOAkcziP1vHCfcYr9omKJZ4eA3UOYG/
+ kTziDSsyKpopKo53LrThKaTXRzVDx7E2khPF2SLEvRPkTDxvL57GkskvEL+Murpc88oQ
+ +H8A==
+X-Gm-Message-State: AOJu0YwuafxKee/Wvle2G4Bno6ZskLMy5roel67v5Y1YuS6dT0/qnFEX
+ XgtmPMuU4z9vtpe0Jav6pzka/Wx9710yOeTvA/6WmivpykZqQWw8HbTK98xW2MT/AsO+Mrs6fpK
+ sAicauMWm8pkwxl7eQ4drsiO+CbTY9EK4LOew3fA=
+X-Gm-Gg: ASbGncsR9p+9W+WJjn7BMZNJ3DWXOHwDeAvsmexHfeSy0csgTxIPWO4dQPRORA4DCfC
+ /x6PuS5nwPPQ5en4R3eHJQ7L/eUoAurbaCQ1MRi/MPIUPUZzXuv+gwLaplwhbHfWJx4cbMIxzAB
+ KuPA9t5dMyXLWpYA+Bgvk38gdDYmuX5RBKl3USBMRe3w==
+X-Google-Smtp-Source: AGHT+IFLYC1yXv5gXB8ImV5FG6UpdHtahHSui9Aie3GNJbdKaHSEczY/D0fJnKukh6pxpQNS6edsElcPtkf29DCbXEM=
+X-Received: by 2002:a17:907:9623:b0:ae0:d4ef:e35e with SMTP id
+ a640c23a62f3a-ae350486cacmr20649266b.20.1750966224005; Thu, 26 Jun 2025
+ 12:30:24 -0700 (PDT)
+MIME-Version: 1.0
 References: <20250624190336.GA19307@fedora>
  <20250625123023.33428-1-tanishdesai37@gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="3n//5Zgar1wd4WYt"
-Content-Disposition: inline
-In-Reply-To: <20250625123023.33428-1-tanishdesai37@gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <20250626184335.GA152840@fedora>
+In-Reply-To: <20250626184335.GA152840@fedora>
+From: Tanish Desai <tanishdesai37@gmail.com>
+Date: Fri, 27 Jun 2025 01:00:12 +0530
+X-Gm-Features: Ac12FXyV2BAJ4xwCbgDYL4pYT5h6Z-d7gFDJ9DGhh5lhfpnnSTg9l9NfAj-d-Nw
+Message-ID: <CAH_Y1jdswvVGdh-qYg3Pu7RjP_riR4LyMtByJ-8nM8Z2gBfirg@mail.gmail.com>
+Subject: Re: [PATCH v3] tracetool: generates conitional checks when needed
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, mads@ynddal.dk, pbonzini@redhat.com
+Content-Type: multipart/alternative; boundary="000000000000cbb40e06387e9776"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=tanishdesai37@gmail.com; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,261 +94,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000cbb40e06387e9776
+Content-Type: text/plain; charset="UTF-8"
 
---3n//5Zgar1wd4WYt
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+>
+>
+> > This patch does not apply to qemu.git/master. When posting new revisions
+> > of patches, please resend the entire patch series that this belongs to
+> > or send it as a separate patch with the Based-on: <message-id> trailer
+> > to let people (and tools) know which unmerged patch series it depends
+> > on.
+>
+
+Noted
+
+
+> > The hasCondition list argument can be avoided by returning bool from
+> > generate_h_conditional() instead of modifying the argument. That's a
+> > little cleaner than the pass-by-reference trick where each backend has
+> > to logical-or in their value.
+>
+
+I thought of this earlier as well and even tried to implement but
+the problem
+with this is h.py calls backend.generate() which calls _run_function which
+inturn loops it for all backends and runs the respective generate function.
+Now if I want generate_h_conditional() to return that means I need to
+add a return in _run_function(..) and also need to add a return in
+generate_unconditional(..) as well.
+Adding a return statement to _run_function(..) didn't make much sense
+to me and then I would also need to find a way to merge all the return
+value(from individual backend) as well so I skipped this approach.
+
+> The generate_h_conditional() function could also be replace with a
+> > module variable like the existing PUBLIC variable. That way backends can
+> > simply declare what they want instead of implementing a function:
+> >
+> >  CHECK_TRACE_EVENT_GET_STATE = True # or False
+> >
+> > And the code in h.py would know whether to call the generate function
+> > inside the conditional or not. (I snuck in another suggestion: changing
+> > the name from "conditional", which is a general term, to
+> > "check_trace_event_get_state" to be more specific about what it does.)
+>
+
+Yes, I can do this.
+Wrapper Class has attribute check_trace_event_get_state which will
+be *"or"* of all CHECK_TRACE_EVENT_GET_STATE which is derived
+from getattr(module, "CHECK_TRACE_EVENT_GET_STATE", False)
+and finally in h.py I will have code like this
+
+backend.generate_unconditional(...);
+> if backend.check_trace_event_get_state:
+>    out("if(check_trace_event_get_state(...)){")
+>         backend.generate_conditional(...);
+>    out("}")
+
+--000000000000cbb40e06387e9776
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 25, 2025 at 12:30:23PM +0000, Tanish Desai wrote:
-> Adds generate_conditional, allowing backends to wrap generate()
-> output in a trace_event_get_state(...) check if needed.
->=20
-> Removes no_check by inlining its logic into trace_foo(...).
-> Also ensures the generated code is formatted properly.
->=20
-> Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
-> ---
->  scripts/tracetool/backend/__init__.py |  3 +++
->  scripts/tracetool/backend/ftrace.py   | 16 +++++++-------
->  scripts/tracetool/backend/log.py      | 26 +++++++++++++----------
->  scripts/tracetool/backend/simple.py   |  4 ++++
->  scripts/tracetool/backend/syslog.py   |  4 ++++
->  scripts/tracetool/format/h.py         | 30 ++++++++++-----------------
->  6 files changed, 46 insertions(+), 37 deletions(-)
+<div dir=3D"ltr"><div class=3D"gmail_quote gmail_quote_container"><blockquo=
+te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
+solid rgb(204,204,204);padding-left:1ex"><br>&gt; This patch does not apply=
+ to qemu.git/master. When posting new revisions<br>&gt; of patches, please =
+resend the entire patch series that this belongs to<br>&gt; or send it as a=
+ separate patch with the Based-on: &lt;message-id&gt; trailer<br>&gt; to le=
+t people (and tools) know which unmerged patch series it depends<br>&gt; on=
+.<br></blockquote><div>=C2=A0</div><div><span style=3D"white-space:unset">N=
+oted</span></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">&gt; The hasCondition list argument can be avoided by returning =
+bool from<br>&gt; generate_h_conditional() instead of modifying the argumen=
+t. That&#39;s a<br>&gt; little cleaner than the pass-by-reference trick whe=
+re each backend has<br>&gt; to logical-or in their value.<br></blockquote><=
+div>=C2=A0</div><div>I thought of this earlier as well and even tried to im=
+plement but the=C2=A0problem</div><div>with this is h.py calls backend.gene=
+rate() which calls=C2=A0_run_function which <br>inturn loops it for all bac=
+kends and runs the respective generate function.<br>Now if I want=C2=A0<spa=
+n style=3D"white-space:unset">generate_h_conditional() to return that means=
+ I need to=C2=A0<br>add a return in=C2=A0</span><span style=3D"white-space:=
+unset">_run_function(..)</span><span style=3D"white-space:unset">=C2=A0and =
+also need to add a return in=C2=A0</span></div><div><span style=3D"white-sp=
+ace:unset">generate_unconditional(..) as well.<br>Adding a return statement=
+ to=C2=A0</span><span style=3D"white-space:unset">_run_function(..) didn&#3=
+9;t make much sense</span></div><div><span style=3D"white-space:unset">to m=
+e and then=C2=A0I would also need to find a way to merge all the return<br>=
+value(from individual backend) as=C2=A0</span><span style=3D"white-space:un=
+set">well=C2=A0</span><span style=3D"white-space:unset">so I</span><span st=
+yle=3D"white-space:unset"> skipped=C2=A0this approach.</span></div><div><sp=
+an style=3D"white-space:unset"><br></span></div><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
+204);padding-left:1ex">&gt; The generate_h_conditional() function could als=
+o be replace with a<br>&gt; module variable like the existing PUBLIC variab=
+le. That way backends can<br>&gt; simply declare what they want instead of =
+implementing a function:<br>
+&gt;<br>&gt;=C2=A0 CHECK_TRACE_EVENT_GET_STATE =3D True # or False<br>&gt;<=
+br>&gt; And the code in h.py would know whether to call the generate functi=
+on<br>&gt; inside the conditional or not. (I snuck in another suggestion: c=
+hanging<br>&gt; the name from &quot;conditional&quot;, which is a general t=
+erm, to<br>&gt; &quot;check_trace_event_get_state&quot; to be more specific=
+ about what it does.)<br></blockquote><div><br></div><div>Yes, I can do thi=
+s.<br>Wrapper Class has attribute check_trace_event_get_state which will</d=
+iv><div>be <b>&quot;or&quot;</b> of all=C2=A0<span style=3D"white-space:uns=
+et">CHECK_TRACE_EVENT_GET_STATE which is derived=C2=A0</span></div><div><sp=
+an style=3D"white-space:unset">from=C2=A0</span><span style=3D"white-space:=
+unset">getattr(module, &quot;</span>CHECK_TRACE_EVENT_GET_STATE<span style=
+=3D"white-space:unset">&quot;, False)</span></div><div><span style=3D"white=
+-space:unset">and finally in h.py I will have code like this</span></div><d=
+iv><span style=3D"white-space:unset"><br></span></div><div><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
+gb(204,204,204);padding-left:1ex"><span style=3D"white-space:unset"><font f=
+ace=3D"monospace">backend.generate_unconditional(...);<br></font></span><fo=
+nt face=3D"monospace"><span style=3D"white-space:unset">if backend.</span><=
+span style=3D"white-space:unset">check_trace_event_get_state:<br></span></f=
+ont><font face=3D"monospace"><span style=3D"white-space:unset">=C2=A0 =C2=
+=A0out(&quot;if(</span>check_trace_event_get_state(...)<span style=3D"white=
+-space:unset">){&quot;)<br></span></font><font face=3D"monospace"><span sty=
+le=3D"white-space:unset">=C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0</span><span styl=
+e=3D"white-space:unset">backend.</span><span style=3D"white-space:unset">ge=
+nerate_conditional(...);<br></span></font><span style=3D"white-space:unset"=
+><font face=3D"monospace">=C2=A0 =C2=A0out(&quot;}&quot;)</font></span></bl=
+ockquote></div></div></div>
 
-This patch does not apply to qemu.git/master. When posting new revisions
-of patches, please resend the entire patch series that this belongs to
-or send it as a separate patch with the Based-on: <message-id> trailer
-to let people (and tools) know which unmerged patch series it depends
-on.
-
->=20
-> diff --git a/scripts/tracetool/backend/__init__.py b/scripts/tracetool/ba=
-ckend/__init__.py
-> index c4456a5efd..dc0806f8d0 100644
-> --- a/scripts/tracetool/backend/__init__.py
-> +++ b/scripts/tracetool/backend/__init__.py
-> @@ -118,6 +118,9 @@ def generate_begin(self, events, group):
->      def generate(self, event, group):
->          self._run_function("generate_%s", event, group)
-> =20
-> +    def generate_conditional(self, hasCondition):
-> +        self._run_function("generate_%s_conditional", hasCondition)
-> +   =20
->      def generate_unconditional(self, event, group):
->          self._run_function("generate_%s_unconditional", event, group)
->     =20
-> diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/back=
-end/ftrace.py
-> index 2d6d608add..d579139532 100644
-> --- a/scripts/tracetool/backend/ftrace.py
-> +++ b/scripts/tracetool/backend/ftrace.py
-> @@ -30,17 +30,15 @@ def generate_h(event, group):
->      if len(event.args) > 0:
->          argnames =3D ", " + argnames
-> =20
-> -    out('    {',
-> -        '        char ftrace_buf[MAX_TRACE_STRLEN];',
-> +    out('        char ftrace_buf[MAX_TRACE_STRLEN];',
->          '        int unused __attribute__ ((unused));',
->          '        int trlen;',
->          '#line %(event_lineno)d "%(event_filename)s"',
-> -        '            trlen =3D snprintf(ftrace_buf, MAX_TRACE_STRLEN,',
-> -        '                             "%(name)s " %(fmt)s "\\n" %(argnam=
-es)s);',
-> +        '        trlen =3D snprintf(ftrace_buf, MAX_TRACE_STRLEN,',
-> +        '                         "%(name)s " %(fmt)s "\\n" %(argnames)s=
-);',
->          '#line %(out_next_lineno)d "%(out_filename)s"',
-> -        '            trlen =3D MIN(trlen, MAX_TRACE_STRLEN - 1);',
-> -        '            unused =3D write(trace_marker_fd, ftrace_buf, trlen=
-);',
-> -        '    }',
-> +        '        trlen =3D MIN(trlen, MAX_TRACE_STRLEN - 1);',
-> +        '        unused =3D write(trace_marker_fd, ftrace_buf, trlen);',
->          name=3Devent.name,
->          args=3Devent.args,
->          event_lineno=3Devent.lineno,
-> @@ -52,3 +50,7 @@ def generate_h(event, group):
->  def generate_h_backend_dstate(event, group):
->      out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
->          event_id=3D"TRACE_" + event.name.upper())
-> +
-> +
-> +def generate_h_conditional(hasCondition):
-> +    hasCondition[0] =3D hasCondition[0] or True
-> diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend=
-/log.py
-> index 35a3aeee55..119e24af04 100644
-> --- a/scripts/tracetool/backend/log.py
-> +++ b/scripts/tracetool/backend/log.py
-> @@ -31,22 +31,22 @@ def generate_h(event, group):
->      if len(event.args) > 0:
->          argnames =3D ", " + argnames
-> =20
-> -    out('    if (qemu_loglevel_mask(LOG_TRACE)) {',
-> -        '        if (message_with_timestamp) {',
-> -        '            struct timeval _now;',
-> -        '            gettimeofday(&_now, NULL);',
-> +    out('        if (qemu_loglevel_mask(LOG_TRACE)) {',
-> +        '            if (message_with_timestamp) {',
-> +        '                struct timeval _now;',
-> +        '                gettimeofday(&_now, NULL);',
->          '#line %(event_lineno)d "%(event_filename)s"',
-> -        '            qemu_log("%%d@%%zu.%%06zu:%(name)s " %(fmt)s "\\n",=
-',
-> -        '                     qemu_get_thread_id(),',
-> -        '                     (size_t)_now.tv_sec, (size_t)_now.tv_usec',
-> -        '                     %(argnames)s);',
-> +        '                qemu_log("%%d@%%zu.%%06zu:%(name)s " %(fmt)s "\=
-\n",',
-> +        '                         qemu_get_thread_id(),',
-> +        '                         (size_t)_now.tv_sec, (size_t)_now.tv_u=
-sec',
-> +        '                         %(argnames)s);',
->          '#line %(out_next_lineno)d "%(out_filename)s"',
-> -        '        } else {',
-> +        '            } else {',
->          '#line %(event_lineno)d "%(event_filename)s"',
-> -        '            qemu_log("%(name)s " %(fmt)s "\\n"%(argnames)s);',
-> +        '                qemu_log("%(name)s " %(fmt)s "\\n"%(argnames)s)=
-;',
->          '#line %(out_next_lineno)d "%(out_filename)s"',
-> +        '            }',
->          '        }',
-> -        '    }',
->          event_lineno=3Devent.lineno,
->          event_filename=3Dos.path.relpath(event.filename),
->          name=3Devent.name,
-> @@ -57,3 +57,7 @@ def generate_h(event, group):
->  def generate_h_backend_dstate(event, group):
->      out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
->          event_id=3D"TRACE_" + event.name.upper())
-> +
-> +   =20
-> +def generate_h_conditional(hasCondition):
-> +    hasCondition[0] =3D hasCondition[0] or True
-> diff --git a/scripts/tracetool/backend/simple.py b/scripts/tracetool/back=
-end/simple.py
-> index ce8036f5da..316f39727b 100644
-> --- a/scripts/tracetool/backend/simple.py
-> +++ b/scripts/tracetool/backend/simple.py
-> @@ -97,3 +97,7 @@ def generate_c(event, group):
->      out('    trace_record_finish(&rec);',
->          '}',
->          '')
-> +
-> +
-> +def generate_h_conditional(hasCondition):
-> +    hasCondition[0] =3D hasCondition[0] or True
-> diff --git a/scripts/tracetool/backend/syslog.py b/scripts/tracetool/back=
-end/syslog.py
-> index f84cec641c..a224bd1922 100644
-> --- a/scripts/tracetool/backend/syslog.py
-> +++ b/scripts/tracetool/backend/syslog.py
-> @@ -43,3 +43,7 @@ def generate_h(event, group):
->  def generate_h_backend_dstate(event, group):
->      out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
->          event_id=3D"TRACE_" + event.name.upper())
-> +
-> +
-> +def generate_h_conditional(hasCondition):
-> +    hasCondition[0] =3D hasCondition[0] or True
-> diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
-> index 7bbe6d3148..7a5a32d518 100644
-> --- a/scripts/tracetool/format/h.py
-> +++ b/scripts/tracetool/format/h.py
-> @@ -59,21 +59,10 @@ def generate(events, backend, group):
-> =20
->          out('    false)')
-> =20
-> -        # tracer without checks
-> -        out('',
-> -            'static inline void %(api)s(%(args)s)',
-> -            '{',
-> -            api=3De.api(e.QEMU_TRACE_NOCHECK),
-> -            args=3De.args)
-> -
-> -        if "disable" not in e.properties:
-> -            backend.generate(e, group)
-> -
-> -        out('}')
-> -
->          event_id =3D 'TRACE_' + e.name.upper()
->          cond =3D "trace_event_get_state(%s)" % event_id
-> -
-> +        hasCondition =3D [False]
-> +        backend.generate_conditional(hasCondition)
->          out('',
->              'static inline void %(api)s(%(args)s)',
->              '{',
-> @@ -83,13 +72,16 @@ def generate(events, backend, group):
->          if "disable" not in e.properties:
->              backend.generate_unconditional(e, group)
-> =20
-> -        out('    if (%(cond)s) {',
-> -            '        %(api_nocheck)s(%(names)s);',
-> -            '    }',
-> -            '}',
-> -            api_nocheck=3De.api(e.QEMU_TRACE_NOCHECK),
-> -            names=3D", ".join(e.args.names()),
-> +        if hasCondition[0]:
-> +            out('    if (%(cond)s) {',
->              cond=3Dcond)
-> +       =20
-> +        if "disable" not in e.properties:
-> +            backend.generate(e, group)
-> +
-> +        if hasCondition[0]:
-> +            out('    }')
-> +        out('}')
-
-This doesn't handle cases where some backends (like dtrace) do not want
-trace_event_get_state() but some backends (like simple) do. You can test
-that case with ./configure --enable-trace-backends=3Ddtrace,simple.
-
-Both types of backends need to have their generate function
-called separately:
-
-   ...backends without the conditional...
-   if (trace_event_get_state(...)) {
-       ...backends with the conditional...
-   }
-
-The hasCondition list argument can be avoided by returning bool from
-generate_h_conditional() instead of modifying the argument. That's a
-little cleaner than the pass-by-reference trick where each backend has
-to logical-or in their value.
-
-The generate_h_conditional() function could also be replace with a
-module variable like the existing PUBLIC variable. That way backends can
-simply declare what they want instead of implementing a function:
-
-  CHECK_TRACE_EVENT_GET_STATE =3D True # or False
-
-And the code in h.py would know whether to call the generate function
-inside the conditional or not. (I snuck in another suggestion: changing
-the name from "conditional", which is a general term, to
-"check_trace_event_get_state" to be more specific about what it does.)
-
-Stefan
-
---3n//5Zgar1wd4WYt
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmhdlNcACgkQnKSrs4Gr
-c8h8/QgAsFi0scHCffMnbpi3+H9Mykk64CkaB9OugmZJB+6UPt8lCvayLIZavu3r
-DATAEdoeFqsGyRNhWpM73wsWCyJY+HopOBSMFNj8a7B+Vg6H0/Si3dTJNy2Ta4Vx
-wUtHTuIY+HpriOoUoQtJiht0TRlrF7idlp8PqmQ52pXH1yCfKgUAvWh/J/eOUPBC
-9z875shC6sg9E9kpTJIkyJ4dtiLHDmEhxa5pYRbNnM/iIXUD1lqn1irSGJFX0OqK
-QACW4+NEUJ9aBXuHqBoqhKaEB5Ic3SOLM6C1Q099ikfR5xVVSWJpRlm/UxIZDjXZ
-mH94Df5+jZyV2JgVjGm+AuC55ldXhw==
-=gt4w
------END PGP SIGNATURE-----
-
---3n//5Zgar1wd4WYt--
-
+--000000000000cbb40e06387e9776--
 
