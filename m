@@ -4,86 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66FE6C7EE31
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 13:15:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4F74C77B7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 13:17:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uV8ur-00010v-Eh; Fri, 27 Jun 2025 09:14:53 -0400
+	id 1uV8x3-000243-VB; Fri, 27 Jun 2025 09:17:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <micro6947@gmail.com>)
- id 1uUz3X-0005t1-PP
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 22:43:13 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uV8x0-00023j-0O
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 09:17:06 -0400
+Received: from mail-oa1-x34.google.com ([2001:4860:4864:20::34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <micro6947@gmail.com>)
- id 1uUz3T-00048P-4y
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 22:43:08 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-313910f392dso1402720a91.2
- for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 19:43:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uV8wx-0001pH-Me
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 09:17:05 -0400
+Received: by mail-oa1-x34.google.com with SMTP id
+ 586e51a60fabf-2ebb72384dbso644652fac.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 06:17:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750992184; x=1751596984; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=YCaT80+woPzPW811tJJDtvGMU03636VebjfcJA5zUmA=;
- b=VU4Zgpj6XGtp11pE+3Wp/NKpTdpJD79KO0mtw+ApbBgJ4HHliwdZ/LHVJhuuL/w3NY
- r3gXOypHsSFXtdGu0Pb3OxdLiH7tgwxks1Yz7mVysfcSZ0kHQuWvaPFy8KeQdiZh58O9
- I4rEL1KJCZpGVjaxPnXZTJsgT1F50BpYCbKt48ioBTgi3nhfTUa6GJ2q9Gy/lBqIV5SB
- LaS120+YJY+ymh3Hp77UQ9sCL63RpzokztUF+MoyisrZU/9sfHGp49Qj0aTve2B4cN/7
- NGyN+wIJ4JnqA2Nl0ksxTaO7YPkQzWzb2pdAY8dSdBuK/9zyaNeOOl6EdAaMi0UfcJVs
- UWJA==
+ d=linaro.org; s=google; t=1751030219; x=1751635019; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lNECuvIGquJI3zSKbdXttEIu7fLwU8LMFtxR41SZIYk=;
+ b=zhUIpgP8A4+3Mysl9wGi1k6ENjnM9DGWBk41BydomwGejE8xFQGUcb1JhFs7DafvWV
+ xNm7O3xdibqc6Dyahte78YaXTyGiCIeJRmXqPHvXv+YDiaapu24MQkotWv3irrwPi5Qa
+ gOj7WOMHIV3zOCJcz0wvwra/ZRjd7zdSk7Jir3xfPXdxSvKlsXylhOyB0vQ1SjkDX66M
+ dWDqhwApIZ+dJvXyhIZSB55WfF7dkF3muSBXxD67fHP9HPGKv8tCFs5FiiT2olqb06Bi
+ HFA3U3aEAfxg8dv0id+E6ACqyRhhmjZiVNhmdUsymdBTOnBmLImco+12p6oUHR5Nhjiz
+ 54sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750992184; x=1751596984;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YCaT80+woPzPW811tJJDtvGMU03636VebjfcJA5zUmA=;
- b=fSYdPrVQ3QqUNuToofEtQsS8jSDHM0MZaxtJJ6K2YNNo613/V/OCtGhw6oIFXXbg26
- UMd/ssSa+PTR4Shlvv0fB1Nh5R8azqy1ragCB0ri0jXer0SYftXh7gnw01B2Dh+Gr92f
- lYWHtQSSQ6HhjWnsoLnWc5d9Wo63AE7gNgt/HKlTcDgv0pxAlidlndiU0zRjkzXVvS1R
- o4olKBSBswe62pn1LiEFeQD+xHRKwnXTRpjFxjFrDhPt9AblH5xJsiNuKUkIw9qRm8eN
- PvYC/k8UJV+sRaVcqLdF86u6pjQACskik9qAbdsqeyx1fqFStT74vGjhQbVMJBxCyxRM
- t0tg==
-X-Gm-Message-State: AOJu0Yz9qQ3DNWc86MdMQC6ibwSqVRIcNyHRWaG/UKbrwXBvNuJnTuqG
- ISiljXr9E6rhBMeRkIqKvws2vuUkjB+35R/uUjJNhkA7JESYqYvvMSaXf3OVJoDrAHqctQ==
-X-Gm-Gg: ASbGnctcqxHJ6eRPmjNafVs7U+RPph8EUviX1q2w1ncnqiV+NDLU8ml3bcbYA4GzDqD
- GnnUEyFJj7kcLw9soi5Fs3VXwKvKCembulo3FbqlrpFrKpI1YaqPvRivGumT0HyU3QyGXxRRZV9
- 17tNst5yqAut6jvOBaz9k2Wm227feBoy0wzQUQ+tkfLIABK4mfVoIV0jG5eAEm3VKejKohfOqY3
- e3em6DiE1/QM2C06UXpjJptdfZ4c80WkH2//G4y5/bRE1dqNXgDUFPWfeJ0r5xpCOvUc7wBQRhW
- 6oIMgB2MFwgN9xPpez2Xgggkponzd264K2Tiwnz58P07RCN7JSBHn0f95HOX7gcrmibe/os+EQp
- cKrcuPxmh
-X-Google-Smtp-Source: AGHT+IGTo4EXOyszvbTKlWC99oSPrkLjOfzAq325Q7nBdkXqbPtDP9RpsJcW2nzqEkb19dDoUYzuzQ==
-X-Received: by 2002:a17:90b:5347:b0:311:e8cc:4255 with SMTP id
- 98e67ed59e1d1-318c930f93amr1555136a91.31.1750992183666; 
- Thu, 26 Jun 2025 19:43:03 -0700 (PDT)
-Received: from localhost.localdomain ([1.203.169.237])
+ d=1e100.net; s=20230601; t=1751030219; x=1751635019;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lNECuvIGquJI3zSKbdXttEIu7fLwU8LMFtxR41SZIYk=;
+ b=L04kbyo3gTshqvFr/2MYYv7J5+FWE7wHznWfDHsDRBmgOwGJLpoewNKei5aW0N2b6J
+ kuEYYhKZhZui4HiD6vD/rTM+RAHHuAnnwCjTGmwx3Z+Pnala69nVT8hyd7GLRNoJQRGe
+ ixtC8AaiH1e9aU9FKwOLMCHKbr0DYLLah50/5hDQyvJvp+k8j1+F7lgSXJ7z/eUr1t05
+ QvSW/aH5CFSE8YUFGThAprjtUJpYNsjXqv1CxwQTrdIKOKF7xArJ2DAYgumoiFGCl655
+ Qo3cLQsYgui89iJfh3BGoNzgJTQ6Qz+tJn7CWbF7vN9dWspBv3rPFAgS3LnMhooKOIi7
+ TEUw==
+X-Gm-Message-State: AOJu0YwyEE+BjTHHhrLB4tvzmMKdbj+VgFCORgZn+r4tJoVkjsKU6JmU
+ sVAZ8k60Omf2T64M/arVXcSQsHqAE0dKKDFr0yHW34+ybUPJc/inQ/fTIjHnYJ2fYs0PCGcvpag
+ dGwkL2vw=
+X-Gm-Gg: ASbGnctruBoBreYSMZvizYpUeYAr4aTSuc8MjVwX/3KZt619e62mahCoKmOuVyiem5G
+ /a08XLNLBDVkFGYEQ+80ZM4zUJP0n7axJPPH6fMsoYyUojYpCfnAisbXjjDiBT16eT8A7UTim4B
+ YVYQazF/yd+ZXqiJaphJu4SkrmkmsSkbH+KSuhSKkPUlrFkuTrm6RszOljMQm0YZmFvm4HASEQw
+ nOzUFRG2196vZ4HjS9km21ISouI9bKvZ7dvrz3sLARTWsPLQdUKjoIDv8e8MbeSfIVYHtXfmvbH
+ s27LETRr9rVT5ZFNQetn1ZHnpTbxuKvOuzzofu2tMLW6zHxTthr9QCv31pKzxmXpMC5LuH/A/pQ
+ 7sEdlO7KRQf0=
+X-Google-Smtp-Source: AGHT+IFfER1uI2qq+W0ytDtN/jJhotS2WVFfHkW4x5b6Vevi13SZISQBqpD+oIk9wkEDklWNo3Ulqw==
+X-Received: by 2002:a05:6870:24a6:b0:2d5:1232:b081 with SMTP id
+ 586e51a60fabf-2efed70fb39mr2034906fac.29.1751030219321; 
+ Fri, 27 Jun 2025 06:16:59 -0700 (PDT)
+Received: from [10.25.7.30] ([187.210.107.185])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-318ca222dcdsm529501a91.39.2025.06.26.19.43.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Jun 2025 19:43:03 -0700 (PDT)
-From: xjdeng <micro6947@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: xjdeng <micro6947@gmail.com>
-Subject: [PATCH] qtest/migration: Fix potential NPD through getenv
-Date: Fri, 27 Jun 2025 10:42:26 +0800
-Message-Id: <20250627024226.1767-1-micro6947@gmail.com>
-X-Mailer: git-send-email 2.27.0.windows.1
+ 006d021491bc7-611b848ba33sm235723eaf.10.2025.06.27.06.16.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 27 Jun 2025 06:16:58 -0700 (PDT)
+Message-ID: <c3a2c4f9-c750-4a0a-b6bc-e94b55784952@linaro.org>
+Date: Fri, 27 Jun 2025 06:16:56 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=micro6947@gmail.com; helo=mail-pj1-x102e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 093/163] tcg: Convert extract to TCGOutOpExtract
+To: Andrea Bolognani <abologna@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20250415192515.232910-1-richard.henderson@linaro.org>
+ <20250415192515.232910-94-richard.henderson@linaro.org>
+ <CABJz62OFyaXitSdge4M9_oTk34a5aocLJLFYfkOGXc0BToOgVA@mail.gmail.com>
+ <CABJz62OMmmbDjWpp6YkXu2d+hB4HeShgqaa05ZigAVqNQSwjZA@mail.gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CABJz62OMmmbDjWpp6YkXu2d+hB4HeShgqaa05ZigAVqNQSwjZA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::34;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x34.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 27 Jun 2025 09:14:51 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,60 +105,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In `find_common_machine_version`, the code previously assumed that
-`getenv(var1)` and `getenv(var2)` would always return non-NULL values.
-However, if either environment variable is not set, `getenv` returns
-NULL, which could lead to a null pointer dereference.
+On 6/26/25 09:20, Andrea Bolognani wrote:
+> On Mon, Jun 09, 2025 at 06:52:21AM -0700, Andrea Bolognani wrote:
+>> On Tue, Apr 15, 2025 at 12:24:04PM -0700, Richard Henderson wrote:
+>>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>>> ---
+>>>   tcg/tcg.c                        | 20 +++++++++
+>>>   tcg/aarch64/tcg-target.c.inc     | 28 +++++++-----
+>>>   tcg/arm/tcg-target.c.inc         | 23 +++++-----
+>>>   tcg/i386/tcg-target.c.inc        | 77 +++++++++++++++++---------------
+>>>   tcg/loongarch64/tcg-target.c.inc | 33 +++++++-------
+>>>   tcg/mips/tcg-target.c.inc        | 35 +++++++--------
+>>>   tcg/ppc/tcg-target.c.inc         | 35 +++++++--------
+>>>   tcg/riscv/tcg-target.c.inc       | 54 +++++++++++-----------
+>>>   tcg/s390x/tcg-target.c.inc       | 14 +++---
+>>>   tcg/sparc64/tcg-target.c.inc     | 16 ++++---
+>>>   tcg/tci/tcg-target.c.inc         |  8 ++--
+>>>   11 files changed, 191 insertions(+), 152 deletions(-)
+>>
+>> Hi Richard,
+>>
+>> this seems to have introduced a regression when running on a riscv64
+>> host.
+>>
+>> Before the change:
+>>
+>>    $ timeout --foreground 1 \
+>>      ./build/qemu-system-riscv64 -machine virt,accel=tcg \
+>>      -display none -serial stdio 2>&1 | grep -i opensbi
+>>    OpenSBI v1.5.1
+>>
+>> After the change, no output is produced.
+>>
+>> This causes the
+>>
+>>    qemu:func-quick+func-riscv64 / func-riscv64-riscv_opensbi
+>>
+>> test to stall and eventually fail due to the built-in test suite
+>> timeout kicking in.
+>>
+>> Interestingly, I can't reproduce this by running the exact same
+>> commands and using the exact same git commits on an x86_64 host.
+>>
+>> Do you have any idea what could be going wrong? I'll happily
+>> investigate further if you give me pointers.
+> 
+> Hi,
+> 
+> this is still an issue as of f9a3def17b2a.
+> 
+> Any idea where to look?
 
-Tracing upstream usage: `find_common_machine_version` is called by
-`resolve_machine_version` with `QEMU_ENV_SRC` and `QEMU_ENV_DST`.
-`resolve_machine_version` is used by `migrate_start`, which is called
-by `migrate_postcopy_prepare`, and ultimately by `test_postcopy_common`.
+tcg/riscv/tcg-target.c.inc, tgen_extract(), must be at fault.
 
-In `test_postcopy_common`, after `migrate_postcopy_prepare`, the
-function `migrate_postcopy_complete` is called. Inside, 
-`migration_get_env` checks if `QEMU_ENV_SRC` and `QEMU_ENV_DST` are
-set before use. Thus, these variables can be NULL, leading to a
-potential null pointer dereference in `find_common_machine_version`.
+Oh, I see it:
 
-Signed-off-by: xjdeng <micro6947@gmail.com>
----
- tests/qtest/migration/migration-util.c | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+--- a/tcg/riscv/tcg-target.c.inc
++++ b/tcg/riscv/tcg-target.c.inc
+@@ -2502,7 +2502,7 @@ static void tgen_extract
+          }
+      }
+      if (ofs + len == 32) {
+-        tgen_shli(s, TCG_TYPE_I32, a0, a1, ofs);
++        tgen_shri(s, TCG_TYPE_I32, a0, a1, ofs);
+          return;
+      }
+      if (len == 1) {
 
-diff --git a/tests/qtest/migration/migration-util.c b/tests/qtest/migration/migration-util.c
-index 642cf50c8d..45c9e164e2 100644
---- a/tests/qtest/migration/migration-util.c
-+++ b/tests/qtest/migration/migration-util.c
-@@ -203,8 +203,25 @@ char *find_common_machine_version(const char *mtype, const char *var1,
-         return g_strdup(type2);
-     }
- 
--    g_test_message("No common machine version for machine type '%s' between "
--                   "binaries %s and %s", mtype, getenv(var1), getenv(var2));
-+    char *varstring1 = getenv(var1);
-+    char *varstring2 = getenv(var2);
-+    if (varstring1 && varstring2) {
-+        g_test_message("No common machine version for machine type '%s' "
-+                       "between binaries %s and %s",
-+                       mtype, varstring1, varstring2);
-+    } else if (varstring1) {
-+        g_test_message("No common machine version for machine type '%s' "
-+                       "between binary %s and environment variable %s",
-+                       mtype, varstring1, var2);
-+    } else if (varstring2) {
-+        g_test_message("No common machine version for machine type '%s' "
-+                       "between binary %s and environment variable %s",
-+                       mtype, varstring2, var1);
-+    } else {
-+        g_test_message("No common machine version for machine type '%s' "
-+                       "between environment variables %s and %s",
-+                       mtype, var1, var2);
-+    }
-     g_assert_not_reached();
- }
- 
--- 
-2.27.0.windows.1
 
+Please test.
+
+r~
 
