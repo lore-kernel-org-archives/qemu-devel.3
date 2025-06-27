@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47A99C77B7F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 09:53:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D118CC77B7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 09:53:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uV5lC-0001Zf-Lv; Fri, 27 Jun 2025 05:52:42 -0400
+	id 1uV5m9-0002CP-Vy; Fri, 27 Jun 2025 05:53:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uV5lA-0001ZA-47
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 05:52:40 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uV5m8-0002C0-8x
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 05:53:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uV5l8-0006SC-0o
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 05:52:39 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uV5m6-0006c3-O2
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 05:53:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751017956;
+ s=mimecast20190719; t=1751018017;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=EPgFLY5mOeVJ9I7NqfX9llmIJbcx6jupzJikb8SVHcM=;
- b=CZE6QOAkJjuYPkFh0hh6NutnbD6z/H9kVxZEuZe0bsNJ6tc1tD/Od9kDXzvHx/+WZTMF8Z
- LppUEIV3irEJ3Q8pPc9y/3Qlss/SqhhegIC8ZCBVVtLbRsVjhAkLrT06MTg4pIyUldR4c6
- sKroPQwMe6MscTTIIg7Zz2wT6SxvGkM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ma7EJpfrHofi12kSiqVJuqlAlukw8PfGNBYjwNug0nA=;
+ b=B9ph3fe6Mn6eVxR9tQatNvCiGRXJtZIc7u4Y9gIYfuzOGpHuoo5wyCnG5/ebG4+SIToV2z
+ 0DHbrTfRJsey04Ct6aYEcyhS/KcDFuuxEgGcqJhYJilQ6zecPNCcu11iG+1+QCKKswdOvP
+ 5I2LQKljiOvEuVrzWf8q2s53RriGLqI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-IifSwPJDPe2E_2rts6mgEA-1; Fri,
- 27 Jun 2025 05:52:32 -0400
-X-MC-Unique: IifSwPJDPe2E_2rts6mgEA-1
-X-Mimecast-MFC-AGG-ID: IifSwPJDPe2E_2rts6mgEA_1751017950
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-299-Rnd6oXOPMwONYmyoGHphug-1; Fri,
+ 27 Jun 2025 05:53:33 -0400
+X-MC-Unique: Rnd6oXOPMwONYmyoGHphug-1
+X-Mimecast-MFC-AGG-ID: Rnd6oXOPMwONYmyoGHphug_1751018010
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2D5D81801218; Fri, 27 Jun 2025 09:52:29 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 25132180136B; Fri, 27 Jun 2025 09:53:29 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 388FA30002C0; Fri, 27 Jun 2025 09:52:26 +0000 (UTC)
+ id D2D2930001BC; Fri, 27 Jun 2025 09:53:27 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id EF57621E6A27; Fri, 27 Jun 2025 11:52:22 +0200 (CEST)
+ id 6670921E6A27; Fri, 27 Jun 2025 11:53:25 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org,  Jiri Pirko <jiri@resnulli.us>,  Fan Ni
@@ -74,14 +74,13 @@ Cc: qemu-devel@nongnu.org,  Jiri Pirko <jiri@resnulli.us>,  Fan Ni
  <peter.maydell@linaro.org>,  Alex Williamson <alex.williamson@redhat.com>,
  Zhenwei Pi <pizhenwei@bytedance.com>,  Jason Wang <jasowang@redhat.com>,
  Lukas Straub <lukasstraub2@web.de>
-Subject: Re: [PATCH v3 4/5] docs/sphinx: remove special parsing for freeform
- sections
-In-Reply-To: <20250618165353.1980365-5-jsnow@redhat.com> (John Snow's message
- of "Wed, 18 Jun 2025 12:53:52 -0400")
+Subject: Re: [PATCH v3 3/5] docs/sphinx: remove legacy QAPI manual generator
+In-Reply-To: <20250618165353.1980365-4-jsnow@redhat.com> (John Snow's message
+ of "Wed, 18 Jun 2025 12:53:51 -0400")
 References: <20250618165353.1980365-1-jsnow@redhat.com>
- <20250618165353.1980365-5-jsnow@redhat.com>
-Date: Fri, 27 Jun 2025 11:52:22 +0200
-Message-ID: <874iw1o6jt.fsf@pond.sub.org>
+ <20250618165353.1980365-4-jsnow@redhat.com>
+Date: Fri, 27 Jun 2025 11:53:25 +0200
+Message-ID: <8734blo6i2.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -95,8 +94,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_QUOTING=0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,97 +112,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 John Snow <jsnow@redhat.com> writes:
 
-> This change removes special parsing for freeform sections and allows
-> them to simply be unmodified rST syntax. The existing headings in the
-> QAPI schema are adjusted to reflect the new paradigm.
+> Thanks for your service!
+>
+> Remove the old qapidoc and the option to enable the transmogrifier,
+> leaving the "transmogrifier" as the ONLY qapi doc generator. This in
+> effect also converts the QAPI test to use the new documentation
+> generator, too.
+>
+> Update doc-good.txt output to match the new doc generator, which I
+> should've done exactly when we switched over to the transmogrifier, but,
+> uhh, oops!
+>
+> Notes on the new format:
+>  1. per-member IFCOND documentation is missing. Known issue.
+>  2. Freeform documentation without a header is now copied through into
+>     the output. This is an intentional change.
+>
 
-"Allows them to" suggests the patch enables use of rST headings.  Is
-this the case?  Or do they just work, and this patch just switches
-schema code to use them, and drops now unnecessary generator code?
->
-> Tests and documentation are updated to match.
->
+Make that "This is a bug fix", and add
+
+Fixes: b61a4eb3f32 (docs/qapidoc: support header-less freeform sections)
+
 > Signed-off-by: John Snow <jsnow@redhat.com>
-
-[...]
-
-> diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
-> index 231cc0fecf7..dfdbeac5a5a 100644
-> --- a/docs/devel/qapi-code-gen.rst
-> +++ b/docs/devel/qapi-code-gen.rst
-> @@ -876,25 +876,35 @@ structuring content.
-   Documentation comments
-   ----------------------
-
-   A multi-line comment that starts and ends with a ``##`` line is a
-   documentation comment.
-
-   If the documentation comment starts like ::
-
-       ##
-       # @SYMBOL:
-
-   it documents the definition of SYMBOL, else it's free-form
-   documentation.
-
-   See below for more on `Definition documentation`_.
-
-   Free-form documentation may be used to provide additional text and
-   structuring content.
-
-
->  Headings and subheadings
->  ~~~~~~~~~~~~~~~~~~~~~~~~
->  
-> -A free-form documentation comment containing a line which starts with
-> -some ``=`` symbols and then a space defines a section heading::
-> +Free-form documentation does not start with ``@SYMBOL`` and can contain
-> +arbitrary rST markup. Headings can be marked up using the standard rST
-> +syntax::
-
-Nothing stops you from using such markup in definition documentation.
-It's probably a bad idea, though.
-
-I think it's easiest not to talk about the two kinds of doc blocks here
-at all.  Scratch the first sentence?
-
->  
->      ##
-> -    # = This is a top level heading
-> +    # *************************
-> +    # This is a level 2 heading
-> +    # *************************
->      #
->      # This is a free-form comment which will go under the
->      # top level heading.
->      ##
->  
->      ##
-> -    # == This is a second level heading
-> +    # This is a third level heading
-> +    # ==============================
-> +    #
-> +    # Level 4
-> +    # _______
-> +    #
-> +    # Level 5
-> +    # ^^^^^^^
-> +    #
-> +    # Level 6
-> +    # """""""
->      ##
->  
-> -A heading line must be the first line of the documentation
-> -comment block.
-> -
-> -Section headings must always be correctly nested, so you can only
-> -define a third-level heading inside a second-level heading, and so on.
-> +Level 1 headings are reserved for use by the generated documentation
-> +page itself, leaving level 2 as the highest level that should be used.
->  
->  
->  Documentation markup
-
-[...]
 
 
