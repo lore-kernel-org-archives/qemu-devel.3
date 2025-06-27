@@ -4,100 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD1AC77B7F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 15:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B942C7EE2A
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 15:29:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uVAtC-0006dp-O3; Fri, 27 Jun 2025 11:21:18 -0400
+	id 1uVB0J-0007qN-8W; Fri, 27 Jun 2025 11:28:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1uVAt5-0006dA-S5
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 11:21:14 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uVB0H-0007pt-P7
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 11:28:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1uVAt1-0000oI-Fo
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 11:21:11 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uVB0E-0001kP-Rh
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 11:28:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751037666;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1751038113;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=idp2zCBDw8wYxtmgXKK2lGhlSAoKLwJ9F2rpmIF0feE=;
- b=XYtkW3t71NM48Am8jLxA7xPPlA/Pl1hCXcQNfFQuYgoaISlKO5Jz5nHs8BLBdYGyYhdz8F
- Mzs6rDRPccI/JsaQCfz0ApX49DO/G78J5/HSQlM/Vcwm4hqw0Bf8SG3+887iIRipvX6D1N
- 0/JM1XBH5raLZKqlKqof3DI7FcLOsnc=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nQV5TtIlKVpVHoY5q6hFUB/cVQO58vzVnNbm5lxm68E=;
+ b=R+E60U0Moz2dq5zN8L5Bo4SRrJlyqS0jk2C7W4GvsThFHv9gAfcaJNhJBT+hvX+4/T2oGE
+ H9boGWVGefUDsOGS3QouhEWwgAonsGftBH0zUxqz3/D7FI2OzYme/S+vs/87jvzOP8lgIW
+ unN1bXOTkoJV7wyVZJIZbiZhaPh5RJo=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-653-IzmYsAZJOlKpZ2HH4XZgaw-1; Fri, 27 Jun 2025 11:21:02 -0400
-X-MC-Unique: IzmYsAZJOlKpZ2HH4XZgaw-1
-X-Mimecast-MFC-AGG-ID: IzmYsAZJOlKpZ2HH4XZgaw_1751037661
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ae0d76b4f84so173138566b.3
- for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 08:21:01 -0700 (PDT)
+ us-mta-461-mcmUiNIvPdC9ayfpyf0brg-1; Fri, 27 Jun 2025 11:28:31 -0400
+X-MC-Unique: mcmUiNIvPdC9ayfpyf0brg-1
+X-Mimecast-MFC-AGG-ID: mcmUiNIvPdC9ayfpyf0brg_1751038110
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-451ac1b43c4so12085965e9.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 08:28:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751037661; x=1751642461;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=idp2zCBDw8wYxtmgXKK2lGhlSAoKLwJ9F2rpmIF0feE=;
- b=nJCBkNAgN16J/UmqvZw7SvryUiZSfEgIHPog+g7cO5YMClC6molsh3etaJ+VNcH5QL
- 4XPUqk/2gBKHfJFNASrNFLllIdLSorLEXApdKsKfR11e5H+V+baPjDRrMyJCMwj42B3M
- k933RXGd3EXU+CztZdhP9bvDImZ6e3CM7SZti59wWEo92NJrq8qYzcWvSjw+CQo6aLqH
- ZB046EK9qxqJdEjuGxqjEMd2PNkWufxUhqU1lckehXUrGOa5+ZQk2CllThATbbHmROHf
- Sugh4f8h1uvBDPFvfdqxBXnOGiv+H19hcw3jeFJQ8SP0ayHycumzwDpzF6VeVjNJcjBD
- 5KRA==
-X-Gm-Message-State: AOJu0Yw4MYaVdmlXqTKD62Tnvkzxx4llEmryKKUj9M0XtNZfQYJNpNgl
- C38eQLm2S3LbXeN54WStIvPabk/H4AqpiBL5oX+Mwy4nryYceIZVCBdrckPm/vUjYBzUxablQxp
- kF1u5d1rmkErOy42/7xfoxsQevJvQYe3QsxUu73Rn809r/G5XPf/+TnTY5Rf59GrtFDfIlyk4RF
- jtdtjXvBdOcNdJhcOWvomAzpOMwuMgdnc=
-X-Gm-Gg: ASbGncu+zciTjebigCHL6kvB3YWpcQL625UZWIuFegh5P+GLEhhlX8llgrJNxEh3zVM
- no958csyF0J/m3W96JqiPsN3XTj2eEG4g4r6aObKTWyMqjDU/1xofgNmzXOjbQkBjq7PytdiRp/
- 0bOXfW
-X-Received: by 2002:a17:906:ef07:b0:ae0:a590:bc64 with SMTP id
- a640c23a62f3a-ae34fdc37e1mr360872566b.18.1751037660623; 
- Fri, 27 Jun 2025 08:21:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGglEyPQzWKhR17NJkv2RUwL/kSW+ZeH2gEgDiMI/X9pAhqUmHS/OBaTBqAcZzIK6FQeXS4EpWlC+t5sqzbCsc=
-X-Received: by 2002:a17:906:ef07:b0:ae0:a590:bc64 with SMTP id
- a640c23a62f3a-ae34fdc37e1mr360867966b.18.1751037660154; Fri, 27 Jun 2025
- 08:21:00 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1751038110; x=1751642910;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nQV5TtIlKVpVHoY5q6hFUB/cVQO58vzVnNbm5lxm68E=;
+ b=EzCX0CBVUqgWnkGfzpTa/RwmqTkWXqPtJwTiZL7Pe2xbsSIxizLO/497lvvzzpkGYH
+ POkCjxQtISGS7lzJswctO66FKptqNve+GgSJlVXKfB6dfQv07aEbUHQz36CFTJRuiHge
+ 8T8oz551uei2LhgZsTPooX/117aYQ9lbW6SMsaK0vwsan4BvTt5QBBmJGsEB+J3Me76R
+ 7VJ3yiwCz8Us5/Cgvzdhg2PP/bV1zEEMBWqtHbhMLr+oWe12v2NJG2wexC2N0MtT9P9C
+ QEDw5NcKA3hn7CGRUFUsWFYTRkGHVhWssLsKov7DEKWkcyws/hVmf5Q5Xn4XNUo0ZnVD
+ 65fA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUpHhQMuU9EcsCNff51pbkWePvqCZ1RWOhnpsdXLw3/ONOeNoWANWSbqnhNhyalFhjAErkZsQukWwGD@nongnu.org
+X-Gm-Message-State: AOJu0YxzoLuFYbESYuzMI4psfum5flIn16bxeFw6qb57YCC8mx2zGRbm
+ L0utHscJ2IcyQavvRmOFuOnYVGhaNaYxJO6D59AJ4oygseI4MVIV0gAHJrV3LzLQo0gvCMtTs8B
+ ZwtjUB8uOh5YJ8cv/DLbCx231AF4yO3BkcbD9Cwvolczt6Hoy2eGwmild
+X-Gm-Gg: ASbGnct+CKr4EpuN+4vfOaHY96cqCqFOgfVNK3JVbag0liyIcBzOGEJepGCr+xDnUy4
+ Ar43Mt8zkiUkYAglQLUwupGlPeOumz9AKsloFmF6g1UDnbKice5OBUi2O+u8RIFDTPAzACHzCcu
+ iZwWKIy6ezu2UH0lIHmPIKarnwz89q9KBW8RZZD2xo7Xd5Jeo5N9JE7VCyB+dOE/g3QKEUFkfcc
+ Njt9BtRNJ/sIPa6J32MzjAxJ2SZ8se6eAUQzf+mRN379pAeaV6fMkRH4a95RrCBP7zeRtb74i36
+ XWsp+0NxPxhjchb6/FPiaSjYpovcKYAGLO2A8telhH/cpQsS9nJBKjtmKiGSVBqjnmfxaA==
+X-Received: by 2002:a05:600c:c172:b0:440:9b1a:cd78 with SMTP id
+ 5b1f17b1804b1-4538ee3458amr49038405e9.10.1751038109788; 
+ Fri, 27 Jun 2025 08:28:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEilt7/lRyC6x0ngjzi5IxCBRXaioPc9zF2A1H+reLmWtHNovOp9QQEUWskxgFr6+lRf+nT0A==
+X-Received: by 2002:a05:600c:c172:b0:440:9b1a:cd78 with SMTP id
+ 5b1f17b1804b1-4538ee3458amr49037855e9.10.1751038109019; 
+ Fri, 27 Jun 2025 08:28:29 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4538234b30dsm83759025e9.12.2025.06.27.08.28.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 27 Jun 2025 08:28:28 -0700 (PDT)
+Message-ID: <6990669d-7750-4f30-a11f-6ac06ffb266c@redhat.com>
+Date: Fri, 27 Jun 2025 17:28:27 +0200
 MIME-Version: 1.0
-References: <cover.1749820158.git.roy.hopkins@randomman.co.uk>
-In-Reply-To: <cover.1749820158.git.roy.hopkins@randomman.co.uk>
-From: Ani Sinha <anisinha@redhat.com>
-Date: Fri, 27 Jun 2025 20:50:47 +0530
-X-Gm-Features: Ac12FXz451u3LcqmLyaIbTGcQfYwJZPDWpg_UnVKuCsLW8S0g3EV0PpfTK-nwh0
-Message-ID: <CAK3XEhO10vxTOknX16KpJhFxU_FN9H6XecPEBYb7hMA6V9qzdA@mail.gmail.com>
-Subject: Re: [PATCH v8 00/16] Introduce support for IGVM files
-To: Roy Hopkins <roy.hopkins@randomman.co.uk>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- "Daniel P . Berrange" <berrange@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, 
- Marcelo Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, 
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Tom Lendacky <thomas.lendacky@amd.com>, 
- Michael Roth <michael.roth@amd.com>, Gerd Hoffman <kraxel@redhat.com>, 
- Pankaj Gupta <pankaj.gupta@amd.com>, Joerg Roedel <joro@8bytes.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 5/9] hw/arm/virt-acpi-build: Factor out
+ create_its_idmaps
+Content-Language: en-US
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ philmd@linaro.org, mst@redhat.com
+Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, udo@hypervisor.org,
+ ajones@ventanamicro.com, peter.maydell@linaro.org, imammedo@redhat.com,
+ anisinha@redhat.com
+References: <20250623135749.691137-1-gustavo.romero@linaro.org>
+ <20250623135749.691137-6-gustavo.romero@linaro.org>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250623135749.691137-6-gustavo.romero@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,142 +116,128 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 13, 2025 at 7:06=E2=80=AFPM Roy Hopkins <roy.hopkins@randomman.=
-co.uk> wrote:
->
-> Here is v8 of the set of patches to add support for IGVM files to QEMU. T=
-his is
-> based on commit d9ce74873a6a5a7c504379857461e4ae64fcf0cd of qemu.
->
-> The previous version of this patch series [1] has only received a few com=
-ments
-> which are now addressed in this new version. Additionally, the series has
-> benefited from additional reviews and testing from the community. Therefo=
-re I
-> am hoping that this will be the final version and rebase of this patch se=
-ries.
->
-> Suggestions have been received for adding support for setting CPU initial=
- state
-> for non-confidential guests (Gerd) and for reorganization of the confiden=
-tial-
-> guest support modules (dhildenb). These suggestions have not been
-> implemented in this version of the patch series, but I will look to imple=
-ment
-> them in a future patch series.
->
-> The only functional change in this version is to fix an issue in patch 16=
-/16
-> where the pre-parsing of the IGVM file caused an error after rebasing.
-> Additionally, commit metadata, version numbers and documentation changes =
-have
-> been made, as suggested in review comments.
->
-> As always, thanks to those that have been following along, reviewing and =
-testing
-> this series. This v8 patch series is also available on github: [2]
->
-> For testing IGVM support in QEMU you need to generate an IGVM file that i=
-s
-> configured for the platform you want to launch. You can use the `buildigv=
-m`
-> test tool [3] to allow generation of IGVM files for all currently support=
-ed
-> platforms. Patch 11/17 contains information on how to generate an IGVM fi=
-le
-> using this tool.
->
-> Changes in v8:
->
-> * Fix an issue found after rebasing where the pre-parsing of the IGVM fil=
-e
->   caused an error.
-> * Update version numbers for IGVM support to 10.1
-> * Minor changes to documentation.
-> * Add metadata to relevant commits.
->
+Hi Gustavo,
 
-Other than the comments I already posted ...
+On 6/23/25 3:57 PM, Gustavo Romero wrote:
+> Factor out a new function, create_its_idmaps(), from the current
+I would call it build_rc_its_idmap() to be clearer on what relationship
+we build.
+> build_iort code. Add proper comments to it clarifying how the ID ranges
+> that go directly to the ITS Group node are computed based on the ones
+> that go to the SMMU node.
+>
+> Suggested-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> ---
+>  hw/arm/virt-acpi-build.c | 64 +++++++++++++++++++++++++---------------
+>  1 file changed, 41 insertions(+), 23 deletions(-)
+>
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index e9cd3fb351..40a782a498 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -266,6 +266,42 @@ static int iort_idmap_compare(gconstpointer a, gconstpointer b)
+>      return idmap_a->input_base - idmap_b->input_base;
+>  }
+>  
+> +/* Compute ID ranges (RIDs) from RC that do directly to the ITS Group node */
+s/do/go
+Ior use the spec terminology: that are directed to the ITS Group node
+> +static void create_its_idmaps(GArray *its_idmaps, GArray *smmu_idmaps)
+> +{
+> +    AcpiIortIdMapping *idmap;
+> +    AcpiIortIdMapping next_range = {0};
+> +
+> +    /*
+> +     * Based on the RID ranges that go to the SMMU, determine the bypassed RID
+same here
+> +     * ranges, i.e., the ones that go directly to the ITS Group node, by
+> +     * subtracting the SMMU-bound ranges from the full RID range, 0x0000–0xFFFF.
+substracting
+> +     */
+> +     for (int i = 0; i < smmu_idmaps->len; i++) {
+> +        idmap = &g_array_index(smmu_idmaps, AcpiIortIdMapping, i);
+> +
+> +        if (next_range.input_base < idmap->input_base) {
+> +            next_range.id_count = idmap->input_base - next_range.input_base;
+> +            g_array_append_val(its_idmaps, next_range);
+> +        }
+> +
+> +        next_range.input_base = idmap->input_base + idmap->id_count;
+> +    }
+> +
+> +    /*
+> +     * Append the last RC -> ITS ID mapping.
+> +     *
+> +     * RIDs are 16-bit, according to the PCI Express 2.0 Base Specification, rev
+> +     * 0.9, section 2.2.6.2, "Transaction Descriptor - Transaction ID Field",
+> +     * hence, the end of the range is 0x10000.
+> +     */
+> +    if (next_range.input_base < 0x10000) {
+> +        next_range.id_count = 0x10000 - next_range.input_base;
+> +        g_array_append_val(its_idmaps, next_range);
+> +    }
+> +}
+> +
+> +
+>  /*
+>   * Input Output Remapping Table (IORT)
+>   * Conforms to "IO Remapping Table System Software on ARM Platforms",
+> @@ -276,7 +312,6 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>  {
+>      int i, nb_nodes, rc_mapping_count;
+>      size_t node_size, smmu_offset = 0;
+> -    AcpiIortIdMapping *idmap;
+>      uint32_t id = 0;
+>      GArray *smmu_idmaps = g_array_new(false, true, sizeof(AcpiIortIdMapping));
+>      GArray *its_idmaps = g_array_new(false, true, sizeof(AcpiIortIdMapping));
+> @@ -287,34 +322,17 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>      acpi_table_begin(&table, table_data);
+>  
+>      if (vms->iommu == VIRT_IOMMU_SMMUV3) {
+> -        AcpiIortIdMapping next_range = {0};
+> -
+>          object_child_foreach_recursive(object_get_root(),
+>                                         iort_host_bridges, smmu_idmaps);
+>  
+>          /* Sort the smmu idmap by input_base */
+>          g_array_sort(smmu_idmaps, iort_idmap_compare);
+>  
+> -        /*
+> -         * Split the whole RIDs by mapping from RC to SMMU,
+> -         * build the ID mapping from RC to ITS directly.
+> -         */
+> -        for (i = 0; i < smmu_idmaps->len; i++) {
+> -            idmap = &g_array_index(smmu_idmaps, AcpiIortIdMapping, i);
+> -
+> -            if (next_range.input_base < idmap->input_base) {
+> -                next_range.id_count = idmap->input_base - next_range.input_base;
+> -                g_array_append_val(its_idmaps, next_range);
+> -            }
+> -
+> -            next_range.input_base = idmap->input_base + idmap->id_count;
+> -        }
+> -
+> -        /* Append the last RC -> ITS ID mapping */
+> -        if (next_range.input_base < 0x10000) {
+> -            next_range.id_count = 0x10000 - next_range.input_base;
+> -            g_array_append_val(its_idmaps, next_range);
+> -        }
+> +	/*
+> +	 * Knowing the ID ranges from the RC to the SMMU, it's possible to
+> +	 * determine the ID ranges from RC that go directly to ITS.
+are directed to
+> +	 */
+> +        create_its_idmaps(its_idmaps, smmu_idmaps);
+>  
+>          nb_nodes = 3; /* RC, ITS, SMMUv3 */
+>          rc_mapping_count = smmu_idmaps->len + its_idmaps->len;
+Thanks
 
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
-
-> Patch summary:
->
-> 1-11: Add support and documentation for processing IGVM files for SEV, SE=
-V-ES,
-> SEV-SNP and native platforms.
->
-> 12-15: Processing of policy and SEV-SNP ID_BLOCK from IGVM file.
->
-> 16: Add pre-processing of IGVM file to support synchronization of 'SEV_FE=
-ATURES'
-> from IGVM VMSA to KVM.
->
-> [1] Link to v7:
-> https://lists.gnu.org/archive/html/qemu-devel/2025-02/msg05714.html
->
-> [2] v8 patches also available here:
-> https://github.com/roy-hopkins/qemu/tree/igvm_master_v8
->
-> [3] `buildigvm` tool v0.2.0
-> https://github.com/roy-hopkins/buildigvm/releases/tag/v0.2.0
->
-> Roy Hopkins (16):
->   meson: Add optional dependency on IGVM library
->   backends/confidential-guest-support: Add functions to support IGVM
->   backends/igvm: Add IGVM loader and configuration
->   hw/i386: Add igvm-cfg object and processing for IGVM files
->   i386/pc_sysfw: Ensure sysfw flash configuration does not conflict with
->     IGVM
->   sev: Update launch_update_data functions to use Error handling
->   target/i386: Allow setting of R_LDTR and R_TR with
->     cpu_x86_load_seg_cache()
->   i386/sev: Refactor setting of reset vector and initial CPU state
->   i386/sev: Implement ConfidentialGuestSupport functions for SEV
->   docs/system: Add documentation on support for IGVM
->   docs/interop/firmware.json: Add igvm to FirmwareDevice
->   backends/confidential-guest-support: Add set_guest_policy() function
->   backends/igvm: Process initialization sections in IGVM file
->   backends/igvm: Handle policy for SEV guests
->   i386/sev: Add implementation of CGS set_guest_policy()
->   sev: Provide sev_features flags from IGVM VMSA to KVM_SEV_INIT2
->
->  backends/confidential-guest-support.c       |  43 +
->  backends/igvm-cfg.c                         |  51 +
->  backends/igvm.c                             | 977 ++++++++++++++++++++
->  backends/igvm.h                             |  22 +
->  backends/meson.build                        |   5 +
->  docs/interop/firmware.json                  |  30 +-
->  docs/system/i386/amd-memory-encryption.rst  |   2 +
->  docs/system/igvm.rst                        | 173 ++++
->  docs/system/index.rst                       |   1 +
->  hw/i386/pc.c                                |  12 +
->  hw/i386/pc_piix.c                           |  10 +
->  hw/i386/pc_q35.c                            |  10 +
->  hw/i386/pc_sysfw.c                          |  31 +-
->  include/hw/i386/x86.h                       |   3 +
->  include/system/confidential-guest-support.h |  88 ++
->  include/system/igvm-cfg.h                   |  49 +
->  meson.build                                 |   8 +
->  meson_options.txt                           |   2 +
->  qapi/qom.json                               |  17 +
->  qemu-options.hx                             |  28 +
->  scripts/meson-buildoptions.sh               |   3 +
->  target/i386/cpu.h                           |   9 +-
->  target/i386/sev.c                           | 851 +++++++++++++++--
->  target/i386/sev.h                           | 124 +++
->  24 files changed, 2465 insertions(+), 84 deletions(-)
->  create mode 100644 backends/igvm-cfg.c
->  create mode 100644 backends/igvm.c
->  create mode 100644 backends/igvm.h
->  create mode 100644 docs/system/igvm.rst
->  create mode 100644 include/system/igvm-cfg.h
->
-> --
-> 2.43.0
->
+Eric
 
 
