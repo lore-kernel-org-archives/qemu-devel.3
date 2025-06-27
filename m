@@ -4,99 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C378C77B7F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 12:15:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F529C77B7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 12:31:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uV7yB-00021d-NH; Fri, 27 Jun 2025 08:14:15 -0400
+	id 1uV8Dy-0005ri-QO; Fri, 27 Jun 2025 08:30:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uV7yA-00021L-PW
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 08:14:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uV8Dw-0005rL-GP
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 08:30:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uV7y8-0006YE-CR
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 08:14:14 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uV8Dr-0001XQ-6X
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 08:30:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751026450;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1751027423;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Py3TPV5zuZPrpF/KGzIXmqU+JkJO3G52AmeeZCrSa9c=;
- b=i/BBrTr4C5lIVc7eeGIA/R3NO+CVWxNcvyEvh0av5BxoAU4+txab4u3yu7O8xMs2VN/p7/
- blKvs19DpwrGZdWbK7Gdwan48MzNPDb1TF2WiL2b9RKl5fWxm1w+um9hQNNQpS4HWJqxoZ
- 1zKEtJQE/B8gyJ6pqC+BmGNIp35i9uY=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-15-wGI4ZjddPrmwOvtUgaI4rA-1; Fri, 27 Jun 2025 08:14:08 -0400
-X-MC-Unique: wGI4ZjddPrmwOvtUgaI4rA-1
-X-Mimecast-MFC-AGG-ID: wGI4ZjddPrmwOvtUgaI4rA_1751026447
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a4f8fd1847so850370f8f.1
- for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 05:14:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751026447; x=1751631247;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Py3TPV5zuZPrpF/KGzIXmqU+JkJO3G52AmeeZCrSa9c=;
- b=jQTqYu+0FTpTtywYqk1tGhLYMPShidYz61QAWpIbOph4wZd4H00hvZyJK173Xel66C
- NGDCQATzMRyENazqxjPmjev5XhMMXDN20ujSNXaKZ7hhVt1Tt74WAJD4f5NpeIOS8wGQ
- kWCKZDxp5qrQh4x1lZn9fUoJAlwpAMBGCpRPt1nUxwocunKdLDtWDuWTo/bzMHCL/Shg
- xNG5U+MO/zHfnkU4TNfH4HiF1OJiaeRPFEOSCx5cjU6s61DBU6HJh3/0YwFI/dmRLf5+
- YB9+2FIScJKiLq0pyBC5kSNqM15uG8G7AV6XWv/fo4TsRubN6IEDRR3kDbc3cj5XNnQd
- mrig==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWFvLCGCHuqnpPl98NV7bFvAtoFnVm8vocbECRoKsa3EEp71wDxDzxEbyTMdXJauW+mjfTSbc34JhN8@nongnu.org
-X-Gm-Message-State: AOJu0YxI/Cr1R6c/fyVlHVbAGkMrekTA+edyBJnTGxLvlOgYQKZU/Ynb
- 3guQfoiDJ7S/EnCrjkhKMc7YTCG8snBXBxOuCLMrEIitRGr/BnSF6t8jW2ke2Zpr4n23F2DYV39
- bpFRoWrq9hI2DjGDtzoX4dYS4JcV/0ulue+Zz+O7YXDPXhrBd5GYQ7yVC
-X-Gm-Gg: ASbGncvgOjRdLYU4G8NXa4eEf/nUV6Lzjt5OPnBtTpqjm5tnQ+vsBToY1Zi2t03MeUO
- YxtVa4edIZ5V/SZyHHlKCXduHRtUDAlDngdLyXSIwCttjnnO9qar6xczcvS9O+GcsMMcNU8Eyrn
- FApoK+LN03ZpYXeFBWSD9uD6LsuSDurTWYPOJyumhGdIwMY6yMlyoonEx7e6GZR7riXHg9JWLU9
- +EnVq0CSBG1sDSbOytBDlv2vsL9Gz4lYtSFsudL+zX4V5RshO16ouvhVpphPCWJ/jIyveFgPKm7
- hNe2bSE5Y65pYna2TL2LJAg0bEH4htEXEVKFwaUqCLrD4h/v2PiGsx7idMWlWvYEOknqgA==
-X-Received: by 2002:a05:6000:645:b0:3a4:d53d:be20 with SMTP id
- ffacd0b85a97d-3a8fdff4832mr2372076f8f.18.1751026447358; 
- Fri, 27 Jun 2025 05:14:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG26xoMo4Id1l9yv7RPKNHXgIuZFr08ET1/hmMypqGLNQxNAbFiDZCDk1R51c7y88PQLpKZ1w==
-X-Received: by 2002:a05:6000:645:b0:3a4:d53d:be20 with SMTP id
- ffacd0b85a97d-3a8fdff4832mr2372048f8f.18.1751026446855; 
- Fri, 27 Jun 2025 05:14:06 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4538a406ab6sm49594285e9.30.2025.06.27.05.14.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Jun 2025 05:14:06 -0700 (PDT)
-Message-ID: <6a3c2ebf-ac62-474f-b2b7-a1d017f6c2bb@redhat.com>
-Date: Fri, 27 Jun 2025 14:14:01 +0200
+ bh=gKKkc6z345jmH26p5rMRiYRworieKPgNQxfolOC5M6o=;
+ b=CO1J5xQgDO6LADlFoYbdd60u8PFxSYjIPwp9Uux5fGQf8r3rEOo2mtQq1NtmkdSECc/voG
+ 7LRvgnnyLoSvV8bi2QhSrzohRlc4nDcZSlEEveEAfuM8GBo/GDI6OEoYmYB2W3kQY/dSph
+ IJ6QdGc4qdOfS5eQYk8+hy1maF/78wg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-308--LDZ0dzmOH6IXxerUueOPg-1; Fri,
+ 27 Jun 2025 08:30:19 -0400
+X-MC-Unique: -LDZ0dzmOH6IXxerUueOPg-1
+X-Mimecast-MFC-AGG-ID: -LDZ0dzmOH6IXxerUueOPg_1751027416
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1BCB518089B7; Fri, 27 Jun 2025 12:30:14 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 04EE0180045B; Fri, 27 Jun 2025 12:30:11 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 576D021E6A27; Fri, 27 Jun 2025 14:30:08 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Jason Wang <jasowang@redhat.com>,  Eduardo
+ Habkost <eduardo@habkost.net>,  Peter Maydell <peter.maydell@linaro.org>,
+ Jiri Pirko <jiri@resnulli.us>,  Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  qemu-trivial@nongnu.org,  "Gonglei (Arei)"
+ <arei.gonglei@huawei.com>,  Laurent Vivier <laurent@vivier.eu>,  Peter Xu
+ <peterx@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Zhao
+ Liu <zhao1.liu@intel.com>,  Fabiano Rosas <farosas@suse.de>,  Yanan Wang
+ <wangyanan55@huawei.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>, Michael Roth <michael.roth@amd.com>,  Zhenwei Pi
+ <pizhenwei@bytedance.com>,  Lukas Straub <lukasstraub2@web.de>,  Hanna
+ Reitz <hreitz@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Ani
+ Sinha <anisinha@redhat.com>,  Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,
+ Eric Blake <eblake@redhat.com>,  qemu-block@nongnu.org,  Mads Ynddal
+ <mads@ynddal.dk>
+Subject: Re: [PATCH v5 2/4] docs, qapi: generate undocumented return sections
+In-Reply-To: <20250626195337.2158250-3-jsnow@redhat.com> (John Snow's message
+ of "Thu, 26 Jun 2025 15:53:35 -0400")
+References: <20250626195337.2158250-1-jsnow@redhat.com>
+ <20250626195337.2158250-3-jsnow@redhat.com>
+Date: Fri, 27 Jun 2025 14:30:08 +0200
+Message-ID: <877c0xl63z.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 09/11] bios-tables-test: Allow for smmuv3 test data.
-Content-Language: en-US
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
- ddutile@redhat.com, berrange@redhat.com, imammedo@redhat.com,
- nathanc@nvidia.com, mochs@nvidia.com, smostafa@google.com,
- gustavo.romero@linaro.org, linuxarm@huawei.com, wangzhou1@hisilicon.com,
- jiangkunkun@huawei.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
-References: <20250623094230.76084-1-shameerali.kolothum.thodi@huawei.com>
- <20250623094230.76084-10-shameerali.kolothum.thodi@huawei.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250623094230.76084-10-shameerali.kolothum.thodi@huawei.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,56 +100,191 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+John Snow <jsnow@redhat.com> writes:
 
-On 6/23/25 11:42 AM, Shameer Kolothum wrote:
-> The tests to be added exercises both legacy(iommu=smmuv3) and new
-Suggesting: exercice.  legacy (
-
-Besides:
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-Eric
-> -device arm-smmuv3,.. cases.
+> This patch changes the qapidoc parser to generate stub Return value
+> documentation for any command that has a return value but does not have
+> a "Returns:" doc section.
 >
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-> ---
->  tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev    | 0
->  tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy | 0
->  tests/data/acpi/aarch64/virt/IORT.smmuv3-dev    | 0
->  tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy | 0
->  tests/qtest/bios-tables-test-allowed-diff.h     | 4 ++++
->  5 files changed, 4 insertions(+)
->  create mode 100644 tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev
->  create mode 100644 tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy
->  create mode 100644 tests/data/acpi/aarch64/virt/IORT.smmuv3-dev
->  create mode 100644 tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy
+> The stubs include just the type name, which will be rendered with a
+> cross-reference link in the HTML output.
 >
-> diff --git a/tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev b/tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev
-> new file mode 100644
-> index 0000000000..e69de29bb2
-> diff --git a/tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy b/tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy
-> new file mode 100644
-> index 0000000000..e69de29bb2
-> diff --git a/tests/data/acpi/aarch64/virt/IORT.smmuv3-dev b/tests/data/acpi/aarch64/virt/IORT.smmuv3-dev
-> new file mode 100644
-> index 0000000000..e69de29bb2
-> diff --git a/tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy b/tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy
-> new file mode 100644
-> index 0000000000..e69de29bb2
-> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-> index dfb8523c8b..2e3e3ccdce 100644
-> --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> @@ -1 +1,5 @@
->  /* List of comma-separated changed AML files to ignore */
-> +"tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy",
-> +"tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev",
-> +"tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy",
-> +"tests/data/acpi/aarch64/virt/IORT.smmuv3-dev",
+> Signed-off-by: John Snow <jsnow@redhat.com>
+
+Might want to briefly explain placement of the auto-generated return
+value documentation.
+
+The cover letter claims you implemented the placement I suggested:
+
+1. If we have arguments, return goes right after them.
+
+2. Else if we have errors, return goes right before them.
+
+3. Else if we have features, return goes right before them.
+
+4. Else return goes right after the intro (might require a few more TODO
+   hacks to terminate the intro).
+
+This patch adds auto-generated return value documentation where we have
+none.
+
+The next patch replaces handwritten by auto-generated return value
+documentation where these are at least as good.  Moves the return value
+docs in some cases.
+
+Let's check placement.  Skip to the end for a summary of findings.
+
+First the additions (this patch):
+
+* x-debug-query-block-graph
+
+  Title, intro, features, return
+
+  1. doesn't apply, 2. doesn't apply, 3. applies: return should go right
+  before features.  It's afterwards.  Unexpected.
+
+* query-tpm
+
+  Title, intro, return, example
+
+  4. applies.  Good.
+
+* query-dirty-rate
+
+  Title, intro, arguments, return, examples
+
+  1. applies.  Good.
+
+* query-vcpu-dirty-limit
+
+  Title, intro, return, example
+
+  4. applies.  Good.
+
+* query-vm-generation-id
+
+  Title, intro, return
+
+  4. applies.  Good.
+
+* query-memory-size-summary
+
+  Title, intro, example, return
+
+  4. applies.  Why is return after example here, and before example
+  elsewhere?
+
+  Turns out elsewhere we have Since: between intro and .. qmp-example::
+  terminating the intro.  Slighly unusual, Since: more often the last in
+  the comment block).
+
+  Except for query-memory-size-summary, which does have Since: at the
+  very and, and uses the TODO hack instead to terminate the intro.
+
+  So, the placement algorithm works as intended here.  We just need to
+  terminate the intro here as well.
+
+* query-memory-devices
+
+  Title, intro, return, example
+
+  4. applies.  Good.
+
+* query-acpi-ospm-status
+
+  Title, intro, return, example
+
+  4. applies.  Good.
+
+* query-stats-schemas
+
+  Title, intro, arguments, return, note
+
+  1. applies.  Good.
+
+Check placement of moved returns (next patch):
+
+* x-debug-block-dirty-bitmap-sha256
+
+  Title, intro, arguments, features, errors, return
+
+  1. applies: return should go right after arguments.  Its at the end.
+  Unexpected.
+
+* query-xen-replication-status
+
+  Title, intro, example, return
+
+  Return after example instead of before.  This is just like
+  query-memory-size-summary: placement algorithm works as intended,
+  intro needs a terminator.
+
+* query-colo-status
+
+  Title, intro, example, return
+
+  Likewise.
+
+* query-machines
+
+  Title, intro, arguments, return, features, example
+
+  1. applies.  Okay.
+
+* query-balloon
+
+  Title, intro, errors, return, example
+
+  2. applies: return should go right before errors.  It's afterwards.
+  Unexpected.
+
+* query-hv-balloon-status-report
+
+  Title, intro, errors, return, example
+
+  Likewise.
+
+* query-yank
+
+  Title, intro, example, return
+
+  Another one just like query-memory-size-summary: placement algorithm
+  works as intended, intro needs a terminator.
+
+* query-sev-capabilities
+
+  Title, intro, errors, return, example
+
+  Like query-ballon.
+
+* x-query-virtio-queue-element
+
+  Title, intro, arguments, return, features, example
+
+  1. applies.  Good.
+
+
+Summary of findings:
+
+1. If we have arguments, return goes right after them.
+
+   Works as intended, except for x-debug-block-dirty-bitmap-sha256.
+   Odd.
+
+2. Else if we have errors, return goes right before them.
+
+   You seem to place it afterwards instead.
+
+3. Else if we have features, return goes right before them.
+
+   You seem to place it afterwards instead.
+
+4. Else return goes right after the intro (might require a few more TODO
+   hacks to terminate the intro).
+
+   Yes, we need several of them.
 
 
