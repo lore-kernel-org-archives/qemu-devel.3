@@ -4,69 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53087C77B7F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 08:23:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2132C77B7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 08:24:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uV4MV-000810-Ut; Fri, 27 Jun 2025 04:23:07 -0400
+	id 1uV4NZ-0000HM-Ts; Fri, 27 Jun 2025 04:24:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uV4MI-0007zu-61
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 04:22:56 -0400
-Received: from mgamail.intel.com ([198.175.65.15])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uV4NW-0000Gc-Ve
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 04:24:11 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uV4MA-0001Q1-1F
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 04:22:53 -0400
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uV4NU-0001ct-Uw
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 04:24:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751012566; x=1782548566;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=Kbz47DuMnWT0v9tfwC0nho0rIfl4eEfmfBomwBJYoKA=;
- b=A12aqH3w0LjcFncnNOlTSybDsEzzDYMQhrXX9IJcel9J647K7LiOD/yk
- QLyS5xvT5dn4NTFa+t62odb1Pgekeki1AKQheeLAxLcNK42/+PIuIYmDf
- BHmsv8KyqV33L2CnjtXy0l5Ur9Yty4QIn4l5nFp83ej5mRTILjdxU47ri
- VDFFyutEPnlxWtVpvcZ40PQT3A0UuzgpSfL0bnQ2aNTKRIFJquyFy2ssY
- wzvsk3SYLAJ58bfdE3bJjPfyMWtGHlPwjons+6KL+5eQsiwgRlwGnjJ2+
- wyXjLjSeZc394ZZSn+PrjJSKTSAvnn4eLT5w+cWnWgRRtgWQGcLkkU051 w==;
-X-CSE-ConnectionGUID: U81rmcAcQy2wNA0JwEnuAA==
-X-CSE-MsgGUID: V438YjZQQcWjy96D8AgMaw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11476"; a="57000815"
-X-IronPort-AV: E=Sophos;i="6.16,270,1744095600"; d="scan'208";a="57000815"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Jun 2025 01:22:43 -0700
-X-CSE-ConnectionGUID: Yy3HybgzQI6OBoEZwlTfXg==
-X-CSE-MsgGUID: mlLRaNBtSFOc+PXLlxDLmQ==
+ t=1751012649; x=1782548649;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=XrI4vpS4ZE9ZvR/h6/QehLdrMplYTo9Ns/njSi80pdM=;
+ b=Fs81NhfC9PD9IxHavEZ9bfW7GKiBSI+GHWJtJLY8BYz8WI2EedXYH+J9
+ qTlhhwW2lpUyGcknXkxtgGtir72dKLGKj40YugFmY4rcVt5rN2n0JtUGx
+ 1BSUuZxVDch1zBwUuiHTFSYGbLxML1YciYPRbBWe69uOCaOKHLsqmkhi7
+ 627ojEon8s14K+rw6xXDvZeiJfD79vf7Hf1cDqMIZgmTozGRdtbc7E41v
+ UImsvDMkhRZqng03H9StkO4JGuP+l8zinHLZX9s01DjgkZCWgIji1ZRmy
+ emI3jQHZ59OcL7JLBEVI2iaD4YdYl4+poe+zCvNK2inETpgVxxERIrJZy g==;
+X-CSE-ConnectionGUID: j8DPGkqWRNiOn9sPvmhGKw==
+X-CSE-MsgGUID: 6NEQVuXiQQyNj7xdXg8cCQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11476"; a="64011843"
+X-IronPort-AV: E=Sophos;i="6.16,270,1744095600"; d="scan'208";a="64011843"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Jun 2025 01:24:06 -0700
+X-CSE-ConnectionGUID: FpkZuIZMSe6g647B6KdMxA==
+X-CSE-MsgGUID: PtOYRRPJSpawGQqPHyEpVw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,270,1744095600"; d="scan'208";a="153456758"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa010.fm.intel.com with ESMTP; 27 Jun 2025 01:22:41 -0700
-Date: Fri, 27 Jun 2025 16:44:03 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] i386/tdx: Don't mask off CPUID_EXT_PDCM
-Message-ID: <aF5Z02o1BFDZSqLS@intel.com>
-References: <20250625035710.2770679-1-xiaoyao.li@intel.com>
+X-IronPort-AV: E=Sophos;i="6.16,270,1744095600"; d="scan'208";a="157296823"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Jun 2025 01:24:04 -0700
+Message-ID: <dedb9a90-a516-430e-8748-f776392f508d@intel.com>
+Date: Fri, 27 Jun 2025 16:24:01 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250625035710.2770679-1-xiaoyao.li@intel.com>
-Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] i386/cpu: Mark ECX/EDX in CPUID 0x80000008 leaf as
+ reserved for Intel
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>
+Cc: Ewan Hai <ewanhai-oc@zhaoxin.com>, Tao Su <tao1.su@intel.com>,
+ Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
+ qemu-devel@nongnu.org
+References: <20250627035129.2755537-1-zhao1.liu@intel.com>
+ <20250627035129.2755537-4-zhao1.liu@intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250627035129.2755537-4-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,26 +91,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 25, 2025 at 11:57:10AM +0800, Xiaoyao Li wrote:
-> Date: Wed, 25 Jun 2025 11:57:10 +0800
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: [PATCH] i386/tdx: Don't mask off CPUID_EXT_PDCM
-> X-Mailer: git-send-email 2.43.0
+On 6/27/2025 11:51 AM, Zhao Liu wrote:
+> Per SDM,
 > 
-> It gets below warning when booting TDX VMs:
+> 80000008H EAX Linear/Physical Address size.
+>                Bits 07-00: #Physical Address Bits*.
+>                Bits 15-08: #Linear Address Bits.
+>                Bits 31-16: Reserved = 0.
+>            EBX Bits 08-00: Reserved = 0.
+>                Bit 09: WBNOINVD is available if 1.
+>                Bits 31-10: Reserved = 0.
+>            ECX Reserved = 0.
+>            EDX Reserved = 0.
 > 
->   warning: TDX forcibly sets the feature: CPUID[eax=01h].ECX.pdcm [bit 15]
+> ECX/EDX in CPUID 0x80000008 leaf are reserved. Encode these 2 registers
+> as 0 for Intel.
 > 
-> Because CPUID_EXT_PDCM is fixed1 for TDX, and MSR_IA32_PERF_CAPABILITIES is
-> supported for TDX guest unconditioanlly.
-> 
-> Don't mask off CPUID_EXT_PDCM for TDX.
-> 
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->  target/i386/cpu.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+>   target/i386/cpu.c | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 6d590a9af389..5d5a227d4c8a 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -8391,6 +8391,12 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>                *eax |= (cpu->guest_phys_bits << 16);
+>           }
+>           *ebx = env->features[FEAT_8000_0008_EBX];
+> +
+> +        if (cpu->vendor_cpuid_only_v2 && IS_INTEL_CPU(env)) {
+> +            *ecx = *edx = 0;
+> +            break;
+> +        }
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+current code guarantees ecx and edx to be 0 for !IS_AMD_CPU(). I think 
+the patch is unnecessary.
+
+>           if (threads_per_pkg > 1) {
+>               /*
+>                * Bits 15:12 is "The number of bits in the initial
 
 
