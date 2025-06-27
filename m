@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8067CC7EE30
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 03:25:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2B8FC7EE31
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 03:25:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUzhe-0005GA-QX; Thu, 26 Jun 2025 23:24:39 -0400
+	id 1uUzhg-0005Gf-2K; Thu, 26 Jun 2025 23:24:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uUzhc-0005Eq-77
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 23:24:36 -0400
+ id 1uUzhd-0005Fe-LF
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 23:24:37 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uUzhY-00065V-7N
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 23:24:35 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1uUzhY-00065T-J0
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 23:24:37 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxPuPoDl5opwgeAQ--.31668S3;
- Fri, 27 Jun 2025 11:24:24 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxJHDmDl5omggeAQ--.25680S3;
+ Fri, 27 Jun 2025 11:24:22 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMBxn8XiDl5oz10sAQ--.3598S6;
- Fri, 27 Jun 2025 11:24:24 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBxn8XiDl5oz10sAQ--.3598S2;
+ Fri, 27 Jun 2025 11:24:18 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: maobibo@loongson.cn
 Cc: qemu-devel@nongnu.org,
 	philmd@linaro.org,
 	jiaxun.yang@flygoat.com
-Subject: [PATCH v3 4/9] target/loongarch: add msg interrupt CSR registers
-Date: Fri, 27 Jun 2025 11:01:33 +0800
-Message-Id: <20250627030138.2482055-5-gaosong@loongson.cn>
+Subject: [PATCH v3 0/9] hw/loongarch: add the advanced extended interrupt
+ controllers (AVECINTC) support
+Date: Fri, 27 Jun 2025 11:01:29 +0800
+Message-Id: <20250627030138.2482055-1-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20250627030138.2482055-1-gaosong@loongson.cn>
-References: <20250627030138.2482055-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxn8XiDl5oz10sAQ--.3598S6
+X-CM-TRANSID: qMiowMBxn8XiDl5oz10sAQ--.3598S2
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,126 +65,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-include CSR_MSGIS0-3, CSR_MSGIR and CSR_MSGIE.
+ntroduce the advanced extended interrupt controllers (AVECINTC). This
+feature will allow each core to have 256 independent interrupt vectors
+and MSI interrupts can be independently routed to any vector on any CPU.
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- target/loongarch/cpu-csr.h |  3 +++
- target/loongarch/cpu.c     |  7 +++++++
- target/loongarch/cpu.h     | 10 ++++++++++
- target/loongarch/machine.c | 25 +++++++++++++++++++++++--
- 4 files changed, 43 insertions(+), 2 deletions(-)
+The whole topology of irqchips in LoongArch machines looks like this if
+AVECINTC is supported:
 
-diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
-index 0834e91f30..4792677086 100644
---- a/target/loongarch/cpu-csr.h
-+++ b/target/loongarch/cpu-csr.h
-@@ -186,6 +186,9 @@ FIELD(CSR_MERRCTL, ISMERR, 0, 1)
- 
- #define LOONGARCH_CSR_CTAG           0x98 /* TagLo + TagHi */
- 
-+#define LOONGARCH_CSR_MSGIS(N)       (0xa0 + N)
-+#define LOONGARCH_CSR_MSGIR               0xa4
-+
- /* Direct map windows CSRs*/
- #define LOONGARCH_CSR_DMW(N)         (0x180 + N)
- FIELD(CSR_DMW, PLV0, 0, 1)
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index abad84c054..bde9f917fc 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -523,6 +523,13 @@ static void loongarch_la464_initfn(Object *obj)
-     env->CSR_PRCFG3 = FIELD_DP64(env->CSR_PRCFG3, CSR_PRCFG3, STLB_WAYS, 7);
-     env->CSR_PRCFG3 = FIELD_DP64(env->CSR_PRCFG3, CSR_PRCFG3, STLB_SETS, 8);
- 
-+    env->CSR_MSGIS[0] = 0;
-+    env->CSR_MSGIS[1] = 0;
-+    env->CSR_MSGIS[2] = 0;
-+    env->CSR_MSGIS[3] = 0;
-+    env->CSR_MSGIR = 0;
-+    env->CSR_MSGIE = 0;
-+
-     loongarch_la464_init_csr(obj);
-     loongarch_cpu_post_init(obj);
- }
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 56fc4a1459..208d3e0cd3 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -233,6 +233,12 @@ FIELD(TLB_MISC, ASID, 1, 10)
- FIELD(TLB_MISC, VPPN, 13, 35)
- FIELD(TLB_MISC, PS, 48, 6)
- 
-+/*Msg interrupt registers */
-+FIELD(CSR_MSGIS, IS, 0, 63)
-+FIELD(CSR_MSGIR, INTNUM, 0, 8)
-+FIELD(CSR_MSGIR, ACTIVE, 31, 1)
-+FIELD(CSR_MSGIE, PT, 0, 8)
-+
- #define LSX_LEN    (128)
- #define LASX_LEN   (256)
- 
-@@ -350,6 +356,10 @@ typedef struct CPUArchState {
-     uint64_t CSR_DBG;
-     uint64_t CSR_DERA;
-     uint64_t CSR_DSAVE;
-+    /* Msg interrupt registers */
-+    uint64_t CSR_MSGIS[4];
-+    uint64_t CSR_MSGIR;
-+    uint64_t CSR_MSGIE;
-     struct {
-         uint64_t guest_addr;
-     } stealtime;
-diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
-index 4e70f5c879..1e276c08ac 100644
---- a/target/loongarch/machine.c
-+++ b/target/loongarch/machine.c
-@@ -45,6 +45,26 @@ static const VMStateDescription vmstate_fpu = {
-     },
- };
- 
-+static bool msg_needed(void *opaque)
-+{
-+    LoongArchCPU *cpu = opaque;
-+
-+    return FIELD_EX64(cpu->env.cpucfg[1], CPUCFG1, MSG_INT);
-+}
-+
-+static const VMStateDescription vmstate_msg = {
-+    .name = "cpu/msg",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = msg_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64_ARRAY(env.CSR_MSGIS, LoongArchCPU, 4),
-+        VMSTATE_UINT64(env.CSR_MSGIR, LoongArchCPU),
-+        VMSTATE_UINT64(env.CSR_MSGIE, LoongArchCPU),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
- static const VMStateDescription vmstate_lsxh_reg = {
-     .name = "lsxh_reg",
-     .version_id = 1,
-@@ -168,8 +188,8 @@ static const VMStateDescription vmstate_tlb = {
- /* LoongArch CPU state */
- const VMStateDescription vmstate_loongarch_cpu = {
-     .name = "cpu",
--    .version_id = 3,
--    .minimum_version_id = 3,
-+    .version_id = 4,
-+    .minimum_version_id = 4,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINTTL_ARRAY(env.gpr, LoongArchCPU, 32),
-         VMSTATE_UINTTL(env.pc, LoongArchCPU),
-@@ -245,6 +265,7 @@ const VMStateDescription vmstate_loongarch_cpu = {
-         &vmstate_tlb,
- #endif
-         &vmstate_lbt,
-+        &vmstate_msg,
-         NULL
-     }
- };
+  +-----+     +-----------------------+     +-------+
+  | IPI | --> |        CPUINTC        | <-- | Timer |
+  +-----+     +-----------------------+     +-------+
+               ^          ^          ^
+               |          |          |
+        +---------+ +----------+ +---------+     +-------+
+        | EIOINTC | | AVECINTC | | LIOINTC | <-- | UARTs |
+        +---------+ +----------+ +---------+     +-------+
+             ^            ^
+             |            |
+        +---------+  +---------+
+        | PCH-PIC |  | PCH-MSI |
+        +---------+  +---------+
+          ^     ^           ^
+          |     |           |
+  +---------+ +---------+ +---------+
+  | Devices | | PCH-LPC | | Devices |
+  +---------+ +---------+ +---------+
+                   ^
+                   |
+              +---------+
+              | Devices |
+              +---------+
+
+We can see more about AVECINTC on linux driver code[1]
+and loongarch msg interrupts on volI 6.2 Message-Interrupts
+
+Tested the code using the virion-net NIC the start scripts is kernel.sh at[3] and then 
+run 'ifconfig eth0 192.168.122.12'
+
+[1]: https://github.com/torvalds/linux/blob/master/drivers/irqchip/irq-loongarch-avec.c
+[2]: https://github.com/loongson/LoongArch-Documentation/releases/download/2023.04.20/LoongArch-Vol1-v1.10-EN.pdf
+[3]: https://github.com/gaosong715/qemu/releases/download/pull-loongarch-20250514/kernel.sh
+
+
+v3: 
+  1: Implement the read-clear feature for CSR_MSGIR register
+  2: Fix some code style;
+  3: Merge patch8 and patch9 into one patch8;
+  4: Fix patch7 get wrong cpu_num and irq_num;
+  5: Add vmstate_msg for messag-interrupt registers migrate;
+  6: Update test scripts use  '-bios', because kernel use avec need acpi
+support. the bios is qemu/pc_bios/edk2-loongarch64-code.fd.bz2.  
+
+v2:
+  1: Use one irqline for avec parent_irq;
+  2; Correct avec memroy area;
+  3; Pch-msi not connecet to avec when avec is enabled and drop patch 7;
+  4: Add misc_feature and misc_status for misc features an misc
+
+Thanks.
+Song Gao
+
+
+Song Gao (9):
+  hw/loongarch: move some machine define to virt.h
+  hw/loongarch: add virt feature avecintc support
+  loongarch: add a advance interrupt controller device
+  target/loongarch: add msg interrupt CSR registers
+  hw/loongarch: AVEC controller add a MemoryRegion
+  hw/loongarch: Implement avec controller imput and output pins
+  hw/loongarch: Implement avec set irq
+  target/loongarch: CPU enable msg interrupts.
+  target/loongarch:Implement csrrd CSR_MSGIR register
+
+ hw/intc/Kconfig                               |   3 +
+ hw/intc/loongarch_avec.c                      | 153 ++++++++++++++++++
+ hw/intc/meson.build                           |   1 +
+ hw/loongarch/Kconfig                          |   1 +
+ hw/loongarch/virt.c                           |  89 +++++++++-
+ include/hw/intc/loongarch_avec.h              |  36 +++++
+ include/hw/loongarch/virt.h                   |  36 +++++
+ include/hw/pci-host/ls7a.h                    |   2 +
+ target/loongarch/cpu-csr.h                    |   9 +-
+ target/loongarch/cpu.c                        |  17 ++
+ target/loongarch/cpu.h                        |  34 ++--
+ target/loongarch/csr.c                        |   5 +
+ target/loongarch/machine.c                    |  25 ++-
+ target/loongarch/tcg/csr_helper.c             |  21 +++
+ target/loongarch/tcg/helper.h                 |   1 +
+ .../tcg/insn_trans/trans_privileged.c.inc     |   1 +
+ 16 files changed, 405 insertions(+), 29 deletions(-)
+ create mode 100644 hw/intc/loongarch_avec.c
+ create mode 100644 include/hw/intc/loongarch_avec.h
+
 -- 
 2.34.1
 
