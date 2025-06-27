@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37022C7EE32
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 11:28:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A12EC7EE31
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 11:28:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uV7DL-0005LA-7B; Fri, 27 Jun 2025 07:25:51 -0400
+	id 1uV7DD-0005FS-DM; Fri, 27 Jun 2025 07:25:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uV7DD-0005F2-52
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 07:25:43 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1uV7D3-00057i-1b
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 07:25:37 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uV7D6-0007Ek-LZ
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 07:25:42 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-3a52874d593so1637024f8f.0
- for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 04:25:36 -0700 (PDT)
+ id 1uV7Cy-0007AC-R7
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 07:25:32 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3a4e742dc97so2055632f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 04:25:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751023535; x=1751628335; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751023522; x=1751628322; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BidNnNLM1rUcFeA/dLJqRUtobHsgBklQOV2aV4NWhB0=;
- b=ZdgwYgkRipXAVAO0+3u952iR3sCnwqcGXcebw07XhK0OTfEEIA8JzvHGHUSMKaYIW6
- RWjY/e+Jr41QIbB3LuOW+VcL0m01Jj+NV2pNqRwDnsz4Vq16FgBDr3lQ7+dD52JwnCne
- 5/szRgK8HLW5+lg0ycpUACxBMayjEkLC+7xxNDi3c+R/eV14tnVjeKR8ig1yO5dmjpe3
- dME7RHCJAQq+7klgQG3l1kXeRJUOREwrX2wUOJaDIVMGD2WOPWfyjzKereHdnTcSB1cR
- MmE8s++kML/AGrA+JkkOe0HTwEzGUgLYcfSIOL7890hq4pjBFkQ8fSk0bQUvZyAMLZ0Q
- h2eQ==
+ bh=lgYISCMNkEKe+zFhK94dOEi+d176X9PjgGsBtgsVHM8=;
+ b=scZdlMiorYjIKz8MMTTbGIsq5f9voyELCEQeKE7ibCqiFxaXvnWuCS0l1AScEzSX5s
+ mYwYenSUMYU4e87gKs0sK6ykAP/PEaeCFkIUydhzBNPM3ja+B/XCGvBP3wduolUZcaau
+ oiSQR/uoBBBDANSHROQAZI5mWDz2EgiUqxkk2v0FqOEi8ZCYk6hyJJxTb0m2f5Jzhwhr
+ j+XzDw494FH8p8Ex9Uoqs2q3jmRytSihzGLqjOkYGRwZGvRDV3CAgkrqEoCFvrZ62tKH
+ k5pU/KY5Uxs2RNQizecqds1SWZKf0m+OAkI2cnTTQ3uzutrRiJgfi/e0XRl4/OZpAzml
+ 6DYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751023535; x=1751628335;
+ d=1e100.net; s=20230601; t=1751023522; x=1751628322;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BidNnNLM1rUcFeA/dLJqRUtobHsgBklQOV2aV4NWhB0=;
- b=mjYKJXOksBQXo2HfTp4WhH9M/5h2S6tGKvE+FtycToAIv9ozX0R0jZhD4pKbUnBPpA
- xeHNWDTMjl9WNHAQ0hwy8leQQF72xeBsXP6hUf9OLz6kI1RDYW4TD+HQ8EaqXXUQ+pIp
- KcJOC+ydLYpCkMMbtTZwebXL1mth2Tb8YrRLWx0cCHr4/5wY3L9aLtmxk+EyvmnQ2Lcz
- NnJ8G/1VjOggdeWB+lk5iMSnFL2kcqd34RyYsdm3/1+fii3stYkvhoJYJ1mUVq+WQ2F4
- LPJOffWGIEKBKvVUQgSTdODlVAHWkiIMWooTLwKUcy0Wn1kikN1ZrVE/FVrp1EYkhSSn
- rWnA==
-X-Gm-Message-State: AOJu0Yzin+u1LBXagXpP4HGexbSi1wRf+LI9sUbWebeRk2JnKkERuf3N
- K/S3dmJX3eY38xilwVM6e3i+FYseln6Tou+9c+1bkMrBiM2mcWNdI3q+q2zFty4kz8Q=
-X-Gm-Gg: ASbGnctY829d0yxHtHWXeWJ7W7+m26sA4sMj1bfZPA4x4kuHyprJ4ZhC68yyqKo/LDn
- fG1HN5Knf6/NF/+SxJMsb8zK/vRyNapiqTbwloUBwYhGGJzTBpYW8StbBrRDWwxw7yiP3837HB0
- W0gc+6V+u2Oo52Mws4txTusmjwfggZyfvO1gr6ZsDkSxeEbrBcPrfsduWkTyUkQeRr5OJhowboT
- CBv6xkqZwRfkFmM+EyL5SsrljBlCqIqunuEHzVuxtrFjJCu7bTK3pRZIQndJJbPVDvt4HkJ3J+4
- Y3kQs5XJHjMT+XEhvHQJC0/T2oJxjrr432GsN6WAvrikHQqFG39WCOG8G9x1hCApjGgjQUUebg=
- =
-X-Google-Smtp-Source: AGHT+IGeZTzgPMyLh7NTsJQ2mZLboaEbGrxlWVe/A2OfF8W6yTae6W9vF4shOu0P8w8F6eQPrRJW9w==
-X-Received: by 2002:a5d:64e3:0:b0:3a4:f52f:d4a3 with SMTP id
- ffacd0b85a97d-3a8fed705ffmr2997155f8f.28.1751023534979; 
- Fri, 27 Jun 2025 04:25:34 -0700 (PDT)
+ bh=lgYISCMNkEKe+zFhK94dOEi+d176X9PjgGsBtgsVHM8=;
+ b=PKBv7ORnnnALtiuCG9Fbbu0pFdA+wlZi0u6r3yo5tX+Shzoypqg1pg/S2yrA9CLOBi
+ c9tyAZ0VNmO3wPV+4tUdB/UKluMEVTvtJy8UIyRavmltPKmf0oghsLOkw3jKuLzBsFVQ
+ /ULbft8JeD36vHffU358jiOYJcB9OioI3pzIZQSzv/0zs06LYEdlViyCLOyobWd9Gnx+
+ iGVk1B/OWhl4qjGdtOqnhDY7oOegr935WmeZSf2hfMjFICdR1EQ7pj6BpiHNQDVTKsKQ
+ 3WEtqKVJOeeEiqPsM99um/S0W04Ou7i7/x9g6un/2+wy+RisJNMri7+AaghZbRS2OlVP
+ 4UVA==
+X-Gm-Message-State: AOJu0YzX1eMFjZHdJF8SpUh3VNXXuUVCUdEToDM5CibDYoNU+qIeYYaM
+ rraINQYR5kw5DpJSZC0nl9t8//eRg8kLBF/Qnnd+exU5UNQMm9GOQIWQSF83sMgVe2s=
+X-Gm-Gg: ASbGncsgkaJuCPQDNajS2k2IQ5P3iqlpNMirfkF4xsgwHglGK1zHy4wMHIEEwINh+tT
+ Epy7sFg2v4TncIDmuZrSjDQ9dz0RsEubYIl9buDB6r01jWXTHZNmRA1acUv6dcQ+b/d/HyGS+p+
+ B6VLqavqGWJm2pVun1BB0dw1QcSmolEgIYr4N3e+jIvo//+av8LFiEWId5C3Mvs1YyZ8G3ufKhS
+ VEwQs5J8tY+1GTyr5XllRTdxi7Rw6W3thX9EpIqPtILavcrnN426iZ/gIU7ZVnunbn8nVfbM9dT
+ a0lFRSg8YmCaGoKSwVr4RVJNThj7X7MenaYaUhgbLna47pLQ5W7iKKSAa3jzLfw=
+X-Google-Smtp-Source: AGHT+IG1Yuizh7/5aajRPTyMcg43l/o7mD/5p8sVsb0rISmy/JFghhmmKS1N4AcSorRkdKAEzcJhpw==
+X-Received: by 2002:a05:6000:4411:b0:3a4:ce5c:5e8d with SMTP id
+ ffacd0b85a97d-3a6f3152d16mr4125037f8f.20.1751023522420; 
+ Fri, 27 Jun 2025 04:25:22 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45380d0f15esm69791405e9.1.2025.06.27.04.25.21
+ ffacd0b85a97d-3a88c7e7814sm2422975f8f.8.2025.06.27.04.25.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Jun 2025 04:25:31 -0700 (PDT)
+ Fri, 27 Jun 2025 04:25:20 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7C3C05F91C;
- Fri, 27 Jun 2025 12:25:13 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id A21055F8B4;
+ Fri, 27 Jun 2025 12:25:12 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
@@ -82,18 +81,20 @@ Cc: Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Zhao Liu <zhao1.liu@intel.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Alexandre Iooss <erdnaxe@crans.org>, Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH 13/15] MAINTAINERS: add myself to virtio-gpu for Odd Fixes
-Date: Fri, 27 Jun 2025 12:25:09 +0100
-Message-ID: <20250627112512.1880708-14-alex.bennee@linaro.org>
+ Alexandre Iooss <erdnaxe@crans.org>, Rowan Hart <rowanbhart@gmail.com>,
+ Julian Ganz <neither@nut.email>
+Subject: [PATCH 05/15] gdbstub: Expose gdb_write_register function to
+ consumers of gdbstub
+Date: Fri, 27 Jun 2025 12:25:01 +0100
+Message-ID: <20250627112512.1880708-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250627112512.1880708-1-alex.bennee@linaro.org>
 References: <20250627112512.1880708-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,32 +117,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Seeing as I've taken a few patches to here now I might as well put
-myself forward to maintain virtio-gpu. I've marked it as Odd Fixes as
-it is not my core focus. If someone with more GPU experience comes
-forward we can always update again.
+From: Rowan Hart <rowanbhart@gmail.com>
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+This patch exposes the gdb_write_register function from
+gdbstub/gdbstub.c via the exec/gdbstub.h header file to support use in
+plugins to write register contents.
+
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Julian Ganz <neither@nut.email>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
+Message-ID: <20250624175351.440780-2-rowanbhart@gmail.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20250603110204.838117-8-alex.bennee@linaro.org>
 ---
- MAINTAINERS | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/exec/gdbstub.h | 14 ++++++++++++++
+ gdbstub/gdbstub.c      |  2 +-
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 0a7c7f3770..0f96a8d956 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2677,7 +2677,8 @@ F: hw/display/ramfb*.c
- F: include/hw/display/ramfb.h
+diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
+index 0675b0b646..a16c0051ce 100644
+--- a/include/exec/gdbstub.h
++++ b/include/exec/gdbstub.h
+@@ -124,6 +124,20 @@ const GDBFeature *gdb_find_static_feature(const char *xmlname);
+  */
+ int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
  
- virtio-gpu
--S: Orphan
-+M: Alex Bennée <alex.bennee@linaro.org>
-+S: Odd Fixes
- F: hw/display/virtio-gpu*
- F: hw/display/virtio-vga.*
- F: include/hw/virtio/virtio-gpu.h
++/**
++ * gdb_write_register() - Write a register associated with a CPU.
++ * @cpu: The CPU associated with the register.
++ * @buf: The buffer that the register contents will be set to.
++ * @reg: The register's number returned by gdb_find_feature_register().
++ *
++ * The size of @buf must be at least the size of the register being
++ * written.
++ *
++ * Return: The number of written bytes, or 0 if an error occurred (for
++ * example, an unknown register was provided).
++ */
++int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg);
++
+ /**
+  * typedef GDBRegDesc - a register description from gdbstub
+  */
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index def0b7e877..dd5fb5667c 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -535,7 +535,7 @@ int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
+     return 0;
+ }
+ 
+-static int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
++int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
+ {
+     GDBRegisterState *r;
+ 
 -- 
 2.47.2
 
