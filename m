@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1E32C7EE32
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 00:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F54BC7EE32
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 01:09:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUxIT-0007Rf-V8; Thu, 26 Jun 2025 20:50:30 -0400
+	id 1uUxaS-00023r-Ng; Thu, 26 Jun 2025 21:09:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1uUxIO-0007RC-C2
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 20:50:25 -0400
-Received: from mx2.zhaoxin.com ([61.152.208.219])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1uUxIK-00026Z-Lw
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 20:50:23 -0400
-X-ASG-Debug-ID: 1750985404-1eb14e1c391de10001-jgbH7p
-Received: from ZXSHMBX2.zhaoxin.com (ZXSHMBX2.zhaoxin.com [10.28.252.164]) by
- mx2.zhaoxin.com with ESMTP id zUOfYFMVZuZId9by (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Fri, 27 Jun 2025 08:50:04 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
-Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX2.zhaoxin.com
- (10.28.252.164) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Fri, 27 Jun
- 2025 08:50:03 +0800
-Received: from ZXSHMBX1.zhaoxin.com ([::1]) by ZXSHMBX1.zhaoxin.com
- ([fe80::2c07:394e:4919:4dc1%7]) with mapi id 15.01.2507.044; Fri, 27 Jun 2025
- 08:50:03 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
-Received: from [192.168.31.91] (10.28.66.62) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Thu, 26 Jun
- 2025 20:07:07 +0800
-Message-ID: <0d038476-e7c6-4e7a-add2-aeb4d715c202@zhaoxin.com>
-Date: Thu, 26 Jun 2025 20:07:06 +0800
+ (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
+ id 1uUxaQ-000231-5t; Thu, 26 Jun 2025 21:09:02 -0400
+Received: from mail-io1-xd2b.google.com ([2607:f8b0:4864:20::d2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
+ id 1uUxaN-0004Hp-65; Thu, 26 Jun 2025 21:09:01 -0400
+Received: by mail-io1-xd2b.google.com with SMTP id
+ ca18e2360f4ac-8762a0866a3so48979739f.2; 
+ Thu, 26 Jun 2025 18:08:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1750986537; x=1751591337; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tgTEZA4KFIwzCVZHPH2LULKCGaquiuwY9ifA7S+tzbg=;
+ b=lbD63gTIM8b61Kf9S5ESLqtHKoTszB75S8jCZhe2VRXuUAqXehdhIAhkFO3zDy6ntf
+ Cj7w9vU4qpMKHFmPFOucF8no+3NIhof5XPGseVzVMoswoqqQYmOOr0xY1jk1AJzcJQ5Z
+ wsg2XQJSzB9cKJgo8w00CH7JY7fR1bs4HoT4FPJJqFC7Q6e35ax8ovGVLvfaggI1q930
+ ClmmKqRBWmmiWjy2J2yG2r3zZikxQ/Xff7csT/A0FibX0sjqazSByzereno6VyplRiJ9
+ OI3t4MPRVReHkKJzYJp3EvnpDNtBYxxRZOAcI3pdQAL1UdE4uhQgYffEDT1lQtkwM+UI
+ 9JTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750986537; x=1751591337;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tgTEZA4KFIwzCVZHPH2LULKCGaquiuwY9ifA7S+tzbg=;
+ b=QKeHa3/YWTpf9m7y4C1jMIHjPiQt/10TUerSKdDj06JHfeVUuigsCv6fA9tdNh+lAa
+ VDIH2ehcEf6f7/7H8/ogsVLzTpsP4fI4JoICMIl3sjtT9z0lk8z14SGhHhBZMHv7F56r
+ Erh+7NRb7LdrrOrGnzIUZ6Lv1Ak+ZeUppWsYkPotkf+1XGzeAHktRiWBOjfA+Bgi0Te9
+ /1L0JFLc9ggb9B99mFlMrQF0iGgVVoMSNaolbkxoc0ktTxpCtNatXPxJKo5XflczXrrY
+ QeB4EttYN2ZTlPts420KdNdHZ7GWHCGqUEzBOrkOYPC0aNBctYKekxoFDS6dKW1wfGeX
+ iClA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXBe0RrdeMxtrHh0jW2BeAomjt+GkbYk5vH6ljWiDUFMFYrBv23dgRlaApx7C7Mjty+FtxYX3bxm+Dl@nongnu.org
+X-Gm-Message-State: AOJu0YyOruHyW5kbAQs8/kI3+wp5u910QtM2NH/Wi9IGco7rmdTNF0Jk
+ CZW38wi+xThGbXYbvSgLhggdUUIRVnMR78FXBZlB3z5YBZ5u+snlI6xbgtoiRMJyZcI=
+X-Gm-Gg: ASbGncv6oIZVLH71H7gzgB631ujQ4joLFbj/qXF9pD4AisJwwfI5Ag+igoPJ2zaML2v
+ l9HPaV3WlfxVs0EeL9Dt4DVnI9BC0Bg2I6/+CUYQAZ1pqlcNxZB20dj7Ibe9Lwzo8Bnq14nZTvV
+ yEH4tivac7pndUBMsXY81/69910g21JlvKCnRt/WMRCQcHLJ2v8YYVzIKeQiOHF9mi3YtQZWpuM
+ YNGbkLxxHnGr64wHD8q1d/iRgog2py2azOAs+dImQDCHGmBcVCJJ28kNaBDOE+D4PQdt4ZCJCQY
+ C0zIViZcE+B2oS2ZMBvbTFHm3O7lBKfzOt+UGC2CuQ/NKQAbm7SU1PN5BFhg2VxcD0L/LEotgVz
+ b+JiHfYXoVFtjY9uFzpWxScftL4E48Q3j1UBmMWWQpQrXVccjmw==
+X-Google-Smtp-Source: AGHT+IGLVHAw1mqiWJEJKRrpg/9zi699TeV2Ib/ZW6WEbtcIwugG5/ERWICbh/V9qxKCdZpIg733Pg==
+X-Received: by 2002:a05:6602:2c90:b0:875:bbf0:8bf with SMTP id
+ ca18e2360f4ac-8768859204amr219500239f.5.1750986536719; 
+ Thu, 26 Jun 2025 18:08:56 -0700 (PDT)
+Received: from [10.36.15.110]
+ (wn-campus-nat-129-97-124-110.dynamic.uwaterloo.ca. [129.97.124.110])
+ by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-50204a8e17fsm253985173.101.2025.06.26.18.08.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Jun 2025 18:08:56 -0700 (PDT)
+Message-ID: <a0842801-ac45-4708-9253-8ec600e9c4aa@gmail.com>
+Date: Thu, 26 Jun 2025 21:08:54 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/8] i386/cpu: Add a "x-force-cpuid-0x1f" property
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, Igor Mammedov
- <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-X-ASG-Orig-Subj: Re: [PATCH 5/8] i386/cpu: Add a "x-force-cpuid-0x1f" property
-CC: Jason Zeng <jason.zeng@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>, "Tao
- Su" <tao1.su@intel.com>, Yi Lai <yi1.lai@intel.com>, Dapeng Mi
- <dapeng1.mi@intel.com>, Tejus GK <tejus.gk@nutanix.com>, Manish Mishra
- <manish.mishra@nutanix.com>, <qemu-devel@nongnu.org>
-References: <20250626083105.2581859-1-zhao1.liu@intel.com>
- <20250626083105.2581859-6-zhao1.liu@intel.com>
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-In-Reply-To: <20250626083105.2581859-6-zhao1.liu@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.28.66.62]
-X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 6/27/2025 8:50:02 AM
-X-Barracuda-Connect: ZXSHMBX2.zhaoxin.com[10.28.252.164]
-X-Barracuda-Start-Time: 1750985404
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 3379
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -1.42
-X-Barracuda-Spam-Status: No,
- SCORE=-1.42 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=BSF_SC0_SA085b, PR0N_SUBJECT
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.143446
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
- 0.20 PR0N_SUBJECT Subject has letters around special characters (pr0n)
- 0.40 BSF_SC0_SA085b         Custom Rule SA085b
-Received-SPF: pass client-ip=61.152.208.219;
- envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Subject: Re: [PATCH v2 18/21] fuse: Implement multi-threading
+Content-Language: en-US
+To: Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <20250604132813.359438-1-hreitz@redhat.com>
+ <20250604132813.359438-19-hreitz@redhat.com>
+From: Brian <hibriansong@gmail.com>
+In-Reply-To: <20250604132813.359438-19-hreitz@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2b;
+ envelope-from=hibriansong@gmail.com; helo=mail-io1-xd2b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,86 +106,569 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 6/26/25 4:31 PM, Zhao Liu wrote:
+On 6/4/25 9:28 AM, Hanna Czenczek wrote:
+> FUSE allows creating multiple request queues by "cloning" /dev/fuse FDs
+> (via open("/dev/fuse") + ioctl(FUSE_DEV_IOC_CLONE)).
 > 
+> We can use this to implement multi-threading.
 > 
-> From: Manish Mishra <manish.mishra@nutanix.com>
+> For configuration, we don't need any more information beyond the simple
+> array provided by the core block export interface: The FUSE kernel
+> driver feeds these FDs in a round-robin fashion, so all of them are
+> equivalent and we want to have exactly one per thread.
 > 
-> Add a "x-force-cpuid-0x1f" property so that CPU models can enable it and
-> have 0x1f CPUID leaf natually as the Host CPU.
+> These are the benchmark results when using four threads (compared to a
+> single thread); note that fio still only uses a single job, but
+> performance can still be improved because of said round-robin usage for
+> the queues.  (Not in the sync case, though, in which case I guess it
+> just adds overhead.)
 > 
-> The advantage is that when the CPU model's cache model is already
-> consistent with the Host CPU, for example, SRF defaults to l2 per
-> module & l3 per package, 0x1f can better help users identify the
-> topology in the VM.
+> file:
+>    read:
+>      seq aio:   264.8k ±0.8k (+120 %)
+>      rand aio:  143.8k ±0.4k (+ 27 %)
+>      seq sync:   49.9k ±0.5k (-  5 %)
+>      rand sync:  10.3k ±0.1k (-  1 %)
+>    write:
+>      seq aio:   226.6k ±2.1k (+184 %)
+>      rand aio:  225.9k ±1.8k (+186 %)
+>      seq sync:   36.9k ±0.6k (- 11 %)
+>      rand sync:  36.9k ±0.2k (- 11 %)
+> null:
+>    read:
+>      seq aio:   315.2k ±11.0k (+18 %)
+>      rand aio:  300.5k ±10.8k (+14 %)
+>      seq sync:  114.2k ± 3.6k (-16 %)
+>      rand sync: 112.5k ± 2.8k (-16 %)
+>    write:
+>      seq aio:   222.6k ±6.8k (-21 %)
+>      rand aio:  220.5k ±6.8k (-23 %)
+>      seq sync:  117.2k ±3.7k (-18 %)
+>      rand sync: 116.3k ±4.4k (-18 %)
 > 
-> Adding 0x1f for specific CPU models should not cause any trouble in
-> principle. This property is only enabled for CPU models that already
-> have 0x1f leaf on the Host, so software that originally runs normally on
-> the Host won't encounter issues in the Guest with corresponding CPU
-> model. Conversely, some software that relies on checking 0x1f might
-> have problems in the Guest due to the lack of 0x1f [*]. In
-> summary, adding 0x1f is also intended to further emulate the Host CPU
-> environment.
+> (I don't know what's going on in the null-write AIO case, sorry.)
 > 
-> [*]: https://lore.kernel.org/qemu-devel/PH0PR02MB738410511BF51B12DB09BE6CF6AC2@PH0PR02MB7384.namprd02.prod.outlook.com/
+> Here's results for numjobs=4:
 > 
-> Signed-off-by: Manish Mishra <manish.mishra@nutanix.com>
-> Co-authored-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> [Integrated and rebased 2 previous patches (ordered by post time)]
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> "Before", i.e. without multithreading in QSD/FUSE (results compared to
+> numjobs=1):
+> 
+> file:
+>    read:
+>      seq aio:   104.7k ± 0.4k (- 13 %)
+>      rand aio:  111.5k ± 0.4k (-  2 %)
+>      seq sync:   71.0k ±13.8k (+ 36 %)
+>      rand sync:  41.4k ± 0.1k (+297 %)
+>    write:
+>      seq aio:    79.4k ±0.1k (-  1 %)
+>      rand aio:   78.6k ±0.1k (±  0 %)
+>      seq sync:   83.3k ±0.1k (+101 %)
+>      rand sync:  82.0k ±0.2k (+ 98 %)
+> null:
+>    read:
+>      seq aio:   260.5k ±1.5k (-  2 %)
+>      rand aio:  260.1k ±1.4k (-  2 %)
+>      seq sync:  291.8k ±1.3k (+115 %)
+>      rand sync: 280.1k ±1.7k (+115 %)
+>    write:
+>      seq aio:   280.1k ±1.7k (±  0 %)
+>      rand aio:  279.5k ±1.4k (-  3 %)
+>      seq sync:  306.7k ±2.2k (+116 %)
+>      rand sync: 305.9k ±1.8k (+117 %)
+> 
+> (As probably expected, little difference in the AIO case, but great
+> improvements in the sync case because it kind of gives it an artificial
+> iodepth of 4.)
+> 
+> "After", i.e. with four threads in QSD/FUSE (now results compared to the
+> above):
+> 
+> file:
+>    read:
+>      seq aio:   193.3k ± 1.8k (+ 85 %)
+>      rand aio:  329.3k ± 0.3k (+195 %)
+>      seq sync:   66.2k ±13.0k (-  7 %)
+>      rand sync:  40.1k ± 0.0k (-  3 %)
+>    write:
+>      seq aio:   219.7k ±0.8k (+177 %)
+>      rand aio:  217.2k ±1.5k (+176 %)
+>      seq sync:   92.5k ±0.2k (+ 11 %)
+>      rand sync:  91.9k ±0.2k (+ 12 %)
+> null:
+>    read:
+>      seq aio:   706.7k ±2.1k (+171 %)
+>      rand aio:  714.7k ±3.2k (+175 %)
+>      seq sync:  431.7k ±3.0k (+ 48 %)
+>      rand sync: 435.4k ±2.8k (+ 50 %)
+>    write:
+>      seq aio:   746.9k ±2.8k (+167 %)
+>      rand aio:  749.0k ±4.9k (+168 %)
+>      seq sync:  420.7k ±3.1k (+ 37 %)
+>      rand sync: 419.1k ±2.5k (+ 37 %)
+> 
+> So this helps mainly for the AIO cases, but also in the null sync cases,
+> because null is always CPU-bound, so more threads help.
+> 
+> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 > ---
-> Note:
->    This patch integrates the idea from 2 previous posted patches (ordered
-> by post time)[1] [2], following the s-o-b policy of "Re-starting
-> abandoned work" in docs/devel/code-provenance.rst.
+>   block/export/fuse.c | 205 ++++++++++++++++++++++++++++++++++----------
+>   1 file changed, 159 insertions(+), 46 deletions(-)
 > 
-> [1]: From Manish: https://lore.kernel.org/qemu-devel/20240722101859.47408-1-manish.mishra@nutanix.com/
-> [2]: From Xiaoyao: https://lore.kernel.org/qemu-devel/20240813033145.279307-1-xiaoyao.li@intel.com/
-> ---
-> Changes since RFC:
->   * Rebase and rename the property as "x-force-cpuid-0x1f". (Igor)
-> ---
->   target/i386/cpu.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 08c84ba90f52..ee36f7ee2ccc 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -9934,6 +9934,7 @@ static const Property x86_cpu_properties[] = {
->       DEFINE_PROP_BOOL("x-intel-pt-auto-level", X86CPU, intel_pt_auto_level,
->                        true),
->       DEFINE_PROP_BOOL("x-l1-cache-per-thread", X86CPU, l1_cache_per_core, true),
-> +    DEFINE_PROP_BOOL("x-force-cpuid-0x1f", X86CPU, force_cpuid_0x1f, false),
->   };
+> diff --git a/block/export/fuse.c b/block/export/fuse.c
+> index 44f0b796b3..cdec31f2a8 100644
+> --- a/block/export/fuse.c
+> +++ b/block/export/fuse.c
+> @@ -31,11 +31,14 @@
+>   #include "qemu/error-report.h"
+>   #include "qemu/main-loop.h"
+>   #include "system/block-backend.h"
+> +#include "system/block-backend.h"
+> +#include "system/iothread.h"
+>   
+>   #include <fuse.h>
+>   #include <fuse_lowlevel.h>
+>   
+>   #include "standard-headers/linux/fuse.h"
+> +#include <sys/ioctl.h>
+>   
+>   #if defined(CONFIG_FALLOCATE_ZERO_RANGE)
+>   #include <linux/falloc.h>
+> @@ -50,12 +53,17 @@
+>   /* Small enough to fit in the request buffer */
+>   #define FUSE_MAX_WRITE_BYTES (4 * 1024)
+>   
+> -typedef struct FuseExport {
+> -    BlockExport common;
+> +typedef struct FuseExport FuseExport;
+>   
+> -    struct fuse_session *fuse_session;
+> -    unsigned int in_flight; /* atomic */
+> -    bool mounted, fd_handler_set_up;
+> +/*
+> + * One FUSE "queue", representing one FUSE FD from which requests are fetched
+> + * and processed.  Each queue is tied to an AioContext.
+> + */
+> +typedef struct FuseQueue {
+> +    FuseExport *exp;
+> +
+> +    AioContext *ctx;
+> +    int fuse_fd;
+>   
+>       /*
+>        * The request buffer must be able to hold a full write, and/or at least
+> @@ -66,6 +74,14 @@ typedef struct FuseExport {
+>                FUSE_MAX_WRITE_BYTES,
+>           FUSE_MIN_READ_BUFFER
+>       )];
+> +} FuseQueue;
+> +
+> +struct FuseExport {
+> +    BlockExport common;
+> +
+> +    struct fuse_session *fuse_session;
+> +    unsigned int in_flight; /* atomic */
+> +    bool mounted, fd_handler_set_up;
+>   
+>       /*
+>        * Set when there was an unrecoverable error and no requests should be read
+> @@ -74,7 +90,15 @@ typedef struct FuseExport {
+>        */
+>       bool halted;
+>   
+> -    int fuse_fd;
+> +    int num_queues;
+> +    FuseQueue *queues;
+> +    /*
+> +     * True if this export should follow the generic export's AioContext.
+> +     * Will be false if the queues' AioContexts have been explicitly set by the
+> +     * user, i.e. are expected to stay in those contexts.
+> +     * (I.e. is always false if there is more than one queue.)
+> +     */
+> +    bool follow_aio_context;
+>   
+>       char *mountpoint;
+>       bool writable;
+> @@ -85,11 +109,11 @@ typedef struct FuseExport {
+>       mode_t st_mode;
+>       uid_t st_uid;
+>       gid_t st_gid;
+> -} FuseExport;
+> +};
+>   
+>   /* Parameters to the request processing coroutine */
+>   typedef struct FuseRequestCoParam {
+> -    FuseExport *exp;
+> +    FuseQueue *q;
+>       int got_request;
+>   } FuseRequestCoParam;
+>   
+> @@ -102,11 +126,12 @@ static void fuse_export_halt(FuseExport *exp);
+>   static void init_exports_table(void);
+>   
+>   static int mount_fuse_export(FuseExport *exp, Error **errp);
+> +static int clone_fuse_fd(int fd, Error **errp);
+>   
+>   static bool is_regular_file(const char *path, Error **errp);
+>   
+>   static void read_from_fuse_fd(void *opaque);
+> -static void coroutine_fn fuse_co_process_request(FuseExport *exp);
+> +static void coroutine_fn fuse_co_process_request(FuseQueue *q);
+>   
+>   static void fuse_inc_in_flight(FuseExport *exp)
+>   {
+> @@ -136,8 +161,11 @@ static void fuse_attach_handlers(FuseExport *exp)
+>           return;
+>       }
+>   
+> -    aio_set_fd_handler(exp->common.ctx, exp->fuse_fd,
+> -                       read_from_fuse_fd, NULL, NULL, NULL, exp);
+> +    for (int i = 0; i < exp->num_queues; i++) {
+> +        aio_set_fd_handler(exp->queues[i].ctx, exp->queues[i].fuse_fd,
+> +                           read_from_fuse_fd, NULL, NULL, NULL,
+> +                           &exp->queues[i]);
+> +    }
+>       exp->fd_handler_set_up = true;
+>   }
+>   
+> @@ -146,8 +174,10 @@ static void fuse_attach_handlers(FuseExport *exp)
+>    */
+>   static void fuse_detach_handlers(FuseExport *exp)
+>   {
+> -    aio_set_fd_handler(exp->common.ctx, exp->fuse_fd,
+> -                       NULL, NULL, NULL, NULL, NULL);
+> +    for (int i = 0; i < exp->num_queues; i++) {
+> +        aio_set_fd_handler(exp->queues[i].ctx, exp->queues[i].fuse_fd,
+> +                           NULL, NULL, NULL, NULL, NULL);
+> +    }
+>       exp->fd_handler_set_up = false;
+>   }
+>   
+> @@ -162,6 +192,11 @@ static void fuse_export_drained_end(void *opaque)
+>   
+>       /* Refresh AioContext in case it changed */
+>       exp->common.ctx = blk_get_aio_context(exp->common.blk);
+> +    if (exp->follow_aio_context) {
+> +        assert(exp->num_queues == 1);
+> +        exp->queues[0].ctx = exp->common.ctx;
+> +    }
+> +
+>       fuse_attach_handlers(exp);
+>   }
+>   
+> @@ -192,8 +227,32 @@ static int fuse_export_create(BlockExport *blk_exp,
+>       assert(blk_exp_args->type == BLOCK_EXPORT_TYPE_FUSE);
+>   
+>       if (multithread) {
+> -        error_setg(errp, "FUSE export does not support multi-threading");
+> -        return -EINVAL;
+> +        /* Guaranteed by common export code */
+> +        assert(mt_count >= 1);
+> +
+> +        exp->follow_aio_context = false;
+> +        exp->num_queues = mt_count;
+> +        exp->queues = g_new(FuseQueue, mt_count);
+> +
+> +        for (size_t i = 0; i < mt_count; i++) {
+> +            exp->queues[i] = (FuseQueue) {
+> +                .exp = exp,
+> +                .ctx = multithread[i],
+> +                .fuse_fd = -1,
+> +            };
+> +        }
+> +    } else {
+> +        /* Guaranteed by common export code */
+> +        assert(mt_count == 0);
+> +
+> +        exp->follow_aio_context = true;
+> +        exp->num_queues = 1;
+> +        exp->queues = g_new(FuseQueue, 1);
+> +        exp->queues[0] = (FuseQueue) {
+> +            .exp = exp,
+> +            .ctx = exp->common.ctx,
+> +            .fuse_fd = -1,
+> +        };
+>       }
+>   
+>       /* For growable and writable exports, take the RESIZE permission */
+> @@ -280,13 +339,23 @@ static int fuse_export_create(BlockExport *blk_exp,
+>   
+>       g_hash_table_insert(exports, g_strdup(exp->mountpoint), NULL);
+>   
+> -    exp->fuse_fd = fuse_session_fd(exp->fuse_session);
+> -    ret = qemu_fcntl_addfl(exp->fuse_fd, O_NONBLOCK);
+> +    assert(exp->num_queues >= 1);
+> +    exp->queues[0].fuse_fd = fuse_session_fd(exp->fuse_session);
+> +    ret = qemu_fcntl_addfl(exp->queues[0].fuse_fd, O_NONBLOCK);
+>       if (ret < 0) {
+>           error_setg_errno(errp, -ret, "Failed to make FUSE FD non-blocking");
+>           goto fail;
+>       }
+>   
+> +    for (int i = 1; i < exp->num_queues; i++) {
+> +        int fd = clone_fuse_fd(exp->queues[0].fuse_fd, errp);
+> +        if (fd < 0) {
+> +            ret = fd;
+> +            goto fail;
+> +        }
+> +        exp->queues[i].fuse_fd = fd;
+> +    }
+> +
+>       fuse_attach_handlers(exp);
+>       return 0;
+>   
+> @@ -359,9 +428,42 @@ static int mount_fuse_export(FuseExport *exp, Error **errp)
+>       return 0;
+>   }
+>   
+> +/**
+> + * Clone the given /dev/fuse file descriptor, yielding a second FD from which
+> + * requests can be pulled for the associated filesystem.  Returns an FD on
+> + * success, and -errno on error.
+> + */
+> +static int clone_fuse_fd(int fd, Error **errp)
+> +{
+> +    uint32_t src_fd = fd;
+> +    int new_fd;
+> +    int ret;
+> +
+> +    /*
+> +     * The name "/dev/fuse" is fixed, see libfuse's lib/fuse_loop_mt.c
+> +     * (fuse_clone_chan()).
+> +     */
+> +    new_fd = open("/dev/fuse", O_RDWR | O_CLOEXEC | O_NONBLOCK);
+> +    if (new_fd < 0) {
+> +        ret = -errno;
+> +        error_setg_errno(errp, errno, "Failed to open /dev/fuse");
+> +        return ret;
+> +    }
+> +
+> +    ret = ioctl(new_fd, FUSE_DEV_IOC_CLONE, &src_fd);
+> +    if (ret < 0) {
+> +        ret = -errno;
+> +        error_setg_errno(errp, errno, "Failed to clone FUSE FD");
+> +        close(new_fd);
+> +        return ret;
+> +    }
+> +
+> +    return new_fd;
+> +}
+> +
+>   /**
+>    * Try to read a single request from the FUSE FD.
+> - * Takes a FuseExport pointer in `opaque`.
+> + * Takes a FuseQueue pointer in `opaque`.
+>    *
+>    * Assumes the export's in-flight counter has already been incremented.
+>    *
+> @@ -369,8 +471,9 @@ static int mount_fuse_export(FuseExport *exp, Error **errp)
+>    */
+>   static void coroutine_fn co_read_from_fuse_fd(void *opaque)
+>   {
+> -    FuseExport *exp = opaque;
+> -    int fuse_fd = exp->fuse_fd;
+> +    FuseQueue *q = opaque;
+> +    int fuse_fd = q->fuse_fd;
+> +    FuseExport *exp = q->exp;
+>       ssize_t ret;
+>       const struct fuse_in_header *in_hdr;
+>   
+> @@ -378,8 +481,7 @@ static void coroutine_fn co_read_from_fuse_fd(void *opaque)
+>           goto no_request;
+>       }
+>   
+> -    ret = RETRY_ON_EINTR(read(fuse_fd, exp->request_buf,
+> -                              sizeof(exp->request_buf)));
+> +    ret = RETRY_ON_EINTR(read(fuse_fd, q->request_buf, sizeof(q->request_buf)));
+>       if (ret < 0 && errno == EAGAIN) {
+>           /* No request available */
+>           goto no_request;
+> @@ -397,7 +499,7 @@ static void coroutine_fn co_read_from_fuse_fd(void *opaque)
+>           goto no_request;
+>       }
+>   
+> -    in_hdr = (const struct fuse_in_header *)exp->request_buf;
+> +    in_hdr = (const struct fuse_in_header *)q->request_buf;
+>       if (unlikely(ret != in_hdr->len)) {
+>           error_report("Number of bytes read from FUSE device does not match "
+>                        "request size, expected %" PRIu32 " bytes, read %zi "
+> @@ -408,7 +510,7 @@ static void coroutine_fn co_read_from_fuse_fd(void *opaque)
+>           goto no_request;
+>       }
+>   
+> -    fuse_co_process_request(exp);
+> +    fuse_co_process_request(q);
+>   
+>   no_request:
+>       fuse_dec_in_flight(exp);
+> @@ -417,16 +519,16 @@ no_request:
+>   /**
+>    * Try to read and process a single request from the FUSE FD.
+>    * (To be used as a handler for when the FUSE FD becomes readable.)
+> - * Takes a FuseExport pointer in `opaque`.
+> + * Takes a FuseQueue pointer in `opaque`.
+>    */
+>   static void read_from_fuse_fd(void *opaque)
+>   {
+> -    FuseExport *exp = opaque;
+> +    FuseQueue *q = opaque;
+>       Coroutine *co;
+>   
+> -    co = qemu_coroutine_create(co_read_from_fuse_fd, exp);
+> +    co = qemu_coroutine_create(co_read_from_fuse_fd, q);
+>       /* Decremented by co_read_from_fuse_fd() */
+> -    fuse_inc_in_flight(exp);
+> +    fuse_inc_in_flight(q->exp);
+>       qemu_coroutine_enter(co);
+>   }
+>   
+> @@ -451,6 +553,16 @@ static void fuse_export_delete(BlockExport *blk_exp)
+>   {
+>       FuseExport *exp = container_of(blk_exp, FuseExport, common);
+>   
+> +    for (int i = 0; i < exp->num_queues; i++) {
+> +        FuseQueue *q = &exp->queues[i];
+> +
+> +        /* Queue 0's FD belongs to the FUSE session */
+> +        if (i > 0 && q->fuse_fd >= 0) {
+> +            close(q->fuse_fd);
+> +        }
+> +    }
+> +    g_free(exp->queues);
+> +
+>       if (exp->fuse_session) {
+>           if (exp->mounted) {
+>               fuse_session_unmount(exp->fuse_session);
+> @@ -1108,23 +1220,23 @@ static int fuse_write_buf_response(int fd, uint32_t req_id,
+>   /*
+>    * For use in fuse_co_process_request():
+>    * Returns a pointer to the parameter object for the given operation (inside of
+> - * exp->request_buf, which is assumed to hold a fuse_in_header first).
+> - * Verifies that the object is complete (exp->request_buf is large enough to
+> + * q->request_buf, which is assumed to hold a fuse_in_header first).
+> + * Verifies that the object is complete (q->request_buf is large enough to
+>    * hold it in one piece, and the request length includes the whole object).
+>    *
+> - * Note that exp->request_buf may be overwritten after yielding, so the returned
+> + * Note that q->request_buf may be overwritten after yielding, so the returned
+>    * pointer must not be used across a function that may yield!
+>    */
+> -#define FUSE_IN_OP_STRUCT(op_name, export) \
+> +#define FUSE_IN_OP_STRUCT(op_name, queue) \
 
-After applying these patches to QEMU mainline at commit 6e1571533fd9:
+Should `q` actually be `queue` (i.e. the second parameter)?
 
-$ git am 
-patches-from-https://lore.kernel.org/qemu-devel/20250620092734.1576677-1-zhao1.liu@intel.com/
-$ git am 
-patches-from-https://lore.kernel.org/all/20250626083105.2581859-6-zhao1.liu@intel.com/
+The original code works because the second parameter passed to this 
+macro is called `q` in the caller function.
 
-and configure && make qemu with:
+>       ({ \
+>           const struct fuse_in_header *__in_hdr = \
+> -            (const struct fuse_in_header *)(export)->request_buf; \
+> +            (const struct fuse_in_header *)(q)->request_buf; \
 
-$ ./configure --target-list=x86_64-softmmu --enable-debug --enable-kvm 
---enable-sdl --enable-gtk --enable-spice --prefix=/usr --enable-libusb 
---enable-usb-redir --enable-trace-backends=simple && make -j32
+The same issue here.
 
-I ran into this build error:
-
-target/i386/cpu.c:9942:52: error: 'X86CPU' {aka 'struct ArchCPU'} has no member 
-named 'force_cpuid_0x1f' ; did you mean 'enable_cpuid_0x1f' ?
-
-I haven't debug it yet, because it seems like a simple mistake, asking you 
-directly might be quicker.
-
-> 
->   #ifndef CONFIG_USER_ONLY
-> --
-> 2.34.1
-> 
+>           const struct fuse_##op_name##_in *__in = \
+>               (const struct fuse_##op_name##_in *)(__in_hdr + 1); \
+>           const size_t __param_len = sizeof(*__in_hdr) + sizeof(*__in); \
+>           uint32_t __req_len; \
+>           \
+> -        QEMU_BUILD_BUG_ON(sizeof((export)->request_buf) < __param_len); \
+> +        QEMU_BUILD_BUG_ON(sizeof((q)->request_buf) < __param_len); \
+>           \
+>           __req_len = __in_hdr->len; \
+>           if (__req_len < __param_len) { \
+> @@ -1161,11 +1273,12 @@ static int fuse_write_buf_response(int fd, uint32_t req_id,
+>    * Process a FUSE request, incl. writing the response.
+>    *
+>    * Note that yielding in any request-processing function can overwrite the
+> - * contents of exp->request_buf.  Anything that takes a buffer needs to take
+> + * contents of q->request_buf.  Anything that takes a buffer needs to take
+>    * care that the content is copied before yielding.
+>    */
+> -static void coroutine_fn fuse_co_process_request(FuseExport *exp)
+> +static void coroutine_fn fuse_co_process_request(FuseQueue *q)
+>   {
+> +    FuseExport *exp = q->exp;
+>       uint32_t opcode;
+>       uint64_t req_id;
+>       /*
+> @@ -1188,7 +1301,7 @@ static void coroutine_fn fuse_co_process_request(FuseExport *exp)
+>       /* Limit scope to ensure pointer is no longer used after yielding */
+>       {
+>           const struct fuse_in_header *in_hdr =
+> -            (const struct fuse_in_header *)exp->request_buf;
+> +            (const struct fuse_in_header *)q->request_buf;
+>   
+>           opcode = in_hdr->opcode;
+>           req_id = in_hdr->unique;
+> @@ -1196,7 +1309,7 @@ static void coroutine_fn fuse_co_process_request(FuseExport *exp)
+>   
+>       switch (opcode) {
+>       case FUSE_INIT: {
+> -        const struct fuse_init_in *in = FUSE_IN_OP_STRUCT(init, exp);
+> +        const struct fuse_init_in *in = FUSE_IN_OP_STRUCT(init, q);
+>           ret = fuse_co_init(exp, FUSE_OUT_OP_STRUCT(init, out_buf),
+>                              in->max_readahead, in->flags);
+>           break;
+> @@ -1219,23 +1332,23 @@ static void coroutine_fn fuse_co_process_request(FuseExport *exp)
+>           break;
+>   
+>       case FUSE_SETATTR: {
+> -        const struct fuse_setattr_in *in = FUSE_IN_OP_STRUCT(setattr, exp);
+> +        const struct fuse_setattr_in *in = FUSE_IN_OP_STRUCT(setattr, q);
+>           ret = fuse_co_setattr(exp, FUSE_OUT_OP_STRUCT(attr, out_buf),
+>                                 in->valid, in->size, in->mode, in->uid, in->gid);
+>           break;
+>       }
+>   
+>       case FUSE_READ: {
+> -        const struct fuse_read_in *in = FUSE_IN_OP_STRUCT(read, exp);
+> +        const struct fuse_read_in *in = FUSE_IN_OP_STRUCT(read, q);
+>           ret = fuse_co_read(exp, &out_data_buffer, in->offset, in->size);
+>           break;
+>       }
+>   
+>       case FUSE_WRITE: {
+> -        const struct fuse_write_in *in = FUSE_IN_OP_STRUCT(write, exp);
+> +        const struct fuse_write_in *in = FUSE_IN_OP_STRUCT(write, q);
+>           uint32_t req_len;
+>   
+> -        req_len = ((const struct fuse_in_header *)exp->request_buf)->len;
+> +        req_len = ((const struct fuse_in_header *)q->request_buf)->len;
+>           if (unlikely(req_len < sizeof(struct fuse_in_header) + sizeof(*in) +
+>                                  in->size)) {
+>               warn_report("FUSE WRITE truncated; received %zu bytes of %" PRIu32,
+> @@ -1264,7 +1377,7 @@ static void coroutine_fn fuse_co_process_request(FuseExport *exp)
+>       }
+>   
+>       case FUSE_FALLOCATE: {
+> -        const struct fuse_fallocate_in *in = FUSE_IN_OP_STRUCT(fallocate, exp);
+> +        const struct fuse_fallocate_in *in = FUSE_IN_OP_STRUCT(fallocate, q);
+>           ret = fuse_co_fallocate(exp, in->offset, in->length, in->mode);
+>           break;
+>       }
+> @@ -1279,7 +1392,7 @@ static void coroutine_fn fuse_co_process_request(FuseExport *exp)
+>   
+>   #ifdef CONFIG_FUSE_LSEEK
+>       case FUSE_LSEEK: {
+> -        const struct fuse_lseek_in *in = FUSE_IN_OP_STRUCT(lseek, exp);
+> +        const struct fuse_lseek_in *in = FUSE_IN_OP_STRUCT(lseek, q);
+>           ret = fuse_co_lseek(exp, FUSE_OUT_OP_STRUCT(lseek, out_buf),
+>                               in->offset, in->whence);
+>           break;
+> @@ -1293,11 +1406,11 @@ static void coroutine_fn fuse_co_process_request(FuseExport *exp)
+>       /* Ignore errors from fuse_write*(), nothing we can do anyway */
+>       if (out_data_buffer) {
+>           assert(ret >= 0);
+> -        fuse_write_buf_response(exp->fuse_fd, req_id, out_hdr,
+> +        fuse_write_buf_response(q->fuse_fd, req_id, out_hdr,
+>                                   out_data_buffer, ret);
+>           qemu_vfree(out_data_buffer);
+>       } else {
+> -        fuse_write_response(exp->fuse_fd, req_id, out_hdr,
+> +        fuse_write_response(q->fuse_fd, req_id, out_hdr,
+>                               ret < 0 ? ret : 0,
+>                               ret < 0 ? 0 : ret);
+>       }
 
 
