@@ -4,82 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 534D6C7EE2A
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 20:50:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85321C77B7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 20:53:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uVG1G-0005KJ-QL; Fri, 27 Jun 2025 16:49:58 -0400
+	id 1uVG47-0007LL-UY; Fri, 27 Jun 2025 16:52:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yodel.eldar@gmail.com>)
- id 1uVG1E-0005Je-SY
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 16:49:56 -0400
-Received: from mail-pf1-x442.google.com ([2607:f8b0:4864:20::442])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uVG46-0007Ki-Hd
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 16:52:54 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yodel.eldar@gmail.com>)
- id 1uVG1D-0005Gr-1X
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 16:49:56 -0400
-Received: by mail-pf1-x442.google.com with SMTP id
- d2e1a72fcca58-74924255af4so462015b3a.1
- for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 13:49:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751057393; x=1751662193; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=55pIi7kf6Zis72VmkGKSzNIxzpZaUxSaUCgdQZi2+Sc=;
- b=HgGGMDGjvT1/V9GK9KJ9wxY+8uNlTxKs+VChnQAXu3Cr08cb697O1lVLc9oi1Q+duy
- Hp7hNUQH2SykXzIZO1u0SN93s8Bq1gNpKRcyDFPTY3PvjInLHJzrfNgW5tDLuaVj9qd9
- 7ERnepiKeGMwbYxNbDyQBCRmE61GCZ4mjv4NZNZjolSCz8ytLsfv/y7B5k2pxlgLQaY8
- 6LDH8RM5DzJHVjkuBi5nJVThb5G6UFYmFUiUwfwXoerAlSUiYlhm/h7qYL8YeVQgDCAc
- Ou25ucxx9mHQ5hJc6D+m72vk42ox08j8XQYmZiULVNuAVxYOZGfbuGCkYY3FSbYDQfvD
- 2tGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751057393; x=1751662193;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=55pIi7kf6Zis72VmkGKSzNIxzpZaUxSaUCgdQZi2+Sc=;
- b=ri1ooWjsSjUThQZ2f3jqnzKVMTk9jOsh8PMJ/9gSjsWzTBHXACKFyETqdXdHdKW8+Y
- pcoUJdJknDUxeVPqSyqH/h0NX6lueTmesAl6EvSNSSUCW1Q+YDCg0oHv+P8DPyvPVLHx
- mLBUGe0prlU0HVpHsBhChdAnBk/w7uWaXjMzBlWDH4kp3stCboutW7TpoP0ngr/v7fH1
- ma/U2Ro3vxazKhPv7cnYChWALjG8ZjPkt6SiudagbBH2CfD44BIY8515Gfm+zWEmskdA
- 8ZufOOraozu2DG5FVmScC+vufIjm7lkFs/8na9j1O2L+HCadQ+Z1b0ccdeiFEa5pY6l0
- 72Fg==
-X-Gm-Message-State: AOJu0YyGGdcqQIx0H4N5NwpwW3oLA0NX4OFfSBI5OwJ+yRBI00Gu9fLn
- fYWNRytbVrzD19Drobq8fAFU91CjwiPR0QJh1G5Fu8lAv1MCROmNkIzAnf4U94XK
-X-Gm-Gg: ASbGncu1NQXrG1Lanhi9yqOUiVDxOuIvPNxR1k1RZ+LlFD1AWGgWBqDWMEt3ceJjAdx
- WauVZgR3NOugxdi8xS2aEDZFFcHoqxRZeVUyFAwlkmTdQOz2LK/Rl/Grhi1zDeS2y+22cbCwYza
- GbMscFtJKdjmQ2/B5Gp0BUPUHYl5l16dq35MFpOD7jsRPvxbKYDAwfDjGZfu4vCHYzCl0cRfx7K
- TOrCSVvk4AvlmScr8UEThTbQLBeiFC6J+5FmNVE2cwZodnWCFeIVZ6mziQjtXM2leLpqC20UEJH
- i1kOkiuw3m37KpWvQscDuUag1wthG152XtIrDfPIQe2bhc591HsUCm7Lew==
-X-Google-Smtp-Source: AGHT+IEQQrPxXOxR7o0tJixk+SjDUuiHtNynIthBiDnl2HROtL7iVc9FMtsqqbxa76oxQRfh7aUM0w==
-X-Received: by 2002:a05:6a20:a11c:b0:218:59b:b2f4 with SMTP id
- adf61e73a8af0-220a17f7369mr6142906637.42.1751057393373; 
- Fri, 27 Jun 2025 13:49:53 -0700 (PDT)
-Received: from darlin ([89.187.185.165]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74af557b3bcsm2977538b3a.101.2025.06.27.13.49.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Jun 2025 13:49:52 -0700 (PDT)
-From: Yodel Eldar <yodel.eldar@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, richard.henderson@linaro.org, laurent@vivier.eu,
- Yodel Eldar <yodel.eldar@gmail.com>
-Subject: [PATCH 0/2] target/alpha: Add TCG plugin register tracking support
-Date: Fri, 27 Jun 2025 15:47:57 -0500
-Message-ID: <20250627204817.47595-1-yodel.eldar@gmail.com>
-X-Mailer: git-send-email 2.50.0
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uVG44-0005mG-RG
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 16:52:54 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 232EC21134;
+ Fri, 27 Jun 2025 20:52:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1751057571; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FhtVvdQ4xBMZ/b+A2+k9vl0MEDJyZSSSBXoytq758ck=;
+ b=1EBTmjBDKAhrN3TMGl2Ychfu1kYaMg9THn+lZNjfr0oBLkBiNkcm884lrpSM5j/3GfQ1b1
+ WY3VgVz0AfQxZyA1TDwy7q9gtbZ5eCln4/ZoCj1TJP/vqFdHEpQWCNZgUEjLm3HEqb/SYt
+ nVSRN135xbFjh5cnoUYe8IQt4nWdT1c=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1751057571;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FhtVvdQ4xBMZ/b+A2+k9vl0MEDJyZSSSBXoytq758ck=;
+ b=n5QLt+Md9SBH/GW0wcFDnj5iDJguAvbWtb8N+F9+dlEZNgahZmWBA4cnZnEY2ibaazpknf
+ epXDvyuTNFbzReBw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1751057571; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FhtVvdQ4xBMZ/b+A2+k9vl0MEDJyZSSSBXoytq758ck=;
+ b=1EBTmjBDKAhrN3TMGl2Ychfu1kYaMg9THn+lZNjfr0oBLkBiNkcm884lrpSM5j/3GfQ1b1
+ WY3VgVz0AfQxZyA1TDwy7q9gtbZ5eCln4/ZoCj1TJP/vqFdHEpQWCNZgUEjLm3HEqb/SYt
+ nVSRN135xbFjh5cnoUYe8IQt4nWdT1c=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1751057571;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FhtVvdQ4xBMZ/b+A2+k9vl0MEDJyZSSSBXoytq758ck=;
+ b=n5QLt+Md9SBH/GW0wcFDnj5iDJguAvbWtb8N+F9+dlEZNgahZmWBA4cnZnEY2ibaazpknf
+ epXDvyuTNFbzReBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9619F13786;
+ Fri, 27 Jun 2025 20:52:50 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 4iX/FaIEX2hhOAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 27 Jun 2025 20:52:50 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: xjdeng <micro6947@gmail.com>, qemu-devel@nongnu.org
+Cc: xjdeng <micro6947@gmail.com>
+Subject: Re: [PATCH] qtest/migration: Fix potential NPD through getenv
+In-Reply-To: <20250627024226.1767-1-micro6947@gmail.com>
+References: <20250627024226.1767-1-micro6947@gmail.com>
+Date: Fri, 27 Jun 2025 17:52:47 -0300
+Message-ID: <87qzz46h5s.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::442;
- envelope-from=yodel.eldar@gmail.com; helo=mail-pf1-x442.google.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; MIME_TRACE(0.00)[0:+];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; TO_DN_SOME(0.00)[];
+ FREEMAIL_TO(0.00)[gmail.com,nongnu.org];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; FREEMAIL_CC(0.00)[gmail.com];
+ RCPT_COUNT_THREE(0.00)[3]; FROM_EQ_ENVFROM(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,63 +114,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds TCG plugin register tracking support for the Alpha
-target and resolves gitlab issue #2569:
+xjdeng <micro6947@gmail.com> writes:
 
-  https://gitlab.com/qemu-project/qemu/-/issues/2569
+Hi, thanks for the interest in fixing this. However, the analysis it not
+quite right:
 
-As mentioned in the bug report by Alex Bennée, the register list is
-built using the target's corresponding GDB XML feature file, but the
-Alpha target does not have one. The second patch introduces the missing
-feature file and the necessary plumbing for it.
+> In `find_common_machine_version`, the code previously assumed that
+> `getenv(var1)` and `getenv(var2)` would always return non-NULL values.
 
-While testing the second patch, I noticed the following error:
+That's not true. qtest_qemu_binary() has:
 
-  qemu-alpha: GLib: g_strrstr: assertion 'haystack != NULL' failed
+    if (var) {
+        qemu_bin = getenv(var);
+        if (qemu_bin) {        <--- HERE
+            return qemu_bin;
+        }
+    }
 
-when running:
+> However, if either environment variable is not set, `getenv` returns
+> NULL, which could lead to a null pointer dereference.
+>
+> Tracing upstream usage: `find_common_machine_version` is called by
+> `resolve_machine_version` with `QEMU_ENV_SRC` and `QEMU_ENV_DST`.
+> `resolve_machine_version` is used by `migrate_start`, which is called
+> by `migrate_postcopy_prepare`, and ultimately by `test_postcopy_common`.
+>
+> In `test_postcopy_common`, after `migrate_postcopy_prepare`, the
+> function `migrate_postcopy_complete` is called. Inside, 
+> `migration_get_env` checks if `QEMU_ENV_SRC` and `QEMU_ENV_DST` are
+> set before use. Thus, these variables can be NULL, leading to a
+> potential null pointer dereference in `find_common_machine_version`.
 
-  ./qemu-alpha -d plugin \
-  -plugin ./contrib/plugins/libexeclog.so,reg=*,rdisas=on \
-  ./tests/tcg/alpha-linux-user/linux-test
+There's no dereference happening anywhere, just a g_test_message(),
+which would show "(null)".
 
-and discovered an issue with execlog.c that the first patch resolves:
-a missing null check after execlog searches a disassembled instruction
-for a space separator between the mnemonic and the operands. Execlog
-assumes that disassembled instructions will contain a space, but some
-disassemblers use tabs (like Alpha).
+>
+> Signed-off-by: xjdeng <micro6947@gmail.com>
+> ---
+>  tests/qtest/migration/migration-util.c | 21 +++++++++++++++++++--
+>  1 file changed, 19 insertions(+), 2 deletions(-)
+>
+> diff --git a/tests/qtest/migration/migration-util.c b/tests/qtest/migration/migration-util.c
+> index 642cf50c8d..45c9e164e2 100644
+> --- a/tests/qtest/migration/migration-util.c
+> +++ b/tests/qtest/migration/migration-util.c
+> @@ -203,8 +203,25 @@ char *find_common_machine_version(const char *mtype, const char *var1,
+>          return g_strdup(type2);
+>      }
+>  
+> -    g_test_message("No common machine version for machine type '%s' between "
+> -                   "binaries %s and %s", mtype, getenv(var1), getenv(var2));
 
-Besides adding the null check, the execlog patch also adds tab to the
-separator search by replacing the g_strstr_len call with a call to
-strpbrk, so that the plugin would operate as intended for Alpha.
+I don't think we'll ever reach here in case one var is NULL. It would
+have been replaced with QTEST_QEMU_BINARY and either asserted or exited
+in the if below:
 
-Two pointers in the immediate area of the changed code were converted to
-const pointers in keeping with the QEMU Coding Style. Also, as a trivial
-optimization, I took the liberty of adding a break statement to the
-register search loop that immediately follows the separator search, so
-that it breaks out of the loop as soon as a relevant register is found
-in the instruction; please let me know if either of these minor changes
-should be moved to a separate patch file.
+    g_autofree char *type1 = qtest_resolve_machine_alias(var1, mtype);
+    g_autofree char *type2 = qtest_resolve_machine_alias(var2, mtype);
 
-Lastly, this is my first submission to QEMU, and I want to thank
-every past, present, and future contributor to this project that has
-kept my system secure as I tinker with weird machines in the ultimate
-sandbox. QEMU is truly mind-blowing technology, and I have all of
-you to thank for it: Thanks!
+    g_assert(type1 && type2);
 
-Yodel Eldar (2):
-  contrib/plugins/execlog: Add tab to the separator search of insn_disas
-  target/alpha: Add GDB XML feature file
+    if (g_str_equal(type1, type2)) {
+        /* either can be used */
+        return g_strdup(type1);
+    }
 
- configs/targets/alpha-linux-user.mak |   1 +
- configs/targets/alpha-softmmu.mak    |   1 +
- contrib/plugins/execlog.c            |  15 +--
- gdb-xml/alpha-core.xml               | 136 +++++++++++++++++++++++++++
- target/alpha/cpu.c                   |   1 +
- 5 files changed, 148 insertions(+), 6 deletions(-)
- create mode 100644 gdb-xml/alpha-core.xml
+Can you provide a test command line that exposes the issue? Something
+like:
 
--- 
-2.50.0
+QTEST_QEMU_BINARY=./qemu-system-<arch> QTEST_QEMU_BINARY_DST=<some other
+qemu version here> ../tests/qtest/migration-test --full
 
+Thanks
+
+> +    char *varstring1 = getenv(var1);
+> +    char *varstring2 = getenv(var2);
+> +    if (varstring1 && varstring2) {
+> +        g_test_message("No common machine version for machine type '%s' "
+> +                       "between binaries %s and %s",
+> +                       mtype, varstring1, varstring2);
+> +    } else if (varstring1) {
+> +        g_test_message("No common machine version for machine type '%s' "
+> +                       "between binary %s and environment variable %s",
+> +                       mtype, varstring1, var2);
+> +    } else if (varstring2) {
+> +        g_test_message("No common machine version for machine type '%s' "
+> +                       "between binary %s and environment variable %s",
+> +                       mtype, varstring2, var1);
+> +    } else {
+> +        g_test_message("No common machine version for machine type '%s' "
+> +                       "between environment variables %s and %s",
+> +                       mtype, var1, var2);
+> +    }
+>      g_assert_not_reached();
+>  }
 
