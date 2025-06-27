@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B1AC77B7F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 11:28:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8141C7EE31
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 11:28:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uV7DA-0005Aq-1z; Fri, 27 Jun 2025 07:25:40 -0400
+	id 1uV7D0-00056E-Vu; Fri, 27 Jun 2025 07:25:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uV7Cr-00055L-9c
+ id 1uV7Cr-00055J-7k
  for qemu-devel@nongnu.org; Fri, 27 Jun 2025 07:25:21 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uV7Cn-00077t-NU
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 07:25:20 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-453608ed113so19764705e9.0
- for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 04:25:17 -0700 (PDT)
+ id 1uV7Cn-00077Y-2W
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 07:25:19 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-450cfb79177so11250665e9.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 04:25:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751023516; x=1751628316; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751023515; x=1751628315; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mFEb0bgv+2xGk9RmgZr4IJS3shLJx45QACChrHbJL0M=;
- b=JOv372kwf2xa92OfsjghTIAVDLabUBGLM42/hVfNqCtly8QJknYfCu4y2qbqRvD9x9
- JpsTj/n6vvYjbKSOitCauX5tcYIzFZcLYEYFMoP2ZKzbw0VNaAyL1VCeU0njg+bdAUT3
- k4odB6xPga9wgbTbDsvowEgNpopF0seDXhIwl4v2USXGnnUV8j3UbLahlbBbaBnf3ziW
- ydKIIZnK7eeCYWEW21Xxgu2ToVcFGRhtuiLZLbgTPDeGxP0LVfK0ZkCIwj08kjheWuB1
- 9EOLQsGEFIngeMQVuJYbDOw+OQn+AR8LuTMpkdvFj5lKyedIGdCXUQ68ChFNq/TS9s6l
- FiFg==
+ bh=86d2/oAIEj3do6T300sHlZkco6pyNAgZUSH9/1Z5+kc=;
+ b=qOgshlpv6em4iiXGxlgdhbI4+75yyk0JuJpNXj8JlRmZeot8l5HFLCmr2kLCuE6U4z
+ x6iP3qBbb071sGpz1hRm3mVh1mtXUmTpLpJARrKcU3qSYOjzjn7KS8LJrX6Rd7GbZy+3
+ Y2CfM4uWYmTJPb8Th7W0iWWOXu2Yy80HISXmScevcclyh7uVn38HHrjvr+OsAZCClLaF
+ GxIow+PansuaD1OQVLnOda8XRLgJZ6OC9kPlH8jo0JD4VexTnEszNT+yH5iLrSdLjUMf
+ DId1G8J2leyLY2roSl/vEKlo+8Mrh0njlHY86YOeE0S16QNWuplI4kbGAnFmURVQHOa6
+ HZCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751023516; x=1751628316;
+ d=1e100.net; s=20230601; t=1751023515; x=1751628315;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mFEb0bgv+2xGk9RmgZr4IJS3shLJx45QACChrHbJL0M=;
- b=Xf074khXjekaweDdaIVSFYpvD4Rfy86Y8okQZ0thJ6U8zP1rMt88iEFwrJDMPermBA
- FWBVvW7WiO3+//cKhfUUC7V1j43S1LnKNgIV/SEG5UqYxCHrnHMUwiER7t2PoG3jxAEh
- JxaFR/rDeXxolHjFCNXFwcjHJGMILpFYP8V/URRBOhcjpNHc4sofMo5PbCvFUvOB+Mzd
- hJg/8zDEAGxHiWnEXoORYitYBw3tbVOc2J8QZq/6LgjkC1OozOlMgx3hWS+cZKa9lJR1
- hTg1vE0LtaO3wtPU8eckY5afNA+xlc5B83nXHTXTUmLdqk6X/Cgikl1XFaZYt4iIG023
- Or4A==
-X-Gm-Message-State: AOJu0Yx+B1kBNfeBr1R0x0P6PMwufhPG0e6zFFtK2Nc836veOp1i1yf3
- h4L2eumEbkn7quBPQyVxNasjmiSWk+KtPfVFLPCaj3awChBbnrCJheZsvBagCqFIgaI=
-X-Gm-Gg: ASbGncvfvZWjud8gIv20KohmdN2RNra20XddYjJZrxgt1gvk4e6CZyp8bbAoXIvRmwN
- ORmzcFHeShij5WPcnNRtznkSZA4d8OSkpMQ4FdFzoACeXPYmHeGhcZa8+GwcUSIuwEvXvhdG0PN
- dCh3W/I6vUuC4/PA9gz0hgaWUHBfSC9YBK9eOPBa3l4+XCXr9Kf+bJexH4BxaCykMEDe1nWEyOq
- Gf0+pcdMGk8onQY/Tf+M0ExB/mge6y93fLCq0NyioVJFfLPPHZwiFyI5vXqjJRpciHRdSHtlheD
- p+qtt3Hq1DPG2huD+clJwndTADGkHBHWfDe5eQNLKykkfKImD8GKNek+sHJleeQ=
-X-Google-Smtp-Source: AGHT+IESrMLOsO5v3Ll5bK0aV/YoVRqfvxfhpHS1NaRSAZ0R+zDjtml+XHBKyVWnq4JZ5pe3xhIIjw==
-X-Received: by 2002:a05:600c:1551:b0:450:cd25:e68f with SMTP id
- 5b1f17b1804b1-45390ac9011mr19595025e9.27.1751023515990; 
- Fri, 27 Jun 2025 04:25:15 -0700 (PDT)
+ bh=86d2/oAIEj3do6T300sHlZkco6pyNAgZUSH9/1Z5+kc=;
+ b=jGgogUZsLj+Ta24762cCqW5jZSUZ/rA2Uq6rYMcoxU+wvjBKvaD6o1AKAEqlVufYtR
+ eixhVjCB1Z5IJ1Q89Lzyyla4nUie34q9GfKA23mwnK3QhHL8nDB4WItUOxD2sDCUAxRc
+ /yhdMkjINq3YknKpUL68AY5TwdiDpJSdlzGA2/4/NyvUbq98yJqnfBdpjKA4i3xFhHu/
+ PlLdOHq2HM0vYjkMD/Gt5OXJzXmQlbaUcDmYtkHdsizhofUqDht6PUrlu1TfCNvxufRE
+ nRNCSztK7EQ8JJuISY7Xt4Asjz6JxBjxUHT5ZB2p8cGX5Plpg0ZXCg3LO+3PCppp+Aj7
+ 4yaA==
+X-Gm-Message-State: AOJu0Yyem4KzfKFl0C4VHFSXKaDvppchEPRzxML3vgcFv+pAkrHC+8W7
+ UjzRDddC/3dNUVtwUj4YTJ3QpzHySOL0Ojpc9wyi7wtBwlBW4Wpn7fhrMN68sCVb96U=
+X-Gm-Gg: ASbGncuYzgE41tpzHAKXQgMQ78ZY5ah2unDp0GsAmFdTWO4JbxO1xsZrI/ctsWQx+J9
+ ptaNYhG4VAPwqUU8N6yUpiyXY/3XfEe/dPV+DgM88j28ip4lPu1fstcqMsCXRMntnfQ8IkR7wK/
+ A4Wsw8SnHhsUMjv6nnP5VzwO7ha7xn9G+La5pKGn4WFauh/OKf0qDRK10qCztaEtCTWCzFmgTfe
+ XP3WffAa/tQiPGR8UcFyRWskesr+10F2dB916ZqxinbEmsJF+VAeGXSy0m2M0ANFPVpqkaCUeL8
+ WGsjo1XtULZF8aYvGfwjhUFamc5xYSWAJC9C86KStptHvqhgHePgxZp/YFhy7WFv5mr4rfUEpA=
+ =
+X-Google-Smtp-Source: AGHT+IEW7UfHRVV7hKr54Lu4wdWzV+vFYwQox+EmqzSVp16j86D/AAIb3NiiVIqbbFHvgR8aj/UKmA==
+X-Received: by 2002:a05:600c:1d1a:b0:43c:fffc:7886 with SMTP id
+ 5b1f17b1804b1-4538ee341afmr30891915e9.8.1751023514995; 
+ Fri, 27 Jun 2025 04:25:14 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4538233c05csm77901285e9.5.2025.06.27.04.25.13
+ 5b1f17b1804b1-4538233c4acsm76309695e9.1.2025.06.27.04.25.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 27 Jun 2025 04:25:13 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 751FF5F889;
+ by draig.lan (Postfix) with ESMTP id 5E8DE5F886;
  Fri, 27 Jun 2025 12:25:12 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -81,18 +82,19 @@ Cc: Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Zhao Liu <zhao1.liu@intel.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Alexandre Iooss <erdnaxe@crans.org>
-Subject: [PATCH 03/15] semihosting/uaccess: Remove uses of target_ulong type
-Date: Fri, 27 Jun 2025 12:24:59 +0100
-Message-ID: <20250627112512.1880708-4-alex.bennee@linaro.org>
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 02/15] tests/functional: Add PCI hotplug test for aarch64
+Date: Fri, 27 Jun 2025 12:24:58 +0100
+Message-ID: <20250627112512.1880708-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250627112512.1880708-1-alex.bennee@linaro.org>
 References: <20250627112512.1880708-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,115 +117,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Gustavo Romero <gustavo.romero@linaro.org>
 
-Replace target_ulong by vaddr or size_t types to match
-cpu_memory_rw_debug() prototype in "exec/cpu-common.h":
+Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
+hot-unplug on arm64.
 
- >  int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
- >                          void *ptr, size_t len,
- >                          bool is_write);
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250526095213.14113-2-philmd@linaro.org>
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Acked-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20250528203137.1654964-1-gustavo.romero@linaro.org>
+[AJB: trimmed boilerplate to keep checkpatch happy]
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- include/semihosting/uaccess.h | 12 ++++++------
- semihosting/uaccess.c         | 10 +++++-----
- 2 files changed, 11 insertions(+), 11 deletions(-)
+ MAINTAINERS                                  |  6 ++
+ tests/functional/meson.build                 |  1 +
+ tests/functional/test_aarch64_hotplug_pci.py | 71 ++++++++++++++++++++
+ 3 files changed, 78 insertions(+)
+ create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
 
-diff --git a/include/semihosting/uaccess.h b/include/semihosting/uaccess.h
-index 6bc90b12d6..2093a49827 100644
---- a/include/semihosting/uaccess.h
-+++ b/include/semihosting/uaccess.h
-@@ -15,9 +15,9 @@
- #endif
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 27f4fe3f25..0a7c7f3770 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2082,6 +2082,12 @@ S: Supported
+ F: include/hw/pci/pcie_doe.h
+ F: hw/pci/pcie_doe.c
  
- #include "exec/cpu-common.h"
--#include "exec/cpu-defs.h"
- #include "exec/tswap.h"
- #include "exec/page-protection.h"
-+#include "exec/vaddr.h"
- 
- /**
-  * get_user_u64:
-@@ -89,8 +89,8 @@
-  *
-  * The returned pointer should be freed using uaccess_unlock_user().
-  */
--void *uaccess_lock_user(CPUArchState *env, target_ulong addr,
--                        target_ulong len, bool copy);
-+void *uaccess_lock_user(CPUArchState *env, vaddr addr,
-+                        size_t len, bool copy);
- /**
-  * lock_user:
-  *
-@@ -103,7 +103,7 @@ void *uaccess_lock_user(CPUArchState *env, target_ulong addr,
-  *
-  * The returned string should be freed using uaccess_unlock_user().
-  */
--char *uaccess_lock_user_string(CPUArchState *env, target_ulong addr);
-+char *uaccess_lock_user_string(CPUArchState *env, vaddr addr);
- /**
-  * uaccess_lock_user_string:
-  *
-@@ -112,10 +112,10 @@ char *uaccess_lock_user_string(CPUArchState *env, target_ulong addr);
- #define lock_user_string(p) uaccess_lock_user_string(env, p)
- 
- void uaccess_unlock_user(CPUArchState *env, void *p,
--                         target_ulong addr, target_ulong len);
-+                         vaddr addr, size_t len);
- #define unlock_user(s, args, len) uaccess_unlock_user(env, s, args, len)
- 
--ssize_t uaccess_strlen_user(CPUArchState *env, target_ulong addr);
-+ssize_t uaccess_strlen_user(CPUArchState *env, vaddr addr);
- #define target_strlen(p) uaccess_strlen_user(env, p)
- 
- #endif /* SEMIHOSTING_SOFTMMU_UACCESS_H */
-diff --git a/semihosting/uaccess.c b/semihosting/uaccess.c
-index 4554844e15..ff944d8c2f 100644
---- a/semihosting/uaccess.c
-+++ b/semihosting/uaccess.c
-@@ -14,8 +14,8 @@
- #include "exec/tlb-flags.h"
- #include "semihosting/uaccess.h"
- 
--void *uaccess_lock_user(CPUArchState *env, target_ulong addr,
--                        target_ulong len, bool copy)
-+void *uaccess_lock_user(CPUArchState *env, vaddr addr,
-+                        size_t len, bool copy)
- {
-     void *p = malloc(len);
-     if (p && copy) {
-@@ -27,7 +27,7 @@ void *uaccess_lock_user(CPUArchState *env, target_ulong addr,
-     return p;
- }
- 
--ssize_t uaccess_strlen_user(CPUArchState *env, target_ulong addr)
-+ssize_t uaccess_strlen_user(CPUArchState *env, vaddr addr)
- {
-     int mmu_idx = cpu_mmu_index(env_cpu(env), false);
-     size_t len = 0;
-@@ -75,7 +75,7 @@ ssize_t uaccess_strlen_user(CPUArchState *env, target_ulong addr)
-     }
- }
- 
--char *uaccess_lock_user_string(CPUArchState *env, target_ulong addr)
-+char *uaccess_lock_user_string(CPUArchState *env, vaddr addr)
- {
-     ssize_t len = uaccess_strlen_user(env, addr);
-     if (len < 0) {
-@@ -85,7 +85,7 @@ char *uaccess_lock_user_string(CPUArchState *env, target_ulong addr)
- }
- 
- void uaccess_unlock_user(CPUArchState *env, void *p,
--                         target_ulong addr, target_ulong len)
-+                         vaddr addr, size_t len)
- {
-     if (len) {
-         cpu_memory_rw_debug(env_cpu(env), addr, p, len, 1);
++ARM PCI Hotplug
++M: Gustavo Romero <gustavo.romero@linaro.org>
++L: qemu-arm@nongnu.org
++S: Supported
++F: tests/functional/test_aarch64_hotplug_pci.py
++
+ ACPI/SMBIOS
+ M: Michael S. Tsirkin <mst@redhat.com>
+ M: Igor Mammedov <imammedo@redhat.com>
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index e9f19d54a2..53721c97ec 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -83,6 +83,7 @@ tests_aarch64_system_quick = [
+ tests_aarch64_system_thorough = [
+   'aarch64_aspeed_ast2700',
+   'aarch64_aspeed_ast2700fc',
++  'aarch64_hotplug_pci',
+   'aarch64_imx8mp_evk',
+   'aarch64_raspi3',
+   'aarch64_raspi4',
+diff --git a/tests/functional/test_aarch64_hotplug_pci.py b/tests/functional/test_aarch64_hotplug_pci.py
+new file mode 100755
+index 0000000000..25e40702b0
+--- /dev/null
++++ b/tests/functional/test_aarch64_hotplug_pci.py
+@@ -0,0 +1,71 @@
++#!/usr/bin/env python3
++#
++# The test hotplugs a PCI device and checks it on a Linux guest.
++#
++# Copyright (c) 2025 Linaro Ltd.
++#
++# Author:
++#  Gustavo Romero <gustavo.romero@linaro.org>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
++from qemu_test import BUILD_DIR
++
++class HotplugPCI(LinuxKernelTest):
++
++    ASSET_KERNEL = Asset(
++        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
++         '20230607+deb12u11/images/netboot/debian-installer/arm64/linux'),
++         'd92a60392ce1e379ca198a1a820899f8f0d39a62d047c41ab79492f81541a9d9')
++
++    ASSET_INITRD = Asset(
++        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
++         '20230607+deb12u11/images/netboot/debian-installer/arm64/initrd.gz'),
++         '9f817f76951f3237bca8216bee35267bfb826815687f4b2fcdd5e6c2a917790c')
++
++    def test_hotplug_pci(self):
++
++        self.set_machine('virt')
++        self.vm.add_args('-m', '512M')
++        self.vm.add_args('-cpu', 'cortex-a57')
++        self.vm.add_args('-append',
++                         'console=ttyAMA0,115200 init=/bin/sh')
++        self.vm.add_args('-device',
++                         'pcie-root-port,bus=pcie.0,chassis=1,slot=1,id=pcie.1')
++        self.vm.add_args('-bios', self.build_file('pc-bios',
++                                                  'edk2-aarch64-code.fd'))
++
++        # BusyBox prompt
++        prompt = "~ #"
++        self.launch_kernel(self.ASSET_KERNEL.fetch(),
++                           self.ASSET_INITRD.fetch(),
++                           wait_for=prompt)
++
++        # Check for initial state: 2 network adapters, lo and enp0s1.
++        exec_command_and_wait_for_pattern(self,
++                                          'ls -l /sys/class/net | wc -l',
++                                          '2')
++
++        # Hotplug one network adapter to the root port, i.e. pcie.1 bus.
++        self.vm.cmd('device_add',
++                    driver='virtio-net-pci',
++                    bus='pcie.1',
++                    addr=0,
++                    id='na')
++        # Wait for the kernel to recognize the new device.
++        self.wait_for_console_pattern('virtio-pci')
++        self.wait_for_console_pattern('virtio_net')
++
++        # Check if there is a new network adapter.
++        exec_command_and_wait_for_pattern(self,
++                                          'ls -l /sys/class/net | wc -l',
++                                          '3')
++
++        self.vm.cmd('device_del', id='na')
++        exec_command_and_wait_for_pattern(self,
++                                          'ls -l /sys/class/net | wc -l',
++                                          '2')
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
 -- 
 2.47.2
 
