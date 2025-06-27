@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD2EDC77B7F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 15:45:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10877C7EE2A
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 15:46:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uVBFz-0003ru-Da; Fri, 27 Jun 2025 11:44:51 -0400
+	id 1uVBGg-00046j-L1; Fri, 27 Jun 2025 11:45:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uVBFv-0003rR-LY
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 11:44:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uVBGe-000463-Ru
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 11:45:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uVBFr-0007rt-4X
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 11:44:45 -0400
+ id 1uVBGc-0008H1-0X
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 11:45:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751039082;
+ s=mimecast20190719; t=1751039129;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HEDOUjPtxmsWcDn67nR+IKB3WKWJ3kq0H/uNMQDCfdE=;
- b=hpweYK2jhRrhXIQEmtG0Rm8eckTyhQ6RCZkOYBC61LFl1M1F+cfuihVeF6pODEtZjxJ34r
- qN3J13L9HaOn/nOwK6mvKz2osDlK8eW+sxQUcSO28b9uLUjeJOgqlDj2zaD2Wf+HpWl97v
- iMnvBMnxIeC0AIibi3CywqP83zjaTyw=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tbhSGpYnnKPSj+oh98w7vQyURqNZ7CCnKJwgu/azLNE=;
+ b=J6SAcEIOD34m0pK3TwERlBiE4rJxdvBh/mSUpmSAILU1xdSCCkA9RsOc81g5NoNbFQbGQJ
+ cLQM2xX2FtXQAkMSjVmSx5mFFBc487fqQZUb4+yIYlLeRU8wnIY6Sjl/3/E7w7UYqpfFIU
+ 0ck5uFRbo9/Nub2gGWmzTMTD7+mcCWc=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-347-bggVS6CiMiyY3-oqdgYZwA-1; Fri, 27 Jun 2025 11:44:38 -0400
-X-MC-Unique: bggVS6CiMiyY3-oqdgYZwA-1
-X-Mimecast-MFC-AGG-ID: bggVS6CiMiyY3-oqdgYZwA_1751039078
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4eeed54c2so1507084f8f.3
- for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 08:44:38 -0700 (PDT)
+ us-mta-690-Z9hT6VvWM92xOkMo3NT4_g-1; Fri, 27 Jun 2025 11:45:27 -0400
+X-MC-Unique: Z9hT6VvWM92xOkMo3NT4_g-1
+X-Mimecast-MFC-AGG-ID: Z9hT6VvWM92xOkMo3NT4_g_1751039127
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a5058f9ef4so1098939f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 08:45:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751039077; x=1751643877;
+ d=1e100.net; s=20230601; t=1751039126; x=1751643926;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=HEDOUjPtxmsWcDn67nR+IKB3WKWJ3kq0H/uNMQDCfdE=;
- b=G+XjDzYMw1UZ/NUkK5yLTOvVSAvlsSNbVT6AkvnpAS0erixq+Ft94r5Apu2wNA9KVl
- R6C+8piktNFKGOdo7vWgCosyjZ9bydDN7g/PkSNl9ijnbhnUBCp4IbbqvY1ad6bMdm7V
- j/mFs25HBmxDkwz/esqgDe5m2at4Apc/6efDHiL89D4/+Xe4GDecQOMDaqo3aWIQShvQ
- szqxMICuI/Nasz46wSVqF86OnkohhWs/Svjqap3spBjXB0HRdMdeeur/TDgr79LrWGcy
- /rgiv2CWBQ4FKPihoEFbE1obkb1d2koFza36mD6yImBFEn9nzJVTsjUnC2V4Frt77MCr
- fNJA==
+ bh=tbhSGpYnnKPSj+oh98w7vQyURqNZ7CCnKJwgu/azLNE=;
+ b=bYfJOGKlyK/UgLBwTsuAupLvn6Ux6SudHzhBIeI5U4NTZweFeRsgIuLJL/0bV+3u+m
+ b8xyKxKuOzSlJ+04r7/p4Y/J3qDSspl5PZCJbMMJcGrOe9zPJJMMQCvkiAoCNcVJLxks
+ NGEa4crCBKr5DGkBPQfxH5dGoo6KdWl/fjqoNepyuJpMn/uvW3LVMRQDHdWIuu8AMEye
+ Nm3B5QtLbaYn+S/+v7HoebwEIFOUkCOxKvnrZEPzpJvjOrkMwKs+OToCKZi1pfDiZ0a3
+ MB10ByQ7gqfRmuTrK6/0PYBhI5krdtgAXAYAQQ88sTSRKMOIOIs4K0v+pdxOMJtxf2en
+ DnkA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXnVxFp7Xa63uRAvqlTxcNi6drFnZ+YNXFk0HzjbIFmTyx/pSTkgrBzUGFlVOgUzXZbDT8ah+QZncgA@nongnu.org
-X-Gm-Message-State: AOJu0Yx6en/SSKowcGl0mjpplySvsJYqSWD2xqxdPbCiy43zsfdFw0ZT
- zZdtyLO+od53GRtywghtx/W199rDvBMaf1Yg6vG4UZSSDOnd4PtaiglV9ID0gNm7/apXJ9x32AB
- xLlJoDxZhQOX6ZkBv3WO9E5cTcTi23FYaJeeETFwZBIsiY+pdlCyymtks
-X-Gm-Gg: ASbGncsBfi5e4h+XIc7fxEXdRwnuxYV8n34SjV6NXeCqQVzalGwvGrwzcLRDLPJz4ka
- qgsmr7UcjREzJMzDj8BkbvLiEp5S9/zt6mWc9GcgLFHJz0P0+Cij2HmJeL5apX+VWeTNQ+RBITS
- CNkDiOrvxUiyTVmzbpYR4GLEOjO4TXaEscMi9h6d23NAyDjZd6Xb8CPATyPkAdgWw9fnw+UXk6q
- u7jBRBZK+4Zycz3uGG+NBObh3bMcEGQYIp+4lV+DJLhAc7uBNgDBATf+ktY+4PHpVySXtnb0oS7
- 6SkKZXn0GgT0HII8gzQlgO3tFvHMJQHfp0ml+crKZfGlZtnktrVCdVuXxDyPZIBbpSkoeg==
-X-Received: by 2002:a5d:5f46:0:b0:3a5:8d08:6239 with SMTP id
- ffacd0b85a97d-3a8f58749a0mr4203606f8f.21.1751039077330; 
- Fri, 27 Jun 2025 08:44:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE8EhAG5Nblcyu/ctSh5xN+rbIjVE28EEB3NUYFDp1pzWCJw4x2jJMbHVwJf3ibtH2uyd7hiA==
-X-Received: by 2002:a5d:5f46:0:b0:3a5:8d08:6239 with SMTP id
- ffacd0b85a97d-3a8f58749a0mr4203574f8f.21.1751039076729; 
- Fri, 27 Jun 2025 08:44:36 -0700 (PDT)
+ AJvYcCUmR/1imtZfunprlLy/m5++6sVT3piHStje2KY6w83hFZ1YkEXZaKdmgZQKn7NDQ90kPFWnMLgTuJ8s@nongnu.org
+X-Gm-Message-State: AOJu0YxQhHL05Y5GCCdm5ImrsK9R9H2sOUrVHWr2PJEq4fXWpoq867af
+ 01ViwkLG650y/vWOH+mtO6yWjOY2NzKz0JB07pWaBR2ZguRAy2GwCa27qXm0pRUGx2/hDfwoqAr
+ NdwnxXgisOY8jdX//zEPL0AlbxrljKPvXivLkfZV7NMcdi3zPEQyej2Rs
+X-Gm-Gg: ASbGnctztcm26ES8x9H4Np0pm6vWtdcKYzmwk9t9kPsj2PAiZEflP42mEVd7d9ZUdOR
+ 1JbqLOgKZtnHu8iGfblmU1F3VvEf8dYMDpL4THRoqpkbqD+L/JnUj1Vto5ZEFMZ3YASG0MbQBAq
+ BajAfWkoROkYSg04lbHMKd1I565XBUj5KyU+NgXOLpgWi0uC6imSAEF7dvggx/bUVWlBMRTDKFt
+ za/taGnjy1KGmb5Q1R6i2Mj0B6YwpVHaJ9/90RXyG4tCpGgS5X6oC6NZlqRTxh77lo5tBWSvSJ6
+ MmgZuWkPG35V75jSqzb0CMmTq1rAnAYHA+bGJUjHBgys4gRC89C3S1vSEgux932LylOlig==
+X-Received: by 2002:a05:6000:4009:b0:3a8:2f65:373f with SMTP id
+ ffacd0b85a97d-3aa9fc2002dmr1103290f8f.16.1751039126525; 
+ Fri, 27 Jun 2025 08:45:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF4LhTsv46b5N5QDWOSzM9rfhDX7s5ntn6Q2P85cd30bymwr9HNscoMqA9NsYeQWQVWmY473A==
+X-Received: by 2002:a05:6000:4009:b0:3a8:2f65:373f with SMTP id
+ ffacd0b85a97d-3aa9fc2002dmr1103259f8f.16.1751039126017; 
+ Fri, 27 Jun 2025 08:45:26 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a892e59884sm2947388f8f.80.2025.06.27.08.44.35
+ ffacd0b85a97d-3a892e52af3sm3087624f8f.50.2025.06.27.08.45.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Jun 2025 08:44:36 -0700 (PDT)
-Message-ID: <5e0e0aa6-cc09-4aa3-b48c-65de8273549c@redhat.com>
-Date: Fri, 27 Jun 2025 17:44:35 +0200
+ Fri, 27 Jun 2025 08:45:25 -0700 (PDT)
+Message-ID: <91976510-de0d-45b7-a9ea-68927e505db7@redhat.com>
+Date: Fri, 27 Jun 2025 17:45:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v5 8/9] hw/arm/virt-acpi-build: Fix ACPI IORT and MADT
@@ -94,7 +94,7 @@ From: Eric Auger <eric.auger@redhat.com>
 In-Reply-To: <20250623135749.691137-9-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,7 +103,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,7 +120,7 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Gustavo,
+
 
 On 6/23/25 3:57 PM, Gustavo Romero wrote:
 > Currently, the ITS Group nodes in the IORT table and the GIC ITS Struct
@@ -138,6 +138,9 @@ On 6/23/25 3:57 PM, Gustavo Romero wrote:
 > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2886
 > Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 > Co-authored-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+
+Eric
 > ---
 >  hw/arm/virt-acpi-build.c                    | 128 ++++++++++++--------
 >  tests/qtest/bios-tables-test-allowed-diff.h |   2 +
@@ -221,19 +224,6 @@ On 6/23/25 3:57 PM, Gustavo Romero wrote:
 > +
 > +        if (vms->its) {
 > +            num_id_mappings = 1; /* ITS Group node */
-While at it, I would suggest to rename num_id_mappings into
-smmu_mapping_count for consistency with
-
-rc_mapping_count.
-
-Also I would recommend to rename smmu_idmaps and its_idmaps into rc_smmu_idmaps and rc_its_idmaps to make things clearer. But that be done outside of thise series if you prefer.
-
-Otherwise this looks good.
-
-Thanks
-
-Eric
-
 > +            offset_to_id_array = SMMU_V3_ENTRY_SIZE; /* Just after the header */
 > +        } else {
 > +            num_id_mappings = 0; /* No ID mappings */
