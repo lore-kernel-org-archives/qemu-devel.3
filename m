@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D118CC77B7F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 09:53:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E79AC7EE31
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 09:54:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uV5m9-0002CP-Vy; Fri, 27 Jun 2025 05:53:42 -0400
+	id 1uV5n2-0002oQ-4w; Fri, 27 Jun 2025 05:54:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uV5m8-0002C0-8x
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 05:53:40 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uV5mw-0002nt-Rf
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 05:54:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uV5m6-0006c3-O2
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 05:53:40 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uV5mu-0006tt-9H
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 05:54:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751018017;
+ s=mimecast20190719; t=1751018067;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ma7EJpfrHofi12kSiqVJuqlAlukw8PfGNBYjwNug0nA=;
- b=B9ph3fe6Mn6eVxR9tQatNvCiGRXJtZIc7u4Y9gIYfuzOGpHuoo5wyCnG5/ebG4+SIToV2z
- 0DHbrTfRJsey04Ct6aYEcyhS/KcDFuuxEgGcqJhYJilQ6zecPNCcu11iG+1+QCKKswdOvP
- 5I2LQKljiOvEuVrzWf8q2s53RriGLqI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=4gN8BioK9SEwGoTkkgmI1Ch/QmS8rGF3rCf9NA+2Or0=;
+ b=RDO38i58k1hbMDe2WQNTPS3PgnA084Byc/njo6O6FCFWibizq+DQrjdy7H0uo/eSCDll3B
+ +owwFBMssB5Vt6seQzmfUl5qfb7+YAfEEUrmFfG2tPAhNFKAJtA+zU12o5DLv6myB9iwRP
+ KeL9K6AcIDq5Ngh4LYukeB/i36f2Gig=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-299-Rnd6oXOPMwONYmyoGHphug-1; Fri,
- 27 Jun 2025 05:53:33 -0400
-X-MC-Unique: Rnd6oXOPMwONYmyoGHphug-1
-X-Mimecast-MFC-AGG-ID: Rnd6oXOPMwONYmyoGHphug_1751018010
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-77-nvxo-9ocOD68d4Kzzf8_QQ-1; Fri,
+ 27 Jun 2025 05:54:23 -0400
+X-MC-Unique: nvxo-9ocOD68d4Kzzf8_QQ-1
+X-Mimecast-MFC-AGG-ID: nvxo-9ocOD68d4Kzzf8_QQ_1751018061
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 25132180136B; Fri, 27 Jun 2025 09:53:29 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CFBC5180120C; Fri, 27 Jun 2025 09:54:20 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D2D2930001BC; Fri, 27 Jun 2025 09:53:27 +0000 (UTC)
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A85E41944CE7; Fri, 27 Jun 2025 09:54:19 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6670921E6A27; Fri, 27 Jun 2025 11:53:25 +0200 (CEST)
+ id 2F7D821E6A27; Fri, 27 Jun 2025 11:54:17 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org,  Jiri Pirko <jiri@resnulli.us>,  Fan Ni
@@ -74,17 +74,17 @@ Cc: qemu-devel@nongnu.org,  Jiri Pirko <jiri@resnulli.us>,  Fan Ni
  <peter.maydell@linaro.org>,  Alex Williamson <alex.williamson@redhat.com>,
  Zhenwei Pi <pizhenwei@bytedance.com>,  Jason Wang <jasowang@redhat.com>,
  Lukas Straub <lukasstraub2@web.de>
-Subject: Re: [PATCH v3 3/5] docs/sphinx: remove legacy QAPI manual generator
-In-Reply-To: <20250618165353.1980365-4-jsnow@redhat.com> (John Snow's message
- of "Wed, 18 Jun 2025 12:53:51 -0400")
+Subject: Re: [PATCH v3 2/5] docs/sphinx: parse @references in freeform text
+In-Reply-To: <20250618165353.1980365-3-jsnow@redhat.com> (John Snow's message
+ of "Wed, 18 Jun 2025 12:53:50 -0400")
 References: <20250618165353.1980365-1-jsnow@redhat.com>
- <20250618165353.1980365-4-jsnow@redhat.com>
-Date: Fri, 27 Jun 2025 11:53:25 +0200
-Message-ID: <8734blo6i2.fsf@pond.sub.org>
+ <20250618165353.1980365-3-jsnow@redhat.com>
+Date: Fri, 27 Jun 2025 11:54:17 +0200
+Message-ID: <87y0tdmrw6.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -112,27 +112,52 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 John Snow <jsnow@redhat.com> writes:
 
-> Thanks for your service!
+> Oversight in the new qapidoc transmogrifier: @references in freeform
+> documentation blocks were not being transformed to literals. This fixes
+> that, and the next patch ensures that we're testing for this O:-)
 >
-> Remove the old qapidoc and the option to enable the transmogrifier,
-> leaving the "transmogrifier" as the ONLY qapi doc generator. This in
-> effect also converts the QAPI test to use the new documentation
-> generator, too.
->
-> Update doc-good.txt output to match the new doc generator, which I
-> should've done exactly when we switched over to the transmogrifier, but,
-> uhh, oops!
->
-> Notes on the new format:
->  1. per-member IFCOND documentation is missing. Known issue.
->  2. Freeform documentation without a header is now copied through into
->     the output. This is an intentional change.
->
-
-Make that "This is a bug fix", and add
-
-Fixes: b61a4eb3f32 (docs/qapidoc: support header-less freeform sections)
-
 > Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>  docs/sphinx/qapidoc.py | 10 +++++++---
+>  1 file changed, 7 insertions(+), 3 deletions(-)
+>
+> diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+> index 5374dee8fad..adc14ade456 100644
+> --- a/docs/sphinx/qapidoc.py
+> +++ b/docs/sphinx/qapidoc.py
+> @@ -218,6 +218,11 @@ def generate_field(
+>          typ = self.format_type(member)
+>          self.add_field(kind, member.name, body, info, typ)
+>  
+> +    @staticmethod
+> +    def reformat_arobase(text: str) -> str:
+
+What's an "arobase"?  Inquiring mind wants to know!
+
+> +        """ reformats @var to ``var`` """
+> +        return re.sub(r"@([\w-]+)", r"``\1``", text)
+> +
+>      # Transmogrification helpers
+>  
+>      def visit_paragraph(self, section: QAPIDoc.Section) -> None:
+> @@ -361,8 +366,7 @@ def visit_sections(self, ent: QAPISchemaDefinition) -> None:
+>  
+>          # Add sections in source order:
+>          for i, section in enumerate(sections):
+> -            # @var is translated to ``var``:
+> -            section.text = re.sub(r"@([\w-]+)", r"``\1``", section.text)
+> +            section.text = self.reformat_arobase(section.text)
+>  
+>              if section.kind == QAPIDoc.Kind.PLAIN:
+>                  self.visit_paragraph(section)
+> @@ -405,7 +409,7 @@ def visit_freeform(self, doc: QAPIDoc) -> None:
+>  
+>          assert len(doc.all_sections) == 1, doc.all_sections
+>          body = doc.all_sections[0]
+> -        text = body.text
+> +        text = self.reformat_arobase(body.text)
+>          info = doc.info
+>  
+>          if re.match(r"=+ ", text):
 
 
