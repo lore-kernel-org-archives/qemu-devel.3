@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64155C7EE31
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 03:26:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97249C7EE31
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 03:26:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUzhf-0005GN-SA; Thu, 26 Jun 2025 23:24:39 -0400
+	id 1uUzhf-0005GL-9d; Thu, 26 Jun 2025 23:24:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uUzhd-0005FV-8C
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 23:24:37 -0400
+ id 1uUzhb-0005Ed-Ox
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 23:24:35 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uUzhY-00065U-IX
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 23:24:36 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1uUzhX-000672-Sd
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 23:24:35 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8BxLHLoDl5oowgeAQ--.31965S3;
- Fri, 27 Jun 2025 11:24:24 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Cx_eLtDl5ovwgeAQ--.26155S3;
+ Fri, 27 Jun 2025 11:24:29 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMBxn8XiDl5oz10sAQ--.3598S5;
- Fri, 27 Jun 2025 11:24:23 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBxn8XiDl5oz10sAQ--.3598S11;
+ Fri, 27 Jun 2025 11:24:25 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: maobibo@loongson.cn
 Cc: qemu-devel@nongnu.org,
 	philmd@linaro.org,
 	jiaxun.yang@flygoat.com
-Subject: [PATCH v3 3/9] loongarch: add a advance interrupt controller device
-Date: Fri, 27 Jun 2025 11:01:32 +0800
-Message-Id: <20250627030138.2482055-4-gaosong@loongson.cn>
+Subject: [PATCH v3 9/9] target/loongarch:Implement csrrd CSR_MSGIR register
+Date: Fri, 27 Jun 2025 11:01:38 +0800
+Message-Id: <20250627030138.2482055-10-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20250627030138.2482055-1-gaosong@loongson.cn>
 References: <20250627030138.2482055-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxn8XiDl5oz10sAQ--.3598S5
+X-CM-TRANSID: qMiowMBxn8XiDl5oz10sAQ--.3598S11
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,166 +66,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add Loongarch  advance interrupt controller device base Definition.
+implement the read-clear feature for CSR_MSGIR register.
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/intc/Kconfig                  |  3 ++
- hw/intc/loongarch_avec.c         | 68 ++++++++++++++++++++++++++++++++
- hw/intc/meson.build              |  1 +
- hw/loongarch/Kconfig             |  1 +
- include/hw/intc/loongarch_avec.h | 35 ++++++++++++++++
- 5 files changed, 108 insertions(+)
- create mode 100644 hw/intc/loongarch_avec.c
- create mode 100644 include/hw/intc/loongarch_avec.h
+ target/loongarch/csr.c                        |  5 +++++
+ target/loongarch/tcg/csr_helper.c             | 21 +++++++++++++++++++
+ target/loongarch/tcg/helper.h                 |  1 +
+ .../tcg/insn_trans/trans_privileged.c.inc     |  1 +
+ 4 files changed, 28 insertions(+)
 
-diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
-index 7547528f2c..b9266dc269 100644
---- a/hw/intc/Kconfig
-+++ b/hw/intc/Kconfig
-@@ -109,3 +109,6 @@ config LOONGARCH_PCH_MSI
+diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
+index 7ea0a30450..f973780bba 100644
+--- a/target/loongarch/csr.c
++++ b/target/loongarch/csr.c
+@@ -97,6 +97,11 @@ static CSRInfo csr_info[] = {
+     CSR_OFF(DBG),
+     CSR_OFF(DERA),
+     CSR_OFF(DSAVE),
++    CSR_OFF_ARRAY(MSGIS, 0),
++    CSR_OFF_ARRAY(MSGIS, 1),
++    CSR_OFF_ARRAY(MSGIS, 2),
++    CSR_OFF_ARRAY(MSGIS, 3),
++    CSR_OFF(MSGIR),
+ };
  
- config LOONGARCH_EXTIOI
-     bool
-+
-+config LOONGARCH_AVEC
-+    bool
-diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
-new file mode 100644
-index 0000000000..5a3e7ecc03
---- /dev/null
-+++ b/hw/intc/loongarch_avec.c
-@@ -0,0 +1,68 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * QEMU Loongson  Advance interrupt controller.
-+ *
-+ * Copyright (C) 2025 Loongson Technology Corporation Limited
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/sysbus.h"
-+#include "hw/irq.h"
-+#include "hw/intc/loongarch_pch_msi.h"
-+#include "hw/intc/loongarch_pch_pic.h"
-+#include "hw/intc/loongarch_avec.h"
-+#include "hw/pci/msi.h"
-+#include "hw/misc/unimp.h"
-+#include "migration/vmstate.h"
-+#include "trace.h"
-+#include "hw/qdev-properties.h"
-+
-+
-+static void loongarch_avec_realize(DeviceState *dev, Error **errp)
+ CSRInfo *get_csr(unsigned int csr_num)
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 2942d7feb8..f7cc24166c 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -68,6 +68,27 @@ target_ulong helper_csrrd_tval(CPULoongArchState *env)
+     return cpu_loongarch_get_constant_timer_ticks(cpu);
+ }
+ 
++target_ulong helper_csrrd_msgir(CPULoongArchState *env)
 +{
-+    LoongArchAVECClass *lac = LOONGARCH_AVEC_GET_CLASS(dev);
++    int64_t old_v = env->CSR_MSGIR;
++    int irq = FIELD_EX64(env->CSR_MSGIR, CSR_MSGIR, INTNUM);
 +
-+    Error *local_err = NULL;
-+    lac->parent_realize(dev, &local_err);
-+    if (local_err) {
-+        error_propagate(errp, local_err);
-+        return;
++    if (FIELD_EX64(env->CSR_ESTAT, CSR_ESTAT, MSGINT)) {
++        clear_bit(irq, &env->CSR_MSGIS[irq / 64]);
++        env->CSR_MSGIR = FIELD_DP64(env->CSR_MSGIR, CSR_MSGIR, INTNUM, 0);
++        for (int i = 256; i >= 0; i--) {
++            if (test_bit(i, &(env->CSR_MSGIS[i / 64]))) {
++                return old_v;
++            }
++        }
++        env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
++        env->CSR_ECFG = FIELD_DP64(env->CSR_ECFG, CSR_ECFG, MSGINT, 0);
++        env->CSR_MSGIR = FIELD_DP64(env->CSR_MSGIR, CSR_MSGIR, ACTIVE, 1);
 +    }
 +
-+    return;
++    return old_v;
 +}
 +
-+static void loongarch_avec_unrealize(DeviceState *dev)
-+{
-+    return;
-+}
-+
-+static void loongarch_avec_init(Object *obj)
-+{
-+    return;
-+}
-+
-+static void loongarch_avec_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    LoongArchAVECClass *lac = LOONGARCH_AVEC_CLASS(klass);
-+
-+    dc->unrealize = loongarch_avec_unrealize;
-+    device_class_set_parent_realize(dc, loongarch_avec_realize,
-+                                    &lac->parent_realize);
-+}
-+
-+static const TypeInfo loongarch_avec_info = {
-+    .name          = TYPE_LOONGARCH_AVEC,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(LoongArchAVECState),
-+    .instance_init = loongarch_avec_init,
-+    .class_init    = loongarch_avec_class_init,
-+};
-+
-+static void loongarch_avec_register_types(void)
-+{
-+    type_register_static(&loongarch_avec_info);
-+}
-+
-+type_init(loongarch_avec_register_types)
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index 3137521a4a..cf2c47cd53 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -80,3 +80,4 @@ specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_MSI', if_true: files('loongarch_pch_
- specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI', if_true: files('loongarch_extioi.c', 'loongarch_extioi_common.c'))
- specific_ss.add(when: ['CONFIG_KVM', 'CONFIG_LOONGARCH_EXTIOI'],
-                if_true: files('loongarch_extioi_kvm.c'))
-+specific_ss.add(when: 'CONFIG_LOONGARCH_AVEC', if_true: files('loongarch_avec.c'))
-diff --git a/hw/loongarch/Kconfig b/hw/loongarch/Kconfig
-index bb2838b7b5..1bf240b1e2 100644
---- a/hw/loongarch/Kconfig
-+++ b/hw/loongarch/Kconfig
-@@ -15,6 +15,7 @@ config LOONGARCH_VIRT
-     select LOONGARCH_PCH_PIC
-     select LOONGARCH_PCH_MSI
-     select LOONGARCH_EXTIOI
-+    select LOONGARCH_AVEC
-     select LS7A_RTC
-     select SMBIOS
-     select ACPI_CPU_HOTPLUG
-diff --git a/include/hw/intc/loongarch_avec.h b/include/hw/intc/loongarch_avec.h
-new file mode 100644
-index 0000000000..92e2ca9590
---- /dev/null
-+++ b/include/hw/intc/loongarch_avec.h
-@@ -0,0 +1,35 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * LoongArch  Advance interrupt controller definitions
-+ *
-+ * Copyright (C) 2025 Loongson Technology Corporation Limited
-+ */
-+
-+#include "qom/object.h"
-+#include "hw/sysbus.h"
-+#include "hw/loongarch/virt.h"
-+
-+
-+#define NR_VECTORS     256
-+
-+#define TYPE_LOONGARCH_AVEC "loongarch_avec"
-+OBJECT_DECLARE_TYPE(LoongArchAVECState, LoongArchAVECClass, LOONGARCH_AVEC)
-+
-+typedef struct AVECCore {
-+    CPUState *cpu;
-+    qemu_irq parent_irq;
-+    uint64_t arch_id;
-+} AVECCore;
-+
-+struct LoongArchAVECState {
-+    SysBusDevice parent_obj;
-+    AVECCore *cpu;
-+    uint32_t num_cpu;
-+};
-+
-+struct LoongArchAVECClass {
-+    SysBusDeviceClass parent_class;
-+
-+    DeviceRealize parent_realize;
-+    DeviceUnrealize parent_unrealize;
-+};
+ target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+ {
+     int64_t old_v = env->CSR_ESTAT;
+diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
+index 1d5cb0198c..db57dbfc16 100644
+--- a/target/loongarch/tcg/helper.h
++++ b/target/loongarch/tcg/helper.h
+@@ -100,6 +100,7 @@ DEF_HELPER_1(rdtime_d, i64, env)
+ DEF_HELPER_1(csrrd_pgd, i64, env)
+ DEF_HELPER_1(csrrd_cpuid, i64, env)
+ DEF_HELPER_1(csrrd_tval, i64, env)
++DEF_HELPER_1(csrrd_msgir, i64, env)
+ DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
+ DEF_HELPER_2(csrwr_estat, i64, env, tl)
+ DEF_HELPER_2(csrwr_asid, i64, env, tl)
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index ecbfe23b63..2619b5342b 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -83,6 +83,7 @@ void loongarch_csr_translate_init(void)
+     SET_CSR_FUNC(TCFG,  NULL, gen_helper_csrwr_tcfg);
+     SET_CSR_FUNC(TVAL,  gen_helper_csrrd_tval, NULL);
+     SET_CSR_FUNC(TICLR, NULL, gen_helper_csrwr_ticlr);
++    SET_CSR_FUNC(MSGIR, gen_helper_csrrd_msgir, NULL);
+ }
+ #undef SET_CSR_FUNC
+ 
 -- 
 2.34.1
 
