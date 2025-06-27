@@ -4,51 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D563BC7EE31
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 02:57:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51867C7EE30
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 03:04:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUzGI-0007fG-8b; Thu, 26 Jun 2025 22:56:22 -0400
+	id 1uUzNk-000316-8J; Thu, 26 Jun 2025 23:04:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1uUzGF-0007eQ-Cr; Thu, 26 Jun 2025 22:56:19 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1uUzGD-0006B6-Qm; Thu, 26 Jun 2025 22:56:19 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 27 Jun
- 2025 10:56:07 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Fri, 27 Jun 2025 10:56:07 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 1/3] hw/misc/aspeed_otp: Add ASPEED OTP memory device model
-Date: Fri, 27 Jun 2025 10:56:03 +0800
-Message-ID: <20250627025606.631167-2-kane_chen@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250627025606.631167-1-kane_chen@aspeedtech.com>
-References: <20250627025606.631167-1-kane_chen@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <micro6947@gmail.com>)
+ id 1uUzNc-00030s-Mh
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 23:03:56 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <micro6947@gmail.com>)
+ id 1uUzNa-0000mX-Os
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 23:03:56 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-313910f392dso1410803a91.2
+ for <qemu-devel@nongnu.org>; Thu, 26 Jun 2025 20:03:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1750993433; x=1751598233; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=YCaT80+woPzPW811tJJDtvGMU03636VebjfcJA5zUmA=;
+ b=e0hdSyVoMixVcLG24ILgeJIcYw0WdTV2jUz5OZ4EyTQ6ginfKT7DriCCepdZMtqetw
+ z28gotub/jXI2BIZ1AeUBtFTExAyjdALcXaUoaYLANHnE6M2eN/2qHz4WC9u2nw+cQGI
+ h8yavGvEQ4IwEnMSsoemNY23Rv2V6BaQKevTO3ikgujTKq46VAfbiycTYXzyMGGzEuSS
+ L8ECQoZyykODf9tER9XW5EHUrn45eZwhW24WmfQyL0n/iX9evjeAJf4eJiQY9HumCvJl
+ MKDDGQRFuRTJX101pW2k20d5jL9gEVm3YTXjerjvguublRBTHW/1IWawEWhQeFfsIbo7
+ 8/OQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750993433; x=1751598233;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YCaT80+woPzPW811tJJDtvGMU03636VebjfcJA5zUmA=;
+ b=NBS9n4yikFVGIwhDNXbYjyh6LEybIvBV27D944GWF8bceblnWXMc5IjwCqV4Hmctzp
+ 5uom7caUzOyHsrf+5YKgLiU/LirDNh4ysoTZS0Mlf2z21evFc7p/81QUjFG8zYpuGWgr
+ FuaLaMRyiWtlk5qy2/BbgBbaefSreae1GziBOF8HWUYPi9JfuFRhDGzfWGdIPKLs6NpN
+ JO1LWjPtxVmdb77EHdkJQ+myGhDChD+rC4IsAGlSIkM1Zork/fvuKsOMG7mvpOqfiZEi
+ PDH6k099eLoXq9csaZM+57lQO8PqPZQnhWG2fohqNJIHGFPkv/PWuH0FZfEfg1W/HsRl
+ d8RA==
+X-Gm-Message-State: AOJu0Yye/0vc9+WGFGBJZqLKwPZJe+pt6kWDSgqFQe8cAlBRP8AjABG0
+ bPyN4KFGq1LPTQpdm0aeFfB0Fy9IzFUDEi7sKje/1PQo5dPfys6FC6XHw7H5+GvMc/U=
+X-Gm-Gg: ASbGncvjQxR769QwnoispjG912hDHKb1fEHOZtGRnbr5ojEGqjinOfbsBsFRP8khKnL
+ Y6Wg3ctptGjEKM69knQlE9MUYdDFQTWxqtI7PFEYAgFayv+7E3ZM5Fa7tWJhDFu19bWyi7amjoD
+ DVS81wRrcq3mrf0No4Aq6exPZQu9tedxZIB0HCYuNdo69CU6RcOgaCRnUjiOCmapdW+EvRSswi9
+ pB/ougDXBy+fLBemcnLyp2yd08doNOFuSGCKoTh0Nqtxi5gjsU/QabIz8PFn4tTN5wVavvu8DkP
+ hYMv1T5avoa2XY/V+qfuVQkSzwmq7Mu/13aCFGGj84HwKYRUHRD3YkN2JpsB8oWybRTTgGbHN0Q
+ UWlzoV4Z0wwGMMkQOAj0ymuY20TX/dLlwjklBu76dwpyEhmk5WkIM8P4jAEZlWf87sNPu
+X-Google-Smtp-Source: AGHT+IEHqtnnYC3vmlbkWvlmvNiqANimQMPgA+tKM3OKavILUjWF+KueOcwjHyXLQuGoKuVZWm9ngg==
+X-Received: by 2002:a17:90b:2dcc:b0:313:14b5:2538 with SMTP id
+ 98e67ed59e1d1-318c93131damr1923137a91.35.1750993432640; 
+ Thu, 26 Jun 2025 20:03:52 -0700 (PDT)
+Received: from localhost.localdomain (awork062199.netvigator.com.
+ [203.198.28.199]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-318ca222dcdsm563448a91.39.2025.06.26.20.03.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 26 Jun 2025 20:03:52 -0700 (PDT)
+From: xjdeng <micro6947@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: xjdeng <micro6947@gmail.com>
+Subject: [PATCH] qtest/migration: Fix potential NPD through getenv
+Date: Fri, 27 Jun 2025 11:03:19 +0800
+Message-Id: <20250627030319.470-1-micro6947@gmail.com>
+X-Mailer: git-send-email 2.27.0.windows.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=kane_chen@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=micro6947@gmail.com; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,183 +94,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Kane Chen <kane_chen@aspeedtech.com>
-From:  Kane Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kane-Chen-AS <kane_chen@aspeedtech.com>
+In `find_common_machine_version`, the code previously assumed that
+`getenv(var1)` and `getenv(var2)` would always return non-NULL values.
+However, if either environment variable is not set, `getenv` returns
+NULL, which could lead to a null pointer dereference.
 
-Introduce a QEMU device model for ASPEED's One-Time Programmable (OTP)
-memory.
+Tracing upstream usage: `find_common_machine_version` is called by
+`resolve_machine_version` with `QEMU_ENV_SRC` and `QEMU_ENV_DST`.
+`resolve_machine_version` is used by `migrate_start`, which is called
+by `migrate_postcopy_prepare`, and ultimately by `test_postcopy_common`.
 
-This model simulates a word-addressable OTP region used for secure
-fuse storage. The OTP memory can operate with an internal memory
-buffer.
+In `test_postcopy_common`, after `migrate_postcopy_prepare`, the
+function `migrate_postcopy_complete` is called. Inside, 
+`migration_get_env` checks if `QEMU_ENV_SRC` and `QEMU_ENV_DST` are
+set before use. Thus, these variables can be NULL, leading to a
+potential null pointer dereference in `find_common_machine_version`.
 
-The OTP model provides a memory-like interface through a dedicated
-AddressSpace, allowing other device models (e.g., SBC) to issue
-transactions as if accessing a memory-mapped region.
-
-Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+Signed-off-by: xjdeng <micro6947@gmail.com>
 ---
- include/hw/nvram/aspeed_otp.h | 30 +++++++++++
- hw/nvram/aspeed_otp.c         | 94 +++++++++++++++++++++++++++++++++++
- hw/nvram/meson.build          |  4 ++
- 3 files changed, 128 insertions(+)
- create mode 100644 include/hw/nvram/aspeed_otp.h
- create mode 100644 hw/nvram/aspeed_otp.c
+ tests/qtest/migration/migration-util.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/nvram/aspeed_otp.h b/include/hw/nvram/aspeed_otp.h
-new file mode 100644
-index 0000000000..aadeb313be
---- /dev/null
-+++ b/include/hw/nvram/aspeed_otp.h
-@@ -0,0 +1,30 @@
-+/*
-+ *  ASPEED OTP (One-Time Programmable) memory
-+ *
-+ *  Copyright (C) 2025 Aspeed
-+ *
-+ *  SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef ASPEED_OTP_H
-+#define ASPEED_OTP_H
-+
-+#include "system/memory.h"
-+#include "system/address-spaces.h"
-+
-+#define TYPE_ASPEED_OTP "aspeed.otp"
-+OBJECT_DECLARE_SIMPLE_TYPE(AspeedOTPState, ASPEED_OTP)
-+
-+typedef struct AspeedOTPState {
-+    DeviceState parent_obj;
-+
-+    uint64_t size;
-+
-+    AddressSpace as;
-+
-+    MemoryRegion mmio;
-+
-+    uint8_t *storage;
-+} AspeedOTPState;
-+
-+#endif /* ASPEED_OTP_H */
-diff --git a/hw/nvram/aspeed_otp.c b/hw/nvram/aspeed_otp.c
-new file mode 100644
-index 0000000000..233dc3528b
---- /dev/null
-+++ b/hw/nvram/aspeed_otp.c
-@@ -0,0 +1,94 @@
-+/*
-+ *  ASPEED OTP (One-Time Programmable) memory
-+ *
-+ *  Copyright (C) 2025 Aspeed
-+ *
-+ *  SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qapi/error.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/nvram/aspeed_otp.h"
-+
-+static uint64_t aspeed_otp_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    AspeedOTPState *s = opaque;
-+    uint64_t val = 0;
-+
-+    memcpy(&val, s->storage + offset, size);
-+
-+    return val;
-+}
-+
-+static void aspeed_otp_write(void *opaque, hwaddr offset,
-+                                uint64_t val, unsigned size)
-+{
-+    AspeedOTPState *s = opaque;
-+
-+    memcpy(s->storage + offset, &val, size);
-+}
-+
-+static void aspeed_otp_init_storage(uint8_t *storage, uint64_t size)
-+{
-+    uint32_t *p;
-+    int i, num;
-+
-+    num = size / sizeof(uint32_t);
-+    p = (uint32_t *)storage;
-+    for (i = 0; i < num; i++) {
-+        p[i] = (i % 2 == 0) ? 0x00000000 : 0xFFFFFFFF;
-+    }
-+}
-+
-+static const MemoryRegionOps aspeed_otp_ops = {
-+    .read = aspeed_otp_read,
-+    .write = aspeed_otp_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid.min_access_size = 1,
-+    .valid.max_access_size = 4,
-+};
-+
-+static void aspeed_otp_realize(DeviceState *dev, Error **errp)
-+{
-+    AspeedOTPState *s = ASPEED_OTP(dev);
-+
-+    if (s->size == 0) {
-+        error_setg(errp, "aspeed.otp: 'size' property must be set");
-+        return;
-+    }
-+
-+    s->storage = g_malloc(s->size);
-+
-+    aspeed_otp_init_storage(s->storage, s->size);
-+
-+    memory_region_init_io(&s->mmio, OBJECT(dev), &aspeed_otp_ops,
-+                          s, "aspeed.otp", s->size);
-+    address_space_init(&s->as, &s->mmio, NULL);
-+}
-+
-+static const Property aspeed_otp_properties[] = {
-+    DEFINE_PROP_UINT64("size", AspeedOTPState, size, 0),
-+};
-+
-+static void aspeed_otp_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    dc->realize = aspeed_otp_realize;
-+    device_class_set_props(dc, aspeed_otp_properties);
-+}
-+
-+static const TypeInfo aspeed_otp_info = {
-+    .name          = TYPE_ASPEED_OTP,
-+    .parent        = TYPE_DEVICE,
-+    .instance_size = sizeof(AspeedOTPState),
-+    .class_init    = aspeed_otp_class_init,
-+};
-+
-+static void aspeed_otp_register_types(void)
-+{
-+    type_register_static(&aspeed_otp_info);
-+}
-+
-+type_init(aspeed_otp_register_types)
-diff --git a/hw/nvram/meson.build b/hw/nvram/meson.build
-index 10f3639db6..b66f23605b 100644
---- a/hw/nvram/meson.build
-+++ b/hw/nvram/meson.build
-@@ -19,3 +19,7 @@ system_ss.add(when: 'CONFIG_XLNX_BBRAM', if_true: files('xlnx-bbram.c'))
+diff --git a/tests/qtest/migration/migration-util.c b/tests/qtest/migration/migration-util.c
+index 642cf50c8d..45c9e164e2 100644
+--- a/tests/qtest/migration/migration-util.c
++++ b/tests/qtest/migration/migration-util.c
+@@ -203,8 +203,25 @@ char *find_common_machine_version(const char *mtype, const char *var1,
+         return g_strdup(type2);
+     }
  
- specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr_nvram.c'))
- specific_ss.add(when: 'CONFIG_ACPI', if_true: files('fw_cfg-acpi.c'))
-+
-+system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-+  'aspeed_otp.c',
-+  ))
-\ No newline at end of file
+-    g_test_message("No common machine version for machine type '%s' between "
+-                   "binaries %s and %s", mtype, getenv(var1), getenv(var2));
++    char *varstring1 = getenv(var1);
++    char *varstring2 = getenv(var2);
++    if (varstring1 && varstring2) {
++        g_test_message("No common machine version for machine type '%s' "
++                       "between binaries %s and %s",
++                       mtype, varstring1, varstring2);
++    } else if (varstring1) {
++        g_test_message("No common machine version for machine type '%s' "
++                       "between binary %s and environment variable %s",
++                       mtype, varstring1, var2);
++    } else if (varstring2) {
++        g_test_message("No common machine version for machine type '%s' "
++                       "between binary %s and environment variable %s",
++                       mtype, varstring2, var1);
++    } else {
++        g_test_message("No common machine version for machine type '%s' "
++                       "between environment variables %s and %s",
++                       mtype, var1, var2);
++    }
+     g_assert_not_reached();
+ }
+ 
 -- 
-2.43.0
+2.27.0.windows.1
 
 
