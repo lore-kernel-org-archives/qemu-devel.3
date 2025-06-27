@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16D4BC7EE31
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 13:21:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3477CC7EE31
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 13:22:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uV90t-0003Jx-PZ; Fri, 27 Jun 2025 09:21:07 -0400
+	id 1uV91w-0005hm-F8; Fri, 27 Jun 2025 09:22:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1uV90c-00037m-OH
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 09:20:55 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1uV91t-0005gh-U8
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 09:22:09 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1uV90W-0003NL-II
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 09:20:50 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-747e41d5469so2208161b3a.3
- for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 06:20:44 -0700 (PDT)
+ id 1uV91q-0003W5-MP
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 09:22:09 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-234b9dfb842so21798915ad.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 06:22:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1751030442; x=1751635242; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DhEwdbXEy5NwBx8sO1ZDvg4qPAxKxqK/ec7o1GfsOJk=;
- b=Y5iESqo8oG4v6jWC9JeMhX9hWwHFRaLs+tCcT3tZ758OCfE7qgG1Qvv5hwqDb+U5VY
- KNtcV3AMosPhfrTJ/Hv+m50FqeTNM5IT0txwLrT0Y+Wsyc9Wd7VAxUAP51b3+1EJxs2f
- i1xbzKiPNLjOV+aJlnqnjfnLvUc874uY4+MLpQCmHXIyOU8s7N9T7KB8u6nt3SXldx9F
- M/RJL71WfSBHgBI/aKDIhl34gqt/vC3Ll0IWDUVwt/FvxVHr7t9DFhB1YVZgIFriHIY6
- 8mhS+dA+RWaPa8fBB9eKhR+JUyvcAPmGUg6VKwoxwn6AOZQqIQktQAhykEIMdfoMxlkT
- 207Q==
+ d=sifive.com; s=google; t=1751030525; x=1751635325; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=HSzhEP9dEzA+7lfjcbU4kZWDFhSDWRTA9w9lKAghg8o=;
+ b=d33Idx2JTYPJj10P7dBovoJ5A+i7fLqD/3ky1Pu1dXlQzyQdiyBNoglQxEqriwSuSX
+ 7Q21vRY9yanVV1TnlJFxLIC09ddtrM3MFbQ/O99LHAVLDGXu/SaAPB9462w7HyQhb/uj
+ 30hwXFUBwIdS/68RjQqi6znzb9BTzbUmgQeHeEX9EhaQ/09K5Cu0MxWD9PFDcrX0fRx2
+ 0J07YzLZ3/TuF8d7UxC4M44ie2UINUHEbtZ/miSuhcqZAlA5xJrHO+tHpItpxK14JWGT
+ fkQXV8br/yxM993D8qJKDB3b5to1qHjCSq5HZPP8ZEPKS2y0AdNgDMGrBcGJd52nvgPs
+ jrIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751030442; x=1751635242;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DhEwdbXEy5NwBx8sO1ZDvg4qPAxKxqK/ec7o1GfsOJk=;
- b=ItQDwjdWVWiKem06wl5QxyRIePe+5V39MGPfpn6uFGTFCTcpBfnzXwm1oWeC7tjdgS
- YDxxdOm6x1ZZcCSWLObkMgg4f8HgyPbj+lSfUoNAXl6p9dK84anap3vULl1d+QejIAYj
- s2XObU7FAAciSyBE+yJIyPmZNmfjCl5qmtdJYiSaFcOXFnK0PHTUuNtRTWTenatY9dnf
- 4kpqxoZ9Mea4nefmYdHJg2JESM+AMOt00WAO0zeMRUhgTv6irAr15JBu5BVTadQNUDks
- V27Cjh5UrfH87gEjANcNAooato+Aignmjz/sMYEZU5eFnCI07aT7OEiz26UhjJtJfjBt
- 9DXw==
-X-Gm-Message-State: AOJu0Yz2V5BoYSR85P9v7h1PxX1N5gRzNpUNOr2I7qa3w3hD0yhqKTzM
- CVDwjJJiN8YPSUqqawZOKWx8f0Sh5gEsrq/Q9uWg2bpe5RnDL3ukL/K+Bozaftm9xFInl28GfGG
- 4KjaXTuEmwVhuNwVCmBBvUJu9MIepsR0rrrCW20UvayHcxEEPNJpDsAuj/iOzH+AM4X1HMPVbyG
- cq422fbydeUEcYvHEKU8cGQMenI8l5Q/ngQkgong9T0w==
-X-Gm-Gg: ASbGncsHijfJQeZpg1Veg9wGPwfP/ulIMPn42RlR+SGEgybliEhuEQKfOTEMvzNi/9T
- k0nYcvi+R+9XLHXRAppZyteFGBcN3QjtJ3LSBSaFxWrnKc8jUd81KP8D+UAfs/q8RhOgomCdAYg
- TrFRMDuChDnrF7aujAjapqlz42E3XLEpZqtBWN8mx43/y29SkASscKGzAz6vlDI0RisqBHKGsCd
- pxMYJOAA+/NQ3fEKsQtsSf9sbM1BvbMOXgPwXNJZSMw9MJq+roT9xO67Uj2DA9gTV2h19dAZ0V6
- V7aM9djaBIuxq7ngD4YSh28LtiC82VO+/7UutSJPbaQ37bS4ZxNtoFyvC8sjO5+w3XCJ5UVo/y4
- HX/rlh3mXtvRA2PYXZmZV2fCXPHwqf6U=
-X-Google-Smtp-Source: AGHT+IEPQcZueH4f7d7aHs2ifwYEYl7r8mam6U6rZ54pVxXwlcDOjfFuOZcVeI1le3cHOtDsjkPAGw==
-X-Received: by 2002:a05:6a20:430f:b0:220:37a7:578f with SMTP id
- adf61e73a8af0-220a1142ce8mr5569938637.2.1751030442536; 
- Fri, 27 Jun 2025 06:20:42 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1751030525; x=1751635325;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HSzhEP9dEzA+7lfjcbU4kZWDFhSDWRTA9w9lKAghg8o=;
+ b=FPXYmNvdwS+uyMw5yUy+mpAaUkkZwUqzRmwr3tebTFat7itpPTJJ8NJoOWVzbr000p
+ miaJ6Z/B4L/KL6f6SpWzEf6tWIGHlYKJVPK/7DkJeSA8xARwLpsUTjG06kQHnLkM60Ma
+ Ju0QVAOguoeUduYmkahf5NiS1fR5Al20dO6mAfzxV8Hc3vWC3DwoETTqPGS3OBbFD2Z5
+ tK8ju0bWLCy1kJIop+sdDqypgKb8ov+lVOMW7yynXJzkhmjg0yZkBiIJQ2+2QUTEoBtx
+ 0mXC0+/tkmQbWoXQCJDpRNTlXC3rEX4sHjhzzFj4HZyfMFcwlToKrdCyJAGOnpv0kTvo
+ KTWQ==
+X-Gm-Message-State: AOJu0YxGYeCHjS0sYJJhzO+VO3HdJf392XS4tDmaXpRQcQuFM5Vp5PZ8
+ mMaqNBm33h+bTzf8qTtlIRYQFtuUFV6WAvEJjs53WhUlBsTsHVxbwcDwMZvd/b4keDQKygwj3Io
+ hK7pqad9IVlEl9mi1GUtqLvbIYyNaLNDNUqhwC6i0eWyNsKFlJug94A+SH6N1CdQtBiV4dsF8fl
+ NzqFutHD2ovEGNlTCmwG4x+L/pA9KknAYfDzS+2uZveQ==
+X-Gm-Gg: ASbGnct+Z963+GFxh5u7iFhQgMN1IjKQjTL2McBQtH+GrkxDgMxbp6YCRkmnaJkxKaR
+ qX1Sty/Fkrx0AtyK6Oog8iRxaorA9HlwC86m+ZtYOT1v8qS7I24Hko9oI3noLJvVUBJ5eneHtbQ
+ YSvJICxf8Cgy/nA25c2VI5nyOJ6SzLuPbp0/3QSi+I6ZbBYsf6qJUVyaZofcIqg9l09/Cn5NOz/
+ i06XnArg/CDjHdjla5pIjl2qnOkcfw2pTfmDUBBxdiGpErfR19GCtEhbi0fAFqFbvHpVFeDm4PZ
+ iyDRvCHXGlfLgbuUMlERHwZ+uDI/tqD4jQlXuhL+WxA/QhPALuVwN7IWKO8nmiFNw1LaAPRyr9q
+ GpDGoVxGqgqNWe+r0X03SyuoyfP6ETmQ=
+X-Google-Smtp-Source: AGHT+IHxREoC2veGcD8WiMGg/igBtulwDyefeM2wbbWKscmJnLSnC6qKlLlti17ao9c5gsetlSeRvA==
+X-Received: by 2002:a17:902:d58e:b0:235:779:edf0 with SMTP id
+ d9443c01a7336-23ac463560amr42025145ad.50.1751030524466; 
+ Fri, 27 Jun 2025 06:22:04 -0700 (PDT)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74af5573e71sm2393162b3a.98.2025.06.27.06.20.40
+ d9443c01a7336-23acb3c475bsm16083705ad.212.2025.06.27.06.22.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Jun 2025 06:20:42 -0700 (PDT)
+ Fri, 27 Jun 2025 06:22:04 -0700 (PDT)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -73,25 +72,23 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, antonb@tenstorrent.com,
- Max Chou <max.chou@sifive.com>
-Subject: [PATCH v2 3/3] target/riscv: vadc and vsbc are vm=0 instructions
-Date: Fri, 27 Jun 2025 21:20:22 +0800
-Message-ID: <20250627132022.439315-4-max.chou@sifive.com>
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>
+Subject: [PATCH] target/riscv: rvv: Minimum VLEN needs to respect V/Zve
+ extensions
+Date: Fri, 27 Jun 2025 21:21:56 +0800
+Message-ID: <20250627132156.440214-1-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250627132022.439315-1-max.chou@sifive.com>
-References: <20250627132022.439315-1-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=max.chou@sifive.com; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,43 +104,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Blanchard <antonb@tenstorrent.com>
+According to the RISC-V instruction set manual, the minimum VLEN needs
+to respect the following extensions:
 
-We were marking vadc and vsbc as vm=1 instructions, which meant
-vext_check_input_eew wouldn't detect mask vs source register
-overlaps.
+  Extension     Minimum VLEN
+* V             128
+* Zve64[d|f|x]   64
+* Zve32[f|x]     32
 
-Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- target/riscv/insn32.decode | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ target/riscv/tcg/tcg-cpu.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index cd23b1f3a9b..5442203ecaa 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -451,14 +451,14 @@ vwsubu_wv       110110 . ..... ..... 010 ..... 1010111 @r_vm
- vwsubu_wx       110110 . ..... ..... 110 ..... 1010111 @r_vm
- vwsub_wv        110111 . ..... ..... 010 ..... 1010111 @r_vm
- vwsub_wx        110111 . ..... ..... 110 ..... 1010111 @r_vm
--vadc_vvm        010000 0 ..... ..... 000 ..... 1010111 @r_vm_1
--vadc_vxm        010000 0 ..... ..... 100 ..... 1010111 @r_vm_1
--vadc_vim        010000 0 ..... ..... 011 ..... 1010111 @r_vm_1
-+vadc_vvm        010000 0 ..... ..... 000 ..... 1010111 @r_vm_0
-+vadc_vxm        010000 0 ..... ..... 100 ..... 1010111 @r_vm_0
-+vadc_vim        010000 0 ..... ..... 011 ..... 1010111 @r_vm_0
- vmadc_vvm       010001 . ..... ..... 000 ..... 1010111 @r_vm
- vmadc_vxm       010001 . ..... ..... 100 ..... 1010111 @r_vm
- vmadc_vim       010001 . ..... ..... 011 ..... 1010111 @r_vm
--vsbc_vvm        010010 0 ..... ..... 000 ..... 1010111 @r_vm_1
--vsbc_vxm        010010 0 ..... ..... 100 ..... 1010111 @r_vm_1
-+vsbc_vvm        010010 0 ..... ..... 000 ..... 1010111 @r_vm_0
-+vsbc_vxm        010010 0 ..... ..... 100 ..... 1010111 @r_vm_0
- vmsbc_vvm       010011 . ..... ..... 000 ..... 1010111 @r_vm
- vmsbc_vxm       010011 . ..... ..... 100 ..... 1010111 @r_vm
- vand_vv         001001 . ..... ..... 000 ..... 1010111 @r_vm
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 163e7ce3642..187534009dd 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -416,12 +416,21 @@ static void riscv_cpu_validate_misa_priv(CPURISCVState *env, Error **errp)
+ static void riscv_cpu_validate_v(CPURISCVState *env, RISCVCPUConfig *cfg,
+                                  Error **errp)
+ {
++    uint32_t min_vlen;
+     uint32_t vlen = cfg->vlenb << 3;
+ 
+-    if (vlen > RV_VLEN_MAX || vlen < 128) {
++    if (riscv_has_ext(env, RVV)) {
++        min_vlen = 128;
++    } else if (cfg->ext_zve64x) {
++        min_vlen = 64;
++    } else if (cfg->ext_zve32x) {
++        min_vlen = 32;
++    }
++
++    if (vlen > RV_VLEN_MAX || vlen < min_vlen) {
+         error_setg(errp,
+                    "Vector extension implementation only supports VLEN "
+-                   "in the range [128, %d]", RV_VLEN_MAX);
++                   "in the range [%d, %d]", min_vlen, RV_VLEN_MAX);
+         return;
+     }
+ 
 -- 
 2.43.0
 
