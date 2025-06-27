@@ -4,65 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ED4CC7EE2A
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 18:04:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F27DC77B7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 18:04:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uVDQS-0005cE-9E; Fri, 27 Jun 2025 14:03:48 -0400
+	id 1uVDQQ-0005bC-CE; Fri, 27 Jun 2025 14:03:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dkg@fifthhorseman.net>)
- id 1uVDQQ-0005b0-0Z
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 14:03:46 -0400
-Received: from che.mayfirst.org ([2001:470:1:116::7])
+ id 1uVDQO-0005Zv-Hn
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 14:03:44 -0400
+Received: from che.mayfirst.org ([162.247.75.118])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dkg@fifthhorseman.net>)
- id 1uVDQM-0006kT-Tf
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 14:03:45 -0400
+ id 1uVDQM-0006kU-Hn
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 14:03:44 -0400
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/simple;
  d=fifthhorseman.net; i=@fifthhorseman.net; q=dns/txt; s=2019;
  t=1751047420; h=from : to : cc : subject : date : message-id :
  in-reply-to : references : mime-version : content-transfer-encoding :
- from; bh=Rnq4OXExIRcpJC5EcSJGqi0uLZAj07LEbvHF4zFuOns=;
- b=W4vx/EPVGX18JTQxluJ2ANK657vwOKnNQct/p6Ig2rsdCMnP7BXVssmR08aDm8QFzy2sk
- +y3RTBR/E45W34ZDQ==
+ from; bh=dynow+ibnkbDlpWO3xp9SEdYoeWiYC+RVdASpIyqFho=;
+ b=btMpreM/gr9OIomkLmY5Zw/d/02NZQqgbbbX1uobDWt4Q7OWSunDiHO9k4XoL/o153htM
+ uNMPEPD3OUAaGjCBw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fifthhorseman.net;
  i=@fifthhorseman.net; q=dns/txt; s=2019rsa; t=1751047420; h=from : to
  : cc : subject : date : message-id : in-reply-to : references :
  mime-version : content-transfer-encoding : from;
- bh=Rnq4OXExIRcpJC5EcSJGqi0uLZAj07LEbvHF4zFuOns=;
- b=sYl7/kXOvVaKwN9hdxA7fuQQmfV87UTVBMvxu4+/vM/fD8I7EwRLN6UAx1WWqcugYyk81
- HjqROS7bQopSk94WgnGXgE/Djq4B8qVTlVONQuUZM/iV/ulKj1GKpReOtG1Z2nR9PdT3p8S
- 5kUrZdr9ysBHkU917CgdGUHRXDHDgk/Mw35adEt2/sthab09W+aUciXUiVIqSPL6HbANOtw
- mHuKITBzmMEiFHRV5JhHCXh1uH0GZV/VpIcmRVYH27QTx7JuoSDJZ+PUMCgdP1X0FWun+UG
- tvtEO58pzuNryfYhawGOHUt7DQSD6tmLpJAuG3U1BUTtn8exLHD0O6NzGFnw==
+ bh=dynow+ibnkbDlpWO3xp9SEdYoeWiYC+RVdASpIyqFho=;
+ b=hVpJobVG4NmDUwXhWLy4CKT4QtkUXOekn4370Vk0tPWe6/JQmdVJXfT0LU11t00Wl4rOB
+ dOQjee7acYZ+XPjuf006qGpYSQdYd8Vmtrsf98qqViuoCr61CGZQ4yFoMUPmmXU0p9DjoOP
+ fXgUuce9iE7RXZrrwOwuYSiWi+gWM7VF8t1jFX3z6iDdXlfh1uiau9QAziRnA7k6ffUbuyI
+ LQnBzSbumBxb7s5cMtXXPyA3iWQU4vVWCwSsur+ibhw1QiaSPPWnWeZARmQtGXcStdqXaWa
+ ipyelZX8umcqQam0OJ+ob1FEt0aEfvzWPZOnLaFS/Ie9PNZy/p2nYH4QUBmg==
 Received: from fifthhorseman.net (lair.fifthhorseman.net [108.58.6.98])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature ECDSA (secp384r1) server-digest SHA384)
  (No client certificate requested)
- by che.mayfirst.org (Postfix) with ESMTPSA id 475D9F9B2;
+ by che.mayfirst.org (Postfix) with ESMTPSA id 414FEF9B1;
  Fri, 27 Jun 2025 14:03:40 -0400 (EDT)
 Received: by fifthhorseman.net (Postfix, from userid 1000)
- id 6A03513F6BB; Fri, 27 Jun 2025 14:03:31 -0400 (EDT)
+ id 6CBA913F6BF; Fri, 27 Jun 2025 14:03:31 -0400 (EDT)
 From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
 To: qemu-devel@nongnu.org
 Cc: dkg@fifthhorseman.net
-Subject: [PATCH 2/3] Socket activation: get FD by label
-Date: Fri, 27 Jun 2025 14:03:30 -0400
-Message-ID: <20250627180331.1370235-2-dkg@fifthhorseman.net>
+Subject: [PATCH 3/3] Socket activation: enable spice listener.
+Date: Fri, 27 Jun 2025 14:03:31 -0400
+Message-ID: <20250627180331.1370235-3-dkg@fifthhorseman.net>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250627180331.1370235-1-dkg@fifthhorseman.net>
 References: <20250627180331.1370235-1-dkg@fifthhorseman.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:470:1:116::7;
+Received-SPF: pass client-ip=162.247.75.118;
  envelope-from=dkg@fifthhorseman.net; helo=che.mayfirst.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,94 +81,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This uses the cached copy of LISTEN_FDNAMES to find the first file
-descriptorlabel with a matching label.
+Enable qemu to be socket-activated based on a spice connection.
 
-Note that if two file descriptors are given the same label this will
-ignore all but the first.
+Note that this depends on un-deprecating
+spice_server_set_listen_socket_fd, see
+https://gitlab.freedesktop.org/spice/spice/-/merge_requests/240
 
-This is another step toward addressing
+This partially addresses
 https://gitlab.com/qemu-project/qemu/-/issues/3011
 
 Signed-off-by: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
----
- include/qemu/systemd.h | 15 +++++++++++++++
- util/systemd.c         | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 50 insertions(+)
 
-diff --git a/include/qemu/systemd.h b/include/qemu/systemd.h
-index f0ea1266d5..9f2bfdc7c7 100644
---- a/include/qemu/systemd.h
-+++ b/include/qemu/systemd.h
-@@ -23,4 +23,19 @@
-  */
- unsigned int check_socket_activation(void);
+More fixup for spice systemd socket activation
+---
+ qemu-options.hx |  7 +++++--
+ ui/spice-core.c | 47 +++++++++++++++++++++++++++++++++++------------
+ 2 files changed, 40 insertions(+), 14 deletions(-)
+
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 1f862b19a6..d17c5bc5ff 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -2270,6 +2270,7 @@ DEF("spice", HAS_ARG, QEMU_OPTION_spice,
+     "       [,x509-cert-file=<file>][,x509-cacert-file=<file>]\n"
+     "       [,x509-dh-key-file=<file>][,addr=addr]\n"
+     "       [,ipv4=on|off][,ipv6=on|off][,unix=on|off]\n"
++    "       [,socket-activated=<str>]\n"
+     "       [,tls-ciphers=<list>]\n"
+     "       [,tls-channel=[main|display|cursor|inputs|record|playback]]\n"
+     "       [,plaintext-channel=[main|display|cursor|inputs|record|playback]]\n"
+@@ -2297,8 +2298,10 @@ SRST
+         Set the IP address spice is listening on. Default is any
+         address.
  
-+
-+/*
-+ * Check if socket activation indicates named file descriptor based on
-+ * the colon-delimited LISTEN_FDNAMES.  The "label" must not be NULL,
-+ * and should be a simple text string that does not contain a colon,
-+ * matching the FileDescriptorName= directive in systemd.socket(5)
-+ *
-+ * It is acceptable to ask for the empty string as a label.
-+ *
-+ * Returns -1 if no socket activation is in use, or if the label does
-+ * not match any file descriptor.  Otherwise, returns the lowest
-+ * numeric value for a file descriptor matching the label exactly.
-+ */
-+unsigned int socket_activated_fd_by_label(const char *label);
-+
- #endif
-diff --git a/util/systemd.c b/util/systemd.c
-index 1eca2bd69f..d6675725be 100644
---- a/util/systemd.c
-+++ b/util/systemd.c
-@@ -97,9 +97,44 @@ unsigned int check_socket_activation(void)
-     return nr_fds;
- }
+-    ``ipv4=on|off``; \ ``ipv6=on|off``; \ ``unix=on|off``
+-        Force using the specified IP version.
++    ``ipv4=on|off``; \ ``ipv6=on|off``; \ ``unix=on|off`` ; \ ``socket-activated=<str>``
++        Force using the specified IP version.  Or, use a unix-domain socket.
++        Or, listen using the passed file descriptor from systemd-style socket
++        activation associated with FileDescriptorName ``str``.
  
-+unsigned int socket_activated_fd_by_label(const char *label)
-+{
-+    int nr_fds = check_socket_activation();
-+    if (!nr_fds) {
-+        return -1;
-+    }
-+    int curfd;
-+    const char *nameend;
-+    const char *nameptr;
-+    size_t labellen, namelen;
-+
-+    labellen = sizeof(label);
-+    curfd = 0;
-+    nameptr = fdnames;
-+    do {
-+        nameend = strchr(nameptr, ':');
-+        if (nameend) {
-+            namelen = nameend - nameptr;
-+            nameend++;
-+        } else {
-+            namelen = strlen(nameptr);
-+        }
-+        if (labellen == namelen && memcmp(nameptr, label, namelen) == 0) {
-+            return curfd + FIRST_SOCKET_ACTIVATION_FD;
-+        }
-+        curfd++;
-+        nameptr = nameend;
-+    } while (nameptr && curfd < nr_fds);
-+    return -1;
-+}
-+
- #else /* !_WIN32 */
- unsigned int check_socket_activation(void)
- {
-     return 0;
- }
-+unsigned int socket_activated_fd_by_label(const char *label)
-+{
-+    return 0;
-+}
+     ``password-secret=<secret-id>``
+         Set the ID of the ``secret`` object containing the password
+diff --git a/ui/spice-core.c b/ui/spice-core.c
+index 0326c63bec..1f817142f0 100644
+--- a/ui/spice-core.c
++++ b/ui/spice-core.c
+@@ -38,6 +38,7 @@
+ #include "migration/misc.h"
+ #include "hw/pci/pci_bus.h"
+ #include "ui/spice-display.h"
++#include "qemu/systemd.h"
+ 
+ /* core bits */
+ 
+@@ -433,6 +434,9 @@ static QemuOptsList qemu_spice_opts = {
+         },{
+             .name = "unix",
+             .type = QEMU_OPT_BOOL,
++        },{
++            .name = "socket-activated",
++            .type = QEMU_OPT_STRING,
  #endif
+         },{
+             .name = "password-secret",
+@@ -736,18 +740,37 @@ static void qemu_spice_init(void)
+     }
+ 
+     spice_server = spice_server_new();
+-    spice_server_set_addr(spice_server, addr ? addr : "", addr_flags);
+-    if (port) {
+-        spice_server_set_port(spice_server, port);
+-    }
+-    if (tls_port) {
+-        spice_server_set_tls(spice_server, tls_port,
+-                             x509_cacert_file,
+-                             x509_cert_file,
+-                             x509_key_file,
+-                             x509_key_password,
+-                             x509_dh_file,
+-                             tls_ciphers);
++    str = qemu_opt_get(opts, "socket-activated");
++    if (str) {
++        int fd = socket_activated_fd_by_label(str);
++        if (fd == -1) {
++            error_report("socket-activated spice failed: No FD found with label '%s'",
++                         str);
++            exit(1);
++        }
++
++        if (addr || addr_flags) {
++            error_report("When spice is socket-activated, do not set addr or ipv4 or ipv6 or unix");
++            exit(1);
++        }
++        if (spice_server_set_listen_socket_fd(spice_server, fd) == -1) {
++            error_report("spice_server_set_listen_socket_fd failed!");
++            exit(1);
++        }
++    } else {
++        spice_server_set_addr(spice_server, addr ? addr : "", addr_flags);
++        if (port) {
++            spice_server_set_port(spice_server, port);
++        }
++        if (tls_port) {
++            spice_server_set_tls(spice_server, tls_port,
++                                 x509_cacert_file,
++                                 x509_cert_file,
++                                 x509_key_file,
++                                 x509_key_password,
++                                 x509_dh_file,
++                                 tls_ciphers);
++        }
+     }
+     if (password) {
+         qemu_spice.set_passwd(password, false, false);
 -- 
 2.47.2
 
