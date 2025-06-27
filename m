@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 518CFC7EE2A
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 16:45:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FAAC7EE2A
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 16:50:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uVCC5-0000KV-Kc; Fri, 27 Jun 2025 12:44:53 -0400
+	id 1uVCHJ-0001em-Aq; Fri, 27 Jun 2025 12:50:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uVCC1-0000Js-9I
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 12:44:50 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uVCHE-0001eI-Vk
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 12:50:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uVCBz-0008Tu-H8
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 12:44:49 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uVCHD-0001TW-0h
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 12:50:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751042686;
+ s=mimecast20190719; t=1751043009;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=4as6/ltz8TD2p+c8QRn0nMKDRRrk20hJ6WmHo+miXLE=;
- b=ZeOKIxz3H5X6Hcwz8oNCEhhDYapRQ35c9E5GHzLvkb1cdu5MPzgodz9112cOEA7IEIragE
- pNZeT8V33CPUXMOiLah0cXtQpQYqG545RTqSikp8lcChoIY3flYIi6gE9etlUTEsXsy90y
- 5Im39l/jMR5ytQ2ykGLjCgAOK1/U/N8=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9VuDI1/bPts+KyiGdxOEORJa2qYEMpk0kEU3WHPTprY=;
+ b=Cuqga2GjFIV8WtAL0JRI+/VReLUoIJmjGJ4pmVtrQTDMdtoaw4WGArmsmbf42taUSFpjCw
+ sO9nmyVcvkRT0+n7kBDvktLuJZd6NnbQ/mX3ES2YrB9WOYEuLbJvvOs6PENX9LkuBnNqMZ
+ 4oaA7n1GFIuGXJLhtx1DbPbtEhAkUQY=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-682-3cZqaXwBPb2F9mbNMM-Ceg-1; Fri, 27 Jun 2025 12:44:45 -0400
-X-MC-Unique: 3cZqaXwBPb2F9mbNMM-Ceg-1
-X-Mimecast-MFC-AGG-ID: 3cZqaXwBPb2F9mbNMM-Ceg_1751042684
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-b34b810fdcaso49884a12.0
- for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 09:44:45 -0700 (PDT)
+ us-mta-224-MdOu8nz4PGS61KHNnUSPDw-1; Fri, 27 Jun 2025 12:50:07 -0400
+X-MC-Unique: MdOu8nz4PGS61KHNnUSPDw-1
+X-Mimecast-MFC-AGG-ID: MdOu8nz4PGS61KHNnUSPDw_1751043007
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-b31cc625817so2832982a12.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 09:50:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751042684; x=1751647484;
+ d=1e100.net; s=20230601; t=1751043007; x=1751647807;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=4as6/ltz8TD2p+c8QRn0nMKDRRrk20hJ6WmHo+miXLE=;
- b=dd8yFBIFeCXGv/JkultITk7aORfE+5R6+xyjncnfj81IwdW5wpGtjb+fIR6h859kGu
- A9kuwkd/u1z9I83rwhfuT9HtqUL7y+QianYsFGdwxqbx6qpoj8ZdrI9F0RewQ7FF6Eff
- H0bNC9Itco11+LGvj3p8PUunkQtrFeMXlQegKMbEyy6ox4UuJerflsPlx8zI5I4ajcm4
- 0TQtbcmOCZFKW5ygPljpZtedduPSn2bQKDlbRi1aeq7oGBBFfzGhNRCipygPXoD1abp5
- 2DgZJ2qrYDT1z03vB2s/e3v/styswZqhNFlEpijlrD2/oKpLUxjl+ESdpOEw+T2Yp3+4
- Zqxg==
-X-Gm-Message-State: AOJu0YzSoQbKwXfmyTsAb9vml3fxNg3gmFj2uGQzqCT13dlNWIRyeHzY
- lP1m2F3+oG6vo/dtxZ+OXPXXW6hTFK39T4BZHpMefh5YeG2+5QhRsQF1tAaNxbehFCoLGNq6h0X
- ecT2SSo9eM+nta7UZA/J9BaalFU2UMDAAuWivZPv/4Wwqnf/AYrjh3h2PjciUkREIXZf4gT597/
- CcIHxK2Hk0dSb7gn8pglsAw+pnoMGx4zc=
-X-Gm-Gg: ASbGncvkM72tIxgV2+lwDDNkH2nSwsZopUuJJ1vLfO9tvWbMfFCBZvw1Uzsa3zsANJv
- PNdUP87GqQAXYV27w480QVK/wuYp1EMovUnFv4OPMQf2zBVyNgWBpP5IUathQ5/tzJP90VYhD+m
- d2uKCMY+mN3AWD8zotaMx4sz4Rp3dJ9WELYWg=
-X-Received: by 2002:a17:90b:43:b0:311:9c9a:58c5 with SMTP id
- 98e67ed59e1d1-318c8ee9a31mr7047306a91.12.1751042684076; 
- Fri, 27 Jun 2025 09:44:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHOAspCPSH58ahvwq+XapRuhvTO0RjA22fbYzJH8Ft6dsT/mPgkVV3V79tYXGW6RCaSk+LqTpgyypOoToHMBZ0=
-X-Received: by 2002:a17:90b:43:b0:311:9c9a:58c5 with SMTP id
- 98e67ed59e1d1-318c8ee9a31mr7047262a91.12.1751042683674; Fri, 27 Jun 2025
- 09:44:43 -0700 (PDT)
+ bh=9VuDI1/bPts+KyiGdxOEORJa2qYEMpk0kEU3WHPTprY=;
+ b=os8dQ35rcHp/4EcLMr6IqEI6ntcBD6mkpAtEdY4qxPWR5NnDQyR3mQmmosXSV6mPTx
+ YconUL01bocfrkY8sdA4wxIQDwN5r+vsSSkjxdmsZdkGD3HiWix0Iq5K2q6ZwXkrQOO+
+ de9XghnrAQ6xuQj2QHCkomMi8PyPei5xTUU0lAQAmyobxdf00rdS3hbxWs6k7K/poNP7
+ h0S8y76bLjTSaTLffcihGc/GdcjbsM2I1NTIiBEDx/aFDL93Jp8aevKUe9i0ODigH7d1
+ 0aAus8xMyNjr2BvlLD6YszlQpaS/23miVaI9ztspwSjonw58rKEiRSptxe+yfjX2IIj1
+ gVjg==
+X-Gm-Message-State: AOJu0YxmVzrCNt4jDKTNvpqK3+6nCY7bb7ClhRZpCHuN2KusS0uUjfO7
+ buYKGT5yNrKefycCD1e6EPvPtmRHkgzsCgGlSwxg60Bms/lFHmCjlkixgrm0zEBRuh0TRrj/+L0
+ zKKduRjmCBDIu9XvrtkYLYkzE7dI3dbjN1iRyX1tZV5+CcLDECHGHUgV+C6zENLm2Dyr4WSpQfq
+ 85ZYGOmOsDq4slPo9W0WetLEAldza9ikc=
+X-Gm-Gg: ASbGnct9X+eyRQa7S2iVURZPmbn+VP+BVqmmg1NzAuqF1d3DlY9aP6LmG9ruH/7aIJB
+ HZq66tD0G5iCelw7Ovl95YntSN/Zu5KpKq4VkLW6e9a6BefHFOsNVJBLQdVNpC8oYXZsQV92x+g
+ RqSUYacFXoRDSs9SbehRsJbFV1KTux3IX7fV8=
+X-Received: by 2002:a17:90b:5345:b0:311:1617:5bc4 with SMTP id
+ 98e67ed59e1d1-316ed3a99d5mr11731510a91.12.1751043006894; 
+ Fri, 27 Jun 2025 09:50:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHYjaiLCnJM9Uo+IfV1B2FN9eXytOZr3uYwLVzeBBTH9zwrpqsd8sgaJk+B5p6kiqW7JKvzRSVcyi3IpwWnLbA=
+X-Received: by 2002:a17:90b:5345:b0:311:1617:5bc4 with SMTP id
+ 98e67ed59e1d1-316ed3a99d5mr11731449a91.12.1751043006487; Fri, 27 Jun 2025
+ 09:50:06 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250618165353.1980365-1-jsnow@redhat.com>
  <20250618165353.1980365-5-jsnow@redhat.com>
  <874iw1o6jt.fsf@pond.sub.org>
 In-Reply-To: <874iw1o6jt.fsf@pond.sub.org>
 From: John Snow <jsnow@redhat.com>
-Date: Fri, 27 Jun 2025 12:44:31 -0400
-X-Gm-Features: Ac12FXwZocAUotqw-prP0rbfjXnGGy-E7uG39Fitel3685w2uIdkZfFqByaTgX0
-Message-ID: <CAFn=p-bxeTg2FSaRTky1xEPu9KkiXTb-8w6+mvgdf6+RbTHXvw@mail.gmail.com>
+Date: Fri, 27 Jun 2025 12:49:53 -0400
+X-Gm-Features: Ac12FXxxwwd5Vmu0qvWttg3nGNUJMDjHWI8CDG3hQCKE3SZYMOdBKWG_ahAmxIw
+Message-ID: <CAFn=p-ZkBt8ck7WWg_1FFBi5GoYmyEhVPZGfdL4ODN6GBn3YSw@mail.gmail.com>
 Subject: Re: [PATCH v3 4/5] docs/sphinx: remove special parsing for freeform
  sections
 To: Markus Armbruster <armbru@redhat.com>
@@ -103,7 +103,7 @@ Cc: qemu-devel <qemu-devel@nongnu.org>, Jiri Pirko <jiri@resnulli.us>,
  Alex Williamson <alex.williamson@redhat.com>,
  Zhenwei Pi <pizhenwei@bytedance.com>, 
  Jason Wang <jasowang@redhat.com>, Lukas Straub <lukasstraub2@web.de>
-Content-Type: multipart/alternative; boundary="00000000000025c6d10638906575"
+Content-Type: multipart/alternative; boundary="0000000000006387e106389078ac"
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -114,7 +114,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
  RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
+ WEIRD_QUOTING=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,7 +130,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000025c6d10638906575
+--0000000000006387e106389078ac
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -146,7 +146,17 @@ On Fri, Jun 27, 2025, 5:52=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
 > "Allows them to" suggests the patch enables use of rST headings.  Is
 > this the case?  Or do they just work, and this patch just switches
 > schema code to use them, and drops now unnecessary generator code?
-> >
+>
+
+Ehm... Kind of both? I guess I hadn't considered that rST headings might
+already work without the switch. I guess they didn't because of the
+headerless freeform section bug I fix in this series.
+
+I guess you're technically right, I just never thought of it in that way.
+
+I'll update the message so I don't confuse you in the future.
+
+>
 > > Tests and documentation are updated to match.
 > >
 > > Signed-off-by: John Snow <jsnow@redhat.com>
@@ -195,10 +205,6 @@ n
 > I think it's easiest not to talk about the two kinds of doc blocks here
 > at all.  Scratch the first sentence?
 >
-
-Sure.
-
-
 > >
 > >      ##
 > > -    # =3D This is a top level heading
@@ -241,7 +247,7 @@ Sure.
 >
 >
 
---00000000000025c6d10638906575
+--0000000000006387e106389078ac
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -262,7 +268,17 @@ br>
 &quot;Allows them to&quot; suggests the patch enables use of rST headings.=
 =C2=A0 Is<br>
 this the case?=C2=A0 Or do they just work, and this patch just switches<br>
-schema code to use them, and drops now unnecessary generator code?<br>
+schema code to use them, and drops now unnecessary generator code?<br></blo=
+ckquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Ehm... Ki=
+nd of both? I guess I hadn&#39;t considered that rST headings might already=
+ work without the switch. I guess they didn&#39;t because of the headerless=
+ freeform section bug I fix in this series.</div><div dir=3D"auto"><br></di=
+v><div dir=3D"auto">I guess you&#39;re technically right, I just never thou=
+ght of it in that way.</div><div dir=3D"auto"><br></div><div dir=3D"auto">I=
+&#39;ll update the message so I don&#39;t confuse you in the future.</div><=
+div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmai=
+l_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 =
+.8ex;border-left:1px #ccc solid;padding-left:1ex">
 &gt;<br>
 &gt; Tests and documentation are updated to match.<br>
 &gt;<br>
@@ -317,11 +333,7 @@ It&#39;s probably a bad idea, though.<br>
 <br>
 I think it&#39;s easiest not to talk about the two kinds of doc blocks here=
 <br>
-at all.=C2=A0 Scratch the first sentence?<br></blockquote></div></div><div =
-dir=3D"auto"><br></div><div dir=3D"auto">Sure.</div><div dir=3D"auto"><br><=
-/div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #=
-ccc solid;padding-left:1ex">
+at all.=C2=A0 Scratch the first sentence?<br>
 <br>
 &gt;=C2=A0 <br>
 &gt;=C2=A0 =C2=A0 =C2=A0 ##<br>
@@ -369,6 +381,6 @@ br>
 <br>
 </blockquote></div></div></div>
 
---00000000000025c6d10638906575--
+--0000000000006387e106389078ac--
 
 
