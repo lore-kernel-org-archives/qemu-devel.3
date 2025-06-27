@@ -4,106 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21318C7EE31
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 14:07:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B54E2C77B7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 14:30:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uV9i3-0007EZ-FK; Fri, 27 Jun 2025 10:05:43 -0400
+	id 1uVA5Z-00036E-Dy; Fri, 27 Jun 2025 10:30:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uV9i1-0007DR-UR
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 10:05:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uV9i0-0006SX-4Q
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 10:05:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751033138;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qiUHlUwRTtOeycYenbTYku29+WxK2EOQMBu5/2LMQhM=;
- b=PlCJIlTxYC0Dxj98TIQHwSJgWee3Ypg32PZBtMvEHj2U5zlupZTzqSuMNOnS2fq6nm+dh9
- RJCNHK4UM1Jh6QbBGBC3W7g+IqG9V7wQTor/oGy3ndEC728S0QzfHd7jEYV7NF4Uxo2gNr
- Op+nRNkAZu3w5Ev3DotEhjTNUz6Hxr0=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-682-g27t7nZ2N62lmVAYTWxwRw-1; Fri, 27 Jun 2025 10:05:37 -0400
-X-MC-Unique: g27t7nZ2N62lmVAYTWxwRw-1
-X-Mimecast-MFC-AGG-ID: g27t7nZ2N62lmVAYTWxwRw_1751033136
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4f3796779so1070040f8f.1
- for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 07:05:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uVA5X-00035j-9y
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 10:29:59 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uVA5S-0007BF-3K
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 10:29:58 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4537fdec33bso14179315e9.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 07:29:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751034589; x=1751639389; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3jkl0RSixfcpJWBKVGrfoh6ZVQrLew26EIKrobEHG18=;
+ b=o4MdEnRD75+aFK3CUAMoqwQsfQ7MhNL2JIGdJDwjl3Lhf5ipmW0cvIsH7RsBaPvEw4
+ hOHjSpl5qeqOq55iJ+yC4iw2yb3WYvmIQTwFiD56kQXeO5KCui1YxxXGgNIFE8Q/pHY4
+ iop+DitprpagyJB8GxgsMkq/s9R4Fq4cO8YINIq4+MrdAuweSGCSfRwSKkWjyY/bykmC
+ x17U04Ar3xVLTz2rhZMDCX/9gTTqmZEeRhMcmzcVRoez4MFS1fvqCkNPJiqoLVpwbrOY
+ NBtESCQSTZ/alSMrWOtjL6Emi/xriR7HxQq0n/CiN4EPulEMrFc3tnq269uIcxii2Gls
+ qg2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751033136; x=1751637936;
- h=content-transfer-encoding:in-reply-to:references:reply-to:cc:to
- :from:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qiUHlUwRTtOeycYenbTYku29+WxK2EOQMBu5/2LMQhM=;
- b=X2BViETS5YwOV46YXLZLw+wRLLeFi6JMGdhxYN6F4QQXpUI0t5PbjfWiiYtxtC8YLs
- +D58qDim02xQ1DFeDoopoHy+oSXYw+7KfmQWM23JP9ihz+zJcT7EIiZovjotbpSWgRsk
- x1ds08Pi6wf099yIIKkx0eWpYVSxZfhzhueVQwBXhueWto9hfcdUceaa4/kg6QCoVhu3
- SXB+6JXVSg2ipTIHcy9mOH6tZq6eSYpVJ3CpsfZ0/XJijHJDQ7FXLUABBjxI/At43Pnf
- y0cmEHACnArogTCc/DcflNpAUFVBw6T61LXRp2kPGRJKKcTncEPlG+C6f17T7iL/0Df/
- 78iA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU5jclVDqWyCuCvczukosCMWzn6K69lLP8zMUa1bXj1rmOzVCEY9bLTULJrZtggb8j2pBBUBxDBXFQV@nongnu.org
-X-Gm-Message-State: AOJu0YzEV/TzQbpz2Rk5ulUvAsyKWw3ewG14oZRKeI+EJPo4EKzQG9VA
- /4fdOiVa5pCx8K2BBmtmZe4mb8/4AHO5aaSY0Af3tg/APg8NylTAKiYndKCTL8PAzvbaoOce3z0
- TfGNF7ZqEyi+LRLfHMtqN/5boUewrc9shhNQpnJNXQW1xvCh66JTSpeYj
-X-Gm-Gg: ASbGncvkrhgoTwSQYS/kjDGf0f5vV0gWeW3/aSF8VsA9GIw0zFtKEK9eUBU8suE1KlO
- JR04sJdwYvr1YaHFo0Tgvs3QePdF5fTxFaPFYPrMtfnLjatyx6v0QJv4hYJgjkrlMoCTQZZ246w
- FbK71nmNMLR5Eyi1JEYgz6jDCdZM0ki3m7Nj7VUJReniJt2EhnYmSVUHBaOBu3kTV3iuXlhFsJi
- kVZRwVX8fhDlC7mq8TeSFdgcQ4C9hRI9m1FHu2tMsNYHXvAsE+85zFZZOppAnMzNxeW0l26S/kO
- MBkrrjwMa9OgrSU/+n7rTXfD4ub6hNjNxm466EJp39CTbqYNQ1EcoH13X9NPneA+z4dATw==
-X-Received: by 2002:a05:6000:490a:b0:3a5:2949:6c38 with SMTP id
- ffacd0b85a97d-3a91846d660mr3331163f8f.52.1751033135341; 
- Fri, 27 Jun 2025 07:05:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGAKSxUEGAfPbfmfUZfpXzTSws5Zvn5M5kcxepW3JJKM6A2qOsniE0K+HmGptNqIUZ/su4YKg==
-X-Received: by 2002:a05:6000:490a:b0:3a5:2949:6c38 with SMTP id
- ffacd0b85a97d-3a91846d660mr3331077f8f.52.1751033134556; 
- Fri, 27 Jun 2025 07:05:34 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-453814a6275sm56990555e9.1.2025.06.27.07.05.33
+ d=1e100.net; s=20230601; t=1751034589; x=1751639389;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3jkl0RSixfcpJWBKVGrfoh6ZVQrLew26EIKrobEHG18=;
+ b=qKiMQp7/qzFIddKHTQNB5vfXMKC4CWHwg7PoFAW3gsYywzSjhDFBIn4NvqpGgN6c1x
+ wNOKFe2rwSctSE3Vi5IAbQHiAJ5XArgJjpqE763ctig7aV4DbYjQLoDMt3jx6pAGCyke
+ P9Jp85l3ynUapyOWIi6WPeG6J3UIVQ9aXCGooqJcVNDaRDBr5+2Tfe9M6KZXJ58ttHNv
+ KOJeav76tKXoS7Hr96bXk3pcluajiudjd1BBSU3CHzc+gHiRibjhNrsMexQ8YIW+I3QG
+ kznhLMMFU1LMeuvigq+swCV/bmxl/laMqkJ76IRo+tyfzWZzQMC7wWDZosDH6xdlYKwk
+ xP4A==
+X-Gm-Message-State: AOJu0YzQvJWZp7kSRJE2Aoo0UAk9VB7uK1V82KXi1Hz7iCryfcMCw1+0
+ iQR6Pc+KhFL4OJSZVHiCDQ3vcLfxB67cCuYbFaBizlPljHBorhmyJwr1GniFqLNK+fc=
+X-Gm-Gg: ASbGnctRQDeVUqLT+3UVLIQHT9TpiBzWlWB/7r2REevgkrW/qFgkk2I7pMVZ4DwIS63
+ r/4XDNvG05L14G3tMNtJBXlRXxcSCULHMxx/Cqin/Y2Ai477mXF1/tJvN3d2ulR/AFr96BL4CAu
+ vxzFMRR9o/jbRJRggtLaKam9wVGuXURGMDPiwanAGJY1KtpAXcDKUtjBZZ6IW2+ie4dDdohoMvw
+ StmJMEpA8iD30cu5EH8DI8ZAaMRLH1WaY3SPKvUcpMUYjlMRsUylqjILOXI7lZWApkvdjAcEwJ9
+ UFkuXMjYZPwlQvjHvgvBpiA7XHoL6LVhwBG8kCsUb8IxfhruiDJ3VZPuPrQUhRbbqnR9gBYc9v8
+ v9BNtALsKmnAmngzs6Nnw3+s5vQrWZA==
+X-Google-Smtp-Source: AGHT+IGjW/FLEX9dV8z1u55CzE3ajyLNw/6vIWJ+2pcpmVjgb2BFS0pHqOk9vh9ONAkmiODA89stFg==
+X-Received: by 2002:a05:600c:6307:b0:453:745:8534 with SMTP id
+ 5b1f17b1804b1-4538fbe93e5mr29457905e9.12.1751034589333; 
+ Fri, 27 Jun 2025 07:29:49 -0700 (PDT)
+Received: from [192.168.69.218] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a892e6214fsm2863157f8f.98.2025.06.27.07.29.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Jun 2025 07:05:33 -0700 (PDT)
-Message-ID: <c98c9d01-ccd9-4e3a-a24e-9a42cf1b4b8e@redhat.com>
-Date: Fri, 27 Jun 2025 16:05:31 +0200
+ Fri, 27 Jun 2025 07:29:48 -0700 (PDT)
+Message-ID: <9234117e-1a81-4561-a69a-9ead63d5d4b9@linaro.org>
+Date: Fri, 27 Jun 2025 16:29:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/9] hw/arm/virt-acpi-build: Improve comment in
- build_iort
+Subject: Re: [PATCH v4 093/163] tcg: Convert extract to TCGOutOpExtract
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Andrea Bolognani <abologna@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20250415192515.232910-1-richard.henderson@linaro.org>
+ <20250415192515.232910-94-richard.henderson@linaro.org>
+ <CABJz62OFyaXitSdge4M9_oTk34a5aocLJLFYfkOGXc0BToOgVA@mail.gmail.com>
+ <CABJz62OMmmbDjWpp6YkXu2d+hB4HeShgqaa05ZigAVqNQSwjZA@mail.gmail.com>
+ <c3a2c4f9-c750-4a0a-b6bc-e94b55784952@linaro.org>
 Content-Language: en-US
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- philmd@linaro.org, mst@redhat.com
-Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, udo@hypervisor.org,
- ajones@ventanamicro.com, peter.maydell@linaro.org, imammedo@redhat.com,
- anisinha@redhat.com
-References: <20250623135749.691137-1-gustavo.romero@linaro.org>
- <20250623135749.691137-5-gustavo.romero@linaro.org>
- <adf5e6e5-e0e3-44f9-949c-620aea3edfa0@redhat.com>
-In-Reply-To: <adf5e6e5-e0e3-44f9-949c-620aea3edfa0@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <c3a2c4f9-c750-4a0a-b6bc-e94b55784952@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,96 +101,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  eric.auger@redhat.com
-X-ACL-Warn: ,  Eric Auger <eric.auger@redhat.com>
-From:  Eric Auger via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 6/27/25 3:57 PM, Eric Auger wrote:
-> Hi Gustavo,
+On 27/6/25 15:16, Richard Henderson wrote:
+> On 6/26/25 09:20, Andrea Bolognani wrote:
+>> On Mon, Jun 09, 2025 at 06:52:21AM -0700, Andrea Bolognani wrote:
+>>> On Tue, Apr 15, 2025 at 12:24:04PM -0700, Richard Henderson wrote:
+>>>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>>>> ---
+>>>>   tcg/tcg.c                        | 20 +++++++++
+>>>>   tcg/aarch64/tcg-target.c.inc     | 28 +++++++-----
+>>>>   tcg/arm/tcg-target.c.inc         | 23 +++++-----
+>>>>   tcg/i386/tcg-target.c.inc        | 77 ++++++++++++++++ 
+>>>> +---------------
+>>>>   tcg/loongarch64/tcg-target.c.inc | 33 +++++++-------
+>>>>   tcg/mips/tcg-target.c.inc        | 35 +++++++--------
+>>>>   tcg/ppc/tcg-target.c.inc         | 35 +++++++--------
+>>>>   tcg/riscv/tcg-target.c.inc       | 54 +++++++++++-----------
+>>>>   tcg/s390x/tcg-target.c.inc       | 14 +++---
+>>>>   tcg/sparc64/tcg-target.c.inc     | 16 ++++---
+>>>>   tcg/tci/tcg-target.c.inc         |  8 ++--
+>>>>   11 files changed, 191 insertions(+), 152 deletions(-)
+>>>
+>>> Hi Richard,
+>>>
+>>> this seems to have introduced a regression when running on a riscv64
+>>> host.
+>>>
+>>> Before the change:
+>>>
+>>>    $ timeout --foreground 1 \
+>>>      ./build/qemu-system-riscv64 -machine virt,accel=tcg \
+>>>      -display none -serial stdio 2>&1 | grep -i opensbi
+>>>    OpenSBI v1.5.1
+>>>
+>>> After the change, no output is produced.
+>>>
+>>> This causes the
+>>>
+>>>    qemu:func-quick+func-riscv64 / func-riscv64-riscv_opensbi
+>>>
+>>> test to stall and eventually fail due to the built-in test suite
+>>> timeout kicking in.
+>>>
+>>> Interestingly, I can't reproduce this by running the exact same
+>>> commands and using the exact same git commits on an x86_64 host.
+>>>
+>>> Do you have any idea what could be going wrong? I'll happily
+>>> investigate further if you give me pointers.
+>>
+>> Hi,
+>>
+>> this is still an issue as of f9a3def17b2a.
+>>
+>> Any idea where to look?
 > 
-> On 6/23/25 3:57 PM, Gustavo Romero wrote:
->> When building the Root Complex table, the comment about the code that
-> s/table/node? or do you refer to the IORT table?
-Reading the IORT spec again, both terminologies are used, ie. node / table
+> tcg/riscv/tcg-target.c.inc, tgen_extract(), must be at fault.
+> 
+> Oh, I see it:
+> 
+> --- a/tcg/riscv/tcg-target.c.inc
+> +++ b/tcg/riscv/tcg-target.c.inc
+> @@ -2502,7 +2502,7 @@ static void tgen_extract
+>           }
+>       }
+>       if (ofs + len == 32) {
+> -        tgen_shli(s, TCG_TYPE_I32, a0, a1, ofs);
+> +        tgen_shri(s, TCG_TYPE_I32, a0, a1, ofs);
 
-So please ignore my comment
+Glad I figured the same :>
 
-Thanks
+>           return;
+>       }
+>       if (len == 1) {
+> 
+> 
+> Please test.
 
-Eric
->> maps the RC node to SMMU node is misleading because it reads
->> "RC -> SMMUv3 -> ITS", but the code is only mapping the RCs IDs to the
->> SMMUv3 node. The step of mapping from the SMMUv3 IDs to the ITS Group
->> node is actually defined in another table (in the SMMUv3 node). So
->> change the comment to read "RC -> SMMUv3" instead.
->>
->> Signed-off-by Gustavo Romero <gustavo.romero@linaro.org>
->> ---
->>  hw/arm/virt-acpi-build.c | 25 +++++++++++++++++++------
->>  1 file changed, 19 insertions(+), 6 deletions(-)
->>
->> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
->> index 9eee284c80..e9cd3fb351 100644
->> --- a/hw/arm/virt-acpi-build.c
->> +++ b/hw/arm/virt-acpi-build.c
->> @@ -370,7 +370,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->>          /* DeviceID mapping index (ignored since interrupts are GSIV based) */
->>          build_append_int_noprefix(table_data, 0, 4);
->>  
->> -        /* output IORT node is the ITS group node (the first node) */
->> +        /* Output IORT node is the ITS Group node (the first node) */
->>          build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
->>      }
->>  
->> @@ -407,23 +407,36 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->>      if (vms->iommu == VIRT_IOMMU_SMMUV3) {
->>          AcpiIortIdMapping *range;
->>  
->> -        /* translated RIDs connect to SMMUv3 node: RC -> SMMUv3 -> ITS */
->> +        /*
->> +         * Map RIDs (input) from RC to SMMUv3 nodes: RC -> SMMUv3.
->> +         *
->> +         * N.B.: The mapping from SMMUv3 to ITS Group node (SMMUv3 -> ITS) is
->> +         * defined in the SMMUv3 table, where all SMMUv3 IDs are mapped to the
-> s/table/node
->> +         * ITS Group node.
->> +         */
->>          for (i = 0; i < smmu_idmaps->len; i++) {
->>              range = &g_array_index(smmu_idmaps, AcpiIortIdMapping, i);
->> -            /* output IORT node is the smmuv3 node */
->> +            /* Output IORT node is the SMMUv3 node. */
->>              build_iort_id_mapping(table_data, range->input_base,
->>                                    range->id_count, smmu_offset);
->>          }
->>  
->> -        /* bypassed RIDs connect to ITS group node directly: RC -> ITS */
->> +        /*
->> +         * Map bypassed (don't go throught the SMMU) RIDs (input) to ITS Group
->> +         * node directly: RC -> ITS.
->> +         */
->>          for (i = 0; i < its_idmaps->len; i++) {
->>              range = &g_array_index(its_idmaps, AcpiIortIdMapping, i);
->> -            /* output IORT node is the ITS group node (the first node) */
->> +            /* Output IORT node is the ITS Group node (the first node). */
->>              build_iort_id_mapping(table_data, range->input_base,
->>                                    range->id_count, IORT_NODE_OFFSET);
->>          }
->>      } else {
->> -        /* output IORT node is the ITS group node (the first node) */
->> +        /*
->> +         * Map all RIDs (input) to ITS Group node directly, since there is no
->> +         * SMMU: RC -> ITS.
->> +         * Output IORT node is the ITS Group node (the first node).
->> +         */
->>          build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
->>      }
->>  
-> Besides:
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Eric
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
