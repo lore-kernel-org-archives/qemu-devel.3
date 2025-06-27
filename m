@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2EF6C7EE30
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAE65C7EE32
 	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 03:25:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uUzhc-0005Eb-If; Thu, 26 Jun 2025 23:24:36 -0400
+	id 1uUzhd-0005Fh-Qr; Thu, 26 Jun 2025 23:24:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uUzha-0005E0-Qr
- for qemu-devel@nongnu.org; Thu, 26 Jun 2025 23:24:34 -0400
+ id 1uUzhb-0005EE-0l
+ for qemu-devel@nongnu.org; Thu, 26 Jun 2025 23:24:35 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uUzhX-00065X-Sm
+ (envelope-from <gaosong@loongson.cn>) id 1uUzhX-00065R-US
  for qemu-devel@nongnu.org; Thu, 26 Jun 2025 23:24:34 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxzOLpDl5orQgeAQ--.498S3;
- Fri, 27 Jun 2025 11:24:25 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMBxn8XiDl5oz10sAQ--.3598S8;
+ by gateway (Coremail) with SMTP id _____8Ax3eLoDl5ooAgeAQ--.28373S3;
  Fri, 27 Jun 2025 11:24:24 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowMBxn8XiDl5oz10sAQ--.3598S4;
+ Fri, 27 Jun 2025 11:24:23 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: maobibo@loongson.cn
 Cc: qemu-devel@nongnu.org,
 	philmd@linaro.org,
 	jiaxun.yang@flygoat.com
-Subject: [PATCH v3 6/9] hw/loongarch: Implement avec controller imput and
- output pins
-Date: Fri, 27 Jun 2025 11:01:35 +0800
-Message-Id: <20250627030138.2482055-7-gaosong@loongson.cn>
+Subject: [PATCH v3 2/9] hw/loongarch: add virt feature avecintc support
+Date: Fri, 27 Jun 2025 11:01:31 +0800
+Message-Id: <20250627030138.2482055-3-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20250627030138.2482055-1-gaosong@loongson.cn>
 References: <20250627030138.2482055-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxn8XiDl5oz10sAQ--.3598S8
+X-CM-TRANSID: qMiowMBxn8XiDl5oz10sAQ--.3598S4
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -67,107 +66,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-the AVEC controller supports 256*256 irqs input, all the irqs connect CPU INT_AVEC irq
+LoongArchVirtMachinState adds avecintc features, and
+it use to check whether virt machine support advance interrupt controller
+and default set avecintc = ON_OFF_AUTO_ON.
+LoongArchVirtMachineState adds misc_feature and misc_status for
+misc fetures and status. and set default avec feture bit.
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/intc/loongarch_avec.c | 21 +++++++++++++++++++++
- hw/loongarch/virt.c      | 11 +++++++++--
- target/loongarch/cpu.h   |  3 ++-
- 3 files changed, 32 insertions(+), 3 deletions(-)
+ hw/loongarch/virt.c         | 43 +++++++++++++++++++++++++++++++++----
+ include/hw/loongarch/virt.h | 15 +++++++++++++
+ 2 files changed, 54 insertions(+), 4 deletions(-)
 
-diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
-index 253bab5461..c686ac9483 100644
---- a/hw/intc/loongarch_avec.c
-+++ b/hw/intc/loongarch_avec.c
-@@ -38,7 +38,12 @@ static const MemoryRegionOps loongarch_avec_ops = {
- 
- static void loongarch_avec_realize(DeviceState *dev, Error **errp)
- {
-+    LoongArchAVECState *s = LOONGARCH_AVEC(dev);
-     LoongArchAVECClass *lac = LOONGARCH_AVEC_GET_CLASS(dev);
-+    MachineState *machine = MACHINE(qdev_get_machine());
-+    MachineClass *mc = MACHINE_GET_CLASS(machine);
-+    const CPUArchIdList  *id_list;
-+    int i;
- 
-     Error *local_err = NULL;
-     lac->parent_realize(dev, &local_err);
-@@ -47,6 +52,22 @@ static void loongarch_avec_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    assert(mc->possible_cpu_arch_ids);
-+    id_list = mc->possible_cpu_arch_ids(machine);
-+    s->num_cpu = id_list->len;
-+    s->cpu = g_new(AVECCore, s->num_cpu);
-+    if (s->cpu == NULL) {
-+        error_setg(errp, "Memory allocation for AVECCore fail");
-+        return;
-+    }
-+
-+    for (i = 0; i < s->num_cpu; i++) {
-+        s->cpu[i].arch_id = id_list->cpus[i].arch_id;
-+        s->cpu[i].cpu = CPU(id_list->cpus[i].cpu);
-+        qdev_init_gpio_out(dev, &s->cpu[i].parent_irq, 1);
-+    }
-+    qdev_init_gpio_in(dev, NULL, NR_VECTORS * s->num_cpu);
-+
-     return;
- }
- 
 diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 6fb08740c2..1d4e62b1cf 100644
+index 6a169d4824..426eaaef84 100644
 --- a/hw/loongarch/virt.c
 +++ b/hw/loongarch/virt.c
-@@ -381,7 +381,7 @@ static void virt_cpu_irq_init(LoongArchVirtMachineState *lvms)
-     }
- }
+@@ -47,6 +47,28 @@
+ #include "hw/virtio/virtio-iommu.h"
+ #include "qemu/error-report.h"
  
--static void virt_irq_init(LoongArchVirtMachineState *lvms)
-+static void virt_irq_init(LoongArchVirtMachineState *lvms, MachineState *ms)
++static void virt_get_avecintc(Object *obj, Visitor *v, const char *name,
++                             void *opaque, Error **errp)
++{
++    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
++    OnOffAuto avecintc = lvms->avecintc;
++
++    visit_type_OnOffAuto(v, name, &avecintc, errp);
++
++}
++static void virt_set_avecintc(Object *obj, Visitor *v, const char *name,
++                              void *opaque, Error **errp)
++{
++    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
++
++    if (lvms->avecintc == ON_OFF_AUTO_OFF) {
++        lvms->misc_feature &= ~BIT(IOCSRF_AVEC);
++        lvms->misc_status &= ~BIT(IOCSRM_AVEC_EN);
++    }
++
++    visit_type_OnOffAuto(v, name, &lvms->avecintc, errp);
++}
++
+ static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
+                               void *opaque, Error **errp)
  {
-     DeviceState *pch_pic, *pch_msi;
-     DeviceState *ipi, *extioi, *avec;
-@@ -471,6 +471,13 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
-         sysbus_realize_and_unref(SYS_BUS_DEVICE(avec), &error_fatal);
-         memory_region_add_subregion(get_system_memory(), VIRT_AVEC_BASE,
-                         sysbus_mmio_get_region(SYS_BUS_DEVICE(avec), 0));
-+        CPUState *cpu_state;
-+        DeviceState *cpudev;
-+        for (int cpu = 0; cpu < ms->smp.cpus; cpu++) {
-+            cpu_state = qemu_get_cpu(cpu);
-+            cpudev = DEVICE(cpu_state);
-+            qdev_connect_gpio_out(avec, cpu, qdev_get_gpio_in(cpudev, INT_AVEC));
+@@ -539,6 +561,10 @@ static MemTxResult virt_iocsr_misc_write(void *opaque, hwaddr addr,
+             return MEMTX_OK;
+         }
+ 
++        if (val & BIT(IOCSRM_AVEC_EN)) {
++            lvms->misc_status |= BIT(IOCSRM_AVEC_EN);
 +        }
++
+         features = address_space_ldl(&lvms->as_iocsr,
+                                      EXTIOI_VIRT_BASE + EXTIOI_VIRT_CONFIG,
+                                      attrs, NULL);
+@@ -574,8 +600,9 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
+         break;
+     case FEATURE_REG:
+         ret = BIT(IOCSRF_MSI) | BIT(IOCSRF_EXTIOI) | BIT(IOCSRF_CSRIPI);
+-        /*TODO: check bit IOCSRF_AVEC with virt_is_avec_enabled */
+-        ret |= BIT(IOCSRF_AVEC);
++        if (virt_is_avecintc_enabled(lvms)) {
++            ret |= BIT(IOCSRF_AVEC);
++        }
+         if (kvm_enabled()) {
+             ret |= BIT(IOCSRF_VM);
+         }
+@@ -605,8 +632,10 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
+         if (features & BIT(EXTIOI_ENABLE_INT_ENCODE)) {
+             ret |= BIT_ULL(IOCSRM_EXTIOI_INT_ENCODE);
+         }
+-        /* enable avec default */
+-        ret |= BIT_ULL(IOCSRM_AVEC_EN);
++        if (virt_is_avecintc_enabled(lvms) &&
++            (lvms->misc_status & BIT(IOCSRM_AVEC_EN))) {
++            ret |= BIT_ULL(IOCSRM_AVEC_EN);
++        }
+         break;
+     default:
+         g_assert_not_reached();
+@@ -850,6 +879,8 @@ static void virt_initfn(Object *obj)
+     if (tcg_enabled()) {
+         lvms->veiointc = ON_OFF_AUTO_OFF;
      }
++    lvms->misc_feature = BIT(IOCSRF_AVEC);
++    lvms->avecintc = ON_OFF_AUTO_ON;
+     lvms->acpi = ON_OFF_AUTO_AUTO;
+     lvms->oem_id = g_strndup(ACPI_BUILD_APPNAME6, 6);
+     lvms->oem_table_id = g_strndup(ACPI_BUILD_APPNAME8, 8);
+@@ -1242,6 +1273,10 @@ static void virt_class_init(ObjectClass *oc, const void *data)
+         NULL, NULL);
+     object_class_property_set_description(oc, "v-eiointc",
+                             "Enable Virt Extend I/O Interrupt Controller.");
++    object_class_property_add(oc, "avecintc", "OnOffAuto",
++        virt_get_avecintc, virt_set_avecintc, NULL, NULL);
++    object_class_property_set_description(oc, "avecintc",
++                            "Enable Advance Interrupt Controller.");
+     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
+     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
+ #ifdef CONFIG_TPM
+diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+index cc6656619d..44504e5501 100644
+--- a/include/hw/loongarch/virt.h
++++ b/include/hw/loongarch/virt.h
+@@ -70,6 +70,7 @@ struct LoongArchVirtMachineState {
+     Notifier     powerdown_notifier;
+     OnOffAuto    acpi;
+     OnOffAuto    veiointc;
++    OnOffAuto    avecintc;
+     char         *oem_id;
+     char         *oem_table_id;
+     DeviceState  *acpi_ged;
+@@ -85,6 +86,8 @@ struct LoongArchVirtMachineState {
+     DeviceState *extioi;
+     struct memmap_entry *memmap_table;
+     unsigned int memmap_entries;
++    uint64_t misc_feature;
++    uint64_t misc_status;
+ };
  
-     /* Create EXTIOI device */
-@@ -839,7 +846,7 @@ static void virt_init(MachineState *machine)
-     }
+ #define TYPE_LOONGARCH_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
+@@ -92,6 +95,18 @@ OBJECT_DECLARE_SIMPLE_TYPE(LoongArchVirtMachineState, LOONGARCH_VIRT_MACHINE)
+ void virt_acpi_setup(LoongArchVirtMachineState *lvms);
+ void virt_fdt_setup(LoongArchVirtMachineState *lvms);
  
-     /* Initialize the IO interrupt subsystem */
--    virt_irq_init(lvms);
-+    virt_irq_init(lvms, machine);
-     lvms->machine_done.notify = virt_done;
-     qemu_add_machine_init_done_notifier(&lvms->machine_done);
-      /* connect powerdown request */
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 208d3e0cd3..556e9dabb9 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -217,9 +217,10 @@ FIELD(CSR_CRMD, WE, 9, 1)
- extern const char * const regnames[32];
- extern const char * const fregnames[32];
- 
--#define N_IRQS      13
-+#define N_IRQS      15
- #define IRQ_TIMER   11
- #define IRQ_IPI     12
-+#define INT_AVEC    14
- 
- #define LOONGARCH_STLB         2048 /* 2048 STLB */
- #define LOONGARCH_MTLB         64   /* 64 MTLB */
++static inline bool virt_is_avecintc_enabled(LoongArchVirtMachineState *lvms)
++{
++    if (!(lvms->misc_feature & BIT(IOCSRF_AVEC))) {
++        return false;
++    }
++
++    if (lvms->avecintc == ON_OFF_AUTO_OFF) {
++        return false;
++    }
++    return true;
++}
++
+ static inline bool virt_is_veiointc_enabled(LoongArchVirtMachineState *lvms)
+ {
+     if (lvms->veiointc == ON_OFF_AUTO_OFF) {
 -- 
 2.34.1
 
