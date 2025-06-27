@@ -4,111 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50E21C77B7F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 11:32:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E1FEC77B7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 11:32:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uV7JD-0007gm-4u; Fri, 27 Jun 2025 07:31:55 -0400
+	id 1uV7Jv-00081j-JG; Fri, 27 Jun 2025 07:32:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uV7J8-0007g9-92
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 07:31:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=5m2v=ZK=kaod.org=clg@ozlabs.org>)
+ id 1uV7Jk-0007u8-9Z; Fri, 27 Jun 2025 07:32:30 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uV7J6-0000Vd-A5
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 07:31:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751023906;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=r9pBYBdBNg06ftIGb3ioYeXiuHpqvO6JFuJvq88+4+M=;
- b=as0LlD7G7q+g6HwJtC9eW3kw7vRQRr7N1jYi5V6+2cPEN5rP91/cK2P4BsmvLmhTC6x6KU
- aVIRbmUaw/7PsiR46NYIQbVJ2ikMrB4DONCZ34ZmbrESTy95JP+UDzhReEZXzQ6iRa4vXl
- st0AEq/OGPpfAD9GEkndWjbADFYU1bo=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-599-AOk8gCIgMfWJXcZe9Hpl7Q-1; Fri, 27 Jun 2025 07:31:44 -0400
-X-MC-Unique: AOk8gCIgMfWJXcZe9Hpl7Q-1
-X-Mimecast-MFC-AGG-ID: AOk8gCIgMfWJXcZe9Hpl7Q_1751023903
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4f65a705dso1039258f8f.2
- for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 04:31:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751023903; x=1751628703;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=r9pBYBdBNg06ftIGb3ioYeXiuHpqvO6JFuJvq88+4+M=;
- b=Ek9GjuPUzlNPETErMcAudElKRz7d+FzGV0D83droy31hDaJjLwIMS/+fiX7o6xPl+x
- h4tbQ3yE0wSoJqCYEPx5VO4Bxtjku9wpZQxPq3aARt2dSyZhazJ4yJpye0AoL9ck2Yxh
- pExmftZA+cFeAH4RZnuzNivCosM4jkqEUiFG0Mi/t/ISfLWUsShV1zJBH4THFBrfnLgm
- FS015QubwBpcNBDY0TNT4PzWVhh7LGEpnHJZYAehaAKRT+G8V2W+AZfpQ5eAngeRM/u/
- /siscKNpsiqlNFNt4xDWiiSFCzs9tptFs2C/XYHOvedLFqITzFIVIDj/i811uZz5Suu+
- LYHA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV7o4RmeL7rioenNaOVg8TIF2RFGPdFufAXLVHCaSHYmNkTDe8WhC+0LKoxo9oE2IhEUV4+MZ+eE5wW@nongnu.org
-X-Gm-Message-State: AOJu0YymFyNzAssacd689IDh/OLXLNqTJtCtYFfH+bnrWJUPpCi4jsK/
- k+9oi2Dr3mXY1SDVjihD1fSBnLnlWQzNjL+yPA9SiOT+/OslynbAW9vc5Dg4yTaTuS8swPoboF1
- 8NHOLyNd+eu2x0fFANZOOAXvWFSwERjGUZoERe0ppQLZ+o5y5B3wWJzr+
-X-Gm-Gg: ASbGnct/hdslizbzfuyp+7W1oylqDqtgK9eyI2RFgoItw1+ELwKVDJK4/PyfrjrcFeJ
- o9bQdfDXuwVzX38//JNbJ10jC1ZjFrRoSRARSsEaHy+z6eNyam2AGz1TJpoZGu2Z+6mCG0z2EFr
- CmmHvNL5sMQtW6fiPLoQwryUf9Mnc4k5gb4T8Ue8SNaqQOjwxcXQ3CnasNLdoH7IMmLE485MKpD
- WDUvqIIZqlZyVpISWnxlyYOElFM2DRpGmT9Eu80yWJVWaWbxjsi1SU7uRmbWWohd5fISfIxw9Ma
- ih7eWUK7OqFm
-X-Received: by 2002:adf:9c89:0:b0:3a5:300d:ead0 with SMTP id
- ffacd0b85a97d-3a8fe5b1b0cmr2459342f8f.43.1751023902757; 
- Fri, 27 Jun 2025 04:31:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFEO1tCvr8o6PlFZH7eKI7ueod3akAgKhCNj+aafP1Mq09DvC0dQnroZnCDNMlzNF/rIZa4tQ==
-X-Received: by 2002:adf:9c89:0:b0:3a5:300d:ead0 with SMTP id
- ffacd0b85a97d-3a8fe5b1b0cmr2459302f8f.43.1751023902255; 
- Fri, 27 Jun 2025 04:31:42 -0700 (PDT)
-Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4538233c1easm77368155e9.3.2025.06.27.04.31.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Jun 2025 04:31:41 -0700 (PDT)
-Date: Fri, 27 Jun 2025 13:31:39 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf
- <kwolf@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-block@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Fam Zheng <fam@euphon.net>, Jason Wang
- <jasowang@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Dmitry Fleytman <dmitry.fleytman@gmail.com>, Eduardo
- Habkost <eduardo@habkost.net>, Hanna Reitz <hreitz@redhat.com>, John Snow
- <jsnow@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>
-Subject: Re: [PATCH v4 04/19] target/i386/cpu: Remove X86CPU::check_cpuid field
-Message-ID: <20250627133139.25e78d64@fedora>
-In-Reply-To: <aEFiUp9xD-UIhuGq@redhat.com>
-References: <20250512083948.39294-1-philmd@linaro.org>
- <20250512083948.39294-5-philmd@linaro.org>
- <ccf78c07-fc08-493f-85d8-5058cccbe82e@intel.com>
- <aDad5elq0bgZ/tvp@intel.com>
- <20250603170238.75a0f1de@imammedo.users.ipa.redhat.com>
- <aEFiUp9xD-UIhuGq@redhat.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <SRS0=5m2v=ZK=kaod.org=clg@ozlabs.org>)
+ id 1uV7Jg-0000ZU-Om; Fri, 27 Jun 2025 07:32:28 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bTD1F2yCxz4x8R;
+ Fri, 27 Jun 2025 21:32:17 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bTD1B0Qf8z4x7s;
+ Fri, 27 Jun 2025 21:32:13 +1000 (AEST)
+Message-ID: <65a22a3c-1227-47b7-a001-dd98dac1191c@kaod.org>
+Date: Fri, 27 Jun 2025 13:32:09 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] hw/misc/aspeed_scu: Handle AST2600 protection key
+ registers correctly
+To: Tan Siewert <tan@siewert.io>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
+References: <20250619085329.42125-1-tan@siewert.io>
+ <c58bf387-a484-4cc3-a4b6-76cb955c6b0e@kaod.org>
+ <SI2PR06MB5041A8B6109499DDAAF298E5FC7CA@SI2PR06MB5041.apcprd06.prod.outlook.com>
+ <8d21f5e6-9188-4abf-8f97-5da3b585a892@siewert.io>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <8d21f5e6-9188-4abf-8f97-5da3b585a892@siewert.io>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=5m2v=ZK=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,118 +114,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Jun 2025 10:24:34 +0100
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
+On 6/27/25 12:16, Tan Siewert wrote:
+> On 20.06.25 03:23, Jamin Lin wrote:
+>>
+>>> Subject: Re: [PATCH v4] hw/misc/aspeed_scu: Handle AST2600 protection key
+>>> registers correctly
+>>>
+>>> Jamin,
+>>>
+>>> On 6/19/25 10:53, Tan Siewert wrote:
+>>>> The AST2600 SCU has two protection key registers (0x00 and 0x10) that
+>>>> both need to be unlocked. (Un-)locking 0x00 modifies both protection
+>>>> key registers, while modifying 0x10 only modifies itself.
+>>>>
+>>>> This commit updates the SCU write logic to reject writes unless both
+>>>> protection key registers are unlocked, matching the behaviour of real
+>>>> hardware.
+>>>>
+>>>> Signed-off-by: Tan Siewert <tan@siewert.io>
+>>>
+>>> Could you please resend your R-b ?
+>>>
+>>> Thanks,
+>>>
+>>> C.
+>>>
+>>>
+>>
+>> Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>>
+>> Thanks-Jamin
+> 
+> Cédric,
+> 
+> Do you think this patch could be applied to aspeed-next?
 
-> On Tue, Jun 03, 2025 at 05:02:38PM +0200, Igor Mammedov wrote:
-> > On Wed, 28 May 2025 13:23:49 +0800
-> > Zhao Liu <zhao1.liu@intel.com> wrote:
-> >  =20
-> > > On Wed, May 28, 2025 at 10:09:56AM +0800, Xiaoyao Li wrote: =20
-> > > > Date: Wed, 28 May 2025 10:09:56 +0800
-> > > > From: Xiaoyao Li <xiaoyao.li@intel.com>
-> > > > Subject: Re: [PATCH v4 04/19] target/i386/cpu: Remove X86CPU::check=
-_cpuid
-> > > >  field
-> > > >=20
-> > > > On 5/12/2025 4:39 PM, Philippe Mathieu-Daud=C3=A9 wrote:   =20
-> > > > > The X86CPU::check_cpuid boolean was only set in the
-> > > > > pc_compat_2_4[] array, via the 'check=3Doff' property.
-> > > > > We removed all machines using that array, lets remove
-> > > > > that CPU property and simplify x86_cpu_realizefn().   =20
-> > > >=20
-> > > > No.
-> > > >=20
-> > > > We cannot do this. Because it changes the behavior of QEMU.
-> > > >=20
-> > > > 'check_cpuid' is true by default while 'enforce_cpuid' is false. So=
- that
-> > > > QEMU emits warnings in x86_cpu_filter_features() by default when us=
-er
-> > > > requests unsupported CPU features. If remove "check" property and t=
-he
-> > > > internal 'check_cpuid', QEMU will not do it unless user sets enforc=
-e_cpuid
-> > > > explicitly.   =20
-> > >=20
-> > > One option would be to have x86_cpu_filter_features() unconditionally
-> > > turn on verbose and print warnings, but some people might want to turn
-> > > off these warning prints, I don't know if anyone would, but it would =
-be
-> > > possible.
-> > >=20
-> > > The other option is still to keep the =E2=80=9Ccheck=E2=80=9D propert=
-y.
-> > >=20
-> > > IMO, the latter option is the better way to reduce Philippe's burden.=
- =20
-> >=20
-> > we essentially loose warnings by default when some features aren't avai=
-lable,
-> > qemu still continues to run though.
-> >=20
-> > Given that Daniel acked it from libvirt side, libvirt doesn't care abou=
-t warnings
-> > (it does its has its own cpu model calculation). Likely other mgmt do n=
-ot care
-> > about it either, and if they do they probably doing something wrong and
-> > should use QMP to get that data. =20
->=20
-> Acking it was a mistake on my part - I mis-interpreted the patch and so
-> didn't notice we were loosing the verbose printing of missing features
-> by default.
->=20
-> I'm actually curious why we made the 'check' feature tied to machine
-> types at all. If it doesn't affect guest ABI, just causes verbose
-> info on stderr, it feels like something we could have just had on
-> all machine types new & old. Git history brings us back to
->=20
->   commit 3e68482224129c3ddc061af7c9d438b882ecfdd1
->   Author: Eduardo Habkost <ehabkost@redhat.com>
->   Date:   Tue Nov 3 17:18:50 2015 -0200
->=20
->     target-i386: Set "check=3Doff" by default on pc-*-2.4 and older
->    =20
->     The default CPU model (qemu64) have some issues today: it enables some
->     features (ABM and SSE4a) that are not present in many host CPUs. That
->     means many hosts (but not all of them) had those features silently
->     disabled in the default configuration in QEMU 2.4 and older.
->    =20
->     With the new "check=3Don" default, this causes warnings to be printed=
- in
->     the default configuration, because of the lack of SSE4A on all Intel
->     hosts, and the lack of ABM on Sandy Bridge and older hosts:
->    =20
->       $ qemu-system-x86_64 -machine pc,accel=3Dkvm
->       warning: host doesn't support requested feature: CPUID.80000001H:EC=
-X.abm [bit 5]
->       warning: host doesn't support requested feature: CPUID.80000001H:EC=
-X.sse4a [bit 6]
->    =20
->     Those issues will be fixed in pc-*-2.5 and newer. But as we can't cha=
-nge
->     the guest ABI in pc-*-2.4, disable "check" mode by default in pc-*-2.4
->     and older so we don't print spurious warnings.
->=20
-> IOW, we wanted to have 'check' unconditionally on by default, but
-> had to do a temp hack to avoid spamming all configurations with
-> the broken 'qemu64' CPU model design.
->=20
-> > That leaves us with human users, for that case I'd say one should use
-> > enforce_cpuid if feature availability matters. =20
->=20
-> IMHO even with mgmt apps, it is worth having 'check=3Don' by default
-> as the log message has value in debugging scenarios. It could have
-> the potential to highlight situations where an mgmt app has
-> unwittingly done something wrong with CPU config. At the very least
-> though its a warning to humans debugging that they should not trust
-> the QEMU command line as a expressing the full CPU featureset.
+I did a week ago.
 
-in that line of thought, maybe hardcode 'check=3Don' and drop conditional/p=
-roperty?
+https://github.com/legoater/qemu/commit/7b27524a27a3e835b2e6b725e1778950015cbb63
 
->=20
-> With regards,
-> Daniel
+Thanks,
+
+C.
+
 
 
