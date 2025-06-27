@@ -4,92 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DEFEC77B7F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 09:41:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABDA3C77B7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 09:41:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uV5Z6-0005sJ-Ku; Fri, 27 Jun 2025 05:40:12 -0400
+	id 1uV5aR-0007ZK-AC; Fri, 27 Jun 2025 05:41:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1uV5Z4-0005qn-EG
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 05:40:10 -0400
-Received: from mx1.zhaoxin.com ([210.0.225.12])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uV5aP-0007Oh-EZ
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 05:41:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1uV5Z1-0001QM-FK
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 05:40:10 -0400
-X-ASG-Debug-ID: 1751017201-086e2327865c9a0001-jgbH7p
-Received: from ZXSHMBX3.zhaoxin.com (ZXSHMBX3.zhaoxin.com [10.28.252.165]) by
- mx1.zhaoxin.com with ESMTP id TkgOSeSHLjZogceG (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Fri, 27 Jun 2025 17:40:01 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
-Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX3.zhaoxin.com
- (10.28.252.165) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Fri, 27 Jun
- 2025 17:40:01 +0800
-Received: from ZXSHMBX1.zhaoxin.com ([::1]) by ZXSHMBX1.zhaoxin.com
- ([fe80::2c07:394e:4919:4dc1%7]) with mapi id 15.01.2507.044; Fri, 27 Jun 2025
- 17:40:01 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
-Received: from [192.168.31.91] (10.28.66.62) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Fri, 27 Jun
- 2025 13:52:38 +0800
-Message-ID: <eba721c2-ca12-4ee3-a011-e011fecc31af@zhaoxin.com>
-Date: Fri, 27 Jun 2025 13:52:38 +0800
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uV5aN-0001rh-Kb
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 05:41:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751017288;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VpqGtpD5S3ukUp5w6YHD8Yyg1f6vZQ4XDMnfcDyOYRk=;
+ b=Rj1+RJjKq1SQkhoIqXXGKMgGh7fYqSfxxE5YS1u6hyTRJTUzTpXMs7CIaIBYstcF4kafaT
+ JtaxWRi0VzAMi7/GFOQRm7ETT2lHJ+U+A6HUaCZ7U0U8SYrJoB6ENgIObbWOGSuHx62Zsu
+ TYj7oJDd13GM1wqMU04DMqKu4YJHzks=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-464-QGyzML0POn2WVijr5IqbSg-1; Fri,
+ 27 Jun 2025 05:41:23 -0400
+X-MC-Unique: QGyzML0POn2WVijr5IqbSg-1
+X-Mimecast-MFC-AGG-ID: QGyzML0POn2WVijr5IqbSg_1751017281
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 31B7A1944AAD; Fri, 27 Jun 2025 09:41:20 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 36C6019560A7; Fri, 27 Jun 2025 09:41:18 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id BBECA21E6A27; Fri, 27 Jun 2025 11:41:15 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Jiri Pirko <jiri@resnulli.us>,  Fan Ni
+ <fan.ni@samsung.com>,  Stefano Garzarella <sgarzare@redhat.com>,  Michael
+ Roth <michael.roth@amd.com>,  "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,  Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  qemu-block@nongnu.org,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Fabiano Rosas <farosas@suse.de>,  Kashyap Chamarthy
+ <kchamart@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,  Yanan Wang
+ <wangyanan55@huawei.com>,  Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Igor Mammedov <imammedo@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,  Mads Ynddal <mads@ynddal.dk>,  Ani
+ Sinha <anisinha@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  Kevin Wolf <kwolf@redhat.com>,
+ Eric Blake <eblake@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>,  Cleber Rosa <crosa@redhat.com>,  Eduardo
+ Habkost <eduardo@habkost.net>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Alex Williamson <alex.williamson@redhat.com>,
+ Zhenwei Pi <pizhenwei@bytedance.com>,  Jason Wang <jasowang@redhat.com>,
+ Lukas Straub <lukasstraub2@web.de>
+Subject: Re: [PATCH v3 5/5] qapi: lift restriction on using '=' in doc blocks
+In-Reply-To: <20250618165353.1980365-6-jsnow@redhat.com> (John Snow's message
+ of "Wed, 18 Jun 2025 12:53:53 -0400")
+References: <20250618165353.1980365-1-jsnow@redhat.com>
+ <20250618165353.1980365-6-jsnow@redhat.com>
+Date: Fri, 27 Jun 2025 11:41:15 +0200
+Message-ID: <87cyapo72c.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-Subject: Re: [PATCH 1/4] i386/cpu: Mark EBX/ECX/EDX in CPUID 0x80000000 leaf
- as reserved for Intel
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, Igor Mammedov
- <imammedo@redhat.com>
-X-ASG-Orig-Subj: Re: [PATCH 1/4] i386/cpu: Mark EBX/ECX/EDX in CPUID
- 0x80000000 leaf as reserved for Intel
-CC: Xiaoyao Li <xiaoyao.li@intel.com>, Tao Su <tao1.su@intel.com>, Yi Lai
- <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
- <qemu-devel@nongnu.org>
-References: <20250627035129.2755537-1-zhao1.liu@intel.com>
- <20250627035129.2755537-2-zhao1.liu@intel.com>
-In-Reply-To: <20250627035129.2755537-2-zhao1.liu@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.28.66.62]
-X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 6/27/2025 5:40:00 PM
-X-Barracuda-Connect: ZXSHMBX3.zhaoxin.com[10.28.252.165]
-X-Barracuda-Start-Time: 1751017201
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.35:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 426
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -0.94
-X-Barracuda-Spam-Status: No,
- SCORE=-0.94 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=DATE_IN_PAST_03_06,
- DATE_IN_PAST_03_06_2
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.143464
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
- 0.01 DATE_IN_PAST_03_06     Date: is 3 to 6 hours before Received: date
- 1.08 DATE_IN_PAST_03_06_2   DATE_IN_PAST_03_06_2
-Received-SPF: pass client-ip=210.0.225.12; envelope-from=EwanHai-oc@zhaoxin.com;
- helo=mx1.zhaoxin.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,19 +110,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+John Snow <jsnow@redhat.com> writes:
 
+Let's explain why.  Here's my attempt:
 
-On 6/27/25 11:51 AM, Zhao Liu wrote:
-> +        if (cpu->vendor_cpuid_only_v2 && IS_INTEL_CPU(env)) {
+  We reject lines starting with '=' in definition documentation.  This
+  made sense when such lines were headings in free-form documentation,
+  but not in definition documentation.
 
-Please also add IS_ZHAOXIN_CPU(env), since Zhaoxin follows the SDM definition 
-for CPUID leaf 0x80000000.
+  Before the previous commit, lines starting with '=' were headings in
+  free-form documentation, and rejected in definition documentation,
+  where such headings could not work.
 
-> +            *ebx = *ecx = *edx = 0;
-> +        } else {
-> +            *ebx = env->cpuid_vendor1;
-> +            *edx = env->cpuid_vendor2;
-> +            *ecx = env->cpuid_vendor3;
-> +        }
+  The previous commit dropped the headings feature from free-form
+  documentation, because we can simply use plain rST headings.
+  Rejecting them in definition documentation no longer makes sense, so
+  drop that, too.
+
+> Signed-off-by: John Snow <jsnow@redhat.com>
 
 
