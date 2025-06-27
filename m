@@ -4,163 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99977C77B7F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 10:17:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 664F5C7EE31
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 11:26:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uV68S-0002FZ-75; Fri, 27 Jun 2025 06:16:47 -0400
+	id 1uV7DO-0005On-0N; Fri, 27 Jun 2025 07:25:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tan@siewert.io>)
- id 1uV68H-0002F5-OE; Fri, 27 Jun 2025 06:16:33 -0400
-Received: from
- mail-germanywestcentralazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c20c::1] helo=FR6P281CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tan@siewert.io>)
- id 1uV68F-0006gn-Cr; Fri, 27 Jun 2025 06:16:33 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MbW8IEfKa6gGiZ8fO/HGKLjK2AW6P+asBCAgosCwT839fSCkCLTkoDOEL0Gh0zyTQQpTMcEtSwHnD+ML/ZIi3U4ysD6XqasS1Av9+AJYXYFwXzTG9+hdTq4PajBN6KOJiZUTxa7O6tWWL4/j9BbZx5Wr66VeTX7x0h02GiP0kyZIJ2FcGI09MleDZQnGhhIk1ozQzA7eDDqbxOG3dhBpaq/KGf5Ss1LmokEOlxN8kP8cBQLBqditroxeSm8n3AdICeyORfxrSzQqbgyZz6ddsZrSMI+3sIuDgYtmOdJEw1KuaKjaP2cbE8QIW+mFG3N7+k45fBOhhp381cjHkBI5kg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5kegrzP/dYEQI36XabJhL+7W71HhMT7BFnT2XORM+Mw=;
- b=d/6Xd2WdyaI1+bBUtNJcPuGnWW5MW32FYAPfDWF8I7RBzx3MbnYxlhfQ/JV8XDUSCHbn5Ojn00MmrZ2wRaxnHtBEyHWG+04iFZncd4jXTpSA5Y8hrJD62W60gCo4MKccUYHdkxyXTOG8Lliybc6An1RhIcedQVCJ8Aqzw/lvv5awaqvBN4wKM7iBRHZgOcACvD7+d6raUUcQmgGOA5Lq+8l62mG1sbiU2GaRLpMAmcwkQa0xJUI3KP0XLEadR/au+Ahwop/5lupvpkT1Tw2nbNfq6cLttDdDnTZtju12z02H6AI0hI/VX2hj9VhcN/ewJJmmjJW2IK/F9qGdO9IZyw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=siewert.io; dmarc=pass action=none header.from=siewert.io;
- dkim=pass header.d=siewert.io; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=siewert.io;
-Received: from BE1PPF7DB70B163.DEUP281.PROD.OUTLOOK.COM (2603:10a6:b18::65f)
- by FR4P281MB4696.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d10:143::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8880.21; Fri, 27 Jun
- 2025 10:16:24 +0000
-Received: from BE1PPF7DB70B163.DEUP281.PROD.OUTLOOK.COM
- ([fe80::5c4:893c:2523:a442]) by BE1PPF7DB70B163.DEUP281.PROD.OUTLOOK.COM
- ([fe80::5c4:893c:2523:a442%3]) with mapi id 15.20.8880.021; Fri, 27 Jun 2025
- 10:16:24 +0000
-Message-ID: <8d21f5e6-9188-4abf-8f97-5da3b585a892@siewert.io>
-Date: Fri, 27 Jun 2025 12:16:23 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] hw/misc/aspeed_scu: Handle AST2600 protection key
- registers correctly
-Content-Language: en-GB
-To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
-References: <20250619085329.42125-1-tan@siewert.io>
- <c58bf387-a484-4cc3-a4b6-76cb955c6b0e@kaod.org>
- <SI2PR06MB5041A8B6109499DDAAF298E5FC7CA@SI2PR06MB5041.apcprd06.prod.outlook.com>
-From: Tan Siewert <tan@siewert.io>
-In-Reply-To: <SI2PR06MB5041A8B6109499DDAAF298E5FC7CA@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR4P281CA0064.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:ce::16) To BE1PPF7DB70B163.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:b18::65f)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uV7DB-0005Dc-Qy
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 07:25:42 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uV7D4-0007DW-47
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 07:25:41 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-453398e90e9so14751175e9.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 04:25:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751023531; x=1751628331; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=J6UmG/qOpQ+wr6fHJ9f8B6S5TAjmqDK30lDqng/ncfc=;
+ b=UNjD4iGxtC5mZP9SqmI6aIXLPUkUcAmbqOgo864J6z96vjJ4Xj5tI/CfVbjQHDnw6z
+ 6LR+avtJQaJYRApjLOvtpRaMMhKcMGNLx/WnwlKga5XqrlMFITwlGY3iwXIBBNDfFcli
+ ilkHFtG8ffX1aUH4w2q/qf/ccz7/qTuyojhD05KVPOSYGZVVPprCtOeI2b+FAurZ4b+a
+ IClkilreIigPsfrA5KVsmzMhfZlEjJck5d8PM11dl99zSZsLvfJLAEliDCTKFgu3cFSZ
+ MiH7Hl6gxUFQ0PsRb6UENHDR4tQhT9idzqkC4go6U5XXG0fUFVEYGe00mW+Ifb596DeZ
+ 6V5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751023531; x=1751628331;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=J6UmG/qOpQ+wr6fHJ9f8B6S5TAjmqDK30lDqng/ncfc=;
+ b=fNk8YashJLT7sXscOV5EKaLF04Ut8FGhatMN5Y3ZyQRa46R1Yy2oyS5qEo0+Mbhwc1
+ sC2b679torPfs+vZVE8/ff9CRE8fVBijvOdEdvfXzmVQsK+ZeFW2UOWA9exvfmdQNsNi
+ IY/g6jeyHykuawVnu8es0E4MMummqNP+dtImtWn63UNrlfFqFMpDOSlgqZuR2nDRpAVz
+ Rp88PDYgg0Rcz7SMisSIat4lNThI+1FlWpDW2PNHpsGbYoEmdvKi+eCuc0mzIk6Jchh0
+ 9mcz3T3NtlT8lypfKMWWkzibV3X6SSJ+kPVqCWWnPOgMeLiD0vPAKVtUxxoAYJoTKemi
+ +iFA==
+X-Gm-Message-State: AOJu0Yy8dinFtIoIUJadW4+YiXN6dVAhneH9pdq8JTdmP7ACAv9xsAsd
+ JW8X0loW+DNU8je1qYH9rFNvsh9GlI6U8LPNBs+JD5MHmAoJUKNUbX2KlnjLYaR8uPM=
+X-Gm-Gg: ASbGncuIrIB6K3GpJLVySxuChg68FCgY5Le/sD1BNNuD0zKlruTkrMocPXhov0rKS1n
+ jK9fIM3R0jUWAkBQJtJZwslDzASbP9L9McZ91cMgLQcElQVNuJQMBd33slPxIOIe/AOi62qP4/Q
+ mnFHoY+RAONS1HXST9GvNKQutTZhZejhHBxTeezE4kUOp5KUuu1/MD71TG9VA5BwF1B4v5lLuLi
+ WQ2jny4oVttkOt6xTRmjEAIpuADFFvibfdxOs/gfq+QBBomcD3RV/CQDXkJpzF4CrT1nK7YR7/+
+ 7t5CmGK7asfmVkD4zP/iughiiIQkszIWLNsrVlsHTpg4Z7HFW3siCVxToB3qI64=
+X-Google-Smtp-Source: AGHT+IH52oYny8bIzT97ubxSqX6q3JJ3jR+zRLAz207VK/d6uf3VquB537sEhM9gKizGFL93PY0uuA==
+X-Received: by 2002:a05:600c:34c8:b0:450:d012:df85 with SMTP id
+ 5b1f17b1804b1-4538ee607edmr30762215e9.18.1751023531437; 
+ Fri, 27 Jun 2025 04:25:31 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a88c800eaasm2489362f8f.37.2025.06.27.04.25.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 27 Jun 2025 04:25:20 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 4CB6F5F914;
+ Fri, 27 Jun 2025 12:25:13 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ qemu-s390x@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Alexandre Iooss <erdnaxe@crans.org>, Rowan Hart <rowanbhart@gmail.com>
+Subject: [PATCH 11/15] plugins: Add patcher plugin and test
+Date: Fri, 27 Jun 2025 12:25:07 +0100
+Message-ID: <20250627112512.1880708-12-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250627112512.1880708-1-alex.bennee@linaro.org>
+References: <20250627112512.1880708-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BE1PPF7DB70B163:EE_|FR4P281MB4696:EE_
-X-MS-Office365-Filtering-Correlation-Id: ac658ef9-122e-4de0-d243-08ddb563ab97
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016|7053199007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?M0pqWmRRRUtSTWpCY2xIUk1qRENXSnhBeXc0Q2NoNVRQVGNpYlFVc2dObDR6?=
- =?utf-8?B?UkF2OHhqcUJFUHJIN0dtTktuZTMvSW1UOGxjVm1mUkFtT1drMnRpNC9CVEZ6?=
- =?utf-8?B?WHhjaEUzWlMvRFI0dHBNdGNSdlRzNysvUWl6TGRURjV2M1JNR1lUSWs1dHl5?=
- =?utf-8?B?Uk92R1NFM1RkeEV6V24vL2ZnVGMrazJJT3Q4QUxGS1dJMlEvbE1KVThzSTd6?=
- =?utf-8?B?RUNMaUZYa2ZDc1poWk9mS2o1V2dRY3pGS3hJay9aam5rbXZHK2NFMk1xOVhH?=
- =?utf-8?B?MjNEQWZOZ2puOVViK3BzVlZsMisyL0t3K2orQ0dLSmFLdnFuRWthV2ozRURD?=
- =?utf-8?B?MVlwRTVZQkRNVG9xNW9nRVRscUh5bFdMTVpJUTBUOUh2Z2xrMU9aSEJHbzQr?=
- =?utf-8?B?dVJHWkpFdTlad09kTWhtZGM3Vnp5MmtXZmhIM0JJcEd1TzczY0tEUnlnNXdo?=
- =?utf-8?B?QjY5bng0RE1kWGE0bUwyaHBXSmhhZkV2N1RFOFJxNzBRb0tScnJ0b2ZVZmpI?=
- =?utf-8?B?L29BaXhoWjc5YWIxUTNDWTQ1YlZUaEtvM2s1OTdOYmdHMjMzeGQ2UG5FWE0r?=
- =?utf-8?B?aVErdGhxbG5Zbm42QS9rbTAzYnVuN096ajRJUEw1cWwxZjNseXQ0M1lpaGd5?=
- =?utf-8?B?NlhiUGpVeU5lN0RXZUtiL3U4c0VFUEk4UUVhcWNIQU1sV3VmTkJZUXRITkVJ?=
- =?utf-8?B?MUtLV3ZUbHBrZGhScFN0TCtLL05yQkZpbUM5OHhPbXZGWmdJNFIzRW9oUTFH?=
- =?utf-8?B?c0s2VGRBbXRKWEduM0hlTGRRQWcwdXduNFhCdjVlS3NBK2ZucC9zVnl5NDg2?=
- =?utf-8?B?UFVpVjJmU0MrM21nVWhXWGp4cFRLTmZaamFXdkc1azVNZFNpTVhDMkhVTG9h?=
- =?utf-8?B?UGNWMEhWY05ZY0xuYlNNWTI0NEZJQ3liRUVvTGdJRFY4T0ZzNFp1aHZDVHpR?=
- =?utf-8?B?SjVab212VSsvMGp2ZVUvZVRhUWpFMHRUOUFVWVBhdGZUNC9aKzRCbmZ5M0cx?=
- =?utf-8?B?NnNGMlQzQi96OGFBYm55Q3cxb2xUZHJxODBXVVRoTk1ZU0RaUnExenlmOHE5?=
- =?utf-8?B?Sk9DYXNVd0ZPVS84dnh1M2VSa1ZwWm5TQ1p3aTJQZThJeC9XSnRUZ0VWWkJ6?=
- =?utf-8?B?WFpUMkY3UTZaNW4zRUF6TDVBUjJVUElMSi9IWi9GUzlFR3VYZHV4YXQ2SnJQ?=
- =?utf-8?B?ZWxDZ3ltb3kwUFNWaXBJd0JjQ0RianZndDgzZi9DNlBQQ1ZCUG5la1NxZis0?=
- =?utf-8?B?T1FVanR0VFAvSEp2alhOdzl0OFoxV0VKMmJiY1RXSm5LUkFjSjVJSmc0ckts?=
- =?utf-8?B?OUhoZ0t5Q1YyM05Ec3VWeHVxSkVab1VXcHZESTllV21reUljZGw5TStXNmtF?=
- =?utf-8?B?bDNBcU9vbnpoWE41NHN4UXIwYndwVFdUY2NkTW1UOTZicG9odFBMWnB6bFFC?=
- =?utf-8?B?K01LUWpubllzYXMxN1hBcjRIUGx0cTl2eXNaSVVLb1R4czNpUkxHcVcwdXBM?=
- =?utf-8?B?THgvamFaU2xRSjNMWmtxKzh2NnQ2aWIrWW5MYURjaGhveDVYa3FNWnZXdVcv?=
- =?utf-8?B?RkEwR0Z6TXp6SmRZNTdlamhHaThsTTFQbitCTjJEeDkzekV5S3pVNHhqVDdt?=
- =?utf-8?B?MEZFNVpBNzRRSFFmMWlzRFBNQlZUVFF2c2ZvZ3c1S3IyRUxSdDN0VDlYZzNx?=
- =?utf-8?B?NldvZWhXMU80bTc0dkZNZU9LYlBtYzFYOVZvQW0rMktTeWR5VDdYelNqRG5M?=
- =?utf-8?B?K1ROSDYrV3BiNDYvYlJYNVU2TzlFNWZLdXRuaVFuaWRCak5jVEk0RFVjUGt2?=
- =?utf-8?B?SVMxaUx5ZWJCem5yNlpBcURLdHIyQW9LeWRFRGtaTUZWK2lFSk5hcmJsNEg2?=
- =?utf-8?B?QnBUY0MxVlJycWcrNDRydC9CM1BwR05YMExTbmRYSG9rM0tIUExrUGlmL3Rr?=
- =?utf-8?Q?68x63eXQrvQ=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BE1PPF7DB70B163.DEUP281.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(7053199007); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aVRFSGlYKzkvaU9lbjhCM0Y2Q0pXaS9vTjltbEFJd1dFN2YxV1lMMXUyRFli?=
- =?utf-8?B?NEZGaVdwbStMZjF1VklJb01sa3BxbVJNSE16VVY1QXlDeUJORHRzNkFtNEla?=
- =?utf-8?B?Smd6Tkx0eDd4YWpCOFJubzZmVEgxWWlxOWNnZEFYSER4eDdEMExsd2pCd2pR?=
- =?utf-8?B?enE3UVRFYmhjR08wbVp3eWk4d2lHVExidFJVcmtiK3MvN3R0N1NnMTB0VDRu?=
- =?utf-8?B?TnU2Nm1lTk5VbGN0MjFtNkNxaDltNUpTWG9TaFdEQnlOeXV4d3BHMFVBWE5M?=
- =?utf-8?B?eElyNGNiajR2NzRld05oVVN6VUcwZTJteHFlcEJYYXpvazZ3OHNXcS93MnNk?=
- =?utf-8?B?Zll5NUhPSndLbWc5OWU1ZXVFSjZraDdHN2RGZExQQm9FQzA3NGc4ZC9FelVw?=
- =?utf-8?B?elVyanpTUDU4WGsyL1AvYUZQbm5paXVDMUZFYktDcGxvNTNodEpvYVJTZFVq?=
- =?utf-8?B?ZzV5S3U1UERjVkR2blRnaTkzMVVxNGdrUUFUMU1mMlo3Sy83b1FIbXUwVjJ0?=
- =?utf-8?B?dEE3cDJ4Zmc4S3dqK2pYT2lYNVpLU1NsUXpLN1FWdDM2Y3I5TWtZQkJVVHRG?=
- =?utf-8?B?SzdobXMyQVhUQUhsL0Uwd2EyMUdURlNLNmFJMDIrS2R2alFUTEFqdjJTMDBz?=
- =?utf-8?B?UkhTWGlKbVUzR0tDSGFtUlZTQk9hL1pndDk4M3NaZU1FZFBoajJlWjVXMTYr?=
- =?utf-8?B?MHFwMWlwSXkrbWRXYTM3clJLZHcyVFBWbDFUd2p3WG4zdjFkcUo2Nm9kS2VL?=
- =?utf-8?B?VkFnTldWMlJQQnBiMjlEVXdlTW5nbHlpdkQ4VXprWHA4Z3NIbUZXSm9kZ243?=
- =?utf-8?B?WXdrcW45cm9lK2VuRWF5YVNZOW5CUUE4V25OT2lkZXUraUtoUzErb1R2cCtz?=
- =?utf-8?B?aFA1TFZ0cjdad3B1ZTVnZXJtYVdOTmdadnBtQkYxQ3hDY3RweCtZendBWTlE?=
- =?utf-8?B?OUZObFhZOTM5S0I0aVlOOWFpU0huRHhXWVZPWi9xQ1k0aGlpU21aZGd4SHdi?=
- =?utf-8?B?VEtQTm1BSHN6MFo5dFlGL0lqZEUva280ai85VHZtUmdEMWxoRUpjWlBzcmdh?=
- =?utf-8?B?aXNmWVNud21TY1VjMkprcy9TN1lRbVZ6WTlsNzN6NCtJOGY3RzY4RW1IQVVQ?=
- =?utf-8?B?S2ZUdHE2M0FENWwzZDl5N2F4b1ZXeFMxcmZyZk9wUkhkd0pCQW42c09QRm9U?=
- =?utf-8?B?SjZRUDM1bUpyR1o2dG9uRlBIeHRydDBSN3luSWU0SzNuOTZuQ3ZkQ1k0Zkow?=
- =?utf-8?B?aHc0endQSHVDdkFncERWMG9ObERmSnJtUXQxZ3o5UTN3MGxHaVBtTGo1QlBF?=
- =?utf-8?B?eC9mUGNSWThrbzF4R2lnZkFZaGxpdTJSZTdMNXBGU25CcEJ2dy8zRXNwMlpw?=
- =?utf-8?B?TnY1eDE3aG54NDJtdy9Uby90eTFYZEt1MEUrcHNXL29CclVJbmp4d2Q2SkFC?=
- =?utf-8?B?R05lMm1DcW82VnpoZkxyMWRBVVkrdWxieGR2NS9sTVdwVmlkaGY2OWswNGRh?=
- =?utf-8?B?R0o0QU1xK25GOXZZSFpaZjdySmlyYmZlLzk3Q25PMXM1aCs3Q29LSU5wbkxx?=
- =?utf-8?B?UmRrYWt3SjVmTkFpQ3ZxaGZiblpWUkdTQlRJekJJZ1N3NkN6UU1zZTE5VVln?=
- =?utf-8?B?ck5EdDNKSXg3QkRTWSt4c2JnSUVnVWxNMDhNd0sxbmFpOGxidWFaYSt5cldX?=
- =?utf-8?B?NWRVQkFNb2tnS1RMVmxkTzVHUnVablA4WE9UNjgydEdNbVpscWI4N1RiczVa?=
- =?utf-8?B?eTZqcVhieUZrekkyYnd2bnlrbUZXL0xOYTg0OGgrQ3p1YUlNOUZkam9JR2pn?=
- =?utf-8?B?TFZjY3RiMGNUZHNaQ3RNemU2c1R6WUR3Q0lXMzhsaDN6RHVtcHptU0dGSEVm?=
- =?utf-8?B?RHVROHh3Y1FXWHUrL0M5RWd1eUZhTGJ0SmZXc3BoMHpUNjFXSHp3cTdwclor?=
- =?utf-8?B?YlNpejBNUjdROTV0bWxIdE5jSE52L1pscjdWa1VEK2dicWZEWUMrSkc3WjBv?=
- =?utf-8?B?RDlmYjFBOXVDYlNRZ29ORmdtTzJ6U2pNVjRHeEIraFN4Sk9aSFl0R2VhVFpO?=
- =?utf-8?B?b1NMdlBDVjh3MzdGL3RBZWJCSjIzVi91dHZOcGhiV01yUHl0eml3OG9PRUEy?=
- =?utf-8?Q?R6Ms=3D?=
-X-OriginatorOrg: siewert.io
-X-MS-Exchange-CrossTenant-Network-Message-Id: ac658ef9-122e-4de0-d243-08ddb563ab97
-X-MS-Exchange-CrossTenant-AuthSource: BE1PPF7DB70B163.DEUP281.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jun 2025 10:16:24.4677 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e8b4abbe-444b-4835-b8fd-87ac97451a7e
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: kfAeFm2+WzvO6l1QsddSi4c3DIWd8L3j9YfmMkoLZzjqrvBvPMCzYefENI8c1s90
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: FR4P281MB4696
-Received-SPF: pass client-ip=2a01:111:f403:c20c::1;
- envelope-from=tan@siewert.io;
- helo=FR6P281CU001.outbound.protection.outlook.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -176,107 +115,408 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20.06.25 03:23, Jamin Lin wrote:
-> 
->> Subject: Re: [PATCH v4] hw/misc/aspeed_scu: Handle AST2600 protection key
->> registers correctly
->>
->> Jamin,
->>
->> On 6/19/25 10:53, Tan Siewert wrote:
->>> The AST2600 SCU has two protection key registers (0x00 and 0x10) that
->>> both need to be unlocked. (Un-)locking 0x00 modifies both protection
->>> key registers, while modifying 0x10 only modifies itself.
->>>
->>> This commit updates the SCU write logic to reject writes unless both
->>> protection key registers are unlocked, matching the behaviour of real
->>> hardware.
->>>
->>> Signed-off-by: Tan Siewert <tan@siewert.io>
->>
->> Could you please resend your R-b ?
->>
->> Thanks,
->>
->> C.
->>
->>
-> 
-> Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> 
-> Thanks-Jamin
+From: Rowan Hart <rowanbhart@gmail.com>
 
-Cédric,
+This patch adds a plugin that exercises the virtual and hardware memory
+read-write API functions added in a previous patch. The plugin takes a
+target and patch byte sequence, and will overwrite any instruction
+matching the target byte sequence with the patch.
 
-Do you think this patch could be applied to aspeed-next?
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
+Message-ID: <20250624175351.440780-8-rowanbhart@gmail.com>
+[AJB: tweak Makefile, use uintptr_t for pointer stuffing]
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ tests/tcg/plugins/patch.c                 | 251 ++++++++++++++++++++++
+ tests/tcg/x86_64/system/patch-target.c    |  22 ++
+ tests/tcg/Makefile.target                 |   7 +-
+ tests/tcg/plugins/meson.build             |   2 +-
+ tests/tcg/x86_64/Makefile.softmmu-target  |   9 +
+ tests/tcg/x86_64/system/validate-patch.py |  39 ++++
+ 6 files changed, 328 insertions(+), 2 deletions(-)
+ create mode 100644 tests/tcg/plugins/patch.c
+ create mode 100644 tests/tcg/x86_64/system/patch-target.c
+ create mode 100755 tests/tcg/x86_64/system/validate-patch.py
 
-Thanks,
-Tan
-
-> 
->>
->>> ---
->>> V4:
->>>     - Fix mis-understanding of or operator in lock check [Tan]
->>>     - Move SCU protection data variable outside of switch case [Cedric]
->>>     - Fix u32 -> uint32_t mistake (now bool as same result) [Cedric]
->>>
->>>    hw/misc/aspeed_scu.c | 16 ++++++++++++++--
->>>    1 file changed, 14 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c index
->>> 4930e00fed..39832cd861 100644
->>> --- a/hw/misc/aspeed_scu.c
->>> +++ b/hw/misc/aspeed_scu.c
->>> @@ -91,6 +91,7 @@
->>>    #define BMC_DEV_ID           TO_REG(0x1A4)
->>>
->>>    #define AST2600_PROT_KEY          TO_REG(0x00)
->>> +#define AST2600_PROT_KEY2         TO_REG(0x10)
->>>    #define AST2600_SILICON_REV       TO_REG(0x04)
->>>    #define AST2600_SILICON_REV2      TO_REG(0x14)
->>>    #define AST2600_SYS_RST_CTRL      TO_REG(0x40)
->>> @@ -722,6 +723,8 @@ static void aspeed_ast2600_scu_write(void *opaque,
->> hwaddr offset,
->>>        int reg = TO_REG(offset);
->>>        /* Truncate here so bitwise operations below behave as expected */
->>>        uint32_t data = data64;
->>> +    bool prot_data_state = data == ASPEED_SCU_PROT_KEY;
->>> +    bool unlocked = s->regs[AST2600_PROT_KEY] &&
->>> + s->regs[AST2600_PROT_KEY2];
->>>
->>>        if (reg >= ASPEED_AST2600_SCU_NR_REGS) {
->>>            qemu_log_mask(LOG_GUEST_ERROR, @@ -730,15 +733,24
->> @@ static
->>> void aspeed_ast2600_scu_write(void *opaque, hwaddr offset,
->>>            return;
->>>        }
->>>
->>> -    if (reg > PROT_KEY && !s->regs[PROT_KEY]) {
->>> +    if ((reg != AST2600_PROT_KEY && reg != AST2600_PROT_KEY2) &&
->>> + !unlocked) {
->>>            qemu_log_mask(LOG_GUEST_ERROR, "%s: SCU is locked!\n",
->>> __func__);
->>> +        return;
->>>        }
->>>
->>>        trace_aspeed_scu_write(offset, size, data);
->>>
->>>        switch (reg) {
->>>        case AST2600_PROT_KEY:
->>> -        s->regs[reg] = (data == ASPEED_SCU_PROT_KEY) ? 1 : 0;
->>> +        /*
->>> +         * Writing a value to SCU000 will modify both protection
->>> +         * registers to each protection register individually.
->>> +         */
->>> +        s->regs[AST2600_PROT_KEY] = prot_data_state;
->>> +        s->regs[AST2600_PROT_KEY2] = prot_data_state;
->>> +        return;
->>> +    case AST2600_PROT_KEY2:
->>> +        s->regs[AST2600_PROT_KEY2] = prot_data_state;
->>>            return;
->>>        case AST2600_HW_STRAP1:
->>>        case AST2600_HW_STRAP2:
-> 
+diff --git a/tests/tcg/plugins/patch.c b/tests/tcg/plugins/patch.c
+new file mode 100644
+index 0000000000..111c5c1f16
+--- /dev/null
++++ b/tests/tcg/plugins/patch.c
+@@ -0,0 +1,251 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This plugin patches instructions matching a pattern to a different
++ * instruction as they execute
++ *
++ */
++
++#include "glib.h"
++#include "glibconfig.h"
++
++#include <qemu-plugin.h>
++#include <string.h>
++#include <stdio.h>
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
++
++static bool use_hwaddr;
++static GByteArray *target_data;
++static GByteArray *patch_data;
++
++/**
++ * Parse a string of hexadecimal digits into a GByteArray. The string must be
++ * even length
++ */
++static GByteArray *str_to_bytes(const char *str)
++{
++    size_t len = strlen(str);
++
++    if (len == 0 || len % 2 != 0) {
++        return NULL;
++    }
++
++    GByteArray *bytes = g_byte_array_new();
++    char byte[3] = {0};
++    guint8 value = 0;
++
++    for (size_t i = 0; i < len; i += 2) {
++        byte[0] = str[i];
++        byte[1] = str[i + 1];
++        value = (guint8)g_ascii_strtoull(byte, NULL, 16);
++        g_byte_array_append(bytes, &value, 1);
++    }
++
++    return bytes;
++}
++
++static void patch_hwaddr(unsigned int vcpu_index, void *userdata)
++{
++    uintptr_t addr = (uintptr_t) userdata;
++    g_autoptr(GString) str = g_string_new(NULL);
++    g_string_printf(str, "patching: @0x%"
++                    PRIxPTR "\n",
++                    addr);
++    qemu_plugin_outs(str->str);
++
++    enum qemu_plugin_hwaddr_operation_result result =
++        qemu_plugin_write_memory_hwaddr(addr, patch_data);
++
++
++    if (result != QEMU_PLUGIN_HWADDR_OPERATION_OK) {
++        g_autoptr(GString) errmsg = g_string_new(NULL);
++        g_string_printf(errmsg, "Failed to write memory: %d\n", result);
++        qemu_plugin_outs(errmsg->str);
++        return;
++    }
++
++    GByteArray *read_data = g_byte_array_new();
++
++    result = qemu_plugin_read_memory_hwaddr(addr, read_data,
++                                            patch_data->len);
++
++    qemu_plugin_outs("Reading memory...\n");
++
++    if (result != QEMU_PLUGIN_HWADDR_OPERATION_OK) {
++        g_autoptr(GString) errmsg = g_string_new(NULL);
++        g_string_printf(errmsg, "Failed to read memory: %d\n", result);
++        qemu_plugin_outs(errmsg->str);
++        return;
++    }
++
++    if (memcmp(patch_data->data, read_data->data, patch_data->len) != 0) {
++        qemu_plugin_outs("Failed to read back written data\n");
++    }
++
++    qemu_plugin_outs("Success!\n");
++
++    return;
++}
++
++static void patch_vaddr(unsigned int vcpu_index, void *userdata)
++{
++    uintptr_t addr = (uintptr_t) userdata;
++    uint64_t hwaddr = 0;
++    if (!qemu_plugin_translate_vaddr(addr, &hwaddr)) {
++        qemu_plugin_outs("Failed to translate vaddr\n");
++        return;
++    }
++    g_autoptr(GString) str = g_string_new(NULL);
++    g_string_printf(str, "patching: @0x%"
++                    PRIxPTR " hw: @0x%" PRIx64 "\n",
++                    addr, hwaddr);
++    qemu_plugin_outs(str->str);
++
++    qemu_plugin_outs("Writing memory (vaddr)...\n");
++
++    if (!qemu_plugin_write_memory_vaddr(addr, patch_data)) {
++        qemu_plugin_outs("Failed to write memory\n");
++        return;
++    }
++
++    qemu_plugin_outs("Reading memory (vaddr)...\n");
++
++    g_autoptr(GByteArray) read_data = g_byte_array_new();
++
++    if (!qemu_plugin_read_memory_vaddr(addr, read_data, patch_data->len)) {
++        qemu_plugin_outs("Failed to read memory\n");
++        return;
++    }
++
++    if (memcmp(patch_data->data, read_data->data, patch_data->len) != 0) {
++        qemu_plugin_outs("Failed to read back written data\n");
++    }
++
++    qemu_plugin_outs("Success!\n");
++
++    return;
++}
++
++/*
++ * Callback on translation of a translation block.
++ */
++static void vcpu_tb_trans_cb(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
++{
++    g_autoptr(GByteArray) insn_data = g_byte_array_new();
++    uintptr_t addr = 0;
++
++    for (size_t i = 0; i < qemu_plugin_tb_n_insns(tb); i++) {
++        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
++        uint64_t vaddr = qemu_plugin_insn_vaddr(insn);
++
++        if (use_hwaddr) {
++            uint64_t hwaddr = 0;
++            if (!qemu_plugin_translate_vaddr(vaddr, &hwaddr)) {
++                qemu_plugin_outs("Failed to translate vaddr\n");
++                continue;
++            }
++            /*
++             * As we cannot emulate 64 bit systems on 32 bit hosts we
++             * should never see the top bits set, hence we can safely
++             * cast to uintptr_t.
++             */
++            g_assert(hwaddr <= UINTPTR_MAX);
++            addr = (uintptr_t) hwaddr;
++        } else {
++            g_assert(vaddr <= UINTPTR_MAX);
++            addr = (uintptr_t) vaddr;
++        }
++
++        g_byte_array_set_size(insn_data, qemu_plugin_insn_size(insn));
++        qemu_plugin_insn_data(insn, insn_data->data, insn_data->len);
++
++        if (insn_data->len >= target_data->len &&
++            !memcmp(insn_data->data, target_data->data,
++                    MIN(target_data->len, insn_data->len))) {
++            if (use_hwaddr) {
++                qemu_plugin_register_vcpu_tb_exec_cb(tb, patch_hwaddr,
++                                                     QEMU_PLUGIN_CB_NO_REGS,
++                                                     (void *) addr);
++            } else {
++                qemu_plugin_register_vcpu_tb_exec_cb(tb, patch_vaddr,
++                                                     QEMU_PLUGIN_CB_NO_REGS,
++                                                     (void *) addr);
++            }
++        }
++    }
++}
++
++static void usage(void)
++{
++    fprintf(stderr, "Usage: <lib>,target=<bytes>,patch=<new_bytes>"
++            "[,use_hwaddr=true|false]");
++}
++
++/*
++ * Called when the plugin is installed
++ */
++QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
++                                           const qemu_info_t *info, int argc,
++                                           char **argv)
++{
++
++    use_hwaddr = true;
++    target_data = NULL;
++    patch_data = NULL;
++
++    if (argc > 4) {
++        usage();
++        return -1;
++    }
++
++    for (size_t i = 0; i < argc; i++) {
++        char *opt = argv[i];
++        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
++        if (g_strcmp0(tokens[0], "use_hwaddr") == 0) {
++            if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &use_hwaddr)) {
++                fprintf(stderr,
++                        "Failed to parse boolean argument use_hwaddr\n");
++                return -1;
++            }
++        } else if (g_strcmp0(tokens[0], "target") == 0) {
++            target_data = str_to_bytes(tokens[1]);
++            if (!target_data) {
++                fprintf(stderr,
++                         "Failed to parse target bytes.\n");
++                return -1;
++            }
++        } else if (g_strcmp0(tokens[0], "patch") == 0) {
++            patch_data = str_to_bytes(tokens[1]);
++            if (!patch_data) {
++                fprintf(stderr, "Failed to parse patch bytes.\n");
++                return -1;
++            }
++        } else {
++            fprintf(stderr, "Unknown argument: %s\n", tokens[0]);
++            usage();
++            return -1;
++        }
++    }
++
++    if (!target_data) {
++        fprintf(stderr, "target argument is required\n");
++        usage();
++        return -1;
++    }
++
++    if (!patch_data) {
++        fprintf(stderr, "patch argument is required\n");
++        usage();
++        return -1;
++    }
++
++    if (target_data->len != patch_data->len) {
++        fprintf(stderr, "Target and patch data must be the same length\n");
++        return -1;
++    }
++
++    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans_cb);
++
++    return 0;
++}
+diff --git a/tests/tcg/x86_64/system/patch-target.c b/tests/tcg/x86_64/system/patch-target.c
+new file mode 100644
+index 0000000000..8c2b6f4ba7
+--- /dev/null
++++ b/tests/tcg/x86_64/system/patch-target.c
+@@ -0,0 +1,22 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This test target increments a value 100 times. The patcher converts the
++ * inc instruction to a nop, so it only increments the value once.
++ *
++ */
++#include <minilib.h>
++
++int main(void)
++{
++    ml_printf("Running test...\n");
++    unsigned int x = 0;
++    for (int i = 0; i < 100; i++) {
++        asm volatile (
++            "inc %[x]"
++            : [x] "+a" (x)
++        );
++    }
++    ml_printf("Value: %d\n", x);
++    return 0;
++}
+diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
+index 95ff76ea44..af68f11664 100644
+--- a/tests/tcg/Makefile.target
++++ b/tests/tcg/Makefile.target
+@@ -151,7 +151,12 @@ ifeq ($(CONFIG_PLUGIN),y)
+ PLUGIN_SRC=$(SRC_PATH)/tests/tcg/plugins
+ PLUGIN_LIB=../plugins
+ VPATH+=$(PLUGIN_LIB)
+-PLUGINS=$(patsubst %.c, lib%.so, $(notdir $(wildcard $(PLUGIN_SRC)/*.c)))
++# Some plugins need to be disabled for all tests to avoid exponential explosion.
++# For example, libpatch.so only needs to run against the arch-specific patch
++# target test, so we explicitly run it in the arch-specific Makefile.
++DISABLE_PLUGINS=libpatch.so
++PLUGINS=$(filter-out $(DISABLE_PLUGINS), \
++	$(patsubst %.c, lib%.so, $(notdir $(wildcard $(PLUGIN_SRC)/*.c))))
+ 
+ # We need to ensure expand the run-plugin-TEST-with-PLUGIN
+ # pre-requistes manually here as we can't use stems to handle it. We
+diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
+index 029342282a..61a007d9e7 100644
+--- a/tests/tcg/plugins/meson.build
++++ b/tests/tcg/plugins/meson.build
+@@ -1,6 +1,6 @@
+ t = []
+ if get_option('plugins')
+-  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall']
++  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall', 'patch']
+     if host_os == 'windows'
+       t += shared_module(i, files(i + '.c') + '../../../contrib/plugins/win32_linker.c',
+                         include_directories: '../../../include/qemu',
+diff --git a/tests/tcg/x86_64/Makefile.softmmu-target b/tests/tcg/x86_64/Makefile.softmmu-target
+index d3e09708a5..3e30ca9307 100644
+--- a/tests/tcg/x86_64/Makefile.softmmu-target
++++ b/tests/tcg/x86_64/Makefile.softmmu-target
+@@ -33,3 +33,12 @@ memory: CFLAGS+=-DCHECK_UNALIGNED=1
+ 
+ # Running
+ QEMU_OPTS+=-device isa-debugcon,chardev=output -device isa-debug-exit,iobase=0xf4,iosize=0x4 -kernel
++
++ifeq ($(CONFIG_PLUGIN),y)
++run-plugin-patch-target-with-libpatch.so:		\
++	PLUGIN_ARGS=$(COMMA)target=ffc0$(COMMA)patch=9090$(COMMA)use_hwaddr=true
++run-plugin-patch-target-with-libpatch.so:		\
++	CHECK_PLUGIN_OUTPUT_COMMAND=$(X64_SYSTEM_SRC)/validate-patch.py $@.out
++run-plugin-patch-target-with-libpatch.so: patch-target libpatch.so
++EXTRA_RUNS+=run-plugin-patch-target-with-libpatch.so
++endif
+diff --git a/tests/tcg/x86_64/system/validate-patch.py b/tests/tcg/x86_64/system/validate-patch.py
+new file mode 100755
+index 0000000000..700950eae5
+--- /dev/null
++++ b/tests/tcg/x86_64/system/validate-patch.py
+@@ -0,0 +1,39 @@
++#!/usr/bin/env python3
++#
++# validate-patch.py: check the patch applies
++#
++# This program takes two inputs:
++#   - the plugin output
++#   - the binary output
++#
++# Copyright (C) 2024
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import sys
++from argparse import ArgumentParser
++
++def main() -> None:
++    """
++    Process the arguments, injest the program and plugin out and
++    verify they match up and report if they do not.
++    """
++    parser = ArgumentParser(description="Validate patch")
++    parser.add_argument('test_output',
++                        help="The output from the test itself")
++    parser.add_argument('plugin_output',
++                        help="The output from plugin")
++    args = parser.parse_args()
++
++    with open(args.test_output, 'r') as f:
++        test_data = f.read()
++    with open(args.plugin_output, 'r') as f:
++        plugin_data = f.read()
++    if "Value: 1" in test_data:
++        sys.exit(0)
++    else:
++        sys.exit(1)
++
++if __name__ == "__main__":
++    main()
++
+-- 
+2.47.2
 
 
