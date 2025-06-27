@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93425C77B7F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDF47C7EE31
 	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 13:21:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uV90r-0003CV-CZ; Fri, 27 Jun 2025 09:21:05 -0400
+	id 1uV90s-0003Ed-Fe; Fri, 27 Jun 2025 09:21:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1uV90V-00031q-V6
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 09:20:44 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1uV90W-00033Y-Dn
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 09:20:45 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1uV90R-0003HD-3m
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 09:20:43 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-747fc77bb2aso2089086b3a.3
- for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 06:20:38 -0700 (PDT)
+ id 1uV90U-0003MT-9y
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 09:20:44 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-742c7a52e97so2088498b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 06:20:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1751030437; x=1751635237; darn=nongnu.org;
+ d=sifive.com; s=google; t=1751030440; x=1751635240; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Z7cQbTwl8/Wsv/cBZa0gH677CLKVrdhFboZMiTRyuo4=;
- b=ROvED2+0x8oi/+jH/iae3omwMBghWSmbHy8zTUxabXk9Pkgcle0tSKG3FqTrMKnE7o
- w77fsmqt2EdxlbNH4yVfNylcFoc/nM/WFJHtyZJ91UVYBDgIpbzLKTwhK9bRiUiQEjfS
- +OwrD7wSU1oK+JI6QMvATq1OTB2ATcXvGWZVycRdo1mxs+17AO5g+6I2xMmUaegvpDod
- bXGWFfqSPCtJqz+JXiIq58CwLw/JzrA6JvEHGjCypMcoicHhIb0LL+LmoIw71Mx/0Lx/
- i9J518ajPcw25/TLu06NNUCJjqu/lw6zD8FuPnnFuIGY8PDrC7P5mVW+uLSYeZi/Q9m4
- k5HQ==
+ bh=5HGmWSO3+djq6ALIkR5O7IVHUJC5hIN3/GWTRKD/WcM=;
+ b=hMzyIMmUB74icEA8V72B4NdCfdFbEEVC1ympZvGQfXn5e6JfcrUKxBlG1Z1Q7aAqOh
+ JKmz8lF7IfJapVZ12xHiyAQ+r5/Fitk7EPXONlgZYAW/LU6CzauaRalW3Q7gpzqYO3rZ
+ 5AVK+Hs6WyDeoAHkxA0IjOSy/xmS38BBPd3KyK+seQ1T/er2D3Ne0EzfbveMI+pBcCdE
+ NCmQeV0iy2o1s/gcwDxmVG0eKGYF0iZTyImr+1hWvVJzy+8MRS/qSCQw+ecIF9WDOWmJ
+ 3/7tuRgeStp8UWsknKwdZvlvvO/SlQGaqjY9OojDbYI9MW6Jgw5wF6Ald33WVJjkgRkz
+ dHSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751030437; x=1751635237;
+ d=1e100.net; s=20230601; t=1751030440; x=1751635240;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Z7cQbTwl8/Wsv/cBZa0gH677CLKVrdhFboZMiTRyuo4=;
- b=N2m24RZS/Ji5vdKD9f/Vq4recm9AxLA3rrb6xcp3mTMDzrmyh1IXgpp+XARlfjA3Gx
- DI37b6OANpkiEe34OkBZTLeEc0D3ja6ZKRQ5rw0tFTvdeWtbfJZHST9Cwxeu/lZGrqLl
- Sgqld+5vDZ58mDYitjHWTa+xZOmc4NL39ytJdGg97clfTfNtKnGFyGaw9VKFUuKNZ2aR
- NoCnKF4z0iLKYs2ES7GbeA2U0Nz0zFYGwZs0JVzbevEwNSbucituGxNxW3xaLIud70Nr
- rhFwvBMgyCC/14KMCNpXwRbBp2ZF+16LFypN7MnpDxnJIcpmHLZEW+Qvq5Fz8F1i00Hh
- kkJw==
-X-Gm-Message-State: AOJu0YzQESUsPi8Reh88PWSxRAXZmF7EPvo+wO//AapfzlJ2phm+NWtr
- UfA2lnKRgD0dRz4mBK7mDhupbOr0sUzHRyJnwxVu3RjioZjN5Ub9+Kofk0m31oBPfBfN61W9nUF
- 7N6S66WwWkFInXcf+dhBzgHaAlv9zjW8bQsuG2L91ob14tqJYUCMCh2vXtwUTjpvPbOVN/T3SYi
- a9YRISADADITGwLG2k79IZkBX5KYgXW0PUx8uXHCZDZg==
-X-Gm-Gg: ASbGncu12cqoFVTb3MmROPiJZmXggtcl9PEV4uKqeMtKNzgbzVNLFrdjO2CiaLiY7ti
- XyG4uKOHvH6GNSAl1HgOKdko666pzu6neMl1AOwhGnHEHLsgAErbgWlHjTcBoJbMyeWETsMO1LX
- +Z59CUW0mm6q7QXfvLmoZ9eKSfo+vAy7FI1l6/Bc3di+u4SXYwgs7Ht9cXu6/jLelsNqsigO/O5
- rfj7bNUfKuqv2H5j4hnu/R6ONWDgCPdEaf0UumrF/G+kozloTCxvReSCysWIfRKLPjxZAb4TXUh
- Jkn2gTJe4qfxewDJ5nH47VVqw5ZorsmlQRaIm2RQAuXUyf4Sq30GOnyoJND2xO1/z5XGhorMiMn
- wqXT8OzbYPVjLy748iKRVAeTtkRq7eTM=
-X-Google-Smtp-Source: AGHT+IHjyZzNzmUxzn7BLQtPjDYVzQrHomReev/4cXKM8lhbltSQn7HIaL/iQz72DG27uo067PWj0A==
-X-Received: by 2002:a05:6a00:14c2:b0:73e:1e24:5a4e with SMTP id
- d2e1a72fcca58-74af6f7f8e2mr5177977b3a.24.1751030437245; 
- Fri, 27 Jun 2025 06:20:37 -0700 (PDT)
+ bh=5HGmWSO3+djq6ALIkR5O7IVHUJC5hIN3/GWTRKD/WcM=;
+ b=wonEXYJYn9AinwAEarHHklets1Q7RsOkJSeVrFChN9utIFHshFMMVAzaYu9m3JGcHA
+ bN1ae4MDAvyJZAADqBzLEM9zoclRXJem28GwuKDlBJkZ8QFRt1i8KszPDdXJ1iRnSKAC
+ Td8Q6BoDILjpOmpD0T6VGHnVkBmI4u2zmu2rhNZHOLxuKzZm8iaYbmpcDJbz6crl4QZ7
+ m0ZJ4RNl4MdExG3s4anfwoodBecYzobJ9q1oW0bR2NwdZcZVrsFS18QvtwRcGpEvFpiR
+ H9Cccrx5EytSxjXfaYDDXyLAXKczmInguDcBcTB1c7HyX9boM5sMGe1Z0ovpsn9mL+Pz
+ 6Dow==
+X-Gm-Message-State: AOJu0YwxARFv8ptwx4N3VY4Cri/iUh11yjbS2KruDl+u4wzFo3PyYEvT
+ iYQu8yx+zKMkfQ6T6owQ2yDq4FShpG9nLvUrQwNxN8h/Ejlf270gj5zg/SAQReRuz3PaeGlOE4H
+ 6txahYMdBDyeFUlcgXUWCxCv7emIOrAljX+4tCSxsGmsHS2T82BtApT6b7v08MMP4WG1eupGdrg
+ waiUHnQQ3BgYezKY3vBnsX6WCEKUWrdExKQiPo/V3uYw==
+X-Gm-Gg: ASbGncs0v/dWkMUfYaPMra1sxDpYTH/BtkpYgTTfQGWLkxHP0ytciwJtKeZI7DQwydM
+ Jq/V5rjrkmDMrDonOjf0YwfnZB1pas/XBlplPA8D2wm6K+16npUsSvYdUsw+dp4909OgWvAAnTu
+ PG/fCTl/M6kDuVdcDgnxjGv+eJg2znMMnyrkBdKHqMNz+C5DfezPPaMgxxsuPGZAPrzdEWmXj+f
+ DKXCAjpS3sB4ZU91itzaOXV5pHyGmDuFLQFHRrzSSmnf0Mknnw0iRV9hy5G/YGFk7WU97E8ay6d
+ jrUC8+l+L4TK5VGwQelGw8AAnqlSyBn0lGunS2BPMpku+fxn9rNCZgaLRLHo55kGOK4sucJkqPM
+ Igzqb5v1U6cUcGqWotA3T3/vCWgJtZeE=
+X-Google-Smtp-Source: AGHT+IFgAIMomK1cdNjvexq56+cSfCwtvfo40mVFXSpruVP2F5tnQu5VXJOg3WC7uis2tvlTtN1/Qw==
+X-Received: by 2002:a05:6a00:1992:b0:748:fb2c:6b95 with SMTP id
+ d2e1a72fcca58-74af6f2e8c1mr4607892b3a.18.1751030439947; 
+ Fri, 27 Jun 2025 06:20:39 -0700 (PDT)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74af5573e71sm2393162b3a.98.2025.06.27.06.20.35
+ d2e1a72fcca58-74af5573e71sm2393162b3a.98.2025.06.27.06.20.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Jun 2025 06:20:37 -0700 (PDT)
+ Fri, 27 Jun 2025 06:20:39 -0700 (PDT)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -75,17 +75,17 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, antonb@tenstorrent.com,
  Max Chou <max.chou@sifive.com>
-Subject: [PATCH v2 1/3] target/riscv: rvv: Apply vext_check_input_eew to
- vector integer/fp compare instructions
-Date: Fri, 27 Jun 2025 21:20:20 +0800
-Message-ID: <20250627132022.439315-2-max.chou@sifive.com>
+Subject: [PATCH v2 2/3] target/riscv: rvv: Apply vext_check_input_eew to
+ vector reduction instructions
+Date: Fri, 27 Jun 2025 21:20:21 +0800
+Message-ID: <20250627132022.439315-3-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250627132022.439315-1-max.chou@sifive.com>
 References: <20250627132022.439315-1-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=max.chou@sifive.com; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=max.chou@sifive.com; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,96 +113,33 @@ From: Anton Blanchard <antonb@tenstorrent.com>
 Handle the overlap of source registers with different EEWs.
 
 Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- target/riscv/insn_trans/trans_rvv.c.inc | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ target/riscv/insn_trans/trans_rvv.c.inc | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 2b6077ac067..ec34d0d8c47 100644
+index ec34d0d8c47..ac6f1d04c6d 100644
 --- a/target/riscv/insn_trans/trans_rvv.c.inc
 +++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -436,9 +436,10 @@ static bool vext_check_sss(DisasContext *s, int vd, int vs1, int vs2, int vm)
-            require_align(vs1, s->lmul);
- }
- 
--static bool vext_check_ms(DisasContext *s, int vd, int vs)
-+static bool vext_check_ms(DisasContext *s, int vd, int vs, int vm)
- {
--    bool ret = require_align(vs, s->lmul);
-+    bool ret = require_align(vs, s->lmul) &&
-+               vext_check_input_eew(s, vs, s->sew, -1, 0, vm);
-     if (vd != vs) {
-         ret &= require_noover(vd, 0, vs, s->lmul);
-     }
-@@ -461,9 +462,10 @@ static bool vext_check_ms(DisasContext *s, int vd, int vs)
-  *      with a mask value (e.g., comparisons) or the scalar result
-  *      of a reduction. (Section 5.3)
-  */
--static bool vext_check_mss(DisasContext *s, int vd, int vs1, int vs2)
-+static bool vext_check_mss(DisasContext *s, int vd, int vs1, int vs2, int vm)
- {
--    bool ret = vext_check_ms(s, vd, vs2) &&
-+    bool ret = vext_check_ms(s, vd, vs2, vm) &&
-+               vext_check_input_eew(s, vs1, s->sew, vs2, s->sew, vm) &&
-                require_align(vs1, s->lmul);
-     if (vd != vs1) {
-         ret &= require_noover(vd, 0, vs1, s->lmul);
-@@ -2040,7 +2042,7 @@ static bool opivv_vmadc_check(DisasContext *s, arg_rmrr *a)
+@@ -3293,6 +3293,7 @@ static bool reduction_check(DisasContext *s, arg_rmrr *a)
  {
      return require_rvv(s) &&
             vext_check_isa_ill(s) &&
--           vext_check_mss(s, a->rd, a->rs1, a->rs2);
-+           vext_check_mss(s, a->rd, a->rs1, a->rs2, a->vm);
++           vext_check_input_eew(s, a->rs1, s->sew, a->rs2, s->sew, a->vm) &&
+            vext_check_reduction(s, a->rs2);
  }
  
- GEN_OPIVV_TRANS(vmadc_vvm, opivv_vmadc_check)
-@@ -2076,7 +2078,7 @@ static bool opivx_vmadc_check(DisasContext *s, arg_rmrr *a)
+@@ -3309,7 +3310,8 @@ GEN_OPIVV_TRANS(vredxor_vs, reduction_check)
+ static bool reduction_widen_check(DisasContext *s, arg_rmrr *a)
  {
-     return require_rvv(s) &&
-            vext_check_isa_ill(s) &&
--           vext_check_ms(s, a->rd, a->rs2);
-+           vext_check_ms(s, a->rd, a->rs2, a->vm);
+     return reduction_check(s, a) && (s->sew < MO_64) &&
+-           ((s->sew + 1) <= (s->cfg_ptr->elen >> 4));
++           ((s->sew + 1) <= (s->cfg_ptr->elen >> 4)) &&
++           vext_check_input_eew(s, a->rs1, s->sew, a->rs2, s->sew + 1, a->vm);
  }
  
- GEN_OPIVX_TRANS(vmadc_vxm, opivx_vmadc_check)
-@@ -2250,7 +2252,7 @@ static bool opivv_cmp_check(DisasContext *s, arg_rmrr *a)
- {
-     return require_rvv(s) &&
-            vext_check_isa_ill(s) &&
--           vext_check_mss(s, a->rd, a->rs1, a->rs2);
-+           vext_check_mss(s, a->rd, a->rs1, a->rs2, a->vm);
- }
- 
- GEN_OPIVV_TRANS(vmseq_vv, opivv_cmp_check)
-@@ -2264,7 +2266,7 @@ static bool opivx_cmp_check(DisasContext *s, arg_rmrr *a)
- {
-     return require_rvv(s) &&
-            vext_check_isa_ill(s) &&
--           vext_check_ms(s, a->rd, a->rs2);
-+           vext_check_ms(s, a->rd, a->rs2, a->vm);
- }
- 
- GEN_OPIVX_TRANS(vmseq_vx, opivx_cmp_check)
-@@ -2972,7 +2974,7 @@ static bool opfvv_cmp_check(DisasContext *s, arg_rmrr *a)
-     return require_rvv(s) &&
-            require_rvf(s) &&
-            vext_check_isa_ill(s) &&
--           vext_check_mss(s, a->rd, a->rs1, a->rs2);
-+           vext_check_mss(s, a->rd, a->rs1, a->rs2, a->vm);
- }
- 
- GEN_OPFVV_TRANS(vmfeq_vv, opfvv_cmp_check)
-@@ -2985,7 +2987,7 @@ static bool opfvf_cmp_check(DisasContext *s, arg_rmrr *a)
-     return require_rvv(s) &&
-            require_rvf(s) &&
-            vext_check_isa_ill(s) &&
--           vext_check_ms(s, a->rd, a->rs2);
-+           vext_check_ms(s, a->rd, a->rs2, a->vm);
- }
- 
- GEN_OPFVF_TRANS(vmfeq_vf, opfvf_cmp_check)
+ GEN_OPIVV_WIDEN_TRANS(vwredsum_vs, reduction_widen_check)
 -- 
 2.43.0
 
