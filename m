@@ -4,98 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18DF8C77B7F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 16:18:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95A99C77B7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 16:39:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uVBmB-0003Vb-K4; Fri, 27 Jun 2025 12:18:07 -0400
+	id 1uVC5o-0006Zu-WD; Fri, 27 Jun 2025 12:38:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uVBmA-0003VK-9b
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 12:18:06 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
+ id 1uVC5n-0006Zd-6E
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 12:38:23 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uVBm7-0007ro-Qb
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 12:18:05 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-748d982e92cso2017601b3a.1
- for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 09:18:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
+ id 1uVC5l-0006L6-1E
+ for qemu-devel@nongnu.org; Fri, 27 Jun 2025 12:38:22 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-739b3fe7ce8so2926598b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 09:38:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751041082; x=1751645882; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=VkzgF/n1E77l61snMr0EOF4qiFj3fQhuwAnqCf1S2Dk=;
- b=Yacs03YU0bJXY/91hzPYQsluzbj5+fyM/uKqWsNBD8LSJ0IOQ0elUV49FnBvi8qCHq
- nm/N6eP5fBfcQvEOsf3ovKOrOUTSbthR4Rf63SEVoEMJ7QqyTxa5XbyEt3JbM0E7rk3w
- 3FGYAhALDjwZEHf8CklkQ9q78eOmLWmvvOIEAUKqf16U2vjBMhso+O8djgNECO3EHx2Q
- RJzhHMuaAYh/bklKuWbrGBhpNnqgR7zFnWalYhYZD4FVk6V0M8a+uQNJNJBGkK8/Jivo
- aDdHwm4TbIx/oC4ZMbf2zJmriVd2nSJ57yGPg41zVZUU8jw0yG9s+911YNpDvNGy9r0S
- vkmA==
+ d=gmail.com; s=20230601; t=1751042299; x=1751647099; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=+KrP4NrgRfqKvj7KEsF377Ymituu2ngJplzC+zDSckM=;
+ b=Xm95IyVuLtn2msqu1Df5fWrIgmiRfbw4SaZtkR8LE2hCuD0NQNZgXzCzq1BoPwp8Lh
+ I4g7jlpKd8fpUN3LL9EqEqkpnGeSDDEYy0F366pOtsGp6GRe+aDCJYh3mZ7Te9i/XFfn
+ dBzGw3xIgN6kHLAeQLkUEg+V14A/hdSM+wICMtWh9KilNPCeavWyUcstbnr2rHvd0T/P
+ n4q3B3L/qVbG8p6AQtZC9OIkXrTl/ohFA0B8FNR9dSQWz1fxmmBfI4BvSjpXp+RowYkl
+ eeqfp+THua49Jv6qluftRIUiXs12J4CAjdNekm2l7QtqwNBJ6McS/qLkprRfVWS1r6Zn
+ QIAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751041082; x=1751645882;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VkzgF/n1E77l61snMr0EOF4qiFj3fQhuwAnqCf1S2Dk=;
- b=sdRSau1Aldl9t3+vALZBU9oCKH9jv/wUqlNdbkf509EJLwRllU3puNjIg69W6Fsroi
- axLXZVyQPn+EPoTj9Tnm9FJH/v5oxBrkpOwnoQQUw67UYV0Kb+yQzPQbdbZUfZdFr3g9
- AJz9Nn/V06YhR865mnsqJMMKETzSpfwIk/q2toqyvWNk1esanr5JrDl8afLronNTX4RW
- rS/GXW/DUJwe7n9dBPPkhGGhEq9QrQZo06bTG7sHTe/2rOy8WVNIAEPLT9LkDbLGtaFv
- rm1bYRSujIBQGpID7OQrwc8SWmH0LoSGWfQx7s1xjR+ZzQmTeG+acHS4QQ073P0UwpIS
- fPyA==
+ d=1e100.net; s=20230601; t=1751042299; x=1751647099;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+KrP4NrgRfqKvj7KEsF377Ymituu2ngJplzC+zDSckM=;
+ b=kfgrXZ+OMbr60njyK5gI0gFCTlIKhKZOOPz31Tk6oiPe63SvMpVRsaagGP92aP6S1H
+ HeaXgKld/kwdvQOHivyJTxylTr4WoDFsRR3sjHzJJDdZF2pPRtgQDb6Lxey7gJYd73GK
+ LtGhizEvot+fRNbDmDGJPQ4bBUF3TtXlBH/UReraeA7ktqipPIKUwrud0rX2o+kU+qb2
+ tuHCxQXO23AxfqtbHldfm2g4KFqswsynPcl1Np0ocyO0M4LKwlC0jyvn0kFtzbu28lZV
+ YAFiro4RoKl14kO2xc3T3LfrBEMU0OkPxbqv6VVEP76rWE5zGHeZOf/tMU5TiFasPSXG
+ x6YA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVKBemBYil76Ilqkr5AXc8hr1vIL+BEMzdu1aB9TINpJxCrFN2e2shJRh8/kNiDaI+wa4GXKJqIQSqc@nongnu.org
-X-Gm-Message-State: AOJu0YwaaUp7JqOIusOLVmGpdRNopPTQJrLHEBR+wi+DhIZ7mWVQtpPS
- xm87IpccD0w0Mg5sR+1hJbCSlpy2wfpmALDKQBv1Kvv9aQPt/ktFNWjKg8kyL4dS7BY=
-X-Gm-Gg: ASbGncsx9obzR61d1VtIh/je7Q/YL/mhUCQxpq3XLUG6MO6CiBnrWgWr4zgv65U7YU9
- 5ae8FBF2Ad0LXLKW4fvNOVvN3+K//yHq8YHltudFUwJpNNS2YIIgS1z7cLXtcYSLkKgJSI/NFz+
- WDFud3DvSYSI13SvZfuaA+RkP66Oq1XBqOqm6gGA0Bfife2PFfMQCbvJS3iNSpPnCGnWcgkmJ26
- fOCbElBvMc3GUcUnF6VQeTXBC69x8T4GKqbHqn2Wz+rVhqx1qW3tERH9Pk1nRHnQYxwLFLg67mj
- GD8cthxVnojU0rjA1kVMAaZ3+J9tpG2k6uUCuntneUiMLC7CfyHPUQrq7+esk2sd7mHP+ihlSq0
- =
-X-Google-Smtp-Source: AGHT+IHA2eZyhJfXDxi/mrMwmdb/wkEYcJlpz/O7WK+45CcS6VgfwQztFZS+kaRvCGGG7WIaPp3xxw==
-X-Received: by 2002:a17:903:3a88:b0:234:ed31:fc94 with SMTP id
- d9443c01a7336-23ac4633e37mr65914535ad.26.1751041082001; 
- Fri, 27 Jun 2025 09:18:02 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ AJvYcCXGNiX65X23c1KUdTdUCitW8V9wUOF52t3g2cA7micVYbk7Rwqwe/izitHlwXdxHWYxDjn2ZPJYJePF@nongnu.org
+X-Gm-Message-State: AOJu0Yy22U4l6SU4BmQAmE3EvkieO+YyYMnW7ddkq/AGCj8/iQ2dHxqE
+ BA470Fz9xS1yROm9iydDG+KMtx78+YeiFNUusagW3cgC5s296I77hIZK
+X-Gm-Gg: ASbGncveABpJTXHDP/ubmpjY/vhiDk/sa39JctdPAOO6/qOPTSz0HBAoI4rTIjECyqT
+ lKp0Ni6kRDpX8x+QOEy3GL++HpWSObb/4sqNEd1xcN9AY4+bJsaXJW+vQb/GulrDqBcUQu+3Nsc
+ OAIc3tkrQt9OcInWFxEBt9jEjvvsB9yeTXxJ4rJedfBc9BdRMRTY1QRg0eQwigSFBy/mmuYAEQN
+ FQZzToI48tgRx1BYpkUQPLeIZAClHIjx1Q7BFenjKSVgdcbBfleo9UGQu1ag51WI9CWaoznrRoU
+ djbH51IAdEA6wOUuX/kY11dwBZ7nR9dbg8fRXEcfRN/1pi7QMadnoUzlktYN3esuJqX+jOpRvzq
+ XDMW2NQk3Yg4VatYYAfl2/ao=
+X-Google-Smtp-Source: AGHT+IFEGzayuaUZPPDUntzB46BhlvyBWNVdIiBGBzdvEUIpwGJfB0HiDIzF6jM+3w0dl/cI9PShew==
+X-Received: by 2002:a17:902:d58f:b0:235:2e0:ab8 with SMTP id
+ d9443c01a7336-23ac3cf54a7mr51063175ad.6.1751042298751; 
+ Fri, 27 Jun 2025 09:38:18 -0700 (PDT)
+Received: from deb-101020-bm01.eng.stellus.in ([149.97.161.244])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23acb2e3badsm20020965ad.21.2025.06.27.09.18.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Jun 2025 09:18:01 -0700 (PDT)
-Message-ID: <5f50e512-818f-465a-970e-04873ee2dc77@linaro.org>
-Date: Fri, 27 Jun 2025 09:18:00 -0700
+ 41be03b00d2f7-b34e300468esm2027696a12.7.2025.06.27.09.38.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 27 Jun 2025 09:38:18 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+Date: Fri, 27 Jun 2025 16:38:16 +0000
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: anisa.su887@gmail.com, qemu-devel@nongnu.org, nifan.cxl@gmail.com,
+ dave@stgolabs.net, linux-cxl@vger.kernel.org
+Subject: Re: [HACK QEMU PATCH v1 1/1] hw/cxl: Fix MCTP Binding Check
+Message-ID: <aF7I-ByGLZOxqNXi@deb-101020-bm01.eng.stellus.in>
+References: <20250626235102.1902427-1-anisa.su887@gmail.com>
+ <20250626235102.1902427-2-anisa.su887@gmail.com>
+ <20250627104859.00003cbe@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 0/8] Add additional plugin API functions to read and
- write memory and registers
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Rowan Hart <rowanbhart@gmail.com>, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250624175351.440780-1-rowanbhart@gmail.com>
- <87o6ubzxfw.fsf@draig.linaro.org> <87cyaqzcft.fsf@draig.linaro.org>
- <5606f27e-48c1-40fa-9453-f76f87fecd2e@linaro.org>
- <877c0xzgpw.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <877c0xzgpw.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250627104859.00003cbe@huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=anisa.su887@gmail.com; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,176 +105,266 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/27/25 2:17 AM, Alex Bennée wrote:
-> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On Fri, Jun 27, 2025 at 10:48:59AM +0100, Jonathan Cameron wrote:
+> On Thu, 26 Jun 2025 23:41:15 +0000
+> anisa.su887@gmail.com wrote:
 > 
->> On 6/26/25 9:37 AM, Alex Bennée wrote:
->>> Alex Bennée <alex.bennee@linaro.org> writes:
->>>
->>>> Rowan Hart <rowanbhart@gmail.com> writes:
->>>>
->>>>> This patch series adds several new API functions focused on enabling use
->>>>> cases around reading and writing guest memory from QEMU plugins. To support
->>>>> these new APIs, some utility functionality around retrieving information about
->>>>> address spaces is added as well.
->>>>
->>>> Queued to plugins/next, thanks.
->>> So this fails a number of the CI tests, mostly due to 32 bit issues:
->>>     https://gitlab.com/stsquad/qemu/-/pipelines/1890883927/failures
->>> The tci failure is easy enough:
->>> --8<---------------cut here---------------start------------->8---
->>> modified   tests/tcg/x86_64/Makefile.softmmu-target
->>> @@ -34,9 +34,11 @@ memory: CFLAGS+=-DCHECK_UNALIGNED=1
->>>    # Running
->>>    QEMU_OPTS+=-device isa-debugcon,chardev=output -device isa-debug-exit,iobase=0xf4,iosize=0x4 -kernel
->>>    +ifeq ($(CONFIG_PLUGIN),y)
->>>    run-plugin-patch-target-with-libpatch.so:		\
->>>    	PLUGIN_ARGS=$(COMMA)target=ffc0$(COMMA)patch=9090$(COMMA)use_hwaddr=true
->>>    run-plugin-patch-target-with-libpatch.so:		\
->>>    	CHECK_PLUGIN_OUTPUT_COMMAND=$(X64_SYSTEM_SRC)/validate-patch.py $@.out
->>>    run-plugin-patch-target-with-libpatch.so: patch-target libpatch.so
->>>    EXTRA_RUNS+=run-plugin-patch-target-with-libpatch.so
->>> +endif
->>> --8<---------------cut here---------------end--------------->8---
->>> The other problem is trying to stuff a uint64_t into a void * on 32
->>> bit.
->>> We did disable plugins for 32 bit but then reverted because we were able
->>> to fixup the cases:
->>>    cf2a78cbbb (deprecation: don't enable TCG plugins by default on 32
->>> bit hosts)
->>>    db7a06ade1 (configure: reenable plugins by default for 32-bit hosts)
->>> So I don't what is easier:
->>>    - re-deprecate for 32 bit systems
->>>    - only build libpatch on 64 bit systems
->>>    - fix libpatch to handle being built on 32 bit systems
->>>
->>
->> More context:
->> ../tests/tcg/plugins/patch.c: In function ‘patch_hwaddr’:
->> ../tests/tcg/plugins/patch.c:50:21: error: cast from pointer to
->> integer of different size [-Werror=pointer-to-int-cast]
->>     50 |     uint64_t addr = (uint64_t)userdata;
->>        |                     ^
->> ../tests/tcg/plugins/patch.c: In function ‘patch_vaddr’:
->> ../tests/tcg/plugins/patch.c:93:21: error: cast from pointer to
->> integer of different size [-Werror=pointer-to-int-cast]
->>     93 |     uint64_t addr = (uint64_t)userdata;
->>        |                     ^
->> ../tests/tcg/plugins/patch.c: In function ‘vcpu_tb_trans_cb’:
->> ../tests/tcg/plugins/patch.c:159:54: error: cast to pointer from
->> integer of different size [-Werror=int-to-pointer-cast]
->>    159 |                                                      (void *)addr);
->>        |                                                      ^
->> ../tests/tcg/plugins/patch.c:163:54: error: cast to pointer from
->> integer of different size [-Werror=int-to-pointer-cast]
->>    163 |                                                      (void *)addr);
->>        |
->>
->> Since we disabled 64 bit targets on 32 bit hosts, and that data passed
->> by pointers concern addresses, it should be safe to cast values to
->> (uintptr_t) instead of (uint64_t).
+> > From: Anisa Su <anisa.su@samsung.com>
+> > 
+> > Per the spec, FMAPI commands (0x51-0x59) must be bound with
+> > MCTP_MT_CXL_FMAPI. Fix the conditions ensuring this in i2c_mctp_cxl.c
+> > and dev-mctp.c
+> > 
+> > Move the opcode enum from cxl-mailbox-utils.c to cxl_mailbox.h to
+> > allow i2c_mctp_cxl.c and dev-mctp.c to use the enum instead of
+> > hardcoding the values.
+> > 
+> > Signed-off-by: Anisa Su <anisa.su@samsung.com>
+> Why HACK in the patch title?
 > 
-> Something like this?
-> 
-> --8<---------------cut here---------------start------------->8---
-> modified   tests/tcg/plugins/patch.c
-> @@ -47,10 +47,10 @@ static GByteArray *str_to_bytes(const char *str)
->   
->   static void patch_hwaddr(unsigned int vcpu_index, void *userdata)
->   {
-> -    uint64_t addr = (uint64_t)userdata;
-> +    uintptr_t addr = (uintptr_t) userdata;
->       g_autoptr(GString) str = g_string_new(NULL);
->       g_string_printf(str, "patching: @0x%"
-> -                    PRIx64 "\n",
-> +                    PRIxPTR "\n",
->                       addr);
->       qemu_plugin_outs(str->str);
->   
-> @@ -90,7 +90,7 @@ static void patch_hwaddr(unsigned int vcpu_index, void *userdata)
->   
->   static void patch_vaddr(unsigned int vcpu_index, void *userdata)
->   {
-> -    uint64_t addr = (uint64_t)userdata;
-> +    uintptr_t addr = (uintptr_t) userdata;
->       uint64_t hwaddr = 0;
->       if (!qemu_plugin_translate_vaddr(addr, &hwaddr)) {
->           qemu_plugin_outs("Failed to translate vaddr\n");
-> @@ -98,7 +98,7 @@ static void patch_vaddr(unsigned int vcpu_index, void *userdata)
->       }
->       g_autoptr(GString) str = g_string_new(NULL);
->       g_string_printf(str, "patching: @0x%"
-> -                    PRIx64 " hw: @0x%" PRIx64 "\n",
-> +                    PRIxPTR " hw: @0x%" PRIx64 "\n",
->                       addr, hwaddr);
->       qemu_plugin_outs(str->str);
->   
-> @@ -132,19 +132,29 @@ static void patch_vaddr(unsigned int vcpu_index, void *userdata)
->    */
->   static void vcpu_tb_trans_cb(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->   {
-> -    uint64_t addr = 0;
->       g_autoptr(GByteArray) insn_data = g_byte_array_new();
-> +    uintptr_t addr = 0;
-> +
->       for (size_t i = 0; i < qemu_plugin_tb_n_insns(tb); i++) {
->           struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
-> +        uint64_t vaddr = qemu_plugin_insn_vaddr(insn);
->   
->           if (use_hwaddr) {
-> -            uint64_t vaddr = qemu_plugin_insn_vaddr(insn);
-> -            if (!qemu_plugin_translate_vaddr(vaddr, &addr)) {
-> +            uint64_t hwaddr = 0;
-> +            if (!qemu_plugin_translate_vaddr(vaddr, &hwaddr)) {
->                   qemu_plugin_outs("Failed to translate vaddr\n");
->                   continue;
->               }
-> +            /*
-> +             * As we cannot emulate 64 bit systems on 32 bit hosts we
-> +             * should never see the top bits set, hence we can safely
-> +             * cast to uintptr_t.
-> +             */
-> +            g_assert(!(hwaddr & ~UINTPTR_MAX));
+I guess this isn't really a hack but my intention was to make
+it clear that this patch isn't intended for upstream. Seems like that
+made things more confusing though, but now I know!
 
-We would have so many other problems before plugins if this hypothesis 
-was not true (all the usage of vaddr type in the codebase would be 
-broken). So the assert will not detect anything we are not aware about 
-already.
+> In general this seems reasonable - the complexity is how I merge it
+> into my tree given the code being modified slips in at various different
+> points. I'll sort that out though.
 
-If we want to mention this assumption for plugins users, the plugins 
-documentation is probably a better place than one random plugin.
+I could also send you an alternate version of the FMAPI DCD Management patchset
+based on this one?
 
-> +            addr = (uintptr_t) hwaddr;
->           } else {
-> -            addr = qemu_plugin_insn_vaddr(insn);
-> +            g_assert(!(vaddr & ~UINTPTR_MAX));
-> +            addr = (uintptr_t) vaddr;
->           }
->   
->           g_byte_array_set_size(insn_data, qemu_plugin_insn_size(insn));
-> @@ -156,11 +166,11 @@ static void vcpu_tb_trans_cb(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->               if (use_hwaddr) {
->                   qemu_plugin_register_vcpu_tb_exec_cb(tb, patch_hwaddr,
->                                                        QEMU_PLUGIN_CB_NO_REGS,
-> -                                                     (void *)addr);
-> +                                                     (void *) addr);
->               } else {
->                   qemu_plugin_register_vcpu_tb_exec_cb(tb, patch_vaddr,
->                                                        QEMU_PLUGIN_CB_NO_REGS,
-> -                                                     (void *)addr);
-> +                                                     (void *) addr);
->               }
->           }
->       }
-> --8<---------------cut here---------------end--------------->8---
+> Jonathan
 > 
+> > ---
+> >  hw/cxl/cxl-mailbox-utils.c   | 74 +-----------------------------------
+> >  hw/cxl/i2c_mctp_cxl.c        |  6 ++-
+> >  hw/usb/dev-mctp.c            |  6 ++-
+> >  include/hw/cxl/cxl_mailbox.h | 73 +++++++++++++++++++++++++++++++++++
+> >  4 files changed, 82 insertions(+), 77 deletions(-)
+> > 
+> > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> > index 4c01b25110..7f84e147f7 100644
+> > --- a/hw/cxl/cxl-mailbox-utils.c
+> > +++ b/hw/cxl/cxl-mailbox-utils.c
+> > @@ -37,7 +37,7 @@
+> >  
+> >  /*
+> >   * How to add a new command, example. The command set FOO, with cmd BAR.
+> > - *  1. Add the command set and cmd to the enum.
+> > + *  1. Add the command set and cmd to the enum in cxl_mailbox.h.
+> >   *     FOO    = 0x7f,
+> >   *          #define BAR 0
+> >   *  2. Implement the handler
+> > @@ -60,78 +60,6 @@
+> >   *  a register interface that already deals with it.
+> >   */
+> >  
+> > -enum {
+> > -    INFOSTAT    = 0x00,
+> > -        #define IS_IDENTIFY   0x1
+> > -        #define BACKGROUND_OPERATION_STATUS    0x2
+> > -        #define GET_RESPONSE_MSG_LIMIT         0x3
+> > -        #define SET_RESPONSE_MSG_LIMIT         0x4
+> > -        #define BACKGROUND_OPERATION_ABORT     0x5
+> > -    EVENTS      = 0x01,
+> > -        #define GET_RECORDS   0x0
+> > -        #define CLEAR_RECORDS   0x1
+> > -        #define GET_INTERRUPT_POLICY   0x2
+> > -        #define SET_INTERRUPT_POLICY   0x3
+> > -    FIRMWARE_UPDATE = 0x02,
+> > -        #define GET_INFO      0x0
+> > -        #define TRANSFER      0x1
+> > -        #define ACTIVATE      0x2
+> > -    TIMESTAMP   = 0x03,
+> > -        #define GET           0x0
+> > -        #define SET           0x1
+> > -    LOGS        = 0x04,
+> > -        #define GET_SUPPORTED 0x0
+> > -        #define GET_LOG       0x1
+> > -        #define GET_LOG_CAPABILITIES   0x2
+> > -        #define CLEAR_LOG     0x3
+> > -        #define POPULATE_LOG  0x4
+> > -    FEATURES    = 0x05,
+> > -        #define GET_SUPPORTED 0x0
+> > -        #define GET_FEATURE   0x1
+> > -        #define SET_FEATURE   0x2
+> > -    IDENTIFY    = 0x40,
+> > -        #define MEMORY_DEVICE 0x0
+> > -    CCLS        = 0x41,
+> > -        #define GET_PARTITION_INFO     0x0
+> > -        #define GET_LSA       0x2
+> > -        #define SET_LSA       0x3
+> > -    HEALTH_INFO_ALERTS = 0x42,
+> > -        #define GET_ALERT_CONFIG 0x1
+> > -        #define SET_ALERT_CONFIG 0x2
+> > -    SANITIZE    = 0x44,
+> > -        #define OVERWRITE     0x0
+> > -        #define SECURE_ERASE  0x1
+> > -        #define MEDIA_OPERATIONS 0x2
+> > -    PERSISTENT_MEM = 0x45,
+> > -        #define GET_SECURITY_STATE     0x0
+> > -    MEDIA_AND_POISON = 0x43,
+> > -        #define GET_POISON_LIST        0x0
+> > -        #define INJECT_POISON          0x1
+> > -        #define CLEAR_POISON           0x2
+> > -        #define GET_SCAN_MEDIA_CAPABILITIES 0x3
+> > -        #define SCAN_MEDIA             0x4
+> > -        #define GET_SCAN_MEDIA_RESULTS 0x5
+> > -    DCD_CONFIG  = 0x48,
+> > -        #define GET_DC_CONFIG          0x0
+> > -        #define GET_DYN_CAP_EXT_LIST   0x1
+> > -        #define ADD_DYN_CAP_RSP        0x2
+> > -        #define RELEASE_DYN_CAP        0x3
+> > -    PHYSICAL_SWITCH = 0x51,
+> > -        #define IDENTIFY_SWITCH_DEVICE      0x0
+> > -        #define GET_PHYSICAL_PORT_STATE     0x1
+> > -    TUNNEL = 0x53,
+> > -        #define MANAGEMENT_COMMAND     0x0
+> > -    MHD = 0x55,
+> > -        #define GET_MHD_INFO 0x0
+> > -    FMAPI_DCD_MGMT = 0x56,
+> > -        #define GET_DCD_INFO    0x0
+> > -        #define GET_HOST_DC_REGION_CONFIG   0x1
+> > -        #define SET_DC_REGION_CONFIG        0x2
+> > -        #define GET_DC_REGION_EXTENT_LIST   0x3
+> > -        #define INITIATE_DC_ADD             0x4
+> > -        #define INITIATE_DC_RELEASE         0x5
+> > -};
+> > -
+> >  /* CCI Message Format CXL r3.1 Figure 7-19 */
+> >  typedef struct CXLCCIMessage {
+> >      uint8_t category;
+> > diff --git a/hw/cxl/i2c_mctp_cxl.c b/hw/cxl/i2c_mctp_cxl.c
+> > index 1714f36e8e..3f17779562 100644
+> > --- a/hw/cxl/i2c_mctp_cxl.c
+> > +++ b/hw/cxl/i2c_mctp_cxl.c
+> > @@ -29,6 +29,7 @@
+> >  #include "hw/pci/pcie_port.h"
+> >  #include "hw/qdev-properties.h"
+> >  #include "hw/registerfields.h"
+> > +#include "hw/cxl/cxl_mailbox.h"
+> >  
+> >  #define TYPE_I2C_MCTP_CXL "i2c_mctp_cxl"
+> >  
+> > @@ -198,9 +199,10 @@ static void i2c_mctp_cxl_handle_message(MCTPI2CEndpoint *mctp)
+> >           */
+> >  
+> >          if (!(msg->message_type == MCTP_MT_CXL_TYPE3 &&
+> > -              msg->command_set < 0x51) &&
+> > +              msg->command_set < PHYSICAL_SWITCH) &&
+> >              !(msg->message_type == MCTP_MT_CXL_FMAPI &&
+> > -              msg->command_set >= 0x51 && msg->command_set < 0x56)) {
+> > +              msg->command_set >= PHYSICAL_SWITCH &&
+> > +              msg->command_set < GLOBAL_MEM_ACCESS_EP_MGMT)) {
+> >              buf->rc = CXL_MBOX_UNSUPPORTED;
+> >              st24_le_p(buf->pl_length, len_out);
+> >              s->len = s->pos;
+> > diff --git a/hw/usb/dev-mctp.c b/hw/usb/dev-mctp.c
+> > index aafb9e7e96..b82a269561 100644
+> > --- a/hw/usb/dev-mctp.c
+> > +++ b/hw/usb/dev-mctp.c
+> > @@ -25,6 +25,7 @@
+> >  #include "hw/usb.h"
+> >  #include "hw/usb/desc.h"
+> >  #include "net/mctp.h"
+> > +#include "hw/cxl/cxl_mailbox.h"
+> >  
+> >  /* TODO: Move to header */
+> >  
+> > @@ -504,9 +505,10 @@ static void usb_cxl_mctp_handle_data(USBDevice *dev, USBPacket *p)
+> >           * onwards.
+> >           */
+> >          if (!(req->message_type == MCTP_MT_CXL_TYPE3 &&
+> > -              req->command_set < 0x51) &&
+> > +              req->command_set < PHYSICAL_SWITCH) &&
+> >              !(req->message_type == MCTP_MT_CXL_FMAPI &&
+> > -              req->command_set >= 0x51 && req->command_set < 0x56)) {
+> > +              req->command_set >= PHYSICAL_SWITCH &&
+> > +              req->command_set < GLOBAL_MEM_ACCESS_EP_MGMT)) {
+> >              len_out = 0;
+> >              usb_pkt_len = sizeof(MCTPUSBPacket) + sizeof(CXLMCTPMessage) +
+> >                  len_out;
+> > diff --git a/include/hw/cxl/cxl_mailbox.h b/include/hw/cxl/cxl_mailbox.h
+> > index 820c411cbb..209a11ecbc 100644
+> > --- a/include/hw/cxl/cxl_mailbox.h
+> > +++ b/include/hw/cxl/cxl_mailbox.h
+> > @@ -27,4 +27,77 @@
+> >  #define CXL_LOG_CAP_AUTO_POPULATE_SUPPORTED (1 << 2)
+> >  #define CXL_LOG_CAP_PERSISTENT_COLD_RESET_SUPPORTED (1 << 3)
+> >  
+> > +enum {
+> > +    INFOSTAT    = 0x00,
+> > +        #define IS_IDENTIFY   0x1
+> > +        #define BACKGROUND_OPERATION_STATUS    0x2
+> > +        #define GET_RESPONSE_MSG_LIMIT         0x3
+> > +        #define SET_RESPONSE_MSG_LIMIT         0x4
+> > +        #define BACKGROUND_OPERATION_ABORT     0x5
+> > +    EVENTS      = 0x01,
+> > +        #define GET_RECORDS   0x0
+> > +        #define CLEAR_RECORDS   0x1
+> > +        #define GET_INTERRUPT_POLICY   0x2
+> > +        #define SET_INTERRUPT_POLICY   0x3
+> > +    FIRMWARE_UPDATE = 0x02,
+> > +        #define GET_INFO      0x0
+> > +        #define TRANSFER      0x1
+> > +        #define ACTIVATE      0x2
+> > +    TIMESTAMP   = 0x03,
+> > +        #define GET           0x0
+> > +        #define SET           0x1
+> > +    LOGS        = 0x04,
+> > +        #define GET_SUPPORTED 0x0
+> > +        #define GET_LOG       0x1
+> > +        #define GET_LOG_CAPABILITIES   0x2
+> > +        #define CLEAR_LOG     0x3
+> > +        #define POPULATE_LOG  0x4
+> > +    FEATURES    = 0x05,
+> > +        #define GET_SUPPORTED 0x0
+> > +        #define GET_FEATURE   0x1
+> > +        #define SET_FEATURE   0x2
+> > +    IDENTIFY    = 0x40,
+> > +        #define MEMORY_DEVICE 0x0
+> > +    CCLS        = 0x41,
+> > +        #define GET_PARTITION_INFO     0x0
+> > +        #define GET_LSA       0x2
+> > +        #define SET_LSA       0x3
+> > +    HEALTH_INFO_ALERTS = 0x42,
+> > +        #define GET_ALERT_CONFIG 0x1
+> > +        #define SET_ALERT_CONFIG 0x2
+> > +    SANITIZE    = 0x44,
+> > +        #define OVERWRITE     0x0
+> > +        #define SECURE_ERASE  0x1
+> > +        #define MEDIA_OPERATIONS 0x2
+> > +    PERSISTENT_MEM = 0x45,
+> > +        #define GET_SECURITY_STATE     0x0
+> > +    MEDIA_AND_POISON = 0x43,
+> > +        #define GET_POISON_LIST        0x0
+> > +        #define INJECT_POISON          0x1
+> > +        #define CLEAR_POISON           0x2
+> > +        #define GET_SCAN_MEDIA_CAPABILITIES 0x3
+> > +        #define SCAN_MEDIA             0x4
+> > +        #define GET_SCAN_MEDIA_RESULTS 0x5
+> > +    DCD_CONFIG  = 0x48,
+> > +        #define GET_DC_CONFIG          0x0
+> > +        #define GET_DYN_CAP_EXT_LIST   0x1
+> > +        #define ADD_DYN_CAP_RSP        0x2
+> > +        #define RELEASE_DYN_CAP        0x3
+> > +    PHYSICAL_SWITCH = 0x51,
+> > +        #define IDENTIFY_SWITCH_DEVICE      0x0
+> > +        #define GET_PHYSICAL_PORT_STATE     0x1
+> > +    TUNNEL = 0x53,
+> > +        #define MANAGEMENT_COMMAND     0x0
+> > +    MHD = 0x55,
+> > +        #define GET_MHD_INFO 0x0
+> > +    FMAPI_DCD_MGMT = 0x56,
+> > +        #define GET_DCD_INFO    0x0
+> > +        #define GET_HOST_DC_REGION_CONFIG   0x1
+> > +        #define SET_DC_REGION_CONFIG        0x2
+> > +        #define GET_DC_REGION_EXTENT_LIST   0x3
+> > +        #define INITIATE_DC_ADD             0x4
+> > +        #define INITIATE_DC_RELEASE         0x5
+> > +    GLOBAL_MEM_ACCESS_EP_MGMT = 0X59,
+> > +};
+> > +
+> >  #endif
 > 
->>
->> Pierrick
-> 
-
-For the rest, it looks good to me.
-
-Thanks,
-Pierrick
 
