@@ -4,100 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86C7CC7EE31
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 09:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83F98C77B7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Jun 2025 09:24:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uV5D5-0008Qd-Bf; Fri, 27 Jun 2025 05:17:27 -0400
+	id 1uV5J9-0001xw-DZ; Fri, 27 Jun 2025 05:23:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uV5D2-0008QN-00
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 05:17:24 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uV5Cz-000202-Dv
- for qemu-devel@nongnu.org; Fri, 27 Jun 2025 05:17:23 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4537deebb01so10164675e9.0
- for <qemu-devel@nongnu.org>; Fri, 27 Jun 2025 02:17:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751015838; x=1751620638; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SlwfZ/DMde9PmjH8WTe39bnLEYxPuc0WEJC29xKRYAs=;
- b=l6FKJA2cEZJ/DOv3IjhK7SjIASSkB+lnx1U4FAlukLwDxkueGlSHJeN0sWy4Bd/0vC
- ujDzadIJJfttUlOeKa28WbUh19Wb3TXg5/QgMaD22QnhfLhlA6Xn2FZRg8MyFdQVXXlN
- vEeGEKyTRky3hspFNIN2hpqdV+qD/WgUDDum2LngqNi2HlAD3/ZDLJUOuR74l3vP08rT
- oazEI7pjbgi7Vrx+EA/OJb4SV2s3pUNUD1xPz4/pIQWzGViH4nm+0gK15fAB5KtU2rGh
- K5J54zWJ+BkEG9Q3Szb9xesoXUauCJbytxJQbLGAfUFKzgZd2txNVGtmLmU5LfhWVqCi
- arfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751015838; x=1751620638;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=SlwfZ/DMde9PmjH8WTe39bnLEYxPuc0WEJC29xKRYAs=;
- b=FtMHXFXiiW22ht+eS77xwv3rsbxbb3IYM1nKFP1QhmNpCRxT84tGxe6SHPCJ0seHW0
- gxNXzjhtFWBeSHB+Vv4Tl06S/cqkk/KbkA0DUs7uA4cUYE6wRCpx5YY2Bu7JqT8g0HzF
- yawBhfK4lCDS6WA+Z6AVYUHDuMmxOEMTHrVAwQlkkiQpP8YoMcV5iwQMahDxfV0nyZPl
- WYpj2/99IWRO7HnY3D+efWtjv711CtX3QhvaYSkBdw5hnK4vWQpA/FDFvd1PzQjZIpl3
- ifN7V54S9MllZZ/i3C7c6DFZGbIry/1Ufb07ACL2U6nld+FgHnSMqYxlS3g6Vbm7xOGi
- U84Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVWtfdJl38/95983PLWfl1PUia2j0TOi6oTBoM1UXzqPz7dSenC7p5hxPS4o907GXpWV8FqCSi6wOia@nongnu.org
-X-Gm-Message-State: AOJu0YxIFyZg79nws5tl5rddEV8+ImNjcKerOz04aUzxuzCWumgzGQSq
- UuaDoSM/rvwTg7WinFam/H+tVkWe1ybstC6TYkYLWx8stJt13hnmXDyH3OZsD0jtB/E=
-X-Gm-Gg: ASbGncuLRc+IzlED/z51rvy3ChNkRvPXSusj6B5pgeZajIO8FYl7BFyvIkXk9dEjPwB
- sZTwWxFUfrdZ1d1FdIOfRuBPgqbCB7POX9S2kY1rhKTP6MlmF10Kiy8wefZcDWBSQQCbjC2lSVg
- Wjp++xhq25oNkjJbbm2b968n+EIgT5rJntxWJdQmNXpw+eynM6rSaWRh8HhnhBS3pbOY9imb/f9
- vSJJaqfL2v9rmsZEjjv6DEykm1IqZN+M8/oYaT1m65wLZIhboRFzKgmyFsB6icBGEjzKt9zQQUU
- x59zzHk4TjMgtuYJdiv1v0BG0ECBpMdpe7I15HQNf95+kYGRW3s+3NIpg+k6Zzc=
-X-Google-Smtp-Source: AGHT+IEVoxvsEeTA4yrwItx3qhPdkR2CZB3G9C+bOjtZx1uKXgCsW7mjWJQirzOyJEwj2Tys4c3EDA==
-X-Received: by 2002:a05:600c:1907:b0:440:61eb:2ce5 with SMTP id
- 5b1f17b1804b1-4538ee61fddmr27597345e9.17.1751015838533; 
- Fri, 27 Jun 2025 02:17:18 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4538a3a8048sm45786065e9.9.2025.06.27.02.17.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Jun 2025 02:17:16 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B7BA95F82D;
- Fri, 27 Jun 2025 10:17:15 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Rowan Hart <rowanbhart@gmail.com>,  qemu-devel@nongnu.org,  Richard
- Henderson <richard.henderson@linaro.org>,  Mahmoud Mandour
- <ma.mandourr@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>,  Yanan Wang
- <wangyanan55@huawei.com>,  Alexandre Iooss <erdnaxe@crans.org>,  Eduardo
- Habkost <eduardo@habkost.net>,  Zhao Liu <zhao1.liu@intel.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v14 0/8] Add additional plugin API functions to read and
- write memory and registers
-In-Reply-To: <5606f27e-48c1-40fa-9453-f76f87fecd2e@linaro.org> (Pierrick
- Bouvier's message of "Thu, 26 Jun 2025 11:23:03 -0700")
-References: <20250624175351.440780-1-rowanbhart@gmail.com>
- <87o6ubzxfw.fsf@draig.linaro.org> <87cyaqzcft.fsf@draig.linaro.org>
- <5606f27e-48c1-40fa-9453-f76f87fecd2e@linaro.org>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Fri, 27 Jun 2025 10:17:15 +0100
-Message-ID: <877c0xzgpw.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <SRS0=5m2v=ZK=kaod.org=clg@ozlabs.org>)
+ id 1uV5J6-0001x2-V0; Fri, 27 Jun 2025 05:23:40 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=5m2v=ZK=kaod.org=clg@ozlabs.org>)
+ id 1uV5J4-0005hM-DL; Fri, 27 Jun 2025 05:23:40 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bT98h0Lqhz4x83;
+ Fri, 27 Jun 2025 19:23:32 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bT98c5PwJz4x5g;
+ Fri, 27 Jun 2025 19:23:28 +1000 (AEST)
+Message-ID: <042961e9-d61b-41e1-b1fd-3adc2cfa9cff@kaod.org>
+Date: Fri, 27 Jun 2025 11:23:25 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/3] Add QEMU model for ASPEED OTP memory and integrate
+ with SoC
+To: Kane Chen <kane_chen@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20250627025606.631167-1-kane_chen@aspeedtech.com>
+ <673b668f-b374-432c-b1e0-19a9977f6f14@kaod.org>
+ <SI6PR06MB76312CBD36E8204DA851E454F745A@SI6PR06MB7631.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <SI6PR06MB76312CBD36E8204DA851E454F745A@SI6PR06MB7631.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=5m2v=ZK=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,180 +114,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On 6/27/25 11:09, Kane Chen wrote:
+> Hi Cédric,
+> 
+> Thanks for your reviewing and comments.
+> 
+> Regarding the drive property and block backend, my understanding is that the following changes would be required:
+> 
+> 1. Add a BlockBackend field in AspeedOTPState
+> 2. Register a drive property to associate the backend with the device
 
-> On 6/26/25 9:37 AM, Alex Benn=C3=A9e wrote:
->> Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
->>=20
->>> Rowan Hart <rowanbhart@gmail.com> writes:
->>>
->>>> This patch series adds several new API functions focused on enabling u=
-se
->>>> cases around reading and writing guest memory from QEMU plugins. To su=
-pport
->>>> these new APIs, some utility functionality around retrieving informati=
-on about
->>>> address spaces is added as well.
->>>
->>> Queued to plugins/next, thanks.
->> So this fails a number of the CI tests, mostly due to 32 bit issues:
->>    https://gitlab.com/stsquad/qemu/-/pipelines/1890883927/failures
->> The tci failure is easy enough:
->> --8<---------------cut here---------------start------------->8---
->> modified   tests/tcg/x86_64/Makefile.softmmu-target
->> @@ -34,9 +34,11 @@ memory: CFLAGS+=3D-DCHECK_UNALIGNED=3D1
->>   # Running
->>   QEMU_OPTS+=3D-device isa-debugcon,chardev=3Doutput -device isa-debug-e=
-xit,iobase=3D0xf4,iosize=3D0x4 -kernel
->>   +ifeq ($(CONFIG_PLUGIN),y)
->>   run-plugin-patch-target-with-libpatch.so:		\
->>   	PLUGIN_ARGS=3D$(COMMA)target=3Dffc0$(COMMA)patch=3D9090$(COMMA)use_hw=
-addr=3Dtrue
->>   run-plugin-patch-target-with-libpatch.so:		\
->>   	CHECK_PLUGIN_OUTPUT_COMMAND=3D$(X64_SYSTEM_SRC)/validate-patch.py $@.=
-out
->>   run-plugin-patch-target-with-libpatch.so: patch-target libpatch.so
->>   EXTRA_RUNS+=3Drun-plugin-patch-target-with-libpatch.so
->> +endif
->> --8<---------------cut here---------------end--------------->8---
->> The other problem is trying to stuff a uint64_t into a void * on 32
->> bit.
->> We did disable plugins for 32 bit but then reverted because we were able
->> to fixup the cases:
->>   cf2a78cbbb (deprecation: don't enable TCG plugins by default on 32
->> bit hosts)
->>   db7a06ade1 (configure: reenable plugins by default for 32-bit hosts)
->> So I don't what is easier:
->>   - re-deprecate for 32 bit systems
->>   - only build libpatch on 64 bit systems
->>   - fix libpatch to handle being built on 32 bit systems
->>=20
->
-> More context:
-> ../tests/tcg/plugins/patch.c: In function =E2=80=98patch_hwaddr=E2=80=99:
-> ../tests/tcg/plugins/patch.c:50:21: error: cast from pointer to
-> integer of different size [-Werror=3Dpointer-to-int-cast]
->    50 |     uint64_t addr =3D (uint64_t)userdata;
->       |                     ^
-> ../tests/tcg/plugins/patch.c: In function =E2=80=98patch_vaddr=E2=80=99:
-> ../tests/tcg/plugins/patch.c:93:21: error: cast from pointer to
-> integer of different size [-Werror=3Dpointer-to-int-cast]
->    93 |     uint64_t addr =3D (uint64_t)userdata;
->       |                     ^
-> ../tests/tcg/plugins/patch.c: In function =E2=80=98vcpu_tb_trans_cb=E2=80=
-=99:
-> ../tests/tcg/plugins/patch.c:159:54: error: cast to pointer from
-> integer of different size [-Werror=3Dint-to-pointer-cast]
->   159 |                                                      (void *)addr=
-);
->       |                                                      ^
-> ../tests/tcg/plugins/patch.c:163:54: error: cast to pointer from
-> integer of different size [-Werror=3Dint-to-pointer-cast]
->   163 |                                                      (void *)addr=
-);
->       |
->
-> Since we disabled 64 bit targets on 32 bit hosts, and that data passed
-> by pointers concern addresses, it should be safe to cast values to
-> (uintptr_t) instead of (uint64_t).
+Let's do 1. and 2. first.
 
-Something like this?
+The rest has been discussed already in previous emails.
+Please go through them.
 
---8<---------------cut here---------------start------------->8---
-modified   tests/tcg/plugins/patch.c
-@@ -47,10 +47,10 @@ static GByteArray *str_to_bytes(const char *str)
-=20
- static void patch_hwaddr(unsigned int vcpu_index, void *userdata)
- {
--    uint64_t addr =3D (uint64_t)userdata;
-+    uintptr_t addr =3D (uintptr_t) userdata;
-     g_autoptr(GString) str =3D g_string_new(NULL);
-     g_string_printf(str, "patching: @0x%"
--                    PRIx64 "\n",
-+                    PRIxPTR "\n",
-                     addr);
-     qemu_plugin_outs(str->str);
-=20
-@@ -90,7 +90,7 @@ static void patch_hwaddr(unsigned int vcpu_index, void *u=
-serdata)
-=20
- static void patch_vaddr(unsigned int vcpu_index, void *userdata)
- {
--    uint64_t addr =3D (uint64_t)userdata;
-+    uintptr_t addr =3D (uintptr_t) userdata;
-     uint64_t hwaddr =3D 0;
-     if (!qemu_plugin_translate_vaddr(addr, &hwaddr)) {
-         qemu_plugin_outs("Failed to translate vaddr\n");
-@@ -98,7 +98,7 @@ static void patch_vaddr(unsigned int vcpu_index, void *us=
-erdata)
-     }
-     g_autoptr(GString) str =3D g_string_new(NULL);
-     g_string_printf(str, "patching: @0x%"
--                    PRIx64 " hw: @0x%" PRIx64 "\n",
-+                    PRIxPTR " hw: @0x%" PRIx64 "\n",
-                     addr, hwaddr);
-     qemu_plugin_outs(str->str);
-=20
-@@ -132,19 +132,29 @@ static void patch_vaddr(unsigned int vcpu_index, void=
- *userdata)
-  */
- static void vcpu_tb_trans_cb(qemu_plugin_id_t id, struct qemu_plugin_tb *t=
-b)
- {
--    uint64_t addr =3D 0;
-     g_autoptr(GByteArray) insn_data =3D g_byte_array_new();
-+    uintptr_t addr =3D 0;
-+
-     for (size_t i =3D 0; i < qemu_plugin_tb_n_insns(tb); i++) {
-         struct qemu_plugin_insn *insn =3D qemu_plugin_tb_get_insn(tb, i);
-+        uint64_t vaddr =3D qemu_plugin_insn_vaddr(insn);
-=20
-         if (use_hwaddr) {
--            uint64_t vaddr =3D qemu_plugin_insn_vaddr(insn);
--            if (!qemu_plugin_translate_vaddr(vaddr, &addr)) {
-+            uint64_t hwaddr =3D 0;
-+            if (!qemu_plugin_translate_vaddr(vaddr, &hwaddr)) {
-                 qemu_plugin_outs("Failed to translate vaddr\n");
-                 continue;
-             }
-+            /*
-+             * As we cannot emulate 64 bit systems on 32 bit hosts we
-+             * should never see the top bits set, hence we can safely
-+             * cast to uintptr_t.
-+             */
-+            g_assert(!(hwaddr & ~UINTPTR_MAX));
-+            addr =3D (uintptr_t) hwaddr;
-         } else {
--            addr =3D qemu_plugin_insn_vaddr(insn);
-+            g_assert(!(vaddr & ~UINTPTR_MAX));
-+            addr =3D (uintptr_t) vaddr;
-         }
-=20
-         g_byte_array_set_size(insn_data, qemu_plugin_insn_size(insn));
-@@ -156,11 +166,11 @@ static void vcpu_tb_trans_cb(qemu_plugin_id_t id, str=
-uct qemu_plugin_tb *tb)
-             if (use_hwaddr) {
-                 qemu_plugin_register_vcpu_tb_exec_cb(tb, patch_hwaddr,
-                                                      QEMU_PLUGIN_CB_NO_REG=
-S,
--                                                     (void *)addr);
-+                                                     (void *) addr);
-             } else {
-                 qemu_plugin_register_vcpu_tb_exec_cb(tb, patch_vaddr,
-                                                      QEMU_PLUGIN_CB_NO_REG=
-S,
--                                                     (void *)addr);
-+                                                     (void *) addr);
-             }
-         }
-     }
---8<---------------cut here---------------end--------------->8---
+Thanks,
 
+C.
 
->
-> Pierrick
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
