@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72572C54ED1
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Jun 2025 10:04:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14789C54ED1
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Jun 2025 10:10:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uVSPS-00044P-OL; Sat, 28 Jun 2025 06:03:46 -0400
+	id 1uVSV7-0005Es-HU; Sat, 28 Jun 2025 06:09:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uVSPR-00044G-AY
- for qemu-devel@nongnu.org; Sat, 28 Jun 2025 06:03:45 -0400
-Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ id 1uVSV0-0005EF-Ic
+ for qemu-devel@nongnu.org; Sat, 28 Jun 2025 06:09:30 -0400
+Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uVSPP-0007Ar-Kj
- for qemu-devel@nongnu.org; Sat, 28 Jun 2025 06:03:45 -0400
-Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-40791b696a2so960707b6e.2
- for <qemu-devel@nongnu.org>; Sat, 28 Jun 2025 03:03:42 -0700 (PDT)
+ id 1uVSUw-000803-Fk
+ for qemu-devel@nongnu.org; Sat, 28 Jun 2025 06:09:27 -0400
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 46e09a7af769-72c173211feso240853a34.1
+ for <qemu-devel@nongnu.org>; Sat, 28 Jun 2025 03:09:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751105022; x=1751709822; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751105364; x=1751710164; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=6AzfETaTiDOVr/1Slta5f+ZDoCyULP7okI2yn11ncUs=;
- b=LZAlXxkGpIQVPR59BZSdmUbWd5A+4gS0mJqp2rbx9qCjm0K+0CXms5zfnjr2AOV3md
- WbRVMUgXdO6MthCzeXCqj/SdNtCLPWliH2IlPFsxATUEZV7LSGTjhT9Ef0xFPN5+LJCO
- oN3m2ywiemU7136YSX3otrqqb/va0v3gHPGi70VOav5MV5/8sbSllvj7BfcMFAyNkgHL
- XEwHxkuH9rdQLtPl2M748cbsC3IJsS1ogOvRg59zEUdSG7kDv/Yl/xFM+4cHjrwh4Ps2
- y/A8QUQNUwW0pjmL3eTPQiNW0VId3Ukxek85s0PyiD0gVIpDQ/DKhj5Wb429WBZ+rbRZ
- SUfg==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ES2fZs3jpJrPDKjM1pdP0S/2RlCzVs5+c8N6vB9RCpA=;
+ b=g1qXVGCNy2CEHcU4gJpj75nvFYkt1hjOYoKlrIJ5HyNC95gIFwPtlB7PVSyvSJomS2
+ Y/tz/AK9fgdGq1RAlGG4TjfM9AvTYLzKQqX6FvjrLGkdBkPkpiuBUK6BmAUgMpVhmWGV
+ vfPIlRN1p6cQX4P5dEDmaHyKEmAq9EnEefKqgES50Yq3wG0HwtL1tPe02tRrf4c2IrXQ
+ KI2wQWpbno5xZjB+WxwYfZPzPxpnLr5IQdKGAeZ6Gd/RLkzRgDuJrjoKaMAkgqrkyZSa
+ 4mykDvqf2lXRHCdQ7me4hpEy4lPqqbBGohOqztzD2IFnWP4e6Sji/BUvsUOpf5yi04+H
+ P/Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751105022; x=1751709822;
+ d=1e100.net; s=20230601; t=1751105364; x=1751710164;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6AzfETaTiDOVr/1Slta5f+ZDoCyULP7okI2yn11ncUs=;
- b=sfchg7IypMwgFgwuRvoMhzvqblJJ6O0i5Fm3NiuW5wgttBCrtftSZAJQ10l7AXTTpp
- clVAVSQjRFoOm+8msUJI/9RBdMJJXRQPmd5RjnbzF3SA41jpFke8sjVyBS4fjTXG3sT3
- br9n8iKU/8oPAypC4tp0jAcr5PwUlFY6uqHuUGeTFYB3L+PeSMMyns7Rcgpi8QuVIjCJ
- 7s1OMYR/J55menzBrogCck0ERf8useImIpgnRv228DcH5cJn2+/3mKocBLUySzlaAol5
- xgjHP6gFyn7lfGT4mVWBSBHNT8v9OnbSjVfLY8hvdAzmRujNHKolcv73ZByaizw6P6P1
- 43mg==
-X-Gm-Message-State: AOJu0YzGrvYwIkOI9hOQDNBw7CtBU9IpIWsOUdWovb480G3WNempOV8a
- 2dwLNxfWvoOgwRwAZvPGOW1r8uWwawBezJQTvBl4hTTOZVE4Kel+3xc4yvPn7RX9SFN68+mQyyE
- 1K9OoiXo=
-X-Gm-Gg: ASbGnctxpCFp4BYREN/AYpgIzUxbjTIZ1cX6iSq58rfIX3/twkfToyu0RAee7Nl4bCN
- iGtPiXA27FnfbByXAWTg1P9LiUSi++A3If5a0LblFiHt8X6JKaMYfth57IjeB8/jpTVWDMunc9e
- /b+/aceq6l8XKMlQTixC5cfh76xe7IMpd3MZicNAYlhxpMcA9Va2L8GgepVnKqTtgQFJq5irIp5
- syQXJrrxh3vOBdtGb7jgFG+qLf6nlCb9G9ek7sEAvS61rVdYcPCkp2PDsIOQ5lpEZPHZBNAd9n6
- V8JO8+f701ud88eczv43F3kyKBzipT1cQTr35ZXyIOheh5L8/a1gDcGUkfUVDZGJI9GgSfSuA5u
- 5
-X-Google-Smtp-Source: AGHT+IHvYahxxo1os4XHzvc9K1GTFCYEn2XCpouhMeBQqKvgtuoGOUceJ4pkiimE7FhVU4gSRaqe2w==
-X-Received: by 2002:a05:6808:1921:b0:40a:ba8b:ee61 with SMTP id
- 5614622812f47-40b33c5d605mr5204111b6e.10.1751105021679; 
- Sat, 28 Jun 2025 03:03:41 -0700 (PDT)
+ bh=ES2fZs3jpJrPDKjM1pdP0S/2RlCzVs5+c8N6vB9RCpA=;
+ b=hzrkUlNH29oWZiEFUi7B+Fahe24gA4bXXc97nYtjtQgKMux4Pm+CrqpXRuuQk4i6zr
+ BwaDtChreiH64l5dhMDe0M/gsA+QUAiZGzxOfIPusmys1ej66Q5rTt3nPkhLWIL7f7kU
+ 4ZPFUj/24W0qXW1jTGmddxB4ynvU8j94hrYRrM7TdLjVCE1uSM7TlrcuzwM+hvsIwIcN
+ JAd3dqkJGCUEwubRBLn3WsE6j5TH/+FBMuLEj+An/Q5bG58V9tSKKnRESCUttkKPisHh
+ uPudlUit9XiDWOzm9yvsvSJfC7IX02I9vnmfCZKbOQrb2Sn+OAytdjHiA5aJRgPBbXjj
+ oU/Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVfiQ/eQj4iFNgtKkL5MxLZrKXI6Zyx7+fNoRnGsZCKOo7TFNeW0zIZkRlz1jm37tkpklCo1jyhBuVK@nongnu.org
+X-Gm-Message-State: AOJu0YxK++Hu5mhMXurv4PUnqExt1K7+pxfPi6lqESYKwPZNMVKMHU7G
+ i5vlK+yEN/DHDFPS4Fnxy5yOWZK5mz8zL+u5qFOrZKB6hx0o/uGqJqWdnJEx8BVWajM=
+X-Gm-Gg: ASbGncvT/r9Mn6NqQ+V/+mLWCEvktfEiKhQ6yRmxZAbsYqxpPAhAhxXGXKpHbti9NX4
+ trrqFCR9B/T8rwbuFve5oYkJg5PYDHzTfjj8XUQ83iIuUT44THHyRLE9gxZZecA/usp7qCehtVZ
+ 9NrYJlylEDgCPcWBHl/3LsgJX8xZ3nl4VDrD0wr8kMjOGySLLIWMOD8MZvNt32oVseG1Uk8mtmt
+ DQWHVW96C/tEJmBAo8ghONuBRFGlhbq+PuWcSDVVwHxIwlL/IRdzH0KPttbBOsC/EmEaFt7L4wK
+ ydifGzZ/BgNkVRr/i6DnRdJY2d+SDDnZkoxSRc5SY6nnHoYHwy3tRE+KhxFpdVD42xe1yvwynHX
+ T
+X-Google-Smtp-Source: AGHT+IFZtMMwHzu7mkiApOWXadN4s4RFh2uO+NGn6E0me4MP7Alu0TycQ94m1HOC2NimQEU3iZBfWA==
+X-Received: by 2002:a05:6808:152c:b0:407:a47e:6e43 with SMTP id
+ 5614622812f47-40b33c2a0f6mr4369638b6e.1.1751105364535; 
+ Sat, 28 Jun 2025 03:09:24 -0700 (PDT)
 Received: from [10.25.7.25] ([187.210.107.185])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-40b322ae48esm754362b6e.13.2025.06.28.03.03.40
- for <qemu-devel@nongnu.org>
+ 5614622812f47-40b32420c83sm769724b6e.36.2025.06.28.03.09.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 28 Jun 2025 03:03:40 -0700 (PDT)
-Message-ID: <b9f5cc76-1fdc-4363-826d-ab45f58c3e73@linaro.org>
-Date: Sat, 28 Jun 2025 04:03:38 -0600
+ Sat, 28 Jun 2025 03:09:24 -0700 (PDT)
+Message-ID: <a0553da3-8bec-4e08-b5d0-9ad32b1853d7@linaro.org>
+Date: Sat, 28 Jun 2025 04:09:22 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: rvv: Fix missing exit TB flow for ldff_trans
-To: qemu-devel@nongnu.org
-References: <20250627133013.443997-1-max.chou@sifive.com>
+Subject: Re: [PATCH 2/2] target/alpha: Add GDB XML feature file
+To: Yodel Eldar <yodel.eldar@gmail.com>, qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, laurent@vivier.eu
+References: <20250627204817.47595-1-yodel.eldar@gmail.com>
+ <20250627204817.47595-3-yodel.eldar@gmail.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250627133013.443997-1-max.chou@sifive.com>
+In-Reply-To: <20250627204817.47595-3-yodel.eldar@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,35 +104,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/27/25 06:30, Max Chou wrote:
-> According to the V spec, the vector fault-only-first load instructions
-> may change the VL CSR.
-> So the ldff_trans TCG translation function should generate the
-> lookup_and_goto_ptr flow as the vsetvl/vsetvli translation function to
-> make sure the vl_eq_vlmax TB flag is correct.
+On 6/27/25 13:47, Yodel Eldar wrote:
+> This patch adds the GDB XML feature file that describes Alpha's core
+> registers.
 > 
-> Signed-off-by: Max Chou <max.chou@sifive.com>
+> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/2569
+> 
+> Signed-off-by: Yodel Eldar<yodel.eldar@gmail.com>
 > ---
->   target/riscv/insn_trans/trans_rvv.c.inc | 6 ++++++
->   1 file changed, 6 insertions(+)
-> 
-> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-> index 2b6077ac067..4cd030c7eb3 100644
-> --- a/target/riscv/insn_trans/trans_rvv.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
-> @@ -1361,6 +1361,12 @@ static bool ldff_trans(uint32_t vd, uint32_t rs1, uint32_t data,
->       fn(dest, mask, base, tcg_env, desc);
->   
->       finalize_rvv_inst(s);
-> +
-> +    /* vector unit-stride fault-only-first load may modify vl CSR */
-> +    gen_update_pc(s, s->cur_insn_len);
-> +    lookup_and_goto_ptr(s);
-> +    s->base.is_jmp = DISAS_NORETURN;
-> +
->       return true;
->   }
->   
+>   configs/targets/alpha-linux-user.mak |   1 +
+>   configs/targets/alpha-softmmu.mak    |   1 +
+>   gdb-xml/alpha-core.xml               | 136 +++++++++++++++++++++++++++
+>   target/alpha/cpu.c                   |   1 +
+>   4 files changed, 139 insertions(+)
+>   create mode 100644 gdb-xml/alpha-core.xml
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
