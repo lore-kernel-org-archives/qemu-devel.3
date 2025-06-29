@@ -4,100 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A337CC7EE39
-	for <qemu-devel@archiver.kernel.org>; Sun, 29 Jun 2025 22:50:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06212C7EE39
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 00:32:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uW0po-0004HP-K1; Sun, 29 Jun 2025 18:49:16 -0400
+	id 1uW2RP-000654-Az; Sun, 29 Jun 2025 20:32:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yodel.eldar@gmail.com>)
- id 1uW0pn-0004HF-8X
- for qemu-devel@nongnu.org; Sun, 29 Jun 2025 18:49:15 -0400
-Received: from mail-pl1-x643.google.com ([2607:f8b0:4864:20::643])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yodel.eldar@gmail.com>)
- id 1uW0ph-0007B6-3z
- for qemu-devel@nongnu.org; Sun, 29 Jun 2025 18:49:15 -0400
-Received: by mail-pl1-x643.google.com with SMTP id
- d9443c01a7336-2353a2bc210so10113865ad.2
- for <qemu-devel@nongnu.org>; Sun, 29 Jun 2025 15:49:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751237346; x=1751842146; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=h4776ZRPh8s1TSb9wlB2pGqAS1FZErQkBzJZnqKxiPo=;
- b=X48l2dsCEJboVxgfbmlK6YWriKCnMn7nB+xu3qMe8IvEro8m6CH1Gqu+HwFMV+fu8s
- B7RmOOJ2r71Z46G3mElAZf47RhEI7qi7ukZxSPGExwRUpJXdC1VdqVwaI2GymoNfcg69
- Q0ak6wn5714GO5AQcp2UwVqVXzu2yhxhDkkjg6Lakm7eDf42zR0B3GpUakX8SA6BUsl7
- 87nWSqFew1K76Lh2v7F85SvF+37eauokaNseLfP7aPNei2WVYGrNISrxHJyg+TaZjaaa
- ZGQ2Zm6b8c/60wevlHIQ1tzdLV/nSAbp4AkV2n781mAna34Gerk1qpC52RSARYM+SWWa
- POCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751237346; x=1751842146;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=h4776ZRPh8s1TSb9wlB2pGqAS1FZErQkBzJZnqKxiPo=;
- b=CmTpAvGmfd25Ln8k29Tgz7MTPvNhZfQAuVRVGFn77YrK9DJKRJ1RIaFRQXOncynuIT
- 01W80XmREEpBG49kGDyfztNRET3q5SwuE+vLsd0+leaSB2HkpO/wDKF+adF6xWaralXu
- EqzMcTT+owiSzS2lo6cdmdocCDLxVzODm0oQYu9pmxCY7uEquPgrr8L80rQt0j872hiB
- bb+RMlXOlLNNDwjlVvCrMvj6oFjtjlKoEy8D2m7qen4eqpjMw0PB9Sn6sZtUapw3XKu1
- DvO71y+sodBn2sG23rwUoA1L8rN9uwIqHa5aMPK69ffQyOqASv1ixQRpI2NBQD3cmDsh
- Xk0A==
-X-Gm-Message-State: AOJu0YwGTMMt41CDr3z6z6rltf+Ok7aaCeAry8hj85G670XYGlzKOIN5
- Wvku/sUrLJbmSBy10oioYwtIfS3+ybpHp3K1e5a3n1STrrSTvqs/rIcN
-X-Gm-Gg: ASbGncuKpfkZK0WalXGezT9vZqbG9JvXjRo8W7JHH/r3r5RWJZnsOGsMNoPzmD4dZW4
- G44uWthDEIE+RkP1Y0YyeDxpm3UeU40EAwtCQTywhKK6Yh4X1OR0dUnQ/DvOW/h+uNfzZLqR2KP
- aBxxUd2jbLMm0skc1zP+flnW4ISgyJZgBe5yvbYQLPk/IM0BzD8tVhHsRS1dXnChTbPEbnfynDX
- E9aH2+crWllRuSGMiM4K0OOzi/VUoTl+r3m0Xsn+69d3kFU4YfQBJaOi7EDmQjT1ayM+3/5aMow
- qj3YKVeFFvtTqUdek0U3qVDugUBLjWMY36RL2e834SPwHJjbDFpDZ8U3xTuhvIo=
-X-Google-Smtp-Source: AGHT+IF437pg+3f1tHocVLxEGr/0jP1flbrRtpSwazW1aS+vdRtO5y1rJ9hFHg97gQjIoN//RmiADw==
-X-Received: by 2002:a17:902:ebc7:b0:234:a139:120d with SMTP id
- d9443c01a7336-23ac3817845mr160235285ad.7.1751237345571; 
- Sun, 29 Jun 2025 15:49:05 -0700 (PDT)
-Received: from [10.2.0.2] ([89.187.185.165]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23acb39b928sm65897245ad.111.2025.06.29.15.49.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 29 Jun 2025 15:49:05 -0700 (PDT)
-Message-ID: <4932277d-ae7c-469a-93bb-db44913c1a1b@gmail.com>
-Date: Sun, 29 Jun 2025 17:49:02 -0500
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1uW2RL-00064e-UO
+ for qemu-devel@nongnu.org; Sun, 29 Jun 2025 20:32:07 -0400
+Received: from mx1.zhaoxin.com ([210.0.225.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1uW2RG-0006Mt-4t
+ for qemu-devel@nongnu.org; Sun, 29 Jun 2025 20:32:06 -0400
+X-ASG-Debug-ID: 1751243504-086e2327846bba0001-jgbH7p
+Received: from ZXSHMBX1.zhaoxin.com (ZXSHMBX1.zhaoxin.com [10.28.252.163]) by
+ mx1.zhaoxin.com with ESMTP id Mf9SUBYSvEdUYp0v (version=TLSv1.2
+ cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+ Mon, 30 Jun 2025 08:31:44 +0800 (CST)
+X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
+Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX1.zhaoxin.com
+ (10.28.252.163) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Mon, 30 Jun
+ 2025 08:31:44 +0800
+Received: from ZXSHMBX1.zhaoxin.com ([::1]) by ZXSHMBX1.zhaoxin.com
+ ([fe80::2c07:394e:4919:4dc1%7]) with mapi id 15.01.2507.044; Mon, 30 Jun 2025
+ 08:31:44 +0800
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
+Received: from [192.168.31.91] (10.28.66.62) by zxbjmbx1.zhaoxin.com
+ (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Sun, 29 Jun
+ 2025 17:47:24 +0800
+Message-ID: <7f2b589b-589d-4d72-9ecb-26bb5727f724@zhaoxin.com>
+Date: Sun, 29 Jun 2025 17:47:23 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] contrib/plugins/execlog: Add tab to the separator
- search of insn_disas
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, laurent@vivier.eu,
- Yodel Eldar <yodel.eldar@gmail.com>
-References: <20250627204817.47595-1-yodel.eldar@gmail.com>
- <20250627204817.47595-2-yodel.eldar@gmail.com>
- <87wm8uwfe4.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Yodel Eldar <yodel.eldar@gmail.com>
-Autocrypt: addr=yodel.eldar@gmail.com; keydata=
- xjMEZxqXdhYJKwYBBAHaRw8BAQdAkletQdG3CLyANZyuf2t7Z9PK4b6HiT+DdSPUB2mHzmPN
- N1lvZGVsIEVsZGFyIChZb2RlbCBPcGVuUEdQIGtleSkgPHlvZGVsLmVsZGFyQGdtYWlsLmNv
- bT7ClgQTFggAPgIbAwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBNPNGM1AbbuKZqn435Xu
- T7c2ZU2sBQJnI9xJBQkB6nhTAAoJEJXuT7c2ZU2sSQABANuu74MJKexa8V8kVNLhw68loN4x
- 2ZbojcfUOWd8Pf5HAQDn1XxmQFPMIUYahlXMMrwRyQE1m6HjtrolOELICzwxDM44BGcal3YS
- CisGAQQBl1UBBQEBB0Ao8jLdb8MoWybV77fXOiqY5jSmrPy+MgzzjrAzqURjZAMBCAfCfgQY
- FggAJgIbDBYhBNPNGM1AbbuKZqn435XuT7c2ZU2sBQJnI9wMBQkB6ngWAAoJEJXuT7c2ZU2s
- BlUA/0ZfDDmzKdC1khPMaRIv/gWedFd5Z8jWqh0rswF2LyeNAQD6PjBgliBhL1xTto+juM1b
- jctqRusjtyMyzG8/ps2iDQ==
-In-Reply-To: <87wm8uwfe4.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::643;
- envelope-from=yodel.eldar@gmail.com; helo=mail-pl1-x643.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Subject: Re: [PATCH 4/8] i386/cpu: Introduce cache model for YongFeng
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, Igor Mammedov
+ <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+X-ASG-Orig-Subj: Re: [PATCH 4/8] i386/cpu: Introduce cache model for YongFeng
+CC: Jason Zeng <jason.zeng@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>, "Tao
+ Su" <tao1.su@intel.com>, Yi Lai <yi1.lai@intel.com>, Dapeng Mi
+ <dapeng1.mi@intel.com>, Tejus GK <tejus.gk@nutanix.com>, Manish Mishra
+ <manish.mishra@nutanix.com>, <qemu-devel@nongnu.org>
+References: <20250626083105.2581859-1-zhao1.liu@intel.com>
+ <20250626083105.2581859-5-zhao1.liu@intel.com>
+From: Ewan Hai <ewanhai-oc@zhaoxin.com>
+In-Reply-To: <20250626083105.2581859-5-zhao1.liu@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.28.66.62]
+X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
+ zxbjmbx1.zhaoxin.com (10.29.252.163)
+X-Moderation-Data: 6/30/2025 8:31:43 AM
+X-Barracuda-Connect: ZXSHMBX1.zhaoxin.com[10.28.252.163]
+X-Barracuda-Start-Time: 1751243504
+X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
+X-Barracuda-URL: https://10.28.252.35:4443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at zhaoxin.com
+X-Barracuda-Scan-Msg-Size: 9213
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
+X-Barracuda-Spam-Score: -2.02
+X-Barracuda-Spam-Status: No,
+ SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
+ QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.143588
+ Rule breakdown below
+ pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+Received-SPF: pass client-ip=210.0.225.12; envelope-from=EwanHai-oc@zhaoxin.com;
+ helo=mx1.zhaoxin.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,83 +102,259 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 6/29/25 1:50 PM, Alex Bennée wrote:
-> Yodel Eldar <yodel.eldar@gmail.com> writes:
->
->> Currently, execlog searches for a space separator between the
->> instruction mnemonic and operands, but some disassemblers, e.g. Alpha's,
->> use a tab separator instead; this results in a null pointer being passed
->> as the haystack in g_strstr during a subsequent register search, i.e.
->> undefined behavior, because of a missing null check.
->>
->> This patch adds tab to the separator search and a null check on the
->> result.
->>
->> Also, existing, affected pointers are changed to const.
->>
->> Lastly, a break statement was added to immediately terminate the
->> register search when a user-requested register is found in the current
->> instruction as a trivial optimization, because searching for the
->> remaining requested registers is unnecessary once one is found.
->>
->> Signed-off-by: Yodel Eldar <yodel.eldar@gmail.com>
->> ---
->>   contrib/plugins/execlog.c | 15 +++++++++------
->>   1 file changed, 9 insertions(+), 6 deletions(-)
->>
->> diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
->> index d67d010761..08fc1f12d4 100644
->> --- a/contrib/plugins/execlog.c
->> +++ b/contrib/plugins/execlog.c
->> @@ -232,12 +232,15 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->>            */
->>           if (disas_assist && rmatches) {
->>               check_regs_next = false;
->> -            gchar *args = g_strstr_len(insn_disas, -1, " ");
->> -            for (int n = 0; n < all_reg_names->len; n++) {
->> -                gchar *reg = g_ptr_array_index(all_reg_names, n);
->> -                if (g_strrstr(args, reg)) {
->> -                    check_regs_next = true;
->> -                    skip = false;
->> +            const gchar *args = strpbrk(insn_disas, " \t");
-> We have a general preference for glib here, could we use g_strsplit_set?
->
-> Something like:
->
-> modified   contrib/plugins/execlog.c
-> @@ -232,12 +232,14 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->            */
->           if (disas_assist && rmatches) {
->               check_regs_next = false;
-> -            gchar *args = g_strstr_len(insn_disas, -1, " ");
-> -            for (int n = 0; n < all_reg_names->len; n++) {
-> -                gchar *reg = g_ptr_array_index(all_reg_names, n);
-> -                if (g_strrstr(args, reg)) {
-> -                    check_regs_next = true;
-> -                    skip = false;
-> +            g_auto(GStrv) args = g_strsplit_set(insn_disas, " \t", 2);
-> +            if (args && args[1]) {
-> +                for (int n = 0; n < all_reg_names->len; n++) {
-> +                    gchar *reg = g_ptr_array_index(all_reg_names, n);
-> +                    if (g_strrstr(args[1], reg)) {
-> +                        check_regs_next = true;
-> +                        skip = false;
-> +                    }
->
 
-Certainly, and thanks for the suggestion! May I credit you with a
-"Suggested-by" or "Co-authored-by" tag in v2 of the patch?
+On 6/26/25 4:31 PM, Zhao Liu wrote:
+> 
+> 
+> From: Ewan Hai <ewanhai-oc@zhaoxin.com>
+> 
+> Add the cache model to YongFeng (v3) to better emulate its
+> environment.
+> 
+> Note, although YongFeng v2 was added after v10.0, it was also back
+> ported to v10.0.2. Therefore, the new version (v3) is needed to avoid
+> conflict.
+> 
+> The cache model is as follows:
+> 
+>        --- cache 0 ---
+>        cache type                         = data cache (1)
+>        cache level                        = 0x1 (1)
+>        self-initializing cache level      = true
+>        fully associative cache            = false
+>        maximum IDs for CPUs sharing cache = 0x0 (0)
+>        maximum IDs for cores in pkg       = 0x0 (0)
+>        system coherency line size         = 0x40 (64)
+>        physical line partitions           = 0x1 (1)
+>        ways of associativity              = 0x8 (8)
+>        number of sets                     = 0x40 (64)
+>        WBINVD/INVD acts on lower caches   = false
+>        inclusive to lower caches          = false
+>        complex cache indexing             = false
+>        number of sets (s)                 = 64
+>        (size synth)                       = 32768 (32 KB)
+>        --- cache 1 ---
+>        cache type                         = instruction cache (2)
+>        cache level                        = 0x1 (1)
+>        self-initializing cache level      = true
+>        fully associative cache            = false
+>        maximum IDs for CPUs sharing cache = 0x0 (0)
+>        maximum IDs for cores in pkg       = 0x0 (0)
+>        system coherency line size         = 0x40 (64)
+>        physical line partitions           = 0x1 (1)
+>        ways of associativity              = 0x10 (16)
+>        number of sets                     = 0x40 (64)
+>        WBINVD/INVD acts on lower caches   = false
+>        inclusive to lower caches          = false
+>        complex cache indexing             = false
+>        number of sets (s)                 = 64
+>        (size synth)                       = 65536 (64 KB)
+>        --- cache 2 ---
+>        cache type                         = unified cache (3)
+>        cache level                        = 0x2 (2)
+>        self-initializing cache level      = true
+>        fully associative cache            = false
+>        maximum IDs for CPUs sharing cache = 0x0 (0)
+>        maximum IDs for cores in pkg       = 0x0 (0)
+>        system coherency line size         = 0x40 (64)
+>        physical line partitions           = 0x1 (1)
+>        ways of associativity              = 0x8 (8)
+>        number of sets                     = 0x200 (512)
+>        WBINVD/INVD acts on lower caches   = false
+>        inclusive to lower caches          = true
+>        complex cache indexing             = false
+>        number of sets (s)                 = 512
+>        (size synth)                       = 262144 (256 KB)
+>        --- cache 3 ---
+>        cache type                         = unified cache (3)
+>        cache level                        = 0x3 (3)
+>        self-initializing cache level      = true
+>        fully associative cache            = false
+>        maximum IDs for CPUs sharing cache = 0x0 (0)
+>        maximum IDs for cores in pkg       = 0x0 (0)
+>        system coherency line size         = 0x40 (64)
+>        physical line partitions           = 0x1 (1)
+>        ways of associativity              = 0x10 (16)
+>        number of sets                     = 0x2000 (8192)
+>        WBINVD/INVD acts on lower caches   = true
+>        inclusive to lower caches          = true
+>        complex cache indexing             = false
+>        number of sets (s)                 = 8192
+>        (size synth)                       = 8388608 (8 MB)
+>        --- cache 4 ---
+>        cache type                         = no more caches (0)
+> 
+> Signed-off-by: Ewan Hai <ewanhai-oc@zhaoxin.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+> Changes on the original codes:
+>   * Rearrange cache model fields to make them easier to check.
+>   * And add explanation of why v3 is needed.
+>   * Drop lines_per_tag field for L2 & L3.
+> ---
+>   target/i386/cpu.c | 104 ++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 104 insertions(+)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index a7f2e5dd3fcb..08c84ba90f52 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -3159,6 +3159,105 @@ static const CPUCaches xeon_srf_cache_info = {
+>       },
+>   };
+> 
+> +static const CPUCaches yongfeng_cache_info = {
+> +    .l1d_cache = &(CPUCacheInfo) {
+> +        /* CPUID 0x4.0x0.EAX */
+> +        .type = DATA_CACHE,
+> +        .level = 1,
+> +        .self_init = true,
+> +
+> +        /* CPUID 0x4.0x0.EBX */
+> +        .line_size = 64,
+> +        .partitions = 1,
+> +        .associativity = 8,
+> +
+> +        /* CPUID 0x4.0x0.ECX */
+> +        .sets = 64,
+> +
+> +        /* CPUID 0x4.0x0.EDX */
+> +        .no_invd_sharing = false,
+> +        .inclusive = false,
+> +        .complex_indexing = false,
+> +
+> +        /* CPUID 0x80000005.ECX */
+> +        .lines_per_tag = 1,
+> +        .size = 32 * KiB,
+> +
+> +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
+> +    },
+> +    .l1i_cache = &(CPUCacheInfo) {
+> +        /* CPUID 0x4.0x1.EAX */
+> +        .type = INSTRUCTION_CACHE,
+> +        .level = 1,
+> +        .self_init = true,
+> +
+> +        /* CPUID 0x4.0x1.EBX */
+> +        .line_size = 64,
+> +        .partitions = 1,
+> +        .associativity = 16,
+> +
+> +        /* CPUID 0x4.0x1.ECX */
+> +        .sets = 64,
+> +
+> +        /* CPUID 0x4.0x1.EDX */
+> +        .no_invd_sharing = false,
+> +        .inclusive = false,
+> +        .complex_indexing = false,
+> +
+> +        /* CPUID 0x80000005.EDX */
+> +        .lines_per_tag = 1,
+> +        .size = 64 * KiB,
+> +
+> +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
+> +    },
+> +    .l2_cache = &(CPUCacheInfo) {
+> +        /* CPUID 0x4.0x2.EAX */
+> +        .type = UNIFIED_CACHE,
+> +        .level = 2,
+> +        .self_init = true,
+> +
+> +        /* CPUID 0x4.0x2.EBX */
+> +        .line_size = 64,
+> +        .partitions = 1,
+> +        .associativity = 8,
+> +
+> +        /* CPUID 0x4.0x2.ECX */
+> +        .sets = 512,
+> +
+> +        /* CPUID 0x4.0x2.EDX */
+> +        .no_invd_sharing = false,
+> +        .inclusive = true,
+> +        .complex_indexing = false,
+> +
+> +        /* CPUID 0x80000006.ECX */
+> +        .size = 256 * KiB,
+> +
+> +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
+> +    },
+> +    .l3_cache = &(CPUCacheInfo) {
+> +        /* CPUID 0x4.0x3.EAX */
+> +        .type = UNIFIED_CACHE,
+> +        .level = 3,
+> +        .self_init = true,
+> +
+> +        /* CPUID 0x4.0x3.EBX */
+> +        .line_size = 64,
+> +        .partitions = 1,
+> +        .associativity = 16,
+> +
+> +        /* CPUID 0x4.0x3.ECX */
+> +        .sets = 8192,
+> +
+> +        /* CPUID 0x4.0x3.EDX */
+> +        .no_invd_sharing = true,
+> +        .inclusive = true,
+> +        .complex_indexing = false,
+> +
+> +        .size = 8 * MiB,
+> +        .share_level = CPU_TOPOLOGY_LEVEL_DIE,
+> +    },
+> +};
+> +
+>   /* The following VMX features are not supported by KVM and are left out in the
+>    * CPU definitions:
+>    *
+> @@ -6438,6 +6537,11 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+>                       { /* end of list */ }
+>                   }
+>               },
+> +            {
+> +                .version = 3,
+> +                .note = "with the cache info",
+
+I realize that my previous use of "cache info" was not precise; "cache model" is 
+more appropriate. Please help me adjust accordingly, thank you.
+
+> +                .cache_info = &yongfeng_cache_info
+> +            },
+>               { /* end of list */ }
+>           }
+>       },
+> --
+> 2.34.1
+> 
+
+Hi Zhao,
+
+I tested the patchsets you provided on different hosts, and here are the results:
+
+1. On an Intel host with KVM enabled
+The CPUID leaves 0x2 and 0x4 reported inside the YongFeng-V3 VM match our 
+expected cache details exactly. However, CPUID leaf 0x80000005 returns all 
+zeros. This is because when KVM is in use, QEMU uses the host's vendor for the 
+IS_INTEL_CPU(env), IS_ZHAOXIN_CPU(env), and IS_AMD_CPU(env) checks. Given that 
+behavior, a zeroed 0x80000005 leaf in the guest is expected and, to me, 
+acceptable. What are your thoughts?
+
+2. On a YongFeng host (with or without KVM)
+The CPUID leaves 0x2, 0x4, and 0x80000006 inside the VM all return the values we 
+want, and the L1D/L1I cache info in leaf 0x80000005 is also correct.
+
+3. TLB info in leaf 0x80000005
+On both Intel and YongFeng hosts, the L1 TLB fields in leaf 0x80000005 remain 
+constant, as we discussed. As you mentioned before, "we can wait and see what 
+maintainers think" about this.
+
+In summary, both patchsets look good for Zhaoxin support, I don't see any issues 
+so far.
+
+Btw, YongFeng host also support 0x1F, does YongFeng need to turn on 
+"x-force-cpuid-0x1f" default ? I think maybe yes.
 
 
->> +            if (args) {
->> +                for (int n = 0; n < all_reg_names->len; n++) {
->> +                    const gchar *reg = g_ptr_array_index(all_reg_names, n);
->> +                    if (g_strrstr(args, reg)) {
->> +                        check_regs_next = true;
->> +                        skip = false;
->> +                        break;
->> +                    }
->>                   }
->>               }
->>           }
+Best regards,
+Ewan
+
+
 
