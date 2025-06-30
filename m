@@ -4,74 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ACA3C83026
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59C9FC83000
 	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 04:34:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uW6Cg-0004VM-Pv; Mon, 30 Jun 2025 00:33:14 -0400
+	id 1uW6Cm-0004XS-Gf; Mon, 30 Jun 2025 00:33:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uW6Ca-0004UC-MA
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 00:33:09 -0400
-Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
+ id 1uW6Cc-0004Uc-KZ
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 00:33:10 -0400
+Received: from mail-qt1-x836.google.com ([2607:f8b0:4864:20::836])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uW6CU-00053W-Cr
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 00:33:03 -0400
-Received: by mail-qt1-x829.google.com with SMTP id
- d75a77b69052e-4a442a3a2bfso34207091cf.1
- for <qemu-devel@nongnu.org>; Sun, 29 Jun 2025 21:32:59 -0700 (PDT)
+ id 1uW6CZ-00054a-OF
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 00:33:10 -0400
+Received: by mail-qt1-x836.google.com with SMTP id
+ d75a77b69052e-4a5903bceffso55177571cf.3
+ for <qemu-devel@nongnu.org>; Sun, 29 Jun 2025 21:33:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751257979; x=1751862779; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=xwg4/mGs9AWU01hT2+1uM8Iz4xoWbdqsFjVaCRRcKlo=;
- b=QqYCQe8Hs1Fs//1Sfqa2lGCQMMRGlYO+k5SoSbifeqOmZhqb5FeKWRVwXxqEBqhIJE
- 7z5VGxR3ZpcVYwmvIgqeU2ylg/qwWqA6KlIpui3Z4CHvyhUzf7YQl2xGSFj9e5Tmkavc
- DskKQ4ktxSfgHf8r0lhZ4bK9VPIwNXP6p0m1iooNP/rJ9WywrVcZ3JU0Xm++I7zLeHLC
- rAa52HCer0awgehKuo+lTy1yfP8NyOoyZ+vhR68lK4c3iLm3ICLfMTxcmPpZBj9LKPiW
- ZpSApJJ84dhXjkNk7o04CKWJow+fi+PoOhN+9N84ap8JKYgQjqEMZVKrNoUxgtzGLXbQ
- tjrA==
+ d=linaro.org; s=google; t=1751257983; x=1751862783; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=m7p1tDIFwTjQb2kYrEx8VXYNJTLr+20o3ghBktTtRy4=;
+ b=pzhPGvEhKD/+PcEqWjwDYSgJPmNxg8E3+mfBciB1cUbCDb7s/MXLmRrLUkjPPciGhR
+ kEv4Es8T42MAvK+aL7NLbdKftoZI60QpwYkqHim8L9VI6/r4TE8wIu8jTLYvszmzJhgP
+ JgFs0rpt4AGwC7SsCgwgsn/9jgpuhg05loApohwsFBVnBmO1s2JhKjwNIOHqABBjVmHg
+ jczQmr9yFM+k2q0BoK3YtjxtARjZiF4QA5GaP4Aiy+D+YxNua+cfa7onSzTTgLph6atV
+ n6nf87Rp09HoUPiMf/ccpLjxMboiby3DMRNORtjv9LX+mUqInbQ371UlIjJwMKf2ZcVB
+ xssw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751257979; x=1751862779;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xwg4/mGs9AWU01hT2+1uM8Iz4xoWbdqsFjVaCRRcKlo=;
- b=WStRXDikLowoeyi33KVopELg9Q8mhn9utWZBPHVlz9tdTfGhtJjSooH7zsGeQvZslU
- xjYh8LTJavBZgHtcig9+iYk0BlzYGDx7j5viw/BHNcTkx9KsqVeTOSZVqgNuhu9leuwC
- Aw/frU0VFDSKZ+iGBKkyX5HI/Fx27TsvWyJoWXyNmdzLc5NArzwE5RAkAxwb2JexjevF
- ax63vZbytQhfc1usALIoYEj2zsf8UJxXVX+YgN+OQMkgS5HlpimVXDldRaaMEr5XMOoC
- 2I1T4R7r/SNXhdLLa4k1lYDbVE6zwXG+nqSMRH+qfn3QxEguSCwXNyYwbrMvPZBmJLFu
- jIdg==
-X-Gm-Message-State: AOJu0Yzt5cVC+hR66GxbEYy7KiJ1nQc9dh+oU6+KRZbmcXzyK/FVF/yU
- vjKvz7qbJZpUGbU5e1iu/Xp4QRk0vWd3Nn73qHwKxEUQPAOa1ff83GSj/ur12Axf6/o=
-X-Gm-Gg: ASbGncur94UgIeuVuSFjXwF6fAjQdx02FLcJjYaPHZoNprKPNC48zqCg5mtF0v5Fo9Y
- F2ceUJ5Et9eGipmnKmui1H2xCuByiaqeKePOKvC2HfxwgRj1X2szGBa5t0NKxOitltmK31ChrCB
- A13gx6kZSLHEefv2e3HGsYHLkslBo8GHzz7hB9nfFoloDYLKRFiLNsDYn7k3RMq1QqeoIevdRn2
- 021OklIuaXhQMcyLgTzlU/PzB9ZhSSS4z6hrcdvsoEWIipomzr1Fpi2qaCfVbrlALkf4c96e/Jm
- Nmk3YS5Z3am3J5wRmDIfPfJJk941p2bLFjFz6FBNS/BUXIRu75vlOuo89sTitUOB5Pw=
-X-Google-Smtp-Source: AGHT+IFHnkvJlPZGoYIy5ZOVjm6Excfd1PisbneTFkOA2RRZnH1Q/nxBwevrtm1F2aCa0VzIkb4gdQ==
-X-Received: by 2002:a05:622a:8b:b0:4a7:fbd0:79b3 with SMTP id
- d75a77b69052e-4a7fc8bb4c1mr183691361cf.0.1751257978871; 
- Sun, 29 Jun 2025 21:32:58 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1751257983; x=1751862783;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=m7p1tDIFwTjQb2kYrEx8VXYNJTLr+20o3ghBktTtRy4=;
+ b=Xmdd8lBqDIpuAdE1IddAZM8hwHxx9kpGgA3uqFxbMEba3lNQL2YGgINV/IdXjLZoZX
+ pyFS/QagU/JoTZVurjhuWQHxmcW7lmG4DXq+tQXrheSBHAkWVKzWJvfekcz0QRgNNV89
+ 2G9dHkbzvY8oT+szQIyCXAubpLw4lPI/NtyNrLvm92mfc4Twp/fRNR13vLL5pkqJSgek
+ 3TKSwihQSeHFYBQHK6VRCinO4kvOi25u8A+X7vLG+t4zEKVOa1aqTB9s6BAUbX7ACC93
+ mZNFrUWuYWHjJzoU9JMV25SvlDroyXkhaSPekdP+ZnZYvKMhTOPSMZUBJZuQtPED9rs2
+ hyzA==
+X-Gm-Message-State: AOJu0YywVEgx+FRlTkM6TYUaokEKiGcRFOWCZyYpNXIzB1V6WePdlXf8
+ r1rC1pb7A7RZjd750LfXbpZdfpxtDdm2PRL+QNPWJnFmfmPjO6kErIhgQCsXTvS4xUI0urAoFNF
+ no35w
+X-Gm-Gg: ASbGncueJFWGKh+Tsgd14iJ92Ybi7bBf/ebGy7IUJ86p0oYwm75BGWQ4/eFFUT5+bIb
+ SaRXYM4+vuHBn8rx5Ir0OwgjlM34N4pfJz3X51xGA9U4kQ9PwrHuvClVY+QX/hhBC1geth5jBJM
+ 3pDzh6Cy+z213Xq4EoAoBN2oyI05NSOBHsqUTBHRGY+3aLpkFFxnrKKdVkCIzYdG7ucjkd9rDhC
+ m25pLLAziZlYtd8TSzW98GdX9jX949Jq9EPK+u8XLt677TrbuxoBHtSeQs8/cUv90ioJn8moqxv
+ s03/ncvghwtRJGHSWhM6/fe4OgVcVmKnYOh/ixveAdvwk7A68I9HFPa32jHLiMyI32s=
+X-Google-Smtp-Source: AGHT+IFj5wFwbOMqR/+3+2Bt9LpdUyGqCRpRf2COHd39idOzknEGTiSuLuiV7CPBqU8z7ahE3cAL6g==
+X-Received: by 2002:a05:622a:4012:b0:4a7:a8a:eed with SMTP id
+ d75a77b69052e-4a7fcae72c0mr214110621cf.39.1751257983162; 
+ Sun, 29 Jun 2025 21:33:03 -0700 (PDT)
 Received: from gromero0.. ([186.215.58.88]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4a7fc13971fsm53470171cf.20.2025.06.29.21.32.56
+ d75a77b69052e-4a7fc13971fsm53470171cf.20.2025.06.29.21.33.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 29 Jun 2025 21:32:58 -0700 (PDT)
+ Sun, 29 Jun 2025 21:33:02 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-arm@nongnu.org
 Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, gustavo.romero@linaro.org
-Subject: [WIP-for-10.1 0/3] target/arm: Add FEAT_MEC to max cpu
-Date: Mon, 30 Jun 2025 04:32:34 +0000
-Message-Id: <20250630043237.996788-1-gustavo.romero@linaro.org>
+Subject: [PATCH 2/3] target/arm: Advertise FEAT_MEC in cpu max
+Date: Mon, 30 Jun 2025 04:32:36 +0000
+Message-Id: <20250630043237.996788-3-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250630043237.996788-1-gustavo.romero@linaro.org>
+References: <20250630043237.996788-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
- envelope-from=gustavo.romero@linaro.org; helo=mail-qt1-x829.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::836;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-qt1-x836.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,28 +98,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series a WIP for adding full FEAT_MEC support to arm max cpu.
+Advertise FEAT_MEC in AA64MMFR3 ID register for the Arm64 cpu max as a
+first step to fully support FEAT_MEC.
 
-It adds the FEAT_MEC registers but does not touch the translation regimes to
-support the MECIDs. I'm currently looking at the possibilies to support it in
-QEMU for the various translation regimes we have on Arm64.
+The FEAT_MEC is an extension to FEAT_RME that implements multiple
+Memory Encryption Contexts (MEC) so the memory in a realm can be
+encrypted and accessing it from the wrong encryption context is not
+possible. An encryption context allow the selection of a memory
+encryption engine.
 
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+---
+ docs/system/arm/emulation.rst | 1 +
+ target/arm/cpu-features.h     | 5 +++++
+ target/arm/tcg/cpu64.c        | 1 +
+ 3 files changed, 7 insertions(+)
 
-Cheers,
-Gustavo
-
-Gustavo Romero (3):
-  target/arm: Add the MECEn SCR_EL3 bit
-  target/arm: Advertise FEAT_MEC in cpu max
-  target/arm: Add FEAT_MEC registers
-
- docs/system/arm/emulation.rst |  1 +
- target/arm/cpu-features.h     |  5 ++
- target/arm/cpu.h              | 15 ++++++
- target/arm/helper.c           | 98 +++++++++++++++++++++++++++++++++++
- target/arm/tcg/cpu64.c        |  1 +
- 5 files changed, 120 insertions(+)
-
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index 78c2fd2113..68acb49825 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -89,6 +89,7 @@ the following architecture extensions:
+ - FEAT_LSE (Large System Extensions)
+ - FEAT_LSE2 (Large System Extensions v2)
+ - FEAT_LVA (Large Virtual Address space)
++- FEAT_MEC (Memory Encryption Contexts)
+ - FEAT_MixedEnd (Mixed-endian support)
+ - FEAT_MixedEndEL0 (Mixed-endian support at EL0)
+ - FEAT_MOPS (Standardization of memory operations)
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 4452e7c21e..128d75e68f 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -593,6 +593,11 @@ static inline bool isar_feature_aa64_hbc(const ARMISARegisters *id)
+     return FIELD_EX64(id->id_aa64isar2, ID_AA64ISAR2, BC) != 0;
+ }
+ 
++static inline bool isar_feature_aa64_mec(const ARMISARegisters *id)
++{
++    return FIELD_EX64(id->id_aa64mmfr3, ID_AA64MMFR3, MEC);
++}
++
+ static inline bool isar_feature_aa64_mops(const ARMISARegisters *id)
+ {
+     return FIELD_EX64(id->id_aa64isar2, ID_AA64ISAR2, MOPS);
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 5d8ed2794d..66c4d1d789 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1242,6 +1242,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+ 
+     t = cpu->isar.id_aa64mmfr3;
+     t = FIELD_DP64(t, ID_AA64MMFR3, SPEC_FPACC, 1); /* FEAT_FPACC_SPEC */
++    t = FIELD_DP64(t, ID_AA64MMFR3, MEC, 1);        /* FEAT_MEC */
+     cpu->isar.id_aa64mmfr3 = t;
+ 
+     t = cpu->isar.id_aa64zfr0;
 -- 
 2.34.1
 
