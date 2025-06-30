@@ -4,71 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7F8DC83028
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 08:14:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF32CC83000
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 08:16:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uW9eC-00040W-Ef; Mon, 30 Jun 2025 04:13:52 -0400
+	id 1uW9gT-00074u-O6; Mon, 30 Jun 2025 04:16:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uW9eA-0003wc-Dv
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 04:13:50 -0400
-Received: from mgamail.intel.com ([192.198.163.15])
+ (Exim 4.90_1) (envelope-from <SRS0=bKmi=ZN=kaod.org=clg@ozlabs.org>)
+ id 1uW9gQ-0006xP-Es; Mon, 30 Jun 2025 04:16:10 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uW9e7-0008FC-8H
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 04:13:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751271227; x=1782807227;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=nCRHuUYhe42P6UuwE38kZ1hSX8NACPLufNZ+MC6x+3s=;
- b=FSdyjsypCD9fwhcN82UWAvZLEpO0NM2QSPOCWmlmGWx2k6VVTz5iu/wi
- KM5qRhWGy+TAESA/BQ0u9IdBwvCT6Bdn9LTy1/7nS1EJI5mV0/OtQwz+x
- R6wEx1KzVVpxAY/1ctp0CWXdopLL8pdd8aT0CyaYnX3iAXUHU0e9EnOtn
- R5QYkxgsrTvVD2yoW/pYMR0iC/UIRKbNz7MzOljgfhZfZ0cvtweLmEV+F
- sLie6TjHRAtSgcc6sBWc3+K3gCKCdnSDDWv2Let8RN41ox2ZXPd1Kkscb
- sHC6IooBuzuroHuxGKk8s2vvN2RZ5IrMDS2oCg+H/rYmM/ZMhLc5Z0hoo w==;
-X-CSE-ConnectionGUID: 8WPZonCHRDOZdnXe+A3vzw==
-X-CSE-MsgGUID: 7GKb5hkBQeuQCeZfC25wRA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11479"; a="53637405"
-X-IronPort-AV: E=Sophos;i="6.16,277,1744095600"; d="scan'208";a="53637405"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Jun 2025 01:13:41 -0700
-X-CSE-ConnectionGUID: otzw2sJqRgSlhlujdF7OSA==
-X-CSE-MsgGUID: m44nY6AmR6Wkl0r5QVa0vA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,277,1744095600"; d="scan'208";a="152777295"
-Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa010.jf.intel.com with ESMTP; 30 Jun 2025 01:13:39 -0700
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- xiaoyao.li@intel.com
-Subject: [PATCH 3/4] i386/kvm-cpu: Fix the indentation inside
- kvm_cpu_realizefn()
-Date: Mon, 30 Jun 2025 16:06:09 +0800
-Message-ID: <20250630080610.3151956-4-xiaoyao.li@intel.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250630080610.3151956-1-xiaoyao.li@intel.com>
-References: <20250630080610.3151956-1-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <SRS0=bKmi=ZN=kaod.org=clg@ozlabs.org>)
+ id 1uW9gO-0000Mp-9j; Mon, 30 Jun 2025 04:16:10 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bVzWP3L5Nz4x21;
+ Mon, 30 Jun 2025 18:16:01 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bVzWK0jhDz4wbR;
+ Mon, 30 Jun 2025 18:15:56 +1000 (AEST)
+Message-ID: <4170a00a-ca5f-4b01-8775-5281af18112c@kaod.org>
+Date: Mon, 30 Jun 2025 10:15:53 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/qtest: Add test for ASPEED SCU
+To: Tan Siewert <tan@siewert.io>, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20250629135405.73117-1-tan@siewert.io>
+ <54aa55bf-376b-4eda-8a78-b6d20e1cf8aa@kaod.org>
+ <2b9f9020-743c-43b3-8cb5-ff7b16ebe431@siewert.io>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <2b9f9020-743c-43b3-8cb5-ff7b16ebe431@siewert.io>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=bKmi=ZN=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,28 +112,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The indentation of one of the } inside kvm_cpu_realizefn() isn'f
-correct. fix it.
 
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
----
- target/i386/kvm/kvm-cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> I'll remove the `scu-utils` in v2.
+> 
+> Q: Are you more concerned about the helper methods or the separate `scu-utils` file? 
 
-diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-index 16bde4de01e5..6df92dc6d703 100644
---- a/target/i386/kvm/kvm-cpu.c
-+++ b/target/i386/kvm/kvm-cpu.c
-@@ -72,7 +72,7 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
-             if (env->features[FEAT_1_ECX] & CPUID_EXT_MONITOR) {
-                 host_cpuid(5, 0, &cpu->mwait.eax, &cpu->mwait.ebx,
-                            &cpu->mwait.ecx, &cpu->mwait.edx);
--	    }
-+            }
-         }
-         if (cpu->ucode_rev == 0) {
-             cpu->ucode_rev =
--- 
-2.43.0
+The files.
+
+> If the helper functions are fine, should they be marked as `static inline`?
+
+The helpers are fine to keep.
+
+Thanks,
+
+C.
+
 
 
