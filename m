@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6156C83029
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 15:23:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01D52C83029
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 15:26:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWGLw-00071z-5A; Mon, 30 Jun 2025 11:23:28 -0400
+	id 1uWGNm-0007oK-IL; Mon, 30 Jun 2025 11:25:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uWGLo-00070t-Mq
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:23:21 -0400
-Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
+ id 1uWGNl-0007n7-Gj
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:25:21 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uWGLi-0007f6-I0
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:23:20 -0400
-Received: by mail-yb1-xb32.google.com with SMTP id
- 3f1490d57ef6-e81cf6103a6so2127529276.3
- for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 08:23:13 -0700 (PDT)
+ id 1uWGNg-0007xb-Nz
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:25:21 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-714067ecea3so17227347b3.0
+ for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 08:25:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751296992; x=1751901792; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751297112; x=1751901912; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=m40CaCvXv6dQ/Kik62QOQVVIz2NlJXmaGa9e5MrI4kA=;
- b=sTICE9mMHwNdoqy7bYN2FxwyD10W2RJk6cm+/iBUdl+wfvjR1QMtwuF3RaZfp1O3Km
- RrVBj12FCQrgj+WhyknA1duJ55Q8rHn6KypOOgs8z47baEXAWuEM2C2veDFw20YQ/9gL
- T30bOCqDkwbZo4UFUurTNWqUVI0E9Zca4GmZnsBC4Vv7SHHyax/pZ+Ep26b/MxLWY+M5
- LIr9yAC7C7LvgShUMBACJT2LR7dl4NjvdJEPbc2nKE4YNd1nhJ8gIk3F9FYbqcK9xPXQ
- q14lex7lYC8zREQw7pRg31svwwY+TSZ3aSO9yhTf6YLmXRI5dgL17REFO5TpuwPHogJK
- To6Q==
+ bh=I5h/4tT6uYWyspNT7UisC2lRP7Ask7OpjyLTLtPE4HQ=;
+ b=H35zuNXyN6Iwwlljy94N26bQ110Cu4/3GV5otu5gbNs3fYJioy3JJUp85BUNFk6phY
+ 2PxAiOqamPtPtYNAXWh4AfkC5hUx1nhsX6sJCG4bfs2e8WZVSpvJ20O2j/rZDy2tn39V
+ tziRG7b0hhrbxWIpRNEpFB3NB3dzRGkdFsZXHxUgdmTbk2EadSzJzj9q/H8uwHVf2Ahd
+ 93AzNbmoek+c6RAMfkSquaYq/S7x1j0hJ2cXh4NGS47+nX8rRCiOpajkKvhuhC6EjXdf
+ OKQYMjsHsFYp3wOgxyrxO3HT3yBou8k1z6o5oahkZjGnW6vTYEYyYtXtxZjSa6vAw9iC
+ Wrqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751296992; x=1751901792;
+ d=1e100.net; s=20230601; t=1751297112; x=1751901912;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=m40CaCvXv6dQ/Kik62QOQVVIz2NlJXmaGa9e5MrI4kA=;
- b=wIKcFknI4QOL+VhsUd3xOiHDJHA4ub7YcGg+e78xc5Y0RPSv4OCHH/ynKS2EJRwOKZ
- OsEI0gCsnnsE5vIKjv2slnv9slUD7DVTmREkf8EjceEPoB+aU8U+A0sDQxWrKfkKRqWQ
- S9sPX7BrvUTsfn5tVi1PFuoIEyJFY8DmjefmKEWEYkMsFFtJ+gc4TGDbd3TfV7odC9/C
- WTZIJ6suOzic3jWuynQd0fJaQM2plmDCeFh/5tu8DnRNa3tCqvKUjrwQqR17hYCNKe2Y
- axCLAiIu56DCzMPSfzEQSfBJ1twcRQuZhX+i/NkxGmp2sqrk0bpr3OPseeYup4dwq2zf
- fW5w==
+ bh=I5h/4tT6uYWyspNT7UisC2lRP7Ask7OpjyLTLtPE4HQ=;
+ b=Xz6PjYM/W+2Sc9N33G2T0c0sVB+AeRyliPj/xVqiijtJLIGM6jveLYvn1J5qtfmOsc
+ Ca1AiIdOue2JiNkMdITt70/eqMuW8tUArg2qG6hDlOeAcRo3Kmbm75GjrvdTFn5OVwiq
+ xlzHvTvMnD1DVjgAStkM0CEAbBkCaMb8bBd4cE8f5y8fM3mMZw0V8bFmlgVrlgdagZFh
+ yyGAOyY5mnnAbSTTMu10g8PHKip+ilUBt2sTviaeiEQA0JnCz+gTgAj2HAqAb22BG0gM
+ P21ruaY3S0oHkyrztm6aG1gXm94szV0xHCX62XAly1BkyEyMLqePj6dJ1IvsVnNgcgQo
+ 7CCA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWBLKddwboUcZSKPrOEZHcieQX+APdIT2Dd2kFHFXf8drHUk+05DezxE41PIncjGrIHcQBYqeSy3Qcl@nongnu.org
-X-Gm-Message-State: AOJu0YymJbohgwgS21cqZmmeZM0q1SYv6wzDrL/RX2hzBm13fcAi88sO
- 5vlO7sVas6tsQwVgpzxRXuljTt13NiLickU9P+H8qXUVI20XT/MCw7zmlxxm0nxsO2HFzwMJdM3
- eGF9afb+iIXTEs1rOhyHdGQ6Rc5wlwFsTh8bHR4ILwQ==
-X-Gm-Gg: ASbGncurqtu0Dsezh5Ci8okMj3jMM+tj+2xp2B1Ql+zp6S26fkRbfWTtbbd5GyJtOkn
- TaLhBtbt+Gb78zHGdDU9HYcRUtwejIa04vOznryB892tPu8i1Qlo0csA/Gu4CvOPioaUklCUC+c
- 9VwScy53KvFIqoNEtXHq5oq9O7RlQdSQgI4lQvVNGcbSYv
-X-Google-Smtp-Source: AGHT+IFLey3gbDO7x3IaACwxZKzj8qTloEuvMAvkPa8CTVEMIeapmV9N19RDAtE8dOmUNYaIULXNoTjX4myy8R9g/Lc=
-X-Received: by 2002:a05:690c:d85:b0:702:52af:7168 with SMTP id
- 00721157ae682-7151713694bmr204905857b3.2.1751296991584; Mon, 30 Jun 2025
- 08:23:11 -0700 (PDT)
+ AJvYcCVguKrxYhf2kP7AIyN92+xH+7spCroT4nbd8Ai5FlmHl9gfm1C+1kF/hsSH0mLSib2yToGwUN0BgVvl@nongnu.org
+X-Gm-Message-State: AOJu0YwpIFIITpUwI+aK703KL5/6xN4AhMCpZaxim7Lk5mO75Y5bopqm
+ ZlF/urvFlcFUqFfcdz/WmBhMpQnAwcTjwvp6zJ3PSdMqMNEFrCKeDjBgQVbBbc0pDomAUzLoxbu
+ ahPwbaMbCtkruV2dEFc2BK0l8GZvP8eZq/Ktl0I2hMg==
+X-Gm-Gg: ASbGncueHqptvoaHCAOoqG9LFBXGN98HNjluw8AB0NBTDeYyJ/ZD8gx0iR2Kv1dljhO
+ JIENtRyHncgDdBWjD4vfMSTQc/7kQDm0MpBc+8aXzwxMlQR/gYnWYg9Jk25YXaXfhEzdtOqO081
+ nmXsgDowT2+G2RrejGX02tnyzEdMBm+UK1doc63TDRVN5N
+X-Google-Smtp-Source: AGHT+IHbDKkB+v2UqZI/qbpQTn8DDgm/V9SQW5oPnLxD8oZI4VSXOLZFRxjLJnIc+/ugHtVSQMvSaqZsLIPCSyZdD+4=
+X-Received: by 2002:a05:690c:dc9:b0:70e:142d:9c52 with SMTP id
+ 00721157ae682-7151719cf61mr215756077b3.22.1751297111869; Mon, 30 Jun 2025
+ 08:25:11 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250617153931.1330449-1-cohuck@redhat.com>
- <20250617153931.1330449-14-cohuck@redhat.com>
-In-Reply-To: <20250617153931.1330449-14-cohuck@redhat.com>
+In-Reply-To: <20250617153931.1330449-1-cohuck@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 30 Jun 2025 16:23:00 +0100
-X-Gm-Features: Ac12FXx_QA1CfRyIPMvH1-pew-Ema3cEXUdffZUdmGWz7Wrn2y7JuUohVq0azp4
-Message-ID: <CAFEAcA9OXi4v+hdBMamQv85HYp2EqxOA5=nfsdZ5E3nf8RP_pw@mail.gmail.com>
-Subject: Re: [PATCH v8 13/14] arm/cpu: switch to a generated cpu-sysregs.h.inc
+Date: Mon, 30 Jun 2025 16:25:00 +0100
+X-Gm-Features: Ac12FXw50PpiOmK56GCGuI5ZjfhKrVyyA1XeCo2Esd3LtbqKHdL_R1y58yMuILw
+Message-ID: <CAFEAcA-Zuqzqg_qUQh+yT4BGqEke3=OhSr0iSY1ztPtVV506sw@mail.gmail.com>
+Subject: Re: [PATCH v8 00/14] arm: rework id register storage
 To: Cornelia Huck <cohuck@redhat.com>
 Cc: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org, 
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, richard.henderson@linaro.org, 
@@ -76,14 +75,13 @@ Cc: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  agraf@csgraf.de, shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org, 
  pbonzini@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,77 +98,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 17 Jun 2025 at 16:41, Cornelia Huck <cohuck@redhat.com> wrote:
+On Tue, 17 Jun 2025 at 16:39, Cornelia Huck <cohuck@redhat.com> wrote:
 >
-> Generated against Linux 6.15.
+> Mostly addressed Peter's feedback:
+> - make sure every inbetween stage compiles (also fixed some bonus issues)
+> - try to make the scripts more robust, add a note the generated file,
+>   and make sure to grab only registers we actually want
+>   - I did a half-hearted attempt to use python instead of awk, but I'm
+>     out of my depth, especially with the script that will be used for
+>     the register fields in the cpu models series
 >
-> Reviewed-by: Sebastian Ott <sebott@redhat.com>
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+> Also available at
+> https://gitlab.com/cohuck/qemu/-/commits/arm-rework-idreg-storage-v8
 
-Stripping out all the lines that just moved around,
-here are the additions:
+The script seems to be creating array entries for some registers
+it should not still; I've left comments on that patch.
 
-> +DEF(ID_AFR0_EL1, 3, 0, 0, 1, 3)
+I've taken patches 1-11 and 14 into target-arm.next so you don't
+have to keep rebasing them.
 
-This is ARMCPU::id_afr0. If we want to store this in
-the idregs[] array that's fine but we ought to move it.
-
-> +DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
-
-> +DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
-
-> +DEF(ID_AA64DFR2_EL1, 3, 0, 0, 5, 2)
-
-These are all ID registers we don't implement yet
-because we don't implement any features that are
-described in them (i.e. our implementation is RAZ/WI).
-I guess it's OK to list them here, though we won't
-do anything with the array entry.
-
-> +DEF(ID_AA64AFR0_EL1, 3, 0, 0, 5, 4)
-
-ARMCPU::id_aa64afr0
-
-> +DEF(ID_AA64AFR1_EL1, 3, 0, 0, 5, 5)
-
-ARMCPU::id_aa64afr1
-
-> +DEF(ID_AA64ISAR3_EL1, 3, 0, 0, 6, 3)
-
-> +DEF(ID_AA64MMFR4_EL1, 3, 0, 0, 7, 4)
-
-More ID regs for features we don't implement yet.
-
-> +DEF(CCSIDR_EL1, 3, 1, 0, 0, 0)
-
-CCSIDR_EL1 isn't a single ID register, it's an array
-of them (indexed by CCSELR_EL1). We keep them in
-ARMCPU::ccsidr[]. I don't think it makes sense to
-have an entry in isar.idregs[] for this.
-
-> +DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
-
-ARMCPU::clidr
-
-> +DEF(CCSIDR2_EL1, 3, 1, 0, 0, 2)
-
-This is an array too.
-
-> +DEF(GMID_EL1, 3, 1, 0, 0, 4)
-
-Another ID register for a feature we don't yet implement
-(and a slightly oddball one in that it should UNDEF
-until we do implement FEAT_MTE2).
-
-> +DEF(SMIDR_EL1, 3, 1, 0, 0, 6)
-
-We implement this as a fixed zero in helper.c.
-
-> +DEF(DCZID_EL0, 3, 3, 0, 0, 7)
-
-We construct the value of this one in aa64_dczid_read()
-based on ARMCPU::dcz_blocksize plus some runtime info.
-
+thanks
 -- PMM
 
