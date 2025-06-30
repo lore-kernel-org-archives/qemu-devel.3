@@ -4,77 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 581BFC83000
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 05:00:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C319FC83029
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 05:19:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uW6cK-0001lp-Rt; Mon, 30 Jun 2025 00:59:44 -0400
+	id 1uW6th-0005X7-1p; Mon, 30 Jun 2025 01:17:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uW6cH-0001l3-UF
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 00:59:42 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
+ (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
+ id 1uW6tc-0005VL-9W; Mon, 30 Jun 2025 01:17:37 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uW6cF-0000wb-Uc
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 00:59:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751259580; x=1782795580;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=bzjzHuoFz3RgM2XiFsZoAfa4Wh/oSQierjAsn0Ekupw=;
- b=lPtaW/qSV+cuvKwb65J9edOMDldO6I5+DO80Ef/IXmNYAtWMuFmVfPQr
- 9r4bvW8RyvOH5eRGFowLw7ieVC4X54uHYx+Orn07QsWzcwB0M8fHCJqGf
- lJLdtNSj6L1nNZOum5TSz+YkrNmQTJapmGkjWRSl7VoZQMVzPunjf8svn
- TuTyoSMETwveIZstPaSG+4UWcAoqL9jlctB3c7KfJoOXFUxCkSED+dkoH
- dqAR0pjZykYrBtDKCFtyNXS4ufgGlM3bmjqbq2SB4YjXbsHdHew/828KP
- Opvs3/aSGnZCFkQJquGciw07/CzWaAOZ2S0onu+OaWmsf4cikYU3B5M8t A==;
-X-CSE-ConnectionGUID: l+7mwyFLRnyWGIoGHNuqZQ==
-X-CSE-MsgGUID: IuFiNFSOQpqCjzzw4xS7rA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11479"; a="64167047"
-X-IronPort-AV: E=Sophos;i="6.16,277,1744095600"; d="scan'208";a="64167047"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Jun 2025 21:59:36 -0700
-X-CSE-ConnectionGUID: rJp3tvo1SN+uPNe2OaPicQ==
-X-CSE-MsgGUID: O92vljidQEW8aSgHeojC1g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,277,1744095600"; d="scan'208";a="184271656"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa001.fm.intel.com with ESMTP; 29 Jun 2025 21:59:33 -0700
-Date: Mon, 30 Jun 2025 13:20:57 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Ewan Hai <ewanhai-oc@zhaoxin.com>, Tao Su <tao1.su@intel.com>,
- Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH 3/4] i386/cpu: Mark ECX/EDX in CPUID 0x80000008 leaf as
- reserved for Intel
-Message-ID: <aGIeuV5QKTIbtkeu@intel.com>
-References: <20250627035129.2755537-1-zhao1.liu@intel.com>
- <20250627035129.2755537-4-zhao1.liu@intel.com>
- <dedb9a90-a516-430e-8748-f776392f508d@intel.com>
+ (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
+ id 1uW6tZ-0003fn-Ty; Mon, 30 Jun 2025 01:17:36 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 30 Jun
+ 2025 13:17:21 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Mon, 30 Jun 2025 13:17:21 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
+Subject: [PATCH v3 0/3] Add QEMU model for ASPEED OTP memory and integrate
+ with SoC
+Date: Mon, 30 Jun 2025 13:17:17 +0800
+Message-ID: <20250630051721.254207-1-kane_chen@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <dedb9a90-a516-430e-8748-f776392f508d@intel.com>
-Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=kane_chen@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,24 +60,67 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Kane Chen <kane_chen@aspeedtech.com>
+From:  Kane Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > +        if (cpu->vendor_cpuid_only_v2 && IS_INTEL_CPU(env)) {
-> > +            *ecx = *edx = 0;
-> > +            break;
-> > +        }
-> 
-> current code guarantees ecx and edx to be 0 for !IS_AMD_CPU(). I think the
-> patch is unnecessary.
+From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-Hi, could you please tell me why?
+This patch series introduces a QEMU model for the ASPEED OTP (One-Time
+Programmable) memory, along with its integration into the Secure Boot
+Controller (SBC) and supported SoC (AST2600).
 
-Thanks,
-Zhao
+The OTP model emulates a simple fuse array used for secure boot or
+device configuration, implemented with internal buffers; external
+file/device support not included in this version. It exposes an
+AddressSpace to support transaction-based access from controllers
+like the SBC.
 
-> >           if (threads_per_pkg > 1) {
-> >               /*
-> >                * Bits 15:12 is "The number of bits in the initial
-> 
+This series includes:
+  - OTP memory device implementation
+  - SBC integration with command decoding (READ/PROG)
+  - Direct integration in AST2600 SoC without requiring user parameters
+
+Any feedback or suggestions are appreciated!
+
+Kane
+---
+
+ChangeLog
+---------
+v3:
+- Switched to object_property_set_int() for setting "size"
+- Simplified qdev_realize() error handling by passing errp directly
+- Added "drive" property to OTP model for future extensibility
+
+v2:
+- Rename device from 'aspeed_otpmem' to 'aspeed_otp' and move it to hw/nvram/
+- Move OTP device realization from instance_init to the realize function
+- Improve error logging with qemu_log_mask() and remove unused error propagation
+
+v1:
+- Initial version
+
+---
+
+Kane-Chen-AS (3):
+  hw/misc/aspeed_otp: Add OTP device model with fallback RAM storage
+  hw/misc/aspeed_sbc: Connect ASPEED OTP memory device to SBC
+  hw/arm: Integrate ASPEED OTP memory support into AST2600 SoCs
+
+ include/hw/misc/aspeed_sbc.h  |   5 ++
+ include/hw/nvram/aspeed_otp.h |  33 ++++++++++
+ hw/arm/aspeed_ast2600.c       |   2 +-
+ hw/misc/aspeed_sbc.c          | 113 ++++++++++++++++++++++++++++++++++
+ hw/nvram/aspeed_otp.c         | 113 ++++++++++++++++++++++++++++++++++
+ hw/misc/trace-events          |   5 ++
+ hw/nvram/meson.build          |   4 ++
+ 7 files changed, 274 insertions(+), 1 deletion(-)
+ create mode 100644 include/hw/nvram/aspeed_otp.h
+ create mode 100644 hw/nvram/aspeed_otp.c
+
+-- 
+2.43.0
+
 
