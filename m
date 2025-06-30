@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B0F1C83033
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 20:01:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1427C83033
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 20:01:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWKfU-0002kk-UI; Mon, 30 Jun 2025 15:59:56 -0400
+	id 1uWKfU-0002jQ-0V; Mon, 30 Jun 2025 15:59:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uWKfR-0002gC-Bn
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 15:59:53 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uWKfL-0002dC-6D
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 15:59:49 -0400
 Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uWKfP-0007UY-1Z
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 15:59:53 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uWKfI-0007U1-EP
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 15:59:45 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 8593C1F397;
- Mon, 30 Jun 2025 19:59:35 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 7906A1F393;
+ Mon, 30 Jun 2025 19:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1751313575; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1751313574; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=77bYJDNs0Ws59oQe8GYo3nGN8937if8rA7m8Ew4y654=;
- b=02HUJGg8tGGW5p2AaU7yZoH0aI0Wqx9Y5BAyMWnEBi3sWK8j2odDoIt8W7MRzGUaKkCdj0
- Y1Pfh6Uh2GyVDkb6rRhPCiSdvgwYBzzPakXIYSOPz8eDu0DHHJBfPQp9aMfu2pGFrrchZC
- T0D3EyvrAm4kTBKks1TdyXFeez7Bdjo=
+ bh=MUB/IZD2jkUuleGLSl99i/f1/dQ8eMW7zGyUow/gd5k=;
+ b=eco0fj8QmGM0ZyO9yLAUo7vvdhJX4AkZb8ftx8Cp7Vw6UWDXnWAGWOioSqaLllr4rEcVDz
+ O5jwHI8uBJylZnqRM6VVXtnkQapo2P8sFGY3kilXpxworV6q2LPtTRF3u4SC0PkgJyQJPk
+ zIL5KSGHzkEn8gHb/JGx/zHLTVEV3xU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1751313575;
+ s=susede2_ed25519; t=1751313574;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=77bYJDNs0Ws59oQe8GYo3nGN8937if8rA7m8Ew4y654=;
- b=dRjqqV9X9qxIPhxiNCnZgBvmEWzyKgNWnKDzQpPsfyQHv2jSyRzqQ3HgEpqH7M9Td1WCV+
- Z19iQspOs67aruDA==
+ bh=MUB/IZD2jkUuleGLSl99i/f1/dQ8eMW7zGyUow/gd5k=;
+ b=Yq43iG+T7xoGci1/id7FGrG0wLi8J1UdL3SxlrpExN1l/kHxN+El+15rWF79ZgOosjWWfd
+ ZZAaEJJ7Qp9+4vBQ==
 Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1751313575; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1751313573; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=77bYJDNs0Ws59oQe8GYo3nGN8937if8rA7m8Ew4y654=;
- b=02HUJGg8tGGW5p2AaU7yZoH0aI0Wqx9Y5BAyMWnEBi3sWK8j2odDoIt8W7MRzGUaKkCdj0
- Y1Pfh6Uh2GyVDkb6rRhPCiSdvgwYBzzPakXIYSOPz8eDu0DHHJBfPQp9aMfu2pGFrrchZC
- T0D3EyvrAm4kTBKks1TdyXFeez7Bdjo=
+ bh=MUB/IZD2jkUuleGLSl99i/f1/dQ8eMW7zGyUow/gd5k=;
+ b=SHH7rllYEae0mqdHrzzRyi1avl9WSFJbI0DtdfNgUIN5ljady2blLdwnmZBzFFz/gQmTuN
+ Tm4EjFzj9LZJ6Nroau9zK2PhnaCcwi97e8nkeMJq33n1ONC7ugneRPeA++19qC3DK2mzA5
+ v9BzqX0wMduLkLjOLl3EQx8luEiCT9w=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1751313575;
+ s=susede2_ed25519; t=1751313573;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=77bYJDNs0Ws59oQe8GYo3nGN8937if8rA7m8Ew4y654=;
- b=dRjqqV9X9qxIPhxiNCnZgBvmEWzyKgNWnKDzQpPsfyQHv2jSyRzqQ3HgEpqH7M9Td1WCV+
- Z19iQspOs67aruDA==
+ bh=MUB/IZD2jkUuleGLSl99i/f1/dQ8eMW7zGyUow/gd5k=;
+ b=Ltr+FmnUjVRZKi0Ck2xDuIScnl5MrkbkXK2a6s5pjBlgCP3c1ia4DTCXspikTOmhqT1mb6
+ tIHu0nTYauhsq2Bg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0423013A24;
- Mon, 30 Jun 2025 19:59:33 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AC6E21399F;
+ Mon, 30 Jun 2025 19:59:31 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id ME4xLaXsYmhQUAAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 30 Jun 2025 19:59:33 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id iIwvG6PsYmhQUAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 30 Jun 2025 19:59:31 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com,
-	armbru@redhat.com,
-	Peter Xu <peterx@redhat.com>
-Subject: [PATCH v2 08/24] migration: Remove checks for s->parameters has_*
- fields
-Date: Mon, 30 Jun 2025 16:58:57 -0300
-Message-Id: <20250630195913.28033-9-farosas@suse.de>
+Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>
+Subject: [PATCH v2 07/24] migration: Add a flag to track block-bitmap-mapping
+ input
+Date: Mon, 30 Jun 2025 16:58:56 -0300
+Message-Id: <20250630195913.28033-8-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250630195913.28033-1-farosas@suse.de>
 References: <20250630195913.28033-1-farosas@suse.de>
@@ -88,15 +87,13 @@ Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
  R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.999];
- MIME_GOOD(-0.10)[text/plain]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MIME_TRACE(0.00)[0:+];
- R_RATELIMIT(0.00)[to_ip_from(RLjrdmmf3juheryardexw6jb95)];
- ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
  RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
  RCVD_TLS_ALL(0.00)[]
 Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
  helo=smtp-out2.suse.de
@@ -123,279 +120,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The migration parameters validation produces a temporary structure
-which is the merge of the current parameter values (s->parameters,
-MigrationParameters) with the new parameters set by the user
-(former MigrateSetParameters).
+The QAPI converts an empty list on the block-bitmap-mapping input into
+a NULL BitmapMigrationNodeAliasList. The empty list is a valid input
+for the block-bitmap-mapping option, so commit 3cba22c9ad ("migration:
+Fix block_bitmap_mapping migration") started using the
+s->parameters.has_block_bitmap_mapping field to tell when the user has
+passed in an empty list vs. when no list has been passed at all.
 
-When copying the values from s->parameters into the temporary
-structure, the has_* fields are copied along, but when merging the
-user-input values they are not.
+Using s->parameters.has_block_bitmap_mapping field is only possible
+because MigrationParameters has had its members made optional due to
+historical reasons.
 
-During migrate_params_check(), only the parameters that have the
-corresponding has_* field will be checked, so only the parameters that
-were initialized in migrate_params_init() will be validated.
+In order to make improvements to the way configuration options are set
+for a migration, we'd like to reduce the open-coded usage of the has_*
+fields of the global configuration object (s->parameters).
 
-This causes (almost) all of the migration parameters to be validated
-every time a parameter is set, regardless of which fields the user
-touched, but it also skips validation of any values that are not set
-in migrate_params_init().
+Add a separate boolean to track the status of the block_bitmap_mapping
+option.
 
-It's not clear what was the intention of the original code, whether to
-validate all fields always, or only validate what the user input
-changed. Since the current situation is closer to the former option,
-make the choice of validating all parameters by removing the checks
-for the has_* fields when validating.
+No functional change intended.
 
-Note that bringing the user input into the temporary structure for
-validation still needs to look at the has_* fields, otherwise any
-parameters not set by the user (i.e. 0) would override the
-corresponding value in s->parameters.
+(this was verified to not regress iotest 300, which is the test that
+3cba22c9ad refers to)
 
-The empty migrate_params_init() will be kept because subsequent
-patches will add code to it.
-
+CC: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/options.c | 101 +++++++++++++-------------------------------
- 1 file changed, 29 insertions(+), 72 deletions(-)
+ migration/migration-hmp-cmds.c | 3 ++-
+ migration/migration.h          | 7 +++++++
+ migration/options.c            | 6 +++---
+ 3 files changed, 12 insertions(+), 4 deletions(-)
 
+diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+index 82cd2dcb8e..f29bdc12a8 100644
+--- a/migration/migration-hmp-cmds.c
++++ b/migration/migration-hmp-cmds.c
+@@ -240,6 +240,7 @@ void hmp_info_migrate_capabilities(Monitor *mon, const QDict *qdict)
+ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+ {
+     MigrationParameters *params;
++    MigrationState *s = migrate_get_current();
+ 
+     params = qmp_query_migrate_parameters(NULL);
+ 
+@@ -322,7 +323,7 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+             MigrationParameter_str(MIGRATION_PARAMETER_TLS_AUTHZ),
+                        params->tls_authz->u.s);
+ 
+-        if (params->has_block_bitmap_mapping) {
++        if (s->has_block_bitmap_mapping) {
+             const BitmapMigrationNodeAliasList *bmnal;
+ 
+             monitor_printf(mon, "%s:\n",
+diff --git a/migration/migration.h b/migration/migration.h
+index 739289de93..84c3007ab8 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -510,6 +510,13 @@ struct MigrationState {
+     bool rdma_migration;
+ 
+     GSource *hup_source;
++
++    /*
++     * The block-bitmap-mapping option is allowed to be an emtpy list,
++     * therefore we need a way to know whether the user has given
++     * anything as input.
++     */
++    bool has_block_bitmap_mapping;
+ };
+ 
+ void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
 diff --git a/migration/options.c b/migration/options.c
-index cb5855303a..af19c8f2e0 100644
+index 1f8a977865..cb5855303a 100644
 --- a/migration/options.c
 +++ b/migration/options.c
-@@ -1056,31 +1056,6 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
- 
- void migrate_params_init(MigrationParameters *params)
+@@ -736,7 +736,7 @@ bool migrate_has_block_bitmap_mapping(void)
  {
--    /* Set has_* up only for parameter checks */
--    params->has_throttle_trigger_threshold = true;
--    params->has_cpu_throttle_initial = true;
--    params->has_cpu_throttle_increment = true;
--    params->has_cpu_throttle_tailslow = true;
--    params->has_max_bandwidth = true;
--    params->has_downtime_limit = true;
--    params->has_x_checkpoint_delay = true;
--    params->has_multifd_channels = true;
--    params->has_multifd_compression = true;
--    params->has_multifd_zlib_level = true;
--    params->has_multifd_qatzip_level = true;
--    params->has_multifd_zstd_level = true;
--    params->has_xbzrle_cache_size = true;
--    params->has_max_postcopy_bandwidth = true;
--    params->has_max_cpu_throttle = true;
--    params->has_announce_initial = true;
--    params->has_announce_max = true;
--    params->has_announce_rounds = true;
--    params->has_announce_step = true;
--    params->has_x_vcpu_dirty_limit_period = true;
--    params->has_vcpu_dirty_limit = true;
--    params->has_mode = true;
--    params->has_zero_page_detection = true;
--    params->has_direct_io = true;
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->parameters.has_block_bitmap_mapping;
++    return s->has_block_bitmap_mapping;
  }
  
- static void migrate_post_update_params(MigrationParameters *new, Error **errp)
-@@ -1116,34 +1091,31 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
- {
-     ERRP_GUARD();
+ uint32_t migrate_checkpoint_delay(void)
+@@ -1033,7 +1033,7 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+     params->has_announce_step = true;
+     params->announce_step = s->parameters.announce_step;
  
--    if (params->has_throttle_trigger_threshold &&
--        (params->throttle_trigger_threshold < 1 ||
--         params->throttle_trigger_threshold > 100)) {
-+    if (params->throttle_trigger_threshold < 1 ||
-+        params->throttle_trigger_threshold > 100) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-                    "throttle_trigger_threshold",
-                    "an integer in the range of 1 to 100");
-         return false;
-     }
+-    if (s->parameters.has_block_bitmap_mapping) {
++    if (s->has_block_bitmap_mapping) {
+         params->has_block_bitmap_mapping = true;
+         params->block_bitmap_mapping =
+             QAPI_CLONE(BitmapMigrationNodeAliasList,
+@@ -1513,7 +1513,7 @@ static void migrate_params_apply(MigrationParameters *params)
+         qapi_free_BitmapMigrationNodeAliasList(
+             s->parameters.block_bitmap_mapping);
  
--    if (params->has_cpu_throttle_initial &&
--        (params->cpu_throttle_initial < 1 ||
--         params->cpu_throttle_initial > 99)) {
-+    if (params->cpu_throttle_initial < 1 ||
-+        params->cpu_throttle_initial > 99) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-                    "cpu_throttle_initial",
-                    "an integer in the range of 1 to 99");
-         return false;
-     }
- 
--    if (params->has_cpu_throttle_increment &&
--        (params->cpu_throttle_increment < 1 ||
--         params->cpu_throttle_increment > 99)) {
-+    if (params->cpu_throttle_increment < 1 ||
-+        params->cpu_throttle_increment > 99) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-                    "cpu_throttle_increment",
-                    "an integer in the range of 1 to 99");
-         return false;
-     }
- 
--    if (params->has_max_bandwidth && (params->max_bandwidth > SIZE_MAX)) {
-+    if (params->max_bandwidth > SIZE_MAX) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-                    "max_bandwidth",
-                    "an integer in the range of 0 to "stringify(SIZE_MAX)
-@@ -1151,8 +1123,7 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
-         return false;
-     }
- 
--    if (params->has_avail_switchover_bandwidth &&
--        (params->avail_switchover_bandwidth > SIZE_MAX)) {
-+    if (params->avail_switchover_bandwidth > SIZE_MAX) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-                    "avail_switchover_bandwidth",
-                    "an integer in the range of 0 to "stringify(SIZE_MAX)
-@@ -1160,8 +1131,7 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
-         return false;
-     }
- 
--    if (params->has_downtime_limit &&
--        (params->downtime_limit > MAX_MIGRATE_DOWNTIME)) {
-+    if (params->downtime_limit > MAX_MIGRATE_DOWNTIME) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-                    "downtime_limit",
-                    "an integer in the range of 0 to "
-@@ -1171,93 +1141,82 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
- 
-     /* x_checkpoint_delay is now always positive */
- 
--    if (params->has_multifd_channels && (params->multifd_channels < 1)) {
-+    if (params->multifd_channels < 1) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-                    "multifd_channels",
-                    "a value between 1 and 255");
-         return false;
-     }
- 
--    if (params->has_multifd_zlib_level &&
--        (params->multifd_zlib_level > 9)) {
-+    if (params->multifd_zlib_level > 9) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "multifd_zlib_level",
-                    "a value between 0 and 9");
-         return false;
-     }
- 
--    if (params->has_multifd_qatzip_level &&
--        ((params->multifd_qatzip_level > 9) ||
--        (params->multifd_qatzip_level < 1))) {
-+    if (params->multifd_qatzip_level > 9 ||
-+        params->multifd_qatzip_level < 1) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "multifd_qatzip_level",
-                    "a value between 1 and 9");
-         return false;
-     }
- 
--    if (params->has_multifd_zstd_level &&
--        (params->multifd_zstd_level > 20)) {
-+    if (params->multifd_zstd_level > 20) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "multifd_zstd_level",
-                    "a value between 0 and 20");
-         return false;
-     }
- 
--    if (params->has_xbzrle_cache_size &&
--        (params->xbzrle_cache_size < qemu_target_page_size() ||
--         !is_power_of_2(params->xbzrle_cache_size))) {
-+    if (params->xbzrle_cache_size < qemu_target_page_size() ||
-+        !is_power_of_2(params->xbzrle_cache_size)) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-                    "xbzrle_cache_size",
-                    "a power of two no less than the target page size");
-         return false;
-     }
- 
--    if (params->has_max_cpu_throttle &&
--        (params->max_cpu_throttle < params->cpu_throttle_initial ||
--         params->max_cpu_throttle > 99)) {
-+    if (params->max_cpu_throttle < params->cpu_throttle_initial ||
-+        params->max_cpu_throttle > 99) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-                    "max_cpu_throttle",
-                    "an integer in the range of cpu_throttle_initial to 99");
-         return false;
-     }
- 
--    if (params->has_announce_initial &&
--        params->announce_initial > 100000) {
-+    if (params->announce_initial > 100000) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-                    "announce_initial",
-                    "a value between 0 and 100000");
-         return false;
-     }
--    if (params->has_announce_max &&
--        params->announce_max > 100000) {
-+    if (params->announce_max > 100000) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-                    "announce_max",
-                    "a value between 0 and 100000");
-        return false;
-     }
--    if (params->has_announce_rounds &&
--        params->announce_rounds > 1000) {
-+    if (params->announce_rounds > 1000) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-                    "announce_rounds",
-                    "a value between 0 and 1000");
-        return false;
-     }
--    if (params->has_announce_step &&
--        (params->announce_step < 1 ||
--        params->announce_step > 10000)) {
-+    if (params->announce_step < 1 ||
-+        params->announce_step > 10000) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-                    "announce_step",
-                    "a value between 0 and 10000");
-        return false;
-     }
- 
--    if (params->has_block_bitmap_mapping &&
--        !check_dirty_bitmap_mig_alias_map(params->block_bitmap_mapping, errp)) {
-+    if (!check_dirty_bitmap_mig_alias_map(params->block_bitmap_mapping, errp)) {
-         error_prepend(errp, "Invalid mapping given for block-bitmap-mapping: ");
-         return false;
-     }
- 
- #ifdef CONFIG_LINUX
-     if (migrate_zero_copy_send() &&
--        ((params->has_multifd_compression && params->multifd_compression) ||
--         *params->tls_creds->u.s)) {
-+        (params->multifd_compression || *params->tls_creds->u.s)) {
-         error_setg(errp,
-                    "Zero copy only available for non-compressed non-TLS multifd migration");
-         return false;
-@@ -1271,23 +1230,21 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
-         return false;
-     }
- 
--    if (params->has_x_vcpu_dirty_limit_period &&
--        (params->x_vcpu_dirty_limit_period < 1 ||
--         params->x_vcpu_dirty_limit_period > 1000)) {
-+    if (params->x_vcpu_dirty_limit_period < 1 ||
-+        params->x_vcpu_dirty_limit_period > 1000) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-                    "x-vcpu-dirty-limit-period",
-                    "a value between 1 and 1000");
-         return false;
-     }
- 
--    if (params->has_vcpu_dirty_limit &&
--        (params->vcpu_dirty_limit < 1)) {
-+    if (params->vcpu_dirty_limit < 1) {
-         error_setg(errp,
-                    "Parameter 'vcpu_dirty_limit' must be greater than 1 MB/s");
-         return false;
-     }
- 
--    if (params->has_direct_io && params->direct_io && !qemu_has_direct_io()) {
-+    if (params->direct_io && !qemu_has_direct_io()) {
-         error_setg(errp, "No build-time support for direct-io");
-         return false;
-     }
+-        s->parameters.has_block_bitmap_mapping = true;
++        s->has_block_bitmap_mapping = true;
+         s->parameters.block_bitmap_mapping =
+             QAPI_CLONE(BitmapMigrationNodeAliasList,
+                        params->block_bitmap_mapping);
 -- 
 2.35.3
 
