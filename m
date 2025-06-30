@@ -4,75 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 669BCC7EE39
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 07:13:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AE65C83028
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 08:14:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uW8gs-0006ri-1O; Mon, 30 Jun 2025 03:12:34 -0400
+	id 1uW9eB-0003yz-BO; Mon, 30 Jun 2025 04:13:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uW8gg-0006Ur-TG; Mon, 30 Jun 2025 03:12:26 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uW9eA-0003vd-24
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 04:13:50 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uW8gc-0004V9-LR; Mon, 30 Jun 2025 03:12:22 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bVy2Y3MZgz6L55K;
- Mon, 30 Jun 2025 15:09:25 +0800 (CST)
-Received: from frapeml100008.china.huawei.com (unknown [7.182.85.131])
- by mail.maildlp.com (Postfix) with ESMTPS id 4BD1E1402EC;
- Mon, 30 Jun 2025 15:12:12 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml100008.china.huawei.com (7.182.85.131) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 30 Jun 2025 09:12:12 +0200
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Mon, 30 Jun 2025 09:12:12 +0200
-To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "berrange@redhat.com"
- <berrange@redhat.com>, "imammedo@redhat.com" <imammedo@redhat.com>,
- "nathanc@nvidia.com" <nathanc@nvidia.com>, "mochs@nvidia.com"
- <mochs@nvidia.com>, "smostafa@google.com" <smostafa@google.com>,
- "gustavo.romero@linaro.org" <gustavo.romero@linaro.org>, Linuxarm
- <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
- <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
-Subject: RE: [PATCH v5 00/11] hw/arm/virt: Add support for user creatable
- SMMUv3 device
-Thread-Topic: [PATCH v5 00/11] hw/arm/virt: Add support for user creatable
- SMMUv3 device
-Thread-Index: AQHb5C8S0d/fYPGiP0CF8356U8e6vbQW1lEAgAR9sXA=
-Date: Mon, 30 Jun 2025 07:12:12 +0000
-Message-ID: <942853c1cd54409480fa4136e45e7db8@huawei.com>
-References: <20250623094230.76084-1-shameerali.kolothum.thodi@huawei.com>
- <7a878419-d709-4da7-8b06-2c36a2b05287@redhat.com>
-In-Reply-To: <7a878419-d709-4da7-8b06-2c36a2b05287@redhat.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uW9e3-0008Fh-CM
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 04:13:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1751271223; x=1782807223;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=huJnZK6/VFdFTS+MtsTCfXogRK27ANF61hUOOHmIvh0=;
+ b=GHKUw2Jf1g+xa8govwK9PHBcbtiflgFf5efEI+zSxNSsMW3ty61sypMb
+ Az4mKeJtT9u6cFTXB+UPX68q87GXpj8vQicwX5CpzXQAVgf5UGD30UQi0
+ brn6CH1XeRyOJusYS+tV4W9bBnP55FTgB7Eo0oSJ+9mpoNY7mZ9USHOtF
+ dr6966EIhFZ6vrvrTNQyy3KQf2ljdp61VGTp+jKplzkQj+zby1SzLoejH
+ envGmQf1Mte4gZEec8u/eRcIJK+6+lULPfbU18xyOOjvYf7i7oXg2S6Ap
+ BIVJfwJ6M7r6Vyh3qzqSObn+UpnwpMWOP7X0Z21jUDUHk7XrrwANe9IY/ g==;
+X-CSE-ConnectionGUID: 9DaoTr13QQe61R1YEw95CA==
+X-CSE-MsgGUID: hDs72dupTN+2eW0jbHcHnw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11479"; a="53637397"
+X-IronPort-AV: E=Sophos;i="6.16,277,1744095600"; d="scan'208";a="53637397"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Jun 2025 01:13:37 -0700
+X-CSE-ConnectionGUID: KrpeSJEhTNqnmt//GeESdA==
+X-CSE-MsgGUID: qNkGmzTSTTaNHEGwCXxPzw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,277,1744095600"; d="scan'208";a="152777285"
+Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
+ by orviesa010.jf.intel.com with ESMTP; 30 Jun 2025 01:13:36 -0700
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ xiaoyao.li@intel.com
+Subject: [PATCH 1/4] i386/cpu: Use CPUID_MODEL_ID_SZ instead of hardcoded 48
+Date: Mon, 30 Jun 2025 16:06:07 +0800
+Message-ID: <20250630080610.3151956-2-xiaoyao.li@intel.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250630080610.3151956-1-xiaoyao.li@intel.com>
+References: <20250630080610.3151956-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,30 +80,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRXJpYyBBdWdlciA8ZXJp
-Yy5hdWdlckByZWRoYXQuY29tPg0KPiBTZW50OiBGcmlkYXksIEp1bmUgMjcsIDIwMjUgMTozNyBQ
-TQ0KPiBUbzogU2hhbWVlcmFsaSBLb2xvdGh1bSBUaG9kaQ0KPiA8c2hhbWVlcmFsaS5rb2xvdGh1
-bS50aG9kaUBodWF3ZWkuY29tPjsgcWVtdS1hcm1Abm9uZ251Lm9yZzsNCj4gcWVtdS1kZXZlbEBu
-b25nbnUub3JnDQo+IENjOiBwZXRlci5tYXlkZWxsQGxpbmFyby5vcmc7IGpnZ0BudmlkaWEuY29t
-OyBuaWNvbGluY0BudmlkaWEuY29tOw0KPiBkZHV0aWxlQHJlZGhhdC5jb207IGJlcnJhbmdlQHJl
-ZGhhdC5jb207IGltYW1tZWRvQHJlZGhhdC5jb207DQo+IG5hdGhhbmNAbnZpZGlhLmNvbTsgbW9j
-aHNAbnZpZGlhLmNvbTsgc21vc3RhZmFAZ29vZ2xlLmNvbTsNCj4gZ3VzdGF2by5yb21lcm9AbGlu
-YXJvLm9yZzsgTGludXhhcm0gPGxpbnV4YXJtQGh1YXdlaS5jb20+OyBXYW5nemhvdQ0KPiAoQikg
-PHdhbmd6aG91MUBoaXNpbGljb24uY29tPjsgamlhbmdrdW5rdW4gPGppYW5na3Vua3VuQGh1YXdl
-aS5jb20+Ow0KPiBKb25hdGhhbiBDYW1lcm9uIDxqb25hdGhhbi5jYW1lcm9uQGh1YXdlaS5jb20+
-Ow0KPiB6aGFuZ2ZlaS5nYW9AbGluYXJvLm9yZw0KPiBTdWJqZWN0OiBSZTogW1BBVENIIHY1IDAw
-LzExXSBody9hcm0vdmlydDogQWRkIHN1cHBvcnQgZm9yIHVzZXIgY3JlYXRhYmxlDQo+IFNNTVV2
-MyBkZXZpY2UNCj4gDQo+IEhpIFNoYW1lZXIsDQo+IA0KPiBPbiA2LzIzLzI1IDExOjQyIEFNLCBT
-aGFtZWVyIEtvbG90aHVtIHdyb3RlOg0KPiA+IEhpIEFsbCwNCj4gPg0KPiA+IENoYW5nZXMgZnJv
-bSB2NDoNCj4gPiBodHRwczovL2xvcmUua2VybmVsLm9yZy9xZW11LWRldmVsLzIwMjUwNjEzMTQ0
-NDQ5LjYwMTU2LTEtDQo+IHNoYW1lZXJhbGkua29sb3RodW0udGhvZGlAaHVhd2VpLmNvbS8NCj4g
-Pg0KPiA+IE1ham9yIGNoYW5nZXMgZnJvbSB2NDoNCj4gdGhpcyB3aWxsIG5lZWQgYSByZXNwaW4g
-YWZ0ZXIgbWVyZ2Ugb2YNCj4gZjVlYzc1MWVlNzBkwqAgaHcvYXJtL3ZpcnQ6IENoZWNrIGJ5cGFz
-cyBpb21tdSBpcyBub3Qgc2V0IGZvciBpb21tdS1tYXANCj4gRFQgcHJvcGVydHkNCg0KWWVzLiBN
-aXNzZWQgdGhhdC4gV2lsbCBkby4NCg0KVGhhbmtzLA0KU2hhbWVlcg0KDQo=
+There is already the MACRO CPUID_MODEL_ID_SZ defined in QEMU. Use it to
+replace all the hardcoded 48.
+
+Opportunistically fix the indentation of CPUID_VENDOR_SZ.
+
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+---
+ target/i386/cpu.c      | 8 ++++----
+ target/i386/cpu.h      | 3 ++-
+ target/i386/host-cpu.c | 1 -
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 0d35e95430fe..d80e57d0cc0d 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6468,11 +6468,11 @@ static char *x86_cpuid_get_model_id(Object *obj, Error **errp)
+     char *value;
+     int i;
+ 
+-    value = g_malloc(48 + 1);
+-    for (i = 0; i < 48; i++) {
++    value = g_malloc(CPUID_MODEL_ID_SZ + 1);
++    for (i = 0; i < CPUID_MODEL_ID_SZ; i++) {
+         value[i] = env->cpuid_model[i >> 2] >> (8 * (i & 3));
+     }
+-    value[48] = '\0';
++    value[CPUID_MODEL_ID_SZ] = '\0';
+     return value;
+ }
+ 
+@@ -6487,7 +6487,7 @@ static void x86_cpuid_set_model_id(Object *obj, const char *model_id,
+         model_id = "";
+     }
+     len = strlen(model_id);
+-    memset(env->cpuid_model, 0, 48);
++    memset(env->cpuid_model, 0, CPUID_MODEL_ID_SZ);
+     for (i = 0; i < 48; i++) {
+         if (i >= len) {
+             c = '\0';
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 51e10139dfdf..b83c521d9fbb 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -1159,7 +1159,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ /* PMM enabled */
+ #define CPUID_C000_0001_EDX_PMM_EN             (1U << 13)
+ 
+-#define CPUID_VENDOR_SZ      12
++#define CPUID_VENDOR_SZ     12
++#define CPUID_MODEL_ID_SZ   48
+ 
+ #define CPUID_VENDOR_INTEL_1 0x756e6547 /* "Genu" */
+ #define CPUID_VENDOR_INTEL_2 0x49656e69 /* "ineI" */
+diff --git a/target/i386/host-cpu.c b/target/i386/host-cpu.c
+index 7512567298bc..16c236478e2b 100644
+--- a/target/i386/host-cpu.c
++++ b/target/i386/host-cpu.c
+@@ -80,7 +80,6 @@ bool host_cpu_realizefn(CPUState *cs, Error **errp)
+     return true;
+ }
+ 
+-#define CPUID_MODEL_ID_SZ 48
+ /**
+  * cpu_x86_fill_model_id:
+  * Get CPUID model ID string from host CPU.
+-- 
+2.43.0
+
 
