@@ -4,108 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C695C83030
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 20:05:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DA08C83030
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 20:19:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWKgX-0005mX-9C; Mon, 30 Jun 2025 16:01:01 -0400
+	id 1uWKxw-0003VC-8W; Mon, 30 Jun 2025 16:19:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uWKgF-00059p-Br
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 16:00:43 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uWKxt-0003Ut-BS
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 16:18:57 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uWKgD-0007mk-IM
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 16:00:43 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 810D021161;
- Mon, 30 Jun 2025 20:00:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1751313604; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OMnsDqpS7mN5ekbzq6rLUj1Jtd21FawuezqRU1AIOxE=;
- b=SOyg5eilBG96Xgweic7QpojL5RNpbLiDFTv2YpjnoxsXcYhXWbsXCx7hy9Bc3UbcnWyFgQ
- 9H0lBS6SxaQMlKXuZAbRJzKjUCYEIzIuZFwIr3ii2ENN+sv1fu2KKz/7xmN1CQ/R5pTcej
- nHfItiG8i8OCuYztIR4T5J64RZlORVI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1751313604;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OMnsDqpS7mN5ekbzq6rLUj1Jtd21FawuezqRU1AIOxE=;
- b=u4T9Up066SayiMCh1tGi/xzVTuJpAhXlkANSFlRrZkkJIEGUtMas/56r7hC0wJUYrSG04+
- Rv2XZ2Wy7KlkJJCA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1751313604; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OMnsDqpS7mN5ekbzq6rLUj1Jtd21FawuezqRU1AIOxE=;
- b=SOyg5eilBG96Xgweic7QpojL5RNpbLiDFTv2YpjnoxsXcYhXWbsXCx7hy9Bc3UbcnWyFgQ
- 9H0lBS6SxaQMlKXuZAbRJzKjUCYEIzIuZFwIr3ii2ENN+sv1fu2KKz/7xmN1CQ/R5pTcej
- nHfItiG8i8OCuYztIR4T5J64RZlORVI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1751313604;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OMnsDqpS7mN5ekbzq6rLUj1Jtd21FawuezqRU1AIOxE=;
- b=u4T9Up066SayiMCh1tGi/xzVTuJpAhXlkANSFlRrZkkJIEGUtMas/56r7hC0wJUYrSG04+
- Rv2XZ2Wy7KlkJJCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 71F791399F;
- Mon, 30 Jun 2025 20:00:02 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id KG35DMLsYmhQUAAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 30 Jun 2025 20:00:02 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 21/24] tests/qtest/migration: Take reference when passing
- %p to qtest_qmp
-Date: Mon, 30 Jun 2025 16:59:10 -0300
-Message-Id: <20250630195913.28033-22-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20250630195913.28033-1-farosas@suse.de>
-References: <20250630195913.28033-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uWKxq-0002DZ-EX
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 16:18:57 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2363616a1a6so19964475ad.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 13:18:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751314732; x=1751919532; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Gcbpiwxb/T3MTViaos40c0NFlzFRu1N9xiMG5+q6Wko=;
+ b=QK+aQbE/OCXs/5QbDve1FPSH5J7ZCjnAcEvviuL+RitF6ri6SnzxPVG36ZklfhwP+3
+ 1bjQTrIvp36wZ1eOElbd20yMBfc2NPnnflMztlqo+k+Ff55AOp5NseH7K5ytuvD0bllu
+ smHw88d3YNmSz+CwY2bHg6a4E4lejXXOJTAeNajHbFiWIlP6QZxOQ6Mtz/HOOUfwxkuQ
+ YNhsrF0Ira2Iws5Ckp934BmAbytU/M7iy0BNsbGqq1De35FvmexPjIU+J1EiqxXO58ko
+ ixnzySYq2m8Ch80NErpP5nNQ+D+9N05AbjXAofI7sPWRZJqj+N18nqAfrdXErRYh1y3k
+ zgXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751314732; x=1751919532;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Gcbpiwxb/T3MTViaos40c0NFlzFRu1N9xiMG5+q6Wko=;
+ b=RIDCKiQJESVngrClDDRYtWRmbBsW8fAxINWGDIVlMI4RnY/7sQgS6+HT4fVrlrfn6I
+ g/3zuHSyHNBSdlhU33sX0dkET5QXr9m47cpbRUhjoUdzOvng8o7lO8KzfrFuY8co9vOb
+ hxFxSRms3i+s4BYfQYq/q29e8diymVLMuEFL2eO6y+xtP0k27aMyDFZjZJ3L4uthv+i/
+ YzCEy+NEL7YO7PBM7MrHJ1llsLrBhcnTjSIKtD9DyLvevUNGQS03wwQEz/LoU0n+rnhQ
+ tzr9ji4m84qIeEODh3BtQsl7tToSmMFr/qLipPG4gSw1MxW5HObBGlfdoTZuD/0d6KEw
+ rjMQ==
+X-Gm-Message-State: AOJu0YyTFL8L0tEI6jjRoIl6Fw515+2ofZFVoxcwL22pBMPeXhGRFReQ
+ IVgNCsn4kmt/G04xYGTcZ/N4DuPBhiwf+KiGdwkuhOldi+lb2dwHFtRFpham/sc89Yk=
+X-Gm-Gg: ASbGncvDt9lTMhXIxOobERva+kGDPzu4PjMc8zPUUnfMCDiMJLGPyjef58gnN3ytQwM
+ APm3dvRn+ul9q64l9AUod3TMJ3dZy22dEP2Ke3ZsFwte7U1RvsN4QvA0rVLxyRbk6ULya6rqoA3
+ c/I3s+A8vAAhHn+RCn6H7Hbk4l+U++u4Okms79XYPKsk/HYWv5zQ/kAbQMF+7r+3JOnOi8TVds6
+ uX80zPh+tOfrnr14rjaJWdDvmnZ6Os4kUIrFnwjOHIOOl4q8GzM8+4uPJSKi5O/uEoWWKSD5ewL
+ snbADu8CYD1JQjnqGy4YPEbpWx2XuNBQ4Ve3YzYTaoz30CU7xS3hKDZH0t4h//WwxatIgwP9pfY
+ =
+X-Google-Smtp-Source: AGHT+IHi99KE6TJ5XslJutN2HXwokQs37vumKrPI0b1RYv2/MQuqibzwp2eL5YA0QGZOXPCxnYyWEw==
+X-Received: by 2002:a17:903:1786:b0:235:6e7:8df2 with SMTP id
+ d9443c01a7336-23ac465cc6cmr218261865ad.41.1751314732124; 
+ Mon, 30 Jun 2025 13:18:52 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-23acb3adeabsm85277395ad.159.2025.06.30.13.18.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 30 Jun 2025 13:18:51 -0700 (PDT)
+Message-ID: <66852209-91e3-43a2-8d7a-51b31f843dca@linaro.org>
+Date: Mon, 30 Jun 2025 13:18:51 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: Options to output the preprocessor code
+Content-Language: en-US
+To: mindentropy <mindentropy@gmail.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>
+References: <CAM2a4uyBMNSdKNtJWWTgNivj6dpDFzJJepkfpU5RN-wir9vQEQ@mail.gmail.com>
+ <81d022a7-fdf7-4a03-9a3b-cb2635c96cda@linaro.org>
+ <CAM2a4uxrzRKrQsnaNXwQO208V4WExg+MvweKfRwF+_RgXrFqxw@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <CAM2a4uxrzRKrQsnaNXwQO208V4WExg+MvweKfRwF+_RgXrFqxw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.999];
- MIME_GOOD(-0.10)[text/plain]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MIME_TRACE(0.00)[0:+];
- R_RATELIMIT(0.00)[to_ip_from(RLjrdmmf3juheryardexw6jb95)];
- ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
- RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,52 +103,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The documentation of qobject_from_jsonv() states that it takes
-ownership of any %p arguments passed in.
+On 6/30/25 12:23 PM, mindentropy wrote:
+> On Tue, Jul 1, 2025 at 12:27 AM Pierrick Bouvier
+> <pierrick.bouvier@linaro.org> wrote:
+>>
+>> You can get verbose command for building by using make V=1, or ninja -v,
+>> depending which command you like to use.
+>>
+>> Then, you can get a preprocessed output by using '-E' gcc option.
+>> Don't forget to remove -o option, emitting the object file (or replace
+>> path).
+> 
+> Is there a Make rule to just generate the preprocessor output?
 
-Next patches will add config-passing to the tests, so take an extra
-reference in the migrate_qmp* functions to ensure the config is not
-freed from under us.
-
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- tests/qtest/migration/migration-qmp.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
-index fb59741b2c..d82ac8c750 100644
---- a/tests/qtest/migration/migration-qmp.c
-+++ b/tests/qtest/migration/migration-qmp.c
-@@ -97,7 +97,8 @@ void migrate_qmp_fail(QTestState *who, const char *uri,
-     }
- 
-     err = qtest_qmp_assert_failure_ref(
--        who, "{ 'execute': 'migrate', 'arguments': %p}", args);
-+        who, "{ 'execute': 'migrate', 'arguments': %p}",
-+        qdict_clone_shallow(args));
- 
-     g_assert(qdict_haskey(err, "desc"));
- 
-@@ -136,7 +137,8 @@ void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
-     }
- 
-     qtest_qmp_assert_success(who,
--                             "{ 'execute': 'migrate', 'arguments': %p}", args);
-+                             "{ 'execute': 'migrate', 'arguments': %p}",
-+                             qdict_clone_shallow(args));
- }
- 
- void migrate_set_capability(QTestState *who, const char *capability,
-@@ -174,7 +176,7 @@ void migrate_incoming_qmp(QTestState *to, const char *uri, QObject *channels,
-     migrate_set_capability(to, "events", true);
- 
-     rsp = qtest_qmp(to, "{ 'execute': 'migrate-incoming', 'arguments': %p}",
--                    args);
-+                    qdict_clone_shallow(args));
- 
-     if (!qdict_haskey(rsp, "return")) {
-         g_autoptr(GString) s = qobject_to_json_pretty(QOBJECT(rsp), true);
--- 
-2.35.3
-
+No, you need to find the command for the associated file you want, and 
+manually add the -E parameter.
 
