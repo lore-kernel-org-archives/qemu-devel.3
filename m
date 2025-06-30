@@ -4,91 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F403C83029
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 13:56:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFA33C8302D
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 14:16:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWEze-00033Q-Bz; Mon, 30 Jun 2025 09:56:22 -0400
+	id 1uWFHX-0006cj-CD; Mon, 30 Jun 2025 10:14:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWEzd-000338-52
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 09:56:21 -0400
-Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWEzb-0003tW-5R
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 09:56:20 -0400
-Received: by mail-oa1-x31.google.com with SMTP id
- 586e51a60fabf-2d09d495c6cso772033fac.3
- for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 06:56:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751291777; x=1751896577; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=XGFOiZa0zREV29yy8MdZoT3iiirrIep9pVPiA23b/cE=;
- b=tyuJnjbyJXlckDUK8fBZ9UXDE0SGcUeq779TIdKfIx9DJ/xSQeyl+o60kUVCAQnFry
- zlMn6E2rmC4ghKlVRclQN9v76vfzW6gBdcJobb+WdE5rapphZUytoji9EG4aoSR0XID4
- 7dQg63MgD7zVayaY/NyeVLDSiPfN2OYXK4G2/6rB8nc4sKSSx/RT1LnwpgZn+9xDwX14
- DbLXupkjjLvzSjqbS7uwLnzZx4fwd+iXav+qr8kPsAqKEHH8m/dZQUay7iJTxD6dMI7t
- 3nfnNANmAb0lIZbefunmnB/+QCeDEvVgDN3Oq9HpG1roiQ3FrYSCCSyP/iRH61ra98Zu
- 2fXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751291777; x=1751896577;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XGFOiZa0zREV29yy8MdZoT3iiirrIep9pVPiA23b/cE=;
- b=lk4LVr2zBn2rxl7EFJ+QCbla4QovwD2tSPPwDLZowU23M71GMTcVrweJ+V9vJVVloo
- 0AqdX7goOWiF9Qc0dVMCsQYFqrPtYprQph6j1zV/+uxXJVh1yBgC9vIUcQfCWJMrlG2m
- A/zvHJ8ZGRoFdauexoMk7P/NSeKw2rG0hEVCKzk7g4U0ZoVFH8Hbzt+YJsJPlMm1XbpS
- wWuKXGgnZcqhzcmlYWXu/Hnls0NnndvSdNQ1+9IQ4UY3Xx6wofBzZEfnilCNntF4RenA
- KuQYUp8e0FSEROYeXna18MXDNVke7NF04r7SBFB8+LMGZSzJSBgBPWR39JrdW9rApXBc
- gBnQ==
-X-Gm-Message-State: AOJu0YxdD+z7eFakNHVoswhvvRVXVM+1SDA2GtIASJUwjk5dBhRiycyC
- btx7Gv78ac4/COYBG7YnqwJAOAlr/W2ToFDzDvRrR/rud0BAqZt4PhyXunWM046zrDCTe5tOcOL
- 3+apA
-X-Gm-Gg: ASbGnctuFukuYT4y5rVvjpREatZZVeKbkoCM08v8dLTBtySFF5uwK+qlGgySiAeT2QU
- h1QfW4FpDIhj6+c0OZGxMe7O3n+MRLYlHyIWwMGw+EzrJdSJWDQ+mGMrr9//INrUVAIEPGJgSnb
- 484dSN24RB+GhUXOiQODS3VuczwU5DI3JXo0ywNjntgTPxu0anJL2BLrB2Erpr6osUCN6Z4Ztbh
- yqJWXr9Y9WrHE//s4VlDgtPr07oJZnrSzm5aWqon/WUvX0lEWbE8wLkNgF70VqQpkX61YTd5HdB
- DtOvN/CFPdokFm97FTkc7+T3ssuJInxPOVTv/MyxASNJXtNZjSKXKTlS3Q6l8XswezeG0YGYeBu
- MR/FrvTVDxjc=
-X-Google-Smtp-Source: AGHT+IF4Ymi8lmyuZJODt19HOT4QxbGoUKoOifXKDWsaoU3kw9Or4JAsy1K8g95vTOaxSl49XSApWQ==
-X-Received: by 2002:a05:6870:d92:b0:2ea:70ad:4517 with SMTP id
- 586e51a60fabf-2efed4f4f3emr8253925fac.15.1751291777136; 
- Mon, 30 Jun 2025 06:56:17 -0700 (PDT)
-Received: from [10.25.7.25] ([187.210.107.185])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-73afb02ad29sm1670694a34.29.2025.06.30.06.56.16
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Jun 2025 06:56:16 -0700 (PDT)
-Message-ID: <8141d048-42e5-4b79-a90d-0ef1857d5857@linaro.org>
-Date: Mon, 30 Jun 2025 07:56:14 -0600
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1uWFHU-0006cW-6V; Mon, 30 Jun 2025 10:14:48 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1uWFHR-0006qi-MX; Mon, 30 Jun 2025 10:14:47 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 7F9D14422D;
+ Mon, 30 Jun 2025 16:14:41 +0200 (CEST)
+From: Fiona Ebner <f.ebner@proxmox.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
+ eblake@redhat.com, armbru@redhat.com
+Subject: [PATCH] block: include 'file' child node name in block device info
+Date: Mon, 30 Jun 2025 16:06:26 +0200
+Message-ID: <20250630141421.1558724-1-f.ebner@proxmox.com>
+X-Mailer: git-send-email 2.47.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] target/arm: Allow arm_cpu_tlb_fill_align optionally
- set CPUTLBEntryFull
-To: qemu-devel@nongnu.org
-References: <20250630130937.3487-1-philmd@linaro.org>
- <20250630130937.3487-7-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250630130937.3487-7-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::31;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x31.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,31 +54,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/30/25 07:09, Philippe Mathieu-Daudé wrote:
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/arm/tcg/tlb_helper.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
-> index 23c72a99f5c..df04ef351d1 100644
-> --- a/target/arm/tcg/tlb_helper.c
-> +++ b/target/arm/tcg/tlb_helper.c
-> @@ -349,7 +349,9 @@ bool arm_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr address,
->                                 &res, fi)) {
->           res.f.extra.arm.pte_attrs = res.cacheattrs.attrs;
->           res.f.extra.arm.shareability = res.cacheattrs.shareability;
-> -        *out = res.f;
-> +        if (out) {
-> +            *out = res.f;
-> +        }
->           return true;
->       }
->       if (probe) {
+In combination with using a throttle filter to enforce IO limits for
+a guest device, knowing the 'file' child of a block device can be
+useful. If the throttle filter is only intended for guest IO, block
+jobs should not also be limited by the throttle filter, so the
+block operations need to be done with the 'file' child of the top
+throttle node as the target. In combination with mirroring, the name
+of that child is not fixed.
 
-Why?  There's no other way to get the phys addr result.
-Are you only calling this for the raise-exception side effect?
+Another scenario is when unplugging a guest device after mirroring
+below a top throttle node, where the mirror target is added explicitly
+via blockdev-add. After mirroring, the target becomes the new 'file'
+child of the throttle node. For unplugging, both the top throttle node
+and the mirror target need to be deleted, because only implicitly
+added child nodes are deleted automatically, and the current 'file'
+child of the throttle node was explicitly added (as the mirror
+target).
+
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+---
+ block/qapi.c               | 4 ++++
+ qapi/block-core.json       | 4 ++++
+ tests/qemu-iotests/184.out | 1 +
+ tests/qemu-iotests/191.out | 8 ++++++++
+ tests/qemu-iotests/273.out | 2 ++
+ 5 files changed, 19 insertions(+)
+
+diff --git a/block/qapi.c b/block/qapi.c
+index 2c50a6bf3b..bbca042baf 100644
+--- a/block/qapi.c
++++ b/block/qapi.c
+@@ -77,6 +77,10 @@ BlockDeviceInfo *bdrv_block_device_info(BlockBackend *blk,
+         info->node_name = g_strdup(bs->node_name);
+     }
+ 
++    if (bs->file && bs->file->bs && bs->file->bs->node_name[0]) {
++        info->file_child_node_name = g_strdup(bs->file->bs->node_name);
++    }
++
+     backing = bdrv_cow_bs(bs);
+     if (backing) {
+         info->backing_file = g_strdup(backing->filename);
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index 1df6644f0d..74d049606b 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -481,6 +481,9 @@
+ #     2.5: 'host_floppy' dropped 2.6: 'luks' added 2.8: 'replication'
+ #     added, 'tftp' dropped 2.9: 'archipelago' dropped
+ #
++# @file-child-node-name: the name of the 'file' child block driver node.
++#     (since: 10.1)
++#
+ # @backing_file: the name of the backing file (for copy-on-write)
+ #
+ # @backing_file_depth: number of files in the backing file chain
+@@ -559,6 +562,7 @@
+ ##
+ { 'struct': 'BlockDeviceInfo',
+   'data': { 'file': 'str', '*node-name': 'str', 'ro': 'bool', 'drv': 'str',
++            '*file-child-node-name': 'str',
+             '*backing_file': 'str', 'backing_file_depth': 'int',
+             'active': 'bool', 'encrypted': 'bool',
+             'detect_zeroes': 'BlockdevDetectZeroesOptions',
+diff --git a/tests/qemu-iotests/184.out b/tests/qemu-iotests/184.out
+index 52692b6b3b..aa02df950b 100644
+--- a/tests/qemu-iotests/184.out
++++ b/tests/qemu-iotests/184.out
+@@ -47,6 +47,7 @@ Testing:
+             "iops": 0,
+             "bps_wr": 0,
+             "write_threshold": 0,
++            "file-child-node-name": "disk0",
+             "encrypted": false,
+             "bps": 0,
+             "bps_rd": 0,
+diff --git a/tests/qemu-iotests/191.out b/tests/qemu-iotests/191.out
+index 2a72ca7106..f29e1b5209 100644
+--- a/tests/qemu-iotests/191.out
++++ b/tests/qemu-iotests/191.out
+@@ -143,6 +143,7 @@ wrote 65536/65536 bytes at offset 1048576
+             "bps_wr": 0,
+             "write_threshold": 0,
+             "backing_file": "TEST_DIR/t.IMGFMT.base",
++            "file-child-node-name": "NODE_NAME",
+             "encrypted": false,
+             "bps": 0,
+             "bps_rd": 0,
+@@ -214,6 +215,7 @@ wrote 65536/65536 bytes at offset 1048576
+             "bps_wr": 0,
+             "write_threshold": 0,
+             "backing_file": "TEST_DIR/t.IMGFMT.base",
++            "file-child-node-name": "NODE_NAME",
+             "encrypted": false,
+             "bps": 0,
+             "bps_rd": 0,
+@@ -285,6 +287,7 @@ wrote 65536/65536 bytes at offset 1048576
+             "bps_wr": 0,
+             "write_threshold": 0,
+             "backing_file": "TEST_DIR/t.IMGFMT.base",
++            "file-child-node-name": "NODE_NAME",
+             "encrypted": false,
+             "bps": 0,
+             "bps_rd": 0,
+@@ -344,6 +347,7 @@ wrote 65536/65536 bytes at offset 1048576
+             "iops": 0,
+             "bps_wr": 0,
+             "write_threshold": 0,
++            "file-child-node-name": "NODE_NAME",
+             "encrypted": false,
+             "bps": 0,
+             "bps_rd": 0,
+@@ -558,6 +562,7 @@ wrote 65536/65536 bytes at offset 1048576
+             "bps_wr": 0,
+             "write_threshold": 0,
+             "backing_file": "TEST_DIR/t.IMGFMT.base",
++            "file-child-node-name": "NODE_NAME",
+             "encrypted": false,
+             "bps": 0,
+             "bps_rd": 0,
+@@ -640,6 +645,7 @@ wrote 65536/65536 bytes at offset 1048576
+             "bps_wr": 0,
+             "write_threshold": 0,
+             "backing_file": "TEST_DIR/t.IMGFMT.ovl2",
++            "file-child-node-name": "NODE_NAME",
+             "encrypted": false,
+             "bps": 0,
+             "bps_rd": 0,
+@@ -699,6 +705,7 @@ wrote 65536/65536 bytes at offset 1048576
+             "iops": 0,
+             "bps_wr": 0,
+             "write_threshold": 0,
++            "file-child-node-name": "NODE_NAME",
+             "encrypted": false,
+             "bps": 0,
+             "bps_rd": 0,
+@@ -770,6 +777,7 @@ wrote 65536/65536 bytes at offset 1048576
+             "bps_wr": 0,
+             "write_threshold": 0,
+             "backing_file": "TEST_DIR/t.IMGFMT.base",
++            "file-child-node-name": "NODE_NAME",
+             "encrypted": false,
+             "bps": 0,
+             "bps_rd": 0,
+diff --git a/tests/qemu-iotests/273.out b/tests/qemu-iotests/273.out
+index c19753c685..eabe95c1a0 100644
+--- a/tests/qemu-iotests/273.out
++++ b/tests/qemu-iotests/273.out
+@@ -62,6 +62,7 @@ Testing: -blockdev file,node-name=base,filename=TEST_DIR/t.IMGFMT.base -blockdev
+             "bps_wr": 0,
+             "write_threshold": 0,
+             "backing_file": "TEST_DIR/t.IMGFMT.mid",
++            "file-child-node-name": "topf",
+             "encrypted": false,
+             "bps": 0,
+             "bps_rd": 0,
+@@ -132,6 +133,7 @@ Testing: -blockdev file,node-name=base,filename=TEST_DIR/t.IMGFMT.base -blockdev
+             "bps_wr": 0,
+             "write_threshold": 0,
+             "backing_file": "TEST_DIR/t.IMGFMT.base",
++            "file-child-node-name": "midf",
+             "encrypted": false,
+             "bps": 0,
+             "bps_rd": 0,
+-- 
+2.47.2
 
 
-r~
 
