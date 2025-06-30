@@ -4,91 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90A8EC83029
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 15:37:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C94F4C8302B
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 15:38:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWGV1-0005vF-C4; Mon, 30 Jun 2025 11:32:51 -0400
+	id 1uWGSY-0001IX-FM; Mon, 30 Jun 2025 11:30:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uWGUY-0005eX-1H
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:32:25 -0400
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uWGRt-0000UK-Jx
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:29:43 -0400
+Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uWGUR-0000Kn-2l
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:32:20 -0400
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-714078015edso23920017b3.2
- for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 08:32:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uWGRg-0008Ev-Vq
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:29:37 -0400
+Received: by mail-ot1-x332.google.com with SMTP id
+ 46e09a7af769-735b9d558f9so991277a34.2
+ for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 08:29:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751297531; x=1751902331; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1751297357; x=1751902157; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BBv5z/VpiWqm6TUtxvPZN70k+f7CGqEYeEiw2nVISzY=;
- b=GQaP1ajrwi2MxcOS0whhzOgb7kVFhlNBRSoXJPWFtAz/1r7EHhtAUtQ3+XUd7rJJ4s
- Ylr845FGeWf1iLelv7Dgl/IloLavlC1H/VPSbRJxSqq9sYO6kZCZ+yOJ8WxXvQcAE/i3
- Vxb7ONOHtx773bKYcjAv23PQ1pNpZPJs6T30gOyfH+JEeJOou+6vvsMUBiMHZHIAY+bf
- 7sd3ogL/12StSJtjybREKCVMN1pLSsTqo+4bK/4b7T+wVYVA5JuY1EU8R7cCO6rBUF75
- IMhDf9CSEc/C58nJRabJBUniIELOA7dGwe6sKnneGkO5DHF9NF+7qDT9TCJzK39IBZ7x
- H0vg==
+ bh=jATSbSJ+A/6hV81CQNrcRjhOil/0/zy3N0rZ0dVrd5E=;
+ b=RzN/QbadWUJLJRM7bp6inzASxeYh5yhiry8J8dIOusZ96iJMKZ/iaajEWr/dHdeHQI
+ rcy3VH76mm/ULUCRJ2ZHkq0jTRl/HsvrHsJDZ1kvQXW9zp5cfSeAd+lD2e7gg4ohFuQZ
+ ok+W+//gkFpIS89NQzvOH0allmpt9Q2H0Ym+E5aVb8YbSCK9x3Hmxajrbx966sqe8nQE
+ Xr+I+mQuck+PLNhfDQRj+yHdQmNgz1lUGEEdV3wolmMXqR4olN/y42snbs0jj5inO3NN
+ OLopB3Kl1Jo89iW8sApjpku7njce9Uh4KhhDdKZKIVt5Y4pjdCxWdzWJXAr8K452LBUk
+ ve5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751297531; x=1751902331;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1751297357; x=1751902157;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BBv5z/VpiWqm6TUtxvPZN70k+f7CGqEYeEiw2nVISzY=;
- b=j14+AB8IqmxetO4vnunwCARZBrPxQE97b5UasTchfARliM/SGBlaNGxKmqhhF1LlWb
- q9d3Qdpdbvah63rQ8sXAxkXSkz/fqLvs+McssV5GjBJ+5DB4JfPic6W9eTZqTEV/0x8m
- 18LYh2LjrlCEOEorDirjtnk3tbvCg9EKAjCvDIa6VIBQDci2SUjdq4J4gQp61lZtllj3
- V/xEjTvYCzbeI+x++QHW7g/q1Eg3n60Oi7q5J4SG//qU93M+RHSM8ltl+8+yiRZ8Mycm
- AgzVfgrFH+JoYz8RlymSGrIpux7QnUIhrE/ny0NgH3dGl/Hak9GXBmC0VcQZY40fOoy1
- KpbA==
-X-Gm-Message-State: AOJu0Yx+F7KvWVxuFYpeVGObWnk1ryo00WH9qfJb5tzVRrwvjNnqKWzk
- FBdhDU/Godk1ZUkl4ksWZTz4waMoRQHmjsH1saFWiXmlqJ4mljdUzQy+mIuSEImdhPil/ZMIepq
- SINmS0w6A3va5euzXxU0qkZZug814XlkQTmg2hD+uaw==
-X-Gm-Gg: ASbGncvZX/xR5AajeosGh6qKsI1TqzdFwFjZ5m6/mUh9WFoWMQzKBO0PdH2dJnBsAPI
- YegmObQJzqjHiG+nSIeRzpAg2+9H5PPc0b43dF0uZ+t+UrumNmQ91oUPN3ULp9tU9nl4+izLkJD
- +Q+jBPIAUgADh5+Ewys/br03DPysxSjVcCIjwMi313ABdN
-X-Google-Smtp-Source: AGHT+IHy8nnqmhTcZqN296zS/GH2AzcmKJFgjhBGMvlHCoJRvN7kCBoPACAJDbr1konLbK5VYHH+YUoYt2nSk6mM5yk=
-X-Received: by 2002:a05:690c:4b8c:b0:710:edf9:d93b with SMTP id
- 00721157ae682-71517158331mr260393347b3.11.1751297531250; Mon, 30 Jun 2025
- 08:32:11 -0700 (PDT)
+ bh=jATSbSJ+A/6hV81CQNrcRjhOil/0/zy3N0rZ0dVrd5E=;
+ b=JMrUgAlOqDT/4XsKGtuVjXt5lDbYfDZezoOripqKvV31UJXZI4M5u/E55vEW8a7c2J
+ myU9OFEsnVmmCv2YTsexYQEPKq7ZpEa04OEBC6o3oeW9TZT1I4vQfoKHm91G1XwKS6Uw
+ EaG0nuWU8o+oJLZlLL/LfSZBVJgoFVPG8OJOuWUWAj8UfU3MFaeaBOZXHvzvIx6IFtKR
+ NQGynDnKl9p4NL4rzsgtk5hqx83jXqSTfEmoJDS+fE2RdQS9V14nXrT+LSIuVM7Wf+8n
+ DHRG7G1BaOyccVuCrrAGITw2tIGvOx/+qLLua09I411CzjH6uQW3lIH3H9ROllYRdkNQ
+ 964g==
+X-Gm-Message-State: AOJu0YyGIL0yejAtTZjiiS2ggzbfNIRQvaf4DNSZdoCQASOQO3c+RQTd
+ mSvMAZUqsOU4ln6uyXf4RPEh6VuJQ5IP2Q97CnFFWYAJYFoNudrLvc4up15bhU33pVyCwr7Fosi
+ pJxj6
+X-Gm-Gg: ASbGncsMYJQkR06hsgwKfnuIEn2SWOo8ALmrXpMQVRmIQB3qs+bJ7nDYDFims54lab6
+ VxiBsQ17HbWCiLafAjFejL6Rha4O1ioS6lZDihEOd5u01FxnOYqx6D6BFyG4U1H7yEQwGjxj5te
+ GnGfzPAFCPXc/bQLy9ci+QG3iTEnXizy7s8ZpqFE2LClPs/tXEZKyzvOQGTdOURmsYUhZ2QrjGD
+ GoGl3zOzK7UTx3DgDBSkM9rkdL0nbTNRK1AbSEzHG4AduxE8xSOVqR0R/ix1VvWiHeQ/pvbyudI
+ kUKcyPCKfqmzU+vBxLnrL2GryNA+MMFWPI3zQaf0KBOUzz2ot5e/8ve6JEvvdxdBe5UVoA==
+X-Google-Smtp-Source: AGHT+IEl1JcnW8ChWE0clN2oKZy9369urTls19mcMvkU2K3XPtUhD9PhMGdscG/yyNrJTZJgwXw2yw==
+X-Received: by 2002:a05:6830:6c15:b0:73a:96e5:19cd with SMTP id
+ 46e09a7af769-73afc55e1b6mr8786075a34.10.1751297356570; 
+ Mon, 30 Jun 2025 08:29:16 -0700 (PDT)
+Received: from stoup.. ([187.210.107.185]) by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-73afb00c48asm1712478a34.27.2025.06.30.08.29.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 30 Jun 2025 08:29:16 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 19/29] tcg/optimize: Build and use o_bits in fold_movcond
+Date: Mon, 30 Jun 2025 09:28:45 -0600
+Message-ID: <20250630152855.148018-20-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250630152855.148018-1-richard.henderson@linaro.org>
+References: <20250630152855.148018-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20250623121845.7214-1-philmd@linaro.org>
- <20250623121845.7214-11-philmd@linaro.org>
-In-Reply-To: <20250623121845.7214-11-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 30 Jun 2025 16:31:59 +0100
-X-Gm-Features: Ac12FXxL7r8Fqtmkx3bL2CVmkkdzP7qpLkzAMPTSCdtXWbBVYPe4zZUG2yIbwZA
-Message-ID: <CAFEAcA-fe_8qZFWjTAB3EGFpR6vO=fHj-yB7cV=CYgjsVgLOcg@mail.gmail.com>
-Subject: Re: [PATCH v3 10/26] accel/hvf: Model PhysTimer register
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Leif Lindholm <leif.lindholm@oss.qualcomm.com>, 
- qemu-arm@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Alexander Graf <agraf@csgraf.de>, Bernhard Beschow <shentey@gmail.com>,
- John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- kvm@vger.kernel.org, Eric Auger <eric.auger@redhat.com>, 
- Cameron Esfahani <dirty@apple.com>, Cleber Rosa <crosa@redhat.com>, 
- Radoslaw Biernacki <rad@semihalf.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,56 +98,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Jun 2025 at 13:19, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Emulate PhysTimer dispatching to TCG, like we do with GIC registers.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/hvf/hvf.c | 19 ++++++++-----------
->  1 file changed, 8 insertions(+), 11 deletions(-)
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/optimize.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index 42d5ee23c0..abcbee9111 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2097,7 +2097,7 @@ static bool fold_mov(OptContext *ctx, TCGOp *op)
+ 
+ static bool fold_movcond(OptContext *ctx, TCGOp *op)
+ {
+-    uint64_t z_mask, s_mask;
++    uint64_t z_mask, o_mask, s_mask;
+     TempOptInfo *tt, *ft;
+     int i;
+ 
+@@ -2123,6 +2123,7 @@ static bool fold_movcond(OptContext *ctx, TCGOp *op)
+     tt = arg_info(op->args[3]);
+     ft = arg_info(op->args[4]);
+     z_mask = tt->z_mask | ft->z_mask;
++    o_mask = tt->o_mask & ft->o_mask;
+     s_mask = tt->s_mask & ft->s_mask;
+ 
+     if (ti_is_const(tt) && ti_is_const(ft)) {
+@@ -2145,7 +2146,7 @@ static bool fold_movcond(OptContext *ctx, TCGOp *op)
+         }
+     }
+ 
+-    return fold_masks_zs(ctx, op, z_mask, s_mask);
++    return fold_masks_zos(ctx, op, z_mask, o_mask, s_mask);
+ }
+ 
+ static bool fold_mul(OptContext *ctx, TCGOp *op)
+-- 
+2.43.0
 
-> @@ -1639,16 +1640,12 @@ static int hvf_sysreg_write(CPUState *cpu, uint32=
-_t reg, uint64_t val)
->      case SYSREG_OSLAR_EL1:
->          env->cp15.oslsr_el1 =3D val & 1;
->          return 0;
-> -    case SYSREG_CNTP_CTL_EL0:
-> -        /*
-> -         * Guests should not rely on the physical counter, but macOS emi=
-ts
-> -         * disable writes to it. Let it do so, but ignore the requests.
-> -         */
-> -        qemu_log_mask(LOG_UNIMP, "Unsupported write to CNTP_CTL_EL0\n");
-> -        return 0;
->      case SYSREG_OSDLR_EL1:
->          /* Dummy register */
->          return 0;
-> +    case SYSREG_CNTP_CTL_EL0:
-> +    case SYSREG_CNTP_CVAL_EL0:
-> +    case SYSREG_CNTP_TVAL_EL0:
->      case SYSREG_ICC_AP0R0_EL1:
->      case SYSREG_ICC_AP0R1_EL1:
->      case SYSREG_ICC_AP0R2_EL1:
-
-This adds three registers which aren't GICv3 registers to
-a code path which has a comment
-
-        /* Call the TCG sysreg handler. This is only safe for GICv3 regs. *=
-/
-
-In general the TCG sysreg implementations aren't expecting
-to be called for non-TCG accelerators. I would like to see
-some analysis of why this is OK for the timer, please.
-(Compare commit a2260983c65 which notes the limitations under
-which this works for the GIC registers and had to make some
-minor changes to the GIC code both noting that it might be
-called for non-TCG accelerators and adjusting things so
-that would work.)
-
-thanks
--- PMM
 
