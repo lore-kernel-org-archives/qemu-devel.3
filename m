@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBB8BC8302F
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 12:34:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 532F0C8302D
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 12:38:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWDhN-0007tM-Pl; Mon, 30 Jun 2025 08:33:25 -0400
+	id 1uWDlV-0001uI-LX; Mon, 30 Jun 2025 08:37:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uWDhE-0007ra-V9; Mon, 30 Jun 2025 08:33:18 -0400
+ id 1uWDlT-0001qx-Gf; Mon, 30 Jun 2025 08:37:39 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uWDhA-0006Es-JG; Mon, 30 Jun 2025 08:33:16 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bW58t0hjZz6L5PK;
- Mon, 30 Jun 2025 20:30:22 +0800 (CST)
+ id 1uWDlP-0006qw-4l; Mon, 30 Jun 2025 08:37:38 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bW5Jh4NHCz6L5dv;
+ Mon, 30 Jun 2025 20:37:08 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 878271402EC;
- Mon, 30 Jun 2025 20:33:09 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 0EB8F140417;
+ Mon, 30 Jun 2025 20:37:28 +0800 (CST)
 Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
  (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 30 Jun
- 2025 14:33:08 +0200
-Date: Mon, 30 Jun 2025 13:33:07 +0100
+ 2025 14:37:16 +0200
+Date: Mon, 30 Jun 2025 13:37:14 +0100
 To: Eric Auger <eric.auger@redhat.com>
 CC: <eric.auger.pro@gmail.com>, <qemu-devel@nongnu.org>,
  <qemu-arm@nongnu.org>, <peter.maydell@linaro.org>, <imammedo@redhat.com>,
  <gustavo.romero@linaro.org>, <anisinha@redhat.com>, <mst@redhat.com>,
  <shannon.zhaosl@gmail.com>, <pbonzini@redhat.com>, <philmd@linaro.org>,
  <alex.bennee@linaro.org>
-Subject: Re: [PATCH v4 20/32] hw/arm/virt-acpi-build: Modify the DSDT ACPI
- table to enable ACPI PCI hotplug
-Message-ID: <20250630133307.00005cc2@huawei.com>
-In-Reply-To: <20250627095620.3300028-21-eric.auger@redhat.com>
+Subject: Re: [PATCH v4 24/32] hw/acpi/pcihp: Remove root arg in acpi_pcihp_init
+Message-ID: <20250630133714.00000060@huawei.com>
+In-Reply-To: <20250627095620.3300028-25-eric.auger@redhat.com>
 References: <20250627095620.3300028-1-eric.auger@redhat.com>
- <20250627095620.3300028-21-eric.auger@redhat.com>
+ <20250627095620.3300028-25-eric.auger@redhat.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -76,12 +75,22 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 27 Jun 2025 11:55:09 +0200
+On Fri, 27 Jun 2025 11:55:13 +0200
 Eric Auger <eric.auger@redhat.com> wrote:
 
-> Modify the DSDT ACPI table to enable ACPI PCI hotplug.
+> Let pass the root bus to ich9 and piix4 through a property link
+> instead of through an argument passed to acpi_pcihp_init().
+> 
+> Also make sure the root bus is set at the entry of acpi_pcihp_init().
+> 
+> The rationale of that change is to be consistent with the forecoming ARM
+> implementation where the machine passes the root bus (steming from GPEX)
+> to the GED device through a link property.
 > 
 > Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Suggested-by: Igor Mammedov <imammedo@redhat.com>
 
+Seems reasonable to me.
+
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 
