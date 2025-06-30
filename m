@@ -4,60 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D89C8302D
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 17:24:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECF20C8302D
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 17:47:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWIF9-0002ly-Pu; Mon, 30 Jun 2025 13:24:36 -0400
+	id 1uWIb3-0000Ef-Ee; Mon, 30 Jun 2025 13:47:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uWIEz-0002ld-H4
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 13:24:25 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uWIEu-0005Bj-C8
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 13:24:24 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bWCgX2F9Qz6L5ch;
- Tue,  1 Jul 2025 01:23:52 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 65F481402EB;
- Tue,  1 Jul 2025 01:24:12 +0800 (CST)
-Received: from localhost (10.122.19.247) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 30 Jun
- 2025 19:24:12 +0200
-Date: Mon, 30 Jun 2025 18:24:10 +0100
-To: Anisa Su <anisa.su887@gmail.com>
-CC: <qemu-devel@nongnu.org>, <nifan.cxl@gmail.com>, <dave@stgolabs.net>,
- <linux-cxl@vger.kernel.org>
-Subject: Re: [HACK QEMU PATCH v1 1/1] hw/cxl: Fix MCTP Binding Check
-Message-ID: <20250630182410.00007a74@huawei.com>
-In-Reply-To: <aF7I-ByGLZOxqNXi@deb-101020-bm01.eng.stellus.in>
-References: <20250626235102.1902427-1-anisa.su887@gmail.com>
- <20250626235102.1902427-2-anisa.su887@gmail.com>
- <20250627104859.00003cbe@huawei.com>
- <aF7I-ByGLZOxqNXi@deb-101020-bm01.eng.stellus.in>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uWIay-0000E0-Li
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 13:47:10 -0400
+Received: from mail-qv1-xf2d.google.com ([2607:f8b0:4864:20::f2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uWIaw-0000fZ-83
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 13:47:08 -0400
+Received: by mail-qv1-xf2d.google.com with SMTP id
+ 6a1803df08f44-6fb1be9ba89so24275436d6.2
+ for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 10:47:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1751305623; x=1751910423; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Bt140AnAlmkHb1ONVg+2EfIHe9JNorpfYig6YcLTis4=;
+ b=ABtWjPcyA1b/Ri42ZY2Aaa8TIHZRzptEd6g9E6hDPJV4gdyHvS7Hvt2W5/L+XoSqFT
+ YP5JQCEpT6qbdOvM+pgCbcCEBq1cvV4iM5eohHiES3/EdhQxZRkfjdFVzNM8bT64tk1f
+ B1JuBJqt4NyvDKHQ5SfsndciyRxqX17MGUah1FeFUN3eD6GyhAzXXqNboMo4ibIPzgnL
+ so/+yIjoeSwE62gCmLQA18GmawlHpO/rIuOY9GXp4N6w9jx6p4wKANaFBIbj9PM5M7Yh
+ wnOevHPgZtxOY67YfzNg1L9W0ESl9E2JOzVccK/z3KqflaUG//SzHTvfenRbjeTVZKxE
+ 8zfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751305623; x=1751910423;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Bt140AnAlmkHb1ONVg+2EfIHe9JNorpfYig6YcLTis4=;
+ b=c7zGo5kvaAMZJ4+i3npRGyDz3QEiEUUr1Hz07pdeYIrRS6AGomFoDpXf4BVsjzRRtm
+ ryo9tym6U1e5kAqF4mQDvNiTC735v9ZKtJ6AIWALAmdJ36F6ckA0kBg3muVvHB/5WJeU
+ sgeyF5ct/vlXiuaHHf2sH8TkKPXoMocTqT8d2e0WfTguJpsR0rnLSJ6TsH/orggxRtRV
+ yAjmTPe3gtsc8u8JjrgilSkSEK4Hr+G8IU8TvHkemgfos5WVP93Yq9em4yvd9GTh8CpR
+ 0rf+bMgextjoQmCpyZ4le9egF4DhtpY/WNfQDJnsFeJUQ6pMluxj+RTzaQx9IY7PjWlu
+ t+Eg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUCKxnRmJSF6bEiRoJkK0iBTLqAR7kTrYbAnebWc/K/YousK7JxN2IiozkYvncUKI8N0mqgAuQ2XJnH@nongnu.org
+X-Gm-Message-State: AOJu0YyUSuwv9RkB+4s/PuCdFzFWhonJGatFHYUg8ocPIs49+TTS6ZNZ
+ 4nUh+s+ZI9m7IZh1D/UT5Jm78SvBturEFf0ruAKnmo5hIDZuob+EgTT9DH/34/mJTHc=
+X-Gm-Gg: ASbGncsFJk+WrsqMKHP6R06oF1mYLVAHpL5o1T/djQdV5lWEvEtqWkKnYqXfaahwbYj
+ hC6ENOUGtb6wRmc3QZdphPBT3xOZZpgllaAlaNO8hfelkMf2MwfMgqLCVLOsVe8VyX7K+rupJDx
+ Vdz2LXsbc3JuzmuQ4ES7HbRcb+2P1pEYMy94jSMJLrXCy7TCaF0vJH3Aa5eknOGY1pxe+tnbLj0
+ II1wF154ghYM+617Jy7nD4caC5TuaVTI9dr8cjPPkbO/fSiJN/ZH19BuCD7xjQMtNkcvSxqBaBo
+ zf+6GEbGOZyaCUCKT2MjsRkH/pX/mo0QUUGqzwTKqaHyOqWKh1vnByEgki64Qmo3mfmJ59qEGgs
+ =
+X-Google-Smtp-Source: AGHT+IE1Ufk3p4am7QoyJcXpZilxz1tEwepWme1U7t6HEg4s3G9BkL+6zNFQ6mAlUoH93i2Vt67/SQ==
+X-Received: by 2002:ad4:4ee2:0:b0:6fd:d91:ba28 with SMTP id
+ 6a1803df08f44-70002ee6d21mr177388056d6.41.1751305623355; 
+ Mon, 30 Jun 2025 10:47:03 -0700 (PDT)
+Received: from [192.168.68.110] ([179.93.20.232])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6fd771abd15sm72244346d6.29.2025.06.30.10.47.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 30 Jun 2025 10:47:02 -0700 (PDT)
+Message-ID: <26d4e4de-d7fc-410c-a1cd-d86de538b70f@ventanamicro.com>
+Date: Mon, 30 Jun 2025 14:46:59 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hmp-cmds-target, target/riscv: add 'info register'
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20250630132228.1276838-1-dbarboza@ventanamicro.com>
+ <be01b414-f30f-4ca5-a515-94a60187e8e6@linaro.org>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <be01b414-f30f-4ca5-a515-94a60187e8e6@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2d;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-qv1-xf2d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,282 +105,111 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 27 Jun 2025 16:38:16 +0000
-Anisa Su <anisa.su887@gmail.com> wrote:
 
-> On Fri, Jun 27, 2025 at 10:48:59AM +0100, Jonathan Cameron wrote:
-> > On Thu, 26 Jun 2025 23:41:15 +0000
-> > anisa.su887@gmail.com wrote:
-> >   
-> > > From: Anisa Su <anisa.su@samsung.com>
-> > > 
-> > > Per the spec, FMAPI commands (0x51-0x59) must be bound with
-> > > MCTP_MT_CXL_FMAPI. Fix the conditions ensuring this in i2c_mctp_cxl.c
-> > > and dev-mctp.c
-> > > 
-> > > Move the opcode enum from cxl-mailbox-utils.c to cxl_mailbox.h to
-> > > allow i2c_mctp_cxl.c and dev-mctp.c to use the enum instead of
-> > > hardcoding the values.
-> > > 
-> > > Signed-off-by: Anisa Su <anisa.su@samsung.com>  
-> > Why HACK in the patch title?
-> >   
-> I guess this isn't really a hack but my intention was to make
-> it clear that this patch isn't intended for upstream. Seems like that
-> made things more confusing though, but now I know!
+
+On 6/30/25 1:00 PM, Philippe Mathieu-Daudé wrote:
+> Hi Daniel,
 > 
-> > In general this seems reasonable - the complexity is how I merge it
-> > into my tree given the code being modified slips in at various different
-> > points. I'll sort that out though.  
+> On 30/6/25 15:22, Daniel Henrique Barboza wrote:
+>> The RISC-V target has *a lot* of CPU registers, with more registers
+>> being added along the way when new extensions are added. In this world,
+>> 'info registers' will throw a wall of text that can be annoying to deal
+>> with when the user wants to verify the value of just a couple of
+>> registers.
+>>
+>> Add a new 'info register' HMP command that prints a specific register.
+>> The semantics, and implementation, is similar to what 'info registers'
+>> already does, i.e. '-a' will print a register for all VCPUs and it's
+>> possible to print a reg for a specific VCPU.
+>>
+>> A RISC-V implementation is included via riscv_cpu_dump_register().
+>>
+>> Here's an example:
+>>
+>> Welcome to Buildroot
+>> buildroot login: QEMU 10.0.50 monitor - type 'help' for more information
+>> (qemu) info register mstatus
+>>
+>> CPU#0
+>>   mstatus  0000000a000000a0
+>> (qemu) info register mstatus -a
+>>
+>> CPU#0
+>>   mstatus  0000000a000000a0
+>>
+>> CPU#1
+>>   mstatus  0000000a000000a0
+>> (qemu)
+>>
+>> The API is introduced as TARGET_RISCV only.
+>>
+>> Cc: Dr. David Alan Gilbert <dave@treblig.org>
+>> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+>> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>> ---
+>>   hmp-commands-info.hx         | 17 +++++++++++++
+>>   hw/core/cpu-common.c         |  8 ++++++
+>>   include/hw/core/cpu.h        | 11 +++++++++
+>>   include/monitor/hmp-target.h |  1 +
+>>   monitor/hmp-cmds-target.c    | 30 ++++++++++++++++++++++
+>>   target/riscv/cpu.c           | 48 ++++++++++++++++++++++++++++++++++++
+>>   6 files changed, 115 insertions(+)
+>>
+>> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+>> index 639a450ee5..f3561e4a02 100644
+>> --- a/hmp-commands-info.hx
+>> +++ b/hmp-commands-info.hx
+>> @@ -113,6 +113,23 @@ SRST
+>>       Show the cpu registers.
+>>   ERST
+>> +#if defined(TARGET_RISCV)
 > 
-> I could also send you an alternate version of the FMAPI DCD Management patchset
-> based on this one?
+> Just make this command available for all targets, displaying
+> "No such register" or better when no handler registered.
 
-No need. I've queued the DCD series up way ahead of where this makes sense.
-I'll tweak this into a precursor patch doing the move and then squash the other
-bits into the two mctp implementations.
+What about "<targe-name> does not support this command" ?
 
-Jonathan
 
 > 
-> > Jonathan
-> >   
-> > > ---
-> > >  hw/cxl/cxl-mailbox-utils.c   | 74 +-----------------------------------
-> > >  hw/cxl/i2c_mctp_cxl.c        |  6 ++-
-> > >  hw/usb/dev-mctp.c            |  6 ++-
-> > >  include/hw/cxl/cxl_mailbox.h | 73 +++++++++++++++++++++++++++++++++++
-> > >  4 files changed, 82 insertions(+), 77 deletions(-)
-> > > 
-> > > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> > > index 4c01b25110..7f84e147f7 100644
-> > > --- a/hw/cxl/cxl-mailbox-utils.c
-> > > +++ b/hw/cxl/cxl-mailbox-utils.c
-> > > @@ -37,7 +37,7 @@
-> > >  
-> > >  /*
-> > >   * How to add a new command, example. The command set FOO, with cmd BAR.
-> > > - *  1. Add the command set and cmd to the enum.
-> > > + *  1. Add the command set and cmd to the enum in cxl_mailbox.h.
-> > >   *     FOO    = 0x7f,
-> > >   *          #define BAR 0
-> > >   *  2. Implement the handler
-> > > @@ -60,78 +60,6 @@
-> > >   *  a register interface that already deals with it.
-> > >   */
-> > >  
-> > > -enum {
-> > > -    INFOSTAT    = 0x00,
-> > > -        #define IS_IDENTIFY   0x1
-> > > -        #define BACKGROUND_OPERATION_STATUS    0x2
-> > > -        #define GET_RESPONSE_MSG_LIMIT         0x3
-> > > -        #define SET_RESPONSE_MSG_LIMIT         0x4
-> > > -        #define BACKGROUND_OPERATION_ABORT     0x5
-> > > -    EVENTS      = 0x01,
-> > > -        #define GET_RECORDS   0x0
-> > > -        #define CLEAR_RECORDS   0x1
-> > > -        #define GET_INTERRUPT_POLICY   0x2
-> > > -        #define SET_INTERRUPT_POLICY   0x3
-> > > -    FIRMWARE_UPDATE = 0x02,
-> > > -        #define GET_INFO      0x0
-> > > -        #define TRANSFER      0x1
-> > > -        #define ACTIVATE      0x2
-> > > -    TIMESTAMP   = 0x03,
-> > > -        #define GET           0x0
-> > > -        #define SET           0x1
-> > > -    LOGS        = 0x04,
-> > > -        #define GET_SUPPORTED 0x0
-> > > -        #define GET_LOG       0x1
-> > > -        #define GET_LOG_CAPABILITIES   0x2
-> > > -        #define CLEAR_LOG     0x3
-> > > -        #define POPULATE_LOG  0x4
-> > > -    FEATURES    = 0x05,
-> > > -        #define GET_SUPPORTED 0x0
-> > > -        #define GET_FEATURE   0x1
-> > > -        #define SET_FEATURE   0x2
-> > > -    IDENTIFY    = 0x40,
-> > > -        #define MEMORY_DEVICE 0x0
-> > > -    CCLS        = 0x41,
-> > > -        #define GET_PARTITION_INFO     0x0
-> > > -        #define GET_LSA       0x2
-> > > -        #define SET_LSA       0x3
-> > > -    HEALTH_INFO_ALERTS = 0x42,
-> > > -        #define GET_ALERT_CONFIG 0x1
-> > > -        #define SET_ALERT_CONFIG 0x2
-> > > -    SANITIZE    = 0x44,
-> > > -        #define OVERWRITE     0x0
-> > > -        #define SECURE_ERASE  0x1
-> > > -        #define MEDIA_OPERATIONS 0x2
-> > > -    PERSISTENT_MEM = 0x45,
-> > > -        #define GET_SECURITY_STATE     0x0
-> > > -    MEDIA_AND_POISON = 0x43,
-> > > -        #define GET_POISON_LIST        0x0
-> > > -        #define INJECT_POISON          0x1
-> > > -        #define CLEAR_POISON           0x2
-> > > -        #define GET_SCAN_MEDIA_CAPABILITIES 0x3
-> > > -        #define SCAN_MEDIA             0x4
-> > > -        #define GET_SCAN_MEDIA_RESULTS 0x5
-> > > -    DCD_CONFIG  = 0x48,
-> > > -        #define GET_DC_CONFIG          0x0
-> > > -        #define GET_DYN_CAP_EXT_LIST   0x1
-> > > -        #define ADD_DYN_CAP_RSP        0x2
-> > > -        #define RELEASE_DYN_CAP        0x3
-> > > -    PHYSICAL_SWITCH = 0x51,
-> > > -        #define IDENTIFY_SWITCH_DEVICE      0x0
-> > > -        #define GET_PHYSICAL_PORT_STATE     0x1
-> > > -    TUNNEL = 0x53,
-> > > -        #define MANAGEMENT_COMMAND     0x0
-> > > -    MHD = 0x55,
-> > > -        #define GET_MHD_INFO 0x0
-> > > -    FMAPI_DCD_MGMT = 0x56,
-> > > -        #define GET_DCD_INFO    0x0
-> > > -        #define GET_HOST_DC_REGION_CONFIG   0x1
-> > > -        #define SET_DC_REGION_CONFIG        0x2
-> > > -        #define GET_DC_REGION_EXTENT_LIST   0x3
-> > > -        #define INITIATE_DC_ADD             0x4
-> > > -        #define INITIATE_DC_RELEASE         0x5
-> > > -};
-> > > -
-> > >  /* CCI Message Format CXL r3.1 Figure 7-19 */
-> > >  typedef struct CXLCCIMessage {
-> > >      uint8_t category;
-> > > diff --git a/hw/cxl/i2c_mctp_cxl.c b/hw/cxl/i2c_mctp_cxl.c
-> > > index 1714f36e8e..3f17779562 100644
-> > > --- a/hw/cxl/i2c_mctp_cxl.c
-> > > +++ b/hw/cxl/i2c_mctp_cxl.c
-> > > @@ -29,6 +29,7 @@
-> > >  #include "hw/pci/pcie_port.h"
-> > >  #include "hw/qdev-properties.h"
-> > >  #include "hw/registerfields.h"
-> > > +#include "hw/cxl/cxl_mailbox.h"
-> > >  
-> > >  #define TYPE_I2C_MCTP_CXL "i2c_mctp_cxl"
-> > >  
-> > > @@ -198,9 +199,10 @@ static void i2c_mctp_cxl_handle_message(MCTPI2CEndpoint *mctp)
-> > >           */
-> > >  
-> > >          if (!(msg->message_type == MCTP_MT_CXL_TYPE3 &&
-> > > -              msg->command_set < 0x51) &&
-> > > +              msg->command_set < PHYSICAL_SWITCH) &&
-> > >              !(msg->message_type == MCTP_MT_CXL_FMAPI &&
-> > > -              msg->command_set >= 0x51 && msg->command_set < 0x56)) {
-> > > +              msg->command_set >= PHYSICAL_SWITCH &&
-> > > +              msg->command_set < GLOBAL_MEM_ACCESS_EP_MGMT)) {
-> > >              buf->rc = CXL_MBOX_UNSUPPORTED;
-> > >              st24_le_p(buf->pl_length, len_out);
-> > >              s->len = s->pos;
-> > > diff --git a/hw/usb/dev-mctp.c b/hw/usb/dev-mctp.c
-> > > index aafb9e7e96..b82a269561 100644
-> > > --- a/hw/usb/dev-mctp.c
-> > > +++ b/hw/usb/dev-mctp.c
-> > > @@ -25,6 +25,7 @@
-> > >  #include "hw/usb.h"
-> > >  #include "hw/usb/desc.h"
-> > >  #include "net/mctp.h"
-> > > +#include "hw/cxl/cxl_mailbox.h"
-> > >  
-> > >  /* TODO: Move to header */
-> > >  
-> > > @@ -504,9 +505,10 @@ static void usb_cxl_mctp_handle_data(USBDevice *dev, USBPacket *p)
-> > >           * onwards.
-> > >           */
-> > >          if (!(req->message_type == MCTP_MT_CXL_TYPE3 &&
-> > > -              req->command_set < 0x51) &&
-> > > +              req->command_set < PHYSICAL_SWITCH) &&
-> > >              !(req->message_type == MCTP_MT_CXL_FMAPI &&
-> > > -              req->command_set >= 0x51 && req->command_set < 0x56)) {
-> > > +              req->command_set >= PHYSICAL_SWITCH &&
-> > > +              req->command_set < GLOBAL_MEM_ACCESS_EP_MGMT)) {
-> > >              len_out = 0;
-> > >              usb_pkt_len = sizeof(MCTPUSBPacket) + sizeof(CXLMCTPMessage) +
-> > >                  len_out;
-> > > diff --git a/include/hw/cxl/cxl_mailbox.h b/include/hw/cxl/cxl_mailbox.h
-> > > index 820c411cbb..209a11ecbc 100644
-> > > --- a/include/hw/cxl/cxl_mailbox.h
-> > > +++ b/include/hw/cxl/cxl_mailbox.h
-> > > @@ -27,4 +27,77 @@
-> > >  #define CXL_LOG_CAP_AUTO_POPULATE_SUPPORTED (1 << 2)
-> > >  #define CXL_LOG_CAP_PERSISTENT_COLD_RESET_SUPPORTED (1 << 3)
-> > >  
-> > > +enum {
-> > > +    INFOSTAT    = 0x00,
-> > > +        #define IS_IDENTIFY   0x1
-> > > +        #define BACKGROUND_OPERATION_STATUS    0x2
-> > > +        #define GET_RESPONSE_MSG_LIMIT         0x3
-> > > +        #define SET_RESPONSE_MSG_LIMIT         0x4
-> > > +        #define BACKGROUND_OPERATION_ABORT     0x5
-> > > +    EVENTS      = 0x01,
-> > > +        #define GET_RECORDS   0x0
-> > > +        #define CLEAR_RECORDS   0x1
-> > > +        #define GET_INTERRUPT_POLICY   0x2
-> > > +        #define SET_INTERRUPT_POLICY   0x3
-> > > +    FIRMWARE_UPDATE = 0x02,
-> > > +        #define GET_INFO      0x0
-> > > +        #define TRANSFER      0x1
-> > > +        #define ACTIVATE      0x2
-> > > +    TIMESTAMP   = 0x03,
-> > > +        #define GET           0x0
-> > > +        #define SET           0x1
-> > > +    LOGS        = 0x04,
-> > > +        #define GET_SUPPORTED 0x0
-> > > +        #define GET_LOG       0x1
-> > > +        #define GET_LOG_CAPABILITIES   0x2
-> > > +        #define CLEAR_LOG     0x3
-> > > +        #define POPULATE_LOG  0x4
-> > > +    FEATURES    = 0x05,
-> > > +        #define GET_SUPPORTED 0x0
-> > > +        #define GET_FEATURE   0x1
-> > > +        #define SET_FEATURE   0x2
-> > > +    IDENTIFY    = 0x40,
-> > > +        #define MEMORY_DEVICE 0x0
-> > > +    CCLS        = 0x41,
-> > > +        #define GET_PARTITION_INFO     0x0
-> > > +        #define GET_LSA       0x2
-> > > +        #define SET_LSA       0x3
-> > > +    HEALTH_INFO_ALERTS = 0x42,
-> > > +        #define GET_ALERT_CONFIG 0x1
-> > > +        #define SET_ALERT_CONFIG 0x2
-> > > +    SANITIZE    = 0x44,
-> > > +        #define OVERWRITE     0x0
-> > > +        #define SECURE_ERASE  0x1
-> > > +        #define MEDIA_OPERATIONS 0x2
-> > > +    PERSISTENT_MEM = 0x45,
-> > > +        #define GET_SECURITY_STATE     0x0
-> > > +    MEDIA_AND_POISON = 0x43,
-> > > +        #define GET_POISON_LIST        0x0
-> > > +        #define INJECT_POISON          0x1
-> > > +        #define CLEAR_POISON           0x2
-> > > +        #define GET_SCAN_MEDIA_CAPABILITIES 0x3
-> > > +        #define SCAN_MEDIA             0x4
-> > > +        #define GET_SCAN_MEDIA_RESULTS 0x5
-> > > +    DCD_CONFIG  = 0x48,
-> > > +        #define GET_DC_CONFIG          0x0
-> > > +        #define GET_DYN_CAP_EXT_LIST   0x1
-> > > +        #define ADD_DYN_CAP_RSP        0x2
-> > > +        #define RELEASE_DYN_CAP        0x3
-> > > +    PHYSICAL_SWITCH = 0x51,
-> > > +        #define IDENTIFY_SWITCH_DEVICE      0x0
-> > > +        #define GET_PHYSICAL_PORT_STATE     0x1
-> > > +    TUNNEL = 0x53,
-> > > +        #define MANAGEMENT_COMMAND     0x0
-> > > +    MHD = 0x55,
-> > > +        #define GET_MHD_INFO 0x0
-> > > +    FMAPI_DCD_MGMT = 0x56,
-> > > +        #define GET_DCD_INFO    0x0
-> > > +        #define GET_HOST_DC_REGION_CONFIG   0x1
-> > > +        #define SET_DC_REGION_CONFIG        0x2
-> > > +        #define GET_DC_REGION_EXTENT_LIST   0x3
-> > > +        #define INITIATE_DC_ADD             0x4
-> > > +        #define INITIATE_DC_RELEASE         0x5
-> > > +    GLOBAL_MEM_ACCESS_EP_MGMT = 0X59,
-> > > +};
-> > > +
-> > >  #endif  
-> >   
+>> +    {
+>> +        .name       = "register",
+>> +        .args_type  = "register:s,cpustate_all:-a,vcpu:i?",
+>> +        .params     = "[register|-a|vcpu]",
+>> +        .help       = "show a cpu register (-a: show the register value for all cpus;"
+>> +                      " vcpu: specific vCPU to query; show the current CPU's register if"
+>> +                      " no vcpu is specified)",
+> 
+> I'd invert the default behavior: dump for all vcpus except if a specific
+> one is specified.
+
+Fair enough.
+
+> 
+> I wonder about a 'info register -h' do list all register names available.
+
+That's a neat idea. I'll see what I can do.
+
+
+Thanks,
+
+Daniel
+
+> 
+>> +        .cmd        = hmp_info_register,
+>> +    },
+>> +
+>> +SRST
+>> +  ``info register``
+>> +    Show a cpu register.
+>> +ERST
+>> +#endif
+> 
+> Regards,
+> 
+> Phil.
 
 
