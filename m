@@ -4,83 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA146C83030
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 12:09:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5698C8302F
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 12:25:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWDJs-0008Pf-8K; Mon, 30 Jun 2025 08:09:08 -0400
+	id 1uWDYO-0003Ft-QU; Mon, 30 Jun 2025 08:24:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
- id 1uWDJj-0008Ng-Vw
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 08:09:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uWDYM-0003FU-SC
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 08:24:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
- id 1uWDJZ-0001y2-Go
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 08:08:56 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uWDYJ-0004ak-L3
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 08:24:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751285324;
+ s=mimecast20190719; t=1751286240;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=WJOAFNow4V2hcxo4fZUgJ931Bq5F3Mkn//kUrnuCO9o=;
- b=DWbYrDV7KTvJx4JSw0Yyguwn4Pe6VNzBUr7qtOU+9D8/tWa/3V9u6doP1Lc+/kwH0Ou0RE
- T/jimNqagAI/zYQrVJR1SvKuz0fgW1D1yj+2PaySzX37tLUIxcKpGNmyO3y1oyzUX5qFjm
- GD+GxV4rC00KWeLEfPirReYEUzBhvM8=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-70-cLsUKBEBOMigo5SM545zaw-1; Mon, 30 Jun 2025 08:08:43 -0400
-X-MC-Unique: cLsUKBEBOMigo5SM545zaw-1
-X-Mimecast-MFC-AGG-ID: cLsUKBEBOMigo5SM545zaw_1751285322
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-4a587c85a60so106635011cf.2
- for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 05:08:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751285322; x=1751890122;
- h=cc:to:subject:message-id:date:in-reply-to:mime-version:references
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WJOAFNow4V2hcxo4fZUgJ931Bq5F3Mkn//kUrnuCO9o=;
- b=IPXRn7aiUOzcYBw2gIfIpfAk7bAHafNFI3tp5TR0YYzc1fUJyfF/LNk+5cRWrNtFrj
- lGm9vSiolns9jT79/y2sDhFNWoj3hNpeTWO/QB0J9nEeVZQXP1wbaZZPllhQAN8nNiCh
- tLuuWuYpojW6PikHP45kYBKxPHYTqVlR7yNknO4MhYuo8AHw+PyOipB2QwedI+n8fMyE
- UBolRGpl4o5Dr1Yywa0i+b5jgcFc0qmzOLHUk/XjpSa0ek1gPD5epZcJEUv87If6p6Hh
- 2/uO4nFRTmKGTUGFKnrKTmDMvmtgooqzB/fQ+IhQzQOYgD+qfMA84+bEoLn/ru7Nazad
- 3R0w==
-X-Gm-Message-State: AOJu0YxA8W420xSK+LDzFkDZF8NN32h2Dgd18pSK5BYrIyxQPJfbLHr7
- LYEDsIkeTu53Ir+mYawoYFCVtGwqFv4L1icnuDS/xVb/1BcOIOjDQYea3C8WELMpyXxobXQH5oX
- nIze2zXv5PwOesfFwVJNV7OjJX8npLWhl5PdoIv9VdC0LQl6EhoG1aYmY2Nwi+sELp0rTW8i8AY
- cJkiedewJmzCqW4KSqzRi+xSf+GT0igNW0O5zmXPU=
-X-Gm-Gg: ASbGncukQtFscpXDRQK7CSRazDt5d3bkVaNHFGvHEmYLqAU2Fqzj1kYCCaAp1x+VrwZ
- Egwj5rU9VoMEhwEExYGC7oVgS6J/KrKN8LIToNa4cZhFsbYO//SrMRGaeU4GtIQyziC37mrv6hf
- 4=
-X-Received: by 2002:a05:622a:110b:b0:4a5:a96d:6068 with SMTP id
- d75a77b69052e-4a7fcde957cmr226795701cf.37.1751285322134; 
- Mon, 30 Jun 2025 05:08:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEkyLWeQcRYHD2wdXKJblO55FQcIW457Umuqwg96C03yv8794rfhTwpXFJ0x08iRLuB221VBFAww0bcfj8p/hY=
-X-Received: by 2002:a05:622a:110b:b0:4a5:a96d:6068 with SMTP id
- d75a77b69052e-4a7fcde957cmr226795201cf.37.1751285321750; Mon, 30 Jun 2025
- 05:08:41 -0700 (PDT)
-Received: from 744723338238 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 30 Jun 2025 08:08:40 -0400
-From: Andrea Bolognani <abologna@redhat.com>
-References: <20250415192515.232910-1-richard.henderson@linaro.org>
- <20250415192515.232910-94-richard.henderson@linaro.org>
- <CABJz62OFyaXitSdge4M9_oTk34a5aocLJLFYfkOGXc0BToOgVA@mail.gmail.com>
- <CABJz62OMmmbDjWpp6YkXu2d+hB4HeShgqaa05ZigAVqNQSwjZA@mail.gmail.com>
- <c3a2c4f9-c750-4a0a-b6bc-e94b55784952@linaro.org>
+ bh=vbPTnOJtHranLReIjtDv0x7dfcEl3Z817Ldp5LDBF8I=;
+ b=glqHX3PzGwy6ENyNXA4LgVU2vAhQkShPO8RP9frvcrNlIuAfC5CQTBYjlfhm4DhdhiU996
+ G2K5ezlJ8AZLxNW6U6eTtd1hnJKPjXuJbzC3i+ZMHyaEpf0G3LnM+7P951ME3BqGyHMIUw
+ JbA4QAiBHCKbgeQkIwlPYJfWjokDKSE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-287-ZOrlGgDBO561AL9CwwlqQQ-1; Mon,
+ 30 Jun 2025 08:23:57 -0400
+X-MC-Unique: ZOrlGgDBO561AL9CwwlqQQ-1
+X-Mimecast-MFC-AGG-ID: ZOrlGgDBO561AL9CwwlqQQ_1751286234
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6B642180120D; Mon, 30 Jun 2025 12:23:53 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6B6FF30001B1; Mon, 30 Jun 2025 12:23:51 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id D658C21E6A27; Mon, 30 Jun 2025 14:23:48 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Jiri Pirko <jiri@resnulli.us>,  Fan Ni
+ <fan.ni@samsung.com>,  Stefano Garzarella <sgarzare@redhat.com>,  Michael
+ Roth <michael.roth@amd.com>,  "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,  Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  qemu-block@nongnu.org,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Fabiano Rosas <farosas@suse.de>,  Kashyap Chamarthy
+ <kchamart@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,  Yanan Wang
+ <wangyanan55@huawei.com>,  Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Igor Mammedov <imammedo@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,  Mads Ynddal <mads@ynddal.dk>,  Ani
+ Sinha <anisinha@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  Kevin Wolf <kwolf@redhat.com>,
+ Eric Blake <eblake@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>,  Cleber Rosa <crosa@redhat.com>,  Eduardo
+ Habkost <eduardo@habkost.net>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Alex Williamson <alex.williamson@redhat.com>,
+ Zhenwei Pi <pizhenwei@bytedance.com>,  Jason Wang <jasowang@redhat.com>,
+ Lukas Straub <lukasstraub2@web.de>,  Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v3 1/5] docs/sphinx: adjust qapidoc to cope with
+ same-line error sections
+In-Reply-To: <20250618165353.1980365-2-jsnow@redhat.com> (John Snow's message
+ of "Wed, 18 Jun 2025 12:53:49 -0400")
+References: <20250618165353.1980365-1-jsnow@redhat.com>
+ <20250618165353.1980365-2-jsnow@redhat.com>
+Date: Mon, 30 Jun 2025 14:23:48 +0200
+Message-ID: <87cyala04r.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-In-Reply-To: <c3a2c4f9-c750-4a0a-b6bc-e94b55784952@linaro.org>
-Date: Mon, 30 Jun 2025 08:08:40 -0400
-X-Gm-Features: Ac12FXyaTpUe0-wGYzdUKf5dbYUnko60cgMD8f2dtsUl20XXeMHzpWW6IsCORmw
-Message-ID: <CABJz62Ntvsj6PDRoor=Wy5x603buuBopqPcX8cEAsfhGiX6WvA@mail.gmail.com>
-Subject: Re: [PATCH v4 093/163] tcg: Convert extract to TCGOutOpExtract
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=abologna@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
@@ -89,7 +95,7 @@ X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,84 +111,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 27, 2025 at 06:16:56AM -0700, Richard Henderson wrote:
-> On 6/26/25 09:20, Andrea Bolognani wrote:
-> > On Mon, Jun 09, 2025 at 06:52:21AM -0700, Andrea Bolognani wrote:
-> > > On Tue, Apr 15, 2025 at 12:24:04PM -0700, Richard Henderson wrote:
-> > > > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> > > > ---
-> > > >   tcg/tcg.c                        | 20 +++++++++
-> > > >   tcg/aarch64/tcg-target.c.inc     | 28 +++++++-----
-> > > >   tcg/arm/tcg-target.c.inc         | 23 +++++-----
-> > > >   tcg/i386/tcg-target.c.inc        | 77 +++++++++++++++++---------------
-> > > >   tcg/loongarch64/tcg-target.c.inc | 33 +++++++-------
-> > > >   tcg/mips/tcg-target.c.inc        | 35 +++++++--------
-> > > >   tcg/ppc/tcg-target.c.inc         | 35 +++++++--------
-> > > >   tcg/riscv/tcg-target.c.inc       | 54 +++++++++++-----------
-> > > >   tcg/s390x/tcg-target.c.inc       | 14 +++---
-> > > >   tcg/sparc64/tcg-target.c.inc     | 16 ++++---
-> > > >   tcg/tci/tcg-target.c.inc         |  8 ++--
-> > > >   11 files changed, 191 insertions(+), 152 deletions(-)
-> > >
-> > > Hi Richard,
-> > >
-> > > this seems to have introduced a regression when running on a riscv64
-> > > host.
-> > >
-> > > Before the change:
-> > >
-> > >    $ timeout --foreground 1 \
-> > >      ./build/qemu-system-riscv64 -machine virt,accel=tcg \
-> > >      -display none -serial stdio 2>&1 | grep -i opensbi
-> > >    OpenSBI v1.5.1
-> > >
-> > > After the change, no output is produced.
-> > >
-> > > This causes the
-> > >
-> > >    qemu:func-quick+func-riscv64 / func-riscv64-riscv_opensbi
-> > >
-> > > test to stall and eventually fail due to the built-in test suite
-> > > timeout kicking in.
-> > >
-> > > Interestingly, I can't reproduce this by running the exact same
-> > > commands and using the exact same git commits on an x86_64 host.
-> > >
-> > > Do you have any idea what could be going wrong? I'll happily
-> > > investigate further if you give me pointers.
-> >
-> > Hi,
-> >
-> > this is still an issue as of f9a3def17b2a.
-> >
-> > Any idea where to look?
->
-> tcg/riscv/tcg-target.c.inc, tgen_extract(), must be at fault.
->
-> Oh, I see it:
->
-> --- a/tcg/riscv/tcg-target.c.inc
-> +++ b/tcg/riscv/tcg-target.c.inc
-> @@ -2502,7 +2502,7 @@ static void tgen_extract
->          }
->      }
->      if (ofs + len == 32) {
-> -        tgen_shli(s, TCG_TYPE_I32, a0, a1, ofs);
-> +        tgen_shri(s, TCG_TYPE_I32, a0, a1, ofs);
->          return;
->      }
->      if (len == 1) {
->
->
-> Please test.
+John Snow <jsnow@redhat.com> writes:
 
-This indeed seems to do the trick, I get output from OpenSBI now.
+> Signed-off-by: John Snow <jsnow@redhat.com>
 
-  Tested-by: Andrea Bolognani <abologna@redhat.com>
+Let's mention the reproducer: "# Errors: some" in doc-good.json with
+:transmogrify:.
 
-Thank you!
-
--- 
-Andrea Bolognani / Red Hat / Virtualization
+> ---
+>  docs/sphinx/qapidoc.py | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
+>
+> diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+> index 8011ac9efaf..5374dee8fad 100644
+> --- a/docs/sphinx/qapidoc.py
+> +++ b/docs/sphinx/qapidoc.py
+> @@ -267,10 +267,14 @@ def visit_returns(self, section: QAPIDoc.Section) -> None:
+>          self.add_field("return", typ, section.text, section.info)
+>  
+>      def visit_errors(self, section: QAPIDoc.Section) -> None:
+> -        # FIXME: the formatting for errors may be inconsistent and may
+> -        # or may not require different newline placement to ensure
+> -        # proper rendering as a nested list.
+> -        self.add_lines(f":error:\n{section.text}", section.info)
+> +        # If the section text does not start with a space, it means text
+> +        # began on the same line as the "Error:" string and we should
+> +        # not insert a newline in this case.
+> +        if section.text[0].isspace():
+> +            text = f":error:\n{section.text}"
+> +        else:
+> +            text = f":error: {section.text}"
+> +        self.add_lines(text, section.info)
+>  
+>      def preamble(self, ent: QAPISchemaDefinition) -> None:
+>          """
 
 
