@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB8E7C8302D
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 11:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BBBDC7EE39
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 11:52:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWD2T-0006p0-Si; Mon, 30 Jun 2025 07:51:09 -0400
+	id 1uWD2u-0006u7-FA; Mon, 30 Jun 2025 07:51:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uWD2S-0006od-86
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 07:51:08 -0400
-Received: from mail-qt1-x831.google.com ([2607:f8b0:4864:20::831])
+ id 1uWD2j-0006si-AD
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 07:51:30 -0400
+Received: from mail-qk1-x72c.google.com ([2607:f8b0:4864:20::72c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uWD2Q-00086Y-22
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 07:51:08 -0400
-Received: by mail-qt1-x831.google.com with SMTP id
- d75a77b69052e-4a7f61ea32aso79445471cf.3
- for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 04:51:04 -0700 (PDT)
+ id 1uWD2c-00087t-My
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 07:51:24 -0400
+Received: by mail-qk1-x72c.google.com with SMTP id
+ af79cd13be357-7d38ddc198eso217859085a.1
+ for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 04:51:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1751284263; x=1751889063; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1751284275; x=1751889075; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3RzLEaOXHmqUWkuQ3zmz/OCZ3SVN88BhJM0B53/UOLw=;
- b=AesiSkUGILUNdKTCdv2R8Yipqp0vHz2SUzlO4J0VQ/jB0Uf4p3qNrL0odEM2tdeDOP
- mKO0G/8uld1Z1CB+JN/9YFxsH0abkO8u6Pf/M6pgrkzsJZvdVNzT5gCtP6Cp0aekIe6m
- pQ4XwmWEKIWjsbN1cCTAl1G9/snsKofUVYX96AggeDOuib+6cmFmqRL/kwNxJRJTrMnf
- LqkDKTbAjiWzAkeKd4W4yzpQImLqtE+PYcNs1n2Re201tSOxfFxdywHdCkWo606D4cE6
- +fxp/5ojQyQHXk/iX0FMfHtncAyJVQ18+XHzwbmznOcaU6lAzLAZhyN7tlfVgBlz9HwC
- 379Q==
+ bh=Hsix+QDvemlV3gz/UpeDemflmuRjux4V/Jm1LqpJO3I=;
+ b=d9FhSTi/9ydOAxDHFYPxArVqi62JC7G6rsmDWjwtjL+GOAcHPNcq21JFRwQQ65sW8J
+ C98JuS10ITFprQK2+ESV19d1uCPXyPgu4YM9B1MoZGL2ZDVe+4fDhqhwAeJTsJqNcG7G
+ csS+ozvf06AhGJusoYykCSiS8HD35EpNU62FxbJUuEOjU1aZaf5hvZu/b47xolPkjbW8
+ V26OWFKdj/7cHzrB+RkzCFhnzAYGhigkmFwfSH7FZUaaor0Lh7Wi7V1aIUUHkITja3Ym
+ ykREV/JCpLVGfOgk93RhTlRsL+hxJ1P4OwgHougewInTu8LVJiNZhXOt3Zo7eVXqCEgn
+ Q4+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751284263; x=1751889063;
+ d=1e100.net; s=20230601; t=1751284275; x=1751889075;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3RzLEaOXHmqUWkuQ3zmz/OCZ3SVN88BhJM0B53/UOLw=;
- b=Dy1W3ksbjirzWJaZjsZ2s24q0JH+8CLsBOqkKjqPN5JfN4rcBu6d3RshYg6Jo5KwG3
- M8Zkm4WRCZauxJsKwORFgW6xqiIZ09f0QxAcE66R13xSjm1eL+GQCC6f4ziv2TprfJJE
- kGkUeYZJflDBVO3rKI5QaHaGaEblykB0cdj40EqGkRNECKLSPsZb3aImhsLBnHFzUpHw
- K5i9c6f2B0qeGcWtCQXZwmgReThz5CYfAtPvF2vBrvPpI6KY8Yz5bEr+t7AKDlFTh9ZU
- BYtFqtNtz5ZNDR0Wmwg21QMsERqzdc6aNtqWb/2hGlQcUqry9UNFu8GhszDLt9gerhfc
- gNaQ==
+ bh=Hsix+QDvemlV3gz/UpeDemflmuRjux4V/Jm1LqpJO3I=;
+ b=RJnWSb+QPsgVGoo9P5U2rbR3iuxPQ9rObyevuZlIHctuQg70gDYWlnfORC8Vz485WD
+ DPzndJqviN29VVYTVku+WWK5SYc5mItGo4P9nbg5ZNuYjlNiigvusHHgIQQM1/ilZu4J
+ tdyvgbdv+kX0nDcmmh15YXkIJsQlr6kbYzhIzffel+/oUTzSpItj1ean7SQwQ8YHnx3j
+ /xe7qPb4SAZwvrifw9/tZDrKND4pnJtMYTpNtaMpcIRBdv9iGhAhvwAe3jyv2hd6lvzm
+ WVs+2sAMui8pIfu+sgFybcSOP68lOnl1MMlycapzUmWTDQeC+Hhe79zdiyoiGCDd1+gG
+ e/vg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWAsjhc5/zHElloNQM/AEnTah+JvLJMZa0gzqcsYOFLEU3tT0Io+g+piOKrs5/S2ozvxFxSvSy/jzVS@nongnu.org
-X-Gm-Message-State: AOJu0YwI05KezJCXT3lksWlau/zwH+uLhkjqn0GkklWu6OPnKYAaN4md
- CmlrKM8yesicXHOEcZk65kSMAveNI5V/GOjD7V67xj5iiVtmNdJtXVgo7k29Y5/lIIE=
-X-Gm-Gg: ASbGnctM/gpuuFOttaYqG5FCduSioVYg2tpO6OVuOPBeC5nxo//Gi62rGFmk2huqgcZ
- ydZS2K5YB4jCvW/CG+YHZsLZ/DWi1iTJ9mqQcoyO5ZzAYiPU5PW9k+HnXxSNsnwPSpSHxTEdCmO
- xQ1QBQws08XugEgTHmOO24TUJaAzN7LeH0rqZortytyxr3ETtuhP5oJ5ATeSYvdAwSm1CHq5zSk
- 43yNUqSbNCGWN2BYi97q4csUJUhhv+ri7jQcz5Jrrkx1IqU4BcBxHfDjD4vEvxkG167hNopAOyK
- 11xN8g4wqK5c9B5yFF7CTqqny4w7xCD9lONsa4DOt94wyfk6OD0XzPrKyUDvkpaB92z63ZoHL48
+ AJvYcCUIgWVh8PrVgJlxn9RcK2Lv6AbS5C3mpUlbdJaAMQbCPCE+V/fa86eiGuZBlm3D0Lo6gmrcjkywkX+v@nongnu.org
+X-Gm-Message-State: AOJu0YzmDsl2e3MJFRnbwXkaO1Jl05EW2IO9L9rcYGEIr2sBSmQSfaO6
+ WcCH//07N/oG4ZUKBLLEQejYUtt1Kn8umJDR7Gsb7tQWFgYWKys/XGzgqGc5EdpEwVo=
+X-Gm-Gg: ASbGncvKnqbsp8xUj89JCe7QRAvSMyquObSzlUiLagYHzcqeLeh9yFagWH431dDgWbO
+ ejbkaSyxQ5kIMgG8pwT2N9rdfECKqHwnBZLJpsiGnQAD9Ds3+Av/gaV3DzoMQ8p1kq/DijLvf5q
+ 99l3+agzj+Ioyt61nlvfR+SlaoUTstDvHdueh0isbAo8sGwO1zxordHufINjB72j9uC1FGTcc7A
+ 6EGp8+8hHRMfvUwhuNLiOacp0Y0jhQ7buZTB+tq5wWPAlylV14+nhE/UjFiPfLPEkNXRpOgVd3p
+ cPfqw7vwL5d/Hr7SPvvvdpmq0GusAnA6w//Byy9IxXzd1UD1wVm2SI2U8p7U0som3vQouWC4/Sw
  =
-X-Google-Smtp-Source: AGHT+IGJrDBNwrqFd706CH0KhcFMn/UT9+yb9CNIRfGhIdoN21cJoz/IVxaSBMdE5Emq79PzMfLGLw==
-X-Received: by 2002:a05:622a:296:b0:4a6:f6e6:7693 with SMTP id
- d75a77b69052e-4a7fc9d8522mr193028571cf.6.1751284263134; 
- Mon, 30 Jun 2025 04:51:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGmVhEHDLz3zfUk0BEOBXONFM9NCI8yxtbLNOu9EI3k6WDNhYFXxzF8XRXABCpXTyoVWSRnrQ==
+X-Received: by 2002:a05:620a:2712:b0:7d2:1199:ac89 with SMTP id
+ af79cd13be357-7d4439a6690mr1941779685a.36.1751284274740; 
+ Mon, 30 Jun 2025 04:51:14 -0700 (PDT)
 Received: from [192.168.68.110] ([179.93.20.232])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4a7fc55c396sm57333521cf.50.2025.06.30.04.51.00
+ af79cd13be357-7d443179f17sm580166685a.40.2025.06.30.04.51.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Jun 2025 04:51:02 -0700 (PDT)
-Message-ID: <dc3ca3fd-1159-4186-acbf-ddd38276c33c@ventanamicro.com>
-Date: Mon, 30 Jun 2025 08:50:58 -0300
+ Mon, 30 Jun 2025 04:51:14 -0700 (PDT)
+Message-ID: <313db59a-5bf9-4001-bb68-ab67cbde310b@ventanamicro.com>
+Date: Mon, 30 Jun 2025 08:51:11 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 02/11] target/riscv: Add cpu_set_exception_base
+Subject: Re: [PATCH v4 03/11] target/riscv: Add MIPS P8700 CPU
 To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
  "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
  "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>
 References: <20250625141732.59084-1-djordje.todorovic@htecgroup.com>
- <20250625141732.59084-3-djordje.todorovic@htecgroup.com>
+ <20250625141732.59084-4-djordje.todorovic@htecgroup.com>
 Content-Language: en-US
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250625141732.59084-3-djordje.todorovic@htecgroup.com>
+In-Reply-To: <20250625141732.59084-4-djordje.todorovic@htecgroup.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::831;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-qt1-x831.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-qk1-x72c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,60 +110,68 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 6/25/25 11:18 AM, Djordje Todorovic wrote:
-> Add a new function, so we can change reset vector from platforms
-> during runtime.
+> Introduce P8700 CPU by MIPS.
 > 
 > Signed-off-by: Chao-ying Fu <cfu@mips.com>
 > Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
 > ---
->   target/riscv/cpu.h       | 4 ++++
->   target/riscv/translate.c | 8 ++++++++
->   2 files changed, 12 insertions(+)
+
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+>   target/riscv/cpu-qom.h      |  1 +
+>   target/riscv/cpu.c          | 15 +++++++++++++++
+>   target/riscv/cpu_vendorid.h |  1 +
+>   3 files changed, 17 insertions(+)
 > 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 229ade9ed9..fba0b0506b 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -656,6 +656,10 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
->   target_ulong riscv_cpu_get_fflags(CPURISCVState *env);
->   void riscv_cpu_set_fflags(CPURISCVState *env, target_ulong);
+> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+> index 1ee05eb393..1e62b96094 100644
+> --- a/target/riscv/cpu-qom.h
+> +++ b/target/riscv/cpu-qom.h
+> @@ -55,6 +55,7 @@
+>   #define TYPE_RISCV_CPU_VEYRON_V1        RISCV_CPU_TYPE_NAME("veyron-v1")
+>   #define TYPE_RISCV_CPU_TT_ASCALON       RISCV_CPU_TYPE_NAME("tt-ascalon")
+>   #define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-nanhu")
+> +#define TYPE_RISCV_CPU_MIPS_P8700       RISCV_CPU_TYPE_NAME("mips-p8700")
+>   #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
 >   
-> +#ifndef CONFIG_USER_ONLY
-> +void cpu_set_exception_base(int vp_index, target_ulong address);
-> +#endif
+>   OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 629ac37501..672e30378e 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -3167,6 +3167,21 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+>           .cfg.max_satp_mode = VM_1_10_SV39,
+>       ),
+>   
+> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_MIPS_P8700, TYPE_RISCV_VENDOR_CPU,
+> +        .misa_mxl_max = MXL_RV64,
+> +        .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU,
+> +        .priv_spec = PRIV_VERSION_1_12_0,
+> +        .cfg.max_satp_mode = VM_1_10_SV48,
+> +        .cfg.ext_zifencei = true,
+> +        .cfg.ext_zicsr = true,
+> +        .cfg.mmu = true,
+> +        .cfg.pmp = true,
+> +        .cfg.ext_zba = true,
+> +        .cfg.ext_zbb = true,
+> +        .cfg.marchid = 0x8000000000000201,
+> +        .cfg.mvendorid = MIPS_VENDOR_ID,
+> +    ),
 > +
->   FIELD(TB_FLAGS, MEM_IDX, 0, 3)
->   FIELD(TB_FLAGS, FS, 3, 2)
->   /* Vector flags */
-> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> index d7a6de02df..c3fbae7cfe 100644
-> --- a/target/riscv/translate.c
-> +++ b/target/riscv/translate.c
-> @@ -1427,3 +1427,11 @@ void riscv_translate_init(void)
->       load_val = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, load_val),
->                                "load_val");
->   }
-> +
-> +#ifndef CONFIG_USER_ONLY
-> +void cpu_set_exception_base(int vp_index, target_ulong address)
-> +{
-> +    RISCVCPU *vp = RISCV_CPU(qemu_get_cpu(vp_index));
-> +    vp->env.resetvec = address;
-> +}
-
-Sorry to not noticing this in v3 but I don't think this code belongs here. There's
-no translation related code being done. This code is better placed in
-target/riscv/cpu.c.
-
-Also, qemu_get_cpu() can return NULL. Given that you handled the NULL cases in patch 1
-to support sparse IDs I believe it would be consistent to do the same here for
-the sake of future users of this API.
-
-
-Thanks,
-
-Daniel
-
-> +#endif
+>   #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+>       DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
+>           .cfg.max_satp_mode = VM_1_10_SV57,
+> diff --git a/target/riscv/cpu_vendorid.h b/target/riscv/cpu_vendorid.h
+> index 96b6b9c2cb..28f0ce9370 100644
+> --- a/target/riscv/cpu_vendorid.h
+> +++ b/target/riscv/cpu_vendorid.h
+> @@ -2,6 +2,7 @@
+>   #define TARGET_RISCV_CPU_VENDORID_H
+>   
+>   #define THEAD_VENDOR_ID         0x5b7
+> +#define MIPS_VENDOR_ID          0x722
+>   
+>   #define VEYRON_V1_MARCHID       0x8000000000010000
+>   #define VEYRON_V1_MIMPID        0x111
 
 
