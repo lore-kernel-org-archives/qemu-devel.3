@@ -4,95 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCD72C7EE39
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 11:42:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CCF3C8302D
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 11:48:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWCtO-00042H-8K; Mon, 30 Jun 2025 07:41:46 -0400
+	id 1uWCzK-0005Tp-PZ; Mon, 30 Jun 2025 07:47:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uWCtM-00041W-1D
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 07:41:44 -0400
-Received: from mail-qv1-xf32.google.com ([2607:f8b0:4864:20::f32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uWCtJ-0006WN-Qp
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 07:41:43 -0400
-Received: by mail-qv1-xf32.google.com with SMTP id
- 6a1803df08f44-6facba680a1so24312776d6.3
- for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 04:41:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1751283697; x=1751888497; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7lAMPt/pj50WRkfjltobwmgNsB/GGXp6kM/HsYWsPgg=;
- b=YVYX4WngmDhdmDzUEj+5b7A9CUe7KCTAzcnM/d2ZWtGiPJjwRncsLUY4DT2hB0Y+0o
- lsBMpRGdEFlldfZmm36DXg0CfsCqlv6ej0WktTHifnZE9r7GzWZT9Pi8zAf/lu563ZQY
- TMIqQ0PZ37Yqx9CCm3+RRq1GOH7K3MoBDyfA64xT0EXZwt7ojPDyHT1DAkd7NjhV2JCg
- BjZCksVIS+UsCzfFpmKgFknnTsBel64glgJringokRhnFM5BTIrh9gIdLiECnGwP1tCN
- Df7RQnSrc9PQHK/+8PzLoIp/yI4PSCtD7C4VDDiXN8PynW4eQyNyh9jrYHgl7sOsEZRQ
- nKkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751283697; x=1751888497;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7lAMPt/pj50WRkfjltobwmgNsB/GGXp6kM/HsYWsPgg=;
- b=np/sgjiBLcyQ3xyS2MrJQwMJAV43r3sdXDRNq5ILwIABhmCu25zOcroQuJxDO3WLVv
- 04SjKp8dHHjAtTUqxn66Gnwd3IXt1g3jduM5NURM/Q9HWo7DQRSTTfBfOGyVR+ddZVHn
- UYBxeojGK6yq1o9NA0cUGfyjoQukQLR4IqBU6qQzrketAdpQQFz4rNCyeF4DAMI1HCyO
- V/MeRA3MI1cuQojgDdOUxY+U5CehkLhvMpHjf72P84JCYbavtzLCHgYGq0hFUpjJxK0V
- ysAQGg82DKiajy/ax3Kf5tYPZW4iRxIGzLcBT5UYxM1fYGPBCgtDZzMf6imzmwz5t9P1
- c9Fw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWGqUld39G/rXqpMqYX3TVwOAeP3hcMOogMBXWk1V2IK9Z8Pccg6C+yUY5e22432k9J1+we7gxonA9m@nongnu.org
-X-Gm-Message-State: AOJu0YyfbSsaI4jFnPGr7d7Zk5kvZSXwHo4HgMkm30a6v3bsKcJObu+r
- J4v6vvS0uCTR9xPQ5A9wM0zbpU6S0yfGx75Olk6p2nMMViEkQJ49j7jiQM1BfIoV0C8=
-X-Gm-Gg: ASbGncuZwje6vzbOFL5dkGsd8jSx3GKqFZpA5ad3PN8+K20nk3dzWyucmBpaXEe6Qhi
- 69z5mabX9tqTaYARHjW543+r4/I54x0liEb6ikAw+RPaACiB9hjSBK6aUBVPsxx4PeR99VGC79i
- jho1fCyG0bLU0rQ6i0cXZhZfaCMcHKflumshRfCrTpo2YSHsKElxnRmmkIfwIEnqiJtPIEObeWX
- FZl6U6K967PrGl8V3YcOS+iNlGKikzRToDv8if7fOoKC/T3hxN2rLfEJbtxSEX4O61JnaYYlmiU
- ahMPyTtzE6uP6UehMomrGlBQntcIYWWFHhh0+SUsfZ0gtriCddNIfWWtwUHb7yAXRmuvyYSkfm0
- =
-X-Google-Smtp-Source: AGHT+IENwUJpuba5vfcQgp4Rt52itQO7CIMW2tNeW7PG+hjXhCMYuY7kL8OB8cd8759y5cvvdaIstg==
-X-Received: by 2002:a05:6214:234e:b0:6fa:cb05:b455 with SMTP id
- 6a1803df08f44-700141348ccmr203997366d6.35.1751283697232; 
- Mon, 30 Jun 2025 04:41:37 -0700 (PDT)
-Received: from [192.168.68.110] ([179.93.20.232])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6fd772fc8f3sm65716716d6.84.2025.06.30.04.41.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Jun 2025 04:41:36 -0700 (PDT)
-Message-ID: <9b0f4a24-f1cd-4973-947f-49a5459d28a3@ventanamicro.com>
-Date: Mon, 30 Jun 2025 08:41:33 -0300
+ (Exim 4.90_1) (envelope-from <SRS0=bKmi=ZN=kaod.org=clg@ozlabs.org>)
+ id 1uWCzH-0005TO-Ec; Mon, 30 Jun 2025 07:47:52 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=bKmi=ZN=kaod.org=clg@ozlabs.org>)
+ id 1uWCzB-0007cI-KL; Mon, 30 Jun 2025 07:47:49 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bW4CY6L1sz4xQ2;
+ Mon, 30 Jun 2025 21:47:37 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bW4CS5xqDz4wbX;
+ Mon, 30 Jun 2025 21:47:32 +1000 (AEST)
+Message-ID: <8fd8738e-8ecf-4fcc-adbe-9af8ba51b0b4@kaod.org>
+Date: Mon, 30 Jun 2025 13:47:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/11] hw/intc: Allow gaps in hartids for aclint and
- aplic
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>
-References: <20250625141732.59084-1-djordje.todorovic@htecgroup.com>
- <20250625141732.59084-2-djordje.todorovic@htecgroup.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250625141732.59084-2-djordje.todorovic@htecgroup.com>
+Subject: Re: [PATCH v2] tests/qtest: Add test for ASPEED SCU
+To: Tan Siewert <tan@siewert.io>, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
+References: <20250630112646.74944-1-tan@siewert.io>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250630112646.74944-1-tan@siewert.io>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f32;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-qv1-xf32.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=bKmi=ZN=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,96 +110,291 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
++Thomas for more qtest expertise,
 
-
-On 6/25/25 11:18 AM, Djordje Todorovic wrote:
-> This is needed for riscv based CPUs by MIPS since those may have
-> sparse hart-ID layouts. ACLINT and APLIC still assume a dense
-> range, and if a hart is missing, this causes NULL derefs.
+On 6/30/25 13:26, Tan Siewert wrote:
+> This adds basic tests for the ASPEED System Control Unit (SCU) and its
+> protection mechanism on the AST2500 and AST2600 platforms.
 > 
-> Signed-off-by: Chao-ying Fu <cfu@mips.com>
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> The tests verify:
+>    - That SCU protection registers can be unlocked and locked again
+>    - That modifying the primary protection register on AST2600 also
+>      affects the secondary one
+>    - That writes to protected SCU registers are blocked unless
+>      protection registers are unlocked explicitly
+> 
+> These tests ensure proper emulation of hardware locking behaviour
+> and help catch regressions in SCU access logic.
+> 
+> Signed-off-by: Tan Siewert <tan@siewert.io>
 > ---
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   hw/intc/riscv_aclint.c | 21 +++++++++++++++++++--
->   hw/intc/riscv_aplic.c  | 10 +++++++---
->   2 files changed, 26 insertions(+), 5 deletions(-)
+> V2:
+>    - Merge unnecessary aspeed-scu-utils into aspeed_scu-test
+>      file [Cedric]
 > 
-> diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
-> index b0139f03f5..22ac4133d5 100644
-> --- a/hw/intc/riscv_aclint.c
-> +++ b/hw/intc/riscv_aclint.c
-> @@ -292,7 +292,13 @@ static void riscv_aclint_mtimer_realize(DeviceState *dev, Error **errp)
->       s->timecmp = g_new0(uint64_t, s->num_harts);
->       /* Claim timer interrupt bits */
->       for (i = 0; i < s->num_harts; i++) {
-> -        RISCVCPU *cpu = RISCV_CPU(cpu_by_arch_id(s->hartid_base + i));
-> +        CPUState *cpu_by_hartid = cpu_by_arch_id(s->hartid_base + i);
-> +        if (cpu_by_hartid == NULL) {
-> +            qemu_log_mask(LOG_GUEST_ERROR, "aclint-mtimer: invalid hartid: %u",
-> +                          s->hartid_base + i);
-> +            continue;
+>   tests/qtest/aspeed_scu-test.c | 231 ++++++++++++++++++++++++++++++++++
+>   tests/qtest/meson.build       |   3 +-
+>   2 files changed, 233 insertions(+), 1 deletion(-)
+>   create mode 100644 tests/qtest/aspeed_scu-test.c
+> 
+> diff --git a/tests/qtest/aspeed_scu-test.c b/tests/qtest/aspeed_scu-test.c
+> new file mode 100644
+> index 0000000000..ca09f9171f
+> --- /dev/null
+> +++ b/tests/qtest/aspeed_scu-test.c
+> @@ -0,0 +1,231 @@
+> +/*
+> + * QTest testcase for the ASPEED AST2500 and AST2600 SCU.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + * Copyright (C) 2025 Tan Siewert
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "libqtest-single.h"
+> +
+> +/*
+> + * SCU base, as well as protection key are
+> + * the same on AST2500 and 2600.
+> + */
+> +#define AST_SCU_BASE                    0x1E6E2000
+> +#define AST_SCU_PROT_LOCK_STATE         0x0
+> +#define AST_SCU_PROT_LOCK_VALUE         0x2
+> +#define AST_SCU_PROT_UNLOCK_STATE       0x1
+> +#define AST_SCU_PROT_UNLOCK_VALUE       0x1688A8A8
+> +
+> +#define AST2500_MACHINE                 "-machine ast2500-evb"
+> +#define AST2500_SCU_PROT_REG            0x00
+> +#define AST2500_SCU_MISC_2_CONTROL_REG  0x4C
+> +
+> +#define AST2600_MACHINE                 "-machine ast2600-evb"
+> +/* AST2600 has two protection registers */
+> +#define AST2600_SCU_PROT_REG            0x000
+> +#define AST2600_SCU_PROT_REG2           0x010
+> +#define AST2600_SCU_MISC_2_CONTROL_REG  0x0C4
+> +
+> +#define TEST_LOCK_ARBITRARY_VALUE       0xABCDEFAB
+> +
+> +/**
+> + * Assert that a given register matches an expected value.
+> + *
+> + * Reads the register and checks if its value equals the expected value.
+> + *
+> + * @param *s - QTest machine state
+> + * @param reg - Address of the register to be checked
+> + * @param expected - Expected register value
+> + */
+> +static inline void assert_register_eq(QTestState *s,
+> +                                      uint32_t reg,
+> +                                      uint32_t expected)
+> +{
+> +    uint32_t value = qtest_readl(s, reg);
+> +    g_assert_cmphex(value, ==, expected);
+> +}
+> +
+> +/**
+> + * Assert that a given register does not match a specific value.
+> + *
+> + * Reads the register and checks that its value is not equal to the
+> + * provided value.
+> + *
+> + * @param *s - QTest machine state
+> + * @param reg - Address of the register to be checked
+> + * @param not_expected - Value the register must not contain
+> + */
+> +static inline void assert_register_neq(QTestState *s,
+> +                                       uint32_t reg,
+> +                                       uint32_t not_expected)
+> +{
+> +    uint32_t value = qtest_readl(s, reg);
+> +    g_assert_cmphex(value, !=, not_expected);
+> +}
+> +
+> +/**
+> + * Test whether the SCU can be locked and unlocked correctly.
+> + *
+> + * When testing multiple registers, this function assumes that writing
+> + * to the first register also affects the others. However, writing to
+> + * any other register only affects itself.
+> + *
+> + * @param *machine - input machine configuration, passed directly
+> + *                   to QTest
+> + * @param regs[] - List of registers to be checked
+> + * @param regc - amount of arguments for registers to be checked
+> + */
+> +static void test_protection_register(const char *machine,
+> +                                     const uint32_t regs[],
+> +                                     const int regc)
+> +{
+> +    QTestState *s = qtest_init(machine);
+> +
+> +    for (int i = 0; i < regc; i++) {
+> +        uint32_t reg = regs[i];
+> +
+> +        qtest_writel(s, reg, AST_SCU_PROT_UNLOCK_VALUE);
+> +        assert_register_eq(s, reg, AST_SCU_PROT_UNLOCK_STATE);
+> +
+> +        /**
+> +         * Check that other registers are unlocked too, if more
+> +         * than one is available.
+> +         */
+> +        if (regc > 1 && i == 0) {
+> +            /* Initialise at 1 instead of 0 to skip first */
+> +            for (int j = 1; j < regc; j++) {
+> +                uint32_t add_reg = regs[j];
+> +                assert_register_eq(s, add_reg, AST_SCU_PROT_UNLOCK_STATE);
+> +            }
 > +        }
-> +        RISCVCPU *cpu = RISCV_CPU(cpu_by_hartid);
->           if (riscv_cpu_claim_interrupts(cpu, MIP_MTIP) < 0) {
->               error_report("MTIP already claimed");
->               exit(1);
-> @@ -481,7 +487,13 @@ static void riscv_aclint_swi_realize(DeviceState *dev, Error **errp)
->   
->       /* Claim software interrupt bits */
->       for (i = 0; i < swi->num_harts; i++) {
-> -        RISCVCPU *cpu = RISCV_CPU(qemu_get_cpu(swi->hartid_base + i));
-> +        CPUState *cpu_by_hartid = cpu_by_arch_id(swi->hartid_base + i);
-> +        if (cpu_by_hartid == NULL) {
-> +            qemu_log_mask(LOG_GUEST_ERROR, "aclint-swi: invalid hartid: %u",
-> +                          swi->hartid_base + i);
-> +            continue;
+> +
+> +        /* Lock the register again */
+> +        qtest_writel(s, reg, AST_SCU_PROT_LOCK_VALUE);
+> +        assert_register_eq(s, reg, AST_SCU_PROT_LOCK_STATE);
+> +
+> +        /* And the same for locked state */
+> +        if (regc > 1 && i == 0) {
+> +            /* Initialise at 1 instead of 0 to skip first */
+> +            for (int j = 1; j < regc; j++) {
+> +                uint32_t add_reg = regs[j];
+> +                assert_register_eq(s, add_reg, AST_SCU_PROT_LOCK_STATE);
+> +            }
 > +        }
-> +        RISCVCPU *cpu = RISCV_CPU(cpu_by_hartid);
->           /* We don't claim mip.SSIP because it is writable by software */
->           if (riscv_cpu_claim_interrupts(cpu, swi->sswi ? 0 : MIP_MSIP) < 0) {
->               error_report("MSIP already claimed");
-> @@ -545,6 +557,11 @@ DeviceState *riscv_aclint_swi_create(hwaddr addr, uint32_t hartid_base,
->   
->       for (i = 0; i < num_harts; i++) {
->           CPUState *cpu = cpu_by_arch_id(hartid_base + i);
-> +        if (cpu == NULL) {
-> +            qemu_log_mask(LOG_GUEST_ERROR, "aclint-swi: invalid hartid: %u",
-> +                          hartid_base + i);
-> +            continue;
-> +        }
->           RISCVCPU *rvcpu = RISCV_CPU(cpu);
->   
->           qdev_connect_gpio_out(dev, i,
-> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-> index 8bcd9f4697..360a3dc117 100644
-> --- a/hw/intc/riscv_aplic.c
-> +++ b/hw/intc/riscv_aplic.c
-> @@ -899,9 +899,11 @@ static void riscv_aplic_realize(DeviceState *dev, Error **errp)
->           if (!aplic->msimode) {
->               /* Claim the CPU interrupt to be triggered by this APLIC */
->               for (i = 0; i < aplic->num_harts; i++) {
-> -                RISCVCPU *cpu;
-> -
-> -                cpu = RISCV_CPU(cpu_by_arch_id(aplic->hartid_base + i));
-> +                CPUState *temp = cpu_by_arch_id(aplic->hartid_base + i);
-> +                if (temp == NULL) {
-> +                    continue;
-> +                }
-> +                RISCVCPU *cpu = RISCV_CPU(temp);
->                   if (riscv_cpu_claim_interrupts(cpu,
->                       (aplic->mmode) ? MIP_MEIP : MIP_SEIP) < 0) {
->                       error_report("%s already claimed",
-> @@ -1076,6 +1078,8 @@ DeviceState *riscv_aplic_create(hwaddr addr, hwaddr size,
->           if (!msimode) {
->               for (i = 0; i < num_harts; i++) {
->                   CPUState *cpu = cpu_by_arch_id(hartid_base + i);
-> +                if (cpu == NULL)
-> +                    continue;
->   
->                   qdev_connect_gpio_out_named(dev, NULL, i,
->                                               qdev_get_gpio_in(DEVICE(cpu),
+> +    }
+> +
+> +    qtest_quit(s);
+> +}
+> +
+> +static void test_2500_protection_register(void)
+> +{
+> +    uint32_t regs[] = { AST_SCU_BASE + AST2500_SCU_PROT_REG };
+> +
+> +    test_protection_register(AST2500_MACHINE,
+> +                             regs,
+> +                             ARRAY_SIZE(regs));
+> +}
+> +
+> +static void test_2600_protection_register(void)
+> +{
+> +    /**
+> +     * The AST2600 has two protection registers, both
+> +     * being required to be unlocked to do any operation.
+> +     *
+> +     * Modifying SCU000 also modifies SCU010, but modifying
+> +     * SCU010 only will keep SCU000 untouched.
+> +     */
+> +    uint32_t regs[] = { AST_SCU_BASE + AST2600_SCU_PROT_REG,
+> +                        AST_SCU_BASE + AST2600_SCU_PROT_REG2 };
+> +
+> +    test_protection_register(AST2600_MACHINE,
+> +                             regs,
+> +                             ARRAY_SIZE(regs));
+> +}
+> +
+> +/**
+> + * Test if SCU register writes are correctly allowed or blocked
+> + * depending on the protection register state.
+> + *
+> + * The test first locks the protection register and verifies that
+> + * writes to the target SCU register are rejected. It then unlocks
+> + * the protection register and confirms that the written value is
+> + * retained when unlocked.
+> + *
+> + * @param *machine - input machine configuration, passed directly
+> + *                   to QTest
+> + * @param protection_register - first SCU protection key register
+> + *                              (only one for keeping it simple)
+> + * @param test_register - Register to be used for writing arbitrary
+> + *                        values
+> + */
+> +static void test_write_permission_lock_state(const char *machine,
+> +                                             const uint32_t protection_register,
+> +                                             const uint32_t test_register)
+> +{
+> +    QTestState *s = qtest_init(machine);
+> +
+> +    /* Arbitrary value to lock provided SCU protection register */
+> +    qtest_writel(s, protection_register, AST_SCU_PROT_LOCK_VALUE);
+> +
+> +    /* Ensure that the SCU is really locked */
+> +    assert_register_eq(s, protection_register, AST_SCU_PROT_LOCK_STATE);
+> +
+> +    /* Write a known arbitrary value to test that the write is blocked */
+> +    qtest_writel(s, test_register, TEST_LOCK_ARBITRARY_VALUE);
+> +
+> +    /* We do not want to have the written value to be saved */
+> +    assert_register_neq(s, test_register, TEST_LOCK_ARBITRARY_VALUE);
+> +
+> +    /**
+> +     * Unlock the SCU and verify that it can be written to.
+> +     * Assumes that the first SCU protection register is sufficient to
+> +     * unlock all protection registers, if multiple are present.
+> +     */
+> +    qtest_writel(s, protection_register, AST_SCU_PROT_UNLOCK_VALUE);
+> +    assert_register_eq(s, protection_register, AST_SCU_PROT_UNLOCK_STATE);
+> +
+> +    /* Write a known arbitrary value to test that the write works */
+> +    qtest_writel(s, test_register, TEST_LOCK_ARBITRARY_VALUE);
+> +
+> +    /* Ensure that the written value is retained */
+> +    assert_register_eq(s, test_register, TEST_LOCK_ARBITRARY_VALUE);
+> +
+> +    qtest_quit(s);
+> +}
+> +
+> +static void test_2500_write_permission_lock_state(void)
+> +{
+> +    test_write_permission_lock_state(
+> +            AST2500_MACHINE,
+> +            AST_SCU_BASE + AST2500_SCU_PROT_REG,
+> +            AST_SCU_BASE + AST2500_SCU_MISC_2_CONTROL_REG
+> +    );
+> +}
+> +
+> +static void test_2600_write_permission_lock_state(void)
+> +{
+> +    test_write_permission_lock_state(
+> +            AST2600_MACHINE,
+> +            AST_SCU_BASE + AST2600_SCU_PROT_REG,
+> +            AST_SCU_BASE + AST2600_SCU_MISC_2_CONTROL_REG
+> +    );
+> +}
+> +
+> +int main(int argc, char **argv)
+> +{
+> +    g_test_init(&argc, &argv, NULL);
+> +
+> +    qtest_add_func("/ast2500/scu/protection_register",
+> +                   test_2500_protection_register);
+> +    qtest_add_func("/ast2600/scu/protection_register",
+> +                   test_2600_protection_register);
+> +
+> +    qtest_add_func("/ast2500/scu/write_permission_lock_state",
+> +                   test_2500_write_permission_lock_state);
+> +    qtest_add_func("/ast2600/scu/write_permission_lock_state",
+> +                   test_2600_write_permission_lock_state);
+> +
+> +    return g_test_run();
+> +}
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index 8ad849054f..8c5fcc4fc1 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -215,7 +215,8 @@ qtests_npcm8xx = \
+>   qtests_aspeed = \
+>     ['aspeed_gpio-test',
+>      'aspeed_hace-test',
+> -   'aspeed_smc-test']
+> +   'aspeed_smc-test',
+> +   'aspeed_scu-test']
+
+Sorry I should have mentioned that :/ Could you please maintain the
+alphabetic order ?
+
+With that,
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
 
 
