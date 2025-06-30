@@ -4,86 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2DA9C8302B
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 15:35:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4BA4C83035
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 15:35:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWGXS-00025q-LF; Mon, 30 Jun 2025 11:35:23 -0400
+	id 1uWGRc-0000RF-07; Mon, 30 Jun 2025 11:29:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uWGWz-0001rk-SC
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:34:57 -0400
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uWGRY-0000Nw-Rs
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:29:16 -0400
+Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uWGWv-0000Te-9k
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:34:53 -0400
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-7086dcab64bso20294427b3.1
- for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 08:34:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uWGRM-0008Cb-W8
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:29:15 -0400
+Received: by mail-ot1-x32b.google.com with SMTP id
+ 46e09a7af769-72c09f8369cso1286858a34.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 08:29:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751297684; x=1751902484; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1751297343; x=1751902143; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DzC/oii9o7rPIbYU7tLpYjy4/LYNBCTnqw6z2ZXkL0s=;
- b=p2RA4p3gphMpWD2MHq2uuELtfZUtaKMc+wWHepQKHhgrfxuAxLWd37DcbmfdB9MF+G
- eKaKx6rQigcXIyvfwE0fgMUv0tjDFS6w9jo/OrT925PNnQW9I+pUOH77gwBhG1fBBPwa
- CGNEFcsUPmhFt3vwzCd9lVa03nchrtfjgMUbrszJOvw+cbNHmrcAK2wbG7lXkIIKLbz5
- A5o5AKyCQVETM4gYw9cKO9rbqRgqWGDA879qHv8eTek0BQxyVt0fdabe6xj8Wqns9/GG
- 8DE4w93rHVqKdemwcftMxfNMFZ0mVDcCSLCGurnWLkZP5XiiaczzlWqvF97K3NA/i1l9
- 2x/g==
+ bh=XWCTAyFZpYLfY4pk7pvKybm5SaB2cnEmwYcfGu+sc/k=;
+ b=l6MbZY3fzcZgXpJDHg2vFGOJ8h09sxfu7b4E1iOcjpNxN2nzR3/uWY43K0bG/KCwas
+ Tyjx7a7CV7JaDxswJEINIQUNj57m0AZltdv+ChnsrO7wna52sLas6OVt9I/GjUfBgqSi
+ xJH/8F6qBeqPLY0yb0q9jj3S+VM+LrQBXQaPnJSScnCOym+LH6hY8F6vG8EieFUWnR/Y
+ X1Jm4YxxWuEcZ8OFqkhOOAVNT5U6oor+F4rl0m2h9Yf/VpFqyu15JEGvDaDs+AZJGDty
+ gdtjhKS71YjTqclE6lWlpHp5c/X237MRx9V6pw4Zc+G6Sjunfk4QNo2BB8VrGnPovnkD
+ kSjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751297684; x=1751902484;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1751297343; x=1751902143;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DzC/oii9o7rPIbYU7tLpYjy4/LYNBCTnqw6z2ZXkL0s=;
- b=KtXeYjvhchU9UYO9SvnHJoKT3ofRO8RbUE91mLV+X4fHlPAsb30LBWL2rXFMVGXeUC
- cUimMalwVSiWCFm+hOaA6Q5J4MJT6yHfpwarBuVtpnOKZDhm1XUxCgCKjMDzytRaMSNt
- vH+yAeklPm97zFOvayqfEb5PeDj9XbeeX6tXerKBIuZ5jswp4mZuIE285xX/roWGpF8Q
- ShLp3FoyivYFpGxaBIF6oT2eGnow3nkoUBa3u99dcggqGKokii81A7lpeaJF/A6e4P28
- E5vAyeG0cMv97y1gBTRQTizH4xNJQmiYX/DPx+qRh1VM3zENHeYAOS5wC0VILKOyoYy/
- bNgg==
-X-Gm-Message-State: AOJu0YwBriPnLpmmqdKWi5MTCMUM/YfcyV6gH1MFe36Qsf+LMy9mscBj
- 2sSafF4WKfEHy9NuCc6l+cGC6R+3dmT5fY6wQIigIAyqIUtlz0UbXM74K4CwE0E2Tgx4FNc2sRI
- IVJw+0I7R0EEkYq0vx8/bY23i1Vz/DuDtM0hSBQrvGg==
-X-Gm-Gg: ASbGncsM29z7PhY7Etx6eJ6hz72k/yTg7KsMlq7ruLsLOrj16A90j0eTE+vRdGJf0GL
- xlOGlIBeoNZk2Nr6b+T6YVznrDpHpj9yCa2mBSe8PPbj4ZFZZj9Vhx5skBvLeCH4YvrfR619q9u
- 6zbublcQyU3DwVgz7VLgRW8kq77jxyxvrv9t9WoeBQmgrH
-X-Google-Smtp-Source: AGHT+IH+iwwqTU7zlX2I945lgbnNlrrxF9cxMU8gMHe6Vd7HsmOmqSLMequo3znfXJSEumDV7EvriQUoY33Fxg3xTNc=
-X-Received: by 2002:a05:690c:d85:b0:70f:8884:17af with SMTP id
- 00721157ae682-7151714d14emr228157307b3.6.1751297684555; Mon, 30 Jun 2025
- 08:34:44 -0700 (PDT)
+ bh=XWCTAyFZpYLfY4pk7pvKybm5SaB2cnEmwYcfGu+sc/k=;
+ b=h1ItHMtu8ig63Khu/p6xjmiNcHtboRUzG9JETEwa3DOqH+oXZ+MC4wRg3EMl+gIQn3
+ zeXHFRp/61JxuuLkZMEinh4UxDBBIkw9Hf/IIOb0qoqakJfG/qlVrvyK8IXkzhmu/Wyr
+ 5R8shmODwG0wHn23YoQ/HKmN81fd7KybUL1abJq9UdoEr9BW8g7maLNOoX/QzpR9z32m
+ DNXYEKALfBVaIZ9DwUJE/1tdHsk1WpbgxOgk83221mats45PfUK1yhwn0MLfg4l8IbiZ
+ xTIBTngRTz68rbmIYK/VSnRdOI/BQzebdL6G3ABL00nf8KUHN6bzeSMLrrCK/Bo8wNA9
+ N5Yg==
+X-Gm-Message-State: AOJu0YxFUlzZUpLMTCTnM3IbuZVcEy1QjLg6pFRKSLYM0VpYAnC5ZqPA
+ oxS/w1nTsXUM4adgmJ3W/fgfEnoQz5jU/oqMCq8gKvPw6j3e3krLeJf3KFyRRjQek3v4XXZ0ffL
+ kcIwS
+X-Gm-Gg: ASbGnctGh6L1jgYbqmgAbfk382ZbD6SgVRrPRZYSexGfG1C8H//SFxwYMpG+lbGssah
+ P6xrt+7bMqvGi90ovTWmXW2c5D5CSmMfY5Jqu4S0UMtoluuqsLwlM0WDJWqHufsTsGUj/IZ1JOb
+ S5OMjNzEs0KBDrc/MlCMySBqYIP4NZ2KaU2Z8icxM9dEtORlXhlc1IU7L18SFgoqofSzF7dTgbx
+ dUo/fmfH2ED1T8jFD3syEO/6nPTTL8cOTfWlZvH1sYSzCt43X8lr58KzHuLtJCaUWJfgvzFZbr0
+ DzCZ/X3yeCee7y9T3TElbuiZksbynXPPO16kLX+gNFu8ufDQUVhrt53Nwdw18Y/8+ThaPg==
+X-Google-Smtp-Source: AGHT+IFdVlZKuo/jzcP7bd7llTDjnN9z3gnNRDZSAooDBiiWgEmzAFJV0yE5ib5SCl2+byVQb2kHrg==
+X-Received: by 2002:a05:6830:7110:b0:73b:bd6:dfdd with SMTP id
+ 46e09a7af769-73b0bd6e0camr6692075a34.14.1751297343030; 
+ Mon, 30 Jun 2025 08:29:03 -0700 (PDT)
+Received: from stoup.. ([187.210.107.185]) by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-73afb00c48asm1712478a34.27.2025.06.30.08.29.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 30 Jun 2025 08:29:02 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 06/29] tcg/optimize: Build and use z_bits and o_bits in fold_eqv
+Date: Mon, 30 Jun 2025 09:28:32 -0600
+Message-ID: <20250630152855.148018-7-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250630152855.148018-1-richard.henderson@linaro.org>
+References: <20250630152855.148018-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20250623121845.7214-1-philmd@linaro.org>
- <20250623121845.7214-21-philmd@linaro.org>
-In-Reply-To: <20250623121845.7214-21-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 30 Jun 2025 16:34:32 +0100
-X-Gm-Features: Ac12FXygwnSXLP-ZPonXcEmOAhgztcCBXBn2LNuOkJFkl9HoaCecpnHthAmLnYw
-Message-ID: <CAFEAcA_xqu1oDLThHBp5T_srQs2+2oxWTXF=sQzBjKDduc0cfw@mail.gmail.com>
-Subject: Re: [PATCH v3 20/26] hw/arm/virt: Rename cpu_post_init() ->
- post_cpus_gic_realized()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Leif Lindholm <leif.lindholm@oss.qualcomm.com>, 
- qemu-arm@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Alexander Graf <agraf@csgraf.de>, Bernhard Beschow <shentey@gmail.com>,
- John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- kvm@vger.kernel.org, Eric Auger <eric.auger@redhat.com>, 
- Cameron Esfahani <dirty@apple.com>, Cleber Rosa <crosa@redhat.com>, 
- Radoslaw Biernacki <rad@semihalf.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,36 +98,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Jun 2025 at 13:20, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> QDev uses _post_init() during instance creation, before being
-> realized. Since here both vCPUs and GIC are REALIZED, rename
-> as virt_post_cpus_gic_realized() for clarity.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  hw/arm/virt.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index a9099570faa..da453768cce 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -2032,7 +2032,8 @@ static void finalize_gic_version(VirtMachineState *=
-vms)
->   * virt_cpu_post_init() must be called after the CPUs have
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/optimize.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-You forgot to update the function name in this comment :-)
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index 123734b167..6d35a2e58b 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -1093,6 +1093,12 @@ static bool fold_masks_zosa(OptContext *ctx, TCGOp *op, uint64_t z_mask,
+     return true;
+ }
+ 
++static bool fold_masks_zos(OptContext *ctx, TCGOp *op,
++                           uint64_t z_mask, uint64_t o_mask, uint64_t s_mask)
++{
++    return fold_masks_zosa(ctx, op, z_mask, o_mask, s_mask, -1);
++}
++
+ static bool fold_masks_zs(OptContext *ctx, TCGOp *op,
+                           uint64_t z_mask, uint64_t s_mask)
+ {
+@@ -1916,7 +1922,7 @@ static bool fold_dup2(OptContext *ctx, TCGOp *op)
+ 
+ static bool fold_eqv(OptContext *ctx, TCGOp *op)
+ {
+-    uint64_t s_mask;
++    uint64_t z_mask, o_mask, s_mask;
+     TempOptInfo *t1, *t2;
+ 
+     if (fold_const2_commutative(ctx, op) ||
+@@ -1946,8 +1952,12 @@ static bool fold_eqv(OptContext *ctx, TCGOp *op)
+     }
+ 
+     t1 = arg_info(op->args[1]);
++
++    z_mask = (t1->z_mask | ~t2->o_mask) & (t2->z_mask | ~t1->o_mask);
++    o_mask = ~(t1->z_mask | t2->z_mask) | (t1->o_mask & t2->o_mask);
+     s_mask = t1->s_mask & t2->s_mask;
+-    return fold_masks_s(ctx, op, s_mask);
++
++    return fold_masks_zos(ctx, op, z_mask, o_mask, s_mask);
+ }
+ 
+ static bool fold_extract(OptContext *ctx, TCGOp *op)
+-- 
+2.43.0
 
->   * been realized and the GIC has been created.
->   */
-> -static void virt_cpu_post_init(VirtMachineState *vms, MemoryRegion *sysm=
-em)
-> +static void virt_post_cpus_gic_realized(VirtMachineState *vms,
-> +                                        MemoryRegion *sysmem)
-
-thanks
--- PMM
 
