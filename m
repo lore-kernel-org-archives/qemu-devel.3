@@ -4,68 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9693DC83029
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 17:23:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D89C8302D
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 17:24:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWIDx-0002B9-H3; Mon, 30 Jun 2025 13:23:21 -0400
+	id 1uWIF9-0002ly-Pu; Mon, 30 Jun 2025 13:24:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uWIDs-0002AW-Sy
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 13:23:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uWIEz-0002ld-H4
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 13:24:25 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uWIDq-00055p-3j
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 13:23:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751304192;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=2FIHlp4dsxijxXAk6+uDz+KHKBmOkyeRnIdYQ0Z3d0I=;
- b=EYrxlsVCtmoPO4qTJCKKMhdftWUwJSK5Pfd4alX9w10YRUz0XN317yMEZrmDu8CS6raD7L
- ujojlv0+N2pMyykc/G/oVzCyABpOFRidMtpJRhvO+NW2SnemK4O8gleG0PV9yiC3i48WAH
- 1YfMXe4SkKckK1zeQWNRVV/iCfv3+TM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-493-d8ZF5q2pPz-K8S64TY1jjg-1; Mon,
- 30 Jun 2025 13:23:09 -0400
-X-MC-Unique: d8ZF5q2pPz-K8S64TY1jjg-1
-X-Mimecast-MFC-AGG-ID: d8ZF5q2pPz-K8S64TY1jjg_1751304187
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CED201944A83; Mon, 30 Jun 2025 17:23:06 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.32.43])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E06D219560A7; Mon, 30 Jun 2025 17:23:04 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Signed-off-by=3A=20Philippe=20Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH] b4: Drop linktrailermask
-Date: Mon, 30 Jun 2025 19:23:01 +0200
-Message-ID: <20250630172301.519848-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uWIEu-0005Bj-C8
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 13:24:24 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bWCgX2F9Qz6L5ch;
+ Tue,  1 Jul 2025 01:23:52 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 65F481402EB;
+ Tue,  1 Jul 2025 01:24:12 +0800 (CST)
+Received: from localhost (10.122.19.247) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 30 Jun
+ 2025 19:24:12 +0200
+Date: Mon, 30 Jun 2025 18:24:10 +0100
+To: Anisa Su <anisa.su887@gmail.com>
+CC: <qemu-devel@nongnu.org>, <nifan.cxl@gmail.com>, <dave@stgolabs.net>,
+ <linux-cxl@vger.kernel.org>
+Subject: Re: [HACK QEMU PATCH v1 1/1] hw/cxl: Fix MCTP Binding Check
+Message-ID: <20250630182410.00007a74@huawei.com>
+In-Reply-To: <aF7I-ByGLZOxqNXi@deb-101020-bm01.eng.stellus.in>
+References: <20250626235102.1902427-1-anisa.su887@gmail.com>
+ <20250626235102.1902427-2-anisa.su887@gmail.com>
+ <20250627104859.00003cbe@huawei.com>
+ <aF7I-ByGLZOxqNXi@deb-101020-bm01.eng.stellus.in>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.122.19.247]
+X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,32 +71,282 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, 27 Jun 2025 16:38:16 +0000
+Anisa Su <anisa.su887@gmail.com> wrote:
 
-When grabbing a patch series, the link trailer is replaced with a
-Message-ID, which is not useful compared to an URL. Fix that by
-dropping the linktrailermask config.
+> On Fri, Jun 27, 2025 at 10:48:59AM +0100, Jonathan Cameron wrote:
+> > On Thu, 26 Jun 2025 23:41:15 +0000
+> > anisa.su887@gmail.com wrote:
+> >   
+> > > From: Anisa Su <anisa.su@samsung.com>
+> > > 
+> > > Per the spec, FMAPI commands (0x51-0x59) must be bound with
+> > > MCTP_MT_CXL_FMAPI. Fix the conditions ensuring this in i2c_mctp_cxl.c
+> > > and dev-mctp.c
+> > > 
+> > > Move the opcode enum from cxl-mailbox-utils.c to cxl_mailbox.h to
+> > > allow i2c_mctp_cxl.c and dev-mctp.c to use the enum instead of
+> > > hardcoding the values.
+> > > 
+> > > Signed-off-by: Anisa Su <anisa.su@samsung.com>  
+> > Why HACK in the patch title?
+> >   
+> I guess this isn't really a hack but my intention was to make
+> it clear that this patch isn't intended for upstream. Seems like that
+> made things more confusing though, but now I know!
+> 
+> > In general this seems reasonable - the complexity is how I merge it
+> > into my tree given the code being modified slips in at various different
+> > points. I'll sort that out though.  
+> 
+> I could also send you an alternate version of the FMAPI DCD Management patchset
+> based on this one?
 
-Cc: Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Fixes: 838cf72b5d2c ("Add a b4 configuration file")
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- .b4-config | 1 -
- 1 file changed, 1 deletion(-)
+No need. I've queued the DCD series up way ahead of where this makes sense.
+I'll tweak this into a precursor patch doing the move and then squash the other
+bits into the two mctp implementations.
 
-diff --git a/.b4-config b/.b4-config
-index 4b9b2fe290f9..126f503ded74 100644
---- a/.b4-config
-+++ b/.b4-config
-@@ -11,4 +11,3 @@
-     prep-perpatch-check-cmd = scripts/checkpatch.pl -q --terse --no-summary --mailback -
-     searchmask = https://lore.kernel.org/qemu-devel/?x=m&t=1&q=%s
-     linkmask = https://lore.kernel.org/qemu-devel/%s
--    linktrailermask = Message-ID: <%s>
--- 
-2.50.0
+Jonathan
+
+> 
+> > Jonathan
+> >   
+> > > ---
+> > >  hw/cxl/cxl-mailbox-utils.c   | 74 +-----------------------------------
+> > >  hw/cxl/i2c_mctp_cxl.c        |  6 ++-
+> > >  hw/usb/dev-mctp.c            |  6 ++-
+> > >  include/hw/cxl/cxl_mailbox.h | 73 +++++++++++++++++++++++++++++++++++
+> > >  4 files changed, 82 insertions(+), 77 deletions(-)
+> > > 
+> > > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> > > index 4c01b25110..7f84e147f7 100644
+> > > --- a/hw/cxl/cxl-mailbox-utils.c
+> > > +++ b/hw/cxl/cxl-mailbox-utils.c
+> > > @@ -37,7 +37,7 @@
+> > >  
+> > >  /*
+> > >   * How to add a new command, example. The command set FOO, with cmd BAR.
+> > > - *  1. Add the command set and cmd to the enum.
+> > > + *  1. Add the command set and cmd to the enum in cxl_mailbox.h.
+> > >   *     FOO    = 0x7f,
+> > >   *          #define BAR 0
+> > >   *  2. Implement the handler
+> > > @@ -60,78 +60,6 @@
+> > >   *  a register interface that already deals with it.
+> > >   */
+> > >  
+> > > -enum {
+> > > -    INFOSTAT    = 0x00,
+> > > -        #define IS_IDENTIFY   0x1
+> > > -        #define BACKGROUND_OPERATION_STATUS    0x2
+> > > -        #define GET_RESPONSE_MSG_LIMIT         0x3
+> > > -        #define SET_RESPONSE_MSG_LIMIT         0x4
+> > > -        #define BACKGROUND_OPERATION_ABORT     0x5
+> > > -    EVENTS      = 0x01,
+> > > -        #define GET_RECORDS   0x0
+> > > -        #define CLEAR_RECORDS   0x1
+> > > -        #define GET_INTERRUPT_POLICY   0x2
+> > > -        #define SET_INTERRUPT_POLICY   0x3
+> > > -    FIRMWARE_UPDATE = 0x02,
+> > > -        #define GET_INFO      0x0
+> > > -        #define TRANSFER      0x1
+> > > -        #define ACTIVATE      0x2
+> > > -    TIMESTAMP   = 0x03,
+> > > -        #define GET           0x0
+> > > -        #define SET           0x1
+> > > -    LOGS        = 0x04,
+> > > -        #define GET_SUPPORTED 0x0
+> > > -        #define GET_LOG       0x1
+> > > -        #define GET_LOG_CAPABILITIES   0x2
+> > > -        #define CLEAR_LOG     0x3
+> > > -        #define POPULATE_LOG  0x4
+> > > -    FEATURES    = 0x05,
+> > > -        #define GET_SUPPORTED 0x0
+> > > -        #define GET_FEATURE   0x1
+> > > -        #define SET_FEATURE   0x2
+> > > -    IDENTIFY    = 0x40,
+> > > -        #define MEMORY_DEVICE 0x0
+> > > -    CCLS        = 0x41,
+> > > -        #define GET_PARTITION_INFO     0x0
+> > > -        #define GET_LSA       0x2
+> > > -        #define SET_LSA       0x3
+> > > -    HEALTH_INFO_ALERTS = 0x42,
+> > > -        #define GET_ALERT_CONFIG 0x1
+> > > -        #define SET_ALERT_CONFIG 0x2
+> > > -    SANITIZE    = 0x44,
+> > > -        #define OVERWRITE     0x0
+> > > -        #define SECURE_ERASE  0x1
+> > > -        #define MEDIA_OPERATIONS 0x2
+> > > -    PERSISTENT_MEM = 0x45,
+> > > -        #define GET_SECURITY_STATE     0x0
+> > > -    MEDIA_AND_POISON = 0x43,
+> > > -        #define GET_POISON_LIST        0x0
+> > > -        #define INJECT_POISON          0x1
+> > > -        #define CLEAR_POISON           0x2
+> > > -        #define GET_SCAN_MEDIA_CAPABILITIES 0x3
+> > > -        #define SCAN_MEDIA             0x4
+> > > -        #define GET_SCAN_MEDIA_RESULTS 0x5
+> > > -    DCD_CONFIG  = 0x48,
+> > > -        #define GET_DC_CONFIG          0x0
+> > > -        #define GET_DYN_CAP_EXT_LIST   0x1
+> > > -        #define ADD_DYN_CAP_RSP        0x2
+> > > -        #define RELEASE_DYN_CAP        0x3
+> > > -    PHYSICAL_SWITCH = 0x51,
+> > > -        #define IDENTIFY_SWITCH_DEVICE      0x0
+> > > -        #define GET_PHYSICAL_PORT_STATE     0x1
+> > > -    TUNNEL = 0x53,
+> > > -        #define MANAGEMENT_COMMAND     0x0
+> > > -    MHD = 0x55,
+> > > -        #define GET_MHD_INFO 0x0
+> > > -    FMAPI_DCD_MGMT = 0x56,
+> > > -        #define GET_DCD_INFO    0x0
+> > > -        #define GET_HOST_DC_REGION_CONFIG   0x1
+> > > -        #define SET_DC_REGION_CONFIG        0x2
+> > > -        #define GET_DC_REGION_EXTENT_LIST   0x3
+> > > -        #define INITIATE_DC_ADD             0x4
+> > > -        #define INITIATE_DC_RELEASE         0x5
+> > > -};
+> > > -
+> > >  /* CCI Message Format CXL r3.1 Figure 7-19 */
+> > >  typedef struct CXLCCIMessage {
+> > >      uint8_t category;
+> > > diff --git a/hw/cxl/i2c_mctp_cxl.c b/hw/cxl/i2c_mctp_cxl.c
+> > > index 1714f36e8e..3f17779562 100644
+> > > --- a/hw/cxl/i2c_mctp_cxl.c
+> > > +++ b/hw/cxl/i2c_mctp_cxl.c
+> > > @@ -29,6 +29,7 @@
+> > >  #include "hw/pci/pcie_port.h"
+> > >  #include "hw/qdev-properties.h"
+> > >  #include "hw/registerfields.h"
+> > > +#include "hw/cxl/cxl_mailbox.h"
+> > >  
+> > >  #define TYPE_I2C_MCTP_CXL "i2c_mctp_cxl"
+> > >  
+> > > @@ -198,9 +199,10 @@ static void i2c_mctp_cxl_handle_message(MCTPI2CEndpoint *mctp)
+> > >           */
+> > >  
+> > >          if (!(msg->message_type == MCTP_MT_CXL_TYPE3 &&
+> > > -              msg->command_set < 0x51) &&
+> > > +              msg->command_set < PHYSICAL_SWITCH) &&
+> > >              !(msg->message_type == MCTP_MT_CXL_FMAPI &&
+> > > -              msg->command_set >= 0x51 && msg->command_set < 0x56)) {
+> > > +              msg->command_set >= PHYSICAL_SWITCH &&
+> > > +              msg->command_set < GLOBAL_MEM_ACCESS_EP_MGMT)) {
+> > >              buf->rc = CXL_MBOX_UNSUPPORTED;
+> > >              st24_le_p(buf->pl_length, len_out);
+> > >              s->len = s->pos;
+> > > diff --git a/hw/usb/dev-mctp.c b/hw/usb/dev-mctp.c
+> > > index aafb9e7e96..b82a269561 100644
+> > > --- a/hw/usb/dev-mctp.c
+> > > +++ b/hw/usb/dev-mctp.c
+> > > @@ -25,6 +25,7 @@
+> > >  #include "hw/usb.h"
+> > >  #include "hw/usb/desc.h"
+> > >  #include "net/mctp.h"
+> > > +#include "hw/cxl/cxl_mailbox.h"
+> > >  
+> > >  /* TODO: Move to header */
+> > >  
+> > > @@ -504,9 +505,10 @@ static void usb_cxl_mctp_handle_data(USBDevice *dev, USBPacket *p)
+> > >           * onwards.
+> > >           */
+> > >          if (!(req->message_type == MCTP_MT_CXL_TYPE3 &&
+> > > -              req->command_set < 0x51) &&
+> > > +              req->command_set < PHYSICAL_SWITCH) &&
+> > >              !(req->message_type == MCTP_MT_CXL_FMAPI &&
+> > > -              req->command_set >= 0x51 && req->command_set < 0x56)) {
+> > > +              req->command_set >= PHYSICAL_SWITCH &&
+> > > +              req->command_set < GLOBAL_MEM_ACCESS_EP_MGMT)) {
+> > >              len_out = 0;
+> > >              usb_pkt_len = sizeof(MCTPUSBPacket) + sizeof(CXLMCTPMessage) +
+> > >                  len_out;
+> > > diff --git a/include/hw/cxl/cxl_mailbox.h b/include/hw/cxl/cxl_mailbox.h
+> > > index 820c411cbb..209a11ecbc 100644
+> > > --- a/include/hw/cxl/cxl_mailbox.h
+> > > +++ b/include/hw/cxl/cxl_mailbox.h
+> > > @@ -27,4 +27,77 @@
+> > >  #define CXL_LOG_CAP_AUTO_POPULATE_SUPPORTED (1 << 2)
+> > >  #define CXL_LOG_CAP_PERSISTENT_COLD_RESET_SUPPORTED (1 << 3)
+> > >  
+> > > +enum {
+> > > +    INFOSTAT    = 0x00,
+> > > +        #define IS_IDENTIFY   0x1
+> > > +        #define BACKGROUND_OPERATION_STATUS    0x2
+> > > +        #define GET_RESPONSE_MSG_LIMIT         0x3
+> > > +        #define SET_RESPONSE_MSG_LIMIT         0x4
+> > > +        #define BACKGROUND_OPERATION_ABORT     0x5
+> > > +    EVENTS      = 0x01,
+> > > +        #define GET_RECORDS   0x0
+> > > +        #define CLEAR_RECORDS   0x1
+> > > +        #define GET_INTERRUPT_POLICY   0x2
+> > > +        #define SET_INTERRUPT_POLICY   0x3
+> > > +    FIRMWARE_UPDATE = 0x02,
+> > > +        #define GET_INFO      0x0
+> > > +        #define TRANSFER      0x1
+> > > +        #define ACTIVATE      0x2
+> > > +    TIMESTAMP   = 0x03,
+> > > +        #define GET           0x0
+> > > +        #define SET           0x1
+> > > +    LOGS        = 0x04,
+> > > +        #define GET_SUPPORTED 0x0
+> > > +        #define GET_LOG       0x1
+> > > +        #define GET_LOG_CAPABILITIES   0x2
+> > > +        #define CLEAR_LOG     0x3
+> > > +        #define POPULATE_LOG  0x4
+> > > +    FEATURES    = 0x05,
+> > > +        #define GET_SUPPORTED 0x0
+> > > +        #define GET_FEATURE   0x1
+> > > +        #define SET_FEATURE   0x2
+> > > +    IDENTIFY    = 0x40,
+> > > +        #define MEMORY_DEVICE 0x0
+> > > +    CCLS        = 0x41,
+> > > +        #define GET_PARTITION_INFO     0x0
+> > > +        #define GET_LSA       0x2
+> > > +        #define SET_LSA       0x3
+> > > +    HEALTH_INFO_ALERTS = 0x42,
+> > > +        #define GET_ALERT_CONFIG 0x1
+> > > +        #define SET_ALERT_CONFIG 0x2
+> > > +    SANITIZE    = 0x44,
+> > > +        #define OVERWRITE     0x0
+> > > +        #define SECURE_ERASE  0x1
+> > > +        #define MEDIA_OPERATIONS 0x2
+> > > +    PERSISTENT_MEM = 0x45,
+> > > +        #define GET_SECURITY_STATE     0x0
+> > > +    MEDIA_AND_POISON = 0x43,
+> > > +        #define GET_POISON_LIST        0x0
+> > > +        #define INJECT_POISON          0x1
+> > > +        #define CLEAR_POISON           0x2
+> > > +        #define GET_SCAN_MEDIA_CAPABILITIES 0x3
+> > > +        #define SCAN_MEDIA             0x4
+> > > +        #define GET_SCAN_MEDIA_RESULTS 0x5
+> > > +    DCD_CONFIG  = 0x48,
+> > > +        #define GET_DC_CONFIG          0x0
+> > > +        #define GET_DYN_CAP_EXT_LIST   0x1
+> > > +        #define ADD_DYN_CAP_RSP        0x2
+> > > +        #define RELEASE_DYN_CAP        0x3
+> > > +    PHYSICAL_SWITCH = 0x51,
+> > > +        #define IDENTIFY_SWITCH_DEVICE      0x0
+> > > +        #define GET_PHYSICAL_PORT_STATE     0x1
+> > > +    TUNNEL = 0x53,
+> > > +        #define MANAGEMENT_COMMAND     0x0
+> > > +    MHD = 0x55,
+> > > +        #define GET_MHD_INFO 0x0
+> > > +    FMAPI_DCD_MGMT = 0x56,
+> > > +        #define GET_DCD_INFO    0x0
+> > > +        #define GET_HOST_DC_REGION_CONFIG   0x1
+> > > +        #define SET_DC_REGION_CONFIG        0x2
+> > > +        #define GET_DC_REGION_EXTENT_LIST   0x3
+> > > +        #define INITIATE_DC_ADD             0x4
+> > > +        #define INITIATE_DC_RELEASE         0x5
+> > > +    GLOBAL_MEM_ACCESS_EP_MGMT = 0X59,
+> > > +};
+> > > +
+> > >  #endif  
+> >   
 
 
