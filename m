@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 784C4C83029
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 15:02:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29B10C83029
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 15:19:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWG13-000243-Cn; Mon, 30 Jun 2025 11:01:53 -0400
+	id 1uWGHE-000565-U0; Mon, 30 Jun 2025 11:18:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uWG0n-00021W-WD
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:01:43 -0400
-Received: from mgamail.intel.com ([198.175.65.19])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uWG0k-00059b-AO
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:01:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751295694; x=1782831694;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=8wGalKdVuYUNEhhfVz3VISsqj82RsNcy4Yl45QObEzM=;
- b=k4ZlQWrzE224pyxFP9FPvcCt8uXSrcrq7NhoBSYdhxjwvOj4u5qBbedh
- 8j81twNLOKh6p9I19rHZhPEa2PpKuf1yh99qy88dclfh7pq6KmWDHNlA4
- 3DcNCCy2HrqZcGVZxbOFHbGHu7LGDPDcOH9PD71isqw7nuzZ5CD5NXu61
- 6aGdCqqEu3q2H7eadKj5fbZ4ivx8FXBGVVyXyqH77S6BEVlEVK+67nuQw
- lLPt00IfUOGWVI+bbK8WlGXT+awjD6WE82p2A5QLRXbgLX8ePw3pr6ZF5
- J1N2k5HftX7bG/PpJN77vLo+odLkTXYzzsLpLZvX5jjRHF8UjXn/zgXi6 g==;
-X-CSE-ConnectionGUID: dnMSnQg/Tp+HeyKSzbP60g==
-X-CSE-MsgGUID: jfoXDQg3QLuVdEgZopmrbw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11480"; a="53399942"
-X-IronPort-AV: E=Sophos;i="6.16,278,1744095600"; d="scan'208";a="53399942"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Jun 2025 08:01:30 -0700
-X-CSE-ConnectionGUID: nEv33Z5xQb2kDxoGpiNcKg==
-X-CSE-MsgGUID: 7VTbZlsQT82W2ORq/pxqXw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,278,1744095600"; d="scan'208";a="158989912"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa004.fm.intel.com with ESMTP; 30 Jun 2025 08:01:24 -0700
-Date: Mon, 30 Jun 2025 23:22:48 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Dongli Zhang <dongli.zhang@oracle.com>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Philippe =?utf-8?B?TWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Like Xu <like.xu.linux@gmail.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [Regression] Re: [PULL 35/35] qom: reverse order of
- instance_post_init calls
-Message-ID: <aGKryLSGlFTMSKHv@intel.com>
-References: <20250520110530.366202-1-pbonzini@redhat.com>
- <20250520110530.366202-36-pbonzini@redhat.com>
- <d429b6f5-b59c-4884-b18f-8db71cb8dc7b@oracle.com>
- <aFpocfTpBLB34N3l@intel.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aFpocfTpBLB34N3l@intel.com>
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ (Exim 4.90_1) (envelope-from
+ <3wqpiaAkKCusNaXRRfYReTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--ankeesler.bounces.google.com>)
+ id 1uWGHD-00055p-5G
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:18:35 -0400
+Received: from mail-qv1-xf4a.google.com ([2607:f8b0:4864:20::f4a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3wqpiaAkKCusNaXRRfYReTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--ankeesler.bounces.google.com>)
+ id 1uWGHA-00074c-5S
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:18:33 -0400
+Received: by mail-qv1-xf4a.google.com with SMTP id
+ 6a1803df08f44-6fb2910dd04so83154486d6.0
+ for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 08:18:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1751296707; x=1751901507; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=nqu9bi+YSugCVUW3IGj0xL0NJ/2WtJNV3h3xBg+HnX4=;
+ b=dZMwgtxRthi/qAdtlkjJcX5wW0iYaDkp+bjAgIweGyMTvPPgDZPZo8UsjFzaa8zHh2
+ GKvUcqYRg5Xp28v1prD+jjACU+R8iP0sp8wAwdYU+LYwmnX5oMNDU3QNn829EMMl5MTb
+ otgPqjl5iSTKF/j8m7i5jB6fn19VVNsh+9h1qO9b3wBg3mblGFVhhjfugypQtQSG1WV1
+ Ml9OgNwfDgsQRHBRWo55cZhTsEUHxZ520o7GriEV4aJzVMfv6JDURC5kPOyXNGNDF8YB
+ euYi7ntRpXBJS+9uNlhv/vvwMwCdcOmHs2Ap1+156ClYrnFeNGalVORov1XDZEPWjuoU
+ O5Uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751296707; x=1751901507;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nqu9bi+YSugCVUW3IGj0xL0NJ/2WtJNV3h3xBg+HnX4=;
+ b=dQyQ3UdO2+dFdJi4tH04rUa6yEa72En60GoVJjVSZ7nTU1aFXOm8RuWMyh5kNNnpns
+ 6dZiI4q6Wf8e/9uU/UB5rCd9M5xQD7oRU/RK5RRAocAhiQnIXO3xyRhkR0C3ZMVsSBeZ
+ VcUuNH2vcG/fKY1brs+AMcdrQ+1HWAgvdrxJ2C4InF19DNx+vt8z6kIYwUF92mJsp3/T
+ uLgOb87lc5hZaWFNdZbylJSqWbXdXFt1NLxDMdTkmS7Ghl7UCL+SjCZr/Hgan/7LqjZk
+ LOlJ2eKeiZ4g21RXtxJ+9cXXAK+azy7pE/d3G2Y5TlcdgI6sn59PyT05SnpJNgE07AC3
+ ujWg==
+X-Gm-Message-State: AOJu0YytMXISm+ru5pxumCxSJjLckDImuH1Km7zNIH8m9wvCHeCUOJ5r
+ iyO8XadwvwCNf2M37lhaZXJHUczJJ9JrGWXkXjSH5zj/IjijZnQba4eRAqkdymBdW01AxwL4n5n
+ wV5qWpyWn9HoY4Skq
+X-Google-Smtp-Source: AGHT+IFMhKwGxuf7Bg8yGsRn6NRiFYy0dPGHZfR2yzKAsELknAyN0pDPX7246GkS/EhxEJRwgUnZaHcZwJ9BsZo=
+X-Received: from qvbri22.prod.google.com
+ ([2002:a05:6214:3316:b0:6fa:baaf:148b])
+ (user=ankeesler job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6214:260b:b0:6f5:4214:774a with SMTP id
+ 6a1803df08f44-70003c91593mr180291476d6.41.1751296706719; 
+ Mon, 30 Jun 2025 08:18:26 -0700 (PDT)
+Date: Mon, 30 Jun 2025 15:17:56 +0000
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.50.0.727.gbf7dc18ff4-goog
+Message-ID: <20250630151757.2553891-1-ankeesler@google.com>
+Subject: [PATCH v2 0/1] Allow injection of virtio-gpu EDID name
+From: Andrew Keesler <ankeesler@google.com>
+To: berrange@redhat.com
+Cc: qemu-devel@nongnu.org, Andrew Keesler <ankeesler@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f4a;
+ envelope-from=3wqpiaAkKCusNaXRRfYReTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--ankeesler.bounces.google.com;
+ helo=mail-qv1-xf4a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,94 +91,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(cc Thomas for bug reporting on kvm-unit-test...)
+Thanks to 72d277a7, 1ed2cb32, and others, EDID (Extended Display
+Identification Data) is propagated by QEMU such that a virtual display
+presents legitimate metadata (e.g., name, serial number, preferred
+resolutions, etc.) to its connected guest.
 
-On Tue, Jun 24, 2025 at 04:57:21PM +0800, Zhao Liu wrote:
-> Date: Tue, 24 Jun 2025 16:57:21 +0800
-> From: Zhao Liu <zhao1.liu@intel.com>
-> Subject: Re: [Regression] Re: [PULL 35/35] qom: reverse order of
->  instance_post_init calls
-> 
-> On Mon, Jun 23, 2025 at 09:56:14AM -0700, Dongli Zhang wrote:
-> > Date: Mon, 23 Jun 2025 09:56:14 -0700
-> > From: Dongli Zhang <dongli.zhang@oracle.com>
-> > Subject: [Regression] Re: [PULL 35/35] qom: reverse order of
-> >  instance_post_init calls
-> > 
-> > This commit may broken the "vendor=" configuration.
-> > 
-> > For instance, the hypervisor CPU vendor is AMD.
-> > 
-> > I am going to use "-cpu Skylake-Server,vendor=GenuineIntel".
-> > 
-> > 
-> > Because of the commit, the vendor is still AMD.
-> > 
-> > [root@vm ~]# cpuid -1 -l 0x0
-> > CPU:
-> >    vendor_id = "AuthenticAMD"
-> > 
-> > 
-> > If I revert this patch, the vendor because the expected Intel.
-> > 
-> > [root@vm ~]# cpuid -1 -l 0x0
-> > CPU:
-> >    vendor_id = "GenuineIntel"
-> > 
-> > 
-> > Thank you very much!
-> 
-> Thank you Dongli!
-> 
-> (+Like)
-> 
-> While testing my cache model series, I also noticed the similar behavior
-> for KVM. Additionally, Like Xu reported to me that this commit caused
-> a failure in a KVM unit test case. Your report helped me connect these
-> two issues I met (though due to my environment issues, I haven't
-> confirmed yet).
+This change adds the ability to specify the EDID name for a particular
+virtio-vga display. Previously, every virtual display would have the same
+name: "QEMU Monitor". Now, we can inject names of displays in order to test
+guest behavior that is specific to display names. We provide the ability to
+inject the display name from the frontend since this is guest visible
+data. Furthermore, this makes it clear where N potential display outputs
+would get their name from (which will be added in a future change).
 
-Ok, now I can confirm this commit cause KUT failure:
- * On AMD platform, the "msr.flat" case fails since this case requires
-   vendor=GenuineIntel (tested by Like).
- * On Intel platform, the "syscall.flat" case fails because it requires
-   vendor=AuthenticAMD (tested by myself).
+Note that we have elected to use a struct here for output data for
+extensibility - we intend to add per-output fields like resolution in a
+future change.
 
-> The "vendor" property from cli is registered as the global property in
-> x86_cpu_parse_featurestr(), and is applied to x86 CPUs in
-> device_post_init().
-> 
-> With this commit, now KVM will override the "vendor" in
-> host_cpu_instance_init() (called in x86_cpu_post_initfn()) after
-> device_post_init(), regardless the previous global "vendor" property.
+It should be noted that EDID names longer than 12 bytes will be truncated
+per spec (I think?).
 
-This is the root cause for the above failure.
+Testing: verified that when I specified 2 outputs for a virtio-gpu with
+edid_name set, the names matched those that I configured with my vnc
+display.
 
-> Back to this commit, I think current order of post_init  makes sense.
-> Instead, the place of host_cpu_instance_init() doesn't seem quite
-> right. So, I think this commit might have exposed some drawbacks in the
-> previous x86 CPU initialization order:
-> 
-> f5cc5a5c1686 ("i386: split cpu accelerators from cpu.c, using AccelCPUClass")
-> 5b8978d80426 ("i386: do not call cpudef-only models functions for max, host, base")
+  -display vnc=localhost:0,id=aaa,display=vga,head=0 \
+  -display vnc=localhost:1,id=bbb,display=vga,head=1 \
+  -device '{"driver":"virtio-vga",
+            "max_outputs":2,
+            "id":"vga",
+            "outputs":[
+              {
+                 "name":"AAA",
+              },
+              {
+                 "name":"BBB",
+              },
+            ]}'
 
-To fix this issue, we need to initialize "vendor" property in the initfn
-of max/host/named CPUs instead of current post_initfn.
+Andrew Keesler (1):
+  hw/display: Allow injection of virtio-gpu EDID name
 
-This will need to split the cpu_instance_init() of x86 kvm (and maybe hvf/tcg)
-into 2 hooks:
- * AccelCPUClass.cpu_instance_init() - called in x86 CPUs' initfn.
- * AccelCPUClass.cpu_instance_post_init() - called in x86 CPUs'
-   post_initfn.
+ hw/core/qdev-properties-system.c    | 44 +++++++++++++++++++++++++++++
+ hw/display/virtio-gpu-base.c        | 20 +++++++++++++
+ include/hw/qdev-properties-system.h |  5 ++++
+ include/hw/virtio/virtio-gpu.h      |  3 ++
+ qapi/virtio.json                    | 18 ++++++++++--
+ 5 files changed, 88 insertions(+), 2 deletions(-)
 
-I just did a POC and this solution works in principle.
-
-But there are very many more details here, including considering more
-properties/considering hvf and tcg and so on. It still need to take more
-time for me figuring everything out. Once that's done, I'll post a series
-to fix this issue.
-
-Thanks,
-Zhao
+-- 
+2.50.0.727.gbf7dc18ff4-goog
 
 
