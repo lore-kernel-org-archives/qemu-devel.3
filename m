@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ED06C83029
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 16:49:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8B14C83029
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 16:50:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWHgi-0006I9-GN; Mon, 30 Jun 2025 12:49:01 -0400
+	id 1uWHhR-0006Sk-3Y; Mon, 30 Jun 2025 12:49:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uWHgh-0006Hq-4y
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 12:48:59 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1uWHhO-0006Mr-Lu
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 12:49:42 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uWHgf-0000mA-DU
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 12:48:58 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-747e41d5469so2597110b3a.3
- for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 09:48:56 -0700 (PDT)
+ id 1uWHhN-0000oW-0S
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 12:49:42 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-23694cec0feso45289655ad.2
+ for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 09:49:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751302135; x=1751906935; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1751302179; x=1751906979; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=//9dJhOtE2lkY/XekYzysjuTbyZ1SmC5V7ccVcBGw+k=;
- b=f/V8GDVMcKl59myXp2qwWHpNCxC7r5+3mqOnaPXouat/3UsKT+W6VXjeA+g2OWkZMC
- 8dh19y0CQ2cCPKMu4tK1EW0nreGQbj8EfcU3R/JzGY3hg+V/cH/EjmJ/A/rxnuIbwX0k
- a4A0ePN2DTZV7FT+9dhJ7wh1RMMnUMYfkqvfzUqL+Ux+4819X47zWcg1dnpIVkgHmYYd
- 5quPnVdl0he2rUFNUWI0IHlGR5H/S7jVkduZsiIZHePLMg4mnKgASCbt8n9j4gJAydnG
- yJ6amqwF3kKzc81bn7pp7tA+AGI26DcL6pFgiqjVLbRQ70tYLg7zJw68rzeUks2NYxKo
- p+Rg==
+ bh=tTo9bQDZX/TKUpXWrNBeXrsYKdrS8YGynbPu15MH34w=;
+ b=NR5r7vq32of7gF6ZSx/ei5mREVFTPCnxyedPd4EgsfdvGD0Tb9E0tbHPqL0RfmdcZ1
+ f3/9qfwasUTKZa+wOpqlvF6BKdD5Wx7ofCScszQP889j3fYEXwVcS9NY0HY2yj0/Pay5
+ zeO1wlG4Ry09JkmnNOlVOg0fjY8/unKq6wdlugO5Cqm+7ZZvjzMkWnxOU3mb+pkgpY8t
+ 4yQzDPfObUb2xsQZ7sO62r0dXwx5IGu+1+d2XnPXQwgD7GXR69IsccYXhXpj+En+aKZH
+ aHohw7GRp+VkmuyvVGNeAZKuEAbbCJh5cgL32HGEl+9HoL8M/kaBJk8H5tGjz5D8QC7e
+ Nc3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751302135; x=1751906935;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1751302179; x=1751906979;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=//9dJhOtE2lkY/XekYzysjuTbyZ1SmC5V7ccVcBGw+k=;
- b=UGJQcLvQ5+o3RUQWDcH1Cc50pI9vGnGDMFqYlQUvm4S8N9dTE8rzgzGqh/iChh5ci/
- GBKPC43+KWHnbYOOUms8Z3jC84QpBxL9nBua2lq8wN2Qjo4eXzyTp2f7A49jqwFtwk/U
- BKSJn/vEcZLFafiGrO5NXL355WW+XvYPWEJ/uhT/lCCPZQSFIsiTzrZToXP1GKKl22sX
- 6q+7bDf1EcUQDgCrRD7Uie1b5BBePL4IKWXF+UyBYM4EleTDjwZwWxXN2f90xRsQ7Q9q
- knKczeRrOIyxW+TyKX2wBzhJDKIA9rzh4fC2AUe8iLfEbmPaJesUrGG/wI2uKtQmE0bj
- dJ4w==
+ bh=tTo9bQDZX/TKUpXWrNBeXrsYKdrS8YGynbPu15MH34w=;
+ b=A5VlGxAjOzK7ua3AloA9bfcYDWeL87A/Kj2ZqtRJMVcRfw9/buz5lL1NzU9RSLRuZI
+ bJcg8QuiaBVM5ZshciR0pQA90VGQcR7FygbsN9LKYtzuWroJnE04cfF8NMSRSflj9Jd0
+ eN+WQxbVQ/vrtLVqBr+RG6ZG8gqjj2dZCzFAXwhPG25fLox6MWV1iG5imbBD+qcph4eO
+ 57wOH80Muzo/iW9FfS1sCF7I/9vpwo1L9tdvo1c4Sz67cVSaN/zIuErXd9l4snTnuMkY
+ OJ8AQv9fYOHIFtDG5NafcyJ6uaE4G0hKfJjw54yf+5yl3oNyOrsopoB6vJkaKRCMauD1
+ pTJg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXZqC4HkJctG4VVCcWMsUYXY+ybSPl0rvMdGqyjsM2DzE+g2KJ3vV04p4D8By+/Uvko3/tuf4EV7Nqx@nongnu.org
-X-Gm-Message-State: AOJu0YzsIMTM01CE+oIo4K0K0SdhXh04dABEdYf6CJWLp71zLS+S4xQe
- iD2bM/d3+LPd+Uly9NPMN1rrnljeBUCvhlWXbMuF0SqKPd8hcLVDWaJSu1e4A/EhrrPWgUpPEiT
- A01XO
-X-Gm-Gg: ASbGncvyHGiFLH7Tnv5vZzxI5nzxCKJYaYqCxQfGYwlKqhGP4uD0zPwWJOtPDR9yUGO
- Acx7aJeuP8LVsVYs9mHnmYvm6LqSBl+b/iHB3GMMLKDbI0TfQ5BhyV0/RUV4mRuPxykDla9bYoH
- bhBfY93RA3kLRWPIbleuCV5nrnbbgMhKbieRjF5UvWvq30j+xXquzpprDJXvJ7a14Uc5zUn0Q9H
- KdkbTzptIXa0oOKmxDa333B50IW4pxCyGZqQwNI2iG+bpIvkty8DXJUixWO7rSBMl9pHtfi5bIM
- ujN0Eo0AKXMxOGPGBiliH+nbiEFtBXMcuX4kw8mNvf6vyhNkrfsUCFJopE0fl2XfOW5eApqFTKQ
+ AJvYcCU9tZDwvxW1OSlH4mAvhk055vXKYCuTtqBd/8EBh3KpxALdCAZFpgRKig2QBDVuqq4uWf/OBR0aFWFt@nongnu.org
+X-Gm-Message-State: AOJu0YzBdgEAKPJY74S43b3kteriHvCu81sDdfmdy4GCOzfWj0etLNbY
+ 5wZd59yNfRYBexb0TvRD6pDMCnjO9uMEREpBXPbXzq9Vr+jw7/GbdQBumlZpPN0dd/w=
+X-Gm-Gg: ASbGncvt71dvFQXPf2Zlwv1Lp58DkLnSGhZ+va7BrsDeAmYzkBhTCdkyknECKzFT+eG
+ tDEQkISJRj4e7R1qzkA3C91aNVutx6zxQZzz7rB2BX1IXNi9VIN753EFwRz5ej4vlxnaG6kwW3A
+ oMyWHlqHjFRwuLzbh4O7EmAx4KWD9XfJlS0HMoX+qEw310os6JaHuz3Q4GmmOTfJBzN4TDU1OKz
+ YgGRUnzgwdNU5djH+LVvb+aVd2I7ul/jS3T4lvWqSo10dapbyxdRvLOW4xp/4Pibzgl/HK8msK/
+ 9wbpGqR0uZjM9U6xwRitWZOo6Vd6TtTvDwDxttBB8ZQP1tidVk+c63Qj36vvk9MQgrrkg26Op4M
  =
-X-Google-Smtp-Source: AGHT+IEyyxGjDtBxgLK1AjzuQEapewl+2cC29y9rfEYPT7XWohXerOl6ssa6LAWSPt+qNDhOpMXqnw==
-X-Received: by 2002:a05:6a00:997:b0:730:95a6:3761 with SMTP id
- d2e1a72fcca58-74af6e3f46amr21115371b3a.3.1751302134683; 
- Mon, 30 Jun 2025 09:48:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGPfHLB9AxOoQRn5fGAquUwskyga5GmnnfuIof5rLxfJcrVSIOEtWlNjeuenDmD0x7Ikv2tsg==
+X-Received: by 2002:a17:90b:1d4d:b0:312:db8:dbd2 with SMTP id
+ 98e67ed59e1d1-318c92cd016mr17612576a91.19.1751302179343; 
+ Mon, 30 Jun 2025 09:49:39 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74af541e655sm9483237b3a.65.2025.06.30.09.48.53
+ 98e67ed59e1d1-315f5426bd9sm13675903a91.27.2025.06.30.09.49.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Jun 2025 09:48:54 -0700 (PDT)
-Message-ID: <038363c8-36e8-4730-a1dc-eee360f6533f@linaro.org>
-Date: Mon, 30 Jun 2025 09:48:53 -0700
+ Mon, 30 Jun 2025 09:49:38 -0700 (PDT)
+Message-ID: <c4745999-9863-40fc-b507-f6b937430d08@linaro.org>
+Date: Mon, 30 Jun 2025 09:49:38 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] target/arm: Only set CPU_INTERRUPT_EXITTB for TCG
+Subject: Re: [PATCH 2/6] target/arm: Only allow disabling NEON when using TCG
+Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
+ Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org
 References: <20250630130937.3487-1-philmd@linaro.org>
- <20250630130937.3487-2-philmd@linaro.org>
-Content-Language: en-US
+ <20250630130937.3487-3-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250630130937.3487-2-philmd@linaro.org>
+In-Reply-To: <20250630130937.3487-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,14 +108,25 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/30/25 6:09 AM, Philippe Mathieu-Daudé wrote:
-> Commit 34c45d53026 ("target-arm: kvm - re-inject guest debug
-> exceptions") removed CPU_INTERRUPT_EXITTB from KVM, but it
-> also appears on HVF. Better to restrict it to TCG.
+> Only allow disabling NEON when using TCG.
 > 
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> This avoids confusing user experience:
+> 
+>    $ qemu-system-aarch64 -M virt -accel hvf \
+>                          -cpu host,neon=off,vfp=off,vfp-d32=off
+>    qemu-system-aarch64: AArch64 CPUs must have both VFP and Neon or neither
+> 
+>    $ qemu-system-aarch64 -M virt -accel hvf \
+>                          -cpu host,neon=off,vfp=off,vfp-d32=off
+>    qemu-system-aarch64: ARM CPUs must have both VFP-D32 and Neon or neither
+> 
+>    $ qemu-system-aarch64 -M virt -accel hvf \
+>                          -cpu host,neon=off,vfp=off,vfp-d32=off
+>    qemu-system-aarch64: can't apply global host-arm-cpu.vfp-d32=off: Property 'host-arm-cpu.vfp-d32' not found
+> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/arm/helper.c | 2 +-
+>   target/arm/cpu.c | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
