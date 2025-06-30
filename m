@@ -4,79 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95B83C83029
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2DA9C8302B
 	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 15:35:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWGSE-0000ix-VZ; Mon, 30 Jun 2025 11:29:59 -0400
+	id 1uWGXS-00025q-LF; Mon, 30 Jun 2025 11:35:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWGRy-0000WM-19
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:29:47 -0400
-Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uWGWz-0001rk-SC
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:34:57 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWGRj-0008GM-0E
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:29:40 -0400
-Received: by mail-ot1-x333.google.com with SMTP id
- 46e09a7af769-73a9c5ccfcdso1264956a34.0
- for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 08:29:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uWGWv-0000Te-9k
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:34:53 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-7086dcab64bso20294427b3.1
+ for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 08:34:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751297362; x=1751902162; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1751297684; x=1751902484; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PkpB8g1xUtpDEpvXKq6mCBd8Xvirz1+gexv6+2S738c=;
- b=IaqIqH6SGOGkU7OMbk+alG0ydLghS/mdIv00smyG4sbZCTADf5nHfHHBXPxnnb6OXU
- CP8/bEiWWor50ZTye/TLxqf4r67TKMWUO0syWuSkGuquGqMj7uQYYvWaa0b7uR4+kbVX
- XCOQ8Wdbc1e++sQ0t03q/64hkX7ImYSkg8GHhJyuVBmNJDl5F7JmaQsa6aO2QCf4mL6H
- 8rYsByua68KHHb4/lQzGbpJKxQxBRgSjDWIBTnfaR51FkQPglpeFZ9pJYjoDcmLfXs3d
- ZT/21RaCZ4/ew6P9TosltH1IHxHS6T02TKqLVCoZAeCSR5HWJzXtgkmqJn8fA/UfR4GW
- WTVQ==
+ bh=DzC/oii9o7rPIbYU7tLpYjy4/LYNBCTnqw6z2ZXkL0s=;
+ b=p2RA4p3gphMpWD2MHq2uuELtfZUtaKMc+wWHepQKHhgrfxuAxLWd37DcbmfdB9MF+G
+ eKaKx6rQigcXIyvfwE0fgMUv0tjDFS6w9jo/OrT925PNnQW9I+pUOH77gwBhG1fBBPwa
+ CGNEFcsUPmhFt3vwzCd9lVa03nchrtfjgMUbrszJOvw+cbNHmrcAK2wbG7lXkIIKLbz5
+ A5o5AKyCQVETM4gYw9cKO9rbqRgqWGDA879qHv8eTek0BQxyVt0fdabe6xj8Wqns9/GG
+ 8DE4w93rHVqKdemwcftMxfNMFZ0mVDcCSLCGurnWLkZP5XiiaczzlWqvF97K3NA/i1l9
+ 2x/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751297362; x=1751902162;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1751297684; x=1751902484;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PkpB8g1xUtpDEpvXKq6mCBd8Xvirz1+gexv6+2S738c=;
- b=wokJdjpJq/bvchi+ffUn87PD4dfkcssdA/Wu6IZQ/+XeQ/gEjFHKIov09C+ea4Nc0e
- G/1RBcBBKprb0WAE4NBaaFujBAbYdqvEVD2LSd3QmpBUuyohndVeFUwU01DPCGFrzTgs
- 9AL0m9aRfFte93Ya5g95x83mknfaxkks+6UwdGQxQf2avqE+1n0iUk47+gzNdnf3dvai
- QkmmpSuGvYBDjA3CA33KTxp+gBd/dcm1UcXLUuk9UFc0iyM3pKlShoeREN1TRfnZMvv/
- dgz3oG6XqGCQchJEmTwFIKQD8+q4wYK2btGuG9wH6J1Rs6SQLyv6iy7nKFeKBYfVjx6d
- ibAw==
-X-Gm-Message-State: AOJu0YzxVguEn3FTpks8VHyaA6jxrRXXgHnnjo3WxrqGPaOVE1vjp/Ee
- R9zAut1yAXTPU6DBtj2tebQMQ6XTnCrdggOqQ/aA9OP4rjNuKbO1mfnmKWnUOucCzrvvlXtj+sT
- vaETu
-X-Gm-Gg: ASbGncuf1DGGdrEqNlY8PCz2qdPJ+8CmZToEMULK+aKt+eDnaIVij30DIwGkAWOCOLN
- LRRT9T8MlVywOi6GTg5pO7e1k9p3Xu0dn4JYEe2CbBC463e36OM3ioHYhNMs1EEMVHNs6LyJK5b
- pokjnXXA9Ukm3Kx/SPzAD64EZYEyKx1eoP/F3zb4uK1Jeq/L6bhfJtnrEKGcBmwKZ8kDpnnWI+z
- odiQMqgs4jrrhbFmEQCbp+3PBcSxJk/QZe4q/7fD8S9/7JRBhEU68uLONpK4nFKO3m8u+dXwM/7
- mS+0mt86se083x6V3fdGmoUn0SwUa5ylrecR1Gl2CgZtyUPOd3/CV6MbMtk8bXXw/qwVg+K9vUo
- +zQwI
-X-Google-Smtp-Source: AGHT+IFf992+JX6FvGus7lfydaB/KyCMPOPWsubM4mxQkl45aD0eKw89F7LCkYOmqPTmpknwrO6C4g==
-X-Received: by 2002:a05:6830:8009:b0:735:b9db:5939 with SMTP id
- 46e09a7af769-73afc3e703emr7373626a34.10.1751297362612; 
- Mon, 30 Jun 2025 08:29:22 -0700 (PDT)
-Received: from stoup.. ([187.210.107.185]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-73afb00c48asm1712478a34.27.2025.06.30.08.29.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Jun 2025 08:29:22 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 27/29] tcg/optimize: Simplify fold_eqv constant checks
-Date: Mon, 30 Jun 2025 09:28:53 -0600
-Message-ID: <20250630152855.148018-28-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250630152855.148018-1-richard.henderson@linaro.org>
-References: <20250630152855.148018-1-richard.henderson@linaro.org>
+ bh=DzC/oii9o7rPIbYU7tLpYjy4/LYNBCTnqw6z2ZXkL0s=;
+ b=KtXeYjvhchU9UYO9SvnHJoKT3ofRO8RbUE91mLV+X4fHlPAsb30LBWL2rXFMVGXeUC
+ cUimMalwVSiWCFm+hOaA6Q5J4MJT6yHfpwarBuVtpnOKZDhm1XUxCgCKjMDzytRaMSNt
+ vH+yAeklPm97zFOvayqfEb5PeDj9XbeeX6tXerKBIuZ5jswp4mZuIE285xX/roWGpF8Q
+ ShLp3FoyivYFpGxaBIF6oT2eGnow3nkoUBa3u99dcggqGKokii81A7lpeaJF/A6e4P28
+ E5vAyeG0cMv97y1gBTRQTizH4xNJQmiYX/DPx+qRh1VM3zENHeYAOS5wC0VILKOyoYy/
+ bNgg==
+X-Gm-Message-State: AOJu0YwBriPnLpmmqdKWi5MTCMUM/YfcyV6gH1MFe36Qsf+LMy9mscBj
+ 2sSafF4WKfEHy9NuCc6l+cGC6R+3dmT5fY6wQIigIAyqIUtlz0UbXM74K4CwE0E2Tgx4FNc2sRI
+ IVJw+0I7R0EEkYq0vx8/bY23i1Vz/DuDtM0hSBQrvGg==
+X-Gm-Gg: ASbGncsM29z7PhY7Etx6eJ6hz72k/yTg7KsMlq7ruLsLOrj16A90j0eTE+vRdGJf0GL
+ xlOGlIBeoNZk2Nr6b+T6YVznrDpHpj9yCa2mBSe8PPbj4ZFZZj9Vhx5skBvLeCH4YvrfR619q9u
+ 6zbublcQyU3DwVgz7VLgRW8kq77jxyxvrv9t9WoeBQmgrH
+X-Google-Smtp-Source: AGHT+IH+iwwqTU7zlX2I945lgbnNlrrxF9cxMU8gMHe6Vd7HsmOmqSLMequo3znfXJSEumDV7EvriQUoY33Fxg3xTNc=
+X-Received: by 2002:a05:690c:d85:b0:70f:8884:17af with SMTP id
+ 00721157ae682-7151714d14emr228157307b3.6.1751297684555; Mon, 30 Jun 2025
+ 08:34:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x333.google.com
+References: <20250623121845.7214-1-philmd@linaro.org>
+ <20250623121845.7214-21-philmd@linaro.org>
+In-Reply-To: <20250623121845.7214-21-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 30 Jun 2025 16:34:32 +0100
+X-Gm-Features: Ac12FXygwnSXLP-ZPonXcEmOAhgztcCBXBn2LNuOkJFkl9HoaCecpnHthAmLnYw
+Message-ID: <CAFEAcA_xqu1oDLThHBp5T_srQs2+2oxWTXF=sQzBjKDduc0cfw@mail.gmail.com>
+Subject: Re: [PATCH v3 20/26] hw/arm/virt: Rename cpu_post_init() ->
+ post_cpus_gic_realized()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Leif Lindholm <leif.lindholm@oss.qualcomm.com>, 
+ qemu-arm@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Alexander Graf <agraf@csgraf.de>, Bernhard Beschow <shentey@gmail.com>,
+ John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ kvm@vger.kernel.org, Eric Auger <eric.auger@redhat.com>, 
+ Cameron Esfahani <dirty@apple.com>, Cleber Rosa <crosa@redhat.com>, 
+ Radoslaw Biernacki <rad@semihalf.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,30 +106,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Both cases are handled by fold_xor after conversion.
+On Mon, 23 Jun 2025 at 13:20, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> QDev uses _post_init() during instance creation, before being
+> realized. Since here both vCPUs and GIC are REALIZED, rename
+> as virt_post_cpus_gic_realized() for clarity.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  hw/arm/virt.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index a9099570faa..da453768cce 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -2032,7 +2032,8 @@ static void finalize_gic_version(VirtMachineState *=
+vms)
+>   * virt_cpu_post_init() must be called after the CPUs have
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/optimize.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+You forgot to update the function name in this comment :-)
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index a48ddd9171..62a128bc9b 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -1948,9 +1948,7 @@ static bool fold_eqv(OptContext *ctx, TCGOp *op)
-     uint64_t z_mask, o_mask, s_mask;
-     TempOptInfo *t1, *t2;
- 
--    if (fold_const2_commutative(ctx, op) ||
--        fold_xi_to_x(ctx, op, -1) ||
--        fold_xi_to_not(ctx, op, 0)) {
-+    if (fold_const2_commutative(ctx, op)) {
-         return true;
-     }
- 
--- 
-2.43.0
+>   * been realized and the GIC has been created.
+>   */
+> -static void virt_cpu_post_init(VirtMachineState *vms, MemoryRegion *sysm=
+em)
+> +static void virt_post_cpus_gic_realized(VirtMachineState *vms,
+> +                                        MemoryRegion *sysmem)
 
+thanks
+-- PMM
 
