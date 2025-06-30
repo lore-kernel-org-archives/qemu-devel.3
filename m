@@ -4,83 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A94CEC8302E
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 08:59:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 866CFC8302D
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 09:10:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWAML-0006Nk-Qt; Mon, 30 Jun 2025 04:59:29 -0400
+	id 1uWAWM-0000tO-Nc; Mon, 30 Jun 2025 05:09:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWAMJ-0006KL-OR
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 04:59:27 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uWAWL-0000sO-3c
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 05:09:49 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWAMI-0006cE-0k
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 04:59:27 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3a575a988f9so2668759f8f.0
- for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 01:59:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uWAWI-0008D1-25
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 05:09:48 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-7115e32802bso18840487b3.1
+ for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 02:09:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751273964; x=1751878764; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=w+A3+IebsMaAPwZvp7nKuPH6W45hRJN6sDur+FFmVCk=;
- b=GMN06SPxg94S/W+TBT23538Mo6UMiTpy8c9aYBpn9eDWgNuB5FWT+37EW3yEoiWWCi
- l1eNiRg2NXUTvOw9qsCcIh/mc1QfsYJbwJ/5PstFyYwMik52JZDo8zgJJgKcWXavI8ul
- CpY2Bp9oHLjX4w5dBrVJpDKOWcEI0b7w/wqA1asrnoWEEJTYQP3bbc3Y8e0mH04cWcXX
- AGeDMigu9kma6p7iL7ya8g0xNNszZEXQ+a+a6a6KDn3esLHG7S72Aadky9tIlexZIftH
- 2nEaUuFiWzv1caAgKkKgQCZfQ5toEOm5n3nEMT52HA53dhsLKbHY5kYuz147RK2ko83A
- 2hvg==
+ d=linaro.org; s=google; t=1751274583; x=1751879383; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=8aLa30mfa1QZWGHp4Pv7l5Pn3jAcwhk8PsVesC+g/8o=;
+ b=ThoWlhdxBRUhY/YRvOVa1RNmATAUU2GVtHlelUdH1HtMjtluVjiG9QccajJqASX5EV
+ oL22od6N/VpEJdIedr658jP+SqNZBz65WWj1v3290Mgu7I+dirl94nL4RPlp8FicrPqt
+ l58l8T28Ilj/xk50dxzW5R3GI/Wfr3C7YEaeJcnd4xleWON4I1kAvi8mLvvN0eQGy47B
+ IPBu8cuQwFv+n2ENZv4YfNvYamneL8z2YKHlpH7RSTl8H9TGxHlOs4voMB9tmEe3s3wD
+ QDwoZGBA9RlZ83bmTCVKwxy+B39Q628TXsGrIe0KocRXRm97qGXMGw+xRtuAdlaITopR
+ PRRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751273964; x=1751878764;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w+A3+IebsMaAPwZvp7nKuPH6W45hRJN6sDur+FFmVCk=;
- b=GEujNAQ+yRBWZuzjLilVypFS7+p/+bJRSjOuVmqNPQ6FsbzFV9BRB5FrHxU2ZxugeF
- XUM0eviYUuF2ZzU9lgYrxSGtd5OYmxGeOeNxB+q5VWA89TvN5f/CkRsUWbOtkCjiy7kd
- 9c0fPnDYvBwljsdv064Nwoc6/454lh4AlEILXXuYzKNUv8pAjX+o27ypnQBJYumCvdTI
- 2JlCg3bybSx7TUsjeaF07bd7Sgk5MbF6seAy/OB/sTxnK9swNh+kyB9LP2LC801tNDSL
- X71tDPun0AXHMrjosDcr9OBTL+zglouW/kM+h47ttM1PkYcqXcxkEVIgiOJ+We5afXrL
- 6kFg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVfxtk0wEO3iaOmnWClQISm9vNzAnHxBya84IG/bATuQ7vZ2o3B8p62JekjChTNj+stsE3hUUOVMwjU@nongnu.org
-X-Gm-Message-State: AOJu0YwRxweLc/uxHw/2MT6VpJ4hI7SXxnQ9yZlSG+HExZaoG/HHs4Eb
- pQZ/8cHgn5cNc4yg8anTMnjIwhi1OM5n0AgG6KpmoeJzMm1F4SX4tU5llV5psquaER0=
-X-Gm-Gg: ASbGnctlq0fkp/odM8EgNJT5OYQeiAGbwrLj+qsGDJ7sjlrtiJFZJE3R+S3ohNYYUgS
- R8MGAWSW9MNYxcKWJWVysg5uAkpyaiGQlMYNmRd+60t/OKjW/BtStMyzF5cpuT226P91xNPg9YT
- wh74JZCF8SnVKzTGWxrHvKA3vWWIHyUMUOuH5ozdzcUrGfEqDKJzRV1CZHzMtT76VYAiw0sX11H
- FLkwlfBum1WFx1j3VmWwAVGkWbHw7TwDF+kwan3ih3/xZKOgaSog1LVy8+Ih+/BtM36wc/3M7D8
- WdKa/wfO4VwwYRupoCqnO5Sozl4AMGYBeO7gHb5gWVRMutqhcCvsRH07C6z0UAZB/Um71I0oRKE
- XWpEWeKvWmFqxh2vwNmsPGhuZ6VFSjA==
-X-Google-Smtp-Source: AGHT+IEGCUFjnRTI8xE6HfEs2SybcXOepmvHqaYnK3CY1zqa0wmWx5AOZ9u1/evDfGUXiuvBOFstDg==
-X-Received: by 2002:a05:6000:2a88:b0:3a4:f663:acb9 with SMTP id
- ffacd0b85a97d-3a8fdb2aee4mr8787145f8f.9.1751273964018; 
- Mon, 30 Jun 2025 01:59:24 -0700 (PDT)
-Received: from [192.168.69.218] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4538a390d11sm130380765e9.7.2025.06.30.01.59.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Jun 2025 01:59:23 -0700 (PDT)
-Message-ID: <4c966437-91b4-4c07-a07e-1a54f51329fe@linaro.org>
-Date: Mon, 30 Jun 2025 10:59:22 +0200
+ d=1e100.net; s=20230601; t=1751274583; x=1751879383;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8aLa30mfa1QZWGHp4Pv7l5Pn3jAcwhk8PsVesC+g/8o=;
+ b=UgRU70Rheq5ZLgRhGI5DtbYO+AmncblBaaUXG5/scqO/G1VWW9+s0s4gn5dDvaZRc6
+ OVu7K21GNzPLrxF8KjEjB5VlPL4Daz7rW99gAmPxTo1L1reMp0cHgsCSrdFM+qNSEEaq
+ 7mb5iGEWS7B3NR4O+4iyQPzhb1zq5Ct4t3MhEuP1LJDh0BPSDWTvOUzCDcOHTM+LY9YK
+ kYyhh25bkL8Cvb/XmkRvxWrLW2DJ+ltLYh1yKL2gLtiagheqqDBFMX5m/kkQhrokMHOV
+ q9qlI2hn04tngjDIKcU2VO77rX5+04DFKRgba+JQA6ypxdzNRLW8lW+Y9ZeCDMwP+gqa
+ MBcQ==
+X-Gm-Message-State: AOJu0YylbwsfjYH8tPz3ya+aWJbXeyScZs5kVePP+j5tqxPyQJdeuJU/
+ MXt9bZ5ByIxWeu7Ld9aPMrTI8a1ZvHSQ4QlJPUOYtQeW6CzY1IzG4WMMd5ZR3zK56czzwgfDBPk
+ gHhFSlWiE/NZGDN5gPqPINXpozkFqLX0xFPqGGX3SMA==
+X-Gm-Gg: ASbGnct1s5pEMPTqxZb6NjUwY0QeKACQ42B3HthDqAMY2HXCWaqJrhnSW3Gpnnp9l7K
+ GQXxNi3topIeTzp3JwWyIc8+8IhHBGGHRLdYPoH1nTjoVi9Vvz0YzBqQ78sOEUA2Oi6ktalqn5y
+ Mshz6T3yPCoFiDIIXS1qwp1yKfet2qkBAlThTEdJevIMG8TzppFDmDo7E=
+X-Google-Smtp-Source: AGHT+IG9lk7cGLYs8qxGXrJfAZKBDGyfdMPVr1EUXfZWndJ+UxwNlpR3r3+PDLiKrI+mqcZGHGL7X5I6UEhnFL0x6fE=
+X-Received: by 2002:a05:690c:4d47:b0:714:349:583a with SMTP id
+ 00721157ae682-7151719c76fmr196612007b3.32.1751274582806; Mon, 30 Jun 2025
+ 02:09:42 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hw/arm/fsl-imx8mp: Wire VIRQ and VFIQ
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
 References: <20250629204851.1778-1-shentey@gmail.com>
- <20250629204851.1778-2-shentey@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250629204851.1778-2-shentey@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+ <20250629204851.1778-3-shentey@gmail.com>
+In-Reply-To: <20250629204851.1778-3-shentey@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 30 Jun 2025 10:09:31 +0100
+X-Gm-Features: Ac12FXzsrJq8SMsscGWNIw-g6uIlT--_s19vhIkbjNwE2ZQz6x2enyqrP0YbrV4
+Message-ID: <CAFEAcA-HaQwySM1j7Cy_R1z0fM1D9ykiBiMKLYNVYF+Tm_mrPA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] hw/arm/imx8mp-evk: Add KVM support
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,16 +93,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/6/25 22:48, Bernhard Beschow wrote:
-> Allows to run KVM guests inside the imx8mp-evk machine.
-> 
-> Fixes: a4eefc69b237 ("hw/arm: Add i.MX 8M Plus EVK board")
-> CC: qemu-stable
+On Sun, 29 Jun 2025 at 21:49, Bernhard Beschow <shentey@gmail.com> wrote:
+>
+> Allows the imx8mp-evk machine to be run with KVM acceleration as a guest.
+>
 > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->   hw/arm/fsl-imx8mp.c | 4 ++++
->   1 file changed, 4 insertions(+)
+>  docs/system/arm/imx8mp-evk.rst |  7 +++++++
+>  hw/arm/fsl-imx8mp.c            | 33 ++++++++++++++++++++++++++++-----
+>  hw/arm/imx8mp-evk.c            | 11 +++++++++++
+>  hw/arm/Kconfig                 |  3 ++-
+>  hw/arm/meson.build             |  2 +-
+>  5 files changed, 49 insertions(+), 7 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+This puts a lot of IMX device models onto our security boundary,
+which makes me a bit nervous -- that's a lot of code which
+wasn't really written or reviewed carefully to ensure it
+can't be exploited by a malicious guest.
 
+-- PMM
 
