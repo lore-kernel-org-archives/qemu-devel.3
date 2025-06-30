@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E75BEC8302F
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 13:11:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73FAAC8302D
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 13:11:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWEHw-0006c7-1m; Mon, 30 Jun 2025 09:11:14 -0400
+	id 1uWEHN-0006IZ-IN; Mon, 30 Jun 2025 09:10:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWEH4-00065Y-5N
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWEH4-00065Z-61
  for qemu-devel@nongnu.org; Mon, 30 Jun 2025 09:10:19 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWEH1-0004HX-Hh
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 09:10:17 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-45377776935so24245125e9.3
- for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 06:10:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWEGx-0004FN-2z
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 09:10:16 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3a6f2c6715fso2327252f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 06:10:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751289013; x=1751893813; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751289007; x=1751893807; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=H+FJk0a0cgOcCeztwLwPBBSDzF3OpAdthXdeLrgGRTg=;
- b=XTpQt4bvJzM3pVhKFj/Mk7MJGqCB079O7nMagqoF1LO2T3LfZ+eUvvys2YKTJ0xH0o
- AeBGgB3005wKKxRkhJNZbOjB0RpPA9TjtphpC6PYuRmucfNX0D3LimoXLFR80Ziwmmbu
- d6dLNFZaIKnxamcaftC3hUqlIOh4dp9F04Ut3MMHSjmlgWvXbjbBF4IF1uhoXDjH8f+P
- /K88FOW+zfV29hpctz9bfmswe5SV33kHiSDaJ8EH0zovkVFBPwmVyT4udkuWGRaGKemQ
- QyeQ+uS19ugBzRe4nZtlbBYv4dTPRw5Asf/WDG063+imJnbp7pIZv5wpZvH4m+592VcO
- 1/OQ==
+ bh=7RlmNXlhYATHcqGzuUYY9u+iNysqBplPIi1ujnVq9xc=;
+ b=rFPAhExG6Lq+jI7pp9/BK7HqI8b39dlaB7HbD+yOi0RyU3SBnPFBzwHNrvO/jH7chX
+ Tkh9QMNRcxDNL/YKQWTIcv81in0Hoyhw3VNYIcohwPPMk1YOpFv+fHZWLyXOWb9ZUshw
+ jBzTMI59hfktlXlmxRzIIkwIaZp9kLf1v8MTHO5BORKZ3n4G8/+hCUjLaNmwFYOz574Z
+ x/8168+S9ibGRyJlKlgM6j65gnfwSjGZP6iORq0Q6q8SJZiXHuDyWgkzbAOWWJJ9+m0j
+ L//kUfVFhH53tL2acO30/3keBDZmvErSwUx2nYPO1WzXemFABiFolf+EVWFEOBJgHqBT
+ UbXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751289013; x=1751893813;
+ d=1e100.net; s=20230601; t=1751289007; x=1751893807;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=H+FJk0a0cgOcCeztwLwPBBSDzF3OpAdthXdeLrgGRTg=;
- b=lVrVcrVxPPzhSKYOhrcg+MWuOrez/qoFR4NMdVKjTSb3RPlIAtkyaiI/uz8h8aBx2u
- ANdZE/bvgiyNZ4YJgwNWWQA0KpdJeMbxInztg9Edw8n2lpkDKYEr+bwiJw8fT7Nbgc/6
- aEoZBUAhHo1zBLEHPIJuDrLQsnZt0GNSHuBkjTx3aIpDm3pLSFR+p5JThhr4KQm4siax
- OOe+28qCbi17HV5jkGTAdAZtK6Sb+pNtK/rTJbKjXZT79mOj1mKz4XfqpzZvQ4j+sTO8
- S0V/tYQ+anmLGFDjjlHBUZWJK+o+RKaXwBFvegrOlSYHBEUzWXNDVMD3MGwltFBQ1k9H
- CGrw==
-X-Gm-Message-State: AOJu0YxJXQ5EtUBV/1OUAreOd/q33FfraW6nyIY9Ky/FgvKBjjdFTKLD
- IeEx2kTeUDUlcQtrfvWG1xDKMLZ65tgvkwv0GGmjk8pS8jkbr+GNKruED1PuxjRM+MkD0aqsWvc
- HErFk
-X-Gm-Gg: ASbGncv/GWbpE9dE/ciM4jfhxAPKeGXeGW2S+knEwiymhQ7bbrYF4mTRhtqVdQjsD8V
- YfJITfJa/U28xQrV6Yni1GuIrmMhQXa0+JFbc5PBVP7Qlmuj6o7im9sEfb5yG/cNRH85+EoC1D8
- 8CLI3HX/gf1LmQGojgFENhTez2uhdCmpCxz6wumSAfJ6oPaYpYrsunvhlUUVWXNp5q3H2cuWSek
- R3xmI8bCPgVnF06lqivXmhnc5bx8VdP1MJRj+i0YtsgWeWfgylONIE1Ls+l4OAIELYml3/4xh5d
- ph1A/8gqDiJS/O6OYbH5RyVKks7hZW7XFOkEkfIOfiZykAJQ6J5Pst3G8xHRHzDjvFSRVvKZwTL
- c9reRMXvcsOIjwmCqyjeXwkiuck0P9oeMkEC+
-X-Google-Smtp-Source: AGHT+IEByqu72FkfcvT5uo05D7E1vi0yvvlmhmF3Uteu/Agpq6RjqYSA3xSu6GHZbwfK+UN8hGdH/g==
-X-Received: by 2002:a05:600c:c0d7:b0:442:ccfa:fa with SMTP id
- 5b1f17b1804b1-4538f516210mr90896245e9.27.1751289012845; 
- Mon, 30 Jun 2025 06:10:12 -0700 (PDT)
+ bh=7RlmNXlhYATHcqGzuUYY9u+iNysqBplPIi1ujnVq9xc=;
+ b=Geyk6R8Z18Nl5tzj8uP/7YpsLtnv0EL7VTGCDJ8TT9eXhZ8Qota0E47d7UAmXMT39a
+ J/yPgB42ShWtCKT+nsPPwr0PxG6uiSQQsuP2/TytjP/aucs5OXLPqAgthWyHXlx1KBw8
+ Bma/8/bn9XQIPOOQnkkIripzL7OcfB+hmervKBSS1A1l4h02xzPKL938jb6YOdCy4Vb1
+ YPreXckBNnczxxv31NgKXDOvnbWGdZa8u6fsqJolZ+MikDbtOuJcDTmlLGIP5ggGzuSP
+ 2bTq04BG9dsQ7JMveogn2e4oA+rQ23d/fiTbv/cp4qLNWsyQrgJvoybG+NRk7aT5v5tf
+ tX2g==
+X-Gm-Message-State: AOJu0Yw6zoCTKM+mbK6ntNiBEPCXaASMdu5Tsk9PhcQs+jmP+vwf+v6U
+ 6HVPxjrPBSi1siRx4nLbEwpq1Mkl5agLu3KlaJPUzZUn7jbE9G4N2ziiHF//4llhuPw7VgIteX2
+ TPFX2
+X-Gm-Gg: ASbGncsqoyvKDweGsMbLH+61PWZpPF6mGnBDjMOCneOnsxV0gtkT+ekSiXvINTGyRbp
+ w+3vxR0UJA6nfBsN60PExrL+lgXv9MafRUctkWJULXkZAWP5RRjxLgqOxUpJgenae0NbRwBj9nP
+ PklFpig0oWZ2cFagTKBm796r05WktNMJtF5281qdAZhU5to7GmlQ1VMSt3rSqfAI+ha3oNCmZAZ
+ Sr0xsN0vZv6kWIE+lZoXXNp0kitlbjyd5MkJWBiX6eQVL191jOP+fs8sBQJNwlHv40W8owX+bIN
+ /oIyQVXcGBjN7iabnyIhdflKE1mK7oA8/rgs4guuAMDHr1dTnppKpx3LZtD5ZZ2HYAHNroQTNsh
+ AB9qaJSBMGByoMj/tHNS/OuPRaKySYUdpyu7c
+X-Google-Smtp-Source: AGHT+IEDl8M5F+MobCB3JAO2gQTMzxkCii5P0pswMIQwCksbt96XXTeibZfmDV/cScD+EFyz1kmVaQ==
+X-Received: by 2002:a05:6000:4204:b0:3a3:5f36:33ee with SMTP id
+ ffacd0b85a97d-3a8fdeff5a6mr10622405f8f.32.1751289007376; 
+ Mon, 30 Jun 2025 06:10:07 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a892e52a35sm10549142f8f.57.2025.06.30.06.10.11
+ ffacd0b85a97d-3a88c7e7518sm10255872f8f.2.2025.06.30.06.10.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 30 Jun 2025 06:10:12 -0700 (PDT)
+ Mon, 30 Jun 2025 06:10:06 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -70,18 +70,18 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 6/6] target/arm: Allow arm_cpu_tlb_fill_align optionally set
- CPUTLBEntryFull
-Date: Mon, 30 Jun 2025 15:09:37 +0200
-Message-ID: <20250630130937.3487-7-philmd@linaro.org>
+Subject: [PATCH 5/6] target/arm: Share ARM_PSCI_CALL trace event between TCG
+ and HVF
+Date: Mon, 30 Jun 2025 15:09:36 +0200
+Message-ID: <20250630130937.3487-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250630130937.3487-1-philmd@linaro.org>
 References: <20250630130937.3487-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,26 +104,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+It is useful to compare PSCI calls of the same guest running
+under TCG or HVF.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/tcg/tlb_helper.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ target/arm/hvf/hvf.c    | 3 ++-
+ target/arm/tcg/psci.c   | 3 +++
+ target/arm/trace-events | 3 +++
+ 3 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
-index 23c72a99f5c..df04ef351d1 100644
---- a/target/arm/tcg/tlb_helper.c
-+++ b/target/arm/tcg/tlb_helper.c
-@@ -349,7 +349,9 @@ bool arm_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr address,
-                               &res, fi)) {
-         res.f.extra.arm.pte_attrs = res.cacheattrs.attrs;
-         res.f.extra.arm.shareability = res.cacheattrs.shareability;
--        *out = res.f;
-+        if (out) {
-+            *out = res.f;
-+        }
-         return true;
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 7a99118c8c2..6309c5b872e 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -34,6 +34,7 @@
+ #include "target/arm/multiprocessing.h"
+ #include "target/arm/gtimer.h"
+ #include "trace.h"
++#include "../trace.h"
+ #include "migration/vmstate.h"
+ 
+ #include "gdbstub/enums.h"
+@@ -1149,7 +1150,7 @@ static bool hvf_handle_psci_call(CPUState *cpu)
+     int target_el = 1;
+     int32_t ret = 0;
+ 
+-    trace_hvf_psci_call(param[0], param[1], param[2], param[3],
++    trace_arm_psci_call(param[0], param[1], param[2], param[3],
+                         arm_cpu_mp_affinity(arm_cpu));
+ 
+     switch (param[0]) {
+diff --git a/target/arm/tcg/psci.c b/target/arm/tcg/psci.c
+index cabed43e8a8..8df27ca123e 100644
+--- a/target/arm/tcg/psci.c
++++ b/target/arm/tcg/psci.c
+@@ -25,6 +25,7 @@
+ #include "internals.h"
+ #include "arm-powerctl.h"
+ #include "target/arm/multiprocessing.h"
++#include "../trace.h"
+ 
+ bool arm_is_psci_call(ARMCPU *cpu, int excp_type)
+ {
+@@ -79,6 +80,8 @@ void arm_handle_psci_call(ARMCPU *cpu)
+          */
+         param[i] = is_a64(env) ? env->xregs[i] : env->regs[i];
      }
-     if (probe) {
++    trace_arm_psci_call(param[0], param[1], param[2], param[3],
++                        arm_cpu_mp_affinity(cpu));
+ 
+     if ((param[0] & QEMU_PSCI_0_2_64BIT) && !is_a64(env)) {
+         ret = QEMU_PSCI_RET_NOT_SUPPORTED;
+diff --git a/target/arm/trace-events b/target/arm/trace-events
+index 4438dce7bec..a9cb5e0f5c6 100644
+--- a/target/arm/trace-events
++++ b/target/arm/trace-events
+@@ -13,3 +13,6 @@ arm_gt_update_irq(int timer, int irqstate) "gt_update_irq: timer %d irqstate %d"
+ 
+ # kvm.c
+ kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is translated into 0x%"PRIx64
++
++# tcg/psci.c and hvf/hvf.c
++arm_psci_call(uint64_t x0, uint64_t x1, uint64_t x2, uint64_t x3, uint32_t cpuid) "PSCI Call x0=0x%016"PRIx64" x1=0x%016"PRIx64" x2=0x%016"PRIx64" x3=0x%016"PRIx64" cpuid=0x%x"
 -- 
 2.49.0
 
