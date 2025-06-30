@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01D52C83029
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 15:26:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D046C83029
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 15:29:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWGNm-0007oK-IL; Mon, 30 Jun 2025 11:25:22 -0400
+	id 1uWGRY-0000Nz-Cw; Mon, 30 Jun 2025 11:29:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uWGNl-0007n7-Gj
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:25:21 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uWGRW-0000MX-R6
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:29:15 -0400
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uWGNg-0007xb-Nz
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:25:21 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-714067ecea3so17227347b3.0
- for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 08:25:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uWGRM-0008CN-Tj
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 11:29:07 -0400
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-72c13802133so689138a34.3
+ for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 08:29:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751297112; x=1751901912; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=I5h/4tT6uYWyspNT7UisC2lRP7Ask7OpjyLTLtPE4HQ=;
- b=H35zuNXyN6Iwwlljy94N26bQ110Cu4/3GV5otu5gbNs3fYJioy3JJUp85BUNFk6phY
- 2PxAiOqamPtPtYNAXWh4AfkC5hUx1nhsX6sJCG4bfs2e8WZVSpvJ20O2j/rZDy2tn39V
- tziRG7b0hhrbxWIpRNEpFB3NB3dzRGkdFsZXHxUgdmTbk2EadSzJzj9q/H8uwHVf2Ahd
- 93AzNbmoek+c6RAMfkSquaYq/S7x1j0hJ2cXh4NGS47+nX8rRCiOpajkKvhuhC6EjXdf
- OKQYMjsHsFYp3wOgxyrxO3HT3yBou8k1z6o5oahkZjGnW6vTYEYyYtXtxZjSa6vAw9iC
- Wrqg==
+ d=linaro.org; s=google; t=1751297342; x=1751902142; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yh/Z6IcqrEAchgIs/HAf59KsDGYMrGPzRcjMoo8cwK8=;
+ b=U4zc9Gl6YGKZnVDkMfAnsgeKOtoYbYG4Tl3CFUmqWmoweyiz3Turn6J8HQUQ8yNO/n
+ 3vw7pYVMpSpwo2/EmbIQR3xxQXBhpzqY9HDpzndXvj+UC4W2J2/D1z1q6ZokPLXMGp09
+ wCKatxMAIJmVPGIytmKfeAozRR6UzbU6d8vpFFxIyYSOzEhDfGMq1d8vyztoiT7gSyfs
+ jqBu/9iVokEZMhUeUOJ5bvB7lN8Tw2t+tMkutpV+cAcFmfs+BJepVm3dZQf44L7b6w3m
+ cHg3rAmOQZsY+O+jf/VwQkK4BO2EjqVSqIeuBRSATOwBIqE7VW837tTQeCFmHenHSdLf
+ GYqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751297112; x=1751901912;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=I5h/4tT6uYWyspNT7UisC2lRP7Ask7OpjyLTLtPE4HQ=;
- b=Xz6PjYM/W+2Sc9N33G2T0c0sVB+AeRyliPj/xVqiijtJLIGM6jveLYvn1J5qtfmOsc
- Ca1AiIdOue2JiNkMdITt70/eqMuW8tUArg2qG6hDlOeAcRo3Kmbm75GjrvdTFn5OVwiq
- xlzHvTvMnD1DVjgAStkM0CEAbBkCaMb8bBd4cE8f5y8fM3mMZw0V8bFmlgVrlgdagZFh
- yyGAOyY5mnnAbSTTMu10g8PHKip+ilUBt2sTviaeiEQA0JnCz+gTgAj2HAqAb22BG0gM
- P21ruaY3S0oHkyrztm6aG1gXm94szV0xHCX62XAly1BkyEyMLqePj6dJ1IvsVnNgcgQo
- 7CCA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVguKrxYhf2kP7AIyN92+xH+7spCroT4nbd8Ai5FlmHl9gfm1C+1kF/hsSH0mLSib2yToGwUN0BgVvl@nongnu.org
-X-Gm-Message-State: AOJu0YwpIFIITpUwI+aK703KL5/6xN4AhMCpZaxim7Lk5mO75Y5bopqm
- ZlF/urvFlcFUqFfcdz/WmBhMpQnAwcTjwvp6zJ3PSdMqMNEFrCKeDjBgQVbBbc0pDomAUzLoxbu
- ahPwbaMbCtkruV2dEFc2BK0l8GZvP8eZq/Ktl0I2hMg==
-X-Gm-Gg: ASbGncueHqptvoaHCAOoqG9LFBXGN98HNjluw8AB0NBTDeYyJ/ZD8gx0iR2Kv1dljhO
- JIENtRyHncgDdBWjD4vfMSTQc/7kQDm0MpBc+8aXzwxMlQR/gYnWYg9Jk25YXaXfhEzdtOqO081
- nmXsgDowT2+G2RrejGX02tnyzEdMBm+UK1doc63TDRVN5N
-X-Google-Smtp-Source: AGHT+IHbDKkB+v2UqZI/qbpQTn8DDgm/V9SQW5oPnLxD8oZI4VSXOLZFRxjLJnIc+/ugHtVSQMvSaqZsLIPCSyZdD+4=
-X-Received: by 2002:a05:690c:dc9:b0:70e:142d:9c52 with SMTP id
- 00721157ae682-7151719cf61mr215756077b3.22.1751297111869; Mon, 30 Jun 2025
- 08:25:11 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1751297342; x=1751902142;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yh/Z6IcqrEAchgIs/HAf59KsDGYMrGPzRcjMoo8cwK8=;
+ b=dEfrN9+dSGWkevllhNWzfI797+JE8KKqt78MwdmOWsbzdGTkyprVXK3acSSEwxiyx2
+ Rpp3MsH6fsJV7LD1MIl1Fcquts50HwOgXR7b7mZvy6Ujjip2wqoN8C4fevwB901RRJMp
+ ahYcZLiwC45Dib5qsQP7bZ4xdhNG6/HIITL20wqIeNodzcwSsPUDSpMg2T857U4pQ7EB
+ wiU7iNapHGUq3pTUeHUB2ylYDdLPOZBtzKGtrP4JCpDC4Y4ltQHmnzdvWPq4/KwM5Hvl
+ QI9ZaJYEW30wZ89lSnh4IwH7gVUDW0Zd6WK6CRaDFV4rcnU1pextYK2ui7LQ4/qDmydn
+ fvqQ==
+X-Gm-Message-State: AOJu0YwHHCZdYkkUtz+egB0HvFWsQDF2VMvQWYH4fK1Sf56dBURg+tUI
+ saNjDZV0z9j3Qjf+NTJOo0qPQ72cjb25Q5KWx56H3q5KPkXHrQeW1OPbe8GEU2siJvpTILOwyuF
+ m54ji
+X-Gm-Gg: ASbGncvQHQnr0y57xKKY3ZetIsYH6mhmU7gnNnXa1IVvCT+tRQo1HY94JqJHZoGtUgp
+ ueX7+GpkpNPLJTi0Dc/+vQ8pdVzQoQJvIZ2eRCHOfoFpNomRN9y9K5U9a4q6RckHDuc/Kb2b+f3
+ YkaaSekZTduLX2SETJNt4R6GCM/Jq4KCHSmIPeVHYE6pjYxNSjptG5T/OE80NqrAhcDd0dqO82j
+ 5EEeXMailUUVJjc0p/RO1knUZ7uuyRlJU3Mkq0vw03dldCYr7DJxK9jh0CTLoUbWm7qYh4ogynU
+ JBKgmqiMsbbvJzmQLaJRywoEts6/yOr68dB82uu1+H8nN2lXNQqKTMAam7YcpzRGrVN+QQK+M6J
+ a/jDC
+X-Google-Smtp-Source: AGHT+IEf1SYdbhSZ98xwb4RmNoV/X6CPJ7W1WySCrZZjvOr9QZYhKfPqHb0EqHbS6QQyoAUXSVv0iA==
+X-Received: by 2002:a05:6830:6086:b0:739:fc48:6831 with SMTP id
+ 46e09a7af769-73afc6b2111mr11532843a34.21.1751297341845; 
+ Mon, 30 Jun 2025 08:29:01 -0700 (PDT)
+Received: from stoup.. ([187.210.107.185]) by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-73afb00c48asm1712478a34.27.2025.06.30.08.29.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 30 Jun 2025 08:29:01 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 05/29] tcg/optimize: Build and use o_bits in fold_andc
+Date: Mon, 30 Jun 2025 09:28:31 -0600
+Message-ID: <20250630152855.148018-6-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250630152855.148018-1-richard.henderson@linaro.org>
+References: <20250630152855.148018-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20250617153931.1330449-1-cohuck@redhat.com>
-In-Reply-To: <20250617153931.1330449-1-cohuck@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 30 Jun 2025 16:25:00 +0100
-X-Gm-Features: Ac12FXw50PpiOmK56GCGuI5ZjfhKrVyyA1XeCo2Esd3LtbqKHdL_R1y58yMuILw
-Message-ID: <CAFEAcA-Zuqzqg_qUQh+yT4BGqEke3=OhSr0iSY1ztPtVV506sw@mail.gmail.com>
-Subject: Re: [PATCH v8 00/14] arm: rework id register storage
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, richard.henderson@linaro.org, 
- alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev, 
- sebott@redhat.com, shameerali.kolothum.thodi@huawei.com, armbru@redhat.com, 
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com, 
- agraf@csgraf.de, shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org, 
- pbonzini@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,25 +99,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 17 Jun 2025 at 16:39, Cornelia Huck <cohuck@redhat.com> wrote:
->
-> Mostly addressed Peter's feedback:
-> - make sure every inbetween stage compiles (also fixed some bonus issues)
-> - try to make the scripts more robust, add a note the generated file,
->   and make sure to grab only registers we actually want
->   - I did a half-hearted attempt to use python instead of awk, but I'm
->     out of my depth, especially with the script that will be used for
->     the register fields in the cpu models series
->
-> Also available at
-> https://gitlab.com/cohuck/qemu/-/commits/arm-rework-idreg-storage-v8
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/optimize.c | 23 ++++++++---------------
+ 1 file changed, 8 insertions(+), 15 deletions(-)
 
-The script seems to be creating array entries for some registers
-it should not still; I've left comments on that patch.
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index d9ccbb36e2..123734b167 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -1452,7 +1452,7 @@ static bool fold_and(OptContext *ctx, TCGOp *op)
+ 
+ static bool fold_andc(OptContext *ctx, TCGOp *op)
+ {
+-    uint64_t z_mask, s_mask;
++    uint64_t z_mask, o_mask, s_mask, a_mask;
+     TempOptInfo *t1, *t2;
+ 
+     if (fold_const2(ctx, op) ||
+@@ -1464,7 +1464,6 @@ static bool fold_andc(OptContext *ctx, TCGOp *op)
+ 
+     t1 = arg_info(op->args[1]);
+     t2 = arg_info(op->args[2]);
+-    z_mask = t1->z_mask;
+ 
+     if (ti_is_const(t2)) {
+         /* Fold andc r,x,i to and r,x,~i. */
+@@ -1485,20 +1484,14 @@ static bool fold_andc(OptContext *ctx, TCGOp *op)
+         return fold_and(ctx, op);
+     }
+ 
+-    /*
+-     * Known-zeros does not imply known-ones.  Therefore unless
+-     * arg2 is constant, we can't infer anything from it.
+-     */
+-    if (ti_is_const(t2)) {
+-        uint64_t v2 = ti_const_val(t2);
+-        if (fold_affected_mask(ctx, op, z_mask & v2)) {
+-            return true;
+-        }
+-        z_mask &= ~v2;
+-    }
+-
++    z_mask = t1->z_mask & ~t2->o_mask;
++    o_mask = t1->o_mask & ~t2->z_mask;
+     s_mask = t1->s_mask & t2->s_mask;
+-    return fold_masks_zs(ctx, op, z_mask, s_mask);
++
++    /* Affected bits are those not known zero, masked by those known zero. */
++    a_mask = t1->z_mask & t2->z_mask;
++
++    return fold_masks_zosa(ctx, op, z_mask, o_mask, s_mask, a_mask);
+ }
+ 
+ static bool fold_bitsel_vec(OptContext *ctx, TCGOp *op)
+-- 
+2.43.0
 
-I've taken patches 1-11 and 14 into target-arm.next so you don't
-have to keep rebasing them.
-
-thanks
--- PMM
 
