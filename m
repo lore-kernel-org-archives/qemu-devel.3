@@ -4,112 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 105D6C83029
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 14:25:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD007C8302B
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 14:35:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWFQX-0000OX-4z; Mon, 30 Jun 2025 10:24:09 -0400
+	id 1uWFay-00037h-JV; Mon, 30 Jun 2025 10:34:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbrivio@redhat.com>)
- id 1uWFQI-0000Nj-7H
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 10:23:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alexandre.chartre@oracle.com>)
+ id 1uWEam-0004aa-8a; Mon, 30 Jun 2025 09:30:40 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbrivio@redhat.com>)
- id 1uWFQC-0008W9-3T
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 10:23:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751293422;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XguLVPas8vLBmV5N6UZJ9WWBP1Z9nTe1Xs0TRWIpjx0=;
- b=HqMQrYArkNpTvs11r1ZerwKaDxufHFV35HrUjvBQHU7pPyJj2fB2nnWTdS9BnShw0gwCmD
- ryAy46S3DosTLIXA+qeEaKtv/zjwdi4Xrg1aM6uIk0ZayuBDktTinOyJBvFNKQ8zI8zG1h
- mcqbkja7EfPu597mHwTGsp5uqy2wYL0=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-452-85c155KLOm-J9RmXfLszXA-1; Mon, 30 Jun 2025 10:22:30 -0400
-X-MC-Unique: 85c155KLOm-J9RmXfLszXA-1
-X-Mimecast-MFC-AGG-ID: 85c155KLOm-J9RmXfLszXA_1751293350
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4539b44e7b1so9959185e9.1
- for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 07:22:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751293349; x=1751898149;
- h=content-transfer-encoding:mime-version:organization:references
- :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XguLVPas8vLBmV5N6UZJ9WWBP1Z9nTe1Xs0TRWIpjx0=;
- b=ukQwkXdX8vpOZaWrJzd0Y1BSF2Mj0sEK8y8bGjC7+DZ+rEa0mDbyiMdlbETIQiUS6U
- /1btDP4bglIjR9Gs0ppAdJgBoOiFAQc12ozbzL6S3S9EMeslPHDE5h/4mmfVwbUbpTvb
- oV8/qq7fXFL/rbHhgklYEJoFoz6iptKqp1Z9bxQrh4bWyRuc4q2sgepE5j7k+u1xWjhb
- uYm1zBkR+0xxHrkh0UxpQ7YWYk5k+sWU6jQTKhKLgfCywVHDEmpdsZ4RXmsbVzZS3zDu
- ws3joPiiN0o0WdlddioNRhKvMO3cdvUpJqjUou0/GZkvqiISM8LozCL4Gy2K02DlrI5e
- AXOA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUHzRHKnwNnce62X8Iabe7KW9IdemECs1DBmsHdOSKi2tC+SlVnCM+pcJefbkMdvbFHp38MljjctBaj@nongnu.org
-X-Gm-Message-State: AOJu0Yz5k6GWyjdWv855bBq2J6xlZ1dv/e/RSvNWKH+1q2biK+ce7TfX
- ag1ngrP1XnoUHMIa9NrPRPnP6ZWdwX3/r7nCV5V7jZdd9q5Ggb7oVm3hryjFe47maVAL6MXRR9U
- jZuSm/1ppaV7yWyolvT2BZaF8Yi/U2f7ToPtfC6M40hMtwlxhXZzlMww+
-X-Gm-Gg: ASbGncvMuywwEQXu9cg6sTduDTPp6IlGbGxnFSyo3JdoEFo/+AmZGhtw0g4ZZdqqaRj
- pNiSqUicv7mtGEr7orGO6w2m4ADxPnvFM9IzapgFp/6mlNMCLL+9czUAOpwmq4pQdpY9d5Rpz4Y
- gX7ucpvwAZb4nzPT+VKRS/uPleCjQjbwhle65hrds0WSGBMxew8BzCumaD6uVnhmilLdvPwZc3c
- 4DvtyE7G86Kh64A6/wJx1HWFLuaK5z/wN/4PAfDVOa2AjI6kekZmS+ZDwvsvz4Mvia4mkhlB4Ev
- 3z4eBw8EWkXTFNjXv4vcR0f5PXjl0mttfA==
-X-Received: by 2002:a05:600c:818d:b0:453:1058:f8aa with SMTP id
- 5b1f17b1804b1-4538ee4dad4mr151870585e9.15.1751293349419; 
- Mon, 30 Jun 2025 07:22:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFRacDJjYTMOJ54yovmnl2PTcBfIxMreQLw6+1Ud8xa9w3dNSUMFn2j44FHMD9fI8n0Lmwj4Q==
-X-Received: by 2002:a05:600c:818d:b0:453:1058:f8aa with SMTP id
- 5b1f17b1804b1-4538ee4dad4mr151870145e9.15.1751293348841; 
- Mon, 30 Jun 2025 07:22:28 -0700 (PDT)
-Received: from maya.myfinge.rs (ifcgrfdd.trafficplex.cloud.
- [2a10:fc81:a806:d6a9::1]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-453883d81besm149327255e9.38.2025.06.30.07.22.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Jun 2025 07:22:28 -0700 (PDT)
-Date: Mon, 30 Jun 2025 16:22:25 +0200
-From: Stefano Brivio <sbrivio@redhat.com>
-To: Markus Armbruster via Devel <devel@lists.libvirt.org>
-Cc: Markus Armbruster <armbru@redhat.com>, Laurent Vivier
- <lvivier@redhat.com>, qemu-devel@nongnu.org, =?UTF-8?B?TWFyYy1BbmRyw6k=?=
- Lureau <marcandre.lureau@redhat.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVk?=
- =?UTF-8?B?w6k=?= <philmd@linaro.org>, Stefan Weil <sw@weilnetz.de>, Stefano
- Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
- "Michael S. Tsirkin " <mst@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, "Dr. David Alan Gilbert " <dave@treblig.org>, Eric
- Blake <eblake@redhat.com>
-Subject: Re: [PATCH v2 09/10] net: Add passt network backend
-Message-ID: <20250630162225.451a7df9@elisabeth>
-In-Reply-To: <877c10cnqg.fsf@pond.sub.org>
-References: <20250618155718.550968-1-lvivier@redhat.com>
- <20250618155718.550968-10-lvivier@redhat.com>
- <87pletlflp.fsf@pond.sub.org>
- <957e1b39-bb40-4752-9d61-84f2b1ca7aa2@redhat.com>
- <87pleticbb.fsf@pond.sub.org> <aFqUENpgRvcYru6L@redhat.com>
- <3bb6ca25-c691-4a9a-9de3-9db7444c8904@redhat.com>
- <877c10cnqg.fsf@pond.sub.org>
-Organization: Red Hat
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.49; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <alexandre.chartre@oracle.com>)
+ id 1uWEai-0008Dx-TQ; Mon, 30 Jun 2025 09:30:39 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55UDBfNE000806;
+ Mon, 30 Jun 2025 13:30:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=corp-2025-04-25; bh=B7IKr9oZj7qYdfJs4YEnvRbaGnAA3
+ CJxLzUSvOJ03p8=; b=H+qR59CNQnLQ8Tu+bWWfqwolKnh7ZTpVn4cZFE4IfpUCB
+ vRVSEaWBjW7yKY9mWh0djxXHIPdJk+r28btrkRqxqcQ7b7OPVhsF48/tS+I03358
+ AAbwaIy32c9waK7S9/nd8JVzf4JNjGbc4SlHyzkpY6747FokyRbbPtCcswWnMF4z
+ v7En7KwOajcmYcivwHEEm+uekLJpmjrwa4JcV0/87wPcX7V9IZr+Z2xdOqr9pNyN
+ +YMToBgRvb2vomDOaVis5lVdHb8iBGTCi0rWOclIP4Q9u0o8CI8hZ2z42BMQ37MM
+ OBMeJakGb2tRXo89O1DBysj1jvUjGMT/u2enVpeEA==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47j80w2ghe-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 30 Jun 2025 13:30:29 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 55UCEDZJ011807; Mon, 30 Jun 2025 13:30:28 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 47j6u83kwn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 30 Jun 2025 13:30:28 +0000
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55UDUSPi038390;
+ Mon, 30 Jun 2025 13:30:28 GMT
+Received: from laptop-dell-latitude7430.nl.oracle.com
+ (dhcp-10-154-171-177.vpn.oracle.com [10.154.171.177])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
+ 47j6u83ksy-1; Mon, 30 Jun 2025 13:30:28 +0000
+From: Alexandre Chartre <alexandre.chartre@oracle.com>
+To: qemu-devel@nongnu.org, pbonzini@redhat.com, xiaoyao.li@intel.com
+Cc: qemu-stable@nongnu.org, zhao1.liu@intel.com, konrad.wilk@oracle.com,
+ boris.ostrovsky@oracle.com, maciej.szmigiero@oracle.com,
+ alexandre.chartre@oracle.com
+Subject: [PATCH] i386/cpu: ARCH_CAPABILITIES should not be advertised on AMD
+Date: Mon, 30 Jun 2025 15:30:25 +0200
+Message-ID: <20250630133025.4189544-1-alexandre.chartre@oracle.com>
+X-Mailer: git-send-email 2.43.5
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sbrivio@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-30_03,2025-06-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ phishscore=0
+ suspectscore=0 mlxscore=0 bulkscore=0 adultscore=0 spamscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2505160000 definitions=main-2506300110
+X-Proofpoint-GUID: 33l6VizfbN-F3TTganpPn07u3t0H-ToV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjMwMDExMCBTYWx0ZWRfXwPyU0bN7sUZI
+ yN+utnedimTWQfKlUEPLr9PpUmui/HGyjsSOoIPvcG2vc9//TQ2nLpd8OWSpKr5pzSZAF8GxUXr
+ R72BRJTfaDkgvgoe9SQNPSoPqtZL3/qNYKF5+7PYvN0UohDSsWYkAA3wisyddsuK1x2U+AWAqrG
+ U/h/yns4BomLrbvclOrXDeOQzrXE4E+3A6GpQpwY7pRqW4fjS/Vl+et8QD3TGlaZNulvwwOG3uU
+ IcyqoTzHgHZboj3gaDLQxYqfRgTrOyL9WrjP4GUt74pmvS35i7CrYPPgOxoLOfHtlGQHSC7DpNt
+ H1qA/wdHTiQVOr4cDczAyHIR6bh8cFFnhE5R4+HPDiN3lMKvCPbzAMWkud6fpUAUrgtDjDuCozp
+ IL+NeZTnhnl8FzotgB/3Ea+uk0mZKcv3Rcd8QKlPr9GcWrU4sV6dBI90AmM7mOa/CT3crkhY
+X-Authority-Analysis: v=2.4 cv=D6hHKuRj c=1 sm=1 tr=0 ts=68629175 b=1 cx=c_pps
+ a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
+ a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=12CMx0NIz8uwtlTLpWMA:9
+X-Proofpoint-ORIG-GUID: 33l6VizfbN-F3TTganpPn07u3t0H-ToV
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=alexandre.chartre@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 30 Jun 2025 10:34:53 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -124,97 +109,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 25 Jun 2025 08:57:27 +0200
-Markus Armbruster via Devel <devel@lists.libvirt.org> wrote:
+KVM emulates the ARCH_CAPABILITIES on x86 for both Intel and AMD
+cpus, although the IA32_ARCH_CAPABILITIES MSR is an Intel-specific
+MSR and it makes no sense to emulate it on AMD.
 
-> [...]
->
-> Back to the design question how to pass configuration via qemu-system to
-> the passt program with this new backend.
-> 
-> Your patch replicates passt command line options as optional members of
-> QAPI type NetDevPasstOptions.  Any passt options not covered are
-> inaccessible.
-> 
-> Or rather inaccessible via QMP / HMP / CLI.  You can still access them
-> by pointing @passt to a wrapper script.
-> 
-> This leads us to a possible alternative: make such a wrapper script the
-> *only* way to configure passt.  This is like NetdevTapOptions @script
-> and @downscript.  Mind, I'm not telling you it's a good idea, I'm merely
-> trying to map the solution space!
+As a consequence, VMs created on AMD with qemu -cpu host and using
+KVM will advertise the ARCH_CAPABILITIES feature and provide the
+IA32_ARCH_CAPABILITIES MSR. This can cause issues (like Windows BSOD)
+as the guest OS might not expect this MSR to exist on such cpus (the
+AMD documentation specifies that ARCH_CAPABILITIES feature and MSR
+are not defined on the AMD architecture).
 
-I'd prefer this idea to having explicit QEMU support (code) for each
-passt option, mostly because a. it's a lot of code and b. passt doesn't
-completely guarantee backwards compatibility, only to a reasonable
-extent (the general idea is to deprecate options first, then to make
-them disappear in a couple of years).
+A fix was proposed in KVM code, however KVM maintainers don't want to
+change this behavior that exists for 6+ years and suggest changes to be
+done in qemu instead.
 
-Still, I see three main issues with it:
+So this commit changes the behavior in qemu so that ARCH_CAPABILITIES
+is not provided by default on AMD cpus when the hypervisor emulates it,
+but it can still be provided by explicitly setting arch-capabilities=on.
 
-1. you would still need to distribute an example of a wrapper script,
-   and that will eventually get outdated as well
+Signed-off-by: Alexandre Chartre <alexandre.chartre@oracle.com>
+---
+ target/i386/cpu.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-2. it's complicated and somewhat surprising. You would probably need to
-   configure different wrapper scripts (or functions in scripts?)
-   depending on what guest you're running
-
-3. that would be the usual fun with LSMs. What SELinux label would the
-   script have? Should we define a separate AppArmor policy for it? Or
-   make it a subprofile...?
-
-> Instead of trying to make NetDevPasstOptions complete (so you need to
-> fall back to a wrapper script only when using a version of passt with
-> different options), we can limit it to a curated set of options.  We'd
-> need to decide which ones :)
-> 
-> You pointed out yet another alternative: pass through the passt command
-> line directly.  Two obvious ways: a single shell command string to be
-> passed to system(3), or an array of strings to be passed to execv(3).
-
-...so I'd much prefer this approach (it's actually an alternative I was
-suggesting to Laurent in some offline chats earlier). We did the same
-in Podman for pasta(1) (same binary as passt(1), different command, for
-containers):
-
-  https://github.com/containers/common/blob/2d2b7a488601a3557301420fce6acb58d0898b95/libnetwork/pasta/pasta_linux.go#L172
-
-where you would do, say:
-
-  podman --net=pasta:--pcap,/tmp/pasta.pcap,--no-dhcpv6,...
-
-This one looks simple, the documentation of options is always updated
-and maintained as part of passt's documentation, and there's no need to
-change anything in QEMU if we introduce new options or deprecate some.
-
-I would use an array of strings (same as it's done for Podman) rather
-than a flat argument for system(3), because:
-
-> system(3) is a terrible idea with untrusted input, but this is trusted
-> input.
-
-...even if it's trusted input, a single, long argument with quotes is
-more error-prone than separate arguments, I think.
-
-> Any other interface ideas?
-> 
-> Since the backend is for human user convenience: which of these ways
-> would be convenient for human users?
-
-As I'm familiar with passt(1) options, passing options through is the
-most convenient for me, personally.
-
-I often use passt without libvirt exactly because it's awkward to pass,
-say, debugging options (I have to use some horrible /usr/local/bin/passt
-wrapper script with a switch case inferring the name of the guest from
-the socket path given as argument, and sometimes it's unpractical):
-
-  https://issues.redhat.com/browse/RHEL-52281
-
-and it's especially awkward to help users debugging things this way, so
-it would be nice if QEMU could make it convenient, instead.
-
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 0d35e95430..7e136c48df 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -8324,6 +8324,20 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+         }
+     }
+ 
++    /*
++     * For years, KVM has inadvertently emulated the ARCH_CAPABILITIES
++     * MSR on AMD although this is an Intel-specific MSR; and KVM will
++     * continue doing so to not change its ABI for existing setups.
++     *
++     * So ensure that the ARCH_CAPABILITIES MSR is disabled on AMD cpus
++     * to prevent providing a cpu with an MSR which is not supposed to
++     * be there, unless it was explicitly requested by the user.
++     */
++    if (IS_AMD_CPU(env) &&
++        !(env->user_features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_CAPABILITIES)) {
++        env->features[FEAT_7_0_EDX] &= ~CPUID_7_0_EDX_ARCH_CAPABILITIES;
++    }
++
+     if (x86_threads_per_pkg(&env->topo_info) > 1) {
+         env->features[FEAT_1_EDX] |= CPUID_HT;
+ 
 -- 
-Stefano
+2.43.5
 
 
