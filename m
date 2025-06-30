@@ -4,82 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5417C83038
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 19:25:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D73E7C83038
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 19:33:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWK72-0002PK-GB; Mon, 30 Jun 2025 15:24:20 -0400
+	id 1uWKEa-0004xW-2m; Mon, 30 Jun 2025 15:32:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mindentropy@gmail.com>)
- id 1uWK6w-0002P1-VB
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 15:24:16 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mindentropy@gmail.com>)
- id 1uWK6r-0002Wv-Ar
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 15:24:13 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-711756ae8c9so49307987b3.3
- for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 12:24:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751311447; x=1751916247; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=087W3gVL7sk1pYvHtFT/YLIfaUJRYUtS8Vo2+U3u4Zk=;
- b=ZRN05kp2n4/0dXOXeR24/MZfyzWD1O0Wu7QzVtlu9uc+O5iUpVd5o7CkNUeiDyFp3D
- QQTnGCLu+Mhmm6LvUuSy0M8s7ieTYZz8r+a15kaK+sIU3mDlCasYMT+PZ6Sch5McJT9r
- drqa7Wvw2p2Cbnoj9ps5/hQ/5vA0iHhuZUsbrFKze7Y1Br4vg/CPK1tysgACSsPDAFIA
- abz9vuABhoFTsBfP1aIIS+NclOa9mwivCTQOy0wgpt2wvQ21oF9+WEImXyQdeE5QZEtO
- YVdD3v/2dh3IDNBlMH6wYojH6RVJJiaXe1rqJPgkAmsSY78TR6Ceesm4GYYMWWUZB6Yj
- k4yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751311447; x=1751916247;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=087W3gVL7sk1pYvHtFT/YLIfaUJRYUtS8Vo2+U3u4Zk=;
- b=PD4QzuzIlw+cjox48mOoQd1tLvog/1jqa3Du+vt50ZDxzVqZz3Z/mAloR6GQsGwwzV
- jYbh5VVvS88hrz3rgfYeQaW8PYG3iy3qLaY1bnGju2PqM1jUg05NJaN9Z/fM5KtY7V6h
- PbgCdrpA6S+GbGd7FzaBgYkYwYFRg14X3fULRVPGFBOVMMLolK0dEjQLqmd5YZHhh8S4
- sMeu2vL+tRDvfJsP50x/T4INqSkUQWJCbFDcLMJwq2rXRFIWYciGoBkuzrwNm9TgBnO/
- 820PEf/t2DbAb8RQTR8PPlvlQr6DtmYxAjpjy96aR3CVNSAn4aNmT8nIAnWNHkfDxXDa
- XioQ==
-X-Gm-Message-State: AOJu0Yz3YYKvaVNzObsekHh9/Bcm0thT9aDq/mVX4wCkqTTGPMG+TiDl
- WLfci5WYgcB742KjCb2J1sRKFhp6EJrv87FHfGX5ucgmadU+AtoswISfQ/8/+baKaercVkZgUeJ
- WpgxWanR9s58TPdbh8TcMEMVzR4eCiIw4LQ==
-X-Gm-Gg: ASbGncuj1bfjXak2PVDWbNV3WJ08Ln6IY6vSVdpsBVGcbxVxG1jn91waT1e5Ua3YCn+
- d72eLob7PwFbeuCEd8U1bACjPJKp5J8Mq6iT2QvtMtEVa+ZYgLq6goEEknISZH4bC3d5cHiLw3W
- WCrYTApFgmoo01r4yaHviYpfIL2cSKvZrzMk91mKTvc2nB3C7AXQ0iS8gAL7viyfypHkFQn7L3P
- SnH9g==
-X-Google-Smtp-Source: AGHT+IEKqv57DgyeX51cWLHfui6+Cbu+UIjHWjK8spdfA2JmnEYUdpqPnCe9icFE6KG7NSAPOcHNVPVv93TKoHOeEd0=
-X-Received: by 2002:a05:690c:368e:b0:711:406f:7735 with SMTP id
- 00721157ae682-71517160b01mr237354177b3.13.1751311447202; Mon, 30 Jun 2025
- 12:24:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1uWKEP-0004u9-AB; Mon, 30 Jun 2025 15:31:59 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1uWKEM-0003WX-JI; Mon, 30 Jun 2025 15:31:57 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55UHcJsB019490;
+ Mon, 30 Jun 2025 19:31:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=fBTPa0
+ eNDlJmgTyTXWjL88Pq5P/0yz4jmN2qU+VqpjM=; b=DA3lyhF13tJVA929+BDFcC
+ DZNKPVxyKV2hJKecp4vSnYJXIQllsSUpJunK6+GASUKHxRO+KSRQtaoTk2JriRLC
+ 6xRm+EWJXCaJ/YUeV3EduP8RSEF9laerxYTzlEkkbsLLs5TDPPpZqPZrtJf5amrM
+ UN4kTBEuNDzG0um5TH6KhFpp3UzGyLOIuG6OWs+/Zup3ZBuvSohFaSChaMB9aWLD
+ tnsOONGD4If7iFBG9RD05FY7RlWayF7dFBRw9Tn/Ytpo77qh1mvshIXurmFxaW9p
+ Htk83IJ2VwskI+32DVXrSZ9PN0pL2gAow9NfrYUUzGxRcrXzt02o1y/pKoCX0EHg
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47j7wrbcup-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 30 Jun 2025 19:31:43 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55UILuJ9021939;
+ Mon, 30 Jun 2025 19:31:42 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47juqpf96u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 30 Jun 2025 19:31:42 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 55UJVe4L62587218
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 30 Jun 2025 19:31:40 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 929C558051;
+ Mon, 30 Jun 2025 19:31:40 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B08E85805C;
+ Mon, 30 Jun 2025 19:31:39 +0000 (GMT)
+Received: from [9.61.110.65] (unknown [9.61.110.65])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 30 Jun 2025 19:31:39 +0000 (GMT)
+Message-ID: <25eb9d2e-b6d5-4af7-9087-dfeede1a879f@linux.ibm.com>
+Date: Mon, 30 Jun 2025 15:31:39 -0400
 MIME-Version: 1.0
-References: <CAM2a4uyBMNSdKNtJWWTgNivj6dpDFzJJepkfpU5RN-wir9vQEQ@mail.gmail.com>
- <81d022a7-fdf7-4a03-9a3b-cb2635c96cda@linaro.org>
-In-Reply-To: <81d022a7-fdf7-4a03-9a3b-cb2635c96cda@linaro.org>
-From: mindentropy <mindentropy@gmail.com>
-Date: Tue, 1 Jul 2025 00:53:55 +0530
-X-Gm-Features: Ac12FXykGAlm_vBKXHar9GQQx1R0NKvVaHPuUDy1xYal_Vujt6HN3fGG5hD2vqo
-Message-ID: <CAM2a4uxrzRKrQsnaNXwQO208V4WExg+MvweKfRwF+_RgXrFqxw@mail.gmail.com>
-Subject: Re: Options to output the preprocessor code
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=mindentropy@gmail.com; helo=mail-yw1-x112b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 01/28] Add boot-certificates to s390-ccw-virtio machine
+ type option
+To: Jared Rossi <jrossi@linux.ibm.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
+ pbonzini@redhat.com, walling@linux.ibm.com, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+References: <20250604215657.528142-1-zycai@linux.ibm.com>
+ <20250604215657.528142-2-zycai@linux.ibm.com> <aEL0bVhOFaCQbiBS@redhat.com>
+ <7451ec24-1e42-4fb7-8a6a-4b7fa7009452@linux.ibm.com>
+ <4cf2bc35-f735-43d6-9716-d449cfc43980@linux.ibm.com>
+Content-Language: en-US
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <4cf2bc35-f735-43d6-9716-d449cfc43980@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=E/PNpbdl c=1 sm=1 tr=0 ts=6862e61f cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=OvTz5OeRKy__VLHic7wA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: yWD2Sgyi2KkiDOq41Dn2OesLNX_HRgto
+X-Proofpoint-ORIG-GUID: yWD2Sgyi2KkiDOq41Dn2OesLNX_HRgto
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjMwMDE1NyBTYWx0ZWRfXzyG3lNMhJplu
+ 5yFJJ5VI+17MgLvA6GvBJL8SGHTJ1BplzKAVd9umbFdQiWE32u4idcr8q/QrFB3DIFBPiMLn4Jg
+ cUY6MyDkfo1EjuAatbIEWoLsjHibOUssFu/h1f8cJPRsvwLYml3EmfkNOVr37+ex9Iy4ZWzxSLE
+ rjyvK3TyE+MRMm4yc8tVpgw5k7BnogyONA+B0IuFHME4+PFQavfUIs33gN5EzKyvkBqQOJBEaBb
+ /j91XVuLQUfCFbLhmEJVc7WBoQWYPKOd1w6ThPbmChNkku3ZkiwdSmfDkzh1k4NU6xml9o+dZEk
+ 6WeRz17ECOL9CmeRXuB83iCU5vuJoqemQdgQRV1/kA6tk3ZEq97f4WE3nMKFIhcSTv2t3l1CXLL
+ hFwYMPxrKNMpIm/gVtBMy4gO5djwhico1Mu5AYF3sNlTrEjQx5pd9v1tJZdFhHKRLfBb13EX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-06-30_04,2025-06-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0
+ bulkscore=0 priorityscore=1501 phishscore=0 suspectscore=0 mlxlogscore=999
+ lowpriorityscore=0 mlxscore=0 clxscore=1015 adultscore=0 impostorscore=0
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506300157
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,16 +129,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 1, 2025 at 12:27=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
-> You can get verbose command for building by using make V=3D1, or ninja -v=
-,
-> depending which command you like to use.
->
-> Then, you can get a preprocessed output by using '-E' gcc option.
-> Don't forget to remove -o option, emitting the object file (or replace
-> path).
+On 6/24/25 11:03 AM, Jared Rossi wrote:
+> 
+> 
+> On 6/20/25 11:45 AM, Zhuoying Cai wrote:
+>> On 6/6/25 10:00 AM, Daniel P. Berrangé wrote:
+>>> On Wed, Jun 04, 2025 at 05:56:29PM -0400, Zhuoying Cai wrote:
+>>>> Add boot-certificates as a parameter of s390-ccw-virtio machine type option.
+>>>>
+>>>> The `boot-certificates=/path/dir:/path/file` parameter is implemented
+>>>> to provide path to either a directory or a single certificate.
+>>>>
+>>>> Multiple paths can be delineated using a colon.
+>>> How do users specify paths which contain a colon as a valid
+>>> character ?
+>>>
+>> It was suggested to separate lists of directories and files with a
+>> colon, following the convention used by the shell PATH variable. As the
+>> colon serves as a delimiter, it’s expected that individual paths do not
+>> contain any colon characters.
+> 
+> I'm not sure if I understand why this is needed.  Why would someone want 
+> to have the certificates in two distinct locations, as opposed to all in 
+> one directory or in sub-directories of a single main certificate 
+> directory? Supporting only one path would simplify both the 
+> implementation and the usage.  Could we just not allow multiple paths, 
+> or is there a use case that requires it?
+> 
 
-Is there a Make rule to just generate the preprocessor output?
+We chose to support lists of directories and files to provide greater
+flexibility in the CLI. One use case involves scenarios where some
+certificates are shipped with the distro (e.g., /usr/path/cert/dir),
+while additional certificates may be managed by the local admin in a
+separate location, such as /etc/path/cert/dir.
+
+If supporting multiple of directories and files is a concern, the design
+could be simplified to allow a single directory containing all the
+certificates required for secure boot, which should still cover typical
+usage scenarios.
+
+I'd appreciate any additional feedback on this design.
+
+>> [snip..]
+>>
+
 
