@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D34CC8302D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76081C83029
 	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 16:42:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWHaA-0002XI-66; Mon, 30 Jun 2025 12:42:14 -0400
+	id 1uWHaF-0002aU-AZ; Mon, 30 Jun 2025 12:42:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yodel.eldar@gmail.com>)
- id 1uWHZq-0002Pm-Hu
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 12:41:55 -0400
-Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
+ id 1uWHa0-0002S6-Gg
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 12:42:11 -0400
+Received: from mail-pl1-x643.google.com ([2607:f8b0:4864:20::643])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yodel.eldar@gmail.com>)
- id 1uWHZn-0008QH-O3
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 12:41:53 -0400
-Received: by mail-pl1-x641.google.com with SMTP id
- d9443c01a7336-22c33677183so38786325ad.2
- for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 09:41:49 -0700 (PDT)
+ id 1uWHZx-0008R4-P6
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 12:42:04 -0400
+Received: by mail-pl1-x643.google.com with SMTP id
+ d9443c01a7336-235f9ea8d08so40740525ad.1
+ for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 09:42:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751301708; x=1751906508; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1751301720; x=1751906520; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n8QqI6sUZ3+nL6u2zF4XdptHTXwj43cSqcR6sa9X3Jc=;
- b=eAJHEEra8Lt6G9rtSDoP7kmj+YaJOqYjQOpiowYN4xNYlVj5XPKB2o9DSxsgDYTdG9
- fEClwJ7Y2ksqPn2LRU4g8KDOSu/e+BYTpc1nnMXlLTFzzr+m/22Qj3gNKwgr3QUgVBnn
- 7R1qOjne6PQlD4QsAO6Jk/xDSP8lYz9Rf7xZ6yv7/a/6lrJO1CopwkgXGWnESioLX68n
- SYoPrgtmTY0De9jOC8m+LZb/jtNL2rWPtDVfSOPGJkQ/40lRX59zRKg/2PhBmyyeFnUI
- wDVULFPlzsCmqgrzD2zGNW+nTLVvmaplCLNNk5aUo+ocswcfrSkjLMUgbt3W3pp4Cb5z
- aS5g==
+ bh=Z0uO3LHm5oL2Yx8jbs1PkNoSZKDdb93SOzvoVU1OTs8=;
+ b=Tsz+SzSFeBPc5Jw6X+g3SznJC1M8OcMNBDq548SllTyytTRjzPOPdXourZ3Xebvxhz
+ GIYB42sq8KTbTjmK98sRDxcyKx2e1tSTQtGM/dfzSt4FHvtTNK1jYEp0QxM8Jx/ULYby
+ BxvYJAbnmF4WXPODHXLQFZ5BKShCu3vbny78TZUp/x4S6asjWEQYYVpS0sdCzPIxkbyd
+ entUwrJ8+TQqrjdKv09Dub7tKPPuAVfDGu2UP4Dbt0lZpgBFJmrf09evPcJlnNTc137l
+ JDQgNN5hJxBC8bRpbVGNFqecudOjbCdVHrUlIlnIQ3WskPWH2gVydqMIf9RhmMmm9kWw
+ iBsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751301708; x=1751906508;
+ d=1e100.net; s=20230601; t=1751301720; x=1751906520;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=n8QqI6sUZ3+nL6u2zF4XdptHTXwj43cSqcR6sa9X3Jc=;
- b=G98dKKTXqIGWXXbhtLHAVcrtOVQ10BxEgwBzSF0YOLq/FK8jla+1zU3NKkscEsJia+
- hWDy5ufCgP1cP95r9yPm6iBBgOU6aqc6u+Bu4nrQlex/tOQCmn0DyJ0+l2qE2bGhNYn/
- bhsFkD2YxIRBmiFatT3DaHq0ue2Swp+00pQy5QKRfofS3MiNU1wxVmmhIL0x+5AZzHWL
- XGl3TNlvz5qkZPI+Q+YyTJ4SqxlBpH1ixmB7FIANTRsMmyF6ro+kYvjlVRweG4e7rKfB
- XcEdjYGIbbTLLPN6MSM3IHozkcGMjVsRiDKUjYGmyoCyR27SQV4OdfkHPQ70Fg+HZ/Mg
- 6Sog==
-X-Gm-Message-State: AOJu0YxLorocImMkcYyqo6hTjp1kdGGnhLJR6OZgAnhQhdaRWbZq3TC9
- KlztrqmLifYXefewubO4faMAm4lqRWDQd7ZXdNM4qJCGUuRrIEED/zHiPd+D7OO4
-X-Gm-Gg: ASbGncscpmO/nht0reoAyjXdms3llyiAkgzU+KgvYJt8Wxh5n28uaHgvpVXVxaLdFgS
- LrbSfBhGAgkaWRIfeODSlxpo6i2drGQHOiZ9Y3KvzCVZiDfpd5whX51NoSzGvqYd7Tng9qITMod
- GyJyoJmMyFLHPQ0ylqq/0XXHAWv6xxSO0E6+PwyiPh1jR0+6xfxc/Ch0BGeWx+uCuXSQ9Ekjx8C
- eiqoiX6xjkkE0ePK87l6sy+vHM5MSrPZCARqKn2tH2Ku+JihroWLKreoOniM3cg0Deuwn7r7vLS
- 9xd2WJSSNM+JvBzNkC3aPOd3FKlLdIlt1V8UjiWKIgl/DcHD9VAjQKqUrQ==
-X-Google-Smtp-Source: AGHT+IEpPFqEcT/u2kkTUo4M0Lvw+br6S08miJoCTKJG0jWr1EYMqN6f87d3tXhWJWP7ZCV5ZpLG6A==
-X-Received: by 2002:a17:902:f545:b0:234:8ec1:4af1 with SMTP id
- d9443c01a7336-23ac19ab87cmr235079365ad.0.1751301708234; 
- Mon, 30 Jun 2025 09:41:48 -0700 (PDT)
+ bh=Z0uO3LHm5oL2Yx8jbs1PkNoSZKDdb93SOzvoVU1OTs8=;
+ b=fjckoKOQ48IYVcXhD1jGk22UOK+3rTCnGf41OTgifVcAbL6BwxvLdBhidCaE8Nvd4m
+ JDoOneMITl6MKmc+hfKj4Ky/onHpDcDzjR2K/xfg4H6sadrXXYen47hpaF6LauhT0mex
+ NHG42a9zzozy+d3/9LJiH00y+0T7YAU+gjTAnKujKC6Or/cpV1bcAg7yYKvtXffXN/IN
+ tmBljUes50D6PVoerwT6qfYtx3w/oKMSx9WZwfB5WJf/hb7AaZyslDk3LBWNFz4neQJw
+ VDtgLXC/GRkcRjYC7WygAwR5nQiFZQJSeCT/uxV0EpaZ2Nsd1zYfqxd1sUcUd1MWyps+
+ azbg==
+X-Gm-Message-State: AOJu0YxLSr7zEWHeiZooOfAr0DWbF0DH1QoLiz79E82yurEZ/qXXGjz/
+ n4sbe7WjUEJaKMts8LoXp1Vnm/R8R1zE1dSjGzL25VR7YOXMBiIQajvmPQSW4W9J
+X-Gm-Gg: ASbGncsqin8tjVjmWpJ7DTK4FtP9oYpKbFm5HRdMHaf936Sj6HDRbXyiNJa/3XENB4S
+ baFYphmy1VK56SYf84hJ1idAozUR9rgLLmwt79OGBjlYASxsYOIY+GAgs9lc+M69QSpdYfBz3Yj
+ okCSDERPzqub5z4UylXYfkmp4N2oX0kkQkBgQuzZVu2DqYTtNCSshFD3lm/ICTkmz/VFvZZ8fD1
+ Rm3koX+drvvVf5cDxmrPoQF6q5PDMcsT0RydYQGNlHb9L1303/Ezl3z20TyqYW21r8K5XN4hcSk
+ fDa2Qt26hVvIFW4Te6CjpoWDlHE+EjhyycKM78E8AHpFVguMQ41coAVZXA==
+X-Google-Smtp-Source: AGHT+IGa+pgIR0rVJ6geGkv61AnipUJgA4HzUNN1Msm/pgz6jIS7ABDpdEkhfEeLKA/rlKWMJNm5xw==
+X-Received: by 2002:a17:903:8c8:b0:234:d679:72e3 with SMTP id
+ d9443c01a7336-23ac468378dmr219883855ad.42.1751301720000; 
+ Mon, 30 Jun 2025 09:42:00 -0700 (PDT)
 Received: from darlin ([89.187.185.165]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23acb39b9fdsm90082595ad.108.2025.06.30.09.41.47
+ d9443c01a7336-23acb39b9fdsm90082595ad.108.2025.06.30.09.41.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Jun 2025 09:41:47 -0700 (PDT)
+ Mon, 30 Jun 2025 09:41:59 -0700 (PDT)
 From: Yodel Eldar <yodel.eldar@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, richard.henderson@linaro.org, laurent@vivier.eu,
  Yodel Eldar <yodel.eldar@gmail.com>
-Subject: [PATCH v2 1/2] contrib/plugins/execlog: Add tab to the separator
- search of insn_disas
-Date: Mon, 30 Jun 2025 11:41:23 -0500
-Message-ID: <20250630164124.26315-2-yodel.eldar@gmail.com>
+Subject: [PATCH v2 2/2] target/alpha: Add GDB XML feature file
+Date: Mon, 30 Jun 2025 11:41:24 -0500
+Message-ID: <20250630164124.26315-3-yodel.eldar@gmail.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250630164124.26315-1-yodel.eldar@gmail.com>
 References: <20250630164124.26315-1-yodel.eldar@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
- envelope-from=yodel.eldar@gmail.com; helo=mail-pl1-x641.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::643;
+ envelope-from=yodel.eldar@gmail.com; helo=mail-pl1-x643.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,54 +98,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, execlog searches for a space separator between the
-instruction mnemonic and operands, but some disassemblers, e.g. Alpha's,
-use a tab separator instead; this results in a null pointer being passed
-as the haystack in g_strstr during a subsequent register search, i.e.
-undefined behavior, because of a missing null check.
+This patch adds the GDB XML feature file that describes Alpha's core
+registers.
 
-This patch adds tab to the separator search and a null check on the
-result.
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2569
 
-Also, an affected pointer is changed to const.
-
-Lastly, a break statement was added to immediately terminate the
-register search when a user-requested register is found in the current
-instruction as a trivial optimization, because searching for the
-remaining requested registers is unnecessary once one is found.
-
-Suggested-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Yodel Eldar <yodel.eldar@gmail.com>
 ---
- contrib/plugins/execlog.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ configs/targets/alpha-linux-user.mak |   1 +
+ configs/targets/alpha-softmmu.mak    |   1 +
+ gdb-xml/alpha-core.xml               | 136 +++++++++++++++++++++++++++
+ target/alpha/cpu.c                   |   1 +
+ 4 files changed, 139 insertions(+)
+ create mode 100644 gdb-xml/alpha-core.xml
 
-diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
-index d67d010761..06ec76d6e9 100644
---- a/contrib/plugins/execlog.c
-+++ b/contrib/plugins/execlog.c
-@@ -232,12 +232,15 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-          */
-         if (disas_assist && rmatches) {
-             check_regs_next = false;
--            gchar *args = g_strstr_len(insn_disas, -1, " ");
--            for (int n = 0; n < all_reg_names->len; n++) {
--                gchar *reg = g_ptr_array_index(all_reg_names, n);
--                if (g_strrstr(args, reg)) {
--                    check_regs_next = true;
--                    skip = false;
-+            g_auto(GStrv) args = g_strsplit_set(insn_disas, " \t", 2);
-+            if (args && args[1]) {
-+                for (int n = 0; n < all_reg_names->len; n++) {
-+                    const gchar *reg = g_ptr_array_index(all_reg_names, n);
-+                    if (g_strrstr(args[1], reg)) {
-+                        check_regs_next = true;
-+                        skip = false;
-+                        break;
-+                    }
-                 }
-             }
-         }
+diff --git a/configs/targets/alpha-linux-user.mak b/configs/targets/alpha-linux-user.mak
+index ef8e365b09..aa25766236 100644
+--- a/configs/targets/alpha-linux-user.mak
++++ b/configs/targets/alpha-linux-user.mak
+@@ -2,3 +2,4 @@ TARGET_ARCH=alpha
+ TARGET_SYSTBL_ABI=common
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_LONG_BITS=64
++TARGET_XML_FILES= gdb-xml/alpha-core.xml
+diff --git a/configs/targets/alpha-softmmu.mak b/configs/targets/alpha-softmmu.mak
+index 5275076e50..e31f059a52 100644
+--- a/configs/targets/alpha-softmmu.mak
++++ b/configs/targets/alpha-softmmu.mak
+@@ -1,2 +1,3 @@
+ TARGET_ARCH=alpha
+ TARGET_LONG_BITS=64
++TARGET_XML_FILES= gdb-xml/alpha-core.xml
+diff --git a/gdb-xml/alpha-core.xml b/gdb-xml/alpha-core.xml
+new file mode 100644
+index 0000000000..c9e12f4ffd
+--- /dev/null
++++ b/gdb-xml/alpha-core.xml
+@@ -0,0 +1,136 @@
++<?xml version="1.0"?>
++<!-- Copyright (C) 2025 Free Software Foundation, Inc.
++
++     Copying and distribution of this file, with or without modification,
++     are permitted in any medium without royalty provided the copyright
++     notice and this notice are preserved.  -->
++
++<!DOCTYPE feature SYSTEM "gdb-target.dtd">
++<feature name="org.gnu.gdb.alpha.core">
++  <!-- IEEE rounding mode values -->
++  <enum id="dyn_rm_enum" size="8">
++    <!-- Chopped rounding mode -->
++    <evalue name="chop" value="0"/>
++    <!-- Minus infinity -->
++    <evalue name="-inf" value="1"/>
++    <!-- Normal rounding -->
++    <evalue name="norm" value="2"/>
++    <!-- Plus infinity -->
++    <evalue name="+inf" value="3"/>
++  </enum>
++
++  <!-- Floating-Point Control Register Flags -->
++  <flags id="fpcr_flags" size="8">
++    <!-- Denormal Operand Exception Disable -->
++    <field name="DNOD"   start="47" end="47"/>
++    <!-- Denormal Operands to Zero -->
++    <field name="DNZ"    start="48" end="48"/>
++    <!-- Invalid Operation Disable -->
++    <field name="INVD"   start="49" end="49"/>
++    <!-- Division by Zero Disable -->
++    <field name="DZED"   start="50" end="50"/>
++    <!-- Overflow Disable -->
++    <field name="OVFD"   start="51" end="51"/>
++    <!-- Invalid Operation -->
++    <field name="INV"    start="52" end="52"/>
++    <!-- Division by Zero -->
++    <field name="DZE"    start="53" end="53"/>
++    <!-- Overflow -->
++    <field name="OVF"    start="54" end="54"/>
++    <!-- Underflow -->
++    <field name="UNF"    start="55" end="55"/>
++    <!-- Inexact Result -->
++    <field name="INE"    start="56" end="56"/>
++    <!-- Integer Overflow -->
++    <field name="IOV"    start="57" end="57"/>
++    <!-- Dynamic Rounding Mode -->
++    <field name="DYN_RM" start="58" end="59" type="dyn_rm_enum"/>
++    <!-- Underflow to Zero -->
++    <field name="UNDZ"   start="60" end="60"/>
++    <!-- Underflow Disable -->
++    <field name="UNFD"   start="61" end="61"/>
++    <!-- Inexact Disable -->
++    <field name="INED"   start="62" end="62"/>
++    <!-- Summary Bit -->
++    <field name="SUM"    start="63" end="63"/>
++  </flags>
++
++  <!-- Integer Registers -->
++  <reg name="v0"   bitsize="64" type="int64"/>
++  <reg name="t0"   bitsize="64" type="int64"/>
++  <reg name="t1"   bitsize="64" type="int64"/>
++  <reg name="t2"   bitsize="64" type="int64"/>
++  <reg name="t3"   bitsize="64" type="int64"/>
++  <reg name="t4"   bitsize="64" type="int64"/>
++  <reg name="t5"   bitsize="64" type="int64"/>
++  <reg name="t6"   bitsize="64" type="int64"/>
++  <reg name="t7"   bitsize="64" type="int64"/>
++  <reg name="s0"   bitsize="64" type="int64"/>
++  <reg name="s1"   bitsize="64" type="int64"/>
++  <reg name="s2"   bitsize="64" type="int64"/>
++  <reg name="s3"   bitsize="64" type="int64"/>
++  <reg name="s4"   bitsize="64" type="int64"/>
++  <reg name="s5"   bitsize="64" type="int64"/>
++  <reg name="fp"   bitsize="64" type="int64"/>
++  <reg name="a0"   bitsize="64" type="int64"/>
++  <reg name="a1"   bitsize="64" type="int64"/>
++  <reg name="a2"   bitsize="64" type="int64"/>
++  <reg name="a3"   bitsize="64" type="int64"/>
++  <reg name="a4"   bitsize="64" type="int64"/>
++  <reg name="a5"   bitsize="64" type="int64"/>
++  <reg name="t8"   bitsize="64" type="int64"/>
++  <reg name="t9"   bitsize="64" type="int64"/>
++  <reg name="t10"  bitsize="64" type="int64"/>
++  <reg name="t11"  bitsize="64" type="int64"/>
++  <reg name="ra"   bitsize="64" type="int64"/>
++  <reg name="t12"  bitsize="64" type="int64"/>
++  <reg name="at"   bitsize="64" type="int64"/>
++  <reg name="gp"   bitsize="64" type="data_ptr"/>
++  <reg name="sp"   bitsize="64" type="data_ptr"/>
++  <reg name="zero" bitsize="64" type="int64" save-restore="no"/>
++
++  <!-- Floating-Point Registers -->
++  <reg name="f0"  bitsize="64" type="float" group="float"/>
++  <reg name="f1"  bitsize="64" type="float" group="float"/>
++  <reg name="f2"  bitsize="64" type="float" group="float"/>
++  <reg name="f3"  bitsize="64" type="float" group="float"/>
++  <reg name="f4"  bitsize="64" type="float" group="float"/>
++  <reg name="f5"  bitsize="64" type="float" group="float"/>
++  <reg name="f6"  bitsize="64" type="float" group="float"/>
++  <reg name="f7"  bitsize="64" type="float" group="float"/>
++  <reg name="f8"  bitsize="64" type="float" group="float"/>
++  <reg name="f9"  bitsize="64" type="float" group="float"/>
++  <reg name="f10" bitsize="64" type="float" group="float"/>
++  <reg name="f11" bitsize="64" type="float" group="float"/>
++  <reg name="f12" bitsize="64" type="float" group="float"/>
++  <reg name="f13" bitsize="64" type="float" group="float"/>
++  <reg name="f14" bitsize="64" type="float" group="float"/>
++  <reg name="f15" bitsize="64" type="float" group="float"/>
++  <reg name="f16" bitsize="64" type="float" group="float"/>
++  <reg name="f17" bitsize="64" type="float" group="float"/>
++  <reg name="f18" bitsize="64" type="float" group="float"/>
++  <reg name="f19" bitsize="64" type="float" group="float"/>
++  <reg name="f20" bitsize="64" type="float" group="float"/>
++  <reg name="f21" bitsize="64" type="float" group="float"/>
++  <reg name="f22" bitsize="64" type="float" group="float"/>
++  <reg name="f23" bitsize="64" type="float" group="float"/>
++  <reg name="f24" bitsize="64" type="float" group="float"/>
++  <reg name="f25" bitsize="64" type="float" group="float"/>
++  <reg name="f26" bitsize="64" type="float" group="float"/>
++  <reg name="f27" bitsize="64" type="float" group="float"/>
++  <reg name="f28" bitsize="64" type="float" group="float"/>
++  <reg name="f29" bitsize="64" type="float" group="float"/>
++  <reg name="f30" bitsize="64" type="float" group="float"/>
++
++  <!-- Floating-Point Control Register -->
++  <reg name="fpcr" bitsize="64" type="fpcr_flags" group="float"/>
++
++  <!-- Program Counter -->
++  <reg name="pc" bitsize="64" type="code_ptr"/>
++
++  <!-- Reserved Index for Former Virtual Register -->
++  <reg name="" bitsize="64" type="int64" save-restore="no"/>
++
++  <!-- PALcode Memory Slot -->
++  <reg name="unique" bitsize="64" type="int64" group="system"/>
++</feature>
+diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
+index 2082db45ea..bf1787a69d 100644
+--- a/target/alpha/cpu.c
++++ b/target/alpha/cpu.c
+@@ -286,6 +286,7 @@ static void alpha_cpu_class_init(ObjectClass *oc, const void *data)
+     cc->get_pc = alpha_cpu_get_pc;
+     cc->gdb_read_register = alpha_cpu_gdb_read_register;
+     cc->gdb_write_register = alpha_cpu_gdb_write_register;
++    cc->gdb_core_xml_file = "alpha-core.xml";
+ #ifndef CONFIG_USER_ONLY
+     dc->vmsd = &vmstate_alpha_cpu;
+     cc->sysemu_ops = &alpha_sysemu_ops;
 -- 
 2.50.0
 
