@@ -4,56 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D4BBC8302D
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 08:14:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82E6EC83000
+	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 08:14:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uW9e9-0003vE-Fm; Mon, 30 Jun 2025 04:13:49 -0400
+	id 1uW9eF-00042Y-9L; Mon, 30 Jun 2025 04:13:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uW9e6-0003v2-Sx
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 04:13:46 -0400
+ id 1uW9eC-00040i-Hm
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 04:13:52 -0400
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uW9e1-0008FC-DZ
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 04:13:46 -0400
+ id 1uW9eA-0008Fh-FG
+ for qemu-devel@nongnu.org; Mon, 30 Jun 2025 04:13:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751271221; x=1782807221;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=kNtZV9/4wlO7pqV3WzMD6Mjh7KpcJBsVr0n4r4zy9PY=;
- b=P4oMrrGKMvRd7fw2CHj4uCHN/ovCUcOgmekS77dzdAWjFGAEvaKgAUL/
- B8RDd1SW6P9Vw3cPGwvORB08s75mGXUfZq8hzbZb1nVcGiDMJYf+BJLu+
- H1OiHtw5UErUsEc4gp1vwnSFcv9U2Z93ttM2hKeR9nj9a4of63MtDyS+v
- Lp1Rpynj/h+C7NpWpP4zlZ0yqwsTEnDXGNVh7gcF2GuJ+mCLX2+Rb77Ck
- EuX8dTi0LnJoXKVEsf0Tt7iSdM5CCYvTF8OH33PhWJSkS7o6zRctHlXCU
- n8sXGIq8g9gKcNkFql3Z6xQHjo0lkb/TBJepGpkgtzj4qLdpdMonKnNWj g==;
-X-CSE-ConnectionGUID: lvheu0rXRIq4F+LwqZjv+A==
-X-CSE-MsgGUID: xUgEzGeTTN+P42l8/nPTGQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11479"; a="53637391"
-X-IronPort-AV: E=Sophos;i="6.16,277,1744095600"; d="scan'208";a="53637391"
+ t=1751271230; x=1782807230;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=wbnYOcHpb08DaNDk4xqwBS52v0jf+Fk+vZfKyddt4bk=;
+ b=jMcgLZE5hLx3jKteij4dhAxaOhqHmyRPd0QjcLHEBKjFjJhuktBO3WuG
+ z/CRSYg0XnzmeDvdjXazKukS/nltDboSjdJ8WG91vBoBpxhg/1Yy8PHHo
+ WKHbkihIqgMD2TCmsfgssAewKMHX6bWrKam8xkpeGm2VnVq6YbvOFUNrf
+ MIDcKQ/37QlSYwhbElXKWHEeTm35Fc5GsCycbi32ioGBUCSWVPLllFZQQ
+ pX/BJ+XNRdXMt9VsZcxV3mJNNAGQjxPAEMG/HG5HZmc4uG2GY+jMQj12h
+ gC0WTwP54+12KRMlTjsROdMdW8h9+gYn+WaOmwOM5+yD14yobNlkGh89w A==;
+X-CSE-ConnectionGUID: kzNr7SKRT1iL6ykjtFX4dw==
+X-CSE-MsgGUID: dvPhy3c7SFiE0DPXUeL7WA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11479"; a="53637410"
+X-IronPort-AV: E=Sophos;i="6.16,277,1744095600"; d="scan'208";a="53637410"
 Received: from orviesa010.jf.intel.com ([10.64.159.150])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Jun 2025 01:13:36 -0700
-X-CSE-ConnectionGUID: 0OplDfk6RQW8QVB8mJbI7Q==
-X-CSE-MsgGUID: DIw/qoHeTg63ZwxRSpxmgQ==
+ 30 Jun 2025 01:13:43 -0700
+X-CSE-ConnectionGUID: MNl0pe2VTpy75SF2gQiotg==
+X-CSE-MsgGUID: NZNABDqURWixCRQd3azYkw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,277,1744095600"; d="scan'208";a="152777280"
+X-IronPort-AV: E=Sophos;i="6.16,277,1744095600"; d="scan'208";a="152777301"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa010.jf.intel.com with ESMTP; 30 Jun 2025 01:13:34 -0700
+ by orviesa010.jf.intel.com with ESMTP; 30 Jun 2025 01:13:41 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
  xiaoyao.li@intel.com
-Subject: [PATCH 0/4] i386: Misc cleanup and fix  
-Date: Mon, 30 Jun 2025 16:06:06 +0800
-Message-ID: <20250630080610.3151956-1-xiaoyao.li@intel.com>
+Subject: [PATCH 4/4] i386/cpu: Unify family,
+ model and stepping calculation for x86 CPU
+Date: Mon, 30 Jun 2025 16:06:10 +0800
+Message-ID: <20250630080610.3151956-5-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250630080610.3151956-1-xiaoyao.li@intel.com>
+References: <20250630080610.3151956-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.15; envelope-from=xiaoyao.li@intel.com;
@@ -81,26 +84,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a misc sereis.
+There are multiple places where CPUID family/model/stepping info
+are retrieved from env->cpuid_version.
 
-The first 3 patches are cleanup and they are simple.
+Besides, the calculation of family and model inside host_cpu_vendor_fms()
+doesn't comply to what Intel and AMD define. For family, both Intel
+and AMD define that Extended Family ID needs to be counted only when
+(base) Family is 0xF. For model, Intel counts Extended Model when
+(base) Family is 0x6 or 0xF, while AMD counts EXtended MOdel when
+(base) Family is 0xF.
 
-The last one is cleanup as well as a fix.
+Introduce generic helper functions to get family, model and stepping
+from the EAX value of CPUID leaf 1, with the correct calculation
+formula.
 
-Xiaoyao Li (4):
-  i386/cpu: Use CPUID_MODEL_ID_SZ instead of hardcoded 48
-  i386: Cleanup the usage of CPUID_VENDOR_INTEL_1
-  i386/kvm-cpu: Fix the indentation inside kvm_cpu_realizefn()
-  i386/cpu: Unify family, model and stepping calculation for x86 CPU
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+---
+Note, for the calculation of model, it uses the same algorithm as Linux
+kernel that counts Extended model when (base) Family is >= 6. To me, this
+has the assumption that AMD always has a (base) Family of 0xF and Intel
+doens't have processor with (base) Family between (0x6, 0xF).
 
- target/i386/cpu.c                | 22 +++++++++------------
- target/i386/cpu.h                | 33 +++++++++++++++++++++++++++++++-
- target/i386/host-cpu.c           |  7 +++----
- target/i386/kvm/kvm-cpu.c        |  2 +-
- target/i386/kvm/kvm.c            |  2 +-
- target/i386/tcg/decode-new.c.inc |  4 ++--
- 6 files changed, 48 insertions(+), 22 deletions(-)
+I'm not sure about the rule on Zhaoxin and Hygon so that not sure if the
+contidition of base Family >= 6 works for them or not.
 
+For Zhaoxin, there is "YongFeng" defined in QEMU, which has Family 7 and
+model 11. The model 11 doesn't require the Extended model field. So
+I'm not sure the rule on Zhaoxin.
+
+For Hygon, there is "Dhyana" defined in QEMU, which has Family 24 and
+model 0. The model 0 doens't requrie the Extended model field as well.
+---
+ target/i386/cpu.c      | 12 ++++--------
+ target/i386/cpu.h      | 30 ++++++++++++++++++++++++++++++
+ target/i386/host-cpu.c |  6 +++---
+ target/i386/kvm/kvm.c  |  2 +-
+ 4 files changed, 38 insertions(+), 12 deletions(-)
+
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 83858358f5ec..51fcc8ba9867 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6324,10 +6324,7 @@ static void x86_cpuid_version_get_family(Object *obj, Visitor *v,
+     CPUX86State *env = &cpu->env;
+     uint64_t value;
+ 
+-    value = (env->cpuid_version >> 8) & 0xf;
+-    if (value == 0xf) {
+-        value += (env->cpuid_version >> 20) & 0xff;
+-    }
++    value = x86_cpu_family(env->cpuid_version);
+     visit_type_uint64(v, name, &value, errp);
+ }
+ 
+@@ -6365,8 +6362,7 @@ static void x86_cpuid_version_get_model(Object *obj, Visitor *v,
+     CPUX86State *env = &cpu->env;
+     uint64_t value;
+ 
+-    value = (env->cpuid_version >> 4) & 0xf;
+-    value |= ((env->cpuid_version >> 16) & 0xf) << 4;
++    value = x86_cpu_model(env->cpuid_version);
+     visit_type_uint64(v, name, &value, errp);
+ }
+ 
+@@ -6400,7 +6396,7 @@ static void x86_cpuid_version_get_stepping(Object *obj, Visitor *v,
+     CPUX86State *env = &cpu->env;
+     uint64_t value;
+ 
+-    value = env->cpuid_version & 0xf;
++    value = x86_cpu_stepping(env->cpuid_version);
+     visit_type_uint64(v, name, &value, errp);
+ }
+ 
+@@ -8154,7 +8150,7 @@ static void mce_init(X86CPU *cpu)
+     CPUX86State *cenv = &cpu->env;
+     unsigned int bank;
+ 
+-    if (((cenv->cpuid_version >> 8) & 0xf) >= 6
++    if (x86_cpu_family(cenv->cpuid_version) >= 6
+         && (cenv->features[FEAT_1_EDX] & (CPUID_MCE | CPUID_MCA)) ==
+             (CPUID_MCE | CPUID_MCA)) {
+         cenv->mcg_cap = MCE_CAP_DEF | MCE_BANKS_DEF |
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index b83c521d9fbb..b589a00c80d7 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2671,6 +2671,36 @@ static inline int32_t x86_get_a20_mask(CPUX86State *env)
+     }
+ }
+ 
++static inline uint32_t x86_cpu_family(uint32_t eax)
++{
++    uint32_t family = (eax >> 8) & 0xf;
++
++    if (family == 0xf) {
++        family += (eax >> 20) & 0xff;
++    }
++
++    return family;
++}
++
++static inline uint32_t x86_cpu_model(uint32_t eax)
++{
++    uint32_t family, model;
++
++    family = x86_cpu_family(eax);
++    model = (eax >> 4) & 0xf;
++
++    if (family >= 0x6) {
++        model += ((eax >> 16) & 0xf) << 4;
++    }
++
++    return model;
++}
++
++static inline uint32_t x86_cpu_stepping(uint32_t eax)
++{
++    return eax & 0xf;
++}
++
+ static inline bool cpu_has_vmx(CPUX86State *env)
+ {
+     return env->features[FEAT_1_ECX] & CPUID_EXT_VMX;
+diff --git a/target/i386/host-cpu.c b/target/i386/host-cpu.c
+index 16c236478e2b..383c42d4ae3d 100644
+--- a/target/i386/host-cpu.c
++++ b/target/i386/host-cpu.c
+@@ -117,13 +117,13 @@ void host_cpu_vendor_fms(char *vendor, int *family, int *model, int *stepping)
+ 
+     host_cpuid(0x1, 0, &eax, &ebx, &ecx, &edx);
+     if (family) {
+-        *family = ((eax >> 8) & 0x0F) + ((eax >> 20) & 0xFF);
++        *family = x86_cpu_family(eax);
+     }
+     if (model) {
+-        *model = ((eax >> 4) & 0x0F) | ((eax & 0xF0000) >> 12);
++        *model = x86_cpu_model(eax);
+     }
+     if (stepping) {
+-        *stepping = eax & 0x0F;
++        *stepping = x86_cpu_stepping(eax);
+     }
+ }
+ 
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 234878c613f6..650d96210192 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2259,7 +2259,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     cpuid_i = kvm_x86_build_cpuid(env, cpuid_data.entries, cpuid_i);
+     cpuid_data.cpuid.nent = cpuid_i;
+ 
+-    if (((env->cpuid_version >> 8)&0xF) >= 6
++    if (x86_cpu_family(env->cpuid_version) >= 6
+         && (env->features[FEAT_1_EDX] & (CPUID_MCE | CPUID_MCA)) ==
+            (CPUID_MCE | CPUID_MCA)) {
+         uint64_t mcg_cap, unsupported_caps;
 -- 
 2.43.0
 
