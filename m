@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7B5BC83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:33:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65107C83038
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:33:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWeoO-0005B8-3i; Tue, 01 Jul 2025 13:30:28 -0400
+	id 1uWeoy-0006Q6-F5; Tue, 01 Jul 2025 13:31:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uWeo7-0004ae-OR
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:30:15 -0400
+ id 1uWeob-00069F-G8
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:30:43 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uWeo1-00074k-Jx
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:30:11 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uWeoV-0007Gq-1X
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:30:41 -0400
 Received: from localhost.localdomain (unknown [167.220.208.67])
- by linux.microsoft.com (Postfix) with ESMTPSA id 5ED352112239;
- Tue,  1 Jul 2025 10:29:59 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 5ED352112239
+ by linux.microsoft.com (Postfix) with ESMTPSA id 69590211938F;
+ Tue,  1 Jul 2025 10:30:19 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 69590211938F
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1751391002;
- bh=g4T8hjfmlC+E5NLakuoBJUixqAkV+uy2hfu/eDEiWoU=;
+ s=default; t=1751391023;
+ bh=IcalwT8+xtmV9BIr8XPQRT0cWxIIe+Fs8gXDtFxzNdo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=P1uXv4oNsmV7+ALwoLQn4gekK2KOKzQWQWZ3KRA2hsq+mkzEhyuiKj1jyF4/gjUU+
- 9ogS7xCmcjXLl0sgKjkU/0EP33TYW5WQ35Z24PB0BBxlKpzcBuSM16KZgqGW0uFqqX
- c64t5+79pcqzqs4xbEYuE4Gd/GFmj4zKJt2Qthls=
+ b=bLnDudvdzHAd4amKVX1eRRBu3yY4SAcdQ+Rkz35MY0IoA9pnMsawoceWvktkUvL+m
+ UGB+T6NBmsH71I1zxM2v0mkycTSIPr0yziVoqQUNPNSWbeTn/kHPDH96kDx9SvDJww
+ ldOzIP1kzUR3dUy4g6B+whbgQl6jBmFt1ZXVzhO4=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Cameron Esfahani <dirty@apple.com>,
@@ -45,9 +45,9 @@ Cc: Cameron Esfahani <dirty@apple.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 15/27] target/i386/mshv: Implement mshv_store_regs()
-Date: Tue,  1 Jul 2025 19:28:22 +0200
-Message-Id: <20250701172834.44849-16-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v2 20/27] target/i386/mshv: Register CPUID entries with MSHV
+Date: Tue,  1 Jul 2025 19:28:27 +0200
+Message-Id: <20250701172834.44849-21-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250701172834.44849-1-magnuskulke@linux.microsoft.com>
 References: <20250701172834.44849-1-magnuskulke@linux.microsoft.com>
@@ -77,128 +77,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for writing general-purpose registers to MSHV vCPUs
-during initialization or migration using the MSHV register interface. A
-generic set_register call is introduced to abstract the HV call over
-the various register types.
+Convert the guest CPU's CPUID model into MSHV's format and register it
+with the hypervisor. This ensures that the guest observes the correct
+CPU feature set during CPUID instructions.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- include/system/mshv.h       |  1 +
- target/i386/mshv/mshv-cpu.c | 84 ++++++++++++++++++++++++++++++++++++-
- 2 files changed, 83 insertions(+), 2 deletions(-)
+ target/i386/mshv/mshv-cpu.c | 199 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 199 insertions(+)
 
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 0ff19d4eb5..adce4153d9 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -91,6 +91,7 @@ void mshv_remove_vcpu(int vm_fd, int cpu_fd);
- int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit);
- int mshv_load_regs(CPUState *cpu);
- int mshv_store_regs(CPUState *cpu);
-+int mshv_set_generic_regs(int cpu_fd, hv_register_assoc *assocs, size_t n_regs);
- int mshv_arch_put_registers(const CPUState *cpu);
- void mshv_arch_init_vcpu(CPUState *cpu);
- void mshv_arch_destroy_vcpu(CPUState *cpu);
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 7a6965d7fb..4bd4e29b72 100644
+index 8716fe350b..210bd85e11 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -30,12 +30,92 @@
+@@ -323,6 +323,199 @@ int mshv_load_regs(CPUState *cpu)
+     return 0;
+ }
  
- #include <sys/ioctl.h>
- 
-+static enum hv_register_name STANDARD_REGISTER_NAMES[18] = {
-+    HV_X64_REGISTER_RAX,
-+    HV_X64_REGISTER_RBX,
-+    HV_X64_REGISTER_RCX,
-+    HV_X64_REGISTER_RDX,
-+    HV_X64_REGISTER_RSI,
-+    HV_X64_REGISTER_RDI,
-+    HV_X64_REGISTER_RSP,
-+    HV_X64_REGISTER_RBP,
-+    HV_X64_REGISTER_R8,
-+    HV_X64_REGISTER_R9,
-+    HV_X64_REGISTER_R10,
-+    HV_X64_REGISTER_R11,
-+    HV_X64_REGISTER_R12,
-+    HV_X64_REGISTER_R13,
-+    HV_X64_REGISTER_R14,
-+    HV_X64_REGISTER_R15,
-+    HV_X64_REGISTER_RIP,
-+    HV_X64_REGISTER_RFLAGS,
-+};
-+
-+int mshv_set_generic_regs(int cpu_fd, hv_register_assoc *assocs, size_t n_regs)
++static void add_cpuid_entry(GList *cpuid_entries,
++                            uint32_t function, uint32_t index,
++                            uint32_t eax, uint32_t ebx,
++                            uint32_t ecx, uint32_t edx)
 +{
-+    struct mshv_vp_registers input = {
-+        .count = n_regs,
-+        .regs = assocs,
++    struct hv_cpuid_entry *entry;
++
++    entry = g_malloc0(sizeof(struct hv_cpuid_entry));
++    entry->function = function;
++    entry->index = index;
++    entry->eax = eax;
++    entry->ebx = ebx;
++    entry->ecx = ecx;
++    entry->edx = edx;
++
++    cpuid_entries = g_list_append(cpuid_entries, entry);
++}
++
++static void collect_cpuid_entries(const CPUState *cpu, GList *cpuid_entries)
++{
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    uint32_t eax, ebx, ecx, edx;
++    uint32_t leaf, subleaf;
++    size_t max_leaf = 0x1F;
++    size_t max_subleaf = 0x20;
++
++    uint32_t leaves_with_subleaves[] = {0x4, 0x7, 0xD, 0xF, 0x10};
++    int n_subleaf_leaves = ARRAY_SIZE(leaves_with_subleaves);
++
++    /* Regular leaves without subleaves */
++    for (leaf = 0; leaf <= max_leaf; leaf++) {
++        bool has_subleaves = false;
++        for (int i = 0; i < n_subleaf_leaves; i++) {
++            if (leaf == leaves_with_subleaves[i]) {
++                has_subleaves = true;
++                break;
++            }
++        }
++
++        if (!has_subleaves) {
++            cpu_x86_cpuid(env, leaf, 0, &eax, &ebx, &ecx, &edx);
++            if (eax == 0 && ebx == 0 && ecx == 0 && edx == 0) {
++                /* all zeroes indicates no more leaves */
++                continue;
++            }
++
++            add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
++            continue;
++        }
++
++        subleaf = 0;
++        while (subleaf < max_subleaf) {
++            cpu_x86_cpuid(env, leaf, subleaf, &eax, &ebx, &ecx, &edx);
++
++            if (eax == 0 && ebx == 0 && ecx == 0 && edx == 0) {
++                /* all zeroes indicates no more leaves */
++                break;
++            }
++            add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
++            subleaf++;
++        }
++    }
++}
++
++static int register_intercept_result_cpuid_entry(int cpu_fd,
++                                                 uint8_t subleaf_specific,
++                                                 uint8_t always_override,
++                                                 struct hv_cpuid_entry *entry)
++{
++    struct hv_register_x64_cpuid_result_parameters cpuid_params = {
++        .input.eax = entry->function,
++        .input.ecx = entry->index,
++        .input.subleaf_specific = subleaf_specific,
++        .input.always_override = always_override,
++        .input.padding = 0,
++        /*
++         * With regard to masks - these are to specify bits to be overwritten
++         * The current CpuidEntry structure wouldn't allow to carry the masks
++         * in addition to the actual register values. For this reason, the
++         * masks are set to the exact values of the corresponding register bits
++         * to be registered for an overwrite. To view resulting values the
++         * hypervisor would return, HvCallGetVpCpuidValues hypercall can be
++         * used.
++         */
++        .result.eax = entry->eax,
++        .result.eax_mask = entry->eax,
++        .result.ebx = entry->ebx,
++        .result.ebx_mask = entry->ebx,
++        .result.ecx = entry->ecx,
++        .result.ecx_mask = entry->ecx,
++        .result.edx = entry->edx,
++        .result.edx_mask = entry->edx,
 +    };
-+
-+    return ioctl(cpu_fd, MSHV_SET_VP_REGISTERS, &input);
-+}
-+
-+static int set_standard_regs(const CPUState *cpu)
-+{
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86cpu->env;
-+    hv_register_assoc assocs[ARRAY_SIZE(STANDARD_REGISTER_NAMES)];
-+    int ret;
-+    int cpu_fd = mshv_vcpufd(cpu);
-+    size_t n_regs = ARRAY_SIZE(STANDARD_REGISTER_NAMES);
-+
-+    /* set names */
-+    for (size_t i = 0; i < ARRAY_SIZE(STANDARD_REGISTER_NAMES); i++) {
-+        assocs[i].name = STANDARD_REGISTER_NAMES[i];
-+    }
-+    assocs[0].value.reg64 = env->regs[R_EAX];
-+    assocs[1].value.reg64 = env->regs[R_EBX];
-+    assocs[2].value.reg64 = env->regs[R_ECX];
-+    assocs[3].value.reg64 = env->regs[R_EDX];
-+    assocs[4].value.reg64 = env->regs[R_ESI];
-+    assocs[5].value.reg64 = env->regs[R_EDI];
-+    assocs[6].value.reg64 = env->regs[R_ESP];
-+    assocs[7].value.reg64 = env->regs[R_EBP];
-+    assocs[8].value.reg64 = env->regs[R_R8];
-+    assocs[9].value.reg64 = env->regs[R_R9];
-+    assocs[10].value.reg64 = env->regs[R_R10];
-+    assocs[11].value.reg64 = env->regs[R_R11];
-+    assocs[12].value.reg64 = env->regs[R_R12];
-+    assocs[13].value.reg64 = env->regs[R_R13];
-+    assocs[14].value.reg64 = env->regs[R_R14];
-+    assocs[15].value.reg64 = env->regs[R_R15];
-+    assocs[16].value.reg64 = env->eip;
-+    lflags_to_rflags(env);
-+    assocs[17].value.reg64 = env->eflags;
-+
-+    ret = mshv_set_generic_regs(cpu_fd, assocs, n_regs);
-+    if (ret < 0) {
-+        error_report("failed to set standard registers");
-+        return -errno;
-+    }
-+    return 0;
-+}
-+
- int mshv_store_regs(CPUState *cpu)
- {
--    error_report("unimplemented");
--    abort();
++    union hv_register_intercept_result_parameters parameters = {
++        .cpuid = cpuid_params,
++    };
++    struct mshv_register_intercept_result args = {
++        .intercept_type = HV_INTERCEPT_TYPE_X64_CPUID,
++        .parameters = parameters,
++    };
 +    int ret;
 +
-+    ret = set_standard_regs(cpu);
++    ret = ioctl(cpu_fd, MSHV_VP_REGISTER_INTERCEPT_RESULT, &args);
 +    if (ret < 0) {
-+        error_report("Failed to store standard registers");
++        error_report("failed to register intercept result for cpuid: %s",
++                     strerror(errno));
 +        return -1;
 +    }
 +
 +    return 0;
- }
- 
++}
 +
- int mshv_load_regs(CPUState *cpu)
++static int register_intercept_result_cpuid(int cpu_fd, struct hv_cpuid *cpuid)
++{
++    int ret = 0, entry_ret;
++    struct hv_cpuid_entry *entry;
++    uint8_t subleaf_specific, always_override;
++
++    for (size_t i = 0; i < cpuid->nent; i++) {
++        entry = &cpuid->entries[i];
++
++        /* set defaults */
++        subleaf_specific = 0;
++        always_override = 1;
++
++        /* Intel */
++        /* 0xb - Extended Topology Enumeration Leaf */
++        /* 0x1f - V2 Extended Topology Enumeration Leaf */
++        /* AMD */
++        /* 0x8000_001e - Processor Topology Information */
++        /* 0x8000_0026 - Extended CPU Topology */
++        if (entry->function == 0xb
++            || entry->function == 0x1f
++            || entry->function == 0x8000001e
++            || entry->function == 0x80000026) {
++            subleaf_specific = 1;
++            always_override = 1;
++        } else if (entry->function == 0x00000001
++            || entry->function == 0x80000000
++            || entry->function == 0x80000001
++            || entry->function == 0x80000008) {
++            subleaf_specific = 0;
++            always_override = 1;
++        }
++
++        entry_ret = register_intercept_result_cpuid_entry(cpu_fd,
++                                                          subleaf_specific,
++                                                          always_override,
++                                                          entry);
++        if ((entry_ret < 0) && (ret == 0)) {
++            ret = entry_ret;
++        }
++    }
++
++    return ret;
++}
++
++static int set_cpuid2(const CPUState *cpu)
++{
++    int ret;
++    size_t n_entries, cpuid_size;
++    struct hv_cpuid *cpuid;
++    struct hv_cpuid_entry *entry;
++    GList *entries = NULL;
++    int cpu_fd = mshv_vcpufd(cpu);
++
++    collect_cpuid_entries(cpu, entries);
++    n_entries = g_list_length(entries);
++
++    cpuid_size = sizeof(struct hv_cpuid)
++        + n_entries * sizeof(struct hv_cpuid_entry);
++
++    cpuid = g_malloc0(cpuid_size);
++    cpuid->nent = n_entries;
++    cpuid->padding = 0;
++
++    for (size_t i = 0; i < n_entries; i++) {
++        entry = g_list_nth_data(entries, i);
++        cpuid->entries[i] = *entry;
++        g_free(entry);
++    }
++    g_list_free(entries);
++
++    ret = register_intercept_result_cpuid(cpu_fd, cpuid);
++    g_free(cpuid);
++    if (ret < 0) {
++        return ret;
++    }
++
++    return 0;
++}
++
+ static inline void populate_hv_segment_reg(SegmentCache *seg,
+                                            hv_x64_segment_register *hv_reg)
  {
-     error_report("unimplemented");
+@@ -607,6 +800,12 @@ int mshv_configure_vcpu(const CPUState *cpu, const struct MshvFPU *fpu,
+     int ret;
+     int cpu_fd = mshv_vcpufd(cpu);
+ 
++    ret = set_cpuid2(cpu);
++    if (ret < 0) {
++        error_report("failed to set cpuid");
++        return -1;
++    }
++
+     ret = set_cpu_state(cpu, fpu, xcr0);
+     if (ret < 0) {
+         error_report("failed to set cpu state");
 -- 
 2.34.1
 
