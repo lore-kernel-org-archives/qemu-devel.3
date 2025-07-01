@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE165C8303D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5ED3C83038
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 14:58:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWcGn-0008MH-Et; Tue, 01 Jul 2025 10:47:37 -0400
+	id 1uWcBL-0006pK-Rb; Tue, 01 Jul 2025 10:41:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWcFq-0007ug-S7
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:46:42 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWcB3-0006TP-Rk
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:41:46 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWcFl-0007WC-UV
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:46:36 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3a525eee2e3so3672973f8f.2
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 07:46:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWcAw-0006uU-2E
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:41:40 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-453749aef9eso21787835e9.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 07:41:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751381192; x=1751985992; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751380891; x=1751985691; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FL4Z1JJfVmMUZm0/Ew/5hEBjQo27MY9J0Ii/7EGBd6w=;
- b=d/PoaqtbHBlDH79l2QniJs7ifG0E7tJVtsx176pIS7k5LgiWbzkXGZGxYJyaBIARho
- bQUsmBBOcJ7Am3o6veVhgbQoKszAbyAZ7OH2KzW7QXuvhky/Tmxl7G2jEfYoR9QOM9IF
- HTAm5R7SvpKArwfZ4fQbvDse92xzJZJGb5YYijZIz+11lvi03SClOB8hAN5KhyMUBka8
- GHcYlp0rMF0dw1TqKySnUP1jXao2MNNQjjXo6RaUmfEqhkWTqcUJ5sMWVRpAvX8Ep28p
- +6YlUT3S1JhFMi7cMZCeBOPtj9u8lyBWTEcbu2dj4llKjv8+vooOKQrNBx6lYlUJV53+
- 7+Nw==
+ bh=kXF6WGGmmwy/yt/TE6WKliMeWMxcd7vOuV1UqDr79LQ=;
+ b=gJdJwos7UTphOKhtxgPWZdMinZTZhaXrj9P6Mn96zL+kHgWVAUw+j4DbNzDtNxZ7C8
+ mqOrHEKP39yOOpiLRUrteYrv0NAzCZcwEFUg8r4DgoKaoio5XDtvfFMcuMXEtOL2/n0z
+ VA88MyBdCJP9YKvX6M7tl50qV8KQgM9xrSj5oWPGWreuRCT5dRh1rW3Ln0nu0UBfG66b
+ dVEYZ4g4F/CL5rDx3jVVl/cmlYmfusLtLhnjriHqQfueb0qM65lg7ROJ+ieLVoc2o/A4
+ e+KDzBt1Z0ZUr4CpdhFfQCmQeKkZeelqWxV/Bczn2DcamacwIljO09qSHhKTJ/Z2s30N
+ RYNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751381192; x=1751985992;
+ d=1e100.net; s=20230601; t=1751380891; x=1751985691;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FL4Z1JJfVmMUZm0/Ew/5hEBjQo27MY9J0Ii/7EGBd6w=;
- b=MB+UGDNrwYfEL5ajyqQNFfzUASJ38PotBDhgXgFEhd+d/8fWXBkAKhzgOFyOSHpGCL
- bLNTZRRXktYNfPY8P2Es9kGOSBhIVLu2S2p69h/w9PKWM6g2pZVkh36Rp1c9P3SEfF7x
- LXPTIllqJCtGImXDKnmv9IwyIh+2dNceLJsfvHrl2e8rNgk2Q7vTBV+8ZBxtUSNqqpI2
- sk+r1vnPzf6PE772/R1UKW3WA2goLWTOxL5KaRtLSsmuXgno6HyIV6zfyOqcQBaTEoB2
- NRy+X04JZaMsNFmMcmmVP0+4GwSQx/7Ehux4TmORPJoqDTnaJZmL1N9rc7XmFVPHImgI
- 7BEg==
-X-Gm-Message-State: AOJu0Yx+WxBLk1UOoI2Z30ChByLRKdUGVG82odqOdsbt9INasd1u7wWT
- aM9MrZ0YV78AvjeLghDrXYXJR431GCZyX4zq6Hx3s2fsdc3WslXxtW738IkPLHGuAz7MB3gXRrL
- bwphJ
-X-Gm-Gg: ASbGncu24A3pieXcN/xaeMfx4m0vF5ykicN2a07NuiwIEqdvyts3DiFr4dxkSUgp3EQ
- 6VxzrLWXhu1ttv/kqZLlQFNX8EfFEvf49stt4gIRSrkxERXX1p88O+EFMH0oz/ecUeqr2f0bSD/
- Va4a7cSPJe8eeLst6/VYg23Qx5XPWtH7iKAGukuHlMwMg6Irte8e+3HeVsCAS0Wg2CNpAULnoZL
- LgnbpYx5k7o7yHj6KCInbTaEDYQy+CZeyOyRthFZ+i8Du10vjhOdZrcJuh8dXWQBfX1EXMPfYTP
- DHVPi6taGpnqSpnfEqXqTTgYJk9ZuyYvFanElHfl/M4Rx/IVj0a8dKNnYOkx6fFXVkEPP+sry+u
- HUKNzYUbzHRUY9jtDL7aEsakJAMR55VETjmOF
-X-Google-Smtp-Source: AGHT+IHnWmLdIDgfirMf5wozhxeIz5isTLSPUPIGzyJqKPAQ/edMoYtX4Om9YGgHMV/Gc6jwe6wUUQ==
-X-Received: by 2002:a5d:5f91:0:b0:3a3:67bb:8f46 with SMTP id
- ffacd0b85a97d-3a90b9bea87mr16637740f8f.57.1751381191768; 
- Tue, 01 Jul 2025 07:46:31 -0700 (PDT)
+ bh=kXF6WGGmmwy/yt/TE6WKliMeWMxcd7vOuV1UqDr79LQ=;
+ b=M7jQJtSg4DJRM1eU2tqsadz+j0+dDH3nckEFoQ43hL7YPnxbXgU6csOglJgSgQNbH7
+ w09ZuJj4UzQmUj8cVLiFvJDTi6uqATVr2gIDoZHFDHvYbQ6lIVjNHSgksyJehGX0Mqdm
+ bHMnhaf4KZ05wXyjf3Q2tmvC7V98L3X07z7+Ohs2H3RFjlR4La8Y9tI9RnwpMh2SszU9
+ M0WBirKVEMB5DktqauWjYYxfyYpT/qXq0S1lVtlwtwZaa7+FB067UxcItli4cg87/7u/
+ NFVzFsQCjpyQ8enL4wQliOzyCWFiM87IoFy+hnOYkkmEaXFCGUG9GaMJcoEPc7WrfLd6
+ d7vg==
+X-Gm-Message-State: AOJu0Yz30GTnHLJx4OgYYYKgzPTOzP4+e2hRwqsebLYHyWfe15pv80Dr
+ fFaIn6zjI0kZLEWWkKskJPxu9n29l/qd3rM8FoSy+EdCGhnV7BQ70ZQ1V7tOK7MtVJCqRVGHhmW
+ 9pDRX
+X-Gm-Gg: ASbGncuMRMJieKZKLlsdeUclYmZP5nXSIVJvkFV7rWJnyiM2FdfiW7hOy8EWAxYXIFL
+ Z4MOPi+hkzK7yQCJ9KaZ6nkcTN7QryAArKVS59ymToZpqBJIdJqQ+R632orE8XN4ADeDqNFa/rk
+ sdXZNaavINuDRzvIq5ymTrRs0No04MpbEace6ZMhbgJEU2KCUods2XnnL+OzzcarqTunjwSXZwg
+ HS+rQFw83mDxJpzZNFt7mSQtP4kvNcalcL92nWvQPIQ+6buv0betdiDNnOe+NhbnVibqCSaeBmE
+ KLOwXilvF/dD6ykAqZL0/uE+kYW128TJrw2vwnsr3Ejg3YcBFV5RjZJcHPmd12+BXtqhM1iyRjH
+ c2zUcvqaLuRB9JEPLLbT+exxF1B3JMkfhfPeq
+X-Google-Smtp-Source: AGHT+IEITtpWbZiA9JDh3WDYl7w7vzNGkQdrQhwe8qf2qBM7DI3TMkXY/yvEDPRQ32Be/Aho1pAsew==
+X-Received: by 2002:a05:600c:4e52:b0:450:cfcb:5c9b with SMTP id
+ 5b1f17b1804b1-4538ee2a8cbmr153061925e9.1.1751380891020; 
+ Tue, 01 Jul 2025 07:41:31 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a892e5f44dsm13331985f8f.87.2025.07.01.07.46.29
+ 5b1f17b1804b1-453823c0812sm196534185e9.34.2025.07.01.07.41.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 01 Jul 2025 07:46:30 -0700 (PDT)
+ Tue, 01 Jul 2025 07:41:30 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -71,17 +71,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Julian Armistead <julian.armistead@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 58/68] accel/tcg: Factor mttcg_cpu_exec() out for re-use
-Date: Tue,  1 Jul 2025 16:40:06 +0200
-Message-ID: <20250701144017.43487-59-philmd@linaro.org>
+Subject: [PATCH v3 13/68] accel: Directly pass AccelState argument to
+ AccelClass::has_memory()
+Date: Tue,  1 Jul 2025 16:39:21 +0200
+Message-ID: <20250701144017.43487-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250701144017.43487-1-philmd@linaro.org>
 References: <20250701144017.43487-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,52 +107,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- accel/tcg/tcg-accel-ops-mttcg.h |  1 +
- accel/tcg/tcg-accel-ops-mttcg.c | 16 ++++++++++++----
- 2 files changed, 13 insertions(+), 4 deletions(-)
+ include/qemu/accel.h | 2 +-
+ accel/kvm/kvm-all.c  | 4 ++--
+ system/memory.c      | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/accel/tcg/tcg-accel-ops-mttcg.h b/accel/tcg/tcg-accel-ops-mttcg.h
-index 8bf2452c886..72eb1a71d61 100644
---- a/accel/tcg/tcg-accel-ops-mttcg.h
-+++ b/accel/tcg/tcg-accel-ops-mttcg.h
-@@ -14,5 +14,6 @@
- void mttcg_kick_vcpu_thread(CPUState *cpu);
+diff --git a/include/qemu/accel.h b/include/qemu/accel.h
+index b9a9b3593d8..f327a71282c 100644
+--- a/include/qemu/accel.h
++++ b/include/qemu/accel.h
+@@ -46,7 +46,7 @@ typedef struct AccelClass {
  
- void *mttcg_cpu_thread_routine(void *arg);
-+int mttcg_cpu_exec(CPUState *cpu);
+     /* system related hooks */
+     void (*setup_post)(MachineState *ms, AccelState *accel);
+-    bool (*has_memory)(MachineState *ms, AddressSpace *as,
++    bool (*has_memory)(AccelState *accel, AddressSpace *as,
+                        hwaddr start_addr, hwaddr size);
  
- #endif /* TCG_ACCEL_OPS_MTTCG_H */
-diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
-index 2d31b00ee59..8a0295e2410 100644
---- a/accel/tcg/tcg-accel-ops-mttcg.c
-+++ b/accel/tcg/tcg-accel-ops-mttcg.c
-@@ -109,10 +109,7 @@ void *mttcg_cpu_thread_routine(void *arg)
- 
-     do {
-         if (cpu_can_run(cpu)) {
--            int r;
--            bql_unlock();
--            r = tcg_cpu_exec(cpu);
--            bql_lock();
-+            int r = mttcg_cpu_exec(cpu);
-             switch (r) {
-             case EXCP_DEBUG:
-                 cpu_handle_guest_debug(cpu);
-@@ -148,3 +145,14 @@ void mttcg_kick_vcpu_thread(CPUState *cpu)
- {
-     cpu_exit(cpu);
+     /* gdbstub related hooks */
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 72fba12d9fa..d56ac2a058f 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -3789,10 +3789,10 @@ int kvm_get_one_reg(CPUState *cs, uint64_t id, void *target)
+     return r;
  }
-+
-+int mttcg_cpu_exec(CPUState *cpu)
-+{
-+    int ret;
-+
-+    bql_unlock();
-+    ret = tcg_cpu_exec(cpu);
-+    bql_lock();
-+
-+    return ret;
-+}
+ 
+-static bool kvm_accel_has_memory(MachineState *ms, AddressSpace *as,
++static bool kvm_accel_has_memory(AccelState *accel, AddressSpace *as,
+                                  hwaddr start_addr, hwaddr size)
+ {
+-    KVMState *kvm = KVM_STATE(ms->accelerator);
++    KVMState *s = KVM_STATE(accel);
+     int i;
+ 
+     for (i = 0; i < kvm->nr_as; ++i) {
+diff --git a/system/memory.c b/system/memory.c
+index 76b44b8220f..e8d9b15b28f 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -3501,7 +3501,7 @@ static void mtree_print_flatview(gpointer key, gpointer value,
+         if (fvi->ac) {
+             for (i = 0; i < fv_address_spaces->len; ++i) {
+                 as = g_array_index(fv_address_spaces, AddressSpace*, i);
+-                if (fvi->ac->has_memory(current_machine, as,
++                if (fvi->ac->has_memory(current_machine->accelerator, as,
+                                         int128_get64(range->addr.start),
+                                         MR_SIZE(range->addr.size) + 1)) {
+                     qemu_printf(" %s", fvi->ac->name);
 -- 
 2.49.0
 
