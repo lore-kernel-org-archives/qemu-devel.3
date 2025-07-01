@@ -4,91 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC5E9C7EE30
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 15:50:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00D13C83038
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 15:51:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWdFg-0001EW-1E; Tue, 01 Jul 2025 11:50:32 -0400
+	id 1uWdGP-0001ur-RQ; Tue, 01 Jul 2025 11:51:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uWdFe-0001Dp-Df
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 11:50:30 -0400
-Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uWdFb-0002no-Rd
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 11:50:30 -0400
-Received: by mail-yb1-xb32.google.com with SMTP id
- 3f1490d57ef6-e8187601f85so5084968276.2
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 08:50:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751385026; x=1751989826; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NM0m9m6FgXQhqUCQOzdMmZYVj23cYKuGezzGfv9F+qE=;
- b=K9QrTpAWfb8l0jPevomr6Gb8LwJqcENUN2EKrsg5nn3xXAuf0QWM+ospmU5vW0Iwmz
- LDM4YnLsxeHHu4i4d9DX/C7+dxo3wjWn2liGqHOIirJc4iyOH3u2xEHJppNPhi+MC+ci
- EOayFzqLgr8r34Gh1pjGVERHjOlw2XVI88m6SjIRle9qgMM3iyr1dmyusFXgPG+PNKrt
- UH+HSHKUXR5T3z3FXz9/i3ovOGTKOJf9S+CO7VTrryVXbX/IKPN9LWseSYR4nJYpo8R8
- HAaxnnyb9EMwzfsnNIBaTVZGJzOkZjnmsm2cnTW/LwP0nK2gkjhf8OaHpXruk2uZfG81
- q/mQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751385026; x=1751989826;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NM0m9m6FgXQhqUCQOzdMmZYVj23cYKuGezzGfv9F+qE=;
- b=QYX04n3itzHKWyRmgb8pjwEdYMReBvNik5JpffyTremkXuOZO1B+q9+fl+o+IN3k65
- nvWQXZ7bcKm9RED0Bfgi9kwtUV7ie5NCs7p9oc14nQMxiIQwz1rrtT/h5k3Q1V+fHP9f
- 3RrzNhlJ3HhpnVvH4DKXunG3jhrRxbaAgF+fY1DEI9BSKOGZYj2F/dxjAtuFsV3Mk5r7
- KsUEeLSOxrXHLotZngZgGfk41lJkkSRzlEHmXv5ljTPq4WXKO/vWmDGZXBfmaR4P0mmT
- cW0FdvLB+kod0q+F7M2z7umwoxJdCyfsrBTjIfkxJ4pRI77Syg7HSe4M3PAVvH/A8Hl0
- K6/w==
-X-Gm-Message-State: AOJu0YwDVHvEdncgtsfNeR6tqBSn05a4YKB6wgG/Wz+OVrDDTTQ8wYbX
- cZ8eaIeaueYebePvlrjw3yE4QdkzPp0KSGxD22LE00dBrJCAt/R/nhXD7WjCtbEdYMBVo9svnBM
- qDHSeXySWXa5TqzEkLa1iI92Qo9PBTwAuCkTzIc1Vjg==
-X-Gm-Gg: ASbGncsq7Qby3Gwkz7MOTfvSfmRKxmt09C8y3L8L6VO94+HgVvcoM3ZUlsCqfG97BIL
- pZ7OAzF1i83b8Vx0jIMJUoNeeP7p5OwZYLthsrRS0RyPWJYZFpeuzKMAl2aQL+NOkajdchXD4ie
- vZ/eU5WNR1PQSAi+EPDoChBMluP7917i7T3+r3PrNEWeDH
-X-Google-Smtp-Source: AGHT+IGGy1LiWLJoul/YG8YZ7v1W37zVJZeUDsvzCu+RNL4TBiAeiTy/45xc5PzZQdt8W81oQJcvdTJMl4dmlwVX3uo=
-X-Received: by 2002:a05:690c:1e:b0:70f:6ec6:62b2 with SMTP id
- 00721157ae682-71517150f8emr253657857b3.8.1751385025700; Tue, 01 Jul 2025
- 08:50:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250623121845.7214-1-philmd@linaro.org>
- <20250623121845.7214-26-philmd@linaro.org>
-In-Reply-To: <20250623121845.7214-26-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 1 Jul 2025 16:50:14 +0100
-X-Gm-Features: Ac12FXxbbgcWVCUlees7q4LLOO8nBn3R6BKx2RlRYHRfsfQHSIdewGI2EN-Bf0M
-Message-ID: <CAFEAcA9MLMJBFk+PQCJT8Bd+6R+vaho9_vXmDCjPU5cp6B7LfQ@mail.gmail.com>
-Subject: Re: [PATCH v3 25/26] tests/functional: Add hvf_available() helper
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Leif Lindholm <leif.lindholm@oss.qualcomm.com>, 
- qemu-arm@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Alexander Graf <agraf@csgraf.de>, Bernhard Beschow <shentey@gmail.com>,
- John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- kvm@vger.kernel.org, Eric Auger <eric.auger@redhat.com>, 
- Cameron Esfahani <dirty@apple.com>, Cleber Rosa <crosa@redhat.com>, 
- Radoslaw Biernacki <rad@semihalf.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1uWdGP-0001ue-28
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 11:51:17 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uWdGM-0002vr-EK
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 11:51:16 -0400
+Received: from example.com (unknown [167.220.208.67])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 1DD142112202;
+ Tue,  1 Jul 2025 08:51:09 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 1DD142112202
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1751385072;
+ bh=iUWL5VWsWU1hcEFNeVxSqVSRa0woPkamOX7Ac+J7Rqc=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=l8Ipkzzmpqu6jpElWKcr2We/5M/FMRagPtariBqjsyAwcFpeYfBOGY9hjxuFTcPx/
+ xJ2dQ+7k3BQj1QDeeq+4/BD9C66vhqmo2lqT3jawAVI4XI12VY4K1nSfFfKYjodBaa
+ HsfRYDxIZ0v7/pemCjLjdkpJiFInDbqY4oq1zHpI=
+Date: Tue, 1 Jul 2025 17:51:07 +0200
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: Wei Liu <wei.liu@kernel.org>
+Cc: magnuskulke@microsoft.com, qemu-devel@nongnu.org, liuwe@microsoft.com,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb32.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ Cameron Esfahani <dirty@apple.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Subject: Re: [RFC PATCH 24/25] target/i386/mshv: Implement mshv_vcpu_run()
+Message-ID: <aGQD6xk02+ojK+S6@example.com>
+References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
+ <20250520113018.49569-25-magnuskulke@linux.microsoft.com>
+ <aC0Ht-541wBzrUoc@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
+ <aGOd1jSBsAMQ3OSj@example.com>
+ <aGP6q20CEV5_Y2UM@liuwe-devbox-ubuntu-v2.lamzopl0uupeniq2etz1fddiyg.xx.internal.cloudapp.net>
+ <aGQCg+yzwyNaFdAV@example.com>
+ <aGQDHMchYFWUKxx1@liuwe-devbox-ubuntu-v2.lamzopl0uupeniq2etz1fddiyg.xx.internal.cloudapp.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aGQDHMchYFWUKxx1@liuwe-devbox-ubuntu-v2.lamzopl0uupeniq2etz1fddiyg.xx.internal.cloudapp.net>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,34 +80,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Jun 2025 at 13:20, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> ---
->  python/qemu/utils/__init__.py          | 2 +-
->  python/qemu/utils/accel.py             | 8 ++++++++
->  tests/functional/qemu_test/testcase.py | 6 ++++--
->  3 files changed, 13 insertions(+), 3 deletions(-)
+On Tue, Jul 01, 2025 at 03:47:40PM +0000, Wei Liu wrote:
+> 
+> We can leave the out for now as long as the guest shutdown works.
+> 
+> Wei.
 
-This seems to trigger errors in the check-python-minreqs job:
-https://gitlab.com/pm215/qemu/-/jobs/10529051338
-
-Log file "stdout" content for test "01-tests/flake8.sh" (FAIL):
-qemu/utils/__init__.py:26:1: F401 '.accel.hvf_available' imported but unuse=
-d
-qemu/utils/accel.py:86:1: E302 expected 2 blank lines, found 1
-Log file "stderr" content for test "01-tests/flake8.sh" (FAIL):
-Log file "stdout" content for test "04-tests/isort.sh" (FAIL):
-ERROR: /builds/pm215/qemu/python/qemu/utils/__init__.py Imports are
-incorrectly sorted and/or formatted.
-
-I'll see if I can fix this up locally. (The missing blank line
-is easy; I think probably hvf_available needs to be in the
-__all__ =3D () list in __init__.py like kvm_available and
-tcg_available. Not sure about the incorrectly-sorted warning.)
-
--- PMM
+yup, shutdown works fine, so I will drop the commit from the next patch
+set, thanks!
 
