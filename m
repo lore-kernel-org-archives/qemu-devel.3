@@ -4,61 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92516C83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 08:06:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 021A7C83038
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 08:25:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWVzY-0006xk-BJ; Tue, 01 Jul 2025 04:05:24 -0400
+	id 1uWWHe-0002gL-NM; Tue, 01 Jul 2025 04:24:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uWVzS-0006xD-7P
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 04:05:18 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
+ id 1uWWHb-0002fa-OI; Tue, 01 Jul 2025 04:24:04 -0400
+Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uWVzK-00076f-Mw
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 04:05:16 -0400
+ id 1uWWHY-0005z8-OF; Tue, 01 Jul 2025 04:24:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751357111; x=1782893111;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=umHWAtsKsfzLVPZKOjmq4/JFkJtRRsk2mp5Q+dzUJBo=;
- b=OQ8YfbYssnstIj+jwXotj6emCCMJjD+jaRiGxOqCMI9sjpJrdM17yEjY
- vIN5KlHbXPLczb7OII9KcdaUzejI0D119VcXaPDwNqoI4QiO8kuETfiDl
- 3j5gCj9m81j9qZDtzfWxNj/mg3P7HSQs2V93lbF/+U0+LHhyJD0iw3dpV
- xRMTJI5ZMi+kis7i5IPFJUj4PuEBrcBTWl6WD9rC2Awzd0dlGwmxy+bQG
- S5YvcHmgzmBCyNn/yu/G3QkXW5wwQKCJKqMwz9nYpr9JJTQkU2tO9gsyH
- O8oqbBoBTpsQe8cDgLaaJdUthD/EWG2lX/4LzoCdqEuz3NkKXne4VG9H1 Q==;
-X-CSE-ConnectionGUID: ZagZ/YBaQ+uTRTBSGD7+BQ==
-X-CSE-MsgGUID: d5vUW1/GSq2/k6GLFVeAuw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11480"; a="64207657"
-X-IronPort-AV: E=Sophos;i="6.16,279,1744095600"; d="scan'208";a="64207657"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Jul 2025 01:05:07 -0700
-X-CSE-ConnectionGUID: nqA1eYzWSYK4liQVr2/XoQ==
-X-CSE-MsgGUID: 89LWOQARRkuYZw8esHwsvw==
+ t=1751358241; x=1782894241;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=XJ1nQvdfy/CCiwDDxxCvaKYEkbla0xj9i+OIJDssyq4=;
+ b=eDKmsx8hjdFyZ360t1QPqoShD6UUfk2rwuCDgvMiTHGQCfkhhP3QJBPJ
+ TKhFFl4yhkzVjqUWpDUeS913pWm1j0DYbcGVYczSobS0K/ByJRUan/qen
+ egiFOBFyE8vmSBshPUZicWf/R3q01jtA9qb/yuwz9JzPBJtQIXzqKggi5
+ EKMu0SMpqUdVWeS1v2kA2X6CyplbNfMFQH66pFV8Tu5QQ8ZFe5GsOf+Si
+ oD38jlJunzko39yIM1THYYMfGDsc8uzFX6XYqLH6j36eUG8csXQwgERhK
+ CDwMP/VxTtE3cghMWBOzntRdPYtfIMwEiVB9GqCh+CYSbJYCDjTfkg9Mt w==;
+X-CSE-ConnectionGUID: bu3sW+O8QLSWheClp12aNw==
+X-CSE-MsgGUID: jJ4u7KlVQ6aGteLsDkPzCw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11480"; a="52841558"
+X-IronPort-AV: E=Sophos;i="6.16,279,1744095600"; d="scan'208";a="52841558"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Jul 2025 01:23:54 -0700
+X-CSE-ConnectionGUID: NlBc+ZzPR/2Nbgh8hdR5mg==
+X-CSE-MsgGUID: a0p+2f+sT4WLchxyFjd6gQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,279,1744095600"; d="scan'208";a="157726504"
-Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa003.fm.intel.com with ESMTP; 01 Jul 2025 01:05:04 -0700
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>, Cameron Esfahani <dirty@apple.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
- xiaoyao.li@intel.com
-Subject: [PATCH 0/2] Clean up of target/i386/host-cpu.c
-Date: Tue,  1 Jul 2025 15:57:36 +0800
-Message-ID: <20250701075738.3451873-1-xiaoyao.li@intel.com>
-X-Mailer: git-send-email 2.43.0
+X-IronPort-AV: E=Sophos;i="6.16,279,1744095600"; d="scan'208";a="159413702"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Jul 2025 01:23:52 -0700
+Message-ID: <3a9c8152-3202-4962-a1fe-a2d7fdc33b76@intel.com>
+Date: Tue, 1 Jul 2025 16:23:49 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=xiaoyao.li@intel.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] i386/cpu: ARCH_CAPABILITIES should not be advertised on
+ AMD
+To: Alexandre Chartre <alexandre.chartre@oracle.com>, qemu-devel@nongnu.org,
+ pbonzini@redhat.com
+Cc: qemu-stable@nongnu.org, zhao1.liu@intel.com, konrad.wilk@oracle.com,
+ boris.ostrovsky@oracle.com, maciej.szmigiero@oracle.com
+References: <20250630133025.4189544-1-alexandre.chartre@oracle.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250630133025.4189544-1-alexandre.chartre@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -83,36 +86,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Everytime I look at the flow of how x86 cpu is initialized, I get
-confused by the name of host_cpu_instance_init() and
-host_cpu_max_instance_init(). They look like related to "-cpu host" and
-the .instance_init() callback of "-cpu host".
+On 6/30/2025 9:30 PM, Alexandre Chartre wrote:
+> KVM emulates the ARCH_CAPABILITIES on x86 for both Intel and AMD
+> cpus, although the IA32_ARCH_CAPABILITIES MSR is an Intel-specific
+> MSR and it makes no sense to emulate it on AMD.
+> 
+> As a consequence, VMs created on AMD with qemu -cpu host and using
+> KVM will advertise the ARCH_CAPABILITIES feature and provide the
+> IA32_ARCH_CAPABILITIES MSR. This can cause issues (like Windows BSOD)
+> as the guest OS might not expect this MSR to exist on such cpus (the
+> AMD documentation specifies that ARCH_CAPABILITIES feature and MSR
+> are not defined on the AMD architecture).
+> 
+> A fix was proposed in KVM code, however KVM maintainers don't want to
+> change this behavior that exists for 6+ years and suggest changes to be
+> done in qemu instead.
+> 
+> So this commit changes the behavior in qemu so that ARCH_CAPABILITIES
+> is not provided by default on AMD cpus when the hypervisor emulates it,
+> but it can still be provided by explicitly setting arch-capabilities=on.
+> 
+> Signed-off-by: Alexandre Chartre <alexandre.chartre@oracle.com>
+> ---
+>   target/i386/cpu.c | 14 ++++++++++++++
+>   1 file changed, 14 insertions(+)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 0d35e95430..7e136c48df 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -8324,6 +8324,20 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+>           }
+>       }
+>   
+> +    /*
+> +     * For years, KVM has inadvertently emulated the ARCH_CAPABILITIES
+> +     * MSR on AMD although this is an Intel-specific MSR; and KVM will
+> +     * continue doing so to not change its ABI for existing setups.
+> +     *
+> +     * So ensure that the ARCH_CAPABILITIES MSR is disabled on AMD cpus
+> +     * to prevent providing a cpu with an MSR which is not supposed to
+> +     * be there, unless it was explicitly requested by the user.
+> +     */
+> +    if (IS_AMD_CPU(env) &&
+> +        !(env->user_features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_CAPABILITIES)) {
+> +        env->features[FEAT_7_0_EDX] &= ~CPUID_7_0_EDX_ARCH_CAPABILITIES;
+> +    }
 
-However, host_cpu_instance_init() even has noting to do with "-cpu
-host". So patch 1, to rename host_cpu_instance_init(). I also want to
-rename host_cpu_max_instance_init(), but I cannot think of a new better
-name so I just leave it as-is.
+This changes the result for the existing usage of "-cpu host" on AMD. So 
+it will need a compat_prop to keep the old behavior for old machine.
 
-Patch 2 is the cleanup found when I look at host-cpu.c
+But I would like discuss if we really want to do it in QEMU. 
+ARCH_CAPABILITIES is not the only one KVM emulates unconditionally. We 
+have TSC_DEADLINE_TIMER as well. So why to treat them differently? just 
+because some Windows cannot boot? To me, it looks just the bug of 
+Windows. So please fix Windows. And to run with the buggy Windows, we 
+have the workaround: "-cpu host,-arch-capabilities"
 
-Note, this series is based on my another cleanup [1]. It might be able
-to apply cleanly on master with [1].
-
-[1] https://lore.kernel.org/qemu-devel/20250630080610.3151956-1-xiaoyao.li@intel.com/
-
-Xiaoyao Li (2):
-  i386/cpu: Rename host_cpu_instance_init() to apply_host_vendor()
-  i386/cpu: Move the implementation of is_host_cpu_intel() host-cpu.c
-
- target/i386/host-cpu.c        | 21 +++++++++++++--------
- target/i386/host-cpu.h        |  3 ++-
- target/i386/hvf/hvf-cpu.c     |  5 ++++-
- target/i386/kvm/kvm-cpu.c     |  4 ++--
- target/i386/kvm/vmsr_energy.c |  9 ---------
- target/i386/kvm/vmsr_energy.h |  1 -
- 6 files changed, 21 insertions(+), 22 deletions(-)
-
--- 
-2.43.0
+>       if (x86_threads_per_pkg(&env->topo_info) > 1) {
+>           env->features[FEAT_1_EDX] |= CPUID_HT;
+>   
 
 
