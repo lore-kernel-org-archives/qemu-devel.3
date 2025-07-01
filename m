@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67B34C8302F
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 06:32:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F2A5C7EE30
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 06:36:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWUWp-0001lA-C7; Tue, 01 Jul 2025 02:31:39 -0400
+	id 1uWUb8-00035w-UY; Tue, 01 Jul 2025 02:36:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uWUWm-0001kP-LB
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 02:31:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uWUb6-00034t-Pa
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 02:36:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uWUWk-0001sb-6S
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 02:31:36 -0400
+ id 1uWUb1-0002dA-Eh
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 02:36:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751351489;
+ s=mimecast20190719; t=1751351757;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6LR7ZO0C+TGNIDz+GF9OqXAtZE8ZVPkH1n+UdZpH5KA=;
- b=dy4n8VrjeXLZTWmp7X3BNgNlX/fr74mP7MAtv2XjMUY5bkdztdIojvwWfaGTelm7KCiffm
- iqqdwytHaZwElUJuhkcdYuPI/5McnlCHF/PTH/nNhm2eANn1c93hnKRglaDp1GXle5eHTY
- GZwop3cg0SOBiWFL3ln7c5Wd8HpDUMw=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HEAXJZgTb2fievGW6M0Ej3NJhxsSWJzOazjMlpWKRlI=;
+ b=Klbofnt0Sj44qX+MXUbsqQHPFAUJQ+2kRM8zkgaS2zsZbZwGSV+2LN/YSgEQK5ZkNgOHMV
+ rVGYIo+LtadPc7GfaeS8UpQEG8wRSzNdodUHvZIRlwtsR4FAVAyDxxAxc6uyOtjpSikoGI
+ U/PYCQO+uPPD6SgW0BLVQBuY41GAre4=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-425-572LzsZ5NeephqZah7ybDQ-1; Tue, 01 Jul 2025 02:31:28 -0400
-X-MC-Unique: 572LzsZ5NeephqZah7ybDQ-1
-X-Mimecast-MFC-AGG-ID: 572LzsZ5NeephqZah7ybDQ_1751351487
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-450eaae2934so20720465e9.2
- for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 23:31:28 -0700 (PDT)
+ us-mta-568-N30ruBleOUq6nHC2e4tgbw-1; Tue, 01 Jul 2025 02:35:55 -0400
+X-MC-Unique: N30ruBleOUq6nHC2e4tgbw-1
+X-Mimecast-MFC-AGG-ID: N30ruBleOUq6nHC2e4tgbw_1751351755
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a4fac7fa27so1011402f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 30 Jun 2025 23:35:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751351487; x=1751956287;
+ d=1e100.net; s=20230601; t=1751351754; x=1751956554;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=6LR7ZO0C+TGNIDz+GF9OqXAtZE8ZVPkH1n+UdZpH5KA=;
- b=maQRb+IDSe7oGMcAlLi3L6Kbt72TRwvONEQfmSt9VKwJuRx+csqlot6P+5MLfj8dGB
- ahuyTnFo66pY/9arb0rrBRj9nsngFk6xJZQZ1bGcA0E7XIuKSFDOZLgyqykk6XieBz+4
- hW967xFcy0ypDAK8BVjAnftC0iAYLEpk7Ql8mtfkoA8+CCaR1ls5GcoclVWbLuevfliQ
- WISaeN8dLGWRhMRCjVWRAFCuR8Ru0dniw+VSvvFNqEf4PCRmDyVLxTrTtGzBypQYqT9/
- 8Rq0WMm/eCTKz4rjTeHsfwzJmYd5Q+sOyTRbqD+b8d582Otiqk1Mad05egJsH4OJ9oGA
- JH4g==
+ bh=HEAXJZgTb2fievGW6M0Ej3NJhxsSWJzOazjMlpWKRlI=;
+ b=jGWhJ8vsh7m7b1YTrnR8FhvhGj9cISD2Go7xjk6fLRTt2IEAGr9QEwpkXqDdbl0Xy4
+ XV2p2f+OGanI8Wik29gbEyM+iKwmduo1nCmyYQMhHvqpsYZUFdSrYR0pnlQKUEHL6dFO
+ GCRZ7qMxLnHSf6lFcqzupfiqZvwtJQk8hVHJHefq360YN6tgIMXl2KDzpGo7rvLmL9Vl
+ JgKSVZFR0K+izGcgosxLPCl19Gna8GiLfZvMW2cIfkbx8yfv4cFUUYQcFPmfLEB83L7i
+ /JkvEA7PIM3KhX6X4j2XkN9RqNGL/VkkzS3juWRm6k5veNSyhFQLvqoYFbDcLPKIERfB
+ w3yQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWl8SSAT3pBisXCzw8L3b72shrZNpF5ccB9nhET2KlITfeD0zkh4MhK/onZnoPRjRvUsbjcTELRj6eC@nongnu.org
-X-Gm-Message-State: AOJu0Yw+AEHkb5kg8cEFdMYfCpd+M9elTFJWT4Aqq2sQ7vxwQXBpOoLS
- jnM8VwkgjjBpBOg0UqqPHc5VIyUIVfI7bk7ko8NZ2zyrKppil6FZ2Rf/NKGDTkjHu7/COi2uBGv
- EuIXZCkKNPyg3N+MEkS0OI0i+/7v/rICLp56pJevWA2JV7Ds4dDFFkhPW
-X-Gm-Gg: ASbGnct1bxlVztty/7WKjVmLOgSdKRFP2eU0bIbsMHfZF1xdqoR0DcaoxP6FdzZzz8S
- W0qkrYrnUVpkj+KPNS525c8h/kCwWhUf6uJnLGhD4C/9tTkd9HEJqUeuXX4RPki82mkKMaZZi44
- y34/FHk2Jq2C1SSP/2LRRFPzFrwTgXJAiUv8HuWDRopcUxXf3eN+HyT6IK5nn6M3SfgU0IUM2VI
- FqvCgsc8uMxgzyTeL1C40ss3XgTKv05k7J8uhTJhaNE8pYlp6vg4/qFHxAJx52Qev+ujMk2WeMw
- K37vy+qaOqlEerOvbPGaYbsmqEEjzK2r2wZlL2FL3/hxwV9+Xd+CV76UoKm7q3/GaPhojw==
-X-Received: by 2002:a05:600c:a009:b0:453:dbe:7574 with SMTP id
- 5b1f17b1804b1-453902d3100mr146674295e9.12.1751351487028; 
- Mon, 30 Jun 2025 23:31:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFhjTLsVW0x5lyIrQ/CT3ruHe90xnHbEA6+jRqX46KgiVXyxtbdlQa22Iqh/+0YVKT8dq6ikw==
-X-Received: by 2002:a05:600c:a009:b0:453:dbe:7574 with SMTP id
- 5b1f17b1804b1-453902d3100mr146673715e9.12.1751351486515; 
- Mon, 30 Jun 2025 23:31:26 -0700 (PDT)
+ AJvYcCXK0UxUuTCakb762ipvK0FmjUzzktPIB5H1LvwHOC1+o0cuIo5V02Yu25HSzxDtm1Mh6At/kC7K/yab@nongnu.org
+X-Gm-Message-State: AOJu0YyVqvChbu1USkpGI/+BEnh9MKrkwM2HIMgPfLt3HIim8auOXfPH
+ MzPTcXrbzp17szLWtTE/lTGbIxLmCv6HU2Oz7wrQMoLhHgZKxlwQwna6evbaNdYLPvw5astqh3y
+ bJdbytMaalwtpf9rGgel+2y+qzTcuLalHNclfZILjNuUpXQcxPoTEWk5z
+X-Gm-Gg: ASbGncs/o/+NqJh73BhUBUvEjUYoHtnH7KBEjDceSEhY1FBEVwiFaxvTQQfSmH3YiIp
+ K84eeDflF2VqKILQyFMmiGpZTPAKn6jAARwtx3oRLyDygvXdpUiO6oV1S8Xp649E+ft+FR4Xlxj
+ 4CRTAO9Ghu/ufyCVK2TkUSI98KG7md9XNVeWYXPPlTHb9YfkxHdKIAQZjCEom1vZCvD1EKPPT1h
+ SOLdNzzQV28oINTRT+2CNO+SCAh++EHQZszgcs0A9bcmmAHRZ9AeYuP6Vm6AjreTG0FEEBwRnhU
+ LofzMFXI220x8r+KcnUiYQY+BzMnnmFo8gcFTabMoAkJvrVVQMQJoCKmav+26/ow4361cA==
+X-Received: by 2002:a05:6000:4211:b0:3a4:ff01:218a with SMTP id
+ ffacd0b85a97d-3a90038ba79mr12310679f8f.50.1751351754547; 
+ Mon, 30 Jun 2025 23:35:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFNMPO1sDt+f0bjFZ0PY5Vow9U1WhNyA1Ozd2O1bCO37a49RMXzuMiCiRY3ez0+I2eu2oKjYQ==
+X-Received: by 2002:a05:6000:4211:b0:3a4:ff01:218a with SMTP id
+ ffacd0b85a97d-3a90038ba79mr12310642f8f.50.1751351754086; 
+ Mon, 30 Jun 2025 23:35:54 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a892e59736sm12227960f8f.74.2025.06.30.23.31.24
+ ffacd0b85a97d-3ac6ee0d0b9sm6601661f8f.18.2025.06.30.23.35.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 30 Jun 2025 23:31:25 -0700 (PDT)
-Message-ID: <90fc6fd8-fe67-4a16-b287-69da9861f180@redhat.com>
-Date: Tue, 1 Jul 2025 08:31:24 +0200
+ Mon, 30 Jun 2025 23:35:53 -0700 (PDT)
+Message-ID: <e8fa6035-4130-4a68-922a-67028e470bfa@redhat.com>
+Date: Tue, 1 Jul 2025 08:35:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 01/11] hw/arm/smmu-common: Check SMMU has PCIe Root
- Complex association
+Subject: Re: [PATCH v5 11/11] qtest/bios-tables-test: Update tables for smmuv3
+ tests
 Content-Language: en-US
 To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
  "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
@@ -100,14 +100,14 @@ Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
  Jonathan Cameron <jonathan.cameron@huawei.com>,
  "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
 References: <20250623094230.76084-1-shameerali.kolothum.thodi@huawei.com>
- <20250623094230.76084-2-shameerali.kolothum.thodi@huawei.com>
- <ce1d4b22-d613-4143-9b50-bd3e8047bff8@redhat.com>
- <5a0ee9d2e27e47e6a4b443ef6e645b52@huawei.com>
+ <20250623094230.76084-12-shameerali.kolothum.thodi@huawei.com>
+ <43abd1f9-0b5d-4824-82a5-dcce5b323749@redhat.com>
+ <690db58e248a46dd83c641b9ec4ac616@huawei.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <5a0ee9d2e27e47e6a4b443ef6e645b52@huawei.com>
+In-Reply-To: <690db58e248a46dd83c641b9ec4ac616@huawei.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
@@ -116,7 +116,7 @@ X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,12 +135,11 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 6/30/25 9:01 AM, Shameerali Kolothum Thodi wrote:
-> Hi Eric,
+On 6/30/25 9:11 AM, Shameerali Kolothum Thodi wrote:
 >
 >> -----Original Message-----
 >> From: Eric Auger <eric.auger@redhat.com>
->> Sent: Friday, June 27, 2025 12:52 PM
+>> Sent: Friday, June 27, 2025 1:36 PM
 >> To: Shameerali Kolothum Thodi
 >> <shameerali.kolothum.thodi@huawei.com>; qemu-arm@nongnu.org;
 >> qemu-devel@nongnu.org
@@ -151,89 +150,127 @@ On 6/30/25 9:01 AM, Shameerali Kolothum Thodi wrote:
 >> (B) <wangzhou1@hisilicon.com>; jiangkunkun <jiangkunkun@huawei.com>;
 >> Jonathan Cameron <jonathan.cameron@huawei.com>;
 >> zhangfei.gao@linaro.org
->> Subject: Re: [PATCH v5 01/11] hw/arm/smmu-common: Check SMMU has
->> PCIe Root Complex association
+>> Subject: Re: [PATCH v5 11/11] qtest/bios-tables-test: Update tables for
+>> smmuv3 tests
 >>
 >> Hi Shameer,
 >>
 >> On 6/23/25 11:42 AM, Shameer Kolothum wrote:
->>> We only allow default PCIe Root Complex(pcie.0) or pxb-pcie based extra
->>> root complexes to be associated with SMMU.
->>>
->>> Although this change does not affect functionality at present, it is
->>> required when we add support for user-creatable SMMUv3 devices in
->>> future patches.
->>>
->>> Signed-off-by: Shameer Kolothum
->> <shameerali.kolothum.thodi@huawei.com>
->>> ---
->>>  hw/arm/smmu-common.c                | 29 ++++++++++++++++++++++++++---
->>>  hw/pci-bridge/pci_expander_bridge.c |  1 -
->>>  include/hw/pci/pci_bridge.h         |  1 +
->>>  3 files changed, 27 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
->>> index f39b99e526..b15e7fd0e4 100644
->>> --- a/hw/arm/smmu-common.c
->>> +++ b/hw/arm/smmu-common.c
->>> @@ -20,6 +20,7 @@
->>>  #include "trace.h"
->>>  #include "exec/target_page.h"
->>>  #include "hw/core/cpu.h"
->>> +#include "hw/pci/pci_bridge.h"
->>>  #include "hw/qdev-properties.h"
->>>  #include "qapi/error.h"
->>>  #include "qemu/jhash.h"
->>> @@ -925,6 +926,7 @@ static void smmu_base_realize(DeviceState *dev,
->> Error **errp)
->>>  {
->>>      SMMUState *s = ARM_SMMU(dev);
->>>      SMMUBaseClass *sbc = ARM_SMMU_GET_CLASS(dev);
->>> +    PCIBus *pci_bus = s->primary_bus;
->>>      Error *local_err = NULL;
->>>
->>>      sbc->parent_realize(dev, &local_err);
->>> @@ -937,11 +939,32 @@ static void smmu_base_realize(DeviceState
->> *dev, Error **errp)
->>>                                       g_free, g_free);
->>>      s->smmu_pcibus_by_busptr = g_hash_table_new(NULL, NULL);
->>>
->>> -    if (s->primary_bus) {
->>> -        pci_setup_iommu(s->primary_bus, &smmu_ops, s);
->>> -    } else {
->>> +    if (!pci_bus) {
->>>          error_setg(errp, "SMMU is not attached to any PCI bus!");
->>> +        return;
->>> +    }
->>> +
->>> +    /*
->>> +     * We only allow default PCIe Root Complex(pcie.0) or pxb-pcie based
->> extra
->>> +     * root complexes to be associated with SMMU.
->>> +     */
->>> +    if (pci_bus_is_express(pci_bus) && pci_bus_is_root(pci_bus) &&
->>> +        object_dynamic_cast(OBJECT(pci_bus)->parent,
->> TYPE_PCI_HOST_BRIDGE)) {
->>> +        /*
->>> +         * For pxb-pcie, parent_dev will be set. Make sure it is
->>> +         * pxb-pcie indeed.
->>> +         */
->>> +        if (pci_bus->parent_dev) {
->>> +            if (!object_dynamic_cast(OBJECT(pci_bus), TYPE_PXB_PCIE_BUS)) {
->>> +                goto out_err;
->>> +            }
->> I still wonder whether the above check was mandated as it works for what
->> it is meant:
-> Added that check to make sure we don't support pxb-cxl which is of type
-> PCI_HOST_BRIDGE. Once the cxl support for ARM is up streamed and tested
-> with SMMUv3, we can relax this if required.
-agreed. I would add this in the commit msg while rebasing.
+>>> For the legacy smmuv3 test case, IORT has a single SMMUV3 node and a
+>>> Root Complex node with three ID mappings of which two points to the
+>>> SMMUv3 node and the remaining one points to ITS.
+>> You don't describe DSDT at all below, just IORT. I don't know whether it is
+>> mandated though
+> I don't think DSDT is required as the code changes we want to test is
+> IORT related only.
+
+OK. Then I would add in the commit msg the DSDT is not impacted by the
+way the SMMU is instantiated.
+
+Thanks
 
 Eric
 >
->> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+>>> ...
+>>> [030h 0048   1]                         Type : 00
+>>> [031h 0049   2]                       Length : 0018
+>>> [033h 0051   1]                     Revision : 01
+>>> [034h 0052   4]                   Identifier : 00000000
+>>> [038h 0056   4]                Mapping Count : 00000000
+>>> [03Ch 0060   4]               Mapping Offset : 00000000
+>>>
+>>> [040h 0064   4]                     ItsCount : 00000001
+>>> [044h 0068   4]                  Identifiers : 00000000
+>>>
+>>> [048h 0072   1]                         Type : 04
+>>> [049h 0073   2]                       Length : 0058
+>>> [04Bh 0075   1]                     Revision : 04
+>>> [04Ch 0076   4]                   Identifier : 00000001
+>>> [050h 0080   4]                Mapping Count : 00000001
+>>> [054h 0084   4]               Mapping Offset : 00000044
+>>>
+>>> [058h 0088   8]                 Base Address : 0000000009050000
+>>> [060h 0096   4]        Flags (decoded below) : 00000001
+>>>                              COHACC Override : 1
+>>>                                HTTU Override : 0
+>>>                       Proximity Domain Valid : 0
+>>> [064h 0100   4]                     Reserved : 00000000
+>>> [068h 0104   8]                VATOS Address : 0000000000000000
+>>> [070h 0112   4]                        Model : 00000000
+>>> [074h 0116   4]                   Event GSIV : 0000006A
+>>> [078h 0120   4]                     PRI GSIV : 0000006B
+>>> [07Ch 0124   4]                    GERR GSIV : 0000006D
+>>> [080h 0128   4]                    Sync GSIV : 0000006C
+>>> [084h 0132   4]             Proximity Domain : 00000000
+>>> [088h 0136   4]      Device ID Mapping Index : 00000000
+>>>
+>>> [08Ch 0140   4]                   Input base : 00000000
+>>> [090h 0144   4]                     ID Count : 0000FFFF
+>>> [094h 0148   4]                  Output Base : 00000000
+>>> [098h 0152   4]             Output Reference : 00000030
+>>> [09Ch 0156   4]        Flags (decoded below) : 00000000
+>>>                               Single Mapping : 0
+>>>
+>>> [0A0h 0160   1]                         Type : 02
+>>> [0A1h 0161   2]                       Length : 0074
+>>> [0A3h 0163   1]                     Revision : 03
+>>> [0A4h 0164   4]                   Identifier : 00000002
+>>> [0A8h 0168   4]                Mapping Count : 00000004
+>>> [0ACh 0172   4]               Mapping Offset : 00000024
+>>>
+>>> [0B0h 0176   8]            Memory Properties : [IORT Memory Access
+>> Properties]
+>>> [0B0h 0176   4]              Cache Coherency : 00000001
+>>> [0B4h 0180   1]        Hints (decoded below) : 00
+>>>                                    Transient : 0
+>>>                               Write Allocate : 0
+>>>                                Read Allocate : 0
+>>>                                     Override : 0
+>>> [0B5h 0181   2]                     Reserved : 0000
+>>> [0B7h 0183   1] Memory Flags (decoded below) : 03
+>>>                                    Coherency : 1
+>>>                             Device Attribute : 1
+>>> [0B8h 0184   4]                ATS Attribute : 00000000
+>>> [0BCh 0188   4]           PCI Segment Number : 00000000
+>>> [0C0h 0192   1]            Memory Size Limit : 40
+>>> [0C1h 0193   2]           PASID Capabilities : 0000
+>>> [0C3h 0195   1]                     Reserved : 00
+>>>
+>>> [0C4h 0196   4]                   Input base : 00000000
+>>> [0C8h 0200   4]                     ID Count : 000001FF
+>>> [0CCh 0204   4]                  Output Base : 00000000
+>>> [0D0h 0208   4]             Output Reference : 00000048
+>>> [0D4h 0212   4]        Flags (decoded below) : 00000000
+>>>                               Single Mapping : 0
+>>>
+>>> [0D8h 0216   4]                   Input base : 00001000
+>>> [0DCh 0220   4]                     ID Count : 000000FF
+>>> [0E0h 0224   4]                  Output Base : 00001000
+>>> [0E4h 0228   4]             Output Reference : 00000048
+>>> [0E8h 0232   4]        Flags (decoded below) : 00000000
+>>>                               Single Mapping : 0
+>>>
+>>> [0ECh 0236   4]                   Input base : 00000200
+>>> [0F0h 0240   4]                     ID Count : 00000DFF
+>>> [0F4h 0244   4]                  Output Base : 00000200
+>>> [0F8h 0248   4]             Output Reference : 00000030
+>>> [0FCh 0252   4]        Flags (decoded below) : 00000000
+>>>                               Single Mapping : 0
+>>>
+>>> [100h 0256   4]                   Input base : 00001100
+>>> [104h 0260   4]                     ID Count : 0000EEFF
+>>> [108h 0264   4]                  Output Base : 00001100
+>>> [10Ch 0268   4]             Output Reference : 00000030
+>>> [110h 0272   4]        Flags (decoded below) : 00000000
+>>>                               Single Mapping : 0
+>>>
+>>> For the smmuv3-dev test case, IORT has two SMMUV3 nodes and a Root
+>>> Complex node with ID mappings of which two points to two different
+>>> SMMUv3 nodes and remianining ones pointing
+>> remaining. Still difficult to parse for me ;-)
+> Ok 😊. I will rephrase as suggested in the previous one.
+>
 > Thanks,
 > Shameer
->
 
 
