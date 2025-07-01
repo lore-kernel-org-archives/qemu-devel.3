@@ -4,80 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C41BDC83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:27:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAC27C7EE30
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:29:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWekx-0000Xs-2j; Tue, 01 Jul 2025 13:26:55 -0400
+	id 1uWemW-00023O-Hs; Tue, 01 Jul 2025 13:28:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3RxpkaAkKClYyB822G92F4CC492.0CAE2AI-12J29BCB4BI.CF4@flex--ankeesler.bounces.google.com>)
- id 1uWekh-0000NF-LR
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:26:41 -0400
-Received: from mail-qt1-x84a.google.com ([2607:f8b0:4864:20::84a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3RxpkaAkKClYyB822G92F4CC492.0CAE2AI-12J29BCB4BI.CF4@flex--ankeesler.bounces.google.com>)
- id 1uWekb-0005OF-MA
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:26:39 -0400
-Received: by mail-qt1-x84a.google.com with SMTP id
- d75a77b69052e-4a972e8965bso7002911cf.2
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 10:26:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1751390791; x=1751995591; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=R6YtsOikOWGkn1EHQ47FTYhM00Ci2cZcTsbE2ba2Szk=;
- b=Atct0tCWiIP66myPlZMyGAB3KThG9eojZ2Rve/0vEfe1/roca6MWRfrcZy9TSlhut9
- 3h8JTEphTVuWaiZVRce9pN2mPFqpzHcmNwvr+atdKViD5IDYI81yQDFu4z6ceuqKt/Jw
- DHCSYAuKCMmYbeULFbMbHTo2RVMWOAiWFqAvRx3zsgJ3Uv7bLgryYqNfkmvXwYochfVi
- D8De112RUHyJ/cLEMdAwbbz9Fv4po9ECXPmJ1nttUa0QejTneu17QQ3aKByZpU631Kk2
- Jo/MhD1ZGVxHpEXXP3b0Ajo3Hk1pQIFhuxbI/YZsD9CMj9fI79y+L1ZtJ+x3f20QHQ7q
- N3YQ==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uWemT-00022x-RR
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:28:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uWemS-00068R-3V
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:28:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751390906;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=h4uf9bj/+dQ4A6SdlyrI7ie/VNOmPIOPLMFHAtadjJs=;
+ b=BaLH4vEBENvIqK3yruSUg8NW7lt7tm5DqtUSbYVKqYt+wzseiR4sfAWITSB0Q7Omi/y7t0
+ M9WWPw6rnlt3Rd3Q4xFEpMUWT53Pxk8T/D0glyygfe2JonPVGoQqwGD+Ys4MZOnXCKOmVq
+ kGr9vt5fLztbBEaeJ/fw7IMxbT5dsDw=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-614-SKBPmr2rPyWPpV5JIh3ivg-1; Tue, 01 Jul 2025 13:28:25 -0400
+X-MC-Unique: SKBPmr2rPyWPpV5JIh3ivg-1
+X-Mimecast-MFC-AGG-ID: SKBPmr2rPyWPpV5JIh3ivg_1751390904
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a579058758so1352353f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 10:28:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751390791; x=1751995591;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=R6YtsOikOWGkn1EHQ47FTYhM00Ci2cZcTsbE2ba2Szk=;
- b=Rnk/vy5b9pgZ9845/guifAjYuppoI+Z1jXGFLdl/ScKbVetA13ZgklCpUzThBjtICv
- CBBit2hkTdY1flV13Y2OLhbbzbFE0DZcVWXdlG6wVmBlILr5yJR5p3zHWaybrzaBU0r0
- bPasg5j6AjDJKTH6UUYhwpurS+K0cuc4+stoO+2brE864QUqJT7lyquu4/G2/M+Y25/C
- VOhexRE2Pkv523UpkIv9KVBoy/KFCad+xSUz86efubINDwEaHzyNc4u7Q6nKZkvn5Q4Q
- 1roWAjTdyCybMZj48BROvw7qVVEsEONh3cZxRAfjnCJOc5wWGVyZUvPzuMaqCKMxTo+I
- y/nw==
-X-Gm-Message-State: AOJu0YwiQ2W1CRDsHFAQOEjDlK1F6xfAI9f2ZfEAnp/yuEPaKtpA9X4r
- jADeQkvo32vDX4yfi0L27E9PgBP2MS/jVujPKsS9hHwkVxKnhxh3akdTdYgFrwgOyCuSxAMqxvp
- 0h3Hw/S8c5ThP4mE0
-X-Google-Smtp-Source: AGHT+IGhbo8qrLiA0581u9Fl3j3kD91Zd9R/6YfYMpWY1DYgXBvIH80S3Xyj9GWGOJVw2PnCfNWe0utVqnnGpeY=
-X-Received: from qtbbq20.prod.google.com
- ([2002:a05:622a:1c14:b0:4a4:4c21:c3ac])
- (user=ankeesler job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:622a:1983:b0:4a5:a447:679f with SMTP id
- d75a77b69052e-4a7fcae46abmr277532521cf.22.1751390791627; 
- Tue, 01 Jul 2025 10:26:31 -0700 (PDT)
-Date: Tue,  1 Jul 2025 17:25:56 +0000
-In-Reply-To: <20250701172556.3349106-1-ankeesler@google.com>
-Mime-Version: 1.0
-References: <20250701172556.3349106-1-ankeesler@google.com>
-X-Mailer: git-send-email 2.50.0.727.gbf7dc18ff4-goog
-Message-ID: <20250701172556.3349106-2-ankeesler@google.com>
-Subject: [PATCH v3 1/1] hw/display: Allow injection of virtio-gpu EDID name
-From: Andrew Keesler <ankeesler@google.com>
-To: berrange@redhat.com
-Cc: qemu-devel@nongnu.org, Andrew Keesler <ankeesler@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::84a;
- envelope-from=3RxpkaAkKClYyB822G92F4CC492.0CAE2AI-12J29BCB4BI.CF4@flex--ankeesler.bounces.google.com;
- helo=mail-qt1-x84a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ d=1e100.net; s=20230601; t=1751390904; x=1751995704;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=h4uf9bj/+dQ4A6SdlyrI7ie/VNOmPIOPLMFHAtadjJs=;
+ b=C+LA7gzV+ljE2mneslUFUlRgnnu6P7K8gNvpX/zR+NGlLb0LK5Cjxq/8LPP1dn7s/j
+ Aeuliik+WltO43sYchkxwEoe/WucFd+2eG7fpp8cm1TAa92xF6qnvACgCMsV4TvjXVki
+ 0tF93Sgg8KGnSqlxfCmeWu6GNdr16b0El2mLiqKTVsbJQUt5sQbD/By790LKO0zFGgle
+ PInK5Q8GP4Dau/qHszZwlfEg7VNRXdnNXIzbZ98kNmBcixsoQbin6LqQv+piLWArAGAT
+ xr/+tGZrZsKTOtrPot9ji7dnSg+lVbbjLdCkKOfgfwoY9EbzPGpNGTI6hzPAYxTWiyOp
+ 3cbg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVGkouDY3LKgiiVhngYych7ht5seA/J2WSuhJ7Ky/miNND0nRYF4Q4r0uF2IsQABvjL9jUT2ekYAI7T@nongnu.org
+X-Gm-Message-State: AOJu0YzZ+yZU5UDfrz563w1rUqlLiUFIc3b3dJRolhdVLsjvgsFEsX7X
+ XbyMJ89gFrPBBs4Z6IuPpurYfK4qvw0CHFERip8uyvfDX2TJ/FbUyZJuZmzL2Quk1KacbBrII7k
+ DoQQ2WuR9p6p1tdtTEaU1+Nkaxy8G7L4JaI2p1bcHN+TY8NqBJI3pG3l8
+X-Gm-Gg: ASbGncu2veli3t3olwYD5LCRK8ojcz8ojQm7ZHrYQ4Et5aPHfMDza61AeHfiWDh6fsH
+ mpN4amRoUJALFOJC0TyFU8t//4FyPW9q7xBhzUrasXaEwHKfa6XSXj2UuSKisq9t0WuBJvk9VMs
+ 6WkTD7RPrryyvmr7Jt3aAVzSh3wfXXoK9KZLFvn1vYYMXLQIEoCuN1rX7FbL8xB5c+x2Ql5RKcR
+ YyBVfzwzfVu93K0B5iVYEUvIA96/eCzrd2//mNn7x+y5QsJYsRFIkNFHZGbP6tKJpgSdXhE0R+Q
+ ma55RLmjzDZZQNogaHWDKIkdLYYm6sWkxCTqtHeYUd0QlM1A49Suj4FCITxcOQ==
+X-Received: by 2002:adf:9cc4:0:b0:3a5:6008:e782 with SMTP id
+ ffacd0b85a97d-3a8fed6dd92mr13648928f8f.43.1751390904122; 
+ Tue, 01 Jul 2025 10:28:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGLdyZZ/Qs4gtDZ3Ps/JcXBfHRBhWVLKBXiWJ3/ACe6537B4pJhSk+PV2MNXJyN/DsYT4e5UQ==
+X-Received: by 2002:adf:9cc4:0:b0:3a5:6008:e782 with SMTP id
+ ffacd0b85a97d-3a8fed6dd92mr13648913f8f.43.1751390903660; 
+ Tue, 01 Jul 2025 10:28:23 -0700 (PDT)
+Received: from [192.168.0.6] (ltea-047-064-114-041.pools.arcor-ip.net.
+ [47.64.114.41]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a88c7fadf3sm14070681f8f.34.2025.07.01.10.28.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 01 Jul 2025 10:28:23 -0700 (PDT)
+Message-ID: <d96479ff-a239-421f-a697-b19dc4a8fa1e@redhat.com>
+Date: Tue, 1 Jul 2025 19:28:21 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/6] treewide: update docs file extensions (.txt -> .rst)
+ in comments
+To: Sean Wei <me@sean.taipei>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov
+ <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:sPAPR (pseries)" <qemu-ppc@nongnu.org>
+References: <20250616.qemu.relocated@sean.taipei>
+ <20250616.qemu.relocated.05@sean.taipei>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250616.qemu.relocated.05@sean.taipei>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,272 +161,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks to 72d277a7, 1ed2cb32, and others, EDID (Extended Display
-Identification Data) is propagated by QEMU such that a virtual display
-presents legitimate metadata (e.g., name, serial number, preferred
-resolutions, etc.) to its connected guest.
+On 16/06/2025 17.50, Sean Wei wrote:
+> Several source comments still refer to docs with the old .txt
+> extension that were previously converted to reStructuredText.
+> 
+> Update these references to use the correct .rst extensions to
+> maintain accurate in-tree documentation pointers.
+> 
+> No functional changes.
+> 
+> Related commits:
+>    50f8174c5c1 (Jul 2021): docs/specs/acpi_nvdimm: Convert to rST
+>    f054eb1c920 (Jul 2021): docs/specs/acpi_pci_hotplug: Convert to rST
+>    912fb3678b8 (Sep 2023): docs/specs/vmgenid: Convert to rST
+>    bb1cff6ee04 (Sep 2023): docs/specs/ivshmem-spec: Convert to rST
+>    55ff468f781 (Jan 2022): docs: Rename ppc-spapr-hotplug.txt to .rst
+> 
+> Signed-off-by: Sean Wei <me@sean.taipei>
+> ---
+>   hw/acpi/nvdimm.c               | 2 +-
+>   hw/acpi/pcihp.c                | 2 +-
+>   hw/acpi/vmgenid.c              | 6 +++---
+>   hw/misc/ivshmem-flat.c         | 2 +-
+>   hw/ppc/spapr.c                 | 2 +-
+>   include/hw/acpi/pcihp.h        | 2 +-
+>   include/hw/misc/ivshmem-flat.h | 2 +-
+>   tests/qtest/vmgenid-test.c     | 2 +-
+>   8 files changed, 10 insertions(+), 10 deletions(-)
 
-This change adds the ability to specify the EDID name for a particular
-virtio-vga display. Previously, every virtual display would have the same
-name: "QEMU Monitor". Now, we can inject names of displays in order to test
-guest behavior that is specific to display names. We provide the ability to
-inject the display name from the frontend since this is guest visible
-data. Furthermore, this makes it clear where N potential display outputs
-would get their name from (which will be added in a future change).
-
-Note that we have elected to use a struct here for output data for
-extensibility - we intend to add per-output fields like resolution in a
-future change.
-
-It should be noted that EDID names longer than 12 bytes will be truncated
-per spec (I think?).
-
-Testing: verified that when I specified 2 outputs for a virtio-gpu with
-edid_name set, the names matched those that I configured with my vnc
-display.
-
-  -display vnc=localhost:0,id=aaa,display=vga,head=0 \
-  -display vnc=localhost:1,id=bbb,display=vga,head=1 \
-  -device '{"driver":"virtio-vga",
-            "max_outputs":2,
-            "id":"vga",
-            "outputs":[
-              {
-                 "name":"AAA",
-              },
-              {
-                 "name":"BBB",
-              },
-            ]}'
-
-Signed-off-by: Andrew Keesler <ankeesler@google.com>
----
- hw/core/qdev-properties-system.c    | 44 +++++++++++++++++++++++++++++
- hw/display/virtio-gpu-base.c        | 26 +++++++++++++++++
- include/hw/display/edid.h           |  2 ++
- include/hw/qdev-properties-system.h |  5 ++++
- include/hw/virtio/virtio-gpu.h      |  3 ++
- qapi/virtio.json                    | 18 ++++++++++--
- 6 files changed, 96 insertions(+), 2 deletions(-)
-
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index 24e145d870..1f810b7ddf 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -1299,3 +1299,47 @@ const PropertyInfo qdev_prop_vmapple_virtio_blk_variant = {
-     .set   = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
- };
-+
-+/* --- VirtIOGPUOutputList --- */
-+
-+static void get_virtio_gpu_output_list(Object *obj, Visitor *v,
-+    const char *name, void *opaque, Error **errp)
-+{
-+    VirtIOGPUOutputList **prop_ptr =
-+        object_field_prop_ptr(obj, opaque);
-+
-+    visit_type_VirtIOGPUOutputList(v, name, prop_ptr, errp);
-+}
-+
-+static void set_virtio_gpu_output_list(Object *obj, Visitor *v,
-+    const char *name, void *opaque, Error **errp)
-+{
-+    VirtIOGPUOutputList **prop_ptr =
-+        object_field_prop_ptr(obj, opaque);
-+    VirtIOGPUOutputList *list;
-+
-+    if (!visit_type_VirtIOGPUOutputList(v, name, &list, errp)) {
-+        return;
-+    }
-+
-+    qapi_free_VirtIOGPUOutputList(*prop_ptr);
-+    *prop_ptr = list;
-+}
-+
-+static void release_virtio_gpu_output_list(Object *obj,
-+    const char *name, void *opaque)
-+{
-+    VirtIOGPUOutputList **prop_ptr =
-+        object_field_prop_ptr(obj, opaque);
-+
-+    qapi_free_VirtIOGPUOutputList(*prop_ptr);
-+    *prop_ptr = NULL;
-+}
-+
-+const PropertyInfo qdev_prop_virtio_gpu_output_list = {
-+    .type = "VirtIOGPUOutputList",
-+    .description = "VirtIO GPU output list [{\"name\":\"<name>\"},...]",
-+    .get = get_virtio_gpu_output_list,
-+    .set = set_virtio_gpu_output_list,
-+    .release = release_virtio_gpu_output_list,
-+};
-diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
-index 9eb806b71f..c0b8423646 100644
---- a/hw/display/virtio-gpu-base.c
-+++ b/hw/display/virtio-gpu-base.c
-@@ -19,6 +19,7 @@
- #include "qemu/error-report.h"
- #include "hw/display/edid.h"
- #include "trace.h"
-+#include "qapi/qapi-types-virtio.h"
- 
- void
- virtio_gpu_base_reset(VirtIOGPUBase *g)
-@@ -56,6 +57,8 @@ void
- virtio_gpu_base_generate_edid(VirtIOGPUBase *g, int scanout,
-                               struct virtio_gpu_resp_edid *edid)
- {
-+    size_t output_idx;
-+    VirtIOGPUOutputList *node;
-     qemu_edid_info info = {
-         .width_mm = g->req_state[scanout].width_mm,
-         .height_mm = g->req_state[scanout].height_mm,
-@@ -64,6 +67,13 @@ virtio_gpu_base_generate_edid(VirtIOGPUBase *g, int scanout,
-         .refresh_rate = g->req_state[scanout].refresh_rate,
-     };
- 
-+    for (output_idx = 0, node = g->conf.outputs;
-+         output_idx <= scanout && node; output_idx++, node = node->next) {
-+        if (output_idx == scanout && node->value && node->value->name) {
-+            info.name = g->conf.outputs->value->name;
-+        }
-+    }
-+
-     edid->size = cpu_to_le32(sizeof(edid->edid));
-     qemu_edid_generate(edid->edid, sizeof(edid->edid), &info);
- }
-@@ -172,6 +182,8 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
-                                VirtIOHandleOutput cursor_cb,
-                                Error **errp)
- {
-+    size_t output_idx;
-+    VirtIOGPUOutputList *node;
-     VirtIODevice *vdev = VIRTIO_DEVICE(qdev);
-     VirtIOGPUBase *g = VIRTIO_GPU_BASE(qdev);
-     int i;
-@@ -181,6 +193,20 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
-         return false;
-     }
- 
-+    for (output_idx = 0, node = g->conf.outputs;
-+         node; output_idx++, node = node->next) {
-+        if (output_idx == g->conf.max_outputs) {
-+            error_setg(errp, "invalid outputs > %d", g->conf.max_outputs);
-+            return false;
-+        }
-+        if (node->value && node->value->name &&
-+            strlen(node->value->name) > EDID_NAME_MAX_LENGTH) {
-+            error_setg(errp, "invalid output name '%s' > %d",
-+                       node->value->name, EDID_NAME_MAX_LENGTH);
-+            return false;
-+        }
-+    }
-+
-     if (virtio_gpu_virgl_enabled(g->conf)) {
-         error_setg(&g->migration_blocker, "virgl is not yet migratable");
-         if (migrate_add_blocker(&g->migration_blocker, errp) < 0) {
-diff --git a/include/hw/display/edid.h b/include/hw/display/edid.h
-index 520f8ec202..91c0a428af 100644
---- a/include/hw/display/edid.h
-+++ b/include/hw/display/edid.h
-@@ -1,6 +1,8 @@
- #ifndef EDID_H
- #define EDID_H
- 
-+#define EDID_NAME_MAX_LENGTH 12
-+
- typedef struct qemu_edid_info {
-     const char *vendor; /* http://www.uefi.org/pnp_id_list */
-     const char *name;
-diff --git a/include/hw/qdev-properties-system.h b/include/hw/qdev-properties-system.h
-index b921392c52..9601a11a09 100644
---- a/include/hw/qdev-properties-system.h
-+++ b/include/hw/qdev-properties-system.h
-@@ -32,6 +32,7 @@ extern const PropertyInfo qdev_prop_cpus390entitlement;
- extern const PropertyInfo qdev_prop_iothread_vq_mapping_list;
- extern const PropertyInfo qdev_prop_endian_mode;
- extern const PropertyInfo qdev_prop_vmapple_virtio_blk_variant;
-+extern const PropertyInfo qdev_prop_virtio_gpu_output_list;
- 
- #define DEFINE_PROP_PCI_DEVFN(_n, _s, _f, _d)                   \
-     DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_pci_devfn, int32_t)
-@@ -110,4 +111,8 @@ extern const PropertyInfo qdev_prop_vmapple_virtio_blk_variant;
-                          qdev_prop_vmapple_virtio_blk_variant, \
-                          VMAppleVirtioBlkVariant)
- 
-+#define DEFINE_PROP_VIRTIO_GPU_OUTPUT_LIST(_name, _state, _field) \
-+    DEFINE_PROP(_name, _state, _field, qdev_prop_virtio_gpu_output_list, \
-+                VirtIOGPUOutputList *)
-+
- #endif
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index a42957c4e2..9f16f89a36 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -20,6 +20,7 @@
- #include "hw/virtio/virtio.h"
- #include "qemu/log.h"
- #include "system/vhost-user-backend.h"
-+#include "qapi/qapi-types-virtio.h"
- 
- #include "standard-headers/linux/virtio_gpu.h"
- #include "standard-headers/linux/virtio_ids.h"
-@@ -128,6 +129,7 @@ struct virtio_gpu_base_conf {
-     uint32_t xres;
-     uint32_t yres;
-     uint64_t hostmem;
-+    VirtIOGPUOutputList *outputs;
- };
- 
- struct virtio_gpu_ctrl_command {
-@@ -167,6 +169,7 @@ struct VirtIOGPUBaseClass {
- 
- #define VIRTIO_GPU_BASE_PROPERTIES(_state, _conf)                       \
-     DEFINE_PROP_UINT32("max_outputs", _state, _conf.max_outputs, 1),    \
-+    DEFINE_PROP_VIRTIO_GPU_OUTPUT_LIST("outputs", _state, _conf.outputs), \
-     DEFINE_PROP_BIT("edid", _state, _conf.flags, \
-                     VIRTIO_GPU_FLAG_EDID_ENABLED, true), \
-     DEFINE_PROP_UINT32("xres", _state, _conf.xres, 1280), \
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index 73df718a26..eb6a907c40 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -963,17 +963,31 @@
- { 'struct': 'IOThreadVirtQueueMapping',
-   'data': { 'iothread': 'str', '*vqs': ['uint16'] } }
- 
-+##
-+# @VirtIOGPUOutput:
-+#
-+# Describes configuration of a VirtIO GPU output.
-+#
-+# @name: the name of the output
-+#
-+# Since: 9.0
-+##
-+
-+{ 'struct': 'VirtIOGPUOutput',
-+  'data': { 'name': 'str' } }
-+
- ##
- # @DummyVirtioForceArrays:
- #
- # Not used by QMP; hack to let us use IOThreadVirtQueueMappingList
--# internally
-+# and VirtIOGPUOutputList internally
- #
- # Since: 9.0
- ##
- 
- { 'struct': 'DummyVirtioForceArrays',
--  'data': { 'unused-iothread-vq-mapping': ['IOThreadVirtQueueMapping'] } }
-+  'data': { 'unused-iothread-vq-mapping': ['IOThreadVirtQueueMapping'],
-+            'unused-virtio-gpu-output': ['VirtIOGPUOutput'] } }
- 
- ##
- # @GranuleMode:
--- 
-2.50.0.727.gbf7dc18ff4-goog
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
