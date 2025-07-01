@@ -4,63 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD14EC83F04
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE1CBC8303F
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:36:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWenl-0003y7-IG; Tue, 01 Jul 2025 13:29:49 -0400
+	id 1uWetk-0004bv-Rg; Tue, 01 Jul 2025 13:36:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uWenj-0003np-Mp
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:29:47 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uWeng-0006ln-5d
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:29:47 -0400
-Received: from localhost.localdomain (unknown [167.220.208.67])
- by linux.microsoft.com (Postfix) with ESMTPSA id 6F53C2112236;
- Tue,  1 Jul 2025 10:29:39 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6F53C2112236
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1751390983;
- bh=Y4vhPW1L/apWF7A2PygowCDp5jO99b8a9HgfYCjLboI=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=hycZXmQZF60SDp6nNrn1MYE18EJXtTfFFU1NarpNWbg/EuM1KC/ZhBIzdniwggSjb
- gwM7RytFV6O74eg37fLRDjm83RSdohXNxDZLe0Q2gaJwVGadaD7qNoqbkgqQ3mVLtK
- SjxAYfdzQx6gKJmawKtjpV3wltEo50cWmZ0S2Z08=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: Cameron Esfahani <dirty@apple.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>, Thomas Huth <thuth@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Wei Liu <wei.liu@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <liuwe@microsoft.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Magnus Kulke <magnuskulke@microsoft.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 10/27] accel/mshv: Add ioeventfd support
-Date: Tue,  1 Jul 2025 19:28:17 +0200
-Message-Id: <20250701172834.44849-11-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250701172834.44849-1-magnuskulke@linux.microsoft.com>
-References: <20250701172834.44849-1-magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uWetc-0004Ka-HP
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:35:52 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uWetV-0000A3-Eu
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:35:51 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id CAEA321174;
+ Tue,  1 Jul 2025 17:35:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1751391343; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jAogss75G+8WOyNzABCTp4Q7N33UdWP3rfHYyFQRI/g=;
+ b=Gso4f0vraooNdJRifSKlZFzadcUeSI5gqpfWiwq1LcZzQ8FkMb/iEZOT0IaqRzD19EOXNu
+ Q9Fhl00xCFLsNbUigUPZiWfTZ48XBzATsQ94CK2+y3Y+TytD1In569fdRBCSTyadwaB3Ec
+ Hy+zhta/Zd5D1Mcx3VgAr2hjZtuXPbk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1751391343;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jAogss75G+8WOyNzABCTp4Q7N33UdWP3rfHYyFQRI/g=;
+ b=pzTeFyXKSldjyhIztXqzSqJhmvLJ1WnhuTGGMsf+d+w3HcRigjVOwuryobWsFIwongp7+N
+ IKpvwQ34lrQOH0BQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1751391341; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jAogss75G+8WOyNzABCTp4Q7N33UdWP3rfHYyFQRI/g=;
+ b=cVSfn+M97Rhbe2ChsEhVnwVszAbypCRvpV2CHdnFdP0AJHYFmYERKoBi1z9BHP5GbkADBV
+ Y/0/QL87NC8e9WADytkrINpboJCw6mzNZNpOxB1k8bU3Lp7K+C50lZYqXFvDMB1D8uS05C
+ RWCWu8OE+79o/vA3DwJVniRkZXOUQ5Y=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1751391341;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jAogss75G+8WOyNzABCTp4Q7N33UdWP3rfHYyFQRI/g=;
+ b=Y5oBMmeAt57WxQYO5j5AYYPJkFhTh58qnNJuv68ogRIvVvXPefZwE597Omj9fCj1NNaK5i
+ KPZuBkX5mJwngvBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 41A8B13890;
+ Tue,  1 Jul 2025 17:35:41 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id r7lrAG0cZGhHSQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 01 Jul 2025 17:35:41 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com, "Dr . David Alan
+ Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH v2 10/11] migration: Rewrite the migration complete
+ detect logic
+In-Reply-To: <20250609161855.6603-11-peterx@redhat.com>
+References: <20250609161855.6603-1-peterx@redhat.com>
+ <20250609161855.6603-11-peterx@redhat.com>
+Date: Tue, 01 Jul 2025 14:35:38 -0300
+Message-ID: <87a55n6cgl.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,190 +118,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement ioeventfd registration in the MSHV accelerator backend to
-handle guest-triggered events. This enables integration with QEMU's
-eventfd-based I/O mechanism.
+Peter Xu <peterx@redhat.com> writes:
 
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- accel/mshv/mshv-all.c   | 116 ++++++++++++++++++++++++++++++++++++++++
- accel/mshv/trace-events |   3 ++
- include/system/mshv.h   |   8 +++
- 3 files changed, 127 insertions(+)
+> There're a few things off here in that logic, rewrite it.  When at it, add
+> rich comment to explain each of the decisions.
+>
+> Since this is very sensitive path for migration, below are the list of
+> things changed with their reasonings.
+>
+>   (1) Exact pending size is only needed for precopy not postcopy
+>
+>       Fundamentally it's because "exact" version only does one more deep
+>       sync to fetch the pending results, while in postcopy's case it's
+>       never going to sync anything more than estimate as the VM on source
+>       is stopped.
+>
+>   (2) Do _not_ rely on threshold_size anymore to decide whether postcopy
+>       should complete
+>
+>       threshold_size was calculated from the expected downtime and
+>       bandwidth only during precopy as an efficient way to decide when to
+>       switchover.  It's not sensible to rely on threshold_size in postcopy.
+>
+>       For precopy, if switchover is decided, the migration will complete
+>       soon.  It's not true for postcopy.  Logically speaking, postcopy
+>       should only complete the migration if all pending data is flushed.
+>
+>       Here it used to work because save_complete() used to implicitly
+>       contain save_live_iterate() when there's pending size.
+>
+>       Even if that looks benign, having RAMs to be migrated in postcopy's
+>       save_complete() has other bad side effects:
+>
+>       (a) Since save_complete() needs to be run once at a time, it means
+>       when moving RAM there's no way moving other things (rather than
+>       round-robin iterating the vmstate handlers like what we do with
+>       ITERABLE phase).  Not an immediate concern, but it may stop working
+>       in the future when there're more than one iterables (e.g. vfio
+>       postcopy).
+>
+>       (b) postcopy recovery, unfortunately, only works during ITERABLE
+>       phase. IOW, if src QEMU moves RAM during postcopy's save_complete()
+>       and network failed, then it'll crash both QEMUs... OTOH if it failed
+>       during iteration it'll still be recoverable.  IOW, this change should
+>       further reduce the window QEMU split brain and crash in extreme cases.
+>
+>       If we enable the ram_save_complete() tracepoints, we'll see this
+>       before this patch:
+>
+>       1267959@1748381938.294066:ram_save_complete dirty=9627, done=0
+>       1267959@1748381938.308884:ram_save_complete dirty=0, done=1
+>
+>       It means in this migration there're 9627 pages migrated at complete()
+>       of postcopy phase.
+>
+>       After this change, all the postcopy RAM should be migrated in iterable
+>       phase, rather than save_complete():
+>
+>       1267959@1748381938.294066:ram_save_complete dirty=0, done=0
+>       1267959@1748381938.308884:ram_save_complete dirty=0, done=1
+>
+>   (3) Adjust when to decide to switch to postcopy
+>
+>       This shouldn't be super important, the movement makes sure there's
+>       only one in_postcopy check, then we are clear on what we do with the
+>       two completely differnt use cases (precopy v.s. postcopy).
+>
+>   (4) Trivial touch up on threshold_size comparision
+>
+>       Which changes:
+>
+>       "(!pending_size || pending_size < s->threshold_size)"
+>
+>       into:
+>
+>       "(pending_size <= s->threshold_size)"
+>
+> Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 712e651627..2ae9d1cffa 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -7,6 +7,7 @@
-  *  Ziqiao Zhou       <ziqiaozhou@microsoft.com>
-  *  Magnus Kulke      <magnuskulke@microsoft.com>
-  *  Jinank Jain       <jinankjain@microsoft.com>
-+ *  Wei Liu           <liuwe@microsoft.com>
-  *
-  * This work is licensed under the terms of the GNU GPL, version 2 or later.
-  * See the COPYING file in the top-level directory.
-@@ -236,11 +237,126 @@ static void mem_region_del(MemoryListener *listener,
-     memory_region_unref(section->mr);
- }
- 
-+typedef enum {
-+    DATAMATCH_NONE,
-+    DATAMATCH_U32,
-+    DATAMATCH_U64,
-+} DatamatchTag;
-+
-+typedef struct {
-+    DatamatchTag tag;
-+    union {
-+        uint32_t u32;
-+        uint64_t u64;
-+    } value;
-+} Datamatch;
-+
-+/* flags: determine whether to de/assign */
-+static int ioeventfd(int vm_fd, int event_fd, uint64_t addr, Datamatch dm,
-+                     uint32_t flags)
-+{
-+    mshv_user_ioeventfd args = {0};
-+    args.fd = event_fd;
-+    args.addr = addr;
-+    args.flags = flags;
-+
-+    if (dm.tag == DATAMATCH_NONE) {
-+        args.datamatch = 0;
-+    } else {
-+        flags |= BIT(MSHV_IOEVENTFD_BIT_DATAMATCH);
-+        args.flags = flags;
-+        if (dm.tag == DATAMATCH_U64) {
-+            args.len = sizeof(uint64_t);
-+            args.datamatch = dm.value.u64;
-+        } else {
-+            args.len = sizeof(uint32_t);
-+            args.datamatch = dm.value.u32;
-+        }
-+    }
-+
-+    return ioctl(vm_fd, MSHV_IOEVENTFD, &args);
-+}
-+
-+static int unregister_ioevent(int vm_fd, int event_fd, uint64_t mmio_addr)
-+{
-+    uint32_t flags = 0;
-+    Datamatch dm = {0};
-+
-+    flags |= BIT(MSHV_IOEVENTFD_BIT_DEASSIGN);
-+    dm.tag = DATAMATCH_NONE;
-+
-+    return ioeventfd(vm_fd, event_fd, mmio_addr, dm, flags);
-+}
-+
-+static int register_ioevent(int vm_fd, int event_fd, uint64_t mmio_addr,
-+                            uint64_t val, bool is_64bit, bool is_datamatch)
-+{
-+    uint32_t flags = 0;
-+    Datamatch dm = {0};
-+
-+    if (!is_datamatch) {
-+        dm.tag = DATAMATCH_NONE;
-+    } else if (is_64bit) {
-+        dm.tag = DATAMATCH_U64;
-+        dm.value.u64 = val;
-+    } else {
-+        dm.tag = DATAMATCH_U32;
-+        dm.value.u32 = val;
-+    }
-+
-+    return ioeventfd(vm_fd, event_fd, mmio_addr, dm, flags);
-+}
-+
-+static void mem_ioeventfd_add(MemoryListener *listener,
-+                              MemoryRegionSection *section,
-+                              bool match_data, uint64_t data,
-+                              EventNotifier *e)
-+{
-+    int fd = event_notifier_get_fd(e);
-+    int ret;
-+    bool is_64 = int128_get64(section->size) == 8;
-+    uint64_t addr = section->offset_within_address_space;
-+
-+    trace_mshv_mem_ioeventfd_add(addr, int128_get64(section->size), data);
-+
-+    ret = register_ioevent(mshv_state->vm, fd, addr, data, is_64, match_data);
-+
-+    if (ret < 0) {
-+        error_report("Failed to register ioeventfd: %s (%d)", strerror(-ret),
-+                     -ret);
-+        abort();
-+    }
-+}
-+
-+static void mem_ioeventfd_del(MemoryListener *listener,
-+                              MemoryRegionSection *section,
-+                              bool match_data, uint64_t data,
-+                              EventNotifier *e)
-+{
-+    int fd = event_notifier_get_fd(e);
-+    int ret;
-+    uint64_t addr = section->offset_within_address_space;
-+
-+    trace_mshv_mem_ioeventfd_del(section->offset_within_address_space,
-+                                 int128_get64(section->size), data);
-+
-+    ret = unregister_ioevent(mshv_state->vm, fd, addr);
-+    if (ret < 0) {
-+        error_report("Failed to unregister ioeventfd: %s (%d)", strerror(-ret),
-+                     -ret);
-+        abort();
-+    }
-+}
-+
- static MemoryListener mshv_memory_listener = {
-     .name = "mshv",
-     .priority = MEMORY_LISTENER_PRIORITY_ACCEL,
-     .region_add = mem_region_add,
-     .region_del = mem_region_del,
-+#ifdef MSHV_USE_IOEVENTFD
-+    .eventfd_add = mem_ioeventfd_add,
-+    .eventfd_del = mem_ioeventfd_del,
-+#endif
- };
- 
- static MemoryListener mshv_io_listener = {
-diff --git a/accel/mshv/trace-events b/accel/mshv/trace-events
-index 9a3af6b8be..b49a5b1702 100644
---- a/accel/mshv/trace-events
-+++ b/accel/mshv/trace-events
-@@ -1,6 +1,9 @@
- # See docs/devel/tracing.rst for syntax documentation.
- 
- mshv_set_memory(bool add, uint64_t gpa, uint64_t size, uint64_t user_addr, bool readonly, int ret) "[add = %d] gpa = %lx size = %lx user = %lx readonly = %d result = %d"
-+mshv_mem_ioeventfd_add(uint64_t addr, uint32_t size, uint32_t data) "addr %lx size %d data %x"
-+mshv_mem_ioeventfd_del(uint64_t addr, uint32_t size, uint32_t data) "addr %lx size %d data %x"
-+
- mshv_hvcall_args(const char* hvcall, uint16_t code, uint16_t in_sz) "built args for '%s' code: %d in_sz: %d"
- 
- mshv_set_msi_routing(uint32_t gsi, uint64_t addr, uint32_t data) "gsi=%d addr=%lx data=%x"
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 3624d9477f..c2b0414c85 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -30,6 +30,14 @@
- #define CONFIG_MSHV_IS_POSSIBLE
- #endif
- 
-+/*
-+ * Set to 0 if we do not want to use eventfd to optimize the MMIO events.
-+ * Set to 1 so that mshv kernel driver receives doorbell when the VM access
-+ * MMIO memory and then signal eventfd to notify the qemu device
-+ * without extra switching to qemu to emulate mmio access.
-+ */
-+#define MSHV_USE_IOEVENTFD 1
-+
- #define MSHV_PAGE_SHIFT 12
- 
- #ifdef CONFIG_MSHV_IS_POSSIBLE
--- 
-2.34.1
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
