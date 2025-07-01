@@ -4,101 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C358C83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 18:23:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63E97C7EE30
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 18:30:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWfcX-0001LG-Mk; Tue, 01 Jul 2025 14:22:17 -0400
+	id 1uWfje-0003V0-Bb; Tue, 01 Jul 2025 14:29:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWfcW-0001L3-IE
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 14:22:16 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uWfjc-0003UR-Ae
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 14:29:36 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWfcU-0006jV-MY
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 14:22:16 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-453608ed113so36937305e9.0
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 11:22:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751394132; x=1751998932; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Thr6EF6Q1jokrF4quW2IgrC5uW6ZIlo0QLoKP3d5mPQ=;
- b=jmL8H2TzGxaOpE9wWGSIny1O7PE+p7zeNxOhF8fizdBG9RguL8MjHtOmN44xSsma1A
- kDmR9O0BQH/+6LM4M/VD7AoFwzv2epYFEIywtZVyicEMn7nGoTF2Bw3RBkmAqRXi6RsO
- 7hQHcsLFf/d1v+J/9fWdwXxRRtvsnZgTDZ1EG5PVNHo1XfOdmCBN3mi0AUkDGGB0vBrh
- XhhnYriwBZxabHMubWtmbmYGd/P+8JNQwd8Gp9152c4gv4rv4fMKbM84k06lKZapooGq
- Wv49ha7AI2JrrhKuNuhWcNs0dHq4VWarnVOJmNNdbtKKFO8/MiLE7dR0PFOdNp1FhXQi
- llMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751394132; x=1751998932;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Thr6EF6Q1jokrF4quW2IgrC5uW6ZIlo0QLoKP3d5mPQ=;
- b=j+iBRibbMxvFBzSCwIAjcD3G5L318yuSaRhSBSOZCb4c9Hhc9w99I8naPWcQpdIuVs
- tamFLEeGzUZcqMSim4VTUd7+gZ0CHOtdgCrV+plfbnWtxtzHYlfnzGlRjbVFqQ+dzKKi
- MlWw8ftXJN0HYoEfX8LI04yZ23AvB+ssQg1orIGTyZgcZA+/XkTdlKM5xQfbSHd98vs5
- 04jtAUkhpfWo8CxqRab/EYkVXZcC1nkL92QjDUrDx9alG9Br9GHcD8w8IcxaHzs+maRz
- kmZpsh6OtGkooYbJyufN1U3bKPEwwzNBJNP7lUKddlvaMFIZZtW+SZpoSlhFptVgi9Hj
- wG9A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUYENQ5T6uH7F/q1dP9eDMkOO8/4IXyx/2vbojQp8gdFYC5OfK0UKXsqia1cxYJjDgC7/Ykak01rUNu@nongnu.org
-X-Gm-Message-State: AOJu0Yx1ggQR1twbgC1KwinAMAVUYB4msoyckoKO0hFKDDJPge8227ds
- VL+QL2q5Ag4hmbtXkqoXcI53DC4L4kRq3tjtikS4ihz9319w8HL2+8mqvEkYZWLingU=
-X-Gm-Gg: ASbGncuX2FrIaQ7q0vCfMcc4B+g4Xx0+zkGK6HNrKROUTnxtnYcOsCKPlyrMaE20/Bo
- 82frNF8rlWA8iBfLHD8tgmtGKOp+DsRxqg/SMHpx1OgugQP95AEmnwIHsObyY8NYjmimn5UqA4y
- +2vmOnCiMwLiT/4g2YT+3jX7BtKly8l2VL4mtPYgO9UqUtbzJBF9OokkznKOeXtmNTtBAu0k9Cg
- aev2hA3UvDBwod/L9vzHhQs1JIVR+Js8pWL2XisfkkfxGrHBjnr0tSwj+5h3MYPUNH3R2isGkxL
- 6eSP7S4mYFIF2o12C5nL7g/Pi4Uj6LuO7KKz4Tt/6kJ5Dm/5U0OMCRtJJmfM9AdPjqrdzANu4sd
- no3V52oSCoI8riSUSG9gXiIcOKgUfT96VyEEh7OBK
-X-Google-Smtp-Source: AGHT+IGXNJLqo+pGQCw0NFuyH/JxIPFIpZ6g6dpQBs0ejg40xmBO/8Gqlg38P2gBrzCMzxo6ilzBLA==
-X-Received: by 2002:a05:600c:3589:b0:453:8bc7:5e53 with SMTP id
- 5b1f17b1804b1-454a367a6d8mr2517895e9.0.1751394131956; 
- Tue, 01 Jul 2025 11:22:11 -0700 (PDT)
-Received: from [192.168.69.218] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-453822c6b9fsm202731635e9.0.2025.07.01.11.22.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Jul 2025 11:22:11 -0700 (PDT)
-Message-ID: <8e1e8f28-28cb-4529-ad2d-9cd277f7ccd1@linaro.org>
-Date: Tue, 1 Jul 2025 20:22:09 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uWfjX-0007VH-Rg
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 14:29:34 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id A53D31F445;
+ Tue,  1 Jul 2025 18:29:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1751394569; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=WDlpmY7n6zm2AKPN2BrjPAH1sXJk2cRs0KH6HDlj+/c=;
+ b=JkHPQnLLVB51w+Fy79+kjYcII7myWrtp6VQnKYV9ApxhQu7g2goT2dhRJfYHpR9sl07Lwd
+ 1TlS3rdo3u1Jup2aEfh/MrUYTDCsm0QAWd88mrtJ5XQvXAqyYsMuLB2RMeF9WPLzX0bqAG
+ llxVT6lbgnTGbBgVZbxIbiIrhf5GBTg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1751394569;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=WDlpmY7n6zm2AKPN2BrjPAH1sXJk2cRs0KH6HDlj+/c=;
+ b=mAJxCQA3WCe+J6fSPN9Id0/FegsgasyuQ+pYoY42Yt7bRcLBJGQ7AAZoJ2YSX8Tf4JCEuh
+ 6jDVDbjK/oCzsNCA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1751394569; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=WDlpmY7n6zm2AKPN2BrjPAH1sXJk2cRs0KH6HDlj+/c=;
+ b=JkHPQnLLVB51w+Fy79+kjYcII7myWrtp6VQnKYV9ApxhQu7g2goT2dhRJfYHpR9sl07Lwd
+ 1TlS3rdo3u1Jup2aEfh/MrUYTDCsm0QAWd88mrtJ5XQvXAqyYsMuLB2RMeF9WPLzX0bqAG
+ llxVT6lbgnTGbBgVZbxIbiIrhf5GBTg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1751394569;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=WDlpmY7n6zm2AKPN2BrjPAH1sXJk2cRs0KH6HDlj+/c=;
+ b=mAJxCQA3WCe+J6fSPN9Id0/FegsgasyuQ+pYoY42Yt7bRcLBJGQ7AAZoJ2YSX8Tf4JCEuh
+ 6jDVDbjK/oCzsNCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1DEB91364B;
+ Tue,  1 Jul 2025 18:29:28 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id o51cMwgpZGjgVgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 01 Jul 2025 18:29:28 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>, Alex Williamson
+ <alex.williamson@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>, Peter Xu <peterx@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Avihai Horon
+ <avihaih@nvidia.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH 1/3] vfio/migration: Max in-flight VFIO device state
+ buffer count limit
+In-Reply-To: <0e88a253e06647f6c01bdeba45848501b3631bd3.1750787338.git.maciej.szmigiero@oracle.com>
+References: <cover.1750787338.git.maciej.szmigiero@oracle.com>
+ <0e88a253e06647f6c01bdeba45848501b3631bd3.1750787338.git.maciej.szmigiero@oracle.com>
+Date: Tue, 01 Jul 2025 15:29:26 -0300
+Message-ID: <874ivv69yx.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 26/27] accel/mshv: Workaround for overlappig mem
- mappings
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org
-Cc: Cameron Esfahani <dirty@apple.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Roman Bolshakov
- <rbolshakov@ddn.com>, Thomas Huth <thuth@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Wei Liu <wei.liu@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <liuwe@microsoft.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Magnus Kulke <magnuskulke@microsoft.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250701172834.44849-1-magnuskulke@linux.microsoft.com>
- <20250701172834.44849-27-magnuskulke@linux.microsoft.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250701172834.44849-27-magnuskulke@linux.microsoft.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[oracle.com:email, szmigiero.name:email,
+ suse.de:email, suse.de:mid, imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,50 +120,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Magnus,
+"Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
 
-On 1/7/25 19:28, Magnus Kulke wrote:
-> QEMU maps certain regions into the guest multiple times, as seen in the
-> trace below. Currently the MSHV kernel driver will reject those
-> mappings. To workaround this, a record is kept (a static global list of
-> "slots", inspired by what the HVF accelerator has implemented). An
-> overlapping region is not registered at the hypervisor, and marked as
-> mapped=false. If there is an UNMAPPED_GPA exit, we can look for a slot
-> that is unmapped and would cover the GPA. In this case we map out the
-> conflicting slot and map in the requested region.
-> 
-> mshv_set_phys_mem       add=1 name=pc.bios
-> mshv_map_memory      => u_a=7ffff4e00000 gpa=00fffc0000 size=00040000
-> mshv_set_phys_mem       add=1 name=ioapic
-> mshv_set_phys_mem       add=1 name=hpet
-> mshv_set_phys_mem       add=0 name=pc.ram
-> mshv_unmap_memory       u_a=7fff67e00000 gpa=0000000000 size=80000000
-> mshv_set_phys_mem       add=1 name=pc.ram
-> mshv_map_memory         u_a=7fff67e00000 gpa=0000000000 size=000c0000
-> mshv_set_phys_mem       add=1 name=pc.rom
-> mshv_map_memory         u_a=7ffff4c00000 gpa=00000c0000 size=00020000
-> mshv_set_phys_mem       add=1 name=pc.bios
-> mshv_remap_attempt   => u_a=7ffff4e20000 gpa=00000e0000 size=00020000
-> 
-> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-> ---
->   accel/mshv/mem.c            | 264 ++++++++++++++++++++++++++++++++----
->   accel/mshv/trace-events     |   7 +-
->   include/system/mshv.h       |  16 ++-
->   target/i386/mshv/mshv-cpu.c |  43 ++++++
->   4 files changed, 295 insertions(+), 35 deletions(-)
-> 
-> diff --git a/accel/mshv/mem.c b/accel/mshv/mem.c
-> index 6d7a726898..0ffe379601 100644
-> --- a/accel/mshv/mem.c
-> +++ b/accel/mshv/mem.c
-> @@ -20,44 +20,167 @@
->   #include <sys/ioctl.h>
->   #include "trace.h"
->   
-> +MshvMemorySlot mem_slots[MSHV_MAX_MEM_SLOTS];
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>
+> Allow capping the maximum count of in-flight VFIO device state buffers
+> queued at the destination, otherwise a malicious QEMU source could
+> theoretically cause the target QEMU to allocate unlimited amounts of memory
+> for buffers-in-flight.
+>
+> Since this is not expected to be a realistic threat in most of VFIO live
+> migration use cases and the right value depends on the particular setup
+> disable the limit by default by setting it to UINT64_MAX.
+>
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
-Ideally this should be in MshvState. Just a comment, not asking for
-changes... yet ;).
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
