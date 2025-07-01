@@ -4,85 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EF9FC8302F
-	for <qemu-devel@archiver.kernel.org>; Mon, 30 Jun 2025 23:24:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E10DEC83030
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 00:08:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWNqt-0006DN-8x; Mon, 30 Jun 2025 19:23:55 -0400
+	id 1uWOX9-0003qx-Qi; Mon, 30 Jun 2025 20:07:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uWNqr-0006Ce-Ds; Mon, 30 Jun 2025 19:23:53 -0400
-Received: from mail-vs1-xe2c.google.com ([2607:f8b0:4864:20::e2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uWNqp-0000HZ-LN; Mon, 30 Jun 2025 19:23:53 -0400
-Received: by mail-vs1-xe2c.google.com with SMTP id
- ada2fe7eead31-4e9c6b44477so1917397137.3; 
- Mon, 30 Jun 2025 16:23:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751325830; x=1751930630; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oRv/ZGebEpExuq0d5LPY93uI4zzW3lexV9Zn/HcsrL0=;
- b=G00SKDttqsR235zqcFQvwbtECVtrQ3G4uvdxXyl28TC3RlMoZdm7I8eCwNZvUYnLkU
- 9eLGJd/DEigCLdaGU2g58WCvayW5wsB7jlAZNayoW21JEZ9kSJ1wYhsGsXfAxcIpTzvv
- TyMZPJZra4r/gfOnc+VCjoh0KobzBzd1m8BsHOFMGqGqs7YcIu9U488OJ0IxbGQkrsgX
- 9gI5ayml//6GyLCsNCPIo4zYnbsWXKRh95KX4sdQK1/7NoL1ThLUYwzCnFFytJqMvoCC
- u4xTjEs26UJO16c5rQysjuedQTfrd2F1nUMzX09T+SLjfC6+osSGKIuKA4n8thHWd2UH
- kY/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751325830; x=1751930630;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oRv/ZGebEpExuq0d5LPY93uI4zzW3lexV9Zn/HcsrL0=;
- b=Ue2LQBIzyNTIL90IFb9B7ZRHoWsSE1bvGbYRm3exBqrUUINsBrxeg2tdb4NFybA9ho
- WDx384CYbSQfakZm3RFvmcfSMwJokgYio4Ad9fnisOK5rD+nCrnQ54quxcb0tokE7A9C
- +6xgOYYOORo9dk8GqfxLrsjQ3Bo7Wt5jC9x4gPAzREy+PNQPEB2iB4fUdHnMqgGxCV4L
- yxwt15YVOLY1q1u6uXweOoxhwg0lUU6RlU6RvVYJ4Pnusflug+LNtuBCD/rBI8748/Oc
- ZW/+Q7XFfxnNAUVQq2oHyRhqqEYnLTGLU97pG0W5LfJGhf+awVlugtrPlcu9iJVKmetw
- KoWw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWtSirnr1nTCM5ktiJUEdwaNXdQlur/Qo/evFVWHEv2aNzbj3wbzgeYxkpShK/L3cRct7p8jESkCd1IpA==@nongnu.org,
- AJvYcCXWjkAkN+aJaESwBliwSpAUVgcme1LJGtC6CE+6C8V7QQPUXfxHu98iZy0RABJip2wDXfDAQ+Ie0bV7@nongnu.org
-X-Gm-Message-State: AOJu0YxJb3KeNGZTS3wH9jpCgHtnn/FKb+HWl8rv49Vimg5YH3Wdfl9p
- xW4TbdSwCSZflMvTkDc9PnycGPCXX10TAkgUZAsZ5kuVXOBPlC999NmEZD25yjtUOcH40ivkbXn
- dgOaNVCYvXYvd5QODj23KyPUTqRBLGgE=
-X-Gm-Gg: ASbGnctO5EhmxWAWia9u2mTUe740ZssOFo8TG8Fmcd9K3d19AsZzBn/HmLdllcQ3wn5
- yDh0HlSr/rSyB689kJIj6OtEHLPpg9bCtbaE/pdAbBmMsUOHcSL8pF92sh//leP1ELWgtpl7Iwz
- 86tFsz2XTvjm3OIoWS8CNm7qoavtZb4cpTTsua8lbLicpNSNUYHnToZCkeYXLWyCNrKcSC6nqdE
- A==
-X-Google-Smtp-Source: AGHT+IFjNnwaoiQ3IoSAXWXaGky8MgKs9gicP6qu4hgSWRmDXMZbDXkYGRRoeIZlUDlNSgjtkN6unuy1ErI1KW/I08E=
-X-Received: by 2002:a05:6102:d8e:b0:4e6:d7af:a7b1 with SMTP id
- ada2fe7eead31-4ee4f6a056emr10234852137.10.1751325829946; Mon, 30 Jun 2025
- 16:23:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1uWOX4-0003qO-NC; Mon, 30 Jun 2025 20:07:30 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1uWOX0-0001dk-1d; Mon, 30 Jun 2025 20:07:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=7iqp7KavO6EMw2L8FHJR0xSNnodSxvI3eoapG6MozKU=; b=N0y5JLBJDPa7uPRA
+ MnyCynNE8Ovnzf9L9KGcgm34NGIddP0QW0ByNRpPeqjN6zRXXdhEIqwXoug9mxZja8hEkCEPrdjV+
+ zTspEDkz0Pp6Okx6u9arU9pD3lghGJevf6Ck862Ac2Xpdg07F3YO6PDE0rDlB9C3c/LVIhVm+L6Pc
+ INuJAvd2JVhQVeUele30PMobL/vcDCmyhSoZ7j00Gc57hpYssFpaSXSAyXs3kj1zzOPla/21iB4Sk
+ 1tfBKFDK3n816c3fTkDbHUoHLKELiMFj5gioKce/nwB4CpI2JlrbC4HP5sLyeS1e6nY0JzKoSdDjf
+ hGl25y91XG1z44ccbw==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1uWOWs-00D9k6-2v;
+ Tue, 01 Jul 2025 00:07:18 +0000
+Date: Tue, 1 Jul 2025 00:07:18 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ palmer@dabbelt.com, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH] hmp-cmds-target, target/riscv: add 'info register'
+Message-ID: <aGMmtqfqh7ZbJzdK@gallifrey>
+References: <20250630132228.1276838-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-References: <20250616150034827wuHs_ffe3Qm8cqFXT7HeW@zte.com.cn>
-In-Reply-To: <20250616150034827wuHs_ffe3Qm8cqFXT7HeW@zte.com.cn>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 1 Jul 2025 09:23:24 +1000
-X-Gm-Features: Ac12FXwF2xOEvf6BhMb7rNdLuogvOGBRb5p6eoD8c1n37_bUknr_sGacLyTtTLY
-Message-ID: <CAKmqyKP-edaygvvoW+=j4mRBT3YNs8Q++EHH0nDNY=qmhqJq5g@mail.gmail.com>
-Subject: Re: [PATCH v3 RESEND] migration: Fix migration failure when aia is
- configured as aplic-imsic
-To: liu.xuemei1@zte.com.cn
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2c;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250630132228.1276838-1-dbarboza@ventanamicro.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
+X-Uptime: 23:40:24 up 64 days, 7:53, 1 user, load average: 0.00, 0.00, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,92 +72,281 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 16, 2025 at 5:02=E2=80=AFPM <liu.xuemei1@zte.com.cn> wrote:
->
-> Address an error in migration when aia is configured as 'aplic-imsic' in
-> riscv kvm vm by adding riscv_aplic_state_needed() and
-> riscv_imsic_state_needed() to determine whether the corresponding sates a=
-re
-> needed.
->
-> Previously, the fields in the vmsds of 'riscv_aplic' and 'riscv_imsic' ca=
-n
-> only be initialized under certain special conditions in commit 95a97b3fd2=
-.
-> However, the corresponding ses of these vmsds are inserted into the
-> savevm_state.handlers unconditionally. This led to migration failure
-> characterized by uninitialized fields when save vm state:
-> qemu-system-riscv64: ../migration/vmstate.c:433: vmstate_save_state_v:
-> Assertion 'first_elem || !n_elems || !size' failed.
->
-> Fixes: 95a97b3fd2 ("target/riscv: update APLIC and IMSIC to support KVM A=
-IA")
->
-> Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
+* Daniel Henrique Barboza (dbarboza@ventanamicro.com) wrote:
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Hi Daniel,
 
-Alistair
+> The RISC-V target has *a lot* of CPU registers, with more registers
+> being added along the way when new extensions are added. In this world,
+> 'info registers' will throw a wall of text that can be annoying to deal
+> with when the user wants to verify the value of just a couple of
+> registers.
+> 
+> Add a new 'info register' HMP command that prints a specific register.
+> The semantics, and implementation, is similar to what 'info registers'
+> already does, i.e. '-a' will print a register for all VCPUs and it's
+> possible to print a reg for a specific VCPU.
+> 
+> A RISC-V implementation is included via riscv_cpu_dump_register().
+> 
+> Here's an example:
+> 
+> Welcome to Buildroot
+> buildroot login: QEMU 10.0.50 monitor - type 'help' for more information
+> (qemu) info register mstatus
+> 
+> CPU#0
+>  mstatus  0000000a000000a0
+> (qemu) info register mstatus -a
+> 
+> CPU#0
+>  mstatus  0000000a000000a0
+> 
+> CPU#1
+>  mstatus  0000000a000000a0
+> (qemu)
 
+OK, that makes some sense; some comments:
+
+   a) I'd make that a list of register names so you can print a handful out
+for whatever you're debugging.
+       info register gpr0,gpr1,pc
+   b) (But then you start wondering if having some predefined like 'gprs'
+would work)
+   c) It turns out there's an old, but limited similar thing called MonitorDef's
+where a target can define a list of registers; so you might want to define
+target_monitor_defs() OR target_get_monitor_def() for your architecture anyway,
+on x86 you can do things like
+          p/x $pc
+          x/10i $pc
+          p/x $eax
+
+      It doesn't seem very well maintained in the architectures though; the x86
+  one is prehistoric for example.
+
+  d) Another way would be to modify info registers to take an optional
+     -r register-list
+
+Anyway, those are _suggestions_ only.
+
+Dave
+
+> The API is introduced as TARGET_RISCV only.
+> 
+> Cc: Dr. David Alan Gilbert <dave@treblig.org>
+> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > ---
->  Changes in v3:
->  - Increase version_id and minimum_version_id
->
->  hw/intc/riscv_aplic.c | 12 ++++++++++--
->  hw/intc/riscv_imsic.c | 10 ++++++++--
->  2 files changed, 18 insertions(+), 4 deletions(-)
->
-> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-> index 8bcd9f4697..4fa5f7597b 100644
-> --- a/hw/intc/riscv_aplic.c
-> +++ b/hw/intc/riscv_aplic.c
-> @@ -962,10 +962,18 @@ static const Property riscv_aplic_properties[] =3D =
-{
->      DEFINE_PROP_BOOL("mmode", RISCVAPLICState, mmode, 0),
->  };
->
-> +static bool riscv_aplic_state_needed(void *opaque)
-> +{
-> +    RISCVAPLICState *aplic =3D opaque;
+>  hmp-commands-info.hx         | 17 +++++++++++++
+>  hw/core/cpu-common.c         |  8 ++++++
+>  include/hw/core/cpu.h        | 11 +++++++++
+>  include/monitor/hmp-target.h |  1 +
+>  monitor/hmp-cmds-target.c    | 30 ++++++++++++++++++++++
+>  target/riscv/cpu.c           | 48 ++++++++++++++++++++++++++++++++++++
+>  6 files changed, 115 insertions(+)
+> 
+> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+> index 639a450ee5..f3561e4a02 100644
+> --- a/hmp-commands-info.hx
+> +++ b/hmp-commands-info.hx
+> @@ -113,6 +113,23 @@ SRST
+>      Show the cpu registers.
+>  ERST
+>  
+> +#if defined(TARGET_RISCV)
+> +    {
+> +        .name       = "register",
+> +        .args_type  = "register:s,cpustate_all:-a,vcpu:i?",
+> +        .params     = "[register|-a|vcpu]",
+> +        .help       = "show a cpu register (-a: show the register value for all cpus;"
+> +                      " vcpu: specific vCPU to query; show the current CPU's register if"
+> +                      " no vcpu is specified)",
+> +        .cmd        = hmp_info_register,
+> +    },
 > +
-> +    return riscv_use_emulated_aplic(aplic->msimode);
+> +SRST
+> +  ``info register``
+> +    Show a cpu register.
+> +ERST
+> +#endif
+> +
+>  #if defined(TARGET_I386)
+>      {
+>          .name       = "lapic",
+> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+> index 39e674aca2..9c65ce1537 100644
+> --- a/hw/core/cpu-common.c
+> +++ b/hw/core/cpu-common.c
+> @@ -108,6 +108,14 @@ void cpu_dump_state(CPUState *cpu, FILE *f, int flags)
+>      }
+>  }
+>  
+> +void cpu_dump_register(CPUState *cpu, const char *reg, FILE *f)
+> +{
+> +    if (cpu->cc->dump_register) {
+> +        cpu_synchronize_state(cpu);
+> +        cpu->cc->dump_register(cpu, reg, f);
+> +    }
 > +}
 > +
->  static const VMStateDescription vmstate_riscv_aplic =3D {
->      .name =3D "riscv_aplic",
-> -    .version_id =3D 2,
-> -    .minimum_version_id =3D 2,
-> +    .version_id =3D 3,
-> +    .minimum_version_id =3D 3,
-> +    .needed =3D riscv_aplic_state_needed,
->      .fields =3D (const VMStateField[]) {
->              VMSTATE_UINT32(domaincfg, RISCVAPLICState),
->              VMSTATE_UINT32(mmsicfgaddr, RISCVAPLICState),
-> diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
-> index 2169988167..6174e1a05d 100644
-> --- a/hw/intc/riscv_imsic.c
-> +++ b/hw/intc/riscv_imsic.c
-> @@ -398,10 +398,16 @@ static const Property riscv_imsic_properties[] =3D =
-{
->      DEFINE_PROP_UINT32("num-irqs", RISCVIMSICState, num_irqs, 0),
->  };
->
-> +static bool riscv_imsic_state_needed(void *opaque)
+>  void cpu_reset(CPUState *cpu)
+>  {
+>      device_cold_reset(DEVICE(cpu));
+> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> index 33296a1c08..b9ddce22bd 100644
+> --- a/include/hw/core/cpu.h
+> +++ b/include/hw/core/cpu.h
+> @@ -160,6 +160,7 @@ struct CPUClass {
+>      int (*memory_rw_debug)(CPUState *cpu, vaddr addr,
+>                             uint8_t *buf, size_t len, bool is_write);
+>      void (*dump_state)(CPUState *cpu, FILE *, int flags);
+> +    void (*dump_register)(CPUState *cpu, const char *reg, FILE *);
+>      void (*query_cpu_fast)(CPUState *cpu, CpuInfoFast *value);
+>      int64_t (*get_arch_id)(CPUState *cpu);
+>      void (*set_pc)(CPUState *cpu, vaddr value);
+> @@ -693,6 +694,16 @@ enum CPUDumpFlags {
+>   */
+>  void cpu_dump_state(CPUState *cpu, FILE *f, int flags);
+>  
+> +/**
+> + * cpu_dump_register:
+> + * @cpu: The CPU whose register state is to be dumped.
+> + * @reg: CPU register name to be dumped.
+> + * @f: If non-null, dump to this stream, else to current print sink.
+> + *
+> + * Dumps CPU register state.
+> + */
+> +void cpu_dump_register(CPUState *cpu, const char *reg, FILE *f);
+> +
+>  /**
+>   * cpu_get_phys_page_attrs_debug:
+>   * @cpu: The CPU to obtain the physical page address for.
+> diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
+> index b679aaebbf..da9d690f89 100644
+> --- a/include/monitor/hmp-target.h
+> +++ b/include/monitor/hmp-target.h
+> @@ -57,6 +57,7 @@ void hmp_info_via(Monitor *mon, const QDict *qdict);
+>  void hmp_memory_dump(Monitor *mon, const QDict *qdict);
+>  void hmp_physical_memory_dump(Monitor *mon, const QDict *qdict);
+>  void hmp_info_registers(Monitor *mon, const QDict *qdict);
+> +void hmp_info_register(Monitor *mon, const QDict *qdict);
+>  void hmp_gva2gpa(Monitor *mon, const QDict *qdict);
+>  void hmp_gpa2hva(Monitor *mon, const QDict *qdict);
+>  void hmp_gpa2hpa(Monitor *mon, const QDict *qdict);
+> diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c
+> index 8eaf70d9c9..43f509aa60 100644
+> --- a/monitor/hmp-cmds-target.c
+> +++ b/monitor/hmp-cmds-target.c
+> @@ -121,6 +121,36 @@ void hmp_info_registers(Monitor *mon, const QDict *qdict)
+>      }
+>  }
+>  
+> +/*
+> + * Based on hmp_info_registers().
+> + */
+> +void hmp_info_register(Monitor *mon, const QDict *qdict)
 > +{
-> +    return !kvm_irqchip_in_kernel();
+> +    const char *reg = qdict_get_try_str(qdict, "register");
+> +    bool all_cpus = qdict_get_try_bool(qdict, "cpustate_all", false);
+> +    int vcpu = qdict_get_try_int(qdict, "vcpu", -1);
+> +    CPUState *cs;
+> +
+> +    if (all_cpus) {
+> +        CPU_FOREACH(cs) {
+> +            cpu_dump_register(cs, reg, NULL);
+> +        }
+> +    } else {
+> +        cs = vcpu >= 0 ? qemu_get_cpu(vcpu) : mon_get_cpu(mon);
+> +
+> +        if (!cs) {
+> +            if (vcpu >= 0) {
+> +                monitor_printf(mon, "CPU#%d not available\n", vcpu);
+> +            } else {
+> +                monitor_printf(mon, "No CPU available\n");
+> +            }
+> +            return;
+> +        }
+> +
+> +        cpu_dump_register(cs, reg, NULL);
+> +    }
 > +}
 > +
->  static const VMStateDescription vmstate_riscv_imsic =3D {
->      .name =3D "riscv_imsic",
-> -    .version_id =3D 1,
-> -    .minimum_version_id =3D 1,
-> +    .version_id =3D 2,
-> +    .minimum_version_id =3D 2,
-> +    .needed =3D riscv_imsic_state_needed,
->      .fields =3D (const VMStateField[]) {
->              VMSTATE_VARRAY_UINT32(eidelivery, RISCVIMSICState,
->                                    num_pages, 0,
-> --
-> 2.27.0
->
+>  static void memory_dump(Monitor *mon, int count, int format, int wsize,
+>                          hwaddr addr, int is_physical)
+>  {
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index e3f8ecef68..8b3edf7b23 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -640,6 +640,53 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+>      }
+>  }
+>  
+> +static void riscv_cpu_dump_register(CPUState *cs, const char *reg, FILE *f)
+> +{
+> +    RISCVCPU *cpu = RISCV_CPU(cs);
+> +    CPURISCVState *env = &cpu->env;
+> +    bool match_found = false;
+> +    int i;
+> +
+> +    for (i = 0; i < ARRAY_SIZE(csr_ops); i++) {
+> +        RISCVException res;
+> +        target_ulong val = 0;
+> +        int csrno = i;
+> +
+> +        /*
+> +         * Early skip when possible since we're going
+> +         * through a lot of NULL entries.
+> +         */
+> +        if (csr_ops[csrno].predicate == NULL) {
+> +            continue;
+> +        }
+> +
+> +        /*
+> +         * We're doing partial register name matching,
+> +         * e.g. 'mhpm' will match all registers that
+> +         * starts with 'mhpm'.
+> +         */
+> +        if (strncasecmp(csr_ops[csrno].name, reg, strlen(reg)) != 0) {
+> +            continue;
+> +        }
+> +
+> +        res = riscv_csrrw_debug(env, csrno, &val, 0, 0);
+> +
+> +        /*
+> +         * Rely on the smode, hmode, etc, predicates within csr.c
+> +         * to do the filtering of the registers that are present.
+> +         */
+> +        if (res == RISCV_EXCP_NONE) {
+> +            if (!match_found) {
+> +                match_found = true;
+> +                qemu_fprintf(f, "\nCPU#%d\n", cs->cpu_index);
+> +            }
+> +
+> +            qemu_fprintf(f, " %-8s " TARGET_FMT_lx "\n",
+> +                         csr_ops[csrno].name, val);
+> +        }
+> +    }
+> +}
+> +
+>  static void riscv_cpu_set_pc(CPUState *cs, vaddr value)
+>  {
+>      RISCVCPU *cpu = RISCV_CPU(cs);
+> @@ -2690,6 +2737,7 @@ static void riscv_cpu_common_class_init(ObjectClass *c, const void *data)
+>  
+>      cc->class_by_name = riscv_cpu_class_by_name;
+>      cc->dump_state = riscv_cpu_dump_state;
+> +    cc->dump_register = riscv_cpu_dump_register;
+>      cc->set_pc = riscv_cpu_set_pc;
+>      cc->get_pc = riscv_cpu_get_pc;
+>      cc->gdb_read_register = riscv_cpu_gdb_read_register;
+> -- 
+> 2.49.0
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
