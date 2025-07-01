@@ -4,75 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EEE1C8302F
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 09:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2DA4C8302F
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 09:50:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWXaG-0006xx-6k; Tue, 01 Jul 2025 05:47:24 -0400
+	id 1uWXd7-000821-Ix; Tue, 01 Jul 2025 05:50:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uWXaD-0006xb-9i; Tue, 01 Jul 2025 05:47:21 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uWXa9-0008TB-Vw; Tue, 01 Jul 2025 05:47:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751363238; x=1782899238;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=wRi38XEn3lG16EwLgOcpScq87jgyYmhJBiymSis23qA=;
- b=Nx+DyAaA5cvduHVS0frfwgN4HTQ2CJNBQX6BpZqdsJ0aX7gXzrJUq23v
- 1PwvLfasmy9OgFYHRenLPu3vYa7lKccipJf/Mb5/hodY7u6/3avd5ra6Z
- q2oKMD33kxjBIylGC49CzfBFfOpODt5BEkuMOVuMrI/eJB9ePPzjqkBRO
- NiB7u28bRNs0krhz74ft17VN2gORHUlg7PrCJiiZqSQt3oKZQrfuHytna
- 8UJlGxtJYtMNvx7BomPR3Vw4YAxZMJPEeGe8TgCyE9CGKX9oNUByRJFc/
- c6Ar5uegogsIGZfIaOwFNejelkgx16nWUMhmIPntu9bz6x15h1Xf5OIWP Q==;
-X-CSE-ConnectionGUID: uY747rTiTd27hw9giXqY2Q==
-X-CSE-MsgGUID: rYOs0HglSjmtyoHTe9x4FQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11480"; a="41252422"
-X-IronPort-AV: E=Sophos;i="6.16,279,1744095600"; d="scan'208";a="41252422"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Jul 2025 02:47:12 -0700
-X-CSE-ConnectionGUID: zREfzJeYQ6KZtv/vPGFnYA==
-X-CSE-MsgGUID: miUAP0VdShuL/uDYFnuSWg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,279,1744095600"; d="scan'208";a="177388589"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Jul 2025 02:47:08 -0700
-Message-ID: <c8a0bd48-3f48-4f3b-b3ee-93a14e84a70a@intel.com>
-Date: Tue, 1 Jul 2025 17:47:06 +0800
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uWXcy-0007xu-KK
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 05:50:13 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uWXcu-00020E-Mj
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 05:50:12 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-70e64b430daso31979767b3.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 02:50:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751363406; x=1751968206; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=L3ead+uizm1Vc976UnfrINanFTxCKtIjchE+tw+EPsA=;
+ b=KPa10ZGvrzt+U31ql15kqWOBN+mAIN5oT41H1Xru842Y3FhoIKjWHEdGVVcrZashC5
+ X+MWTAjbX/bcQfE3QOdp2BxBTVk1gsnt/pbbgvIJcZHFbaHRvwnzVFWJYdj3fS4VNekS
+ V1wAhJfILTF0ifWhCP15+H9pKk8iaWRfAxEr7hi6QwhmO+pqDlIuE3oAXPhvanbcwBat
+ kAsxuQaGOwlXHUXZsa4tt4KN2NmjoeSsYbrmAmxJVNIWVrOzKoUxNWOizhqIf4lvVFHh
+ k1eLcMoCbuuN9iGq7GMxj6tvCn7tGeDPouHIJeekZ3lq/zrcyYNgL7hWAPX5oxOc7JfQ
+ t7CQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751363406; x=1751968206;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=L3ead+uizm1Vc976UnfrINanFTxCKtIjchE+tw+EPsA=;
+ b=dSf/denQsXdWItM7OlHIF3nW2yr4KLqOd7pvN8f2Dxwzkf6MqMW2xZeZFbYS1C3ppf
+ KitTntFoUPetRihwKdLKMOvkv3i5Y9rL0JE7FO0fqfQ8Kk95i/MMwYJ4Z2VqCMs+z+mG
+ 1Ft730I2cQoShrrC6OIY0BCK2Dw6MyQazfNMDhbU28MjKkEsHNmgFAXb46xWBBrM4Jyv
+ JmQ+5BVfQ2gfJn3Ry5jmfsN9LZP2Ll5WpTEQtzeDfVFFOrmgwyOuB//VLxEv52SpxNSQ
+ 5CuhaJ0u43f7jxN2ZH0K6R+mPD98hlgtywoF5fXkgeTv5PR9wB4JXIU0jKy6kPPJGe9J
+ AIbw==
+X-Gm-Message-State: AOJu0YxONXZMVWBGLplLj5jDZOB4BAqn5K0Kh7yXcaFhgdwZGRYApwlp
+ FhGp7FIeGnmea0O1fxfAwNOXKMYnWWyZhDx8VFVxKPLIWyEV5wN9ACmb2feXqhMoYusvaVslVF8
+ cWqK8knM+y94r+kw1dRjOL+GP3gkBokfPyAv3BnB7uw==
+X-Gm-Gg: ASbGncsTo8twYHlBwwtazpr/6dz6E0g26bhTeNeO3dlY2vE3RYTmxG5E5nKkYrbrja3
+ DU9p6Eenr2mDAdnQKS6VWweUTw3ABlSMGhtzVHrWZkDioTm04uEtts6hDATrJqySAAsLuaEF5Vr
+ 03/Q3V4hO1FxGSVKAGkKLaaHGKlkM8sSVvuX3wBt7Pbpmc
+X-Google-Smtp-Source: AGHT+IEgNBWX5tGLtftpO87ft/BiEpcXC82wrB1DaQaCVscRFjWWJgGUjii5r8i+5yiViziGpgeRsjHaIy59eNovzCg=
+X-Received: by 2002:a05:690c:7442:b0:711:a4af:43ad with SMTP id
+ 00721157ae682-71517147badmr235251117b3.14.1751363406075; Tue, 01 Jul 2025
+ 02:50:06 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i386/cpu: ARCH_CAPABILITIES should not be advertised on
- AMD
-To: Alexandre Chartre <alexandre.chartre@oracle.com>, qemu-devel@nongnu.org,
- pbonzini@redhat.com
-Cc: qemu-stable@nongnu.org, zhao1.liu@intel.com, konrad.wilk@oracle.com,
- boris.ostrovsky@oracle.com, maciej.szmigiero@oracle.com
-References: <20250630133025.4189544-1-alexandre.chartre@oracle.com>
- <3a9c8152-3202-4962-a1fe-a2d7fdc33b76@intel.com>
- <abdf31e3-2ada-47d8-9c9d-d875491537b2@oracle.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <abdf31e3-2ada-47d8-9c9d-d875491537b2@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250623121845.7214-1-philmd@linaro.org>
+ <20250623121845.7214-7-philmd@linaro.org>
+In-Reply-To: <20250623121845.7214-7-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 1 Jul 2025 10:49:54 +0100
+X-Gm-Features: Ac12FXyuBHFyZZaOxyOwWqZE-W7vNcGgM_jfizm0gIVdy-6YVWg7T5T5DEF9PnA
+Message-ID: <CAFEAcA9ref1SFd2uPRBBjyg=eph+GptWxoyURxMZj8aSVD7zAg@mail.gmail.com>
+Subject: Re: [PATCH v3 06/26] target/arm/hvf: Trace hv_vcpu_run() failures
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Leif Lindholm <leif.lindholm@oss.qualcomm.com>, 
+ qemu-arm@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Alexander Graf <agraf@csgraf.de>, Bernhard Beschow <shentey@gmail.com>,
+ John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ kvm@vger.kernel.org, Eric Auger <eric.auger@redhat.com>, 
+ Cameron Esfahani <dirty@apple.com>, Cleber Rosa <crosa@redhat.com>, 
+ Radoslaw Biernacki <rad@semihalf.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,116 +105,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/1/2025 5:22 PM, Alexandre Chartre wrote:
-> 
-> On 7/1/25 10:23, Xiaoyao Li wrote:
->> On 6/30/2025 9:30 PM, Alexandre Chartre wrote:
->>> KVM emulates the ARCH_CAPABILITIES on x86 for both Intel and AMD
->>> cpus, although the IA32_ARCH_CAPABILITIES MSR is an Intel-specific
->>> MSR and it makes no sense to emulate it on AMD.
->>>
->>> As a consequence, VMs created on AMD with qemu -cpu host and using
->>> KVM will advertise the ARCH_CAPABILITIES feature and provide the
->>> IA32_ARCH_CAPABILITIES MSR. This can cause issues (like Windows BSOD)
->>> as the guest OS might not expect this MSR to exist on such cpus (the
->>> AMD documentation specifies that ARCH_CAPABILITIES feature and MSR
->>> are not defined on the AMD architecture).
->>>
->>> A fix was proposed in KVM code, however KVM maintainers don't want to
->>> change this behavior that exists for 6+ years and suggest changes to be
->>> done in qemu instead.
->>>
->>> So this commit changes the behavior in qemu so that ARCH_CAPABILITIES
->>> is not provided by default on AMD cpus when the hypervisor emulates it,
->>> but it can still be provided by explicitly setting arch-capabilities=on.
->>>
->>> Signed-off-by: Alexandre Chartre <alexandre.chartre@oracle.com>
->>> ---
->>>   target/i386/cpu.c | 14 ++++++++++++++
->>>   1 file changed, 14 insertions(+)
->>>
->>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->>> index 0d35e95430..7e136c48df 100644
->>> --- a/target/i386/cpu.c
->>> +++ b/target/i386/cpu.c
->>> @@ -8324,6 +8324,20 @@ void x86_cpu_expand_features(X86CPU *cpu, 
->>> Error **errp)
->>>           }
->>>       }
->>> +    /*
->>> +     * For years, KVM has inadvertently emulated the ARCH_CAPABILITIES
->>> +     * MSR on AMD although this is an Intel-specific MSR; and KVM will
->>> +     * continue doing so to not change its ABI for existing setups.
->>> +     *
->>> +     * So ensure that the ARCH_CAPABILITIES MSR is disabled on AMD cpus
->>> +     * to prevent providing a cpu with an MSR which is not supposed to
->>> +     * be there, unless it was explicitly requested by the user.
->>> +     */
->>> +    if (IS_AMD_CPU(env) &&
->>> +        !(env->user_features[FEAT_7_0_EDX] & 
->>> CPUID_7_0_EDX_ARCH_CAPABILITIES)) {
->>> +        env->features[FEAT_7_0_EDX] &= 
->>> ~CPUID_7_0_EDX_ARCH_CAPABILITIES;
->>> +    }
->>
->> This changes the result for the existing usage of "-cpu host" on
->> AMD. So it will need a compat_prop to keep the old behavior for old
->> machine.
-> 
-> Right, I will look at that.
-> 
->>
->> But I would like discuss if we really want to do it in QEMU.
->> ARCH_CAPABILITIES is not the only one KVM emulates unconditionally.
->> We have TSC_DEADLINE_TIMER as well. So why to treat them
->> differently? just because some Windows cannot boot? To me, it looks
->> just the bug of Windows. So please fix Windows. And to run with the
->> buggy Windows, we have the workaround: "-cpu host,-arch-capabilities"
-> 
-> Well, the Windows behavior is not that wrong as it conforms to the AMD 
-> Manual
-> which specifies that ARCH_CAPABILITIES feature and MSR are not defined 
-> on AMD
-> cpus; while QEMU/KVM are providing an hybrid kind of AMD cpu with Intel 
-> feature/MSR.
+On Mon, 23 Jun 2025 at 13:19, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> Allow distinguishing HV_ILLEGAL_GUEST_STATE in trace events.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/hvf/hvf.c        | 10 +++++++++-
+>  target/arm/hvf/trace-events |  1 +
+>  2 files changed, 10 insertions(+), 1 deletion(-)
+>
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index ef76dcd28de..cc5bbc155d2 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -1916,7 +1916,15 @@ int hvf_vcpu_exec(CPUState *cpu)
+>      bql_unlock();
+>      r =3D hv_vcpu_run(cpu->accel->fd);
+>      bql_lock();
+> -    assert_hvf_ok(r);
+> +    switch (r) {
+> +    case HV_SUCCESS:
+> +        break;
+> +    case HV_ILLEGAL_GUEST_STATE:
+> +        trace_hvf_illegal_guest_state();
+> +        /* fall through */
+> +    default:
+> +        g_assert_not_reached();
 
-It is currently reserved bit in AMD's manual. But it doesn't mean it 
-will be reserved forever. Nothing prevents AMD to implement it in the 
-future.
+This seems kind of odd.
 
-Software shouldn't set any expectation on the reserved bit.
+If it can happen, we shouldn't g_assert_not_reached().
+If it can't happen, we shouldn't trace it.
 
-> Microsoft is fixing that behavior anyway and has provided a preview fix 
-> (OS Build
-> 26100.4484), so that's good news. But the goal here is also to prevent 
-> such future
-> misbehavior. So if other features (like TSC_DEADLINE_TIMER) are exposed 
-> while they
-> shouldn't then they should probably be fixed as well.
- > > "-cpu host,-arch-capabilities" is indeed a workaround, but it defeats
-> the purpose
-> of the "-cpu host" option which is to provide a guest with the same 
-> features as the
-> host. And this workaround basically says: "provide a guest with the same 
-> cpu as
-> the host but disable this feature that the host doesn't provide"; this 
-> doesn't make
-> sense. Also this workaround doesn't integrate well in heterogeneous 
-> environments
-> (with Intel,  AMD, ARM or other cpus) where you just want to use "-cpu 
-> host" whatever
-> the platform is, and not have a special case for AMD cpus.
+But the hvf code already has a lot of "assert success
+rather than handling possible-but-fatal errors more
+gracefully", so I guess it's OK.
 
-As I said, it's just the workaround for users who want to run a specific 
-version of Windows with "-cpu host" on AMD. That's why it's called 
-workaround.
-
-The root-cause is the wrong behavior of the specific version of Windows. 
-If you don't use the buggy Windows, you don't need the workaround.
-
-> Thanks,
-> 
-> alex.
-> 
-
+-- PMM
 
