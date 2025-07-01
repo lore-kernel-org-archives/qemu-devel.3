@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA4B6C8302F
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 11:31:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A855C7EE30
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 11:38:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWZCZ-0002L9-Dj; Tue, 01 Jul 2025 07:31:03 -0400
+	id 1uWZIw-0003gZ-BJ; Tue, 01 Jul 2025 07:37:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.jaloo@gmail.com>)
- id 1uWZCT-0002Jn-VY
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:30:58 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <liu.jaloo@gmail.com>)
- id 1uWZCO-0007zb-BZ
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:30:57 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-32ce1b2188dso38410691fa.3
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 04:30:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751369449; x=1751974249; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=QIG6KFSu6Cq2Q+uTRAiMVLhEcoNdDloV/xPSIQ52UhM=;
- b=h/9xE0BT1WtR5Rt7T8yh7eSLYX0VGaKVPYnN+O1TGvLlFkUzit0vohYcW+OU7K0x5C
- szne+YEsvsfd9ea9VBjH8d70hwAhX6YE+4Z1CbsApKhxSMAkuXf1MftF6i2443oYxoCD
- Yl+kSozKpsDq2qdUPpceU0jIGGqtVOEsGhvXtzOs9UKP8ZCu6MARd4rA4bVIsdTyWjex
- o/va70djCiQFXgAuwvIt/ThxYpu6A0i8mPSm31NFEPs7mOs89FJx6IfJeha0aAVUGFR1
- nxg0C+lwxUq7zL8xLYvw0j4CFXfSOr9c0tJB3jeJn7lEmDw5jmyZgYjoAdyRvnSLjOP6
- 42ZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751369449; x=1751974249;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QIG6KFSu6Cq2Q+uTRAiMVLhEcoNdDloV/xPSIQ52UhM=;
- b=M93YIQgdyJFmhPqMt/U0a9SoMBHPjtdy5PTVthISuQ5BTmyaLPSNZxyFC8zFbDT2S9
- BHUfM3D9Qt9T8+s0Ey65KWYaOJQgmSLuwjuBwfOmbl1N6br2vEYO0hdXalcoQViRV/is
- oheN5QO62JYvCh+HADivCM3vow3l2t041xHKnancBoQPPEkMY1faIpNkrU/1pmWW/z+J
- b4UsUKVz5GChJXC+/OTS0rcY90uddkvjF371blhV3PEexcgC/OgEaKill3g6mNt3D1O+
- w5mTUe3XujEDqNCRzRju+L8PfbW76JYyj48iKfoPLb8tGwud6dzS0M1fXjXnqKzAQzH/
- 4zzA==
-X-Gm-Message-State: AOJu0Yydtl6vWTACI6CcFcbRM9x0U5CJRqlAw9iMxZoCdwJRGtMHfwX0
- nlR//fTrUpYE+C2ZlXj+ER74LmIvnETsyTR+drPGS7CpoCz474vXxj+7884w5v0osjaMeS0gJOO
- mT2Lc5NCNr99f9y8mJjYH4r7oANbtY/75NIxbAQ==
-X-Gm-Gg: ASbGncvchZWV65cF7/+nJ+KGUchRrct0EcTaUoO6igOp2+UaywhhjzEICxPZ6NbJ+RR
- FGinT9jmXpi5Y1HNxvf5DfGyn/ZQEKzFJRKrlRcAYJng+ramHvQBXSUyq2bh9OFENhlYkALlE/u
- sS+cREQc99Rj2Nm8FMayrRLlyelMYNye5nK/x5ayAKKYHH
-X-Google-Smtp-Source: AGHT+IGsZmUNZurvjQG731HRvENIk5GwF/4tJzYXKpQa9gR7vo4rqeV9uUX3DebK5mTNwgdSS5ePqoILmTVm740wiHg=
-X-Received: by 2002:a05:6512:1089:b0:553:20f2:2e79 with SMTP id
- 2adb3069b0e04-5550b803d2emr5184453e87.13.1751369448582; Tue, 01 Jul 2025
- 04:30:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uWZIr-0003g8-00
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:37:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uWZIn-00024U-6t
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:37:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751369845;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=vw5O4lMVxeF8wcY5LvDDfJqxCwiPzAWKcuF+9FH0pxE=;
+ b=h4t5bfobRHdVqEaPTmiAZM+FKyvnFIKmPyjgs4wTKLqlZeEcIYYkrCk6sw1iS0MESmg0BX
+ 5DmrKFlXtjbsokOJm9nOdynce9nLONrmcDhEZrVmFkoBCmjIcVXw7Hu2wkgZa75msZQ69y
+ Hd+0vNThJRXcu1ur5/kFtNaqwNP7j3I=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-153-6UyDl35rNMmEEnclqVAofg-1; Tue,
+ 01 Jul 2025 07:37:22 -0400
+X-MC-Unique: 6UyDl35rNMmEEnclqVAofg-1
+X-Mimecast-MFC-AGG-ID: 6UyDl35rNMmEEnclqVAofg_1751369840
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8F87B1808984; Tue,  1 Jul 2025 11:37:19 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.34.118])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ABA2730001B1; Tue,  1 Jul 2025 11:37:13 +0000 (UTC)
+Date: Tue, 1 Jul 2025 13:37:10 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, den@virtuozzo.com,
+ andrey.drobyshev@virtuozzo.com, hreitz@redhat.com,
+ stefanha@redhat.com, eblake@redhat.com, jsnow@redhat.com,
+ vsementsov@yandex-team.ru, xiechanglong.d@gmail.com,
+ wencongyang2@huawei.com, berto@igalia.com, fam@euphon.net, ari@tuxera.com
+Subject: Re: [PATCH v4 24/48] block: add bdrv_graph_wrlock_drained()
+ convenience wrapper
+Message-ID: <aGPIZvQwejyjRPKw@redhat.com>
+References: <20250530151125.955508-1-f.ebner@proxmox.com>
+ <20250530151125.955508-25-f.ebner@proxmox.com>
 MIME-Version: 1.0
-From: Liu Jaloo <liu.jaloo@gmail.com>
-Date: Tue, 1 Jul 2025 19:30:36 +0800
-X-Gm-Features: Ac12FXyKiTeIYoMfM9pAUiY6Uwo4w7O6Qaq2JOH2LX3I48JNSRLnfzq7NgP7lvE
-Message-ID: <CAOYM0N1ffwdV1CDCrt_=ZcuQRnNbZ4ZNC3CS9VoxF=Yz4yMdUg@mail.gmail.com>
-Subject: about 0x602 in e1000.c
-To: qemu-devel@nongnu.org
-Cc: dmitry.fleytman@gmail.com, odaki@rsg.ci.i.u-tokyo.ac.jp
-Content-Type: multipart/alternative; boundary="000000000000da73280638dc797c"
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=liu.jaloo@gmail.com; helo=mail-lj1-x235.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250530151125.955508-25-f.ebner@proxmox.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,37 +87,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000da73280638dc797c
-Content-Type: text/plain; charset="UTF-8"
+Am 30.05.2025 um 17:11 hat Fiona Ebner geschrieben:
+> Many write-locked sections are also drained sections. A new
+> bdrv_graph_wrunlock_drained() wrapper around bdrv_graph_wrunlock() is
+> introduced, which will begin a drained section first. A global
+> variable is used so bdrv_graph_wrunlock() knows if it also needs
+> to end such a drained section. Both the aio_poll call in
+> bdrv_graph_wrlock() and the aio_bh_poll() in bdrv_graph_wrunlock()
+> can re-enter a write-locked section. While for the latter, ending the
+> drain could be moved to before the call, the former requires that the
+> variable is a counter and not just a boolean.
+> 
+> Since the wrapper calls bdrv_drain_all_begin(), which must be called
+> with the graph unlocked, mark the wrapper as GRAPH_UNLOCKED too.
+> 
+> The switch to the new helpers was generated with the following
+> commands and then manually checked:
+> find . -name '*.c' -exec sed -i -z 's/bdrv_drain_all_begin();\n\s*bdrv_graph_wrlock();/bdrv_graph_wrlock_drained();/g' {} ';'
+> find . -name '*.c' -exec sed -i -z 's/bdrv_graph_wrunlock();\n\s*bdrv_drain_all_end();/bdrv_graph_wrunlock();/g' {} ';'
+> 
+> Suggested-by: Kevin Wolf <kwolf@redhat.com>
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+> ---
+> 
+> Changes in v4:
+> * Adapt to context changes from earlier patch.
+> * Mark the wrapper as GRAPH_UNLOCKED itself
 
-in the source code "hw/net/e1000.c"
+> diff --git a/include/block/graph-lock.h b/include/block/graph-lock.h
+> index 2c26c72108..b564cba2c0 100644
+> --- a/include/block/graph-lock.h
+> +++ b/include/block/graph-lock.h
+> @@ -112,10 +112,21 @@ void unregister_aiocontext(AioContext *ctx);
+>  void no_coroutine_fn TSA_ACQUIRE(graph_lock) TSA_NO_TSA
+>  bdrv_graph_wrlock(void);
+>  
+> +/*
+> + * bdrv_graph_wrlock_drained:
+> + * Similar to bdrv_graph_wrlock, but will begin a drained section before
+> + * locking.
+> + */
+> +void no_coroutine_fn TSA_ACQUIRE(graph_lock) TSA_NO_TSA GRAPH_UNLOCKED
+> +bdrv_graph_wrlock_drained(void);
 
-[LEDCTL]  = 0x602,
+GRAPH_UNLOCKED is redundant. TSA_ACQUIRE(graph_lock) already means that
+you can't call the function while holding the lock.
 
-maybe should be:
-[LEDCTL] = 0x07068302,
+Kevin
 
-according to the "*Table 13-60. LED Control Bit Description*" of the doc:
-https://www.intel.com/content/dam/doc/manual/pci-pci-x-family-gbe-controllers-software-dev-manual.pdf
-
-0x602 is EEPROM default value, just for LED0 and LED2, according to the
-same doc:
-*Table 5-15. LED Configuration Defaults*
-
---000000000000da73280638dc797c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>in the source code &quot;hw/net/e1000.c&quot;</div><d=
-iv><br></div><div>[LEDCTL] =C2=A0=3D 0x602,</div><div><br></div><div>maybe =
-should be: <br></div><div>[LEDCTL] =3D 0x07068302,</div><div><br></div><div=
->according to the &quot;<b>Table 13-60. LED Control Bit Description</b>&quo=
-t; of the doc:</div><div><a href=3D"https://www.intel.com/content/dam/doc/m=
-anual/pci-pci-x-family-gbe-controllers-software-dev-manual.pdf">https://www=
-.intel.com/content/dam/doc/manual/pci-pci-x-family-gbe-controllers-software=
--dev-manual.pdf</a></div><div><br></div><div>0x602 is EEPROM default value,=
- just for LED0 and LED2, according to the same doc:<br></div><div><b>Table =
-5-15. LED Configuration Defaults</b></div></div>
-
---000000000000da73280638dc797c--
 
