@@ -4,100 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92297C83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 14:48:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91822C7EE30
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 14:48:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWcGt-00008p-SM; Tue, 01 Jul 2025 10:47:45 -0400
+	id 1uWcH3-0000Lu-ML; Tue, 01 Jul 2025 10:47:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uWcG6-0007vc-JB
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWcGA-0007vm-7A
  for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:47:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uWcG0-0007Wt-QT
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:46:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751381204;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UMC/A6RAs43ZKJp/HNwTuRg/0+rMwp9YxcboB6r83i0=;
- b=LWhblFzOkY+LyHxT5wga1rkJlC6eniHuSrm9FOaqlBc5opGlaz4CJEiZs2JJl9aThm9rxs
- jfAKYgEAhFn2Li6UWNDflAlH4CauM7NDzSjNv6EKxLYM8P3VN6kpnEJh2r3lnenARZviKq
- 7i+AjBnhLyoIOMY7f7254/AOekZhbX4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-561-LZVLWg9nNY2RSCYceWSwQQ-1; Tue, 01 Jul 2025 10:46:42 -0400
-X-MC-Unique: LZVLWg9nNY2RSCYceWSwQQ-1
-X-Mimecast-MFC-AGG-ID: LZVLWg9nNY2RSCYceWSwQQ_1751381201
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-450d290d542so36974735e9.1
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 07:46:42 -0700 (PDT)
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWcG5-0007XJ-Hc
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:46:56 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-453066fad06so39234795e9.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 07:46:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751381210; x=1751986010; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=32sIKa7Y8PNtS8Bgd6Etg2hYgYfsXGy2A3nEDlLpLAs=;
+ b=cMYPzPfrWitHywZSbVPdPGJolaLpqGTlQQVYPxU7P1GB9aa/hcEQ1LiyDGy/G2puAM
+ utgz4JY9JvwQePg9AqKw0uIMp9NGueTD0Rtx9FRnneSh7bFnX9EanUtE8jUzk/RUrfn8
+ 9Vn731qoMfR0RM93hUIn/vS/MCWmdadG1ZGKvIe8a+CkX9XZpMwM43HPkya67ShCgTUn
+ yMYiPZt0E0XmH7IKOWsTQzdglrnjifwfXnFCVRiXzGZdLSOlm2q/57bDWw7xg32kPah/
+ kcFWJ8ue3ViEhNOGm2M9ZxIirdJcYgnf4qJgZl6IPsJvL+Xk4p5V4G2crPytAwiPSLG3
+ aL9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751381201; x=1751986001;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UMC/A6RAs43ZKJp/HNwTuRg/0+rMwp9YxcboB6r83i0=;
- b=gXIFvk8KA6APoAThahqSXtvXN7Q77jfeA8DM+cZZO38dkBTZ19KOaaYEfleh06StPU
- tGvDuFZIbn66Hj9RqyxE0vm9i7+xMwVmeyIXtCNo5k8MteCPp9fNLfSn8hIID1C2susN
- cRsR5N5BWzXXrYhQSf/CmwOOlRr70Ijk9Sb5jNHtLU7zrANEQdZbqMBT4GtSxA6G6G+x
- v/w7zcWxdAhJLBd7oMcbR8Ja6oJ2XtYr8Ofc2vJlyxAUaAECsttCW8hsltqMX0Wsf7Y6
- wAvCrRIe7e4us6Aft9umA1C2r8J6NnPRyvhyxqWem0XGtbJGe2Cp/mUH7M7F8UjIzB3L
- FAzg==
-X-Gm-Message-State: AOJu0Yy5yHsic0OO4owA9OkACaO7/rnOwh/dLECcPAQMVYId4nugoe5M
- nTeH4Nc0R2bwMghneD1lNu85kOLnF3+QXnPyIOuXtzCXiGusmNfBk2xnVvcEV500NXYk/YO3hOt
- 7EiUonyClSGIzWOA1KCkCUnEEDaqYR3o/Ma2cwhly9IYZ6McYhJUzkYYR
-X-Gm-Gg: ASbGncv8BSyMhIYBakUQIhRtJ/gpB8i+yxs5aaGDHupwbL/l9SKFU7M9LAAA2LjrCCo
- J1hps6w6oqiGcSedA4hie7s6IbT18adJRknrQM3o8qblxHFLeDwVKhg09x2IOkPOmRvOpct7fmt
- 4u8e95OITticTtge3/H3ZZRTA/S58VlSBphzpWogAXG5Pfp2Ipn8zhrAWEaN/0DP1swFSvAIdii
- l4qdO6yJ+YlWxTKSNnVnNuuMlwfuSQyMH4ROl96CqLgROdewaevMOOxv9cK4CDLDcyU2YhknHk0
- y6NB+EzHDWG4UxmPLWOPwCCFEGD8fQIULN22BrmwrNRe5Mz7zHEB1jm94g8mJFsx4XxowvCd5NG
- 1c+eMFBBgeLYvllhrZlGKqQJoVEpzBs4pM9vBAp0YAvJslfmxVoU=
-X-Received: by 2002:a05:600c:190b:b0:44b:eb56:1d48 with SMTP id
- 5b1f17b1804b1-4538ee4f88cmr199617435e9.4.1751381201013; 
- Tue, 01 Jul 2025 07:46:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFMeT/YY3inTBxyQTVgKTSbxEEAcLrxTan0VXaWX4UKFD0XhfIh5lEoacPC6K7bTh61p79v7w==
-X-Received: by 2002:a05:600c:190b:b0:44b:eb56:1d48 with SMTP id
- 5b1f17b1804b1-4538ee4f88cmr199617085e9.4.1751381200512; 
- Tue, 01 Jul 2025 07:46:40 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d700:f3aa:cbe1:b363:ae39:fc99?
- (p200300cfd700f3aacbe1b363ae39fc99.dip0.t-ipconnect.de.
- [2003:cf:d700:f3aa:cbe1:b363:ae39:fc99])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-453823ad03asm200375865e9.23.2025.07.01.07.46.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Jul 2025 07:46:39 -0700 (PDT)
-Message-ID: <18f6275a-dee0-4df4-85e3-efaf81a7724d@redhat.com>
-Date: Tue, 1 Jul 2025 16:46:38 +0200
+ d=1e100.net; s=20230601; t=1751381210; x=1751986010;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=32sIKa7Y8PNtS8Bgd6Etg2hYgYfsXGy2A3nEDlLpLAs=;
+ b=rNpy4vTBB5sYnhRVaM7QJS45qVF1N9nOjyIV0Kq8OAugNB7txk1pUqotcN60napf43
+ kJLt+QbWIAu+ECEI/g5nfOjQimlWuQKFY199QtVad29ec+7l6LcrjgY81QDkvWSPgL8b
+ BPxK5JY+yFijH+jpIh5ZkRVP9AqqYZJB239WDRrHJbmDuxejvJg/Vd17yvVNvLXeD1Ri
+ kZX6RiXw0fKllxEqdJvh7GfNpssHaTB0fr/J2Yba9+z7hGa1owqvTJ+LQo7V6eMfy9aj
+ tHGRkxSE5Ev5xb0coY0BD1VvIvaO68R6Ek+dcGn59NqKMcNYB2FCgCDzgUZ0hEvN6FeX
+ RYSw==
+X-Gm-Message-State: AOJu0YxrPzYR8pcayUxAFYitC2Di5mWu1blixyWoiZ8ikRIATwpW+OZZ
+ C3y+T8Svd3uHUgo3myIK4UbS3/cVC/KrrbdD7uo6Stwg/hCcqa8hXQeSy5u3guImdv5rTbwDezs
+ IJlGm
+X-Gm-Gg: ASbGncueAwIZnhqiEktJnUydaQge4D01uKUp7vrgBna4fdWYm26X+VdG2wx+nQ5K4PX
+ 0rjwmYPXTbFsM9VvTf+nPRKGknOokrhvNB16AFucA8xz+Z1wa2tbWZvv3Qpgc8g5lWjK2ePdwd4
+ bz6YOr3/s30nwjcx/JWOg8zur4ZryHo6fWWc/xixeZFx0O3LDigNYzJFPKTEQRuRlIMguNqxlhz
+ PIDrBjSFOh0HlEJrg9aLxG8FHZ7DGMyMjp+eNiz2NyKM9BypEMttERKUmUfb5NaAsSopX7C3xik
+ NgVj/tzqUmjrknp5qe+XDnjm3UGogRPjibrTJtwxC1NEwD2/q/fLROgONz5ObLixjZFC7EE3O0I
+ J47Cl9FJywMJDFHyN6xLrDm9SnPdeZ7nkJWc+4shGXRlburU=
+X-Google-Smtp-Source: AGHT+IGOS3Pp8BhAxRzra+IEREvLRhuYrwIp3ak858aMQ47FBlqU2sCDfuCBdZRqh2BLL4upavGENQ==
+X-Received: by 2002:a05:600c:5392:b0:445:1984:2479 with SMTP id
+ 5b1f17b1804b1-45390bad330mr170129225e9.5.1751381209722; 
+ Tue, 01 Jul 2025 07:46:49 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4538f88efffsm140603835e9.17.2025.07.01.07.46.46
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 01 Jul 2025 07:46:48 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Julian Armistead <julian.armistead@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 60/68] accel/tcg: Factor rr_cpu_exec() out for re-use
+Date: Tue,  1 Jul 2025 16:40:08 +0200
+Message-ID: <20250701144017.43487-61-philmd@linaro.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250701144017.43487-1-philmd@linaro.org>
+References: <20250701144017.43487-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] block: implement 'resize' callback for child_of_bds
- class
-To: Fiona Ebner <f.ebner@proxmox.com>, qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, stefanha@redhat.com,
- fam@euphon.net
-References: <20250630113035.820557-1-f.ebner@proxmox.com>
- <20250630113035.820557-4-f.ebner@proxmox.com>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <20250630113035.820557-4-f.ebner@proxmox.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,93 +104,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.06.25 13:27, Fiona Ebner wrote:
-> If a node below a filter node is resized, the size of the filter node
-> is now also refreshed (recursively for filter parents).
->
-> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-> ---
->   block.c                          | 12 ++++++++++++
->   include/block/block_int-common.h |  2 +-
->   2 files changed, 13 insertions(+), 1 deletion(-)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ accel/tcg/tcg-accel-ops-rr.h |  2 ++
+ accel/tcg/tcg-accel-ops-rr.c | 31 ++++++++++++++++++++-----------
+ 2 files changed, 22 insertions(+), 11 deletions(-)
 
-What does this do for block job filter nodes, like mirror?  If they 
-changed their length, we might have to consider whether the job also 
-needs to be amended somehow.
-
-However, I assume it’s a safe (conservative) change for them because 
-such drivers don’t implement bdrv_co_getlength(), so 
-bdrv_co_refresh_total_sectors() will not change anything.  Is that right 
-and intended?
-
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-
-(Babbling below.)
-
-> diff --git a/block.c b/block.c
-> index bfd4340b24..449f814ebe 100644
-> --- a/block.c
-> +++ b/block.c
-> @@ -1497,6 +1497,17 @@ static void GRAPH_WRLOCK bdrv_child_cb_detach(BdrvChild *child)
->       }
->   }
->   
-> +static void coroutine_fn GRAPH_RDLOCK bdrv_child_cb_resize(BdrvChild *child)
-> +{
-> +    BlockDriverState *bs = child->opaque;
-> +
-> +    if (bs->drv && bs->drv->is_filter) {
-
-Checking the role for BDRV_CHILD_FILTERED would be more generic; but it 
-would cause 'raw' nodes to be updated, too.  But I don’t know whether we 
-want that or not, and excluding raw (i.e. not changing behavior there) 
-is certainly the safe option.
-
-> +        /* Best effort, ignore errors. */
-> +        bdrv_co_refresh_total_sectors(bs, bs->total_sectors);
-> +        bdrv_co_parent_cb_resize(bs);
-
-This makes me wonder whether bdrv_co_refresh_total_sectors() should 
-itself call bdrv_co_parent_cb_resize().  Still not quite sure; if the 
-underlying image file is resized by an external party (and we notice 
-this by accident, more or less), maybe the guest device should be informed.
-
-(One thing to consider, maybe, are nodes that unshare the resize 
-permission for a child.  It’s probably not clever to call the resize CB 
-if that permission is unshared, so maybe just from that perspective, we 
-should keep that CB strictly inside of that explicit truncate path that 
-checks that permission (at least when growing images...).)
-
-Anyway, again, this is the safe option.
-
-Hanna
-
-> +    }
-> +}
-> +
->   static int bdrv_child_cb_update_filename(BdrvChild *c, BlockDriverState *base,
->                                            const char *filename,
->                                            bool backing_mask_protocol,
-> @@ -1529,6 +1540,7 @@ const BdrvChildClass child_of_bds = {
->       .detach          = bdrv_child_cb_detach,
->       .inactivate      = bdrv_child_cb_inactivate,
->       .change_aio_ctx  = bdrv_child_cb_change_aio_ctx,
-> +    .resize          = bdrv_child_cb_resize,
->       .update_filename = bdrv_child_cb_update_filename,
->       .get_parent_aio_context = child_of_bds_get_parent_aio_context,
->   };
-> diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-> index 692a9696d1..6670db2f85 100644
-> --- a/include/block/block_int-common.h
-> +++ b/include/block/block_int-common.h
-> @@ -1023,7 +1023,7 @@ struct BdrvChildClass {
->       /*
->        * Notifies the parent that the child was resized.
->        */
-> -    void (*resize)(BdrvChild *child);
-> +    void GRAPH_RDLOCK_PTR (*resize)(BdrvChild *child);
->   
->       /*
->        * Returns a name that is supposedly more useful for human users than the
+diff --git a/accel/tcg/tcg-accel-ops-rr.h b/accel/tcg/tcg-accel-ops-rr.h
+index 2a76a296127..a73fe5b94a6 100644
+--- a/accel/tcg/tcg-accel-ops-rr.h
++++ b/accel/tcg/tcg-accel-ops-rr.h
+@@ -18,4 +18,6 @@ void rr_kick_vcpu_thread(CPUState *unused);
+ /* start the round robin vcpu thread */
+ void rr_start_vcpu_thread(CPUState *cpu);
+ 
++int rr_cpu_exec(CPUState *cpu);
++
+ #endif /* TCG_ACCEL_OPS_RR_H */
+diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+index f5af7818d51..a9150802369 100644
+--- a/accel/tcg/tcg-accel-ops-rr.c
++++ b/accel/tcg/tcg-accel-ops-rr.c
+@@ -169,6 +169,25 @@ static int rr_cpu_count(void)
+     return cpu_count;
+ }
+ 
++int rr_cpu_exec(CPUState *cpu)
++{
++    int ret;
++
++    bql_unlock();
++    if (icount_enabled()) {
++        icount_prepare_for_run(cpu);
++    }
++
++    ret = tcg_cpu_exec(cpu);
++
++    if (icount_enabled()) {
++        icount_process_data(cpu);
++    }
++    bql_lock();
++
++    return ret;
++}
++
+ static void *rr_vcpu_register(CPUState *cpu)
+ {
+     Notifier *force_rcu = g_new(Notifier, 1);
+@@ -269,17 +288,7 @@ static void *rr_cpu_thread_fn(void *arg)
+                               (cpu->singlestep_enabled & SSTEP_NOTIMER) == 0);
+ 
+             if (cpu_can_run(cpu)) {
+-                int r;
+-
+-                bql_unlock();
+-                if (icount_enabled()) {
+-                    icount_prepare_for_run(cpu);
+-                }
+-                r = tcg_cpu_exec(cpu);
+-                if (icount_enabled()) {
+-                    icount_process_data(cpu);
+-                }
+-                bql_lock();
++                int r = rr_cpu_exec(cpu);
+ 
+                 if (r == EXCP_DEBUG) {
+                     cpu_handle_guest_debug(cpu);
+-- 
+2.49.0
 
 
