@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3BA2C8302F
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 11:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12D67C7EE30
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 11:49:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWZRl-0006Qa-5L; Tue, 01 Jul 2025 07:46:45 -0400
+	id 1uWZRx-00070j-Lf; Tue, 01 Jul 2025 07:46:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uWZQj-0005Vg-1P
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:45:41 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uWZQr-0005bZ-2H
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:45:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uWZQY-0003a2-CH
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:45:40 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uWZQk-0003cc-9f
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:45:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751370328;
+ s=mimecast20190719; t=1751370338;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oMe0OVYlTZYOUnzGRhuNbsELyRKdi/6CFqcynNPkjCw=;
- b=WJry8N301kh5oO52Ll1zTwkhWBu8rdKJxTfuEIpILVmgPC+OOPoogBvnvQLE3ZZdv6A4bf
- o833gmFn2KdDBKJnzVtfUWdJMheKz8m3J4ONZ32+FMZaYQ+AB1of1P3a6o5DOK9vIWchqI
- jXCTddNmQcZIzTlwnIc8A9whgCr8+zc=
+ bh=Qihe+exxIN+/4sefM9Iuz6plsiYQc/e5rgGK1PReb6U=;
+ b=Dtvnll0i890g1lzgj57HsxhzYOqvqP4EZNkLJqn5ZsOMyYZlRhB9HfaijGkaQddmzWcSeL
+ SWmlcIZu8IU6rBi18H+xyMciEKPl96ogSESf+tg3tVnNXx1VyaHXBax9v1TOu9kMeHjBJb
+ L0RV5V3AA9Sz/CWn1X4Kb4rzO3wblyg=
 Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
  [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-496-q6jaT6KyOtep3jAMtSSolg-1; Tue, 01 Jul 2025 07:45:23 -0400
-X-MC-Unique: q6jaT6KyOtep3jAMtSSolg-1
-X-Mimecast-MFC-AGG-ID: q6jaT6KyOtep3jAMtSSolg_1751370323
+ us-mta-260-_iMP0aBTPl-UL_TyA7mXiA-1; Tue, 01 Jul 2025 07:45:37 -0400
+X-MC-Unique: _iMP0aBTPl-UL_TyA7mXiA-1
+X-Mimecast-MFC-AGG-ID: _iMP0aBTPl-UL_TyA7mXiA_1751370336
 Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4edf5bb4dso3657816f8f.0
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 04:45:23 -0700 (PDT)
+ ffacd0b85a97d-3a52bfda108so2620067f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 04:45:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751370322; x=1751975122;
+ d=1e100.net; s=20230601; t=1751370336; x=1751975136;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oMe0OVYlTZYOUnzGRhuNbsELyRKdi/6CFqcynNPkjCw=;
- b=EIdTJZnCsMBi2b0npKsZO6ndOMSwL3uhehLQYmtt1dpiParZwpnE59HQIKmwM+Wm/v
- SAmG6hZ5LFY9Z5yWIPf8xcX51ABO3lagG7IKwBsPmQndBq7xQiDC5m7IC8XFdz4hbKc5
- x8MOtNLJaChi2GHVSGvsoDJBhpLOtQpTXiNvMGA7wU+tQQnYagWYO26kjWEqCNBuYijp
- QpaLRCDQgZzSEaH8aDxom/pLaqvo3mNcT1PZazI+mG2Q9Glo5D1eyKJpbzfU1iRYk8hI
- zZJLDV2OOiMTQwszdbFjAWuxC4hZlYmKixviv3CPPNL+F0j7bMlmpBpDMkyQwZXTgDIN
- xdDg==
-X-Gm-Message-State: AOJu0YxRVMmH4j0sa6x8ge91F4rPAYKiFZgWWNgRdP8aSL+HXQM5+myo
- /toKx9ooc9qHqRaRTrBVVEAnOZeB2MW2T630Ww7S4mv1HQzI7ntPg1E08XnUFLsDeXhlv3XL3KF
- sAVrKpE0jI4oZGD9qWWM0TxN57DRT4u/bgGkN9HxK1IHZJ9W4RLYP9TZF
-X-Gm-Gg: ASbGnctOcvMDdLXEeijavFr9q7bmZkbdBUa8txT1oL02YI36amEKc1AJL9Rcoq0Nqeh
- UhjRjS0mW23MXa8ZZ266r3+JDFsEiF0aYki1+ohcr+Y1oTKvwaxLBITOgQ8ZH8GOrPpKUF3s5bv
- Tz2IFa2+zjHVfaINMDoba1TJ/DnznP5Nh+Hq7szzzMv6/qyf8UhEEPsto04/CmuLV9S8TaljpLX
- c1tdGUp5uWnuC2QGEaYolV+VqcvV+zqHLADygF/eN9dfIN8qrM9yDN8HABPhJ4HjTpBPbHMdqGo
- 9i3cmSAiZQd7R1L4CyPvunBwX2muJFRN1IKKhjjczx0JZNQBbltkqgAOcO0ppNt+HKmat4FIxEX
- ktNGb
-X-Received: by 2002:a05:6000:402a:b0:3a5:300d:5e17 with SMTP id
- ffacd0b85a97d-3a917603734mr15479243f8f.29.1751370322422; 
- Tue, 01 Jul 2025 04:45:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHN2Yw9kikZpOXY+mDEhclFYgRLHty/dbkqGwASlPH8opYztE4LUWpI0gnGzaTZIXorxuUVmQ==
-X-Received: by 2002:a05:6000:402a:b0:3a5:300d:5e17 with SMTP id
- ffacd0b85a97d-3a917603734mr15479218f8f.29.1751370321982; 
- Tue, 01 Jul 2025 04:45:21 -0700 (PDT)
+ bh=Qihe+exxIN+/4sefM9Iuz6plsiYQc/e5rgGK1PReb6U=;
+ b=v3EIvOj9MmadhWyWiAri0n5A/vmGFlRUOd/XL4ibnOwhJnLLQE6y49nGXmw2UvEV9k
+ K/TfRRvxmSO5yq3h5gY0dZCfcN9oxUzseery3otXXfnkjpfYmxwJWrsVOIkHLoI2XKOw
+ fNNnnV+zvpnquEUWNN6XgueXFxL3irCxIZ6WdENtW1HpdH/+/OhLRqPtEcfumMluwH9+
+ 8PpDoQLfWtW8l90HlNO/XBuBZr0aKkMuY2GGWMU+NvsOROd2xctY2DtlV9g9PsrByIO9
+ ApnGR54R5CbI4YwbPOYKeDaKofBaWVIm5fvraXiinKESEaJVk/rhGfO30Ph1TPezuGno
+ 8xoA==
+X-Gm-Message-State: AOJu0YwhAOlrBpeQ+Le2XeY2WVuqDbz2aGuhGkqK5A/kpeM+lqGe69YC
+ a9jnELNI5uJZ40f79wIa57qVgTp7ExEpntRhaLPr9TrITam2GMMNXtE/KXEBlOyKlMFPotVXuLF
+ SxibJcB2nI8mimTj11sw124/EI41rY4tLIDhF+bjpTLVDHGKbn5ydivdx
+X-Gm-Gg: ASbGncvWDcyoNaSbK09f+n0oUVf0z9Is9jtx6um6av4F/P0hb2Y6+4Rc6jx6Ila3Jxk
+ WJWXgKosyGReFvoBqFs8u4eWoNjlIo2gqzIkJYaMkSDnW5PlU1mfrpGoodP8mePGW0IQvvMElL4
+ hpqOdg1K2SO/53n9o3j/HmsbzgEfIdqqT7ZHkGyi0BhNFgMGyFhGnnjV9MzRTUcv2CpX6B+NWPN
+ PL3ljN2/7neQH7HcMpT4naSGXKBAzqb/8cGnOq0iwbKvs1tPpEwS4t2mJTdYtN6e5NTNL7wrtXI
+ oo0GcW5SH+U0C6BSjDOedjrsLOsyw/5LR1xORDvvCz5w6U+NxTTIPBy/BgmfOc8KkJsGLuiE7kx
+ Moxm6
+X-Received: by 2002:a05:6000:3102:b0:3a5:2ed2:118e with SMTP id
+ ffacd0b85a97d-3a8fda35a0cmr15236785f8f.9.1751370335402; 
+ Tue, 01 Jul 2025 04:45:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF7Rvg3VL280xjrGK6ZBw7bgc022kxnR0eScCCGF8fL1IpRKAmmP+CoSUIRydib35SX4lJgBQ==
+X-Received: by 2002:a05:6000:3102:b0:3a5:2ed2:118e with SMTP id
+ ffacd0b85a97d-3a8fda35a0cmr15236746f8f.9.1751370334754; 
+ Tue, 01 Jul 2025 04:45:34 -0700 (PDT)
 Received: from localhost
  (p200300cfd700f38d3df6a1ca7d40fe1f.dip0.t-ipconnect.de.
  [2003:cf:d700:f38d:3df6:a1ca:7d40:fe1f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a88c7e7518sm12850784f8f.2.2025.07.01.04.45.18
+ ffacd0b85a97d-3a892e6214fsm13186326f8f.98.2025.07.01.04.45.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Jul 2025 04:45:19 -0700 (PDT)
+ Tue, 01 Jul 2025 04:45:32 -0700 (PDT)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Brian Song <hibriansong@gmail.com>
-Subject: [PATCH v3 12/21] block: Move qemu_fcntl_addfl() into osdep.c
-Date: Tue,  1 Jul 2025 13:44:28 +0200
-Message-ID: <20250701114437.207419-13-hreitz@redhat.com>
+Subject: [PATCH v3 16/21] block/export: Add multi-threading interface
+Date: Tue,  1 Jul 2025 13:44:32 +0200
+Message-ID: <20250701114437.207419-17-hreitz@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250701114437.207419-1-hreitz@redhat.com>
 References: <20250701114437.207419-1-hreitz@redhat.com>
@@ -111,93 +111,326 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move file-posix's helper to add a flag (or a set of flags) to an FD's
-existing set of flags into osdep.c for other places to use.
+Make BlockExportType.iothread an alternate between a single-thread
+variant 'str' and a multi-threading variant '[str]'.
 
-Suggested-by: Eric Blake <eblake@redhat.com>
+In contrast to the single-thread setting, the multi-threading setting
+will not change the BDS's context (and so is incompatible with the
+fixed-iothread setting), but instead just pass a list to the export
+driver, with which it can do whatever it wants.
+
+Currently no export driver supports multi-threading, so they all return
+an error when receiving such a list.
+
+Suggested-by: Kevin Wolf <kwolf@redhat.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- include/qemu/osdep.h |  1 +
- block/file-posix.c   | 17 +----------------
- util/osdep.c         | 18 ++++++++++++++++++
- 3 files changed, 20 insertions(+), 16 deletions(-)
+ qapi/block-export.json               | 34 +++++++++++++++++---
+ include/block/export.h               | 12 +++++--
+ block/export/export.c                | 48 +++++++++++++++++++++++++---
+ block/export/fuse.c                  |  7 ++++
+ block/export/vduse-blk.c             |  7 ++++
+ block/export/vhost-user-blk-server.c |  8 +++++
+ nbd/server.c                         |  6 ++++
+ 7 files changed, 111 insertions(+), 11 deletions(-)
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index 96fe51bc39..ff11070c7e 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -619,6 +619,7 @@ int qemu_lock_fd(int fd, int64_t start, int64_t len, bool exclusive);
- int qemu_unlock_fd(int fd, int64_t start, int64_t len);
- int qemu_lock_fd_test(int fd, int64_t start, int64_t len, bool exclusive);
- bool qemu_has_ofd_lock(void);
-+int qemu_fcntl_addfl(int fd, int flag);
- #endif
+diff --git a/qapi/block-export.json b/qapi/block-export.json
+index ed4deb54db..ee30606680 100644
+--- a/qapi/block-export.json
++++ b/qapi/block-export.json
+@@ -362,14 +362,16 @@
+ #     to the export before completion is signalled.  (since: 5.2;
+ #     default: false)
+ #
+-# @iothread: The name of the iothread object where the export will
+-#     run.  The default is to use the thread currently associated with
+-#     the block node.  (since: 5.2)
++# @iothread: The name(s) of one or more iothread object(s) where the
++#     export will run.  The default is to use the thread currently
++#     associated with the block node.  (since: 5.2; multi-threading
++#     since 10.1)
+ #
+ # @fixed-iothread: True prevents the block node from being moved to
+ #     another thread while the export is active.  If true and
+ #     @iothread is given, export creation fails if the block node
+-#     cannot be moved to the iothread.  The default is false.
++#     cannot be moved to the iothread.  Must not be true when giving
++#     multiple iothreads for @iothread.  The default is false.
+ #     (since: 5.2)
+ #
+ # @allow-inactive: If true, the export allows the exported node to be inactive.
+@@ -385,7 +387,7 @@
+   'base': { 'type': 'BlockExportType',
+             'id': 'str',
+             '*fixed-iothread': 'bool',
+-            '*iothread': 'str',
++            '*iothread': 'BlockExportIothreads',
+             'node-name': 'str',
+             '*writable': 'bool',
+             '*writethrough': 'bool',
+@@ -401,6 +403,28 @@
+                      'if': 'CONFIG_VDUSE_BLK_EXPORT' }
+    } }
  
- bool qemu_has_direct_io(void);
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 9b5f08ccb2..045e94d54d 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -1047,21 +1047,6 @@ static int raw_handle_perm_lock(BlockDriverState *bs,
-     return ret;
- }
++##
++# @BlockExportIothreads:
++#
++# Specify a single or multiple I/O threads in which to run a block export's I/O.
++#
++# @single: Run the export's I/O in the given single I/O thread.
++#
++# @multi: Use multi-threading across the given set of I/O threads, which must
++#     must not be empty.  Note: Passing a single I/O thread via this variant is
++#     still treated as multi-threading, which is different from using the
++#     @single variant.  In particular, even if there only is a single I/O thread
++#     in the set, export types that do not support multi-threading will
++#     generally reject this variant, and BlockExportOptions.fixed-iothread is
++#     always incompatible with it.
++#
++# Since: 10.1
++##
++{ 'alternate': 'BlockExportIothreads',
++  'data': {
++      'single': 'str',
++      'multi': ['str'] } }
++
+ ##
+ # @block-export-add:
+ #
+diff --git a/include/block/export.h b/include/block/export.h
+index 4bd9531d4d..ca45da928c 100644
+--- a/include/block/export.h
++++ b/include/block/export.h
+@@ -32,8 +32,16 @@ typedef struct BlockExportDriver {
+     /* True if the export type supports running on an inactive node */
+     bool supports_inactive;
  
--/* Sets a specific flag */
--static int fcntl_setfl(int fd, int flag)
--{
--    int flags;
--
--    flags = fcntl(fd, F_GETFL);
--    if (flags == -1) {
--        return -errno;
--    }
--    if (fcntl(fd, F_SETFL, flags | flag) == -1) {
--        return -errno;
--    }
--    return 0;
--}
--
- static int raw_reconfigure_getfd(BlockDriverState *bs, int flags,
-                                  int *open_flags, uint64_t perm, Error **errp)
+-    /* Creates and starts a new block export */
+-    int (*create)(BlockExport *, BlockExportOptions *, Error **);
++    /*
++     * Creates and starts a new block export.
++     *
++     * If the user passed a set of I/O threads for multi-threading, @multithread
++     * is a list of the @multithread_count corresponding contexts (freed by the
++     * caller).  Note that @exp->ctx has no relation to that list.
++     */
++    int (*create)(BlockExport *exp, BlockExportOptions *opts,
++                  AioContext *const *multithread, size_t multithread_count,
++                  Error **errp);
+ 
+     /*
+      * Frees a removed block export. This function is only called after all
+diff --git a/block/export/export.c b/block/export/export.c
+index f3bbf11070..b733f269f3 100644
+--- a/block/export/export.c
++++ b/block/export/export.c
+@@ -76,16 +76,26 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
  {
-@@ -1100,7 +1085,7 @@ static int raw_reconfigure_getfd(BlockDriverState *bs, int flags,
-         /* dup the original fd */
-         fd = qemu_dup(s->fd);
-         if (fd >= 0) {
--            ret = fcntl_setfl(fd, *open_flags);
-+            ret = qemu_fcntl_addfl(fd, *open_flags);
-             if (ret) {
-                 qemu_close(fd);
-                 fd = -1;
-diff --git a/util/osdep.c b/util/osdep.c
-index 770369831b..000e7daac8 100644
---- a/util/osdep.c
-+++ b/util/osdep.c
-@@ -280,6 +280,24 @@ int qemu_lock_fd_test(int fd, int64_t start, int64_t len, bool exclusive)
-         return fl.l_type == F_UNLCK ? 0 : -EAGAIN;
-     }
- }
-+
-+/**
-+ * Set the given flag(s) (fcntl GETFL/SETFL) on the given FD, while retaining
-+ * other flags.
-+ */
-+int qemu_fcntl_addfl(int fd, int flag)
-+{
-+    int flags;
-+
-+    flags = fcntl(fd, F_GETFL);
-+    if (flags == -1) {
-+        return -errno;
-+    }
-+    if (fcntl(fd, F_SETFL, flags | flag) == -1) {
-+        return -errno;
-+    }
-+    return 0;
-+}
- #endif
+     bool fixed_iothread = export->has_fixed_iothread && export->fixed_iothread;
+     bool allow_inactive = export->has_allow_inactive && export->allow_inactive;
++    bool multithread = export->iothread &&
++        export->iothread->type == QTYPE_QLIST;
+     const BlockExportDriver *drv;
+     BlockExport *exp = NULL;
+     BlockDriverState *bs;
+     BlockBackend *blk = NULL;
+     AioContext *ctx;
++    AioContext **multithread_ctxs = NULL;
++    size_t multithread_count = 0;
+     uint64_t perm;
+     int ret;
  
- bool qemu_has_direct_io(void)
+     GLOBAL_STATE_CODE();
+ 
++    if (fixed_iothread && multithread) {
++        error_setg(errp,
++                   "Cannot use fixed-iothread for a multi-threaded export");
++        return NULL;
++    }
++
+     if (!id_wellformed(export->id)) {
+         error_setg(errp, "Invalid block export id");
+         return NULL;
+@@ -116,14 +126,16 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
+ 
+     ctx = bdrv_get_aio_context(bs);
+ 
+-    if (export->iothread) {
++    /* Move the BDS to the target I/O thread, if it is a single one */
++    if (export->iothread && !multithread) {
++        const char *iothread_id = export->iothread->u.single;
+         IOThread *iothread;
+         AioContext *new_ctx;
+         Error **set_context_errp;
+ 
+-        iothread = iothread_by_id(export->iothread);
++        iothread = iothread_by_id(iothread_id);
+         if (!iothread) {
+-            error_setg(errp, "iothread \"%s\" not found", export->iothread);
++            error_setg(errp, "iothread \"%s\" not found", iothread_id);
+             goto fail;
+         }
+ 
+@@ -137,6 +149,32 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
+         } else if (fixed_iothread) {
+             goto fail;
+         }
++    } else if (multithread) {
++        strList *iothread_list = export->iothread->u.multi;
++        size_t i;
++
++        multithread_count = 0;
++        for (strList *e = iothread_list; e; e = e->next) {
++            multithread_count++;
++        }
++
++        if (multithread_count == 0) {
++            error_setg(errp, "The set of I/O threads must not be empty");
++            return NULL;
++        }
++
++        multithread_ctxs = g_new(AioContext *, multithread_count);
++        i = 0;
++        for (strList *e = iothread_list; e; e = e->next) {
++            IOThread *iothread = iothread_by_id(e->value);
++
++            if (!iothread) {
++                error_setg(errp, "iothread \"%s\" not found", e->value);
++                goto fail;
++            }
++            multithread_ctxs[i++] = iothread_get_aio_context(iothread);
++        }
++        assert(i == multithread_count);
+     }
+ 
+     bdrv_graph_rdlock_main_loop();
+@@ -195,7 +233,7 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
+         .blk        = blk,
+     };
+ 
+-    ret = drv->create(exp, export, errp);
++    ret = drv->create(exp, export, multithread_ctxs, multithread_count, errp);
+     if (ret < 0) {
+         goto fail;
+     }
+@@ -203,6 +241,7 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
+     assert(exp->blk != NULL);
+ 
+     QLIST_INSERT_HEAD(&block_exports, exp, next);
++    g_free(multithread_ctxs);
+     return exp;
+ 
+ fail:
+@@ -214,6 +253,7 @@ fail:
+         g_free(exp->id);
+         g_free(exp);
+     }
++    g_free(multithread_ctxs);
+     return NULL;
+ }
+ 
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index 0648b5bc7d..0e3fa028d3 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -180,6 +180,8 @@ static const BlockDevOps fuse_export_blk_dev_ops = {
+ 
+ static int fuse_export_create(BlockExport *blk_exp,
+                               BlockExportOptions *blk_exp_args,
++                              AioContext *const *multithread,
++                              size_t mt_count,
+                               Error **errp)
+ {
+     ERRP_GUARD(); /* ensure clean-up even with error_fatal */
+@@ -189,6 +191,11 @@ static int fuse_export_create(BlockExport *blk_exp,
+ 
+     assert(blk_exp_args->type == BLOCK_EXPORT_TYPE_FUSE);
+ 
++    if (multithread) {
++        error_setg(errp, "FUSE export does not support multi-threading");
++        return -EINVAL;
++    }
++
+     /* For growable and writable exports, take the RESIZE permission */
+     if (args->growable || blk_exp_args->writable) {
+         uint64_t blk_perm, blk_shared_perm;
+diff --git a/block/export/vduse-blk.c b/block/export/vduse-blk.c
+index bd852e538d..bf70c98dd6 100644
+--- a/block/export/vduse-blk.c
++++ b/block/export/vduse-blk.c
+@@ -266,6 +266,7 @@ static const BlockDevOps vduse_block_ops = {
+ };
+ 
+ static int vduse_blk_exp_create(BlockExport *exp, BlockExportOptions *opts,
++                                AioContext *const *multithread, size_t mt_count,
+                                 Error **errp)
+ {
+     VduseBlkExport *vblk_exp = container_of(exp, VduseBlkExport, export);
+@@ -301,6 +302,12 @@ static int vduse_blk_exp_create(BlockExport *exp, BlockExportOptions *opts,
+             return -EINVAL;
+         }
+     }
++
++    if (multithread) {
++        error_setg(errp, "vduse-blk export does not support multi-threading");
++        return -EINVAL;
++    }
++
+     vblk_exp->num_queues = num_queues;
+     vblk_exp->handler.blk = exp->blk;
+     vblk_exp->handler.serial = g_strdup(vblk_opts->serial ?: "");
+diff --git a/block/export/vhost-user-blk-server.c b/block/export/vhost-user-blk-server.c
+index d9d2014d9b..481d4b7441 100644
+--- a/block/export/vhost-user-blk-server.c
++++ b/block/export/vhost-user-blk-server.c
+@@ -315,6 +315,7 @@ static const BlockDevOps vu_blk_dev_ops = {
+ };
+ 
+ static int vu_blk_exp_create(BlockExport *exp, BlockExportOptions *opts,
++                             AioContext *const *multithread, size_t mt_count,
+                              Error **errp)
+ {
+     VuBlkExport *vexp = container_of(exp, VuBlkExport, export);
+@@ -340,6 +341,13 @@ static int vu_blk_exp_create(BlockExport *exp, BlockExportOptions *opts,
+         error_setg(errp, "num-queues must be greater than 0");
+         return -EINVAL;
+     }
++
++    if (multithread) {
++        error_setg(errp,
++                   "vhost-user-blk export does not support multi-threading");
++        return -EINVAL;
++    }
++
+     vexp->handler.blk = exp->blk;
+     vexp->handler.serial = g_strdup("vhost_user_blk");
+     vexp->handler.logical_block_size = logical_block_size;
+diff --git a/nbd/server.c b/nbd/server.c
+index d242be9811..a1736a5a24 100644
+--- a/nbd/server.c
++++ b/nbd/server.c
+@@ -1793,6 +1793,7 @@ static const BlockDevOps nbd_block_ops = {
+ };
+ 
+ static int nbd_export_create(BlockExport *blk_exp, BlockExportOptions *exp_args,
++                             AioContext *const *multithread, size_t mt_count,
+                              Error **errp)
+ {
+     NBDExport *exp = container_of(blk_exp, NBDExport, common);
+@@ -1829,6 +1830,11 @@ static int nbd_export_create(BlockExport *blk_exp, BlockExportOptions *exp_args,
+         return -EEXIST;
+     }
+ 
++    if (multithread) {
++        error_setg(errp, "NBD export does not support multi-threading");
++        return -EINVAL;
++    }
++
+     size = blk_getlength(blk);
+     if (size < 0) {
+         error_setg_errno(errp, -size,
 -- 
 2.49.0
 
