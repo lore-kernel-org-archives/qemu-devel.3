@@ -4,76 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49FB0C83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 12:21:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 668CFC83038
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 12:22:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWZyL-0001ot-66; Tue, 01 Jul 2025 08:20:26 -0400
+	id 1uWZzs-00045c-IA; Tue, 01 Jul 2025 08:22:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <osteffen@redhat.com>)
- id 1uWZxq-0001VC-Uv
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 08:20:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <osteffen@redhat.com>)
- id 1uWZxi-00060O-So
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 08:19:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751372385;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nUi9WXLHbqXC4QJiEUarnTHY0dgJlY0JhYQEljuo24c=;
- b=U+ZY6/t0xlgrQ1iBIJ/sJxZkFqwFrshCEG6YtXH5hfAkF9JfSVBnWD1ZtWqErBeqsnGeX7
- 8QTtdCYnhtpfQ+g2rjZGEwXikO51vieV/A8PWrkHGBe3AukI10M/7yWJbrg0ae9vtzbvfJ
- j1w+j491zw6HnAkrzL3e51ouz6Dq7M4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-21-t8iXtT_gNU2WRvXOwKbrtA-1; Tue,
- 01 Jul 2025 08:18:33 -0400
-X-MC-Unique: t8iXtT_gNU2WRvXOwKbrtA-1
-X-Mimecast-MFC-AGG-ID: t8iXtT_gNU2WRvXOwKbrtA_1751372312
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AB5EB19560BE; Tue,  1 Jul 2025 12:18:31 +0000 (UTC)
-Received: from osteffen-laptop.redhat.com (unknown [10.45.225.251])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6AE9F19560AB; Tue,  1 Jul 2025 12:18:27 +0000 (UTC)
-From: Oliver Steffen <osteffen@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Joerg Roedel <joerg.roedel@amd.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Oliver Steffen <osteffen@redhat.com>
-Subject: [RFC 2/2] q35: add virtio-mmio slots
-Date: Tue,  1 Jul 2025 14:18:15 +0200
-Message-ID: <20250701121815.523896-3-osteffen@redhat.com>
-In-Reply-To: <20250701121815.523896-1-osteffen@redhat.com>
-References: <20250701121815.523896-1-osteffen@redhat.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1uWZze-0003vb-1V; Tue, 01 Jul 2025 08:21:49 -0400
+Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1uWZzZ-0006Nk-CE; Tue, 01 Jul 2025 08:21:44 -0400
+Received: by mail-qt1-x82f.google.com with SMTP id
+ d75a77b69052e-4a8244e8860so16296931cf.2; 
+ Tue, 01 Jul 2025 05:21:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1751372495; x=1751977295; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=O9iMP6l19X8AdibSKn3h9xGb8Hcyk+IgkDV9YNNsqFk=;
+ b=YpyXFBksmEGy3cE8k6fTNgm+B0NQMkUEliFr9RHZ26YhU9ItZbjUSWjY5wX06LM/aP
+ pMXmlbBAIPcvDnud0JNIV7eftluGsPHl/ZcmT1/W0B9eZKgBYq3TzRN/07c/EMzYemCB
+ fC7dw25Ael2dVzstQ4GymYrWX7xA4N3jRxWiHWCwp+tlhZo3jg368K1EZ+p2/+Wsi/dz
+ 5tmWwXf0maDykGnTC/AVpHB8vGG7+9An+o4qkWrS7DbXo/t+gF4hf2OouSyXm6n0kBJf
+ +Mm/S6+VQD1rtL3QJO6qEK2+c4sptSFdsBCRXH0zEuix0ksvY7kV5L+e6XaRgmNG8t4g
+ 7Fvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751372495; x=1751977295;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=O9iMP6l19X8AdibSKn3h9xGb8Hcyk+IgkDV9YNNsqFk=;
+ b=CpTO0RMqV+y9aHzsweEreoAYrgqqabLMeF7TkzDhI5T/PqBCMn3oZuU6xW7b5v1xSp
+ HvKtdsRuRdF2VGFuYJYWXU+7Jz8zUuCPHSZ64nbQkyWoedGBhLL3G5MnYzNF96q8v68a
+ q9lKD+XI8XcrrGdr6QpqjtnJPaBOpc0cgAAu+aTvC6F2T92vuEhP3filXfbqAMryeK6D
+ TgkSNf9U+/GVqqeRNePk/bNIcPf8qB49cke216/QDqP2wSeRQ0UKZmm34HF4To61A4Sv
+ yEn+7pgFU4+KWoRpKIodxHKEJVqA1buanm8DroGfrSl2nG5m+LK4C/4rHqOalD3xGDUc
+ OeUw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVakXCqRfkNjD3079P9fxKmUZ0nWqWmcxid3ZI6Jr6OC5/XLqQa0Z4yg/VqV1X5tsLB5xvpc8klLg==@nongnu.org,
+ AJvYcCXBqY6oHnDz+H3KTwi1UNnIgc+ZhY5wPk13sFqMC7fOks0egEwSeYrF+qIFaG34w1px9cZd/zkj1eXU4Q==@nongnu.org
+X-Gm-Message-State: AOJu0Yw/sVZYKXZ1qs07nkdGq6H0/cprir7jOG3nGzO7FA4NhVAx7Wwg
+ xv+RrgrkTuDiJzfrP4NEmOTKtIUmfbnuWmsegRURblUBykpgjNwo+5b5qnRq9gXUBxgReUFUBHe
+ R0BIDSXM9GckFTyWOimES93eBrUmqWEE=
+X-Gm-Gg: ASbGncv5gT9bfrZFWTe1Z4dtc57YLjnDvaMYXgh6loLXmfXu3/0s3t6yaQ8SfcBbOXL
+ dMT3bYv7Yl92FPnMUj2f0uVyhkMzVnofuFYh3J8g6jQLcvlQvI0PBSIidh3MZvo2TI18ZJ4nueW
+ 2FHf10ic239GNUlQYIYpg1MrWblO7/BNJRXQqIXE31+ii9ztJt/RfiWsHGNVjT1ikzbErfFcEO4
+ jW2
+X-Google-Smtp-Source: AGHT+IGVgdUHgSEKgk/Zzmtubnjlpa6m8bSwkoQOSuLGx2HNhb/R7mLjLnvSUqVh1B0FlpDe8ARQYW+3zScfwxkjKnU=
+X-Received: by 2002:a05:622a:513:b0:4a7:74ed:cd49 with SMTP id
+ d75a77b69052e-4a7fcadbd48mr284601421cf.19.1751372494863; Tue, 01 Jul 2025
+ 05:21:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=osteffen@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250624-propagate_tpm_error-v1-0-2171487a593d@redhat.com>
+ <20250624-propagate_tpm_error-v1-3-2171487a593d@redhat.com>
+In-Reply-To: <20250624-propagate_tpm_error-v1-3-2171487a593d@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 1 Jul 2025 16:21:23 +0400
+X-Gm-Features: Ac12FXyKzuZJ7k7sxi1OzZWEflkZb489jIK7LZ6xjxMllETMqKtT1lT2jkTMdKQ
+Message-ID: <CAJ+F1CLHo9BhcMkNL7Fv_EJ+kw-JQ0_Q3y-047uqsrCeTi31xQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] backends/tpm: Propagate vTPM error on migration
+ failure
+To: Arun Menon <armenon@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>, 
+ Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Steve Sistare <steven.sistare@oracle.com>, 
+ qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,114 +116,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+Hi
 
-Add virtio-mmio slots to the q35 machine model, intended to be used by
-an SVSM.
+On Tue, Jun 24, 2025 at 4:26=E2=80=AFPM Arun Menon <armenon@redhat.com> wro=
+te:
+>
+> - Introduce a new post_load_with_error() hook that will
+>   take in the Error object as a parameter.
 
-Disabled by default, enable using '-machine q35,x-svsm-virtio-mmio=on'.
+You should make this a different patch. I wonder if adding another
+callback is the right approach, as only one of the two is called. I
+would rather change the existing callback.
 
-When enabled it is possible to plug up to 4 virtio devices into the
-slots virtio-mmio using '-device virtio-${kind}-device'.
+> - This error object is set if the loading of state fails.
+> - The error can then be retrieved using QMP command
+>   {"execute" : "query-migrate"}
+>
+> Buglink: https://issues.redhat.com/browse/RHEL-82826
+>
+> Signed-off-by: Arun Menon <armenon@redhat.com>
+> ---
+>  backends/tpm/tpm_emulator.c | 39 ++++++++++++++++++++-------------------
+>  include/migration/vmstate.h |  1 +
+>  migration/vmstate.c         |  4 +++-
+>  3 files changed, 24 insertions(+), 20 deletions(-)
+>
+> diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
+> index 4a234ab2c0b19b2604bf0dd8cb5f4540c72a9438..816134d7b4de00a75a3d0b928=
+d160595b17be810 100644
+> --- a/backends/tpm/tpm_emulator.c
+> +++ b/backends/tpm/tpm_emulator.c
+> @@ -819,7 +819,8 @@ static int tpm_emulator_get_state_blobs(TPMEmulator *=
+tpm_emu)
+>  static int tpm_emulator_set_state_blob(TPMEmulator *tpm_emu,
+>                                         uint32_t type,
+>                                         TPMSizedBuffer *tsb,
+> -                                       uint32_t flags)
+> +                                       uint32_t flags,
+> +                                       Error **errp)
+>  {
+>      ssize_t n;
+>      ptm_setstate pss;
+> @@ -838,17 +839,17 @@ static int tpm_emulator_set_state_blob(TPMEmulator =
+*tpm_emu,
+>      /* write the header only */
+>      if (tpm_emulator_ctrlcmd(tpm_emu, CMD_SET_STATEBLOB, &pss,
+>                               offsetof(ptm_setstate, u.req.data), 0, 0) <=
+ 0) {
+> -        error_report("tpm-emulator: could not set state blob type %d : %=
+s",
+> -                     type, strerror(errno));
+> +        error_setg(errp, "tpm-emulator: could not set state blob type %d=
+ : %s",
+> +                   type, strerror(errno));
+>          return -1;
+>      }
+>
+>      /* now the body */
+>      n =3D qemu_chr_fe_write_all(&tpm_emu->ctrl_chr, tsb->buffer, tsb->si=
+ze);
+>      if (n !=3D tsb->size) {
+> -        error_report("tpm-emulator: Writing the stateblob (type %d) "
+> -                     "failed; could not write %u bytes, but only %zd",
+> -                     type, tsb->size, n);
+> +        error_setg(errp, "tpm-emulator: Writing the stateblob (type %d) =
+"
+> +                   "failed; could not write %u bytes, but only %zd",
+> +                   type, tsb->size, n);
+>          return -1;
+>      }
+>
+> @@ -856,17 +857,17 @@ static int tpm_emulator_set_state_blob(TPMEmulator =
+*tpm_emu,
+>      n =3D qemu_chr_fe_read_all(&tpm_emu->ctrl_chr,
+>                               (uint8_t *)&pss, sizeof(pss.u.resp));
+>      if (n !=3D sizeof(pss.u.resp)) {
+> -        error_report("tpm-emulator: Reading response from writing stateb=
+lob "
+> -                     "(type %d) failed; expected %zu bytes, got %zd", ty=
+pe,
+> -                     sizeof(pss.u.resp), n);
+> +        error_setg(errp, "tpm-emulator: Reading response from writing "
+> +                   "stateblob (type %d) failed; expected %zu bytes, "
+> +                   "got %zd", type, sizeof(pss.u.resp), n);
+>          return -1;
+>      }
+>
+>      tpm_result =3D be32_to_cpu(pss.u.resp.tpm_result);
+>      if (tpm_result !=3D 0) {
+> -        error_report("tpm-emulator: Setting the stateblob (type %d) fail=
+ed "
+> -                     "with a TPM error 0x%x %s", type, tpm_result,
+> -                     tpm_emulator_strerror(tpm_result));
+> +        error_setg(errp, "tpm-emulator: Setting the stateblob (type %d) =
+"
+> +                   "failed with a TPM error 0x%x %s", type, tpm_result,
+> +                   tpm_emulator_strerror(tpm_result));
+>          return -1;
+>      }
+>
+> @@ -880,7 +881,7 @@ static int tpm_emulator_set_state_blob(TPMEmulator *t=
+pm_emu,
+>   *
+>   * Returns a negative errno code in case of error.
+>   */
+> -static int tpm_emulator_set_state_blobs(TPMBackend *tb)
+> +static int tpm_emulator_set_state_blobs(TPMBackend *tb, Error **errp)
+>  {
+>      TPMEmulator *tpm_emu =3D TPM_EMULATOR(tb);
+>      TPMBlobBuffers *state_blobs =3D &tpm_emu->state_blobs;
+> @@ -894,13 +895,13 @@ static int tpm_emulator_set_state_blobs(TPMBackend =
+*tb)
+>
+>      if (tpm_emulator_set_state_blob(tpm_emu, PTM_BLOB_TYPE_PERMANENT,
+>                                      &state_blobs->permanent,
+> -                                    state_blobs->permanent_flags) < 0 ||
+> +                                    state_blobs->permanent_flags, errp) =
+< 0 ||
+>          tpm_emulator_set_state_blob(tpm_emu, PTM_BLOB_TYPE_VOLATILE,
+>                                      &state_blobs->volatil,
+> -                                    state_blobs->volatil_flags) < 0 ||
+> +                                    state_blobs->volatil_flags, errp) < =
+0 ||
+>          tpm_emulator_set_state_blob(tpm_emu, PTM_BLOB_TYPE_SAVESTATE,
+>                                      &state_blobs->savestate,
+> -                                    state_blobs->savestate_flags) < 0) {
+> +                                    state_blobs->savestate_flags, errp) =
+< 0) {
+>          return -EIO;
+>      }
+>
+> @@ -948,12 +949,12 @@ static void tpm_emulator_vm_state_change(void *opaq=
+ue, bool running,
+>   *
+>   * Returns negative errno codes in case of error.
+>   */
+> -static int tpm_emulator_post_load(void *opaque, int version_id)
+> +static int tpm_emulator_post_load(void *opaque, int version_id, Error **=
+errp)
+>  {
+>      TPMBackend *tb =3D opaque;
+>      int ret;
+>
+> -    ret =3D tpm_emulator_set_state_blobs(tb);
+> +    ret =3D tpm_emulator_set_state_blobs(tb, errp);
+>      if (ret < 0) {
+>          return ret;
+>      }
+> @@ -969,7 +970,7 @@ static const VMStateDescription vmstate_tpm_emulator =
+=3D {
+>      .name =3D "tpm-emulator",
+>      .version_id =3D 0,
+>      .pre_save =3D tpm_emulator_pre_save,
+> -    .post_load =3D tpm_emulator_post_load,
+> +    .post_load_with_error =3D tpm_emulator_post_load,
+>      .fields =3D (const VMStateField[]) {
+>          VMSTATE_UINT32(state_blobs.permanent_flags, TPMEmulator),
+>          VMSTATE_UINT32(state_blobs.permanent.size, TPMEmulator),
+> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+> index 056781b1c21e737583f081594d9f88b32adfd674..1c6e89c3b08a3914cde6dce3b=
+e5955978b6b7d0b 100644
+> --- a/include/migration/vmstate.h
+> +++ b/include/migration/vmstate.h
+> @@ -207,6 +207,7 @@ struct VMStateDescription {
+>      MigrationPriority priority;
+>      int (*pre_load)(void *opaque);
+>      int (*post_load)(void *opaque, int version_id);
+> +    int (*post_load_with_error)(void *opaque, int version_id, Error **er=
+rp);
+>      int (*pre_save)(void *opaque);
+>      int (*post_save)(void *opaque);
+>      bool (*needed)(void *opaque);
+> diff --git a/migration/vmstate.c b/migration/vmstate.c
+> index 3f8c3d3c1dcfe14d70bab1f43b827244eb4bb385..c5dfffd9bad7285e819d4769e=
+055d47157caab34 100644
+> --- a/migration/vmstate.c
+> +++ b/migration/vmstate.c
+> @@ -232,7 +232,9 @@ int vmstate_load_state(QEMUFile *f, const VMStateDesc=
+ription *vmsd,
+>          qemu_file_set_error(f, ret);
+>          return ret;
+>      }
+> -    if (vmsd->post_load) {
+> +    if (vmsd->post_load_with_error) {
+> +        ret =3D vmsd->post_load_with_error(opaque, version_id, errp);
+> +    } else if (vmsd->post_load) {
+>          ret =3D vmsd->post_load(opaque, version_id);
+>      }
+>      trace_vmstate_load_state_end(vmsd->name, "end", ret);
+>
+> --
+> 2.49.0
+>
+>
 
-The devices can be found at base address 0xfef00000, each slot on a
-separate page.  No IRQ is wired up, the SVSM has to drive the devices
-in polling mode.
 
-The base addresses are communicated to the SVSM via the etc/hardware-info
-fw_cfg file.
-
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Signed-off-by: Oliver Steffen <osteffen@redhat.com>
----
- hw/i386/pc.c         | 18 +++++++++++++++++-
- hw/i386/pc_q35.c     | 15 +++++++++++++++
- include/hw/i386/pc.h |  1 +
- 3 files changed, 33 insertions(+), 1 deletion(-)
-
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 432ab288a8..e1dbf8846d 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1584,6 +1584,21 @@ static void pc_machine_set_smbios_ep(Object *obj, Visitor *v, const char *name,
-     visit_type_SmbiosEntryPointType(v, name, &pcms->smbios_entry_point_type, errp);
- }
- 
-+static bool pc_machine_get_svsm_virtio_mmio(Object *obj, Error **errp)
-+{
-+    PCMachineState *pcms = PC_MACHINE(obj);
-+
-+    return pcms->svsm_virtio_mmio;
-+}
-+
-+static void pc_machine_set_svsm_virtio_mmio(Object *obj, bool value,
-+                                            Error **errp)
-+{
-+    PCMachineState *pcms = PC_MACHINE(obj);
-+
-+    pcms->svsm_virtio_mmio = value;
-+}
-+
- static void pc_machine_get_max_ram_below_4g(Object *obj, Visitor *v,
-                                             const char *name, void *opaque,
-                                             Error **errp)
-@@ -1844,7 +1859,8 @@ static void pc_machine_class_init(ObjectClass *oc, const void *data)
-                                           "Set IGVM configuration");
- #endif
- 
--
-+    object_class_property_add_bool(oc, "x-svsm-virtio-mmio",
-+        pc_machine_get_svsm_virtio_mmio, pc_machine_set_svsm_virtio_mmio);
- }
- 
- static const TypeInfo pc_machine_info = {
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index cf871cfdad..b8511ae52a 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -60,7 +60,9 @@
- #include "hw/mem/nvdimm.h"
- #include "hw/uefi/var-service-api.h"
- #include "hw/i386/acpi-build.h"
-+#include "hw/uefi/hardware-info.h"
- #include "target/i386/cpu.h"
-+#include "exec/target_page.h"
- 
- /* ICH9 AHCI has 6 ports */
- #define MAX_SATA_PORTS     6
-@@ -335,6 +337,19 @@ static void pc_q35_init(MachineState *machine)
-         }
-     }
- #endif
-+
-+    if (pcms->svsm_virtio_mmio) {
-+        for (int dev = 0; dev < 4; dev++) {
-+            HARDWARE_INFO_SIMPLE_DEVICE hwinfo = {
-+                .mmio_address = cpu_to_le64(0xfef00000 + dev * TARGET_PAGE_SIZE),
-+            };
-+            sysbus_create_simple("virtio-mmio", hwinfo.mmio_address,
-+                                 /* no irq */ NULL);
-+            hardware_info_register(HardwareInfoVirtioMmioSvsm,
-+                                   &hwinfo, sizeof(hwinfo));
-+        }
-+    }
-+
- }
- 
- #define DEFINE_Q35_MACHINE(major, minor) \
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 79b72c54dd..9c9f947087 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -51,6 +51,7 @@ typedef struct PCMachineState {
-     bool i8042_enabled;
-     bool default_bus_bypass_iommu;
-     bool fd_bootchk;
-+    bool svsm_virtio_mmio;
-     uint64_t max_fw_size;
- 
-     /* ACPI Memory hotplug IO base address */
--- 
-2.50.0
-
+--=20
+Marc-Andr=C3=A9 Lureau
 
