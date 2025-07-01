@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB3E1C7EE30
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 14:49:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9A95C83038
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 14:49:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWcHF-0001Rf-RE; Tue, 01 Jul 2025 10:48:05 -0400
+	id 1uWcFZ-0006UY-Ep; Tue, 01 Jul 2025 10:46:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWcGJ-0007wS-AE
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:47:09 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWcEq-0005TK-2v
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:45:37 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWcGG-0007YJ-37
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:47:07 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-450cb2ddd46so33964365e9.2
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 07:47:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWcEo-0007RO-1O
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:45:35 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-451d41e1ad1so38380785e9.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 07:45:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751381220; x=1751986020; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751381130; x=1751985930; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4hhl07c07Yt1bcZ4pWFGg1y3bhGgJSn5MEgtp83jeqQ=;
- b=lyRmHytQNi5Bf2rs9cUiwFLb3XSH8YH6OFkGYZ8npmDkjv/e2/Fmywwu0WCEGdxSQa
- m9u3uTs/DLlJuE0uzelfLg/0z0kTjaWLlGsIacd9LP4CJYW/10AhPs6xqUUyMgz1CxRO
- cqpwLzy8MIgaQzuMalQFgSBR1NYMumFoQCpRTbyJ29dY4C1rHOEMjWrLMSicWz+fsdfi
- QKDK2qmPejPENLBTrzhVtGU0IDvd0tEm+weV6MO7QfYhU8/r4t4zZk9okR1kfhb97LA6
- czRvJ9hLdSw9KEHAL3Xobm56ubYE1Uh/N3g2n5li/L/GHt+WgpIsR7jvJoQYCakObu8K
- M1hw==
+ bh=SfIXmPf89XXe1HBqtw6MJ15ZCEw8ryCmetzhx/QXCNQ=;
+ b=T/uN01lK39/IysIkQwtjYzi6GMdSAW5FLXeO4snsj2KDo0TBO5K2hkv+uOXhFT5B2m
+ sPbQXVmhWJAYW0UjUvArRQWBsCFqLfz947p8Tg2VThAkjwfR3EL49vv3aKn/k9n8rRxG
+ qoYu2wGIXcOaO89VMD3Aej0rXvzSDw5h6y/tWBQvUuCnhN32WbGjrTviNRlHbWiIMnnk
+ oEYI51EwQZ0TcS6kpOA1+kXN41y2pwuIspT4N3lrAH6YF6vSabzgjT3dXLnx6xlaJdrh
+ WNrQio+RVwYFgotTVHMD7ZMiypgSYW+SUp1nX0u5hkYqZtNLRN30M3KrWaNhcmkC+Ur5
+ b+NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751381220; x=1751986020;
+ d=1e100.net; s=20230601; t=1751381130; x=1751985930;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4hhl07c07Yt1bcZ4pWFGg1y3bhGgJSn5MEgtp83jeqQ=;
- b=uE115uwgkTB2ZBHPzhqHpDfnmuzyuNtFjz39RfeaHicxgGcAQ3C1plpY9j0Arbc5xC
- sMvmw8FWgV4V8oTRca4wgdc/gxUa6G3eKvVzcBEVmZM0p4E05Pvxo/xMznWJZCWbcvWZ
- OCj0wTXIAv6fr9jhnIWxgMp1s3/si6iJ3cMr4FBjMgWsiq5AKoAcZ9oX88vHQLc9QFXU
- sztPnpjBzuGxhwXEOTyDTU5zE2cETflnAHnuFmXkqWHX1vjtiKFltTyg4hFp5Rx0d7VF
- UYjIUY3ib2oYzpHMmT0QVlb9oYwN41Ob48r+UVh0/rmkDowGyfyY+4IQpvNAuDEnEFsI
- gdRg==
-X-Gm-Message-State: AOJu0YwjEpYoaI+C0zjdbmjuakBRQo8IMvhFsv3XEWqu85ZfJjevXWta
- qV6dfJ1yMwfKOyGzTo+NIK64s8rljgGE88n2XiPa4HGGWPP75zJdqrBhj/73mp6OuNjXm9/3Hft
- Bj8sC
-X-Gm-Gg: ASbGncu+xvXYHzxMcymD77NIrkdoJ1ZymJksRBb+UD0yS6xCz9bGiYlJvszlmdNhvMv
- dgh+yfOS+fBaK2GDBcsZ9tOwB/1MUWOzvKK9BiIxQOes462eBzB2gKl97qj5FMV5OM/TP7EgjuG
- 1uedAARXw/HBuwKN16yVftEP4Exj97BfRJZLdccPIJ7jfk7x4K0cD0hHo6+yAVsfdAPrwfKGqD9
- f2Y7/jg09UlEpfOSWK7ZdEFlTNCyho0cEBnFlYj5HZWOm7/56sIOQ+FyMnLbKta0+PZs9bwHRgs
- rnvQF/2uDcP0WzWWHmxINDLOygJUJHzUIjc6KxNi4ZVeTO0X19cbeTsFCv8ThoD1LEsjOC2+Trx
- FtXD/2EINs9aYjNln6AGrL1uUQPTYLqEMw4qzyOhP7jWVh98=
-X-Google-Smtp-Source: AGHT+IF/XHm+eQVFhfWlnEuKj+A771wed5Z2AiWXa9QWZz55KdZWok3A3Kpc/lRRnJMjK4pvXRnEhg==
-X-Received: by 2002:a05:600c:6085:b0:43c:fceb:91a with SMTP id
- 5b1f17b1804b1-4538ee58e29mr156297785e9.11.1751381219845; 
- Tue, 01 Jul 2025 07:46:59 -0700 (PDT)
+ bh=SfIXmPf89XXe1HBqtw6MJ15ZCEw8ryCmetzhx/QXCNQ=;
+ b=RDWfpk/PQoDEPTMNfhpcCQ2TZM4UTC9PMAhnq2FNfbZcwfl6H8iFh/wvyu1LrTPoNY
+ sM8a2NMAyaZmtjdddPz0CVVnXHp+jRChGNEFHBziOMjLxX4yHvroSVAHwpoZim5zmZpO
+ n3fAw7YUXTXozTbcKiz4rz93W1mxSQQ/oU9owfM+Hv5cGG5ASxNjur4eKBl/7lP3vfc9
+ dSyBYiGxNdvdUsHViYX2hmB3aKG8YVjWlDdeoRdQyKV3EznXFaE265Bqpy6PQtIMXDMu
+ kNARn2Fh568HXtVtTk4ahnSKe/TgGRsParpH6vmFztccHkddKF2YFTcQm+InwHbY+XWH
+ 1k1w==
+X-Gm-Message-State: AOJu0Yz33IjYftxKKBmy1x/kmxzk/kplh/IiYf3dbR9S3Lcu996NgIqo
+ PMJh8kdHBjguDAGT6zPxyD6T8ri3X2O+Wr2SE7qCQZhUJeGmMWJbR2TpcJU5APj0CmFMcmynRNP
+ l4xSv
+X-Gm-Gg: ASbGncvtp7252exVQqKMV1CpbPQZPziF+mlR+/wzkTxNwtkyNKJMgwbJapbkGb2hHC/
+ Vi5zqJQ8he4o2Q+XMZ/mJQaGp7FD+6Au7IHRitPHcu6sYui3tYcrqf9rOKoYiS8o+8oFPzS+sWP
+ GHA65VXMzHRIsyvJ6frHU3XRZtDAfQFZY6bSSilr/eCdPFD2QRfPHGeURTWyk/GFLjRzbSEWaZd
+ fRdcjqoDv/OmUxezhh11XjOWEM8jt/25W7hbhenvU/AtApc3KMOuNZshW7OMK/s7iZSn+K5f59i
+ Y6JBpxQa0mJ6V+qyw05GnbnCrkzkI5qjHdFEFinOTTLaEdHBrNEKKpATd9lqqBXnAkeMjQLtZmy
+ EuKuXTs1ctnWRZ3XWKrGLdPVDgtDA0dUXkH1H
+X-Google-Smtp-Source: AGHT+IH0NoSf77UejRAzWuRL0iFSipP2VY63L8cEMTMGmuU/liKUetL2tlYYBu3h5d2mQXPqPKegDQ==
+X-Received: by 2002:a05:600c:3494:b0:453:5c30:a1fd with SMTP id
+ 5b1f17b1804b1-453a33d6fb9mr68703175e9.8.1751381130323; 
+ Tue, 01 Jul 2025 07:45:30 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a88c7fb67dsm13749177f8f.35.2025.07.01.07.46.55
+ 5b1f17b1804b1-4538a3a72dasm167627045e9.16.2025.07.01.07.45.23
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 01 Jul 2025 07:46:58 -0700 (PDT)
+ Tue, 01 Jul 2025 07:45:29 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -71,17 +71,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Julian Armistead <julian.armistead@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 61/68] accel/tcg: Clear exit_request once in tcg_cpu_exec()
-Date: Tue,  1 Jul 2025 16:40:09 +0200
-Message-ID: <20250701144017.43487-62-philmd@linaro.org>
+Subject: [PATCH v3 55/68] accel/tcg: Factor tcg_vcpu_init() out for re-use
+Date: Tue,  1 Jul 2025 16:40:03 +0200
+Message-ID: <20250701144017.43487-56-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250701144017.43487-1-philmd@linaro.org>
 References: <20250701144017.43487-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,36 +106,72 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- accel/tcg/tcg-accel-ops-mttcg.c | 1 -
- accel/tcg/tcg-accel-ops.c       | 3 +++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ accel/tcg/tcg-accel-ops.h       | 2 ++
+ accel/tcg/tcg-accel-ops-mttcg.c | 4 +++-
+ accel/tcg/tcg-accel-ops-rr.c    | 4 +++-
+ accel/tcg/tcg-accel-ops.c       | 7 +++++++
+ 4 files changed, 15 insertions(+), 2 deletions(-)
 
+diff --git a/accel/tcg/tcg-accel-ops.h b/accel/tcg/tcg-accel-ops.h
+index 129af89c3e7..1263a666774 100644
+--- a/accel/tcg/tcg-accel-ops.h
++++ b/accel/tcg/tcg-accel-ops.h
+@@ -20,4 +20,6 @@ int tcg_cpu_exec(CPUState *cpu);
+ void tcg_handle_interrupt(CPUState *cpu, int mask);
+ void tcg_cpu_init_cflags(CPUState *cpu, bool parallel);
+ 
++int tcg_vcpu_init(CPUState *cpu);
++
+ #endif /* TCG_ACCEL_OPS_H */
 diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
-index 8a0295e2410..2fb6ced2572 100644
+index 96ce065eb59..4de506a80ca 100644
 --- a/accel/tcg/tcg-accel-ops-mttcg.c
 +++ b/accel/tcg/tcg-accel-ops-mttcg.c
-@@ -130,7 +130,6 @@ void *mttcg_cpu_thread_routine(void *arg)
-             }
-         }
+@@ -79,8 +79,10 @@ void *mttcg_cpu_thread_routine(void *arg)
+     qemu_thread_get_self(cpu->thread);
  
--        qatomic_set_mb(&cpu->exit_request, 0);
-         qemu_wait_io_event(cpu);
-     } while (!cpu->unplug || cpu_can_run(cpu));
+     cpu->thread_id = qemu_get_thread_id();
+-    cpu->neg.can_do_io = true;
+     current_cpu = cpu;
++
++    tcg_vcpu_init(cpu);
++
+     cpu_thread_signal_created(cpu);
+     qemu_guest_random_seed_thread_part2(cpu->random_seed);
+ 
+diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+index fc33a13e4e8..9578bc639cb 100644
+--- a/accel/tcg/tcg-accel-ops-rr.c
++++ b/accel/tcg/tcg-accel-ops-rr.c
+@@ -192,7 +192,9 @@ static void *rr_cpu_thread_fn(void *arg)
+     qemu_thread_get_self(cpu->thread);
+ 
+     cpu->thread_id = qemu_get_thread_id();
+-    cpu->neg.can_do_io = true;
++
++    tcg_vcpu_init(cpu);
++
+     cpu_thread_signal_created(cpu);
+     qemu_guest_random_seed_thread_part2(cpu->random_seed);
  
 diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-index 83fb2d1362c..9b5caf9c4f5 100644
+index 4931e536beb..83fb2d1362c 100644
 --- a/accel/tcg/tcg-accel-ops.c
 +++ b/accel/tcg/tcg-accel-ops.c
-@@ -95,6 +95,9 @@ int tcg_cpu_exec(CPUState *cpu)
-     cpu_exec_start(cpu);
-     ret = cpu_exec(cpu);
-     cpu_exec_end(cpu);
-+
-+    qatomic_set_mb(&cpu->exit_request, 0);
-+
-     return ret;
+@@ -76,6 +76,13 @@ void tcg_vcpu_thread_precreate(CPUState *cpu)
+     tcg_cpu_init_cflags(cpu, current_machine->smp.max_cpus > 1);
  }
  
++int tcg_vcpu_init(CPUState *cpu)
++{
++    cpu->neg.can_do_io = true;
++
++    return 0;
++}
++
+ void tcg_cpu_destroy(CPUState *cpu)
+ {
+     cpu_thread_signal_destroyed(cpu);
 -- 
 2.49.0
 
