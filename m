@@ -4,74 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE2C2C7EE30
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 08:25:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81049C83038
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 08:28:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWWIl-000351-LK; Tue, 01 Jul 2025 04:25:15 -0400
+	id 1uWWKt-00049e-KF; Tue, 01 Jul 2025 04:27:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uWWIj-00032o-Lg
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 04:25:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uWWIf-0006KJ-Q0
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 04:25:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751358306;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3zTgEh4BvEEzL46s1pc7IJS5mPWU8IieF8laSoNDYXw=;
- b=GJICd3aI89W4MtdDyLP3dnrE7Yuxfi6CXCzaKD+bersO2cCfpSEW/s7zyw0Yh64iBypLNx
- /gjuk2ZxlGu6YhpxU3vUfpjB3uoqMXy3jd0ZCKMYZ9AoqHgUV0y7hB8BqVIC6BCCRlApT6
- CsdUHUohuuRaAueweuFT5a11Rgw8Y+U=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-466-FbtqZBpSOUWHSGNzZRZslA-1; Tue,
- 01 Jul 2025 04:25:05 -0400
-X-MC-Unique: FbtqZBpSOUWHSGNzZRZslA-1
-X-Mimecast-MFC-AGG-ID: FbtqZBpSOUWHSGNzZRZslA_1751358305
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C4CBA1800268; Tue,  1 Jul 2025 08:25:04 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 313A419560AB; Tue,  1 Jul 2025 08:25:04 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 81D8621E6A27; Tue, 01 Jul 2025 10:25:01 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,  berrange@redhat.com,  Peter Xu
- <peterx@redhat.com>,  Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v2 16/24] migration: Add capabilities into
- MigrationParameters
-In-Reply-To: <20250630195913.28033-17-farosas@suse.de> (Fabiano Rosas's
- message of "Mon, 30 Jun 2025 16:59:05 -0300")
-References: <20250630195913.28033-1-farosas@suse.de>
- <20250630195913.28033-17-farosas@suse.de>
-Date: Tue, 01 Jul 2025 10:25:01 +0200
-Message-ID: <87jz4sz5b6.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <kosasihwilliam4@gmail.com>)
+ id 1uWWKr-00049H-Ti; Tue, 01 Jul 2025 04:27:26 -0400
+Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <kosasihwilliam4@gmail.com>)
+ id 1uWWKo-0006Xm-OQ; Tue, 01 Jul 2025 04:27:24 -0400
+Received: by mail-yb1-xb2c.google.com with SMTP id
+ 3f1490d57ef6-e8601ce24c9so2237536276.1; 
+ Tue, 01 Jul 2025 01:27:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1751358440; x=1751963240; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Cec4ZnY4yDttputSR02LtvbTtScjGMxT6YCVoIAp95Q=;
+ b=STDjjxPfX2dXnsJ8mO2BnrZfqTOVVBmKWF+Uotaen+eZ35HlDKOXjXCUcj9X8+xXyi
+ MDiWFXGafUVek3WQ40/MExhjac4wm1QFoDYV476Kff5saNbaBhQtdq7XSmHxDEUaFW7H
+ Pt9pHlzocikv9p8v6RLlBGWhHz+hiqpBa0awS0XF3/LpxNhRHsgQqaHsdUigCSmp11E5
+ /FrlYvNAC5GVtnJtD3NO2KMdppo019sKRSyQyE0yfc4foTbLnIEhB8NgGS3fBMUB5YOg
+ y9GKeFRTBAackykqnWeGD7Eke30WbcBRhsGkzIWYO3yIgXk50apN/IA9Rx1314YgcVbP
+ eqpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751358440; x=1751963240;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Cec4ZnY4yDttputSR02LtvbTtScjGMxT6YCVoIAp95Q=;
+ b=HFiyr3iV/L2FEZLuCVs4aNDf/Ze7xR1VfQQxiE8EhucDA5gDTm3RsrJGja4l7HFBWA
+ idMpN0CU6NW56tBmUS74W7sdAeEJOa3Hrgma3+N8dhrr0YMhnV9OgHczhXSoKO5az6SB
+ WmFSwmACApmnrJY89b1Jv65z+jF4JHTiTMf22WHTBEkW4gCqP5j752T2gNvD2HYviDdl
+ yrRSXzRFLIUcgXYHpC0B6ccvjVXx2ZTaaGkXDhaEEJHtNCV9ObBsSBRsWcdfu4y1aTHS
+ lF784kdqDJK1Fa93gsV20hCewYq/9+5A0mc+5oABP1MO9xJq+cUosOMXNPJnF0DgTLrY
+ zO8Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV3BTEOKu0zZCDG0Xex+Pb5oGXBkoxJgzcbCgKVNS+Te8BSVSEY4BwEt+l+cjrldLyDh+K1wNRn/g==@nongnu.org
+X-Gm-Message-State: AOJu0YwloSaynSaPYhnRvH/jKA2OYA6lYxAOQCO8/Qm1yh6+JwAuLWrh
+ pJtXWox7uglFElyycqopq/mEtaI8aOBsURNU6wmQFqZ3xlkxTplVNBF8k5a0Wl2YXgYk0S/jqE+
+ 1HANwM//C/VhiD5RuAQiJJml6RGxsOn8=
+X-Gm-Gg: ASbGncuTVgM3cQuO3AU79+Joj2CnAwFle4Ax9IKEXra/apljwDW30z/RpeAGseYLo+6
+ 8BLx2dobfBLDAyefs6mrwNR8hg7UT+8Rx26lDkZCNXUO+ETrd8yJyF+3UaIKSLBbMYB1lga7jQk
+ TUOp8w0pzASD702aMQQXF+93jVfT92S4AgKhCBSfuLlH4=
+X-Google-Smtp-Source: AGHT+IFWHWZamBpd3/BjcjTW9cUJdTlTLqXZjFIHXQnP1ddAvu/6lVy4phJL9S6MtmkuCWfImM/ITr5TTycF9EijroA=
+X-Received: by 2002:a05:690c:30d:b0:70f:84c8:312e with SMTP id
+ 00721157ae682-7151713d346mr246637127b3.1.1751358440398; Tue, 01 Jul 2025
+ 01:27:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <20250625105832.1277378-1-kosasihwilliam4@gmail.com>
+ <CAFEAcA9X8B8cUbv2hj8dXEnu5OgBW=mzO47PBO9HEDzAVOnGCg@mail.gmail.com>
+In-Reply-To: <CAFEAcA9X8B8cUbv2hj8dXEnu5OgBW=mzO47PBO9HEDzAVOnGCg@mail.gmail.com>
+From: William Kosasih <kosasihwilliam4@gmail.com>
+Date: Tue, 1 Jul 2025 17:57:09 +0930
+X-Gm-Features: Ac12FXyz9S3OKl6b-yP1Tnj65aJaOuD3MGhEYSQ1--tb5hGTXCqtz6Bf1hMpuuI
+Message-ID: <CAG66A_dyEsx_kFEuKNTdgYos+3m4hboR8g_YmjvKFDc6ZQNYpg@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: Fix M-profile helper loads/stores alignment
+ checks
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000b6e21f0638d9e9c0"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
+ envelope-from=kosasihwilliam4@gmail.com; helo=mail-yb1-xb2c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,217 +94,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+--000000000000b6e21f0638d9e9c0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> Add capabilities to MigrationParameters. This structure will hold all
-> migration options. Capabilities will go away in the next patch.
+Hi Peter, really appreciate your feedback, thank you so much. I'll split
+the patch into smaller
+series as you suggested, and keep changes to bare minimum for this fix.
+I'll create another
+patch for the refactoring of the helper macros indentation.
+
+Cheers,
+William
+
+On Tue, Jul 1, 2025 at 1:13=E2=80=AFAM Peter Maydell <peter.maydell@linaro.=
+org>
+wrote:
+
+> On Wed, 25 Jun 2025 at 11:59, William Kosasih <kosasihwilliam4@gmail.com>
+> wrote:
+> >
+> > Historically, M-profile helper functions in m_helper.c and mve_helper.c
+> > used the unaligned cpu_*_data_ra() routines to perform guest memory
+> > accesses. This meant we had no way to enforce alignment constraints
+> > when executing helper-based loads/stores. With the addition of the
+> > cpu_*_mmu() APIs, we can now combine the current MMU state
+> > (cpu_mmu_index(env, false)) with MO_ALIGN flags to build a MemOpIdx
+> > that enforces alignment at the helper level.
+> >
+> > This patch:
+> > - Replaces all calls to cpu_ldl_data_ra(), cpu_ldst_data_ra(), etc.,
+> >   in the M-profile helpers (m_helper.c) and the MVE helpers
+> >   (mve_helper.c) with their cpu_*_mmu() equivalents.
+> > - Leaves SME and SVE helper code untouched, as those extensions
+> >   support unaligned accesses by design.
+> > - Retains the manual alignment checks in the vlldm/vlstm helpers
+> >   because those instructions enforce an 8-byte alignment requirement
+> >   (instead of the 4-byte alignment for ordinary long loads/stores).
+> >   References to cpu_*_data_* are still replaced with cpu_*_mmu(), so
+> >   that the individual word accesses themselves also perform the standar=
+d
+> >   alignment checks, in keeping with the ARM pseudocode.
+> >
+> > With this change, all M-profile and MVE helper-based loads and stores
+> > will now correctly honor their alignment requirements.
+> >
+> > Signed-off-by: William Kosasih <kosasihwilliam4@gmail.com>
+> >
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1154
+> > ---
+> >  target/arm/tcg/m_helper.c   |  33 +--
+> >  target/arm/tcg/mve_helper.c | 408 ++++++++++++++++++++----------------
+> >  2 files changed, 254 insertions(+), 187 deletions(-)
 >
-> Also add capabilities to MigrationParameter as the enum needs to be
-> kept in sync with MigrationParameters. This affects the parsing of
-> migration HMP commands so make the necessary additions there too.
+> Hi; thanks for doing this work, this is something that it's definitely
+> nice to see fixed.
 >
-> From this point on, both QMP and HMP versions of
-> migrate-set-parameters and query-migrate-parameters gain the ability
-> to work with capabilities.
+> My main comment here is that this patch is really too large
+> at 400+ lines to review easily. Could you split it up into
+> a multi-patch series where each patch does one coherent
+> thing, please? (For instance "honour alignment requirements in
+> vlldm and vlstm" could be one patch, and so on.) This will
+> make it easier to review, and also easier to track down any
+> problems in it by bisecting to the relevant commit if we get
+> reports of a regression.
 >
-> With MigrationParameters now having members for each capability, the
-> migration capabilities commands (query-migrate-capabilities,
-> migrate-set-capabilities) will soon be deprecated. Add a set of
-> helpers to convert between the old MigrationCapability representation
-> and the new representation as members of MigrationParameters.
+> thanks
+> -- PMM
 >
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-[...]
+--000000000000b6e21f0638d9e9c0
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 40e00fb86e..3d3f5624c5 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -763,7 +763,14 @@
->             'vcpu-dirty-limit',
->             'mode',
->             'zero-page-detection',
-> -           'direct-io'] }
-> +           'direct-io', 'xbzrle', 'rdma-pin-all', 'auto-converge',
-> +           'zero-blocks', 'events', 'postcopy-ram', 'x-colo',
-> +           'release-ram', 'return-path', 'pause-before-switchover',
-> +           'multifd', 'dirty-bitmaps', 'postcopy-blocktime',
-> +           'late-block-activate', 'x-ignore-shared',
-> +           'validate-uuid', 'background-snapshot',
-> +           'zero-copy-send', 'postcopy-preempt',
-> +           'switchover-ack', 'dirty-limit', 'mapped-ram' ] }
+<div dir=3D"ltr">Hi Peter, really appreciate your feedback, thank you so mu=
+ch. I&#39;ll split the patch into smaller<div>series as you suggested, and =
+keep changes to bare minimum for this fix. I&#39;ll create another</div><di=
+v>patch for the refactoring of the helper macros indentation.=C2=A0</div><d=
+iv><br></div><div>Cheers,</div><div>William</div></div><br><div class=3D"gm=
+ail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On T=
+ue, Jul 1, 2025 at 1:13=E2=80=AFAM Peter Maydell &lt;<a href=3D"mailto:pete=
+r.maydell@linaro.org">peter.maydell@linaro.org</a>&gt; wrote:<br></div><blo=
+ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
+:1px solid rgb(204,204,204);padding-left:1ex">On Wed, 25 Jun 2025 at 11:59,=
+ William Kosasih &lt;<a href=3D"mailto:kosasihwilliam4@gmail.com" target=3D=
+"_blank">kosasihwilliam4@gmail.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; Historically, M-profile helper functions in m_helper.c and mve_helper.=
+c<br>
+&gt; used the unaligned cpu_*_data_ra() routines to perform guest memory<br=
+>
+&gt; accesses. This meant we had no way to enforce alignment constraints<br=
+>
+&gt; when executing helper-based loads/stores. With the addition of the<br>
+&gt; cpu_*_mmu() APIs, we can now combine the current MMU state<br>
+&gt; (cpu_mmu_index(env, false)) with MO_ALIGN flags to build a MemOpIdx<br=
+>
+&gt; that enforces alignment at the helper level.<br>
+&gt;<br>
+&gt; This patch:<br>
+&gt; - Replaces all calls to cpu_ldl_data_ra(), cpu_ldst_data_ra(), etc.,<b=
+r>
+&gt;=C2=A0 =C2=A0in the M-profile helpers (m_helper.c) and the MVE helpers<=
+br>
+&gt;=C2=A0 =C2=A0(mve_helper.c) with their cpu_*_mmu() equivalents.<br>
+&gt; - Leaves SME and SVE helper code untouched, as those extensions<br>
+&gt;=C2=A0 =C2=A0support unaligned accesses by design.<br>
+&gt; - Retains the manual alignment checks in the vlldm/vlstm helpers<br>
+&gt;=C2=A0 =C2=A0because those instructions enforce an 8-byte alignment req=
+uirement<br>
+&gt;=C2=A0 =C2=A0(instead of the 4-byte alignment for ordinary long loads/s=
+tores).<br>
+&gt;=C2=A0 =C2=A0References to cpu_*_data_* are still replaced with cpu_*_m=
+mu(), so<br>
+&gt;=C2=A0 =C2=A0that the individual word accesses themselves also perform =
+the standard<br>
+&gt;=C2=A0 =C2=A0alignment checks, in keeping with the ARM pseudocode.<br>
+&gt;<br>
+&gt; With this change, all M-profile and MVE helper-based loads and stores<=
+br>
+&gt; will now correctly honor their alignment requirements.<br>
+&gt;<br>
+&gt; Signed-off-by: William Kosasih &lt;<a href=3D"mailto:kosasihwilliam4@g=
+mail.com" target=3D"_blank">kosasihwilliam4@gmail.com</a>&gt;<br>
+&gt;<br>
+&gt; Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/115=
+4" rel=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qem=
+u/-/issues/1154</a><br>
+&gt; ---<br>
+&gt;=C2=A0 target/arm/tcg/m_helper.c=C2=A0 =C2=A0|=C2=A0 33 +--<br>
+&gt;=C2=A0 target/arm/tcg/mve_helper.c | 408 ++++++++++++++++++++----------=
+------<br>
+&gt;=C2=A0 2 files changed, 254 insertions(+), 187 deletions(-)<br>
+<br>
+Hi; thanks for doing this work, this is something that it&#39;s definitely<=
+br>
+nice to see fixed.<br>
+<br>
+My main comment here is that this patch is really too large<br>
+at 400+ lines to review easily. Could you split it up into<br>
+a multi-patch series where each patch does one coherent<br>
+thing, please? (For instance &quot;honour alignment requirements in<br>
+vlldm and vlstm&quot; could be one patch, and so on.) This will<br>
+make it easier to review, and also easier to track down any<br>
+problems in it by bisecting to the relevant commit if we get<br>
+reports of a regression.<br>
+<br>
+thanks<br>
+-- PMM<br>
+</blockquote></div>
 
-This is MigrateParameter.  Different order than in MigrationParameters.
-Intentional?
-
->  
->  ##
->  # @migrate-set-parameters:
-> @@ -934,10 +941,108 @@
->  #     only has effect if the @mapped-ram capability is enabled.
->  #     (Since 9.1)
->  #
-> +# @xbzrle: Migration supports xbzrle (Xor Based Zero Run Length
-> +#     Encoding).  This feature allows us to minimize migration traffic
-> +#     for certain work loads, by sending compressed difference of the
-> +#     pages
-> +#
-> +# @rdma-pin-all: Controls whether or not the entire VM memory
-> +#     footprint is mlock()'d on demand or all at once.  Refer to
-> +#     docs/rdma.txt for usage.  Disabled by default.  (since 2.0)
-> +#
-> +# @zero-blocks: During storage migration encode blocks of zeroes
-> +#     efficiently.  This essentially saves 1MB of zeroes per block on
-> +#     the wire.  Enabling requires source and target VM to support
-> +#     this feature.  To enable it is sufficient to enable the
-> +#     capability on the source VM.  The feature is disabled by
-> +#     default.  (since 1.6)
-> +#
-> +# @events: generate events for each migration state change (since 2.4)
-> +#
-> +# @auto-converge: If enabled, QEMU will automatically throttle down
-> +#     the guest to speed up convergence of RAM migration.  (since 1.6)
-> +#
-> +# @postcopy-ram: Start executing on the migration target before all of
-> +#     RAM has been migrated, pulling the remaining pages along as
-> +#     needed.  The capacity must have the same setting on both source
-> +#     and target or migration will not even start.  NOTE: If the
-
-Make this
-
-   #     and target or migration will not even start.  **Note:** if the
-
-Crossed with commit 188b31ad425c (qapi: Use proper markup instead of
-CAPS for emphasis in doc comments).
-
-> +#     migration fails during postcopy the VM will fail.  (since 2.6)
-> +#
-> +# @x-colo: If enabled, migration will never end, and the state of the
-> +#     VM on the primary side will be migrated continuously to the VM
-> +#     on secondary side, this process is called COarse-Grain LOck
-> +#     Stepping (COLO) for Non-stop Service.  (since 2.8)
-> +#
-> +# @release-ram: if enabled, qemu will free the migrated ram pages on
-
-And this
-
-   # @release-ram: if enabled, QEMU will free the migrated ram pages on
-
-Crossed with commit 6263225492ba (qapi: Correct spelling of QEMU in doc
-comments).
-
-> +#     the source during postcopy-ram migration.  (since 2.9)
-> +#
-> +# @return-path: If enabled, migration will use the return path even
-> +#     for precopy.  (since 2.10)
-> +#
-> +# @pause-before-switchover: Pause outgoing migration before
-> +#     serialising device state and before disabling block IO (since
-> +#     2.11)
-
-   #     serialising device state and before disabling block IO
-   #     (since 2.11)
-
-Crossed with commit c1a6aa1d443e (qapi: Avoid breaking lines within
-(since X.Y))
-
-> +#
-> +# @multifd: Use more than one fd for migration (since 4.0)
-> +#
-> +# @dirty-bitmaps: If enabled, QEMU will migrate named dirty bitmaps.
-> +#     (since 2.12)
-> +#
-> +# @postcopy-blocktime: Calculate downtime for postcopy live migration
-> +#     (since 3.0)
-> +#
-> +# @late-block-activate: If enabled, the destination will not activate
-> +#     block devices (and thus take locks) immediately at the end of
-> +#     migration.  (since 3.0)
-> +#
-> +# @x-ignore-shared: If enabled, QEMU will not migrate shared memory
-> +#     that is accessible on the destination machine.  (since 4.0)
-> +#
-> +# @validate-uuid: Send the UUID of the source to allow the destination
-> +#     to ensure it is the same.  (since 4.2)
-> +#
-> +# @background-snapshot: If enabled, the migration stream will be a
-> +#     snapshot of the VM exactly at the point when the migration
-> +#     procedure starts.  The VM RAM is saved with running VM.
-> +#     (since 6.0)
-> +#
-> +# @zero-copy-send: Controls behavior on sending memory pages on
-> +#     migration.  When true, enables a zero-copy mechanism for sending
-> +#     memory pages, if host supports it.  Requires that QEMU be
-> +#     permitted to use locked memory for guest RAM pages.  (since 7.1)
-> +#
-> +# @postcopy-preempt: If enabled, the migration process will allow
-> +#     postcopy requests to preempt precopy stream, so postcopy
-> +#     requests will be handled faster.  This is a performance feature
-> +#     and should not affect the correctness of postcopy migration.
-> +#     (since 7.1)
-> +#
-> +# @switchover-ack: If enabled, migration will not stop the source VM
-> +#     and complete the migration until an ACK is received from the
-> +#     destination that it's OK to do so.  Exactly when this ACK is
-> +#     sent depends on the migrated devices that use this feature.  For
-> +#     example, a device can use it to make sure some of its data is
-> +#     sent and loaded in the destination before doing switchover.
-> +#     This can reduce downtime if devices that support this capability
-> +#     are present.  'return-path' capability must be enabled to use
-> +#     it.  (since 8.1)
-> +#
-> +# @dirty-limit: If enabled, migration will throttle vCPUs as needed to
-> +#     keep their dirty page rate within @vcpu-dirty-limit.  This can
-> +#     improve responsiveness of large guests during live migration,
-> +#     and can result in more stable read performance.  Requires KVM
-> +#     with accelerator property "dirty-ring-size" set.  (Since 8.1)
-> +#
-> +# @mapped-ram: Migrate using fixed offsets in the migration file for
-> +#     each RAM page.  Requires a migration URI that supports seeking,
-> +#     such as a file.  (since 9.0)
-> +#
->  # Features:
->  #
-> -# @unstable: Members @x-checkpoint-delay and
-> -#     @x-vcpu-dirty-limit-period are experimental.
-> +# @unstable: Members @x-checkpoint-delay, @x-vcpu-dirty-limit-period,
-> +#     @x-colo and @x-ignore-shared are experimental.
-> +# @deprecated: Member @zero-blocks is deprecated as being part of
-> +#     block migration which was already removed.
->  #
->  # Since: 2.4
->  ##
-> @@ -972,7 +1077,29 @@
->              '*vcpu-dirty-limit': 'uint64',
->              '*mode': 'MigMode',
->              '*zero-page-detection': 'ZeroPageDetection',
-> -            '*direct-io': 'bool' } }
-> +            '*direct-io': 'bool',
-> +            '*xbzrle': 'bool',
-> +            '*rdma-pin-all': 'bool',
-> +            '*auto-converge': 'bool',
-> +            '*zero-blocks': { 'type': 'bool', 'features': [ 'deprecated' ] },
-> +            '*events': 'bool',
-> +            '*postcopy-ram': 'bool',
-> +            '*x-colo': { 'type': 'bool', 'features': [ 'unstable' ] },
-> +            '*release-ram': 'bool',
-> +            '*return-path': 'bool',
-> +            '*pause-before-switchover': 'bool',
-> +            '*multifd': 'bool',
-> +            '*dirty-bitmaps': 'bool',
-> +            '*postcopy-blocktime': 'bool',
-> +            '*late-block-activate': 'bool',
-> +            '*x-ignore-shared': { 'type': 'bool', 'features': [ 'unstable' ] },
-> +            '*validate-uuid': 'bool',
-> +            '*background-snapshot': 'bool',
-> +            '*zero-copy-send': 'bool',
-> +            '*postcopy-preempt': 'bool',
-> +            '*switchover-ack': 'bool',
-> +            '*dirty-limit': 'bool',
-> +            '*mapped-ram': 'bool' } }
->  
->  ##
->  # @query-migrate-parameters:
-
+--000000000000b6e21f0638d9e9c0--
 
