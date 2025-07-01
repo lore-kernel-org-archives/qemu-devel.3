@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA639C83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:17:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CFE8C7EE30
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:19:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWeSV-0005b7-TF; Tue, 01 Jul 2025 13:07:51 -0400
+	id 1uWeSs-0005tG-Cq; Tue, 01 Jul 2025 13:08:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uWeSS-0005Z2-Te
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:07:49 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1uWeSp-0005rW-AN
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:08:11 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uWeSP-0003WD-HA
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:07:48 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-450cb2ddd46so35127985e9.2
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 10:07:44 -0700 (PDT)
+ id 1uWeSk-0003lL-Ce
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:08:11 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3a4ef2c2ef3so3099656f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 10:08:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751389663; x=1751994463; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751389683; x=1751994483; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VBvxJ1cilsn9V1RB9o7d6hcyA6rSrn3aogssV0H3S/w=;
- b=cmoi+F1Y7p08f9ic11Z74om+I+vTK521iIgBHzmnPVyOz9TAd6OgJRRQgNF89uzSkQ
- JKkGRHM8aSgJkvNnD3sMiCgQMy+/NA+Zvl5foxy2AawR/a6gDzoqmsIdtb4TzdNzrhcN
- 8CeTQsaZ/Daull0K556YShg7GU2kLo5XJyopsMF52iQxzs19jhLZUDPMyA9jdqh8MxS+
- 3V8u7Jt1pcbBs8VJ6divfhKeJbnMv1bXGHVqmFVRQgv7IE2eARXm+BaNfAcZDKdt9txN
- 2oTHH5aB2NSXCZxgDkAMNd6g/z/xBemEwUT882kLiIW2WrqzK/tVecnQfkkWKd6FQXgn
- WNFw==
+ :reply-to; bh=h1wFfqXrQ7liHsZUjU0tPUQrAZmnsGYgeDtVNq+Ns4Q=;
+ b=NWKXZGT4Mf0JELVhdPpul82h90g7vQTYDuufUwWet/eoRURg2DD7SMQFcdwksisZfe
+ 7RWCN0cQFL6sLhiqjhwAcVq5HVhH6i33ZCSRAedV6x7DIBY3F3OaqdsrwmAZkLe6IXue
+ LuXDQI7qIiqfQHx+FY5iE0RRIBAC9KbUDqqQNy4wAp3C3LQZzXwp63xV7zhyoAuakCuT
+ 5LOzcjYiQoAzpnTGDrEHYPWAQw3tlwhqGrHZ4aYs+988cWHkBJWi3C7hjYJzT+1/mAF6
+ vl1dtnLh5pm6/b96wT1ZnQiwjd/1guGcxkaCRLrbrJg98DEOmHUGl6fbeQ60LI8GB0Xk
+ jKyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751389663; x=1751994463;
+ d=1e100.net; s=20230601; t=1751389683; x=1751994483;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VBvxJ1cilsn9V1RB9o7d6hcyA6rSrn3aogssV0H3S/w=;
- b=XMINd11AB+khGP15Ey8BabDSjVctFfMyx0e3A8CRF22tJI/REmSpzRporxY8Ws7YnN
- Cs1Vykt2EhO1PgaWFr/d0qfXS84of9YC8uQr6sLtTnfsjFl3iqcEtOAtofitgwvHD3ve
- PS2YR3UbI6FbqfPSpwCx05RRHhDkpVMw8WvUfVZDReXn5HvNhJ8ug5agaMNOmAy5WQKr
- ObMIERqZRzJg8GhxNGY+ozp55SD2Ro1w14nl5U2rusB07HScPvmX6bGmmvej/QUNY0X0
- 5OhFx35AnDYs4Gre1qdnxgHP4VF1QdYlyirakrLkuSSVTZAbqZK7AadHG8OR/0NVBxVl
- Z2SQ==
-X-Gm-Message-State: AOJu0Yw6+iyH1h4GJk95xT9UbQgAxHSnr+ZpsrStTNPVaFYOxljhze0d
- wNw8uRLqvVBXfFsUNkmR5ROJfl6cdKHYb6kASIhA/NVHc6fnx8pWFiMeOWhhc7I8ERVMh0Cj/wp
- 3XiHS
-X-Gm-Gg: ASbGncueHKZjVRYEpUPboHsgODf/rYMhdPu1BzwdNwwYuBk4ZvjQOvhx7SHjMItj0Zj
- MgL+4Id5OmsDAGS9Gq4YEytKw0PSghkKXTsyfxPdCsA5bldi4GmzkDFy2Ms6p9c9vk0ax7i9ho9
- 0J5tIMcC1SiMUTxyUwb0whrgAMmOOVv4qNuPTsMMgSVJp2OdkoyfGWImHhAt8MLTOXxN0vxrNrg
- EPKLxyfy/KgpHfHX0I5gFO5vSgbBPyvXFNb+XUbJsEDUAyj+waOSoijh0/X+jAOIqKC+NY0hZfP
- 6/uAAAHsthfbY7n1tXrgdeeVeusTyEHzUQnjaV/FKVkpq2KbhPWkWAZPu8rAXkDqi8LU
-X-Google-Smtp-Source: AGHT+IHESZ7+ZFMbLry/oN0ZLhhp2B3Vyc+k3H1jCX8eOsjHe48I6G6p10zDdR3wp0p1I/UiP+vkRA==
-X-Received: by 2002:a05:600c:138a:b0:451:edc8:7806 with SMTP id
- 5b1f17b1804b1-453a629bc0emr51099325e9.32.1751389662607; 
- Tue, 01 Jul 2025 10:07:42 -0700 (PDT)
+ bh=h1wFfqXrQ7liHsZUjU0tPUQrAZmnsGYgeDtVNq+Ns4Q=;
+ b=sdSslWqyaW/JSzJaFbV47NRuQ227iLx07zcJiLaIQBZv/t2TAsmxof7zrH0Cp4r1//
+ B/+STiTyJxXewxSqmMsFu8iOm74uY6EEK+wgrzWDzhXk7CeHQE6os8MqN42ujTO6bs1U
+ vC6aos/zvLHEVEp34U5iISAi9tpE+dcaILETp9jhOwgIA7+annrWG86excJxlOzvQaes
+ ExpmKy7vc+7ocVAqk0bctVfkq0ISzMFvoKIpbWYZenhuZMIHIZNAlFAoZG0x6/eoLOjP
+ boFlQt3SKS0BgQfGqUr1GJRlt1RCCXJWIXvK9+N5mTY/sQ0/O8tAU5vcNNFDLlok/glu
+ a25A==
+X-Gm-Message-State: AOJu0YzxgMfjEaVHsrEFesleZGrJrDcbjH5nzj4slyBRNRm8GOWC/FSy
+ BXyC5zudpiKLaImZ5oytt0MeHb7OtZ2tK9P0MRRqwwU9lCGFjapQbVBMalwBKbkUB33xvHNykHC
+ gtQgy
+X-Gm-Gg: ASbGncvN623egHb+zNP45bsUxt5xp804dSFBS8cD7oiY53G5z6szxdNt1HHSOJ0DTtW
+ VzwGA2jObF6pAo079EBFbq4yUS0XocuhrT4pKuA2Htc78xs3PMwLfGITq6mo/gjKe/590B+TUJh
+ 2PvcMR9woqMdxlMKxw8+bE52a91DB0+TWM0rTgwoZEUv/Flmv10XWNfexb5XFnREKAGfLuD5vZk
+ nA+OTRIFGWfjWFD+aeaHHaHgqpJuE4YihbNKDfpDR8PlqhMYAO0NDCdxKufE+8Q8UqEyRoFNxTn
+ APgxqqzrlw9wmL+Oovw2hyv92P04g1LHNPSycSZZzXA1K73VeVEEO7xzzyK2WofS7xVW
+X-Google-Smtp-Source: AGHT+IHPol/cDjIqMKhBWRCX++6if7wnpRmhjVWWcitWMLALet2QaBjW3IIQuMuWzvLHvR17/kXNPA==
+X-Received: by 2002:a05:6000:2407:b0:3a5:783f:528a with SMTP id
+ ffacd0b85a97d-3a8ff051153mr18179494f8f.59.1751389683206; 
+ Tue, 01 Jul 2025 10:08:03 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a88c80bb28sm13475658f8f.43.2025.07.01.10.07.41
+ ffacd0b85a97d-3a88c80bb28sm13475658f8f.43.2025.07.01.10.08.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Jul 2025 10:07:42 -0700 (PDT)
+ Tue, 01 Jul 2025 10:08:02 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 20/43] qtest/bios-tables-test: Add test for when ITS is off on
- aarch64
-Date: Tue,  1 Jul 2025 18:06:56 +0100
-Message-ID: <20250701170720.4072660-21-peter.maydell@linaro.org>
+Subject: [PULL 42/43] tests/functional: Expand Aarch64 SMMU tests to run on
+ HVF accelerator
+Date: Tue,  1 Jul 2025 18:07:18 +0100
+Message-ID: <20250701170720.4072660-43-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250701170720.4072660-1-peter.maydell@linaro.org>
 References: <20250701170720.4072660-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,77 +102,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Arm64 GIC ITS (Interrupt Translation Service) is an optional piece of
-hardware introduced in GICv3 and, being optional, it can be disabled
-in QEMU aarch64 VMs that support it using machine option "its=off",
-like, for instance: "-M virt,its=off".
-
-In ACPI, the ITS is advertised, if present, in the MADT (aka APIC)
-table, while the ID mappings from the Root Complex (RC) and from the
-SMMU nodes to the ITS Group nodes are described in the IORT table.
-
-This new test verifies that when the "its=off" option is passed to the
-machine the ITS-related data is correctly pruned from the ACPI tables.
-
-The new blobs for this test will be added in a following commit.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Message-id: 20250628195722.977078-7-gustavo.romero@linaro.org
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20250623121845.7214-27-philmd@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h |  2 ++
- tests/qtest/bios-tables-test.c              | 21 +++++++++++++++++++++
- 2 files changed, 23 insertions(+)
+ tests/functional/test_aarch64_smmu.py | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8bf..a88198d5c2a 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,3 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/aarch64/virt/APIC.its_off",
-+"tests/data/acpi/aarch64/virt/IORT.its_off",
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index 0b2bdf9d0d4..4dbc07ec5ea 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -2146,6 +2146,25 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
-     free_test_data(&data);
- }
+diff --git a/tests/functional/test_aarch64_smmu.py b/tests/functional/test_aarch64_smmu.py
+index c65d0f28178..e0f4a922176 100755
+--- a/tests/functional/test_aarch64_smmu.py
++++ b/tests/functional/test_aarch64_smmu.py
+@@ -17,7 +17,7 @@
  
-+static void test_acpi_aarch64_virt_tcg_its_off(void)
-+{
-+    test_data data = {
-+        .machine = "virt",
-+        .arch = "aarch64",
-+        .variant = ".its_off",
-+        .tcg_only = true,
-+        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
-+        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-+        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
-+        .ram_start = 0x40000000ULL,
-+        .scan_len = 128ULL * 1024 * 1024,
-+    };
-+
-+    test_acpi_one("-cpu cortex-a57 "
-+                  "-M gic-version=3,iommu=smmuv3,its=off", &data);
-+    free_test_data(&data);
-+}
-+
- static void test_acpi_q35_viot(void)
- {
-     test_data data = {
-@@ -2577,6 +2596,8 @@ int main(int argc, char *argv[])
-                            test_acpi_aarch64_virt_tcg_acpi_hmat);
-             qtest_add_func("acpi/virt/topology",
-                            test_acpi_aarch64_virt_tcg_topology);
-+            qtest_add_func("acpi/virt/its_off",
-+                           test_acpi_aarch64_virt_tcg_its_off);
-             qtest_add_func("acpi/virt/numamem",
-                            test_acpi_aarch64_virt_tcg_numamem);
-             qtest_add_func("acpi/virt/memhp", test_acpi_aarch64_virt_tcg_memhp);
+ from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
+ from qemu_test import BUILD_DIR
+-from qemu.utils import kvm_available
++from qemu.utils import kvm_available, hvf_available
+ 
+ 
+ class SMMU(LinuxKernelTest):
+@@ -45,11 +45,17 @@ def set_up_boot(self, path):
+         self.vm.add_args('-device', 'virtio-net,netdev=n1' + self.IOMMU_ADDON)
+ 
+     def common_vm_setup(self, kernel, initrd, disk):
+-        self.require_accelerator("kvm")
++        if hvf_available(self.qemu_bin):
++            accel = "hvf"
++        elif kvm_available(self.qemu_bin):
++            accel = "kvm"
++        else:
++            self.skipTest("Neither HVF nor KVM accelerator is available")
++        self.require_accelerator(accel)
+         self.require_netdev('user')
+         self.set_machine("virt")
+         self.vm.add_args('-m', '1G')
+-        self.vm.add_args("-accel", "kvm")
++        self.vm.add_args("-accel", accel)
+         self.vm.add_args("-cpu", "host")
+         self.vm.add_args("-machine", "iommu=smmuv3")
+         self.vm.add_args("-d", "guest_errors")
 -- 
 2.43.0
 
