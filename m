@@ -4,71 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D49CEC83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 15:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2803FC83038
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 16:00:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWdIT-0003Ey-BM; Tue, 01 Jul 2025 11:53:25 -0400
+	id 1uWdOc-0006Kg-7m; Tue, 01 Jul 2025 11:59:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uWdIR-0003Cm-Ej
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 11:53:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uWdIP-00039t-55
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 11:53:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751385199;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8QXwFjRIHs0pUvwU7CzS2qXsyJk4zCyLuvRLWkWxqIw=;
- b=FCKaEo12b+Gq2YO6VByIep2TTxfE70rzUJJJapZPictji0IIRgfvnR19NW0f1U5Kga6ACm
- FjgCq5/Ox2/y8Mxr0wP67AFcj9OakeFC/Jm2sHv48kxeS6BxQhx9D9EMLlYXg3mWG1R/io
- sxdt70AAWj2AcmYBcq/sW+50dEbt4MY=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-32-8dFdZcrZPzO_YEYiDvduzg-1; Tue,
- 01 Jul 2025 11:53:16 -0400
-X-MC-Unique: 8dFdZcrZPzO_YEYiDvduzg-1
-X-Mimecast-MFC-AGG-ID: 8dFdZcrZPzO_YEYiDvduzg_1751385195
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3CB1F19560AE; Tue,  1 Jul 2025 15:53:15 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.34.118])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AE7121944CE7; Tue,  1 Jul 2025 15:53:12 +0000 (UTC)
-Date: Tue, 1 Jul 2025 17:53:10 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: Fiona Ebner <f.ebner@proxmox.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, eblake@redhat.com, armbru@redhat.com
-Subject: Re: [PATCH] block: include 'file' child node name in block device info
-Message-ID: <aGQEZiOSyQLMMEW7@redhat.com>
-References: <20250630141421.1558724-1-f.ebner@proxmox.com>
- <81cb7080-cf5e-4049-82f8-e009aac93cdc@redhat.com>
+ (Exim 4.90_1) (envelope-from <sourabhtk37@gmail.com>)
+ id 1uWdEC-0000Kh-TJ; Tue, 01 Jul 2025 11:49:02 -0400
+Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <sourabhtk37@gmail.com>)
+ id 1uWdE6-0002SQ-TL; Tue, 01 Jul 2025 11:49:00 -0400
+Received: by mail-yb1-xb31.google.com with SMTP id
+ 3f1490d57ef6-e81749142b3so4488019276.3; 
+ Tue, 01 Jul 2025 08:48:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1751384931; x=1751989731; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iRGeOnXiKk3UNLg/JISGg2y/jFiiBBoZUHa7JQ5/NE8=;
+ b=bRUxWygqb19whbTwkNJpro2LxwTV8w9wtqsmUVY5y+61SmdPIS4aQzE1gfip+Rifxr
+ dSRqKLqJf7R4a+VS0cyEuwFegyeyLkfYC3Au0x0SDVEKivNsmEj/S1GwmOnzLN5dDkCI
+ txYQpl2Gl7P1wgRGCK3UoUrnEiXzpjpHaxs0SdzKtjAj68yn3qRFrcGIXbkkjWalalHY
+ as4grnEeGTyYilrSB21sbwqeD6EBwTKbunFTDQArW0vcdc1EHwZjmzAKoUlZlRm8F+kR
+ fcG2gkPALBK7qV0Yi1CGTw6t9UMjRkJWBOLddjYPNVsx8nrFiPiUuqnqZuDVCBiSsBDO
+ vxkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751384931; x=1751989731;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iRGeOnXiKk3UNLg/JISGg2y/jFiiBBoZUHa7JQ5/NE8=;
+ b=OVvOUh0cizVsmzxiedf5G4o5e6xk9polSj7pSiAYScxfmmaR4ZanQlS+SqX1lCvnHw
+ HiJ1u+ormTMZKUnBrqFJTrF7X+sN8KlIqmdzkQNUc1PqYJhgKsHTxdBuDtWKKoRebbzp
+ zw0jvnWx4uSK8XRHybj5Iifn30LyyK2c8k2J5q+yG8HWhLZTI5nw7m9sxCCxmaHjbUDB
+ zAEx8aBMpKAmHQt8s2mqv2EbEc0NSEEpXiKhLEVQehP1DOeMBj6TbzQPx1zPFDiEAGY+
+ eYDjOskiRev1vrKYx6j9VQ/c6/PcazrgHWVn20jaGvnlrk6Ooj/GUwcWOXJMf3E3Diex
+ Zrpw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV0wFW36nxq5oUhrRabe2rrjRLYQiOUjamQoyYZ4WU0uAKdoAGD/VJQtYwkkZb1UBfTVZjQwJ5WHcKsTA==@nongnu.org,
+ AJvYcCWHmy7Mk0MpPWPZPfVvko9wbdgasyLtveI9hEn+ZnjQnMLkm3YxuFu5GatjUwzjSbCO/S9z7q9XcjS2@nongnu.org
+X-Gm-Message-State: AOJu0YyGuDTH8DVKaBxvc0lL2wqLI5zNjdSQJOGTGUgKOGnbA2I/gqel
+ Q8FNEV6v+/N7hewt5GANvPZdrtFWtxqZ6ELJChTEtgWODV+IgiWU5tzD0XeFFu3hsaZPLloLn+m
+ 64+ZVQWH+JvhW7LLaNmKCigdO9jEHhv0=
+X-Gm-Gg: ASbGncthJ6gbSAYKjoo5LEBiQv5VI2fQEid76kzeGmWmQdLc9oA1nu/FKqcTe+M+naM
+ p3HhyPeVlGMCYqvyRsyEhACj351CLSwmN3t43IyXFHQon8WdHP6qB89e+eiEfNqfWMcOYF4Bjum
+ D/eKE9gK53w72Fdr5OUpzV/JcWPXTT0NdbhJjvfaxu
+X-Google-Smtp-Source: AGHT+IG+DyxCD84w4aVceGLSnOjZYsQCaCHaAc4+2MFYdHW5KF5DwHdbWotdgnXlOR/TdsPItnLvV8F3+CUULSnAIlQ=
+X-Received: by 2002:a05:6902:2ec3:b0:e87:9a73:ce60 with SMTP id
+ 3f1490d57ef6-e87a7b0e10fmr16014760276.11.1751384931314; Tue, 01 Jul 2025
+ 08:48:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <81cb7080-cf5e-4049-82f8-e009aac93cdc@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20221108183352.9466-1-philmd@linaro.org>
+ <CAJSP0QVdQ=wTtgNVDChzu5U1ww3SZAa2HfXjuE4z5uOnFeT_bw@mail.gmail.com>
+ <CAJSP0QVZ8D59AM_tvgHzdhqF6EUefUgmyD9WMtfPUD=nn54v+g@mail.gmail.com>
+ <898348ed-a9bf-5e4a-d389-b60a456ccaba@linaro.org>
+ <ZYSr456CZ0p_X9wv@eldamar.lan>
+ <63af6d5b-79d7-42a4-9d74-ed533c383a3d@linaro.org>
+In-Reply-To: <63af6d5b-79d7-42a4-9d74-ed533c383a3d@linaro.org>
+From: T K Sourabh <sourabhtk37@gmail.com>
+Date: Tue, 1 Jul 2025 17:48:14 +0200
+X-Gm-Features: Ac12FXw1DJ_xuXEFCcr4aaavAbFl9qrh_2YEeejwC8vSMdY18fzd6A1W9EmkRWQ
+Message-ID: <CADS2XXpNMSp6RimrM8W88QRiXHNYHPaSfqZkWeVBTLqVgF1j5A@mail.gmail.com>
+Subject: Re: [PULL 0/3] Memory/SDHCI/ParallelFlash patches for v7.2.0-rc0
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Salvatore Bonaccorso <carnil@debian.org>,
+ Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel@nongnu.org, 
+ Bin Meng <bin.meng@windriver.com>, Hanna Reitz <hreitz@redhat.com>, 
+ David Hildenbrand <david@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, 
+ Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
+ envelope-from=sourabhtk37@gmail.com; helo=mail-yb1-xb31.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 01 Jul 2025 11:59:45 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,38 +106,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 01.07.2025 um 15:04 hat Hanna Czenczek geschrieben:
-> On 30.06.25 16:06, Fiona Ebner wrote:
-> > In combination with using a throttle filter to enforce IO limits for
-> > a guest device, knowing the 'file' child of a block device can be
-> > useful. If the throttle filter is only intended for guest IO, block
-> > jobs should not also be limited by the throttle filter, so the
-> > block operations need to be done with the 'file' child of the top
-> > throttle node as the target. In combination with mirroring, the name
-> > of that child is not fixed.
-> > 
-> > Another scenario is when unplugging a guest device after mirroring
-> > below a top throttle node, where the mirror target is added explicitly
-> > via blockdev-add. After mirroring, the target becomes the new 'file'
-> > child of the throttle node. For unplugging, both the top throttle node
-> > and the mirror target need to be deleted, because only implicitly
-> > added child nodes are deleted automatically, and the current 'file'
-> > child of the throttle node was explicitly added (as the mirror
-> > target).
-> 
-> Why not return a map of all children?
+Hi,
 
-I had the same thought, just didn't get around to actually replying. I
-think "a map" in this context will be a list of objects, like this:
+Is there a way to reproduce this issue? I have tried with the
+available reproducer but it doesn't seem to work.
 
-    "children": [
-        { "child": "file", "node-name": "foo" },
-        { "child": "backing", "node-name": "bar" }
-    ]
+It would be really helpful to improve my understanding of qemu and I
+can help in testing the patch-sets additionally.
 
-Which as a side effect automatically gives us extensibility if we ever
-want to expose more details of BdrvChild.
+Thanks
+T K Sourab
 
-Kevin
 
+On Tue, Jun 24, 2025 at 6:43=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> On 21/12/23 22:19, Salvatore Bonaccorso wrote:
+> > Hi Philippe,
+> >
+> > On Wed, Nov 09, 2022 at 08:43:19AM +0100, Philippe Mathieu-Daud=C3=A9 w=
+rote:
+> >> On 8/11/22 21:57, Stefan Hajnoczi wrote:
+> >>> I've dropped the SDHCI CVE fix due to the CI failure.
+> >>>
+> >>> The rest of the commits are still in the staging tree and I plan to
+> >>> include them in v7.2.0-rc0.
+> >>
+> >> Thank you Stefan, sorry for not catching that failure sooner.
+> >
+> > I was looking through some older CVE's for qemu which are tracked
+> > still unfixed in Debian and noticed CVE-2022-3872 . Do you happen to
+> > know if the fix for CVE-2022-3872, the dropped one above, was ever
+> > fixed in another way? Or did that felt trough the cracks?
+>
+> Doh... You are right, this totally slipped off my radar :/
 
