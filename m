@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9C82C83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:34:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37674C7EE30
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:35:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWepi-0007Eh-A7; Tue, 01 Jul 2025 13:31:50 -0400
+	id 1uWepX-0006zL-Pd; Tue, 01 Jul 2025 13:31:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uWeoq-0006Q5-12
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:30:59 -0400
+ id 1uWep1-0006YL-1D
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:31:08 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uWeok-0007Kb-Tm
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:30:55 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uWeov-0007Ji-IA
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:31:06 -0400
 Received: from localhost.localdomain (unknown [167.220.208.67])
- by linux.microsoft.com (Postfix) with ESMTPSA id 595402119397;
- Tue,  1 Jul 2025 10:30:35 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 595402119397
+ by linux.microsoft.com (Postfix) with ESMTPSA id 4EC232119398;
+ Tue,  1 Jul 2025 10:30:47 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4EC232119398
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1751391038;
- bh=74QqBYYVDLmh00uPX2tb/zHhMNGHChVTPpJto0oEgZY=;
+ s=default; t=1751391050;
+ bh=+Y//l1YbBSWT9WUeIyoAcZdX9+ugwF8RlxPl7j64R+M=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=UtNGClOHKkNc/XTPZodlvTdd//tkXNjb8LH8Yl8CXKAP38CUgFn9GXMZ5Jzz2Ru/f
- KDgn4ixKkB2/7oFofJKDcwnb4FOlXSFbyJi3ym2eR2ey6pOOp+BdSKUMoVMOEDmiAK
- dFWpKFOLro0n5wKszzQNP7w6XcqhnS+hEI2lXFwI=
+ b=LRwTvdREwCG6AuL6pDHKagwUPecqGRmAYAXx4ZAecA/N1NYnS5fQQCFgTfcR36Uju
+ ZGVh9lEFMtqB1eBJwf0COfdS7IjHliBaXp+CAHZlFsdLQOGhqdalzwapg05l4R2TV8
+ M39j5WCxo6Tj1GRkPOMPDj0KffbPGsGfIDjCCIa4=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Cameron Esfahani <dirty@apple.com>,
@@ -45,9 +45,9 @@ Cc: Cameron Esfahani <dirty@apple.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 24/27] target/i386/mshv: Implement mshv_vcpu_run()
-Date: Tue,  1 Jul 2025 19:28:31 +0200
-Message-Id: <20250701172834.44849-25-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v2 27/27] docs: Add mshv to documentation
+Date: Tue,  1 Jul 2025 19:28:34 +0200
+Message-Id: <20250701172834.44849-28-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250701172834.44849-1-magnuskulke@linux.microsoft.com>
 References: <20250701172834.44849-1-magnuskulke@linux.microsoft.com>
@@ -55,13 +55,13 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=13.77.154.182;
  envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,496 +77,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the main vCPU execution loop for MSHV using the MSHV_RUN_VP ioctl.
-
-A translate_gva() hypercall is implemented. The execution loop handles
-guest entry and VM exits. There are handlers for memory r/w, PIO and
-MMIO to which the exit events are dispatched.
-
-In case of MMIO the i386 instruction decoder/emulator is invoked to
-perform the operation in user space.
+Added mshv to the list of accelerators in doc text.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- target/i386/mshv/mshv-cpu.c | 463 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 461 insertions(+), 2 deletions(-)
+ docs/devel/codebase.rst |  2 +-
+ qemu-options.hx         | 16 ++++++++--------
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 8def964862..353073ed50 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -984,10 +984,469 @@ void mshv_arch_amend_proc_features(
-     features->access_guest_idle_reg = 1;
- }
+diff --git a/docs/devel/codebase.rst b/docs/devel/codebase.rst
+index 2a3143787a..69d8827117 100644
+--- a/docs/devel/codebase.rst
++++ b/docs/devel/codebase.rst
+@@ -48,7 +48,7 @@ yet, so sometimes the source code is all you have.
+ * `accel <https://gitlab.com/qemu-project/qemu/-/tree/master/accel>`_:
+   Infrastructure and architecture agnostic code related to the various
+   `accelerators <Accelerators>` supported by QEMU
+-  (TCG, KVM, hvf, whpx, xen, nvmm).
++  (TCG, KVM, hvf, whpx, xen, nvmm, mshv).
+   Contains interfaces for operations that will be implemented per
+   `target <https://gitlab.com/qemu-project/qemu/-/tree/master/target>`_.
+ * `audio <https://gitlab.com/qemu-project/qemu/-/tree/master/audio>`_:
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 1f862b19a6..a749edff04 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -28,7 +28,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+     "-machine [type=]name[,prop[=value][,...]]\n"
+     "                selects emulated machine ('-machine help' for list)\n"
+     "                property accel=accel1[:accel2[:...]] selects accelerator\n"
+-    "                supported accelerators are kvm, xen, hvf, nvmm, whpx or tcg (default: tcg)\n"
++    "                supported accelerators are kvm, xen, hvf, nvmm, whpx, mshv or tcg (default: tcg)\n"
+     "                vmport=on|off|auto controls emulation of vmport (default: auto)\n"
+     "                dump-guest-core=on|off include guest memory in a core dump (default=on)\n"
+     "                mem-merge=on|off controls memory merge support (default: on)\n"
+@@ -65,10 +65,10 @@ SRST
  
-+static int set_memory_info(const struct hyperv_message *msg,
-+                           struct hv_x64_memory_intercept_message *info)
-+{
-+    if (msg->header.message_type != HVMSG_GPA_INTERCEPT
-+            && msg->header.message_type != HVMSG_UNMAPPED_GPA
-+            && msg->header.message_type != HVMSG_UNACCEPTED_GPA) {
-+        error_report("invalid message type");
-+        return -1;
-+    }
-+    memcpy(info, msg->payload, sizeof(*info));
-+
-+    return 0;
-+}
-+
-+static int emulate_instruction(CPUState *cpu,
-+                               const uint8_t *insn_bytes, size_t insn_len,
-+                               uint64_t gva, uint64_t gpa)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    struct x86_decode decode = { 0 };
-+    int ret;
-+    x86_insn_stream stream = { .bytes = insn_bytes, .len = insn_len };
-+
-+    ret = mshv_load_regs(cpu);
-+    if (ret < 0) {
-+        error_report("failed to load registers");
-+        return -1;
-+    }
-+
-+    decode_instruction_stream(env, &decode, &stream);
-+    exec_instruction(env, &decode);
-+
-+    ret = mshv_store_regs(cpu);
-+    if (ret < 0) {
-+        error_report("failed to store registers");
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+static int handle_mmio(CPUState *cpu, const struct hyperv_message *msg,
-+                       MshvVmExit *exit_reason)
-+{
-+    struct hv_x64_memory_intercept_message info = { 0 };
-+    size_t insn_len;
-+    uint8_t access_type;
-+    uint8_t *instruction_bytes;
-+    int ret;
-+
-+    ret = set_memory_info(msg, &info);
-+    if (ret < 0) {
-+        error_report("failed to convert message to memory info");
-+        return -1;
-+    }
-+    insn_len = info.instruction_byte_count;
-+    access_type = info.header.intercept_access_type;
-+
-+    if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_EXECUTE) {
-+        error_report("invalid intercept access type: execute");
-+        return -1;
-+    }
-+
-+    if (insn_len > 16) {
-+        error_report("invalid mmio instruction length: %zu", insn_len);
-+        return -1;
-+    }
-+
-+    trace_mshv_handle_mmio(info.guest_virtual_address,
-+                           info.guest_physical_address,
-+                           info.instruction_byte_count, access_type);
-+
-+    instruction_bytes = info.instruction_bytes;
-+
-+    ret = emulate_instruction(cpu, instruction_bytes, insn_len,
-+                              info.guest_virtual_address,
-+                              info.guest_physical_address);
-+    if (ret < 0) {
-+        error_report("failed to emulate mmio");
-+        return -1;
-+    }
-+
-+    *exit_reason = MshvVmExitIgnore;
-+
-+    return 0;
-+}
-+
-+static int set_ioport_info(const struct hyperv_message *msg,
-+                           hv_x64_io_port_intercept_message *info)
-+{
-+    if (msg->header.message_type != HVMSG_X64_IO_PORT_INTERCEPT) {
-+        error_report("Invalid message type");
-+        return -1;
-+    }
-+    memcpy(info, msg->payload, sizeof(*info));
-+
-+    return 0;
-+}
-+
-+typedef struct X64Registers {
-+  const uint32_t *names;
-+  const uint64_t *values;
-+  uintptr_t count;
-+} X64Registers;
-+
-+static int set_x64_registers(int cpu_fd, const X64Registers *regs)
-+{
-+    size_t n_regs = regs->count;
-+    struct hv_register_assoc *assocs;
-+
-+    assocs = g_new0(hv_register_assoc, n_regs);
-+    for (size_t i = 0; i < n_regs; i++) {
-+        assocs[i].name = regs->names[i];
-+        assocs[i].value.reg64 = regs->values[i];
-+    }
-+    int ret;
-+
-+    ret = mshv_set_generic_regs(cpu_fd, assocs, n_regs);
-+    g_free(assocs);
-+    if (ret < 0) {
-+        error_report("failed to set x64 registers");
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+static inline MemTxAttrs get_mem_attrs(bool is_secure_mode)
-+{
-+    MemTxAttrs memattr = {0};
-+    memattr.secure = is_secure_mode;
-+    return memattr;
-+}
-+
-+static void pio_read(uint64_t port, uint8_t *data, uintptr_t size,
-+                     bool is_secure_mode)
-+{
-+    int ret = 0;
-+    MemTxAttrs memattr = get_mem_attrs(is_secure_mode);
-+    ret = address_space_rw(&address_space_io, port, memattr, (void *)data, size,
-+                           false);
-+    if (ret != MEMTX_OK) {
-+        error_report("Failed to read from port %lx: %d", port, ret);
-+        abort();
-+    }
-+}
-+
-+static int pio_write(uint64_t port, const uint8_t *data, uintptr_t size,
-+                     bool is_secure_mode)
-+{
-+    int ret = 0;
-+    MemTxAttrs memattr = get_mem_attrs(is_secure_mode);
-+    ret = address_space_rw(&address_space_io, port, memattr, (void *)data, size,
-+                           true);
-+    return ret;
-+}
-+
-+static int handle_pio_non_str(const CPUState *cpu,
-+                              hv_x64_io_port_intercept_message *info) {
-+    size_t len = info->access_info.access_size;
-+    uint8_t access_type = info->header.intercept_access_type;
-+    int ret;
-+    uint32_t val, eax;
-+    const uint32_t eax_mask =  0xffffffffu >> (32 - len * 8);
-+    size_t insn_len;
-+    uint64_t rip, rax;
-+    uint32_t reg_names[2];
-+    uint64_t reg_values[2];
-+    struct X64Registers x64_regs = { 0 };
-+    uint16_t port = info->port_number;
-+    int cpu_fd = mshv_vcpufd(cpu);
-+
-+    if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
-+        union {
-+            uint32_t u32;
-+            uint8_t bytes[4];
-+        } conv;
-+
-+        /* convert the first 4 bytes of rax to bytes */
-+        conv.u32 = (uint32_t)info->rax;
-+        /* secure mode is set to false */
-+        ret = pio_write(port, conv.bytes, len, false);
-+        if (ret < 0) {
-+            error_report("Failed to write to io port");
-+            return -1;
-+        }
-+    } else {
-+        uint8_t data[4] = { 0 };
-+        /* secure mode is set to false */
-+        pio_read(info->port_number, data, len, false);
-+
-+        /* Preserve high bits in EAX, but clear out high bits in RAX */
-+        val = *(uint32_t *)data;
-+        eax = (((uint32_t)info->rax) & ~eax_mask) | (val & eax_mask);
-+        info->rax = (uint64_t)eax;
-+    }
-+
-+    insn_len = info->header.instruction_length;
-+
-+    /* Advance RIP and update RAX */
-+    rip = info->header.rip + insn_len;
-+    rax = info->rax;
-+
-+    reg_names[0] = HV_X64_REGISTER_RIP;
-+    reg_values[0] = rip;
-+    reg_names[1] = HV_X64_REGISTER_RAX;
-+    reg_values[1] = rax;
-+
-+    x64_regs.names = reg_names;
-+    x64_regs.values = reg_values;
-+    x64_regs.count = 2;
-+
-+    ret = set_x64_registers(cpu_fd, &x64_regs);
-+    if (ret < 0) {
-+        error_report("Failed to set x64 registers");
-+        return -1;
-+    }
-+
-+    cpu->accel->dirty = false;
-+
-+    return 0;
-+}
-+
-+static int fetch_guest_state(CPUState *cpu)
-+{
-+    int ret;
-+
-+    ret = mshv_get_standard_regs(cpu);
-+    if (ret < 0) {
-+        error_report("Failed to get standard registers");
-+        return -1;
-+    }
-+
-+    ret = mshv_get_special_regs(cpu);
-+    if (ret < 0) {
-+        error_report("Failed to get special registers");
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+static int read_memory(int cpu_fd, uint64_t initial_gva, uint64_t initial_gpa,
-+                       uint64_t gva, uint8_t *data, size_t len)
-+{
-+    int ret;
-+    uint64_t gpa, flags;
-+
-+    if (gva == initial_gva) {
-+        gpa = initial_gpa;
-+    } else {
-+        flags = HV_TRANSLATE_GVA_VALIDATE_READ;
-+        ret = translate_gva(cpu_fd, gva, &gpa, flags);
-+        if (ret < 0) {
-+            return -1;
-+        }
-+
-+        ret = mshv_guest_mem_read(gpa, data, len, false, false);
-+        if (ret < 0) {
-+            error_report("failed to read guest mem");
-+            return -1;
-+        }
-+    }
-+
-+    return 0;
-+}
-+
-+static int write_memory(int cpu_fd, uint64_t initial_gva, uint64_t initial_gpa,
-+                        uint64_t gva, const uint8_t *data, size_t len)
-+{
-+    int ret;
-+    uint64_t gpa, flags;
-+
-+    if (gva == initial_gva) {
-+        gpa = initial_gpa;
-+    } else {
-+        flags = HV_TRANSLATE_GVA_VALIDATE_WRITE;
-+        ret = translate_gva(cpu_fd, gva, &gpa, flags);
-+        if (ret < 0) {
-+            error_report("failed to translate gva to gpa");
-+            return -1;
-+        }
-+    }
-+    ret = mshv_guest_mem_write(gpa, data, len, false);
-+    if (ret != MEMTX_OK) {
-+        error_report("failed to write to mmio");
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+static int handle_pio_str_write(CPUState *cpu,
-+                                hv_x64_io_port_intercept_message *info,
-+                                size_t repeat, uint16_t port,
-+                                bool direction_flag)
-+{
-+    int ret;
-+    uint64_t src;
-+    uint8_t data[4] = { 0 };
-+    size_t len = info->access_info.access_size;
-+    int cpu_fd = mshv_vcpufd(cpu);
-+
-+    src = linear_addr(cpu, info->rsi, R_DS);
-+
-+    for (size_t i = 0; i < repeat; i++) {
-+        ret = read_memory(cpu_fd, 0, 0, src, data, len);
-+        if (ret < 0) {
-+            error_report("Failed to read memory");
-+            return -1;
-+        }
-+        ret = pio_write(port, data, len, false);
-+        if (ret < 0) {
-+            error_report("Failed to write to io port");
-+            return -1;
-+        }
-+        src += direction_flag ? -len : len;
-+        info->rsi += direction_flag ? -len : len;
-+    }
-+
-+    return 0;
-+}
-+
-+static int handle_pio_str_read(CPUState *cpu,
-+                                hv_x64_io_port_intercept_message *info,
-+                                size_t repeat, uint16_t port,
-+                                bool direction_flag)
-+{
-+    int ret;
-+    uint64_t dst;
-+    size_t len = info->access_info.access_size;
-+    uint8_t data[4] = { 0 };
-+    int cpu_fd = mshv_vcpufd(cpu);
-+
-+    dst = linear_addr(cpu, info->rdi, R_ES);
-+
-+    for (size_t i = 0; i < repeat; i++) {
-+        pio_read(port, data, len, false);
-+
-+        ret = write_memory(cpu_fd, 0, 0, dst, data, len);
-+        if (ret < 0) {
-+            error_report("Failed to write memory");
-+            return -1;
-+        }
-+        dst += direction_flag ? -len : len;
-+        info->rdi += direction_flag ? -len : len;
-+    }
-+
-+    return 0;
-+}
-+
-+static int handle_pio_str(CPUState *cpu,
-+                          hv_x64_io_port_intercept_message *info)
-+{
-+    uint8_t access_type = info->header.intercept_access_type;
-+    uint16_t port = info->port_number;
-+    bool repop = info->access_info.rep_prefix == 1;
-+    size_t repeat = repop ? info->rcx : 1;
-+    size_t insn_len = info->header.instruction_length;
-+    bool direction_flag;
-+    uint32_t reg_names[3];
-+    uint64_t reg_values[3];
-+    int ret;
-+    struct X64Registers x64_regs = { 0 };
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    int cpu_fd = mshv_vcpufd(cpu);
-+
-+    ret = fetch_guest_state(cpu);
-+    if (ret < 0) {
-+        error_report("Failed to fetch guest state");
-+        return -1;
-+    }
-+
-+    direction_flag = (env->eflags & DESC_E_MASK) != 0;
-+
-+    if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
-+        ret = handle_pio_str_write(cpu, info, repeat, port, direction_flag);
-+        if (ret < 0) {
-+            error_report("Failed to handle pio str write");
-+            return -1;
-+        }
-+        reg_names[0] = HV_X64_REGISTER_RSI;
-+        reg_values[0] = info->rsi;
-+    } else {
-+        ret = handle_pio_str_read(cpu, info, repeat, port, direction_flag);
-+        reg_names[0] = HV_X64_REGISTER_RDI;
-+        reg_values[0] = info->rdi;
-+    }
-+
-+    reg_names[1] = HV_X64_REGISTER_RIP;
-+    reg_values[1] = info->header.rip + insn_len;
-+    reg_names[2] = HV_X64_REGISTER_RAX;
-+    reg_values[2] = info->rax;
-+
-+    x64_regs.names = reg_names;
-+    x64_regs.values = reg_values;
-+    x64_regs.count = 2;
-+
-+    ret = set_x64_registers(cpu_fd, &x64_regs);
-+    if (ret < 0) {
-+        error_report("Failed to set x64 registers");
-+        return -1;
-+    }
-+
-+    cpu->accel->dirty = false;
-+
-+    return 0;
-+}
-+
-+static int handle_pio(CPUState *cpu, const struct hyperv_message *msg)
-+{
-+    struct hv_x64_io_port_intercept_message info = { 0 };
-+    int ret;
-+
-+    ret = set_ioport_info(msg, &info);
-+    if (ret < 0) {
-+        error_report("Failed to convert message to ioport info");
-+        return -1;
-+    }
-+
-+    if (info.access_info.string_op) {
-+        return handle_pio_str(cpu, &info);
-+    }
-+
-+    return handle_pio_non_str(cpu, &info);
-+}
-+
- int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
- {
--    error_report("unimplemented");
--    abort();
-+    int ret;
-+    enum MshvVmExit exit_reason;
-+    int cpu_fd = mshv_vcpufd(cpu);
-+
-+    ret = ioctl(cpu_fd, MSHV_RUN_VP, msg);
-+    if (ret < 0) {
-+        return MshvVmExitShutdown;
-+    }
-+
-+    switch (msg->header.message_type) {
-+    case HVMSG_UNRECOVERABLE_EXCEPTION:
-+        return MshvVmExitShutdown;
-+    case HVMSG_UNMAPPED_GPA:
-+    case HVMSG_GPA_INTERCEPT:
-+        ret = handle_mmio(cpu, msg, &exit_reason);
-+        if (ret < 0) {
-+            error_report("failed to handle mmio");
-+            return -1;
-+        }
-+        return exit_reason;
-+    case HVMSG_X64_IO_PORT_INTERCEPT:
-+        ret = handle_pio(cpu, msg);
-+        if (ret < 0) {
-+            return MshvVmExitSpecial;
-+        }
-+        return MshvVmExitIgnore;
-+    default:
-+        break;
-+    }
-+
-+    *exit = MshvVmExitIgnore;
-+    return 0;
- }
+     ``accel=accels1[:accels2[:...]]``
+         This is used to enable an accelerator. Depending on the target
+-        architecture, kvm, xen, hvf, nvmm, whpx or tcg can be available.
+-        By default, tcg is used. If there is more than one accelerator
+-        specified, the next one is used if the previous one fails to
+-        initialize.
++        architecture, kvm, xen, hvf, nvmm, whpx, mshv or tcg can be
++        available. By default, tcg is used. If there is more than one
++        accelerator specified, the next one is used if the previous one
++        fails to initialize.
  
- void mshv_remove_vcpu(int vm_fd, int cpu_fd)
+     ``vmport=on|off|auto``
+         Enables emulation of VMWare IO port, for vmmouse etc. auto says
+@@ -221,7 +221,7 @@ ERST
+ 
+ DEF("accel", HAS_ARG, QEMU_OPTION_accel,
+     "-accel [accel=]accelerator[,prop[=value][,...]]\n"
+-    "                select accelerator (kvm, xen, hvf, nvmm, whpx or tcg; use 'help' for a list)\n"
++    "                select accelerator (kvm, xen, hvf, nvmm, whpx, mshv or tcg; use 'help' for a list)\n"
+     "                igd-passthru=on|off (enable Xen integrated Intel graphics passthrough, default=off)\n"
+     "                kernel-irqchip=on|off|split controls accelerated irqchip support (default=on)\n"
+     "                kvm-shadow-mem=size of KVM shadow MMU in bytes\n"
+@@ -236,8 +236,8 @@ DEF("accel", HAS_ARG, QEMU_OPTION_accel,
+ SRST
+ ``-accel name[,prop=value[,...]]``
+     This is used to enable an accelerator. Depending on the target
+-    architecture, kvm, xen, hvf, nvmm, whpx or tcg can be available. By
+-    default, tcg is used. If there is more than one accelerator
++    architecture, kvm, xen, hvf, nvmm, whpx, mshv or tcg can be available.
++    By default, tcg is used. If there is more than one accelerator
+     specified, the next one is used if the previous one fails to
+     initialize.
+ 
 -- 
 2.34.1
 
