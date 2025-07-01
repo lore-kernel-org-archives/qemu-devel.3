@@ -4,109 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AFADC83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 15:50:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC5E9C7EE30
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 15:50:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWdFT-000156-Og; Tue, 01 Jul 2025 11:50:19 -0400
+	id 1uWdFg-0001EW-1E; Tue, 01 Jul 2025 11:50:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uWdFP-00012c-3i
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 11:50:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uWdFN-0002lT-95
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 11:50:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751385011;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=P/uTjjueacCrk9iWxrSPigoGAnsDBOasrqX6cOjFTgQ=;
- b=JDurwOBng+16w3h68hxvdltCnpiYTMhwt67qbk0e5LJtU4qJeG96+d2Ah+rM5Q5RvSL2bF
- kVRPD15MnP96cEKywR4sgmx/LGTwhGW02sn7NyX31UPmDUdMH3CQ095pzrf65XPWKnzX7I
- 5RoaLxJN4+1P6brl81qFM6rgK4mx6MY=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-639-sToQIaU6PZKwP-YZHPraNQ-1; Tue, 01 Jul 2025 11:50:09 -0400
-X-MC-Unique: sToQIaU6PZKwP-YZHPraNQ-1
-X-Mimecast-MFC-AGG-ID: sToQIaU6PZKwP-YZHPraNQ_1751385008
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-452ff9e054eso27999445e9.2
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 08:50:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uWdFe-0001Dp-Df
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 11:50:30 -0400
+Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uWdFb-0002no-Rd
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 11:50:30 -0400
+Received: by mail-yb1-xb32.google.com with SMTP id
+ 3f1490d57ef6-e8187601f85so5084968276.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 08:50:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751385026; x=1751989826; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NM0m9m6FgXQhqUCQOzdMmZYVj23cYKuGezzGfv9F+qE=;
+ b=K9QrTpAWfb8l0jPevomr6Gb8LwJqcENUN2EKrsg5nn3xXAuf0QWM+ospmU5vW0Iwmz
+ LDM4YnLsxeHHu4i4d9DX/C7+dxo3wjWn2liGqHOIirJc4iyOH3u2xEHJppNPhi+MC+ci
+ EOayFzqLgr8r34Gh1pjGVERHjOlw2XVI88m6SjIRle9qgMM3iyr1dmyusFXgPG+PNKrt
+ UH+HSHKUXR5T3z3FXz9/i3ovOGTKOJf9S+CO7VTrryVXbX/IKPN9LWseSYR4nJYpo8R8
+ HAaxnnyb9EMwzfsnNIBaTVZGJzOkZjnmsm2cnTW/LwP0nK2gkjhf8OaHpXruk2uZfG81
+ q/mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751385008; x=1751989808;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=P/uTjjueacCrk9iWxrSPigoGAnsDBOasrqX6cOjFTgQ=;
- b=JDhY0o83J4AJ4BQbqbI/ZlwURFEa4ww+Ck4TibQJky+rOBfUYuy7fnTzbYrGpDndw3
- qLWlEnKM+4vOYG8gtwQrtKmkKzJ64LKausHgQH5ZtWFrtRcfq7y6dYBJ0Ak7LXMrr7mS
- oLKzUiSfAqRP/cxt3NoldvDO3OLhcS7MzvSaFs/kBakefOBC6sDpBurCwHBPdbp2HVI4
- 63YSLHxuYrdSibUqg1IXGM7+OIEDtWZrwgbKlAwj61u5IKJCXr+zonZEpwPRe0y2wdYb
- VS1WLzFbs3JM5fkaKnMd1HXjXV5cwhGZAMJJyq/9LuJTcF/w3s8ENmnSrbUdDqypuuKR
- IenQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXtYRLt3FfNFS2LM0Ko67Lk5vlpGiyGrAwnJc42lBiMt//VkHzlT2+kfCcfQfZaJ5C1AwshRurufIdQ@nongnu.org
-X-Gm-Message-State: AOJu0Yykng+x+Uap+upzseoZsCezmL4e/CzXHArhwj2VeQgNSObpl/L6
- R6lrabT2yUTs4pAPj+Ob7PzyZVvjAOZMUnumJvKP8dDp1KrsaUB4kCmC2aB7cJB0UY9PbENV8NU
- /HcPkxizJDtH+ViX2r4hb/hx9smrLOuOss6ND3dOYNjsMeJPV4vlnW8uP
-X-Gm-Gg: ASbGncsf9OXhUZHbt9J1j3Oq2QCZtFhEhfP1szaIeeGHgL6IclUJX9gtgXIK0GSXmkl
- kGoYRd66U2Cumsz/RHyCDoi6P0HYsoeKfxhbLeoxCMDfR7Ye1fFEfVzN7f3++PwLllKI4D22PDy
- tFek0VcYJ9UtuPOyl0fHfwuZ7E05TquEfaQ9EzHfs3xRzZ3DqNN1+1dTN6u1uTkjZ3tL7/Qkmtd
- d22BFNPGAqAslOB6VWlDcslbldWRFoQcE+RIDDcPc5alXaGAZvfmRzCQGU+i/gguu2ajLS9c8I+
- K/O8Srd2NYADfxiUTSj8MTgRL5HpNGZavEHEdxkD0LrtkMrIqLaS1LHdPRmK495cPUT7Og==
-X-Received: by 2002:a05:600c:5491:b0:43c:fe90:1279 with SMTP id
- 5b1f17b1804b1-4538ee85900mr166291365e9.21.1751385008181; 
- Tue, 01 Jul 2025 08:50:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFSjaCcv20JTLT5Z7l8zZE31W6uvOWaFUFaBFf+SLQsvyeRfijy3L3xJoCafOP1uED7rnpNlg==
-X-Received: by 2002:a05:600c:5491:b0:43c:fe90:1279 with SMTP id
- 5b1f17b1804b1-4538ee85900mr166290895e9.21.1751385007628; 
- Tue, 01 Jul 2025 08:50:07 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4538a40766csm171425715e9.32.2025.07.01.08.50.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Jul 2025 08:50:07 -0700 (PDT)
-Message-ID: <93f59259-c720-4c54-8829-fb13cdb8abdb@redhat.com>
-Date: Tue, 1 Jul 2025 17:50:05 +0200
+ d=1e100.net; s=20230601; t=1751385026; x=1751989826;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NM0m9m6FgXQhqUCQOzdMmZYVj23cYKuGezzGfv9F+qE=;
+ b=QYX04n3itzHKWyRmgb8pjwEdYMReBvNik5JpffyTremkXuOZO1B+q9+fl+o+IN3k65
+ nvWQXZ7bcKm9RED0Bfgi9kwtUV7ie5NCs7p9oc14nQMxiIQwz1rrtT/h5k3Q1V+fHP9f
+ 3RrzNhlJ3HhpnVvH4DKXunG3jhrRxbaAgF+fY1DEI9BSKOGZYj2F/dxjAtuFsV3Mk5r7
+ KsUEeLSOxrXHLotZngZgGfk41lJkkSRzlEHmXv5ljTPq4WXKO/vWmDGZXBfmaR4P0mmT
+ cW0FdvLB+kod0q+F7M2z7umwoxJdCyfsrBTjIfkxJ4pRI77Syg7HSe4M3PAVvH/A8Hl0
+ K6/w==
+X-Gm-Message-State: AOJu0YwDVHvEdncgtsfNeR6tqBSn05a4YKB6wgG/Wz+OVrDDTTQ8wYbX
+ cZ8eaIeaueYebePvlrjw3yE4QdkzPp0KSGxD22LE00dBrJCAt/R/nhXD7WjCtbEdYMBVo9svnBM
+ qDHSeXySWXa5TqzEkLa1iI92Qo9PBTwAuCkTzIc1Vjg==
+X-Gm-Gg: ASbGncsq7Qby3Gwkz7MOTfvSfmRKxmt09C8y3L8L6VO94+HgVvcoM3ZUlsCqfG97BIL
+ pZ7OAzF1i83b8Vx0jIMJUoNeeP7p5OwZYLthsrRS0RyPWJYZFpeuzKMAl2aQL+NOkajdchXD4ie
+ vZ/eU5WNR1PQSAi+EPDoChBMluP7917i7T3+r3PrNEWeDH
+X-Google-Smtp-Source: AGHT+IGGy1LiWLJoul/YG8YZ7v1W37zVJZeUDsvzCu+RNL4TBiAeiTy/45xc5PzZQdt8W81oQJcvdTJMl4dmlwVX3uo=
+X-Received: by 2002:a05:690c:1e:b0:70f:6ec6:62b2 with SMTP id
+ 00721157ae682-71517150f8emr253657857b3.8.1751385025700; Tue, 01 Jul 2025
+ 08:50:25 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH qemu v16 1/5] hw/cxl-host: Add an index field to
- CXLFixedMemoryWindow
-Content-Language: en-US
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>, qemu-devel@nongnu.org,
- Fan Ni <fan.ni@samsung.com>, Peter Maydell <peter.maydell@linaro.org>,
- mst@redhat.com, Zhijian Li <lizhijian@fujitsu.com>,
- Itaru Kitayama <itaru.kitayama@linux.dev>
-Cc: linuxarm@huawei.com, linux-cxl@vger.kernel.org, qemu-arm@nongnu.org,
- Yuquan Wang <wangyuquan1236@phytium.com.cn>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250625161926.549812-1-Jonathan.Cameron@huawei.com>
- <20250625161926.549812-2-Jonathan.Cameron@huawei.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250625161926.549812-2-Jonathan.Cameron@huawei.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+References: <20250623121845.7214-1-philmd@linaro.org>
+ <20250623121845.7214-26-philmd@linaro.org>
+In-Reply-To: <20250623121845.7214-26-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 1 Jul 2025 16:50:14 +0100
+X-Gm-Features: Ac12FXxbbgcWVCUlees7q4LLOO8nBn3R6BKx2RlRYHRfsfQHSIdewGI2EN-Bf0M
+Message-ID: <CAFEAcA9MLMJBFk+PQCJT8Bd+6R+vaho9_vXmDCjPU5cp6B7LfQ@mail.gmail.com>
+Subject: Re: [PATCH v3 25/26] tests/functional: Add hvf_available() helper
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Leif Lindholm <leif.lindholm@oss.qualcomm.com>, 
+ qemu-arm@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Alexander Graf <agraf@csgraf.de>, Bernhard Beschow <shentey@gmail.com>,
+ John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ kvm@vger.kernel.org, Eric Auger <eric.auger@redhat.com>, 
+ Cameron Esfahani <dirty@apple.com>, Cleber Rosa <crosa@redhat.com>, 
+ Radoslaw Biernacki <rad@semihalf.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,82 +102,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 6/25/25 6:19 PM, Jonathan Cameron via wrote:
-> To enable these to be found in a fixed order, that order needs to be known.
-> This will later be used to sort a list of these structures so that address
-> map and ACPI table entries are predictable.
+On Mon, 23 Jun 2025 at 13:20, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> Tested-by: Li Zhijian <lizhijian@fujitsu.com>
-> Reviewed-by: Li Zhijian <lizhijian@fujitsu.com>
-> Reviewed-by: Fan Ni <fan.ni@samsung.com>
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-Eric
->
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
 > ---
-> v16: Tested tag
-> ---
->  include/hw/cxl/cxl.h | 1 +
->  hw/cxl/cxl-host.c    | 9 ++++++---
->  2 files changed, 7 insertions(+), 3 deletions(-)
->
-> diff --git a/include/hw/cxl/cxl.h b/include/hw/cxl/cxl.h
-> index 75e47b6864..b2bcce7ed6 100644
-> --- a/include/hw/cxl/cxl.h
-> +++ b/include/hw/cxl/cxl.h
-> @@ -27,6 +27,7 @@
->  typedef struct PXBCXLDev PXBCXLDev;
->  
->  typedef struct CXLFixedWindow {
-> +    int index;
->      uint64_t size;
->      char **targets;
->      PXBCXLDev *target_hbs[16];
-> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-> index e010163174..b7aa429ddf 100644
-> --- a/hw/cxl/cxl-host.c
-> +++ b/hw/cxl/cxl-host.c
-> @@ -24,13 +24,15 @@
->  
->  static void cxl_fixed_memory_window_config(CXLState *cxl_state,
->                                             CXLFixedMemoryWindowOptions *object,
-> -                                           Error **errp)
-> +                                           int index, Error **errp)
->  {
->      ERRP_GUARD();
->      g_autofree CXLFixedWindow *fw = g_malloc0(sizeof(*fw));
->      strList *target;
->      int i;
->  
-> +    fw->index = index;
-> +
->      for (target = object->targets; target; target = target->next) {
->          fw->num_targets++;
->      }
-> @@ -325,14 +327,15 @@ static void machine_set_cfmw(Object *obj, Visitor *v, const char *name,
->      CXLState *state = opaque;
->      CXLFixedMemoryWindowOptionsList *cfmw_list = NULL;
->      CXLFixedMemoryWindowOptionsList *it;
-> +    int index;
->  
->      visit_type_CXLFixedMemoryWindowOptionsList(v, name, &cfmw_list, errp);
->      if (!cfmw_list) {
->          return;
->      }
->  
-> -    for (it = cfmw_list; it; it = it->next) {
-> -        cxl_fixed_memory_window_config(state, it->value, errp);
-> +    for (it = cfmw_list, index = 0; it; it = it->next, index++) {
-> +        cxl_fixed_memory_window_config(state, it->value, index, errp);
->      }
->      state->cfmw_list = cfmw_list;
->  }
+>  python/qemu/utils/__init__.py          | 2 +-
+>  python/qemu/utils/accel.py             | 8 ++++++++
+>  tests/functional/qemu_test/testcase.py | 6 ++++--
+>  3 files changed, 13 insertions(+), 3 deletions(-)
 
+This seems to trigger errors in the check-python-minreqs job:
+https://gitlab.com/pm215/qemu/-/jobs/10529051338
+
+Log file "stdout" content for test "01-tests/flake8.sh" (FAIL):
+qemu/utils/__init__.py:26:1: F401 '.accel.hvf_available' imported but unuse=
+d
+qemu/utils/accel.py:86:1: E302 expected 2 blank lines, found 1
+Log file "stderr" content for test "01-tests/flake8.sh" (FAIL):
+Log file "stdout" content for test "04-tests/isort.sh" (FAIL):
+ERROR: /builds/pm215/qemu/python/qemu/utils/__init__.py Imports are
+incorrectly sorted and/or formatted.
+
+I'll see if I can fix this up locally. (The missing blank line
+is easy; I think probably hvf_available needs to be in the
+__all__ =3D () list in __init__.py like kvm_available and
+tcg_available. Not sure about the incorrectly-sorted warning.)
+
+-- PMM
 
