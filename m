@@ -4,72 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7556FC8302F
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 06:38:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C72EC8302F
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 06:44:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWUdS-0004YZ-Ei; Tue, 01 Jul 2025 02:38:31 -0400
+	id 1uWUic-000638-0m; Tue, 01 Jul 2025 02:43:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uWUdP-0004Y8-QV
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 02:38:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uWUdN-000331-Hu
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 02:38:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751351904;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3FNq4lMgYTrqwt7mPLW5sUjfowZ0T+hvYqhuv6RL6vA=;
- b=bzvNBGErDiWWYb+7pw3wHk6rxttc3VdjoGFi4lCtbq9juKqVoeFlytUK3bH792k6kbvt0H
- GAI6AVOsN9x57HylywnxVucIgg7G1Y8wQfqgXAGmsfsEA6M3CwmU3Y1DpGA80ZfiHaM+Hs
- jPNRzO6dOf+3dmpgrxeQWWuW2yQD/wg=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-237-kEdaOO0YMVq9udhJpGgkVw-1; Tue,
- 01 Jul 2025 02:38:23 -0400
-X-MC-Unique: kEdaOO0YMVq9udhJpGgkVw-1
-X-Mimecast-MFC-AGG-ID: kEdaOO0YMVq9udhJpGgkVw_1751351902
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5BAE81955EC1; Tue,  1 Jul 2025 06:38:22 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DFD5218003FC; Tue,  1 Jul 2025 06:38:21 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 311A221E6A27; Tue, 01 Jul 2025 08:38:19 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH v2 02/24] migration: Add a qdev property for StrOrNull
-In-Reply-To: <20250630195913.28033-3-farosas@suse.de> (Fabiano Rosas's message
- of "Mon, 30 Jun 2025 16:58:51 -0300")
-References: <20250630195913.28033-1-farosas@suse.de>
- <20250630195913.28033-3-farosas@suse.de>
-Date: Tue, 01 Jul 2025 08:38:19 +0200
-Message-ID: <87a55o4dr8.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+ (Exim 4.90_1) (envelope-from <liujingqi@lanxincomputing.com>)
+ id 1uWUiX-00062W-Up
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 02:43:45 -0400
+Received: from sg-1-22.ptr.blmpb.com ([118.26.132.22])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <liujingqi@lanxincomputing.com>)
+ id 1uWUiL-0005Hh-Mi
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 02:43:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=lanxincomputing-com.20200927.dkim.feishu.cn; t=1751352191;
+ h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=tETfWgbJ709zQxCvjvE0bpy0jjiJnpGnZKpr8dWVvgg=;
+ b=3M15RYaM4vJ1t3bCWL4W7WQ8ktNu8i+KFtP8RyDYVva/0pNrQ/Xt1cYUv5NsUwSR5nyVvz
+ 8fyq+WFYStntYZDZIEujYh0t9BjUqLa3uKAAIEvJjx1AT2enbUXuXsZ16X7lI7jZxVXYi4
+ bZJzYr0XsfA/I1c9rbGBc2+JAnxNuOceFPRNOYnRCMNFdeFeU93kMpbbyqCq0eh8Wn143M
+ +vm0Nn9NCrONJzPVjFi5+YRf0DGzsqX5F0s2hoxuAOM2460PcCE53VfeuyvZCDr4q25nE6
+ KNMNp9bJB16uc/Qft6wcdvVRPQglrH4wxhkq5PK0rorRuqqAkz4OfoJJsypIvQ==
+In-Reply-To: <20250627132022.439315-3-max.chou@sifive.com>
+User-Agent: Mozilla Thunderbird
+Cc: "Palmer Dabbelt" <palmer@dabbelt.com>, 
+ "Alistair Francis" <alistair.francis@wdc.com>, 
+ "Weiwei Li" <liwei1518@gmail.com>, 
+ "Daniel Henrique Barboza" <dbarboza@ventanamicro.com>, 
+ "Liu Zhiwei" <zhiwei_liu@linux.alibaba.com>, <antonb@tenstorrent.com>
+Date: Tue, 1 Jul 2025 14:43:07 +0800
+Message-Id: <69d73c59-2ff6-4446-ac23-c36b0e299afc@lanxincomputing.com>
+Content-Transfer-Encoding: 7bit
+To: "Max Chou" <max.chou@sifive.com>, <qemu-devel@nongnu.org>, 
+ <qemu-riscv@nongnu.org>
+Subject: Re: [PATCH v2 2/3] target/riscv: rvv: Apply vext_check_input_eew to
+ vector reduction instructions
+Mime-Version: 1.0
+X-Original-From: Nutty Liu <liujingqi@lanxincomputing.com>
+Content-Type: text/plain; charset=UTF-8
+From: "Nutty Liu" <liujingqi@lanxincomputing.com>
+References: <20250627132022.439315-1-max.chou@sifive.com>
+ <20250627132022.439315-3-max.chou@sifive.com>
+Received: from [127.0.0.1] ([116.237.111.137]) by smtp.feishu.cn with ESMTPS;
+ Tue, 01 Jul 2025 14:43:08 +0800
+Content-Language: en-US
+X-Lms-Return-Path: <lba+26863837d+bb7641+nongnu.org+liujingqi@lanxincomputing.com>
+Received-SPF: pass client-ip=118.26.132.22;
+ envelope-from=liujingqi@lanxincomputing.com; helo=sg-1-22.ptr.blmpb.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, MSGID_FROM_MTA_HEADER=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,118 +78,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+On 6/27/2025 9:20 PM, Max Chou wrote:
+> From: Anton Blanchard <antonb@tenstorrent.com>
+>
+> Handle the overlap of source registers with different EEWs.
 
-> The MigrationState is a QOM object with TYPE_DEVICE as a parent. This
-> was done about eight years ago so the migration code could make use of
-> qdev properties to define the defaults for the migration parameters
-> and to be able to expose migration knobs for debugging via the
-> '-global migration' command line option.
+Above description is the same as [patch v2 1/3].
+They are different functions.
+Maybe need to add some different description.
+
+Otherwise,
+Reviewed-by: Nutty Liu<liujingqi@lanxincomputing.com>
+
+Thanks,
+Nutty
+
 >
-> Due to unrelated historical reasons, three of the migration parameters
-> (TLS options) received different types when used via the
-> query-migrate-parameters QMP command than with the
-> migrate-set-parameters command. This has created a lot of duplication
-> in the migration code and in the QAPI documentation because the whole
-> of MigrationParameters had to be duplicated as well.
->
-> The migration code is now being fixed to remove the duplication and
-> for that to happen the offending fields need to be reconciled into a
-> single type. The StrOrNull type is going to be used.
->
-> To keep the command line compatibility, the parameters need to
-> continue being exposed via qdev properties accessible from the command
-> line. Introduce a qdev property StrOrNull just for that.
->
-> Note that this code is being kept in migration/options.c because this
-> version of StrOrNull doesn't need to handle QNULL because it was never
-> a valid option in the previous command line, which took a string.
->
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+> Signed-off-by: Max Chou <max.chou@sifive.com>
 > ---
->  migration/options.c | 47 +++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 47 insertions(+)
+>   target/riscv/insn_trans/trans_rvv.c.inc | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> diff --git a/migration/options.c b/migration/options.c
-> index 162c72cda4..384ef9e421 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -83,6 +83,11 @@
->  #define DEFINE_PROP_MIG_CAP(name, x)             \
->      DEFINE_PROP_BOOL(name, MigrationState, capabilities[x], false)
->  
-> +const PropertyInfo qdev_prop_StrOrNull;
-> +#define DEFINE_PROP_STR_OR_NULL(_name, _state, _field)                  \
-> +    DEFINE_PROP(_name, _state, _field, qdev_prop_StrOrNull, StrOrNull *, \
-> +                .set_default = true)
-> +
->  #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT_PERIOD     1000    /* milliseconds */
->  #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT            1       /* MB/s */
->  
-> @@ -204,6 +209,48 @@ const Property migration_properties[] = {
->  };
->  const size_t migration_properties_count = ARRAY_SIZE(migration_properties);
->  
-> +/*
-> + * qdev property for TLS options handling via '-global migration'
-> + * command line.
-> + */
-
-Looks like this was a function comment.  It's not, it applies to the
-PropertyInfo and its method.  Move it to the PropertyInfo?
-
-Maybe
-
-   /*
-    * String property like qdev_prop_string, except it's backed by a
-    * StrOrNull * instead of a char *.  This is intended for
-    * TYPE_MIGRATION's TLS options.
-    */
-
-> +static void set_StrOrNull(Object *obj, Visitor *v, const char *name,
-> +                          void *opaque, Error **errp)
-> +{
-> +    const Property *prop = opaque;
-> +    StrOrNull **ptr = object_field_prop_ptr(obj, prop);
-> +    StrOrNull *str_or_null = g_new0(StrOrNull, 1);
-> +
-> +    /*
-> +     * Only str to keep compatibility, QNULL was never used via
-> +     * command line.
-> +     */
-> +    str_or_null->type = QTYPE_QSTRING;
-> +    if (!visit_type_str(v, name, &str_or_null->u.s, errp)) {
-> +        return;
-> +    }
-> +
-> +    qapi_free_StrOrNull(*ptr);
-> +    *ptr = str_or_null;
-> +}
-> +
-> +static void release_StrOrNull(Object *obj, const char *name, void *opaque)
-> +{
-> +    const Property *prop = opaque;
-> +    qapi_free_StrOrNull(*(StrOrNull **)object_field_prop_ptr(obj, prop));
-> +}
-> +
-> +static void set_default_value_tls_opt(ObjectProperty *op, const Property *prop)
-> +{
-> +    object_property_set_default_str(op, "");
-> +}
-> +
-> +const PropertyInfo qdev_prop_StrOrNull = {
-> +    .type  = "StrOrNull",
-> +    .set = set_StrOrNull,
-> +    .release = release_StrOrNull,
-> +    .set_default_value = set_default_value_tls_opt,
-> +};
-
-No getter, i.e. properties will be write-only.  This is unusual.  Is it
-safe?
-
-> +
->  bool migrate_auto_converge(void)
->  {
->      MigrationState *s = migrate_get_current();
-
+> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+> index ec34d0d8c47..ac6f1d04c6d 100644
+> --- a/target/riscv/insn_trans/trans_rvv.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
+> @@ -3293,6 +3293,7 @@ static bool reduction_check(DisasContext *s, arg_rmrr *a)
+>   {
+>       return require_rvv(s) &&
+>              vext_check_isa_ill(s) &&
+> +           vext_check_input_eew(s, a->rs1, s->sew, a->rs2, s->sew, a->vm) &&
+>              vext_check_reduction(s, a->rs2);
+>   }
+>   
+> @@ -3309,7 +3310,8 @@ GEN_OPIVV_TRANS(vredxor_vs, reduction_check)
+>   static bool reduction_widen_check(DisasContext *s, arg_rmrr *a)
+>   {
+>       return reduction_check(s, a) && (s->sew < MO_64) &&
+> -           ((s->sew + 1) <= (s->cfg_ptr->elen >> 4));
+> +           ((s->sew + 1) <= (s->cfg_ptr->elen >> 4)) &&
+> +           vext_check_input_eew(s, a->rs1, s->sew, a->rs2, s->sew + 1, a->vm);
+>   }
+>   
+>   GEN_OPIVV_WIDEN_TRANS(vwredsum_vs, reduction_widen_check)
 
