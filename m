@@ -4,81 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D0F1C83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 06:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 380D0C8302F
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 07:09:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWUou-00019r-T2; Tue, 01 Jul 2025 02:50:20 -0400
+	id 1uWV6a-0004w7-Ve; Tue, 01 Jul 2025 03:08:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uWUon-00018r-Ms
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 02:50:13 -0400
-Received: from mgamail.intel.com ([192.198.163.15])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uWV6Y-0004vp-98
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 03:08:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uWUok-0006nA-2N
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 02:50:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751352610; x=1782888610;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=bfIgNabme3lWjnyhb85FNuwrnZ3Hbn/38kMllrUwWnM=;
- b=jAQ3FS5xAKJkLZHAneFneMzGQDwF/dbi5pztK409W2rNGMIYCZo+lElf
- 7uyoWfPy0e1mbIsXopIrXKyXHq75LuyXiZ6r/o7Ssu+NH7ocBvR+tleWW
- xiTOdMM+x61+6GktKwN7QwCP0FmyT/2tAt5pDCvWNgwyauZ0C44xUWDWc
- reoo2LqqmmzyaQEI2hSrFVlxRzuhuMb4a/IlJGeDgAJKw2r561uT4Q+ZT
- FOxalOcABBZYnDPkUIl57OHEB88Z7wm5mByDfZsXKCmI859crNShn1HeD
- VZImf32e2df7YZaltKL9Cu7SijihowwLARMLnI9fXh6VBO491/TGN7SQX A==;
-X-CSE-ConnectionGUID: CTCqP2LYSQS+kUvrPjw64Q==
-X-CSE-MsgGUID: HE7sBN+GR8GLP2bGC8jojg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11480"; a="53744954"
-X-IronPort-AV: E=Sophos;i="6.16,279,1744095600"; d="scan'208";a="53744954"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Jun 2025 23:50:07 -0700
-X-CSE-ConnectionGUID: QzGA+o1LT7+GBG4WhwPd3A==
-X-CSE-MsgGUID: NOlxvFbyTk6Q++F4AmFYsA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,279,1744095600"; d="scan'208";a="159189878"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Jun 2025 23:50:06 -0700
-Message-ID: <690b5bca-4345-4ee9-a332-4c2e38532309@intel.com>
-Date: Tue, 1 Jul 2025 14:50:02 +0800
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uWV6P-0005E1-QR
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 03:08:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751353702;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=BStXMMxRw1s8W9xNcjZ1l9zKliX7yn/dh9DAkD6FBbo=;
+ b=VgEVidngZdOA9ea+2Pssrz/pD0yjt+fEEq4SxuSp2xX8QKMdClPvDZVJDgkrszCW6ey5H0
+ AfSrs32i5IUFBQJCAz/k7YgVFsSvkL6DeJGcBDvBHQJ/FVid8pF3mBV3enXvX0LUTzLYum
+ Uu038a0ZpiqgUD5u3+5hMD55l3YDS4w=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-470-jS2-SD-HNUituZKHsdv3Tg-1; Tue,
+ 01 Jul 2025 03:08:17 -0400
+X-MC-Unique: jS2-SD-HNUituZKHsdv3Tg-1
+X-Mimecast-MFC-AGG-ID: jS2-SD-HNUituZKHsdv3Tg_1751353696
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6A76E180120D; Tue,  1 Jul 2025 07:08:16 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C634119560AB; Tue,  1 Jul 2025 07:08:15 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2FFBB21E6A27; Tue, 01 Jul 2025 09:08:13 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Daniel P .
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Subject: Re: [PATCH 01/21] migration: Normalize tls arguments
+In-Reply-To: <87tt4153ql.fsf@suse.de> (Fabiano Rosas's message of "Fri, 27 Jun
+ 2025 17:28:02 -0300")
+References: <20250603013810.4772-1-farosas@suse.de>
+ <20250603013810.4772-2-farosas@suse.de> <87cyas88gg.fsf@pond.sub.org>
+ <878qlf7nc0.fsf@suse.de> <87o6uayh9r.fsf@pond.sub.org>
+ <87zfdu5zf4.fsf@suse.de> <877c0xpsli.fsf@pond.sub.org>
+ <87tt4153ql.fsf@suse.de>
+Date: Tue, 01 Jul 2025 09:08:13 +0200
+Message-ID: <8734bg4cde.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Regression] Re: [PULL 35/35] qom: reverse order of
- instance_post_init calls
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Dongli Zhang <dongli.zhang@oracle.com>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=EF=BF=BD?= <philmd@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Like Xu <like.xu.linux@gmail.com>
-References: <20250520110530.366202-1-pbonzini@redhat.com>
- <20250520110530.366202-36-pbonzini@redhat.com>
- <d429b6f5-b59c-4884-b18f-8db71cb8dc7b@oracle.com>
- <aFpocfTpBLB34N3l@intel.com> <aGKryLSGlFTMSKHv@intel.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <aGKryLSGlFTMSKHv@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,138 +89,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/30/2025 11:22 PM, Zhao Liu wrote:
-> (cc Thomas for bug reporting on kvm-unit-test...)
-> 
-> On Tue, Jun 24, 2025 at 04:57:21PM +0800, Zhao Liu wrote:
->> Date: Tue, 24 Jun 2025 16:57:21 +0800
->> From: Zhao Liu <zhao1.liu@intel.com>
->> Subject: Re: [Regression] Re: [PULL 35/35] qom: reverse order of
->>   instance_post_init calls
+Fabiano Rosas <farosas@suse.de> writes:
+
+> Markus Armbruster <armbru@redhat.com> writes:
+>
+>> Fabiano Rosas <farosas@suse.de> writes:
 >>
->> On Mon, Jun 23, 2025 at 09:56:14AM -0700, Dongli Zhang wrote:
->>> Date: Mon, 23 Jun 2025 09:56:14 -0700
->>> From: Dongli Zhang <dongli.zhang@oracle.com>
->>> Subject: [Regression] Re: [PULL 35/35] qom: reverse order of
->>>   instance_post_init calls
+>>> Markus Armbruster <armbru@redhat.com> writes:
 >>>
->>> This commit may broken the "vendor=" configuration.
->>>
->>> For instance, the hypervisor CPU vendor is AMD.
->>>
->>> I am going to use "-cpu Skylake-Server,vendor=GenuineIntel".
->>>
->>>
->>> Because of the commit, the vendor is still AMD.
->>>
->>> [root@vm ~]# cpuid -1 -l 0x0
->>> CPU:
->>>     vendor_id = "AuthenticAMD"
->>>
->>>
->>> If I revert this patch, the vendor because the expected Intel.
->>>
->>> [root@vm ~]# cpuid -1 -l 0x0
->>> CPU:
->>>     vendor_id = "GenuineIntel"
->>>
->>>
->>> Thank you very much!
+>>>> Fabiano Rosas <farosas@suse.de> writes:
+>>>>
+>>>>> Markus Armbruster <armbru@redhat.com> writes:
+>>>>>
+>>>>>> Fabiano Rosas <farosas@suse.de> writes:
+
+[...]
+
+>> There more than one way to skin this cat.  I like to keep state
+>> normalized.
 >>
->> Thank you Dongli!
+>> State is an optional StrOrNull.  Possible values:
 >>
->> (+Like)
+>> * NULL
 >>
->> While testing my cache model series, I also noticed the similar behavior
->> for KVM. Additionally, Like Xu reported to me that this commit caused
->> a failure in a KVM unit test case. Your report helped me connect these
->> two issues I met (though due to my environment issues, I haven't
->> confirmed yet).
-> 
-> Ok, now I can confirm this commit cause KUT failure:
->   * On AMD platform, the "msr.flat" case fails since this case requires
->     vendor=GenuineIntel (tested by Like).
->   * On Intel platform, the "syscall.flat" case fails because it requires
->     vendor=AuthenticAMD (tested by myself).
-> 
->> The "vendor" property from cli is registered as the global property in
->> x86_cpu_parse_featurestr(), and is applied to x86 CPUs in
->> device_post_init().
+>> * QNull, i.e. non-NULL, ->type is QTYPE_QNULL
 >>
->> With this commit, now KVM will override the "vendor" in
->> host_cpu_instance_init() (called in x86_cpu_post_initfn()) after
->> device_post_init(), regardless the previous global "vendor" property.
-> 
-> This is the root cause for the above failure.
-> 
->> Back to this commit, I think current order of post_init  makes sense.
->> Instead, the place of host_cpu_instance_init() doesn't seem quite
->> right. So, I think this commit might have exposed some drawbacks in the
->> previous x86 CPU initialization order:
+>> * Empty string, i.e. non-NULL, ->type is QTYPE_QSTRING, ->u.s is ""
 >>
->> f5cc5a5c1686 ("i386: split cpu accelerators from cpu.c, using AccelCPUClass")
->> 5b8978d80426 ("i386: do not call cpudef-only models functions for max, host, base")
-> 
-> To fix this issue, we need to initialize "vendor" property in the initfn
-> of max/host/named CPUs instead of current post_initfn.
-> 
-> This will need to split the cpu_instance_init() of x86 kvm (and maybe hvf/tcg)
-> into 2 hooks:
->   * AccelCPUClass.cpu_instance_init() - called in x86 CPUs' initfn.
->   * AccelCPUClass.cpu_instance_post_init() - called in x86 CPUs'
->     post_initfn.
+>> * Non-empty string, i.e. non-NULL, -> type is QTYPE_QSTRING, ->u.s is
+>>   not "" (and cannot be NULL)
+>>
+>> As far as I understand, we have just two cases semantically:
+>>
+>> * Set, value is a non-empty string (empty makes no sense)
+>>
+>> * Unset
+>>
+>> I'd normalize the state to "either NULL, or (non-empty) string".
+>>
+>
+> This is what I wanted to do (in the next version), but it results in
+> more complex and less readable code:
 
-Split accel.cpu_instance_init() into cpu's instance_init() and 
-post_instance_init() does not seem right way to go.
+[...]
 
-The reason .post_instance_init() was implemented and put 
-accel_cpu_instance_init() in it for x86 cpu was that, we don't want to 
-scatter acceletor specific instance_init operation into different 
-subclass of x86 cpu (max/host/named cpu model).
+> If we instead normalize to "either non-empty string or empty string"
+> then:
 
-I think something like below should be enough.
+[...]
 
------------8<-------------
-Author: Xiaoyao Li <xiaoyao.li@intel.com>
-Date:   Tue Jul 1 13:33:43 2025 +0800
+> The query methods get simpler because s->parameters already contains
+> data in the format they expect, we can normalize earlier in [2], which
+> means data is always in the same format throughout
+> qmp_migrate_set_parameters() and lastly, we already have the getter
+> methods [1] which can expose "abc"|NULL to the rest of the code anyway.
 
-     i386/cpu: Re-apply the global props as the last step of post_init
+I'd like the possible states to be clearly visible, and suggest to guard
+them with assertions.  Details, such as how exactly the states are
+encoded, are up to you.  You're in a better position to judge them than
+I am.
 
-     Commit 220c739903ce ("qom: reverse order of instance_post_init calls")
-     reverses the order instance_post_init calls, which leads to
-     device_post_init() called before x86 cpu specific 
-.instance_post_init().
+>> When writing state, we need to normalize.
+>>
+>> When reading state, we can rely on it being normalized.  Asserting it is
+>> seems prudent, and should help readers.
+>>
+>
+> My main concern is that reading can rely on it being normalized, but the
+> query methods cannot, so they need to do an "extra conversion", which
+> from the reader's POV, will look nonsensical. It's not as simple as
+> using a ternary because the StrOrNull object needs to be allocated.
 
-     However, x86 cpu replies on qdev_prop_set_globals() (inside
-     device_post_init()) to apply the cpu option like "feature[=foo]" passed
-     via '-cpu' as the last step to make the '-cpu' option highest priority.
+[...]
 
-     After the order change of .instance_post_init(), x86_cpu_post_initfn()
-     is called after device_post_init(), and it will change some property
-     value even though "-cpu" option specify a different one.
+>>> There are two external interfaces actually.
+>>>
+>>> -global migration.some_compat_option=on (stored in MigrationState):
+>>>
+>>> seems intentional and I believe we'd lose the ability to get out of some
+>>> tricky situations if we ditched it.
+>>>
+>>> -global migation.some_random_option=on (stored in MigrationParameters):
+>>>
+>>> has become a debugging *feature*, which I personally don't use, but
+>>> others do. And worse: we don't know if anyone uses it in production.
+>>
+>> Accidental external interface.
+>>
+>>> We also arbitrarily put x- in front of options for some reason. There is
+>>> an argument to drop those because x- is scary and no one should be using
+>>> them.
+>>
+>> We pretty much ditched the x- convention in the QAPI schema.
+>> docs/devel/qapi-code-gen.rst:
+>>
+>>     Names beginning with ``x-`` used to signify "experimental".  This
+>>     convention has been replaced by special feature "unstable".
+>>
+>> Goes back to
+>>
+>> commit a3c45b3e62962f99338716b1347cfb0d427cea44
+>> Author: Markus Armbruster <armbru@redhat.com>
+>> Date:   Thu Oct 28 12:25:12 2021 +0200
+>>
+>>     qapi: New special feature flag "unstable"
+>>     
+>>     By convention, names starting with "x-" are experimental.  The parts
+>>     of external interfaces so named may be withdrawn or changed
+>>     incompatibly in future releases.
+>
+> This allows dropping about half of the parameters we expose. Deprecate
+> the other half, move the remaining legitimate compat options into
+> MigrationParameters, (which can be set by migrate-set-parameters) and
+> maybe we can remove the TYPE_DEVICE from MigrationState anytime this
+> decade.
 
-     Re-apply the global props as the last step to ensure "-cpu" option
-     always takes highest priority.
+I'd love to get rid of the pseudo-device.
 
-     Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Moving all qdev properties to their own TYPE_DEVICE object and putting
+> it under --enable-debug is also an idea.
+>
+> I'm willing to do the work if we ever reach a consensus about this.
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 0d35e95430fe..bf290262cbfe 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -9044,6 +9044,12 @@ static void x86_cpu_post_initfn(Object *obj)
-              X86_CONFIDENTIAL_GUEST(current_machine->cgs), (CPU(obj)));
-      }
-  #endif
-+
-+    /*
-+     * Re-apply the "feature[=foo]" from '-cpu' option since they might
-+     * be overwritten by above
-+     */
-+    qdev_prop_set_globals(DEVICE(obj));
-  }
+I'd like migration to work more like other long-running tasks: pass the
+entire configuration with the command starting it, provide commands and
+events to manage the task while it runs.
 
-  static void x86_cpu_init_default_topo(X86CPU *cpu)
+This is advice, not a demand.  I'm not going to block change the
+migration maintainers want.  I may ask you to do the QAPI schema part in
+certain ways, but that's detail.
 
+[...]
 
 
