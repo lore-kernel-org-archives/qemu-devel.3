@@ -4,99 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67199C7EE30
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 09:29:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA0EBC7EE30
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 09:39:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWXIR-00024A-6P; Tue, 01 Jul 2025 05:29:03 -0400
+	id 1uWXRn-00048B-UY; Tue, 01 Jul 2025 05:38:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uWXIM-000224-6C
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 05:28:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uWXRl-00047X-Al
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 05:38:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uWXIH-000178-V9
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 05:28:51 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uWXRg-0003Rh-He
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 05:38:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751362127;
+ s=mimecast20190719; t=1751362709;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FGqTT2w+KS6jckIHM+NDWJhU0IE5n4M12BMJuWiciJY=;
- b=CJD2zloGQrr3euI+yKgAO+/ed+SZ4O5RpoWt1cmFZU+Z+G2HqJXQY9iZUfWMjzmFv03hyC
- fS8scZ/36W0diMRFvc/hBuFKgz+B7iLqUH/kjaQT9LAjLplxZ8e0gXqjAdJ3vrWZSCCM2o
- hdT84A2f2x9Ost+PcZXrj7I7bjz+BSg=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-401-cw4wi6XVPWi6Ys1PtPHnxw-1; Tue, 01 Jul 2025 05:28:46 -0400
-X-MC-Unique: cw4wi6XVPWi6Ys1PtPHnxw-1
-X-Mimecast-MFC-AGG-ID: cw4wi6XVPWi6Ys1PtPHnxw_1751362125
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4eb6fcd88so2321605f8f.1
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 02:28:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751362125; x=1751966925;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FGqTT2w+KS6jckIHM+NDWJhU0IE5n4M12BMJuWiciJY=;
- b=tOGk0b6v6Xp29GMaXDbwONGbMqCiFMuENja9lXFB/0TRjRIpqdGQ3nMlw4k9fmTQY7
- 3FRN1WHmSZYhMwNojZIJmZp/l+LH69jMnWjBY9Ktn61R/yoLlRB1cUI5gXSPctNPDAF0
- 7sB/qlWTo6aoIAiG3H5jD/IIl9ac7pOchyOLtSgSHO+dS9ZqWxWvbi8JvVCOqYW7/T5k
- bPLQTgjehitOgcH2wA0Q7W83im20NWKrx74aclIvtC05OxdbVb0M9ck02kwKP/2oqVLJ
- 9n4jGV9DLptimIQKHnZO9Y4+fH7lcN8uH5dzsxcF798gkIQWA4mFnW7/iahRSGiHPRaD
- vnBw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXd6rVMdO2h0QclxjB7aYJEqwbFfof3quG5D9Pj1aqR0QURhCjoL4ozbdolPWZiH0NXRdT3NnAOrZ1I@nongnu.org
-X-Gm-Message-State: AOJu0Yxjyr6ebPNvmxdy4ZJOhuLu2H+UfUGX0U/F7r1i3u4tWVYDRmSe
- 314lgPMNJSnOtDg3i6heqh7UGRojP8kIjBVAIlLxbnrlQE3mh+15WiHxyXMH1bRSeuyCZqGLxrS
- GDqTAxteYxhUPD7mIIbVzi/KIad+BmNoUBfbNgcmmiRrG5Dxnvg5kd3zX
-X-Gm-Gg: ASbGncskR8ZO1XaSmkg259r7pvKBCbhPbMdRtND7fkGSgtxP6rRfP7lJFs4qTPQmCYy
- jCZ/GMT7+sBgUa4PfVqAiD3i0KwxIhs6U9uP8d0ILkod/TiHefKdJ2RIvcn7irRdlRsDGW9alN6
- Xm9qLUHFT/37YdjXd9Rez7M1qJkegv4t4v5L9Rd3h8A5BevKwRf6Fv/bVpG53PQGR0ibtR7DH8r
- mK13i72UpesA+fBGBmubuKoquDGqfzAjY4kiVCV9Nv2wazGuYaY1CIHyVSGpdrl/rv7oOpiiyxa
- w7taFzgvH1liFEBQcwuruuvLaXfa29C0FwxsgHvY6jkPczsOWPtXd2K6Ym3AlYc6OlL2JQ==
-X-Received: by 2002:a05:6000:440f:b0:3a3:6595:9209 with SMTP id
- ffacd0b85a97d-3a8fdeffb3emr9012492f8f.36.1751362124916; 
- Tue, 01 Jul 2025 02:28:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEpIso0AhElduHuCY/K2/Db51M3EnSrQ3U2C2GyiInQ8hfwA1RqIGDMHKl+nFT8RVKCKBqgGA==
-X-Received: by 2002:a05:6000:440f:b0:3a3:6595:9209 with SMTP id
- ffacd0b85a97d-3a8fdeffb3emr9012462f8f.36.1751362124439; 
- Tue, 01 Jul 2025 02:28:44 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-453823ad0fesm194636705e9.25.2025.07.01.02.28.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Jul 2025 02:28:43 -0700 (PDT)
-Message-ID: <6c138685-82cb-4dad-b562-2d898c8414e2@redhat.com>
-Date: Tue, 1 Jul 2025 11:28:42 +0200
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=kuzdZmSCbqt1FEXK6fnL06S9XI+rWz9PWext7uu1g6I=;
+ b=dutwvhTwzu7zFUql/1ffgdNt+NYgzyEHHqnoS8/SsV0m7bV+tTYrWbcEmnTJqbtzPsZeNF
+ qN2RKmhcm8GlwXiLPJ3Mu2bFals1WitJCbl9Jsd8irLTngbnzkjWqKrXPXEXG3ib91e9+N
+ ykyJXtzGnDTxcVTbltaUn6ffIKuURE4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-206-uX00KfVrMHyrlDwkgXBk9w-1; Tue,
+ 01 Jul 2025 05:38:25 -0400
+X-MC-Unique: uX00KfVrMHyrlDwkgXBk9w-1
+X-Mimecast-MFC-AGG-ID: uX00KfVrMHyrlDwkgXBk9w_1751362704
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 24893183E3F9; Tue,  1 Jul 2025 09:38:07 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.157])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2C9B819560B4; Tue,  1 Jul 2025 09:38:05 +0000 (UTC)
+Date: Tue, 1 Jul 2025 10:38:02 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 3/3] Socket activation: enable spice listener.
+Message-ID: <aGOsek0xeyXk3G6y@redhat.com>
+References: <20250627180331.1370235-1-dkg@fifthhorseman.net>
+ <20250627180331.1370235-3-dkg@fifthhorseman.net>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 29/32] hw/arm/virt: Let virt support pci hotplug/unplug
- GED event
-Content-Language: en-US
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, imammedo@redhat.com, gustavo.romero@linaro.org,
- anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com,
- pbonzini@redhat.com, philmd@linaro.org, alex.bennee@linaro.org
-References: <20250627095620.3300028-1-eric.auger@redhat.com>
- <20250627095620.3300028-30-eric.auger@redhat.com>
- <20250630135315.000041b2@huawei.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250630135315.000041b2@huawei.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250627180331.1370235-3-dkg@fifthhorseman.net>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -117,75 +82,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jonathan
+On Fri, Jun 27, 2025 at 02:03:31PM -0400, Daniel Kahn Gillmor wrote:
+> Enable qemu to be socket-activated based on a spice connection.
+> 
+> Note that this depends on un-deprecating
+> spice_server_set_listen_socket_fd, see
+> https://gitlab.freedesktop.org/spice/spice/-/merge_requests/240
+> 
+> This partially addresses
+> https://gitlab.com/qemu-project/qemu/-/issues/3011
 
-On 6/30/25 2:53 PM, Jonathan Cameron wrote:
-> On Fri, 27 Jun 2025 11:55:18 +0200
-> Eric Auger <eric.auger@redhat.com> wrote:
->
->> Set up the IO registers used to communicate between QEMU
->> and ACPI.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Follow on comment inline.  Otherwise LGTM
->
-> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-thanks!
->
->> ---
->> v2 -> v3:
->> - remove acpi_ged_state->pcihp_state.use_acpi_hotplug_bridge = true;
->> - use sysbus_mmio_map_name for all regs (Igor)
->> - create_pcie left at its original place
->>
->> v1 -> v2:
->> - use ACPI_PCIHP_REGION_NAME
->> ---
->>  hw/arm/virt.c | 13 +++++++++++++
->>  1 file changed, 13 insertions(+)
->>
->> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->> index 878c567354..d8706ef9c8 100644
->> --- a/hw/arm/virt.c
->> +++ b/hw/arm/virt.c
->> @@ -686,6 +686,7 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
->>      SysBusDevice *sbdev;
->>      int irq = vms->irqmap[VIRT_ACPI_GED];
->>      uint32_t event = ACPI_GED_PWR_DOWN_EVT;
->> +    bool acpi_pcihp;
->>  
->>      if (ms->ram_slots) {
->>          event |= ACPI_GED_MEM_HOTPLUG_EVT;
->> @@ -704,6 +705,18 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
->>      sysbus_mmio_map_name(sbdev, TYPE_ACPI_GED, vms->memmap[VIRT_ACPI_GED].base);
->>      sysbus_mmio_map_name(sbdev, ACPI_MEMHP_REGION_NAME,
->>                           vms->memmap[VIRT_PCDIMM_ACPI].base);
->> +
->> +    acpi_pcihp = object_property_get_bool(OBJECT(dev),
->> +                                          ACPI_PM_PROP_ACPI_PCIHP_BRIDGE, NULL);
->> +
->> +    if (acpi_pcihp) {
-> As mentioned in earlier patch review, with this code you now have means to set the event
-> bitmap as done in other cases.  Maybe just do that here as well?
-see my previous reply
+I don't think this is showing the right approach for systemd socket
+activation. Spice is rather an odd-ball part of QEMU today that isn't
+using modern best practice config design, so what looks simple from a
+Spice POV is not aligned with what we need for QEMU.
 
-Hope this clarifies
+Historically we've long supported passing pre-opened FDs of any kind
+into QEMU at launch time, but we didn't rely on systemd socket
+activation. We just passed the FDs in and referenced them numerically
+in the config.
 
-Eric
->
->> +        int pcihp_region_index;
->> +
->> +        pcihp_region_index = sysbus_mmio_map_name(sbdev, ACPI_PCIHP_REGION_NAME,
->> +                                                  vms->memmap[VIRT_ACPI_PCIHP].base);
->> +        assert(pcihp_region_index >= 0);
->> +    }
->> +
->>      sysbus_connect_irq(sbdev, 0, qdev_get_gpio_in(vms->gic, irq));
->>  
->>      return dev;
+At runtime we then also had the ability to pass in pre-opend FDs over
+QMP, which we referenced by name.
+
+IMHO for systemd socket activation, we want to introduce the ability
+to reference sockets by name at startup, so it is aligned with what
+we can do at runtime.
+
+Primarily this comes down to having logic present in the socket_get_fd
+method, such that when there is no current monitor, we use the systemd
+named sockets.
+
+We should also have logic to validate that we have consumed all
+systemd sockets, before we move out of startup phase, in order to
+detect config errors. This indicates should we proactively parse
+the socket activation env at starutp and record all FDs, and keep
+track of which are consumed by the config.
+
+Meanwhile both -vnc and -spice need updating to have their CLI
+modelled in QAPI, and use the SocketAdddress struct config, which
+would unlock FD passing both with & without systemd socket activation.
+
+And then there are some hard questions about how we integrate this with
+the various helper programs like qemu-nbd, and friends, which all
+already support systemd socket activation but fail to validate the
+names, making it hard to add propert support while retaining back compat.
+
+This is all a major amount of work, which is partly why we've not addressed
+this yet, despite it being on the wishlist for years already
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
