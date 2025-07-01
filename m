@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 811BEC83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:29:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EC5AC7EE30
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:29:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWenJ-0002nB-P3; Tue, 01 Jul 2025 13:29:21 -0400
+	id 1uWenP-0002wz-PU; Tue, 01 Jul 2025 13:29:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uWenI-0002ib-7l
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:29:20 -0400
+ id 1uWenL-0002us-DI
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:29:23 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uWenD-0006X3-QF
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:29:19 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uWenH-0006Yp-RJ
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:29:23 -0400
 Received: from localhost.localdomain (unknown [167.220.208.67])
- by linux.microsoft.com (Postfix) with ESMTPSA id AC552211221D;
- Tue,  1 Jul 2025 10:29:10 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com AC552211221D
+ by linux.microsoft.com (Postfix) with ESMTPSA id D359B2112221;
+ Tue,  1 Jul 2025 10:29:14 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D359B2112221
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1751390954;
- bh=EWCKlb6Nhh0QNsC/EhDfeSFEihSY0t16npg7RScTWcI=;
+ s=default; t=1751390958;
+ bh=jLJRI9UQwPQ7QvAFK4jr1bU+zUCcMtzt90fSPxsEtvE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=VLQ+mX0dw114tTjyFelO2s3w7vyQI+kU2DU/8PifwbI0dTraukTySvqc92wP5JpuW
- Vd3h84Iu6lrHJlksCLatpajlKtgf078S5iCCQlFIn2LcVc5hdxV9l0xRgyb1SA4tSm
- yxKTuqcjq+Inm5cgThC8VKLdhKqiCEs40dHUsnUc=
+ b=LxWDnhO+NNXBZF1fBxlpvI+0D3dT4+gIHIS2VodDiCv6/NjDmGlQD7XAn+RJ9AdPL
+ rm0DMjSnhtd1DehUeyI4pjYzCE+sWE6Pn6Y18UIzJgl36pJ3E0EB2pWCzQz+/j8ytt
+ djwj2kaCjJNNFwrC04eyYGLcp5EpqmxxyNC0DaIE=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Cameron Esfahani <dirty@apple.com>,
@@ -45,9 +45,10 @@ Cc: Cameron Esfahani <dirty@apple.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 03/27] target/i386/mshv: Add x86 decoder/emu implementation
-Date: Tue,  1 Jul 2025 19:28:10 +0200
-Message-Id: <20250701172834.44849-4-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v2 04/27] hw/intc: Generalize APIC helper names from kvm_* to
+ accel_*
+Date: Tue,  1 Jul 2025 19:28:11 +0200
+Message-Id: <20250701172834.44849-5-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250701172834.44849-1-magnuskulke@linux.microsoft.com>
 References: <20250701172834.44849-1-magnuskulke@linux.microsoft.com>
@@ -77,417 +78,353 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The MSHV accelerator requires a x86 decoder/emulator in userland to
-emulate MMIO instructions. This change contains the implementations for
-the generalized i386 instruction decoder/emulator.
+Rename APIC helper functions to use an accel_* prefix instead of kvm_*
+to support use by accelerators other than KVM. This is a preparatory
+step for integrating MSHV support with common APIC logic.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- include/system/mshv.h           |  25 +++
- target/i386/cpu.h               |   2 +-
- target/i386/emulate/meson.build |   7 +-
- target/i386/meson.build         |   2 +
- target/i386/mshv/meson.build    |   7 +
- target/i386/mshv/x86.c          | 296 ++++++++++++++++++++++++++++++++
- 6 files changed, 336 insertions(+), 3 deletions(-)
- create mode 100644 include/system/mshv.h
- create mode 100644 target/i386/mshv/meson.build
- create mode 100644 target/i386/mshv/x86.c
+ accel/accel-irq.c          | 95 ++++++++++++++++++++++++++++++++++++++
+ accel/meson.build          |  2 +-
+ hw/intc/ioapic.c           | 20 +++++---
+ hw/virtio/virtio-pci.c     | 21 +++++----
+ include/system/accel-irq.h | 26 +++++++++++
+ include/system/mshv.h      | 21 +++++++++
+ 6 files changed, 167 insertions(+), 18 deletions(-)
+ create mode 100644 accel/accel-irq.c
+ create mode 100644 include/system/accel-irq.h
 
-diff --git a/include/system/mshv.h b/include/system/mshv.h
+diff --git a/accel/accel-irq.c b/accel/accel-irq.c
 new file mode 100644
-index 0000000000..a971982b52
+index 0000000000..63f8ed260a
 --- /dev/null
-+++ b/include/system/mshv.h
-@@ -0,0 +1,25 @@
-+/*
-+ * QEMU MSHV support
-+ *
-+ * Copyright Microsoft, Corp. 2025
-+ *
-+ * Authors: Ziqiao Zhou  <ziqiaozhou@microsoft.com>
-+ *          Magnus Kulke <magnuskulke@microsoft.com>
-+ *          Jinank Jain  <jinankjain@microsoft.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ */
-+
-+#ifndef QEMU_MSHV_INT_H
-+#define QEMU_MSHV_INT_H
-+
-+#ifdef COMPILING_PER_TARGET
-+#ifdef CONFIG_MSHV
-+#define CONFIG_MSHV_IS_POSSIBLE
-+#endif
-+#else
-+#define CONFIG_MSHV_IS_POSSIBLE
-+#endif
-+
-+#endif
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 51e10139df..48979432f6 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2122,7 +2122,7 @@ typedef struct CPUArchState {
-     QEMUTimer *xen_periodic_timer;
-     QemuMutex xen_timers_lock;
- #endif
--#if defined(CONFIG_HVF)
-+#if defined(CONFIG_HVF) || defined(CONFIG_MSHV)
-     void *emu_mmio_buf;
- #endif
- 
-diff --git a/target/i386/emulate/meson.build b/target/i386/emulate/meson.build
-index 4edd4f462f..b6dafb6a5b 100644
---- a/target/i386/emulate/meson.build
-+++ b/target/i386/emulate/meson.build
-@@ -1,5 +1,8 @@
--i386_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: files(
-+emulator_files = files(
-   'x86_decode.c',
-   'x86_emu.c',
-   'x86_flags.c',
--))
-+)
-+
-+i386_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: emulator_files)
-+i386_system_ss.add(when: 'CONFIG_MSHV', if_true: emulator_files)
-diff --git a/target/i386/meson.build b/target/i386/meson.build
-index c1aacea613..6097e5c427 100644
---- a/target/i386/meson.build
-+++ b/target/i386/meson.build
-@@ -11,6 +11,7 @@ i386_ss.add(when: 'CONFIG_SEV', if_true: files('host-cpu.c', 'confidential-guest
- # x86 cpu type
- i386_ss.add(when: 'CONFIG_KVM', if_true: files('host-cpu.c'))
- i386_ss.add(when: 'CONFIG_HVF', if_true: files('host-cpu.c'))
-+i386_ss.add(when: 'CONFIG_MSHV', if_true: files('host-cpu.c'))
- 
- i386_system_ss = ss.source_set()
- i386_system_ss.add(files(
-@@ -32,6 +33,7 @@ subdir('nvmm')
- subdir('hvf')
- subdir('tcg')
- subdir('emulate')
-+subdir('mshv')
- 
- target_arch += {'i386': i386_ss}
- target_system_arch += {'i386': i386_system_ss}
-diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
-new file mode 100644
-index 0000000000..8ddaa7c11d
---- /dev/null
-+++ b/target/i386/mshv/meson.build
-@@ -0,0 +1,7 @@
-+i386_mshv_ss = ss.source_set()
-+
-+i386_mshv_ss.add(files(
-+  'x86.c',
-+))
-+
-+i386_system_ss.add_all(when: 'CONFIG_MSHV', if_true: i386_mshv_ss)
-diff --git a/target/i386/mshv/x86.c b/target/i386/mshv/x86.c
-new file mode 100644
-index 0000000000..54c40b8064
---- /dev/null
-+++ b/target/i386/mshv/x86.c
-@@ -0,0 +1,296 @@
-+/*
-+ * QEMU MSHV support
-+ *
-+ * Copyright Microsoft, Corp. 2025
-+ *
-+ * Authors: Magnus Kulke <magnuskulke@microsoft.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
++++ b/accel/accel-irq.c
+@@ -0,0 +1,95 @@
 +#include "qemu/osdep.h"
++#include "hw/pci/msi.h"
 +
-+#include "cpu.h"
-+#include "emulate/x86_decode.h"
-+#include "emulate/x86_emu.h"
-+#include "qemu/typedefs.h"
-+#include "qemu/error-report.h"
++#include "system/kvm.h"
++#include "system/mshv.h"
++#include "system/accel-irq.h"
++
++int accel_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev)
++{
++#ifdef CONFIG_MSHV_IS_POSSIBLE
++    if (mshv_msi_via_irqfd_enabled()) {
++        return mshv_irqchip_add_msi_route(vector, dev);
++    }
++#endif
++    if (kvm_enabled()) {
++        return kvm_irqchip_add_msi_route(c, vector, dev);
++    }
++    return -ENOSYS;
++}
++
++int accel_irqchip_update_msi_route(int vector, MSIMessage msg, PCIDevice *dev)
++{
++#ifdef CONFIG_MSHV_IS_POSSIBLE
++    if (mshv_msi_via_irqfd_enabled()) {
++        return mshv_irqchip_update_msi_route(vector, msg, dev);
++    }
++#endif
++    if (kvm_enabled()) {
++        return kvm_irqchip_update_msi_route(kvm_state, vector, msg, dev);
++    }
++    return -ENOSYS;
++}
++
++void accel_irqchip_commit_route_changes(KVMRouteChange *c)
++{
++#ifdef CONFIG_MSHV_IS_POSSIBLE
++    if (mshv_msi_via_irqfd_enabled()) {
++        mshv_irqchip_commit_routes();
++    }
++#endif
++    if (kvm_enabled()) {
++        kvm_irqchip_commit_route_changes(c);
++    }
++}
++
++void accel_irqchip_commit_routes(void)
++{
++#ifdef CONFIG_MSHV_IS_POSSIBLE
++    if (mshv_msi_via_irqfd_enabled()) {
++        mshv_irqchip_commit_routes();
++    }
++#endif
++    if (kvm_enabled()) {
++        kvm_irqchip_commit_routes(kvm_state);
++    }
++}
++
++void accel_irqchip_release_virq(int virq)
++{
++#ifdef CONFIG_MSHV_IS_POSSIBLE
++    if (mshv_msi_via_irqfd_enabled()) {
++        mshv_irqchip_release_virq(virq);
++    }
++#endif
++    if (kvm_enabled()) {
++        kvm_irqchip_release_virq(kvm_state, virq);
++    }
++}
++
++int accel_irqchip_add_irqfd_notifier_gsi(EventNotifier *n, EventNotifier *rn,
++                                         int virq)
++{
++#ifdef CONFIG_MSHV_IS_POSSIBLE
++    if (mshv_msi_via_irqfd_enabled()) {
++        return mshv_irqchip_add_irqfd_notifier_gsi(n, rn, virq);
++    }
++#endif
++    if (kvm_enabled()) {
++        return kvm_irqchip_add_irqfd_notifier_gsi(kvm_state, n, rn, virq);
++    }
++    return -ENOSYS;
++}
++
++int accel_irqchip_remove_irqfd_notifier_gsi(EventNotifier *n, int virq)
++{
++#ifdef CONFIG_MSHV_IS_POSSIBLE
++    if (mshv_msi_via_irqfd_enabled()) {
++        return mshv_irqchip_remove_irqfd_notifier_gsi(n, virq);
++    }
++#endif
++    if (kvm_enabled()) {
++        return kvm_irqchip_remove_irqfd_notifier_gsi(kvm_state, n, virq);
++    }
++    return -ENOSYS;
++}
+diff --git a/accel/meson.build b/accel/meson.build
+index 52909314bf..d5e982d152 100644
+--- a/accel/meson.build
++++ b/accel/meson.build
+@@ -1,6 +1,6 @@
+ common_ss.add(files('accel-common.c'))
+ specific_ss.add(files('accel-target.c'))
+-system_ss.add(files('accel-system.c', 'accel-blocker.c'))
++system_ss.add(files('accel-system.c', 'accel-blocker.c', 'accel-irq.c'))
+ user_ss.add(files('accel-user.c'))
+ 
+ subdir('tcg')
+diff --git a/hw/intc/ioapic.c b/hw/intc/ioapic.c
+index 133bef852d..e431d00311 100644
+--- a/hw/intc/ioapic.c
++++ b/hw/intc/ioapic.c
+@@ -30,12 +30,18 @@
+ #include "hw/intc/ioapic_internal.h"
+ #include "hw/pci/msi.h"
+ #include "hw/qdev-properties.h"
++#include "system/accel-irq.h"
+ #include "system/kvm.h"
+ #include "system/system.h"
+ #include "hw/i386/apic-msidef.h"
+ #include "hw/i386/x86-iommu.h"
+ #include "trace.h"
+ 
++
++#if defined(CONFIG_KVM) || defined(CONFIG_MSHV)
++#define ACCEL_GSI_IRQFD_POSSIBLE
++#endif
++
+ #define APIC_DELIVERY_MODE_SHIFT 8
+ #define APIC_POLARITY_SHIFT 14
+ #define APIC_TRIG_MODE_SHIFT 15
+@@ -191,10 +197,10 @@ static void ioapic_set_irq(void *opaque, int vector, int level)
+ 
+ static void ioapic_update_kvm_routes(IOAPICCommonState *s)
+ {
+-#ifdef CONFIG_KVM
++#ifdef ACCEL_GSI_IRQFD_POSSIBLE
+     int i;
+ 
+-    if (kvm_irqchip_is_split()) {
++    if (accel_irqchip_is_split()) {
+         for (i = 0; i < IOAPIC_NUM_PINS; i++) {
+             MSIMessage msg;
+             struct ioapic_entry_info info;
+@@ -202,15 +208,15 @@ static void ioapic_update_kvm_routes(IOAPICCommonState *s)
+             if (!info.masked) {
+                 msg.address = info.addr;
+                 msg.data = info.data;
+-                kvm_irqchip_update_msi_route(kvm_state, i, msg, NULL);
++                accel_irqchip_update_msi_route(i, msg, NULL);
+             }
+         }
+-        kvm_irqchip_commit_routes(kvm_state);
++        accel_irqchip_commit_routes();
+     }
+ #endif
+ }
+ 
+-#ifdef CONFIG_KVM
++#ifdef ACCEL_KERNEL_GSI_IRQFD_POSSIBLE
+ static void ioapic_iec_notifier(void *private, bool global,
+                                 uint32_t index, uint32_t mask)
+ {
+@@ -428,11 +434,11 @@ static const MemoryRegionOps ioapic_io_ops = {
+ 
+ static void ioapic_machine_done_notify(Notifier *notifier, void *data)
+ {
+-#ifdef CONFIG_KVM
++#ifdef ACCEL_KERNEL_GSI_IRQFD_POSSIBLE
+     IOAPICCommonState *s = container_of(notifier, IOAPICCommonState,
+                                         machine_done);
+ 
+-    if (kvm_irqchip_is_split()) {
++    if (accel_irqchip_is_split()) {
+         X86IOMMUState *iommu = x86_iommu_get_default();
+         if (iommu) {
+             /* Register this IOAPIC with IOMMU IEC notifier, so that
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index fba2372c93..a582bb082d 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -33,6 +33,7 @@
+ #include "hw/pci/msi.h"
+ #include "hw/pci/msix.h"
+ #include "hw/loader.h"
++#include "system/accel-irq.h"
+ #include "system/kvm.h"
+ #include "hw/virtio/virtio-pci.h"
+ #include "qemu/range.h"
+@@ -824,11 +825,11 @@ static int kvm_virtio_pci_vq_vector_use(VirtIOPCIProxy *proxy,
+ 
+     if (irqfd->users == 0) {
+         KVMRouteChange c = kvm_irqchip_begin_route_changes(kvm_state);
+-        ret = kvm_irqchip_add_msi_route(&c, vector, &proxy->pci_dev);
++        ret = accel_irqchip_add_msi_route(&c, vector, &proxy->pci_dev);
+         if (ret < 0) {
+             return ret;
+         }
+-        kvm_irqchip_commit_route_changes(&c);
++        accel_irqchip_commit_route_changes(&c);
+         irqfd->virq = ret;
+     }
+     irqfd->users++;
+@@ -840,7 +841,7 @@ static void kvm_virtio_pci_vq_vector_release(VirtIOPCIProxy *proxy,
+ {
+     VirtIOIRQFD *irqfd = &proxy->vector_irqfd[vector];
+     if (--irqfd->users == 0) {
+-        kvm_irqchip_release_virq(kvm_state, irqfd->virq);
++        accel_irqchip_release_virq(irqfd->virq);
+     }
+ }
+ 
+@@ -849,7 +850,7 @@ static int kvm_virtio_pci_irqfd_use(VirtIOPCIProxy *proxy,
+                                  unsigned int vector)
+ {
+     VirtIOIRQFD *irqfd = &proxy->vector_irqfd[vector];
+-    return kvm_irqchip_add_irqfd_notifier_gsi(kvm_state, n, NULL, irqfd->virq);
++    return accel_irqchip_add_irqfd_notifier_gsi(n, NULL, irqfd->virq);
+ }
+ 
+ static void kvm_virtio_pci_irqfd_release(VirtIOPCIProxy *proxy,
+@@ -859,7 +860,7 @@ static void kvm_virtio_pci_irqfd_release(VirtIOPCIProxy *proxy,
+     VirtIOIRQFD *irqfd = &proxy->vector_irqfd[vector];
+     int ret;
+ 
+-    ret = kvm_irqchip_remove_irqfd_notifier_gsi(kvm_state, n, irqfd->virq);
++    ret = accel_irqchip_remove_irqfd_notifier_gsi(n, irqfd->virq);
+     assert(ret == 0);
+ }
+ static int virtio_pci_get_notifier(VirtIOPCIProxy *proxy, int queue_no,
+@@ -994,12 +995,12 @@ static int virtio_pci_one_vector_unmask(VirtIOPCIProxy *proxy,
+     if (proxy->vector_irqfd) {
+         irqfd = &proxy->vector_irqfd[vector];
+         if (irqfd->msg.data != msg.data || irqfd->msg.address != msg.address) {
+-            ret = kvm_irqchip_update_msi_route(kvm_state, irqfd->virq, msg,
+-                                               &proxy->pci_dev);
++            ret = accel_irqchip_update_msi_route(irqfd->virq, msg,
++                                                 &proxy->pci_dev);
+             if (ret < 0) {
+                 return ret;
+             }
+-            kvm_irqchip_commit_routes(kvm_state);
++            accel_irqchip_commit_routes();
+         }
+     }
+ 
+@@ -1228,7 +1229,7 @@ static int virtio_pci_set_guest_notifiers(DeviceState *d, int nvqs, bool assign)
+     VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
+     int r, n;
+     bool with_irqfd = msix_enabled(&proxy->pci_dev) &&
+-        kvm_msi_via_irqfd_enabled();
++        accel_msi_via_irqfd_enabled() ;
+ 
+     nvqs = MIN(nvqs, VIRTIO_QUEUE_MAX);
+ 
+@@ -1432,7 +1433,7 @@ static void virtio_pci_set_vector(VirtIODevice *vdev,
+                                   uint16_t new_vector)
+ {
+     bool kvm_irqfd = (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK) &&
+-        msix_enabled(&proxy->pci_dev) && kvm_msi_via_irqfd_enabled();
++        msix_enabled(&proxy->pci_dev) && accel_msi_via_irqfd_enabled();
+ 
+     if (new_vector == old_vector) {
+         return;
+diff --git a/include/system/accel-irq.h b/include/system/accel-irq.h
+new file mode 100644
+index 0000000000..8d17fe45ea
+--- /dev/null
++++ b/include/system/accel-irq.h
+@@ -0,0 +1,26 @@
++#ifndef SYSEMU_ACCEL_H
++#define SYSEMU_ACCEL_H
++#include "hw/pci/msi.h"
++#include "qemu/osdep.h"
++#include "system/kvm.h"
 +#include "system/mshv.h"
 +
-+/* RW or Exec segment */
-+static const uint8_t RWRX_SEGMENT_TYPE        = 0x2;
-+static const uint8_t CODE_SEGMENT_TYPE        = 0x8;
-+static const uint8_t EXPAND_DOWN_SEGMENT_TYPE = 0x4;
-+
-+typedef enum CpuMode {
-+    REAL_MODE,
-+    PROTECTED_MODE,
-+    LONG_MODE,
-+} CpuMode;
-+
-+static CpuMode cpu_mode(CPUState *cpu)
++static inline bool accel_msi_via_irqfd_enabled(void)
 +{
-+    enum CpuMode m = REAL_MODE;
-+
-+    if (x86_is_protected(cpu)) {
-+        m = PROTECTED_MODE;
-+
-+        if (x86_is_long_mode(cpu)) {
-+            m = LONG_MODE;
-+        }
-+    }
-+
-+    return m;
++  return mshv_msi_via_irqfd_enabled() || kvm_msi_via_irqfd_enabled();
 +}
 +
-+static bool segment_type_ro(const SegmentCache *seg)
++static inline bool accel_irqchip_is_split(void)
 +{
-+    uint32_t type_ = (seg->flags >> DESC_TYPE_SHIFT) & 15;
-+    return (type_ & (~RWRX_SEGMENT_TYPE)) == 0;
++  return mshv_msi_via_irqfd_enabled() || kvm_irqchip_is_split();
 +}
 +
-+static bool segment_type_code(const SegmentCache *seg)
-+{
-+    uint32_t type_ = (seg->flags >> DESC_TYPE_SHIFT) & 15;
-+    return (type_ & CODE_SEGMENT_TYPE) != 0;
-+}
++int accel_irqchip_add_msi_route(KVMRouteChange *c, int vector, PCIDevice *dev);
++int accel_irqchip_update_msi_route(int vector, MSIMessage msg, PCIDevice *dev);
++void accel_irqchip_commit_route_changes(KVMRouteChange *c);
++void accel_irqchip_commit_routes(void);
++void accel_irqchip_release_virq(int virq);
++int accel_irqchip_add_irqfd_notifier_gsi(EventNotifier *n, EventNotifier *rn,
++                                         int virq);
++int accel_irqchip_remove_irqfd_notifier_gsi(EventNotifier *n, int virq);
++#endif
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index a971982b52..a358691428 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -22,4 +22,25 @@
+ #define CONFIG_MSHV_IS_POSSIBLE
+ #endif
+ 
++#ifdef CONFIG_MSHV_IS_POSSIBLE
++extern bool mshv_allowed;
++#define mshv_enabled() (mshv_allowed)
++#else /* CONFIG_MSHV_IS_POSSIBLE */
++#define mshv_enabled() false
++#endif
++#ifdef MSHV_USE_KERNEL_GSI_IRQFD
++#define mshv_msi_via_irqfd_enabled() mshv_enabled()
++#else
++#define mshv_msi_via_irqfd_enabled() false
++#endif
 +
-+static bool segment_expands_down(const SegmentCache *seg)
-+{
-+    uint32_t type_ = (seg->flags >> DESC_TYPE_SHIFT) & 15;
++/* interrupt */
++int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev);
++int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev);
++void mshv_irqchip_commit_routes(void);
++void mshv_irqchip_release_virq(int virq);
++int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *n,
++                                        const EventNotifier *rn, int virq);
++int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *n, int virq);
 +
-+    if (segment_type_code(seg)) {
-+        return false;
-+    }
-+
-+    return (type_ & EXPAND_DOWN_SEGMENT_TYPE) != 0;
-+}
-+
-+static uint32_t segment_limit(const SegmentCache *seg)
-+{
-+    uint32_t limit = seg->limit;
-+    uint32_t granularity = (seg->flags & DESC_G_MASK) != 0;
-+
-+    if (granularity != 0) {
-+        limit = (limit << 12) | 0xFFF;
-+    }
-+
-+    return limit;
-+}
-+
-+static uint8_t segment_db(const SegmentCache *seg)
-+{
-+    return (seg->flags >> DESC_B_SHIFT) & 1;
-+}
-+
-+static uint32_t segment_max_limit(const SegmentCache *seg)
-+{
-+    if (segment_db(seg) != 0) {
-+        return 0xFFFFFFFF;
-+    }
-+    return 0xFFFF;
-+}
-+
-+static int linearize(CPUState *cpu,
-+                     target_ulong logical_addr, target_ulong *linear_addr,
-+                     X86Seg seg_idx)
-+{
-+    enum CpuMode mode;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    SegmentCache *seg = &env->segs[seg_idx];
-+    target_ulong base = seg->base;
-+    target_ulong logical_addr_32b;
-+    uint32_t limit;
-+    /* TODO: the emulator will not pass us "write" indicator yet */
-+    bool write = false;
-+
-+    mode = cpu_mode(cpu);
-+
-+    switch (mode) {
-+    case LONG_MODE:
-+        if (__builtin_add_overflow(logical_addr, base, linear_addr)) {
-+            error_report("Address overflow");
-+            return -1;
-+        }
-+        break;
-+    case PROTECTED_MODE:
-+    case REAL_MODE:
-+        if (segment_type_ro(seg) && write) {
-+            error_report("Cannot write to read-only segment");
-+            return -1;
-+        }
-+
-+        logical_addr_32b = logical_addr & 0xFFFFFFFF;
-+        limit = segment_limit(seg);
-+
-+        if (segment_expands_down(seg)) {
-+            if (logical_addr_32b >= limit) {
-+                error_report("Address exceeds limit (expands down)");
-+                return -1;
-+            }
-+
-+            limit = segment_max_limit(seg);
-+        }
-+
-+        if (logical_addr_32b > limit) {
-+            error_report("Address exceeds limit %u", limit);
-+            return -1;
-+        }
-+        *linear_addr = logical_addr_32b + base;
-+        break;
-+    default:
-+        error_report("Unknown cpu mode: %d", mode);
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+bool x86_read_segment_descriptor(CPUState *cpu,
-+                                 struct x86_segment_descriptor *desc,
-+                                 x86_segment_selector sel)
-+{
-+    target_ulong base;
-+    uint32_t limit;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    target_ulong gva;
-+
-+    memset(desc, 0, sizeof(*desc));
-+
-+    /* valid gdt descriptors start from index 1 */
-+    if (!sel.index && GDT_SEL == sel.ti) {
-+        return false;
-+    }
-+
-+    if (GDT_SEL == sel.ti) {
-+        base = env->gdt.base;
-+        limit = env->gdt.limit;
-+    } else {
-+        base = env->ldt.base;
-+        limit = env->ldt.limit;
-+    }
-+
-+    if (sel.index * 8 >= limit) {
-+        return false;
-+    }
-+
-+    gva = base + sel.index * 8;
-+    emul_ops->read_mem(cpu, desc, gva, sizeof(*desc));
-+
-+    return true;
-+}
-+
-+bool x86_read_call_gate(CPUState *cpu, struct x86_call_gate *idt_desc,
-+                        int gate)
-+{
-+    target_ulong base;
-+    uint32_t limit;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    target_ulong gva;
-+
-+    base = env->idt.base;
-+    limit = env->idt.limit;
-+
-+    memset(idt_desc, 0, sizeof(*idt_desc));
-+    if (gate * 8 >= limit) {
-+        perror("call gate exceeds idt limit");
-+        return false;
-+    }
-+
-+    gva = base + gate * 8;
-+    emul_ops->read_mem(cpu, idt_desc, gva, sizeof(*idt_desc));
-+
-+    return true;
-+}
-+
-+bool x86_is_protected(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    uint64_t cr0 = env->cr[0];
-+
-+    return cr0 & CR0_PE_MASK;
-+}
-+
-+bool x86_is_real(CPUState *cpu)
-+{
-+    return !x86_is_protected(cpu);
-+}
-+
-+bool x86_is_v8086(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    return x86_is_protected(cpu) && (env->eflags & VM_MASK);
-+}
-+
-+bool x86_is_long_mode(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    uint64_t efer = env->efer;
-+
-+    return ((efer & (EFER_LME | EFER_LMA)) == (EFER_LME | EFER_LMA));
-+}
-+
-+bool x86_is_long64_mode(CPUState *cpu)
-+{
-+    error_report("unimplemented: is_long64_mode()");
-+    abort();
-+}
-+
-+bool x86_is_paging_mode(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    uint64_t cr0 = env->cr[0];
-+
-+    return cr0 & CR0_PG_MASK;
-+}
-+
-+bool x86_is_pae_enabled(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    uint64_t cr4 = env->cr[4];
-+
-+    return cr4 & CR4_PAE_MASK;
-+}
-+
-+target_ulong linear_addr(CPUState *cpu, target_ulong addr, X86Seg seg)
-+{
-+    int ret;
-+    target_ulong linear_addr;
-+
-+    ret = linearize(cpu, addr, &linear_addr, seg);
-+    if (ret < 0) {
-+        error_report("failed to linearize address");
-+        abort();
-+    }
-+
-+    return linear_addr;
-+}
-+
-+target_ulong linear_addr_size(CPUState *cpu, target_ulong addr, int size,
-+                              X86Seg seg)
-+{
-+    switch (size) {
-+    case 2:
-+        addr = (uint16_t)addr;
-+        break;
-+    case 4:
-+        addr = (uint32_t)addr;
-+        break;
-+    default:
-+        break;
-+    }
-+    return linear_addr(cpu, addr, seg);
-+}
-+
-+target_ulong linear_rip(CPUState *cpu, target_ulong rip)
-+{
-+    return linear_addr(cpu, rip, R_CS);
-+}
+ #endif
 -- 
 2.34.1
 
