@@ -4,93 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AB25C7EE30
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 16:36:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D869CC83038
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 16:36:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWdww-0004iG-Q9; Tue, 01 Jul 2025 12:35:14 -0400
+	id 1uWdxi-00058p-OB; Tue, 01 Jul 2025 12:36:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWdwn-0004hj-FQ
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 12:35:05 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWdxg-00056I-RA
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 12:36:00 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWdwh-0008QU-Kq
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 12:35:04 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-450ce3a2dd5so27331305e9.3
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 09:34:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWdxe-0000GY-UL
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 12:36:00 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3a54700a463so3602365f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 09:35:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751387695; x=1751992495; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751387754; x=1751992554; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=d2K10LNjVF7YPHB2xQYULfdat2hC8OE4Tb7cNChuI7E=;
- b=qaTPTw+52sN1dWeK+L0KQ+uA/VDWez+traZ45vKFh0GAuO26Czgoo7L9W+qgMhuWR6
- mu7llYKbaw03QxJkyI8m4ricngGw6ZmYB1IVfTHLaAJuE+owuny697NeRZELJGDXtVLy
- EsjQ2t8DZKSHMgvjRHn1Maik7x3zK+hQ1IokxLGINXx7/yJYEREefxM3opp0vtNzxZ6P
- 6n0HpoQRw3oyush+NorYt3Z/obCxTgeP01cyTDUxd5xJKqxv3wmxzpeZPfXwDanxETz3
- m7DsW7zzQM+mCX6t2TVkIizN4volHroIgUSsOrCvsCbBiVy/zpOcHrshEmlXn2K6ZQf3
- xp6w==
+ bh=O/6EiRS+dKF8gdeapMmBXhGH7wQxCu8g5WqEtX2r8X4=;
+ b=g4fq4WA9HaLkyEhejk50N//SN4195OgX5Mvd90NrEgFuW3bvIzZ0w11jorf3uww4Wc
+ lc6zn7wEHJOPSKDqM8KspTo/wI7fpx/ghH4SQIkIFJzJtm9WS8w+UxAauVu6HhUqSTXv
+ eIsHUK/8PR5aLsWrCYFGsCyRSgkZPT9gM04Gl0xitr+9Qk+1GftyI/jEcFat/YPFN5FH
+ fca0u1Zz6oTcBC7T2fdCZF1INmrCwD1uzDlqhINp8IhLxpmq2FMn9/QnqarZv0XPafdY
+ fgayIsgszD+3cJ6nAi52F+wHBIYrp5lFBRw9afnzJivao0LB6e3MZkkAIzMw8H3aSG4j
+ Qi6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751387695; x=1751992495;
+ d=1e100.net; s=20230601; t=1751387754; x=1751992554;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=d2K10LNjVF7YPHB2xQYULfdat2hC8OE4Tb7cNChuI7E=;
- b=g+F0ovaolySemg7D28mcvbpDMiZpJZ3Dm8aeni5X+WxCRk0q6fnMtcLSUmQgLztlwZ
- nRNhk+RLQ717+hczMXiyu9tWSbDQZ0KCgBJvlglcgA6mgARYYs6bcoVYJhgW46sGt3lp
- WH5fcTd+qNyO+TN95JSIbFCr/nSauHKHAOx9ZhT8FQjUi4vLoFquU9npyWlitcFabjT3
- f9rkZ0UsdzWKVXWKhOXKRYsbFMbF6AfYqOfZHGahmQc8tuPbCScSnbYPJbTyTk1xqvJp
- DbiD/JbYv237vrkwNPirgBRBuxuf290YcncXvyaWBPWB/FKizNP6Z8K+KO4LT19li/JG
- ED6Q==
-X-Gm-Message-State: AOJu0YyDdi12mKcdoDZGTK+1wGfJ4aklITDwwYUmju8ZjMDHLGeCDeKB
- ShdjSUxPmJH+2Q0FHBb2SZQGDxL4LxiI5ADWgmKnVc5l2QsV4B/s13uYyutr3ZnLF6c=
-X-Gm-Gg: ASbGncsV1N+8Ji88d8fyTpzAOpEhKNTNUWnasDBchendYIVpWmRUui4BFZehWzm9EZC
- 8soU/vEpfURq6XIdgAoJRZyr/jMzY1qrBNXotxajY0GJCgTnif5UTcyMiWk4uyA6IuDUHpKotsS
- AebmBF/WqnO4h0k21TxwPvLA7ZSsQ0s8yKrl4quA/LUSPsMDc9lZQ+UZ4QuqPxPUakdVJOp6uQh
- za9wPzY80qnIShOIJFmeyRjKCONRIJvgo0vF8s9xXaCGJo9WHVNbzJPyoUy+DP3SOBCjWD4GM6n
- zSNXcLuDJK0xUgu6zxQTNfTdVq/rtfFf45NTTGl84e2lSBwhLAu9WonjjtEcWMsTMuqE/FQC+0j
- A+du/6leQrJixcIRZEk46ooNJZiJhUg==
-X-Google-Smtp-Source: AGHT+IELwnWyYcu4hvfdvvbC7DYEvVdua5rlUoWfFzyQB8GHFmkYY6GB86F+9a8HBtGke/AvoPoUtg==
-X-Received: by 2002:a05:600c:1913:b0:453:8ab5:17f3 with SMTP id
- 5b1f17b1804b1-4538ee837e3mr172158175e9.22.1751387695285; 
- Tue, 01 Jul 2025 09:34:55 -0700 (PDT)
+ bh=O/6EiRS+dKF8gdeapMmBXhGH7wQxCu8g5WqEtX2r8X4=;
+ b=S+LKR6QGyJTUr2n54jmnZUVroZr2+xIje1vduR0iR+HsLlFsWwoOHcpTwMyPUH3GQC
+ AsncQHRM9Ruptwe8zXylUULx21kLH8BYPtI4+g6vhkIObhUvuz6J7k/yYZ6XjW7uiQEc
+ UKBGxT80UD54p9EWBQnio4O8ttsBUvWIVNGmc6UGIr1FeUS7yLMzV0CKMK4UNe2x2i9v
+ KhJQuyoe5my6aL4SD0pxsQl6C4CZ5lNmwg6kOw8xU38t52wOrzFZkn91jVyvtQI8YUSO
+ 9chFSq0tceYI4blB9InK2tRhSBUGI8Pd4SBOoKRf+PXP8I+Y8uB4DGLoLpoK5aLmeZ+W
+ yd+Q==
+X-Gm-Message-State: AOJu0YwsUjdMPvgNcAsj76eCpOZv5HpIeOZ3eHBs0CalavaNENIZv5DN
+ grslLXzIf4TQ6KWzhA+89VJG03ah4Ibnj6YtV3p5BylICTSGVS9/ymBlAKf9/y5Qiz6te+blcTG
+ a2g66
+X-Gm-Gg: ASbGncs4pt6rvE/rpOKT69YaxSyrL3RcrrFENtmoDxxxv8tG1nsyWy34aHb3AQ4o+26
+ XzofxOeI24/qQvnKIkARVUQp/pSZf/XBSxN76UQ8rUQoaYLxmuY2ZHeEsBvn+3vtGaxRBNWFYSU
+ AVqsurBIuwtA5vgcZ2b+z4+FH1BmRT3DBlBxI8bRqlv5iWYdw5nz6TBRok9WONXhSe/ZR+oHObb
+ +znbLY7wMQh0MoSoLFYYk8F67NbRXCdAtwJ4Ze1iqrHp6M0HPXgTyE4ZeZmKgXjL4ChXBjp9Ht9
+ dEyKH9GgVknIYL2euh//Zlia0zuK6bifWjLPPWF9QWevH1F00xpnFZQ6POBCOrJJXCIFI8L/3Al
+ AGq2meIKzjQ6GYEdCpZcGEBtpAUE4aw==
+X-Google-Smtp-Source: AGHT+IGSGrRQ1JutHZUB8+W+IN4OH7awrZLyDyP0F7Vz8Cx9NBcL0Mo1gD/6Cnck9VVefvMdHWPm9w==
+X-Received: by 2002:a5d:4886:0:b0:3a4:e238:6496 with SMTP id
+ ffacd0b85a97d-3af100ae54bmr3299204f8f.18.1751387754132; 
+ Tue, 01 Jul 2025 09:35:54 -0700 (PDT)
 Received: from [192.168.69.218] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4538234b30dsm200624615e9.12.2025.07.01.09.34.53
+ 5b1f17b1804b1-4538a3b3213sm168819815e9.18.2025.07.01.09.35.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Jul 2025 09:34:54 -0700 (PDT)
-Message-ID: <30fb9500-b38d-4143-a4d8-d72d30a18292@linaro.org>
-Date: Tue, 1 Jul 2025 18:34:52 +0200
+ Tue, 01 Jul 2025 09:35:53 -0700 (PDT)
+Message-ID: <c9a161db-1220-452e-88bb-7887bafb6986@linaro.org>
+Date: Tue, 1 Jul 2025 18:35:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 25/26] tests/functional: Add hvf_available() helper
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
- qemu-arm@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- Bernhard Beschow <shentey@gmail.com>, John Snow <jsnow@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- kvm@vger.kernel.org, Eric Auger <eric.auger@redhat.com>,
- Cameron Esfahani <dirty@apple.com>, Cleber Rosa <crosa@redhat.com>,
- Radoslaw Biernacki <rad@semihalf.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250623121845.7214-1-philmd@linaro.org>
- <20250623121845.7214-26-philmd@linaro.org>
- <CAFEAcA9MLMJBFk+PQCJT8Bd+6R+vaho9_vXmDCjPU5cp6B7LfQ@mail.gmail.com>
+Subject: Re: [RFC PATCH] target/i386: Report TPR accesses to HVF
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <liuwe@linux.microsoft.com>, 
+ Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan
+ <phil@philjordan.eu>, Zhao Liu <zhao1.liu@intel.com>,
+ Sergio Andres Gomez Del Real <Sergio.G.DelReal@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20250616090632.55214-1-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA9MLMJBFk+PQCJT8Bd+6R+vaho9_vXmDCjPU5cp6B7LfQ@mail.gmail.com>
+In-Reply-To: <20250616090632.55214-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,35 +104,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/7/25 17:50, Peter Maydell wrote:
-> On Mon, 23 Jun 2025 at 13:20, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> Reviewed-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   python/qemu/utils/__init__.py          | 2 +-
->>   python/qemu/utils/accel.py             | 8 ++++++++
->>   tests/functional/qemu_test/testcase.py | 6 ++++--
->>   3 files changed, 13 insertions(+), 3 deletions(-)
-> 
-> This seems to trigger errors in the check-python-minreqs job:
-> https://gitlab.com/pm215/qemu/-/jobs/10529051338
-> 
-> Log file "stdout" content for test "01-tests/flake8.sh" (FAIL):
-> qemu/utils/__init__.py:26:1: F401 '.accel.hvf_available' imported but unused
-> qemu/utils/accel.py:86:1: E302 expected 2 blank lines, found 1
-> Log file "stderr" content for test "01-tests/flake8.sh" (FAIL):
-> Log file "stdout" content for test "04-tests/isort.sh" (FAIL):
-> ERROR: /builds/pm215/qemu/python/qemu/utils/__init__.py Imports are
-> incorrectly sorted and/or formatted.
-> 
-> I'll see if I can fix this up locally. (The missing blank line
-> is easy; I think probably hvf_available needs to be in the
-> __all__ = () list in __init__.py like kvm_available and
-> tcg_available. Not sure about the incorrectly-sorted warning.)
+Ping?
 
-I neglected to rebuild the Python package, sorry...
+On 16/6/25 11:06, Philippe Mathieu-Daudé wrote:
+> HVF should be able to handle task priority register accesses.
+> 
+> Cc: Sergio Andres Gomez Del Real <Sergio.G.DelReal@gmail.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> RFC: Untested as I don't have access to such setup, noticed
+> during code review.
+> ---
+>   target/i386/helper.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/i386/helper.c b/target/i386/helper.c
+> index e0aaed3c4c4..a0555e74cc6 100644
+> --- a/target/i386/helper.c
+> +++ b/target/i386/helper.c
+> @@ -549,7 +549,7 @@ void cpu_report_tpr_access(CPUX86State *env, TPRAccess access)
+>       X86CPU *cpu = env_archcpu(env);
+>       CPUState *cs = env_cpu(env);
+>   
+> -    if (kvm_enabled() || whpx_enabled() || nvmm_enabled()) {
+> +    if (kvm_enabled() || whpx_enabled() || nvmm_enabled() || hvf_enabled()) {
+>           env->tpr_access_type = access;
+>   
+>           cpu_interrupt(cs, CPU_INTERRUPT_TPR);
 
-Don't worry dropping this patch and the following.
 
