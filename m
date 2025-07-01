@@ -4,66 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00D13C83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 15:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29DD4C83038
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 15:53:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWdGP-0001ur-RQ; Tue, 01 Jul 2025 11:51:17 -0400
+	id 1uWdI2-00038D-EH; Tue, 01 Jul 2025 11:52:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uWdGP-0001ue-28
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 11:51:17 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uWdGM-0002vr-EK
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 11:51:16 -0400
-Received: from example.com (unknown [167.220.208.67])
- by linux.microsoft.com (Postfix) with ESMTPSA id 1DD142112202;
- Tue,  1 Jul 2025 08:51:09 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 1DD142112202
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1751385072;
- bh=iUWL5VWsWU1hcEFNeVxSqVSRa0woPkamOX7Ac+J7Rqc=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=l8Ipkzzmpqu6jpElWKcr2We/5M/FMRagPtariBqjsyAwcFpeYfBOGY9hjxuFTcPx/
- xJ2dQ+7k3BQj1QDeeq+4/BD9C66vhqmo2lqT3jawAVI4XI12VY4K1nSfFfKYjodBaa
- HsfRYDxIZ0v7/pemCjLjdkpJiFInDbqY4oq1zHpI=
-Date: Tue, 1 Jul 2025 17:51:07 +0200
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Wei Liu <wei.liu@kernel.org>
-Cc: magnuskulke@microsoft.com, qemu-devel@nongnu.org, liuwe@microsoft.com,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Subject: Re: [RFC PATCH 24/25] target/i386/mshv: Implement mshv_vcpu_run()
-Message-ID: <aGQD6xk02+ojK+S6@example.com>
-References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
- <20250520113018.49569-25-magnuskulke@linux.microsoft.com>
- <aC0Ht-541wBzrUoc@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
- <aGOd1jSBsAMQ3OSj@example.com>
- <aGP6q20CEV5_Y2UM@liuwe-devbox-ubuntu-v2.lamzopl0uupeniq2etz1fddiyg.xx.internal.cloudapp.net>
- <aGQCg+yzwyNaFdAV@example.com>
- <aGQDHMchYFWUKxx1@liuwe-devbox-ubuntu-v2.lamzopl0uupeniq2etz1fddiyg.xx.internal.cloudapp.net>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uWdHh-00035J-II; Tue, 01 Jul 2025 11:52:37 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uWdHd-00033c-Df; Tue, 01 Jul 2025 11:52:37 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bWnZV4npGz6M4Hg;
+ Tue,  1 Jul 2025 23:51:30 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id EF2DF14011A;
+ Tue,  1 Jul 2025 23:52:24 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 1 Jul
+ 2025 17:52:24 +0200
+Date: Tue, 1 Jul 2025 16:52:22 +0100
+To: Eric Auger <eric.auger@redhat.com>
+CC: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, Peter Maydell
+ <peter.maydell@linaro.org>, <mst@redhat.com>, Zhijian Li
+ <lizhijian@fujitsu.com>, Itaru Kitayama <itaru.kitayama@linux.dev>,
+ <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>, <qemu-arm@nongnu.org>,
+ "Yuquan Wang" <wangyuquan1236@phytium.com.cn>, Philippe
+ =?ISO-8859-1?Q?Mathieu-Dau?= =?ISO-8859-1?Q?d=E9?= <philmd@linaro.org>, Alex
+ =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH qemu v16 3/5] hw/arm/virt: Basic CXL enablement on
+ pci_expander_bridge instances pxb-cxl
+Message-ID: <20250701165222.0000068f@huawei.com>
+In-Reply-To: <128e59be-4038-4a19-8cca-3be3d6446e0e@redhat.com>
+References: <20250625161926.549812-1-Jonathan.Cameron@huawei.com>
+ <20250625161926.549812-4-Jonathan.Cameron@huawei.com>
+ <128e59be-4038-4a19-8cca-3be3d6446e0e@redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aGQDHMchYFWUKxx1@liuwe-devbox-ubuntu-v2.lamzopl0uupeniq2etz1fddiyg.xx.internal.cloudapp.net>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,15 +74,72 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 01, 2025 at 03:47:40PM +0000, Wei Liu wrote:
-> 
-> We can leave the out for now as long as the guest shutdown works.
-> 
-> Wei.
+On Tue, 1 Jul 2025 17:34:36 +0200
+Eric Auger <eric.auger@redhat.com> wrote:
 
-yup, shutdown works fine, so I will drop the commit from the next patch
-set, thanks!
+> Hi Jonathan,
+> 
+> On 6/25/25 6:19 PM, Jonathan Cameron via wrote:
+> > Code based on i386/pc enablement.
+> > The memory layout places space for 16 host bridge register regions after
+> > the GIC_REDIST2 in the extended memmap. This is a hole in the current
+> > map so adding them here has no impact on placement of other memory regions
+> > (tested with enough CPUs for GIC_REDIST2 to be in use.)
+> >
+> > The CFMWs are placed above the extended memmap.  Note the confusing
+> > existing variable highest_gpa is the highest_gpa that has been allocated
+> > at a particular point in setting up the memory map.
+> >
+> > The cxl_devices_state.host_mr is provides a small space in which to place  
+> s/is//
+Fixed. Thanks.
+> > the individual host bridge register regions for whatever host bridges are
+> > allocated via -device pxb-cxl on the command line. The existing dynamic
+> > sysbus infrastructure is not reused because pxb-cxl is a PCI device not
+> > a sysbus one but these registers are directly in the main memory map,
+> > not the PCI address space.
+> >
+> > Only create the CEDT table if cxl=on set for the machine. Default to off.
+> >
+> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > ---
+
+> > @@ -1895,6 +1917,9 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
+> >      if (device_memory_size > 0) {
+> >          machine_memory_devices_init(ms, device_memory_base, device_memory_size);
+> >      }
+> > +    vms->highest_gpa = cxl_fmws_set_memmap(ROUND_UP(vms->highest_gpa + 1,
+> > +                                                    256 * MiB),
+> > +                                           BIT_ULL(pa_bits)) - 1;  
+> in hw/cxl/cxl-host.c, there seems to be a loop on fw windows? I guess
+> those windows only exist if cxl option is set. In the positive,
+> highest_gpa will be changed only if the option is set, which is fine.
+> Indeed we have requested_ipa_size = 64 - clz64(vms->highest_gpa). So we
+> shall not modify this if cxl is not set.
+> 
+> What I am a bit concerned with is that it"consumes" some high memory
+> without making it explicit in extended_memmap. Shouldn't we book some
+> dedicated space there? Sorry I am jumping very late in the review, maybe
+> turning things worse & noisy :-( Eric
+
+No problem with late review - whilst it looks late we had a several year
+gap at one point in updating this series!
+
+How much to book?  It's effectively infinite much like device memory.
+Would be odd to book the minimum which is 256MiB given any useful system
+is going to have a lot more than that (they are usually a few TiB but
+may be much larger than that).
+
+Would a comment after 
+   [VIRT_HIGH_PCIE_MMIO] =     { 0x0, DEFAULT_HIGH_PCIE_MMIO_SIZE }, 
+such as
+   /* Any CXL Fixed memory windows come here */
+be enough?
+
+ 
 
