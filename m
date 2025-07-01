@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F976C7EE30
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:08:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E1A5C83038
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:09:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWeST-0005Zg-Ri; Tue, 01 Jul 2025 13:07:49 -0400
+	id 1uWeSS-0005Yx-QO; Tue, 01 Jul 2025 13:07:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uWeSQ-0005W4-Eg
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:07:46 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1uWeSL-0005Tn-Ui
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:07:43 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uWeSK-0003Sj-5q
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:07:45 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3a531fcaa05so2172505f8f.3
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 10:07:39 -0700 (PDT)
+ id 1uWeSG-0003OU-N0
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:07:41 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-45377776935so42129065e9.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 10:07:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751389658; x=1751994458; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751389651; x=1751994451; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=yGrl9aNeRGVvk2bktaVqb3xXDuq3A1i3mnww3L1qfrQ=;
- b=KaKJLXZt1hJfwbR46PAhB3N3zv4Hze6BdU7bo5QECbd6iPWurg/HqicBsGhhnbSCHi
- GTdips4aBeAJY0PaQ9g1WpHmxh2TPvw48mI+d14kiqP5tSwImR/msRUa093WMt0EXuIM
- KLtZXXRTlnD9pUmsuXOPcmAwS7vVOGN8igNGQcAkKe449CKSpE1ydlAY2wLnpKsBKiul
- RSuD1SHMF9FKoNrcD2ZRBDlMzKvJHWI4ar2E2yEEIMP9en60VFCdKinQi5Sz390VkCkM
- 6x8tle77iDMcmqjbFV4TvgQeWgln4+CFm/Dbre5kJeYsS2LKgHHS2+zK+8qpQuTLUrpR
- q0vw==
+ :reply-to; bh=QK8RvFe2IhjZDCNc+St0RMz6uYb453veI+5VnX+9k4s=;
+ b=RJlo4zxp9CavJ8gq9j8CdQduGb+Fh8xEQGF6FQ0bIM8pOvwRJYWzrrK11bCR/53s4l
+ KDXBsFgZbkR3LsbVPBQZl0yQ6du3Pi8E+KfzyfwLPQd92F9+/JZp8o6XyN24WDsI2Xnp
+ 4H9NSbJdfrQWcY6vS+z1LugJPAqjA4S/en97mxIqXf9hAMDg6BRb3/r9I0RR7NUgk2hu
+ sYOU1pcRs0NoRmCfwLPr6Ud/d6RNQW/1xPP+8YpZIKKIPre/db91WSDy3++UmVSCsx8Q
+ gkerXHNfmRAvJdY+r1ZMtkSdVMO8M65fsTLpPqCzR6gKkOFUY5xulnfSRff4RL2upDlG
+ i1RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751389658; x=1751994458;
+ d=1e100.net; s=20230601; t=1751389651; x=1751994451;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yGrl9aNeRGVvk2bktaVqb3xXDuq3A1i3mnww3L1qfrQ=;
- b=lrcyZKBJPFyyO9P8ZHvHOfqdSe53j8W5O8j+IBgK+4ssyCMwCI3OxibUv/ZOyhFpS3
- TergjPAerXKS+JbXUDBY//3ImOuJ/fu5rzT/cDNO1mD3RIDK9MwG86ZwnoNmUnIRQWOz
- 5sNiCifwH90z7TOHjOW3iIRw1JlP0sqLGq/ZoxUuAz7LAyuLGImUgW1srfdAxJe47XVE
- KhSWJ3L5fhDnAXOt20IyKZ13E0gwJUbnJvGYMlnUO1ecu4Gn+kUpkeQwKXtDi4udQnh6
- sFVz8pk93KX7yEeFq0SsiSFR2nP/Vad0Jo8J3zVLwCk/Wrimu2J24eYMK3uAoZC3/Kdr
- W4UQ==
-X-Gm-Message-State: AOJu0YyqnrRNqMte3EaYJLBg+pawqwvX6r6geiOQdvQuHtG3mRtSp8vd
- asVCJAuxGcxo+0FuH0Kenx5Jxu9bgtm/rxlh3AHFSB3tn4a/yuMfFczrnFwCA8BJwo5KcwbXlpZ
- wbyFB
-X-Gm-Gg: ASbGncsjiT8vUcLsEfkmhcdI1IopUrbY2Ukr64FKPuUZ/irg8HTcxLNgxgyPC6p05d+
- cT9O4OylFXlOPABgbi4HerOd+7jwqVMx26NutohPVtyd/POWwc8imwAxPjASvmAtZjE1DFLAqQC
- jj1vY1qxxtceYpRTuxy1mAn2PMYPxKKVofKN0CXJuh7FlG2VCBDeCwjlwM0D7adQiOhkCKy5LLk
- bGChEmUGjY3KerlGH7dp6wSIhCVO0cJ9u/MQ6VD7dCpjBXKEvMTqIemoEBgyduJHzf9tacsAbHn
- sWfYnvwa+iSc2zWoGo9eu0j84qDDxbC6G9Zm+93R4YEdhmsIYUfFmvHpzaQtu8J6uWOp
-X-Google-Smtp-Source: AGHT+IGbBFTZCFjbo4ph4l2nyZz9Qwlay26rDeNFJWCsrjae8kgKRU7fB9cJb5bwIxjoBC6xyIld/g==
-X-Received: by 2002:a05:6000:250f:b0:3a4:f936:7882 with SMTP id
- ffacd0b85a97d-3a8ffcca8b2mr18209555f8f.55.1751389658079; 
- Tue, 01 Jul 2025 10:07:38 -0700 (PDT)
+ bh=QK8RvFe2IhjZDCNc+St0RMz6uYb453veI+5VnX+9k4s=;
+ b=trqD6+B1oVu2Sjt1M1GJ7aixCrt6aqHuBs5xVASlvluOK5oFjE+hm2TIjXBpJqePHp
+ qa2LiABb0919aXsYzVaob6cspfxoxaJjGQuyMW/P8/UlbpCp6Fotdrvdp9/6p5Fpw7i2
+ 68muNyfgic5GLi8MmF6Rbv68GTmzwVMlzZSZvSLZwYAFsbgk5pZQPFsOSodnR8aoXVdY
+ /Xd+FH0xLtTbXQLHrihOHfPIp1yn+vf4cddCp8mcTHzDf/R/vRD/wfvZ+OTsunbILv4d
+ BJoin/kJFfyIBzYbIqqJfyUWVsSs38DGgNVnIVTn51vzkeM/RlvQsRsA5CN7K+bGuJcF
+ jb3A==
+X-Gm-Message-State: AOJu0Ywd2hMyUr+QFrqaLo9AVcEkS2WqRUubhIxRLoGXC/qtBjDaG2KL
+ w5wAbsr21MZyqsFgK4EdoTsw7Y9VNrLSjRKnaUY1TRsjnk61gktL2B8lRzxwqYGSnkaWBTnBtCu
+ EHZoI
+X-Gm-Gg: ASbGnctIfj9tKWzTYo1GEkfKVc65kzSDc3VM3J+eC/WQzSzGShINc6adZPmTHo7s1Ad
+ uaZnxEeQ94gf78dp4UOnpyvom3xPOUhDCGUhQg55nh/7pS6fmGafDD6Zoj7QN2U25q9AbTOgRoi
+ cZcsMyBXNEM5o1xVEcwDi35vMTGcTF9+t0o7Sbij6iyaLk80mlDMNlWTBrGh5Kf++98gagkKycq
+ oNtGTwA7BWYw2r/rhU8D1eSOdz94pujAwrpPPKwm0l5SbGoAJ9v03cfU3dxul9UbXRDg3TTY08i
+ Ge+Wt7pU2mHZrjV6bV/NmkOp5z2Ho5I7gYdS9hbYMFlB5MezVuneRk2DYr4B88MdyEWF
+X-Google-Smtp-Source: AGHT+IEpG0Jlt+f7ApUPln4FV3Gz/721qll4U3PDdPHrj576lAlBaRP0pq6UTaY1uHCauNSKV3eBqA==
+X-Received: by 2002:a05:600c:c163:b0:443:48:66d2 with SMTP id
+ 5b1f17b1804b1-4538ee7db55mr209661445e9.16.1751389651066; 
+ Tue, 01 Jul 2025 10:07:31 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a88c80bb28sm13475658f8f.43.2025.07.01.10.07.37
+ ffacd0b85a97d-3a88c80bb28sm13475658f8f.43.2025.07.01.10.07.29
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Jul 2025 10:07:37 -0700 (PDT)
+ Tue, 01 Jul 2025 10:07:29 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/43] hw/intc/gicv3_its: Do not check its_class_name()
-Date: Tue,  1 Jul 2025 18:06:51 +0100
-Message-ID: <20250701170720.4072660-16-peter.maydell@linaro.org>
+Subject: [PULL 08/43] arm/cpu: Store aa64dfr0/1 into the idregs array
+Date: Tue,  1 Jul 2025 18:06:44 +0100
+Message-ID: <20250701170720.4072660-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250701170720.4072660-1-peter.maydell@linaro.org>
 References: <20250701170720.4072660-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,88 +98,347 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Eric Auger <eric.auger@redhat.com>
 
-Since commit cc5e719e2c8 ("kvm: require KVM_CAP_SIGNAL_MSI"), the single
-implementation of its_class_name() no longer returns NULL (it now always
-returns a valid char pointer). Hence, update the prototype docstring and
-remove the tautological checks that use the its_class_name() returned
-value.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Message-id: 20250628195722.977078-2-gustavo.romero@linaro.org
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+Message-id: 20250617153931.1330449-7-cohuck@redhat.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/intc/arm_gicv3_its_common.h |  2 +-
- hw/arm/virt-acpi-build.c               | 32 +++++++++++---------------
- 2 files changed, 15 insertions(+), 19 deletions(-)
+ target/arm/cpu-features.h | 16 ++++++++--------
+ target/arm/cpu.h          |  2 --
+ target/arm/internals.h    |  6 +++---
+ target/arm/cpu.c          | 15 +++++----------
+ target/arm/cpu64.c        |  4 ++--
+ target/arm/helper.c       |  4 ++--
+ target/arm/hvf/hvf.c      |  4 ++--
+ target/arm/kvm.c          | 12 +++++-------
+ target/arm/tcg/cpu64.c    | 32 ++++++++++++++++----------------
+ 9 files changed, 43 insertions(+), 52 deletions(-)
 
-diff --git a/include/hw/intc/arm_gicv3_its_common.h b/include/hw/intc/arm_gicv3_its_common.h
-index 7dc712b38d2..3c7b543b018 100644
---- a/include/hw/intc/arm_gicv3_its_common.h
-+++ b/include/hw/intc/arm_gicv3_its_common.h
-@@ -128,7 +128,7 @@ struct GICv3ITSCommonClass {
-  * Return the ITS class name to use depending on whether KVM acceleration
-  * and KVM CAP_SIGNAL_MSI are supported
-  *
-- * Returns: class name to use or NULL
-+ * Returns: class name to use
-  */
- const char *its_class_name(void);
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 89c9278639b..9517e8a74c8 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -901,30 +901,30 @@ static inline bool isar_feature_aa64_nv2(const ARMISARegisters *id)
  
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 7e8e0f0298d..9eee284c809 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -737,20 +737,18 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-                                           memmap[VIRT_HIGH_GIC_REDIST2].size);
-         }
+ static inline bool isar_feature_aa64_pmuv3p1(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64dfr0, ID_AA64DFR0, PMUVER) >= 4 &&
+-        FIELD_EX64(id->id_aa64dfr0, ID_AA64DFR0, PMUVER) != 0xf;
++    return FIELD_EX64_IDREG(id, ID_AA64DFR0, PMUVER) >= 4 &&
++        FIELD_EX64_IDREG(id, ID_AA64DFR0, PMUVER) != 0xf;
+ }
  
--        if (its_class_name()) {
--            /*
--             * ACPI spec, Revision 6.0 Errata A
--             * (original 6.0 definition has invalid Length)
--             * 5.2.12.18 GIC ITS Structure
--             */
--            build_append_int_noprefix(table_data, 0xF, 1);  /* Type */
--            build_append_int_noprefix(table_data, 20, 1);   /* Length */
--            build_append_int_noprefix(table_data, 0, 2);    /* Reserved */
--            build_append_int_noprefix(table_data, 0, 4);    /* GIC ITS ID */
--            /* Physical Base Address */
--            build_append_int_noprefix(table_data, memmap[VIRT_GIC_ITS].base, 8);
--            build_append_int_noprefix(table_data, 0, 4);    /* Reserved */
--        }
-+        /*
-+         * ACPI spec, Revision 6.0 Errata A
-+         * (original 6.0 definition has invalid Length)
-+         * 5.2.12.18 GIC ITS Structure
-+         */
-+        build_append_int_noprefix(table_data, 0xF, 1);  /* Type */
-+        build_append_int_noprefix(table_data, 20, 1);   /* Length */
-+        build_append_int_noprefix(table_data, 0, 2);    /* Reserved */
-+        build_append_int_noprefix(table_data, 0, 4);    /* GIC ITS ID */
-+        /* Physical Base Address */
-+        build_append_int_noprefix(table_data, memmap[VIRT_GIC_ITS].base, 8);
-+        build_append_int_noprefix(table_data, 0, 4);    /* Reserved */
+ static inline bool isar_feature_aa64_pmuv3p4(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64dfr0, ID_AA64DFR0, PMUVER) >= 5 &&
+-        FIELD_EX64(id->id_aa64dfr0, ID_AA64DFR0, PMUVER) != 0xf;
++    return FIELD_EX64_IDREG(id, ID_AA64DFR0, PMUVER) >= 5 &&
++        FIELD_EX64_IDREG(id, ID_AA64DFR0, PMUVER) != 0xf;
+ }
+ 
+ static inline bool isar_feature_aa64_pmuv3p5(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64dfr0, ID_AA64DFR0, PMUVER) >= 6 &&
+-        FIELD_EX64(id->id_aa64dfr0, ID_AA64DFR0, PMUVER) != 0xf;
++    return FIELD_EX64_IDREG(id, ID_AA64DFR0, PMUVER) >= 6 &&
++        FIELD_EX64_IDREG(id, ID_AA64DFR0, PMUVER) != 0xf;
+ }
+ 
+ static inline bool isar_feature_aa64_debugv8p2(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64dfr0, ID_AA64DFR0, DEBUGVER) >= 8;
++    return FIELD_EX64_IDREG(id, ID_AA64DFR0, DEBUGVER) >= 8;
+ }
+ 
+ static inline bool isar_feature_aa64_doublelock(const ARMISARegisters *id)
+ {
+-    return FIELD_SEX64(id->id_aa64dfr0, ID_AA64DFR0, DOUBLELOCK) >= 0;
++    return FIELD_SEX64_IDREG(id, ID_AA64DFR0, DOUBLELOCK) >= 0;
+ }
+ 
+ static inline bool isar_feature_aa64_sve2(const ARMISARegisters *id)
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index df9b7cc8c84..c7935377c6f 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1074,8 +1074,6 @@ struct ArchCPU {
+         uint32_t dbgdidr;
+         uint32_t dbgdevid;
+         uint32_t dbgdevid1;
+-        uint64_t id_aa64dfr0;
+-        uint64_t id_aa64dfr1;
+         uint64_t id_aa64smfr0;
+         uint64_t reset_pmcr_el0;
+         uint64_t idregs[NUM_ID_IDX];
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 3360de9150f..6216f68c94f 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1175,7 +1175,7 @@ static inline bool regime_using_lpae_format(CPUARMState *env, ARMMMUIdx mmu_idx)
+ static inline int arm_num_brps(ARMCPU *cpu)
+ {
+     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
+-        return FIELD_EX64(cpu->isar.id_aa64dfr0, ID_AA64DFR0, BRPS) + 1;
++        return FIELD_EX64_IDREG(&cpu->isar, ID_AA64DFR0, BRPS) + 1;
      } else {
-         const uint16_t spi_base = vms->irqmap[VIRT_GIC_V2M] + ARM_SPI_BASE;
- 
-@@ -969,10 +967,8 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
-                           vms->oem_table_id);
+         return FIELD_EX32(cpu->isar.dbgdidr, DBGDIDR, BRPS) + 1;
      }
+@@ -1189,7 +1189,7 @@ static inline int arm_num_brps(ARMCPU *cpu)
+ static inline int arm_num_wrps(ARMCPU *cpu)
+ {
+     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
+-        return FIELD_EX64(cpu->isar.id_aa64dfr0, ID_AA64DFR0, WRPS) + 1;
++        return FIELD_EX64_IDREG(&cpu->isar, ID_AA64DFR0, WRPS) + 1;
+     } else {
+         return FIELD_EX32(cpu->isar.dbgdidr, DBGDIDR, WRPS) + 1;
+     }
+@@ -1203,7 +1203,7 @@ static inline int arm_num_wrps(ARMCPU *cpu)
+ static inline int arm_num_ctx_cmps(ARMCPU *cpu)
+ {
+     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
+-        return FIELD_EX64(cpu->isar.id_aa64dfr0, ID_AA64DFR0, CTX_CMPS) + 1;
++        return FIELD_EX64_IDREG(&cpu->isar, ID_AA64DFR0, CTX_CMPS) + 1;
+     } else {
+         return FIELD_EX32(cpu->isar.dbgdidr, DBGDIDR, CTX_CMPS) + 1;
+     }
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index d39e8dc9560..400bee84943 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2347,8 +2347,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+                 cpu);
+ #endif
+     } else {
+-        cpu->isar.id_aa64dfr0 =
+-            FIELD_DP64(cpu->isar.id_aa64dfr0, ID_AA64DFR0, PMUVER, 0);
++        FIELD_DP64_IDREG(isar, ID_AA64DFR0, PMUVER, 0);
+         cpu->isar.id_dfr0 = FIELD_DP32(cpu->isar.id_dfr0, ID_DFR0, PERFMON, 0);
+         cpu->pmceid0 = 0;
+         cpu->pmceid1 = 0;
+@@ -2408,19 +2407,15 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+          * try to access the non-existent system registers for them.
+          */
+         /* FEAT_SPE (Statistical Profiling Extension) */
+-        cpu->isar.id_aa64dfr0 =
+-            FIELD_DP64(cpu->isar.id_aa64dfr0, ID_AA64DFR0, PMSVER, 0);
++        FIELD_DP64_IDREG(isar, ID_AA64DFR0, PMSVER, 0);
+         /* FEAT_TRBE (Trace Buffer Extension) */
+-        cpu->isar.id_aa64dfr0 =
+-            FIELD_DP64(cpu->isar.id_aa64dfr0, ID_AA64DFR0, TRACEBUFFER, 0);
++        FIELD_DP64_IDREG(isar, ID_AA64DFR0, TRACEBUFFER, 0);
+         /* FEAT_TRF (Self-hosted Trace Extension) */
+-        cpu->isar.id_aa64dfr0 =
+-            FIELD_DP64(cpu->isar.id_aa64dfr0, ID_AA64DFR0, TRACEFILT, 0);
++        FIELD_DP64_IDREG(isar, ID_AA64DFR0, TRACEFILT, 0);
+         cpu->isar.id_dfr0 =
+             FIELD_DP32(cpu->isar.id_dfr0, ID_DFR0, TRACEFILT, 0);
+         /* Trace Macrocell system register access */
+-        cpu->isar.id_aa64dfr0 =
+-            FIELD_DP64(cpu->isar.id_aa64dfr0, ID_AA64DFR0, TRACEVER, 0);
++        FIELD_DP64_IDREG(isar, ID_AA64DFR0, TRACEVER, 0);
+         cpu->isar.id_dfr0 =
+             FIELD_DP32(cpu->isar.id_dfr0, ID_DFR0, COPTRC, 0);
+         /* Memory mapped trace */
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 500f3646bfa..a215ba8b479 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -671,7 +671,7 @@ static void aarch64_a57_initfn(Object *obj)
+     cpu->isar.id_isar5 = 0x00011121;
+     cpu->isar.id_isar6 = 0;
+     SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
+-    cpu->isar.id_aa64dfr0 = 0x10305106;
++    SET_IDREG(isar, ID_AA64DFR0, 0x10305106);
+     SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+     SET_IDREG(isar, ID_AA64MMFR0, 0x00001124);
+     cpu->isar.dbgdidr = 0x3516d000;
+@@ -733,7 +733,7 @@ static void aarch64_a53_initfn(Object *obj)
+     cpu->isar.id_isar5 = 0x00011121;
+     cpu->isar.id_isar6 = 0;
+     SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
+-    cpu->isar.id_aa64dfr0 = 0x10305106;
++    SET_IDREG(isar, ID_AA64DFR0, 0x10305106);
+     SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+     SET_IDREG(isar, ID_AA64MMFR0, 0x00001122); /* 40 bit physical addr */
+     cpu->isar.dbgdidr = 0x3516d000;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index fe0bda749f4..2ac132c1db8 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -7963,12 +7963,12 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 5, .opc2 = 0,
+               .access = PL1_R, .type = ARM_CP_CONST,
+               .accessfn = access_aa64_tid3,
+-              .resetvalue = cpu->isar.id_aa64dfr0 },
++              .resetvalue = GET_IDREG(isar, ID_AA64DFR0) },
+             { .name = "ID_AA64DFR1_EL1", .state = ARM_CP_STATE_AA64,
+               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 5, .opc2 = 1,
+               .access = PL1_R, .type = ARM_CP_CONST,
+               .accessfn = access_aa64_tid3,
+-              .resetvalue = cpu->isar.id_aa64dfr1 },
++              .resetvalue = GET_IDREG(isar, ID_AA64DFR1) },
+             { .name = "ID_AA64DFR2_EL1_RESERVED", .state = ARM_CP_STATE_AA64,
+               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 5, .opc2 = 2,
+               .access = PL1_R, .type = ARM_CP_CONST,
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 37a6303ec2a..5c95ccc5b8d 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -868,8 +868,8 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     } regs[] = {
+         { HV_SYS_REG_ID_AA64PFR0_EL1, &host_isar.idregs[ID_AA64PFR0_EL1_IDX] },
+         { HV_SYS_REG_ID_AA64PFR1_EL1, &host_isar.idregs[ID_AA64PFR1_EL1_IDX] },
+-        { HV_SYS_REG_ID_AA64DFR0_EL1, &host_isar.id_aa64dfr0 },
+-        { HV_SYS_REG_ID_AA64DFR1_EL1, &host_isar.id_aa64dfr1 },
++        { HV_SYS_REG_ID_AA64DFR0_EL1, &host_isar.idregs[ID_AA64DFR0_EL1_IDX] },
++        { HV_SYS_REG_ID_AA64DFR1_EL1, &host_isar.idregs[ID_AA64DFR1_EL1_IDX] },
+         { HV_SYS_REG_ID_AA64ISAR0_EL1, &host_isar.idregs[ID_AA64ISAR0_EL1_IDX] },
+         { HV_SYS_REG_ID_AA64ISAR1_EL1, &host_isar.idregs[ID_AA64ISAR1_EL1_IDX] },
+         /* Add ID_AA64ISAR2_EL1 here when HVF supports it */
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 1dde96fbbda..479e5860e02 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -316,10 +316,8 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+         err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR1_EL1_IDX);
+         err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64smfr0,
+                               ARM64_SYS_REG(3, 0, 0, 4, 5));
+-        err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64dfr0,
+-                              ARM64_SYS_REG(3, 0, 0, 5, 0));
+-        err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64dfr1,
+-                              ARM64_SYS_REG(3, 0, 0, 5, 1));
++        err |= get_host_cpu_reg(fd, ahcf, ID_AA64DFR0_EL1_IDX);
++        err |= get_host_cpu_reg(fd, ahcf, ID_AA64DFR1_EL1_IDX);
+         err |= get_host_cpu_reg(fd, ahcf, ID_AA64ISAR0_EL1_IDX);
+         err |= get_host_cpu_reg(fd, ahcf, ID_AA64ISAR1_EL1_IDX);
+         err |= get_host_cpu_reg(fd, ahcf, ID_AA64ISAR2_EL1_IDX);
+@@ -390,10 +388,10 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+          * We only do this if the CPU supports AArch32 at EL1.
+          */
+         if (FIELD_EX32_IDREG(&ahcf->isar, ID_AA64PFR0, EL1) >= 2) {
+-            int wrps = FIELD_EX64(ahcf->isar.id_aa64dfr0, ID_AA64DFR0, WRPS);
+-            int brps = FIELD_EX64(ahcf->isar.id_aa64dfr0, ID_AA64DFR0, BRPS);
++            int wrps = FIELD_EX64_IDREG(&ahcf->isar, ID_AA64DFR0, WRPS);
++            int brps = FIELD_EX64_IDREG(&ahcf->isar, ID_AA64DFR0, BRPS);
+             int ctx_cmps =
+-                FIELD_EX64(ahcf->isar.id_aa64dfr0, ID_AA64DFR0, CTX_CMPS);
++                FIELD_EX64_IDREG(&ahcf->isar, ID_AA64DFR0, CTX_CMPS);
+             int version = 6; /* ARMv8 debug architecture */
+             bool has_el3 =
+                 !!FIELD_EX32_IDREG(&ahcf->isar, ID_AA64PFR0, EL3);
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 9efb7f0ce80..7e18d31a253 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -65,8 +65,8 @@ static void aarch64_a35_initfn(Object *obj)
+     cpu->isar.id_isar5 = 0x00011121;
+     SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
+     SET_IDREG(isar, ID_AA64PFR1, 0);
+-    cpu->isar.id_aa64dfr0 = 0x10305106;
+-    cpu->isar.id_aa64dfr1 = 0;
++    SET_IDREG(isar, ID_AA64DFR0, 0x10305106);
++    SET_IDREG(isar, ID_AA64DFR1, 0);
+     SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+     SET_IDREG(isar, ID_AA64ISAR1, 0);
+     SET_IDREG(isar, ID_AA64MMFR0, 0x00101122);
+@@ -219,7 +219,7 @@ static void aarch64_a55_initfn(Object *obj)
+     cpu->clidr = 0x82000023;
+     cpu->ctr = 0x84448004; /* L1Ip = VIPT */
+     cpu->dcz_blocksize = 4; /* 64 bytes */
+-    cpu->isar.id_aa64dfr0  = 0x0000000010305408ull;
++    SET_IDREG(isar, ID_AA64DFR0, 0x0000000010305408ull);
+     SET_IDREG(isar, ID_AA64ISAR0, 0x0000100010211120ull);
+     SET_IDREG(isar, ID_AA64ISAR1, 0x0000000000100001ull);
+     SET_IDREG(isar, ID_AA64MMFR0, 0x0000000000101122ull);
+@@ -310,7 +310,7 @@ static void aarch64_a72_initfn(Object *obj)
+     cpu->isar.id_isar4 = 0x00011142;
+     cpu->isar.id_isar5 = 0x00011121;
+     SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
+-    cpu->isar.id_aa64dfr0 = 0x10305106;
++    SET_IDREG(isar, ID_AA64DFR0, 0x10305106);
+     SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+     SET_IDREG(isar, ID_AA64MMFR0, 0x00001124);
+     cpu->isar.dbgdidr = 0x3516d000;
+@@ -352,7 +352,7 @@ static void aarch64_a76_initfn(Object *obj)
+     cpu->clidr = 0x82000023;
+     cpu->ctr = 0x8444C004;
+     cpu->dcz_blocksize = 4;
+-    cpu->isar.id_aa64dfr0  = 0x0000000010305408ull;
++    SET_IDREG(isar, ID_AA64DFR0, 0x0000000010305408ull),
+     SET_IDREG(isar, ID_AA64ISAR0, 0x0000100010211120ull);
+     SET_IDREG(isar, ID_AA64ISAR1, 0x0000000000100001ull);
+     SET_IDREG(isar, ID_AA64MMFR0, 0x0000000000101122ull);
+@@ -426,8 +426,8 @@ static void aarch64_a64fx_initfn(Object *obj)
+     cpu->reset_sctlr = 0x30000180;
+     SET_IDREG(isar, ID_AA64PFR0, 0x0000000101111111); /* No RAS Extensions */
+     SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000000);
+-    cpu->isar.id_aa64dfr0 = 0x0000000010305408;
+-    cpu->isar.id_aa64dfr1 = 0x0000000000000000;
++    SET_IDREG(isar, ID_AA64DFR0, 0x0000000010305408),
++    SET_IDREG(isar, ID_AA64DFR1, 0x0000000000000000),
+     cpu->id_aa64afr0 = 0x0000000000000000;
+     cpu->id_aa64afr1 = 0x0000000000000000;
+     SET_IDREG(isar, ID_AA64MMFR0, 0x0000000000001122);
+@@ -600,7 +600,7 @@ static void aarch64_neoverse_n1_initfn(Object *obj)
+     cpu->clidr = 0x82000023;
+     cpu->ctr = 0x8444c004;
+     cpu->dcz_blocksize = 4;
+-    cpu->isar.id_aa64dfr0  = 0x0000000110305408ull;
++    SET_IDREG(isar, ID_AA64DFR0, 0x0000000110305408ull);
+     SET_IDREG(isar, ID_AA64ISAR0, 0x0000100010211120ull);
+     SET_IDREG(isar, ID_AA64ISAR1, 0x0000000000100001ull);
+     SET_IDREG(isar, ID_AA64MMFR0, 0x0000000000101125ull);
+@@ -678,8 +678,8 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
+     cpu->dcz_blocksize = 4;
+     cpu->id_aa64afr0 = 0x00000000;
+     cpu->id_aa64afr1 = 0x00000000;
+-    cpu->isar.id_aa64dfr0  = 0x000001f210305519ull;
+-    cpu->isar.id_aa64dfr1 = 0x00000000;
++    SET_IDREG(isar, ID_AA64DFR0, 0x000001f210305519ull),
++    SET_IDREG(isar, ID_AA64DFR1, 0x00000000),
+     SET_IDREG(isar, ID_AA64ISAR0, 0x1011111110212120ull); /* with FEAT_RNG */
+     SET_IDREG(isar, ID_AA64ISAR1, 0x0011000001211032ull);
+     SET_IDREG(isar, ID_AA64MMFR0, 0x0000000000101125ull);
+@@ -925,8 +925,8 @@ static void aarch64_a710_initfn(Object *obj)
+     SET_IDREG(isar, ID_AA64PFR0, 0x1201111120111112ull); /* GIC filled in later */
+     SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000221ull);
+     SET_IDREG(isar, ID_AA64ZFR0, 0x0000110100110021ull); /* with Crypto */
+-    cpu->isar.id_aa64dfr0  = 0x000011f010305619ull;
+-    cpu->isar.id_aa64dfr1  = 0;
++    SET_IDREG(isar, ID_AA64DFR0, 0x000011f010305619ull);
++    SET_IDREG(isar, ID_AA64DFR1, 0);
+     cpu->id_aa64afr0       = 0;
+     cpu->id_aa64afr1       = 0;
+     SET_IDREG(isar, ID_AA64ISAR0, 0x0221111110212120ull); /* with Crypto */
+@@ -1027,8 +1027,8 @@ static void aarch64_neoverse_n2_initfn(Object *obj)
+     SET_IDREG(isar, ID_AA64PFR0, 0x1201111120111112ull); /* GIC filled in later */
+     SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000221ull);
+     SET_IDREG(isar, ID_AA64ZFR0, 0x0000110100110021ull); /* with Crypto */
+-    cpu->isar.id_aa64dfr0  = 0x000011f210305619ull;
+-    cpu->isar.id_aa64dfr1  = 0;
++    SET_IDREG(isar, ID_AA64DFR0, 0x000011f210305619ull);
++    SET_IDREG(isar, ID_AA64DFR1, 0);
+     cpu->id_aa64afr0       = 0;
+     cpu->id_aa64afr1       = 0;
+     SET_IDREG(isar, ID_AA64ISAR0, 0x1221111110212120ull); /* with Crypto and FEAT_RNG */
+@@ -1261,11 +1261,11 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64ZFR0, F64MM, 1);     /* FEAT_F64MM */
+     SET_IDREG(isar, ID_AA64ZFR0, t);
  
--    if (its_class_name()) {
--        acpi_add_table(table_offsets, tables_blob);
--        build_iort(tables_blob, tables->linker, vms);
--    }
-+    acpi_add_table(table_offsets, tables_blob);
-+    build_iort(tables_blob, tables->linker, vms);
+-    t = cpu->isar.id_aa64dfr0;
++    t = GET_IDREG(isar, ID_AA64DFR0);
+     t = FIELD_DP64(t, ID_AA64DFR0, DEBUGVER, 10); /* FEAT_Debugv8p8 */
+     t = FIELD_DP64(t, ID_AA64DFR0, PMUVER, 6);    /* FEAT_PMUv3p5 */
+     t = FIELD_DP64(t, ID_AA64DFR0, HPMN0, 1);     /* FEAT_HPMN0 */
+-    cpu->isar.id_aa64dfr0 = t;
++    SET_IDREG(isar, ID_AA64DFR0, t);
  
- #ifdef CONFIG_TPM
-     if (tpm_get_version(tpm_find()) == TPM_VERSION_2_0) {
+     t = cpu->isar.id_aa64smfr0;
+     t = FIELD_DP64(t, ID_AA64SMFR0, F32F32, 1);   /* FEAT_SME */
 -- 
 2.43.0
 
