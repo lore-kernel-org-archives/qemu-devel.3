@@ -4,91 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52329C83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 14:42:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CF02C83038
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 14:42:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWcAi-0005rp-Sj; Tue, 01 Jul 2025 10:41:20 -0400
+	id 1uWcBC-0006fz-TC; Tue, 01 Jul 2025 10:41:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWcAg-0005qy-Q5
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:41:18 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWcAf-0006so-0C
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:41:18 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3a5123c1533so1926139f8f.2
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 07:41:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751380875; x=1751985675; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=K7agq2/z/dMVKZ8AYrQE6GIlp8fdEIwRrjWbdb+ua6k=;
- b=jjuCx7Gz+iXAJheRCbyJZLBb0FujXqAaJPFmgp+VZnbzKuhPggKBhyrmkTBPIBQUFd
- w3XAAVRGi+VnRJLo4J5VFfcxl26vczTslsQCUf987EqWMf2CJqgR3JDYPll2ZI1MtyPX
- JYaO0nU1HxW++ceg0CqwO/+bxRD5cxjot9tNR3mXpXCuxIZCWgsSBGrKN+1by4Cz0YG/
- 8NIcoBbvX4sR7m1kYMLKlf4QbCh42gERRlFkYEfZswB5TmxB8ZRH87vmfC73SK6d/zJE
- u38PaDA7XGX1q+PqDgt5c4LMFFncztO9lDe3S7PXhyUrQ3/U8Bf7k5HsDwuwnfxs/ZGT
- XDSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751380875; x=1751985675;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=K7agq2/z/dMVKZ8AYrQE6GIlp8fdEIwRrjWbdb+ua6k=;
- b=dCAjV32QTuIsYUz90se0C2WfJ4G/l5Sba2edf1c8ivcjy/n+f/nCgYgZIcrU/LQJV1
- rPSwLP8xkRbAs+9tw1AOZU/Q7Q4bM09lmiKkonByHGRtnyPyu3JQChr8w7KiYIvzUghT
- UZc3qC1Wtb3Qx0YwubccDvE2JTYRqmxnWQ4kFLZ5M34gIToDNq4KmGYrhfCi3PvCIGXF
- tKgiBvr1j7PLOCFwDesr5XpjacozKApo69M9l9B80ZambJOa1Co2naxI8S4pyNms2AIV
- Pi8dL2X7RQ4cUt94wuYg7MByFyIfCke9SQTndT2LwOlxuTb+j87lyM93GduG5tosY/Qs
- uyWA==
-X-Gm-Message-State: AOJu0Yw/pX0BgPPSOzntIPQCQ8fDcDYcAhsrKGdJQ3bYLoS5NfxEV1AB
- yHnjGdyj7OXBXTuYk30/J20q4xU5tkZS532LbzZqvalul4eusUwPwvHBAF06zOSxhd5mUkLiveY
- i+fkn
-X-Gm-Gg: ASbGncvwC8GhkQjmdC3GfPMuBnkApQPi+j+mNCNymaoTWMpSr1wwuJEEwYqo943okKi
- mVaODbeafA678sBM3PHaVRPiN26rdhMMv6ErLDv4ChvwrKbbgOxQZ/om8AuROuUPRsbq9zHuno5
- o4otp5tKy9bMRdIwG432Tm5sNuTjdy9gtOJxhZYVIUb25jixpXuZPkVVxUmstC1uH2L/rmrReww
- gIKI7nTU9/qXZy4LGSyh9rzo+JaV+YVVXkaTpeA3W6XFCd9tuZGCjMrUzlSkChuORD7g4r2Lakh
- ALw0/2Zi/5kVptBpWbYLOrXyy7ZlbbOQDWBo3g5bxooGUSPtwpA5eebAsz0Dp+ovTeQh+HIufSU
- M80oTDY/2d+NOb6QFCeZiZo69yWlO+dPUNKQT
-X-Google-Smtp-Source: AGHT+IG9Ufx4S27vj8PJ0dVg1fsqPttGlvZIlwc3d/qh0VSyKeP23PAYmO0uhTWz1DrCNO+mYmSzKA==
-X-Received: by 2002:a05:6000:200e:b0:3a5:8a09:70b7 with SMTP id
- ffacd0b85a97d-3a8fe5b1d02mr17437287f8f.38.1751380874925; 
- Tue, 01 Jul 2025 07:41:14 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-453a1914d10sm58341935e9.4.2025.07.01.07.41.12
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 01 Jul 2025 07:41:13 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Julian Armistead <julian.armistead@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 10/68] accel/kvm: Prefer local AccelState over global
- MachineState::accel
-Date: Tue,  1 Jul 2025 16:39:18 +0200
-Message-ID: <20250701144017.43487-11-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250701144017.43487-1-philmd@linaro.org>
-References: <20250701144017.43487-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uWcAv-0006H5-QQ; Tue, 01 Jul 2025 10:41:33 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uWcAs-0006sh-Cj; Tue, 01 Jul 2025 10:41:33 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bWm0x4y7Bz6L52Z;
+ Tue,  1 Jul 2025 22:40:49 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 962CE14027A;
+ Tue,  1 Jul 2025 22:41:12 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 1 Jul
+ 2025 16:41:11 +0200
+Date: Tue, 1 Jul 2025 15:41:10 +0100
+To: Eric Auger <eric.auger@redhat.com>
+CC: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, Peter Maydell
+ <peter.maydell@linaro.org>, <mst@redhat.com>, Zhijian Li
+ <lizhijian@fujitsu.com>, Itaru Kitayama <itaru.kitayama@linux.dev>,
+ <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>, <qemu-arm@nongnu.org>,
+ "Yuquan Wang" <wangyuquan1236@phytium.com.cn>, Philippe
+ =?ISO-8859-1?Q?Mathieu-Dau?= =?ISO-8859-1?Q?d=E9?= <philmd@linaro.org>, Alex
+ =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH qemu v16 3/5] hw/arm/virt: Basic CXL enablement on
+ pci_expander_bridge instances pxb-cxl
+Message-ID: <20250701154110.00007675@huawei.com>
+In-Reply-To: <4ceea721-b633-499e-9fcd-735990ee0704@redhat.com>
+References: <20250625161926.549812-1-Jonathan.Cameron@huawei.com>
+ <20250625161926.549812-4-Jonathan.Cameron@huawei.com>
+ <4ceea721-b633-499e-9fcd-735990ee0704@redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,37 +74,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- accel/kvm/kvm-all.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+On Tue, 1 Jul 2025 15:26:26 +0200
+Eric Auger <eric.auger@redhat.com> wrote:
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 264f288dc64..72fba12d9fa 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2588,15 +2588,13 @@ static int kvm_init(AccelState *as, MachineState *ms)
-         { /* end of list */ }
-     }, *nc = num_cpus;
-     int soft_vcpus_limit, hard_vcpus_limit;
--    KVMState *s;
-+    KVMState *s = KVM_STATE(as);
-     const KVMCapabilityInfo *missing_cap;
-     int ret;
-     int type;
- 
-     qemu_mutex_init(&kml_slots_lock);
- 
--    s = KVM_STATE(ms->accelerator);
--
-     /*
-      * On systems where the kernel can support different base page
-      * sizes, host page size may be different from TARGET_PAGE_SIZE,
--- 
-2.49.0
+> Hi Jonathan,
+> 
+> On 6/25/25 6:19 PM, Jonathan Cameron via wrote:
+> > Code based on i386/pc enablement.
+> > The memory layout places space for 16 host bridge register regions after
+> > the GIC_REDIST2 in the extended memmap. This is a hole in the current
+> > map so adding them here has no impact on placement of other memory regions
+> > (tested with enough CPUs for GIC_REDIST2 to be in use.)  
+> 
+> Doesn't it depend on the init RAM size setting.
+> if the init RAM top + REDIST2 aligns to a 256MB boundary (size of the
+> PCI ECAM) aren't you likely to have no hole?
+
+Hi Eric,
+
+Is that possible?  I think the device_memory_base being force to align
+to a 1 GiB means that never happens.  That seems to occur even
+if there is no device_memory.  
+
+    device_memory_base =
+        ROUND_UP(vms->memmap[VIRT_MEM].base + ms->ram_size, GiB);
+    device_memory_size = ms->maxram_size - ms->ram_size + ms->ram_slots * GiB;
+
+    /* Base address of the high IO region */
+    memtop = base = device_memory_base + ROUND_UP(device_memory_size, GiB);
+//So here we are GiB aligned.
+...
+
+    if (base < vms->memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES) {
+        base = vms->memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES;
+    }
+
+//That's 256 GiB in or leave it alone as more than that but GiB aligned.
+
+   /* We know for sure that at least the memory fits in the PA space */
+    vms->highest_gpa = memtop - 1;
+
+    virt_set_high_memmap(vms, base, pa_bits);
+
+
+So I think I'm fine. I should call out that REDIST2 is GiB
+aligned though in this patch description.
+> 
+> 
+> >
+> > The CFMWs are placed above the extended memmap.  Note the confusing
+> > existing variable highest_gpa is the highest_gpa that has been allocated
+> > at a particular point in setting up the memory map.  
+> what kind of improvement would you foresee wrt highest_gpa?
+
+This was mostly a response to Peter expressed that he was expecting
+highest_gpa to reflect the limit, not the highest yet seen.
+
+I'm not sure how to resolve that without having awkward naming
+like highest_gpa_sofar. There are existing comments where it is updated
+so I'm not thinking we need to change anything for this.
+
+
+Thanks for taking a look,
+
+Jonathan
 
 
