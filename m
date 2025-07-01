@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D531AC83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 15:19:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EBB0C83038
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 15:19:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWckm-0004yp-4M; Tue, 01 Jul 2025 11:18:36 -0400
+	id 1uWckm-0004yo-4j; Tue, 01 Jul 2025 11:18:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alok.rathore@samsung.com>)
- id 1uWbcG-0008Do-W3
+ id 1uWbcH-0008Ds-3f
  for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:05:45 -0400
-Received: from mailout1.samsung.com ([203.254.224.24])
+Received: from mailout3.samsung.com ([203.254.224.33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alok.rathore@samsung.com>)
- id 1uWbc6-0003Nf-4v
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:05:42 -0400
-Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
- by mailout1.samsung.com (KnoxPortal) with ESMTP id
- 20250701140511epoutp0109291c91bcef686452bb17fe4c7e8ca2~OJaiYfMKd2457124571epoutp01_
- for <qemu-devel@nongnu.org>; Tue,  1 Jul 2025 14:05:11 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
- 20250701140511epoutp0109291c91bcef686452bb17fe4c7e8ca2~OJaiYfMKd2457124571epoutp01_
+ id 1uWbc8-0003PP-8r
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:05:41 -0400
+Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
+ by mailout3.samsung.com (KnoxPortal) with ESMTP id
+ 20250701140517epoutp030aca78dcebec52bbe3688f0e5cfe325c~OJaoRh2XV2947629476epoutp03c
+ for <qemu-devel@nongnu.org>; Tue,  1 Jul 2025 14:05:17 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
+ 20250701140517epoutp030aca78dcebec52bbe3688f0e5cfe325c~OJaoRh2XV2947629476epoutp03c
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1751378711;
- bh=nB+oPxvGdY5WDKUI3ZuIzRpW7qHJsx76Yp55t6Aezcw=;
+ s=mail20170921; t=1751378717;
+ bh=SoQMVZ5O2p3R61+9gmywCmv4ErJ0sDEjwYnmnfcJgoI=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=M4phBxy/ITYXWkM2u3NFA17mD9et5Om/6UImeOmFmcx6+OHe4xWqxetMtPz3vu/2O
- IKLNVngx7Vcb8ehvsl+tnSgubSIiwvUiDB8qVyTV4E6fgqEgPuD5Vf+oAkYDV3gyKq
- J39YA2J7CR1SRdqN9SxHInjZeN0EkmqdgpHAQiSM=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
- epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
- 20250701140510epcas5p22a37f25258781eb52cbf8b001b39d843~OJaiHL9cP2585325853epcas5p2D;
- Tue,  1 Jul 2025 14:05:10 +0000 (GMT)
-Received: from epcas5p4.samsung.com (unknown [182.195.38.174]) by
- epsnrtp02.localdomain (Postfix) with ESMTP id 4bWlCn3gqHz2SSKY; Tue,  1 Jul
- 2025 14:05:09 +0000 (GMT)
-Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
+ b=hgbD3VAOhho5YStd9cC++9vZrKVEhLOPZ5D6KccQktQw8tnX9HRdlf9fF10mx/aHW
+ P82AgYTvKvGNRbQQirlDqCyxQOBm6t4XUnsPvVuU8cvH0bE9kAF5v3X8y6LP3tDKDJ
+ Agn/U+UXzOISyjv+VXqRqOJeBhZHejzjBmY7ADLs=
+Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
+ epcas5p3.samsung.com (KnoxPortal) with ESMTPS id
+ 20250701140517epcas5p39c5acd224410f13ddb4a41b52b710bec~OJaoAiQPQ0924409244epcas5p3m;
+ Tue,  1 Jul 2025 14:05:17 +0000 (GMT)
+Received: from epcas5p1.samsung.com (unknown [182.195.38.182]) by
+ epsnrtp03.localdomain (Postfix) with ESMTP id 4bWlCv6D29z3hhT4; Tue,  1 Jul
+ 2025 14:05:15 +0000 (GMT)
+Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
  epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
- 20250701125932epcas5p3283f2e1bca3eeb34104b44b11d7f8cd9~OIhOnoABJ2734327343epcas5p3s;
- Tue,  1 Jul 2025 12:59:32 +0000 (GMT)
+ 20250701131120epcas5p35fa8d12f058a82bc637c13d176dd0477~OIriALeZL0141101411epcas5p3r;
+ Tue,  1 Jul 2025 13:11:20 +0000 (GMT)
 Received: from test-PowerEdge-R740xd (unknown [107.99.41.79]) by
- epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
- 20250701125931epsmtip2d8355ff2489cfed03a2b92bcfdd77266~OIhNlSMHm2456524565epsmtip2a;
- Tue,  1 Jul 2025 12:59:31 +0000 (GMT)
-Date: Tue, 1 Jul 2025 18:29:09 +0530
+ epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+ 20250701131119epsmtip13d617f872e981b6e71bbfe6a1d4f91c8~OIrgvNJUI2721527215epsmtip1F;
+ Tue,  1 Jul 2025 13:11:19 +0000 (GMT)
+Date: Tue, 1 Jul 2025 18:41:14 +0530
 From: Alok Rathore <alok.rathore@samsung.com>
-To: Fan Ni <nifan.cxl@gmail.com>
-Cc: qemu-devel@nongnu.org, gost.dev@samsung.com, linux-cxl@vger.kernel.org,
- dave@stgolabs.net, vishak.g@samsung.com, krish.reddy@samsung.com,
- a.manzanares@samsung.com
+To: Anisa Su <anisa.su887@gmail.com>
+Cc: nifan.cxl@gmail.com, a.manzanares@samsung.com, dave@stgolabs.net,
+ gost.dev@samsung.com, krish.reddy@samsung.com, linux-cxl@vger.kernel.org,
+ qemu-devel@nongnu.org, vishak.g@samsung.com, alokrathore20@gmail.com
 Subject: Re: [PATCH] Add support for FMAPI Get Mutliheaded Head info opcode
  (5501h)
-Message-ID: <20250701125909.jmpc6eptgejvlic4@test-PowerEdge-R740xd>
+Message-ID: <20250701131114.67ezywkxshca4gj6@test-PowerEdge-R740xd>
 MIME-Version: 1.0
-In-Reply-To: <682f5543.170a0220.2bc644.8b61@mx.google.com>
-X-CMS-MailID: 20250701125932epcas5p3283f2e1bca3eeb34104b44b11d7f8cd9
+In-Reply-To: <aC-vRUoCDJ70_yox@deb-101020-bm01.eng.stellus.in>
+X-CMS-MailID: 20250701131120epcas5p35fa8d12f058a82bc637c13d176dd0477
 X-Msg-Generator: CA
 Content-Type: multipart/mixed;
- boundary="----nR.o9xAt.CKA9Q2_7V_sz8FZ15p3Iy14m0uxA3-zFK6OxaPG=_e1d27_"
+ boundary="----nR.o9xAt.CKA9Q2_7V_sz8FZ15p3Iy14m0uxA3-zFK6OxaPG=_e1d94_"
 X-Sendblock-Type: REQ_APPROVE
 CMS-TYPE: 105P
 cpgsPolicy: CPGSC10-542,Y
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250522063149epcas5p13719600aa8f59313ff3dc2570c996aec
-References: <CGME20250522063149epcas5p13719600aa8f59313ff3dc2570c996aec@epcas5p1.samsung.com>
- <20250522063135.366295-1-vinayak.kh@samsung.com>
- <682f5543.170a0220.2bc644.8b61@mx.google.com>
-Received-SPF: pass client-ip=203.254.224.24;
- envelope-from=alok.rathore@samsung.com; helo=mailout1.samsung.com
+X-CMS-RootMailID: 20250701131120epcas5p35fa8d12f058a82bc637c13d176dd0477
+References: <20250522063135.366295-1-vinayak.kh@samsung.com>
+ <aC-vRUoCDJ70_yox@deb-101020-bm01.eng.stellus.in>
+ <CGME20250701131120epcas5p35fa8d12f058a82bc637c13d176dd0477@epcas5p3.samsung.com>
+Received-SPF: pass client-ip=203.254.224.33;
+ envelope-from=alok.rathore@samsung.com; helo=mailout3.samsung.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -97,11 +97,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-------nR.o9xAt.CKA9Q2_7V_sz8FZ15p3Iy14m0uxA3-zFK6OxaPG=_e1d27_
+------nR.o9xAt.CKA9Q2_7V_sz8FZ15p3Iy14m0uxA3-zFK6OxaPG=_e1d94_
 Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Transfer-Encoding: 8bit
 Content-Disposition: inline
 
-On 22/05/25 09:48AM, Fan Ni wrote:
+On 22/05/25 11:12PM, Anisa Su wrote:
 >On Thu, May 22, 2025 at 12:01:35PM +0530, Vinayak Holikatti wrote:
 >> CXL spec 3.2 section 7.6.7.5.2  describes Get Head Info.
 >>
@@ -133,35 +134,17 @@ On 22/05/25 09:48AM, Fan Ni wrote:
 >>
 >> +/*
 >> + * CXL r3.2 section 7.6.7.5.2 - Get Multi-Headed Head Info (Opcode 5501h)
->That does not match the section subject of the spec
->Get Head Info (...
-
-Thanks Fan Ni. Will fix in V1 patch.
-
 >> + */
 >> +static CXLRetCode cmd_mhd_get_head_info(const struct cxl_cmd *cmd,
 >> +                                   uint8_t *payload_in, size_t len_in,
 >> +                                   uint8_t *payload_out, size_t *len_out,
 >> +                                   CXLCCI *cci)
->The indent here is not right.
-
-Okay. Will fix in V1 patch.
-
->> +static CXLRetCode cmd_mhd_get_head_info(const struct cxl_cmd *cmd,
->> +                                        uint8_t *payload_in, size_t len_in,
->
 >> +{
 >> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
 >> +    CXLType3Class *cvc = CXL_TYPE3_GET_CLASS(ct3d);
 >> +    if (cvc->mhd_get_head_info) {
 >> +        return cvc->mhd_get_head_info(cmd, payload_in, len_in, payload_out,
 >> +                                 len_out, cci);
->
->indent needs fix.
-
-Okay. Will fix in V1 patch.
-
->
 >> +    }
 >> +    return CXL_MBOX_UNSUPPORTED;
 >> +}
@@ -174,97 +157,13 @@ Okay. Will fix in V1 patch.
 >>          cmd_media_get_scan_media_results, 0, 0 },
 >>      [MHD][GET_MHD_INFO] = { "GET_MULTI_HEADED_INFO", cmd_mhd_get_info, 2, 0},
 >> +    [MHD][GET_MHD_HEAD_INFO] = { "GET_MULTI_HEADED_INFO", cmd_mhd_get_head_info, 2, 0},
+>The name here "GET_MULTI_HEADED_INFO" is the same as the previous command.
+
+Yes, It should be GET_HEAD_INFO. Will fix in V1 patch.
+
 >>  };
 >>
->>  static const struct cxl_cmd cxl_cmd_set_dcd[256][256] = {
->> @@ -3761,6 +3780,8 @@ static const struct cxl_cmd cxl_cmd_set_t3_fm_owned_ld_mctp[256][256] = {
->>      [TIMESTAMP][GET] = { "TIMESTAMP_GET", cmd_timestamp_get, 0, 0 },
->>      [TUNNEL][MANAGEMENT_COMMAND] = { "TUNNEL_MANAGEMENT_COMMAND",
->>                                       cmd_tunnel_management_cmd, ~0, 0 },
->> +    [MHD][GET_MHD_INFO] = { "GET_MULTI_HEADED_INFO", cmd_mhd_get_info, 2, 0},
->> +    [MHD][GET_MHD_HEAD_INFO] = { "GET_MULTI_HEADED_INFO", cmd_mhd_get_head_info, 2, 0},
->>  };
->>
->>  void cxl_initialize_t3_fm_owned_ld_mctpcci(CXLCCI *cci, DeviceState *d,
->> diff --git a/hw/cxl/mhsld/mhsld.c b/hw/cxl/mhsld/mhsld.c
->> index 9f633b3bed..981546b5ff 100644
->> --- a/hw/cxl/mhsld/mhsld.c
->> +++ b/hw/cxl/mhsld/mhsld.c
->> @@ -61,9 +61,57 @@ static CXLRetCode cmd_mhd_get_info(const struct cxl_cmd *cmd,
->>      return CXL_MBOX_SUCCESS;
->>  }
->>
->> +/*
->> + * CXL r3.2 section 7.6.7.5.2 - Get Head Info (Opcode 5501h)
->> + *
->> + * This command retrieves the number of heads, number of supported LDs,
->> + * and Head-to-LD mapping of a Multi-Headed device.
->> + */
->> +static CXLRetCode cmd_mhd_get_head_info(const struct cxl_cmd *cmd,
->> +                                        uint8_t *payload_in, size_t len_in,
->> +                                        uint8_t *payload_out, size_t *len_out,
->> +                                        CXLCCI *cci)
->> +{
->> +    CXLMHSLDState *s = CXL_MHSLD(cci->d);
->> +    MHDGetHeadInfoInput *input = (void *)payload_in;
->> +    MHDGetHeadInfoOutput *output = (void *)payload_out;
->> +    int i = 0;
->> +
->> +    if (input->start_head > MHSLD_HEADS) {
->
->Should be ">=" ?
-
-Right. Head index starts from 0, so this condition should be there.
-
->
->Also, per the spec, we need also check the "number of heads" field, if
->start_head and number of heads together point to a non-exist head, we
->should return invalid input.
-
-Yes. Will add this check in V1 patch.
-
->
->> +        return CXL_MBOX_INVALID_INPUT;
->> +    }
->> +
->> +    output->nr_heads = MIN((MHSLD_HEADS - input->start_head), input->nr_heads);
->> +    for (i = input->start_head; i < input->start_head + output->nr_heads; i++) {
->> +        output->head_info_list[i].port_number =
->> +                                 s->mhd_state->head_info_blocks[i].port_number;
->> +        output->head_info_list[i].max_link_width =
->> +                              s->mhd_state->head_info_blocks[i].max_link_width;
->> +        output->head_info_list[i].nego_link_width =
->> +                             s->mhd_state->head_info_blocks[i].nego_link_width;
->> +        output->head_info_list[i].supp_link_speeds_vector =
->> +                     s->mhd_state->head_info_blocks[i].supp_link_speeds_vector;
->> +        output->head_info_list[i].max_link_speed =
->> +                              s->mhd_state->head_info_blocks[i].max_link_speed;
->> +        output->head_info_list[i].current_link_speed =
->> +                          s->mhd_state->head_info_blocks[i].current_link_speed;
->> +        output->head_info_list[i].ltssm_state =
->> +                                 s->mhd_state->head_info_blocks[i].ltssm_state;
->> +        output->head_info_list[i].first_nego_lane_num =
->> +                         s->mhd_state->head_info_blocks[i].first_nego_lane_num;
->> +        output->head_info_list[i].link_state_flags =
->> +                            s->mhd_state->head_info_blocks[i].link_state_flags;
->> +    }
->> +
->> +    *len_out = sizeof(*output) + output->nr_heads * sizeof(MHDHeadInfoBlock);
->> +    return CXL_MBOX_SUCCESS;
->> +}
->> +
->>  static const struct cxl_cmd cxl_cmd_set_mhsld[256][256] = {
->>      [MHSLD_MHD][GET_MHD_INFO] = {"GET_MULTI_HEADED_INFO",
->>          cmd_mhd_get_info, 2, 0},
->> +    [MHSLD_MHD][GET_MHD_HEAD_INFO] = {"GET_HEAD_INFO",
->> +        cmd_mhd_get_head_info, 2, 0},
->>  };
->>
->>  static const Property cxl_mhsld_props[] = {
->> @@ -166,6 +214,47 @@ static void cxl_mhsld_state_initialize(CXLMHSLDState *s, size_t dc_size)
->>      s->mhd_state->nr_blocks = dc_size / MHSLD_BLOCK_SZ;
->>  }
->>
+>...
 >> +
 >> +static void cxl_mhsld_init_head_info(CXLMHSLDState *s, PCIDevice *pdev)
 >> +{
@@ -302,6 +201,10 @@ Yes. Will add this check in V1 patch.
 >> +    s->mhd_state->head_info_blocks[s->mhd_head].current_link_speed =
 >> +                                                             current_link_speed;
 >> +    s->mhd_state->head_info_blocks[s->mhd_head].ltssm_state = 0x7;
+>I think it would be helpful to make a define for the ltssm states?
+
+Sure, Will fix in V1 patch
+
 >> +    s->mhd_state->head_info_blocks[s->mhd_head].first_nego_lane_num = 0;
 >> +    s->mhd_state->head_info_blocks[s->mhd_head].link_state_flags = 0;
 >> +}
@@ -379,18 +282,6 @@ Yes. Will add this check in V1 patch.
 >> +    uint8_t nr_heads;
 >> +    uint8_t rsvd[3];
 >> +    MHDHeadInfoBlock head_info_list[];
->
->s/head_info_list/head_info/
-
-Okay. Will use head_info in V1 patch.
-
->
->Fan
-
-Thanks Fan Ni for reviewing the patch.
-
-Alok
->
 >> +} QEMU_PACKED MHDGetHeadInfoOutput;
 >> +
 >>  #endif
@@ -408,16 +299,20 @@ Alok
 >> +                               uint8_t *payload_out,
 >> +                               size_t *len_out,
 >> +                               CXLCCI *cci);
+>I think the indent here needs to be aligned with the open parentheses on
+>the first line of the function declaration
+
+I’ll fix in V1 patch.
+
 >>      bool (*mhd_access_valid)(PCIDevice *d, uint64_t addr, unsigned int size);
 >>      bool (*mhd_reserve_extents)(PCIDevice *d,
 >>                                  CxlDynamicCapacityExtentList *records,
 >> --
 >> 2.34.1
->>
 
-------nR.o9xAt.CKA9Q2_7V_sz8FZ15p3Iy14m0uxA3-zFK6OxaPG=_e1d27_
+------nR.o9xAt.CKA9Q2_7V_sz8FZ15p3Iy14m0uxA3-zFK6OxaPG=_e1d94_
 Content-Type: text/plain; charset="utf-8"
 
 
-------nR.o9xAt.CKA9Q2_7V_sz8FZ15p3Iy14m0uxA3-zFK6OxaPG=_e1d27_--
+------nR.o9xAt.CKA9Q2_7V_sz8FZ15p3Iy14m0uxA3-zFK6OxaPG=_e1d94_--
 
