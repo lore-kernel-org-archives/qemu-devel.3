@@ -4,91 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5ED3C83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 14:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F9ABC8303F
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 14:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWcBL-0006pK-Rb; Tue, 01 Jul 2025 10:41:59 -0400
+	id 1uWcN2-00089g-2c; Tue, 01 Jul 2025 10:54:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWcB3-0006TP-Rk
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:41:46 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uWcMx-0007yU-NC
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:54:00 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWcAw-0006uU-2E
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:41:40 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-453749aef9eso21787835e9.3
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 07:41:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751380891; x=1751985691; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kXF6WGGmmwy/yt/TE6WKliMeWMxcd7vOuV1UqDr79LQ=;
- b=gJdJwos7UTphOKhtxgPWZdMinZTZhaXrj9P6Mn96zL+kHgWVAUw+j4DbNzDtNxZ7C8
- mqOrHEKP39yOOpiLRUrteYrv0NAzCZcwEFUg8r4DgoKaoio5XDtvfFMcuMXEtOL2/n0z
- VA88MyBdCJP9YKvX6M7tl50qV8KQgM9xrSj5oWPGWreuRCT5dRh1rW3Ln0nu0UBfG66b
- dVEYZ4g4F/CL5rDx3jVVl/cmlYmfusLtLhnjriHqQfueb0qM65lg7ROJ+ieLVoc2o/A4
- e+KDzBt1Z0ZUr4CpdhFfQCmQeKkZeelqWxV/Bczn2DcamacwIljO09qSHhKTJ/Z2s30N
- RYNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751380891; x=1751985691;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kXF6WGGmmwy/yt/TE6WKliMeWMxcd7vOuV1UqDr79LQ=;
- b=M7jQJtSg4DJRM1eU2tqsadz+j0+dDH3nckEFoQ43hL7YPnxbXgU6csOglJgSgQNbH7
- w09ZuJj4UzQmUj8cVLiFvJDTi6uqATVr2gIDoZHFDHvYbQ6lIVjNHSgksyJehGX0Mqdm
- bHMnhaf4KZ05wXyjf3Q2tmvC7V98L3X07z7+Ohs2H3RFjlR4La8Y9tI9RnwpMh2SszU9
- M0WBirKVEMB5DktqauWjYYxfyYpT/qXq0S1lVtlwtwZaa7+FB067UxcItli4cg87/7u/
- NFVzFsQCjpyQ8enL4wQliOzyCWFiM87IoFy+hnOYkkmEaXFCGUG9GaMJcoEPc7WrfLd6
- d7vg==
-X-Gm-Message-State: AOJu0Yz30GTnHLJx4OgYYYKgzPTOzP4+e2hRwqsebLYHyWfe15pv80Dr
- fFaIn6zjI0kZLEWWkKskJPxu9n29l/qd3rM8FoSy+EdCGhnV7BQ70ZQ1V7tOK7MtVJCqRVGHhmW
- 9pDRX
-X-Gm-Gg: ASbGncuMRMJieKZKLlsdeUclYmZP5nXSIVJvkFV7rWJnyiM2FdfiW7hOy8EWAxYXIFL
- Z4MOPi+hkzK7yQCJ9KaZ6nkcTN7QryAArKVS59ymToZpqBJIdJqQ+R632orE8XN4ADeDqNFa/rk
- sdXZNaavINuDRzvIq5ymTrRs0No04MpbEace6ZMhbgJEU2KCUods2XnnL+OzzcarqTunjwSXZwg
- HS+rQFw83mDxJpzZNFt7mSQtP4kvNcalcL92nWvQPIQ+6buv0betdiDNnOe+NhbnVibqCSaeBmE
- KLOwXilvF/dD6ykAqZL0/uE+kYW128TJrw2vwnsr3Ejg3YcBFV5RjZJcHPmd12+BXtqhM1iyRjH
- c2zUcvqaLuRB9JEPLLbT+exxF1B3JMkfhfPeq
-X-Google-Smtp-Source: AGHT+IEITtpWbZiA9JDh3WDYl7w7vzNGkQdrQhwe8qf2qBM7DI3TMkXY/yvEDPRQ32Be/Aho1pAsew==
-X-Received: by 2002:a05:600c:4e52:b0:450:cfcb:5c9b with SMTP id
- 5b1f17b1804b1-4538ee2a8cbmr153061925e9.1.1751380891020; 
- Tue, 01 Jul 2025 07:41:31 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-453823c0812sm196534185e9.34.2025.07.01.07.41.29
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 01 Jul 2025 07:41:30 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Julian Armistead <julian.armistead@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 13/68] accel: Directly pass AccelState argument to
- AccelClass::has_memory()
-Date: Tue,  1 Jul 2025 16:39:21 +0200
-Message-ID: <20250701144017.43487-14-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250701144017.43487-1-philmd@linaro.org>
-References: <20250701144017.43487-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uWcMv-0003IN-Po
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:53:59 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 87FFA1F393;
+ Tue,  1 Jul 2025 14:53:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1751381632; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2oy4xhzEIb0a3Iqu0O1NxY0Y7FTWNNTY9kkLCOiKS6g=;
+ b=EfHrq/H09FlycKfaBZrM3wOLnCn39ThvM9CVxNk15+ESmQ0jQTx5taTSXf+OgbMQJyan+5
+ HtqdXRM7oyCVMHIV0TI1HeWlidcfP96JFQjqU+fdkCEYjOSqjVrxQhHx7LCiFx7n+Pj+H5
+ 3EmFW1msdRaeKwdxJNsvvtDvhuZGNes=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1751381632;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2oy4xhzEIb0a3Iqu0O1NxY0Y7FTWNNTY9kkLCOiKS6g=;
+ b=tv0ffibjGV99VJbFVTZphFfjwG8Ts3JhxDHuOBLWZUVHCyPhAF44uF2G4yjBkpYGDGZrFA
+ uABKquz4wogYG8BA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="EfHrq/H0";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=tv0ffibj
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1751381632; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2oy4xhzEIb0a3Iqu0O1NxY0Y7FTWNNTY9kkLCOiKS6g=;
+ b=EfHrq/H09FlycKfaBZrM3wOLnCn39ThvM9CVxNk15+ESmQ0jQTx5taTSXf+OgbMQJyan+5
+ HtqdXRM7oyCVMHIV0TI1HeWlidcfP96JFQjqU+fdkCEYjOSqjVrxQhHx7LCiFx7n+Pj+H5
+ 3EmFW1msdRaeKwdxJNsvvtDvhuZGNes=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1751381632;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2oy4xhzEIb0a3Iqu0O1NxY0Y7FTWNNTY9kkLCOiKS6g=;
+ b=tv0ffibjGV99VJbFVTZphFfjwG8Ts3JhxDHuOBLWZUVHCyPhAF44uF2G4yjBkpYGDGZrFA
+ uABKquz4wogYG8BA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E10FF13A5E;
+ Tue,  1 Jul 2025 14:53:51 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id Q+cFJ3/2Y2jFGAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 01 Jul 2025 14:53:51 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com, "Dr . David Alan
+ Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH v2 07/11] migration: qemu_savevm_complete*() helpers
+In-Reply-To: <20250609161855.6603-8-peterx@redhat.com>
+References: <20250609161855.6603-1-peterx@redhat.com>
+ <20250609161855.6603-8-peterx@redhat.com>
+Date: Tue, 01 Jul 2025 11:53:49 -0300
+Message-ID: <87cyak55du.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.97%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MISSING_XM_UA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: 87FFA1F393
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,57 +127,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/qemu/accel.h | 2 +-
- accel/kvm/kvm-all.c  | 4 ++--
- system/memory.c      | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+Peter Xu <peterx@redhat.com> writes:
 
-diff --git a/include/qemu/accel.h b/include/qemu/accel.h
-index b9a9b3593d8..f327a71282c 100644
---- a/include/qemu/accel.h
-+++ b/include/qemu/accel.h
-@@ -46,7 +46,7 @@ typedef struct AccelClass {
- 
-     /* system related hooks */
-     void (*setup_post)(MachineState *ms, AccelState *accel);
--    bool (*has_memory)(MachineState *ms, AddressSpace *as,
-+    bool (*has_memory)(AccelState *accel, AddressSpace *as,
-                        hwaddr start_addr, hwaddr size);
- 
-     /* gdbstub related hooks */
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 72fba12d9fa..d56ac2a058f 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -3789,10 +3789,10 @@ int kvm_get_one_reg(CPUState *cs, uint64_t id, void *target)
-     return r;
- }
- 
--static bool kvm_accel_has_memory(MachineState *ms, AddressSpace *as,
-+static bool kvm_accel_has_memory(AccelState *accel, AddressSpace *as,
-                                  hwaddr start_addr, hwaddr size)
- {
--    KVMState *kvm = KVM_STATE(ms->accelerator);
-+    KVMState *s = KVM_STATE(accel);
-     int i;
- 
-     for (i = 0; i < kvm->nr_as; ++i) {
-diff --git a/system/memory.c b/system/memory.c
-index 76b44b8220f..e8d9b15b28f 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -3501,7 +3501,7 @@ static void mtree_print_flatview(gpointer key, gpointer value,
-         if (fvi->ac) {
-             for (i = 0; i < fv_address_spaces->len; ++i) {
-                 as = g_array_index(fv_address_spaces, AddressSpace*, i);
--                if (fvi->ac->has_memory(current_machine, as,
-+                if (fvi->ac->has_memory(current_machine->accelerator, as,
-                                         int128_get64(range->addr.start),
-                                         MR_SIZE(range->addr.size) + 1)) {
-                     qemu_printf(" %s", fvi->ac->name);
--- 
-2.49.0
+> Since we use the same save_complete() hook for both precopy and postcopy,
+> add a set of helpers to invoke the hook() to dedup the code.
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
