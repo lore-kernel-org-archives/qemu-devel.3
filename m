@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9A95C83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 14:49:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BDF7C83038
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 14:49:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWcFZ-0006UY-Ep; Tue, 01 Jul 2025 10:46:21 -0400
+	id 1uWcHS-0002ZL-Py; Tue, 01 Jul 2025 10:48:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWcEq-0005TK-2v
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:45:37 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWcFz-0007v8-U8
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:47:00 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWcEo-0007RO-1O
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:45:35 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-451d41e1ad1so38380785e9.1
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 07:45:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWcFv-0007Wp-SB
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 10:46:46 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3a6cd1a6fecso6151320f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 07:46:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751381130; x=1751985930; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751381200; x=1751986000; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SfIXmPf89XXe1HBqtw6MJ15ZCEw8ryCmetzhx/QXCNQ=;
- b=T/uN01lK39/IysIkQwtjYzi6GMdSAW5FLXeO4snsj2KDo0TBO5K2hkv+uOXhFT5B2m
- sPbQXVmhWJAYW0UjUvArRQWBsCFqLfz947p8Tg2VThAkjwfR3EL49vv3aKn/k9n8rRxG
- qoYu2wGIXcOaO89VMD3Aej0rXvzSDw5h6y/tWBQvUuCnhN32WbGjrTviNRlHbWiIMnnk
- oEYI51EwQZ0TcS6kpOA1+kXN41y2pwuIspT4N3lrAH6YF6vSabzgjT3dXLnx6xlaJdrh
- WNrQio+RVwYFgotTVHMD7ZMiypgSYW+SUp1nX0u5hkYqZtNLRN30M3KrWaNhcmkC+Ur5
- b+NA==
+ bh=iORnn1JJJLCdwYBCZ/l6c6FvfoDU1dUjDQ64NH+dtBI=;
+ b=SdxToHs4/M0GcFEOWGProE9foJcm8nWvl9GDi3I/AFOxV+ZFvaHYxOfL5Q9bq7F0h8
+ WM6mQtyBtvM/A0gS+VigFAroT87lT16A11f0C0AbSU2TWGd2V+awxwSujt9Ukcj0mafV
+ Hzhuojxt6GyAc+rKzwtEpPn32+cm/r4DPFYgmaekI7+RrxsnKcRCCHrGkFeNBB0rFeVO
+ qHaJcVhty3oY6UvBL7GAg5v0VH+Ns3Y+Q0rJewb80IwD4NEPMvHVxmX/uNRZWb5yUk91
+ BZ3lXxQKLzf5gj2RCuozaKQlSxMjXjY8IDk8idqPWnaay5l+RWaEn28Hp7MnJ9n76j9a
+ yYvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751381130; x=1751985930;
+ d=1e100.net; s=20230601; t=1751381200; x=1751986000;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SfIXmPf89XXe1HBqtw6MJ15ZCEw8ryCmetzhx/QXCNQ=;
- b=RDWfpk/PQoDEPTMNfhpcCQ2TZM4UTC9PMAhnq2FNfbZcwfl6H8iFh/wvyu1LrTPoNY
- sM8a2NMAyaZmtjdddPz0CVVnXHp+jRChGNEFHBziOMjLxX4yHvroSVAHwpoZim5zmZpO
- n3fAw7YUXTXozTbcKiz4rz93W1mxSQQ/oU9owfM+Hv5cGG5ASxNjur4eKBl/7lP3vfc9
- dSyBYiGxNdvdUsHViYX2hmB3aKG8YVjWlDdeoRdQyKV3EznXFaE265Bqpy6PQtIMXDMu
- kNARn2Fh568HXtVtTk4ahnSKe/TgGRsParpH6vmFztccHkddKF2YFTcQm+InwHbY+XWH
- 1k1w==
-X-Gm-Message-State: AOJu0Yz33IjYftxKKBmy1x/kmxzk/kplh/IiYf3dbR9S3Lcu996NgIqo
- PMJh8kdHBjguDAGT6zPxyD6T8ri3X2O+Wr2SE7qCQZhUJeGmMWJbR2TpcJU5APj0CmFMcmynRNP
- l4xSv
-X-Gm-Gg: ASbGncvtp7252exVQqKMV1CpbPQZPziF+mlR+/wzkTxNwtkyNKJMgwbJapbkGb2hHC/
- Vi5zqJQ8he4o2Q+XMZ/mJQaGp7FD+6Au7IHRitPHcu6sYui3tYcrqf9rOKoYiS8o+8oFPzS+sWP
- GHA65VXMzHRIsyvJ6frHU3XRZtDAfQFZY6bSSilr/eCdPFD2QRfPHGeURTWyk/GFLjRzbSEWaZd
- fRdcjqoDv/OmUxezhh11XjOWEM8jt/25W7hbhenvU/AtApc3KMOuNZshW7OMK/s7iZSn+K5f59i
- Y6JBpxQa0mJ6V+qyw05GnbnCrkzkI5qjHdFEFinOTTLaEdHBrNEKKpATd9lqqBXnAkeMjQLtZmy
- EuKuXTs1ctnWRZ3XWKrGLdPVDgtDA0dUXkH1H
-X-Google-Smtp-Source: AGHT+IH0NoSf77UejRAzWuRL0iFSipP2VY63L8cEMTMGmuU/liKUetL2tlYYBu3h5d2mQXPqPKegDQ==
-X-Received: by 2002:a05:600c:3494:b0:453:5c30:a1fd with SMTP id
- 5b1f17b1804b1-453a33d6fb9mr68703175e9.8.1751381130323; 
- Tue, 01 Jul 2025 07:45:30 -0700 (PDT)
+ bh=iORnn1JJJLCdwYBCZ/l6c6FvfoDU1dUjDQ64NH+dtBI=;
+ b=PrSngU6wcAB9z1zGyC9txKVPJ/NCSZplPYXmwypstWHkSEdi91g0QR0Da+BqOwdul7
+ /UMjM48FmHe1qm9/LR7mmaNiSyrEl8UEnKPjnaBgjQtJMzfA4FLsPXZLoC0YVNs3vgMT
+ +1qo0zDC7fBmjIyz0azrAwPshEC3DQ784DcyKnMR8HBKjnbkvnh6c9l/2zF5qAqVixYY
+ pvRVeJKC9RnRhWXKr21SOCLA94e8bvB4BN4NCfABQ3uoG5NVpqUUKtTyRI5aSMD9xol6
+ xun1g2BvdRtpfhrq1U2ohZnCwYt9JoD+2yoKgb9tLshQmCzuy5pL6ZHkI/znkNecm/oA
+ RRDA==
+X-Gm-Message-State: AOJu0Yy3Og4KbZ/wdkMIDSbhD/OYjwa/C1lIRYNaOVOdvfb34aGMIALG
+ szC9GcerfjKeNq1iOpfQB8DqgNf8q0TxxKb4hLz/6+nLhwj8ByujFyiTr3vlBH+/Pto2oO7+G+1
+ S30Xp
+X-Gm-Gg: ASbGnctj5IBz6epQmqcKeV/Bc5ABeOLbxDQ5qHA/Fp7bNLzuVviKl5QZUaxGawb+Xxi
+ Ib1HkKr6nUEDfs7tXi47YWH79QI+qGNkmVaMOia90Z/Gc4JFbBFcYZKQcOgm8vw4hNJX1evwRxS
+ PlWE6x9Ps+BQx5vo5DU06CBwymA3ajtGepVMmvYwn6t9Yk+zbD4EHlN5uKt/bdaHTa8BYc4z0GX
+ PpWn4HEYpFHZIMxw1a6DjEmxxuouOIRtSRX4PxPYWfxgNuDcalU2D8zWJ6QaQRG757Ti5VnekPY
+ nbG9Br24ZcFEG52MiQUujSzrlmx+6P8hl2nY0NIe30J15QnMEV6945XHeLlkgYg5PeZA8i629I4
+ BICe4SeD8F7W95HJK+nKn2T7doRHhktx5RkDc
+X-Google-Smtp-Source: AGHT+IGAs7TxHwXqt7lLNC5eerYhYUvaR4jfXV0zWONpvIaehy6Rsj5cpIEMUFRBQ+2mO+gEZNw+jg==
+X-Received: by 2002:adf:e282:0:b0:3a5:2a24:fbf5 with SMTP id
+ ffacd0b85a97d-3a90d69c3ffmr11689974f8f.18.1751381200280; 
+ Tue, 01 Jul 2025 07:46:40 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4538a3a72dasm167627045e9.16.2025.07.01.07.45.23
+ 5b1f17b1804b1-4538a390d4asm170094995e9.3.2025.07.01.07.46.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 01 Jul 2025 07:45:29 -0700 (PDT)
+ Tue, 01 Jul 2025 07:46:39 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -71,17 +71,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Julian Armistead <julian.armistead@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 55/68] accel/tcg: Factor tcg_vcpu_init() out for re-use
-Date: Tue,  1 Jul 2025 16:40:03 +0200
-Message-ID: <20250701144017.43487-56-philmd@linaro.org>
+Subject: [PATCH v3 59/68] accel/tcg: Expose vcpu_[un]register() for RR
+Date: Tue,  1 Jul 2025 16:40:07 +0200
+Message-ID: <20250701144017.43487-60-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250701144017.43487-1-philmd@linaro.org>
 References: <20250701144017.43487-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,74 +104,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Allocate ForceRcuNotifier on the Heap.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- accel/tcg/tcg-accel-ops.h       | 2 ++
- accel/tcg/tcg-accel-ops-mttcg.c | 4 +++-
- accel/tcg/tcg-accel-ops-rr.c    | 4 +++-
- accel/tcg/tcg-accel-ops.c       | 7 +++++++
- 4 files changed, 15 insertions(+), 2 deletions(-)
+ accel/tcg/tcg-accel-ops-icount.h |  4 ++--
+ include/hw/core/cpu.h            |  2 ++
+ accel/tcg/tcg-accel-ops-icount.c |  8 +++----
+ accel/tcg/tcg-accel-ops-rr.c     | 36 +++++++++++++++++++++++---------
+ 4 files changed, 34 insertions(+), 16 deletions(-)
 
-diff --git a/accel/tcg/tcg-accel-ops.h b/accel/tcg/tcg-accel-ops.h
-index 129af89c3e7..1263a666774 100644
---- a/accel/tcg/tcg-accel-ops.h
-+++ b/accel/tcg/tcg-accel-ops.h
-@@ -20,4 +20,6 @@ int tcg_cpu_exec(CPUState *cpu);
- void tcg_handle_interrupt(CPUState *cpu, int mask);
- void tcg_cpu_init_cflags(CPUState *cpu, bool parallel);
+diff --git a/accel/tcg/tcg-accel-ops-icount.h b/accel/tcg/tcg-accel-ops-icount.h
+index 16a301b6dc0..5f3ebea50ff 100644
+--- a/accel/tcg/tcg-accel-ops-icount.h
++++ b/accel/tcg/tcg-accel-ops-icount.h
+@@ -11,8 +11,8 @@
+ #define TCG_ACCEL_OPS_ICOUNT_H
  
-+int tcg_vcpu_init(CPUState *cpu);
-+
- #endif /* TCG_ACCEL_OPS_H */
-diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
-index 96ce065eb59..4de506a80ca 100644
---- a/accel/tcg/tcg-accel-ops-mttcg.c
-+++ b/accel/tcg/tcg-accel-ops-mttcg.c
-@@ -79,8 +79,10 @@ void *mttcg_cpu_thread_routine(void *arg)
-     qemu_thread_get_self(cpu->thread);
+ void icount_handle_deadline(void);
+-void icount_prepare_for_run(CPUState *cpu, int64_t cpu_budget);
+-int64_t icount_percpu_budget(int cpu_count);
++void icount_prepare_for_run(CPUState *cpu);
++void icount_update_percpu_budget(CPUState *cpu, int cpu_count);
+ void icount_process_data(CPUState *cpu);
  
-     cpu->thread_id = qemu_get_thread_id();
--    cpu->neg.can_do_io = true;
-     current_cpu = cpu;
+ void icount_handle_interrupt(CPUState *cpu, int mask);
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 726427449da..952e44587b3 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -498,6 +498,8 @@ struct CPUState {
+     int singlestep_enabled;
+     int64_t icount_budget;
+     int64_t icount_extra;
++    int64_t cpu_budget; /* FIXME TCG specific */
 +
-+    tcg_vcpu_init(cpu);
-+
-     cpu_thread_signal_created(cpu);
-     qemu_guest_random_seed_thread_part2(cpu->random_seed);
+     uint64_t random_seed;
+     sigjmp_buf jmp_env;
  
-diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
-index fc33a13e4e8..9578bc639cb 100644
---- a/accel/tcg/tcg-accel-ops-rr.c
-+++ b/accel/tcg/tcg-accel-ops-rr.c
-@@ -192,7 +192,9 @@ static void *rr_cpu_thread_fn(void *arg)
-     qemu_thread_get_self(cpu->thread);
- 
-     cpu->thread_id = qemu_get_thread_id();
--    cpu->neg.can_do_io = true;
-+
-+    tcg_vcpu_init(cpu);
-+
-     cpu_thread_signal_created(cpu);
-     qemu_guest_random_seed_thread_part2(cpu->random_seed);
- 
-diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-index 4931e536beb..83fb2d1362c 100644
---- a/accel/tcg/tcg-accel-ops.c
-+++ b/accel/tcg/tcg-accel-ops.c
-@@ -76,6 +76,13 @@ void tcg_vcpu_thread_precreate(CPUState *cpu)
-     tcg_cpu_init_cflags(cpu, current_machine->smp.max_cpus > 1);
+diff --git a/accel/tcg/tcg-accel-ops-icount.c b/accel/tcg/tcg-accel-ops-icount.c
+index d0f7b410fab..ae1297ff7f3 100644
+--- a/accel/tcg/tcg-accel-ops-icount.c
++++ b/accel/tcg/tcg-accel-ops-icount.c
+@@ -90,7 +90,7 @@ void icount_handle_deadline(void)
  }
  
-+int tcg_vcpu_init(CPUState *cpu)
+ /* Distribute the budget evenly across all CPUs */
+-int64_t icount_percpu_budget(int cpu_count)
++void icount_update_percpu_budget(CPUState *cpu, int cpu_count)
+ {
+     int64_t limit = icount_get_limit();
+     int64_t timeslice = limit / cpu_count;
+@@ -99,10 +99,10 @@ int64_t icount_percpu_budget(int cpu_count)
+         timeslice = limit;
+     }
+ 
+-    return timeslice;
++    cpu->cpu_budget = timeslice;
+ }
+ 
+-void icount_prepare_for_run(CPUState *cpu, int64_t cpu_budget)
++void icount_prepare_for_run(CPUState *cpu)
+ {
+     int insns_left;
+ 
+@@ -116,7 +116,7 @@ void icount_prepare_for_run(CPUState *cpu, int64_t cpu_budget)
+ 
+     replay_mutex_lock();
+ 
+-    cpu->icount_budget = MIN(icount_get_limit(), cpu_budget);
++    cpu->icount_budget = MIN(icount_get_limit(), cpu->cpu_budget);
+     insns_left = MIN(0xffff, cpu->icount_budget);
+     cpu->neg.icount_decr.u16.low = insns_left;
+     cpu->icount_extra = cpu->icount_budget - insns_left;
+diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+index 57a4bcab203..f5af7818d51 100644
+--- a/accel/tcg/tcg-accel-ops-rr.c
++++ b/accel/tcg/tcg-accel-ops-rr.c
+@@ -169,6 +169,27 @@ static int rr_cpu_count(void)
+     return cpu_count;
+ }
+ 
++static void *rr_vcpu_register(CPUState *cpu)
 +{
-+    cpu->neg.can_do_io = true;
++    Notifier *force_rcu = g_new(Notifier, 1);
 +
-+    return 0;
++    assert(tcg_enabled());
++    force_rcu->notify = rr_force_rcu;
++    rcu_add_force_rcu_notifier(force_rcu);
++    tcg_register_thread();
++
++    return force_rcu;
 +}
 +
- void tcg_cpu_destroy(CPUState *cpu)
++static void rr_vcpu_unregister(CPUState *cpu, void *opaque)
++{
++    Notifier *force_rcu = opaque;
++
++    rcu_remove_force_rcu_notifier(force_rcu);
++
++    g_free(force_rcu);
++}
++
+ /*
+  * In the single-threaded case each vCPU is simulated in turn. If
+  * there is more than a single vCPU we create a simple timer to kick
+@@ -179,14 +200,11 @@ static int rr_cpu_count(void)
+ 
+ static void *rr_cpu_thread_fn(void *arg)
  {
-     cpu_thread_signal_destroyed(cpu);
+-    Notifier force_rcu;
++    Notifier *force_rcu;
+     CPUState *cpu = arg;
+ 
+-    assert(tcg_enabled());
+     rcu_register_thread();
+-    force_rcu.notify = rr_force_rcu;
+-    rcu_add_force_rcu_notifier(&force_rcu);
+-    tcg_register_thread();
++    force_rcu = rr_vcpu_register(cpu);
+ 
+     bql_lock();
+     qemu_thread_get_self(cpu->thread);
+@@ -217,9 +235,6 @@ static void *rr_cpu_thread_fn(void *arg)
+     cpu->exit_request = 1;
+ 
+     while (1) {
+-        /* Only used for icount_enabled() */
+-        int64_t cpu_budget = 0;
+-
+         bql_unlock();
+         replay_mutex_lock();
+         bql_lock();
+@@ -235,7 +250,7 @@ static void *rr_cpu_thread_fn(void *arg)
+              */
+             icount_handle_deadline();
+ 
+-            cpu_budget = icount_percpu_budget(cpu_count);
++            icount_update_percpu_budget(cpu, cpu_count);
+         }
+ 
+         replay_mutex_unlock();
+@@ -258,7 +273,7 @@ static void *rr_cpu_thread_fn(void *arg)
+ 
+                 bql_unlock();
+                 if (icount_enabled()) {
+-                    icount_prepare_for_run(cpu, cpu_budget);
++                    icount_prepare_for_run(cpu);
+                 }
+                 r = tcg_cpu_exec(cpu);
+                 if (icount_enabled()) {
+@@ -304,6 +319,7 @@ static void *rr_cpu_thread_fn(void *arg)
+         rr_deal_with_unplugged_cpus();
+     }
+ 
++    rr_vcpu_unregister(cpu, force_rcu);
+     rcu_unregister_thread();
+ 
+     g_assert_not_reached();
 -- 
 2.49.0
 
