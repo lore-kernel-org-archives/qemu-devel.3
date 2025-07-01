@@ -4,87 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83B74C83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 18:03:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BAB6C7EE30
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 18:07:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWfJC-0003XH-N1; Tue, 01 Jul 2025 14:02:18 -0400
+	id 1uWfOC-0005Gd-0u; Tue, 01 Jul 2025 14:07:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dkg@fifthhorseman.net>)
- id 1uWfJB-0003Wl-DW
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 14:02:17 -0400
-Received: from che.mayfirst.org ([2001:470:1:116::7])
+ (Exim 4.90_1) (envelope-from <me@sean.taipei>)
+ id 1uWfNv-0005Da-Lu; Tue, 01 Jul 2025 14:07:12 -0400
+Received: from mail.sean.taipei ([128.199.207.102] helo=sean.taipei)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dkg@fifthhorseman.net>)
- id 1uWfJ9-0008RE-9b
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 14:02:17 -0400
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/simple;
- d=fifthhorseman.net; i=@fifthhorseman.net; q=dns/txt; s=2019;
- t=1751392931; h=from : to : cc : subject : in-reply-to : references :
- date : message-id : mime-version : content-type : from;
- bh=acbPrRIDpGLlCvJ569ptlghoiP2o2VB0+xw6ejV0Z2c=;
- b=bLulJUzH6VbW+9EbShT4kF5zv1DrCc4zcLk3DHp/cmQRiiHu+m/fIqUi+IwR0RPTLDKtn
- uq8G353aBaeLShzBQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fifthhorseman.net;
- i=@fifthhorseman.net; q=dns/txt; s=2019rsa; t=1751392931; h=from : to
- : cc : subject : in-reply-to : references : date : message-id :
- mime-version : content-type : from;
- bh=acbPrRIDpGLlCvJ569ptlghoiP2o2VB0+xw6ejV0Z2c=;
- b=DsuabNL6eZ+XZVvEIlP2DRqt67zSPP14nELvWPAIQzKKVCRd/4eDHfBIrjPMxSwBsPFwI
- nvgIBvKiCxWn5PgIGue9Yx/Z0EM+zFr2+XOIjE+71n2Y64xfK2vklg3Jw+wJvhk3VTdZS0D
- 6Wbz7EF14IRliZfkxwmfyNDqoBF/NzYzNfiapYVgFUsrWkHfMdzjIDRjLhXiHzugZTF504+
- tUXEA6tXd33TYlK8G2DwcNYTxXwLRdAJvpUJ9arZ6YOtcVl/d2tIjyQGd6ZV5mRImeH/YwG
- hbK0ZJdzhQpO9S4uafX7rxfOPYInfHnnFmmZOPerQVNzg4aZ1hUYSBF9EWrQ==
-Received: from fifthhorseman.net (AMERICAN-CI.ear2.NewYork6.Level3.net
- [4.59.214.2])
+ (Exim 4.90_1) (envelope-from <me@sean.taipei>)
+ id 1uWfNs-0001CO-4n; Tue, 01 Jul 2025 14:07:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sean.taipei;
+ s=2021Q3; t=1751393214;
+ bh=oB1HQ5jW4y+GgS9JNmJHGhEh83gN5kSHOE+88EYEWAY=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=lBW1ociAkhEpE//nks2TsVtHEPVpk8nqknMYIONyfcz7XQUMAtQuNlQKq8JA2fG5v
+ KSoN956H3Fx1SpCXB1u1bArtMJZGBd80jMmAIUDOkvHDTriCqSu9Vi06orhhBU0hbw
+ YIx9hlbfcycWmCWVVk9J4bBqNnCAeWVbeB3xEEXXhbNJ3XShWxMph9PGZamQZGwn6t
+ Lwk1BJ3p+l6DtT8ktc//h3Y/Qt4adnYqI4zxfhsaaoC435RNUC1rZCjjYltWLu4197
+ TKeWI1NQ0weaaHBkxgnUUoWIcldlrl4RlIy7+CykNV+HoWhzL75dQ5xZqny657T8Fx
+ qZP1Zdrb4O6Lw==
+Received: from [192.168.0.215] (unknown [23.170.80.102])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature ECDSA (secp384r1) server-digest SHA384)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by che.mayfirst.org (Postfix) with ESMTPSA id 5FDB0F9B1;
- Tue,  1 Jul 2025 14:02:11 -0400 (EDT)
-Received: by fifthhorseman.net (Postfix, from userid 1000)
- id 4492D13F6B3; Tue, 01 Jul 2025 14:02:06 -0400 (EDT)
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 3/3] Socket activation: enable spice listener.
-In-Reply-To: <aGOsek0xeyXk3G6y@redhat.com>
-References: <20250627180331.1370235-1-dkg@fifthhorseman.net>
- <20250627180331.1370235-3-dkg@fifthhorseman.net>
- <aGOsek0xeyXk3G6y@redhat.com>
-Autocrypt: addr=dkg@fifthhorseman.net; prefer-encrypt=mutual; keydata=
- xjMEZXEJyxYJKwYBBAHaRw8BAQdA5BpbW0bpl5qCng/RiqwhQINrplDMSS5JsO/YO+5Zi7HNFzxk
- a2dAZmlmdGhob3JzZW1hbi5uZXQ+wsARBBMWCgB5AwsJB0cUAAAAAAAeACBzYWx0QG5vdGF0aW9u
- cy5zZXF1b2lhLXBncC5vcmcS78JIJ7JbALqPiKEmva7/Pp16WwXWm9hbe5+B/UvnfwMVCggCmwEC
- HgEWIQTUdwQMcMIValwphUm7fpEBSV5r9wUCZadfkAUJBdnwRQAKCRC7fpEBSV5r9yNXAP442N0c
- zvisBroQSKKpo+OWm2JpnEJWoVheeJvoRtkBGQEA+edHylby8IGcNccq7rmM2rAXdofvrU1o6qow
- V+mmDwbOMwRnio4OFgkrBgEEAdpHDwEBB0Cw9HzJFl9lZn3UBaUqSMSgxjcdbd0MwNVcGZ8t8wdN
- EcLAvwQYFgoBMQWCZ4qODgkQu36RAUlea/dHFAAAAAAAHgAgc2FsdEBub3RhdGlvbnMuc2VxdW9p
- YS1wZ3Aub3JnhcN+tn41cAg01Kk56zcAfpdsh8j98PDe00mqKPfFvaYCmwK+oAQZFgoAbwWCZ4qO
- DgkQeAuFTtnCtJZHFAAAAAAAHgAgc2FsdEBub3RhdGlvbnMuc2VxdW9pYS1wZ3Aub3JnxsD8Sk5P
- Wgx8c/Zseo6OlCjyDC+Ogm17gTaUUIpxjWYWIQRjrBGOWy5dZsiKhad4C4VO2cK0lgAAdcQA/1RG
- dmrmvVxkBY2qNPjtERNwPga8Pf4IdlenrZ03NXM4AQC+TDHMpD7d5obEvUy8GYI3oThzYItPP8vv
- ChY+wbaIBRYhBNR3BAxwwhVqXCmFSbt+kQFJXmv3AAAKbgD+K1MZXnRKPdmA8DgNysyGRZY8cSVH
- HQcC7ZAAtV3i2+wA/0CyOYrbFYbyTRALgoERR07OHFoP+fJopQLMNQARVUELzjgEZ4qN+RIKKwYB
- BAGXVQEFAQEHQDTGlR+Qmn334e+bPqvojJVdFsiBf0leAAHP+ESqop8NAwEIB8LAAAQYFgoAcgWC
- Z4qN+QkQu36RAUlea/dHFAAAAAAAHgAgc2FsdEBub3RhdGlvbnMuc2VxdW9pYS1wZ3Aub3JnA5Lw
- b3wOOcoodImuVNw4PYq1U65FDC1Q2JMFIcJXqF0CmwwWIQTUdwQMcMIValwphUm7fpEBSV5r9wAA
- 6egA/j3QANSmogZ5VTF5KlI+BBye9ud/w9j7RLcCHU6u8AA1AQC3FGaNuv+uWOSa+eeEoI/aZrGd
- X5el8b/m6aXDDxDjDg==
-Date: Tue, 01 Jul 2025 14:02:05 -0400
-Message-ID: <871pqz6b8i.fsf@fifthhorseman.net>
+ by sean.taipei (Postfix) with ESMTPSA id E9EA24E6;
+ Wed,  2 Jul 2025 02:06:49 +0800 (CST)
+Message-ID: <374597a7-94e4-45b2-9617-35183db3ea9d@sean.taipei>
+Date: Tue, 1 Jul 2025 14:06:32 -0400
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-=-="
-Received-SPF: pass client-ip=2001:470:1:116::7;
- envelope-from=dkg@fifthhorseman.net; helo=che.mayfirst.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/6] MAINTAINERS: fix paths for relocated files
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Sean Wei <me@sean.taipei>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Jason Wang <jasowang@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Xiao Guangrong <xiaoguangrong.eric@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>
+References: <20250616.qemu.relocated@sean.taipei>
+ <20250616.qemu.relocated.02@sean.taipei>
+ <ff8a559e-f1d7-45a8-a292-20c9ab697646@redhat.com>
+Content-Language: en-US
+From: Sean Wei <me@sean.taipei>
+In-Reply-To: <ff8a559e-f1d7-45a8-a292-20c9ab697646@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=128.199.207.102; envelope-from=me@sean.taipei;
+ helo=sean.taipei
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,157 +79,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-=-=
-Sig: t=p; b=iHUEARYKAB0WIQRjrBGOWy5dZsiKhad4C4VO2cK0lgUCaGQingAKCRB4C4VO2cK0
- lt3oAQDoiA6PXiTf/2tyaJDL7IYIuBpflpcOs/HKWv6hLRW5GwEA6pQmNU3Qubl1
- vs55xPvl018KqXv6ENUMhs3acuONkg0=
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 3/3] Socket activation: enable spice listener.
-In-Reply-To: <aGOsek0xeyXk3G6y@redhat.com>
-References: <20250627180331.1370235-1-dkg@fifthhorseman.net>
- <20250627180331.1370235-3-dkg@fifthhorseman.net>
- <aGOsek0xeyXk3G6y@redhat.com>
-Autocrypt: addr=dkg@fifthhorseman.net; prefer-encrypt=mutual; keydata=
- xjMEZXEJyxYJKwYBBAHaRw8BAQdA5BpbW0bpl5qCng/RiqwhQINrplDMSS5JsO/YO+5Zi7HNFzxk
- a2dAZmlmdGhob3JzZW1hbi5uZXQ+wsARBBMWCgB5AwsJB0cUAAAAAAAeACBzYWx0QG5vdGF0aW9u
- cy5zZXF1b2lhLXBncC5vcmcS78JIJ7JbALqPiKEmva7/Pp16WwXWm9hbe5+B/UvnfwMVCggCmwEC
- HgEWIQTUdwQMcMIValwphUm7fpEBSV5r9wUCZadfkAUJBdnwRQAKCRC7fpEBSV5r9yNXAP442N0c
- zvisBroQSKKpo+OWm2JpnEJWoVheeJvoRtkBGQEA+edHylby8IGcNccq7rmM2rAXdofvrU1o6qow
- V+mmDwbOMwRnio4OFgkrBgEEAdpHDwEBB0Cw9HzJFl9lZn3UBaUqSMSgxjcdbd0MwNVcGZ8t8wdN
- EcLAvwQYFgoBMQWCZ4qODgkQu36RAUlea/dHFAAAAAAAHgAgc2FsdEBub3RhdGlvbnMuc2VxdW9p
- YS1wZ3Aub3JnhcN+tn41cAg01Kk56zcAfpdsh8j98PDe00mqKPfFvaYCmwK+oAQZFgoAbwWCZ4qO
- DgkQeAuFTtnCtJZHFAAAAAAAHgAgc2FsdEBub3RhdGlvbnMuc2VxdW9pYS1wZ3Aub3JnxsD8Sk5P
- Wgx8c/Zseo6OlCjyDC+Ogm17gTaUUIpxjWYWIQRjrBGOWy5dZsiKhad4C4VO2cK0lgAAdcQA/1RG
- dmrmvVxkBY2qNPjtERNwPga8Pf4IdlenrZ03NXM4AQC+TDHMpD7d5obEvUy8GYI3oThzYItPP8vv
- ChY+wbaIBRYhBNR3BAxwwhVqXCmFSbt+kQFJXmv3AAAKbgD+K1MZXnRKPdmA8DgNysyGRZY8cSVH
- HQcC7ZAAtV3i2+wA/0CyOYrbFYbyTRALgoERR07OHFoP+fJopQLMNQARVUELzjgEZ4qN+RIKKwYB
- BAGXVQEFAQEHQDTGlR+Qmn334e+bPqvojJVdFsiBf0leAAHP+ESqop8NAwEIB8LAAAQYFgoAcgWC
- Z4qN+QkQu36RAUlea/dHFAAAAAAAHgAgc2FsdEBub3RhdGlvbnMuc2VxdW9pYS1wZ3Aub3JnA5Lw
- b3wOOcoodImuVNw4PYq1U65FDC1Q2JMFIcJXqF0CmwwWIQTUdwQMcMIValwphUm7fpEBSV5r9wAA
- 6egA/j3QANSmogZ5VTF5KlI+BBye9ud/w9j7RLcCHU6u8AA1AQC3FGaNuv+uWOSa+eeEoI/aZrGd
- X5el8b/m6aXDDxDjDg==
-Date: Tue, 01 Jul 2025 14:02:05 -0400
-Message-ID: <871pqz6b8i.fsf@fifthhorseman.net>
-Content-Type: text/plain; charset=utf-8; hp="clear"
-Content-Transfer-Encoding: quoted-printable
+On 2025/7/1 1:24 PM, Thomas Huth wrote:
+> On 16/06/2025 17.48, Sean Wei wrote:
+>> Several files were renamed in previous commits, causing their entries
+>> in MAINTAINERS to reference outdated paths.
+>> This prevents scripts/get_maintainer.pl from correctly matching
+>> these files to their maintainers.
+>>
+>> Update the filenames to reflect their current locations so that
+>> maintainer lookup works properly.
+>>
+>> Related commits
+>> ---------------
+>>
+>>    c45460decbd (Oct 2023)
+>>      hw/input/stellaris_input: Rename to stellaris_gamepad
+>>      Rename  include/hw/input/{gamepad.h => stellaris_gamepad.h}
+>>
+>>    4faf359accb (Nov 2020)
+>>      docs: Move virtio-net-failover.rst into the system manual
+>>      Rename  docs/{ => system}/virtio-net-failover.rst
+>>
+>>    89857312f32 (Apr 2024)
+>>      hw/usb: move stubs out of stubs/
+>>      Rename  stubs/usb-dev-stub.c => hw/usb/bus-stub.c
+>>
+>>    f2604d8508a (Apr 2024)
+>>      hw/virtio: move stubs out of stubs/
+>>      Rename  stubs/virtio-md-pci.c => hw/virtio/virtio-md-stubs.c
+>>
+>>    2c888febdfa (Apr 2024)
+>>      memory-device: move stubs out of stubs/
+>>      Rename  stubs/memory_device.c => hw/mem/memory-device-stubs.c
+>>
+>>    d481cec7565 (Oct 2024)
+>>      migration: Move cpu-throttle.c from system to migration
+>>      Rename  {system => migration}/cpu-throttle.c
+>>
+>>    864a3fa4392 (Jan 2023)
+>>      monitor: Rename misc.c to hmp-target.c
+>>      Rename  monitor/{misc.c => hmp-target.c}
+>>
+>> Signed-off-by: Sean Wei <me@sean.taipei>
+>> ---
+>>   MAINTAINERS | 14 +++++++-------
+>>   1 file changed, 7 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index fed8619874..0477e124d1 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -1002,7 +1002,7 @@ L: qemu-arm@nongnu.org
+>>   S: Odd Fixes
+>>   F: hw/*/stellaris*
+>>   F: hw/display/ssd03*
+>> -F: include/hw/input/gamepad.h
+>> +F: include/hw/input/stellaris_gamepad.h
+>>   F: include/hw/timer/stellaris-gptm.h
+>>   F: docs/system/arm/stellaris.rst
+>>   F: tests/functional/test_arm_stellaris.py
+>> @@ -2163,7 +2163,7 @@ F: hw/net/
+>>   F: include/hw/net/
+>>   F: tests/qtest/virtio-net-test.c
+>>   F: tests/functional/test_info_usernet.py
+>> -F: docs/virtio-net-failover.rst
+>> +F: docs/system/virtio-net-failover.rst
+>>   T: git https://github.com/jasowang/qemu.git net
+>>   Parallel NOR Flash devices
+>> @@ -2214,7 +2214,7 @@ F: tests/qtest/sdhci-test.c
+>>   USB
+>>   S: Orphan
+>>   F: hw/usb/*
+>> -F: stubs/usb-dev-stub.c
+>> +F: hw/usb/bus-stub.c
+> 
+> I think we could simply drop this line now completely since it is 
+> already covered by the previous hw/usb/* wildcard line.
+> 
+>>   F: tests/qtest/usb-*-test.c
+>>   F: docs/system/devices/usb.rst
+>>   F: include/hw/usb.h
+>> @@ -2469,7 +2469,7 @@ F: hw/s390x/virtio-ccw-md.h
+>>   F: hw/s390x/virtio-ccw-md-stubs.c
+>>   F: hw/virtio/virtio-md-pci.c
+>>   F: include/hw/virtio/virtio-md-pci.h
+>> -F: stubs/virtio-md-pci.c
+>> +F: hw/virtio/virtio-md-stubs.c
+> 
+> Could be merged with the hw/virtio/virtio-md-pci.c line by turning it into:
+> 
+> F: hw/virtio/virtio-md-*.c
+> 
+>>   virtio-mem
+>>   M: David Hildenbrand <david@redhat.com>
+>> @@ -3187,7 +3187,7 @@ F: hw/mem/pc-dimm.c
+>>   F: include/hw/mem/memory-device.h
+>>   F: include/hw/mem/nvdimm.h
+>>   F: include/hw/mem/pc-dimm.h
+>> -F: stubs/memory_device.c
+>> +F: hw/mem/memory-device-stubs.c
+> 
+> This could be merged with the preceeding "hw/mem/memory-device.c" line, 
+> too, by turning it into:
+> 
+> F: hw/mem/memory-device*.c
+> 
+>   Thomas
+> 
 
-Hi Daniel--
 
-Thanks for the followup and the background.  What you say makes sense to
-me, but i don't know enough about the plumbing to know how i would go
-about trying to help make it happen.  I ask a few questions below for
-hints on how i might move forward.
+Hi Thomas,
 
-On Tue 2025-07-01 10:38:02 +0100, Daniel P. Berrang=C3=A9 wrote:
-> Spice is rather an odd-ball part of QEMU today that isn't using modern
-> best practice config design, so what looks simple from a Spice POV is
-> not aligned with what we need for QEMU.
+Oh yeah, those suggestions makes sense to me, and make this patch much 
+better!
 
-Fair enough, i'd be happy to put the spice work on the back burner and
-get the systemd socket activation by named file descriptor normalized
-first.
+Should I send a PATCH v2 to the mailing list, or just attach the fix-up 
+like this is enough?
+I've also reviewed other files and no other improvement found.
 
-> IMHO for systemd socket activation, we want to introduce the ability
-> to reference sockets by name at startup, so it is aligned with what
-> we can do at runtime.
+Best wishes,
+Sean Wei
 
-Agreed, this makes sense to me.
+---
 
-> Primarily this comes down to having logic present in the socket_get_fd
-> method, such that when there is no current monitor, we use the systemd
-> named sockets.
+Several files were renamed in previous commits, causing their entries
+in MAINTAINERS to reference outdated paths.
+This prevents scripts/get_maintainer.pl from correctly matching
+these files to their maintainers.
 
-I'm not sure how the monitor plays a role here.  Are you talking about
-having a socket-activated monitor specifically, or do you see the
-monitor playing some special role in socket activation beyond just being
-yet another file descriptor that might be passed in via systemd-style
-supervision?  why wouldn't it be OK to have a monitor *and* use systemd
-named sockets? Looking at socket_get_fd, i see that it's resolving the
-fdstr differently if there is a current monitor; is that codepath only
-active after all command-line arguments have been processed?
+Update the filenames to reflect their current locations so that
+maintainer lookup works properly.
 
-> We should also have logic to validate that we have consumed all
-> systemd sockets, before we move out of startup phase, in order to
-> detect config errors. This indicates should we proactively parse
-> the socket activation env at starutp and record all FDs, and keep
-> track of which are consumed by the config.
+Related commits
+---------------
 
-Could you be a bit more specific about how the "startup phase" is
-delimited within the codebase?  I'd be happy to try to build out
-something similar to what you describe here, if you think that would be
-useful.  I'd want to make sure i place the check for all passed file
-descriptors being accounted for in the right place.
+   c45460decbd (Oct 2023)
+     hw/input/stellaris_input: Rename to stellaris_gamepad
+     Rename  include/hw/input/{gamepad.h => stellaris_gamepad.h}
 
-> Meanwhile both -vnc and -spice need updating to have their CLI
-> modelled in QAPI, and use the SocketAdddress struct config, which
-> would unlock FD passing both with & without systemd socket activation.
+   4faf359accb (Nov 2020)
+     docs: Move virtio-net-failover.rst into the system manual
+     Rename  docs/{ => system}/virtio-net-failover.rst
 
-I'm happy to leave the -vnc and -spice alone for now, if we can get
-name-based socket activation normalized and stable.
+   89857312f32 (Apr 2024)
+     hw/usb: move stubs out of stubs/
+     Rename  stubs/usb-dev-stub.c => hw/usb/bus-stub.c
 
-> And then there are some hard questions about how we integrate this with
-> the various helper programs like qemu-nbd, and friends, which all
-> already support systemd socket activation but fail to validate the
-> names, making it hard to add propert support while retaining back compat.
+   f2604d8508a (Apr 2024)
+     hw/virtio: move stubs out of stubs/
+     Rename  stubs/virtio-md-pci.c => hw/virtio/virtio-md-stubs.c
 
-Understood -- from looking at the sources i think that means this
-specific list of four helper programs:
+   2c888febdfa (Apr 2024)
+     memory-device: move stubs out of stubs/
+     Rename  stubs/memory_device.c => hw/mem/memory-device-stubs.c
 
- - qemu-nbd (network block device server)
- - qemu-ga (the qemu guest agent)
- - qemu-pr-helper (qemu SCSI persistent reservation helper)
- - qemu-vmsr-helper (i386 only?)
+   d481cec7565 (Oct 2024)
+     migration: Move cpu-throttle.c from system to migration
+     Rename  {system => migration}/cpu-throttle.c
 
-all of these processes currently just accept a single listening socket,
-and ignore the names.  They all abort if they are passed more than one
-socket via systemd-style supervision.  With the exception of qga, they
-all abort with an error if they are passed listener configuration
-information while also being launched under systemd-style supervision
-with a socket.
+   864a3fa4392 (Jan 2023)
+     monitor: Rename misc.c to hmp-target.c
+     Rename  monitor/{misc.c => hmp-target.c}
 
-I don't see this narrow scope of functionality as being a difficult to
-maintain for backward-compatibility.
+Signed-off-by: Sean Wei <me@sean.taipei>
+---
+  MAINTAINERS | 15 ++++++---------
+  1 file changed, 6 insertions(+), 9 deletions(-)
 
-We can simply offer a mechanism that these tools can use with the
-semantics of "if only one socket-activated listener, claim it".
+diff --git a/MAINTAINERS b/MAINTAINERS
+index b7f321597f..d855cb1491 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1005,7 +1005,7 @@ L: qemu-arm@nongnu.org
+  S: Odd Fixes
+  F: hw/*/stellaris*
+  F: hw/display/ssd03*
+-F: include/hw/input/gamepad.h
++F: include/hw/input/stellaris_gamepad.h
+  F: include/hw/timer/stellaris-gptm.h
+  F: docs/system/arm/stellaris.rst
+  F: tests/functional/test_arm_stellaris.py
+@@ -2171,7 +2171,7 @@ F: hw/net/
+  F: include/hw/net/
+  F: tests/qtest/virtio-net-test.c
+  F: tests/functional/test_info_usernet.py
+-F: docs/virtio-net-failover.rst
++F: docs/system/virtio-net-failover.rst
+  T: git https://github.com/jasowang/qemu.git net
 
-As far as i can tell, none of these four helper daemons is designed to
-listen on more than one socket anyway.
+  Parallel NOR Flash devices
+@@ -2222,7 +2222,6 @@ F: tests/qtest/sdhci-test.c
+  USB
+  S: Orphan
+  F: hw/usb/*
+-F: stubs/usb-dev-stub.c
+  F: tests/qtest/usb-*-test.c
+  F: docs/system/devices/usb.rst
+  F: include/hw/usb.h
+@@ -2475,9 +2474,8 @@ S: Supported
+  F: hw/s390x/virtio-ccw-md.c
+  F: hw/s390x/virtio-ccw-md.h
+  F: hw/s390x/virtio-ccw-md-stubs.c
+-F: hw/virtio/virtio-md-pci.c
++F: hw/virtio/virtio-md-*.c
+  F: include/hw/virtio/virtio-md-pci.h
+-F: stubs/virtio-md-pci.c
 
-          --dkg
+  virtio-mem
+  M: David Hildenbrand <david@redhat.com>
+@@ -3195,13 +3193,12 @@ M: David Hildenbrand <david@redhat.com>
+  M: Igor Mammedov <imammedo@redhat.com>
+  R: Xiao Guangrong <xiaoguangrong.eric@gmail.com>
+  S: Supported
+-F: hw/mem/memory-device.c
++F: hw/mem/memory-device*.c
+  F: hw/mem/nvdimm.c
+  F: hw/mem/pc-dimm.c
+  F: include/hw/mem/memory-device.h
+  F: include/hw/mem/nvdimm.h
+  F: include/hw/mem/pc-dimm.h
+-F: stubs/memory_device.c
+  F: docs/nvdimm.txt
 
-PS in the course of thinking through this patch, one alternate approach
-   did occur to me, but i'm not inclined to follow it as it might be too
-   radical.  I thought i'd note it here anyway, in case anyone thinks
-   it's interesting, or (alternately) wants to definitively close the
-   door on it.
+  SPICE
+@@ -3242,9 +3239,9 @@ F: util/qemu-timer*.c
+  F: system/vl.c
+  F: system/main.c
+  F: system/cpus.c
+-F: system/cpu-throttle.c
+  F: system/cpu-timers.c
+  F: system/runstate*
++F: migration/cpu-throttle.c
+  F: qapi/run-state.json
 
-   The idea is that rather than just being able to pass a file
-   descriptor by name anywhere that you can pass a file descriptor by
-   number, qemu could use the name of the file descriptor to decide what
-   to do with it.
+  Read, Copy, Update (RCU)
+@@ -3263,7 +3260,7 @@ Human Monitor (HMP)
+  M: Dr. David Alan Gilbert <dave@treblig.org>
+  S: Maintained
+  F: monitor/monitor-internal.h
+-F: monitor/misc.c
++F: monitor/hmp-target.c
+  F: monitor/monitor.c
+  F: monitor/hmp*
+  F: hmp.h
+-- 
+2.50.0
 
-   So, for example, rather than running:
-
-      qemu -chardev socket,id=3Dfoo,opt=3D123,server=3Don ...
-
-   the administrator could set up a systemd .socket file with:
-
-      FileDescriptorName=3Did=3Dfoo,opt=3D123
-
-   and have the corresponding systemd .service file would launch:
-
-      ExecStart=3D/usr/bin/qemu ...
-
-   One of the logistical challenges for that is that the colon (":")
-   isn't permitted in FileDescriptorName, and some qemu options might
-   want a colon in them.  And, this approach with -chardev doesn't
-   necessarily translate well to all the various places that might also
-   want a file descriptor (e.g. -incoming, -object, -spice, etc).
-
-   So like i said, probably too radical, but i thought i'd mention it.
-
---=-=-=--
 
