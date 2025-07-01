@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07615C7EE30
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:14:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06189C83038
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:14:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWeSQ-0005Uu-66; Tue, 01 Jul 2025 13:07:46 -0400
+	id 1uWeSR-0005Y3-83; Tue, 01 Jul 2025 13:07:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uWeSG-0005RN-J9
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:07:39 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1uWeSL-0005SH-31
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:07:41 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uWeS8-0003KC-JR
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:07:32 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3a52874d593so3027087f8f.0
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 10:07:24 -0700 (PDT)
+ id 1uWeSG-0003Om-9J
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:07:40 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-450cfb790f7so49885855e9.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 10:07:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751389643; x=1751994443; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=QOHnZnuZkLefFPPn38bCNhPbcEbOkcGXJg0OrwCx5aE=;
- b=w1fuKuwxly2BOdn7bbFAlGPqEAtbzgZxRC2crijXBGG0GsAWYG9kQSDdh1IhP0IzHw
- ZnvvIVin9zoiwrqYQHe9+KvcnAA9S5gGSOsebNhw/ziKw4Ib06/0ecDn7adjcy9qrF8a
- j22E23lazWHOuhleRUzfHol3WqnFgoILxi414oW+cl8llhOE/2Arb2HpwBPr9TALnLGq
- NHb45zpSGmOBg5il7ekN+qshjkEgicPjDTjon93bEAqAqb/vyW1VMPfjAs4xx/674ZGy
- /iJQA03ZRzA0zXLAxcEuJlyinZrqnlwuNAwHdovonfjnS3N4QIjZHbpcGU2PMGIBNRV4
- bEBg==
+ d=linaro.org; s=google; t=1751389652; x=1751994452; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=woNG226mYLpY0jKWxUwCaex2A1BTO3B77V+A/DKKFPY=;
+ b=maaAkhbbtA2G8umxGA1OuS0dtB8PQhIxcQjR6YDCPrU+6xuqKfF+C7OjBzF8Pmfbtq
+ 4qNpOVf3iTEdI+P3GC/vgSamRj9aERnX8gfycpvXbdfEiw6+3fw8PRp3wfxAMRG4Y81u
+ ZPIbluGobEPnmHZfBXuKMyoC66b6JSi9P6adcqXRpeQQO+WsIEx4WgxevV1djizeyRC6
+ q5UuiHrw4KsvefTrE7mdyPqrDIeNzY4i4l1UeYf6ogB1dCVHEnt0535G5Zs4rOP+gUF1
+ p3hSLLxwhkL0D6/7f6c4jE2JyzANGYLLNAXUjxBXzzx+5ptUQINSc8YNO3sjdaE0ECd8
+ sJNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751389643; x=1751994443;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QOHnZnuZkLefFPPn38bCNhPbcEbOkcGXJg0OrwCx5aE=;
- b=Vuk6JS7n4sPeS+JzSpphjm8uxp7YoZD4fyaZI1q1jUW9Bdj2/HRkYfmVb3/Mte3/cy
- XQks1MWwHcCBPWJsNQs3YRUZssBNA54wGZL3Ix73wbgNqZ8pEO6NH94HlOCz+Tuut7iI
- kSoxIcQtgrkMFJ8zQlS4BDl9LDkeI6urqXirHR/qQpFEwi3/RNjBQq+l4s9TqyfvTGh4
- xuxVV0VuNgpMfAWZbb6MbZFBVZzp3gA479POgX11+JFuBabciL6SuLIYsL2vZaap+53U
- 7pogpOTUn+R5JkKuv0IPejsNtfcsbTegVwuY/tX5FQD6xxnTSwXs6i5G5baXNt9M+XVh
- pu+Q==
-X-Gm-Message-State: AOJu0Yw9wmmosoRt7+rK1aCCkW/Db726Y0OWEklExabuMBWN6Dd8VgCo
- rgYqi4B4VZH5/YLiEmKsvnO1fY68SS0FTaX1jOjwpiUkGoNJNgTUL02WCd3K3EjjS75b/R9NR7C
- ZSLAe
-X-Gm-Gg: ASbGncvo1OCf6LinX6mfL0XffwE9D3jrWzQqXwfDZ5u2Cp4MlmzRg0LE43UmmHXgObL
- ZIFr5CIp6Mw48aCYhGCkn6hUh4v6h7OkLlKrWsOdpPWy1HfA+71U46X+HnVjZJqrVBN2TdZ/KhX
- s6nwewWKWJsb3IFVGFWCM9Km9tIoJ3aTw0XWlbvACwgQv/NGvMbRlKicybWqGagP3dCwsyTMsmq
- xX5eTiJIxdwwhTvjoagYquLQObJTtmjizGBGvQNFjFrO9G9lGP6U4hUDllY4mQ/j8oE1kmBi+Ij
- vS329y341586hdRqj7GZkYOWJdJSfZ7xfRNG3ho0ByiU5DdNeBIiJAcSr/nwHrbVbKjSwRIoyzn
- l/14=
-X-Google-Smtp-Source: AGHT+IFDF6fLP/1mwvAonXjZvg2qeSfdGXk6hg4xo0Z2btLdtKL8uqQPn59DMtDSCB1BefW29gIfkw==
-X-Received: by 2002:a05:6000:440f:b0:3a4:efbb:6df3 with SMTP id
- ffacd0b85a97d-3a8f454904fmr12265452f8f.10.1751389642526; 
- Tue, 01 Jul 2025 10:07:22 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1751389652; x=1751994452;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=woNG226mYLpY0jKWxUwCaex2A1BTO3B77V+A/DKKFPY=;
+ b=DZMN8pNcPWeEkqJcCAI8ElT5ier8x38f4WAUZDgZbpQcLRCoOH0bbx5Vf8XeC828jf
+ BrkB3FbnXFGvm2mj1EYmsquBsyw567breq1EyqCu2qYtuRgE5kSx833c+3qO9DdX3wsG
+ tBIkD6ENPI7ftfUa6nbEuyBTC7v0ouC6mXXM2UnzTEM1iTw0FHgSrUSGsdaNtiQpmwN9
+ t6EVZFlG0jzxodjND+oaDD5PeCk7vKe8wrN8W/MPvYGBVpCx1x/iQduSbN+okPv8k4SB
+ +OoSP/Bra5s9ZkY9bSr4+fa35SZrDueCvuungT658MMHIMK28CjeHi3TKl5WHNg1weLO
+ 9Pwg==
+X-Gm-Message-State: AOJu0YwSmJbKRugH8r7P4FIm1+IC4AQr76JLtuc7rqpq9TfReNZgAB0i
+ z0POuDMVW3xXNN9i3iVjAGoTmdVV+nrnggQJj8HkcytBB8gJx5BXN4E3wg1qQ9hcTFnvc9p8SEp
+ bB5MB
+X-Gm-Gg: ASbGncvmfhysARNPPI+Cd9aK7y/uGE3irsyipY46dIWFZLFh7Z0jz61j//CWgBrWAqM
+ Fu+h4u8XZZ7RsKC5q4PoOnMXTjp7znuTWVlgiVjvTKH0SLDcfgfItIhA2ilZWRCldinVZ0uy8to
+ 4Vwzgcr04W50F+QVIlkPmmoIdI2+NyUwIDJWmU5Ss+qBdDIHFMU4dJLJ9ZRggBPpBr5PGTWN8Us
+ OlEdkenDUH6A3RcJBmoPBvMGojyay99R9M4piVSfQyfqOnAV1ab8gfL6knx1TVriQwnWE8pMh+9
+ sjDZkWzbhkk7Kh0CwgIntvzeIAwGYukgMZ4SLa/2+lwkYYaBPeuJGGJexiyLb3GlfL7FdvrBj1c
+ a+zM=
+X-Google-Smtp-Source: AGHT+IF9RoNLL4F6UD4Z4oPn+eFxoIQcZgBXCsXnEvE4OEwGFL3EPShqk050bKkgPm9moHhjSDxJRw==
+X-Received: by 2002:a05:600c:4685:b0:450:cff7:62f9 with SMTP id
+ 5b1f17b1804b1-4538ee56520mr177226415e9.22.1751389652065; 
+ Tue, 01 Jul 2025 10:07:32 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a88c80bb28sm13475658f8f.43.2025.07.01.10.07.21
+ ffacd0b85a97d-3a88c80bb28sm13475658f8f.43.2025.07.01.10.07.31
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Jul 2025 10:07:21 -0700 (PDT)
+ Tue, 01 Jul 2025 10:07:31 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/43] target-arm queue
-Date: Tue,  1 Jul 2025 18:06:36 +0100
-Message-ID: <20250701170720.4072660-1-peter.maydell@linaro.org>
+Subject: [PULL 09/43] arm/cpu: Store aa64smfr0 into the idregs array
+Date: Tue,  1 Jul 2025 18:06:45 +0100
+Message-ID: <20250701170720.4072660-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250701170720.4072660-1-peter.maydell@linaro.org>
+References: <20250701170720.4072660-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,144 +99,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi; here's an arm pullreq. Most of it is refactoring and similar
-cleanup type patches. I just switched to using gitlab as the
-host for pullreq tags; I think I got the config change right but
-let me know if this is broken somehow.
+From: Eric Auger <eric.auger@redhat.com>
 
-thanks
--- PMM
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+Message-id: 20250617153931.1330449-8-cohuck@redhat.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/cpu-features.h | 6 +++---
+ target/arm/cpu.h          | 1 -
+ target/arm/cpu64.c        | 7 ++-----
+ target/arm/helper.c       | 2 +-
+ target/arm/kvm.c          | 3 +--
+ target/arm/tcg/cpu64.c    | 4 ++--
+ 6 files changed, 9 insertions(+), 14 deletions(-)
 
-The following changes since commit 6138e72b7e33e0240ee955a2754dd038ee99494d:
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 9517e8a74c8..051ed7b8847 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -979,17 +979,17 @@ static inline bool isar_feature_aa64_sve_f64mm(const ARMISARegisters *id)
+ 
+ static inline bool isar_feature_aa64_sme_f64f64(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64smfr0, ID_AA64SMFR0, F64F64);
++    return FIELD_EX64_IDREG(id, ID_AA64SMFR0, F64F64);
+ }
+ 
+ static inline bool isar_feature_aa64_sme_i16i64(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64smfr0, ID_AA64SMFR0, I16I64) == 0xf;
++    return FIELD_EX64_IDREG(id, ID_AA64SMFR0, I16I64) == 0xf;
+ }
+ 
+ static inline bool isar_feature_aa64_sme_fa64(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64smfr0, ID_AA64SMFR0, FA64);
++    return FIELD_EX64_IDREG(id, ID_AA64SMFR0, FA64);
+ }
+ 
+ /*
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index c7935377c6f..1083ae7623b 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1074,7 +1074,6 @@ struct ArchCPU {
+         uint32_t dbgdidr;
+         uint32_t dbgdevid;
+         uint32_t dbgdevid1;
+-        uint64_t id_aa64smfr0;
+         uint64_t reset_pmcr_el0;
+         uint64_t idregs[NUM_ID_IDX];
+     } isar;
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index a215ba8b479..0f938155d28 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -328,7 +328,7 @@ void arm_cpu_sme_finalize(ARMCPU *cpu, Error **errp)
+ 
+     if (vq_map == 0) {
+         if (!cpu_isar_feature(aa64_sme, cpu)) {
+-            cpu->isar.id_aa64smfr0 = 0;
++            SET_IDREG(&cpu->isar, ID_AA64SMFR0, 0);
+             return;
+         }
+ 
+@@ -381,11 +381,8 @@ static bool cpu_arm_get_sme_fa64(Object *obj, Error **errp)
+ static void cpu_arm_set_sme_fa64(Object *obj, bool value, Error **errp)
+ {
+     ARMCPU *cpu = ARM_CPU(obj);
+-    uint64_t t;
+ 
+-    t = cpu->isar.id_aa64smfr0;
+-    t = FIELD_DP64(t, ID_AA64SMFR0, FA64, value);
+-    cpu->isar.id_aa64smfr0 = t;
++    FIELD_DP64_IDREG(&cpu->isar, ID_AA64SMFR0, FA64, value);
+ }
+ 
+ #ifdef CONFIG_USER_ONLY
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 2ac132c1db8..39729d3a8d0 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -7948,7 +7948,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 4, .opc2 = 5,
+               .access = PL1_R, .type = ARM_CP_CONST,
+               .accessfn = access_aa64_tid3,
+-              .resetvalue = cpu->isar.id_aa64smfr0 },
++              .resetvalue = GET_IDREG(isar, ID_AA64SMFR0)},
+             { .name = "ID_AA64PFR6_EL1_RESERVED", .state = ARM_CP_STATE_AA64,
+               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 4, .opc2 = 6,
+               .access = PL1_R, .type = ARM_CP_CONST,
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 479e5860e02..87368558614 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -314,8 +314,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+         err = 0;
+     } else {
+         err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR1_EL1_IDX);
+-        err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64smfr0,
+-                              ARM64_SYS_REG(3, 0, 0, 4, 5));
++        err |= get_host_cpu_reg(fd, ahcf, ID_AA64SMFR0_EL1_IDX);
+         err |= get_host_cpu_reg(fd, ahcf, ID_AA64DFR0_EL1_IDX);
+         err |= get_host_cpu_reg(fd, ahcf, ID_AA64DFR1_EL1_IDX);
+         err |= get_host_cpu_reg(fd, ahcf, ID_AA64ISAR0_EL1_IDX);
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 7e18d31a253..80a99ab025d 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1267,7 +1267,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64DFR0, HPMN0, 1);     /* FEAT_HPMN0 */
+     SET_IDREG(isar, ID_AA64DFR0, t);
+ 
+-    t = cpu->isar.id_aa64smfr0;
++    t = GET_IDREG(isar, ID_AA64SMFR0);
+     t = FIELD_DP64(t, ID_AA64SMFR0, F32F32, 1);   /* FEAT_SME */
+     t = FIELD_DP64(t, ID_AA64SMFR0, B16F32, 1);   /* FEAT_SME */
+     t = FIELD_DP64(t, ID_AA64SMFR0, F16F32, 1);   /* FEAT_SME */
+@@ -1275,7 +1275,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64SMFR0, F64F64, 1);   /* FEAT_SME_F64F64 */
+     t = FIELD_DP64(t, ID_AA64SMFR0, I16I64, 0xf); /* FEAT_SME_I16I64 */
+     t = FIELD_DP64(t, ID_AA64SMFR0, FA64, 1);     /* FEAT_SME_FA64 */
+-    cpu->isar.id_aa64smfr0 = t;
++    SET_IDREG(isar, ID_AA64SMFR0, t);
+ 
+     /* Replicate the same data to the 32-bit id registers.  */
+     aa32_max_features(cpu);
+-- 
+2.43.0
 
-  Merge tag 'pull-tcg-20250630' of https://gitlab.com/rth7680/qemu into staging (2025-07-01 04:25:08 -0400)
-
-are available in the Git repository at:
-
-  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20250701-1
-
-for you to fetch changes up to 7bc86ccbb59f2022014e132327a33b94a7ed00fe:
-
-  tests/functional: test device passthrough on aarch64 (2025-07-01 17:22:31 +0100)
-
-----------------------------------------------------------------
-target-arm queue:
- * MAINTAINERS update for arm hvf
- * target/arm: Make RETA[AB] UNDEF when pauth is not implemented
- * target/arm: Refactoring of ID register value storage
- * target/arm: Various refactoring/cleanup patches
- * virt: Don't show an ITS in ACPI tables when no ITS is present
- * tests/functional: test device passthrough on aarch64
- * tests/functional: Expand Aarch64 SMMU tests to run on HVF accelerator
-
-----------------------------------------------------------------
-Cornelia Huck (1):
-      arm/kvm: use fd instead of fdarray[2]
-
-Eric Auger (11):
-      arm/cpu: Add sysreg definitions in cpu-sysregs.h
-      arm/cpu: Store aa64isar0/aa64zfr0 into the idregs arrays
-      arm/cpu: Store aa64isar1/2 into the idregs array
-      arm/cpu: Store aa64pfr0/1 into the idregs array
-      arm/cpu: Store aa64mmfr0-3 into the idregs array
-      arm/cpu: Store aa64dfr0/1 into the idregs array
-      arm/cpu: Store aa64smfr0 into the idregs array
-      arm/cpu: Store id_isar0-7 into the idregs array
-      arm/cpu: Store id_pfr0/1/2 into the idregs array
-      arm/cpu: Store id_dfr0/1 into the idregs array
-      arm/cpu: Store id_mmfr0-5 into the idregs array
-
-Gustavo Romero (6):
-      hw/arm/virt: Simplify logic for setting instance's 'tcg_its' variable
-      hw/arm/virt-acpi-build: Improve comment in build_iort
-      hw/arm/virt-acpi-build: Factor out create_its_idmaps
-      qtest/bios-tables-test: Add blobs for its=off test on aarch64
-      hw/arm/virt-acpi-build: Fix ACPI IORT and MADT tables when its=off
-      qtest/bios-tables-test: Update blobs for its=off test on aarch64
-
-Mads Ynddal (1):
-      MAINTAINERS: add myself as reviewer for Apple Silicon HVF
-
-Peter Maydell (1):
-      tests/functional: Add hvf_available() helper
-
-Philippe Mathieu-Daudé (21):
-      hw/intc/gicv3_its: Do not check its_class_name()
-      hw/arm/virt: Simplify create_its()
-      qtest/bios-tables-test: Add test for when ITS is off on aarch64
-      target/arm: Remove arm_handle_psci_call() stub
-      target/arm: Reduce arm_cpu_post_init() declaration scope
-      target/arm: Unify gen_exception_internal()
-      target/arm/hvf: Directly re-lock BQL after hv_vcpu_run()
-      target/arm/hvf: Trace hv_vcpu_run() failures
-      accel/hvf: Trace VM memory mapping
-      target/arm/hvf: Log $pc in hvf_unknown_hvc() trace event
-      target/arm: Correct KVM & HVF dtb_compatible value
-      target/arm/hvf: Pass @target_el argument to hvf_raise_exception()
-      target/arm: Restrict system register properties to system binary
-      hw/arm/virt: Make EL3-guest accel check an accept-list
-      hw/arm/virt: Make EL2 accelerator check an accept-list
-      hw/arm/virt: Rename cpu_post_init() -> post_cpus_gic_realized()
-      hw/arm/sbsa-ref: Tidy up use of RAMLIMIT_GB definition
-      tests/functional: Set sbsa-ref machine type in each test function
-      tests/functional: Restrict nested Aarch64 Xen test to TCG
-      tests/functional: Require TCG to run Aarch64 imx8mp-evk test
-      tests/functional: Expand Aarch64 SMMU tests to run on HVF accelerator
-
-Pierrick Bouvier (1):
-      tests/functional: test device passthrough on aarch64
-
-Solomon Tan (1):
-      target/arm: Make RETA[AB] UNDEF when pauth is not implemented
-
- MAINTAINERS                                        |   2 +
- meson.build                                        |   1 +
- accel/hvf/trace.h                                  |   2 +
- include/hw/intc/arm_gicv3_its_common.h             |   2 +-
- target/arm/cpu-features.h                          | 317 +++++++-------
- target/arm/cpu-sysregs.h                           |  42 ++
- target/arm/cpu.h                                   |  82 ++--
- target/arm/internals.h                             |  12 +-
- target/arm/tcg/translate.h                         |   1 +
- target/arm/cpu-sysregs.h.inc                       |  36 ++
- accel/hvf/hvf-accel-ops.c                          |   6 +
- hw/arm/sbsa-ref.c                                  |   8 +-
- hw/arm/virt-acpi-build.c                           | 186 ++++++---
- hw/arm/virt.c                                      |  38 +-
- hw/intc/armv7m_nvic.c                              |  27 +-
- target/arm/cpu.c                                   | 124 +++---
- target/arm/cpu64.c                                 | 128 +++---
- target/arm/helper.c                                |  68 +--
- target/arm/hvf/hvf.c                               |  72 ++--
- target/arm/kvm.c                                   | 139 +++----
- target/arm/ptw.c                                   |   6 +-
- target/arm/tcg/cpu-v7m.c                           | 174 ++++----
- target/arm/tcg/cpu32.c                             | 320 +++++++-------
- target/arm/tcg/cpu64.c                             | 459 +++++++++++----------
- target/arm/tcg/translate-a64.c                     |  10 +-
- target/arm/tcg/translate.c                         |   2 +-
- tests/qtest/bios-tables-test.c                     |  21 +
- accel/hvf/trace-events                             |   7 +
- python/qemu/utils/__init__.py                      |   8 +-
- python/qemu/utils/accel.py                         |   9 +
- target/arm/hvf/trace-events                        |   5 +-
- tests/data/acpi/aarch64/virt/APIC.its_off          | Bin 0 -> 164 bytes
- tests/data/acpi/aarch64/virt/IORT.its_off          | Bin 0 -> 172 bytes
- tests/functional/meson.build                       |   2 +
- tests/functional/qemu_test/testcase.py             |   6 +-
- .../functional/test_aarch64_device_passthrough.py  | 142 +++++++
- tests/functional/test_aarch64_imx8mp_evk.py        |   1 +
- tests/functional/test_aarch64_sbsaref.py           |   5 +-
- tests/functional/test_aarch64_sbsaref_alpine.py    |   3 +-
- tests/functional/test_aarch64_sbsaref_freebsd.py   |   3 +-
- tests/functional/test_aarch64_smmu.py              |  12 +-
- tests/functional/test_aarch64_xen.py               |   1 +
- 42 files changed, 1432 insertions(+), 1057 deletions(-)
- create mode 100644 accel/hvf/trace.h
- create mode 100644 target/arm/cpu-sysregs.h
- create mode 100644 target/arm/cpu-sysregs.h.inc
- create mode 100644 accel/hvf/trace-events
- create mode 100644 tests/data/acpi/aarch64/virt/APIC.its_off
- create mode 100644 tests/data/acpi/aarch64/virt/IORT.its_off
- create mode 100755 tests/functional/test_aarch64_device_passthrough.py
 
