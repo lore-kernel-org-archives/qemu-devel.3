@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12FCAC7EE30
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:12:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C5B1C83038
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:13:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWeSQ-0005V9-7S; Tue, 01 Jul 2025 13:07:46 -0400
+	id 1uWeSk-0005n4-CX; Tue, 01 Jul 2025 13:08:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uWeSG-0005RI-Gx
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:07:39 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1uWeSi-0005lQ-GC
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:08:04 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uWeSA-0003Ks-Aa
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:07:34 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3a6cdc27438so3016749f8f.2
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 10:07:26 -0700 (PDT)
+ id 1uWeSg-0003jk-KW
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:08:04 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3a54700a463so3623242f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 10:08:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751389644; x=1751994444; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751389681; x=1751994481; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qVAzEalqJxujtmncmmPvxYDDmAvLtGutu9NBUWptPQA=;
- b=QA08r9Aisdh1F1vaib+3ukBHhOAxztldWecm8I8bI42XOmy9HCbT1DE/tIW51+g/kY
- 7Tby5GxTh5N+fcXtNBa/fq7OzWyBgWMbFORkbLteyYrbJ0czy9fftZ8VSMBS5bYUAyVA
- IQlH5MnNsNAFGeJcm5d9B+JnihEe9T2oZfCsnf1yIvoItINb3hq884kOP9SH6AJIE9UF
- KqFqAN2AlO3cG4aPjEpIT+LBkXEsqEwhQTipLOZpxPSXlMTUMesKRRVOL2ZO4byOjjBF
- HZKpu+G4M3i/+Zsot18jVuOhcc53JL1AY9AayWlxDYrTRwMHnnSdtd8r9vfZZlBhjOVo
- czpw==
+ :reply-to; bh=EGJGSXijrkKuptWT9xhB3UrOoEMpHnMUKPvnMJKERYM=;
+ b=ClQNmybHexf+y5Xap7x/VITtLGkWk8N5mDNiK00qRpfVQg0ezUiafG2KaTS6tlT0vR
+ ctblPPuLKutv59gtP6gDnglFtAvFbaxMBxDsoF34J2bVTARkQcZXvSduwhymCoHUEORI
+ 1jRHgVSvKQ3auyk9mhLu94NTLUj3ikpBtfZrc5g8x7dnKqygGqUK4nhIYLf0R3FbBw8C
+ M1INzQUECHl5Ocf5NweENW1bfYeXkmBhUu+TKyzj2k1jOJJLSGnCqjSXNx3C6ZtSSsu7
+ Z5wM0N65jDv3HtxoBGsGVI7bOd8rNLmlPLu8xT3hDPbgeJ5T5dk3LcCL8SSQzaMbKa+z
+ LnCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751389644; x=1751994444;
+ d=1e100.net; s=20230601; t=1751389681; x=1751994481;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qVAzEalqJxujtmncmmPvxYDDmAvLtGutu9NBUWptPQA=;
- b=qWpPsd64GeEvThAwGYu/jlt0xN2E8r0sfnMMufZJ7mqwwV19WV9EpMB2C9xMmbysEk
- TXw8rjqJA+ceJ2K/VZ4Ki9F3eNsuDaQGswsj1CoEjiKe+RADlO6vOV0HqMT7o0U05JJl
- IuJe6gTxd/zXmlgXV16OAqR04yHPx4SlrDg++9WeRML8bR5S2tH5ary0qJOBCLYSOndR
- OW50U/IwZ0Qew/iIqPH3j8hsXKvs+lSVw+G+z6Q+NS7aD/1OcC7z3Ch0MJkyY0OJ3UeX
- D/AtOLWZ6XyEBkf1K1KG6QU4zN8Rev+q6NNsnGxKcIm+OFueyS+dc98PV6UZ5icIdZIH
- V25Q==
-X-Gm-Message-State: AOJu0YxaBNfEdb0Dh2J+QPmFVZUEKQQBdPUd8o6dtOFi49i6Nbx1VCFS
- fheeQsf0U1Pj3pfaT3dvkDGnmg0s7P900ZMyIkrh1Vrzinbik/CZ7v6pU9dexmrpivwKBLbtQ1P
- sZQ9J
-X-Gm-Gg: ASbGncsxt4qapF2dc91r1xVV2EVEfTBFdLq3w4oxoUBrImdL4YEblxT+4B2UUsmwVYo
- 8QcHDZ0LhfUCysYZPTzIGUgSqpddDyUwzXWxtVgxKD+csEAtcx6ugjWdG6zzucvtFWELpSa+IMv
- 9Inha3ZeOSeq1LJKPE87tFR/TybFdIjCcNK7EbgSfUCPxX7QW5N90bMMoCaxKunCfkhflBpLL+d
- NZQgrJvOxHntD47UcBsnLSNC1yGm9GMT9OGNaSOsKXMddSFL2Pp+iLB1Ch9jjOMsn4VJmNFwzKV
- NOkiWqlTbscaC7XH4AS0jP1FIxpd2rGOcGTRf4mt/5eO9NQw/WsCgWhOitOXCUm6s95f
-X-Google-Smtp-Source: AGHT+IEg8T5mGcjdQ9YcXXleR92TI4j2iB9+NXY/sKR52wvGJCY+hXjOCMVpor/r4o64LcgyNFqyDw==
-X-Received: by 2002:a05:6000:2188:b0:3a4:d79a:35a6 with SMTP id
- ffacd0b85a97d-3a8f482c094mr12665995f8f.14.1751389644508; 
- Tue, 01 Jul 2025 10:07:24 -0700 (PDT)
+ bh=EGJGSXijrkKuptWT9xhB3UrOoEMpHnMUKPvnMJKERYM=;
+ b=R9M2acXHkegKa64n40cZRH3U4PGjsYKvvlve+XQ7Zgxn5XV7QS4cFWXHwSVqXIR37a
+ 0ZgREYN+3pvN9nAEfLrYKVftXp9TZBdlrUcnsUrsrO2Vt/yltfN3tINbzPYoSQN0o9yf
+ qUfseiJWpLPep4/iA1nLmpCDwZhDzEhIur+iWf8+BdctMfp6hqp3CnH+SQhF+wG1N2au
+ ao/zVy2TE3onAlrWoeP7D0MHE+nkxn5FEsVhNBpKMKhIT9ILFzapa5FJL9IftRJjtTxF
+ 9quctFgz4KflL+/N0xGquAWdBh6vnOMMEo9sNUI0aYa2mAwbJtN84KSJ+0F9PlXLfc/t
+ DYxg==
+X-Gm-Message-State: AOJu0YzCSVX76wXhujjMZ0Ye4ctn/Bp7xZgUfL6xdz/6eSM17kYLm0mU
+ EzNM7i3EJPImY25AnEiLsGeWQJPdNOFjMwgQl+vmgyMjarw5q9uh2m0oMT5+wif5wO5h6UbO9AS
+ xzZUm
+X-Gm-Gg: ASbGncvW+KvTYHQiUJ23GqoNd6zXdhu9exvS42LtKkZeMpRtj+OVZTkWaeX+XHipcK+
+ o09jcIAldLDFjgp2jD1T18ytUMlTp5eoPr1JLIJFS2PNmol5D5EwF7IcFNuIKIaA4WvinXts4+7
+ 2NJ6rcNIypHHjRWjy1mL6F/tIdcAInHQ182z+IRWfhMWTGDtb8y/8a3uZjMrKK2qesnQguRvJ+p
+ LJ4f0CdJ1xHoKPpksmnBAaDSH+NhktsjiADhl025C+AG+CQl+krNOrzaRXjaEjIDxF+9y8VEKgp
+ JP+Ai58vxLxNryHBo0DWh6Bqme/HiNmHtF8ev2daqdbEYV0pFvx02H01CWpVkyvBelcseShlJ0K
+ ZxKw=
+X-Google-Smtp-Source: AGHT+IGteTB8Oar82/5wnE99Mnhrc7sz9iunpmpGaWEzwXNvQtLtUHOfS7IR1RdBq6whMlhGcH+UgQ==
+X-Received: by 2002:adf:ea10:0:b0:3a5:270e:7d3 with SMTP id
+ ffacd0b85a97d-3af100ae56cmr3282079f8f.13.1751389680645; 
+ Tue, 01 Jul 2025 10:08:00 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a88c80bb28sm13475658f8f.43.2025.07.01.10.07.23
+ ffacd0b85a97d-3a88c80bb28sm13475658f8f.43.2025.07.01.10.07.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Jul 2025 10:07:23 -0700 (PDT)
+ Tue, 01 Jul 2025 10:08:00 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/43] target/arm: Make RETA[AB] UNDEF when pauth is not
- implemented
-Date: Tue,  1 Jul 2025 18:06:38 +0100
-Message-ID: <20250701170720.4072660-3-peter.maydell@linaro.org>
+Subject: [PULL 39/43] tests/functional: Restrict nested Aarch64 Xen test to TCG
+Date: Tue,  1 Jul 2025 18:07:15 +0100
+Message-ID: <20250701170720.4072660-40-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250701170720.4072660-1-peter.maydell@linaro.org>
 References: <20250701170720.4072660-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,42 +100,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Solomon Tan <root@wjsota.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-According to the Arm A-profile A64 Instruction Set Architecture,
-RETA[AB] should be decoded as UNDEF if the pauth feature is not
-implemented.
+Currently QEMU only support accelerating EL0 and EL1, so features
+requiring EL2 (like virtualization) or EL3 must be emulated with TCG.
 
-We got this right in the initial implementation, but accidentally
-dropped the feature-check when we converted these insns to
-decodetree.
+On macOS this test fails:
 
-Cc: qemu-stable@nongnu.org
-Fixes: 0ebbe9021254f ("target/arm: Convert BRA[AB]Z, BLR[AB]Z, RETA[AB] to decodetree")
-Signed-off-by: Solomon Tan <root@wjsota.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+  qemu-system-aarch64: mach-virt: HVF does not support providing Virtualization extensions to the guest CPU
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250616171549.59190-1-root@wjsota.com
+Message-id: 20250623121845.7214-24-philmd@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/translate-a64.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tests/functional/test_aarch64_xen.py | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index ac80f572a2d..d0719b5665f 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -1816,6 +1816,10 @@ static bool trans_RETA(DisasContext *s, arg_reta *a)
- {
-     TCGv_i64 dst;
- 
-+    if (!dc_isar_feature(aa64_pauth, s)) {
-+        return false;
-+    }
-+
-     dst = auth_branch_target(s, cpu_reg(s, 30), cpu_X[31], !a->m);
-     gen_a64_set_pc(s, dst);
-     s->base.is_jmp = DISAS_JUMP;
+diff --git a/tests/functional/test_aarch64_xen.py b/tests/functional/test_aarch64_xen.py
+index 339904221b0..261d796540d 100755
+--- a/tests/functional/test_aarch64_xen.py
++++ b/tests/functional/test_aarch64_xen.py
+@@ -33,6 +33,7 @@ def launch_xen(self, xen_path):
+         """
+         Launch Xen with a dom0 guest kernel
+         """
++        self.require_accelerator("tcg") # virtualization=on
+         self.set_machine('virt')
+         self.cpu = "cortex-a57"
+         self.kernel_path = self.ASSET_KERNEL.fetch()
 -- 
 2.43.0
 
