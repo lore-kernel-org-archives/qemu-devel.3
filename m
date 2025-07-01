@@ -4,66 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 988DBC7EE30
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 03:49:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 447B3C8302F
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 04:12:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWRzc-00075p-Br; Mon, 30 Jun 2025 23:49:12 -0400
+	id 1uWSLN-0003Wz-9V; Tue, 01 Jul 2025 00:11:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <liujingqi@lanxincomputing.com>)
- id 1uWRyZ-0005yL-II
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 23:48:10 -0400
-Received: from sg-1-17.ptr.blmpb.com ([118.26.132.17])
+ id 1uWSLL-0003WS-40
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 00:11:39 -0400
+Received: from sg-3-18.ptr.tlmpb.com ([101.45.255.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <liujingqi@lanxincomputing.com>)
- id 1uWRyV-0002zI-Ai
- for qemu-devel@nongnu.org; Mon, 30 Jun 2025 23:48:06 -0400
+ id 1uWSLA-0001yl-LE
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 00:11:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=lanxincomputing-com.20200927.dkim.feishu.cn; t=1751341674;
+ s=s1; d=lanxincomputing-com.20200927.dkim.feishu.cn; t=1751343070;
  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
  reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=T744kqp8F+vAcMTM1lypMu4rDENDDT47dC++iAMaxZU=;
- b=Pk61Bttq6A/dCDVg9HqgAhscOnaw0FZx6MUThlDgQ1vhQA/xZMAX4Tz3FukHzaN4C0ny2p
- sJIvtLy5oJv1oSsVkWT5BwHIUEsm9UQ/z8oFEyfI+gbpFm2M0flkAyILLwQ+wiRuN/FnN8
- 47c2XFTSJuPUp8Yj9nay9FfoMUqWc4l04p+Ml6hp1RKYcjR8NTk76CwwmF4ohEpUNy8+Nk
- IeeqrU1SWvGKcqKy8o7k3IW3wn/N7ePvsbrU35sZGtuX3OfdwY1lSkzZ5DnH8f24jCE6px
- jI0C0R1TyMKEAtg9Uz28spQ5KzO6wiJw5+jxTQtaY2h+Nym27n536ZB3rdmUfQ==
-From: "Nutty Liu" <liujingqi@lanxincomputing.com>
-Date: Tue, 1 Jul 2025 11:47:49 +0800
+ bh=8gIRZ1kwo5Pu64HyhfaR8mZGpB5Y5UAFxFge0JXhLoA=;
+ b=HRSNtLf9e7FmduGJP7B4MpQdmiii23sgW0eNYFalzkz+v33tS7mGLOJ01OqhjUcst11Zyg
+ +meqzWt68G4vYPNRaWyKRrZIbTfu2/xBuZMx73vsguitgKEaNRWnvVnkiu99gjN6mVzFiQ
+ 9UbJoKn3z64pugbYupQiXp6ED/dldwW80o8/zmUPu5Lq2oyXaaL+hmiFIbyn8Z7RwsErxc
+ AdTWUQxuiqPtzsmml4C2IjoDU7HLhPj5joh+U0m24PX5wz/Jd55eJL0H5LHPvyz9YQwZv0
+ WRMtpTxHSofSmXhSNDYqeiQDk03j1LFcBe0ZgrBT17E4Deh1/buvFswWzTw3Ww==
+To: "Max Chou" <max.chou@sifive.com>, <qemu-devel@nongnu.org>, 
+ <qemu-riscv@nongnu.org>
+Date: Tue, 1 Jul 2025 12:11:05 +0800
+References: <20250627132156.440214-1-max.chou@sifive.com>
+X-Lms-Return-Path: <lba+268635fdc+e3eda0+nongnu.org+liujingqi@lanxincomputing.com>
+Content-Language: en-US
 User-Agent: Mozilla Thunderbird
-X-Lms-Return-Path: <lba+268635a68+a41bc4+nongnu.org+liujingqi@lanxincomputing.com>
+From: "Nutty Liu" <liujingqi@lanxincomputing.com>
+Subject: Re: [PATCH] target/riscv: rvv: Minimum VLEN needs to respect V/Zve
+ extensions
+Mime-Version: 1.0
+Received: from [127.0.0.1] ([116.237.111.137]) by smtp.feishu.cn with ESMTPS;
+ Tue, 01 Jul 2025 12:11:07 +0800
+Content-Transfer-Encoding: 7bit
+In-Reply-To: <20250627132156.440214-1-max.chou@sifive.com>
 Cc: "Palmer Dabbelt" <palmer@dabbelt.com>, 
  "Alistair Francis" <alistair.francis@wdc.com>, 
  "Weiwei Li" <liwei1518@gmail.com>, 
  "Daniel Henrique Barboza" <dbarboza@ventanamicro.com>, 
- "Liu Zhiwei" <zhiwei_liu@linux.alibaba.com>, 
- "Frank Chang" <frank.chang@sifive.com>
-Message-Id: <fad98061-eceb-4dae-ac7c-5a95bea1d582@lanxincomputing.com>
-Mime-Version: 1.0
+ "Liu Zhiwei" <zhiwei_liu@linux.alibaba.com>
+Message-Id: <4dc2ea0e-5869-4913-9cde-bb8e40705ca3@lanxincomputing.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
 X-Original-From: Nutty Liu <liujingqi@lanxincomputing.com>
-In-Reply-To: <20250701030021.99218-2-jay.chang@sifive.com>
-Content-Transfer-Encoding: 7bit
-Received: from [127.0.0.1] ([116.237.111.137]) by smtp.feishu.cn with ESMTPS;
- Tue, 01 Jul 2025 11:47:51 +0800
-To: "Jay Chang" <jay.chang@sifive.com>, <qemu-devel@nongnu.org>, 
- <qemu-riscv@nongnu.org>
-Subject: Re: [PATCH v3 1/2] target/riscv: Restrict mideleg/medeleg/medelegh
- access to S-mode harts
-References: <20250701030021.99218-1-jay.chang@sifive.com>
- <20250701030021.99218-2-jay.chang@sifive.com>
-Received-SPF: pass client-ip=118.26.132.17;
- envelope-from=liujingqi@lanxincomputing.com; helo=sg-1-17.ptr.blmpb.com
+Received-SPF: pass client-ip=101.45.255.18;
+ envelope-from=liujingqi@lanxincomputing.com; helo=sg-3-18.ptr.tlmpb.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, MSGID_FROM_MTA_HEADER=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ DKIM_VALID=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,48 +77,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/1/2025 11:00 AM, Jay Chang wrote:
-> RISC-V Privileged Spec states:
-> "In harts with S-mode, the medeleg and mideleg registers must exist, and
-> setting a bit in medeleg or mideleg will delegate the corresponding trap
-> , when occurring in S-mode or U-mode, to the S-mode trap handler. In
-> harts without S-mode, the medeleg and mideleg registers should not
-> exist."
+On 6/27/2025 9:21 PM, Max Chou wrote:
+> According to the RISC-V instruction set manual, the minimum VLEN needs
+> to respect the following extensions:
 >
-> Add smode predicate to ensure these CSRs are only accessible when S-mode
-> is supported.
+>    Extension     Minimum VLEN
+> * V             128
+> * Zve64[d|f|x]   64
+> * Zve32[f|x]     32
 >
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> Signed-off-by: Jay Chang <jay.chang@sifive.com>
+> Signed-off-by: Max Chou <max.chou@sifive.com>
 > ---
->   target/riscv/csr.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+>   target/riscv/tcg/tcg-cpu.c | 13 +++++++++++--
+>   1 file changed, 11 insertions(+), 2 deletions(-)
 >
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 6296ecd1e1..0e0ad37654 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -5862,8 +5862,8 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
->                             NULL,                read_mstatus_i128           },
->       [CSR_MISA]        = { "misa",       any,   read_misa,    write_misa,
->                             NULL,                read_misa_i128              },
-> -    [CSR_MIDELEG]     = { "mideleg",    any,   NULL, NULL,   rmw_mideleg   },
-> -    [CSR_MEDELEG]     = { "medeleg",    any,   read_medeleg, write_medeleg },
-> +    [CSR_MIDELEG]     = { "mideleg",    smode,   NULL, NULL,   rmw_mideleg   },
-> +    [CSR_MEDELEG]     = { "medeleg",    smode,   read_medeleg, write_medeleg },
->       [CSR_MIE]         = { "mie",        any,   NULL, NULL,   rmw_mie       },
->       [CSR_MTVEC]       = { "mtvec",      any,   read_mtvec,   write_mtvec   },
->       [CSR_MCOUNTEREN]  = { "mcounteren", umode, read_mcounteren,
-> @@ -5871,7 +5871,7 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 163e7ce3642..187534009dd 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -416,12 +416,21 @@ static void riscv_cpu_validate_misa_priv(CPURISCVState *env, Error **errp)
+>   static void riscv_cpu_validate_v(CPURISCVState *env, RISCVCPUConfig *cfg,
+>                                    Error **errp)
+>   {
+> +    uint32_t min_vlen;
+>       uint32_t vlen = cfg->vlenb << 3;
 >   
->       [CSR_MSTATUSH]    = { "mstatush",   any32, read_mstatush,
->                             write_mstatush                                   },
-> -    [CSR_MEDELEGH]    = { "medelegh",   any32, read_zero, write_ignore,
-> +    [CSR_MEDELEGH]    = { "medelegh",   smode32, read_zero, write_ignore,
->                             .min_priv_ver = PRIV_VERSION_1_13_0              },
->       [CSR_HEDELEGH]    = { "hedelegh",   hmode32, read_hedelegh, write_hedelegh,
->                             .min_priv_ver = PRIV_VERSION_1_13_0              },
+> -    if (vlen > RV_VLEN_MAX || vlen < 128) {
+> +    if (riscv_has_ext(env, RVV)) {
+> +        min_vlen = 128;
+> +    } else if (cfg->ext_zve64x) {
+> +        min_vlen = 64;
+> +    } else if (cfg->ext_zve32x) {
+> +        min_vlen = 32;
+> +    }
+> +
+> +    if (vlen > RV_VLEN_MAX || vlen < min_vlen) {
+>           error_setg(errp,
+>                      "Vector extension implementation only supports VLEN "
+> -                   "in the range [128, %d]", RV_VLEN_MAX);
+> +                   "in the range [%d, %d]", min_vlen, RV_VLEN_MAX);
+>           return;
+>       }
+>   
 
 Reviewed-by: Nutty Liu<liujingqi@lanxincomputing.com>
 
