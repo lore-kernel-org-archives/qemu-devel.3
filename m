@@ -4,98 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73ED6C8302F
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 11:46:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E76F3C8302F
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 11:46:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWZQI-0005Dv-Cl; Tue, 01 Jul 2025 07:45:14 -0400
+	id 1uWZQ8-00059m-1I; Tue, 01 Jul 2025 07:45:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uWZQ9-0005AY-7p
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:45:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uWZQ3-00058t-Fo
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:44:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uWZPy-0003F7-Q3
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:45:04 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uWZPw-0003EE-Hr
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:44:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751370293;
+ s=mimecast20190719; t=1751370287;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vicT1n12Q3bt43l0BKSXkJu6cLKKIkPFHwd4M2fi9jo=;
- b=R9qCZ0APZihsCo14WpIxZ7GApYV1EdjOlTDWmQBUroZ9pehQV0W+pynxhVzWL5vIqegqHl
- 4BhX/lsb9MCjHmWg5+cvVM/jxDfsUw86sllb7zpdkIyJG76nU2suI+EQpb1qHD/Lmdo5Es
- bVNLgBUkl1YLdDZ31KAhPoVRsneijsM=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=X230xMRuC2AZJb8px0TMmN2N+5uco+uzUp9uzbplB0s=;
+ b=FH9VgT1IDbwTwRgZfIn/j0cEwefp0J3krm9HgPnFlsEe43Ou+gWF+iUcNRbjgIhZcXyl8O
+ HJs8vWyxL8K42BORPGKjFLFwODL8L9diWkQ3797PTmDucBzPZQh20VrToKkfdrceBaKPRh
+ MA8GSsTw8Mq8UTOWfPTByeJVYRWhVOw=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-400-3AUkznmzNfKKaEhcs2JBDQ-1; Tue, 01 Jul 2025 07:44:51 -0400
-X-MC-Unique: 3AUkznmzNfKKaEhcs2JBDQ-1
-X-Mimecast-MFC-AGG-ID: 3AUkznmzNfKKaEhcs2JBDQ_1751370291
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45311704d22so22759865e9.2
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 04:44:51 -0700 (PDT)
+ us-mta-427-E7T52Kc6M-661Sq5rmtf_Q-1; Tue, 01 Jul 2025 07:44:46 -0400
+X-MC-Unique: E7T52Kc6M-661Sq5rmtf_Q-1
+X-Mimecast-MFC-AGG-ID: E7T52Kc6M-661Sq5rmtf_Q_1751370285
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a4f3796779so3027835f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 04:44:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751370290; x=1751975090;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vicT1n12Q3bt43l0BKSXkJu6cLKKIkPFHwd4M2fi9jo=;
- b=SIQtCcbGWobvPXxXtSbP/RKP6Y6Ub+RIi3fj1kvRyuc3LzC7ygkIpxMtVV+NIjEaTc
- 3IrP9p8Yo4dmmaMtJBxji47iGIoTXbvNbOrd4XEXls0l7lvHwL/GtseYkOrzP80v6F0d
- Lz6CrbnGGmnACp5PlUnCTKaQPysHDP9eF6hvnsGvLclX1/dVsZwNqckbwr7XJG9y5i61
- XuqAuKDz3WlglVaxfEGgsdd6ag+tfiXlEOCfVz/X17tUbcdjnJdVZyzEyhDHBUdKOQFd
- wBh2tBr6Cyb2FWlEm5O5HIf+u3v2vUL4+/H/lv3pSh2ffU2KQC/WN+KcY3+pdV2UY3HX
- SKjw==
-X-Gm-Message-State: AOJu0YxvLxQn/Vp4PKxAG2BZyyo0lxe7pgtVpTIiqeqs8B8Rf9v+4mBM
- OEX39aNSSWQGm2YBZQGyVDJ2VRH45LKvsDiuzHqs2PhcE6I75VBj0fqIIVYPfMhu4yYkZ8008kI
- c+HTqjxeIpOXW1lO+8bM88fRaInUli3pAbonwdVc8uOmMyMwgPCvoQfYV
-X-Gm-Gg: ASbGncsvjCzK0O1M13l/NErCCNAoY+3uwqScee5kkkKRZk2zRrzpURGLm5mobeo7TZJ
- uEdRyHaZcmmv/jjqQfLd0FdNge8QpEAqaxfpwnCgPAFzcY2GNWAMs/3IahmHCiXOiA6shXPFHLv
- LTd6Yaw6Jv3iRyAiA6oJBeJkDeYXFhQIxIhtoWlidrQg7FzQkVmjEyN4snLcU4/8KqOKnswsnf3
- AJlfmemrrJdlJqZPo4I7G/o12iq9QE1FE4Z+XjFfM2aWy3NL9a6rCAB5VKMjqhRmM/zaFjBE1f9
- qvckzsrnb7rqlYXdj1yjYb4AV8CVWwnQRNhqxsoYRl/bjmtOdDYWzx/Z7HLaBcEFoFgbjaGwGdb
- WQ3Un
-X-Received: by 2002:a05:600c:138d:b0:442:f482:c429 with SMTP id
- 5b1f17b1804b1-453a84069b7mr26196255e9.8.1751370290492; 
- Tue, 01 Jul 2025 04:44:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH/KSSaExI7tSriJSKh3CJ+W2i4cwOnH2U7DfkF2usMOGbDo55o7tUhWNC/XHbKk+nII1a6UA==
-X-Received: by 2002:a05:600c:138d:b0:442:f482:c429 with SMTP id
- 5b1f17b1804b1-453a84069b7mr26195905e9.8.1751370289969; 
- Tue, 01 Jul 2025 04:44:49 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1751370285; x=1751975085;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=X230xMRuC2AZJb8px0TMmN2N+5uco+uzUp9uzbplB0s=;
+ b=jVqiZFlh/3Y0lxyroZmJfi3pVVFi+339Jk2k5AlnRHAc9gx57H9e7OFtE6GFSgTgYG
+ aDKalgPKBtG/TfnyxpZ5pbPotL/yO/wbqqJ+KxD2JROfO3bJqXPzcJsmoHZVQIA3pb0G
+ xpZRbNj6SY5AG3zr7vWvHcRKeYWFvW/J4L0atrIz0Ac5cek5+WAqBBl9CB2ZUioJVU5N
+ lpVUlUd1+enLYyy7EfZK5rY4zIsyAxw6QGPmuOP6P4XU2L+Kpl3EiFm0nbZQpW1eMtpy
+ acp+2M4wDYD/Zr3qZIjNpo2Xmb/C2ziHHWtN+pqAkrtCD08KFnpTxC3JT31K1blF9yBk
+ 1MIA==
+X-Gm-Message-State: AOJu0Yw8mu88U034rHq9APRxv0N4/Uurq21t63dJh9Ymec385+fOKyV0
+ vIihs6U6iaYgLUKZt8CSJRPh85xvAJhi8BULOnp5i6A/md0Vb3WEPi4Za4tWQjtzzp/Vmhaq5sP
+ qAV5JhzfKp1H/1t4jcjsZDAOxpxl/sb9kOFOBtbFbgryxqlP0WgARIHUE
+X-Gm-Gg: ASbGnctzZm7Bh6UjdF6nqChHH6wH93l9xVMe/bXKafszjx1VijwH/lYYmMtfjuVkq5f
+ lwK+b6YxUAkLfbKeTy31vpK1VHJhtLPtNuMZC+XGQ5YB3ZaUIxPJOv+By3dxukFW4HieTHgZAqT
+ ETctZvLnecg1prq8qpw002ZK6Hj+k7hQRtm0vb1cJbtixzaSw5+7ik+hd3C3CdFrgYyGvZx9OsR
+ t0N5eVetrhoNBnvg0aXPUtCWhQ8CdsYxC9yD+6FqlAWKm4/rjLnEDVxAneflfptfixi51EthFvZ
+ /EZO0Gpk5dGdWgD3FpOuXs184zKmcbXcDwatj48dLwwN9ZYPrwpSd+vL3kWDL4udyJQq8wkpeOi
+ MaF5u
+X-Received: by 2002:adf:ba4b:0:b0:3a5:39d5:d962 with SMTP id
+ ffacd0b85a97d-3a917bc78demr9960428f8f.41.1751370284678; 
+ Tue, 01 Jul 2025 04:44:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFd8QvK2nqeWJKgeZQuko/9UqHOCAsAZvTFS+mUD5LKBhfg2P1T1S0P2TZcwPSHjuJL21d94g==
+X-Received: by 2002:adf:ba4b:0:b0:3a5:39d5:d962 with SMTP id
+ ffacd0b85a97d-3a917bc78demr9960409f8f.41.1751370284236; 
+ Tue, 01 Jul 2025 04:44:44 -0700 (PDT)
 Received: from localhost
  (p200300cfd700f38d3df6a1ca7d40fe1f.dip0.t-ipconnect.de.
  [2003:cf:d700:f38d:3df6:a1ca:7d40:fe1f])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4538233c49fsm192090365e9.7.2025.07.01.04.44.47
+ 5b1f17b1804b1-453883d81besm176542325e9.38.2025.07.01.04.44.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Jul 2025 04:44:48 -0700 (PDT)
+ Tue, 01 Jul 2025 04:44:43 -0700 (PDT)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Brian Song <hibriansong@gmail.com>
-Subject: [PATCH v3 02/21] fuse: Ensure init clean-up even with error_fatal
-Date: Tue,  1 Jul 2025 13:44:18 +0200
-Message-ID: <20250701114437.207419-3-hreitz@redhat.com>
+Subject: [PATCH v3 00/21] export/fuse: Use coroutines and multi-threading
+Date: Tue,  1 Jul 2025 13:44:16 +0200
+Message-ID: <20250701114437.207419-1-hreitz@redhat.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250701114437.207419-1-hreitz@redhat.com>
-References: <20250701114437.207419-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,36 +109,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When exports are created on the command line (with the storage daemon),
-errp is going to point to error_fatal.  Without ERRP_GUARD, we would
-exit immediately when *errp is set, i.e. skip the clean-up code under
-the `fail` label.  Use ERRP_GUARD so we always run that code.
+Hi,
 
-As far as I know, this has no actual impact right now[1], but it is
-still better to make this right.
+This series:
+- Fixes some bugs/minor inconveniences,
+- Removes libfuse from the request processing path,
+- Make the FUSE export use coroutines for request handling,
+- Introduces multi-threading into the FUSE export.
 
-[1] Not cleaning up the mount point is the only thing I can imagine
-    would be problematic, but that is the last thing we attempt, so if
-    it fails, it will clean itself up.
+More detail on the v1 cover letter:
+https://lists.nongnu.org/archive/html/qemu-block/2025-03/msg00359.html
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
----
- block/export/fuse.c | 1 +
- 1 file changed, 1 insertion(+)
+v2 cover letter:
+https://lists.nongnu.org/archive/html/qemu-block/2025-06/msg00040.html
 
-diff --git a/block/export/fuse.c b/block/export/fuse.c
-index b967e88d2b..b224ce591d 100644
---- a/block/export/fuse.c
-+++ b/block/export/fuse.c
-@@ -119,6 +119,7 @@ static int fuse_export_create(BlockExport *blk_exp,
-                               BlockExportOptions *blk_exp_args,
-                               Error **errp)
- {
-+    ERRP_GUARD(); /* ensure clean-up even with error_fatal */
-     FuseExport *exp = container_of(blk_exp, FuseExport, common);
-     BlockExportOptionsFuse *args = &blk_exp_args->u.fuse;
-     int ret;
+
+Changes from v2:
+- Patch 12: Moved qemu_fcntl_addfl() into the #ifndef _WIN32 section
+  where other fcntl() wrappers reside
+- Patch 13: Fixed comment to say `export` instead of `exp`; kept
+  Stefan’s R-b
+- Patch 15: Same as patch 13
+- Patch 18: In macro, use correct parameter `queue` instead of the
+  non-existing `q`
+
+
+git-backport-diff from v2:
+
+Key:
+[----] : patches are identical
+[####] : number of functional differences between upstream/downstream patch
+[down] : patch is downstream-only
+The flags [FC] indicate (F)unctional and (C)ontextual differences, respectively
+
+001/21:[----] [--] 'fuse: Copy write buffer content before polling'
+002/21:[----] [--] 'fuse: Ensure init clean-up even with error_fatal'
+003/21:[----] [--] 'fuse: Remove superfluous empty line'
+004/21:[----] [--] 'fuse: Explicitly set inode ID to 1'
+005/21:[----] [--] 'fuse: Change setup_... to mount_fuse_export()'
+006/21:[----] [--] 'fuse: Fix mount options'
+007/21:[----] [--] 'fuse: Set direct_io and parallel_direct_writes'
+008/21:[----] [--] 'fuse: Introduce fuse_{at,de}tach_handlers()'
+009/21:[----] [--] 'fuse: Introduce fuse_{inc,dec}_in_flight()'
+010/21:[----] [--] 'fuse: Add halted flag'
+011/21:[----] [--] 'fuse: Rename length to blk_len in fuse_write()'
+012/21:[----] [-C] 'block: Move qemu_fcntl_addfl() into osdep.c'
+013/21:[0008] [FC] 'fuse: Manually process requests (without libfuse)'
+014/21:[----] [--] 'fuse: Reduce max read size'
+015/21:[0008] [FC] 'fuse: Process requests in coroutines'
+016/21:[----] [--] 'block/export: Add multi-threading interface'
+017/21:[----] [--] 'iotests/307: Test multi-thread export interface'
+018/21:[0016] [FC] 'fuse: Implement multi-threading'
+019/21:[----] [--] 'qapi/block-export: Document FUSE's multi-threading'
+020/21:[----] [--] 'iotests/308: Add multi-threading sanity test'
+021/21:[----] [--] 'fuse: Increase MAX_WRITE_SIZE with a second buffer'
+
+
+Hanna Czenczek (21):
+  fuse: Copy write buffer content before polling
+  fuse: Ensure init clean-up even with error_fatal
+  fuse: Remove superfluous empty line
+  fuse: Explicitly set inode ID to 1
+  fuse: Change setup_... to mount_fuse_export()
+  fuse: Fix mount options
+  fuse: Set direct_io and parallel_direct_writes
+  fuse: Introduce fuse_{at,de}tach_handlers()
+  fuse: Introduce fuse_{inc,dec}_in_flight()
+  fuse: Add halted flag
+  fuse: Rename length to blk_len in fuse_write()
+  block: Move qemu_fcntl_addfl() into osdep.c
+  fuse: Manually process requests (without libfuse)
+  fuse: Reduce max read size
+  fuse: Process requests in coroutines
+  block/export: Add multi-threading interface
+  iotests/307: Test multi-thread export interface
+  fuse: Implement multi-threading
+  qapi/block-export: Document FUSE's multi-threading
+  iotests/308: Add multi-threading sanity test
+  fuse: Increase MAX_WRITE_SIZE with a second buffer
+
+ qapi/block-export.json               |   39 +-
+ include/block/export.h               |   12 +-
+ include/qemu/osdep.h                 |    1 +
+ block/export/export.c                |   48 +-
+ block/export/fuse.c                  | 1181 ++++++++++++++++++++------
+ block/export/vduse-blk.c             |    7 +
+ block/export/vhost-user-blk-server.c |    8 +
+ block/file-posix.c                   |   17 +-
+ nbd/server.c                         |    6 +
+ util/osdep.c                         |   18 +
+ tests/qemu-iotests/307               |   47 +
+ tests/qemu-iotests/307.out           |   18 +
+ tests/qemu-iotests/308               |   55 +-
+ tests/qemu-iotests/308.out           |   61 +-
+ 14 files changed, 1213 insertions(+), 305 deletions(-)
+
 -- 
 2.49.0
 
