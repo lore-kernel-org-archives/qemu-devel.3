@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35118C7EE30
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:29:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 811BEC83038
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:29:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWen9-0002QS-LO; Tue, 01 Jul 2025 13:29:11 -0400
+	id 1uWenJ-0002nB-P3; Tue, 01 Jul 2025 13:29:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uWen7-0002PQ-ET
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:29:09 -0400
+ id 1uWenI-0002ib-7l
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:29:20 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uWen5-0006SY-CF
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:29:09 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uWenD-0006X3-QF
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:29:19 -0400
 Received: from localhost.localdomain (unknown [167.220.208.67])
- by linux.microsoft.com (Postfix) with ESMTPSA id AA0A72112219;
- Tue,  1 Jul 2025 10:29:02 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com AA0A72112219
+ by linux.microsoft.com (Postfix) with ESMTPSA id AC552211221D;
+ Tue,  1 Jul 2025 10:29:10 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com AC552211221D
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1751390946;
- bh=5XVtskIyehqzUfzD7n3E/UoVw7FlSFU9LC3s1SxuJo8=;
+ s=default; t=1751390954;
+ bh=EWCKlb6Nhh0QNsC/EhDfeSFEihSY0t16npg7RScTWcI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ZLg7V7Ye3T7iGGRp6ZdEpUG03EgcuLUyy/nClTiUBESu2BuZqXPf+HUA8K7FsPz/x
- NrcSjjynAxfrTr9irAI1hKXzDEfnS2V+SiuUOSD9LCDrWNzAnrfP/Esgn6+m2+vqFm
- UuTP9YhnbrJLclbVeLBxWa4ozSqbBrMbDeuyjaJk=
+ b=VLQ+mX0dw114tTjyFelO2s3w7vyQI+kU2DU/8PifwbI0dTraukTySvqc92wP5JpuW
+ Vd3h84Iu6lrHJlksCLatpajlKtgf078S5iCCQlFIn2LcVc5hdxV9l0xRgyb1SA4tSm
+ yxKTuqcjq+Inm5cgThC8VKLdhKqiCEs40dHUsnUc=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Cameron Esfahani <dirty@apple.com>,
@@ -45,10 +45,9 @@ Cc: Cameron Esfahani <dirty@apple.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 01/27] accel: Add Meson and config support for MSHV
- accelerator
-Date: Tue,  1 Jul 2025 19:28:08 +0200
-Message-Id: <20250701172834.44849-2-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v2 03/27] target/i386/mshv: Add x86 decoder/emu implementation
+Date: Tue,  1 Jul 2025 19:28:10 +0200
+Message-Id: <20250701172834.44849-4-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250701172834.44849-1-magnuskulke@linux.microsoft.com>
 References: <20250701172834.44849-1-magnuskulke@linux.microsoft.com>
@@ -78,102 +77,417 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a Meson feature option and default-config entry to allow
-building QEMU with MSHV (Microsoft Hypervisor) acceleration support.
-
-This is the first step toward implementing an MSHV backend in QEMU.
+The MSHV accelerator requires a x86 decoder/emulator in userland to
+emulate MMIO instructions. This change contains the implementations for
+the generalized i386 instruction decoder/emulator.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/Kconfig                 |  3 +++
- meson.build                   | 10 ++++++++++
- meson_options.txt             |  2 ++
- scripts/meson-buildoptions.sh |  3 +++
- 4 files changed, 18 insertions(+)
+ include/system/mshv.h           |  25 +++
+ target/i386/cpu.h               |   2 +-
+ target/i386/emulate/meson.build |   7 +-
+ target/i386/meson.build         |   2 +
+ target/i386/mshv/meson.build    |   7 +
+ target/i386/mshv/x86.c          | 296 ++++++++++++++++++++++++++++++++
+ 6 files changed, 336 insertions(+), 3 deletions(-)
+ create mode 100644 include/system/mshv.h
+ create mode 100644 target/i386/mshv/meson.build
+ create mode 100644 target/i386/mshv/x86.c
 
-diff --git a/accel/Kconfig b/accel/Kconfig
-index 4263cab722..a60f114923 100644
---- a/accel/Kconfig
-+++ b/accel/Kconfig
-@@ -13,6 +13,9 @@ config TCG
- config KVM
-     bool
- 
-+config MSHV
-+    bool
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+new file mode 100644
+index 0000000000..a971982b52
+--- /dev/null
++++ b/include/system/mshv.h
+@@ -0,0 +1,25 @@
++/*
++ * QEMU MSHV support
++ *
++ * Copyright Microsoft, Corp. 2025
++ *
++ * Authors: Ziqiao Zhou  <ziqiaozhou@microsoft.com>
++ *          Magnus Kulke <magnuskulke@microsoft.com>
++ *          Jinank Jain  <jinankjain@microsoft.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ */
 +
- config XEN
-     bool
-     select FSDEV_9P if VIRTFS
-diff --git a/meson.build b/meson.build
-index dbc97bfdf7..927f3474ea 100644
---- a/meson.build
-+++ b/meson.build
-@@ -334,6 +334,7 @@ elif cpu == 'x86_64'
-     'CONFIG_HVF': ['x86_64-softmmu'],
-     'CONFIG_NVMM': ['i386-softmmu', 'x86_64-softmmu'],
-     'CONFIG_WHPX': ['i386-softmmu', 'x86_64-softmmu'],
-+    'CONFIG_MSHV': ['x86_64-softmmu'],
-   }
- endif
- 
-@@ -884,6 +885,14 @@ accelerators = []
- if get_option('kvm').allowed() and host_os == 'linux'
-   accelerators += 'CONFIG_KVM'
- endif
++#ifndef QEMU_MSHV_INT_H
++#define QEMU_MSHV_INT_H
 +
-+if get_option('mshv').allowed() and host_os == 'linux'
-+  if get_option('mshv').enabled() and host_machine.cpu() != 'x86_64'
-+    error('mshv accelerator requires x64_64 host')
-+  endif
-+  accelerators += 'CONFIG_MSHV'
-+endif
++#ifdef COMPILING_PER_TARGET
++#ifdef CONFIG_MSHV
++#define CONFIG_MSHV_IS_POSSIBLE
++#endif
++#else
++#define CONFIG_MSHV_IS_POSSIBLE
++#endif
 +
- if get_option('whpx').allowed() and host_os == 'windows'
-   if get_option('whpx').enabled() and host_machine.cpu() != 'x86_64'
-     error('WHPX requires 64-bit host')
-@@ -4797,6 +4806,7 @@ if have_system
-   summary_info += {'HVF support':       config_all_accel.has_key('CONFIG_HVF')}
-   summary_info += {'WHPX support':      config_all_accel.has_key('CONFIG_WHPX')}
-   summary_info += {'NVMM support':      config_all_accel.has_key('CONFIG_NVMM')}
-+  summary_info += {'MSHV support':       config_all_accel.has_key('CONFIG_MSHV')}
-   summary_info += {'Xen support':       xen.found()}
-   if xen.found()
-     summary_info += {'xen ctrl version':  xen.version()}
-diff --git a/meson_options.txt b/meson_options.txt
-index a442be2995..1c02a4f54b 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -71,6 +71,8 @@ option('malloc', type : 'combo', choices : ['system', 'tcmalloc', 'jemalloc'],
++#endif
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 51e10139df..48979432f6 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2122,7 +2122,7 @@ typedef struct CPUArchState {
+     QEMUTimer *xen_periodic_timer;
+     QemuMutex xen_timers_lock;
+ #endif
+-#if defined(CONFIG_HVF)
++#if defined(CONFIG_HVF) || defined(CONFIG_MSHV)
+     void *emu_mmio_buf;
+ #endif
  
- option('kvm', type: 'feature', value: 'auto',
-        description: 'KVM acceleration support')
-+option('mshv', type: 'feature', value: 'auto',
-+       description: 'MSHV acceleration support')
- option('whpx', type: 'feature', value: 'auto',
-        description: 'WHPX acceleration support')
- option('hvf', type: 'feature', value: 'auto',
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index 73e0770f42..d21bf4dc33 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -153,6 +153,7 @@ meson_options_help() {
-   printf "%s\n" '  membarrier      membarrier system call (for Linux 4.14+ or Windows'
-   printf "%s\n" '  modules         modules support (non Windows)'
-   printf "%s\n" '  mpath           Multipath persistent reservation passthrough'
-+  printf "%s\n" '  mshv            MSHV acceleration support'
-   printf "%s\n" '  multiprocess    Out of process device emulation support'
-   printf "%s\n" '  netmap          netmap network backend support'
-   printf "%s\n" '  nettle          nettle cryptography support'
-@@ -404,6 +405,8 @@ _meson_option_parse() {
-     --disable-modules) printf "%s" -Dmodules=disabled ;;
-     --enable-mpath) printf "%s" -Dmpath=enabled ;;
-     --disable-mpath) printf "%s" -Dmpath=disabled ;;
-+    --enable-mshv) printf "%s" -Dmshv=enabled ;;
-+    --disable-mshv) printf "%s" -Dmshv=disabled ;;
-     --enable-multiprocess) printf "%s" -Dmultiprocess=enabled ;;
-     --disable-multiprocess) printf "%s" -Dmultiprocess=disabled ;;
-     --enable-netmap) printf "%s" -Dnetmap=enabled ;;
+diff --git a/target/i386/emulate/meson.build b/target/i386/emulate/meson.build
+index 4edd4f462f..b6dafb6a5b 100644
+--- a/target/i386/emulate/meson.build
++++ b/target/i386/emulate/meson.build
+@@ -1,5 +1,8 @@
+-i386_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: files(
++emulator_files = files(
+   'x86_decode.c',
+   'x86_emu.c',
+   'x86_flags.c',
+-))
++)
++
++i386_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: emulator_files)
++i386_system_ss.add(when: 'CONFIG_MSHV', if_true: emulator_files)
+diff --git a/target/i386/meson.build b/target/i386/meson.build
+index c1aacea613..6097e5c427 100644
+--- a/target/i386/meson.build
++++ b/target/i386/meson.build
+@@ -11,6 +11,7 @@ i386_ss.add(when: 'CONFIG_SEV', if_true: files('host-cpu.c', 'confidential-guest
+ # x86 cpu type
+ i386_ss.add(when: 'CONFIG_KVM', if_true: files('host-cpu.c'))
+ i386_ss.add(when: 'CONFIG_HVF', if_true: files('host-cpu.c'))
++i386_ss.add(when: 'CONFIG_MSHV', if_true: files('host-cpu.c'))
+ 
+ i386_system_ss = ss.source_set()
+ i386_system_ss.add(files(
+@@ -32,6 +33,7 @@ subdir('nvmm')
+ subdir('hvf')
+ subdir('tcg')
+ subdir('emulate')
++subdir('mshv')
+ 
+ target_arch += {'i386': i386_ss}
+ target_system_arch += {'i386': i386_system_ss}
+diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
+new file mode 100644
+index 0000000000..8ddaa7c11d
+--- /dev/null
++++ b/target/i386/mshv/meson.build
+@@ -0,0 +1,7 @@
++i386_mshv_ss = ss.source_set()
++
++i386_mshv_ss.add(files(
++  'x86.c',
++))
++
++i386_system_ss.add_all(when: 'CONFIG_MSHV', if_true: i386_mshv_ss)
+diff --git a/target/i386/mshv/x86.c b/target/i386/mshv/x86.c
+new file mode 100644
+index 0000000000..54c40b8064
+--- /dev/null
++++ b/target/i386/mshv/x86.c
+@@ -0,0 +1,296 @@
++/*
++ * QEMU MSHV support
++ *
++ * Copyright Microsoft, Corp. 2025
++ *
++ * Authors: Magnus Kulke <magnuskulke@microsoft.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++
++#include "cpu.h"
++#include "emulate/x86_decode.h"
++#include "emulate/x86_emu.h"
++#include "qemu/typedefs.h"
++#include "qemu/error-report.h"
++#include "system/mshv.h"
++
++/* RW or Exec segment */
++static const uint8_t RWRX_SEGMENT_TYPE        = 0x2;
++static const uint8_t CODE_SEGMENT_TYPE        = 0x8;
++static const uint8_t EXPAND_DOWN_SEGMENT_TYPE = 0x4;
++
++typedef enum CpuMode {
++    REAL_MODE,
++    PROTECTED_MODE,
++    LONG_MODE,
++} CpuMode;
++
++static CpuMode cpu_mode(CPUState *cpu)
++{
++    enum CpuMode m = REAL_MODE;
++
++    if (x86_is_protected(cpu)) {
++        m = PROTECTED_MODE;
++
++        if (x86_is_long_mode(cpu)) {
++            m = LONG_MODE;
++        }
++    }
++
++    return m;
++}
++
++static bool segment_type_ro(const SegmentCache *seg)
++{
++    uint32_t type_ = (seg->flags >> DESC_TYPE_SHIFT) & 15;
++    return (type_ & (~RWRX_SEGMENT_TYPE)) == 0;
++}
++
++static bool segment_type_code(const SegmentCache *seg)
++{
++    uint32_t type_ = (seg->flags >> DESC_TYPE_SHIFT) & 15;
++    return (type_ & CODE_SEGMENT_TYPE) != 0;
++}
++
++static bool segment_expands_down(const SegmentCache *seg)
++{
++    uint32_t type_ = (seg->flags >> DESC_TYPE_SHIFT) & 15;
++
++    if (segment_type_code(seg)) {
++        return false;
++    }
++
++    return (type_ & EXPAND_DOWN_SEGMENT_TYPE) != 0;
++}
++
++static uint32_t segment_limit(const SegmentCache *seg)
++{
++    uint32_t limit = seg->limit;
++    uint32_t granularity = (seg->flags & DESC_G_MASK) != 0;
++
++    if (granularity != 0) {
++        limit = (limit << 12) | 0xFFF;
++    }
++
++    return limit;
++}
++
++static uint8_t segment_db(const SegmentCache *seg)
++{
++    return (seg->flags >> DESC_B_SHIFT) & 1;
++}
++
++static uint32_t segment_max_limit(const SegmentCache *seg)
++{
++    if (segment_db(seg) != 0) {
++        return 0xFFFFFFFF;
++    }
++    return 0xFFFF;
++}
++
++static int linearize(CPUState *cpu,
++                     target_ulong logical_addr, target_ulong *linear_addr,
++                     X86Seg seg_idx)
++{
++    enum CpuMode mode;
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    SegmentCache *seg = &env->segs[seg_idx];
++    target_ulong base = seg->base;
++    target_ulong logical_addr_32b;
++    uint32_t limit;
++    /* TODO: the emulator will not pass us "write" indicator yet */
++    bool write = false;
++
++    mode = cpu_mode(cpu);
++
++    switch (mode) {
++    case LONG_MODE:
++        if (__builtin_add_overflow(logical_addr, base, linear_addr)) {
++            error_report("Address overflow");
++            return -1;
++        }
++        break;
++    case PROTECTED_MODE:
++    case REAL_MODE:
++        if (segment_type_ro(seg) && write) {
++            error_report("Cannot write to read-only segment");
++            return -1;
++        }
++
++        logical_addr_32b = logical_addr & 0xFFFFFFFF;
++        limit = segment_limit(seg);
++
++        if (segment_expands_down(seg)) {
++            if (logical_addr_32b >= limit) {
++                error_report("Address exceeds limit (expands down)");
++                return -1;
++            }
++
++            limit = segment_max_limit(seg);
++        }
++
++        if (logical_addr_32b > limit) {
++            error_report("Address exceeds limit %u", limit);
++            return -1;
++        }
++        *linear_addr = logical_addr_32b + base;
++        break;
++    default:
++        error_report("Unknown cpu mode: %d", mode);
++        return -1;
++    }
++
++    return 0;
++}
++
++bool x86_read_segment_descriptor(CPUState *cpu,
++                                 struct x86_segment_descriptor *desc,
++                                 x86_segment_selector sel)
++{
++    target_ulong base;
++    uint32_t limit;
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    target_ulong gva;
++
++    memset(desc, 0, sizeof(*desc));
++
++    /* valid gdt descriptors start from index 1 */
++    if (!sel.index && GDT_SEL == sel.ti) {
++        return false;
++    }
++
++    if (GDT_SEL == sel.ti) {
++        base = env->gdt.base;
++        limit = env->gdt.limit;
++    } else {
++        base = env->ldt.base;
++        limit = env->ldt.limit;
++    }
++
++    if (sel.index * 8 >= limit) {
++        return false;
++    }
++
++    gva = base + sel.index * 8;
++    emul_ops->read_mem(cpu, desc, gva, sizeof(*desc));
++
++    return true;
++}
++
++bool x86_read_call_gate(CPUState *cpu, struct x86_call_gate *idt_desc,
++                        int gate)
++{
++    target_ulong base;
++    uint32_t limit;
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    target_ulong gva;
++
++    base = env->idt.base;
++    limit = env->idt.limit;
++
++    memset(idt_desc, 0, sizeof(*idt_desc));
++    if (gate * 8 >= limit) {
++        perror("call gate exceeds idt limit");
++        return false;
++    }
++
++    gva = base + gate * 8;
++    emul_ops->read_mem(cpu, idt_desc, gva, sizeof(*idt_desc));
++
++    return true;
++}
++
++bool x86_is_protected(CPUState *cpu)
++{
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    uint64_t cr0 = env->cr[0];
++
++    return cr0 & CR0_PE_MASK;
++}
++
++bool x86_is_real(CPUState *cpu)
++{
++    return !x86_is_protected(cpu);
++}
++
++bool x86_is_v8086(CPUState *cpu)
++{
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    return x86_is_protected(cpu) && (env->eflags & VM_MASK);
++}
++
++bool x86_is_long_mode(CPUState *cpu)
++{
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    uint64_t efer = env->efer;
++
++    return ((efer & (EFER_LME | EFER_LMA)) == (EFER_LME | EFER_LMA));
++}
++
++bool x86_is_long64_mode(CPUState *cpu)
++{
++    error_report("unimplemented: is_long64_mode()");
++    abort();
++}
++
++bool x86_is_paging_mode(CPUState *cpu)
++{
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    uint64_t cr0 = env->cr[0];
++
++    return cr0 & CR0_PG_MASK;
++}
++
++bool x86_is_pae_enabled(CPUState *cpu)
++{
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    uint64_t cr4 = env->cr[4];
++
++    return cr4 & CR4_PAE_MASK;
++}
++
++target_ulong linear_addr(CPUState *cpu, target_ulong addr, X86Seg seg)
++{
++    int ret;
++    target_ulong linear_addr;
++
++    ret = linearize(cpu, addr, &linear_addr, seg);
++    if (ret < 0) {
++        error_report("failed to linearize address");
++        abort();
++    }
++
++    return linear_addr;
++}
++
++target_ulong linear_addr_size(CPUState *cpu, target_ulong addr, int size,
++                              X86Seg seg)
++{
++    switch (size) {
++    case 2:
++        addr = (uint16_t)addr;
++        break;
++    case 4:
++        addr = (uint32_t)addr;
++        break;
++    default:
++        break;
++    }
++    return linear_addr(cpu, addr, seg);
++}
++
++target_ulong linear_rip(CPUState *cpu, target_ulong rip)
++{
++    return linear_addr(cpu, rip, R_CS);
++}
 -- 
 2.34.1
 
