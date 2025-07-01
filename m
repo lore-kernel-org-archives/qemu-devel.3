@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 161A2C8302F
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 11:47:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07D9EC8302F
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 11:47:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWZQo-0005Zb-5O; Tue, 01 Jul 2025 07:45:46 -0400
+	id 1uWZRu-0006qA-1A; Tue, 01 Jul 2025 07:46:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uWZQm-0005YL-NE
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:45:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uWZR3-0005m0-9Y
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:46:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uWZQk-0003dC-TB
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:45:44 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uWZQu-0003fJ-92
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:45:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751370340;
+ s=mimecast20190719; t=1751370350;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4miDEcFeoLMzpknUkidzUiT3tY62ZBbQkI2NJpJaCbA=;
- b=Y1iSDwbnbJUoPV72i9CphkP486nnsKnt7MmY0W+soGk8NR1psWylnKR88/YstUrZvIZEbm
- V4TwYdbxEwkKdl+qyLxD/au3LYvv6dfHo12Qf9+7+eD03NSTEu0FWEFl4d3/yjI3M+I6Gg
- R0jM7bnMPypd0bP2qaoyI4Xe8O5zm04=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Wmi5I5WHYt2gr3ayuHReWJBs0mW0tBonN0/WuhY6EsA=;
+ b=SyXhT8BW/5ZiNALaCGkuCc7gP5XpWIiERs4TLUU8Fmls+xmWjD3kNK8GQCtgoRytP9JgDX
+ AD39A3lst4J8uXmDqoelOBBYWtwIXxw5qciI6ZV++RKpcYbUfjeFv4dddXuyqg4IfjDZuE
+ nRAtBPdogvRL2biUA8QWfTQiPIVEsrU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-12-sqi_68arMOGFrf7IZRz2zg-1; Tue, 01 Jul 2025 07:45:39 -0400
-X-MC-Unique: sqi_68arMOGFrf7IZRz2zg-1
-X-Mimecast-MFC-AGG-ID: sqi_68arMOGFrf7IZRz2zg_1751370338
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a4f65a705dso1918926f8f.2
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 04:45:39 -0700 (PDT)
+ us-mta-605-AByYE_STNyCoIaApVAB5Pg-1; Tue, 01 Jul 2025 07:45:49 -0400
+X-MC-Unique: AByYE_STNyCoIaApVAB5Pg-1
+X-Mimecast-MFC-AGG-ID: AByYE_STNyCoIaApVAB5Pg_1751370348
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-451dda846a0so21553825e9.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 04:45:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751370338; x=1751975138;
+ d=1e100.net; s=20230601; t=1751370348; x=1751975148;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4miDEcFeoLMzpknUkidzUiT3tY62ZBbQkI2NJpJaCbA=;
- b=rtN6LSHgADriw7x4uJd4athL75XKh9mCMMqYH8Ts4X/Rm8PPZjQH6hV2wqUgC8ynaM
- d1Ap58hoE+w8egN3idWfDPOsVZU3MUp2cN1R7VRpw8jEixKafl2P4KBkFEk5dPXSJDG4
- EFSdAfV/ivLb4xs4PWKDxYlWS6sKVbgPsVybSUWrRF+6EX6Wd5meY+4FKgFym5g3OPls
- cMBGUO6OVFz2n7q/bOnWg+jmvNHt428anZfCUW3xVq45UMHFspSubalD9uQfMvFPaBeA
- SwGNV9UXKhtcjXvTd1MOjoMPu0HpGgc+VCuIn7wbQfEzB0Cj/74hz6nrmKxSB/EMG7fs
- aR+Q==
-X-Gm-Message-State: AOJu0YzmnD6EvvO/7KWka0lrHNS49td+4i/7iqpZW1mRHKSU0Kts907t
- QLQiDpI8qMHwd1IwFqfDgc/oNMSlEdgUMRB+bAl1vydAsVwFdSBDNTgVFoHrlRVcbJDoIifuY8i
- NGs4GurgLxRkroF/ZVimrJZodUkGo7tmNHSSYbEv4Y31DQhuO4MSBJqda
-X-Gm-Gg: ASbGncsXDrdInQZgb2/XWDl05CV7DXT2usgdbqAen4CTRh8oseTpE7+/DuaKSL7bXXa
- 7w/93M/7hTF7yAH3mKlhGHq/0NdVfat9praXaK+zAuIrYI/WGnQQsdHLzFC9/BdWoxMBz8LcL+X
- 4A9VoRfT3sD3tjWYhoa3oZBxoCRkbPXZ7OO7isHIGqI5ELTrnff/1ku0jfApSy0PbntzzOJpvR/
- nHJX8jwY0ZIVYc0lKQLToJrGy7O02HMNWK97AZ+mHG1iS4/X1REKBRNjDsZM8dY+pdyrg9otzNL
- 148ozM3hTmOWaD4pbUuw0Cs6uDEtlFe/wA36/TkSo5v4Y0yZHZbymg0WAuwPksIy6qrKaknkS9Y
- ba9pW
-X-Received: by 2002:a05:6000:1a8f:b0:3a5:541c:b40f with SMTP id
- ffacd0b85a97d-3a8f435e1c6mr14693127f8f.9.1751370338426; 
- Tue, 01 Jul 2025 04:45:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGdyOJrCwa0ubmb30ykhye4/88RrVgFLz2TEVMayQUNJdMxh5VJ8LZYxRvx6LgwKJmvq68epA==
-X-Received: by 2002:a05:6000:1a8f:b0:3a5:541c:b40f with SMTP id
- ffacd0b85a97d-3a8f435e1c6mr14693091f8f.9.1751370337938; 
- Tue, 01 Jul 2025 04:45:37 -0700 (PDT)
+ bh=Wmi5I5WHYt2gr3ayuHReWJBs0mW0tBonN0/WuhY6EsA=;
+ b=s7cQd3T9Hn4YoTtcDVrQzloPTSVMFijrSKkEmAoZm13pUq2sEIZWZArxzYmCXBC4e0
+ AOqH77L2O3jEY7CIr1/TVWkq9mJORC813Tki0aqBq0KjFwsW68BbBSZSDe/C+NXLiMZI
+ sLrZGy4QfC/JVFUuIWCCWPtfRE/qTiQ+9/bjqn8Oo6+9keqWVoWqPo6i8YEPKh/VccKO
+ IUln393kmSOA7m6Hg4DIUcoV8WafPhLnYk2D8IF91+gcL/YzqyZxHUS61jAC4FEZy0WH
+ PkAVMrS/mvYXbeT+W7wwahGGlovCFD20W5OG+nQFuSFPYc/OAlU2krGpET41vcggiF3Z
+ Jaiw==
+X-Gm-Message-State: AOJu0YyKZ1w8xOR6WphcpAAV2MJM9lwivSzjJ5M+1BlovnApXNz/IEao
+ k+PBwEnscCcNSQ1IUfChE2DkLMG8RVgStOEYkL4+5pRgGoblfBJr63BGEMERAkhR+kH+3sp9M8W
+ o/WDanBieIRzetH5e2whAvWZXpbrlFXgyYkbNYvFE4SbkktYbhB6kJ+Hw
+X-Gm-Gg: ASbGncsqfwKbTSE7verK+8lVv+1MnwMRhci9QkQzOQjOQB1EaVmo72pNbqJ4SVZQdCq
+ JvDCGIv9i3HOtk27o8ULWdzUAydaJPFZ58BPgZje/zaRYgEMFcQrpdtOZ2ABYMVzIKOlNc0lie9
+ 7tlccvWSU0/KcGSlgBnuRWsCwj5TasO8gfEhxKsR80i4+pjUyNZVYPhhkrxkcon1JB6U4zJxD9G
+ rfwvr/VjkU3mSsWBSWyj7z6xSL3n2un0SphMvcGHgIAKNqkuoXn37RUbbjhUYyVcoWeK8m/p4S3
+ enfSmoqM8iwZQDShnNKdCR6s/gSphlzPsqMJngJPzIMqJBFNDPUfBQzI+4W9ptEkdIGUwMiezhB
+ jXB7/
+X-Received: by 2002:a05:600c:3b0a:b0:453:9bf:6f7c with SMTP id
+ 5b1f17b1804b1-4538ee5d0b8mr188520015e9.9.1751370348279; 
+ Tue, 01 Jul 2025 04:45:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHT+GObbK6oNCknbIHIqRpvMqUDBTM25FlbyxEDP54tbNEMOOgubqChNq1ebJqXelLH5Zx1Ew==
+X-Received: by 2002:a05:600c:3b0a:b0:453:9bf:6f7c with SMTP id
+ 5b1f17b1804b1-4538ee5d0b8mr188519695e9.9.1751370347798; 
+ Tue, 01 Jul 2025 04:45:47 -0700 (PDT)
 Received: from localhost
  (p200300cfd700f38d3df6a1ca7d40fe1f.dip0.t-ipconnect.de.
  [2003:cf:d700:f38d:3df6:a1ca:7d40:fe1f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a892e52a35sm13228925f8f.57.2025.07.01.04.45.35
+ 5b1f17b1804b1-453a1914d10sm53734025e9.4.2025.07.01.04.45.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Jul 2025 04:45:36 -0700 (PDT)
+ Tue, 01 Jul 2025 04:45:45 -0700 (PDT)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Brian Song <hibriansong@gmail.com>
-Subject: [PATCH v3 17/21] iotests/307: Test multi-thread export interface
-Date: Tue,  1 Jul 2025 13:44:33 +0200
-Message-ID: <20250701114437.207419-18-hreitz@redhat.com>
+Subject: [PATCH v3 20/21] iotests/308: Add multi-threading sanity test
+Date: Tue,  1 Jul 2025 13:44:36 +0200
+Message-ID: <20250701114437.207419-21-hreitz@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250701114437.207419-1-hreitz@redhat.com>
 References: <20250701114437.207419-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -95,7 +95,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,100 +111,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Test the QAPI interface for multi-threaded exports.  None of our exports
-currently support multi-threading, so it's always an error in the end,
-but we can still test the specific errors.
+Run qemu-img bench on a simple multi-threaded FUSE export to test that
+it works.
 
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- tests/qemu-iotests/307     | 47 ++++++++++++++++++++++++++++++++++++++
- tests/qemu-iotests/307.out | 18 +++++++++++++++
- 2 files changed, 65 insertions(+)
+ tests/qemu-iotests/308     | 51 ++++++++++++++++++++++++++++++++++
+ tests/qemu-iotests/308.out | 56 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 107 insertions(+)
 
-diff --git a/tests/qemu-iotests/307 b/tests/qemu-iotests/307
-index b429b5aa50..f6ee3ebec0 100755
---- a/tests/qemu-iotests/307
-+++ b/tests/qemu-iotests/307
-@@ -142,5 +142,52 @@ with iotests.FilePath('image') as img, \
-     vm.qmp_log('query-block-exports')
-     iotests.qemu_nbd_list_log('-k', socket)
+diff --git a/tests/qemu-iotests/308 b/tests/qemu-iotests/308
+index 033d5cbe22..2960412285 100755
+--- a/tests/qemu-iotests/308
++++ b/tests/qemu-iotests/308
+@@ -415,6 +415,57 @@ $QEMU_IO -c 'read -P 0 0 64M' "$TEST_IMG" | _filter_qemu_io
  
-+    iotests.log('\n=== Using multi-thread with NBD ===')
-+
-+    # Actual multi-threading; (currently) not supported by NBD
-+    vm.qmp_log('block-export-add',
-+               id='export0',
-+               type='nbd',
-+               node_name='fmt',
-+               iothread=['iothread0', 'iothread1'])
-+
-+    # Should be treated the same way as actual multi-threading, even if there's
-+    # only a single thread
-+    vm.qmp_log('block-export-add',
-+               id='export0',
-+               type='nbd',
-+               node_name='fmt',
-+               iothread=['iothread0'])
-+
-+    iotests.log('\n=== Empty thread list')
-+
-+    # Simply not allowed
-+    vm.qmp_log('block-export-add',
-+               id='export0',
-+               type='nbd',
-+               node_name='fmt',
-+               iothread=[])
-+
-+    iotests.log('\n=== Non-existent thread name in list')
-+
-+    # Expect an error, even if NBD does not support multi-threading, because the
-+    # list is parsed before being passed to NBD
-+    vm.qmp_log('block-export-add',
-+               id='export0',
-+               type='nbd',
-+               node_name='fmt',
-+               iothread=['iothread0', 'nothread', 'iothread1'])
-+
-+    iotests.log('\n=== Multi-thread with fixed-iothread')
-+
-+    # With multi-threading, there is no single context to give the BDS, so it is
-+    # just left where it is.  fixed-iothread does not make sense then.
-+    vm.qmp_log('block-export-add',
-+               id='export0',
-+               type='nbd',
-+               node_name='fmt',
-+               iothread=['iothread0', 'iothread1'],
-+               fixed_iothread=True)
-+
-     iotests.log('\n=== Shut down QEMU ===')
-     vm.shutdown()
-diff --git a/tests/qemu-iotests/307.out b/tests/qemu-iotests/307.out
-index f645f3315f..a9b37d3ac1 100644
---- a/tests/qemu-iotests/307.out
-+++ b/tests/qemu-iotests/307.out
-@@ -134,4 +134,22 @@ read failed: Input/output error
- exports available: 0
+ _cleanup_test_img
  
- 
-+=== Using multi-thread with NBD ===
-+{"execute": "block-export-add", "arguments": {"id": "export0", "iothread": ["iothread0", "iothread1"], "node-name": "fmt", "type": "nbd"}}
-+{"error": {"class": "GenericError", "desc": "NBD export does not support multi-threading"}}
-+{"execute": "block-export-add", "arguments": {"id": "export0", "iothread": ["iothread0"], "node-name": "fmt", "type": "nbd"}}
-+{"error": {"class": "GenericError", "desc": "NBD export does not support multi-threading"}}
++echo
++echo '=== Multi-threading ==='
 +
-+=== Empty thread list
-+{"execute": "block-export-add", "arguments": {"id": "export0", "iothread": [], "node-name": "fmt", "type": "nbd"}}
-+{"error": {"class": "GenericError", "desc": "The set of I/O threads must not be empty"}}
++# Just set up a null block device, export it (with multi-threading), and run
++# qemu-img bench on it (to get parallel requests)
 +
-+=== Non-existent thread name in list
-+{"execute": "block-export-add", "arguments": {"id": "export0", "iothread": ["iothread0", "nothread", "iothread1"], "node-name": "fmt", "type": "nbd"}}
-+{"error": {"class": "GenericError", "desc": "iothread \"nothread\" not found"}}
++_launch_qemu
++_send_qemu_cmd $QEMU_HANDLE \
++    "{'execute': 'qmp_capabilities'}" \
++    'return'
 +
-+=== Multi-thread with fixed-iothread
-+{"execute": "block-export-add", "arguments": {"fixed-iothread": true, "id": "export0", "iothread": ["iothread0", "iothread1"], "node-name": "fmt", "type": "nbd"}}
-+{"error": {"class": "GenericError", "desc": "Cannot use fixed-iothread for a multi-threaded export"}}
++_send_qemu_cmd $QEMU_HANDLE \
++    "{'execute': 'blockdev-add',
++      'arguments': {
++          'driver': 'null-co',
++          'node-name': 'null'
++      } }" \
++    'return'
 +
- === Shut down QEMU ===
++for id in iothread{0,1,2,3}; do
++    _send_qemu_cmd $QEMU_HANDLE \
++        "{'execute': 'object-add',
++          'arguments': {
++              'qom-type': 'iothread',
++              'id': '$id'
++          } }" \
++        'return'
++done
++
++echo
++
++iothreads="['iothread0', 'iothread1', 'iothread2', 'iothread3']"
++fuse_export_add \
++    'export' \
++    "'mountpoint': '$EXT_MP', 'iothread': $iothreads" \
++    'return' \
++    'null'
++
++echo
++$QEMU_IMG bench -f raw "$EXT_MP" |
++    sed -e 's/[0-9.]\+ seconds/X.XXX seconds/'
++echo
++
++fuse_export_del 'export'
++
++_send_qemu_cmd $QEMU_HANDLE \
++    "{'execute': 'quit'}" \
++    'return'
++
++wait=yes _cleanup_qemu
++
+ # success, all done
+ echo "*** done"
+ rm -f $seq.full
+diff --git a/tests/qemu-iotests/308.out b/tests/qemu-iotests/308.out
+index 2d7a38d63d..04e6913c5c 100644
+--- a/tests/qemu-iotests/308.out
++++ b/tests/qemu-iotests/308.out
+@@ -207,4 +207,60 @@ read 67108864/67108864 bytes at offset 0
+ {"return": {}}
+ read 67108864/67108864 bytes at offset 0
+ 64 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++
++=== Multi-threading ===
++{'execute': 'qmp_capabilities'}
++{"return": {}}
++{'execute': 'blockdev-add',
++      'arguments': {
++          'driver': 'null-co',
++          'node-name': 'null'
++      } }
++{"return": {}}
++{'execute': 'object-add',
++          'arguments': {
++              'qom-type': 'iothread',
++              'id': 'iothread0'
++          } }
++{"return": {}}
++{'execute': 'object-add',
++          'arguments': {
++              'qom-type': 'iothread',
++              'id': 'iothread1'
++          } }
++{"return": {}}
++{'execute': 'object-add',
++          'arguments': {
++              'qom-type': 'iothread',
++              'id': 'iothread2'
++          } }
++{"return": {}}
++{'execute': 'object-add',
++          'arguments': {
++              'qom-type': 'iothread',
++              'id': 'iothread3'
++          } }
++{"return": {}}
++
++{'execute': 'block-export-add',
++          'arguments': {
++              'type': 'fuse',
++              'id': 'export',
++              'node-name': 'null',
++              'mountpoint': 'TEST_DIR/t.IMGFMT.fuse', 'iothread': ['iothread0', 'iothread1', 'iothread2', 'iothread3']
++          } }
++{"return": {}}
++
++Sending 75000 read requests, 4096 bytes each, 64 in parallel (starting at offset 0, step size 4096)
++Run completed in X.XXX seconds.
++
++{'execute': 'block-export-del',
++          'arguments': {
++              'id': 'export'
++          } }
++{"return": {}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_EXPORT_DELETED", "data": {"id": "export"}}
++{'execute': 'quit'}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
++{"return": {}}
+ *** done
 -- 
 2.49.0
 
