@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53AE3C83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:37:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB541C83038
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:37:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWeuV-0005tg-N6; Tue, 01 Jul 2025 13:36:49 -0400
+	id 1uWeqM-0007vg-0e; Tue, 01 Jul 2025 13:32:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uWeuN-0005no-NL
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:36:40 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uWeqB-0007qn-Dd
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:32:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uWeuG-0000Gw-TG
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:36:39 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uWeq8-0007jS-Lu
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:32:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751391390;
+ s=mimecast20190719; t=1751391134;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=luy9hP+C1+jCcXEoM0Q3nN3pMN/n+lvKWFy0GZW2BMM=;
- b=UKYTSV+m5MCRhrdi1k2coBWjxV7K+IZBMvm1z5LrW/x52gCijW/53ffN6Bp+kRQrPJ3ZtA
- GKirDPOFA0jtTXW/DVli1ymQZCeSVYnYMadwyHMxMudxnOeO06BNLY1TOyMgLHwCIz1JnN
- COmjvKbd9/kTBW+65P39AJpvVA6/Mqo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+oSMyrCsd9PQmvJAo8VtpC0GfICKT3Ea3CYydX0cp8s=;
+ b=cdxmadMVCRc4HuxmYGYAQff/RPXxRZgLJ2QyLR1KPRV403yPF6Rg7VtNO88c7RbeUhkbDD
+ zorzxV5V0ZCFrydof4qSB0563hDPMn+197s1RPtDtfYh9ZKLwh1BZhTl4R9qXIfouBJiNZ
+ /Yiw5fXPDG2FYVYSE/8vlMgBT3eDdPg=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-600-cLjngP3tPqqt6veHpvNZSw-1; Tue, 01 Jul 2025 13:18:10 -0400
-X-MC-Unique: cLjngP3tPqqt6veHpvNZSw-1
-X-Mimecast-MFC-AGG-ID: cLjngP3tPqqt6veHpvNZSw_1751390290
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4f6ff23ccso3974234f8f.2
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 10:18:10 -0700 (PDT)
+ us-mta-570-FzQD2spwOrG6J4TZi2_SKQ-1; Tue, 01 Jul 2025 13:32:13 -0400
+X-MC-Unique: FzQD2spwOrG6J4TZi2_SKQ-1
+X-Mimecast-MFC-AGG-ID: FzQD2spwOrG6J4TZi2_SKQ_1751391132
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-453a5d50b81so13202345e9.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 10:32:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751390289; x=1751995089;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=luy9hP+C1+jCcXEoM0Q3nN3pMN/n+lvKWFy0GZW2BMM=;
- b=JsCgMP5lvqcXszt3khCpzqOTYCXhOzaDhcvm/geQIJopsVCdTX78qPYkoIjiycuYY4
- L3afmHJGuPXl7K7cnOdC9BQ8T2Xr3zScnh2+LA4W8bLnM9V2SGMluJas8a0ce/eKrqOE
- lICIlg17IcNu65s5ACnBXrlsXWmDUWasp6Ta0i+R53N1wZM9ci+nydBsGENQv+sE2cux
- 35U+7P8bjXFr7JC/6wSm5DXA226Uqz59ru4RcZXdzXeJKa9NnaeOg588v5OP4jtSpdZ+
- HPVvBHTGJ0fromZaS2nmL1nCZaOk5g8IB5Y9PRSHkMyOKGW+UXefr+KYuP3+Gg5ftaVZ
- cv8g==
+ d=1e100.net; s=20230601; t=1751391132; x=1751995932;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+oSMyrCsd9PQmvJAo8VtpC0GfICKT3Ea3CYydX0cp8s=;
+ b=oPKjdBN1Y+ScFNYvh+pRvtvXZIDkV6DrPdaVbXuCdFka7atDNlnVciDYvdRYvqsWO/
+ cdKTQDNsLj4yCL21jlF/0zoy8Cbyioo0N4VXmeLj0NeiPJtd+qcnFFvNzCX39oW07gr6
+ Hkuymawc8QfuXV3iwZPklg2phnjozt1mPSAZ+6vhDs65xQ9F0s5YTVFqljUVJNruXYOe
+ 4xbHorK2fcVmPQ1squBA+h2wLqJzNygF9yiAfJqHwjPJBG34XSgzLlfnWLzYEiyo9bVO
+ ciKegch74lLBU38/fhoU7ydu3iJrvsQHBPSSns+W75Wq4twGJKZJVH2Q2W3sPJ80KIFA
+ uBWA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUH/lNpLShKPY3qqj2FWYVewCTNmk7USexv8PG7bVEfU06nz0iT9JATXn07YDnOaQt8XaUlu8v0nl8I@nongnu.org
-X-Gm-Message-State: AOJu0Yymqt2U7CvEnKskExOAiSKeARZLmTpml/rKMpVUm6mls5JiuL4p
- tRgmffeExIXydsR/TVHNfMILwZ24MlVRcWlGmkctuTPbkTSHYHnmNGJMxL8i3/xobd3wRzA7Jl2
- 80UCQQHni+tjznMFCvuyaW+JjVHKeWZukEjRG6DYDr2L62AwXcyZ8mdPFumOV81Qs
-X-Gm-Gg: ASbGncuU5qMzuAvaqmJkTx1Dp8YUYzT6fJ77UMx+5Dwzfj32fob2U/88I9Y8+m5o1j7
- dPP4ZpiNkA96kj5/RUx1534xX1DjkFI1V85Bqd2hS1beA208qzsx2SD5LhhEa+lKEYa/TQ/re2m
- nD7ZwGRl1vlYsgIcwLaz/rNj4CaPVSYTcxIRblYolFRB9LTAiUi7hSRPsAnLCQ15Z3fmEbC45C8
- Ehq4Ii7zb1yoCpVW0dDR0zI7lsQBeDFcScoizqYtJFlD3eZwpLKKiIgwNdTu6CcQPOjKwaKbdS8
- 03Wrgyl3U3fPJ8t6v2qIRFJsbFpIL7dtbf7KYx6v35qgUzcCBWqPkMB7J8m6WA==
-X-Received: by 2002:adf:b651:0:b0:3a6:ec41:b9df with SMTP id
- ffacd0b85a97d-3a91818bdeemr13312633f8f.49.1751390289407; 
- Tue, 01 Jul 2025 10:18:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHTZr20L8Trh5Mcysi6zvPyYngKNIPyUIOFWpmzOc6YPN4r9bXaH+FmM8OAXF3atCsq7i+Pjg==
-X-Received: by 2002:adf:b651:0:b0:3a6:ec41:b9df with SMTP id
- ffacd0b85a97d-3a91818bdeemr13312603f8f.49.1751390288931; 
- Tue, 01 Jul 2025 10:18:08 -0700 (PDT)
+ AJvYcCWXnxk/A5+KhtsM7RAlssnKuE+PDn0nSnFpRDWK8jx8Xei/k3sO9gOJxS8ViPapuuAVc47/EvbimWGP@nongnu.org
+X-Gm-Message-State: AOJu0YyFt6mHcwG9iL4eaC3swJivjgSm83ICnQfP5ckJb9jJ+p7bbMZa
+ /hrLaosJOWodw/hVT9aR0VdmEjDYubkm0SWZ/2Bv3D2lAVVjzUmCB3LZmOs2gTZiBE16/R3QL4H
+ 7BjxjAijSTWAPk5U8EugIHcnXUv9ktZpLLKPVpj5ITCyo0JN/BUDdhue+
+X-Gm-Gg: ASbGncu+WOrz/y6C/N6Plo02OQabjr/RgQ1eHnhGRP1GFjg/DafV3u2mB1RZBfAGHKF
+ mnvIrjpYAtDJ2HDIYbd3E0jJUAFyOr5aMQ1E9phi/VMVAk+zOlVfFVU4F43AoAtR5PU+Fa6gT2F
+ qd+zSUZ0tLryck2BraPAOiShCj9sJmn0FNZVyvFT9szwz9N1hZjrr9hXKz/v4wr1a+cb8SvdtU8
+ qnNTHkOZ1LW6KuJlw7ff6ai6IoXM425d1Iqbx73P1oIaxqdQe6mE84dFK2oyl8yAuDhWJvvjeGC
+ xy39h0pS81Bwnt84KKW9py1YNeyDHS/DMqd/dtNL6eILYCKamDJj0rHOuACoEw==
+X-Received: by 2002:a05:600c:698c:b0:441:b076:fce8 with SMTP id
+ 5b1f17b1804b1-4538ee5db08mr203962285e9.14.1751391131947; 
+ Tue, 01 Jul 2025 10:32:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFrDi1kdke+sinF7xSSSY+sFf1D6wdSqaIqUHRyD1XBs3e3Zvpcc8AVESdpb/V1u1kVCGm/mQ==
+X-Received: by 2002:a05:600c:698c:b0:441:b076:fce8 with SMTP id
+ 5b1f17b1804b1-4538ee5db08mr203961915e9.14.1751391131467; 
+ Tue, 01 Jul 2025 10:32:11 -0700 (PDT)
 Received: from [192.168.0.6] (ltea-047-064-114-041.pools.arcor-ip.net.
  [47.64.114.41]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45391c6aa0asm135323155e9.26.2025.07.01.10.18.07
+ ffacd0b85a97d-3a88c7e74fbsm14023459f8f.10.2025.07.01.10.32.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Jul 2025 10:18:08 -0700 (PDT)
-Message-ID: <cf8846e8-24b1-4c76-acfe-88a62913c8e9@redhat.com>
-Date: Tue, 1 Jul 2025 19:18:07 +0200
+ Tue, 01 Jul 2025 10:32:10 -0700 (PDT)
+Message-ID: <55f15763-9b67-418f-a670-9a1bbd55d3f8@redhat.com>
+Date: Tue, 1 Jul 2025 19:32:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] MAINTAINERS: update docs file extensions (.txt ->
- .rst)
+Subject: Re: [PATCH 6/6] treewide: fix paths for relocated files in comments
 To: Sean Wei <me@sean.taipei>, qemu-devel@nongnu.org
-Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, Peter Maydell
+ <peter.maydell@linaro.org>, Song Gao <gaosong@loongson.cn>,
+ "open list:nvme" <qemu-block@nongnu.org>,
+ "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
 References: <20250616.qemu.relocated@sean.taipei>
- <20250616.qemu.relocated.01@sean.taipei>
-Content-Language: en-US
+ <20250616.qemu.relocated.06@sean.taipei>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -128,9 +129,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250616.qemu.relocated.01@sean.taipei>
+In-Reply-To: <20250616.qemu.relocated.06@sean.taipei>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -140,7 +141,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,45 +157,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/06/2025 17.47, Sean Wei wrote:
-> The documentation tree has been converted to reStructuredText, but
-> two entries in MAINTAINERS still point to the removed *.txt files.
+On 16/06/2025 17.51, Sean Wei wrote:
+> After the docs directory restructuring, several comments
+> refer to paths that no longer exist.
 > 
-> This prevents scripts/get_maintainer.pl from matching the documents.
+> Replace these references to the current file locations
+> so readers can find the correct files.
 > 
-> Update those entries to *.rst so the maintainer script works again.
+> Related commits
+> ---------------
 > 
-> Related commits:
->    8472cc5dbe6 (Sep 2023): docs/specs/vmw_pvscsi-spec: Convert to rST
->    8e72ceee5cd (Jun 2022): Rename docs/specs/fw_cfg.txt to .rst
+>    189c099f75f (Jul 2021)
+>      docs: collect the disparate device emulation docs into one section
+>      Rename  docs/system/{ => devices}/nvme.rst
+> 
+>    5f4c96b779f (Feb 2023)
+>      docs/system/loongarch: update loongson3.rst and rename it to virt.rst
+>      Rename  docs/system/loongarch/{loongson3.rst => virt.rst}
+> 
+>    fe0007f3c1d (Sep 2023)
+>      exec: Rename cpu.c -> cpu-target.c
+>      Rename  cpus-common.c => cpu-common.c
+> 
+>    42fa9665e59 (Apr 2025)
+>      exec: Restrict 'cpu_ldst.h' to accel/tcg/
+>      Rename  include/{exec/cpu_ldst.h => accel/tcg/cpu-ldst.h}
 > 
 > Signed-off-by: Sean Wei <me@sean.taipei>
 > ---
->   MAINTAINERS | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 28b3dd2684..fed8619874 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2531,7 +2531,7 @@ F: hw/net/net_tx_pkt*
->   Vmware
->   M: Dmitry Fleytman <dmitry.fleytman@gmail.com>
->   S: Maintained
-> -F: docs/specs/vmw_pvscsi-spec.txt
-> +F: docs/specs/vmw_pvscsi-spec.rst
->   F: hw/display/vmware_vga.c
->   F: hw/net/vmxnet*
->   F: hw/scsi/vmw_pvscsi*
-> @@ -2736,7 +2736,7 @@ Firmware configuration (fw_cfg)
->   M: Philippe Mathieu-Daudé <philmd@linaro.org>
->   R: Gerd Hoffmann <kraxel@redhat.com>
->   S: Supported
-> -F: docs/specs/fw_cfg.txt
-> +F: docs/specs/fw_cfg.rst
->   F: hw/nvram/fw_cfg*.c
->   F: stubs/fw_cfg.c
->   F: include/hw/nvram/fw_cfg.h
+>   docs/spin/tcg-exclusive.promela | 4 ++--
+>   hw/nvme/ctrl.c                  | 2 +-
+>   target/arm/cpu.c                | 2 +-
+>   target/loongarch/README         | 2 +-
+>   4 files changed, 5 insertions(+), 5 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
