@@ -4,76 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 380D0C8302F
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 07:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A7C4C7EE30
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 07:25:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWV6a-0004w7-Ve; Tue, 01 Jul 2025 03:08:38 -0400
+	id 1uWVMG-0007Ua-9B; Tue, 01 Jul 2025 03:24:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uWV6Y-0004vp-98
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 03:08:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uWVM9-0007TR-P4
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 03:24:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uWV6P-0005E1-QR
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 03:08:34 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uWVM5-0002id-VC
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 03:24:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751353702;
+ s=mimecast20190719; t=1751354674;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BStXMMxRw1s8W9xNcjZ1l9zKliX7yn/dh9DAkD6FBbo=;
- b=VgEVidngZdOA9ea+2Pssrz/pD0yjt+fEEq4SxuSp2xX8QKMdClPvDZVJDgkrszCW6ey5H0
- AfSrs32i5IUFBQJCAz/k7YgVFsSvkL6DeJGcBDvBHQJ/FVid8pF3mBV3enXvX0LUTzLYum
- Uu038a0ZpiqgUD5u3+5hMD55l3YDS4w=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-470-jS2-SD-HNUituZKHsdv3Tg-1; Tue,
- 01 Jul 2025 03:08:17 -0400
-X-MC-Unique: jS2-SD-HNUituZKHsdv3Tg-1
-X-Mimecast-MFC-AGG-ID: jS2-SD-HNUituZKHsdv3Tg_1751353696
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A76E180120D; Tue,  1 Jul 2025 07:08:16 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C634119560AB; Tue,  1 Jul 2025 07:08:15 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2FFBB21E6A27; Tue, 01 Jul 2025 09:08:13 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Daniel P .
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [PATCH 01/21] migration: Normalize tls arguments
-In-Reply-To: <87tt4153ql.fsf@suse.de> (Fabiano Rosas's message of "Fri, 27 Jun
- 2025 17:28:02 -0300")
-References: <20250603013810.4772-1-farosas@suse.de>
- <20250603013810.4772-2-farosas@suse.de> <87cyas88gg.fsf@pond.sub.org>
- <878qlf7nc0.fsf@suse.de> <87o6uayh9r.fsf@pond.sub.org>
- <87zfdu5zf4.fsf@suse.de> <877c0xpsli.fsf@pond.sub.org>
- <87tt4153ql.fsf@suse.de>
-Date: Tue, 01 Jul 2025 09:08:13 +0200
-Message-ID: <8734bg4cde.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=N/zv2SkYKPqpSeH05xRuJftTOquvB5rAvPKRlA54iwI=;
+ b=E3QHa2/+U6o3UY8JNtGI3ycMKFA/qKqB9It1GnKqrws66958PL0yIChzjAHzGB8Y+jD6qa
+ z3GSvFmzLqL3EA/VJ/raPu6gzFlcRjRtZ9Me4jpJTNP+PT3+FW+tH1ZOgxSGqMnnXWpMeI
+ SyVyT3JED9ymo9SJy+IliH+HC1TOy1U=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-311-cVv8XLZCPDik102gNZWmtg-1; Tue, 01 Jul 2025 03:24:33 -0400
+X-MC-Unique: cVv8XLZCPDik102gNZWmtg-1
+X-Mimecast-MFC-AGG-ID: cVv8XLZCPDik102gNZWmtg_1751354672
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4f7f1b932so1758041f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 00:24:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751354671; x=1751959471;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=N/zv2SkYKPqpSeH05xRuJftTOquvB5rAvPKRlA54iwI=;
+ b=UqYGf0siAYm8JDl7dZquMjDZacfTJeop+QqUZAnTEsahRgeXtQ9qWfpIdEWjVx3n5/
+ PT0/2nTag13IbIxr6pteyplOk3f8VTLp13J7MRoFjGYXI5eERr+YT1/2KiMbE48ZkD4x
+ MUNMz7xcfXq8I20uVIrVm1fQPgij0YVovMdstGJgYItTSRsN0bECtLqz0H8jOsl0Xwjs
+ Ws+o764bsC4L339E9g/dMki8TS8QKAIVfResp9neAHQZ+uimQ4gIgqVDWU/rfVk5Swvx
+ 9r0r3znXTA6il5tZvz+FhMGYUgrrEW+jzCIDOOiLrvhsJ8w7RAXiTF2ZNZCqxCFv8Xi5
+ nIqw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXEIy90VXxg75v72GpP2i3n52ztH1CjFVZzwSAh+Ek99maMmn8RF5XUiNHpilgDt16YnyvwHGjHo8Ge@nongnu.org
+X-Gm-Message-State: AOJu0Yw59/pu6+zNhzdx2DAp8eFd3EsZf8BH7KP1wjjggdZlcedRck13
+ BDcatzWao7FzaTC0L4bvN4R0far5VQ5XuP+zEevfQtQ9doM1Dje5NAStxX9uTqISx2/S3vDyc3H
+ HwwoA8mCEQ55F78bPxDQ32GEnuoEWhvpshs5C/nkc3JZv3Q9Mlo89Cv4i
+X-Gm-Gg: ASbGncu+EaoMhuMbanavHVa+XqVHyBRbsuuJnoHoMq6SNxDnil4XYdcCttxxfLLIJQR
+ XgwJsTMFOojfaeJwl1BpT8f1ViI/A6xhBDyNRoo3Hsa7fp/dTYnIqt+RxMm+f7dXG+jaRED6WC6
+ SLhewFnZ4UUPYHyXqkyLuhBpBCc1QCraNAN6262mGGKrJ4K9vGvqtmNoGR/eSHed1zfmGcZfGhh
+ RWegESdlvqkrZ9uMuKN5B33aBNc5L+1Uzn2FHS10vUNGPTDVtNQ39IlNo8lkDYScSWyeMVBvfzC
+ yg0YXEqEod3lYXibkiYSNY6X69DYAdl9Emt+52u99wAw1oG9NLmvDy9iKAX9VjGcgn0yp2D4k+f
+ sjLtjnmso1STbqFRM0/TYwkSsyxvXz6nmZFqzPppuGVvZMdSe78M=
+X-Received: by 2002:adf:9d89:0:b0:3a6:e2d5:f14c with SMTP id
+ ffacd0b85a97d-3a8fdeff3fcmr11681276f8f.30.1751354671528; 
+ Tue, 01 Jul 2025 00:24:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHKvaoz3ItB6k1I3vlYAsWz1ZuEXsWM0/qqNhWd1jOEFHrqtdcO8Pzi4G4PUGLhbbZWOcf1LQ==
+X-Received: by 2002:adf:9d89:0:b0:3a6:e2d5:f14c with SMTP id
+ ffacd0b85a97d-3a8fdeff3fcmr11681241f8f.30.1751354671031; 
+ Tue, 01 Jul 2025 00:24:31 -0700 (PDT)
+Received: from ?IPV6:2003:cf:d700:f38d:3df6:a1ca:7d40:fe1f?
+ (p200300cfd700f38d3df6a1ca7d40fe1f.dip0.t-ipconnect.de.
+ [2003:cf:d700:f38d:3df6:a1ca:7d40:fe1f])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a892e59659sm12411974f8f.77.2025.07.01.00.24.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 01 Jul 2025 00:24:29 -0700 (PDT)
+Message-ID: <0ffd2ae1-2e77-4911-aead-27f318771561@redhat.com>
+Date: Tue, 1 Jul 2025 09:24:28 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 12/21] block: Move qemu_fcntl_addfl() into osdep.c
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Brian Song <hibriansong@gmail.com>
+References: <20250604132813.359438-1-hreitz@redhat.com>
+ <20250604132813.359438-13-hreitz@redhat.com> <20250609150310.GF29452@fedora>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <20250609150310.GF29452@fedora>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,136 +115,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
-
-> Markus Armbruster <armbru@redhat.com> writes:
->
->> Fabiano Rosas <farosas@suse.de> writes:
->>
->>> Markus Armbruster <armbru@redhat.com> writes:
->>>
->>>> Fabiano Rosas <farosas@suse.de> writes:
->>>>
->>>>> Markus Armbruster <armbru@redhat.com> writes:
->>>>>
->>>>>> Fabiano Rosas <farosas@suse.de> writes:
-
-[...]
-
->> There more than one way to skin this cat.  I like to keep state
->> normalized.
->>
->> State is an optional StrOrNull.  Possible values:
->>
->> * NULL
->>
->> * QNull, i.e. non-NULL, ->type is QTYPE_QNULL
->>
->> * Empty string, i.e. non-NULL, ->type is QTYPE_QSTRING, ->u.s is ""
->>
->> * Non-empty string, i.e. non-NULL, -> type is QTYPE_QSTRING, ->u.s is
->>   not "" (and cannot be NULL)
->>
->> As far as I understand, we have just two cases semantically:
->>
->> * Set, value is a non-empty string (empty makes no sense)
->>
->> * Unset
->>
->> I'd normalize the state to "either NULL, or (non-empty) string".
->>
->
-> This is what I wanted to do (in the next version), but it results in
-> more complex and less readable code:
-
-[...]
-
-> If we instead normalize to "either non-empty string or empty string"
-> then:
-
-[...]
-
-> The query methods get simpler because s->parameters already contains
-> data in the format they expect, we can normalize earlier in [2], which
-> means data is always in the same format throughout
-> qmp_migrate_set_parameters() and lastly, we already have the getter
-> methods [1] which can expose "abc"|NULL to the rest of the code anyway.
-
-I'd like the possible states to be clearly visible, and suggest to guard
-them with assertions.  Details, such as how exactly the states are
-encoded, are up to you.  You're in a better position to judge them than
-I am.
-
->> When writing state, we need to normalize.
->>
->> When reading state, we can rely on it being normalized.  Asserting it is
->> seems prudent, and should help readers.
->>
->
-> My main concern is that reading can rely on it being normalized, but the
-> query methods cannot, so they need to do an "extra conversion", which
-> from the reader's POV, will look nonsensical. It's not as simple as
-> using a ternary because the StrOrNull object needs to be allocated.
-
-[...]
-
->>> There are two external interfaces actually.
->>>
->>> -global migration.some_compat_option=on (stored in MigrationState):
->>>
->>> seems intentional and I believe we'd lose the ability to get out of some
->>> tricky situations if we ditched it.
->>>
->>> -global migation.some_random_option=on (stored in MigrationParameters):
->>>
->>> has become a debugging *feature*, which I personally don't use, but
->>> others do. And worse: we don't know if anyone uses it in production.
->>
->> Accidental external interface.
->>
->>> We also arbitrarily put x- in front of options for some reason. There is
->>> an argument to drop those because x- is scary and no one should be using
->>> them.
->>
->> We pretty much ditched the x- convention in the QAPI schema.
->> docs/devel/qapi-code-gen.rst:
->>
->>     Names beginning with ``x-`` used to signify "experimental".  This
->>     convention has been replaced by special feature "unstable".
->>
->> Goes back to
->>
->> commit a3c45b3e62962f99338716b1347cfb0d427cea44
->> Author: Markus Armbruster <armbru@redhat.com>
->> Date:   Thu Oct 28 12:25:12 2021 +0200
->>
->>     qapi: New special feature flag "unstable"
->>     
->>     By convention, names starting with "x-" are experimental.  The parts
->>     of external interfaces so named may be withdrawn or changed
->>     incompatibly in future releases.
->
-> This allows dropping about half of the parameters we expose. Deprecate
-> the other half, move the remaining legitimate compat options into
-> MigrationParameters, (which can be set by migrate-set-parameters) and
-> maybe we can remove the TYPE_DEVICE from MigrationState anytime this
-> decade.
-
-I'd love to get rid of the pseudo-device.
-
-> Moving all qdev properties to their own TYPE_DEVICE object and putting
-> it under --enable-debug is also an idea.
->
-> I'm willing to do the work if we ever reach a consensus about this.
-
-I'd like migration to work more like other long-running tasks: pass the
-entire configuration with the command starting it, provide commands and
-events to manage the task while it runs.
-
-This is advice, not a demand.  I'm not going to block change the
-migration maintainers want.  I may ask you to do the QAPI schema part in
-certain ways, but that's detail.
-
-[...]
+T24gMDkuMDYuMjUgMTc6MDMsIFN0ZWZhbiBIYWpub2N6aSB3cm90ZToNCj4gT24gV2VkLCBK
+dW4gMDQsIDIwMjUgYXQgMDM6Mjg6MDRQTSArMDIwMCwgSGFubmEgQ3plbmN6ZWsgd3JvdGU6
+DQo+PiBNb3ZlIGZpbGUtcG9zaXgncyBoZWxwZXIgdG8gYWRkIGEgZmxhZyAob3IgYSBzZXQg
+b2YgZmxhZ3MpIHRvIGFuIEZEJ3MNCj4+IGV4aXN0aW5nIHNldCBvZiBmbGFncyBpbnRvIG9z
+ZGVwLmMgZm9yIG90aGVyIHBsYWNlcyB0byB1c2UuDQo+Pg0KPj4gU3VnZ2VzdGVkLWJ5OiBF
+cmljIEJsYWtlIDxlYmxha2VAcmVkaGF0LmNvbT4NCj4+IFNpZ25lZC1vZmYtYnk6IEhhbm5h
+IEN6ZW5jemVrIDxocmVpdHpAcmVkaGF0LmNvbT4NCj4+IC0tLQ0KPj4gICBpbmNsdWRlL3Fl
+bXUvb3NkZXAuaCB8ICAxICsNCj4+ICAgYmxvY2svZmlsZS1wb3NpeC5jICAgfCAxNyArLS0t
+LS0tLS0tLS0tLS0tLQ0KPj4gICB1dGlsL29zZGVwLmMgICAgICAgICB8IDE4ICsrKysrKysr
+KysrKysrKysrKw0KPj4gICAzIGZpbGVzIGNoYW5nZWQsIDIwIGluc2VydGlvbnMoKyksIDE2
+IGRlbGV0aW9ucygtKQ0KPiBJIHdhcyBjdXJpb3VzIGlmIHB1dHRpbmcgUE9TSVggZmNudGwo
+MikgaW4gb3NkZXAuYyB3b3VsZCB3b3JrIG9uDQo+IFdpbmRvd3MuIEl0IGRvZXMgbm90Og0K
+Pg0KPiB4ODZfNjQtdzY0LW1pbmd3MzItZ2NjIC1tNjQgLUlsaWJxZW11dXRpbC5hLnAgLUku
+IC1JLi4gLUlxYXBpIC1JdHJhY2UgLUl1aSAtSXVpL3NoYWRlciAtSS91c3IveDg2XzY0LXc2
+NC1taW5ndzMyL3N5cy1yb290L21pbmd3L2luY2x1ZGUvZ2xpYi0yLjAgLUkvdXNyL3g4Nl82
+NC13NjQtbWluZ3czMi9zeXMtcm9vdC9taW5ndy9saWIvZ2xpYi0yLjAvaW5jbHVkZSAtZmRp
+YWdub3N0aWNzLWNvbG9yPWF1dG8gLVdhbGwgLVdpbnZhbGlkLXBjaCAtV2Vycm9yIC1zdGQ9
+Z251MTEgLU8yIC1nIC1mc3RhY2stcHJvdGVjdG9yLXN0cm9uZyAtV2VtcHR5LWJvZHkgLVdl
+bmRpZi1sYWJlbHMgLVdleHBhbnNpb24tdG8tZGVmaW5lZCAtV2Zvcm1hdC1zZWN1cml0eSAt
+V2Zvcm1hdC15MmsgLVdpZ25vcmVkLXF1YWxpZmllcnMgLVdpbXBsaWNpdC1mYWxsdGhyb3Vn
+aD0yIC1XaW5pdC1zZWxmIC1XbWlzc2luZy1mb3JtYXQtYXR0cmlidXRlIC1XbWlzc2luZy1w
+cm90b3R5cGVzIC1XbmVzdGVkLWV4dGVybnMgLVdvbGQtc3R5bGUtZGVjbGFyYXRpb24gLVdv
+bGQtc3R5bGUtZGVmaW5pdGlvbiAtV3JlZHVuZGFudC1kZWNscyAtV3NoYWRvdz1sb2NhbCAt
+V3N0cmljdC1wcm90b3R5cGVzIC1XdHlwZS1saW1pdHMgLVd1bmRlZiAtV3ZsYSAtV3dyaXRl
+LXN0cmluZ3MgLVduby1taXNzaW5nLWluY2x1ZGUtZGlycyAtV25vLXBzYWJpIC1Xbm8tc2hp
+ZnQtbmVnYXRpdmUtdmFsdWUgLWlxdW90ZSAuIC1pcXVvdGUgL2hvbWUvc3RlZmFuaGEvcWVt
+dSAtaXF1b3RlIC9ob21lL3N0ZWZhbmhhL3FlbXUvaW5jbHVkZSAtaXF1b3RlIC9ob21lL3N0
+ZWZhbmhhL3FlbXUvaG9zdC9pbmNsdWRlL3g4Nl82NCAtaXF1b3RlIC9ob21lL3N0ZWZhbmhh
+L3FlbXUvaG9zdC9pbmNsdWRlL2dlbmVyaWMgLWlxdW90ZSAvaG9tZS9zdGVmYW5oYS9xZW11
+L3RjZy9pMzg2IC1tbXMtYml0ZmllbGRzIC1tbXMtYml0ZmllbGRzIC1tY3gxNiAtbXNzZTIg
+LURfR05VX1NPVVJDRSAtRF9GSUxFX09GRlNFVF9CSVRTPTY0IC1EX0xBUkdFRklMRV9TT1VS
+Q0UgLWZuby1zdHJpY3QtYWxpYXNpbmcgLWZuby1jb21tb24gLWZ3cmFwdiAtZm5vLXBpZSAt
+bm8tcGllIC1mdHJpdmlhbC1hdXRvLXZhci1pbml0PXplcm8gLWZ6ZXJvLWNhbGwtdXNlZC1y
+ZWdzPXVzZWQtZ3ByIC1tbXMtYml0ZmllbGRzIC1tbXMtYml0ZmllbGRzIC1wdGhyZWFkIC1t
+bXMtYml0ZmllbGRzIC1NRCAtTVEgbGlicWVtdXV0aWwuYS5wL3V0aWxfb3NkZXAuYy5vYmog
+LU1GIGxpYnFlbXV1dGlsLmEucC91dGlsX29zZGVwLmMub2JqLmQgLW8gbGlicWVtdXV0aWwu
+YS5wL3V0aWxfb3NkZXAuYy5vYmogLWMgLi4vdXRpbC9vc2RlcC5jDQo+IC4uL3V0aWwvb3Nk
+ZXAuYzogSW4gZnVuY3Rpb24gJ3FlbXVfZmNudGxfYWRkZmwnOg0KPiAuLi91dGlsL29zZGVw
+LmM6NjI1OjEzOiBlcnJvcjogaW1wbGljaXQgZGVjbGFyYXRpb24gb2YgZnVuY3Rpb24gJ2Zj
+bnRsJyBbLVdpbXBsaWNpdC1mdW5jdGlvbi1kZWNsYXJhdGlvbl0NCj4gICAgNjI1IHwgICAg
+IGZsYWdzID0gZmNudGwoZmQsIEZfR0VURkwpOw0KPiAgICAgICAgfCAgICAgICAgICAgICBe
+fn5+fg0KPiAuLi91dGlsL29zZGVwLmM6NjI1OjEzOiBlcnJvcjogbmVzdGVkIGV4dGVybiBk
+ZWNsYXJhdGlvbiBvZiAnZmNudGwnIFstV2Vycm9yPW5lc3RlZC1leHRlcm5zXQ0KPiAuLi91
+dGlsL29zZGVwLmM6NjI1OjIzOiBlcnJvcjogJ0ZfR0VURkwnIHVuZGVjbGFyZWQgKGZpcnN0
+IHVzZSBpbiB0aGlzIGZ1bmN0aW9uKQ0KPiAgICA2MjUgfCAgICAgZmxhZ3MgPSBmY250bChm
+ZCwgRl9HRVRGTCk7DQo+ICAgICAgICB8ICAgICAgICAgICAgICAgICAgICAgICBefn5+fn5+
+DQo+IC4uL3V0aWwvb3NkZXAuYzo2MjU6MjM6IG5vdGU6IGVhY2ggdW5kZWNsYXJlZCBpZGVu
+dGlmaWVyIGlzIHJlcG9ydGVkIG9ubHkgb25jZSBmb3IgZWFjaCBmdW5jdGlvbiBpdCBhcHBl
+YXJzIGluDQo+IC4uL3V0aWwvb3NkZXAuYzo2Mjk6MTk6IGVycm9yOiAnRl9TRVRGTCcgdW5k
+ZWNsYXJlZCAoZmlyc3QgdXNlIGluIHRoaXMgZnVuY3Rpb24pDQo+ICAgIDYyOSB8ICAgICBp
+ZiAoZmNudGwoZmQsIEZfU0VURkwsIGZsYWdzIHwgZmxhZykgPT0gLTEpIHsNCj4gICAgICAg
+IHwgICAgICAgICAgICAgICAgICAgXn5+fn5+fg0KPiBjYzE6IGFsbCB3YXJuaW5ncyBiZWlu
+ZyB0cmVhdGVkIGFzIGVycm9ycw0KDQpBaCwgdGhhbmtzIQ0KDQpJ4oCZbGwgbW92ZSBpdCB1
+cCBpbnRvIHRoZSAjaWZuZGVmIF9XSU4zMiBibG9jayBhcm91bmQgcWVtdV9kdXBfZmxhZ3Mo
+KSANCmFuZCBmcmllbmRzLg0KDQpIYW5uYQ0K
 
 
