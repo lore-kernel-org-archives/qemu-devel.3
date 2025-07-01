@@ -4,104 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE1CBC8303F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD14C8303C
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:36:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWetk-0004bv-Rg; Tue, 01 Jul 2025 13:36:01 -0400
+	id 1uWepK-0006e5-Ux; Tue, 01 Jul 2025 13:31:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uWetc-0004Ka-HP
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:35:52 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uWetV-0000A3-Eu
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:35:51 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id CAEA321174;
- Tue,  1 Jul 2025 17:35:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1751391343; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jAogss75G+8WOyNzABCTp4Q7N33UdWP3rfHYyFQRI/g=;
- b=Gso4f0vraooNdJRifSKlZFzadcUeSI5gqpfWiwq1LcZzQ8FkMb/iEZOT0IaqRzD19EOXNu
- Q9Fhl00xCFLsNbUigUPZiWfTZ48XBzATsQ94CK2+y3Y+TytD1In569fdRBCSTyadwaB3Ec
- Hy+zhta/Zd5D1Mcx3VgAr2hjZtuXPbk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1751391343;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jAogss75G+8WOyNzABCTp4Q7N33UdWP3rfHYyFQRI/g=;
- b=pzTeFyXKSldjyhIztXqzSqJhmvLJ1WnhuTGGMsf+d+w3HcRigjVOwuryobWsFIwongp7+N
- IKpvwQ34lrQOH0BQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1751391341; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jAogss75G+8WOyNzABCTp4Q7N33UdWP3rfHYyFQRI/g=;
- b=cVSfn+M97Rhbe2ChsEhVnwVszAbypCRvpV2CHdnFdP0AJHYFmYERKoBi1z9BHP5GbkADBV
- Y/0/QL87NC8e9WADytkrINpboJCw6mzNZNpOxB1k8bU3Lp7K+C50lZYqXFvDMB1D8uS05C
- RWCWu8OE+79o/vA3DwJVniRkZXOUQ5Y=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1751391341;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jAogss75G+8WOyNzABCTp4Q7N33UdWP3rfHYyFQRI/g=;
- b=Y5oBMmeAt57WxQYO5j5AYYPJkFhTh58qnNJuv68ogRIvVvXPefZwE597Omj9fCj1NNaK5i
- KPZuBkX5mJwngvBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 41A8B13890;
- Tue,  1 Jul 2025 17:35:41 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id r7lrAG0cZGhHSQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 01 Jul 2025 17:35:41 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com, "Dr . David Alan
- Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH v2 10/11] migration: Rewrite the migration complete
- detect logic
-In-Reply-To: <20250609161855.6603-11-peterx@redhat.com>
-References: <20250609161855.6603-1-peterx@redhat.com>
- <20250609161855.6603-11-peterx@redhat.com>
-Date: Tue, 01 Jul 2025 14:35:38 -0300
-Message-ID: <87a55n6cgl.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1uWeog-0006OH-So
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:30:51 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uWeoc-0007Iv-4p
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:30:45 -0400
+Received: from localhost.localdomain (unknown [167.220.208.67])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 638AF2119388;
+ Tue,  1 Jul 2025 10:30:27 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 638AF2119388
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1751391030;
+ bh=4LvCJGwmpIjKrsgYwC24zk+8wmMxFtEhjy4AN5gbITE=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=SWQ0iY6so0cyh9AVREV7pV/NW4hgpVese8FeGiYayblnHQ/P4fNWN6/Yoq67zdumE
+ QH0oANfL84JB7TrZDpel2rMdg8dUhyBHmx0r1H/xpy93N8ixf1ZfmNAJ7x6zNNjes2
+ I4kkJvveooWYwJeAqk8R8oVDnDcQ0DMWmQpfQYtw=
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: qemu-devel@nongnu.org
+Cc: Cameron Esfahani <dirty@apple.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Thomas Huth <thuth@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Wei Liu <wei.liu@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <liuwe@microsoft.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Magnus Kulke <magnuskulke@microsoft.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v2 22/27] target/i386/mshv: Integrate x86 instruction
+ decoder/emulator
+Date: Tue,  1 Jul 2025 19:28:29 +0200
+Message-Id: <20250701172834.44849-23-magnuskulke@linux.microsoft.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250701172834.44849-1-magnuskulke@linux.microsoft.com>
+References: <20250701172834.44849-1-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,84 +78,282 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Connect the x86 instruction decoder and emulator to the MSHV backend
+to handle intercepted instructions. This enables software emulation
+of MMIO operations in MSHV guests. MSHV has a translate_gva hypercall
+that is used to accessing the physical guest memory.
 
-> There're a few things off here in that logic, rewrite it.  When at it, add
-> rich comment to explain each of the decisions.
->
-> Since this is very sensitive path for migration, below are the list of
-> things changed with their reasonings.
->
->   (1) Exact pending size is only needed for precopy not postcopy
->
->       Fundamentally it's because "exact" version only does one more deep
->       sync to fetch the pending results, while in postcopy's case it's
->       never going to sync anything more than estimate as the VM on source
->       is stopped.
->
->   (2) Do _not_ rely on threshold_size anymore to decide whether postcopy
->       should complete
->
->       threshold_size was calculated from the expected downtime and
->       bandwidth only during precopy as an efficient way to decide when to
->       switchover.  It's not sensible to rely on threshold_size in postcopy.
->
->       For precopy, if switchover is decided, the migration will complete
->       soon.  It's not true for postcopy.  Logically speaking, postcopy
->       should only complete the migration if all pending data is flushed.
->
->       Here it used to work because save_complete() used to implicitly
->       contain save_live_iterate() when there's pending size.
->
->       Even if that looks benign, having RAMs to be migrated in postcopy's
->       save_complete() has other bad side effects:
->
->       (a) Since save_complete() needs to be run once at a time, it means
->       when moving RAM there's no way moving other things (rather than
->       round-robin iterating the vmstate handlers like what we do with
->       ITERABLE phase).  Not an immediate concern, but it may stop working
->       in the future when there're more than one iterables (e.g. vfio
->       postcopy).
->
->       (b) postcopy recovery, unfortunately, only works during ITERABLE
->       phase. IOW, if src QEMU moves RAM during postcopy's save_complete()
->       and network failed, then it'll crash both QEMUs... OTOH if it failed
->       during iteration it'll still be recoverable.  IOW, this change should
->       further reduce the window QEMU split brain and crash in extreme cases.
->
->       If we enable the ram_save_complete() tracepoints, we'll see this
->       before this patch:
->
->       1267959@1748381938.294066:ram_save_complete dirty=9627, done=0
->       1267959@1748381938.308884:ram_save_complete dirty=0, done=1
->
->       It means in this migration there're 9627 pages migrated at complete()
->       of postcopy phase.
->
->       After this change, all the postcopy RAM should be migrated in iterable
->       phase, rather than save_complete():
->
->       1267959@1748381938.294066:ram_save_complete dirty=0, done=0
->       1267959@1748381938.308884:ram_save_complete dirty=0, done=1
->
->   (3) Adjust when to decide to switch to postcopy
->
->       This shouldn't be super important, the movement makes sure there's
->       only one in_postcopy check, then we are clear on what we do with the
->       two completely differnt use cases (precopy v.s. postcopy).
->
->   (4) Trivial touch up on threshold_size comparision
->
->       Which changes:
->
->       "(!pending_size || pending_size < s->threshold_size)"
->
->       into:
->
->       "(pending_size <= s->threshold_size)"
->
-> Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+A guest might read from unmapped memory regions (e.g. OVMF will probe
+0xfed40000 for a vTPM). In those cases 0xFF bytes is returned instead of
+aborting the execution.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+---
+ accel/mshv/mem.c            |  65 +++++++++++++++++++
+ accel/mshv/mshv-all.c       |   2 +-
+ include/system/mshv.h       |   6 +-
+ target/i386/mshv/mshv-cpu.c | 126 +++++++++++++++++++++++++++++++++++-
+ 4 files changed, 196 insertions(+), 3 deletions(-)
+
+diff --git a/accel/mshv/mem.c b/accel/mshv/mem.c
+index f51e9fee8e..6d7a726898 100644
+--- a/accel/mshv/mem.c
++++ b/accel/mshv/mem.c
+@@ -58,6 +58,71 @@ static int map_or_unmap(int vm_fd, const MshvMemoryRegion *mr, bool map)
+     return set_guest_memory(vm_fd, &region);
+ }
+ 
++static int handle_unmapped_mmio_region_read(uint64_t gpa, uint64_t size,
++                                            uint8_t *data)
++{
++    warn_report("read from unmapped mmio region gpa=0x%lx size=%lu", gpa, size);
++
++    if (size == 0 || size > 8) {
++        error_report("invalid size %lu for reading from unmapped mmio region",
++                     size);
++        return -1;
++    }
++
++    memset(data, 0xFF, size);
++
++    return 0;
++}
++
++int mshv_guest_mem_read(uint64_t gpa, uint8_t *data, uintptr_t size,
++                        bool is_secure_mode, bool instruction_fetch)
++{
++    int ret;
++    MemTxAttrs memattr = { .secure = is_secure_mode };
++
++    if (instruction_fetch) {
++        trace_mshv_insn_fetch(gpa, size);
++    } else {
++        trace_mshv_mem_read(gpa, size);
++    }
++
++    ret = address_space_rw(&address_space_memory, gpa, memattr, (void *)data,
++                           size, false);
++    if (ret == MEMTX_OK) {
++        return 0;
++    }
++
++    if (ret == MEMTX_DECODE_ERROR) {
++        return handle_unmapped_mmio_region_read(gpa, size, data);
++    }
++
++    error_report("failed to read guest memory at 0x%lx", gpa);
++    return -1;
++}
++
++int mshv_guest_mem_write(uint64_t gpa, const uint8_t *data, uintptr_t size,
++                         bool is_secure_mode)
++{
++    int ret;
++    MemTxAttrs memattr = { .secure = is_secure_mode };
++
++    trace_mshv_mem_write(gpa, size);
++    ret = address_space_rw(&address_space_memory, gpa, memattr, (void *)data,
++                           size, true);
++    if (ret == MEMTX_OK) {
++        return 0;
++    }
++
++    if (ret == MEMTX_DECODE_ERROR) {
++        warn_report("write to unmapped mmio region gpa=0x%lx size=%lu", gpa,
++                    size);
++        return 0;
++    }
++
++    error_report("Failed to write guest memory");
++    return -1;
++}
++
+ static int set_memory(const MshvMemoryRegion *mshv_mr, bool add)
+ {
+     int ret = 0;
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index d95893806f..e9f880b83e 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -432,7 +432,7 @@ static int mshv_init(MachineState *ms)
+         return -1;
+     }
+ 
+-    mshv_init_cpu_logic();
++    mshv_init_mmio_emu();
+ 
+     mshv_init_msicontrol();
+ 
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index 9e3242d5e6..63104af68c 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -101,7 +101,7 @@ typedef enum MshvVmExit {
+     MshvVmExitSpecial  = 2,
+ } MshvVmExit;
+ 
+-void mshv_init_cpu_logic(void);
++void mshv_init_mmio_emu(void);
+ int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd);
+ void mshv_remove_vcpu(int vm_fd, int cpu_fd);
+ int mshv_configure_vcpu(const CPUState *cpu, const MshvFPU *fpu, uint64_t xcr0);
+@@ -151,6 +151,10 @@ typedef struct MshvMemoryRegion {
+ 
+ int mshv_add_mem(int vm_fd, const MshvMemoryRegion *mr);
+ int mshv_remove_mem(int vm_fd, const MshvMemoryRegion *mr);
++int mshv_guest_mem_read(uint64_t gpa, uint8_t *data, uintptr_t size,
++                        bool is_secure_mode, bool instruction_fetch);
++int mshv_guest_mem_write(uint64_t gpa, const uint8_t *data, uintptr_t size,
++                         bool is_secure_mode);
+ void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
+                        bool add);
+ 
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index a17be79a77..d177fe5826 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -102,6 +102,34 @@ static enum hv_register_name FPU_REGISTER_NAMES[26] = {
+     HV_X64_REGISTER_XMM_CONTROL_STATUS,
+ };
+ 
++static int translate_gva(int cpu_fd, uint64_t gva, uint64_t *gpa,
++                         uint64_t flags)
++{
++    int ret;
++    union hv_translate_gva_result result = { 0 };
++
++    *gpa = 0;
++    mshv_translate_gva args = {
++        .gva = gva,
++        .flags = flags,
++        .gpa = (__u64 *)gpa,
++        .result = &result,
++    };
++
++    ret = ioctl(cpu_fd, MSHV_TRANSLATE_GVA, &args);
++    if (ret < 0) {
++        error_report("failed to invoke gpa->gva translation");
++        return -errno;
++    }
++    if (result.result_code != HV_TRANSLATE_GVA_SUCCESS) {
++        error_report("failed to translate gva (" TARGET_FMT_lx ") to gpa", gva);
++        return -1;
++
++    }
++
++    return 0;
++}
++
+ int mshv_set_generic_regs(int cpu_fd, hv_register_assoc *assocs, size_t n_regs)
+ {
+     struct mshv_vp_registers input = {
+@@ -921,8 +949,104 @@ int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
+     return 0;
+ }
+ 
+-void mshv_init_cpu_logic(void)
++static int guest_mem_read_with_gva(const CPUState *cpu, uint64_t gva,
++                                   uint8_t *data, uintptr_t size,
++                                   bool fetch_instruction)
++{
++    int ret;
++    uint64_t gpa, flags;
++    int cpu_fd = mshv_vcpufd(cpu);
++
++    flags = HV_TRANSLATE_GVA_VALIDATE_READ;
++    ret = translate_gva(cpu_fd, gva, &gpa, flags);
++    if (ret < 0) {
++        error_report("failed to translate gva to gpa");
++        return -1;
++    }
++
++    ret = mshv_guest_mem_read(gpa, data, size, false, fetch_instruction);
++    if (ret < 0) {
++        error_report("failed to read from guest memory");
++        return -1;
++    }
++
++    return 0;
++}
++
++static int guest_mem_write_with_gva(const CPUState *cpu, uint64_t gva,
++                                    const uint8_t *data, uintptr_t size)
++{
++    int ret;
++    uint64_t gpa, flags;
++    int cpu_fd = mshv_vcpufd(cpu);
++
++    flags = HV_TRANSLATE_GVA_VALIDATE_WRITE;
++    ret = translate_gva(cpu_fd, gva, &gpa, flags);
++    if (ret < 0) {
++        error_report("failed to translate gva to gpa");
++        return -1;
++    }
++    ret = mshv_guest_mem_write(gpa, data, size, false);
++    if (ret < 0) {
++        error_report("failed to write to guest memory");
++        return -1;
++    }
++    return 0;
++}
++
++static void write_mem(CPUState *cpu, void *data, target_ulong addr, int bytes)
++{
++    if (guest_mem_write_with_gva(cpu, addr, data, bytes) < 0) {
++        error_report("failed to write memory");
++        abort();
++    }
++}
++
++static void read_mem(CPUState *cpu, void *data, target_ulong addr, int bytes)
++{
++    if (guest_mem_read_with_gva(cpu, addr, data, bytes, false) < 0) {
++        error_report("failed to read memory");
++        abort();
++    }
++}
++
++static void fetch_instruction(CPUState *cpu, void *data,
++                              target_ulong addr, int bytes)
++{
++    if (guest_mem_read_with_gva(cpu, addr, data, bytes, true) < 0) {
++        error_report("failed to fetch instruction");
++        abort();
++    }
++}
++
++static void read_segment_descriptor(CPUState *cpu,
++                                    struct x86_segment_descriptor *desc,
++                                    enum X86Seg seg_idx)
++{
++    bool ret;
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    SegmentCache *seg = &env->segs[seg_idx];
++    x86_segment_selector sel = { .sel = seg->selector & 0xFFFF };
++
++    ret = x86_read_segment_descriptor(cpu, desc, sel);
++    if (ret == false) {
++        error_report("failed to read segment descriptor");
++        abort();
++    }
++}
++
++static const struct x86_emul_ops mshv_x86_emul_ops = {
++    .fetch_instruction = fetch_instruction,
++    .read_mem = read_mem,
++    .write_mem = write_mem,
++    .read_segment_descriptor = read_segment_descriptor,
++};
++
++void mshv_init_mmio_emu(void)
+ {
++    init_decoder();
++    init_emu(&mshv_x86_emul_ops);
+ }
+ 
+ void mshv_arch_init_vcpu(CPUState *cpu)
+-- 
+2.34.1
+
 
