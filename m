@@ -4,68 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A8DDC83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 15:12:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1252EC7EE30
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 15:14:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWceP-0002UI-JI; Tue, 01 Jul 2025 11:12:01 -0400
+	id 1uWcgI-0003PS-6n; Tue, 01 Jul 2025 11:13:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1uWceN-0002Tg-RQ
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 11:11:59 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uWcgG-0003PC-9O; Tue, 01 Jul 2025 11:13:56 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1uWceH-0000cG-Hy
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 11:11:59 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 9A56243E7F;
- Tue,  1 Jul 2025 15:11:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40C5AC4CEEB;
- Tue,  1 Jul 2025 15:11:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1751382700;
- bh=M+bQwFmLXTxBWOnu4wlcoc4EDLvR5mXpIb1b4efgzsQ=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=uKk9ctLAIOmkAX/PrO/jYKf1GxSvSUWMiWFBuQRzqpeYCc86kRHRzoF0VvEEhf6KX
- YTbfyf5B4XTEGEX0TyQLD+dH+oe4XUS5HS0DPefWL7NA1uBCgyfXU7/2HQXD00LPVy
- hlDPMi2OzMXJy2DNlEiWM2Mt1mWnDikXVlmOZUN8MHMMjftOAzE+GPXuc05ONsP/6c
- Vp0yrgaPsrBzXcP4FIgbtd4/fbHyMp8zl11gQMW6mM8Mk01zvgOP/hhvwDdQqNi9dK
- /5AV+HjMlBF0P8LDJLy4Iz1fTcGpXw2CqETs5TB5Cq4pZofZPU201wsltll/DFV7DK
- P4MFsgYRJpotQ==
-Date: Tue, 1 Jul 2025 15:11:39 +0000
-From: Wei Liu <wei.liu@kernel.org>
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Cc: Wei Liu <wei.liu@kernel.org>, magnuskulke@microsoft.com,
- qemu-devel@nongnu.org, liuwe@microsoft.com,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Subject: Re: [RFC PATCH 24/25] target/i386/mshv: Implement mshv_vcpu_run()
-Message-ID: <aGP6q20CEV5_Y2UM@liuwe-devbox-ubuntu-v2.lamzopl0uupeniq2etz1fddiyg.xx.internal.cloudapp.net>
-References: <20250520113018.49569-1-magnuskulke@linux.microsoft.com>
- <20250520113018.49569-25-magnuskulke@linux.microsoft.com>
- <aC0Ht-541wBzrUoc@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
- <aGOd1jSBsAMQ3OSj@example.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uWcg7-00012S-3y; Tue, 01 Jul 2025 11:13:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1751382827; x=1782918827;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=hcGGy5cmnJsNTiMK7Lwef975+eC1/j95aZrplOwmAxs=;
+ b=WBmGe1boQKrDGauH4tLgwVj/sodCs/MZVAAvCZBce7kZXq9PMZyC69il
+ ZpADFT38KQV/DZDeJKO1yeUrhxI3fupW/mMGfHk/ELw9+8YVaprslSVKR
+ 38gnqzblpyWqKnTXGfvu4Bp4vSJiKidxePp20BzAZUtM8VYXSqtEIvhaa
+ hMkFv9CS4S+07NrzFXicJ+1uFQ/zEdxO62pTUs6rMkFh8a/dBPik/9xiH
+ GPEMgfHA8buI4ssiliIYe4sYc7S66hY9tA+pTO+7jz7gbRqDWVQa2EeTW
+ UsP01EnfTq/9tPo1hr6qfRv4ncmnmvgjAzYEnv4OB2J6aiLXTMATVc9LK Q==;
+X-CSE-ConnectionGUID: oqTyTxGmRo+d0H0R09UpJA==
+X-CSE-MsgGUID: Ui3W+6owRH2M2P+C2rMdbA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11481"; a="71217148"
+X-IronPort-AV: E=Sophos;i="6.16,279,1744095600"; d="scan'208";a="71217148"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Jul 2025 08:13:41 -0700
+X-CSE-ConnectionGUID: rABrkWjbQQyBLlPZQxR9ag==
+X-CSE-MsgGUID: IKozC8+QS/iUjy+Ta7CQqw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,279,1744095600"; d="scan'208";a="159514178"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Jul 2025 08:13:38 -0700
+Message-ID: <e19644ed-3e32-42f7-8d46-70f744ffe33b@intel.com>
+Date: Tue, 1 Jul 2025 23:13:34 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aGOd1jSBsAMQ3OSj@example.com>
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=wei.liu@kernel.org;
- helo=sea.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] i386/cpu: ARCH_CAPABILITIES should not be advertised on
+ AMD
+To: Alexandre Chartre <alexandre.chartre@oracle.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, qemu-stable@nongnu.org,
+ konrad.wilk@oracle.com, boris.ostrovsky@oracle.com,
+ maciej.szmigiero@oracle.com, Sean Christopherson <seanjc@google.com>,
+ kvm@vger.kernel.org
+References: <20250630133025.4189544-1-alexandre.chartre@oracle.com>
+ <aGO3vOfHUfjgvBQ9@intel.com> <c6a79077-024f-4d2f-897c-118ac8bb9b58@intel.com>
+ <1ecfac9a-29c0-4612-b4d2-fd6f0e70de9d@oracle.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <1ecfac9a-29c0-4612-b4d2-fd6f0e70de9d@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,31 +90,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 01, 2025 at 10:35:34AM +0200, Magnus Kulke wrote:
-> On Tue, May 20, 2025 at 10:52:39PM +0000, Wei Liu wrote:
-> > On Tue, May 20, 2025 at 01:30:17PM +0200, Magnus Kulke wrote:
-> > > +    default:
-> > > +        msg = &exit_msg;
-> > 
-> > Do you not get any HALT exit? How are you going to shut down the VM?
-> > 
+On 7/1/2025 8:12 PM, Alexandre Chartre wrote:
 > 
-> In the WHPX accelerator there is this comment:
+> On 7/1/25 13:12, Xiaoyao Li wrote:
+>> On 7/1/2025 6:26 PM, Zhao Liu wrote:
+>>>> unless it was explicitly requested by the user.
+>>> But this could still break Windows, just like issue #3001, which enables
+>>> arch-capabilities for EPYC-Genoa. This fact shows that even explicitly
+>>> turning on arch-capabilities in AMD Guest and utilizing KVM's emulated
+>>> value would even break something.
+>>>
+>>> So even for named CPUs, arch-capabilities=on doesn't reflect the fact
+>>> that it is purely emulated, and is (maybe?) harmful.
+>>
+>> It is because Windows adds wrong code. So it breaks itself and it's 
+>> just the regression of Windows.
+>>
+>> KVM and QEMU are not supposed to be blamed.
 > 
-> 	case WHvRunVpExitReasonX64Halt:
-> 		/*
-> 		 * WARNING: as of build 19043.1526 (21H1), this exit reason is no
-> 		 * longer used.
-> 		 */
-> 		ret = whpx_handle_halt(cpu);
-> 		break;
+> I can understand the Windows code logic, and I don't think it is 
+> necessarily wrong,
+> because it finds that the system has:
 > 
-> I wonder if this also applies to HVMSG_X64_HALT from the MSHV driver?
+> - an AMD cpu
+> - an Intel-only feature/MSR
+> 
+> Then what should the code do? Trust the cpu type (AMD) or trust the MSR 
+> (Intel).
+> They decided not to choose, and for safety they stop because they have 
+> an unexpected
+> configuration.
 
-IIRC that's still used in our driver.
+It's not how software/OS is supposed to work with x86 architecture.
 
-You can try shutting down the VM with `poweroff` or `halt` and see if
-you get the exit.
+Though there are different vendors for x86, like Intel and AMD, they 
+both implement x86 architecture. For x86 architecture, architectural 
+features are enumerated by CPUID. If you read Intel SDM and AMD APM, you 
+will find that Intel defines most features at range [0, x] while AMD 
+defines most features at range [0x8000 000, 0x8000 000y]. But if a bit 
+is defined by both Intel and AMD, it must have same meaning and 
+enumerate the same feature.
 
-Wei
+Usually, a feature is first introduced by one vendor, then other vendors 
+might implement the same one later. E.g., bus lock detection, which is 
+enumerated via CPUID.7_0:ECX[bit 24] and first introduced by Intel in 
+2020. Later, AMD implemented the same one from Zen 5. Before AMD 
+implemented it, it was an Intel-only feature. Can we make code as below
+
+    if (is_AMD && cpuid_enumerates_bus_lock_detect)
+	error(unsupported CPU);
+
+at that time? If we wrote such code, then it will fail on all the AMD 
+Zen 5 CPUs.
+
+Besides, I would like to talk about how software is supposed to deal 
+with reserved bits on x86 architecture. In general, software should not 
+set any expectation on the reserved bit. The value cannot be relied upon 
+to be 0 since any reserved bit can have a meaning in the future. As Igor 
+said:
+
+   software shouldn't even try to use it or make any decisions
+   based on that
+
+For more information, you can refer to Intel SDM vol1. chapter 1.3.2 
+Reserved Bits and Software compatibility. For AMD APM, you would need 
+search yourself.
+
+OK, back to the original question "what should the code do?"
+
+My answer is, it can behave with any of below option:
+
+- Be vendor agnostic and stick to x86 architecture. If CPUID enumerates 
+a feature, then the feature is available architecturally.
+
+- Based on AMD spec. Ignore the bit since it's a reserved bit. (Expect a 
+reserved bit to be zero if not explicitly state by spec is totally wrong!)
+
+> alex.
+> 
+
 
