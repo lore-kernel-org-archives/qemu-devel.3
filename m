@@ -4,74 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A855C7EE30
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 11:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73ED6C8302F
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 11:46:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWZIw-0003gZ-BJ; Tue, 01 Jul 2025 07:37:38 -0400
+	id 1uWZQI-0005Dv-Cl; Tue, 01 Jul 2025 07:45:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uWZIr-0003g8-00
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:37:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uWZQ9-0005AY-7p
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:45:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uWZIn-00024U-6t
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:37:31 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uWZPy-0003F7-Q3
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 07:45:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751369845;
+ s=mimecast20190719; t=1751370293;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vw5O4lMVxeF8wcY5LvDDfJqxCwiPzAWKcuF+9FH0pxE=;
- b=h4t5bfobRHdVqEaPTmiAZM+FKyvnFIKmPyjgs4wTKLqlZeEcIYYkrCk6sw1iS0MESmg0BX
- 5DmrKFlXtjbsokOJm9nOdynce9nLONrmcDhEZrVmFkoBCmjIcVXw7Hu2wkgZa75msZQ69y
- Hd+0vNThJRXcu1ur5/kFtNaqwNP7j3I=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-153-6UyDl35rNMmEEnclqVAofg-1; Tue,
- 01 Jul 2025 07:37:22 -0400
-X-MC-Unique: 6UyDl35rNMmEEnclqVAofg-1
-X-Mimecast-MFC-AGG-ID: 6UyDl35rNMmEEnclqVAofg_1751369840
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8F87B1808984; Tue,  1 Jul 2025 11:37:19 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.34.118])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ABA2730001B1; Tue,  1 Jul 2025 11:37:13 +0000 (UTC)
-Date: Tue, 1 Jul 2025 13:37:10 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, den@virtuozzo.com,
- andrey.drobyshev@virtuozzo.com, hreitz@redhat.com,
- stefanha@redhat.com, eblake@redhat.com, jsnow@redhat.com,
- vsementsov@yandex-team.ru, xiechanglong.d@gmail.com,
- wencongyang2@huawei.com, berto@igalia.com, fam@euphon.net, ari@tuxera.com
-Subject: Re: [PATCH v4 24/48] block: add bdrv_graph_wrlock_drained()
- convenience wrapper
-Message-ID: <aGPIZvQwejyjRPKw@redhat.com>
-References: <20250530151125.955508-1-f.ebner@proxmox.com>
- <20250530151125.955508-25-f.ebner@proxmox.com>
+ bh=vicT1n12Q3bt43l0BKSXkJu6cLKKIkPFHwd4M2fi9jo=;
+ b=R9qCZ0APZihsCo14WpIxZ7GApYV1EdjOlTDWmQBUroZ9pehQV0W+pynxhVzWL5vIqegqHl
+ 4BhX/lsb9MCjHmWg5+cvVM/jxDfsUw86sllb7zpdkIyJG76nU2suI+EQpb1qHD/Lmdo5Es
+ bVNLgBUkl1YLdDZ31KAhPoVRsneijsM=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-400-3AUkznmzNfKKaEhcs2JBDQ-1; Tue, 01 Jul 2025 07:44:51 -0400
+X-MC-Unique: 3AUkznmzNfKKaEhcs2JBDQ-1
+X-Mimecast-MFC-AGG-ID: 3AUkznmzNfKKaEhcs2JBDQ_1751370291
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45311704d22so22759865e9.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 04:44:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751370290; x=1751975090;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vicT1n12Q3bt43l0BKSXkJu6cLKKIkPFHwd4M2fi9jo=;
+ b=SIQtCcbGWobvPXxXtSbP/RKP6Y6Ub+RIi3fj1kvRyuc3LzC7ygkIpxMtVV+NIjEaTc
+ 3IrP9p8Yo4dmmaMtJBxji47iGIoTXbvNbOrd4XEXls0l7lvHwL/GtseYkOrzP80v6F0d
+ Lz6CrbnGGmnACp5PlUnCTKaQPysHDP9eF6hvnsGvLclX1/dVsZwNqckbwr7XJG9y5i61
+ XuqAuKDz3WlglVaxfEGgsdd6ag+tfiXlEOCfVz/X17tUbcdjnJdVZyzEyhDHBUdKOQFd
+ wBh2tBr6Cyb2FWlEm5O5HIf+u3v2vUL4+/H/lv3pSh2ffU2KQC/WN+KcY3+pdV2UY3HX
+ SKjw==
+X-Gm-Message-State: AOJu0YxvLxQn/Vp4PKxAG2BZyyo0lxe7pgtVpTIiqeqs8B8Rf9v+4mBM
+ OEX39aNSSWQGm2YBZQGyVDJ2VRH45LKvsDiuzHqs2PhcE6I75VBj0fqIIVYPfMhu4yYkZ8008kI
+ c+HTqjxeIpOXW1lO+8bM88fRaInUli3pAbonwdVc8uOmMyMwgPCvoQfYV
+X-Gm-Gg: ASbGncsvjCzK0O1M13l/NErCCNAoY+3uwqScee5kkkKRZk2zRrzpURGLm5mobeo7TZJ
+ uEdRyHaZcmmv/jjqQfLd0FdNge8QpEAqaxfpwnCgPAFzcY2GNWAMs/3IahmHCiXOiA6shXPFHLv
+ LTd6Yaw6Jv3iRyAiA6oJBeJkDeYXFhQIxIhtoWlidrQg7FzQkVmjEyN4snLcU4/8KqOKnswsnf3
+ AJlfmemrrJdlJqZPo4I7G/o12iq9QE1FE4Z+XjFfM2aWy3NL9a6rCAB5VKMjqhRmM/zaFjBE1f9
+ qvckzsrnb7rqlYXdj1yjYb4AV8CVWwnQRNhqxsoYRl/bjmtOdDYWzx/Z7HLaBcEFoFgbjaGwGdb
+ WQ3Un
+X-Received: by 2002:a05:600c:138d:b0:442:f482:c429 with SMTP id
+ 5b1f17b1804b1-453a84069b7mr26196255e9.8.1751370290492; 
+ Tue, 01 Jul 2025 04:44:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH/KSSaExI7tSriJSKh3CJ+W2i4cwOnH2U7DfkF2usMOGbDo55o7tUhWNC/XHbKk+nII1a6UA==
+X-Received: by 2002:a05:600c:138d:b0:442:f482:c429 with SMTP id
+ 5b1f17b1804b1-453a84069b7mr26195905e9.8.1751370289969; 
+ Tue, 01 Jul 2025 04:44:49 -0700 (PDT)
+Received: from localhost
+ (p200300cfd700f38d3df6a1ca7d40fe1f.dip0.t-ipconnect.de.
+ [2003:cf:d700:f38d:3df6:a1ca:7d40:fe1f])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4538233c49fsm192090365e9.7.2025.07.01.04.44.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 01 Jul 2025 04:44:48 -0700 (PDT)
+From: Hanna Czenczek <hreitz@redhat.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Brian Song <hibriansong@gmail.com>
+Subject: [PATCH v3 02/21] fuse: Ensure init clean-up even with error_fatal
+Date: Tue,  1 Jul 2025 13:44:18 +0200
+Message-ID: <20250701114437.207419-3-hreitz@redhat.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250701114437.207419-1-hreitz@redhat.com>
+References: <20250701114437.207419-1-hreitz@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250530151125.955508-25-f.ebner@proxmox.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,52 +111,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 30.05.2025 um 17:11 hat Fiona Ebner geschrieben:
-> Many write-locked sections are also drained sections. A new
-> bdrv_graph_wrunlock_drained() wrapper around bdrv_graph_wrunlock() is
-> introduced, which will begin a drained section first. A global
-> variable is used so bdrv_graph_wrunlock() knows if it also needs
-> to end such a drained section. Both the aio_poll call in
-> bdrv_graph_wrlock() and the aio_bh_poll() in bdrv_graph_wrunlock()
-> can re-enter a write-locked section. While for the latter, ending the
-> drain could be moved to before the call, the former requires that the
-> variable is a counter and not just a boolean.
-> 
-> Since the wrapper calls bdrv_drain_all_begin(), which must be called
-> with the graph unlocked, mark the wrapper as GRAPH_UNLOCKED too.
-> 
-> The switch to the new helpers was generated with the following
-> commands and then manually checked:
-> find . -name '*.c' -exec sed -i -z 's/bdrv_drain_all_begin();\n\s*bdrv_graph_wrlock();/bdrv_graph_wrlock_drained();/g' {} ';'
-> find . -name '*.c' -exec sed -i -z 's/bdrv_graph_wrunlock();\n\s*bdrv_drain_all_end();/bdrv_graph_wrunlock();/g' {} ';'
-> 
-> Suggested-by: Kevin Wolf <kwolf@redhat.com>
-> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-> ---
-> 
-> Changes in v4:
-> * Adapt to context changes from earlier patch.
-> * Mark the wrapper as GRAPH_UNLOCKED itself
+When exports are created on the command line (with the storage daemon),
+errp is going to point to error_fatal.  Without ERRP_GUARD, we would
+exit immediately when *errp is set, i.e. skip the clean-up code under
+the `fail` label.  Use ERRP_GUARD so we always run that code.
 
-> diff --git a/include/block/graph-lock.h b/include/block/graph-lock.h
-> index 2c26c72108..b564cba2c0 100644
-> --- a/include/block/graph-lock.h
-> +++ b/include/block/graph-lock.h
-> @@ -112,10 +112,21 @@ void unregister_aiocontext(AioContext *ctx);
->  void no_coroutine_fn TSA_ACQUIRE(graph_lock) TSA_NO_TSA
->  bdrv_graph_wrlock(void);
->  
-> +/*
-> + * bdrv_graph_wrlock_drained:
-> + * Similar to bdrv_graph_wrlock, but will begin a drained section before
-> + * locking.
-> + */
-> +void no_coroutine_fn TSA_ACQUIRE(graph_lock) TSA_NO_TSA GRAPH_UNLOCKED
-> +bdrv_graph_wrlock_drained(void);
+As far as I know, this has no actual impact right now[1], but it is
+still better to make this right.
 
-GRAPH_UNLOCKED is redundant. TSA_ACQUIRE(graph_lock) already means that
-you can't call the function while holding the lock.
+[1] Not cleaning up the mount point is the only thing I can imagine
+    would be problematic, but that is the last thing we attempt, so if
+    it fails, it will clean itself up.
 
-Kevin
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+---
+ block/export/fuse.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index b967e88d2b..b224ce591d 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -119,6 +119,7 @@ static int fuse_export_create(BlockExport *blk_exp,
+                               BlockExportOptions *blk_exp_args,
+                               Error **errp)
+ {
++    ERRP_GUARD(); /* ensure clean-up even with error_fatal */
+     FuseExport *exp = container_of(blk_exp, FuseExport, common);
+     BlockExportOptionsFuse *args = &blk_exp_args->u.fuse;
+     int ret;
+-- 
+2.49.0
 
 
