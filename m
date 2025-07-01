@@ -4,150 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 600DEC83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 20:35:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5314BC7EE30
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 20:57:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWhgJ-0002B7-2d; Tue, 01 Jul 2025 16:34:19 -0400
+	id 1uWi2G-0007o3-Gb; Tue, 01 Jul 2025 16:57:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <etanous@nvidia.com>)
- id 1uWhgF-0002A0-R4; Tue, 01 Jul 2025 16:34:15 -0400
-Received: from mail-bn7nam10on20606.outbound.protection.outlook.com
- ([2a01:111:f403:2009::606]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <etanous@nvidia.com>)
- id 1uWhgE-0000h4-A6; Tue, 01 Jul 2025 16:34:15 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=I6IXc8A5c14EweK3vJJEXSBC1WseSy2tQTdQaWUxO/zOY7jry742PhQ3l/JAwodhxVc0HArJmTbf63YlD26qVBWp2Ou/EcRjPEy6OeKZ9fVAQkvQPvYOImnaZgcqgt9yL9WWOjwQMbku/AXL74yb0rmLCPS9D0mV63OxSHyeweV0M4iEwSjDY/3y/jMHv5uvcKjM5Km46OeTL56uGtTYCIOw9yM3VeTbarQrNO8MN3LW3cMb7BdjmrcqSGJOiav+RPJeOFiHmXTbdIew2gdwbUj67lEcf7q8M6ksXHa0It5pE4sNQPdcyQq+KvNfm0dYVBiaWrKfiFfs6kUmTlOWZw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rcH1E2ZK9pMDGZzdHyVZF+vURoJ31zRQbSlMRo/QOd8=;
- b=anQWo3VdCPGDatMoj66jqIM0eFagqjdWwcY2yk04ay+me35KDdBQKf4+Ol5aeRxpc+AfblYN0q0VYEZx2nBCGpoFCoJKrpgTF0RPtzitFtDUSV3YxoowuAFu53nlsDdD73rMKinKNW3zuitLC4kLNTF3g4iAVvNRle96sFsyAjAB0B+LaJrgFy6zJcOfuv2ruiIuWFc+8as2qG6TQHhqEDnbBZfmZIXmXHG7p23Lxwa/+/d1DLeqMf74YaTlCB5D3NfQftSuYCMR2qFNPMADes3UMBjAiMOE6Le0W3ZdDqUzDsNOAGZd195w38fJjIxptUHJu9lEYfiEfCcvTwgZAg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rcH1E2ZK9pMDGZzdHyVZF+vURoJ31zRQbSlMRo/QOd8=;
- b=VVY5fN8FPx8D8XVko12jINYwjDuwxXbVm5s1lbQjQjoW1wY51yuLhed/KgGB1FrjTlpR3VWWQVOQ0l/+dSAc9uICJlI3XvAvwxyuBTT3xWx2i4ZrBrMlQKxTcCc9F1G6WV14ZC/Jpm1WTwVsF/nbXu7niGupmIyFJMtiHHd/bzkq+yg5nc1yejVmbeQ5ieTT2obkhX5R3QuvQzxU20nvsz3/zcKKZNhrnWDxXl/mzSzlE95jArKceHl5mFwMB2I0lhwM/s7awg+O39teQn7PtcdXM9oj70KtRpG5c0DHvDYVSiHzBtMSZE7YYr+Pkki7Suv0eO2TNV4g7aNNWNPSBQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH2PR12MB4277.namprd12.prod.outlook.com (2603:10b6:610:ae::23)
- by BN7PPF0FD1DEA27.namprd12.prod.outlook.com
- (2603:10b6:40f:fc02::6c8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.29; Tue, 1 Jul
- 2025 20:34:05 +0000
-Received: from CH2PR12MB4277.namprd12.prod.outlook.com
- ([fe80::8857:98e9:8b64:787]) by CH2PR12MB4277.namprd12.prod.outlook.com
- ([fe80::8857:98e9:8b64:787%4]) with mapi id 15.20.8880.021; Tue, 1 Jul 2025
- 20:34:05 +0000
-From: Ed Tanous <etanous@nvidia.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Troy Lee <leetroy@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Jamin Lin <jamin_lin@aspeedtech.com>, qemu-arm@nongnu.org,
- Ed Tanous <etanous@nvidia.com>
-Subject: [PATCH 2/4] hw/arm/aspeed: Add second SPI chip to Aspeed model
-Date: Tue,  1 Jul 2025 13:33:58 -0700
-Message-ID: <20250701203400.71677-3-etanous@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250701203400.71677-1-etanous@nvidia.com>
-References: <20250701203400.71677-1-etanous@nvidia.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SJ0PR03CA0022.namprd03.prod.outlook.com
- (2603:10b6:a03:33a::27) To CH2PR12MB4277.namprd12.prod.outlook.com
- (2603:10b6:610:ae::23)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR12MB4277:EE_|BN7PPF0FD1DEA27:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7a8c4239-20d5-4f7c-4544-08ddb8de9f86
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?CUbTSdqn//4cfyHmoXkENIxVQUAo9KsNOarnCj9QxADbltPV9U0cmLU8keNA?=
- =?us-ascii?Q?4qYPwlIqi7Q5ObwxQqGvFtad6SKGysjL9Z6PvbBr1p4683weBsr4L48noymj?=
- =?us-ascii?Q?8+GDYUL2LsofEdDkQFvf3qxWML3ixj2KN/pKbmycaZLNc8l9r53tqzozih9r?=
- =?us-ascii?Q?6d8xtXRPbrGX9//CGZ0v0Qrcg64ndR0GdZ/1MUo+CU3r2PIkNrodTqvNWpl5?=
- =?us-ascii?Q?5IldkNjmR+Dl+H2gve6UoUOztYebS6xs0MbNqoImVpcCyS/qm51G+zeRsD7z?=
- =?us-ascii?Q?9/NAQZUIngz+4mBmnG8RxVuY//Scc9fz2Supzbsn/YZM5qeHCmMrtqEj8kRg?=
- =?us-ascii?Q?M5zkJsYHBkw8hDYPkac04sA/A414pNDRrgyknVI9UhRedg2eQiFX/cWjqTe3?=
- =?us-ascii?Q?b/BdYipQdV0u8Zq8TGmI0gKK4nkY0+1bVbP449h2fXugP1jMBvdidV0i+6DZ?=
- =?us-ascii?Q?pfZVqx2bxieK+9QUA2aT+dWtm+KbqgeySSHt5HWNJWQLmonDXOm6LBIbGxhR?=
- =?us-ascii?Q?t7CEcKHYErjVtJdr8cgWplT4kHmQHTWq4iv00q1VgIRgvTNrgJRDw5e9A8fW?=
- =?us-ascii?Q?wKkxShecZvFVlepK0vmMA3LKZ5bgDEpxAtqFnifiP4xSjyd/IKxQSK5Agkix?=
- =?us-ascii?Q?cKbuoxUhvk9ntb2KiNxAo0Jevr3SCEiQFzv/yKZwhm03RYe3l1K5hQ1pUb8Y?=
- =?us-ascii?Q?EHKDi+erB5N0+l/LSJi6ZxznGgwPgdi1dE2JesaomhcJmuKCwE8EXYnqQ5Ue?=
- =?us-ascii?Q?OVWPq4T1vrbmt8s77xQhcwxJC58155+q4nLhX1u9Bpd1JVMXhyi6eWU5Pot3?=
- =?us-ascii?Q?s/WdtoeZE6kKJNVix+nvQrN5dFMsFyLXG3uPbWzA0tTI2f2q/LC+3MNw/4+y?=
- =?us-ascii?Q?eD2AoOhzNlfr1UsfaLus//bweqPW4RIprQTBYBPj8v8V7dpvcYAfujLmVhDF?=
- =?us-ascii?Q?+Vf9FV3Wf7QJ0IyXMmU4d8ywWfNfh/MBMiol/JJiVUMNyNxYBFtOJqUSe0R0?=
- =?us-ascii?Q?YErGHCn0jeMtG7jSXUwD2fGUgOBCNlwW1ssSmpIY6WBTejwRmZggy0j882z2?=
- =?us-ascii?Q?fPiBUxG7E+3zoq6LOWgohFwfxKrxjzzdUUIPZO5msWQHzeghdCJ9+Xaxt570?=
- =?us-ascii?Q?/xvM2FQrSsAhv5yK2HTQaSzmSFymXihWVd/sQZ+AUVHwfNA6ewga8xvfdkuE?=
- =?us-ascii?Q?Lq7zEwCgp5NnVfzxSmbKQI77/d3L+ROf6nojvl0a9lWRjQHtI2sxIYKFNbn+?=
- =?us-ascii?Q?ArBgdaUrzYfdgM72cJYz+qBAMYVBVLVYae22jipmINlEHGKKzTmGjbXHy48M?=
- =?us-ascii?Q?3puUybsG/h+M7zO09WliBTKK6jP28phhatGvg3lAxGooUETlaHJOzjRzaKCu?=
- =?us-ascii?Q?FxiRy2Ln5MYAIE8vWOVrGvMSnFwtQLGym9HryGFnh9RL8hJ25SlKrb8Ik3KS?=
- =?us-ascii?Q?SELfSloaEx0=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH2PR12MB4277.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(366016)(1800799024); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?3qjLufXUKZyDdvXmFrdYNRkX6e98TaZxwXgRbmIqrgZcXW6Q2RJoIc+h3qd9?=
- =?us-ascii?Q?dW1Q58WRAMmEdB8v3ibFXWSYRHdHF7LA3cFG7l5VtmgOxLS6B0r9tN0EUHjz?=
- =?us-ascii?Q?zerruLImShGnAaa9Lina/yscTxYDBtO5YCiN3lnQms8t/p8x1Rgfv51yD8gO?=
- =?us-ascii?Q?VTk76WroKTjv5wJ1aEXDu8Yb10OAnYpHSCpwKFIf8SH5Jhpzc4p5Rf9lzfLd?=
- =?us-ascii?Q?FOceU5CkYDpBm1D3ZMaM2lkQE5MZAIdFjy+HyHPAGfN3ctc8PPFQChQ4cDYj?=
- =?us-ascii?Q?frQYow9/70c/KeOdbrHK+07mIbuOXgd93Hmsqz2MOUzi3Hjd1jZcaCZi06as?=
- =?us-ascii?Q?4qU77zLFRNsIgYLkOmTYSXmebpkiy1TvJmLfB2ASqHaTVldONTTAbeyLzPb5?=
- =?us-ascii?Q?SzsoRNL1AeodMqfD8ekCzUa1SgJHh91/XN7qGZnpk/ByE2bR4RAO8wgYXH+j?=
- =?us-ascii?Q?wIhJ7hIF64Mj1RHAJVbKgY58NWuSZVcT86qX8W0NnjjThZASHkv+PLtFPNSI?=
- =?us-ascii?Q?IzPBBp8vmzHAi05eoD12hkCMdZwaJnagtNygARiSgWYQ4f2r5nM+HY2MF+4P?=
- =?us-ascii?Q?SeWACPuYBLGLd4tIS0u4UmbdVy3FG53sFeCII48bas0Yn4k9LKjLeEfZigg0?=
- =?us-ascii?Q?8oVdBLj5OWgfY/Bp8bqTL+ZlCBRmg9KM+3HVE/Qt8mXGUV36D3WrWIPeyFCP?=
- =?us-ascii?Q?udgs9G3EFU78qR1s9rpH0HDVLhmPPe2STl5JbTbf6Vgs7VH/YRAbzY3TXLZw?=
- =?us-ascii?Q?8c1Krcbs5VDmaUnnoopuoaqaWeJoE+dZ8jCWgGedgAGoHUEne06iTpJ60GKl?=
- =?us-ascii?Q?eYk7pSd6gARAQObnoY7Pjkb9f4YI2PxJOO5rz0eojot3nZyumLZPGxZXHwYJ?=
- =?us-ascii?Q?wV2xpPZr6/qLaIGrx/k98SVIXAcIOuJuN39jPUak8VUhW1Es8rw+dqX+Kewu?=
- =?us-ascii?Q?DAr3ak5YTj7VjkMIULBR7tbXQ+UjnnOEYOnUzN/iCNdYzX4M4HOQkpLvXzfX?=
- =?us-ascii?Q?S7nvQOFF1zGPlYaLIUVzfpI5ZBF0ciEGzHoZA7kCFAorNgDwLmlXmSGyZa4q?=
- =?us-ascii?Q?GNUXzZOaqkoIG7FcNmK/AVEA/4j6Ge8jPD5hB4qZLrq7obmn/tqBfNHRBPOI?=
- =?us-ascii?Q?GVrdtE5NsgLfuZbqALM57GklUgyXdX5nWWu0jYkB686Ml8AvUeirn8bd0e08?=
- =?us-ascii?Q?WtqQbCJkjQpPaZEDC23p9kV8QCjaLHWXLer2CNe2n1ELij4t3nZk99+JP9LS?=
- =?us-ascii?Q?vjS1kXl5k0KKMlqhQqxU6CnyU9whshDn3yddPswf8asEmA6eu0STV816YliU?=
- =?us-ascii?Q?otA7VXyAf7lYNRDoOUsthTCmcRKu8tPnWZHn/8cMsP0osZVqfXzd71mHUcnu?=
- =?us-ascii?Q?30g2+7TAMmaq35EX6C+5F7IFaCNLhL5zUNWeyz5FnihhUMT7P9XtcASrTBEr?=
- =?us-ascii?Q?eWVJEFzmzwQzIDgnTR5x13HmzCUy5Sps2mKva5k8bkL+SJJP+XH6aMFr38Ox?=
- =?us-ascii?Q?2AOPFQa4qvdtGhpM/gMOSna+npjzStwAocfqDtzkTqULOWyUTtHMJC8tBS2H?=
- =?us-ascii?Q?DseoCZt/dhxR0SEamdIlz0I8NfoJC8miAz2maQm0?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7a8c4239-20d5-4f7c-4544-08ddb8de9f86
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR12MB4277.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jul 2025 20:34:05.6701 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: DCCXUxTBiYVNV8H/Rk9gz1x9oN/vP0ueIl8gvATkt9fR4PVJvfsTmGKq35ixYIriB6GFvzXoeheCe+mpm5MVuw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PPF0FD1DEA27
-Received-SPF: permerror client-ip=2a01:111:f403:2009::606;
- envelope-from=etanous@nvidia.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ (Exim 4.90_1) (envelope-from
+ <3l0tkaAkKCgokxuoo2vo1qyyqvo.myw0ow4-no5ovxyxqx4.y1q@flex--ankeesler.bounces.google.com>)
+ id 1uWi2D-0007nt-Sa
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 16:56:57 -0400
+Received: from mail-qt1-x84a.google.com ([2607:f8b0:4864:20::84a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3l0tkaAkKCgokxuoo2vo1qyyqvo.myw0ow4-no5ovxyxqx4.y1q@flex--ankeesler.bounces.google.com>)
+ id 1uWi2C-0006X8-Ga
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 16:56:57 -0400
+Received: by mail-qt1-x84a.google.com with SMTP id
+ d75a77b69052e-4a6fb9bbbc9so208553331cf.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 13:56:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1751403415; x=1752008215; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=aVbrycOKtbSykzzWJZTPgqIimzepCiFkIJ34owzqQQY=;
+ b=EUxDIlU7VJyc2PkmfkIP8I2fqCcC1PQWEXk2Rcv8xKd9kMyYnYpxjldCJRJ+VcH2bq
+ kBdV6W8Do7SXpnvIfPMmC5SF0AFmXfGP7hGcMCLLHBU5GIB/p48m2cA75Dn9SYVYnm2D
+ geafXYIExlD/1VEqeBc90rBFwRK0mDOoqKjXvvFn7ZBrviUt/z6UzycJ1QUWWsm4fJuy
+ KvorPk0utpV8n6NMsYRpfvybHb5XmZaDiMw8IV1S4lr9CxkQ9Uf8HrURIt4kxGJz791f
+ RNYBm/ZK/Q28MGxlEYYQSY9LC6O5ibfVNnB1p9CmpznjbK+omNLn6XJMV9zL7r0cn8nP
+ lYeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751403415; x=1752008215;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aVbrycOKtbSykzzWJZTPgqIimzepCiFkIJ34owzqQQY=;
+ b=hIEjeauGoYbOcBGGGDbRsxSUuc5DFkp/eyC14Lsgtdr7bM8jCX8+Vw1olmR0wQvcPm
+ Tg5EBYxQUqb4xP7kXIBRJOToI/4p2jFE3Kui6pwUqBPwl0EgCum3hyfgU1GRaZx5pLf8
+ ZvyL9QDN/3c/snf7qNkVrFM2Hqv1kSmI5X79yjW7jf3B9yjGubZzo+Sq1RGQzksMv/DR
+ 2airN+diDo8IX1RqEc5DAR+QzxeVWaaDnM9/+/Z+bHbUUnPwFcwYQDQbL/phbsjwLT6E
+ IX/5pbL9+5Z9Z7LtqK4THnLZOzzoQ29jGa7e0sfF1G0X7jTNCFQywAp/57/9+71+QGHk
+ l9IA==
+X-Gm-Message-State: AOJu0Yygy1an8PQ3GBnOf634MHEBE2wyRHlYiY/HcxF5WlzlHOcyloB9
+ P2J1KWg6Kwhd3jGrvTTtlU+Hhv+vBzdlQgZhuJrGElOdKh8qF2p39GwyhibxPre4I8IorN+LF78
+ 7YMeCFr1XTUp9cc9z
+X-Google-Smtp-Source: AGHT+IHSGE36qnQ3fls4CIDW9l9/kNGSYzikXFV7KoViwsqRwCshyuBnKiSQT+G/08smJ81T9Bcx3HMEbgfXd04=
+X-Received: from qtbcm21.prod.google.com
+ ([2002:a05:622a:2515:b0:4a7:f6db:b0bf])
+ (user=ankeesler job=prod-delivery.src-stubby-dispatcher) by
+ 2002:ac8:7c43:0:b0:478:f4bd:8b8e with SMTP id
+ d75a77b69052e-4a9769de2d5mr8452861cf.39.1751403415010; 
+ Tue, 01 Jul 2025 13:56:55 -0700 (PDT)
+Date: Tue,  1 Jul 2025 20:56:51 +0000
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.50.0.727.gbf7dc18ff4-goog
+Message-ID: <20250701205652.3536098-1-ankeesler@google.com>
+Subject: [PATCH v4 0/1] Allow injection of virtio-gpu EDID name
+From: Andrew Keesler <ankeesler@google.com>
+To: berrange@redhat.com
+Cc: qemu-devel@nongnu.org, Andrew Keesler <ankeesler@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::84a;
+ envelope-from=3l0tkaAkKCgokxuoo2vo1qyyqvo.myw0ow4-no5ovxyxqx4.y1q@flex--ankeesler.bounces.google.com;
+ helo=mail-qt1-x84a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,43 +91,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Aspeed2600 has two spi lanes;  Add a new struct that can mount the
-second SPI.
+Thanks to 72d277a7, 1ed2cb32, and others, EDID (Extended Display
+Identification Data) is propagated by QEMU such that a virtual display
+presents legitimate metadata (e.g., name, serial number, preferred
+resolutions, etc.) to its connected guest.
 
-Signed-off-by: Ed Tanous <etanous@nvidia.com>
----
- hw/arm/aspeed.c         | 2 ++
- include/hw/arm/aspeed.h | 2 ++
- 2 files changed, 4 insertions(+)
+This change adds the ability to specify the EDID name for a particular
+virtio-vga display. Previously, every virtual display would have the same
+name: "QEMU Monitor". Now, we can inject names of displays in order to test
+guest behavior that is specific to display names. We provide the ability to
+inject the display name from the frontend since this is guest visible
+data. Furthermore, this makes it clear where N potential display outputs
+would get their name from (which will be added in a future change).
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index d0b333646e..3ef7f6c5b2 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -465,6 +465,8 @@ static void aspeed_machine_init(MachineState *machine)
-         aspeed_board_init_flashes(&bmc->soc->spi[0],
-                               bmc->spi_model ? bmc->spi_model : amc->spi_model,
-                               1, amc->num_cs);
-+        aspeed_board_init_flashes(&bmc->soc->spi[1],
-+                                  amc->spi2_model, 1, amc->num_cs2);
-     }
- 
-     if (machine->kernel_filename && sc->num_cpus > 1) {
-diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
-index 973277bea6..6c36455656 100644
---- a/include/hw/arm/aspeed.h
-+++ b/include/hw/arm/aspeed.h
-@@ -35,7 +35,9 @@ struct AspeedMachineClass {
-     uint32_t hw_strap2;
-     const char *fmc_model;
-     const char *spi_model;
-+    const char *spi2_model;
-     uint32_t num_cs;
-+    uint32_t num_cs2;
-     uint32_t macs_mask;
-     void (*i2c_init)(AspeedMachineState *bmc);
-     uint32_t uart_default;
+Note that we have elected to use a struct here for output data for
+extensibility - we intend to add per-output fields like resolution in a
+future change.
+
+It should be noted that EDID names longer than 12 bytes will be truncated
+per spec (I think?).
+
+Testing: verified that when I specified 2 outputs for a virtio-gpu with
+edid_name set, the names matched those that I configured with my vnc
+display.
+
+  -display vnc=localhost:0,id=aaa,display=vga,head=0 \
+  -display vnc=localhost:1,id=bbb,display=vga,head=1 \
+  -device '{"driver":"virtio-vga",
+            "max_outputs":2,
+            "id":"vga",
+            "outputs":[
+              {
+                 "name":"AAA",
+              },
+              {
+                 "name":"BBB",
+              },
+            ]}'
+
+Changelog:
+* v4 - fixed copy-paste issue in virtio_gpu_base_generate_edid()
+* v3 - report an error at realize time if request name is too long
+* v2 - migrated configuration surface to virtio-gpu device
+
+Andrew Keesler (1):
+  hw/display: Allow injection of virtio-gpu EDID name
+
+ hw/core/qdev-properties-system.c    | 44 +++++++++++++++++++++++++++++
+ hw/display/virtio-gpu-base.c        | 26 +++++++++++++++++
+ include/hw/display/edid.h           |  2 ++
+ include/hw/qdev-properties-system.h |  5 ++++
+ include/hw/virtio/virtio-gpu.h      |  3 ++
+ qapi/virtio.json                    | 18 ++++++++++--
+ 6 files changed, 96 insertions(+), 2 deletions(-)
+
 -- 
-2.43.0
+2.50.0.727.gbf7dc18ff4-goog
 
 
