@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 769D5C83038
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:29:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C656C8303C
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Jul 2025 17:29:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWen8-0002Pw-Kt; Tue, 01 Jul 2025 13:29:10 -0400
+	id 1uWenC-0002RV-QA; Tue, 01 Jul 2025 13:29:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uWen7-0002On-2E
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:29:09 -0400
+ id 1uWenB-0002RF-Jb
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:29:13 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uWen1-0006R2-Jw
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:29:07 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uWen9-0006Us-Ct
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 13:29:13 -0400
 Received: from localhost.localdomain (unknown [167.220.208.67])
- by linux.microsoft.com (Postfix) with ESMTPSA id AAB4920415BD;
- Tue,  1 Jul 2025 10:28:58 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com AAB4920415BD
+ by linux.microsoft.com (Postfix) with ESMTPSA id AD28D211220B;
+ Tue,  1 Jul 2025 10:29:06 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com AD28D211220B
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1751390942;
- bh=BfGNjaPbLXQC4E1juiq724yLDptvY78mIT0tFav6nkc=;
- h=From:To:Cc:Subject:Date:From;
- b=qE2V/XbqQpKgN9XGuawreqLwyLRZ+ogCV1yOF8LCUqeMoMZWGUncHiRnZyIPg7Zlc
- 7IeouMxmzpFkDbGJLeSzGUsTSWiP1b3p9VzeFCnHOGreGy99ofboRHMoH8sMkiVNpH
- 955N1HZME8pO5TD1BLalrhOBSTUCS/oTp035X9t8=
+ s=default; t=1751390950;
+ bh=6liSC5uPnVmbC+x1NjCI6F9/8bBgz4KWGj8cxMl/S4Q=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=NmoKriVeq7os7hDGL4WsEfKVRckoEG0CF1bDsJZeikVc4QBOF3BIy+waQZU4SQfbv
+ e0Ojal6JBqdJlzD3/g/GnppzwkElvPRLwiifrS/y8uuArQwCqP7C5oKKMWmY5hYE9c
+ 1z3sMGyj/KJAuYfOc925u5MtMGVjnSeuCsRJVrgk=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Cameron Esfahani <dirty@apple.com>,
@@ -45,11 +45,13 @@ Cc: Cameron Esfahani <dirty@apple.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 00/27] Implementing a MSHV (Microsoft Hypervisor)
- accelerator
-Date: Tue,  1 Jul 2025 19:28:07 +0200
-Message-Id: <20250701172834.44849-1-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v2 02/27] target/i386/emulate: Allow instruction decoding from
+ stream
+Date: Tue,  1 Jul 2025 19:28:09 +0200
+Message-Id: <20250701172834.44849-3-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250701172834.44849-1-magnuskulke@linux.microsoft.com>
+References: <20250701172834.44849-1-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=13.77.154.182;
@@ -76,136 +78,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hey all,
+Introduce a new helper function to decode x86 instructions from a
+raw instruction byte stream. MSHV delivers an instruction stream in a
+buffer of the vm_exit message. It can be used to speed up MMIO
+emulation, since instructions do not have to be fetched and translated.
 
-This is the second revision of an accelerator implemented for the MSHV
-kernel driver, exposing HyperV to Linux "Dom0" hosts. Thanks for the
-helpful and quick feedback on the RFC patch. I attempted to address all
-comments and we worked on fixing some of the limitation that we
-identified in internal testing.
+Added "fetch_instruction()" op to x86_emul_ops() to improve
+traceability.
 
-Best,
+Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+---
+ target/i386/emulate/x86_decode.c | 31 +++++++++++++++++++++++++++----
+ target/i386/emulate/x86_decode.h | 10 ++++++++++
+ target/i386/emulate/x86_emu.c    |  3 ++-
+ target/i386/emulate/x86_emu.h    |  1 +
+ 4 files changed, 40 insertions(+), 5 deletions(-)
 
-Magnus
-
-Changelog:
-
-v1 (RFC) => v2
-
-- Addressed code review comments (style, consilidation).
-- Rewrote the logic that handles overlap-in-userspace mappings to use
-  a static list of slots, inspired by the HVF accelerator code.
-- Fixed a bug that wrote corrupt payload in a MSHV_SET_MSI_ROUTING
-  call, preventing vhost=on to work on tap network devices.
-- Removed an erronous truncation of guest addresses to 32bit when
-  registering ioeventfd's using MSHV_IOEVENTFD. This resulted in
-  shadowing of low memory when ioevents were registered with
-  addresses beyond the 4gb barrier and thus unexpected "unmapped gpa"
-  vm exits in lower mem regions (impacting io performance).
-- Fixed problem in which the MSI routing table was committed for KVM
-  KVM instead of MSHV in virtio-pci bus initialization.
-- Added some "mshv" strings to the documentation.
-- The above fixes removed a few limitation present in the previous
-  revision:
-  - Guest with machine type "pc" are booting (testing is still mostly
-    performed with q35)
-  - Tap network devices can be used with vhost=on option.
-  - Seabios can be used with >2.75G memory and multiple virtio-pci
-    devices
-  - I/O performance improvement as extranous MMIO vm exits are avoided
-    by registering ioevents with a correct address.
-
-Notes:
-
-- Changes to the mshv kernel driver that would allow to map regions of
-  userspace multiple times into the guest are still being discussed.
-  For now commit #26 will work around this limitation.
-- A kernel ioctl "set_immediate_exit" will be added to the mshv driver
-  to avoid a race condition when handling signals (like ctrl-a x).
-
-Magnus Kulke (27):
-  accel: Add Meson and config support for MSHV accelerator
-  target/i386/emulate: Allow instruction decoding from stream
-  target/i386/mshv: Add x86 decoder/emu implementation
-  hw/intc: Generalize APIC helper names from kvm_* to accel_*
-  include/hw/hyperv: Add MSHV ABI header definitions
-  accel/mshv: Add accelerator skeleton
-  accel/mshv: Register memory region listeners
-  accel/mshv: Initialize VM partition
-  accel/mshv: Register guest memory regions with hypervisor
-  accel/mshv: Add ioeventfd support
-  accel/mshv: Add basic interrupt injection support
-  accel/mshv: Add vCPU creation and execution loop
-  accel/mshv: Add vCPU signal handling
-  target/i386/mshv: Add CPU create and remove logic
-  target/i386/mshv: Implement mshv_store_regs()
-  target/i386/mshv: Implement mshv_get_standard_regs()
-  target/i386/mshv: Implement mshv_get_special_regs()
-  target/i386/mshv: Implement mshv_arch_put_registers()
-  target/i386/mshv: Set local interrupt controller state
-  target/i386/mshv: Register CPUID entries with MSHV
-  target/i386/mshv: Register MSRs with MSHV
-  target/i386/mshv: Integrate x86 instruction decoder/emulator
-  target/i386/mshv: Write MSRs to the hypervisor
-  target/i386/mshv: Implement mshv_vcpu_run()
-  target/i386/mshv: Handle HVMSG_X64_HALT vm exit
-  accel/mshv: Workaround for overlappig mem mappings
-  docs: Add mshv to documentation
-
- accel/Kconfig                    |    3 +
- accel/accel-irq.c                |   95 ++
- accel/meson.build                |    3 +-
- accel/mshv/irq.c                 |  369 +++++++
- accel/mshv/mem.c                 |  415 ++++++++
- accel/mshv/meson.build           |    9 +
- accel/mshv/mshv-all.c            |  727 +++++++++++++
- accel/mshv/msr.c                 |  372 +++++++
- accel/mshv/trace-events          |   29 +
- accel/mshv/trace.h               |    1 +
- docs/devel/codebase.rst          |    2 +-
- hw/intc/apic.c                   |    9 +
- hw/intc/ioapic.c                 |   20 +-
- hw/virtio/virtio-pci.c           |   21 +-
- include/hw/hyperv/hvgdk.h        |   19 +
- include/hw/hyperv/hvhdk.h        |  164 +++
- include/hw/hyperv/hvhdk_mini.h   |  105 ++
- include/system/accel-irq.h       |   26 +
- include/system/mshv.h            |  184 ++++
- linux-headers/linux/mshv.h       | 1038 ++++++++++++++++++
- meson.build                      |   11 +
- meson_options.txt                |    2 +
- qemu-options.hx                  |   16 +-
- scripts/meson-buildoptions.sh    |    3 +
- scripts/update-linux-headers.sh  |    2 +-
- target/i386/cpu.h                |    4 +-
- target/i386/emulate/meson.build  |    7 +-
- target/i386/emulate/x86_decode.c |   31 +-
- target/i386/emulate/x86_decode.h |   10 +
- target/i386/emulate/x86_emu.c    |    3 +-
- target/i386/emulate/x86_emu.h    |    1 +
- target/i386/meson.build          |    2 +
- target/i386/mshv/meson.build     |    8 +
- target/i386/mshv/mshv-cpu.c      | 1699 ++++++++++++++++++++++++++++++
- target/i386/mshv/x86.c           |  297 ++++++
- 35 files changed, 5671 insertions(+), 36 deletions(-)
- create mode 100644 accel/accel-irq.c
- create mode 100644 accel/mshv/irq.c
- create mode 100644 accel/mshv/mem.c
- create mode 100644 accel/mshv/meson.build
- create mode 100644 accel/mshv/mshv-all.c
- create mode 100644 accel/mshv/msr.c
- create mode 100644 accel/mshv/trace-events
- create mode 100644 accel/mshv/trace.h
- create mode 100644 include/hw/hyperv/hvgdk.h
- create mode 100644 include/hw/hyperv/hvhdk.h
- create mode 100644 include/hw/hyperv/hvhdk_mini.h
- create mode 100644 include/system/accel-irq.h
- create mode 100644 include/system/mshv.h
- create mode 100644 linux-headers/linux/mshv.h
- create mode 100644 target/i386/mshv/meson.build
- create mode 100644 target/i386/mshv/mshv-cpu.c
- create mode 100644 target/i386/mshv/x86.c
-
+diff --git a/target/i386/emulate/x86_decode.c b/target/i386/emulate/x86_decode.c
+index 2eca39802e..133065b50a 100644
+--- a/target/i386/emulate/x86_decode.c
++++ b/target/i386/emulate/x86_decode.c
+@@ -60,6 +60,7 @@ static inline uint64_t decode_bytes(CPUX86State *env, struct x86_decode *decode,
+                                     int size)
+ {
+     uint64_t val = 0;
++    target_ulong va;
+ 
+     switch (size) {
+     case 1:
+@@ -71,10 +72,17 @@ static inline uint64_t decode_bytes(CPUX86State *env, struct x86_decode *decode,
+         VM_PANIC_EX("%s invalid size %d\n", __func__, size);
+         break;
+     }
+-    target_ulong va  = linear_rip(env_cpu(env), env->eip) + decode->len;
+-    emul_ops->read_mem(env_cpu(env), &val, va, size);
++
++    /* copy the bytes from the instruction stream, if available */
++    if (decode->stream && decode->len + size <= decode->stream->len) {
++        memcpy(&val, decode->stream->bytes + decode->len, size);
++    } else {
++        va = linear_rip(env_cpu(env), env->eip) + decode->len;
++        emul_ops->fetch_instruction(env_cpu(env), &val, va, size);
++    }
+     decode->len += size;
+-    
++
++
+     return val;
+ }
+ 
+@@ -2076,9 +2084,10 @@ static void decode_opcodes(CPUX86State *env, struct x86_decode *decode)
+     }
+ }
+ 
+-uint32_t decode_instruction(CPUX86State *env, struct x86_decode *decode)
++static uint32_t decode_opcode(CPUX86State *env, struct x86_decode *decode)
+ {
+     memset(decode, 0, sizeof(*decode));
++
+     decode_prefix(env, decode);
+     set_addressing_size(env, decode);
+     set_operand_size(env, decode);
+@@ -2088,6 +2097,20 @@ uint32_t decode_instruction(CPUX86State *env, struct x86_decode *decode)
+     return decode->len;
+ }
+ 
++uint32_t decode_instruction(CPUX86State *env, struct x86_decode *decode)
++{
++    return decode_opcode(env, decode);
++}
++
++uint32_t decode_instruction_stream(CPUX86State *env, struct x86_decode *decode,
++                                   struct x86_insn_stream *stream)
++{
++    if (stream != NULL) {
++        decode->stream = stream;
++    }
++    return decode_opcode(env, decode);
++}
++
+ void init_decoder(void)
+ {
+     int i;
+diff --git a/target/i386/emulate/x86_decode.h b/target/i386/emulate/x86_decode.h
+index 927645af1a..f5e9738914 100644
+--- a/target/i386/emulate/x86_decode.h
++++ b/target/i386/emulate/x86_decode.h
+@@ -272,6 +272,11 @@ typedef struct x86_decode_op {
+     };
+ } x86_decode_op;
+ 
++typedef struct x86_insn_stream {
++    const uint8_t *bytes;
++    size_t len;
++} x86_insn_stream;
++
+ typedef struct x86_decode {
+     int len;
+     uint8_t opcode[4];
+@@ -298,11 +303,16 @@ typedef struct x86_decode {
+     struct x86_modrm modrm;
+     struct x86_decode_op op[4];
+     bool is_fpu;
++
++	x86_insn_stream *stream;
+ } x86_decode;
+ 
+ uint64_t sign(uint64_t val, int size);
+ 
+ uint32_t decode_instruction(CPUX86State *env, struct x86_decode *decode);
++uint32_t decode_instruction_stream(CPUX86State *env,
++								   struct x86_decode *decode,
++		                           struct x86_insn_stream *stream);
+ 
+ void *get_reg_ref(CPUX86State *env, int reg, int rex_present,
+                   int is_extended, int size);
+diff --git a/target/i386/emulate/x86_emu.c b/target/i386/emulate/x86_emu.c
+index db7a7f7437..f7e6bf01bc 100644
+--- a/target/i386/emulate/x86_emu.c
++++ b/target/i386/emulate/x86_emu.c
+@@ -1246,7 +1246,8 @@ static void init_cmd_handler(void)
+ bool exec_instruction(CPUX86State *env, struct x86_decode *ins)
+ {
+     if (!_cmd_handler[ins->cmd].handler) {
+-        printf("Unimplemented handler (" TARGET_FMT_lx ") for %d (%x %x) \n", env->eip,
++        printf("Unimplemented handler (" TARGET_FMT_lx ") for %d (%x %x) \n",
++                env->eip,
+                 ins->cmd, ins->opcode[0],
+                 ins->opcode_len > 1 ? ins->opcode[1] : 0);
+         env->eip += ins->len;
+diff --git a/target/i386/emulate/x86_emu.h b/target/i386/emulate/x86_emu.h
+index a1a961284b..f1680c41f4 100644
+--- a/target/i386/emulate/x86_emu.h
++++ b/target/i386/emulate/x86_emu.h
+@@ -24,6 +24,7 @@
+ #include "cpu.h"
+ 
+ struct x86_emul_ops {
++    void (*fetch_instruction)(CPUState *cpu, void *data, target_ulong addr, int bytes);
+     void (*read_mem)(CPUState *cpu, void *data, target_ulong addr, int bytes);
+     void (*write_mem)(CPUState *cpu, void *data, target_ulong addr, int bytes);
+     void (*read_segment_descriptor)(CPUState *cpu, struct x86_segment_descriptor *desc,
 -- 
 2.34.1
 
