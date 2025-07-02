@@ -4,139 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C236C83013
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 12:07:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2325DC8303F
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 12:07:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWwEo-0006gs-2i; Wed, 02 Jul 2025 08:06:54 -0400
+	id 1uWwF6-0006sd-I4; Wed, 02 Jul 2025 08:07:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uWwEa-0006cu-9B
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:06:44 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uWwEz-0006qN-4E
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:07:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uWwEK-0003PM-Mw
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:06:34 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uWwEr-0003Zz-VR
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:07:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751457980;
+ s=mimecast20190719; t=1751458014;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=nS0Ywf9UgiAEolMB9h1D2YM1G5GwvZJR4e+1OHJV5is=;
- b=VM8MQ8l/10+yc7P2XJ07TPnJfkF0mfK9ByUs8XU8cP3EQ34c2gDu1rYUfnAq9F0KHgVOi2
- 2+PLSvByuKrvsKWK8dcvNwdCzZb/kUQITa9LudOc2/3eG2azfw79yFwd8uN8EGwIYH2oFX
- voYLjDKwq8pNVydg/x6bRnQ4V776CNg=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=31J1hjhz/sCnMXy7Rg7sf1mlj2DSfvoGGS2qbTqz4fg=;
+ b=Svu6t9T5KdfFp/YuduN67N1+EqXT2iTPhW36i4Oe+TxxXObHi6GsLNzSi1iWEIRQPWasMT
+ qOKUOBChIG8PKsno3gtTCMgzaWWPvVcfdYmUwHPk9gkifSr12lqf9dpia3IcWHUj2lhaU4
+ 04zN4wwEpVKrLb1H23PraVHDFYiWUzo=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-526-llxM5qIkNsueVJXvewHJxA-1; Wed, 02 Jul 2025 08:06:17 -0400
-X-MC-Unique: llxM5qIkNsueVJXvewHJxA-1
-X-Mimecast-MFC-AGG-ID: llxM5qIkNsueVJXvewHJxA_1751457976
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-451d3f03b74so35405755e9.3
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:06:17 -0700 (PDT)
+ us-mta-688-uDiH_a00P_qIBRnI47sVfQ-1; Wed, 02 Jul 2025 08:06:53 -0400
+X-MC-Unique: uDiH_a00P_qIBRnI47sVfQ-1
+X-Mimecast-MFC-AGG-ID: uDiH_a00P_qIBRnI47sVfQ_1751458012
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a50049f8eeso3414808f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:06:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751457976; x=1752062776;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1751458012; x=1752062812;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nS0Ywf9UgiAEolMB9h1D2YM1G5GwvZJR4e+1OHJV5is=;
- b=Cn3aBQGnGyJ33QfsW5pmaWs9HO0P7gg8UCbeztZlAMG84PO3cHLnSvwLGToI0QcjMR
- zqI52QRJYnwEqbYx5R7U/TqIvk/NjM1khHvliJntq8F2N+Ft5XTS5P2A4usNT2tq6UzS
- xmdvejvOphzOh+J6oRb28+REs6dCfHLRDXIrJ4kK1jPy2Lq0xpgwQuMRtlyXjaxaFxGJ
- gt9boRsmm5Oxqv7rktbiFgVL+SIXzjm+SSXpobIh7q7MrJeaoYn3/duQdML8TSRQKEDi
- 7VWqN1mGQ66pa8YH61UQ6NZGiFhYJYzgd9yrHfcVJQG2TupmipuuoM/7XLDKCcKnyHrr
- 4QKA==
+ bh=31J1hjhz/sCnMXy7Rg7sf1mlj2DSfvoGGS2qbTqz4fg=;
+ b=VEDLDbtBvAhhcB7GiGk3f6AKX0dDcbxaq1fnls0N6qz571Ohzltl3mIL9qAAJwwL5n
+ q+TITz685+w+jQ8+OY2FEXi57M8YztEWcf4CDuJ+dFtdMknGMTxM4RXXquc4E3XBay3x
+ 64nrnAomgHzPpcgEH/NjvMlWdR+H8ZJLr8GZBl4dTXC9lmkg2B11/KoB0vfQ028wr4I0
+ 4nyzNflRQ8wCaqWnDbBfA6hdATvO/nEyGfUvUWzsY0Qg0Fe4B1xzzcMq6eRp1QJ4XNE5
+ n1tcvBqQaB6wgtmnTez4KE4KBSfKNggzemiggrB4psvRI3cMEagoPhmClw3rG6hVjNHC
+ mdoQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVh0CA2NfHk8n2K0c8nDfwDkcwNCPCAM+zAaI5o0geu2CXWF5JBkdUU1zbPuyuxbCIOoqb4nPHAyzVs@nongnu.org
-X-Gm-Message-State: AOJu0YxXQyAZh41+bkSowxd1pJrQDPdL1qIvVsh1qsN1/Kxcu9BAQ+6+
- jerC5hnyA4ge+Cl5rFBGSLiSjg1o1aLB6M8F6EjDeUgQaLN/+KwINGSyu8mmb0AZ25PgwclpLgU
- Qt+jzv6Wq3O5yZo1vXdFbxAONldnSNS+Ejoevyb6AX2gWwznSwl2Q+tbm
-X-Gm-Gg: ASbGnctZbft/ERIFNKOniArjU9JXDGk+CAO6S4WC8Mc/xRFDjwiwPPzAkqm2+qTiM7j
- 4hPvQJicty56nJi1ARjwrpkCe4Updg2YuuaY4CUzwyJcN+d+bZZK8QuvZNlg0Da3Qk1BxUbQAXs
- xNHh9nQsIV99eifNQH6Q7CTGODiiDqBnfDCBia+9PJPQ3kM9+6zuVVZFC0Hpe9IJiTEb5x5ctUW
- VZHuV8ujej7sisLNZ+c4DVcY7WbE74ivuOLTgFM4FbfImrBC4nTP7phOec+diNC8rxM0DRfgcLh
- ZBwZJ0MYi6JXbth5ngk+ibxh+oFF4lJPhvE/5vlT1Ehdx142yNtPZa8qluQx
-X-Received: by 2002:a05:600c:5249:b0:441:d4e8:76c6 with SMTP id
- 5b1f17b1804b1-454a3731fdbmr31953095e9.30.1751457975717; 
- Wed, 02 Jul 2025 05:06:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IElmckfqDm/Mb7slsdvt6yonpow3XciR8JKn1ZD2I6cE/CopcjnakIMXqASR6ynUgSLqip0rg==
-X-Received: by 2002:a05:600c:5249:b0:441:d4e8:76c6 with SMTP id
- 5b1f17b1804b1-454a3731fdbmr31952365e9.30.1751457974993; 
- Wed, 02 Jul 2025 05:06:14 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4538234b30dsm226289255e9.12.2025.07.02.05.06.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Jul 2025 05:06:13 -0700 (PDT)
-Message-ID: <42ba6262-ca64-46e1-9191-874602670220@redhat.com>
-Date: Wed, 2 Jul 2025 14:06:12 +0200
+ AJvYcCVBA6Xq0T59omgD+YG85EaPmD0pU8rJ5s5B77/1ms9zqNkUf8xAPc7lfM3ypQYDXMTeFf9g8pJpKa4o@nongnu.org
+X-Gm-Message-State: AOJu0YxwtQ0lcRK9lAc0BjV/TXQxaRx+4kEYc8eD1wYbeUkS27IOxs7B
+ 01ccYMAniuL40rFAwq2KYL4t2BFC9qJ1brV5bjoKfBn9bNXemJVuS52qDVuGHSYnC2fl0uk1UPO
+ l/Ks4mQvNRI+63RJRltrWdjFjIbiRNFNANRWw0i15Ni7t0MPr8bXboD2F+8+V1WngzNjO5OsTVj
+ z9gBdr5/eLFOsNcjEUmYzmcsVfOPI8NL4=
+X-Gm-Gg: ASbGnctHWtm4ZcBYgOeworGaCGdARSXHv2BWJ247jerspfsX1yN34heO7zfpVJvL+mR
+ 5LSAgcKklUkW0Dq1prRMDJ5IjEBiYxQeSahtjfTXUlA+SlWBO+Dpaly80IIrnh/iw7o0udhcWG0
+ OAlw==
+X-Received: by 2002:a05:6000:4409:b0:3a4:eecd:f4d2 with SMTP id
+ ffacd0b85a97d-3b2000b0939mr1422503f8f.38.1751458012059; 
+ Wed, 02 Jul 2025 05:06:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHIMBzbcXLPAY9+1eA9RMgINutnny0JBf5go7YE3W3icvsMuQ/NSjH2rknd2ekw2N6dVqM69hm0kqwBVdv3PsE=
+X-Received: by 2002:a05:6000:4409:b0:3a4:eecd:f4d2 with SMTP id
+ ffacd0b85a97d-3b2000b0939mr1422481f8f.38.1751458011635; Wed, 02 Jul 2025
+ 05:06:51 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio-user: do not register vfio-user container with cpr
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, john.levon@nutanix.com,
- steven.sistare@oracle.com, qemu-devel@nongnu.org
-References: <20250702120043.267634-1-mark.caveayland@nutanix.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250702120043.267634-1-mark.caveayland@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+References: <20250520110530.366202-1-pbonzini@redhat.com>
+ <20250520110530.366202-36-pbonzini@redhat.com>
+ <d429b6f5-b59c-4884-b18f-8db71cb8dc7b@oracle.com> <aFpocfTpBLB34N3l@intel.com>
+ <aGKryLSGlFTMSKHv@intel.com> <690b5bca-4345-4ee9-a332-4c2e38532309@intel.com>
+ <31387ca1-4fa0-482e-8e11-e8857c10cb6c@linaro.org>
+In-Reply-To: <31387ca1-4fa0-482e-8e11-e8857c10cb6c@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 2 Jul 2025 08:06:38 -0400
+X-Gm-Features: Ac12FXxYsEnf8dvpojMOHATVJ3DA7FTnwwun6I5hpoMmXvIFuTWvrVs_dcKjwDg
+Message-ID: <CABgObfZJztWmXQBzetLKsUyqRS6yL23OpeLvAm1GWpSbXwFsKw@mail.gmail.com>
+Subject: Re: [Regression] Re: [PULL 35/35] qom: reverse order of
+ instance_post_init calls
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Dongli Zhang <dongli.zhang@oracle.com>, Thomas Huth <thuth@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>, Alistair Francis <alistair.francis@wdc.com>,
+ Like Xu <like.xu.linux@gmail.com>, Igor Mammedov <imammedo@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000009f7ea90638f1186d"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -154,62 +111,244 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/2/25 13:59, Mark Cave-Ayland wrote:
-> As the full cpr implementation is yet to be merged upstream, do not register
-> the vfio-user container with cpr. Full vfio-user support for cpr can be
-> merged later as a follow-up series.
-> 
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+--0000000000009f7ea90638f1186d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Il mer 2 lug 2025, 02:54 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> ha
+scritto:
+
+> >>> Back to this commit, I think current order of post_init  makes sense.
+> >>> Instead, the place of host_cpu_instance_init() doesn't seem quite
+> >>> right. So, I think this commit might have exposed some drawbacks in t=
+he
+> >>> previous x86 CPU initialization order:
+> >>>
+> >>> f5cc5a5c1686 ("i386: split cpu accelerators from cpu.c, using
+> >>> AccelCPUClass")
+> >>> 5b8978d80426 ("i386: do not call cpudef-only models functions for
+> >>> max, host, base")
+> >>
+> >> To fix this issue, we need to initialize "vendor" property in the init=
+fn
+> >> of max/host/named CPUs instead of current post_initfn.
+> >>
+> >> This will need to split the cpu_instance_init() of x86 kvm (and maybe
+> >> hvf/tcg)
+> >> into 2 hooks:
+> >>   * AccelCPUClass.cpu_instance_init() - called in x86 CPUs' initfn.
+> >>   * AccelCPUClass.cpu_instance_post_init() - called in x86 CPUs'
+> >>     post_initfn.
+> >
+> > Split accel.cpu_instance_init() into cpu's instance_init() and
+> > post_instance_init() does not seem right way to go.
+>
+> Yeah, please don't. I'm trying to consolidate this code but it takes
+> (too) long.
+>
+
+Unfortunately I agree with Zhao. The globals, being user provided, must
+come after the AccelCPUClass initialization.
+
+My hope is that it's possible to avoid a split and move everything earlier
+as in target-riscv/. I will take a look next week if Zhao doesn't beat me,
+and/or discuss with him.
+
+Paolo
 
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> > The reason .post_instance_init() was implemented and put
+> > accel_cpu_instance_init() in it for x86 cpu was that, we don't want to
+> > scatter acceletor specific instance_init operation into different
+> > subclass of x86 cpu (max/host/named cpu model).
+> >
+> > I think something like below should be enough.
+> >
+> > -----------8<-------------
+> > Author: Xiaoyao Li <xiaoyao.li@intel.com>
+> > Date:   Tue Jul 1 13:33:43 2025 +0800
+> >
+> >      i386/cpu: Re-apply the global props as the last step of post_init
+> >
+> >      Commit 220c739903ce ("qom: reverse order of instance_post_init
+> calls")
+> >      reverses the order instance_post_init calls, which leads to
+> >      device_post_init() called before x86 cpu
+> > specific .instance_post_init().
+> >
+> >      However, x86 cpu replies on qdev_prop_set_globals() (inside
+> >      device_post_init()) to apply the cpu option like "feature[=3Dfoo]"
+> > passed
+> >      via '-cpu' as the last step to make the '-cpu' option highest
+> > priority.
+> >
+> >      After the order change of .instance_post_init(),
+> x86_cpu_post_initfn()
+> >      is called after device_post_init(), and it will change some proper=
+ty
+> >      value even though "-cpu" option specify a different one.
+> >
+> >      Re-apply the global props as the last step to ensure "-cpu" option
+> >      always takes highest priority.
+> >
+> >      Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> >
+> > diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> > index 0d35e95430fe..bf290262cbfe 100644
+> > --- a/target/i386/cpu.c
+> > +++ b/target/i386/cpu.c
+> > @@ -9044,6 +9044,12 @@ static void x86_cpu_post_initfn(Object *obj)
+> >               X86_CONFIDENTIAL_GUEST(current_machine->cgs), (CPU(obj)))=
+;
+> >       }
+> >   #endif
+> > +
+> > +    /*
+> > +     * Re-apply the "feature[=3Dfoo]" from '-cpu' option since they mi=
+ght
+> > +     * be overwritten by above
+> > +     */
+> > +    qdev_prop_set_globals(DEVICE(obj));
+> >   }
+>
+> This patch LGTM.
+>
+> Regards,
+>
+> Phil.
+>
+>
 
-Thanks,
+--0000000000009f7ea90638f1186d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-C.
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mer 2 lug 2025, 02:54 Philipp=
+e Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@linaro=
+.org</a>&gt; ha scritto:</div><blockquote class=3D"gmail_quote" style=3D"ma=
+rgin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:=
+1ex">
+&gt;&gt;&gt; Back to this commit, I think current order of post_init=C2=A0 =
+makes sense.<br>
+&gt;&gt;&gt; Instead, the place of host_cpu_instance_init() doesn&#39;t see=
+m quite<br>
+&gt;&gt;&gt; right. So, I think this commit might have exposed some drawbac=
+ks in the<br>
+&gt;&gt;&gt; previous x86 CPU initialization order:<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; f5cc5a5c1686 (&quot;i386: split cpu accelerators from cpu.c, u=
+sing <br>
+&gt;&gt;&gt; AccelCPUClass&quot;)<br>
+&gt;&gt;&gt; 5b8978d80426 (&quot;i386: do not call cpudef-only models funct=
+ions for <br>
+&gt;&gt;&gt; max, host, base&quot;)<br>
+&gt;&gt;<br>
+&gt;&gt; To fix this issue, we need to initialize &quot;vendor&quot; proper=
+ty in the initfn<br>
+&gt;&gt; of max/host/named CPUs instead of current post_initfn.<br>
+&gt;&gt;<br>
+&gt;&gt; This will need to split the cpu_instance_init() of x86 kvm (and ma=
+ybe <br>
+&gt;&gt; hvf/tcg)<br>
+&gt;&gt; into 2 hooks:<br>
+&gt;&gt; =C2=A0 * AccelCPUClass.cpu_instance_init() - called in x86 CPUs&#3=
+9; initfn.<br>
+&gt;&gt; =C2=A0 * AccelCPUClass.cpu_instance_post_init() - called in x86 CP=
+Us&#39;<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 post_initfn.<br>
+&gt; <br>
+&gt; Split accel.cpu_instance_init() into cpu&#39;s instance_init() and <br=
+>
+&gt; post_instance_init() does not seem right way to go.<br>
+<br>
+Yeah, please don&#39;t. I&#39;m trying to consolidate this code but it take=
+s<br>
+(too) long.<br></blockquote></div></div><div dir=3D"auto"><br></div><div di=
+r=3D"auto">Unfortunately I agree with Zhao. The globals, being user provide=
+d, must come after the AccelCPUClass initialization.</div><div dir=3D"auto"=
+><br></div><div dir=3D"auto">My hope is that it&#39;s possible to avoid a s=
+plit and move everything earlier as in target-riscv/. I will take a look ne=
+xt week if Zhao doesn&#39;t beat me, and/or discuss with him.</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></di=
+v><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><block=
+quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
+px solid rgb(204,204,204);padding-left:1ex">
+<br>
+&gt; The reason .post_instance_init() was implemented and put <br>
+&gt; accel_cpu_instance_init() in it for x86 cpu was that, we don&#39;t wan=
+t to <br>
+&gt; scatter acceletor specific instance_init operation into different <br>
+&gt; subclass of x86 cpu (max/host/named cpu model).<br>
+&gt; <br>
+&gt; I think something like below should be enough.<br>
+&gt; <br>
+&gt; -----------8&lt;-------------<br>
+&gt; Author: Xiaoyao Li &lt;<a href=3D"mailto:xiaoyao.li@intel.com" target=
+=3D"_blank" rel=3D"noreferrer">xiaoyao.li@intel.com</a>&gt;<br>
+&gt; Date:=C2=A0=C2=A0 Tue Jul 1 13:33:43 2025 +0800<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0=C2=A0=C2=A0 i386/cpu: Re-apply the global props as the la=
+st step of post_init<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0=C2=A0=C2=A0 Commit 220c739903ce (&quot;qom: reverse order=
+ of instance_post_init calls&quot;)<br>
+&gt;=C2=A0 =C2=A0=C2=A0=C2=A0 reverses the order instance_post_init calls, =
+which leads to<br>
+&gt;=C2=A0 =C2=A0=C2=A0=C2=A0 device_post_init() called before x86 cpu <br>
+&gt; specific .instance_post_init().<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0=C2=A0=C2=A0 However, x86 cpu replies on qdev_prop_set_glo=
+bals() (inside<br>
+&gt;=C2=A0 =C2=A0=C2=A0=C2=A0 device_post_init()) to apply the cpu option l=
+ike &quot;feature[=3Dfoo]&quot; <br>
+&gt; passed<br>
+&gt;=C2=A0 =C2=A0=C2=A0=C2=A0 via &#39;-cpu&#39; as the last step to make t=
+he &#39;-cpu&#39; option highest <br>
+&gt; priority.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0=C2=A0=C2=A0 After the order change of .instance_post_init=
+(), x86_cpu_post_initfn()<br>
+&gt;=C2=A0 =C2=A0=C2=A0=C2=A0 is called after device_post_init(), and it wi=
+ll change some property<br>
+&gt;=C2=A0 =C2=A0=C2=A0=C2=A0 value even though &quot;-cpu&quot; option spe=
+cify a different one.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0=C2=A0=C2=A0 Re-apply the global props as the last step to=
+ ensure &quot;-cpu&quot; option<br>
+&gt;=C2=A0 =C2=A0=C2=A0=C2=A0 always takes highest priority.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0=C2=A0=C2=A0 Signed-off-by: Xiaoyao Li &lt;<a href=3D"mail=
+to:xiaoyao.li@intel.com" target=3D"_blank" rel=3D"noreferrer">xiaoyao.li@in=
+tel.com</a>&gt;<br>
+&gt; <br>
+&gt; diff --git a/target/i386/cpu.c b/target/i386/cpu.c<br>
+&gt; index 0d35e95430fe..bf290262cbfe 100644<br>
+&gt; --- a/target/i386/cpu.c<br>
+&gt; +++ b/target/i386/cpu.c<br>
+&gt; @@ -9044,6 +9044,12 @@ static void x86_cpu_post_initfn(Object *obj)<br=
+>
+&gt;=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 X86_CONFIDENTIAL_GUEST(current_machine-&gt;cgs), (CPU(obj)));<br>
+&gt;=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0 }<br>
+&gt;=C2=A0 =C2=A0#endif<br>
+&gt; +<br>
+&gt; +=C2=A0=C2=A0=C2=A0 /*<br>
+&gt; +=C2=A0=C2=A0=C2=A0=C2=A0 * Re-apply the &quot;feature[=3Dfoo]&quot; f=
+rom &#39;-cpu&#39; option since they might<br>
+&gt; +=C2=A0=C2=A0=C2=A0=C2=A0 * be overwritten by above<br>
+&gt; +=C2=A0=C2=A0=C2=A0=C2=A0 */<br>
+&gt; +=C2=A0=C2=A0=C2=A0 qdev_prop_set_globals(DEVICE(obj));<br>
+&gt;=C2=A0 =C2=A0}<br>
+<br>
+This patch LGTM.<br>
+<br>
+Regards,<br>
+<br>
+Phil.<br>
+<br>
+</blockquote></div></div></div>
 
-
-> ---
->   hw/vfio-user/container.c | 10 +---------
->   1 file changed, 1 insertion(+), 9 deletions(-)
-> 
-> diff --git a/hw/vfio-user/container.c b/hw/vfio-user/container.c
-> index 3133fef177..4ee99fc2cc 100644
-> --- a/hw/vfio-user/container.c
-> +++ b/hw/vfio-user/container.c
-> @@ -225,14 +225,10 @@ vfio_user_container_connect(AddressSpace *as, VFIODevice *vbasedev,
->   
->       bcontainer = &container->bcontainer;
->   
-> -    if (!vfio_cpr_register_container(bcontainer, errp)) {
-> -        goto free_container_exit;
-> -    }
-> -
->       ret = ram_block_uncoordinated_discard_disable(true);
->       if (ret) {
->           error_setg_errno(errp, -ret, "Cannot set discarding of RAM broken");
-> -        goto unregister_container_exit;
-> +        goto free_container_exit;
->       }
->   
->       vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-> @@ -261,9 +257,6 @@ listener_release_exit:
->   enable_discards_exit:
->       ram_block_uncoordinated_discard_disable(false);
->   
-> -unregister_container_exit:
-> -    vfio_cpr_unregister_container(bcontainer);
-> -
->   free_container_exit:
->       object_unref(container);
->   
-> @@ -286,7 +279,6 @@ static void vfio_user_container_disconnect(VFIOUserContainer *container)
->           vioc->release(bcontainer);
->       }
->   
-> -    vfio_cpr_unregister_container(bcontainer);
->       object_unref(container);
->   
->       vfio_address_space_put(space);
+--0000000000009f7ea90638f1186d--
 
 
