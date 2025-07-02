@@ -4,89 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0794C8303C
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 19:00:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04C76C77B7C
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 19:00:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uX2dj-0007AM-CN; Wed, 02 Jul 2025 14:57:03 -0400
+	id 1uX2bW-0001Vo-B2; Wed, 02 Jul 2025 14:54:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX2dQ-0006QS-1H
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 14:56:44 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX2dN-0002WK-46
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 14:56:43 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3a588da60dfso3068261f8f.1
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 11:56:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751482599; x=1752087399; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HbtMMfTGvsSTq8PxfWtAmmbIIbgaQfV1sw8UTVP93vI=;
- b=iXjJmINNyc4cftnVsUMpH6d6ZhYYySvxOnz5UtlHFIEHs4y/dGBpuIxCjLo3Lq62K7
- Xp2bqHQ9VLuD8DYjRfHfO5P0nTkkVU4o0oneYho2WI9C9kqyARTboEVkU2nyTKQucJNU
- ZPLqYbqlpxeTxd31F2u8goAPM2fL9axIcwWNHaiuaswy+1GeokqXqbhFyIdpePExOQiC
- E8pUzqI96o7DMtSB2eR3bbrUWuAuPuSdGZ+ImGulz6FxzI3Q65/+TPbXCksPzRlP+t63
- BUFhF7Bb9eGwhFphmuFO0vr8p4vKB6g+hA34abqKx9vAdSoezNy/LAxVNhMRK/8unMSb
- U35A==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uX2bM-0001Jd-Er
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 14:54:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uX2bK-0001ic-6w
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 14:54:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751482471;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=IWpPA+/Hn8njnJ1tCrLg9w91wEBQlvmdEnGXHKOD3uc=;
+ b=agJzpQjaYh6tqlje34/UccZyu6z5Q2ni+WRpDJXiflvkGfJL2ufr25muFYH3agnFDWZ+xX
+ 0rjtIojOSkkvlwf7P0DbidL4exey8QVFzu2CCPzOvUihgKvN+Sno7CUkRfbaQuJ/c+CqMs
+ XKJkPEyHT6pT7lk7IeCsad/bRUd9274=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-587-b5B08DuZNCa0Hvzo9BT_aQ-1; Wed, 02 Jul 2025 14:54:29 -0400
+X-MC-Unique: b5B08DuZNCa0Hvzo9BT_aQ-1
+X-Mimecast-MFC-AGG-ID: b5B08DuZNCa0Hvzo9BT_aQ_1751482469
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a4eb6fcd88so3558994f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 11:54:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751482599; x=1752087399;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HbtMMfTGvsSTq8PxfWtAmmbIIbgaQfV1sw8UTVP93vI=;
- b=I6ClQ6snRKVn7itcbq+X+6K3qfX9sHbWDjySzWbVIn3ODIP/3xmbJMugYWVL+6LCEA
- CYLjv5Nucnv7httu5/2sjBbswPetozXTJ1Q1rYD9D76KL4DqCHBVtTIUmE8WtspunKob
- B+h5f8W/+Jnvh3o3CUyUEl8zhapOcOiuFLKOavtMX7LtFrKGoriHL+CQTkwgjXEGx6A0
- nwKGO9hsJv59xR7vsaWHhw8ZgK4Hhhq7wiZTJlwxKSWFS6AkcOiGQUy2rxyvZT2DL5QW
- kMsqNRvd5OlImJKtyrSfDWcK+wk5m5VOOOYS2YpKr4/eKb1+Ia7hBK1Ylf4+JLW35vFZ
- Ej0w==
-X-Gm-Message-State: AOJu0YxGzbkR7wFKuRy0FszjWhwsv9JY1PnUsk2Udmir1MXg8ojAH4Oz
- IzCLzht4qKJxzacgCdorTjeMToA1VEmZOWhkXapSZ5gCoPwWbwpv751+H3eSlU80lP8lCkZrGrd
- HWO99
-X-Gm-Gg: ASbGncvMYfE8eDnZpJ3NRDn+rVquAWJ1X/3buZPMWq28wnaJsNsPIH7NBhd215gGdny
- SUtaNBayGpg7skKWpd2/ZHQmS+nlb/UYuQQkYJzMcm0RmfecVdnk93XIKBW8OFvEi+SDkrFk2Bi
- GiA67QKJ+2cpK+siE/MnKItlCZcUaltIvqmbgg8DLR8bi+u6ql3RQHWT+C8w5lcapQN/Y+VQnZc
- 5NZtH76Epc5aXd3glUN4WuOZF1rT1XIAT8MH8aee46Och7Z/o3900a39OA9o8r7OjPX4d2JkRnS
- nO5JeI5s2WRzs9p/8jy6gq3PhnJGSzOlwyT6yJC5yp/f4bAbL5kEO+xtxEDSs/X5+ymXYfWbK46
- HrN2INS44kHfTbfRGeEmeBEDt3JcDD+r2HoZRjlVLZ9z2eOE=
-X-Google-Smtp-Source: AGHT+IFkQww10hbhm43S3pkTjnKIoi9bghBL6Eo1X1DPDUp3vTlYiiCw78fD7cvz3WR+ZnecsAAO6w==
-X-Received: by 2002:a05:6000:2a88:b0:3a3:6a9a:5ebf with SMTP id
- ffacd0b85a97d-3b32c477c9cmr216065f8f.20.1751482598987; 
- Wed, 02 Jul 2025 11:56:38 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a892e52a5asm16884357f8f.54.2025.07.02.11.56.36
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 02 Jul 2025 11:56:38 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 25/65] accel/tcg: Factor tcg_dump_flush_info() out
-Date: Wed,  2 Jul 2025 20:52:47 +0200
-Message-ID: <20250702185332.43650-26-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250702185332.43650-1-philmd@linaro.org>
-References: <20250702185332.43650-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1751482469; x=1752087269;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IWpPA+/Hn8njnJ1tCrLg9w91wEBQlvmdEnGXHKOD3uc=;
+ b=RZhqMm8nwwbjQhBOC0ne/VJtzdCL6QkhZQ3LCREqEy1oWvuMCbS/LI3Y9EZHp5JU1S
+ OKbsH/cT2Bs12/eJD+oZRKoCpAVE9SL+WfmFQtMpXMwV4dViy21nHemioQ5eYc2tq4+Z
+ I1NmPWQr1B6sHX9N5msqgzkKdXUBCXJjwOGc061VDx8fnDOmfQHrdcQ+cLbEY5wj5hxO
+ BcXYIIJYBZGA3QIJ4E31GmRhmxgtMLkx9m4+BqPqNj/TDJsFMkvdFjbC5w7y/24mR/3J
+ dvJ3RwIWNpehnb+YClaLg4kr0EO7Mnssvl9YHtE+eoKCgK/ZvzhsT0mXawHuIetuMFSq
+ xR/w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXrrQzQ9dQr1qeGcs7qHDkYTIaftz3/SUrqcs0dyZ6ZwsogR1SxInLdqZ9WJ4lAoP/43TRNZCUB2APw@nongnu.org
+X-Gm-Message-State: AOJu0YxxvjK7MIdPtJ+WeqrqDQ7bfA5LFmTFfOEXoEC3/XBQ/jY/tEyN
+ leTXQmHnaeTsDx3FVtSa/3DYYbuKaaDd5B/fFeQ93PavtozoE/bXdRLgOKw1+hXgLoiHUfA1Fwi
+ OSj51FUEHvGHLKqrdLRjSE2SQFYZ3UYOtB1/5bZV55ZO6mqrm0QitVKSPHi3wkq/lLtrp/adfHm
+ +yLzYxIL0AUo6KcDU+eW7d6p0ESwzQWKA=
+X-Gm-Gg: ASbGncuX5A7KvmwQaFjgjWUrzC899Pcr08aNKCZmeLVqp7ELIvdPDnf8nayvwWhNpYk
+ mYsZIWjIQ8UDoK/AHKqUte0o/xwjPjhqqa2t7tYoskI26wePqHz96PbLXriLr6C1qJoPuwZ+Vcr
+ caCw==
+X-Received: by 2002:a05:6000:2d09:b0:3a5:26fd:d450 with SMTP id
+ ffacd0b85a97d-3b20110b55fmr2109472f8f.47.1751482468621; 
+ Wed, 02 Jul 2025 11:54:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGq2je9fXlnnuSRE0rEsDTjEfgJxiXfI0yI1NCxQUav4ZBkNiIwwyBZh7yzljmw+IawlpqYSQPBRcRO/16gvg0=
+X-Received: by 2002:a05:6000:2d09:b0:3a5:26fd:d450 with SMTP id
+ ffacd0b85a97d-3b20110b55fmr2109463f8f.47.1751482468203; Wed, 02 Jul 2025
+ 11:54:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+References: <20250520110530.366202-1-pbonzini@redhat.com>
+ <20250520110530.366202-36-pbonzini@redhat.com>
+ <d429b6f5-b59c-4884-b18f-8db71cb8dc7b@oracle.com> <aFpocfTpBLB34N3l@intel.com>
+ <aGKryLSGlFTMSKHv@intel.com> <690b5bca-4345-4ee9-a332-4c2e38532309@intel.com>
+ <31387ca1-4fa0-482e-8e11-e8857c10cb6c@linaro.org> <aGTmFGC9vZB2yEwv@intel.com>
+ <76f8e877-e203-421f-b301-4b321534bd8b@intel.com>
+ <CABgObfY-sDqw3kPSgr8b3OycA2wZVYQLcxcavierdbr-U0S_Dw@mail.gmail.com>
+ <f7545434-f51f-4cb5-b1b9-afbaa26d11e8@intel.com>
+In-Reply-To: <f7545434-f51f-4cb5-b1b9-afbaa26d11e8@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 2 Jul 2025 14:54:16 -0400
+X-Gm-Features: Ac12FXy8bxGUFDfN3GKxitQDLCMDQE7_B-TvmwRHGpBkH0NcxWA3_rxaO4d9g_I
+Message-ID: <CABgObfax21xZDKGN9b8tH-HBVeEgTjWD-xLO6DRkr3uCvkyHQQ@mail.gmail.com>
+Subject: Re: [Regression] Re: [PULL 35/35] qom: reverse order of
+ instance_post_init calls
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Dongli Zhang <dongli.zhang@oracle.com>, Thomas Huth <thuth@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>, Alistair Francis <alistair.francis@wdc.com>,
+ Like Xu <like.xu.linux@gmail.com>, Igor Mammedov <imammedo@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000005916a40638f6cad6"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,74 +115,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- accel/tcg/internal-common.h |  2 ++
- accel/tcg/monitor.c         | 27 +++++++++++++++++----------
- 2 files changed, 19 insertions(+), 10 deletions(-)
+--0000000000005916a40638f6cad6
+Content-Type: text/plain; charset="UTF-8"
 
-diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
-index 1dbc45dd955..fb265d0cefa 100644
---- a/accel/tcg/internal-common.h
-+++ b/accel/tcg/internal-common.h
-@@ -139,4 +139,6 @@ G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
- void tb_phys_invalidate(TranslationBlock *tb, tb_page_addr_t page_addr);
- void tb_set_jmp_target(TranslationBlock *tb, int n, uintptr_t addr);
- 
-+void tcg_dump_flush_info(GString *buf);
-+
- #endif
-diff --git a/accel/tcg/monitor.c b/accel/tcg/monitor.c
-index 5bdd837006c..3d024e250a1 100644
---- a/accel/tcg/monitor.c
-+++ b/accel/tcg/monitor.c
-@@ -146,11 +146,26 @@ static void tcg_dump_info(GString *buf)
-     g_string_append_printf(buf, "[TCG profiler not compiled]\n");
- }
- 
-+void tcg_dump_flush_info(GString *buf)
-+{
-+    size_t flush_full, flush_part, flush_elide;
-+
-+    g_string_append_printf(buf, "TB flush count      %u\n",
-+                           qatomic_read(&tb_ctx.tb_flush_count));
-+    g_string_append_printf(buf, "TB invalidate count %u\n",
-+                           qatomic_read(&tb_ctx.tb_phys_invalidate_count));
-+
-+    tlb_flush_counts(&flush_full, &flush_part, &flush_elide);
-+    g_string_append_printf(buf, "TLB full flushes    %zu\n", flush_full);
-+    g_string_append_printf(buf, "TLB partial flushes %zu\n", flush_part);
-+    g_string_append_printf(buf, "TLB elided flushes  %zu\n", flush_elide);
-+}
-+
- static void dump_exec_info(GString *buf)
- {
-     struct tb_tree_stats tst = {};
-     struct qht_stats hst;
--    size_t nb_tbs, flush_full, flush_part, flush_elide;
-+    size_t nb_tbs;
- 
-     tcg_tb_foreach(tb_tree_stats_iter, &tst);
-     nb_tbs = tst.nb_tbs;
-@@ -187,15 +202,7 @@ static void dump_exec_info(GString *buf)
-     qht_statistics_destroy(&hst);
- 
-     g_string_append_printf(buf, "\nStatistics:\n");
--    g_string_append_printf(buf, "TB flush count      %u\n",
--                           qatomic_read(&tb_ctx.tb_flush_count));
--    g_string_append_printf(buf, "TB invalidate count %u\n",
--                           qatomic_read(&tb_ctx.tb_phys_invalidate_count));
--
--    tlb_flush_counts(&flush_full, &flush_part, &flush_elide);
--    g_string_append_printf(buf, "TLB full flushes    %zu\n", flush_full);
--    g_string_append_printf(buf, "TLB partial flushes %zu\n", flush_part);
--    g_string_append_printf(buf, "TLB elided flushes  %zu\n", flush_elide);
-+    tcg_dump_flush_info(buf);
-     tcg_dump_info(buf);
- }
- 
--- 
-2.49.0
+Il mer 2 lug 2025, 09:25 Xiaoyao Li <xiaoyao.li@intel.com> ha scritto:
+
+> IIRC that's on rhel QEMU which ports the TDX code before it's merged
+> upstream. Now TDX is upstreamed, it works with upstream compat property
+> and I think future new compat property won't affect TDX or anything,
+> since it's compat property and it's to guarantee the existing behavior
+> when introducing new behavior?
+>
+
+It's a compat property that is only added by RHEL-specific machine types.
+But the bug is not specific to RHEL, it just happens that no upstream
+machine type has compat properties that overlap with TDX adjustments of
+CPUID.
+
+> In general I don't see how the reverse order makes sense: the subclass
+> > knows what the superclass does, so it can do the right thing if it runs
+> > last; but the superclass cannot know what all of its subclasses do in
+> > post_init, so it makes less sense to run it last.
+>
+> I agree in general the parent to child order makes more sense,
+> especially when we treat .instance_init() as the phase 1 init and
+> .post_instance_init() as the phase 2 init.
+>
+> But the original purpose of introducing .post_instance_init() was to
+> ensure qdev_prop_set_globals() is called at last for Device. Reverse the
+> order breaks this purpose.
+>
+
+Not "last", but "after instance_init". Anything that happens in the child
+class's instance_post_init can be moved at the end of instance_init, just
+like the refactoring that I did for risc-v.
+
+Paolo
+
+It seems not good option like the reversed order from child to parent
+> that can achieve it by just putting the last step in top parent's.
+>
+> I'm looking forward to seeing a better solution.
+>
+> > Paolo
+> >
+> >
+> >> So I think we might revert this patch, and document clearly the reverse
+> >> order of .post_instance_init() callback.
+> >>
+> >>> X86 CPUs have the issue (e.g., "vendor" doesn't work) now because
+> >>> they - as leaf class, don't care about the property values of
+> >>> superclass - the DeviceState. If a property is just for initialization,
+> >>> like "vendor", it should be placed in the instance_init() instead of
+> >>> instance_post_init().
+> >>>
+> >>> In addition, if other places handle it similarly, the device's
+> >>> post_init seems pointless. :-(
+> >>>
+> >>> Thanks,
+> >>> Zhao
+> >>>
+> >>
+> >>
+> >
+>
+>
+
+--0000000000005916a40638f6cad6
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mer 2 lug 2025, 09:25 Xiaoyao=
+ Li &lt;<a href=3D"mailto:xiaoyao.li@intel.com">xiaoyao.li@intel.com</a>&gt=
+; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
+x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">II=
+RC that&#39;s on rhel QEMU which ports the TDX code before it&#39;s merged =
+<br>
+upstream. Now TDX is upstreamed, it works with upstream compat property <br=
+>
+and I think future new compat property won&#39;t affect TDX or anything, <b=
+r>
+since it&#39;s compat property and it&#39;s to guarantee the existing behav=
+ior <br>
+when introducing new behavior?<br></blockquote></div></div><div dir=3D"auto=
+"><br></div><div dir=3D"auto">It&#39;s a compat property that is only added=
+ by RHEL-specific machine types. But the bug is not specific to RHEL, it ju=
+st happens that no upstream machine type has compat properties that overlap=
+ with TDX adjustments of CPUID.</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
+gb(204,204,204);padding-left:1ex">&gt; In general I don&#39;t see how the r=
+everse order makes sense: the subclass<br>
+&gt; knows what the superclass does, so it can do the right thing if it run=
+s<br>
+&gt; last; but the superclass cannot know what all of its subclasses do in<=
+br>
+&gt; post_init, so it makes less sense to run it last.<br>
+<br>
+I agree in general the parent to child order makes more sense, <br>
+especially when we treat .instance_init() as the phase 1 init and <br>
+.post_instance_init() as the phase 2 init.<br>
+<br>
+But the original purpose of introducing .post_instance_init() was to <br>
+ensure qdev_prop_set_globals() is called at last for Device. Reverse the <b=
+r>
+order breaks this purpose.<br></blockquote></div></div><div dir=3D"auto"><b=
+r></div><div dir=3D"auto">Not &quot;last&quot;, but &quot;after instance_in=
+it&quot;. Anything that happens in the child class&#39;s instance_post_init=
+ can be moved at the end of instance_init, just like the refactoring that I=
+ did for risc-v.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</=
+div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote=
+ gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0=
+px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+It seems not good option like the reversed order from child to parent <br>
+that can achieve it by just putting the last step in top parent&#39;s.<br>
+<br>
+I&#39;m looking forward to seeing a better solution.<br>
+<br>
+&gt; Paolo<br>
+&gt; <br>
+&gt; <br>
+&gt;&gt; So I think we might revert this patch, and document clearly the re=
+verse<br>
+&gt;&gt; order of .post_instance_init() callback.<br>
+&gt;&gt;<br>
+&gt;&gt;&gt; X86 CPUs have the issue (e.g., &quot;vendor&quot; doesn&#39;t =
+work) now because<br>
+&gt;&gt;&gt; they - as leaf class, don&#39;t care about the property values=
+ of<br>
+&gt;&gt;&gt; superclass - the DeviceState. If a property is just for initia=
+lization,<br>
+&gt;&gt;&gt; like &quot;vendor&quot;, it should be placed in the instance_i=
+nit() instead of<br>
+&gt;&gt;&gt; instance_post_init().<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; In addition, if other places handle it similarly, the device&#=
+39;s<br>
+&gt;&gt;&gt; post_init seems pointless. :-(<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; Thanks,<br>
+&gt;&gt;&gt; Zhao<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt; <br>
+<br>
+</blockquote></div></div></div>
+
+--0000000000005916a40638f6cad6--
 
 
