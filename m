@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A544C77B7C
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 15:09:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E6D8C83F04
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 15:09:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWz51-0004it-Q5; Wed, 02 Jul 2025 11:08:59 -0400
+	id 1uWz5M-0005S9-6o; Wed, 02 Jul 2025 11:09:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWz4h-0004W0-DL
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 11:08:47 -0400
-Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ id 1uWz5I-0005HT-HY
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 11:09:16 -0400
+Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWz4c-0001qS-Hb
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 11:08:39 -0400
-Received: by mail-ot1-x334.google.com with SMTP id
- 46e09a7af769-73adf1a0c48so2384355a34.2
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 08:08:34 -0700 (PDT)
+ id 1uWz5C-0002Bv-PJ
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 11:09:16 -0400
+Received: by mail-oa1-x35.google.com with SMTP id
+ 586e51a60fabf-2eb5cbe41e1so4897932fac.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 08:09:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751468911; x=1752073711; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751468949; x=1752073749; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=SromJdYWRi0IX5meBNfxmdgHqbOvzVs8/IQzgCqHJ1s=;
- b=BkyZTTk959H/gaMImXl5lVfmDV6znjYkmm5zS2C8DdbtUB86FNbRv0/8KIpyT9Mm+R
- GWHYEiWYFBMkGfHkOk1o1LQ3bv/q2EWChbLPx8a6A7HqEcF2YmhQvQZtvOdNcWVw+bIL
- ptHPW5KeWz6cGqDMUrLGmImLKfZB4KIgQ9WnkYUJjDAIPQA6bL7+BMsID5fqFf61yuLD
- rWaKqVvUvGsrk7+VAqv/HKoi8NN8xLlogVzHwSIr3QcgR+MRRTGpERKKga117l1pAntA
- 0pvw2CXAOXeIpAvzelg1brNJzgM1OBSyjfqryemDxJMtAQELbkEJ/GrHKipR7ECtNXEk
- G2pQ==
+ bh=wyE4TE5vYymeFgJLjj6Ezpl+gTEXeHQxlcSiIX9ywQQ=;
+ b=fZ67UbpevG8/lPYKURAR7ijq/UkW31cgj2Lp6AG8c/q7i7FVey84McfRqa9GV1l5hQ
+ qlW33jbfqQ7xGdnqtwl8CUOvJO87Y2D4KvS4OgBFlXrq/rQgI/KK6OyLRDg4Is9aUFgz
+ XVPG0vlRQ8EiJBz+j/yGkyMpa6pcXx+hD0mf898pH9hntXZjTjC3ZId+Aq2G9iaMlD1c
+ 5202J3wK1BqypoL9iLXePMyEdqfstllqBHHRRMpQDp/i6Wui/S1GbTMd9wzGr+XGjTgx
+ 8qevndhbkf7PDINWWkJapWGKykEW3R6joT/Du2ocIRgF0RyfoULqRS1js45on3nrTWAS
+ LLfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751468911; x=1752073711;
+ d=1e100.net; s=20230601; t=1751468949; x=1752073749;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SromJdYWRi0IX5meBNfxmdgHqbOvzVs8/IQzgCqHJ1s=;
- b=aHRzyCNHoum+pW6GlG4CAOfzeQJ5+Xd/z3tOiNVoIKvq5DIoZtHxIiEdoM508GHR4R
- hgvIADIPsO0XIAJMC59uvmA0iyqqmb9YJFFFzUZrAqV0cBZ0juQwkO/kH8ZsU7x0Fk1q
- CU0QC9i7KYH2I1wUEGuchBOf2aechWFR2IPRmP8cvLK9ghJsy00EFekD6Off2K3XDa4q
- kZVi2LQFA+iBk7Y5TqXvnUgH1pFwqvjoAwvmzUH2zfSVlHHFyO6HfXZeYaWL1pndOUvT
- ke4Z2Na0UaOl2sP8dlKJ03CL3e+blAwz0fEtoGPJiD6y6Ag3pg+d761u0tPJ/3NrlCYT
- GRtA==
+ bh=wyE4TE5vYymeFgJLjj6Ezpl+gTEXeHQxlcSiIX9ywQQ=;
+ b=S7yvDm9qQN2VJBcd7KGcdkj0ILrVAczRxY6OlzhwQ85VuieW7/sc/g76GHnzzs9inQ
+ BH1RFDj/gUdGf9juNISfmX3hXmI692StKg6XcC1yH19DCiQgMZrvzmJtAPFtP5MfORKX
+ LQ2LfbuvJD1N/7Kp39/tlUufjdF0cmoJoaU6vwDa/wxgs8N7Hew/0H444Nv4S5ZIp+yk
+ /lgtuRg9cds2ePdaPLyh1Ijs2O7+98mQBSwUOlmn5Ne6zrGHiYni0DWyfTjXC6dWRNL3
+ jkThtb4T+yU8ptoDR+JLY+HBfhzkBCBejJNsdtTyx426LhEs0VKi0fHtAtKTVA6exiDe
+ vpFw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBAXXM2O0TyMvSN8FhS/QHZZp/cY5WtmUNHVxGrHUVPNJeRV2Ot/BNYZkg7d/5sM7K2AF5if0qebUG@nongnu.org
-X-Gm-Message-State: AOJu0YygmsHtsZ1XFLqPu1yrjUvoBeRtEidVWNegovg9LxT1/RVxP6BP
- ZFf2PN/SCUI/2bn2ruXMbAQzQ+3nBZPBLCoOikSA0TegeAxpevVlgt+98sDJI5R0oTk=
-X-Gm-Gg: ASbGnct8FZnnEZnovpMIrUkKFVnhqwRXDZdoyVgK1iwMXH4Z+mf1ekwcnoNFdXGiVw6
- hPTbquZI51dIN7Hj2QbvmaWq8Jd/ucXrNkQuIxaEFH8aEOUgY7HhgVRsQhksuwoZIdYz9XMI+QQ
- wv+ZGHGhE34AI5ajtEjO+VVjIiWw+HXrPQnv/48PG3vj+yVgfxtbwbbYlxF9k6Ch2cPlL576M4r
- Di2NWr6p/Rfz8RQinPwCIvwS3DOk95K8Gik9j9P/rs4Olz+8E1DkQfcdPG4wL9WsI/7T0NWEAIK
- 33HnpJQVrfT7D2YuqkQFpLpgfu6tQp1QnPc11500VxkpRvhOp57uDNNTQwY6crnKdyLyxJ1tH0x
- b
-X-Google-Smtp-Source: AGHT+IEA/Hg00qL1JMoo3l3nBie8IeGVDrUGYU5EEH1jNBgXuhwTdPsU+Bv6ZoezozqSWXRtGroXOw==
-X-Received: by 2002:a05:6808:1c06:b0:40b:af9:b32d with SMTP id
- 5614622812f47-40b887479eemr2301180b6e.2.1751468910934; 
- Wed, 02 Jul 2025 08:08:30 -0700 (PDT)
+ AJvYcCUwOI1r6vclnrjrP8QcCjXhFmBvDqAi+I98+jdggJ0owDP72RDaBzqV/l3KCVFmAysvY0hg3KXkaHsn@nongnu.org
+X-Gm-Message-State: AOJu0YwI8SaUwsmBbOWNmIQK9j9OPbNOAgEBcoNqA114aRpAeI0euAVG
+ H/r/qk/R6mfXil6EN4qD5afjJy2wNe83CPPvSLDJSI2Kt3R4MhkKpWXStR+LQ/u/iEQ=
+X-Gm-Gg: ASbGncs5belU/wmE29W41Et8AvVgyZwuSY9KvGqzEualmGhs5cO/kJ3ufQ4kJXGC6C8
+ V7oRbm4BR8bKe0OKhAIdKtAbQooqJABXWYFpHhLlXuNbYEnj+X0Y0s1jp1yc4Oe8wpD8As1iSoK
+ XEHAUjXkQnQ7d3nNH/rmWThw4vYjNv3ABs9k6nO/TZSIr6JuDoKWCst2myIGxjmjpylHYqbe4Ke
+ 9x6KC38w0nSUPVCST6nmBnydpQSby2Ta0xMknTmv8ZmXFwVVc3VthQCPH3jT4eOiFXZpZTV/plu
+ ZEXlgBFCTCLyJMU6b6XiFpyPeV0PxCCfRJuoVSb+w/+pb5lWC+C4UA7ZB8tslU10496BInhkpt8
+ 9
+X-Google-Smtp-Source: AGHT+IEQXtPZ24v0Wj6BnfMrdJGsXSd3pmtmFVumBBcjpVD1aHT9oTt7y9XH8wECNTL1eTlK1dWj/w==
+X-Received: by 2002:a05:6871:cd07:b0:28c:8476:dd76 with SMTP id
+ 586e51a60fabf-2f5a8b594c2mr2927248fac.29.1751468948767; 
+ Wed, 02 Jul 2025 08:09:08 -0700 (PDT)
 Received: from [10.25.7.74] ([187.210.107.185])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-40b3243dc52sm2561319b6e.46.2025.07.02.08.08.29
+ 586e51a60fabf-2efd5145967sm3843495fac.49.2025.07.02.08.09.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Jul 2025 08:08:30 -0700 (PDT)
-Message-ID: <cddc07e4-1fe9-48af-9bb6-a26e380d0490@linaro.org>
-Date: Wed, 2 Jul 2025 09:08:28 -0600
+ Wed, 02 Jul 2025 08:09:08 -0700 (PDT)
+Message-ID: <ab2349fb-d8b7-4b5e-8610-f2550b840b30@linaro.org>
+Date: Wed, 2 Jul 2025 09:09:06 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 31/68] accel/hvf: Move generic method declarations to
- hvf-all.c
+Subject: Re: [PATCH v3 33/68] accel/hvf: Replace @dirty field by generic
+ CPUState::vcpu_dirty field
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Julian Armistead <julian.armistead@linaro.org>
 References: <20250701144017.43487-1-philmd@linaro.org>
- <20250701144017.43487-32-philmd@linaro.org>
+ <20250701144017.43487-34-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250701144017.43487-32-philmd@linaro.org>
+In-Reply-To: <20250701144017.43487-34-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x334.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::35;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,14 +109,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/1/25 08:39, Philippe Mathieu-Daudé wrote:
-> hvf-all.c aims to contain the generic accel methods (TYPE_ACCEL),
-> while hvf-accel-ops.c the per-vcpu methods (TYPE_ACCEL_OPS).
+> No need for accel-specific @dirty field when we have
+> a generic one in CPUState.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   accel/hvf/hvf-accel-ops.c | 272 +-------------------------------------
->   accel/hvf/hvf-all.c       | 267 +++++++++++++++++++++++++++++++++++++
->   2 files changed, 272 insertions(+), 267 deletions(-)
+>   include/system/hvf_int.h  |  1 -
+>   accel/hvf/hvf-accel-ops.c | 10 +++++-----
+>   target/arm/hvf/hvf.c      |  4 ++--
+>   target/i386/hvf/hvf.c     |  4 ++--
+>   target/i386/hvf/x86hvf.c  |  2 +-
+>   5 files changed, 10 insertions(+), 11 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
