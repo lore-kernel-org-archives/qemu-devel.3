@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0189FC77B7C
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 19:03:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AF60C83038
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 19:03:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uX2f9-0002xi-N1; Wed, 02 Jul 2025 14:58:31 -0400
+	id 1uX2hQ-0007yB-MW; Wed, 02 Jul 2025 15:00:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX2ez-0002hn-6T
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 14:58:22 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX2hN-0007mf-0g
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 15:00:49 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX2et-0002ne-FA
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 14:58:20 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-45348bff79fso48529345e9.2
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 11:58:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX2hH-0003ac-4R
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 15:00:48 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3a57c8e247cso3955767f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 12:00:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751482690; x=1752087490; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751482840; x=1752087640; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SZcPe3nYMdLPvpkVihaPaKQWmWCYPUgBDgbI5JlWA4I=;
- b=KK4wW6o56wqqu6joBlVnsC/EOoWQ6KDateG/s63QWf0eTMQ+9OpgaSOltNHPoTL9pL
- pAii23JZ5ghtyZpJRTeiYE1IWjbrCoCLw+iHoMXR/8nKbAKO8zLLJwdtOFgDkNUwtI4L
- EE24iTdRNYrbpNyPE9HCQs5RXENKQrooV2pmvIdnSoY9N9wVn6nU77V10xyOraH9MUKA
- cM/q+RQ+q8wSwAIzAhp5KQzUd43KhxnSocY52cuiZOtBJpJhie2fXMOXAmBagqNU+tpG
- xMqZYfP07gJXNkX//JtvxSpTQ/7mLyE2PX2zOcxC4fCT0s+AYalMPikpNa3QAWYl05DO
- ZWvA==
+ bh=NkXbMENLL2/wIEzevGvNzpprsLRrgpl0VsO0QRREPRs=;
+ b=sH5xcLOFlQDt67HugS3PpBmK4FcSn0UJJSEMhcgy9/Yivf0cTcD9zHgqGJxgwlrtPQ
+ S1iXxFTZsms7RBqRuYBl9E5hOrETUWJhizAbknf7QNnAXyP30AP6pBMu6+ev9i8BALMQ
+ wqNZvhDcoQM37AbPA+zEEbwz5YLDuMqIaLjShOSAvi8BuXdXAoh3k2YVT/+xBVFKarEa
+ HuaYBpMCgOu0V/aojVr1Txouc7W3omoKC80h4juWnZaIiwalS5Qr7MnMReZXSGOkRX3c
+ vqIo/PRPQmxYGTwoZ++szli50PaZAeDStJEOxKT8QKrIuh+7TKMs3DEUdAMLzcYZa1Zy
+ 9yIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751482690; x=1752087490;
+ d=1e100.net; s=20230601; t=1751482840; x=1752087640;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SZcPe3nYMdLPvpkVihaPaKQWmWCYPUgBDgbI5JlWA4I=;
- b=w8Hik4EzwZSTXUjW0oWtpKc/oALNhJx9GfFYGXUV8ere9sDIBBxntHCmYiAlEIjzIA
- iJ9jR5xGZM9Lm2JP3S2K6k/IFDVpmmmHdTOGrARLUoDiZ/bH7xUqoRIeAb0hZ1LoAW1g
- Vj/17kh46hReVEq1c9XthJlT/VU3Sz0ThkocKUcdaHVhVIAKtNDSkKTHKXD8U40570/M
- NZB1is1SuZZSk1afgtkOKBcTXwqEui7Mqzb+Jo0X+1tBhf4HtC4yuOgdmtsIEXwoX6Bo
- MG39rcylegy0kH50C+vsfzaWiRGjgZUefDUlBkgRKVXz12YmmONFIt9OoUVftos8QDui
- CZIQ==
-X-Gm-Message-State: AOJu0Yzdy5dDU81qnnlXpVSIttEja61St57aG84AEK4+9JR0nGZbqUsX
- 2uIfZore/dNSNG82EegjGHtzK0JqcejFzh+UfEKNaDAD8lmqfVp2AYiJNEsi5nB7aeSkazyJoUF
- jEtou
-X-Gm-Gg: ASbGncu9/OY9EWyloa20IdpojGKdts7g1T1eGz+NiGTD3u1ZHygcXO1XmCyJiRdEwsd
- bE9+6F09YYKoYGue4sqB5i6gtyzDgmBg8KGO72hd2y3Y82Ii7wovYzKG9luQKxlVRH9qqS6GcRD
- XJ59Kc2wtyCjOX6RJBaGhnsiyIUE8gZHdwbdUImF24W9MB/4NRuP9owvVQsa7fv1IwIY7RKHEjZ
- DXWvMaEILlpClBtwNvk3LI87W3ocPhLK/fvFuDf22DH+RdcD672MAjA7d5K713NrQ+ufoK39wxx
- ULoP4fP4kDCu0orxh3MfDlO0qaBCuBQiIsXmVFWcXoY4GL+hR7uOa9jonugtSbudl2d+Tq87M5i
- 7ttJZSSpJcYyTF2iC6NQUTLz+A5UHM98qtjxV
-X-Google-Smtp-Source: AGHT+IEMJc2bCpIf0tMa9zUMTXA/l80YP6s5PRbLi1vGz/HuGBykc1Hw9iizQYQBjwStGofzLQlDgA==
-X-Received: by 2002:a05:600c:4509:b0:441:ac58:eb31 with SMTP id
- 5b1f17b1804b1-454a3705065mr37982045e9.20.1751482690018; 
- Wed, 02 Jul 2025 11:58:10 -0700 (PDT)
+ bh=NkXbMENLL2/wIEzevGvNzpprsLRrgpl0VsO0QRREPRs=;
+ b=UmayiECsncl7LmSKgeq7HRlAMfuzchd+4swpO3Q2CZdIFeMHriOqae1HYI+1RdVYgd
+ +Zb3vblNqvkpHrEGB8ozHr7ww1bSLBXmRGK7EXk1o+65G4tJLvD4aHtFnDAePcfwXu8K
+ wIz2MJ3LSTYQS/I1CXzJqs6FlphH6VO3UyZxsN1xHTjGAhl6YxLpKaBmYPkMFFxicOAG
+ 1PxiO59Y0ycqZY2yza50I/MH89Ny3RsSJeELMW8RNRgO1vdCb6qmZT4P7eErjYvVbjxv
+ oyKtF1n+CwY0xGcuv9882rCuo1A0D5Prd5R6F/az8egBjcjL3RUVmGI9kUnuP2p5e2Rv
+ G0iQ==
+X-Gm-Message-State: AOJu0YzMTQQ2AYqq6LOik/4+E9jUYsOK6eIVZpp5Ztu+i6FzTDR1V+gE
+ juwhPEEKzt8S+MH4r5vKgx/tPFsXgR15CKNtpRDNpJ7E3Q4Sjg7w9LCWQ9arYrxDCupxNAzCLlp
+ Eu0ED
+X-Gm-Gg: ASbGncsg/qlgBzqhU4z/j0W3KyBzcyVo2gHVhBF4NBH0WshXyOgoyQ0jM3ZxmnhUKqe
+ hXcNwtYuwcgQal6FEQCHgLo+nWmFUlqXcgBXW+y2YyDi5hgf0GPUVvqDTNG/IS9UbeyfU1TG/Kz
+ W560gOGswunUZvTE/32cKMq3kMKy2Z49z7pfsvMvCWwLcKtQkrgZllE4Pxg2eJgweoW4RIToa2R
+ tK78Rwv83d2tgYIlqqJFxiAer+/RjZ39PNN+CBmtoDAt85O5UrLAEV1gQWbG9dUxrSORRvBqyGj
+ KIxQEST1SAjA2ZhLp1PFoMvTuBFH1QQGaKYehFCl8wgtwk20CcuqzQAInZG7ChPAkVePCGvLXBx
+ FdH+8RzaN23FD2pncxsHbhRjTfjxp/Qf7rc4se0lLDVIgHrA=
+X-Google-Smtp-Source: AGHT+IELGT++1jNUmUBDrBmEnStzKY27FesNm8l/0VyU4bnMTYFsc2ODMv0ihPjQ+IWm1lh2eyEnHQ==
+X-Received: by 2002:a5d:64e1:0:b0:3a4:ec32:e4f3 with SMTP id
+ ffacd0b85a97d-3b1fe6b69efmr3029463f8f.17.1751482840386; 
+ Wed, 02 Jul 2025 12:00:40 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a892e5972bsm16892625f8f.68.2025.07.02.11.58.08
+ 5b1f17b1804b1-454a99b6f94sm5577135e9.32.2025.07.02.12.00.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 02 Jul 2025 11:58:09 -0700 (PDT)
+ Wed, 02 Jul 2025 12:00:39 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -70,18 +70,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 38/65] accel/system: Document
- cpu_synchronize_state_post_init/reset()
-Date: Wed,  2 Jul 2025 20:53:00 +0200
-Message-ID: <20250702185332.43650-39-philmd@linaro.org>
+Subject: [PATCH v4 63/65] accel/tcg: Factor rr_cpu_exec() out
+Date: Wed,  2 Jul 2025 20:53:25 +0200
+Message-ID: <20250702185332.43650-64-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250702185332.43650-1-philmd@linaro.org>
 References: <20250702185332.43650-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,51 +103,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/system/accel-ops.h | 8 ++++++++
- include/system/hw_accel.h  | 8 ++++++++
- 2 files changed, 16 insertions(+)
+Altough we aren't going to re-use rr_cpu_exec(), factor
+it out to have RR implementation matches with MTTCG one.
 
-diff --git a/include/system/accel-ops.h b/include/system/accel-ops.h
-index ac0283cffba..77bd3f586bd 100644
---- a/include/system/accel-ops.h
-+++ b/include/system/accel-ops.h
-@@ -43,6 +43,14 @@ struct AccelOpsClass {
-     void (*kick_vcpu_thread)(CPUState *cpu);
-     bool (*cpu_thread_is_idle)(CPUState *cpu);
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ accel/tcg/tcg-accel-ops-rr.c | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
+
+diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+index 9578bc639cb..d976daa7319 100644
+--- a/accel/tcg/tcg-accel-ops-rr.c
++++ b/accel/tcg/tcg-accel-ops-rr.c
+@@ -169,6 +169,25 @@ static int rr_cpu_count(void)
+     return cpu_count;
+ }
  
-+    /**
-+     * synchronize_post_reset:
-+     * synchronize_post_init:
-+     * @cpu: The vCPU to synchronize.
-+     *
-+     * Request to synchronize QEMU vCPU registers to the hardware accelerator
-+     * (QEMU is the reference).
-+     */
-     void (*synchronize_post_reset)(CPUState *cpu);
-     void (*synchronize_post_init)(CPUState *cpu);
-     /**
-diff --git a/include/system/hw_accel.h b/include/system/hw_accel.h
-index 574c9738408..fa9228d5d2d 100644
---- a/include/system/hw_accel.h
-+++ b/include/system/hw_accel.h
-@@ -28,6 +28,14 @@
- void cpu_synchronize_state(CPUState *cpu);
- void cpu_synchronize_pre_loadvm(CPUState *cpu);
++static int rr_cpu_exec(CPUState *cpu, int64_t cpu_budget)
++{
++    int ret;
++
++    bql_unlock();
++    if (icount_enabled()) {
++        icount_prepare_for_run(cpu, cpu_budget);
++    }
++
++    ret = tcg_cpu_exec(cpu);
++
++    if (icount_enabled()) {
++        icount_process_data(cpu);
++    }
++    bql_lock();
++
++    return ret;
++}
++
+ /*
+  * In the single-threaded case each vCPU is simulated in turn. If
+  * there is more than a single vCPU we create a simple timer to kick
+@@ -254,17 +273,7 @@ static void *rr_cpu_thread_fn(void *arg)
+                               (cpu->singlestep_enabled & SSTEP_NOTIMER) == 0);
  
-+/**
-+ * cpu_synchronize_post_reset:
-+ * cpu_synchronize_post_init:
-+ * @cpu: The vCPU to synchronize.
-+ *
-+ * Request to synchronize QEMU vCPU registers to the hardware accelerator
-+ * (QEMU is the reference).
-+ */
- void cpu_synchronize_post_reset(CPUState *cpu);
- void cpu_synchronize_post_init(CPUState *cpu);
+             if (cpu_can_run(cpu)) {
+-                int r;
+-
+-                bql_unlock();
+-                if (icount_enabled()) {
+-                    icount_prepare_for_run(cpu, cpu_budget);
+-                }
+-                r = tcg_cpu_exec(cpu);
+-                if (icount_enabled()) {
+-                    icount_process_data(cpu);
+-                }
+-                bql_lock();
++                int r = rr_cpu_exec(cpu, cpu_budget);
  
+                 if (r == EXCP_DEBUG) {
+                     cpu_handle_guest_debug(cpu);
 -- 
 2.49.0
 
