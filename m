@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 889ACC8303C
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 18:58:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69F45C8303C
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 18:58:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uX2db-0006ju-6m; Wed, 02 Jul 2025 14:56:57 -0400
+	id 1uX2dS-0006R0-63; Wed, 02 Jul 2025 14:56:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX2cY-00057r-Rp
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 14:55:58 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX2dD-0005Yv-4X
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 14:56:33 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX2cO-0002Jd-VF
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 14:55:50 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3a582e09144so3484976f8f.1
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 11:55:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX2dA-0002Tw-5j
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 14:56:30 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3a575a988f9so4722557f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 11:56:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751482538; x=1752087338; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751482585; x=1752087385; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bV84MiQpGOn60kTDkD54slrXkuHu95fcxpVNCRAl6i0=;
- b=rTPLBQlYxB2vdRrwOU04j9qkZM31ov0Jzl8mQufWoPG2Pt//wq9N5Lwq2nyHC7ac7D
- ksdTxskI3EJ6AQSee6ZU3ntPdpONzSKoR3cv1OmBYnDqd48uHv/uCI+CK99ry3r+aUVU
- oudrUL0qvSu/UlCYML57K2dZL+q9XQiEXOnXoqG507/VOlLYQPfGwiVFvGG8RSLjGZlv
- MCKcmSVlNuWaHFm86XdAx9WcfOm1w7LyWvV4HDhQhzqY4zzNKOh0fxIgW1LQxrHTm8iM
- N8Q77spK9Q0EmrzceSaf1FZ6P8yh2YjRvK0+FYM7OqlKqvxehnAAqChO7rdVT0fLuhbE
- B/vQ==
+ bh=eg1QLrLP2BMZ9vGVeWVIdjZH5+H7wor9h9xhFdkEFm4=;
+ b=pgOLK/WcfOoEvqZ4z/UuCb43FZBVeaYUU9genBuT7E2QMv7ID7AOnW/mcP91ojQqRE
+ zQDrfNi1S9dzVWf3W/yvYDRilrx7XEYaTtuurs27ed+y897JYMo90PgTtfexDpm5Sdj5
+ 3SmKr1M86DXqrPc4XDg/LrE2gLzrVLFfQHAsqzoaKtH/TEZaQVJWlbD4Xce76jpXxvPV
+ pmC2Y2vN9qHcLSu0RSaYr/kYC9s1+sZc1q00pv0D/sdVcjqFm6TxgMSvAQY0sJ6fym5K
+ SQxhrpK07JAU0QdPYherDZ2JVnWf4b8aZBbJGa2o+XwCvp+tL3OAV7G23ZuZimCipuZv
+ dmqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751482538; x=1752087338;
+ d=1e100.net; s=20230601; t=1751482585; x=1752087385;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bV84MiQpGOn60kTDkD54slrXkuHu95fcxpVNCRAl6i0=;
- b=mfjNoSvweEstAp+3KzsB/GLERgtwW+gbHJjZ2/tmDJw6HWUGKzxtGpAnDko1Do/vpc
- 2nUbeOSJX0Ka/KvSuDVlXBdui1tPv4AoIChSYyBWX7XwJYuGQzNF8LQPkdMz/LCtNO2W
- 9VX993d+qHolWvu6037AVE+DoyS0r+LkfRylCLJ3hQGKS2cynvPADlo/9NP/8uagWu5y
- zrpiGDUzVC3+JF38S7VyhT76myWtdla1RoqmpSBEwoOfc5xPSrzczi1ZemUMsYF4h1+1
- E6huIeFR8RAUpMXKGLeHSvVt5zoV2VkWVQX7Sc0CMw+ei+k4mnVpBZW/l58b+LYNVYZD
- OO3w==
-X-Gm-Message-State: AOJu0Yzo1BziIHcj2PXV1WrOhfprsEY6FfsI4NVMzqxveUKt0NUie7M5
- M7LK2jvzJuRqVd6qOrpk1dgmf9NGkaxPFhxjzsNhKeqyOWCU/PvGlQ+T5+Xj/DJik/1mz3shBcu
- GIhSn
-X-Gm-Gg: ASbGncsyHJtJWvLYrPLRjl7yLk7XbM4aA0usgGIMouzyE1YUmp8zQaX/yxmxlPu63JI
- wSWIr9Eg03G7JYyn7IQ7CqcyzD4XjyzeQBsGQY7l7gMTZq64IeJkrhZ4V+HYdjM8VYrZli4vObF
- 7xtVC2VQRtH8WfCZn6OsT5Xx24qwkQkM08XBPUvX65ScKOyCl92+CE1aBnujZ7mcuEvFYbYPbhm
- nECWNmSYzAlr6bkY5sPbih6YxVaNp6vvryzszz4dAO806q074KpQmslbZIUo4rwDUNrYpwyejPP
- LqMBXS/es9x3WKQDrHUpbi70G8OX4wO+CyweIfgQdl2LNGmCmkHrU12YMDLIjm6HAW9yDeRMvNW
- UvRNQm3pwgm1nd1+U/XbzGBNEGI0ztINLUeJz
-X-Google-Smtp-Source: AGHT+IFODJ+D1AFeTvC1vkdycvK6lOL44CSBA8lY+BbJ04aT22gqywY98ryhDAizdMHORIqFjKZtkA==
-X-Received: by 2002:a05:6000:1a8a:b0:3a4:f786:4fa1 with SMTP id
- ffacd0b85a97d-3b1fe5bf079mr3216108f8f.2.1751482537445; 
- Wed, 02 Jul 2025 11:55:37 -0700 (PDT)
+ bh=eg1QLrLP2BMZ9vGVeWVIdjZH5+H7wor9h9xhFdkEFm4=;
+ b=ShKbTTZB9KvPAoK7cCNAXJ7qR/hA+dfTwCt8MUTg9ioLYTaEGjlXTG9DJbm3cREEVj
+ +qmf3r84pMeKW13XG6JNjvWAU7UYNil4kCKqIqLjQp8D9UKUHIFXodoDPL643LLJ/0Pe
+ vDCN/3Ugf/q3eXvUiLNJsnNuWzvmL2F+XWg2UYQGKI1qED9eu6W9f6cUqhGTOH/3CAnF
+ 17amO1I7xksK8VzSP0H1Dw1XqirMAmKWrzZH2bhSiI4mblWdtQOF34BEqGSyMYDxaNKr
+ MnBk0MksMkJ383Wsusn+4Hj5iG0K7k2ZFYxE8dVk6D7lvDs/BtR/3OTPuAOgUjeDXgix
+ 9p8A==
+X-Gm-Message-State: AOJu0Ywt5AYvEVQLvGLXrHY4UIMBx+VUZ4YFc2pIwPAUyOxdnGgthPWv
+ 5ejh3RVKnNG85mXfg4QkvEhFfXNxey6lxkhyVZXPtenMCjpXHsQtIs1dUMpx1ISwsL5mKRBXXsu
+ PdHmF
+X-Gm-Gg: ASbGnctkOBYTpWrnKXxfziyJSzsCGxyNyAtPt5m4Hq+MmORmqZ3+2+XSdahSILwCi8A
+ pn1WTB1eO4AwUCUvFophEs58X3NtpQK2CpixND8Me8p2zQIIWVIRQ4KzrxxUIrN6XoxTyk6YbRZ
+ znStmM3BFJ5WjAlyAB6sHLpIrLXf9uaJRUdJcmJtCHJmvXBmX+OVGlW5iPtZ7oZf+/ZcvLdxhRo
+ Hg/UAuvjtAyc2sps7mjHVjpl/2TVgGTMr2tU/gPvWZn+Ob6oprXQbH8yK6DgDj5tSciXgRJlJO1
+ jQr8ioKQXT8wbe7DkO5Z9ZzUv7yKysDAzantcJ3eOg+DsywtqMmTkiIPNTqFzBigEHGW+8XKHWT
+ pZ9bOEMFKLfUmNvbVCWE/0eTCCMZ6VhM6Hn5H
+X-Google-Smtp-Source: AGHT+IH5acTYdfn6qoz2xOPcBTVv+InLxlJToiv4CwOuSaTe+SB1DB+Tr51i/fJFDkJCAcmPQ1yN2g==
+X-Received: by 2002:a05:6000:43c9:b0:3a5:7944:c9b with SMTP id
+ ffacd0b85a97d-3b32c0a188bmr190504f8f.16.1751482585133; 
+ Wed, 02 Jul 2025 11:56:25 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a892e5f44dsm16538961f8f.87.2025.07.02.11.55.34
+ ffacd0b85a97d-3a892e5979dsm16670846f8f.75.2025.07.02.11.56.22
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 02 Jul 2025 11:55:36 -0700 (PDT)
+ Wed, 02 Jul 2025 11:56:24 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -70,29 +70,25 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Mads Ynddal <mads@ynddal.dk>,
- Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
- kvm@vger.kernel.org, qemu-arm@nongnu.org
-Subject: [PATCH v4 17/65] accel: Move supports_guest_debug() declaration to
- AccelClass
-Date: Wed,  2 Jul 2025 20:52:39 +0200
-Message-ID: <20250702185332.43650-18-philmd@linaro.org>
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: [PATCH v4 23/65] accel/system: Introduce @x-accel-stats QMP command
+Date: Wed,  2 Jul 2025 20:52:45 +0200
+Message-ID: <20250702185332.43650-24-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250702185332.43650-1-philmd@linaro.org>
 References: <20250702185332.43650-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,225 +104,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AccelOpsClass is for methods dealing with vCPUs.
-When only dealing with AccelState, AccelClass is sufficient.
-
-In order to have AccelClass methods instrospect their state,
-we need to pass AccelState by argument.
+Unstable QMP 'x-accel-stats' dispatches to the
+AccelOpsClass::get_stats() and get_vcpu_stats() handlers.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/kvm/kvm-cpus.h       | 1 -
- include/qemu/accel.h       | 1 +
- include/system/accel-ops.h | 1 -
- include/system/hvf.h       | 2 +-
- accel/hvf/hvf-accel-ops.c  | 2 +-
- accel/kvm/kvm-accel-ops.c  | 1 -
- accel/kvm/kvm-all.c        | 5 ++++-
- accel/tcg/tcg-accel-ops.c  | 6 ------
- accel/tcg/tcg-all.c        | 6 ++++++
- gdbstub/system.c           | 7 ++++---
- target/arm/hvf/hvf.c       | 2 +-
- target/i386/hvf/hvf.c      | 2 +-
- 12 files changed, 19 insertions(+), 17 deletions(-)
+ qapi/accelerator.json      | 17 +++++++++++++++++
+ include/qemu/accel.h       |  2 ++
+ include/system/accel-ops.h |  3 +++
+ accel/accel-qmp.c          | 34 ++++++++++++++++++++++++++++++++++
+ accel/accel-system.c       |  1 +
+ accel/meson.build          |  2 +-
+ 6 files changed, 58 insertions(+), 1 deletion(-)
+ create mode 100644 accel/accel-qmp.c
 
-diff --git a/accel/kvm/kvm-cpus.h b/accel/kvm/kvm-cpus.h
-index 688511151c8..3185659562d 100644
---- a/accel/kvm/kvm-cpus.h
-+++ b/accel/kvm/kvm-cpus.h
-@@ -16,7 +16,6 @@ void kvm_destroy_vcpu(CPUState *cpu);
- void kvm_cpu_synchronize_post_reset(CPUState *cpu);
- void kvm_cpu_synchronize_post_init(CPUState *cpu);
- void kvm_cpu_synchronize_pre_loadvm(CPUState *cpu);
--bool kvm_supports_guest_debug(void);
- int kvm_insert_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len);
- int kvm_remove_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len);
- void kvm_remove_all_breakpoints(CPUState *cpu);
+diff --git a/qapi/accelerator.json b/qapi/accelerator.json
+index 1d2a83f1b22..88b536e5274 100644
+--- a/qapi/accelerator.json
++++ b/qapi/accelerator.json
+@@ -73,3 +73,20 @@
+   'returns': 'HumanReadableText',
+   'if': 'CONFIG_TCG',
+   'features': [ 'unstable' ] }
++
++##
++# @x-accel-stats:
++#
++# Query accelerator statistics
++#
++# Features:
++#
++# @unstable: This command is meant for debugging.
++#
++# Returns: accelerator statistics
++#
++# Since: 10.1
++##
++{ 'command': 'x-accel-stats',
++  'returns': 'HumanReadableText',
++  'features': [ 'unstable' ] }
 diff --git a/include/qemu/accel.h b/include/qemu/accel.h
-index 1c097ac4dfb..c6fe8dc3913 100644
+index 065de80a87b..598796bdca9 100644
 --- a/include/qemu/accel.h
 +++ b/include/qemu/accel.h
-@@ -50,6 +50,7 @@ typedef struct AccelClass {
-                        hwaddr start_addr, hwaddr size);
+@@ -41,6 +41,8 @@ typedef struct AccelClass {
+     AccelOpsClass *ops;
  
-     /* gdbstub related hooks */
-+    bool (*supports_guest_debug)(AccelState *as);
-     int (*gdbstub_supported_sstep_flags)(AccelState *as);
+     int (*init_machine)(AccelState *as, MachineState *ms);
++    /* get_stats: Append statistics to @buf */
++    void (*get_stats)(AccelState *as, GString *buf);
  
-     bool *allowed;
+     /* system related hooks */
+     void (*setup_post)(AccelState *as);
 diff --git a/include/system/accel-ops.h b/include/system/accel-ops.h
-index a863fe59388..51faf47ac69 100644
+index af54302409c..2a89641aa81 100644
 --- a/include/system/accel-ops.h
 +++ b/include/system/accel-ops.h
-@@ -65,7 +65,6 @@ struct AccelOpsClass {
-     int64_t (*get_elapsed_ticks)(void);
+@@ -50,6 +50,9 @@ struct AccelOpsClass {
  
-     /* gdbstub hooks */
--    bool (*supports_guest_debug)(void);
-     int (*update_guest_debug)(CPUState *cpu);
-     int (*insert_breakpoint)(CPUState *cpu, int type, vaddr addr, vaddr len);
-     int (*remove_breakpoint)(CPUState *cpu, int type, vaddr addr, vaddr len);
-diff --git a/include/system/hvf.h b/include/system/hvf.h
-index 8c4409a13f1..7b9384d816c 100644
---- a/include/system/hvf.h
-+++ b/include/system/hvf.h
-@@ -71,7 +71,7 @@ void hvf_arch_update_guest_debug(CPUState *cpu);
- /*
-  * Return whether the guest supports debugging.
-  */
--bool hvf_arch_supports_guest_debug(void);
-+bool hvf_arch_supports_guest_debug(AccelState *as);
+     void (*handle_interrupt)(CPUState *cpu, int mask);
  
- bool hvf_arch_cpu_realize(CPUState *cpu, Error **errp);
- 
-diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
-index 640f41faa43..e7f40888c26 100644
---- a/accel/hvf/hvf-accel-ops.c
-+++ b/accel/hvf/hvf-accel-ops.c
-@@ -364,6 +364,7 @@ static void hvf_accel_class_init(ObjectClass *oc, const void *data)
-     ac->name = "HVF";
-     ac->init_machine = hvf_accel_init;
-     ac->allowed = &hvf_allowed;
-+    ac->supports_guest_debug = hvf_arch_supports_guest_debug;
-     ac->gdbstub_supported_sstep_flags = hvf_gdbstub_sstep_flags;
- }
- 
-@@ -600,7 +601,6 @@ static void hvf_accel_ops_class_init(ObjectClass *oc, const void *data)
-     ops->remove_breakpoint = hvf_remove_breakpoint;
-     ops->remove_all_breakpoints = hvf_remove_all_breakpoints;
-     ops->update_guest_debug = hvf_update_guest_debug;
--    ops->supports_guest_debug = hvf_arch_supports_guest_debug;
- };
- static const TypeInfo hvf_accel_ops_type = {
-     .name = ACCEL_OPS_NAME("hvf"),
-diff --git a/accel/kvm/kvm-accel-ops.c b/accel/kvm/kvm-accel-ops.c
-index e5c15449aa6..96606090889 100644
---- a/accel/kvm/kvm-accel-ops.c
-+++ b/accel/kvm/kvm-accel-ops.c
-@@ -104,7 +104,6 @@ static void kvm_accel_ops_class_init(ObjectClass *oc, const void *data)
- 
- #ifdef TARGET_KVM_HAVE_GUEST_DEBUG
-     ops->update_guest_debug = kvm_update_guest_debug_ops;
--    ops->supports_guest_debug = kvm_supports_guest_debug;
-     ops->insert_breakpoint = kvm_insert_breakpoint;
-     ops->remove_breakpoint = kvm_remove_breakpoint;
-     ops->remove_all_breakpoints = kvm_remove_all_breakpoints;
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 45579f80fa5..a9d917f1ea6 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -3528,7 +3528,7 @@ int kvm_update_guest_debug(CPUState *cpu, unsigned long reinject_trap)
-     return data.err;
- }
- 
--bool kvm_supports_guest_debug(void)
-+static bool kvm_supports_guest_debug(AccelState *as)
- {
-     /* probed during kvm_init() */
-     return kvm_has_guest_debug;
-@@ -3993,6 +3993,9 @@ static void kvm_accel_class_init(ObjectClass *oc, const void *data)
-     ac->has_memory = kvm_accel_has_memory;
-     ac->allowed = &kvm_allowed;
-     ac->gdbstub_supported_sstep_flags = kvm_gdbstub_sstep_flags;
-+#ifdef TARGET_KVM_HAVE_GUEST_DEBUG
-+    ac->supports_guest_debug = kvm_supports_guest_debug;
-+#endif
- 
-     object_class_property_add(oc, "kernel-irqchip", "on|off|split",
-         NULL, kvm_set_kernel_irqchip,
-diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-index 37b4b21f882..07b1ec4ea50 100644
---- a/accel/tcg/tcg-accel-ops.c
-+++ b/accel/tcg/tcg-accel-ops.c
-@@ -106,11 +106,6 @@ void tcg_handle_interrupt(CPUState *cpu, int mask)
-     }
- }
- 
--static bool tcg_supports_guest_debug(void)
--{
--    return true;
--}
--
- /* Translate GDB watchpoint type to a flags value for cpu_watchpoint_* */
- static inline int xlat_gdb_type(CPUState *cpu, int gdbtype)
- {
-@@ -218,7 +213,6 @@ static void tcg_accel_ops_init(AccelClass *ac)
-     }
- 
-     ops->cpu_reset_hold = tcg_cpu_reset_hold;
--    ops->supports_guest_debug = tcg_supports_guest_debug;
-     ops->insert_breakpoint = tcg_insert_breakpoint;
-     ops->remove_breakpoint = tcg_remove_breakpoint;
-     ops->remove_all_breakpoints = tcg_remove_all_breakpoints;
-diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
-index 5904582a68d..93972bc0919 100644
---- a/accel/tcg/tcg-all.c
-+++ b/accel/tcg/tcg-all.c
-@@ -219,6 +219,11 @@ static void tcg_set_one_insn_per_tb(Object *obj, bool value, Error **errp)
-     qatomic_set(&one_insn_per_tb, value);
- }
- 
-+static bool tcg_supports_guest_debug(AccelState *as)
-+{
-+    return true;
-+}
++    /* get_vcpu_stats: Append statistics of this @cpu to @buf */
++    void (*get_vcpu_stats)(CPUState *cpu, GString *buf);
 +
- static int tcg_gdbstub_supported_sstep_flags(AccelState *as)
- {
-     /*
-@@ -242,6 +247,7 @@ static void tcg_accel_class_init(ObjectClass *oc, const void *data)
-     ac->cpu_common_realize = tcg_exec_realizefn;
-     ac->cpu_common_unrealize = tcg_exec_unrealizefn;
-     ac->allowed = &tcg_allowed;
-+    ac->supports_guest_debug = tcg_supports_guest_debug;
-     ac->gdbstub_supported_sstep_flags = tcg_gdbstub_supported_sstep_flags;
- 
-     object_class_property_add_str(oc, "thread",
-diff --git a/gdbstub/system.c b/gdbstub/system.c
-index 8a32d8e1a1d..bced226fd94 100644
---- a/gdbstub/system.c
-+++ b/gdbstub/system.c
-@@ -634,9 +634,10 @@ int gdb_signal_to_target(int sig)
- 
- bool gdb_supports_guest_debug(void)
- {
--    const AccelOpsClass *ops = cpus_get_accel();
--    if (ops->supports_guest_debug) {
--        return ops->supports_guest_debug();
+     /**
+      * @get_virtual_clock: fetch virtual clock
+      * @set_virtual_clock: set virtual clock
+diff --git a/accel/accel-qmp.c b/accel/accel-qmp.c
+new file mode 100644
+index 00000000000..318629665b3
+--- /dev/null
++++ b/accel/accel-qmp.c
+@@ -0,0 +1,34 @@
++/*
++ * QMP commands related to accelerators
++ *
++ * Copyright (c) Linaro
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/accel.h"
++#include "qapi/type-helpers.h"
++#include "qapi/qapi-commands-accelerator.h"
++#include "system/accel-ops.h"
++#include "hw/core/cpu.h"
++
++HumanReadableText *qmp_x_accel_stats(Error **errp)
++{
 +    AccelState *accel = current_accel();
 +    AccelClass *acc = ACCEL_GET_CLASS(accel);
-+    if (acc->supports_guest_debug) {
-+        return acc->supports_guest_debug(accel);
-     }
-     return false;
- }
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 4c4d21e38cd..bd19a9f475d 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -2357,7 +2357,7 @@ void hvf_arch_update_guest_debug(CPUState *cpu)
-     hvf_arch_set_traps(cpu);
- }
++    g_autoptr(GString) buf = g_string_new("");
++
++    if (acc->get_stats) {
++        acc->get_stats(accel, buf);
++    }
++    if (acc->ops->get_vcpu_stats) {
++        CPUState *cpu;
++
++        CPU_FOREACH(cpu) {
++            acc->ops->get_vcpu_stats(cpu, buf);
++        }
++    }
++
++    return human_readable_text_from_str(buf);
++}
+diff --git a/accel/accel-system.c b/accel/accel-system.c
+index 11ba8e24d60..246ea55425f 100644
+--- a/accel/accel-system.c
++++ b/accel/accel-system.c
+@@ -26,6 +26,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/accel.h"
+ #include "hw/boards.h"
++#include "hw/core/cpu.h"
+ #include "system/accel-ops.h"
+ #include "system/cpus.h"
+ #include "qemu/error-report.h"
+diff --git a/accel/meson.build b/accel/meson.build
+index 52909314bfa..25b0f100b51 100644
+--- a/accel/meson.build
++++ b/accel/meson.build
+@@ -1,6 +1,6 @@
+ common_ss.add(files('accel-common.c'))
+ specific_ss.add(files('accel-target.c'))
+-system_ss.add(files('accel-system.c', 'accel-blocker.c'))
++system_ss.add(files('accel-system.c', 'accel-blocker.c', 'accel-qmp.c'))
+ user_ss.add(files('accel-user.c'))
  
--bool hvf_arch_supports_guest_debug(void)
-+bool hvf_arch_supports_guest_debug(AccelState *as)
- {
-     return true;
- }
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index 28484496710..bcf30662bec 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -1024,7 +1024,7 @@ void hvf_arch_update_guest_debug(CPUState *cpu)
- {
- }
- 
--bool hvf_arch_supports_guest_debug(void)
-+bool hvf_arch_supports_guest_debug(AccelState *as)
- {
-     return false;
- }
+ subdir('tcg')
 -- 
 2.49.0
 
