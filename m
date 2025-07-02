@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D337FC83038
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 04:45:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D629DC83038
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 04:47:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWpLT-0007Y0-Mm; Wed, 02 Jul 2025 00:45:20 -0400
+	id 1uWpN7-0008DB-1i; Wed, 02 Jul 2025 00:47:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1uWpLQ-0007Xc-5r
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 00:45:16 -0400
-Received: from nyc.source.kernel.org ([147.75.193.91])
+ id 1uWpMz-0008CE-HW
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 00:46:55 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1uWpLM-00030d-Up
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 00:45:15 -0400
+ id 1uWpMt-00038j-N7
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 00:46:52 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id DC66FA52C3F;
- Wed,  2 Jul 2025 04:45:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22885C4CEEF;
- Wed,  2 Jul 2025 04:45:09 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 5376044E01;
+ Wed,  2 Jul 2025 04:46:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E123EC4CEEF;
+ Wed,  2 Jul 2025 04:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1751431509;
- bh=8q+C0ZDihNqVoISkP9duHWUHu55CQiD0OGV+slkfXcc=;
+ s=k20201202; t=1751431603;
+ bh=KzRaIkRor51mHUcj5WewqlRpjIp0KQrX8NQMKwn89RI=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=UQ5v7z7FujTyxqRZMx8LpXN6V1wjaQUkXVz8AdwyYmqrXnLml65EQT1ltjUzmLNVv
- DWBmX1/PclR1EbT1UOxy7nlyiLuUqpjfuM9kgveNBIcBc2tsJevFazwNiV2xjEznKN
- GY27kROrgTWqp7c2W2TG6Im8PPUtmAAtaSOD7OrdCUUTsT+LiuQC0PBXm8V0IDNnAL
- 7xjpkme52pD3Na9NPj4l+QGfdO1/Uzw+CFKLA9BLgfIr7BWAbj+zXg9VXBjECzG/sl
- TSkJKkIlGnxtqbgY0cGt6YkgjDXbQl4tPmR5uhL1tktNOX2CSXczJ0VlcdELSS69uA
- IWQBQYz8cCumA==
-Date: Wed, 2 Jul 2025 04:45:07 +0000
+ b=NiqS8761UrZD8RaaFDbqc+tXjylpYcHVAKdaBET9tBQUN5hqIsNTcPMkJU/m/LhGZ
+ R3PUnrE5yxDRqlsCr2+HlSILAKBG/FKRwHdHH4n8RQxuLOHCmYhk+djjtgCWeGR86w
+ kAVZQ4g09DtDISk8SKMtWJM1WkQM2SKTfvDyIl1ARdstPSEGmPyHJoUdGyIgSsWQ8W
+ m3x0NJmD7Z92ZGHqnNnuD7f1j4X0+Dkh1wmk+3DJ/6Q0KjQZaLy7q6KqHrHQdg7Nsj
+ ij1PUsx+jTNMqVSmqmBNvaG3dTRpZxWmWy/GjhYYqNAdqh4oHWXSnZdNoaorwikAl/
+ VvvNtmFlomaKA==
+Date: Wed, 2 Jul 2025 04:46:41 +0000
 From: Wei Liu <wei.liu@kernel.org>
 To: Magnus Kulke <magnuskulke@linux.microsoft.com>
 Cc: qemu-devel@nongnu.org, Cameron Esfahani <dirty@apple.com>,
@@ -52,24 +52,23 @@ Cc: qemu-devel@nongnu.org, Cameron Esfahani <dirty@apple.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
  Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH v2 08/27] accel/mshv: Initialize VM partition
-Message-ID: <aGS5U-jMUFVnpMpd@liuwe-devbox-ubuntu-v2.lamzopl0uupeniq2etz1fddiyg.xx.internal.cloudapp.net>
+Subject: Re: [PATCH v2 18/27] target/i386/mshv: Implement
+ mshv_arch_put_registers()
+Message-ID: <aGS5sUXTY58xsFXh@liuwe-devbox-ubuntu-v2.lamzopl0uupeniq2etz1fddiyg.xx.internal.cloudapp.net>
 References: <20250701172834.44849-1-magnuskulke@linux.microsoft.com>
- <20250701172834.44849-9-magnuskulke@linux.microsoft.com>
+ <20250701172834.44849-19-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250701172834.44849-9-magnuskulke@linux.microsoft.com>
-Received-SPF: pass client-ip=147.75.193.91; envelope-from=wei.liu@kernel.org;
- helo=nyc.source.kernel.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <20250701172834.44849-19-magnuskulke@linux.microsoft.com>
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=wei.liu@kernel.org; helo=sea.source.kernel.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,105 +84,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 01, 2025 at 07:28:15PM +0200, Magnus Kulke wrote:
-> Create the MSHV virtual machine by opening a partition and issuing
-> the necessary ioctl to initialize it. This sets up the basic VM
-> structure and initial configuration used by MSHV to manage guest state.
+On Tue, Jul 01, 2025 at 07:28:25PM +0200, Magnus Kulke wrote:
+> Write CPU register state to MSHV vCPUs. Various mapping functions to
+> prepare the payload for the HV call have been implemented.
 > 
 > Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 > ---
->  accel/mshv/mshv-all.c        | 210 ++++++++++++++++++++++++++++++++++-
->  accel/mshv/trace-events      |   3 +
->  accel/mshv/trace.h           |   1 +
->  include/system/mshv.h        |  20 +++-
->  meson.build                  |   1 +
->  target/i386/mshv/meson.build |   1 +
->  target/i386/mshv/mshv-cpu.c  |  71 ++++++++++++
->  7 files changed, 300 insertions(+), 7 deletions(-)
->  create mode 100644 accel/mshv/trace-events
->  create mode 100644 accel/mshv/trace.h
->  create mode 100644 target/i386/mshv/mshv-cpu.c
+>  include/system/mshv.h       |  15 +++
+>  target/i386/mshv/mshv-cpu.c | 239 ++++++++++++++++++++++++++++++++++++
+>  2 files changed, 254 insertions(+)
 > 
-> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-> index 9e0590c4f9..712e651627 100644
-> --- a/accel/mshv/mshv-all.c
-> +++ b/accel/mshv/mshv-all.c
-> @@ -46,8 +46,177 @@ DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE, TYPE_MSHV_ACCEL)
+> diff --git a/include/system/mshv.h b/include/system/mshv.h
+> index 7d0fed3c42..40510d5f80 100644
+> --- a/include/system/mshv.h
+> +++ b/include/system/mshv.h
+> @@ -79,6 +79,20 @@ typedef struct MshvMsiControl {
+>  #define mshv_msi_via_irqfd_enabled() mshv_enabled()
 >  
->  bool mshv_allowed;
->  
-> -MshvState *mshv_state;
-> +MshvState *mshv_state = NULL;
+>  /* cpu */
+> +typedef struct MshvFPU {
+> +  uint8_t fpr[8][16];
+> +  uint16_t fcw;
+> +  uint16_t fsw;
+> +  uint8_t ftwx;
+> +  uint8_t pad1;
+> +  uint16_t last_opcode;
+> +  uint64_t last_ip;
+> +  uint64_t last_dp;
+> +  uint8_t xmm[16][16];
+> +  uint32_t mxcsr;
+> +  uint32_t pad2;
 
-This is not needed. Global variables are initialized to zero by default.
+Not enough spaces here.
 
->  
-> +static int init_mshv(int *mshv_fd)
-> +{
-> +    int fd = open("/dev/mshv", O_RDWR | O_CLOEXEC);
-> +    if (fd < 0) {
-> +        error_report("Failed to open /dev/mshv: %s", strerror(errno));
-> +        return -1;
-> +    }
-> +	*mshv_fd = fd;
-> +	return 0;
-
-Tabs here.
-
-> +}
+> +} MshvFPU;
 > +
-> +/* freeze 1 to pause, 0 to resume */
-> +static int set_time_freeze(int vm_fd, int freeze)
-> +{
-> +    int ret;
-> +
-> +    if (freeze != 0 && freeze != 1) {
-> +        error_report("Invalid time freeze value");
-> +        return -1;
-> +    }
-> +
-
-This is a static function. You know all callers already, so you can
-dro the check here.
-
-> +    struct hv_input_set_partition_property in = {0};
-> +    in.property_code = HV_PARTITION_PROPERTY_TIME_FREEZE;
-> +    in.property_value = freeze;
-> +
-> +    struct mshv_root_hvcall args = {0};
-> +    args.code = HVCALL_SET_PARTITION_PROPERTY;
-> +    args.in_sz = sizeof(in);
-> +    args.in_ptr = (uint64_t)&in;
-> +
-> +    ret = mshv_hvcall(vm_fd, &args);
-> +    if (ret < 0) {
-> +        error_report("Failed to set time freeze");
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-[...]
->  typedef struct MshvState {
-> -    AccelState parent_obj;
-> -    int vm;
-> -    MshvMemoryListener memory_listener;
-> -    /* number of listeners */
-> -    int nr_as;
-> -    MshvAddressSpace *as;
-> +	AccelState parent_obj;
-> +	int vm;
-> +	MshvMemoryListener memory_listener;
-> +	/* number of listeners */
-> +	int nr_as;
-> +	MshvAddressSpace *as;
-
-Unnecessary changes due to tabs.
-
-> +    int fd;
->  } MshvState;
->  extern MshvState *mshv_state;
 
 Wei
 
