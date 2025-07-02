@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CD00C83013
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 04:42:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D337FC83038
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 04:45:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWpI1-0006Pj-2y; Wed, 02 Jul 2025 00:41:45 -0400
+	id 1uWpLT-0007Y0-Mm; Wed, 02 Jul 2025 00:45:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1uWpHy-0006Oy-6L
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 00:41:42 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1uWpLQ-0007Xc-5r
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 00:45:16 -0400
+Received: from nyc.source.kernel.org ([147.75.193.91])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1uWpHr-0001Ll-Re
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 00:41:41 -0400
+ id 1uWpLM-00030d-Up
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 00:45:15 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 565116000A;
- Wed,  2 Jul 2025 04:41:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0309C4CEEF;
- Wed,  2 Jul 2025 04:41:32 +0000 (UTC)
+ by nyc.source.kernel.org (Postfix) with ESMTP id DC66FA52C3F;
+ Wed,  2 Jul 2025 04:45:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22885C4CEEF;
+ Wed,  2 Jul 2025 04:45:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1751431293;
- bh=P5mSNb/GYxN5q9kpvE4ItjxJ8SksKynXc4n/EiLo61I=;
+ s=k20201202; t=1751431509;
+ bh=8q+C0ZDihNqVoISkP9duHWUHu55CQiD0OGV+slkfXcc=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=BT/YKWah3jYKtdgdQgWtEGRPv6Vsbful0xTKFb8zcdk2Oy8xixUWPZhvV7fJxHhDU
- YnH3nqmnzYa1l7B4yaB1nBkW1wISLlaM/T7b1xXAbhFTMfZEfC7oMLZOKUoF6yeKwC
- KBQtqa8yZ/PQ6UdU1Wy2nkt5hYP7UWltRzfkrERel/tVVi9OpIsf0vaQgOiAmSrYGu
- u2IecDvsIxX33V/C3BUFavcKofCQFhVUYQ4ncz/3guEHVWuygqkDjbzXs3GTGGMem+
- vVoVHiKpEEfyNoqXF16ZX8EqtOYolXXMXuI2Ef1Fxz5rv9kTP7tlKgOuU9UkvLfZu1
- F759L6g6ogKpw==
-Date: Wed, 2 Jul 2025 04:41:31 +0000
+ b=UQ5v7z7FujTyxqRZMx8LpXN6V1wjaQUkXVz8AdwyYmqrXnLml65EQT1ltjUzmLNVv
+ DWBmX1/PclR1EbT1UOxy7nlyiLuUqpjfuM9kgveNBIcBc2tsJevFazwNiV2xjEznKN
+ GY27kROrgTWqp7c2W2TG6Im8PPUtmAAtaSOD7OrdCUUTsT+LiuQC0PBXm8V0IDNnAL
+ 7xjpkme52pD3Na9NPj4l+QGfdO1/Uzw+CFKLA9BLgfIr7BWAbj+zXg9VXBjECzG/sl
+ TSkJKkIlGnxtqbgY0cGt6YkgjDXbQl4tPmR5uhL1tktNOX2CSXczJ0VlcdELSS69uA
+ IWQBQYz8cCumA==
+Date: Wed, 2 Jul 2025 04:45:07 +0000
 From: Wei Liu <wei.liu@kernel.org>
 To: Magnus Kulke <magnuskulke@linux.microsoft.com>
 Cc: qemu-devel@nongnu.org, Cameron Esfahani <dirty@apple.com>,
@@ -52,23 +52,24 @@ Cc: qemu-devel@nongnu.org, Cameron Esfahani <dirty@apple.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
  Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH v2 02/27] target/i386/emulate: Allow instruction decoding
- from stream
-Message-ID: <aGS4e45DuKE26uS6@liuwe-devbox-ubuntu-v2.lamzopl0uupeniq2etz1fddiyg.xx.internal.cloudapp.net>
+Subject: Re: [PATCH v2 08/27] accel/mshv: Initialize VM partition
+Message-ID: <aGS5U-jMUFVnpMpd@liuwe-devbox-ubuntu-v2.lamzopl0uupeniq2etz1fddiyg.xx.internal.cloudapp.net>
 References: <20250701172834.44849-1-magnuskulke@linux.microsoft.com>
- <20250701172834.44849-3-magnuskulke@linux.microsoft.com>
+ <20250701172834.44849-9-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250701172834.44849-3-magnuskulke@linux.microsoft.com>
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=wei.liu@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <20250701172834.44849-9-magnuskulke@linux.microsoft.com>
+Received-SPF: pass client-ip=147.75.193.91; envelope-from=wei.liu@kernel.org;
+ helo=nyc.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,139 +85,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 01, 2025 at 07:28:09PM +0200, Magnus Kulke wrote:
-> Introduce a new helper function to decode x86 instructions from a
-> raw instruction byte stream. MSHV delivers an instruction stream in a
-> buffer of the vm_exit message. It can be used to speed up MMIO
-> emulation, since instructions do not have to be fetched and translated.
-> 
-> Added "fetch_instruction()" op to x86_emul_ops() to improve
-> traceability.
+On Tue, Jul 01, 2025 at 07:28:15PM +0200, Magnus Kulke wrote:
+> Create the MSHV virtual machine by opening a partition and issuing
+> the necessary ioctl to initialize it. This sets up the basic VM
+> structure and initial configuration used by MSHV to manage guest state.
 > 
 > Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 > ---
->  target/i386/emulate/x86_decode.c | 31 +++++++++++++++++++++++++++----
->  target/i386/emulate/x86_decode.h | 10 ++++++++++
->  target/i386/emulate/x86_emu.c    |  3 ++-
->  target/i386/emulate/x86_emu.h    |  1 +
->  4 files changed, 40 insertions(+), 5 deletions(-)
+>  accel/mshv/mshv-all.c        | 210 ++++++++++++++++++++++++++++++++++-
+>  accel/mshv/trace-events      |   3 +
+>  accel/mshv/trace.h           |   1 +
+>  include/system/mshv.h        |  20 +++-
+>  meson.build                  |   1 +
+>  target/i386/mshv/meson.build |   1 +
+>  target/i386/mshv/mshv-cpu.c  |  71 ++++++++++++
+>  7 files changed, 300 insertions(+), 7 deletions(-)
+>  create mode 100644 accel/mshv/trace-events
+>  create mode 100644 accel/mshv/trace.h
+>  create mode 100644 target/i386/mshv/mshv-cpu.c
 > 
-> diff --git a/target/i386/emulate/x86_decode.c b/target/i386/emulate/x86_decode.c
-> index 2eca39802e..133065b50a 100644
-> --- a/target/i386/emulate/x86_decode.c
-> +++ b/target/i386/emulate/x86_decode.c
-> @@ -60,6 +60,7 @@ static inline uint64_t decode_bytes(CPUX86State *env, struct x86_decode *decode,
->                                      int size)
->  {
->      uint64_t val = 0;
-> +    target_ulong va;
+> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+> index 9e0590c4f9..712e651627 100644
+> --- a/accel/mshv/mshv-all.c
+> +++ b/accel/mshv/mshv-all.c
+> @@ -46,8 +46,177 @@ DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE, TYPE_MSHV_ACCEL)
+>  
+>  bool mshv_allowed;
+>  
+> -MshvState *mshv_state;
+> +MshvState *mshv_state = NULL;
 
-This can be moved inside the else branch to limit the scope of the
-variable.
+This is not needed. Global variables are initialized to zero by default.
 
 >  
->      switch (size) {
->      case 1:
-> @@ -71,10 +72,17 @@ static inline uint64_t decode_bytes(CPUX86State *env, struct x86_decode *decode,
->          VM_PANIC_EX("%s invalid size %d\n", __func__, size);
->          break;
->      }
-> -    target_ulong va  = linear_rip(env_cpu(env), env->eip) + decode->len;
-> -    emul_ops->read_mem(env_cpu(env), &val, va, size);
-> +
-> +    /* copy the bytes from the instruction stream, if available */
-> +    if (decode->stream && decode->len + size <= decode->stream->len) {
-> +        memcpy(&val, decode->stream->bytes + decode->len, size);
-> +    } else {
-> +        va = linear_rip(env_cpu(env), env->eip) + decode->len;
-
-           target_ulong va = linear_rip(env_cpu(env), env->eip) + decode->len;
-
-> +        emul_ops->fetch_instruction(env_cpu(env), &val, va, size);
-> +    }
->      decode->len += size;
-> -    
-> +
-> +
-
-Extraneous blank line here.
-
->      return val;
->  }
->  
-> @@ -2076,9 +2084,10 @@ static void decode_opcodes(CPUX86State *env, struct x86_decode *decode)
->      }
->  }
->  
-> -uint32_t decode_instruction(CPUX86State *env, struct x86_decode *decode)
-> +static uint32_t decode_opcode(CPUX86State *env, struct x86_decode *decode)
->  {
->      memset(decode, 0, sizeof(*decode));
-> +
->      decode_prefix(env, decode);
->      set_addressing_size(env, decode);
->      set_operand_size(env, decode);
-> @@ -2088,6 +2097,20 @@ uint32_t decode_instruction(CPUX86State *env, struct x86_decode *decode)
->      return decode->len;
->  }
->  
-> +uint32_t decode_instruction(CPUX86State *env, struct x86_decode *decode)
+> +static int init_mshv(int *mshv_fd)
 > +{
-> +    return decode_opcode(env, decode);
+> +    int fd = open("/dev/mshv", O_RDWR | O_CLOEXEC);
+> +    if (fd < 0) {
+> +        error_report("Failed to open /dev/mshv: %s", strerror(errno));
+> +        return -1;
+> +    }
+> +	*mshv_fd = fd;
+> +	return 0;
+
+Tabs here.
+
 > +}
 > +
-> +uint32_t decode_instruction_stream(CPUX86State *env, struct x86_decode *decode,
-> +                                   struct x86_insn_stream *stream)
+> +/* freeze 1 to pause, 0 to resume */
+> +static int set_time_freeze(int vm_fd, int freeze)
 > +{
-> +    if (stream != NULL) {
-> +        decode->stream = stream;
+> +    int ret;
+> +
+> +    if (freeze != 0 && freeze != 1) {
+> +        error_report("Invalid time freeze value");
+> +        return -1;
 > +    }
+> +
 
-This can be simplified as
+This is a static function. You know all callers already, so you can
+dro the check here.
 
-       decode->stream = stream;
-
-> +    return decode_opcode(env, decode);
+> +    struct hv_input_set_partition_property in = {0};
+> +    in.property_code = HV_PARTITION_PROPERTY_TIME_FREEZE;
+> +    in.property_value = freeze;
+> +
+> +    struct mshv_root_hvcall args = {0};
+> +    args.code = HVCALL_SET_PARTITION_PROPERTY;
+> +    args.in_sz = sizeof(in);
+> +    args.in_ptr = (uint64_t)&in;
+> +
+> +    ret = mshv_hvcall(vm_fd, &args);
+> +    if (ret < 0) {
+> +        error_report("Failed to set time freeze");
+> +        return -1;
+> +    }
+> +
+> +    return 0;
 > +}
 > +
->  void init_decoder(void)
->  {
->      int i;
-> diff --git a/target/i386/emulate/x86_decode.h b/target/i386/emulate/x86_decode.h
-> index 927645af1a..f5e9738914 100644
-> --- a/target/i386/emulate/x86_decode.h
-> +++ b/target/i386/emulate/x86_decode.h
-> @@ -272,6 +272,11 @@ typedef struct x86_decode_op {
->      };
->  } x86_decode_op;
->  
-> +typedef struct x86_insn_stream {
-> +    const uint8_t *bytes;
-> +    size_t len;
-> +} x86_insn_stream;
-> +
->  typedef struct x86_decode {
->      int len;
->      uint8_t opcode[4];
-> @@ -298,11 +303,16 @@ typedef struct x86_decode {
->      struct x86_modrm modrm;
->      struct x86_decode_op op[4];
->      bool is_fpu;
-> +
-> +	x86_insn_stream *stream;
+[...]
+>  typedef struct MshvState {
+> -    AccelState parent_obj;
+> -    int vm;
+> -    MshvMemoryListener memory_listener;
+> -    /* number of listeners */
+> -    int nr_as;
+> -    MshvAddressSpace *as;
+> +	AccelState parent_obj;
+> +	int vm;
+> +	MshvMemoryListener memory_listener;
+> +	/* number of listeners */
+> +	int nr_as;
+> +	MshvAddressSpace *as;
 
-Tab here.
+Unnecessary changes due to tabs.
 
->  } x86_decode;
->  
->  uint64_t sign(uint64_t val, int size);
->  
->  uint32_t decode_instruction(CPUX86State *env, struct x86_decode *decode);
-> +uint32_t decode_instruction_stream(CPUX86State *env,
-> +								   struct x86_decode *decode,
-> +		                           struct x86_insn_stream *stream);
-
-Mixing spaces and tabs.
+> +    int fd;
+>  } MshvState;
+>  extern MshvState *mshv_state;
 
 Wei
 
