@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD10C83013
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 12:25:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 193A4C83013
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 12:26:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWwUP-00054y-8v; Wed, 02 Jul 2025 08:23:01 -0400
+	id 1uWwU5-0004xB-0E; Wed, 02 Jul 2025 08:22:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWwU6-0004xs-13
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:22:42 -0400
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ id 1uWwU2-0004vZ-I8
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:22:38 -0400
+Received: from mail-oa1-x36.google.com ([2001:4860:4864:20::36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWwTq-0007Dh-PG
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:22:41 -0400
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-2e95ab2704fso2958591fac.3
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:22:24 -0700 (PDT)
+ id 1uWwTo-0007D8-MB
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:22:38 -0400
+Received: by mail-oa1-x36.google.com with SMTP id
+ 586e51a60fabf-2ea58f008e9so3743877fac.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:22:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751458943; x=1752063743; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751458941; x=1752063741; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=phdMuO5PFzyuS0l+J9EZDp4Ant5FWeh391ft9bOj440=;
- b=DfR/EY1LqA953Zrk6ojxvFrHT2BmG09bIFl2jMesbajv7OdfjL8Fw8DPr4GmC43DPP
- cIu8vOCV4xvBjLVr6gwgaUW3rqXYBdZ9xyeVdg/1k1+/6o5iL4fL5Q4Gwb3P8zm8c5SS
- /QJaUyyWA/TsSQHYfLjiY9vLZVRX/z1Erk2ja1qJhTSIpVLhoeIDoXy7Yq5IQwmBSEAm
- lKXfzgRl176SP40EdwF0vb9tKBCh/jhewydYbV8b13sh1aMiEd/x50C/6iRv2nQdVjYp
- RQVJ+/iX72XgEUNbyAiZvjv0gjWUdRrvEl1fzxzgBjv6qvNsjeTOBMHGe8IXIlixnBZF
- W87g==
+ bh=G0lOyAHGfdwVrVagI3IBAJ8avsxWv+VgaY92gqB8lM0=;
+ b=G3goi1vcMmuBgTjiSnPcfp0cKCxPosUutjboZYSMJI7U84zOgE5sc1LYh/lIFDzOPg
+ vDZDP7sEd34KrLG33ZwHCa+zDkFktRwBlhJVeXjvsNO3XlEIEYllznbb4t2xfsDhzehw
+ tQGumBxoebADGhKS4D7u3l6gniW3UeXg8PT3Ga97QNOgLjGDsoGeff3E+pgUb8JVkDVD
+ GFtzp/kb2dVAsEfQRgTV9BqHRrc0IGSSrF8hYV7vb9qyTQU+JdhedTeTaXB6qFzHuyzT
+ jvQSvkIsKp7gGNKGtXf1/tECU1wYOtReBeqi/jIGjDDH5/uNthsGjMYRBpZgLORw4reJ
+ 0p2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751458943; x=1752063743;
+ d=1e100.net; s=20230601; t=1751458941; x=1752063741;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=phdMuO5PFzyuS0l+J9EZDp4Ant5FWeh391ft9bOj440=;
- b=s5HbHpWdHiDHVJFWEJnzDOolsgIWNkDSddKz0kCqojh69nvmVxj1//pDGBSg1hSVHH
- c5/p/Fwy2RI8MwQEkl8718QL5PIm01ouBWlo12E1j9OPOblBZo4q8zhSg88gRG/lWYiR
- mFI+x86OcO7nIGlGLygfRs5/TNK+E3YW4/BXAkP8e4hg46UkgX/4C/WboadsdWRtKIb0
- gp9acqUWhnh1aVuxVPs4FgNYvm/JOGLR3LcDGguRJWqfc6u8J1ny5Ohh8mxDnwoET95s
- ttuoS45qTZ7rifLBEOCzDV9scaA4tOVEKPt5NoyPWgu/bOFHFvUDWkMuZw8cRF05h1BR
- 2TPA==
-X-Gm-Message-State: AOJu0YxnKyjePy3Q9Lgr+Xdlv5UHSWG5mOMdRWFbFoZaSM6ch1M4sRkb
- auPRo1BsEmPAvnFtggrowlbZvpQ9j0uxaEYyrAMeZIFcK98Iwfusm+rBJ+nuJB7qOHWA6mX8hez
- XaYra3WA=
-X-Gm-Gg: ASbGncudHYjKLMFSlqnCYwbM88IEjEVOH1YKBHhFOgfbnxICX9HE8IkGR/zl3BLEynv
- oxoSo9iceYgcZLrmd8k5iXgFj0FH/eElYZ5Jpwus4rcV7xYKfw3NYdcAt3n/T/64rJGyY9aFOI7
- z5sv12TOfn166jmAKsTLL/3r2C9Ltu2EF9rUvpETNt/TQjFR2BMl0PH7+feGrtnum0z2XySl8HH
- rPONBwgqmgBdW3HwWccQwyTP2tUWakwHAVznGVO0LK4g+s9M5QhkgaEZByCqkSkOAV5+8zN8Wjr
- hvivewTfLUdPEJpBbWOC741M+m4TlawJnGyfjVac07NT52eH5lLn5M3DR40bdORpoBOv44or1Sp
- 33v9P
-X-Google-Smtp-Source: AGHT+IGZT6I/weadZbfX4/XW3bxIKBvsuN66aPgMB1uXdj2N1Uj3SoCrvNW9krezOWg0pb38YipVrA==
-X-Received: by 2002:a05:6870:7007:b0:2d6:6639:52d9 with SMTP id
- 586e51a60fabf-2f5c7adb95amr2103359fac.32.1751458943106; 
- Wed, 02 Jul 2025 05:22:23 -0700 (PDT)
+ bh=G0lOyAHGfdwVrVagI3IBAJ8avsxWv+VgaY92gqB8lM0=;
+ b=I0p7ae0f2m+eBqTPraWzitfL8n39WEj417d7aLX76jZtY0+aVZsJXKPMk7IQWvSwuv
+ L0eEKjxrFzg+fTXTQvTzfFo0qQQeVzuNVS7307K5u1znGsiv4nHm7XeEs816n54iH0zS
+ vnlk1Kzm770aagVYO+8LCQpLy39uhWCVCDGdjxG5S0OpG4Dk4LzfMuIjxRQZmzmqZVy8
+ XJXp3rWE7sooiM0Gba6XuB74C2FfEZJtouMHPZA689kkiEYpQuxYVBBL9qP/+2EAXA9c
+ JRwLcpcgAUnQ8kBq6/aEwOExitAJpgbHNLXLAdBJLWByyHkZg2HXmqY+Fom8iGIWVTLz
+ p+Vw==
+X-Gm-Message-State: AOJu0YwiDZSaHz3CkDEKE3tuyGuYpq6BVnWHKU9t1+eMkR7P2qb8vhGW
+ ThjzwPXbAHMFDJD7ur0fSJN0WtCALyvdvTjhlBNn+ZNcaJxqBa9gBFgn+Zz7MZEtcTQj+rKjXtR
+ 1/IAd31A=
+X-Gm-Gg: ASbGncvKBz1hMY8ImbYhBphZ0nxRzqyDqUkhQIUqCgIT/toEkEmM4cTRElHu7mpHe0u
+ DTTiQVmr0+3i6IloVVLxlFIeQAZM4r7PmHhfm5jUlYpFcRPddImxcXTRgCph3vvt0P2LMrDx/6D
+ 2maALQsu48UxIfWuUiuyVINBFpW3Mvnmwra0oE2TERy4XJbbz6+2GUqjuooK+TODTeQf9MwrLRw
+ 3XjQKqpgEb9D37ZjOEUXIK3ySvoRiCIb3HY3dGBe+271OWYhN3Ffzop5x5MIbteZ7NYjaaIlCrr
+ HiTadc9++hqnyJzgcEfyFgfIsptoSJD+YzWavzNuaFHgnsCZA79bjZcKXPnBpz7XOZW9Ww==
+X-Google-Smtp-Source: AGHT+IH/WXDzTMlzCxAuwP43kQHnbJP3++519fAOeui32y2v7WRNtWr0vvOw5X+s9U+7TnB2mBvmwg==
+X-Received: by 2002:a05:6870:6f12:b0:2e9:fd62:9061 with SMTP id
+ 586e51a60fabf-2f5a8c83c06mr2028914fac.32.1751458940998; 
+ Wed, 02 Jul 2025 05:22:20 -0700 (PDT)
 Received: from stoup.. ([187.210.107.185]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2efd50b1bd3sm3785013fac.28.2025.07.02.05.22.22
+ 586e51a60fabf-2efd50b1bd3sm3785013fac.28.2025.07.02.05.22.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Jul 2025 05:22:22 -0700 (PDT)
+ Wed, 02 Jul 2025 05:22:20 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	peter.maydell@linaro.org
-Subject: [PATCH v3 06/10] target/arm: Disable FEAT_F64MM if maximum SVE vector
- size too small
-Date: Wed,  2 Jul 2025 06:22:09 -0600
-Message-ID: <20250702122213.758588-7-richard.henderson@linaro.org>
+Subject: [PATCH v3 04/10] target/arm: Replace @rda_rn_rm_e0 in sve.decode
+Date: Wed,  2 Jul 2025 06:22:07 -0600
+Message-ID: <20250702122213.758588-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250702122213.758588-1-richard.henderson@linaro.org>
 References: <20250702122213.758588-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2a.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::36;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,33 +99,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All F64MM instructions operate on a 256-bit vector.
-If only 128-bit vectors is supported by the cpu,
-then the cpu cannot enable F64MM.
+Replace @rda_rn_rm_e0 with @rda_rn_rm_ex, and require
+users to supply an explicit esz.
 
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu64.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ target/arm/tcg/sve.decode | 48 +++++++++++++++++++--------------------
+ 1 file changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 200da1c489..c5c289eadf 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -237,6 +237,12 @@ void arm_cpu_sve_finalize(ARMCPU *cpu, Error **errp)
-     /* From now on sve_max_vq is the actual maximum supported length. */
-     cpu->sve_max_vq = max_vq;
-     cpu->sve_vq.map = vq_map;
-+
-+    /* FEAT_F64MM requires the existence of a 256-bit vector size. */
-+    if (max_vq < 2) {
-+        cpu->isar.id_aa64zfr0 = FIELD_DP64(cpu->isar.id_aa64zfr0,
-+                                           ID_AA64ZFR0, F64MM, 0);
-+    }
- }
+diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
+index 04b6fcc0cf..3a99eb7299 100644
+--- a/target/arm/tcg/sve.decode
++++ b/target/arm/tcg/sve.decode
+@@ -131,11 +131,11 @@
+ @rda_rn_rm      ........ esz:2 . rm:5 ... ... rn:5 rd:5 \
+                 &rrrr_esz ra=%reg_movprfx
  
- /*
+-# Four operand with unused vector element size
+-@rda_rn_rm_e0   ........ ... rm:5 ... ... rn:5 rd:5 \
+-                &rrrr_esz esz=0 ra=%reg_movprfx
+-@rdn_ra_rm_e0   ........ ... rm:5 ... ... ra:5 rd:5 \
+-                &rrrr_esz esz=0 rn=%reg_movprfx
++# Four operand with explicit vector element size
++@rda_rn_rm_ex   ........ ... rm:5 ... ... rn:5 rd:5 \
++                &rrrr_esz ra=%reg_movprfx
++@rdn_ra_rm_ex   ........ ... rm:5 ... ... ra:5 rd:5 \
++                &rrrr_esz rn=%reg_movprfx
+ 
+ # Three operand with "memory" size, aka immediate left shift
+ @rd_rn_msz_rm   ........ ... rm:5 .... imm:2 rn:5 rd:5          &rrri
+@@ -428,12 +428,12 @@ XAR             00000100 .. 1 ..... 001 101 rm:5  rd:5   &rrri_esz \
+                 rn=%reg_movprfx esz=%tszimm16_esz imm=%tszimm16_shr
+ 
+ # SVE2 bitwise ternary operations
+-EOR3            00000100 00 1 ..... 001 110 ..... .....         @rdn_ra_rm_e0
+-BSL             00000100 00 1 ..... 001 111 ..... .....         @rdn_ra_rm_e0
+-BCAX            00000100 01 1 ..... 001 110 ..... .....         @rdn_ra_rm_e0
+-BSL1N           00000100 01 1 ..... 001 111 ..... .....         @rdn_ra_rm_e0
+-BSL2N           00000100 10 1 ..... 001 111 ..... .....         @rdn_ra_rm_e0
+-NBSL            00000100 11 1 ..... 001 111 ..... .....         @rdn_ra_rm_e0
++EOR3            00000100 00 1 ..... 001 110 ..... .....     @rdn_ra_rm_ex esz=0
++BSL             00000100 00 1 ..... 001 111 ..... .....     @rdn_ra_rm_ex esz=0
++BCAX            00000100 01 1 ..... 001 110 ..... .....     @rdn_ra_rm_ex esz=0
++BSL1N           00000100 01 1 ..... 001 111 ..... .....     @rdn_ra_rm_ex esz=0
++BSL2N           00000100 10 1 ..... 001 111 ..... .....     @rdn_ra_rm_ex esz=0
++NBSL            00000100 11 1 ..... 001 111 ..... .....     @rdn_ra_rm_ex esz=0
+ 
+ ### SVE Index Generation Group
+ 
+@@ -1450,9 +1450,9 @@ EORTB           01000101 .. 0 ..... 10010 1 ..... .....  @rd_rn_rm
+ 
+ ## SVE integer matrix multiply accumulate
+ 
+-SMMLA           01000101 00 0 ..... 10011 0 ..... .....  @rda_rn_rm_e0
+-USMMLA          01000101 10 0 ..... 10011 0 ..... .....  @rda_rn_rm_e0
+-UMMLA           01000101 11 0 ..... 10011 0 ..... .....  @rda_rn_rm_e0
++SMMLA           01000101 00 0 ..... 10011 0 ..... .....  @rda_rn_rm_ex esz=2
++USMMLA          01000101 10 0 ..... 10011 0 ..... .....  @rda_rn_rm_ex esz=2
++UMMLA           01000101 11 0 ..... 10011 0 ..... .....  @rda_rn_rm_ex esz=2
+ 
+ ## SVE2 bitwise permute
+ 
+@@ -1602,9 +1602,9 @@ SQRDCMLAH_zzzz  01000100 esz:2 0 rm:5 0011 rot:2 rn:5 rd:5  ra=%reg_movprfx
+ USDOT_zzzz      01000100 .. 0 ..... 011 110 ..... .....  @rda_rn_rm
+ 
+ ### SVE2 floating point matrix multiply accumulate
+-BFMMLA          01100100 01 1 ..... 111 001 ..... .....  @rda_rn_rm_e0
+-FMMLA_s         01100100 10 1 ..... 111 001 ..... .....  @rda_rn_rm_e0
+-FMMLA_d         01100100 11 1 ..... 111 001 ..... .....  @rda_rn_rm_e0
++BFMMLA          01100100 01 1 ..... 111 001 ..... .....  @rda_rn_rm_ex esz=1
++FMMLA_s         01100100 10 1 ..... 111 001 ..... .....  @rda_rn_rm_ex esz=2
++FMMLA_d         01100100 11 1 ..... 111 001 ..... .....  @rda_rn_rm_ex esz=3
+ 
+ ### SVE2 Memory Gather Load Group
+ 
+@@ -1654,16 +1654,16 @@ FCVTLT_sd       01100100 11 0010 11 101 ... ..... .....  @rd_pg_rn_e0
+ FLOGB           01100101 00 011 esz:2 0101 pg:3 rn:5 rd:5  &rpr_esz
+ 
+ ### SVE2 floating-point multiply-add long (vectors)
+-FMLALB_zzzw     01100100 10 1 ..... 10 0 00 0 ..... .....  @rda_rn_rm_e0
+-FMLALT_zzzw     01100100 10 1 ..... 10 0 00 1 ..... .....  @rda_rn_rm_e0
+-FMLSLB_zzzw     01100100 10 1 ..... 10 1 00 0 ..... .....  @rda_rn_rm_e0
+-FMLSLT_zzzw     01100100 10 1 ..... 10 1 00 1 ..... .....  @rda_rn_rm_e0
++FMLALB_zzzw     01100100 10 1 ..... 10 0 00 0 ..... .....  @rda_rn_rm_ex esz=2
++FMLALT_zzzw     01100100 10 1 ..... 10 0 00 1 ..... .....  @rda_rn_rm_ex esz=2
++FMLSLB_zzzw     01100100 10 1 ..... 10 1 00 0 ..... .....  @rda_rn_rm_ex esz=2
++FMLSLT_zzzw     01100100 10 1 ..... 10 1 00 1 ..... .....  @rda_rn_rm_ex esz=2
+ 
+-BFMLALB_zzzw    01100100 11 1 ..... 10 0 00 0 ..... .....  @rda_rn_rm_e0
+-BFMLALT_zzzw    01100100 11 1 ..... 10 0 00 1 ..... .....  @rda_rn_rm_e0
++BFMLALB_zzzw    01100100 11 1 ..... 10 0 00 0 ..... .....  @rda_rn_rm_ex esz=2
++BFMLALT_zzzw    01100100 11 1 ..... 10 0 00 1 ..... .....  @rda_rn_rm_ex esz=2
+ 
+ ### SVE2 floating-point bfloat16 dot-product
+-BFDOT_zzzz      01100100 01 1 ..... 10 0 00 0 ..... .....  @rda_rn_rm_e0
++BFDOT_zzzz      01100100 01 1 ..... 10 0 00 0 ..... .....  @rda_rn_rm_ex esz=2
+ 
+ ### SVE2 floating-point multiply-add long (indexed)
+ FMLALB_zzxw     01100100 10 1 ..... 0100.0 ..... .....     @rrxr_3a esz=2
 -- 
 2.43.0
 
