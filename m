@@ -4,98 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70E69C77B7C
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 21:26:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F39E5C8303C
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 21:27:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uX4xY-0001WU-Bd; Wed, 02 Jul 2025 17:25:40 -0400
+	id 1uX4z4-000295-Sb; Wed, 02 Jul 2025 17:27:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=U4+o=ZP=kaod.org=clg@ozlabs.org>)
- id 1uX4xV-0001VX-N7; Wed, 02 Jul 2025 17:25:37 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=U4+o=ZP=kaod.org=clg@ozlabs.org>)
- id 1uX4xS-0005IB-GK; Wed, 02 Jul 2025 17:25:37 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bXXx16xrKz4x7G;
- Thu,  3 Jul 2025 07:25:09 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bXXwy4w7Mz4wd0;
- Thu,  3 Jul 2025 07:25:06 +1000 (AEST)
-Message-ID: <4da195c9-3adb-4e1d-bba7-5784e08361b8@kaod.org>
-Date: Wed, 2 Jul 2025 23:25:23 +0200
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uX4yu-00026F-Ud
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 17:27:07 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uX4yq-0005y1-7Y
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 17:27:02 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-311c95ddfb5so5662700a91.2
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 14:26:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751491616; x=1752096416; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VnT9NdXE3ybydcEe8oSYwUjLjEOXETYq80rC4G+1H7Q=;
+ b=ost+dgOJr+qywdaYEk9G2ds0/slWBi/ufuA9hLSbdAOZpYPvmwPCi0itNCnEYo1fkK
+ 1yTyNg7CyUBwm12eKfiehxwa+lOCyZEr71uENv7AnxKKQiJxUoLNX0m9etoX6kirt946
+ zAMP5uDgXOVZgMpf4vpZO2U7Mya0ir4ipDOf/SFVS7VGQ7LIEFT3HZF+hlXfsyQOe0AV
+ 10CirXp8AZT3lsJxkPhDDMk85lIydtSxV3NMPGZsM6ruTAd9MMIeXSMXE4kMsMnf2W/d
+ stFiGXjjMYpYUqIQHEqqRKzRoxiLMP+oVQHPtID2QKlGocJnJ731cZmIMLzz3YVcKqdl
+ EcyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751491616; x=1752096416;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VnT9NdXE3ybydcEe8oSYwUjLjEOXETYq80rC4G+1H7Q=;
+ b=R9jGBddvgQmCbNu11fef1DuvHc/wQO4NIcxdgbcNEMEM8VI0eUCzTxkUG3hMFm5aIH
+ 0Udtf4p7BN65mSlp4R36U8/b+0jfiKAI/5ihSLISF8a02q3hAAcA72yXdtm4rt1oKsPY
+ dOChtPenXiFZlcVr8QCNaWLayA2NPNZ6cXEBcJWezcIDxpkEElENPHSUYhPoyxUx65HK
+ OsEXsereU82ScU4vJ82/8DyOqJUJc0bmnZoiIsSoef46WpDPPHJR6Hsojvouqs380L04
+ Id1QV/8IM1ztwV7ObrUOXOkGnndYCmvgqWljpBRWNRCDjqd6zX9r31s+6ECJF53++glo
+ kxCQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU12a+BwbgWx53tg0v6l+sBgN9625t0J4zTJ0lbunIoWR5yG1CqHhv8U0DRnhAc7/SVSRNEJ7b8KL2R@nongnu.org
+X-Gm-Message-State: AOJu0Yxt0oRA6yNmPMAmvi42DYKzaygoMtqZE111tTxPKHlNVcLueoyZ
+ XNQw8JzHwk1zW3/7n8zzieZxnGSS9yDystBxJlw+27BsnZ4XPBbOx1Pam+duCgQQV9c=
+X-Gm-Gg: ASbGncsXHfjZ7iPDTWRvV7f/8d0B4Gq69P8vHOe/ucUE17oBoX6orPJ8F+GIbR2bP0s
+ D3R/2y1QITzfx/NQLMvAjOEbDH8YMr5WiKpU/ZAuCLm5Gwvc3Vk7vGdpmY4i0VHfRI1fbg/QpEJ
+ +CTe0pZ4QmXmJZbQ8lCsawuscjNAqW0UZ/MGr8zWtW3InCf+do1Ky6D2giVcpIDkv0ZQ0bmnDIM
+ mfYtCIm5gyDwlApr8i4vPiZYvYGMrndWPILdv+bJ3rqlLO/aSueWZa7FOprPLJionqfPkAFhnpS
+ 4d0Yt5YSYZfx0pv0am3q62H1xE5TE7D3r0ggI1Wn9V6ewWsTPBubVP7FP6qp7ArwbODYgi22GzY
+ =
+X-Google-Smtp-Source: AGHT+IFcgjPigidp2JUObKIfrGnW+CVetFfi2zv1TnmMkn0UzMtONPXdsIJh8GiugT0++pMmG1OYrA==
+X-Received: by 2002:a17:90b:1848:b0:313:db0b:75d8 with SMTP id
+ 98e67ed59e1d1-31a9d64e448mr1002562a91.32.1751491615640; 
+ Wed, 02 Jul 2025 14:26:55 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-31a9ccf8711sm570443a91.27.2025.07.02.14.26.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 02 Jul 2025 14:26:55 -0700 (PDT)
+Message-ID: <5348f155-5644-497d-b9f9-89924d961cff@linaro.org>
+Date: Wed, 2 Jul 2025 14:26:54 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] Add support for gb200-bmc machine
-To: etanous <etanous@nvidia.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
- Troy Lee <leetroy@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Jamin Lin <jamin_lin@aspeedtech.com>, qemu-arm@nongnu.org
-References: <20250701203400.71677-1-etanous@nvidia.com>
- <b70dbdb3-0d1e-4976-b696-78065bd09640@kaod.org>
- <aGWJG1fO0vmL_RyU@edtanousvm.nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <aGWJG1fO0vmL_RyU@edtanousvm.nvidia.com>
+Subject: Re: [PATCH v4 57/65] accel: Always register
+ AccelOpsClass::kick_vcpu_thread() handler
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, kvm@vger.kernel.org,
+ xen-devel@lists.xenproject.org
+References: <20250702185332.43650-1-philmd@linaro.org>
+ <20250702185332.43650-58-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250702185332.43650-58-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=U4+o=ZP=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,43 +113,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/2/25 21:31, etanous wrote:
-> On Wed, Jul 02, 2025 at 09:00:53AM +0200, Cédric Le Goater wrote:
->> External email: Use caution opening links or attachments
->>
->>
->> On 7/1/25 22:33, Ed Tanous wrote:
->>> This patch series adds support for gb200-bmc, a baseboard management controller
->>> module based on an Aspeed 2600 SOC.
->>>
->>> Ed Tanous (4):
->>>     hw/arm: Add PCA9554 to ARM target
->>>     hw/arm/aspeed: Add second SPI chip to Aspeed model
->>>     docs: add support for gb200-bmc
->>>     hw/arm/aspeed: Add GB200 BMC target
->>>
->>>    docs/system/arm/aspeed.rst |  4 +-
->>>    hw/arm/Kconfig             |  1 +
->>>    hw/arm/aspeed.c            | 81 ++++++++++++++++++++++++++++++++++++++
->>>    hw/arm/aspeed_eeprom.c     | 21 ++++++++++
->>>    hw/arm/aspeed_eeprom.h     |  3 ++
->>>    include/hw/arm/aspeed.h    |  2 +
->>>    6 files changed, 110 insertions(+), 2 deletions(-)
->>>
->>
->> Could you provide a functional test for the gb200nvl-bmc machine too ?
->> See tests/functional/test_*aspeed* files.
->>
+On 7/2/25 11:53 AM, Philippe Mathieu-Daudé wrote:
+> In order to dispatch over AccelOpsClass::kick_vcpu_thread(),
+> we need it always defined, not calling a hidden handler under
+> the hood. Make AccelOpsClass::kick_vcpu_thread() mandatory.
+> Register the default cpus_kick_thread() for each accelerator.
 > 
-> Can do.  It looks like images are pushed to
-> https://github.com/legoater/qemu-aspeed-boot and accepted via Github PR?
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/system/accel-ops.h | 1 +
+>   accel/kvm/kvm-accel-ops.c  | 1 +
+>   accel/qtest/qtest.c        | 1 +
+>   accel/xen/xen-all.c        | 1 +
+>   system/cpus.c              | 7 ++-----
+>   5 files changed, 6 insertions(+), 5 deletions(-)
 
-Yes. please do that. It seems the easiest way to collect FW images.
+Sounds good.
 
-Please provide some info on how it was built, openbmc version, repo, etc.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Thanks,
+Unrelated, but I noticed that hvf_kick_vcpu_thread uses hv_vcpus_exit 
+[1] on x86 and hv_vcpu_interrupt [2] on arm64.
+I'm not even sure what's the difference when reading the Apple doc, 
+except that exit existed before interrupt.
+[1] https://developer.apple.com/documentation/hypervisor/hv_vcpus_exit(_:_:)
+[2] 
+https://developer.apple.com/documentation/hypervisor/hv_vcpu_interrupt(_:_:)
 
-C.
+It might be worth moving x86 to use interrupt also, in a future series.
 
+Regards,
+Pierrick
 
