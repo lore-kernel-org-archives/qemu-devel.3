@@ -4,89 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7AACC83038
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 19:10:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE243C83038
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 19:10:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uX2hK-0007cS-G5; Wed, 02 Jul 2025 15:00:46 -0400
+	id 1uX2dK-0005lW-1r; Wed, 02 Jul 2025 14:56:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX2gk-0006ol-AP
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 15:00:12 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX2d6-0005TN-UR
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 14:56:28 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX2gX-0003E6-IL
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 15:00:09 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3a4e742dc97so187884f8f.0
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 11:59:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX2d0-0002SK-IV
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 14:56:23 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3a51481a598so2794662f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 11:56:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751482794; x=1752087594; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751482575; x=1752087375; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KYagbleC/hcq8JgGV1mXFBe9rSbch4M6pqZHxCjKKEU=;
- b=T+102yab3decFmKQr9B45tcUUDJRYBbzhUwCY54yBbnaN7ZNVpfV8lEAEiMD6r9utY
- JebMF0V2Rbj+m5PMVQy1+Y25bXpNBdAmfA32cCwVvUBUVFCoReGrzFRWzhqOin8I6JqD
- oqvZ39cWBNrTp3S07hY9W/XCkAHoJqFNSz5V2sMwLNpYRO7RK8E/keS3r5Bt2mmB1kjZ
- 9ENZ6tfr+JExQTBglMly+COpDEhPsxA5XicCBqjN96leA0ncoTBEmU+umd0VVJ5fkwgx
- ERtAF44fPuM9XF6Av8SNYEBEjK4PGaYNClaF/lzQQ52Ff6Nmm158F9mR0x9piUbQDD3y
- Z2dg==
+ bh=hFx3N/Sw8FKjhjXRe+TJd3AuO90MwVK80ZLLTDnhkYU=;
+ b=shMfwYL2KLMbldbhds/1F2hnA1ts7VrZR3wHuk5M+z07s8e7zUKFluChpdSmOfMbir
+ No/zfAyYiColD6AroNRlD0fhHJSmSqr23Ao31zH2kIRcm3Uy8RXDN0vmU/zYPxUGzQjw
+ ttxay7eZDAgt6Pci1ZZLuA1y5T1zrZHk+Bmws372GJFA9IOqH1X8b0uvUBZOltyLdeXk
+ Xcp4c2T6hy4tBz15HGmnmbwu0oTLsYmmB+BRzOJdZ/85nJyvt1Lo+aFcNSTEBWpMqW6X
+ LxEAeBNGMftTiZORVw0ChuYAF1aftwcxvFuKIbaix5+OrY0hxOGrARpagVgjNf4CBIqE
+ iN2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751482794; x=1752087594;
+ d=1e100.net; s=20230601; t=1751482575; x=1752087375;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KYagbleC/hcq8JgGV1mXFBe9rSbch4M6pqZHxCjKKEU=;
- b=iZAy1L/VODFpsJUmRKeDrdpHjViY/E9lXSAkuVgBuUuBd2ficrH0MFNNjC7xQC64HC
- nHV4sofIIeXHfnP3kecOkDysOfcZE2KOug1Q0zHZqpf0KhB7+36SI5RfFtTcpcUfc5CF
- tZa4KAxA+WVxvKcNV2DuOtmJW4GzaGq7nzf9dVwEnUI0RlGDicQ32lxUPmIvOipf/431
- N3JvBF6GH6Q3GyPTw0hjBcVPujXB0phAXK1RgRXD355VsfwVzs7dMQhR3Mh8x6uiTd1M
- mMT1zXTgYPzAtfze/R/2SOvvunQ93l8QnhWfOJRTKTeQ+5WjIjt5Z+BqM4xJgQeO2McB
- BjfA==
-X-Gm-Message-State: AOJu0YxV40tywFLIzrRON6fKk6Cp5PMIuTy93imsPrBSkM4sd3e13Z8w
- 5IKk7gjrNM144oFlrclXbrJj6OfpZfLNXWs+ESgQ032j8FPY+LRP0nUkj2VOTILPJryTGpw5m17
- 18mmR
-X-Gm-Gg: ASbGnctFv69JQVdAeirQ5StC/qpEh6D4C88CWx58fuNEmYCNLoAvRumcRjQwaprDB0k
- 7ofFdQFoPtvv7UWRzgm1EDVxpy9FGUnHx+RLL5pVQVeJ0Cfq0rVedQLSX4M167lzDZdPgBCjwIi
- hLtibzYostC4DalkZOMlZDZk31ooLLJjKEVkVV+OOQ9lmcGxrlak6Q4lLn8++7MSWi1fe3wsH14
- 2omsc7DIqh8HC0OKr+fEwgNWu26OdeGd154kfnM1XZmdNzBtK7/Bbw/f2SgiaeDWTE0AyBtNpME
- xqBVVzBjFdNXxSlkmjqVpDKQRv6eYueL4u3GpB2Id96NmRdUak+Vesd6eHZ6AnbX2DZrGfZNtyP
- mC+s80c+xvdrx1KgB1jSWlBqO/h71wb5f+17z
-X-Google-Smtp-Source: AGHT+IH7JAtsFhmAb1AK63J5iC2PtfQNAlI4jKPIiYPgGu15QEkXDCrenr2fwUZnfBmSi5gFbRvEjA==
-X-Received: by 2002:a5d:588c:0:b0:3a4:eee4:f73a with SMTP id
- ffacd0b85a97d-3b343e5304cmr37690f8f.22.1751482794439; 
- Wed, 02 Jul 2025 11:59:54 -0700 (PDT)
+ bh=hFx3N/Sw8FKjhjXRe+TJd3AuO90MwVK80ZLLTDnhkYU=;
+ b=OrQcRo/k5YFM8/Svtjgan3T0mv1FrICMCCR9T6LJF0B1TUWseLJ1C1cMbJpAY/ryNG
+ hyzkyY0LAQmB/uPyED/spdp8dPJjv6FBPVJBC3iDWotvNyQatK/nsVNOIrDHmlYUdrbt
+ Oio2x6aAFAkaT2pwhAIJbUpgmlorHwJMXPFGZmEeTrZjdKmEMJqUWeB+47HWyiuz4yPR
+ iqb3cbkRrFeerJi0/DbFD0HY4U24Th0C4+g3HlFUSsdNVsREj7q+CH+S7N8HG/Of5fGL
+ JjCPUjO6cWmHzPVRl5/BfVYg2GOFKqN6awyXSrjEaHLiSnYc20wLkJ73bVhfQjCtZotp
+ w7jQ==
+X-Gm-Message-State: AOJu0YyADOgDzJD3knRJld1n79YppEAx6xgY8Kli0rN2RwUopjb51HGd
+ Gn3sc5Ha/KMnafHF9QR582OMkisr1rb+8CfHTlX/9iJQQfzD/9CLvjtV4Xm+8f5nOdoP8AGuNbw
+ PHWoe
+X-Gm-Gg: ASbGncsXIA15xEi3c7qvIOvyV8BbBDPIJtdJcWWsAu4hdPFNgkCG9KWWfCYlwPXDiea
+ Zw9c/sNFQNxP355LgT74vYOo4PHJ4I47LxSR31eJ9KqNY+FgdnWKU5hgrOzQFaPm5dcU9shiMNe
+ h2T+CDDD612wIjT5VFpR7MLebAtN895aTf2iktQPDtVSE3Z7stCSYeUgYwU9BR8fFKA/h/5GCoD
+ OqCyeZoQSVbOkbGnm3wG+mCTI4SaJWH/dHXN+nGk5Efcag6hO2uHLrLzLy7UnZ/DC3NCoMHqHtS
+ ysZmoN5xcz8F3IBnsYwwUrjGW52t1SId+Xp54OZo5pxSarxEAcar0t0TYGW2Jun03l0qTQ3G0wi
+ X8PvoiAWogEFm+0ndUCvnJt1I1wRrcQkLcP6y
+X-Google-Smtp-Source: AGHT+IH+eXOXaGjfjtwP7dnGyYo7Hf80QwmNhdYqXAx1WDfQzlhVe2uvb1k4drG12WzGIPW8PKTW6Q==
+X-Received: by 2002:a5d:5888:0:b0:3a4:d0ed:257b with SMTP id
+ ffacd0b85a97d-3b1ff42f9b6mr3335947f8f.22.1751482575474; 
+ Wed, 02 Jul 2025 11:56:15 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a892e5972bsm16895261f8f.68.2025.07.02.11.59.53
+ ffacd0b85a97d-3a892e5f8absm17000638f8f.95.2025.07.02.11.56.13
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 02 Jul 2025 11:59:53 -0700 (PDT)
+ Wed, 02 Jul 2025 11:56:14 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 54/65] accel: Factor accel_cpu_realize() out
-Date: Wed,  2 Jul 2025 20:53:16 +0200
-Message-ID: <20250702185332.43650-55-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Michael Roth <michael.roth@amd.com>
+Subject: [PATCH v4 22/65] qapi: Move definitions related to accelerators in
+ their own file
+Date: Wed,  2 Jul 2025 20:52:44 +0200
+Message-ID: <20250702185332.43650-23-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250702185332.43650-1-philmd@linaro.org>
 References: <20250702185332.43650-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,54 +109,265 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Factor accel_cpu_realize() out of accel_cpu_common_realize()
-for re-use.
+Extract TCG and KVM definitions from machine.json to accelerator.json.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/accel-internal.h | 2 ++
- accel/accel-common.c   | 8 ++++++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ MAINTAINERS                |  1 +
+ qapi/accelerator.json      | 75 ++++++++++++++++++++++++++++++++++++++
+ qapi/machine.json          | 65 ---------------------------------
+ qapi/qapi-schema.json      |  1 +
+ accel/tcg/monitor.c        |  2 +-
+ hw/core/machine-hmp-cmds.c |  1 +
+ hw/core/machine-qmp-cmds.c |  1 +
+ qapi/meson.build           |  1 +
+ 8 files changed, 81 insertions(+), 66 deletions(-)
+ create mode 100644 qapi/accelerator.json
 
-diff --git a/accel/accel-internal.h b/accel/accel-internal.h
-index d3a4422cbf7..b541377c349 100644
---- a/accel/accel-internal.h
-+++ b/accel/accel-internal.h
-@@ -14,4 +14,6 @@
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7128e0bc98e..5d6b337cef6 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -507,6 +507,7 @@ F: accel/Makefile.objs
+ F: accel/stubs/Makefile.objs
+ F: cpu-common.c
+ F: cpu-target.c
++F: qapi/accelerator.json
+ F: system/cpus.c
  
- void accel_init_ops_interfaces(AccelClass *ac);
- 
-+bool accel_cpu_realize(AccelState *accel, CPUState *cpu, Error **errp);
+ Apple Silicon HVF CPUs
+diff --git a/qapi/accelerator.json b/qapi/accelerator.json
+new file mode 100644
+index 00000000000..1d2a83f1b22
+--- /dev/null
++++ b/qapi/accelerator.json
+@@ -0,0 +1,75 @@
++# -*- Mode: Python -*-
++# vim: filetype=python
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
- #endif /* ACCEL_SYSTEM_H */
-diff --git a/accel/accel-common.c b/accel/accel-common.c
-index 24038acf4aa..de010adb484 100644
---- a/accel/accel-common.c
-+++ b/accel/accel-common.c
-@@ -122,9 +122,8 @@ void accel_create_vcpu_thread(AccelState *accel, CPUState *cpu)
-     }
- }
- 
--bool accel_cpu_common_realize(CPUState *cpu, Error **errp)
-+bool accel_cpu_realize(AccelState *accel, CPUState *cpu, Error **errp)
- {
--    AccelState *accel = current_accel();
-     AccelClass *acc = ACCEL_GET_CLASS(accel);
- 
-     /* target specific realization */
-@@ -147,6 +146,11 @@ bool accel_cpu_common_realize(CPUState *cpu, Error **errp)
-     return true;
- }
- 
-+bool accel_cpu_common_realize(CPUState *cpu, Error **errp)
-+{
-+    return accel_cpu_realize(current_accel(), cpu, errp);
-+}
++##
++# = Accelerators
++##
 +
- void accel_cpu_common_unrealize(CPUState *cpu)
- {
-     AccelState *accel = current_accel();
++{ 'include': 'common.json' }
++
++##
++# @KvmInfo:
++#
++# Information about support for KVM acceleration
++#
++# @enabled: true if KVM acceleration is active
++#
++# @present: true if KVM acceleration is built into this executable
++#
++# Since: 0.14
++##
++{ 'struct': 'KvmInfo', 'data': {'enabled': 'bool', 'present': 'bool'} }
++
++##
++# @query-kvm:
++#
++# Return information about KVM acceleration
++#
++# Returns: @KvmInfo
++#
++# Since: 0.14
++#
++# .. qmp-example::
++#
++#     -> { "execute": "query-kvm" }
++#     <- { "return": { "enabled": true, "present": true } }
++##
++{ 'command': 'query-kvm', 'returns': 'KvmInfo' }
++
++##
++# @x-query-jit:
++#
++# Query TCG compiler statistics
++#
++# Features:
++#
++# @unstable: This command is meant for debugging.
++#
++# Returns: TCG compiler statistics
++#
++# Since: 6.2
++##
++{ 'command': 'x-query-jit',
++  'returns': 'HumanReadableText',
++  'if': 'CONFIG_TCG',
++  'features': [ 'unstable' ] }
++
++##
++# @x-query-opcount:
++#
++# Query TCG opcode counters
++#
++# Features:
++#
++# @unstable: This command is meant for debugging.
++#
++# Returns: TCG opcode counters
++#
++# Since: 6.2
++##
++{ 'command': 'x-query-opcount',
++  'returns': 'HumanReadableText',
++  'if': 'CONFIG_TCG',
++  'features': [ 'unstable' ] }
+diff --git a/qapi/machine.json b/qapi/machine.json
+index d5bbb5e367e..e4713c405e8 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -454,35 +454,6 @@
+ ##
+ { 'command': 'inject-nmi' }
+ 
+-##
+-# @KvmInfo:
+-#
+-# Information about support for KVM acceleration
+-#
+-# @enabled: true if KVM acceleration is active
+-#
+-# @present: true if KVM acceleration is built into this executable
+-#
+-# Since: 0.14
+-##
+-{ 'struct': 'KvmInfo', 'data': {'enabled': 'bool', 'present': 'bool'} }
+-
+-##
+-# @query-kvm:
+-#
+-# Return information about KVM acceleration
+-#
+-# Returns: @KvmInfo
+-#
+-# Since: 0.14
+-#
+-# .. qmp-example::
+-#
+-#     -> { "execute": "query-kvm" }
+-#     <- { "return": { "enabled": true, "present": true } }
+-##
+-{ 'command': 'query-kvm', 'returns': 'KvmInfo' }
+-
+ ##
+ # @NumaOptionsType:
+ #
+@@ -1729,24 +1700,6 @@
+   'returns': 'HumanReadableText',
+   'features': [ 'unstable' ] }
+ 
+-##
+-# @x-query-jit:
+-#
+-# Query TCG compiler statistics
+-#
+-# Features:
+-#
+-# @unstable: This command is meant for debugging.
+-#
+-# Returns: TCG compiler statistics
+-#
+-# Since: 6.2
+-##
+-{ 'command': 'x-query-jit',
+-  'returns': 'HumanReadableText',
+-  'if': 'CONFIG_TCG',
+-  'features': [ 'unstable' ] }
+-
+ ##
+ # @x-query-numa:
+ #
+@@ -1764,24 +1717,6 @@
+   'returns': 'HumanReadableText',
+   'features': [ 'unstable' ] }
+ 
+-##
+-# @x-query-opcount:
+-#
+-# Query TCG opcode counters
+-#
+-# Features:
+-#
+-# @unstable: This command is meant for debugging.
+-#
+-# Returns: TCG opcode counters
+-#
+-# Since: 6.2
+-##
+-{ 'command': 'x-query-opcount',
+-  'returns': 'HumanReadableText',
+-  'if': 'CONFIG_TCG',
+-  'features': [ 'unstable' ] }
+-
+ ##
+ # @x-query-ramblock:
+ #
+diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
+index a8f66163cb7..0477696ff02 100644
+--- a/qapi/qapi-schema.json
++++ b/qapi/qapi-schema.json
+@@ -37,6 +37,7 @@
+ { 'include': 'run-state.json' }
+ { 'include': 'crypto.json' }
+ { 'include': 'job.json' }
++{ 'include': 'accelerator.json' }
+ { 'include': 'block.json' }
+ { 'include': 'block-export.json' }
+ { 'include': 'char.json' }
+diff --git a/accel/tcg/monitor.c b/accel/tcg/monitor.c
+index 1c182b6bfb5..5bdd837006c 100644
+--- a/accel/tcg/monitor.c
++++ b/accel/tcg/monitor.c
+@@ -11,7 +11,7 @@
+ #include "qemu/qht.h"
+ #include "qapi/error.h"
+ #include "qapi/type-helpers.h"
+-#include "qapi/qapi-commands-machine.h"
++#include "qapi/qapi-commands-accelerator.h"
+ #include "monitor/monitor.h"
+ #include "system/cpu-timers.h"
+ #include "exec/icount.h"
+diff --git a/hw/core/machine-hmp-cmds.c b/hw/core/machine-hmp-cmds.c
+index 65eeb5e9cc2..15ae5864d16 100644
+--- a/hw/core/machine-hmp-cmds.c
++++ b/hw/core/machine-hmp-cmds.c
+@@ -18,6 +18,7 @@
+ #include "monitor/monitor.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-builtin-visit.h"
++#include "qapi/qapi-commands-accelerator.h"
+ #include "qapi/qapi-commands-machine.h"
+ #include "qobject/qdict.h"
+ #include "qapi/string-output-visitor.h"
+diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+index ab4fd1ec08a..f37fd220c2d 100644
+--- a/hw/core/machine-qmp-cmds.c
++++ b/hw/core/machine-qmp-cmds.c
+@@ -14,6 +14,7 @@
+ #include "hw/mem/memory-device.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-builtin-visit.h"
++#include "qapi/qapi-commands-accelerator.h"
+ #include "qapi/qapi-commands-machine.h"
+ #include "qobject/qobject.h"
+ #include "qapi/qobject-input-visitor.h"
+diff --git a/qapi/meson.build b/qapi/meson.build
+index 3b035aea339..ca6b61a608d 100644
+--- a/qapi/meson.build
++++ b/qapi/meson.build
+@@ -57,6 +57,7 @@ qapi_all_modules = [
+ ]
+ if have_system
+   qapi_all_modules += [
++    'accelerator',
+     'acpi',
+     'audio',
+     'cryptodev',
 -- 
 2.49.0
 
