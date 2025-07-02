@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55C17C7EE30
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 08:57:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B0B6C83013
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 09:02:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWtGg-0001fI-OL; Wed, 02 Jul 2025 04:56:38 -0400
+	id 1uWtLd-0004Jh-UG; Wed, 02 Jul 2025 05:01:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shahuang@redhat.com>)
- id 1uWtGe-0001el-U4
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 04:56:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uWtLc-0004JQ-3g
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 05:01:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shahuang@redhat.com>)
- id 1uWtGZ-0003uu-Gv
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 04:56:36 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uWtLZ-0004yO-9y
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 05:01:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751446588;
+ s=mimecast20190719; t=1751446899;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=RQGL6Fh3ytcO2cXkmkLYkjWcg5c3LLdLoqv9zK/qqQ4=;
- b=JKKwKNluNZ713v/DiW/dKE4Nkio/V/LqwM1ADaSXeAIBA/I7/5dZkuyktAEFoKD6xVyVLv
- TdxzWJHfuEAzVNy4P5OXz1qvqOAXwu4uUwZJRnvBF9sEYbQvW8VC+7tAvSgP8JQT3H+v3w
- NcMq9on0ZFq8T0kldOVMTegMZeBX8sE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=d+kQul6R0lGd1wxb4o77UWDFa/jjXRqLzsaVV/fmKXI=;
+ b=MoirCfsChmBZBL3LzqBYTLBox51+SqMxiVMZ3ZHLodQhCIwBG6ZvXX0QARqftPKh1xyBo3
+ uE50RzSfjOdDDgIApzlEgfMN0wIiYY0aguXuyPcxcT0UWOX9Iig8oPMP+n/qNUmq+jC60W
+ 5/3Dgzjc0TSIveRSbIVRs+GscnljB4c=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-541-QtdRg5MZP420TZ-pHO3vVw-1; Wed,
- 02 Jul 2025 04:56:25 -0400
-X-MC-Unique: QtdRg5MZP420TZ-pHO3vVw-1
-X-Mimecast-MFC-AGG-ID: QtdRg5MZP420TZ-pHO3vVw_1751446584
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-184-B_5uyoxXPSGnO1NBkZVZrQ-1; Wed,
+ 02 Jul 2025 05:01:36 -0400
+X-MC-Unique: B_5uyoxXPSGnO1NBkZVZrQ-1
+X-Mimecast-MFC-AGG-ID: B_5uyoxXPSGnO1NBkZVZrQ_1751446894
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7EED619560A1; Wed,  2 Jul 2025 08:56:23 +0000 (UTC)
-Received: from virt-mtcollins-01.lab.eng.rdu2.redhat.com
- (virt-mtcollins-01.lab.eng.rdu2.redhat.com [10.8.1.196])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2DE0E18002B5; Wed,  2 Jul 2025 08:56:18 +0000 (UTC)
-From: Shaoqin Huang <shahuang@redhat.com>
-To: qemu-arm@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Eric Auger <eauger@redhat.com>,
- Shaoqin Huang <shahuang@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v7 0/2] ramfb: Add property to control if load the romfile
-Date: Wed,  2 Jul 2025 04:56:14 -0400
-Message-Id: <20250702085616.2172722-1-shahuang@redhat.com>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DD28D1809C80; Wed,  2 Jul 2025 09:01:33 +0000 (UTC)
+Received: from localhost (dhcp-192-236.str.redhat.com [10.33.192.236])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 493741956048; Wed,  2 Jul 2025 09:01:32 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ sebott@redhat.com, shameerali.kolothum.thodi@huawei.com,
+ armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
+ jdenemar@redhat.com, agraf@csgraf.de, shahuang@redhat.com,
+ mark.rutland@arm.com, philmd@linaro.org, pbonzini@redhat.com
+Subject: Re: [PATCH v8 13/14] arm/cpu: switch to a generated cpu-sysregs.h.inc
+In-Reply-To: <CAFEAcA8+OjptoJgPDeQkw5TQtVduhq-KvP-Br6JNDmW57jgXbw@mail.gmail.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
+References: <20250617153931.1330449-1-cohuck@redhat.com>
+ <20250617153931.1330449-14-cohuck@redhat.com>
+ <CAFEAcA9OXi4v+hdBMamQv85HYp2EqxOA5=nfsdZ5E3nf8RP_pw@mail.gmail.com>
+ <87bjq3rj3a.fsf@redhat.com>
+ <CAFEAcA8+OjptoJgPDeQkw5TQtVduhq-KvP-Br6JNDmW57jgXbw@mail.gmail.com>
+User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
+Date: Wed, 02 Jul 2025 11:01:29 +0200
+Message-ID: <875xgbq846.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=shahuang@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,70 +96,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently the ramfb device loads the vgabios-ramfb.bin unconditionally, but only
-the x86 need the vgabios-ramfb.bin, this can cause that when use the
-release package on arm64 it can't find the vgabios-ramfb.bin.
+On Tue, Jul 01 2025, Peter Maydell <peter.maydell@linaro.org> wrote:
 
-Because only seabios will use the vgabios-ramfb.bin, load the rom logic
-is x86-specific. For other !x86 platforms, the edk2 ships an EFI driver
-for ramfb, so they don't need to load the romfile.
+> On Tue, 1 Jul 2025 at 17:07, Cornelia Huck <cohuck@redhat.com> wrote:
+>>
+>> On Mon, Jun 30 2025, Peter Maydell <peter.maydell@linaro.org> wrote:
+>>
+>> > On Tue, 17 Jun 2025 at 16:41, Cornelia Huck <cohuck@redhat.com> wrote:
+>> >>
+>> >> Generated against Linux 6.15.
+>> >>
+>> >> Reviewed-by: Sebastian Ott <sebott@redhat.com>
+>> >> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+>> >> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+>> >
+>> > Stripping out all the lines that just moved around,
+>> > here are the additions:
+>> >
+>> >> +DEF(ID_AFR0_EL1, 3, 0, 0, 1, 3)
+>> >
+>> > This is ARMCPU::id_afr0. If we want to store this in
+>> > the idregs[] array that's fine but we ought to move it.
+>> >
+>>
+>> I guess the *afr* regs fell into the cracks because they were not in the
+>> isar struct -- makes sense to move them.
+>>
+>> (This reg "must be interpreted with" MIDR_EL1; I'm wondering if that has
+>> any implications once we enlighten guests with possible midr/revidr/aidr
+>> values.)
+>
+> It just means that the contents are entirely implementation
+> defined, so you can't tell what they mean unless you first
+> look at MIDR_EL1 to find out what your implementation is.
 
-So add a new property use-legacy-x86-rom in both ramfb and vfio_pci
-device, because the vfio display also use the ramfb_setup() to load
-the vgabios-ramfb.bin file.
+Would we need to provide multiple afr options then once we allow to
+specify multiple values of MIDR and friends?
 
-After have this property, the machine type can set the compatibility to
-not load the vgabios-ramfb.bin if the arch doesn't need it.
+>
+> (Linux doesn't appear to ever look at the AFR0 registers.)
 
-Then I set the use_legacy_x86_rom property to false by default, and only set it
-to true on x86 since only x86 will need it.
+Or ignore it for now...
 
-At the same time, set the "use-legacy-x86-rom" property to true on those
-historical versioned machine types in order to avoid the memory layout
-being changed.
+>
+>> >> +DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
+>> >
+>> >> +DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
+>> >
+>> >> +DEF(ID_AA64DFR2_EL1, 3, 0, 0, 5, 2)
+>> >
+>> > These are all ID registers we don't implement yet
+>> > because we don't implement any features that are
+>> > described in them (i.e. our implementation is RAZ/WI).
+>> > I guess it's OK to list them here, though we won't
+>> > do anything with the array entry.
+>>
+>> I don't think it hurts to include them, it makes things easier when we
+>> want to deal with non-zero values in there via kvm.
+>>
+>> >
+>> >> +DEF(ID_AA64AFR0_EL1, 3, 0, 0, 5, 4)
+>> >
+>> > ARMCPU::id_aa64afr0
+>> >
+>> >> +DEF(ID_AA64AFR1_EL1, 3, 0, 0, 5, 5)
+>> >
+>> > ARMCPU::id_aa64afr1
+>> >
+>> >> +DEF(ID_AA64ISAR3_EL1, 3, 0, 0, 6, 3)
+>> >
+>> >> +DEF(ID_AA64MMFR4_EL1, 3, 0, 0, 7, 4)
+>> >
+>> > More ID regs for features we don't implement yet.
+>> >
+>> >> +DEF(CCSIDR_EL1, 3, 1, 0, 0, 0)
+>> >
+>> > CCSIDR_EL1 isn't a single ID register, it's an array
+>> > of them (indexed by CCSELR_EL1). We keep them in
+>> > ARMCPU::ccsidr[]. I don't think it makes sense to
+>> > have an entry in isar.idregs[] for this.
+>>
+>> Hm, IIUC, kvm gets the correct CCSIDR_EL1 under the covers already
+>> (i.e. no array).
+>
+> There's support in the KVM GET_ONE_REG API for reading
+> and writing the full array (see KVM_REG_ARM_DEMUX_ID_CCSIDR).
+> We just don't bother in QEMU at the moment because we never
+> need the values in userspace.
 
-Changelog:
----------
-v6 -> v7:
-  - Set the property into hw_compat_10_0 instead of hw_compat_9_2.
-v5 -> v6:
-  - Set the property to true on those historical versioned machine types.
-v4 -> v5:
-  - Fix some typo error.
-  - Set the property in piix machine type.
-v3 -> v4:
-  - Set the new property to false by default, only set it to true on x86.
-v2 -> v3:
-  - Fix the underscore error.
-  - Add a new patch to set the property in arm compatibility.
-v1 -> v2:
-  - Change the property name.
+We could manually exclude things like CCSIDR_EL1, but is it worth the
+effort if it's simply present?
 
-v6: https://lore.kernel.org/all/20250701030549.2153331-1-shahuang@redhat.com/
-v5: https://lore.kernel.org/all/20250626034526.2136585-1-shahuang@redhat.com/
-v4: https://lore.kernel.org/all/20250617030521.2109305-1-shahuang@redhat.com/
-v3: https://lore.kernel.org/all/20250609073408.2083831-1-shahuang@redhat.com/
-v2: https://lore.kernel.org/all/20250606070234.2063451-1-shahuang@redhat.com/
-v1: https://lore.kernel.org/all/20250605030351.2056571-1-shahuang@redhat.com/
+>
+>> >> +DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
+>> >
+>> > ARMCPU::clidr
+>> >
+>> >> +DEF(CCSIDR2_EL1, 3, 1, 0, 0, 2)
+>> >
+>> > This is an array too.
+>>
+>> Currently, kvm handles this as undef.
+>
+> That seems like a missing feature in KVM -- it ought to be
+> implemented on anything where ID_AA64MMFR2.CCIDX says
+> we have FEAT_CCIDX (which means that the whole cache ID
+> format changes and the info is split between CCSIDR
+> and CCSIDR2).
+>
+>> >> +DEF(GMID_EL1, 3, 1, 0, 0, 4)
+>> >
+>> > Another ID register for a feature we don't yet implement
+>> > (and a slightly oddball one in that it should UNDEF
+>> > until we do implement FEAT_MTE2).
+>> >
+>> >> +DEF(SMIDR_EL1, 3, 1, 0, 0, 6)
+>> >
+>> > We implement this as a fixed zero in helper.c.
+>>
+>> Undef in kvm.
+>
+> Probably because KVM doesn't have support for SME in
+> guests yet ?
 
+Once we do get support for it in kvm, it would make sense to have it in
+place already, and it probably won't conflict with the fixed definition
+in tcg code, right?
 
-Shaoqin Huang (2):
-  ramfb: Add property to control if load the romfile
-  hw/i386: Add the ramfb romfile compatibility
+>
+>> >
+>> >> +DEF(DCZID_EL0, 3, 3, 0, 0, 7)
+>> >
+>> > We construct the value of this one in aa64_dczid_read()
+>> > based on ARMCPU::dcz_blocksize plus some runtime info.
+>>
+>> That one's another bit of a headache (I didn't manage to spot kvm code
+>> dealing with it.)
+>
+> The hardware handles it for you -- inside the guest, the
+> value of the DZP bit depends on HCR_EL2.TDZ (and maybe also
+> SCTLR_EL1.DZE). The value of DCZID_EL0.BS has to match the
+> real host CPU anyway because you can't change the block
+> size that the DC ZVA insn is going to use. (You could
+> trap DCZID_EL0 accesses via HFGRTR_EL2.DCZID_EL0 if you really
+> wanted to, but you'd also need to trap-and-emulate the
+> DC ZVA insns, which is a lot of effort for something
+> no guest is really going to notice the difference on.)
 
- hw/core/machine.c             |  2 ++
- hw/display/ramfb-standalone.c |  4 +++-
- hw/display/ramfb-stubs.c      |  2 +-
- hw/display/ramfb.c            |  6 ++++--
- hw/i386/pc_piix.c             | 10 ++++++++++
- hw/i386/pc_q35.c              |  3 +++
- hw/vfio/display.c             |  4 ++--
- hw/vfio/pci.c                 |  1 +
- hw/vfio/pci.h                 |  1 +
- include/hw/display/ramfb.h    |  2 +-
- 10 files changed, 28 insertions(+), 7 deletions(-)
+So I guess it wouldn't hurt to include this in the array?
 
--- 
-2.40.1
+My basic question is: Do we need to exclude certain registers from being
+included in the autogenerated list and derived code? (On the flip side,
+once we add the code that discovers registers writable via kvm, we also
+found that we need some registers not in the source file...)
 
 
