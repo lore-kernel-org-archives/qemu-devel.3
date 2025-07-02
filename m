@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A939CC8303C
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 22:00:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A4D4C83F03
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 22:01:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uX5UG-0003Xx-NN; Wed, 02 Jul 2025 17:59:28 -0400
+	id 1uX5UB-0003WH-JI; Wed, 02 Jul 2025 17:59:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uX5UF-0003X7-3W
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 17:59:27 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1uX5U8-0003VW-T9
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 17:59:21 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uX5UC-0003jX-Fy
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 17:59:26 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 562LQf1Q014606;
- Wed, 2 Jul 2025 21:59:12 GMT
+ id 1uX5U7-0003lf-Bt
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 17:59:20 -0400
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 562LQfwY030336;
+ Wed, 2 Jul 2025 21:59:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=OzALD2fsFEdS/IShgruUdRHOQtTLvq07jI1ADEkvc28=; b=
- k9F+dhzPOf4UxyISbljt0AVRuDWVelZZ2qT2Ny9dd/qCPubUo9ZccUVVPDu7PaN+
- OgqrpoLuyfc7N8viS7WBcNfDkLy6a9/Vq6L0v5oIvDwqTFcSu5Sn6M7jRqLBQzlc
- fwKspTnp6Q855iQHd57dpG4Bm23H0h7w7E17KWrYQQbzvGdgMwf5Pw6aQBL16X/t
- XCPF0QTNgBgAGteKJeRtpnDzo/fmLwIkeb4T7PS2WLY4O9+JjNtv/myAxeZyubH6
- S72COAC+rdeM6wtIk03pv4unQchTca/KTVZNkPIKl2kOXzemIThlAkIpM4Q46JPq
- HIjKZwZDxfuiDs0hVTQW/w==
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=F88eYIe03c7Ls4yKjocET+c+1VxLAyWt9CWpeWd2WrQ=; b=
+ r93pMyaTi/xG5fPMxrCb/BfEPZzR0Xm3VRvh/Fylc1CDk/34E+FXECJVCuCQYdCA
+ RhBp+TMizFo//577sc796fsmgH+4WpDIZ2lRhi7l1JrB6k4Z8W/u5gvY6go9Q2n1
+ a4Ee8qhuTPJ9mQ6SIs750m3+P0VwNiwObisQAaeMfybF638XCIbcjw1105WB0lvf
+ E3olPCkDmCCdQQyT9mmuE1zTGvBWKgk+GE+KQ4XYPWoEPZza529ZQOxq/qIciU8O
+ 53a32j3sqKQrCcUe8z5AGqKEjhFt+HxLlOMoai+Bz4XxTxtHjB4qCNAWdjNVP2RT
+ S/gVh6ULxOnYMuYWcfTujA==
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47j8xx7vd1-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47j766fyqv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 02 Jul 2025 21:59:11 +0000 (GMT)
+ Wed, 02 Jul 2025 21:59:16 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 562LTgjp033925; Wed, 2 Jul 2025 21:59:11 GMT
+ with ESMTP id 562LdcMa034127; Wed, 2 Jul 2025 21:59:15 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 47j6ubtd5r-1
+ 47j6ubtd8d-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 02 Jul 2025 21:59:11 +0000
+ Wed, 02 Jul 2025 21:59:15 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 562LwxgO020012;
- Wed, 2 Jul 2025 21:59:10 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 562LwxgY020012;
+ Wed, 2 Jul 2025 21:59:14 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 47j6ubtcxb-16; Wed, 02 Jul 2025 21:59:10 +0000
+ ESMTP id 47j6ubtcxb-21; Wed, 02 Jul 2025 21:59:14 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -63,12 +64,15 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V6 15/21] vfio/iommufd: preserve descriptors
-Date: Wed,  2 Jul 2025 14:58:52 -0700
-Message-Id: <1751493538-202042-16-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V6 20/21] vfio/container: delete old cpr register
+Date: Wed,  2 Jul 2025 14:58:57 -0700
+Message-Id: <1751493538-202042-21-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1751493538-202042-1-git-send-email-steven.sistare@oracle.com>
 References: <1751493538-202042-1-git-send-email-steven.sistare@oracle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-02_04,2025-07-02_04,2025-03-28_01
@@ -77,26 +81,28 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
  mlxlogscore=999 phishscore=0 suspectscore=0 mlxscore=0 bulkscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2507020182
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDE4MiBTYWx0ZWRfX0zVmfrLZ8nzu
- Gtid50ST4UtXnZs/c0/wAON1jofUdVnomibLeTdIXrJQ3jtAF/iYWwt0o8Z6lSVly9+5T4ZTX+C
- LK+ccDwKbqgZY+HYAj2mUHsZcpjVgMK2Bm798t1eVsBh4j5XeC8NGdQ/nKHiVGxFRYCVD1DgiAZ
- aQNJjIsIsGYJdWLMovbfbpAYe8IK0MTiVDkwPGwuZSml5+S628friDqGQrT6KMkCZoR++85COQ7
- YvA7GJsh9a1cwgB6T/RpYkBXlVzrELEZm2hjqI66CtaAwW5wFJCa7nqKdG94P4q+q+uX98o3PJ6
- VBYViZCqrAv1xPz1nU9UOs64bf73CSpobNxbvMKAokUZ5VR/aTlRB+VS1VgpNhACjCqmCvY4t28
- Ika4MjJo2Xzh4xliIji/CXbgudCqJ7vdRYCEs0WLrIY+/vQSAfvkD8X8jHFVqt8Z1mMXhsz1
-X-Proofpoint-ORIG-GUID: cJf3ORlPbjJ-GemAetf2fqjNUj02cUwK
-X-Proofpoint-GUID: cJf3ORlPbjJ-GemAetf2fqjNUj02cUwK
-X-Authority-Analysis: v=2.4 cv=QfRmvtbv c=1 sm=1 tr=0 ts=6865abaf cx=c_pps
+X-Proofpoint-GUID: IDhW8kaUtTl6dYsH1EBL1o2qvIVPv8zf
+X-Proofpoint-ORIG-GUID: IDhW8kaUtTl6dYsH1EBL1o2qvIVPv8zf
+X-Authority-Analysis: v=2.4 cv=b82y4sGx c=1 sm=1 tr=0 ts=6865abb4 cx=c_pps
  a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=QyXUC8HyAAAA:8 a=I2KNaNdY-GqYJbIdq80A:9
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=QyXUC8HyAAAA:8
+ a=20KFwNOVAAAA:8 a=wb1fy916W68PL7SXvpoA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDE4MSBTYWx0ZWRfX2ycEhFySzWjx
+ VQvatiZfAtrQYRQfBLhvzGJUzodRYE2eXfse9EgqzP7y+loyg4QZJuCUC/e61FEzL7YLQuq04z9
+ el4zoHqmlHmpg8aE7Be3/nsIDFAfve3uSMlPUSigRQJsCmq2EA2uEz8hTNg0dIqnJIG3sjFxpUD
+ s8pBFEyUyXs70aoK3ZShUAq0jfOvnBmcTHKhXvgqCZJPhBMcBY5RFfEdfoZ8abLWDsEiTp4T9e5
+ GWm2I4h1ScdACwLcchxaN+O5PD8PAtVNj2VR3h7tgny00Dnoxk76/kuXHpIqrnB2JfUfYnpBg9n
+ yaHkrMxTKavdbPDIKApIDhw6RYm4Ob6nKXMMrPYXKmECU8sCaC1GhufNxsZWSc2XmaSCt+AFTKj
+ 013O4Sjkf34kEuhMKfOYldLkeopeL3418CVO9GZCz1F5WHWbKsqccirzXewnkwvcLj3mBRsC
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,151 +120,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Save the iommu and vfio device fd in CPR state when it is created.
-After CPR, the fd number is found in CPR state and reused.
+vfio_cpr_[un]register_container is no longer used since they were
+subsumed by container type-specific registration.  Delete them.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- backends/iommufd.c    | 35 +++++++++++++++++++++++++++++------
- hw/vfio/cpr-iommufd.c | 10 ++++++++++
- hw/vfio/device.c      |  9 +--------
- 3 files changed, 40 insertions(+), 14 deletions(-)
+ include/hw/vfio/vfio-cpr.h |  4 ----
+ hw/vfio/cpr.c              | 13 -------------
+ 2 files changed, 17 deletions(-)
 
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index c554ce5..e091792 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -16,12 +16,18 @@
- #include "qemu/module.h"
- #include "qom/object_interfaces.h"
- #include "qemu/error-report.h"
-+#include "migration/cpr.h"
- #include "monitor/monitor.h"
- #include "trace.h"
- #include "hw/vfio/vfio-device.h"
- #include <sys/ioctl.h>
- #include <linux/iommufd.h>
+diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
+index 4c17cb3..e9cd9b2 100644
+--- a/include/hw/vfio/vfio-cpr.h
++++ b/include/hw/vfio/vfio-cpr.h
+@@ -44,10 +44,6 @@ void vfio_legacy_cpr_unregister_container(struct VFIOContainer *container);
+ int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
+                              Error **errp);
  
-+static const char *iommufd_fd_name(IOMMUFDBackend *be)
-+{
-+    return object_get_canonical_path_component(OBJECT(be));
-+}
-+
- static void iommufd_backend_init(Object *obj)
- {
-     IOMMUFDBackend *be = IOMMUFD_BACKEND(obj);
-@@ -64,11 +70,27 @@ static bool iommufd_backend_can_be_deleted(UserCreatable *uc)
-     return !be->users;
- }
- 
-+static void iommufd_backend_complete(UserCreatable *uc, Error **errp)
-+{
-+    IOMMUFDBackend *be = IOMMUFD_BACKEND(uc);
-+    const char *name = iommufd_fd_name(be);
-+
-+    if (!be->owned) {
-+        /* fd came from the command line. Fetch updated value from cpr state. */
-+        if (cpr_is_incoming()) {
-+            be->fd = cpr_find_fd(name, 0);
-+        } else {
-+            cpr_save_fd(name, 0, be->fd);
-+        }
-+    }
-+}
-+
- static void iommufd_backend_class_init(ObjectClass *oc, const void *data)
- {
-     UserCreatableClass *ucc = USER_CREATABLE_CLASS(oc);
- 
-     ucc->can_be_deleted = iommufd_backend_can_be_deleted;
-+    ucc->complete = iommufd_backend_complete;
- 
-     object_class_property_add_str(oc, "fd", NULL, iommufd_backend_set_fd);
- }
-@@ -102,7 +124,7 @@ bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp)
-     int fd;
- 
-     if (be->owned && !be->users) {
--        fd = qemu_open("/dev/iommu", O_RDWR, errp);
-+        fd = cpr_open_fd("/dev/iommu", O_RDWR, iommufd_fd_name(be), 0, errp);
-         if (fd < 0) {
-             return false;
-         }
-@@ -127,14 +149,15 @@ void iommufd_backend_disconnect(IOMMUFDBackend *be)
-         goto out;
-     }
-     be->users--;
--    if (!be->users && be->owned) {
--        close(be->fd);
--        be->fd = -1;
--    }
--out:
-     if (!be->users) {
-         vfio_iommufd_cpr_unregister_iommufd(be);
-+        if (be->owned) {
-+            cpr_delete_fd(iommufd_fd_name(be), 0);
-+            close(be->fd);
-+            be->fd = -1;
-+        }
-     }
-+out:
-     trace_iommufd_backend_disconnect(be->fd, be->users);
- }
- 
-diff --git a/hw/vfio/cpr-iommufd.c b/hw/vfio/cpr-iommufd.c
-index 4166201..a72b68d 100644
---- a/hw/vfio/cpr-iommufd.c
-+++ b/hw/vfio/cpr-iommufd.c
-@@ -166,12 +166,18 @@ void vfio_iommufd_cpr_unregister_container(VFIOIOMMUFDContainer *container)
- void vfio_iommufd_cpr_register_device(VFIODevice *vbasedev)
- {
-     if (!cpr_is_incoming()) {
-+        /*
-+         * Beware fd may have already been saved by vfio_device_set_fd,
-+         * so call resave to avoid a duplicate entry.
-+         */
-+        cpr_resave_fd(vbasedev->name, 0, vbasedev->fd);
-         vfio_cpr_save_device(vbasedev);
-     }
- }
- 
- void vfio_iommufd_cpr_unregister_device(VFIODevice *vbasedev)
- {
-+    cpr_delete_fd(vbasedev->name, 0);
-     vfio_cpr_delete_device(vbasedev->name);
- }
- 
-@@ -180,5 +186,9 @@ void vfio_cpr_load_device(VFIODevice *vbasedev)
-     if (cpr_is_incoming()) {
-         bool ret = vfio_cpr_find_device(vbasedev);
-         g_assert(ret);
-+
-+        if (vbasedev->fd < 0) {
-+            vbasedev->fd = cpr_find_fd(vbasedev->name, 0);
-+        }
-     }
- }
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 0ae3f3c..96cf214 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -351,14 +351,7 @@ void vfio_device_free_name(VFIODevice *vbasedev)
- 
- void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp)
- {
--    ERRP_GUARD();
--    int fd = monitor_fd_param(monitor_cur(), str, errp);
+-bool vfio_cpr_register_container(struct VFIOContainerBase *bcontainer,
+-                                 Error **errp);
+-void vfio_cpr_unregister_container(struct VFIOContainerBase *bcontainer);
 -
--    if (fd < 0) {
--        error_prepend(errp, "Could not parse remote object fd %s:", str);
--        return;
--    }
--    vbasedev->fd = fd;
-+    vbasedev->fd = cpr_get_fd_param(vbasedev->dev->id, str, 0, errp);
+ bool vfio_iommufd_cpr_register_container(struct VFIOIOMMUFDContainer *container,
+                                          Error **errp);
+ void vfio_iommufd_cpr_unregister_container(
+diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
+index 0e903cd..af0f12a 100644
+--- a/hw/vfio/cpr.c
++++ b/hw/vfio/cpr.c
+@@ -29,19 +29,6 @@ int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
+     return 0;
  }
  
- static VFIODeviceIOOps vfio_device_io_ops_ioctl;
+-bool vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp)
+-{
+-    migration_add_notifier_mode(&bcontainer->cpr_reboot_notifier,
+-                                vfio_cpr_reboot_notifier,
+-                                MIG_MODE_CPR_REBOOT);
+-    return true;
+-}
+-
+-void vfio_cpr_unregister_container(VFIOContainerBase *bcontainer)
+-{
+-    migration_remove_notifier(&bcontainer->cpr_reboot_notifier);
+-}
+-
+ #define STRDUP_VECTOR_FD_NAME(vdev, name)   \
+     g_strdup_printf("%s_%s", (vdev)->vbasedev.name, (name))
+ 
 -- 
 1.8.3.1
 
