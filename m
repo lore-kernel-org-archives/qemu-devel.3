@@ -4,74 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9660AC77B7C
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 16:26:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45BBBC77B7C
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 16:29:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uX0Gf-0007oh-BM; Wed, 02 Jul 2025 12:25:06 -0400
+	id 1uX0KS-0000Hf-Gz; Wed, 02 Jul 2025 12:29:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uX0Ge-0007o7-2Q
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 12:25:04 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uX0Gb-0004qw-Co
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 12:25:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751473502; x=1783009502;
- h=message-id:date:mime-version:subject:from:to:cc:
- references:in-reply-to:content-transfer-encoding;
- bh=nr5byySlXrN0IqchmO+iAIhBsh23cH/NfipECD75P2E=;
- b=Ev+tejzI1Vam70z+oz6aiKr9LfqM3luJDq058vC0L7tssdAfTz+oV4UM
- 8apbcsYW6vNsuIaqPP/u6NQtSyaCmLMtf3pDqvG4B5H48Ao/OpbzCIJhj
- WYfnkchDz8ZL6ZD1AF5wpwilOBZvoBUEjxJffAEKaagO+GPJ+bycdatA8
- 4/GliZFVH/rQ1cz0ZW5nmpquvVtsgmBTR94eEEWBRHqlp4lXebZAaDN2k
- MehPdJlocgD9lawlJDhZHrp3D6U559nQIuJSe8CAs6ckXQvkWnHZsRVGM
- vHo+kxTVQaLCTL21qmrNArZiYuCmR0j32WGTL+eYy6ywn2Wfrt8cuEuSK Q==;
-X-CSE-ConnectionGUID: lz6XjHFSRIG82WUB/QR8EQ==
-X-CSE-MsgGUID: 28+1eaHZS4CKwqjR9rkgHQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="53505182"
-X-IronPort-AV: E=Sophos;i="6.16,281,1744095600"; d="scan'208";a="53505182"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jul 2025 09:24:59 -0700
-X-CSE-ConnectionGUID: OrSOw8msTIWWIQRGWjs9kw==
-X-CSE-MsgGUID: S9JccJyURtiv9mK4yoFW0g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,281,1744095600"; d="scan'208";a="154477408"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jul 2025 09:24:57 -0700
-Message-ID: <1d12e519-9f3c-41a0-90ff-8e4655000d21@intel.com>
-Date: Thu, 3 Jul 2025 00:24:54 +0800
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX0KO-0000H8-PE
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 12:28:57 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX0KJ-0005Ux-Rw
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 12:28:56 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3a54700a46eso3889754f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 09:28:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751473725; x=1752078525; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bP8ud+i1jqcrTj4HjnlAu3Yq0+7svexrq5/VWLYbZyM=;
+ b=v8uWl07PmXEM+v0y+Bt+xCuwWj/EhO49mDi7uS+GH4OYnavIRHv2Gu62NH5Yxqj+a+
+ ywbh1+GCtZC7H7zX3BdAlTBEJQIBN2A3Md1GiI8zpVGDouh3CVM0EQFvgWg7OnCWZ2Q6
+ swC0XbH6FlZ6xbp6ZldnliA9hjb5KUsUMnyGPB+XHp0DtmIQWDPfsxl6N3dbcNsqQu3R
+ rkXwUdBRH1mqA39eyK23ieS3ZyiT72jvbxXz8gtUewontyTadWDVXFi781Oa+dIuvX3d
+ gZqZfpGK51BNKaGb2yBcuSb7QPRRVQ2uFdQrihzUeaDgJYm4tT/tFA3CbmhVIiurQtfX
+ 99dQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751473725; x=1752078525;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bP8ud+i1jqcrTj4HjnlAu3Yq0+7svexrq5/VWLYbZyM=;
+ b=LDvQAF8qvjWNdRO9wzxeitxhoTJTVLtFP53e7i9XhbSYaSHJe3T1EwW7vw0LZT2Zh6
+ VMt3Unzw4oGSHDWKjbOPoVibUpqRdQjzftZtKtRqTa8wYopcz7CVxLkJ4DUApAGs7p3U
+ alzwI36CaGfg4ilwvJ83WXJYQ8xIKOus6wnlPaMqd4SRQi8CIxxYdT7jFotRhayXJAL1
+ uOUhoG0cm4+FyBoNjJlF6Cp8wty/mXNvCPjWqX94jVd3rf9wrGQHiqy9Q6gXee6DHuG/
+ JUTwea0UPyrJXjw65gtRskmWO+TgPSC3DagdPgU89rrDkSORQnZr7LJhP+cLmeiQidCr
+ Hejw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWrWbajENJwKKLx+WGGuyZ6YYDCtQ9qq14CjxXo846uuFl7G28MAH6cQYL6ZtdzVsn3gerXUsg00ECj@nongnu.org
+X-Gm-Message-State: AOJu0Yzixq8ACYSC3PzJB2i2Av3OZNEEh0h4CBS9bsLMEZVvd/e7aj1A
+ C2w5Ex2YiCy7A181LEyb6e5XR4Fe5/5Hj297T49wMQxYf5D2G154I2Eb53dOKsrpaoU=
+X-Gm-Gg: ASbGncsTi9Lu+xwvsF8HSPvydqAHsb19p7cw17Dfg6swdedOeodlWguu+dDixJ8cHsY
+ C8riznShlmJQgj9D8evnV3Q9SW7J8RKnJw4eBuF4ehT2qAOzEAH9bmKjjxn3GOGb3PL9P6RIlfM
+ npNkoXdXgEeUUPpaRMOItit3ykibu1NH9xVptsE4uzn7TxfcqqIcmQSkR6gxKCBu1diBbSRkbVF
+ Z94VS+T//Sx8/YhXshCbnXEiS5kZBLhpSv13jopAJcbvSq38ozRxsK9RuT7aV4EKv35lLEFPSPA
+ ZZvIC2v+a8RTvzRIYKicR8Vcv0YBc8BQevQr6IPANKp3SXErQq5Lb8jqhvY+8Bxi87CtMmI1Hq5
+ D1zITDJ4Cwm5PDawyCkmAKJdwUSLEvm4iyoasU7yRu9o=
+X-Google-Smtp-Source: AGHT+IFqI3RRBeARiOZROO+c5nr7GXhaJri1iWvinGZAhi1IU7Q1mqvtwo8v1gsXBC2Zq4E7LAF3jQ==
+X-Received: by 2002:a05:6000:2284:b0:3a5:5270:a52c with SMTP id
+ ffacd0b85a97d-3b1faa90a2dmr2600837f8f.0.1751473725118; 
+ Wed, 02 Jul 2025 09:28:45 -0700 (PDT)
+Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a88c8013fesm16668990f8f.38.2025.07.02.09.28.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 02 Jul 2025 09:28:44 -0700 (PDT)
+Message-ID: <d4667f1c-836b-49a3-87c0-a2d72a0078d0@linaro.org>
+Date: Wed, 2 Jul 2025 18:28:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] x86/cpu: Handle SMM mode in x86_cpu_dump_state for softmmu
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-To: Kirill Martynov <stdcalllevi@yandex-team.ru>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20250523154431.506993-1-stdcalllevi@yandex-team.ru>
- <3096f21e-d8dd-4434-afbd-ee2b56adb20f@intel.com>
- <6a18dfcc-1686-4e3e-8e0a-b96d7034f4ab@intel.com>
+Subject: Re: [PATCH v3 62/68] accel/tcg: Add rr_vcpu_destroy() stub
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Julian Armistead <julian.armistead@linaro.org>
+References: <20250701144017.43487-1-philmd@linaro.org>
+ <20250701144017.43487-63-philmd@linaro.org>
+ <a856e1ba-4382-41e8-80cf-b626cc388f7c@linaro.org>
 Content-Language: en-US
-In-Reply-To: <6a18dfcc-1686-4e3e-8e0a-b96d7034f4ab@intel.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <a856e1ba-4382-41e8-80cf-b626cc388f7c@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,74 +105,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/2/2025 11:10 PM, Xiaoyao Li wrote:
-> On 7/2/2025 10:16 PM, Xiaoyao Li wrote:
->> On 5/23/2025 11:44 PM, Kirill Martynov wrote:
->>> Certain error conditions can trigger x86_cpu_dump_state() to output 
->>> CPU state
->>> debug information e.g. KVM emulation failure due to misbehaving guest.
->>> However, if the CPU is in System Management Mode (SMM) when the 
->>> assertion
->>> in cpu_asidx_from_attrs failure happens because:
->>>
->>> 1. In SMM mode (smm=1), the CPU must use multiple address spaces
->>>     with a dedicated SMM address space
->>> 2. On machine types with softmmu, address spaces are hardcoded to 1
->>>     (no multiple address spaces available)
->>>
->>> The assertion occurs in cpu_asidx_from_attrs() when trying to
->>> access memory in SMM mode with insufficient address spaces.
->>>
->>> Fix this by:
->>> 1. If number of address spaces is 1 always use index 0
->>> 2. In other cases use attr.secure for identified proper index
->>>
->>> This prevents the assertion while still providing useful debug
->>> output during VM shutdown errors.
+On 2/7/25 17:34, Richard Henderson wrote:
+> On 7/1/25 08:40, Philippe Mathieu-Daudé wrote:
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   accel/tcg/tcg-accel-ops-rr.h | 2 ++
+>>   accel/tcg/tcg-accel-ops-rr.c | 5 +++++
+>>   2 files changed, 7 insertions(+)
 >>
->> To me,  it's just a workaround to avoid the assertion.
->>
->> When attrs.secure is 1, it means it's in SMM mode. As you describe above,
->>
->>  > 1. In SMM mode (smm=1), the CPU must use multiple address spaces
->>  >     with a dedicated SMM address space
->>
->> So I think we need to first figure out why it gets attrs.secure as 1 
->> when there is only 1 address space.
+>> diff --git a/accel/tcg/tcg-accel-ops-rr.h b/accel/tcg/tcg-accel-ops-rr.h
+>> index a73fe5b94a6..4234ef2f706 100644
+>> --- a/accel/tcg/tcg-accel-ops-rr.h
+>> +++ b/accel/tcg/tcg-accel-ops-rr.h
+>> @@ -20,4 +20,6 @@ void rr_start_vcpu_thread(CPUState *cpu);
+>>   int rr_cpu_exec(CPUState *cpu);
+>> +void rr_vcpu_destroy(CPUState *cpu);
+>> +
+>>   #endif /* TCG_ACCEL_OPS_RR_H */
+>> diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+>> index a9150802369..95c7d3a3172 100644
+>> --- a/accel/tcg/tcg-accel-ops-rr.c
+>> +++ b/accel/tcg/tcg-accel-ops-rr.c
+>> @@ -137,6 +137,11 @@ static void rr_deal_with_unplugged_cpus(void)
+>>       }
+>>   }
+>> +void rr_vcpu_destroy(CPUState *cpu)
+>> +{
+>> +    /* Already dealt with in rr_deal_with_unplugged_cpus() */
+>> +}
+>> +
+>>   static void rr_force_rcu(Notifier *notify, void *data)
+>>   {
+>>       rr_kick_next_cpu();
 > 
-> Ah, with KVM, QEMU can only support 1 address space.
+> Why?  Is this hook mandatory?
 
-In fact, KVM does support different address space for supporting SMM 
-mode. There is KVM_CAP_MULTI_ADDRESS_SPACE to report how many address 
-space is supported by KVM.
-
-(It turns out my memory on KVM is correct. I was misled by QEMU code and 
-comment)
-
-QEMU allocates separate KVM address space for SMM in 
-register_smram_listener(). But the address space doesn't associated with 
-cpu's address space.
-
-I think this patch can only avoid the assertion in you case when vcpu is 
-in SMM mode with KVM. But with this patch, do you get the correct info 
-of SMM mode dumped? I guess no, since the info is of address space 0, 
-not the SMM address space.
-
-If there is no reason of cannot associate KVM's address space with cpu's 
-address space, I think the right fix is to enable the association with 
-them.
-
-
-> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-
-Based on above, I need to withdraw my Reviewed-by.
-
-
->>>   }
->>>   static inline AddressSpace *cpu_addressspace(CPUState *cs, 
->>> MemTxAttrs attrs)
->>
-> 
-> 
-
+No, I'll drop.
 
