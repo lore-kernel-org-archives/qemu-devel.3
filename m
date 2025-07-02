@@ -4,110 +4,268 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BC58C7EE30
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 09:29:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 782E1C83038
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 09:29:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWtlW-0002yy-TK; Wed, 02 Jul 2025 05:28:31 -0400
+	id 1uWtkp-0002t1-5z; Wed, 02 Jul 2025 05:27:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shahuang@redhat.com>)
- id 1uWtlS-0002yT-4M
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 05:28:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alexandre.chartre@oracle.com>)
+ id 1uWtkm-0002sg-Fw; Wed, 02 Jul 2025 05:27:44 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shahuang@redhat.com>)
- id 1uWtlP-0002Qv-Cz
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 05:28:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751448493;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4rGpk6T8lyk4D+P0XfIiDMc290P78ET6QvK2l42ojvc=;
- b=Tbc+1V+G5DEhDRxayfZB3x96OFGI1eBR4CCXJ5uNQVIGOfdmWTrv0HFaR0mQSQR+836sp2
- 6aeIVezG2JnB5mu5aT4jyw52WbaIG7STJXSeOC4UrCQNEKmWgkjtdZRQHWhC7PQvLI3AWS
- OyamwMOjlxJLjKOwguE5jrx1oSHttpA=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-542-sQ5z6PTmN5-0Q9JjoDIayg-1; Wed, 02 Jul 2025 05:28:10 -0400
-X-MC-Unique: sQ5z6PTmN5-0Q9JjoDIayg-1
-X-Mimecast-MFC-AGG-ID: sQ5z6PTmN5-0Q9JjoDIayg_1751448489
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-b362d101243so1136487a12.0
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 02:28:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751448489; x=1752053289;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4rGpk6T8lyk4D+P0XfIiDMc290P78ET6QvK2l42ojvc=;
- b=sya5opQhA5zRpquT64MzzeJUGRCw8NZZXCJy4rlZtbaUEbE2XI31kxfwTkQ6Le0e0N
- kmwDPHA/MQH+9gdFNb6EJL/C5zON2mH9J7cwtq8tYk49m5N3KkCpunr6p3dlH/HZcMVb
- IRppoelB1nzJS6XkV4qs3Z3a4lUHafivfZ3NfTvdC5WIGT0yuC0fShYXrZ0EYwkf8nWw
- or/b+ckYZdRmZl72aQP2DgPYVU9VfSr7ml/88WwZPx1tNRMwjZfNn7xPZMVjM84a90w7
- 1wkQCm+GxmVuBmcgRQp316p5c4n90LuZLDeraTR1WYZ+2jzdlAHOnrqZhDgb9Jodj3lh
- PHAw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXS2Oi+IgybaBvH0kfrpDcwSkmE2RIcbQBpZfBi9L6j6KXA+B8J/4AxnwBfep/U7ZC3U6HDUU2tdnBG@nongnu.org
-X-Gm-Message-State: AOJu0YzSLbY8er2s7cUnTrMSPeXybfbXFjB3iG6UcApLYnmnmCATmo1H
- NT20A+EKAI15VyiEKdc6ynHV5LO/qGvVl9I8npSp5bLP4V2lOHruQ36byhrBxOkvWpeeh5X/ynW
- GOCg3MvfoF6qsY1CWw3PaQCCvzA+rN2guN0u40m6cTYva0K9qNRVYnpv/
-X-Gm-Gg: ASbGncv2Ti29Wpr31ZUj06xIf/EC87dYR2CNLt02wWdUh7gF02TB8E9qAhsOKpPwpmX
- afTB+r/RZfZ5+WGiTJIOlq6aujagYGZkGOBdF4YrhljFM2L6UDV1du6o1BH0m+rSjmfzj9VF83k
- CYU0MRyau2CFLZcJ3b/cA5mUrxYJSFkIyVTowvnQIIMg1BbIphFDhhVMT8Qy8Vg4ztmJdkNc0TC
- 1P/1jbf2+CaXF7lJcjGj/GFrGz3tEBXg4oSDCpRvV8U5N/uYw3GB6oPXWSsSdr63hxgmJmNoJ69
- GAza1+53xaBdAdHsCVPeJATl1g==
-X-Received: by 2002:a05:6300:6c1a:b0:222:2a34:6249 with SMTP id
- adf61e73a8af0-222d7e9a85dmr2738003637.27.1751448489217; 
- Wed, 02 Jul 2025 02:28:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHlOe3n5x8yzpKLAT+0u2pUNspJc6oc1hAeHHM40SpdP+cJooK7B563o/5/C5FicNSuuPnG0w==
-X-Received: by 2002:a05:6300:6c1a:b0:222:2a34:6249 with SMTP id
- adf61e73a8af0-222d7e9a85dmr2737980637.27.1751448488806; 
- Wed, 02 Jul 2025 02:28:08 -0700 (PDT)
-Received: from [10.72.116.77] ([209.132.188.88])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b34e32000fbsm12261420a12.68.2025.07.02.02.28.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Jul 2025 02:28:08 -0700 (PDT)
-Message-ID: <36d469be-d9fd-48c9-8106-2db885e6fe39@redhat.com>
-Date: Wed, 2 Jul 2025 17:28:01 +0800
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <alexandre.chartre@oracle.com>)
+ id 1uWtkg-0002NJ-Gq; Wed, 02 Jul 2025 05:27:44 -0400
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5627MoPN025768;
+ Wed, 2 Jul 2025 09:27:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=hYS2EPK0b2Nzw89B129lCNdOmTM4oOkDIvyyS5Y/oOg=; b=
+ X06xgogzxJeaC2Or4F6SFGfApjWbYcGJpzqJ7TEGlYNdcfxhykpazdT38Rodp9HB
+ 1le29RQX5v/2br21E6hhUVhe9rYgU+30lepb/AkDTE1KxvCLISfowS2JpnJCsSuq
+ oZBYXa0/+AZF476oQsEdNjuNIAl7IB1yfd9hZAZGGYxuRowmNOH+9y46lyXyHd1v
+ wGX6a55ucwMrxSKwjD3F8y0gbPD9M2ItdXqiu5GiJ+Ij4mqUQixPV5vo/tko5oe9
+ 9t+6f9pSbCNmLZJ3Biz9C+wlm+6zBLj7uGQO37aATPWub+txJ9u7hopEzGHPPX5n
+ AOBO541W0k6rI4CRA/ZuWg==
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47j766ek0x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 02 Jul 2025 09:27:30 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 5628Lg73019283; Wed, 2 Jul 2025 09:27:30 GMT
+Received: from nam11-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam11on2073.outbound.protection.outlook.com [40.107.223.73])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 47jy1fqxtc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 02 Jul 2025 09:27:30 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=womDiLVz5MNXYVgUMz86njFJmZ7D2+dfF/ldjOTFptX3SzdPs45pCjmbaGDyUf7R1fWqy4MzWv+ZPTGbjodojZTw9ix4zPG/hQElvxL7mt2aFH6Jt4KvP2q/CPOlXTRcrRRmA3v/cchw++B51O7tv2OoMLmgPB0SLfta6XRD6ybUB1CBD46zyQmAqNr7RliYXCSkEGNl+7140kMdy9WJLl4dLdknZHHoi2LzHJEwU9ItNJ6APjIZYs4i8xs4UF5qtkdq51mRd9fJae8rKxWz814kf890Xu/LaNMrDJM8uYE+pPQcNndql9EE0PjyL0Jph6zbkqsh4uPIJDbLuphlHQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hYS2EPK0b2Nzw89B129lCNdOmTM4oOkDIvyyS5Y/oOg=;
+ b=iQeIHz20tubtW4U8EhHSzobEyn47zDtZM/dlvkB6SSfiZ4Mkuun9Hk+Kc5S+OZiouIENPqdbnJ0oPrKAmcyhJgnuYnv7ddQm5c37TNr/1egFbi29iNTkl7buuQWtinwMv7QQGklNtJ09gFU7M2u/ytGzVnyuNh4sp6aygrg0wRZRkS5WTp4ATcZC/+GIxy8Z6BAV1nZ8xhJQhsXiAMlaGXvAJJNgjGQgUmpBbrbaoAR9lJojJsra7oLmvdVE4oZW9jPK0K2uqMrEWYG7LIB2a/pN9KBAF47l1YwXJMrL24Eyn5JU0HS6Kkk0I0Mv1Q4fFsDCdIYvTWlz9GLI2keRTQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hYS2EPK0b2Nzw89B129lCNdOmTM4oOkDIvyyS5Y/oOg=;
+ b=Ix5QF7g6+SOuXGn6rwltmwuFEi1WEbz/zkL6oMYwUVbB1wF2ZRnqoDIerTd39zNFKM3XYK1LR39UkRgpa/yqq3O2aV3XUTvv0YDS2MDpZFAnGAlDvHBp6B1RujhhhaUkhw7YrEEkqizP3PvpeYzlZEnxHtXeRYi8TYm3zcI3uxw=
+Received: from SN4PR10MB5622.namprd10.prod.outlook.com (2603:10b6:806:209::18)
+ by SA1PR10MB6344.namprd10.prod.outlook.com (2603:10b6:806:257::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8857.21; Wed, 2 Jul
+ 2025 09:27:28 +0000
+Received: from SN4PR10MB5622.namprd10.prod.outlook.com
+ ([fe80::6bce:37ef:d1de:d084]) by SN4PR10MB5622.namprd10.prod.outlook.com
+ ([fe80::6bce:37ef:d1de:d084%7]) with mapi id 15.20.8901.018; Wed, 2 Jul 2025
+ 09:27:27 +0000
+Message-ID: <b01ff0a6-a456-4a6f-8490-f79cf626f727@oracle.com>
+Date: Wed, 2 Jul 2025 11:27:21 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/2] hw/i386: Add the ramfb romfile compatibility
-To: Eric Auger <eauger@redhat.com>, qemu-arm@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-References: <20250702085616.2172722-1-shahuang@redhat.com>
- <20250702085616.2172722-3-shahuang@redhat.com>
- <dec256c0-d0a5-49d7-b5ce-a025eaf27f8c@redhat.com>
+Cc: alexandre.chartre@oracle.com, Xiaoyao Li <xiaoyao.li@intel.com>,
+ qemu-devel@nongnu.org, pbonzini@redhat.com, qemu-stable@nongnu.org,
+ boris.ostrovsky@oracle.com, maciej.szmigiero@oracle.com,
+ Sean Christopherson <seanjc@google.com>, kvm@vger.kernel.org
+Subject: Re: [PATCH] i386/cpu: ARCH_CAPABILITIES should not be advertised on
+ AMD
+To: Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>,
+ Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>
+References: <20250630133025.4189544-1-alexandre.chartre@oracle.com>
+ <aGO3vOfHUfjgvBQ9@intel.com> <c6a79077-024f-4d2f-897c-118ac8bb9b58@intel.com>
+ <aGPWW/joFfohy05y@intel.com> <20250701150500.3a4001e9@fedora>
+ <aGQ-ke-pZhzLnr8t@char.us.oracle.com> <aGS9E6pT0I57gn+e@intel.com>
 Content-Language: en-US
-From: Shaoqin Huang <shahuang@redhat.com>
-In-Reply-To: <dec256c0-d0a5-49d7-b5ce-a025eaf27f8c@redhat.com>
+From: Alexandre Chartre <alexandre.chartre@oracle.com>
+Autocrypt: addr=alexandre.chartre@oracle.com; keydata=
+ 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
+ swLliy6PdpST
+In-Reply-To: <aGS9E6pT0I57gn+e@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=shahuang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: AM0PR04CA0114.eurprd04.prod.outlook.com
+ (2603:10a6:208:55::19) To SJ0PR10MB5630.namprd10.prod.outlook.com
+ (2603:10b6:a03:3d2::18)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN4PR10MB5622:EE_|SA1PR10MB6344:EE_
+X-MS-Office365-Filtering-Correlation-Id: b3237b49-e278-415f-f2b3-08ddb94aa872
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0; ARA:13230040|366016|1800799024|376014|10070799003;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?TDZrd2Vhc2JWV0dod2lJYng2TnJKd3E0VS9NTThhUmFHTjd2UXFuN3lseU9j?=
+ =?utf-8?B?Q3lnbHdmZElzYVhCZ3dSVFZVZWJLdERRaTE4UDJGTUc5V1FCRnVvK0tuRmVV?=
+ =?utf-8?B?RXJuMytOMXlnM2pDS1h4RHZ4T3BVRkpEQWQ1QVhnSHFRejFnazhDVDdlZzBh?=
+ =?utf-8?B?UGNGVTF5VERhMG8wbE9BZk9uQlJPS2pHYzVKc2k2bWlhTjNaaVhoSzJITkRt?=
+ =?utf-8?B?RFA1azVnMkJEZDFRY1llS25ETzVXVFp3K0MzcExSbUF6L2dqVTc4dU94SjAz?=
+ =?utf-8?B?bDVjRDFFWDdkL2ZiZlpzVmxqWUd3aDFNVkZ1aFVSRG8zeHNBUVNzMlZHaFJK?=
+ =?utf-8?B?UlhjN1ZhcUdhR2NySjZmcThBRUJ4RUVYSHJMNlp6dFFEVGJjWVEzdFhkVitS?=
+ =?utf-8?B?dG9QdVJzVllSQS83UWVFaklxMmR3d1dCKzB2L2svcEFsSVFnUzROVTc0ZEkv?=
+ =?utf-8?B?MUJsUXZ6TVd1eW01REJEcTRoUUl3bnBpY0kyWnZmOEFRd0lweDFGNys5NjFS?=
+ =?utf-8?B?UFRqOTROTkxJNXkyYUJEZ0x6a0hyYkh5Q0t5VG4xaEtRNklIcWhGZ1p5aUtk?=
+ =?utf-8?B?bVFiL0tKcTFFWFdabjE0ODVGVEw3L3JsS2pwTkc4ZUc5UUJpL2ZWa2d4MkVx?=
+ =?utf-8?B?SW12bWFRUWtVa1FHTjgralNKakwxRHUvNlE4cGRVS3hNVVF1QjUzQnVEc0Jq?=
+ =?utf-8?B?VE1oYjNhZnhUbUJhQkJlV0pab2w5aHo3U00wK0lUVkdqcEZLd2ppY1FIQlV3?=
+ =?utf-8?B?cERIeEptWStyb1lYVlZvbWUvN25EWHVCQ2E4SW5rWlhIOW14OWcxSEtLc3U0?=
+ =?utf-8?B?S2pjL3k3S2RManFFMU9HQ1owTUsycHVzb1Fma2QzQk0rWFhKL3VFaXdoTXFU?=
+ =?utf-8?B?dHczZEhSVS83K2JIN0tPaFVyUzF6a3NUVzA1Mm9kZlZKUGZhNlVpbnBDQU02?=
+ =?utf-8?B?L3N3c25SdUZiUDFqYXd6K3pGcEluT2FPb04ybW54R1E2RFdPOTRwY2xqclhC?=
+ =?utf-8?B?VE5BQVIyZm9HWm1oSi9hZ2lvYWROb0VybEE1RVFHU2ZqODFYb1JXeXRDZmRW?=
+ =?utf-8?B?d0JsRlhjQlFqZ1VibUJqamJGQTV4enB4SnBGVkpkTFAwMGk2dzFvM0Y4SGYw?=
+ =?utf-8?B?WFJwanhIWTZVWk1wMmJFRHZoVnFEaWIrTzQ0UUhLNUc2eDJJYlRFellxOVFT?=
+ =?utf-8?B?SE42VGJRV1hOWitEaWpMSXZBVVdQb09pSVhZVjc2UVptbVVEenBSOTBDZFh2?=
+ =?utf-8?B?WlZiTjA0dW83MnJNTTI3NElmdTZQUnVTUGd1V2g4ZWhqTXA0YlhjT2V0d3hn?=
+ =?utf-8?B?ZFV3aVQ4QnY0UmdBQ3lJUXdmaTEzMkc5eGVFYXNDdDhrNGw2UGlBOUx3dkMz?=
+ =?utf-8?B?SnFoTmlqVnVDZUU2M0RIblVhcTU4dXU4MmdoanBVVW1sckg0QStHR0xpWkVh?=
+ =?utf-8?B?ckxFSTlZTjZWM2NBYU0zMDB0ckV4T3RDQkxRVmU4NS9YS2NoYWV4VndFUld5?=
+ =?utf-8?B?NXZtc2xVUW0wK3BBZytNb3QzODBHOFd3V3RTSzlvWVZvdDE2WU1GMmQvN1dU?=
+ =?utf-8?B?N2tta09KSW9iNDVNNmhITmVqWW9NSzBKSHpnZVM5MWd1MEE0aFptN1h0NlZx?=
+ =?utf-8?B?TmlET2VUdm1odXV4NUNQZE9FYXZYdm1JemJkRFJnVzJZakhSQWVIcUtQdEtZ?=
+ =?utf-8?B?aVBscG1yTFZWRUJjVUhVY29qUkxDS1ZZUUVtTks2a3VDNExLUFhuN3dORFRP?=
+ =?utf-8?B?YzdsUmQ0a2R4N3VmcG5tWDJFU1kyMnh0dGY1RVJRME05Rzc5aC9UWXRkUjdS?=
+ =?utf-8?B?b2o5NERYY2w0ZE9jbE1MdExXWDhaNDU3M1dyWmZUNFVUcGN2RXB0UUtNUjVJ?=
+ =?utf-8?Q?Fz+WUowPM6U0l?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SN4PR10MB5622.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(10070799003); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QktrSWxiY3N5R0dQRE12UFpKYkJmSzUwMVRtK3MyZmw4RlpqRHNhbTc1Nzcv?=
+ =?utf-8?B?ZnNROCsxUUcrT3lCbjdBSXUwa3FtUUdOamZ1Z0JYcDVkbnljM2hnc0o3MGhi?=
+ =?utf-8?B?MUtXenJwM21jU3FOT2JPU0xvak85OE9SLyt3VU45Z2p0VGVEV2pQNlNTYjRx?=
+ =?utf-8?B?c2pkazFTSXR6a0llU1pVVjdsZjlEQmE0S2lWa1h3Q3UvOFlJcmx6YkxWRUJY?=
+ =?utf-8?B?d1ZQRHVscUptNU5QbkEzTVpzTS9UcWwzN0FBWHNRNFZmMGdGUHVWVTdUQ1p5?=
+ =?utf-8?B?dzFuemdLM0JUQkJsU2JVRnBKK3ZhU3ZneklyaG9xYTc1a3k5OURIUmpSWW50?=
+ =?utf-8?B?cXBuUjVTbGN0bTJiR0padHZwTFdmYUtndHlOU0ZkbjVnWmdxTmRUVkNwa3U1?=
+ =?utf-8?B?R2hrMTlQbXBsNjd6THlqZXhrWEI2R2RJLzcrVlAybEFZemVWUDNiQWNwclFT?=
+ =?utf-8?B?MUtXOVJoa2M0SGlTU1lIYzNWOEZGS2tzQmlRMXFBWjV1ajBrUUp4dEJSeWdW?=
+ =?utf-8?B?alU3YXNiM2ZYOWZKWnA2NDhkWDBsWXd6QktyZEtGeE1TRE5KYU9Td0JJbUpI?=
+ =?utf-8?B?K3VRQmludzRQS2J4Y0VRN09aMHNDcDVXZ1pZN0YyVzljWlVERUZjL01Kdi9u?=
+ =?utf-8?B?YnB3ZkhSeWhTZG9TK3AxSFBudE1naFlNVC9NYjRPWnZNRUNzdWUwZ2pnZ2di?=
+ =?utf-8?B?a2srbGV0UDIvQmZyS2w1dGE4TXdNZGEzRThMKzhGQ1pwK1ZwSzYzcFg2YjB1?=
+ =?utf-8?B?QTh4MXRMV1ZmM09OOFpndEg1SWdjUlpEUU14RDErNlhEQXR4dEo0MkhPdUZY?=
+ =?utf-8?B?RVh3WHV0WHBXQWF5Z3MrMTZqV0c4QkpHYVJZaGZqTHczbkRqRWNjVzlLTEcy?=
+ =?utf-8?B?Tk5PSnFiOXZGWEd3anFXWGhVRjlmMUVjVFN4QmRTNnNZT3g1UDQxYXE5eFRx?=
+ =?utf-8?B?RUN5L1hHUE1Kem1FTTZNZVVFdEpxMmtudXluZ2xOK2hPeTE0aXFYK0VEMXdC?=
+ =?utf-8?B?TU5EK3AwOTBQaGpKZ0xWOE14RW1RWFJPTzJEYVpicDZmRXdtQUNEdlhzNy9N?=
+ =?utf-8?B?aVZKQ0FSTHRvWlJ1YzVLR3VOSFloRXdTM3lWeis3V3p0WlBEemVRWWdsZHdO?=
+ =?utf-8?B?V2xSWG9WdmZVQXdEdXBKaDI0WmVtQVE0OXFXL1BCWVloL0s4MlgzVVZncTQ1?=
+ =?utf-8?B?TGlxVldBdmlqdjZSVlovS1hsODFmUVpzc210bWtWT0wvYzFQS1JTSDY2STRP?=
+ =?utf-8?B?UWVMeEhKUHVBSFhCL3RqSmFkZTdVeDF2NTZMS1NtVVJjRjVQSTBibDR6dzQ2?=
+ =?utf-8?B?SzdnNmpNWDRjMnZXZlVKaUFJeHB5T3VoejZzbWtaVXJyWG81N3NrUENrcDdk?=
+ =?utf-8?B?K0FPcS8zZGExVXhQUEhXN3JiSWxOdTZITmJDL2F3R3hIRzZnaHpmbmc1NDYv?=
+ =?utf-8?B?SjIyVVYzM2hvMmRHNjQ4aTFnSlphaUw3TkkvTkovaDdYYUg5WGxTUWN6VnBZ?=
+ =?utf-8?B?MXYrMXhQSFIxRXk0NytoYWR1U0VCa0o2cmlNSlQ4Y1lyQ3JzM3RwWk10SXNp?=
+ =?utf-8?B?eU1vRXZLc0lHN09HeW9zN2NNV1M5VjZYVFhaM1ZUK3luMmN5SmVvS1ptYnUv?=
+ =?utf-8?B?WFBJM3Y4a3M5enM0NGtaRnJ4U29NYnNUNWNuN3RYU2F3ZE1PYXFnQ0lvcUNC?=
+ =?utf-8?B?eWRBc3ZwWjdnKzZuc1pVa0E4VjZYNUZLdGY2NzgvNS82RGtwTjkxeHg4ZTVr?=
+ =?utf-8?B?VFpBZ3RzOG53NnJkeGk1VlFIL2RuUzlXaHZFWGppdDMyMmFtN1ZUQm9QT29m?=
+ =?utf-8?B?Wkt1QnBuMHFVTmp4WXI5VHhrSnc3L0lmRlZoNS9zOWpGUTJadktOa3d0M3Rq?=
+ =?utf-8?B?QzZrWCt6RnlyTkF6clVSbDBZUWF1bGp0RjFaTzcrZksyNm9oTytzSkhkVFZn?=
+ =?utf-8?B?dXYvQVEvQSs1UnBNYXZSaFZza0EwZ1J0aDIwY1ZZS1BmT2RjOU1HaVVkRXEz?=
+ =?utf-8?B?SnYzbHhkaXJocWgxK0JzQlZwbkttaUNoTHJCaCsxQVlKZ1IrOFdlWEZBOTls?=
+ =?utf-8?B?T2dTU2ZLaFlHSXJBYWlWMTFKZ01QVEJPdVNjbHc4N091SEIwdGpIRW9lcFBD?=
+ =?utf-8?B?MHZmRnpyWFEvSmFMWHdxcTBrYWpDenc1S2tuWWRNekhvRHpLU2t4NnVKbUFP?=
+ =?utf-8?B?dHB0R2NWN1hDZ3RSWjBNVysxN3phQ3RDNkUwMWhaWDRrelJRbzE3UGFJYURG?=
+ =?utf-8?B?elEvc2lBaTJXa3lLaERjUnhGVHZnPT0=?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: h+cO/E5xNciaW++X9WlCsZO/ZTozXpJPuqBLQNl9EeqH1XI7jn1yg5oW3Bpy/ZTKQiLzjnr3OmMq3/Unv+OTrigYZw/PkRSLRb8uDrR2pLu9TGgyC7CaHWV+QPVCY12wZJBVl3n75csygDXLkJUA9qAl3buw51Ygy7dgq/I5oYDq6IG5hPAdJM9SYSWobsRCN/ZmLILGkXAkOp9BAvqDh4By1DkfRK6f+Dxxszsd5/LaSJCGoRGJ0m2Ew8/rOHLqsr76Q70BCLvpcKe7YZCYpIiTNJ6TYLy4wDXL0VUeXXlFJCab+MlOVvR8hcdRC4Tw/aMTLgBPW5qkqrHwqq8PWTdMMO10tPUwbudnlpQwmEVyJItMs+ta6G+TZ2uKZ8nPsL4zyAM21Rlk7zs4gMZvUBMpEuQjYZjNYKctKWpd07SQ/fvx6VWMs2Q3ARsye5NtNn7I40DURSc3w+K0k6v8IBriURC2Ttq4ds+NLONyekoYZTWqbsYpI5dGVv7+vEMELSI1T4hMazyVpwZ5XbLVK0CBCsTKT2DmuFx0Gf54zQcfKNxR00qnGI2+rTavp7kn955LYVxJtyMXE37RW4yce2xS+9tX9J151+lWy8LcSWs=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b3237b49-e278-415f-f2b3-08ddb94aa872
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR10MB5630.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jul 2025 09:27:27.4600 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: AS6WRlCjAC4YnGxauOhlry9SrjYa0sEUWNXMWuwc1tNybJEqwglAYiPmycHkc03ZLZuGpJra4FWmpZgtBLW+wYYdlXSUdQLH6GYshiNEQs8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR10MB6344
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-02_01,2025-06-27_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ mlxscore=0 malwarescore=0
+ bulkscore=0 suspectscore=0 mlxlogscore=999 phishscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2507020075
+X-Proofpoint-GUID: 9mHPYvjINIaGO3Qbsr0CNBTBK-2MgEWC
+X-Proofpoint-ORIG-GUID: 9mHPYvjINIaGO3Qbsr0CNBTBK-2MgEWC
+X-Authority-Analysis: v=2.4 cv=b82y4sGx c=1 sm=1 tr=0 ts=6864fb82 b=1 cx=c_pps
+ a=qoll8+KPOyaMroiJ2sR5sw==:117 a=qoll8+KPOyaMroiJ2sR5sw==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=Wb1JkmetP80A:10 a=GoEa3M9JfhUA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8
+ a=20KFwNOVAAAA:8 a=wGz7-fTsAAAA:8 a=s_NOnkg2AAAA:8 a=oR9o6jqiCfMVefq3Jk0A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=rnSQA9y58HElrkoqsYbd:22 cc=ntf awl=host:13216
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDA3NSBTYWx0ZWRfX0gvMyuTE3Oda
+ Xj0AuEkZy1R70g/zHYLYIc+F1ed+i89/xjjyQVduDw8L2Fv0COT0cX8KOlCGXtxYxStjuxXEWro
+ dL7tDQpugPLcSK+ZjnN+xel2nCLZ5PUvEQ2Z4b+YUZ29wQZtSi12Kx0uL9ltouYYm6K1eqG6J/q
+ Fnaj96DwzEpzhg/rznO1iky93wN/k/Ow5NtPoKyjRLz02rRq8FTYPj5cgiLj5ns888A4uzqrPZt
+ Bo2+Kz/+jpkPUS8tBikv/VDwQqgMo4sl0VGAQ80r6qs3Sm19HH3r3IScPPWl8LKd4zAyBnoDkqH
+ vp5nIIQ5px4UR/OE8bxL+nDmr/tp6HCM+El8kGu6X8KdkNpKHbBJ5m541u4IB42PK9NS3L0p4pn
+ mDjcAW7yJM+JguM9RwOwYWXn3Kw/b/Rdb+rfPoNbZXUZvUTzbpe51BygylhqNveZ5aIX/cI1
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=alexandre.chartre@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,137 +281,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
 
-On 7/2/25 5:08 PM, Eric Auger wrote:
+On 7/2/25 07:01, Zhao Liu wrote:
+> Thanks Igor for looking here and thanks Konrad's explanation.
 > 
-> 
-> On 7/2/25 10:56 AM, Shaoqin Huang wrote:
->> Set the "use-legacy-x86-rom" property to false by default, and only set
->> it to true on x86 since only x86 will need it.
+>>>>> On 7/1/2025 6:26 PM, Zhao Liu wrote:
+>>>>>>> unless it was explicitly requested by the user.
+>>>>>> But this could still break Windows, just like issue #3001, which enables
+>>>>>> arch-capabilities for EPYC-Genoa. This fact shows that even explicitly
+>>>>>> turning on arch-capabilities in AMD Guest and utilizing KVM's emulated
+>>>>>> value would even break something.
+>>>>>>
+>>>>>> So even for named CPUs, arch-capabilities=on doesn't reflect the fact
+>>>>>> that it is purely emulated, and is (maybe?) harmful.
+>>>>>
+>>>>> It is because Windows adds wrong code. So it breaks itself and it's just the
+>>>>> regression of Windows.
+>>>>
+>>>> Could you please tell me what the Windows's wrong code is? And what's
+>>>> wrong when someone is following the hardware spec?
+>>>
+>>> the reason is that it's reserved on AMD hence software shouldn't even try
+>>> to use it or make any decisions based on that.
+>>>
+>>>
+>>> PS:
+>>> on contrary, doing such ad-hoc 'cleanups' for the sake of misbehaving
+>>> guest would actually complicate QEMU for no big reason.
 >>
->> At the same time, set the "use-legacy-x86-rom" property to true on those
->> historical versioned machine types in order to avoid the memory layout
->> being changed.
->>
->> Signed-off-by: Shaoqin Huang <shahuang@redhat.com>
->> ---
->>   hw/core/machine.c             |  2 ++
->>   hw/display/ramfb-standalone.c |  2 +-
->>   hw/i386/pc_piix.c             | 10 ++++++++++
->>   hw/i386/pc_q35.c              |  3 +++
-> If I understood correctly, Gerd said we needed to set the prop to "true"
-> on microvm too? I don't see that change.
-
-Yes, I try to do that. But I didn't see there are any machine type in 
-the microvm like q35. I'm confuse about it, How should I do that?
-
-Thanks,
-Shaoqin
-
+>> The guest is not misbehaving. It is following the spec.
 > 
-> Eric
->>   hw/vfio/pci.c                 |  2 +-
->>   5 files changed, 17 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/core/machine.c b/hw/core/machine.c
->> index e869821b22..a7043e2a34 100644
->> --- a/hw/core/machine.c
->> +++ b/hw/core/machine.c
->> @@ -39,6 +39,8 @@
->>   
->>   GlobalProperty hw_compat_10_0[] = {
->>       { "scsi-hd", "dpofua", "off" },
->> +    { "ramfb", "use-legacy-x86-rom", "true"},
->> +    { "vfio-pci", "use-legacy-x86-rom", "true" },
->>   };
->>   const size_t hw_compat_10_0_len = G_N_ELEMENTS(hw_compat_10_0);
->>   
->> diff --git a/hw/display/ramfb-standalone.c b/hw/display/ramfb-standalone.c
->> index 725aef9896..b20a7c57b3 100644
->> --- a/hw/display/ramfb-standalone.c
->> +++ b/hw/display/ramfb-standalone.c
->> @@ -63,7 +63,7 @@ static const VMStateDescription ramfb_dev_vmstate = {
->>   
->>   static const Property ramfb_properties[] = {
->>       DEFINE_PROP_BOOL("x-migrate", RAMFBStandaloneState, migrate,  true),
->> -    DEFINE_PROP_BOOL("use-legacy-x86-rom", RAMFBStandaloneState, use_legacy_x86_rom, true),
->> +    DEFINE_PROP_BOOL("use-legacy-x86-rom", RAMFBStandaloneState, use_legacy_x86_rom, false),
->>   };
->>   
->>   static void ramfb_class_initfn(ObjectClass *klass, const void *data)
->> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
->> index ea7572e783..8ec8d8ae6d 100644
->> --- a/hw/i386/pc_piix.c
->> +++ b/hw/i386/pc_piix.c
->> @@ -49,6 +49,7 @@
->>   #include "hw/i2c/smbus_eeprom.h"
->>   #include "system/memory.h"
->>   #include "hw/acpi/acpi.h"
->> +#include "hw/vfio/pci.h"
->>   #include "qapi/error.h"
->>   #include "qemu/error-report.h"
->>   #include "system/xen.h"
->> @@ -77,6 +78,13 @@ static const int ide_iobase2[MAX_IDE_BUS] = { 0x3f6, 0x376 };
->>   static const int ide_irq[MAX_IDE_BUS] = { 14, 15 };
->>   #endif
->>   
->> +static GlobalProperty pc_piix_compat_defaults[] = {
->> +    { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
->> +    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "true" },
->> +};
->> +static const size_t pc_piix_compat_defaults_len =
->> +    G_N_ELEMENTS(pc_piix_compat_defaults);
->> +
->>   /*
->>    * Return the global irq number corresponding to a given device irq
->>    * pin. We could also use the bus number to have a more precise mapping.
->> @@ -482,6 +490,8 @@ static void pc_i440fx_machine_options(MachineClass *m)
->>                                      pc_set_south_bridge);
->>       object_class_property_set_description(oc, "x-south-bridge",
->>                                        "Use a different south bridge than PIIX3");
->> +    compat_props_add(m->compat_props,
->> +                     pc_piix_compat_defaults, pc_piix_compat_defaults_len);
->>   }
->>   
->>   static void pc_i440fx_machine_10_1_options(MachineClass *m)
->> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
->> index 33211b1876..0096eef6f4 100644
->> --- a/hw/i386/pc_q35.c
->> +++ b/hw/i386/pc_q35.c
->> @@ -45,6 +45,7 @@
->>   #include "hw/i386/pc.h"
->>   #include "hw/i386/amd_iommu.h"
->>   #include "hw/i386/intel_iommu.h"
->> +#include "hw/vfio/pci.h"
->>   #include "hw/virtio/virtio-iommu.h"
->>   #include "hw/display/ramfb.h"
->>   #include "hw/ide/pci.h"
->> @@ -67,6 +68,8 @@
->>   
->>   static GlobalProperty pc_q35_compat_defaults[] = {
->>       { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "39" },
->> +    { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
->> +    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "true" },
->>   };
->>   static const size_t pc_q35_compat_defaults_len =
->>       G_N_ELEMENTS(pc_q35_compat_defaults);
->> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->> index f4fa8a5610..604b337389 100644
->> --- a/hw/vfio/pci.c
->> +++ b/hw/vfio/pci.c
->> @@ -3710,7 +3710,7 @@ static const TypeInfo vfio_pci_dev_info = {
->>   
->>   static const Property vfio_pci_dev_nohotplug_properties[] = {
->>       DEFINE_PROP_BOOL("ramfb", VFIOPCIDevice, enable_ramfb, false),
->> -    DEFINE_PROP_BOOL("use-legacy-x86-rom", VFIOPCIDevice, use_legacy_x86_rom, true),
->> +    DEFINE_PROP_BOOL("use-legacy-x86-rom", VFIOPCIDevice, use_legacy_x86_rom, false),
->>       DEFINE_PROP_ON_OFF_AUTO("x-ramfb-migrate", VFIOPCIDevice, ramfb_migrate,
->>                               ON_OFF_AUTO_AUTO),
->>   };
+> (That's my thinking, and please feel free to correct me.)
 > 
+> I had the same thought. Windows guys could also say they didn't access
+> the reserved MSR unconditionally, and they followed the CPUID feature
+> bit to access that MSR. When CPUID is set, it indicates that feature is
+> implemented.
+> 
+> At least I think it makes sense to rely on the CPUID to access the MSR.
+> Just as an example, it's unlikely that after the software finds a CPUID
+> of 1, it still need to download the latest spec version to confirm
+> whether the feature is actually implemented or reserved.
+> 
+> Based on the above point, this CPUID feature bit is set to 1 in KVM and
+> KVM also adds emulation (as a fix) specifically for this MSR. This means
+> that Guest is considered to have valid access to this feature MSR,
+> except that if Guest doesn't get what it wants, then it is reasonable
+> for Guest to assume that the current (v)CPU lacks hardware support and
+> mark it as "unsupported processor".
+> 
+> As Konrad's mentioned, there's the previous explanation about why KVM
+> sets this feature bit (it started with a little accident):
+> 
+> https://lore.kernel.org/kvm/CALMp9eRjDczhSirSismObZnzimxq4m+3s6Ka7OxwPj5Qj6X=BA@mail.gmail.com/#t
+> 
+> So I think the question is where this fix should be applied (KVM or
+> QEMU) or if it should be applied at all, rather than whether Windows has
+> the bug.
+> 
+> But I do agree, such "cleanups" would complicate QEMU, as I listed
+> Eduardo as having done similar workaround six years ago:
+> 
+> https://lore.kernel.org/qemu-devel/20190125220606.4864-1-ehabkost@redhat.com/
+> 
+> Complexity and technical debt is an important consideration, and another
+> consideration is the impact of this issue. Luckily, newer versions of
+> Windows are actively compatible with KVM + QEMU:
+> 
+> https://blogs.windows.com/windows-insider/2025/06/23/announcing-windows-11-insider-preview-build-26120-4452-beta-channel/
+> 
+> But it's also hard to say if such a problem will happen again.
+> Especially if the software works fine on real hardware but fails in
+> "-host cpu" (which is supposed synchronized with host as much as
+> possible).
+> 
+>>> Also
+>>> KVM does do have plenty of such code, and it's not actively preventing guests from using it.
+>>> Given that KVM is not welcoming such change, I think QEMU shouldn't do that either.
+>>
+>> Because KVM maintainer does not want to touch the guest ABI. He agrees
+>> this is a bug.
+> 
+> If we agree on this fix should be applied on Linux virtualization stack,
+> then the question of whether the fix should land in KVM or QEMU is a bit
+> like the chicken and egg dilemma.
+> 
+> I personally think it might be better to roll it out in QEMU first — it
+> feels like the safer bet:
+> 
+>   * Currently, the -cpu host option enables this feature by default, and
+>     it's hard to say if anyone is actually relying on this emulated
+>     feature (though issue #3001 suggests it causes trouble for Windows).
+>     So only when the ABI changes, it's uncertain if anything will break.
 
--- 
-Shaoqin
+I wouldn't expect that any code rely on the presence of this feature (emulated
+or or) because it is not available on some cpus (AMD but also some Intel cpus),
+so the code should be able to handle the absence of this feature.
+
+Also KVM emulates this MSR only to advertise that the cpu is not impacted by
+some speculative execution vulnerabilities, none of which (except one) applies
+to AMD cpus. So on AMD, the MSR always says: this cpu is not impacted by
+all these vulnerabilities; but you can already figure that because this is an
+AMD cpu. The only vulnerability in this MSR that can be present on AMD is SSB,
+but it also has an AMD-specific feature to indicate if the cpu is not impacted
+(and it is set accordingly by KVM).
+
+Anyway, changing QEMU first is certainly safer before eventually changing KVM.
+
+alex.
+
+
+>   * Similarly, if only the ABI is changed, I'm a bit unsure if there's
+>     any migration based on "-cpu host" and between different versions of
+>     kernel. And, based on my analysis at the beginning reply, named CPUs
+>     also have the effect if user actively sets "arch-capbilities=on". But
+>     the key here point is the migration happens between different kernel
+>     versions.
+> 
+>   * Additionally, handling different versions of ABI can sometimes be
+>     quite complex. After changing the ABI, there might be differences
+>     between the new kernel and the old stable kernels (and according to
+>     doc, the oldest supported kernel is v4.5 - docs/system/target-i386.rst).
+>     It's similar to what Ewan previously complained about:
+> 
+>     https://lore.kernel.org/qemu-devel/53119b66-3528-41d6-ac44-df166699500a@zhaoxin.com/
+> 
+> So, if anyone is relying on the current emulated feature, changing the
+> ABI will inevitably break existing things, and QEMU might have to bear
+> the cost of maintaining compatibility with the old ABI. :-(
+> 
+> Personally, I think the safer approach is to first handle potential old
+> dependencies in QEMU through a compat option. Once the use case is
+> eliminated in user space, it can clearly demonstrate that the ABI change
+> won't disrupt user space.
+> 
+> The workaround change I proposed to Alexandre isn't meant to be
+> permanent. If we upgrade the supported kernel version to >6.17 (assuming
+> the ABI can be changed in 6.17), then the workaround can be removed —
+> though I admit that day might never come...
+> 
+> Thanks for your patience.
+> Zhao
+> 
 
 
