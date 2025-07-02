@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47067C83038
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 17:04:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B905C77B7C
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 17:04:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uX0rT-0003kg-Kb; Wed, 02 Jul 2025 13:03:07 -0400
+	id 1uX0rH-0003is-OI; Wed, 02 Jul 2025 13:02:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uX0rJ-0003jW-6n
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 13:02:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uX0rE-0003iT-QV
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 13:02:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uX0rG-0003cg-EC
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 13:02:56 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uX0rB-0003by-IV
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 13:02:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751475773;
+ s=mimecast20190719; t=1751475768;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xn6FNEac9ogsCNuJNqMUFEmVqLKCw623bM+SEFbcvrM=;
- b=Lrxg8BKZEyD03H5MuBt7aFryatqYR1EvDx7VohJQXlXC4tPhZSBF+rpLAzLn+migDLlyG5
- VOJNNl9709rxpBSSr5kPPViQN3n1z7ifVhOY+BXAX6zos2l7qGwlg2ADL8kpYUPfDZ/tcU
- KalBQ9retclp5rhWyD6+w9w5KHDPu9o=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=1i0iaIXHDEGoi5z+DHygo0dveZQA5WqCv7VuDzFqpmE=;
+ b=g1l36bPkUfp1+ZFdMvrfrgdAWoZDVLntW8zkxRuKLIxlfrC36QwEyYZVhKxO8Nly3KsQL8
+ zeA3JWS5r7Zfx7fAzTVSKcK1MCBd9QaGOVIcYHaWIFSO5tp1d/GNz7A4x1T8Irv0DGieSv
+ KkjEdQunBHwA2RIuHamH6OFTJ/ynPN4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-604-R5lqsmxYMdKYeu5FpSICMA-1; Wed,
- 02 Jul 2025 13:02:46 -0400
-X-MC-Unique: R5lqsmxYMdKYeu5FpSICMA-1
-X-Mimecast-MFC-AGG-ID: R5lqsmxYMdKYeu5FpSICMA_1751475766
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-493-utVkBv_MNdeSf2HLdKaGLQ-1; Wed,
+ 02 Jul 2025 13:02:47 -0400
+X-MC-Unique: utVkBv_MNdeSf2HLdKaGLQ-1
+X-Mimecast-MFC-AGG-ID: utVkBv_MNdeSf2HLdKaGLQ_1751475767
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1E5111801300; Wed,  2 Jul 2025 17:02:24 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 32EC1180ACD5
+ for <qemu-devel@nongnu.org>; Wed,  2 Jul 2025 17:02:31 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.23])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BC7E61956053; Wed,  2 Jul 2025 17:02:22 +0000 (UTC)
+ id AA3E9195608F; Wed,  2 Jul 2025 17:02:29 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
-	Sean Wei <me@sean.taipei>
-Subject: [PULL 6/9] MAINTAINERS: fix paths for relocated files
-Date: Wed,  2 Jul 2025 19:02:01 +0200
-Message-ID: <20250702170206.212303-7-thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 9/9] tests/functional/test_aarch64_sbsaref_freebsd: Fix the URL
+ of the ISO image
+Date: Wed,  2 Jul 2025 19:02:04 +0200
+Message-ID: <20250702170206.212303-10-thuth@redhat.com>
 In-Reply-To: <20250702170206.212303-1-thuth@redhat.com>
 References: <20250702170206.212303-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
@@ -82,130 +83,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sean Wei <me@sean.taipei>
+From: Thomas Huth <thuth@redhat.com>
 
-Several files were renamed in previous commits, causing their entries
-in MAINTAINERS to reference outdated paths.
-This prevents scripts/get_maintainer.pl from correctly matching
-these files to their maintainers.
+The original image has been removed from the server, so the test
+currently fails if it has to fetch the asset, but we can still
+download the ISO from the archive server. While we're at it, prefer
+the XZ compressed image, it's much smaller and thus the download
+should be faster.
 
-Update the filenames to reflect their current locations so that
-maintainer lookup works properly.
-
-Related commits
----------------
-
-  c45460decbd (Oct 2023)
-    hw/input/stellaris_input: Rename to stellaris_gamepad
-    Rename  include/hw/input/{gamepad.h => stellaris_gamepad.h}
-
-  4faf359accb (Nov 2020)
-    docs: Move virtio-net-failover.rst into the system manual
-    Rename  docs/{ => system}/virtio-net-failover.rst
-
-  89857312f32 (Apr 2024)
-    hw/usb: move stubs out of stubs/
-    Rename  stubs/usb-dev-stub.c => hw/usb/bus-stub.c
-
-  f2604d8508a (Apr 2024)
-    hw/virtio: move stubs out of stubs/
-    Rename  stubs/virtio-md-pci.c => hw/virtio/virtio-md-stubs.c
-
-  2c888febdfa (Apr 2024)
-    memory-device: move stubs out of stubs/
-    Rename  stubs/memory_device.c => hw/mem/memory-device-stubs.c
-
-  d481cec7565 (Oct 2024)
-    migration: Move cpu-throttle.c from system to migration
-    Rename  {system => migration}/cpu-throttle.c
-
-  864a3fa4392 (Jan 2023)
-    monitor: Rename misc.c to hmp-target.c
-    Rename  monitor/{misc.c => hmp-target.c}
-
-Signed-off-by: Sean Wei <me@sean.taipei>
-Message-ID: <374597a7-94e4-45b2-9617-35183db3ea9d@sean.taipei>
+Message-ID: <20250701105809.366180-1-thuth@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ tests/functional/test_aarch64_sbsaref_freebsd.py | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 8aa0fd33b7d..a36f97ed006 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1007,7 +1007,7 @@ L: qemu-arm@nongnu.org
- S: Odd Fixes
- F: hw/*/stellaris*
- F: hw/display/ssd03*
--F: include/hw/input/gamepad.h
-+F: include/hw/input/stellaris_gamepad.h
- F: include/hw/timer/stellaris-gptm.h
- F: docs/system/arm/stellaris.rst
- F: tests/functional/test_arm_stellaris.py
-@@ -2173,7 +2173,7 @@ F: hw/net/
- F: include/hw/net/
- F: tests/qtest/virtio-net-test.c
- F: tests/functional/test_info_usernet.py
--F: docs/virtio-net-failover.rst
-+F: docs/system/virtio-net-failover.rst
- T: git https://github.com/jasowang/qemu.git net
+diff --git a/tests/functional/test_aarch64_sbsaref_freebsd.py b/tests/functional/test_aarch64_sbsaref_freebsd.py
+index 3cddc082f3b..7ef016fba62 100755
+--- a/tests/functional/test_aarch64_sbsaref_freebsd.py
++++ b/tests/functional/test_aarch64_sbsaref_freebsd.py
+@@ -18,9 +18,9 @@
+ class Aarch64SbsarefFreeBSD(QemuSystemTest):
  
- Parallel NOR Flash devices
-@@ -2224,7 +2224,6 @@ F: tests/qtest/sdhci-test.c
- USB
- S: Orphan
- F: hw/usb/*
--F: stubs/usb-dev-stub.c
- F: tests/qtest/usb-*-test.c
- F: docs/system/devices/usb.rst
- F: include/hw/usb.h
-@@ -2477,9 +2476,8 @@ S: Supported
- F: hw/s390x/virtio-ccw-md.c
- F: hw/s390x/virtio-ccw-md.h
- F: hw/s390x/virtio-ccw-md-stubs.c
--F: hw/virtio/virtio-md-pci.c
-+F: hw/virtio/virtio-md-*.c
- F: include/hw/virtio/virtio-md-pci.h
--F: stubs/virtio-md-pci.c
+     ASSET_FREEBSD_ISO = Asset(
+-        ('https://download.freebsd.org/releases/arm64/aarch64/ISO-IMAGES/'
+-         '14.1/FreeBSD-14.1-RELEASE-arm64-aarch64-bootonly.iso'),
+-        '44cdbae275ef1bb6dab1d5fbb59473d4f741e1c8ea8a80fd9e906b531d6ad461')
++        ('http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/old-releases/arm64'
++         '/aarch64/ISO-IMAGES/14.1/FreeBSD-14.1-RELEASE-arm64-aarch64-bootonly.iso.xz'),
++        '7313a4495ffd71ab77b49b1e83f571521c32756e1d75bf48bd890e0ab0f75827')
  
- virtio-mem
- M: David Hildenbrand <david@redhat.com>
-@@ -3197,13 +3195,12 @@ M: David Hildenbrand <david@redhat.com>
- M: Igor Mammedov <imammedo@redhat.com>
- R: Xiao Guangrong <xiaoguangrong.eric@gmail.com>
- S: Supported
--F: hw/mem/memory-device.c
-+F: hw/mem/memory-device*.c
- F: hw/mem/nvdimm.c
- F: hw/mem/pc-dimm.c
- F: include/hw/mem/memory-device.h
- F: include/hw/mem/nvdimm.h
- F: include/hw/mem/pc-dimm.h
--F: stubs/memory_device.c
- F: docs/nvdimm.txt
+     # This tests the whole boot chain from EFI to Userspace
+     # We only boot a whole OS for the current top level CPU and GIC
+@@ -29,7 +29,7 @@ def boot_freebsd14(self, cpu=None):
+         self.set_machine('sbsa-ref')
  
- SPICE
-@@ -3244,9 +3241,9 @@ F: util/qemu-timer*.c
- F: system/vl.c
- F: system/main.c
- F: system/cpus.c
--F: system/cpu-throttle.c
- F: system/cpu-timers.c
- F: system/runstate*
-+F: migration/cpu-throttle.c
- F: qapi/run-state.json
+         fetch_firmware(self)
+-        img_path = self.ASSET_FREEBSD_ISO.fetch()
++        img_path = self.uncompress(self.ASSET_FREEBSD_ISO)
  
- Read, Copy, Update (RCU)
-@@ -3265,7 +3262,7 @@ Human Monitor (HMP)
- M: Dr. David Alan Gilbert <dave@treblig.org>
- S: Maintained
- F: monitor/monitor-internal.h
--F: monitor/misc.c
-+F: monitor/hmp-target.c
- F: monitor/monitor.c
- F: monitor/hmp*
- F: hmp.h
+         self.vm.set_console()
+         self.vm.add_args(
 -- 
 2.50.0
 
