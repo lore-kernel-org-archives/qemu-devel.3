@@ -4,89 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE8A5C83013
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 06:57:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 798FBC83013
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 06:57:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWrOj-0006aL-Fh; Wed, 02 Jul 2025 02:56:49 -0400
+	id 1uWrOE-0006Td-LI; Wed, 02 Jul 2025 02:56:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWrOa-0006XX-0k
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 02:56:40 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWrO8-0006SE-Je
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 02:56:12 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWrOS-00080N-Od
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 02:56:39 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3a525eee2e3so4070123f8f.2
- for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 23:56:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWrO0-0007wa-Ke
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 02:56:12 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4537edf2c3cso63574085e9.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 23:56:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751439388; x=1752044188; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751439359; x=1752044159; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=T4Zx99QimOI7p4Z9U8ZK+dMGdmMSE7DeJaCAtdtwvqI=;
- b=P5UMeaxONr9XuKDT8NE+7Ek8xfWMUy5ko9n/lZx6To/gBCdH3WPp86ojflgoQtre15
- RUJVRLTWQEp7O5NS9iR9JGL70048AnPpce+wglUTzFMaR3uzeXdotQZ7+eOh7C0IYQfA
- NBzjfT+6WXbAysitBcikiog9Yl7Z9DNZn6kstAdkijqpuAm5umjqWekjhIKeVhJwI5sM
- nZNCs8wamnpUoAWOX0IOllYtXhVdwthDZ6iM34pzwEwPWxV6HHL2NEJihqIksV7zzXkH
- giU9K10LYrlqRQqw/dP/Nxp7TJUmQIeR6vYoBfWXpaF1nh/RLzr0hCEwv6vOQPHd39ds
- x3+w==
+ bh=pgu7VqDBRCkgwsJtMNJzkITzgF5YINgQ+CFLRGvMbOM=;
+ b=lAIT/6bN2wtnSA2UDB4X6hicosC6DfkgJS3zEJUe1AH4V2hTPHAUFuwlZcPmM8vVMb
+ n802jXaNpgS7ZvPZTk/dvFbwJgsu5/0PgpD5tu4AaRswWD3ArTlW6EZzXv3YVeKGXGat
+ ojlInl+mhZ3kFTxF1V/uX5hYvAvsf+MtZ/BYtoIVf1rddSbNnwCJoqaQjrZRvfluPzSE
+ PQyufAeGHA1c9KRsAADj/i4V/znoTXbQyxMEy/8N8xd7T4gOS3kx6k4Z7mFA3111P1f6
+ 4R3NUGOqPWFr9Hg8DY+pW5M0Q2brR6+9RzUgs65Ioc+YOe6n/VHjaamzSrzOAReWcP3B
+ K+sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751439388; x=1752044188;
+ d=1e100.net; s=20230601; t=1751439359; x=1752044159;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=T4Zx99QimOI7p4Z9U8ZK+dMGdmMSE7DeJaCAtdtwvqI=;
- b=YWoILfcVMt/gyXHT7Ku1XlkKHt9u2cEzMVCs9ZbU7VTazCBfr+LZC6iv1NST6e0tyZ
- RFRF2mwauWJ03fQnV60b6wK30sIF3y8mgz4c1deb0FrIJQibh/C0YYh61HOfWQZtta3l
- 3GHeH1ZyAhpIgckyT7bVnqGaeZGDvdmJqmc7CWQ8bqES0jS4E69qbOrvtaPXEbCJiKu4
- +M6m3hYqGV2eOBY6IKTMEC7E6giZEseTTgqB4Yw6zagbA9lDaGubUH5FUf16lEX99K0e
- xTcViD1ndKAVd3pOUXUkUCX9JqgSBfEgb9OFPTDJ1HTwj5HxjN9bh82ZL9YXXbj3Klsq
- SPJg==
+ bh=pgu7VqDBRCkgwsJtMNJzkITzgF5YINgQ+CFLRGvMbOM=;
+ b=jawqkZg9EsNFnX8U1ujzldhhBlMNDeujIHySD60/2rolRy9PCG97+zkXGcx5/AZAi9
+ rYNvVrv8KPgqdKau9IyS0RartCiiBk8572PNN0siBaiX77xn9Bj8c+2L+NQ9GE+yMrDI
+ NIqVWAAwMOq3JnI8pSTI0L9u8sYxa1kdrPaAGj3wfXRJmVd1FJGergJO/R/buxXsaM1R
+ fnWhgG5mZqAJslgeJ0JCy7owViU7ITfceZaNxHy6uUlxI+cPkoi22gkByosVSKsbZVzQ
+ Awlae/i+h6YnMmZAoxwGNeQawkjm0tQcjjS8bK0YY+wI1ajRWv65cdxpsM8+n12ymLfH
+ kvjA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVp5CjUtL7QmngXWdamE+DXyB++WGAiFCL18vRks8tkYv0HP5mdwmYdvItFNVgrPslkDKFQgjQYCSXR@nongnu.org
-X-Gm-Message-State: AOJu0YyzHSZPJICjby06hFJK2EUT8BvNLu/mEpyfjv8hCQuGCyLSiMrF
- JmEvRgemNI/h35oykDXVZIiCK0hDfrUYU/rHCdb9h2KjsaM8LcVpliEe5u4cZUiKV+U=
-X-Gm-Gg: ASbGncu/CyxyXIOdX+CynZFNyfpENqZBcDE5z5pnomoMwrg+SHENXxZWZYHnGzLMdJk
- 6VOXNCYgdorj29Z3nanOzGADLvrLMD6wf0zJs0uLBwnrPsQUunaSD45pd4ayRW5LIqn0y9cD7Zo
- MqTuOxPQRlobwB52XSpO9j34NL9QolvkLNImnacFK+aqd2Z/OCMkYA9a+u2ZDaTS4tpDUuYMqtA
- QAjXJ8MaDFNzdz5T8IWX+/sqmzUDekVwZgNqYplpNzOFyhQKcdYdV92JhGErL11dp/piOurdTyX
- yEyhj89ZAVEtq+7DQRNCpvs8MsR8JhVypVadGkpDW/LQQB2UmkEw5eS4dEN3ORLcyf7yyHTPhMY
- mlr+EIl2eFPHmWv4NKH50k8r5qXDyU68kZwtiBtDy
-X-Google-Smtp-Source: AGHT+IH9mHv/pAjAEq2jTAyW3orjWeuq5PFCCn8HfbkS66hGKT2OrCmPaVT5k1viUX1/SIqNxONLmw==
-X-Received: by 2002:a05:6000:25e3:b0:3a6:d403:6e75 with SMTP id
- ffacd0b85a97d-3b1fdc209b5mr868713f8f.4.1751439387821; 
- Tue, 01 Jul 2025 23:56:27 -0700 (PDT)
+ AJvYcCVU/7eSGYnm88etdMe2/xt75BsXalWzdj2K2JwEm6G/J6IuiGJ8U4q38yFgdjuk0qGvB8qBrmFoaJkG@nongnu.org
+X-Gm-Message-State: AOJu0Yw1yOIrQU0Tl7AFmqSDxW3UqQO0WJFJO1NjbZPs4wRg2T7ICAn1
+ L9fcCCBUxAS3eiq2xc+MP7n6VO5CCVLzCKkojWZzmLnCcJmYXNedErgCOhV6LN6D5CM=
+X-Gm-Gg: ASbGncuKkLWlZXM49abjBvmp/3qwWGlHTsSSdSTm8EJFAi2BV5a11UITK6xmOI4TQJs
+ WwRR+cLThfdbDN2jG4pK81B8v2I/lU41sNY/TcowW0Pkj7GwMrbdDsDcmDYww8qVDElwVL2jtNb
+ wI4YYh7kvDmEu2kH4q06ryf04Vr/F5S+fwv4BNifPzHPsVLqRdUVpFG9yi1b21z2kZoOZ8vh+n9
+ 7iipqHhTZrWhdG42DZ9YZjcKfyow6yquLuxBxvCBLztxqo8bSTAOJXa88qEsrmkLivCsgbv5x0d
+ eu8ETPdkEhYgcGTtB4xHYeTA6iaArmAKqy1YcuRLtYklXMsYdRTSAeVHX7T9ycqUox2oRkJYgWe
+ 5X9LLMUWagjj5zipjdbDG1sXAqlDsAQ==
+X-Google-Smtp-Source: AGHT+IGtneCTq5/X1I2atVKDD+cfUWATiSPDzKx6KyMF+bybGxmJ4h86Dg7ULvaeEPLiJq6dMXcJIA==
+X-Received: by 2002:a05:600c:8b22:b0:453:8bc7:5cbb with SMTP id
+ 5b1f17b1804b1-454a3726347mr14856515e9.25.1751439359173; 
+ Tue, 01 Jul 2025 23:55:59 -0700 (PDT)
 Received: from [192.168.69.166] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a88c7fa54dsm15002743f8f.23.2025.07.01.23.56.26
+ ffacd0b85a97d-3a88c7e7814sm14978548f8f.8.2025.07.01.23.55.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Jul 2025 23:56:26 -0700 (PDT)
-Message-ID: <46cd8b91-72e3-4031-b7d0-857b53ee9c9a@linaro.org>
-Date: Wed, 2 Jul 2025 08:56:25 +0200
+ Tue, 01 Jul 2025 23:55:58 -0700 (PDT)
+Message-ID: <83d7c55b-fa17-413d-8896-171d9538693d@linaro.org>
+Date: Wed, 2 Jul 2025 08:55:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/s390x: A fix for the trouble with tribles
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org, David Hildenbrand <david@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>, Michael Mueller <mimu@linux.ibm.com>
-References: <20250701194241.434183-1-thuth@redhat.com>
+Subject: Re: [PATCH] accel/kvm: Adjust the note about the minimum required
+ kernel version
+To: Zhao Liu <zhao1.liu@intel.com>, Thomas Huth <thuth@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, qemu-stable@nongnu.org, qemu-trivial@nongnu.org
+References: <20250702060319.13091-1-thuth@redhat.com>
+ <aGTU2enBBQj7lu3E@intel.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250701194241.434183-1-thuth@redhat.com>
+In-Reply-To: <aGTU2enBBQj7lu3E@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,19 +104,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/7/25 21:42, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 2/7/25 08:42, Zhao Liu wrote:
+> On Wed, Jul 02, 2025 at 08:03:19AM +0200, Thomas Huth wrote:
+>> Date: Wed,  2 Jul 2025 08:03:19 +0200
+>> From: Thomas Huth <thuth@redhat.com>
+>> Subject: [PATCH] accel/kvm: Adjust the note about the minimum required
+>>   kernel version
+>>
+>> From: Thomas Huth <thuth@redhat.com>
+>>
+>> Since commit 126e7f78036 ("kvm: require KVM_CAP_IOEVENTFD and
+>> KVM_CAP_IOEVENTFD_ANY_LENGTH") we require at least kernel 4.4 to
+>> be able to use KVM. Adjust the upgrade_note accordingly.
+>> While we're at it, remove the text about kvm-kmod and the
+>> SourceForge URL since this is not actively maintained anymore.
+>>
+>> Fixes: 126e7f78036 ("kvm: require KVM_CAP_IOEVENTFD and KVM_CAP_IOEVENTFD_ANY_LENGTH")
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   accel/kvm/kvm-all.c | 3 +--
+>>   1 file changed, 1 insertion(+), 2 deletions(-)
 > 
-> While Tribbles are cute, it should be "triple store" here,
-> not "trible store".
+> I just mentioned the kernel version in another patch thread. I found
+> x86 doc said it requires v4.5 or newer ("OS requirements" section in
+> docs/system/target-i386.rst).
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   target/s390x/cpu_features_def.h.inc | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+>> index d095d1b98f8..e3302b087f4 100644
+>> --- a/accel/kvm/kvm-all.c
+>> +++ b/accel/kvm/kvm-all.c
+>> @@ -2571,8 +2571,7 @@ static int kvm_init(MachineState *ms)
+>>   {
+>>       MachineClass *mc = MACHINE_GET_CLASS(ms);
+>>       static const char upgrade_note[] =
+>> -        "Please upgrade to at least kernel 2.6.29 or recent kvm-kmod\n"
+>> -        "(see http://sourceforge.net/projects/kvm).\n";
+>> +        "Please upgrade to at least kernel 4.4.\n";
 
-:)
+Using 4.4 or 4.5:
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+>>       const struct {
+>>           const char *name;
+>>           int num;
+>> -- 
+>> 2.50.0
+>>
+>>
+> 
 
 
