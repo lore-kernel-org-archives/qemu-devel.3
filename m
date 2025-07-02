@@ -4,69 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0BBCC8303D
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 02:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D08D0C7EE30
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 02:07:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWmqg-0005UK-16; Tue, 01 Jul 2025 22:05:22 -0400
+	id 1uWms3-0006BS-Et; Tue, 01 Jul 2025 22:06:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uWmqY-0005Tb-Hz
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 22:05:16 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uWmqS-0002eH-Bf
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 22:05:11 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Bx22rOk2RoxvQgAQ--.36868S3;
- Wed, 02 Jul 2025 10:05:02 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJDx_8PLk2RoUxwGAA--.34849S3;
- Wed, 02 Jul 2025 10:05:02 +0800 (CST)
-Subject: Re: [PATCH v3 2/9] hw/loongarch: add virt feature avecintc support
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
-References: <20250627030138.2482055-1-gaosong@loongson.cn>
- <20250627030138.2482055-3-gaosong@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <ab746c92-492b-fb47-c5f4-df04da478a85@loongson.cn>
-Date: Wed, 2 Jul 2025 10:03:28 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uWms1-0006Aq-Of
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 22:06:45 -0400
+Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uWmrz-0002v6-PG
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 22:06:45 -0400
+Received: by mail-oi1-x235.google.com with SMTP id
+ 5614622812f47-408fa4be483so2255622b6e.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 19:06:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751422002; x=1752026802; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4yiF5IrOyxAjbvHg14hQjpBgBMge4ArYTidkU/xmVuQ=;
+ b=Abtf39011RQO515bmJhEW4pLNEj7RC6J1LX72ZgP9TW5LUeFL/DOnPCasHCwmS665d
+ VAh1ikMbXa56qey+TWaDqHG118/p2hzVZ1I6GfuaeIHLVr5IcP+fi/MXYBDp4Mk491wX
+ 6FxB+rps3tsUlnf4rUPjxHs2l4EoHnfPiQ4bAzOww4dDqjfYuSYn8mUwdkJFMurtBAOJ
+ 63SytYNQeI1wowh0bG8+IgZ730CRnSYLubmaI8ZOe/PDnL36ZbavnYkIwr6Plng2MzHz
+ Xva+OizU7Qlv61nrG4DL9Au3wH9HqlE3xzvvXR9THcZQJGMxy5PNgvEvFfkscZOYVrZF
+ nhlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751422002; x=1752026802;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4yiF5IrOyxAjbvHg14hQjpBgBMge4ArYTidkU/xmVuQ=;
+ b=olZQbWtwAhtpJm0V+DpoFYYic/bqHu6KRX8aUvcisWfWEIzAiQyYb3U0hiYqTbU5iZ
+ gXN7UVS3EmyTlZ2HUNChwhVeYdA+xeptLGE02f9dKT7rV9ZMud3tO8X6a/gfR0NuAW4/
+ g5zO+F4XOwZbE4fyoCZB/5rD4CW2Ykuuo397Ccri2Z2gypPOLTM2SVj82uA10kg/r8wX
+ U8bYHORS7bo+z6B+ebtgU50fyvveMNR5Tqc3djB6bdQ8idDwTwRKmpsm/HWs0oT5QD4X
+ LuOZG1Y+dXKG7+Ywadg+ajaSV3eHNxQboLgLz2LyDxeoNuQvsDP6NncLS25wZk68Gz3W
+ iQWw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWGsnIEV8YcELzPfS02uMqf7keQX1m2OoKvhdz0TogtrR9KxruzqZJz9stsbRs0/M9MpLLlXv1Cf3vp@nongnu.org
+X-Gm-Message-State: AOJu0Yy/nMVtBBvxg6yubW30WTT8/uy1fPjIn/c4BzfAHgCPHREwkxkv
+ EafBpkOHV5q8SNd/ehPUr12m5jzgBEaMq3wwCwChAkb2SkRUIpPQw8Z/cTPLWtbjINU=
+X-Gm-Gg: ASbGncvkX6so+532HkamwLle0c4OFUbItEmdZb4ZAfka3NWogggesVN6HrGCuIaYGdN
+ Z6CisKuYHJAECvBm6WLVq7Ky1+bctUU6yG1Oep+M6ynNZhOh0AVF8kfhJXbC9o7vdIheT3ZpywJ
+ iB/u3yJiFm/dqpz2ks3K4eD3j4GRTWBN8txKIB0upcsSW8AJErjQU6hiIbs3ZNHB9rUV79IkXl7
+ U5pXD+99+oEFa1MNRNS4rvBgsUQLJkHLE6CLuiVMvhLHHUr7alpM687NLTc8YJqo9ddovBNkjdP
+ Vwfk3qcgRQF5nm2pQkH3UycMA2pWymr3HGWr+AMqnAskdBoXgVvKjusOoau7bQpTQJGqy+XTC7q
+ ZNQ==
+X-Google-Smtp-Source: AGHT+IGxyT0fBeicXhygu5eGtQ4t1xiPfHzAuxTaICk2L0+FogJe5PrpDCo/PS4jK/C5Flwrz9reyA==
+X-Received: by 2002:a05:6808:6909:b0:40b:1588:e005 with SMTP id
+ 5614622812f47-40b8877df29mr667132b6e.10.1751422002239; 
+ Tue, 01 Jul 2025 19:06:42 -0700 (PDT)
+Received: from [10.25.7.201] ([187.210.107.185])
+ by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-40b324050d2sm2370875b6e.32.2025.07.01.19.06.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 01 Jul 2025 19:06:41 -0700 (PDT)
+Message-ID: <0ac8967e-ce39-4820-8c60-474b702cc728@linaro.org>
+Date: Tue, 1 Jul 2025 20:06:39 -0600
 MIME-Version: 1.0
-In-Reply-To: <20250627030138.2482055-3-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/12] target/arm: Fix VLSTM/VLLDM helper load/store
+ alignment checks
+To: William Kosasih <kosasihwilliam4@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+References: <20250701103159.62661-1-kosasihwilliam4@gmail.com>
+ <20250701103159.62661-2-kosasihwilliam4@gmail.com>
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDx_8PLk2RoUxwGAA--.34849S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxtw1DCryxuw4UAF1UKr1fXwc_yoW7ur1fpa
- yrAFZ5ZFyUtr4xWrZxKrn8urn8Aws2ka42gF43urW09F1DWr1Uur1DA3s8tFWkA3yDZFsY
- gF4kGFsrCFsrZrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07jUsqXU
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.077,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250701103159.62661-2-kosasihwilliam4@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x235.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,164 +105,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2025/6/27 上午11:01, Song Gao wrote:
-> LoongArchVirtMachinState adds avecintc features, and
-> it use to check whether virt machine support advance interrupt controller
-> and default set avecintc = ON_OFF_AUTO_ON.
-> LoongArchVirtMachineState adds misc_feature and misc_status for
-> misc fetures and status. and set default avec feture bit.
+On 7/1/25 04:31, William Kosasih wrote:
+> This patch adds alignment checks in the load operations in the VLLDM
+> instruction, and in the store operations in the VLSTM instruction.
 > 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   hw/loongarch/virt.c         | 43 +++++++++++++++++++++++++++++++++----
->   include/hw/loongarch/virt.h | 15 +++++++++++++
->   2 files changed, 54 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index 6a169d4824..426eaaef84 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -47,6 +47,28 @@
->   #include "hw/virtio/virtio-iommu.h"
->   #include "qemu/error-report.h"
->   
-> +static void virt_get_avecintc(Object *obj, Visitor *v, const char *name,
-> +                             void *opaque, Error **errp)
-> +{
-> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> +    OnOffAuto avecintc = lvms->avecintc;
-> +
-> +    visit_type_OnOffAuto(v, name, &avecintc, errp);
-> +
-> +}
-> +static void virt_set_avecintc(Object *obj, Visitor *v, const char *name,
-> +                              void *opaque, Error **errp)
-> +{
-> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> +
-> +    if (lvms->avecintc == ON_OFF_AUTO_OFF) {
-> +        lvms->misc_feature &= ~BIT(IOCSRF_AVEC);
-> +        lvms->misc_status &= ~BIT(IOCSRM_AVEC_EN);
-> +    }
-> +
-> +    visit_type_OnOffAuto(v, name, &lvms->avecintc, errp);
-It is a little strange that firstly check variable and then set it, I 
-think that visit_type_OnOffAuto() should be before
-  +    if (lvms->avecintc == ON_OFF_AUTO_OFF) {
-  +        lvms->misc_feature &= ~BIT(IOCSRF_AVEC);
-  +        lvms->misc_status &= ~BIT(IOCSRM_AVEC_EN);
-  +    }
+> Manual alignment checks in the both helpers are retained because they
+> enforce an 8-byte alignment requirement (instead of the 4-byte alignment for
+> ordinary long loads/stores). References to cpu_*_data_* are still replaced
+> with cpu_*_mmu(), so that the individual word accesses themselves also
+> perform the standard alignment checks, in keeping with the ARM pseudocode.
 
-> +}
-> +
->   static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
->                                 void *opaque, Error **errp)
->   {
-> @@ -539,6 +561,10 @@ static MemTxResult virt_iocsr_misc_write(void *opaque, hwaddr addr,
->               return MEMTX_OK;
->           }
->   
-> +        if (val & BIT(IOCSRM_AVEC_EN)) {
-> +            lvms->misc_status |= BIT(IOCSRM_AVEC_EN);
-> +        }
-> +
->           features = address_space_ldl(&lvms->as_iocsr,
->                                        EXTIOI_VIRT_BASE + EXTIOI_VIRT_CONFIG,
->                                        attrs, NULL);
-> @@ -574,8 +600,9 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
->           break;
->       case FEATURE_REG:
->           ret = BIT(IOCSRF_MSI) | BIT(IOCSRF_EXTIOI) | BIT(IOCSRF_CSRIPI);
-> -        /*TODO: check bit IOCSRF_AVEC with virt_is_avec_enabled */
-> -        ret |= BIT(IOCSRF_AVEC);
-> +        if (virt_is_avecintc_enabled(lvms)) {
-> +            ret |= BIT(IOCSRF_AVEC);
-> +        }
->           if (kvm_enabled()) {
->               ret |= BIT(IOCSRF_VM);
->           }
-> @@ -605,8 +632,10 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
->           if (features & BIT(EXTIOI_ENABLE_INT_ENCODE)) {
->               ret |= BIT_ULL(IOCSRM_EXTIOI_INT_ENCODE);
->           }
-> -        /* enable avec default */
-> -        ret |= BIT_ULL(IOCSRM_AVEC_EN);
-> +        if (virt_is_avecintc_enabled(lvms) &&
-> +            (lvms->misc_status & BIT(IOCSRM_AVEC_EN))) {
-> +            ret |= BIT_ULL(IOCSRM_AVEC_EN);
-> +        }
->           break;
->       default:
->           g_assert_not_reached();
-> @@ -850,6 +879,8 @@ static void virt_initfn(Object *obj)
->       if (tcg_enabled()) {
->           lvms->veiointc = ON_OFF_AUTO_OFF;
->       }
-> +    lvms->misc_feature = BIT(IOCSRF_AVEC);
-> +    lvms->avecintc = ON_OFF_AUTO_ON;
->       lvms->acpi = ON_OFF_AUTO_AUTO;
->       lvms->oem_id = g_strndup(ACPI_BUILD_APPNAME6, 6);
->       lvms->oem_table_id = g_strndup(ACPI_BUILD_APPNAME8, 8);
-> @@ -1242,6 +1273,10 @@ static void virt_class_init(ObjectClass *oc, const void *data)
->           NULL, NULL);
->       object_class_property_set_description(oc, "v-eiointc",
->                               "Enable Virt Extend I/O Interrupt Controller.");
-> +    object_class_property_add(oc, "avecintc", "OnOffAuto",
-> +        virt_get_avecintc, virt_set_avecintc, NULL, NULL);
-> +    object_class_property_set_description(oc, "avecintc",
-> +                            "Enable Advance Interrupt Controller.");
-It is only can be added in TCG mode, in kvm mode avec should not be 
-supported now.
->       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
->       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
->   #ifdef CONFIG_TPM
-> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-> index cc6656619d..44504e5501 100644
-> --- a/include/hw/loongarch/virt.h
-> +++ b/include/hw/loongarch/virt.h
-> @@ -70,6 +70,7 @@ struct LoongArchVirtMachineState {
->       Notifier     powerdown_notifier;
->       OnOffAuto    acpi;
->       OnOffAuto    veiointc;
-> +    OnOffAuto    avecintc;
->       char         *oem_id;
->       char         *oem_table_id;
->       DeviceState  *acpi_ged;
-> @@ -85,6 +86,8 @@ struct LoongArchVirtMachineState {
->       DeviceState *extioi;
->       struct memmap_entry *memmap_table;
->       unsigned int memmap_entries;
-> +    uint64_t misc_feature;
-> +    uint64_t misc_status;
->   };
->   
->   #define TYPE_LOONGARCH_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
-> @@ -92,6 +95,18 @@ OBJECT_DECLARE_SIMPLE_TYPE(LoongArchVirtMachineState, LOONGARCH_VIRT_MACHINE)
->   void virt_acpi_setup(LoongArchVirtMachineState *lvms);
->   void virt_fdt_setup(LoongArchVirtMachineState *lvms);
->   
-> +static inline bool virt_is_avecintc_enabled(LoongArchVirtMachineState *lvms)
-> +{
-> +    if (!(lvms->misc_feature & BIT(IOCSRF_AVEC))) {
-> +        return false;
-> +    }
-> +
-> +    if (lvms->avecintc == ON_OFF_AUTO_OFF) {
-> +        return false;
-> +    }
-Is it enough to only check variable misc_feature? checking avecintc 
-seems unnecessary duplicated.
+So... this merely makes this function match the pseudocode, it doesn't actually fix a bug.
+This description should be fixed to reflect that.
 
-Regards
-Bibo Mao
-> +    return true;
-> +}
-> +
->   static inline bool virt_is_veiointc_enabled(LoongArchVirtMachineState *lvms)
->   {
->       if (lvms->veiointc == ON_OFF_AUTO_OFF) {
-> 
+> diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
+> index 6614719832..251e12edf9 100644
+> --- a/target/arm/tcg/m_helper.c
+> +++ b/target/arm/tcg/m_helper.c
+> @@ -1048,6 +1048,9 @@ void HELPER(v7m_vlstm)(CPUARMState *env, uint32_t fptr)
+>       bool s = env->v7m.fpccr[M_REG_S] & R_V7M_FPCCR_S_MASK;
+>       bool lspact = env->v7m.fpccr[s] & R_V7M_FPCCR_LSPACT_MASK;
+>       uintptr_t ra = GETPC();
+> +    ARMMMUIdx mmu_idx = arm_mmu_idx(env);
+> +    MemOpIdx oi = make_memop_idx(MO_TEUL | MO_ALIGN,
+> +                                 arm_to_core_mmu_idx(mmu_idx));
+>   
+>       assert(env->v7m.secure);
+>   
+> @@ -1073,7 +1076,7 @@ void HELPER(v7m_vlstm)(CPUARMState *env, uint32_t fptr)
+>        * Note that we do not use v7m_stack_write() here, because the
+>        * accesses should not set the FSR bits for stacking errors if they
+>        * fail. (In pseudocode terms, they are AccType_NORMAL, not AccType_STACK
+> -     * or AccType_LAZYFP). Faults in cpu_stl_data_ra() will throw exceptions
+> +     * or AccType_LAZYFP). Faults in cpu_stl_mmu() will throw exceptions
+>        * and longjmp out.
+>        */
+>       if (!(env->v7m.fpccr[M_REG_S] & R_V7M_FPCCR_LSPEN_MASK)) {
+> @@ -1089,12 +1092,12 @@ void HELPER(v7m_vlstm)(CPUARMState *env, uint32_t fptr)
+>               if (i >= 16) {
+>                   faddr += 8; /* skip the slot for the FPSCR */
+>               }
+> -            cpu_stl_data_ra(env, faddr, slo, ra);
+> -            cpu_stl_data_ra(env, faddr + 4, shi, ra);
+> +            cpu_stl_mmu(env, faddr, slo, oi, ra);
+> +            cpu_stl_mmu(env, faddr + 4, shi, oi, ra);
 
+This is an improvement because the mmu index is resolved once, instead of within every 
+call to cpu_stl_data_ra.
+
+
+r~
 
