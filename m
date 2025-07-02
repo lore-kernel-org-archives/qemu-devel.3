@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 504B7C83F04
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 13:41:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D3C7C83F04
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 13:41:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWwnO-0000OS-GY; Wed, 02 Jul 2025 08:42:38 -0400
+	id 1uWwp5-0003Ct-3J; Wed, 02 Jul 2025 08:44:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWwjp-0004gM-Gc
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:38:59 -0400
-Received: from mail-oa1-x2f.google.com ([2001:4860:4864:20::2f])
+ id 1uWwjh-0004WX-G2
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:38:50 -0400
+Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWwjZ-0002Cu-Dl
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:38:56 -0400
-Received: by mail-oa1-x2f.google.com with SMTP id
- 586e51a60fabf-2eb5cbe41e1so4783660fac.0
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:38:40 -0700 (PDT)
+ id 1uWwjZ-0002Cd-9z
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:38:49 -0400
+Received: by mail-oa1-x2a.google.com with SMTP id
+ 586e51a60fabf-2e9a38d2a3aso4363943fac.3
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:38:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751459920; x=1752064720; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751459919; x=1752064719; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=agWht1TtFZD9FvY9g9OkzAozp1ScoD+4OlrihO2XdT8=;
- b=JUOJRZ46QyjzHd6gStPvJp2JQU2PXMccEdCL+Av3UKJ/lC5LQXEsiLeVxruf1W+21V
- sJKvgLRPub+lJjSfIH5tLbThaXkzqyawUlEFmge1PmM2WOqQunzq/Dn3JgzV0OwgM69d
- EJQm+U0ijqJoU+CGGGIrB7u/KB2kkEgmh2WXEOAO5aFVS5B0WdBUqZg/LKBZ8sY79lw4
- mWD69ruCOJIp30bm++wQY6USNgtwwDcyWG1Ff/kgZmn7+SnGw31VWDllgyFGxePQAfPQ
- 2NhSgaN8T45ZiWuUxkM+TSTVg+UvsXxke7xQtTXicA3IDz8JdwA4HdrfIZMe9CEv29YH
- 7YLg==
+ bh=d3iqV402n2zRibf20P4N2YxyvHzHBd9L0SbttgPpbJQ=;
+ b=vZYBAtd1jUFxMsb3VI5urNcsh/zVmn9NzL6pC6kcA5HZQQiISlpqAZy+4Ns8fUQpP+
+ QCWT8YYDCnGrbFpW6N2Hwl5ppmj8i4C9wT9JWvFN8BYfmfABzYeg8KAsnTCm2QxKHdIy
+ aQoPTSfRSosPJYTgYovh/6jYkjjcsE0EovTIiTEKeLiYDmCBU/fnfhpReqo7gVnLj9av
+ fr9tR+rvoP9yok5C9IU5idDk78B6LVlFl+jiQBHdfs+zDyjV1x0umG9kef2FkIAm+OkZ
+ /xD5Vx1jGSwI4zgwd4tF8B8AgAR26E9lF3SEWJj946odqFSZg2ZFv21Hrx0kyDqp77KB
+ 3T+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751459920; x=1752064720;
+ d=1e100.net; s=20230601; t=1751459919; x=1752064719;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=agWht1TtFZD9FvY9g9OkzAozp1ScoD+4OlrihO2XdT8=;
- b=LI87Fgn3Yi5hDyqaebus25z4ClqpBuBaOE5Xs8J+iHMf3ZmUI/Am94WLVL47qLzTtu
- U2xO7wzi+VHfiLRCs5yDVrou4yDo4v5cSjWiiH5sRdJALb04muIQ+iFkRYlJuppQ+3po
- wVaWFMHNExJCrSSGmkuIe2Gy4NBNT7H3YeGu0CL5cLmV/9+3Mhfab2tHbAA4GKFUyQ7T
- unXQulv035GCt8pI24SwxkKpe2025DTdG5shKPP8adYPfo9ComFUTL7my8/CWDpYOk1Z
- Vo2WXcbNw+uIA7IWv8EFMSILkgGM13/976O1HVTFDYXccjopKCyW3m304pU6+LZ3qixa
- dL+w==
-X-Gm-Message-State: AOJu0YwL13iN2ktVeAIk4TslKWQWZmU3vc3rvWQMUhvmZY6wfedXSl8E
- Cimrvjz2kAxJWula09JxK4Od0AOx1mfVZkr+CpcyWDcCGIPAX2M4gjYCv0Fx3I7hSGrJei8Va0g
- jGi96Rr0=
-X-Gm-Gg: ASbGncurTyowiEqJj14J6NfI6RkAWKYkRx+x78dOwY/rklEYhtPtpNdlkU/LKlbjS6p
- 8dd5YEhrV7X5MjfFT5vmXhyz43aE2TymyFmAV46b3P2CKafOM7xSjhNigljLHIdgL97p+cVixVj
- pmQfa0zYxL9CD5keh9yNo4D2NaS7lvF1FzETVk301BdV6peBNKYA6w+4fT43ItWQcjuzdM4Fydd
- luWzyODhkZ3rOXWexxOTjs95h/ao8iUURwOwSx2AowwoYg8XQ4Ro3fhkyHCWmpwwnhZ/h9xWeQo
- 8XkPjBhgJ7xG8JC+SUQoREzWeG+1bFokumdsN+wj7Iw5qAuqkRS66dCxihBQmdRtK77WoA==
-X-Google-Smtp-Source: AGHT+IFTe+PM98lOsComt1T05w5TXAmNTLqRLt9xf7ozLrixK7QW9DWE0Fi2WsK1HMtBlr8LcR6gOg==
-X-Received: by 2002:a05:6871:a403:b0:2df:a9d0:1dc9 with SMTP id
- 586e51a60fabf-2f5a8c677f6mr1813940fac.37.1751459919782; 
- Wed, 02 Jul 2025 05:38:39 -0700 (PDT)
+ bh=d3iqV402n2zRibf20P4N2YxyvHzHBd9L0SbttgPpbJQ=;
+ b=KmarlKhyVx2P6m6Mt1DO3tdriPNg0ifkbr4f6pFljPh46O1Ml3LjAv3PzyfkRk4cH5
+ kvoMHI6PeKn4sxtxGs41oTybJSEzNCu0xX+SQHeQ9AQtwbJckgyJhd8cCGvzJ3fdLfcA
+ ENObkzKbL7hybSofIEOB9iTYgyEOnnHDZdoZHi3Ty3Wxec3L7ESFjrywLcGpd9llwlCS
+ DXNgSiLtpTak8N+m0bqaNS60c0/gfk7x/RrM99Knmf7O2ubvogiqpjmqH5C2DiJeskW4
+ SmxIhc1pgycKr+vz4eIgZ+2vzaP65GAFwF9V3nB5Xt1mSDBcZIZxFQoHvHi6N8gJelOK
+ 0J5g==
+X-Gm-Message-State: AOJu0YxYKviGENLt0W/C3GB6R+jwMOra/K53GAHFjScddixQyOCGyIws
+ n7i11OU09R6dbv8rWM+Js+NLFrImbGUnc+/vhcs/BIxEiz+xlYaKXLs7HqCk6KMnkP83lhwOfxq
+ frEUgW44=
+X-Gm-Gg: ASbGncvONZmaXOurnLaVs6JnlsyVf+h7Iygl6hcSqqjtKIIPbs39sE0DC0Q9DIKpPFh
+ EomLcH/Gu3nrcPzO29RKa+eGfpiqia/vGxeE+3m5h690qrabGlIXzuDetqEnVlq44v82VLvfmI8
+ chFApFoJQJOH4YAR/wiELim1CnWRDrQkp6BD3feSXmV2GwjMd2cgz39or/dCSnQxzlBgV825Lfj
+ 1574V44l69lX5rn8IpsDIwcVAT/+CgIGMpXJfreE6lTFMwIRDt07+Vdmm+zlknG9rghd5JdReTh
+ cd+5cH1Ldw2xJeOesD0aX3b49ywTQcwjjycREz1wSqRMlGneydOAlRUxSrm62unAtJMvqg==
+X-Google-Smtp-Source: AGHT+IGmNeTsu6QxxtXuWOpm1HSgHYRfwfMyssLwMBIvI6eFZwJ+liiekEioDDlmVzjc+swPoAm+zQ==
+X-Received: by 2002:a05:6871:7897:b0:2e9:e9b9:fd7c with SMTP id
+ 586e51a60fabf-2f5a8c3aba3mr1881211fac.26.1751459918888; 
+ Wed, 02 Jul 2025 05:38:38 -0700 (PDT)
 Received: from stoup.. ([187.210.107.185]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2efd4ea5d9fsm3843451fac.10.2025.07.02.05.38.39
+ 586e51a60fabf-2efd4ea5d9fsm3843451fac.10.2025.07.02.05.38.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Jul 2025 05:38:39 -0700 (PDT)
+ Wed, 02 Jul 2025 05:38:38 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	peter.maydell@linaro.org
-Subject: [PATCH v3 68/97] target/arm: Implement SVE2p1 WHILE (predicate as
- counter)
-Date: Wed,  2 Jul 2025 06:33:41 -0600
-Message-ID: <20250702123410.761208-69-richard.henderson@linaro.org>
+Subject: [PATCH v3 67/97] target/arm: Implement SVE2p1 WHILE (predicate pair)
+Date: Wed,  2 Jul 2025 06:33:40 -0600
+Message-ID: <20250702123410.761208-68-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250702123410.761208-1-richard.henderson@linaro.org>
 References: <20250702123410.761208-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2f;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2f.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,177 +101,142 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/helper-sve.h    |  3 ++
- target/arm/tcg/sve_helper.c    | 51 ++++++++++++++++++++++++++++++++++
- target/arm/tcg/translate-sve.c | 22 +++++++++++----
- target/arm/tcg/sve.decode      | 11 ++++++++
- 4 files changed, 82 insertions(+), 5 deletions(-)
+ target/arm/tcg/helper-sve.h    |  3 +++
+ target/arm/tcg/sve_helper.c    | 44 ++++++++++++++++++++++++++++++++++
+ target/arm/tcg/translate-sve.c | 14 +++++++----
+ target/arm/tcg/sve.decode      |  8 +++++++
+ 4 files changed, 65 insertions(+), 4 deletions(-)
 
 diff --git a/target/arm/tcg/helper-sve.h b/target/arm/tcg/helper-sve.h
-index eac23e75b9..74029c641b 100644
+index 0b1b588783..eac23e75b9 100644
 --- a/target/arm/tcg/helper-sve.h
 +++ b/target/arm/tcg/helper-sve.h
-@@ -944,6 +944,9 @@ DEF_HELPER_FLAGS_3(sve_whileg, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
- DEF_HELPER_FLAGS_3(sve_while2l, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
- DEF_HELPER_FLAGS_3(sve_while2g, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
+@@ -941,6 +941,9 @@ DEF_HELPER_FLAGS_3(sve_cntp, TCG_CALL_NO_RWG, i64, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_3(sve_whilel, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
+ DEF_HELPER_FLAGS_3(sve_whileg, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
  
-+DEF_HELPER_FLAGS_3(sve_whilecl, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
-+DEF_HELPER_FLAGS_3(sve_whilecg, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
++DEF_HELPER_FLAGS_3(sve_while2l, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
++DEF_HELPER_FLAGS_3(sve_while2g, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
 +
  DEF_HELPER_FLAGS_4(sve_subri_b, TCG_CALL_NO_RWG, void, ptr, ptr, i64, i32)
  DEF_HELPER_FLAGS_4(sve_subri_h, TCG_CALL_NO_RWG, void, ptr, ptr, i64, i32)
  DEF_HELPER_FLAGS_4(sve_subri_s, TCG_CALL_NO_RWG, void, ptr, ptr, i64, i32)
 diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index 2aec963f74..f5fbfb751e 100644
+index dbade6ece0..2aec963f74 100644
 --- a/target/arm/tcg/sve_helper.c
 +++ b/target/arm/tcg/sve_helper.c
-@@ -4096,6 +4096,29 @@ uint64_t HELPER(sve_cntp)(void *vn, void *vg, uint32_t pred_desc)
-     return sum;
+@@ -4142,6 +4142,28 @@ uint32_t HELPER(sve_whilel)(void *vd, uint32_t count, uint32_t pred_desc)
+     return pred_count_test(oprbits, count, false);
  }
  
-+/* C.f. Arm pseudocode EncodePredCount */
-+static uint64_t encode_pred_count(uint32_t elements, uint32_t count,
-+                                  uint32_t esz, bool invert)
++uint32_t HELPER(sve_while2l)(void *vd, uint32_t count, uint32_t pred_desc)
 +{
-+    uint32_t pred;
-+
-+    if (count == 0) {
-+        return 0;
-+    }
-+    if (invert) {
-+        count = elements - count;
-+    } else if (count == elements) {
-+        count = 0;
-+        invert = true;
-+    }
-+
-+    pred = (count << 1) | 1;
-+    pred <<= esz;
-+    pred |= invert << 15;
-+
-+    return pred;
-+}
-+
- /* C.f. Arm pseudocode PredCountTest */
- static uint32_t pred_count_test(uint32_t elements, uint32_t count, bool invert)
- {
-@@ -4164,6 +4187,20 @@ uint32_t HELPER(sve_while2l)(void *vd, uint32_t count, uint32_t pred_desc)
-     return pred_count_test(2 * oprbits, count, false);
- }
- 
-+uint32_t HELPER(sve_whilecl)(void *vd, uint32_t count, uint32_t pred_desc)
-+{
-+    uint32_t pl = FIELD_EX32(pred_desc, PREDDESC, OPRSZ);
++    uint32_t oprsz = FIELD_EX32(pred_desc, PREDDESC, OPRSZ);
 +    uint32_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
-+    uint32_t scale = FIELD_EX32(pred_desc, PREDDESC, DATA);
-+    uint32_t vl = pl * 8;
-+    uint32_t elements = (vl >> esz) << scale;
++    uint32_t oprbits = oprsz * 8;
++    uint64_t esz_mask = pred_esz_masks[esz];
 +    ARMPredicateReg *d = vd;
 +
-+    do_zero(d, pl);
-+    d->p[0] = encode_pred_count(elements, count, esz, false);
-+    return pred_count_test(elements, count, false);
++    do_zero(&d[0], oprsz);
++    do_zero(&d[1], oprsz);
++
++    count <<= esz;
++    if (count <= oprbits) {
++        do_whilel(d[0].p, esz_mask, count, oprbits);
++    } else {
++        do_whilel(d[0].p, esz_mask, oprbits, oprbits);
++        do_whilel(d[1].p, esz_mask, count - oprbits, oprbits);
++    }
++
++    return pred_count_test(2 * oprbits, count, false);
 +}
 +
  static void do_whileg(uint64_t *d, uint64_t esz_mask,
                        uint32_t count, uint32_t oprbits)
  {
-@@ -4218,6 +4255,20 @@ uint32_t HELPER(sve_while2g)(void *vd, uint32_t count, uint32_t pred_desc)
-     return pred_count_test(2 * oprbits, count, true);
+@@ -4174,6 +4196,28 @@ uint32_t HELPER(sve_whileg)(void *vd, uint32_t count, uint32_t pred_desc)
+     return pred_count_test(oprbits, count, true);
  }
  
-+uint32_t HELPER(sve_whilecg)(void *vd, uint32_t count, uint32_t pred_desc)
++uint32_t HELPER(sve_while2g)(void *vd, uint32_t count, uint32_t pred_desc)
 +{
-+    uint32_t pl = FIELD_EX32(pred_desc, PREDDESC, OPRSZ);
++    uint32_t oprsz = FIELD_EX32(pred_desc, PREDDESC, OPRSZ);
 +    uint32_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
-+    uint32_t scale = FIELD_EX32(pred_desc, PREDDESC, DATA);
-+    uint32_t vl = pl * 8;
-+    uint32_t elements = (vl >> esz) << scale;
++    uint32_t oprbits = oprsz * 8;
++    uint64_t esz_mask = pred_esz_masks[esz];
 +    ARMPredicateReg *d = vd;
 +
-+    do_zero(d, pl);
-+    d->p[0] = encode_pred_count(elements, count, esz, true);
-+    return pred_count_test(elements, count, true);
++    do_zero(&d[0], oprsz);
++    do_zero(&d[1], oprsz);
++
++    count <<= esz;
++    if (count <= oprbits) {
++        do_whileg(d[1].p, esz_mask, count, oprbits);
++    } else {
++        do_whileg(d[1].p, esz_mask, oprbits, oprbits);
++        do_whileg(d[0].p, esz_mask, count - oprbits, oprbits);
++    }
++
++    return pred_count_test(2 * oprbits, count, true);
 +}
 +
  /* Recursive reduction on a function;
   * C.f. the ARM ARM function ReducePredicated.
   *
 diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index de6ffe7511..c93dca224c 100644
+index cb60b533e9..de6ffe7511 100644
 --- a/target/arm/tcg/translate-sve.c
 +++ b/target/arm/tcg/translate-sve.c
-@@ -3110,7 +3110,7 @@ static bool trans_CTERM(DisasContext *s, arg_CTERM *a)
+@@ -3109,7 +3109,8 @@ static bool trans_CTERM(DisasContext *s, arg_CTERM *a)
+ }
  
  typedef void gen_while_fn(TCGv_i32, TCGv_ptr, TCGv_i32, TCGv_i32);
- static bool do_WHILE(DisasContext *s, arg_while *a,
--                     bool lt, int scale, gen_while_fn *fn)
-+                     bool lt, int scale, int data, gen_while_fn *fn)
+-static bool do_WHILE(DisasContext *s, arg_while *a, bool lt, gen_while_fn *fn)
++static bool do_WHILE(DisasContext *s, arg_while *a,
++                     bool lt, int scale, gen_while_fn *fn)
  {
      TCGv_i64 op0, op1, t0, t1, tmax;
      TCGv_i32 t2;
-@@ -3196,6 +3196,7 @@ static bool do_WHILE(DisasContext *s, arg_while *a,
+@@ -3164,7 +3165,7 @@ static bool do_WHILE(DisasContext *s, arg_while *a, bool lt, gen_while_fn *fn)
+         }
+     }
  
-     desc = FIELD_DP32(desc, PREDDESC, OPRSZ, vsz / 8);
-     desc = FIELD_DP32(desc, PREDDESC, ESZ, a->esz);
-+    desc = FIELD_DP32(desc, PREDDESC, DATA, data);
- 
-     ptr = tcg_temp_new_ptr();
-     tcg_gen_addi_ptr(ptr, tcg_env, pred_full_reg_offset(s, a->rd));
-@@ -3206,13 +3207,24 @@ static bool do_WHILE(DisasContext *s, arg_while *a,
+-    tmax = tcg_constant_i64(vsz >> a->esz);
++    tmax = tcg_constant_i64((vsz << scale) >> a->esz);
+     if (eq) {
+         /* Equality means one more iteration.  */
+         tcg_gen_addi_i64(t0, t0, 1);
+@@ -3205,8 +3206,13 @@ static bool do_WHILE(DisasContext *s, arg_while *a, bool lt, gen_while_fn *fn)
      return true;
  }
  
--TRANS_FEAT(WHILE_lt, aa64_sve, do_WHILE, a, true, 0, gen_helper_sve_whilel)
--TRANS_FEAT(WHILE_gt, aa64_sve2, do_WHILE, a, false, 0, gen_helper_sve_whileg)
-+TRANS_FEAT(WHILE_lt, aa64_sve, do_WHILE,
-+           a, true, 0, 0, gen_helper_sve_whilel)
-+TRANS_FEAT(WHILE_gt, aa64_sve2, do_WHILE,
-+           a, false, 0, 0, gen_helper_sve_whileg)
- 
- TRANS_FEAT(WHILE_lt_pair, aa64_sme2_or_sve2p1, do_WHILE,
--           a, true, 1, gen_helper_sve_while2l)
-+           a, true, 1, 0, gen_helper_sve_while2l)
- TRANS_FEAT(WHILE_gt_pair, aa64_sme2_or_sve2p1, do_WHILE,
--           a, false, 1, gen_helper_sve_while2g)
-+           a, false, 1, 0, gen_helper_sve_while2g)
+-TRANS_FEAT(WHILE_lt, aa64_sve, do_WHILE, a, true, gen_helper_sve_whilel)
+-TRANS_FEAT(WHILE_gt, aa64_sve2, do_WHILE, a, false, gen_helper_sve_whileg)
++TRANS_FEAT(WHILE_lt, aa64_sve, do_WHILE, a, true, 0, gen_helper_sve_whilel)
++TRANS_FEAT(WHILE_gt, aa64_sve2, do_WHILE, a, false, 0, gen_helper_sve_whileg)
 +
-+TRANS_FEAT(WHILE_lt_cnt2, aa64_sme2_or_sve2p1, do_WHILE,
-+           a, true, 1, 1, gen_helper_sve_whilecl)
-+TRANS_FEAT(WHILE_lt_cnt4, aa64_sme2_or_sve2p1, do_WHILE,
-+           a, true, 2, 2, gen_helper_sve_whilecl)
-+TRANS_FEAT(WHILE_gt_cnt2, aa64_sme2_or_sve2p1, do_WHILE,
-+           a, false, 1, 1, gen_helper_sve_whilecg)
-+TRANS_FEAT(WHILE_gt_cnt4, aa64_sme2_or_sve2p1, do_WHILE,
-+           a, false, 2, 2, gen_helper_sve_whilecg)
++TRANS_FEAT(WHILE_lt_pair, aa64_sme2_or_sve2p1, do_WHILE,
++           a, true, 1, gen_helper_sve_while2l)
++TRANS_FEAT(WHILE_gt_pair, aa64_sme2_or_sve2p1, do_WHILE,
++           a, false, 1, gen_helper_sve_while2g)
  
  static bool trans_WHILE_ptr(DisasContext *s, arg_WHILE_ptr *a)
  {
 diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index 968b2a57e9..389a72d824 100644
+index c90d975ebf..968b2a57e9 100644
 --- a/target/arm/tcg/sve.decode
 +++ b/target/arm/tcg/sve.decode
-@@ -59,6 +59,8 @@
+@@ -796,6 +796,14 @@ WHILE_gt        00100101 esz:2 1 rm:5 000 sf:1 u:1 0 rn:5 eq:1 rd:4  &while
+ # SVE2 pointer conflict compare
+ WHILE_ptr       00100101 esz:2 1 rm:5 001 100 rn:5 rw:1 rd:4
  
- %rn_ax2         6:4 !function=times_2
- 
-+%pnd            0:3 !function=plus_8
++# SVE2.1 predicate pair
++%pd_pair        1:3 !function=times_2
++@while_pair     ........ esz:2 . rm:5 .... u:1 . rn:5 . ... eq:1 \
++                &while rd=%pd_pair sf=1
 +
- ###########################################################################
- # Named attribute sets.  These are used to make nice(er) names
- # when creating helpers common to those for the individual
-@@ -804,6 +806,15 @@ WHILE_ptr       00100101 esz:2 1 rm:5 001 100 rn:5 rw:1 rd:4
- WHILE_lt_pair   00100101 .. 1 ..... 0101 . 1 ..... 1 ... .  @while_pair
- WHILE_gt_pair   00100101 .. 1 ..... 0101 . 0 ..... 1 ... .  @while_pair
- 
-+# SVE2.1 predicate as count
-+@while_cnt      ........ esz:2 . rm:5 .... u:1 . rn:5 . eq:1 ... \
-+                &while rd=%pnd sf=1
-+
-+WHILE_lt_cnt2   00100101 .. 1 ..... 0100 . 1 ..... 1 . ...  @while_cnt
-+WHILE_lt_cnt4   00100101 .. 1 ..... 0110 . 1 ..... 1 . ...  @while_cnt
-+WHILE_gt_cnt2   00100101 .. 1 ..... 0100 . 0 ..... 1 . ...  @while_cnt
-+WHILE_gt_cnt4   00100101 .. 1 ..... 0110 . 0 ..... 1 . ...  @while_cnt
++WHILE_lt_pair   00100101 .. 1 ..... 0101 . 1 ..... 1 ... .  @while_pair
++WHILE_gt_pair   00100101 .. 1 ..... 0101 . 0 ..... 1 ... .  @while_pair
 +
  ### SVE Integer Wide Immediate - Unpredicated Group
  
