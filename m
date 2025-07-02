@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47A95C83F03
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 22:40:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96545C83F04
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 22:40:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uX65x-0008M0-6o; Wed, 02 Jul 2025 18:38:25 -0400
+	id 1uX65y-0008Mk-5T; Wed, 02 Jul 2025 18:38:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uX65l-0008DL-Ix; Wed, 02 Jul 2025 18:38:13 -0400
+ id 1uX65t-0008Id-R4; Wed, 02 Jul 2025 18:38:21 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uX65i-0005Dg-04; Wed, 02 Jul 2025 18:38:12 -0400
+ id 1uX65r-0005Gj-6X; Wed, 02 Jul 2025 18:38:21 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 38C8B55CA60;
- Thu, 03 Jul 2025 00:38:07 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 2E18155CCAB;
+ Thu, 03 Jul 2025 00:38:17 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id x6Zvs3O2WHAa; Thu,  3 Jul 2025 00:38:04 +0200 (CEST)
+ with ESMTP id cUd9eMHA3ehj; Thu,  3 Jul 2025 00:38:15 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 7C4CF55CA58; Thu, 03 Jul 2025 00:38:04 +0200 (CEST)
-Message-ID: <ea74ad1351a40b037c6af0cd1563d7bff9727e1b.1751494995.git.balaton@eik.bme.hu>
+ id 2F68855CCA8; Thu, 03 Jul 2025 00:38:15 +0200 (CEST)
+Message-ID: <58b460095a54cfc69c6a4cc6d88b0b93932deb54.1751494995.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1751494995.git.balaton@eik.bme.hu>
 References: <cover.1751494995.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 02/13] hw/ppc/pegasos2: Remove explicit name properties
- from device tree
+Subject: [PATCH v2 12/13] hw/ppc/pegasos2: Add Pegasos I emulation
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>
-Date: Thu, 03 Jul 2025 00:38:04 +0200 (CEST)
+Date: Thu, 03 Jul 2025 00:38:15 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -16
@@ -63,152 +62,342 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are not needed any more now that VOF can handle it.
+The Pegasos II is a redesign of the original Pegasos (later marked I)
+that replaces the north bridge and has updated firmware but otherwise
+these are very similar. The Pegasos uses the same north bridge that
+AmigaOne used which we already emulate so we can also easily emulate
+Pegasos I.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/ppc/pegasos2.c | 17 -----------------
- 1 file changed, 17 deletions(-)
+ hw/ppc/pegasos2.c | 170 +++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 124 insertions(+), 46 deletions(-)
 
 diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-index e15cf96427..73995624e5 100644
+index ae3f01231d..a88d93ae04 100644
 --- a/hw/ppc/pegasos2.c
 +++ b/hw/ppc/pegasos2.c
-@@ -662,7 +662,6 @@ static void dt_isa(PCIBus *bus, PCIDevice *d, FDTInfo *fi)
-     qemu_fdt_setprop_cell(fi->fdt, fi->path, "#size-cells", 1);
-     qemu_fdt_setprop_cell(fi->fdt, fi->path, "#address-cells", 2);
-     qemu_fdt_setprop_string(fi->fdt, fi->path, "device_type", "isa");
--    qemu_fdt_setprop_string(fi->fdt, fi->path, "name", "isa");
+@@ -1,5 +1,5 @@
+ /*
+- * QEMU PowerPC CHRP (Genesi/bPlan Pegasos II) hardware System Emulator
++ * QEMU PowerPC CHRP (Genesi/bPlan Pegasos I/II) hardware System Emulator
+  *
+  * Copyright (c) 2018-2021 BALATON Zoltan
+  *
+@@ -15,6 +15,7 @@
+ #include "hw/pci/pci_host.h"
+ #include "hw/irq.h"
+ #include "hw/or-irq.h"
++#include "hw/pci-host/articia.h"
+ #include "hw/pci-host/mv64361.h"
+ #include "hw/isa/vt82c686.h"
+ #include "hw/ide/pci.h"
+@@ -55,12 +56,18 @@
+ #define H_PRIVILEGE  -3  /* Caller not privileged */
+ #define H_PARAMETER  -4  /* Parameter invalid, out-of-range or conflicting */
  
-     /* additional devices */
-     g_string_printf(name, "%s/lpt@i3bc", fi->path);
-@@ -677,7 +676,6 @@ static void dt_isa(PCIBus *bus, PCIDevice *d, FDTInfo *fi)
-     cells[2] = cpu_to_be32(8);
-     qemu_fdt_setprop(fi->fdt, name->str, "reg", cells, 3 * sizeof(cells[0]));
-     qemu_fdt_setprop_string(fi->fdt, name->str, "device_type", "lpt");
--    qemu_fdt_setprop_string(fi->fdt, name->str, "name", "lpt");
++typedef enum {
++    PEGASOS1 = 1,
++    PEGASOS2 = 2,
++} PegasosMachineType;
++
+ #define TYPE_PEGASOS_MACHINE MACHINE_TYPE_NAME("pegasos")
+ OBJECT_DECLARE_SIMPLE_TYPE(PegasosMachineState, PEGASOS_MACHINE)
  
-     g_string_printf(name, "%s/fdc@i3f0", fi->path);
-     qemu_fdt_add_subnode(fi->fdt, name->str);
-@@ -691,7 +689,6 @@ static void dt_isa(PCIBus *bus, PCIDevice *d, FDTInfo *fi)
-     cells[2] = cpu_to_be32(8);
-     qemu_fdt_setprop(fi->fdt, name->str, "reg", cells, 3 * sizeof(cells[0]));
-     qemu_fdt_setprop_string(fi->fdt, name->str, "device_type", "fdc");
--    qemu_fdt_setprop_string(fi->fdt, name->str, "name", "fdc");
+ struct PegasosMachineState {
+     MachineState parent_obj;
  
-     g_string_printf(name, "%s/timer@i40", fi->path);
-     qemu_fdt_add_subnode(fi->fdt, name->str);
-@@ -701,7 +698,6 @@ static void dt_isa(PCIBus *bus, PCIDevice *d, FDTInfo *fi)
-     cells[2] = cpu_to_be32(8);
-     qemu_fdt_setprop(fi->fdt, name->str, "reg", cells, 3 * sizeof(cells[0]));
-     qemu_fdt_setprop_string(fi->fdt, name->str, "device_type", "timer");
--    qemu_fdt_setprop_string(fi->fdt, name->str, "name", "timer");
++    PegasosMachineType type;
+     PowerPCCPU *cpu;
+     DeviceState *nb; /* north bridge */
+     DeviceState *sb; /* south bridge */
+@@ -79,7 +86,7 @@ struct PegasosMachineState {
  
-     g_string_printf(name, "%s/rtc@i70", fi->path);
-     qemu_fdt_add_subnode(fi->fdt, name->str);
-@@ -716,7 +712,6 @@ static void dt_isa(PCIBus *bus, PCIDevice *d, FDTInfo *fi)
-     cells[2] = cpu_to_be32(2);
-     qemu_fdt_setprop(fi->fdt, name->str, "reg", cells, 3 * sizeof(cells[0]));
-     qemu_fdt_setprop_string(fi->fdt, name->str, "device_type", "rtc");
--    qemu_fdt_setprop_string(fi->fdt, name->str, "name", "rtc");
+ static void *pegasos2_build_fdt(PegasosMachineState *pm, int *fdt_size);
  
-     g_string_printf(name, "%s/keyboard@i60", fi->path);
-     qemu_fdt_add_subnode(fi->fdt, name->str);
-@@ -729,7 +724,6 @@ static void dt_isa(PCIBus *bus, PCIDevice *d, FDTInfo *fi)
-     cells[2] = cpu_to_be32(5);
-     qemu_fdt_setprop(fi->fdt, name->str, "reg", cells, 3 * sizeof(cells[0]));
-     qemu_fdt_setprop_string(fi->fdt, name->str, "device_type", "keyboard");
--    qemu_fdt_setprop_string(fi->fdt, name->str, "name", "keyboard");
- 
-     g_string_printf(name, "%s/8042@i60", fi->path);
-     qemu_fdt_add_subnode(fi->fdt, name->str);
-@@ -743,7 +737,6 @@ static void dt_isa(PCIBus *bus, PCIDevice *d, FDTInfo *fi)
-     cells[2] = cpu_to_be32(5);
-     qemu_fdt_setprop(fi->fdt, name->str, "reg", cells, 3 * sizeof(cells[0]));
-     qemu_fdt_setprop_string(fi->fdt, name->str, "device_type", "");
--    qemu_fdt_setprop_string(fi->fdt, name->str, "name", "8042");
- 
-     g_string_printf(name, "%s/serial@i2f8", fi->path);
-     qemu_fdt_add_subnode(fi->fdt, name->str);
-@@ -757,7 +750,6 @@ static void dt_isa(PCIBus *bus, PCIDevice *d, FDTInfo *fi)
-     cells[2] = cpu_to_be32(8);
-     qemu_fdt_setprop(fi->fdt, name->str, "reg", cells, 3 * sizeof(cells[0]));
-     qemu_fdt_setprop_string(fi->fdt, name->str, "device_type", "serial");
--    qemu_fdt_setprop_string(fi->fdt, name->str, "name", "serial");
- 
-     g_string_free(name, TRUE);
+-static void pegasos2_cpu_reset(void *opaque)
++static void pegasos_cpu_reset(void *opaque)
+ {
+     PowerPCCPU *cpu = opaque;
+     PegasosMachineState *pm = PEGASOS_MACHINE(current_machine);
+@@ -89,6 +96,8 @@ static void pegasos2_cpu_reset(void *opaque)
+     if (pm->vof) {
+         cpu->env.gpr[1] = 2 * VOF_STACK_SIZE - 0x20;
+         cpu->env.nip = 0x100;
++    } else if (pm->type == PEGASOS1) {
++        cpu->env.nip = 0xfffc0100;
+     }
+     cpu_ppc_tb_reset(&cpu->env);
  }
-@@ -846,7 +838,6 @@ static void add_pci_device(PCIBus *bus, PCIDevice *d, void *opaque)
-         j += 5;
+@@ -139,13 +148,15 @@ static void pegasos_init(MachineState *machine)
+     PegasosMachineState *pm = PEGASOS_MACHINE(machine);
+     CPUPPCState *env;
+     MemoryRegion *rom = g_new(MemoryRegion, 1);
+-    PCIBus *pci_bus;
++    PCIBus *pci_bus = NULL;
+     Object *via;
+     PCIDevice *dev;
+     I2CBus *i2c_bus;
+     const char *fwname = machine->firmware ?: PROM_FILENAME;
+     char *filename;
++    hwaddr prom_addr;
+     ssize_t sz;
++    int devfn;
+     uint8_t *spd_data;
+ 
+     /* init CPU */
+@@ -158,7 +169,7 @@ static void pegasos_init(MachineState *machine)
+ 
+     /* Set time-base frequency */
+     cpu_ppc_tb_init(env, pm->bus_freq_hz / 4);
+-    qemu_register_reset(pegasos2_cpu_reset, pm->cpu);
++    qemu_register_reset(pegasos_cpu_reset, pm->cpu);
+ 
+     /* RAM */
+     if (machine->ram_size > 2 * GiB) {
+@@ -176,12 +187,16 @@ static void pegasos_init(MachineState *machine)
+     if (!machine->firmware && !pm->vof) {
+         pm->vof = g_malloc0(sizeof(*pm->vof));
      }
-     qemu_fdt_setprop(fi->fdt, node->str, "reg", cells, j * sizeof(cells[0]));
--    qemu_fdt_setprop_string(fi->fdt, node->str, "name", name ?: pn);
-     if (pci_get_byte(&d->config[PCI_INTERRUPT_PIN])) {
-         qemu_fdt_setprop_cell(fi->fdt, node->str, "interrupts",
-                               pci_get_byte(&d->config[PCI_INTERRUPT_PIN]));
-@@ -916,7 +907,6 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
-     qemu_fdt_setprop_cell(fdt, "/pci@c0000000", "#size-cells", 2);
-     qemu_fdt_setprop_cell(fdt, "/pci@c0000000", "#address-cells", 3);
-     qemu_fdt_setprop_string(fdt, "/pci@c0000000", "device_type", "pci");
--    qemu_fdt_setprop_string(fdt, "/pci@c0000000", "name", "pci");
- 
-     fi.path = "/pci@c0000000";
-     pci_bus = mv64361_get_pci_bus(pm->mv, 0);
-@@ -951,7 +941,6 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
-     qemu_fdt_setprop_cell(fdt, "/pci@80000000", "#size-cells", 2);
-     qemu_fdt_setprop_cell(fdt, "/pci@80000000", "#address-cells", 3);
-     qemu_fdt_setprop_string(fdt, "/pci@80000000", "device_type", "pci");
--    qemu_fdt_setprop_string(fdt, "/pci@80000000", "name", "pci");
- 
-     fi.path = "/pci@80000000";
-     pci_bus = mv64361_get_pci_bus(pm->mv, 1);
-@@ -959,7 +948,6 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
- 
-     qemu_fdt_add_subnode(fdt, "/failsafe");
-     qemu_fdt_setprop_string(fdt, "/failsafe", "device_type", "serial");
--    qemu_fdt_setprop_string(fdt, "/failsafe", "name", "failsafe");
- 
-     qemu_fdt_add_subnode(fdt, "/rtas");
-     qemu_fdt_setprop_cell(fdt, "/rtas", "system-reboot", RTAS_SYSTEM_REBOOT);
-@@ -989,14 +977,12 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
-     qemu_fdt_setprop_cell(fdt, "/rtas", "rtas-display-device", 0);
-     qemu_fdt_setprop_cell(fdt, "/rtas", "rtas-size", 20);
-     qemu_fdt_setprop_cell(fdt, "/rtas", "rtas-version", 1);
--    qemu_fdt_setprop_string(fdt, "/rtas", "name", "rtas");
- 
-     /* cpus */
-     qemu_fdt_add_subnode(fdt, "/cpus");
-     qemu_fdt_setprop_cell(fdt, "/cpus", "#cpus", 1);
-     qemu_fdt_setprop_cell(fdt, "/cpus", "#address-cells", 1);
-     qemu_fdt_setprop_cell(fdt, "/cpus", "#size-cells", 0);
--    qemu_fdt_setprop_string(fdt, "/cpus", "name", "cpus");
- 
-     /* FIXME Get CPU name from CPU object */
-     const char *cp = "/cpus/PowerPC,G4";
-@@ -1048,7 +1034,6 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
-     cells[1] = 0;
-     qemu_fdt_setprop(fdt, cp, "reg", cells, 2 * sizeof(cells[0]));
-     qemu_fdt_setprop_string(fdt, cp, "device_type", "cpu");
--    qemu_fdt_setprop_string(fdt, cp, "name", strrchr(cp, '/') + 1);
- 
-     /* memory */
-     qemu_fdt_add_subnode(fdt, "/memory@0");
-@@ -1056,7 +1041,6 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
-     cells[1] = cpu_to_be32(machine->ram_size);
-     qemu_fdt_setprop(fdt, "/memory@0", "reg", cells, 2 * sizeof(cells[0]));
-     qemu_fdt_setprop_string(fdt, "/memory@0", "device_type", "memory");
--    qemu_fdt_setprop_string(fdt, "/memory@0", "name", "memory");
- 
-     qemu_fdt_add_subnode(fdt, "/chosen");
-     if (pm->initrd_addr && pm->initrd_size) {
-@@ -1067,7 +1051,6 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
+-    memory_region_init_rom(rom, NULL, "pegasos2.rom", PROM_SIZE, &error_fatal);
+-    memory_region_add_subregion(get_system_memory(), PROM_ADDR, rom);
++    prom_addr = PROM_ADDR;
++    if (pm->type == PEGASOS1) {
++        prom_addr += PROM_SIZE;
++    }
++    memory_region_init_rom(rom, NULL, "rom", PROM_SIZE, &error_fatal);
++    memory_region_add_subregion(get_system_memory(), prom_addr, rom);
+     sz = load_elf(filename, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+                   ELFDATA2MSB, PPC_ELF_MACHINE, 0, 0);
+     if (sz <= 0) {
+-        sz = load_image_targphys(filename, pm->vof ? 0 : PROM_ADDR, PROM_SIZE);
++        sz = load_image_targphys(filename, pm->vof ? 0 : prom_addr, PROM_SIZE);
      }
-     qemu_fdt_setprop_string(fdt, "/chosen", "bootargs",
-                             machine->kernel_cmdline ?: "");
--    qemu_fdt_setprop_string(fdt, "/chosen", "name", "chosen");
+     if (sz <= 0 || sz > PROM_SIZE) {
+         error_report("Could not load firmware '%s'", filename);
+@@ -192,13 +207,37 @@ static void pegasos_init(MachineState *machine)
+         pm->vof->fw_size = sz;
+     }
  
-     qemu_fdt_add_subnode(fdt, "/openprom");
-     qemu_fdt_setprop_string(fdt, "/openprom", "model", "Pegasos2,1.1");
+-    /* Marvell Discovery II system controller */
+-    pm->nb = DEVICE(sysbus_create_simple(TYPE_MV64361, -1,
+-                          qdev_get_gpio_in(DEVICE(pm->cpu), PPC6xx_INPUT_INT)));
+-    pci_bus = mv64361_get_pci_bus(pm->nb, 1);
++    /* north bridge */
++    switch (pm->type) {
++    case PEGASOS1:
++    {
++        MemoryRegion *pci_mem, *mr;
++
++        /* Articia S */
++        pm->nb = DEVICE(sysbus_create_simple(TYPE_ARTICIA, 0xfe000000, NULL));
++        pci_mem = sysbus_mmio_get_region(SYS_BUS_DEVICE(pm->nb), 1);
++        mr = g_new(MemoryRegion, 1);
++        memory_region_init_alias(mr, OBJECT(pm->nb), "pci-mem-low", pci_mem,
++                                 0, 0x1000000);
++        memory_region_add_subregion(get_system_memory(), 0xfd000000, mr);
++        mr = g_new(MemoryRegion, 1);
++        memory_region_init_alias(mr, OBJECT(pm->nb), "pci-mem-high", pci_mem,
++                                 0x80000000, 0x7d000000);
++        memory_region_add_subregion(get_system_memory(), 0x80000000, mr);
++        pci_bus = PCI_BUS(qdev_get_child_bus(pm->nb, "pci.0"));
++        break;
++    }
++    case PEGASOS2:
++        /* Marvell Discovery II system controller */
++        pm->nb = DEVICE(sysbus_create_simple(TYPE_MV64361, -1,
++                        qdev_get_gpio_in(DEVICE(pm->cpu), PPC6xx_INPUT_INT)));
++        pci_bus = mv64361_get_pci_bus(pm->nb, 1);
++        break;
++    }
+ 
+     /* VIA VT8231 South Bridge (multifunction PCI device) */
+-    pm->sb = DEVICE(pci_new_multifunction(PCI_DEVFN(12, 0), TYPE_VT8231_ISA));
++    devfn = PCI_DEVFN(pm->type == PEGASOS1 ? 7 : 12, 0);
++    pm->sb = DEVICE(pci_new_multifunction(devfn, TYPE_VT8231_ISA));
+     via = OBJECT(pm->sb);
+ 
+     /* Set properties on individual devices before realizing the south bridge */
+@@ -223,7 +262,21 @@ static void pegasos_init(MachineState *machine)
+     /* other PC hardware */
+     pci_vga_init(pci_bus);
+ 
+-    pegasos2_setup_pci_irq(pm);
++    /* pci interrupt routing */
++    switch (pm->type) {
++    case PEGASOS1:
++        qdev_connect_gpio_out_named(pm->sb, "intr", 0,
++                                    qdev_get_gpio_in(DEVICE(pm->cpu),
++                                                     PPC6xx_INPUT_INT));
++        for (int i = 0; i < PCI_NUM_PINS; i++) {
++            qdev_connect_gpio_out(pm->nb, i,
++                                  qdev_get_gpio_in_named(pm->sb, "pirq", i));
++        }
++        break;
++    case PEGASOS2:
++        pegasos2_setup_pci_irq(pm);
++        break;
++    }
+ 
+     if (machine->kernel_filename) {
+         sz = load_elf(machine->kernel_filename, NULL, NULL, NULL,
+@@ -376,7 +429,7 @@ static void pegasos2_chipset_reset(PegasosMachineState *pm)
+                               PCI_INTERRUPT_LINE, 2, 0x309);
+ }
+ 
+-static void pegasos2_machine_reset(MachineState *machine, ResetType type)
++static void pegasos_machine_reset(MachineState *machine, ResetType type)
+ {
+     PegasosMachineState *pm = PEGASOS_MACHINE(machine);
+     void *fdt;
+@@ -387,6 +440,9 @@ static void pegasos2_machine_reset(MachineState *machine, ResetType type)
+     qemu_devices_reset(type);
+     if (!pm->vof) {
+         return; /* Firmware should set up machine so nothing to do */
++    } else if (pm->type == PEGASOS1) {
++        error_report("VOF is not supported by this machine");
++        exit(1);
+     }
+ 
+     /* Otherwise, set up devices that board firmware would normally do */
+@@ -558,12 +614,12 @@ static target_ulong pegasos2_rtas(PowerPCCPU *cpu, PegasosMachineState *pm,
+     }
+ }
+ 
+-static bool pegasos2_cpu_in_nested(PowerPCCPU *cpu)
++static bool pegasos_cpu_in_nested(PowerPCCPU *cpu)
+ {
+     return false;
+ }
+ 
+-static void pegasos2_hypercall(PPCVirtualHypervisor *vhyp, PowerPCCPU *cpu)
++static void pegasos_hypercall(PPCVirtualHypervisor *vhyp, PowerPCCPU *cpu)
+ {
+     PegasosMachineState *pm = PEGASOS_MACHINE(vhyp);
+     CPUPPCState *env = &cpu->env;
+@@ -574,7 +630,7 @@ static void pegasos2_hypercall(PPCVirtualHypervisor *vhyp, PowerPCCPU *cpu)
+     if (FIELD_EX64(env->msr, MSR, PR)) {
+         qemu_log_mask(LOG_GUEST_ERROR, "Hypercall made with MSR[PR]=1\n");
+         env->gpr[3] = H_PRIVILEGE;
+-    } else if (env->gpr[3] == KVMPPC_H_RTAS) {
++    } else if (env->gpr[3] == KVMPPC_H_RTAS && pm->type == PEGASOS2) {
+         env->gpr[3] = pegasos2_rtas(cpu, pm, env->gpr[4]);
+     } else if (env->gpr[3] == KVMPPC_H_VOF_CLIENT) {
+         int ret = vof_client_call(MACHINE(pm), pm->vof, MACHINE(pm)->fdt,
+@@ -596,62 +652,84 @@ static target_ulong vhyp_encode_hpt_for_kvm_pr(PPCVirtualHypervisor *vhyp)
+     return POWERPC_CPU(current_cpu)->env.spr[SPR_SDR1];
+ }
+ 
+-static bool pegasos2_setprop(MachineState *ms, const char *path,
+-                             const char *propname, void *val, int vallen)
++static bool pegasos_setprop(MachineState *ms, const char *path,
++                            const char *propname, void *val, int vallen)
+ {
+     return true;
+ }
+ 
+-static void pegasos2_init(Object *obj)
+-{
+-    PegasosMachineState *pm = PEGASOS_MACHINE(obj);
+-
+-    pm->bus_freq_hz = 133333333;
+-}
+-
+-static void pegasos2_machine_class_init(ObjectClass *oc, const void *data)
++static void pegasos_machine_init(MachineClass *mc)
+ {
+-    MachineClass *mc = MACHINE_CLASS(oc);
+-    PPCVirtualHypervisorClass *vhc = PPC_VIRTUAL_HYPERVISOR_CLASS(oc);
+-    VofMachineIfClass *vmc = VOF_MACHINE_CLASS(oc);
++    PPCVirtualHypervisorClass *vhc = PPC_VIRTUAL_HYPERVISOR_CLASS(mc);
++    VofMachineIfClass *vmc = VOF_MACHINE_CLASS(mc);
+ 
+-    mc->desc = "Genesi/bPlan Pegasos II";
+     mc->init = pegasos_init;
+-    mc->reset = pegasos2_machine_reset;
++    mc->reset = pegasos_machine_reset;
+     mc->block_default_type = IF_IDE;
+     mc->default_boot_order = "cd";
+     mc->default_display = "std";
+-    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("7457_v1.2");
+-    mc->default_ram_id = "pegasos2.ram";
++    mc->default_ram_id = "ram";
+     mc->default_ram_size = 512 * MiB;
+     machine_add_audiodev_property(mc);
+ 
+-    vhc->cpu_in_nested = pegasos2_cpu_in_nested;
+-    vhc->hypercall = pegasos2_hypercall;
++    vhc->cpu_in_nested = pegasos_cpu_in_nested;
++    vhc->hypercall = pegasos_hypercall;
+     vhc->cpu_exec_enter = vhyp_nop;
+     vhc->cpu_exec_exit = vhyp_nop;
+     vhc->encode_hpt_for_kvm_pr = vhyp_encode_hpt_for_kvm_pr;
+ 
+-    vmc->setprop = pegasos2_setprop;
++    vmc->setprop = pegasos_setprop;
++}
++
++static void pegasos1_init(Object *obj)
++{
++    PegasosMachineState *pm = PEGASOS_MACHINE(obj);
++
++    pm->type = PEGASOS1;
++    pm->bus_freq_hz = 33000000;
++}
++
++static void pegasos1_machine_class_init(ObjectClass *oc, const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++
++    mc->desc = "Genesi/bPlan Pegasos I";
++    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("750cxe_v3.1b");
++}
++
++static void pegasos2_init(Object *obj)
++{
++    PegasosMachineState *pm = PEGASOS_MACHINE(obj);
++
++    pm->type = PEGASOS2;
++    pm->bus_freq_hz = 133333333;
++}
++
++static void pegasos2_machine_class_init(ObjectClass *oc, const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++
++    mc->desc = "Genesi/bPlan Pegasos II";
++    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("7457_v1.2");
+ }
+ 
++DEFINE_MACHINE_EXTENDED("pegasos", MACHINE, PegasosMachineState,
++                        pegasos_machine_init, true,
++                        { TYPE_PPC_VIRTUAL_HYPERVISOR },
++                        { TYPE_VOF_MACHINE_IF }, { })
++
+ static const TypeInfo pegasos_machine_types[] = {
+     {
+-        .name          = TYPE_PEGASOS_MACHINE,
+-        .parent        = TYPE_MACHINE,
+-        .instance_size = sizeof(PegasosMachineState),
+-        .abstract      = true,
++        .name          = MACHINE_TYPE_NAME("pegasos1"),
++        .parent        = TYPE_PEGASOS_MACHINE,
++        .class_init    = pegasos1_machine_class_init,
++        .instance_init = pegasos1_init,
+     },
+     {
+         .name          = MACHINE_TYPE_NAME("pegasos2"),
+         .parent        = TYPE_PEGASOS_MACHINE,
+         .class_init    = pegasos2_machine_class_init,
+         .instance_init = pegasos2_init,
+-        .interfaces = (const InterfaceInfo[]) {
+-              { TYPE_PPC_VIRTUAL_HYPERVISOR },
+-              { TYPE_VOF_MACHINE_IF },
+-              { }
+-        },
+     },
+ };
+ 
 -- 
 2.41.3
 
