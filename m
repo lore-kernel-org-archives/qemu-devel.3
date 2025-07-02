@@ -4,70 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 682C9C7EE30
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 06:05:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B64DC83013
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 06:15:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWqZV-0000kP-Eq; Wed, 02 Jul 2025 02:03:58 -0400
+	id 1uWqjD-0003OR-FI; Wed, 02 Jul 2025 02:13:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uWqZH-0000j5-Gq
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 02:03:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uWqjB-0003Ng-ID
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 02:13:53 -0400
+Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uWqZC-0004fS-IF
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 02:03:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751436208;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=BL4N4vQUHRolZ4DvmG3fojJiew3wsR9YAjpgmgCVCXk=;
- b=QU/jnSoV54snMBzis0DcxlseTJySkUePmEqMb1aM04hIe08R6pXpN6HozvzD+O8F0KUHIc
- HUMcSQAd2wMC9CkE05+kYE4DfsndFqsbUvPB0W+6etRKSh9y5SJ3fKXbP6r3VdcY+NWUI4
- AIkye+lMXPa/Hjc32sW/QPR2uVPPogE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-279-WQ_eRFWENs2ee4mZhZ6sXw-1; Wed,
- 02 Jul 2025 02:03:26 -0400
-X-MC-Unique: WQ_eRFWENs2ee4mZhZ6sXw-1
-X-Mimecast-MFC-AGG-ID: WQ_eRFWENs2ee4mZhZ6sXw_1751436205
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 779421955D4E; Wed,  2 Jul 2025 06:03:25 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.224.120])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 24BAB18003FC; Wed,  2 Jul 2025 06:03:21 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
-	qemu-devel@nongnu.org
-Cc: kvm@vger.kernel.org,
-	qemu-stable@nongnu.org,
-	qemu-trivial@nongnu.org
-Subject: [PATCH] accel/kvm: Adjust the note about the minimum required kernel
- version
-Date: Wed,  2 Jul 2025 08:03:19 +0200
-Message-ID: <20250702060319.13091-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uWqj5-000748-Li
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 02:13:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1751436828; x=1782972828;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=ZRjDfu3Eo1kq6glHmDbWpF7kNZYyBuliP3tTJzzdXTA=;
+ b=Us4BkugwElNsnZ2t6BzEjC5aYU22oxPf55iIU7riwtfjhMZVsgOo3rvv
+ /vChoTkm6mnih1zqDdbJQhgzNTRva5IGgQZzpJxumyrX7kF8TZhn1emFv
+ sybNUyAmYKyCsZ/3NSGQkF3HOUXKxRcq5MAmCsUJbDmY4rbvvBfQgDjs1
+ iE2munwi6x+Os953Y7mkvhebdiqueN+DN70MTv3xXVEpB4wZwfbJArrJl
+ A9XkAYtZmZSjSdiWQ0u1ydMe1ua5Dlo6lO8gV5KwaMNlb3faQQWkAq7ak
+ B0eulM7ADZGjkU2KS8aIflsWoxZWV2diTzYELTFQH3NwRdLsTDqrsHYjt g==;
+X-CSE-ConnectionGUID: hcBE2i14THypwNFvqd142Q==
+X-CSE-MsgGUID: MBqiwqLGS7a2vAnZESC3dw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11481"; a="52950499"
+X-IronPort-AV: E=Sophos;i="6.16,281,1744095600"; d="scan'208";a="52950499"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Jul 2025 23:13:42 -0700
+X-CSE-ConnectionGUID: AugRwZ41Rpmb1CtDSNhvEw==
+X-CSE-MsgGUID: PRNxl9A/Quyp3h9PDA6ysA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,281,1744095600"; d="scan'208";a="153608850"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa007.fm.intel.com with ESMTP; 01 Jul 2025 23:13:39 -0700
+Date: Wed, 2 Jul 2025 14:35:04 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Ewan Hai <ewanhai-oc@zhaoxin.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Jason Zeng <jason.zeng@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Tao Su <tao1.su@intel.com>,
+ Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
+ Tejus GK <tejus.gk@nutanix.com>,
+ Manish Mishra <manish.mishra@nutanix.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 4/8] i386/cpu: Introduce cache model for YongFeng
+Message-ID: <aGTTGP+92oL+5rbf@intel.com>
+References: <20250626083105.2581859-1-zhao1.liu@intel.com>
+ <20250626083105.2581859-5-zhao1.liu@intel.com>
+ <7f2b589b-589d-4d72-9ecb-26bb5727f724@zhaoxin.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7f2b589b-589d-4d72-9ecb-26bb5727f724@zhaoxin.com>
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,35 +91,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+> > +            {
+> > +                .version = 3,
+> > +                .note = "with the cache info",
+> 
+> I realize that my previous use of "cache info" was not precise; "cache
+> model" is more appropriate. Please help me adjust accordingly, thank you.
 
-Since commit 126e7f78036 ("kvm: require KVM_CAP_IOEVENTFD and
-KVM_CAP_IOEVENTFD_ANY_LENGTH") we require at least kernel 4.4 to
-be able to use KVM. Adjust the upgrade_note accordingly.
-While we're at it, remove the text about kvm-kmod and the
-SourceForge URL since this is not actively maintained anymore.
+Nope, will fix.
 
-Fixes: 126e7f78036 ("kvm: require KVM_CAP_IOEVENTFD and KVM_CAP_IOEVENTFD_ANY_LENGTH")
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- accel/kvm/kvm-all.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+> > +                .cache_info = &yongfeng_cache_info
+> > +            },
+> >               { /* end of list */ }
+> >           }
+> >       },
+> > --
+> > 2.34.1
+> > 
+> 
+> Hi Zhao,
+> 
+> I tested the patchsets you provided on different hosts, and here are the results:
+> 
+> 1. On an Intel host with KVM enabled
+> The CPUID leaves 0x2 and 0x4 reported inside the YongFeng-V3 VM match our
+> expected cache details exactly. However, CPUID leaf 0x80000005 returns all
+> zeros. This is because when KVM is in use, QEMU uses the host's vendor for
+> the IS_INTEL_CPU(env), IS_ZHAOXIN_CPU(env), and IS_AMD_CPU(env) checks.
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index d095d1b98f8..e3302b087f4 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2571,8 +2571,7 @@ static int kvm_init(MachineState *ms)
+This is a bug:
+
+https://lore.kernel.org/qemu-devel/d429b6f5-b59c-4884-b18f-8db71cb8dc7b@oracle.com/
+
+And we expect we can change the vendor with KVM.
+
+> Given that behavior, a zeroed 0x80000005 leaf in the guest is expected and,
+> to me, acceptable. What are your thoughts?
+
+Well, (with this bug) since VM is "Intel" vendor, so this is correct.
+
+> 2. On a YongFeng host (with or without KVM)
+> The CPUID leaves 0x2, 0x4, and 0x80000006 inside the VM all return the
+> values we want, and the L1D/L1I cache info in leaf 0x80000005 is also
+> correct.
+
+Nice!
+
+> 3. TLB info in leaf 0x80000005
+> On both Intel and YongFeng hosts, the L1 TLB fields in leaf 0x80000005
+> remain constant, as we discussed. As you mentioned before, "we can wait and
+> see what maintainers think" about this.
+
+Yes. I suppose Zhaoxin also uses 0x2 to present TLB info like Intel does.
+To support TLB, I feel like there is still some work to be done, and it
+depends on if it's worth it...
+
+> In summary, both patchsets look good for Zhaoxin support, I don't see any
+> issues so far.
+
+Thanks!
+
+> Btw, YongFeng host also support 0x1F, does YongFeng need to turn on
+> "x-force-cpuid-0x1f" default ? I think maybe yes.
+
+OK, will add it.
+
+BTW...my colleague reports a bug that Intel/Zhaoxin CPUs with cache
+model will meet assertion failure on the v10.0 or old machine.
+
+So I think it's necessary to drop all the assert() checks on
+lines_per_tag directly:
+
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 18bb0e9cf9f6..f73943a46945 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -491,7 +491,6 @@ static void encode_topo_cpuid1f(CPUX86State *env, uint32_t count,
+ static uint32_t encode_cache_cpuid80000005(CPUCacheInfo *cache)
  {
-     MachineClass *mc = MACHINE_GET_CLASS(ms);
-     static const char upgrade_note[] =
--        "Please upgrade to at least kernel 2.6.29 or recent kvm-kmod\n"
--        "(see http://sourceforge.net/projects/kvm).\n";
-+        "Please upgrade to at least kernel 4.4.\n";
-     const struct {
-         const char *name;
-         int num;
--- 
-2.50.0
+     assert(cache->size % 1024 == 0);
+-    assert(cache->lines_per_tag > 0);
+     assert(cache->associativity > 0);
+     assert(cache->line_size > 0);
+     return ((cache->size / 1024) << 24) | (cache->associativity << 16) |
+@@ -520,13 +519,10 @@ static uint32_t encode_cache_cpuid80000005(CPUCacheInfo *cache)
+  */
+ static void encode_cache_cpuid80000006(CPUCacheInfo *l2,
+                                        CPUCacheInfo *l3,
+-                                       uint32_t *ecx, uint32_t *edx,
+-                                       bool lines_per_tag_supported)
++                                       uint32_t *ecx, uint32_t *edx)
+ {
+     assert(l2->size % 1024 == 0);
+     assert(l2->associativity > 0);
+-    assert(lines_per_tag_supported ?
+-           l2->lines_per_tag > 0 : l2->lines_per_tag == 0);
+     *ecx = ((l2->size / 1024) << 16) |
+            (X86_ENC_ASSOC(l2->associativity) << 12) |
+            (l2->lines_per_tag << 8) | (l2->line_size);
+@@ -535,8 +531,6 @@ static void encode_cache_cpuid80000006(CPUCacheInfo *l2,
+     if (l3) {
+         assert(l3->size % (512 * 1024) == 0);
+         assert(l3->associativity > 0);
+-        assert(lines_per_tag_supported ?
+-               l3->lines_per_tag > 0 : l3->lines_per_tag == 0);
+         assert(l3->line_size > 0);
+         *edx = ((l3->size / (512 * 1024)) << 18) |
+                (X86_ENC_ASSOC(l3->associativity) << 12) |
+@@ -8353,7 +8347,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+             (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) {
+             *eax = *ebx = 0;
+             encode_cache_cpuid80000006(caches->l2_cache,
+-                                       NULL, ecx, edx, false);
++                                       NULL, ecx, edx);
+             break;
+         }
+
+@@ -8369,7 +8363,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         encode_cache_cpuid80000006(caches->l2_cache,
+                                    cpu->enable_l3_cache ?
+                                    caches->l3_cache : NULL,
+-                                   ecx, edx, true);
++                                   ecx, edx);
+         break;
+     }
+     case 0x80000007:
+
+
 
 
