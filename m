@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAD7EC83013
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 10:01:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09C49C83013
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 10:01:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWuGp-00056U-W4; Wed, 02 Jul 2025 06:00:52 -0400
+	id 1uWuGu-00057T-S2; Wed, 02 Jul 2025 06:00:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uWuGm-00056G-69
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 06:00:48 -0400
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1uWuGs-000576-PX
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 06:00:55 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uWuGj-0000zG-5C
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 06:00:47 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxaeFHA2VoQSIhAQ--.29039S3;
- Wed, 02 Jul 2025 18:00:39 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJBxpeREA2Vo0I8GAA--.37843S3;
- Wed, 02 Jul 2025 18:00:39 +0800 (CST)
-Subject: Re: [PATCH v3 7/9] hw/loongarch: Implement avec set irq
-To: gaosong <gaosong@loongson.cn>
+ (envelope-from <gaosong@loongson.cn>) id 1uWuGq-000106-7w
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 06:00:54 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8AxquBRA2VoSCIhAQ--.31500S3;
+ Wed, 02 Jul 2025 18:00:49 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJAxVOROA2Vo848GAA--.37516S3;
+ Wed, 02 Jul 2025 18:00:48 +0800 (CST)
+Subject: Re: [PATCH v3 2/9] hw/loongarch: add virt feature avecintc support
+To: Bibo Mao <maobibo@loongson.cn>
 Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
 References: <20250627030138.2482055-1-gaosong@loongson.cn>
- <20250627030138.2482055-8-gaosong@loongson.cn>
- <eac2cad7-d0a9-9d65-e98e-1e0f5d719a42@loongson.cn>
- <ca4adb80-dfd0-b1d2-50ab-9b6cace43081@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <dd95532b-56a1-4c2a-a36d-c5e94fc1b442@loongson.cn>
-Date: Wed, 2 Jul 2025 17:59:05 +0800
+ <20250627030138.2482055-3-gaosong@loongson.cn>
+ <ab746c92-492b-fb47-c5f4-df04da478a85@loongson.cn>
+ <3bf9c6c4-60f4-a405-a779-bb297f03dcc7@loongson.cn>
+ <491df489-fa1b-fd07-7a85-3cc86175d85c@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <8dfde1d8-021f-bf5a-7bd8-f634043b8880@loongson.cn>
+Date: Wed, 2 Jul 2025 18:03:36 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <ca4adb80-dfd0-b1d2-50ab-9b6cace43081@loongson.cn>
+In-Reply-To: <491df489-fa1b-fd07-7a85-3cc86175d85c@loongson.cn>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxpeREA2Vo0I8GAA--.37843S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxXw18ZF47tr47Xw48CFW5XFc_yoWrCF4xpF
- 1kAFZ8Gry5Jrn3Jw13G345XFy3Ar10qwn7XF1xWF1IyrsrJr12grW8XrnFgF1UAw4rGr4U
- Zr1rWw43ZF13JrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+Content-Language: en-US
+X-CM-TRANSID: qMiowJAxVOROA2Vo848GAA--.37516S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3Jr4DJr1xurWktw1rZFWfXrc_yoWfAF45pr
+ 1kJFWUAry5Jrn5Xr12gr1UXr98tr1Ut3WDXr48XFy8Jr4DJr1Ygr1UXr1qgF1DAr4kJr18
+ Xr18JrnxZF17XrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ 0xBIdaVrnRJUUU92b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
  e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE14v2
- 6r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr
- 1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8P5r7UU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ 0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
+ xVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C267AK
+ xVWUAVWUtwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
+ AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
+ 42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
+ IF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVF
+ xhVjvjDU0xZFpf9x07j0sjUUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -84,127 +85,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2025/7/2 下午3:21, gaosong wrote:
-> 在 2025/7/2 上午11:15, Bibo Mao 写道:
->>
->>
->> On 2025/6/27 上午11:01, Song Gao wrote:
->>> Implement avec set irq and update CSR_MSIS and CSR_MSGIR.
+在 2025/7/2 下午5:46, Bibo Mao 写道:
+>
+>
+> On 2025/7/2 下午3:10, gaosong wrote:
+>> 在 2025/7/2 上午10:03, Bibo Mao 写道:
 >>>
->>> Signed-off-by: Song Gao <gaosong@loongson.cn>
->>> ---
->>>   hw/intc/loongarch_avec.c | 44 ++++++++++++++++++++++++++++++++++++++--
->>>   1 file changed, 42 insertions(+), 2 deletions(-)
 >>>
->>> diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
->>> index c686ac9483..5959d05d13 100644
->>> --- a/hw/intc/loongarch_avec.c
->>> +++ b/hw/intc/loongarch_avec.c
->>> @@ -16,6 +16,12 @@
->>>   #include "migration/vmstate.h"
->>>   #include "trace.h"
->>>   #include "hw/qdev-properties.h"
->>> +#include "target/loongarch/cpu.h"
->>> +
->>> +/* msg addr field */
->>> +FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
->>> +FIELD(MSG_ADDR, CPU_NUM, 12, 8)
->>> +FIELD(MSG_ADDR, FIX, 28, 12)
->>>     static uint64_t loongarch_avec_mem_read(void *opaque,
->>>                                           hwaddr addr, unsigned size)
->>> @@ -23,12 +29,46 @@ static uint64_t loongarch_avec_mem_read(void 
->>> *opaque,
->>>       return 0;
->>>   }
->>>   +static void avec_set_irq(LoongArchAVECState *s, int cpu_num, int 
->>> irq_num, int level)
->>> +{
->>> +    MachineState *machine = MACHINE(qdev_get_machine());
->>> +    MachineClass *mc = MACHINE_GET_CLASS(machine);
->>> +    const CPUArchIdList *id_list = NULL;
->>> +    CPUState *cpu;
->>> +    CPULoongArchState *env;
->>> +    int i;
->>> +
->>> +    assert(mc->possible_cpu_arch_ids(machine));
->>> +    id_list = mc->possible_cpu_arch_ids(machine);
->>> +    cpu = id_list->cpus[cpu_num].cpu;
->>> +    env = &LOONGARCH_CPU(cpu)->env;
->>> +
->>> +    if (level) {
->>> +        set_bit(irq_num, &env->CSR_MSGIS[irq_num / 64]);
->>> +        env->CSR_MSGIR = FIELD_DP64(env->CSR_MSGIR, CSR_MSGIR, 
->>> INTNUM, irq_num);
->>> +        env->CSR_MSGIR = FIELD_DP64(env->CSR_MSGIR, CSR_MSGIR, 
->>> ACTIVE, 0);
->>> +
->>> +        for (i = 0; i < ARRAY_SIZE(env->CSR_MSGIS); i++) {
->>> +            if (env->CSR_MSGIS[i]) {
->>> +                return;
->>> +            }
->>> +        }
->>> +        qemu_set_irq(s->cpu[cpu_num].parent_irq, 0);
-> and thecheck CSR_MSGIS[4] is from v2 comment.
->> Here such code can inject interrupt to cpu side.
->>   if (level) {
->>       set_bit(irq_num, &env->CSR_MSGIS[irq_num / 64]);
->>       qemu_set_irq(s->cpu[cpu_num].parent_irq, 1);
->>   }
+>>> On 2025/6/27 上午11:01, Song Gao wrote:
+>>>> LoongArchVirtMachinState adds avecintc features, and
+>>>> it use to check whether virt machine support advance interrupt 
+>>>> controller
+>>>> and default set avecintc = ON_OFF_AUTO_ON.
+>>>> LoongArchVirtMachineState adds misc_feature and misc_status for
+>>>> misc fetures and status. and set default avec feture bit.
+>>>>
+>>>> Signed-off-by: Song Gao <gaosong@loongson.cn>
+>>>> ---
+>>>>   hw/loongarch/virt.c         | 43 
+>>>> +++++++++++++++++++++++++++++++++----
+>>>>   include/hw/loongarch/virt.h | 15 +++++++++++++
+>>>>   2 files changed, 54 insertions(+), 4 deletions(-)
+>>>>
+>>>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+>>>> index 6a169d4824..426eaaef84 100644
+>>>> --- a/hw/loongarch/virt.c
+>>>> +++ b/hw/loongarch/virt.c
+>>>> @@ -47,6 +47,28 @@
+>>>>   #include "hw/virtio/virtio-iommu.h"
+>>>>   #include "qemu/error-report.h"
+>>>>   +static void virt_get_avecintc(Object *obj, Visitor *v, const 
+>>>> char *name,
+>>>> +                             void *opaque, Error **errp)
+>>>> +{
+>>>> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
+>>>> +    OnOffAuto avecintc = lvms->avecintc;
+>>>> +
+>>>> +    visit_type_OnOffAuto(v, name, &avecintc, errp);
+>>>> +
+>>>> +}
+>>>> +static void virt_set_avecintc(Object *obj, Visitor *v, const char 
+>>>> *name,
+>>>> +                              void *opaque, Error **errp)
+>>>> +{
+>>>> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
+>>>> +
+>>>> +    if (lvms->avecintc == ON_OFF_AUTO_OFF) {
+>>>> +        lvms->misc_feature &= ~BIT(IOCSRF_AVEC);
+>>>> +        lvms->misc_status &= ~BIT(IOCSRM_AVEC_EN);
+>>>> +    }
+>>>> +
+>>>> +    visit_type_OnOffAuto(v, name, &lvms->avecintc, errp);
+>>> It is a little strange that firstly check variable and then set it, 
+>>> I think that visit_type_OnOffAuto() should be before
+>>>  +    if (lvms->avecintc == ON_OFF_AUTO_OFF) {
+>>>  +        lvms->misc_feature &= ~BIT(IOCSRF_AVEC);
+>>>  +        lvms->misc_status &= ~BIT(IOCSRM_AVEC_EN);
+>>>  +    }
+>>>
+>>>> +}
+>>>> +
+>>>>   static void virt_get_veiointc(Object *obj, Visitor *v, const char 
+>>>> *name,
+>>>>                                 void *opaque, Error **errp)
+>>>>   {
+>>>> @@ -539,6 +561,10 @@ static MemTxResult virt_iocsr_misc_write(void 
+>>>> *opaque, hwaddr addr,
+>>>>               return MEMTX_OK;
+>>>>           }
+>>>>   +        if (val & BIT(IOCSRM_AVEC_EN)) {
+>>>> +            lvms->misc_status |= BIT(IOCSRM_AVEC_EN);
+>>>> +        }
+>>>> +
+>>>>           features = address_space_ldl(&lvms->as_iocsr,
+>>>>                                        EXTIOI_VIRT_BASE + 
+>>>> EXTIOI_VIRT_CONFIG,
+>>>>                                        attrs, NULL);
+>>>> @@ -574,8 +600,9 @@ static MemTxResult virt_iocsr_misc_read(void 
+>>>> *opaque, hwaddr addr,
+>>>>           break;
+>>>>       case FEATURE_REG:
+>>>>           ret = BIT(IOCSRF_MSI) | BIT(IOCSRF_EXTIOI) | 
+>>>> BIT(IOCSRF_CSRIPI);
+>>>> -        /*TODO: check bit IOCSRF_AVEC with virt_is_avec_enabled */
+>>>> -        ret |= BIT(IOCSRF_AVEC);
+>>>> +        if (virt_is_avecintc_enabled(lvms)) {
+>>>> +            ret |= BIT(IOCSRF_AVEC);
+>>>> +        }
+>>>>           if (kvm_enabled()) {
+>>>>               ret |= BIT(IOCSRF_VM);
+>>>>           }
+>>>> @@ -605,8 +632,10 @@ static MemTxResult virt_iocsr_misc_read(void 
+>>>> *opaque, hwaddr addr,
+>>>>           if (features & BIT(EXTIOI_ENABLE_INT_ENCODE)) {
+>>>>               ret |= BIT_ULL(IOCSRM_EXTIOI_INT_ENCODE);
+>>>>           }
+>>>> -        /* enable avec default */
+>>>> -        ret |= BIT_ULL(IOCSRM_AVEC_EN);
+>>>> +        if (virt_is_avecintc_enabled(lvms) &&
+>>>> +            (lvms->misc_status & BIT(IOCSRM_AVEC_EN))) {
+>>>> +            ret |= BIT_ULL(IOCSRM_AVEC_EN);
+>>>> +        }
+>>>>           break;
+>>>>       default:
+>>>>           g_assert_not_reached();
+>>>> @@ -850,6 +879,8 @@ static void virt_initfn(Object *obj)
+>>>>       if (tcg_enabled()) {
+>>>>           lvms->veiointc = ON_OFF_AUTO_OFF;
+>>>>       }
+>>>> +    lvms->misc_feature = BIT(IOCSRF_AVEC);
+>>>> +    lvms->avecintc = ON_OFF_AUTO_ON;
+>>>>       lvms->acpi = ON_OFF_AUTO_AUTO;
+>>>>       lvms->oem_id = g_strndup(ACPI_BUILD_APPNAME6, 6);
+>>>>       lvms->oem_table_id = g_strndup(ACPI_BUILD_APPNAME8, 8);
+>>>> @@ -1242,6 +1273,10 @@ static void virt_class_init(ObjectClass *oc, 
+>>>> const void *data)
+>>>>           NULL, NULL);
+>>>>       object_class_property_set_description(oc, "v-eiointc",
+>>>>                               "Enable Virt Extend I/O Interrupt 
+>>>> Controller.");
+>>>> +    object_class_property_add(oc, "avecintc", "OnOffAuto",
+>>>> +        virt_get_avecintc, virt_set_avecintc, NULL, NULL);
+>>>> +    object_class_property_set_description(oc, "avecintc",
+>>>> +                            "Enable Advance Interrupt Controller.");
+>>> It is only can be added in TCG mode, in kvm mode avec should not be 
+>>> supported now.
+>>>> machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
+>>>>       machine_class_allow_dynamic_sysbus_dev(mc, 
+>>>> TYPE_UEFI_VARS_SYSBUS);
+>>>>   #ifdef CONFIG_TPM
+>>>> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+>>>> index cc6656619d..44504e5501 100644
+>>>> --- a/include/hw/loongarch/virt.h
+>>>> +++ b/include/hw/loongarch/virt.h
+>>>> @@ -70,6 +70,7 @@ struct LoongArchVirtMachineState {
+>>>>       Notifier     powerdown_notifier;
+>>>>       OnOffAuto    acpi;
+>>>>       OnOffAuto    veiointc;
+>>>> +    OnOffAuto    avecintc;
+>>>>       char         *oem_id;
+>>>>       char         *oem_table_id;
+>>>>       DeviceState  *acpi_ged;
+>>>> @@ -85,6 +86,8 @@ struct LoongArchVirtMachineState {
+>>>>       DeviceState *extioi;
+>>>>       struct memmap_entry *memmap_table;
+>>>>       unsigned int memmap_entries;
+>>>> +    uint64_t misc_feature;
+>>>> +    uint64_t misc_status;
+>>>>   };
+>>>>     #define TYPE_LOONGARCH_VIRT_MACHINE MACHINE_TYPE_NAME("virt")
+>>>> @@ -92,6 +95,18 @@ 
+>>>> OBJECT_DECLARE_SIMPLE_TYPE(LoongArchVirtMachineState, 
+>>>> LOONGARCH_VIRT_MACHINE)
+>>>>   void virt_acpi_setup(LoongArchVirtMachineState *lvms);
+>>>>   void virt_fdt_setup(LoongArchVirtMachineState *lvms);
+>>>>   +static inline bool 
+>>>> virt_is_avecintc_enabled(LoongArchVirtMachineState *lvms)
+>>>> +{
+>>>> +    if (!(lvms->misc_feature & BIT(IOCSRF_AVEC))) {
+>>>> +        return false;
+>>>> +    }
+>>>> +
+>>>> +    if (lvms->avecintc == ON_OFF_AUTO_OFF) {
+>>>> +        return false;
+>>>> +    }
+>>> Is it enough to only check variable misc_feature? checking avecintc 
+>>> seems unnecessary duplicated.
+>>>
+>>   Someone may  disable avecintc with command  'avecintc = off'.
+> +static void virt_set_avecintc(Object *obj, Visitor *v, const char *name,
+> +                              void *opaque, Error **errp)
+> +{
+> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
+> +
+> +    if (lvms->avecintc == ON_OFF_AUTO_OFF) {
+> +        lvms->misc_feature &= ~BIT(IOCSRF_AVEC);
+> +        lvms->misc_status &= ~BIT(IOCSRM_AVEC_EN);
+> +    }
+> With avecintc = off option, misc_feature will be cleared with 
+> IOCSRF_AVEC also.
+>
+you 're right , check  misc_feature is enough.
+
+thanks.
+Song Gao
+> Regards
+> Bibo Mao
 >>
-> but, we also need set CSRIR,  Otherwise, it will cause the kernel to 
-> faill into a deep loop on avec driver avecintc_irq_dispatch();
-It depends on the detailed implementation in patch 9, there is untested 
-example code.
-
-target_ulong helper_csrrd_msgir(CPULoongArchState *env)
-{
-     int irq, new;
-
-     irq = find_first_bit(env->CSR_MSGIS, 256);
-     if (irq < 256) {
-       clear_bit(irq, env->CSR_MSGIS);
-
-       new = find_first_bit(env->CSR_MSGIS, 256);
-       if (new < 256)
-           return irq;
-
-       env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
-       env->CSR_ECFG = FIELD_DP64(env->CSR_ECFG, CSR_ECFG, MSGINT, 0);
-     } else {
-       /* bit 31 set 1 for no invalid irq */
-       irq = -1;
-     }
-
-     return irq;
-}
-
-Regards
-Bibo Mao
-> 
-> Thanks.
-> Song Gao.
->> Regards
->> Bibo Mao
->>> +    }
->>> +    qemu_set_irq(s->cpu[cpu_num].parent_irq, level);
->>> +}
->>> +
->>>   static void loongarch_avec_mem_write(void *opaque, hwaddr addr,
->>>                                        uint64_t val, unsigned size)
->>>   {
->>> -    return;
->>> -}
->>> +    int irq_num, cpu_num = 0;
->>> +    LoongArchAVECState *s = LOONGARCH_AVEC(opaque);
->>> +    uint64_t msg_addr = addr + VIRT_AVEC_BASE;
->>>   +    cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
->>> +    irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
->>> +    avec_set_irq(s, cpu_num, irq_num, 1);
->>> +}
->>>     static const MemoryRegionOps loongarch_avec_ops = {
->>>       .read = loongarch_avec_mem_read,
->>>
+>> Thanks.
+>> Song Gao.
+>>> Regards
+>>> Bibo Mao
+>>>> +    return true;
+>>>> +}
+>>>> +
+>>>>   static inline bool 
+>>>> virt_is_veiointc_enabled(LoongArchVirtMachineState *lvms)
+>>>>   {
+>>>>       if (lvms->veiointc == ON_OFF_AUTO_OFF) {
+>>>>
 
 
