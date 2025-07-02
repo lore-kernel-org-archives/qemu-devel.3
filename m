@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F25AC77B7C
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 15:20:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36B06C83F04
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 15:20:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWzFG-0006KG-Oy; Wed, 02 Jul 2025 11:19:34 -0400
+	id 1uWzGK-0006va-Ab; Wed, 02 Jul 2025 11:20:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWzFE-0006JR-EX
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 11:19:32 -0400
-Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
+ id 1uWzGA-0006u8-BG
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 11:20:30 -0400
+Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWzFC-0007H0-FB
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 11:19:32 -0400
-Received: by mail-oo1-xc2b.google.com with SMTP id
- 006d021491bc7-61208b86d75so249496eaf.2
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 08:19:29 -0700 (PDT)
+ id 1uWzG3-0007s3-DD
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 11:20:28 -0400
+Received: by mail-oa1-x31.google.com with SMTP id
+ 586e51a60fabf-2eb6c422828so4927fac.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 08:20:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751469568; x=1752074368; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751469620; x=1752074420; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=WTsLyO0G+AS4guPqcwiOrYSY2CPwjFSsqC8+z1aGmFE=;
- b=KTjhRrZ+/8IAUw2lM8HtC6x3TopTfCkCwfvNu8iXAQPWF+notfIul2bgNiwpT5mAMt
- /JbJr6WUiXwmyq1Z8PJuj1OLv2eBSkk36AjC//6bXbT5CLqOMGfjTO+x2AumKCmuyXGg
- OxrQbx0f1FOeNqYJv1lkYPi9VuormTNy0odUtUl9AlnWSBqTvytHApP+3ZwkFXVcjNzk
- 0A07YUgcl2dpJ2q7BuhJ9R/AVtmO8FyCbNQHrxT8LtMnVm4RTbstflNRVNfFwAit7SOY
- h/b1jO/TsXItlO/34ktBR/OhjqatRu80wWjeR3ihEdxEBTfq+4Ap1rStDJsXSZ4XtnDe
- R5eg==
+ bh=D28DbDgHnfNf/tYw+qtpEqTnG8anLVbGrbbKzFlQCnM=;
+ b=cdpoSymE1DAJeNLbSqE5Abfk9cp5zOEjDP/qgF3nbZjHpwzpdrDV66ojJSvQswn/NL
+ ar+cTQQxeUU8wjKd386VAidmneCLXD0dlCBemY/8XkOcQxHCU5xWbGFS/R4gSLvVEIEW
+ DeLsxac8eHJTMNks4NANjteiXTJjOF8aTAM0se7tvx1tXC6xeWcC50DjqU6VKjgjNUFW
+ bH7XyrSfRj6ccAjmN2wZHtEs2GPJ0TIFPR3pXAX3j9zCBn2YmqooHyswpGX8VAih5PoF
+ bQzjYPRqHWH/QphYpwuxS6KNy30OPBGj7qdce+2LTyVkeelikwyQ0n7EwtJlj/2V51JX
+ qV6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751469568; x=1752074368;
+ d=1e100.net; s=20230601; t=1751469620; x=1752074420;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WTsLyO0G+AS4guPqcwiOrYSY2CPwjFSsqC8+z1aGmFE=;
- b=ZDp+JrkVUtB2Rq/cHVkF/LQLSOv1mPD1IidCy6G5ihexIqB2cR5ADgT6EqBCk8Xp2F
- PqsIrLOw37TBhsSSE90jCqI/CJJgpaOjAHU6bRvcD91cep8Xu6KEwEsU1fwpIiSJ35sq
- okxZTzlK2W85M0fZNxN2d+L7ydI50JVl71HYFBO3BPtS5HhZQyNS/zwQBkOa1eJqoH7x
- 9B3oRWZhHaNAoaSThX6BwvGX9Ez4kKPDmylw3YNWeGtZf++eaSV2zUMBC4msmaxD8tzm
- msxGX9PQUxcOvy11kNZsn47/N4oNnVMvPVGjLp5SUcrTcr65EE6iYzw8sL0HzW8TvvNk
- dJLw==
+ bh=D28DbDgHnfNf/tYw+qtpEqTnG8anLVbGrbbKzFlQCnM=;
+ b=GS3UER1NHPgjN3cXYAzj0zKkmIudO3HadhwWQS0vT05EV5PGLttk5axrWCBFxlWqfp
+ BKmtWvFxvOfN1fyv58veW3iQs270WPyIJktVBrwD8jkx5EPiCIepSO0IORqnaRgewg9H
+ mY92jYCRJtWmy8BAhd/gc83W23alEupm2nz2zh8hJY6H5ivYpvjWuzTR80MzcFGrX+GI
+ pbDV8rsjfcjz5mD+mBvWNEkaGmcdeSWWFJ8pBjBLh0QrT3r4mDlO9AkPq/MPLZ7GQat5
+ +UzeBOrpL+P3GuP8PCA90Ehmy3m0RY7EuRbc2nQTSEn+qncdx4pprYLss4sVThex5727
+ aKsA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU+a8khsj9Do3t/xMqcAB0REP6Xbyrg9AJHJ22NyjyAupceZkXRaH/JxbcZuPJ+TIuSUZw4U1PyKPRh@nongnu.org
-X-Gm-Message-State: AOJu0YzWtBOCdSlV1iloCQr94bGQ6tlNUkTVPbuJ+/QQ1jfIsx/0SGT6
- GuIDjXs0BuZB95TbN4pLlxwSPAHXc+DZ2nxqe53mpLR5YrHKf7IF8z0C4bwu9w7D4/s=
-X-Gm-Gg: ASbGnct27HOWJFF0xrJM8waP5CR2IX1zVmCwwf+mFvmKIjV3tV74ElSjAaad4t+4Ujv
- BB7e3GR+137irtP7zpW+nsEo0rjDvdTaBFJ/CzR0fkSiWkJR9ISk27i/+HaNBlmiRmNh9uaCiPZ
- eUyfdJVy22rvmeWSClBAd3yZpqgyb3lEpgyC3dz//tmZR4d8qWlwzMIDIporouaSKxObvhht1bG
- 4B5bk/ep+zUeOCJnXnClnXDt8WUYhH8Gh6FWadSsTtvVJwd+BtKOX6Tzhz1/OuCmNRWjPPCU0Zw
- uLdkGvwBJXem4XzHjjOwVmccLOl6TCpV37G/C88LYAW2+Kwoj+J225mDYZ24hKyjR2MpESdrlBy
- r
-X-Google-Smtp-Source: AGHT+IFZTnJ2iUrYX2K2LLFudjrnECRSm26AbC1cGVKgStjwyDcT28xMeFqoA+OdQ51C+yfxiSt5NQ==
-X-Received: by 2002:a05:6871:6183:b0:2d4:ce45:698d with SMTP id
- 586e51a60fabf-2f5a8d29995mr2404318fac.4.1751469568112; 
- Wed, 02 Jul 2025 08:19:28 -0700 (PDT)
+ AJvYcCUQNiml6Ybw7O9fKYAWbvHZB4mckK58XQEbhnU7HR9bsmCpKceOkHYC4fqPLDCBk2QVf6mtrnVMwOuF@nongnu.org
+X-Gm-Message-State: AOJu0YzPvzsTYpYJ0h70UpnltIkBhPom/7AEmX2AgmSQjK0LYE4um4Hz
+ e4Y2V6UGGMUz+SPdHo5vPRjmrOrqeTt9lB8oa0LkTY+HPKz/INiV27sslMmzh91Tl3SmFcX22fI
+ wk2lESd8=
+X-Gm-Gg: ASbGncuZO/h1l2fgbyV9XfxPF0N7cEaGR1UOS03Ln0LGkBnfHpmUd298hqDus6P5e/M
+ uyVrPmBYFx4f0nQUtH7I20wEm/tTpDJhqHJOIu/+7imMV+Yy4w2szT9iolbDeJNXRx0o0msGLM3
+ VCJ1MFwPRmcq/16btJWFQD9uTWdRkUq31T2LVFkPRDOt+0g0DdooF5MfmOE+xV28Sz3BHtkAcvF
+ YEmba2TOY3dDvFvxpc8QS1+0tEKNQNQ5VQfBkolgihJVlxyqP7U3MNYIDeSwwa1yksLjINU9H2v
+ k/Jp4ooMqagCpnJBBDI5QWodZ4hQ1gD8sn+2omrIIiMi5MuostgRpTftCF980ETx/URQIpbQKgA
+ 1
+X-Google-Smtp-Source: AGHT+IEXNdax9hyDxE93KV5cibepbIoRmpKneCwdaczYDZJi8LEUYUYYdU11yJyS8PEmWYeiVnTBlA==
+X-Received: by 2002:a05:6870:469f:b0:2da:b440:5b1 with SMTP id
+ 586e51a60fabf-2f6472a5f71mr2256621fac.5.1751469620318; 
+ Wed, 02 Jul 2025 08:20:20 -0700 (PDT)
 Received: from [10.25.7.74] ([187.210.107.185])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2efd512f0cdsm3904294fac.46.2025.07.02.08.19.27
+ 586e51a60fabf-2efd4eb552fsm3886184fac.9.2025.07.02.08.20.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Jul 2025 08:19:27 -0700 (PDT)
-Message-ID: <89ceef1e-c4c1-45eb-a369-a17f711ef4ad@linaro.org>
-Date: Wed, 2 Jul 2025 09:19:25 -0600
+ Wed, 02 Jul 2025 08:20:19 -0700 (PDT)
+Message-ID: <5301a330-be07-4cb8-9f2e-83c90e9ffade@linaro.org>
+Date: Wed, 2 Jul 2025 09:20:17 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 57/68] accel/tcg: Expose vcpu_[un]register() for MTTCG
+Subject: Re: [PATCH v3 58/68] accel/tcg: Factor mttcg_cpu_exec() out for re-use
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Julian Armistead <julian.armistead@linaro.org>
 References: <20250701144017.43487-1-philmd@linaro.org>
- <20250701144017.43487-58-philmd@linaro.org>
+ <20250701144017.43487-59-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250701144017.43487-58-philmd@linaro.org>
+In-Reply-To: <20250701144017.43487-59-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2b.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::31;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,78 +109,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/1/25 08:40, Philippe Mathieu-Daudé wrote:
-> Allocate ForceRcuNotifier on the Heap.
-> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   accel/tcg/tcg-accel-ops-mttcg.c | 30 ++++++++++++++++++++++++------
->   1 file changed, 24 insertions(+), 6 deletions(-)
+>   accel/tcg/tcg-accel-ops-mttcg.h |  1 +
+>   accel/tcg/tcg-accel-ops-mttcg.c | 16 ++++++++++++----
+>   2 files changed, 13 insertions(+), 4 deletions(-)
 
-Please document the motivation.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
-
-> 
-> diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
-> index 4de506a80ca..2d31b00ee59 100644
-> --- a/accel/tcg/tcg-accel-ops-mttcg.c
-> +++ b/accel/tcg/tcg-accel-ops-mttcg.c
-> @@ -55,6 +55,27 @@ static void mttcg_force_rcu(Notifier *notify, void *data)
->       async_run_on_cpu(cpu, do_nothing, RUN_ON_CPU_NULL);
->   }
->   
-> +static void *mttcg_vcpu_register(CPUState *cpu)
-> +{
-> +    MttcgForceRcuNotifier *force_rcu = g_new(MttcgForceRcuNotifier, 1);
-> +
-> +    force_rcu->notifier.notify = mttcg_force_rcu;
-> +    force_rcu->cpu = cpu;
-> +    rcu_add_force_rcu_notifier(&force_rcu->notifier);
-> +    tcg_register_thread();
-> +
-> +    return force_rcu;
-> +}
-> +
-> +static void mttcg_vcpu_unregister(CPUState *cpu, void *opaque)
-> +{
-> +    MttcgForceRcuNotifier *force_rcu = opaque;
-> +
-> +    rcu_remove_force_rcu_notifier(&force_rcu->notifier);
-> +
-> +    g_free(force_rcu);
-> +}
-> +
->   /*
->    * In the multi-threaded case each vCPU has its own thread. The TLS
->    * variable current_cpu can be used deep in the code to find the
-> @@ -63,17 +84,14 @@ static void mttcg_force_rcu(Notifier *notify, void *data)
->   
->   void *mttcg_cpu_thread_routine(void *arg)
->   {
-> -    MttcgForceRcuNotifier force_rcu;
-> +    MttcgForceRcuNotifier *force_rcu;
->       CPUState *cpu = arg;
->   
->       assert(tcg_enabled());
->       g_assert(!icount_enabled());
->   
->       rcu_register_thread();
-> -    force_rcu.notifier.notify = mttcg_force_rcu;
-> -    force_rcu.cpu = cpu;
-> -    rcu_add_force_rcu_notifier(&force_rcu.notifier);
-> -    tcg_register_thread();
-> +    force_rcu = mttcg_vcpu_register(cpu);
->   
->       bql_lock();
->       qemu_thread_get_self(cpu->thread);
-> @@ -121,7 +139,7 @@ void *mttcg_cpu_thread_routine(void *arg)
->   
->       tcg_cpu_destroy(cpu);
->       bql_unlock();
-> -    rcu_remove_force_rcu_notifier(&force_rcu.notifier);
-> +    mttcg_vcpu_unregister(cpu, force_rcu);
->       rcu_unregister_thread();
->       return NULL;
->   }
 
 
