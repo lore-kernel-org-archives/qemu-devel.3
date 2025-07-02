@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40E33C83F04
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 13:08:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E5B6C77B7C
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 13:08:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWx6X-0001VT-UW; Wed, 02 Jul 2025 09:02:26 -0400
+	id 1uWwgf-0008V1-IL; Wed, 02 Jul 2025 08:35:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uWx6M-0001GQ-21
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 09:02:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uWx6E-0000nM-Jt
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 09:02:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751461323;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NLUShs5M2XQXIAtBKPIU9h1HTe17oq5w8FuuIcCnOL0=;
- b=RnFHuWk9rrQe49G84plcbTOnOBKWXkGjRaVyO9Aojr7uWn+Jjpyzg4jB6qq6wLx3dp/qXr
- Vlx1LH8SgGjs/Z29i1dqJ8wnDrIb8w2SqVZlJ0IBMl2TnGyghh3XxS6PuX60vGtTQ/s0/x
- hWx2GWlle0Kk8UlEZjh/m8wGv3vg7QM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-562--64A5iRmNVyG1riXMY36OQ-1; Wed,
- 02 Jul 2025 09:01:59 -0400
-X-MC-Unique: -64A5iRmNVyG1riXMY36OQ-1
-X-Mimecast-MFC-AGG-ID: -64A5iRmNVyG1riXMY36OQ_1751461315
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EF1B81800289; Wed,  2 Jul 2025 13:01:54 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EAFDF1956066; Wed,  2 Jul 2025 13:01:53 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 122AE21E6A27; Wed, 02 Jul 2025 15:01:51 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Arun Menon <armenon@redhat.com>
-Cc: qemu-devel@nongnu.org,  "Michael S. Tsirkin" <mst@redhat.com>,  Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>,  Cornelia Huck
- <cohuck@redhat.com>,  Halil Pasic <pasic@linux.ibm.com>,  Eric Farman
- <farman@linux.ibm.com>,  Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>,  Ilya Leoshkevich
- <iii@linux.ibm.com>,  Thomas Huth <thuth@redhat.com>,  Christian
- Borntraeger <borntraeger@linux.ibm.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Fam Zheng <fam@euphon.net>,  Nicholas Piggin
- <npiggin@gmail.com>,  Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,  Alex Williamson
- <alex.williamson@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>,  Peter
- Xu <peterx@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Hailiang Zhang
- <zhanghailiang@xfusion.com>,  Steve Sistare <steven.sistare@oracle.com>,
- qemu-s390x@nongnu.org,  qemu-ppc@nongnu.org,  Stefan Berger
- <stefanb@linux.vnet.ibm.com>
-Subject: Re: [PATCH v3 1/3] migration: Pass Error object errp into vm state
- loading functions
-In-Reply-To: <20250702-propagate_tpm_error-v3-1-986d94540528@redhat.com> (Arun
- Menon's message of "Wed, 02 Jul 2025 17:06:50 +0530")
-References: <20250702-propagate_tpm_error-v3-0-986d94540528@redhat.com>
- <20250702-propagate_tpm_error-v3-1-986d94540528@redhat.com>
-Date: Wed, 02 Jul 2025 15:01:51 +0200
-Message-ID: <87ikkawxts.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uWwg8-0007zw-IV
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:35:09 -0400
+Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uWwfn-00014w-DM
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:35:05 -0400
+Received: by mail-ot1-x329.google.com with SMTP id
+ 46e09a7af769-73a44512c8aso1536865a34.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:34:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751459685; x=1752064485; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9JmrM0K8ZLfI+GER2A7TZLp0p7wKAFK1cAuaQ0BJ0Lc=;
+ b=PXpT690xw5uMw6RYTynLoLYbBJrshmkVbrBy29jcw0hrellOvHXQIA4LFxZaFEdU9j
+ 9V6a7hGCC8SgtugOFoe4ZUCPkVuVRH0vQ3PQMTifZh7mLLC25E/6t5xc8Hze3AY0v02x
+ wLGpmqWFTk0fEsWl8hM8gVOj4G2TLBq5TbOVVOxJA29JYUJ2TOcX1tjA5999KnqbDntI
+ njPxaLpoieqxgeONl8NqzakMENFQnGzH3PA6CfsJ8qcAZ/nP+JqEzmZ9iYUnYqVqv3sU
+ 6j3dZoc4/NiyYBzq00f+7SYKMYR1z0YEO1BOWEZKHrPF+suCxfdub460erjbe5ri4K0A
+ H19g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751459685; x=1752064485;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9JmrM0K8ZLfI+GER2A7TZLp0p7wKAFK1cAuaQ0BJ0Lc=;
+ b=l98U6pQNNNZKzH16e+yRr42bZH/lHd4tEh5XLyreKqo3n9u4KBQgG995uXXVdB3r1r
+ cqzPqvKx7gL4n9QEgLtdFmOfUxf7fEcM+jYuUeaggX8hLHzspV9TY6EFMVRFQ7YRQaVX
+ oYzrn/g3X1Le1btzzZr35WsRXuCnWFhT8Awa+4+TOGIFO+4TBumpwCCNud8j1ic7HB9R
+ Sq36y0DJVZK93lQtS/0jfWo3FgN/4j3C6MyoEBlmATJkaN8YWC3gJDCgtETcQ5ZZqfcX
+ cqL0wiI7Vy4cCSjKlY5LFC3QaZ8FBO3XrJe18srVVdBWZ0C5ihamgF+uxynBnfRHw0FI
+ xVWg==
+X-Gm-Message-State: AOJu0YwKQfv2llcRRhYlyP/mdQtz5zJrtsK5lFxSxzPd0D56eHqgpCxM
+ XUEqD0G51gDp5xPrrf6k4cHIGGVwDyqdosjfq00tgsVj1vPPVaHIVILjngoRhd5f/vu03H2B1bx
+ j9sMkW5k=
+X-Gm-Gg: ASbGnctX0bc0Zm/gyTxl6e73pbDfupbA1Hk7Hw/5CV/ic/BYEwQqXfy4v4p+28LYh+W
+ l043Z0rqBVb4hH0R+BdRLF3f8uj84Hfla7Yvil4txRaQ7qaWlSBAvefZpB8cLYE7zzESb3vORs9
+ lbu3ukZmVp+N+TjUcUnQJhGg30DGz/FXfInRo9v3drF4JWXosOPdzud3pHYKMORWIv9VdGNTz1n
+ zmTG64KDCjF+M0yUxL8L47AIGvH7rn94RBYQIROFKM1aTZcYnicHhhrBXDU7epgLiOIzPW0fWYC
+ untWvDUHa57ejUfLvkKsFUsmLPsDEh21g6wTCXI9ogti71tIu3XsI9rL0bwWKXe0AuewYw==
+X-Google-Smtp-Source: AGHT+IFaKAiys+3qJiLpGSpsULZno8Oa2D2ReX/aOg7hzijcgaNBvzV82qEgjDMbNNK9zruIeG1arg==
+X-Received: by 2002:a05:6830:8206:b0:72a:1625:ef11 with SMTP id
+ 46e09a7af769-73b4ce34d95mr1825192a34.27.1751459685171; 
+ Wed, 02 Jul 2025 05:34:45 -0700 (PDT)
+Received: from stoup.. ([187.210.107.185]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-2efd50b1b2fsm3864281fac.32.2025.07.02.05.34.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 02 Jul 2025 05:34:44 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+	peter.maydell@linaro.org
+Subject: [PATCH v3 26/97] target/arm: Implement SME2 FMLAL, BFMLAL
+Date: Wed,  2 Jul 2025 06:32:59 -0600
+Message-ID: <20250702123410.761208-27-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250702123410.761208-1-richard.henderson@linaro.org>
+References: <20250702123410.761208-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,163 +99,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Arun Menon <armenon@redhat.com> writes:
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/translate-sme.c | 98 ++++++++++++++++++++++++++++++++++
+ target/arm/tcg/sme.decode      | 71 ++++++++++++++++++++++++
+ 2 files changed, 169 insertions(+)
 
-> - This is an incremental step in converting vmstate loading
->   code to report errors.
-> - Minimal changes to the signature and body of the following
->   functions are done,
->   - vmstate_load()
->   - vmstate_load_state()
->   - vmstate_subsection_load()
->   - qemu_load_device_state()
->   - qemu_loadvm_state()
->   - qemu_loadvm_section_start_full()
->   - qemu_loadvm_section_part_end()
->   - qemu_loadvm_state_header()
->   - qemu_loadvm_state_main()
-> - error_report() has been replaced with error_setg();
->   and in places where error has been already set,
->   error_prepend() is used to not lose information.
->
-> Signed-off-by: Arun Menon <armenon@redhat.com>
-
-[...]
-
-> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-> index 1ff7bd9ac425ba67cd5ca7ad97bcf570f9e19abe..056781b1c21e737583f081594d9f88b32adfd674 100644
-> --- a/include/migration/vmstate.h
-> +++ b/include/migration/vmstate.h
-> @@ -1196,7 +1196,7 @@ extern const VMStateInfo vmstate_info_qlist;
->      }
->  
->  int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-> -                       void *opaque, int version_id);
-> +                       void *opaque, int version_id, Error **errp);
->  int vmstate_save_state(QEMUFile *f, const VMStateDescription *vmsd,
->                         void *opaque, JSONWriter *vmdesc);
->  int vmstate_save_state_with_err(QEMUFile *f, const VMStateDescription *vmsd,
-> diff --git a/migration/colo.c b/migration/colo.c
-> index e0f713c837f5da25d67afbd02ceb6c54024ca3af..808c980b4af3199968771cdc6cca3c2451a2f4a6 100644
-> --- a/migration/colo.c
-> +++ b/migration/colo.c
-> @@ -659,6 +659,7 @@ void migrate_start_colo_process(MigrationState *s)
->  static void colo_incoming_process_checkpoint(MigrationIncomingState *mis,
->                        QEMUFile *fb, QIOChannelBuffer *bioc, Error **errp)
->  {
-> +    ERRP_GUARD();
->      uint64_t total_size;
->      uint64_t value;
->      Error *local_err = NULL;
-       int ret;
-
-       bql_lock();
-       vm_stop_force_state(RUN_STATE_COLO);
-       bql_unlock();
-       trace_colo_vm_state_change("run", "stop");
-
-       /* FIXME: This is unnecessary for periodic checkpoint mode */
-       colo_send_message(mis->to_src_file, COLO_MESSAGE_CHECKPOINT_REPLY,
-                    &local_err);
-       if (local_err) {
-           error_propagate(errp, local_err);
-           return;
-       }
-
-Avoid error_propagate() when you have ERRP_GUARD():
-
-       colo_send_message(mis->to_src_file, COLO_MESSAGE_CHECKPOINT_REPLY,
-                    errp);
-       if (*errp) {
-           return;
-       }
-
-See the big comment in qapi/error.h for additional guidance.
-
-       colo_receive_check_message(mis->from_src_file,
-                          COLO_MESSAGE_VMSTATE_SEND, &local_err);
-       if (local_err) {
-           error_propagate(errp, local_err);
-           return;
-       }
-
-Likewise.  More of the same below, not flagging it again.
-
-> @@ -686,11 +687,13 @@ static void colo_incoming_process_checkpoint(MigrationIncomingState *mis,
->  
->      bql_lock();
->      cpu_synchronize_all_states();
-> -    ret = qemu_loadvm_state_main(mis->from_src_file, mis);
-> +    ret = qemu_loadvm_state_main(mis->from_src_file, mis, &local_err);
->      bql_unlock();
->  
->      if (ret < 0) {
-> -        error_setg(errp, "Load VM's live state (ram) error");
-> +        if (local_err != NULL) {
-
-How can @local_err be null here?
-
-> +            error_prepend(errp, "Load VM's live state (ram) error");
-
-Since nothing has set @errp so far, it should still point to null.
-error_prepend() crashes when passed a pointer to null.
-
-> +        }
->          return;
-
-Returns without setting an error, and leaks @local_err.
-
-Can you pass @errp to qemu_loadvm_state_main() and call it a day?
-
->      }
->  
-> @@ -729,9 +732,11 @@ static void colo_incoming_process_checkpoint(MigrationIncomingState *mis,
->      bql_lock();
->      vmstate_loading = true;
->      colo_flush_ram_cache();
-> -    ret = qemu_load_device_state(fb);
-> +    ret = qemu_load_device_state(fb, &local_err);
->      if (ret < 0) {
-> -        error_setg(errp, "COLO: load device state failed");
-> +        if (*errp != NULL) {
-> +            error_prepend(errp, "COLO: load device state failed");
-> +        }
-
-Since nothing has set @errp so far, it should still point to null, so
-this will never prepend anything.
-
->          vmstate_loading = false;
->          bql_unlock();
->          return;
-
-Returns without setting an error, and leaks @local_err.
-
-Can you pass @errp to qemu_load_device_state()?
-
-> diff --git a/migration/cpr.c b/migration/cpr.c
-> index a50a57edca754b50e68fa9c294b3c89791e62ba8..0fb9fadac905c83689eed2b1193b282da679b6ef 100644
-> --- a/migration/cpr.c
-> +++ b/migration/cpr.c
-> @@ -235,7 +235,7 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
->          return -ENOTSUP;
->      }
->  
-> -    ret = vmstate_load_state(f, &vmstate_cpr_state, &cpr_state, 1);
-> +    ret = vmstate_load_state(f, &vmstate_cpr_state, &cpr_state, 1, errp);
-
-If vmstate_load_state() fails, it should set @errp.
-
->      if (ret) {
->          error_setg(errp, "vmstate_load_state error %d", ret);
-
-Setting it again will trip error_setv()'s assertion.
-
->          qemu_fclose(f);
-
-I doubt you tested your changes to the error paths.  This is dangerous.
-
-I did not look at the remainder of this patch.
-
-[...]
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index aabdb96675..9ec02d960d 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -805,3 +805,101 @@ TRANS_FEAT(ADD_azz_nn_s, aa64_sme2, do_azz_nn, a, MO_32, tcg_gen_gvec_add_var)
+ TRANS_FEAT(SUB_azz_nn_s, aa64_sme2, do_azz_nn, a, MO_32, tcg_gen_gvec_sub_var)
+ TRANS_FEAT(ADD_azz_nn_d, aa64_sme2_i16i64, do_azz_nn, a, MO_64, tcg_gen_gvec_add_var)
+ TRANS_FEAT(SUB_azz_nn_d, aa64_sme2_i16i64, do_azz_nn, a, MO_64, tcg_gen_gvec_sub_var)
++
++/*
++ * Expand array multi-vector single (n1), array multi-vector (nn),
++ * and array multi-vector indexed (nx), for floating-point accumulate.
++ *   multi: true for nn, false for n1.
++ *   fpst: >= 0 to set ptr argument for FPST_*, < 0 for ENV.
++ *   data: stuff for simd_data, including any index.
++ */
++#define FPST_ENV  -1
++
++static bool do_azz_acc_fp(DisasContext *s, int nreg, int nsel,
++                          int rv, int off, int zn, int zm,
++                          int data, int shsel, bool multi, int fpst,
++                          gen_helper_gvec_4_ptr *fn)
++{
++    if (sme_smza_enabled_check(s)) {
++        int svl = streaming_vec_reg_size(s);
++        int vstride = svl / nreg;
++        TCGv_ptr t_za = get_zarray(s, rv, off, nreg, nsel);
++        TCGv_ptr t, ptr;
++
++        if (fpst >= 0) {
++            ptr = fpstatus_ptr(fpst);
++        } else {
++            ptr = tcg_env;
++        }
++        t = tcg_temp_new_ptr();
++
++        for (int r = 0; r < nreg; ++r) {
++            TCGv_ptr t_zn = vec_full_reg_ptr(s, zn);
++            TCGv_ptr t_zm = vec_full_reg_ptr(s, zm);
++
++            for (int i = 0; i < nsel; ++i) {
++                int o_za = (r * vstride + i) * sizeof(ARMVectorReg);
++                int desc = simd_desc(svl, svl, data | (i << shsel));
++
++                tcg_gen_addi_ptr(t, t_za, o_za);
++                fn(t, t_zn, t_zm, t, ptr, tcg_constant_i32(desc));
++            }
++
++            /*
++             * For multiple-and-single vectors, Zn may wrap.
++             * For multiple vectors, both Zn and Zm are aligned.
++             */
++            zn = (zn + 1) % 32;
++            zm += multi;
++        }
++    }
++    return true;
++}
++
++static bool do_fmlal(DisasContext *s, arg_azz_n *a, bool sub, bool multi)
++{
++    return do_azz_acc_fp(s, a->n, 2, a->rv, a->off, a->zn, a->zm,
++                         (1 << 2) | sub, 1,
++                         multi, FPST_ENV, gen_helper_sve2_fmlal_zzzw_s);
++}
++
++TRANS_FEAT(FMLAL_n1, aa64_sme2, do_fmlal, a, false, false)
++TRANS_FEAT(FMLSL_n1, aa64_sme2, do_fmlal, a, true, false)
++TRANS_FEAT(FMLAL_nn, aa64_sme2, do_fmlal, a, false, true)
++TRANS_FEAT(FMLSL_nn, aa64_sme2, do_fmlal, a, true, true)
++
++static bool do_fmlal_nx(DisasContext *s, arg_azx_n *a, bool sub)
++{
++    return do_azz_acc_fp(s, a->n, 2, a->rv, a->off, a->zn, a->zm,
++                         (a->idx << 3) | (1 << 2) | sub, 1,
++                         false, FPST_ENV, gen_helper_sve2_fmlal_zzxw_s);
++}
++
++TRANS_FEAT(FMLAL_nx, aa64_sme2, do_fmlal_nx, a, false)
++TRANS_FEAT(FMLSL_nx, aa64_sme2, do_fmlal_nx, a, true)
++
++static bool do_bfmlal(DisasContext *s, arg_azz_n *a, bool sub, bool multi)
++{
++    return do_azz_acc_fp(s, a->n, 2, a->rv, a->off, a->zn, a->zm,
++                         0, 0, multi, FPST_ZA,
++                         (!sub ? gen_helper_gvec_bfmlal
++                          : s->fpcr_ah ? gen_helper_gvec_ah_bfmlsl
++                          : gen_helper_gvec_bfmlsl));
++}
++
++TRANS_FEAT(BFMLAL_n1, aa64_sme2, do_bfmlal, a, false, false)
++TRANS_FEAT(BFMLSL_n1, aa64_sme2, do_bfmlal, a, true, false)
++TRANS_FEAT(BFMLAL_nn, aa64_sme2, do_bfmlal, a, false, true)
++TRANS_FEAT(BFMLSL_nn, aa64_sme2, do_bfmlal, a, true, true)
++
++static bool do_bfmlal_nx(DisasContext *s, arg_azx_n *a, bool sub)
++{
++    return do_azz_acc_fp(s, a->n, 2, a->rv, a->off, a->zn, a->zm,
++                         a->idx << 1, 0, false, FPST_ZA,
++                         !sub ? gen_helper_gvec_bfmlal_idx
++                         : s->fpcr_ah ? gen_helper_gvec_ah_bfmlsl_idx
++                         : gen_helper_gvec_bfmlsl_idx);
++}
++
++TRANS_FEAT(BFMLAL_nx, aa64_sme2, do_bfmlal_nx, a, false)
++TRANS_FEAT(BFMLSL_nx, aa64_sme2, do_bfmlal_nx, a, true)
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index a6dee08661..9850c19d90 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -261,6 +261,30 @@ SUB_azz_n1_s    11000001 0011 .... 0 .. 110 ..... 11 ...    @azz_nx1_o3 n=4
+ SUB_azz_n1_d    11000001 0110 .... 0 .. 110 ..... 11 ...    @azz_nx1_o3 n=2
+ SUB_azz_n1_d    11000001 0111 .... 0 .. 110 ..... 11 ...    @azz_nx1_o3 n=4
+ 
++%off3_x2        0:3 !function=times_2
++%off2_x2        0:2 !function=times_2
++
++@azz_nx1_o3x2   ........ ... . zm:4 . .. ... zn:5 .. ...    \
++                &azz_n off=%off3_x2 rv=%mova_rv
++@azz_nx1_o2x2   ........ ... . zm:4 . .. ... zn:5 ... ..    \
++                &azz_n off=%off2_x2 rv=%mova_rv
++
++FMLAL_n1        11000001 001 0 .... 0 .. 011 ..... 00 ...   @azz_nx1_o3x2 n=1
++FMLAL_n1        11000001 001 0 .... 0 .. 010 ..... 000 ..   @azz_nx1_o2x2 n=2
++FMLAL_n1        11000001 001 1 .... 0 .. 010 ..... 000 ..   @azz_nx1_o2x2 n=4
++
++FMLSL_n1        11000001 001 0 .... 0 .. 011 ..... 01 ...   @azz_nx1_o3x2 n=1
++FMLSL_n1        11000001 001 0 .... 0 .. 010 ..... 010 ..   @azz_nx1_o2x2 n=2
++FMLSL_n1        11000001 001 1 .... 0 .. 010 ..... 010 ..   @azz_nx1_o2x2 n=4
++
++BFMLAL_n1       11000001 001 0 .... 0 .. 011 ..... 10 ...   @azz_nx1_o3x2 n=1
++BFMLAL_n1       11000001 001 0 .... 0 .. 010 ..... 100 ..   @azz_nx1_o2x2 n=2
++BFMLAL_n1       11000001 001 1 .... 0 .. 010 ..... 100 ..   @azz_nx1_o2x2 n=4
++
++BFMLSL_n1       11000001 001 0 .... 0 .. 011 ..... 11 ...   @azz_nx1_o3x2 n=1
++BFMLSL_n1       11000001 001 0 .... 0 .. 010 ..... 110 ..   @azz_nx1_o2x2 n=2
++BFMLSL_n1       11000001 001 1 .... 0 .. 010 ..... 110 ..   @azz_nx1_o2x2 n=4
++
+ ### SME2 Multi-vector Multiple Array Vectors
+ 
+ %zn_ax2         6:4 !function=times_2
+@@ -280,3 +304,50 @@ SUB_azz_nn_s    11000001 101 ....0 0 .. 110 ....0 11 ...    @azz_2x2_o3
+ SUB_azz_nn_s    11000001 101 ...01 0 .. 110 ...00 11 ...    @azz_4x4_o3
+ SUB_azz_nn_d    11000001 111 ....0 0 .. 110 ....0 11 ...    @azz_2x2_o3
+ SUB_azz_nn_d    11000001 111 ...01 0 .. 110 ...00 11 ...    @azz_4x4_o3
++
++@azz_2x2_o2x2   ........ ... ..... . .. ... ..... ... ..    \
++                &azz_n n=2 rv=%mova_rv zn=%zn_ax2 zm=%zm_ax2 off=%off2_x2
++@azz_4x4_o2x2   ........ ... ..... . .. ... ..... ... ..    \
++                &azz_n n=4 rv=%mova_rv zn=%zn_ax4 zm=%zm_ax4 off=%off2_x2
++
++FMLAL_nn        11000001 101 ....0 0 .. 010 ....0 000 ..    @azz_2x2_o2x2
++FMLAL_nn        11000001 101 ...01 0 .. 010 ...00 000 ..    @azz_4x4_o2x2
++
++FMLSL_nn        11000001 101 ....0 0 .. 010 ....0 010 ..    @azz_2x2_o2x2
++FMLSL_nn        11000001 101 ...01 0 .. 010 ...00 010 ..    @azz_4x4_o2x2
++
++BFMLAL_nn       11000001 101 ....0 0 .. 010 ....0 100 ..    @azz_2x2_o2x2
++BFMLAL_nn       11000001 101 ...01 0 .. 010 ...00 100 ..    @azz_4x4_o2x2
++
++BFMLSL_nn       11000001 101 ....0 0 .. 010 ....0 110 ..    @azz_2x2_o2x2
++BFMLSL_nn       11000001 101 ...01 0 .. 010 ...00 110 ..    @azz_4x4_o2x2
++
++### SME2 Multi-vector Indexed
++
++&azx_n          n off rv zn zm idx
++
++%idx3_15_10     15:1 10:2
++%idx2_10_2      10:2 2:1
++
++@azx_1x1_o3x2   ........ .... zm:4 . .. . .. zn:5 .. ...    \
++                &azx_n n=1 rv=%mova_rv off=%off3_x2 idx=%idx3_15_10
++@azx_2x1_o2x2   ........ .... zm:4 . .. . .. ..... .. ...   \
++                &azx_n n=2 rv=%mova_rv off=%off2_x2 zn=%zn_ax2 idx=%idx2_10_2
++@azx_4x1_o2x2   ........ .... zm:4 . .. . .. ..... .. ...   \
++                &azx_n n=4 rv=%mova_rv off=%off2_x2 zn=%zn_ax4 idx=%idx2_10_2
++
++FMLAL_nx        11000001 1000 .... . .. 1 .. ..... 00 ...   @azx_1x1_o3x2
++FMLAL_nx        11000001 1001 .... 0 .. 1 .. ....0 00 ...   @azx_2x1_o2x2
++FMLAL_nx        11000001 1001 .... 1 .. 1 .. ...00 00 ...   @azx_4x1_o2x2
++
++FMLSL_nx        11000001 1000 .... . .. 1 .. ..... 01 ...   @azx_1x1_o3x2
++FMLSL_nx        11000001 1001 .... 0 .. 1 .. ....0 01 ...   @azx_2x1_o2x2
++FMLSL_nx        11000001 1001 .... 1 .. 1 .. ...00 01 ...   @azx_4x1_o2x2
++
++BFMLAL_nx       11000001 1000 .... . .. 1 .. ..... 10 ...   @azx_1x1_o3x2
++BFMLAL_nx       11000001 1001 .... 0 .. 1 .. ....0 10 ...   @azx_2x1_o2x2
++BFMLAL_nx       11000001 1001 .... 1 .. 1 .. ...00 10 ...   @azx_4x1_o2x2
++
++BFMLSL_nx       11000001 1000 .... . .. 1 .. ..... 11 ...   @azx_1x1_o3x2
++BFMLSL_nx       11000001 1001 .... 0 .. 1 .. ....0 11 ...   @azx_2x1_o2x2
++BFMLSL_nx       11000001 1001 .... 1 .. 1 .. ...00 11 ...   @azx_4x1_o2x2
+-- 
+2.43.0
 
 
