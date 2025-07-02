@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C161FC83F04
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 15:03:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9863FC83F04
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 15:05:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWyyq-000837-DZ; Wed, 02 Jul 2025 11:02:36 -0400
+	id 1uWz1E-0001wP-B5; Wed, 02 Jul 2025 11:05:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWyyi-00082c-70
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 11:02:28 -0400
-Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
+ id 1uWz1A-0001u7-2a
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 11:05:00 -0400
+Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWyyg-0007Ao-FI
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 11:02:27 -0400
-Received: by mail-oa1-x29.google.com with SMTP id
- 586e51a60fabf-2ea2fee5471so4380fac.0
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 08:02:26 -0700 (PDT)
+ id 1uWz16-0008Gx-Lx
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 11:04:59 -0400
+Received: by mail-oa1-x2c.google.com with SMTP id
+ 586e51a60fabf-2ebb72384dbso1904968fac.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 08:04:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751468543; x=1752073343; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751468692; x=1752073492; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/n4TQiMEjGqEsYwUM8DUUfOf7dSgjKtoqZGYyQU6sTI=;
- b=o56WRz4nBy3L+wgw3tPOEjPhTM77LULRRNdWsjqbpOgFiZ8jGAHrOQnyU+mkKOSsvo
- vkRba4DaF3qlW9gk84JdBZ1ewgs9Ldfdfe7O7cZM64I5dVZWuTAkrtaKN7oRscT45wDN
- i3DrOChp4f7jIbCBm1zi3ZPEjogoIeQ0GCAYz6GgE+NRTRnHr+FqMmgrytSR7wt8vPuO
- 983fQBd8WaOjwhSME0J+BYz2E0OU/dJ0zXSnLbkfgShjqPSJ3ms9ejNvybogU8pUwBN8
- Dl4GfFNFccUE80eHkPrdmKg/lJT/MfLxjmzost4dHSS2dMPvn9CDGhQjoBC0By8+LvsS
- T9VQ==
+ bh=XsI0jXZ4ILb5VamJSwGUqa0HyuisamQfPMvj+g4Re0U=;
+ b=yPXMRnDZPLxsrmWz14MCvvPkmaUzfjoDTUBrS2xuA5rBVPuOFDiNOERa/MojU17A1f
+ EYywb4pifqXYCiLdM59cXHwM672MzroWDl28F5SBxU4jxWg9dbeg46d+0BcNWMdeSSto
+ 2qRnO2Cmm2yAwtZklN2bdKOiPTQ/PZDiR+s2zAWC/5gg1gAf2nBXSVP6um3DL3zV+Uox
+ XqYQnk9w/XWsKhF+RTGqnsjruHyDZNmIlSn8Igvf8eQ9xA99jnzjbOJtKKE1aiqKb/uT
+ EQVdcZ/EYa4WMC/T9oH5dhbQTwawCF+HoKjVCBZSDAFaYYqgZ/uaJiG3ch1zBux7GVsD
+ jHsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751468543; x=1752073343;
+ d=1e100.net; s=20230601; t=1751468692; x=1752073492;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/n4TQiMEjGqEsYwUM8DUUfOf7dSgjKtoqZGYyQU6sTI=;
- b=A1WhV2QGItpLGoj1PM1a3RxaaoZ6fRwsNqsWG9Xv14t3FjvrAEDJrNHndsYJKDKG14
- SJY26KbWe/t6PwM5ygy54qYk+dU6k5b1Ht3uaZuohfaS7f/+QPCBwKp4FEECpj+268rg
- wiHxolj4UC55mF4plsXO6eYqBpRciqUS6OIisjtUGoIoOX5FocYZUbJcNtkHPe+fgt3Q
- H1iYbGzJ8tsaAWIo2t6PCEHrYhrsnRksTKOgm2vGrimgT++FPTea7ikzJWzfoa2CVDGq
- NNwTivXGpnU+EYYtwgtNOhQEztU/6yOryPhr/3RhOXI7Thal53Tu4+4OOb7p08Kb4s7O
- h+dw==
+ bh=XsI0jXZ4ILb5VamJSwGUqa0HyuisamQfPMvj+g4Re0U=;
+ b=aO629VR2xzNzBRjPzAeIYcaXjlNhtB+UiWIOaucQB2jyTFEujBSNegeHFS5aBrtLdm
+ sQBIGT6YLzBO3Kdv6k5vAXAAIoS6Ssr3db+7Z2/2dLfFmJRG6MfnQVMUUSEsZpchDC2S
+ H1bYR8fi+BnMSKmCwrazmePgDVv1XhoWX/cgpGYMgHaD/PTEy//+j4RXV+JPR4EY27TT
+ GrLn4HfUlmXA3uJaF7gEmu/jZAa7sFFCrYFHMevSCc8mNEBOrayaq+C5De62g0dO55iD
+ 5SjXS6cr9MEsbFSp6Xn395GUoviQKhAL88GEj6toDSxBn0Cop4wMT7Gyf/tTQ9Gsfomw
+ qa2A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW5f7AfAv902qWNwzCi2+DM2MBT2dhsAleq/jI39iI09jDYpLd/J8p4amhhH63eBIVQ9LgrGRA+40nG@nongnu.org
-X-Gm-Message-State: AOJu0YwL65qC/zNbh/pcn8cDmXJSyll6UnPlkYHoZmv/B/y+lLaT6kRc
- B8T8nSpaT2U6dn8TY2/FxbmZy65rDpj3q+T4K00+ysfIHEQfsoXA+TfWS6aT8Ul7/4xTQV8Ir9f
- 8QyiFiuQ=
-X-Gm-Gg: ASbGncu1XNFLKuNbKPfFzTilrVhrFxqJ9EKQput5s5MGCK8FIBHZtf8idDVnkPKoPZO
- 17lGpvi8TjiEs32vTA5jB77kn8ywfQiwJ+Mdh0sKusr77eJD/SNGWjZN1Rp1mtsV57+SVcLG0o7
- V9lLUqsQ0fJQOcklG++/J2qdDL7vuadcTJo/6ADtMg54EHXBd+F4BDg3tOWns6IZNGOSGI0Q6yr
- pfBld3tSnzD8IUvLIF6fH5Qbp6Th4lAqyV38TSEBEfLqjlz+Sepr26cPywo/uGOKxFAUW/Cud4I
- QcWSYfms7v3k2DNbpeFfAVSDLoi3JsrkNdhaDv0z3Y4fWt+brH9hQWaOwXy7c5X9LoUr5Fu7qFo
- s
-X-Google-Smtp-Source: AGHT+IFxxqZkSXFqluuZYwXmuB9PbgOtQCQuFa8cKoWISGcZM+nawjaL+kRO6yjQq0bsod4d9abBfw==
-X-Received: by 2002:a05:6870:860d:b0:2da:9db9:9ab4 with SMTP id
- 586e51a60fabf-2f6471e573amr2245257fac.4.1751468543355; 
- Wed, 02 Jul 2025 08:02:23 -0700 (PDT)
+ AJvYcCXaZp0SV8fR9PFWaVd+hPwG3RWyeaV9boErJqoKoZ43EEhg9bqpZbPTaIOYMJEJaIQDb23fu0Ttn9ph@nongnu.org
+X-Gm-Message-State: AOJu0YwYWcYlEO2cTVXADykuseeFFRyAmerIOxQXJGuRmSHZe1VKvnhE
+ rpxzlEjbOSit/Ah/+PW+6SgTLCzB/ugfKZAzdtEi26vAKATYDPgs5D+8DGd9i4gmaY8=
+X-Gm-Gg: ASbGncv9NyFCIZNj1IBch7dmxhWeFoR2E6dy70iYGR8H5QHGhw10CrQ6Sv5dLZMthlk
+ jQR5WUbn9Wbq0j17l74mTsnNQRc8PiOOdaRsOpqwipJTIgXT31Yi6m4xsz/StHC2k7Ny8NOiK4L
+ zOcstUbVgf48dNcI+BcmUPtXmMRxGQTXsA25NL32s8DzSjyLD5MDk8UdK+aw9Vr8RUkFN4V5Hav
+ 2f1WYq/08UrjTAuvP9INTZfOJvVDqBhBt1MHDLuQxt8+wk7bGsYucxy+9IGrtE2MO10J9LPcaeB
+ BavS3+1HzNMfQXIGkkUpUZzcI2gbPU5SDOWARAO0P0fjkdAhPtRa/3JUY79bcmYQ9vXJqEIGR88
+ D
+X-Google-Smtp-Source: AGHT+IFZTsOCcvn0MXVClR6WOQ01ta+8VhI6Ew2yhvmfVR7+qiGzOr0DyPbEb5IPU6HT4gkepmetAA==
+X-Received: by 2002:a05:6870:46a5:b0:2f3:9384:cf7 with SMTP id
+ 586e51a60fabf-2f5a8c96bcamr2168566fac.20.1751468692391; 
+ Wed, 02 Jul 2025 08:04:52 -0700 (PDT)
 Received: from [10.25.7.74] ([187.210.107.185])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-73afb0e338esm2533322a34.40.2025.07.02.08.02.22
+ 586e51a60fabf-2efd50f7f6asm3964672fac.36.2025.07.02.08.04.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Jul 2025 08:02:23 -0700 (PDT)
-Message-ID: <3d68b42e-0767-489a-b5b6-cd832244c1d4@linaro.org>
-Date: Wed, 2 Jul 2025 09:02:21 -0600
+ Wed, 02 Jul 2025 08:04:52 -0700 (PDT)
+Message-ID: <06b83a6f-5380-480a-878d-2ecf5f503401@linaro.org>
+Date: Wed, 2 Jul 2025 09:04:49 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 23/68] hw/core/machine: Display CPU model name in 'info
- cpus' command
+Subject: Re: [PATCH v3 28/68] accel/hvf: Report missing
+ com.apple.security.hypervisor entitlement
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Julian Armistead <julian.armistead@linaro.org>
+ Julian Armistead <julian.armistead@linaro.org>, Shatyuka <shatyuka@qq.com>
 References: <20250701144017.43487-1-philmd@linaro.org>
- <20250701144017.43487-24-philmd@linaro.org>
+ <20250701144017.43487-29-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250701144017.43487-24-philmd@linaro.org>
+In-Reply-To: <20250701144017.43487-29-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::29;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x29.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,36 +109,27 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/1/25 08:39, Philippe Mathieu-Daudé wrote:
-> Display the CPU model in 'info cpus'. Example before:
+> We need the QEMU binary signed to be able to use HVF.
+> Improve the following:
 > 
->   $ qemu-system-aarch64 -M xlnx-versal-virt -S -monitor stdio
->   QEMU 10.0.0 monitor - type 'help' for more information
->   (qemu) info cpus
->   * CPU #0: thread_id=42924
->     CPU #1: thread_id=42924
->     CPU #2: thread_id=42924
->     CPU #3: thread_id=42924
->   (qemu) q
+>    $ ./qemu-system-aarch64-unsigned -M virt -accel hvf
+>    qemu-system-aarch64-unsigned: -accel hvf: Error: ret = HV_DENIED (0xfae94007, at ../../accel/hvf/hvf-accel-ops.c:339)
+>    Abort trap: 6
 > 
-> and after:
+> to:
 > 
->   $ qemu-system-aarch64 -M xlnx-versal-virt -S -monitor stdio
->   QEMU 10.0.50 monitor - type 'help' for more information
->   (qemu) info cpus
->   * CPU #0: thread_id=42916 (cortex-a72)
->     CPU #1: thread_id=42916 (cortex-a72)
->     CPU #2: thread_id=42916 (cortex-r5f)
->     CPU #3: thread_id=42916 (cortex-r5f)
->   (qemu)
+>    $ ./qemu-system-aarch64-unsigned -M virt -accel hvf
+>    qemu-system-aarch64-unsigned: -accel hvf: Could not access HVF. Is the executable signed with com.apple.security.hypervisor entitlement?
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Suggested-by: Shatyuka <shatyuka@qq.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2800
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   qapi/machine.json          | 3 +++
->   hw/core/machine-hmp-cmds.c | 3 ++-
->   hw/core/machine-qmp-cmds.c | 1 +
->   3 files changed, 6 insertions(+), 1 deletion(-)
+>   accel/hvf/hvf-accel-ops.c | 5 +++++
+>   1 file changed, 5 insertions(+)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
+
 
