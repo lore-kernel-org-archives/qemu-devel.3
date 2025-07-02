@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13DD6C83F04
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 13:38:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91AB7C77B7C
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 13:39:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWxFj-0002u6-9o; Wed, 02 Jul 2025 09:11:55 -0400
+	id 1uWx4R-0004ql-I3; Wed, 02 Jul 2025 09:00:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWxFe-0002nd-Fy
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 09:11:51 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uWx48-0004TL-B2
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:59:59 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWxFb-0006LC-3C
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 09:11:50 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3a4f72cba73so5026132f8f.1
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 06:11:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uWx41-0007tO-06
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:59:54 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-ae0ccfd5ca5so623286966b.3
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:59:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751461904; x=1752066704; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=C8lvA+l3wNoCTx9JuHtyHUxTUWUWBsRM4PqjqegebxU=;
- b=lIPzWp2O5Z1frhm2iJRgi+QJsySDOWNCiJW3+zmwt5OzuSSSBeqq2zqGLqXXw8ep4k
- T9dzbfUHqwtH3R/1TEukBt9It21jwW5j2zrKAbsRPxzJoddfwAKpAIOk5KrXBzbqfV1y
- Mx2ZnuL8Jnj8zleyCbXBOxgqDTGrb3nKR81T80RzZcUlLPe2ucQv1rgDw4vs1kjEVuOr
- z6g+rHg9UGwJn7vUomFumr+Mggy79U//XFNjHRRSIYhJvlpYDc65yYZYNOBWIQL3XVN3
- 58FjTRyMUdkinYyTG8O9wj9CQ+7aVv+ikYJZv6Vy7o5VnO4y5vzKmjV3ePvhLzRK+dmg
- QF1Q==
+ d=linaro.org; s=google; t=1751461186; x=1752065986; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=E9+XoyS+lvjeJBJDO3NHCXmpRb+IvEYkL23MZR7a1u0=;
+ b=evIDXFTOqbNjp24yIKXJ8UaaxzwGTPIVLt8jacqvQtED6QTbdO2OwDEuLAEa485iW3
+ wGzryRjImTqC6O5ZG86MARl/wExS8tC9JF6iuTBg9JSJw8/PzM/J+OEwV9GNkU0Gd6c6
+ pkUNmkTV/GL6FIrYfLr6KoSjJqi6x2o2wkVDVTz8H+Xpg6gTzFM4XJNJKiOE5j8LuYAh
+ qhk3FcCiTTKfLZYdigmwGj8XEHPi1mdT3bG2QclTi1lEATgeBYkDW6fDlFmXoOiHDgdR
+ XachUhMvc1FzJ/Wn8/OzHKH6SJfzEVllqfLZmALVHduumZEq6WybeToaffwpvMx2ClxI
+ 12gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751461904; x=1752066704;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=C8lvA+l3wNoCTx9JuHtyHUxTUWUWBsRM4PqjqegebxU=;
- b=WXDjC6mzIwiuwpFCmGZoKIP1zyOM9JJ8TP0Igw1a38bcBCqidBOOGJRxPbTx/TsP1L
- Z/bXCtJbaZr1mitU381Srx4btjjMhUjN4BEPystF0n/42eck30RYEtCFFCz/gB5BhpIP
- wF8O58NML5ruJRB1h0S5RkLezz7U9H1tMv555r8HI1GqgrbkYQDLCRQgRysVMQ7m9dg9
- 52Wr6VYxRC/TDl20cboHBebbk5m9ztEEDZBDUAkX1mhFt0XBNC9RaV2WeDKlV15vY2uZ
- wTOdGHS9r3OV45rCbOwsk/HYvh5IKx65sD2VzK2tqOirvzGg8gn6uS6/k2JMV7zJhun9
- r5Kw==
-X-Gm-Message-State: AOJu0YxXU8fylaJHwmvMMKzkbFSTlLIcb1y/rL5eNMuM3+z/R4wQp8K6
- V288UNWDHn8JGBtKmR3Squ1rIljPh0VhVSJR9xhVAwqs1+cUFwVn7o82eJg28KKB/50=
-X-Gm-Gg: ASbGnctWvx4V4PgDeDwf8tjVf3GgSWujUB6KsngXBSCbjY/b54u4kv3hGdpAu29AzL7
- 1COr7AbIabFqpvoY+/3EevoV9cYklO8qJ0eqP7hrQ7JEdRdebKyPJcEAib9/gwlCx9Jyh7zTE5L
- fVysFv5SK8TEXbm3+vZyo6ScrHYtpYibVw6NFKoWSMwgF5AII/ch2rVs6fd0NqD4HN9je8kVuKJ
- b2nc0IafNTm5RlbrSH/bYPsd7hEzKBEI2v76eaTZ3Ccv1NrhzRv8cMHZaovGl5CIuRPqjhku03n
- hnra3vZuazi3RnZdWMsmwpWFHM2vI5vZt6jl97eRrWcTWJM5Y/8Ylx5oKG+XeCLaqvfmK5RtOZU
- UV4bSJx987DtuNUAj5cWjjfiX+8OIHQ==
-X-Google-Smtp-Source: AGHT+IGlrNHl8N4sLogigtp0t4ezf+YtP5kFVC2uWInF/frLmUyVBD41303bLOqpnDRshpB8F1IenQ==
-X-Received: by 2002:a05:6000:188f:b0:3a4:d685:3de7 with SMTP id
- ffacd0b85a97d-3b1f61bdb37mr2366627f8f.8.1751461903755; 
- Wed, 02 Jul 2025 06:11:43 -0700 (PDT)
-Received: from [192.168.69.166] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a892e595c6sm16467247f8f.66.2025.07.02.06.11.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Jul 2025 06:11:43 -0700 (PDT)
-Message-ID: <1c95b135-f9c1-4c52-8e26-d3e9110b3035@linaro.org>
-Date: Wed, 2 Jul 2025 15:11:42 +0200
+ d=1e100.net; s=20230601; t=1751461186; x=1752065986;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:to:from:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=E9+XoyS+lvjeJBJDO3NHCXmpRb+IvEYkL23MZR7a1u0=;
+ b=IN2eYQM788lgii1Wwv3H114CrCseRouQi65ztcSiJaMLHcGVJw9fvir04NgBmzXQni
+ XUFtouaag+bxgDtn5cY9I70HjGzMeGb398//VOofzdHoLum4fnUqtcD1DO1qKSylN92w
+ rr9tO6+IR7/DfvVJThWjUxfHbzfKzC8mlFz8GQJvydBWB7ckEiIrvS/fWs/3uOTLwidG
+ lXP9a9xfGgsvLbKPu74yPgkE07Z/U7Xo0/StsExK52fvDzpNAifObsLxj2hRK9EkXg1b
+ gYKO8KXuQgyUkOa9zu24V1JOTLh1NZXv96S2nqCa1n0o49NR6r12lmV/GKHkAEYYt97x
+ XG4A==
+X-Gm-Message-State: AOJu0Yx8vFQ7YFH9IyBP1E3zVFNKrPBYOLoO2dv0wGqyr5Bn+ignenYz
+ I7J4q4qvt7XarVkIrg2eU6a+5ewtS59F1b08WRCdDufzucUqHgKQv4582KSZv+QLeqpOeQ4I4xw
+ AmDCQEG4=
+X-Gm-Gg: ASbGncspQgd1+9+ChmaUekN28PzLQhqoIKZMsWkV9JPGsf3q6Urxg0eQv3l5ZmhVf9z
+ GC9BW74uaWbhvo128DLfYQPPawZQ7gzzTaJf040o4MrRShDMI2+ddNHgJpO0SfmM83Exqrjrhn2
+ ZcZiIaWxCclmtzm7vdxrsbtkwHiifjRwKKAZYs87LWb2C0tbI6hOL4vVyuMTkUL52fyxS9Zgnpf
+ uoY2z2Uu1AJoAuxsOmkuQtdgmKowOhJRiqpgF3Vm8XEEvOx6y0enlMeugtmmfdVi+ChoajiQGzR
+ 3Z2S0cdNvBzxPgEpUPlehq3nEZ1R7iUXvgHEStp1PMMOo1hyFQ4tW9H79ofoTXs=
+X-Google-Smtp-Source: AGHT+IFFSpwRen/S4OEZfgyfvpN+v+8hLwgsgBZ6wl5IUK0juZzxie7v+Dw7L0whVyNx7ZB2YoaLsg==
+X-Received: by 2002:a17:906:6a27:b0:ae3:5be2:d9e8 with SMTP id
+ a640c23a62f3a-ae3c2b8c116mr295945466b.18.1751461186103; 
+ Wed, 02 Jul 2025 05:59:46 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ae35363b1c4sm1073299266b.31.2025.07.02.05.59.41
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 02 Jul 2025 05:59:43 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id EBAF65F8BE
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 13:59:40 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: Re: [PULL 00/15] Maintainer updates for June (gitlab, semihosting,
+ plugins, virtio-gpu)
+In-Reply-To: <20250702104336.3775206-1-alex.bennee@linaro.org> ("Alex
+ =?utf-8?Q?Benn=C3=A9e=22's?= message of "Wed, 2 Jul 2025 11:43:21 +0100")
+References: <20250702104336.3775206-1-alex.bennee@linaro.org>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Wed, 02 Jul 2025 13:59:40 +0100
+Message-ID: <871pqyg343.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 24/68] accel/system: Add 'info accel' on human monitor
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Julian Armistead <julian.armistead@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250701144017.43487-1-philmd@linaro.org>
- <20250701144017.43487-25-philmd@linaro.org> <878ql7rxxg.fsf@pond.sub.org>
- <d9ab105e-20ad-4ee2-8655-2b89ed3910b8@linaro.org>
- <87ms9myf9a.fsf@pond.sub.org> <aGUiXjcEvx7ncBRI@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aGUiXjcEvx7ncBRI@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,42 +104,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/7/25 14:13, Daniel P. Berrangé wrote:
-> On Wed, Jul 02, 2025 at 02:00:01PM +0200, Markus Armbruster wrote:
->> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
->>
->>> On 2/7/25 06:58, Markus Armbruster wrote:
+Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
 
->>>> Standard question for new HMP commands that don't wrap around QMP
->>>> commands: why is the functionality not useful in QMP?
->>>
->>> So far the sole use of this command is to prove the 'split accel'
->>> works by using it in a test:
->>> https://lore.kernel.org/qemu-devel/20250620172751.94231-43-philmd@linaro.org/
->>
->> Different series?  Best to add new interfaces together with their uses.
->>
->>> Is it worth overloading QAPI and its documentation, and overload
->>> the QMP command set (even if prefixing with experimental / hidden 'x-')?
->>>
->>> If so, I don't mind implementing yet another "embedded plain HMP string
->>> to QMP command" in v4, or directly export each debug statistical value
->>> via QAPI.
->>
->> Whatever the reasons for implementing something in HMP only may be, the
->> commit message should state them.
->>
->> "Just for testing" is a valid reason for HMP-only.  It's not obvious
->> from the command documentation or code, though.
-> 
-> IMHO there is no valid reason for continuing to add HMP-only commands
-> which are not backed by QMP.
-> 
-> A test case can easily run QMP commands, and we accept arbitrary QMP
-> commands with the 'x-' prefix and experimental tag, to serve as the
-> basis for the HMP command printing human readable text. So if anything
-> I'd suggest exposing a QMP command and not bothering with HMP at all.
+> The following changes since commit 6138e72b7e33e0240ee955a2754dd038ee9949=
+4d:
+>
+>   Merge tag 'pull-tcg-20250630' of https://gitlab.com/rth7680/qemu into s=
+taging (2025-07-01 04:25:08 -0400)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/stsquad/qemu.git tags/pull-10.1-maintainer-june-2025=
+-020725-1
+>
+> for you to fetch changes up to 1fa2ffdbec55d84326e22f046bc3e26322836f5a:
+>
+>   virtio-gpu: support context init multiple timeline (2025-07-02
+>   10:10:07 +0100)
 
-Fine.
+Oops - I should have realised it had been sent when it failed due to
+missing patches. The tag is the same for both, sorry for the list spam.
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
