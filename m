@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42AC4C83F04
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 16:04:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B162C83F04
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 16:04:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWzwY-0004To-00; Wed, 02 Jul 2025 12:04:18 -0400
+	id 1uWzwr-0005sp-VG; Wed, 02 Jul 2025 12:04:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uWzwG-000442-Bs
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 12:04:01 -0400
+ id 1uWzwq-0005os-Iv
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 12:04:36 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uWzwC-0007TR-Rm
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 12:03:59 -0400
+ id 1uWzwk-0007Yn-1Y
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 12:04:36 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bXPnF4Jv0z6M4nb;
- Thu,  3 Jul 2025 00:02:57 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bXPlZ4rfyz6L5Yx;
+ Thu,  3 Jul 2025 00:01:30 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 67FA71402E9;
- Thu,  3 Jul 2025 00:03:53 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 48D2C1402E9;
+ Thu,  3 Jul 2025 00:04:24 +0800 (CST)
 Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
  frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 2 Jul 2025 18:03:53 +0200
+ 15.1.2507.39; Wed, 2 Jul 2025 18:04:23 +0200
 To: <qemu-devel@nongnu.org>, Michael Tsirkin <mst@redhat.com>, Fan Ni
  <fan.ni@samsung.com>
 CC: <linux-cxl@vger.kernel.org>, <linuxarm@huawei.com>
-Subject: [PATCH qemu 03/11] hw/mem: cxl_type3: Add dsmas_flags to CXLDCRegion
- struct
-Date: Wed, 2 Jul 2025 17:02:09 +0100
-Message-ID: <20250702160219.989731-4-Jonathan.Cameron@huawei.com>
+Subject: [PATCH qemu 04/11] hw/cxl: mailbox-utils: 0x5601 - FMAPI Get Host
+ Region Config
+Date: Wed, 2 Jul 2025 17:02:10 +0100
+Message-ID: <20250702160219.989731-5-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250702160219.989731-1-Jonathan.Cameron@huawei.com>
 References: <20250702160219.989731-1-Jonathan.Cameron@huawei.com>
@@ -76,73 +76,146 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Anisa Su <anisa.su@samsung.com>
 
-Add booleans to DC Region struct to represent dsmas flags (defined in CDAT) in
-preparation for the next command, which returns the flags in the next mailbox
-command 0x5601.
+FM DCD Management command 0x5601 implemented per CXL r3.2 Spec Section 7.6.7.6.2
 
 Reviewed-by: Fan Ni <fan.ni@samsung.com>
 Signed-off-by: Anisa Su <anisa.su@samsung.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- include/hw/cxl/cxl_device.h | 15 +++++++++++++++
- hw/mem/cxl_type3.c          |  8 +++++++-
- 2 files changed, 22 insertions(+), 1 deletion(-)
+ hw/cxl/cxl-mailbox-utils.c | 106 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 106 insertions(+)
 
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 7eade9cf8a..469e5d872a 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -133,6 +133,15 @@ typedef enum {
-     CXL_MBOX_MAX = 0x20
- } CXLRetCode;
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 3304048922..bf1710b251 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -120,6 +120,7 @@ enum {
+         #define MANAGEMENT_COMMAND     0x0
+     FMAPI_DCD_MGMT = 0x56,
+         #define GET_DCD_INFO    0x0
++        #define GET_HOST_DC_REGION_CONFIG   0x1
+ };
  
-+/* r3.2 Section 7.6.7.6.2 Table 7-66 DSMAS Flags Bits */
-+typedef enum {
-+    CXL_DSMAS_FLAGS_NONVOLATILE = 2,
-+    CXL_DSMAS_FLAGS_SHARABLE = 3,
-+    CXL_DSMAS_FLAGS_HW_MANAGED_COHERENCY = 4,
-+    CXL_DSMAS_FLAGS_IC_SPECIFIC_DC_MANAGEMENT = 5,
-+    CXL_DSMAS_FLAGS_RDONLY = 6,
-+} CXLDSMASFlags;
+ /* CCI Message Format CXL r3.1 Figure 7-19 */
+@@ -3286,6 +3287,109 @@ static CXLRetCode cmd_fm_get_dcd_info(const struct cxl_cmd *cmd,
+     return CXL_MBOX_SUCCESS;
+ }
+ 
++static void build_dsmas_flags(uint8_t *flags, CXLDCRegion *region)
++{
++    *flags = 0;
 +
- typedef struct CXLCCI CXLCCI;
- typedef struct cxl_device_state CXLDeviceState;
- struct cxl_cmd;
-@@ -531,6 +540,12 @@ typedef struct CXLDCRegion {
-     uint8_t flags;
-     unsigned long *blk_bitmap;
-     uint64_t supported_blk_size_bitmask;
-+    /* Following bools make up dsmas flags, as defined in the CDAT */
-+    bool nonvolatile;
-+    bool sharable;
-+    bool hw_managed_coherency;
-+    bool ic_specific_dc_management;
-+    bool rdonly;
- } CXLDCRegion;
++    if (region->nonvolatile) {
++        *flags |= BIT(CXL_DSMAS_FLAGS_NONVOLATILE);
++    }
++    if (region->sharable) {
++        *flags |= BIT(CXL_DSMAS_FLAGS_SHARABLE);
++    }
++    if (region->hw_managed_coherency) {
++        *flags |= BIT(CXL_DSMAS_FLAGS_HW_MANAGED_COHERENCY);
++    }
++    if (region->ic_specific_dc_management) {
++        *flags |= BIT(CXL_DSMAS_FLAGS_IC_SPECIFIC_DC_MANAGEMENT);
++    }
++    if (region->rdonly) {
++        *flags |= BIT(CXL_DSMAS_FLAGS_RDONLY);
++    }
++}
++
++/*
++ * CXL r3.2 section 7.6.7.6.2:
++ * Get Host DC Region Configuration (Opcode 5601h)
++ */
++static CXLRetCode cmd_fm_get_host_dc_region_config(const struct cxl_cmd *cmd,
++                                                   uint8_t *payload_in,
++                                                   size_t len_in,
++                                                   uint8_t *payload_out,
++                                                   size_t *len_out,
++                                                   CXLCCI *cci)
++{
++    struct {
++        uint16_t host_id;
++        uint8_t region_cnt;
++        uint8_t start_rid;
++    } QEMU_PACKED *in = (void *)payload_in;
++    struct {
++        uint16_t host_id;
++        uint8_t num_regions;
++        uint8_t regions_returned;
++        struct {
++            uint64_t base;
++            uint64_t decode_len;
++            uint64_t region_len;
++            uint64_t block_size;
++            uint8_t flags;
++            uint8_t rsvd1[3];
++            uint8_t sanitize;
++            uint8_t rsvd2[3];
++        } QEMU_PACKED records[];
++    } QEMU_PACKED *out = (void *)payload_out;
++    struct {
++        uint32_t num_extents_supported;
++        uint32_t num_extents_available;
++        uint32_t num_tags_supported;
++        uint32_t num_tags_available;
++    } QEMU_PACKED *extra_out;
++    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
++    uint16_t record_count, out_pl_len, i;
++
++    if (in->start_rid >= ct3d->dc.num_regions) {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++    record_count = MIN(ct3d->dc.num_regions - in->start_rid, in->region_cnt);
++
++    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
++    extra_out = (void *)out + out_pl_len;
++    out_pl_len += sizeof(*extra_out);
++
++    assert(out_pl_len <= CXL_MAILBOX_MAX_PAYLOAD_SIZE);
++
++    stw_le_p(&out->host_id, 0);
++    out->num_regions = ct3d->dc.num_regions;
++    out->regions_returned = record_count;
++
++    for (i = 0; i < record_count; i++) {
++        stq_le_p(&out->records[i].base,
++                 ct3d->dc.regions[in->start_rid + i].base);
++        stq_le_p(&out->records[i].decode_len,
++                 ct3d->dc.regions[in->start_rid + i].decode_len /
++                 CXL_CAPACITY_MULTIPLIER);
++        stq_le_p(&out->records[i].region_len,
++                 ct3d->dc.regions[in->start_rid + i].len);
++        stq_le_p(&out->records[i].block_size,
++                 ct3d->dc.regions[in->start_rid + i].block_size);
++        build_dsmas_flags(&out->records[i].flags,
++                          &ct3d->dc.regions[in->start_rid + i]);
++        /* Sanitize is bit 0 of flags. */
++        out->records[i].sanitize =
++            ct3d->dc.regions[in->start_rid + i].flags & BIT(0);
++    }
++
++    stl_le_p(&extra_out->num_extents_supported, CXL_NUM_EXTENTS_SUPPORTED);
++    stl_le_p(&extra_out->num_extents_available, CXL_NUM_EXTENTS_SUPPORTED -
++             ct3d->dc.total_extent_count);
++    stl_le_p(&extra_out->num_tags_supported, CXL_NUM_TAGS_SUPPORTED);
++    stl_le_p(&extra_out->num_tags_available, CXL_NUM_TAGS_SUPPORTED);
++
++    *len_out = out_pl_len;
++    return CXL_MBOX_SUCCESS;
++}
++
+ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+     [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
+         cmd_infostat_bg_op_abort, 0, 0 },
+@@ -3402,6 +3506,8 @@ static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
+ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
+     [FMAPI_DCD_MGMT][GET_DCD_INFO] = { "GET_DCD_INFO",
+         cmd_fm_get_dcd_info, 0, 0 },
++    [FMAPI_DCD_MGMT][GET_HOST_DC_REGION_CONFIG] = { "GET_HOST_DC_REGION_CONFIG",
++        cmd_fm_get_host_dc_region_config, 4, 0 },
+ };
  
- typedef struct CXLSetFeatureInfo {
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index f608470362..0fccd22800 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -226,10 +226,16 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
-          * future.
-          */
-         for (i = 0; i < ct3d->dc.num_regions; i++) {
-+            ct3d->dc.regions[i].nonvolatile = false;
-+            ct3d->dc.regions[i].sharable = false;
-+            ct3d->dc.regions[i].hw_managed_coherency = false;
-+            ct3d->dc.regions[i].ic_specific_dc_management = false;
-+            ct3d->dc.regions[i].rdonly = false;
-             ct3_build_cdat_entries_for_mr(&(table[cur_ent]),
-                                           dsmad_handle++,
-                                           ct3d->dc.regions[i].len,
--                                          false, true, region_base);
-+                                          ct3d->dc.regions[i].nonvolatile,
-+                                          true, region_base);
-             ct3d->dc.regions[i].dsmadhandle = dsmad_handle - 1;
- 
-             cur_ent += CT3_CDAT_NUM_ENTRIES;
+ /*
 -- 
 2.48.1
 
