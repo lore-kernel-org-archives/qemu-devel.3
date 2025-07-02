@@ -4,104 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 776EBC83013
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 07:49:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CBA5C83013
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 07:52:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWsDe-00089W-Fn; Wed, 02 Jul 2025 03:49:26 -0400
+	id 1uWsGD-0000iU-2V; Wed, 02 Jul 2025 03:52:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shahuang@redhat.com>)
- id 1uWsDb-000897-Au
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 03:49:23 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uWsGB-0000hQ-6y
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 03:52:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shahuang@redhat.com>)
- id 1uWsDU-00043l-8M
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 03:49:21 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uWsG9-0004ZA-4n
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 03:52:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751442555;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1751442718;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=USuE7m+Uw/y7NqBAo7vHVRkRmvT+v0lBpgBm2OFdnco=;
- b=UIIdWLPaL2fnpE1y3WQHqf2QuuJTbEm4xp16scU9gZU3yZB3bQ1/Szmd9u97iYsKUJShp/
- ymjoFwR/CQN15ffAX+HRoL1l82rHq0H3BHOzp7Iq87bT0Jopfe0szLvpn7aXAe0FAFiewS
- KqY4wNdeUMYltxOrGxZ9ojZkQyd3XUc=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-wWiA8iPPO-SHeccV_vw88g-1; Wed, 02 Jul 2025 03:49:13 -0400
-X-MC-Unique: wWiA8iPPO-SHeccV_vw88g-1
-X-Mimecast-MFC-AGG-ID: wWiA8iPPO-SHeccV_vw88g_1751442553
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2382607509fso40079035ad.3
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 00:49:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751442552; x=1752047352;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=USuE7m+Uw/y7NqBAo7vHVRkRmvT+v0lBpgBm2OFdnco=;
- b=eMaBWUmsgqg30y2FRFdEaCdl03V06sKK7RUsovgBJ7B0XUpT1fbH1/SJL6VJquCAZA
- nUquPQLjjnDXSLFWhqiXKc/MhxwCs/v8yByLD7SlvE+lIpPGuitUCMT2N3luQWbQkvGO
- JPNv0ulgFOUtjR6sZ23yZMof8owe2WBaf5vJLKWnWJaELjAppsT2VzMp4mNQLctS1Qxt
- OnAjgT6KPpaBA1dbe3sJfxjidar6Me/21LwWqM8c1DdnGImPGL0nQV6A9W/IBfxGn7Rn
- s9XHCFtLgVz/C0qGjU5F7BNAk60WKF9/iHlQGxpxsJo/WQUR/2b5dK86q3nYaiW4EXkX
- SANw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV4cNelN63sWSUnP0IzgOutxa9KpClvZr80HhTQ7lrVVimHDpIgiMdsWT/+ZBuXkR5ypItSoIfy3pdP@nongnu.org
-X-Gm-Message-State: AOJu0YwPnf3xmztw62mKUc/lTvfloDXayQbPhUX3xApRwfQI2/LBpICc
- x5DIKfprwAgtYzwnx6xPZfT5ptDAXahG3vFOR+H8ZLrWVYdwP/SOP9puDlLMreuVBV4ZgMnIF8q
- 4E+xmZFfucPigynEC6XqI8INhjdL390GAApXWJ+o1yudkuFI/YU9ut3rs
-X-Gm-Gg: ASbGncu/fwn+QoRCUNd5Xy19a86VtOcNZujmb3dukXAlyqlF8pl7RhNWuCrP1L8Ickp
- 9oasOwYgFymNF04tgnIqIFP2Zx5+wMY1+y0saXCSujQuvPDJHzhlCJeXuN3X2OeEq+1kl0VSRBz
- wgnyNs4NuUco2gs9LPbq2V+8p8m+XY1wBu7ykKtWf9hpP/yXz2ZN2UnS/QCHuOLK3wpVK5tm3mh
- +v+DkKbk0TaNER7RSGTFPs+4B8WD60scnLFWLmjD/7MCXyox1JkHft14dpiTbSiDyNZvs+3y3iW
- T01L/GYlDP696PVOW7YhPeV6Pw==
-X-Received: by 2002:a17:903:2acc:b0:234:986c:66bf with SMTP id
- d9443c01a7336-23c6e4d3049mr24250975ad.11.1751442552263; 
- Wed, 02 Jul 2025 00:49:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHMpR9TwMWSwXfGSYiGfz9r3guaIksy8L+6Qj8igd/z964t0okbtgZYQnjrnCGN4aQEEeeD6w==
-X-Received: by 2002:a17:903:2acc:b0:234:986c:66bf with SMTP id
- d9443c01a7336-23c6e4d3049mr24250535ad.11.1751442551889; 
- Wed, 02 Jul 2025 00:49:11 -0700 (PDT)
-Received: from [10.72.116.77] ([209.132.188.88])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23acb3c70c7sm121812295ad.231.2025.07.02.00.48.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Jul 2025 00:49:11 -0700 (PDT)
-Message-ID: <e881139d-dc61-45c5-878d-02ba16aeebc9@redhat.com>
-Date: Wed, 2 Jul 2025 15:48:50 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/2] hw/i386: Add the ramfb romfile compatibility
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Eric Auger <eauger@redhat.com>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
+ bh=RVhEYkU0LKAK4rSwmFltHwoOvslzWPU8HQv8dPhbgYk=;
+ b=Lu8l8UDDMx5FzBc7Dv0xxomwUyQCZUzQf+h4eR6JaPcuUvNZx0vvuBGhJWgwdRoq0sEGFt
+ NYc79DUhZhXZlvTe7cgxg2qZOEkEK02BxKZWaxQN+zXNw8Tz3E+4dEh/iFfBVDKIcFIiQ4
+ slxtTdtABSV2MyEz5slFvFcFxT68ARA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-78-0oifh1-lPwSaB-BWmkpGCQ-1; Wed,
+ 02 Jul 2025 03:51:55 -0400
+X-MC-Unique: 0oifh1-lPwSaB-BWmkpGCQ-1
+X-Mimecast-MFC-AGG-ID: 0oifh1-lPwSaB-BWmkpGCQ_1751442714
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7E572180120D; Wed,  2 Jul 2025 07:51:53 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 570F019560A7; Wed,  2 Jul 2025 07:51:51 +0000 (UTC)
+Date: Wed, 2 Jul 2025 08:51:48 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ David Hildenbrand <david@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-References: <20250701030549.2153331-1-shahuang@redhat.com>
- <20250701030549.2153331-3-shahuang@redhat.com>
- <9bbaa0bb-cf32-48f2-aff6-6484285496f0@redhat.com>
- <6347e3a2-23f5-43a3-8b74-503148f3bacf@redhat.com>
- <e7f5a70d-a052-4d37-9cec-5c9595559de7@redhat.com>
- <aGTNJAfn8bAnxQzU@intel.com>
-Content-Language: en-US
-From: Shaoqin Huang <shahuang@redhat.com>
-In-Reply-To: <aGTNJAfn8bAnxQzU@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=shahuang@redhat.com;
+ Ilya Leoshkevich <iii@linux.ibm.com>, Michael Mueller <mimu@linux.ibm.com>
+Subject: Re: [PATCH] target/s390x: A fix for the trouble with tribles
+Message-ID: <aGTk9-nkX7-zO0q9@redhat.com>
+References: <20250701194241.434183-1-thuth@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250701194241.434183-1-thuth@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -109,8 +73,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,39 +87,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhao,
+On Tue, Jul 01, 2025 at 09:42:41PM +0200, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> While Tribbles are cute, it should be "triple store" here,
+> not "trible store".
 
-On 7/2/25 2:09 PM, Zhao Liu wrote:
->> One more question, now the qemu doesn't have the hw_compat_10_1, should I
->> first add another patch to add it just like the commit:
->> 0a7c438a42 hw: add compat machines for 10.0
+Do we really need to fix it ? Tribbles are fun :-)
+
 > 
-> Hi Shaoqin, I think you can add compat option in hw_compat_10_0. Then
-> the compat property will be applied for v10.0 and before. And you can
-> find v10.1 won't be affected by compat option you set.
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  target/s390x/cpu_features_def.h.inc | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
 > 
-> You can test this with "-machine pc-q35-10.0" or older, with "-machine pc-q35"
-> or "-machine pc-q35-10.1".
+> diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
+> index e23e603a792..c017bffcdc4 100644
+> --- a/target/s390x/cpu_features_def.h.inc
+> +++ b/target/s390x/cpu_features_def.h.inc
+> @@ -186,7 +186,7 @@ DEF_FEAT(PLO_CSO, "plo-cso", PLO, 25, "PLO Compare and swap (256 bit in paramete
+>  DEF_FEAT(PLO_DCSO, "plo-dcso", PLO, 26, "PLO Double compare and swap (256 bit in parameter list)")
+>  DEF_FEAT(PLO_CSSTO, "plo-cssto", PLO, 27, "PLO Compare and swap and store (256 bit in parameter list)")
+>  DEF_FEAT(PLO_CSDSTO, "plo-csdsto", PLO, 28, "PLO Compare and swap and double store (256 bit in parameter list)")
+> -DEF_FEAT(PLO_CSTSTO, "plo-cststo", PLO, 29, "PLO Compare and swap and trible store (256 bit in parameter list)")
+> +DEF_FEAT(PLO_CSTSTO, "plo-cststo", PLO, 29, "PLO Compare and swap and triple store (256 bit in parameter list)")
+>  DEF_FEAT(PLO_TCS, "plo-tcs", PLO, 30, "Triple compare and swap (32 bit in parameter list)")
+>  DEF_FEAT(PLO_TCSG, "plo-tcsg", PLO, 31, "Triple compare and swap (64 bit in parameter list)")
+>  DEF_FEAT(PLO_TCSX, "plo-tcsx", PLO, 32, "Triple compare and swap (128 bit in parameter list)")
+> -- 
+> 2.50.0
+> 
 > 
 
-Thanks for your explaination, it helps a lot.
-
-Thanks,
-Shaoqin
-
->> I think it should have the hw_compat_10_1 first, then I can add the property
->> into it.
-> 
-> This hw_compat_10_1 will be added when v10.1 is realeased.
-> 
-> Thanks,
-> Zhao
-> 
-
+With regards,
+Daniel
 -- 
-Shaoqin
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
