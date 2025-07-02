@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85A26C83F04
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 13:10:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97136C83F04
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 13:10:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWwgI-0008E3-1H; Wed, 02 Jul 2025 08:35:18 -0400
+	id 1uWwqy-00071p-U8; Wed, 02 Jul 2025 08:46:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWwgA-000814-4e
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:35:10 -0400
-Received: from mail-oa1-x2b.google.com ([2001:4860:4864:20::2b])
+ id 1uWwju-0004hn-2Z
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:39:03 -0400
+Received: from mail-oa1-x30.google.com ([2001:4860:4864:20::30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWwfo-00015B-5l
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:35:07 -0400
-Received: by mail-oa1-x2b.google.com with SMTP id
- 586e51a60fabf-2eb6c422828so3963265fac.1
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:34:47 -0700 (PDT)
+ id 1uWwjd-0002E8-Nv
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:38:58 -0400
+Received: by mail-oa1-x30.google.com with SMTP id
+ 586e51a60fabf-2ea34731c5dso2647052fac.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:38:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751459686; x=1752064486; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751459923; x=1752064723; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+o9WtWIZF7CJjfjA2GAPrFXLh1beSrq23YpovmlbJIg=;
- b=ix6OY9ZKFTCRTF2/3pvN8ApXyzA7G9bmv7r0IzLGXn+3SjGC2IjLd7FoD0N6zwTOoA
- VfHdkGGHd+ZV7QtC3rlqta8BXQgr9IykqsyahTuwxPs77+JKm0XJm3ZqEjEfmAfO51HH
- W64IgkmEoKmgBVE7n5ueLQYJgU0mVvzFK8mMawKS7d58IEj/37e7VWvBzES2fO9LFg1Z
- 0Xln/6jrXLvewtBvmKPYDXauicQgdWIQJ2vtOmGOlxNfdiBWZLNxJ/9AtvrmEntgO0Tc
- vohXyu/hFXKH7KwoZ2ymYXH8lC4mSexMqnjjLBhX4OAUZz/3ma0dBMYLqK9rH7Aq5lWA
- X2vg==
+ bh=g282VnLG4FRWjvt3Oj566nXSR9/d2h3hitvgyLII8mU=;
+ b=z2gmFofZfVWPutMUUUwyH1wCO5fRm3CyP9Hn2Y85REuAf2Dw9YXohyu0bDUR3UW1eZ
+ m/HbNTwmZfpKww3G3b2e6javIr99dVm8ZE2YNgKLiTp8wC3LcpBxDcc64R/q0q2HfW2O
+ LlRjFPKmT2QHhtkAjP9+7GJH+RoQO9nRJC7vwZtTZL5ApZTd/j8G/vXourH4uwnlI0WS
+ cYLMz7iX9oHzdYaYSNdJbODPHY+coGR8mN7ftc22KkNaNZwPT8t4JF0LaWqlhSiVgK+e
+ N8OHMpB1e9yklWn/J/ianXUugYomUxCnFeOa4hfq0JrPKnFDCRrOmNw9lrxh9BOkY5zT
+ yc3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751459686; x=1752064486;
+ d=1e100.net; s=20230601; t=1751459923; x=1752064723;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+o9WtWIZF7CJjfjA2GAPrFXLh1beSrq23YpovmlbJIg=;
- b=ni21q+03IXKzz392sWpa/dHNjW8Ch3k4m76TPo3/+6OJNEKPvsJfsLL2mKfXJ18n+9
- bpfhjNhY/xexdkzydIHZUbcGh5n99pU6kQKpPwu3vSqm7OqsUADSl5lbLrzC/UaCIBb4
- QxIi0ipytnGvR7Su1DUeI3pNMzb4cW7KWabnScCkHQrS6W3/qi7y4nBfuO+q++u1+zmY
- Oqp/5o2xtKTxb5vDr/nYPCqmaabou97YF6ey1kdxYN2qVZFSMNidPwufAYylkfcj3cxF
- NQ91dyQ8F1nRpFX4nK7ZiuMBAySX/wWBxa8ovZVWkgtWCP0wrlxObk3O6nvcA07c6u7/
- 1agQ==
-X-Gm-Message-State: AOJu0Yz5NhIca/b/o+hU63pWMrDTqxWr0mZIYGdOvw4ewaWr40YsZPhj
- b0Hlq5v9Td1B0kTWKvr+uIej7lDJO5k/7pmTxdCsMaVBnHg1YPTSML9ZuCaDBTef86PvcddQ9+c
- 8qNbgS10=
-X-Gm-Gg: ASbGncunTpWTfrw80GjcZnf1RwB9HKVyJ18hct1RbFzkw/HU/E1/Cz6qRN2On5yOrXS
- 0JWNt5tDfkjMN1/70qGu1OBmoY4GiDS6MLFdhZkVxjUdha56Z7rBk4fUjk8eu7AqtfXiD9XRQH0
- PiUAkxJikW03sSRR7fEXo6R27MmhEXS8Qpgu40eK3aAzQK8Cn1WXW14zwKPWS5R8xi/42FIikdv
- /o2YyONT7quGh0vL308LwfUPAs/dJ0KRWOttBIt7wq+gRBD7W+8NB8N7zKuk/8+sk5H+5uKFAgL
- UaUkgujxkvwoD4AQUA0e7R9kyD2wtkZ0W17Fpp9vOCtZUrlICTHEgOG+B2GVxNH451gnrA==
-X-Google-Smtp-Source: AGHT+IHc8H4efE8fOryzclqD+czw1sfR2LRxe+4bKscYqGiQ816zSPrG99LnHyLV4/c9PE56xkNa0Q==
-X-Received: by 2002:a05:6871:4984:b0:2e4:c5c8:707b with SMTP id
- 586e51a60fabf-2f6472a31e9mr1337827fac.6.1751459686433; 
- Wed, 02 Jul 2025 05:34:46 -0700 (PDT)
+ bh=g282VnLG4FRWjvt3Oj566nXSR9/d2h3hitvgyLII8mU=;
+ b=hTmpVfo0TKSPwBdfj4Z/ub/y+RcqjzB+213j0iIv0fXC5Nqqbb04VcMhhR7RV4R+N7
+ 5HM2JGtjjY3sODEZDcNnlEk4Ekd67WjORl3S7iRWEgvwkPiK9cOHV+X+xRfZh3vwrAg+
+ ZXJSLu1fxUII4JMmdAq/wXpp8o4QtmwX5umR5bGW9vOGulY3hEosZV36ZRyk/2zFN6D6
+ sYITBhsLSqBqe6krsu3Jihta/CcLK5b52/3IPvETbmq6dVxPlWaEnkPezYax7tsenlTe
+ d4bhJAB2ejaIyE8ql6yxLam8RdG9Uzm0mtKwJPHOsHqEdY2E4MtHsnRm2yP52hisBD9C
+ WkMQ==
+X-Gm-Message-State: AOJu0Yze/kH2pRsXbdFr7HR6nkFb7dDdoI2+V3bbOeNCQ99lREMD95WC
+ SzLnSWZ7SvIu4kTdxcM0eM0Jjv0oiYcG5BjMtSUEZq9QfJD498AqhrZFyJW5Qoh/zTqg3LnMAYx
+ j7SAgUK0=
+X-Gm-Gg: ASbGncvbp7vEfvAqGsKceixwf2RNBUyiSQDyy1iabYMyZD9j+MvlfZiQC0CIO+pRq/S
+ qPJNM5GUFLusNCHtW9fuNjA/ElVRCcd18Tro5xBPSF8cyFIveq1eiJM9ULvwHVjNxNWZ/5wZ5l4
+ pcXF0orK5udw2kbXmaPUKCtJ4YUPNkTnB86TkdI+V7dJovHtUnzpafFcQi2c+wCnOJgmEMIbEXZ
+ KqKhWOpo60N7FhUb88QaYQoKxtaRa7NS3G3Nx2vlHnVfC2j1kqkvB4CPxrHIpr0YBtVqdRC5J+w
+ MswbG7baxShUdYAzdbaMp2veIJlIvyzW2ogXbQucGe8iElJjsVZdadd7u2jZqBwCH164oQ==
+X-Google-Smtp-Source: AGHT+IFtzZgay5GeuHplCYQJcHbGS3uHHtH2qS4Sdb1Tf6WYovaUmO9dJT4GiyioqEuVxr2Wb/3CaQ==
+X-Received: by 2002:a05:6870:9686:b0:29d:c764:f873 with SMTP id
+ 586e51a60fabf-2f5c7abccefmr2113221fac.31.1751459923269; 
+ Wed, 02 Jul 2025 05:38:43 -0700 (PDT)
 Received: from stoup.. ([187.210.107.185]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2efd50b1b2fsm3864281fac.32.2025.07.02.05.34.45
+ 586e51a60fabf-2efd4ea5d9fsm3843451fac.10.2025.07.02.05.38.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Jul 2025 05:34:45 -0700 (PDT)
+ Wed, 02 Jul 2025 05:38:42 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	peter.maydell@linaro.org
-Subject: [PATCH v3 27/97] target/arm: Implement SME2 FDOT
-Date: Wed,  2 Jul 2025 06:33:00 -0600
-Message-ID: <20250702123410.761208-28-richard.henderson@linaro.org>
+Subject: [PATCH v3 71/97] target/arm: Implement SVE2p1 PEXT
+Date: Wed,  2 Jul 2025 06:33:44 -0600
+Message-ID: <20250702123410.761208-72-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250702123410.761208-1-richard.henderson@linaro.org>
 References: <20250702123410.761208-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2b;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2b.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::30;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,188 +99,214 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/helper-sme.h    |  5 ++++
- target/arm/tcg/sme_helper.c    | 44 ++++++++++++++++++++++++++++++++++
- target/arm/tcg/translate-sme.c | 18 ++++++++++++++
- target/arm/tcg/translate-sve.c |  5 ++++
- target/arm/tcg/sme.decode      | 14 +++++++++++
- target/arm/tcg/sve.decode      |  7 ++++--
- 6 files changed, 91 insertions(+), 2 deletions(-)
+ target/arm/tcg/helper-sve.h    |  2 +
+ target/arm/tcg/vec_internal.h  | 74 ++++++++++++++++++++++++++++++++++
+ target/arm/tcg/sve_helper.c    | 27 +++++++++++++
+ target/arm/tcg/translate-sve.c | 36 +++++++++++++++++
+ target/arm/tcg/sve.decode      |  6 +++
+ 5 files changed, 145 insertions(+)
 
-diff --git a/target/arm/tcg/helper-sme.h b/target/arm/tcg/helper-sme.h
-index cdd7058aed..ec93ff57ff 100644
---- a/target/arm/tcg/helper-sme.h
-+++ b/target/arm/tcg/helper-sme.h
-@@ -173,3 +173,8 @@ DEF_HELPER_FLAGS_5(gvec_fmaxnum_b16, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_5(gvec_fminnum_b16, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, fpst, i32)
+diff --git a/target/arm/tcg/helper-sve.h b/target/arm/tcg/helper-sve.h
+index 5f5ecc2e0d..ec82d0a4e7 100644
+--- a/target/arm/tcg/helper-sve.h
++++ b/target/arm/tcg/helper-sve.h
+@@ -2953,3 +2953,5 @@ DEF_HELPER_FLAGS_4(sve2p1_uminqv_b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(sve2p1_uminqv_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(sve2p1_uminqv_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(sve2p1_uminqv_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
 +
-+DEF_HELPER_FLAGS_6(sme2_fdot_h, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_FLAGS_6(sme2_fdot_idx_h, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, env, i32)
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index 8ce50653b4..60322be3d0 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -1152,6 +1152,50 @@ void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
-     }
- }
++DEF_HELPER_FLAGS_3(pext, TCG_CALL_NO_RWG, void, ptr, i32, i32)
+diff --git a/target/arm/tcg/vec_internal.h b/target/arm/tcg/vec_internal.h
+index 5efd257c50..236927c640 100644
+--- a/target/arm/tcg/vec_internal.h
++++ b/target/arm/tcg/vec_internal.h
+@@ -337,4 +337,78 @@ bfloat16 helper_sme2_ah_fmin_b16(bfloat16 a, bfloat16 b, float_status *fpst);
+ float32 sve_f16_to_f32(float16 f, float_status *fpst);
+ float16 sve_f32_to_f16(float32 f, float_status *fpst);
  
-+void HELPER(sme2_fdot_h)(void *vd, void *vn, void *vm, void *va,
-+                         CPUARMState *env, uint32_t desc)
++/*
++ * Decode helper functions for predicate as counter.
++ */
++
++typedef struct {
++    unsigned count;
++    unsigned stride;
++    bool invert;
++} DecodeCounter;
++
++static inline DecodeCounter
++decode_counter(unsigned png, unsigned vl, unsigned v_esz)
 +{
-+    intptr_t i, oprsz = simd_maxsz(desc);
-+    bool za = extract32(desc, SIMD_DATA_SHIFT, 1);
-+    float_status *fpst_std = &env->vfp.fp_status[za ? FPST_ZA : FPST_A64];
-+    float_status *fpst_f16 = &env->vfp.fp_status[za ? FPST_ZA_F16 : FPST_A64_F16];
-+    float_status fpst_odd = *fpst_std;
-+    float32 *d = vd, *a = va;
-+    uint32_t *n = vn, *m = vm;
++    DecodeCounter ret = { .stride = 1 };
 +
-+    set_float_rounding_mode(float_round_to_odd, &fpst_odd);
++    /* C.f. Arm pseudocode CounterToPredicate. */
++    if (likely(png & 0xf)) {
++        unsigned p_esz = ctz32(png);
 +
-+    for (i = 0; i < oprsz / sizeof(float32); ++i) {
-+        d[H4(i)] = f16_dotadd(a[H4(i)], n[H4(i)], m[H4(i)],
-+                              fpst_f16, fpst_std, &fpst_odd);
-+    }
-+}
++        /*
++         * maxbit = log2(pl(bits) * 4)
++         *        = log2(vl(bytes) * 4)
++         *        = log2(vl) + 2
++         * maxbit_mask = ones<maxbit:0>
++         *             = (1 << (maxbit + 1)) - 1
++         *             = (1 << (log2(vl) + 2 + 1)) - 1
++         *             = (1 << (log2(vl) + 3)) - 1
++         *             = (pow2ceil(vl) << 3) - 1
++         */
++        ret.count = png & (((unsigned)pow2ceil(vl) << 3) - 1);
++        ret.count >>= p_esz + 1;
 +
-+void HELPER(sme2_fdot_idx_h)(void *vd, void *vn, void *vm, void *va,
-+                             CPUARMState *env, uint32_t desc)
-+{
-+    intptr_t i, j, oprsz = simd_maxsz(desc);
-+    intptr_t elements = oprsz / sizeof(float32);
-+    intptr_t eltspersegment = MIN(4, elements);
-+    int idx = extract32(desc, SIMD_DATA_SHIFT, 2);
-+    bool za = extract32(desc, SIMD_DATA_SHIFT + 2, 1);
-+    float_status *fpst_std = &env->vfp.fp_status[za ? FPST_ZA : FPST_A64];
-+    float_status *fpst_f16 = &env->vfp.fp_status[za ? FPST_ZA_F16 : FPST_A64_F16];
-+    float_status fpst_odd = *fpst_std;
-+    float32 *d = vd, *a = va;
-+    uint32_t *n = vn, *m = (uint32_t *)vm + H4(idx);
++        ret.invert = (png >> 15) & 1;
 +
-+    set_float_rounding_mode(float_round_to_odd, &fpst_odd);
-+
-+    for (i = 0; i < elements; i += eltspersegment) {
-+        uint32_t mm = m[i];
-+        for (j = 0; j < eltspersegment; ++j) {
-+            d[H4(i + j)] = f16_dotadd(a[H4(i + j)], n[H4(i + j)], mm,
-+                                      fpst_f16, fpst_std, &fpst_odd);
++        /*
++         * The Arm pseudocode for CounterToPredicate expands the count to
++         * a set of bits, and then the operation proceeds as for the original
++         * interpretation of predicates as a set of bits.
++         *
++         * We can avoid the expansion by adjusting the count and supplying
++         * an element stride.
++         */
++        if (unlikely(p_esz != v_esz)) {
++            if (p_esz < v_esz) {
++                /*
++                 * For predicate esz < vector esz, the expanded predicate
++                 * will have more bits set than will be consumed.
++                 * Adjust the count down, rounding up.
++                 * Consider p_esz = MO_8, v_esz = MO_64, count 14:
++                 * The expanded predicate would be
++                 *    0011 1111 1111 1111
++                 * The significant bits are
++                 *    ...1 ...1 ...1 ...1
++                 */
++                unsigned shift = v_esz - p_esz;
++                unsigned trunc = ret.count >> shift;
++                ret.count = trunc + (ret.count != (trunc << shift));
++            } else {
++                /*
++                 * For predicate esz > vector esz, the expanded predicate
++                 * will have bits set only at power-of-two multiples of
++                 * the vector esz.  Bits at other multiples will all be
++                 * false.  Adjust the count up, and supply the caller
++                 * with a stride of elements to skip.
++                 */
++                unsigned shift = p_esz - v_esz;
++                ret.count <<= shift;
++                ret.stride = 1 << shift;
++            }
 +        }
 +    }
++    return ret;
 +}
 +
- void HELPER(sme_bfmopa)(void *vza, void *vzn, void *vzm,
-                         void *vpn, void *vpm, CPUARMState *env, uint32_t desc)
- {
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 9ec02d960d..761584c90b 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -903,3 +903,21 @@ static bool do_bfmlal_nx(DisasContext *s, arg_azx_n *a, bool sub)
+ #endif /* TARGET_ARM_VEC_INTERNAL_H */
+diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
+index cc706db901..59ba1caf02 100644
+--- a/target/arm/tcg/sve_helper.c
++++ b/target/arm/tcg/sve_helper.c
+@@ -7825,3 +7825,30 @@ DO_FCVTLT(sve2_fcvtlt_sd, uint64_t, uint32_t, H1_8, H1_4, float32_to_float64)
  
- TRANS_FEAT(BFMLAL_nx, aa64_sme2, do_bfmlal_nx, a, false)
- TRANS_FEAT(BFMLSL_nx, aa64_sme2, do_bfmlal_nx, a, true)
+ #undef DO_FCVTLT
+ #undef DO_FCVTNT
 +
-+static bool do_fdot(DisasContext *s, arg_azz_n *a, bool multi)
++void HELPER(pext)(void *vd, uint32_t png, uint32_t desc)
 +{
-+    return do_azz_acc_fp(s, a->n, 1, a->rv, a->off, a->zn, a->zm, 1, 0,
-+                         multi, FPST_ENV, gen_helper_sme2_fdot_h);
++    int pl = FIELD_EX32(desc, PREDDESC, OPRSZ);
++    int vl = pl * 8;
++    unsigned v_esz = FIELD_EX32(desc, PREDDESC, ESZ);
++    int part = FIELD_EX32(desc, PREDDESC, DATA);
++    DecodeCounter p = decode_counter(png, vl, v_esz);
++    uint64_t mask = pred_esz_masks[v_esz + ctz32(p.stride)];
++
++    /*
++     * Convert from element count to byte count and adjust
++     * for the portion of the 4*VL counter to be extracted.
++     */
++    int b_count = (p.count << v_esz) - vl * part;
++
++    do_zero(vd, pl);
++    if (p.invert) {
++        if (b_count <= 0) {
++            do_whilel(vd, mask, vl, vl);
++        } else if (b_count < vl) {
++            do_whileg(vd, mask, vl - b_count, vl);
++        }
++    } else if (b_count > 0) {
++        do_whilel(vd, mask, MIN(b_count, vl), vl);
++    }
 +}
-+
-+TRANS_FEAT(FDOT_n1, aa64_sme2, do_fdot, a, false)
-+TRANS_FEAT(FDOT_nn, aa64_sme2, do_fdot, a, true)
-+
-+static bool do_fdot_nx(DisasContext *s, arg_azx_n *a)
-+{
-+    return do_azz_acc_fp(s, a->n, 1, a->rv, a->off, a->zn, a->zm,
-+                         a->idx | (1 << 2), 0, false, FPST_ENV,
-+                         gen_helper_sme2_fdot_idx_h);
-+}
-+
-+TRANS_FEAT(FDOT_nx, aa64_sme2, do_fdot_nx, a)
 diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index b85bd885f9..4acd22f55e 100644
+index 2e29dff989..6ad4d1e289 100644
 --- a/target/arm/tcg/translate-sve.c
 +++ b/target/arm/tcg/translate-sve.c
-@@ -7229,6 +7229,11 @@ TRANS_FEAT_NONSTREAMING(USMMLA, aa64_sve_i8mm, gen_gvec_ool_arg_zzzz,
- TRANS_FEAT_NONSTREAMING(UMMLA, aa64_sve_i8mm, gen_gvec_ool_arg_zzzz,
-                         gen_helper_gvec_ummla_b, a, 0)
+@@ -3336,6 +3336,42 @@ static bool trans_WHILE_ptr(DisasContext *s, arg_WHILE_ptr *a)
+     return true;
+ }
  
-+TRANS_FEAT(FDOT_zzzz, aa64_sme2_or_sve2p1, gen_gvec_env_arg_zzzz,
-+           gen_helper_sme2_fdot_h, a, 0)
-+TRANS_FEAT(FDOT_zzxz, aa64_sme2_or_sve2p1, gen_gvec_env_arg_zzxz,
-+           gen_helper_sme2_fdot_idx_h, a)
++static bool do_pext(DisasContext *s, arg_pext *a, int n)
++{
++    TCGv_i32 t_png;
++    TCGv_ptr t_pd;
++    int pl;
 +
- TRANS_FEAT(BFDOT_zzzz, aa64_sve_bf16, gen_gvec_env_arg_zzzz,
-            gen_helper_gvec_bfdot, a, 0)
- TRANS_FEAT(BFDOT_zzxz, aa64_sve_bf16, gen_gvec_env_arg_zzxz,
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index 9850c19d90..a2b93519c4 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -285,6 +285,9 @@ BFMLSL_n1       11000001 001 0 .... 0 .. 011 ..... 11 ...   @azz_nx1_o3x2 n=1
- BFMLSL_n1       11000001 001 0 .... 0 .. 010 ..... 110 ..   @azz_nx1_o2x2 n=2
- BFMLSL_n1       11000001 001 1 .... 0 .. 010 ..... 110 ..   @azz_nx1_o2x2 n=4
- 
-+FDOT_n1         11000001 001 0 .... 0 .. 100 ..... 00 ...   @azz_nx1_o3 n=2
-+FDOT_n1         11000001 001 1 .... 0 .. 100 ..... 00 ...   @azz_nx1_o3 n=4
++    if (!sve_access_check(s)) {
++        return true;
++    }
 +
- ### SME2 Multi-vector Multiple Array Vectors
- 
- %zn_ax2         6:4 !function=times_2
-@@ -322,6 +325,9 @@ BFMLAL_nn       11000001 101 ...01 0 .. 010 ...00 100 ..    @azz_4x4_o2x2
- BFMLSL_nn       11000001 101 ....0 0 .. 010 ....0 110 ..    @azz_2x2_o2x2
- BFMLSL_nn       11000001 101 ...01 0 .. 010 ...00 110 ..    @azz_4x4_o2x2
- 
-+FDOT_nn         11000001 101 ....0 0 .. 100 ....0 00 ...    @azz_2x2_o3
-+FDOT_nn         11000001 101 ...01 0 .. 100 ...00 00 ...    @azz_4x4_o3
++    t_png = tcg_temp_new_i32();
++    tcg_gen_ld16u_i32(t_png, tcg_env,
++                      pred_full_reg_offset(s, a->rn) ^
++                      (HOST_BIG_ENDIAN ? 6 : 0));
 +
- ### SME2 Multi-vector Indexed
- 
- &azx_n          n off rv zn zm idx
-@@ -351,3 +357,11 @@ BFMLAL_nx       11000001 1001 .... 1 .. 1 .. ...00 10 ...   @azx_4x1_o2x2
- BFMLSL_nx       11000001 1000 .... . .. 1 .. ..... 11 ...   @azx_1x1_o3x2
- BFMLSL_nx       11000001 1001 .... 0 .. 1 .. ....0 11 ...   @azx_2x1_o2x2
- BFMLSL_nx       11000001 1001 .... 1 .. 1 .. ...00 11 ...   @azx_4x1_o2x2
++    t_pd = tcg_temp_new_ptr();
++    pl = pred_full_reg_size(s);
 +
-+@azx_2x1_i2_o3  ........ .... zm:4 . .. . idx:2 .... ... off:3 \
-+                &azx_n n=2 rv=%mova_rv zn=%zn_ax2
-+@azx_4x1_i2_o3  ........ .... zm:4 . .. . idx:2 .... ... off:3 \
-+                &azx_n n=2 rv=%mova_rv zn=%zn_ax4
++    for (int i = 0; i < n; ++i) {
++        int rd = (a->rd + i) % 16;
++        int part = a->imm * n + i;
++        unsigned desc = 0;
 +
-+FDOT_nx         11000001 0101 .... 0 .. 1 .. ....0 01 ...   @azx_2x1_i2_o3
-+FDOT_nx         11000001 0101 .... 1 .. 1 .. ...00 01 ...   @azx_4x1_i2_o3
++        desc = FIELD_DP32(desc, PREDDESC, OPRSZ, pl);
++        desc = FIELD_DP32(desc, PREDDESC, ESZ, a->esz);
++        desc = FIELD_DP32(desc, PREDDESC, DATA, part);
++
++        tcg_gen_addi_ptr(t_pd, tcg_env, pred_full_reg_offset(s, rd));
++        gen_helper_pext(t_pd, t_png, tcg_constant_i32(desc));
++    }
++    return true;
++}
++
++TRANS_FEAT(PEXT_1, aa64_sme2_or_sve2p1, do_pext, a, 1)
++TRANS_FEAT(PEXT_2, aa64_sme2_or_sve2p1, do_pext, a, 2)
++
+ /*
+  *** SVE Integer Wide Immediate - Unpredicated Group
+  */
 diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index 3a99eb7299..5970ed9ac4 100644
+index a3221308ad..b762257759 100644
 --- a/target/arm/tcg/sve.decode
 +++ b/target/arm/tcg/sve.decode
-@@ -1662,7 +1662,8 @@ FMLSLT_zzzw     01100100 10 1 ..... 10 1 00 1 ..... .....  @rda_rn_rm_ex esz=2
- BFMLALB_zzzw    01100100 11 1 ..... 10 0 00 0 ..... .....  @rda_rn_rm_ex esz=2
- BFMLALT_zzzw    01100100 11 1 ..... 10 0 00 1 ..... .....  @rda_rn_rm_ex esz=2
+@@ -60,6 +60,7 @@
+ %rn_ax2         6:4 !function=times_2
  
--### SVE2 floating-point bfloat16 dot-product
-+### SVE2 floating-point dot-product
-+FDOT_zzzz       01100100 00 1 ..... 10 0 00 0 ..... .....  @rda_rn_rm_ex esz=2
- BFDOT_zzzz      01100100 01 1 ..... 10 0 00 0 ..... .....  @rda_rn_rm_ex esz=2
+ %pnd            0:3 !function=plus_8
++%pnn            5:3 !function=plus_8
  
- ### SVE2 floating-point multiply-add long (indexed)
-@@ -1673,7 +1674,9 @@ FMLSLT_zzxw     01100100 10 1 ..... 0110.1 ..... .....     @rrxr_3a esz=2
- BFMLALB_zzxw    01100100 11 1 ..... 0100.0 ..... .....     @rrxr_3a esz=2
- BFMLALT_zzxw    01100100 11 1 ..... 0100.1 ..... .....     @rrxr_3a esz=2
+ ###########################################################################
+ # Named attribute sets.  These are used to make nice(er) names
+@@ -823,6 +824,11 @@ WHILE_lt_cnt4   00100101 .. 1 ..... 0110 . 1 ..... 1 . ...  @while_cnt
+ WHILE_gt_cnt2   00100101 .. 1 ..... 0100 . 0 ..... 1 . ...  @while_cnt
+ WHILE_gt_cnt4   00100101 .. 1 ..... 0110 . 0 ..... 1 . ...  @while_cnt
  
--### SVE2 floating-point bfloat16 dot-product (indexed)
-+### SVE2 floating-point dot-product (indexed)
++# SVE2.1 extract mask predicate from predicate-as-counter
++&pext           rd rn esz imm
++PEXT_1          00100101 esz:2 1 00000 0111 00 imm:2 ... 1 rd:4  &pext rn=%pnn
++PEXT_2          00100101 esz:2 1 00000 0111 010 imm:1 ... 1 rd:4 &pext rn=%pnn
 +
-+FDOT_zzxz       01100100 00 1 ..... 010000 ..... .....     @rrxr_2 esz=2
- BFDOT_zzxz      01100100 01 1 ..... 010000 ..... .....     @rrxr_2 esz=2
+ ### SVE Integer Wide Immediate - Unpredicated Group
  
- ### SVE broadcast predicate element
+ # SVE broadcast floating-point immediate (unpredicated)
 -- 
 2.43.0
 
