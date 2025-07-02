@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB722C77B7C
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 18:16:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20C48C83038
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 18:26:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uX1zI-0006AK-Ou; Wed, 02 Jul 2025 14:15:16 -0400
+	id 1uX29V-0000ug-QT; Wed, 02 Jul 2025 14:25:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uX1zG-00069i-FS
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 14:15:15 -0400
-Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX29S-0000tf-3H
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 14:25:46 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uX1zD-0002Wh-VQ
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 14:15:13 -0400
-Received: by mail-oo1-xc2d.google.com with SMTP id
- 006d021491bc7-612033bb26cso408154eaf.3
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 11:15:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX29P-0004ec-2b
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 14:25:44 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4538bc1cffdso45776745e9.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 11:25:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751480110; x=1752084910; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=AxQhK9pKqs9jAdyZ3RE1U011mfYv3GPygX6VrXFjJDI=;
- b=nYcPKTzj7w+3beAzr1tc+x03jezXJSPu/74/r7WjmfplfYvgCuD9b6UP21h3f2zPCe
- V/X63QYszGmdtSqXNMvlw9GDRM5R/8KzUXiRNFqSDJ+8kgZrt2zijHKLey1sBJb1Md+1
- OlQZ7U+7bzXGeoAnqjF5XRCvNp9LCiSLjWeq5oB1BkSPZc6REwdy8bQ3ZndVGeeCNWTJ
- C4tjEb3P30JCC65Iw+w5OYJAf0H7BW7TMWp3OHTTuFT3e0JcUEYwOKQ1IDxJJjvA0i/s
- m2tYJo0Gv0nUzGPDskBRs5cAsTjBFeEV7iiETwUJP/bA+lv4VAyRaL+inuhsmBqNGItU
- 9CBQ==
+ d=linaro.org; s=google; t=1751480741; x=1752085541; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=vbbsCtKiihSxcvSRHHDVP6sy4C+cCApajjABE6XxvWk=;
+ b=yufXrgpdHZipliAI7z+V8JmbmhSuC03Kp6r5+h1cVb1v+uhcC0qwaCSA2sYceFRil7
+ oUC5hjKTznA3ckELIm5TMiIPDH/aV1NLHu66TH5yidMY9AfGs0iaoMVW5l0IEcEqqEyT
+ cj4NRffMVXcsWgQ3Sw8zMawiJ4SX+FIaKR+ffkMoljoUIamdWRnNU9jeZp9WgSAlTaVE
+ 9XdsiFFN942s6O7p2jHrNzuzt60jVCNMJvQktaIvoWvUyNLgB+aL2gtlJXt6pJUT73pj
+ FpRLfN03wuk4w6oHDqX9Xu4uEG7bFQ8WJqzWDm2pV1I+MaN3ax7udirOBA0PpPlFjIkZ
+ 72vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751480110; x=1752084910;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1751480741; x=1752085541;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AxQhK9pKqs9jAdyZ3RE1U011mfYv3GPygX6VrXFjJDI=;
- b=a4tEIotb2423GOFkg8KMnFqSQyi1IchAAKzQrJ/fRhgfqq4qfhm+g6Zj18Zf7nasbb
- R1S1bHmSSTi09X5xVmXuML+/3f9Ncc8fmM59XOZggt8QmXq+QETf7cADzmXJRXveHv+G
- Ttq38gCjzQtq+0k6dkdKgwLfq2VfFud21UlNDLLTpa0fRGMP4bvFq5AmWysvbttIO08Z
- Sg84m4UMJJ4Y2YOumIJGDfeueE8j7ffYqLKCNN66ADj2jsCZe/a4qd7kURc3D6U/qVvf
- 3WxH+5RbwR6HhXHU2a38mfsX3ha/HEU3NtkTrvPDcad8IKa8gKIeEs64KOzCEcWPeJEs
- riog==
-X-Gm-Message-State: AOJu0Yz1ceUhT8MkZ0/YNXUY9TGoeuYqWTP3EmLOIoPqSK2MNmo+P95N
- es9r24QQKqzveN7cTRlVUWriXBLgXI1zVVN7Uvss8XkS/69wiLD0HuEURUDbR+3ozz+U5IZWSKh
- XswbnHz8=
-X-Gm-Gg: ASbGnctejq3ojEkBBYtYTfYNy9QFyomVb0NpAEq/ZgT3hNPN+o6wvhldxacQ0nn+4YP
- myuyXFpkXqJIgd9yuUOj4U4ffBp12Rw8gdLQhgSVKoz1KUagQyMiiSDoHu8gLxIInEnmEiKiCFS
- frgxu0ifsqxD2QZiIZuLZCg+AcYm/DR4H5XsnRc9hfnsscBwo4shEa+vyjLucw6ojfzqoSV20t5
- 8eNoK3pLEhaQbYRZNNr8MIB5y1sUu3o/lQMAJ8VZeFJ5X5I5to5NSgJV0JkUMV4BRBUaW3H1koW
- Hq7pDLhtka+nns4vxGkHdADpEBJ9nYoZXlhojOFz4Cg5S5LE5Vo54zU5bx/YNo2PdMnfzDYj26Y
- 4Z/rzmye20+acSmU=
-X-Google-Smtp-Source: AGHT+IFAWPf2q5OegzoRVxy5LwtkzSOLnEuTgExX1Wkl7lEtXIoy6QgC/w8MKRb6XZQGSwDyFZtBtw==
-X-Received: by 2002:a05:6820:198d:b0:611:e30a:fa1c with SMTP id
- 006d021491bc7-61200f7034bmr2463789eaf.1.1751480110083; 
- Wed, 02 Jul 2025 11:15:10 -0700 (PDT)
-Received: from [10.225.72.227] ([187.210.107.189])
- by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-611b85c84afsm1777352eaf.40.2025.07.02.11.15.09
+ bh=vbbsCtKiihSxcvSRHHDVP6sy4C+cCApajjABE6XxvWk=;
+ b=NpcqiVfiERjqKxbkjoUELbX9W7fh6Jt5sIG8cpIU7W1QYvMfdE/zvsY/4rNNOmwZCS
+ zRXE96VmmN8eeXNBAlAnTr/nfTYCOShGomsT6kYwVpFJEB3bJt/qH2mQCGgloSyeglGa
+ fBSIupvyiI76BfMxgpQv14q6F8jylxoqE1YiI6rlxhjOQ7knflQqP7oYQZEl+L1oSa8c
+ 1RI0fY3imJt/DyYztCkbnlRBXEPOg7yLHDqjeWZI+g7Ch11R6U24ahwza+yome4E5Bi1
+ 3mEazoqVxImY4aIXSpSWDxbW7LNJm9LdtkwXB06EiTSXlwgVfhWW69GGZm6/W/Cg+84b
+ 4LwQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVADTN59VXCnzBEiY5CdJlDM75+YHQ/lHLSvRECM4+9nVr80aRLkvCqf9hRCf56X1+pYBgtsEzpE8PJ@nongnu.org
+X-Gm-Message-State: AOJu0YzkE3ReahmDq9OzfE4LOzS87buZtJsGx1MS3furELGbdZ9d5bkQ
+ BI8fOXnViuKRbHZK060LA0NuwdX/eHR7yCd+blxM5uUk8u6HgHKd9644VN77SUI4x9Zc0O5NJSS
+ wAMr/
+X-Gm-Gg: ASbGncs8HYQqumhn/bP+xMHo7EIDAy5cCfkdc70/dj/0j20po39pmuIkWcbn+itcKB8
+ dCQgO6Pc46X8nypv17xvINgqEgZYqqI8FGe0e/BpLViLDtuewpA59qxEeKKMpXrVN65PLGqt8Is
+ YrUdQKucteClq+vtj+SBPb87YdiM0HP7pjw4kKos/Svr1M5R+kkYITQlQ0VeUyvppNv4vX3UZ32
+ K6PA7EMRZ59HHrMm+BNYdBpHL7ri0u7HM3Hav0qzWEBePDD8GsMK1z5G4q0T4vwRHB8ytsJX/Ir
+ a5GXzJ3ExKqdlWjtlNpkBDxdCuwMEzOWq0BilVM3b6/Vr2cv2nI/VuJG0kyRgjydI60ctJvU8qZ
+ hQIkqRTTZ0+59KOnBTUCOekRYskXPBdgs2WKFltJj
+X-Google-Smtp-Source: AGHT+IEi8GFzY854Wcqq8YpQ2kXxUKbuGICSouF0JMXmpKzKVGQtTM/CctHFc/coIYFL95yis3t6xA==
+X-Received: by 2002:a05:600c:4752:b0:43d:878c:7c40 with SMTP id
+ 5b1f17b1804b1-454a36e2baamr50970215e9.10.1751480740970; 
+ Wed, 02 Jul 2025 11:25:40 -0700 (PDT)
+Received: from [192.168.69.166] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454a9beb22asm4826585e9.36.2025.07.02.11.25.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Jul 2025 11:15:09 -0700 (PDT)
-Message-ID: <78bb2fc1-bdd5-43b1-83a8-b4e3a37d1825@linaro.org>
-Date: Wed, 2 Jul 2025 12:15:02 -0600
+ Wed, 02 Jul 2025 11:25:40 -0700 (PDT)
+Message-ID: <72e2855d-4ba0-4933-826e-d38100e9a46f@linaro.org>
+Date: Wed, 2 Jul 2025 20:25:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/10] target/arm: Disable FEAT_F64MM if maximum SVE
- vector size too small
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org
-References: <20250702122213.758588-1-richard.henderson@linaro.org>
- <20250702122213.758588-7-richard.henderson@linaro.org>
+Subject: Re: [PATCH v3 57/68] accel/tcg: Expose vcpu_[un]register() for MTTCG
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Julian Armistead <julian.armistead@linaro.org>
+References: <20250701144017.43487-1-philmd@linaro.org>
+ <20250701144017.43487-58-philmd@linaro.org>
+ <89ceef1e-c4c1-45eb-a369-a17f711ef4ad@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250702122213.758588-7-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <89ceef1e-c4c1-45eb-a369-a17f711ef4ad@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,40 +106,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/2/25 06:22, Richard Henderson wrote:
-> All F64MM instructions operate on a 256-bit vector.
-> If only 128-bit vectors is supported by the cpu,
-> then the cpu cannot enable F64MM.
+On 2/7/25 17:19, Richard Henderson wrote:
+> On 7/1/25 08:40, Philippe Mathieu-Daudé wrote:
+>> Allocate ForceRcuNotifier on the Heap.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   accel/tcg/tcg-accel-ops-mttcg.c | 30 ++++++++++++++++++++++++------
+>>   1 file changed, 24 insertions(+), 6 deletions(-)
 > 
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/arm/cpu64.c | 6 ++++++
->   1 file changed, 6 insertions(+)
+> Please document the motivation.
 
-Ho hum.  The idregs reorg landed overnight.  I will update my branch, but will not re-post 
-right away.
+ > [...] the structure is still not accessible from anywhere outside
+ > of the function, and has the same lifetime as the function.
 
+We need this to register the MTTCG thread in split_cpu_thread_routine():
+https://lore.kernel.org/qemu-devel/20250620172751.94231-12-philmd@linaro.org/
 
-r~
+Better to have AccelOpsClass::[un]register_thread_rcu() hooks?
 
+>>
+>> diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel- 
+>> ops-mttcg.c
+>> index 4de506a80ca..2d31b00ee59 100644
+>> --- a/accel/tcg/tcg-accel-ops-mttcg.c
+>> +++ b/accel/tcg/tcg-accel-ops-mttcg.c
+>> @@ -55,6 +55,27 @@ static void mttcg_force_rcu(Notifier *notify, void 
+>> *data)
+>>       async_run_on_cpu(cpu, do_nothing, RUN_ON_CPU_NULL);
+>>   }
+>> +static void *mttcg_vcpu_register(CPUState *cpu)
+>> +{
+>> +    MttcgForceRcuNotifier *force_rcu = g_new(MttcgForceRcuNotifier, 1);
+>> +
+>> +    force_rcu->notifier.notify = mttcg_force_rcu;
+>> +    force_rcu->cpu = cpu;
+>> +    rcu_add_force_rcu_notifier(&force_rcu->notifier);
+>> +    tcg_register_thread();
+>> +
+>> +    return force_rcu;
+>> +}
+>> +
+>> +static void mttcg_vcpu_unregister(CPUState *cpu, void *opaque)
+>> +{
+>> +    MttcgForceRcuNotifier *force_rcu = opaque;
+>> +
+>> +    rcu_remove_force_rcu_notifier(&force_rcu->notifier);
+>> +
+>> +    g_free(force_rcu);
+>> +}
+>> +
+>>   /*
+>>    * In the multi-threaded case each vCPU has its own thread. The TLS
+>>    * variable current_cpu can be used deep in the code to find the
+>> @@ -63,17 +84,14 @@ static void mttcg_force_rcu(Notifier *notify, void 
+>> *data)
+>>   void *mttcg_cpu_thread_routine(void *arg)
+>>   {
+>> -    MttcgForceRcuNotifier force_rcu;
+>> +    MttcgForceRcuNotifier *force_rcu;
+>>       CPUState *cpu = arg;
+>>       assert(tcg_enabled());
+>>       g_assert(!icount_enabled());
+>>       rcu_register_thread();
+>> -    force_rcu.notifier.notify = mttcg_force_rcu;
+>> -    force_rcu.cpu = cpu;
+>> -    rcu_add_force_rcu_notifier(&force_rcu.notifier);
+>> -    tcg_register_thread();
+>> +    force_rcu = mttcg_vcpu_register(cpu);
+>>       bql_lock();
+>>       qemu_thread_get_self(cpu->thread);
+>> @@ -121,7 +139,7 @@ void *mttcg_cpu_thread_routine(void *arg)
+>>       tcg_cpu_destroy(cpu);
+>>       bql_unlock();
+>> -    rcu_remove_force_rcu_notifier(&force_rcu.notifier);
+>> +    mttcg_vcpu_unregister(cpu, force_rcu);
+>>       rcu_unregister_thread();
+>>       return NULL;
+>>   }
 > 
-> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-> index 200da1c489..c5c289eadf 100644
-> --- a/target/arm/cpu64.c
-> +++ b/target/arm/cpu64.c
-> @@ -237,6 +237,12 @@ void arm_cpu_sve_finalize(ARMCPU *cpu, Error **errp)
->       /* From now on sve_max_vq is the actual maximum supported length. */
->       cpu->sve_max_vq = max_vq;
->       cpu->sve_vq.map = vq_map;
-> +
-> +    /* FEAT_F64MM requires the existence of a 256-bit vector size. */
-> +    if (max_vq < 2) {
-> +        cpu->isar.id_aa64zfr0 = FIELD_DP64(cpu->isar.id_aa64zfr0,
-> +                                           ID_AA64ZFR0, F64MM, 0);
-> +    }
->   }
->   
->   /*
 
 
