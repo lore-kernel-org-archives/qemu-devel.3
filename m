@@ -4,86 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AA60C77B7C
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 13:43:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B371C83F04
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 13:43:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWwlv-0006U0-RT; Wed, 02 Jul 2025 08:41:08 -0400
+	id 1uWxk7-00051e-0c; Wed, 02 Jul 2025 09:43:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWwjV-0004Lb-LN
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:38:41 -0400
-Received: from mail-oa1-x34.google.com ([2001:4860:4864:20::34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWwjL-00027N-Rr
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:38:36 -0400
-Received: by mail-oa1-x34.google.com with SMTP id
- 586e51a60fabf-2ea35edc691so1681586fac.2
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:38:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751459903; x=1752064703; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cLOzuV0IZQAzv7VumD5A4WEK+Bowcevem0zcvJPACgI=;
- b=QEw5j/agJa8Qy+rEb0bRcRBqqDequFvOT4QS4mFRnumaSPSksAR0ILYZRptGxNZwvG
- PxfnbfIw/Hpa67Xzr8iK88H8+pi2oSz7E05auouoj8j7V/P+2lZSQI0qnhEH1qWftmsS
- LPKKIs9VTsejSa7B3adOiYNMEi6khy5E3eMfuFgx25JAezHnoqAhLRv/rps5R5c4dMVW
- vDF4FxxjuoEkVhLHR/CAy/Ly5urG66DZpWqJPPAi4O1jumx6Wqf0vxlpoynKwP6lrWS6
- TGrH8pcO9THHmySRO9O9T1T8LcCW2/0AsFNaGbce1i20F/PgBWjh2wJgH0ad4W5PJCKh
- 0VPQ==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uWxk1-0004zT-68
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 09:43:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uWxjz-0006yf-1q
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 09:43:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751463788;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=rS836x+pkATlci8tKSzPvi9q/tIxzaeTa7/ISOQRvLA=;
+ b=ZyH3SIx7AOrnzLrzTOmT7l6Ydgk78bl4oM9XxyDsYPxrQLQ7IfBuY+zR9u6FZiWmmUEZMg
+ s2A1T8LNUElt/E+iA/kOH+j42ecR2XBjE7kYhKmb1dNE+YS9EDkG4CNJ3P8S7KPmNiRiIf
+ 6klX6Z65GBsAptRO1OX7elzjAXFQk1k=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-320-alTpkiq5PJOuSxl7Cgin-Q-1; Wed, 02 Jul 2025 09:43:07 -0400
+X-MC-Unique: alTpkiq5PJOuSxl7Cgin-Q-1
+X-Mimecast-MFC-AGG-ID: alTpkiq5PJOuSxl7Cgin-Q_1751463786
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a4f858bc5eso3168260f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 06:43:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751459903; x=1752064703;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cLOzuV0IZQAzv7VumD5A4WEK+Bowcevem0zcvJPACgI=;
- b=mGqtMvGjw1+RQ/pqXmyRbkCkbxUKUgN9CSTNCoekbaLKTyGA+EA4OegzWu7S+UL2lx
- +RLNSoT3GLrtVYv+6eaS90fEyEt5NTGg0GioZNPo2IctGDUbzXQqvl9VfKOr+2nAnIQz
- laaY7vpNeNp7hRLwviyrn2pkfqnElgAzBEJ2BEp1ewuxMfYNr8xLaH/NzNhw3h74QN5K
- 634BssgRhNnykgZPiiBuZKFQU7vWOP3yHFggf3nSi3YIF9DSToaADrc6q9NTR+8CihPi
- R7+2Jo/CiE8t70Q8hkH7tQt00VpUwbPn9vHhxmo4k9AmGN94BErF4jHKGm5YDmafsv48
- wyAQ==
-X-Gm-Message-State: AOJu0YzqVshkDxFDwcaf2LLjaniHweExJMlcx1uM+RcNUtdgwZob9KYB
- S8yszCSqG7ZxWoxJramYCG4NUuZdardyMBoTG/xqB9+6yrl0azBBdjVDBk8ByFTenF9I4d6dxZM
- NgnnHvlU=
-X-Gm-Gg: ASbGncupQBbYudZTwEr2OGeXddS+FkSE/51BJIs3EEMLI+hPgQMs1lNvhbZlwcN9Myz
- Iz0WN9B5mRC1gTw019ANYHdlvnz76fUHJK7OZuRU6RccIMcXccK1xAnrtrgFL6gCiYsd3d48Nsz
- lJQl6LvHBHANKyGd9WuQ68n6n43YIh2TLDtEwW2Zc+IDCixaq26p1ZoukWa/wkQHIkiqY99NqpT
- MeMexwxGS/qM99B6s7JT8tPk1Xqz2HbUdKXwbeinEVLMoPKiE2ZSAZv+G1fmUK1otbw3R0EohrA
- 5FiAWbovJWmOvy+b5FdtzQixmtW6JpVaks7R+qFol3XzgTfRGr3h0N6SRYT5tcRO65+L8w==
-X-Google-Smtp-Source: AGHT+IGrEd9mRp6ANSJaZZd2sqMEOqLsmmfPtSA+/DDwHuUz7HVwUMNbfQkjmppHQrjYQUcgSfmLhA==
-X-Received: by 2002:a05:6870:f71e:b0:2c6:72d3:fc93 with SMTP id
- 586e51a60fabf-2f5a8a490d0mr2079026fac.12.1751459903204; 
- Wed, 02 Jul 2025 05:38:23 -0700 (PDT)
-Received: from stoup.. ([187.210.107.185]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2efd4ea5d9fsm3843451fac.10.2025.07.02.05.38.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Jul 2025 05:38:22 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	peter.maydell@linaro.org
-Subject: [PATCH v3 56/97] target/arm: Implement SME2 FCLAMP, SCLAMP, UCLAMP
-Date: Wed,  2 Jul 2025 06:33:29 -0600
-Message-ID: <20250702123410.761208-57-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250702123410.761208-1-richard.henderson@linaro.org>
-References: <20250702123410.761208-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1751463786; x=1752068586;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rS836x+pkATlci8tKSzPvi9q/tIxzaeTa7/ISOQRvLA=;
+ b=Ms4tcfHp1ERTsKuiHPsbGoVD9Sw1lfM8McurMQ6y5AqWvSJOgpBGOvMXv5zikAcIu+
+ cu/PyRPWnAH8mVTqSMRfEseTSwZ950F95T4cYvwQ0p2mLxmtlJs7RAhLW9tA/7Bqdk5D
+ 4iOonxvD/fqstPfN9DOsg+wZX0suMyhcvKWZSstdCq1W8+Ya+e5XSEtj1ooD5Y38swfL
+ USLWGhxW3FmBlEMLMsgX6Tg9D8Rx2eKplKvCOtPuqXX1LulT5zXhYi9dDCp+ij8wLTZz
+ 9OhhN1d0ZBmebGQre5sJ+Gi9vGEyX1b7oxAInw+n04ysjxdOvF6o6mEzvjS/mPz3AzqY
+ LvxA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWojWUQ95KtzvdYHfl7C5+W2udfOlmmYx2LjaMWKcfjhtN7SBCfrwoQPpOboUpWXuaWtVpKYMUtM2iD@nongnu.org
+X-Gm-Message-State: AOJu0YyyDB9z3tYsOOKxlVYVcf/DrrTWP5keRMkysSZ6vHiGRAY87D3Z
+ 46SIV3/JWZF18hkjowTHGKz/H8fiwiTtoQlQw0BXabaXIDMUb1fEOl53pOrfAyy94KXBLkGFTp0
+ NxU5XPB6yO6SnfwiPpLulC8U+QWU0ZMlBSNP4+6i+zMhVewZ4ymn1YnmC
+X-Gm-Gg: ASbGncsGeS9pkFLxdcoeeUkRHSeBIncxKcTznsb9T5lWJkb4a/TTUGF/7moR+6sJ5X7
+ r9MeoN10RcX1J3qCzUfWGmdy47dw+Ans8SJsbnARvnIfit22UP2FV7wkcrhl59bZPiBlowQ21U+
+ f1d+BZfxeIJyvgMmjB/0AO8qOtVPksCoon+tAF4V1bbHG1CkKaZ8W6obBnuke2I1BHSFqGFIm+y
+ iOKxP13608HkkAioyTc7ffheRWKZqat/APiuC2kvtP4Gcq3MCcFR0XrNwfqg68g+wDtJmmKlpPf
+ NGPqgBf7Cz4PQNvHzdK4ybdybCshMgcaPOvJtK/XcOhyujFEsL5fT1ANS587
+X-Received: by 2002:a05:6000:4104:b0:3a9:de4:851e with SMTP id
+ ffacd0b85a97d-3b201203be4mr2233226f8f.45.1751463785757; 
+ Wed, 02 Jul 2025 06:43:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFYFvn9YMKtU9TgMwLogVGnsm9vYyS8qJ2UnmoYJcPGJx6MjgI2y8ydV0yt51ME0f9t9ppZcA==
+X-Received: by 2002:a05:6000:4104:b0:3a9:de4:851e with SMTP id
+ ffacd0b85a97d-3b201203be4mr2233204f8f.45.1751463785286; 
+ Wed, 02 Jul 2025 06:43:05 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a892e52a26sm16281802f8f.51.2025.07.02.06.43.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 02 Jul 2025 06:43:04 -0700 (PDT)
+Message-ID: <d0a2f944-8a6c-43e6-b666-75927249a24c@redhat.com>
+Date: Wed, 2 Jul 2025 15:43:04 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::34;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x34.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vfio-user: do not register vfio-user container with cpr
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, john.levon@nutanix.com,
+ steven.sistare@oracle.com, qemu-devel@nongnu.org
+References: <20250702120043.267634-1-mark.caveayland@nutanix.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250702120043.267634-1-mark.caveayland@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,206 +154,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/helper-sme.h    | 15 +++++++
- target/arm/tcg/sme_helper.c    | 52 +++++++++++++++++++++++
- target/arm/tcg/translate-sme.c | 75 ++++++++++++++++++++++++++++++++++
- target/arm/tcg/sme.decode      | 17 ++++++++
- 4 files changed, 159 insertions(+)
+On 7/2/25 13:59, Mark Cave-Ayland wrote:
+> As the full cpr implementation is yet to be merged upstream, do not register
+> the vfio-user container with cpr. Full vfio-user support for cpr can be
+> merged later as a follow-up series.
+> 
+> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> ---
+>   hw/vfio-user/container.c | 10 +---------
+>   1 file changed, 1 insertion(+), 9 deletions(-)
+> 
+> diff --git a/hw/vfio-user/container.c b/hw/vfio-user/container.c
+> index 3133fef177..4ee99fc2cc 100644
+> --- a/hw/vfio-user/container.c
+> +++ b/hw/vfio-user/container.c
+> @@ -225,14 +225,10 @@ vfio_user_container_connect(AddressSpace *as, VFIODevice *vbasedev,
+>   
+>       bcontainer = &container->bcontainer;
+>   
+> -    if (!vfio_cpr_register_container(bcontainer, errp)) {
+> -        goto free_container_exit;
+> -    }
+> -
+>       ret = ram_block_uncoordinated_discard_disable(true);
+>       if (ret) {
+>           error_setg_errno(errp, -ret, "Cannot set discarding of RAM broken");
+> -        goto unregister_container_exit;
+> +        goto free_container_exit;
+>       }
+>   
+>       vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+> @@ -261,9 +257,6 @@ listener_release_exit:
+>   enable_discards_exit:
+>       ram_block_uncoordinated_discard_disable(false);
+>   
+> -unregister_container_exit:
+> -    vfio_cpr_unregister_container(bcontainer);
+> -
+>   free_container_exit:
+>       object_unref(container);
+>   
+> @@ -286,7 +279,6 @@ static void vfio_user_container_disconnect(VFIOUserContainer *container)
+>           vioc->release(bcontainer);
+>       }
+>   
+> -    vfio_cpr_unregister_container(bcontainer);
+>       object_unref(container);
+>   
+>       vfio_address_space_put(space);
 
-diff --git a/target/arm/tcg/helper-sme.h b/target/arm/tcg/helper-sme.h
-index 06b95da3c3..78ba3d1f20 100644
---- a/target/arm/tcg/helper-sme.h
-+++ b/target/arm/tcg/helper-sme.h
-@@ -298,3 +298,18 @@ DEF_HELPER_FLAGS_3(sme2_sqrshrun_sb, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
- DEF_HELPER_FLAGS_3(sme2_sqrshrn_dh, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
- DEF_HELPER_FLAGS_3(sme2_uqrshrn_dh, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
- DEF_HELPER_FLAGS_3(sme2_sqrshrun_dh, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-+
-+DEF_HELPER_FLAGS_4(sme2_sclamp_b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sme2_sclamp_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sme2_sclamp_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sme2_sclamp_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+
-+DEF_HELPER_FLAGS_4(sme2_uclamp_b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sme2_uclamp_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sme2_uclamp_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sme2_uclamp_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+
-+DEF_HELPER_FLAGS_5(sme2_fclamp_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_5(sme2_fclamp_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_5(sme2_fclamp_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_5(sme2_bfclamp, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index 7a869f6b9c..bfcedef3d9 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -2055,3 +2055,55 @@ UZP4(sme2_uzp4_d, uint64_t, )
- UZP4(sme2_uzp4_q, Int128, )
- 
- #undef UZP4
-+
-+#define ICLAMP(NAME, TYPE, H) \
-+void HELPER(NAME)(void *vd, void *vn, void *vm, uint32_t desc)  \
-+{                                                               \
-+    size_t stride = sizeof(ARMVectorReg) / sizeof(TYPE);        \
-+    size_t elements = simd_oprsz(desc) / sizeof(TYPE);          \
-+    size_t nreg = simd_data(desc);                              \
-+    TYPE *d = vd, *n = vn, *m = vm;                             \
-+    for (size_t e = 0; e < elements; e++) {                     \
-+        TYPE nn = n[H(e)], mm = m[H(e)];                        \
-+        for (size_t r = 0; r < nreg; r++) {                     \
-+            TYPE *dd = &d[r * stride + H(e)];                   \
-+            *dd = MIN(MAX(*dd, nn), mm);                        \
-+        }                                                       \
-+    }                                                           \
-+}
-+
-+ICLAMP(sme2_sclamp_b, int8_t, H1)
-+ICLAMP(sme2_sclamp_h, int16_t, H2)
-+ICLAMP(sme2_sclamp_s, int32_t, H4)
-+ICLAMP(sme2_sclamp_d, int64_t, H8)
-+
-+ICLAMP(sme2_uclamp_b, uint8_t, H1)
-+ICLAMP(sme2_uclamp_h, uint16_t, H2)
-+ICLAMP(sme2_uclamp_s, uint32_t, H4)
-+ICLAMP(sme2_uclamp_d, uint64_t, H8)
-+
-+#undef ICLAMP
-+
-+#define FCLAMP(NAME, TYPE, H) \
-+void HELPER(NAME)(void *vd, void *vn, void *vm,                 \
-+                  float_status *fpst, uint32_t desc)            \
-+{                                                               \
-+    size_t stride = sizeof(ARMVectorReg) / sizeof(TYPE);        \
-+    size_t elements = simd_oprsz(desc) / sizeof(TYPE);          \
-+    size_t nreg = simd_data(desc);                              \
-+    TYPE *d = vd, *n = vn, *m = vm;                             \
-+    for (size_t e = 0; e < elements; e++) {                     \
-+        TYPE nn = n[H(e)], mm = m[H(e)];                        \
-+        for (size_t r = 0; r < nreg; r++) {                     \
-+            TYPE *dd = &d[r * stride + H(e)];                   \
-+            *dd = TYPE##_minnum(TYPE##_maxnum(nn, *dd, fpst), mm, fpst); \
-+        }                                                       \
-+    }                                                           \
-+}
-+
-+FCLAMP(sme2_fclamp_h, float16, H2)
-+FCLAMP(sme2_fclamp_s, float32, H4)
-+FCLAMP(sme2_fclamp_d, float64, H8)
-+FCLAMP(sme2_bfclamp, bfloat16, H2)
-+
-+#undef FCLAMP
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index d52ccf2ac5..99e4056316 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -1547,3 +1547,78 @@ static gen_helper_gvec_3 * const uzp2_fns[] = {
-     gen_helper_sme2_uzp2_q,
- };
- TRANS_FEAT(UZP_2, aa64_sme2, do_zipuzp_2, a, uzp2_fns)
-+
-+static bool trans_FCLAMP(DisasContext *s, arg_zzz_en *a)
-+{
-+    static gen_helper_gvec_3_ptr * const fn[] = {
-+        gen_helper_sme2_bfclamp,
-+        gen_helper_sme2_fclamp_h,
-+        gen_helper_sme2_fclamp_s,
-+        gen_helper_sme2_fclamp_d,
-+    };
-+    TCGv_ptr fpst;
-+    int vl;
-+
-+    if (!dc_isar_feature(aa64_sme2, s)) {
-+        return false;
-+    }
-+    /* This insn uses MO_8 to encode BFloat16. */
-+    if (a->esz == MO_8 && !dc_isar_feature(aa64_sme_b16b16, s)) {
-+        return false;
-+    }
-+    if (!sme_sm_enabled_check(s)) {
-+        return true;
-+    }
-+
-+    fpst = fpstatus_ptr(a->esz == MO_16 ? FPST_A64_F16 : FPST_A64);
-+    vl = vec_full_reg_size(s);
-+
-+    tcg_gen_gvec_3_ptr(vec_full_reg_offset(s, a->zd),
-+                       vec_full_reg_offset(s, a->zn),
-+                       vec_full_reg_offset(s, a->zm),
-+                       fpst, vl, vl, a->n, fn[a->esz]);
-+    return true;
-+}
-+
-+static bool do_clamp(DisasContext *s, arg_zzz_en *a,
-+                     gen_helper_gvec_3 * const fn[4])
-+{
-+    int vl;
-+
-+    if (!dc_isar_feature(aa64_sme2, s)) {
-+        return false;
-+    }
-+    if (!sme_sm_enabled_check(s)) {
-+        return true;
-+    }
-+
-+    /*
-+     * Clamp is just a min+max, easily supported by most host
-+     * vector operations -- we already have such an expansion in
-+     * translate-sve.c for a single output.
-+     * TODO: Add support in gvec for multiple simultaneous output,
-+     * and/or copy to temporary upon overlap.
-+     */
-+    vl = vec_full_reg_size(s);
-+    tcg_gen_gvec_3_ool(vec_full_reg_offset(s, a->zd),
-+                       vec_full_reg_offset(s, a->zn),
-+                       vec_full_reg_offset(s, a->zm),
-+                       vl, vl, a->n, fn[a->esz]);
-+    return true;
-+}
-+
-+static gen_helper_gvec_3 * const sclamp_fns[] = {
-+    gen_helper_sme2_sclamp_b,
-+    gen_helper_sme2_sclamp_h,
-+    gen_helper_sme2_sclamp_s,
-+    gen_helper_sme2_sclamp_d,
-+};
-+TRANS(SCLAMP, do_clamp, a, sclamp_fns)
-+
-+static gen_helper_gvec_3 * const uclamp_fns[] = {
-+    gen_helper_sme2_uclamp_b,
-+    gen_helper_sme2_uclamp_h,
-+    gen_helper_sme2_uclamp_s,
-+    gen_helper_sme2_uclamp_d,
-+};
-+TRANS(UCLAMP, do_clamp, a, uclamp_fns)
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index c1f73d9f63..47adcb5a15 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -860,3 +860,20 @@ UZP_2           11000001 esz:2 1 zm:5 110100 zn:5 .... 1    \
-                 &zzz_e zd=%zd_ax2
- UZP_2           11000001 00    1 zm:5 110101 zn:5 .... 1    \
-                 &zzz_e zd=%zd_ax2 esz=4
-+
-+&zzz_en         zd zn zm esz n
-+
-+FCLAMP          11000001 esz:2 1 zm:5 110000 zn:5 .... 0    \
-+                &zzz_en zd=%zd_ax2 n=2
-+FCLAMP          11000001 esz:2 1 zm:5 110010 zn:5 ...0 0    \
-+                &zzz_en zd=%zd_ax4 n=4
-+
-+SCLAMP          11000001 esz:2 1 zm:5 110001 zn:5 .... 0    \
-+                &zzz_en zd=%zd_ax2 n=2
-+SCLAMP          11000001 esz:2 1 zm:5 110011 zn:5 ...0 0    \
-+                &zzz_en zd=%zd_ax4 n=4
-+
-+UCLAMP          11000001 esz:2 1 zm:5 110001 zn:5 .... 1    \
-+                &zzz_en zd=%zd_ax2 n=2
-+UCLAMP          11000001 esz:2 1 zm:5 110011 zn:5 ...0 1    \
-+                &zzz_en zd=%zd_ax4 n=4
--- 
-2.43.0
+
+Applied to vfio-next.
+
+Thanks,
+
+C.
+
 
 
