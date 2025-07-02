@@ -4,78 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C31FC7EE30
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 08:14:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B68DDC7EE30
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 08:14:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWsaw-0007Iz-3g; Wed, 02 Jul 2025 04:13:30 -0400
+	id 1uWsbj-00081u-Uz; Wed, 02 Jul 2025 04:14:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uWsai-0007Gy-Um; Wed, 02 Jul 2025 04:13:20 -0400
-Received: from mgamail.intel.com ([192.198.163.14])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uWsbj-00081G-1z
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 04:14:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uWsae-0001QM-TK; Wed, 02 Jul 2025 04:13:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751443993; x=1782979993;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=pqKQoXF566I3jN7jBYoVqec+bIUayudHtA0Prhir1Lk=;
- b=MbR5n2ePimLOjDPwEHB9AmNV9llXDv9/5B6rC9h41hzpZ/kweYGnm5pz
- hElA7m/x4ttCpuahvgSDzlPXDwMBKLXces0BKBeSTu+ZoA3kINcSC5ink
- qd8ZXiQcad4nfip61S1Q28TNXs0hupp+JqAdioyENV/OgA7VN5xP179v5
- 6npnSsiNYYwBbwtDJ/cpzjNWDvsQ5aHgmtUWS8fMTcOMrTutDhWIzfarr
- zC+F+WHx+9cxwAP404zQ6YyxdwnfRvrH3tC/J2wrDXTAifIoITBja8P6w
- 5ldKTBAVvNEa9HMxDLmCuOFw2jTLQ+1h/zfEnRQvaXoOm4LpMjahjzRvq A==;
-X-CSE-ConnectionGUID: 3r7ie9RrSmqwH/NGnowqSA==
-X-CSE-MsgGUID: rESAzTOOTY+GPpOtIHIzlQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11481"; a="53821377"
-X-IronPort-AV: E=Sophos;i="6.16,281,1744095600"; d="scan'208";a="53821377"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jul 2025 01:13:08 -0700
-X-CSE-ConnectionGUID: 6z/xjzRbToaDXZD/mBpeLw==
-X-CSE-MsgGUID: G+Ui2uqNQlmmGX/qhD8vzA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,281,1744095600"; d="scan'208";a="159524773"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa004.fm.intel.com with ESMTP; 02 Jul 2025 01:13:04 -0700
-Date: Wed, 2 Jul 2025 16:34:29 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Igor Mammedov <imammedo@redhat.com>,
- Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
- Alexandre Chartre <alexandre.chartre@oracle.com>,
- qemu-devel@nongnu.org, pbonzini@redhat.com, qemu-stable@nongnu.org,
- boris.ostrovsky@oracle.com, maciej.szmigiero@oracle.com,
- Sean Christopherson <seanjc@google.com>, kvm@vger.kernel.org
-Subject: Re: [PATCH] i386/cpu: ARCH_CAPABILITIES should not be advertised on
- AMD
-Message-ID: <aGTvFbqLKcG1wLqO@intel.com>
-References: <20250630133025.4189544-1-alexandre.chartre@oracle.com>
- <aGO3vOfHUfjgvBQ9@intel.com>
- <c6a79077-024f-4d2f-897c-118ac8bb9b58@intel.com>
- <aGPWW/joFfohy05y@intel.com> <20250701150500.3a4001e9@fedora>
- <aGQ-ke-pZhzLnr8t@char.us.oracle.com> <aGS9E6pT0I57gn+e@intel.com>
- <f1d53417-4dce-43e8-a647-74fbc5c378cb@intel.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uWsbg-0001Zk-80
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 04:14:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751444053;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nc4IEC+itcR7vlJW47Ng2F8MYYWLbohqTkuJ3+oKUpk=;
+ b=JnHgj1IKzLV9ydp5ejXm0mbr7yeHfxz6dDMhizTbGjvbpNUuyE8eJ3UOg51qLi7epk6yqG
+ Lo/CxzoNvA34yY2XAGLF4YQobqH5zNW4wo2vdKvaSWcQj8c/ZHc+jNsHPR6OO872bORn58
+ fp65pP431s2KcpPl9fflxQb9Zt/LSNQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-231-WX3UdlKSPhi8xjafLMZniQ-1; Wed,
+ 02 Jul 2025 04:14:10 -0400
+X-MC-Unique: WX3UdlKSPhi8xjafLMZniQ-1
+X-Mimecast-MFC-AGG-ID: WX3UdlKSPhi8xjafLMZniQ_1751444048
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 165671808984; Wed,  2 Jul 2025 08:14:08 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 84F151800285; Wed,  2 Jul 2025 08:14:07 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 176E221E6A27; Wed, 02 Jul 2025 10:14:05 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,  Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>,  Eric Blake <eblake@redhat.com>,  Kevin Wolf
+ <kwolf@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>,  Alex =?utf-8?Q?Benn?=
+ =?utf-8?Q?=C3=A9e?=
+ <alex.bennee@linaro.org>,  Lukas Straub <lukasstraub2@web.de>,  Ani Sinha
+ <anisinha@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,  Fabiano Rosas <farosas@suse.de>,
+ Jason Wang <jasowang@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,  qemu-block@nongnu.org,  Peter Xu
+ <peterx@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH 17/18] qapi: add cross-references to yank.json
+In-Reply-To: <20250613203620.1283814-18-jsnow@redhat.com> (John Snow's message
+ of "Fri, 13 Jun 2025 16:36:19 -0400")
+References: <20250613203620.1283814-1-jsnow@redhat.com>
+ <20250613203620.1283814-18-jsnow@redhat.com>
+Date: Wed, 02 Jul 2025 10:14:05 +0200
+Message-ID: <87h5zvovqq.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f1d53417-4dce-43e8-a647-74fbc5c378cb@intel.com>
-Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,28 +100,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> I think we need firstly aligned on what the behavior of the Windows that hit
-> "unsupported processor" is.
-> 
-> My understanding is, the Windows is doing something like
-> 
-> 	if (is_AMD && CPUID(arch_capabilities))
-> 		error(unsupported processor)
+John Snow <jsnow@redhat.com> writes:
 
-This is just a guess; it's also possible that Windows checked this MSR
-and found the necessary feature missing. Windows 11 has very strict
-hardware support requirements.
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>  qapi/yank.json | 20 ++++++++++----------
+>  1 file changed, 10 insertions(+), 10 deletions(-)
+>
+> diff --git a/qapi/yank.json b/qapi/yank.json
+> index 9bd8ecce27f..931d4b22d4b 100644
+> --- a/qapi/yank.json
+> +++ b/qapi/yank.json
+> @@ -9,7 +9,7 @@
+>  ##
+>  # @YankInstanceType:
+>  #
+> -# An enumeration of yank instance types.  See @YankInstance for more
+> +# An enumeration of `yank` instance types.  See `YankInstance` for more
 
-> And I think this behavior is not correct.
-> 
-> However, it seems not the behavior of the Windows from your understanding.
-> So what's the behavior in you mind?
+A yank instance is not an instance of the yank command.
 
-Guessing and discussing what Windows' code actually does is unlikely to
-yield results. It's closed-source, and even if someone knows the answer,
-he probably won't disclose it due to contractual restrictions.
+I think most instances of "yank" should be left alone.  I'm going to
+flag the ones that should be made links to the yank command.
 
-Thanks,
-Zhao
+>  # information.
+>  #
+>  # Since: 6.0
+> @@ -20,7 +20,7 @@
+>  ##
+>  # @YankInstanceBlockNode:
+>  #
+> -# Specifies which block graph node to yank.  See @YankInstance for
+> +# Specifies which block graph node to `yank`.  See `YankInstance` for
+>  # more information.
+>  #
+>  # @node-name: the name of the block graph node
+> @@ -33,7 +33,7 @@
+>  ##
+>  # @YankInstanceChardev:
+>  #
+> -# Specifies which character device to yank.  See @YankInstance for
+> +# Specifies which character device to `yank`.  See `YankInstance` for
+>  # more information.
+>  #
+>  # @id: the chardev's ID
+> @@ -46,20 +46,20 @@
+>  ##
+>  # @YankInstance:
+>  #
+> -# A yank instance can be yanked with the @yank qmp command to recover
+> +# A `yank` instance can be yanked with the `yank` qmp command to recover
+
+Keep the second `yank`.
+
+>  # from a hanging QEMU.
+>  #
+> -# @type: yank instance type
+> +# @type: `yank` instance type
+>  #
+> -# Currently implemented yank instances:
+> +# Currently implemented `yank` instances:
+>  #
+>  # - nbd block device: Yanking it will shut down the connection to the
+>  #   nbd server without attempting to reconnect.
+>  # - socket chardev: Yanking it will shut down the connected socket.
+>  # - migration: Yanking it will shut down all migration connections.
+> -#   Unlike @migrate_cancel, it will not notify the migration process,
+> +#   Unlike `migrate_cancel`, it will not notify the migration process,
+>  #   so migration will go into @failed state, instead of @cancelled
+> -#   state.  @yank should be used to recover from hangs.
+> +#   state.  `yank` should be used to recover from hangs.
+
+Keep.
+
+>  #
+>  # Since: 6.0
+>  ##
+> @@ -74,7 +74,7 @@
+>  # @yank:
+>  #
+>  # Try to recover from hanging QEMU by yanking the specified instances.
+> -# See @YankInstance for more information.
+> +# See `YankInstance` for more information.
+>  #
+>  # @instances: the instances to be yanked
+>  #
+> @@ -100,7 +100,7 @@
+>  ##
+>  # @query-yank:
+>  #
+> -# Query yank instances.  See @YankInstance for more information.
+> +# Query `yank` instances.  See `YankInstance` for more information.
+>  #
+>  #
+>  # .. qmp-example::
 
 
