@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72CFFC83013
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 08:47:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F78EC83013
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 08:49:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWt7b-0006tH-Bv; Wed, 02 Jul 2025 04:47:15 -0400
+	id 1uWt8n-0007gu-FN; Wed, 02 Jul 2025 04:48:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uWt7Y-0006sn-5Q
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 04:47:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1uWt8k-0007ga-2v
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 04:48:26 -0400
+Received: from mgamail.intel.com ([198.175.65.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uWt7V-0001wm-D8
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 04:47:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751446027;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8bmrix3SRkejtxkZeSUfVdsas9XCclL2BdcDpYVHi4M=;
- b=DXNZGYFTnFOmaksV4tIXM2G6IC7Y3QAa2FfMn3Ur/R1D/SKXUtUP5MAuMnn+k3SfrhMciy
- 3c6PGNzzmf40mOFePSjPeam/BX3YnGpELT7mVr3iMVG6oBGx/5aKaHYm/eK6cAIH6MSHbN
- PBNlF6Rborbbwcb6es8ymyEzof/zDNY=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-OiDTYf4FNIeL_xP4JTgzeQ-1; Wed,
- 02 Jul 2025 04:47:02 -0400
-X-MC-Unique: OiDTYf4FNIeL_xP4JTgzeQ-1
-X-Mimecast-MFC-AGG-ID: OiDTYf4FNIeL_xP4JTgzeQ_1751446020
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 208461955EDB; Wed,  2 Jul 2025 08:46:59 +0000 (UTC)
-Received: from localhost (dhcp-192-236.str.redhat.com [10.33.192.236])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A5AA19560B3; Wed,  2 Jul 2025 08:46:56 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Jinqian Yang <yangjinqian1@huawei.com>, eric.auger.pro@gmail.com,
- eric.auger@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- kvmarm@lists.linux.dev, peter.maydell@linaro.org,
- richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- oliver.upton@linux.dev, sebott@redhat.com,
- shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com, Zhou
- Wang <wangzhou1@hisilicon.com>, liuyonglong <liuyonglong@huawei.com>
-Cc: agraf@csgraf.de, shahuang@redhat.com, mark.rutland@arm.com,
- philmd@linaro.org, pbonzini@redhat.com
-Subject: Re: [PATCH v3 07/10] arm/kvm: write back modified ID regs to KVM
-In-Reply-To: <ae3f4d26-7a1a-418c-b303-2ed1d9ced4ba@huawei.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20250414163849.321857-1-cohuck@redhat.com>
- <20250414163849.321857-8-cohuck@redhat.com>
- <ae3f4d26-7a1a-418c-b303-2ed1d9ced4ba@huawei.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Wed, 02 Jul 2025 10:46:53 +0200
-Message-ID: <878ql7q8si.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1uWt8h-00023F-Hj
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 04:48:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1751446104; x=1782982104;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=zk6cPQfsKpuWrDifx8+BrG8ShNF9/KPb42pCeEVTuV8=;
+ b=UA/NTdnoQm0aWDdg1ENYfOQ56m+MVkktB9E/tiozaMtdr19qqQ7tRt+T
+ lLGoCBOToSc605v5TAgmaLbuK61ZgUa6WPx1k9oj5fyvfzYms45SJZZzx
+ Td8e3j/+n9zjEV/nC25IIe+RDw0jFc5Lt8KofuzQPevEfteNGfccrfe2q
+ Sw+GN7QUkW5H/bxecGQlcE8Pr/X+27P66Yz4HKnx5xHZce4NSxt3luW5h
+ b5KAxBGC7ow1sLOgQhxrROLDndI1BQe42mWHKW1ONF7Sg8NcBlamHaOlQ
+ qXxnjpJDAOaNk16bb2cyTbvMxg9TZRbJPs6S748P/csoI/d9mHLRoH9DZ g==;
+X-CSE-ConnectionGUID: 7gpJxvauTYaVQZFRN1PlTg==
+X-CSE-MsgGUID: ufrHP5nOSYi6cgqx7Gi5VA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11481"; a="65187185"
+X-IronPort-AV: E=Sophos;i="6.16,281,1744095600"; d="scan'208";a="65187185"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jul 2025 01:48:18 -0700
+X-CSE-ConnectionGUID: NUITdyxRRsOun/lNM0ItnA==
+X-CSE-MsgGUID: zLN0N6NlRXaZmp58HrIXpw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,281,1744095600"; d="scan'208";a="153476348"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.240.80])
+ ([10.124.240.80])
+ by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jul 2025 01:48:14 -0700
+Message-ID: <4fde6b82-0d13-48d8-898a-e105b9a79858@linux.intel.com>
+Date: Wed, 2 Jul 2025 16:48:11 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/16] i386/cpu: Refine comment of
+ CPUID2CacheDescriptorInfo
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Babu Moger <babu.moger@amd.com>, Ewan Hai <ewanhai-oc@zhaoxin.com>,
+ Pu Wen <puwen@hygon.cn>, Tao Su <tao1.su@intel.com>,
+ Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+References: <20250620092734.1576677-1-zhao1.liu@intel.com>
+ <20250620092734.1576677-2-zhao1.liu@intel.com>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20250620092734.1576677-2-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=198.175.65.12;
+ envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,121 +96,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 02 2025, Jinqian Yang <yangjinqian1@huawei.com> wrote:
 
-> On 2025/4/15 0:38, Cornelia Huck wrote:
->> From: Eric Auger <eric.auger@redhat.com>
->>
->> We want to give a chance to override the value of host ID regs.
->> In a previous patch we made sure all their values could be fetched
->> through kvm_get_one_reg() calls before their modification. After
->> their potential modification we need to make sure we write back
->> the values through kvm_set_one_reg() calls.
->>
->> Make sure the cpreg_list is modified with updated values and
->> transfer those values back to kvm.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->> ---
->>   target/arm/kvm.c        | 44 ++++++++++++++++++++++++++++++++++++++++-
->>   target/arm/trace-events |  1 +
->>   2 files changed, 44 insertions(+), 1 deletion(-)
->>
->> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
->> index b07d5f16db50..9e4cca1705c8 100644
->> --- a/target/arm/kvm.c
->> +++ b/target/arm/kvm.c
->> @@ -1083,6 +1083,39 @@ void kvm_arm_cpu_post_load(ARMCPU *cpu)
->>       }
->>   }
->>=20=20=20
->> +static void kvm_arm_writable_idregs_to_cpreg_list(ARMCPU *cpu)
->> +{
->> +    if (!cpu->writable_map) {
->> +        return;
->> +    }
->> +    for (int i =3D 0; i < NR_ID_REGS; i++) {
->> +        uint64_t writable_mask =3D cpu->writable_map->regs[i];
->> +        uint64_t *cpreg;
->> +
->> +        if (writable_mask) {
->> +            uint64_t previous, new;
->> +            int idx =3D kvm_idx_to_idregs_idx(i);
->> +            ARM64SysReg *sysregdesc;
->> +            uint32_t sysreg;
->> +
->> +            if (idx =3D=3D -1) {
->> +                /* sysreg writable, but we don't know it */
->> +                continue;
->> +            }
->> +            sysregdesc =3D &arm64_id_regs[idx];
->> +            sysreg =3D sysregdesc->sysreg;
->> +            cpreg =3D kvm_arm_get_cpreg_ptr(cpu, idregs_sysreg_to_kvm_r=
-eg(sysreg));
->> +            previous =3D *cpreg;
->> +            new =3D cpu->isar.idregs[idx];
->> +            if (previous !=3D new) {
->> +                *cpreg =3D new;
->> +                trace_kvm_arm_writable_idregs_to_cpreg_list(sysregdesc-=
->name,
->> +                                                            previous, n=
-ew);
->> +            }
->> +        }
->> +    }
->> +}
->> +
->>   void kvm_arm_reset_vcpu(ARMCPU *cpu)
->>   {
->>       int ret;
->> @@ -2050,7 +2083,16 @@ int kvm_arch_init_vcpu(CPUState *cs)
->>       }
->>       cpu->mp_affinity =3D mpidr & ARM64_AFFINITY_MASK;
->>=20=20=20
->> -    return kvm_arm_init_cpreg_list(cpu);
->> +    ret =3D kvm_arm_init_cpreg_list(cpu);
->> +    if (ret) {
->> +        return ret;
->> +    }
->> +    /* overwrite writable ID regs with their updated property values */
->> +    kvm_arm_writable_idregs_to_cpreg_list(cpu);
->> +
->> +    write_list_to_kvmstate(cpu, 3);
->> +
->> +    return 0;
->>   }
+On 6/20/2025 5:27 PM, Zhao Liu wrote:
+> Refer to SDM vol.3 table 1-21, add the notes about the missing
+> descriptor, and fix the typo and comment format.
 >
-> Hi,
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>  target/i386/cpu.c | 31 ++++++++++++++++++++++---------
+>  1 file changed, 22 insertions(+), 9 deletions(-)
 >
-> When I was testing this series, I found a problem. On the host,=20
-> SYSREG_ID_AA64MMFR3_EL1_TCRX=3D0x1,
-> I configured it to 0x0 in=C2=A0qemu, and qemu cannot start.
-> The ID_AA64MMFR3_EL1 TCRX field controls whether the TCR2_EL1 and=20
-> TCR2_EL2 registers are used.
-> In the kernel, when TCRX is 0, TCR2_EL1 is invisible to the guest, and=20
-> when it is 1, it is visible. When we
-> configure this field segment to 0, the configuration is not yet written=20
-> to KVM, but the cpreg list is initialized,
-> adding TCR2_EL1 to the cpreg list. Therefore, after writing the=20
-> QEMU-configured registers to KVM, the
-> cpreg list needs to be updated again.
->
-> @@ -2227,7 +2229,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
->
->  =C2=A0 =C2=A0 =C2=A0write_list_to_kvmstate(cpu, 3);
->
-> -=C2=A0 =C2=A0 return 0;
-> +=C2=A0 =C2=A0 return kvm_arm_init_cpreg_list(cpu);
->  =C2=A0}
->
-> The above modification can solve the problem, but it may not be the best=
-=20
-> way.
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 40aefb38f6da..e398868a3f8d 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -66,6 +66,7 @@ struct CPUID2CacheDescriptorInfo {
+>  
+>  /*
+>   * Known CPUID 2 cache descriptors.
+> + * TLB, prefetch and sectored cache related descriptors are not included.
+>   * From Intel SDM Volume 2A, CPUID instruction
+>   */
+>  struct CPUID2CacheDescriptorInfo cpuid2_cache_descriptors[] = {
+> @@ -87,18 +88,29 @@ struct CPUID2CacheDescriptorInfo cpuid2_cache_descriptors[] = {
+>                 .associativity = 2,  .line_size = 64, },
+>      [0x21] = { .level = 2, .type = UNIFIED_CACHE,     .size = 256 * KiB,
+>                 .associativity = 8,  .line_size = 64, },
+> -    /* lines per sector is not supported cpuid2_cache_descriptor(),
+> -    * so descriptors 0x22, 0x23 are not included
+> -    */
+> +    /*
+> +     * lines per sector is not supported cpuid2_cache_descriptor(),
+> +     * so descriptors 0x22, 0x23 are not included
+> +     */
+>      [0x24] = { .level = 2, .type = UNIFIED_CACHE,     .size =   1 * MiB,
+>                 .associativity = 16, .line_size = 64, },
+> -    /* lines per sector is not supported cpuid2_cache_descriptor(),
+> -    * so descriptors 0x25, 0x20 are not included
+> -    */
+> +    /*
+> +     * lines per sector is not supported cpuid2_cache_descriptor(),
+> +     * so descriptors 0x25, 0x29 are not included
+> +     */
+>      [0x2C] = { .level = 1, .type = DATA_CACHE,        .size =  32 * KiB,
+>                 .associativity = 8,  .line_size = 64, },
+>      [0x30] = { .level = 1, .type = INSTRUCTION_CACHE, .size =  32 * KiB,
+>                 .associativity = 8,  .line_size = 64, },
+> +    /*
+> +     * Newer Intel CPUs (having the cores without L3, e.g., Intel MTL, ARL)
+> +     * use CPUID 0x4 leaf to describe cache topology, by encoding CPUID 0x2
+> +     * leaf with 0xFF. For older CPUs (without 0x4 leaf), it's also valid
+> +     * to just ignore l3's code if there's no l3.
 
-Thanks for testing. Indeed, if we write something that changes the
-visibility of registers, we need to do an update. Probably needs some
-thinking (e.g. what happens if a register disappears, but the user set
-some fields?)
+s/l3/L3/g
 
+Others look good to me. 
+
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+
+
+> +     *
+> +     * This already covers all the cases in QEMU, so code 0x40 is not
+> +     * included.
+> +     */
+>      [0x41] = { .level = 2, .type = UNIFIED_CACHE,     .size = 128 * KiB,
+>                 .associativity = 4,  .line_size = 32, },
+>      [0x42] = { .level = 2, .type = UNIFIED_CACHE,     .size = 256 * KiB,
+> @@ -136,9 +148,10 @@ struct CPUID2CacheDescriptorInfo cpuid2_cache_descriptors[] = {
+>                 .associativity = 4,  .line_size = 64, },
+>      [0x78] = { .level = 2, .type = UNIFIED_CACHE,     .size =   1 * MiB,
+>                 .associativity = 4,  .line_size = 64, },
+> -    /* lines per sector is not supported cpuid2_cache_descriptor(),
+> -    * so descriptors 0x79, 0x7A, 0x7B, 0x7C are not included.
+> -    */
+> +    /*
+> +     * lines per sector is not supported cpuid2_cache_descriptor(),
+> +     * so descriptors 0x79, 0x7A, 0x7B, 0x7C are not included.
+> +     */
+>      [0x7D] = { .level = 2, .type = UNIFIED_CACHE,     .size =   2 * MiB,
+>                 .associativity = 8,  .line_size = 64, },
+>      [0x7F] = { .level = 2, .type = UNIFIED_CACHE,     .size = 512 * KiB,
 
