@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B40AEC7EE30
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 02:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C639EC8303D
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 03:18:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWneA-0002Hu-Ah; Tue, 01 Jul 2025 22:56:30 -0400
+	id 1uWnyc-0005e3-Sv; Tue, 01 Jul 2025 23:17:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uWne4-0002Hg-Uc
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 22:56:24 -0400
-Received: from mgamail.intel.com ([198.175.65.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uWne2-0000sz-DU
- for qemu-devel@nongnu.org; Tue, 01 Jul 2025 22:56:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751424982; x=1782960982;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=3n75qDWfWW4zlG23AmreWnoG45GlC1J+rYLd738uzVc=;
- b=caaolIL+MknLuAImWozvnKqpS8X6u8w9qLkKn0nJ7GP2nTb7q5I9f9RB
- RQg6T9a9iNGAazghvP5oA2Uc8F2jFVU8d/IbUautR+4GGivUAmujTfCvV
- hiKDR7tPf9GcPne3Whd2yxnQOKMdWdJXvhBxkmP30TgvmzYDoKiUTDTHu
- V8Ye3GMVkkysTy3GWEUxFeKtpZ6RJ+ZAX9HlQUgykExay3dhyB3wim7yX
- ei9rZNYEjnBhtEE0lStC/mXGprVY3E6ALAgFJsFVsUt7ZqNvmuCNg3vww
- s/zUQrOpgd5URH5bj+HoqQbb66JCHxYGrnvXPHBE1tLiAyj4suv1XluDO A==;
-X-CSE-ConnectionGUID: RrXh2U00SSKLpKXx9DovSg==
-X-CSE-MsgGUID: ORMjD9yHSBmqnFs/KrgIag==
-X-IronPort-AV: E=McAfee;i="6800,10657,11481"; a="53570247"
-X-IronPort-AV: E=Sophos;i="6.16,280,1744095600"; d="scan'208";a="53570247"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Jul 2025 19:56:18 -0700
-X-CSE-ConnectionGUID: kQJ144ljQ6W99SeBgVFgBg==
-X-CSE-MsgGUID: fztzLU/FTZmS8fgWG+kvMg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,280,1744095600"; d="scan'208";a="154267621"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa009.fm.intel.com with ESMTP; 01 Jul 2025 19:56:17 -0700
-Date: Wed, 2 Jul 2025 11:17:42 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Kirill Martynov <stdcalllevi@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] x86/cpu: Handle SMM mode in x86_cpu_dump_state for softmmu
-Message-ID: <aGSk1tiqq7F0+CTr@intel.com>
-References: <20250523154431.506993-1-stdcalllevi@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uWnyZ-0005db-Fv
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 23:17:35 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uWnyS-0005BU-RY
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 23:17:34 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxG6zBpGRovvogAQ--.31104S3;
+ Wed, 02 Jul 2025 11:17:22 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJBxZOS9pGRoqSwGAA--.35198S3;
+ Wed, 02 Jul 2025 11:17:20 +0800 (CST)
+Subject: Re: [PATCH v3 7/9] hw/loongarch: Implement avec set irq
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
+References: <20250627030138.2482055-1-gaosong@loongson.cn>
+ <20250627030138.2482055-8-gaosong@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <eac2cad7-d0a9-9d65-e98e-1e0f5d719a42@loongson.cn>
+Date: Wed, 2 Jul 2025 11:15:46 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250523154431.506993-1-stdcalllevi@yandex-team.ru>
-Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
+In-Reply-To: <20250627030138.2482055-8-gaosong@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJBxZOS9pGRoqSwGAA--.35198S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxXrWUKw1kWr4DWF1UGw17Jwc_yoW5GFWUpa
+ n3AF90gr15Jr47Za9xG345ZrnxXr40gryxX3ZFkF92kFyDWr18WrWkJr9rtF48C345WrWj
+ vrn5Ga15W3W7JFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAF
+ wI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JV
+ WxJwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU7pnQ
+ UUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -39
+X-Spam_score: -4.0
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.077,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,61 +82,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 23, 2025 at 03:44:31PM +0000, Kirill Martynov wrote:
-> Date: Fri, 23 May 2025 15:44:31 +0000
-> From: Kirill Martynov <stdcalllevi@yandex-team.ru>
-> Subject: [PATCH] x86/cpu: Handle SMM mode in x86_cpu_dump_state for softmmu
-> X-Mailer: git-send-email 2.43.0
+
+
+On 2025/6/27 上午11:01, Song Gao wrote:
+> Implement avec set irq and update CSR_MSIS and CSR_MSGIR.
 > 
-> Certain error conditions can trigger x86_cpu_dump_state() to output CPU state
-> debug information e.g. KVM emulation failure due to misbehaving guest.
-> However, if the CPU is in System Management Mode (SMM) when the assertion
-> in cpu_asidx_from_attrs failure happens because:
-> 
-> 1. In SMM mode (smm=1), the CPU must use multiple address spaces
->    with a dedicated SMM address space
-> 2. On machine types with softmmu, address spaces are hardcoded to 1
->    (no multiple address spaces available)
-> 
-> The assertion occurs in cpu_asidx_from_attrs() when trying to
-> access memory in SMM mode with insufficient address spaces.
-> 
-> Fix this by:
-> 1. If number of address spaces is 1 always use index 0
-> 2. In other cases use attr.secure for identified proper index
-> 
-> This prevents the assertion while still providing useful debug
-> output during VM shutdown errors.
-> 
-> Stack trace of the original issue:
-> #0  ... in raise () from /lib/x86_64-linux-gnu/libc.so.6
-> #1  ... in abort () from /lib/x86_64-linux-gnu/libc.so.6
-> #2  ... in ?? () from /lib/x86_64-linux-gnu/libc.so.6
-> #3  ... in __assert_fail () from /lib/x86_64-linux-gnu/libc.so.6
-> #4  ... in cpu_asidx_from_attrs (cpu=cpu@entry=0x5578ca2eb340, attrs=...)
->    at ../hw/core/cpu-sysemu.c:76
-> #5  ... in cpu_memory_rw_debug (cpu=cpu@entry=0x5578ca2eb340,
->    addr=addr@entry=2147258348, ptr=ptr@entry=0x7f5341ca373c, len=len@entry=1,
->     is_write=is_write@entry=false) at ../softmmu/physmem.c:3529
-> #6  ... in x86_cpu_dump_state (cs=0x5578ca2eb340,
->    f=0x7f53434065c0 <_IO_2_1_stderr_>, flags=<optimized out>)
->    at ../target/i386/cpu-dump.c:560
-> #7  ... in kvm_cpu_exec (cpu=cpu@entry=0x5578ca2eb340)
->    at ../accel/kvm/kvm-all.c:3000
-> #8  ... in kvm_vcpu_thread_fn (arg=arg@entry=0x5578ca2eb340)
->    at ../accel/kvm/kvm-accel-ops.c:51
-> #9  ... in qemu_thread_start (args=<optimized out>)
->    at ../util/qemu-thread-posix.c:505
-> #10 ... in start_thread () from /lib/x86_64-linux-gnu/libpthread.so.0
-> #11 ... in clone () from /lib/x86_64-linux-gnu/libc.so.6
-> 
-> Signed-off-by: Kirill Martynov <stdcalllevi@yandex-team.ru>
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
 > ---
->  target/i386/cpu.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>   hw/intc/loongarch_avec.c | 44 ++++++++++++++++++++++++++++++++++++++--
+>   1 file changed, 42 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
+> index c686ac9483..5959d05d13 100644
+> --- a/hw/intc/loongarch_avec.c
+> +++ b/hw/intc/loongarch_avec.c
+> @@ -16,6 +16,12 @@
+>   #include "migration/vmstate.h"
+>   #include "trace.h"
+>   #include "hw/qdev-properties.h"
+> +#include "target/loongarch/cpu.h"
+> +
+> +/* msg addr field */
+> +FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
+> +FIELD(MSG_ADDR, CPU_NUM, 12, 8)
+> +FIELD(MSG_ADDR, FIX, 28, 12)
+>   
+>   static uint64_t loongarch_avec_mem_read(void *opaque,
+>                                           hwaddr addr, unsigned size)
+> @@ -23,12 +29,46 @@ static uint64_t loongarch_avec_mem_read(void *opaque,
+>       return 0;
+>   }
+>   
+> +static void avec_set_irq(LoongArchAVECState *s, int cpu_num, int irq_num, int level)
+> +{
+> +    MachineState *machine = MACHINE(qdev_get_machine());
+> +    MachineClass *mc = MACHINE_GET_CLASS(machine);
+> +    const CPUArchIdList *id_list = NULL;
+> +    CPUState *cpu;
+> +    CPULoongArchState *env;
+> +    int i;
+> +
+> +    assert(mc->possible_cpu_arch_ids(machine));
+> +    id_list = mc->possible_cpu_arch_ids(machine);
+> +    cpu = id_list->cpus[cpu_num].cpu;
+> +    env = &LOONGARCH_CPU(cpu)->env;
+> +
+> +    if (level) {
+> +        set_bit(irq_num, &env->CSR_MSGIS[irq_num / 64]);
+> +        env->CSR_MSGIR = FIELD_DP64(env->CSR_MSGIR, CSR_MSGIR, INTNUM, irq_num);
+> +        env->CSR_MSGIR = FIELD_DP64(env->CSR_MSGIR, CSR_MSGIR, ACTIVE, 0);
+> +
+> +        for (i = 0; i < ARRAY_SIZE(env->CSR_MSGIS); i++) {
+> +            if (env->CSR_MSGIS[i]) {
+> +                return;
+> +            }
+> +        }
+> +        qemu_set_irq(s->cpu[cpu_num].parent_irq, 0);
+Here such code can inject interrupt to cpu side.
+   if (level) {
+       set_bit(irq_num, &env->CSR_MSGIS[irq_num / 64]);
+       qemu_set_irq(s->cpu[cpu_num].parent_irq, 1);
+   }
 
-Sorry for delay. This fix looks good to me,
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Regards
+Bibo Mao
+> +    }
+> +    qemu_set_irq(s->cpu[cpu_num].parent_irq, level);
+> +}
+> +
+>   static void loongarch_avec_mem_write(void *opaque, hwaddr addr,
+>                                        uint64_t val, unsigned size)
+>   {
+> -    return;
+> -}
+> +    int irq_num, cpu_num = 0;
+> +    LoongArchAVECState *s = LOONGARCH_AVEC(opaque);
+> +    uint64_t msg_addr = addr + VIRT_AVEC_BASE;
+>   
+> +    cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
+> +    irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
+> +    avec_set_irq(s, cpu_num, irq_num, 1);
+> +}
+>   
+>   static const MemoryRegionOps loongarch_avec_ops = {
+>       .read = loongarch_avec_mem_read,
+> 
 
 
