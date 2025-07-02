@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0626C83013
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 07:01:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4ACCC83013
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 07:02:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWrSz-00007q-1q; Wed, 02 Jul 2025 03:01:13 -0400
+	id 1uWrSd-0008Uk-OB; Wed, 02 Jul 2025 03:00:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=U4+o=ZP=kaod.org=clg@ozlabs.org>)
- id 1uWrSw-00006R-UG; Wed, 02 Jul 2025 03:01:10 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1uWrSV-0008Ti-2q; Wed, 02 Jul 2025 03:00:43 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=U4+o=ZP=kaod.org=clg@ozlabs.org>)
- id 1uWrSr-0000tE-MP; Wed, 02 Jul 2025 03:01:10 -0400
+ id 1uWrSJ-0000p7-SL; Wed, 02 Jul 2025 03:00:42 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bX9ld0J6Dz4x0C;
- Wed,  2 Jul 2025 17:00:45 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bX9ky6rfGz4x0C;
+ Wed,  2 Jul 2025 17:00:10 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bX9lY5MXmz4wcZ;
- Wed,  2 Jul 2025 17:00:41 +1000 (AEST)
-Message-ID: <b70dbdb3-0d1e-4976-b696-78065bd09640@kaod.org>
-Date: Wed, 2 Jul 2025 09:00:53 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bX9kv3pl2z4wcr;
+ Wed,  2 Jul 2025 17:00:07 +1000 (AEST)
+Message-ID: <a0dfcbf7-cc09-4fb8-bc3b-3d4060fce5e9@kaod.org>
+Date: Wed, 2 Jul 2025 09:00:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] Add support for gb200-bmc machine
+Subject: Re: [PATCH 2/4] hw/arm/aspeed: Add second SPI chip to Aspeed model
 To: Ed Tanous <etanous@nvidia.com>, qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
@@ -39,6 +39,7 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Andrew Jeffery <andrew@codeconstruct.com.au>,
  Jamin Lin <jamin_lin@aspeedtech.com>, qemu-arm@nongnu.org
 References: <20250701203400.71677-1-etanous@nvidia.com>
+ <20250701203400.71677-3-etanous@nvidia.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -83,16 +84,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250701203400.71677-1-etanous@nvidia.com>
+In-Reply-To: <20250701203400.71677-3-etanous@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=U4+o=ZP=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, FORGED_SPF_HELO=1,
  HEADER_FROM_DIFFERENT_DOMAINS=0.017, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,26 +112,58 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/1/25 22:33, Ed Tanous wrote:
-> This patch series adds support for gb200-bmc, a baseboard management controller
-> module based on an Aspeed 2600 SOC.
+> Aspeed2600 has two spi lanes;  Add a new struct that can mount the
+> second SPI.
 > 
-> Ed Tanous (4):
->    hw/arm: Add PCA9554 to ARM target
->    hw/arm/aspeed: Add second SPI chip to Aspeed model
->    docs: add support for gb200-bmc
->    hw/arm/aspeed: Add GB200 BMC target
+> Signed-off-by: Ed Tanous <etanous@nvidia.com>
+> ---
+>   hw/arm/aspeed.c         | 2 ++
+>   include/hw/arm/aspeed.h | 2 ++
+>   2 files changed, 4 insertions(+)
 > 
->   docs/system/arm/aspeed.rst |  4 +-
->   hw/arm/Kconfig             |  1 +
->   hw/arm/aspeed.c            | 81 ++++++++++++++++++++++++++++++++++++++
->   hw/arm/aspeed_eeprom.c     | 21 ++++++++++
->   hw/arm/aspeed_eeprom.h     |  3 ++
->   include/hw/arm/aspeed.h    |  2 +
->   6 files changed, 110 insertions(+), 2 deletions(-)
-> 
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index d0b333646e..3ef7f6c5b2 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -465,6 +465,8 @@ static void aspeed_machine_init(MachineState *machine)
+>           aspeed_board_init_flashes(&bmc->soc->spi[0],
+>                                 bmc->spi_model ? bmc->spi_model : amc->spi_model,
+>                                 1, amc->num_cs);
+> +        aspeed_board_init_flashes(&bmc->soc->spi[1],
+> +                                  amc->spi2_model, 1, amc->num_cs2);
+>       }
+>   
+>       if (machine->kernel_filename && sc->num_cpus > 1) {
+> diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
+> index 973277bea6..6c36455656 100644
+> --- a/include/hw/arm/aspeed.h
+> +++ b/include/hw/arm/aspeed.h
+> @@ -35,7 +35,9 @@ struct AspeedMachineClass {
+>       uint32_t hw_strap2;
+>       const char *fmc_model;
+>       const char *spi_model;
+> +    const char *spi2_model;
+>       uint32_t num_cs;
+> +    uint32_t num_cs2;
+>       uint32_t macs_mask;
+>       void (*i2c_init)(AspeedMachineState *bmc);
+>       uint32_t uart_default;
 
-Could you provide a functional test for the gb200nvl-bmc machine too ?
-See tests/functional/test_*aspeed* files.
+Another way specifying backends for all SPI devices is to use -blockdev :
+
+   $ qemu-system-arm -M ast2600-evb \
+       -blockdev node-name=fmc0,driver=file,filename=/path/to/fmc0.img \
+       -device mx66u51235f,bus=ssi.0,cs=0x0,drive=fmc0 \
+       -blockdev node-name=fmc1,driver=file,filename=/path/to/fmc1.img \
+       -device mx66u51235f,bus=ssi.0,cs=0x1,drive=fmc1 \
+       -blockdev node-name=spi1,driver=file,filename=/path/to/spi1.img \
+       -device mx66u51235f,cs=0x0,bus=ssi.1,drive=spi1 \
+       -nographic -nodefaults
+
+See https://www.qemu.org/docs/master/system/arm/aspeed.html.
+
+Have you tried it ?
+
 
 Thanks,
 
