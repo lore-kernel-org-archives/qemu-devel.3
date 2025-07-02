@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60E7DC83F03
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 22:02:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6575EC8303C
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 22:02:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uX5UD-0003Wi-VS; Wed, 02 Jul 2025 17:59:25 -0400
+	id 1uX5U2-0003Qw-23; Wed, 02 Jul 2025 17:59:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uX5UC-0003WU-7m
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 17:59:24 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1uX5Tx-0003Nh-TL
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 17:59:09 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uX5U7-0003m1-BC
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 17:59:23 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 562LQxmo028292;
- Wed, 2 Jul 2025 21:59:17 GMT
+ id 1uX5Tv-0003f8-UL
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 17:59:09 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 562LQf1O014606;
+ Wed, 2 Jul 2025 21:59:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=gEm/LuJJzxZFaI/fmQhNlXXmc+Vyq1rOmMGEgxNtF1M=; b=
- ja8Es07bAu0jU/wFxgDNANAjGEsuB/UzxFLI5OhzVf5Bin0SJ0jaquiPnvze4hAy
- S+V5g/e9pkcxqxiZsN+eeiNoZ/eT6MPl20lb4EDEFE4jY3pD1lJQH1PaXB+WnG1r
- ojE7er+6QHrE6+2LHeeYNrkmBRU9JWHsTTXD5EKcVVP6g5my+ImfaAel8vtwlhg6
- DxfwA3bXysL/UHLYWtqJbQ/zi/C6YHqc7VrX2lzAjG4eP8gVpivrSKOcU4hlhhLB
- sCjV9ZNgRz0X8VZJS5YWxOmi7rLgnAQ92pDflRB0a/mL5N2UbGXKTicEopMIb+LO
- 6cS2mFI12OOmi90ZCJUNNA==
+ corp-2025-04-25; bh=ehCcTDGAG4j8kMpCcv3xI8gmUfFjPYOpVSgaQEk9CUM=; b=
+ ry6lIBuBQ54c7gPR3XUik9w95ZPgcu1lGpGN/qTXjwAz8sUSmm1lQoDA30RXvoop
+ kMW4JfhpI58QuYScHIsHMAwa/DY4aGWqyV15V+VNlT0NHLt2do1vbRE9K94QrPRC
+ PHiY+nmUT+nDKxOertwmgQiAqeExnBC5zb67Ufy0a4IbYrmsClAlfImHJ4z4UgDJ
+ T4KqboLkzTXj4Kjm1OYGAyD8AyUCMhjVAXpvaeYIKLHH5uD4rH5cO/H/nnGcdUz4
+ J4TEkskQPONpdG2T14i3wEUUCDEeYVkJvHWZwNX5EOQUHZjrlJTEgm999jtoMb/9
+ I4EDQf0eWFHpqA1da2lrsQ==
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47j80w7vrb-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47j8xx7vcw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 02 Jul 2025 21:59:16 +0000 (GMT)
+ Wed, 02 Jul 2025 21:59:05 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 562LoWAx033773; Wed, 2 Jul 2025 21:59:16 GMT
+ with ESMTP id 562KdmBR034387; Wed, 2 Jul 2025 21:59:04 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 47j6ubtd91-1
+ 47j6ubtd1u-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 02 Jul 2025 21:59:15 +0000
+ Wed, 02 Jul 2025 21:59:04 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 562Lwxga020012;
- Wed, 2 Jul 2025 21:59:15 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 562Lwxg6020012;
+ Wed, 2 Jul 2025 21:59:04 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 47j6ubtcxb-22; Wed, 02 Jul 2025 21:59:15 +0000
+ ESMTP id 47j6ubtcxb-7; Wed, 02 Jul 2025 21:59:03 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -64,9 +64,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V6 21/21] vfio: doc changes for cpr
-Date: Wed,  2 Jul 2025 14:58:58 -0700
-Message-Id: <1751493538-202042-22-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V6 06/21] backends/iommufd: change process ioctl
+Date: Wed,  2 Jul 2025 14:58:43 -0700
+Message-Id: <1751493538-202042-7-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1751493538-202042-1-git-send-email-steven.sistare@oracle.com>
 References: <1751493538-202042-1-git-send-email-steven.sistare@oracle.com>
@@ -81,30 +81,30 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
  mlxlogscore=999 phishscore=0 suspectscore=0 mlxscore=0 bulkscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2507020182
-X-Proofpoint-GUID: fCxtTmycWpPEuPOSLqswscFwpf0VmSH2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDE4MiBTYWx0ZWRfX7+j4Kkmd/Yhm
- dfVky77+vS6DGIwn7qE0LNPmLqJFJqi7fnlFC3D4QV6S80NX10UuFlpB9EOdJkaB3z2TEsrv/lz
- LGig/UtrtsR4g/dXX6cAeN4g7byFTgjKIxk8mm+RGz6f7kBNf35vVI5UKlKrtypZkQ0i0CGmTEJ
- 190CsB2bAUlV8S8OS9PdPXd5u6Oj+7pADPHxFrafnzbMD8g5fLaVjgmN3Ihcr90ibLmCHzMhpRY
- X5/7/TYaI+mPHqEnxu1e28Jw2daCtKYIaGYIbPvT9e8DZytbDlirDYwFWvBhW9iDpGsIDw2y4/+
- W1RMhHVhjlq5XhiHJLtwW+gFLowRoqqkqXnA0mihV/nlN1ke09p82TfUGX+YmRr3N8AWmuo5+69
- sSbfDCg6v1E8W/AQmb62iOH40w7kEQCIO3LB5pV3DSLuLP5UN3NgEKY2oljqWKK71d9BJWSX
-X-Authority-Analysis: v=2.4 cv=D6hHKuRj c=1 sm=1 tr=0 ts=6865abb4 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDE4MiBTYWx0ZWRfX8cXd7tmNrAhW
+ wyUvRPyrB0MPFB7hQ9P0kjmBHcEaJptT/5gkvjL21IZY2rtD3qMdB7Yc5JDm1XS3KwJBP1S78Hc
+ ecvgVauFuOLu1hLdnfu9ZpsR4b0fPBJhNqHk03XazQkO16yoGmDtxnCXTla2Ys04zSjOPhC7G7k
+ XX24YtLlFULMkYdL8IlbF2142qreZkHDCozr7pyLepf3IQ3IV9iCy9F6X/F6VlfjI7A5A9/AL5B
+ 0Rv5xoEnd7mFXhMJxWBGixqUUtbyGzHECoPc5WBsEWaOUYbzlnkj3hacW4LuNT8XpQVAheCirKG
+ KiCVZWFKcxJyXOzMbAKPgwk6Ur93sa7DZJHMMQrUrVWZ/YzVyfbyucVg8Z/nRVDzSJ9QlayEuNd
+ tYTAJ+ohJym96dT1aED/xyt27eO7SFLkV06k4I0z7Js904Kos4QptErJuDdmmuStd5Vt4g9O
+X-Proofpoint-ORIG-GUID: jO_WGt1Ti3Jgf6BkzY_XUjaMju_pHgfQ
+X-Proofpoint-GUID: jO_WGt1Ti3Jgf6BkzY_XUjaMju_pHgfQ
+X-Authority-Analysis: v=2.4 cv=QfRmvtbv c=1 sm=1 tr=0 ts=6865aba9 cx=c_pps
  a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
  a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8
- a=cQ5gJ0ErMGRkCJeqeJUA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: fCxtTmycWpPEuPOSLqswscFwpf0VmSH2
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+ a=QyXUC8HyAAAA:8 a=SRdfyBftnUHxAk-46XYA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,55 +120,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update documentation to say that cpr-transfer supports vfio and iommufd.
+Define the change process ioctl
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- docs/devel/migration/CPR.rst | 5 ++---
- qapi/migration.json          | 6 ++++--
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ include/system/iommufd.h |  3 +++
+ backends/iommufd.c       | 24 ++++++++++++++++++++++++
+ backends/trace-events    |  1 +
+ 3 files changed, 28 insertions(+)
 
-diff --git a/docs/devel/migration/CPR.rst b/docs/devel/migration/CPR.rst
-index 7897873..0a0fd4f 100644
---- a/docs/devel/migration/CPR.rst
-+++ b/docs/devel/migration/CPR.rst
-@@ -152,8 +152,7 @@ cpr-transfer mode
- This mode allows the user to transfer a guest to a new QEMU instance
- on the same host with minimal guest pause time, by preserving guest
- RAM in place, albeit with new virtual addresses in new QEMU.  Devices
--and their pinned memory pages will also be preserved in a future QEMU
--release.
-+and their pinned memory pages are also preserved for VFIO and IOMMUFD.
+diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+index 2d24d93..db5f2c7 100644
+--- a/include/system/iommufd.h
++++ b/include/system/iommufd.h
+@@ -69,6 +69,9 @@ bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
+                                       uint32_t *entry_num, void *data,
+                                       Error **errp);
  
- The user starts new QEMU on the same host as old QEMU, with command-
- line arguments to create the same machine, plus the ``-incoming``
-@@ -322,6 +321,6 @@ Futures
++bool iommufd_change_process_capable(IOMMUFDBackend *be);
++bool iommufd_change_process(IOMMUFDBackend *be, Error **errp);
++
+ #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
+ OBJECT_DECLARE_TYPE(HostIOMMUDeviceIOMMUFD, HostIOMMUDeviceIOMMUFDClass,
+                     HOST_IOMMU_DEVICE_IOMMUFD)
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index 3a2ecc7..87f81a0 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -73,6 +73,30 @@ static void iommufd_backend_class_init(ObjectClass *oc, const void *data)
+     object_class_property_add_str(oc, "fd", NULL, iommufd_backend_set_fd);
+ }
  
- cpr-transfer mode is based on a capability to transfer open file
- descriptors from old to new QEMU.  In the future, descriptors for
--vfio, iommufd, vhost, and char devices could be transferred,
-+vhost, and char devices could be transferred,
- preserving those devices and their kernel state without interruption,
- even if they do not explicitly support live migration.
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 4963f6c..e8a7d3b 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -620,8 +620,10 @@
- #
- # @cpr-transfer: This mode allows the user to transfer a guest to a
- #     new QEMU instance on the same host with minimal guest pause
--#     time by preserving guest RAM in place.  Devices and their pinned
--#     pages will also be preserved in a future QEMU release.
-+#     time by preserving guest RAM in place.
-+#
-+#     Devices and their pinned pages are also preserved for VFIO and
-+#     IOMMUFD. (since 10.1)
- #
- #     The user starts new QEMU on the same host as old QEMU, with
- #     command-line arguments to create the same machine, plus the
++bool iommufd_change_process_capable(IOMMUFDBackend *be)
++{
++    struct iommu_ioas_change_process args = {.size = sizeof(args)};
++
++    /*
++     * Call IOMMU_IOAS_CHANGE_PROCESS to verify it is a recognized ioctl.
++     * This is a no-op if the process has not changed since DMA was mapped.
++     */
++    return !ioctl(be->fd, IOMMU_IOAS_CHANGE_PROCESS, &args);
++}
++
++bool iommufd_change_process(IOMMUFDBackend *be, Error **errp)
++{
++    struct iommu_ioas_change_process args = {.size = sizeof(args)};
++    bool ret = !ioctl(be->fd, IOMMU_IOAS_CHANGE_PROCESS, &args);
++
++    if (!ret) {
++        error_setg_errno(errp, errno, "IOMMU_IOAS_CHANGE_PROCESS fd %d failed",
++                         be->fd);
++    }
++    trace_iommufd_change_process(be->fd, ret);
++    return ret;
++}
++
+ bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp)
+ {
+     int fd;
+diff --git a/backends/trace-events b/backends/trace-events
+index e5f3e70..56132d3 100644
+--- a/backends/trace-events
++++ b/backends/trace-events
+@@ -7,6 +7,7 @@ dbus_vmstate_loading(const char *id) "id: %s"
+ dbus_vmstate_saving(const char *id) "id: %s"
+ 
+ # iommufd.c
++iommufd_change_process(int fd, bool ret) "fd=%d (%d)"
+ iommufd_backend_connect(int fd, bool owned, uint32_t users) "fd=%d owned=%d users=%d"
+ iommufd_backend_disconnect(int fd, uint32_t users) "fd=%d users=%d"
+ iommu_backend_set_fd(int fd) "pre-opened /dev/iommu fd=%d"
 -- 
 1.8.3.1
 
