@@ -4,44 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC107C83013
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 12:34:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F107C8303F
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 12:34:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWwdP-0005PP-DO; Wed, 02 Jul 2025 08:32:19 -0400
+	id 1uWwfa-0007S7-Te; Wed, 02 Jul 2025 08:34:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uWwdN-0005OF-Nc; Wed, 02 Jul 2025 08:32:17 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uWwdL-0000RR-SJ; Wed, 02 Jul 2025 08:32:17 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 7035747550;
- Wed,  2 Jul 2025 14:32:10 +0200 (CEST)
-From: Fiona Ebner <f.ebner@proxmox.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
- eblake@redhat.com, armbru@redhat.com
-Subject: [PATCH v3 2/2] block/qapi: make @node-name in @BlockDeviceInfo
- non-optional
-Date: Wed,  2 Jul 2025 14:31:28 +0200
-Message-ID: <20250702123204.325470-3-f.ebner@proxmox.com>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250702123204.325470-1-f.ebner@proxmox.com>
-References: <20250702123204.325470-1-f.ebner@proxmox.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uWwfX-0007Qa-I4
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:34:31 -0400
+Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uWwfL-0000v2-1l
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:34:31 -0400
+Received: by mail-oa1-x33.google.com with SMTP id
+ 586e51a60fabf-2e999729ccbso2665994fac.2
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:34:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751459656; x=1752064456; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qv/VxcFKc2nhD2P/0kekyRsDOu03G4xgMX0HwOwNFDA=;
+ b=rQ/d8UhitQlVGH8oerbVDSofrdypqNKDFWpvkqe540iAhFgDtC1KidRMYCRaEjXp7z
+ 1YyfjFUpxNbiBMNpT8Hq9qbyICwSzdOKej+0JlHr76BRUsIKEh4mdwow6bhIxGa/QGB3
+ pXE//nmjaUQLiyDWWAynlJr4W0AzxYmc8yLX4v7edQ3EiERv53PXk4SHOYLI3w999hyy
+ TRWCAx4vvp/sovu8fOWUD3vWZ90+BbofqAAlD2p76aB/AE5NaGXDCewePFT6FAZJwCIO
+ nE+KO+Y3m0U3sb9/R22+WPAloz59pMrPC7rWVaXqXVx8tyBQ70fLPmkdsKA2MRznJOZn
+ XJhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751459656; x=1752064456;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qv/VxcFKc2nhD2P/0kekyRsDOu03G4xgMX0HwOwNFDA=;
+ b=P+PLb4BSCpsrXDZIwGvDV0mO6Uq0kZUBkcRMLxktJGZG48x7Dcrt86K+O+jE1Frr61
+ pkalK7vq/1pwxTveP03KZQaQVWCGdECjlk/Is2NxA2VnMfSDHr0F3YLqX2aVGzWvZoM5
+ hh/jjM+2OuugdXOuzf9Db84kKcwiHLZr6mZdT+B5DiVal2/fLZtBTFUI+0aNZwYP/Nk2
+ 6G8sdQ0mR/5hwno1HxL/xHAgFgRnrtsTfcWkvAyxveB0s9iSgruazsA2wKwtdrZMZETt
+ zQ+N82iCqm8s03IlCr7VqQp7W3XrjGSEPQmeeyq4RjZESTuEjSLnN4l6LiaRpERJYga8
+ koeg==
+X-Gm-Message-State: AOJu0Yxh6tXTtkcHIGd6R6CEdQn1UMkMMoYDONOsZ8/gVVKn7npMgmPP
+ f5LRlg+HTvaHUyolv9uxj8vC7cvJde5JvKvj8JCqar0L4XngYAH46k5iQcQK/3fN/nU9de0fI6O
+ WPktNCmE=
+X-Gm-Gg: ASbGncul3KnlBQaDSCDquf1IbpdmzMffhGT8wLwkD/Z3HL4qqI9HXOl70wXztdazftF
+ dYJTsI7W0n1vARMZL0sBTYHW3FTtLEHArjBU0McIA1rWj0Zk3PT5SCgs5XQqjm2CLNj77qwwvaU
+ +qiT/EQz3n8uBIsAp/X6YatjV5E/OoFEqeJwlUrgiTRLz2iY4r/74Yvvp6115dN/i+/FJQxcySq
+ LHgGtizET3ayRZ28p+zt8g1TBXit0NyNEHcKb1XQY9ckSgs2OV2jz5muIyb2A7VKudiY3bbYd3G
+ VuXve723BfHAXtoSCcL3qVKMxgnTiPuBTLIZ4OXTCSJVpmqbHWJAAQPXuD1+ojVc8SljnA==
+X-Google-Smtp-Source: AGHT+IG8FQ6fMNjIYuBwIaAR5FlhKD9XIoEpQ1mYOZipdcfN7SfMWj1mSxs1zQKhv95uwWL7tXisrw==
+X-Received: by 2002:a05:6870:7007:b0:2d6:6639:52d9 with SMTP id
+ 586e51a60fabf-2f5c7adb95amr2137992fac.32.1751459655619; 
+ Wed, 02 Jul 2025 05:34:15 -0700 (PDT)
+Received: from stoup.. ([187.210.107.185]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-2efd50b1b2fsm3864281fac.32.2025.07.02.05.34.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 02 Jul 2025 05:34:15 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+	peter.maydell@linaro.org
+Subject: [PATCH v3 02/97] target/arm: Use FPST_ZA for sme_fmopa_[hsd]
+Date: Wed,  2 Jul 2025 06:32:35 -0600
+Message-ID: <20250702123410.761208-3-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250702123410.761208-1-richard.henderson@linaro.org>
+References: <20250702123410.761208-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2001:4860:4864:20::33;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x33.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -57,49 +99,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 15489c769b ("block: auto-generated node-names"), if the
-node name of a block driver state is not explicitly specified, it
-will be auto-generated.
-
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
+ target/arm/tcg/sme_helper.c    | 37 ++++++++--------------------------
+ target/arm/tcg/translate-sme.c |  4 ++--
+ 2 files changed, 10 insertions(+), 31 deletions(-)
 
-New in v3.
-
- block/qapi.c         | 4 +---
- qapi/block-core.json | 2 +-
- 2 files changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/block/qapi.c b/block/qapi.c
-index e08a1e970f..12fbf8d1b7 100644
---- a/block/qapi.c
-+++ b/block/qapi.c
-@@ -75,9 +75,7 @@ BlockDeviceInfo *bdrv_block_device_info(BlockBackend *blk,
-         .no_flush       = !!(bs->open_flags & BDRV_O_NO_FLUSH),
-     };
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index 8f33387e4b..9942d717aa 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -904,20 +904,11 @@ void HELPER(sme_addva_d)(void *vzda, void *vzn, void *vpn,
+ }
  
--    if (bs->node_name[0]) {
--        info->node_name = g_strdup(bs->node_name);
--    }
-+    info->node_name = g_strdup(bs->node_name);
+ void HELPER(sme_fmopa_s)(void *vza, void *vzn, void *vzm, void *vpn,
+-                         void *vpm, float_status *fpst_in, uint32_t desc)
++                         void *vpm, float_status *fpst, uint32_t desc)
+ {
+     intptr_t row, col, oprsz = simd_maxsz(desc);
+     uint32_t neg = simd_data(desc) << 31;
+     uint16_t *pn = vpn, *pm = vpm;
+-    float_status fpst;
+-
+-    /*
+-     * Make a copy of float_status because this operation does not
+-     * update the cumulative fp exception status.  It also produces
+-     * default nans.
+-     */
+-    fpst = *fpst_in;
+-    set_default_nan_mode(true, &fpst);
  
-     children_list_tail = &info->children;
-     QLIST_FOREACH(child, &bs->children, next) {
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 3e720af5ad..9d36927fc1 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -573,7 +573,7 @@
- # Since: 0.14
- ##
- { 'struct': 'BlockDeviceInfo',
--  'data': { 'file': 'str', '*node-name': 'str', 'ro': 'bool', 'drv': 'str',
-+  'data': { 'file': 'str', 'node-name': 'str', 'ro': 'bool', 'drv': 'str',
-             '*backing_file': 'str', 'backing_file_depth': 'int',
-             'children': ['BlockdevChild'],
-             'active': 'bool', 'encrypted': 'bool',
+     for (row = 0; row < oprsz; ) {
+         uint16_t pa = pn[H2(row >> 4)];
+@@ -932,7 +923,7 @@ void HELPER(sme_fmopa_s)(void *vza, void *vzn, void *vzm, void *vpn,
+                         if (pb & 1) {
+                             uint32_t *a = vza_row + H1_4(col);
+                             uint32_t *m = vzm + H1_4(col);
+-                            *a = float32_muladd(n, *m, *a, 0, &fpst);
++                            *a = float32_muladd(n, *m, *a, 0, fpst);
+                         }
+                         col += 4;
+                         pb >>= 4;
+@@ -946,15 +937,12 @@ void HELPER(sme_fmopa_s)(void *vza, void *vzn, void *vzm, void *vpn,
+ }
+ 
+ void HELPER(sme_fmopa_d)(void *vza, void *vzn, void *vzm, void *vpn,
+-                         void *vpm, float_status *fpst_in, uint32_t desc)
++                         void *vpm, float_status *fpst, uint32_t desc)
+ {
+     intptr_t row, col, oprsz = simd_oprsz(desc) / 8;
+     uint64_t neg = (uint64_t)simd_data(desc) << 63;
+     uint64_t *za = vza, *zn = vzn, *zm = vzm;
+     uint8_t *pn = vpn, *pm = vpm;
+-    float_status fpst = *fpst_in;
+-
+-    set_default_nan_mode(true, &fpst);
+ 
+     for (row = 0; row < oprsz; ++row) {
+         if (pn[H1(row)] & 1) {
+@@ -964,7 +952,7 @@ void HELPER(sme_fmopa_d)(void *vza, void *vzn, void *vzm, void *vpn,
+             for (col = 0; col < oprsz; ++col) {
+                 if (pm[H1(col)] & 1) {
+                     uint64_t *a = &za_row[col];
+-                    *a = float64_muladd(n, zm[col], *a, 0, &fpst);
++                    *a = float64_muladd(n, zm[col], *a, 0, fpst);
+                 }
+             }
+         }
+@@ -1065,19 +1053,8 @@ void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
+     intptr_t row, col, oprsz = simd_maxsz(desc);
+     uint32_t neg = simd_data(desc) * 0x80008000u;
+     uint16_t *pn = vpn, *pm = vpm;
+-    float_status fpst_odd, fpst_std, fpst_f16;
++    float_status fpst_odd = env->vfp.fp_status[FPST_ZA];
+ 
+-    /*
+-     * Make copies of the fp status fields we use, because this operation
+-     * does not update the cumulative fp exception status.  It also
+-     * produces default NaNs. We also need a second copy of fp_status with
+-     * round-to-odd -- see above.
+-     */
+-    fpst_f16 = env->vfp.fp_status[FPST_A64_F16];
+-    fpst_std = env->vfp.fp_status[FPST_A64];
+-    set_default_nan_mode(true, &fpst_std);
+-    set_default_nan_mode(true, &fpst_f16);
+-    fpst_odd = fpst_std;
+     set_float_rounding_mode(float_round_to_odd, &fpst_odd);
+ 
+     for (row = 0; row < oprsz; ) {
+@@ -1097,7 +1074,9 @@ void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
+ 
+                         m = f16mop_adj_pair(m, pcol, 0);
+                         *a = f16_dotadd(*a, n, m,
+-                                        &fpst_f16, &fpst_std, &fpst_odd);
++                                        &env->vfp.fp_status[FPST_ZA_F16],
++                                        &env->vfp.fp_status[FPST_ZA],
++                                        &fpst_odd);
+                     }
+                     col += 4;
+                     pcol >>= 4;
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index fcbb350016..51175c923e 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -358,9 +358,9 @@ static bool do_outprod_env(DisasContext *s, arg_op *a, MemOp esz,
+ TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_env, a,
+            MO_32, gen_helper_sme_fmopa_h)
+ TRANS_FEAT(FMOPA_s, aa64_sme, do_outprod_fpst, a,
+-           MO_32, FPST_A64, gen_helper_sme_fmopa_s)
++           MO_32, FPST_ZA, gen_helper_sme_fmopa_s)
+ TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a,
+-           MO_64, FPST_A64, gen_helper_sme_fmopa_d)
++           MO_64, FPST_ZA, gen_helper_sme_fmopa_d)
+ 
+ TRANS_FEAT(BFMOPA, aa64_sme, do_outprod_env, a, MO_32, gen_helper_sme_bfmopa)
+ 
 -- 
-2.47.2
-
+2.43.0
 
 
