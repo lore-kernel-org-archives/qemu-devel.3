@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95448C83013
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 12:35:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E29C83013
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 12:35:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWwfp-0007bq-NT; Wed, 02 Jul 2025 08:34:49 -0400
+	id 1uWwfe-0007VB-CY; Wed, 02 Jul 2025 08:34:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWwfk-0007YK-N3
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:34:45 -0400
-Received: from mail-oa1-x34.google.com ([2001:4860:4864:20::34])
+ id 1uWwfb-0007SF-1G
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:34:35 -0400
+Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWwfX-0000xb-11
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:34:44 -0400
-Received: by mail-oa1-x34.google.com with SMTP id
- 586e51a60fabf-2ea35edc691so1680405fac.2
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:34:27 -0700 (PDT)
+ id 1uWwfP-0000vd-L0
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:34:34 -0400
+Received: by mail-oa1-x35.google.com with SMTP id
+ 586e51a60fabf-2ea2fee5471so3668056fac.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:34:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751459667; x=1752064467; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751459657; x=1752064457; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BGYgwCm9XTJh3Jv7tUzNjmQDxtUUB3eW8c2+NqQ6fB4=;
- b=NSkhzkOvRta0E9FqtTdabF8Rn1TIMUkETbjvxH1+/NxaUDr9fBknB33M8n35ln89a/
- Obi2HiQCPLNYUGPpRJ/dRaUh/X/Xr4GwKkvXRCD7vCQCNsjdibTHb0ivQy3aGD9iDJ07
- ouDdmQpmNqnQb122QCJyfsbszE9ZUc5w7HHEnq+eRaTX29NeBkXvcyD3b4EU9z/K4JFX
- 28b3xDeSeAn5wYBpV/cN2nv0OXCeyKZ0WLUMsbee66AHAzNLFPVnn8lacwMIMfns4bLG
- eTyim39PFX8AKvDVFktMogXQZ07FuCj51M/PgLfP/eL8GKUynBL6ja0EXs4E+v/ObGeA
- ZalA==
+ bh=feRjxLmhrg6X+CnBaSEjpc+GubWFISEAMkyHftCn26M=;
+ b=Jp4PPDI7h8MCrZJnf0p5Ab/n9hr3Cc2asfrAlw3Pdk5GgK90n9l3EY1tJnCYGtl8Q6
+ UcmdbUNwfe0YZgoQTxt5kmcaq/Lm/QI/joNJadVRR5WUaeWd0TIvlPy9HbHUqx1X3tlS
+ qk/K3I1X4dlZ2qmno4mHSQI6sREBrTSAqeJHIqY+oEOQMqQE8hXlchai/010xVurE7q2
+ y3G/ifH0nZwgxuxIRQKs5uvDflHfy8H28NVISSv5lV5jTcNjh76F3i83T3THB1sMmMCx
+ vK8V6qnI+lu6mKAz0fQMWKtOkqAae6IFH2PKpjbIazVtdHEFBYXl3uYZCZkZIQQF3RsL
+ Z3lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751459667; x=1752064467;
+ d=1e100.net; s=20230601; t=1751459657; x=1752064457;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BGYgwCm9XTJh3Jv7tUzNjmQDxtUUB3eW8c2+NqQ6fB4=;
- b=HxDIBtKCrJfS5ObriHN+lyMyy5aKbZsLlRxblCLvVrUHCW1Jba0IX5VyfPuUGZz53j
- z334oPI2v51XxzFsOtyyJafbnCRy1RA96nOHSIMzDyPyuEQ3quznlxB9Onix9tWt/RKd
- OZrL20wMhXkd0fXYEzf+GOGX3nuuxWFoH/hRg2IPf9auut1eGDe7rzNCrKD3joD2pMEo
- gseeWhXU0aAlrDUOJUX3HkjRn5B41T6MTLge92GMzWkVubeo3hyhayoEFmHfbczIVPKU
- Krr0U+fCefvASn+3cwltpNFOuBgdgdXPR3hM6sqxT0S2s3tQtqxpwksdFeplez/U+SxI
- Y3ug==
-X-Gm-Message-State: AOJu0YxqbkU2OmBbDoGImxjOclOWniVD8l2ATrYgjlUrUsBgUAF70HVE
- ElVBaxDH3OHui8wDLf+YL8H8PwU26lVx8znL1naMTqxorP2lVvcNpP9F3XcduAVEicK0oVqFxEk
- N8zB6PEw=
-X-Gm-Gg: ASbGncvh/MwQ4GnR4eNCzQdVdMID6iJMK5J+AuMZZIaJqWNp329R70ApU8Q4h+kLKi2
- RP5YvwJ8EPLCS7UNfpcMbcaW3bwdVuvYuP7f0oLry15Z08Ha5vpnbKMZy4u6kHVTpRtfmR41cyx
- EA9Tmzp9dO1GY5znlSqz5HolJqBhz04kBikebenH0XMb2dZ6oD/CTq4yMvr0ShpNHpL36tK1QYF
- ajoZNffNayxEw5HEmFgvxFemF/KDIypGpAtXIDsem68bwQ4GcSn5E++5/j74CZlpZ7H+DXwovSE
- bImAxzzW2oHvWf27pLF33Alsv7lP15ivRcAyunX3jc9e9ACFUy4OEQ95tDvUX+VZL9hhznwPnGe
- eSYFY
-X-Google-Smtp-Source: AGHT+IEWw0FXi1Bl9ChXtInzrD+5QXkbCZ+HHPpVgEJh2MV28tdX4NwTyApFWe2EYHajKefc7dNNGw==
-X-Received: by 2002:a05:6870:5d87:b0:2ef:e245:c65a with SMTP id
- 586e51a60fabf-2f5c7a44f1bmr1911502fac.38.1751459666634; 
- Wed, 02 Jul 2025 05:34:26 -0700 (PDT)
+ bh=feRjxLmhrg6X+CnBaSEjpc+GubWFISEAMkyHftCn26M=;
+ b=aQyXpB1vcCagMcdPib1HYdHWlqjHM2dI2IuFumN0M1Uwkh4O6tVN4HUDOmw7QzPTmi
+ wtGPv3aSoyKPGCyA9HPKrhv3P7USxFM3n2hUkkIZL/Mdut1dzrbHpYzNrT3Zco2hYxiq
+ S/reDKbmCUm1ELLcMpmSTmUKKTQ9975fMbq9trpWs7TaaccWcu4odMXCuiEePSG+WkGg
+ TLJdppjWGwMvGO5SoGUcsUvi38XgTvYZPw7nbqBqrfjqWa3gJxAjBOtnWDzJEKAKT+ps
+ 81lAsjZjXHgIHfwKG6UBpLC8ikx5Nmbpa1XCuffQdBUc946szDkmE6axcUuQ7JKnu9pl
+ 07uw==
+X-Gm-Message-State: AOJu0YyOmQntUWfy89m9wYQqGXPoWQ8nIaeA427LEBswB+FF9QYLPTMe
+ BllR8REzWB7MXwemB3t4OKLsXuhbcWgpHC2B2OUPITKEnaGGCfunwsqffQ+rJt61KHOwOn3PfjN
+ tcw2KFNM=
+X-Gm-Gg: ASbGncuWqsjWcyzgSfj3kZZsMVV2CWaGpXymFHUUcQYynwvnbVGHsAJUXg43b2Qr4cE
+ CDQzlRUABpQUrsFfdp/qjGKops8ESWMepbGmgopgafWZuTVC9188XKoJoVpGUQCnbB1WxTpfgdt
+ Kz00v6YSr6VfnUlX4dgoCTqoG5V5ucfARYlOA4BuIz005T+uYleMdevzrYNHLlCybrVkTljRSfy
+ 1+Sg9gT0x7gK6Hdj7M0xOyvf4EN7JPAxQOOe1AVYldGOPBgFfveLVqSFWfQG+sl028Sigf1gwSW
+ Lv+4Qf0w/f0u7Ri8N071Zvml7VwF3V5VqpDS60pA4r/JXkcimOE+SPs/RUPuKHVujXVooQ==
+X-Google-Smtp-Source: AGHT+IHVExvlFNpQ6wR2MqzJlQkFes3TksAYP4wGQqBKQilq9ZPPF6XTe8rj101hk4hmN7oZeac2IQ==
+X-Received: by 2002:a05:6870:d696:b0:2ea:9932:f1ac with SMTP id
+ 586e51a60fabf-2f664836d8dmr2029548fac.12.1751459656946; 
+ Wed, 02 Jul 2025 05:34:16 -0700 (PDT)
 Received: from stoup.. ([187.210.107.185]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2efd50b1b2fsm3864281fac.32.2025.07.02.05.34.25
+ 586e51a60fabf-2efd50b1b2fsm3864281fac.32.2025.07.02.05.34.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Jul 2025 05:34:26 -0700 (PDT)
+ Wed, 02 Jul 2025 05:34:16 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	peter.maydell@linaro.org
-Subject: [PATCH v3 11/97] target/arm: Split get_tile_rowcol argument tile_index
-Date: Wed,  2 Jul 2025 06:32:44 -0600
-Message-ID: <20250702123410.761208-12-richard.henderson@linaro.org>
+Subject: [PATCH v3 03/97] target/arm: Rename zarray to za_state.za
+Date: Wed,  2 Jul 2025 06:32:36 -0600
+Message-ID: <20250702123410.761208-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250702123410.761208-1-richard.henderson@linaro.org>
 References: <20250702123410.761208-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::34;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x34.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::35;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,140 +99,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Decode tile number and index offset beforehand and separately.
+The whole ZA state will also contain ZT0.
+Make things easier in aarch64_set_svcr to zero both
+by wrapping them in a common structure.
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-sme.c | 17 +++++--------
- target/arm/tcg/sme.decode      | 46 +++++++++++++++++++++++-----------
- 2 files changed, 38 insertions(+), 25 deletions(-)
+ target/arm/cpu.h               | 48 +++++++++++++++++++---------------
+ linux-user/aarch64/signal.c    |  4 +--
+ target/arm/cpu.c               |  4 +--
+ target/arm/helper.c            |  2 +-
+ target/arm/machine.c           |  2 +-
+ target/arm/tcg/sme_helper.c    |  6 ++---
+ target/arm/tcg/translate-sme.c |  4 +--
+ 7 files changed, 38 insertions(+), 32 deletions(-)
 
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index c5060bcb97..052ca20283 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -714,27 +714,33 @@ typedef struct CPUArchState {
+ 
+     uint64_t scxtnum_el[4];
+ 
+-    /*
+-     * SME ZA storage -- 256 x 256 byte array, with bytes in host word order,
+-     * as we do with vfp.zregs[].  This corresponds to the architectural ZA
+-     * array, where ZA[N] is in the least-significant bytes of env->zarray[N].
+-     * When SVL is less than the architectural maximum, the accessible
+-     * storage is restricted, such that if the SVL is X bytes the guest can
+-     * see only the bottom X elements of zarray[], and only the least
+-     * significant X bytes of each element of the array. (In other words,
+-     * the observable part is always square.)
+-     *
+-     * The ZA storage can also be considered as a set of square tiles of
+-     * elements of different sizes. The mapping from tiles to the ZA array
+-     * is architecturally defined, such that for tiles of elements of esz
+-     * bytes, the Nth row (or "horizontal slice") of tile T is in
+-     * ZA[T + N * esz]. Note that this means that each tile is not contiguous
+-     * in the ZA storage, because its rows are striped through the ZA array.
+-     *
+-     * Because this is so large, keep this toward the end of the reset area,
+-     * to keep the offsets into the rest of the structure smaller.
+-     */
+-    ARMVectorReg zarray[ARM_MAX_VQ * 16];
++    struct {
++        /*
++         * SME ZA storage -- 256 x 256 byte array, with bytes in host
++         * word order, as we do with vfp.zregs[].  This corresponds to
++         * the architectural ZA array, where ZA[N] is in the least
++         * significant bytes of env->za_state.za[N].
++         *
++         * When SVL is less than the architectural maximum, the accessible
++         * storage is restricted, such that if the SVL is X bytes the guest
++         * can see only the bottom X elements of zarray[], and only the least
++         * significant X bytes of each element of the array. (In other words,
++         * the observable part is always square.)
++         *
++         * The ZA storage can also be considered as a set of square tiles of
++         * elements of different sizes. The mapping from tiles to the ZA array
++         * is architecturally defined, such that for tiles of elements of esz
++         * bytes, the Nth row (or "horizontal slice") of tile T is in
++         * ZA[T + N * esz]. Note that this means that each tile is not
++         * contiguous in the ZA storage, because its rows are striped through
++         * the ZA array.
++         *
++         * Because this is so large, keep this toward the end of the
++         * reset area, to keep the offsets into the rest of the structure
++         * smaller.
++         */
++        ARMVectorReg za[ARM_MAX_VQ * 16];
++    } za_state;
+ 
+     struct CPUBreakpoint *cpu_breakpoint[16];
+     struct CPUWatchpoint *cpu_watchpoint[16];
+diff --git a/linux-user/aarch64/signal.c b/linux-user/aarch64/signal.c
+index bc7a13800d..d50cab78d8 100644
+--- a/linux-user/aarch64/signal.c
++++ b/linux-user/aarch64/signal.c
+@@ -248,7 +248,7 @@ static void target_setup_za_record(struct target_za_context *za,
+     for (i = 0; i < vl; ++i) {
+         uint64_t *z = (void *)za + TARGET_ZA_SIG_ZAV_OFFSET(vq, i);
+         for (j = 0; j < vq * 2; ++j) {
+-            __put_user_e(env->zarray[i].d[j], z + j, le);
++            __put_user_e(env->za_state.za[i].d[j], z + j, le);
+         }
+     }
+ }
+@@ -397,7 +397,7 @@ static bool target_restore_za_record(CPUARMState *env,
+     for (i = 0; i < vl; ++i) {
+         uint64_t *z = (void *)za + TARGET_ZA_SIG_ZAV_OFFSET(vq, i);
+         for (j = 0; j < vq * 2; ++j) {
+-            __get_user_e(env->zarray[i].d[j], z + j, le);
++            __get_user_e(env->za_state.za[i].d[j], z + j, le);
+         }
+     }
+     return true;
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 6111b9db91..f7cbdd6814 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1335,8 +1335,8 @@ static void aarch64_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+             qemu_fprintf(f, "ZA[%0*d]=", svl_lg10, i);
+             for (j = zcr_len; j >= 0; --j) {
+                 qemu_fprintf(f, "%016" PRIx64 ":%016" PRIx64 "%c",
+-                             env->zarray[i].d[2 * j + 1],
+-                             env->zarray[i].d[2 * j],
++                             env->za_state.za[i].d[2 * j + 1],
++                             env->za_state.za[i].d[2 * j],
+                              j ? ':' : '\n');
+             }
+         }
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 889d308807..617097a9e7 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -6663,7 +6663,7 @@ void aarch64_set_svcr(CPUARMState *env, uint64_t new, uint64_t mask)
+      * when disabled either.
+      */
+     if (change & new & R_SVCR_ZA_MASK) {
+-        memset(env->zarray, 0, sizeof(env->zarray));
++        memset(&env->za_state, 0, sizeof(env->za_state));
+     }
+ 
+     if (tcg_enabled()) {
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index e442d48524..6e73368ef9 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -315,7 +315,7 @@ static const VMStateDescription vmstate_za = {
+     .minimum_version_id = 1,
+     .needed = za_needed,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_STRUCT_ARRAY(env.zarray, ARMCPU, ARM_MAX_VQ * 16, 0,
++        VMSTATE_STRUCT_ARRAY(env.za_state.za, ARMCPU, ARM_MAX_VQ * 16, 0,
+                              vmstate_vreg, ARMVectorReg),
+         VMSTATE_END_OF_LIST()
+     }
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index 9942d717aa..7b0bc1b17c 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -39,12 +39,12 @@ void helper_sme_zero(CPUARMState *env, uint32_t imm, uint32_t svl)
+     uint32_t i;
+ 
+     /*
+-     * Special case clearing the entire ZA space.
++     * Special case clearing the entire ZArray.
+      * This falls into the CONSTRAINED UNPREDICTABLE zeroing of any
+      * parts of the ZA storage outside of SVL.
+      */
+     if (imm == 0xff) {
+-        memset(env->zarray, 0, sizeof(env->zarray));
++        memset(env->za_state.za, 0, sizeof(env->za_state.za));
+         return;
+     }
+ 
+@@ -54,7 +54,7 @@ void helper_sme_zero(CPUARMState *env, uint32_t imm, uint32_t svl)
+      */
+     for (i = 0; i < svl; i++) {
+         if (imm & (1 << (i % 8))) {
+-            memset(&env->zarray[i], 0, svl);
++            memset(&env->za_state.za[i], 0, svl);
+         }
+     }
+ }
 diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 797035e289..e22ec393fd 100644
+index 51175c923e..e8b3578174 100644
 --- a/target/arm/tcg/translate-sme.c
 +++ b/target/arm/tcg/translate-sme.c
-@@ -41,15 +41,10 @@ static bool sme2_zt0_enabled_check(DisasContext *s)
-     return true;
- }
+@@ -92,7 +92,7 @@ static TCGv_ptr get_tile_rowcol(DisasContext *s, int esz, int rs,
+     offset = tile * sizeof(ARMVectorReg);
  
--/*
-- * Resolve tile.size[index] to a host pointer, where tile and index
-- * are always decoded together, dependent on the element size.
-- */
-+/* Resolve tile.size[rs+imm] to a host pointer. */
- static TCGv_ptr get_tile_rowcol(DisasContext *s, int esz, int rs,
--                                int tile_index, bool vertical)
-+                                int tile, int imm, bool vertical)
- {
--    int tile = tile_index >> (4 - esz);
--    int index = esz == MO_128 ? 0 : extract32(tile_index, 0, 4 - esz);
-     int pos, len, offset;
-     TCGv_i32 tmp;
-     TCGv_ptr addr;
-@@ -57,7 +52,7 @@ static TCGv_ptr get_tile_rowcol(DisasContext *s, int esz, int rs,
-     /* Compute the final index, which is Rs+imm. */
-     tmp = tcg_temp_new_i32();
-     tcg_gen_trunc_tl_i32(tmp, cpu_reg(s, rs));
--    tcg_gen_addi_i32(tmp, tmp, index);
-+    tcg_gen_addi_i32(tmp, tmp, imm);
+     /* Include the byte offset of zarray to make this relative to env. */
+-    offset += offsetof(CPUARMState, zarray);
++    offset += offsetof(CPUARMState, za_state.za);
+     tcg_gen_addi_i32(tmp, tmp, offset);
  
-     /* Prepare a power-of-two modulo via extraction of @len bits. */
-     len = ctz32(streaming_vec_reg_size(s)) - esz;
-@@ -185,7 +180,7 @@ static bool trans_MOVA(DisasContext *s, arg_MOVA *a)
-         return true;
-     }
+     /* Add the byte offset to env to produce the final pointer. */
+@@ -112,7 +112,7 @@ static TCGv_ptr get_tile(DisasContext *s, int esz, int tile)
+     TCGv_ptr addr = tcg_temp_new_ptr();
+     int offset;
  
--    t_za = get_tile_rowcol(s, a->esz, a->rs, a->za_imm, a->v);
-+    t_za = get_tile_rowcol(s, a->esz, a->rs, a->za, a->off, a->v);
-     t_zr = vec_full_reg_ptr(s, a->zr);
-     t_pg = pred_full_reg_ptr(s, a->pg);
+-    offset = tile * sizeof(ARMVectorReg) + offsetof(CPUARMState, zarray);
++    offset = tile * sizeof(ARMVectorReg) + offsetof(CPUARMState, za_state.za);
  
-@@ -264,7 +259,7 @@ static bool trans_LDST1(DisasContext *s, arg_LDST1 *a)
-         return true;
-     }
- 
--    t_za = get_tile_rowcol(s, a->esz, a->rs, a->za_imm, a->v);
-+    t_za = get_tile_rowcol(s, a->esz, a->rs, a->za, a->off, a->v);
-     t_pg = pred_full_reg_ptr(s, a->pg);
-     addr = tcg_temp_new_i64();
- 
-@@ -295,7 +290,7 @@ static bool do_ldst_r(DisasContext *s, arg_ldstr *a, GenLdStR *fn)
-     }
- 
-     /* ZA[n] equates to ZA0H.B[n]. */
--    base = get_tile_rowcol(s, MO_8, a->rv, imm, false);
-+    base = get_tile_rowcol(s, MO_8, a->rv, 0, imm, false);
- 
-     fn(s, base, 0, svl, a->rn, imm * svl,
-        s->align_mem ? MO_ALIGN_16 : MO_UNALN);
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index 83ca6a9104..efe369e079 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -27,17 +27,29 @@ ZERO_zt0        11000000 01 001 00000000000 00000001
- ### SME Move into/from Array
- 
- %mova_rs        13:2 !function=plus_12
--&mova           esz rs pg zr za_imm v:bool to_vec:bool
-+&mova           esz rs pg zr za off v:bool to_vec:bool
- 
--MOVA            11000000 esz:2 00000 0 v:1 .. pg:3 zr:5 0 za_imm:4  \
--                &mova to_vec=0 rs=%mova_rs
--MOVA            11000000 11    00000 1 v:1 .. pg:3 zr:5 0 za_imm:4  \
--                &mova to_vec=0 rs=%mova_rs esz=4
-+MOVA            11000000 00 00000 0 v:1 .. pg:3 zr:5 0 off:4  \
-+                &mova to_vec=0 rs=%mova_rs esz=0 za=0
-+MOVA            11000000 01 00000 0 v:1 .. pg:3 zr:5 0 za:1 off:3  \
-+                &mova to_vec=0 rs=%mova_rs esz=1
-+MOVA            11000000 10 00000 0 v:1 .. pg:3 zr:5 0 za:2 off:2  \
-+                &mova to_vec=0 rs=%mova_rs esz=2
-+MOVA            11000000 11 00000 0 v:1 .. pg:3 zr:5 0 za:3 off:1  \
-+                &mova to_vec=0 rs=%mova_rs esz=3
-+MOVA            11000000 11 00000 1 v:1 .. pg:3 zr:5 0 za:4  \
-+                &mova to_vec=0 rs=%mova_rs esz=4 off=0
- 
--MOVA            11000000 esz:2 00001 0 v:1 .. pg:3 0 za_imm:4 zr:5  \
--                &mova to_vec=1 rs=%mova_rs
--MOVA            11000000 11    00001 1 v:1 .. pg:3 0 za_imm:4 zr:5  \
--                &mova to_vec=1 rs=%mova_rs esz=4
-+MOVA            11000000 00 00001 0 v:1 .. pg:3 0 off:4      zr:5  \
-+                &mova to_vec=1 rs=%mova_rs esz=0 za=0
-+MOVA            11000000 01 00001 0 v:1 .. pg:3 0 za:1 off:3 zr:5  \
-+                &mova to_vec=1 rs=%mova_rs esz=1
-+MOVA            11000000 10 00001 0 v:1 .. pg:3 0 za:2 off:2 zr:5  \
-+                &mova to_vec=1 rs=%mova_rs esz=2
-+MOVA            11000000 11 00001 0 v:1 .. pg:3 0 za:3 off:1 zr:5  \
-+                &mova to_vec=1 rs=%mova_rs esz=3
-+MOVA            11000000 11 00001 1 v:1 .. pg:3 0 za:4       zr:5  \
-+                &mova to_vec=1 rs=%mova_rs esz=4 off=0
- 
- ### SME Move into/from ZT0
- 
-@@ -46,12 +58,18 @@ MOVT_ztr        1100 0000 0100 1110 0 off:3 00 11111 rt:5
- 
- ### SME Memory
- 
--&ldst           esz rs pg rn rm za_imm v:bool st:bool
-+&ldst           esz rs pg rn rm za off v:bool st:bool
- 
--LDST1           1110000 0 esz:2 st:1 rm:5 v:1 .. pg:3 rn:5 0 za_imm:4  \
--                &ldst rs=%mova_rs
--LDST1           1110000 111     st:1 rm:5 v:1 .. pg:3 rn:5 0 za_imm:4  \
--                &ldst esz=4 rs=%mova_rs
-+LDST1           1110000 0 00 st:1 rm:5 v:1 .. pg:3 rn:5 0 off:4  \
-+                &ldst rs=%mova_rs esz=0 za=0
-+LDST1           1110000 0 01 st:1 rm:5 v:1 .. pg:3 rn:5 0 za:1 off:3  \
-+                &ldst rs=%mova_rs esz=1
-+LDST1           1110000 0 10 st:1 rm:5 v:1 .. pg:3 rn:5 0 za:2 off:2  \
-+                &ldst rs=%mova_rs esz=2
-+LDST1           1110000 0 11 st:1 rm:5 v:1 .. pg:3 rn:5 0 za:3 off:1  \
-+                &ldst rs=%mova_rs esz=3
-+LDST1           1110000 1 11 st:1 rm:5 v:1 .. pg:3 rn:5 0 za:4  \
-+                &ldst rs=%mova_rs esz=4 off=0
- 
- &ldstr          rv rn imm
- @ldstr          ....... ... . ...... .. ... rn:5 . imm:4 \
+     tcg_gen_addi_ptr(addr, tcg_env, offset);
+     return addr;
 -- 
 2.43.0
 
