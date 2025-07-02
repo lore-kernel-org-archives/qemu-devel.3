@@ -4,86 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE511C77B7C
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 15:18:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F25AC77B7C
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 15:20:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWwxV-0005C1-3c; Wed, 02 Jul 2025 08:53:05 -0400
+	id 1uWzFG-0006KG-Oy; Wed, 02 Jul 2025 11:19:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWwnN-0000Lr-7p
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:42:37 -0400
-Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
+ id 1uWzFE-0006JR-EX
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 11:19:32 -0400
+Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWwn5-0003Gz-5N
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:42:35 -0400
-Received: by mail-oa1-x2d.google.com with SMTP id
- 586e51a60fabf-2cc89c59cc0so4764059fac.0
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:42:18 -0700 (PDT)
+ id 1uWzFC-0007H0-FB
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 11:19:32 -0400
+Received: by mail-oo1-xc2b.google.com with SMTP id
+ 006d021491bc7-61208b86d75so249496eaf.2
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 08:19:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751460137; x=1752064937; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FgYGKO1mW9qx6eZh3ncNiRkSWSekpPfz5Aqf+QGYTWw=;
- b=dmQ+C7a3UQNfG+Vtl/pOZC0Vja4GV8hwlBdL+RrViuX9Fks8kTZ4PhBvrahuX0rbY1
- 5GjqeZ1CWqfXaMmwR/t4hefgkkHIr5IbbFoE/hQYuds49wGztWugqRIj/UhlWS0YlHic
- SCPX6T6xbUEkPHzOmKnZJPE40WIrAkbsC+/65oBrMpVYoFZCgAU7LtqmVNrG/Rxa/PiD
- a/1EKf2amANXfHrV6NaF1n39I0nz8SEtvHMiKNFqHtQi3nBpaWowiqH9+iooF6kcE3f1
- gOv/9lDXu+JCedJ+Bw7Baa1feVp+vJHLAPaOLwPzZZQGdbboKaaROVMzvtQl4bW96fUT
- 8Kxg==
+ d=linaro.org; s=google; t=1751469568; x=1752074368; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=WTsLyO0G+AS4guPqcwiOrYSY2CPwjFSsqC8+z1aGmFE=;
+ b=KTjhRrZ+/8IAUw2lM8HtC6x3TopTfCkCwfvNu8iXAQPWF+notfIul2bgNiwpT5mAMt
+ /JbJr6WUiXwmyq1Z8PJuj1OLv2eBSkk36AjC//6bXbT5CLqOMGfjTO+x2AumKCmuyXGg
+ OxrQbx0f1FOeNqYJv1lkYPi9VuormTNy0odUtUl9AlnWSBqTvytHApP+3ZwkFXVcjNzk
+ 0A07YUgcl2dpJ2q7BuhJ9R/AVtmO8FyCbNQHrxT8LtMnVm4RTbstflNRVNfFwAit7SOY
+ h/b1jO/TsXItlO/34ktBR/OhjqatRu80wWjeR3ihEdxEBTfq+4Ap1rStDJsXSZ4XtnDe
+ R5eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751460137; x=1752064937;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FgYGKO1mW9qx6eZh3ncNiRkSWSekpPfz5Aqf+QGYTWw=;
- b=VEdwhdvC46mgzstnAporjmUhum42XV/1iJ/9BKsIlluCCLJ9iH5swVrRB6Vc/Qg3+5
- WAyY6EFajSiswP0uplQ087CjZ2AwSTFSp+xJzlFrQcbJOm2yBVpU+todjh7FCmRX95gB
- l9jPda0nNioNH4942Q3eW5ROT8dzpFyzXOg6pLlh+cNAUukJaDL2B/dy2BFW6cT7NXc2
- +DscY0ELQSvvrDFtt3MG/50ofJDEnNDItz8EmV/wFjBW53UOBhgDDMmjVe5jtAqFGJoz
- mhXq/XxqbLWNsO1aZpSDIgu8nliFEN3DngdzX+0loWrojOaPni3GbSj3uHLK2W6nyj/C
- mcVg==
-X-Gm-Message-State: AOJu0YwLRGxNm8gyEMmKaa+aq1Ybiakh/x1+k7G32bDGRK2L7NUm1wd2
- AKUwL0ne6RDxDAkf+QBfs1tT+vfI8tEksjza6x4n9f8DqX7nSLNsTcNr3iXjryzeV5fTRKijyX1
- byHEiP3A=
-X-Gm-Gg: ASbGnctlDAVhDtZKAHFebtcbF8Pn4e7maSNo3hzRo5dNTKnaGIOnPKD6wVjwXvbblZm
- IZVS3r4jmapNQ5vk1fQPeQCGWeIlzsaw1xXKlmn9nyhcMKAgyBAyMXPdRWaBnZFM6DK9F+Je8pN
- to2ORmVLJVdRW5UfJ8ZfdHd8YQ6f4rSXebtCHCdBrQjxF8xLOQLvRucRXHX/zXEMA88FHGSjnA5
- fECtEBirEkK7KamjQPdSBNHa8UtbgvsgkBB0VWgU8RJe3RuWn9IzETdi+9uQtkNzTmEAd1D9uER
- uOPaApDjo6OSRhN6jvui0C40yO8N9NdnWvEH6SSMfjA9gRgBzzUKTdkZ1R4T4JihCiGvzQ==
-X-Google-Smtp-Source: AGHT+IF81P3JCDdPad+V/P9tRR+g7gnLb6kmSBjKhoYoq/TgubE1vb07veGZq6n6+8Xh2dPodKaO8w==
-X-Received: by 2002:a05:6870:d0ca:b0:2e8:755d:b4e9 with SMTP id
- 586e51a60fabf-2f6471df620mr1829692fac.1.1751460137477; 
- Wed, 02 Jul 2025 05:42:17 -0700 (PDT)
-Received: from stoup.. ([187.210.107.185]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2efd50f7d89sm3907004fac.34.2025.07.02.05.42.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Jul 2025 05:42:16 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	peter.maydell@linaro.org
-Subject: [PATCH v3 95/97] target/arm: Enable FEAT_SME2p1 on -cpu max
-Date: Wed,  2 Jul 2025 06:34:08 -0600
-Message-ID: <20250702123410.761208-96-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250702123410.761208-1-richard.henderson@linaro.org>
-References: <20250702123410.761208-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1751469568; x=1752074368;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=WTsLyO0G+AS4guPqcwiOrYSY2CPwjFSsqC8+z1aGmFE=;
+ b=ZDp+JrkVUtB2Rq/cHVkF/LQLSOv1mPD1IidCy6G5ihexIqB2cR5ADgT6EqBCk8Xp2F
+ PqsIrLOw37TBhsSSE90jCqI/CJJgpaOjAHU6bRvcD91cep8Xu6KEwEsU1fwpIiSJ35sq
+ okxZTzlK2W85M0fZNxN2d+L7ydI50JVl71HYFBO3BPtS5HhZQyNS/zwQBkOa1eJqoH7x
+ 9B3oRWZhHaNAoaSThX6BwvGX9Ez4kKPDmylw3YNWeGtZf++eaSV2zUMBC4msmaxD8tzm
+ msxGX9PQUxcOvy11kNZsn47/N4oNnVMvPVGjLp5SUcrTcr65EE6iYzw8sL0HzW8TvvNk
+ dJLw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU+a8khsj9Do3t/xMqcAB0REP6Xbyrg9AJHJ22NyjyAupceZkXRaH/JxbcZuPJ+TIuSUZw4U1PyKPRh@nongnu.org
+X-Gm-Message-State: AOJu0YzWtBOCdSlV1iloCQr94bGQ6tlNUkTVPbuJ+/QQ1jfIsx/0SGT6
+ GuIDjXs0BuZB95TbN4pLlxwSPAHXc+DZ2nxqe53mpLR5YrHKf7IF8z0C4bwu9w7D4/s=
+X-Gm-Gg: ASbGnct27HOWJFF0xrJM8waP5CR2IX1zVmCwwf+mFvmKIjV3tV74ElSjAaad4t+4Ujv
+ BB7e3GR+137irtP7zpW+nsEo0rjDvdTaBFJ/CzR0fkSiWkJR9ISk27i/+HaNBlmiRmNh9uaCiPZ
+ eUyfdJVy22rvmeWSClBAd3yZpqgyb3lEpgyC3dz//tmZR4d8qWlwzMIDIporouaSKxObvhht1bG
+ 4B5bk/ep+zUeOCJnXnClnXDt8WUYhH8Gh6FWadSsTtvVJwd+BtKOX6Tzhz1/OuCmNRWjPPCU0Zw
+ uLdkGvwBJXem4XzHjjOwVmccLOl6TCpV37G/C88LYAW2+Kwoj+J225mDYZ24hKyjR2MpESdrlBy
+ r
+X-Google-Smtp-Source: AGHT+IFZTnJ2iUrYX2K2LLFudjrnECRSm26AbC1cGVKgStjwyDcT28xMeFqoA+OdQ51C+yfxiSt5NQ==
+X-Received: by 2002:a05:6871:6183:b0:2d4:ce45:698d with SMTP id
+ 586e51a60fabf-2f5a8d29995mr2404318fac.4.1751469568112; 
+ Wed, 02 Jul 2025 08:19:28 -0700 (PDT)
+Received: from [10.25.7.74] ([187.210.107.185])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-2efd512f0cdsm3904294fac.46.2025.07.02.08.19.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 02 Jul 2025 08:19:27 -0700 (PDT)
+Message-ID: <89ceef1e-c4c1-45eb-a369-a17f711ef4ad@linaro.org>
+Date: Wed, 2 Jul 2025 09:19:25 -0600
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 57/68] accel/tcg: Expose vcpu_[un]register() for MTTCG
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Julian Armistead <julian.armistead@linaro.org>
+References: <20250701144017.43487-1-philmd@linaro.org>
+ <20250701144017.43487-58-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250701144017.43487-58-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2d;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,83 +107,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/cpu64.c        | 10 ++++++++--
- docs/system/arm/emulation.rst |  6 ++++++
- 2 files changed, 14 insertions(+), 2 deletions(-)
+On 7/1/25 08:40, Philippe Mathieu-Daudé wrote:
+> Allocate ForceRcuNotifier on the Heap.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   accel/tcg/tcg-accel-ops-mttcg.c | 30 ++++++++++++++++++++++++------
+>   1 file changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 5d8ed2794d..f73729926b 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1194,7 +1194,7 @@ void aarch64_max_tcg_initfn(Object *obj)
-      */
-     t = FIELD_DP64(t, ID_AA64PFR1, MTE, 3);       /* FEAT_MTE3 */
-     t = FIELD_DP64(t, ID_AA64PFR1, RAS_FRAC, 0);  /* FEAT_RASv1p1 + FEAT_DoubleFault */
--    t = FIELD_DP64(t, ID_AA64PFR1, SME, 1);       /* FEAT_SME */
-+    t = FIELD_DP64(t, ID_AA64PFR1, SME, 2);       /* FEAT_SME2 */
-     t = FIELD_DP64(t, ID_AA64PFR1, CSV2_FRAC, 0); /* FEAT_CSV2_3 */
-     t = FIELD_DP64(t, ID_AA64PFR1, NMI, 1);       /* FEAT_NMI */
-     cpu->isar.id_aa64pfr1 = t;
-@@ -1245,10 +1245,11 @@ void aarch64_max_tcg_initfn(Object *obj)
-     cpu->isar.id_aa64mmfr3 = t;
- 
-     t = cpu->isar.id_aa64zfr0;
--    t = FIELD_DP64(t, ID_AA64ZFR0, SVEVER, 1);
-+    t = FIELD_DP64(t, ID_AA64ZFR0, SVEVER, 2);    /* FEAT_SVE2p1 */
-     t = FIELD_DP64(t, ID_AA64ZFR0, AES, 2);       /* FEAT_SVE_PMULL128 */
-     t = FIELD_DP64(t, ID_AA64ZFR0, BITPERM, 1);   /* FEAT_SVE_BitPerm */
-     t = FIELD_DP64(t, ID_AA64ZFR0, BFLOAT16, 2);  /* FEAT_BF16, FEAT_EBF16 */
-+    t = FIELD_DP64(t, ID_AA64ZFR0, B16B16, 1);    /* FEAT_SVE_B16B16 */
-     t = FIELD_DP64(t, ID_AA64ZFR0, SHA3, 1);      /* FEAT_SVE_SHA3 */
-     t = FIELD_DP64(t, ID_AA64ZFR0, SM4, 1);       /* FEAT_SVE_SM4 */
-     t = FIELD_DP64(t, ID_AA64ZFR0, I8MM, 1);      /* FEAT_I8MM */
-@@ -1264,11 +1265,16 @@ void aarch64_max_tcg_initfn(Object *obj)
- 
-     t = cpu->isar.id_aa64smfr0;
-     t = FIELD_DP64(t, ID_AA64SMFR0, F32F32, 1);   /* FEAT_SME */
-+    t = FIELD_DP64(t, ID_AA64SMFR0, BI32I32, 1);  /* FEAT_SME2 */
-     t = FIELD_DP64(t, ID_AA64SMFR0, B16F32, 1);   /* FEAT_SME */
-     t = FIELD_DP64(t, ID_AA64SMFR0, F16F32, 1);   /* FEAT_SME */
-     t = FIELD_DP64(t, ID_AA64SMFR0, I8I32, 0xf);  /* FEAT_SME */
-+    t = FIELD_DP64(t, ID_AA64SMFR0, F16F16, 1);   /* FEAT_SME_F16F16 */
-+    t = FIELD_DP64(t, ID_AA64SMFR0, B16B16, 1);   /* FEAT_SME_B16B16 */
-+    t = FIELD_DP64(t, ID_AA64SMFR0, I16I32, 5);   /* FEAT_SME2 */
-     t = FIELD_DP64(t, ID_AA64SMFR0, F64F64, 1);   /* FEAT_SME_F64F64 */
-     t = FIELD_DP64(t, ID_AA64SMFR0, I16I64, 0xf); /* FEAT_SME_I16I64 */
-+    t = FIELD_DP64(t, ID_AA64SMFR0, SMEVER, 2);   /* FEAT_SME2p1 */
-     t = FIELD_DP64(t, ID_AA64SMFR0, FA64, 1);     /* FEAT_SME_FA64 */
-     cpu->isar.id_aa64smfr0 = t;
- 
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 78c2fd2113..890dc6fee2 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -129,16 +129,22 @@ the following architecture extensions:
- - FEAT_SM3 (Advanced SIMD SM3 instructions)
- - FEAT_SM4 (Advanced SIMD SM4 instructions)
- - FEAT_SME (Scalable Matrix Extension)
-+- FEAT_SME2 (Scalable Matrix Extension version 2)
-+- FEAT_SME2p1 (Scalable Matrix Extension version 2.1)
-+- FEAT_SME_B16B16 (Non-widening BFloat16 arithmetic for SME2)
- - FEAT_SME_FA64 (Full A64 instruction set in Streaming SVE mode)
-+- FEAT_SME_F16F16 (Non-widening half-precision FP16 arithmetic for SME2)
- - FEAT_SME_F64F64 (Double-precision floating-point outer product instructions)
- - FEAT_SME_I16I64 (16-bit to 64-bit integer widening outer product instructions)
- - FEAT_SVE (Scalable Vector Extension)
- - FEAT_SVE_AES (Scalable Vector AES instructions)
-+- FEAT_SVE_B16B16 (Non-widening BFloat16 arithmetic for SVE2)
- - FEAT_SVE_BitPerm (Scalable Vector Bit Permutes instructions)
- - FEAT_SVE_PMULL128 (Scalable Vector PMULL instructions)
- - FEAT_SVE_SHA3 (Scalable Vector SHA3 instructions)
- - FEAT_SVE_SM4 (Scalable Vector SM4 instructions)
- - FEAT_SVE2 (Scalable Vector Extension version 2)
-+- FEAT_SVE2p1 (Scalable Vector Extension version 2.1)
- - FEAT_SPECRES (Speculation restriction instructions)
- - FEAT_SSBS (Speculative Store Bypass Safe)
- - FEAT_SSBS2 (MRS and MSR instructions for SSBS version 2)
--- 
-2.43.0
+Please document the motivation.
+
+r~
+
+> 
+> diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
+> index 4de506a80ca..2d31b00ee59 100644
+> --- a/accel/tcg/tcg-accel-ops-mttcg.c
+> +++ b/accel/tcg/tcg-accel-ops-mttcg.c
+> @@ -55,6 +55,27 @@ static void mttcg_force_rcu(Notifier *notify, void *data)
+>       async_run_on_cpu(cpu, do_nothing, RUN_ON_CPU_NULL);
+>   }
+>   
+> +static void *mttcg_vcpu_register(CPUState *cpu)
+> +{
+> +    MttcgForceRcuNotifier *force_rcu = g_new(MttcgForceRcuNotifier, 1);
+> +
+> +    force_rcu->notifier.notify = mttcg_force_rcu;
+> +    force_rcu->cpu = cpu;
+> +    rcu_add_force_rcu_notifier(&force_rcu->notifier);
+> +    tcg_register_thread();
+> +
+> +    return force_rcu;
+> +}
+> +
+> +static void mttcg_vcpu_unregister(CPUState *cpu, void *opaque)
+> +{
+> +    MttcgForceRcuNotifier *force_rcu = opaque;
+> +
+> +    rcu_remove_force_rcu_notifier(&force_rcu->notifier);
+> +
+> +    g_free(force_rcu);
+> +}
+> +
+>   /*
+>    * In the multi-threaded case each vCPU has its own thread. The TLS
+>    * variable current_cpu can be used deep in the code to find the
+> @@ -63,17 +84,14 @@ static void mttcg_force_rcu(Notifier *notify, void *data)
+>   
+>   void *mttcg_cpu_thread_routine(void *arg)
+>   {
+> -    MttcgForceRcuNotifier force_rcu;
+> +    MttcgForceRcuNotifier *force_rcu;
+>       CPUState *cpu = arg;
+>   
+>       assert(tcg_enabled());
+>       g_assert(!icount_enabled());
+>   
+>       rcu_register_thread();
+> -    force_rcu.notifier.notify = mttcg_force_rcu;
+> -    force_rcu.cpu = cpu;
+> -    rcu_add_force_rcu_notifier(&force_rcu.notifier);
+> -    tcg_register_thread();
+> +    force_rcu = mttcg_vcpu_register(cpu);
+>   
+>       bql_lock();
+>       qemu_thread_get_self(cpu->thread);
+> @@ -121,7 +139,7 @@ void *mttcg_cpu_thread_routine(void *arg)
+>   
+>       tcg_cpu_destroy(cpu);
+>       bql_unlock();
+> -    rcu_remove_force_rcu_notifier(&force_rcu.notifier);
+> +    mttcg_vcpu_unregister(cpu, force_rcu);
+>       rcu_unregister_thread();
+>       return NULL;
+>   }
 
 
