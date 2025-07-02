@@ -4,98 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1093BC7EE30
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 06:50:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53157C7EE30
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 06:55:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWrI2-0004bb-Nx; Wed, 02 Jul 2025 02:49:54 -0400
+	id 1uWrMj-0005k1-By; Wed, 02 Jul 2025 02:54:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=U4+o=ZP=kaod.org=clg@ozlabs.org>)
- id 1uWrI0-0004ag-1U; Wed, 02 Jul 2025 02:49:52 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=U4+o=ZP=kaod.org=clg@ozlabs.org>)
- id 1uWrHw-0005mt-Uk; Wed, 02 Jul 2025 02:49:50 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bX9Vd39y6z4x6q;
- Wed,  2 Jul 2025 16:49:29 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bX9VZ1H6Kz4wyR;
- Wed,  2 Jul 2025 16:49:25 +1000 (AEST)
-Message-ID: <055915bf-6e68-4a1c-aeca-c31f0772da2c@kaod.org>
-Date: Wed, 2 Jul 2025 08:49:38 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWrMe-0005jh-Gr
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 02:54:42 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWrMb-0006r3-06
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 02:54:40 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3a525eee2e3so4069099f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Jul 2025 23:54:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751439271; x=1752044071; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=K++mzfbnQA8tia9R43ZFI6VSUcxunM/GKnJ3kqbXUxQ=;
+ b=NUyXPC+55ebCGm51qMHhLG+I+FgKn0P52cTXZMTUNo8P7uuWdVVYpSwfRzeJPcRveR
+ Yqat9HacT0Ha2Ch8jT0xycL+W5W1U/pwFumRPgnfeWBO/3U8huVO5lWajS7OjbNJFJl9
+ kOEwNeC3sP67luR4kol6RYoVsdv0Kb10I3Fv56gY4ZRNtwMnGyEIXfnA5aK0c99yHw9S
+ gStM4hnIm8Q7Dhq1+T8zjbJzK3ZbsXhVQwbM/+jcybGn3gE246XfAl751fIE0h5+RQxJ
+ GIoCXhO7Udkq291RGczjt3DaBTOjuOC/Rbgklc2coc30r/Px5OvB9OpCQ6tbHSAaP51c
+ p1YQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751439271; x=1752044071;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=K++mzfbnQA8tia9R43ZFI6VSUcxunM/GKnJ3kqbXUxQ=;
+ b=Y7goSFXQdC2Od9pciGix25gyt/ApdgtbRVaOi5yq2w4d/tMv83/1xTOvpjdW0A7Txn
+ 32A0T5FFKhENxIhrxydld7SSzAX00m6sXjNN466n69QNE1QMGULAKBlbpTSlL4KCuTJS
+ liGTQFCMdWsxLRlU562/rmvvGAVwBCfEmyzyahLsXwtpwjO3qsJJ9iVarN71353uxUoj
+ 1Jq7Rc6KpyJGcb7dV6oZSNTe27OmW06GwjbP9f0OP8jNK6eS7Kw34EEibUSZ4qdvLnAK
+ C2VVjIq5dbJ0aYjAlG+Xx9ehfBMR6TjLNvkP1LFWuXlJiWaMJhnlcFG+0+mUi1ArcZ4d
+ LJ+g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXUU2cYTDr6pIsuBu9bVGLUnE0y10qRr6MW46c81Khvt7n2KYlYOG9hp8EszW2B6epvg9pO7hX3d050@nongnu.org
+X-Gm-Message-State: AOJu0YxD6U0qlo54HYlwQWH+Ptqc0zp+BP9XrKasOImU4NO9voBsknLd
+ gcvVzgr8odDLw9Kw2gP+rFSIQZFJhZLvRYFjKxptjiur5QIZSxPO/6T0cDQxDrrQ0t0=
+X-Gm-Gg: ASbGnctoYNAUzwrFaJaFWr8O2/R760nb0X/r9N+fr9HyFox+o1IVCyPioQ58xWeRsf3
+ JIBUOhR1SgW3L0lz/OdxljMuoM8wBnHWc9ekG7fLPGsz/npMVyCGKdL8LglzVcIEYqULy0iknLm
+ teEsC3a8BtSp2QntrEfqjlbvq0NRh+1kMTDxNhIuAysgfROtBtGNZ6GMb7TUuHmNeILaC5XayR0
+ OKgpn3BVPdcuJSVvCMDq2EzzD8M1eaWiEsCn69l/+IaZaursRU6vwMJZaNHJ7Rb9CU+V52wch4z
+ 9IGtDxaKgXm+k2+RRTsgbfDid5YZHOfRnTQh6TJL9XhBQ+ohVfvOsBQNBsA+fZPPr+P8EEo1S17
+ bjuOeEWOxXnGmKL0q9DbwbUoahLVGibapQaCQeK39
+X-Google-Smtp-Source: AGHT+IH2tdpx2CEPxZC5veah2sVknVlw7LH20MNexGy/HZESdHLvamO44OiTLHr9DZnhnRRQ68kIMg==
+X-Received: by 2002:a05:6000:4718:b0:391:3aaf:1d5f with SMTP id
+ ffacd0b85a97d-3b200e2a0e3mr1029602f8f.52.1751439271243; 
+ Tue, 01 Jul 2025 23:54:31 -0700 (PDT)
+Received: from [192.168.69.166] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4538a390d4asm190722585e9.3.2025.07.01.23.54.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 01 Jul 2025 23:54:30 -0700 (PDT)
+Message-ID: <31387ca1-4fa0-482e-8e11-e8857c10cb6c@linaro.org>
+Date: Wed, 2 Jul 2025 08:54:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] docs: add support for gb200-bmc
-To: Ed Tanous <etanous@nvidia.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
- Troy Lee <leetroy@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Jamin Lin <jamin_lin@aspeedtech.com>, qemu-arm@nongnu.org
-References: <20250701203400.71677-1-etanous@nvidia.com>
- <20250701203400.71677-4-etanous@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250701203400.71677-4-etanous@nvidia.com>
+Subject: Re: [Regression] Re: [PULL 35/35] qom: reverse order of
+ instance_post_init calls
+To: Xiaoyao Li <xiaoyao.li@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Dongli Zhang <dongli.zhang@oracle.com>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Like Xu <like.xu.linux@gmail.com>, Igor Mammedov <imammedo@redhat.com>
+References: <20250520110530.366202-1-pbonzini@redhat.com>
+ <20250520110530.366202-36-pbonzini@redhat.com>
+ <d429b6f5-b59c-4884-b18f-8db71cb8dc7b@oracle.com>
+ <aFpocfTpBLB34N3l@intel.com> <aGKryLSGlFTMSKHv@intel.com>
+ <690b5bca-4345-4ee9-a332-4c2e38532309@intel.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <690b5bca-4345-4ee9-a332-4c2e38532309@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=U4+o=ZP=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.017, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,40 +109,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/1/25 22:33, Ed Tanous wrote:
-> This patch updates the docs for support of gb200-bmc.
+On 1/7/25 08:50, Xiaoyao Li wrote:
+> On 6/30/2025 11:22 PM, Zhao Liu wrote:
+>> (cc Thomas for bug reporting on kvm-unit-test...)
+>>
+>> On Tue, Jun 24, 2025 at 04:57:21PM +0800, Zhao Liu wrote:
+>>> Date: Tue, 24 Jun 2025 16:57:21 +0800
+>>> From: Zhao Liu <zhao1.liu@intel.com>
+>>> Subject: Re: [Regression] Re: [PULL 35/35] qom: reverse order of
+>>>   instance_post_init calls
+>>>
+>>> On Mon, Jun 23, 2025 at 09:56:14AM -0700, Dongli Zhang wrote:
+>>>> Date: Mon, 23 Jun 2025 09:56:14 -0700
+>>>> From: Dongli Zhang <dongli.zhang@oracle.com>
+>>>> Subject: [Regression] Re: [PULL 35/35] qom: reverse order of
+>>>>   instance_post_init calls
+>>>>
+>>>> This commit may broken the "vendor=" configuration.
+>>>>
+>>>> For instance, the hypervisor CPU vendor is AMD.
+>>>>
+>>>> I am going to use "-cpu Skylake-Server,vendor=GenuineIntel".
+>>>>
+>>>>
+>>>> Because of the commit, the vendor is still AMD.
+>>>>
+>>>> [root@vm ~]# cpuid -1 -l 0x0
+>>>> CPU:
+>>>>     vendor_id = "AuthenticAMD"
+>>>>
+>>>>
+>>>> If I revert this patch, the vendor because the expected Intel.
+>>>>
+>>>> [root@vm ~]# cpuid -1 -l 0x0
+>>>> CPU:
+>>>>     vendor_id = "GenuineIntel"
+>>>>
+>>>>
+>>>> Thank you very much!
+>>>
+>>> Thank you Dongli!
+>>>
+>>> (+Like)
+>>>
+>>> While testing my cache model series, I also noticed the similar behavior
+>>> for KVM. Additionally, Like Xu reported to me that this commit caused
+>>> a failure in a KVM unit test case. Your report helped me connect these
+>>> two issues I met (though due to my environment issues, I haven't
+>>> confirmed yet).
+>>
+>> Ok, now I can confirm this commit cause KUT failure:
+>>   * On AMD platform, the "msr.flat" case fails since this case requires
+>>     vendor=GenuineIntel (tested by Like).
+>>   * On Intel platform, the "syscall.flat" case fails because it requires
+>>     vendor=AuthenticAMD (tested by myself).
+>>
+>>> The "vendor" property from cli is registered as the global property in
+>>> x86_cpu_parse_featurestr(), and is applied to x86 CPUs in
+>>> device_post_init().
+>>>
+>>> With this commit, now KVM will override the "vendor" in
+>>> host_cpu_instance_init() (called in x86_cpu_post_initfn()) after
+>>> device_post_init(), regardless the previous global "vendor" property.
+>>
+>> This is the root cause for the above failure.
+>>
+>>> Back to this commit, I think current order of post_init  makes sense.
+>>> Instead, the place of host_cpu_instance_init() doesn't seem quite
+>>> right. So, I think this commit might have exposed some drawbacks in the
+>>> previous x86 CPU initialization order:
+>>>
+>>> f5cc5a5c1686 ("i386: split cpu accelerators from cpu.c, using 
+>>> AccelCPUClass")
+>>> 5b8978d80426 ("i386: do not call cpudef-only models functions for 
+>>> max, host, base")
+>>
+>> To fix this issue, we need to initialize "vendor" property in the initfn
+>> of max/host/named CPUs instead of current post_initfn.
+>>
+>> This will need to split the cpu_instance_init() of x86 kvm (and maybe 
+>> hvf/tcg)
+>> into 2 hooks:
+>>   * AccelCPUClass.cpu_instance_init() - called in x86 CPUs' initfn.
+>>   * AccelCPUClass.cpu_instance_post_init() - called in x86 CPUs'
+>>     post_initfn.
 > 
-> Signed-off-by: Ed Tanous <etanous@nvidia.com>
-> ---
->   docs/system/arm/aspeed.rst | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+> Split accel.cpu_instance_init() into cpu's instance_init() and 
+> post_instance_init() does not seem right way to go.
+
+Yeah, please don't. I'm trying to consolidate this code but it takes
+(too) long.
+
+> The reason .post_instance_init() was implemented and put 
+> accel_cpu_instance_init() in it for x86 cpu was that, we don't want to 
+> scatter acceletor specific instance_init operation into different 
+> subclass of x86 cpu (max/host/named cpu model).
 > 
-> diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-> index 43d27d83cb..bec0a1dfa8 100644
-> --- a/docs/system/arm/aspeed.rst
-> +++ b/docs/system/arm/aspeed.rst
-> @@ -1,5 +1,4 @@
-> -Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
-> -=================================================================================================================================================================================================================================================================================================================================================================================================================================
-> +Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``gb200nvl-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
->   
->   The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
->   Aspeed evaluation boards. They are based on different releases of the
-> @@ -35,6 +34,7 @@ AST2600 SoC based machines :
->   - ``fuji-bmc``             Facebook Fuji BMC
->   - ``bletchley-bmc``        Facebook Bletchley BMC
->   - ``fby35-bmc``            Facebook fby35 BMC
-> +- ``gb200nvl-bmc``         Nvidia GB200nvl BMC
->   - ``qcom-dc-scm-v1-bmc``   Qualcomm DC-SCM V1 BMC
->   - ``qcom-firework-bmc``    Qualcomm Firework BMC
->   
+> I think something like below should be enough.
+> 
+> -----------8<-------------
+> Author: Xiaoyao Li <xiaoyao.li@intel.com>
+> Date:   Tue Jul 1 13:33:43 2025 +0800
+> 
+>      i386/cpu: Re-apply the global props as the last step of post_init
+> 
+>      Commit 220c739903ce ("qom: reverse order of instance_post_init calls")
+>      reverses the order instance_post_init calls, which leads to
+>      device_post_init() called before x86 cpu 
+> specific .instance_post_init().
+> 
+>      However, x86 cpu replies on qdev_prop_set_globals() (inside
+>      device_post_init()) to apply the cpu option like "feature[=foo]" 
+> passed
+>      via '-cpu' as the last step to make the '-cpu' option highest 
+> priority.
+> 
+>      After the order change of .instance_post_init(), x86_cpu_post_initfn()
+>      is called after device_post_init(), and it will change some property
+>      value even though "-cpu" option specify a different one.
+> 
+>      Re-apply the global props as the last step to ensure "-cpu" option
+>      always takes highest priority.
+> 
+>      Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 0d35e95430fe..bf290262cbfe 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -9044,6 +9044,12 @@ static void x86_cpu_post_initfn(Object *obj)
+>               X86_CONFIDENTIAL_GUEST(current_machine->cgs), (CPU(obj)));
+>       }
+>   #endif
+> +
+> +    /*
+> +     * Re-apply the "feature[=foo]" from '-cpu' option since they might
+> +     * be overwritten by above
+> +     */
+> +    qdev_prop_set_globals(DEVICE(obj));
+>   }
 
+This patch LGTM.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Regards,
 
-Thanks,
-
-C.
-
-
+Phil.
 
