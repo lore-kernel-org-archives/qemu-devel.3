@@ -4,92 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 892A6C83038
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4B0FC83F03
 	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 17:53:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uX1dg-00075e-O1; Wed, 02 Jul 2025 13:52:57 -0400
+	id 1uX1dm-00078d-3z; Wed, 02 Jul 2025 13:53:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX1de-00071V-6r
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 13:52:54 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uX1dc-0006HE-En
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uX1dc-0006yb-My
  for qemu-devel@nongnu.org; Wed, 02 Jul 2025 13:52:53 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3a525eee2e3so4519744f8f.2
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 10:52:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751478770; x=1752083570; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=EIwR6V9nYMA8INGDW0pmc9lPXYy6WzUGJoiGhNb8Ovk=;
- b=b+Fe4xl3lofXIBcxge+J+4G3AuIdhXXxIgdxK7m79MfqLy1HED1mkeRzlGQY92s4/J
- glQzWd+iXJJvsmRTQ2aoKqijWPXZq/ZsIFkGatZv+ec6Xayw5yQ+mhmQwp8mHHoPNnVg
- M0v9OwSYnduVqWZ1vVQrlYiIZi/w04nq49qGM6A9BjRSOQjSwFjhFk1AmGph//k9EeQ7
- vP4lEvHOGT8XvVrU+B+WU+Gih10PhlXVqF39Y+K+Qnn4fevvf+1jdcF3hTDCDrNHyTk8
- t3IDcyISVdVNoH+IUwT2ZTHu8/ZwbMXP1umNoEryv7XTNtJjAAoxyxCozMOJDPbzfVxI
- 7ABg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751478770; x=1752083570;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EIwR6V9nYMA8INGDW0pmc9lPXYy6WzUGJoiGhNb8Ovk=;
- b=NuXrdGHlijEPCi32Wv6NaMOfPz6lAYfx13JwZPvM0E7pyuCD0wUJOf8Nht3d1e88R9
- pfEsrqA2vqA2tV1Zdl0rmWQP/LmOOZMvU4MXpTHu0S3+iylUo0x6y+4XhnBAQi42hISE
- p5Q0iBGHfzJXYsxAASek5ZUDubY3pmiM/oG40blfnNSAp2M6r9V1GS2/5sKw+m63rO3Z
- NiVQPGGPYHgi1f7NttFY71brZ2zTxWFLoXW4PGihoEvDdPjPMMwjdI+yp7HyFPpl4Ze1
- XVvIMSSGEiWcDIffDXbskTAV5TDXJiAGF49N217Q5X2lkCbOCmT6Gy2N0v6gE+V8YeY7
- tCkA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW4ms0qzLHLXKym/axEczv7pLUB3XbAv36MCY8w49Cyvzbom0xL8EsOb+o95VXdOV+YTFtsoBC5JJyg@nongnu.org
-X-Gm-Message-State: AOJu0YyLlsUB4bIMvAjwekNNiWEn5lyOwpdmlVm9OZxZ8Jk8fzGS1esv
- 22ZguRmV+fZRqRB9vmlwq3gRuCMtJ/GeoZHYJa8pJ4E01wIN2eM2c3pUrjGexP9AHoE=
-X-Gm-Gg: ASbGncu/Irvb8YgSvPWXyCkHNV1QBfBAiiLgQ4ZonlWk+iMEM4doxAcw0fm9AQxvcW6
- pgG2HvUtZZGXIgb0QYDIcJN78yYKI/pngHDA4Nzxn0w9xvG1i0EPLZCjnJv1LFPlKdpmz4eWAeB
- PH1RFkIh1bAFTcAUa4kG0EQyBTIMXtnSIIAvKO53/yzedip77OMegU4qsMxPamFu8CCBlDkOGuq
- 8cBbup/XtX0+FSTTrQDz3/PXZh3IeMR9yt20HcsPnCESjn950oSqpIUab5SZjawnzpQT8vBs7lC
- vQPAKE/uvBspLmufZIcPmWp7C9JiZl6TzdUF+i8sqrNYcvY/NH8HEHTk4U0KRnx2/iFyU0MWdm5
- js7vjprR2ri+FT7YJtkp58Wd6twX9iZHXmt6vMqPG
-X-Google-Smtp-Source: AGHT+IERMM5KO0vUZgRsawxoZ2HhiQRFQrWGtUtQEa0nJEtkXRffnVk6AublfbcBAFgTjobJ0ElKzg==
-X-Received: by 2002:a05:6000:2d81:b0:3a3:6991:dcbb with SMTP id
- ffacd0b85a97d-3b32b42782amr83808f8f.12.1751478769911; 
- Wed, 02 Jul 2025 10:52:49 -0700 (PDT)
-Received: from [192.168.69.166] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454a99b1a5dsm4242345e9.29.2025.07.02.10.52.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Jul 2025 10:52:49 -0700 (PDT)
-Message-ID: <860c7281-5e0d-4b6a-a728-5769453640d6@linaro.org>
-Date: Wed, 2 Jul 2025 19:52:48 +0200
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uX1da-0006Gh-TV
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 13:52:52 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 214D321163;
+ Wed,  2 Jul 2025 17:52:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1751478767; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/l8JUxlK6GNRm6ikqwkuEkSaKy3qwdGI3oG0ZTjfGGk=;
+ b=0RHqAyOLREzfYfIcKTWb5lwNtqqhKRge1jEeh0CR1mrPj3xq3Sd653T2R8sEQ59R6/jQgZ
+ be4NyqYFlsI9oEsayIrT4IiOXcP/0npGEiodiXQw9nrTABwyGZ66aKfrc5W+7DToPs2dxb
+ p8NaLj1wFl52Skv8YjU004PC1Ko4qko=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1751478767;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/l8JUxlK6GNRm6ikqwkuEkSaKy3qwdGI3oG0ZTjfGGk=;
+ b=ipJoDy3+qnEegTv4/7le13zhFQ+DTi+lN9+1L4TIaGhdVGhIKkYcsCjgA0Vky3Dnxohy3h
+ UZNaW6cq0kx0ZMBw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=0RHqAyOL;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ipJoDy3+
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1751478767; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/l8JUxlK6GNRm6ikqwkuEkSaKy3qwdGI3oG0ZTjfGGk=;
+ b=0RHqAyOLREzfYfIcKTWb5lwNtqqhKRge1jEeh0CR1mrPj3xq3Sd653T2R8sEQ59R6/jQgZ
+ be4NyqYFlsI9oEsayIrT4IiOXcP/0npGEiodiXQw9nrTABwyGZ66aKfrc5W+7DToPs2dxb
+ p8NaLj1wFl52Skv8YjU004PC1Ko4qko=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1751478767;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/l8JUxlK6GNRm6ikqwkuEkSaKy3qwdGI3oG0ZTjfGGk=;
+ b=ipJoDy3+qnEegTv4/7le13zhFQ+DTi+lN9+1L4TIaGhdVGhIKkYcsCjgA0Vky3Dnxohy3h
+ UZNaW6cq0kx0ZMBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7D0D513A24;
+ Wed,  2 Jul 2025 17:52:46 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 1c7eDu5xZWi7BAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 02 Jul 2025 17:52:46 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>, Cedric Le Goater
+ <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>, Eric Auger
+ <eric.auger@redhat.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>, Steve Sistare
+ <steven.sistare@oracle.com>
+Subject: Re: [PATCH V5 38/38] vfio: doc changes for cpr
+In-Reply-To: <1749569991-25171-39-git-send-email-steven.sistare@oracle.com>
+References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
+ <1749569991-25171-39-git-send-email-steven.sistare@oracle.com>
+Date: Wed, 02 Jul 2025 14:52:43 -0300
+Message-ID: <87v7oa4h04.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 67/68] accel: Have each accelerator implement the
- handle_interrupt() hook
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Julian Armistead <julian.armistead@linaro.org>
-References: <20250701144017.43487-1-philmd@linaro.org>
- <20250701144017.43487-68-philmd@linaro.org>
- <8353d9c8-8dd6-4dd1-ade6-4dd7f5a4c8c5@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <8353d9c8-8dd6-4dd1-ade6-4dd7f5a4c8c5@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 214D321163
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-2.95 / 50.00]; BAYES_HAM(-2.94)[99.72%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_TRACE(0.00)[0:+];
+ FREEMAIL_CC(0.00)[redhat.com,intel.com,gmail.com,oracle.com];
+ ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ MISSING_XM_UA(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ RCPT_COUNT_SEVEN(0.00)[11]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; TAGGED_RCPT(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:dkim, suse.de:email,
+ oracle.com:email, imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,54 +132,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/7/25 17:30, Richard Henderson wrote:
-> On 7/1/25 08:40, Philippe Mathieu-Daudé wrote:
->> Better to make the interrupt handler an explicit implementation
->> rather than depending on some generic handler.
->>
->> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   accel/dummy-cpus.h                |  1 +
->>   include/system/accel-ops.h        |  1 +
->>   accel/dummy-cpus.c                |  7 +++++++
->>   accel/hvf/hvf-accel-ops.c         |  8 ++++++++
->>   accel/kvm/kvm-accel-ops.c         |  8 ++++++++
->>   accel/qtest/qtest.c               |  1 +
->>   accel/xen/xen-all.c               |  1 +
->>   system/cpus.c                     | 15 ++-------------
->>   target/i386/nvmm/nvmm-accel-ops.c |  8 ++++++++
->>   target/i386/whpx/whpx-accel-ops.c |  8 ++++++++
->>   10 files changed, 45 insertions(+), 13 deletions(-)
-> 
-> I had suggested exporting generic_handle_interrupt
-> 
->> @@ -358,6 +365,7 @@ static void hvf_accel_ops_class_init(ObjectClass 
->> *oc, const void *data)
->>       ops->kick_vcpu_thread = hvf_kick_vcpu_thread;
->>       ops->exec_vcpu_thread = hvf_vcpu_exec;
->>       ops->destroy_vcpu_thread = hvf_vcpu_destroy;
->> +    ops->handle_interrupt = hvf_handle_interrupt;
-> 
-> ... and then registering it in each accelerator,
-> 
->> diff --git a/system/cpus.c b/system/cpus.c
->> index 8c2647f5f19..e217e42ba03 100644
->> --- a/system/cpus.c
->> +++ b/system/cpus.c
->> @@ -246,13 +246,6 @@ int64_t cpus_get_elapsed_ticks(void)
->>       return cpu_get_ticks();
->>   }
->> -static void generic_handle_interrupt(CPUState *cpu, int old_mask, int 
->> new_mask)
->> -{
->> -    if (!qemu_cpu_is_self(cpu)) {
->> -        qemu_cpu_kick(cpu);
->> -    }
->> -}
-> 
-> ... rather than removing the common implementation.
+Steve Sistare <steven.sistare@oracle.com> writes:
 
-Oh I misunderstood then.
+> Update documentation to say that cpr-transfer supports vfio and iommufd.
+>
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> ---
+>  docs/devel/migration/CPR.rst | 5 ++---
+>  qapi/migration.json          | 6 ++++--
+>  2 files changed, 6 insertions(+), 5 deletions(-)
+>
+> diff --git a/docs/devel/migration/CPR.rst b/docs/devel/migration/CPR.rst
+> index 7897873..0a0fd4f 100644
+> --- a/docs/devel/migration/CPR.rst
+> +++ b/docs/devel/migration/CPR.rst
+> @@ -152,8 +152,7 @@ cpr-transfer mode
+>  This mode allows the user to transfer a guest to a new QEMU instance
+>  on the same host with minimal guest pause time, by preserving guest
+>  RAM in place, albeit with new virtual addresses in new QEMU.  Devices
+> -and their pinned memory pages will also be preserved in a future QEMU
+> -release.
+> +and their pinned memory pages are also preserved for VFIO and IOMMUFD.
+>  
+>  The user starts new QEMU on the same host as old QEMU, with command-
+>  line arguments to create the same machine, plus the ``-incoming``
+> @@ -322,6 +321,6 @@ Futures
+>  
+>  cpr-transfer mode is based on a capability to transfer open file
+>  descriptors from old to new QEMU.  In the future, descriptors for
+> -vfio, iommufd, vhost, and char devices could be transferred,
+> +vhost, and char devices could be transferred,
+>  preserving those devices and their kernel state without interruption,
+>  even if they do not explicitly support live migration.
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index 4963f6c..e8a7d3b 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -620,8 +620,10 @@
+>  #
+>  # @cpr-transfer: This mode allows the user to transfer a guest to a
+>  #     new QEMU instance on the same host with minimal guest pause
+> -#     time by preserving guest RAM in place.  Devices and their pinned
+> -#     pages will also be preserved in a future QEMU release.
+> +#     time by preserving guest RAM in place.
+> +#
+> +#     Devices and their pinned pages are also preserved for VFIO and
+> +#     IOMMUFD. (since 10.1)
+>  #
+>  #     The user starts new QEMU on the same host as old QEMU, with
+>  #     command-line arguments to create the same machine, plus the
 
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
