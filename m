@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2AB8C83F03
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 22:16:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A9DCC83F03
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 22:16:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uX5jv-0001tE-AI; Wed, 02 Jul 2025 18:15:39 -0400
+	id 1uX5jm-0001YP-2A; Wed, 02 Jul 2025 18:15:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uX5jt-0001ro-F6; Wed, 02 Jul 2025 18:15:37 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1uX5jg-0001UD-6m; Wed, 02 Jul 2025 18:15:24 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uX5ji-0006he-6x; Wed, 02 Jul 2025 18:15:37 -0400
+ id 1uX5jS-00061J-QF; Wed, 02 Jul 2025 18:15:23 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 6A0DB55CB66;
- Thu, 03 Jul 2025 00:09:02 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 307FD55CA5A;
+ Thu, 03 Jul 2025 00:08:57 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id ORvdBgbpxQb6; Thu,  3 Jul 2025 00:09:00 +0200 (CEST)
+ with ESMTP id fOlrXiOI9L-D; Thu,  3 Jul 2025 00:08:55 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 6E59E55CA62; Thu, 03 Jul 2025 00:09:00 +0200 (CEST)
-Message-ID: <688ac07e52e04f062810e82cf6e3ba3caf06416f.1751493467.git.balaton@eik.bme.hu>
+ id 2149855C1B9; Thu, 03 Jul 2025 00:08:55 +0200 (CEST)
+Message-ID: <1b2a596aee7d4d5c6d94dca837a8b1e11a654136.1751493467.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1751493467.git.balaton@eik.bme.hu>
 References: <cover.1751493467.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 06/14] hw/pci-host/raven: Simplify direct config access
- address decoding
+Subject: [PATCH v2 01/14] hw/pci-host/raven: Simplify PCI facing part
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,14 +39,15 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
-Date: Thu, 03 Jul 2025 00:09:00 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Date: Thu, 03 Jul 2025 00:08:55 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,55 +63,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use ctz instead of an open coded version and rename function to better
-show what it does.
+The raven PCI device does not need a state struct as it has no data to
+store there any more, so we can remove that to simplify code.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/pci-host/raven.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ hw/pci-host/raven.c | 30 +-----------------------------
+ 1 file changed, 1 insertion(+), 29 deletions(-)
 
 diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-index a400a22df3..66dab28a29 100644
+index f8c0be5d21..172f01694c 100644
 --- a/hw/pci-host/raven.c
 +++ b/hw/pci-host/raven.c
-@@ -57,16 +57,9 @@ struct PREPPCIState {
+@@ -31,7 +31,6 @@
+ #include "hw/pci/pci_bus.h"
+ #include "hw/pci/pci_host.h"
+ #include "hw/qdev-properties.h"
+-#include "migration/vmstate.h"
+ #include "hw/intc/i8259.h"
+ #include "hw/irq.h"
+ #include "hw/or-irq.h"
+@@ -40,12 +39,6 @@
+ #define TYPE_RAVEN_PCI_DEVICE "raven"
+ #define TYPE_RAVEN_PCI_HOST_BRIDGE "raven-pcihost"
  
- #define PCI_IO_BASE_ADDR    0x80000000  /* Physical address on main bus */
- 
--static inline uint32_t raven_pci_io_config(hwaddr addr)
-+static inline uint32_t raven_idsel_to_addr(hwaddr addr)
- {
--    int i;
+-OBJECT_DECLARE_SIMPLE_TYPE(RavenPCIState, RAVEN_PCI_DEVICE)
 -
--    for (i = 0; i < 11; i++) {
--        if ((addr & (1 << (11 + i))) != 0) {
--            break;
--        }
--    }
--    return (addr & 0x7ff) |  (i << 11);
-+    return (ctz16(addr >> 11) << 11) | (addr & 0x7ff);
+-struct RavenPCIState {
+-    PCIDevice dev;
+-};
+-
+ typedef struct PRePPCIState PREPPCIState;
+ DECLARE_INSTANCE_CHECKER(PREPPCIState, RAVEN_PCI_HOST_BRIDGE,
+                          TYPE_RAVEN_PCI_HOST_BRIDGE)
+@@ -65,7 +58,6 @@ struct PRePPCIState {
+     MemoryRegion bm_ram_alias;
+     MemoryRegion bm_pci_memory_alias;
+     AddressSpace bm_as;
+-    RavenPCIState pci_dev;
+ 
+     int contiguous_map;
+ };
+@@ -268,8 +260,7 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+                           "pci-intack", 1);
+     memory_region_add_subregion(address_space_mem, 0xbffffff0, &s->pci_intack);
+ 
+-    /* TODO Remove once realize propagates to child devices. */
+-    qdev_realize(DEVICE(&s->pci_dev), BUS(&s->pci_bus), errp);
++    pci_create_simple(&s->pci_bus, PCI_DEVFN(0, 0), TYPE_RAVEN_PCI_DEVICE);
  }
  
- static void raven_pci_io_write(void *opaque, hwaddr addr,
-@@ -74,7 +67,7 @@ static void raven_pci_io_write(void *opaque, hwaddr addr,
+ static void raven_pcihost_initfn(Object *obj)
+@@ -277,7 +268,6 @@ static void raven_pcihost_initfn(Object *obj)
+     PCIHostState *h = PCI_HOST_BRIDGE(obj);
+     PREPPCIState *s = RAVEN_PCI_HOST_BRIDGE(obj);
+     MemoryRegion *address_space_mem = get_system_memory();
+-    DeviceState *pci_dev;
+ 
+     memory_region_init(&s->pci_io, obj, "pci-io", 0x3f800000);
+     memory_region_init_io(&s->pci_io_non_contiguous, obj, &raven_io_ops, s,
+@@ -314,12 +304,6 @@ static void raven_pcihost_initfn(Object *obj)
+     pci_setup_iommu(&s->pci_bus, &raven_iommu_ops, s);
+ 
+     h->bus = &s->pci_bus;
+-
+-    object_initialize(&s->pci_dev, sizeof(s->pci_dev), TYPE_RAVEN_PCI_DEVICE);
+-    pci_dev = DEVICE(&s->pci_dev);
+-    object_property_set_int(OBJECT(&s->pci_dev), "addr", PCI_DEVFN(0, 0),
+-                            NULL);
+-    qdev_prop_set_bit(pci_dev, "multifunction", false);
+ }
+ 
+ static void raven_realize(PCIDevice *d, Error **errp)
+@@ -329,16 +313,6 @@ static void raven_realize(PCIDevice *d, Error **errp)
+     d->config[PCI_CAPABILITY_LIST] = 0x00;
+ }
+ 
+-static const VMStateDescription vmstate_raven = {
+-    .name = "raven",
+-    .version_id = 0,
+-    .minimum_version_id = 0,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_PCI_DEVICE(dev, RavenPCIState),
+-        VMSTATE_END_OF_LIST()
+-    },
+-};
+-
+ static void raven_class_init(ObjectClass *klass, const void *data)
  {
-     PREPPCIState *s = opaque;
-     PCIHostState *phb = PCI_HOST_BRIDGE(s);
--    pci_data_write(phb->bus, raven_pci_io_config(addr), val, size);
-+    pci_data_write(phb->bus, raven_idsel_to_addr(addr), val, size);
- }
- 
- static uint64_t raven_pci_io_read(void *opaque, hwaddr addr,
-@@ -82,7 +75,7 @@ static uint64_t raven_pci_io_read(void *opaque, hwaddr addr,
- {
-     PREPPCIState *s = opaque;
-     PCIHostState *phb = PCI_HOST_BRIDGE(s);
--    return pci_data_read(phb->bus, raven_pci_io_config(addr), size);
-+    return pci_data_read(phb->bus, raven_idsel_to_addr(addr), size);
- }
- 
- static const MemoryRegionOps raven_pci_io_ops = {
+     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+@@ -350,7 +324,6 @@ static void raven_class_init(ObjectClass *klass, const void *data)
+     k->revision = 0x00;
+     k->class_id = PCI_CLASS_BRIDGE_HOST;
+     dc->desc = "PReP Host Bridge - Motorola Raven";
+-    dc->vmsd = &vmstate_raven;
+     /*
+      * Reason: PCI-facing part of the host bridge, not usable without
+      * the host-facing part, which can't be device_add'ed, yet.
+@@ -361,7 +334,6 @@ static void raven_class_init(ObjectClass *klass, const void *data)
+ static const TypeInfo raven_info = {
+     .name = TYPE_RAVEN_PCI_DEVICE,
+     .parent = TYPE_PCI_DEVICE,
+-    .instance_size = sizeof(RavenPCIState),
+     .class_init = raven_class_init,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
 -- 
 2.41.3
 
