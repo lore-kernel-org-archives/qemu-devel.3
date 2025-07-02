@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6575EC8303C
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 22:02:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56677C8303C
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 22:03:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uX5U2-0003Qw-23; Wed, 02 Jul 2025 17:59:14 -0400
+	id 1uX5U3-0003Rz-Ig; Wed, 02 Jul 2025 17:59:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uX5Tx-0003Nh-TL
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 17:59:09 -0400
+ id 1uX5Ty-0003OV-Sx
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 17:59:10 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uX5Tv-0003f8-UL
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 17:59:09 -0400
+ id 1uX5Tx-0003fj-4x
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 17:59:10 -0400
 Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 562LQf1O014606;
- Wed, 2 Jul 2025 21:59:05 GMT
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 562LQf1P014606;
+ Wed, 2 Jul 2025 21:59:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=ehCcTDGAG4j8kMpCcv3xI8gmUfFjPYOpVSgaQEk9CUM=; b=
- ry6lIBuBQ54c7gPR3XUik9w95ZPgcu1lGpGN/qTXjwAz8sUSmm1lQoDA30RXvoop
- kMW4JfhpI58QuYScHIsHMAwa/DY4aGWqyV15V+VNlT0NHLt2do1vbRE9K94QrPRC
- PHiY+nmUT+nDKxOertwmgQiAqeExnBC5zb67Ufy0a4IbYrmsClAlfImHJ4z4UgDJ
- T4KqboLkzTXj4Kjm1OYGAyD8AyUCMhjVAXpvaeYIKLHH5uD4rH5cO/H/nnGcdUz4
- J4TEkskQPONpdG2T14i3wEUUCDEeYVkJvHWZwNX5EOQUHZjrlJTEgm999jtoMb/9
- I4EDQf0eWFHpqA1da2lrsQ==
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2025-04-25; bh=Fo4ucAwSiBa8F7pCR5ZYmYsTnw0uYVrb7SxtkBJNuaA=; b=
+ hAtDucjWbgEMkaxtMxO/wERr8+Wf2BOHX5dXlPM6BnPQtEyf7MJE9eqEb3ND9aMz
+ MGc9E/j9zBcVeAxYnBIgvgYdEzlgLYvm1VUo8hqgnntv2u9+KjeqVpMFPuqulxrC
+ q2YWLU9TMBqf1Lc5wLsghT5PkWA+3LHveXfsFeyNF+I9fh/lRg9/St+2i3KMvTN2
+ J5XS+nae7C9Q1vq9TwcqbbINhKxx63H8lO8fWHgHJeWnTXDf0+VbuoTbI0czZdtb
+ dIBwvfLsg2uVViHC17iLBZwLc61FgoLP0X4QlWM59n8QaXc+hUVjUsVImM7y0yJ7
+ 4RHRQsPizh6EgMga1+3s4Q==
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47j8xx7vcw-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47j8xx7vcx-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 02 Jul 2025 21:59:05 +0000 (GMT)
+ Wed, 02 Jul 2025 21:59:06 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 562KdmBR034387; Wed, 2 Jul 2025 21:59:04 GMT
+ with ESMTP id 562JrbhB033801; Wed, 2 Jul 2025 21:59:06 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 47j6ubtd1u-1
+ 47j6ubtd2h-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 02 Jul 2025 21:59:04 +0000
+ Wed, 02 Jul 2025 21:59:05 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 562Lwxg6020012;
- Wed, 2 Jul 2025 21:59:04 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 562LwxgA020012;
+ Wed, 2 Jul 2025 21:59:05 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 47j6ubtcxb-7; Wed, 02 Jul 2025 21:59:03 +0000
+ ESMTP id 47j6ubtcxb-9; Wed, 02 Jul 2025 21:59:05 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -64,15 +63,12 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V6 06/21] backends/iommufd: change process ioctl
-Date: Wed,  2 Jul 2025 14:58:43 -0700
-Message-Id: <1751493538-202042-7-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V6 08/21] vfio/iommufd: use IOMMU_IOAS_MAP_FILE
+Date: Wed,  2 Jul 2025 14:58:45 -0700
+Message-Id: <1751493538-202042-9-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1751493538-202042-1-git-send-email-steven.sistare@oracle.com>
 References: <1751493538-202042-1-git-send-email-steven.sistare@oracle.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-02_04,2025-07-02_04,2025-03-28_01
@@ -81,20 +77,18 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
  mlxlogscore=999 phishscore=0 suspectscore=0 mlxscore=0 bulkscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2507020182
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDE4MiBTYWx0ZWRfX8cXd7tmNrAhW
- wyUvRPyrB0MPFB7hQ9P0kjmBHcEaJptT/5gkvjL21IZY2rtD3qMdB7Yc5JDm1XS3KwJBP1S78Hc
- ecvgVauFuOLu1hLdnfu9ZpsR4b0fPBJhNqHk03XazQkO16yoGmDtxnCXTla2Ys04zSjOPhC7G7k
- XX24YtLlFULMkYdL8IlbF2142qreZkHDCozr7pyLepf3IQ3IV9iCy9F6X/F6VlfjI7A5A9/AL5B
- 0Rv5xoEnd7mFXhMJxWBGixqUUtbyGzHECoPc5WBsEWaOUYbzlnkj3hacW4LuNT8XpQVAheCirKG
- KiCVZWFKcxJyXOzMbAKPgwk6Ur93sa7DZJHMMQrUrVWZ/YzVyfbyucVg8Z/nRVDzSJ9QlayEuNd
- tYTAJ+ohJym96dT1aED/xyt27eO7SFLkV06k4I0z7Js904Kos4QptErJuDdmmuStd5Vt4g9O
-X-Proofpoint-ORIG-GUID: jO_WGt1Ti3Jgf6BkzY_XUjaMju_pHgfQ
-X-Proofpoint-GUID: jO_WGt1Ti3Jgf6BkzY_XUjaMju_pHgfQ
-X-Authority-Analysis: v=2.4 cv=QfRmvtbv c=1 sm=1 tr=0 ts=6865aba9 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDE4MiBTYWx0ZWRfX9G9xQxT+dqbo
+ XX5Fwbah2X9YFJ0uJOfSNnlht+bNLdQUA6QKqSWnfuPMorbBPZfciA3PzaC75wUMiWyvpx3/zHF
+ DMpMsAWBw9r0FTJGtzJbZnYbhUW3KPRiy1RzaGMQ1/MxocehQ8qUjJzythJoSIC9Dmx1zd/4jno
+ r2trQFnBXIQfZsVUMRzjWp4bQBtgqSgSyJL+oItXw6DXH0NLM1yLAmXvNqCD9TIqxBIiVPi6DJs
+ a+45n0xpLXb8VBwC8KyEaRHD0fA1jL5aZROlRBuPVCeceDl/cXHZlT3ymF2sA9BPGZ4lmSfjlHX
+ gRSoJiJSWePHCeakgEC2OG3LDvsVuok6+2jMaewa0/udDvQc/BCEvXYZntgjr7KgiVRjHJcP9O4
+ DLDX0XnRm+4SabdvuHSruUPXrPAaEXyz4qk6Tsk7+ggDjMYHb5fuyUdkuy06MmxgF9UFfVbj
+X-Proofpoint-ORIG-GUID: rStX50jaxAeSWlwu2UDdFoo1yQU9o5KK
+X-Proofpoint-GUID: rStX50jaxAeSWlwu2UDdFoo1yQU9o5KK
+X-Authority-Analysis: v=2.4 cv=QfRmvtbv c=1 sm=1 tr=0 ts=6865abaa cx=c_pps
  a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8
- a=QyXUC8HyAAAA:8 a=SRdfyBftnUHxAk-46XYA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=QyXUC8HyAAAA:8 a=-QcZ205ZjAmYhoUyRx0A:9
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -25
@@ -120,78 +114,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define the change process ioctl
+Use IOMMU_IOAS_MAP_FILE when the mapped region is backed by a file.
+Such a mapping can be preserved without modification during CPR,
+because it depends on the file's address space, which does not change,
+rather than on the process's address space, which does change.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/system/iommufd.h |  3 +++
- backends/iommufd.c       | 24 ++++++++++++++++++++++++
- backends/trace-events    |  1 +
- 3 files changed, 28 insertions(+)
+ include/hw/vfio/vfio-container-base.h | 15 +++++++++++++++
+ hw/vfio/container-base.c              |  9 +++++++++
+ hw/vfio/iommufd.c                     | 13 +++++++++++++
+ 3 files changed, 37 insertions(+)
 
-diff --git a/include/system/iommufd.h b/include/system/iommufd.h
-index 2d24d93..db5f2c7 100644
---- a/include/system/iommufd.h
-+++ b/include/system/iommufd.h
-@@ -69,6 +69,9 @@ bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
-                                       uint32_t *entry_num, void *data,
-                                       Error **errp);
+diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+index 3cd86ec..bded6e9 100644
+--- a/include/hw/vfio/vfio-container-base.h
++++ b/include/hw/vfio/vfio-container-base.h
+@@ -168,6 +168,21 @@ struct VFIOIOMMUClass {
+                    hwaddr iova, ram_addr_t size,
+                    void *vaddr, bool readonly, MemoryRegion *mr);
+     /**
++     * @dma_map_file
++     *
++     * Map a file range for the container.
++     *
++     * @bcontainer: #VFIOContainerBase to use for map
++     * @iova: start address to map
++     * @size: size of the range to map
++     * @fd: descriptor of the file to map
++     * @start: starting file offset of the range to map
++     * @readonly: map read only if true
++     */
++    int (*dma_map_file)(const VFIOContainerBase *bcontainer,
++                        hwaddr iova, ram_addr_t size,
++                        int fd, unsigned long start, bool readonly);
++    /**
+      * @dma_unmap
+      *
+      * Unmap an address range from the container.
+diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+index d834bd4..5630497 100644
+--- a/hw/vfio/container-base.c
++++ b/hw/vfio/container-base.c
+@@ -78,7 +78,16 @@ int vfio_container_dma_map(VFIOContainerBase *bcontainer,
+                            void *vaddr, bool readonly, MemoryRegion *mr)
+ {
+     VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
++    RAMBlock *rb = mr->ram_block;
++    int mfd = rb ? qemu_ram_get_fd(rb) : -1;
  
-+bool iommufd_change_process_capable(IOMMUFDBackend *be);
-+bool iommufd_change_process(IOMMUFDBackend *be, Error **errp);
++    if (mfd >= 0 && vioc->dma_map_file) {
++        unsigned long start = vaddr - qemu_ram_get_host_addr(rb);
++        unsigned long offset = qemu_ram_get_fd_offset(rb);
 +
- #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
- OBJECT_DECLARE_TYPE(HostIOMMUDeviceIOMMUFD, HostIOMMUDeviceIOMMUFDClass,
-                     HOST_IOMMU_DEVICE_IOMMUFD)
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index 3a2ecc7..87f81a0 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -73,6 +73,30 @@ static void iommufd_backend_class_init(ObjectClass *oc, const void *data)
-     object_class_property_add_str(oc, "fd", NULL, iommufd_backend_set_fd);
++        return vioc->dma_map_file(bcontainer, iova, size, mfd, start + offset,
++                                  readonly);
++    }
+     g_assert(vioc->dma_map);
+     return vioc->dma_map(bcontainer, iova, size, vaddr, readonly, mr);
+ }
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index d3efef7..962a1e2 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -45,6 +45,18 @@ static int iommufd_cdev_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+                                    iova, size, vaddr, readonly);
  }
  
-+bool iommufd_change_process_capable(IOMMUFDBackend *be)
++static int iommufd_cdev_map_file(const VFIOContainerBase *bcontainer,
++                                 hwaddr iova, ram_addr_t size,
++                                 int fd, unsigned long start, bool readonly)
 +{
-+    struct iommu_ioas_change_process args = {.size = sizeof(args)};
++    const VFIOIOMMUFDContainer *container =
++        container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
 +
-+    /*
-+     * Call IOMMU_IOAS_CHANGE_PROCESS to verify it is a recognized ioctl.
-+     * This is a no-op if the process has not changed since DMA was mapped.
-+     */
-+    return !ioctl(be->fd, IOMMU_IOAS_CHANGE_PROCESS, &args);
++    return iommufd_backend_map_file_dma(container->be,
++                                        container->ioas_id,
++                                        iova, size, fd, start, readonly);
 +}
 +
-+bool iommufd_change_process(IOMMUFDBackend *be, Error **errp)
-+{
-+    struct iommu_ioas_change_process args = {.size = sizeof(args)};
-+    bool ret = !ioctl(be->fd, IOMMU_IOAS_CHANGE_PROCESS, &args);
-+
-+    if (!ret) {
-+        error_setg_errno(errp, errno, "IOMMU_IOAS_CHANGE_PROCESS fd %d failed",
-+                         be->fd);
-+    }
-+    trace_iommufd_change_process(be->fd, ret);
-+    return ret;
-+}
-+
- bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp)
- {
-     int fd;
-diff --git a/backends/trace-events b/backends/trace-events
-index e5f3e70..56132d3 100644
---- a/backends/trace-events
-+++ b/backends/trace-events
-@@ -7,6 +7,7 @@ dbus_vmstate_loading(const char *id) "id: %s"
- dbus_vmstate_saving(const char *id) "id: %s"
+ static int iommufd_cdev_unmap(const VFIOContainerBase *bcontainer,
+                               hwaddr iova, ram_addr_t size,
+                               IOMMUTLBEntry *iotlb, bool unmap_all)
+@@ -807,6 +819,7 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, const void *data)
+     VFIOIOMMUClass *vioc = VFIO_IOMMU_CLASS(klass);
  
- # iommufd.c
-+iommufd_change_process(int fd, bool ret) "fd=%d (%d)"
- iommufd_backend_connect(int fd, bool owned, uint32_t users) "fd=%d owned=%d users=%d"
- iommufd_backend_disconnect(int fd, uint32_t users) "fd=%d users=%d"
- iommu_backend_set_fd(int fd) "pre-opened /dev/iommu fd=%d"
+     vioc->dma_map = iommufd_cdev_map;
++    vioc->dma_map_file = iommufd_cdev_map_file;
+     vioc->dma_unmap = iommufd_cdev_unmap;
+     vioc->attach_device = iommufd_cdev_attach;
+     vioc->detach_device = iommufd_cdev_detach;
 -- 
 1.8.3.1
 
