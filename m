@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91AB7C77B7C
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 13:39:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D764C83F04
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 13:39:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWx4R-0004ql-I3; Wed, 02 Jul 2025 09:00:15 -0400
+	id 1uWwgO-0008PB-B8; Wed, 02 Jul 2025 08:35:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uWx48-0004TL-B2
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:59:59 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uWwg5-0007va-OV
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:35:05 -0400
+Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uWx41-0007tO-06
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:59:54 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-ae0ccfd5ca5so623286966b.3
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:59:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uWwfm-00013Z-AT
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:35:02 -0400
+Received: by mail-ot1-x32a.google.com with SMTP id
+ 46e09a7af769-7382a999970so3517815a34.3
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:34:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751461186; x=1752065986; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1751459682; x=1752064482; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=E9+XoyS+lvjeJBJDO3NHCXmpRb+IvEYkL23MZR7a1u0=;
- b=evIDXFTOqbNjp24yIKXJ8UaaxzwGTPIVLt8jacqvQtED6QTbdO2OwDEuLAEa485iW3
- wGzryRjImTqC6O5ZG86MARl/wExS8tC9JF6iuTBg9JSJw8/PzM/J+OEwV9GNkU0Gd6c6
- pkUNmkTV/GL6FIrYfLr6KoSjJqi6x2o2wkVDVTz8H+Xpg6gTzFM4XJNJKiOE5j8LuYAh
- qhk3FcCiTTKfLZYdigmwGj8XEHPi1mdT3bG2QclTi1lEATgeBYkDW6fDlFmXoOiHDgdR
- XachUhMvc1FzJ/Wn8/OzHKH6SJfzEVllqfLZmALVHduumZEq6WybeToaffwpvMx2ClxI
- 12gg==
+ bh=AQf/TObpoRHlubh31JKaROZXrhMyeMqBNp1Pj+KLbEk=;
+ b=UfXZI1/rLu4h0yp9//OiiWGtCfTl7ozxRH73T+nt6UCvy8wPoDwS1zdJaZjxe2y/8x
+ s7urvzXxVTyps7YBb/9PIaLq251ZWjUI87xNIuBThVKQ8FtVDhAaX+Ui+Vk138wLi9RC
+ xl6vaepB4vHQqgZ7659H7FVVxds5VT+bSkfl0pOQaswHtrBC9KGk1F4gdXU+6C2WOhqT
+ AOsT2ghNyCJkEzMLp4mtewPSNOmC/wRvY9epTZnsovnW2jZRiC8OmsDbJgDWu8kjtddc
+ 5rB74xvg8du1/IHyF2wUCQpJqYAHNFb/WLNoxnSI9CW7ovRcKwm/YrqBeOaqOYfnMCrp
+ QUag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751461186; x=1752065986;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:to:from:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=E9+XoyS+lvjeJBJDO3NHCXmpRb+IvEYkL23MZR7a1u0=;
- b=IN2eYQM788lgii1Wwv3H114CrCseRouQi65ztcSiJaMLHcGVJw9fvir04NgBmzXQni
- XUFtouaag+bxgDtn5cY9I70HjGzMeGb398//VOofzdHoLum4fnUqtcD1DO1qKSylN92w
- rr9tO6+IR7/DfvVJThWjUxfHbzfKzC8mlFz8GQJvydBWB7ckEiIrvS/fWs/3uOTLwidG
- lXP9a9xfGgsvLbKPu74yPgkE07Z/U7Xo0/StsExK52fvDzpNAifObsLxj2hRK9EkXg1b
- gYKO8KXuQgyUkOa9zu24V1JOTLh1NZXv96S2nqCa1n0o49NR6r12lmV/GKHkAEYYt97x
- XG4A==
-X-Gm-Message-State: AOJu0Yx8vFQ7YFH9IyBP1E3zVFNKrPBYOLoO2dv0wGqyr5Bn+ignenYz
- I7J4q4qvt7XarVkIrg2eU6a+5ewtS59F1b08WRCdDufzucUqHgKQv4582KSZv+QLeqpOeQ4I4xw
- AmDCQEG4=
-X-Gm-Gg: ASbGncspQgd1+9+ChmaUekN28PzLQhqoIKZMsWkV9JPGsf3q6Urxg0eQv3l5ZmhVf9z
- GC9BW74uaWbhvo128DLfYQPPawZQ7gzzTaJf040o4MrRShDMI2+ddNHgJpO0SfmM83Exqrjrhn2
- ZcZiIaWxCclmtzm7vdxrsbtkwHiifjRwKKAZYs87LWb2C0tbI6hOL4vVyuMTkUL52fyxS9Zgnpf
- uoY2z2Uu1AJoAuxsOmkuQtdgmKowOhJRiqpgF3Vm8XEEvOx6y0enlMeugtmmfdVi+ChoajiQGzR
- 3Z2S0cdNvBzxPgEpUPlehq3nEZ1R7iUXvgHEStp1PMMOo1hyFQ4tW9H79ofoTXs=
-X-Google-Smtp-Source: AGHT+IFFSpwRen/S4OEZfgyfvpN+v+8hLwgsgBZ6wl5IUK0juZzxie7v+Dw7L0whVyNx7ZB2YoaLsg==
-X-Received: by 2002:a17:906:6a27:b0:ae3:5be2:d9e8 with SMTP id
- a640c23a62f3a-ae3c2b8c116mr295945466b.18.1751461186103; 
- Wed, 02 Jul 2025 05:59:46 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae35363b1c4sm1073299266b.31.2025.07.02.05.59.41
- for <qemu-devel@nongnu.org>
+ d=1e100.net; s=20230601; t=1751459682; x=1752064482;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=AQf/TObpoRHlubh31JKaROZXrhMyeMqBNp1Pj+KLbEk=;
+ b=acYmgAUR2bsq69jY3qZ4Up9al1PMGNT1t750BxyPzgReUHd6qjwlHJymI30H+jleNk
+ o7TN2Lh7Cl+ht7h6h9F8WGvL9ayBQS32VZhxPmFQtE16DHPn0md0g36b6RjSB4Mvm9Fz
+ rtEno3h+/3ORw64oQpUGN62ZMd6g6aOENI0kEAf0AoKvqxdUu1YpPo8pNjCeE9DAlceF
+ Q4r4C2EgSbLeUIyLHWHTkpSgU2Ah+JiN9XHS6vK1JAw3K3d/zeM1R/Ypo2/AEA9xWU/k
+ YgqS1oQdX0+qDnjCnPkIH5CR8TZ8McDRrK+9FlKynE+nMKUn0R/yz1KGZnHsmd/az+eL
+ LFmQ==
+X-Gm-Message-State: AOJu0Yw/2skLiRUuoYy7fTlar+QU5I/15MLrhYXPtm+eyiNFeQPxu/aq
+ ILTIupXvBxfxdBuxvrzPZaYVGO9h90V4otWMokvaCuxs4SKAUEP0uI6+rdpPC3aV9uxEOrlafSQ
+ Xg/OtYvY=
+X-Gm-Gg: ASbGncv3mdOskzTtL3ag5K47WzYOsFY5GQYs79zk5fo8Cqs5iumSbLuQNgdqo9rpV/8
+ GxrshWRekhvtSDdpPti6bdFEzcgX+ulNgn2Wgb6AfkCVg+Mab06XvuMzc/s/0OIXX4tipvY2Zfr
+ GEUig5EBsRPw/Vxv+GHWzX7J1/lpQuaWpQSB1Ltvr6mQ1+o3p4f2SAo7Hv4MsPG//EjgXQEGg5a
+ EBBC+4nP5W10z4RwEq1W9Y2pvDdiyODslpCdi9s72DEYAUgby1eCTGOldK7XFgUjg1Y8CU8k1ER
+ 8+p2xrTTG/vF9lixjWsDLsGj+oKJkm+CShw5hlrEUhF0x+bmlzjmKykf1cVv0QmaxTNusQ==
+X-Google-Smtp-Source: AGHT+IEorCa+V57z8Kn9f2adQ0hERoNjoX+gRtGWj9efoSYOOhKjsyPWiBy6cNZ9Gr76zIDW4yzj/w==
+X-Received: by 2002:a05:6870:d394:b0:29d:c85f:bc8c with SMTP id
+ 586e51a60fabf-2f5c7be7b23mr1948709fac.36.1751459681993; 
+ Wed, 02 Jul 2025 05:34:41 -0700 (PDT)
+Received: from stoup.. ([187.210.107.185]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-2efd50b1b2fsm3864281fac.32.2025.07.02.05.34.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Jul 2025 05:59:43 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EBAF65F8BE
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 13:59:40 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+ Wed, 02 Jul 2025 05:34:41 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: Re: [PULL 00/15] Maintainer updates for June (gitlab, semihosting,
- plugins, virtio-gpu)
-In-Reply-To: <20250702104336.3775206-1-alex.bennee@linaro.org> ("Alex
- =?utf-8?Q?Benn=C3=A9e=22's?= message of "Wed, 2 Jul 2025 11:43:21 +0100")
-References: <20250702104336.3775206-1-alex.bennee@linaro.org>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Wed, 02 Jul 2025 13:59:40 +0100
-Message-ID: <871pqyg343.fsf@draig.linaro.org>
+Cc: qemu-arm@nongnu.org,
+	peter.maydell@linaro.org
+Subject: [PATCH v3 23/97] target/arm: Implement SME2 ADD/SUB (array results,
+ multiple vectors)
+Date: Wed,  2 Jul 2025 06:32:56 -0600
+Message-ID: <20250702123410.761208-24-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250702123410.761208-1-richard.henderson@linaro.org>
+References: <20250702123410.761208-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,28 +100,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/translate-sme.c | 30 ++++++++++++++++++++++++++++++
+ target/arm/tcg/sme.decode      | 20 ++++++++++++++++++++
+ 2 files changed, 50 insertions(+)
 
-> The following changes since commit 6138e72b7e33e0240ee955a2754dd038ee9949=
-4d:
->
->   Merge tag 'pull-tcg-20250630' of https://gitlab.com/rth7680/qemu into s=
-taging (2025-07-01 04:25:08 -0400)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/stsquad/qemu.git tags/pull-10.1-maintainer-june-2025=
--020725-1
->
-> for you to fetch changes up to 1fa2ffdbec55d84326e22f046bc3e26322836f5a:
->
->   virtio-gpu: support context init multiple timeline (2025-07-02
->   10:10:07 +0100)
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index 4bb880d9ef..aabdb96675 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -775,3 +775,33 @@ TRANS_FEAT(ADD_azz_n1_s, aa64_sme2, do_azz_n1, a, MO_32, tcg_gen_gvec_add_var)
+ TRANS_FEAT(SUB_azz_n1_s, aa64_sme2, do_azz_n1, a, MO_32, tcg_gen_gvec_sub_var)
+ TRANS_FEAT(ADD_azz_n1_d, aa64_sme2_i16i64, do_azz_n1, a, MO_64, tcg_gen_gvec_add_var)
+ TRANS_FEAT(SUB_azz_n1_d, aa64_sme2_i16i64, do_azz_n1, a, MO_64, tcg_gen_gvec_sub_var)
++
++/* Add/Sub each vector Z[m*N] to each Z[n*N] with result in ZA[d*N]. */
++static bool do_azz_nn(DisasContext *s, arg_azz_n *a, int esz,
++                      GVecGen3FnVar *fn)
++{
++    TCGv_ptr t_za;
++    int svl, n;
++
++    if (!sme_smza_enabled_check(s)) {
++        return true;
++    }
++
++    n = a->n;
++    t_za = get_zarray(s, a->rv, a->off, n, 1);
++    svl = streaming_vec_reg_size(s);
++
++    for (int i = 0; i < n; ++i) {
++        int o_za = (svl / n * sizeof(ARMVectorReg)) * i;
++        int o_zn = vec_full_reg_offset(s, a->zn + i);
++        int o_zm = vec_full_reg_offset(s, a->zm + i);
++
++        fn(esz, t_za, o_za, tcg_env, o_zn, tcg_env, o_zm, svl, svl);
++    }
++    return true;
++}
++
++TRANS_FEAT(ADD_azz_nn_s, aa64_sme2, do_azz_nn, a, MO_32, tcg_gen_gvec_add_var)
++TRANS_FEAT(SUB_azz_nn_s, aa64_sme2, do_azz_nn, a, MO_32, tcg_gen_gvec_sub_var)
++TRANS_FEAT(ADD_azz_nn_d, aa64_sme2_i16i64, do_azz_nn, a, MO_64, tcg_gen_gvec_add_var)
++TRANS_FEAT(SUB_azz_nn_d, aa64_sme2_i16i64, do_azz_nn, a, MO_64, tcg_gen_gvec_sub_var)
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index 8b81c0a0ce..a6dee08661 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -260,3 +260,23 @@ SUB_azz_n1_s    11000001 0010 .... 0 .. 110 ..... 11 ...    @azz_nx1_o3 n=2
+ SUB_azz_n1_s    11000001 0011 .... 0 .. 110 ..... 11 ...    @azz_nx1_o3 n=4
+ SUB_azz_n1_d    11000001 0110 .... 0 .. 110 ..... 11 ...    @azz_nx1_o3 n=2
+ SUB_azz_n1_d    11000001 0111 .... 0 .. 110 ..... 11 ...    @azz_nx1_o3 n=4
++
++### SME2 Multi-vector Multiple Array Vectors
++
++%zn_ax2         6:4 !function=times_2
++%zn_ax4         7:3 !function=times_4
++
++@azz_2x2_o3     ........ ... ..... . .. ... ..... .. off:3  \
++                &azz_n n=2 rv=%mova_rv zn=%zn_ax2 zm=%zm_ax2
++@azz_4x4_o3     ........ ... ..... . .. ... ..... .. off:3  \
++                &azz_n n=4 rv=%mova_rv zn=%zn_ax4 zm=%zm_ax4
++
++ADD_azz_nn_s    11000001 101 ....0 0 .. 110 ....0 10 ...    @azz_2x2_o3
++ADD_azz_nn_s    11000001 101 ...01 0 .. 110 ...00 10 ...    @azz_4x4_o3
++ADD_azz_nn_d    11000001 111 ....0 0 .. 110 ....0 10 ...    @azz_2x2_o3
++ADD_azz_nn_d    11000001 111 ...01 0 .. 110 ...00 10 ...    @azz_4x4_o3
++
++SUB_azz_nn_s    11000001 101 ....0 0 .. 110 ....0 11 ...    @azz_2x2_o3
++SUB_azz_nn_s    11000001 101 ...01 0 .. 110 ...00 11 ...    @azz_4x4_o3
++SUB_azz_nn_d    11000001 111 ....0 0 .. 110 ....0 11 ...    @azz_2x2_o3
++SUB_azz_nn_d    11000001 111 ...01 0 .. 110 ...00 11 ...    @azz_4x4_o3
+-- 
+2.43.0
 
-Oops - I should have realised it had been sent when it failed due to
-missing patches. The tag is the same for both, sorry for the list spam.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
