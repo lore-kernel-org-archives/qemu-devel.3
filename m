@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04137C77B7C
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 13:35:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13DD6C83F04
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 13:38:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWxcQ-0000WH-P8; Wed, 02 Jul 2025 09:35:22 -0400
+	id 1uWxFj-0002u6-9o; Wed, 02 Jul 2025 09:11:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uWxcI-0000T7-O4
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 09:35:17 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWxFe-0002nd-Fy
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 09:11:51 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uWxcG-0002aQ-7i
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 09:35:14 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-6099d89a19cso8585245a12.2
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 06:35:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uWxFb-0006LC-3C
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 09:11:50 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3a4f72cba73so5026132f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 06:11:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751463309; x=1752068109; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YBX6H8cg+eP92HN2jpwxPh/l/T6B+C/auGuYAi7x/vI=;
- b=fQBLbksmpvwhS/+nDoozKtKVcYFUNItFX0mO7BvDxA6v5/C1JLAYoDVOGphYFgDvoU
- T/EXz9wenhCl0huBHRlKXKc5H9VhUdZOlRM27SzLjx1XMYEvA2FBprkGp8y9h96MaLi/
- oZntEI4qPjhEXWauGrcShu7WRERn3Oz7XLNORPeAjvMI2jxPrParYm0iZmBK3ubBdjXc
- 9bVe9k0NWWmLSC4yqdTYKZqtg33bkI/jQgsvPEWMTiZPRM5sYG+Kad4CCOcAy8DvgCp3
- wI7dZxoLO29mrorh1A4vcvHvofbLDdS0abf02dMyjEjYuU4Sembp40l7TdzqAGmigoX3
- JrPw==
+ d=linaro.org; s=google; t=1751461904; x=1752066704; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=C8lvA+l3wNoCTx9JuHtyHUxTUWUWBsRM4PqjqegebxU=;
+ b=lIPzWp2O5Z1frhm2iJRgi+QJsySDOWNCiJW3+zmwt5OzuSSSBeqq2zqGLqXXw8ep4k
+ T9dzbfUHqwtH3R/1TEukBt9It21jwW5j2zrKAbsRPxzJoddfwAKpAIOk5KrXBzbqfV1y
+ Mx2ZnuL8Jnj8zleyCbXBOxgqDTGrb3nKR81T80RzZcUlLPe2ucQv1rgDw4vs1kjEVuOr
+ z6g+rHg9UGwJn7vUomFumr+Mggy79U//XFNjHRRSIYhJvlpYDc65yYZYNOBWIQL3XVN3
+ 58FjTRyMUdkinYyTG8O9wj9CQ+7aVv+ikYJZv6Vy7o5VnO4y5vzKmjV3ePvhLzRK+dmg
+ QF1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751463309; x=1752068109;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=YBX6H8cg+eP92HN2jpwxPh/l/T6B+C/auGuYAi7x/vI=;
- b=B+qrisSFR+bAqRDGJfFJPOUB6CY5bnapp72HkMw/BC2YOoyJACbG5g10I2bJMCcU+y
- wJdakmdczkL1xLuLzIrRc1fZquP2PCStaNdExC4Aq5K1LKy1Lo1NObIFsYjJGGIZ1yPP
- ev65zUfB254J9xEUrekV+BmPWQu07qtysxUgCV3P7MBKqu3ospgtV3dvlHu+wEYner4E
- A+ZXBcOZ96fSdAWzjFwB+Zk78MFrinLNA9LlYb9hKbJD5mHi/pfXmktBdpXvPsztNw9C
- hoRJbkD8TyAC7kLzFpqLKtMFrLTHvMgPVzQNo6eq9pzlyZ08z7xXEaF35o+fhe/lmv+k
- vMZg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW5A26b98nUzAeZQr6hyvMCgJCc06lrKZNmyxxpLOU5T4EEgm8jyEj+fYKikCqwlNmd3AA1DaLc6l97@nongnu.org
-X-Gm-Message-State: AOJu0Yxz+Tuum8yiisEwAQGGUitmXGoSR0tW5wzO8aJ+IywJaTz64z6E
- 78XJ85Lb3C2ZhW9i197LhDUtdgOvvCjfs8SfYr15wtWG1woWBCx5AGaYL51nTBSLRhE=
-X-Gm-Gg: ASbGncuo2/z2I9C+Dqf0zMe3+XKsffqgbxOSPvA4YfFzxL50/zAL5Kq5v/hsfv/wunw
- BJPW7xtqP/Z4FcxmI51CPePg7FVMFkbKzqIWfXQnF+RK7MuvRFYC5bWMsJ7HY67q/DkEbDeJfZO
- cz+D7qJZnm3g2qBIoaE5SHWXgl9AJQ5SSHObLW+/YMZ6Rbu3/iRgNHJS1DwM4hkpzG3aXtHcbMZ
- ksWpuXMjECbKuwSwZs/KCg6K7OJVtPqMKRbQF4HocWPVa6CK7UNAkJBECcfUaCgv5FDZE8NtJR0
- 1hMMH2mTLpGjdp4Sewb0jzXdcjB+Tx9/t5xV1wiuDkZtSmaMfRrphgjYxqo9kmc=
-X-Google-Smtp-Source: AGHT+IEAXGDC/gaIc8QbylmkCYGGTN7q90Everfzpzyaa+FlDVtyub/qwOPrfaPBADuBolTh/ztOlw==
-X-Received: by 2002:a17:907:a604:b0:ae3:cc60:8ce7 with SMTP id
- a640c23a62f3a-ae3cc60930fmr130634566b.19.1751463308695; 
- Wed, 02 Jul 2025 06:35:08 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae353ca2095sm1074966366b.162.2025.07.02.06.35.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Jul 2025 06:35:07 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DBADF5F8BE;
- Wed, 02 Jul 2025 14:35:06 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org,
- berrange@redhat.com,  thuth@redhat.com,  jean-philippe@linaro.org,
- eric.auger@redhat.com,  smostafa@google.com
-Subject: Re: [PATCH v2] tests/functional: test device passthrough on aarch64
-In-Reply-To: <ed4fb068-dcba-4ce0-83d7-3534d3e37509@kaod.org>
- (=?utf-8?Q?=22C=C3=A9dric?= Le
- Goater"'s message of "Wed, 2 Jul 2025 14:51:38 +0200")
-References: <20250627200222.5172-1-pierrick.bouvier@linaro.org>
- <ed4fb068-dcba-4ce0-83d7-3534d3e37509@kaod.org>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Wed, 02 Jul 2025 14:35:06 +0100
-Message-ID: <87ecuyemwl.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1751461904; x=1752066704;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=C8lvA+l3wNoCTx9JuHtyHUxTUWUWBsRM4PqjqegebxU=;
+ b=WXDjC6mzIwiuwpFCmGZoKIP1zyOM9JJ8TP0Igw1a38bcBCqidBOOGJRxPbTx/TsP1L
+ Z/bXCtJbaZr1mitU381Srx4btjjMhUjN4BEPystF0n/42eck30RYEtCFFCz/gB5BhpIP
+ wF8O58NML5ruJRB1h0S5RkLezz7U9H1tMv555r8HI1GqgrbkYQDLCRQgRysVMQ7m9dg9
+ 52Wr6VYxRC/TDl20cboHBebbk5m9ztEEDZBDUAkX1mhFt0XBNC9RaV2WeDKlV15vY2uZ
+ wTOdGHS9r3OV45rCbOwsk/HYvh5IKx65sD2VzK2tqOirvzGg8gn6uS6/k2JMV7zJhun9
+ r5Kw==
+X-Gm-Message-State: AOJu0YxXU8fylaJHwmvMMKzkbFSTlLIcb1y/rL5eNMuM3+z/R4wQp8K6
+ V288UNWDHn8JGBtKmR3Squ1rIljPh0VhVSJR9xhVAwqs1+cUFwVn7o82eJg28KKB/50=
+X-Gm-Gg: ASbGnctWvx4V4PgDeDwf8tjVf3GgSWujUB6KsngXBSCbjY/b54u4kv3hGdpAu29AzL7
+ 1COr7AbIabFqpvoY+/3EevoV9cYklO8qJ0eqP7hrQ7JEdRdebKyPJcEAib9/gwlCx9Jyh7zTE5L
+ fVysFv5SK8TEXbm3+vZyo6ScrHYtpYibVw6NFKoWSMwgF5AII/ch2rVs6fd0NqD4HN9je8kVuKJ
+ b2nc0IafNTm5RlbrSH/bYPsd7hEzKBEI2v76eaTZ3Ccv1NrhzRv8cMHZaovGl5CIuRPqjhku03n
+ hnra3vZuazi3RnZdWMsmwpWFHM2vI5vZt6jl97eRrWcTWJM5Y/8Ylx5oKG+XeCLaqvfmK5RtOZU
+ UV4bSJx987DtuNUAj5cWjjfiX+8OIHQ==
+X-Google-Smtp-Source: AGHT+IGlrNHl8N4sLogigtp0t4ezf+YtP5kFVC2uWInF/frLmUyVBD41303bLOqpnDRshpB8F1IenQ==
+X-Received: by 2002:a05:6000:188f:b0:3a4:d685:3de7 with SMTP id
+ ffacd0b85a97d-3b1f61bdb37mr2366627f8f.8.1751461903755; 
+ Wed, 02 Jul 2025 06:11:43 -0700 (PDT)
+Received: from [192.168.69.166] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a892e595c6sm16467247f8f.66.2025.07.02.06.11.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 02 Jul 2025 06:11:43 -0700 (PDT)
+Message-ID: <1c95b135-f9c1-4c52-8e26-d3e9110b3035@linaro.org>
+Date: Wed, 2 Jul 2025 15:11:42 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 24/68] accel/system: Add 'info accel' on human monitor
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Julian Armistead <julian.armistead@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250701144017.43487-1-philmd@linaro.org>
+ <20250701144017.43487-25-philmd@linaro.org> <878ql7rxxg.fsf@pond.sub.org>
+ <d9ab105e-20ad-4ee2-8655-2b89ed3910b8@linaro.org>
+ <87ms9myf9a.fsf@pond.sub.org> <aGUiXjcEvx7ncBRI@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <aGUiXjcEvx7ncBRI@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,128 +107,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-C=C3=A9dric Le Goater <clg@kaod.org> writes:
+On 2/7/25 14:13, Daniel P. Berrangé wrote:
+> On Wed, Jul 02, 2025 at 02:00:01PM +0200, Markus Armbruster wrote:
+>> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+>>
+>>> On 2/7/25 06:58, Markus Armbruster wrote:
 
-> Hello,
->
-> On 6/27/25 22:02, Pierrick Bouvier wrote:
->> This test allows to document and exercise device passthrough, using a
->> nested virtual machine setup. Two disks are generated and passed to the
->> VM, and their content is compared to original images.
->> Guest and nested guests commands are executed through two scripts,
->> and
->> init used in both system is configured to trigger a kernel panic in case
->> any command fails. This is more reliable and readable than executing all
->> commands through prompt injection and trying to guess what failed.
->> Initially, this test was supposed to test smmuv3 nested emulation
->> (combining both stages of translation), but I could not find any setup
->> (kernel + vmm) able to do the passthrough correctly, despite several
->> tries.
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>   tests/functional/meson.build                  |   2 +
->>   .../test_aarch64_device_passthrough.py        | 142 ++++++++++++++++++
->>   2 files changed, 144 insertions(+)
->>   create mode 100755 tests/functional/test_aarch64_device_passthrough.py
->> diff --git a/tests/functional/meson.build
->> b/tests/functional/meson.build
->> index 3021928a9d4..6cc78abb123 100644
->> --- a/tests/functional/meson.build
->> +++ b/tests/functional/meson.build
->> @@ -13,6 +13,7 @@ endif
->>   test_timeouts =3D {
->>     'aarch64_aspeed_ast2700' : 600,
->>     'aarch64_aspeed_ast2700fc' : 600,
->> +  'aarch64_device_passthrough' : 720,
->>     'aarch64_imx8mp_evk' : 240,
->>     'aarch64_raspi4' : 480,
->>     'aarch64_reverse_debug' : 180,
->> @@ -84,6 +85,7 @@ tests_aarch64_system_quick =3D [
->>   tests_aarch64_system_thorough =3D [
->>     'aarch64_aspeed_ast2700',
->>     'aarch64_aspeed_ast2700fc',
->> +  'aarch64_device_passthrough',
->>     'aarch64_imx8mp_evk',
->>     'aarch64_raspi3',
->>     'aarch64_raspi4',
->> diff --git a/tests/functional/test_aarch64_device_passthrough.py b/tests=
-/functional/test_aarch64_device_passthrough.py
->> new file mode 100755
->> index 00000000000..1f3f158a9ff
->> --- /dev/null
->> +++ b/tests/functional/test_aarch64_device_passthrough.py
->> @@ -0,0 +1,142 @@
->> +#!/usr/bin/env python3
->> +#
->> +# Boots a nested guest and compare content of a device (passthrough) to=
- a
->> +# reference image. Both vfio group and iommufd passthrough methods are =
-tested.
->> +#
->> +# Copyright (c) 2025 Linaro Ltd.
->> +#
->> +# Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> +#
->> +# SPDX-License-Identifier: GPL-2.0-or-later
->> +
->> +import os
->> +
->> +from qemu_test import QemuSystemTest, Asset
->> +from qemu_test import exec_command, wait_for_console_pattern
->> +from qemu_test import exec_command_and_wait_for_pattern
->> +from random import randbytes
->> +
->> +guest_script =3D '''
->> +#!/usr/bin/env bash
->> +
->> +set -euo pipefail
->> +set -x
->> +
->> +# find disks from nvme serial
->> +dev_vfio=3D$(lsblk --nvme | grep vfio | cut -f 1 -d ' ')
->> +dev_iommufd=3D$(lsblk --nvme | grep iommufd | cut -f 1 -d ' ')
->> +pci_vfio=3D$(basename $(readlink -f /sys/block/$dev_vfio/../../../))
->> +pci_iommufd=3D$(basename $(readlink -f /sys/block/$dev_iommufd/../../..=
-/))
->> +
->> +# bind disks to vfio
->> +for p in "$pci_vfio" "$pci_iommufd"; do
->> +    if [ "$(cat /sys/bus/pci/devices/$p/driver_override)" =3D=3D vfio-p=
-ci ]; then
->> +        continue
->> +    fi
->> +    echo $p > /sys/bus/pci/drivers/nvme/unbind
->> +    echo vfio-pci > /sys/bus/pci/devices/$p/driver_override
->> +    echo $p > /sys/bus/pci/drivers/vfio-pci/bind
->> +done
->> +
->> +# boot nested guest and execute /host/nested_guest.sh
->> +# one disk is passed through vfio group, the other, through iommufd
->> +qemu-system-aarch64 \
->
-> Is this binary on the host.ext4 image ?
->
-> If so, the test is testing a chosen QEMU version compiled in the
-> L1 guest image but not the current QEMU version, which is the one
-> running in the L0.
->
-> Anyhow this is a very nice test and an excellent base to build on.
-> As a next step, I=E2=80=99d suggest including tests with NICs using igb
-> devices and igb virtual functions (VFs).
->
-> It would also be great to run the L1 environment using the current
-> version of QEMU. I haven't found a clean way to achieve that yet :/
+>>>> Standard question for new HMP commands that don't wrap around QMP
+>>>> commands: why is the functionality not useful in QMP?
+>>>
+>>> So far the sole use of this command is to prove the 'split accel'
+>>> works by using it in a test:
+>>> https://lore.kernel.org/qemu-devel/20250620172751.94231-43-philmd@linaro.org/
+>>
+>> Different series?  Best to add new interfaces together with their uses.
+>>
+>>> Is it worth overloading QAPI and its documentation, and overload
+>>> the QMP command set (even if prefixing with experimental / hidden 'x-')?
+>>>
+>>> If so, I don't mind implementing yet another "embedded plain HMP string
+>>> to QMP command" in v4, or directly export each debug statistical value
+>>> via QAPI.
+>>
+>> Whatever the reasons for implementing something in HMP only may be, the
+>> commit message should state them.
+>>
+>> "Just for testing" is a valid reason for HMP-only.  It's not obvious
+>> from the command documentation or code, though.
+> 
+> IMHO there is no valid reason for continuing to add HMP-only commands
+> which are not backed by QMP.
+> 
+> A test case can easily run QMP commands, and we accept arbitrary QMP
+> commands with the 'x-' prefix and experimental tag, to serve as the
+> basis for the HMP command printing human readable text. So if anything
+> I'd suggest exposing a QMP command and not bothering with HMP at all.
 
-I sometimes boot up with a virtiofsd mapped to $HOME but it gets a
-little unstable over time and I haven't had a chance to figure out where
-things where going wrong.
+Fine.
 
-We have the containers to reliably build a cross image of QEMU but we
-would have to ensure the guest image matches so we don't run into
-library skew issues. I have had a static build working but thats not a
-very well supported configuration for qemu-system.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
