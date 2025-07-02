@@ -4,75 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE615C7EE30
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 01:07:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74B75C8303D
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 01:45:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWlvw-0003qO-2E; Tue, 01 Jul 2025 21:06:44 -0400
+	id 1uWmWC-0001bE-ET; Tue, 01 Jul 2025 21:44:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uWlvt-0003pT-Ul; Tue, 01 Jul 2025 21:06:41 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uWlvr-00087i-10; Tue, 01 Jul 2025 21:06:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751418399; x=1782954399;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=BRvXTnma/VCNa+QMctOvNLj1cGoxTriQJvp7SMtNDjQ=;
- b=U35/1QJmR06R4pX7S3mBspvwJDBI4ZXpxXg5fxTHD3AIZuGjIXWlb17E
- xjBQlzNc5fOTvD4iO17wVFo96jcxKLLuyniygKNdj0LbfaMUgci9QDjBz
- RAUXbrYeJ1bVJqILIwMDVH0F0q8iHC+XNGng8ZLdPdI4pd54GQO3iROxN
- Ni7j3MMnFj/M3wTvuD0YJHnbPofEejNG/uIAXThEPB9DlGbtmicuNbKRi
- VF3tDS5EOT1qedAdsJ5yfUF7zSKUpT8VojjCr2y+0Hcy/dXgwGwG0+0Bt
- mhkoBZCcQHq819D04Qt2QSlcP0Pcn9JGNfSyltN1Yr8LTGnBoDm6J5zRb Q==;
-X-CSE-ConnectionGUID: KEsRK2DKT6CPtLUj2MNRVw==
-X-CSE-MsgGUID: wasQe4WmRXmuSP7mVplSqQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11481"; a="71126531"
-X-IronPort-AV: E=Sophos;i="6.16,280,1744095600"; d="scan'208";a="71126531"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Jul 2025 18:06:35 -0700
-X-CSE-ConnectionGUID: 4tXMIMrdR7WAClkpR3P2aw==
-X-CSE-MsgGUID: 71esOLeYSyC1RseItddZLg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,280,1744095600"; d="scan'208";a="154020163"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Jul 2025 18:06:31 -0700
-Message-ID: <2667f6af-0e75-4724-9371-0f4713bf6e75@intel.com>
-Date: Wed, 2 Jul 2025 09:06:28 +0800
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uWmW9-0001ao-7Y
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 21:44:09 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uWmW5-0007Qo-9W
+ for qemu-devel@nongnu.org; Tue, 01 Jul 2025 21:44:09 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxWXHZjmRo6_IgAQ--.6862S3;
+ Wed, 02 Jul 2025 09:43:53 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJCxocLTjmRolRcGAA--.34412S3;
+ Wed, 02 Jul 2025 09:43:52 +0800 (CST)
+Subject: Re: [PATCH v3 1/9] hw/loongarch: move some machine define to virt.h
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
+References: <20250627030138.2482055-1-gaosong@loongson.cn>
+ <20250627030138.2482055-2-gaosong@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <85faff6d-f077-413c-76b0-abbb2abd2d7c@loongson.cn>
+Date: Wed, 2 Jul 2025 09:42:16 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i386/cpu: ARCH_CAPABILITIES should not be advertised on
- AMD
-To: Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>
-Cc: Alexandre Chartre <alexandre.chartre@oracle.com>, qemu-devel@nongnu.org,
- pbonzini@redhat.com, qemu-stable@nongnu.org, zhao1.liu@intel.com,
- boris.ostrovsky@oracle.com, maciej.szmigiero@oracle.com
-References: <20250630133025.4189544-1-alexandre.chartre@oracle.com>
- <3a9c8152-3202-4962-a1fe-a2d7fdc33b76@intel.com>
- <abdf31e3-2ada-47d8-9c9d-d875491537b2@oracle.com>
- <c8a0bd48-3f48-4f3b-b3ee-93a14e84a70a@intel.com>
- <aGQ7UrHYWkWE_k6Y@char.us.oracle.com>
+In-Reply-To: <20250627030138.2482055-2-gaosong@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <aGQ7UrHYWkWE_k6Y@char.us.oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+X-CM-TRANSID: qMiowJCxocLTjmRolRcGAA--.34412S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxJF47GFWDCryDCF4ftw43urX_yoWrJw4fpF
+ WayF98tr1UKF47Kwn2gwnxXrnxXws7Gr12kr47u3y8CF47Xw1kur10gwsxXFy5Z3s3GrWI
+ qrn5Xw1UuayDWwbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07jUsqXU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.077,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,170 +82,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/2/2025 3:47 AM, Konrad Rzeszutek Wilk wrote:
-> On Tue, Jul 01, 2025 at 05:47:06PM +0800, Xiaoyao Li wrote:
->> On 7/1/2025 5:22 PM, Alexandre Chartre wrote:
->>>
->>> On 7/1/25 10:23, Xiaoyao Li wrote:
->>>> On 6/30/2025 9:30 PM, Alexandre Chartre wrote:
->>>>> KVM emulates the ARCH_CAPABILITIES on x86 for both Intel and AMD
->>>>> cpus, although the IA32_ARCH_CAPABILITIES MSR is an Intel-specific
->>>>> MSR and it makes no sense to emulate it on AMD.
->>>>>
->>>>> As a consequence, VMs created on AMD with qemu -cpu host and using
->>>>> KVM will advertise the ARCH_CAPABILITIES feature and provide the
->>>>> IA32_ARCH_CAPABILITIES MSR. This can cause issues (like Windows BSOD)
->>>>> as the guest OS might not expect this MSR to exist on such cpus (the
->>>>> AMD documentation specifies that ARCH_CAPABILITIES feature and MSR
->>>>> are not defined on the AMD architecture).
->>>>>
->>>>> A fix was proposed in KVM code, however KVM maintainers don't want to
->>>>> change this behavior that exists for 6+ years and suggest changes to be
->>>>> done in qemu instead.
->>>>>
->>>>> So this commit changes the behavior in qemu so that ARCH_CAPABILITIES
->>>>> is not provided by default on AMD cpus when the hypervisor emulates it,
->>>>> but it can still be provided by explicitly setting arch-capabilities=on.
->>>>>
->>>>> Signed-off-by: Alexandre Chartre <alexandre.chartre@oracle.com>
->>>>> ---
->>>>>    target/i386/cpu.c | 14 ++++++++++++++
->>>>>    1 file changed, 14 insertions(+)
->>>>>
->>>>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->>>>> index 0d35e95430..7e136c48df 100644
->>>>> --- a/target/i386/cpu.c
->>>>> +++ b/target/i386/cpu.c
->>>>> @@ -8324,6 +8324,20 @@ void x86_cpu_expand_features(X86CPU *cpu,
->>>>> Error **errp)
->>>>>            }
->>>>>        }
->>>>> +    /*
->>>>> +     * For years, KVM has inadvertently emulated the ARCH_CAPABILITIES
->>>>> +     * MSR on AMD although this is an Intel-specific MSR; and KVM will
->>>>> +     * continue doing so to not change its ABI for existing setups.
->>>>> +     *
->>>>> +     * So ensure that the ARCH_CAPABILITIES MSR is disabled on AMD cpus
->>>>> +     * to prevent providing a cpu with an MSR which is not supposed to
->>>>> +     * be there, unless it was explicitly requested by the user.
->>>>> +     */
->>>>> +    if (IS_AMD_CPU(env) &&
->>>>> +        !(env->user_features[FEAT_7_0_EDX] &
->>>>> CPUID_7_0_EDX_ARCH_CAPABILITIES)) {
->>>>> +        env->features[FEAT_7_0_EDX] &=
->>>>> ~CPUID_7_0_EDX_ARCH_CAPABILITIES;
->>>>> +    }
->>>>
->>>> This changes the result for the existing usage of "-cpu host" on
->>>> AMD. So it will need a compat_prop to keep the old behavior for old
->>>> machine.
->>>
->>> Right, I will look at that.
->>>
->>>>
->>>> But I would like discuss if we really want to do it in QEMU.
->>>> ARCH_CAPABILITIES is not the only one KVM emulates unconditionally.
->>>> We have TSC_DEADLINE_TIMER as well. So why to treat them
->>>> differently? just because some Windows cannot boot? To me, it looks
->>>> just the bug of Windows. So please fix Windows. And to run with the
->>>> buggy Windows, we have the workaround: "-cpu host,-arch-capabilities"
->>>
->>> Well, the Windows behavior is not that wrong as it conforms to the AMD
->>> Manual
->>> which specifies that ARCH_CAPABILITIES feature and MSR are not defined
->>> on AMD
->>> cpus; while QEMU/KVM are providing an hybrid kind of AMD cpu with Intel
->>> feature/MSR.
->>
->> It is currently reserved bit in AMD's manual. But it doesn't mean it will be
->> reserved forever. Nothing prevents AMD to implement it in the future.
+
+
+On 2025/6/27 上午11:01, Song Gao wrote:
+> move som machine define to virt.h and define avec feature and status bit.
+> Use the IOCSRF_AVEC bit for avdance interrupt controller drivers
+> avecintc_enable[1] and set the default value of the MISC_FUNC_REG bit IOCSRM_AVEC_EN.
+> and set the default value of the MISC_FUNC_REG bit IOCSRM_AVEC_EN.
 > 
-> And if it is implemented in the future (say in 100 years), then we
-> would expose it then by the virtue of -cpu host picking it up
-> automatically.
-
-I wanted to talk about the impact on Windows implementation.
-
-What if AMD implements 1 year later? Then at that time, the Windows will 
-even fail booting on real AMD. Do you think is the correct 
-implementation of Windows?
-
->>
->> Software shouldn't set any expectation on the reserved bit.
+> [1]:https://github.com/torvalds/linux/blob/master/drivers/irqchip/irq-loongarch-avec.c
 > 
-> Exactly. Which is why there is this fix which does not set those bits.
-> It should be done in KVM, but as you saw Sean agreed this is a bug, but
-> he did not want it in the kernel.
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> ---
+>   hw/loongarch/virt.c         |  4 ++++
+>   include/hw/loongarch/virt.h | 20 ++++++++++++++++++++
+>   target/loongarch/cpu.h      | 21 ---------------------
+>   3 files changed, 24 insertions(+), 21 deletions(-)
 > 
-> What about the TSC deadline MSR? That should not be exposed either as it is
-> not implemented on AMD.
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index b15ada2078..6a169d4824 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -574,6 +574,8 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
+>           break;
+>       case FEATURE_REG:
+>           ret = BIT(IOCSRF_MSI) | BIT(IOCSRF_EXTIOI) | BIT(IOCSRF_CSRIPI);
+> +        /*TODO: check bit IOCSRF_AVEC with virt_is_avec_enabled */
+Space needed with /*TODO.
+Does this patch pass with command scripts/checkpatch.pl?
 
-Oh, no. It's not the rule of virtualization.
+> +        ret |= BIT(IOCSRF_AVEC);
+Why is AVEC capability enabled always? If there is TODO, this patch 
+should not be the first one.
 
-With virtualization, we don't need to present the vcpu 100% the same 
-with real silicon. We can expose more (useful) features to vcpu as long 
-as it's architecturally correct.
+>           if (kvm_enabled()) {
+>               ret |= BIT(IOCSRF_VM);
+>           }
+> @@ -603,6 +605,8 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
+>           if (features & BIT(EXTIOI_ENABLE_INT_ENCODE)) {
+>               ret |= BIT_ULL(IOCSRM_EXTIOI_INT_ENCODE);
+>           }
+> +        /* enable avec default */
+> +        ret |= BIT_ULL(IOCSRM_AVEC_EN);
+>           break;
+>       default:
+>           g_assert_not_reached();
+> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+> index 602feab0f0..cc6656619d 100644
+> --- a/include/hw/loongarch/virt.h
+> +++ b/include/hw/loongarch/virt.h
+> @@ -13,6 +13,26 @@
+>   #include "hw/block/flash.h"
+>   #include "hw/loongarch/boot.h"
+>   
+> +#define IOCSRF_TEMP             0
+> +#define IOCSRF_NODECNT          1
+> +#define IOCSRF_MSI              2
+> +#define IOCSRF_EXTIOI           3
+> +#define IOCSRF_CSRIPI           4
+> +#define IOCSRF_FREQCSR          5
+> +#define IOCSRF_FREQSCALE        6
+> +#define IOCSRF_DVFSV1           7
+> +#define IOCSRF_GMOD             9
+> +#define IOCSRF_VM               11
+> +#define IOCSRF_AVEC             15
+> +
+> +#define VERSION_REG             0x0
+> +#define FEATURE_REG             0x8
+> +#define VENDOR_REG              0x10
+> +#define CPUNAME_REG             0x20
+> +#define MISC_FUNC_REG           0x420
+> +#define IOCSRM_EXTIOI_EN        48
+> +#define IOCSRM_EXTIOI_INT_ENCODE 49
+> +#define IOCSRM_AVEC_EN           51
+I suggest to split it into two patches, one is purely code moving 
+between header files, the other is actual code modification.
 
-And with virtualization, people can tailor their own vcpu with different 
-features/vendors/FMS as long as the configuration is architecturally 
-correct.
+Regards
+Bibo Mao
 
->>
->>> Microsoft is fixing that behavior anyway and has provided a preview fix
->>> (OS Build
->>> 26100.4484), so that's good news. But the goal here is also to prevent
->>> such future
->>> misbehavior. So if other features (like TSC_DEADLINE_TIMER) are exposed
->>> while they
->>> shouldn't then they should probably be fixed as well.
->>>> "-cpu host,-arch-capabilities" is indeed a workaround, but it defeats
->>> the purpose
->>> of the "-cpu host" option which is to provide a guest with the same
->>> features as the
->>> host. And this workaround basically says: "provide a guest with the same
->>> cpu as
->>> the host but disable this feature that the host doesn't provide"; this
->>> doesn't make
->>> sense. Also this workaround doesn't integrate well in heterogeneous
->>> environments
->>> (with Intel,  AMD, ARM or other cpus) where you just want to use "-cpu
->>> host" whatever
->>> the platform is, and not have a special case for AMD cpus.
->>
->> As I said, it's just the workaround for users who want to run a specific
->> version of Windows with "-cpu host" on AMD. That's why it's called
->> workaround.
+>   #define LOONGARCH_MAX_CPUS      256
+>   
+>   #define VIRT_FWCFG_BASE         0x1e020000UL
+> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+> index 9538e8d61d..56fc4a1459 100644
+> --- a/target/loongarch/cpu.h
+> +++ b/target/loongarch/cpu.h
+> @@ -21,27 +21,6 @@
+>   #include "cpu-csr.h"
+>   #include "cpu-qom.h"
+>   
+> -#define IOCSRF_TEMP             0
+> -#define IOCSRF_NODECNT          1
+> -#define IOCSRF_MSI              2
+> -#define IOCSRF_EXTIOI           3
+> -#define IOCSRF_CSRIPI           4
+> -#define IOCSRF_FREQCSR          5
+> -#define IOCSRF_FREQSCALE        6
+> -#define IOCSRF_DVFSV1           7
+> -#define IOCSRF_GMOD             9
+> -#define IOCSRF_VM               11
+> -
+> -#define VERSION_REG             0x0
+> -#define FEATURE_REG             0x8
+> -#define VENDOR_REG              0x10
+> -#define CPUNAME_REG             0x20
+> -#define MISC_FUNC_REG           0x420
+> -#define IOCSRM_EXTIOI_EN        48
+> -#define IOCSRM_EXTIOI_INT_ENCODE 49
+> -
+> -#define IOCSR_MEM_SIZE          0x428
+> -
+>   #define FCSR0_M1    0x1f         /* FCSR1 mask, Enables */
+>   #define FCSR0_M2    0x1f1f0000   /* FCSR2 mask, Cause and Flags */
+>   #define FCSR0_M3    0x300        /* FCSR3 mask, Round Mode */
 > 
-> No? It is making the -cpu host expose the real bits.
-> 
-> Not add extra ones.
-> 
->> The root-cause is the wrong behavior of the specific version of Windows. If
->> you don't use the buggy Windows, you don't need the workaround.
-> 
-> Windows probably does this.
-> 
-> if (cpuid(arch_capabilities)
-> 	// do something sensible.
 
- From the description, doesn't Windows do something like
-
-   if (IS_AMD && CPUID(arch_capabilities))
-	ERROR(UNSUPPORTED PROCESSOR)
-
-The problem is software cannot assume CPUID(arch_capabilities) is 0 on AMD.
-
-> That is a correct behavior based on reading the Intel SDM.
-> 
-> The AMD SDM says that if you don't detect a CPUID being set, then don't mess
-> with that MSR that is associated with that - otherwise you will get undefined
-> behaviors.
-
-
-> I am really missing what your agument here is? Is it that guest ABI got
-> screwed up 7 years ago (and the author of the patch agreed it was a
-> bug and so did the KVM maintainer) and we should just continue having this
-> bug because ... what?
-
-No, it's not a bug of KVM, nor QEMU.
 
