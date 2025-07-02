@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 812D0C8303F
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 10:52:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12B8AC8303F
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 10:52:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWv2b-00007X-EI; Wed, 02 Jul 2025 06:50:13 -0400
+	id 1uWv2e-0000DI-3j; Wed, 02 Jul 2025 06:50:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uWv2U-0008VH-QT
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 06:50:07 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1uWv2Z-000065-Ud
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 06:50:12 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uWv2O-0002o0-05
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 06:50:06 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4538a2fc7ffso44870125e9.0
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 03:49:59 -0700 (PDT)
+ id 1uWv2U-00031a-TV
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 06:50:11 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3a50fc819f2so4728867f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 03:50:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751453397; x=1752058197; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751453405; x=1752058205; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DQDGpu2DK2e5jYtAk3+B2u316yUnK6jEtaDaYh1M9uM=;
- b=uxOw+j9FukRiZox/oJAjeEbWyyvyy7IoG3kz8lwEnPE9Adagw+QY21HhdaiBMUVPf6
- rSKj/vwL3UepZnLmyt1xU2ujHt3urGBDYx7aiOLS4W0xshV2+QdGlZPfMvbXQYHQ6d/A
- /Fi+VJVtu5EPGGihZYKh50IlRO0JB4pz9YbcmT3qaSk5ubiApenpZG2SrLmT2HhAlk8v
- ZJM8LyGv6FC5aqC3zzSZig8yi0uCROBUzTh52aGa4IMA1G9B0hPMMo/dumd57iEv7OIC
- ZmIIE/rYuOMx+csixFdQ6QbIjd6GKEySxiAaZo9jYcPmMz0jGfYTst5/chP6XR7RXQVg
- VQBg==
+ bh=kaLVJH5otwR+otl8BtaHu4M3HmdksGlIfafwyt6VO9Q=;
+ b=IgRJiOBlPLJ1I/YSK+K0CXg7NpOF6KRNUg1BTqBdRo4y/ywoUhE5oUwNSUSA9106pG
+ SIYXuYBiKMfEyrAPwgyTzlLcguKFYjXUZfIUbQkPJFTyjBbHlKNWI8hhZb1Zw4enLpZJ
+ TLz/JRiNxQtk2BZQDuzDXva0as/q1wfBd71Rv2FoPqoUwMO3oNXPjP1iNSgHuaBzalDB
+ xeASBlAKPC+Ocde29gN4+87pfshthoYaHpL4wd6X3dL/r93H2miEXmuWgusVnrDdbbiu
+ N1UIgL0q5IrPiqe6uNINxxA3R3EjJ3qEag0kcBG0du4YG2cBkHxZLhvcrYl16FtEREbz
+ Xvdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751453397; x=1752058197;
+ d=1e100.net; s=20230601; t=1751453405; x=1752058205;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DQDGpu2DK2e5jYtAk3+B2u316yUnK6jEtaDaYh1M9uM=;
- b=FpXnptgTgo0cjaqRae6d4HVlL9haF8zSHCgJmqHX74k7c0nhkWCLtveybx+nspo8pg
- xGQjQ368iwTlotilD1wa8ZntG8gTvOhHxRS5EtMPqeGDRSgwv2mCrnFHLR1cXaNRSO0L
- LgUbRHoZLa+fZw6hAUbcrS+ucDaJsl3UHzzRHqZ8oUL6YpijIcPlr3bjZ6+NPxBK35ep
- I4lcLTI+dstf4AepcmesigoUB9dGXiuVQ16kGw0st8XFSrv7sTV4UT5YB4pbnGUitrqi
- vOOWyIchYqfKVDIiQMenytt2MN/K+UyAUjxpzNwUDbNN6uytyeFAPhSeiiK64FYWuqA8
- nBGA==
-X-Gm-Message-State: AOJu0Yxn/sD8DcU5hU6MzcTlaMx1Is1BcFlcWNi0IK8LnzuZsdcsA++D
- /T3klgvVifXt6hWyWSqr8kopoQbvhKnjy6suQd8u0Nmh+jmQpHX+Um/dSTvqZj4ja2U=
-X-Gm-Gg: ASbGnctzgDCq6W/nLku6FgEoegvOu7wY//6L0vvnSqxnvZCRuIp+OddqhofkcBC+FV/
- RISo2KgIrjDhbUaTyWODylEp17ek2PkE2/x67OtOhXU1LirzsR2OWhJlJuSaNITCmZsI0UJZuDz
- 7qu8dVvPK+KHSW6SdfYdu+GBCnKvBWqo+Ny4/04S5w0+9PlpXppnegY0L8uacaklNqVHCDpEvLC
- //7Z2wWuYN+w77xUiGUrsaYBAK3fvXhqOqSA1Z5U7yNQ0vzbEovC9KlgiRr2tK/B6qbPBeA5GR1
- l6XzbzuhDX9xq/aOowHhYtAXDQ48IUOh+RME1GRXVIxyQEWcZGovrk7Q7E4/mkg=
-X-Google-Smtp-Source: AGHT+IG35Lq9GVUwjVqutJmVlIZPd4qpsF9g4eWdlLENhMgRhfxJh0ha/WjnxOIkNpjyjbTJzsb4BQ==
-X-Received: by 2002:a05:600c:609a:b0:453:10c1:cb21 with SMTP id
- 5b1f17b1804b1-454a3c25487mr24137365e9.8.1751453397516; 
- Wed, 02 Jul 2025 03:49:57 -0700 (PDT)
+ bh=kaLVJH5otwR+otl8BtaHu4M3HmdksGlIfafwyt6VO9Q=;
+ b=g9G07sLnAF10//hTB/G3c0NQCuXa7kvq3779Tkv2V+VbEiDkXxhACglYFafLxej4fh
+ pNgKJJcvGk01QVTx0FXPH9oTdwVS1sxvNKNm7sjcnX/8Lr3ko3RLhG1gj89oWLgyQHuH
+ OevrpuSe6DRQRHPnquZmeu+UpRY2vQkyxrWNABvs2fp8yb+Z7ZlkkucWLtwc7H25qdZB
+ jx+xq49ynohDJ/JE2T6AST0HwIkLtC1jqzqqrsnMXf6xIltQpHDs2qX/lSqTpBy9ISdD
+ yYSFKO/idneY+uMJY/sAmLzvy4uVoBTnvafTD8h3GD0VMGKAYu3kSzQsw/D4DlTvFFEE
+ WgeQ==
+X-Gm-Message-State: AOJu0Yx6Ak+H4Ya9vum2/dIEEaaAmuUw1Hnmh1tfzNkzeBDf4HWIH3YI
+ v8iLc9m7GaBwox+pCIwhn7uCcKYPD76Thua6efSfS+7llhUokT+SCp6dmMcfaOQFF28=
+X-Gm-Gg: ASbGncvN6GjvlXlrAHM2O3GudEmFmrbFnJ/ylMYhYLyjd9PHTo7vqxZ4xOxMKiSep7f
+ pqLPmlxAbeQcYMULOMAsaQDkAELCTLaDZ/WcyVxAJCkvlbu8N5Os8QJvS3my7n53B0PMyQ3g7bS
+ pCSbqj+y6dOPGH5wYLitewu63K8lrROhEFbJRlM6YDYLhfYjG9wueL8Wilo6Y2vitXXex4Y/mxk
+ 1yfKo8OdueWe8zxLbs/S1sBBr99AEX0roGbC3bRX8T8XH5SLokG39XrdOaf325F6H7e1qPijWYQ
+ j4mIUuMIur/l5UlrzgJ9XnDxubBNBfuwkDRN1AVWU4NgGf1RS6B6UJalKXg+t/M=
+X-Google-Smtp-Source: AGHT+IGc9umVJPo23eo45L18kx7azIwjJrTQ1i6krJLRzAx+GNxtnYVM4q0KYSWxGw/aQHouIzI2vw==
+X-Received: by 2002:a05:6000:2582:b0:3a5:52d4:5b39 with SMTP id
+ ffacd0b85a97d-3b1fd74c462mr1743386f8f.8.1751453404980; 
+ Wed, 02 Jul 2025 03:50:04 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a88c7fb67dsm16071010f8f.35.2025.07.02.03.49.56
+ 5b1f17b1804b1-4538f2fec5fsm173621235e9.40.2025.07.02.03.49.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Jul 2025 03:49:56 -0700 (PDT)
+ Wed, 02 Jul 2025 03:50:00 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id F097C5F8D6;
- Wed, 02 Jul 2025 11:49:55 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 593025F8DC;
+ Wed, 02 Jul 2025 11:49:56 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
+Cc: Rowan Hart <rowanbhart@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-arm@nongnu.org (open list:ARM PCI Hotplug)
-Subject: [PULL 02/15] tests/functional: Add PCI hotplug test for aarch64
-Date: Wed,  2 Jul 2025 11:49:42 +0100
-Message-ID: <20250702104955.3778269-3-alex.bennee@linaro.org>
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PULL 06/15] plugins: Add register write API
+Date: Wed,  2 Jul 2025 11:49:46 +0100
+Message-ID: <20250702104955.3778269-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250702104955.3778269-1-alex.bennee@linaro.org>
 References: <20250702104955.3778269-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,126 +105,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gustavo Romero <gustavo.romero@linaro.org>
+From: Rowan Hart <rowanbhart@gmail.com>
 
-Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
-hot-unplug on arm64.
+This patch adds a function to the plugins API to allow plugins to write
+register contents. It also moves the qemu_plugin_read_register function
+so all the register-related functions are grouped together in the file.
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Acked-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250528203137.1654964-1-gustavo.romero@linaro.org>
-[AJB: trimmed boilerplate for checkpatch, simplified invocations]
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
+Message-ID: <20250624175351.440780-3-rowanbhart@gmail.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20250627112512.1880708-3-alex.bennee@linaro.org>
+Message-ID: <20250627112512.1880708-7-alex.bennee@linaro.org>
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index d1672fda8d..850588fb64 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2089,6 +2089,12 @@ S: Supported
- F: include/hw/pci/pcie_doe.h
- F: hw/pci/pcie_doe.c
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index 3a850aa216..cfe1692ecb 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -871,7 +871,8 @@ struct qemu_plugin_register;
+ /**
+  * typedef qemu_plugin_reg_descriptor - register descriptions
+  *
+- * @handle: opaque handle for retrieving value with qemu_plugin_read_register
++ * @handle: opaque handle for retrieving value with qemu_plugin_read_register or
++ *          writing value with qemu_plugin_write_register
+  * @name: register name
+  * @feature: optional feature descriptor, can be NULL
+  */
+@@ -893,6 +894,41 @@ typedef struct {
+ QEMU_PLUGIN_API
+ GArray *qemu_plugin_get_registers(void);
  
-+ARM PCI Hotplug
-+M: Gustavo Romero <gustavo.romero@linaro.org>
-+L: qemu-arm@nongnu.org
-+S: Supported
-+F: tests/functional/test_aarch64_hotplug_pci.py
++/**
++ * qemu_plugin_read_register() - read register for current vCPU
++ *
++ * @handle: a @qemu_plugin_reg_handle handle
++ * @buf: A GByteArray for the data owned by the plugin
++ *
++ * This function is only available in a context that register read access is
++ * explicitly requested via the QEMU_PLUGIN_CB_R_REGS flag.
++ *
++ * Returns the size of the read register. The content of @buf is in target byte
++ * order. On failure returns -1.
++ */
++QEMU_PLUGIN_API
++int qemu_plugin_read_register(struct qemu_plugin_register *handle,
++                              GByteArray *buf);
 +
- ACPI/SMBIOS
- M: Michael S. Tsirkin <mst@redhat.com>
- M: Igor Mammedov <imammedo@redhat.com>
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index e9f19d54a2..53721c97ec 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -83,6 +83,7 @@ tests_aarch64_system_quick = [
- tests_aarch64_system_thorough = [
-   'aarch64_aspeed_ast2700',
-   'aarch64_aspeed_ast2700fc',
-+  'aarch64_hotplug_pci',
-   'aarch64_imx8mp_evk',
-   'aarch64_raspi3',
-   'aarch64_raspi4',
-diff --git a/tests/functional/test_aarch64_hotplug_pci.py b/tests/functional/test_aarch64_hotplug_pci.py
-new file mode 100755
-index 0000000000..c9bb7f1d97
---- /dev/null
-+++ b/tests/functional/test_aarch64_hotplug_pci.py
-@@ -0,0 +1,72 @@
-+#!/usr/bin/env python3
-+#
-+# The test hotplugs a PCI device and checks it on a Linux guest.
-+#
-+# Copyright (c) 2025 Linaro Ltd.
-+#
-+# Author:
-+#  Gustavo Romero <gustavo.romero@linaro.org>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
++/**
++ * qemu_plugin_write_register() - write register for current vCPU
++ *
++ * @handle: a @qemu_plugin_reg_handle handle
++ * @buf: A GByteArray for the data owned by the plugin
++ *
++ * This function is only available in a context that register write access is
++ * explicitly requested via the QEMU_PLUGIN_CB_RW_REGS flag.
++ *
++ * The size of @buf must be at least the size of the requested register.
++ * Attempting to write a register with @buf smaller than the register size
++ * will result in a crash or other undesired behavior.
++ *
++ * Returns the number of bytes written. On failure returns 0.
++ */
++QEMU_PLUGIN_API
++int qemu_plugin_write_register(struct qemu_plugin_register *handle,
++                              GByteArray *buf);
 +
-+from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
-+from qemu_test import BUILD_DIR
+ /**
+  * qemu_plugin_read_memory_vaddr() - read from memory using a virtual address
+  *
+@@ -915,22 +951,6 @@ QEMU_PLUGIN_API
+ bool qemu_plugin_read_memory_vaddr(uint64_t addr,
+                                    GByteArray *data, size_t len);
+ 
+-/**
+- * qemu_plugin_read_register() - read register for current vCPU
+- *
+- * @handle: a @qemu_plugin_reg_handle handle
+- * @buf: A GByteArray for the data owned by the plugin
+- *
+- * This function is only available in a context that register read access is
+- * explicitly requested via the QEMU_PLUGIN_CB_R_REGS flag.
+- *
+- * Returns the size of the read register. The content of @buf is in target byte
+- * order. On failure returns -1.
+- */
+-QEMU_PLUGIN_API
+-int qemu_plugin_read_register(struct qemu_plugin_register *handle,
+-                              GByteArray *buf);
+-
+ /**
+  * qemu_plugin_scoreboard_new() - alloc a new scoreboard
+  *
+diff --git a/plugins/api.c b/plugins/api.c
+index 3c9d4832e9..6514f2c76a 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -433,6 +433,25 @@ GArray *qemu_plugin_get_registers(void)
+     return create_register_handles(regs);
+ }
+ 
++int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByteArray *buf)
++{
++    g_assert(current_cpu);
 +
-+class HotplugPCI(LinuxKernelTest):
++    return gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) - 1);
++}
 +
-+    ASSET_KERNEL = Asset(
-+        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
-+         '20230607+deb12u11/images/netboot/debian-installer/arm64/linux'),
-+         'd92a60392ce1e379ca198a1a820899f8f0d39a62d047c41ab79492f81541a9d9')
++int qemu_plugin_write_register(struct qemu_plugin_register *reg,
++                               GByteArray *buf)
++{
++    g_assert(current_cpu);
 +
-+    ASSET_INITRD = Asset(
-+        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
-+         '20230607+deb12u11/images/netboot/debian-installer/arm64/initrd.gz'),
-+         '9f817f76951f3237bca8216bee35267bfb826815687f4b2fcdd5e6c2a917790c')
++    if (buf->len == 0 || qemu_plugin_get_cb_flags() != QEMU_PLUGIN_CB_RW_REGS) {
++        return -1;
++    }
 +
-+    def test_hotplug_pci(self):
++    return gdb_write_register(current_cpu, buf->data, GPOINTER_TO_INT(reg) - 1);
++}
 +
-+        self.set_machine('virt')
-+
-+        self.vm.add_args('-m', '512M',
-+                         '-cpu', 'cortex-a57',
-+                         '-append',
-+                         'console=ttyAMA0,115200 init=/bin/sh',
-+                         '-device',
-+                         'pcie-root-port,bus=pcie.0,chassis=1,slot=1,id=pcie.1',
-+                         '-bios',
-+                         self.build_file('pc-bios', 'edk2-aarch64-code.fd'))
-+
-+        # BusyBox prompt
-+        prompt = "~ #"
-+        self.launch_kernel(self.ASSET_KERNEL.fetch(),
-+                           self.ASSET_INITRD.fetch(),
-+                           wait_for=prompt)
-+
-+        # Check for initial state: 2 network adapters, lo and enp0s1.
-+        exec_command_and_wait_for_pattern(self,
-+                                          'ls /sys/class/net | wc -l',
-+                                          '2')
-+
-+        # Hotplug one network adapter to the root port, i.e. pcie.1 bus.
-+        self.vm.cmd('device_add',
-+                    driver='virtio-net-pci',
-+                    bus='pcie.1',
-+                    addr=0,
-+                    id='na')
-+        # Wait for the kernel to recognize the new device.
-+        self.wait_for_console_pattern('virtio-pci')
-+        self.wait_for_console_pattern('virtio_net')
-+
-+        # Check if there is a new network adapter.
-+        exec_command_and_wait_for_pattern(self,
-+                                          'ls /sys/class/net | wc -l',
-+                                          '3')
-+
-+        self.vm.cmd('device_del', id='na')
-+        exec_command_and_wait_for_pattern(self,
-+                                          'ls /sys/class/net | wc -l',
-+                                          '2')
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+ bool qemu_plugin_read_memory_vaddr(uint64_t addr, GByteArray *data, size_t len)
+ {
+     g_assert(current_cpu);
+@@ -453,13 +472,6 @@ bool qemu_plugin_read_memory_vaddr(uint64_t addr, GByteArray *data, size_t len)
+     return true;
+ }
+ 
+-int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByteArray *buf)
+-{
+-    g_assert(current_cpu);
+-
+-    return gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) - 1);
+-}
+-
+ struct qemu_plugin_scoreboard *qemu_plugin_scoreboard_new(size_t element_size)
+ {
+     return plugin_scoreboard_new(element_size);
 -- 
 2.47.2
 
