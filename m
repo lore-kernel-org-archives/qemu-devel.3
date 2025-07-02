@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9D1DC83F03
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 22:00:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4257C8303C
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 22:00:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uX5Tz-0003P0-Pp; Wed, 02 Jul 2025 17:59:11 -0400
+	id 1uX5U9-0003Vb-9D; Wed, 02 Jul 2025 17:59:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uX5Ty-0003Ns-GU
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 17:59:10 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1uX5U7-0003Ur-8j
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 17:59:19 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uX5Tw-0003fQ-R0
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 17:59:10 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 562LQdR8007931;
- Wed, 2 Jul 2025 21:59:06 GMT
+ id 1uX5U5-0003lD-SI
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 17:59:19 -0400
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 562LQeR9025466;
+ Wed, 2 Jul 2025 21:59:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=kdVfxQGUysBPpDLYSckkY36Yu3TUl1HNI99P+eYOMEE=; b=
- aAxVI9rkDEslavWLI9alJWg/61putc7+R5t7nIt+Zr0qCrqWOb2XPmHLXHOTtD+Z
- UDcaG8eVDsVY3tldrMo1lEi9pbXQhZtG2qx6kNX3op6IZ0iGZ13FAiEi3Pxxchtw
- 810wGWTUWZRGBGubBU0L1vHdprJwy6Pt51g/aROZb56Vqq45UZtgJOHINKkCZh+g
- e3P+m5JiWbrqeptGQxnXhpecJcs99u2mDl3GX/YncjwYd+kbz2e99anflLNFWnZc
- ymsWkkngyiOnX/bfIosRxh1U+nT4RbPaOeJRz0nTsatttf3bmONlS5YPIYceEpxX
- ND1aRwXUQVrSyhHhPmUznw==
+ corp-2025-04-25; bh=A2iw9xMEROQhItLWlKKFEYuuia/3fs0O33KjNbXWGo0=; b=
+ qIAtzyabL8pz8aLZvDJ+0z6XcDyqpUUEDSdKQ/UHPoe5qqzz38UfWX646eYc4YH+
+ Yb/3BbEThuL1f3cPUmYpu8BQvi4J9ykq0Cmi+r1Au1JEcBfWEp9lR0W2+qsr3iq+
+ Vc5KxYzMtx9SLVQtTPtekKNy0UA0Ee8QcRcdRwjGnZfoNyRE22njsAT8auogGI7j
+ IsKluEcVQCh5oGm4ZCigQQMv8iTgx7bxAXvBXtUWXnTu6OdqabFtHhd9drJezTXJ
+ gVm+BlACgkSxmLq56QynZNiWA+YSjr7JVMKuATblaezVGtbmYRGSdW/mawVe2Bi8
+ 1wr6gozLQGCCZNN4FJohOw==
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47j7af7vh2-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47j6tffvgg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 02 Jul 2025 21:59:06 +0000 (GMT)
+ Wed, 02 Jul 2025 21:59:15 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 562LbuVM033681; Wed, 2 Jul 2025 21:59:05 GMT
+ with ESMTP id 562LoTe5033766; Wed, 2 Jul 2025 21:59:14 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 47j6ubtd22-1
+ 47j6ubtd7w-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 02 Jul 2025 21:59:05 +0000
+ Wed, 02 Jul 2025 21:59:14 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 562Lwxg8020012;
- Wed, 2 Jul 2025 21:59:04 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 562LwxgW020012;
+ Wed, 2 Jul 2025 21:59:14 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 47j6ubtcxb-8; Wed, 02 Jul 2025 21:59:04 +0000
+ ESMTP id 47j6ubtcxb-20; Wed, 02 Jul 2025 21:59:13 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -63,9 +63,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V6 07/21] physmem: qemu_ram_get_fd_offset
-Date: Wed,  2 Jul 2025 14:58:44 -0700
-Message-Id: <1751493538-202042-8-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V6 19/21] iommufd: preserve DMA mappings
+Date: Wed,  2 Jul 2025 14:58:56 -0700
+Message-Id: <1751493538-202042-20-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1751493538-202042-1-git-send-email-steven.sistare@oracle.com>
 References: <1751493538-202042-1-git-send-email-steven.sistare@oracle.com>
@@ -77,27 +77,26 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
  mlxlogscore=999 phishscore=0 suspectscore=0 mlxscore=0 bulkscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2507020182
-X-Proofpoint-ORIG-GUID: obi8YBlHRUWbknvqO6-RgryWWTzFEWcS
-X-Proofpoint-GUID: obi8YBlHRUWbknvqO6-RgryWWTzFEWcS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDE4MSBTYWx0ZWRfX91abZd+7PJS0
- 2zLARf01cZu8JxiSC8MniSa+9NndMDEv4+WEhPbR33RA3t3sjTGkn1d/zfiaK4agcgVy9/0rHGz
- GdGX9JOAflzMkH+kdbkurJUJ9Dvc9E0j2Q0JL611h1BH9Qm9JNoQRFIjQBN8VIFPuFjVfasJcrf
- 1Z+LU52MdEaQd2Be3jK8Y9edZ4Aw8R1wOM8TgRd4IfnVqKhgMYfE7wOl8uM++k8d+H2NN3CfzAN
- 67bVA5cWGvrWu5CTeVPiZf4q5wXx6QE+IK6XgKdfJMiBW6PiJSlDJ3hMKeYme40AAQxKKZEVNzj
- cd/JQgG5eZhKAls+y+Prwy3Ems7j3Wb9ZgGdJZqTz9l5ON8Kg9g181oxNNEOgefgKD5Sale8qg3
- xIF42AsQ9m/Ru0X7LzFDUK9rXtHMjZiYZfAdy2lWpcHS6tcLkefgbaG8p3fBnIMo56NMVcMV
-X-Authority-Analysis: v=2.4 cv=b5Cy4sGx c=1 sm=1 tr=0 ts=6865abaa cx=c_pps
+X-Authority-Analysis: v=2.4 cv=CMMqXQrD c=1 sm=1 tr=0 ts=6865abb3 cx=c_pps
  a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8 a=QyXUC8HyAAAA:8
- a=s_ck3szjhOtuhh_aLR8A:9
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+ a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=QyXUC8HyAAAA:8 a=jxt47dSdNjvG7kEyeNwA:9
+X-Proofpoint-GUID: tbev4fqQuwKFOKrhIt4S1jA-j1V_wP33
+X-Proofpoint-ORIG-GUID: tbev4fqQuwKFOKrhIt4S1jA-j1V_wP33
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAyMDE4MiBTYWx0ZWRfX6vJ6gZAc3Q8k
+ V7QCPQTNj+HP27acEYOShsklS0sDjJRLSqbzNlTR+5ofFPGI18Zws4s1sUFznMrjw9RQIoe38BO
+ vQmAttRXMWZJJSi+8f1bKUqvAalFRwAuuRsVUJa1T8Pk76odhhr4Ib3c+gw+1rRIKjaV9jOBalo
+ hqbUamu5oeaMpDsz4J/Jw+s00E6XFEL7vC3LmN7nDadwqaYjjjgP8Zsd2gavCUmRty4VQgiUyxP
+ kg38sPZzxRaO/SbyN8PSz5JD/fqxUxq1QlraTg9AeU4aG5iFdFKvPcT9gty9Z9kDo2ngyi8yhcQ
+ J4x/mphEnFBYawKv+F4LZSe+flgAOsvCzx0e5ryyDQ6miSyd7yTfFkiY7ugEirJ+XEScPz5JuNt
+ Db7TYpav1wykxWBQT9hL+c5UuJemygzWGpjTvVhtqYbPG4qPxZ433Z2s21Ow93N9WjCGDBVz
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -115,45 +114,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define qemu_ram_get_fd_offset, so CPR can map a memory region using
-IOMMU_IOAS_MAP_FILE in a subsequent patch.
+During cpr-transfer load in new QEMU, the vfio_memory_listener causes
+spurious calls to map and unmap DMA regions, as devices are created and
+the address space is built.  This memory was already already mapped by the
+device in old QEMU, so suppress the map and unmap callbacks during incoming
+CPR.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/exec/cpu-common.h | 1 +
- system/physmem.c          | 5 +++++
- 2 files changed, 6 insertions(+)
+ backends/iommufd.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index a684855..9b658a3 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -85,6 +85,7 @@ void qemu_ram_unset_idstr(RAMBlock *block);
- const char *qemu_ram_get_idstr(RAMBlock *rb);
- void *qemu_ram_get_host_addr(RAMBlock *rb);
- ram_addr_t qemu_ram_get_offset(RAMBlock *rb);
-+ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb);
- ram_addr_t qemu_ram_get_used_length(RAMBlock *rb);
- ram_addr_t qemu_ram_get_max_length(RAMBlock *rb);
- bool qemu_ram_is_shared(RAMBlock *rb);
-diff --git a/system/physmem.c b/system/physmem.c
-index ff0ca40..130c148 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1593,6 +1593,11 @@ ram_addr_t qemu_ram_get_offset(RAMBlock *rb)
-     return rb->offset;
- }
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index e091792..2a33c7a 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -245,6 +245,10 @@ int iommufd_backend_map_file_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+         .length = size,
+     };
  
-+ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb)
-+{
-+    return rb->fd_offset;
-+}
++    if (cpr_is_incoming()) {
++        return 0;
++    }
 +
- ram_addr_t qemu_ram_get_used_length(RAMBlock *rb)
- {
-     return rb->used_length;
+     if (!readonly) {
+         map.flags |= IOMMU_IOAS_MAP_WRITEABLE;
+     }
+@@ -274,6 +278,10 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+         .length = size,
+     };
+ 
++    if (cpr_is_incoming()) {
++        return 0;
++    }
++
+     ret = ioctl(fd, IOMMU_IOAS_UNMAP, &unmap);
+     /*
+      * IOMMUFD takes mapping as some kind of object, unmapping
 -- 
 1.8.3.1
 
