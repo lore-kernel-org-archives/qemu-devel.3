@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01697C8303F
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 12:35:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FDC8C83F05
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Jul 2025 12:35:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uWwfk-0007YA-Ak; Wed, 02 Jul 2025 08:34:44 -0400
+	id 1uWwfh-0007Wp-HD; Wed, 02 Jul 2025 08:34:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWwfg-0007WT-Rr
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:34:41 -0400
-Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
+ id 1uWwfa-0007Rm-8y
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:34:34 -0400
+Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uWwfV-0000xG-1Z
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:34:40 -0400
-Received: by mail-oo1-xc32.google.com with SMTP id
- 006d021491bc7-61208b86da2so89355eaf.2
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:34:26 -0700 (PDT)
+ id 1uWwfI-0000uS-Kf
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 08:34:33 -0400
+Received: by mail-ot1-x32c.google.com with SMTP id
+ 46e09a7af769-72c16e658f4so2262853a34.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 05:34:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751459665; x=1752064465; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GH6Ad5BaJtxdBkiinUY7/X5vKVIV/ggzsySF13b5Img=;
- b=SgKOKecxzCrwISsNROrq6jEF/PJaTZXmRt/PNtiBSYoxP+7IrF7LTakvps5HJdfybd
- wcxgjYw7j/kIZqJlgkn9K7jICauv3vG1lTC6LdPMk4tXansdB+PWOdovWJqRRMdNGdAZ
- RhP68Oiiuk5Xf6z3zYurpiuV61dAQEb2ZvigRV1UvBEQPb9fO+dFQ4j5kBXZEgYtCPGY
- LLBUZxU8P6iGBqHxBdI79ttY4XTlAwrf+gTgtfKddQM05W65V4dhnJt1rrBQjBxlq+1g
- nQIhkkUTl5vvC5rw2ByrueVHPK+gz/U/6MXgBXAbYl0AnmMrcAOJTnKbxEhl5ICu7QP9
- So5A==
+ d=linaro.org; s=google; t=1751459653; x=1752064453; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=BNNMHr09tTasVhE+8wqFbbS+T9GKbkOkcJYOlgxT0c0=;
+ b=NBa7i8vdvo2o7txH7zY8TKcAGvO4FJDhdtjC2rJhm1uCeBGWvjhJmi0b4lNXp/VBEb
+ oykJAMBkV8ZPxPWocRUSPFPBM5uA3tj7hYhI3SsQO/gB9BMr5pdVNbrRqwofLQJRfsxB
+ tDmVziSMOoN+sXzq3r7rVa0UnG+zDyB4ijbwBZS4jy9PEWqncpftK22h1Kc+TbyVQx3e
+ gVewlxlSsM6QdjQ1ZpBQOJruitnwcCNkAIRUFzygKlEYaKFPUMhq9X4VPWssPRt2jwCS
+ YcMOMHFdGk2WzPpCnnjddWqx5BMLzcVtQWVFS/5SOSYI3CIzwHJUpH/na3mhJ/0cr/tR
+ x+Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751459665; x=1752064465;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GH6Ad5BaJtxdBkiinUY7/X5vKVIV/ggzsySF13b5Img=;
- b=pZJ3PzpWNe5bhgn7v4z2Lm9zv5kMXdcBxD6Swcny7LIVF5Nq4ANSGCGgB4CYuSAfyG
- npAj6WZAnHXO8kEdg9CQs7g8jISaCuMxL3FWh4yPrXGs12iST/UVW8nPcWLB95KwLGTG
- ded3kyn6LlMSO0uMqBe5pOjLPy7HMr5iZtdPvB33asNrUciTEtuD3anbB31tSqHgumIT
- goYJGaFiFT6ZMqd9fQbNIg0qRxqRHOGqljC3E7SQoO0nbfLvtof+i8IBBnl897vYrdVA
- VBfoUBJUt2ToJh6mjujv6Mcnh9R8730w90FyNLqP18Cn0DWt022q8UZru+l+N92X4Cbs
- iwrw==
-X-Gm-Message-State: AOJu0YxISPRK8xIYGDKv/yq1iLpa49X6nsTl4J8wvg7Bky5PoXuUROqg
- 3JwZl6PnxmcstbLcODptX95MkiW6yWMsfC+qbhhgFr9b0brSSCIZBi613eNanXVhTfqRQXlprUP
- bLCHDPDI=
-X-Gm-Gg: ASbGncv0WdTRkOtdYJHgHtrKvSbW9mcTILUgyzFqK/skYQaInl+6LrTuXquLnh/rLrj
- W3BcypfzSEZUey/4AXn22J1AMhjZkTQSHXDZFYcywGPNjNrafO0eULBjWYDz1ih8lJNWuzqXtOK
- Aka1ZJxdrgzkfbkCPFDZy2zo6LsqgKMoRK8U/oxTS+0/99bYdLpQuNRlwi0ZDs2K1yqhanbN/HS
- JdOwLEKgANkPHohlz+wLyy0RlF7I1Eq/1hr/VSp4YmYWRlr8NgLLdKmN6Sqza9IrUXHc+qrwFfO
- LwAYhny5q78xzKmmUbkyT9JNnxyA9je9Z/u31yimLkNNoAo/5OGAQyv+OsuM5g7b6j3h/g==
-X-Google-Smtp-Source: AGHT+IG3bakJjbvMH612WW1smrEjnW9KCsx79wZA82igEYybHVxfiKwKaxpF3jTvEaM2+50xgug7rw==
-X-Received: by 2002:a05:6870:9581:b0:2d4:d07c:7cc5 with SMTP id
- 586e51a60fabf-2f5a8a11816mr1960436fac.12.1751459665206; 
- Wed, 02 Jul 2025 05:34:25 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1751459653; x=1752064453;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BNNMHr09tTasVhE+8wqFbbS+T9GKbkOkcJYOlgxT0c0=;
+ b=jvZbH2epDtTTQPCSPwzwLuLK8XQaBKWuBnSQtZ9ZNfnhYYnVsUmR5CXEXndOzpkQXI
+ R66v1Z6MXc+hO8i5iUhEJQikDQJs1/D06eW8F431ZbL9Tlz2emodSMHxKvkrLBQstsWd
+ LG1+olZc9szqGRv2nQ5oqlcuI04lVUd8ebiJo4iAFX84xqFvfS+IF0WRu7bKo42lTeg3
+ vvdRd8/Jhma++IqG24vp3xNTEYJhft8IVBVtdMOmPg4pMP2NzpaGeO0PtJFYGJM0JOdn
+ psI+lap7WVgVx2WOtbuGwCmzmCelBcKpj28otNVygj1KBtVbhN6kyLTelkZuDuJ2Km+E
+ wrLQ==
+X-Gm-Message-State: AOJu0YzwnHxBV7QiwhmIkYLNb3ehjxnmKhq3ZCKlTuNDX48waIIGj42l
+ sRTepZ2+47lPDXSNPFO9WjyeGcExlW+1etTBmdg51GyrDe/rZrniEYInDDnPzuRmyj64q/g2gcU
+ 1iKqfobQ=
+X-Gm-Gg: ASbGncu8Em91KaajZjC/wN7ku5fgsOGVw3JWKuJnr8t/1s5ft0I5/V/blXd0Dhi/Did
+ qGvjbnbCQc5x+14Or0h4rD2zCj6Cs9fHVgAVeNP37b+TzmsZ3gs9SnFUhesGjwuRKt0kNkpKJA6
+ GgIutzIB15KGtVU3jRhw0H2ZcHGCsUrW0XG26HbQ6tilxlL9IKQDeR9mXo52JJ/dHYAjE1y5qAo
+ GrqtBMMJxv+6tYHQIK8xfSfaGUMIKttkqcyFp0npwpbHZgCOzDm7e3WVAOPWEhz4Rb86rN9//rl
+ p1YNtFEUbaQnnmhToD2ygYoppQDR6nQ94DpMtmSabP7R87SE+f/R70VQw1i4p4+WJZ2zHJRttQE
+ 74gKg
+X-Google-Smtp-Source: AGHT+IFJ3CQyymWCTjhrM+vJs2vpo0IBDvTX0BhyW2gK/gybKhhKF0cjGLwav2ytlRF4K63z2AKjvA==
+X-Received: by 2002:a05:6830:2a0c:b0:727:876:c849 with SMTP id
+ 46e09a7af769-73b4d2863c1mr1984875a34.27.1751459653153; 
+ Wed, 02 Jul 2025 05:34:13 -0700 (PDT)
 Received: from stoup.. ([187.210.107.185]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2efd50b1b2fsm3864281fac.32.2025.07.02.05.34.24
+ 586e51a60fabf-2efd50b1b2fsm3864281fac.32.2025.07.02.05.34.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Jul 2025 05:34:24 -0700 (PDT)
+ Wed, 02 Jul 2025 05:34:12 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	peter.maydell@linaro.org
-Subject: [PATCH v3 10/97] target/arm: Implement SME2 MOVT
-Date: Wed,  2 Jul 2025 06:32:43 -0600
-Message-ID: <20250702123410.761208-11-richard.henderson@linaro.org>
+Subject: [PATCH v3 00/97] target/arm: Implement FEAT_SME2p1
+Date: Wed,  2 Jul 2025 06:32:33 -0600
+Message-ID: <20250702123410.761208-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250702123410.761208-1-richard.henderson@linaro.org>
-References: <20250702123410.761208-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c32;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,53 +98,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/translate-sme.c | 13 +++++++++++++
- target/arm/tcg/sme.decode      |  5 +++++
- 2 files changed, 18 insertions(+)
+Based-on: 20250702122213.758588-1-richard.henderson@linaro.org
+("[PATCH v3 00/10] target/arm: SME1/SVE2 fixes")
 
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 9f25273992..797035e289 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -210,6 +210,19 @@ static bool trans_MOVA(DisasContext *s, arg_MOVA *a)
-     return true;
- }
- 
-+static bool do_movt(DisasContext *s, arg_MOVT_rzt *a,
-+                    void (*func)(TCGv_i64, TCGv_ptr, tcg_target_long))
-+{
-+    if (sme2_zt0_enabled_check(s)) {
-+        func(cpu_reg(s, a->rt), tcg_env,
-+             offsetof(CPUARMState, za_state.zt0) + a->off * 8);
-+    }
-+    return true;
-+}
-+
-+TRANS_FEAT(MOVT_rzt, aa64_sme2, do_movt, a, tcg_gen_ld_i64)
-+TRANS_FEAT(MOVT_ztr, aa64_sme2, do_movt, a, tcg_gen_st_i64)
-+
- static bool trans_LDST1(DisasContext *s, arg_LDST1 *a)
- {
-     typedef void GenLdSt1(TCGv_env, TCGv_ptr, TCGv_ptr, TCGv, TCGv_i32);
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index cef49c3b29..83ca6a9104 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -39,6 +39,11 @@ MOVA            11000000 esz:2 00001 0 v:1 .. pg:3 0 za_imm:4 zr:5  \
- MOVA            11000000 11    00001 1 v:1 .. pg:3 0 za_imm:4 zr:5  \
-                 &mova to_vec=1 rs=%mova_rs esz=4
- 
-+### SME Move into/from ZT0
-+
-+MOVT_rzt        1100 0000 0100 1100 0 off:3 00 11111 rt:5
-+MOVT_ztr        1100 0000 0100 1110 0 off:3 00 11111 rt:5
-+
- ### SME Memory
- 
- &ldst           esz rs pg rn rm za_imm v:bool st:bool
+Since v2:
+  - The tcg prep patches have been merged.
+  - https://gitlab.arm.com/kleidi/kleidiai test suite now passes.
+  - Too many other bug fixes to list.
+
+
+r~
+
+
+Peter Maydell (4):
+  target/arm: Rename FMOPA_h to FMOPA_w_h
+  target/arm: Rename BFMOPA to BFMOPA_w
+  target/arm: Implement FMOPA (non-widening) for fp16
+  target/arm: Implement SME2 BFMOPA (non-widening)
+
+Richard Henderson (93):
+  target/arm: Introduce FPST_ZA, FPST_ZA_F16
+  target/arm: Use FPST_ZA for sme_fmopa_[hsd]
+  target/arm: Rename zarray to za_state.za
+  target/arm: Add isar feature tests for SME2p1, SVE2p1
+  target/arm: Add ZT0
+  target/arm: Add zt0_excp_el to DisasContext
+  target/arm: Implement SME2 ZERO ZT0
+  target/arm: Add alignment argument to gen_sve_{ldr,str}
+  target/arm: Implement SME2 LDR/STR ZT0
+  target/arm: Implement SME2 MOVT
+  target/arm: Split get_tile_rowcol argument tile_index
+  target/arm: Rename MOVA for translate
+  target/arm: Split out get_zarray
+  target/arm: Introduce ARMCPU.sme_max_vq
+  target/arm: Implement SME2 MOVA to/from tile, multiple registers
+  target/arm: Implement SME2 MOVA to/from array, multiple registers
+  target/arm: Implement SME2 BMOPA
+  target/arm: Implement SME2 SMOPS, UMOPS (2-way)
+  target/arm: Introduce gen_gvec_sve2_sqdmulh
+  target/arm: Implement SME2 Multiple and Single SVE Destructive
+  target/arm: Implement SME2 Multiple Vectors SVE Destructive
+  target/arm: Implement SME2 ADD/SUB (array results, multiple and single
+    vector)
+  target/arm: Implement SME2 ADD/SUB (array results, multiple vectors)
+  target/arm: Pass ZA to helper_sve2_fmlal_zz[zx]w_s
+  target/arm: Add helper_gvec{_ah}_bfmlsl{_nx}
+  target/arm: Implement SME2 FMLAL, BFMLAL
+  target/arm: Implement SME2 FDOT
+  target/arm: Implement SME2 BFDOT
+  target/arm: Implement SME2 FVDOT, BFVDOT
+  target/arm: Rename helper_gvec_*dot_[bh] to *_4[bh]
+  target/arm: Implemement SME2 SDOT, UDOT, USDOT, SUDOT
+  target/arm: Rename SVE SDOT and UDOT patterns
+  target/arm: Tighten USDOT (vectors) decode
+  target/arm: Implement SDOT, UDOT (2-way) for SME2/SVE2p1
+  target/arm: Implement SME2 SVDOT, UVDOT, SUVDOT, USVDOT
+  target/arm: Implement SME2 SMLAL, SMLSL, UMLAL, UMLSL
+  target/arm: Rename gvec_fml[as]_[hs] with _nf_ infix
+  target/arm: Implement SME2 FMLA, FMLS
+  target/arm: Implement SME2 BFMLA, BFMLS
+  target/arm: Implement SME2 FADD, FSUB, BFADD, BFSUB
+  target/arm: Implement SME2 ADD/SUB (array accumulator)
+  target/arm: Implement SME2 BFCVT, BFCVTN, FCVT, FCVTN
+  target/arm: Implement SME2 FCVT (widening), FCVTL
+  target/arm: Implement SME2 FCVTZS, FCVTZU
+  target/arm: Implement SME2 SCVTF, UCVTF
+  target/arm: Implement SME2 FRINTN, FRINTP, FRINTM, FRINTA
+  target/arm: Introduce do_[us]sat_[bhs] macros
+  target/arm: Use do_[us]sat_[bhs] in sve_helper.c
+  target/arm: Implement SME2 SQCVT, UQCVT, SQCVTU
+  target/arm: Implement SQCVTN, UQCVTN, SQCVTUN for SME2/SVE2p1
+  target/arm: Implement SME2 SUNPK, UUNPK
+  target/arm: Implement SME2 ZIP, UZP (four registers)
+  target/arm: Move do_urshr, do_srshr to vec_internal.h
+  target/arm: Implement SME2 SQRSHR, UQRSHR, SQRSHRN
+  target/arm: Implement SME2 ZIP, UZP (two registers)
+  target/arm: Implement SME2 FCLAMP, SCLAMP, UCLAMP
+  target/arm: Enable SCLAMP, UCLAMP for SVE2p1
+  target/arm: Implement FCLAMP for SME2, SVE2p1
+  target/arm: Implement SME2p1 Multiple Zero
+  target/arm: Introduce pred_count_test
+  target/arm: Fold predtest_ones into helper_sve_brkns
+  target/arm: Split out do_whilel from helper_sve_whilel
+  target/arm: Split out do_whileg from helper_sve_whileg
+  target/arm: Move scale by esz into helper_sve_while*
+  target/arm: Split trans_WHILE to lt and gt
+  target/arm: Enable PSEL for SVE2p1
+  target/arm: Implement SVE2p1 WHILE (predicate pair)
+  target/arm: Implement SVE2p1 WHILE (predicate as counter)
+  target/arm: Implement SVE2p1 PTRUE (predicate as counter)
+  target/arm: Implement {ADD,SMIN,SMAX,UMIN,UMAX}QV for SVE2p1
+  target/arm: Implement SVE2p1 PEXT
+  target/arm: Implement SME2 SEL
+  target/arm: Implement ANDQV, ORQV, EORQV for SVE2p1
+  target/arm: Implement FADDQV, F{MIN,MAX}{NM}QV for SVE2p1
+  target/arm: Implement BFMLSLB{L,T} for SME2/SVE2p1
+  target/arm: Implement CNTP (predicate as counter) for SME2/SVE2p1
+  target/arm: Implement DUPQ for SME2p1/SVE2p1
+  target/arm: Implement EXTQ for SME2p1/SVE2p1
+  target/arm: Implement PMOV for SME2p1/SVE2p1
+  target/arm: Implement ZIPQ, UZPQ for SME2p1/SVE2p1
+  target/arm: Implement TBLQ, TBXQ for SME2p1/SVE2p1
+  target/arm: Implement SME2 counted predicate register load/store
+  target/arm: Split the ST_zpri and ST_zprr patterns
+  target/arm: Implement {LD1,ST1}{W,D} (128-bit element) for SVE2p1
+  target/arm: Move ld1qq and st1qq primitives to sve_ldst_internal.h
+  target/arm: Implement {LD,ST}[234]Q for SME2p1/SVE2p1
+  target/arm: Implement LD1Q, ST1Q for SVE2p1
+  target/arm: Implement MOVAZ for SME2p1
+  target/arm: Implement LUTI2, LUTI4 for SME2/SME2p1
+  target/arm: Support FPCR.AH in SME FMOPS, BFMOPS
+  target/arm: Enable FEAT_SME2p1 on -cpu max
+  linux-user/aarch64: Set hwcap bits for SME2p1/SVE2p1
+  tests/tcg/aarch64: Add sme2-matmul test case
+
+ target/arm/cpu-features.h          |   63 ++
+ target/arm/cpu.h                   |   67 +-
+ target/arm/syndrome.h              |    1 +
+ target/arm/tcg/helper-sme.h        |  215 +++-
+ target/arm/tcg/helper-sve.h        |  212 ++++
+ target/arm/tcg/helper.h            |   91 +-
+ target/arm/tcg/sve_ldst_internal.h |   89 ++
+ target/arm/tcg/translate-a64.h     |   10 +-
+ target/arm/tcg/translate.h         |    9 +
+ target/arm/tcg/vec_internal.h      |  130 +++
+ linux-user/aarch64/signal.c        |    4 +-
+ linux-user/elfload.c               |    8 +
+ target/arm/cpu.c                   |   11 +-
+ target/arm/cpu64.c                 |    1 +
+ target/arm/helper.c                |    8 +-
+ target/arm/machine.c               |   22 +-
+ target/arm/tcg/cpu64.c             |   10 +-
+ target/arm/tcg/gengvec64.c         |   11 +
+ target/arm/tcg/helper-a64.c        |    2 +
+ target/arm/tcg/hflags.c            |   34 +-
+ target/arm/tcg/mve_helper.c        |   21 -
+ target/arm/tcg/neon_helper.c       |   30 +
+ target/arm/tcg/sme_helper.c        | 1599 ++++++++++++++++++++++++++--
+ target/arm/tcg/sve_helper.c        | 1424 ++++++++++++++++++++++---
+ target/arm/tcg/translate-a64.c     |   16 +-
+ target/arm/tcg/translate-neon.c    |   18 +-
+ target/arm/tcg/translate-sme.c     | 1480 ++++++++++++++++++++++++-
+ target/arm/tcg/translate-sve.c     |  947 ++++++++++++++--
+ target/arm/tcg/vec_helper.c        |  309 +++++-
+ target/arm/tcg/vfp_helper.c        |   12 +-
+ tests/tcg/aarch64/sme2-matmul-0.c  |  236 ++++
+ docs/system/arm/emulation.rst      |    6 +
+ target/arm/tcg/sme.decode          |  937 +++++++++++++++-
+ target/arm/tcg/sve.decode          |  279 ++++-
+ tests/tcg/aarch64/Makefile.target  |   11 +-
+ tests/tcg/aarch64/sme2-matmul-1.S  |  321 ++++++
+ 36 files changed, 8046 insertions(+), 598 deletions(-)
+ create mode 100644 tests/tcg/aarch64/sme2-matmul-0.c
+ create mode 100644 tests/tcg/aarch64/sme2-matmul-1.S
+
 -- 
 2.43.0
 
