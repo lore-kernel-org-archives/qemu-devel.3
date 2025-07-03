@@ -4,81 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BC69C83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 20:43:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15CABC83F03
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 21:06:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXQlo-00066D-SL; Thu, 03 Jul 2025 16:43:03 -0400
+	id 1uXR7O-0006z6-EL; Thu, 03 Jul 2025 17:05:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1uXQlB-0005o1-P9
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 16:42:24 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uXR7L-0006xu-R3
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 17:05:16 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1uXQl8-0004qd-RM
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 16:42:21 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-313bb9b2f5bso391344a91.3
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 13:42:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uXR7I-0003sY-Ud
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 17:05:15 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-7424ccbef4eso390948b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 14:05:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1751575336; x=1752180136;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=avcS83d1xROyrkb+P9B6fRdqS6ZXLOHUYmszroxpApg=;
- b=AhfB0IUaMdEESYCOz4ProZ0sX+evNHSHamwSyd6hgozyDQqAq3zjJybVdBYyP+NDvD
- r6iVT7nuEIgYjPzKTQMfA5XR2WVwIQom3R/53qBU1sFp7GZM+0j3DrsLv3x2NHxSyZp4
- gAf++72Js4dJetlg1pD8EC9a5ltU39wi4omDhrvS+l2jgtJnk1j24kBRTNXwgnjLtS8Z
- Ow5IujNdPFpY4lkGuzOtFTdzKCxp94qy3iLmRkoAjYdq1wVZYFDxh9xEV9nPzejaY3rM
- uNePFmkv7I75yGH4oowhwYzWm9Ixedrx4295Rpzaw720zudgrmgf6jWzZ9P1rnJcrd+f
- 7wxw==
+ d=ventanamicro.com; s=google; t=1751576711; x=1752181511; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xQAJsmbCcorVTn9mhPmve34tqI6+ze5GzNhH7tjY3Sg=;
+ b=im81JJTKsXeLgzkGBGjhA/ZaZLJGS8agfVFcRy8rKlSkH+smMNVd39czE8EoYZm5m+
+ Zd7pVDzN5NUWS8Egkpixk8mPOibgP+cv+3GvxP9SHTi7b/ZRsy3qZSPgIvoNuv2rHCwG
+ B2LS9lumz+94iUwvvvqNywuRo8dgn3oKRgekg2sCYy9Yd6vMpdA1f7SsVsRD8fRiBZcs
+ fDQHv03qA+vrYGtJ9Er9E9Wv9STW6AasalTTzJxcMWlo4jEZgGCu+42ouStkoLa6k8HI
+ j8cjWRy8gweFauhKngx4p66ZnRyugmsQXgMkhWLgsFX2ooD/Moh8vKYK2ItXMudB7/K+
+ UTyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751575336; x=1752180136;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=avcS83d1xROyrkb+P9B6fRdqS6ZXLOHUYmszroxpApg=;
- b=f1M2Vix6qJ0OeZl3RC3OmGNzziiMjqMyhRYutRGSHFrE/pIsWyyoXRfa2Ri26FSd4D
- Y6L491rFCdtSQrRN4VV5hyLEnMv4rKjPS4Ji6+DJ+bNNfF59f1JMIvZr2bMgpTYpPt/G
- wxNJVoRv9JPsBKj0YdrieS7wjnfc2vBe6yYVmTorW7pvldnLLh8wGWggnmIOk7adcUM/
- sDQFW248q/59fK2FC5mpp8aG+zzbbhbKtDm2htK5g0dC1nxy2SMnTBBJTKKdn4BbhuXW
- tsQe/Z15KIw5wVyVNLSWQj8V722KpsC8UA7WDBh+CTIVDsu+u8YPxWjFfGZqpZxsd7Vj
- /CPw==
-X-Gm-Message-State: AOJu0Yz3eU61Uw6ET2hHUy1mBSIkn3JcTytbKyMAakASW4lN9Q3TIIcc
- 2AhUMlZIsqafEbNyCHli60D+qsFjIg0st0NS3XzYcCHwTHImWZW+WPArTXRxhB6rWqPLx6nhwmM
- HbS+7+PILwoa1ffeElwyvfRNPhs5t+bv9LVs3ekxYYw==
-X-Gm-Gg: ASbGnctxgkQUmcgv9hmK9zOgK89tmuGfyQScGb9VzIE+Rq4qoGatQegLJnZjDWgdee5
- Dm5n+ruhGlJPOmlonTxd2+kWoX/rMZxs2IzQUIlIvgm/KZKIpJS8aX7ACX/LCukE6mk6VJixJa5
- GaLAzKSDRbe5sC4+v+UnLUzohaFtHrQaqShXvK8AXuhps=
-X-Google-Smtp-Source: AGHT+IHHpPgN8rnUbcdZ/xDo5IoKTDzfIDPb6TS7YA2cs9uMK6SNgXUc21+94Qqzn3vWYRgLY5+kNVqyZ1VaVkIi+Hk=
-X-Received: by 2002:a17:90b:3dc8:b0:311:e8cc:4253 with SMTP id
- 98e67ed59e1d1-31aac436a71mr59636a91.2.1751575336441; Thu, 03 Jul 2025
- 13:42:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1751576711; x=1752181511;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xQAJsmbCcorVTn9mhPmve34tqI6+ze5GzNhH7tjY3Sg=;
+ b=PpFhWxQdPaYq9AVqdjxg8nr4AklA29+ZfqP8sZ6hfv5JxEVrj2JvxhGcl2I+8Xf3iw
+ sZQJklDdunOzDCM/em0mS57YUf9bzpOTdKTrpToHThH3t2fsknBKmn19HccrkmilzmVf
+ L+Cjf+HH0k7JpxjIFgDd2nw1glk3wmKvvjxGdto+GOKV0fk2gkJHn22LHiG+xVtzx3n4
+ o4j2Eagfkj9C6sTW5IWae8Ry2qapyWwCPphKTkfhaJZJPRf8CmDPs3OdlMCFdU2V1dzG
+ j9tGaXC1mAWDkFWXvb53t0eUZkT5AOiPp3+72xmnBtoaN3Nfg9U8Yko8M8GtpkVIjsRI
+ BlaQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX/TVWb5MCMxSG9xkMEx5C3kGSmp1yWgmYrCo2QWniTGsGWUc7mPTqrrLSajJUtFhzI08DMrgquX4ga@nongnu.org
+X-Gm-Message-State: AOJu0YxeyL1rO+6Yc6a/xoaQxsxTAZ1K/XwEli4buW4gRhfE1TSQBrKd
+ SH1dHZ4tF22k85JPgHDSB2RzjgCet9WqyBRzErXOGcXPjuTBJBHvwJZzyGHCveP4fDM=
+X-Gm-Gg: ASbGncvavzUX3vRzMvH634iFnH7eUQjf9pPj59NpjkP/W+NLF0Qavvn3XaJhvPiQ2oM
+ bizDCgCl/xFcYW96Tu3WbCqWsZAURgqD1qnyk7uWwdMj26viQzfVNhYe6KX212b5dCDKxcfThO8
+ 8LFNtuj6VM0bnTNmJvFhHhegAF/d1J/QUGabsvk90txkAA0iShuh7nkCvqE9sxkylxCH8HuP2fS
+ uGLlCR1me1dEY+UGcHQq75wExQkMatK8Qt1vxdPzPTGRq02+lWBCe9QPQY8y8BbQMUpJRfQ7G75
+ 2EMh3qPUptQHkt6py+y+XWRy4vZiAVe0CpFddjDOXXtA80uJOYmngh+TZKLE0ttijsa4o3MCMlq
+ TyQ==
+X-Google-Smtp-Source: AGHT+IEAvWGlx1JnzVtQpSNbiXAOqcfnCZKRxhnLn6u5kMGqwm6Ia5S+9kIy5H+Abe1jjQv2pfTLZA==
+X-Received: by 2002:a05:6300:44:b0:220:6cf3:eef0 with SMTP id
+ adf61e73a8af0-225ba630e8fmr394421637.37.1751576711221; 
+ Thu, 03 Jul 2025 14:05:11 -0700 (PDT)
+Received: from [192.168.68.110] ([189.110.107.157])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-74ce35cca90sm435484b3a.37.2025.07.03.14.05.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Jul 2025 14:05:10 -0700 (PDT)
+Message-ID: <79aeae5b-9b7c-492c-b6f2-c3c2a963762c@ventanamicro.com>
+Date: Thu, 3 Jul 2025 18:05:06 -0300
 MIME-Version: 1.0
-References: <20250701105809.366180-1-thuth@redhat.com>
-In-Reply-To: <20250701105809.366180-1-thuth@redhat.com>
-From: Warner Losh <imp@bsdimp.com>
-Date: Thu, 3 Jul 2025 14:42:04 -0600
-X-Gm-Features: Ac12FXyZmu9HvAPM6zhdITrUKOMhC-JJWBaKQojR5x_lqQ02a2kNVjNvQQF1TPI
-Message-ID: <CANCZdfoRtq53M5zf+KZD3rU9CggTZ0kNj0+=-yvAZ-ijziFzTw@mail.gmail.com>
-Subject: Re: [PATCH] tests/functional/test_aarch64_sbsaref_freebsd: Fix the
- URL of the ISO image
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Stefan Hajnoczi <stefanha@gmail.com>,
- qemu-arm@nongnu.org, Leif Lindholm <leif.lindholm@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: none client-ip=2607:f8b0:4864:20::1035;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1035.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] target/riscv: Fix MEPC/SEPC bit masking for IALIGN
+To: Charalampos Mitrodimas <charmitro@posteo.net>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com
+References: <20250703182157.281320-1-charmitro@posteo.net>
+ <20250703182157.281320-2-charmitro@posteo.net>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20250703182157.281320-2-charmitro@posteo.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,58 +106,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 1, 2025 at 4:58=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrote=
-:
->
-> From: Thomas Huth <thuth@redhat.com>
->
-> The original image has been removed from the server, so the test
-> currently fails if it has to fetch the asset, but we can still
-> download the ISO from the archive server. While we're at it, prefer
-> the XZ compressed image, it's much smaller and thus the download
-> should be faster.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+
+
+On 7/3/25 3:21 PM, Charalampos Mitrodimas wrote:
+> According to the RISC-V Privileged Architecture specification, the low
+> bit of MEPC/SEPC must always be zero. When IALIGN=32, the two low bits
+> must be zero.
+> 
+> This commit fixes the behavior of MEPC/SEPC CSR reads and writes, and
+> the implicit reads by MRET/SRET instructions to properly mask the
+> lowest bit(s) based on whether the C extension is enabled:
+> - When C extension is enabled (IALIGN=16): mask bit 0
+> - When C extension is disabled (IALIGN=32): mask bits [1:0]
+> 
+> Previously, when vectored mode bits from STVEC (which sets bit 0 for
+> vectored mode) were written to MEPC, the bits would not be cleared
+> correctly, causing incorrect behavior on MRET.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2855
+> Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
 > ---
->  tests/functional/test_aarch64_sbsaref_freebsd.py | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/tests/functional/test_aarch64_sbsaref_freebsd.py b/tests/fun=
-ctional/test_aarch64_sbsaref_freebsd.py
-> index 26dfc5878bb..92ebc69c9b1 100755
-> --- a/tests/functional/test_aarch64_sbsaref_freebsd.py
-> +++ b/tests/functional/test_aarch64_sbsaref_freebsd.py
-> @@ -18,9 +18,9 @@
->  class Aarch64SbsarefFreeBSD(QemuSystemTest):
->
->      ASSET_FREEBSD_ISO =3D Asset(
-> -        ('https://download.freebsd.org/releases/arm64/aarch64/ISO-IMAGES=
-/'
-> -         '14.1/FreeBSD-14.1-RELEASE-arm64-aarch64-bootonly.iso'),
-> -        '44cdbae275ef1bb6dab1d5fbb59473d4f741e1c8ea8a80fd9e906b531d6ad46=
-1')
-> +        ('http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/old-release=
-s/arm64'
-> +         '/aarch64/ISO-IMAGES/14.1/FreeBSD-14.1-RELEASE-arm64-aarch64-bo=
-otonly.iso.xz'),
-> +        '7313a4495ffd71ab77b49b1e83f571521c32756e1d75bf48bd890e0ab0f7582=
-7')
->
->      # This tests the whole boot chain from EFI to Userspace
->      # We only boot a whole OS for the current top level CPU and GIC
-> @@ -28,7 +28,7 @@ class Aarch64SbsarefFreeBSD(QemuSystemTest):
->      def boot_freebsd14(self, cpu=3DNone):
->          fetch_firmware(self)
->
-> -        img_path =3D self.ASSET_FREEBSD_ISO.fetch()
-> +        img_path =3D self.uncompress(self.ASSET_FREEBSD_ISO)
->
->          self.vm.set_console()
->          self.vm.add_args(
 
-Reviewed-by: Warner Losh <imp@bsdimp.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Though maybe updating to 14.3 would be better.
+>   target/riscv/csr.c       |  8 ++++----
+>   target/riscv/internals.h | 11 +++++++++++
+>   target/riscv/op_helper.c |  4 ++--
+>   3 files changed, 17 insertions(+), 6 deletions(-)
+> 
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index fb14972169..c33a6e86d2 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -3126,14 +3126,14 @@ static RISCVException write_mscratch(CPURISCVState *env, int csrno,
+>   static RISCVException read_mepc(CPURISCVState *env, int csrno,
+>                                   target_ulong *val)
+>   {
+> -    *val = env->mepc;
+> +    *val = env->mepc & get_xepc_mask(env);
+>       return RISCV_EXCP_NONE;
+>   }
+>   
+>   static RISCVException write_mepc(CPURISCVState *env, int csrno,
+>                                    target_ulong val, uintptr_t ra)
+>   {
+> -    env->mepc = val;
+> +    env->mepc = val & get_xepc_mask(env);
+>       return RISCV_EXCP_NONE;
+>   }
+>   
+> @@ -4113,14 +4113,14 @@ static RISCVException write_sscratch(CPURISCVState *env, int csrno,
+>   static RISCVException read_sepc(CPURISCVState *env, int csrno,
+>                                   target_ulong *val)
+>   {
+> -    *val = env->sepc;
+> +    *val = env->sepc & get_xepc_mask(env);
+>       return RISCV_EXCP_NONE;
+>   }
+>   
+>   static RISCVException write_sepc(CPURISCVState *env, int csrno,
+>                                    target_ulong val, uintptr_t ra)
+>   {
+> -    env->sepc = val;
+> +    env->sepc = val & get_xepc_mask(env);
+>       return RISCV_EXCP_NONE;
+>   }
+>   
+> diff --git a/target/riscv/internals.h b/target/riscv/internals.h
+> index 4570bd50be..89ac6a160f 100644
+> --- a/target/riscv/internals.h
+> +++ b/target/riscv/internals.h
+> @@ -142,6 +142,17 @@ static inline float16 check_nanbox_h(CPURISCVState *env, uint64_t f)
+>       }
+>   }
+>   
+> +static inline target_ulong get_xepc_mask(CPURISCVState *env)
+> +{
+> +    /* When IALIGN=32, both low bits must be zero.
+> +     * When IALIGN=16 (has C extension), only bit 0 must be zero. */
+> +    if (riscv_has_ext(env, RVC)) {
+> +        return ~(target_ulong)1;
+> +    } else {
+> +        return ~(target_ulong)3;
+> +    }
+> +}
+> +
+>   #ifndef CONFIG_USER_ONLY
+>   /* Our implementation of SysemuCPUOps::has_work */
+>   bool riscv_cpu_has_work(CPUState *cs);
+> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+> index 557807ba4b..15460bf84b 100644
+> --- a/target/riscv/op_helper.c
+> +++ b/target/riscv/op_helper.c
+> @@ -280,7 +280,7 @@ target_ulong helper_sret(CPURISCVState *env)
+>           riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
+>       }
+>   
+> -    target_ulong retpc = env->sepc;
+> +    target_ulong retpc = env->sepc & get_xepc_mask(env);
+>       if (!riscv_cpu_allow_16bit_insn(&env_archcpu(env)->cfg,
+>                                       env->priv_ver,
+>                                       env->misa_ext) && (retpc & 0x3)) {
+> @@ -391,7 +391,7 @@ static target_ulong ssdbltrp_mxret(CPURISCVState *env, target_ulong mstatus,
+>   
+>   target_ulong helper_mret(CPURISCVState *env)
+>   {
+> -    target_ulong retpc = env->mepc;
+> +    target_ulong retpc = env->mepc & get_xepc_mask(env);
+>       uint64_t mstatus = env->mstatus;
+>       target_ulong prev_priv = get_field(mstatus, MSTATUS_MPP);
+>   
 
-Warner
 
