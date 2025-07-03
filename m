@@ -4,186 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FAFEC8303C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 02:46:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B02DCC8303C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 02:47:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uX9xA-00013D-6G; Wed, 02 Jul 2025 22:45:37 -0400
+	id 1uX9yf-0001xs-DN; Wed, 02 Jul 2025 22:47:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uX9x3-0000y4-Gy
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 22:45:30 -0400
-Received: from mgamail.intel.com ([192.198.163.13])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uX9yc-0001xi-UT
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 22:47:06 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uX9ww-0006it-8I
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 22:45:29 -0400
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uX9yV-0007Jg-HV
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 22:47:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751510722; x=1783046722;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=pfp2qcJTmYTjz/0HZ43NuE6jGUJrFwb/D85mCsB2H4w=;
- b=J8G12JBQBFVmbKnVQJrGP1aDxrSEKs4QVCBwJszhzeHB8SPgX6t4/akW
- MtOEU0XIsLJbIskFuX5LUvnJZGgnY58dbzgIZUDLqj1ee/a0y1qz5ervR
- I0GMmwpNWuLGyJ434u8AQyMPbCO574pxDcYvjyvfa/STe5qOBsMq+GHgv
- 0tsHXSKzDlGJbz4hHQhUZvXHPLddzCj0qCHStWxQjDLHn8VP7IICo04GM
- RvDZ082q9HXGNEnYiwU2QeCxkxZc4NnwEhWejZ+jAmYs4EnYrmMJZsDAL
- YJxn46ro48DEQGzfM74UjGivWRulXWulmLpq6VcJuyY6WECWftCTq+Ir6 g==;
-X-CSE-ConnectionGUID: a3QmLpGkRReS5OIlsobeZw==
-X-CSE-MsgGUID: vqQzBGpKRradfLTknNVhpA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="56445967"
-X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="56445967"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jul 2025 19:45:16 -0700
-X-CSE-ConnectionGUID: uKXtMneMTWq3Gq7vKWN3zw==
-X-CSE-MsgGUID: +4TtQu+ZSkqK69DsH5fKqA==
+ t=1751510819; x=1783046819;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=YQKtRaNRYRjIQE4Tta3bfFtvYj5tYn61eQlM6o0Zgvk=;
+ b=MNiue9zX4RRPrAEN1077WsJCh95oOXVovMHf88qT5pAch0pC5Tmve8DS
+ HXF4Y1+bphPdU8YUGHirGKIw+K794JDsa2pBtqcyJUZYbhJ957zKrcJta
+ bVrB9A9tPNbo1HagSbkSe3/Q/SfwQi7zpaC6VZ6EEjn76XsNjzWMmuwMm
+ JJpS1hGnyBM0mD2kDtdl7rkhGH26zb1YZ0fmltdG4ukit1JFRdlJEGtG8
+ j8Khx9jL52aSYEZ2Fj+NmuV1RJzBAJJKaqLWzhhQ81TEpAcoGjnFF9ZPI
+ ktpXC/YdfCUAs9FpxAekv5bbqx8vuPsbYw3Fa8BJv0O8SrMWM1z30D8HO Q==;
+X-CSE-ConnectionGUID: bt6ruLVnTBWm/Wc+Y5gePg==
+X-CSE-MsgGUID: r8uX3c3VQmi0VG5g5jbSBw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="53968149"
+X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="53968149"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jul 2025 19:46:55 -0700
+X-CSE-ConnectionGUID: ndHCoYGpTCG8xz42ywH23g==
+X-CSE-MsgGUID: ozwhK9u6Qg6C73wBId+dcg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="185177878"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
- by fmviesa001.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jul 2025 19:45:14 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Wed, 2 Jul 2025 19:45:13 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25 via Frontend Transport; Wed, 2 Jul 2025 19:45:13 -0700
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (40.107.93.68) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Wed, 2 Jul 2025 19:45:13 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UmXMAstewH9R0s+yh/YoAmF2+NAl/ZrVj1yyQyuzhL4I3nIAv3SGhW+f++IfQczm/H4T83F2mG46280TeEnLxDF2ZPmcjZh5GJOfos6RaA5Ea33Zk7SP+RmcJ8YY1H4PkVZyrQw/UezEsWNuxZ3JlQabS5nXo175IzV4oN6mpr+uV8BdO/lqvgRIJ/DCfux49IMu+eIKrYvOaDVfQzQY6YG/35Amyy9IhypSM0KTaembVGiza7KUOdbTBN8h9IkyQPNcnM2otDaMwNYcMT7WZwaWH/L9VQ6eo7aqE8PHyzcJeONdz3HI5Rqx15duZ0mAH9h6d+UUqp/uCeGCiLgUww==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=R3+Gf0haNZwQe5qCLaW+2Ss7BLs5kIIZ7ciiq7FcPbI=;
- b=P8vZXVKn0GfERiyiX6w/MyE0ilt2L3u/HWSN0qUO4AO/JaRFmDp17ySH0ecp6w9AI0dPkPxz5FItS9oVAr2JJeHdXc53xcpUN0l83W2hPUtTsTiOLUeAwQSevjvKTiBhIrHjgz7VpifZbsXvP+YqZDA77sbRgv3deOKlLUktKjjB9PjwGYWGbMg08E14h2CodzxxWDZZmwmJnqiJvSsX5FwpmgqUSf3Aqdq3Xk4Xkke3h5H5qzGIWwFHTT7KV7vB4dmmrGZHKkVnrYvDrEK9mNTOyFIymMCmlOIQzJv1SS4Cl1L1JV1G29zaMDBVyjU9uwhdYkhpgde6CoY+ekoYNQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by PH0PR11MB5061.namprd11.prod.outlook.com (2603:10b6:510:3c::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8857.38; Thu, 3 Jul
- 2025 02:44:44 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.8835.023; Thu, 3 Jul 2025
- 02:44:44 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: Steve Sistare <steven.sistare@oracle.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: Alex Williamson <alex.williamson@redhat.com>, Cedric Le Goater
- <clg@redhat.com>, "Liu, Yi L" <yi.l.liu@intel.com>, Eric Auger
- <eric.auger@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Marcel
- Apfelbaum" <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: RE: [PATCH V6 13/21] migration: vfio cpr state hook
-Thread-Topic: [PATCH V6 13/21] migration: vfio cpr state hook
-Thread-Index: AQHb65yPIuo3FcQr+0WsQZQgA4h3nLQfsW5w
-Date: Thu, 3 Jul 2025 02:44:44 +0000
-Message-ID: <IA3PR11MB9136A7E8EFA7E1C98B2C96779243A@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <1751493538-202042-1-git-send-email-steven.sistare@oracle.com>
- <1751493538-202042-14-git-send-email-steven.sistare@oracle.com>
-In-Reply-To: <1751493538-202042-14-git-send-email-steven.sistare@oracle.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|PH0PR11MB5061:EE_
-x-ms-office365-filtering-correlation-id: 65ff86a7-4205-4b31-e9d5-08ddb9db9123
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700018;
-x-microsoft-antispam-message-info: =?us-ascii?Q?hV5kD4MA6Wd3GPmtQ9oWEdKgrT1aTMshsEQqccMOZNNAQp57L3gx1ME/Rvb/?=
- =?us-ascii?Q?X1EIVqPlzTNpAzIHlXiONeAPlzvr12UXpncNxsSMyRCb5eknH9imKyDd8/j8?=
- =?us-ascii?Q?hrcV7NMmw+O6eo+HBXfsK6WcFAk2V3toYw4Z7y+DtxIaRo9+uAp8qiRZP1R1?=
- =?us-ascii?Q?Q+yXWu8m96FOUGx7kIlbgWEoZhf1wEA2hkKmqaxZiFMUs3SiDJEU9Te8f2/p?=
- =?us-ascii?Q?wVgBE5/LjQ2rrZsUeZ9YBjkeoxZjTK1r+GMQPudq3XNEPt1Pc+q/tGB2NpiW?=
- =?us-ascii?Q?zQzYJfPGRlnwOrafueJpHCeiJbqK7ALefrYCRcf27Hu4ttIisc42hJ5IeyhK?=
- =?us-ascii?Q?HcQxHfqeZtIISRmiOUY8Nf3oZ8Jrhp2/Y6DlvpXNifRO5ziDE+IiNInH0uSW?=
- =?us-ascii?Q?35XHtB+kjXD3qtrW2lDwYabAHryeW8wjB0kbwTR33GUpysGxDWEL3uMiPGDO?=
- =?us-ascii?Q?hjPEO2OoazkPpTTbormZ/VLKIkeiZqr6lTiFHrNhQKRoaT6B7kNie2NNFQBk?=
- =?us-ascii?Q?61fqJYPfVBVMpSFhwbD3kCoR1ODdMQr1TjGVdupWQcgwvjaizEvYZXp+wjaD?=
- =?us-ascii?Q?0mjwhfH9yF85Zh3LzqgPOHuZVU30oe5FUrnLZA9rhTo0+44CV4y5Iiughpye?=
- =?us-ascii?Q?wR8UXzBaUZDMyMyCpMAe/fleNVYX7MBbELjbLo4HVE9scXSPaI+kJtFtXKZe?=
- =?us-ascii?Q?42t/Iv41JvaAOZAB4K6LFxYXXQVerPKfRITyUS7wFPm9gVen39/x4FnfJlHV?=
- =?us-ascii?Q?2tRG/H+oKTrJtcCBT3Z7a5SjNeY+49TlbtCarwEnBbt1ZvHQVE04YXHVdUIJ?=
- =?us-ascii?Q?BvThWKrXVrmUUvSInY6Tcm6waKAS0AQWNJxsRxfzzAEHDJt/NcPw6qwRcuGD?=
- =?us-ascii?Q?wACA+1cMmYT6/hfhyQwD5ZFveCbRIJrsC/1usrEnd3mXk5HA38lBJh8rTohk?=
- =?us-ascii?Q?7g+LtFHq1x4CtDoIusiFqShMHZky+EEU5/LlZcUTNF/2vlXYn8MLbI19UOUz?=
- =?us-ascii?Q?fzTBIZOPrrUh0PWPf0VOFEXsKTRlEWIDSt77GH5ZcG67y1qo2Jl7q3HMZUgx?=
- =?us-ascii?Q?Dx5efnYaHzaO6Ut9k/vvHRMn8pmzd6HotXXrTYsj8Hbeno8UODZ8l03CXRm3?=
- =?us-ascii?Q?Eq9tVBR6odmop8VKBPxOsbJPn9do2jWEJ0n7WQBSW40RJFNWSZwVD7ihm2vE?=
- =?us-ascii?Q?YB152OGJjrfQi3T8DUHEQTWZxHV7OtyMTCX/jcVRz+9v2k+K/JFI0cCuzB9H?=
- =?us-ascii?Q?iccBj0xx25Xt2Ullp3DnWudf8vGt8MYbL/JWXkJkfyvqe9ve8O4+dKlJcjzL?=
- =?us-ascii?Q?yyh4Zly6bYJ67hDXwG5WCuqSB4XrH9/CssOazdMPfLz3cyh2N2/RmN0dY5V7?=
- =?us-ascii?Q?mIEA3dqsSBnhZleobjbYctU2QcrBuDmrKg+NK9zO7RgUfsN/N9cB5V4fBO4r?=
- =?us-ascii?Q?YATsTCeK+jS6Tir6Q80Xbc9p2qs3Y34yjUEmaIr6n+O9u6S+s4bj3g=3D=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(38070700018); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?aziEsDZ192L8v2CZ5lbbuoH+Za1d8sgY++04YJDBiq9g0JcfiHKCafieaTFz?=
- =?us-ascii?Q?PkFFmmASTL0CO1Zz3BbN+GHWUDdgKE9RKc7gxF0fR+QFd+4hakkwKIydFRr6?=
- =?us-ascii?Q?u9de97Yt4dZm+02Tg5uyCYtGtgjIZOqosjMu/lC03juP+U55DbEgdQ5DtgV5?=
- =?us-ascii?Q?/rTZEhzR/7rr03ec/y878jP0IGz9CuQTXsJfYBhJCu8v3on24crRJfjnPuBu?=
- =?us-ascii?Q?Apn/+PqUEofrO6SqM7/xoCIbb9j0cRdbEcn1AfCpc1Yzn5RfJ3dfSCc2XV89?=
- =?us-ascii?Q?cb+f1sbcqzKhESV5qnBY/5rDRYb/acNdiwvsWpI+wvRUVzLKKOA4jvgLsK1Y?=
- =?us-ascii?Q?040fYCmi8aDv2rIJreMpszTNBFdlK5i5OBbMV4MscNj+d+7h8CLQT4pDs16j?=
- =?us-ascii?Q?0ApXYoILkK5zXDIxZlSPYHI/Jv/Vg+JpNjlRjdm6rh2u7wIQ0LZ2Y8aSvnsQ?=
- =?us-ascii?Q?e9Xr2e4FghsZ/vuNiM0ffd89WLupkt7VlDuDEKH5d8R+pdBQMHrJISyRsZiF?=
- =?us-ascii?Q?cu3f/MXCwQEXgoL2FSwCL5/yCrHJ2L7fx0e+RAOQNUkjX4tsKjzR/0kP+/z4?=
- =?us-ascii?Q?S7MjWPVwk45KKonbXLT2INnJ/7VCrjBty5UuwyDMAoQV1pwnvpD0VzIF8wy6?=
- =?us-ascii?Q?rgwzobjtaGm1EIJV5QCh1hVvwldmG4MY+jqpjx5tq83irF/joVOGrj3nH+uo?=
- =?us-ascii?Q?vB+uEjpr27LDGExuJG2EUbSy2dx0rYtGsxygYn0Fhpuarrl2yJg8cXX+oWRs?=
- =?us-ascii?Q?5Y71QtEGPc5gv22kXRhBFrb68Xuna+q25ctalIGp8sYzE1VMzLPF3SM3ztD0?=
- =?us-ascii?Q?lVhpTt6rFl6kqyKAefjX73KXtVQr2EdEz2dZgt95u2kFRepwuJrcwej+wJTl?=
- =?us-ascii?Q?P3wwSQgAZTIWmiLstMRqx1Z21sRcB9yIk5xXsAzYwivDT631ATewv1m0w4D6?=
- =?us-ascii?Q?14u6SBS/GaekAsxcJ1CKQjRuXofGtoN8nZcqABStuDFZ/MUa40Q+/ODCX3tP?=
- =?us-ascii?Q?OCLA8SekGvNcu0JWcihTVCZ7cDEDi/GoLozjMYirCezpG/Kne5L4bsbXJcEL?=
- =?us-ascii?Q?aBF4dSKF11gseujUaDu7xmCkMzrFexmDpsCiLsMG4PC8n0xzvS0d0fSiETNc?=
- =?us-ascii?Q?X8jG7RW9GshIavKwGiSvJ6CyCA/MpBPDSHwqIGzy55Bd7H7HshMYdMTekNHG?=
- =?us-ascii?Q?PzFwyTaTnAqdmYGZQIRJyyDEARmauKT/I3bN91nx9zw+UZgCQ5deE4JfBCPJ?=
- =?us-ascii?Q?z9mbUrtO8HUAC8vGOSJubokU6omi8dlJ6TkDabzTA8V+NusxDb+COiYrCIJj?=
- =?us-ascii?Q?0r76OCTcRzOSQBmifYswFtMKSsC9IQm80SqY9YVfQvB64gIszVvdY8QmsNpl?=
- =?us-ascii?Q?E3fYgKdUl3cxk1zF2bXESkAuev0WOvcj2c1k/BjQg0FCS6QZ/i9JGbduzRx/?=
- =?us-ascii?Q?YnkqbaCA/R/duMDFCAnFRr3XXT5l2bEmedthJTOBqHgI52G6LqszO0UoZtb5?=
- =?us-ascii?Q?BppFpyfOf/ZPSlz7IyAuaf0MAt09ygYB0R8MmPsAG5bEqiXsSSIFrcnoi9ku?=
- =?us-ascii?Q?RuTbbadMQj5KeyG1KkWj4CkOwdErADWvtRwBQkv+?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="154321851"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa006.fm.intel.com with ESMTP; 02 Jul 2025 19:46:52 -0700
+Date: Thu, 3 Jul 2025 11:08:18 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Dongli Zhang <dongli.zhang@oracle.com>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Like Xu <like.xu.linux@gmail.com>, Igor Mammedov <imammedo@redhat.com>
+Subject: Re: [Regression] Re: [PULL 35/35] qom: reverse order of
+ instance_post_init calls
+Message-ID: <aGX0Im2F6R4nTUh4@intel.com>
+References: <aFpocfTpBLB34N3l@intel.com> <aGKryLSGlFTMSKHv@intel.com>
+ <690b5bca-4345-4ee9-a332-4c2e38532309@intel.com>
+ <31387ca1-4fa0-482e-8e11-e8857c10cb6c@linaro.org>
+ <aGTmFGC9vZB2yEwv@intel.com>
+ <76f8e877-e203-421f-b301-4b321534bd8b@intel.com>
+ <CABgObfY-sDqw3kPSgr8b3OycA2wZVYQLcxcavierdbr-U0S_Dw@mail.gmail.com>
+ <f7545434-f51f-4cb5-b1b9-afbaa26d11e8@intel.com>
+ <CABgObfax21xZDKGN9b8tH-HBVeEgTjWD-xLO6DRkr3uCvkyHQQ@mail.gmail.com>
+ <a7d2691b-ce43-454e-aec9-3589787dea5c@intel.com>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 65ff86a7-4205-4b31-e9d5-08ddb9db9123
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jul 2025 02:44:44.0304 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: jHz+ipuHdVCCj7EWmGWjdModQV7VbXOLwdz2IXhislNqYv72hvhfn0Pzq3hOIHIkPUb55gpMntWGz4Ll+hWobEPlAPhbMrPFFWntYThLwBA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB5061
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.13;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a7d2691b-ce43-454e-aec9-3589787dea5c@intel.com>
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -199,24 +95,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Jul 03, 2025 at 09:03:10AM +0800, Xiaoyao Li wrote:
+> Date: Thu, 3 Jul 2025 09:03:10 +0800
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: Re: [Regression] Re: [PULL 35/35] qom: reverse order of
+>  instance_post_init calls
+> 
+> On 7/3/2025 2:54 AM, Paolo Bonzini wrote:
+> > Il mer 2 lug 2025, 09:25 Xiaoyao Li <xiaoyao.li@intel.com> ha scritto:
+> > 
+> > > IIRC that's on rhel QEMU which ports the TDX code before it's merged
+> > > upstream. Now TDX is upstreamed, it works with upstream compat property
+> > > and I think future new compat property won't affect TDX or anything,
+> > > since it's compat property and it's to guarantee the existing behavior
+> > > when introducing new behavior?
+> > > 
+> > 
+> > It's a compat property that is only added by RHEL-specific machine types.
+> > But the bug is not specific to RHEL, it just happens that no upstream
+> > machine type has compat properties that overlap with TDX adjustments of
+> > CPUID.
+> > 
+> > > In general I don't see how the reverse order makes sense: the subclass
+> > > > knows what the superclass does, so it can do the right thing if it runs
+> > > > last; but the superclass cannot know what all of its subclasses do in
+> > > > post_init, so it makes less sense to run it last.
+> > > 
+> > > I agree in general the parent to child order makes more sense,
+> > > especially when we treat .instance_init() as the phase 1 init and
+> > > .post_instance_init() as the phase 2 init.
+> > > 
+> > > But the original purpose of introducing .post_instance_init() was to
+> > > ensure qdev_prop_set_globals() is called at last for Device. Reverse the
+> > > order breaks this purpose.
+> > > 
+> > 
+> > Not "last", but "after instance_init". Anything that happens in the child
+> > class's instance_post_init can be moved at the end of instance_init, just
+> > like the refactoring that I did for risc-v.
+> 
+> Move into the end of instance_init() can surely work. But it requires to
+> split the code in instance_post_init() to different child's instance_init()
+> or making sure the code in instance_post_init() is called at the end of each
+> lowest child class.
 
+Initially, when I proposed the split approach, it wasn't about
+splitting for the sake of splitting, nor for the sake of "work".
 
->-----Original Message-----
->From: Steve Sistare <steven.sistare@oracle.com>
->Subject: [PATCH V6 13/21] migration: vfio cpr state hook
->
->Define a list of vfio devices in CPR state, in a subsection so that
->older QEMU can be live updated to this version.  However, new QEMU
->will not be live updateable to old QEMU.  This is acceptable because
->CPR is not yet commonly used, and updates to older versions are unusual.
->
->The contents of each device object will be defined by the vfio subsystem
->in a subsequent patch.
->
->Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+A more granular split is just a means, and the goal is to place things
+at different stages in the most appropriate locations.
 
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Besides, it also leads to a rule that child of Device's
+> .post_instance_init() needs to be careful about changing the property or
+> anything that might affect the property,
 
-Thanks
-Zhenzhong
+I believe that's how things should be. instance_post_init() provides an
+opportunity to tweak properties. The order of instance_post_init()
+reflects the dependency relationships for property adjustments. As I
+mentioned earlier, if a property doesn't need to consider other factors
+and is simply being initialized, instance_init() is the most appropriate
+place for it.
+
+> because it might break the usage of global properties.
+
+Breaking global properties is just one example. Essentially, properties
+like "vendor" don't adhere well to the semantics of QOM.
+
+> This can surely work. But to me, it seems to make code worse not better.
+
+IMO, it's not the split that makes things worse, but rather the improper
+use of instance_post_init() that makes everything about the x86 CPU
+fragile. Ideally, QOM/qdev should focus on their own abstraction order,
+while the leaf-class should do the right thing in the right place, which
+is the most solid situation.
+
 
