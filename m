@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97675C83F03
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 14:43:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 054A6C83F03
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 14:44:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXL9e-0003GI-U9; Thu, 03 Jul 2025 10:43:14 -0400
+	id 1uXL9U-0003Bo-O2; Thu, 03 Jul 2025 10:43:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <etanous@nvidia.com>)
- id 1uXL9d-0003FG-8a; Thu, 03 Jul 2025 10:43:13 -0400
-Received: from mail-bn1nam02on2061d.outbound.protection.outlook.com
- ([2a01:111:f403:2407::61d]
- helo=NAM02-BN1-obe.outbound.protection.outlook.com)
+ id 1uXL9S-0003BI-Sr; Thu, 03 Jul 2025 10:43:02 -0400
+Received: from mail-bn8nam11on2060a.outbound.protection.outlook.com
+ ([2a01:111:f403:2414::60a]
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <etanous@nvidia.com>)
- id 1uXL9a-0004KY-3s; Thu, 03 Jul 2025 10:43:13 -0400
+ id 1uXL9Q-0004DF-0F; Thu, 03 Jul 2025 10:43:02 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=e40KEw4K1O/43W8wi6WNgAgC5heEelHs36HgPQuuNLUnHvSocAtb6hD5z6or6L6/H8VTIXJuLZwHavWUF191yVjCre/R37V9+LrK648nTBCr5vwWSWXemzWR9Y4nGYNfBnpZ0uJYw6A/+W/Cpe1Df86BrQXQDy+JUjGyk3OacmRf1AiUxSuSKJjtzGMyLJlj5+nhapdGTrFq+qADa2ByCSmy0lwRokRmlRjWnsOs7VZN+zXPD1ebSUSJGKpO45VeOt4iikyVMpRcFuqZEmJtVVrZvz4PG8+dkaLBerCnnVK7NvdAXAq+20WxdmRuFNEBbw42nimij8AwwPwk3rD+9w==
+ b=qHFdReBYJfaLOwXTg/KwXAuI/w88KN3qlLkyEwkMfxIxJqBgnCpwkMfzwFAvUSj7vaOPmVJw5O51uRYuWIcV3fKH55tJxJ2Ti6l3I5WXQ4X91cIkQtLMsEeDTUVuWGfXezQqtulJD7CKsdHnPbhr4O8LM12OTcAEF1QIMS/0neQTdOq3+JtGuSN9ltxEHu8hKmC9RsOcChOsTC6DB57fJEDzJi06aWQAsj8W9UorptoSk/6TCjQZWupcSo5u+Vq5/DzAwYfYvye3KFns/VPg3WOp6dKgAP0wPa4ysI6P5cJTWT78dDKBtEhVWx8eVEdw1f6nQMR/CNZql6HfF4hEfQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=e5DmmmofJHWNVLsUB8hXIlo8AnTXVqq/d2GZdG9uark=;
- b=MeJUpli+wBaZ6VqzT26n2JTDuOO4xq2NpsD+QKCSSB0rv/t6pQG5hM2hjLnLRfwZCmZvN5atZN1aJwTFRe833PWhHL9rB9jzYutD5B3CyPHIUhvwAObiDVsPzxwbjmoWvOiBmkdY0CwfYWUzJESo0POaxi1V7fbReQg4SpWbXcyVsp2lwd9ca9PVUGjszYtQdPaNFoesRvV1inOoUIkghvfA+k8K1vi9HXdElsDvXwNVJzRESz8krS4QELhRs4SHl+d5QK1LC2i3SfCgEfIUL8RsmIbsqwakZYXQ2Nkrme8+nDDeW6Xu2JdHmu/Rr2ItDm6UZgyhz/E8ncfvRMeyBQ==
+ bh=Lx4cSoqXDpdBqEfhYlImKuh1cXRJw76WpuK2PeLnSvI=;
+ b=y0iHFt/gtK4ZPcMpXVUgc2ERDpbOsI/DgajpK0A6ZfwU/zKI6horb513ZQWpEAjj0gNX20RyEqDBpKhmZ3+BJXRDMwEmJhTYSjDHJiNDXMInBEeuerSjBGsbIJ31EaEkdcc/os4drFp/Cb47+OqeSEX8H/vmbU8qi+W+o7rlOmQsnfOxnyHAnwn29tU/NTE/kOOFNVgpAse8E+oD9gSdp3Td2ChK4Og5Rpbv+5a7qEKWUNgQleym0YEQGSq6+F4IksOAvz+vFjGYX6tqZ5TtRF7HNujwetTmVY7EY+NfHqB5SZbgYByedOQFM3DEE912ajbvhol+xo6u1IEjOIEtRg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=e5DmmmofJHWNVLsUB8hXIlo8AnTXVqq/d2GZdG9uark=;
- b=J9VKG6W0qQNhm252i3hhoZI+cNxYAplxH91qMbPFgEDF5nv8fy3G4h35ps58dvKlU1ciWmyBgJvYXd2GE/AxV19iIHgdpbuU5GLSsSEayfwfXzacAAWxUFhacKNU7Wh/7q7gNM5TfVocOFoM/UKi6DqqSdjSVrdC/T8ezvUg4rJUQ49ALvv2GJXU484Ei7q4GimcxRJPHZULhH+1n8XfAFKo01Mqjhu9gw0eNETKkhttjgh4k4lSXypZWOMmmC1h8aPAudbayv8bF4rr7p3IKiHGmpmxkpTNTaRDcl44XIPbYkzEpZFUrkQBjCTwHPbY/2xgHPDWVQfe+ZBpYSqJOQ==
+ bh=Lx4cSoqXDpdBqEfhYlImKuh1cXRJw76WpuK2PeLnSvI=;
+ b=bsDdyF4TgFbOHwicficbdLNezg/pkwUFtrHCh9mB5EKrPrQrTTf7bdfCixu7XO1DKuyqS9Xpuv2np4RTqVOM8GB2vN2StBQB0hVnAWybJgfYOkOHV8SO1OPt17bSoWkDxpr6PZr7UFxPpBozhhkopFYmh2F3DOWkyDDqgcDRXElPMKvorXANgL9ZlGhXOxvKF3MRGmbisO/6WSic9LkKa3U2keNhX134GFlJmOJFn+sgvDupQnGSzTYdekfmvCDqIi2zEJIb0qdUMd+EWgdNATaSDXgUBNzMGdhBCF6w/6JtPymwmWYMQGVp1Xwa6ePBWY7y3huerWapajhY7hPCGA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CH2PR12MB4277.namprd12.prod.outlook.com (2603:10b6:610:ae::23)
- by SJ1PR12MB6337.namprd12.prod.outlook.com (2603:10b6:a03:456::20)
+ by SN7PR12MB7836.namprd12.prod.outlook.com (2603:10b6:806:34e::9)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.20; Thu, 3 Jul
- 2025 14:43:03 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.19; Thu, 3 Jul
+ 2025 14:42:51 +0000
 Received: from CH2PR12MB4277.namprd12.prod.outlook.com
  ([fe80::8857:98e9:8b64:787]) by CH2PR12MB4277.namprd12.prod.outlook.com
  ([fe80::8857:98e9:8b64:787%4]) with mapi id 15.20.8880.021; Thu, 3 Jul 2025
- 14:43:02 +0000
+ 14:42:51 +0000
 From: Ed Tanous <etanous@nvidia.com>
 To: qemu-devel@nongnu.org
 Cc: Troy Lee <leetroy@gmail.com>, Steven Lee <steven_lee@aspeedtech.com>,
@@ -55,93 +55,108 @@ Cc: Troy Lee <leetroy@gmail.com>, Steven Lee <steven_lee@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, Ed Tanous <etanous@nvidia.com>
-Subject: [PATCH v2 4/4] tests/functional: Add gb200 tests
-Date: Thu,  3 Jul 2025 07:42:49 -0700
-Message-ID: <20250703144249.3348879-5-etanous@nvidia.com>
+Subject: [PATCH v2 0/4] Add support for gb200-bmc machine
+Date: Thu,  3 Jul 2025 07:42:45 -0700
+Message-ID: <20250703144249.3348879-1-etanous@nvidia.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250703144249.3348879-1-etanous@nvidia.com>
-References: <20250703144249.3348879-1-etanous@nvidia.com>
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SJ0PR13CA0082.namprd13.prod.outlook.com
- (2603:10b6:a03:2c4::27) To CH2PR12MB4277.namprd12.prod.outlook.com
+X-ClientProxiedBy: BYAPR01CA0021.prod.exchangelabs.com (2603:10b6:a02:80::34)
+ To CH2PR12MB4277.namprd12.prod.outlook.com
  (2603:10b6:610:ae::23)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR12MB4277:EE_|SJ1PR12MB6337:EE_
-X-MS-Office365-Filtering-Correlation-Id: ab65af52-97c1-4524-bfaf-08ddba3fe9d6
+X-MS-TrafficTypeDiagnostic: CH2PR12MB4277:EE_|SN7PR12MB7836:EE_
+X-MS-Office365-Filtering-Correlation-Id: 339fa4d3-5118-4fd2-2a46-08ddba3fe320
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?DqQ0N92wkMEpeFVhh79VQR+/eiK3zTmYruNv8651b5z5MfQgSQRm5HktsSv7?=
- =?us-ascii?Q?QncIelWxOn1vKzC1fnnNDXShdJgoYhylxcPO24c7Jlx5voRJyUcBGN8Nt0Of?=
- =?us-ascii?Q?dtEol+TZrGheIXDUfnkiWGKct2p2+mLgj7JJvhBGmf8x5Vshqe7JOsbRceZI?=
- =?us-ascii?Q?PW00wbdZElCBBdU5+X0nfctHS5Wgy5ZSLUGV8ZVvOwAtwOQBXw3dHuAQvOE2?=
- =?us-ascii?Q?6bPBcDG0YQUXogaeboTdBeyKgvRD2PuZOZcAQs/xQINR+oj+zOSMElA6CxJs?=
- =?us-ascii?Q?K5vmDRKtoTFBAgO7NnB7eZHteBRVoHCB1JsaaWz9vGkQadg9o+ssEJughKyb?=
- =?us-ascii?Q?Ne86LCCvu4b/rDxJPIuGsClLDjJC43AfHi0dU6cbSOPMh1ilg8HMQZKG8x42?=
- =?us-ascii?Q?eselGC4fQUFPyaGSzBJ85B0vKDD7ro8PlxwKEUnOasesFY/quGep5gqRGIGg?=
- =?us-ascii?Q?D6TDzbzH4380bj7OvvonsLdetg+SE9EqZjikZb6/DH7XRXx+pF2nsHHlIlWk?=
- =?us-ascii?Q?QSda/VDJVznUT2l+Hfi7yDfMDPXkY+wYLj83mgp2XI+Y+GemacEpD1NU7Rwe?=
- =?us-ascii?Q?mmrGtK0llmz7oRmRGiyUU2449JTWXIB+a2lKaf6EHlq7eCCZovM7g7MEbtYU?=
- =?us-ascii?Q?oXxkiheTzUhv0EbRP0fq/qq2Fm0DwjOCVHFXCrX2C5Vwu68RSxfY1Wwp0AOj?=
- =?us-ascii?Q?2XSZ31xhDHr6b5zQAZjsI5CfO0g/gRLqM+wJJEinmSYHBXkxxlSxsOevhjit?=
- =?us-ascii?Q?RbHk4km62jqnt35jbPsT7Gp/jiWT2iAbVW5JkLdFKVX3XyabZdTs0n8fXqoG?=
- =?us-ascii?Q?v8npgj4qih9VgwrG9PCgtddeXhGBQnoxV/db18cUTGvB+ccmCLPU7rKmZlEt?=
- =?us-ascii?Q?PZ8wA9GSOVPTFJcn8KtjQVqdtoukVdb4YhU6UyQmhbTcdK0jPaVaiwM3NZ6m?=
- =?us-ascii?Q?JKHZgzGAjsU3o7r51vYE1qKi5dHr2O1XCXeQthX3L9XFVZzqQi9tDD8vrlUl?=
- =?us-ascii?Q?og4euy7lxYpl0UxX+4dVci34pze8X7oZXG7xOHnbq6BxMwTGFmxCdkUYmF32?=
- =?us-ascii?Q?rRMNd8YtTTz1ffHkyoE+/ZfLXJ0ys6t6TDsWqDVQtbs3KfFGul8iBYcLEB7E?=
- =?us-ascii?Q?p8N1gn7P6krkZQov+DnAKSdIYQjmY84XFIQVmcKUidzI2sN+6hhW3MxBdev1?=
- =?us-ascii?Q?yNzE1RTmtYJIrfkLU7sq0U+EgNCoTiB2M3T3mLbLyWjXLjMG9MvFAjBuGVD+?=
- =?us-ascii?Q?GgTcYuBAhJg3WNDCYqJlAn+4/Gwp7lRS46Zj+pQgU/kHBj0K3q/anieZ8hzF?=
- =?us-ascii?Q?W5NjgThqtyd1E0zV3VMe6PvhaiXf8OkwwKP//sPbYgOqqrwuALCke6N0NxDt?=
- =?us-ascii?Q?b9XWgxyV/rPqsgYViy5gQtQ/1+lXO9EC7rQef2WCQagyTT0KOKk54qwBnW6J?=
- =?us-ascii?Q?hjFIN9pjUe8=3D?=
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Q2NMbW5JTStyM2FaaTV3RmljVHhwMGsvRmJvNDF3b1ZDalNXUFh0ejFJbFNZ?=
+ =?utf-8?B?SkZOT1FOdkZ4b2NBeU10VFdOZENrVDhoOFJPcFZNSTRDbndFQnNyd3hnL3ZI?=
+ =?utf-8?B?bnJBb0VmZ2NmRDJzSGV4TG1xRVVYb1F3RjdZK25TaUtRbDZDVXJucVZwN1Zo?=
+ =?utf-8?B?QitralpQd3J1T2orbU00bmlHUDJHUWt1anBIRWNIQTFWQ1dmTTJDZjZNbUky?=
+ =?utf-8?B?ckdpQy81ZXh0ZGhYQnl4Q1FCVk9zQWRZMks1Q1VsZVN2UkFoRTFEWGpYUkJI?=
+ =?utf-8?B?RnBGOHBtSlMvUFpYSW0xa2Y4RlhONmtGUTZqWFoyM3J6QnJWZzZhZTNOTjhu?=
+ =?utf-8?B?MjkzOEVUUWsxbUdvR1h2Sk5rcUJPaXlqRitKMTVpeHVGam8zd0d1ajc1Y2ZC?=
+ =?utf-8?B?UWlBTVRtTHBlam81VGNYRUFMcGE1K1M4SXVpcVFuTmp5Zi9yQjNKdW5jMnVo?=
+ =?utf-8?B?ZTBoTTFnNmFrNDVlTEpsaUZIV3pNQ1BFU1pKWXgyc2lxVEgxV0w2ZHhyMG1h?=
+ =?utf-8?B?d2hzRkdPOTJVbVEwbG9yRDJ0UytwdW5TY1Z2WWdWY2ppYzBxWE5Tc1l0VWow?=
+ =?utf-8?B?MFBnc25hUnlleVVhdy9Xcy84NU0zVXlkKzRmTGd2a0lidU9PTkVKQTFPaUtI?=
+ =?utf-8?B?bTFWSGlSL3g1eDhodUtCMndzazJZblUwd1pXSFVESEtIdFhsM3d0UmRJQk94?=
+ =?utf-8?B?ekZ6OVFxc2JPSHF6K0NLUFdnek1VQmlGWUlLWlVGUk9sMy9uTXpvWGQ3MlNF?=
+ =?utf-8?B?QUxrWUVid0x5SWNMNlFFc0xaQm5aQ0lVMlczNFdOQlozTmpvQ0pTTCtvWHZ3?=
+ =?utf-8?B?NjQzbXNwOUU1ZXJIZmE5Wlh2a3ZZME9Xd1A5Z2NiQm14U2tva2VpcXFrL1hB?=
+ =?utf-8?B?blFDZFpSYjNVYlR6WDFJSnBnVlp2c2hvSlhOc0FjTWpDSUZpMStQOVlaNjlp?=
+ =?utf-8?B?Z2w1RFp4V1QyMXNMNHU5ZFdxVjdoc2FQQ1NybTJ1S05iUGNoZnJ1MStzUk11?=
+ =?utf-8?B?OVRST2NDOVJ3MElkRWp1SEtRQVl2bmhZcDQ4WHp2SnI1SExIczRzWUZDYlFC?=
+ =?utf-8?B?SlJYRVloOXJ0QkhIdWhiRUUwTVg5MFI1MnJwc3ZzVjNrU1RCU1FlbDE0SGRk?=
+ =?utf-8?B?S1lJbkpOanAvdGRUdEpzRlBySTFlYldobmFLY3FBVDdlK1UzVERCMlR6S2ZO?=
+ =?utf-8?B?TGd5dVB4dXpBUlJ4ZE53cGpaTVFvYUxYZFpaWFBBa2dqcnUwdTMrblpyN2dW?=
+ =?utf-8?B?aTA5ajM2N3hoRWlWakxnS0Z2ZllWZGVWU0lPZ3NFQlBSbEptVmZaUmZjcHdl?=
+ =?utf-8?B?SXRJR2w0K21OWDN5NkNTYkc5cXVwSlVORDlUY2VjUE1qcmFCbXdRQUhCQzB1?=
+ =?utf-8?B?SURDeS9JT25QTWhaYWlDS1lRVlZXTGlMd1pBRDZSNmtuSFdhM1FsWTMydXdp?=
+ =?utf-8?B?bXM5N2xyYlc2SHVJY0dWSW4xV1Z1ZnYwMGNDUjFJeC9DQlA5bWdiTTJaSTJV?=
+ =?utf-8?B?V2gxaEJPeXpSRVpUNG9PNUJsQ1Z6TXdSU2dYL3ByUUMveEVoYnY2NjFuVlgz?=
+ =?utf-8?B?M0RON2lHTUVmRUJPUTZOZGQ1RXhLWjgrR3ZUUU9zMGdsL2Q2cG1LSUh6OXBX?=
+ =?utf-8?B?ajRHd3V0aGorYlpkTTA4dnpOTk9PUjdnc2JRU29yajEwZW9ta2RZa3NGL2Fy?=
+ =?utf-8?B?N1ovN3RzUWRaSzlwZjZpV1cxU245dTJJektvYndwZ1ZsOEdRTVhHZ0t5Wjhy?=
+ =?utf-8?B?NWF3RnQvTk5PaHJzSVpLa2ZGcFRIM3hpNW1kUS9HdlNtdndVdCsvRlZiR3dT?=
+ =?utf-8?B?UFl0Nkc4ak9SbGswM09XSkQwMTM5emFtaUFQdlIyUzQxcWxNb0Jva0NncURw?=
+ =?utf-8?B?VndsNW92R0Q0R1FWeUNuRzB1OStWdndYSzlOTkRyazhPTGNIWGFGSzd1Tldz?=
+ =?utf-8?Q?wVMq+C1LD8s=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:CH2PR12MB4277.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014); DIR:OUT; SFP:1101; 
+ SFS:(13230040)(376014)(7416014)(366016)(1800799024); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?3Tgqpd2mE6YoGVW+8sWr2WRKcDZ1KL9Gxy8BAmEwZwEBtscvJktUunP7OyDp?=
- =?us-ascii?Q?BrA/uY+JYvwvFrLC2oo4GoDULDVNMTTPOmxP95qGoNl38Btw5O7+NNiSYPcQ?=
- =?us-ascii?Q?SaM5RWt44iBpBJ8OiGSiiraqW2AVD7UsHAUQIfZO5Buvb57qdr0KSeJtndjx?=
- =?us-ascii?Q?y5vBoISRqdU7wlU2vlZDsAK1Z68sHQBqPqX56AFofh3r0VdDxtqNRV5+Fs0j?=
- =?us-ascii?Q?dYqRyRoDJw+Zku2ZVL5fGOcB11uG1hSwsA2fsUD26aOXQk6tN6XbZyIiKvaY?=
- =?us-ascii?Q?vqrMWyh06fpzReI2LpynNYplyEu91KbSegIAw7axtivR5gTjDmyzuk0ICCKy?=
- =?us-ascii?Q?7dFrhCsgU8TyV6V6+CFDCy+U2LdT6qT5BgRCUohiH1gyXXVpFvhWg86s3Kuv?=
- =?us-ascii?Q?HIfBMsmgiLWecY1ZGWyPs409r6aTnYLJy6zpbWA8IYWOxD8L0zhkKOJ7VElp?=
- =?us-ascii?Q?E6I6kp0n910h9acm3ZE5OLmtOxNr3pehSJzjgTfMVPr200tZE6kmFDYMRCEp?=
- =?us-ascii?Q?Z5vWvjc28ER209fDUUHO8njXnmoMYjH/6trbdl88mvotLEahZAKIT1AJZ6PF?=
- =?us-ascii?Q?mMxwASztYGz2L8aN0QMPuQhgAaBgwW7hYKDDYITM+21MhsazeKIOex83FCGU?=
- =?us-ascii?Q?BlHja2LImuI3TA5SuoKdxQBaJEPi74l4AFJd0037LZjHrfBUsWSAe0cC4njQ?=
- =?us-ascii?Q?qw6YT80m4XAl5CUex3Dm09ZjZbTXG7wV5Bj0lHNsZk4wxKkvn4xXLzOWj7u4?=
- =?us-ascii?Q?cBlmRJiUkfDabrz7v9UE1w5jLuxMV3/88jEpo/jeQWWc3o44VCo2e4EiIAgJ?=
- =?us-ascii?Q?RlWca0q7BXZmEGCnWgfCxjnSHJutXIVhRdcsxMagHTpq8JhQ9TT6ay+nK+BP?=
- =?us-ascii?Q?4XSS7YRbvvdzWoqTSKlUmfYWQtwfSGhSW6p+wt7MshKcNgOwfbD+kIlWGrUv?=
- =?us-ascii?Q?34HL7mxAvXSwDWryfaK4fLFC5Avi5yt8h4H9ZShhv2j4jQBsWO3zolel+kQ8?=
- =?us-ascii?Q?/C9zDaZHiFib0WMUB6NUOYtDdrPVjs80qTaIArF7ea2syrk1CY5Bqnb1k12/?=
- =?us-ascii?Q?hK6ExLcRisxV44PMA303LoBceeRJbojXY9hNauGk6VH/UD/7kTT2FWlLZVBB?=
- =?us-ascii?Q?Bc3DCwk0x56ch81tzDBp/bnWJ6lLmdpbmx8Rl7RGwQKHGZcfyMKdP3zluvWs?=
- =?us-ascii?Q?pDZsgs8C/Jabi3OUoH1WhO3vtJ61drkbjAloy3AxgiklCmYNqfmJY3+DiqOw?=
- =?us-ascii?Q?hJG142oOOCwsDNqfQaia5pz7NkGbmonbtek/deSWXUyQHL6JC1Yi4T5r/Hl/?=
- =?us-ascii?Q?Iuvq2giRTVW3xhEj6uCft7S5cOqPCVZKz53JrDlSEzpjwcY/PF0lo2eTc/uC?=
- =?us-ascii?Q?JLBPURzbnRzJ1cGj1Emw6CzL1cSFNgT+aEadcDAf2zICR7rTyk9f2TT9yC/3?=
- =?us-ascii?Q?sYuPJaMp2Oqj1aGS763GsyXsXUid3gO1XJv9FP6r5/kPYL/SOOq6tV0minOA?=
- =?us-ascii?Q?PpvHbcSq4O6iLQ/dgfcjbVk7FxH1AHt0nisl3bCW1HlEBGZ1EuS8efeeZVzV?=
- =?us-ascii?Q?BF3Q6lzPvzjuE2C0GPXP28I7FtSUiKkM4A7qZeiw?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SC9CNG5zdHpLbm8xcmRFVlFNd1Ewa0RDeGZXMXJCVWFMVWo2enBweXlKQUZC?=
+ =?utf-8?B?cVFLL0lBL2VHTWxCaWY0WEwvajlrNXI5Z0hRUzhKSHlIaFhoTzJJa0YyNlF6?=
+ =?utf-8?B?N2pDUnI0cGlLV09zQ2tjdndRRUFpc1JaM3hPZzcwR0hHdFZNMlgveFRBaEhR?=
+ =?utf-8?B?ZVVLanR3REFPa29UQ0liMkRQaTNYbk5nc1Rod2hoV0duQkVLb3BYczJKZ01z?=
+ =?utf-8?B?WWcxMEhpK2xTdmFSYjBHVUJPTW1iVTBhRDVlWmtaVjNRT0ZoMmJXK3FnSmIz?=
+ =?utf-8?B?TytSekRQenVCUldmamtoZVVNU2JQc1hxVGlXZmx2NnVlVC9oZUgySDJIMXc3?=
+ =?utf-8?B?S2lmc1lKWWRnbDA2L05Oa3R5eTNiSWtuR0dFRVBhZ3N6TFdXWC9YQ0NrdDZ2?=
+ =?utf-8?B?R1dOYm1ic1JHSU5YYjk4SzJha0lYdFQ2a0RMVGpNZ3l4ZWRlOU0zdFNwOE9O?=
+ =?utf-8?B?WmtKMkxkTUUySGFmYjRtSCs2MWh4OUVOYkcyVkY3ZzZ5Q0gvZEZSVDQ5R3dC?=
+ =?utf-8?B?T3p2dGZvYzFSS1Q1dEc3djZxWmFjSGdRdG5lODYyRUU2VzVENEYwdm9RUC9D?=
+ =?utf-8?B?b2w1c1JZd3RwVzUrREtVVlhKMWhhYWY2NGtrTW14T3c3TG5XVVUxbXQvbFJ5?=
+ =?utf-8?B?NlgwSDMvSXArc3dLTWRuMWd6MFgxWmpQaldNdnNNSGxTWm9oZnFRN1Bna291?=
+ =?utf-8?B?enF6SW9WdnVKbVBIMWNCUjJxM1pzOWJFQUFvaHBWZy94WVlxaThrdWdpem4y?=
+ =?utf-8?B?dVB0d0E1eGtFMHFiajNybWgxKzJ4MzZubVpZS05ueGE0Z3A3T3pYanlDb3FE?=
+ =?utf-8?B?VkVEd1BzbzZISG80Ti8xbTAyelIwM1I5bEt2dGVxeVFPTEZtUUhOZzdvbysw?=
+ =?utf-8?B?Z083SFNwTFd0U0dtVExwbkZiRkJKRERoOE9JVWlUeS9lamRxMHk0dGthV1hJ?=
+ =?utf-8?B?STZFeFFiQnhRRUFIU1A0TUxhQjVtczJXMzBNa1hvbnFKOXBBVXNQNlNEZ1lC?=
+ =?utf-8?B?UlhTSFVXUDUxY2Q1dXFFTVlZN2R6bFMvMVA1M2pJeEoyWVNyZUN2NWZ3WFR3?=
+ =?utf-8?B?Z0hzT1VvVitDREZVbE5uV1dZMWw4TTUwRkdnYkU4TmFrQ2JBakcyNnZUbTlN?=
+ =?utf-8?B?OXJGNzdIdlRoaGN0U1lKbXVFNmhJeDB2ZkNrZ0xWUEt0SUxHcDZFVDVTN2l2?=
+ =?utf-8?B?a0EwdWk2SFdxVUVoeWc1MTlXNjVNRHUyKzJhV2pKcVdWZkFnSmEvNHRUWVBG?=
+ =?utf-8?B?MHQ5ejBJbk9Ja2lYMWFkZDlVVUZSMnlIT1VqbkwxeUdBS21KbHBUMURtOHYz?=
+ =?utf-8?B?S0JENmcyd2dZUE1Sb0NoVml0S0lROTVzREM2dnFqRWxuTXlXQ3hJbHpoOXZV?=
+ =?utf-8?B?VVJHa28yNkdnQ3RVV3prN05qNzBsOHZpZUVYQ3Y1ejc2Nzk1eDRKRHVlb1F3?=
+ =?utf-8?B?VUQvZTg4U1lKdTh0QU9BSDlEWDVhb2pIUDVXaE1jYzkyL3BiaS9ySWpXUkJr?=
+ =?utf-8?B?aWlJNmpVdys5QWtQdk5zRkxybFpWUm0zVmJkbFNuRzVsRnp0MG04QlNib0Ri?=
+ =?utf-8?B?U2pERlZpVDdQV2Fsak5pM082UnFNd0p5UHZiYnZBYmtFd25qMHNQaHNQdEw5?=
+ =?utf-8?B?c0JqMWF5TmYxOHA1OVVWRDlFR01ZeXIwZVI1OHJjd0NHNk1xemdQaVhKOVg1?=
+ =?utf-8?B?ek85VzN3amR1MERoQ25yakFKYXA3ZzBUV3lZbjZSNG5hSGQyYUhudHVuMXpW?=
+ =?utf-8?B?NUl0NlR4Um9IUlZRSTNCeExtR2tTSE5UVE12YUVHeDRMbmlNVDArRmlORllK?=
+ =?utf-8?B?L3RjenpXVFV5NytjSEZoRnFlcFhobUxZczVxVEFqSnlpWTEwVGJ1aC8wMjIz?=
+ =?utf-8?B?NmdWUlJWQXA2RHc0SFdCaVpVTENVN0puZ0w1cklxMFQ1U1RMV1FTakRUeTJ4?=
+ =?utf-8?B?cDlXbEdvNlEyN3ZEYU1EbEZ0UDcwTG1rWUVmQVdSb290NmtqdEhvQmdkZmlB?=
+ =?utf-8?B?UU5mQkdLM29rL0ZKMGFGTWxwUWgrSW9Za01zTHlJdGhjcjBhblUvdlJNT2ph?=
+ =?utf-8?B?eGJ2OFlYdHFEQkpxdmVHSHFkbzlHKys2NmQ5enBNM29lYTEyekN1YmJwZnJC?=
+ =?utf-8?Q?3Ox5pvn8M0sH7M9xyWrw+rs/w?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ab65af52-97c1-4524-bfaf-08ddba3fe9d6
+X-MS-Exchange-CrossTenant-Network-Message-Id: 339fa4d3-5118-4fd2-2a46-08ddba3fe320
 X-MS-Exchange-CrossTenant-AuthSource: CH2PR12MB4277.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2025 14:43:02.9069 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2025 14:42:51.5202 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XZ2CFz+8jcwG94Deuncw8ptoloDRJdUCuVDDLw3oyBkJ3uKfhbdc4QYiIfysQoUX82GO48TU3GXnBDuRqbF1LA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR12MB6337
-Received-SPF: permerror client-ip=2a01:111:f403:2407::61d;
+X-MS-Exchange-CrossTenant-UserPrincipalName: rEYptnwO9lpofS0fiF6A7J5MHme4nh2nTyQptJdSi2+U5ZexNIHp6que9v5VGzcAlKsmiXdc9tBg2sJaxpVB1w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7836
+Received-SPF: permerror client-ip=2a01:111:f403:2414::60a;
  envelope-from=etanous@nvidia.com;
- helo=NAM02-BN1-obe.outbound.protection.outlook.com
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -163,88 +178,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To support the newly added gb200 machine, add appropriate tests.
+This patch series adds support for gb200-bmc, a baseboard management controller
+module based on an Aspeed 2600 SOC.
 
-Signed-off-by: Ed Tanous <etanous@nvidia.com>
----
- tests/functional/aspeed.py                    |  9 +++++--
- tests/functional/meson.build                  |  2 ++
- .../test_arm_aspeed_gb200nvl_bmc.py           | 26 +++++++++++++++++++
- 3 files changed, 35 insertions(+), 2 deletions(-)
+v2:
+- Rebase on master
+- Drop duplicated patch for enabling PCA954X
+- Updated commit message with source information
+- Added functional tests and example openbmc image
+
+Ed Tanous (4):
+  hw/arm/aspeed: Add second SPI chip to Aspeed model
+  docs: add support for gb200-bmc
+  hw/arm/aspeed: Add GB200 BMC target
+  tests/functional: Add gb200 tests
+
+ docs/system/arm/aspeed.rst                    |  4 +-
+ hw/arm/aspeed.c                               | 81 +++++++++++++++++++
+ hw/arm/aspeed_eeprom.c                        | 21 +++++
+ hw/arm/aspeed_eeprom.h                        |  3 +
+ include/hw/arm/aspeed.h                       |  2 +
+ tests/functional/aspeed.py                    |  9 ++-
+ tests/functional/meson.build                  |  2 +
+ .../test_arm_aspeed_gb200nvl_bmc.py           | 26 ++++++
+ 8 files changed, 144 insertions(+), 4 deletions(-)
  create mode 100755 tests/functional/test_arm_aspeed_gb200nvl_bmc.py
 
-diff --git a/tests/functional/aspeed.py b/tests/functional/aspeed.py
-index 7a40d5dda7..b131703c52 100644
---- a/tests/functional/aspeed.py
-+++ b/tests/functional/aspeed.py
-@@ -8,8 +8,13 @@
- class AspeedTest(LinuxKernelTest):
- 
-     def do_test_arm_aspeed_openbmc(self, machine, image, uboot='2019.04',
--                                   cpu_id='0x0', soc='AST2500 rev A1'):
--        hostname = machine.removesuffix('-bmc')
-+                                   cpu_id='0x0', soc='AST2500 rev A1',
-+                                   image_hostname=None):
-+        # Allow for the image hostname to not end in "-bmc"
-+        if image_hostname is not None:
-+            hostname = image_hostname
-+        else:
-+            hostname = machine.removesuffix('-bmc')
- 
-         self.set_machine(machine)
-         self.vm.set_console()
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 85158562a2..d2864543a5 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -32,6 +32,7 @@ test_timeouts = {
-   'arm_aspeed_ast2500' : 720,
-   'arm_aspeed_ast2600' : 1200,
-   'arm_aspeed_bletchley' : 480,
-+  'arm_aspeed_gb200nvl_bmc' : 480,
-   'arm_aspeed_rainier' : 480,
-   'arm_bpim2u' : 500,
-   'arm_collie' : 180,
-@@ -126,6 +127,7 @@ tests_arm_system_thorough = [
-   'arm_aspeed_ast2500',
-   'arm_aspeed_ast2600',
-   'arm_aspeed_bletchley',
-+  'arm_aspeed_gb200nvl_bmc',
-   'arm_aspeed_rainier',
-   'arm_bpim2u',
-   'arm_canona1100',
-diff --git a/tests/functional/test_arm_aspeed_gb200nvl_bmc.py b/tests/functional/test_arm_aspeed_gb200nvl_bmc.py
-new file mode 100755
-index 0000000000..8e8e3f05c1
---- /dev/null
-+++ b/tests/functional/test_arm_aspeed_gb200nvl_bmc.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots the ASPEED machines
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import Asset
-+from aspeed import AspeedTest
-+
-+
-+class GB200Machine(AspeedTest):
-+
-+    ASSET_GB200_FLASH = Asset(
-+        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/master/images/gb200nvl-obmc/obmc-phosphor-image-gb200nvl-obmc-20250702182348.static.mtd.xz',
-+        'b84819317cb3dc762895ad507705978ef000bfc77c50c33a63bdd37921db0dbc')
-+
-+    def test_arm_aspeed_gb200_openbmc(self):
-+        image_path = self.uncompress(self.ASSET_GB200_FLASH)
-+
-+        self.do_test_arm_aspeed_openbmc('gb200nvl-bmc', image=image_path,
-+                                        uboot='2019.04', cpu_id='0xf00',
-+                                        soc='AST2600 rev A3',
-+                                        image_hostname='gb200nvl-obmc')
-+
-+if __name__ == '__main__':
-+    AspeedTest.main()
 -- 
 2.43.0
 
