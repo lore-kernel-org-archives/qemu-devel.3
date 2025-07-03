@@ -4,93 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67953C83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 21:07:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAE33C83F03
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 21:22:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXR9K-000870-6n; Thu, 03 Jul 2025 17:07:18 -0400
+	id 1uXRNU-0003Fh-Nv; Thu, 03 Jul 2025 17:21:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uXR9I-00086M-Pg
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 17:07:16 -0400
-Received: from mail-qk1-x729.google.com ([2607:f8b0:4864:20::729])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uXR9G-0004ok-VS
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 17:07:16 -0400
-Received: by mail-qk1-x729.google.com with SMTP id
- af79cd13be357-7d3900f90f6so31490885a.1
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 14:07:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1751576834; x=1752181634; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yAnY07EyCL8o9fgGf3cdrQzSE/PJTZzAdTm7kISpcB4=;
- b=JFku90Oil8dpINln/tl7ky/TJosWN4h/Fbrv4kxqiHpxZCeUmOxZ7/NNFFL3ptTlLW
- OPjzqZII4/CnENZ8qhurBPtwGI4Za6f3oXolwvrXPEVnwLNyIYBSsolBZuKGK5rSr1Z8
- t9npBlIfwZKaOaP0ZTAyZc2AAReszSSATCPBySAlcNJ2WnAhlNFG98wHMocf8HoRJAwN
- tz+/x2BLwfXMh9LynSKtgFfAQpCwxxejI9vC9aW2ciPgvEljXGd7c/NZDBlXyVBaTHkH
- VMwMANUsM/5CB9hPe5chvknT+d+4USht6/imKistCjUWx1Af2etxlKrUrMUU/dndMCID
- Dlcg==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uXRNL-0003DT-VD
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 17:21:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uXRNI-0004r3-L9
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 17:21:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751577703;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=sWcmRRvcIJlCcFClGfc15m4V+pyXLQ693ZY86nbrKzA=;
+ b=GxQzzgCaaDPf24oReAof5RCpmmj4waMdHkdSWJtjesqvckixMyK2V9KVC6/6Xwtd3qS7+4
+ kDGmcJG/2RIhY1OtJjVPpYt7JYO8/igZSMp/Y4rURJgj0AErVzuKm6pn7rtBzp4V3BjlS2
+ /EUKzAkevsJEOh55PVKgIduyMQA6G3E=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-692-2llysxEwPb25p10aYrUgdw-1; Thu, 03 Jul 2025 17:21:41 -0400
+X-MC-Unique: 2llysxEwPb25p10aYrUgdw-1
+X-Mimecast-MFC-AGG-ID: 2llysxEwPb25p10aYrUgdw_1751577700
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-451d30992bcso1600575e9.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 14:21:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751576834; x=1752181634;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yAnY07EyCL8o9fgGf3cdrQzSE/PJTZzAdTm7kISpcB4=;
- b=tfPXQ/xa9dNoA/ONVnSA2I80y4KJ/4a6np0kEFP1EpQZgsiQGPA8D0AVFUClO4GP8z
- 1xm5tCICc0J6ClWIDYWY7UdxOEY804lHslROVINxFsfPUJdQmxrAcAGzjGSYMMDds7n8
- 49juVqNeKGwnTAea4ioDPpdsVEoALQEUgZ3ml+HgbpFE0Nc1beXCyIA/6YPQcmneIzgg
- UPCja4Ai+Hd78+kfQSwpYZUTinuMXzyAtgO+hKJ4jD6UL0xNjDkIQ+7+cIPidleUo4eY
- HD/dJb9xgmQ5buVg1iQhVnvJk3tnarKQqJD87B99EsAYJgIB89+WqB+4UtS7oZ6r8JwA
- yP5g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUN8f6hiFjGs1dAyhk/9d4ntsY95+V3SKtNMcqMVsRud7KMASgAJIE2AzjOuvcyBCcVKcZ06qUm02mx@nongnu.org
-X-Gm-Message-State: AOJu0YyNOl0m9nQuWBc5vr/WA18UlXszaAfXCg+A1E36527dTXqWcKOk
- ZRgosB5QxKuyyJUk1SL6Qz+cFiW6utnBifV/ilButDW2VetLawEF58A7D0tfAeYN1Wk=
-X-Gm-Gg: ASbGnctkOFldeSTMWKZ3N0Jppke+By8WQbp/0S3z254W9MLUG+Sl9CEq9T3psAenVkO
- cHcq633ghhAOsvRVRkIWuUmKVlY3lfryuVB4w7icpq8sbvZacNerIwykjsVCF1ejNJQhGSpp4gZ
- 7YkKcRQIYfF6dpF3LxhB+wsahDCOGqSIGZhftf+Yd47gTLZW3CuGcD4g05vDMBDL+ZISxFmAs+M
- AYZm5Fd5saeTlCetn08Wb/UnkEv61sdqvuLjHALLxAqi+ZzTRFkn0RhKdC2rxW2PgEZM7A6+57t
- WVkgnGT9dlznzIPz6uSLJAkQEChOroLKmxvei9+GtgKd4hX8i0UWbWp/Ltr3PCG7fkN2UD79nh0
- 42GOz/TYgJTbn
-X-Google-Smtp-Source: AGHT+IFJmcHoPIzZ9L264veetB7nxvS2a+7JPWtJfEvBDpSSyE2BpSfEnDiOTdaw54r4hCf2QZIUqw==
-X-Received: by 2002:a05:620a:27c2:b0:7c0:b523:e1b6 with SMTP id
- af79cd13be357-7d5dcc7603emr67525685a.11.1751576833609; 
- Thu, 03 Jul 2025 14:07:13 -0700 (PDT)
-Received: from [192.168.68.110] ([189.110.107.157])
+ d=1e100.net; s=20230601; t=1751577700; x=1752182500;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sWcmRRvcIJlCcFClGfc15m4V+pyXLQ693ZY86nbrKzA=;
+ b=dMcA2dfI6I4O6BpnXly+dYpgrSAgAP572y8MSYYtwXvhCezKyedQL6Irkc+6TW2sOO
+ GK9O+VpJiC7zyNsFH931dWjwXSNjrOXwOCQOEAZ0ABZ5WU2B49rWypG0NcJVnAP899Ao
+ pkPe+LlxCIvDGdOX8eMt7IsdOmji7r9avrVd24UDf3YMPECfa7ppds+TYPfG8CUbOPER
+ zPd9W5jlR9L+5RqGkvJ4n43ndOrSzWgW+QxsLziv48BW++aKt2macetmu4g8CcuQxq8O
+ +mtm1pt//1DGbUb55Trg/jMkJVHAZh+USsSTbWgURJX7o/HtMtSlS39WDoUWGolh3IEf
+ Areg==
+X-Gm-Message-State: AOJu0YzCudt7VLDxFJNkmGG/e0Jolk4IuA49vS95VmL0N/+Eg/acsMhu
+ /K/xlwVGY1sKnISCOJn1iZmr7kNKUDZhJSMcqD1/2nmDnxLyz1wfK5GBIla4K7cHE0vE4hxI8/G
+ DISQpPn2BpYlzr7uZmMRg7tobydxzHRYJqU1h4KgFdzghz3bvTp9bWmrc
+X-Gm-Gg: ASbGncv52sFqk4pRC69NmN7t58sKBPaxk+NHmE7UWCuYagLD0IEA+/WLMdsFkoO91es
+ 5ye1f8juXqmA5rUT6fSooOSNYL+C0+WqYG1TXIsCBqFNi1MHrirhcFgAriUOUfChIyyc2qTjhoH
+ Q4t3ALvGPhBPNdNEASb1J1/JtHTlX/rscQdGxJeaY0cNF+AqAsNA5yOjY5gpSG6WDwTx3IlZ4km
+ ox3WFjThetdsY/R+JUJWl6C8/OzLaHFAXW6uT5DfIkHv0fnEu51RpBtFKVlGBHFbtiSXHnVE+zn
+ Bxm4dASYQ03mNF3QgRSdujJcx/WVZn6MuBl4cvMyoiIosstjvDK3M7shj2Xk
+X-Received: by 2002:a5d:6f16:0:b0:3a4:db49:94aa with SMTP id
+ ffacd0b85a97d-3b1feb84c39mr7586926f8f.21.1751577700371; 
+ Thu, 03 Jul 2025 14:21:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFqzUdscVcTiet/RyVoVHPPodha+/IMdsjDME3BdckdWHVegRxVkd/3feXMjEeDoI9lKOurkA==
+X-Received: by 2002:a5d:6f16:0:b0:3a4:db49:94aa with SMTP id
+ ffacd0b85a97d-3b1feb84c39mr7586902f8f.21.1751577699949; 
+ Thu, 03 Jul 2025 14:21:39 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7d5dbd93e46sm52290885a.13.2025.07.03.14.07.11
+ ffacd0b85a97d-3b47030b9desm733635f8f.19.2025.07.03.14.21.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Jul 2025 14:07:13 -0700 (PDT)
-Message-ID: <bf6c0cc7-114c-4587-80d5-c152e7eef212@ventanamicro.com>
-Date: Thu, 3 Jul 2025 18:07:09 -0300
+ Thu, 03 Jul 2025 14:21:39 -0700 (PDT)
+Message-ID: <d588c137-423a-4609-b5b5-66f6f135b12a@redhat.com>
+Date: Thu, 3 Jul 2025 23:21:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] tests/tcg/riscv64: Add test for MEPC bit masking
-To: Charalampos Mitrodimas <charmitro@posteo.net>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com
-References: <20250703182157.281320-1-charmitro@posteo.net>
- <20250703182157.281320-3-charmitro@posteo.net>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250703182157.281320-3-charmitro@posteo.net>
+Subject: Re: [PATCH V5 20/38] migration: close kvm after cpr
+To: Peter Xu <peterx@redhat.com>, Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>, Zhenzhong Duan
+ <zhenzhong.duan@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
+ <1749569991-25171-21-git-send-email-steven.sistare@oracle.com>
+ <9dfc0dae-f048-4d41-9b6e-02b6e7dbc215@oracle.com> <aGVYD1GkOC-LuI1T@x1.local>
+ <a0487a01-41de-4997-860c-bc555a295643@oracle.com> <aGbd0IgvtiR4EkoH@x1.local>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <aGbd0IgvtiR4EkoH@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::729;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-qk1-x729.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,126 +160,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 7/3/25 3:21 PM, Charalampos Mitrodimas wrote:
-> Add a regression test to verify that MEPC properly masks the lower
-> bits when an address with mode bits is written to it, as required by
-> the RISC-V Privileged Architecture specification.
+On 7/3/25 21:45, Peter Xu wrote:
+> On Wed, Jul 02, 2025 at 03:41:08PM -0400, Steven Sistare wrote:
+>> The irq producer is not closed, but it is detached from the kvm consumer.
+>> It's eventfd is preserved in new QEMU, and interrupts that arrive during
+>> transition are pended there.
 > 
-> The test sets STVEC to an address with bit 0 set (vectored mode),
-> triggers an illegal instruction exception, copies STVEC to MEPC in the
-> trap handler, and verifies that MEPC masks bits [1:0] correctly for
-> IALIGN=32.
+> Ah I see, looks reasonable.
 > 
-> Without the fix, MEPC retains the mode bits (returns non-zero/FAIL).
-> With the fix, MEPC clears bits [1:0] (returns 0/PASS).
+> So can I understand the core issue here is about the irq consumer /
+> provider updates are atomic, meanwhile there's always the fallback paths
+> ready, so before / after the update the irq won't get lost?
 > 
-> Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
-> ---
-
-The additional test is appreciated. Thanks!
-
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   tests/tcg/riscv64/Makefile.softmmu-target |  4 ++
->   tests/tcg/riscv64/test-mepc-masking.S     | 73 +++++++++++++++++++++++
->   2 files changed, 77 insertions(+)
->   create mode 100644 tests/tcg/riscv64/test-mepc-masking.S
+> E.g. in Post-Interrupt context of Intel's, the irte will be updated
+> atomically for these VFIO irqs, so that either it'll keep using the fast
+> path (provided by the irqbypass mechanism), or slow path (eventfd_signal),
+> so it's free of any kind of race that irq could trigger?
 > 
-> diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-> index 7c1d44d3f4..3ca595335d 100644
-> --- a/tests/tcg/riscv64/Makefile.softmmu-target
-> +++ b/tests/tcg/riscv64/Makefile.softmmu-target
-> @@ -20,5 +20,9 @@ EXTRA_RUNS += run-issue1060
->   run-issue1060: issue1060
->   	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
->   
-> +EXTRA_RUNS += run-test-mepc-masking
-> +run-test-mepc-masking: test-mepc-masking
-> +	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
-> +
->   # We don't currently support the multiarch system tests
->   undefine MULTIARCH_TESTS
-> diff --git a/tests/tcg/riscv64/test-mepc-masking.S b/tests/tcg/riscv64/test-mepc-masking.S
-> new file mode 100644
-> index 0000000000..fccd2a7ac4
-> --- /dev/null
-> +++ b/tests/tcg/riscv64/test-mepc-masking.S
-> @@ -0,0 +1,73 @@
-> +/*
-> + * Test for MEPC masking bug fix
-> + *
-> + * This test verifies that MEPC properly masks the lower bits according
-> + * to the RISC-V specification when vectored mode bits from STVEC are
-> + * written to MEPC.
-> + */
-> +
-> +	.option	norvc
-> +
-> +	.text
-> +	.global _start
-> +_start:
-> +	/* Set up machine trap vector */
-> +	lla	t0, machine_trap_handler
-> +	csrw	mtvec, t0
-> +
-> +	/* Set STVEC with vectored mode (mode bits = 01) */
-> +	li	t0, 0x80004001
-> +	csrw	stvec, t0
-> +
-> +	/* Clear medeleg to handle exceptions in M-mode */
-> +	csrw	medeleg, zero
-> +
-> +	/* Trigger illegal instruction exception */
-> +	.word	0xffffffff
-> +
-> +test_completed:
-> +	/* Exit with result in a0 */
-> +	/* a0 = 0: success (bits [1:0] were masked) */
-> +	/* a0 != 0: failure (some bits were not masked) */
-> +	j	_exit
-> +
-> +machine_trap_handler:
-> +	/* Check if illegal instruction (mcause = 2) */
-> +	csrr	t0, mcause
-> +	li	t1, 2
-> +	bne	t0, t1, skip_test
-> +
-> +	/* Test: Copy STVEC (with mode bits) to MEPC */
-> +	csrr	t0, stvec	/* t0 = 0x80004001 */
-> +	csrw	mepc, t0	/* Write to MEPC */
-> +	csrr	t1, mepc	/* Read back MEPC */
-> +
-> +	/* Check if bits [1:0] are masked (IALIGN=32 without RVC) */
-> +	andi	a0, t1, 3	/* a0 = 0 if both bits masked correctly */
-> +
-> +	/* Set correct return address */
-> +	lla	t0, test_completed
-> +	csrw	mepc, t0
-> +
-> +skip_test:
-> +	mret
-> +
-> +/* Exit with semihosting */
-> +_exit:
-> +	lla	a1, semiargs
-> +	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
-> +	sd	t0, 0(a1)
-> +	sd	a0, 8(a1)
-> +	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
-> +
-> +	/* Semihosting call sequence */
-> +	.balign	16
-> +	slli	zero, zero, 0x1f
-> +	ebreak
-> +	srai	zero, zero, 0x7
-> +	j	.
-> +
-> +	.data
-> +	.balign	8
-> +semiargs:
-> +	.space	16
+> I saw that there's already a new version and Cedric queued it.  If possible
+> add some explanation into commit message, either when repost, or when
+> merge, would be nice, on explaning irq won't get lost.
+yes.
+
+Steve, just resend the patch. I will update the vfio queue.
+Or we can address that with a follow up patch before QEMU 10.1
+is released.
+
+Thanks,
+
+C.
+
 
 
