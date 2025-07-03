@@ -4,97 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A4FEC83F03
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:42:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9048DC83F03
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:56:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXN0t-0003Tq-Ie; Thu, 03 Jul 2025 12:42:19 -0400
+	id 1uXNDt-0007sM-1x; Thu, 03 Jul 2025 12:55:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXN0q-0003TV-Aj
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:42:16 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXNDr-0007s7-Nk
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:55:44 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXN0l-0003e7-3h
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:42:16 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3b45edf2303so233216f8f.2
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:42:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXNDo-0008B3-O7
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:55:43 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3a4ef2c2ef3so9000f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:55:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751560929; x=1752165729; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751561738; x=1752166538; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=89VdT6B6Uu37n7jCg16nfxI1G8F7uZUBb7nUaferbJ4=;
- b=P8orES6N2yhNvFsT8a3+rpOArQl4mlUsQkJ/Ypxf7a2cU1+KInX4WiT/ROXc4CvuOX
- wOLFGvR6IEM4Ona6yOxnRkPtMpfs2o7oFF9RAsBmIwVSt5eYe19+eS3heUWlFE8hC4K7
- 311aQstQIfoMIiV5PU/FMQkj12LrxmCQZ1Byb8E00fm76OTOGN9koD327cBCvP8GPUqW
- OOWffbnNq0UEghpWSI70RaCp1psE0uOSyTAoV7P5Cb2/RZD4vijWlvIMQIC03WrrZ7Ja
- Hyq7a72ftQ8gtgmOlYp4dY03o9OTbRBOqadS+IYLNXHjLCKm5DWiYkqyhlb708Cs31lC
- y9Jg==
+ bh=hYYsoPhUt2rwghSez0OC1r1SNN/QZSz1/N0OAe81ego=;
+ b=TKtMR+VTN1I8JJd06pQG9p3sYbzM1Ru1Ler4cGobywgXoXgh9XwqwroTWoPVpIDqY4
+ uDYSHOjnkfqJqEbAplmLZXZm8S7CUaEb9d0nuh3YzNMT731RBPOcUX8OtpTvKqE1VYha
+ 26PNRlrfsQKQuR0fPJYGrJAvYJqi8Rpl/wo7+xEwR+v/VS/bk8A/p2vf//AO+o1Cq2ZK
+ BLDtfKSNE2n/MIlhev1vQxvbUy9x0L60AaeIo5/E3ZHUSV/TGgQp7gdCSW3/vDjPOtqD
+ d3cTR5XeDRaB7Oj55asoELeQPQneOOBlVaTNmbC+UsPFIqH1JNZRSw3jBsBojbfrioAG
+ 9UHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751560929; x=1752165729;
+ d=1e100.net; s=20230601; t=1751561738; x=1752166538;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=89VdT6B6Uu37n7jCg16nfxI1G8F7uZUBb7nUaferbJ4=;
- b=FvzLtcKuix1uv/h+52uBFGPSt1/iVw/E3XWXQvztiodaGUVpMouF2SAgX2Eq/9cfjc
- 44t5LWtOzEqDrOJKMENWW8A/4G3y2vtD3SlFmwClTy2yt93TxnEih7YKSKqPCWv9D5Y6
- 80DpWWEPYNZGiEf8Z8oj+pcSm7zMEaeigrC6lTIRVXHixKRPK/WhC79NPRVFbBh4ByMb
- hUCwrBSyEhKhDWKAbrBYMcOdjM0AxyS6bizfM5R9iutMUxDbvCxfM68pf18FphTue8uD
- RMdTxCLM+rfn/hgBYe+kirs1Nr7w71Q5TXm9gSGcZcwhNjeRJjN+/k6b8ni5yt7f5i/l
- 1lag==
-X-Gm-Message-State: AOJu0YxxVBZdOQ2i77P4u0tIdJlmJ9ULqJfO7H4oqCXMY4uMoQ50SADo
- aaQqaN9dJ1bfsj4eTAhNF8KZkFqL+6xhrQeGPGrrwYH0mimHntZg3lDiVh+6Np0x4hUJ7MHgQOQ
- BDwKyl24=
-X-Gm-Gg: ASbGncsCaHfDKow8K7GVBsQ7FleiUq434RlWyqI9VCyFjRJdHBoLcDXczJQnKInmFSv
- n/urlmbOYKrUeRpR9HELy70rlvV0FVvkljIsLKoxH6up7FphtWtn/H1Y5zQFtdUYeLCK0qfZHEK
- awoaWnnRYkrs+CoKVB9AO/6C0ftjduYlTve8xpZGKeFKBWIEuAMAyZeTYsOaxKwN82Yx1By5SC8
- GE3TmAv6GA78868TAGG/GH2pIBmtQh9WRX5Ds0nlTFNEgOEI5A6Rewivmkof7VMn0RpF+hcyzrR
- iydS4rqceDtJt34G1LPZDiUM3b7vdN9AlNMwkd0eAptMMyHLfVNw3LJjqM9AhgNCae/luSlWyxi
- StrnQRYxXSBa/tPBglqLdEunWe4MzXA==
-X-Google-Smtp-Source: AGHT+IFlo21nZ+3+OnFGvk4QC6mGpvQXwaYFctOTQS0MBUrwjRweS7+YpfJBsCMfUFSoXbSSr2XgHQ==
-X-Received: by 2002:a05:6000:490a:b0:3b1:8db7:d1fc with SMTP id
- ffacd0b85a97d-3b1fe5c07d4mr6498213f8f.21.1751560928626; 
- Thu, 03 Jul 2025 09:42:08 -0700 (PDT)
+ bh=hYYsoPhUt2rwghSez0OC1r1SNN/QZSz1/N0OAe81ego=;
+ b=jK01uXpRU4XG2dehNmZeRjn0hweOk5tUdMdNzy/S26Hy93e09wqt4/edjS7CDR0vro
+ AU1Mpaa2ic8dN1i9MAji+hBiU5S6ZbWmhG75OLfNGtoqrYvn91OePcwXuG5ys5WrXCYk
+ xT6EGTWpsmbLDIS2umK2+Rd8KaacwaTrFlDgfeY11PbcblPxj0igJ4EelVZ5CQAvEPE2
+ 4Cj29ozMJbzvK2GAN0oqsr/BLg+3olNqUEokpmWfCxFbWg+L4xrSx8sAiifuzjNI+aO0
+ sFVmYogS8YmqNp0+HEWEZFw4JyHFTEAggRHvfUukTyXkVCAEIcgUFqT2HOAsMszBnA10
+ 3HgA==
+X-Gm-Message-State: AOJu0YyIsER4oaw8vaGywxh25h6E2hJwsqMpp4LhLL0hAfMqD+dmBVFA
+ bkDVeyZb0ENb7JhBhFV5kQDBEbnvyP/jOtz1kkNHq6ppE+gDzwTttLx83oxkhgBjcxY=
+X-Gm-Gg: ASbGncv9iPohljtE9ImslXNIP6lZIahtBo5PgAT/sxuV5886AIaA6SoY+yjX9OgK4c3
+ YA2gOMlRPt3QnJp5Z5zD8/XovbypNXKrjeZ3uRpbZfBskh6xrf1WwTHmEohZUFLsy9PDL4xIwJT
+ 7i78mqQws1X8cHJ/ICA78sDiw+LLGlcTnJO6xHd3Ka2UWOtyzJk05JEEqA14jxhvn6cTgu5BlM0
+ NGVwZ3OX7PFmubQ6+2hycYhIufQqjOHCYZJtgYj2cPINR5TfbKwqQlDWmx3YpQxsdj0CeThnnwp
+ yql1XRpY8Rn3mA/gl9L2SUERcAiIK6M9jpKhW5GTmQ5iDUAbhXzhwh7qHkahbhlROKd5lqQ2rQ6
+ D+trxrg4tuujlmTXZjF6m3dIOz2Ky3g==
+X-Google-Smtp-Source: AGHT+IHLUEZ5vDy4UpJ8pCKMBdiahdN4DFcUr6FxKXFZdwgF+JfkAVchTkNT9I4nLqN07mkCrXiLxA==
+X-Received: by 2002:a05:6000:481c:b0:3a4:fea6:d49f with SMTP id
+ ffacd0b85a97d-3b2012f94f8mr6499301f8f.49.1751561738527; 
+ Thu, 03 Jul 2025 09:55:38 -0700 (PDT)
 Received: from [192.168.69.218] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b4708d099esm235255f8f.21.2025.07.03.09.42.07
+ 5b1f17b1804b1-454b1698e91sm2651495e9.30.2025.07.03.09.55.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Jul 2025 09:42:08 -0700 (PDT)
-Message-ID: <db0b2ce0-e702-4f32-b284-29cccc8d67ba@linaro.org>
-Date: Thu, 3 Jul 2025 18:42:06 +0200
+ Thu, 03 Jul 2025 09:55:37 -0700 (PDT)
+Message-ID: <4cde90c2-abc9-4221-9571-d66f981bff8a@linaro.org>
+Date: Thu, 3 Jul 2025 18:55:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 28/69] qapi: Move definitions related to accelerators
- in their own file
-To: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, kvm@vger.kernel.org,
+Subject: Re: [PATCH v4 02/65] system/cpus: Defer memory layout changes until
+ vCPUs are realized
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Eric Blake <eblake@redhat.com>,
- Michael Roth <michael.roth@amd.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20250703105540.67664-1-philmd@linaro.org>
- <20250703105540.67664-29-philmd@linaro.org>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Peter Xu
+ <peterx@redhat.com>, David Hildenbrand <david@redhat.com>
+References: <20250702185332.43650-1-philmd@linaro.org>
+ <20250702185332.43650-3-philmd@linaro.org> <87cyahcjt5.fsf@draig.linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250703105540.67664-29-philmd@linaro.org>
+In-Reply-To: <87cyahcjt5.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,96 +104,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Markus,
-
-On 3/7/25 12:54, Philippe Mathieu-Daudé wrote:
-> Extract TCG and KVM definitions from machine.json to accelerator.json.
+On 3/7/25 18:37, Alex Bennée wrote:
+> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->   MAINTAINERS                |  1 +
->   qapi/accelerator.json      | 57 ++++++++++++++++++++++++++++++++++++++
->   qapi/machine.json          | 47 -------------------------------
->   qapi/qapi-schema.json      |  1 +
->   accel/tcg/monitor.c        |  2 +-
->   hw/core/machine-hmp-cmds.c |  1 +
->   hw/core/machine-qmp-cmds.c |  1 +
->   qapi/meson.build           |  1 +
->   8 files changed, 63 insertions(+), 48 deletions(-)
->   create mode 100644 qapi/accelerator.json
+>> vCPUs are not really usable until fully realized. Do not attempt
+>> to commit memory changes in the middle of vCPU realization. Defer
+>> until realization is completed and vCPU fully operational.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   system/physmem.c | 8 ++++++++
+>>   1 file changed, 8 insertions(+)
+>>
+>> diff --git a/system/physmem.c b/system/physmem.c
+>> index ff0ca40222d..8b2be31fa7e 100644
+>> --- a/system/physmem.c
+>> +++ b/system/physmem.c
+>> @@ -2792,6 +2792,14 @@ static void tcg_commit(MemoryListener *listener)
+>>       cpuas = container_of(listener, CPUAddressSpace, tcg_as_listener);
+>>       cpu = cpuas->cpu;
+>>   
+>> +    if (!qdev_is_realized(DEVICE(cpu))) {
+>> +        /*
+>> +         * The listener is also called during realize, before
+>> +         * all of the tcg machinery for run-on is initialized.
+>> +         */
+>> +        return;
+>> +    }
+>> +
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index b1cbfe115bc..c3ce0d37779 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -507,6 +507,7 @@ F: accel/Makefile.objs
->   F: accel/stubs/Makefile.objs
->   F: cpu-common.c
->   F: cpu-target.c
-> +F: qapi/accelerator.json
->   F: system/cpus.c
->   
->   Apple Silicon HVF CPUs
-> diff --git a/qapi/accelerator.json b/qapi/accelerator.json
-> new file mode 100644
-> index 00000000000..00d25427059
-> --- /dev/null
-> +++ b/qapi/accelerator.json
-> @@ -0,0 +1,57 @@
-> +# -*- Mode: Python -*-
-> +# vim: filetype=python
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +##
-> +# = Accelerators
-> +##
-> +
-> +{ 'include': 'common.json' }
+> This is a c&p of the wording bellow:
+> 
+>       * That said, the listener is also called during realize, before
+>       * all of the tcg machinery for run-on is initialized: thus halt_cond.
+> 
+> which is now redundant because of the early exit?
 
-common.json defines @HumanReadableText, ...
+Commit 0d58c660689 ("softmmu: Use async_run_on_cpu in tcg_commit") hmmm.
 
-[...]
-
-> +##
-> +# @x-query-jit:
-> +#
-> +# Query TCG compiler statistics
-> +#
-> +# Features:
-> +#
-> +# @unstable: This command is meant for debugging.
-> +#
-> +# Returns: TCG compiler statistics
-> +#
-> +# Since: 6.2
-> +##
-> +{ 'command': 'x-query-jit',
-> +  'returns': 'HumanReadableText',
-> +  'if': 'CONFIG_TCG',
-
-... which is *optionally* used here, triggering when
-TCG is not built in:
-
-qapi/qapi-commands-accelerator.c:85:13: error: 
-‘qmp_marshal_output_HumanReadableText’ defined but not used 
-[-Werror=unused-function]
-    85 | static void 
-qmp_marshal_output_HumanReadableText(HumanReadableText *ret_in,
-       |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
-
-We previously discussed that issue:
-https://mail.gnu.org/archive/html/qemu-devel/2021-06/msg02667.html
-
-where you said:
-
-"conditional commands returning an unconditional type is a bit
-of a code smell". Is it however a "non-smelly instances of this pattern"?
+I don't understand enough this area, so I'll drop this patch for now and
+keep carrying it for split accel.
 
 Regards,
 
 Phil.
+
 
