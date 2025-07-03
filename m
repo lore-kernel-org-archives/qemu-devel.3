@@ -4,115 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14AC9C83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 09:38:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71344C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 09:46:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXGNr-00036t-LO; Thu, 03 Jul 2025 05:37:35 -0400
+	id 1uXGVg-0005rF-Ev; Thu, 03 Jul 2025 05:45:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
- id 1uXGNo-000367-NF; Thu, 03 Jul 2025 05:37:32 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
- id 1uXGNk-00030L-8K; Thu, 03 Jul 2025 05:37:30 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 562MTPfW003964;
- Thu, 3 Jul 2025 09:37:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=teJEC+rEOEgsnabKyjHMgmAmJw2gbB
- D5syFKdrfWzUc=; b=AhMvrUi1kKnDXCPBVhDeWt67WbLt7fDV7jXUpIy2mDZz+N
- PFqWO1NAXBhCgBVr/1qL5qqzGaaEF7/Vf9mKtvAlLK8OI+FRlW7afYPp05tbtPfA
- B9ckelXbgs4oyvCiXJa8fz3CLFxaSgKcIrAVuEJuc2EBBz6ATt5+2N8T7S7951HX
- MGnBS22T5F9LRYFJ/4HXLc4zOc8Mb/wQxBha0CdYIr2sxOa+jrvQ2jwDmk94vrTQ
- fO+/Wc6pCZ+/BsmBF4kSn9rdiDHt5K25nD6rytrAPXJ9DziXiirYz2PtRMwxllzK
- 2T6XA01TTAPtYNbJxbR/Wj7XPG9w/Nv4fAeFvtxQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47j5ttjpdf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 03 Jul 2025 09:37:25 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 5639YAgc012659;
- Thu, 3 Jul 2025 09:37:24 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47j5ttjpde-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 03 Jul 2025 09:37:24 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5636M9fJ021909;
- Thu, 3 Jul 2025 09:37:24 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47juqpv4g1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 03 Jul 2025 09:37:24 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5639bKXj53543390
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 3 Jul 2025 09:37:20 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 14FCA2004D;
- Thu,  3 Jul 2025 09:37:20 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A9FFE20040;
- Thu,  3 Jul 2025 09:37:18 +0000 (GMT)
-Received: from li-c6426e4c-27cf-11b2-a85c-95d65bc0de0e.ibm.com (unknown
- [9.204.207.58])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Thu,  3 Jul 2025 09:37:18 +0000 (GMT)
-Date: Thu, 3 Jul 2025 15:07:16 +0530
-From: Gautam Menghani <gautam@linux.ibm.com>
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org,
- =?utf-8?B?RnLDqWTDqXJpYw==?= Barrat <fbarrat@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>,
- Caleb Schlossin <calebs@linux.vnet.ibm.com>
-Subject: Re: [PATCH 00/50] ppc/xive: updates for PowerVM
-Message-ID: <rsxrim7v3jrghmoif46vlabl6bdtrqcpvkqk4qcj4fcn5gsjpv@24452e6sftjx>
-References: <20250512031100.439842-1-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXGVZ-0005ns-P5
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 05:45:33 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXGVX-000883-VC
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 05:45:33 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-70b4e497d96so56069847b3.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 02:45:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751535930; x=1752140730; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=yqLrDQKiB7p2Djao7wyoxhIuPDF5XbtOnum5lvMNefE=;
+ b=T2r9rbFl9qAiWLzeAfbv/2C2ItOWIflqxjyASOrs8NFNUrh1koUzMepT45m3XyXuA3
+ EMnDfQfg8joHP9tDFHDBKcWHCxO5aSKH7v5gqOofghI3NSeL8SRN9WkG//Hh9UkijUSs
+ xiJR+8y+jw7XFY5Pv32oiAgHrIzGqgI0DBuXKfMKylNQ2lDLJaoUmUIQpKHbijt1MPD5
+ Hiseo26relPVhvn2O22jUJ1DTo0OQ44ZZzGwcoslLcmN8ZTasXazkSzuQcSlEzxIvFEr
+ UYHEbBGRfRHSve/zDS79CP1ybuolH+htGOf4LYmWqtFvB4/9bPeBQIaEAeWFsPVJ2p8a
+ Pg8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751535930; x=1752140730;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yqLrDQKiB7p2Djao7wyoxhIuPDF5XbtOnum5lvMNefE=;
+ b=Mx/s8dlZAlQE3/k/iDvGXisLFwTd904BuY5aBUyBw+EUI5MpeHLNEVNaPYvCWCzbu8
+ 53k92Jx/AVwxdCYwUWhXIlFLiGYmzJpKnK6AMY+ch4cfS821ff/Cx6Mc325eiAUB6nwC
+ dQBh2dSa/IUdYHzzH7t+gLsBFi0neOZI5mW1B9tmpkR7Etdh7oM16U4uFtqb/OsKwm8g
+ rmsH6KvOnhKhvbGLz4uozRDA3tW2bZjjBCXrbm3EnihecUMed/egMM8Qn7EYAI5RDFbo
+ /CJnyfbc+iV3hRI5WjxMStEqQEK1kxfivB/lboDA902BdfuqvDWf1y0iE9adkpUiBdWV
+ KOjA==
+X-Gm-Message-State: AOJu0Yyy8Is+aU4RY/FAnXJ4o/rspvsEm74TjQAbfV/wmYpfRNSWmFtc
+ NC++MQLxe/BdaUdpTMhdJIG+SAdzihQt57urzxi/cOxRa+MeIIb1oB6RRdlLshVHmQcn8uo+++Y
+ a5J2Ijz2U0zaoslyXKn3bpAGTRT1QFt5guvpzc/JTKg==
+X-Gm-Gg: ASbGncuPAKCtfRv38VH5t+z0eOkjNa080SMYrNkrb9Ihp9mlMh0zOai9mufZbZudhBJ
+ EpkH8qwq+YLhgw6lY0DIB5MQjn5N8DNiP7TujbCvlA5zIhK0B9Iur2IPTd1I1l+GakvkisDUskx
+ 4SnsFfuI30wmHvCEtBJVbg2ThrtpKQdnSoIwOpe/cSL9oh
+X-Google-Smtp-Source: AGHT+IGjIfIAD+LV2tqehV7yb3BH/6Z3KXaPE6RPuMbUYwZT62TaaucfNaS54V7bkDSyEphUJf6AP95/IJeBJb5+iF4=
+X-Received: by 2002:a05:690c:f0d:b0:712:cc11:aed with SMTP id
+ 00721157ae682-7164d27d0e4mr90397977b3.2.1751535930213; Thu, 03 Jul 2025
+ 02:45:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250512031100.439842-1-npiggin@gmail.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 45iLKTL_QsqAY7kkIZjoxH-5Yv6KObj6
-X-Authority-Analysis: v=2.4 cv=UtNjN/wB c=1 sm=1 tr=0 ts=68664f55 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=kj9zAlcOel0A:10 a=Wb1JkmetP80A:10 a=VnNF1IyMAAAA:8 a=MXip1V9D6JMEvDxORhQA:9
- a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: NHphe_IOIfgLj7rv-aUKEHvey1OT218-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzAzMDA3NSBTYWx0ZWRfXyBy3f857B3dk
- HiBl15xo9pDF9j+DaQ8itprPK5sak7nAPCI/rTs+n7IUU2Z0UoToLSJAKqx9eIT55GO60oiGo09
- dwKBWce+VJSngLA09K6isIZZDTmM6uJTuNR4FYhLFNx1tyGZvYK7XzgruTNI2sGaC6tcrwmZhvY
- bCRt3A9W18Cx2hSlN3Vz8o5auJHNU/CZScbxTPGeAALg43sJpTyVB7tRH1t+iknsqtIuyi/qiEN
- mjYeaO/7fjyTLacWYXHIrifxq07tFa0IkrbDaciLss5dQMdD5L243bqfSDINavNzMLELe9Zx94V
- jd8H9/CKNE4hrHjqzWP5B8IVed/1XJEWsuAz0uhi9+5rrMhYKWcOZuY6uWmq3RB+VcZasG03n8q
- RqDI2Wh0ZFjFo9O+4X059hjiZSahfD5TbZi57jYagwUO9Xcwn+n+NPqqdiKpi+0fGfHatjDB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-03_02,2025-07-02_04,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0
- priorityscore=1501 phishscore=0 mlxscore=0 spamscore=0 mlxlogscore=572
- adultscore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0 impostorscore=0
- malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507030075
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=gautam@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20250702123410.761208-1-richard.henderson@linaro.org>
+ <20250702123410.761208-32-richard.henderson@linaro.org>
+In-Reply-To: <20250702123410.761208-32-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 3 Jul 2025 10:45:18 +0100
+X-Gm-Features: Ac12FXzYp_EOl4Fj5V6qX_5rlS4wbCmsU_qh2I4BV8fA2paflc3HX76WbAUu6Rg
+Message-ID: <CAFEAcA8szLP4mEvkatHhbBJzU5A6w0XGcMRRJYr_HPSNgZmU7Q@mail.gmail.com>
+Subject: Re: [PATCH v3 31/97] target/arm: Implemement SME2 SDOT, UDOT, USDOT,
+ SUDOT
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,10 +93,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nick,
+On Wed, 2 Jul 2025 at 13:34, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-I did some sanity testing of this series on KVM on LPAR (P10) with the help of
-avocado test suites, LGTM
 
-Tested-by: Gautam Menghani <gautam@linux.ibm.com>
+
+> +/* Similar for 2-way dot product */
+> +#define DO_DOT(NAME, TYPED, TYPEN, TYPEM) \
+> +void HELPER(NAME)(void *vd, void *vn, void *vm, void *va, uint32_t desc)  \
+> +{                                                                         \
+> +    intptr_t i, opr_sz = simd_oprsz(desc);                                \
+> +    TYPED *d = vd, *a = va;                                               \
+> +    TYPEN *n = vn;                                                        \
+> +    TYPEM *m = vm;                                                        \
+> +    for (i = 0; i < opr_sz / sizeof(TYPED); ++i) {                        \
+> +        d[i] = (a[i] +                                                    \
+> +                (TYPED)n[i * 2 + 0] * m[i * 2 + 0] +                      \
+> +                (TYPED)n[i * 2 + 1] * m[i * 2 + 1]);                      \
+
+Don't we need some H macros here for the big-endian host case?
+(For that matter, the existing 4-way dot product helpers also
+look like they won't work on big-endian...)
+
+> +    }                                                                     \
+> +    clear_tail(d, opr_sz, simd_maxsz(desc));                              \
+> +}
+> +
+> +#define DO_DOT_IDX(NAME, TYPED, TYPEN, TYPEM, HD) \
+> +void HELPER(NAME)(void *vd, void *vn, void *vm, void *va, uint32_t desc)  \
+> +{                                                                         \
+> +    intptr_t i = 0, opr_sz = simd_oprsz(desc);                            \
+> +    intptr_t opr_sz_n = opr_sz / sizeof(TYPED);                           \
+> +    intptr_t segend = MIN(16 / sizeof(TYPED), opr_sz_n);                  \
+> +    intptr_t index = simd_data(desc);                                     \
+> +    TYPED *d = vd, *a = va;                                               \
+> +    TYPEN *n = vn;                                                        \
+> +    TYPEM *m_indexed = (TYPEM *)vm + HD(index) * 2;                       \
+> +    do {                                                                  \
+> +        TYPED m0 = m_indexed[i * 2 + 0];                                  \
+> +        TYPED m1 = m_indexed[i * 2 + 1];                                  \
+> +        do {                                                              \
+> +            d[i] = (a[i] +                                                \
+> +                    n[i * 2 + 0] * m0 +                                   \
+> +                    n[i * 2 + 1] * m1);                                   \
+
+Similarly here.
+
+> +        } while (++i < segend);                                           \
+> +        segend = i + (16 / sizeof(TYPED));                                \
+> +    } while (i < opr_sz_n);                                               \
+> +    clear_tail(d, opr_sz, simd_maxsz(desc));                              \
+> +}
+
+Otherwise
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
