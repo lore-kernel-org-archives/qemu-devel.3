@@ -4,73 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9FD7C77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 15:16:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BA6DC83F03
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 15:19:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXLfd-000643-6r; Thu, 03 Jul 2025 11:16:17 -0400
+	id 1uXLhM-0006h7-ET; Thu, 03 Jul 2025 11:18:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1uXLfW-00063f-9q
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 11:16:11 -0400
-Received: from smtp-out-60.livemail.co.uk ([213.171.216.60]
- helo=dkim.livemail.co.uk)
+ (Exim 4.90_1) (envelope-from <SRS0=EggC=ZQ=kaod.org=clg@ozlabs.org>)
+ id 1uXLhC-0006gD-6E; Thu, 03 Jul 2025 11:17:55 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1uXLfU-0006Ci-5Q
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 11:16:10 -0400
-Received: from smtp.livemail.co.uk (unknown [10.44.132.84])
- by dkim.livemail.co.uk (Postfix) with ESMTPS id 15C8A180395;
- Thu,  3 Jul 2025 16:16:04 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=randomman.co.uk;
- s=livemail2; t=1751555764;
- bh=+tSIBIdP1C48P2hitcfz19hFRfa5EceZasOgmdkRXN8=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=PBpzwX24SC5o449l8Okk7m3LhTBrRP+0FGqBh1JMXjIsWHoQCVBf+9AHwxXn07GbE
- lz2LP9AS9E21E3jJnpZ1oCR6y2AqrevZXlLyhrbRN255tD/0rh8CHfTnlh0QLfwm7e
- nIvGV+QgHg2YPGOUz+QAoGekP+EU2OQrhjzIPkW8=
-Received: from localhost.localdomain (unknown [145.40.191.116])
- (Authenticated sender: roy.hopkins@randomman.co.uk)
- by smtp.livemail.co.uk (Postfix) with ESMTPSA id 548B7A078F;
- Thu,  3 Jul 2025 16:15:58 +0100 (BST)
-From: Roy Hopkins <roy.hopkins@randomman.co.uk>
-To: qemu-devel@nongnu.org
-Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P . Berrange" <berrange@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
- Gerd Hoffman <kraxel@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
- Joerg Roedel <joro@8bytes.org>
-Subject: [PATCH v9 05/16] i386/pc_sysfw: Ensure sysfw flash configuration does
- not conflict with IGVM
-Date: Thu,  3 Jul 2025 16:15:34 +0100
-Message-ID: <c6166cfe128933b04003a9288566b7affe170dfe.1751554099.git.roy.hopkins@randomman.co.uk>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1751554099.git.roy.hopkins@randomman.co.uk>
-References: <cover.1751554099.git.roy.hopkins@randomman.co.uk>
+ (Exim 4.90_1) (envelope-from <SRS0=EggC=ZQ=kaod.org=clg@ozlabs.org>)
+ id 1uXLh9-0006NS-7l; Thu, 03 Jul 2025 11:17:53 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bY0k46Hqtz4x11;
+ Fri,  4 Jul 2025 01:17:16 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bY0jz0Q3yz4wbR;
+ Fri,  4 Jul 2025 01:17:10 +1000 (AEST)
+Message-ID: <ea805ebc-877d-48b0-861c-ac9b5c855acf@kaod.org>
+Date: Thu, 3 Jul 2025 17:17:31 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=213.171.216.60;
- envelope-from=roy.hopkins@randomman.co.uk; helo=dkim.livemail.co.uk
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/4] tests/functional: Add gb200 tests
+To: Ed Tanous <etanous@nvidia.com>, qemu-devel@nongnu.org
+Cc: Troy Lee <leetroy@gmail.com>, Steven Lee <steven_lee@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
+ qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250703144249.3348879-1-etanous@nvidia.com>
+ <20250703144249.3348879-5-etanous@nvidia.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250703144249.3348879-5-etanous@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=EggC=ZQ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,82 +111,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When using an IGVM file the configuration of the system firmware is
-defined by IGVM directives contained in the file. In this case the user
-should not configure any pflash devices.
+On 7/3/25 16:42, Ed Tanous wrote:
+> To support the newly added gb200 machine, add appropriate tests.
+> 
+> Signed-off-by: Ed Tanous <etanous@nvidia.com>
+> ---
+>   tests/functional/aspeed.py                    |  9 +++++--
+>   tests/functional/meson.build                  |  2 ++
+>   .../test_arm_aspeed_gb200nvl_bmc.py           | 26 +++++++++++++++++++
+>   3 files changed, 35 insertions(+), 2 deletions(-)
+>   create mode 100755 tests/functional/test_arm_aspeed_gb200nvl_bmc.py
+> 
+> diff --git a/tests/functional/aspeed.py b/tests/functional/aspeed.py
+> index 7a40d5dda7..b131703c52 100644
+> --- a/tests/functional/aspeed.py
+> +++ b/tests/functional/aspeed.py
+> @@ -8,8 +8,13 @@
+>   class AspeedTest(LinuxKernelTest):
+>   
+>       def do_test_arm_aspeed_openbmc(self, machine, image, uboot='2019.04',
+> -                                   cpu_id='0x0', soc='AST2500 rev A1'):
+> -        hostname = machine.removesuffix('-bmc')
+> +                                   cpu_id='0x0', soc='AST2500 rev A1',
+> +                                   image_hostname=None):
+> +        # Allow for the image hostname to not end in "-bmc"
+> +        if image_hostname is not None:
+> +            hostname = image_hostname
+> +        else:
+> +            hostname = machine.removesuffix('-bmc')
 
-This commit skips initialization of the ROM mode when pflash0 is not set
-then checks to ensure no pflash devices have been configured when using
-IGVM, exiting with an error message if this is not the case.
 
-Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
-Acked-by: Gerd Hoffman <kraxel@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
----
- hw/i386/pc_sysfw.c | 31 ++++++++++++++++++++++++++++---
- 1 file changed, 28 insertions(+), 3 deletions(-)
+This change belongs to another patch and it doesn't seem that
+this series needs it. Does it ?
 
-diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-index 821396c16e..1a12b635ad 100644
---- a/hw/i386/pc_sysfw.c
-+++ b/hw/i386/pc_sysfw.c
-@@ -220,7 +220,13 @@ void pc_system_firmware_init(PCMachineState *pcms,
-     BlockBackend *pflash_blk[ARRAY_SIZE(pcms->flash)];
- 
-     if (!pcmc->pci_enabled) {
--        x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, true);
-+        /*
-+         * If an IGVM file is specified then the firmware must be provided
-+         * in the IGVM file.
-+         */
-+        if (!X86_MACHINE(pcms)->igvm) {
-+            x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, true);
-+        }
-         return;
-     }
- 
-@@ -240,8 +246,13 @@ void pc_system_firmware_init(PCMachineState *pcms,
-     }
- 
-     if (!pflash_blk[0]) {
--        /* Machine property pflash0 not set, use ROM mode */
--        x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, false);
-+        /*
-+         * Machine property pflash0 not set, use ROM mode unless using IGVM,
-+         * in which case the firmware must be provided by the IGVM file.
-+         */
-+        if (!X86_MACHINE(pcms)->igvm) {
-+            x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, false);
-+        }
-     } else {
-         if (kvm_enabled() && !kvm_readonly_mem_enabled()) {
-             /*
-@@ -257,6 +268,20 @@ void pc_system_firmware_init(PCMachineState *pcms,
-     }
- 
-     pc_system_flash_cleanup_unused(pcms);
-+
-+    /*
-+     * The user should not have specified any pflash devices when using IGVM
-+     * to configure the guest.
-+     */
-+    if (X86_MACHINE(pcms)->igvm) {
-+        for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
-+            if (pcms->flash[i]) {
-+                error_report("pflash devices cannot be configured when "
-+                             "using IGVM");
-+                exit(1);
-+            }
-+        }
-+    }
- }
- 
- void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
--- 
-2.43.0
+
+Thanks,
+
+C.
+
+
+
+>           self.set_machine(machine)
+>           self.vm.set_console()
+> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+> index 85158562a2..d2864543a5 100644
+> --- a/tests/functional/meson.build
+> +++ b/tests/functional/meson.build
+> @@ -32,6 +32,7 @@ test_timeouts = {
+>     'arm_aspeed_ast2500' : 720,
+>     'arm_aspeed_ast2600' : 1200,
+>     'arm_aspeed_bletchley' : 480,
+> +  'arm_aspeed_gb200nvl_bmc' : 480,
+>     'arm_aspeed_rainier' : 480,
+>     'arm_bpim2u' : 500,
+>     'arm_collie' : 180,
+> @@ -126,6 +127,7 @@ tests_arm_system_thorough = [
+>     'arm_aspeed_ast2500',
+>     'arm_aspeed_ast2600',
+>     'arm_aspeed_bletchley',
+> +  'arm_aspeed_gb200nvl_bmc',
+>     'arm_aspeed_rainier',
+>     'arm_bpim2u',
+>     'arm_canona1100',
+> diff --git a/tests/functional/test_arm_aspeed_gb200nvl_bmc.py b/tests/functional/test_arm_aspeed_gb200nvl_bmc.py
+> new file mode 100755
+> index 0000000000..8e8e3f05c1
+> --- /dev/null
+> +++ b/tests/functional/test_arm_aspeed_gb200nvl_bmc.py
+> @@ -0,0 +1,26 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Functional test that boots the ASPEED machines
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +from qemu_test import Asset
+> +from aspeed import AspeedTest
+> +
+> +
+> +class GB200Machine(AspeedTest):
+> +
+> +    ASSET_GB200_FLASH = Asset(
+> +        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/master/images/gb200nvl-obmc/obmc-phosphor-image-gb200nvl-obmc-20250702182348.static.mtd.xz',
+> +        'b84819317cb3dc762895ad507705978ef000bfc77c50c33a63bdd37921db0dbc')
+> +
+> +    def test_arm_aspeed_gb200_openbmc(self):
+> +        image_path = self.uncompress(self.ASSET_GB200_FLASH)
+> +
+> +        self.do_test_arm_aspeed_openbmc('gb200nvl-bmc', image=image_path,
+> +                                        uboot='2019.04', cpu_id='0xf00',
+> +                                        soc='AST2600 rev A3',
+> +                                        image_hostname='gb200nvl-obmc')
+> +
+> +if __name__ == '__main__':
+> +    AspeedTest.main()
 
 
