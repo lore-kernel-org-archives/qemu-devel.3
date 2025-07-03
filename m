@@ -4,73 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99EC1C77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 12:59:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68713C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 13:09:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXJXH-0008Qu-Bb; Thu, 03 Jul 2025 08:59:31 -0400
+	id 1uXJfx-0003S4-PA; Thu, 03 Jul 2025 09:08:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uXJXE-0008H5-WB
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:59:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uXJXB-0002hZ-0r
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:59:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751547561;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=z89tewoPj7EMabA5/lu/AAJnIjNCMY3CQG8UM5N3cBw=;
- b=cXYt9kPRLOqsQFRL82F2Ud2oGEreR0aN4hWzTJX6uWUKEI622mV41t50DTQ73OfLzRxfn3
- gMLBB2JAuNdojXsuE+VJyeOXrFkEPETINhObrYDB8SGU+1bkbwCmA+SkBFbeqfsfAk85bz
- LVb3nypiXjyK6iPIrzpdAvFkzi0V0Ls=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-358-VY-9jgAtNfix9CLyWQ3XSA-1; Thu,
- 03 Jul 2025 08:37:38 -0400
-X-MC-Unique: VY-9jgAtNfix9CLyWQ3XSA-1
-X-Mimecast-MFC-AGG-ID: VY-9jgAtNfix9CLyWQ3XSA_1751546256
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 20FFB1801210; Thu,  3 Jul 2025 12:37:36 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.32.16])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B53CC1803AFF; Thu,  3 Jul 2025 12:37:30 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
- Jonathan.Cameron@huawei.com, gustavo.romero@linaro.org,
- anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com
-Cc: pbonzini@redhat.com,
-	philmd@linaro.org,
-	alex.bennee@linaro.org
-Subject: [PATCH v5 00/36] ACPI PCI Hotplug support on ARM
-Date: Thu,  3 Jul 2025 14:35:00 +0200
-Message-ID: <20250703123728.414386-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uXJfv-0003RW-1K
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 09:08:27 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uXJfs-0008PR-PQ
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 09:08:26 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-23aeac7d77aso51570385ad.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 06:08:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1751548103; x=1752152903; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=c7q84lOxk7cn1+c3FhfPl7tYc+qnJ6dVDhuJq7mfJR0=;
+ b=CX0Rz2zGjTamq7uP4POyB4EoMZF1wHOWYObulR3o6MO4n6vHHwZOI85//Kz9/8lqNM
+ p64chazOoeznuqJhqx9vxCayzl6O6UsagNCoI5gQ2lBKle3JcyLuIP2fm65men+JH6By
+ VNdXWY4D84NYxh0Z7ih9ULLMLiFQMyJL8M8MzIMHbnuttGY8k+usE4KaHHW9175fDgpF
+ ypgdp6tj9Nz4Lzs/Ny7Gw2pKcSBaUUCEAa8M/GK1dclBF8faBoR6V4XbYQWNINCbIb+l
+ QbFEWHh423TOzFPT0XOIZcY4AM+yWWhPbrDfksS2YqSMwZXPnK/6tJnQa8T9koS0P9+0
+ wyYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751548103; x=1752152903;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=c7q84lOxk7cn1+c3FhfPl7tYc+qnJ6dVDhuJq7mfJR0=;
+ b=tbxjpqf9jsHB4GpaAp6JYBo3ktTEPBl/2lDGWWGsmuiwCYC9f5tGLqUwU3Rxt9OW+x
+ FDIQb5IL/89Wh8rtlrzc+6tgg2BFF56zupTa8hAfNDyDguus5Wt1pJrRbLU3AExLhNOc
+ ZVWSNQfAy4qV5anM7lsp4gERzYkT1YERKJCF4VxjdVv8PLSEKKAqfFibnmJmUBTYVWY6
+ yAW7c70GhaXgNtBSVwQm81JziSW1oAJ/8bt+0Y7wbSISthiAvsolPz3UdMV1CEUjstR+
+ W5HrCp00nWtpLnK2jCK9vvkh3Z18zdDbw08hvWiWC/vY4Uy/PXyqWPiqv/U5m7uj02pd
+ 1imA==
+X-Gm-Message-State: AOJu0YwSJF71QJ1ImIUeBjLxke0u9uJaOwZTCgXESXqjKgldK+B/Dgzp
+ L0P/XGnJVFUTuKMWhVae4Xbl03jh3FKBClxwevFAdtREmCFRDXibaFJwS4yZH6Ys6p1+Ae86zMN
+ aG6TL
+X-Gm-Gg: ASbGncu9tQ2m7/lLV9sZnyGXJnlRALCnTLerfzKgqFk17VrhDw0wQR1OyFsnWAvTw8M
+ ICs6wNIKS3PWk6OffFm4jTvEhUkZTbBU3tBCgrPmtbZBXU++j4LhoGJHEiDbuihWOeLi+Xx7tQd
+ cbuBLk867LcS8yAwXj5yNHXh7NTO5KW1FZ/1P8dSQ+d3pV3rOFEYKy5PDGrBB4EbAqKF2s+m7vk
+ 7dNj8gJtLx2kCJbTlC7fIi5Y3MmwX0a8q+Pqne+4X+mZQr7lf2B3lr3rvLHDTztMPhJd+Mc+KJl
+ 3zKdIjNUe+mcl1awd96c9rUc0gsMuf+/QhkOH5ghiM2gM7QICeP3jUhmRipDRZg6ZhK+w3wgqYZ
+ MUB7Wln1cyxdyXNI=
+X-Google-Smtp-Source: AGHT+IGzrM7tqUbYUKaz6A/Vj3kRVE7sV9ivu52U5awECN8dAh6SRKgvoV3kt9SgZImlg50wFMMk6Q==
+X-Received: by 2002:a17:902:f542:b0:231:e331:b7df with SMTP id
+ d9443c01a7336-23c7a271f2emr36073225ad.29.1751548102548; 
+ Thu, 03 Jul 2025 06:08:22 -0700 (PDT)
+Received: from grind.dc1.ventanamicro.com ([189.110.107.157])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-23acb3c7041sm159483145ad.229.2025.07.03.06.08.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 03 Jul 2025 06:08:21 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: [PATCH] target/riscv: implement MonitorDef HMP API
+Date: Thu,  3 Jul 2025 10:08:15 -0300
+Message-ID: <20250703130815.1592493-1-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,168 +100,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series enables ACPI PCI hotplug/hotunplug on ARM.
-It is not enabled by default and ACPI PCI hotplug can
-be selected by setting:
+The MonitorDef API is related to two HMP monitor commands: 'p' and 'x':
 
--global acpi-ged.acpi-pci-hotplug-with-bridge-support=on
+(qemu) help p
+print|p /fmt expr -- print expression value (use $reg for CPU register access)
+(qemu) help x
+x /fmt addr -- virtual memory dump starting at 'addr'
 
-Expected benefits should be similar to those listed in [1],
-ie. removal of some racy behaviors, improved latencies.
+For x86, one of the few targets that implements it, it is possible to
+print the PC register value with $pc and use the PC value in the 'x'
+command as well.
 
-The infrastructure used in x86 is heavily reused and a
-huge part of the series consists in moving code from
-hw/i386/acpi-build.c to a generic place and slightly
-adapting it to make it usable on ARM. The DSDT table is
-augmented to support ACPI PCI hotplug elements.
+Those 2 commands are hooked into get_monitor_def(), called by
+exp_unary() in hmp.c. The function tries to fetch a reg value in two
+ways: by reading them directly via a target_monitor_defs array or using
+a target_get_monitor_def() helper. In RISC-V we have *A LOT* of
+registers and this number will keep getting bigger, so we're opting out
+of an array declaration.
 
-On ARM we use use a GED event to notify the OS about
-hotplug events.
+We're able to retrieve all regs but vregs because the API only fits an
+uint64_t and vregs have 'vlen' size that are bigger than that.
 
-Best Regards
+With this patch we can do things such as:
 
-Eric
+- print CSRs and use their val in expressions:
+(qemu) p $mstatus
+0xa000000a0
+(qemu) p $mstatus & 0xFF
+0xa0
 
-This series can be found at:
-https://github.com/eauger/qemu/tree/arm-acpi-pcihp-v5
+- dump the next 10 insn from virtual memory starting at x1 (ra):
 
-previous series:
-https://github.com/eauger/qemu/tree/arm-acpi-pcihp-v4
+(qemu) x/10i $ra
+0xffffffff80958aea:  a9bff0ef          jal                     ra,-1382                # 0xffffffff80958584
+0xffffffff80958aee:  10016073          csrrsi                  zero,sstatus,2
+0xffffffff80958af2:  60a2              ld                      ra,8(sp)
+0xffffffff80958af4:  6402              ld                      s0,0(sp)
+0xffffffff80958af6:  0141              addi                    sp,sp,16
+0xffffffff80958af8:  8082              ret
+0xffffffff80958afa:  10016073          csrrsi                  zero,sstatus,2
+0xffffffff80958afe:  8082              ret
+0xffffffff80958b00:  1141              addi                    sp,sp,-16
+0xffffffff80958b02:  e422              sd                      s0,8(sp)
+(qemu)
 
-History:
-v4 -> v5:
-- Collected Jonathan's R-bs (many thanks!)
-- fixed the tests/qtest/bios-tables-test issue by
-  creating a variant for the viot test
-- use the 3 phase reset API
-- fixed qom-test failures that were due to unconditionnal
-  fetches of the GED property
+Suggested-by: Dr. David Alan Gilbert <dave@treblig.org>
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ target/riscv/cpu.h            |   1 +
+ target/riscv/riscv-qmp-cmds.c | 148 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 149 insertions(+)
 
-v3 -> v4:
-- toook into account all comments on v3
-- static acpi-index is now supported unconditionally
-  from acpi pcihp option. See indiviual patches.
-- I hit a problem with ref block generation at
-  [19/32] tests/qtest/bios-tables-test: Update ARM DSDT reference
-  blobs: despite I regenerate the blobs, I get some errors.
-
-v2 -> v3:
-- lot of changes taking into account various feedbacks
-  (many thanks to all reviewers). Please refer to
-  individual patches for details. Main changes:
-  - no more machine option, acpi pci hp is not set by
-    default.
-  - removal of 2 unused variables in the osc method
-  - introduction of GED property to set the bus
-  - rework of the init/reset sequence
-  - fix virtio-mem-pci hotplug regression
-
-v1 -> v2:
-- collected a bunch of R-bs from Gustavo (many thanks!)
-- Fixed the breakage of bios-tables-test in TCG mode by
-  incorporating Gustavo's patches (part of
-  [PATCH 0/5] ACPI tests for PCI Hotplug on ARM
-  https://lore.kernel.org/all/20250526053123.1434204-1-gustavo.romero@linaro.org/)
-- Tweeked the dsdt aml changes to avoid any dsdt blob difference when
-  acpi-pcihp is off.
-
-RFC -> v1:
-- First 3 trivial patches were pulled separately
-- Fix of the register region size (0x18), ie. ACPI_PCIHP_SIZE
-- addition of aml_pci_edsm which was not called in RFC
-- acpi-index feature is now fixed. vms->bus was not set on
-  acpi_pcihp_init. The init sequence is still hacky though. Suggestions
-  are welcome.
-
-[1] [PATCH v6 0/6] Use ACPI PCI hot-plug for Q35
-https://lore.kernel.org/all/20210713004205.775386-1-jusual@redhat.com/
-
-
-Eric Auger (32):
-  hw/i386/acpi-build: Make aml_pci_device_dsm() static
-  hw/acpi: Rename and move build_x86_acpi_pci_hotplug to pcihp
-  hw/pci-host/gpex-acpi: Add native_pci_hotplug arg to
-    acpi_dsdt_add_pci_osc
-  hw/pci-host/gpex-acpi: Split host bridge OSC and DSM generation
-  hw/acpi/ged: Add a acpi-pci-hotplug-with-bridge-support property
-  hw/pci-host/gpex-acpi: Use GED acpi pcihp property
-  hw/i386/acpi-build: Turn build_q35_osc_method into a generic method
-  hw/pci-host/gpex-acpi: Use build_pci_host_bridge_osc_method
-  tests/qtest/bios-tables-test: Update DSDT blobs after GPEX _OSC change
-  hw/i386/acpi-build: Introduce build_append_pcihp_resources() helper
-  hw/acpi/pcihp: Add an AmlRegionSpace arg to build_acpi_pci_hotplug
-  hw/i386/acpi-build: Move build_append_notification_callback to pcihp
-  hw/i386/acpi-build: Move build_append_pci_bus_devices/pcihp_slots to
-    pcihp
-  hw/i386/acpi-build: Use AcpiPciHpState::root in acpi_set_pci_info
-  hw/i386/acpi-build: Move aml_pci_edsm to a generic place
-  qtest/bios-tables-test: Prepare for fixing the aarch64 viot test
-  qtest/bios-tables-test: Add a variant to the aarch64 viot test
-  qtest/bios-tables-test: Generate DSDT.viot
-  hw/arm/virt-acpi-build: Let non hotplug ports support static
-    acpi-index
-  tests/qtest/bios-tables-test: Update ARM DSDT reference blobs
-  hw/arm/virt-acpi-build: Modify the DSDT ACPI table to enable ACPI PCI
-    hotplug
-  hw/acpi/ged: Add a bus link property
-  hw/arm/virt: Pass the bus on the ged creation
-  hw/acpi/ged: Call pcihp plug callbacks in hotplug handler
-    implementation
-  hw/acpi/pcihp: Remove root arg in acpi_pcihp_init
-  hw/acpi/ged: Prepare the device to react to PCI hotplug events
-  hw/acpi/ged: Support migration of AcpiPciHpState
-  hw/core/sysbus: Introduce sysbus_mmio_map_name() helper
-  hw/arm/virt: Minor code reshuffling in create_acpi_ged
-  hw/arm/virt: Let virt support pci hotplug/unplug GED event
-  qtest/bios-tables-test: Generate reference blob for
-    DSDT.hpoffacpiindex
-  qtest/bios-tables-test: Generate reference blob for DSDT.acpipcihp
-
-Gustavo Romero (4):
-  tests/qtest/bios-tables-test: Prepare for changes in the DSDT table
-  tests/qtest/bios-tables-test: Prepare for changes in the arm virt DSDT
-    table
-  tests/qtest/bios-tables-test: Prepare for addition of acpi pci hp
-    tests
-  tests/qtest/bios-tables-test: Add aarch64 ACPI PCI hotplug test
-
- hw/i386/acpi-build.h                          |   4 -
- include/hw/acpi/generic_event_device.h        |  17 +-
- include/hw/acpi/pci.h                         |   5 +-
- include/hw/acpi/pcihp.h                       |  17 +-
- include/hw/arm/virt.h                         |   1 +
- include/hw/pci-host/gpex.h                    |   1 +
- include/hw/sysbus.h                           |   1 +
- hw/acpi/acpi-pci-hotplug-stub.c               |   2 +-
- hw/acpi/generic_event_device.c                |  77 +++
- hw/acpi/ich9.c                                |   7 +-
- hw/acpi/pci-bridge.c                          |  54 ++
- hw/acpi/pci.c                                 |  50 ++
- hw/acpi/pcihp.c                               | 439 ++++++++++++++-
- hw/acpi/piix4.c                               |   5 +-
- hw/arm/virt-acpi-build.c                      |  38 ++
- hw/arm/virt.c                                 |  27 +-
- hw/core/sysbus.c                              |  11 +
- hw/i386/acpi-build.c                          | 532 +-----------------
- hw/pci-host/gpex-acpi.c                       |  74 +--
- tests/qtest/bios-tables-test.c                |  53 ++
- hw/arm/Kconfig                                |   2 +
- hw/pci-host/Kconfig                           |   1 +
- tests/data/acpi/aarch64/virt/DSDT             | Bin 5196 -> 5293 bytes
- .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5282 -> 5379 bytes
- tests/data/acpi/aarch64/virt/DSDT.acpipcihp   | Bin 0 -> 6202 bytes
- .../acpi/aarch64/virt/DSDT.hpoffacpiindex     | Bin 0 -> 5347 bytes
- tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6557 -> 6654 bytes
- tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7679 -> 7768 bytes
- tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5398 -> 5495 bytes
- tests/data/acpi/aarch64/virt/DSDT.viot        | Bin 0 -> 5310 bytes
- tests/data/acpi/riscv64/virt/DSDT             | Bin 3576 -> 3538 bytes
- tests/data/acpi/x86/microvm/DSDT.pcie         | Bin 3023 -> 2985 bytes
- 32 files changed, 811 insertions(+), 607 deletions(-)
- create mode 100644 tests/data/acpi/aarch64/virt/DSDT.acpipcihp
- create mode 100644 tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex
- create mode 100644 tests/data/acpi/aarch64/virt/DSDT.viot
-
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 229ade9ed9..487884c42c 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -576,6 +576,7 @@ static inline int riscv_has_ext(CPURISCVState *env, target_ulong ext)
+ extern const char * const riscv_int_regnames[];
+ extern const char * const riscv_int_regnamesh[];
+ extern const char * const riscv_fpr_regnames[];
++extern const char * const riscv_rvv_regnames[];
+ 
+ const char *riscv_cpu_get_trap_name(target_ulong cause, bool async);
+ int riscv_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
+diff --git a/target/riscv/riscv-qmp-cmds.c b/target/riscv/riscv-qmp-cmds.c
+index 8ba8aa0d5f..2c8c74bbe4 100644
+--- a/target/riscv/riscv-qmp-cmds.c
++++ b/target/riscv/riscv-qmp-cmds.c
+@@ -31,6 +31,10 @@
+ #include "qapi/qobject-input-visitor.h"
+ #include "qapi/visitor.h"
+ #include "qom/qom-qobject.h"
++#include "qemu/ctype.h"
++#include "qemu/qemu-print.h"
++#include "monitor/hmp.h"
++#include "monitor/hmp-target.h"
+ #include "system/kvm.h"
+ #include "system/tcg.h"
+ #include "cpu-qom.h"
+@@ -240,3 +244,147 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+ 
+     return expansion_info;
+ }
++
++/*
++ * We have way too many potential CSRs and regs being added
++ * regularly to register them in a static array.
++ *
++ * Declare an empty array instead, making get_monitor_def() use
++ * the target_get_monitor_def() API directly.
++ */
++const MonitorDef monitor_defs[] = { { } };
++const MonitorDef *target_monitor_defs(void)
++{
++    return monitor_defs;
++}
++
++static bool reg_is_ulong_integer(CPURISCVState *env, const char *name,
++                                 target_ulong *val, bool is_gprh)
++{
++    const char * const *reg_names;
++    target_ulong *vals;
++
++    if (is_gprh) {
++        reg_names = riscv_int_regnamesh;
++        vals = env->gprh;
++    } else {
++        reg_names = riscv_int_regnames;
++        vals = env->gpr;
++    }
++
++    for (int i = 0; i < 32; i++) {
++        g_autofree char *reg_name = g_strdup(reg_names[i]);
++        char *reg1 = strtok(reg_name, "/");
++        char *reg2 = strtok(NULL, "/");
++
++        if (strcasecmp(reg1, name) == 0 ||
++            (reg2 && strcasecmp(reg2, name) == 0)) {
++            *val = vals[i];
++            return true;
++        }
++    }
++
++    return false;
++}
++
++static bool reg_is_u64_fpu(CPURISCVState *env, const char *name, uint64_t *val)
++{
++    if (qemu_tolower(name[0]) != 'f') {
++        return false;
++    }
++
++    for (int i = 0; i < 32; i++) {
++        g_autofree char *reg_name = g_strdup(riscv_fpr_regnames[i]);
++        char *reg1 = strtok(reg_name, "/");
++        char *reg2 = strtok(NULL, "/");
++
++        if (strcasecmp(reg1, name) == 0 ||
++            (reg2 && strcasecmp(reg2, name) == 0)) {
++            *val = env->fpr[i];
++            return true;
++        }
++    }
++
++    return false;
++}
++
++static bool reg_is_vreg(const char *name)
++{
++    if (qemu_tolower(name[0]) != 'v' || strlen(name) > 3) {
++        return false;
++    }
++
++    for (int i = 0; i < 32; i++) {
++        if (strcasecmp(name, riscv_rvv_regnames[i]) == 0) {
++            return true;
++        }
++    }
++
++    return false;
++}
++
++int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval)
++{
++    CPURISCVState *env = &RISCV_CPU(cs)->env;
++    target_ulong val = 0;
++    uint64_t val64 = 0;
++    int i;
++
++    if (reg_is_ulong_integer(env, name, &val, false) ||
++        reg_is_ulong_integer(env, name, &val, true)) {
++        *pval = val;
++        return 0;
++    }
++
++    if (reg_is_u64_fpu(env, name, &val64)) {
++        *pval = val64;
++        return 0;
++    }
++
++    if (reg_is_vreg(name)) {
++        if (!riscv_has_ext(env, RVV)) {
++            return -EINVAL;
++        }
++
++        qemu_printf("Unable to print the value of vector "
++                    "vreg '%s' from this API\n", name);
++
++        /*
++         * We're returning 0 because returning -EINVAL triggers
++         * an 'unknown register' message in exp_unary() later,
++         * which feels ankward after our own error message.
++         */
++        *pval = 0;
++        return 0;
++    }
++
++    for (i = 0; i < ARRAY_SIZE(csr_ops); i++) {
++        RISCVException res;
++        int csrno = i;
++
++        /*
++         * Early skip when possible since we're going
++         * through a lot of NULL entries.
++         */
++        if (csr_ops[csrno].predicate == NULL) {
++            continue;
++        }
++
++        if (strcasecmp(csr_ops[csrno].name, name) != 0) {
++            continue;
++        }
++
++        res = riscv_csrrw_debug(env, csrno, &val, 0, 0);
++
++        /*
++         * Rely on the smode, hmode, etc, predicates within csr.c
++         * to do the filtering of the registers that are present.
++         */
++        if (res == RISCV_EXCP_NONE) {
++            *pval = val;
++            return 0;
++        }
++    }
++
++    return -EINVAL;
++}
 -- 
 2.49.0
 
