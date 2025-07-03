@@ -4,152 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D604CC83F03
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 15:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF1D4C83F04
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 15:33:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXLpN-00047r-FY; Thu, 03 Jul 2025 11:26:23 -0400
+	id 1uXLvN-0006xD-4g; Thu, 03 Jul 2025 11:32:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <etanous@nvidia.com>)
- id 1uXLov-0003xt-PV; Thu, 03 Jul 2025 11:25:59 -0400
-Received: from mail-bn8nam11on2061b.outbound.protection.outlook.com
- ([2a01:111:f403:2414::61b]
- helo=NAM11-BN8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
+ id 1uXLvJ-0006wt-Nu
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 11:32:30 -0400
+Received: from smtp-out-60.livemail.co.uk ([213.171.216.60]
+ helo=dkim.livemail.co.uk)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <etanous@nvidia.com>)
- id 1uXLos-0000fU-FC; Thu, 03 Jul 2025 11:25:53 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bVYyF3knbb9/JSu0PmyVC9Ih+XeISI8G/yqKlVPL8DZ8tS6eS1ThLzLk4WJVGJZ/WVWkgWhEp5o4dBr1kwd5IBD4QTPe3z/+sRNTZ3YTYow3wlGYjViHs2D4oTkyTwfIEElA+f9Eth2XYFLFGbmDDUjrVxoilxnSHNLZ7vQZJPB2qkG4cWaHqGtZpePwpifNt6vGG6w/jssdVnJ4+sQuIhT+RpW/Dfs7oYVujBCS7QzBnb1Ef4QMbLBEqt1fuTA3mHEvYMBGRLSt0yZE1eIEvCCbOXGzS6KcX5DOHXaqzF/ltOLq396nIdE2Gbea2MxLlj1PyW2BD5IPZ9YIofAanA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UuvZx19ikDw2CaH/aADjiGUzuWr7WXg8uS3V6yWjOMs=;
- b=fxJerMgg32jG3x5ypX6GbhdzFZGxa2ppmJOdoXCOB6G0ugNOAFEe00KbkKTLYteO5xYc+7RpYwlesQEJfSSoUlrcM7EH/7zN3GHhQ0pwIFZ/mVF6uIdda1/1YobI+kJa8aJXIFhKSjWj7ynyuCr+WYqd1v6861dhxtDQ4rCC87hf+UJc8vzyXYpz/0JIOjC5zgwdVCs2/9TeMpNmYswbSK63QTk71NnPikeqKmKGvcl3mAbIeAWtAXI9iOa1Zwv9qE3HWgibwRgwEcNacF4fEF0Eazl3xHmKv/vgBKe5G06D0/naVzlvaH7oif58GrO5oeZuE6viXAASKTI+zqJPgw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UuvZx19ikDw2CaH/aADjiGUzuWr7WXg8uS3V6yWjOMs=;
- b=fYRYER8hDqdo32BjIZazP+sq9X/RrfvrMFpbBKszz3rHdm2vqdl+CkfbkziBJ7NVEvznCd5XLk5O0wAk38DBn64cPDw1o3IfIhAVgOHq8eBNa3THpMKEe8WAdV3zU1zZWnpVy1OPu1YVSCZeyba3/YMsFM9wHysPZNee6U4OOMAKCRR5a4CqvL3pktpj6Uh+n2SHwhiwGWKAQoz1RNmPdDAqv6vbAXy4sYmZIWrN1I+eX0mJXbBougSHE9GL8aAdzV0kORGZAWmeMOhjA12Kfe7ABv1IyraAtxEJQtDCp5V6WXFUr1tZehUMozy3itZShrvR9tB3M6dADzK5pub7FQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH2PR12MB4277.namprd12.prod.outlook.com (2603:10b6:610:ae::23)
- by SN7PR12MB7201.namprd12.prod.outlook.com (2603:10b6:806:2a8::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8880.23; Thu, 3 Jul
- 2025 15:25:43 +0000
-Received: from CH2PR12MB4277.namprd12.prod.outlook.com
- ([fe80::8857:98e9:8b64:787]) by CH2PR12MB4277.namprd12.prod.outlook.com
- ([fe80::8857:98e9:8b64:787%4]) with mapi id 15.20.8880.021; Thu, 3 Jul 2025
- 15:25:43 +0000
-Date: Thu, 3 Jul 2025 08:25:41 -0700
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>
-Cc: qemu-devel@nongnu.org, Troy Lee <leetroy@gmail.com>,
- Steven Lee <steven_lee@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 0/4] Add support for gb200-bmc machine
-Message-ID: <aGag9Q5utRg3HtLB@edtanousvm.nvidia.com>
-References: <20250703144249.3348879-1-etanous@nvidia.com>
- <417686d0-bddc-40de-bbd8-631bb9cc4945@kaod.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <417686d0-bddc-40de-bbd8-631bb9cc4945@kaod.org>
-X-ClientProxiedBy: SJ2PR07CA0014.namprd07.prod.outlook.com
- (2603:10b6:a03:505::7) To CH2PR12MB4277.namprd12.prod.outlook.com
- (2603:10b6:610:ae::23)
+ (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
+ id 1uXLvG-0003QW-E5
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 11:32:29 -0400
+Received: from smtp.livemail.co.uk (unknown [10.44.132.81])
+ by dkim.livemail.co.uk (Postfix) with ESMTPS id B92FE401DD;
+ Thu,  3 Jul 2025 16:32:23 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=randomman.co.uk;
+ s=livemail2; t=1751556743;
+ bh=ueK6WTp32Y+4NVpkhWKush6lgtX8b7s9plkghtBcgSM=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=tueV04hymk456h+NxCTQOVHlYevMzJOzWD+0QLZ6UMWP/XCfBdkn1pRFgj5/asXCf
+ GSNLbbdW6TZHGVSOLWZcLUT2BZtHNJo0yLiXRmo2QIgHg6Y+D2dfHsYu3UO6hMqHb+
+ la6KwqEyWaEUHS/8CNheeX1182e9CyipwwCZTb4M=
+Received: from localhost.localdomain (unknown [145.40.191.116])
+ (Authenticated sender: roy.hopkins@randomman.co.uk)
+ by smtp.livemail.co.uk (Postfix) with ESMTPSA id 30D5040934;
+ Thu,  3 Jul 2025 16:32:19 +0100 (BST)
+From: Roy Hopkins <roy.hopkins@randomman.co.uk>
+To: qemu-devel@nongnu.org
+Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P . Berrange" <berrange@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
+ Gerd Hoffman <kraxel@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
+ Joerg Roedel <joro@8bytes.org>
+Subject: [PATCH v9 07/16] target/i386: Allow setting of R_LDTR and R_TR with
+ cpu_x86_load_seg_cache()
+Date: Thu,  3 Jul 2025 16:31:58 +0100
+Message-ID: <95c69253ea4f91107625872d5e3f0c586376771d.1751554099.git.roy.hopkins@randomman.co.uk>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1751554099.git.roy.hopkins@randomman.co.uk>
+References: <cover.1751554099.git.roy.hopkins@randomman.co.uk>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR12MB4277:EE_|SN7PR12MB7201:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6dc4436a-6f28-459c-2b9c-08ddba45dfe6
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?K0iaUipCILfubhNazBZi53ZdDEB+BhKCmaJps+76qEX3wZYjHXMJ9mMPAI?=
- =?iso-8859-1?Q?z0Ac0ZE+7vHj7yQU8j090cdPav3WdRPUG/nxVhlpsG9/9Np7uGM3miRawW?=
- =?iso-8859-1?Q?rjZq8dYjHp2qlF4YAwQ0otNyV/NaGbnAB5gsW2m0ubDDDcu8+U9gVTmIIP?=
- =?iso-8859-1?Q?jVUqOr2jFY8ezv0QTBfPNnihzjsZ/y3hNjBr8Dw2hf7K7CAsMTREG1tz1M?=
- =?iso-8859-1?Q?YShCR5omCxf5cI4+rY8YmC61Gcntp8miPpUxIVStSkLSxc5G63clnUAYbX?=
- =?iso-8859-1?Q?LbvDhQQlhzKEemGYdWFvBX/xUhXFSoZkKL7PmjYXuk9Ct+/WWb8Hr1EqU5?=
- =?iso-8859-1?Q?OdUODbQy5XagpDR1vS957m2zfKsMOmB1VWLPG9HmErv76KdaPB/Pdjovjd?=
- =?iso-8859-1?Q?dJUTk40PfDMhTkTUcV8qhaozVxgEanocxNqn1YHDwX8qcbK4ASm3AUN5N5?=
- =?iso-8859-1?Q?m+459qrn8gUPqdE+c1j4A0bIZBPdinzTqHVOA/aqGVD0G/u84yYFu6ok4u?=
- =?iso-8859-1?Q?Pj2z1EN7l3S/mRDEu0zS/kiT7k5IGdcTr5491HfkRW3IXDha0Qi0+FPdvH?=
- =?iso-8859-1?Q?q+SeOvVrr8QYIiHBr2aESTQtVZZ4plDo8fDKI11lWp2NZ4Nj0YHzHDsC5M?=
- =?iso-8859-1?Q?ofA1ZNFUjgRcSXGxhtLiN3nz+p8Q4WCgdsRvBChcunOoevJdwOjL3dcUGh?=
- =?iso-8859-1?Q?h28mNjrbq/Rf1lYYcUVRmL6hMYs0+NfBudaPZLYODaSVxkprna/YygrVus?=
- =?iso-8859-1?Q?Ctg3/wOE+wOY7zUGY4StOMYoucMaRPvYq18KdYYKfOTBWcHUtt96Wp2/CQ?=
- =?iso-8859-1?Q?T4dCXxb1tsz+4JSA5UHvgWhw63d8p/dIwD3HZu2ioLcMquEcOmNNg8ulk2?=
- =?iso-8859-1?Q?UmhwHGyEjEGSk1tHaIgT9+iptFrYtfcjt/VSKOJ7fxbCo+fErGVneijlgq?=
- =?iso-8859-1?Q?vysk+yvidwZ/QyJqntYaZXXaGQYEZdK3Roj1efg0sprgnJl4drhlaE4YBJ?=
- =?iso-8859-1?Q?OrMbVPKxsh5zu9MwAmwReDTmxkQU/KvUobySaXxoN1C8DB+4pL8eC+f99D?=
- =?iso-8859-1?Q?Mira18eY0mbUh9YNtsUDYaIPalR/vc6ua6jnK1GKYfUVA4aKepj+QgNP/K?=
- =?iso-8859-1?Q?9CV8aw6QdNk72W9u04GROK3F56HxC2yohn3Njvvs1X2JD66ZWR+LG/w8tx?=
- =?iso-8859-1?Q?Jo/GwM2IxB7sAmr3O9NI6EpIKDbOpCdBA5JMMJ5bHlBv5VSxYfR+WqGlHJ?=
- =?iso-8859-1?Q?XDKYsEavEZX6mXR3uOHs+x5h2RtCWEd8hp8rBuxJfLS9WH+/VUgFd7Ii2P?=
- =?iso-8859-1?Q?5jjjSRf9QSs4auL0d5v2Dh/JoMR/gk38PXG0SSYVUNnDPZRRcA/GXSkJrB?=
- =?iso-8859-1?Q?37xSlaErn6nSqMx9JN5CHyYAMfHa1Jl6hn5yxCLnFP6TvlZAzbaFs9ICUl?=
- =?iso-8859-1?Q?cGrKTbrwHoprbk+LVYoOCsfy1GNzkxa9SM2Nbn0rKZnun55ayY7qv4r/sW?=
- =?iso-8859-1?Q?0=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH2PR12MB4277.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?1w8dA5ld3uZvkm7zN1ilIpGolPFGp1JaQQG5we685v+QtRZnJTdX0ghZkP?=
- =?iso-8859-1?Q?OKObew2EsuaF2q3tLljhfbo/U+piePcNMdhpdUaq2Iww3c8U+P4E4XIB5G?=
- =?iso-8859-1?Q?qGBaGH8HRkfdfpnxF2pl/a4c90JhcBtWjQz+DvELs9LYf7TGkJz/Zq1aoj?=
- =?iso-8859-1?Q?OgHRly41UfkJfRpkUQ5kMK5Hm0r2crfaHsBB4tYZA28vTwsQjuiFYwfLrI?=
- =?iso-8859-1?Q?HdkDSB+1tNwa9jHv2dyDbegJ2203klbYoO2bfyGAYrCaZOj6X5kPNzbd3o?=
- =?iso-8859-1?Q?TK5CpFlFPF+8PUCjqohGe0sgcr7AKrAtwDs3HSjCdTw9kvaMRgl8XnHV32?=
- =?iso-8859-1?Q?SU0eDOi7Lfb+iOVQsQyc08sCGsd5jXJBRa4VK/oxcglFFbOHE/eoySpipk?=
- =?iso-8859-1?Q?vpEb3iDaIAhFW03gY7r1lSQhd78D8rclxrvNxsPRrHnm/zya/a2fL8HIU8?=
- =?iso-8859-1?Q?i9NyJUn+VXZzdc76SK4kVE0Uq6AEOr2JrrdKx6kZkXwaeFqRSCnefjVz2K?=
- =?iso-8859-1?Q?pg6Aib2M0mC/zE9V05SS3WpFACXEkQbF9PZc3YRO1igPT9NzqK+VplTLvs?=
- =?iso-8859-1?Q?0smE5jteD3DqAENz3unGaBqoXP82tFifZaw2nvMH1dXhSMd6K3KV13JX/l?=
- =?iso-8859-1?Q?Luda74qQamDDwWmCEeLXbs/GTRzowmU4UjBA4TSyxORaiz1OjBggTlgQyf?=
- =?iso-8859-1?Q?yIMTvDut0FBYWbsDut6UJ5GtpDurvO8htNLOSQ8WSXgvvKQ1j1L9IK7zSu?=
- =?iso-8859-1?Q?9Dz7ObrGYacoxyw646/kHZfac19/0GM2spwk9ZTxbVerFlartwIsKBywZC?=
- =?iso-8859-1?Q?T7x2N/cXpN0ZUwu8rVPjVqWSPGIN3ECIfCIJUMj17UV0X7IQE3glqtTtPb?=
- =?iso-8859-1?Q?mOulVW3MDDwtRlhYut9D2l08TX6DiYsaIFqzq10cUM4PH4IhX0oC1ql51s?=
- =?iso-8859-1?Q?2nBq+nlUfOXwCQ76IGC+zdeJmDegWQu6VDgTOBp2OB7a7CuAwH3huZyU3A?=
- =?iso-8859-1?Q?ZqW5ktHDFX+MNKDTuj3YpZvrqAYPIJdCf6zo5t3dP05PVh/67W7MWXLRGV?=
- =?iso-8859-1?Q?fK1zB4sWYU+F6jiR7jDrheUGB1dZ6uZPFHkv2mcg1nOK0XBsfevN6+YjqF?=
- =?iso-8859-1?Q?yPa4T2i+7J7iGrWF3nCdpo92KWEBRZSrUjgrRPOLXc9IpvfSRHCIxy6cgJ?=
- =?iso-8859-1?Q?PSliICvAYJqMarMEdpaFJx4NzRAfSwqTYWdKYO6VBI2MPsakN2ucNMWhKx?=
- =?iso-8859-1?Q?ztDgduvt9lDXvHttBNZi19pfzB3yA6lBgSUidEacsbjPDOWCl7m3VRjCGT?=
- =?iso-8859-1?Q?ooFNjKMbZGVWrLh3Y9kC3w1DJ6kTxnin5JkLK0ET73w1cYQ9SrYe1uGaaO?=
- =?iso-8859-1?Q?vni80roopQgOvqAwK3XskBxzdNsIQ/SsLnPBOIzIrgYkSVg2jTN7IK13E6?=
- =?iso-8859-1?Q?tEYC+a67+cCF/Qr0L4NSZns18fZGrU4F0OyfkPJx3RC5uuKcu2PLY316vC?=
- =?iso-8859-1?Q?XmJ5GE9NP93zCscDwR6MXhbc4D1wDTmf4NkSGBK2U1N0xyz6XOUS1iNZR3?=
- =?iso-8859-1?Q?10BuQPyv+Np+uw8JaeLKi705u0EVSxm3BQZUHN8yIFCI3PX42Am+iNLhts?=
- =?iso-8859-1?Q?7FrfcV/y0/6WeyHX8eDpx59djd8mXLbFk3?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6dc4436a-6f28-459c-2b9c-08ddba45dfe6
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR12MB4277.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2025 15:25:43.0518 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1A0zbQWhSn78voKOy+ok61U7+oe0Pqw13nMrMs66jB6UspQUXgtxRiE2mi1Ai+rVpxx1Rth+ZmVNMlQtWyZasQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7201
-Received-SPF: permerror client-ip=2a01:111:f403:2414::61b;
- envelope-from=etanous@nvidia.com;
- helo=NAM11-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=213.171.216.60;
+ envelope-from=roy.hopkins@randomman.co.uk; helo=dkim.livemail.co.uk
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,53 +82,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Ed Tanous <etanous@nvidia.com>
-From:  Ed Tanous via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 03, 2025 at 05:18:56PM +0200, Cédric Le Goater wrote:
-> On 7/3/25 16:42, Ed Tanous wrote:
-> > This patch series adds support for gb200-bmc, a baseboard management controller
-> > module based on an Aspeed 2600 SOC.
-> > 
-> > v2:
-> > - Rebase on master
-> > - Drop duplicated patch for enabling PCA954X
-> > - Updated commit message with source information
-> > - Added functional tests and example openbmc image
-> 
-> 
-> Please try to collect the Reviewed-by trailers of the previous
-> series when you resend.
+The x86 segment registers are identified by the X86Seg enumeration which
+includes LDTR and TR as well as the normal segment registers. The
+function 'cpu_x86_load_seg_cache()' uses the enum to determine which
+segment to set. However, specifying R_LDTR or R_TR results in an
+out-of-bounds access of the segment array.
 
-ACK.  Can do in the next series.  I had erroneously thought that
-git-publish pulled that from the thread.
+Possibly by coincidence, the function does correctly set LDTR or TR in
+this case as the structures for these registers immediately follow the
+array which is accessed out of bounds.
 
-> 
-> 
-> Thanks,
-> 
-> C.
-> 
-> 
-> > 
-> > Ed Tanous (4):
-> >    hw/arm/aspeed: Add second SPI chip to Aspeed model
-> >    docs: add support for gb200-bmc
-> >    hw/arm/aspeed: Add GB200 BMC target
-> >    tests/functional: Add gb200 tests
-> > 
-> >   docs/system/arm/aspeed.rst                    |  4 +-
-> >   hw/arm/aspeed.c                               | 81 +++++++++++++++++++
-> >   hw/arm/aspeed_eeprom.c                        | 21 +++++
-> >   hw/arm/aspeed_eeprom.h                        |  3 +
-> >   include/hw/arm/aspeed.h                       |  2 +
-> >   tests/functional/aspeed.py                    |  9 ++-
-> >   tests/functional/meson.build                  |  2 +
-> >   .../test_arm_aspeed_gb200nvl_bmc.py           | 26 ++++++
-> >   8 files changed, 144 insertions(+), 4 deletions(-)
-> >   create mode 100755 tests/functional/test_arm_aspeed_gb200nvl_bmc.py
-> > 
-> 
+This patch adds correct handling for R_LDTR and R_TR in the function.
+
+Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
+Acked-by: Gerd Hoffman <kraxel@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+---
+ target/i386/cpu.h | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 51e10139df..399b830893 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2417,7 +2417,14 @@ static inline void cpu_x86_load_seg_cache(CPUX86State *env,
+     SegmentCache *sc;
+     unsigned int new_hflags;
+ 
+-    sc = &env->segs[seg_reg];
++    if (seg_reg == R_LDTR) {
++        sc = &env->ldt;
++    } else if (seg_reg == R_TR) {
++        sc = &env->tr;
++    } else {
++        sc = &env->segs[seg_reg];
++    }
++
+     sc->selector = selector;
+     sc->base = base;
+     sc->limit = limit;
+-- 
+2.43.0
+
 
