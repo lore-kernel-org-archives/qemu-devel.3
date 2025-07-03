@@ -4,72 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 656E5C83F03
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 15:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37685C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 15:23:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXLlH-0001uu-FJ; Thu, 03 Jul 2025 11:22:07 -0400
+	id 1uXLmH-0002Vj-8G; Thu, 03 Jul 2025 11:23:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1uXLlE-0001uW-Ux
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 11:22:05 -0400
-Received: from smtp-out-60.livemail.co.uk ([213.171.216.60]
- helo=dkim.livemail.co.uk)
+ (Exim 4.90_1) (envelope-from <etanous@nvidia.com>)
+ id 1uXLmF-0002VH-OA; Thu, 03 Jul 2025 11:23:07 -0400
+Received: from mail-co1nam11on20615.outbound.protection.outlook.com
+ ([2a01:111:f403:2416::615]
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1uXLl6-0007us-Kv
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 11:22:03 -0400
-Received: from smtp.livemail.co.uk (unknown [10.44.132.82])
- by dkim.livemail.co.uk (Postfix) with ESMTPS id C904240138;
- Thu,  3 Jul 2025 16:21:53 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=randomman.co.uk;
- s=livemail2; t=1751556113;
- bh=BnjFs+npIHG79jura7hyNkYdJ41u0iswIof6LevLUWs=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=J1o7t46IIofG2eRLpiQALFSti91naIomMpwy7LdhZS2Fjw6o8KiCEaHMC/StICEYN
- Us/PhX0JV3Ap4WJdQwUQYfZCZlMA5WRn3mWWDk+BqcCnEZthTNcMUoipOOHz3SrgxM
- Q5sK/5WZmUeHmI4p67+QuWqowgsiDIyX1jGIZax0=
-Received: from localhost.localdomain (unknown [145.40.191.116])
- (Authenticated sender: roy.hopkins@randomman.co.uk)
- by smtp.livemail.co.uk (Postfix) with ESMTPSA id 52CCBC01FF;
- Thu,  3 Jul 2025 16:21:49 +0100 (BST)
-From: Roy Hopkins <roy.hopkins@randomman.co.uk>
-To: qemu-devel@nongnu.org
-Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P . Berrange" <berrange@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
- Gerd Hoffman <kraxel@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
- Joerg Roedel <joro@8bytes.org>
-Subject: [PATCH v9 06/16] sev: Update launch_update_data functions to use
- Error handling
-Date: Thu,  3 Jul 2025 16:21:32 +0100
-Message-ID: <d59721f7b99cfc87aab71f8f551937e98e983615.1751554099.git.roy.hopkins@randomman.co.uk>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1751554099.git.roy.hopkins@randomman.co.uk>
-References: <cover.1751554099.git.roy.hopkins@randomman.co.uk>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <etanous@nvidia.com>)
+ id 1uXLmC-0008TQ-Pi; Thu, 03 Jul 2025 11:23:07 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Hi3nwuxjgAeRt1vfc0PQGbwH5zWg0aH/uOjW/SuVL9McaxsarKs+w2ZAPMdd8AsCFmLyjZV4yflpljcx28STjUiD6XqC5/coAsd+vc+yxP68QiMEHz7O9Bp3e/o9MgWY+Q9t0Xii/+L2DgOQQR9rHBW7+mZwjh411QPorzkgWxAVxltZ4ePjDZyv7YP6JmDxHU+iASzKxo2YPMBgXYlW+GsDrYeD5Ks5snlI0LrL0Ouqt0I++Ul8Z6+x4nzaQgivQN0Djk9xQRZCAkWWkTlrJ180/Bv7A/cMtWwhKXc/cqDV1n/cdqhE2Iz6g1pqsfD7SvKUWUPTasTEXTbDbO8+Gg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8iiqlNcMwMk5SbJxqVA5M9vOwD/GiZnPS8IsbF/CJTw=;
+ b=aSgTJwG6l2UpThO2jGgdE9ujaGnhPLC/nXwGU3M4fP6EDO+vUgQZsT4q7/kEA6sK4O8+WqEk4M025LtRz+dJFUyhIxLlB6ydLyZHZtMKXHZwQAqqDSFlrtL2jR3zPGKNxOrAG8hdWBvK4MNyJfUFswwtsnXweicSJ7z5s737NokyGVDUjSGfgix+emnwFMJ3bSz7OHuLosigiQ5E0KhECYLtDB1G3W/AtpUT4/5UxkYHEkZ38uR9F439M8TxoZuVF4NQ5AzG3KjyY294aIJHAnWiR3qmoKXMrLkAROl18iBHqUREv5QR642RbmRgSO5nlOgfiaU2SVdfQv7zOuzBvw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8iiqlNcMwMk5SbJxqVA5M9vOwD/GiZnPS8IsbF/CJTw=;
+ b=qeT/R+oBs8fdAvZw6HXzi5OPHd1T8E2DV92hogaaDXe4K4ErG6t3+q07Yuu6R+rVVNBZ7GaZH3tRvyL00i8GLMRx5jkRsZJ8396cFSMOotFju/Zpt7mvAjEYGaPLCuQTdnBZwdLlNDB3E3kWIDJGoIPNXUM1usR9rKR0hzFEipD+7dt+whgTGw8t5ZcmR7cya/YzdZa6JVuiMsHtRsZ+vsEvCwqfkvDsDX94Hgv41CNwdo2MS2XYPyY+5SQKvHHWP1wLRNUXrLFrbhlAVDgKK0SK396e+YUos7JnlWvE0bRiuSso7kcVisylC4t2cTfblOsia63Vb1gZRTuOOaY0QA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH2PR12MB4277.namprd12.prod.outlook.com (2603:10b6:610:ae::23)
+ by SN7PR12MB7201.namprd12.prod.outlook.com (2603:10b6:806:2a8::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8880.23; Thu, 3 Jul
+ 2025 15:22:59 +0000
+Received: from CH2PR12MB4277.namprd12.prod.outlook.com
+ ([fe80::8857:98e9:8b64:787]) by CH2PR12MB4277.namprd12.prod.outlook.com
+ ([fe80::8857:98e9:8b64:787%4]) with mapi id 15.20.8880.021; Thu, 3 Jul 2025
+ 15:22:59 +0000
+Date: Thu, 3 Jul 2025 08:22:57 -0700
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>
+Cc: qemu-devel@nongnu.org, Troy Lee <leetroy@gmail.com>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 4/4] tests/functional: Add gb200 tests
+Message-ID: <aGagUcRMDvrPTfPw@edtanousvm.nvidia.com>
+References: <20250703144249.3348879-1-etanous@nvidia.com>
+ <20250703144249.3348879-5-etanous@nvidia.com>
+ <ea805ebc-877d-48b0-861c-ac9b5c855acf@kaod.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=213.171.216.60;
- envelope-from=roy.hopkins@randomman.co.uk; helo=dkim.livemail.co.uk
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+In-Reply-To: <ea805ebc-877d-48b0-861c-ac9b5c855acf@kaod.org>
+X-ClientProxiedBy: BYAPR21CA0004.namprd21.prod.outlook.com
+ (2603:10b6:a03:114::14) To CH2PR12MB4277.namprd12.prod.outlook.com
+ (2603:10b6:610:ae::23)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PR12MB4277:EE_|SN7PR12MB7201:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4d16d7c7-7177-4986-8da8-08ddba457e19
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?XV0dFGavsdSeiQjkjLQEhT6SYAeAT2jU3P8EskjzsJrTWKvk+ywlnwCR97?=
+ =?iso-8859-1?Q?64awFL4u2st1QzWmdBn/Q+IT/zqSC194ZoW1WnY8b6JkIFb0+uBbSAAFJ+?=
+ =?iso-8859-1?Q?w4b14RUnuDG1BRCekrGZ4BRCGliF3XdkHWoblisTQI+n3G2i2yQaHAXVSh?=
+ =?iso-8859-1?Q?xcPZoPpevCs/CjLgvZHWalC9vkg2BsUJcqSLYurffSkNLYC/mPIwhYsHi+?=
+ =?iso-8859-1?Q?IHJPRYoEI9lHYv8CbUwiD5ox3GjF6RDO+SB045DOHL7cT+8L6ILN0TGv6f?=
+ =?iso-8859-1?Q?rkbs673U+teKEOT2VLTz0HB0XAeHE+IpF0wGQRiGW+DNa5c2GrnKkJHgY7?=
+ =?iso-8859-1?Q?YaYx/q+3cDI480dE9r6iZcZtRxptG5N8RrBFMpXiuWb+EBKTWko1WDkB2l?=
+ =?iso-8859-1?Q?GmQzgEzk4vQDfYwyceajGwEDuHHTY00Os1jQ8mmWeUh2P6AjyDq7B8RWtc?=
+ =?iso-8859-1?Q?hhnNNnuM54X3YO2kIMw6CEgZl2aZKk5uNx8wn52g3KYu378kMxtMD/Lyh+?=
+ =?iso-8859-1?Q?dhLzkV1eK+ykzOVL+CakcsLaXO3BdB6240KelDRUgenywWvHz2vJy+6XlR?=
+ =?iso-8859-1?Q?3nYLGJq061C2bg272AoM2fZ/lQIxYG19aGmmh7uS8wPL9lW/y+d1BfgdSe?=
+ =?iso-8859-1?Q?ALfOZHSL1ZfIGsr/4cKRYTTbXTPnlUJHU/bCw4IjtU5q1cvBMF36HDX2gk?=
+ =?iso-8859-1?Q?5s75ZYk8Qs9HGWd1UEMuX/3pqAMNq7H3ygPqEEEpBzX1NaeR4mFuRhKJwW?=
+ =?iso-8859-1?Q?JcFops6naDJxgCzl2IcaiB1s4h9mV9RAD9BYnnPNhLZQDpgmga+7a1Zfof?=
+ =?iso-8859-1?Q?tx3I6SRb3ideWQ7tFvg+rSQLsJf2rKv5Df5cwDYC9bsOXl/b3b32p8LTnD?=
+ =?iso-8859-1?Q?xuvtkv4AvDGZZsk77QTeL50/fN8kfEA/yT0tEQBLIll/dMsaFGhG+oI74f?=
+ =?iso-8859-1?Q?9ZnVsAbSMayRNd57uGGzwFpRrlO5OFqb/F79Kr+Yn82DUomsi019A3CUG5?=
+ =?iso-8859-1?Q?DUIJhGuBg2vTFFh2DuDLoIbC5s8CVaGkHuReaUGbQY1cEdJ+fAAWHRVDbl?=
+ =?iso-8859-1?Q?kbtgwvp1gm8dWV5M9ku9V6M1eu47H6+PrDiCxWMQwa2hs938PhNQka/8Ip?=
+ =?iso-8859-1?Q?I1l8mquSQKmUmAPyAZoWZIb0U/qeBcVlRQgNLUHM8BuY9+2OH4+KtCs+gA?=
+ =?iso-8859-1?Q?+7R+QGlUivkeVsd4qVppZsfGrudGMrPczZ8GZZ6XKq08KToHOkjJFxZT+N?=
+ =?iso-8859-1?Q?g47A0I0Jhe0sHH2hGdVAinMuB7lSRU0m1E4DZJs5V2f52vuLTybnIq3Eyh?=
+ =?iso-8859-1?Q?WMUv6l6qB8ZZCJndLjog/bZphXkd9kchjyrgQz2AWmOB2jUgzGPRYQbVjP?=
+ =?iso-8859-1?Q?VIXoiaDkUnpV3ucLB0eFwU10v0jInC3ou6m0crQhxP+en/N7j+C545bRmO?=
+ =?iso-8859-1?Q?s9ORk8jJ3laeTAfs3v/mUaHxMgzD98qu2nNHM3aiKGK2CbyszqnuWVx8C1?=
+ =?iso-8859-1?Q?Q=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH2PR12MB4277.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?NWkO5O+gU8KpgoP4yxIZIUeUXUOk4+k7QClvfQnxYUW17319L69wBRPXad?=
+ =?iso-8859-1?Q?DMXn/PjDuEg2tTtblKL4J5juMnfqe7Ew/Us07KgLTxDzKlNySDxukM+G4P?=
+ =?iso-8859-1?Q?3QeK+RB55R4B9s9YLpnXnQj0we+SyFfJyAi0pGDKeWHXKWW+rcSnKS7nHG?=
+ =?iso-8859-1?Q?TpkqKkvYwmCWP5OjyXtTMWYvQpd4n76zUWGqeEEDaZZafbXTSnZFhaiyhS?=
+ =?iso-8859-1?Q?WK6NiQj4shPQf2ZqP5hPyPhMxzPJ/LxGPLlzR47MdI0pSNMX0fRBHZROxa?=
+ =?iso-8859-1?Q?cu4+/2E7JbCiB5uaAkralDukQw4F5oO559qhPaPcsZ6UpOlGfD3QAttlp7?=
+ =?iso-8859-1?Q?BKeKjOMJJQX2Mh+PgROVySWENVIfS0EnSDHtzUvIfopVbDjZn0TZ16tiTu?=
+ =?iso-8859-1?Q?FhJqAj28BiiMf6fWrz6jDjRWXuoXdvFRT6kfh6cSCRvVQ/8j0FnBHDIU70?=
+ =?iso-8859-1?Q?peov9LZ5JO1SrTeC5JyQxZdlP9g02+MA2k+RyYF/NeDAjXZX88s3hNs4Qe?=
+ =?iso-8859-1?Q?5cHo6wawYGxwcSSym2JA+kQbbX+xCDeMiMQgY0XeTuDuGpGv0FT98BE8DO?=
+ =?iso-8859-1?Q?9xjiZ0oBEJdsUOckFRXbXc/U08fy9NeuALT8fnSQdkYe/FOWiIvl0StNVb?=
+ =?iso-8859-1?Q?+xwufFn3J1JBDJrirCAOppWMe/ZAfRVViykbCmXBFiQu5GIP8XYjLpo17X?=
+ =?iso-8859-1?Q?B3wr3vvVrEjOhbyy/rD1xeo/OnxZ4rK1qtzd8ubbt3UyFIPdvuz8j3zoag?=
+ =?iso-8859-1?Q?OFU9AW+l54XDdZAUu5ZeRVxcZyvLMyze7ljX9iG/x5BfDw4JVjCKiqKHVP?=
+ =?iso-8859-1?Q?MKKR896+yXmBNa6QX5LrNKgkkhPcVmoK47fJq4wLLgUXBMRxA7PiVPkDte?=
+ =?iso-8859-1?Q?w6kznaaRn4XhBG1uDDtB/kzDdEInu8dx/sUFor+DOti2BjfMnp1YG0SKZH?=
+ =?iso-8859-1?Q?zNmSaPWmU9uPJyVGqI/lT5LRZS8QsxSodvdvLv01oVJIceqMkj8Be8RLCY?=
+ =?iso-8859-1?Q?L/hJ4M03Kd6teuV+IJQo5Na/BcWqZt0Ka5N6jJ3u3jGdQoLtrJvT2gF725?=
+ =?iso-8859-1?Q?81mRaxgl8vWg5H8klErbUaQJaC43RM2EAj7q2VKH/H3bhVYIQ0ziuObr1x?=
+ =?iso-8859-1?Q?U3tHgxpu1XuSK6AhVPyvDqLzQSREIEc2UI+ByuQzPO/3h11+MxfZCDJmkO?=
+ =?iso-8859-1?Q?nJpdcsI04Zzik3W8k9yc3v+qi0ygiqdaPcahah3cgHb+eGeL3XYhJBeM2r?=
+ =?iso-8859-1?Q?ZXSy5A3vdpkwHYrr2mKGYYJfSbMKWRFC2C813o3Y/lYMu6AgJNK+owr+mK?=
+ =?iso-8859-1?Q?sG4W6yq6cacMr8Mwm/czH8HPyf/uKRXPIElW46lnadsUlugwKxeex0gKOw?=
+ =?iso-8859-1?Q?E0VLwiw4X6r0oJy5UPE+z0FP2mOArfRG7OdFxzH4akdqnTiX9wa+3QsR0v?=
+ =?iso-8859-1?Q?J2i4muoZH8YKmci7zkDFrnNI1DlYNG4yC1F5twBCBPYjmbzfiVEweMfA9X?=
+ =?iso-8859-1?Q?JWImJE0XXTSMa41lJnbbeoCYcsIyxl+zXfOe6VTH0o5LpqNylzGYxFOPzg?=
+ =?iso-8859-1?Q?1iHEJf9UJ+YwVfdkfLzWOd7+AIl/W2YItl/UYZ7bNqBGHubTPGTE7zeZLQ?=
+ =?iso-8859-1?Q?4xksHDiNPwpgkSv2jBTBS0fVszcYiGcP71?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4d16d7c7-7177-4986-8da8-08ddba457e19
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR12MB4277.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2025 15:22:58.9703 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: IQPNYL4ocOfarAKV9Pd3VL8bR+xbAI2lo39e9mkAzZTjefl5XsxIA3CMja4aIyFBvfs0eLrijs9bGyAecNwitQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7201
+Received-SPF: permerror client-ip=2a01:111:f403:2416::615;
+ envelope-from=etanous@nvidia.com;
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,192 +163,111 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Ed Tanous <etanous@nvidia.com>
+From:  Ed Tanous via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The class function and implementations for updating launch data return
-a code in case of error. In some cases an error message is generated and
-in other cases, just the error return value is used.
+On Thu, Jul 03, 2025 at 05:17:31PM +0200, Cédric Le Goater wrote:
+> On 7/3/25 16:42, Ed Tanous wrote:
+> > To support the newly added gb200 machine, add appropriate tests.
+> > 
+> > Signed-off-by: Ed Tanous <etanous@nvidia.com>
+> > ---
+> >   tests/functional/aspeed.py                    |  9 +++++--
+> >   tests/functional/meson.build                  |  2 ++
+> >   .../test_arm_aspeed_gb200nvl_bmc.py           | 26 +++++++++++++++++++
+> >   3 files changed, 35 insertions(+), 2 deletions(-)
+> >   create mode 100755 tests/functional/test_arm_aspeed_gb200nvl_bmc.py
+> > 
+> > diff --git a/tests/functional/aspeed.py b/tests/functional/aspeed.py
+> > index 7a40d5dda7..b131703c52 100644
+> > --- a/tests/functional/aspeed.py
+> > +++ b/tests/functional/aspeed.py
+> > @@ -8,8 +8,13 @@
+> >   class AspeedTest(LinuxKernelTest):
+> >       def do_test_arm_aspeed_openbmc(self, machine, image, uboot='2019.04',
+> > -                                   cpu_id='0x0', soc='AST2500 rev A1'):
+> > -        hostname = machine.removesuffix('-bmc')
+> > +                                   cpu_id='0x0', soc='AST2500 rev A1',
+> > +                                   image_hostname=None):
+> > +        # Allow for the image hostname to not end in "-bmc"
+> > +        if image_hostname is not None:
+> > +            hostname = image_hostname
+> > +        else:
+> > +            hostname = machine.removesuffix('-bmc')
+> 
+> 
+> This change belongs to another patch and it doesn't seem that
+> this series needs it. Does it ?
 
-This small refactor adds an 'Error **errp' parameter to all functions
-which consistently set an error condition if a non-zero value is
-returned.
+I Should've been made more clear in the commit message, but yes, this is
+required because the hostname of this system is gb200nvl-obmc, so
+removing the postfix of -bmc fails, and the test fails because of it.
+This code allows adding an opt-in param to handle the different string.
+I can break it out into its own commit if that's an issue.
 
-Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Gerd Hoffman <kraxel@redhat.com>
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
----
- target/i386/sev.c | 68 +++++++++++++++++++++++------------------------
- 1 file changed, 33 insertions(+), 35 deletions(-)
-
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 1a12f0671c..a84f5f5d28 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -122,7 +122,8 @@ struct SevCommonStateClass {
-                                        Error **errp);
-     int (*launch_start)(SevCommonState *sev_common);
-     void (*launch_finish)(SevCommonState *sev_common);
--    int (*launch_update_data)(SevCommonState *sev_common, hwaddr gpa, uint8_t *ptr, size_t len);
-+    int (*launch_update_data)(SevCommonState *sev_common, hwaddr gpa,
-+                              uint8_t *ptr, size_t len, Error **errp);
-     int (*kvm_init)(ConfidentialGuestSupport *cgs, Error **errp);
- };
- 
-@@ -970,9 +971,8 @@ sev_snp_adjust_cpuid_features(X86ConfidentialGuest *cg, uint32_t feature, uint32
-     return value;
- }
- 
--static int
--sev_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
--                       uint8_t *addr, size_t len)
-+static int sev_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
-+                                  uint8_t *addr, size_t len, Error **errp)
- {
-     int ret, fw_error;
-     struct kvm_sev_launch_update_data update;
-@@ -987,8 +987,8 @@ sev_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
-     ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_LAUNCH_UPDATE_DATA,
-                     &update, &fw_error);
-     if (ret) {
--        error_report("%s: LAUNCH_UPDATE ret=%d fw_error=%d '%s'",
--                __func__, ret, fw_error, fw_error_to_str(fw_error));
-+        error_setg(errp, "%s: LAUNCH_UPDATE ret=%d fw_error=%d '%s'", __func__,
-+                   ret, fw_error, fw_error_to_str(fw_error));
-     }
- 
-     return ret;
-@@ -1116,8 +1116,8 @@ sev_launch_finish(SevCommonState *sev_common)
-     migrate_add_blocker(&sev_mig_blocker, &error_fatal);
- }
- 
--static int
--snp_launch_update_data(uint64_t gpa, void *hva, size_t len, int type)
-+static int snp_launch_update_data(uint64_t gpa, void *hva, size_t len,
-+                                  int type, Error **errp)
- {
-     SevLaunchUpdateData *data;
- 
-@@ -1132,23 +1132,21 @@ snp_launch_update_data(uint64_t gpa, void *hva, size_t len, int type)
-     return 0;
- }
- 
--static int
--sev_snp_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
--                           uint8_t *ptr, size_t len)
-+static int sev_snp_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
-+                                      uint8_t *ptr, size_t len, Error **errp)
- {
--       int ret = snp_launch_update_data(gpa, ptr, len,
--                                         KVM_SEV_SNP_PAGE_TYPE_NORMAL);
--       return ret;
-+    return snp_launch_update_data(gpa, ptr, len,
-+                                     KVM_SEV_SNP_PAGE_TYPE_NORMAL, errp);
- }
- 
- static int
- sev_snp_cpuid_info_fill(SnpCpuidInfo *snp_cpuid_info,
--                        const KvmCpuidInfo *kvm_cpuid_info)
-+                        const KvmCpuidInfo *kvm_cpuid_info, Error **errp)
- {
-     size_t i;
- 
-     if (kvm_cpuid_info->cpuid.nent > SNP_CPUID_FUNCTION_MAXCOUNT) {
--        error_report("SEV-SNP: CPUID entry count (%d) exceeds max (%d)",
-+        error_setg(errp, "SEV-SNP: CPUID entry count (%d) exceeds max (%d)",
-                      kvm_cpuid_info->cpuid.nent, SNP_CPUID_FUNCTION_MAXCOUNT);
-         return -1;
-     }
-@@ -1190,8 +1188,8 @@ sev_snp_cpuid_info_fill(SnpCpuidInfo *snp_cpuid_info,
-     return 0;
- }
- 
--static int
--snp_launch_update_cpuid(uint32_t cpuid_addr, void *hva, size_t cpuid_len)
-+static int snp_launch_update_cpuid(uint32_t cpuid_addr, void *hva,
-+                                   size_t cpuid_len, Error **errp)
- {
-     KvmCpuidInfo kvm_cpuid_info = {0};
-     SnpCpuidInfo snp_cpuid_info;
-@@ -1208,26 +1206,25 @@ snp_launch_update_cpuid(uint32_t cpuid_addr, void *hva, size_t cpuid_len)
-     } while (ret == -E2BIG);
- 
-     if (ret) {
--        error_report("SEV-SNP: unable to query CPUID values for CPU: '%s'",
--                     strerror(-ret));
--        return 1;
-+        error_setg(errp, "SEV-SNP: unable to query CPUID values for CPU: '%s'",
-+                   strerror(-ret));
-+        return -1;
-     }
- 
--    ret = sev_snp_cpuid_info_fill(&snp_cpuid_info, &kvm_cpuid_info);
--    if (ret) {
--        error_report("SEV-SNP: failed to generate CPUID table information");
--        return 1;
-+    ret = sev_snp_cpuid_info_fill(&snp_cpuid_info, &kvm_cpuid_info, errp);
-+    if (ret < 0) {
-+        return -1;
-     }
- 
-     memcpy(hva, &snp_cpuid_info, sizeof(snp_cpuid_info));
- 
-     return snp_launch_update_data(cpuid_addr, hva, cpuid_len,
--                                  KVM_SEV_SNP_PAGE_TYPE_CPUID);
-+                                  KVM_SEV_SNP_PAGE_TYPE_CPUID, errp);
- }
- 
--static int
--snp_launch_update_kernel_hashes(SevSnpGuestState *sev_snp, uint32_t addr,
--                                void *hva, uint32_t len)
-+static int snp_launch_update_kernel_hashes(SevSnpGuestState *sev_snp,
-+                                           uint32_t addr, void *hva,
-+                                           uint32_t len, Error **errp)
- {
-     int type = KVM_SEV_SNP_PAGE_TYPE_ZERO;
-     if (sev_snp->parent_obj.kernel_hashes) {
-@@ -1239,7 +1236,7 @@ snp_launch_update_kernel_hashes(SevSnpGuestState *sev_snp, uint32_t addr,
-                sizeof(*sev_snp->kernel_hashes_data));
-         type = KVM_SEV_SNP_PAGE_TYPE_NORMAL;
-     }
--    return snp_launch_update_data(addr, hva, len, type);
-+    return snp_launch_update_data(addr, hva, len, type, errp);
- }
- 
- static int
-@@ -1277,12 +1274,14 @@ snp_populate_metadata_pages(SevSnpGuestState *sev_snp,
-         }
- 
-         if (type == KVM_SEV_SNP_PAGE_TYPE_CPUID) {
--            ret = snp_launch_update_cpuid(desc->base, hva, desc->len);
-+            ret = snp_launch_update_cpuid(desc->base, hva, desc->len,
-+                                          &error_fatal);
-         } else if (desc->type == SEV_DESC_TYPE_SNP_KERNEL_HASHES) {
-             ret = snp_launch_update_kernel_hashes(sev_snp, desc->base, hva,
--                                                  desc->len);
-+                                                  desc->len, &error_fatal);
-         } else {
--            ret = snp_launch_update_data(desc->base, hva, desc->len, type);
-+            ret = snp_launch_update_data(desc->base, hva, desc->len, type,
-+                                         &error_fatal);
-         }
- 
-         if (ret) {
-@@ -1615,9 +1614,8 @@ sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
-     if (sev_check_state(sev_common, SEV_STATE_LAUNCH_UPDATE)) {
-         int ret;
- 
--        ret = klass->launch_update_data(sev_common, gpa, ptr, len);
-+        ret = klass->launch_update_data(sev_common, gpa, ptr, len, errp);
-         if (ret < 0) {
--            error_setg(errp, "SEV: Failed to encrypt pflash rom");
-             return ret;
-         }
-     }
--- 
-2.43.0
-
+> 
+> 
+> Thanks,
+> 
+> C.
+> 
+> 
+> 
+> >           self.set_machine(machine)
+> >           self.vm.set_console()
+> > diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+> > index 85158562a2..d2864543a5 100644
+> > --- a/tests/functional/meson.build
+> > +++ b/tests/functional/meson.build
+> > @@ -32,6 +32,7 @@ test_timeouts = {
+> >     'arm_aspeed_ast2500' : 720,
+> >     'arm_aspeed_ast2600' : 1200,
+> >     'arm_aspeed_bletchley' : 480,
+> > +  'arm_aspeed_gb200nvl_bmc' : 480,
+> >     'arm_aspeed_rainier' : 480,
+> >     'arm_bpim2u' : 500,
+> >     'arm_collie' : 180,
+> > @@ -126,6 +127,7 @@ tests_arm_system_thorough = [
+> >     'arm_aspeed_ast2500',
+> >     'arm_aspeed_ast2600',
+> >     'arm_aspeed_bletchley',
+> > +  'arm_aspeed_gb200nvl_bmc',
+> >     'arm_aspeed_rainier',
+> >     'arm_bpim2u',
+> >     'arm_canona1100',
+> > diff --git a/tests/functional/test_arm_aspeed_gb200nvl_bmc.py b/tests/functional/test_arm_aspeed_gb200nvl_bmc.py
+> > new file mode 100755
+> > index 0000000000..8e8e3f05c1
+> > --- /dev/null
+> > +++ b/tests/functional/test_arm_aspeed_gb200nvl_bmc.py
+> > @@ -0,0 +1,26 @@
+> > +#!/usr/bin/env python3
+> > +#
+> > +# Functional test that boots the ASPEED machines
+> > +#
+> > +# SPDX-License-Identifier: GPL-2.0-or-later
+> > +
+> > +from qemu_test import Asset
+> > +from aspeed import AspeedTest
+> > +
+> > +
+> > +class GB200Machine(AspeedTest):
+> > +
+> > +    ASSET_GB200_FLASH = Asset(
+> > +        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/master/images/gb200nvl-obmc/obmc-phosphor-image-gb200nvl-obmc-20250702182348.static.mtd.xz',
+> > +        'b84819317cb3dc762895ad507705978ef000bfc77c50c33a63bdd37921db0dbc')
+> > +
+> > +    def test_arm_aspeed_gb200_openbmc(self):
+> > +        image_path = self.uncompress(self.ASSET_GB200_FLASH)
+> > +
+> > +        self.do_test_arm_aspeed_openbmc('gb200nvl-bmc', image=image_path,
+> > +                                        uboot='2019.04', cpu_id='0xf00',
+> > +                                        soc='AST2600 rev A3',
+> > +                                        image_hostname='gb200nvl-obmc')
+> > +
+> > +if __name__ == '__main__':
+> > +    AspeedTest.main()
+> 
 
