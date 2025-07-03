@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 083F6C83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 12:44:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F108C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 12:44:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXJDo-0000qU-0z; Thu, 03 Jul 2025 08:39:28 -0400
+	id 1uXJI4-0007ut-2s; Thu, 03 Jul 2025 08:43:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uXJDR-0000Zn-UC
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:39:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uXJFL-0004GC-8T
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:40:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uXJDI-0000P8-AH
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:39:01 -0400
+ id 1uXJFF-0001of-Ot
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:40:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751546330;
+ s=mimecast20190719; t=1751546451;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ztOHQuRdZU6Ia6/9fdzeOkwFogOl4LLzWMJKwr7hjGI=;
- b=M4r/2PZsVzw0v+xkR1eeGqpTBNdbITGISSM6q2g60boPHVe/g1AXiYD1LgmuM5KWUKrKM4
- f0ek222FK+vU3BHreqQjjHPMWDtSZ0DUjNkuE9YLHWzLQcTu1Os3mEQ+5TAGijp7K1Pt0e
- crllUjSafxTGSIltRPOgjyUjTKjTX2c=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=OjtNEiXPJAImEXGm/zclHDOBKKUKXlJlaBVZEQKMvtA=;
+ b=Sem7j3MdAPrj8YZ5iNhloUdM1kpiAQmOM7Cbs1+aq/nc0G39I4V+trWr+tkQ0rTrXAvE/6
+ QjEHYHCoOp+BLpubzbChEsQVDfi/HpkjM40wK2rdY8OKEpfKCOnPneUHTBLPUa0JOdXHH6
+ NW2Je2EQMONgPxuDQO85HczigedWZAg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-1ELgZuimP12AlPtu-3IrMw-1; Thu,
- 03 Jul 2025 08:38:47 -0400
-X-MC-Unique: 1ELgZuimP12AlPtu-3IrMw-1
-X-Mimecast-MFC-AGG-ID: 1ELgZuimP12AlPtu-3IrMw_1751546326
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-474-JlgVZIhvP1urmqHJ-FT5lQ-1; Thu,
+ 03 Jul 2025 08:40:49 -0400
+X-MC-Unique: JlgVZIhvP1urmqHJ-FT5lQ-1
+X-Mimecast-MFC-AGG-ID: JlgVZIhvP1urmqHJ-FT5lQ_1751546447
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 44B271956061; Thu,  3 Jul 2025 12:38:46 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B04A6180136B; Thu,  3 Jul 2025 12:40:47 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.32.16])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C0D8F1803AFF; Thu,  3 Jul 2025 12:38:41 +0000 (UTC)
+ id 06038180045B; Thu,  3 Jul 2025 12:40:41 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
@@ -55,26 +55,25 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: pbonzini@redhat.com,
 	philmd@linaro.org,
 	alex.bennee@linaro.org
-Subject: [PATCH v5 13/36] hw/i386/acpi-build: Move
- build_append_notification_callback to pcihp
-Date: Thu,  3 Jul 2025 14:35:13 +0200
-Message-ID: <20250703123728.414386-14-eric.auger@redhat.com>
+Subject: [PATCH v5 36/36] qtest/bios-tables-test: Generate reference blob for
+ DSDT.acpipcihp
+Date: Thu,  3 Jul 2025 14:35:36 +0200
+Message-ID: <20250703123728.414386-37-eric.auger@redhat.com>
 In-Reply-To: <20250703123728.414386-1-eric.auger@redhat.com>
 References: <20250703123728.414386-1-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 15
-X-Spam_score: 1.5
-X-Spam_bar: +
-X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,178 +89,2242 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We plan to reuse build_append_notification_callback() on ARM
-so let's move it to pcihp.c.
+The disassembled DSDT table is given below.
 
-No functional change intended.
+/*
+ * Intel ACPI Component Architecture
+ * AML/ASL+ Disassembler version 20210604 (64-bit version)
+ * Copyright (c) 2000 - 2021 Intel Corporation
+ *
+ * Disassembling to symbolic ASL+ operators
+ *
+ * Disassembly of ../tests/data/acpi/aarch64/virt/DSDT.acpipcihp, Thu Jul  3 05:16:27 2025
+ *
+ * Original Table Header:
+ *     Signature        "DSDT"
+ *     Length           0x0000183A (6202)
+ *     Revision         0x02
+ *     Checksum         0x98
+ *     OEM ID           "BOCHS "
+ *     OEM Table ID     "BXPC    "
+ *     OEM Revision     0x00000001 (1)
+ *     Compiler ID      "BXPC"
+ *     Compiler Version 0x00000001 (1)
+ */
+DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
+{
+    Scope (\_SB)
+    {
+        Device (C000)
+        {
+            Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
+            Name (_UID, Zero)  // _UID: Unique ID
+        }
+
+        Device (COM0)
+        {
+            Name (_HID, "ARMH0011")  // _HID: Hardware ID
+            Name (_UID, Zero)  // _UID: Unique ID
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x09000000,         // Address Base
+                    0x00001000,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000021,
+                }
+            })
+        }
+
+        Device (FWCF)
+        {
+            Name (_HID, "QEMU0002")  // _HID: Hardware ID
+            Name (_STA, 0x0B)  // _STA: Status
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x09020000,         // Address Base
+                    0x00000018,         // Address Length
+                    )
+            })
+        }
+
+        Device (VR00)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, Zero)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A000000,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000030,
+                }
+            })
+        }
+
+        Device (VR01)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, One)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A000200,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000031,
+                }
+            })
+        }
+
+        Device (VR02)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x02)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A000400,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000032,
+                }
+            })
+        }
+
+        Device (VR03)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x03)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A000600,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000033,
+                }
+            })
+        }
+
+        Device (VR04)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x04)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A000800,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000034,
+                }
+            })
+        }
+
+        Device (VR05)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x05)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A000A00,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000035,
+                }
+            })
+        }
+
+        Device (VR06)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x06)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A000C00,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000036,
+                }
+            })
+        }
+
+        Device (VR07)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x07)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A000E00,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000037,
+                }
+            })
+        }
+
+        Device (VR08)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x08)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A001000,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000038,
+                }
+            })
+        }
+
+        Device (VR09)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x09)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A001200,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000039,
+                }
+            })
+        }
+
+        Device (VR10)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x0A)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A001400,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x0000003A,
+                }
+            })
+        }
+
+        Device (VR11)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x0B)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A001600,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x0000003B,
+                }
+            })
+        }
+
+        Device (VR12)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x0C)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A001800,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x0000003C,
+                }
+            })
+        }
+
+        Device (VR13)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x0D)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A001A00,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x0000003D,
+                }
+            })
+        }
+
+        Device (VR14)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x0E)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A001C00,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x0000003E,
+                }
+            })
+        }
+
+        Device (VR15)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x0F)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A001E00,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x0000003F,
+                }
+            })
+        }
+
+        Device (VR16)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x10)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A002000,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000040,
+                }
+            })
+        }
+
+        Device (VR17)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x11)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A002200,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000041,
+                }
+            })
+        }
+
+        Device (VR18)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x12)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A002400,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000042,
+                }
+            })
+        }
+
+        Device (VR19)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x13)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A002600,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000043,
+                }
+            })
+        }
+
+        Device (VR20)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x14)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A002800,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000044,
+                }
+            })
+        }
+
+        Device (VR21)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x15)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A002A00,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000045,
+                }
+            })
+        }
+
+        Device (VR22)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x16)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A002C00,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000046,
+                }
+            })
+        }
+
+        Device (VR23)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x17)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A002E00,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000047,
+                }
+            })
+        }
+
+        Device (VR24)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x18)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A003000,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000048,
+                }
+            })
+        }
+
+        Device (VR25)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x19)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A003200,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000049,
+                }
+            })
+        }
+
+        Device (VR26)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x1A)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A003400,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x0000004A,
+                }
+            })
+        }
+
+        Device (VR27)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x1B)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A003600,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x0000004B,
+                }
+            })
+        }
+
+        Device (VR28)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x1C)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A003800,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x0000004C,
+                }
+            })
+        }
+
+        Device (VR29)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x1D)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A003A00,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x0000004D,
+                }
+            })
+        }
+
+        Device (VR30)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x1E)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A003C00,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x0000004E,
+                }
+            })
+        }
+
+        Device (VR31)
+        {
+            Name (_HID, "LNRO0005")  // _HID: Hardware ID
+            Name (_UID, 0x1F)  // _UID: Unique ID
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A003E00,         // Address Base
+                    0x00000200,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x0000004F,
+                }
+            })
+        }
+
+        Device (L000)
+        {
+            Name (_HID, "PNP0C0F" /* PCI Interrupt Link Device */)  // _HID: Hardware ID
+            Name (_UID, Zero)  // _UID: Unique ID
+            Name (_PRS, ResourceTemplate ()  // _PRS: Possible Resource Settings
+            {
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000023,
+                }
+            })
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000023,
+                }
+            })
+            Method (_SRS, 1, NotSerialized)  // _SRS: Set Resource Settings
+            {
+            }
+        }
+
+        Device (L001)
+        {
+            Name (_HID, "PNP0C0F" /* PCI Interrupt Link Device */)  // _HID: Hardware ID
+            Name (_UID, One)  // _UID: Unique ID
+            Name (_PRS, ResourceTemplate ()  // _PRS: Possible Resource Settings
+            {
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000024,
+                }
+            })
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000024,
+                }
+            })
+            Method (_SRS, 1, NotSerialized)  // _SRS: Set Resource Settings
+            {
+            }
+        }
+
+        Device (L002)
+        {
+            Name (_HID, "PNP0C0F" /* PCI Interrupt Link Device */)  // _HID: Hardware ID
+            Name (_UID, 0x02)  // _UID: Unique ID
+            Name (_PRS, ResourceTemplate ()  // _PRS: Possible Resource Settings
+            {
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000025,
+                }
+            })
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000025,
+                }
+            })
+            Method (_SRS, 1, NotSerialized)  // _SRS: Set Resource Settings
+            {
+            }
+        }
+
+        Device (L003)
+        {
+            Name (_HID, "PNP0C0F" /* PCI Interrupt Link Device */)  // _HID: Hardware ID
+            Name (_UID, 0x03)  // _UID: Unique ID
+            Name (_PRS, ResourceTemplate ()  // _PRS: Possible Resource Settings
+            {
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000026,
+                }
+            })
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000026,
+                }
+            })
+            Method (_SRS, 1, NotSerialized)  // _SRS: Set Resource Settings
+            {
+            }
+        }
+
+        Device (PCI0)
+        {
+            Name (_HID, "PNP0A08" /* PCI Express Bus */)  // _HID: Hardware ID
+            Name (_CID, "PNP0A03" /* PCI Bus */)  // _CID: Compatible ID
+            Name (_SEG, Zero)  // _SEG: PCI Segment
+            Name (_BBN, Zero)  // _BBN: BIOS Bus Number
+            Name (_UID, Zero)  // _UID: Unique ID
+            Name (_STR, Unicode ("PCIe 0 Device"))  // _STR: Description String
+            Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+            Name (_PRT, Package (0x80)  // _PRT: PCI Routing Table
+            {
+                Package (0x04)
+                {
+                    0xFFFF,
+                    Zero,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0xFFFF,
+                    One,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0xFFFF,
+                    0x02,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0xFFFF,
+                    0x03,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0001FFFF,
+                    Zero,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0001FFFF,
+                    One,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0001FFFF,
+                    0x02,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0001FFFF,
+                    0x03,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0002FFFF,
+                    Zero,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0002FFFF,
+                    One,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0002FFFF,
+                    0x02,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0002FFFF,
+                    0x03,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0003FFFF,
+                    Zero,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0003FFFF,
+                    One,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0003FFFF,
+                    0x02,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0003FFFF,
+                    0x03,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0004FFFF,
+                    Zero,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0004FFFF,
+                    One,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0004FFFF,
+                    0x02,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0004FFFF,
+                    0x03,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0005FFFF,
+                    Zero,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0005FFFF,
+                    One,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0005FFFF,
+                    0x02,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0005FFFF,
+                    0x03,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0006FFFF,
+                    Zero,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0006FFFF,
+                    One,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0006FFFF,
+                    0x02,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0006FFFF,
+                    0x03,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0007FFFF,
+                    Zero,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0007FFFF,
+                    One,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0007FFFF,
+                    0x02,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0007FFFF,
+                    0x03,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0008FFFF,
+                    Zero,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0008FFFF,
+                    One,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0008FFFF,
+                    0x02,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0008FFFF,
+                    0x03,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0009FFFF,
+                    Zero,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0009FFFF,
+                    One,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0009FFFF,
+                    0x02,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0009FFFF,
+                    0x03,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000AFFFF,
+                    Zero,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000AFFFF,
+                    One,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000AFFFF,
+                    0x02,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000AFFFF,
+                    0x03,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000BFFFF,
+                    Zero,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000BFFFF,
+                    One,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000BFFFF,
+                    0x02,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000BFFFF,
+                    0x03,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000CFFFF,
+                    Zero,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000CFFFF,
+                    One,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000CFFFF,
+                    0x02,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000CFFFF,
+                    0x03,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000DFFFF,
+                    Zero,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000DFFFF,
+                    One,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000DFFFF,
+                    0x02,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000DFFFF,
+                    0x03,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000EFFFF,
+                    Zero,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000EFFFF,
+                    One,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000EFFFF,
+                    0x02,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000EFFFF,
+                    0x03,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000FFFFF,
+                    Zero,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000FFFFF,
+                    One,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000FFFFF,
+                    0x02,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x000FFFFF,
+                    0x03,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0010FFFF,
+                    Zero,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0010FFFF,
+                    One,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0010FFFF,
+                    0x02,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0010FFFF,
+                    0x03,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0011FFFF,
+                    Zero,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0011FFFF,
+                    One,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0011FFFF,
+                    0x02,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0011FFFF,
+                    0x03,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0012FFFF,
+                    Zero,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0012FFFF,
+                    One,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0012FFFF,
+                    0x02,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0012FFFF,
+                    0x03,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0013FFFF,
+                    Zero,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0013FFFF,
+                    One,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0013FFFF,
+                    0x02,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0013FFFF,
+                    0x03,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0014FFFF,
+                    Zero,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0014FFFF,
+                    One,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0014FFFF,
+                    0x02,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0014FFFF,
+                    0x03,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0015FFFF,
+                    Zero,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0015FFFF,
+                    One,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0015FFFF,
+                    0x02,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0015FFFF,
+                    0x03,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0016FFFF,
+                    Zero,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0016FFFF,
+                    One,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0016FFFF,
+                    0x02,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0016FFFF,
+                    0x03,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0017FFFF,
+                    Zero,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0017FFFF,
+                    One,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0017FFFF,
+                    0x02,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0017FFFF,
+                    0x03,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0018FFFF,
+                    Zero,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0018FFFF,
+                    One,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0018FFFF,
+                    0x02,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0018FFFF,
+                    0x03,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0019FFFF,
+                    Zero,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0019FFFF,
+                    One,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0019FFFF,
+                    0x02,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x0019FFFF,
+                    0x03,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001AFFFF,
+                    Zero,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001AFFFF,
+                    One,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001AFFFF,
+                    0x02,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001AFFFF,
+                    0x03,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001BFFFF,
+                    Zero,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001BFFFF,
+                    One,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001BFFFF,
+                    0x02,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001BFFFF,
+                    0x03,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001CFFFF,
+                    Zero,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001CFFFF,
+                    One,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001CFFFF,
+                    0x02,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001CFFFF,
+                    0x03,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001DFFFF,
+                    Zero,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001DFFFF,
+                    One,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001DFFFF,
+                    0x02,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001DFFFF,
+                    0x03,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001EFFFF,
+                    Zero,
+                    L002,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001EFFFF,
+                    One,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001EFFFF,
+                    0x02,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001EFFFF,
+                    0x03,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001FFFFF,
+                    Zero,
+                    L003,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001FFFFF,
+                    One,
+                    L000,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001FFFFF,
+                    0x02,
+                    L001,
+                    Zero
+                },
+
+                Package (0x04)
+                {
+                    0x001FFFFF,
+                    0x03,
+                    L002,
+                    Zero
+                }
+            })
+            Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
+            {
+                Return (0x0000004010000000)
+            }
+
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
+                    0x0000,             // Granularity
+                    0x0000,             // Range Minimum
+                    0x00FF,             // Range Maximum
+                    0x0000,             // Translation Offset
+                    0x0100,             // Length
+                    ,, )
+                DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                    0x00000000,         // Granularity
+                    0x10000000,         // Range Minimum
+                    0x3EFEFFFF,         // Range Maximum
+                    0x00000000,         // Translation Offset
+                    0x2EFF0000,         // Length
+                    ,, , AddressRangeMemory, TypeStatic)
+                DWordIO (ResourceProducer, MinFixed, MaxFixed, PosDecode, EntireRange,
+                    0x00000000,         // Granularity
+                    0x00000000,         // Range Minimum
+                    0x0000FFFF,         // Range Maximum
+                    0x3EFF0000,         // Translation Offset
+                    0x00010000,         // Length
+                    ,, , TypeStatic, DenseTranslation)
+                QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                    0x0000000000000000, // Granularity
+                    0x0000008000000000, // Range Minimum
+                    0x000000FFFFFFFFFF, // Range Maximum
+                    0x0000000000000000, // Translation Offset
+                    0x0000008000000000, // Length
+                    ,, , AddressRangeMemory, TypeStatic)
+            })
+            Method (_OSC, 4, NotSerialized)  // _OSC: Operating System Capabilities
+            {
+                CreateDWordField (Arg3, Zero, CDW1)
+                If ((Arg0 == ToUUID ("33db4d5b-1ff7-401c-9657-7441c03dd766") /* PCI Host Bridge Device */))
+                {
+                    CreateDWordField (Arg3, 0x04, CDW2)
+                    CreateDWordField (Arg3, 0x08, CDW3)
+                    Local0 = CDW3 /* \_SB_.PCI0._OSC.CDW3 */
+                    Local0 &= 0x1E
+                    If ((Arg1 != One))
+                    {
+                        CDW1 |= 0x08
+                    }
+
+                    If ((CDW3 != Local0))
+                    {
+                        CDW1 |= 0x10
+                    }
+
+                    CDW3 = Local0
+                }
+                Else
+                {
+                    CDW1 |= 0x04
+                }
+
+                Return (Arg3)
+            }
+
+            Method (_DSM, 4, NotSerialized)  // _DSM: Device-Specific Method
+            {
+                If ((Arg0 == ToUUID ("e5c937d0-3553-4d7a-9117-ea4d19c3434d") /* Device Labeling Interface */))
+                {
+                    If ((Arg2 == Zero))
+                    {
+                        Return (Buffer (One)
+                        {
+                             0x01                                             // .
+                        })
+                    }
+                }
+
+                Return (Buffer (One)
+                {
+                     0x00                                             // .
+                })
+            }
+
+            Device (RES0)
+            {
+                Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
+                Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+                {
+                    QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                        0x0000000000000000, // Granularity
+                        0x0000004010000000, // Range Minimum
+                        0x000000401FFFFFFF, // Range Maximum
+                        0x0000000000000000, // Translation Offset
+                        0x0000000010000000, // Length
+                        ,, , AddressRangeMemory, TypeStatic)
+                })
+            }
+        }
+
+        Device (\_SB.GED)
+        {
+            Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
+            Name (_UID, "GED")  // _UID: Unique ID
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000029,
+                }
+            })
+            OperationRegion (EREG, SystemMemory, 0x09080000, 0x04)
+            Field (EREG, DWordAcc, NoLock, WriteAsZeros)
+            {
+                ESEL,   32
+            }
+
+            Method (_EVT, 1, Serialized)  // _EVT: Event
+            {
+                Local0 = ESEL /* \_SB_.GED_.ESEL */
+                If (((Local0 & 0x02) == 0x02))
+                {
+                    Notify (PWRB, 0x80) // Status Change
+                }
+
+                If (((Local0 & 0x10) == 0x10))
+                {
+                    Acquire (\_SB.PCI0.BLCK, 0xFFFF)
+                    \_SB.PCI0.PCNT ()
+                    Release (\_SB.PCI0.BLCK)
+                }
+            }
+        }
+
+        Device (PWRB)
+        {
+            Name (_HID, "PNP0C0C" /* Power Button Device */)  // _HID: Hardware ID
+            Name (_UID, Zero)  // _UID: Unique ID
+        }
+    }
+
+    Scope (_SB.PCI0)
+    {
+        OperationRegion (PCST, SystemMemory, 0x090C0000, 0x08)
+        Field (PCST, DWordAcc, NoLock, WriteAsZeros)
+        {
+            PCIU,   32,
+            PCID,   32
+        }
+
+        OperationRegion (SEJ, SystemMemory, 0x090C0008, 0x04)
+        Field (SEJ, DWordAcc, NoLock, WriteAsZeros)
+        {
+            B0EJ,   32
+        }
+
+        OperationRegion (BNMR, SystemMemory, 0x090C0010, 0x08)
+        Field (BNMR, DWordAcc, NoLock, WriteAsZeros)
+        {
+            BNUM,   32,
+            PIDX,   32
+        }
+
+        Mutex (BLCK, 0x00)
+        Method (PCEJ, 2, NotSerialized)
+        {
+            Acquire (BLCK, 0xFFFF)
+            BNUM = Arg0
+            B0EJ = (One << Arg1)
+            Release (BLCK)
+            Return (Zero)
+        }
+
+        Method (AIDX, 2, NotSerialized)
+        {
+            Acquire (BLCK, 0xFFFF)
+            BNUM = Arg0
+            PIDX = (One << Arg1)
+            Local0 = PIDX /* \_SB_.PCI0.PIDX */
+            Release (BLCK)
+            Return (Local0)
+        }
+
+        Method (PDSM, 5, Serialized)
+        {
+            If ((Arg2 == Zero))
+            {
+                Local0 = Buffer (One)
+                    {
+                         0x00                                             // .
+                    }
+                If ((Arg0 != ToUUID ("e5c937d0-3553-4d7a-9117-ea4d19c3434d") /* Device Labeling Interface */))
+                {
+                    Return (Local0)
+                }
+
+                If ((Arg1 < 0x02))
+                {
+                    Return (Local0)
+                }
+
+                Local1 = Zero
+                Local2 = AIDX (DerefOf (Arg4 [Zero]), DerefOf (Arg4 [One]
+                    ))
+                If (!((Local2 == Zero) | (Local2 == 0xFFFFFFFF)))
+                {
+                    Local1 |= One
+                    Local1 |= (One << 0x07)
+                }
+
+                Local0 [Zero] = Local1
+                Return (Local0)
+            }
+
+            If ((Arg2 == 0x07))
+            {
+                Local2 = AIDX (DerefOf (Arg4 [Zero]), DerefOf (Arg4 [One]
+                    ))
+                Local0 = Package (0x02) {}
+                If (!((Local2 == Zero) || (Local2 == 0xFFFFFFFF)))
+                {
+                    Local0 [Zero] = Local2
+                    Local0 [One] = ""
+                }
+
+                Return (Local0)
+            }
+        }
+    }
+
+    Scope (\_SB.PCI0)
+    {
+        Method (EDSM, 5, Serialized)
+        {
+            If ((Arg2 == Zero))
+            {
+                Local0 = Buffer (One)
+                    {
+                         0x00                                             // .
+                    }
+                If ((Arg0 != ToUUID ("e5c937d0-3553-4d7a-9117-ea4d19c3434d") /* Device Labeling Interface */))
+                {
+                    Return (Local0)
+                }
+
+                If ((Arg1 < 0x02))
+                {
+                    Return (Local0)
+                }
+
+                Local0 [Zero] = 0x81
+                Return (Local0)
+            }
+
+            If ((Arg2 == 0x07))
+            {
+                Local0 = Package (0x02)
+                    {
+                        Zero,
+                        ""
+                    }
+                Local1 = DerefOf (Arg4 [Zero])
+                Local0 [Zero] = Local1
+                Return (Local0)
+            }
+        }
+
+        Device (S00)
+        {
+            Name (_ADR, Zero)  // _ADR: Address
+        }
+
+        Device (S08)
+        {
+            Name (_ADR, 0x00010000)  // _ADR: Address
+        }
+
+        Device (S38)
+        {
+            Name (_ADR, 0x00070000)  // _ADR: Address
+            Device (S00)
+            {
+                Name (_ADR, Zero)  // _ADR: Address
+            }
+
+            Name (BSEL, One)
+            Scope (S00)
+            {
+                Name (ASUN, Zero)
+                Method (_DSM, 4, Serialized)  // _DSM: Device-Specific Method
+                {
+                    Local0 = Package (0x02)
+                        {
+                            Zero,
+                            Zero
+                        }
+                    Local0 [Zero] = BSEL /* \_SB_.PCI0.S38_.BSEL */
+                    Local0 [One] = ASUN /* \_SB_.PCI0.S38_.S00_.ASUN */
+                    Return (PDSM (Arg0, Arg1, Arg2, Arg3, Local0))
+                }
+
+                Name (_SUN, Zero)  // _SUN: Slot User Number
+                Method (_EJ0, 1, NotSerialized)  // _EJx: Eject Device, x=0-9
+                {
+                    PCEJ (BSEL, _SUN)
+                }
+            }
+
+            Method (DVNT, 2, NotSerialized)
+            {
+                If ((Arg0 & One))
+                {
+                    Notify (S00, Arg1)
+                }
+            }
+        }
+
+        Name (BSEL, Zero)
+        Scope (S00)
+        {
+            Name (ASUN, Zero)
+            Method (_DSM, 4, Serialized)  // _DSM: Device-Specific Method
+            {
+                Local0 = Package (0x02)
+                    {
+                        Zero,
+                        Zero
+                    }
+                Local0 [Zero] = BSEL /* \_SB_.PCI0.BSEL */
+                Local0 [One] = ASUN /* \_SB_.PCI0.S00_.ASUN */
+                Return (PDSM (Arg0, Arg1, Arg2, Arg3, Local0))
+            }
+
+            Name (_SUN, Zero)  // _SUN: Slot User Number
+            Method (_EJ0, 1, NotSerialized)  // _EJx: Eject Device, x=0-9
+            {
+                PCEJ (BSEL, _SUN)
+            }
+        }
+
+        Scope (S08)
+        {
+            Name (ASUN, One)
+            Method (_DSM, 4, Serialized)  // _DSM: Device-Specific Method
+            {
+                Local0 = Package (0x02)
+                    {
+                        Zero,
+                        Zero
+                    }
+                Local0 [Zero] = BSEL /* \_SB_.PCI0.BSEL */
+                Local0 [One] = ASUN /* \_SB_.PCI0.S08_.ASUN */
+                Return (PDSM (Arg0, Arg1, Arg2, Arg3, Local0))
+            }
+
+            Name (_SUN, One)  // _SUN: Slot User Number
+            Method (_EJ0, 1, NotSerialized)  // _EJx: Eject Device, x=0-9
+            {
+                PCEJ (BSEL, _SUN)
+            }
+        }
+
+        Method (DVNT, 2, NotSerialized)
+        {
+            If ((Arg0 & One))
+            {
+                Notify (S00, Arg1)
+            }
+
+            If ((Arg0 & 0x02))
+            {
+                Notify (S08, Arg1)
+            }
+        }
+
+        Device (PHPR)
+        {
+            Name (_HID, "PNP0A06" /* Generic Container Device */)  // _HID: Hardware ID
+            Name (_UID, "PCI Hotplug resources")  // _UID: Unique ID
+            Name (_STA, 0x0B)  // _STA: Status
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                IO (Decode16,
+                    0x0000,             // Range Minimum
+                    0x0000,             // Range Maximum
+                    0x01,               // Alignment
+                    0x18,               // Length
+                    )
+            })
+        }
+
+        Scope (S38)
+        {
+            Method (PCNT, 0, NotSerialized)
+            {
+                BNUM = One
+                DVNT (PCIU, One)
+                DVNT (PCID, 0x03)
+            }
+        }
+
+        Method (PCNT, 0, NotSerialized)
+        {
+            BNUM = Zero
+            DVNT (PCIU, One)
+            DVNT (PCID, 0x03)
+            ^S38.PCNT ()
+        }
+    }
+}
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 ---
- include/hw/acpi/pcihp.h |  1 +
- hw/acpi/pcihp.c         | 58 +++++++++++++++++++++++++++++++++++++++++
- hw/i386/acpi-build.c    | 58 -----------------------------------------
- 3 files changed, 59 insertions(+), 58 deletions(-)
+ tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+ tests/data/acpi/aarch64/virt/DSDT.acpipcihp | Bin 0 -> 6202 bytes
+ 2 files changed, 1 deletion(-)
 
-diff --git a/include/hw/acpi/pcihp.h b/include/hw/acpi/pcihp.h
-index 253ac6e483..f4fd44cb32 100644
---- a/include/hw/acpi/pcihp.h
-+++ b/include/hw/acpi/pcihp.h
-@@ -78,6 +78,7 @@ void build_acpi_pci_hotplug(Aml *table, AmlRegionSpace rs, uint64_t pcihp_addr);
- void build_append_pci_dsm_func0_common(Aml *ctx, Aml *retvar);
- void build_append_pcihp_resources(Aml *table,
-                                   uint64_t io_addr, uint64_t io_len);
-+bool build_append_notification_callback(Aml *parent_scope, const PCIBus *bus);
- 
- /* Called on reset */
- void acpi_pcihp_reset(AcpiPciHpState *s);
-diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
-index afa3ec5f4d..b64d06afc9 100644
---- a/hw/acpi/pcihp.c
-+++ b/hw/acpi/pcihp.c
-@@ -39,6 +39,7 @@
- #include "migration/vmstate.h"
- #include "qapi/error.h"
- #include "qom/qom-qobject.h"
-+#include "qobject/qnum.h"
- #include "trace.h"
- 
- #define ACPI_PCIHP_SIZE 0x0018
-@@ -703,6 +704,63 @@ void build_append_pcihp_resources(Aml *scope /* \\_SB.PCI0 */,
-     aml_append(scope, dev);
- }
- 
-+bool build_append_notification_callback(Aml *parent_scope, const PCIBus *bus)
-+{
-+    Aml *method;
-+    PCIBus *sec;
-+    QObject *bsel;
-+    int nr_notifiers = 0;
-+    GQueue *pcnt_bus_list = g_queue_new();
-+
-+    QLIST_FOREACH(sec, &bus->child, sibling) {
-+        Aml *br_scope = aml_scope("S%.02X", sec->parent_dev->devfn);
-+        if (pci_bus_is_root(sec)) {
-+            continue;
-+        }
-+        nr_notifiers = nr_notifiers +
-+                       build_append_notification_callback(br_scope, sec);
-+        /*
-+         * add new child scope to parent
-+         * and keep track of bus that have PCNT,
-+         * bus list is used later to call children PCNTs from this level PCNT
-+         */
-+        if (nr_notifiers) {
-+            g_queue_push_tail(pcnt_bus_list, sec);
-+            aml_append(parent_scope, br_scope);
-+        }
-+    }
-+
-+    /*
-+     * Append PCNT method to notify about events on local and child buses.
-+     * ps: hostbridge might not have hotplug (bsel) enabled but might have
-+     * child bridges that do have bsel.
-+     */
-+    method = aml_method("PCNT", 0, AML_NOTSERIALIZED);
-+
-+    /* If bus supports hotplug select it and notify about local events */
-+    bsel = object_property_get_qobject(OBJECT(bus), ACPI_PCIHP_PROP_BSEL, NULL);
-+    if (bsel) {
-+        uint64_t bsel_val = qnum_get_uint(qobject_to(QNum, bsel));
-+
-+        aml_append(method, aml_store(aml_int(bsel_val), aml_name("BNUM")));
-+        aml_append(method, aml_call2("DVNT", aml_name("PCIU"),
-+                                     aml_int(1))); /* Device Check */
-+        aml_append(method, aml_call2("DVNT", aml_name("PCID"),
-+                                     aml_int(3))); /* Eject Request */
-+        nr_notifiers++;
-+    }
-+
-+    /* Notify about child bus events in any case */
-+    while ((sec = g_queue_pop_head(pcnt_bus_list))) {
-+        aml_append(method, aml_name("^S%.02X.PCNT", sec->parent_dev->devfn));
-+    }
-+
-+    aml_append(parent_scope, method);
-+    qobject_unref(bsel);
-+    g_queue_free(pcnt_bus_list);
-+    return !!nr_notifiers;
-+}
-+
- const VMStateDescription vmstate_acpi_pcihp_pci_status = {
-     .name = "acpi_pcihp_pci_status",
-     .version_id = 1,
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 6ca2b34ef8..3275675e60 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -563,64 +563,6 @@ void build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus)
-     }
- }
- 
--static bool build_append_notification_callback(Aml *parent_scope,
--                                               const PCIBus *bus)
--{
--    Aml *method;
--    PCIBus *sec;
--    QObject *bsel;
--    int nr_notifiers = 0;
--    GQueue *pcnt_bus_list = g_queue_new();
--
--    QLIST_FOREACH(sec, &bus->child, sibling) {
--        Aml *br_scope = aml_scope("S%.02X", sec->parent_dev->devfn);
--        if (pci_bus_is_root(sec)) {
--            continue;
--        }
--        nr_notifiers = nr_notifiers +
--                       build_append_notification_callback(br_scope, sec);
--        /*
--         * add new child scope to parent
--         * and keep track of bus that have PCNT,
--         * bus list is used later to call children PCNTs from this level PCNT
--         */
--        if (nr_notifiers) {
--            g_queue_push_tail(pcnt_bus_list, sec);
--            aml_append(parent_scope, br_scope);
--        }
--    }
--
--    /*
--     * Append PCNT method to notify about events on local and child buses.
--     * ps: hostbridge might not have hotplug (bsel) enabled but might have
--     * child bridges that do have bsel.
--     */
--    method = aml_method("PCNT", 0, AML_NOTSERIALIZED);
--
--    /* If bus supports hotplug select it and notify about local events */
--    bsel = object_property_get_qobject(OBJECT(bus), ACPI_PCIHP_PROP_BSEL, NULL);
--    if (bsel) {
--        uint64_t bsel_val = qnum_get_uint(qobject_to(QNum, bsel));
--
--        aml_append(method, aml_store(aml_int(bsel_val), aml_name("BNUM")));
--        aml_append(method, aml_call2("DVNT", aml_name("PCIU"),
--                                     aml_int(1))); /* Device Check */
--        aml_append(method, aml_call2("DVNT", aml_name("PCID"),
--                                     aml_int(3))); /* Eject Request */
--        nr_notifiers++;
--    }
--
--    /* Notify about child bus events in any case */
--    while ((sec = g_queue_pop_head(pcnt_bus_list))) {
--        aml_append(method, aml_name("^S%.02X.PCNT", sec->parent_dev->devfn));
--    }
--
--    aml_append(parent_scope, method);
--    qobject_unref(bsel);
--    g_queue_free(pcnt_bus_list);
--    return !!nr_notifiers;
--}
--
- /*
-  * build_prt - Define interrupt routing rules
-  *
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dc3ab24d05..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,2 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/aarch64/virt/DSDT.acpipcihp",
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.acpipcihp b/tests/data/acpi/aarch64/virt/DSDT.acpipcihp
+index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..8d55a877a40cb4c4dffdc70378204e12d2261a75 100644
+GIT binary patch
+literal 6202
+zcmb`LOK;oQ6@U+^7e!GrCDWEH%a*2@Oqx!cQdVMn(o7nOlx;bZ%!+m#fI&%T;MR@<
+z3^B<RaDxDj2FSSC6l0@Bmnz^NQealI>#mEgyXhb3t||^m+4nTJivh}otou0MJs)|l
+zaYfTMx9^q!#6PvRj19ZidTbfBTCFAk0Di~6>hBHViEFo9XIM6LU6<UAj+t#5R!7(M
+z6_DJWjtS22uCdjdj177lx?ZnGW0GqO?0i`+zD)xH)1U(UE(wD00RS9>GhAKUHP%Az
+zFWS8wUDuaDa_#M=oRM6^XbK@BFXuvpm@Y+;&G@6iB&BYDu%+wzovURpBd->hL5vpH
+zSwuZtog#4A_Yfk3s7HtvX0gOW$RdvsXBbN?qrqjwc#I^&Xt0diTt=M7kQl~omT`y6
+zNbndk!??pTmbr{1kD)M(WtOqRWu$nF9K%>)8LM1|#AB!oW0hrm!eyj+i~_^>gkjX9
+z%|S~{mU#?~VccaI+%lz`WK!z04C7}kgI}i#FOL$#xW_X1b(-Zd$_(REmcg&n9FI|9
+z824EQzfPxkj75g=bC$ucQ<cZ4F^mT+gI}k49^(fLqscP(bz0ytK4cgzmcg&nX&&Pv
+zhG8&_C4QZ1JjM?hhRHJcbvnai{D@(+Sq8sOXL*btGmJHs!LQRIk8z7(tg{S$otAhE
+zondUS41S%?@fb@Cqr)=zbz0^zZZnKcmcg&nc^+e#VLW6R{5q}h7^@7U%QE<Ny1--H
+zWf(n%(cstVB9C#8Vf0xBzfP+>#(jpd6)`&T?&X2V>RY;@uU#HKtbv`+$(i7sb1j%3
+z9%5*pmUQibEjS@6N{65XiJ(5@pu)aO)Fx&X?H+={!w8$!bq*`+qpWBbQC5tyKH{*#
+zzAM(5WptvahODN(iua^rMy&>(`P%Csxvf_J@;=(zgM3x4SYSX0_Mrwk)WC#&_zfJw
+zXRr@|kl>hR4YsGdFXWR#CY~9O0iO+o--WKO*P)<bzbxYInKWWuU2i}k8&}3-0WhY1
+z*}|wLDCEMiAg*!M#7I4wD+ZBEmo1E(OcldOJ&F_|h@7kv3nC{O#Dd7l)L0l<k0N7X
+z<Ybk25IM;p9z;&2#>2=-^6@ZovPyz@CWvQ(dM3ii$tp?WnIxV`>Y1dTDdL$To+;{?
+zqMj1*l!&K9JtgXyCZ1{HnWmm;>M0XXnRv?7Q>LC7;+Y|y8S0s#o(l0)h^In573!HK
+zo>}6VrJh;pnIoP#;+dnKIqEq@Jg11~6!n~<o+|NFiKj|ERqB~1o_XS#r=EH0Ss<PT
+z;#r`c1?o9XJg150H1(XOo*MDgh^Iz9HR?G-JZFgK4E3C$p0mVrmUzxm&spkOB%Vd$
+zS)`st>RBS5CE{74o+auzM?B|<=N$E%qn>5rStg!k>RG0q^TczWc+OMLdFojqo)zL*
+zp`I1$xj;M@i01<JT%ewd#B-5&E>h1$>RBb8RpMEtp4Ew`rn*L}2^Tqh>w~{<!V}9z
+zN`85o1yKRK#`qz8T?A0@We#5Ic>HhtS%#yxzAl2G#KIQ9IG8@Z4<Nw1kC~X@ItgZs
+z!%57A{l}nnQ|^{+#NQo(VeZyP{lxh}ep*(Y-rpPls#YHSarb5OFQ5MHSMQGGxMA)t
+zy*rX6!`yB7_~E_s<VA0!o}C{GuQ5CrtB<D7&V%8wPsI`6!=67YVHcw67f0GpT+{Bw
+zM<0Z1{&nTMf7o|^+xw>Y&)(d(MsJipe+C!%m>}Q>IKy6i(6*VwjS;-U!WUl+S%1$w
+zxVz)=xQcg~xm5g)Z^RyCp4`HBZtHE+4c|S4FWl;QNZRR`+4Z(b4wNzBW*B<X9<<j%
+z0g%#i+<BA1rqQ<B-J13=;kF-br+sXBBlY~1C*$Gdt+hL7$tR<G*r9@~I@g~3G={6=
+zd9Bqo9*)OMhh_A)of}LC&TxivNC{I74~j-~gj3DgKm}pWiDlT^n4OZACFhNbO~W!e
+zJ2lJbm^J6bZg0AvNH~t!W7BBq?ai8V((3mHps15jY#OcpPOoNl%*QoHz&t>^ZW--O
+z(YY4p?H}L_|5!K#q&PRQ`vSC&n;r8pZx*tA{P3c=o@UCHY4@@tGkN|De0<#AsC>q+
+ziwkd*`op0tUU)w2`MAher_TYtI(;s{(^2{C_4!jcf2ssE|9Vf@d%bro$SK(K_f9>4
+z3vaY?{!C8&cc5PoMO^cnt7!iz2KZSx^#r)^)CV`hg2B72JxsKNjF-Px!t$Fahf0t`
+zAt6E*JU<Y)Owbu-Y+ZLHw`mT*8BW>yYS>V4i#x+L$!=Wrq=3wqT6ViDs9W&>(X@B^
+zpxwlMruc=p2;liRArQmCKn?Hx!QrzbPjZ9#1-HGa3;2+6F7{~!^HG0W9A#b|2=Ers
+zhrvSd|6VBIt-3+t!uL#E;3ZytFY%G`>OdCJV%0r#hMRF~!x~)es;0gi?SISY)HXhU
+z=|BJS*R?P9Uwr=M7oY9FU|yOJ?0i<1*Moo2Lg^UP>-b!>D(+tJ1>6<5IBq>5`eMp4
+R?PfR*|6}}@w~&H!{sU733QPb1
+
+literal 0
+HcmV?d00001
+
 -- 
 2.49.0
 
