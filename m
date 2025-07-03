@@ -4,62 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BD8BC77B7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7FC7C83030
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 12:56:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXJLv-0005sr-P4; Thu, 03 Jul 2025 08:47:47 -0400
+	id 1uXJSQ-0007Zx-Kk; Thu, 03 Jul 2025 08:54:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uXJLg-0005Tt-PG; Thu, 03 Jul 2025 08:47:33 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uXJLc-0006ni-KU; Thu, 03 Jul 2025 08:47:32 -0400
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c10:4a1:0:640:2691:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 4EDBA60CC7;
- Thu,  3 Jul 2025 15:47:19 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:73d::1:28])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id HlbMgQ0FgSw0-5XJ9sAkD; Thu, 03 Jul 2025 15:47:18 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1751546838;
- bh=AySAxDUiU1PmP0dJyXSDIuLXy0LWQcMASwNWclWRNw0=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=053XnnZatYaIcRJFccCO9TtUVqEnfOAGV2pA+1XWPfAbH2HwWgnoH++qb1z01APne
- jGMFoKlebSnpC//1xvI+nRcXWboRfrGiFiHKAoGUsbFL9Tgv2cYLrUEDNKhdNhpbTr
- NWvzerERgTnG7Kxrb3EtYuyBvPRKpq8nbMhrvndw=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: qemu-devel@nongnu.org,
-	mst@redhat.com
-Cc: qemu-block@nongnu.org, fam@euphon.net, pbonzini@redhat.com,
- jasowang@redhat.com, hreitz@redhat.com, kwolf@redhat.com,
- sgarzare@redhat.com, raphael@enfabrica.net,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH 1/4] vhost: introduce
- vhost_ops->vhost_set_vring_enable_supported method
-Date: Thu,  3 Jul 2025 15:47:09 +0300
-Message-ID: <20250703124713.2530079-2-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250703124713.2530079-1-vsementsov@yandex-team.ru>
-References: <20250703124713.2530079-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uXJSN-0007MH-H7
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:54:27 -0400
+Received: from mail-qk1-x734.google.com ([2607:f8b0:4864:20::734])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uXJSJ-0000UF-T9
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:54:26 -0400
+Received: by mail-qk1-x734.google.com with SMTP id
+ af79cd13be357-7d3cc0017fdso605744885a.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 05:54:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1751547262; x=1752152062; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tkfBzDpddJr9lZn50dau+4PajXSOU4T2a0a2JU/cuOI=;
+ b=J8clbtbxOER8u6aAnMLkoLfEz1f5m4+/+xThNY9SD3RyoHMIYjHj2fuj1XJ8zde5Xl
+ Uqp8s7uNBc8+bluLKRSAWh0IBc4Gl/uJPD1oX+qFdA2SMluoHPyd13R0/IZJnjYzQ+zV
+ Lc6CDvvQ9Jdj/tfgDA7XHJwZ7nwkV7BjYTKsYR/5kADTsqc5CJELmYCUsRRC/bjsJ6ke
+ ZWpe6ZiGKxkzopTuDL+qYuxtADxwXaRTOfICoc9uNwuUIHg8KcqikthVfxKBv3HuWzpA
+ 7zinLd9HeXcKRNbBcRGLg6MAn708HmgdVZUvl7aSaGSHKU4QPNnW8r9ivSycXD0TgZI6
+ vxIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751547262; x=1752152062;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tkfBzDpddJr9lZn50dau+4PajXSOU4T2a0a2JU/cuOI=;
+ b=oxAAJId/ATjlGpPTEKQC/kdVUeGBRRzGOhG/b4pgaDZKTWSvnzKWDgVtShnHnBo5JM
+ Hh8zvplhphpArCzkPx3z5AmynfEtfBEaWkM3ZDrrmyFzmwj7G1S4DxY/Rly3mbkc6Ldc
+ qutrNhmj6LtEHzf0k51ruJmlvMwdI8PL+02kkvNwKyfNOom7TSpObXLF3f44N0xRMtCz
+ nDVRn9x/uPS8gQzK6ODeOB0ORBvnMsPogn0CvrAngLwn4wvPkDCAqUuiW0297+ECqTW7
+ EB9t9yEwAhlIgN4/yr+GYHX40uoFwr1IC1ruMMqNysAGzgxC8d+E5Fj6kKDz2GkQWTcn
+ kO9A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUentVwpU4EkfvgerWWHqL6cj1iRwXX+tZhJ2nSsr0CO8p1BYCdSx+j5PbkLfjFQXdykwThUoZp7qus@nongnu.org
+X-Gm-Message-State: AOJu0YxXKSbF4eThuTNnc6RyruQdW1lErrAdmMrDApekFsGDjbLyJoHB
+ qLSzIVyLUGR11PwcJdtn3aiRvROoCt/sr9TQASWmbX8IdWOcoRzFcvwUqR1QFDh7ojA=
+X-Gm-Gg: ASbGncsqAoUUdDWyb6qX8ipcX0IZKMdAkW/xz7YXOdAlxCjB66ybfrVd8ckaEp0VhtY
+ 7oLqyVo4F0j48bt7hPb/hpRe05yk2wmHpDIH9MMHF50KpYcD6psC53KSFVejGRQIMT1s3CcyRgt
+ wl4fGSYK19mP+dXlMW5noTAXUbQqd4T8mH7zq+DSnM+2h0XOJG18f6ssu/6+FPMJgjB3c2prGz4
+ iLoyDJ1MPZY7aiTULjbUJpx7ebPI3kuG0Nscx7ybSDI4e/9rJwbHsLzHyTcPJj68+u7CM2U9pSG
+ rNKp49kpDuYS9ezcLmLKs1g0jDIfcu+9As/Jc8MRX6a3zuFxzuNnktuLS4aTMVZ0f4ekpLKTSl9
+ ZTg==
+X-Google-Smtp-Source: AGHT+IEBgS/H5ia4+tdim/wpP8Iw2YZ5rqmDuahfJJaU627vIX6VdZnGcDy+wGvktqTqlPDplnqYKw==
+X-Received: by 2002:a05:620a:7003:b0:7ce:d04a:83c2 with SMTP id
+ af79cd13be357-7d5d14a0209mr523900185a.50.1751547261741; 
+ Thu, 03 Jul 2025 05:54:21 -0700 (PDT)
+Received: from [192.168.68.110] ([189.110.107.157])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7d443204ffasm1108236185a.70.2025.07.03.05.54.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Jul 2025 05:54:20 -0700 (PDT)
+Message-ID: <73a34e0e-0451-4f5d-98b8-c0af00c0ff3a@ventanamicro.com>
+Date: Thu, 3 Jul 2025 09:54:17 -0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 02/11] target/riscv: Add cpu_set_exception_base
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>
+References: <20250703104925.112688-1-djordje.todorovic@htecgroup.com>
+ <20250703104925.112688-3-djordje.todorovic@htecgroup.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20250703104925.112688-3-djordje.todorovic@htecgroup.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::734;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-qk1-x734.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,88 +107,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove vhost-user specific hack from generic code.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- hw/virtio/vhost-user.c            |  8 ++++++++
- hw/virtio/vhost.c                 | 15 ++++++---------
- include/hw/virtio/vhost-backend.h |  2 ++
- 3 files changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 1e1d6b0d6e0..1b2879a90cc 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -1230,6 +1230,12 @@ static int vhost_user_set_vring_base(struct vhost_dev *dev,
-     return vhost_set_vring(dev, VHOST_USER_SET_VRING_BASE, ring, false);
- }
- 
-+static bool vhost_user_set_vring_enable_supported(struct vhost_dev *dev)
-+{
-+    return virtio_has_feature(dev->backend_features,
-+                              VHOST_USER_F_PROTOCOL_FEATURES);
-+}
-+
- static int vhost_user_set_vring_enable(struct vhost_dev *dev, int enable)
- {
-     int i;
-@@ -3032,6 +3038,8 @@ const VhostOps user_ops = {
-         .vhost_reset_device = vhost_user_reset_device,
-         .vhost_get_vq_index = vhost_user_get_vq_index,
-         .vhost_set_vring_enable = vhost_user_set_vring_enable,
-+        .vhost_set_vring_enable_supported =
-+            vhost_user_set_vring_enable_supported,
-         .vhost_requires_shm_log = vhost_user_requires_shm_log,
-         .vhost_migration_done = vhost_user_migration_done,
-         .vhost_net_set_mtu = vhost_user_net_set_mtu,
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index fc438537048..429fad07ded 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1988,15 +1988,12 @@ static int vhost_dev_set_vring_enable(struct vhost_dev *hdev, int enable)
-         return 0;
-     }
- 
--    /*
--     * For vhost-user devices, if VHOST_USER_F_PROTOCOL_FEATURES has not
--     * been negotiated, the rings start directly in the enabled state, and
--     * .vhost_set_vring_enable callback will fail since
--     * VHOST_USER_SET_VRING_ENABLE is not supported.
--     */
--    if (hdev->vhost_ops->backend_type == VHOST_BACKEND_TYPE_USER &&
--        !virtio_has_feature(hdev->backend_features,
--                            VHOST_USER_F_PROTOCOL_FEATURES)) {
-+    if (hdev->vhost_ops->vhost_set_vring_enable_supported &&
-+        !hdev->vhost_ops->vhost_set_vring_enable_supported(hdev)) {
-+        /*
-+         * This means, that rings are always enabled, and disable/enable
-+         * API is not supported.
-+         */
-         return 0;
-     }
- 
-diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
-index d6df209a2f0..f65fa26298e 100644
---- a/include/hw/virtio/vhost-backend.h
-+++ b/include/hw/virtio/vhost-backend.h
-@@ -105,6 +105,7 @@ typedef int (*vhost_reset_device_op)(struct vhost_dev *dev);
- typedef int (*vhost_get_vq_index_op)(struct vhost_dev *dev, int idx);
- typedef int (*vhost_set_vring_enable_op)(struct vhost_dev *dev,
-                                          int enable);
-+typedef bool (*vhost_set_vring_enable_supported_op)(struct vhost_dev *dev);
- typedef bool (*vhost_requires_shm_log_op)(struct vhost_dev *dev);
- typedef int (*vhost_migration_done_op)(struct vhost_dev *dev,
-                                        char *mac_addr);
-@@ -193,6 +194,7 @@ typedef struct VhostOps {
-     vhost_reset_device_op vhost_reset_device;
-     vhost_get_vq_index_op vhost_get_vq_index;
-     vhost_set_vring_enable_op vhost_set_vring_enable;
-+    vhost_set_vring_enable_supported_op vhost_set_vring_enable_supported;
-     vhost_requires_shm_log_op vhost_requires_shm_log;
-     vhost_migration_done_op vhost_migration_done;
-     vhost_vsock_set_guest_cid_op vhost_vsock_set_guest_cid;
--- 
-2.48.1
+On 7/3/25 7:49 AM, Djordje Todorovic wrote:
+> Add a new function, so we can change reset vector from platforms
+> during runtime.
+> 
+> Signed-off-by: Chao-ying Fu <cfu@mips.com>
+> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> ---
+>   target/riscv/cpu.c | 13 +++++++++++++
+>   target/riscv/cpu.h |  4 ++++
+>   2 files changed, 17 insertions(+)
+> 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 629ac37501..e584bdc5ac 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -73,6 +73,19 @@ bool riscv_cpu_option_set(const char *optname)
+>       return g_hash_table_contains(general_user_opts, optname);
+>   }
+>   
+> +#ifndef CONFIG_USER_ONLY
+> +void cpu_set_exception_base(int vp_index, target_ulong address)
+> +{
+> +    CPUState *cpu_state = qemu_get_cpu(vp_index);
+> +    if (cpu_state == NULL) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "cpu_set_exception_base: invalid vp_index: %u",
+> +                      vp_index);
+> +    }
+> +    RISCVCPU *vp = RISCV_CPU(cpu_state);
+> +    vp->env.resetvec = address;
+> +}
+> +#endif
+> +
+
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+>   static void riscv_cpu_cfg_merge(RISCVCPUConfig *dest, const RISCVCPUConfig *src)
+>   {
+>   #define BOOL_FIELD(x) dest->x |= src->x;
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 229ade9ed9..fba0b0506b 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -656,6 +656,10 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
+>   target_ulong riscv_cpu_get_fflags(CPURISCVState *env);
+>   void riscv_cpu_set_fflags(CPURISCVState *env, target_ulong);
+>   
+> +#ifndef CONFIG_USER_ONLY
+> +void cpu_set_exception_base(int vp_index, target_ulong address);
+> +#endif
+> +
+>   FIELD(TB_FLAGS, MEM_IDX, 0, 3)
+>   FIELD(TB_FLAGS, FS, 3, 2)
+>   /* Vector flags */
 
 
