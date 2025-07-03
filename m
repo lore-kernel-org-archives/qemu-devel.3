@@ -4,80 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1660C83F03
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 13:53:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69DDDC77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 13:53:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXKMb-0006FS-LG; Thu, 03 Jul 2025 09:52:33 -0400
+	id 1uXKMu-0006NX-Rv; Thu, 03 Jul 2025 09:52:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXKMa-0006ET-Mk
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 09:52:32 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXKMU-0005uz-Qg
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 09:52:32 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-70e77831d68so59685847b3.2
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 06:52:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751550743; x=1752155543; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=fiEXJuA4jGOdMWH0N2+Dj43mP+EiUIcu2HB9n8CqSn8=;
- b=H/8IUggT2o8ARyW35udVe6GxCPY6Kr3zZSfAWXUIa2mPoFrLhv+XSl51QIiuwgsajD
- atikJTruzORGI4gkRn9C6o0QOtoaOlq9uIUPA+pT9gqHOR3sm5U63PRAzVBHR2M3pyoP
- kaCfTuIRDaZ2QUd+UyHapHgqdYC2lah4qQMm1K2H/3R0MGbX5u0jr/zZeRbSh2uLpNAR
- gya76Dk7SPwVjndd9hSx+Xk5kWLetmW6RZMprWqvDDJdsYPVwtR4/VW3atpoMZ1lmvjb
- uFZIYNHxvhAVPl4a9bqGn+kPhl0X0xvD+qn7tjE0dFJdMKtMLqYiXm0iFqZ7tVgO3g9r
- d20w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751550743; x=1752155543;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=fiEXJuA4jGOdMWH0N2+Dj43mP+EiUIcu2HB9n8CqSn8=;
- b=tp0uq7r6IV2I7EEE6NIX5GyNonfOIBr0cruitJE0T4qZlgoRuhGlJ9TuD+S5sv5qpT
- 7ytvPHdUv1IhrMnGyuUlOGcWDdTo+ppmjXmp3DKPhNyfE8popqwNfGzekpeqUuJ1TQ/n
- 6ZelkdF4hKl3jyn7BUq78Dq1qmuORWGI+5ddMoO/E9G1wcxDxQ2pqsYdh9gnbaH1Dc6R
- KIPqjIO24Cy9YgkUlNi0NjKy6neasYYpRpRNhk7QYDkreGsTZAvwAjqD4xl/Rl2RWWsj
- SiTBPtBDOMLyvgRpAHee6aYFyYEJLGzAxnrkg68inJEMxTgZJapXOrkRukvrh1Uf3YLm
- xBYA==
-X-Gm-Message-State: AOJu0YxgtlOVehvRy9FBZlsYeNev+bRMusHN70S/bG7t1QhAj6WfLk3c
- UJKsxjnefPJZ5Xyd6iSH3owonRSeKrF3oms3DVrkmljCjcACsYfzgHB1MWTOrhd0e2KMhz1V6z0
- mQ6pCFxfOcoDUd/x3mPTbjBVicTGd8Rtwc1Zbdtn20sL9AzLOYFtS
-X-Gm-Gg: ASbGnctcdG7yHPHSW741+nuUdNay1rhgUaDrqpEIJeth1FB4/FUa1ayyR6IQdwCa9Xn
- 6mzNFfLP7CvUjJkCW3kqwKk3b0ot/mrbRD733D/mvO0Em8LMFELHz1Tji/GKt/Kb7SsiCkL81IV
- Z6N53Ij6mV2C6KzvEA1F/FNUq6qcrQSX7+VjQPmZfwT2+I
-X-Google-Smtp-Source: AGHT+IGtal3C9FUClHazLkbXCOqI0Q0w4ePiS6k9QSy3omS/tvmvxRqUzb6yM4eE/PtUO4++lPRByg+fMaoPPuY1Tqk=
-X-Received: by 2002:a05:690c:6809:b0:702:52af:7168 with SMTP id
- 00721157ae682-71658fd79camr55732987b3.2.1751550743024; Thu, 03 Jul 2025
- 06:52:23 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250625214633.939709-1-pierrick.bouvier@linaro.org>
-In-Reply-To: <20250625214633.939709-1-pierrick.bouvier@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 3 Jul 2025 14:52:09 +0100
-X-Gm-Features: Ac12FXwtBaAa5Xmx9bpVAg5o_RaKgd248KJnYQ9QDeU9UFplRUNf-S4lARNe4y8
-Message-ID: <CAFEAcA-_JKVX9-uN_AgNcq3G3nzVk4e78qHymAgAy4wjUyh2DA@mail.gmail.com>
-Subject: Re: [PATCH] tests/functional: Test device passthrough on aarch64
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, thuth@redhat.com, smostafa@google.com, 
- berrange@redhat.com, jean-philippe@linaro.org, eric.auger@redhat.com, 
- alex.bennee@linaro.org
+ (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
+ id 1uXKMs-0006MG-9G
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 09:52:50 -0400
+Received: from smtp-out-60.livemail.co.uk ([213.171.216.60]
+ helo=dkim.livemail.co.uk)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
+ id 1uXKMk-0005yF-IF
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 09:52:47 -0400
+Received: from smtp.livemail.co.uk (unknown [10.44.132.83])
+ by dkim.livemail.co.uk (Postfix) with ESMTPS id B849BA00D2;
+ Thu,  3 Jul 2025 14:52:37 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=randomman.co.uk;
+ s=livemail2; t=1751550757;
+ bh=E15LJTjGHZP0XyS/tEeUF10rAXEIoLtg64+AjJ3rt+Y=;
+ h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+ b=b3QWZ7Bx+XTXA9qUUssYqoyAgUkny/kQm7DGWXk18+j7YocRITV3ey2HmOwz8Gqnj
+ TcsX86JSLzFlH6AC6npm1I5dZ4qLm9xYVm9jEs6fuDjF4vYFzJGUj0b+8TfSsEHTYk
+ EKfDWJPtHmYEn28xL/bauSUffLlRBZTy1mrxbtyg=
+Received: from [172.22.54.5] (unknown [145.40.191.116])
+ (Authenticated sender: roy.hopkins@randomman.co.uk)
+ by smtp.livemail.co.uk (Postfix) with ESMTPSA id 3270F40261;
+ Thu,  3 Jul 2025 14:52:33 +0100 (BST)
+Message-ID: <b4800e3cc61e4531d96e7c4a2bb2f0841f98c98c.camel@randomman.co.uk>
+Subject: Re: [PATCH v8 13/16] backends/igvm: Process initialization sections
+ in IGVM file
+From: Roy Hopkins <roy.hopkins@randomman.co.uk>
+To: Ani Sinha <anisinha@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, "Daniel P .
+ Berrange" <berrange@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>, Eduardo
+ Habkost <eduardo@habkost.net>, Alistair Francis <alistair@alistair23.me>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, Igor
+ Mammedov <imammedo@redhat.com>, Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>, Gerd Hoffman <kraxel@redhat.com>,
+ Pankaj Gupta <pankaj.gupta@amd.com>, Joerg Roedel <joro@8bytes.org>
+Date: Thu, 03 Jul 2025 14:52:32 +0100
+In-Reply-To: <CAK3XEhPJncqwL6V6KOhOGLHOjSy-9OQTRWyTPQBP0NsHeVxr6A@mail.gmail.com>
+References: <cover.1749820158.git.roy.hopkins@randomman.co.uk>
+ <12d0e71fd1b37ae132f78498d497cb72b90da5d1.1749820158.git.roy.hopkins@randomman.co.uk>
+ <CAK3XEhPJncqwL6V6KOhOGLHOjSy-9OQTRWyTPQBP0NsHeVxr6A@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.4-0ubuntu2 
+MIME-Version: 1.0
+Received-SPF: pass client-ip=213.171.216.60;
+ envelope-from=roy.hopkins@randomman.co.uk; helo=dkim.livemail.co.uk
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,27 +84,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 25 Jun 2025 at 22:47, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
-> This test allows to document and exercise device passthrough, using a
-> nested virtual machine setup. Two disks are generated and passed to the
-> VM, and their content is compared to original images.
->
-> Guest and nested guests commands are executed through two scripts, and
-> init used in both system is configured to trigger a kernel panic in case
-> any command fails. This is more reliable and readable than executing all
-> commands through prompt injection and trying to guess what failed.
->
-> Initially, this test was supposed to test smmuv3 nested emulation
-> (combining both stages of translation), but I could not find any setup
-> (kernel + vmm) able to do the passthrough correctly, despite several
-> tries.
->
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On Fri, 2025-06-27 at 16:58 +0530, Ani Sinha wrote:
+> On Fri, Jun 13, 2025 at 8:52=E2=80=AFPM Roy Hopkins <roy.hopkins@randomma=
+n.co.uk> wrote:
+> >=20
+> > The initialization sections in IGVM files contain configuration that
+> > should be applied to the guest platform before it is started. This
+> > includes guest policy and other information that can affect the securit=
+y
+> > level and the startup measurement of a guest.
+> >=20
+> > This commit introduces handling of the initialization sections during
+> > processing of the IGVM file.
+> >=20
+> > Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
+> > Acked-by: Michael S. Tsirkin <mst@redhat.com>
+> > Acked-by: Gerd Hoffman <kraxel@redhat.com>
+> > Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+> > ---
+> > =C2=A0backends/igvm.c | 21 +++++++++++++++++++++
+> > =C2=A01 file changed, 21 insertions(+)
+> >=20
+> > diff --git a/backends/igvm.c b/backends/igvm.c
+> > index 2a31021d44..ebdb4594d1 100644
+> > --- a/backends/igvm.c
+> > +++ b/backends/igvm.c
+> > @@ -786,6 +786,27 @@ int qigvm_process_file(IgvmCfg *cfg, ConfidentialG=
+uestSupport *cgs,
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > =C2=A0=C2=A0=C2=A0=C2=A0 }
+> >=20
+> > +=C2=A0=C2=A0=C2=A0 header_count =3D
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 igvm_header_count(ctx.file,=
+ IGVM_HEADER_SECTION_INITIALIZATION);
+> > +=C2=A0=C2=A0=C2=A0 if (header_count < 0) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error_setg(
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 err=
+p,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "In=
+valid initialization header count in IGVM file. Error code: %X",
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hea=
+der_count);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 goto cleanup_parameters;
+> > +=C2=A0=C2=A0=C2=A0 }
+> > +
+> > +=C2=A0=C2=A0=C2=A0 for (ctx.current_header_index =3D 0;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ctx.current_header_in=
+dex < (unsigned)header_count;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ctx.current_header_in=
+dex++) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 IgvmVariableHeaderType type=
+ =3D
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 igv=
+m_get_header_type(ctx.file, IGVM_HEADER_SECTION_INITIALIZATION,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ctx.current_header_index);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (qigvm_handler(&ctx, typ=
+e, errp) < 0) {
+>=20
+> So the next patch, patch #14 actually defines the handler.
+>=20
+> @@ -92,6 +135,10 @@ static struct QIGVMHandler handlers[] =3D {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qigvm_directive_environment_info },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { IGVM_VHT_REQUIRED_MEMORY, IGVM_HEADER_SECTION_=
+DIRECTIVE,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qigvm_directive_required_memory },
+> +=C2=A0=C2=A0=C2=A0 { IGVM_VHT_SNP_ID_BLOCK, IGVM_HEADER_SECTION_DIRECTIV=
+E,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qigvm_directive_snp_id_block },
+> +=C2=A0=C2=A0=C2=A0 { IGVM_VHT_GUEST_POLICY, IGVM_HEADER_SECTION_INITIALI=
+ZATION,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qigvm_initialization_guest_policy },
+> =C2=A0};
+>=20
+>=20
+> So I think patch #14 should come before this patch in the series.
+>=20
 
-Whoops, I forgot to send the usual "applied" email, but I applied
-this to target-arm.next and it's now in upstream git.
+This was deliberately placed before #14 as it introduces the mechanism for =
+processing
+initialization sections, allowing future patches to then add sections as ne=
+cessary.
+Patch #14 then uses this new capability to handle guest policy. This patch =
+does
+compile successfully without patch #14 being applied.=20
 
--- PMM
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 got=
+o cleanup_parameters;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > +=C2=A0=C2=A0=C2=A0 }
+> > +
+> > =C2=A0=C2=A0=C2=A0=C2=A0 /*
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * Contiguous pages of data with compatib=
+le flags are grouped together in
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * order to reduce the number of memory r=
+egions we create. Make sure the
+> > --
+> > 2.43.0
+> >=20
+>=20
+
 
