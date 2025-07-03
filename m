@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96C61C83F03
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 15:43:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC86EC83F03
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 15:55:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXM5S-0004wJ-7C; Thu, 03 Jul 2025 11:42:58 -0400
+	id 1uXMGW-0008Bt-JC; Thu, 03 Jul 2025 11:54:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXM5Q-0004vi-80
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 11:42:56 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uXMGD-0008A1-4i
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 11:54:06 -0400
+Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXM5N-00052l-Uz
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 11:42:55 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-453647147c6so87341795e9.2
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 08:42:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uXMG9-0000LU-VE
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 11:54:04 -0400
+Received: by mail-oi1-x229.google.com with SMTP id
+ 5614622812f47-40b859461easo67260b6e.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 08:54:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751557371; x=1752162171; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751558039; x=1752162839; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ntlonvLeCaKhhtUx/ayDLB+iJ8zvvDDgN8XCnp0Kqf8=;
- b=l7sqYBrmqMiMTh5/fNIPde2pUCwRmtdh/obMyag4yrUOehWls37rOgvzeZrjaGfSkR
- /O/7W97et2TLKcISDRvW2aeT3Pmh3K3ZqbCt+ziAmzzvA+WZl3XQId4yP3CxdN5WlZQ9
- KEExS8Cj+8f0JPR9GNlqsdizDMui/ZXaPp+0NEXMCj7Fmb6CD7pnd+D4h76xgqZBUeMa
- evlRT3fekFOtE1mvjOlTQFRTix3GLYJ7zDQTpGQ+CjQ45jRmFFB6/1ZZsLrdwEn1TTUX
- XiAKzJ6tZBT3L9BR5SyqZB6t3tmjGz3dp9NsVPZWgIweYOLr6RLKKcqHdTxpNKvsa53v
- yHoQ==
+ bh=NF+no9p+3maMSsijBYB32Ph41608BK9I+kmKZxnFeOY=;
+ b=DBTUfzOwPzDPl3AyVODM7pi3rvV4xfVwmxtJwIad2t+RbZdYxb0IiTtMAly4f+Swg2
+ EeWB88ySp6Eza9UkztmMP++pfvTSElmd1cna5+NLhw5GZ4wYqO9bd4Hg/6MFtP1QIGHj
+ zCSE1fZOIuWZJ4eb/ro6tq/4WcoQBFQsPMnPaKVY1rpTd5M0bnmrMYElSOHVyf4i0qqt
+ 4tEz936xNWjsZjoXih8BcpZAV3NwmcQ7zENdCT3PkhSvNaF4kMOF7/ByNRPwV8DlATGZ
+ lA6B3mWf3IbFKS+6l9DkbUbKAL1bj6iVoYhBnwfX0IROkruqtBTdWhBnIJIlQNvHdhmN
+ UzZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751557371; x=1752162171;
+ d=1e100.net; s=20230601; t=1751558039; x=1752162839;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ntlonvLeCaKhhtUx/ayDLB+iJ8zvvDDgN8XCnp0Kqf8=;
- b=WfsGmTRfob54eLubmT9txqSo5xIbItgshUXvl3lUcotpnIqXz9azIWX2MG6MOg/goW
- 8Qn7fB6wUEBgd9qhjr7yHhOh2lDE6NzhnLI5hF0XU8WzCP4Y2gP9hiEo4JvVDqVPitLw
- tM1CZDY/ymaKVWPm62WuFruRgBD5MwOqnA3xUdfgRP9dSbzjr/F10rpvypa8fvgQel4N
- 4Jg49NXuJGymCNZ9JsHJL+5T9f2xYFIo7Is+sFHk3NxqZCq7k1AER2sVy2VAe4LiSlt9
- H98qY/8uWHQWU2mJ26vH/v5FmZxqAhaRz9EIqde9KwkwB3Wp2azdv/RuZ1a2HR5h2Th4
- 2Ynw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXRz+P8LfmADRw4bnMSIA9YnBwV8Rpcgm3d6D8lsQqtw72/6UIIw9Ob4qmX2Y1wR7kGOXwxK9ORZmzX@nongnu.org
-X-Gm-Message-State: AOJu0Yzbm+I0c5gqxdk97yOyrlQRbIVeWEs/wNVU5hREVWc5ROWkb2vH
- s3v0P7GiDyLCF6f1Ig7YW/iu1JHvQxur4RQw8sD9fqq9lXa6q3yZt4fJV9sdHTJ0zlY=
-X-Gm-Gg: ASbGnctsE/mRXI8LUVdR4xxLV1QOArl98NfynoesDqJvcxK4VdNVtFnRuzpkRvYEp9H
- h/d92Qvta2XWAFr6ROGFbNROoPRwZ3H0w88KZPcUfA5KPVbPQrwB2kJcsliD8EX5xCJuG2704xL
- FmNnNWmG1WUwyTmi+/IVEP0/iaX296nwkQEHdauXHJGX6i+z0qdzW7xXqStL7CDgMofaGp7Frdv
- bXFNvvzmxEZbgmxwlDTnZUQ5y0LtyOvA1/xPCpIFbnr+KFOJ3NB5yi6x1ECGJ1m4fv+7z9QX4pf
- c0RW1MkMCJyKGUkvP8LZr9J9Yv2gRLIx3Psv8tWwk3wJOJ2J9LexdTU9sKb924f7wpVMzBpsgY6
- ONTMOPPc+kNBH0IbI36GFY9tlBKV3AZmd/R0GmD2i
-X-Google-Smtp-Source: AGHT+IHqAxkDw4k5ySFbRhB9iq50aBVHRWqsssUVzLGsjgyA1DuPYmM0JUsTGYsCZmkxBxuldqrp5A==
-X-Received: by 2002:a05:600c:1909:b0:451:833f:483c with SMTP id
- 5b1f17b1804b1-454a3c0740dmr72460755e9.7.1751557371101; 
- Thu, 03 Jul 2025 08:42:51 -0700 (PDT)
-Received: from [192.168.69.218] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454a9be0bacsm29120195e9.32.2025.07.03.08.42.50
+ bh=NF+no9p+3maMSsijBYB32Ph41608BK9I+kmKZxnFeOY=;
+ b=UKzQYZ/IJ/A0xu048SjDhb/Am4a1ssR6srHxwwyiVYg38gOivRsdTbXJjsFJuSnyfi
+ fAoc1RTRvSiI6L+ocYU9V8C2pm3umg5zwXhfv7ikFuBNszk5d8Wtx/oF05VCg2AnVNEF
+ nNJ1VTOdhgOCp2/cezhI+Ih8S9B2/A/f29ZSryJZZi+yGZJVOke0iFBR910OZmBZDP9h
+ /bSb9wzxhjErn9fkOybg560mwa3c3rMjf4JwbFmAn/MSjhaJxfTmVSvrPRSIPqC1AhK0
+ bxU9NtfV5JVBu5WZcMJux4fH+K0+d5+xmKhRDmQjV9hNdR2KtVJxxNKgVVjFnL2/v5Q3
+ qaYw==
+X-Gm-Message-State: AOJu0YxqmJ2DjpM3d+vDTbQ9sjKr7tup1I/9aPCIjJ5cofR/LU0jXdXw
+ 9dEpoMTHPSr5bxffwwuIjrAOjxl8qCJdP+SbZd1VbRfnE+yeo4IJmJPz+tqdUDtRvio=
+X-Gm-Gg: ASbGncuboK9lmlkKFsIjZXbxzxzEQd/6tRcMUdjjDhQ+e+G9PUT8ILizn7zn9RYH0mQ
+ Kuu/Z+LTpfzWLiluq463z8kkcsGcxKCY7t6BxpO9ljG9Phogjz15/pjQPxmM930oR9EzJiInrYp
+ WMKREtpC+MgJPXLi9Bh82P1TdHuOZmL7BD3SZhKq6yAuNQ0ghUdsSTDLguHBmgbc1Q5Zs5p0Rg/
+ RDA735AUxa+ZciHn4pckdKOb+Ov9+6WMg4Ss9Q+9Xg0GBwSj4qK+HvfO+aZDsGUliSOBtLRo2Dk
+ hEy9OnuoR3yZueOym6IpAlIH0h+P1Tri4Nlpc8sGmg8J46YxRygHlJvu0zZfi/K99Nv1dQnu/S5
+ d
+X-Google-Smtp-Source: AGHT+IHZkUQqiN+BBXCH9yxEFdvbDG0PolD/5VMqqH0S2FF8QOHnqL2RQi05Q9EHpGmQqq+7MW63dA==
+X-Received: by 2002:a05:6808:300e:b0:403:50e7:83db with SMTP id
+ 5614622812f47-40c0fd85993mr2902399b6e.25.1751558038977; 
+ Thu, 03 Jul 2025 08:53:58 -0700 (PDT)
+Received: from [10.25.6.71] ([187.210.107.185])
+ by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-40b32421a92sm3015237b6e.42.2025.07.03.08.53.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Jul 2025 08:42:50 -0700 (PDT)
-Message-ID: <4def8695-076c-4348-9bba-c3c62d2f25de@linaro.org>
-Date: Thu, 3 Jul 2025 17:42:49 +0200
+ Thu, 03 Jul 2025 08:53:58 -0700 (PDT)
+Message-ID: <49b1a585-6249-48b3-86bb-2dbc81963899@linaro.org>
+Date: Thu, 3 Jul 2025 09:53:56 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] memattrs.h: make MemTxAttrs into enum
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
-References: <20250703-rust-mem-api-v1-0-cd5314bdf580@linaro.org>
- <20250703-rust-mem-api-v1-2-cd5314bdf580@linaro.org>
+Subject: Re: [PATCH v3 49/97] target/arm: Implement SME2 SQCVT, UQCVT, SQCVTU
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20250702123410.761208-1-richard.henderson@linaro.org>
+ <20250702123410.761208-50-richard.henderson@linaro.org>
+ <CAFEAcA-Qj5Vv6x08epwiWs0ihDLa4=mihMvrx=D+xOLkdYFvYQ@mail.gmail.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250703-rust-mem-api-v1-2-cd5314bdf580@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAFEAcA-Qj5Vv6x08epwiWs0ihDLa4=mihMvrx=D+xOLkdYFvYQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::229;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x229.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,15 +103,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/25 15:58, Manos Pitsidianakis wrote:
-> Convert MemTxResult defines into an enum. This will allow bindgen to
-> generate a bitflag using the enum variants as its domain of values.
+On 7/3/25 04:20, Peter Maydell wrote:
+> On Wed, 2 Jul 2025 at 13:38, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   target/arm/tcg/helper-sme.h    |  20 ++++++
+>>   target/arm/tcg/sme_helper.c    | 116 +++++++++++++++++++++++++++++++++
+>>   target/arm/tcg/translate-sme.c |  35 ++++++++++
+>>   target/arm/tcg/sme.decode      |  22 +++++++
+>>   4 files changed, 193 insertions(+)
 > 
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> ---
->   include/exec/memattrs.h | 11 ++++++-----
->   1 file changed, 6 insertions(+), 5 deletions(-)
+> 
+>> index d69d57c4cb..906d369d37 100644
+>> --- a/target/arm/tcg/sme_helper.c
+>> +++ b/target/arm/tcg/sme_helper.c
+>> @@ -1561,6 +1561,64 @@ void HELPER(sme2_fcvt_n)(void *vd, void *vs, float_status *fpst, uint32_t desc)
+>>       }
+>>   }
+>>
+>> +#define SQCVT2(NAME, TW, TN, HW, HN, SAT)                       \
+>> +void HELPER(NAME)(void *vd, void *vs, uint32_t desc)            \
+>> +{                                                               \
+>> +    ARMVectorReg scratch;                                       \
+>> +    size_t oprsz = simd_oprsz(desc), n = oprsz / sizeof(TW);    \
+>> +    TW *s0 = vs, *s1 = vs + sizeof(ARMVectorReg);               \
+>> +    TN *d = vd;                                                 \
+>> +    if ((vd - vs) < 2 * sizeof(ARMVectorReg)) {                 \
+> 
+> Does this do the right thing if Vd is less than Vs?
+> Pointer differences are signed, I think, so for eg vd == 0
+> vs == 16 we unnecessarily use the scratch reg.
+> Maybe clearer to write
+>     (vd >= vs && vd < (vs + 2 * sizeof(..))
+> 
+> (Similarly for other use of this condition later in the patch.)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+I should probably split out a helper for this, there are so many instances.
 
+
+> 
+> 
+>> +        d = (TN *)&scratch;                                     \
+>> +    }                                                           \
+>> +    for (size_t i = 0; i < n; ++i) {                            \
+>> +        d[HN(i)] = SAT(s0[HW(i)]);                              \
+>> +        d[HN(i) + n] = SAT(s1[HW(i)]);                          \
+> 
+> Should this be HN(i + n) ?
+
+They're equivalent, because n is the whole vector size, and so does not overlap the xor on 
+8-byte endianness.
+
+>> +    for (size_t i = 0; i < n; ++i) {                            \
+>> +        d[HN(2 * i + 0)] = SAT(s0[HW(i)]);                      \
+>> +        d[HN(2 * i + 1)] = SAT(s1[HW(i)]);                      \
+> 
+> Hmm, here we do do HN(whole expr)...
+
+None of these inputs is known to be a multiple of 8.
+
+
+r~
 
