@@ -4,91 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DB20C83F03
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 17:18:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A0A6C83F03
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 17:22:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXNZE-0000PE-0A; Thu, 03 Jul 2025 13:17:48 -0400
+	id 1uXNck-0001dh-Sg; Thu, 03 Jul 2025 13:21:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uXNZB-0000Ov-W2
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 13:17:46 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uXNcW-0001d1-LQ
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 13:21:12 -0400
+Received: from mail-oa1-x2b.google.com ([2001:4860:4864:20::2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uXNZA-0002du-8h
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 13:17:45 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-60867565fb5so98725a12.3
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 10:17:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uXNcR-0003Rk-2b
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 13:21:12 -0400
+Received: by mail-oa1-x2b.google.com with SMTP id
+ 586e51a60fabf-2da3c572a0bso134234fac.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 10:21:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751563062; x=1752167862; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5QR16+SGF+rDJwWu0K/tL9EK7IYqpT8DnYQmGaU1+Cc=;
- b=I40QgKpLREGhzLcwRErd2lYwRLR7Mega4Bi6YJKnAzvxehPlntP/tct99WaFrY65+8
- +COJaPoBpPjfa2XP4StXWXLzObj8oN4uteDXTknKXNAjI8ue8+oERvyqGjGcYrZ0hOZO
- u/+uHHofGgh7kOK3PDKM921S4Nc2inIoom52IQNiNzDn6lBnu5aI9YznaG5yzIUS0Duc
- mqPuyjXtSZmYuOnH7JpgQ2Yl4uYHQ1EoNOQjS+v0nV2FgRc1y1+UVYZGyNecXr8hQlOE
- J6M9t6wLVjOoz2x9OxsT6SdD5ayZJ1R87zrIZwl+OXg3PWhty84evWIAQLhxcA+k5TGx
- zu0w==
+ d=linaro.org; s=google; t=1751563265; x=1752168065; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7h8WlJzQAwJeaGJwL4lYtEAga+6iWiErbvvG27Y2RRs=;
+ b=nSNqCKLGeKQmtZ7c49uNYN9UIwLaOo9A0k5nGPbuuhKpgYPSO8Z8RJwJvStWNM1qTK
+ GuHLV4hbU7nl1i03Ugn2ZtiPK5YBcBJ3ET4jPnF6p7At6H8zAC7vSg3x1t/3q1O2i2R4
+ WLuSk+aQq8zWhuD+lN6oFWo1evRzDDFRd6EBAdy2Ps8FIzGCKhUJvu/u1NGZOVuEPf1T
+ YgkORWr8g29YognTnD7oBCEV7ICfrKdkqc7WkkWunzCAIBEFMXNcnJ97cDVqnoswKyaI
+ Vtt42BSvlojv1JZ6ImU5/MSRpVF0LObAJ20mk3wxSadrDqFoLUQNf/NsuXwI3J36z/uA
+ IV2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751563062; x=1752167862;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=5QR16+SGF+rDJwWu0K/tL9EK7IYqpT8DnYQmGaU1+Cc=;
- b=CUeVyeuAwjVsAlNsGe8ODCIAT/UvQF46GMF0P6NhPD0TxB+xQDGcLStLRfhCPUURLM
- VPJXoI0YSc7U+6XNefJMmjK7IIhOP4aV+4yoAfdV+EJVa2ETCYQQDr99oL3LYm2t48ug
- UBcALSrB7LdZFxc2L/hd6dkv+j1GdzW+owicP84nfTNsrBKOFkRODiwZ3F2HIwryf5dv
- EgaFbpdjIszFIuS3crWLo7cfSvEgMiD93q+GJ201wjW0J58GaAbdOOWxe5s2TKBaGOS4
- 4H3wcI5GxI8yFkussd1tSwenoeJ5AkjLcTx89QIpgVzcbbekrUqVXzzSIHHPE6lpxi75
- qjcg==
-X-Gm-Message-State: AOJu0Yy7QwXqvxmnnYzfk4Q8d4lA9I1E+F3xxK3Ivb4SH+eVi2+k/U/c
- yJFUN3LqUoS3ZpTDa4ifJtnmJf3ph8NqBAyWigi2uxc2ZCHifu7VbnCbzAsKg0m0uAEUXbpFC6N
- W9R/Ftxw=
-X-Gm-Gg: ASbGncsIDqMUwuEDC+J2JTIUhuotrX+6zhe58Fs44MFyzUWTEa1ALtogxTwk0ZgLWnH
- ZfqtnDZbQmVk2xZBjoKYjejCH+uBcA4Egos8WkLuPC2AKYRgHeo4bb8KHqbPaBtBndz90SvzGtZ
- YzMwS3Kfhb+HfSlUGROizV4/qDL0FdQH0ElkGhNwL5UDRVM7eO+RWMDCHb2I8uXPVLyLvcSi+uB
- gQ4eYmeJkkWHus3q8BZenynpOqyZIK5Zz911ZU799mxe0iopLvck+nyqsm6fsW24XQTDIM/kPRb
- a1tV2Pz7A5ooRPAaBIQuNMC6MmvzjE4Yr+FW2/fUy4ASKNY4D4jeKm9CQ3fSJlU=
-X-Google-Smtp-Source: AGHT+IFxVpViQBU7RKkhBkX30nO3rlduDeOpG57JIJRIffKr5/mOvBPwx46WXUcCbA51hhHb1tGKzg==
-X-Received: by 2002:a17:907:6ea9:b0:ae0:c976:cc84 with SMTP id
- a640c23a62f3a-ae3c2b5f1f1mr759754466b.24.1751563062419; 
- Thu, 03 Jul 2025 10:17:42 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae3f6b02a23sm8484866b.112.2025.07.03.10.17.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Jul 2025 10:17:41 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 06FAE5F8AE;
- Thu, 03 Jul 2025 18:17:41 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  peter.maydell@linaro.org
-Subject: Re: [PATCH v3 95/97] target/arm: Enable FEAT_SME2p1 on -cpu max
-In-Reply-To: <20250702123410.761208-96-richard.henderson@linaro.org> (Richard
- Henderson's message of "Wed, 2 Jul 2025 06:34:08 -0600")
-References: <20250702123410.761208-1-richard.henderson@linaro.org>
- <20250702123410.761208-96-richard.henderson@linaro.org>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Thu, 03 Jul 2025 18:17:41 +0100
-Message-ID: <87plehb3d6.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1751563265; x=1752168065;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7h8WlJzQAwJeaGJwL4lYtEAga+6iWiErbvvG27Y2RRs=;
+ b=Q83z5xB48ATJfm+BSpRC0+Ap7rxqGYK/Cyc5SOHDdTYT8+hLLexk0+CoFjbkm4hfyI
+ 3r34xQopJmnr3iYDCBojkEiZQmPbS6up5OdOEe6cR929ndwwRG138x2Qy+xtIUeHEYI5
+ 3tgOwmS7QB2IpO6bAyenav0cQJkJug8mPQcmCc9NPdCaqyDv6kLCwV7ELrfnqJKb+Vrp
+ ZqQPTmRx8fuenlYiuPoehUX0l3Syj0ZXpM81R/biGkop4NMkEnBUVub6YgTjVEpUUzry
+ uUFiuY55//jzvchElxTUusB0WtplazL25yiVZrNa+NR8cxtHQ/2GVI+UtA812+fzEIav
+ +a4A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV5uTzErMkN6Sg3Ysoy9BOMYu2FHGFiElsjpok7b+2pwhzVFxKZIPFNH7mxLAUlQsYEjq4ogtK5C/pB@nongnu.org
+X-Gm-Message-State: AOJu0Ywwz1fuLXTZKU8qO/wY8wqkuOCIKtPKX5dTR9Z/lT/9gUMQEsRe
+ hQm5Ut2JTozRdwgW138FbWArfacUDN501Bed+NzpOg9tkrAxhJxZ7lmdqYPZ48hzBPs=
+X-Gm-Gg: ASbGncu63Pk7ndWrTyB/6DhKxVm3//ubzdlWvEDDjDeZ0/sm0gTnIitqY9loKWt80lK
+ K3ADdoVwncypmG05ejZja5bNLZ25pDBG5gPNtE0vof0oUl5RSrf/rY8lCexrdRqcud0IL8+cOe4
+ J4P/lJGPhjsTcoqXTu2Pg9abA9xHQ0E6MvJiM6tlk2vBT8C1jlqQ/2tEnjrDzEeCANIDKL77kKM
+ qxbqiMVsqGC3+JZ/X7hVPznVAhnfu7U5BnzHoIsB9wNqkwZiUWUYyLUVVmsrUy/c3nHqBitiG1S
+ UOhP8fPFnnxT4Ih2sT4b67Hqq07vORE6OEK4OPJe4UOHSlRUOy4fBuk3sH+rsSQWqGdEPDSxaph
+ g
+X-Google-Smtp-Source: AGHT+IFfHE4yB5fAUuSO5Mj6VTOUKhtk72Q+0rBdtIJQhhxI/8C12HLIZmvZANidb4VCxRuHI6DjpA==
+X-Received: by 2002:a05:6871:650e:b0:2ef:eddd:690d with SMTP id
+ 586e51a60fabf-2f5a8ab9053mr5536944fac.24.1751563264745; 
+ Thu, 03 Jul 2025 10:21:04 -0700 (PDT)
+Received: from [10.25.6.71] ([187.210.107.185])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-2f790209b9fsm4002fac.37.2025.07.03.10.21.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Jul 2025 10:21:04 -0700 (PDT)
+Message-ID: <22775328-96b9-46ac-b374-40ec73111ff9@linaro.org>
+Date: Thu, 3 Jul 2025 11:19:11 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 49/69] accel/dummy: Factor dummy_thread_precreate() out
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, kvm@vger.kernel.org
+References: <20250703105540.67664-1-philmd@linaro.org>
+ <20250703105540.67664-50-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250703105540.67664-50-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:4860:4864:20::2b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,30 +107,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+On 7/3/25 04:55, Philippe Mathieu-Daudé wrote:
+> +void dummy_thread_precreate(CPUState *cpu)
+> +{
+> +#ifdef _WIN32
+> +    qemu_sem_init(&cpu->sem, 0);
+> +#endif
+> +}
 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/tcg/cpu64.c        | 10 ++++++++--
->  docs/system/arm/emulation.rst |  6 ++++++
->  2 files changed, 14 insertions(+), 2 deletions(-)
->
-> diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-> index 5d8ed2794d..f73729926b 100644
-> --- a/target/arm/tcg/cpu64.c
-> +++ b/target/arm/tcg/cpu64.c
-> @@ -1194,7 +1194,7 @@ void aarch64_max_tcg_initfn(Object *obj)
->       */
->      t =3D FIELD_DP64(t, ID_AA64PFR1, MTE, 3);       /* FEAT_MTE3 */
->      t =3D FIELD_DP64(t, ID_AA64PFR1, RAS_FRAC, 0);  /* FEAT_RASv1p1 + FE=
-AT_DoubleFault */
-> -    t =3D FIELD_DP64(t, ID_AA64PFR1, SME, 1);       /* FEAT_SME */
-> +    t =3D FIELD_DP64(t, ID_AA64PFR1, SME, 2);       /* FEAT_SME2 */
+Incidentally, why is this not in cpu_common_initfn, the instance_init for CPUState?  Given 
+the placement of CPUState.sem, that would seem to be the logical place.
 
-With -cpu max moving to SME2 is there any way to test just plain SME
-now?
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+
+r~
 
