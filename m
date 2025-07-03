@@ -4,82 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E765C77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 06:42:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BC9FC83030
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 06:53:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXDdq-0004dj-4X; Thu, 03 Jul 2025 02:41:54 -0400
+	id 1uXDok-0005ze-Uf; Thu, 03 Jul 2025 02:53:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1uXDdo-0004dY-Aj
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 02:41:52 -0400
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uXDof-0005zI-RZ
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 02:53:06 -0400
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1uXDdl-00037h-RJ
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 02:41:52 -0400
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uXDoe-0005ev-1T
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 02:53:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751524910; x=1783060910;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=zb0yY/Oe4msYOmornpmCDciRbYe2tXpbbXuG+M9KjDI=;
- b=gXAgkIXUkgCVXmVXk98YbmXuF7BkA4HH3I08V31w+8BeZKrzzR71sRad
- kK6PLC7jP21PkrXe4G4c+wL1umaEh6tikdM38Ldb2CUgzGnlTRA9onoj4
- 4vR+gaCzOs98/ruEWCnMA+2fvA05F0Ue0hhzQSmnnPr0LSoX0BnY0pguL
- cnUSodEVqaS+cWIQY7tUHVKnE3N1Et31GN3cTJJV4haSFAomLykeIhYvu
- HmtJ/NHULUMo4ki9K/R9rfi/9eFq5A6YXqNiJzv4MjDsNTOHFyRLGNvDu
- UeMcQTi1f++iNmObgoooNiedxGDsprvLrRc8U5V5n7V4L9FcavYNqLpBX w==;
-X-CSE-ConnectionGUID: 7dqHwLLGRA2QA4pHMUD0kg==
-X-CSE-MsgGUID: F6oGWrOPSLirGo+QVRHzLw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="52956631"
-X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="52956631"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ t=1751525584; x=1783061584;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=Jnf1h1p21hN+dzV5ohwpjGa2cjqFe8yrNqCDkV6dgX8=;
+ b=gWrjg87bnB3IyPvmnANmwshFCaEkFiLhfehdIeXfEWL8ZAJiNGzSgAqK
+ 99lv4XVgp9LiwL+a2Uua/jW0qhpSDe6uzIeXWWh1X3e/1BqzIwaWqor5o
+ cS3JS/VlM7qAGNN1Xumckb9KOv1gR7q8Bbnog6hueUPWg5ZFo537rHF0X
+ go3OJXEfajxUHHCoEUDNUxeFUAdE5p7ZrRRakf2wOFBYRAOvBDk3h8Gcb
+ iptl5DFDfeIe/mDi48v9vNHjuL13OH6/YcRz7uo5m2AIAjwsUUJc+maOU
+ Sq5ATlvOgXkR5LGz+JCVQ7WIOwyIVnMUNz0ONMWQZK+OTZ2q4ItDkeubi w==;
+X-CSE-ConnectionGUID: UqjeNZ35Q9eiXcadVmd1cw==
+X-CSE-MsgGUID: iXp7I6LeR8OdD06a3Zkw5Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="52957467"
+X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="52957467"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jul 2025 23:41:47 -0700
-X-CSE-ConnectionGUID: Lq1snJB9TjipDnp5/o0Aag==
-X-CSE-MsgGUID: ebuZZdehSzaPJEFFtqXdig==
+ 02 Jul 2025 23:53:00 -0700
+X-CSE-ConnectionGUID: 1phJ5Fj5SiCMo1lSEIhpaw==
+X-CSE-MsgGUID: ydQRnj77QMG60r+3x9N48Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="185220939"
-Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.240.80])
- ([10.124.240.80])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jul 2025 23:41:42 -0700
-Message-ID: <1318c33d-9733-4541-b9f8-691a5dc2586e@linux.intel.com>
-Date: Thu, 3 Jul 2025 14:41:40 +0800
+X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="158563616"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa005.fm.intel.com with ESMTP; 02 Jul 2025 23:52:58 -0700
+Date: Thu, 3 Jul 2025 15:14:24 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Julian Armistead <julian.armistead@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v3 26/68] accel/tcg: Implement get_[vcpu]_stats()
+Message-ID: <aGYt0DyMsPapzGQh@intel.com>
+References: <20250701144017.43487-1-philmd@linaro.org>
+ <20250701144017.43487-27-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/16] i386/cpu: Consolidate CPUID 0x4 leaf
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin"
- <mst@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Babu Moger <babu.moger@amd.com>, Ewan Hai <ewanhai-oc@zhaoxin.com>,
- Pu Wen <puwen@hygon.cn>, Tao Su <tao1.su@intel.com>,
- Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org
-References: <20250620092734.1576677-1-zhao1.liu@intel.com>
- <20250620092734.1576677-6-zhao1.liu@intel.com>
-Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20250620092734.1576677-6-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=192.198.163.19;
- envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -40
-X-Spam_score: -4.1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250701144017.43487-27-philmd@linaro.org>
+Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
 X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,109 +88,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Philippe,
 
-On 6/20/2025 5:27 PM, Zhao Liu wrote:
-> Modern Intel CPUs use CPUID 0x4 leaf to describe cache information
-> and leave space in 0x2 for prefetch and TLBs (even TLB has its own leaf
-> CPUID 0x18).
->
-> And 0x2 leaf provides a descriptor 0xFF to instruct software to check
-> cache information in 0x4 leaf instead.
->
-> Therefore, follow this behavior to encode 0xFF when Intel CPU has 0x4
-> leaf with "x-consistent-cache=true" for compatibility.
->
-> In addition, for older CPUs without 0x4 leaf, still enumerate the cache
-> descriptor in 0x2 leaf, except the case that there's no descriptor
-> matching the cache model, then directly encode 0xFF in 0x2 leaf. This
-> makes sense, as in the 0x2 leaf era, all supported caches should have
-> the corresponding descriptor.
->
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+On Tue, Jul 01, 2025 at 04:39:34PM +0200, Philippe Mathieu-Daudé wrote:
+> Date: Tue,  1 Jul 2025 16:39:34 +0200
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Subject: [PATCH v3 26/68] accel/tcg: Implement get_[vcpu]_stats()
+> X-Mailer: git-send-email 2.49.0
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  target/i386/cpu.c | 48 ++++++++++++++++++++++++++++++++++++-----------
->  1 file changed, 37 insertions(+), 11 deletions(-)
->
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 2f895bf13523..a06aa1d629dc 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -223,7 +223,7 @@ struct CPUID2CacheDescriptorInfo cpuid2_cache_descriptors[] = {
->   * Return a CPUID 2 cache descriptor for a given cache.
->   * If no known descriptor is found, return CACHE_DESCRIPTOR_UNAVAILABLE
->   */
-> -static uint8_t cpuid2_cache_descriptor(CPUCacheInfo *cache)
-> +static uint8_t cpuid2_cache_descriptor(CPUCacheInfo *cache, bool *unmacthed)
->  {
->      int i;
->  
-> @@ -240,9 +240,44 @@ static uint8_t cpuid2_cache_descriptor(CPUCacheInfo *cache)
->              }
+>  accel/tcg/tcg-all.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
+> index ae83ca0bd10..d49d2b3b0fa 100644
+> --- a/accel/tcg/tcg-all.c
+> +++ b/accel/tcg/tcg-all.c
+> @@ -239,11 +239,17 @@ static int tcg_gdbstub_supported_sstep_flags(AccelState *as)
 >      }
->  
-> +    *unmacthed |= true;
->      return CACHE_DESCRIPTOR_UNAVAILABLE;
 >  }
 >  
-> +/* Encode cache info for CPUID[4] */
-> +static void encode_cache_cpuid2(X86CPU *cpu,
-> +                                uint32_t *eax, uint32_t *ebx,
-> +                                uint32_t *ecx, uint32_t *edx)
+> +static void tcg_get_stats(AccelState *as, GString *buf)
 > +{
-> +    CPUX86State *env = &cpu->env;
-> +    CPUCaches *caches = &env->cache_info_cpuid2;
-> +    int l1d, l1i, l2, l3;
-> +    bool unmatched = false;
-> +
-> +    *eax = 1; /* Number of CPUID[EAX=2] calls required */
-> +    *ebx = *ecx = *edx = 0;
-> +
-> +    l1d = cpuid2_cache_descriptor(caches->l1d_cache, &unmatched);
-> +    l1i = cpuid2_cache_descriptor(caches->l1i_cache, &unmatched);
-> +    l2 = cpuid2_cache_descriptor(caches->l2_cache, &unmatched);
-> +    l3 = cpuid2_cache_descriptor(caches->l3_cache, &unmatched);
-> +
-> +    if (!cpu->consistent_cache ||
-> +        (env->cpuid_min_level < 0x4 && !unmatched)) {
-> +        /*
-> +         * Though SDM defines code 0x40 for cases with no L2 or L3. It's
-> +         * also valid to just ignore l3's code if there's no l2.
-> +         */
-> +        if (cpu->enable_l3_cache) {
-> +            *ecx = l3;
-> +        }
-> +        *edx = (l1d << 16) | (l1i <<  8) | l2;
-> +    } else {
-> +        *ecx = 0;
-> +        *edx = CACHE_DESCRIPTOR_UNAVAILABLE;
-> +    }
+> +    tcg_dump_flush_info(buf);
 > +}
-> +
->  /* CPUID Leaf 4 constants: */
->  
->  /* EAX: */
-> @@ -7451,16 +7486,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
->              *eax = *ebx = *ecx = *edx = 0;
->              break;
->          }
-> -        *eax = 1; /* Number of CPUID[EAX=2] calls required */
-> -        *ebx = 0;
-> -        if (!cpu->enable_l3_cache) {
-> -            *ecx = 0;
-> -        } else {
-> -            *ecx = cpuid2_cache_descriptor(env->cache_info_cpuid2.l3_cache);
-> -        }
-> -        *edx = (cpuid2_cache_descriptor(env->cache_info_cpuid2.l1d_cache) << 16) |
-> -               (cpuid2_cache_descriptor(env->cache_info_cpuid2.l1i_cache) <<  8) |
-> -               (cpuid2_cache_descriptor(env->cache_info_cpuid2.l2_cache));
-> +        encode_cache_cpuid2(cpu, eax, ebx, ecx, edx);
->          break;
->      case 4:
->          /* cache info: needed for Core compatibility */
 
-LGTM.
+With:
 
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+./configure
+make -j
 
+I met this error:
 
+/usr/bin/ld: libuser.a.p/accel_tcg_tcg-all.c.o: in function `tcg_get_stats':
+/qemu/build/../accel/tcg/tcg-all.c:244: undefined reference to `tcg_dump_flush_info'
+
+It seems tcg_dump_flush_info() needs a stub?
+
+Thanks,
+Zhao
+
+>  static void tcg_accel_class_init(ObjectClass *oc, const void *data)
+>  {
+>      AccelClass *ac = ACCEL_CLASS(oc);
+>      ac->name = "tcg";
+>      ac->init_machine = tcg_init_machine;
+> +    ac->get_stats = tcg_get_stats;
+>      ac->allowed = &tcg_allowed;
+>      ac->supports_guest_debug = tcg_supports_guest_debug;
+>      ac->gdbstub_supported_sstep_flags = tcg_gdbstub_supported_sstep_flags;
+> -- 
+> 2.49.0
+> 
+> 
 
