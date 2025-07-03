@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FAC1C83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 11:17:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E52C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 11:17:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXHil-00058S-0t; Thu, 03 Jul 2025 07:03:15 -0400
+	id 1uXHh1-0000mN-Iz; Thu, 03 Jul 2025 07:01:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHfr-0006uh-ON
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 07:00:23 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHdZ-000572-Iw
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 06:57:55 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHfp-0003cs-M8
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 07:00:15 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-3a52874d593so4573797f8f.0
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 04:00:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHdY-0002Et-3F
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 06:57:53 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4538a2fc7ffso6148705e9.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 03:57:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751540411; x=1752145211; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751540270; x=1752145070; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/WhoOlqE7V0YYD9gThfuSml4H33X/s4g/0Rif+XmbeI=;
- b=MM5rvokXjkI1zHorUS6YLRQthA/ezttjRZO9pleFulHWUJ06CESCZoCYEakHCpRTv4
- fXOJiGpOLyjv/vi9xJdUgoJ010t7zQ7/3aFOeGYYIjfwRPBtyivoaxByoK+sbkkjxiv1
- qzMGZq3E4hwGeVawAFiMy/hIePdabI9U0uqJxqz3UQadXEmuGsx0PEya/RcGfZ06DXw1
- XD7TS9GPSdVvebvcGidEWtKc4SfmUy3VZc4jkhWW1pifQSuercj3pNpkPJAoBIY53ey/
- +uqkOkGMFnML3liSR4Vq/9CyglkB+fg7Rs6+JgqUGjnQO/mwO8SejqOdHm4xEb4ssqA5
- eMEw==
+ bh=LpujPKNmLzr2YCI+n9fjeIzsX6AjXIBIk5d4rtXU8jY=;
+ b=ZpT5MMaklG0ev4xWhwjfo0PjmibbcWIszvHHVtwiODkX+eYB7OGGtiI+/UG5PDZL5z
+ bb5jkKNYnyFUpwzphLjME1I8V6Z862zG5U26Byk1wqOz2xIcixwieAEF65XOeHO/AVdG
+ IcZHKPoexmltfBmGbDaLBhxFNEwVxNC3WuB8NSRW7W+8weCSpujP5g5auRCKXXe3+cvm
+ sY1lpYtDtWzYO43RDx9Ql5jjnRlMNIxXntXLAQhG3Awq2XzIfUiEcek+hLokd7Z7xtTl
+ X9roM9O6+9sSZf37M3A2VK/zEPe1uYkVOYyrnG4BEcoGtRdUGKHID6RTQN7+3QqE7w8r
+ J4dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751540411; x=1752145211;
+ d=1e100.net; s=20230601; t=1751540270; x=1752145070;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/WhoOlqE7V0YYD9gThfuSml4H33X/s4g/0Rif+XmbeI=;
- b=hFexPxeDhc3fdquxF1Gg7Y8EVmOVoFzMwo+teHzcfzSlr3eA+5YIHlUQov5xpecihh
- IEhhtvi0tu5HK7uPHn8VfaG2HyzR6+DJpd2HgOUJqcEZgnWTKMKxUo3xaMFs4NSpkI8l
- /j5VUyM/mt7aqQjAebLEs8Fh5ZPzeuS6xCxKlX3AzkhvWjh1FV3Eu30lmL13+ziBb1g8
- QHZFO4YZ5leE3tWENWrOAPzB1SZxvc9hx/QhPLgtfMBdh37vMYLmqXR8WC1IPQjXeTib
- Swt4hMrWXhXTtQ8eXamXKZ1+vOmVnIjBjGgfKB7e43tDeL1WFcW6Iau3IMLeGEUzbN9u
- +zWw==
-X-Gm-Message-State: AOJu0YzqX6Hr/ixKONB1iVdvU3HdQKWYbT9TR+FRykDH9Q67sybTvIhA
- QT64RzRJRkSK5F9tBifs7kPzClk6dCO5g79APRmLz6oI2B2MHeCsE1mdfYuZyDtrsxabY3hgYB6
- meDzxnqk=
-X-Gm-Gg: ASbGncuaCUNHK0BiYNNyEO4Miig7vqnL3XDp6CCSvP/eAnwXnpmF6WTxCF3OXZL71EA
- cw86ljKWSFGzzXZOPtw8Xq48Fjp4BDIR+nSdhZyCmo7owAKW2HUj72upBjLcuthLfedP8zuCkn5
- BOVOsLD7k+bjypdKKnytmlvcePkJ4t0vEwXSRWiHyzIMqJQLHHfAcQl4GndupQSigRvIK21nCfD
- MMx/+U61gXW7kRySekFqoUhKFelVGde8N0Bkg/5HUUYSidlKbuwGBpc+g8OU8TIxh/maAPg+r5N
- AY6kPNI3NMPFqq382nZW9tQP9zEfoUHnuTE9jDTHHKtb38fOm/kSe+mx62BdzvekVSfYvAUri/W
- JOhnNH4rysZw=
-X-Google-Smtp-Source: AGHT+IFeTMDPZVIUsxjCRROs1WZhm0BU8cjbDiSZTXDbPKt2XE8RpH1YssNTtvaQDLjG2tnATSkPrg==
-X-Received: by 2002:a05:6000:43c6:10b0:3a5:2ef8:3512 with SMTP id
- ffacd0b85a97d-3b32b70c2f9mr1573773f8f.14.1751540411437; 
- Thu, 03 Jul 2025 04:00:11 -0700 (PDT)
+ bh=LpujPKNmLzr2YCI+n9fjeIzsX6AjXIBIk5d4rtXU8jY=;
+ b=uDowDBXN9tgdjcRJfZoxUPevsHJV/xYBiSpov8O5aDczlJLbpTLLvlbYBoQ5znHnUp
+ seQWrmIccBcxwGmDtk3wpHYSjMrz8sTtpnvt9NZI9r/1enWxC34fF3WgBW65zlo6v/Hv
+ KLEP85g7RGzWjuNivQFQeGFlk6+hCLNMfa5hWzgPb978YMT+l9VsCmAV5yiJ0orWu54G
+ V+FGmyjpG91FnnwfVha8EngpMRKYwwTq8w1LKmgsP5qMVrMCW4DUYU47aYUnryOKH3Ar
+ X7VORw5zI4eRQgiLZPKiKWCjglvBr3C6XNeqHFoF+fqkShXF4uIFaB1RUuqKZ/AZDPTd
+ BUqQ==
+X-Gm-Message-State: AOJu0Ywb0WPDxqCChqyKymY7FrBmOuK88yzR/sP+ZP3ZWmKKrwkXAX3w
+ qvfZqm0hUXB6b7bQLLFUKvh6zTwAtiq1auLww7xc/p1hCW+5ZVchw807Vg8xxd0IzZx9rn/pb3/
+ IKlFZ2Ds=
+X-Gm-Gg: ASbGncstXomxkOhEpKoQiGZp3mtHkSNyRrzvNYULUQqtpVJMTcGP/Dmp0GMaH4UqwCY
+ GHvIY9NKlD9eRtC1Q1SvGS+E+IIfAq+yj4EeUxzuGpcCG11mpwBs/670u1CECERUOZgQypKUp7k
+ q5Loksf8AhjNvbAVK3sJL9uSd5WvCZqEMdeDHE/g9PdT7WJBpbnIsUJKdhwSoFvQiiHpSwfAIik
+ xz43MKdwFSNFatqaGyAbHLLsm5xHNqKuhQqdEl7mafJIDC03nm7QnRjvX8vUWf+y3HFrzYMoeTs
+ uIiGa/SXb+RjjrGQI/aqKUxGpOg/QmK/G55hXooHGnURubOKfSYYCsVb395lHObqT8dZ4fdMdmS
+ zi44dkYJpbKTpmEmFIt/g1g==
+X-Google-Smtp-Source: AGHT+IF9IKQZECBZi/S5op3MGZrBBvJrgZce9jUGHoXUct1Tc3R7UnwtXNQQsSeG2xM+tHMugsII/A==
+X-Received: by 2002:a05:600c:3b89:b0:453:84a:e8d6 with SMTP id
+ 5b1f17b1804b1-454ab2ecdafmr23671555e9.1.1751540270071; 
+ Thu, 03 Jul 2025 03:57:50 -0700 (PDT)
 Received: from localhost.localdomain ([83.247.137.20])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a88c80bb28sm17967759f8f.43.2025.07.03.04.00.10
+ 5b1f17b1804b1-454a999c8cdsm23658325e9.24.2025.07.03.03.57.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Jul 2025 04:00:10 -0700 (PDT)
+ Thu, 03 Jul 2025 03:57:49 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -70,17 +70,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, kvm@vger.kernel.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 51/69] accel: Factor accel_create_vcpu_thread() out
-Date: Thu,  3 Jul 2025 12:55:17 +0200
-Message-ID: <20250703105540.67664-52-philmd@linaro.org>
+Subject: [PATCH v5 24/69] accel/tcg: Remove profiler leftover
+Date: Thu,  3 Jul 2025 12:54:50 +0200
+Message-ID: <20250703105540.67664-25-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250703105540.67664-1-philmd@linaro.org>
 References: <20250703105540.67664-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,75 +103,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Factor accel_create_vcpu_thread() out of system/cpus.c
-to be able to access accel/ internal definitions.
+TCG profiler was removed in commit 1b65b4f54c7.
 
+Fixes: 1b65b4f54c7 ("accel/tcg: remove CONFIG_PROFILER")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/qemu/accel.h |  2 ++
- accel/accel-common.c | 19 +++++++++++++++++++
- system/cpus.c        |  4 +---
- 3 files changed, 22 insertions(+), 3 deletions(-)
+ accel/tcg/monitor.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/include/qemu/accel.h b/include/qemu/accel.h
-index 598796bdca9..17cf103e445 100644
---- a/include/qemu/accel.h
-+++ b/include/qemu/accel.h
-@@ -97,6 +97,8 @@ void accel_pre_resume(MachineState *ms, bool step_pending);
-  */
- void accel_cpu_instance_init(CPUState *cpu);
- 
-+void accel_create_vcpu_thread(AccelState *accel, CPUState *cpu);
-+
- /**
-  * accel_cpu_common_realize:
-  * @cpu: The CPU that needs to call accel-specific cpu realization.
-diff --git a/accel/accel-common.c b/accel/accel-common.c
-index d1a5f3ca3df..d719917063e 100644
---- a/accel/accel-common.c
-+++ b/accel/accel-common.c
-@@ -89,6 +89,25 @@ void accel_cpu_instance_init(CPUState *cpu)
-     }
+diff --git a/accel/tcg/monitor.c b/accel/tcg/monitor.c
+index 7c686226b21..344ec500473 100644
+--- a/accel/tcg/monitor.c
++++ b/accel/tcg/monitor.c
+@@ -141,11 +141,6 @@ static void tlb_flush_counts(size_t *pfull, size_t *ppart, size_t *pelide)
+     *pelide = elide;
  }
  
-+void accel_create_vcpu_thread(AccelState *accel, CPUState *cpu)
-+{
-+    AccelClass *ac;
-+
-+    if (!accel) {
-+        accel = current_accel();
-+    }
-+    ac = ACCEL_GET_CLASS(accel);
-+
-+    /* accelerators all implement the AccelOpsClass */
-+    g_assert(ac->ops);
-+
-+    if (ac->ops->create_vcpu_thread != NULL) {
-+        ac->ops->create_vcpu_thread(cpu);
-+    } else {
-+        g_assert_not_reached();
-+    }
-+}
-+
- bool accel_cpu_common_realize(CPUState *cpu, Error **errp)
+-static void tcg_dump_info(GString *buf)
+-{
+-    g_string_append_printf(buf, "[TCG profiler not compiled]\n");
+-}
+-
+ static void dump_exec_info(GString *buf)
  {
-     AccelState *accel = current_accel();
-diff --git a/system/cpus.c b/system/cpus.c
-index 2c3759ea9be..6055f7c1c5f 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -698,9 +698,7 @@ void qemu_init_vcpu(CPUState *cpu)
-         cpu_address_space_init(cpu, 0, "cpu-memory", cpu->memory);
-     }
+     struct tb_tree_stats tst = {};
+@@ -196,7 +191,6 @@ static void dump_exec_info(GString *buf)
+     g_string_append_printf(buf, "TLB full flushes    %zu\n", flush_full);
+     g_string_append_printf(buf, "TLB partial flushes %zu\n", flush_part);
+     g_string_append_printf(buf, "TLB elided flushes  %zu\n", flush_elide);
+-    tcg_dump_info(buf);
+ }
  
--    /* accelerators all implement the AccelOpsClass */
--    g_assert(cpus_accel != NULL && cpus_accel->create_vcpu_thread != NULL);
--    cpus_accel->create_vcpu_thread(cpu);
-+    accel_create_vcpu_thread(NULL, cpu);
- 
-     while (!cpu->created) {
-         qemu_cond_wait(&qemu_cpu_cond, &bql);
+ HumanReadableText *qmp_x_query_jit(Error **errp)
 -- 
 2.49.0
 
