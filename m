@@ -4,80 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92182C83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 10:39:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8507CC83030
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 10:42:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXHLU-0004CO-0G; Thu, 03 Jul 2025 06:39:12 -0400
+	id 1uXHNf-0005JN-Fn; Thu, 03 Jul 2025 06:41:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXHLS-0004Bn-HN
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 06:39:10 -0400
-Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXHLP-0002En-8V
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 06:39:10 -0400
-Received: by mail-yb1-xb2b.google.com with SMTP id
- 3f1490d57ef6-e81a7d90835so4501737276.1
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 03:39:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751539146; x=1752143946; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=m7ZhX30w+SUHKxcEOBIia1xGdqedQEidjKYU/P0aAHc=;
- b=S69C80JzvhWZamBL7Fs9CWthIJxZSkxlUlBtcFaM6V6ZOpdQQZKESqAIk6Z5GunMbW
- tXuEIIrktBHCryqCWUrjX1RfkRfEsiPSPoDfqNND4SSrCz654kZTn7AVLBlkzMooWSGZ
- TDD+mJhyaXmevCBo7SUjni9kgIoFevM0V7YEKejyaKT5yKJNjHkiojtbrPXM7J2OlgAV
- OWJk9yeZmrvItcl2GPHLNchciIsNua0NGVYLdU6RJTiCpqBjBAMy+ZpypFD9n5Xfwg97
- 4g0tklWf/VGD0fcziDyG2d5oX2qj7woXF6ldTRzVVFRSRxhYppwq6XpxhqcZDD/3Xph9
- 9n8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751539146; x=1752143946;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=m7ZhX30w+SUHKxcEOBIia1xGdqedQEidjKYU/P0aAHc=;
- b=O7eTXs+ZGg6gQlFbKBIFMljm44AdbzJLg6uedcVXdGm9Zr5QIG/se04RFR1AlXq9yU
- kOoqdvYX7R/0o+KVu1CLBXY0G+ONvlaeoQf1BEiQtuNSOjG2KhUMmBok696g8LFLdp5v
- j62nfTmFho5w3VWOj49D43HNiHRc60xsh5AJVgQS25ltn/ROklBDSMM6p9VFaUIHYlxL
- 7MImMhZNYMOJm5rmyqAGyzYSGpA9v4KIyunzpXuKqCBrlmov6sqOJIS1fVUSywgbS51c
- /3UH43whxN/j4API3QSA4izSx5Z4/m/BJYlLcxl7T+ABJbBKoGCT6ECSsD8np2CxB4Pt
- jJ7w==
-X-Gm-Message-State: AOJu0YzVXyfLa85DNPzauFMjbBndUNaB0AJOxhh68AYDjwFPI/X+KlSt
- feiOVp5orRTEjthHCALTNwQdKAJ3X/DLO298zLDGdVe1ieqYhHOIV50A0+CgIGAe5sjdOIjmUg5
- zFsyp67POuX0Zl1IjMv9YrVT36ZAwpPmmM9UDH8KGGA==
-X-Gm-Gg: ASbGncsaySphpAaRlFKWy8tSApz8cVFZChFDnJ7muV8y43ebN5A1VbxHDGrdRe3+cQk
- ryRsDW/he6UiE31YbV/cWrxXgWiGehNbD8B81e0udr4eKLCLE9zqqUUpJFBEJDAjiNMPnCu2vHk
- IlJlxGnYDQUa11ZlFvlFRCfcfucipaMteZh5XYmKwQa70+
-X-Google-Smtp-Source: AGHT+IHEJ5Nx5bkz+9Zu9SHsA1fb2e1wqeQOx/8MvHkckbKJnJypPxGyYeR06okWn7DYg2oWHl2QGNCQBq/04oyS2GY=
-X-Received: by 2002:a05:690c:c09:b0:711:af14:3981 with SMTP id
- 00721157ae682-7164d470778mr94959007b3.31.1751539145807; Thu, 03 Jul 2025
- 03:39:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uXHNc-0005J8-3T; Thu, 03 Jul 2025 06:41:24 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uXHNX-0003Q2-UY; Thu, 03 Jul 2025 06:41:23 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bXtZy6kcsz6DJxs;
+ Thu,  3 Jul 2025 18:40:42 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id A239E1402F5;
+ Thu,  3 Jul 2025 18:41:11 +0800 (CST)
+Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
+ frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Thu, 3 Jul 2025 12:41:11 +0200
+To: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Eric Auger <eric.auger@redhat.com>,
+ <mst@redhat.com>, Zhijian Li <lizhijian@fujitsu.com>, Itaru Kitayama
+ <itaru.kitayama@linux.dev>
+CC: <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>, <qemu-arm@nongnu.org>, 
+ Yuquan Wang <wangyuquan1236@phytium.com.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH qemu v17 0/5] arm/virt: CXL support via pxb_cxl
+Date: Thu, 3 Jul 2025 11:41:05 +0100
+Message-ID: <20250703104110.992379-1-Jonathan.Cameron@huawei.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
-References: <20250702123410.761208-1-richard.henderson@linaro.org>
- <20250702123410.761208-63-richard.henderson@linaro.org>
-In-Reply-To: <20250702123410.761208-63-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 3 Jul 2025 11:38:54 +0100
-X-Gm-Features: Ac12FXxCxzKyizBcCofBFylPh1SNA-Y29KhJca5O_hv4XKWCDbD4jcoL69RBx5s
-Message-ID: <CAFEAcA8=25c3yADyE0nD7N6SmZnrTE+Km5YC9-pDZWKT962uNg@mail.gmail.com>
-Subject: Re: [PATCH v3 62/97] target/arm: Split out do_whilel from
- helper_sve_whilel
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.122.19.247]
+X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,59 +69,131 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2 Jul 2025 at 13:38, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/tcg/sve_helper.c | 28 ++++++++++++++++------------
->  1 file changed, 16 insertions(+), 12 deletions(-)
->
-> diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-> index 5014fd135d..4497e9107b 100644
-> --- a/target/arm/tcg/sve_helper.c
-> +++ b/target/arm/tcg/sve_helper.c
-> @@ -4113,26 +4113,30 @@ static uint32_t pred_count_test(uint32_t elements, uint32_t count, bool invert)
->      return flags;
->  }
->
-> -uint32_t HELPER(sve_whilel)(void *vd, uint32_t count, uint32_t pred_desc)
-> +static void do_whilel(uint64_t *d, uint64_t esz_mask,
-> +                      uint32_t count, uint32_t oprbits)
+v17: Thanks to Eric for review
+- Add a comment to the high memory map to reduce the chance of nasty
+  surprises in the future as similar to device_memory, the CXL
+  Fixed Memory Windows are of variable size as so can't be represented
+  by explicit entries in the map.
+- Updated a couple of patch descriptions to provide answers to questions
+  Eric raised.
 
-Does the compiler generate worse code if we give the right
-typed argument for d here (ArmPredicateReg *d) vs uint64_t * ?
+v16:
+- Mostly additional documentation and descriptive text in
+  patch titles.
+- Update test to reflect changes to other tests.
+- Update physmem_max in virt to include the CXL memory.
 
->  {
-> -    intptr_t oprsz = FIELD_EX32(pred_desc, PREDDESC, OPRSZ);
-> -    intptr_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
-> -    uint64_t esz_mask = pred_esz_masks[esz];
-> -    ARMPredicateReg *d = vd;
-> -    intptr_t i, oprbits = oprsz * 8;
-> +    uint32_t i;
->
->      tcg_debug_assert(count <= oprbits);
->
-> -    /* Begin with a zero predicate register.  */
-> -    do_zero(d, oprsz);
-> -
-> -    /* Set all of the requested bits.  */
->      for (i = 0; i < count / 64; ++i) {
-> -        d->p[i] = esz_mask;
-> +        d[i] = esz_mask;
->      }
->      if (count & 63) {
-> -        d->p[i] = MAKE_64BIT_MASK(0, count & 63) & esz_mask;
-> +        d[i] = MAKE_64BIT_MASK(0, count & 63) & esz_mask;
->      }
-> +}
+Updated cover letter
 
-Either way
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Back in 2022, this series stalled on the absence of a solution to device
+tree support for PCI Expander Bridges (PXB) and we ended up only having
+x86 support upstream. I've been carrying the arm64 support out of tree
+since then, with occasional nasty surprises (e.g. UNIMP + DT issue seen
+a few weeks ago) and a fair number of fiddly rebases.
+gitlab.com/jic23/qemu cxl-<latest date>.  Will update shortly with this
+series.
 
-thanks
--- PMM
+A recent discussion with Peter Maydell indicated that there are various
+other ACPI only features now, so in general he might be more relaxed
+about DT support being necessary. The upcoming vSMMUv3 support would
+run into this problem as well.
+
+I presented the background to the PXB issue at Linaro connect 2022. In
+short the issue is that PXBs steal MMIO space from the main PCI root
+bridge. The challenge is knowing how much to steal.
+
+On ACPI platforms, we can rely on EDK2 to perform an enumeration and
+configuration of the PCI topology and QEMU can update the ACPI tables
+after EDK2 has done this when it can simply read the space used by the
+root ports. On device tree, there is no entity to figure out that
+enumeration so we don't know how to size the stolen region.
+
+Three approaches were discussed:
+1) Enumerating in QEMU. Horribly complex and the last thing we want is a
+   3rd enumeration implementation that ends up out of sync with EDK2 and
+   the kernel (there are frequent issues because of how those existing
+   implementations differ.
+2) Figure out how to enumerate in kernel. I never put a huge amount of work
+   into this, but it seemed likely to involve a nasty dance with similar
+   very specific code to that EDK2 is carrying and would very challenging
+   to upstream (given the lack of clarity on real use cases for PXBs and
+   DT).
+3) Hack it based on the control we have which is bus numbers.
+   No one liked this but it worked :)
+
+The other little wrinkle would be the need to define full bindings for CXL
+on DT + implement a fairly complex kernel stack as equivalent in ACPI
+involves a static table, CEDT, new runtime queries via _DSM and a description
+of various components. Doable, but so far there is no interest on physical
+platforms. Worth noting that for now, the QEMU CXL emulation is all about
+testing and developing the OS stack, not about virtualization (performance
+is terrible except in some very contrived situations!)
+
+There is only a very simple test in here, because my intent is not to
+duplicate what we have on x86, but just to do a smoke test that everything
+is hooked up.  In general we need much more comprehensive end to end CXL
+tests but that requires a reaonsably stable guest software stack. A few
+people have expressed interest in working on that, but we aren't there yet.
+
+Note that this series has a very different use case to that in the proposed
+SBSA-ref support:
+https://lore.kernel.org/qemu-devel/20250117034343.26356-1-wangyuquan1236@phytium.com.cn/
+
+SBSA-ref is a good choice if you want a relatively simple mostly fixed
+configuration.  That works well with the limited host system
+discoverability etc as EDK2 can be build against a known configuration.
+
+My interest with this support in arm/virt is support host software stack
+development (we have a wide range of contributors, most of whom are working
+on emulation + the kernel support). I care about the weird corners. As such
+I need to be able to bring up variable numbers of host bridges, multiple CXL
+Fixed Memory Windows with varying characteristics (interleave etc), complex
+NUMA topologies with wierd performance characteristics etc. We can do that
+on x86 upstream today, or my gitlab tree. Note that we need arm support
+for some arch specific features in the near future (cache flushing).
+Doing kernel development with this need for flexibility on SBSA-ref is not
+currently practical. SBSA-ref CXL support is an excellent thing, just
+not much use to me for this work.
+
+Also, we are kicking off some work on DCD virtualization, particularly to
+support inter-host shared memory being presented up into a VM. That
+will need upstream support on arm64 as it is built on top of the existing
+CXL emulation to avoid the need for a separate guest software stack.
+
+Note this is TCG only - it is possible to support limited use with KVM but
+that needs additional patches not yet ready for upstream.  The challenge
+is interleave - and the solution is don't interleave if you want to run
+with KVM.
+
+Jonathan Cameron (5):
+  hw/cxl-host: Add an index field to CXLFixedMemoryWindow
+  hw/cxl: Make the CXL fixed memory windows devices.
+  hw/arm/virt: Basic CXL enablement on pci_expander_bridge instances
+    pxb-cxl
+  docs/cxl: Add an arm/virt example.
+  qtest/cxl: Add aarch64 virt test for CXL
+
+ docs/system/arm/virt.rst    |   9 ++
+ docs/system/devices/cxl.rst |  11 +++
+ include/hw/arm/virt.h       |   4 +
+ include/hw/cxl/cxl.h        |   5 +-
+ include/hw/cxl/cxl_host.h   |   5 +-
+ hw/acpi/cxl.c               |  76 ++++++++--------
+ hw/arm/virt-acpi-build.c    |  34 +++++++
+ hw/arm/virt.c               |  30 +++++++
+ hw/cxl/cxl-host-stubs.c     |   7 +-
+ hw/cxl/cxl-host.c           | 174 +++++++++++++++++++++++++++++-------
+ hw/i386/pc.c                |  50 +++++------
+ tests/qtest/cxl-test.c      |  58 +++++++++---
+ tests/qtest/meson.build     |   1 +
+ 13 files changed, 354 insertions(+), 110 deletions(-)
+
+-- 
+2.48.1
+
 
