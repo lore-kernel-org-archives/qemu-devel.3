@@ -4,83 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAD8CC83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 04:15:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47A07C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 04:18:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXBLl-0006ln-KI; Thu, 03 Jul 2025 00:15:06 -0400
+	id 1uXBOF-0007XV-FT; Thu, 03 Jul 2025 00:17:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1uXBLh-0006kD-MN
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 00:15:03 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1uXBLe-0000of-OK
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 00:15:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751516098; x=1783052098;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=mOAUPLylIi7fAJo3wVvgPuNI2NNOupe5ZVOD2CTejP0=;
- b=WMNxPZVq5TKEg19wQ4Vh/IWTSTMFdcBXqq0TQ5to9GU3us2RMSAOC1Wm
- Dp4/Sv6ws2as6vVysTWsS9O4H+WrHD+jR59OuZWN/gupLOfpM7C23tFZr
- qveU4JH/JC6KQkb09Qsilgv/QGvI2mUswGEH8pjeTLOru9wIRCU8skHou
- 6IgR2U26py3k7vi1elwnH2YKW8u6a8ZUWni2vIL/n8THv19YkjJYPxJjz
- TtugW9jY9p5MEJNVOc29aK4uXpDcfAY4Ny1oy94r9uJhZklIF/lgcKAng
- cva9PS7OE5h34ff1HsxE8i5S8iQhqIYyHXMUHRQ/J7ICaTZDNjIm+LNy8 w==;
-X-CSE-ConnectionGUID: u9lobOB2QIWRNXf25oaA+Q==
-X-CSE-MsgGUID: /Iq1d3nNRfCLAuhDeHgyRw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="64524941"
-X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="64524941"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jul 2025 21:14:50 -0700
-X-CSE-ConnectionGUID: UZqpjDe9TO6CNE0t4gAgxA==
-X-CSE-MsgGUID: WdCQMLVJRwaCymaURJ6/Aw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="191425678"
-Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.240.80])
- ([10.124.240.80])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jul 2025 21:14:46 -0700
-Message-ID: <bb437e9d-c0af-4fb6-9c47-d495781ba29d@linux.intel.com>
-Date: Thu, 3 Jul 2025 12:14:42 +0800
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1uXBOD-0007X1-LN
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 00:17:37 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1uXBOA-0002aa-KK
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 00:17:37 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-23526264386so47213285ad.2
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 21:17:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1751516251; x=1752121051; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=08NQ+TjkxcZaFANSHy0nh1+PPk3TzQQAToiAVZBT/ME=;
+ b=gWGQHq1Y0/CjuRXiRgBaw1axIplNb64NFRe8N9FSxH1bvEjRcTukMQ6LEmLsWJwOWK
+ LqPwWRv0WcyoIy3aYBcWD3c325keNq7Bm2BPFVEnOjZxH49citeqw3rY2gVkhFWY+jf+
+ Ych2Cj2W8HEPoqKpJSecQliCF6cFyX3D7Ox1ijj0EGJKQwzDlWv/37vzbDPY4H+oy0/o
+ gVQDiBTMIgQY1fRPVYEOuB00MWnaNuVoiln9yrV8TbmxovYSPJ0wuEVTyGLAcKaSTkjV
+ ZO8Ye8JPlqvOqcbLOg/b0SwO5uVcTje3NxVwqD/t6wPqm/AS5DsrZhRE1cw13RB7UV/t
+ m8aQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751516251; x=1752121051;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=08NQ+TjkxcZaFANSHy0nh1+PPk3TzQQAToiAVZBT/ME=;
+ b=Kx8oT8wLPMlQdOSxZVNa+QcJtUvMELxa2ClLG79ZnP50yOlJOjhwzSEgDfz4OAeXER
+ DR/IXQVroXdkwCfsHE99RN4PHzOSrzcQqSNy1oNHzoRlISlQA03hnt4YffcWGHStpV0z
+ fVNr8AWH4NgrV6n0frQtkN2EbIWrpumlIdCxiPihfJJFmyhFv4sKVQ/et2w3JDTQuRi4
+ 1ey+1CaqDBUwFKY3mK7oBqMB08mv+MwFHBwYXC1C4K3GLRbEzym/G04Qjm5zf6VWTF3j
+ 0fRYe+qbw5NNwwDmuocvLyMqqG9AZB/JbWFFDQYAKuCm+lJhjGkBldNjWLxu+1nWTbUc
+ QxDw==
+X-Gm-Message-State: AOJu0YyepBSuLi49I0wf85OlULcDq9X+sbqdRnx79AmzkRI4aYfm1JUK
+ Cp2eDwBo40Xc4lgnfsPMheCUF9NhHAVIzODn6G8Pgv7J/Ma6lV2AjvPd
+X-Gm-Gg: ASbGncu1PzB2T9QZtEMLgShjyFJZYHDWsY/n1GaxOrle64mwmHx4bvkBYjAhzXaimpl
+ AcOZa8SMYYLLHN5C2guWDKF8gSykH+19xXL5EtSYvVpRTTktCUC2On18qmZ/wqatJwGCps411A7
+ NfscorClzYCK7zb1MWN02te/uckK5gbXg0KojI/jHA6CigAalhB6CArUvqTFMvqEWC3WqPqXERN
+ OfHT8m2M7CzCKsQuTHqT9IzlXdF34cNQ8RZv32TpnNPM0GUOjbBcPUtaSF9lwGj8seZjJKSgMSS
+ pbD0PPyrfsIMvcfjx1OJrCUuc+yt1YG8w5+c7/130DLc0eBDIjqdI3tkUUwjBU6xojMMTkL0PNU
+ f
+X-Google-Smtp-Source: AGHT+IEbGztOUWf5B7SpFHLemr8o7EKypKBByaiK87oOjUhC7qGuUyRY3Ci1wZazLCfp5+V8KPf0/w==
+X-Received: by 2002:a17:902:e5cc:b0:234:c7e6:8459 with SMTP id
+ d9443c01a7336-23c6e5023f8mr71405255ad.20.1751516251221; 
+ Wed, 02 Jul 2025 21:17:31 -0700 (PDT)
+Received: from smc-140338-bm01 ([149.97.161.244])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-23acb2e219asm151676075ad.40.2025.07.02.21.17.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 02 Jul 2025 21:17:30 -0700 (PDT)
+From: Fan Ni <nifan.cxl@gmail.com>
+X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
+Date: Thu, 3 Jul 2025 04:17:28 +0000
+To: anisa.su887@gmail.com
+Cc: qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com, nifan.cxl@gmail.com,
+ dave@stgolabs.net, alok.a.tiwari@oracle.com,
+ linux-cxl@vger.kernel.org, Anisa Su <anisa.su@samsung.com>
+Subject: Re: [QEMU PATCH v4 09/10] cxl-mailbox-utils: 0x5604 - FMAPI Initiate
+ DC Add
+Message-ID: <aGYEWDOGPbtncEmN@smc-140338-bm01>
+References: <20250626222743.1766404-1-anisa.su887@gmail.com>
+ <20250626222743.1766404-10-anisa.su887@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/16] i386/cpu: Present same cache model in CPUID 0x2 &
- 0x4
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin"
- <mst@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Babu Moger <babu.moger@amd.com>, Ewan Hai <ewanhai-oc@zhaoxin.com>,
- Pu Wen <puwen@hygon.cn>, Tao Su <tao1.su@intel.com>,
- Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org, Alexander Graf <agraf@csgraf.de>
-References: <20250620092734.1576677-1-zhao1.liu@intel.com>
- <20250620092734.1576677-5-zhao1.liu@intel.com>
-Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20250620092734.1576677-5-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=192.198.163.9;
- envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250626222743.1766404-10-anisa.su887@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,137 +103,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 6/20/2025 5:27 PM, Zhao Liu wrote:
-> For a long time, the default cache models used in CPUID 0x2 and
-> 0x4 were inconsistent and had a FIXME note from Eduardo at commit
-> 5e891bf8fd50 ("target-i386: Use #defines instead of magic numbers for
-> CPUID cache info"):
->
-> "/*FIXME: CPUID leaf 2 descriptor is inconsistent with CPUID leaf 4 */".
->
-> This difference is wrong, in principle, both 0x2 and 0x4 are used for
-> Intel's cache description. 0x2 leaf is used for ancient machines while
-> 0x4 leaf is a subsequent addition, and both should be based on the same
-> cache model. Furthermore, on real hardware, 0x4 leaf should be used in
-> preference to 0x2 when it is available.
->
-> Revisiting the git history, that difference occurred much earlier.
->
-> Current legacy_l2_cache_cpuid2 (hardcode: "0x2c307d"), which is used for
-> CPUID 0x2 leaf, is introduced in commit d8134d91d9b7 ("Intel cache info,
-> by Filip Navara."). Its commit message didn't said anything, but its
-> patch [1] mentioned the cache model chosen is "closest to the ones
-> reported in the AMD registers". Now it is not possible to check which
-> AMD generation this cache model is based on (unfortunately, AMD does not
-> use 0x2 leaf), but at least it is close to the Pentium 4.
->
-> In fact, the patch description of commit d8134d91d9b7 is also a bit
-> wrong, the original cache model in leaf 2 is from Pentium Pro, and its
-> cache descriptor had specified the cache line size ad 32 byte by default,
-> while the updated cache model in commit d8134d91d9b7 has 64 byte line
-> size. But after so many years, such judgments are no longer meaningful.
->
-> On the other hand, for legacy_l2_cache, which is used in CPUID 0x4 leaf,
-> is based on Intel Core Duo (patch [2]) and Core2 Duo (commit e737b32a3688
-> ("Core 2 Duo specification (Alexander Graf).")
->
-> The patches of Core Duo and Core 2 Duo add the cache model for CPUID
-> 0x4, but did not update CPUID 0x2 encoding. This is the reason that
-> Intel Guests use two cache models in 0x2 and 0x4 all the time.
->
-> Of course, while no Core Duo or Core 2 Duo machines have been found for
-> double checking, this still makes no sense to encode different cache
-> models on a single machine.
->
-> Referring to the SDM and the real hardware available, 0x2 leaf can be
-> directly encoded 0xFF to instruct software to go to 0x4 leaf to get the
-> cache information, when 0x4 is available.
->
-> Therefore, it's time to clean up Intel's default cache models. As the
-> first step, add "x-consistent-cache" compat option to allow newer
-> machines (v10.1 and newer) to have the consistent cache model in CPUID
-> 0x2 and 0x4 leaves.
->
-> This doesn't affect the CPU models with CPUID level < 4 ("486",
-> "pentium", "pentium2" and "pentium3"), because they have already had the
-> special default cache model - legacy_intel_cpuid2_cache_info.
->
-> [1]: https://lore.kernel.org/qemu-devel/5b31733c0709081227w3e5f1036odbc649edfdc8c79b@mail.gmail.com/
-> [2]: https://lore.kernel.org/qemu-devel/478B65C8.2080602@csgraf.de/
->
-> Cc: Alexander Graf <agraf@csgraf.de>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+On Thu, Jun 26, 2025 at 10:23:32PM +0000, anisa.su887@gmail.com wrote:
+> From: Anisa Su <anisa.su@samsung.com>
+> 
+> FM DCD Management command 0x5604 implemented per CXL r3.2 Spec Section 7.6.7.6.5
+> 
+> Signed-off-by: Anisa Su <anisa.su@samsung.com>
 > ---
->  hw/i386/pc.c      | 4 +++-
->  target/i386/cpu.c | 7 ++++++-
->  target/i386/cpu.h | 7 +++++++
->  3 files changed, 16 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index b2116335752d..ad2d6495ebde 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -81,7 +81,9 @@
->      { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
->      { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
->  
-> -GlobalProperty pc_compat_10_0[] = {};
-> +GlobalProperty pc_compat_10_0[] = {
-> +    { TYPE_X86_CPU, "x-consistent-cache", "false" },
-> +};
->  const size_t pc_compat_10_0_len = G_N_ELEMENTS(pc_compat_10_0);
->  
->  GlobalProperty pc_compat_9_2[] = {};
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 0a2c32214cc3..2f895bf13523 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -8931,7 +8931,11 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
->          /* Build legacy cache information */
->          env->cache_info_cpuid2.l1d_cache = &legacy_l1d_cache;
->          env->cache_info_cpuid2.l1i_cache = &legacy_l1i_cache;
-> -        env->cache_info_cpuid2.l2_cache = &legacy_l2_cache_cpuid2;
-> +        if (!cpu->consistent_cache) {
-> +            env->cache_info_cpuid2.l2_cache = &legacy_l2_cache_cpuid2;
-> +        } else {
-> +            env->cache_info_cpuid2.l2_cache = &legacy_l2_cache;
-> +        }
 
-This would encode the valid L1 and L3 cache descriptors and "0xff"
-descriptor into CPUID leaf 0x2 when there is CPUID leaf 0x4. It seems a
-little bit of ambiguous to mix "0xff" descriptor with other valid
-descriptors and it isn't identical with real HW. Do we consider to make it
-identical with real HW? Thanks.
+Minor comments inline...
 
-
->          env->cache_info_cpuid2.l3_cache = &legacy_l3_cache;
+>  hw/cxl/cxl-mailbox-utils.c  | 106 ++++++++++++++++++++++++++++++++++++
+>  hw/mem/cxl_type3.c          |   8 +--
+>  include/hw/cxl/cxl_device.h |   4 ++
+>  3 files changed, 114 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index 382c41c025..787eeaa7b9 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -122,6 +122,7 @@ enum {
+>          #define GET_HOST_DC_REGION_CONFIG   0x1
+>          #define SET_DC_REGION_CONFIG        0x2
+>          #define GET_DC_REGION_EXTENT_LIST   0x3
+> +        #define INITIATE_DC_ADD             0x4
+>  };
 >  
->          env->cache_info_cpuid4.l1d_cache = &legacy_l1d_cache;
-> @@ -9457,6 +9461,7 @@ static const Property x86_cpu_properties[] = {
->       * own cache information (see x86_cpu_load_def()).
->       */
->      DEFINE_PROP_BOOL("legacy-cache", X86CPU, legacy_cache, true),
-> +    DEFINE_PROP_BOOL("x-consistent-cache", X86CPU, consistent_cache, true),
->      DEFINE_PROP_BOOL("legacy-multi-node", X86CPU, legacy_multi_node, false),
->      DEFINE_PROP_BOOL("xen-vapic", X86CPU, xen_vapic, false),
+>  /* CCI Message Format CXL r3.1 Figure 7-19 */
+> @@ -3539,6 +3540,104 @@ static CXLRetCode cmd_fm_get_dc_region_extent_list(const struct cxl_cmd *cmd,
+>      return CXL_MBOX_SUCCESS;
+>  }
 >  
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index 5910dcf74d42..3c7e59ffb12a 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -2259,6 +2259,13 @@ struct ArchCPU {
->       */
->      bool legacy_cache;
->  
-> +    /*
-> +     * Compatibility bits for old machine types.
-> +     * If true, use the same cache model in CPUID leaf 0x2
-> +     * and 0x4.
-> +     */
-> +    bool consistent_cache;
+> +/*
+> + * Helper function to convert CXLDCExtentRaw to CXLUpdateDCExtentListInPl
+> + * in order to reuse cxl_detect_malformed_extent_list() function which accepts
+> + * CXLUpdateDCExtentListInPl as a parameter.
+> + */
+> +static void convert_raw_extents(CXLDCExtentRaw raw_extents[],
+> +                                CXLUpdateDCExtentListInPl *extent_list,
+> +                                int count)
+> +{
+> +    int i;
 > +
->      /* Compatibility bits for old machine types.
->       * If true decode the CPUID Function 0x8000001E_ECX to support multiple
->       * nodes per processor
+> +    extent_list->num_entries_updated = count;
+> +
+> +    for (i = 0; i < count; i++) {
+> +        extent_list->updated_entries[i].start_dpa = raw_extents[i].start_dpa;
+> +        extent_list->updated_entries[i].len = raw_extents[i].len;
+> +    }
+> +}
+> +
+> +/* CXL r3.2 Section 7.6.7.6.5 Initiate Dynamic Capacity Add (Opcode 5604h) */
+
+Keep the spec reference comments consistent like below,
+/* CXL r3.2 Section 7.6.7.6.5: Initiate Dynamic Capacity Add (Opcode 5604h) */
+
+> +static CXLRetCode cmd_fm_initiate_dc_add(const struct cxl_cmd *cmd,
+> +                                         uint8_t *payload_in,
+> +                                         size_t len_in,
+> +                                         uint8_t *payload_out,
+> +                                         size_t *len_out,
+> +                                         CXLCCI *cci)
+> +{
+> +    struct {
+> +        uint16_t host_id;
+> +        uint8_t selection_policy;
+> +        uint8_t reg_num;
+> +        uint64_t length;
+> +        uint8_t tag[0x10];
+> +        uint32_t ext_count;
+> +        CXLDCExtentRaw extents[];
+> +    } QEMU_PACKED *in = (void *)payload_in;
+> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> +    int i, rc;
+> +
+> +    switch (in->selection_policy) {
+> +        case CXL_EXTENT_SELECTION_POLICY_PRESCRIPTIVE: {
+> +            /* Adding extents exceeds device's extent tracking ability. */
+> +            if (in->ext_count + ct3d->dc.total_extent_count >
+> +                CXL_NUM_EXTENTS_SUPPORTED) {
+> +                return CXL_MBOX_RESOURCES_EXHAUSTED;
+> +            }
+> +
+> +            g_autofree CXLUpdateDCExtentListInPl *list =
+This seems not consistent with existing code style. Type declaration
+comes first.
+> +                g_malloc0(sizeof(*list) +
+> +                    in->ext_count * sizeof(*list->updated_entries));
+> +
+> +            convert_raw_extents(in->extents, list, in->ext_count);
+> +            rc = cxl_detect_malformed_extent_list(ct3d, list);
+> +
+> +            for (i = 0; i < in->ext_count; i++) {
+> +                CXLDCExtentRaw ext = in->extents[i];
+Use pointer as Jonathan mentioned.
+> +                /* Check requested extents do not overlap with pending extents. */
+shorten the comments like
+Extents to add cannot overlap with pending extents
+> +                if (cxl_extent_groups_overlaps_dpa_range(&ct3d->dc.extents_pending,
+> +                                                         ext.start_dpa, ext.len)) {
+> +                    return CXL_MBOX_INVALID_EXTENT_LIST;
+> +                }
+> +                /* Check requested extents do not overlap with existing extents. */
+Not allowed to add extents already existing
+> +                if (cxl_extents_overlaps_dpa_range(&ct3d->dc.extents,
+> +                                                   ext.start_dpa, ext.len)) {
+> +                    return CXL_MBOX_INVALID_EXTENT_LIST;
+> +                }
+> +            }
+> +
+> +            if (rc) {
+> +                return rc;
+> +            }
+> +
+> +            CXLDCExtentGroup *group = NULL;
+> +            for (i = 0; i < in->ext_count; i++) {
+> +                group = cxl_insert_extent_to_extent_group(group,
+> +                                                          in->extents[i].start_dpa,
+> +                                                          in->extents[i].len,
+> +                                                          in->extents[i].tag,
+> +                                                          in->extents[i].shared_seq);
+Shorten the lines as Jonathan suggested. 
+
+Fan
+> +            }
+> +
+> +            cxl_extent_group_list_insert_tail(&ct3d->dc.extents_pending, group);
+> +            ct3d->dc.total_extent_count += in->ext_count;
+> +            cxl_create_dc_event_records_for_extents(ct3d,
+> +                                                    DC_EVENT_ADD_CAPACITY,
+> +                                                    in->extents,
+> +                                                    in->ext_count);
+> +
+> +            return CXL_MBOX_SUCCESS;
+> +        }
+> +        default: {
+> +            qemu_log_mask(LOG_UNIMP,
+> +                          "CXL extent selection policy not supported.\n");
+> +            return CXL_MBOX_INVALID_INPUT;
+> +        }
+> +    }
+> +}
+> +
+>  static const struct cxl_cmd cxl_cmd_set[256][256] = {
+>      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
+>          cmd_infostat_bg_op_abort, 0, 0 },
+> @@ -3666,6 +3765,13 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
+>           CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
+>      [FMAPI_DCD_MGMT][GET_DC_REGION_EXTENT_LIST] = { "GET_DC_REGION_EXTENT_LIST",
+>          cmd_fm_get_dc_region_extent_list, 12, 0 },
+> +    [FMAPI_DCD_MGMT][INITIATE_DC_ADD] = { "INIT_DC_ADD",
+> +        cmd_fm_initiate_dc_add, ~0,
+> +        (CXL_MBOX_CONFIG_CHANGE_COLD_RESET |
+> +        CXL_MBOX_CONFIG_CHANGE_CONV_RESET |
+> +        CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
+> +        CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
+> +        CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
+>  };
+>  
+>  /*
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index 9c2b9d197b..7676d785c2 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -1885,8 +1885,8 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+>   * the list.
+>   * Return value: return true if has overlaps; otherwise, return false
+>   */
+> -static bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
+> -                                           uint64_t dpa, uint64_t len)
+> +bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
+> +                                    uint64_t dpa, uint64_t len)
+>  {
+>      CXLDCExtent *ent;
+>      Range range1, range2;
+> @@ -1931,8 +1931,8 @@ bool cxl_extents_contains_dpa_range(CXLDCExtentList *list,
+>      return false;
+>  }
+>  
+> -static bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
+> -                                                 uint64_t dpa, uint64_t len)
+> +bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
+> +                                          uint64_t dpa, uint64_t len)
+>  {
+>      CXLDCExtentGroup *group;
+>  
+> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> index 91ec1ba299..7be68d98c6 100644
+> --- a/include/hw/cxl/cxl_device.h
+> +++ b/include/hw/cxl/cxl_device.h
+> @@ -736,4 +736,8 @@ void cxl_create_dc_event_records_for_extents(CXLType3Dev *ct3d,
+>                                               CXLDCEventType type,
+>                                               CXLDCExtentRaw extents[],
+>                                               uint32_t ext_count);
+> +bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
+> +                                    uint64_t dpa, uint64_t len);
+> +bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
+> +                                          uint64_t dpa, uint64_t len);
+>  #endif
+> -- 
+> 2.47.2
+> 
+
+-- 
+Fan Ni (From gmail)
 
