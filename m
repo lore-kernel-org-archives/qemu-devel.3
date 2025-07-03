@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADFC5C77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 02:48:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B176C8303C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 02:49:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uX9zV-0002T1-NA; Wed, 02 Jul 2025 22:48:01 -0400
+	id 1uX9zi-0002c0-8O; Wed, 02 Jul 2025 22:48:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uX9zS-0002P0-RM
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 22:47:58 -0400
+ id 1uX9zg-0002bf-PA
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 22:48:12 -0400
 Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uX9zR-0007uj-3S
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 22:47:58 -0400
+ id 1uX9zW-0007uj-Bm
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 22:48:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751510876; x=1783046876;
+ t=1751510881; x=1783046881;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=aggi/VVoEsa3JDXqyqBaYdGUcSP9MkQM0hUW7deY3Vo=;
- b=Q+CSYR9wXb1yw7V2SdjMKaejXj0GGK444v1Do9DI4+MPSL8TDDXAswXW
- 9zb1EBtJTgtoJ9SqHrdFVeyzkxA/05Vrbp5PmmhQ6ffhhFQy8bO8vU3J7
- Z6JY+MtQtwgUyNriLCthNZ6WNybrW2W/+UV0c4KoOuIuMyZs+wt2QioeO
- AsPBEebtv79/CKAurJQan73qmIgsu7ZzpOtba3lVEnf41asQmviE/pBmt
- Wz86ohM6Mlw/ANe06iIFX+2yR5eYdUnsYojrBmUg20QIwyQbSRv43k57I
- zVdxzwcHbxy7I4dEoANc9spdmm43fjZ9pOSC1BiEH4SNAXgLuzH4K6lq3 g==;
-X-CSE-ConnectionGUID: PipyiUgpQDCsjHkFSpNEqw==
-X-CSE-MsgGUID: n3An80AWS3ydR4gZtxOHjw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="57499450"
-X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="57499450"
+ bh=jGc1SEhOx3aErmclLmDyukz5nk+L1TqYMmTJmPp+//I=;
+ b=KxqFXme3y9mNUn37ySE+oJR9UlbOKwtXWGOf4vvWUGXGzBW2gYqi/gpo
+ R4bCpnxDSzxp6/XfMCYaScLD25BcTKsOnid/OeufSfScdkm+Lo5JdnOH5
+ sswNgxBPyy7ryRXyV916Dh5UT44WJ0X0zmBm2yFgREuqcLO1AKxWyj3uL
+ /c8m/N2VrK4gOrY9QDzLrf2GZfgDnlZYz3r+aR0wV5QT2dD3FR48xmjbg
+ OdyvrpjGpLZp+ZZsR29IJy1VcXn1l58RHlIgUHpeE1gZNZfHiB3o7wOiV
+ 48AphlwmBj/ZJp1L6+/5Rx3iqhPtlFFxxkZm2Rk6g81v+0MJc1FIt4QIB A==;
+X-CSE-ConnectionGUID: 9L6hRRtsTmGQkqtYsMtYng==
+X-CSE-MsgGUID: RxIMz+LgRSOse/coqXfmVA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="57499455"
+X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="57499455"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jul 2025 19:47:54 -0700
-X-CSE-ConnectionGUID: TVVSVLO8T1C99mG6z91B4A==
-X-CSE-MsgGUID: wFNQ01H+RPa0RYwA0bEPUA==
+ 02 Jul 2025 19:47:56 -0700
+X-CSE-ConnectionGUID: 2oX2/fo4TPyaeaY7InC+rA==
+X-CSE-MsgGUID: 6uCgOZjYSi2Vkp4IFjFmlg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="153880358"
+X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="153880369"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa007.fm.intel.com with ESMTP; 02 Jul 2025 19:47:53 -0700
+ by fmviesa007.fm.intel.com with ESMTP; 02 Jul 2025 19:47:56 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
  xiaoyao.li@intel.com
-Subject: [PATCH 1/4] i386/tdx: Remove enumeration of GetQuote in
- tdx_handle_get_tdvmcall_info()
-Date: Thu,  3 Jul 2025 10:40:17 +0800
-Message-ID: <20250703024021.3559286-2-xiaoyao.li@intel.com>
+Subject: [PATCH 3/4] i386/tdx: Set value of <GetTdVmCallInfo> based on
+ capabilities of both KVM and QEMU
+Date: Thu,  3 Jul 2025 10:40:19 +0800
+Message-ID: <20250703024021.3559286-4-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250703024021.3559286-1-xiaoyao.li@intel.com>
 References: <20250703024021.3559286-1-xiaoyao.li@intel.com>
@@ -83,55 +83,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GHCI is finalized with the <GetQuote> being one of the base VMCALLs, and
-not enuemrated via <GetTdVmCallInfo>.
+KVM reports the supported TDVMCALL sub leafs in TDX capabilities.
 
-Adjust tdx_handle_get_tdvmcall_info() to match with GHCI.
-
-Opportunistically fix the wrong indentation and explicitly set the
-ret to TDG_VP_VMCALL_SUCCESS (in case KVM leaves unexpected value).
+one for kernel-supported
+    TDVMCALLs (userspace can set those blindly) and one for user-supported
+    TDVMCALLs (userspace can set those if it knows how to handle them)
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
- target/i386/kvm/tdx.c | 6 ++++--
- target/i386/kvm/tdx.h | 2 --
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ target/i386/kvm/tdx.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index e809e4b2dfa2..8c661c3ecfdb 100644
+index 8c661c3ecfdb..10dfb80d22e2 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -1259,13 +1259,15 @@ out_free:
+@@ -1256,14 +1256,21 @@ out_free:
+     g_free(task);
+ }
+ 
++#define SUPPORTED_TDVMCALLINFO_1_R11    (0)
++#define SUPPORTED_TDVMCALLINFO_1_R12    (0)
++
  void tdx_handle_get_tdvmcall_info(X86CPU *cpu, struct kvm_run *run)
  {
      if (run->tdx.get_tdvmcall_info.leaf != 1) {
--	return;
-+        return;
+         return;
      }
  
--    run->tdx.get_tdvmcall_info.r11 = TDG_VP_VMCALL_SUBFUNC_GET_QUOTE;
-+    run->tdx.get_tdvmcall_info.r11 = 0;
-     run->tdx.get_tdvmcall_info.r12 = 0;
+-    run->tdx.get_tdvmcall_info.r11 = 0;
+-    run->tdx.get_tdvmcall_info.r12 = 0;
++    run->tdx.get_tdvmcall_info.r11 = (tdx_caps->user_tdvmcallinfo_1_r11 &
++                                      SUPPORTED_TDVMCALLINFO_1_R11) |
++                                      tdx_caps->kernel_tdvmcallinfo_1_r11;
++    run->tdx.get_tdvmcall_info.r12 = (tdx_caps->user_tdvmcallinfo_1_r12 &
++                                      SUPPORTED_TDVMCALLINFO_1_R12) |
++                                      tdx_caps->kernel_tdvmcallinfo_1_r12;
      run->tdx.get_tdvmcall_info.r13 = 0;
      run->tdx.get_tdvmcall_info.r14 = 0;
-+
-+    run->tdx.get_tdvmcall_info.ret = TDG_VP_VMCALL_SUCCESS;
- }
  
- static void tdx_panicked_on_fatal_error(X86CPU *cpu, uint64_t error_code,
-diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
-index 35a09c19c521..d439078a8761 100644
---- a/target/i386/kvm/tdx.h
-+++ b/target/i386/kvm/tdx.h
-@@ -32,8 +32,6 @@ typedef struct TdxGuestClass {
- #define TDG_VP_VMCALL_GPA_INUSE         0x8000000000000001ULL
- #define TDG_VP_VMCALL_ALIGN_ERROR       0x8000000000000002ULL
- 
--#define TDG_VP_VMCALL_SUBFUNC_GET_QUOTE 0x0000000000000001ULL
--
- enum TdxRamType {
-     TDX_RAM_UNACCEPTED,
-     TDX_RAM_ADDED,
 -- 
 2.43.0
 
