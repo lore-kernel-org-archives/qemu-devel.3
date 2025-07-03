@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 170E2C83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 08:22:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E2FCC77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 08:25:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXFCQ-0003Fw-BU; Thu, 03 Jul 2025 04:21:42 -0400
+	id 1uXFFX-0004DI-91; Thu, 03 Jul 2025 04:24:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXFCK-0003DD-Jw
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 04:21:36 -0400
+ id 1uXFFV-0004CE-DQ
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 04:24:53 -0400
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXFCI-0003wF-W8
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 04:21:36 -0400
+ id 1uXFFT-0004hB-TX
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 04:24:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751530895; x=1783066895;
+ t=1751531092; x=1783067092;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=jVUXjMb7kRtNiepQR/ImXR4huaPt7WQgGicc8HW7yl0=;
- b=H7DXxlfC4+YX1nQRq5ZgcsPh17ywImhLUHgt4v3X1T2917SFILDRh5Gc
- opteBdtXtJ9EKecudHqNxMz0K8ncDFQSZWex5UnqY9QfZpY847tKJGJLh
- Y/JpHGfAyrACGV9nzkkvdvvxUkpoKP6b14Jg/Lnbx+SzTt9zi2Vd6v3si
- AX99LzrLdmE8aPc4mzJVGOU6+zziQnVORHY3ldUDesKbkYdcUpQ5uWsV3
- JaUgRlCtTQo5qY5YUw9LcX5iaUZYU9MxWil5T3vHkGtuUYiOZ0cqbnkHp
- ZCXtAIWdt0i8xywftnG6ex8xK6ut4F8twQYe84x8yGEbA8TDBkbWrpul3 w==;
-X-CSE-ConnectionGUID: YAqu9hUPSxeHQioQFpnaFg==
-X-CSE-MsgGUID: LTZCK6UnTcyKJa93UK2cJw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="64897638"
-X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="64897638"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ bh=OL7YB4QqrsOIrbmMdhLO6b5EBpFpjMPIWAfHz4kxYTk=;
+ b=UOrk1O1BYTMSHTo6xuiNKauhLDNEulPE5n5Jq6Hl9o0N4wYouLBc8Knt
+ Hrc2ciqGAljN2DTmvFeURh++QclvL8h7JI5D+NK1RKrhetznHEweohHr1
+ sCkV7kyi+rdZNE2ONp7xYl+P5tsqJOYh3XtsLQo7k3g1Oh6VHQ7KbOu0w
+ 2zmXMIfLygqq6LzAZcXK1YYI4PDEWR2/s4D7MGUAwuFC3kXZZCnoDRK5L
+ jFEy31G2whT8bAt+5AccufSb+HOVim14BoHwxKQB2PDCiAQAT21Rb5Xq3
+ 7SRaQugePAX1Mn9gLvHeSNKoENlUZmj0ehZsnF3nlb/iGxetyCNU2dqXT w==;
+X-CSE-ConnectionGUID: fskSeSzHSKGFkH4j29EI/A==
+X-CSE-MsgGUID: +gqWmG6tQRqC/Bt3N2Rsbw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="64897790"
+X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="64897790"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2025 01:21:33 -0700
-X-CSE-ConnectionGUID: WZp2ts+OSgGhnj+ngACLrA==
-X-CSE-MsgGUID: Ozl/wDxITiag2bdPBkJcdw==
+ 03 Jul 2025 01:24:50 -0700
+X-CSE-ConnectionGUID: K/Lh4bp/RTiD0Ygz1JEFag==
+X-CSE-MsgGUID: enRRDQADQwmF7whpYfHbxA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="154873949"
+X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="158577105"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa008.fm.intel.com with ESMTP; 03 Jul 2025 01:21:31 -0700
-Date: Thu, 3 Jul 2025 16:42:56 +0800
+ by fmviesa005.fm.intel.com with ESMTP; 03 Jul 2025 01:24:46 -0700
+Date: Thu, 3 Jul 2025 16:46:12 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org,
@@ -54,17 +54,21 @@ Cc: qemu-devel@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v4 23/65] accel/system: Introduce @x-accel-stats QMP
- command
-Message-ID: <aGZCkM7LKEi4VGUi@intel.com>
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, kvm@vger.kernel.org,
+ xen-devel@lists.xenproject.org
+Subject: Re: [PATCH v4 57/65] accel: Always register
+ AccelOpsClass::kick_vcpu_thread() handler
+Message-ID: <aGZDVG3775oKYQmI@intel.com>
 References: <20250702185332.43650-1-philmd@linaro.org>
- <20250702185332.43650-24-philmd@linaro.org>
+ <20250702185332.43650-58-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250702185332.43650-24-philmd@linaro.org>
+In-Reply-To: <20250702185332.43650-58-philmd@linaro.org>
 Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -41
@@ -90,25 +94,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 02, 2025 at 08:52:45PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Wed,  2 Jul 2025 20:52:45 +0200
+On Wed, Jul 02, 2025 at 08:53:19PM +0200, Philippe Mathieu-Daudé wrote:
+> Date: Wed,  2 Jul 2025 20:53:19 +0200
 > From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v4 23/65] accel/system: Introduce @x-accel-stats QMP command
+> Subject: [PATCH v4 57/65] accel: Always register
+>  AccelOpsClass::kick_vcpu_thread() handler
 > X-Mailer: git-send-email 2.49.0
 > 
-> Unstable QMP 'x-accel-stats' dispatches to the
-> AccelOpsClass::get_stats() and get_vcpu_stats() handlers.
+> In order to dispatch over AccelOpsClass::kick_vcpu_thread(),
+> we need it always defined, not calling a hidden handler under
+> the hood. Make AccelOpsClass::kick_vcpu_thread() mandatory.
+> Register the default cpus_kick_thread() for each accelerator.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  qapi/accelerator.json      | 17 +++++++++++++++++
->  include/qemu/accel.h       |  2 ++
->  include/system/accel-ops.h |  3 +++
->  accel/accel-qmp.c          | 34 ++++++++++++++++++++++++++++++++++
->  accel/accel-system.c       |  1 +
->  accel/meson.build          |  2 +-
->  6 files changed, 58 insertions(+), 1 deletion(-)
->  create mode 100644 accel/accel-qmp.c
+>  include/system/accel-ops.h | 1 +
+>  accel/kvm/kvm-accel-ops.c  | 1 +
+>  accel/qtest/qtest.c        | 1 +
+>  accel/xen/xen-all.c        | 1 +
+>  system/cpus.c              | 7 ++-----
+>  5 files changed, 6 insertions(+), 5 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
