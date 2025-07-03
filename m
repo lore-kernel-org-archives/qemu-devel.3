@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9048DC83F03
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:56:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1DE4C83F03
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:57:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXNDt-0007sM-1x; Thu, 03 Jul 2025 12:55:45 -0400
+	id 1uXNEI-0007vC-JX; Thu, 03 Jul 2025 12:56:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXNDr-0007s7-Nk
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:55:44 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uXNED-0007ut-Bf
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:56:05 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXNDo-0008B3-O7
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:55:43 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3a4ef2c2ef3so9000f8f.2
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:55:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uXNEB-0008D5-6b
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:56:05 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-60867565fb5so62129a12.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:56:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751561738; x=1752166538; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hYYsoPhUt2rwghSez0OC1r1SNN/QZSz1/N0OAe81ego=;
- b=TKtMR+VTN1I8JJd06pQG9p3sYbzM1Ru1Ler4cGobywgXoXgh9XwqwroTWoPVpIDqY4
- uDYSHOjnkfqJqEbAplmLZXZm8S7CUaEb9d0nuh3YzNMT731RBPOcUX8OtpTvKqE1VYha
- 26PNRlrfsQKQuR0fPJYGrJAvYJqi8Rpl/wo7+xEwR+v/VS/bk8A/p2vf//AO+o1Cq2ZK
- BLDtfKSNE2n/MIlhev1vQxvbUy9x0L60AaeIo5/E3ZHUSV/TGgQp7gdCSW3/vDjPOtqD
- d3cTR5XeDRaB7Oj55asoELeQPQneOOBlVaTNmbC+UsPFIqH1JNZRSw3jBsBojbfrioAG
- 9UHg==
+ d=linaro.org; s=google; t=1751561761; x=1752166561; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QI7+o1tREJe3qZjR9j+ygkNdK2CxMkJ8vpmr8RlkU7A=;
+ b=MuClnQgYrjJ9HsbhFMOLWdxcQSNWh2X/Giy31V1Hic5ipwIuz9OXVAboJ5zSWwiAxM
+ biMfFAxL5O8dB5ww2hbC1+4HnY/k+h0Zh8oG/rjgZukf7U8yU3aEv6j3QkdM3UFv4+Ji
+ ubeUJ+VpmfbAgbSsa2PjE8xcG09H12y0VOKpvcM/ZK4e5L0OadCHuw7I3/9fNXG1e1I0
+ Isdd69DoB7wNpGYTBBz1H/fcJBoWA1T0Q8L7EkUcVFCz0P/rQ4tUfsbqeXh+WmKlK9d0
+ nOLwN3G3SJL22Zw3jU+FYxuf5nqK1VcTwV7u9/iKkJOMb2++J5NhF2dntNBJzXFwTpjI
+ zr6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751561738; x=1752166538;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hYYsoPhUt2rwghSez0OC1r1SNN/QZSz1/N0OAe81ego=;
- b=jK01uXpRU4XG2dehNmZeRjn0hweOk5tUdMdNzy/S26Hy93e09wqt4/edjS7CDR0vro
- AU1Mpaa2ic8dN1i9MAji+hBiU5S6ZbWmhG75OLfNGtoqrYvn91OePcwXuG5ys5WrXCYk
- xT6EGTWpsmbLDIS2umK2+Rd8KaacwaTrFlDgfeY11PbcblPxj0igJ4EelVZ5CQAvEPE2
- 4Cj29ozMJbzvK2GAN0oqsr/BLg+3olNqUEokpmWfCxFbWg+L4xrSx8sAiifuzjNI+aO0
- sFVmYogS8YmqNp0+HEWEZFw4JyHFTEAggRHvfUukTyXkVCAEIcgUFqT2HOAsMszBnA10
- 3HgA==
-X-Gm-Message-State: AOJu0YyIsER4oaw8vaGywxh25h6E2hJwsqMpp4LhLL0hAfMqD+dmBVFA
- bkDVeyZb0ENb7JhBhFV5kQDBEbnvyP/jOtz1kkNHq6ppE+gDzwTttLx83oxkhgBjcxY=
-X-Gm-Gg: ASbGncv9iPohljtE9ImslXNIP6lZIahtBo5PgAT/sxuV5886AIaA6SoY+yjX9OgK4c3
- YA2gOMlRPt3QnJp5Z5zD8/XovbypNXKrjeZ3uRpbZfBskh6xrf1WwTHmEohZUFLsy9PDL4xIwJT
- 7i78mqQws1X8cHJ/ICA78sDiw+LLGlcTnJO6xHd3Ka2UWOtyzJk05JEEqA14jxhvn6cTgu5BlM0
- NGVwZ3OX7PFmubQ6+2hycYhIufQqjOHCYZJtgYj2cPINR5TfbKwqQlDWmx3YpQxsdj0CeThnnwp
- yql1XRpY8Rn3mA/gl9L2SUERcAiIK6M9jpKhW5GTmQ5iDUAbhXzhwh7qHkahbhlROKd5lqQ2rQ6
- D+trxrg4tuujlmTXZjF6m3dIOz2Ky3g==
-X-Google-Smtp-Source: AGHT+IHLUEZ5vDy4UpJ8pCKMBdiahdN4DFcUr6FxKXFZdwgF+JfkAVchTkNT9I4nLqN07mkCrXiLxA==
-X-Received: by 2002:a05:6000:481c:b0:3a4:fea6:d49f with SMTP id
- ffacd0b85a97d-3b2012f94f8mr6499301f8f.49.1751561738527; 
- Thu, 03 Jul 2025 09:55:38 -0700 (PDT)
-Received: from [192.168.69.218] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454b1698e91sm2651495e9.30.2025.07.03.09.55.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Jul 2025 09:55:37 -0700 (PDT)
-Message-ID: <4cde90c2-abc9-4221-9571-d66f981bff8a@linaro.org>
-Date: Thu, 3 Jul 2025 18:55:37 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 02/65] system/cpus: Defer memory layout changes until
- vCPUs are realized
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Peter Xu
- <peterx@redhat.com>, David Hildenbrand <david@redhat.com>
+ d=1e100.net; s=20230601; t=1751561761; x=1752166561;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=QI7+o1tREJe3qZjR9j+ygkNdK2CxMkJ8vpmr8RlkU7A=;
+ b=bYWFwXeZYi/5xcNWEcFO9hZM7beci8QZ1LT+38yBBuiIzewmOvkvA2EJU0Kojid9K2
+ NcHLnxhFonSua7PBNAHgkLwlktA0NcADDFA3O7GsgWbb9n9/+py15szHMuoidNmqfaUD
+ FqEmYL0ZEfOPebjLusIGoZu/XMPe5dXzlZtFNxKk96G6VKGQoJ4WrRuxDedu9EUGaHCt
+ oUOPC/Rz5w5PsKDx/Qm7HNyWXXsa49WoXDdGDxpg4cDH9REiQ6wqC+DZYPPCfq6ZqaUe
+ Jim8xMwaQrD6X+T4NiD87FaCV0aYSKU7b6EZXcyfED367X465X+1XCsUgCtE863bCKQP
+ VXDA==
+X-Gm-Message-State: AOJu0YyQGgxtvDAbB3C701hVVe4a2ZS9k9mGknJeXuTd3KihCflLBixr
+ VcibmkiKHrozic7MxA/dL69zPMm2OrUMViNUBu4RTaoqIMg9CyG0XMScmeKLnQ/VVhM=
+X-Gm-Gg: ASbGncvVII3jQJS6PNnG1rV500M9qwwwSkPmEumZjR3MxZAWzozfN99AH+ooV1ObSqI
+ MCuWMmBxtZz4TafNIqSzeP1FMyVPPOKmn+uXbcieVNfvq+WkZ+b/fGhszHV2PFZmhF05hvoh22z
+ EgITaqzdsBZ4BlaotYntRZg5UtBoiC691VxzAdDoouuERxJSSofWZPqMfzmsDpveM3FIoeJxcqD
+ L5i4wHLTRnflddVLBay0YgF6Pqchon1BXbGsPLtNSC6eGWDsOWEwlSTbbhsC1701nK5uoSPys3/
+ NeEwre8kcg27sskKNIGaBk+4wAcHZ9ZlC3IqJ0drwtBjB5p5SHT7gtxEtK/V1Ns=
+X-Google-Smtp-Source: AGHT+IEgzZyXuGj9IYibNia78cAn2f1Ptu4ULOGOUO1PSZXEHLVtbIP7OcZ7VImhREA2rRyiEZZGgQ==
+X-Received: by 2002:a17:906:99c4:b0:ad8:9a3b:b274 with SMTP id
+ a640c23a62f3a-ae3c2da6476mr701439666b.52.1751561760809; 
+ Thu, 03 Jul 2025 09:56:00 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ae3f6b64ebfsm5258766b.168.2025.07.03.09.55.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 03 Jul 2025 09:56:00 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 34DDA5F8AE;
+ Thu, 03 Jul 2025 17:55:59 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Richard
+ Henderson <richard.henderson@linaro.org>,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v4 26/65] accel/tcg: Implement get_[vcpu]_stats()
+In-Reply-To: <20250702185332.43650-27-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 2 Jul 2025 20:52:48
+ +0200")
 References: <20250702185332.43650-1-philmd@linaro.org>
- <20250702185332.43650-3-philmd@linaro.org> <87cyahcjt5.fsf@draig.linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87cyahcjt5.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+ <20250702185332.43650-27-philmd@linaro.org>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Thu, 03 Jul 2025 17:55:59 +0100
+Message-ID: <877c0pcixs.fsf@draig.linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,50 +106,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/25 18:37, Alex Bennée wrote:
-> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
-> 
->> vCPUs are not really usable until fully realized. Do not attempt
->> to commit memory changes in the middle of vCPU realization. Defer
->> until realization is completed and vCPU fully operational.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   system/physmem.c | 8 ++++++++
->>   1 file changed, 8 insertions(+)
->>
->> diff --git a/system/physmem.c b/system/physmem.c
->> index ff0ca40222d..8b2be31fa7e 100644
->> --- a/system/physmem.c
->> +++ b/system/physmem.c
->> @@ -2792,6 +2792,14 @@ static void tcg_commit(MemoryListener *listener)
->>       cpuas = container_of(listener, CPUAddressSpace, tcg_as_listener);
->>       cpu = cpuas->cpu;
->>   
->> +    if (!qdev_is_realized(DEVICE(cpu))) {
->> +        /*
->> +         * The listener is also called during realize, before
->> +         * all of the tcg machinery for run-on is initialized.
->> +         */
->> +        return;
->> +    }
->> +
-> 
-> This is a c&p of the wording bellow:
-> 
->       * That said, the listener is also called during realize, before
->       * all of the tcg machinery for run-on is initialized: thus halt_cond.
-> 
-> which is now redundant because of the early exit?
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Commit 0d58c660689 ("softmmu: Use async_run_on_cpu in tcg_commit") hmmm.
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  accel/tcg/tcg-all.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
+> index ae83ca0bd10..d49d2b3b0fa 100644
+> --- a/accel/tcg/tcg-all.c
+> +++ b/accel/tcg/tcg-all.c
+> @@ -239,11 +239,17 @@ static int tcg_gdbstub_supported_sstep_flags(AccelS=
+tate *as)
+>      }
+>  }
+>=20=20
+> +static void tcg_get_stats(AccelState *as, GString *buf)
+> +{
+> +    tcg_dump_flush_info(buf);
 
-I don't understand enough this area, so I'll drop this patch for now and
-keep carrying it for split accel.
+This is failing in linux-user because we don't have a monitor:
 
-Regards,
+  /usr/bin/ld: libuser.a.p/accel_tcg_tcg-all.c.o: in function `tcg_get_stat=
+s':
+  /home/alex/lsrc/qemu.git/builds/all/../../accel/tcg/tcg-all.c:244:(.text+=
+0x194): undefined reference to `tcg_dump_flush_info'
+  collect2: error: ld returned 1 exit status
 
-Phil.
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
