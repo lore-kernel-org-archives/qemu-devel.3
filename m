@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33AF1C83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 11:10:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F94CC83F09
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 11:10:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXHgc-0008Ex-IJ; Thu, 03 Jul 2025 07:01:02 -0400
+	id 1uXHh1-0000mL-Iu; Thu, 03 Jul 2025 07:01:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHdP-0004zJ-1r
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 06:57:46 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHdz-0005Lo-2F
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 06:58:24 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHdN-00025v-Bt
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 06:57:42 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-45310223677so38344625e9.0
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 03:57:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHdt-0002ZL-C5
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 06:58:18 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3a54690d369so5257861f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 03:58:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751540259; x=1752145059; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751540291; x=1752145091; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gyDIfVgkjNXaUsE4JArqlEQoqhWF6dxOZmRK2K42QUQ=;
- b=Vln3hpGHaw27EhzcxNP8BFdT2NrAsYPy7TzDVfZJxth/rs1Udh1NTvhtrQ0LJhU0xI
- FHOHoUuWPOe6er7hL2RSZFahn84yYHQ16dcuSRjRJwiXiZQxDUkymOM1E5MSUlnxzPT3
- LdUOelbnRLUukuLByd9gUpvLDC31cXkvXA4Q5wFJf3L2+mcjiskLgWzYm0Lsid8SrSBg
- RB5TlncPmHeRzOtchNgXcd6ElJ/czgst1KGXufAReEFGUEyukskm8hgI+H6ld8RTbtDE
- /2IbW51JNB1pFoRcBSkIwwoXl8N3wQw/wiGSGj7dqGWPCZK7LK/NwrwXQDLQVmefzbXP
- xKXA==
+ bh=KIKdQEQMhRvU2if5P5ei68jHnjUcTCqPA9NR4/HOCwU=;
+ b=sAaAF05vWwrETqXLmonqmQiRcaRupAhJdR4puYUkc71ueMiuIQJEvOZ8jHMnHQUEYz
+ EuSwj80tdKkkmND3zhJx4htgGn6BrSfkh++HGyAQ8WgGkZwEqFZwJbgU4h0l0YxTkMBf
+ LdkyAA9VoOrLM68J9V+qLNarMGS7rD9YsL/KEBWGm98lV8amVOoQV+meyMcGmgxL88pu
+ gokjnz0SMfWaRRqFWgvwhMvV4jgxm1pjB8n7L7zojf8RD9H6JvVri4xhq/55aplq9xF+
+ b3bVhwOpilShmBZIKRt7XwT8d1+a+8t1r1dvpXxNoES47Rd6zbWpqhp6S6mukwzW7Z1C
+ e5Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751540259; x=1752145059;
+ d=1e100.net; s=20230601; t=1751540291; x=1752145091;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gyDIfVgkjNXaUsE4JArqlEQoqhWF6dxOZmRK2K42QUQ=;
- b=d8x5dgxheMy60YNmoCVYPpDan+KvI0xQ6dViS2n3Gd1udofgOsAezOoK7eAyhtQYXM
- oX6+1UsOAaOOX7j6MZbSQh0FokVUZWTPKIFeltnL/KLEJ7QisPlXjmUtfsIhBxgfqeDF
- eebnCEPwlzgJCE/hfzBxQohaNILIRULU3m576Dr82R7G0tIhVUl+kIeFKC/X7uhBVHXd
- 0v+C1BaTgsfNFqH3z4B/UxsXr713pI15KOno1y14mx/zSGEX9faUdexrWq/KLnSS2s2W
- izyRtUVd5AUzCjWOey4MCSknazLDQy6wKVRGIjkxCoe71tR/ZVUCv/WZ48VSp4aILjhQ
- eBgg==
-X-Gm-Message-State: AOJu0Yx4L8NL4iC4SGRZEzjkuXTHdWaJDTid/6+trHTWwt89dIFE4Mug
- YTGvFoXDUasICw/P90ZqRRLt0hfhlYVPB/CrIWqBQxTvv7hASII9X76jtkcnVX+3fo9CN4LDgBA
- 8TAY/knU=
-X-Gm-Gg: ASbGncvqUHlJBozSOl9p/n0MJoJvTXKKn1/h+62wUC4iQxY60KhjykMZ6kVAsZEDozo
- 8CO9UzlpGfm/juCyQeS60zDg6V748YJ+BlGivh5ZKZso4Hbm3qyUJsWKu4jwGyvpVrLAByTJZLs
- sQi+KlyQt1dEf283PI2JAWDQ2sdWDpXZesY/yPE+J6tVoLVagQHhNoy/juEgsZ0sr0jPHW3Amh2
- 8M5hBMCjUmJmL+3KLYsccHlTf+2UTR2hJD+V70iNhyh7PWqTwVj/fPc4tOiuUggsZPK3K/u1t0H
- /oKgYuaSbYJ9Rx9QuHd5anM8JfQY90psM8wOWNJG/axEGNCy9IVuVsvqU4Ri5k19tzGKBQQij6r
- MGOH3RTZtZJM=
-X-Google-Smtp-Source: AGHT+IFnMUp9ULAlreAnLA58eLaPSmiRt8sgmToqT8PTkCSUBzjcdHDj/cVj5qFUEozQJ4tUqy3gXA==
-X-Received: by 2002:a05:600c:3f0c:b0:441:b076:fce8 with SMTP id
- 5b1f17b1804b1-454a36e91eamr71382595e9.14.1751540259254; 
- Thu, 03 Jul 2025 03:57:39 -0700 (PDT)
+ bh=KIKdQEQMhRvU2if5P5ei68jHnjUcTCqPA9NR4/HOCwU=;
+ b=Sg2E0iRpA3RuOUWz3EY8HaUMmy+y98lpmFUoO+A/nxrg/JLb4QGdiSWghdMOFxCL2e
+ GOVwHuyZqppKhDPYd1eQ5tHa6J7jblcZgr5q5PgAy6Hl7+DmVldciUY1x4ZPY1P4kuW6
+ 6fpA16ZFFvrQq3JyZTlKX0pCQpim3OLLi4lJliFa2iWcQwF0pOM3EnRNZwpRGrLyYGyz
+ MMn/d0VBCV7uSxcnF1OtvDGlEf02q7N2OBc7h5NZ7Nvs3wVMQoBwMMDRm28/Q52v60ya
+ MK3prdN8yFRLjgCBbV6UmC7gvohY2v8kkx/F73DPJ7xViFMRvIVXYBhBEjoo8yDqPZld
+ rKoQ==
+X-Gm-Message-State: AOJu0YxbU4fwcQ4HSg4jIO1yBU+thgVkD2lI6XOsttilAE6p+33CSJwv
+ v2Hsq3q033o1NK7Q/HrxZLQhMOSRIzNc/XxzpQjz/tMPRWYs0fT1/H8pR1oE74y5EQzmoclednP
+ pudt1geE=
+X-Gm-Gg: ASbGncsc0sg5ovDu0Tabt0xWF+qQfqCN2WdzmH5pvT8pwq/y3wQMKa9CfvzdI7lNSCe
+ 6xmbeyZUvFazJbZBClRkAs3zeRvS4pprrz/drf1Eu3DpUrENGlocv6xnsiZDJHSyWXFZu8OJf7T
+ y+LrkEsZ91e2LJ75yzAPxraCQDzuvjUMyF7usujjP5CIrDpsA+y0OTuG502Olg6mskFo1loxHhZ
+ USByR9kT6rCW7uzj+ua+IG/HS14K4KRVP+WGpUW1Yk6lVJld5o2v9UNbTLCd/zgHub0alpa+73O
+ L0Smy9LLV9Vnd3XSwUlguqIpdsRZ3oX4p4SrK0ub3vNFGudMswxgwkTWjDS/7a7/cjutgczox2h
+ aIjKLfH6BMUw=
+X-Google-Smtp-Source: AGHT+IHwgKk5VrVHFX9rm+LGEdeJ7fke42sHffpGrRf9jRGQsl8mPqZf5MQ41AzswLHhRi5K9UL9vQ==
+X-Received: by 2002:a05:6000:4611:b0:3a6:ec1d:1cba with SMTP id
+ ffacd0b85a97d-3b1fea90838mr5549124f8f.20.1751540290789; 
+ Thu, 03 Jul 2025 03:58:10 -0700 (PDT)
 Received: from localhost.localdomain ([83.247.137.20])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454a999d399sm23784825e9.25.2025.07.03.03.57.37
+ ffacd0b85a97d-3a892e52bb3sm18652440f8f.56.2025.07.03.03.58.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Jul 2025 03:57:38 -0700 (PDT)
+ Thu, 03 Jul 2025 03:58:10 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -73,25 +73,24 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v5 22/69] hw/core/machine: Display CPU model name in 'info
- cpus' command
-Date: Thu,  3 Jul 2025 12:54:48 +0200
-Message-ID: <20250703105540.67664-23-philmd@linaro.org>
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>
+Subject: [PATCH v5 28/69] qapi: Move definitions related to accelerators in
+ their own file
+Date: Thu,  3 Jul 2025 12:54:54 +0200
+Message-ID: <20250703105540.67664-29-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250703105540.67664-1-philmd@linaro.org>
 References: <20250703105540.67664-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,85 +107,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Display the CPU model in 'info cpus'. Example before:
-
- $ qemu-system-aarch64 -M xlnx-versal-virt -S -monitor stdio
- QEMU 10.0.0 monitor - type 'help' for more information
- (qemu) info cpus
- * CPU #0: thread_id=42924
-   CPU #1: thread_id=42924
-   CPU #2: thread_id=42924
-   CPU #3: thread_id=42924
- (qemu) q
-
-and after:
-
- $ qemu-system-aarch64 -M xlnx-versal-virt -S -monitor stdio
- QEMU 10.0.50 monitor - type 'help' for more information
- (qemu) info cpus
- * CPU #0: thread_id=42916 (cortex-a72)
-   CPU #1: thread_id=42916 (cortex-a72)
-   CPU #2: thread_id=42916 (cortex-r5f)
-   CPU #3: thread_id=42916 (cortex-r5f)
- (qemu)
+Extract TCG and KVM definitions from machine.json to accelerator.json.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Tested-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- qapi/machine.json          | 3 +++
- hw/core/machine-hmp-cmds.c | 3 ++-
- hw/core/machine-qmp-cmds.c | 1 +
- 3 files changed, 6 insertions(+), 1 deletion(-)
+ MAINTAINERS                |  1 +
+ qapi/accelerator.json      | 57 ++++++++++++++++++++++++++++++++++++++
+ qapi/machine.json          | 47 -------------------------------
+ qapi/qapi-schema.json      |  1 +
+ accel/tcg/monitor.c        |  2 +-
+ hw/core/machine-hmp-cmds.c |  1 +
+ hw/core/machine-qmp-cmds.c |  1 +
+ qapi/meson.build           |  1 +
+ 8 files changed, 63 insertions(+), 48 deletions(-)
+ create mode 100644 qapi/accelerator.json
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index b1cbfe115bc..c3ce0d37779 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -507,6 +507,7 @@ F: accel/Makefile.objs
+ F: accel/stubs/Makefile.objs
+ F: cpu-common.c
+ F: cpu-target.c
++F: qapi/accelerator.json
+ F: system/cpus.c
+ 
+ Apple Silicon HVF CPUs
+diff --git a/qapi/accelerator.json b/qapi/accelerator.json
+new file mode 100644
+index 00000000000..00d25427059
+--- /dev/null
++++ b/qapi/accelerator.json
+@@ -0,0 +1,57 @@
++# -*- Mode: Python -*-
++# vim: filetype=python
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++##
++# = Accelerators
++##
++
++{ 'include': 'common.json' }
++
++##
++# @KvmInfo:
++#
++# Information about support for KVM acceleration
++#
++# @enabled: true if KVM acceleration is active
++#
++# @present: true if KVM acceleration is built into this executable
++#
++# Since: 0.14
++##
++{ 'struct': 'KvmInfo', 'data': {'enabled': 'bool', 'present': 'bool'} }
++
++##
++# @query-kvm:
++#
++# Return information about KVM acceleration
++#
++# Returns: @KvmInfo
++#
++# Since: 0.14
++#
++# .. qmp-example::
++#
++#     -> { "execute": "query-kvm" }
++#     <- { "return": { "enabled": true, "present": true } }
++##
++{ 'command': 'query-kvm', 'returns': 'KvmInfo' }
++
++##
++# @x-query-jit:
++#
++# Query TCG compiler statistics
++#
++# Features:
++#
++# @unstable: This command is meant for debugging.
++#
++# Returns: TCG compiler statistics
++#
++# Since: 6.2
++##
++{ 'command': 'x-query-jit',
++  'returns': 'HumanReadableText',
++  'if': 'CONFIG_TCG',
++  'features': [ 'unstable' ] }
 diff --git a/qapi/machine.json b/qapi/machine.json
-index 0650b8de71a..d5bbb5e367e 100644
+index acf6610efa5..e4713c405e8 100644
 --- a/qapi/machine.json
 +++ b/qapi/machine.json
-@@ -80,6 +80,8 @@
+@@ -454,35 +454,6 @@
+ ##
+ { 'command': 'inject-nmi' }
+ 
+-##
+-# @KvmInfo:
+-#
+-# Information about support for KVM acceleration
+-#
+-# @enabled: true if KVM acceleration is active
+-#
+-# @present: true if KVM acceleration is built into this executable
+-#
+-# Since: 0.14
+-##
+-{ 'struct': 'KvmInfo', 'data': {'enabled': 'bool', 'present': 'bool'} }
+-
+-##
+-# @query-kvm:
+-#
+-# Return information about KVM acceleration
+-#
+-# Returns: @KvmInfo
+-#
+-# Since: 0.14
+-#
+-# .. qmp-example::
+-#
+-#     -> { "execute": "query-kvm" }
+-#     <- { "return": { "enabled": true, "present": true } }
+-##
+-{ 'command': 'query-kvm', 'returns': 'KvmInfo' }
+-
+ ##
+ # @NumaOptionsType:
  #
- # @thread-id: ID of the underlying host thread
+@@ -1729,24 +1700,6 @@
+   'returns': 'HumanReadableText',
+   'features': [ 'unstable' ] }
+ 
+-##
+-# @x-query-jit:
+-#
+-# Query TCG compiler statistics
+-#
+-# Features:
+-#
+-# @unstable: This command is meant for debugging.
+-#
+-# Returns: TCG compiler statistics
+-#
+-# Since: 6.2
+-##
+-{ 'command': 'x-query-jit',
+-  'returns': 'HumanReadableText',
+-  'if': 'CONFIG_TCG',
+-  'features': [ 'unstable' ] }
+-
+ ##
+ # @x-query-numa:
  #
-+# @model: CPU model name (since 10.1)
-+#
- # @props: properties associated with a virtual CPU, e.g. the socket id
- #
- # @target: the QEMU system emulation target, which determines which
-@@ -91,6 +93,7 @@
-   'base'          : { 'cpu-index'    : 'int',
-                       'qom-path'     : 'str',
-                       'thread-id'    : 'int',
-+                      'model'        : 'str',
-                       '*props'       : 'CpuInstanceProperties',
-                       'target'       : 'SysEmuTarget' },
-   'discriminator' : 'target',
+diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
+index a8f66163cb7..616e04970ef 100644
+--- a/qapi/qapi-schema.json
++++ b/qapi/qapi-schema.json
+@@ -55,6 +55,7 @@
+ { 'include': 'introspect.json' }
+ { 'include': 'qom.json' }
+ { 'include': 'qdev.json' }
++{ 'include': 'accelerator.json' }
+ { 'include': 'machine-common.json' }
+ { 'include': 'machine.json' }
+ { 'include': 'machine-s390x.json' }
+diff --git a/accel/tcg/monitor.c b/accel/tcg/monitor.c
+index adb9de5a1c6..d5dd677f2a4 100644
+--- a/accel/tcg/monitor.c
++++ b/accel/tcg/monitor.c
+@@ -9,7 +9,7 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+ #include "qapi/type-helpers.h"
+-#include "qapi/qapi-commands-machine.h"
++#include "qapi/qapi-commands-accelerator.h"
+ #include "monitor/monitor.h"
+ #include "system/tcg.h"
+ #include "internal-common.h"
 diff --git a/hw/core/machine-hmp-cmds.c b/hw/core/machine-hmp-cmds.c
-index c6325cdcaaa..65eeb5e9cc2 100644
+index 65eeb5e9cc2..15ae5864d16 100644
 --- a/hw/core/machine-hmp-cmds.c
 +++ b/hw/core/machine-hmp-cmds.c
-@@ -40,7 +40,8 @@ void hmp_info_cpus(Monitor *mon, const QDict *qdict)
- 
-         monitor_printf(mon, "%c CPU #%" PRId64 ":", active,
-                        cpu->value->cpu_index);
--        monitor_printf(mon, " thread_id=%" PRId64 "\n", cpu->value->thread_id);
-+        monitor_printf(mon, " thread_id=%" PRId64 " (%s)\n",
-+                       cpu->value->thread_id, cpu->value->model);
-     }
- 
-     qapi_free_CpuInfoFastList(cpu_list);
+@@ -18,6 +18,7 @@
+ #include "monitor/monitor.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-builtin-visit.h"
++#include "qapi/qapi-commands-accelerator.h"
+ #include "qapi/qapi-commands-machine.h"
+ #include "qobject/qdict.h"
+ #include "qapi/string-output-visitor.h"
 diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index d82043e1c68..ab4fd1ec08a 100644
+index ab4fd1ec08a..f37fd220c2d 100644
 --- a/hw/core/machine-qmp-cmds.c
 +++ b/hw/core/machine-qmp-cmds.c
-@@ -47,6 +47,7 @@ CpuInfoFastList *qmp_query_cpus_fast(Error **errp)
-         value->cpu_index = cpu->cpu_index;
-         value->qom_path = object_get_canonical_path(OBJECT(cpu));
-         value->thread_id = cpu->thread_id;
-+        value->model = cpu_model_from_type(object_get_typename(OBJECT(cpu)));
- 
-         if (mc->cpu_index_to_instance_props) {
-             CpuInstanceProperties *props;
+@@ -14,6 +14,7 @@
+ #include "hw/mem/memory-device.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-builtin-visit.h"
++#include "qapi/qapi-commands-accelerator.h"
+ #include "qapi/qapi-commands-machine.h"
+ #include "qobject/qobject.h"
+ #include "qapi/qobject-input-visitor.h"
+diff --git a/qapi/meson.build b/qapi/meson.build
+index 3b035aea339..ca6b61a608d 100644
+--- a/qapi/meson.build
++++ b/qapi/meson.build
+@@ -57,6 +57,7 @@ qapi_all_modules = [
+ ]
+ if have_system
+   qapi_all_modules += [
++    'accelerator',
+     'acpi',
+     'audio',
+     'cryptodev',
 -- 
 2.49.0
 
