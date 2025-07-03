@@ -4,75 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C73FC77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 12:45:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D25B7C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 12:46:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXJGS-0005m3-4T; Thu, 03 Jul 2025 08:42:12 -0400
+	id 1uXJIP-0000ze-CP; Thu, 03 Jul 2025 08:44:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uXJE5-000153-O8
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:39:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uXJDr-0000bs-Dr
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:39:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751546362;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aied6IMtrGNeEei91xtIjb3dgzJFDwM7XO3g8IWdCiY=;
- b=Rs1Q3HSlmGrYq3LZPadaV8UmsBNrElkgcwNJEwH1g1rdkNstsxCL3Y0hFhiNsbxy+Lem7x
- cry2fjl+acJ37EyZTSFVh6GR+g/aYi0YYlxAGBFdEatn6ot28+TAJytliLA53Vc3Smz0gm
- KKaD/1xNi8PUWNEnuRHzMZ1/kZ+rLJ0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-417-xcrtr64xNOSH9S5_ySCALQ-1; Thu,
- 03 Jul 2025 08:39:18 -0400
-X-MC-Unique: xcrtr64xNOSH9S5_ySCALQ-1
-X-Mimecast-MFC-AGG-ID: xcrtr64xNOSH9S5_ySCALQ_1751546356
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9955F180028D; Thu,  3 Jul 2025 12:39:16 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.32.16])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 27F79180045C; Thu,  3 Jul 2025 12:39:11 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
- Jonathan.Cameron@huawei.com, gustavo.romero@linaro.org,
- anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com
-Cc: pbonzini@redhat.com,
-	philmd@linaro.org,
-	alex.bennee@linaro.org
-Subject: [PATCH v5 19/36] qtest/bios-tables-test: Generate DSDT.viot
-Date: Thu,  3 Jul 2025 14:35:19 +0200
-Message-ID: <20250703123728.414386-20-eric.auger@redhat.com>
-In-Reply-To: <20250703123728.414386-1-eric.auger@redhat.com>
-References: <20250703123728.414386-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXJH6-0006jk-Dy
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:42:51 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXJGt-0003Zb-4b
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:42:44 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-70e4043c5b7so54808377b3.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 05:42:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751546553; x=1752151353; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZnAvfqlFdC/Hotog3YjSC/GOMBzdYbRz/WSMurliVYI=;
+ b=ht2gHAHHaz/ELy2Y0oxAvQf6B6rdYL4Tt7sGFvwWyKJPju23uu9B5Iiv8Ol4lvHWJh
+ 0SAfC5OawLBhVqokbbWpOfTTKhppz2k1erE1vn0rkCQAPE7qmLHVj+gDusHQYybDpKND
+ h2SfamWGd50H6L+uQpcRn4cB0S6yWFiMsxkRnnAdiFEk8Hl/l1ZtvmTwvRCRIFP2eXyZ
+ 0l1dzq8WUa/+XXrYoFl8ZKiXHAYQvYDpgoWF7lHZLaMvkQJUVVLrmAW3ORl8Fi0XToiz
+ Go8kj+AAqdxoVmBkCpB6VnwTgjACDGcm/XwgH1QXYAZInxHnoBHM/NlIqcx4ZTOJ6jxU
+ PUIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751546553; x=1752151353;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZnAvfqlFdC/Hotog3YjSC/GOMBzdYbRz/WSMurliVYI=;
+ b=hu53I9fqMqziMq7emqJXr3UxhLC3ly+8N8WRyMx4Fl3pbMznJmPJlLgpxJyDnkf6i6
+ 3TwirZW2jemEejCqS7wla2n07bkYjbxtwDtjmH9l5WumlY/d1bIoxgCuMdegj22zJqEt
+ HnU/5Lnq6pWrTiOmfoLBLSoeZuppFJseYJsBlTxjRm9C6kqyQKAv3e6j9g/XDzT+sl7B
+ tkbkvJ6diC8CEfzbPwFg6iFREKFxf1D6gHxFMzG/biaoTuXYUz2MCFXYT2DU3ClgJIQu
+ G9uCOMGBTEcCDJl6HkrWLJ4QP8c2Qj1/K+X2Kbd+KbxIeX5hke68RBo/FJRvitvW0T5l
+ WVpQ==
+X-Gm-Message-State: AOJu0YzHd5nUjoz4L+fgp2u0yutOUlu1ZfTT35h1NCVXMY6QrWbrTEzz
+ UbRcw4p5W5J5CFDUjmLHDIzyDaHvYoZrjbpn5rQI89ZRpcBOgYBFQhY+JprgU2VXkZhDMP7xr6x
+ +W2x2+38fxZbJAWSol+VsT4pPq1qt2ZbNB2FSyJeQIg==
+X-Gm-Gg: ASbGnctP2wHuw0aBlKIP37zic0cmD85CLGEx5h3V+YtMgRLY4cfxYGgQCbwx8fJsmAC
+ n89SckEKG/28TgK7NSOxyM6bkp/1jvigmV4xnKsQWMFelUiyRK43WrEo/NqKOyK1JxkJR1NMFso
+ KWu6XRh4VNNiHf53HjEpWYgjhjLLR+Dea+IfrkBfom+D2Vdjav+fl3rhA=
+X-Google-Smtp-Source: AGHT+IGwNu+Jg4o3xPbg1vRLOg0JAh+TwKDwKcChi7o3EA2wWXteyOGAkbnh5Fy803WAdfvg/JyHugEDTV4tQXaK9xI=
+X-Received: by 2002:a05:690c:6608:b0:70e:7663:8bb4 with SMTP id
+ 00721157ae682-7164d467d9bmr87649087b3.25.1751546553274; Thu, 03 Jul 2025
+ 05:42:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20250702123410.761208-1-richard.henderson@linaro.org>
+ <20250702123410.761208-90-richard.henderson@linaro.org>
+In-Reply-To: <20250702123410.761208-90-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 3 Jul 2025 13:42:20 +0100
+X-Gm-Features: Ac12FXyKa-H0v56oPo_H9mi3YqAWh39rBr-vIxDbeNTlrFsFUf0Mck0yQppJk2I
+Message-ID: <CAFEAcA_1+R93TR350TmieVZbYErQ+g34RyPWjd-8rRatJm-Sug@mail.gmail.com>
+Subject: Re: [PATCH v3 89/97] target/arm: Implement LUTI2,
+ LUTI4 for SME2/SME2p1
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,59 +93,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use a specific DSDT.viot reference blob instead of relying on
-the default DSDT blob. The context has not changed.
+On Wed, 2 Jul 2025 at 13:42, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
----
- tests/qtest/bios-tables-test-allowed-diff.h |   1 -
- tests/data/acpi/aarch64/virt/DSDT.viot      | Bin 0 -> 5158 bytes
- 2 files changed, 1 deletion(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index 7a74beab3d..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/aarch64/virt/DSDT.viot",
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.viot b/tests/data/acpi/aarch64/virt/DSDT.viot
-index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..acab6e65febbc210158d4c39be0680bbb90250f5 100644
-GIT binary patch
-literal 5158
-zcmZvg%WoT16o=2)6MH;<Wc*0%I8N+Bsd!dnyJ^zWmfB+{aj_HQNgE_rawJql$)*w&
-zQmK&AELzBpMq(YL{vk-LkXW!|(KQ?X0d^SOc{t~%o>|y)ALqOG8=sMmZ^!NIT`CYo
-z{%G$y+itD>`OvA=YBi0B)V=z)p54~&Pu%uod|Y;H+cqZKy-vF2412b1uahyk+w0Ky
-z_`0(@2**Z)ZQHKbgE3>`jNEM5EIv<=0w%~J`Y}eDc7ceV(D-;`bKlwYxu10hcWv8l
-zkTG%hT4vIiI8ICR5m__iBO-}X5ZTi2jlwPUcSgImZLgg#JBvJD+@wgbxXlrDe|1Et
-zW#2$V7@{5^+G-aK31LPghRzrb&S;8^sKkgdMw2tHhzwm~7>sd+GuA}LoWw90V~sPe
-zij0`VNHNA$&R7>2afy*(jCIb~5E+KVuoz>5Gp>n@gv7`(#x=&M2QLSvm}yFk0%Kg~
-z3^7gdB?(h~kug5z3^`9z(mqOzaf37DJWWfCGGpB23^`9T5~IQxw>U%2(|L)p${3$;
-zhMcFC#HcaGZO)MMG%GRQVvH7N$a$KR7#A6%%^7l@<|W1@#&8&;A?Im9V!X>39nO&R
-zbU|Xg&lp|Kkn?m=VtmLLo17u%X;ETaW{fS)kn^-8F>J=z<_tMcmn24mF?yUK=V@7D
-zTw#nmoFV7wvc$N`7@u;6oTn9uvB4O9&XDtTMPgiMi~(ab<vd-L7&jPWhco0ntxAkr
-zjIkRqdU}6W5Dj;RwqtM3ijU#Q&1TG`SLeL#&G(BK>?_13?#R`~J}TG_pfm$e7X_5x
-zH$&Y~y9(YOK&fJcZ|fa_<@X^gc#Dt~Mb;&O<@cSlUJjjJ@T)0S%id7Wq}K^rO;z)C
-zx5${Z+dH%8=<bcORkJcAhkEpYYGhN5I`n|PrHAwdJs?sLuS^?`_VWF2%%faVPfn+#
-zejD=dwZ3iFDVI|HW<))nuo3Osc9U{xJvE(bq+;r`mWpanF5{1Ran19linN2d5ihba
-zYpKX^YQ&GUgUASZk>M&)FEZRg)Qb$KM*YZo5E=C&!&P)IGTedgMTS##KQi3B?nj2J
-z%z@_|c+R2coF5sk5(Cc|c*f8(hMsZojDu$!J>%$UfTsbT26`IknE=lOcqY&@fu1IK
-zn&4@or-`0P@Jxbd5<QdXnF7xgc&5-Zg`R2fOoL|{J=5r!0nZG0X3#T(p7Y>251#Yr
-zIgg$ecv|3Tp{IqOS@6t)XBIuP=$Ql09C+r?Gl!me@XUi}9zFBuSpd%hcoxvJfSwEB
-zxd5IE=(&KNi{QBko{Q+Yh@M68EP`hdJ&WjB0?!h7me8|=o=f1l1fEOixrCl&@GOI8
-z89mGBxeT7m;JJ*R%jj7F&kA@}(6fS`E8w{To-63Nf}X43xeA`E=(&oXRq(8WXB9oG
-zp=ZIGIPDg_%BWKx_5a4NShnNl;~&x#Ns+py>O*@`Buc5n9CcaK>3`~PnHs(PqDWdQ
-z>bHod-t_4$B8^TyU@_ix<jt7+lh~#DpHQJ6pX|DhesV}oXTN^7Gk5w`Hg8(v!RzL~
-z)ynOk_aC=@z4_OdCx@o)boLu3ho<3l_M4B?$HCJBvwCo5y*z!WeXqj3vHDs5<*7I9
-z_gQM>(ShpuCFOT1RQ=Uq;iE~%9q4Bl{5Ahv|NU=w?YqHG#eW7%zd3`m#Oc@cDjU@_
-z^+Ds~fj;WGthjN!BP@0B)imul%)O^OoldLjDYMH`_v%Ef9lw8Bow;pwI}`ux!9Q@T
-zt0L)cuan;DcA%h)YVY}>N8M3(i&8{J!qmsllB(%+-EO~DSebP1?Ij+m#=)6&`t-n5
-ZwaN40{-|vpjgObqjlY;*>N!CX_CM8!>@ENR
+> diff --git a/target/arm/tcg/vec_internal.h b/target/arm/tcg/vec_internal.h
+> index 236927c640..ad3bfabc34 100644
+> --- a/target/arm/tcg/vec_internal.h
+> +++ b/target/arm/tcg/vec_internal.h
+> @@ -337,6 +337,22 @@ bfloat16 helper_sme2_ah_fmin_b16(bfloat16 a, bfloat16 b, float_status *fpst);
+>  float32 sve_f16_to_f32(float16 f, float_status *fpst);
+>  float16 sve_f32_to_f16(float32 f, float_status *fpst);
+>
+> +/* Extract @len bits from an array of uint64_t at offset @pos bits. */
+> +static inline uint64_t extractn(uint64_t *p, unsigned pos, unsigned len)
+> +{
+> +    uint64_t x;
+> +
+> +    p += pos / 64;
+> +    pos = pos % 64;
+> +
+> +    x = p[0];
+> +    if (pos + len > 64) {
+> +        x = (x >> pos) | (p[1] << (-pos & 63));
+> +        pos = 0;
+> +    }
+> +    return extract64(x, pos, len);
+> +}
 
-literal 0
-HcmV?d00001
+We added this in patch 79, I think, so we could put it in
+vec_internal.h from the start (with the comment).
 
--- 
-2.49.0
+Otherwise
 
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
