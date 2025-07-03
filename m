@@ -4,71 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69DDDC77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 13:53:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8319C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 13:59:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXKMu-0006NX-Rv; Thu, 03 Jul 2025 09:52:53 -0400
+	id 1uXKSj-0000sL-CT; Thu, 03 Jul 2025 09:58:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1uXKMs-0006MG-9G
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 09:52:50 -0400
-Received: from smtp-out-60.livemail.co.uk ([213.171.216.60]
- helo=dkim.livemail.co.uk)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1uXKMk-0005yF-IF
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 09:52:47 -0400
-Received: from smtp.livemail.co.uk (unknown [10.44.132.83])
- by dkim.livemail.co.uk (Postfix) with ESMTPS id B849BA00D2;
- Thu,  3 Jul 2025 14:52:37 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=randomman.co.uk;
- s=livemail2; t=1751550757;
- bh=E15LJTjGHZP0XyS/tEeUF10rAXEIoLtg64+AjJ3rt+Y=;
- h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
- b=b3QWZ7Bx+XTXA9qUUssYqoyAgUkny/kQm7DGWXk18+j7YocRITV3ey2HmOwz8Gqnj
- TcsX86JSLzFlH6AC6npm1I5dZ4qLm9xYVm9jEs6fuDjF4vYFzJGUj0b+8TfSsEHTYk
- EKfDWJPtHmYEn28xL/bauSUffLlRBZTy1mrxbtyg=
-Received: from [172.22.54.5] (unknown [145.40.191.116])
- (Authenticated sender: roy.hopkins@randomman.co.uk)
- by smtp.livemail.co.uk (Postfix) with ESMTPSA id 3270F40261;
- Thu,  3 Jul 2025 14:52:33 +0100 (BST)
-Message-ID: <b4800e3cc61e4531d96e7c4a2bb2f0841f98c98c.camel@randomman.co.uk>
-Subject: Re: [PATCH v8 13/16] backends/igvm: Process initialization sections
- in IGVM file
-From: Roy Hopkins <roy.hopkins@randomman.co.uk>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, "Daniel P .
- Berrange" <berrange@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin"
- <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>, Eduardo
- Habkost <eduardo@habkost.net>, Alistair Francis <alistair@alistair23.me>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, Igor
- Mammedov <imammedo@redhat.com>, Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>, Gerd Hoffman <kraxel@redhat.com>,
- Pankaj Gupta <pankaj.gupta@amd.com>, Joerg Roedel <joro@8bytes.org>
-Date: Thu, 03 Jul 2025 14:52:32 +0100
-In-Reply-To: <CAK3XEhPJncqwL6V6KOhOGLHOjSy-9OQTRWyTPQBP0NsHeVxr6A@mail.gmail.com>
-References: <cover.1749820158.git.roy.hopkins@randomman.co.uk>
- <12d0e71fd1b37ae132f78498d497cb72b90da5d1.1749820158.git.roy.hopkins@randomman.co.uk>
- <CAK3XEhPJncqwL6V6KOhOGLHOjSy-9OQTRWyTPQBP0NsHeVxr6A@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4-0ubuntu2 
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uXKSg-0000rB-P8
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 09:58:50 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uXKSe-0000hl-Hf
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 09:58:50 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-ae0b6532345so184357266b.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 06:58:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751551125; x=1752155925; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Mq32u52RK+HWwNC5TASeS+/bUraLvFaEkHDNXHlNzLk=;
+ b=x9GPW1HvFnakbLDW/cqUR4wPeYzWgmwaFJchXCZVPucCl8SgC6oqwa1S/POumsabFO
+ XoijhYDt9/Z8sV3T2ii4YjDCAeH2+MlqXeIbSXkypmHDnsFdnALoQ++cQFHp1fD2hsRq
+ mHwFJT+tblzgtU9nMbNmu8P65ui+HLrHjxI3HMiGO8IrrSlHt2IaGkiOqVJbZghserdD
+ Z+cunD1MQgydZ/L6HsjePDXeYfmq25A8qc+mPeoaqYKBDiLr6mnll2aK/ZVD3mywmZnE
+ Yvy0xAU9H7EarDb9eKHus+WESD+5xA+vsgqwx5EsHhIQoLrHHvP0wdbX8Dm6TZj0Nv4z
+ ZShg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751551125; x=1752155925;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Mq32u52RK+HWwNC5TASeS+/bUraLvFaEkHDNXHlNzLk=;
+ b=Adh8W5RfM5VJB6Bm5oBzT0CEzMcF00vDW5VSz0NVonflZ07iTEAyn+u7OGP+ru0WSb
+ xvfT8ndam9m3DY8I6htoSjYnchbMpYDF03ZDH+m8dPY8kzySXDPjNv5KuldwP1AnxE7t
+ Ks20TTkrR7t7zGC0GVnHTKsbYMP82IQ0N309uGMptQBWwuI5GcewKGO1V+eOdOTf0nq+
+ fBHkLl87J5CmCm7wf65cBs+c/bkgZZ72Kk+rLgcTMvpwc6qfM5woc/yLSf8d1bcmviRY
+ 0szrtWaBFrQpjtiUmz3eJlzxW4qHSc8mM2Y7lvXveTbYTImQOQi4TRpnuZ7XDJEqTG8c
+ rd9A==
+X-Gm-Message-State: AOJu0Yy5jytm1ifgY2higLpAE0Xn98E8A5YznUT36msg/LcJRtyVFVJT
+ gtA8C6ooxncyRC6QW32aaTXPJHIcjvU9uNzlWJEQEaoCWgYOFLb2y5goHhdst8ZMNfY=
+X-Gm-Gg: ASbGncsAFXnDq6R7b7nT4Mcx2t9h0lpdqfN0Mrjmq+8BjwdZe16793ORDz1L0niOfNi
+ Pms8yt5iI0jrQacT9R9hVeIj4vkzR7PYM92BEQmqZ6DXE6Kp+XU1m64jpGxrRSjvvv8cQLarDxl
+ Cqid5+A8F9jz9fGVcRmalSydiYd3xNX46djibcs/lodmyuD0sG2V7Af8AfgDxkXCkdmPN0b/Mqx
+ I6JxrfQeVkE0vNEOJs5wKccfzur20dPoa/w3rdAqz70xCYDWaWLlUQj3nFahs6+z4h0ICd434js
+ y2YCwrTpePe8ItsQKhJI3bVUI8nbHk1Tny2GguIZDbgywVCAirBnafK2pVJKj+VWkon3TJyIWvj
+ RzUd8pigSxZCuHT8vVPO7EWNi7OQrQn4=
+X-Google-Smtp-Source: AGHT+IE5o9LVGaXcBrAdQk0V6fbGZzjDbatvFTtJ/HyLnlDbfZHpBoRE7AVguy/axbOkt0UEN5ix9g==
+X-Received: by 2002:a17:906:f597:b0:ad5:6174:f947 with SMTP id
+ a640c23a62f3a-ae3dd5ef9f6mr276716466b.22.1751551124892; 
+ Thu, 03 Jul 2025 06:58:44 -0700 (PDT)
+Received: from [127.0.1.1] (ppp-2-86-212-125.home.otenet.gr. [2.86.212.125])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ae353ca1ca6sm1279678966b.176.2025.07.03.06.58.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 03 Jul 2025 06:58:44 -0700 (PDT)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PATCH 0/3] Small Rust memory API improvements
+Date: Thu, 03 Jul 2025 16:58:10 +0300
+Message-Id: <20250703-rust-mem-api-v1-0-cd5314bdf580@linaro.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=213.171.216.60;
- envelope-from=roy.hopkins@randomman.co.uk; helo=dkim.livemail.co.uk
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAHKMZmgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDcwNj3aLS4hLd3NRc3cSCTF3ztMQ0UzMTk+SURCMloJaCotS0zAqwcdG
+ xtbUAKD+YqF4AAAA=
+X-Change-ID: 20250703-rust-mem-api-7faf5644cda2
+To: qemu-devel@nongnu.org
+Cc: qemu-rust@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1018;
+ i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
+ bh=cXzmzyJpLxv1pQB88zIDrrVR5bfuIDmXpNrttE6CKSA=;
+ b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
+ 25RQWNzbVlnQm9ab3lUY29XV3FvcjFZTmJ3RW5wZ0t3dEhsVXZxCi96QkRGRXh1YURHZnRDSWVC
+ bFNKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYUdhTWt3QUt
+ DUkIzS2Nkd2YzNEowQVgyRC80bVpEQ0NHMkdJS2Z3ZVNDNVdrQUl2QnpHK2M1NTVnV3F4dFpleA
+ pQNU1KSkd3YjNlSjI1dUZzZGdPZCtibGE5U0xyTUJsdndLdzBjclRIbW8xeUtmdTFvTEQxMEVEV
+ W5uS2dKdGRMCmNqV1M5UGk2YlJ4dG1MQXpMYnV6TmhKOVNWT1cxMmJWQmZZWlJoV3IxdzFTMGVW
+ N3BqQml1cTdwMldqVHhXNC8KT0RraGxpUWV0M0lHenZOVWF3YkhIYisvanpDd0k5WGNzL0lwQzd
+ JY2pIbVpTRTV4cWVwdlVMNlgySjJQM2svVgpldlZ3bXFyK213V291bXpLcG45YWgxS2NxZTh1Sz
+ BDU2FOZjFhbEgzcjZ0TEVuK2w4eWdtSGRKa2xLN1l4ZGlOCnFiQ3JWTytFWEZiVk43SksvOXdST
+ llLQlc2d3lRTXZzRnZVNnVxdjJ0U1JoQ0pQdUNXeGc5aVBJZWc1bEEvK1kKSWlOK00vc3psREZw
+ SkFiVGhFZGhmYUJ5RjF6djlBYks0aU83RlVvdGpab2lTMDhPYkRWYVNGNWxCNDk5SVZRYQp2ay9
+ MY1JWWTlNY0RpZGVERklNT3Z6Z3puSTBVbkdPVXQyTUxiRytIdU9BMEdLeVpOaGdvSHJyaGErMT
+ ZHaVNhCjRackhRNVVyTGwwOHg2QzBIek1nYmN5Z0cvZVo5ajlFUHl5aC9aRi93MCt1Mm5iRG5vS
+ EdrTWhHSWpPVklzRGcKTTRBVlpkQ0p0VG8vVTVqcHZiN1BRTjRqaXN5Tm12VTBzTVAxWTUwWTIy
+ QUxlQ2hjVG0wcnRLa2ZQQUhhOTg5aAp2YmsrT1UybnduYVNxTjFaQmVuUmtvNUdFN2VUSGNjNjd
+ uOFpKZ1A3VC83YUVVblE5UHMyZldiZFc1MmNZaVlzCjRvZCszdz09Cj14d2R1Ci0tLS0tRU5EIF
+ BHUCBNRVNTQUdFLS0tLS0K
+X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
+ fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,105 +125,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2025-06-27 at 16:58 +0530, Ani Sinha wrote:
-> On Fri, Jun 13, 2025 at 8:52=E2=80=AFPM Roy Hopkins <roy.hopkins@randomma=
-n.co.uk> wrote:
-> >=20
-> > The initialization sections in IGVM files contain configuration that
-> > should be applied to the guest platform before it is started. This
-> > includes guest policy and other information that can affect the securit=
-y
-> > level and the startup measurement of a guest.
-> >=20
-> > This commit introduces handling of the initialization sections during
-> > processing of the IGVM file.
-> >=20
-> > Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
-> > Acked-by: Michael S. Tsirkin <mst@redhat.com>
-> > Acked-by: Gerd Hoffman <kraxel@redhat.com>
-> > Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-> > ---
-> > =C2=A0backends/igvm.c | 21 +++++++++++++++++++++
-> > =C2=A01 file changed, 21 insertions(+)
-> >=20
-> > diff --git a/backends/igvm.c b/backends/igvm.c
-> > index 2a31021d44..ebdb4594d1 100644
-> > --- a/backends/igvm.c
-> > +++ b/backends/igvm.c
-> > @@ -786,6 +786,27 @@ int qigvm_process_file(IgvmCfg *cfg, ConfidentialG=
-uestSupport *cgs,
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > =C2=A0=C2=A0=C2=A0=C2=A0 }
-> >=20
-> > +=C2=A0=C2=A0=C2=A0 header_count =3D
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 igvm_header_count(ctx.file,=
- IGVM_HEADER_SECTION_INITIALIZATION);
-> > +=C2=A0=C2=A0=C2=A0 if (header_count < 0) {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error_setg(
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 err=
-p,
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "In=
-valid initialization header count in IGVM file. Error code: %X",
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hea=
-der_count);
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 goto cleanup_parameters;
-> > +=C2=A0=C2=A0=C2=A0 }
-> > +
-> > +=C2=A0=C2=A0=C2=A0 for (ctx.current_header_index =3D 0;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ctx.current_header_in=
-dex < (unsigned)header_count;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ctx.current_header_in=
-dex++) {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 IgvmVariableHeaderType type=
- =3D
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 igv=
-m_get_header_type(ctx.file, IGVM_HEADER_SECTION_INITIALIZATION,
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ctx.current_header_index);
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (qigvm_handler(&ctx, typ=
-e, errp) < 0) {
->=20
-> So the next patch, patch #14 actually defines the handler.
->=20
-> @@ -92,6 +135,10 @@ static struct QIGVMHandler handlers[] =3D {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qigvm_directive_environment_info },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { IGVM_VHT_REQUIRED_MEMORY, IGVM_HEADER_SECTION_=
-DIRECTIVE,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qigvm_directive_required_memory },
-> +=C2=A0=C2=A0=C2=A0 { IGVM_VHT_SNP_ID_BLOCK, IGVM_HEADER_SECTION_DIRECTIV=
-E,
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qigvm_directive_snp_id_block },
-> +=C2=A0=C2=A0=C2=A0 { IGVM_VHT_GUEST_POLICY, IGVM_HEADER_SECTION_INITIALI=
-ZATION,
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qigvm_initialization_guest_policy },
-> =C2=A0};
->=20
->=20
-> So I think patch #14 should come before this patch in the series.
->=20
+This series adds minor improvements to the memory API:
 
-This was deliberately placed before #14 as it introduces the mechanism for =
-processing
-initialization sections, allowing future patches to then add sections as ne=
-cessary.
-Patch #14 then uses this new capability to handle guest policy. This patch =
-does
-compile successfully without patch #14 being applied.=20
+- Use an enum to define bit width for memory accesses instead of an
+  integer
+- Add *_with_attrs methods to MemoryRegionOps
 
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 got=
-o cleanup_parameters;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > +=C2=A0=C2=A0=C2=A0 }
-> > +
-> > =C2=A0=C2=A0=C2=A0=C2=A0 /*
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * Contiguous pages of data with compatib=
-le flags are grouped together in
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * order to reduce the number of memory r=
-egions we create. Make sure the
-> > --
-> > 2.43.0
-> >=20
->=20
+The *_with_attrs methods are not currently used by any device, and that
+patch can be dropped without issue.
+
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+---
+Manos Pitsidianakis (3):
+      rust/memory: replace size arg with Bits enum
+      memattrs.h: make MemTxAttrs into enum
+      rust: add *_with_attrs methods to MemoryRegionOps
+
+ include/exec/memattrs.h          | 11 ++---
+ rust/hw/char/pl011/src/device.rs |  8 ++--
+ rust/hw/timer/hpet/src/device.rs | 14 +++----
+ rust/qemu-api/meson.build        |  1 +
+ rust/qemu-api/src/memory.rs      | 86 +++++++++++++++++++++++++++++++++++-----
+ 5 files changed, 93 insertions(+), 27 deletions(-)
+---
+base-commit: c77283dd5d79149f4e7e9edd00f65416c648ee59
+change-id: 20250703-rust-mem-api-7faf5644cda2
+
+--
+γαῖα πυρί μιχθήτω
 
 
