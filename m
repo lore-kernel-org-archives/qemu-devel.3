@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F003C77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 07:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE001C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 07:32:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXEKo-0000vE-Hk; Thu, 03 Jul 2025 03:26:18 -0400
+	id 1uXEPd-00022X-Da; Thu, 03 Jul 2025 03:31:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXEKn-0000uz-OL
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 03:26:17 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
+ id 1uXEPc-00022O-DH
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 03:31:16 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXEKl-0004qa-HM
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 03:26:17 -0400
+ id 1uXEPZ-0006M7-Ms
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 03:31:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751527576; x=1783063576;
+ t=1751527874; x=1783063874;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=3tAVBMJz1cgvIFrjrSwAWbsjRKTYk2yoea1N3PHem44=;
- b=YyDWUl0pGXdsxd+1KhxmhpAmx5XH0tmg0iJ+j/n/0hQwK7hNRHLt9eDa
- xldXBGIV5b5C8Utfbf1smlMv3YnrBNiCMcxRnBAv8YZz/s1An27CRgkCX
- h1dXhsCP2RVqFJjRm23rbHGhOLzyO0dcQ6Xeg+2zjFo9VU29WGh1ODwyD
- JuDFj4CSkax06mckop8jpX5bqJKSkUmQ8K46ovfrHVjSMUmUx/TUxyRmb
- ohA33TkXtllLJSlb/ljb/IXSDSISyOP3ap6Lx6oMy0deeKRtEGgYSbnGc
- MkGahq1kavgQd3eMNxrDynj6N1iezDNDy15EOOgNzQ+NiBppPVEdIUw9n w==;
-X-CSE-ConnectionGUID: xCtrGqbpSoC75jYazcAVFQ==
-X-CSE-MsgGUID: ITnTIYUGTbOqY/cqMKU8lw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="41467333"
-X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="41467333"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2025 00:26:13 -0700
-X-CSE-ConnectionGUID: HCE289wUS4mKi25F3mAoUw==
-X-CSE-MsgGUID: MT9r+anOR4mYdgY7IIJqfA==
+ bh=umhNYtMq0xc0JruKddyKpbWr9UG6Y0MImL389MvdeJA=;
+ b=RP5Y0u4zHqh1Pazyv9TWipgDwhnmLxHNd3QMiCaq0nKkomgiMBebaFzc
+ Uc7/ygH6ADtQMvnDSKKOhziUE7PUOBYlrq7zaiIWY6v95loWNkSNqez7P
+ SMumZnvDP7voW8g3BFkPYG3D+uZjl9IbHdip/gH3BEDF3isvvS6jbY+Ec
+ 2BL3RY5z+w62+anjxr7WQLzg2t57D2B4qYM8HuRTGmZ6FtFK3CeseEFNr
+ 1CCGwQ9mNxQcfhg/fhDOTwbNE4/9omPWFNtuk8hSkltTLOsKNIFpAZIgh
+ wVH4FhQbyGbVDGHypxh+Rg/G+LHuJAkEjrmy3SJnCIpHPDBnsiF43OsyV g==;
+X-CSE-ConnectionGUID: L69C+rcdTAS1QxfBwOFJFw==
+X-CSE-MsgGUID: d1haSGi8TvKbtvAkwg6NUg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="65189365"
+X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="65189365"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jul 2025 00:31:11 -0700
+X-CSE-ConnectionGUID: duyQJDzBSf2hK3L8jDImjw==
+X-CSE-MsgGUID: WZlE00q1THa5jVLuCDVe6g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="158340963"
+X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="159800370"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa003.fm.intel.com with ESMTP; 03 Jul 2025 00:26:09 -0700
-Date: Thu, 3 Jul 2025 15:47:34 +0800
+ by fmviesa004.fm.intel.com with ESMTP; 03 Jul 2025 00:31:07 -0700
+Date: Thu, 3 Jul 2025 15:52:33 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
@@ -61,26 +61,25 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
  Pu Wen <puwen@hygon.cn>, Tao Su <tao1.su@intel.com>,
  Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
  qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [PATCH 03/16] i386/cpu: Add default cache model for Intel CPUs
- with level < 4
-Message-ID: <aGY1llcyArD3T5wD@intel.com>
+Subject: Re: [PATCH 08/16] i386/cpu: Fix CPUID[0x80000006] for Intel CPU
+Message-ID: <aGY2wfQJWeigUhm+@intel.com>
 References: <20250620092734.1576677-1-zhao1.liu@intel.com>
- <20250620092734.1576677-4-zhao1.liu@intel.com>
- <c93dce97-735b-4a1d-b766-f882e53eb50e@linux.intel.com>
+ <20250620092734.1576677-9-zhao1.liu@intel.com>
+ <bd979e2d-e036-4a1a-bf8a-0098eadb4821@linux.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c93dce97-735b-4a1d-b766-f882e53eb50e@linux.intel.com>
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <bd979e2d-e036-4a1a-bf8a-0098eadb4821@linux.intel.com>
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,79 +95,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > +/*
-> > + * Only used for the CPU models with CPUID level < 4.
-> > + * These CPUs (CPUID level < 4) only use CPUID leaf 2 to present
-> > + * cache information.
-> > + *
-> > + * Note: This cache model is just a default one, and is not
-> > + *       guaranteed to match real hardwares.
-> > + */
-> > +static const CPUCaches legacy_intel_cpuid2_cache_info = {
-> > +    .l1d_cache = &(CPUCacheInfo) {
-> > +        .type = DATA_CACHE,
-> > +        .level = 1,
-> > +        .size = 32 * KiB,
-> > +        .self_init = 1,
-> > +        .line_size = 64,
-> > +        .associativity = 8,
-> > +        .sets = 64,
-> > +        .partitions = 1,
-> > +        .no_invd_sharing = true,
-> > +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-> > +    },
-> > +    .l1i_cache = &(CPUCacheInfo) {
-> > +        .type = INSTRUCTION_CACHE,
-> > +        .level = 1,
-> > +        .size = 32 * KiB,
-> > +        .self_init = 1,
-> > +        .line_size = 64,
-> > +        .associativity = 8,
-> > +        .sets = 64,
-> > +        .partitions = 1,
-> > +        .no_invd_sharing = true,
-> > +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-> > +    },
-> > +    .l2_cache = &(CPUCacheInfo) {
-> > +        .type = UNIFIED_CACHE,
-> > +        .level = 2,
-> > +        .size = 2 * MiB,
-> > +        .self_init = 1,
-> > +        .line_size = 64,
-> > +        .associativity = 8,
-> > +        .sets = 4096,
-> > +        .partitions = 1,
-> > +        .no_invd_sharing = true,
-> > +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-> > +    },
-> > +    .l3_cache = &(CPUCacheInfo) {
-> > +        .type = UNIFIED_CACHE,
-> > +        .level = 3,
-> > +        .size = 16 * MiB,
-> > +        .line_size = 64,
-> > +        .associativity = 16,
-> > +        .sets = 16384,
-> > +        .partitions = 1,
-> > +        .lines_per_tag = 1,
-> > +        .self_init = true,
-> > +        .inclusive = true,
-> > +        .complex_indexing = true,
-> > +        .share_level = CPU_TOPOLOGY_LEVEL_DIE,
-> > +    },
+> >  static void encode_cache_cpuid80000006(CPUCacheInfo *l2,
+> >                                         CPUCacheInfo *l3,
+> > -                                       uint32_t *ecx, uint32_t *edx)
+> > +                                       uint32_t *ecx, uint32_t *edx,
+> > +                                       bool lines_per_tag_supported)
+> >  {
+> >      assert(l2->size % 1024 == 0);
+> >      assert(l2->associativity > 0);
+> > -    assert(l2->lines_per_tag > 0);
+> > -    assert(l2->line_size > 0);
 > 
-> Does this cache information match the real legacy HW or just an emulation
-> of Qemu?
+> why remove the assert for l2->line_size?
 
-This is the pure emulation and it doesn't macth any HW :-(, and is a
-"hybrid" result of continuously modifying and adding new cache features
-(like the virtual L3). But for compatibility reasons, I abstracte it
-into this special cache model, used only for older CPUs.
+Good catch! My bad...
 
-This way, at least modern CPUs won't be burdened by old historical
-issues.
-
-Thanks,
-Zhao
-
-
+> > +    assert(lines_per_tag_supported ?
+> > +           l2->lines_per_tag > 0 : l2->lines_per_tag == 0);
+> >      *ecx = ((l2->size / 1024) << 16) |
+> > -           (AMD_ENC_ASSOC(l2->associativity) << 12) |
+> > +           (X86_ENC_ASSOC(l2->associativity) << 12) |
+> >             (l2->lines_per_tag << 8) | (l2->line_size);
+> >  
 
