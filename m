@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CFACC83F03
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:13:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52592C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:16:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXMYx-0001CH-A0; Thu, 03 Jul 2025 12:13:27 -0400
+	id 1uXMb0-0002rw-9z; Thu, 03 Jul 2025 12:15:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXMYq-0001B5-4N
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:13:21 -0400
-Received: from mail-yb1-xb36.google.com ([2607:f8b0:4864:20::b36])
+ id 1uXMay-0002r4-VP
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:15:33 -0400
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXMYo-0000OK-JK
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:13:19 -0400
-Received: by mail-yb1-xb36.google.com with SMTP id
- 3f1490d57ef6-e81cf6103a6so5792029276.3
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:13:16 -0700 (PDT)
+ id 1uXMat-0001rf-Ve
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:15:32 -0400
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-70f147b5a52so46556437b3.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:15:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751559195; x=1752163995; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751559326; x=1752164126; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=bmU+xr1OiBLzHw0SxKXjXI5qLbifrHXtHC6ptVV0wYU=;
- b=dPxucalwx8DIVnhLT0MFAxO1CuHS1yMQdKb0Fy3ndTYr64anoscyCOT0BXy3XtVvIz
- AY8katani+VePviOQUD2ztzn5MeVAjpiljxucDEXGUHwq4Epxzwzc8hzbNbvyKkw08Cj
- tTOkwKLWqNoUK3AwmxKgUVKvbqO4hbDNurf5JVvGkPFylPFXHlJdH1wzcjoH7aUi1kDc
- DA/zvV5k9XJlwKILnQAfnQrgvGAbJddret5Z3FOP4GkFMxaS6KyvN7Ipl9uM10EtC7dN
- 2KZl2pyqjGhv+z2hCK0xfPm65RADzEy1icm4FFPwjQVjjFMt2kk12uz10YsVFIOvyhg8
- 24hQ==
+ bh=Poj0fGA3brK8qz/97lbZAKU719l5CrCEvP5wqOMoU0I=;
+ b=bKAy5A4Oz95tfe+f1EcuWv1IzbBWsVtN8oSEpp1UmmN/ppqYtvIdmcZWGr0+ADhDfK
+ 3AAYNG87w0AiqhM/KzvkLIKHwkWadgzz2v3rQ3FNqrAygriStkIB4beqSqd1iRPCUwPn
+ i/D1/H1h3CJ61XrqFFve8XJCFMmIjJzZvTUJQBdRf1ElfOTnHwMh0ThITh48YjR1g6kv
+ yOpQXJTtx+eMlA3RKdZa2s4xZcfOmW7ZUqRxz4X0waguMr4Fm/BnzU2wd7glTgs+tUtD
+ eQTupQJLaSnrmtIBoVR+uvGr8tOttMrYeipaTTftLIJSWU/5/NaSjepmdoz9fjJXwhwY
+ CDPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751559195; x=1752163995;
+ d=1e100.net; s=20230601; t=1751559326; x=1752164126;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=bmU+xr1OiBLzHw0SxKXjXI5qLbifrHXtHC6ptVV0wYU=;
- b=GIWQMMAtBUAnwpWqawsa0JRYLPY+Cq5JBgzLi4aUl0Ja3Gox7Xhajnz9xIEZ7pvNAj
- QKPGcpzejVBYwYoaQESQ5+tK1IaHF/a1hiFlBBnQByEwDYzjileVBAfgjgxC2sqsChxz
- zRs7eMHmEzUYFuWIXm9eFW/4Oynwj90JMhr1dISg2K3FFKF6u5j24YX4TBCdAGx5DP8o
- 387MCkdntIexvhD1R8N5zLlWC+UcTpK7pINUT6X5JM/OueIeNG0DB+OELHYYRwu7cO/2
- yTgOEfNyP0s+jGS5ibARN7pQAr+zb5g1dWN9sE2YjS9wmHuo7OQDaOcRPiuwcLGeHfBC
- WMCA==
-X-Gm-Message-State: AOJu0Yw2+4pqpYc4xHPwsK0S/lSrm8TrG4KlaPVK1rlrhGJC6Vsp9x6/
- mmXBP8EtfQUHjsDww7qXmY2u1Vtv7cdVP94PVBwsyXQttWUoAx+jbMJq7n0KuN3pxukP3+dLnQ1
- QUu64DQqDuCUOKDzrBI7ud4RohUqRI42MS9NvdGPMhw==
-X-Gm-Gg: ASbGncvfmQoDMBKaKU+xOP8pymmrTh+Pm8mxTRn8UMXbnm/WxNNqdJKbmvd6mMW3ZVz
- x4q41yMp1tCy8VU05LWH4uee7SWTJQOh4DL87DnpxJ6Kp4jltK+jUSuGyDllvIhW005evBLEArX
- 4vhHP7K9UWgQxslS/VITcW4jb3myMktv8/b5BHPN7dwCax
-X-Google-Smtp-Source: AGHT+IFC7lJ53nKBZxCacvFYQ/YSl+EfwtUpaT9Nhke5xGhedXl1NoPpRzA9m83S3Fdn2+atyUuGxbOZ98AgX6sQXmM=
-X-Received: by 2002:a05:690c:b96:b0:70d:f892:2dca with SMTP id
- 00721157ae682-716590e9c87mr56209187b3.32.1751559194798; Thu, 03 Jul 2025
- 09:13:14 -0700 (PDT)
+ bh=Poj0fGA3brK8qz/97lbZAKU719l5CrCEvP5wqOMoU0I=;
+ b=ZV5p4ncJvx88Q23TXIXrx+JG0m1erpchDcRhrVGhkq+mnAugdqVfQuoFdaAtl2G2/f
+ s+wf5ADdx1b5PHkt7BBxFQOYKmxyOHE28dDC2ojEK1psbBm8heUc0ICkuqHLExBsJRIL
+ G2l7ll1VrwSLGvvtp00+Il+JjBtBqqsB+oyZUN2YS12QRi3fn/Zdg1QMFCVLNJkL3HRs
+ WxNkfga17bRdblLd3FryTvwIn5w+o4TbyMhm5BFEzcCYh6nftXNEvTzedE2Xbmp5AASy
+ 6ptONFa9Xph5aRf5kd5FaL+2VwwYP2D40KZ2/8bIMRR8rIHdbtamrPfyoMIz65Zv4j7F
+ aC+Q==
+X-Gm-Message-State: AOJu0YxQhNqcabGqwOiwNPCvJoUD6DfrulOmfkK6uiWi2GeeFehAQA77
+ JzFJzeQTFInR7Uv0tlPOnKWt17/S0kwRQnuGGufHM/7HMPsAbwfz748iTSvuvD3XgSue0WWizL6
+ HPnb7/AxqTSvhlCiB9FP6c82mlw1QYO7i/a34RBLlqQ==
+X-Gm-Gg: ASbGncvgAjrPTDywZeSB6eQYiuuHQxeJcAQpM/5E2RBIB5cJoDgT06uF1fYdRV6Fa9Q
+ 91HoF0KSlKbE96w9LooGCAb6GLS5WqJYFeZcV0qedD8UD+iGnHDL51Zkq2vjatdwhN5MScPvwS3
+ 3QnjdNIBCJWP2Xo1hcv41OQ3TQ1PwfFrjmM2Oavqc6kUkv
+X-Google-Smtp-Source: AGHT+IFFW5IM/RT9vRjsWXY8eDnF88VSs5tgc2DQiek7a8GuwLIuBTrZPub4a3suPFL9BuEomKZIgWl4HG1WcGvR9nc=
+X-Received: by 2002:a05:690c:fcf:b0:710:e7ad:9d49 with SMTP id
+ 00721157ae682-71658ff8fdcmr69631557b3.13.1751559325717; Thu, 03 Jul 2025
+ 09:15:25 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250618230549.3351152-1-jcksn@duck.com>
- <20250618230549.3351152-5-jcksn@duck.com>
-In-Reply-To: <20250618230549.3351152-5-jcksn@duck.com>
+ <20250618230549.3351152-6-jcksn@duck.com>
+In-Reply-To: <20250618230549.3351152-6-jcksn@duck.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 3 Jul 2025 17:13:03 +0100
-X-Gm-Features: Ac12FXxtkgxM8KukjhVlYYSPaMfigSFUMqKzC40qNLhM4yJO66DDUgaYA_RrroQ
-Message-ID: <CAFEAcA9N6zstuiQJVAExjr57K-+F5qRZnCMfrOT3FqughJjAcg@mail.gmail.com>
-Subject: Re: [PATCH v2 04/11] MAX78000: UART Implementation
+Date: Thu, 3 Jul 2025 17:15:14 +0100
+X-Gm-Features: Ac12FXzcb2oF7iL4eMfkCz6a00dHxZzENzASVkRxjOxWDfljUTrew96r0eh0Vc8
+Message-ID: <CAFEAcA-8tNHmZSzZx5VqSMVm+uUU7AE_ioM5Tom2RtGeNMCwBQ@mail.gmail.com>
+Subject: Re: [PATCH v2 05/11] MAX78000: Add UART to SOC
 To: Jackson Donaldson <jackson88044@gmail.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b36;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb36.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,12 +94,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu, 19 Jun 2025 at 00:06, Jackson Donaldson <jackson88044@gmail.com> wrote:
 >
-> This commit implements UART support for the MAX78000
+> This commit adds UART to max78000_soc
 >
 > Signed-off-by: Jackson Donaldson <jcksn@duck.com>
 > ---
+>  hw/arm/max78000_soc.c         | 28 ++++++++++++++++++++++++----
+>  include/hw/arm/max78000_soc.h |  3 +++
+>  2 files changed, 27 insertions(+), 4 deletions(-)
+>
+> diff --git a/hw/arm/max78000_soc.c b/hw/arm/max78000_soc.c
+> index 8d8d2dce61..7217924191 100644
+> --- a/hw/arm/max78000_soc.c
+> +++ b/hw/arm/max78000_soc.c
+> @@ -18,6 +18,10 @@
+>  #include "hw/misc/unimp.h"
+>
+>  static const uint32_t max78000_icc_addr[] = {0x4002a000, 0x4002a800};
+> +static const uint32_t max78000_uart_addr[] = {0x40042000, 0x40043000,
+> +                                              0x40044000};
+> +
+> +static const int max78000_uart_irq[] = {14, 15, 34};
+>
+>  static void max78000_soc_initfn(Object *obj)
+>  {
+> @@ -30,6 +34,11 @@ static void max78000_soc_initfn(Object *obj)
+>          object_initialize_child(obj, "icc[*]", &s->icc[i], TYPE_MAX78000_ICC);
+>      }
+>
+> +    for (i = 0; i < MAX78000_NUM_UART; i++) {
+> +        object_initialize_child(obj, "uart[*]", &s->uart[i],
+> +                                TYPE_MAX78000_UART);
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+As with the earlier patch, give each object a unique name.
+
+> +    }
+> +
+>      s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
+>  }
+>
+> @@ -38,6 +47,7 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
+>      MAX78000State *s = MAX78000_SOC(dev_soc);
+>      MemoryRegion *system_memory = get_system_memory();
+>      DeviceState *dev, *armv7m;
+> +    SysBusDevice *busdev;
+>      Error *err = NULL;
+>      int i;
+>
+> @@ -88,6 +98,20 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
+>          sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, max78000_icc_addr[i]);
+>      }
+>
+> +    for (i = 0; i < MAX78000_NUM_UART; i++) {
+> +        dev = DEVICE(&(s->uart[i]));
+> +        qdev_prop_set_chr(dev, "chardev", serial_hd(i));
+> +        if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart[i]), errp)) {
+> +            return;
+> +        }
+> +        dev->id = g_strdup_printf("uart%d", i);
+
+This looks odd -- the SoC code shouldn't need to reach in and
+set anything directly in the DeviceState struct.
+
+> +
+> +        busdev = SYS_BUS_DEVICE(dev);
+> +        sysbus_mmio_map(busdev, 0, max78000_uart_addr[i]);
+> +        sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m,
+> +                                                       max78000_uart_irq[i]));
+> +    }
+> +
+>      create_unimplemented_device("globalControl",        0x40000000, 0x400);
+>      create_unimplemented_device("systemInterface",      0x40000400, 0x400);
+>      create_unimplemented_device("functionControl",      0x40000800, 0x400);
 
 thanks
 -- PMM
