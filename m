@@ -4,61 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CC83C77B7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99EA2C83030
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 08:49:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXFbO-0006WF-Iz; Thu, 03 Jul 2025 04:47:30 -0400
+	id 1uXFcH-000726-LP; Thu, 03 Jul 2025 04:48:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uXFbL-0006VW-UM; Thu, 03 Jul 2025 04:47:28 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1uXFcD-0006p0-7g
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 04:48:21 -0400
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uXFbI-0003jE-NQ; Thu, 03 Jul 2025 04:47:27 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bXr0Y0td3z6L5fF;
- Thu,  3 Jul 2025 16:44:13 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id AED7A1402F5;
- Thu,  3 Jul 2025 16:47:08 +0800 (CST)
-Received: from A2303104131.china.huawei.com (10.203.177.241) by
- frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 3 Jul 2025 10:46:59 +0200
-To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
- <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
- <imammedo@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <smostafa@google.com>, <gustavo.romero@linaro.org>, <mst@redhat.com>,
- <marcel.apfelbaum@gmail.com>, <linuxarm@huawei.com>,
- <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: [PATCH v6 00/12] hw/arm/virt: Add support for user creatable SMMUv3
- device
-Date: Thu, 3 Jul 2025 09:46:31 +0100
-Message-ID: <20250703084643.85740-1-shameerali.kolothum.thodi@huawei.com>
-X-Mailer: git-send-email 2.12.0.windows.1
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1uXFcA-0004AF-JA
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 04:48:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1751532498; x=1783068498;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=TVqic+b8AVGUwxPElX65V0zWrqt8rFKvH8TJ7zuGHG8=;
+ b=bokdecm4Mpmuf+QNIHyT+mS2RjBEo9AaXaczJnlbvR6lM7WIpvfruh3n
+ adC9AUNUmm6JtYFTifrDMttNlWE4pDiPaI8XtveOfaTRhGn4sb8Jvboql
+ D2h1JXB3EzaW9UG5QBzrXzqb+5+zogWJvBiTfDHA7RrmgB8zt+j6yuzV+
+ HiuIeOjjl5DFSZ+bSBuML8MKSn+yzVb2vijnxQ7BZ1xUlF2CZ1LGxclFb
+ nYwBzxh4oyHPqNccnjunY2Zr+w127DkrcwW2pInUnWlLMKXJWhPMeQnff
+ X2ykjEFyi6vVOrGQ1F074S/6m9EdxzdIORJmCMZN2+6FhY0IZL6okjvN7 w==;
+X-CSE-ConnectionGUID: LcYUbcQzRSyxlcNO3a3daQ==
+X-CSE-MsgGUID: Nxj1PaSgQAuSjU2d93QRUg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="56468912"
+X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="56468912"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jul 2025 01:48:05 -0700
+X-CSE-ConnectionGUID: EGto2FLtQymYlGi9LsTHFA==
+X-CSE-MsgGUID: cPaMJISUREu5N2A/94HLXA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="154079941"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.240.80])
+ ([10.124.240.80])
+ by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jul 2025 01:48:02 -0700
+Message-ID: <47aed1d6-c05d-4d60-a59c-49537a211d21@linux.intel.com>
+Date: Thu, 3 Jul 2025 16:47:59 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.203.177.241]
-X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) AC_FROM_MANY_DOTS=1.024, BAYES_00=-1.9,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 11/16] i386/cpu: Select legacy cache model based on vendor
+ in CPUID 0x2
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Babu Moger <babu.moger@amd.com>, Ewan Hai <ewanhai-oc@zhaoxin.com>,
+ Pu Wen <puwen@hygon.cn>, Tao Su <tao1.su@intel.com>,
+ Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+References: <20250620092734.1576677-1-zhao1.liu@intel.com>
+ <20250620092734.1576677-12-zhao1.liu@intel.com>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20250620092734.1576677-12-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=192.198.163.13;
+ envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,201 +93,194 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi All,
 
-Changes from v5:
-https://lore.kernel.org/qemu-devel/20250623094230.76084-1-shameerali.kolothum.thodi@huawei.com/
+On 6/20/2025 5:27 PM, Zhao Liu wrote:
+> As preparation for merging cache_info_cpuid4 and cache_info_amd in
+> X86CPUState, set legacy cache model based on vendor in the CPUID 0x2
+> leaf. For AMD CPU, select legacy AMD cache model (in cache_info_amd) as
+> the default cache model, otherwise, select legacy Intel cache model (in
+> cache_info_cpuid4) as before.
+>
+> To ensure compatibility is not broken, add an enable_legacy_vendor_cache
+> flag based on x-vendor-only-v2 to indicate cases where the legacy cache
+> model should be used regardless of the vendor. For CPUID 0x2 leaf,
+> enable_legacy_vendor_cache flag indicates to pick legacy Intel cache
+> model, which is for compatibility with the behavior of PC machine v10.0
+> and older.
+>
+> The following explains how current vendor-based default legacy cache
+> model ensures correctness without breaking compatibility.
+>
+> * For the PC machine v6.0 and older, vendor_cpuid_only=false, and
+>   vendor_cpuid_only_v2=false.
+>
+>   - If the named CPU model has its own cache model, and doesn't use
+>     legacy cache model (legacy_cache=false), then cache_info_cpuid4 and
+>     cache_info_amd are same, so 0x2 leaf uses its own cache model
+>     regardless of the vendor.
+>
+>   - For max/host/named CPU (without its own cache model), then the flag
+>     enable_legacy_vendor_cache is true, they will use legacy Intel cache
+>     model just like their previous behavior.
+>
+> * For the PC machine v10.0 and older (to v6.1), vendor_cpuid_only=true,
+>   and vendor_cpuid_only_v2=false.
+>
+>   - If the named CPU model has its own cache model (legacy_cache=false),
+>     then cache_info_cpuid4 & cache_info_amd both equal to its own cache
+>     model, so it uses its own cache model in 0x2 leaf regardless of the
+>     vendor. Only AMD CPUs have all-0 leaf due to vendor_cpuid_only=true,
+>     and this is exactly the behavior of these old machines.
+>
+>   - For max/host/named CPU (without its own cache model), then the flag
+>     enable_legacy_vendor_cache is true, they will use legacy Intel cache
+>     model. Similarly, only AMD CPUs have all-0 leaf, and this is exactly
+>     the behavior of these old machines.
+>
+> * For the PC machine v10.1 and newer, vendor_cpuid_only=true, and
+>   vendor_cpuid_only_v2=true.
+>
+>   - If the named CPU model has its own cache model (legacy_cache=false),
+>     then cache_info_cpuid4 & cache_info_amd both equal to its own cache
+>     model, so it uses its own cache model in 0x2 leaf regardless of the
+>     vendor. And AMD CPUs have all-0 leaf. Nothing will change.
+>
+>   - For max/host/named CPU (without its own cache model), then the flag
+>     enable_legacy_vendor_cache is false, the legacy cache model is
+>     selected based on vendor.
+>
+>     For AMD CPU, it will use legacy AMD cache but still get all-0 leaf
+>     due to vendor_cpuid_only=true.
+>
+>     For non-AMD (Intel/Zhaoxin) CPU, it will use legacy Intel cache as
+>     expected.
+>
+>     Here, selecting the legacy cache model based on the vendor does not
+>     change the previous (before the change)  behavior.
+>
+> Therefore, the above analysis proves that, with the help of the flag
+> enable_legacy_vendor_cache, it is acceptable to select the default
+> legacy cache model based on the vendor.
+>
+> For the CPUID 0x2 leaf, in X86CPUState, a unified cache_info is enough.
+> It only needs to be initialized and configured with the corresponding
+> legacy cache model based on the vendor.
+>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>  target/i386/cpu.c | 47 +++++++++++++++++++++++++++++++++++++----------
+>  target/i386/cpu.h |  1 +
+>  2 files changed, 38 insertions(+), 10 deletions(-)
+>
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index bf8d7a19c88d..524d39de9ace 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -248,23 +248,17 @@ static const CPUCaches legacy_intel_cpuid2_cache_info;
+>  
+>  /* Encode cache info for CPUID[4] */
+>  static void encode_cache_cpuid2(X86CPU *cpu,
+> +                                const CPUCaches *caches,
+>                                  uint32_t *eax, uint32_t *ebx,
+>                                  uint32_t *ecx, uint32_t *edx)
+>  {
+>      CPUX86State *env = &cpu->env;
+> -    const CPUCaches *caches;
+>      int l1d, l1i, l2, l3;
+>      bool unmatched = false;
+>  
+>      *eax = 1; /* Number of CPUID[EAX=2] calls required */
+>      *ebx = *ecx = *edx = 0;
+>  
+> -    if (env->enable_legacy_cpuid2_cache) {
+> -        caches = &legacy_intel_cpuid2_cache_info;
+> -    } else {
+> -        caches = &env->cache_info_cpuid4;
+> -    }
+> -
+>      l1d = cpuid2_cache_descriptor(caches->l1d_cache, &unmatched);
+>      l1i = cpuid2_cache_descriptor(caches->l1i_cache, &unmatched);
+>      l2 = cpuid2_cache_descriptor(caches->l2_cache, &unmatched);
+> @@ -7482,8 +7476,37 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>              *ecx &= ~CPUID_EXT_PDCM;
+>          }
+>          break;
+> -    case 2:
+> -        /* cache info: needed for Pentium Pro compatibility */
+> +    case 2: { /* cache info: needed for Pentium Pro compatibility */
+> +        const CPUCaches *caches;
+> +
+> +        if (env->enable_legacy_cpuid2_cache) {
+> +            caches = &legacy_intel_cpuid2_cache_info;
+> +        } else if (env->enable_legacy_vendor_cache) {
+> +            caches = &legacy_intel_cache_info;
+> +        } else {
+> +            /*
+> +             * FIXME: Temporarily select cache info model here based on
+> +             * vendor, and merge these 2 cache info models later.
+> +             *
+> +             * This condition covers the following cases (with
+> +             * enable_legacy_vendor_cache=false):
+> +             *  - When CPU model has its own cache model and doesn't use legacy
+> +             *    cache model (legacy_model=off). Then cache_info_amd and
+> +             *    cache_info_cpuid4 are the same.
+> +             *
+> +             *  - For v10.1 and newer machines, when CPU model uses legacy cache
+> +             *    model. Non-AMD CPUs use cache_info_cpuid4 like before and AMD
+> +             *    CPU will use cache_info_amd. But this doesn't matter for AMD
+> +             *    CPU, because this leaf encodes all-0 for AMD whatever its cache
+> +             *    model is.
+> +             */
+> +            if (IS_AMD_CPU(env)) {
+> +                caches = &env->cache_info_amd;
+> +            } else {
+> +                caches = &env->cache_info_cpuid4;
+> +            }
+> +        }
+> +
+>          if (cpu->cache_info_passthrough) {
+>              x86_cpu_get_cache_cpuid(index, 0, eax, ebx, ecx, edx);
+>              break;
+> @@ -7491,8 +7514,9 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>              *eax = *ebx = *ecx = *edx = 0;
+>              break;
+>          }
+> -        encode_cache_cpuid2(cpu, eax, ebx, ecx, edx);
+> +        encode_cache_cpuid2(cpu, caches, eax, ebx, ecx, edx);
+>          break;
+> +    }
+>      case 4:
+>          /* cache info: needed for Core compatibility */
+>          if (cpu->cache_info_passthrough) {
+> @@ -8979,6 +9003,9 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+>              env->enable_legacy_cpuid2_cache = true;
+>          }
+>  
+> +        if (!cpu->vendor_cpuid_only_v2) {
+> +            env->enable_legacy_vendor_cache = true;
+> +        }
+>          env->cache_info_cpuid4 = legacy_intel_cache_info;
+>          env->cache_info_amd = legacy_amd_cache_info;
+>      }
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 02cda176798f..243383efd602 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -2078,6 +2078,7 @@ typedef struct CPUArchState {
+>       */
+>      CPUCaches cache_info_cpuid4, cache_info_amd;
+>      bool enable_legacy_cpuid2_cache;
+> +    bool enable_legacy_vendor_cache;
+>  
+>      /* MTRRs */
+>      uint64_t mtrr_fixed[11];
 
-1. Rebased to target-arm.next and resolved conflicts with the series 
-   [PATCH-for-10.1 v6 0/9] hw/arm: GIC 'its=off'.
-2. While at it, noticed an issue with RC id mappings creation
-   and patch #1 is a fix for that.
-3. Patches 3 and 4 have changes because of the conflict resolution with the
-   above series. I have retained the R-by tags, but encourage all to take
-   another look in case I missed anything.
-4. Collected R-by and T-by tags. Thanks!.
+LGTM. Thanks.
 
-Please take a look and let me know. Looks like this is in a good shape now.
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-Thanks,
-Shameer
- 
-Changes from v4:
-https://lore.kernel.org/qemu-devel/20250613144449.60156-1-shameerali.kolothum.thodi@huawei.com/
-
-Major changes from v4:
-
-1. Added stricter validation for PCI buses associated with the SMMU.
-   Only the default PCIe Root Complex (pcie.0) and additional root
-   complexes created using pxb-pcie (see patch #1) are allowed.
-
-2. While testing this series with a setup involving multiple PCIe root
-   complexes using pxb-pcie, I encountered an issue related to IOMMU
-   ops resolution. Consider the below configuration, where an
-   arm-smmuv3 device is associated with the default root complex pcie.0,
-   and an additional pxb-pcie-based root complex (pcie.1) is added
-   without any associated SMMU:
-
-   -device arm-smmuv3,primary-bus=pcie.0,id=smmuv3.1 \
-   ...
-   -device pxb-pcie,id=pcie.1,bus_nr=8,bus=pcie.0 \
-   -device pcie-root-port,id=pcie.port1,chassis=2,bus=pcie.1 \
-   -device arm-smmuv3,primary-bus=pcie.1,id=smmuv3.2 \
-   ...
-   -device virtio-net-pci,bus=pcie.0,netdev=net0,id=virtionet.0 \
-   -device virtio-net-pci,bus=pcie.port1,netdev=net1,id=virtionet.1
-
-   The guest boots fine, and virtionet.0(behind the SMMUV3) bring up
-   is successful. However, attempting to bring up virtionet.1
-   (behind pcie.1, which lacks a connected SMMU) results in a failure:
-
-   root@ubuntu:/# dhclient enp9s0
-   arm-smmu-v3 arm-smmu-v3.0.auto: event 0x02 received:
-   arm-smmu-v3 arm-smmu-v3.0.auto: 0x0000090000000002
-   arm-smmu-v3 arm-smmu-v3.0.auto: 0x0000000000000000
-   arm-smmu-v3 arm-smmu-v3.0.auto: 0x0000000000000000
-   arm-smmu-v3 arm-smmu-v3.0.auto: 0x0000000000000000
-   arm-smmu-v3 arm-smmu-v3.0.auto: event: C_BAD_STREAMID client: (unassigned sid) sid: 0x900 ssid: 0x0
-   virtio_net virtio1 enp9s0: NETDEV WATCHDOG: CPU: 2: transmit queue 0 timed out 5172 ms
-   virtio_net virtio1 enp9s0: TX timeout on queue: 0, sq: output.0, vq: 0x1, name: output.0, 5172000 usecs ago
-   ...
-
-   Debug shows that QEMU currently registers IOMMU ops for bus using
-   pci_setup_iommu(). However, when retrieving IOMMU ops for a device
-   via pci_device_get_iommu_bus_devfn(), the function walks up to the 
-   parent_dev and fetches the IOMMU ops from the parent, even if the
-   current root bus has none configured.
-
-   This works today because existing IOMMU models in QEMU are globally 
-   scoped, and pxb-pcie based extra root complexes can use the
-   bypass_iommu property to skip translation as needed.
-
-   However, with this series introducing support for associating
-   arm-smmuv3 devices with specific PCIe root complexes, this
-   becomes problematic. In QEMU, pxb-pcie is implemented as a synthetic
-   root complex whose parent_dev is pcie.0. As a result, even though
-   pcie.1 has no SMMU attached, pci_device_get_iommu_bus_devfn()
-   incorrectly returns the IOMMU ops associated with pcie.0 due to
-   the fallback mechanism via parent_dev. This causes devices on
-   pcie.1 to erroneously use the address space from pcie.0's SMMU,
-   leading to failures like the one above.
-
-   To address this, patch #6 in the series introduces a new helper 
-   function pci_setup_iommu_per_bus(), which explicitly sets the 
-   iommu_per_bus field in the PCIBus structure. This allows 
-   pci_device_get_iommu_bus_devfn() to retrieve IOMMU ops based 
-   on the specific bus.
-
-   Not sure this is the correct approach or not. If there is a better
-   way to handle this, please let me know .
-
-3. Picked up few R-by tags where the patch content has not changed much.
-
-4. Dropped T-by from Nathan for some patches as things have changed a bit.
-   @Nathan, apprecaite if you have time to rerun the tests.
-
-5. Added a bios table tests for both legacy SMMUv3 and new SMMMv3 devices.
-   See last few patches.
-
-Cover letter:
-
-This patch series introduces support for a user-creatable SMMUv3 device
-(-device arm-smmuv3) in QEMU.
-
-The implementation is based on feedback received from the RFCv2[0]:
-"hw/arm/virt: Add support for user-creatable accelerated SMMUv3"
-
-Currently, QEMU's SMMUv3 emulation (iommu=smmuv3) is tied to the machine
-and does not support instantiating multiple SMMUv3 devices—each associated
-with a separate PCIe root complex. In contrast, real-world ARM systems
-often include multiple SMMUv3 instances, each bound to a different PCIe
-root complex.
-
-This series allows to specify multiple SMMUv3 instances as below,
-
- -device arm-smmuv3,primary-bus=pcie.0,id=smmuv3.0
-  ...
- -device arm-smmuv3,primary-bus=pcie.1,,id=smmuv3.1
-
-The multiple SMMUv3 instance support lays the groundwork for supporting
-accelerated SMMUv3, as proposed in the aforementioned RFCv2[0]. The
-proposed accelerated support will be an optional property like below,
--device arm-smmuv3,primary-bus=pcie.1,accel=on,..
-
-Please note, the accelerated SMMUv3 support is not part of this series
-and will be sent out as a separate series later on top of this one.
-
-This series also,
-
--Supports either the legacy iommu=smmuv3 option or the new
-  "-device arm-smmuv3" model.
-  -Adds device tree bindings for the new SMMUv3 device on the arm/virt
-   machine only, and only for the default pcie.0 root complex.
-   (Note: pxb-pcie root complexes are currently not supported with the
-    device tree due to known limitations[1].)
-
-Example usage:
-  -device arm-smmuv3,primary-bus=pcie.0,id=smmuv3.0
-  -device virtio-net-pci,bus=pcie.0
-  -device pxb-pcie,id=pcie.1,bus_nr=2
-  -device arm-smmuv3,primary-bus=pcie.1,id=smmuv3.1
-  -device pcie-root-port,id=pcie.port1,bus=pcie.1
-  -device virtio-net-pci,bus=pcie.port1
-
-Please take a look and let me know your feedback.
-
-Thanks,
-Shameer
-[0]:https://lore.kernel.org/qemu-devel/20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com/
-[1]:https://lore.kernel.org/qemu-devel/20230421165037.2506-1-Jonathan.Cameron@huawei.com/
-
-Nicolin Chen (1):
-  hw/arm/virt: Add an SMMU_IO_LEN macro
-
-Shameer Kolothum (11):
-  hw/arm/virt-acpi-build: Don't create ITS id mappings by default
-  hw/arm/smmu-common: Check SMMU has PCIe Root Complex association
-  hw/arm/virt-acpi-build: Re-arrange SMMUv3 IORT build
-  hw/arm/virt-acpi-build: Update IORT for multiple smmuv3 devices
-  hw/arm/virt: Factor out common SMMUV3 dt bindings code
-  hw/pci: Introduce pci_setup_iommu_per_bus() for per-bus IOMMU ops
-    retrieval
-  hw/arm/virt: Allow user-creatable SMMUv3 dev instantiation
-  qemu-options.hx: Document the arm-smmuv3 device
-  bios-tables-test: Allow for smmuv3 test data.
-  qtest/bios-tables-test: Add tests for legacy smmuv3 and smmuv3 device
-  qtest/bios-tables-test: Update tables for smmuv3 tests
-
- hw/arm/smmu-common.c                          |  35 ++-
- hw/arm/smmuv3.c                               |   2 +
- hw/arm/virt-acpi-build.c                      | 207 +++++++++++++-----
- hw/arm/virt.c                                 | 110 +++++++---
- hw/core/sysbus-fdt.c                          |   3 +
- hw/pci-bridge/pci_expander_bridge.c           |   1 -
- hw/pci/pci.c                                  |  31 +++
- include/hw/arm/smmu-common.h                  |   1 +
- include/hw/arm/virt.h                         |   1 +
- include/hw/pci/pci.h                          |   2 +
- include/hw/pci/pci_bridge.h                   |   1 +
- include/hw/pci/pci_bus.h                      |   1 +
- qemu-options.hx                               |   7 +
- tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev  | Bin 0 -> 10162 bytes
- .../data/acpi/aarch64/virt/DSDT.smmuv3-legacy | Bin 0 -> 10162 bytes
- tests/data/acpi/aarch64/virt/IORT.smmuv3-dev  | Bin 0 -> 364 bytes
- .../data/acpi/aarch64/virt/IORT.smmuv3-legacy | Bin 0 -> 276 bytes
- tests/qtest/bios-tables-test.c                |  86 ++++++++
- 18 files changed, 407 insertions(+), 81 deletions(-)
- create mode 100644 tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev
- create mode 100644 tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy
- create mode 100644 tests/data/acpi/aarch64/virt/IORT.smmuv3-dev
- create mode 100644 tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy
-
--- 
-2.34.1
 
 
