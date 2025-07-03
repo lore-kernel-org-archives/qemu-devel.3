@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5691AC83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 11:19:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC6A4C83030
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 11:20:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXHip-0005S6-0Z; Thu, 03 Jul 2025 07:03:19 -0400
+	id 1uXHiR-0003SB-Nr; Thu, 03 Jul 2025 07:02:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHhG-0001WS-IP
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 07:01:44 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHff-0006lk-Tt
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 07:00:04 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHhE-00046v-9a
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 07:01:41 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3a4e742dc97so557776f8f.0
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 04:01:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHfL-0003Vw-By
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 06:59:46 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3a54700a46eso4371438f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 03:59:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751540498; x=1752145298; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751540380; x=1752145180; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OlVw0qlAe+vja7bYyOtLn/rW8RkSmVUiIwefJ7c8zZk=;
- b=By9S0ZK9Li5CgPVGrsEQcLSdZ6kqoqwN1e60tzTCkXpBMoCticFM/FKudPwo56QMAO
- +64GtuUsabJLv/9VXyU/iemha0r8tGu1JcQ0isWR4HMZk94rOoUxq9bX1yfERK+rnWH2
- Bs/rlyibHcSnkkDW96B+iJRpP08EDovbArzCZfDC8uShFop3Y66xQJle2et2Iw53LW53
- bECdUbH2IIE26pE+5X36kbQy1Wan6AXTW5enlLyIZe744/c0Tdw0fdgLNdDs7cmD+OFf
- rHbZ+9xThaFGYeJaNWQHIO3iSk711Vbkxpg4bbq+hGCUyqlzEnE7aenMweSTqQOdP57o
- Lg4g==
+ bh=0UiewseZoW7++jqLIzKMJ/OYq1tgfsCyntten+qzSRY=;
+ b=zzM7SngbgxQyfKTTAA8B/8wCriS9CF+aXn3rjX4u85meJirTjTyxaGsA2uWCFoflSO
+ KEnImqc0agwaa0TWB+YE8ELCMOKxZFdQHcSmn8GpGQc2yGPJqS3TSydUfu/4ErtiCRB+
+ K0TPFq1R0ET2GXGjdBo01sR7ztbY/zz3OSwzhfb+YFnPLWPlreyTPyMsdsEg0L4lRplI
+ Wdk1amYHzSLTTWDrM/lGDkzjKTMlQbdJhr7xM2ydShZW1olQ5D9P/BOfibuMfYzfWNl8
+ nan8HA7zTzVMdn73vaLkWsvLGbC7fpwI38zwhpwIOemn3P9Paeu1L7QoD4yHp9nUgv+P
+ +Ktw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751540498; x=1752145298;
+ d=1e100.net; s=20230601; t=1751540380; x=1752145180;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OlVw0qlAe+vja7bYyOtLn/rW8RkSmVUiIwefJ7c8zZk=;
- b=VYSISEs6lIGiBi+OzcqHkUhMg1NpS2z7aqnl+ApN7sfElMHvqOv5GAHeIf5/bBQBPZ
- H0I3W5Q5adysNo7Y7eBTy+6U++na6y0AbUhLVwUHQQkqCRa8EBdTb8UWosSQ8UHTSFCx
- Lw/0hY1zPJDfbC/76YgL4AJuDLS6oAPO3lE9ZbZ4YKJxzTsnKKrSUqqbfjPajoIlFEO9
- svRAj/rOLCDsufhj9D8ECn72uuYQdvJnzKt0ztmQYJ0FnSlmWwT5U1EIjMaFtUGY1h5J
- p0iLcEJ7BSXUsEqtqXAc5+XySQ5VMsf6TkU2PXQWwcXCEx7BbYdOZ4zFQiqg2xtM43M0
- Nt+A==
-X-Gm-Message-State: AOJu0YxJFqf67OjmM1j3EcNeyzbWePbOxkbe70le2hj2prXR19Sv+scO
- r9/9gPrCFoW+IvWEeULc0fYMVe7sXtatmaoBC+bMenuJuVAfSiZP+zJ+QcMnESSIBbOcdYv3pOE
- rDB4w1dY=
-X-Gm-Gg: ASbGncv9KWvkJBmhbtDTHWK6k9yTTqIp3OsY3+FeuHPrPEoxHs+zY9XgfE6SxjvPKpO
- l9jviWjd9cxPpxdSApFNfPqDEoF/Yse19N71Y7w0aIFCVdRHUz2yLadfwqeYO6ak6VnLwDci8vJ
- npKcMC5IUOOXzYOauwm9R6D88pOmReHlKCp47GOaPaE2ukKVfd/o3UQDXEc2M5ux7Hro5AG1/c5
- sTlmGXQRW7GyZijYEwKETbyJIgTeLv02ZkoT2Byuu9m0wgowZ2BREmTw0RVrad7WGK1scEwBRPX
- 2U+Ur2ModW0mUxjZBpI/3qxyXjMmcj0xZgvY5H/4OkbPWP6mNt/bOPEQChg6x54AJpaojG0okHi
- Xe1a03HqNObc=
-X-Google-Smtp-Source: AGHT+IEwu22mbFkl1rhzB3HygZbLt0VI4Bzye/g/jnm9qC1XNkE7RNZ7ayhpruh8WHbzvMo2Ak18vQ==
-X-Received: by 2002:a05:6000:200c:b0:3a4:dfbe:2b14 with SMTP id
- ffacd0b85a97d-3b343886534mr2079025f8f.16.1751540497685; 
- Thu, 03 Jul 2025 04:01:37 -0700 (PDT)
+ bh=0UiewseZoW7++jqLIzKMJ/OYq1tgfsCyntten+qzSRY=;
+ b=C/vBEnWEIYHXTLFsiavcMW1GMcszrgSRiI6I53jSZUhXk94Tv/zbT/humM26bEZW0f
+ YeD/ixvQrlzDjc7KTYTQSe/x9P7Asb+dEm06BC/Jar8mT77hdSrWr3qu2YJ8yvA1hzWO
+ kCxLcMCoZfAHvxS4DQJd93EYR8KvHpc3MyeTaTAkCYD6AVi0MeAsFsO2ju+wE57crSdT
+ vvF756zlngRLBzAo5+V18SX+cfROcrNphb7VJPSwiKTXxwT99WOslofV/BdV3EpuC5ZJ
+ xp0HDdtf1ePG5OQKVtgqWxGY+7kbpWIctGFoJ3K1xykhb4DaGmYEA4D6ZF/Q3X48HDF/
+ Udhw==
+X-Gm-Message-State: AOJu0YyogninMFZIJ7ygyVAfoYS5/9BcQro9ZAfxKwCZ6LNJcN/Mo6IN
+ TsBejsE/6qiZlQ6wo7J0s43L2pdNKKmPyhMfgAmldaxZtAWGBRd9f8WG1oOrHEam8XQLSsicZGo
+ l3TzYW1c=
+X-Gm-Gg: ASbGncvw+bheyPvZk41of5jubcZ+eOR8D4fNmlTUUkAGNB5B79CeC755FGKrghFci7Q
+ IDrc0C/vtIuyGiKf4lsd0pWkqrGasngdXdWUa375ViIcpH4+DFBGRFjLVeHDzKJ+7BnYUYTL/jj
+ fbxV84chEyomD0dd6SPzN4bGGt6jGQ1MkR6O+i63Y1APXgEbKC2foZFzJTWD95rkHs8Y07QpKz9
+ 8bDX9lOE33DQFHgHWY8W1VckoL/iZB6/jKoo4CQcyoHfGALsjsXCZbZNqBTyH/WWSqpvAoE/Cuo
+ UwgmNi2DI4iISckLt3yk8Iw0tlxr5iTkAtFPouIhLzCyJoTGnOj5lWCt+QW1MxB0e8FEQieev16
+ rZXOKZedqDq8=
+X-Google-Smtp-Source: AGHT+IEglrs09yE017jiPqaImjRQF60pKbLzM7xZkDB3/SBr13de9FGL9F2tO1sQQvTsqyjGi5baPQ==
+X-Received: by 2002:a05:6000:21ca:b0:3a4:fc52:f5d4 with SMTP id
+ ffacd0b85a97d-3b2005840cdmr3299331f8f.47.1751540380213; 
+ Thu, 03 Jul 2025 03:59:40 -0700 (PDT)
 Received: from localhost.localdomain ([83.247.137.20])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a892e59aaasm18000178f8f.83.2025.07.03.04.01.36
+ 5b1f17b1804b1-454a9bde35dsm23115255e9.30.2025.07.03.03.59.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Jul 2025 04:01:37 -0700 (PDT)
+ Thu, 03 Jul 2025 03:59:39 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -70,18 +70,18 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, kvm@vger.kernel.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v5 67/69] accel/tcg: Factor rr_cpu_exec() out
-Date: Thu,  3 Jul 2025 12:55:33 +0200
-Message-ID: <20250703105540.67664-68-philmd@linaro.org>
+ Sunil Muthuswamy <sunilmut@microsoft.com>
+Subject: [PATCH v5 45/69] accel/whpx: Expose whpx_enabled() to common code
+Date: Thu,  3 Jul 2025 12:55:11 +0200
+Message-ID: <20250703105540.67664-46-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250703105540.67664-1-philmd@linaro.org>
 References: <20250703105540.67664-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,65 +104,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Altough we aren't going to re-use rr_cpu_exec(), factor
-it out to have RR implementation matches with MTTCG one.
+Currently whpx_enabled() is restricted to target-specific code.
+By defining CONFIG_WHPX_IS_POSSIBLE we allow its use anywhere.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/tcg-accel-ops-rr.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ include/system/whpx.h       | 27 ++++++++++++++-------------
+ accel/stubs/whpx-stub.c     | 12 ++++++++++++
+ target/i386/whpx/whpx-all.c |  5 -----
+ accel/stubs/meson.build     |  1 +
+ 4 files changed, 27 insertions(+), 18 deletions(-)
+ create mode 100644 accel/stubs/whpx-stub.c
 
-diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
-index 9578bc639cb..d976daa7319 100644
---- a/accel/tcg/tcg-accel-ops-rr.c
-+++ b/accel/tcg/tcg-accel-ops-rr.c
-@@ -169,6 +169,25 @@ static int rr_cpu_count(void)
-     return cpu_count;
+diff --git a/include/system/whpx.h b/include/system/whpx.h
+index 00ff409b682..00f6a3e5236 100644
+--- a/include/system/whpx.h
++++ b/include/system/whpx.h
+@@ -16,19 +16,20 @@
+ #define QEMU_WHPX_H
+ 
+ #ifdef COMPILING_PER_TARGET
+-
+-#ifdef CONFIG_WHPX
+-
+-int whpx_enabled(void);
+-bool whpx_apic_in_platform(void);
+-
+-#else /* CONFIG_WHPX */
+-
+-#define whpx_enabled() (0)
+-#define whpx_apic_in_platform() (0)
+-
+-#endif /* CONFIG_WHPX */
+-
++# ifdef CONFIG_WHPX
++#  define CONFIG_WHPX_IS_POSSIBLE
++# endif /* !CONFIG_WHPX */
++#else
++# define CONFIG_WHPX_IS_POSSIBLE
+ #endif /* COMPILING_PER_TARGET */
+ 
++#ifdef CONFIG_WHPX_IS_POSSIBLE
++extern bool whpx_allowed;
++#define whpx_enabled() (whpx_allowed)
++bool whpx_apic_in_platform(void);
++#else /* !CONFIG_WHPX_IS_POSSIBLE */
++#define whpx_enabled() 0
++#define whpx_apic_in_platform() (0)
++#endif /* !CONFIG_WHPX_IS_POSSIBLE */
++
+ #endif /* QEMU_WHPX_H */
+diff --git a/accel/stubs/whpx-stub.c b/accel/stubs/whpx-stub.c
+new file mode 100644
+index 00000000000..c564c89fd0b
+--- /dev/null
++++ b/accel/stubs/whpx-stub.c
+@@ -0,0 +1,12 @@
++/*
++ * WHPX stubs for QEMU
++ *
++ *  Copyright (c) Linaro
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "system/whpx.h"
++
++bool whpx_allowed;
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index 525d6a9567b..1732d108105 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -2688,11 +2688,6 @@ error:
+     return ret;
  }
  
-+static int rr_cpu_exec(CPUState *cpu, int64_t cpu_budget)
-+{
-+    int ret;
-+
-+    bql_unlock();
-+    if (icount_enabled()) {
-+        icount_prepare_for_run(cpu, cpu_budget);
-+    }
-+
-+    ret = tcg_cpu_exec(cpu);
-+
-+    if (icount_enabled()) {
-+        icount_process_data(cpu);
-+    }
-+    bql_lock();
-+
-+    return ret;
-+}
-+
- /*
-  * In the single-threaded case each vCPU is simulated in turn. If
-  * there is more than a single vCPU we create a simple timer to kick
-@@ -254,17 +273,7 @@ static void *rr_cpu_thread_fn(void *arg)
-                               (cpu->singlestep_enabled & SSTEP_NOTIMER) == 0);
- 
-             if (cpu_can_run(cpu)) {
--                int r;
+-int whpx_enabled(void)
+-{
+-    return whpx_allowed;
+-}
 -
--                bql_unlock();
--                if (icount_enabled()) {
--                    icount_prepare_for_run(cpu, cpu_budget);
--                }
--                r = tcg_cpu_exec(cpu);
--                if (icount_enabled()) {
--                    icount_process_data(cpu);
--                }
--                bql_lock();
-+                int r = rr_cpu_exec(cpu, cpu_budget);
+ bool whpx_apic_in_platform(void) {
+     return whpx_global.apic_in_platform;
+ }
+diff --git a/accel/stubs/meson.build b/accel/stubs/meson.build
+index 4c34287215f..9dfc4f9ddaf 100644
+--- a/accel/stubs/meson.build
++++ b/accel/stubs/meson.build
+@@ -4,5 +4,6 @@ system_stubs_ss.add(when: 'CONFIG_KVM', if_false: files('kvm-stub.c'))
+ system_stubs_ss.add(when: 'CONFIG_TCG', if_false: files('tcg-stub.c'))
+ system_stubs_ss.add(when: 'CONFIG_HVF', if_false: files('hvf-stub.c'))
+ system_stubs_ss.add(when: 'CONFIG_NVMM', if_false: files('nvmm-stub.c'))
++system_stubs_ss.add(when: 'CONFIG_WHPX', if_false: files('whpx-stub.c'))
  
-                 if (r == EXCP_DEBUG) {
-                     cpu_handle_guest_debug(cpu);
+ specific_ss.add_all(when: ['CONFIG_SYSTEM_ONLY'], if_true: system_stubs_ss)
 -- 
 2.49.0
 
