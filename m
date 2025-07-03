@@ -4,75 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBD56C77B7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 955C4C83030
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 12:57:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXJI7-00088x-I3; Thu, 03 Jul 2025 08:43:51 -0400
+	id 1uXJNP-0007Vi-NW; Thu, 03 Jul 2025 08:49:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uXJEj-0003Up-1K
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:40:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uXJLk-0005fo-IA; Thu, 03 Jul 2025 08:47:36 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uXJEg-0001It-3C
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:40:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751546414;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zOreZF7iJ7Xj4M3A4SKQurpH0SYsfcpWvlogIxrsc8o=;
- b=dBHRFGiqRyylTmKmZQtITQ9yZSUWS4NVMRocsyyrWYjiC0LooiNRqmYtjaOenA1ltM3Vi3
- CkMCeunBImzvfuuzqDubsPxzE9nTRLWFQKlA+8XsORYcTaCCC+7q0GshA3tPDee+sfvODD
- X6AL5vbXU7oifeI4rnnZRtIh7tVqPPc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-208-xNl-DebeP-m61Bnga-SkDg-1; Thu,
- 03 Jul 2025 08:40:10 -0400
-X-MC-Unique: xNl-DebeP-m61Bnga-SkDg-1
-X-Mimecast-MFC-AGG-ID: xNl-DebeP-m61Bnga-SkDg_1751546409
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1024E180028B; Thu,  3 Jul 2025 12:40:09 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.32.16])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8DC4F180045C; Thu,  3 Jul 2025 12:40:04 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
- Jonathan.Cameron@huawei.com, gustavo.romero@linaro.org,
- anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com
-Cc: pbonzini@redhat.com,
-	philmd@linaro.org,
-	alex.bennee@linaro.org
-Subject: [PATCH v5 29/36] hw/acpi/ged: Support migration of AcpiPciHpState
-Date: Thu,  3 Jul 2025 14:35:29 +0200
-Message-ID: <20250703123728.414386-30-eric.auger@redhat.com>
-In-Reply-To: <20250703123728.414386-1-eric.auger@redhat.com>
-References: <20250703123728.414386-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uXJLc-0006o2-Kn; Thu, 03 Jul 2025 08:47:35 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c10:4a1:0:640:2691:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id D835A60CAF;
+ Thu,  3 Jul 2025 15:47:20 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:73d::1:28])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id HlbMgQ0FgSw0-4uj2EH2p; Thu, 03 Jul 2025 15:47:20 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1751546840;
+ bh=K1guSZvgPSyqTL8nJpBNAWLbXMO659zzSoxEpeUp2kw=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=oT0rtWYc1KEms+cwhH746I/KLz3WIwZ9MO27cx6K4WnY8/m2n8+VCbjCfnAgTtXas
+ J0xlK7WTViqAd7CKudxWXv5/9LsuqH104Svanj9SGG+RSxxjm4ntH+6lmhzN4BGWzy
+ kMy/6kK8a3F8ziiQtjsXx3OhUua0ZFC1I/1u3cfg=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: qemu-devel@nongnu.org,
+	mst@redhat.com
+Cc: qemu-block@nongnu.org, fam@euphon.net, pbonzini@redhat.com,
+ jasowang@redhat.com, hreitz@redhat.com, kwolf@redhat.com,
+ sgarzare@redhat.com, raphael@enfabrica.net,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: [PATCH 3/4] vhost_net: stop use backend_features
+Date: Thu,  3 Jul 2025 15:47:11 +0300
+Message-ID: <20250703124713.2530079-4-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250703124713.2530079-1-vsementsov@yandex-team.ru>
+References: <20250703124713.2530079-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,54 +75,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a subsection to migrate the AcpiPciHpState state.
+We are going to drop backend_features variable as an extra one.
+Call to qemu_has_vnet_hdr() is cheap.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/acpi/generic_event_device.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ hw/net/vhost_net.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-index 7535d07737..95682b79a2 100644
---- a/hw/acpi/generic_event_device.c
-+++ b/hw/acpi/generic_event_device.c
-@@ -417,6 +417,25 @@ static const VMStateDescription vmstate_ghes_state = {
-     }
- };
+diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
+index 891f235a0a6..38cbc6caa14 100644
+--- a/hw/net/vhost_net.c
++++ b/hw/net/vhost_net.c
+@@ -139,7 +139,8 @@ int vhost_net_set_config(struct vhost_net *net, const uint8_t *data,
  
-+static bool pcihp_needed(void *opaque)
-+{
-+    AcpiGedState *s = opaque;
-+    return s->pcihp_state.use_acpi_hotplug_bridge;
-+}
-+
-+static const VMStateDescription vmstate_pcihp_state = {
-+    .name = "acpi-ged/pcihp",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = pcihp_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_PCI_HOTPLUG(pcihp_state,
-+                            AcpiGedState,
-+                            NULL, NULL),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- static const VMStateDescription vmstate_acpi_ged = {
-     .name = "acpi-ged",
-     .version_id = 1,
-@@ -429,6 +448,7 @@ static const VMStateDescription vmstate_acpi_ged = {
-         &vmstate_memhp_state,
-         &vmstate_cpuhp_state,
-         &vmstate_ghes_state,
-+        &vmstate_pcihp_state,
-         NULL
+ void vhost_net_ack_features(struct vhost_net *net, uint64_t features)
+ {
+-    net->dev.acked_features = net->dev.backend_features;
++    net->dev.acked_features = qemu_has_vnet_hdr(net->nc)
++        ? 0 : (1ULL << VHOST_NET_F_VIRTIO_NET_HDR);
+     vhost_ack_features(&net->dev, vhost_net_get_feature_bits(net), features);
+ }
+ 
+@@ -338,12 +339,9 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
+         if (r < 0) {
+             goto fail;
+         }
+-        net->dev.backend_features = qemu_has_vnet_hdr(options->net_backend)
+-            ? 0 : (1ULL << VHOST_NET_F_VIRTIO_NET_HDR);
+         net->backend = r;
+         net->dev.protocol_features = 0;
+     } else {
+-        net->dev.backend_features = 0;
+         net->dev.protocol_features = 0;
+         net->backend = -1;
+ 
+@@ -363,10 +361,10 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
+                                sizeof(struct virtio_net_hdr_mrg_rxbuf))) {
+             net->dev.features &= ~(1ULL << VIRTIO_NET_F_MRG_RXBUF);
+         }
+-        if (~net->dev.features & net->dev.backend_features) {
+-            fprintf(stderr, "vhost lacks feature mask 0x%" PRIx64
+-                   " for backend\n",
+-                   (uint64_t)(~net->dev.features & net->dev.backend_features));
++        if (!qemu_has_vnet_hdr(options->net_backend) &&
++            (~net->dev.features & (1ULL << VHOST_NET_F_VIRTIO_NET_HDR))) {
++            fprintf(stderr, "vhost lacks feature mask 0x%llx for backend\n",
++                    ~net->dev.features & (1ULL << VHOST_NET_F_VIRTIO_NET_HDR));
+             goto fail;
+         }
      }
- };
 -- 
-2.49.0
+2.48.1
 
 
