@@ -4,53 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90DA6C77B7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F06C83030
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 09:51:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXGaW-0007wg-6G; Thu, 03 Jul 2025 05:50:40 -0400
+	id 1uXGaf-0008K1-3f; Thu, 03 Jul 2025 05:50:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uXGZq-0007No-A8
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 05:50:04 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uXGZo-0000SI-8k
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 05:49:58 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Bx22o2UmZoV8AhAQ--.38509S3;
- Thu, 03 Jul 2025 17:49:42 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCxM+QuUmZoNv4HAA--.46770S13;
- Thu, 03 Jul 2025 17:49:42 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: maobibo@loongson.cn
-Cc: qemu-devel@nongnu.org,
-	philmd@linaro.org,
-	jiaxun.yang@flygoat.com
-Subject: [PATCH v4 11/11] hw/loongarch: Implement AVEC plug/unplug interfaces
-Date: Thu,  3 Jul 2025 17:26:50 +0800
-Message-Id: <20250703092650.2598059-12-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20250703092650.2598059-1-gaosong@loongson.cn>
-References: <20250703092650.2598059-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXGaC-0007dH-Ai
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 05:50:23 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXGa8-0000ja-8k
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 05:50:19 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-714078015edso58318507b3.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 02:50:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751536215; x=1752141015; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=x52QpShekcOPzfngz7lq5sNO18hifZ/zWZiGRzzuBMI=;
+ b=ZjhA9rf62haTc5lhkzsBXyvaN9GDLZILiGhQS2sXxFBSGqbJ2n8d0tymxqq/GVWzDv
+ WKFBMWymgSu6u11bCOTjiPDQns6W1Q8K9W4+Dta1UYKzRd+GHh5gVT+MvW7y1SVe9fIh
+ SsJjWRN1F1nTRsbzvD8i5f4qEKih8WyH8m3gI0BDSF+jUd5iBU9IA51qsSBLXAocsl2Z
+ +Gkj760SikG+6C0MYDyTi53NZM9zc9RONa+phr3Ms8CyWmP1GQ6KkP+nZqyM7zqnyf3W
+ VmxgpOUjNiByPcaHQBNKAnYJOOVHVs1hEQzLbSB+82/onrGRN+9tlEdYkAsB+kTLOdQM
+ qZyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751536215; x=1752141015;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=x52QpShekcOPzfngz7lq5sNO18hifZ/zWZiGRzzuBMI=;
+ b=c9d8vg5wtXH4ajr91niedd+//5igNjdTQgCSTzfnwkbilRxyRb7HVCd8lzzclnzvUk
+ X97mRH/brujGbFpI8reCD4ceL8DE+aN/Cke9Q83ikD043DlFGLB3RGlxEdg9IWgEtUt+
+ VS/Y1o6thxbCCbPKZTJaTjJjkLSRYmvDs/PZdWkeDIqyl4R2rZleig8JxR0o+FefKG9p
+ 6SgY8r55eowIBHm8/g47LFYkeXnnpDKjOHXjION5JJTVjp5JbLVThuqDPMsjHaaDHrL2
+ zq2nje9rGVOt+BcXS6wNnSH38+soizzNGg8HYpMjixTwcY5GnpXcCK33unf8Q3YPTVbG
+ zJzA==
+X-Gm-Message-State: AOJu0YwX6iOIY8z0NLN3iZ/Pqs5cAB/Ox4nZ9rcNy9ekAWtboLtGbmrj
+ l/AqnUhiCZMe8ySvrMY1gvSsLHRY7vVqe1YOcCFpDeWHFwBa/nDA2f9wrAk14+OTDMSYoV+Va7x
+ Kxx81K1UA4NLPMSxVqKYlpnQNDBNIgo3Hx4xY4uOQHA==
+X-Gm-Gg: ASbGncur2UWc9WiiRBmBGjqkY6G1VFw//4vBN8SRyMA1B4cXmgnjvc/GWtGOqQY74YT
+ 8HEgGxj9/2ZE35xZmAFS6hB09bJCY4VMH3j7ls2mcPUhnZOG56D7ZZPWOckZvhHquwtpn/0BdFp
+ kyzk4WvFcdCIcQpeCmCDHc7uCIvlR/ju42gd+Rn095P/XR
+X-Google-Smtp-Source: AGHT+IE+ov5eeXy59VYBL0BB2OGeId12ErijMIre/CRbm+Yn4+FptaF8t9BluLXXWtrcnOdk7Yp87y1R8e+opPrwR8c=
+X-Received: by 2002:a05:690c:c93:b0:70d:f3bb:a731 with SMTP id
+ 00721157ae682-7164d2c327fmr80237017b3.9.1751536215025; Thu, 03 Jul 2025
+ 02:50:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxM+QuUmZoNv4HAA--.46770S13
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20250702123410.761208-1-richard.henderson@linaro.org>
+ <20250702123410.761208-37-richard.henderson@linaro.org>
+In-Reply-To: <20250702123410.761208-37-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 3 Jul 2025 10:50:03 +0100
+X-Gm-Features: Ac12FXxYEk7ARAzMdYnSm7mjq9_rH2LzWbjrHSSuWSPUnaa98YTLsBdpRdkUYCY
+Message-ID: <CAFEAcA9MSxRA5fkZgdgzf9GFAiKSAJmQ3sQN1O0-p4hODOZodQ@mail.gmail.com>
+Subject: Re: [PATCH v3 36/97] target/arm: Implement SME2 SMLAL, SMLSL, UMLAL,
+ UMLSL
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,144 +93,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-when cpu added, connect avec irq to cpu INT_AVEC irq pin.
+On Wed, 2 Jul 2025 at 13:34, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/helper-sme.h    |  21 +++++
+>  target/arm/tcg/sme_helper.c    |  59 ++++++++++++
+>  target/arm/tcg/translate-sme.c |  84 +++++++++++++++++
+>  target/arm/tcg/sme.decode      | 168 +++++++++++++++++++++++++++++++++
+>  4 files changed, 332 insertions(+)
+>
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- hw/intc/loongarch_avec.c | 71 ++++++++++++++++++++++++++++++++++++++++
- hw/loongarch/virt.c      |  7 ++++
- 2 files changed, 78 insertions(+)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
-index 8ccd6092e6..caca92bab6 100644
---- a/hw/intc/loongarch_avec.c
-+++ b/hw/intc/loongarch_avec.c
-@@ -117,14 +117,81 @@ static void loongarch_avec_init(Object *obj)
-     return;
- }
- 
-+static AVECCore *loongarch_avec_get_cpu(LoongArchAVECState *s,
-+                                        DeviceState *dev)
-+{
-+    CPUClass *k = CPU_GET_CLASS(dev);
-+    uint64_t arch_id = k->get_arch_id(CPU(dev));
-+    int i;
-+
-+    for (i = 0; i < s->num_cpu; i++) {
-+        if (s->cpu[i].arch_id == arch_id) {
-+            return &s->cpu[i];
-+        }
-+    }
-+
-+    return NULL;
-+}
-+
-+static void loongarch_avec_cpu_plug(HotplugHandler *hotplug_dev,
-+                                   DeviceState *dev, Error **errp)
-+{
-+    LoongArchAVECState *s = LOONGARCH_AVEC(hotplug_dev);
-+    Object *obj = OBJECT(dev);
-+    AVECCore *core;
-+    int index;
-+
-+    if (!object_dynamic_cast(obj, TYPE_LOONGARCH_CPU)) {
-+        warn_report("LoongArch AVEC: Invalid %s device type",
-+                                       object_get_typename(obj));
-+        return;
-+    }
-+    core = loongarch_avec_get_cpu(s, dev);
-+    if (!core) {
-+        return;
-+    }
-+
-+    core->cpu = CPU(dev);
-+    index = core - s->cpu;
-+
-+    /* connect avec msg irq to cpu irq */
-+    qdev_connect_gpio_out(DEVICE(s), index, qdev_get_gpio_in(dev, INT_AVEC));
-+    return;
-+}
-+
-+static void loongarch_avec_cpu_unplug(HotplugHandler *hotplug_dev,
-+                                     DeviceState *dev, Error **errp)
-+{
-+    LoongArchAVECState *s = LOONGARCH_AVEC(hotplug_dev);
-+    Object *obj = OBJECT(dev);
-+    AVECCore *core;
-+
-+    if (!object_dynamic_cast(obj, TYPE_LOONGARCH_CPU)) {
-+        warn_report("LoongArch AVEC: Invalid %s device type",
-+                                       object_get_typename(obj));
-+        return;
-+    }
-+
-+    core = loongarch_avec_get_cpu(s, dev);
-+
-+    if (!core) {
-+        return;
-+    }
-+
-+    core->cpu = NULL;
-+}
-+
- static void loongarch_avec_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-+    HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(klass);
-     LoongArchAVECClass *lac = LOONGARCH_AVEC_CLASS(klass);
- 
-     dc->unrealize = loongarch_avec_unrealize;
-     device_class_set_parent_realize(dc, loongarch_avec_realize,
-                                     &lac->parent_realize);
-+    hc->plug = loongarch_avec_cpu_plug;
-+    hc->unplug = loongarch_avec_cpu_unplug;
- }
- 
- static const TypeInfo loongarch_avec_info = {
-@@ -133,6 +200,10 @@ static const TypeInfo loongarch_avec_info = {
-     .instance_size = sizeof(LoongArchAVECState),
-     .instance_init = loongarch_avec_init,
-     .class_init    = loongarch_avec_class_init,
-+    .interfaces    = (const InterfaceInfo[]) {
-+        { TYPE_HOTPLUG_HANDLER },
-+        { }
-+    },
- };
- 
- static void loongarch_avec_register_types(void)
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 4a842ba3e6..d367c80624 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -377,6 +377,8 @@ static void virt_cpu_irq_init(LoongArchVirtMachineState *lvms)
-                              &error_abort);
-         hotplug_handler_plug(HOTPLUG_HANDLER(lvms->extioi), DEVICE(cs),
-                              &error_abort);
-+        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->avec), DEVICE(cs),
-+                             &error_abort);
-     }
- }
- 
-@@ -1088,6 +1090,7 @@ static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
-     /* Notify ipi and extioi irqchip to remove interrupt routing to CPU */
-     hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->ipi), dev, &error_abort);
-     hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->extioi), dev, &error_abort);
-+    hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->avec), dev, &error_abort);
- 
-     /* Notify acpi ged CPU removed */
-     hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &error_abort);
-@@ -1111,6 +1114,10 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
-         hotplug_handler_plug(HOTPLUG_HANDLER(lvms->extioi), dev, &error_abort);
-     }
- 
-+    if (lvms->avec) {
-+        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->avec), dev, &error_abort);
-+    }
-+
-     if (lvms->acpi_ged) {
-         hotplug_handler_plug(HOTPLUG_HANDLER(lvms->acpi_ged), dev,
-                              &error_abort);
--- 
-2.34.1
-
+thanks
+-- PMM
 
