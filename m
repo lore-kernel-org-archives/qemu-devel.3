@@ -4,87 +4,169 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1702CC77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 06:26:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF598C83030
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 06:29:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXDNy-0004rR-ND; Thu, 03 Jul 2025 02:25:30 -0400
+	id 1uXDQn-0006OR-C9; Thu, 03 Jul 2025 02:28:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1uXDNw-0004qq-OS
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 02:25:28 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1uXDNo-00050s-4d
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 02:25:27 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-453647147c6so80885085e9.2
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 23:25:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <freeman.181@wright.edu>)
+ id 1uXBHB-0006Fc-LL
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 00:10:21 -0400
+Received: from mail-northcentralusazon11023101.outbound.protection.outlook.com
+ ([40.107.201.101] helo=CH4PR04CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <freeman.181@wright.edu>)
+ id 1uXBH3-00062S-Oq
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 00:10:21 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=uymObFHYMdxZQSXx7/oj1/g6hwirlfvXZqlQkVSKkEKzm8QLV1sbMHj4G6yFfxH+Zsv6AQatqpwLt70A7mNV1JW+JqPRjQh5y6833vpIb4BPIuPioz5P/zssI5h91tqUTwILp9Y4rPPvCjMnimFTRfkMJcEbd+080ihFWCBc6CDRU/14M0LEaTdU1J8BU7/dKIi0H+G0QgOoVc998HVjeeYIN1HUxaAY3osAHuDnNALy9GA07WGxr/u/yAJdGEaKH/eNiluZHWu7jQPK+evnFYHE8kDzbaiZrEHFNlngQzbLmRuS27Tm7URGK7Sxtnmb/TeYcPo5z13RXUNRAJiJLA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ibpmMedlH+NwkovRrdBSFQZzClVrwmgkwZ0JoCc3tpk=;
+ b=fcPTdAZRUa3jIoPbv5L2Gsk1Fty10I0A+AiZzuey8ABnM6nPvwqaKcTX9rnWwWlrul5Aaaf4kYRDE4fLzYzCifIfvLN8wPDnRv98opHfDQruqGNilFmA1tjczF+7ldrqXu8qInC7Jqh7QANGRMBBqGWIoEF3FF6gqXBaTLlWMw6ciR6c1Wh/FvsglmwrP5O5jMAEFMGtPRQVnySLRFLLnxDhQ9liDkpqj1gFOZG1HWgRrV0tmObwb0gZ++5YccynDA2o2elsdnItiyJ0VMcWL5kg3oS2GpEo40/yumjLojLI/U5GvaRRIRzG0pVO3tt++Wui93k3TdZfYMNAtBPruQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wright.edu; dmarc=pass action=none header.from=wright.edu;
+ dkim=pass header.d=wright.edu; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751523916; x=1752128716; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=027M8yfg17oaQ7oTKElmz0PXj/VteV8fMxceuIgxhGY=;
- b=mAFc7Uc15MitVSb+5+38BoCazEeFmwKIzqiEq4hYAdHZY3ft2V/h3ZDQS63plp0TcR
- qi4iq3/hOy9z8H5q4Ugb2AzAuw0u6iJE08CxIlI0mfyxUIzSFWHcx7rSpO5mrMI5j50I
- V9Y/PN1RkpwBbFGtdCXo+uPrz76vZP6fpER58uPGC9xPAUtRdUNl11D/ZDN0rXJdT2za
- Xa8NKSa/gS9WigzfR4EqRje8UUf2lBAtJMvCKmlEXL8K9348TEMTfOKMoMBdxt9JhFYA
- v+IJrmdbBmIV2+GJvcSB5WH886QAOUejQh+DGtQZDNs3WdO6bONTAPKQeYACVmrYSzQT
- 2MnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751523916; x=1752128716;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=027M8yfg17oaQ7oTKElmz0PXj/VteV8fMxceuIgxhGY=;
- b=QfdTjCmL8YuRx/vA5J2hOCA2LjiUI9CZGsGJMi5w0ZVbpTh0Dnfu3HL5cg06D+RyaE
- fyTdaEUzy7Pcs/o6dsOZnqXjvOrNlVMfR8tF1dfTqnFvAAZ6LuOwPghXogvlDHvVXr/j
- E4fXzR29LjisXgbGwIkNdgmcx+sfZWYzUewdFxUh9At63jEVP9GisIeRqKxh2p5PiJH5
- B5lq0TL9+umzpIllVWdOBtlN4uSKbY4mrZKHprd7Kp4ug42xM4e71SZBtVHnShZ4TGOi
- ImPazOJ5GUJAjGBewC1B2tbnZT0v/sf3qg5zC5xs717g1Lz27izZBGfVGwSUIqOBn/dj
- SRdA==
-X-Gm-Message-State: AOJu0YyqhQICs1/VlQMB6JdCgMamFxx/orPW6qtWxYC0ijqf4DZI0dVq
- fbObZNN2HGjTFVIUeI5rDi5KLU+XdGxm6wY5xu/u8mdmSmm4m1ocVjxbwo6yoA==
-X-Gm-Gg: ASbGnctqL6CsUHd+tr5rKmzWnnp+evjBSOtLPZxr8mIhCS1gNziRhh4Iy3pWT7Mn8YC
- 3ZG7KFUzD5IeeRLpiC+2oG0h9bwFWtGXtGN5QFtA0TgmX5ZQmFGvL4Ri3tJGn6YrK+/NHSidRjq
- BL5/O7GsUpwjTPQZew1yh6gNh+XwaEyDWD4Y95aI0em+whbG43P9rgk0bBvmqVW8aqueja7Q67b
- Y2w/u2GTty1CBm8HcHWNhWE09jAItJ8IazQbXrU1IM+LH4lHSCp2jfTyUKGVkr0cW1iOvZpSscx
- BPV0OxqMrDplK/le8Ob8AFleIr0eJoA818+18ni7qVS6T80jCWqmk470
-X-Google-Smtp-Source: AGHT+IHNTbd4Wo+hOh93dXvmvR8G3Y6uftQxvFqMDO3wDamtoouERP6c9aKWZ72J0XhZ8hxi6PYikA==
-X-Received: by 2002:a05:600c:3f1b:b0:450:cff7:62f9 with SMTP id
- 5b1f17b1804b1-454a370c690mr51435325e9.22.1751523915806; 
- Wed, 02 Jul 2025 23:25:15 -0700 (PDT)
-Received: from [127.0.0.1] ([62.214.191.67]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-453b8f5f867sm37502685e9.3.2025.07.02.23.25.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Jul 2025 23:25:15 -0700 (PDT)
-Date: Thu, 03 Jul 2025 06:25:11 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-CC: Paolo Bonzini <pbonzini@redhat.com>,
- =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH] meson: Add most 3rd-party includes as system includes
-In-Reply-To: <20250617203435.41490-1-shentey@gmail.com>
-References: <20250617203435.41490-1-shentey@gmail.com>
-Message-ID: <C809116D-8A05-43BC-A7AA-828168457BA7@gmail.com>
+ d=raidermailwright.onmicrosoft.com;
+ s=selector2-raidermailwright-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ibpmMedlH+NwkovRrdBSFQZzClVrwmgkwZ0JoCc3tpk=;
+ b=sWK9C6mMNhLDnNzoGqLkAEX468sWzByFrt6x47Tb5H7a6Kwr/QiUbnKRPbWcGFay147UgRLJLm9JC6ti0fJ4Ca3Ukt/I1OUA4PcTpF2UDBF1/93aHjZ+ttWjI5BbAeMpjJd2TD64MhaF46EZzwJkMguIC54/jmG7AINrJrLkVcM=
+Received: from LV2PR01MB7864.prod.exchangelabs.com (2603:10b6:408:14c::8) by
+ PH0PR01MB6469.prod.exchangelabs.com (2603:10b6:510:1b::6) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8901.21; Thu, 3 Jul 2025 04:05:03 +0000
+Received: from LV2PR01MB7864.prod.exchangelabs.com
+ ([fe80::607d:85ce:5f74:8be3]) by LV2PR01MB7864.prod.exchangelabs.com
+ ([fe80::607d:85ce:5f74:8be3%5]) with mapi id 15.20.8901.018; Thu, 3 Jul 2025
+ 04:05:02 +0000
+From: "Freeman, Kelvin" <freeman.181@wright.edu>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Emulate Tasmota in Qemu 
+Thread-Topic: Emulate Tasmota in Qemu 
+Thread-Index: AQHb683NjnHB4HaWj0qrio0rHJJwtw==
+Date: Thu, 3 Jul 2025 04:05:02 +0000
+Message-ID: <LV2PR01MB78646948225072D8BEAB8852D743A@LV2PR01MB7864.prod.exchangelabs.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wright.edu;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: LV2PR01MB7864:EE_|PH0PR01MB6469:EE_
+x-ms-office365-filtering-correlation-id: a9272928-5a91-4791-d4e9-08ddb9e6c95f
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|376014|1800799024|8096899003|38070700018; 
+x-microsoft-antispam-message-info: =?utf-8?B?bHo2emRLYnF4UlR3RHd3eDVXeGc1dE5pMEFEbUsyNUExUHhxelBlSG9IdVg1?=
+ =?utf-8?B?Um4zaFY2bU10c2N2Ky93emZWNnVyRGJGbGZ3TS9tTWtBcldJVUJ2bjRiUW9Y?=
+ =?utf-8?B?QXVSRmFmRjdIWXpwRHNlZ2hLQ1ZoMlJmc3huc2VWY2FKRkptUzluTkxwRlM2?=
+ =?utf-8?B?QWtTUlZVQXlkL0RQMXZVMWJCdmZ6VkU2bHY2ZHBjTUx6cXJFWUZqVTVvdVFr?=
+ =?utf-8?B?YkdxUkZyNlFqT3ZKLzh6YWQ0UEtHUE9IdEkyS1YxcVVJNy80NnRoaGphMVFB?=
+ =?utf-8?B?VVliZWY0WXNoTHBGOVlkQmU0NU1saXBqejkyMm9YejFBeWZLYndoVEMwaHJo?=
+ =?utf-8?B?enlZTWZaK0NYbTkvcG1CZE0yNFRLZmt0aGh4YXdXb1RNb3Y0SVRRZ0xwK1JY?=
+ =?utf-8?B?czFUQXlhZENVWlFjb0trM3F5QUwrUXNvUXREb1R5ZloxaDFYZXBjVHkrUmRz?=
+ =?utf-8?B?ekxqZVdFSHl0dmhkNWlMWCtVMXBmekU3YTRWNzVvUmF4RXM4aml0YU5aRXBi?=
+ =?utf-8?B?UmVYSHltTjNsUlN3Uy9WMVdrTDNDck4wbFEwbXVhUWx3dVJLeUwrVWppbnkw?=
+ =?utf-8?B?RWEvM2ozRWgxODAyeWg0eHNtSWtJcnlyUGc0blBwbytvUGVlK3p3SXNXdXFN?=
+ =?utf-8?B?RHp2bnZ3L0RKdmt2RW4rUW93ZWdRZ1pXRlJieEFuek41R1NDVmFuZTlpOFc0?=
+ =?utf-8?B?UnM4TEpmaDFYeDd1WFFLREpMcjg3Zm1HcDEwSWFFWlpWZi8rSW82bUxKTTJO?=
+ =?utf-8?B?R29kdjhvN0RaTUJQUHZRZUxTaGpWYmcxSlArUHJCNWxROEViUUxMZVN3eXls?=
+ =?utf-8?B?dTZ0bHhGaXdJeXl0YnJ0ekZ4dHVNb0U2K0xaelRSU0Fld1VFN05DOFJZV1V1?=
+ =?utf-8?B?TXExYTBBYjA4aHhTL3ZDdzhZRHluYk05T2lrcUgySDRiK0xqWVA5NjRzdXhZ?=
+ =?utf-8?B?QTFONXVTeWNBamFRbE44ZmcyUzRJK1k0KzRHcE9RZDk3bGdNcS91L21BbTE0?=
+ =?utf-8?B?WU5QclFvRDJwSEtxbmxEK01VenovQkNWRUp6NEJUa2UrN21BNnpCWjVheW1X?=
+ =?utf-8?B?dU1oZlgwT2pKWGJ4Q3ZwSzUxVWxHQUNlRnJ3Q1JVUVZxTFJPcG5EUlBzSVV4?=
+ =?utf-8?B?aTVVWENlWWV5QVNSVjI0RXpnR1VUeExPb3hhWEd6NkZEQ2x3c3ZVVTBwcTRE?=
+ =?utf-8?B?dWpZY3MrYUFkTkJqQ0RuNWMwZldjVmRPTWltVTkzMHdjVkR3RTJlYXNZMVlY?=
+ =?utf-8?B?WDNqd0p3eXN2bkc1TDVGSExHbDduNWFNT0g4ZUErQnBCbDFkR2xIdUszb3RS?=
+ =?utf-8?B?U2t5V1A4NGtHWUVlNnU4Mys4aitFZnNGUWtLYWhlNE9tWFR4NGFPYnNLQldC?=
+ =?utf-8?B?bHIyS3dQUUNsUjlndElBV3hMc0VsanY1aDF6MER2UlQwOWc0ZGcza3FGbVJB?=
+ =?utf-8?B?MlVqcjY2SXlTdlJwOHc0UldRRFlpVFNtYjVheEdLeUEvMm1JT05GOEZlOGtj?=
+ =?utf-8?B?T1ZQYUtSeDlVbTR6NXluZlA2allnWG9xdE9JRE9jdHJGS2tUUThadG1Qaisz?=
+ =?utf-8?B?WFk3MnRHMGRjaW9qTEliOXcvaStZaXpma0psbU9XRFhHa2pjWWpJQjFkelFY?=
+ =?utf-8?B?Zm43SytxYngrdFQ0cEJ5VFpxck56ajJiUWdmblBOWUxIK2RjWWp0NVNRRUtW?=
+ =?utf-8?B?WXNwNGUyRXZYbk1IaVVTeGZXK2tEenZ0QUF6OE93SWlJYUZ1MmtjZjFNKzE5?=
+ =?utf-8?B?dFpVdSs2SlVBOVRoOGtIQlozSHF5dmhuaVJVRjZ4cDc1WmZZZC9WVmxWVzda?=
+ =?utf-8?B?dnNCVnRyYktHcjJJUEgxanhpa1dMYS90KzRQK3M4R205Q3BrajRIRG14MVA0?=
+ =?utf-8?B?ZlYrRHR6UHFBRDh3R3kwbGE0TTdQZ25ZdytmRldiRTRRQXNCbDFlRmhaQmxJ?=
+ =?utf-8?B?dU0xN2NhWkRMN0gvbkdLOGh2d1IvZGFiYm5Hb2lEUVBETll1SlhxRDU5QWpV?=
+ =?utf-8?Q?uGPyAjlVEJQPvWIADGYOwLr8Clj/Og=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:LV2PR01MB7864.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024)(8096899003)(38070700018); DIR:OUT;
+ SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?UTgwWVFCOWt1YS9pRngreFVmeFJFNmdlcDludWN2YSt5MFpld2xxQXpZVWxQ?=
+ =?utf-8?B?QlBXY2pTNWJQV1NRRDJDdGNNNE81UFJxNFZsemFsYisxaVdMYVZRZVBHRkdY?=
+ =?utf-8?B?VUVDQ2dheHkxWmRtR1UrSStvZUc2NEtUMG0rOGdjdWFTYWJDOGZ0T2VwRzRr?=
+ =?utf-8?B?aUk4YXhQenNQRHR6MkRtT3dvUC9vUllwM2h4ZFZZRmdJcVBGd0VmdHZGK2JF?=
+ =?utf-8?B?bzZyS29vb0RUSE9BbDhqeE1WT2hpRlRtZ3JaYXJNbDdFdEg0YkkvZGFmSVdC?=
+ =?utf-8?B?WlBHdUFidDA2MUlEUXFaZWpCOTFzL0dMVW9PSHQxYStyUlRpWWZ4K2plbDJp?=
+ =?utf-8?B?NVZ5b2tORERYNzgzaUhpbmRPb1VTRFE3TWRZU0JkS2k4UVp5SHFBOVBVQVdR?=
+ =?utf-8?B?U1I3OUczS3NhYU16NG0ybGVpcHVPQUYvM0FsK2UrUGhDYy91dlo5Z2RFYk85?=
+ =?utf-8?B?Y3VUK1o2bGFaamhVWjQ4SlhZRDZkcTNuU0ZHU3ZvUmxkdHZoSlBudHRTMmlr?=
+ =?utf-8?B?cHlFUjh0UFpYUnExQzBFbjRMaEhObzgxS1RhaVMyeFhqSWZIK1ZIVWt3Vm9G?=
+ =?utf-8?B?b0pQWkhIWmVKcldJTytQdklKeTJNTnhHQ2hYbTN4VHpLUHRxTlFINUFqc01T?=
+ =?utf-8?B?cFI5ODFLeTVWSXdoYU1QSFU2QlJNUm1VczhJOVBVWENZTUJUNXNNNmM2bmE2?=
+ =?utf-8?B?Q1RHcmowbE1acG9XK1BLNzE3ZzFFcjJMMW0xMjEvOWNOM2FCTEw2WEIvOGhy?=
+ =?utf-8?B?UlRGN2ZCV3FVZVM5dHNRZXRYTml1R0FRMG4xd3NpMmJHdExwUmJrdjVCSzBw?=
+ =?utf-8?B?TlF4NXNkQm5ud1FzS0Z0SVlab1hFV1ZGVG9peXVZeVZEOWloaFNWSUtjcEdN?=
+ =?utf-8?B?c1RJT1JXVVNHRmtNR2t3WjZoS05xajhFZVBGUkszQitadWhTdG05Y3RZeWl3?=
+ =?utf-8?B?RDJqS2pub3c0cTVYeWttNS9rM1BnbzRrVVhTM2t2OXVCY0ZKUk1rYjRYVG9h?=
+ =?utf-8?B?eEwzSzdHbk5LK052T1A2dnUrdm5YMkhjcDU5bzJPZDY4bnNIZjVmV0w3ZU5M?=
+ =?utf-8?B?YXB1cUwrd3VJVG5GM1JOVDdaUkljRTZtSTU2Z3FjRUdFYmFkaUNYZHZ5b08y?=
+ =?utf-8?B?Q3ZjRmdWTjhEQ084ZUk5clhOemxKTktHTnV1QjB2elVPWUZiVDVqUk4vNXhE?=
+ =?utf-8?B?aTVDSWN0WUQvS29DdEw5Y3VFZ3lINGZKaGtyQWU2Z2tuNi9LcUpoZ3o4dlNW?=
+ =?utf-8?B?bTk0MVpJcDJ3a0pqUnBNRml6b1N2RGN4QitPSDdHZVdaT2RSTDB0emVvTnVR?=
+ =?utf-8?B?ejRKZTljOVErNVQ0OGx6VytjNk43ZTN4WUVpM3NMZDRDRHAxM2pKclV2MGxM?=
+ =?utf-8?B?emRnVEpMdXY5WGR2ZEVZT2dPb0plNkFqb1QrZVhmZE5TdmxuaHJndzdjUnB0?=
+ =?utf-8?B?bUNBNmxEeEh4Z28wZUlYbnpZa25tMFdycEN3U083dkpocE5oSExFcEQ3bXVP?=
+ =?utf-8?B?cmFjdW8vTUNQY0w1N0pZQzNFNWEwU2JvQlJRb0hzazRqam9lRC9KbGcwV0JY?=
+ =?utf-8?B?dkRCUnM2YWQyaUxFUS91RVJ0bzhhN3JkeGZ4K0wydUpIbk1WOEwzWlltSWRQ?=
+ =?utf-8?B?UGRPV1hsdEEza29qNFU2YVdzOVNQNHpsRGtoNGhoMUZuTGVDQzEvQXBmNHRa?=
+ =?utf-8?B?bFhJT1lkL0k1WUdHZVBkcjRiRzZHdFM5NlZFbnBLNFFCUEZSdEtzU29UVWJI?=
+ =?utf-8?B?ZlNBSVJ2WlJrVmxXbitLRWJTMWNnNDVQVXQwWjRlWHZpNEpCT0RrNUh3QnlC?=
+ =?utf-8?B?RW10UlNEUGRHN09LaWw0QnByN2xOVUdSeDU5K09teWsraE45YzdGbDNEVEk2?=
+ =?utf-8?B?QzlUcURNTjBmRTRIRm1lZXd5YjNWSEFKV0lYUE90bmppU2VrREZMNFA4QkpQ?=
+ =?utf-8?B?S1didFpVWGxDamNjVzNILzExMlhSVEFzUjBkZDJhYTlKWWF3NGNiT0dmbTBk?=
+ =?utf-8?B?dnVHb2F1RFh6YXcrTnd3OVI2OGYwNFBqT0dKdHlWTkFsWTdVVzNzV29ZMXpX?=
+ =?utf-8?B?MUFPUUQrT3lBU3BlTE43K3k2c1ZBZnBLZVZOZ244a1RTRTNMLzMvNHBja3VB?=
+ =?utf-8?Q?qKghx7yve7Nto44sqkJzui8UU?=
+Content-Type: multipart/alternative;
+ boundary="_000_LV2PR01MB78646948225072D8BEAB8852D743ALV2PR01MB7864prod_"
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-OriginatorOrg: wright.edu
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: LV2PR01MB7864.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a9272928-5a91-4791-d4e9-08ddb9e6c95f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jul 2025 04:05:02.8144 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 5c46d65d-ee5c-4513-8cd4-af98d15e6833
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: w5hrzohSBypQn+fsZk9iGLVSpWqFiOl6Kf+I6YEfgPVIhFFCexVbZ59jWAZSaToUGhq6C8h6mp1egAKjh2A5Vw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR01MB6469
+Received-SPF: pass client-ip=40.107.201.101;
+ envelope-from=freeman.181@wright.edu;
+ helo=CH4PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 03 Jul 2025 02:28:22 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,719 +181,341 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--_000_LV2PR01MB78646948225072D8BEAB8852D743ALV2PR01MB7864prod_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
+SSBoYXZlIGEgY29sbGVnZSBwcm9qZWN0IHdoZXJlIEkgd2FudCB0byB0YWtlIFRhc21vdGEsIGFu
+IG9wZW4gc291cmNlIEVTUDMyIHByb2plY3QgYW5kIGVtdWxhdGUgdGhlIGZpcm13YXJlIGluIFFF
+TVUuIEkgaG93ZXZlciBrZWVwIHJ1bm5pbmcgaW50byBpc3N1ZXMgcmVsYXRlZCB0byBXSS1GSSBp
+bml0aWF0aW9uLiBJIGp1c3Qgd2FudGVkIHRvIGFzayBpZiBlbXVsYXRpbmcgVGFzbW90YSBpbiB0
+aGUgZXhwcmVzc2lmIGZvcmsgb2YgUUVNVSBpcyBwb3NzaWJsZSBvciBub3Qgd2l0aG91dCByZW1v
+dmluZyBXSS1GSSBzdXBwb3J0IGZyb20gdGhlIGZpcm13YXJlLiBIZXJlIGFyZSB0aGUgc3RlcHMg
+SSBoYXZlIHRha2VuIHNvIGZhci4NCg0KQWZ0ZXIgY2xvbmluZyB0aGUgVGFzbW90YSBnaXQgcmVw
+b3NpdG9yeSBhbmQgYnVpbGRpbmcgdGhlIGZpcm13YXJlIGZyb20gc291cmNlIEkgY2FuIGdldCB0
+aGUgdGFzbW90YTMyLmJpbiB0byBwYXJ0aWFsbHkgYm9vdCBidXQgaXQgc3RhcnRzIHRvIHJlYm9v
+dCBldmVyeSB0aW1lIEkgcmVhY2ggdGhlICJXaWZpTWFuYWdlckJlZ2luIiBwb3J0aW9uIG9mIHRo
+ZSBjb2RlLiBBZnRlciByZWFjaGluZyB0aGlzIGlzc3VlIG15IGdvYWwgd2FzIHRvIGRpc2FibGUg
+YWxsIG9mIHRoZSBXaS1GaSBmZWF0dXJlcyBpbmNsdWRpbmcgdGhlIFdpZmlNYW5hZ2VyIGFuZCBy
+dW4gdGhlIHdlYiBzZXJ2ZXIgdGhyb3VnaCBFdGhlcm5ldCBidXQgYWZ0ZXIgdmlld2luZyBhbGwg
+b2YgdGhlIFdpLUZpIG9wdGlvbnMgaW4gdGhlIGZpcm13YXJlIGNvbmZpZyBmaWxlIGl0IGRpZCBu
+b3Qgc2VlbSBsaWtlIHRoZXJlIHdhcyBhIHN0cmFpZ2h0IGZvcndhcmQgd2F5IG9mIGRvaW5nIHRo
+aXMuIFNvIG1vcmUgb3IgbGVzcyBhc2tpbmcgaWYgaXQgaXMgZXZlbiBwb3NzaWJsZSB0byBlbXVs
+YXRlIHRoaXMgZmlybXdhcmUgd2l0aCBXaS1GaSBzdXBwb3J0IG9yIG5vdC4gSGVyZSBpcyBtb3Jl
+IG9yIGxlc3Mgd2hhdCBJIGhhdmUgdHJpZWQgc28gZmFyLiAoUnVubmluZyBvbiBhbiBVYnVudHUg
+MjQuMDQgVk0pDQoNCiNTdGVwIDE6IERlcGVuZGVuY2llcw0Kc3VkbyBhcHQgdXBkYXRlDQpzdWRv
+IGFwdCB1cGdyYWRlIC15DQpzdWRvIGFwdCBpbnN0YWxsIC15IGdpdA0Kc3VkbyBhcHQgaW5zdGFs
+bCAteSBiaW53YWxrIGJ1aWxkLWVzc2VudGlhbCBjbWFrZSBjY2FjaGUgZGZ1LXV0aWwgZ2l0IGdp
+dC1lbWFpbFwNCuKAguKAguKAguKAgmFjcGljYS10b29scyBsaWJhaW8tZGV2IGxpYmJsdWV0b290
+aC1kZXYgbGliYnJsYXBpLWRldiBsaWJiejItZGV2IGxpYmNhY2FyZC1kZXZcDQogICAgbGliY2Fw
+LW5nLWRldiBsaWJjYXBzdG9uZS1kZXYgbGliY2Jvci1kZXYgbGliY3VwczItZGV2IGxpYmN1cmw0
+LWdudXRscy1kZXYgbGliZGF4Y3RsLWRldlwNCiAgICBsaWJmZmktZGV2IGxpYmZkdC1kZXYgbGli
+Z2NyeXB0MjAgbGliZ2NyeXB0MjAtZGV2IGxpYmdsaWIyLjAtMHQ2NCBsaWJnbGliMi4wLWRldiBc
+DQogICAgbGliZ3RrLTMtZGV2IGxpYmlidmVyYnMtZGV2IGxpYmlzY3NpLWRldiBsaWJqcGVnLWRl
+diBsaWJrZXl1dGlscy1kZXYgbGlibHpvMi1kZXZcDQogICAgbGlibmV0dGxlOHQ2NCBsaWJuY3Vy
+c2VzLWRldiBsaWJuZnMtZGV2IGxpYm51bWEtZGV2IGxpYnBhbTBnLWRldiBsaWJwaXhtYW4tMS0w
+IFwNCiAgICBsaWJwaXhtYW4tMS1kZXYgbGlicG1lbS1kZXYgbGlicmJkLWRldiBsaWJyZG1hY20t
+ZGV2IGxpYnNhc2wyLWRldiBsaWJzZGwyLTIuMC0wIFwNCiAgICBsaWJzZGwyLWRldiBsaWJzZWNj
+b21wLWRldiBsaWJzbGlycC1kZXYgbGlic2xpcnAwIGxpYnNuYXBweS1kZXYgbGlic3NoLWRldiBc
+DQogICAgbGlic3NsLWRldiBsaWJ1c2ItMS4wLTAgbGlidXNiLTEuMC0wLWRldiBsaWJ1c2JyZWRp
+cnBhcnNlci1kZXYgbGlidmRlLWRldiBcDQogICAgbGlidmRlcGx1Zy1kZXYgbGlidnRlLTIuOTEt
+ZGV2IGxpYnhlbi1kZXYgbGlienN0ZC1kZXYgbGludXgtbGliYy1kZXYgbWVzb24gXA0KICAgIG5p
+bmphLWJ1aWxkIHBsYXRmb3JtaW8gc3BoaW54LWRvYyB2YWxncmluZCB4ZnNsaWJzLWRldg0KDQpz
+dWRvIGFwdCBpbnN0YWxsIC15IGNsYW5nIHB5dGhvbjMgcHl0aG9uMy1waXAgcHl0aG9uMy1zcGhp
+bnggcHl0aG9uMy1zZXR1cHRvb2xzXA0K4oCC4oCC4oCC4oCCcHl0aG9uLWlzLXB5dGhvbjMgcHl0
+aG9uMy12ZW52IHB5dGhvbjMtc3BoaW54LXJ0ZC10aGVtZSBsaWJzcGljZS1zZXJ2ZXItZGV2IFwN
+CiAgICBsaWJwdWxzZS1kZXYgbGlidm5jc2VydmVyLWRldiBsaWJ4cmFuZHItZGV2IGxpYnhmaXhl
+cy1kZXYgbGlieGluZXJhbWEtZGV2IFwNCiAgICBsaWJ4ZXh0LWRldiBsaWJ4MTEtZGV2IGxpYnhj
+YjEtZGV2IGxpYnhrYmNvbW1vbi1kZXYgbGliZHJtLWRldiBsaWJzZGwyLWltYWdlLWRldiBcDQog
+ICAgbGliZ3RrLTQtZGV2IGxpYm9wdXMtZGV2IGxpYnpzdGQtZGV2IGx6b3ANCg0KIyBTdGVwIDI6
+IEluc3RhbGwgdGhlIEVzcHJlc3NpZiBFU1AtSURGDQpjZCB+DQpnaXQgY2xvbmUgLS1yZWN1cnNp
+dmUgaHR0cHM6Ly9naXRodWIuY29tL2VzcHJlc3NpZi9lc3AtaWRmLmdpdA0KY2QgZXNwLWlkZg0K
+Li9pbnN0YWxsLnNoDQouIGV4cG9ydC5zaA0KDQojIFN0ZXAgMzogQ2xvbmUgYW5kIEJ1aWxkIHRo
+ZSBFc3ByZXNzaWYgUUVNVSBGb3JrDQpjZCB+DQpnaXQgY2xvbmUgaHR0cHM6Ly9naXRodWIuY29t
+L2VzcHJlc3NpZi9xZW11LmdpdA0KY2QgcWVtdQ0KLi9jb25maWd1cmUgLS10YXJnZXQtbGlzdD14
+dGVuc2Etc29mdG1tdSBcDQogICAgLS1lbmFibGUtZ2NyeXB0IFwNCiAgICAtLWVuYWJsZS1zbGly
+cCBcDQogICAgLS1lbmFibGUtZGVidWcgXA0KICAgIC0tZW5hYmxlLXNkbCBcDQogICAgLS1kaXNh
+YmxlLXN0cmlwIC0tZGlzYWJsZS11c2VyIFwNCiAgICAtLWRpc2FibGUtY2Fwc3RvbmUgLS1kaXNh
+YmxlLXZuYyBcDQogICAgLS1kaXNhYmxlLWd0aw0KbmluamEgLUMgYnVpbGQNCg0KIyBTdGVwIDQ6
+IFNldHVwIHBsYXRmb3JtaW8NCmNkIH4NCnZpcnR1YWxlbnYgcGxhdGZvcm1pby1jb3JlDQpjZCBw
+bGF0Zm9ybWlvLWNvcmUNCi4gYmluL2FjdGl2YXRlDQpwaXAgaW5zdGFsbCAtVSBwbGF0Zm9ybWlv
+DQpwaXAgaW5zdGFsbCAtLXVwZ3JhZGUgcGlwDQoNCiMgU3RlcCA1OiBEb3dubG9hZCBhbmQgQnVp
+bGQgdGhlIFRhc21vdGEgUHJvamVjdA0KY2Qgfi9wbGF0Zm9ybWlvLWNvcmUNCmdpdCBjbG9uZSBo
+dHRwczovL2dpdGh1Yi5jb20vYXJlbmRzdC9UYXNtb3RhLmdpdA0KY2QgVGFzbW90YQ0Kcm0gLXJm
+IC5waW8NCnBpbyBydW4gLXQgY2xlYW4NCnBpbyBydW4gLWUgdGFzbW90YTMyDQpkZWFjdGl2YXRl
+DQoNCiMgU3RlcCA2OiBDb21iaW5lIHRoZSBiaW5hcnkgZmlsZXMNCmNkIH4NCm1rZGlyIC1wIHdv
+cmtpbmcNCmNkIHdvcmtpbmcNCmVzcHRvb2wucHkgLS1jaGlwIGVzcDMyIG1lcmdlX2JpbiBcDQog
+IC0tZmlsbC1mbGFzaC1zaXplIDRNQiBcDQogIC0tZmxhc2hfbW9kZSBkaW8gXA0KICAtLWZsYXNo
+X2ZyZXEgNDBtIFwNCiAgLS1mbGFzaF9zaXplIDRNQiBcDQogIC1vIGZsYXNoX2ltYWdlLmJpbiBc
+DQogIDB4MTAwMCAgfi9wbGF0Zm9ybWlvLWNvcmUvVGFzbW90YS8ucGlvL2J1aWxkL3Rhc21vdGEz
+Mi9ib290bG9hZGVyLmJpbiBcDQogIDB4ODAwMCAgfi9wbGF0Zm9ybWlvLWNvcmUvVGFzbW90YS8u
+cGlvL2J1aWxkL3Rhc21vdGEzMi9wYXJ0aXRpb25zLmJpbiBcDQogIDB4ZTAwMCAgfi8ucGxhdGZv
+cm1pby9wYWNrYWdlcy9mcmFtZXdvcmstYXJkdWlub2VzcHJlc3NpZjMyL3Rvb2xzL3BhcnRpdGlv
+bnMvYm9vdF9hcHAwLmJpbiBcDQogIDB4MTAwMDAgfi9wbGF0Zm9ybWlvLWNvcmUvVGFzbW90YS92
+YXJpYW50cy90YXNtb3RhL3Rhc21vdGEzMi1zYWZlYm9vdC5iaW4gXA0KICAweGUwMDAwIH4vcGxh
+dGZvcm1pby1jb3JlL1Rhc21vdGEvLnBpby9idWlsZC90YXNtb3RhMzIvZmlybXdhcmUuYmluDQoN
+CiMgU3RlcCA3OiBSdW4gVGFzbW90YSBpbiBRZW11DQpjZCB+L3dvcmtpbmcNCn4vcWVtdS9idWls
+ZC9xZW11LXN5c3RlbS14dGVuc2EgLW5vZ3JhcGhpYyAtTSBlc3AzMiAtbSA0TSAtZHJpdmUgZmls
+ZT1mbGFzaF9pbWFnZS5iaW4sZm9ybWF0PXJhdyxpZj1tdGQgLWdsb2JhbCBkcml2ZXI9ZXNwMzIu
+c3BpX2ZsYXNoLHByb3BlcnR5PWRyaXZlLHZhbHVlPWZsYXNoIC1nbG9iYWwgZHJpdmVyPXRpbWVy
+LmVzcDMyLnRpbWcscHJvcGVydHk9d2R0X2Rpc2FibGUsdmFsdWU9dHJ1ZSAtbmljIHVzZXIsbW9k
+ZWw9b3Blbl9ldGggLWRpc3BsYXkgc2RsDQoNClRoaXMgaXMgdGhlIHJlc3VsdCBvZiBydW5uaW5n
+IHRoZXNlIHN0ZXBzDQoNCn4vcWVtdS9idWlsZC9xZW11LXN5c3RlbS14dGVuc2EgLW5vZ3JhcGhp
+YyAtTSBlc3AzMiAtbSA0TSAtZHJpdmUgZmlsZT1mbGFzaF9pbWFnZS5iaW4sZm9ybWF0PXJhdyxp
+Zj1tdGQgLWdsb2JhbCBkcml2ZXI9ZXNwMzIuc3BpX2ZsYXNoLHByb3BlcnR5PWRyaXZlLHZhbHVl
+PWZsYXNoIC1nbG9iYWwgZHJpdmVyPXRpbWVyLmVzcDMyLnRpbWcscHJvcGVydHk9d2R0X2Rpc2Fi
+bGUsdmFsdWU9dHJ1ZSAtbmljIHVzZXIsbW9kZWw9b3Blbl9ldGggLWRpc3BsYXkgc2RsDQpBZGRp
+bmcgU1BJIGZsYXNoIGRldmljZQ0KcWVtdS1zeXN0ZW0teHRlbnNhOiB3YXJuaW5nOiBnbG9iYWwg
+ZXNwMzIuc3BpX2ZsYXNoLmRyaXZlIGhhcyBpbnZhbGlkIGNsYXNzIG5hbWUNCmV0cyBKdWwgMjkg
+MjAxOSAxMjoyMTo0Ng0KDQpyc3Q6MHgxIChQT1dFUk9OX1JFU0VUKSxib290OjB4MTIgKFNQSV9G
+QVNUX0ZMQVNIX0JPT1QpDQpjb25maWdzaXA6IDAsIFNQSVdQOjB4ZWUNCmNsa19kcnY6MHgwMCxx
+X2RydjoweDAwLGRfZHJ2OjB4MDAsY3MwX2RydjoweDAwLGhkX2RydjoweDAwLHdwX2RydjoweDAw
+DQptb2RlOkRJTywgY2xvY2sgZGl2OjINCmxvYWQ6MHgzZmZmMDAzMCxsZW46MjY4DQpobyAwIHRh
+aWwgMTIgcm9vbSA0DQpsb2FkOjB4NDAwNzgwMDAsbGVuOjEzMjQ0DQpsb2FkOjB4NDAwODA0MDAs
+bGVuOjQNCmhvIDggdGFpbCA0IHJvb20gNA0KbG9hZDoweDQwMDgwNDA0LGxlbjoyOTI4DQplbnRy
+eSAweDQwMDgwNTVjDQoNCjAwOjAwOjAwLjA1NyBIRFc6IEVTUDMyLUQwV0RRNiB2MC4wIChQU1JB
+TSBkaXNhYmxlZCkNCjAwOjAwOjAwLjA2MyBIRFc6IFBTUkFNIGlzIGRpc2FibGVkLCByZXF1aXJl
+cyBzcGVjaWZpYyBjb21waWxhdGlvbiBvbiB0aGlzIGhhcmR3YXJlIChzZWUgZG9jKQ0KMDA6MDA6
+MDAuMDk4IFVGUzogRmxhc2hGUyBtb3VudGVkIHdpdGggMzEyIGtCIGZyZWUNCjAwOjAwOjAwLjM4
+NiBDRkc6IFVzZSBkZWZhdWx0cw0KMDA6MDA6MDAuNjU2IFFQQzogUmVzZXQNCjAwOjAwOjAyLjc3
+MSBCUlk6IEJlcnJ5IGluaXRpYWxpemVkLCBSQU0gdXNlZCA0NzYxIGJ5dGVzDQowMDowMDowMy4z
+ODAgUHJvamVjdCB0YXNtb3RhIC0gVGFzbW90YSBWZXJzaW9uIDE1LjAuMS4xKHRhc21vdGEzMikt
+M18xXzMoMjAyNS0wNi0yN1QwMzo1NTozMikNCjAwOjAwOjEwLjc5OCBXSUY6IFdpZmlNYW5hZ2Vy
+IGFjdGl2ZSBmb3IgMyBtaW51dGVzDQpHdXJ1IE1lZGl0YXRpb24gRXJyb3I6IENvcmUgIDAgcGFu
+aWMnZWQgKExvYWRTdG9yZVBJRkFkZHJFcnJvcikuIEV4Y2VwdGlvbiB3YXMgdW5oYW5kbGVkLg0K
+DQpDb3JlICAwIHJlZ2lzdGVyIGR1bXA6DQpQQyAgICAgIDogMHg0MDFmNGY0YyAgUFMgICAgICA6
+IDB4MDAwNjBjMzAgIEEwICAgICAgOiAweDgwMTg4ZWM0ICBBMSAgICAgIDogMHgzZmZiZDMxMA0K
+QTIgICAgICA6IDB4M2ZmZDQwMDQgIEEzICAgICAgOiAweDNmZmQzODkwICBBNCAgICAgIDogMHgw
+MDAwMDAwMiAgQTUgICAgICA6IDB4NjAwMzNjMDANCkE2ICAgICAgOiAweDAwMDAwMDAwICBBNyAg
+ICAgIDogMHgwMDAwMDAwMCAgQTggICAgICA6IDB4ODAwOTIyZDYgIEE5ICAgICAgOiAweDNmZmMw
+YWQwDQpBMTAgICAgIDogMHgwMDAwMDAwMCAgQTExICAgICA6IDB4MDAwMDAwMDAgIEExMiAgICAg
+OiAweDNmZmJkM2U0ICBBMTMgICAgIDogMHgzZmZjMzBlNA0KQTE0ICAgICA6IDB4M2ZmY2FkNjgg
+IEExNSAgICAgOiAweDAwMDAzZjA5ICBTQVIgICAgIDogMHgwMDAwMDAwMCAgRVhDQ0FVU0U6IDB4
+MDAwMDAwMGYNCkVYQ1ZBRERSOiAweDYwMDMzYzAwICBMQkVHICAgIDogMHg0MDA4Y2IwNCAgTEVO
+RCAgICA6IDB4NDAwOGNiMWEgIExDT1VOVCAgOiAweGZmZmZmZmZmDQpCYWNrdHJhY2U6IDB4NDAx
+ZjRmNDk6MHgzZmZiZDMxMCAweDQwMTg4ZWMxOjB4M2ZmYmQ0MTAgMHg0MDE4OGY0OToweDNmZmJk
+NDQwIDB4NDAxYTg3ODU6MHgzZmZiZDQ2MCAweDQwMWRiYzZlOjB4M2ZmYmQ0ODAgMHg0MDFkYzU4
+NjoweDNmZmJkNGEwIDB4NDAxZGEzZmE6MHgzZmZiZDRjMCAweDQwMjA4YWY5OjB4M2ZmYmQ0ZTAN
+CkVMRiBmaWxlIFNIQTI1NjogOGIxMWMyYThmDQpSZWJvb3RpbmcuLi4NCg0KDQpBbnkgYWR2aWNl
+IHdvdWxkIGJlIGdyZWF0bHkgYXBwcmVjaWF0ZWQhDQoNCg==
 
-Am 17=2E Juni 2025 20:34:35 UTC schrieb Bernhard Beschow <shentey@gmail=2E=
-com>:
->When compiling QEMU against fuse3-3=2E17=2E1 with --enable-werror the bui=
-ld fails
->with:
->
->  In file included from =2E=2E/src/block/export/fuse=2Ec:33:
->  /usr/include/fuse3/fuse=2Eh:959:5: error: redundant redeclaration of =
-=E2=80=98fuse_main_real_versioned=E2=80=99 [-Werror=3Dredundant-decls]
->    959 | int fuse_main_real_versioned(int argc, char *argv[],
->        |     ^~~~~~~~~~~~~~~~~~~~~~~~
->  /usr/include/fuse3/fuse=2Eh:885:5: note: previous declaration of =E2=80=
-=98fuse_main_real_versioned=E2=80=99 with type =E2=80=98int(int,  char **, =
-const struct fuse_operations *, size_t,  struct libfuse_version *, void *)=
-=E2=80=99 {aka =E2=80=98int(int,  char **, const struct fuse_operations *, =
-long unsigned int,  struct libfuse_version *, void *)=E2=80=99}
->    885 | int fuse_main_real_versioned(int argc, char *argv[],
->        |     ^~~~~~~~~~~~~~~~~~~~~~~~
->  cc1: all warnings being treated as errors
->
->That is, a fuse header triggers a warning within itself=2E Since QEMU add=
-s the
->fuse3 include path via `-I`, the compiler thinks that the header is part =
-of the
->QEMU project, and thus raises a warning=2E The compiler can be told to ig=
-nore
->warnings within 3rd party headers by adding these paths via `-isystem`=2E=
- Fix the
->above build failure by marking fuse as system dependency=2E While at it m=
-ark
->every 3rd-party dependency as system dependency to prevent similar issues=
- in the
->future but skip glib since that results in glib include paths to be omitt=
-ed from
->bindgen in case of a Rust build=2E
->
->Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+--_000_LV2PR01MB78646948225072D8BEAB8852D743ALV2PR01MB7864prod_
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Ping
+PGh0bWw+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIgY29udGVudD0i
+dGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyIgc3R5bGU9
+ImRpc3BsYXk6bm9uZTsiPiBQIHttYXJnaW4tdG9wOjA7bWFyZ2luLWJvdHRvbTowO30gPC9zdHls
+ZT4NCjwvaGVhZD4NCjxib2R5IGRpcj0ibHRyIj4NCjxkaXYgc3R5bGU9InRleHQtYWxpZ246IGxl
+ZnQ7IHRleHQtaW5kZW50OiAwcHg7IG1hcmdpbjogMHB4OyBmb250LWZhbWlseTogQXB0b3MsIEFw
+dG9zX0VtYmVkZGVkRm9udCwgQXB0b3NfTVNGb250U2VydmljZSwgQ2FsaWJyaSwgSGVsdmV0aWNh
+LCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDEycHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7Ij4NCkkg
+aGF2ZSBhIGNvbGxlZ2UgcHJvamVjdCB3aGVyZSBJIHdhbnQgdG8gdGFrZSBUYXNtb3RhLCBhbiBv
+cGVuIHNvdXJjZSBFU1AzMiBwcm9qZWN0IGFuZCBlbXVsYXRlIHRoZSBmaXJtd2FyZSBpbiBRRU1V
+LiBJIGhvd2V2ZXIga2VlcCBydW5uaW5nIGludG8gaXNzdWVzIHJlbGF0ZWQgdG8gV0ktRkkgaW5p
+dGlhdGlvbi4gSSBqdXN0IHdhbnRlZCB0byBhc2sgaWYgZW11bGF0aW5nIFRhc21vdGEgaW4gdGhl
+IGV4cHJlc3NpZiBmb3JrIG9mIFFFTVUgaXMNCiBwb3NzaWJsZSBvciBub3Qgd2l0aG91dCByZW1v
+dmluZyBXSS1GSSBzdXBwb3J0IGZyb20gdGhlIGZpcm13YXJlLiBIZXJlIGFyZSB0aGUgc3RlcHMg
+SSBoYXZlIHRha2VuIHNvIGZhci48L2Rpdj4NCjxkaXYgc3R5bGU9InRleHQtYWxpZ246IGxlZnQ7
+IHRleHQtaW5kZW50OiAwcHg7IG1hcmdpbjogMHB4OyBmb250LWZhbWlseTogQXB0b3MsIEFwdG9z
+X0VtYmVkZGVkRm9udCwgQXB0b3NfTVNGb250U2VydmljZSwgQ2FsaWJyaSwgSGVsdmV0aWNhLCBz
+YW5zLXNlcmlmOyBmb250LXNpemU6IDEycHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7Ij4NCjxicj4N
+CjwvZGl2Pg0KPGRpdiBzdHlsZT0idGV4dC1hbGlnbjogbGVmdDsgdGV4dC1pbmRlbnQ6IDBweDsg
+bWFyZ2luOiAwcHg7IGZvbnQtZmFtaWx5OiBBcHRvcywgQXB0b3NfRW1iZWRkZWRGb250LCBBcHRv
+c19NU0ZvbnRTZXJ2aWNlLCBDYWxpYnJpLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7IGZvbnQtc2l6
+ZTogMTJwdDsgY29sb3I6IHJnYigwLCAwLCAwKTsiPg0KQWZ0ZXIgY2xvbmluZyB0aGUgVGFzbW90
+YSBnaXQgcmVwb3NpdG9yeSBhbmQgYnVpbGRpbmcgdGhlIGZpcm13YXJlIGZyb20gc291cmNlIEkg
+Y2FuIGdldCB0aGUgdGFzbW90YTMyLmJpbiB0byBwYXJ0aWFsbHkgYm9vdCBidXQgaXQgc3RhcnRz
+IHRvIHJlYm9vdCBldmVyeSB0aW1lIEkgcmVhY2ggdGhlICZxdW90O1dpZmlNYW5hZ2VyQmVnaW4m
+cXVvdDsgcG9ydGlvbiBvZiB0aGUgY29kZS4gQWZ0ZXIgcmVhY2hpbmcgdGhpcyBpc3N1ZSBteSBn
+b2FsIHdhcyB0byBkaXNhYmxlDQogYWxsIG9mIHRoZSBXaS1GaSZuYnNwO2ZlYXR1cmVzIGluY2x1
+ZGluZyB0aGUgV2lmaU1hbmFnZXIgYW5kIHJ1biB0aGUgd2ViIHNlcnZlciB0aHJvdWdoIEV0aGVy
+bmV0IGJ1dCBhZnRlciB2aWV3aW5nIGFsbCBvZiB0aGUgV2ktRmkgb3B0aW9ucyBpbiB0aGUgZmly
+bXdhcmUgY29uZmlnIGZpbGUgaXQgZGlkIG5vdCBzZWVtIGxpa2UgdGhlcmUgd2FzIGEgc3RyYWln
+aHQgZm9yd2FyZCB3YXkgb2YgZG9pbmcgdGhpcy4gU28gbW9yZSBvciBsZXNzIGFza2luZyBpZg0K
+IGl0IGlzIGV2ZW4gcG9zc2libGUgdG8gZW11bGF0ZSB0aGlzIGZpcm13YXJlIHdpdGggV2ktRmkg
+c3VwcG9ydCBvciBub3QuIEhlcmUgaXMgbW9yZSBvciBsZXNzIHdoYXQgSSBoYXZlIHRyaWVkIHNv
+IGZhci4gKFJ1bm5pbmcgb24gYW4gVWJ1bnR1IDI0LjA0IFZNKTwvZGl2Pg0KPHByZSBzdHlsZT0i
+bWFyZ2luLWJvdHRvbTogMXJlbTsgcGFkZGluZzogMXJlbSAxLjRyZW07IGJvcmRlci13aWR0aDog
+MXB4OyBib3JkZXItc3R5bGU6IHNvbGlkOyBib3JkZXItY29sb3I6IHJnYigyMjgsIDIyOCwgMjI4
+KTsgYm9yZGVyLXJhZGl1czogNHB4OyBtYXgtd2lkdGg6IDEwMCU7Ij48ZGl2IHN0eWxlPSJ0ZXh0
+LWFsaWduOiBsZWZ0OyB0ZXh0LWluZGVudDogMHB4OyBtYXJnaW46IDBweDsgZm9udC1mYW1pbHk6
+IENvbnNvbGFzLCBDb3VyaWVyLCBtb25vc3BhY2U7IGZvbnQtc2l6ZTogMTJwdDsgY29sb3I6IHJn
+YigwLCAwLCAwKTsiPiNTdGVwIDE6IERlcGVuZGVuY2llcyAKc3VkbyBhcHQgdXBkYXRlIApzdWRv
+IGFwdCB1cGdyYWRlIC15IApzdWRvIGFwdCBpbnN0YWxsIC15IGdpdCAKc3VkbyBhcHQgaW5zdGFs
+bCAteSBiaW53YWxrIGJ1aWxkLWVzc2VudGlhbCBjbWFrZSBjY2FjaGUgZGZ1LXV0aWwgZ2l0IGdp
+dC1lbWFpbFw8L2Rpdj48ZGl2IHN0eWxlPSJ0ZXh0LWFsaWduOiBsZWZ0OyB0ZXh0LWluZGVudDog
+MHB4OyB3aGl0ZS1zcGFjZTogbm9ybWFsOyBtYXJnaW46IDBweDsgZm9udC1mYW1pbHk6IENvbnNv
+bGFzLCBDb3VyaWVyLCBtb25vc3BhY2U7IGZvbnQtc2l6ZTogMTJwdDsgY29sb3I6IHJnYigwLCAw
+LCAwKTsiPuKAguKAguKAguKAgmFjcGljYS10b29scyBsaWJhaW8tZGV2IGxpYmJsdWV0b290aC1k
+ZXYgbGliYnJsYXBpLWRldiBsaWJiejItZGV2IGxpYmNhY2FyZC1kZXZcPC9kaXY+PGRpdiBzdHls
+ZT0idGV4dC1hbGlnbjogbGVmdDsgdGV4dC1pbmRlbnQ6IDBweDsgd2hpdGUtc3BhY2U6IG5vcm1h
+bDsgbWFyZ2luOiAwcHg7IGZvbnQtZmFtaWx5OiBDb25zb2xhcywgQ291cmllciwgbW9ub3NwYWNl
+OyBmb250LXNpemU6IDEycHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7Ij4mbmJzcDsgJm5ic3A7IGxp
+YmNhcC1uZy1kZXYgbGliY2Fwc3RvbmUtZGV2IGxpYmNib3ItZGV2IGxpYmN1cHMyLWRldiBsaWJj
+dXJsNC1nbnV0bHMtZGV2IGxpYmRheGN0bC1kZXZcPC9kaXY+PGRpdiBzdHlsZT0idGV4dC1hbGln
+bjogbGVmdDsgdGV4dC1pbmRlbnQ6IDBweDsgd2hpdGUtc3BhY2U6IG5vcm1hbDsgbWFyZ2luOiAw
+cHg7IGZvbnQtZmFtaWx5OiBDb25zb2xhcywgQ291cmllciwgbW9ub3NwYWNlOyBmb250LXNpemU6
+IDEycHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7Ij4mbmJzcDsgJm5ic3A7IGxpYmZmaS1kZXYgbGli
+ZmR0LWRldiBsaWJnY3J5cHQyMCBsaWJnY3J5cHQyMC1kZXYgbGliZ2xpYjIuMC0wdDY0IGxpYmds
+aWIyLjAtZGV2IFw8L2Rpdj48ZGl2IHN0eWxlPSJ0ZXh0LWFsaWduOiBsZWZ0OyB0ZXh0LWluZGVu
+dDogMHB4OyB3aGl0ZS1zcGFjZTogbm9ybWFsOyBtYXJnaW46IDBweDsgZm9udC1mYW1pbHk6IENv
+bnNvbGFzLCBDb3VyaWVyLCBtb25vc3BhY2U7IGZvbnQtc2l6ZTogMTJwdDsgY29sb3I6IHJnYigw
+LCAwLCAwKTsiPiZuYnNwOyAmbmJzcDsgbGliZ3RrLTMtZGV2IGxpYmlidmVyYnMtZGV2IGxpYmlz
+Y3NpLWRldiBsaWJqcGVnLWRldiBsaWJrZXl1dGlscy1kZXYgbGlibHpvMi1kZXZcPC9kaXY+PGRp
+diBzdHlsZT0idGV4dC1hbGlnbjogbGVmdDsgdGV4dC1pbmRlbnQ6IDBweDsgd2hpdGUtc3BhY2U6
+IG5vcm1hbDsgbWFyZ2luOiAwcHg7IGZvbnQtZmFtaWx5OiBDb25zb2xhcywgQ291cmllciwgbW9u
+b3NwYWNlOyBmb250LXNpemU6IDEycHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7Ij4mbmJzcDsgJm5i
+c3A7IGxpYm5ldHRsZTh0NjQgbGlibmN1cnNlcy1kZXYgbGlibmZzLWRldiBsaWJudW1hLWRldiBs
+aWJwYW0wZy1kZXYgbGlicGl4bWFuLTEtMCBcPC9kaXY+PGRpdiBzdHlsZT0idGV4dC1hbGlnbjog
+bGVmdDsgdGV4dC1pbmRlbnQ6IDBweDsgd2hpdGUtc3BhY2U6IG5vcm1hbDsgbWFyZ2luOiAwcHg7
+IGZvbnQtZmFtaWx5OiBDb25zb2xhcywgQ291cmllciwgbW9ub3NwYWNlOyBmb250LXNpemU6IDEy
+cHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7Ij4mbmJzcDsgJm5ic3A7IGxpYnBpeG1hbi0xLWRldiBs
+aWJwbWVtLWRldiBsaWJyYmQtZGV2IGxpYnJkbWFjbS1kZXYgbGlic2FzbDItZGV2IGxpYnNkbDIt
+Mi4wLTAgXDwvZGl2PjxkaXYgc3R5bGU9InRleHQtYWxpZ246IGxlZnQ7IHRleHQtaW5kZW50OiAw
+cHg7IHdoaXRlLXNwYWNlOiBub3JtYWw7IG1hcmdpbjogMHB4OyBmb250LWZhbWlseTogQ29uc29s
+YXMsIENvdXJpZXIsIG1vbm9zcGFjZTsgZm9udC1zaXplOiAxMnB0OyBjb2xvcjogcmdiKDAsIDAs
+IDApOyI+Jm5ic3A7ICZuYnNwOyBsaWJzZGwyLWRldiBsaWJzZWNjb21wLWRldiBsaWJzbGlycC1k
+ZXYgbGlic2xpcnAwIGxpYnNuYXBweS1kZXYgbGlic3NoLWRldiBcPC9kaXY+PGRpdiBzdHlsZT0i
+dGV4dC1hbGlnbjogbGVmdDsgdGV4dC1pbmRlbnQ6IDBweDsgd2hpdGUtc3BhY2U6IG5vcm1hbDsg
+bWFyZ2luOiAwcHg7IGZvbnQtZmFtaWx5OiBDb25zb2xhcywgQ291cmllciwgbW9ub3NwYWNlOyBm
+b250LXNpemU6IDEycHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7Ij4mbmJzcDsgJm5ic3A7IGxpYnNz
+bC1kZXYgbGlidXNiLTEuMC0wIGxpYnVzYi0xLjAtMC1kZXYgbGlidXNicmVkaXJwYXJzZXItZGV2
+IGxpYnZkZS1kZXYgXDwvZGl2PjxkaXYgc3R5bGU9InRleHQtYWxpZ246IGxlZnQ7IHRleHQtaW5k
+ZW50OiAwcHg7IHdoaXRlLXNwYWNlOiBub3JtYWw7IG1hcmdpbjogMHB4OyBmb250LWZhbWlseTog
+Q29uc29sYXMsIENvdXJpZXIsIG1vbm9zcGFjZTsgZm9udC1zaXplOiAxMnB0OyBjb2xvcjogcmdi
+KDAsIDAsIDApOyI+Jm5ic3A7ICZuYnNwOyBsaWJ2ZGVwbHVnLWRldiBsaWJ2dGUtMi45MS1kZXYg
+bGlieGVuLWRldiBsaWJ6c3RkLWRldiBsaW51eC1saWJjLWRldiBtZXNvbiBcPC9kaXY+PGRpdiBz
+dHlsZT0idGV4dC1hbGlnbjogbGVmdDsgdGV4dC1pbmRlbnQ6IDBweDsgd2hpdGUtc3BhY2U6IG5v
+cm1hbDsgbWFyZ2luOiAwcHg7IGZvbnQtZmFtaWx5OiBDb25zb2xhcywgQ291cmllciwgbW9ub3Nw
+YWNlOyBmb250LXNpemU6IDEycHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7Ij4mbmJzcDsgJm5ic3A7
+IG5pbmphLWJ1aWxkIHBsYXRmb3JtaW8gc3BoaW54LWRvYyB2YWxncmluZCB4ZnNsaWJzLWRldjwv
+ZGl2PjxkaXYgc3R5bGU9InRleHQtYWxpZ246IGxlZnQ7IHRleHQtaW5kZW50OiAwcHg7IHdoaXRl
+LXNwYWNlOiBub3JtYWw7IG1hcmdpbjogMHB4OyBmb250LWZhbWlseTogQ29uc29sYXMsIENvdXJp
+ZXIsIG1vbm9zcGFjZTsgZm9udC1zaXplOiAxMnB0OyBjb2xvcjogcmdiKDAsIDAsIDApOyI+Jm5i
+c3A7PC9kaXY+PGRpdiBzdHlsZT0idGV4dC1hbGlnbjogbGVmdDsgdGV4dC1pbmRlbnQ6IDBweDsg
+d2hpdGUtc3BhY2U6IG5vcm1hbDsgbWFyZ2luOiAwcHg7IGZvbnQtZmFtaWx5OiBDb25zb2xhcywg
+Q291cmllciwgbW9ub3NwYWNlOyBmb250LXNpemU6IDEycHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7
+Ij5zdWRvIGFwdCBpbnN0YWxsIC15IGNsYW5nIHB5dGhvbjMgcHl0aG9uMy1waXAgcHl0aG9uMy1z
+cGhpbnggcHl0aG9uMy1zZXR1cHRvb2xzXDwvZGl2PjxkaXYgc3R5bGU9InRleHQtYWxpZ246IGxl
+ZnQ7IHRleHQtaW5kZW50OiAwcHg7IHdoaXRlLXNwYWNlOiBub3JtYWw7IG1hcmdpbjogMHB4OyBm
+b250LWZhbWlseTogQ29uc29sYXMsIENvdXJpZXIsIG1vbm9zcGFjZTsgZm9udC1zaXplOiAxMnB0
+OyBjb2xvcjogcmdiKDAsIDAsIDApOyI+4oCC4oCC4oCC4oCCcHl0aG9uLWlzLXB5dGhvbjMgcHl0
+aG9uMy12ZW52IHB5dGhvbjMtc3BoaW54LXJ0ZC10aGVtZSBsaWJzcGljZS1zZXJ2ZXItZGV2IFw8
+L2Rpdj48ZGl2IHN0eWxlPSJ0ZXh0LWFsaWduOiBsZWZ0OyB0ZXh0LWluZGVudDogMHB4OyB3aGl0
+ZS1zcGFjZTogbm9ybWFsOyBtYXJnaW46IDBweDsgZm9udC1mYW1pbHk6IENvbnNvbGFzLCBDb3Vy
+aWVyLCBtb25vc3BhY2U7IGZvbnQtc2l6ZTogMTJwdDsgY29sb3I6IHJnYigwLCAwLCAwKTsiPiZu
+YnNwOyAmbmJzcDsgbGlicHVsc2UtZGV2IGxpYnZuY3NlcnZlci1kZXYgbGlieHJhbmRyLWRldiBs
+aWJ4Zml4ZXMtZGV2IGxpYnhpbmVyYW1hLWRldiBcPC9kaXY+PGRpdiBzdHlsZT0idGV4dC1hbGln
+bjogbGVmdDsgdGV4dC1pbmRlbnQ6IDBweDsgd2hpdGUtc3BhY2U6IG5vcm1hbDsgbWFyZ2luOiAw
+cHg7IGZvbnQtZmFtaWx5OiBDb25zb2xhcywgQ291cmllciwgbW9ub3NwYWNlOyBmb250LXNpemU6
+IDEycHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7Ij4mbmJzcDsgJm5ic3A7IGxpYnhleHQtZGV2IGxp
+YngxMS1kZXYgbGlieGNiMS1kZXYgbGlieGtiY29tbW9uLWRldiBsaWJkcm0tZGV2IGxpYnNkbDIt
+aW1hZ2UtZGV2IFw8L2Rpdj48ZGl2IHN0eWxlPSJ0ZXh0LWFsaWduOiBsZWZ0OyB0ZXh0LWluZGVu
+dDogMHB4OyB3aGl0ZS1zcGFjZTogbm9ybWFsOyBtYXJnaW46IDBweDsgZm9udC1mYW1pbHk6IENv
+bnNvbGFzLCBDb3VyaWVyLCBtb25vc3BhY2U7IGZvbnQtc2l6ZTogMTJwdDsgY29sb3I6IHJnYigw
+LCAwLCAwKTsiPiZuYnNwOyAmbmJzcDsgbGliZ3RrLTQtZGV2IGxpYm9wdXMtZGV2IGxpYnpzdGQt
+ZGV2IGx6b3A8L2Rpdj48ZGl2IHN0eWxlPSJ0ZXh0LWFsaWduOiBsZWZ0OyB0ZXh0LWluZGVudDog
+MHB4OyBmb250LWZhbWlseTogQ29uc29sYXMsIENvdXJpZXIsIG1vbm9zcGFjZTsgZm9udC1zaXpl
+OiAxMnB0OyBjb2xvcjogcmdiKDAsIDAsIDApOyI+CiMgU3RlcCAyOiBJbnN0YWxsIHRoZSBFc3By
+ZXNzaWYgRVNQLUlERgpjZCB+IApnaXQgY2xvbmUgLS1yZWN1cnNpdmUgaHR0cHM6Ly9naXRodWIu
+Y29tL2VzcHJlc3NpZi9lc3AtaWRmLmdpdApjZCBlc3AtaWRmCi4vaW5zdGFsbC5zaAouIGV4cG9y
+dC5zaAoKIyBTdGVwIDM6IENsb25lIGFuZCBCdWlsZCB0aGUgRXNwcmVzc2lmIFFFTVUgRm9yawpj
+ZCB+CmdpdCBjbG9uZSBodHRwczovL2dpdGh1Yi5jb20vZXNwcmVzc2lmL3FlbXUuZ2l0CmNkIHFl
+bXUKLi9jb25maWd1cmUgLS10YXJnZXQtbGlzdD14dGVuc2Etc29mdG1tdSBcCiAmbmJzcDsgJm5i
+c3A7LS1lbmFibGUtZ2NyeXB0IFwKICZuYnNwOyAmbmJzcDstLWVuYWJsZS1zbGlycCBcCiAmbmJz
+cDsgJm5ic3A7LS1lbmFibGUtZGVidWcgXAogJm5ic3A7ICZuYnNwOy0tZW5hYmxlLXNkbCBcCiAm
+bmJzcDsgJm5ic3A7LS1kaXNhYmxlLXN0cmlwIC0tZGlzYWJsZS11c2VyIFwKICZuYnNwOyAmbmJz
+cDstLWRpc2FibGUtY2Fwc3RvbmUgLS1kaXNhYmxlLXZuYyBcCiAmbmJzcDsgJm5ic3A7LS1kaXNh
+YmxlLWd0awpuaW5qYSAtQyBidWlsZAoKIyBTdGVwIDQ6IFNldHVwIHBsYXRmb3JtaW8KY2QgfiAK
+dmlydHVhbGVudiBwbGF0Zm9ybWlvLWNvcmUKY2QgcGxhdGZvcm1pby1jb3JlCi4gYmluL2FjdGl2
+YXRlCnBpcCBpbnN0YWxsIC1VIHBsYXRmb3JtaW8KcGlwIGluc3RhbGwgLS11cGdyYWRlIHBpcAoK
+IyBTdGVwIDU6IERvd25sb2FkIGFuZCBCdWlsZCB0aGUgVGFzbW90YSBQcm9qZWN0CmNkIH4vcGxh
+dGZvcm1pby1jb3JlCmdpdCBjbG9uZSBodHRwczovL2dpdGh1Yi5jb20vYXJlbmRzdC9UYXNtb3Rh
+LmdpdApjZCBUYXNtb3RhCnJtIC1yZiAucGlvCnBpbyBydW4gLXQgY2xlYW4KcGlvIHJ1biAtZSB0
+YXNtb3RhMzIKZGVhY3RpdmF0ZQoKIyBTdGVwIDY6IENvbWJpbmUgdGhlIGJpbmFyeSBmaWxlcwpj
+ZCB+IApta2RpciAtcCB3b3JraW5nCmNkIHdvcmtpbmcKZXNwdG9vbC5weSAtLWNoaXAgZXNwMzIg
+bWVyZ2VfYmluIFwKICZuYnNwOy0tZmlsbC1mbGFzaC1zaXplIDRNQiBcCiAmbmJzcDstLWZsYXNo
+X21vZGUgZGlvIFwKICZuYnNwOy0tZmxhc2hfZnJlcSA0MG0gXAogJm5ic3A7LS1mbGFzaF9zaXpl
+IDRNQiBcCiAmbmJzcDstbyBmbGFzaF9pbWFnZS5iaW4gXAogJm5ic3A7MHgxMDAwICZuYnNwO34v
+cGxhdGZvcm1pby1jb3JlL1Rhc21vdGEvLnBpby9idWlsZC90YXNtb3RhMzIvYm9vdGxvYWRlci5i
+aW4gXAogJm5ic3A7MHg4MDAwICZuYnNwO34vcGxhdGZvcm1pby1jb3JlL1Rhc21vdGEvLnBpby9i
+dWlsZC90YXNtb3RhMzIvcGFydGl0aW9ucy5iaW4gXAogJm5ic3A7MHhlMDAwICZuYnNwO34vLnBs
+YXRmb3JtaW8vcGFja2FnZXMvZnJhbWV3b3JrLWFyZHVpbm9lc3ByZXNzaWYzMi90b29scy9wYXJ0
+aXRpb25zL2Jvb3RfYXBwMC5iaW4gXAogJm5ic3A7MHgxMDAwMCB+L3BsYXRmb3JtaW8tY29yZS9U
+YXNtb3RhL3ZhcmlhbnRzL3Rhc21vdGEvdGFzbW90YTMyLXNhZmVib290LmJpbiBcCiAmbmJzcDsw
+eGUwMDAwIH4vcGxhdGZvcm1pby1jb3JlL1Rhc21vdGEvLnBpby9idWlsZC90YXNtb3RhMzIvZmly
+bXdhcmUuYmluCgojIFN0ZXAgNzogUnVuIFRhc21vdGEgaW4gUWVtdQpjZCB+L3dvcmtpbmcKfi9x
+ZW11L2J1aWxkL3FlbXUtc3lzdGVtLXh0ZW5zYSAtbm9ncmFwaGljIC1NIGVzcDMyIC1tIDRNIC1k
+cml2ZSBmaWxlPWZsYXNoX2ltYWdlLmJpbixmb3JtYXQ9cmF3LGlmPW10ZCAtZ2xvYmFsIGRyaXZl
+cj1lc3AzMi5zcGlfZmxhc2gscHJvcGVydHk9ZHJpdmUsdmFsdWU9Zmxhc2ggLWdsb2JhbCBkcml2
+ZXI9dGltZXIuZXNwMzIudGltZyxwcm9wZXJ0eT13ZHRfZGlzYWJsZSx2YWx1ZT10cnVlIC1uaWMg
+dXNlcixtb2RlbD1vcGVuX2V0aCAtZGlzcGxheSBzZGwgPC9kaXY+PC9wcmU+DQo8ZGl2IHN0eWxl
+PSJmb250LWZhbWlseTogQXB0b3MsIEFwdG9zX0VtYmVkZGVkRm9udCwgQXB0b3NfTVNGb250U2Vy
+dmljZSwgQ2FsaWJyaSwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDEycHQ7IGNv
+bG9yOiByZ2IoMCwgMCwgMCk7Ij4NClRoaXMgaXMgdGhlIHJlc3VsdCBvZiBydW5uaW5nIHRoZXNl
+IHN0ZXBzPC9kaXY+DQo8cHJlIHN0eWxlPSJtYXJnaW4tYm90dG9tOiAxcmVtOyBwYWRkaW5nOiAx
+cmVtIDEuNHJlbTsgYm9yZGVyLXdpZHRoOiAxcHg7IGJvcmRlci1zdHlsZTogc29saWQ7IGJvcmRl
+ci1jb2xvcjogcmdiKDIyOCwgMjI4LCAyMjgpOyBib3JkZXItcmFkaXVzOiA0cHg7IG1heC13aWR0
+aDogMTAwJTsiPjxkaXYgc3R5bGU9InRleHQtYWxpZ246IGxlZnQ7IHRleHQtaW5kZW50OiAwcHg7
+IGZvbnQtZmFtaWx5OiBDb25zb2xhcywgQ291cmllciwgbW9ub3NwYWNlOyBmb250LXNpemU6IDEy
+cHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7Ij5+L3FlbXUvYnVpbGQvcWVtdS1zeXN0ZW0teHRlbnNh
+IC1ub2dyYXBoaWMgLU0gZXNwMzIgLW0gNE0gLWRyaXZlIGZpbGU9Zmxhc2hfaW1hZ2UuYmluLGZv
+cm1hdD1yYXcsaWY9bXRkIC1nbG9iYWwgZHJpdmVyPWVzcDMyLnNwaV9mbGFzaCxwcm9wZXJ0eT1k
+cml2ZSx2YWx1ZT1mbGFzaCAtZ2xvYmFsIGRyaXZlcj10aW1lci5lc3AzMi50aW1nLHByb3BlcnR5
+PXdkdF9kaXNhYmxlLHZhbHVlPXRydWUgLW5pYyB1c2VyLG1vZGVsPW9wZW5fZXRoIC1kaXNwbGF5
+IHNkbCAKQWRkaW5nIFNQSSBmbGFzaCBkZXZpY2UKcWVtdS1zeXN0ZW0teHRlbnNhOiB3YXJuaW5n
+OiBnbG9iYWwgZXNwMzIuc3BpX2ZsYXNoLmRyaXZlIGhhcyBpbnZhbGlkIGNsYXNzIG5hbWUKZXRz
+IEp1bCAyOSAyMDE5IDEyOjIxOjQ2Cgpyc3Q6MHgxIChQT1dFUk9OX1JFU0VUKSxib290OjB4MTIg
+KFNQSV9GQVNUX0ZMQVNIX0JPT1QpCmNvbmZpZ3NpcDogMCwgU1BJV1A6MHhlZQpjbGtfZHJ2OjB4
+MDAscV9kcnY6MHgwMCxkX2RydjoweDAwLGNzMF9kcnY6MHgwMCxoZF9kcnY6MHgwMCx3cF9kcnY6
+MHgwMAptb2RlOkRJTywgY2xvY2sgZGl2OjIKbG9hZDoweDNmZmYwMDMwLGxlbjoyNjgKaG8gMCB0
+YWlsIDEyIHJvb20gNApsb2FkOjB4NDAwNzgwMDAsbGVuOjEzMjQ0CmxvYWQ6MHg0MDA4MDQwMCxs
+ZW46NApobyA4IHRhaWwgNCByb29tIDQKbG9hZDoweDQwMDgwNDA0LGxlbjoyOTI4CmVudHJ5IDB4
+NDAwODA1NWMKCjAwOjAwOjAwLjA1NyBIRFc6IEVTUDMyLUQwV0RRNiB2MC4wIChQU1JBTSBkaXNh
+YmxlZCkKMDA6MDA6MDAuMDYzIEhEVzogUFNSQU0gaXMgZGlzYWJsZWQsIHJlcXVpcmVzIHNwZWNp
+ZmljIGNvbXBpbGF0aW9uIG9uIHRoaXMgaGFyZHdhcmUgKHNlZSBkb2MpCjAwOjAwOjAwLjA5OCBV
+RlM6IEZsYXNoRlMgbW91bnRlZCB3aXRoIDMxMiBrQiBmcmVlCjAwOjAwOjAwLjM4NiBDRkc6IFVz
+ZSBkZWZhdWx0cwowMDowMDowMC42NTYgUVBDOiBSZXNldAowMDowMDowMi43NzEgQlJZOiBCZXJy
+eSBpbml0aWFsaXplZCwgUkFNIHVzZWQgNDc2MSBieXRlcwowMDowMDowMy4zODAgUHJvamVjdCB0
+YXNtb3RhIC0gVGFzbW90YSBWZXJzaW9uIDE1LjAuMS4xKHRhc21vdGEzMiktM18xXzMoMjAyNS0w
+Ni0yN1QwMzo1NTozMikKMDA6MDA6MTAuNzk4IFdJRjogV2lmaU1hbmFnZXIgYWN0aXZlIGZvciAz
+IG1pbnV0ZXMKR3VydSBNZWRpdGF0aW9uIEVycm9yOiBDb3JlICZuYnNwOzAgcGFuaWMnZWQgKExv
+YWRTdG9yZVBJRkFkZHJFcnJvcikuIEV4Y2VwdGlvbiB3YXMgdW5oYW5kbGVkLgoKQ29yZSAmbmJz
+cDswIHJlZ2lzdGVyIGR1bXA6ClBDICZuYnNwOyAmbmJzcDsgJm5ic3A7OiAweDQwMWY0ZjRjICZu
+YnNwO1BTICZuYnNwOyAmbmJzcDsgJm5ic3A7OiAweDAwMDYwYzMwICZuYnNwO0EwICZuYnNwOyAm
+bmJzcDsgJm5ic3A7OiAweDgwMTg4ZWM0ICZuYnNwO0ExICZuYnNwOyAmbmJzcDsgJm5ic3A7OiAw
+eDNmZmJkMzEwICZuYnNwOwpBMiAmbmJzcDsgJm5ic3A7ICZuYnNwOzogMHgzZmZkNDAwNCAmbmJz
+cDtBMyAmbmJzcDsgJm5ic3A7ICZuYnNwOzogMHgzZmZkMzg5MCAmbmJzcDtBNCAmbmJzcDsgJm5i
+c3A7ICZuYnNwOzogMHgwMDAwMDAwMiAmbmJzcDtBNSAmbmJzcDsgJm5ic3A7ICZuYnNwOzogMHg2
+MDAzM2MwMCAmbmJzcDsKQTYgJm5ic3A7ICZuYnNwOyAmbmJzcDs6IDB4MDAwMDAwMDAgJm5ic3A7
+QTcgJm5ic3A7ICZuYnNwOyAmbmJzcDs6IDB4MDAwMDAwMDAgJm5ic3A7QTggJm5ic3A7ICZuYnNw
+OyAmbmJzcDs6IDB4ODAwOTIyZDYgJm5ic3A7QTkgJm5ic3A7ICZuYnNwOyAmbmJzcDs6IDB4M2Zm
+YzBhZDAgJm5ic3A7CkExMCAmbmJzcDsgJm5ic3A7IDogMHgwMDAwMDAwMCAmbmJzcDtBMTEgJm5i
+c3A7ICZuYnNwOyA6IDB4MDAwMDAwMDAgJm5ic3A7QTEyICZuYnNwOyAmbmJzcDsgOiAweDNmZmJk
+M2U0ICZuYnNwO0ExMyAmbmJzcDsgJm5ic3A7IDogMHgzZmZjMzBlNCAmbmJzcDsKQTE0ICZuYnNw
+OyAmbmJzcDsgOiAweDNmZmNhZDY4ICZuYnNwO0ExNSAmbmJzcDsgJm5ic3A7IDogMHgwMDAwM2Yw
+OSAmbmJzcDtTQVIgJm5ic3A7ICZuYnNwOyA6IDB4MDAwMDAwMDAgJm5ic3A7RVhDQ0FVU0U6IDB4
+MDAwMDAwMGYgJm5ic3A7CkVYQ1ZBRERSOiAweDYwMDMzYzAwICZuYnNwO0xCRUcgJm5ic3A7ICZu
+YnNwOzogMHg0MDA4Y2IwNCAmbmJzcDtMRU5EICZuYnNwOyAmbmJzcDs6IDB4NDAwOGNiMWEgJm5i
+c3A7TENPVU5UICZuYnNwOzogMHhmZmZmZmZmZiAmbmJzcDsKQmFja3RyYWNlOiAweDQwMWY0ZjQ5
+OjB4M2ZmYmQzMTAgMHg0MDE4OGVjMToweDNmZmJkNDEwIDB4NDAxODhmNDk6MHgzZmZiZDQ0MCAw
+eDQwMWE4Nzg1OjB4M2ZmYmQ0NjAgMHg0MDFkYmM2ZToweDNmZmJkNDgwIDB4NDAxZGM1ODY6MHgz
+ZmZiZDRhMCAweDQwMWRhM2ZhOjB4M2ZmYmQ0YzAgMHg0MDIwOGFmOToweDNmZmJkNGUwCkVMRiBm
+aWxlIFNIQTI1NjogOGIxMWMyYThmClJlYm9vdGluZy4uLjwvZGl2PjwvcHJlPg0KPGRpdiBzdHls
+ZT0iZm9udC1mYW1pbHk6IEFwdG9zLCBBcHRvc19FbWJlZGRlZEZvbnQsIEFwdG9zX01TRm9udFNl
+cnZpY2UsIENhbGlicmksIEhlbHZldGljYSwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB0OyBj
+b2xvcjogcmdiKDAsIDAsIDApOyI+DQo8YnI+DQo8L2Rpdj4NCjxkaXYgc3R5bGU9ImZvbnQtZmFt
+aWx5OiBBcHRvcywgQXB0b3NfRW1iZWRkZWRGb250LCBBcHRvc19NU0ZvbnRTZXJ2aWNlLCBDYWxp
+YnJpLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTogMTJwdDsgY29sb3I6IHJnYigw
+LCAwLCAwKTsiPg0KPGJyPg0KPC9kaXY+DQo8ZGl2IHN0eWxlPSJmb250LWZhbWlseTogQXB0b3Ms
+IEFwdG9zX0VtYmVkZGVkRm9udCwgQXB0b3NfTVNGb250U2VydmljZSwgQ2FsaWJyaSwgSGVsdmV0
+aWNhLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDEycHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7Ij4N
+CkFueSBhZHZpY2Ugd291bGQgYmUgZ3JlYXRseSBhcHByZWNpYXRlZCEmbmJzcDs8L2Rpdj4NCjxk
+aXYgc3R5bGU9ImZvbnQtZmFtaWx5OiBBcHRvcywgQXB0b3NfRW1iZWRkZWRGb250LCBBcHRvc19N
+U0ZvbnRTZXJ2aWNlLCBDYWxpYnJpLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTog
+MTJwdDsgY29sb3I6IHJnYigwLCAwLCAwKTsiPg0KPGJyPg0KPC9kaXY+DQo8L2JvZHk+DQo8L2h0
+bWw+DQo=
 
->---
-> meson=2Ebuild | 160 ++++++++++++++++++++++++++--------------------------
-> 1 file changed, 80 insertions(+), 80 deletions(-)
->
->diff --git a/meson=2Ebuild b/meson=2Ebuild
->index 34729c2a3d=2E=2E694cf95f6f 100644
->--- a/meson=2Ebuild
->+++ b/meson=2Ebuild
->@@ -826,7 +826,7 @@ endif
-> #####################################
->=20
-> libm =3D cc=2Efind_library('m', required: false)
->-threads =3D dependency('threads')
->+threads =3D dependency('threads', include_type: 'system')
-> util =3D cc=2Efind_library('util', required: false)
-> winmm =3D []
-> socket =3D []
->@@ -859,11 +859,11 @@ if host_os =3D=3D 'windows'
->                                       include_directories: include_direc=
-tories('=2E'))
->   host_dsosuf =3D '=2Edll'
-> elif host_os =3D=3D 'darwin'
->-  coref =3D dependency('appleframeworks', modules: 'CoreFoundation')
->-  iokit =3D dependency('appleframeworks', modules: 'IOKit', required: fa=
-lse)
->+  coref =3D dependency('appleframeworks', modules: 'CoreFoundation', inc=
-lude_type: 'system')
->+  iokit =3D dependency('appleframeworks', modules: 'IOKit', required: fa=
-lse, include_type: 'system')
->   host_dsosuf =3D '=2Edylib'
->   pvg =3D dependency('appleframeworks', modules: ['ParavirtualizedGraphi=
-cs', 'Metal'],
->-                   required: get_option('pvg'))
->+                   required: get_option('pvg'), include_type: 'system')
-> elif host_os =3D=3D 'sunos'
->   socket =3D [cc=2Efind_library('socket'),
->             cc=2Efind_library('nsl'),
->@@ -899,7 +899,7 @@ endif
-> hvf =3D not_found
-> if get_option('hvf')=2Eallowed()
->   hvf =3D dependency('appleframeworks', modules: 'Hypervisor',
->-                   required: get_option('hvf'))
->+                   required: get_option('hvf'), include_type: 'system')
->   if hvf=2Efound()
->     accelerators +=3D 'CONFIG_HVF'
->   endif
->@@ -960,30 +960,30 @@ endif
-> xen =3D not_found
-> if get_option('xen')=2Eenabled() or (get_option('xen')=2Eauto() and have=
-_system)
->   xencontrol =3D dependency('xencontrol', required: false,
->-                          method: 'pkg-config')
->+                          method: 'pkg-config', include_type: 'system')
->   if xencontrol=2Efound()
->     xen_pc =3D declare_dependency(version: xencontrol=2Eversion(),
->       dependencies: [
->         xencontrol,
->         # disabler: true makes xen_pc=2Efound() return false if any is n=
-ot found
->         dependency('xenstore', required: false,
->-                   method: 'pkg-config',
->+                   method: 'pkg-config', include_type: 'system',
->                    disabler: true),
->         dependency('xenforeignmemory', required: false,
->-                   method: 'pkg-config',
->+                   method: 'pkg-config', include_type: 'system',
->                    disabler: true),
->         dependency('xengnttab', required: false,
->-                   method: 'pkg-config',
->+                   method: 'pkg-config', include_type: 'system',
->                    disabler: true),
->         dependency('xenevtchn', required: false,
->-                   method: 'pkg-config',
->+                   method: 'pkg-config', include_type: 'system',
->                    disabler: true),
->         dependency('xendevicemodel', required: false,
->-                   method: 'pkg-config',
->+                   method: 'pkg-config', include_type: 'system',
->                    disabler: true),
->         # optional, no "disabler: true"
->         dependency('xentoolcore', required: false,
->-                   method: 'pkg-config')])
->+                   method: 'pkg-config', include_type: 'system')])
->     if xen_pc=2Efound()
->       xen =3D xen_pc
->     endif
->@@ -1050,10 +1050,10 @@ glib_pc =3D dependency('glib-2=2E0', version: gli=
-b_req_ver, required: true,
-> glib_cflags =3D []
-> if enable_modules
->   gmodule =3D dependency('gmodule-export-2=2E0', version: glib_req_ver, =
-required: true,
->-                       method: 'pkg-config')
->+                       method: 'pkg-config', include_type: 'system')
-> elif get_option('plugins')
->   gmodule =3D dependency('gmodule-no-export-2=2E0', version: glib_req_ve=
-r, required: true,
->-                       method: 'pkg-config')
->+                       method: 'pkg-config', include_type: 'system')
-> else
->   gmodule =3D not_found
-> endif
->@@ -1109,7 +1109,7 @@ gdbus_codegen =3D not_found
-> gdbus_codegen_error =3D '@0@ requires gdbus-codegen, please install libg=
-io'
-> if not get_option('gio')=2Eauto() or have_system
->   gio =3D dependency('gio-2=2E0', required: get_option('gio'),
->-                   method: 'pkg-config')
->+                   method: 'pkg-config', include_type: 'system')
->   if gio=2Efound() and not cc=2Elinks('''
->     #include <gio/gio=2Eh>
->     int main(void)
->@@ -1126,7 +1126,7 @@ if not get_option('gio')=2Eauto() or have_system
->     gdbus_codegen =3D find_program('gdbus-codegen',
->                                  required: get_option('gio'))
->     gio_unix =3D dependency('gio-unix-2=2E0', required: get_option('gio'=
-),
->-                          method: 'pkg-config')
->+                          method: 'pkg-config', include_type: 'system')
->     gio =3D declare_dependency(dependencies: [gio, gio_unix],
->                              version: gio=2Eversion())
->   endif
->@@ -1141,15 +1141,15 @@ xml_pp =3D find_program('scripts/xml-preprocess=
-=2Epy')
-> lttng =3D not_found
-> if 'ust' in get_option('trace_backends')
->   lttng =3D dependency('lttng-ust', required: true, version: '>=3D 2=2E1=
-',
->-                     method: 'pkg-config')
->+                     method: 'pkg-config', include_type: 'system')
-> endif
-> pixman =3D not_found
-> if not get_option('pixman')=2Eauto() or have_system or have_tools
->   pixman =3D dependency('pixman-1', required: get_option('pixman'), vers=
-ion:'>=3D0=2E21=2E8',
->-                      method: 'pkg-config')
->+                      method: 'pkg-config', include_type: 'system')
-> endif
->=20
->-zlib =3D dependency('zlib', required: true)
->+zlib =3D dependency('zlib', required: true, include_type: 'system')
->=20
-> libaio =3D not_found
-> if not get_option('linux_aio')=2Eauto() or have_block
->@@ -1167,7 +1167,7 @@ linux_io_uring =3D not_found
-> if not get_option('linux_io_uring')=2Eauto() or have_block
->   linux_io_uring =3D dependency('liburing', version: '>=3D0=2E3',
->                               required: get_option('linux_io_uring'),
->-                              method: 'pkg-config')
->+                              method: 'pkg-config', include_type: 'syste=
-m')
->   if not cc=2Elinks(linux_io_uring_test)
->     linux_io_uring =3D not_found
->   endif
->@@ -1177,7 +1177,7 @@ libnfs =3D not_found
-> if not get_option('libnfs')=2Eauto() or have_block
->   libnfs =3D dependency('libnfs', version: ['>=3D1=2E9=2E3', '<6=2E0=2E0=
-'],
->                       required: get_option('libnfs'),
->-                      method: 'pkg-config')
->+                      method: 'pkg-config', include_type: 'system')
-> endif
->=20
-> libattr_test =3D '''
->@@ -1214,9 +1214,9 @@ endif
->=20
-> cocoa =3D dependency('appleframeworks',
->                    modules: ['Cocoa', 'CoreVideo', 'QuartzCore'],
->-                   required: get_option('cocoa'))
->+                   required: get_option('cocoa'), include_type: 'system'=
-)
->=20
->-vmnet =3D dependency('appleframeworks', modules: 'vmnet', required: get_=
-option('vmnet'))
->+vmnet =3D dependency('appleframeworks', modules: 'vmnet', required: get_=
-option('vmnet'), include_type: 'system')
-> if vmnet=2Efound() and not cc=2Ehas_header_symbol('vmnet/vmnet=2Eh',
->                                               'VMNET_BRIDGED_MODE',
->                                               dependencies: vmnet)
->@@ -1233,7 +1233,7 @@ seccomp_has_sysrawrc =3D false
-> if not get_option('seccomp')=2Eauto() or have_system or have_tools
->   seccomp =3D dependency('libseccomp', version: '>=3D2=2E3=2E0',
->                        required: get_option('seccomp'),
->-                       method: 'pkg-config')
->+                       method: 'pkg-config', include_type: 'system')
->   if seccomp=2Efound()
->     seccomp_has_sysrawrc =3D cc=2Ehas_header_symbol('seccomp=2Eh',
->                                                 'SCMP_FLTATR_API_SYSRAWR=
-C',
->@@ -1265,13 +1265,13 @@ if get_option('xkbcommon')=2Eauto() and not have_=
-system and not have_tools
->   xkbcommon =3D not_found
-> else
->   xkbcommon =3D dependency('xkbcommon', required: get_option('xkbcommon'=
-),
->-                         method: 'pkg-config')
->+                         method: 'pkg-config', include_type: 'system')
-> endif
->=20
-> slirp =3D not_found
-> if not get_option('slirp')=2Eauto() or have_system
->   slirp =3D dependency('slirp', required: get_option('slirp'),
->-                     method: 'pkg-config')
->+                     method: 'pkg-config', include_type: 'system')
->   # slirp < 4=2E7 is incompatible with CFI support in QEMU=2E  This is b=
-ecause
->   # it passes function pointers within libslirp as callbacks for timers=
-=2E
->   # When using a system-wide shared libslirp, the type information for t=
-he
->@@ -1313,35 +1313,35 @@ endif
-> pulse =3D not_found
-> if not get_option('pa')=2Eauto() or (host_os =3D=3D 'linux' and have_sys=
-tem)
->   pulse =3D dependency('libpulse', required: get_option('pa'),
->-                     method: 'pkg-config')
->+                     method: 'pkg-config', include_type: 'system')
-> endif
-> alsa =3D not_found
-> if not get_option('alsa')=2Eauto() or (host_os =3D=3D 'linux' and have_s=
-ystem)
->   alsa =3D dependency('alsa', required: get_option('alsa'),
->-                    method: 'pkg-config')
->+                    method: 'pkg-config', include_type: 'system')
-> endif
-> jack =3D not_found
-> if not get_option('jack')=2Eauto() or have_system
->   jack =3D dependency('jack', required: get_option('jack'),
->-                    method: 'pkg-config')
->+                    method: 'pkg-config', include_type: 'system')
-> endif
-> pipewire =3D not_found
-> if not get_option('pipewire')=2Eauto() or (host_os =3D=3D 'linux' and ha=
-ve_system)
->   pipewire =3D dependency('libpipewire-0=2E3', version: '>=3D0=2E3=2E60'=
-,
->                     required: get_option('pipewire'),
->-                    method: 'pkg-config')
->+                    method: 'pkg-config', include_type: 'system')
-> endif
-> sndio =3D not_found
-> if not get_option('sndio')=2Eauto() or have_system
->   sndio =3D dependency('sndio', required: get_option('sndio'),
->-                    method: 'pkg-config')
->+                    method: 'pkg-config', include_type: 'system')
-> endif
->=20
-> spice_protocol =3D not_found
-> if not get_option('spice_protocol')=2Eauto() or have_system
->   spice_protocol =3D dependency('spice-protocol', version: '>=3D0=2E14=
-=2E0',
->                               required: get_option('spice_protocol'),
->-                              method: 'pkg-config')
->+                              method: 'pkg-config', include_type: 'syste=
-m')
-> endif
-> spice =3D not_found
-> if get_option('spice') \
->@@ -1351,7 +1351,7 @@ if get_option('spice') \
->              =2Eallowed()
->   spice =3D dependency('spice-server', version: '>=3D0=2E14=2E0',
->                      required: get_option('spice'),
->-                     method: 'pkg-config')
->+                     method: 'pkg-config', include_type: 'system')
-> endif
-> spice_headers =3D spice=2Epartial_dependency(compile_args: true, include=
-s: true)
->=20
->@@ -1361,28 +1361,28 @@ libiscsi =3D not_found
-> if not get_option('libiscsi')=2Eauto() or have_block
->   libiscsi =3D dependency('libiscsi', version: '>=3D1=2E9=2E0',
->                          required: get_option('libiscsi'),
->-                         method: 'pkg-config')
->+                         method: 'pkg-config', include_type: 'system')
-> endif
-> zstd =3D not_found
-> if not get_option('zstd')=2Eauto() or have_block
->   zstd =3D dependency('libzstd', version: '>=3D1=2E4=2E0',
->                     required: get_option('zstd'),
->-                    method: 'pkg-config')
->+                    method: 'pkg-config', include_type: 'system')
-> endif
-> qpl =3D not_found
-> if not get_option('qpl')=2Eauto() or have_system
->   qpl =3D dependency('qpl', version: '>=3D1=2E5=2E0',
->                     required: get_option('qpl'),
->-                    method: 'pkg-config')
->+                    method: 'pkg-config', include_type: 'system')
-> endif
-> uadk =3D not_found
-> if not get_option('uadk')=2Eauto() or have_system
->   libwd =3D dependency('libwd', version: '>=3D2=2E6',
->                       required: get_option('uadk'),
->-                      method: 'pkg-config')
->+                      method: 'pkg-config', include_type: 'system')
->   libwd_comp =3D dependency('libwd_comp', version: '>=3D2=2E6',
->                            required: get_option('uadk'),
->-                           method: 'pkg-config')
->+                           method: 'pkg-config', include_type: 'system')
->   if libwd=2Efound() and libwd_comp=2Efound()
->      uadk =3D declare_dependency(dependencies: [libwd, libwd_comp])
->   endif
->@@ -1392,7 +1392,7 @@ qatzip =3D not_found
-> if not get_option('qatzip')=2Eauto() or have_system
->   qatzip =3D dependency('qatzip', version: '>=3D1=2E1=2E2',
->                       required: get_option('qatzip'),
->-                      method: 'pkg-config')
->+                      method: 'pkg-config', include_type: 'system')
-> endif
->=20
-> virgl =3D not_found
->@@ -1400,31 +1400,31 @@ virgl =3D not_found
-> have_vhost_user_gpu =3D have_tools and host_os =3D=3D 'linux' and pixman=
-=2Efound()
-> if not get_option('virglrenderer')=2Eauto() or have_system or have_vhost=
-_user_gpu
->   virgl =3D dependency('virglrenderer',
->-                     method: 'pkg-config',
->+                     method: 'pkg-config', include_type: 'system',
->                      required: get_option('virglrenderer'))
-> endif
-> rutabaga =3D not_found
-> if not get_option('rutabaga_gfx')=2Eauto() or have_system or have_vhost_=
-user_gpu
->   rutabaga =3D dependency('rutabaga_gfx_ffi',
->-                         method: 'pkg-config',
->+                         method: 'pkg-config', include_type: 'system',
->                          required: get_option('rutabaga_gfx'))
-> endif
-> blkio =3D not_found
-> if not get_option('blkio')=2Eauto() or have_block
->   blkio =3D dependency('blkio',
->-                     method: 'pkg-config',
->+                     method: 'pkg-config', include_type: 'system',
->                      required: get_option('blkio'))
-> endif
-> curl =3D not_found
-> if not get_option('curl')=2Eauto() or have_block
->   curl =3D dependency('libcurl', version: '>=3D7=2E29=2E0',
->-                    method: 'pkg-config',
->+                    method: 'pkg-config', include_type: 'system',
->                     required: get_option('curl'))
-> endif
-> libudev =3D not_found
-> if host_os =3D=3D 'linux' and (have_system or have_tools)
->   libudev =3D dependency('libudev',
->-                       method: 'pkg-config',
->+                       method: 'pkg-config', include_type: 'system',
->                        required: get_option('libudev'))
-> endif
->=20
->@@ -1504,7 +1504,7 @@ if have_system and get_option('curses')=2Eallowed()
->   curses_dep_list =3D host_os =3D=3D 'windows' ? ['ncurses', 'ncursesw']=
- : ['ncursesw']
->   curses =3D dependency(curses_dep_list,
->                       required: false,
->-                      method: 'pkg-config')
->+                      method: 'pkg-config', include_type: 'system')
->   msg =3D get_option('curses')=2Eenabled() ? 'curses library not found' =
-: ''
->   curses_compile_args =3D ['-DNCURSES_WIDECHAR=3D1']
->   if curses=2Efound()
->@@ -1593,7 +1593,7 @@ endif
->=20
-> sdl =3D not_found
-> if not get_option('sdl')=2Eauto() or have_system
->-  sdl =3D dependency('sdl2', required: get_option('sdl'))
->+  sdl =3D dependency('sdl2', required: get_option('sdl'), include_type: =
-'system')
->   sdl_image =3D not_found
-> endif
-> if sdl=2Efound()
->@@ -1608,7 +1608,7 @@ if sdl=2Efound()
->                              version: sdl=2Eversion())
->   endif
->   sdl_image =3D dependency('SDL2_image', required: get_option('sdl_image=
-'),
->-                         method: 'pkg-config')
->+                         method: 'pkg-config', include_type: 'system')
-> else
->   if get_option('sdl_image')=2Eenabled()
->     error('sdl-image required, but SDL was @0@'=2Eformat(
->@@ -1649,7 +1649,7 @@ glusterfs_iocb_has_stat =3D false
-> if not get_option('glusterfs')=2Eauto() or have_block
->   glusterfs =3D dependency('glusterfs-api', version: '>=3D3',
->                          required: get_option('glusterfs'),
->-                         method: 'pkg-config')
->+                         method: 'pkg-config', include_type: 'system')
->   if glusterfs=2Efound()
->     glusterfs_ftruncate_has_stat =3D cc=2Elinks('''
->       #include <glusterfs/api/glfs=2Eh>
->@@ -1707,7 +1707,7 @@ endif
-> libssh =3D not_found
-> if not get_option('libssh')=2Eauto() or have_block
->   libssh =3D dependency('libssh', version: '>=3D0=2E8=2E7',
->-                    method: 'pkg-config',
->+                    method: 'pkg-config', include_type: 'system',
->                     required: get_option('libssh'))
-> endif
->=20
->@@ -1775,12 +1775,12 @@ endif
-> coreaudio =3D not_found
-> if not get_option('coreaudio')=2Eauto() or (host_os =3D=3D 'darwin' and =
-have_system)
->   coreaudio =3D dependency('appleframeworks', modules: 'CoreAudio',
->-                         required: get_option('coreaudio'))
->+                         required: get_option('coreaudio'), include_type=
-: 'system')
-> endif
->=20
-> opengl =3D not_found
-> if not get_option('opengl')=2Eauto() or have_system or have_vhost_user_g=
-pu
->-  epoxy =3D dependency('epoxy', method: 'pkg-config',
->+  epoxy =3D dependency('epoxy', method: 'pkg-config', include_type: 'sys=
-tem',
->                       required: get_option('opengl'))
->   if cc=2Ehas_header('epoxy/egl=2Eh', dependencies: epoxy)
->     opengl =3D epoxy
->@@ -1790,14 +1790,14 @@ if not get_option('opengl')=2Eauto() or have_syst=
-em or have_vhost_user_gpu
-> endif
-> gbm =3D not_found
-> if (have_system or have_tools) and (virgl=2Efound() or opengl=2Efound())
->-  gbm =3D dependency('gbm', method: 'pkg-config', required: false)
->+  gbm =3D dependency('gbm', method: 'pkg-config', include_type: 'system'=
-, required: false)
-> endif
-> have_vhost_user_gpu =3D have_vhost_user_gpu and virgl=2Efound() and open=
-gl=2Efound() and gbm=2Efound()
->=20
-> libcbor =3D not_found
-> if not get_option('libcbor')=2Eauto() or have_system
->   libcbor =3D dependency('libcbor', version: '>=3D0=2E7=2E0',
->-                       required: get_option('libcbor'))
->+                       required: get_option('libcbor'), include_type: 's=
-ystem')
-> endif
->=20
-> gnutls =3D not_found
->@@ -1817,14 +1817,14 @@ if get_option('gnutls')=2Eenabled() or (get_optio=
-n('gnutls')=2Eauto() and have_syste
->   # still use a different crypto backend to satisfy
->   # the platform support requirements
->   gnutls_crypto =3D dependency('gnutls', version: '>=3D3=2E6=2E14',
->-                             method: 'pkg-config',
->+                             method: 'pkg-config', include_type: 'system=
-',
->                              required: false)
->   if gnutls_crypto=2Efound()
->     gnutls =3D gnutls_crypto
->   else
->     # Our min version if all we need is TLS
->     gnutls =3D dependency('gnutls', version: '>=3D3=2E5=2E18',
->-                        method: 'pkg-config',
->+                        method: 'pkg-config', include_type: 'system',
->                         required: get_option('gnutls'))
->   endif
-> endif
->@@ -1853,7 +1853,7 @@ endif
-> if not gnutls_crypto=2Efound()
->   if (not get_option('gcrypt')=2Eauto() or have_system) and not get_opti=
-on('nettle')=2Eenabled()
->     gcrypt =3D dependency('libgcrypt', version: '>=3D1=2E8',
->-                        required: get_option('gcrypt'))
->+                        required: get_option('gcrypt'), include_type: 's=
-ystem')
->     # Debian has removed -lgpg-error from libgcrypt-config
->     # as it "spreads unnecessary dependencies" which in
->     # turn breaks static builds=2E=2E=2E
->@@ -1888,7 +1888,7 @@ if not gnutls_crypto=2Efound()
->   endif
->   if (not get_option('nettle')=2Eauto() or have_system) and not gcrypt=
-=2Efound()
->     nettle =3D dependency('nettle', version: '>=3D3=2E4',
->-                        method: 'pkg-config',
->+                        method: 'pkg-config', include_type: 'system',
->                         required: get_option('nettle'))
->     if nettle=2Efound() and not cc=2Ehas_header('nettle/xts=2Eh', depend=
-encies: nettle)
->       xts =3D 'private'
->@@ -1936,7 +1936,7 @@ endif
-> capstone =3D not_found
-> if not get_option('capstone')=2Eauto() or have_system or have_user
->   capstone =3D dependency('capstone', version: '>=3D3=2E0=2E5',
->-                        method: 'pkg-config',
->+                        method: 'pkg-config', include_type: 'system',
->                         required: get_option('capstone'))
->=20
->   # Some versions of capstone have broken pkg-config file
->@@ -1952,10 +1952,10 @@ if not get_option('capstone')=2Eauto() or have_sy=
-stem or have_user
->   endif
-> endif
->=20
->-gmp =3D dependency('gmp', required: false, method: 'pkg-config')
->+gmp =3D dependency('gmp', required: false, method: 'pkg-config', include=
-_type: 'system')
-> if nettle=2Efound() and gmp=2Efound()
->   hogweed =3D dependency('hogweed', version: '>=3D3=2E4',
->-                       method: 'pkg-config',
->+                       method: 'pkg-config', include_type: 'system',
->                        required: get_option('nettle'))
-> endif
->=20
->@@ -1971,18 +1971,18 @@ if get_option('gtk') \
->                       error_message: 'cannot enable GTK if pixman is not=
- available') \
->              =2Eallowed()
->   gtk =3D dependency('gtk+-3=2E0', version: '>=3D3=2E22=2E0',
->-                   method: 'pkg-config',
->+                   method: 'pkg-config', include_type: 'system',
->                    required: get_option('gtk'))
->   if gtk=2Efound()
->     gtkx11 =3D dependency('gtk+-x11-3=2E0', version: '>=3D3=2E22=2E0',
->-                        method: 'pkg-config',
->+                        method: 'pkg-config', include_type: 'system',
->                         required: false)
->     gtk =3D declare_dependency(dependencies: [gtk, gtkx11],
->                              version: gtk=2Eversion())
->=20
->     if not get_option('vte')=2Eauto() or have_system
->       vte =3D dependency('vte-2=2E91',
->-                       method: 'pkg-config',
->+                       method: 'pkg-config', include_type: 'system',
->                        required: get_option('vte'))
->     endif
->   elif have_gtk_clipboard
->@@ -1992,12 +1992,12 @@ endif
->=20
-> x11 =3D not_found
-> if gtkx11=2Efound()
->-  x11 =3D dependency('x11', method: 'pkg-config', required: gtkx11=2Efou=
-nd())
->+  x11 =3D dependency('x11', method: 'pkg-config', include_type: 'system'=
-, required: gtkx11=2Efound())
-> endif
-> png =3D not_found
-> if get_option('png')=2Eallowed() and have_system
->    png =3D dependency('libpng', version: '>=3D1=2E6=2E34', required: get=
-_option('png'),
->-                    method: 'pkg-config')
->+                    method: 'pkg-config', include_type: 'system')
-> endif
-> vnc =3D not_found
-> jpeg =3D not_found
->@@ -2009,7 +2009,7 @@ if get_option('vnc') \
->              =2Eallowed()
->   vnc =3D declare_dependency() # dummy dependency
->   jpeg =3D dependency('libjpeg', required: get_option('vnc_jpeg'),
->-                    method: 'pkg-config')
->+                    method: 'pkg-config', include_type: 'system')
->   sasl =3D cc=2Efind_library('sasl2', has_headers: ['sasl/sasl=2Eh'],
->                          required: get_option('vnc_sasl'))
->   if sasl=2Efound()
->@@ -2135,49 +2135,49 @@ endif
-> cacard =3D not_found
-> if not get_option('smartcard')=2Eauto() or have_system
->   cacard =3D dependency('libcacard', required: get_option('smartcard'),
->-                      version: '>=3D2=2E5=2E1', method: 'pkg-config')
->+                      version: '>=3D2=2E5=2E1', method: 'pkg-config', in=
-clude_type: 'system')
-> endif
-> u2f =3D not_found
-> if not get_option('u2f')=2Eauto() or have_system
->   u2f =3D dependency('u2f-emu', required: get_option('u2f'),
->-                   method: 'pkg-config')
->+                   method: 'pkg-config', include_type: 'system')
-> endif
-> canokey =3D not_found
-> if not get_option('canokey')=2Eauto() or have_system
->   canokey =3D dependency('canokey-qemu', required: get_option('canokey')=
-,
->-                   method: 'pkg-config')
->+                   method: 'pkg-config', include_type: 'system')
-> endif
-> usbredir =3D not_found
-> if not get_option('usb_redir')=2Eauto() or have_system
->   usbredir =3D dependency('libusbredirparser-0=2E5', required: get_optio=
-n('usb_redir'),
->-                        version: '>=3D0=2E6', method: 'pkg-config')
->+                        version: '>=3D0=2E6', method: 'pkg-config', incl=
-ude_type: 'system')
-> endif
-> libusb =3D not_found
-> if not get_option('libusb')=2Eauto() or have_system
->   libusb =3D dependency('libusb-1=2E0', required: get_option('libusb'),
->-                      version: '>=3D1=2E0=2E13', method: 'pkg-config')
->+                      version: '>=3D1=2E0=2E13', method: 'pkg-config', i=
-nclude_type: 'system')
-> endif
->=20
-> libpmem =3D not_found
-> if not get_option('libpmem')=2Eauto() or have_system
->   libpmem =3D dependency('libpmem', required: get_option('libpmem'),
->-                       method: 'pkg-config')
->+                       method: 'pkg-config', include_type: 'system')
-> endif
-> libdaxctl =3D not_found
-> if not get_option('libdaxctl')=2Eauto() or have_system
->   libdaxctl =3D dependency('libdaxctl', required: get_option('libdaxctl'=
-),
->-                         version: '>=3D57', method: 'pkg-config')
->+                         version: '>=3D57', method: 'pkg-config', includ=
-e_type: 'system')
-> endif
-> tasn1 =3D not_found
-> if gnutls=2Efound()
->   tasn1 =3D dependency('libtasn1',
->                      required: false,
->-                     method: 'pkg-config')
->+                     method: 'pkg-config', include_type: 'system')
-> endif
-> keyutils =3D not_found
-> if not get_option('libkeyutils')=2Eauto() or have_block
->   keyutils =3D dependency('libkeyutils', required: get_option('libkeyuti=
-ls'),
->-                        method: 'pkg-config')
->+                        method: 'pkg-config', include_type: 'system')
-> endif
->=20
-> has_gettid =3D cc=2Ehas_function('gettid')
->@@ -2185,7 +2185,7 @@ has_gettid =3D cc=2Ehas_function('gettid')
-> # libselinux
-> selinux =3D dependency('libselinux',
->                      required: get_option('selinux'),
->-                     method: 'pkg-config')
->+                     method: 'pkg-config', include_type: 'system')
->=20
-> # Malloc tests
->=20
->@@ -2237,7 +2237,7 @@ if get_option('fuse')=2Edisabled() and get_option('=
-fuse_lseek')=2Eenabled()
-> endif
->=20
-> fuse =3D dependency('fuse3', required: get_option('fuse'),
->-                  version: '>=3D3=2E1', method: 'pkg-config')
->+                  version: '>=3D3=2E1', method: 'pkg-config', include_ty=
-pe: 'system')
->=20
-> fuse_lseek =3D not_found
-> if get_option('fuse_lseek')=2Eallowed()
->@@ -2275,7 +2275,7 @@ endif
->=20
-> # libbpf
-> bpf_version =3D '1=2E1=2E0'
->-libbpf =3D dependency('libbpf', version: '>=3D' + bpf_version, required:=
- get_option('bpf'), method: 'pkg-config')
->+libbpf =3D dependency('libbpf', version: '>=3D' + bpf_version, required:=
- get_option('bpf'), method: 'pkg-config', include_type: 'system')
-> if libbpf=2Efound() and not cc=2Elinks('''
->    #include <bpf/libbpf=2Eh>
->    #include <linux/bpf=2Eh>
->@@ -2299,7 +2299,7 @@ libxdp =3D not_found
-> if not get_option('af_xdp')=2Eauto() or have_system
->     if libbpf=2Efound()
->         libxdp =3D dependency('libxdp', required: get_option('af_xdp'),
->-                            version: '>=3D1=2E4=2E0', method: 'pkg-confi=
-g')
->+                            version: '>=3D1=2E4=2E0', method: 'pkg-confi=
-g', include_type: 'system')
->     else
->         if get_option('af_xdp')=2Eenabled()
->             error('libxdp requested, but libbpf is not available')
->@@ -2312,7 +2312,7 @@ libdw =3D not_found
-> if not get_option('libdw')=2Eauto() or \
->         (not get_option('prefer_static') and (have_system or have_user))
->     libdw =3D dependency('libdw',
->-                       method: 'pkg-config',
->+                       method: 'pkg-config', include_type: 'system',
->                        required: get_option('libdw'))
-> endif
->=20
+--_000_LV2PR01MB78646948225072D8BEAB8852D743ALV2PR01MB7864prod_--
 
