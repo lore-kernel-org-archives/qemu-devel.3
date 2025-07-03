@@ -4,83 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39683C77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 17:33:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E3CBC83F03
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 17:34:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXNoc-0005XU-R9; Thu, 03 Jul 2025 13:33:42 -0400
+	id 1uXNoY-0005Wf-5b; Thu, 03 Jul 2025 13:33:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXNob-0005XI-82
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 13:33:41 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXNoT-0005W5-H6
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 13:33:33 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXNoY-0008JI-Ez
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 13:33:39 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-45310223677so853135e9.0
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 10:33:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXNoR-0008BJ-6Y
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 13:33:33 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3a588da60dfso39852f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 10:33:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751564016; x=1752168816; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751564006; x=1752168806; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KA0b8Mx/diMOpz5eVRAgzHisGcdWtT3pud+mD+Gv0yw=;
- b=iY5J1U4cZwuYbmCqVT37sh/UWtaDghXCGDA1Wtc3y//feETEYbjrYE+OpRRAPoS2Xz
- r8bPIYGA02DytedHL+wjdlbDbRBxpwcj8USkeKCNuDy7q83mgc1NJRaptXujlTuc4VQC
- sXdxJlkf7xTe9NAr2E1DF/XnqNKMFmULqrI3K0QVCDdjwx4xmjW4wMSNVAqLVkruw/QM
- 5DolwY7vyvdouUqWQo0F57sUVyRuLrFIe8feULVw/+F9HjFTqY/NQmSp50iMzjXCNZXr
- kYO5Eisgjn06HXtfXYfssfRnInB/y5lNEVUBP+1qgFAfqNh0tiWCAPCp5cbzdl8RK6rb
- qlmg==
+ bh=vZulNH5mkAwF/TzCScDw4HrR7IGxHx1ghZxE2rlPXYg=;
+ b=SQ+edPPtYFTzZdiFudWCR1aWyUwlNWy0IOZzQUiKgBh/jmcOVsQug4mOmSiSRjLWl6
+ ydkdseMgFt3WBn2cWmDIAkAtJrJvgvVLPkJIDYrDCqfaP+rV7k8i0H/7YI9K+h0R7cTE
+ YiVMCf+esHSmPgnlX/qfkKmadTrM5GvIa2fjv2H7DfryDsWnY4+qGlzGGFqFn+fRftsO
+ QbR5Nw6VqTeJICVFkuOFaPxgplgkakFPZMPEa09jihfruTUYDDsPdpWCUmgigZbd/bzY
+ SZLTfV4Q26ptQPd1dcApqOO0e9/g2Mru228cKL2cW9jPlQpXu0i3q40iDY+IQUEhDIY0
+ h8/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751564016; x=1752168816;
+ d=1e100.net; s=20230601; t=1751564006; x=1752168806;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KA0b8Mx/diMOpz5eVRAgzHisGcdWtT3pud+mD+Gv0yw=;
- b=iuv3ROsIBaPYMnchEZtWSs4OSKAk8m+/TC3VMoOXTpQSg0wu0fAnZfTA8BEKFBrT9V
- Mmb76CixIzF8hlMZT1jfEN+aKpH+OdZ7ClZ6Gd/IVsCPHlRXOKLj2yX9JcXTs6tCudaJ
- OFTfXlSWG96M3vH8atOze50NWdNG1oQ469iKvl9jhAnGv1CMH21/3DmAxqoFh3PeR9n3
- /lE/SUOwkD6ZCJhEL1zr1m0B1V8EoWYgmJmXK1LjYRjD4dBWxhzHH0N7v8hcXajFOeYl
- PzZRUOZxjUvwk2QrQt5yHNmSiUFxJMFJCyuj6xmK4YH9c5Da+8gQFwFL+klc/gVj06k8
- shYg==
-X-Gm-Message-State: AOJu0YzHdxtZLMqInUSVms0lDneZS8VMjPj0RO58+AGu9ixYgyblhAz8
- FlNz1DlYOOlOUsIJE0FudGBDxxiVcPzQ+Y/W6ewU+f2zMSd7cttL09W6dm1QDt5idiXESvj7iMM
- XlVzMJKw=
-X-Gm-Gg: ASbGncsafPXiJjQ/7F8JCgmte5xjjUqKAiMOYq8heqGb53hSYB6GqY1B0jHDOlivLw1
- lYibxNkqMRuTJmdW+ZcuF5n1KXeYDglSCTH2j8SLuMAwIfYFztjF7296oZrOarfiYnOMtYvjUJJ
- hnQRvkodgWPbDYsSWvx6DsWfGDxl1IjqjD0mx42EnFKJjsAVJ8hMD6/ONcHzX35W/UuZCn37RAc
- nNN/vE6WI7ZowX83RXLpq7MTLE0v0D2SU+cNijSLbHliKVmLhOECbIlIQT64NkodtoclUlzwu4S
- JKPQXrekJAmjTIKfstzrkjKmsnAzDAFU7uRFoQe2V7I7ztKe03l5nOSqopeIbHJ6HMlEeW8uYCP
- mnUDG1V5j+SOqPnw7sh1nqTN+hkXKiKmyVJyW
-X-Google-Smtp-Source: AGHT+IGrLN692bB7k8Ayl5O7V9o9uvyHI0QE3MSkBBI4qxyi7en3ThLvxe5qeQ6PPc6pGdIGwE3q0Q==
-X-Received: by 2002:a05:600c:4752:b0:441:d2d8:bd8b with SMTP id
- 5b1f17b1804b1-454a36e2c39mr83163645e9.8.1751564016216; 
- Thu, 03 Jul 2025 10:33:36 -0700 (PDT)
+ bh=vZulNH5mkAwF/TzCScDw4HrR7IGxHx1ghZxE2rlPXYg=;
+ b=gsW6S6FZf4zRJepLtTm4pZl4If/gFdIu8BrEd9mS+Y0VVq/wz3Az7F54NIH/ZvK0hv
+ 4OfXa4i191DkMZpyu97Zzdj2a+A2BC0+fIGT6TscyXPC+Lz0LcGNcP0ESo1I8e/YbCYM
+ cnEXHN9qrj1uxqhj7ECXixwEunoJ+Sfvv8WFGjE+rfd7T1VycCPCt44E6S31uU53Sz1O
+ FQCRIpfGHIlSBwSVh7TTfYtBVopV3wM51foBfOpl3dk6v+OLPBKjZP+5685/wQB4H1/u
+ DMZv3R37nh3Xj6wmQ2omLvlDjmKJFpHJAQvpWEUUQl8dMJUD7yT6Y0gYmmfMSWSEJ/GQ
+ pMcw==
+X-Gm-Message-State: AOJu0Yxg5ZLkkolsu9bTeuJodO1ou+PNQr25RfxWJ7ZQk5tg2i5lOCQo
+ k8XUBvL/h42p1rDTcy0XSHd+pQNLUcYRywTwJ+fULJGXaazt5P8pIhiwzTDR9N4jfBKQPbWj/9H
+ sVjP8UtU=
+X-Gm-Gg: ASbGncvKeVpm+U/0Y3p6RLwmJDGlnUTa5/8IhinFouKKurIyQEiPourO7q45uwhaZVO
+ E5CndVIxV7r4ABdSDXyo/eU4JiFMqLnuQ4Nl2CoBlWgVBxt29y+EYncmhRsyAN9TUxZxRKCec7i
+ HHRftcpTT5VbxxPapgCVRTobRuIZViggIa7FlzbkpyuhtvRj+5uqZSobW7Y9hSsT4Pq2rWPegs1
+ 82xZYziZEZfZXrxu/71RWJLIoSqjKUxeo506Oion1l2yqkNEKPjEpDmp0a+vX6yZiXip3mKCaZX
+ GnQ2OlAOQA86h6Nc+x/Drivn3XDas6LjPSJIRAvthRKjQ7cjc9lvA0R1HYxGFQKZOxv9ouFaMve
+ 6KQaI2TIg38IYg/czUzIbvzMHQcpk3YFoxCBEUWOEUHAs8Ug=
+X-Google-Smtp-Source: AGHT+IFJrXavrz4gcHEYbc6mLp3BMnIH4hlLyNy+5zffQ8hUE11DhK5AiKJrHVi2KGZKSRJD/i72dA==
+X-Received: by 2002:a05:6000:230c:b0:3a5:8abe:a267 with SMTP id
+ ffacd0b85a97d-3b32db890fdmr3631644f8f.29.1751564006205; 
+ Thu, 03 Jul 2025 10:33:26 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454b1698e24sm3369755e9.34.2025.07.03.10.33.35
+ ffacd0b85a97d-3b47030ba77sm342996f8f.17.2025.07.03.10.33.25
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Jul 2025 10:33:35 -0700 (PDT)
+ Thu, 03 Jul 2025 10:33:25 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 09/39] accel/tcg: Factor tcg_dump_flush_info() out
-Date: Thu,  3 Jul 2025 19:32:15 +0200
-Message-ID: <20250703173248.44995-10-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>
+Subject: [PATCH v6 07/39] accel/tcg: Remove 'info opcount' and @x-query-opcount
+Date: Thu,  3 Jul 2025 19:32:13 +0200
+Message-ID: <20250703173248.44995-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250703173248.44995-1-philmd@linaro.org>
 References: <20250703173248.44995-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,61 +109,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Since commit 1b65b4f54c7 ("accel/tcg: remove CONFIG_PROFILER",
+released with QEMU v8.1.0) we get pointless output:
+
+  (qemu) info opcount
+  [TCG profiler not compiled]
+
+Remove that unstable and unuseful command.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/monitor.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ qapi/machine.json          | 18 ------------------
+ accel/tcg/monitor.c        | 21 ---------------------
+ tests/qtest/qmp-cmd-test.c |  1 -
+ hmp-commands-info.hx       | 14 --------------
+ 4 files changed, 54 deletions(-)
 
+diff --git a/qapi/machine.json b/qapi/machine.json
+index d5bbb5e367e..acf6610efa5 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1764,24 +1764,6 @@
+   'returns': 'HumanReadableText',
+   'features': [ 'unstable' ] }
+ 
+-##
+-# @x-query-opcount:
+-#
+-# Query TCG opcode counters
+-#
+-# Features:
+-#
+-# @unstable: This command is meant for debugging.
+-#
+-# Returns: TCG opcode counters
+-#
+-# Since: 6.2
+-##
+-{ 'command': 'x-query-opcount',
+-  'returns': 'HumanReadableText',
+-  'if': 'CONFIG_TCG',
+-  'features': [ 'unstable' ] }
+-
+ ##
+ # @x-query-ramblock:
+ #
 diff --git a/accel/tcg/monitor.c b/accel/tcg/monitor.c
-index 344ec500473..6d9cc11d94c 100644
+index 1c182b6bfb5..7c686226b21 100644
 --- a/accel/tcg/monitor.c
 +++ b/accel/tcg/monitor.c
-@@ -141,11 +141,26 @@ static void tlb_flush_counts(size_t *pfull, size_t *ppart, size_t *pelide)
-     *pelide = elide;
+@@ -215,30 +215,9 @@ HumanReadableText *qmp_x_query_jit(Error **errp)
+     return human_readable_text_from_str(buf);
  }
  
-+static void tcg_dump_flush_info(GString *buf)
-+{
-+    size_t flush_full, flush_part, flush_elide;
-+
-+    g_string_append_printf(buf, "TB flush count      %u\n",
-+                           qatomic_read(&tb_ctx.tb_flush_count));
-+    g_string_append_printf(buf, "TB invalidate count %u\n",
-+                           qatomic_read(&tb_ctx.tb_phys_invalidate_count));
-+
-+    tlb_flush_counts(&flush_full, &flush_part, &flush_elide);
-+    g_string_append_printf(buf, "TLB full flushes    %zu\n", flush_full);
-+    g_string_append_printf(buf, "TLB partial flushes %zu\n", flush_part);
-+    g_string_append_printf(buf, "TLB elided flushes  %zu\n", flush_elide);
-+}
-+
- static void dump_exec_info(GString *buf)
- {
-     struct tb_tree_stats tst = {};
-     struct qht_stats hst;
--    size_t nb_tbs, flush_full, flush_part, flush_elide;
-+    size_t nb_tbs;
- 
-     tcg_tb_foreach(tb_tree_stats_iter, &tst);
-     nb_tbs = tst.nb_tbs;
-@@ -182,15 +197,7 @@ static void dump_exec_info(GString *buf)
-     qht_statistics_destroy(&hst);
- 
-     g_string_append_printf(buf, "\nStatistics:\n");
--    g_string_append_printf(buf, "TB flush count      %u\n",
--                           qatomic_read(&tb_ctx.tb_flush_count));
--    g_string_append_printf(buf, "TB invalidate count %u\n",
--                           qatomic_read(&tb_ctx.tb_phys_invalidate_count));
+-static void tcg_dump_op_count(GString *buf)
+-{
+-    g_string_append_printf(buf, "[TCG profiler not compiled]\n");
+-}
 -
--    tlb_flush_counts(&flush_full, &flush_part, &flush_elide);
--    g_string_append_printf(buf, "TLB full flushes    %zu\n", flush_full);
--    g_string_append_printf(buf, "TLB partial flushes %zu\n", flush_part);
--    g_string_append_printf(buf, "TLB elided flushes  %zu\n", flush_elide);
-+    tcg_dump_flush_info(buf);
+-HumanReadableText *qmp_x_query_opcount(Error **errp)
+-{
+-    g_autoptr(GString) buf = g_string_new("");
+-
+-    if (!tcg_enabled()) {
+-        error_setg(errp,
+-                   "Opcode count information is only available with accel=tcg");
+-        return NULL;
+-    }
+-
+-    tcg_dump_op_count(buf);
+-
+-    return human_readable_text_from_str(buf);
+-}
+-
+ static void hmp_tcg_register(void)
+ {
+     monitor_register_hmp_info_hrt("jit", qmp_x_query_jit);
+-    monitor_register_hmp_info_hrt("opcount", qmp_x_query_opcount);
  }
  
- HumanReadableText *qmp_x_query_jit(Error **errp)
+ type_init(hmp_tcg_register);
+diff --git a/tests/qtest/qmp-cmd-test.c b/tests/qtest/qmp-cmd-test.c
+index 040d042810b..cf718761861 100644
+--- a/tests/qtest/qmp-cmd-test.c
++++ b/tests/qtest/qmp-cmd-test.c
+@@ -51,7 +51,6 @@ static int query_error_class(const char *cmd)
+         { "x-query-usb", ERROR_CLASS_GENERIC_ERROR },
+         /* Only valid with accel=tcg */
+         { "x-query-jit", ERROR_CLASS_GENERIC_ERROR },
+-        { "x-query-opcount", ERROR_CLASS_GENERIC_ERROR },
+         { "xen-event-list", ERROR_CLASS_GENERIC_ERROR },
+         { NULL, -1 }
+     };
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index 639a450ee51..d7979222752 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -256,20 +256,6 @@ SRST
+     Show dynamic compiler info.
+ ERST
+ 
+-#if defined(CONFIG_TCG)
+-    {
+-        .name       = "opcount",
+-        .args_type  = "",
+-        .params     = "",
+-        .help       = "show dynamic compiler opcode counters",
+-    },
+-#endif
+-
+-SRST
+-  ``info opcount``
+-    Show dynamic compiler opcode counters
+-ERST
+-
+     {
+         .name       = "sync-profile",
+         .args_type  = "mean:-m,no_coalesce:-n,max:i?",
 -- 
 2.49.0
 
