@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D565C83F03
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C36BC77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:23:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXMhh-0006jR-DR; Thu, 03 Jul 2025 12:22:29 -0400
+	id 1uXMi2-0007Kt-Tv; Thu, 03 Jul 2025 12:22:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXMhY-0006dd-D7
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:22:20 -0400
-Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
+ id 1uXMi0-0007Fa-TN
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:22:48 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXMhW-0006DM-JT
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:22:20 -0400
-Received: by mail-yb1-xb2c.google.com with SMTP id
- 3f1490d57ef6-e81cf6103a6so5802342276.3
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:22:17 -0700 (PDT)
+ id 1uXMhw-0006K8-5B
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:22:47 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-711a3dda147so89326117b3.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:22:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751559736; x=1752164536; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751559762; x=1752164562; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=aBSvS76xILHIDpjwE/w9YCKWfqGz7fpfO4FGe7DpX1Q=;
- b=MNC7XT3kPY6ZOcQmMr1fVWp1QMfgNpjn4ckkik94/gJSSTcQPPM9AjlUCj3naolqFm
- QHAnAkcWWRBx943ZQs8tn9sGmWppz/N+OI6YIWkcbztQEmcNyDLyiE4oqaBG6YzWNCbD
- LkljL16MMPEhGme1hndFKzm4C12+yu4qGuMCZMmjJ/VGf52wOAPdjQ04mbcDdJ8RZwEX
- A2LsFhT5ab9Cv0GXOk9AiNKXP+yt7cHNJpkOXi2KIZiZxOOLiGp3kQrPB8uanqtNU4Sf
- hZQc4JiMUjW7r4NrvOew77pZzxE4xST1DTYmcX5TE0BwdkE15O5v8/XStM96qAiA4fW6
- wZXA==
+ bh=VZOJlHPxMG0XgAd88gcBG7lA9V7NEZI4RP5wm+CcUEM=;
+ b=nqFYgf4QSkkcHAc/f/4vZRkmnW7kLT1MUsRYW502tEv61y0FukE0VINNPW2PNZyYZX
+ GiFZ15cf2DsrgR+IIRVDPcGKhAg3iSDOYuDYORGvbRln4yDi2GQoap92u0f91XdRoEx7
+ EkdE53l6IotkFkgAq8YmfP2zYxQHlCFhtmy9DzE4qWdbE2asPWUvbJ4n4+eAdML/QO+Y
+ 9y2UTL4CESLu5oOP3LU6C0foskpyZjQj2c38z05KvRi+JLG07Nitli/J9xafqQUK5Pe9
+ E9TxC2diFyBC39XHZvzBqTNoZ4L89sNJIBzKVQjY54flaQHi4pWabQEC6bBMbOtYWYZZ
+ 3Kqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751559736; x=1752164536;
+ d=1e100.net; s=20230601; t=1751559762; x=1752164562;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=aBSvS76xILHIDpjwE/w9YCKWfqGz7fpfO4FGe7DpX1Q=;
- b=sAZZWqzdaq9qKTqtuady6LmtuQovIgjVm1ZJgeBRYGlyfhII7GCxUWGJsC0ObHFlgv
- 6CmoU9SKhbx1r2NtOSvtwvT9cUPt6xHnASrZgTkAIBW0iilTjlHPK0wvrJqQ/Nbb/mV4
- eUE7kCknsjA+ddsmIEsOkMVAUdiP3o1qTaRwWPiyeYQDLuztgBJTxXOpCzc6YAzZlNfK
- 0IltLeNSljGK/qR5PwHkBSogPcK2SUR+MbUKWZ2sI55+lA4Sc2cBT8Mah7Rch758pKP6
- c8N9f/16NS9KfimYiHxlvKVFiezV6Dhb7DwGmbrgp1HO8G2bPPD5mE+fr31VQjqRrgLZ
- dziQ==
-X-Gm-Message-State: AOJu0YybtoDCNjoipv6RJDHHhqgbWzNsh05vBlIhXTzmIZCTyQtEbprR
- nFPRmlATo9hGuEZg9eW/T8HoR/IRY8Gs+BVZjKIUExAGkXs0VJfMOSyqu2MOr3i6cRqlCtMAqlc
- jKpz7oOrLY8FWU5+kBfe+5+L4/c/GAyDD7lcU54h1I808rhAu3j2e
-X-Gm-Gg: ASbGncuc0S2yE7WBEZwFIpAQscZ51qjzN2MU8CPwZgJ8NHOtJUrKJLPckMe8oZtmiCc
- uPFPIBKPNN3eRQgoE/09DCvb1lq1ea7snzb0Rc4TwJU5gJDKs01hJ1LdfJ16o5PzMbGWwdgqekE
- eTlTLvgbgxVFItj8U7BjhmGWUSQBjDI+MhxUWkS3DJgNXqZdpVT3sgzEQ=
-X-Google-Smtp-Source: AGHT+IHhMZb7Gqqyr/HF/xZ8JCHdNqNtX0bahLmL5RoiX7APKsSX50sHb8TOYVug2As6/4LdpNvbmMVWUVuQ0NhhXpY=
-X-Received: by 2002:a05:690c:3704:b0:716:4da5:a01c with SMTP id
- 00721157ae682-71658ff8fe7mr72133377b3.11.1751559736458; Thu, 03 Jul 2025
- 09:22:16 -0700 (PDT)
+ bh=VZOJlHPxMG0XgAd88gcBG7lA9V7NEZI4RP5wm+CcUEM=;
+ b=wAJDgGXBC8zG2aYXILBpv58BeBmK0o50ApEILTmExPNSXi3pB3Zunj16hVg/fybLBh
+ CiyL7sSfv+AW19nENUOlXTQizSq+DyNe4aAVH774JgGS6ztWCFIi0cgiZn7OVosWwlvR
+ ciihCwl1JrsWzq4VTM4c5GMjv7B+PFtwjvozgrVHjAMCntTeNgk9z5vjTbVMWDBOrMaS
+ vdHu70RL9i6SOjeI/cmGE4YUoZ8x+SIqRWQ5VoBDikrO1/8CoG6rqpKgEYYePbhQSAhh
+ ZJVgRzCpbmmvoidp2mpwHK+FAsi1/kFaCw132FT5oRtbyIIFOXlC8mzsW5hyYB54S4eR
+ 2Hqg==
+X-Gm-Message-State: AOJu0YxzjK2iSOXQ9yCWkt11OuojtrpeaS7Z+n/Jl13ayaT0wkNWEM1W
+ 8B6fl1vKb4xZUe8rR5Q8JNt+CezOKiAm7dtfBXWqfmBjccqQZ8k5hz5fkHY3qJvkl14o+AnGFF3
+ BjlQ6AZ6I7D35pYKUQtzoBzkidaasavWgAqgi+m9JayF4ru9ReSjN
+X-Gm-Gg: ASbGncsFV2BYHJ6fMLjrlSvtG26j4kmYry54gonmv3g8S4uNuhaVeFtfkGuIEKohBw+
+ vH7LPbTiL2ZES3r/2vSC4l300VVvfO7xVNliuJRDE6sWN6wkxP8TRRTkoeFS/90kOuX1rX0ACkI
+ sTp8R5zo6b2z+fxaE6TFe/Kmd9ewY/F4l565t3RN8hax0y4k3+NjTrCds=
+X-Google-Smtp-Source: AGHT+IFLlYIPOJZJghbq5znRpOdQt728aK5B4DhcNbaQDEn3VIcY6wtSZ0gC2o17rdHa84yaEUIwyhMP3PQtrZcU3vA=
+X-Received: by 2002:a05:690c:5:b0:716:3dc5:a35f with SMTP id
+ 00721157ae682-7164d4d84f7mr113153587b3.19.1751559762312; Thu, 03 Jul 2025
+ 09:22:42 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250618230549.3351152-1-jcksn@duck.com>
- <20250618230549.3351152-9-jcksn@duck.com>
-In-Reply-To: <20250618230549.3351152-9-jcksn@duck.com>
+ <20250618230549.3351152-10-jcksn@duck.com>
+In-Reply-To: <20250618230549.3351152-10-jcksn@duck.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 3 Jul 2025 17:22:03 +0100
-X-Gm-Features: Ac12FXz3WO05I_QJoAycSzwc51SEZWMxRD7d7VuDSpFIpTWzkwevRKi6e0N5wpM
-Message-ID: <CAFEAcA-xLUCGsV+9PrsskADppG3Xcb-qwkcTyTuzKbotF2+2uw@mail.gmail.com>
-Subject: Re: [PATCH v2 08/11] MAX78000: TRNG Implementation
+Date: Thu, 3 Jul 2025 17:22:30 +0100
+X-Gm-Features: Ac12FXznU-Afd1OvROeAxH5JlAmZZYy3GZQReiM2LdCB1AsUrrbnsQKj5SHsjvM
+Message-ID: <CAFEAcA-xYMRaZCBXqUGxW1GFUNZLF=DVSARat=HTOv3VruJU+w@mail.gmail.com>
+Subject: Re: [PATCH v2 09/11] MAX78000: Add TRNG to SOC
 To: Jackson Donaldson <jackson88044@gmail.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,85 +94,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu, 19 Jun 2025 at 00:06, Jackson Donaldson <jackson88044@gmail.com> wrote:
 >
-> This commit implements the True Random Number
-> Generator for the MAX78000
+> This commit adds TRNG to max78000_soc
 >
-> Signed-off-by: Jackson Donaldson <jcksn@duck.com>
+> Signed-off-by: Jackson Donaldson
+> ---
+>  hw/arm/max78000_soc.c         | 10 +++++++++-
+>  include/hw/arm/max78000_soc.h |  2 ++
+>  2 files changed, 11 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/arm/max78000_soc.c b/hw/arm/max78000_soc.c
+> index 1a36bba2fc..09667b578c 100644
+> --- a/hw/arm/max78000_soc.c
+> +++ b/hw/arm/max78000_soc.c
+> @@ -41,6 +41,8 @@ static void max78000_soc_initfn(Object *obj)
+>                                  TYPE_MAX78000_UART);
+>      }
+>
+> +    object_initialize_child(obj, "trng", &s->trng, TYPE_MAX78000_TRNG);
+> +
+>      s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
+>  }
+>
+> @@ -124,6 +126,13 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
+>                                                         max78000_uart_irq[i]));
+>      }
+>
+> +    dev = DEVICE(&s->trng);
+> +    sysbus_realize(SYS_BUS_DEVICE(dev), errp);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x4004d000);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(armv7m, 4));
+> +    dev->id = g_strdup("trng");
+> +    object_property_set_link(OBJECT(gcrdev), "trng", OBJECT(dev), &err);
 
->  static const MemoryRegionOps max78000_gcr_ops = {
-> diff --git a/hw/misc/max78000_trng.c b/hw/misc/max78000_trng.c
-> new file mode 100644
-> index 0000000000..f406681730
-> --- /dev/null
-> +++ b/hw/misc/max78000_trng.c
-> @@ -0,0 +1,127 @@
-> +/*
-> + * MAX78000 True Random Number Generator
-> + *
-> + * Copyright (c) 2025 Jackson Donaldson <jcksn@duck.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/log.h"
-> +#include "trace.h"
-> +#include "hw/irq.h"
-> +#include "migration/vmstate.h"
-> +#include "hw/misc/max78000_trng.h"
-> +#include "qemu/guest-random.h"
-> +
-> +static uint64_t max78000_trng_read(void *opaque, hwaddr addr,
-> +                                    unsigned int size)
-> +{
-> +    uint32_t data;
-> +
-> +    Max78000TrngState *s = opaque;
-> +    switch (addr) {
-> +    case CTRL:
-> +        return s->ctrl;
-> +
-> +    case STATUS:
-> +        return 1;
-> +
-> +    case DATA:
-> +        qemu_guest_getrandom_nofail(&data, sizeof(data));
-> +        return data;
-> +
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"
-> +            HWADDR_PRIx "\n", __func__, addr);
-> +        break;
-> +    }
-> +    return 0;
-> +}
-> +
-> +static void max78000_trng_write(void *opaque, hwaddr addr,
-> +                    uint64_t val64, unsigned int size)
-> +{
-> +    Max78000TrngState *s = opaque;
-> +    uint32_t val = val64;
-> +    switch (addr) {
-> +    case CTRL:
-> +        /* TODO: implement AES keygen */
-> +        s->ctrl = val;
-> +        if (val & RND_IE) {
-> +            qemu_set_irq(s->irq, 1);
-> +        } else{
-> +            qemu_set_irq(s->irq, 0);
-> +        }
-> +        break;
-> +
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"
-> +            HWADDR_PRIx "\n", __func__, addr);
-> +        break;
-> +    }
-> +}
-
-The interrupt generation logic still doesn't look right
-here to me -- see my comments on the TRNG patch in v1
-of this patchset.
+As with the uarts, don't touch dev->id here.
 
 thanks
 -- PMM
