@@ -4,84 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FAAFC77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 01:04:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7831CC77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 02:25:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uX8MF-0005MW-W2; Wed, 02 Jul 2025 21:03:24 -0400
+	id 1uX9d2-0005PN-HX; Wed, 02 Jul 2025 22:24:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uX8MD-0005MD-ER
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 21:03:21 -0400
-Received: from mgamail.intel.com ([198.175.65.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uX8MB-0002FC-5C
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 21:03:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751504599; x=1783040599;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=BurwMDicF6pjfzVWChJ9QztjU6CyVHuC0U5sMXGfV0Y=;
- b=W51+imIMRUmDDcatVdW8R3jd2pV7QCfBZMF0G3U8U90PAj6fzCbmY60I
- 1bC6Dgq5kCnabSHfw+GF2C5y4r3jwkZCQwjhDHm7bt0jp8ZQVvfs0IzQZ
- 7YEn7j7XQLZC58Bq18QCqZ6YeyVlPzLQtQCEoLUBagaZuKZHvGYdHTJZF
- 1ze5Wgmq04fKfmlW+6NVE8fLEJ7oow4o2AKXkoIn0REa/VC+BIF6KZY2C
- PN1jVpbHK7qDx3SXllwwiZEQCEA2sHp1jU+kOFaeUlvTr15IehKvkRkjQ
- OZTB/S+L4Gg7HHd9+9QQBZYCnWrORdAKFIEjF86ndlXCo0c3+DMohPjnu w==;
-X-CSE-ConnectionGUID: x65FnohGRzCnjTnBSDy3AA==
-X-CSE-MsgGUID: l/f5MokLR3GrRKqytkNkxw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="53784395"
-X-IronPort-AV: E=Sophos;i="6.16,282,1744095600"; d="scan'208";a="53784395"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jul 2025 18:03:15 -0700
-X-CSE-ConnectionGUID: 2epG7wetR+SDC0qBStUYag==
-X-CSE-MsgGUID: MQoG5J6NRribqB+JFrFu7g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,282,1744095600"; d="scan'208";a="191395618"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jul 2025 18:03:13 -0700
-Message-ID: <a7d2691b-ce43-454e-aec9-3589787dea5c@intel.com>
-Date: Thu, 3 Jul 2025 09:03:10 +0800
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1uX9cw-0005MI-Ma
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 22:24:42 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1uX9ct-0005rT-RA
+ for qemu-devel@nongnu.org; Wed, 02 Jul 2025 22:24:42 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8AxfeHe6WVo4JMhAQ--.32351S3;
+ Thu, 03 Jul 2025 10:24:30 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJAxT+bc6WVox5sHAA--.44272S3;
+ Thu, 03 Jul 2025 10:24:30 +0800 (CST)
+Subject: Re: [PATCH v3 7/9] hw/loongarch: Implement avec set irq
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
+References: <20250627030138.2482055-1-gaosong@loongson.cn>
+ <20250627030138.2482055-8-gaosong@loongson.cn>
+ <eac2cad7-d0a9-9d65-e98e-1e0f5d719a42@loongson.cn>
+ <ca4adb80-dfd0-b1d2-50ab-9b6cace43081@loongson.cn>
+ <dd95532b-56a1-4c2a-a36d-c5e94fc1b442@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <b7675fd1-0267-93c3-93b1-1befce9196da@loongson.cn>
+Date: Thu, 3 Jul 2025 10:27:18 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Regression] Re: [PULL 35/35] qom: reverse order of
- instance_post_init calls
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Dongli Zhang <dongli.zhang@oracle.com>,
- Thomas Huth <thuth@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Like Xu <like.xu.linux@gmail.com>, Igor Mammedov <imammedo@redhat.com>
-References: <20250520110530.366202-1-pbonzini@redhat.com>
- <20250520110530.366202-36-pbonzini@redhat.com>
- <d429b6f5-b59c-4884-b18f-8db71cb8dc7b@oracle.com>
- <aFpocfTpBLB34N3l@intel.com> <aGKryLSGlFTMSKHv@intel.com>
- <690b5bca-4345-4ee9-a332-4c2e38532309@intel.com>
- <31387ca1-4fa0-482e-8e11-e8857c10cb6c@linaro.org>
- <aGTmFGC9vZB2yEwv@intel.com> <76f8e877-e203-421f-b301-4b321534bd8b@intel.com>
- <CABgObfY-sDqw3kPSgr8b3OycA2wZVYQLcxcavierdbr-U0S_Dw@mail.gmail.com>
- <f7545434-f51f-4cb5-b1b9-afbaa26d11e8@intel.com>
- <CABgObfax21xZDKGN9b8tH-HBVeEgTjWD-xLO6DRkr3uCvkyHQQ@mail.gmail.com>
+In-Reply-To: <dd95532b-56a1-4c2a-a36d-c5e94fc1b442@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <CABgObfax21xZDKGN9b8tH-HBVeEgTjWD-xLO6DRkr3uCvkyHQQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
+X-CM-TRANSID: qMiowJAxT+bc6WVox5sHAA--.44272S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxXw18GFW8JrykXFWxtFW8uFX_yoWrKFWDpr
+ 4kAFZ8Cry5Jrn3Jw1ag345XF9Iyr18t3Z7Xr1xWFyxAFWDJr12grW8XrnFgF18Aw4rGr4U
+ Zr1rXw43uF13JrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU70PfDUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -33
+X-Spam_score: -3.4
 X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.747,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,50 +85,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/2025 2:54 AM, Paolo Bonzini wrote:
-> Il mer 2 lug 2025, 09:25 Xiaoyao Li <xiaoyao.li@intel.com> ha scritto:
-> 
->> IIRC that's on rhel QEMU which ports the TDX code before it's merged
->> upstream. Now TDX is upstreamed, it works with upstream compat property
->> and I think future new compat property won't affect TDX or anything,
->> since it's compat property and it's to guarantee the existing behavior
->> when introducing new behavior?
->>
-> 
-> It's a compat property that is only added by RHEL-specific machine types.
-> But the bug is not specific to RHEL, it just happens that no upstream
-> machine type has compat properties that overlap with TDX adjustments of
-> CPUID.
-> 
->> In general I don't see how the reverse order makes sense: the subclass
->>> knows what the superclass does, so it can do the right thing if it runs
->>> last; but the superclass cannot know what all of its subclasses do in
->>> post_init, so it makes less sense to run it last.
->>
->> I agree in general the parent to child order makes more sense,
->> especially when we treat .instance_init() as the phase 1 init and
->> .post_instance_init() as the phase 2 init.
->>
->> But the original purpose of introducing .post_instance_init() was to
->> ensure qdev_prop_set_globals() is called at last for Device. Reverse the
->> order breaks this purpose.
->>
-> 
-> Not "last", but "after instance_init". Anything that happens in the child
-> class's instance_post_init can be moved at the end of instance_init, just
-> like the refactoring that I did for risc-v.
+在 2025/7/2 下午5:59, Bibo Mao 写道:
+>
+>
+> On 2025/7/2 下午3:21, gaosong wrote:
+>> 在 2025/7/2 上午11:15, Bibo Mao 写道:
+>>>
+>>>
+>>> On 2025/6/27 上午11:01, Song Gao wrote:
+>>>> Implement avec set irq and update CSR_MSIS and CSR_MSGIR.
+>>>>
+>>>> Signed-off-by: Song Gao <gaosong@loongson.cn>
+>>>> ---
+>>>>   hw/intc/loongarch_avec.c | 44 
+>>>> ++++++++++++++++++++++++++++++++++++++--
+>>>>   1 file changed, 42 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
+>>>> index c686ac9483..5959d05d13 100644
+>>>> --- a/hw/intc/loongarch_avec.c
+>>>> +++ b/hw/intc/loongarch_avec.c
+>>>> @@ -16,6 +16,12 @@
+>>>>   #include "migration/vmstate.h"
+>>>>   #include "trace.h"
+>>>>   #include "hw/qdev-properties.h"
+>>>> +#include "target/loongarch/cpu.h"
+>>>> +
+>>>> +/* msg addr field */
+>>>> +FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
+>>>> +FIELD(MSG_ADDR, CPU_NUM, 12, 8)
+>>>> +FIELD(MSG_ADDR, FIX, 28, 12)
+>>>>     static uint64_t loongarch_avec_mem_read(void *opaque,
+>>>>                                           hwaddr addr, unsigned size)
+>>>> @@ -23,12 +29,46 @@ static uint64_t loongarch_avec_mem_read(void 
+>>>> *opaque,
+>>>>       return 0;
+>>>>   }
+>>>>   +static void avec_set_irq(LoongArchAVECState *s, int cpu_num, int 
+>>>> irq_num, int level)
+>>>> +{
+>>>> +    MachineState *machine = MACHINE(qdev_get_machine());
+>>>> +    MachineClass *mc = MACHINE_GET_CLASS(machine);
+>>>> +    const CPUArchIdList *id_list = NULL;
+>>>> +    CPUState *cpu;
+>>>> +    CPULoongArchState *env;
+>>>> +    int i;
+>>>> +
+>>>> +    assert(mc->possible_cpu_arch_ids(machine));
+>>>> +    id_list = mc->possible_cpu_arch_ids(machine);
+>>>> +    cpu = id_list->cpus[cpu_num].cpu;
+>>>> +    env = &LOONGARCH_CPU(cpu)->env;
+>>>> +
+>>>> +    if (level) {
+>>>> +        set_bit(irq_num, &env->CSR_MSGIS[irq_num / 64]);
+>>>> +        env->CSR_MSGIR = FIELD_DP64(env->CSR_MSGIR, CSR_MSGIR, 
+>>>> INTNUM, irq_num);
+>>>> +        env->CSR_MSGIR = FIELD_DP64(env->CSR_MSGIR, CSR_MSGIR, 
+>>>> ACTIVE, 0);
+>>>> +
+>>>> +        for (i = 0; i < ARRAY_SIZE(env->CSR_MSGIS); i++) {
+>>>> +            if (env->CSR_MSGIS[i]) {
+>>>> +                return;
+>>>> +            }
+>>>> +        }
+>>>> +        qemu_set_irq(s->cpu[cpu_num].parent_irq, 0);
+>> and thecheck CSR_MSGIS[4] is from v2 comment.
+>>> Here such code can inject interrupt to cpu side.
+>>>   if (level) {
+>>>       set_bit(irq_num, &env->CSR_MSGIS[irq_num / 64]);
+>>>       qemu_set_irq(s->cpu[cpu_num].parent_irq, 1);
+>>>   }
+>>>
+>> but, we also need set CSRIR,  Otherwise, it will cause the kernel to 
+>> faill into a deep loop on avec driver avecintc_irq_dispatch();
+> It depends on the detailed implementation in patch 9, there is 
+> untested example code.
+>
+> target_ulong helper_csrrd_msgir(CPULoongArchState *env)
+> {
+>     int irq, new;
+>
+>     irq = find_first_bit(env->CSR_MSGIS, 256);
+>     if (irq < 256) {
+>       clear_bit(irq, env->CSR_MSGIS);
+>
+>       new = find_first_bit(env->CSR_MSGIS, 256);
+>       if (new < 256)
+>           return irq;
+>
+>       env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
+>       env->CSR_ECFG = FIELD_DP64(env->CSR_ECFG, CSR_ECFG, MSGINT, 0);
+>     } else {
+>       /* bit 31 set 1 for no invalid irq */
+>       irq = -1;
+just set bit 31
+env->CSR_MSGIR = FIELD_DP64(env->CSR_MSGIR, CSR_MSGIR, ACTIVE, 1);
+and  Thanks for your suggestion , I will  correct it on v3.
 
-Move into the end of instance_init() can surely work. But it requires to 
-split the code in instance_post_init() to different child's 
-instance_init() or making sure the code in instance_post_init() is 
-called at the end of each lowest child class.
-
-Besides, it also leads to a rule that child of Device's 
-.post_instance_init() needs to be careful about changing the property or 
-anything that might affect the property, because it might break the 
-usage of global properties.
-
-This can surely work. But to me, it seems to make code worse not better.
-
+Thanks.
+Song Gao
+>     }
+>
+>     return irq;
+> }
+>
+> Regards
+> Bibo Mao
+>>
+>> Thanks.
+>> Song Gao.
+>>> Regards
+>>> Bibo Mao
+>>>> +    }
+>>>> +    qemu_set_irq(s->cpu[cpu_num].parent_irq, level);
+>>>> +}
+>>>> +
+>>>>   static void loongarch_avec_mem_write(void *opaque, hwaddr addr,
+>>>>                                        uint64_t val, unsigned size)
+>>>>   {
+>>>> -    return;
+>>>> -}
+>>>> +    int irq_num, cpu_num = 0;
+>>>> +    LoongArchAVECState *s = LOONGARCH_AVEC(opaque);
+>>>> +    uint64_t msg_addr = addr + VIRT_AVEC_BASE;
+>>>>   +    cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
+>>>> +    irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
+>>>> +    avec_set_irq(s, cpu_num, irq_num, 1);
+>>>> +}
+>>>>     static const MemoryRegionOps loongarch_avec_ops = {
+>>>>       .read = loongarch_avec_mem_read,
+>>>>
 
 
