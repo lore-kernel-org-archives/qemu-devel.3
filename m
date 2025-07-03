@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E3E2C83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 12:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB846C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 12:49:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXJFL-0004Fp-Hn; Thu, 03 Jul 2025 08:41:00 -0400
+	id 1uXJEd-0003In-Vy; Thu, 03 Jul 2025 08:40:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uXJEO-0002Fi-QU
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:40:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uXJEH-0001be-4K
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:39:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uXJEM-0000xE-Fu
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:40:00 -0400
+ id 1uXJED-0000qA-BV
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:39:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751546397;
+ s=mimecast20190719; t=1751546387;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5SBU8rqjDCM9bszWrHYCJiNHA4uqefOcOO5gBO57x8s=;
- b=WakwlHxIa6JNpiA4jmpEfzIJ+X2sfEBluxNcj2tFR55Q+B8Vt+8WDPI7ly2l13MCYS6w4U
- nhvHGVM3pIGNb030XN7gzaAiMKck5VSyhPgUDxFrzhDaIQavtQRBj0wFSlMqn82ukZyOD9
- Iq0GxmfnSCgd2LpF+rHOKmTOx9XWF4I=
+ bh=gui6+S19PIPTP0HqJYWTL54xHSgeFPP1n+ZMQjEgGiQ=;
+ b=Va0zMMjysE439AzLXfXZVQAZGxTKdHVQcxC3nPnS7WKdNSH9Yj9ByMW7ZJfcB1+bSmitnL
+ 5FEY5rYjN1CLNZs3BMZVUjO8EwKhivptM37R8IeBHmwiXqKefuoGZ/L8+WI8pUeH4JdPfG
+ 5QyC0hYkazrgJWhehdHFGP2sXJTMghs=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-620-oBq0hhyqPV6U0FJshPVShA-1; Thu,
- 03 Jul 2025 08:39:54 -0400
-X-MC-Unique: oBq0hhyqPV6U0FJshPVShA-1
-X-Mimecast-MFC-AGG-ID: oBq0hhyqPV6U0FJshPVShA_1751546392
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-347-s7LHlYcxPsWGAwPJTR7idw-1; Thu,
+ 03 Jul 2025 08:39:43 -0400
+X-MC-Unique: s7LHlYcxPsWGAwPJTR7idw-1
+X-Mimecast-MFC-AGG-ID: s7LHlYcxPsWGAwPJTR7idw_1751546382
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9C34D18DA5CE; Thu,  3 Jul 2025 12:39:52 +0000 (UTC)
+ id 78D5519373D8; Thu,  3 Jul 2025 12:39:42 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.32.16])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 27D2A180045C; Thu,  3 Jul 2025 12:39:47 +0000 (UTC)
+ id 0AE9B180045B; Thu,  3 Jul 2025 12:39:37 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
@@ -55,16 +55,15 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: pbonzini@redhat.com,
 	philmd@linaro.org,
 	alex.bennee@linaro.org
-Subject: [PATCH v5 26/36] hw/acpi/ged: Call pcihp plug callbacks in hotplug
- handler implementation
-Date: Thu,  3 Jul 2025 14:35:26 +0200
-Message-ID: <20250703123728.414386-27-eric.auger@redhat.com>
+Subject: [PATCH v5 24/36] hw/acpi/ged: Add a bus link property
+Date: Thu,  3 Jul 2025 14:35:24 +0200
+Message-ID: <20250703123728.414386-25-eric.auger@redhat.com>
 In-Reply-To: <20250703123728.414386-1-eric.auger@redhat.com>
 References: <20250703123728.414386-1-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 15
 X-Spam_score: 1.5
@@ -90,92 +89,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add PCI device related code in the TYPE_HOTPLUG_HANDLER
-implementation.
-
-For a PCI device hotplug/hotunplug event, the code routes to
-acpi_pcihp_device callbacks (pre_plug_cb, plug_cb, unplug_request_cb,
-unplug_cb).
+This property will be set by the machine code on the object
+creation. It will be used by acpi pcihp hotplug code.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-
 ---
-
-v2 -> v4:
-moved before "hw/acpi/ged: Prepare the device to react to PCI hotplug
-events" (Igor)
-
-v2 -> v3:
-- remove else block in acpi_ged_device_pre_plug_cb
----
- hw/acpi/generic_event_device.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ hw/acpi/generic_event_device.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-index ef1c1ec51f..92b931758f 100644
+index 7831db412b..ef1c1ec51f 100644
 --- a/hw/acpi/generic_event_device.c
 +++ b/hw/acpi/generic_event_device.c
-@@ -17,6 +17,7 @@
+@@ -13,6 +13,7 @@
+ #include "qapi/error.h"
+ #include "hw/acpi/acpi.h"
+ #include "hw/acpi/generic_event_device.h"
++#include "hw/pci/pci.h"
  #include "hw/irq.h"
  #include "hw/mem/pc-dimm.h"
  #include "hw/mem/nvdimm.h"
-+#include "hw/pci/pci_device.h"
- #include "hw/qdev-properties.h"
- #include "migration/vmstate.h"
- #include "qemu/error-report.h"
-@@ -228,6 +229,14 @@ static const MemoryRegionOps ged_regs_ops = {
-     },
+@@ -320,6 +321,8 @@ static const Property acpi_ged_properties[] = {
+     DEFINE_PROP_UINT32("ged-event", AcpiGedState, ged_event_bitmap, 0),
+     DEFINE_PROP_BOOL(ACPI_PM_PROP_ACPI_PCIHP_BRIDGE, AcpiGedState,
+                      pcihp_state.use_acpi_hotplug_bridge, 0),
++    DEFINE_PROP_LINK("bus", AcpiGedState, pcihp_state.root,
++                     TYPE_PCI_BUS, PCIBus *),
  };
  
-+static void acpi_ged_device_pre_plug_cb(HotplugHandler *hotplug_dev,
-+                                        DeviceState *dev, Error **errp)
-+{
-+    if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
-+        acpi_pcihp_device_pre_plug_cb(hotplug_dev, dev, errp);
-+    }
-+}
-+
- static void acpi_ged_device_plug_cb(HotplugHandler *hotplug_dev,
-                                     DeviceState *dev, Error **errp)
- {
-@@ -241,6 +250,8 @@ static void acpi_ged_device_plug_cb(HotplugHandler *hotplug_dev,
-         }
-     } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
-         acpi_cpu_plug_cb(hotplug_dev, &s->cpuhp_state, dev, errp);
-+    } else if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
-+        acpi_pcihp_device_plug_cb(hotplug_dev, &s->pcihp_state, dev, errp);
-     } else {
-         error_setg(errp, "virt: device plug request for unsupported device"
-                    " type: %s", object_get_typename(OBJECT(dev)));
-@@ -257,6 +268,9 @@ static void acpi_ged_unplug_request_cb(HotplugHandler *hotplug_dev,
-         acpi_memory_unplug_request_cb(hotplug_dev, &s->memhp_state, dev, errp);
-     } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
-         acpi_cpu_unplug_request_cb(hotplug_dev, &s->cpuhp_state, dev, errp);
-+    } else if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
-+        acpi_pcihp_device_unplug_request_cb(hotplug_dev, &s->pcihp_state,
-+                                            dev, errp);
-     } else {
-         error_setg(errp, "acpi: device unplug request for unsupported device"
-                    " type: %s", object_get_typename(OBJECT(dev)));
-@@ -272,6 +286,8 @@ static void acpi_ged_unplug_cb(HotplugHandler *hotplug_dev,
-         acpi_memory_unplug_cb(&s->memhp_state, dev, errp);
-     } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
-         acpi_cpu_unplug_cb(&s->cpuhp_state, dev, errp);
-+    } else if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
-+        acpi_pcihp_device_unplug_cb(hotplug_dev, &s->pcihp_state, dev, errp);
-     } else {
-         error_setg(errp, "acpi: device unplug for unsupported device"
-                    " type: %s", object_get_typename(OBJECT(dev)));
-@@ -485,6 +501,7 @@ static void acpi_ged_class_init(ObjectClass *class, const void *data)
-     dc->vmsd = &vmstate_acpi_ged;
-     dc->realize = acpi_ged_realize;
- 
-+    hc->pre_plug = acpi_ged_device_pre_plug_cb;
-     hc->plug = acpi_ged_device_plug_cb;
-     hc->unplug_request = acpi_ged_unplug_request_cb;
-     hc->unplug = acpi_ged_unplug_cb;
+ static const VMStateDescription vmstate_memhp_state = {
 -- 
 2.49.0
 
