@@ -4,94 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7FC7C83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 12:56:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D722C83F03
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 12:56:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXJSQ-0007Zx-Kk; Thu, 03 Jul 2025 08:54:30 -0400
+	id 1uXJHv-0007KI-Tq; Thu, 03 Jul 2025 08:43:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uXJSN-0007MH-H7
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:54:27 -0400
-Received: from mail-qk1-x734.google.com ([2607:f8b0:4864:20::734])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uXJSJ-0000UF-T9
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:54:26 -0400
-Received: by mail-qk1-x734.google.com with SMTP id
- af79cd13be357-7d3cc0017fdso605744885a.3
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 05:54:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1751547262; x=1752152062; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=tkfBzDpddJr9lZn50dau+4PajXSOU4T2a0a2JU/cuOI=;
- b=J8clbtbxOER8u6aAnMLkoLfEz1f5m4+/+xThNY9SD3RyoHMIYjHj2fuj1XJ8zde5Xl
- Uqp8s7uNBc8+bluLKRSAWh0IBc4Gl/uJPD1oX+qFdA2SMluoHPyd13R0/IZJnjYzQ+zV
- Lc6CDvvQ9Jdj/tfgDA7XHJwZ7nwkV7BjYTKsYR/5kADTsqc5CJELmYCUsRRC/bjsJ6ke
- ZWpe6ZiGKxkzopTuDL+qYuxtADxwXaRTOfICoc9uNwuUIHg8KcqikthVfxKBv3HuWzpA
- 7zinLd9HeXcKRNbBcRGLg6MAn708HmgdVZUvl7aSaGSHKU4QPNnW8r9ivSycXD0TgZI6
- vxIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751547262; x=1752152062;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tkfBzDpddJr9lZn50dau+4PajXSOU4T2a0a2JU/cuOI=;
- b=oxAAJId/ATjlGpPTEKQC/kdVUeGBRRzGOhG/b4pgaDZKTWSvnzKWDgVtShnHnBo5JM
- Hh8zvplhphpArCzkPx3z5AmynfEtfBEaWkM3ZDrrmyFzmwj7G1S4DxY/Rly3mbkc6Ldc
- qutrNhmj6LtEHzf0k51ruJmlvMwdI8PL+02kkvNwKyfNOom7TSpObXLF3f44N0xRMtCz
- nDVRn9x/uPS8gQzK6ODeOB0ORBvnMsPogn0CvrAngLwn4wvPkDCAqUuiW0297+ECqTW7
- EB9t9yEwAhlIgN4/yr+GYHX40uoFwr1IC1ruMMqNysAGzgxC8d+E5Fj6kKDz2GkQWTcn
- kO9A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUentVwpU4EkfvgerWWHqL6cj1iRwXX+tZhJ2nSsr0CO8p1BYCdSx+j5PbkLfjFQXdykwThUoZp7qus@nongnu.org
-X-Gm-Message-State: AOJu0YxXKSbF4eThuTNnc6RyruQdW1lErrAdmMrDApekFsGDjbLyJoHB
- qLSzIVyLUGR11PwcJdtn3aiRvROoCt/sr9TQASWmbX8IdWOcoRzFcvwUqR1QFDh7ojA=
-X-Gm-Gg: ASbGncsqAoUUdDWyb6qX8ipcX0IZKMdAkW/xz7YXOdAlxCjB66ybfrVd8ckaEp0VhtY
- 7oLqyVo4F0j48bt7hPb/hpRe05yk2wmHpDIH9MMHF50KpYcD6psC53KSFVejGRQIMT1s3CcyRgt
- wl4fGSYK19mP+dXlMW5noTAXUbQqd4T8mH7zq+DSnM+2h0XOJG18f6ssu/6+FPMJgjB3c2prGz4
- iLoyDJ1MPZY7aiTULjbUJpx7ebPI3kuG0Nscx7ybSDI4e/9rJwbHsLzHyTcPJj68+u7CM2U9pSG
- rNKp49kpDuYS9ezcLmLKs1g0jDIfcu+9As/Jc8MRX6a3zuFxzuNnktuLS4aTMVZ0f4ekpLKTSl9
- ZTg==
-X-Google-Smtp-Source: AGHT+IEBgS/H5ia4+tdim/wpP8Iw2YZ5rqmDuahfJJaU627vIX6VdZnGcDy+wGvktqTqlPDplnqYKw==
-X-Received: by 2002:a05:620a:7003:b0:7ce:d04a:83c2 with SMTP id
- af79cd13be357-7d5d14a0209mr523900185a.50.1751547261741; 
- Thu, 03 Jul 2025 05:54:21 -0700 (PDT)
-Received: from [192.168.68.110] ([189.110.107.157])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7d443204ffasm1108236185a.70.2025.07.03.05.54.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Jul 2025 05:54:20 -0700 (PDT)
-Message-ID: <73a34e0e-0451-4f5d-98b8-c0af00c0ff3a@ventanamicro.com>
-Date: Thu, 3 Jul 2025 09:54:17 -0300
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uXJEy-00044R-0C
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:40:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uXJEp-0001RU-Rb
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:40:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751546425;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QxwfYEvRpYO+ysfGn4l7Ic5LE5Wsaju89hTYULgExAg=;
+ b=R/fZBJZlurHRqEcKc9OIr11Rn6OrkT5+ZmN/fbwJ/HVR6/1zYZ6QAI74umm8kADHUFxMNn
+ gbNUTSibDTTcjQDrdAQtt0jE1ix5W5cWVYFJdP2nYxmc4iQ/U2fGSR3DacEQ4LR9fM6TUs
+ FFadRBuXozeFs59pXVEmk+KB7etNfgw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-271-Vu89Ro_SNlGaz_DNGnChpw-1; Thu,
+ 03 Jul 2025 08:40:20 -0400
+X-MC-Unique: Vu89Ro_SNlGaz_DNGnChpw-1
+X-Mimecast-MFC-AGG-ID: Vu89Ro_SNlGaz_DNGnChpw_1751546419
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5F14418089B8; Thu,  3 Jul 2025 12:40:19 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.44.32.16])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B194E18046C6; Thu,  3 Jul 2025 12:40:14 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
+ Jonathan.Cameron@huawei.com, gustavo.romero@linaro.org,
+ anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com
+Cc: pbonzini@redhat.com,
+	philmd@linaro.org,
+	alex.bennee@linaro.org
+Subject: [PATCH v5 31/36] hw/arm/virt: Minor code reshuffling in
+ create_acpi_ged
+Date: Thu,  3 Jul 2025 14:35:31 +0200
+Message-ID: <20250703123728.414386-32-eric.auger@redhat.com>
+In-Reply-To: <20250703123728.414386-1-eric.auger@redhat.com>
+References: <20250703123728.414386-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 02/11] target/riscv: Add cpu_set_exception_base
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>
-References: <20250703104925.112688-1-djordje.todorovic@htecgroup.com>
- <20250703104925.112688-3-djordje.todorovic@htecgroup.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250703104925.112688-3-djordje.todorovic@htecgroup.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::734;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-qk1-x734.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,60 +90,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Use a local SysBusDevice handle. Also use the newly introduced
+sysbus_mmio_map_name which brings better readability about the region
+being mapped. GED device has regions which exist depending on some
+external properties and it becomes difficult to guess the index of
+a region. Better refer to a region by its name.
 
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+---
+ include/hw/acpi/generic_event_device.h |  1 +
+ hw/arm/virt.c                          | 11 +++++++----
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-On 7/3/25 7:49 AM, Djordje Todorovic wrote:
-> Add a new function, so we can change reset vector from platforms
-> during runtime.
-> 
-> Signed-off-by: Chao-ying Fu <cfu@mips.com>
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> ---
->   target/riscv/cpu.c | 13 +++++++++++++
->   target/riscv/cpu.h |  4 ++++
->   2 files changed, 17 insertions(+)
-> 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 629ac37501..e584bdc5ac 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -73,6 +73,19 @@ bool riscv_cpu_option_set(const char *optname)
->       return g_hash_table_contains(general_user_opts, optname);
->   }
->   
-> +#ifndef CONFIG_USER_ONLY
-> +void cpu_set_exception_base(int vp_index, target_ulong address)
-> +{
-> +    CPUState *cpu_state = qemu_get_cpu(vp_index);
-> +    if (cpu_state == NULL) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "cpu_set_exception_base: invalid vp_index: %u",
-> +                      vp_index);
-> +    }
-> +    RISCVCPU *vp = RISCV_CPU(cpu_state);
-> +    vp->env.resetvec = address;
-> +}
-> +#endif
-> +
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   static void riscv_cpu_cfg_merge(RISCVCPUConfig *dest, const RISCVCPUConfig *src)
->   {
->   #define BOOL_FIELD(x) dest->x |= src->x;
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 229ade9ed9..fba0b0506b 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -656,6 +656,10 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
->   target_ulong riscv_cpu_get_fflags(CPURISCVState *env);
->   void riscv_cpu_set_fflags(CPURISCVState *env, target_ulong);
->   
-> +#ifndef CONFIG_USER_ONLY
-> +void cpu_set_exception_base(int vp_index, target_ulong address);
-> +#endif
-> +
->   FIELD(TB_FLAGS, MEM_IDX, 0, 3)
->   FIELD(TB_FLAGS, FS, 3, 2)
->   /* Vector flags */
+diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
+index d56adaa626..2c5b055327 100644
+--- a/include/hw/acpi/generic_event_device.h
++++ b/include/hw/acpi/generic_event_device.h
+@@ -111,6 +111,7 @@ typedef struct GEDState {
+ } GEDState;
+ 
+ #define ACPI_PCIHP_REGION_NAME "pcihp container"
++#define ACPI_MEMHP_REGION_NAME "memhp container"
+ 
+ struct AcpiGedState {
+     SysBusDevice parent_obj;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 34a3831530..7b247ad30c 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -683,6 +683,7 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
+ {
+     DeviceState *dev;
+     MachineState *ms = MACHINE(vms);
++    SysBusDevice *sbdev;
+     int irq = vms->irqmap[VIRT_ACPI_GED];
+     uint32_t event = ACPI_GED_PWR_DOWN_EVT;
+ 
+@@ -697,11 +698,13 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
+     dev = qdev_new(TYPE_ACPI_GED);
+     qdev_prop_set_uint32(dev, "ged-event", event);
+     object_property_set_link(OBJECT(dev), "bus", OBJECT(vms->bus), &error_abort);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sbdev = SYS_BUS_DEVICE(dev);
++    sysbus_realize_and_unref(sbdev, &error_fatal);
+ 
+-    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, vms->memmap[VIRT_ACPI_GED].base);
+-    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 1, vms->memmap[VIRT_PCDIMM_ACPI].base);
+-    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(vms->gic, irq));
++    sysbus_mmio_map_name(sbdev, TYPE_ACPI_GED, vms->memmap[VIRT_ACPI_GED].base);
++    sysbus_mmio_map_name(sbdev, ACPI_MEMHP_REGION_NAME,
++                         vms->memmap[VIRT_PCDIMM_ACPI].base);
++    sysbus_connect_irq(sbdev, 0, qdev_get_gpio_in(vms->gic, irq));
+ 
+     return dev;
+ }
+-- 
+2.49.0
 
 
