@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 497CDC83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 12:44:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 083F6C83030
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 12:44:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXJEL-0001v5-6u; Thu, 03 Jul 2025 08:39:57 -0400
+	id 1uXJDo-0000qU-0z; Thu, 03 Jul 2025 08:39:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uXJDe-0000mY-Lt
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:39:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uXJDR-0000Zn-UC
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:39:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uXJDY-0000Ug-KS
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:39:13 -0400
+ id 1uXJDI-0000P8-AH
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:39:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751546346;
+ s=mimecast20190719; t=1751546330;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qrdM5Qv5B/f5uJagCphvmvd7g7H1raHqAypDeISaWyY=;
- b=IqStNk3ei94b13vhEzhbZiodnsfPHx+QcjUjTHDqHgdeAj0exMVue1zkTRVSOL0xpgqQ1X
- DN366EWChi3bHuEEiQNPmprPi9Z72ekfip8rSeZJAe8hXiJDYe+B64IbB42To+dKDoKTf3
- dK1Xd4sJiqp40xm3ogv/xa0L76vZSgU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=ztOHQuRdZU6Ia6/9fdzeOkwFogOl4LLzWMJKwr7hjGI=;
+ b=M4r/2PZsVzw0v+xkR1eeGqpTBNdbITGISSM6q2g60boPHVe/g1AXiYD1LgmuM5KWUKrKM4
+ f0ek222FK+vU3BHreqQjjHPMWDtSZ0DUjNkuE9YLHWzLQcTu1Os3mEQ+5TAGijp7K1Pt0e
+ crllUjSafxTGSIltRPOgjyUjTKjTX2c=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-588-s0yPEGRaPGW51AiwDbBSGQ-1; Thu,
- 03 Jul 2025 08:39:03 -0400
-X-MC-Unique: s0yPEGRaPGW51AiwDbBSGQ-1
-X-Mimecast-MFC-AGG-ID: s0yPEGRaPGW51AiwDbBSGQ_1751546341
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-1ELgZuimP12AlPtu-3IrMw-1; Thu,
+ 03 Jul 2025 08:38:47 -0400
+X-MC-Unique: 1ELgZuimP12AlPtu-3IrMw-1
+X-Mimecast-MFC-AGG-ID: 1ELgZuimP12AlPtu-3IrMw_1751546326
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9EFC018089B7; Thu,  3 Jul 2025 12:39:01 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 44B271956061; Thu,  3 Jul 2025 12:38:46 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.32.16])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 012D1180045B; Thu,  3 Jul 2025 12:38:56 +0000 (UTC)
+ id C0D8F1803AFF; Thu,  3 Jul 2025 12:38:41 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
@@ -55,25 +55,26 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: pbonzini@redhat.com,
 	philmd@linaro.org,
 	alex.bennee@linaro.org
-Subject: [PATCH v5 16/36] hw/i386/acpi-build: Move aml_pci_edsm to a generic
- place
-Date: Thu,  3 Jul 2025 14:35:16 +0200
-Message-ID: <20250703123728.414386-17-eric.auger@redhat.com>
+Subject: [PATCH v5 13/36] hw/i386/acpi-build: Move
+ build_append_notification_callback to pcihp
+Date: Thu,  3 Jul 2025 14:35:13 +0200
+Message-ID: <20250703123728.414386-14-eric.auger@redhat.com>
 In-Reply-To: <20250703123728.414386-1-eric.auger@redhat.com>
 References: <20250703123728.414386-1-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 15
+X-Spam_score: 1.5
+X-Spam_bar: +
+X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,180 +90,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move aml_pci_edsm to pci-bridge.c since we want to reuse that for
-ARM and acpi-index support. Also rename it into build_pci_bridge_edsm.
+We plan to reuse build_append_notification_callback() on ARM
+so let's move it to pcihp.c.
+
+No functional change intended.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-
 ---
+ include/hw/acpi/pcihp.h |  1 +
+ hw/acpi/pcihp.c         | 58 +++++++++++++++++++++++++++++++++++++++++
+ hw/i386/acpi-build.c    | 58 -----------------------------------------
+ 3 files changed, 59 insertions(+), 58 deletions(-)
 
-v3->v4:
-- renamed into build_pci_bridge_edsm() (Jonathan, Igor)
-
-v2 -> v3:
-- move to pci-bridge.c instead of pcihp.c (Igor)
----
- include/hw/acpi/pci.h |  1 +
- hw/acpi/pci-bridge.c  | 54 ++++++++++++++++++++++++++++++++++++++++
- hw/i386/acpi-build.c  | 57 ++-----------------------------------------
- 3 files changed, 57 insertions(+), 55 deletions(-)
-
-diff --git a/include/hw/acpi/pci.h b/include/hw/acpi/pci.h
-index 69bae95eac..20b672575f 100644
---- a/include/hw/acpi/pci.h
-+++ b/include/hw/acpi/pci.h
-@@ -42,5 +42,6 @@ void build_pci_bridge_aml(AcpiDevAmlIf *adev, Aml *scope);
- void build_srat_generic_affinity_structures(GArray *table_data);
+diff --git a/include/hw/acpi/pcihp.h b/include/hw/acpi/pcihp.h
+index 253ac6e483..f4fd44cb32 100644
+--- a/include/hw/acpi/pcihp.h
++++ b/include/hw/acpi/pcihp.h
+@@ -78,6 +78,7 @@ void build_acpi_pci_hotplug(Aml *table, AmlRegionSpace rs, uint64_t pcihp_addr);
+ void build_append_pci_dsm_func0_common(Aml *ctx, Aml *retvar);
+ void build_append_pcihp_resources(Aml *table,
+                                   uint64_t io_addr, uint64_t io_len);
++bool build_append_notification_callback(Aml *parent_scope, const PCIBus *bus);
  
- Aml *build_pci_host_bridge_osc_method(bool enable_native_pcie_hotplug);
-+Aml *build_pci_bridge_edsm(void);
+ /* Called on reset */
+ void acpi_pcihp_reset(AcpiPciHpState *s);
+diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
+index afa3ec5f4d..b64d06afc9 100644
+--- a/hw/acpi/pcihp.c
++++ b/hw/acpi/pcihp.c
+@@ -39,6 +39,7 @@
+ #include "migration/vmstate.h"
+ #include "qapi/error.h"
+ #include "qom/qom-qobject.h"
++#include "qobject/qnum.h"
+ #include "trace.h"
  
- #endif
-diff --git a/hw/acpi/pci-bridge.c b/hw/acpi/pci-bridge.c
-index 7baa7034a1..394a919479 100644
---- a/hw/acpi/pci-bridge.c
-+++ b/hw/acpi/pci-bridge.c
-@@ -35,3 +35,57 @@ void build_pci_bridge_aml(AcpiDevAmlIf *adev, Aml *scope)
-         }
-     }
+ #define ACPI_PCIHP_SIZE 0x0018
+@@ -703,6 +704,63 @@ void build_append_pcihp_resources(Aml *scope /* \\_SB.PCI0 */,
+     aml_append(scope, dev);
  }
-+
-+Aml *build_pci_bridge_edsm(void)
+ 
++bool build_append_notification_callback(Aml *parent_scope, const PCIBus *bus)
 +{
-+    Aml *method, *ifctx;
-+    Aml *zero = aml_int(0);
-+    Aml *func = aml_arg(2);
-+    Aml *ret = aml_local(0);
-+    Aml *aidx = aml_local(1);
-+    Aml *params = aml_arg(4);
++    Aml *method;
++    PCIBus *sec;
++    QObject *bsel;
++    int nr_notifiers = 0;
++    GQueue *pcnt_bus_list = g_queue_new();
 +
-+    method = aml_method("EDSM", 5, AML_SERIALIZED);
-+
-+    /* get supported functions */
-+    ifctx = aml_if(aml_equal(func, zero));
-+    {
-+        /* 1: have supported functions */
-+        /* 7: support for function 7 */
-+        const uint8_t caps = 1 | BIT(7);
-+        build_append_pci_dsm_func0_common(ifctx, ret);
-+        aml_append(ifctx, aml_store(aml_int(caps), aml_index(ret, zero)));
-+        aml_append(ifctx, aml_return(ret));
++    QLIST_FOREACH(sec, &bus->child, sibling) {
++        Aml *br_scope = aml_scope("S%.02X", sec->parent_dev->devfn);
++        if (pci_bus_is_root(sec)) {
++            continue;
++        }
++        nr_notifiers = nr_notifiers +
++                       build_append_notification_callback(br_scope, sec);
++        /*
++         * add new child scope to parent
++         * and keep track of bus that have PCNT,
++         * bus list is used later to call children PCNTs from this level PCNT
++         */
++        if (nr_notifiers) {
++            g_queue_push_tail(pcnt_bus_list, sec);
++            aml_append(parent_scope, br_scope);
++        }
 +    }
-+    aml_append(method, ifctx);
 +
-+    /* handle specific functions requests */
 +    /*
-+     * PCI Firmware Specification 3.1
-+     * 4.6.7. _DSM for Naming a PCI or PCI Express Device Under
-+     *        Operating Systems
++     * Append PCNT method to notify about events on local and child buses.
++     * ps: hostbridge might not have hotplug (bsel) enabled but might have
++     * child bridges that do have bsel.
 +     */
-+    ifctx = aml_if(aml_equal(func, aml_int(7)));
-+    {
-+       Aml *pkg = aml_package(2);
-+       aml_append(pkg, zero);
-+       /* optional, if not impl. should return null string */
-+       aml_append(pkg, aml_string("%s", ""));
-+       aml_append(ifctx, aml_store(pkg, ret));
++    method = aml_method("PCNT", 0, AML_NOTSERIALIZED);
 +
-+       /*
-+        * IASL is fine when initializing Package with computational data,
-+        * however it makes guest unhappy /it fails to process such AML/.
-+        * So use runtime assignment to set acpi-index after initializer
-+        * to make OSPM happy.
-+        */
-+       aml_append(ifctx,
-+           aml_store(aml_derefof(aml_index(params, aml_int(0))), aidx));
-+       aml_append(ifctx, aml_store(aidx, aml_index(ret, zero)));
-+       aml_append(ifctx, aml_return(ret));
++    /* If bus supports hotplug select it and notify about local events */
++    bsel = object_property_get_qobject(OBJECT(bus), ACPI_PCIHP_PROP_BSEL, NULL);
++    if (bsel) {
++        uint64_t bsel_val = qnum_get_uint(qobject_to(QNum, bsel));
++
++        aml_append(method, aml_store(aml_int(bsel_val), aml_name("BNUM")));
++        aml_append(method, aml_call2("DVNT", aml_name("PCIU"),
++                                     aml_int(1))); /* Device Check */
++        aml_append(method, aml_call2("DVNT", aml_name("PCID"),
++                                     aml_int(3))); /* Eject Request */
++        nr_notifiers++;
 +    }
-+    aml_append(method, ifctx);
 +
-+    return method;
++    /* Notify about child bus events in any case */
++    while ((sec = g_queue_pop_head(pcnt_bus_list))) {
++        aml_append(method, aml_name("^S%.02X.PCNT", sec->parent_dev->devfn));
++    }
++
++    aml_append(parent_scope, method);
++    qobject_unref(bsel);
++    g_queue_free(pcnt_bus_list);
++    return !!nr_notifiers;
 +}
 +
+ const VMStateDescription vmstate_acpi_pcihp_pci_status = {
+     .name = "acpi_pcihp_pci_status",
+     .version_id = 1,
 diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index fe8bc62c03..423c4959fe 100644
+index 6ca2b34ef8..3275675e60 100644
 --- a/hw/i386/acpi-build.c
 +++ b/hw/i386/acpi-build.c
-@@ -338,59 +338,6 @@ build_facs(GArray *table_data)
-     g_array_append_vals(table_data, reserved, 40); /* Reserved */
+@@ -563,64 +563,6 @@ void build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus)
+     }
  }
  
--static Aml *aml_pci_edsm(void)
+-static bool build_append_notification_callback(Aml *parent_scope,
+-                                               const PCIBus *bus)
 -{
--    Aml *method, *ifctx;
--    Aml *zero = aml_int(0);
--    Aml *func = aml_arg(2);
--    Aml *ret = aml_local(0);
--    Aml *aidx = aml_local(1);
--    Aml *params = aml_arg(4);
+-    Aml *method;
+-    PCIBus *sec;
+-    QObject *bsel;
+-    int nr_notifiers = 0;
+-    GQueue *pcnt_bus_list = g_queue_new();
 -
--    method = aml_method("EDSM", 5, AML_SERIALIZED);
--
--    /* get supported functions */
--    ifctx = aml_if(aml_equal(func, zero));
--    {
--        /* 1: have supported functions */
--        /* 7: support for function 7 */
--        const uint8_t caps = 1 | BIT(7);
--        build_append_pci_dsm_func0_common(ifctx, ret);
--        aml_append(ifctx, aml_store(aml_int(caps), aml_index(ret, zero)));
--        aml_append(ifctx, aml_return(ret));
+-    QLIST_FOREACH(sec, &bus->child, sibling) {
+-        Aml *br_scope = aml_scope("S%.02X", sec->parent_dev->devfn);
+-        if (pci_bus_is_root(sec)) {
+-            continue;
+-        }
+-        nr_notifiers = nr_notifiers +
+-                       build_append_notification_callback(br_scope, sec);
+-        /*
+-         * add new child scope to parent
+-         * and keep track of bus that have PCNT,
+-         * bus list is used later to call children PCNTs from this level PCNT
+-         */
+-        if (nr_notifiers) {
+-            g_queue_push_tail(pcnt_bus_list, sec);
+-            aml_append(parent_scope, br_scope);
+-        }
 -    }
--    aml_append(method, ifctx);
 -
--    /* handle specific functions requests */
 -    /*
--     * PCI Firmware Specification 3.1
--     * 4.6.7. _DSM for Naming a PCI or PCI Express Device Under
--     *        Operating Systems
+-     * Append PCNT method to notify about events on local and child buses.
+-     * ps: hostbridge might not have hotplug (bsel) enabled but might have
+-     * child bridges that do have bsel.
 -     */
--    ifctx = aml_if(aml_equal(func, aml_int(7)));
--    {
--       Aml *pkg = aml_package(2);
--       aml_append(pkg, zero);
--       /* optional, if not impl. should return null string */
--       aml_append(pkg, aml_string("%s", ""));
--       aml_append(ifctx, aml_store(pkg, ret));
+-    method = aml_method("PCNT", 0, AML_NOTSERIALIZED);
 -
--       /*
--        * IASL is fine when initializing Package with computational data,
--        * however it makes guest unhappy /it fails to process such AML/.
--        * So use runtime assignment to set acpi-index after initializer
--        * to make OSPM happy.
--        */
--       aml_append(ifctx,
--           aml_store(aml_derefof(aml_index(params, aml_int(0))), aidx));
--       aml_append(ifctx, aml_store(aidx, aml_index(ret, zero)));
--       aml_append(ifctx, aml_return(ret));
+-    /* If bus supports hotplug select it and notify about local events */
+-    bsel = object_property_get_qobject(OBJECT(bus), ACPI_PCIHP_PROP_BSEL, NULL);
+-    if (bsel) {
+-        uint64_t bsel_val = qnum_get_uint(qobject_to(QNum, bsel));
+-
+-        aml_append(method, aml_store(aml_int(bsel_val), aml_name("BNUM")));
+-        aml_append(method, aml_call2("DVNT", aml_name("PCIU"),
+-                                     aml_int(1))); /* Device Check */
+-        aml_append(method, aml_call2("DVNT", aml_name("PCID"),
+-                                     aml_int(3))); /* Eject Request */
+-        nr_notifiers++;
 -    }
--    aml_append(method, ifctx);
 -
--    return method;
+-    /* Notify about child bus events in any case */
+-    while ((sec = g_queue_pop_head(pcnt_bus_list))) {
+-        aml_append(method, aml_name("^S%.02X.PCNT", sec->parent_dev->devfn));
+-    }
+-
+-    aml_append(parent_scope, method);
+-    qobject_unref(bsel);
+-    g_queue_free(pcnt_bus_list);
+-    return !!nr_notifiers;
 -}
 -
  /*
   * build_prt - Define interrupt routing rules
   *
-@@ -937,7 +884,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
-         dev = aml_device("PCI0");
-         aml_append(dev, aml_name_decl("_HID", aml_eisaid("PNP0A03")));
-         aml_append(dev, aml_name_decl("_UID", aml_int(pcmc->pci_root_uid)));
--        aml_append(dev, aml_pci_edsm());
-+        aml_append(dev, build_pci_bridge_edsm());
-         aml_append(sb_scope, dev);
-         aml_append(dsdt, sb_scope);
- 
-@@ -952,7 +899,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
-         aml_append(dev, aml_name_decl("_CID", aml_eisaid("PNP0A03")));
-         aml_append(dev, aml_name_decl("_UID", aml_int(pcmc->pci_root_uid)));
-         aml_append(dev, build_pci_host_bridge_osc_method(!pm->pcihp_bridge_en));
--        aml_append(dev, aml_pci_edsm());
-+        aml_append(dev, build_pci_bridge_edsm());
-         aml_append(sb_scope, dev);
-         if (mcfg_valid) {
-             aml_append(sb_scope, build_q35_dram_controller(&mcfg));
 -- 
 2.49.0
 
