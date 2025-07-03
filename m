@@ -4,72 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06BC9C83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 08:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22837C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 08:54:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXFhF-0000TR-Oq; Thu, 03 Jul 2025 04:53:33 -0400
+	id 1uXFhk-0000lW-LH; Thu, 03 Jul 2025 04:54:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uXFhD-0000SH-M8; Thu, 03 Jul 2025 04:53:31 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1uXFhi-0000h3-Or
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 04:54:03 -0400
+Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uXFhB-0005tp-5G; Thu, 03 Jul 2025 04:53:31 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bXrB22kwfz6M56l;
- Thu,  3 Jul 2025 16:52:26 +0800 (CST)
-Received: from frapeml100006.china.huawei.com (unknown [7.182.85.201])
- by mail.maildlp.com (Postfix) with ESMTPS id 3D63F140371;
- Thu,  3 Jul 2025 16:53:23 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml100006.china.huawei.com (7.182.85.201) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 3 Jul 2025 10:53:23 +0200
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Thu, 3 Jul 2025 10:53:23 +0200
-To: Gustavo Romero <gustavo.romero@linaro.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "philmd@linaro.org" <philmd@linaro.org>, "mst@redhat.com" <mst@redhat.com>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "alex.bennee@linaro.org"
- <alex.bennee@linaro.org>, "udo@hypervisor.org" <udo@hypervisor.org>,
- "ajones@ventanamicro.com" <ajones@ventanamicro.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "imammedo@redhat.com"
- <imammedo@redhat.com>, "anisinha@redhat.com" <anisinha@redhat.com>
-Subject: RE: [PATCH v6 8/9] hw/arm/virt-acpi-build: Fix ACPI IORT and MADT
- tables when its=off
-Thread-Topic: [PATCH v6 8/9] hw/arm/virt-acpi-build: Fix ACPI IORT and MADT
- tables when its=off
-Thread-Index: AQHb6GdIluK/HKdfpEOOBoHhxk8xYLQehR/wgAGZgoA=
-Date: Thu, 3 Jul 2025 08:53:22 +0000
-Message-ID: <b5c3eff0b98f4292907c1e66f7486d17@huawei.com>
-References: <20250628195722.977078-1-gustavo.romero@linaro.org>
- <20250628195722.977078-9-gustavo.romero@linaro.org>
- <07a913cbe5ed461eab8951e4a8c4d17f@huawei.com>
-In-Reply-To: <07a913cbe5ed461eab8951e4a8c4d17f@huawei.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1uXFhg-0006Lx-Ad
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 04:54:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1751532840; x=1783068840;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=SKH7Y/vJ/A35SyFZsuFjwuZaWMzUx+bEsUWgwn1epWc=;
+ b=F/IK5I5UQSa8Vcs7fqnrs2NeD2BhXal9ouTpKMegpas/jUl516yMcnsF
+ ppDvw7WELy2HojCoE9lyV5T9g8OuGSS3WDMneuxi2f+szRQAnbiDmMBq9
+ xJ8ZCprUBlZxpYWj1BEKOJSkx7v5OVI2LHkPK/8WZ2YYwfmeXeqmQIFiR
+ vwTGZ+D0mqqiUZTSHPLugPAuE0ztsIyRYHsWmnqJikY8xl0Rcm/QoYFJc
+ 8uQEe5BAh/v30IA9BXe/Le6GODH/KV+427wymwwbWhGOMNgR/hSVLDAhY
+ oqyBehKxQGwtXajb/53puXq2v84Og2z3HnsQavcLW5qPe/qBqkgi0ru/L Q==;
+X-CSE-ConnectionGUID: jKbrPmnBSTC1GyHV5Vyixw==
+X-CSE-MsgGUID: STPW76JST9OIScJOMcQiwA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="64447694"
+X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="64447694"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jul 2025 01:53:57 -0700
+X-CSE-ConnectionGUID: KlZHhfQpSnOAX9GZpnmLRw==
+X-CSE-MsgGUID: br6cLjd/T8WEEwPyCmY+mw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="153742936"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.240.80])
+ ([10.124.240.80])
+ by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jul 2025 01:53:54 -0700
+Message-ID: <3d1f5698-1936-4fc0-af04-db900f0d1b9e@linux.intel.com>
+Date: Thu, 3 Jul 2025 16:53:50 +0800
 MIME-Version: 1.0
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 16/16] i386/cpu: Use a unified cache_info in X86CPUState
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Babu Moger <babu.moger@amd.com>, Ewan Hai <ewanhai-oc@zhaoxin.com>,
+ Pu Wen <puwen@hygon.cn>, Tao Su <tao1.su@intel.com>,
+ Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+References: <20250620092734.1576677-1-zhao1.liu@intel.com>
+ <20250620092734.1576677-17-zhao1.liu@intel.com>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20250620092734.1576677-17-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=192.198.163.11;
+ envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,102 +92,301 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogU2hhbWVlcmFsaSBLb2xv
-dGh1bSBUaG9kaQ0KPiBTZW50OiBXZWRuZXNkYXksIEp1bHkgMiwgMjAyNSA5OjM0IEFNDQo+IFRv
-OiAnR3VzdGF2byBSb21lcm8nIDxndXN0YXZvLnJvbWVyb0BsaW5hcm8ub3JnPjsgcWVtdS0NCj4g
-ZGV2ZWxAbm9uZ251Lm9yZzsgZXJpYy5hdWdlckByZWRoYXQuY29tOyBwaGlsbWRAbGluYXJvLm9y
-ZzsNCj4gbXN0QHJlZGhhdC5jb20NCj4gQ2M6IHFlbXUtYXJtQG5vbmdudS5vcmc7IGFsZXguYmVu
-bmVlQGxpbmFyby5vcmc7IHVkb0BoeXBlcnZpc29yLm9yZzsNCj4gYWpvbmVzQHZlbnRhbmFtaWNy
-by5jb207IHBldGVyLm1heWRlbGxAbGluYXJvLm9yZzsNCj4gaW1hbW1lZG9AcmVkaGF0LmNvbTsg
-YW5pc2luaGFAcmVkaGF0LmNvbQ0KPiBTdWJqZWN0OiBSRTogW1BBVENIIHY2IDgvOV0gaHcvYXJt
-L3ZpcnQtYWNwaS1idWlsZDogRml4IEFDUEkgSU9SVCBhbmQgTUFEVA0KPiB0YWJsZXMgd2hlbiBp
-dHM9b2ZmDQo+IA0KPiBIaSBHdXN0YXZvLA0KPiANCj4gPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2Ut
-LS0tLQ0KPiA+IEZyb206IHFlbXUtZGV2ZWwtDQo+ID4gYm91bmNlcytzaGFtZWVyYWxpLmtvbG90
-aHVtLnRob2RpPWh1YXdlaS5jb21Abm9uZ251Lm9yZyA8cWVtdS0NCj4gPiBkZXZlbC1ib3VuY2Vz
-K3NoYW1lZXJhbGkua29sb3RodW0udGhvZGk9aHVhd2VpLmNvbUBub25nbnUub3JnPg0KPiBPbg0K
-PiA+IEJlaGFsZiBPZiBHdXN0YXZvIFJvbWVybw0KPiA+IFNlbnQ6IFNhdHVyZGF5LCBKdW5lIDI4
-LCAyMDI1IDg6NTcgUE0NCj4gPiBUbzogcWVtdS1kZXZlbEBub25nbnUub3JnOyBlcmljLmF1Z2Vy
-QHJlZGhhdC5jb207DQo+IHBoaWxtZEBsaW5hcm8ub3JnOw0KPiA+IG1zdEByZWRoYXQuY29tDQo+
-ID4gQ2M6IHFlbXUtYXJtQG5vbmdudS5vcmc7IGFsZXguYmVubmVlQGxpbmFyby5vcmc7DQo+ID4g
-Z3VzdGF2by5yb21lcm9AbGluYXJvLm9yZzsgdWRvQGh5cGVydmlzb3Iub3JnOw0KPiA+IGFqb25l
-c0B2ZW50YW5hbWljcm8uY29tOyBwZXRlci5tYXlkZWxsQGxpbmFyby5vcmc7DQo+ID4gaW1hbW1l
-ZG9AcmVkaGF0LmNvbTsgYW5pc2luaGFAcmVkaGF0LmNvbQ0KPiA+IFN1YmplY3Q6IFtQQVRDSCB2
-NiA4LzldIGh3L2FybS92aXJ0LWFjcGktYnVpbGQ6IEZpeCBBQ1BJIElPUlQgYW5kIE1BRFQNCj4g
-PiB0YWJsZXMgd2hlbiBpdHM9b2ZmDQo+ID4NCj4gPiBDdXJyZW50bHksIHRoZSBJVFMgR3JvdXAg
-bm9kZXMgaW4gdGhlIElPUlQgdGFibGUgYW5kIHRoZSBHSUMgSVRTIFN0cnVjdA0KPiA+IGluIHRo
-ZSBNQURUIHRhYmxlIGFyZSBhbHdheXMgZ2VuZXJhdGVkLCBldmVuIGlmIEdJQyBJVFMgaXMgbm90
-IGF2YWlsYWJsZQ0KPiA+IG9uIHRoZSBtYWNoaW5lLg0KPiA+DQo+ID4gVGhpcyBjb21taXQgZml4
-ZXMgaXQgYnkgbm90IGdlbmVyYXRpbmcgdGhlIElUUyBHcm91cCBub2Rlcywgbm90IG1hcHBpbmcN
-Cj4gPiBhbnkgb3RoZXIgbm9kZSB0byB0aGVtLCBhbmQgbm90IGFkdmVydGlzaW5nIHRoZSBHSUMg
-SVRTIGluIHRoZSBNQURUDQo+ID4gdGFibGUsIHdoZW4gR0lDIElUUyBpcyBub3QgYXZhaWxhYmxl
-IG9uIHRoZSBtYWNoaW5lLg0KPiA+DQo+ID4gU2luY2UgdGhlIGZpeCBjaGFuZ2VzIHRoZSBNQURU
-IGFuZCBJT1JUIHRhYmxlcywgYWRkIHRoZSBibG9icyBmb3IgdGhlDQo+ID4gIml0cz1vZmYiIHRl
-c3QgdG8gdGhlIGFsbG93IGxpc3QgYW5kIHVwZGF0ZSB0aGVtIGluIHRoZSBuZXh0IGNvbW1pdC4N
-Cj4gPg0KPiA+IFRoaXMgY29tbWl0IGFsc28gcmVuYW1lcyB0aGUgc21tdV9pZG1hcHMgYW5kIGl0
-c19pZG1hcHMgdmFyaWFibGVzIGluDQo+ID4gYnVpbGRfaW9ydCgpIHRvIHJjX3NtbXVfaWRtYXBz
-IGFuZCByY19pdHNfaWRtYXBzLCByZXNwZWN0aXZlbHksIHRvIG1ha2UNCj4gPiBpdCBjbGVhcmVy
-IHdoaWNoIG5vZGVzIGFyZSBpbnZvbHZlZCBpbiB0aGUgbWFwcGluZ3MgYXNzb2NpYXRlZCB3aXRo
-DQo+ID4gdGhlc2UgdmFyaWFibGVzLg0KPiA+DQo+ID4gUmVwb3J0ZWQtYnk6IFVkbyBTdGVpbmJl
-cmcgPHVkb0BoeXBlcnZpc29yLm9yZz4NCj4gPiBSZXNvbHZlczogaHR0cHM6Ly9naXRsYWIuY29t
-L3FlbXUtcHJvamVjdC9xZW11Ly0vaXNzdWVzLzI4ODYNCj4gPiBTaWduZWQtb2ZmLWJ5OiBHdXN0
-YXZvIFJvbWVybyA8Z3VzdGF2by5yb21lcm9AbGluYXJvLm9yZz4NCj4gPiBDby1hdXRob3JlZC1i
-eTogUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgPHBoaWxtZEBsaW5hcm8ub3JnPg0KPiA+IC0tLQ0K
-PiA+ICBody9hcm0vdmlydC1hY3BpLWJ1aWxkLmMgICAgICAgICAgICAgICAgICAgIHwgMTQyICsr
-KysrKysrKysrKy0tLS0tLS0tDQo+ID4gIHRlc3RzL3F0ZXN0L2Jpb3MtdGFibGVzLXRlc3QtYWxs
-b3dlZC1kaWZmLmggfCAgIDIgKw0KPiA+ICAyIGZpbGVzIGNoYW5nZWQsIDkwIGluc2VydGlvbnMo
-KyksIDU0IGRlbGV0aW9ucygtKQ0KPiA+DQo+ID4gZGlmZiAtLWdpdCBhL2h3L2FybS92aXJ0LWFj
-cGktYnVpbGQuYyBiL2h3L2FybS92aXJ0LWFjcGktYnVpbGQuYw0KPiA+IGluZGV4IDA2ODM4M2Y5
-ODIuLmVmZjBkNjk4ZGYgMTAwNjQ0DQo+ID4gLS0tIGEvaHcvYXJtL3ZpcnQtYWNwaS1idWlsZC5j
-DQo+ID4gKysrIGIvaHcvYXJtL3ZpcnQtYWNwaS1idWlsZC5jDQo+ID4gQEAgLTI2Nyw3ICsyNjcs
-NyBAQCBzdGF0aWMgaW50IGlvcnRfaWRtYXBfY29tcGFyZShnY29uc3Rwb2ludGVyIGEsDQo+ID4g
-Z2NvbnN0cG9pbnRlciBiKQ0KPiA+ICB9DQo+ID4NCj4gPiAgLyogQ29tcHV0ZSBJRCByYW5nZXMg
-KFJJRHMpIGZyb20gUkMgdGhhdCBhcmUgZGlyZWN0ZWQgdG8gdGhlIElUUyBHcm91cA0KPiA+IG5v
-ZGUgKi8NCj4gPiAtc3RhdGljIHZvaWQgY3JlYXRlX2l0c19pZG1hcHMoR0FycmF5ICppdHNfaWRt
-YXBzLCBHQXJyYXkNCj4gKnNtbXVfaWRtYXBzKQ0KPiA+ICtzdGF0aWMgdm9pZCBjcmVhdGVfcmNf
-aXRzX2lkbWFwcyhHQXJyYXkgKml0c19pZG1hcHMsIEdBcnJheQ0KPiA+ICpzbW11X2lkbWFwcykN
-Cj4gPiAgew0KPiA+ICAgICAgQWNwaUlvcnRJZE1hcHBpbmcgKmlkbWFwOw0KPiA+ICAgICAgQWNw
-aUlvcnRJZE1hcHBpbmcgbmV4dF9yYW5nZSA9IHswfTsNCj4gPiBAQCAtMzE0LDggKzMxNCw4IEBA
-IGJ1aWxkX2lvcnQoR0FycmF5ICp0YWJsZV9kYXRhLCBCSU9TTGlua2VyICpsaW5rZXIsDQo+ID4g
-VmlydE1hY2hpbmVTdGF0ZSAqdm1zKQ0KPiA+ICAgICAgaW50IGksIG5iX25vZGVzLCByY19tYXBw
-aW5nX2NvdW50Ow0KPiA+ICAgICAgc2l6ZV90IG5vZGVfc2l6ZSwgc21tdV9vZmZzZXQgPSAwOw0K
-PiA+ICAgICAgdWludDMyX3QgaWQgPSAwOw0KPiA+IC0gICAgR0FycmF5ICpzbW11X2lkbWFwcyA9
-IGdfYXJyYXlfbmV3KGZhbHNlLCB0cnVlLA0KPiA+IHNpemVvZihBY3BpSW9ydElkTWFwcGluZykp
-Ow0KPiA+IC0gICAgR0FycmF5ICppdHNfaWRtYXBzID0gZ19hcnJheV9uZXcoZmFsc2UsIHRydWUs
-DQo+ID4gc2l6ZW9mKEFjcGlJb3J0SWRNYXBwaW5nKSk7DQo+ID4gKyAgICBHQXJyYXkgKnJjX3Nt
-bXVfaWRtYXBzID0gZ19hcnJheV9uZXcoZmFsc2UsIHRydWUsDQo+ID4gc2l6ZW9mKEFjcGlJb3J0
-SWRNYXBwaW5nKSk7DQo+ID4gKyAgICBHQXJyYXkgKnJjX2l0c19pZG1hcHMgPSBnX2FycmF5X25l
-dyhmYWxzZSwgdHJ1ZSwNCj4gPiBzaXplb2YoQWNwaUlvcnRJZE1hcHBpbmcpKTsNCj4gPg0KPiA+
-ICAgICAgQWNwaVRhYmxlIHRhYmxlID0geyAuc2lnID0gIklPUlQiLCAucmV2ID0gMywgLm9lbV9p
-ZCA9IHZtcy0+b2VtX2lkLA0KPiA+ICAgICAgICAgICAgICAgICAgICAgICAgICAub2VtX3RhYmxl
-X2lkID0gdm1zLT5vZW1fdGFibGVfaWQgfTsNCj4gPiBAQCAtMzI0LDIyICszMjQsMzggQEAgYnVp
-bGRfaW9ydChHQXJyYXkgKnRhYmxlX2RhdGEsIEJJT1NMaW5rZXINCj4gKmxpbmtlciwNCj4gPiBW
-aXJ0TWFjaGluZVN0YXRlICp2bXMpDQo+ID4NCj4gPiAgICAgIGlmICh2bXMtPmlvbW11ID09IFZJ
-UlRfSU9NTVVfU01NVVYzKSB7DQo+ID4gICAgICAgICAgb2JqZWN0X2NoaWxkX2ZvcmVhY2hfcmVj
-dXJzaXZlKG9iamVjdF9nZXRfcm9vdCgpLA0KPiA+IC0gICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICBpb3J0X2hvc3RfYnJpZGdlcywgc21tdV9pZG1hcHMpOw0KPiA+ICsgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpb3J0X2hvc3RfYnJpZGdlcywgcmNf
-c21tdV9pZG1hcHMpOw0KPiA+DQo+ID4gICAgICAgICAgLyogU29ydCB0aGUgc21tdSBpZG1hcCBi
-eSBpbnB1dF9iYXNlICovDQo+ID4gLSAgICAgICAgZ19hcnJheV9zb3J0KHNtbXVfaWRtYXBzLCBp
-b3J0X2lkbWFwX2NvbXBhcmUpOw0KPiA+ICsgICAgICAgIGdfYXJyYXlfc29ydChyY19zbW11X2lk
-bWFwcywgaW9ydF9pZG1hcF9jb21wYXJlKTsNCj4gPg0KPiA+ICAJLyoNCj4gPiAgCSAqIEtub3dp
-bmcgdGhlIElEIHJhbmdlcyBmcm9tIHRoZSBSQyB0byB0aGUgU01NVSwgaXQncyBwb3NzaWJsZSB0
-bw0KPiA+ICAJICogZGV0ZXJtaW5lIHRoZSBJRCByYW5nZXMgZnJvbSBSQyB0aGF0IGFyZSBkaXJl
-Y3RlZCB0byB0aGUgSVRTLg0KPiA+ICAJICovDQo+ID4gLSAgICAgICAgY3JlYXRlX2l0c19pZG1h
-cHMoaXRzX2lkbWFwcywgc21tdV9pZG1hcHMpOw0KPiA+ICsgICAgICAgIGNyZWF0ZV9yY19pdHNf
-aWRtYXBzKHJjX2l0c19pZG1hcHMsIHJjX3NtbXVfaWRtYXBzKTsNCj4gDQo+IEhtbS4uLm5vdCBz
-dXJlIHdoeSB3ZSBzdGlsbCBuZWVkIHRoZSBhYm92ZSBub3cgYXMgdGhpcyBpcyBiZWluZyBtb3Zl
-ZA0KPiBkb3duDQo+IGZvciB2bXMtPml0cyBpcyBzZXQgY2FzZS4NCj4gDQo+IEkgaGFkIGEgbG9v
-ayBhdCB2NSwgd2hpY2ggc2VlbXMgdG8gYmUgZG9pbmcgdGhlIHJpZ2h0IHRoaW5nLg0KPiBodHRw
-czovL2xvcmUua2VybmVsLm9yZy9xZW11LWRldmVsLzIwMjUwNjIzMTM1NzQ5LjY5MTEzNy05LQ0K
-PiBndXN0YXZvLnJvbWVyb0BsaW5hcm8ub3JnLw0KPiANCj4gT3IgYW0gSSBtaXNzaW5nIHNvbWV0
-aGluZyBoZXJlPw0KDQpJIGhhdmUgaW5jbHVkZWQgYSBmaXggZm9yIHRoZSBhYm92ZSBpbiBteSBT
-TU1VdjMgZGV2IHNlcmllcyBoZXJlLA0KaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvcWVtdS1kZXZl
-bC8yMDI1MDcwMzA4NDY0My44NTc0MC0yLXNoYW1lZXJhbGkua29sb3RodW0udGhvZGlAaHVhd2Vp
-LmNvbS8NCg0KUGxlYXNlIHRha2UgYSBsb29rIGFuZCBsZXQgbWUga25vdyBpZiBpdCBkb2Vzbid0
-IG1ha2Ugc2Vuc2UuDQoNClRoYW5rcywNClNoYW1lZXINCg0K
+
+On 6/20/2025 5:27 PM, Zhao Liu wrote:
+> At present, all cases using the cache model (CPUID 0x2, 0x4, 0x80000005,
+> 0x80000006 and 0x8000001D leaves) have been verified to be able to
+> select either cache_info_intel or cache_info_amd based on the vendor.
+>
+> Therefore, further merge cache_info_intel and cache_info_amd into a
+> unified cache_info in X86CPUState, and during its initialization, set
+> different legacy cache models based on the vendor.
+>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>  target/i386/cpu.c | 150 ++++++++--------------------------------------
+>  target/i386/cpu.h |   5 +-
+>  2 files changed, 27 insertions(+), 128 deletions(-)
+>
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 4e9ac37850c0..c1d1289ee9de 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -7484,27 +7484,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>          } else if (env->enable_legacy_vendor_cache) {
+>              caches = &legacy_intel_cache_info;
+>          } else {
+> -            /*
+> -             * FIXME: Temporarily select cache info model here based on
+> -             * vendor, and merge these 2 cache info models later.
+> -             *
+> -             * This condition covers the following cases (with
+> -             * enable_legacy_vendor_cache=false):
+> -             *  - When CPU model has its own cache model and doesn't use legacy
+> -             *    cache model (legacy_model=off). Then cache_info_amd and
+> -             *    cache_info_cpuid4 are the same.
+> -             *
+> -             *  - For v10.1 and newer machines, when CPU model uses legacy cache
+> -             *    model. Non-AMD CPUs use cache_info_cpuid4 like before and AMD
+> -             *    CPU will use cache_info_amd. But this doesn't matter for AMD
+> -             *    CPU, because this leaf encodes all-0 for AMD whatever its cache
+> -             *    model is.
+> -             */
+> -            if (IS_AMD_CPU(env)) {
+> -                caches = &env->cache_info_amd;
+> -            } else {
+> -                caches = &env->cache_info_cpuid4;
+> -            }
+> +            caches = &env->cache_info;
+>          }
+>  
+>          if (cpu->cache_info_passthrough) {
+> @@ -7523,27 +7503,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>          if (env->enable_legacy_vendor_cache) {
+>              caches = &legacy_intel_cache_info;
+>          } else {
+> -            /*
+> -             * FIXME: Temporarily select cache info model here based on
+> -             * vendor, and merge these 2 cache info models later.
+> -             *
+> -             * This condition covers the following cases (with
+> -             * enable_legacy_vendor_cache=false):
+> -             *  - When CPU model has its own cache model and doesn't use legacy
+> -             *    cache model (legacy_model=off). Then cache_info_amd and
+> -             *    cache_info_cpuid4 are the same.
+> -             *
+> -             *  - For v10.1 and newer machines, when CPU model uses legacy cache
+> -             *    model. Non-AMD CPUs use cache_info_cpuid4 like before and AMD
+> -             *    CPU will use cache_info_amd. But this doesn't matter for AMD
+> -             *    CPU, because this leaf encodes all-0 for AMD whatever its cache
+> -             *    model is.
+> -             */
+> -            if (IS_AMD_CPU(env)) {
+> -                caches = &env->cache_info_amd;
+> -            } else {
+> -                caches = &env->cache_info_cpuid4;
+> -            }
+> +            caches = &env->cache_info;
+>          }
+>  
+>          /* cache info: needed for Core compatibility */
+> @@ -7951,27 +7911,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>          if (env->enable_legacy_vendor_cache) {
+>              caches = &legacy_amd_cache_info;
+>          } else {
+> -            /*
+> -             * FIXME: Temporarily select cache info model here based on
+> -             * vendor, and merge these 2 cache info models later.
+> -             *
+> -             * This condition covers the following cases (with
+> -             * enable_legacy_vendor_cache=false):
+> -             *  - When CPU model has its own cache model and doesn't uses legacy
+> -             *    cache model (legacy_model=off). Then cache_info_amd and
+> -             *    cache_info_cpuid4 are the same.
+> -             *
+> -             *  - For v10.1 and newer machines, when CPU model uses legacy cache
+> -             *    model. AMD CPUs use cache_info_amd like before and non-AMD
+> -             *    CPU will use cache_info_cpuid4. But this doesn't matter,
+> -             *    because for Intel CPU, it will get all-0 leaf, and Zhaoxin CPU
+> -             *    will get correct cache info. Both are expected.
+> -             */
+> -            if (IS_AMD_CPU(env)) {
+> -                caches = &env->cache_info_amd;
+> -            } else {
+> -                caches = &env->cache_info_cpuid4;
+> -            }
+> +            caches = &env->cache_info;
+>          }
+>  
+>          if (cpu->cache_info_passthrough) {
+> @@ -7998,25 +7938,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>          if (env->enable_legacy_vendor_cache) {
+>              caches = &legacy_amd_cache_info;
+>          } else {
+> -            /*
+> -             * FIXME: Temporarily select cache info model here based on
+> -             * vendor, and merge these 2 cache info models later.
+> -             *
+> -             * This condition covers the following cases (with
+> -             * enable_legacy_vendor_cache=false):
+> -             *  - When CPU model has its own cache model and doesn't uses legacy
+> -             *    cache model (legacy_model=off). Then cache_info_amd and
+> -             *    cache_info_cpuid4 are the same.
+> -             *
+> -             *  - For v10.1 and newer machines, when CPU model uses legacy cache
+> -             *    model. AMD CPUs use cache_info_amd like before and non-AMD
+> -             *    CPU (Intel & Zhaoxin) will use cache_info_cpuid4 as expected.
+> -             */
+> -            if (IS_AMD_CPU(env)) {
+> -                caches = &env->cache_info_amd;
+> -            } else {
+> -                caches = &env->cache_info_cpuid4;
+> -            }
+> +            caches = &env->cache_info;
+>          }
+>  
+>          if (cpu->cache_info_passthrough) {
+> @@ -8089,22 +8011,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>              *edx = 0;
+>          }
+>          break;
+> -    case 0x8000001D: {
+> -        const CPUCaches *caches;
+> -
+> -        /*
+> -         * FIXME: Temporarily select cache info model here based on
+> -         * vendor, and merge these 2 cache info models later.
+> -         *
+> -         * Intel doesn't support this leaf so that Intel Guests don't
+> -         * have this leaf. This change is harmless to Intel CPUs.
+> -         */
+> -        if (IS_AMD_CPU(env)) {
+> -            caches = &env->cache_info_amd;
+> -        } else {
+> -            caches = &env->cache_info_cpuid4;
+> -        }
+> -
+> +    case 0x8000001D:
+>          *eax = 0;
+>          if (cpu->cache_info_passthrough) {
+>              x86_cpu_get_cache_cpuid(index, count, eax, ebx, ecx, edx);
+> @@ -8112,19 +8019,19 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>          }
+>          switch (count) {
+>          case 0: /* L1 dcache info */
+> -            encode_cache_cpuid8000001d(caches->l1d_cache,
+> +            encode_cache_cpuid8000001d(env->cache_info.l1d_cache,
+>                                         topo_info, eax, ebx, ecx, edx);
+>              break;
+>          case 1: /* L1 icache info */
+> -            encode_cache_cpuid8000001d(caches->l1i_cache,
+> +            encode_cache_cpuid8000001d(env->cache_info.l1i_cache,
+>                                         topo_info, eax, ebx, ecx, edx);
+>              break;
+>          case 2: /* L2 cache info */
+> -            encode_cache_cpuid8000001d(caches->l2_cache,
+> +            encode_cache_cpuid8000001d(env->cache_info.l2_cache,
+>                                         topo_info, eax, ebx, ecx, edx);
+>              break;
+>          case 3: /* L3 cache info */
+> -            encode_cache_cpuid8000001d(caches->l3_cache,
+> +            encode_cache_cpuid8000001d(env->cache_info.l3_cache,
+>                                         topo_info, eax, ebx, ecx, edx);
+>              break;
+>          default: /* end of info */
+> @@ -8135,7 +8042,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>              *edx &= CACHE_NO_INVD_SHARING | CACHE_INCLUSIVE;
+>          }
+>          break;
+> -    }
+>      case 0x8000001E:
+>          if (cpu->core_id <= 255) {
+>              encode_topo_cpuid8000001e(cpu, topo_info, eax, ebx, ecx, edx);
+> @@ -8825,46 +8731,34 @@ static bool x86_cpu_update_smp_cache_topo(MachineState *ms, X86CPU *cpu,
+>  
+>      level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D);
+>      if (level != CPU_TOPOLOGY_LEVEL_DEFAULT) {
+> -        env->cache_info_cpuid4.l1d_cache->share_level = level;
+> -        env->cache_info_amd.l1d_cache->share_level = level;
+> +        env->cache_info.l1d_cache->share_level = level;
+>      } else {
+>          machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D,
+> -            env->cache_info_cpuid4.l1d_cache->share_level);
+> -        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D,
+> -            env->cache_info_amd.l1d_cache->share_level);
+> +            env->cache_info.l1d_cache->share_level);
+>      }
+>  
+>      level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I);
+>      if (level != CPU_TOPOLOGY_LEVEL_DEFAULT) {
+> -        env->cache_info_cpuid4.l1i_cache->share_level = level;
+> -        env->cache_info_amd.l1i_cache->share_level = level;
+> +        env->cache_info.l1i_cache->share_level = level;
+>      } else {
+>          machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I,
+> -            env->cache_info_cpuid4.l1i_cache->share_level);
+> -        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I,
+> -            env->cache_info_amd.l1i_cache->share_level);
+> +            env->cache_info.l1i_cache->share_level);
+>      }
+>  
+>      level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2);
+>      if (level != CPU_TOPOLOGY_LEVEL_DEFAULT) {
+> -        env->cache_info_cpuid4.l2_cache->share_level = level;
+> -        env->cache_info_amd.l2_cache->share_level = level;
+> +        env->cache_info.l2_cache->share_level = level;
+>      } else {
+>          machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2,
+> -            env->cache_info_cpuid4.l2_cache->share_level);
+> -        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2,
+> -            env->cache_info_amd.l2_cache->share_level);
+> +            env->cache_info.l2_cache->share_level);
+>      }
+>  
+>      level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3);
+>      if (level != CPU_TOPOLOGY_LEVEL_DEFAULT) {
+> -        env->cache_info_cpuid4.l3_cache->share_level = level;
+> -        env->cache_info_amd.l3_cache->share_level = level;
+> +        env->cache_info.l3_cache->share_level = level;
+>      } else {
+>          machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3,
+> -            env->cache_info_cpuid4.l3_cache->share_level);
+> -        machine_set_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3,
+> -            env->cache_info_amd.l3_cache->share_level);
+> +            env->cache_info.l3_cache->share_level);
+>      }
+>  
+>      if (!machine_check_smp_cache(ms, errp)) {
+> @@ -9091,7 +8985,7 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+>                         "CPU model '%s' doesn't support legacy-cache=off", name);
+>              return;
+>          }
+> -        env->cache_info_cpuid4 = env->cache_info_amd = *cache_info;
+> +        env->cache_info = *cache_info;
+>      } else {
+>          /* Build legacy cache information */
+>          if (!cpu->consistent_cache) {
+> @@ -9101,8 +8995,12 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+>          if (!cpu->vendor_cpuid_only_v2) {
+>              env->enable_legacy_vendor_cache = true;
+>          }
+> -        env->cache_info_cpuid4 = legacy_intel_cache_info;
+> -        env->cache_info_amd = legacy_amd_cache_info;
+> +
+> +        if (IS_AMD_CPU(env)) {
+> +            env->cache_info = legacy_amd_cache_info;
+> +        } else {
+> +            env->cache_info = legacy_intel_cache_info;
+> +        }
+>      }
+>  
+>  #ifndef CONFIG_USER_ONLY
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 243383efd602..3f79db679888 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -2072,11 +2072,12 @@ typedef struct CPUArchState {
+>      /* Features that were explicitly enabled/disabled */
+>      FeatureWordArray user_features;
+>      uint32_t cpuid_model[12];
+> -    /* Cache information for CPUID.  When legacy-cache=on, the cache data
+> +    /*
+> +     * Cache information for CPUID.  When legacy-cache=on, the cache data
+>       * on each CPUID leaf will be different, because we keep compatibility
+>       * with old QEMU versions.
+>       */
+> -    CPUCaches cache_info_cpuid4, cache_info_amd;
+> +    CPUCaches cache_info;
+>      bool enable_legacy_cpuid2_cache;
+>      bool enable_legacy_vendor_cache;
+>  
+
+Nice clean-up patch series. Thanks.
+
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+
+
 
