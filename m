@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB654C83F03
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 22:45:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 785CEC83030
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 23:28:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXSf0-00047h-5F; Thu, 03 Jul 2025 18:44:06 -0400
+	id 1uXTL4-0004Xv-3k; Thu, 03 Jul 2025 19:27:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXSey-00047T-SO
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 18:44:04 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uXTL1-0004XH-Mq
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 19:27:31 -0400
+Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXSet-0007QZ-2Q
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 18:44:04 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-450cf0120cdso2443485e9.2
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 15:43:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uXTL0-0006B5-4u
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 19:27:31 -0400
+Received: by mail-oi1-x236.google.com with SMTP id
+ 5614622812f47-40ba3c10b3bso177678b6e.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 16:27:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751582636; x=1752187436; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751585247; x=1752190047; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=f60uyiGRDY1SfwtkXWgGdTFoQ6xZMMsmojGyhdi27ps=;
- b=Z0lVS8lAHpBzNB0MYUlRIhTxFggIPccLQCLOjdTMNYe8TrDe/VKzUdBW1DZem6TVCt
- wg0krWysixJyKyim3ZiARri6noalXCurIsSJfyXJ3KnFvszJnfM23g/UYR4UGzRg2vBJ
- 6acuhKS+5jjZiD8OnZO3UHh3AWs7h15sjSUve+/yfnSiHYl782rFHhUgGu8kL49y2Dru
- A+hI48kCyNyBT4xB45nIEZc7W7HWKMooJRBqhux6eDcpDUkaVD50y+JB90u3hh4P6VO7
- wKqKC9q+BAWRn5F7KDHvX7DHhV0skVufNCfoAdFdTCC9Pt+CE9I5KG6ys84AIBm6MfOv
- B6tg==
+ bh=ZXqytMu0wdCH+SYu3GrpXsxyh0GMIXvcrYNbvw4+76I=;
+ b=Kx1Jjz2KrCWUyxZelz5VeG9KgXyDsbECe0xLMvXdcruJqENunnMu5sulYp6hFiVLOS
+ rhsawtw3nxBK4E65dPukn8JmV97v6WI9xXi5bMSr7NB45hb791rb7+1abu0FvP8Lt5Oj
+ x8MA3qtBvu1zGLUqfFEorsK97yjrTydU3fQax5ou+o6msVPKmJp/gx7xzVMelFO5zULM
+ UWC5RH2NRnEzfFa1yXzXcrh502NVeBoPlYIya754vP8bt12hHkDTwIGcDihznKd7KAWk
+ P6arZ+eJbHTHXmpkcGirpW6/LP7lrgu+Z8y6hxKVxaZK6UbRjPW3ciPSgtUXNnGcPkZd
+ fvTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751582636; x=1752187436;
+ d=1e100.net; s=20230601; t=1751585247; x=1752190047;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=f60uyiGRDY1SfwtkXWgGdTFoQ6xZMMsmojGyhdi27ps=;
- b=hnGqEx/FLI49sDkOziz8FkrENcLy3EfyMTJk/5EAbBeO4TmYWNj/VyrOOrszVgxs3q
- MJqCt0h0NTNdzTOki2Dk8FEXFtwojkiNDox59ynL1PvFZNbZ87caHi6zhgAKAPCruSNV
- nRSlRK+ScMObmtLgrjU7XTs0Vls0K9TeqB2YOVLuDD+zOk3RanKS2UWjX5xuEJC3sLT0
- kyIyy0WLs/XMP2XBmVv+rg30nTY4O0AGm0zq1XqJdK+jXxSrfp37oxRp/JdaChmgBoUi
- mkg63EsxxvpXW7xHFnbtjQtGHxhYazmhp37PVDXfgL03gKStIDreqyGSWDRElnHgGmJf
- 6OUg==
-X-Gm-Message-State: AOJu0YxO/kwH0ivTt5UK8wfOaUpkDHjQ4Vy1lDDoYdrI3zfBe7kCHQBI
- XhUNOFcsOcefG8g6l2aktHqDAWpgbzH5FaqYxXSkHMJWH2WYKbJRWM+m4k9lYUbqI2MrI1xt/Uo
- pKFLMlF0=
-X-Gm-Gg: ASbGncvCCBSLootgC/kZmQcs2STnZEs9Cvp+F+sArYMjmzRf8l/cYGenfPX79iYEzsE
- 3eqA418sdBa8TDBOskTmnHFrljP2fMtUF5ZNJLhZoq1nsrMp+4C/JN7mpOQ5ADSCl+C03eMEg9D
- w0BvqWrv7UOlKgiwpJcG55ejpWWCZEZB3QkUVdYcivExbvxNni6Hu9Yw6OvcBWWeICemZJrDSNc
- jt3J/b5OfcAropBKREruxPiyEPSc9mHwL5YjUkV0SJbEvyC4Y5MRSq8TjJvp7+D0WIjNbxUsAgK
- wdivDNF4RBtCDTvQos4UOJvtZTDFmlHdphNY93WaIRjv/Jw7HrDMlTguLz1MIgiIVZu4hBKoyRb
- n1t7ZMwqJvj0yKsbGB1tbK0DPLM1w5g==
-X-Google-Smtp-Source: AGHT+IFm401XH0luVmrjvkWihYw3z9UtEZt7PeENWcCecULAxixvvV6cPM+8nel4azNjuGWIdmV2fQ==
-X-Received: by 2002:a05:6000:4a15:b0:3a6:da76:38b0 with SMTP id
- ffacd0b85a97d-3b4964ff64fmr120403f8f.25.1751582636389; 
- Thu, 03 Jul 2025 15:43:56 -0700 (PDT)
-Received: from [192.168.69.218] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b47285c903sm837389f8f.90.2025.07.03.15.42.56
+ bh=ZXqytMu0wdCH+SYu3GrpXsxyh0GMIXvcrYNbvw4+76I=;
+ b=JdqToVz5H4H93/96Wg5y2Y7yQXLccmW/tyB/Xv46uKCh4vQ33A61aBqc8H4dNdzEHS
+ 0rHhFa4XhGl7PhFhaAtZJDk9v6xencko939lFHZDW4e8cchThoivGHedUqB+BP4uW+4b
+ W6R+qNGrGF8RDYw3KIKXyjcVTozfR23/EIo4YrbWqMygHDd4AkpUkkmYbdknccxZuuI/
+ lR4pQ8Mv4/OSlOQNEFmZIU7aGX6j4+M5FN8+qxdamB4khQyEPAu1D2yj8b309Iuue98a
+ JBPP1DGvuiPLQCfT3uQ5QlzmeG0exX4l5Ph8TiJRaJ6qFlPy4sLCAbCn102KL3NMWl8v
+ vOBQ==
+X-Gm-Message-State: AOJu0YyM0D4uDxLkSO10Mapsrx36+Z7EYECcE08Xz4RnN/x1QToaRDhw
+ 2GwTVPmPTeVhkL+q23r7amU2KNVmp8x+xZ9nzBcIFB0Gkax5dSUN69A+rimvXmO+v40=
+X-Gm-Gg: ASbGncseC5j+BuRhewOJklazE3EZbMXKt6419Ig3p05hkXqqQvVxYs6SvMx4OeYw23W
+ tFOGm4mIHy3aMvWSuVuab0I2Wy/FXvbbOnDjRHND8H4epYfMVFlu+IpGntZpF9grxRiPLbCPkIl
+ 0wsOslpAss/5j/TXG4WZRMP1j2mLADpbmoPNESdJ5O++yGtujMnZnSod+j1OlQNzzVXraXLQTXE
+ dWNs+mkGfXw//0ReiK/CCO5ZK3jfvF0yf63z7uko2pm8T/I2Usgq3un4o2kjH++C29zOdw9Fdkw
+ 8glex4tRqVayb38S8GW2mPLzJx5YRWEDVRdZ+RFnxIUunDduETCcVfDFKXjCw2Ggs7/BSepXFfU
+ 4sOZVjf9caRTdmGFdjoltE8rPzcufdLBwQAqTzNw+
+X-Google-Smtp-Source: AGHT+IEGK7ipaBkvB3r1MbwBWqMPYwFnZFm6sj1+ctUQ9GnB2yF4Y4NYPjyRm/puUSI3+MPA9jMQ3w==
+X-Received: by 2002:a05:6808:6f8f:b0:406:7a21:1ae9 with SMTP id
+ 5614622812f47-40d044815afmr585591b6e.37.1751585247029; 
+ Thu, 03 Jul 2025 16:27:27 -0700 (PDT)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-40d02ac74e5sm118767b6e.35.2025.07.03.16.27.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Jul 2025 15:43:55 -0700 (PDT)
-Message-ID: <d006157a-d98f-4259-ba97-eb92ea0df044@linaro.org>
-Date: Fri, 4 Jul 2025 00:42:55 +0200
+ Thu, 03 Jul 2025 16:27:26 -0700 (PDT)
+Message-ID: <fd02ab69-c157-4538-b180-42eab6ca8a8d@linaro.org>
+Date: Thu, 3 Jul 2025 17:27:19 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 39/39] MAINTAINERS: Add me as reviewer of overall
- accelerators section
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250703173248.44995-1-philmd@linaro.org>
- <20250703173248.44995-40-philmd@linaro.org>
+Subject: Re: [PATCH v3 79/97] target/arm: Implement PMOV for SME2p1/SVE2p1
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20250702123410.761208-1-richard.henderson@linaro.org>
+ <20250702123410.761208-80-richard.henderson@linaro.org>
+ <CAFEAcA837SedaYqtKaDOFSuZjZ2H=6YgZuFOVs9pSoLN5GZ8vQ@mail.gmail.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250703173248.44995-40-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAFEAcA837SedaYqtKaDOFSuZjZ2H=6YgZuFOVs9pSoLN5GZ8vQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::236;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x236.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,28 +103,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/25 19:32, Philippe Mathieu-Daudé wrote:
-> I'd like to be informed of overall changes of accelerators.
+On 7/3/25 07:24, Peter Maydell wrote:
+> On Wed, 2 Jul 2025 at 13:38, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   target/arm/tcg/helper-sve.h    |   8 +
+>>   target/arm/tcg/sve_helper.c    | 317 +++++++++++++++++++++++++++++++++
+>>   target/arm/tcg/translate-sve.c |  93 ++++++++++
+>>   target/arm/tcg/sve.decode      |  17 ++
+>>   4 files changed, 435 insertions(+)
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   MAINTAINERS | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index e3e08d4607f..a8bf3f9ccfa 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -495,6 +495,7 @@ Guest CPU Cores (other accelerators)
->   Overall
->   M: Richard Henderson <richard.henderson@linaro.org>
->   R: Paolo Bonzini <pbonzini@redhat.com>
-> +M: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Given how much code we end up with here for insns which are
+> implemented in the pseudocode as a two-line loop, I think
+> some more comments on what's going on would be helpful.
 
-Bad copy/paste, I meant s/M/R/ :)
+This one was hard for me to think about, and even now I'm not sure I've got it right.  I'm 
+going to re-implement exactly with the two-line loop, and not think about how it might be 
+"optimized".
 
->   S: Maintained
->   F: include/exec/cpu*.h
->   F: include/exec/target_long.h
 
+r~
 
