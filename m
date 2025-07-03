@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF691C83F03
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EBE3C77B7C
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 15:19:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXLiW-0007s4-O4; Thu, 03 Jul 2025 11:19:16 -0400
+	id 1uXLiQ-0007cm-7F; Thu, 03 Jul 2025 11:19:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=EggC=ZQ=kaod.org=clg@ozlabs.org>)
- id 1uXLiU-0007qa-Sy; Thu, 03 Jul 2025 11:19:14 -0400
+ id 1uXLiN-0007Xn-9y; Thu, 03 Jul 2025 11:19:07 -0400
 Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=EggC=ZQ=kaod.org=clg@ozlabs.org>)
- id 1uXLiS-0007Kf-KF; Thu, 03 Jul 2025 11:19:14 -0400
+ id 1uXLiK-0007Fa-R9; Thu, 03 Jul 2025 11:19:07 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bY0ln659Yz4xcm;
- Fri,  4 Jul 2025 01:18:45 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bY0lf0NK4z4xcr;
+ Fri,  4 Jul 2025 01:18:38 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bY0lk4Ds5z4xcb;
- Fri,  4 Jul 2025 01:18:42 +1000 (AEST)
-Message-ID: <9498349f-f6ae-4d56-a09d-ef2bd49ef992@kaod.org>
-Date: Thu, 3 Jul 2025 17:19:06 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bY0lZ5L5Dz4xcm;
+ Fri,  4 Jul 2025 01:18:34 +1000 (AEST)
+Message-ID: <417686d0-bddc-40de-bbd8-631bb9cc4945@kaod.org>
+Date: Thu, 3 Jul 2025 17:18:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] hw/arm/aspeed: Add second SPI chip to Aspeed model
+Subject: Re: [PATCH v2 0/4] Add support for gb200-bmc machine
 To: Ed Tanous <etanous@nvidia.com>, qemu-devel@nongnu.org
 Cc: Troy Lee <leetroy@gmail.com>, Steven Lee <steven_lee@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>,
@@ -39,7 +39,6 @@ Cc: Troy Lee <leetroy@gmail.com>, Steven Lee <steven_lee@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
  qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
 References: <20250703144249.3348879-1-etanous@nvidia.com>
- <20250703144249.3348879-2-etanous@nvidia.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -84,9 +83,9 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250703144249.3348879-2-etanous@nvidia.com>
+In-Reply-To: <20250703144249.3348879-1-etanous@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=EggC=ZQ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -39
@@ -112,50 +111,42 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/3/25 16:42, Ed Tanous wrote:
-> Aspeed2600 has two spi lanes;  Add a new struct that can mount the
-> second SPI.
+> This patch series adds support for gb200-bmc, a baseboard management controller
+> module based on an Aspeed 2600 SOC.
 > 
-> Signed-off-by: Ed Tanous <etanous@nvidia.com>
+> v2:
+> - Rebase on master
+> - Drop duplicated patch for enabling PCA954X
+> - Updated commit message with source information
+> - Added functional tests and example openbmc image
 
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Please try to collect the Reviewed-by trailers of the previous
+series when you resend.
+
 
 Thanks,
 
 C.
 
 
-> ---
->   hw/arm/aspeed.c         | 2 ++
->   include/hw/arm/aspeed.h | 2 ++
->   2 files changed, 4 insertions(+)
 > 
-> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index d0b333646e..3ef7f6c5b2 100644
-> --- a/hw/arm/aspeed.c
-> +++ b/hw/arm/aspeed.c
-> @@ -465,6 +465,8 @@ static void aspeed_machine_init(MachineState *machine)
->           aspeed_board_init_flashes(&bmc->soc->spi[0],
->                                 bmc->spi_model ? bmc->spi_model : amc->spi_model,
->                                 1, amc->num_cs);
-> +        aspeed_board_init_flashes(&bmc->soc->spi[1],
-> +                                  amc->spi2_model, 1, amc->num_cs2);
->       }
->   
->       if (machine->kernel_filename && sc->num_cpus > 1) {
-> diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
-> index 973277bea6..6c36455656 100644
-> --- a/include/hw/arm/aspeed.h
-> +++ b/include/hw/arm/aspeed.h
-> @@ -35,7 +35,9 @@ struct AspeedMachineClass {
->       uint32_t hw_strap2;
->       const char *fmc_model;
->       const char *spi_model;
-> +    const char *spi2_model;
->       uint32_t num_cs;
-> +    uint32_t num_cs2;
->       uint32_t macs_mask;
->       void (*i2c_init)(AspeedMachineState *bmc);
->       uint32_t uart_default;
+> Ed Tanous (4):
+>    hw/arm/aspeed: Add second SPI chip to Aspeed model
+>    docs: add support for gb200-bmc
+>    hw/arm/aspeed: Add GB200 BMC target
+>    tests/functional: Add gb200 tests
+> 
+>   docs/system/arm/aspeed.rst                    |  4 +-
+>   hw/arm/aspeed.c                               | 81 +++++++++++++++++++
+>   hw/arm/aspeed_eeprom.c                        | 21 +++++
+>   hw/arm/aspeed_eeprom.h                        |  3 +
+>   include/hw/arm/aspeed.h                       |  2 +
+>   tests/functional/aspeed.py                    |  9 ++-
+>   tests/functional/meson.build                  |  2 +
+>   .../test_arm_aspeed_gb200nvl_bmc.py           | 26 ++++++
+>   8 files changed, 144 insertions(+), 4 deletions(-)
+>   create mode 100755 tests/functional/test_arm_aspeed_gb200nvl_bmc.py
+> 
 
 
