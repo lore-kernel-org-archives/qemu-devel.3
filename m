@@ -4,101 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 426E0C83F03
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 19:46:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A82DBC83F03
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 20:37:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXPsS-0004RD-Di; Thu, 03 Jul 2025 15:45:48 -0400
+	id 1uXQgB-0001zs-My; Thu, 03 Jul 2025 16:37:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uXPsG-0004Qp-92
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 15:45:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uXQg6-0001zB-GQ
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 16:37:06 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uXPsC-0006xz-NS
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 15:45:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751571930;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3YD7JjAOry+wB3qZhLEdeFTD0ajGvC3eanym7c/av4s=;
- b=gW23tqr9LB1WTtK3oE3T1GpVPRDdSw6YIsYAhr4Bff7ZyVhwnV8DrLLVaE283UiWYtk66i
- ZrRyD6uVkmapbMLvZ5BAPoEteQtVDdXhsUml1gsc8tGtUmf0aFypT4mdrKAvKZ/R5nAqLm
- pvEx6bi0VtA0+hvcVsZ7dWMeJdkwjV4=
-Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
- [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-519-frL3zloVM-WHMeCN5mmrSQ-1; Thu, 03 Jul 2025 15:45:28 -0400
-X-MC-Unique: frL3zloVM-WHMeCN5mmrSQ-1
-X-Mimecast-MFC-AGG-ID: frL3zloVM-WHMeCN5mmrSQ_1751571928
-Received: by mail-oo1-f72.google.com with SMTP id
- 006d021491bc7-6114c90e664so65520eaf.1
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 12:45:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751571928; x=1752176728;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3YD7JjAOry+wB3qZhLEdeFTD0ajGvC3eanym7c/av4s=;
- b=EiMhlwQQtTZzTAh6dp7o1gMJ1ir2PP1Q+RgY2GISwgVaGVi+5M8ciX7oC5RBfy2vUw
- q8EPW+QlK+KbVEH3pRjGK6E0qgMutUiiO4YkAA9prkRjF9r8vHvIXhUoENznnFi/Ryb9
- ii0MZCeKSDf4yffUVInpT6GwEj+RjuuJV0KQndjyda0UQCbEJWTRKlRv7KX7FkrOTfQL
- eZ7O7htLSv9+twA6D6I6dL/KfeHS9M4b80cAnmwExozI72NPoO2tVpMEef4MghzArTLt
- AAFEh1S0RSkZS61EFzOMoYcJb9kInaaB0PB/CNIqL2WTjprXrYkE71jorp4iSX3eAHmZ
- b6bQ==
-X-Gm-Message-State: AOJu0YwPCkZkM1+rLo7JB/u1QejcDyh1Yc1bIIigeHxiM7wpips7dTBs
- qFWhkKxPhU4+AXGwelTDdAwDQwG2cG0Rw9MDUlTWK8fReK/zGe3zrSMKWkLmzcWjs+kBF8tLg5s
- kt2arW14OHtuCfQX9ZNs8lsTSRph1FAlIQCqAkF9UVdYHtn6DmC4fjw57
-X-Gm-Gg: ASbGnct6t/gVumxPxvj/V/jVzXzQdquDsygwXCj2kqYqOAHd6eZIQfKVXZvBmkskKOI
- Q6Rl0LLUTkx/yrK01yE0K/aYsVqPXX++3ipUu91XsScNwb2ceOOCOp3L7dZPq4k7RjYSGeOJnKA
- TsD2d3BxZ+uZrM90lvgtPtUgJSV20RGeU6BL2+oBOxPT57TMp9Pvah4f7rU9mSuYy/D4/r8Upoh
- bB+s2LWYhCuoxb+4k9XXor2QDjlWOYXjUaVbmJFIAsfrQQz1hfo2IcdvwjknVwcMFe6Jw1krKtN
- Q0RYZOR789S0IA==
-X-Received: by 2002:a05:6871:1d1:b0:2d4:ce45:6993 with SMTP id
- 586e51a60fabf-2f79206502bmr105273fac.30.1751571927842; 
- Thu, 03 Jul 2025 12:45:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGhZ4UvbhsYn2jpjy5ZwpZOs4Uod7fSmwyNVsvuGcEE9QZ5mHx1TwTPWDAVM1gBcyrdVkIxNA==
-X-Received: by 2002:a05:6871:1d1:b0:2d4:ce45:6993 with SMTP id
- 586e51a60fabf-2f79206502bmr105244fac.30.1751571927485; 
- Thu, 03 Jul 2025 12:45:27 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2f7901a6c1bsm77705fac.26.2025.07.03.12.45.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Jul 2025 12:45:25 -0700 (PDT)
-Date: Thu, 3 Jul 2025 15:45:20 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH V5 20/38] migration: close kvm after cpr
-Message-ID: <aGbd0IgvtiR4EkoH@x1.local>
-References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
- <1749569991-25171-21-git-send-email-steven.sistare@oracle.com>
- <9dfc0dae-f048-4d41-9b6e-02b6e7dbc215@oracle.com>
- <aGVYD1GkOC-LuI1T@x1.local>
- <a0487a01-41de-4997-860c-bc555a295643@oracle.com>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uXQg4-0003BF-5h
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 16:37:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=lgZ/qVbfVAF+QMDrPtbnt481WZXyKpazgQw1O0DkOP8=; b=lcBgawtYDHp6jAdF
+ 7TI50nFv7to0RSpxhhvod8AIfDEp2qNIK0DCgyPdK5+ObZd7wMtiL2ByfZm+AdwV3MAfiQqAPOh5B
+ GJ+LCbw2sgE/y80h4OHvxesDRD2N9MShr8/T+MvHRukg4Lu6FjdSXaGlGOz5BP6tutDfNw39hzA65
+ SAykcQrpcbgPIKMX0YFHErsyCy5t5ciwcvYkuVExljC2Dwp57gaZZLnnb5xWWa5Kn46waxsbtyDUC
+ UA94XwLCkKLb2dzVl8dAU8y/UVtcE5KdFh1YhrVzumNvGDXoAqm5lhfYw2OY2u2IPxPRe4O7i5JQV
+ gCYAaEyJpKaE8lx4OQ==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1uXQfy-00Dyz2-16;
+ Thu, 03 Jul 2025 20:36:58 +0000
+Date: Thu, 3 Jul 2025 20:36:58 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: Controlling time in QEMU
+Message-ID: <aGbp6onOanCKHzl9@gallifrey>
+References: <b3cef05e-8bb5-4390-8b43-914adca3b3b6@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <a0487a01-41de-4997-860c-bc555a295643@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <b3cef05e-8bb5-4390-8b43-914adca3b3b6@linaro.org>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
+X-Uptime: 20:30:27 up 67 days,  4:44,  2 users,  load average: 0.00, 0.01, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,29 +74,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 02, 2025 at 03:41:08PM -0400, Steven Sistare wrote:
-> The irq producer is not closed, but it is detached from the kvm consumer.
-> It's eventfd is preserved in new QEMU, and interrupts that arrive during
-> transition are pended there.
+* Pierrick Bouvier (pierrick.bouvier@linaro.org) wrote:
+> Hi,
+> 
+> I recently needed to slow down time within a virtual machine, due to a
+> timeout being hit because my QEMU binary which was not fast enough (gcov
+> debug build if you're curious about the use case).
+> 
+> Currently, people tend to use -icount shift=X with low values for that, as
+> it roughly maps time to how many instructions were ran.
+> As well, I've been working on ips (Instructions per second) plugin [1],
+> which allows to slow down QEMU execution by sleeping, as suggested by Alex.
+> It's using a new clock update API [2], that is limited to move time faster
+> (jump to future time), but not slower.
+> 
+> After looking at how all this implemented, I am wondering why we don't
+> simply fake real time QEMU is using as a reference, which is based on
+> gettimeofday [3].
+> 
+> Using faketime, which fakes gettimeofday I've been able to manipulate QEMU
+> time:
+> - faketime -f '+0 x10' qemu-system-aarch64: boot timestamp is 14s
+> - faketime -f '+0 x0.1' qemu-system-aarch64: boot timestamp is 0.13s
+> In both cases, the real boot time (QEMU execution) is around 3s.
+> 
+> It works as expected, speeding or slowing execution without impacting QEMU
+> speed itself, which can run without needing to do any artificial sleep or
+> clock manipulation. If a program in guest vm sleeps with an absolute time,
+> it will be multiplied by the factor, which results in significant slowdown.
+> But it can't be avoided, by design.
+> By using a time factor big enough (x200), it can even trigger rcu_preempt
+> stall detection in Linux guest kernel.
+> 
+> As it seems a bit too good to be true, time for questions:
+> - Has it already been considered?
 
-Ah I see, looks reasonable.
+Not that I'm aware, but there are a couple of things you might find useful to look
+at; there is the'driftifx' option with the suboption 'slew' and the LOST_TICK_POLICY
+flags (and option?) - I've never looked into how they work, but they're intended
+to correct qemu time slowly in some cases - maybe it's a hint to places to glue
+such a hack in?
 
-So can I understand the core issue here is about the irq consumer /
-provider updates are atomic, meanwhile there's always the fallback paths
-ready, so before / after the update the irq won't get lost?
+You talk of using 'sleep' to slow the CPU down, however there is some code
+in migration to slow CPUs down (but not clocks) to limit the rate at which
+they generate migration data.   I think it's more subtle than a simple sleep,
+running something on each CPU thread to sleep.
 
-E.g. in Post-Interrupt context of Intel's, the irte will be updated
-atomically for these VFIO irqs, so that either it'll keep using the fast
-path (provided by the irqbypass mechanism), or slow path (eventfd_signal),
-so it's free of any kind of race that irq could trigger?
+Dave
 
-I saw that there's already a new version and Cedric queued it.  If possible
-add some explanation into commit message, either when repost, or when
-merge, would be nice, on explaning irq won't get lost.
-
-Thanks,
-
+> - Any obvious downside I might have skipped?
+> - Would that be interesting to offer such a feature in QEMU itself
+>   (-time-dilation 0.10)?
+> 
+> [1] https://gitlab.com/qemu-project/qemu/-/commit/72db6d54a4a9203736261fc63f32f6cd3486b7e4
+> [2] https://gitlab.com/qemu-project/qemu/-/commit/847a65dd76bf1868c7966a2b2608dcd00cb68dc7
+> [3] https://gitlab.com/qemu-project/qemu/-/blob/master/include/qemu/timer.h?ref_type=heads#L809
+> [4] https://github.com/wolfcw/libfaketime
+> 
+> Regards,
+> Pierrick
+> 
 -- 
-Peter Xu
-
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
