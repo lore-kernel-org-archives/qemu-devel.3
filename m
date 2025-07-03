@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C98DDC77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 11:20:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17F63C83F04
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 11:20:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXHmI-0003KO-AW; Thu, 03 Jul 2025 07:06:54 -0400
+	id 1uXHhO-0001Zg-3k; Thu, 03 Jul 2025 07:01:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHmF-00030v-Fd
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 07:06:51 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHeG-0005dp-7F
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 06:58:36 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHmD-0006CZ-Ei
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 07:06:51 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-451d6ade159so39300605e9.1
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 04:06:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHeD-0002qd-Of
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 06:58:35 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-450cfb790f7so66300665e9.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 03:58:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751540807; x=1752145607; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SY3bbRxwwhqkW5iC4r3Kz/+8BMlWUXcP8I5mFKx4az8=;
- b=rF1eCr2ohynvWpF6PTC/wt6WgIdxzgq2TuClMt87p5hZDcdttjAwI5LWtLrnmgBHgD
- cN1O3hUKynvUx3lgLA76NqUb5ay+rqKjqtLJr+SbxIxZEyR/Uws3/3uFj4Yr8bgVBKgx
- Kl28oqBCTwkHnYRwB4czsMmbYliiSpGfX9dxuo/Hp6HzXWP25I2KaPaIKLm2pF1rcL3e
- 2+MjhPRdoW8mBrrt49Tink4mGegbnmQCTRJVgXGZFvt/zp+eDccePR1bEL28Ok13IRMR
- vnmgkMD3dRf91TlS7aGFm4yhvW2XZviqRKD758mxYGkPZfOrMap6VtMi8nhSqyu+9Q0s
- 1q/A==
+ d=linaro.org; s=google; t=1751540312; x=1752145112; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9Nod2XnKcLFCGDw4Al66TFSscA1L5ljopnzhztAklYo=;
+ b=eZuGPncspxb0rG8da7cX/NdiCLxMfV2RGBv+4PL8UhW2QiV5Nju1Nhc/3NgE72B/yi
+ tT/fC0adiKOUMffZ/N9UgpDK+fgAAF4mT3ytEIL6yZfyldpAxX1Nt7WxarHqLLQ7lmnA
+ 9bCv7z84n1oKRC9sAzh6821fSU9zLwNwOqqt/jHhLPs+Ox1KS8gPPRotrSv0idbugFmn
+ gaTwb7MhXzEvcoWbuXkWyuuNybn/qjAo76EY7QHoKTW+FaFbfTLZQ2OVFKeCbGc1qCIb
+ 6I8hjjSwHfdvlR6u01bLPJUYz4YsBKfj4TPRvC2owfLa9weH3uIhaB2At0UlT3dST6Xt
+ P6Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751540807; x=1752145607;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SY3bbRxwwhqkW5iC4r3Kz/+8BMlWUXcP8I5mFKx4az8=;
- b=lUc7KkF8S//8/Q1EmvccYUkqZk6QtuSrm4pCSTbLpTFvvysa4IeuBThA6FEclpOdwp
- gxXM4jfCcueC/YbjJW9Kj0aTGo+mJ3DkSgJupMqehviV5PilJObNKoYJvJfNeEkwqunJ
- NbvShLPWqSoDZwoDAknomI1ZEGVuNubmz7WeNKWAJhAlhtdMHssMIiQor/1XkMM7Tr2x
- Jq23q5C+Ry69WpV5ubgXyUVugGGekCAg8tQnre+kmI3UJCzs0+e25AZbCijGQtBuWtqq
- kkcv5d8Xb0lsbj6OIRvNhZ63R329fd2BDcgzOahic2YTCLp5kt35q4OFSApParzvHMfn
- iTGw==
-X-Gm-Message-State: AOJu0YwzEfxRSXt8r1whwXYfjbJhFqzY5plnZOIslorzk/Qrkea1a7gu
- NwzM4X8ilax5ihS3T5O3WzdJ+0TnBTiAxAPTBaPQ9SvtjvzzuTXUY+6WnUoMQVEDvfnG88JgN3j
- /CscaeK8=
-X-Gm-Gg: ASbGncsu4FniKPIO2+fNi2vYdoB4M4IFt7rL/79su+tKL7/5aLISM3gti5xy6VGUsi0
- cknzLgnsI5fZc9mpL2FQiA0N2D92YjRzjxpDGS9dOist0Aj757vt8tFu6eauF7HQOJ3NXGtIZxc
- 4cfsRYb/Snh+eLcUPmNE0pZy9uG9Nt7QLuK3FqQUacBpN/4UsUbkbmsrA/aUXE+yguEQKc5yH2H
- wyCbQjle9iyzYUd9yOE0BDL8J4vOL1Jmlu/SLmOhvGleUf29lvGmVuNAg/0FfuozYb6dWN1DtiK
- 9wmDQprObyeglc2eGBjqo71GkApKZJUH7cgRm3nAr92DdIAuWy6WzxF5MD1KLSLY8+xJY9I+mL2
- K
-X-Google-Smtp-Source: AGHT+IHjgZAPP08KCJfBUi9HGXkOD5sakqCz6orLObgGHxB3KaUuSEYVzqSR4uUZvniC5txn6nd8BQ==
-X-Received: by 2002:a05:600c:3504:b0:442:f4a3:8c5c with SMTP id
- 5b1f17b1804b1-454a36e483bmr72402135e9.10.1751540806936; 
- Thu, 03 Jul 2025 04:06:46 -0700 (PDT)
-Received: from [10.79.43.25] ([83.247.137.20])
+ d=1e100.net; s=20230601; t=1751540312; x=1752145112;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9Nod2XnKcLFCGDw4Al66TFSscA1L5ljopnzhztAklYo=;
+ b=pwidV68anzWIKuY+g/mDHs6SnhBLFnpjMrt5GJQZJ7dYjmYVnAGiLlGEJka1plHbbC
+ +iLTGv22IJPZ6kY3lkXkU7GSb8D1vXwF09Xaj7AbbDaE1oTUf91L8Fx9+Sxcl/pzO0JR
+ 8mVY4KD9tVjmLWVbCmkoFnN60AOhvRuTYnqWnQPIzvXLYT1g3cGCM6aPyCb4rwIdKnTV
+ 8As+zQbypssaOy7UMuCitTuAw9E7m8BpCrLFrwduy+uHdFq1WDBFmn7DzN3LheUhx1fI
+ pK3Pfayzb8pZqhztNoLi3a1UeQf/jFEJ8fDX8Q1knVbYgyqXtNUH0+oQSoHB5PcxskXa
+ JOnA==
+X-Gm-Message-State: AOJu0YxvMRuQNqMXe+QSS+YCQe5RkkwT6UoMCyTSpAnsQZTP5yQzC4eK
+ r3HNQnjGMntCBBEU+qvguFYgL9V6ZcEmIOl6MZPsRkUlDtmc2nsXBuDpjYglbUFObEAVZcfx8te
+ 2GIcj+EU=
+X-Gm-Gg: ASbGncvtV7jrJdUrR+7zexE6BZBdN66anoZwavQ3jirJE2VWInezX7xknbxCuzZs2OM
+ X+RFc+TjWyoReKKhad2AC4QvnQzlKodm+ERwv1ps4oGvwG8uBwVbSI6ExkAgMz5fYdD8J6vNNDW
+ DBMk1YfgY7M6hkD/x7QJbt0GTIxbPORPXTwYa9S3cx1v9wkeqbFOMrmORptvmJGkK7EVoLYsQvf
+ xJbgA2r1H+vKD/hyZ/Uxr0DnKBufowBnrIuyQASOAPLAO5jPgJdOipEp3Akhr5zQAGyBCfOVNdz
+ rtfmje+s3dURkiIMZJKql3xHcJNUNw/T61l8qOdmLFDqX/yLQin1biMkZ6DqeYRcmMW9pigY8mY
+ o3WVrZrKekkk=
+X-Google-Smtp-Source: AGHT+IGcickO/WQ33gY9Gyq+jaddIwf7/whYrVsk66+TMl1n3JbF5YhpX2jiMT2tTmqO0asrgEwj+Q==
+X-Received: by 2002:a05:600c:5249:b0:453:8bc7:5c9b with SMTP id
+ 5b1f17b1804b1-454a372636bmr65941105e9.24.1751540311639; 
+ Thu, 03 Jul 2025 03:58:31 -0700 (PDT)
+Received: from localhost.localdomain ([83.247.137.20])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454a99a35f9sm23533485e9.27.2025.07.03.04.06.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Jul 2025 04:06:46 -0700 (PDT)
-Message-ID: <deacf2fe-a84f-44aa-a612-7985ea9339ba@linaro.org>
-Date: Thu, 3 Jul 2025 13:06:45 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 00/69] accel: Preparatory cleanups for split-accel
-To: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ 5b1f17b1804b1-454a998aa1dsm23893825e9.21.2025.07.03.03.58.30
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 03 Jul 2025 03:58:31 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, kvm@vger.kernel.org,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250703105540.67664-1-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Mads Ynddal <mads@ynddal.dk>
+Subject: [PATCH v5 32/69] accel/hvf: Implement get_vcpu_stats()
+Date: Thu,  3 Jul 2025 12:54:58 +0200
+Message-ID: <20250703105540.67664-33-philmd@linaro.org>
+X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250703105540.67664-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+References: <20250703105540.67664-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,28 +105,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/25 12:54, Philippe Mathieu-Daudé wrote:
-> Missing review: 23-24, 27
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ accel/hvf/hvf-accel-ops.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-> Few changes needed before being able to add the
-> split acceleration:
-> 
-> - few method docstring added
-> - remove pointless stubs
-> - propagate soon required AccelState argument
-> - try to reduce current_accel() uses
-> - move declarations AccelClass <-> AccelOpsClass
-> - display model name in 'info cpus'
-> - add 'info accel' command to QMP/HMP
-> - make accel_create_vcpu_thread() more generic
-> - introduce hwaccel_enabled()
-> 
-> I plan to send a PR once fully reviewed (v5 likely final, 69 is a good number).
-> 
-> Regards,
-> 
-> Phil.
+diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
+index e7f40888c26..c07ebf8a652 100644
+--- a/accel/hvf/hvf-accel-ops.c
++++ b/accel/hvf/hvf-accel-ops.c
+@@ -358,6 +358,12 @@ static inline int hvf_gdbstub_sstep_flags(AccelState *as)
+     return SSTEP_ENABLE | SSTEP_NOIRQ;
+ }
+ 
++static void do_hvf_get_vcpu_exec_time(CPUState *cpu, run_on_cpu_data arg)
++{
++    int r = hv_vcpu_get_exec_time(cpu->accel->fd, arg.host_ptr);
++    assert_hvf_ok(r);
++}
++
+ static void hvf_accel_class_init(ObjectClass *oc, const void *data)
+ {
+     AccelClass *ac = ACCEL_CLASS(oc);
+@@ -583,6 +589,16 @@ static void hvf_remove_all_breakpoints(CPUState *cpu)
+     }
+ }
+ 
++static void hvf_get_vcpu_stats(CPUState *cpu, GString *buf)
++{
++    uint64_t time_us; /* units of mach_absolute_time() */
++
++    run_on_cpu(cpu, do_hvf_get_vcpu_exec_time, RUN_ON_CPU_HOST_PTR(&time_us));
++
++    g_string_append_printf(buf, "HVF cumulative execution time: %llu.%.3llus\n",
++                                time_us / 1000000, (time_us % 1000000) / 1000);
++}
++
+ static void hvf_accel_ops_class_init(ObjectClass *oc, const void *data)
+ {
+     AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
+@@ -601,7 +617,10 @@ static void hvf_accel_ops_class_init(ObjectClass *oc, const void *data)
+     ops->remove_breakpoint = hvf_remove_breakpoint;
+     ops->remove_all_breakpoints = hvf_remove_all_breakpoints;
+     ops->update_guest_debug = hvf_update_guest_debug;
++
++    ops->get_vcpu_stats = hvf_get_vcpu_stats;
+ };
++
+ static const TypeInfo hvf_accel_ops_type = {
+     .name = ACCEL_OPS_NAME("hvf"),
+ 
+-- 
+2.49.0
 
-Series also pushed as the following tag:
-https://gitlab.com/philmd/qemu/-/tags/20250703105540.67664-1-philmd@linaro.org
 
