@@ -4,106 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CC86C77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:34:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84F77C83F03
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXMtB-0007CR-2f; Thu, 03 Jul 2025 12:34:21 -0400
+	id 1uXMuI-0008UL-4S; Thu, 03 Jul 2025 12:35:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
- id 1uXMt7-00077s-TY
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:34:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
- id 1uXMt4-0001ix-CK
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:34:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751560450;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eaCcGqOSLi5xymHRgXk9oQXJi3fiaQ8iLUZzWw1Wc4g=;
- b=PRxSpKANq0nOq/Yq1Ot6pIAJgI1eekvImegQGGNomj5c8PxRpeyMJpSdNZ3Z6r1pLwwneF
- rIMpumSABbUeq279qNMIzoN9jVuogpVax21PokgTv/3n5ZlEBvdLZwhKt9sJUUAefL3Wnf
- 37BPQuBhrfK81QaZNNPgh5IdjbauVoA=
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
- [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-225-gX4GQZcoO52mgB8QBoB9Bw-1; Thu, 03 Jul 2025 12:34:08 -0400
-X-MC-Unique: gX4GQZcoO52mgB8QBoB9Bw-1
-X-Mimecast-MFC-AGG-ID: gX4GQZcoO52mgB8QBoB9Bw_1751560447
-Received: by mail-oo1-f70.google.com with SMTP id
- 006d021491bc7-610bf6f2c8bso123658eaf.3
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:34:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXMuC-0008NX-0O
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:35:24 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXMu6-00028D-9r
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:35:23 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-710f39f5cb9so81496397b3.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:35:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751560516; x=1752165316; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=wVjbPFTVxyeqZk1Hq3isT9C60m5446h74JqHjmvPqO8=;
+ b=HJH/8WKS/FCMykA9KMDRvMgs87lKG8fbfAL0r2SjTponjVqtsacyK1ifxXI1EfCSxH
+ jEvlmYr54B9gUIp4K8jkSHAmgEw7V6YKsbXa9VegXX17tt+A3lkbErJWU0Qb0rPpQIA+
+ 0CsAM1+D0PoWd12gcoG55y47sXvS/f9jLB0F301vy26Oj+WWqUcEJ6iq5qvEfVjFWoIJ
+ JvVVMR20wJJLE08CKe9tEEGcfvhXI6qJe/q3/DqQwo5rHXELScTtJgUF6WJcUqbTFTE3
+ Ihy9Iogigk1OJW3qTeaGdaNhhX7wG4WBLz/efKcTWWGnyrEDNTxoc8jxtaFLZ/KDpJ+x
+ Wg1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751560447; x=1752165247;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eaCcGqOSLi5xymHRgXk9oQXJi3fiaQ8iLUZzWw1Wc4g=;
- b=w3ZDRABCop2i8vWa0Ik3h3kfrnok1Bebn2//9Q+3l3XBwpfJpinSceLBxJJz5fFQZ3
- KNh8T4SEuFDT//b+UZZymBhfgc+r89Q4PuOw1ckQL7qCAsXKIJ55gAVw09sRr5k6gvOc
- hSrChiP7WmgaxscQaeIlo52+rskKDhJn/YRxSE2FUzmGc5fEAzqtoOeC8i6cM6sJGMRM
- VTikYFFACnY4UPNRqfJvR8ZvOAKFxDL8fQo5RA//7HNLqh6LZIF9BfbRTNsvGR7RtArA
- yuW36qHA8Q9QtTKzoS7sv52Dnft/5gT3yKb4NXMXnjT424jPD915saQm9GzVw+Bg2oI6
- baEA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX2JWzFgD9NH08p/LhBIdRZebTGBxiiZ/yulC/fuI6LmrkxD6NuvgF3YjZn4pE1Wv+bBCbKIVMVUqOX@nongnu.org
-X-Gm-Message-State: AOJu0YyESSTB85f5hJshn9+7iyEo24DPA9QpGpgGOiadFwSVIWgf9DxH
- QgTqBlUG+Aj26rVJtxjuAa2bs8j7xASaFiUMow8XBhl7zrPVGs6gQnV1QNHRtRwRdNKJtfenix8
- xe+0JREti4asbAg/FUcFFaD0J/i/QKUy0/Nu1PV+YrGGP6F+qz05nEWAw
-X-Gm-Gg: ASbGncsnxVnwmnY4pYc8DrXUNUGZlxxnYwozRqJyyj6aw4O7CzcHBD9dDjz8iY9NhDy
- wMJg2YSv+Hwl0uYmDc11alwMhxYcemPNzpqExrtiOcXVidK4ika40TFk7B9MwPgxgvE+c7UELyw
- DJb0nKkhGOHHXNKY/ApzIvw/7Hn98n83jl1/B/X4ooS9C7V6IJMZKAkQ4joqE66gTcpLmWze5Hd
- VNo8zY9cMEyzS4XfQOykKHTv+K+c42Uvwj3bYvIA/tsSGF14f2WpJVx9DM9MJtLAzoEG50me/RO
- KcfjPG8Q4ie4uS7H5lx0vnw=
-X-Received: by 2002:a05:6871:758a:b0:29e:1cd8:4a0f with SMTP id
- 586e51a60fabf-2f76ed9763dmr2844160fac.17.1751560447628; 
- Thu, 03 Jul 2025 09:34:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHLoLSViRCL48qhCfgGJUhva4AdGl3MDnYo9XuAOAg5bgATHS6OxkQwC3205eGWvhHxTfzHIg==
-X-Received: by 2002:a05:6871:758a:b0:29e:1cd8:4a0f with SMTP id
- 586e51a60fabf-2f76ed9763dmr2844133fac.17.1751560447228; 
- Thu, 03 Jul 2025 09:34:07 -0700 (PDT)
-Received: from [192.168.40.164] ([70.105.235.240])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2efd512dc69sm4515294fac.47.2025.07.03.09.34.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Jul 2025 09:34:06 -0700 (PDT)
-Message-ID: <c3d7e59d-eda6-4bc4-913c-e23555c13bdd@redhat.com>
-Date: Thu, 3 Jul 2025 12:32:18 -0400
+ d=1e100.net; s=20230601; t=1751560516; x=1752165316;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wVjbPFTVxyeqZk1Hq3isT9C60m5446h74JqHjmvPqO8=;
+ b=xP+i4I3kx0NrHe9sqv5Uojsm9sgfcNPEF+u0nZWrfdYSgytilFOAm1RKXscUpPpBkZ
+ 48AA3kLztB89w9aLru0hQhzlx221QlaMS+a5Eov47czR+UCE5TR6eIfg5xN2XDJ+yA8O
+ AQGnsFRYNoscxJs0rJv2/Ic2k83Yi3bABcRTqdkF/5tiU2AebF+krYytT6upioO87ivZ
+ zVFjBYK/UveLDhEFGSsRcaHfz3DZLK3W2rKymmk2ecq4ErZiNwQ7je+yeuoajUPPTQsS
+ NT72fSxuxdoySsA3ZSywbVQWhmm5Pj7aLvjcjDff+3bCnV1nbaLF5bq4tVVLHUTJ6gBl
+ qJMg==
+X-Gm-Message-State: AOJu0YxKv5YfOx1TsfoTQb7bOucjuW0lZZcY9rS5YTunRyvcl8Efe06Y
+ TxUwW8PrrOpn6zsY1QSjpcA+EFjzRhFA9Gfac1dFB2U6oIcYWzMfZbLgU8SecXXT69G+ZPCsR3Z
+ azbUxmKVpdJbHLuB0dB9nh5lbDM9XPwBwklXINYQUxg==
+X-Gm-Gg: ASbGncupm3sxqnyY96Yf9lA31xzXzAkLJZzMU41mK00DYlbeIBbRCUKVJVfTBV3D4r6
+ ePWfg0WhWvpegJiatdpBaikmxU1ngEQ/VmANbIkrEYjsiBfh0ACSWnTHPcSVMrm9ZzPCqBZNqbs
+ dGUsoCxDW82h0zLxdEaWCjwC5bkiFlmvTHN9tk6fyvNLaeLyym8JGpwQg=
+X-Google-Smtp-Source: AGHT+IEA8TRwNJpvW8w1S//ksqeSISBQBRJXzPsBwkZicS3tOiKbQ1CyI3bey8BlGtsFVMlFSFjgAk9FX2Al1hI/3C4=
+X-Received: by 2002:a05:690c:692:b0:712:d70b:45e2 with SMTP id
+ 00721157ae682-7165a32017bmr56367737b3.6.1751560516033; Thu, 03 Jul 2025
+ 09:35:16 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 01/12] hw/arm/virt-acpi-build: Don't create ITS id
- mappings by default
-Content-Language: en-US
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: eric.auger@redhat.com, peter.maydell@linaro.org, jgg@nvidia.com,
- nicolinc@nvidia.com, berrange@redhat.com, imammedo@redhat.com,
- nathanc@nvidia.com, mochs@nvidia.com, smostafa@google.com,
- gustavo.romero@linaro.org, mst@redhat.com, marcel.apfelbaum@gmail.com,
- linuxarm@huawei.com, wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
- jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
-References: <20250703084643.85740-1-shameerali.kolothum.thodi@huawei.com>
- <20250703084643.85740-2-shameerali.kolothum.thodi@huawei.com>
-From: Donald Dutile <ddutile@redhat.com>
-In-Reply-To: <20250703084643.85740-2-shameerali.kolothum.thodi@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ddutile@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <7BC53C6E-6F35-4F96-8B59-E77083220372.1@smtp-inbound1.duck.com>
+In-Reply-To: <7BC53C6E-6F35-4F96-8B59-E77083220372.1@smtp-inbound1.duck.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 3 Jul 2025 17:35:04 +0100
+X-Gm-Features: Ac12FXxkGG0AFOyEWvUF077hXv9vnku7svEuH0NJK7AUYAsXJV1wjH_Q2rpZ3aQ
+Message-ID: <CAFEAcA8Marfaj-RbSthm+oNgsDn7Gp8nNir6A2t8Aq+hq6XKTw@mail.gmail.com>
+Subject: Re: [PATCH v2 00/11] MAX78000FTHR Implementation
+To: jcksn@duck.com
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,37 +90,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 19 Jun 2025 at 03:50, <jcksn@duck.com> wrote:
+>
+> v2 changes: Addresses comments by Peter.
 
+Thanks for sending out a v2, and sorry it's taken me a
+couple of weeks to get to it for review. I've left comments
+on the various patches, but this is looking pretty good.
 
-On 7/3/25 4:46 AM, Shameer Kolothum wrote:
-> Commit d6afe18b7242 ("hw/arm/virt-acpi-build: Fix ACPI IORT and MADT tables
-> when its=off") moved ITS group node generation under the its=on condition.
-> However, it still creates rc_its_idmaps unconditionally, which results in
-> duplicate ID mappings in the IORT table.
-> 
-> Fixes:d6afe18b7242 ("hw/arm/virt-acpi-build: Fix ACPI IORT and MADT tables when its=off")
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-> ---
->   hw/arm/virt-acpi-build.c | 6 ------
->   1 file changed, 6 deletions(-)
-> 
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index cd90c47976..724fad5ffa 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -329,12 +329,6 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->           /* Sort the smmu idmap by input_base */
->           g_array_sort(rc_smmu_idmaps, iort_idmap_compare);
->   
-> -        /*
-> -         * Knowing the ID ranges from the RC to the SMMU, it's possible to
-> -         * determine the ID ranges from RC that are directed to the ITS.
-> -         */
-> -        create_rc_its_idmaps(rc_its_idmaps, rc_smmu_idmaps);
-> -
->           nb_nodes = 2; /* RC and SMMUv3 */
->           rc_mapping_count = rc_smmu_idmaps->len;
->   
-Reviewed-by: Donald Dutile <ddutile@redhat.com>
+I should mention that QEMU's softfreeze for 10.1 is on the
+15th June, and that's when patches have to be already in
+submaintainer trees, so if you're interested in trying to get
+it into 10.1 then you'd need to send out a v3 by early to
+mid next week. Otherwise this is likely to slip to 10.2.
 
+-- PMM
 
