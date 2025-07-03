@@ -4,85 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71954C83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 21:32:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC4BCC83030
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 21:59:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXRXC-0007UE-6F; Thu, 03 Jul 2025 17:31:58 -0400
+	id 1uXRwg-0006eF-E4; Thu, 03 Jul 2025 17:58:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uXRX9-0007TL-OI
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 17:31:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uXRwf-0006e2-3b
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 17:58:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uXRX7-0007qW-Ul
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 17:31:55 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uXRwc-0005lA-Ca
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 17:58:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751578312;
+ s=mimecast20190719; t=1751579891;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Mv3/liEXbdi8Or8sOjTT4AN5x9mjmdkW8beC5++aaN0=;
- b=hxln+lvqOueBIaKJuVhuo+KUYL6u+AmM6yR8T9inf9S8lRpRiKcQw/sLQNCk2BDNrsD6rc
- Bqqg2mr1mYHD7yczZEi0j6EyrzP+GGP/rrCVg9J+RUjjXDfTD/cZyPVXVgm/F8rxqBqZpK
- A6aTjiltHNQVT66Ryt7jNX7aI75hBhw=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FeW4+BIe4UTWt729JolGzIrCNRLPb8GQpJMen3EwQAE=;
+ b=VvKOo9WkBHktsjv4wXUsPzyBs21lY1gnKbYesbjVh8ou6OkNghZI5tso1IOEtDAVr3nKX/
+ kVZIzUQae9SipNuA2sJPsd12Q2H0jW4iVixq6mDk+5Pw+5wF4ftSzHRig3TWDCRQRbzvgW
+ 3G7TXs1Pbxr8hfSt5gUv05EPar5P258=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-438-rcgc-hk1P0ijhH3zJ6TI9w-1; Thu, 03 Jul 2025 17:31:43 -0400
-X-MC-Unique: rcgc-hk1P0ijhH3zJ6TI9w-1
-X-Mimecast-MFC-AGG-ID: rcgc-hk1P0ijhH3zJ6TI9w_1751578296
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7d3e90c3a81so23224585a.1
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 14:31:37 -0700 (PDT)
+ us-mta-691-Efh_75Q5PQuXxvGjpHBm6Q-1; Thu, 03 Jul 2025 17:58:10 -0400
+X-MC-Unique: Efh_75Q5PQuXxvGjpHBm6Q-1
+X-Mimecast-MFC-AGG-ID: Efh_75Q5PQuXxvGjpHBm6Q_1751579889
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6face45b58dso3094656d6.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 14:58:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751578296; x=1752183096;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Mv3/liEXbdi8Or8sOjTT4AN5x9mjmdkW8beC5++aaN0=;
- b=AeEffLrv2ItpoicL1VT2pGa9cEw4f7s5tWh1jgSiqNYMA/Hrudw9jz1m2j8MVWUyrf
- HRXjgcOXqh5rWTJHr3Lm8SAKkTxI8viM2DJs6SByuuG8fnA5mMJZz450zxQumW/HB5Wd
- Ljmuf6F/1SbHal9bf8MbopjcHrsPyN5hBg01+eWiFwRyn94jrCOjUht/bIw8lSHHgXhk
- v9pHQGob/0R662N//xLde2LRm0AKZ09v29zTju+ajSXGTWBi6Fd9Q0BCQzdM8PGplCXT
- S8URsadYw10s8pGTQnYpEmRePPhiK/b7l6y3SEgwNs8QPkwYDRZJb33pkr8M5GsXW2eH
- Lg1g==
+ d=1e100.net; s=20230601; t=1751579889; x=1752184689;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FeW4+BIe4UTWt729JolGzIrCNRLPb8GQpJMen3EwQAE=;
+ b=uoR1Q22TxYViDvMHeNvgmgEba1C2/vTXFccXyr/f5vnsXBCGoSpWkVqrcyx59XYqTo
+ be36aTPU1B8OqbR6Y6z7nUmGDMzbYFKODJufcCcchM1pxobs1XzSN2KqnBRpgHGaBMGR
+ AAreEWX+fFvTgDem94Ng5aHyh+fdOXCDAX1ECjnkgQHdUpBLwOX1Gz0ficr3m+T+xeBM
+ lLCaE7lZYP6aO8Y+kyHkLHd2sFS+lvaGBnVu6PQxhBg08ejK0Hr/uhCMOeG/PfWyzAP1
+ anfJg42j6xxDQaWFqoKQadV0tnsU/RQYyJ9ml2470s9/7oNvfwkiUFBBzfQnoUr+BBYp
+ RcOg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXS4iAvazuRgRxHHHQ7qVLzed+oyo886u+oUDCdHKJIqWH8gkdRHA0hgGWPX+45suKvaxOal2W8TnVW@nongnu.org
-X-Gm-Message-State: AOJu0YwTWUCfjJrU8+g8uBMkxwWL/ceiJMc7mvOsN0st5jw/GJUfudx1
- +FwRc4hvgXjAELRphXJEB9+sHbYz0Zy/9qX5B1ub0BuLJIs2PPWF20wnJwNIDz6RUFvK0CEDCrx
- It1p2+Ss3VHRUeeFLsi0vtCH4BYjZgi9NCqb/GXFOOZPLsfpVMHfW3rmo
-X-Gm-Gg: ASbGncu94d0q4i4o9qbgxS/l89nWESPFxYbTO7V46AADGvMgIrShkdYfYsmDhu+V4Po
- KJXCxGn4/ViTzy3ALbViHmYsz46nSzI1C8pmAJkxeUpT47qYWAqc9Euttk9X/QQ/p2+ySQlNPYL
- IxXg/lOd5k4vfspGRV4gojxtUu4jcAGbZWI2W4uMYljy8pHvB8tBf/77rh/xyJdi5bqYBrDlPTL
- Zx0HckR6CqlgugtP1G42K5S/EsQEehmL7nSal+VXaA0t502Ns+GwpN94rpIGHAPTPyfuMbQ/Ywo
- XAEJU95ykm3MKw==
-X-Received: by 2002:a05:620a:1713:b0:7d5:d1a3:40af with SMTP id
- af79cd13be357-7d5dcd14e83mr94899985a.32.1751578295575; 
- Thu, 03 Jul 2025 14:31:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF4izf0oiF4yQ6u73BjHkDo0+t341CPrM+1vG921p8j4xcYuAfv3067UzuaMYJ6uhESymLJYw==
-X-Received: by 2002:a05:620a:1713:b0:7d5:d1a3:40af with SMTP id
- af79cd13be357-7d5dcd14e83mr94895985a.32.1751578295094; 
- Thu, 03 Jul 2025 14:31:35 -0700 (PDT)
+ AJvYcCX48ojrII96E5pZIzJ/oVA0q7tiZPkoKeOPgo2qmvuJrfl2nXYNPH2vncHbVxydcqJKEwN+ypdvLODH@nongnu.org
+X-Gm-Message-State: AOJu0YxqsHycsObdVMN9pJTN6g4tZBhTQWB1kvhKeIXI4pZu1Aea0EbT
+ Sw87Jod+H4Tlf9l/mNpnrh2oL1g0hFd93ltrTv2rsw3cc8hv1GXhqLFY3nx1IK6SyiO+zGj7OyA
+ L0HhLPE25ASCLxKks+k3aBBiyCLfb3nwAGTmYEiUVjtzOR6YSHRBdNKR/
+X-Gm-Gg: ASbGncvLZnIX2cS0vitzeGLxY+I8px+gnrDDnQzhT58Q/ZsnmdcTJEfMzASt5/pRyJI
+ 8RUrS5597gaJbDJeRAq9C/bk73Fp5W2V3MeJwReyvCROIkiGyHvpjnfA/eRuaWwNL1xV1hQxqYa
+ UTi3h+vsJ4QOamjY8O2Z1W95o0dCb1pOp3USy4xG8kr/1fo+h0DljCRtOwtadK41J3+kNlHpSfT
+ xSboKCPc7kzdnHgCBCmemUwi3NkYYdYRq99scE0Ek273knvv17IfGSrwFEhFRnow8k1ME+KPm0R
+ liC6rNJTN5rYvQ==
+X-Received: by 2002:a05:6214:3118:b0:6fd:d91:ba28 with SMTP id
+ 6a1803df08f44-702b1c0e91emr101734026d6.41.1751579889588; 
+ Thu, 03 Jul 2025 14:58:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGkBDwRO2FevithTs4OtFzU+mYN4UzWuuX0zlNTPJ5RKb2pZgsuqROq9xpVvnhwEHRBhpbXwg==
+X-Received: by 2002:a05:6214:3118:b0:6fd:d91:ba28 with SMTP id
+ 6a1803df08f44-702b1c0e91emr101733746d6.41.1751579889234; 
+ Thu, 03 Jul 2025 14:58:09 -0700 (PDT)
 Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7d5dbe919afsm51343285a.93.2025.07.03.14.31.34
+ 6a1803df08f44-702c4d60853sm3684376d6.116.2025.07.03.14.58.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Jul 2025 14:31:34 -0700 (PDT)
-Date: Thu, 3 Jul 2025 17:31:31 -0400
+ Thu, 03 Jul 2025 14:58:08 -0700 (PDT)
+Date: Thu, 3 Jul 2025 17:58:05 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org, berrange@redhat.com
-Subject: Re: [PATCH v2 01/24] migration: Fix leak of block_bitmap_mapping
-Message-ID: <aGb2s6iySOJrEMx7@x1.local>
-References: <20250630195913.28033-1-farosas@suse.de>
- <20250630195913.28033-2-farosas@suse.de>
- <87h5zw4eyc.fsf@pond.sub.org>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Cc: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH V5 20/38] migration: close kvm after cpr
+Message-ID: <aGb87SVQE6OzQMoT@x1.local>
+References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
+ <1749569991-25171-21-git-send-email-steven.sistare@oracle.com>
+ <9dfc0dae-f048-4d41-9b6e-02b6e7dbc215@oracle.com>
+ <aGVYD1GkOC-LuI1T@x1.local>
+ <a0487a01-41de-4997-860c-bc555a295643@oracle.com>
+ <aGbd0IgvtiR4EkoH@x1.local>
+ <d588c137-423a-4609-b5b5-66f6f135b12a@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87h5zw4eyc.fsf@pond.sub.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d588c137-423a-4609-b5b5-66f6f135b12a@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
@@ -107,58 +120,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 01, 2025 at 08:12:27AM +0200, Markus Armbruster wrote:
-> Fabiano Rosas <farosas@suse.de> writes:
+On Thu, Jul 03, 2025 at 11:21:38PM +0200, Cédric Le Goater wrote:
+> On 7/3/25 21:45, Peter Xu wrote:
+> > On Wed, Jul 02, 2025 at 03:41:08PM -0400, Steven Sistare wrote:
+> > > The irq producer is not closed, but it is detached from the kvm consumer.
+> > > It's eventfd is preserved in new QEMU, and interrupts that arrive during
+> > > transition are pended there.
+> > 
+> > Ah I see, looks reasonable.
+> > 
+> > So can I understand the core issue here is about the irq consumer /
+> > provider updates are atomic, meanwhile there's always the fallback paths
+> > ready, so before / after the update the irq won't get lost?
+> > 
+> > E.g. in Post-Interrupt context of Intel's, the irte will be updated
+> > atomically for these VFIO irqs, so that either it'll keep using the fast
+> > path (provided by the irqbypass mechanism), or slow path (eventfd_signal),
+> > so it's free of any kind of race that irq could trigger?
+> > 
+> > I saw that there's already a new version and Cedric queued it.  If possible
+> > add some explanation into commit message, either when repost, or when
+> > merge, would be nice, on explaning irq won't get lost.
+> yes.
 > 
-> > Caught by inspection, but ASAN also reports:
-> >
-> > Direct leak of 16 byte(s) in 1 object(s) allocated from:
-> >  #0 in malloc
-> >  #1 in g_malloc
-> >  #2 in g_memdup
-> >  #3 in qapi_clone_start_struct ../qapi/qapi-clone-visitor.c:40:12
-> >  #4 in qapi_clone_start_list ../qapi/qapi-clone-visitor.c:59:12
-> >  #5 in visit_start_list ../qapi/qapi-visit-core.c:80:10
-> >  #6 in visit_type_BitmapMigrationNodeAliasList qapi/qapi-visit-migration.c:639:10
-> >  #7 in migrate_params_apply ../migration/options.c:1407:13
-> >  #8 in qmp_migrate_set_parameters ../migration/options.c:1463:5
-> >  #9 in qmp_marshal_migrate_set_parameters qapi/qapi-commands-migration.c:214:5
-> >  #10 in do_qmp_dispatch_bh ../qapi/qmp-dispatch.c:128:5
-> 
-> migration_instance_finalize() runs when a TYPE_MIGRATION object dies, we
-> have just one such object, pointed to by @current_migration, and it
-> lives until QEMU shuts down.
-> 
-> So this is as harmless as they get.  Please mentions this in the commit
-> message, to guide backporters.
+> Steve, just resend the patch. I will update the vfio queue.
+> Or we can address that with a follow up patch before QEMU 10.1
+> is released.
 
-If we do not copy qemu-stable, and do not attach Fixes, logically it should
-imply no backport needed.  Not sure if it was intentional, though..  Agreed
-some enrichment in the log would always be nicer.
+I've just noticed maybe I was wrong that slow path was always present.
+We've closed the kvm so likely the slow path is gone..
 
-> 
-> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> > ---
-> >  migration/migration.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/migration/migration.c b/migration/migration.c
-> > index 4098870bce..7ec60d97f9 100644
-> > --- a/migration/migration.c
-> > +++ b/migration/migration.c
-> > @@ -4050,6 +4050,7 @@ static void migration_instance_finalize(Object *obj)
-> >  {
-> >      MigrationState *ms = MIGRATION_OBJ(obj);
-> >  
-> > +    qapi_free_BitmapMigrationNodeAliasList(ms->parameters.block_bitmap_mapping);
-> >      qemu_mutex_destroy(&ms->error_mutex);
-> >      qemu_mutex_destroy(&ms->qemu_file_lock);
-> >      qemu_sem_destroy(&ms->wait_unplug_sem);
-> 
-> With an adjusted commit message:
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+So I think I misunderstood, and Steve likely meant the irq will be
+persisted in eventfd, which is still true if the irq eventfds are persisted
+and passed over (I didn't check the patchset, but I'm assuming this is the
+case).
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Then I found, yes, indeed when irqfd is re-established on dest qemu, we
+have such tricky code:
+
+kvm_irqfd_assign():
+
+	/*
+	 * Check if there was an event already pending on the eventfd
+	 * before we registered, and trigger it as if we didn't miss it.
+	 */
+	events = vfs_poll(fd_file(f), &irqfd->pt);
+
+	if (events & EPOLLIN)
+		schedule_work(&irqfd->inject);
+
+I've no idea whether it was intended to do this as the code was there since
+2009, maybe this chunk of code is the core of why irq won't get lost for
+CPR.  But in all cases, it can be a pretty tricky spot to prove that cpr
+works and looks important piece of info.
+
+Personally I'm ok doing it on top of what's queued.  Maybe such explanation
+on how it works should be put directly into docs/../cpr.rst?
+
+Thanks,
 
 -- 
 Peter Xu
