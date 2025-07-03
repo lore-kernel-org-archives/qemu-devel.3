@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71F62C83F03
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E3E2C83030
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 12:47:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXJHo-00077b-Dg; Thu, 03 Jul 2025 08:43:35 -0400
+	id 1uXJFL-0004Fp-Hn; Thu, 03 Jul 2025 08:41:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uXJF9-0004An-Dy
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:40:54 -0400
+ id 1uXJEO-0002Fi-QU
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:40:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uXJF5-0001Zu-81
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:40:46 -0400
+ id 1uXJEM-0000xE-Fu
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:40:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751546437;
+ s=mimecast20190719; t=1751546397;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7z4t23L2CEjvRbW4POxEjlHbPc7Y86a0BBQtX1AsNc0=;
- b=TLPJMqEChlp9mM4fmfL8ei3b23yUgT4ZcGNEb0cZafwA0pJ6C+pujCJI9MkZpjvUcPuY3a
- MjIfRTQZhLONtLAHjGu3dVkhaNhoAFyxoQdV4I50hl9Ll+RPkr0oDmRm+YDxNn2ObExHae
- fCzL/v46auYryRCEcIwzm46hjKX+Nac=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=5SBU8rqjDCM9bszWrHYCJiNHA4uqefOcOO5gBO57x8s=;
+ b=WakwlHxIa6JNpiA4jmpEfzIJ+X2sfEBluxNcj2tFR55Q+B8Vt+8WDPI7ly2l13MCYS6w4U
+ nhvHGVM3pIGNb030XN7gzaAiMKck5VSyhPgUDxFrzhDaIQavtQRBj0wFSlMqn82ukZyOD9
+ Iq0GxmfnSCgd2LpF+rHOKmTOx9XWF4I=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-VCGK9_JxP4qRm1RqCS9Uxg-1; Thu,
- 03 Jul 2025 08:40:36 -0400
-X-MC-Unique: VCGK9_JxP4qRm1RqCS9Uxg-1
-X-Mimecast-MFC-AGG-ID: VCGK9_JxP4qRm1RqCS9Uxg_1751546434
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-620-oBq0hhyqPV6U0FJshPVShA-1; Thu,
+ 03 Jul 2025 08:39:54 -0400
+X-MC-Unique: oBq0hhyqPV6U0FJshPVShA-1
+X-Mimecast-MFC-AGG-ID: oBq0hhyqPV6U0FJshPVShA_1751546392
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 72ABA1955F38; Thu,  3 Jul 2025 12:40:34 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9C34D18DA5CE; Thu,  3 Jul 2025 12:39:52 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.32.16])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EE13E180045C; Thu,  3 Jul 2025 12:40:29 +0000 (UTC)
+ id 27D2A180045C; Thu,  3 Jul 2025 12:39:47 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
@@ -55,10 +55,10 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: pbonzini@redhat.com,
 	philmd@linaro.org,
 	alex.bennee@linaro.org
-Subject: [PATCH v5 34/36] tests/qtest/bios-tables-test: Add aarch64 ACPI PCI
- hotplug test
-Date: Thu,  3 Jul 2025 14:35:34 +0200
-Message-ID: <20250703123728.414386-35-eric.auger@redhat.com>
+Subject: [PATCH v5 26/36] hw/acpi/ged: Call pcihp plug callbacks in hotplug
+ handler implementation
+Date: Thu,  3 Jul 2025 14:35:26 +0200
+Message-ID: <20250703123728.414386-27-eric.auger@redhat.com>
 In-Reply-To: <20250703123728.414386-1-eric.auger@redhat.com>
 References: <20250703123728.414386-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -90,97 +90,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gustavo Romero <gustavo.romero@linaro.org>
+Add PCI device related code in the TYPE_HOTPLUG_HANDLER
+implementation.
 
-Add 2 new tests:
-- test_acpi_aarch64_virt_acpi_pci_hotplug tests the acpi pci hotplug
-  using -global acpi-ged.acpi-pci-hotplug-with-bridge-support=on
-- test_acpi_aarch64_virt_pcie_root_port_hpoff tests static-acpi index
-  on a root port with disabled hotplug
+For a PCI device hotplug/hotunplug event, the code routes to
+acpi_pcihp_device callbacks (pre_plug_cb, plug_cb, unplug_request_cb,
+unplug_cb).
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 
 ---
-v3 -> v4:
-- add -device pci-testdev for the first test case
-- fix the chassis
-- add a test for static acpi-index
----
- tests/qtest/bios-tables-test.c | 52 ++++++++++++++++++++++++++++++++++
- 1 file changed, 52 insertions(+)
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index 357bcefd37..1074b8d67a 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -1643,6 +1643,54 @@ static void test_acpi_aarch64_virt_tcg_memhp(void)
+v2 -> v4:
+moved before "hw/acpi/ged: Prepare the device to react to PCI hotplug
+events" (Igor)
+
+v2 -> v3:
+- remove else block in acpi_ged_device_pre_plug_cb
+---
+ hw/acpi/generic_event_device.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+index ef1c1ec51f..92b931758f 100644
+--- a/hw/acpi/generic_event_device.c
++++ b/hw/acpi/generic_event_device.c
+@@ -17,6 +17,7 @@
+ #include "hw/irq.h"
+ #include "hw/mem/pc-dimm.h"
+ #include "hw/mem/nvdimm.h"
++#include "hw/pci/pci_device.h"
+ #include "hw/qdev-properties.h"
+ #include "migration/vmstate.h"
+ #include "qemu/error-report.h"
+@@ -228,6 +229,14 @@ static const MemoryRegionOps ged_regs_ops = {
+     },
+ };
  
- }
- 
-+static void test_acpi_aarch64_virt_acpi_pci_hotplug(void)
++static void acpi_ged_device_pre_plug_cb(HotplugHandler *hotplug_dev,
++                                        DeviceState *dev, Error **errp)
 +{
-+    test_data data = {
-+        .machine = "virt",
-+        .arch = "aarch64",
-+        .tcg_only = true,
-+        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
-+        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-+        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
-+        .ram_start = 0x40000000ULL,
-+        .scan_len = 256ULL * MiB,
-+        .variant = ".acpipcihp",
-+    };
-+
-+   /* Use ACPI PCI Hotplug */
-+   test_acpi_one(" -global acpi-ged.acpi-pci-hotplug-with-bridge-support=on"
-+                 " -cpu cortex-a57"
-+                 " -device pcie-root-port,id=pcie.1,bus=pcie.0,chassis=0,slot=1,addr=7.0"
-+                 " -device pci-testdev,bus=pcie.1",
-+                 &data);
-+
-+    free_test_data(&data);
++    if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
++        acpi_pcihp_device_pre_plug_cb(hotplug_dev, dev, errp);
++    }
 +}
 +
-+static void test_acpi_aarch64_virt_pcie_root_port_hpoff(void)
-+{
-+    test_data data = {
-+        .machine = "virt",
-+        .arch = "aarch64",
-+        .tcg_only = true,
-+        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
-+        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-+        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
-+        .ram_start = 0x40000000ULL,
-+        .scan_len = 256ULL * MiB,
-+        .variant = ".hpoffacpiindex",
-+    };
-+
-+   /* turn hotplug off on the pcie-root-port and use static acpi-index*/
-+   test_acpi_one(" -device pcie-root-port,id=pcie.1,chassis=0,"
-+                                          "slot=1,hotplug=off,addr=7.0"
-+                 " -device pci-testdev,bus=pcie.1,acpi-index=12"
-+                 " -cpu cortex-a57",
-+                 &data);
-+
-+    free_test_data(&data);
-+}
-+
- static void test_acpi_microvm_prepare(test_data *data)
+ static void acpi_ged_device_plug_cb(HotplugHandler *hotplug_dev,
+                                     DeviceState *dev, Error **errp)
  {
-     data->machine = "microvm";
-@@ -2602,6 +2650,10 @@ int main(int argc, char *argv[])
-             qtest_add_func("acpi/virt/numamem",
-                            test_acpi_aarch64_virt_tcg_numamem);
-             qtest_add_func("acpi/virt/memhp", test_acpi_aarch64_virt_tcg_memhp);
-+            qtest_add_func("acpi/virt/acpipcihp",
-+                           test_acpi_aarch64_virt_acpi_pci_hotplug);
-+            qtest_add_func("acpi/virt/hpoffacpiindex",
-+                          test_acpi_aarch64_virt_pcie_root_port_hpoff);
-             qtest_add_func("acpi/virt/pxb", test_acpi_aarch64_virt_tcg_pxb);
-             qtest_add_func("acpi/virt/oem-fields",
-                            test_acpi_aarch64_virt_oem_fields);
+@@ -241,6 +250,8 @@ static void acpi_ged_device_plug_cb(HotplugHandler *hotplug_dev,
+         }
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+         acpi_cpu_plug_cb(hotplug_dev, &s->cpuhp_state, dev, errp);
++    } else if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
++        acpi_pcihp_device_plug_cb(hotplug_dev, &s->pcihp_state, dev, errp);
+     } else {
+         error_setg(errp, "virt: device plug request for unsupported device"
+                    " type: %s", object_get_typename(OBJECT(dev)));
+@@ -257,6 +268,9 @@ static void acpi_ged_unplug_request_cb(HotplugHandler *hotplug_dev,
+         acpi_memory_unplug_request_cb(hotplug_dev, &s->memhp_state, dev, errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+         acpi_cpu_unplug_request_cb(hotplug_dev, &s->cpuhp_state, dev, errp);
++    } else if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
++        acpi_pcihp_device_unplug_request_cb(hotplug_dev, &s->pcihp_state,
++                                            dev, errp);
+     } else {
+         error_setg(errp, "acpi: device unplug request for unsupported device"
+                    " type: %s", object_get_typename(OBJECT(dev)));
+@@ -272,6 +286,8 @@ static void acpi_ged_unplug_cb(HotplugHandler *hotplug_dev,
+         acpi_memory_unplug_cb(&s->memhp_state, dev, errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+         acpi_cpu_unplug_cb(&s->cpuhp_state, dev, errp);
++    } else if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_DEVICE)) {
++        acpi_pcihp_device_unplug_cb(hotplug_dev, &s->pcihp_state, dev, errp);
+     } else {
+         error_setg(errp, "acpi: device unplug for unsupported device"
+                    " type: %s", object_get_typename(OBJECT(dev)));
+@@ -485,6 +501,7 @@ static void acpi_ged_class_init(ObjectClass *class, const void *data)
+     dc->vmsd = &vmstate_acpi_ged;
+     dc->realize = acpi_ged_realize;
+ 
++    hc->pre_plug = acpi_ged_device_pre_plug_cb;
+     hc->plug = acpi_ged_device_plug_cb;
+     hc->unplug_request = acpi_ged_unplug_request_cb;
+     hc->unplug = acpi_ged_unplug_cb;
 -- 
 2.49.0
 
