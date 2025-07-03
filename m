@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE8D9C77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 09:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D4C3C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 09:15:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXG15-0003Rc-1N; Thu, 03 Jul 2025 05:14:03 -0400
+	id 1uXG1y-0004KZ-CY; Thu, 03 Jul 2025 05:14:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXG0w-0003Po-LN
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 05:13:56 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ id 1uXG1t-0004E0-4V
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 05:14:54 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXG0t-0002Oe-TT
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 05:13:53 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-70e1d8c2dc2so53915357b3.3
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 02:13:50 -0700 (PDT)
+ id 1uXG1k-0002gO-0F
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 05:14:52 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-714066c7bbbso88079597b3.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 02:14:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751534029; x=1752138829; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751534082; x=1752138882; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jShZV7YTb0wir7CgNkRRubWx084G582r+Vo/uc1OJlE=;
- b=Y3xcAoxKpv0qpA2nS2OdORPULPRN08m5HGNUFCya80H1uxcXVwWVRD2Xd/cBVJLDfC
- SF7MIlEIBL+ju243bKFTGg8GM1MTQk3ggieir4aSti/OvZ5yT3yfjZOuf3N/h+zAMYe/
- 696ScttL74tqPctnP/MvjRwaMzw4qo3618XRqWcT+cvJNO3Umo2YbNifDQOBAJ3WILHt
- F3C9HRrA23VpAuo+PHtOMFq8NcobBrByzm/b8AnJo4zxhl/7n3hzhnuZ1RMvtKN4+TN7
- PEoxOE8B9CyQdpINQMFE5cSwwabSDAChcg8Sh832nxRN3MedxJ33qSVdPbQ8ENJo60/M
- Uj/w==
+ bh=pGSkVMNGir5NqYN9mf3Je1X84Aau+Zt/mS3etMOmdhM=;
+ b=Qgjx55OeqKAdq1mFJ/tGYZlzj16lcjOXibp32ykZAGWGc8YpJzfz+hKcbQfnCsRtob
+ 3v5QqUFSO0Hgh2FF/9sQMcoUnqtwd0Ng1vUJTCCj/NFaIajzSfUA08RrJH8EPfx6z+Qt
+ Wm0qqhPQ7/bUUSiJ9Bj2cNJt/ZiM8dZvjGIcoBJzpCaKr/b5X23g+0xjRWr6OeRmtHv6
+ uVLcNOtBseUkm5kfL/bdPg1Jdr6+joPM/y9hVN9VPym8Pw09wg3ip4Q/SAg9J8aLniCp
+ CoI/wkyxK6oIIj0vXUcrOVNxM/kWpUnRR4Co8bYy+UWhjdzMKFadQxXKCTQUkLdFcPMp
+ HkZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751534029; x=1752138829;
+ d=1e100.net; s=20230601; t=1751534082; x=1752138882;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=jShZV7YTb0wir7CgNkRRubWx084G582r+Vo/uc1OJlE=;
- b=ZnnGYOcA8vAbHrtYa6RHb28aYPraltT50WsdLmFIwWzP4lmtyJqloFGretfyqXxDgm
- 69LIoHmX7XyksH3zQMIat9b9lLiFXc28T8FSEVyscrm/MEr7RgasUdoujUvqLN6h466J
- Z9gSBfp06HbDVJAKzJJtEYIAHuhYd9nfzZbGKvrZXUswRJJP/dP9IfhQ/48f0Yqbniqd
- 4w9brog4LbElJvIPui9DEA82Xx48CKi8td+Qv2GvZPefTNT7eJCfrgSpdtbLiUFFxB1/
- ninQC29mRFDUgDL0QJDdOGMxJsS2GRAqHoUOKdCWwNzY5hTGCWTKoPPqKrwe9HcgYtB3
- o+qg==
-X-Gm-Message-State: AOJu0YwVGSxdBv4NYXiDMyvqvkfkPEqRlRhrhxm+mfx2wD/dk9ADqomW
- aQ18by9upek1k11+XH+91a7MXSrqS1ghgZCOBjaJ4A7HQxN2K1giH5oMBVz2obpCHp8XgnYYb2K
- dpudkxoNFrCeBa+5sNfmoxK82RLX8NAURO6r+sw1IMg==
-X-Gm-Gg: ASbGncvoyQ3g7ibKvQAhnue17cs1GHo19aNN7p75093490m6tiDUqHjFdyQuB5aZKFy
- d8xVW/SbuSEv6Y/10eT40/clm6hXxmTFmsO9F6YcJb0IYXTwl6r95AEiqYMBK8nDwpK9/pHRehA
- UhG3jmysv9caJNtD6cXbK2AQVzM1yRr7AKnjSddoeR+AHw
-X-Google-Smtp-Source: AGHT+IHeDhx+JOXfE4umtzFh7pSgQBGF2qxLnY6kXcx4LyP64EvVGGavR4dL0vw5nTPlPumW4FLb7W6WSm1ydaqGcbo=
-X-Received: by 2002:a05:690c:fcc:b0:709:197d:5d3c with SMTP id
- 00721157ae682-7164d2c7e12mr90705157b3.11.1751534029352; Thu, 03 Jul 2025
- 02:13:49 -0700 (PDT)
+ bh=pGSkVMNGir5NqYN9mf3Je1X84Aau+Zt/mS3etMOmdhM=;
+ b=YaEpVwfqbQvVLaxXy+lyRnv2u74d+XZSRmz8L0tysEu0CjUFoD9FXoW8J4u/ZUcJla
+ LuNlnvPQrzsTQlaOhR9tFTjLu5mIIofK0VnCY7kSkePunrqbxOhvIa0vBQdAvjX51pde
+ 41PbHrXxVX/6rN8+/pfJmQ2tSJ+9emmeB3qIEOTbN3UfAcwyDHJqa8DodZ/cXGWoR5q+
+ OC6E2/2Uj2VD1cmSkhMhJQ2E+BhsPKY63bCowgcKZKaRzoxvdPbgu1Lj51ZxUhWbg4wL
+ 7Akrs6fOm6TZEuv6JZ5gNJZCtubeFT53J6BW6NASZhgGeTN1jPEqtI7R3tLhriceeR2I
+ iYlQ==
+X-Gm-Message-State: AOJu0Yzz5PyMUQME0+40iwUVErA0ocXDT+ZKqYrG+lGds8wdDdxKxZiN
+ u/I2GrCHhezvQpjdkXDqVc/6V/YntA3mLlowGb0FOAbJQGRRGd4h2jdSTBQvP0AEGNeOT1mv+2j
+ nKBK+dqZTZ36QVdOYI0Ujnn8XdYafqL9VltKkGtlqHw==
+X-Gm-Gg: ASbGncvxjG0QatWUKBMbDIiyUzC5WmKLbi1zRX//3W9fLo4jTQhaDcTVCoqTC1l5dcT
+ zl6X0KDbnjMdeDE2Q2zYLFUOjTi0Ul7xj5F1s9J4C0j/C2QBgBics7kdnT1eN2XKHIo3oyhY5PZ
+ xvwmqf+qHczfuEaTXVFaRzDchvTp+SCsgOwkkeJdIwA9ID
+X-Google-Smtp-Source: AGHT+IEA6E7LYkyVPfOEVdk46wvscw7PHTDe+DThCTi9y1suVfsLnl2suIA7GeAB6zEYBx+m6HSxfx21iHv5pabmmqY=
+X-Received: by 2002:a05:690c:9b06:b0:714:691:6d1d with SMTP id
+ 00721157ae682-716590aecf7mr37960847b3.24.1751534081741; Thu, 03 Jul 2025
+ 02:14:41 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250702122213.758588-1-richard.henderson@linaro.org>
- <20250702122213.758588-10-richard.henderson@linaro.org>
-In-Reply-To: <20250702122213.758588-10-richard.henderson@linaro.org>
+ <20250702122213.758588-5-richard.henderson@linaro.org>
+In-Reply-To: <20250702122213.758588-5-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 3 Jul 2025 10:13:37 +0100
-X-Gm-Features: Ac12FXxHROE6WicPcu59BvDqB-HVVYixTkL3nUz_AyIcPRqHhTNHHNLyVVqSsOo
-Message-ID: <CAFEAcA82qZu54fsQjfmy-s3VdzsJrGYccTQPdM7oQ0ienk9LpA@mail.gmail.com>
-Subject: Re: [PATCH v3 09/10] target/arm: Fix bfdotadd_ebf vs nan selection
+Date: Thu, 3 Jul 2025 10:14:30 +0100
+X-Gm-Features: Ac12FXxydFfAJhHEDJzEFqG9DNUxbnmZQQLzqXDCJyLzg8-KyLgCHT196slmn68
+Message-ID: <CAFEAcA_72=K-DZmkTMCjsL9unRzTFu+DKGKNFpw7-bvNhvu-4Q@mail.gmail.com>
+Subject: Re: [PATCH v3 04/10] target/arm: Replace @rda_rn_rm_e0 in sve.decode
 To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-stable@nongnu.org
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,40 +95,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, 2 Jul 2025 at 13:22, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> Implement FPProcessNaNs4 within f16_dotadd, rather than
-
-should be "bfdotadd_ebf" ?
-
-> simply letting NaNs propagate through the function.
+> Replace @rda_rn_rm_e0 with @rda_rn_rm_ex, and require
+> users to supply an explicit esz.
 >
-> Cc: qemu-stable@nongnu.org
-> Fixes: 0e1850182a1 ("target/arm: Implement FPCR.EBF=1 semantics for bfdotadd()")
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/sve.decode | 48 +++++++++++++++++++--------------------
+>  1 file changed, 24 insertions(+), 24 deletions(-)
 
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-> +    /* C.f. FPProcessNaNs4 */
-> +    if (float32_is_any_nan(s1r) || float32_is_any_nan(s1c) ||
-> +        float32_is_any_nan(s2r) || float32_is_any_nan(s2c)) {
-> +        if (float32_is_signaling_nan(s2r, fpst)) {
-> +            t32 = s2r;
-> +        } else if (float32_is_signaling_nan(s2c, fpst)) {
-> +            t32 = s2c;
-> +        } else if (float32_is_signaling_nan(s2r, fpst)) {
-> +            t32 = s2r;
-> +        } else if (float32_is_signaling_nan(s2c, fpst)) {
-> +            t32 = s2c;
-> +        } else if (float32_is_any_nan(s2r)) {
-> +            t32 = s2r;
-> +        } else if (float32_is_any_nan(s2c)) {
-> +            t32 = s2c;
-> +        } else if (float32_is_any_nan(s2r)) {
-> +            t32 = s2r;
-> +        } else {
-> +            t32 = s2c;
-> +        }
-
-Looks like a cut-and-paste error -- we check s2r and s2c
-twice and never look at s1r and s1c.
-
+thanks
 -- PMM
 
