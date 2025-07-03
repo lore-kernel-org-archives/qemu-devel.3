@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 356BFC77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 11:18:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65108C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 11:18:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXHgx-0000Tz-Ni; Thu, 03 Jul 2025 07:01:25 -0400
+	id 1uXHhx-00026M-BJ; Thu, 03 Jul 2025 07:02:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHe1-0005Lt-2V
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 06:58:24 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHfa-0006hp-4X
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 06:59:59 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHdy-0002co-5w
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 06:58:20 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-450cb2ddd46so47381415e9.2
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 03:58:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHep-0003OP-LO
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 06:59:13 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-454ac069223so2984485e9.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 03:59:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751540296; x=1752145096; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751540350; x=1752145150; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EZ/hvC4u2jp7Pix4yjeZfPZoKMalJ7KXbdnBXGN8XCk=;
- b=WN0qrLVvyfemlA9gLQYAP01rJzW5elNUD1NKCmtboORJmjkEuglkNPielYrRHvQ6UX
- 3ItzlDxVK518ubxFwhT8cEnQVvoH56bsEvHoE8xhZC67nCSsgiYRIBWAQJFw/s4YzuIC
- 4oG+FeiC3BDe8zFao43MZszMIVO1cC9X2Ma19eP7Zt7SqpxzEf83PYee+h5tLkutXpjR
- DgsYDFs63HOgWIY7CF1JR045Bl6Mmq5PY0wjGFDhisTj4VmriAoxSNg98T7GHyKrqayT
- U+eV1HKgQyuevqdXfABLw413qYO5AUfG/6L0HRgu3j4nK1qwx1BMSr3FelciZU2/1nrh
- hv9w==
+ bh=vFAqYWkOt5rZ34pscE5bkNOMRRS/BXy8okDEtUQzC0Y=;
+ b=ti5O0mblpcTQezz3ssqxMGhrVO5Wav+21sU3paCnpMD9t9ZuyJIgP+V4oIy73txHUK
+ 38XBMJOhJPkzhVrFqBQUi2ajSS51vtv1FFmECW46wkR5fCOIINPMs4xn4b0XdILllh6k
+ itoW3Eqx1C3KIZ0Jau5MtLdrA6roMpAKXQFiRObVtPdE3dJt03UOuwAaW7kg0zis+NBr
+ kVvx4LZYAVDNHpXtctEnhJrMSqLGcAMC2nD50LMM3Jkt7DzkwwzfIn8xcHW6f2cuqb4j
+ IvWtQ44q0UWtZQLx/RxKaDMZCOTXm0todwhl0iSN1+WxzqxwALq4Vt/7Ptd3WHFiGa7u
+ /h3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751540296; x=1752145096;
+ d=1e100.net; s=20230601; t=1751540350; x=1752145150;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EZ/hvC4u2jp7Pix4yjeZfPZoKMalJ7KXbdnBXGN8XCk=;
- b=HxgnOMaGdbQRS5aK2Yz7zMY5fLgMf3B3t+pyiGqBT65oJtcYY2/uBTQdcTsORBMDJR
- mSxFgF2caQ2krYNUVhBZkuyJZdzswqIAxofz6CHS1wQLzJWlMQ+y2GUkIEnEFghfrmfF
- tnn9xNA9saEVwavaIOjPM7hwLtgo+ssHDEADwAI+KrRBvvXLHGZqUQi0xIF8XLeE6UJx
- K6tPEWf2k+jSPLU77fpXj0DZNbliYIf+ugklKR83WI35QnqiIJSOEykZKMT13ArDczqq
- RTmGidRA7wzB7yPBNErgdH598raNXjwmGO+khzPlmq3gQKLfScI+2tRlhICNOwrRWjjp
- xwpA==
-X-Gm-Message-State: AOJu0Yx2KuYvmZ55VYbvFfSnp9FMX7ENf8Ddw0ewzM00ZEFLYC8R8x4H
- LUMKElkeprTaIrER6nLavg9TMkTQJUdQy5UoQwE0xEH40BN08K0IuTcEPoj2EN31AqdRBHxdnof
- fDA+Nsj4=
-X-Gm-Gg: ASbGncut7xa6mLvSh5pGcw6a3iXvRUNV8YKldDKAGHS8eMe4jAvOFieaHpIs2iaaGNi
- 87646UqKLwi7NJxu7UzXHkASmANUkdABBzLYVG97TzjqRa9QOu0WRBFJeLyXP5byuF/p7nSjXvS
- BwlSt7WVjDTVbHPfETcNcNuIswUrRNoAxAGk0K2pYGMs5Vj+124TaEDir6qJcy12LWZTdCmaXET
- 57ovKDItOcCPeMyZKF7RSuPe9JYxi5IrN+jEbuyqK8loNtpUEommzY/qw5aeyfH6PKVjcjzcMez
- bRFf7XXIAXVSV2FN7iQqpdCZVBdv98iEafxpp5S5+YA7GYJ3vo/JmUPIM4z92czCC/jZd3GS3H7
- 2N63I64J8yd4=
-X-Google-Smtp-Source: AGHT+IEuN0jVmRpBpWx/3F8JjrZDICpuvuBuWma263BrzMgnHysFP/hDSn3CyvPN+WSuLtCvOQGX6Q==
-X-Received: by 2002:a05:600c:190f:b0:44a:ac77:26d5 with SMTP id
- 5b1f17b1804b1-454a36e926fmr70940985e9.14.1751540296019; 
- Thu, 03 Jul 2025 03:58:16 -0700 (PDT)
+ bh=vFAqYWkOt5rZ34pscE5bkNOMRRS/BXy8okDEtUQzC0Y=;
+ b=iQDHLU+rEWerwSAI86suE4Xs2Nuq8nyMTH3Mu+T6XStlN5my7JzTXb3PM4vlMlFSml
+ BeevV82G1cbl10TQeo+Vc4kXpqOv91Awzj+zUI1vObhdQf7jMzeJ+DSRlvNm1HdsniF0
+ 57Qa9FvnWXcvnZT2QL8AF6UCg88wfoPtW0PHZiSUBD7Io5QwgYM2TTIRbsTFRjtb3GOj
+ t9DqrlrLvNafo6Np7Nc2z3cHpPYxZic21p8R6d7PYekfhO9sxPYgf8HzFg+ag5pxwCVZ
+ jWi5lyl74UkfRReigiNohW5OE0FBthGuF2kHkXKvs9V/jO3OFcVmAFFfm44rYVTboWzR
+ MWcQ==
+X-Gm-Message-State: AOJu0Yxo7QMkjvKBP9Xk3fdXrTUcgpZEivEGwSIcxd0KrrarCh5aPIHC
+ BnI3QyQ3g7XdxD/juunwaTdUE1sH5wYCd2V4psWlhCTWjGciuw0CE50AkRkKNb5kumuP4IGFMKe
+ 7XYSeRdE=
+X-Gm-Gg: ASbGncuGEXLghZ8y16yddoXr7Sm4lrcrMdk40NzZ1LfKWtd9EydbqYJE0g2WgkG2bO4
+ iKsW5Aje+k9FjeOFPSFM5rXt1RvLRQ1vZ46nq92jblWRckbkEHShSowGcvTwHtL2fqICEOyNnHq
+ HiqS/BEzQ0dRINcCl71LHEp+uEd1FUyoEf/ZsVlWOgdtS8VyviGuNyfCeMHPvMouikWS9ece5Jk
+ QanAwBcYJ0bJbR86tdu5lpgV0zXSfX6H99jkJaL++tiHBbd4rs0e3vQ3ji+e/ciExVR5qtUBicb
+ oAyTigbdm9Lww44/EyL4TTHP9KqEbXqt0kyf/S6nFDqpjZAwrkBD3q7uzDZRjL+AGkfqnA+GOwT
+ qwUL4pFA/Z3780k0Sc/58qQ==
+X-Google-Smtp-Source: AGHT+IEpLtcQemMkcwNXCmGS2HYXOrXVSmrpZfH3haYqqpBfUcpznPUG0hMZrhqDiS/8G+BDKrWdvQ==
+X-Received: by 2002:a05:6000:4026:b0:3a5:6860:f47f with SMTP id
+ ffacd0b85a97d-3b34281c3efmr1987415f8f.6.1751540349695; 
+ Thu, 03 Jul 2025 03:59:09 -0700 (PDT)
 Received: from localhost.localdomain ([83.247.137.20])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454a9969a8bsm23507045e9.2.2025.07.03.03.58.14
+ ffacd0b85a97d-3a892e52bb3sm18654339f8f.56.2025.07.03.03.59.08
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Jul 2025 03:58:15 -0700 (PDT)
+ Thu, 03 Jul 2025 03:59:09 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -70,19 +70,19 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, kvm@vger.kernel.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Blake <eblake@redhat.com>
-Subject: [PATCH v5 29/69] accel/system: Introduce @x-accel-stats QMP command
-Date: Thu,  3 Jul 2025 12:54:55 +0200
-Message-ID: <20250703105540.67664-30-philmd@linaro.org>
+ Reinoud Zandijk <reinoud@netbsd.org>
+Subject: [PATCH v5 39/69] accel/nvmm: Replace @dirty field by generic
+ CPUState::vcpu_dirty field
+Date: Thu,  3 Jul 2025 12:55:05 +0200
+Message-ID: <20250703105540.67664-40-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250703105540.67664-1-philmd@linaro.org>
 References: <20250703105540.67664-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,139 +105,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Unstable QMP 'x-accel-stats' dispatches to the
-AccelOpsClass::get_stats() and get_vcpu_stats() handlers.
+No need for accel-specific @dirty field when we have
+a generic one in CPUState.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- qapi/accelerator.json      | 17 +++++++++++++++++
- include/qemu/accel.h       |  2 ++
- include/system/accel-ops.h |  3 +++
- accel/accel-qmp.c          | 34 ++++++++++++++++++++++++++++++++++
- accel/accel-system.c       |  1 +
- accel/meson.build          |  2 +-
- 6 files changed, 58 insertions(+), 1 deletion(-)
- create mode 100644 accel/accel-qmp.c
+ target/i386/nvmm/nvmm-all.c | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/qapi/accelerator.json b/qapi/accelerator.json
-index 00d25427059..81308493c66 100644
---- a/qapi/accelerator.json
-+++ b/qapi/accelerator.json
-@@ -55,3 +55,20 @@
-   'returns': 'HumanReadableText',
-   'if': 'CONFIG_TCG',
-   'features': [ 'unstable' ] }
-+
-+##
-+# @x-accel-stats:
-+#
-+# Query accelerator statistics
-+#
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
-+# Returns: accelerator statistics
-+#
-+# Since: 10.1
-+##
-+{ 'command': 'x-accel-stats',
-+  'returns': 'HumanReadableText',
-+  'features': [ 'unstable' ] }
-diff --git a/include/qemu/accel.h b/include/qemu/accel.h
-index 065de80a87b..598796bdca9 100644
---- a/include/qemu/accel.h
-+++ b/include/qemu/accel.h
-@@ -41,6 +41,8 @@ typedef struct AccelClass {
-     AccelOpsClass *ops;
+diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
+index eaae175aa5d..f521c36dc53 100644
+--- a/target/i386/nvmm/nvmm-all.c
++++ b/target/i386/nvmm/nvmm-all.c
+@@ -30,7 +30,6 @@ struct AccelCPUState {
+     struct nvmm_vcpu vcpu;
+     uint8_t tpr;
+     bool stop;
+-    bool dirty;
  
-     int (*init_machine)(AccelState *as, MachineState *ms);
-+    /* get_stats: Append statistics to @buf */
-+    void (*get_stats)(AccelState *as, GString *buf);
+     /* Window-exiting for INTs/NMIs. */
+     bool int_window_exit;
+@@ -508,7 +507,7 @@ nvmm_io_callback(struct nvmm_io *io)
+     }
  
-     /* system related hooks */
-     void (*setup_post)(AccelState *as);
-diff --git a/include/system/accel-ops.h b/include/system/accel-ops.h
-index af54302409c..2a89641aa81 100644
---- a/include/system/accel-ops.h
-+++ b/include/system/accel-ops.h
-@@ -50,6 +50,9 @@ struct AccelOpsClass {
+     /* Needed, otherwise infinite loop. */
+-    current_cpu->accel->dirty = false;
++    current_cpu->vcpu_dirty = false;
+ }
  
-     void (*handle_interrupt)(CPUState *cpu, int mask);
+ static void
+@@ -517,7 +516,7 @@ nvmm_mem_callback(struct nvmm_mem *mem)
+     cpu_physical_memory_rw(mem->gpa, mem->data, mem->size, mem->write);
  
-+    /* get_vcpu_stats: Append statistics of this @cpu to @buf */
-+    void (*get_vcpu_stats)(CPUState *cpu, GString *buf);
-+
-     /**
-      * @get_virtual_clock: fetch virtual clock
-      * @set_virtual_clock: set virtual clock
-diff --git a/accel/accel-qmp.c b/accel/accel-qmp.c
-new file mode 100644
-index 00000000000..318629665b3
---- /dev/null
-+++ b/accel/accel-qmp.c
-@@ -0,0 +1,34 @@
-+/*
-+ * QMP commands related to accelerators
-+ *
-+ * Copyright (c) Linaro
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/accel.h"
-+#include "qapi/type-helpers.h"
-+#include "qapi/qapi-commands-accelerator.h"
-+#include "system/accel-ops.h"
-+#include "hw/core/cpu.h"
-+
-+HumanReadableText *qmp_x_accel_stats(Error **errp)
-+{
-+    AccelState *accel = current_accel();
-+    AccelClass *acc = ACCEL_GET_CLASS(accel);
-+    g_autoptr(GString) buf = g_string_new("");
-+
-+    if (acc->get_stats) {
-+        acc->get_stats(accel, buf);
-+    }
-+    if (acc->ops->get_vcpu_stats) {
-+        CPUState *cpu;
-+
-+        CPU_FOREACH(cpu) {
-+            acc->ops->get_vcpu_stats(cpu, buf);
-+        }
-+    }
-+
-+    return human_readable_text_from_str(buf);
-+}
-diff --git a/accel/accel-system.c b/accel/accel-system.c
-index 11ba8e24d60..246ea55425f 100644
---- a/accel/accel-system.c
-+++ b/accel/accel-system.c
-@@ -26,6 +26,7 @@
- #include "qemu/osdep.h"
- #include "qemu/accel.h"
- #include "hw/boards.h"
-+#include "hw/core/cpu.h"
- #include "system/accel-ops.h"
- #include "system/cpus.h"
- #include "qemu/error-report.h"
-diff --git a/accel/meson.build b/accel/meson.build
-index 52909314bfa..25b0f100b51 100644
---- a/accel/meson.build
-+++ b/accel/meson.build
-@@ -1,6 +1,6 @@
- common_ss.add(files('accel-common.c'))
- specific_ss.add(files('accel-target.c'))
--system_ss.add(files('accel-system.c', 'accel-blocker.c'))
-+system_ss.add(files('accel-system.c', 'accel-blocker.c', 'accel-qmp.c'))
- user_ss.add(files('accel-user.c'))
+     /* Needed, otherwise infinite loop. */
+-    current_cpu->accel->dirty = false;
++    current_cpu->vcpu_dirty = false;
+ }
  
- subdir('tcg')
+ static struct nvmm_assist_callbacks nvmm_callbacks = {
+@@ -727,9 +726,9 @@ nvmm_vcpu_loop(CPUState *cpu)
+      * Inner VCPU loop.
+      */
+     do {
+-        if (cpu->accel->dirty) {
++        if (cpu->vcpu_dirty) {
+             nvmm_set_registers(cpu);
+-            cpu->accel->dirty = false;
++            cpu->vcpu_dirty = false;
+         }
+ 
+         if (qcpu->stop) {
+@@ -827,32 +826,32 @@ static void
+ do_nvmm_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
+ {
+     nvmm_get_registers(cpu);
+-    cpu->accel->dirty = true;
++    cpu->vcpu_dirty = true;
+ }
+ 
+ static void
+ do_nvmm_cpu_synchronize_post_reset(CPUState *cpu, run_on_cpu_data arg)
+ {
+     nvmm_set_registers(cpu);
+-    cpu->accel->dirty = false;
++    cpu->vcpu_dirty = false;
+ }
+ 
+ static void
+ do_nvmm_cpu_synchronize_post_init(CPUState *cpu, run_on_cpu_data arg)
+ {
+     nvmm_set_registers(cpu);
+-    cpu->accel->dirty = false;
++    cpu->vcpu_dirty = false;
+ }
+ 
+ static void
+ do_nvmm_cpu_synchronize_pre_loadvm(CPUState *cpu, run_on_cpu_data arg)
+ {
+-    cpu->accel->dirty = true;
++    cpu->vcpu_dirty = true;
+ }
+ 
+ void nvmm_cpu_synchronize_state(CPUState *cpu)
+ {
+-    if (!cpu->accel->dirty) {
++    if (!cpu->vcpu_dirty) {
+         run_on_cpu(cpu, do_nvmm_cpu_synchronize_state, RUN_ON_CPU_NULL);
+     }
+ }
+@@ -982,7 +981,7 @@ nvmm_init_vcpu(CPUState *cpu)
+         }
+     }
+ 
+-    qcpu->dirty = true;
++    qcpu->vcpu_dirty = true;
+     cpu->accel = qcpu;
+ 
+     return 0;
 -- 
 2.49.0
 
