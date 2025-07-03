@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57ED6C77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:09:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5AD3C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:09:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXMUK-0006oM-0l; Thu, 03 Jul 2025 12:08:40 -0400
+	id 1uXMUl-000763-IM; Thu, 03 Jul 2025 12:09:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXMUH-0006lL-AZ
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:08:37 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ id 1uXMUe-00073H-DJ
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:09:00 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXMUF-0006bO-9a
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:08:37 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-71101668dedso83828137b3.1
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:08:34 -0700 (PDT)
+ id 1uXMUc-0006t0-RI
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:09:00 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-70f94fe1e40so13923017b3.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:08:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751558914; x=1752163714; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751558937; x=1752163737; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=lCvU/m/7QnECpkclSu123WI8su8DE7lFRvsuZY4qDQc=;
- b=ovt2wfJLZXkb2jO1RwR8TwRktGJ8qKqyK/uKnScwtdQP8Gxfm062Uo4fPSB9G6J3KL
- eT5TPStcDTU+aG0gCFF7R7F68wLNnF1ELuFXqDNvkLt5A+DsLlK3KMbVPl1t0qOFa4JM
- 78nmWnHKqacbbAPRs5HnjAhQVmJqn/HcNJkyTMplCZMZv94e9UoVhAU4GY9Te3kTmu1/
- Vz+AIR5D+aBZzsnbCADAbU8wStbFqhmxyQIus5kp7BiVJFcVtWTBc8wtspY3TP36lVbb
- NXb/fJIeylRUYMm+9T0xfx3OJeiCQ542P+yUVVL537Igz2hEY1fg7hBqNbuaKC8DSDO3
- 5LhQ==
+ bh=9UiVuqsA2q9rqnblnN4LVVLr24ECC42x+6TQAhdcejg=;
+ b=I8FNA8US38jo+KzkoCFqpCDyHYwWFPuL0HY7ZsvBPpVRFzFNYxNV7cvubI7yZVYw6C
+ zhMJyX87WjObVi0J69bYGqJgl0crCPZLEt9OIC6Ed50qMm2VLK2cxcnjfCI3KeQJqv7U
+ AQd25TjdgXW8hyMMQhaePVWCMME4+2s+Hu3z4l1JrymtY/VmghmGN/FalCOzJsaqvSJm
+ dAI3DPPA2nVf051XUaqi+DnII4X/uN3eKK+5Zd35dBJnAlkHQvsoM7JQ+LCAMOdOI/mC
+ CinXIzATCRbcH5aH52LFDZM4G5AW7Ob4LLyHrJRwIGUHxtO3YJHGKTlHa4qvHKs1ME0S
+ N8ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751558914; x=1752163714;
+ d=1e100.net; s=20230601; t=1751558937; x=1752163737;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lCvU/m/7QnECpkclSu123WI8su8DE7lFRvsuZY4qDQc=;
- b=Qh6XIH5z35BYhCF26ZY5qDc0z3Rha5CfPDQnQkLeFUgWYn75qVLN+/Ty1EGDZDut3D
- Lf0ZYQ59a+UJf6pxvCQXxma1iJqVAQCUCG6/QNAubAH5lSdd5h2lIUskn3Z9NqmI3lei
- oBl1FTN3k8ipKqIMbW1tfjCzbRfr438PGteA49PAJ6PALkKi4yT1bJGxgMSPQB3OQSJH
- 7iBaHmXnohH6/zuvpRIVwMBanYMkvzs6DmR66M5q4/XZ5qzQo/b0xAiigRXwTBKnos2V
- lrcWGUuNpXoO7b/a8mHCIN9DAm7/WqZByAt7C7oFD8/jqpdIv/FYS5x5TgQEcVPHcpCj
- XrpA==
-X-Gm-Message-State: AOJu0Yy73MvCaKXN4t0Ioz0b8f427Qu0Trnh8hr9CC7b9Ew5Rus9krDE
- MwjpqLUasJbVrv0FiyCeARmo55sXeSXhg1VMqAfiFwq77Dj/wQUN4OFbNiOfKNIe543FztRvQNv
- ocokekRx3yF2A0nDscvZQvuVKy2WPephlNREEorHwmw==
-X-Gm-Gg: ASbGncu6J90M/Dh6+XTLgHBZFkUIIRMUPRGft8WDqp8kN9T4Gl6XzL+gPFNFymDAlS7
- EjosVp3t7VM4JbK15uJL2ag2uyE/SMYYsL9YCMF5NXacKMHiUH6z9W7qSLkP9xO6QEal6SbCbx3
- HjQUEsP+2LnxWW9DfV2GhiiQHPN3G8q0JEUB0A75RnlLC5
-X-Google-Smtp-Source: AGHT+IFx0DCKfyIgRb2mdaTkK5oaiGsLkcfy1w3xy1yXLbvFBIB0ZcLcrzx37iWqt9DCZixI3+myjw9pc7bfi8yF8lI=
-X-Received: by 2002:a05:690c:ec3:b0:70e:86a:ae1e with SMTP id
- 00721157ae682-7164d4d0aa8mr105745637b3.22.1751558913557; Thu, 03 Jul 2025
- 09:08:33 -0700 (PDT)
+ bh=9UiVuqsA2q9rqnblnN4LVVLr24ECC42x+6TQAhdcejg=;
+ b=nLsIlG0iCdsEJCtLpjRgcOi5P7ohKcv/4Bw39D0OcbtBFcONxTU5vyUmGdEqGcdu72
+ AJ3tnQjQVmLRB2TaucmlSG71X+OSgwkdaslLtScGKQP8znfwjGOpZZ4Aq5ARgmkzQ4kJ
+ Q+NTuWQg6/XQbHoQfxzpjfZceYlkaHRv35yNH0Yvp/lm50VrgD4g11C7TMwXjksR6PRG
+ NbOsSbSQ/sIulEIqie/0NIqkLTVREUPwHZtQl5QrbsJD47GHJeHhkPM3zicw5SMJjVM3
+ GDbVG9+I8N+nlzf1CeVTDUejJ7b5vEWVPp/WWsWQlBvIVp8xc/gH4ZIN4VTDCRrp/icW
+ Ih7w==
+X-Gm-Message-State: AOJu0YwyKZOYBOuapPVGQot2hHDTW52BvBjqOAti9OAqzSB+A6dngVMG
+ HoOSx9MAhC5pXMSSD39znuNIv5pEbCFgPgO95W3wj25N4Xni3QZPi4Ag+Tf35tJ+K5VuPEXhEJE
+ ccYWDC5bs19xkyQkXZzDRjLrdJyDRZcgHO1wN8Hj+Wg==
+X-Gm-Gg: ASbGncvtrSNKGoFFkix75qdo+UiBPO78Czl46hFkvDaJu0DkELmvW4iTck7uwpWgD6M
+ aNm9EBNmKIA69UXCqX5WAxd0HzN1NKQHstxlHhwbVZvERd7yxN1eyIvcuy9qSXZKShpo4+HmBao
+ KdOb4Z3Tc6phtkawYWo+YQGwoT5GtlkODnJ8UPjOOrdhkH
+X-Google-Smtp-Source: AGHT+IE8ftNyvlltKFYBsduyW+1kr9g1svbX8mBQjJydVNYRnqE6S6ZsSI+QiMVXHuRJtVvx76dvjvdGRfJaFmiXEBg=
+X-Received: by 2002:a05:690c:c07:b0:713:ffaa:5767 with SMTP id
+ 00721157ae682-7165ca5e39dmr35976387b3.7.1751558937115; Thu, 03 Jul 2025
+ 09:08:57 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250618230549.3351152-1-jcksn@duck.com>
- <20250618230549.3351152-2-jcksn@duck.com>
-In-Reply-To: <20250618230549.3351152-2-jcksn@duck.com>
+ <20250618230549.3351152-3-jcksn@duck.com>
+In-Reply-To: <20250618230549.3351152-3-jcksn@duck.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 3 Jul 2025 17:08:21 +0100
-X-Gm-Features: Ac12FXwSVMnspAZ7PJaQSQiRwGkOnk_RpN31M6dI2KXO5ckblCezMpIsSAmEeAQ
-Message-ID: <CAFEAcA-7u4eT_mah_0GGj3XGBVMZDaq-bQZ6Rr6wECk0cM5DoQ@mail.gmail.com>
-Subject: Re: [PATCH v2 01/11] MAX78000: Add MAX78000FTHR Machine
+Date: Thu, 3 Jul 2025 17:08:45 +0100
+X-Gm-Features: Ac12FXwxu_iNEyEMrOb_Ea4m65DuWvr4ZoJn0Z1I943iulFb_4qFhZmTeQ7Y4sQ
+Message-ID: <CAFEAcA9_PyYPx6gr9JLFSsb8WcjxyKLjzvNgsc2+u1-uzy7jVw@mail.gmail.com>
+Subject: Re: [PATCH v2 02/11] MAX78000: ICC Implementation
 To: Jackson Donaldson <jackson88044@gmail.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,33 +94,21 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu, 19 Jun 2025 at 00:05, Jackson Donaldson <jackson88044@gmail.com> wrote:
 >
-> This patch adds support for the MAX78000FTHR machine.
->
-> The MAX78000FTHR contains a MAX78000 and a RISC-V core. This patch
-> implements only the MAX78000, which is Cortex-M4 based.
-> Details can be found at:
-> https://www.analog.com/media/en/technical-documentation/user-guides/max78000-user-guide.pdf
+> This commit implements the Instruction Cache Controller
+> for the MAX78000
 >
 > Signed-off-by: Jackson Donaldson <jcksn@duck.com>
 > ---
->  hw/arm/Kconfig                |  10 ++
->  hw/arm/max78000_soc.c         | 172 ++++++++++++++++++++++++++++++++++
->  hw/arm/max78000fthr.c         |  50 ++++++++++
->  hw/arm/meson.build            |   2 +
->  include/hw/arm/max78000_soc.h |  35 +++++++
->  5 files changed, 269 insertions(+)
->  create mode 100644 hw/arm/max78000_soc.c
->  create mode 100644 hw/arm/max78000fthr.c
->  create mode 100644 include/hw/arm/max78000_soc.h
+>  hw/arm/Kconfig                 |   1 +
+>  hw/misc/Kconfig                |   3 +
+>  hw/misc/max78000_icc.c         | 120 +++++++++++++++++++++++++++++++++
+>  hw/misc/meson.build            |   1 +
+>  include/hw/misc/max78000_icc.h |  33 +++++++++
+>  5 files changed, 158 insertions(+)
+>  create mode 100644 hw/misc/max78000_icc.c
+>  create mode 100644 include/hw/misc/max78000_icc.h
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-(in case you're not familiar with the email patch workflow, that means
-that when you do a v3 of this patchset, you should include that
-line in the commit message for this patch, unless you made changes
-to this patch:
-https://www.qemu.org/docs/master/devel/submitting-a-patch.html#proper-use-of-reviewed-by-tags-can-aid-review
-)
 
 thanks
 -- PMM
