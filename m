@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCD90C77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 11:03:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6958CC83030
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 11:03:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXHie-0004mI-Te; Thu, 03 Jul 2025 07:03:09 -0400
+	id 1uXHgH-0007cT-0I; Thu, 03 Jul 2025 07:00:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHfh-0006ml-KY
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 07:00:06 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHdL-0004vS-Bt
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 06:57:41 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHfU-0003XO-QL
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 06:59:54 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-450ce3a2dd5so43401915e9.3
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 03:59:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHdI-0001yf-MT
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 06:57:39 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3a57ae5cb17so3616560f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 03:57:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751540391; x=1752145191; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751540254; x=1752145054; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=m+WutgSqJXFykFHZTQaYKZd8VkTwajJGbTU9Mch4jWg=;
- b=MzYsJFueLFbgQ0EdUphQWw5SQdWOShBlR5MMxtviPGuqKtwnOpbdTcSHyUKXbnA1b5
- +33+6fIl10pZq+9W86y3IyDSLFcuHTl5QnJDANyaVpp/r7xut0eK2JEht9XjuC2QHX0L
- o6nWoFha99ROGGgt3bGNiVuj/rTZRAXvhczx7kzQmW02z+yPzBVeG1Ras0TrbXtDi60q
- gJPzKvsEJs14wBA5MVOEXccJRamdKvVOWEBaak7vu1X2EJ9n88xPpE/FnIBmdt9W6JSa
- QHHMx/HhvSoLrlCmyy8/uG3cxHbbTlwTJC1sa5APXeE3NwS1dn6Y6CNYgTyFwKS6e7Tp
- uN8A==
+ bh=MzsXmG16DASHWsIXbw9ajDisw+zUQq9t5Ugm0qpyfec=;
+ b=cui+xxFWWolOZkxZJnt8vI6U1sp1TpQtJoICNciclGJ6s8GjbOXep6l/Icl76+w+xb
+ pE1gR/lFH2q9LpuZYdxD72a05g5HIPkpCriMeOzW8ruzAPf882oufOa87o6SFXvb2fYM
+ iPhFX/JNZXAmzxuvPTzO2hVxbfvhffSzUX+kisqo6ZMVR46qCo9mJQAEppRz4vQ9Jc5z
+ YPk/fh4vfJY6VonY1JzVzbyQvS6E3hbU2NjP/LkMi/6fh2iCx+7wjr9XdZQ+e78cmfx0
+ g3vxxe1Qnd56kSMNBwg9oGzNgpM9CumYti6gxTn2ovegGLINKqmt7bdgTe/ZYpCuawrb
+ QPew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751540391; x=1752145191;
+ d=1e100.net; s=20230601; t=1751540254; x=1752145054;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=m+WutgSqJXFykFHZTQaYKZd8VkTwajJGbTU9Mch4jWg=;
- b=E9I3+V/gU20QsyqLqk3j/G9AHFFXoNxXAzT6NxEctB2ebmYgjqAcWnUsmFxuuMy+p/
- d8IT38H9Uf6KMTatkZcTUZeDYcvsXJQXMPXq5jWPmWc5Fyd0MDNGd3pg7nxrwjCbmxE8
- bXQrnb+r4bVG+cmWq0uH07zdODUuzzHY1AEtutpdrrXgASJEclrmNEnr0ErSAijOe0jD
- uC3BdNIc0hhOOboIc0FPQ5/sDviMSI6UVIaQMwI8/6FfkueLBftKjOd6PULjycp+6iqG
- s5/BYj3i7KWdfwnCvAc2fP+q58ztvCIY1tQzonUcQlFaI2tEyS+xCjfJB8W4d2JPnlNe
- /wkQ==
-X-Gm-Message-State: AOJu0YzZuW8SQqGDpbS2Ekk0GjqMxqbYv5ILqLWU/ccJGRR/VdBsk1lF
- 0g4EQL6UW38agRvYpfxENWqgmvsdDVJtSZ72GkOPDhYJBlShHynQR9Z+/DJ6Rnjxv/HvYCvlCSf
- eBjv1BHE=
-X-Gm-Gg: ASbGncvkZ34C7JFH3nb5F1YQsntawRttkWrpXkpQSDv3mCevHIfwPPiAVC+2sJ2CH8g
- +1XsKyqgOSs4lPXnZDhhYz/UeakOzMxS748f3x3ZqoS8vEggqlEG3Ov0xMq37iXNdsB/e1/Muei
- stbgNTPAOUSkrkbOCN2Lhcg+zcncqK1mvmiNa505Mv6URWYkoFdOO3Hvd1zQxgbd2NV2RMChfaT
- dy8uMpHxiASFNoYaC7G8GIn/bURyQ8mePCyR754+TmQWWoDxN9sD7OiAlhloW9p2bGXN7Gl4PyK
- AMnza1sb/ZOEvkNVyL/zj6oldGNgFqUk238xDx0sSsUC4DxEnmhucgB0rnbnvUuLKwSZo5qS2CL
- yrtzm+DePBmk=
-X-Google-Smtp-Source: AGHT+IFkJTWECY2pugXbhxGY6HjeCgJxFNGAomzZaEG1B6sFjMYNKg+pM1wp3bta32pi3CVqInJhiA==
-X-Received: by 2002:a05:600c:6792:b0:450:c20d:64c3 with SMTP id
- 5b1f17b1804b1-454a370308cmr75309655e9.18.1751540390713; 
- Thu, 03 Jul 2025 03:59:50 -0700 (PDT)
+ bh=MzsXmG16DASHWsIXbw9ajDisw+zUQq9t5Ugm0qpyfec=;
+ b=E6HlE8vQmkcbeCQ6dOsW5rEzWKofT1AcqHOBeCu8NK2xZAc5vDwW7BEFwsSDT/mxrc
+ FNcfWWtIECCwM9/mUt0gYF+pDLT1g3Pm5qdy3jSl/A2PTEzexeznE4JZ+lqFIpgx0Z8B
+ DhpYrpRqZWrdItpPKgnyIIe/9d2wcHupABMmy6PK7YHBN7oSIk2F76slyb7N0tLifs0m
+ k7YC+SDxamoVkSN7hnGWNqB4WllUvkpF171ge0RZSeoMIcNGpuG2/Nk95Ac6VteuGjTe
+ StZMG77q9SLlGNmW1nj3ceZOh2fLZY8l4gWnNWScfYhE7PF1PPiM418qOE4eyWzXFAo7
+ EMwA==
+X-Gm-Message-State: AOJu0YwX8+P2VEapDf97eA3iKFsbbkHZyHAjrPvrGXsqCJxf9mqdWSDA
+ YR4FN9A+rrxoBcn1Yj6DkP0coKDtU8g53TBCxL9PV7YNDC7k9JpYE8CnsCwMBTC1IUhutXQqh6I
+ i+e/l1AQ=
+X-Gm-Gg: ASbGncvCeW15sQd22cEb2Lj7vX92UFQIn8j/f76Sqb97Ykh2edts2T0cR31S+TS+8Rw
+ /kUe7TDXe7ctvG0u4AUFCFMOlSe/77UcrcBHZ4ZKJBQbQGrjrhjLaOq8lykqo2dJwv1NQzRzMnH
+ 0GHYX9gn4jAWbIz4FN3CNu8Td+tHeY4WqnSgJC1o3IFwtEHgMVFAiLbw0Mli9cYZw9rtCvkssnS
+ sTN4nypbqbUbv5DrbW2vjAvlnqZGxgkyPj4dP/Pk5gQa+MlVfsg7jCkxDIPFceBaAs8alg6rVUd
+ SgapVJORGGqFUrXgAg1yknt67M/aNDIpILti8HVp/RNoh+SrVjJgaLwvy/ATSuezm62Z5FFMlIw
+ SdsNkYoQdEuE=
+X-Google-Smtp-Source: AGHT+IH/6u+aXxLt7sGZ69z19XQupL3QFWV9ITJcqOhSUMtGX9QWGmsqODskJ2yOy8OR7GzwbiBLiw==
+X-Received: by 2002:a05:6000:42c9:b0:3a4:ef30:a4c8 with SMTP id
+ ffacd0b85a97d-3b32bae096bmr1447841f8f.10.1751540253936; 
+ Thu, 03 Jul 2025 03:57:33 -0700 (PDT)
 Received: from localhost.localdomain ([83.247.137.20])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454a9989423sm23583475e9.19.2025.07.03.03.59.49
+ ffacd0b85a97d-3a892e5f8b6sm18666357f8f.91.2025.07.03.03.57.32
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Jul 2025 03:59:50 -0700 (PDT)
+ Thu, 03 Jul 2025 03:57:33 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -70,26 +70,26 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, kvm@vger.kernel.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-Subject: [PATCH v5 47/69] target/arm: Use generic hwaccel_enabled() to check
- 'host' cpu type
-Date: Thu,  3 Jul 2025 12:55:13 +0200
-Message-ID: <20250703105540.67664-48-philmd@linaro.org>
+ Sunil Muthuswamy <sunilmut@microsoft.com>
+Subject: [PATCH v5 21/69] accel/system: Convert pre_resume() from
+ AccelOpsClass to AccelClass
+Date: Thu,  3 Jul 2025 12:54:47 +0200
+Message-ID: <20250703105540.67664-22-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250703105540.67664-1-philmd@linaro.org>
 References: <20250703105540.67664-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,54 +105,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We should be able to use the 'host' CPU with any hardware accelerator.
+Accelerators call pre_resume() once. Since it isn't a method to
+call for each vCPU, move it from AccelOpsClass to AccelClass.
+Adapt WHPX.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/arm-qmp-cmds.c | 5 +++--
- target/arm/cpu.c          | 5 +++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ include/qemu/accel.h              | 3 +++
+ include/system/accel-ops.h        | 1 -
+ target/i386/whpx/whpx-accel-ops.h | 1 -
+ accel/accel-system.c              | 9 +++++++++
+ system/cpus.c                     | 4 +---
+ target/i386/whpx/whpx-accel-ops.c | 1 -
+ target/i386/whpx/whpx-all.c       | 3 ++-
+ 7 files changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
-index cefd2352638..ee5eb1bac9f 100644
---- a/target/arm/arm-qmp-cmds.c
-+++ b/target/arm/arm-qmp-cmds.c
-@@ -30,6 +30,7 @@
- #include "qapi/qapi-commands-misc-arm.h"
- #include "qobject/qdict.h"
- #include "qom/qom-qobject.h"
-+#include "system/hw_accel.h"
- #include "cpu.h"
+diff --git a/include/qemu/accel.h b/include/qemu/accel.h
+index 518c99ab643..065de80a87b 100644
+--- a/include/qemu/accel.h
++++ b/include/qemu/accel.h
+@@ -47,6 +47,7 @@ typedef struct AccelClass {
+     bool (*has_memory)(AccelState *accel, AddressSpace *as,
+                        hwaddr start_addr, hwaddr size);
+     bool (*cpus_are_resettable)(AccelState *as);
++    void (*pre_resume_vm)(AccelState *as, bool step_pending);
  
- static GICCapability *gic_cap_new(int version)
-@@ -116,8 +117,8 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-         return NULL;
+     /* gdbstub related hooks */
+     bool (*supports_guest_debug)(AccelState *as);
+@@ -86,6 +87,8 @@ int accel_init_machine(AccelState *accel, MachineState *ms);
+ /* Called just before os_setup_post (ie just before drop OS privs) */
+ void accel_setup_post(MachineState *ms);
+ 
++void accel_pre_resume(MachineState *ms, bool step_pending);
++
+ /**
+  * accel_cpu_instance_init:
+  * @cpu: The CPU that needs to do accel-specific object initializations.
+diff --git a/include/system/accel-ops.h b/include/system/accel-ops.h
+index fb199dc78f0..af54302409c 100644
+--- a/include/system/accel-ops.h
++++ b/include/system/accel-ops.h
+@@ -47,7 +47,6 @@ struct AccelOpsClass {
+     void (*synchronize_post_init)(CPUState *cpu);
+     void (*synchronize_state)(CPUState *cpu);
+     void (*synchronize_pre_loadvm)(CPUState *cpu);
+-    void (*synchronize_pre_resume)(bool step_pending);
+ 
+     void (*handle_interrupt)(CPUState *cpu, int mask);
+ 
+diff --git a/target/i386/whpx/whpx-accel-ops.h b/target/i386/whpx/whpx-accel-ops.h
+index e6cf15511d4..54cfc25a147 100644
+--- a/target/i386/whpx/whpx-accel-ops.h
++++ b/target/i386/whpx/whpx-accel-ops.h
+@@ -21,7 +21,6 @@ void whpx_cpu_synchronize_state(CPUState *cpu);
+ void whpx_cpu_synchronize_post_reset(CPUState *cpu);
+ void whpx_cpu_synchronize_post_init(CPUState *cpu);
+ void whpx_cpu_synchronize_pre_loadvm(CPUState *cpu);
+-void whpx_cpu_synchronize_pre_resume(bool step_pending);
+ 
+ /* state subset only touched by the VCPU itself during runtime */
+ #define WHPX_SET_RUNTIME_STATE   1
+diff --git a/accel/accel-system.c b/accel/accel-system.c
+index 637e2390f35..11ba8e24d60 100644
+--- a/accel/accel-system.c
++++ b/accel/accel-system.c
+@@ -62,6 +62,15 @@ void accel_setup_post(MachineState *ms)
      }
+ }
  
--    if (!kvm_enabled() && !strcmp(model->name, "host")) {
--        error_setg(errp, "The CPU type '%s' requires KVM", model->name);
-+    if (!hwaccel_enabled() && !strcmp(model->name, "host")) {
-+        error_setg(errp, "The CPU type 'host' requires hardware accelerator");
-         return NULL;
-     }
- 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index ebac86f70d3..e37376dbd2d 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1978,8 +1978,9 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-      * this is the first point where we can report it.
++void accel_pre_resume(MachineState *ms, bool step_pending)
++{
++    AccelState *accel = ms->accelerator;
++    AccelClass *acc = ACCEL_GET_CLASS(accel);
++    if (acc->pre_resume_vm) {
++        acc->pre_resume_vm(accel, step_pending);
++    }
++}
++
+ bool cpus_are_resettable(void)
+ {
+     AccelState *accel = current_accel();
+diff --git a/system/cpus.c b/system/cpus.c
+index 4fb764ac880..2c3759ea9be 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -762,9 +762,7 @@ int vm_prepare_start(bool step_pending)
+      * WHPX accelerator needs to know whether we are going to step
+      * any CPUs, before starting the first one.
       */
-     if (cpu->host_cpu_probe_failed) {
--        if (!kvm_enabled() && !hvf_enabled()) {
--            error_setg(errp, "The 'host' CPU type can only be used with KVM or HVF");
-+        if (!hwaccel_enabled()) {
-+            error_setg(errp, "The 'host' CPU type can only be used with "
-+                             "hardware accelator such KVM/HVF");
-         } else {
-             error_setg(errp, "Failed to retrieve host CPU features");
-         }
+-    if (cpus_accel->synchronize_pre_resume) {
+-        cpus_accel->synchronize_pre_resume(step_pending);
+-    }
++    accel_pre_resume(MACHINE(qdev_get_machine()), step_pending);
+ 
+     /* We are sending this now, but the CPUs will be resumed shortly later */
+     qapi_event_send_resume();
+diff --git a/target/i386/whpx/whpx-accel-ops.c b/target/i386/whpx/whpx-accel-ops.c
+index b8bebe403c9..011810b5e50 100644
+--- a/target/i386/whpx/whpx-accel-ops.c
++++ b/target/i386/whpx/whpx-accel-ops.c
+@@ -95,7 +95,6 @@ static void whpx_accel_ops_class_init(ObjectClass *oc, const void *data)
+     ops->synchronize_post_init = whpx_cpu_synchronize_post_init;
+     ops->synchronize_state = whpx_cpu_synchronize_state;
+     ops->synchronize_pre_loadvm = whpx_cpu_synchronize_pre_loadvm;
+-    ops->synchronize_pre_resume = whpx_cpu_synchronize_pre_resume;
+ }
+ 
+ static const TypeInfo whpx_accel_ops_type = {
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index f0be840b7db..821167a2a77 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -2106,7 +2106,7 @@ void whpx_cpu_synchronize_pre_loadvm(CPUState *cpu)
+     run_on_cpu(cpu, do_whpx_cpu_synchronize_pre_loadvm, RUN_ON_CPU_NULL);
+ }
+ 
+-void whpx_cpu_synchronize_pre_resume(bool step_pending)
++static void whpx_pre_resume_vm(AccelState *as, bool step_pending)
+ {
+     whpx_global.step_pending = step_pending;
+ }
+@@ -2703,6 +2703,7 @@ static void whpx_accel_class_init(ObjectClass *oc, const void *data)
+     AccelClass *ac = ACCEL_CLASS(oc);
+     ac->name = "WHPX";
+     ac->init_machine = whpx_accel_init;
++    ac->pre_resume_vm = whpx_pre_resume_vm;
+     ac->allowed = &whpx_allowed;
+ 
+     object_class_property_add(oc, "kernel-irqchip", "on|off|split",
 -- 
 2.49.0
 
