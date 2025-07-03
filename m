@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85DD6C83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 08:32:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C2F5C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 08:32:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXFMY-00009V-8R; Thu, 03 Jul 2025 04:32:10 -0400
+	id 1uXFMY-0000AD-Gc; Thu, 03 Jul 2025 04:32:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXFML-0008V7-Dn
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 04:32:03 -0400
-Received: from mgamail.intel.com ([198.175.65.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXFMI-0006d2-Hg
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 04:31:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751531515; x=1783067515;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=ByU4hpYzsvjOd9VZE1TBCs8POchjSwZa0YYeiaUeNw0=;
- b=IcAE1/7Dux+5zeEOBNgsZwiq9QiyYSpQPRgZrDUK/DQtzSlz9LDeoBsl
- tjiLrbRVjHcOtDiwH2DRy+g4MNRvkqg28663ZmL2hgZqljBZAKNHDkSSF
- /DG/tw785a+ejTxn4peU0VEjBgqPYMokDoaGyMdzgpXYywT/c5/CKchR1
- KHjfbtsgIKSSto94Jv/bw/TVCn0xsz5Usz23iiL529ghmhxHKJiu512EF
- UalMOLAdzVo1RSp7pN4UbSWQfx8cRAGX4eKHmqNAYEHLw+RJ+thq1EpNk
- eHVc+BodCLa2s/1RVq37kTRD6ftwVsXR1nnRqV9bTHPfqzBgTrcsI8He5 g==;
-X-CSE-ConnectionGUID: ljtvigf8SfKeI8oAFwj9Mg==
-X-CSE-MsgGUID: jtdfH8qVRK+f0y8CL2B4gg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="53961007"
-X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="53961007"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2025 01:31:44 -0700
-X-CSE-ConnectionGUID: AuvEBSWtSWyGr0z8bLAlKw==
-X-CSE-MsgGUID: HlkdXOsfS96ROan7iqiTJg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="154797421"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa008.jf.intel.com with ESMTP; 03 Jul 2025 01:31:39 -0700
-Date: Thu, 3 Jul 2025 16:53:04 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Mads Ynddal <mads@ynddal.dk>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Reinoud Zandijk <reinoud@netbsd.org>,
- Sunil Muthuswamy <sunilmut@microsoft.com>, kvm@vger.kernel.org,
- xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v4 56/65] accel: Expose and register
- generic_handle_interrupt()
-Message-ID: <aGZE8PkdEEVxU+Gm@intel.com>
-References: <20250702185332.43650-1-philmd@linaro.org>
- <20250702185332.43650-57-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <kosasihwilliam4@gmail.com>)
+ id 1uXFM7-0008Rk-FA; Thu, 03 Jul 2025 04:31:43 -0400
+Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <kosasihwilliam4@gmail.com>)
+ id 1uXFM5-0006az-MP; Thu, 03 Jul 2025 04:31:43 -0400
+Received: by mail-yb1-xb2b.google.com with SMTP id
+ 3f1490d57ef6-e819ebc3144so6841856276.0; 
+ Thu, 03 Jul 2025 01:31:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1751531499; x=1752136299; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ACN3/5ZwuMHWPnIM2LvNkb6ZNX2drFxWaI640q4NOCk=;
+ b=NlHEnfeDKaMMeRMARD7OfVUuwmxr74AI6pBvvv0uXS5grSxUlbXhytWtxMMD9Pwvxd
+ N4diRdtY/o8g3F0S94v7p3SHw2fEvawCG3AXKwrt8alqDCKb87gJ4pt594mldOTntBxy
+ Qo7S1QVgUfJmFXIp1LDgRdsfEs/RQFO3UzPrQhRGSd8rFMoxikoofO97ORNUhzxVxSkY
+ dOLL78iZNS0wydiCaEBb/J3nIyTVWLV1E7ItCip2EM2sLiGflyVr4OR7kKyKr2fAP1Rx
+ K49RXPgU4kdUYaHFyIKZvIHYSyWTYBJXEVB7zxaUYYlnW0tsDiICRpXzpOUZcvnXQXvv
+ 4I3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751531499; x=1752136299;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ACN3/5ZwuMHWPnIM2LvNkb6ZNX2drFxWaI640q4NOCk=;
+ b=ZHjBq+62CTLlUwpPj3Xwg2Dm697V58dGBErLfxcD/QR0H2Q+X4k+YGsjnxJg3YOkVm
+ UKnoSJaCWngMJ+I882tolfyFKf2Q3WpEGCR4kLOj+ARDj7yD6/1imIkRKNz4FOFukrcD
+ 7q2z9xEv431Yj3YKbF5uV05n5l26oAzzw3XNrwTUgRCCelB0EDxbta9/YOEYjtrqfXDu
+ 3ZhzBN9Q3zk+YBIHckc1auw9LM1UFBS3bM/ENNxiBs4d+JjpLNK4LrMtbGrapwVcbMew
+ 1LiI/AetIlIlxFiCX4GjgjGohkS+rqilUNbyBP+BFxbTFBqPKmEvjYvo1XvPAsPcPvkw
+ pk9g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUCIF54Ee4MPKMS48K9+CfWkiL81BF+gY0dkrhjbMb4dYhP4Q8wvC6eBnusfMUKePNwaWbxEPmnKg==@nongnu.org
+X-Gm-Message-State: AOJu0YyLeky5mK5zEBI9sDCvEXegqO4wtkeGPAd+3HjCiHq7U8y7kpan
+ x5y27hc3yWCvIspnABBLEoqAWQYo0J5Owr35VC947Z61p79mhdOornqpEyVF7ydhAvZZhrhnRVg
+ 5D8Q9BdKK4Xph8VomP6HTlLN9EzXFcO0=
+X-Gm-Gg: ASbGncscdhUj0j6NAMp3yTAwzw+MgH94Csg5rnvCRRTNIWLGKknuM2CaZXtEPEREkj2
+ 59NbaYfwA1sWUb1bv5O1YYh0iMUxEcAHWpxjK/CKsbtIX+ZB7XvfpTK/lVDp5j445YkriDzT3Tb
+ dTi+hWDfZTnK6EpjpjzYc1IMpmf/dI28/INNmzTJ+EgZg=
+X-Google-Smtp-Source: AGHT+IHAU7GG+0ZBhY1SJMSuyjy1D0pZhzrSXUi5Cfrvl0VDj+KwYzn4eOr88y87NKbpRWZhiRTPbfFNuJtrjqhefEI=
+X-Received: by 2002:a05:6902:160d:b0:e87:a485:b430 with SMTP id
+ 3f1490d57ef6-e898f9caefbmr2933418276.35.1751531499377; Thu, 03 Jul 2025
+ 01:31:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250702185332.43650-57-philmd@linaro.org>
-Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20250702111954.128563-1-kosasihwilliam4@gmail.com>
+ <20250702111954.128563-5-kosasihwilliam4@gmail.com>
+ <bfdc5e5d-40fa-49e6-88d4-b70dcbdfd71d@linaro.org>
+In-Reply-To: <bfdc5e5d-40fa-49e6-88d4-b70dcbdfd71d@linaro.org>
+From: William Kosasih <kosasihwilliam4@gmail.com>
+Date: Thu, 3 Jul 2025 18:01:27 +0930
+X-Gm-Features: Ac12FXwtUjcfdobSiDA5d862nUAbeSn_L2C7ukHrAzJ_lWuieKk0BFB10fig9jc
+Message-ID: <CAG66A_fib3v1HM=R4A6sv3OU77JmhY8VHpA_qJ6i1n42kiiNNA@mail.gmail.com>
+Subject: Re: [PATCH v3 04/12] target/arm: Fix VLDR helper load alignment checks
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000d558cc0639023430"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
+ envelope-from=kosasihwilliam4@gmail.com; helo=mail-yb1-xb2b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,32 +95,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 02, 2025 at 08:53:18PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Wed,  2 Jul 2025 20:53:18 +0200
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v4 56/65] accel: Expose and register
->  generic_handle_interrupt()
-> X-Mailer: git-send-email 2.49.0
-> 
-> In order to dispatch over AccelOpsClass::handle_interrupt(),
-> we need it always defined, not calling a hidden handler under
-> the hood. Make AccelOpsClass::handle_interrupt() mandatory.
-> Expose generic_handle_interrupt() prototype and register it
-> for each accelerator.
-> 
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  include/system/accel-ops.h        | 3 +++
->  accel/hvf/hvf-accel-ops.c         | 1 +
->  accel/kvm/kvm-accel-ops.c         | 1 +
->  accel/qtest/qtest.c               | 1 +
->  accel/xen/xen-all.c               | 1 +
->  system/cpus.c                     | 9 +++------
->  target/i386/nvmm/nvmm-accel-ops.c | 1 +
->  target/i386/whpx/whpx-accel-ops.c | 1 +
->  8 files changed, 12 insertions(+), 6 deletions(-)
+--000000000000d558cc0639023430
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+>
+> Much better, thanks.
 
+Cheers! :-)
+
+Use MO_SB, MO_TESW here.
+
+It won't matter for normal operation, but the sign of the operation is
+> exposed to plugins.
+
+
+Ah okay. I'll update accordingly and copy over your Reviewed-by line.
+Thanks!
+
+On Thu, Jul 3, 2025 at 12:14=E2=80=AFAM Richard Henderson <
+richard.henderson@linaro.org> wrote:
+
+> On 7/2/25 05:19, William Kosasih wrote:
+> > +DO_VLDR(vldrb_sh, MO_UB, 1, int8_t, ldb, 2, int16_t)
+> > +DO_VLDR(vldrb_sw, MO_UB, 1, int8_t, ldb, 4, int32_t)
+> ...
+> > +DO_VLDR(vldrh_sw, MO_TEUW, 2, int16_t, ldw, 4, int32_t)
+>
+> Use MO_SB, MO_TESW here.
+>
+> It won't matter for normal operation, but the sign of the operation is
+> exposed to plugins.
+>
+>
+> r~
+>
+
+--000000000000d558cc0639023430
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Much bet=
+ter, thanks.</blockquote><div>Cheers! :-)</div><div><br></div><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
+d rgb(204,204,204);padding-left:1ex">Use MO_SB, MO_TESW here.</blockquote><=
+blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
+eft:1px solid rgb(204,204,204);padding-left:1ex">It won&#39;t matter for no=
+rmal operation, but the sign of the operation is exposed to plugins.=C2=A0<=
+/blockquote><div><br></div><div>Ah okay. I&#39;ll update accordingly and co=
+py over your Reviewed-by line. Thanks!=C2=A0</div></div><br><div class=3D"g=
+mail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On =
+Thu, Jul 3, 2025 at 12:14=E2=80=AFAM Richard Henderson &lt;<a href=3D"mailt=
+o:richard.henderson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:=
+<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8=
+ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On 7/2/25 05:19=
+, William Kosasih wrote:<br>
+&gt; +DO_VLDR(vldrb_sh, MO_UB, 1, int8_t, ldb, 2, int16_t)<br>
+&gt; +DO_VLDR(vldrb_sw, MO_UB, 1, int8_t, ldb, 4, int32_t)<br>
+...<br>
+&gt; +DO_VLDR(vldrh_sw, MO_TEUW, 2, int16_t, ldw, 4, int32_t)<br>
+<br>
+Use MO_SB, MO_TESW here.<br>
+<br>
+It won&#39;t matter for normal operation, but the sign of the operation is =
+exposed to plugins.<br>
+<br>
+<br>
+r~<br>
+</blockquote></div>
+
+--000000000000d558cc0639023430--
 
