@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34854C83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 11:18:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE914C83F04
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 11:18:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXHil-00053L-0B; Thu, 03 Jul 2025 07:03:15 -0400
+	id 1uXHkP-0007fT-L3; Thu, 03 Jul 2025 07:04:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHgP-0007pJ-4W
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 07:00:52 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHhX-0001jV-Ry
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 07:02:03 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHgK-0003w0-UE
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 07:00:46 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-3a6e2d85705so4324279f8f.0
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 04:00:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXHhV-0004BC-Md
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 07:01:59 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4535fbe0299so32571295e9.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 04:01:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751540443; x=1752145243; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tF+udBuXlMZaTJB7NQwpx0fE1exKYPgD405Hy0Dxyzg=;
- b=G2XpVDw9QhCqWMNjxyMt+2JBY7rCChvQqwtpfM3ev4k3Hs5l25lC1PKepadoAdPJHn
- o8kggRO+aCUGiW91nc/3eZOua+MTb+XPujDffNmIyHkBSPUDi2Rckmus6OWxwIBwCYmv
- 3h7UjtW+1HFRmvsG5BI/LTJNM/LuM/3LhFM4aYSOED8N15+YNDjlUFX++mO6LbZgj8pR
- hP/10/DwgRLBbhm1mCaQqcB4p2OrH56Ib6L0GJYx9pPSzIa6e3WYaApvfs3a2SFEwrEA
- oeIymow4HLyGfGS2lMNPAFFqH4JjYYk4watXcVtPlNhQBoLrxXTCAu+y5csq5VUZPH9v
- wMLw==
+ d=linaro.org; s=google; t=1751540514; x=1752145314; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=OohUo2uJk7GnemHNOOPbqmlHUCl8DjJKrjMI+LBrmxg=;
+ b=ct6JRg6jj9LAH7TvtP46mCil9VdXEcEKtalu/KlFhB5vYsJTY+WFrzc7vtmPl+hfIX
+ r9iy7zpLB41CSiRxDHp6jLroTSBN89HHd5VD43i+rrY/HmSIcFLxQwDcb6Djb0LKyVkY
+ 4Je780RGwgqNNVe7Yx99jmuzWU22CFnB69Z2G549AME6qSvM2z5ZhYyGuEUp9xLyFA3t
+ fJkFhJgSarJHd8S+gWHGBdpfejWpugrQwtQBojFifbl95CHg22ADRpWFh+twv4ipxhJc
+ ZJlsXrnX9Z5Q7x+A8Z34zqby6GdUDCT11kAdwu6fpznlKnrGgJcTfayinWt3gICxaxSs
+ OrRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751540443; x=1752145243;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tF+udBuXlMZaTJB7NQwpx0fE1exKYPgD405Hy0Dxyzg=;
- b=CHHMi++NtGJ2fgsn6IwJCN3bm1Fw4yTDXISTVdrpl1iqvWHUvTYxe0bJyry2rb6nnD
- 5TOUFgIGwetP4hBeMwgXSc0Dq0A7CB374q19CpqQyJNi8RLuFgIkwoZnHYYN7/JSXn9z
- oPcTGUZYTVD0W5AoBiUMVsMyznjyw7GLupMd6C69q6x0qQ7j4CQWSiUKo6sylp5+5nYV
- 5bnCU1e0fG+SY2vbVd3R2d/YQiIQ3d2YtCyKhnCSp4j6ZbMKx7YZuaCLq5XKn+NaYfzi
- qWvmFMvf0HxCHOvvj7sRca0XGWEVP135x2Z65+5KWakZ2tZfOQzHdIgSmXCrFtZ91Xh1
- 8zoA==
-X-Gm-Message-State: AOJu0YwriBaBrqzGXzV5iUL1ybkWZdCh0nSkMqmRqYse5xMfEs6Gv/qr
- 7eVw/kdV0n0rDbnycEvEfkQD2TiVoiW0OdHcOAQpDojesTp/Px2FvoqHh0Bzx5Jbp6q4jsPZ+LI
- XvMugqhM=
-X-Gm-Gg: ASbGncv3i/U7SXWoVqq1aBl+OwEjfB1vfcF5uC7Ms/1jQt44T0lNXbRwYV0sU+Tjkiv
- A7agVTIFRkz1hmehBA7jSs+XVKHN3St+ZweL9rXjNBOkm9kRaS1HaciVuAqFXY1MLFRA2Yuu4NZ
- 3KxfV2xrG4IzWg3mMD/G8S9jxoiGy62IaaM+a7EfH55beAVTAy3BP+lTbnwDLqPtb1Z+2ZdSr9d
- 8QD/7gbqwk2qfIMNmrjyHScyJNu87wflKbZ7ty2u1t2pbv1/pI9kKg1BieA46Bqjswir+yiQOr/
- 5Dtn3SM8UjKc2kEDyJTM98QWLNulkpF35DXgv/v2QnS+ccYRGLMbLtxnJlh+rTblxfyFJDyz39Z
- nlE9tDNXAPo0=
-X-Google-Smtp-Source: AGHT+IE9MaP6O8rg7LcUD14UXSi8Yb3/Nbk4djuxfcMPH9STA702dENVi7CTAIjgya/lSPc6DJculA==
-X-Received: by 2002:a05:6000:2503:b0:3a5:8a68:b82d with SMTP id
- ffacd0b85a97d-3b32f28e522mr2309608f8f.43.1751540442845; 
- Thu, 03 Jul 2025 04:00:42 -0700 (PDT)
-Received: from localhost.localdomain ([83.247.137.20])
+ d=1e100.net; s=20230601; t=1751540514; x=1752145314;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OohUo2uJk7GnemHNOOPbqmlHUCl8DjJKrjMI+LBrmxg=;
+ b=lbneXPkvrKMz97dxBQQyw9emztaz762SRFUR345KYzV1e5kzxTGxkJkjGLybqqZg4w
+ qMUly1VlbrWtviGq5c0OeVr75l/1CLyhqUZEDq840esoF2dKoTWMDpq2iWT6HhCpCH+E
+ oOMiDjkqla8MDeZd9xqoG4cBUxvAHSlHLuAtq1x+O1h3TXBj2yx5dqsa52O3z2f+ocoy
+ EEor3+7bMwZuqXMqP/FcpW7d4kJXNhPOy+hNE5jXCNHYMJbFuv3WuiyrvV32NKiuvbAQ
+ nmw1fEfEU84go2cZd/hcbo4Wkr33qwy/Y4fo/TwoV80Xzl5YjRsXtmUgGboEdmlukwiW
+ gsmQ==
+X-Gm-Message-State: AOJu0YwPaFIN9wP6m6i3X3iukEZK/m5ner8qpB35nln7Z9wmXES7Pcf7
+ 6S+KE7Cq68UCuQVyougngSgCGkfwjCJbdAPTvMDyCE9Cw9jSn/6X8mapAQmyP3R9jE4/ZIOsbtn
+ GWV8/mJU=
+X-Gm-Gg: ASbGncv8K0BGG2J0aYKJODEW9o8rX73oWhbG3Wryo7+DgEvXGc6Rjrk79JphYrA8Jjo
+ 5IwrkMlHa73H0WOQki1DXdmFcHI8Go8HpT3Vk5px5TTV0rqd0NIhgzzyR6zhDAKYuxS6FX1Rlnz
+ q0sj1govtqSScbLX7wIPcKOOUUacnD5WsfnujF5+DfeRxbaMEQ9gMIgKdhlsC22beyk9Jhdv4yL
+ zBKwg1ar1fISBJRY/7CNv5SeAcsAgTIx8Smm4QAWcLai4wYao/pHctT7u6JxIOsK2iKfc/wGjc1
+ 1XGXv/G7c1vhjyaUb1aBDpjOAEZiQCdkVlrxjN/axf26vYv+ta5cCvU9SJXs63q/hVwvnRfaL5l
+ 4
+X-Google-Smtp-Source: AGHT+IFCCXZps50G7p4whhH0cZWqb2jr4G/5NcgmjSBVBYoSRhCPrtuIlzc/qLHxS9eIV2c45N/42A==
+X-Received: by 2002:a05:600c:46d2:b0:43c:f629:66f4 with SMTP id
+ 5b1f17b1804b1-454a9be9fa3mr39052665e9.0.1751540513894; 
+ Thu, 03 Jul 2025 04:01:53 -0700 (PDT)
+Received: from [10.79.43.25] ([83.247.137.20])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a87e947431sm18348471f8f.0.2025.07.03.04.00.41
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Jul 2025 04:00:42 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ 5b1f17b1804b1-454a99a3b81sm23123805e9.26.2025.07.03.04.01.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Jul 2025 04:01:53 -0700 (PDT)
+Message-ID: <2bf6e6c0-d082-44df-9b13-93bdcfdf79f9@linaro.org>
+Date: Thu, 3 Jul 2025 13:01:52 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 44/69] accel/nvmm: Expose nvmm_enabled() to common code
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, kvm@vger.kernel.org,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Reinoud Zandijk <reinoud@netbsd.org>
-Subject: [PATCH v5 57/69] accel/nvmm: Convert to
- AccelOpsClass::cpu_thread_routine
-Date: Thu,  3 Jul 2025 12:55:23 +0200
-Message-ID: <20250703105540.67664-58-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250703105540.67664-1-philmd@linaro.org>
 References: <20250703105540.67664-1-philmd@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ <20250703105540.67664-45-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250703105540.67664-45-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,46 +105,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-By converting to AccelOpsClass::cpu_thread_routine we can
-let the common accel_create_vcpu_thread() create the thread.
+On 3/7/25 12:55, Philippe Mathieu-Daudé wrote:
+> Currently nvmm_enabled() is restricted to target-specific code.
+> By defining CONFIG_NVMM_IS_POSSIBLE we allow its use anywhere.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/system/nvmm.h       | 23 ++++++++++++-----------
+>   accel/stubs/nvmm-stub.c     | 12 ++++++++++++
+>   target/i386/nvmm/nvmm-all.c |  6 ------
+>   accel/stubs/meson.build     |  1 +
+>   4 files changed, 25 insertions(+), 17 deletions(-)
+>   create mode 100644 accel/stubs/nvmm-stub.c
+> 
+> diff --git a/include/system/nvmm.h b/include/system/nvmm.h
+> index 6971ddb3a5a..7390def9adb 100644
+> --- a/include/system/nvmm.h
+> +++ b/include/system/nvmm.h
+> @@ -13,17 +13,18 @@
+>   #define QEMU_NVMM_H
+>   
+>   #ifdef COMPILING_PER_TARGET
+> -
+> -#ifdef CONFIG_NVMM
+> -
+> -int nvmm_enabled(void);
+> -
+> -#else /* CONFIG_NVMM */
+> -
+> -#define nvmm_enabled() (0)
+> -
+> -#endif /* CONFIG_NVMM */
+> -
+> +# ifdef CONFIG_NVMM
+> +#  define CONFIG_NVMM_IS_POSSIBLE
+> +# endif /* !CONFIG_NVMM */
+> +#else
+> +# define CONFIG_NVMM_IS_POSSIBLE
+>   #endif /* COMPILING_PER_TARGET */
+>   
+> +#ifdef CONFIG_NVMM_IS_POSSIBLE
+> +extern bool nvmm_allowed;
+> +#define nvmm_enabled() (nvmm_allowed)
+> +#else /* !CONFIG_NVMM_IS_POSSIBLE */
+> +#define nvmm_enabled() 0
+> +#endif /* !CONFIG_NVMM_IS_POSSIBLE */
+> +
+>   #endif /* QEMU_NVMM_H */
+> diff --git a/accel/stubs/nvmm-stub.c b/accel/stubs/nvmm-stub.c
+> new file mode 100644
+> index 00000000000..cc58114ceb3
+> --- /dev/null
+> +++ b/accel/stubs/nvmm-stub.c
+> @@ -0,0 +1,12 @@
+> +/*
+> + * NVMM stubs for QEMU
+> + *
+> + *  Copyright (c) Linaro
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "system/hvf.h"
+> +
+> +bool nvmm_allowed;
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Consider this missing hunk squashed:
+
+-- >8 --
+diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
+index a392d3fc232..b4a4d50e860 100644
+--- a/target/i386/nvmm/nvmm-all.c
++++ b/target/i386/nvmm/nvmm-all.c
+@@ -49 +49 @@ struct qemu_machine {
+-static bool nvmm_allowed;
++bool nvmm_allowed;
 ---
- target/i386/nvmm/nvmm-accel-ops.c | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
-
-diff --git a/target/i386/nvmm/nvmm-accel-ops.c b/target/i386/nvmm/nvmm-accel-ops.c
-index 21443078b72..bef6f61b776 100644
---- a/target/i386/nvmm/nvmm-accel-ops.c
-+++ b/target/i386/nvmm/nvmm-accel-ops.c
-@@ -61,16 +61,6 @@ static void *qemu_nvmm_cpu_thread_fn(void *arg)
-     return NULL;
- }
- 
--static void nvmm_start_vcpu_thread(CPUState *cpu)
--{
--    char thread_name[VCPU_THREAD_NAME_SIZE];
--
--    snprintf(thread_name, VCPU_THREAD_NAME_SIZE, "CPU %d/NVMM",
--             cpu->cpu_index);
--    qemu_thread_create(cpu->thread, thread_name, qemu_nvmm_cpu_thread_fn,
--                       cpu, QEMU_THREAD_JOINABLE);
--}
--
- /*
-  * Abort the call to run the virtual processor by another thread, and to
-  * return the control to that thread.
-@@ -85,7 +75,7 @@ static void nvmm_accel_ops_class_init(ObjectClass *oc, const void *data)
- {
-     AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
- 
--    ops->create_vcpu_thread = nvmm_start_vcpu_thread;
-+    ops->cpu_thread_routine = qemu_nvmm_cpu_thread_fn;
-     ops->kick_vcpu_thread = nvmm_kick_vcpu_thread;
- 
-     ops->synchronize_post_reset = nvmm_cpu_synchronize_post_reset;
--- 
-2.49.0
-
 
