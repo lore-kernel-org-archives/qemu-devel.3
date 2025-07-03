@@ -4,85 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAE63C83F03
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 14:31:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8125C83F03
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 14:38:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXKws-0003TC-Px; Thu, 03 Jul 2025 10:30:02 -0400
+	id 1uXL44-0000rN-QG; Thu, 03 Jul 2025 10:37:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uXKwq-0003S0-32
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 10:30:00 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uXL42-0000qz-RE
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 10:37:26 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uXKwn-0000iD-1A
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 10:29:59 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-74af4af04fdso879931b3a.1
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 07:29:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uXL3x-0003EE-PZ
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 10:37:26 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-60c6fea6742so15472334a12.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 07:37:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751552994; x=1752157794; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3kab9l+/qND0tntfUuRJsur9s6qOoDNb6GXOm4C52Ms=;
- b=xVdQQ0WsFKxelUr/zfbJZxdEUXm4tNAK5sSGZ4tAeszpq8G7lobiq1y7WJqvfFx6bO
- IkzZmvn2BABsgMZMNlkKMxLv3RxaXVT6S+eSNIvBMlmsvwRmU8sKoFQDLsTHgQmf7wO0
- PFD4HFW++dRytXi0qGB8w4eDAN/LdY50xTgl5gi156fbIwoYqwedTb3LsiikKZML0NGh
- KwFxb7zWiEOZKpybbggLsggHdPKHbPxK9+77Gm5fmeJSQd9qiYOh69nAGAqALyP7QQox
- 0lymmlKZXQZltFr4EpraYmvw9Huc2aQ3E+YnbIj+uFgQ/p2CkxT2q8u/5dZqM1zH4ash
- kC9g==
+ d=linaro.org; s=google; t=1751553439; x=1752158239; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=UgN/FxtBkjS1o/sTbqBEuCOXWdexvI4CUOuORGk+ghc=;
+ b=v5NgVcSEjNIr049gJ6OBuSsD/16Hr3woom5K/bH7tlvLapneRLKIwTBc8etikaOCyL
+ QRWAugNLckZYpw8Mgot0Q6jdE1xwxqXewvLijMxWoTrM5t50qHRCvQM1IEBmvsvt1how
+ 2fy0nEBodkczLEiQDGyTseZ7UFl7hpY6PNp/ECf9I7gIiUtKdmBLccs6x8AG7gw4ZGZ8
+ Ow+SjtjJdV/wzjZLVvISFwvbh9knq0JtBNmlnlrFYrSu0guuKspxwJsxV2B2P+/C21sc
+ rqq/qbwbA0bqO29Gw0OHhJgQPxz5MM8BoVfmT15mydVzDIOwm0ZbsE42ku98yvuNfO5Z
+ hzrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751552994; x=1752157794;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3kab9l+/qND0tntfUuRJsur9s6qOoDNb6GXOm4C52Ms=;
- b=g/mb2HwAXGVPBdWyJGexTtUXvXymiaTUULSnIKoNRsJqUdDjPOm4XqbhAr6Hxs1yQ5
- oOqs/Lsf80d6XM2VNo1hds/NBtMnw7C0Gg9olUpmgPnrqGnc6WMsJVzDfQVZeR8gcQUY
- pnTYInq4c38f7Mxjmqh0zSb2/Ewy+VbEt5RGgh9Ygot4y8iiqpRnANZEB6c6VBxIzkBQ
- cMZqFHgFRfy2Xl04tyVgrHnorJ2+l5kOlRu6QV/W3/Z4ZlBmLC2Z83DzybwMSQ3VnQzF
- IdoQG3XUeCL5pu/GEaOYtXzMWLyqcIkO04j5oIO13KWf3T0A/XNzdsqpES0mfqccxGPi
- PDIg==
-X-Gm-Message-State: AOJu0Yw91mNqYbylqSgbO1nD9nBCck8XWBpFwg5I1l/sosRZm0/GhLk8
- b8ByOxnTXlK0G0PW1Ts3TkG/FUJnC2DBIJnvB4rQZ1i6BfqSNQM2wukrMyqtt8EszqM=
-X-Gm-Gg: ASbGncuqUM50QIMl6z8xB7ztG18hvIPNAkD+9TDryJKxov6KGApApjCQeWRnTnW64DZ
- dpUs5uEBWIxlZ/sGbJfcKDJpSrGsxGfEWrg1xzAhJLhC/bQan62oefPJr+74xn8Tc2NXKtllinK
- jBt8gr0AVylyiMv5BuxcS5TnbCJ+VvjKM3zFqS/NyKH+zCtxI8EoeDgKjSFafLGTDVY/iNc1e4z
- X76xTWiZHKmRYjcJ8Yccp32/SW6QnVBh4CFY6dctGoojS+mnJkjnaIGGcEaToowKLXlCZQTuZv4
- b4841j8u/8bp90H32B5Vip3UJmjKz89JoWwArRnEw7P6SoADtin+bGEbe94DyApa/jyQyAhYMvk
- =
-X-Google-Smtp-Source: AGHT+IGUVgkq+QgnB8qhUVHE/yvYt3eEJe5WE0YTjmxAo6AD7Ial00Go7FNKhgK6lj8tSvThCFRF/g==
-X-Received: by 2002:a05:6a20:394b:b0:220:1843:3b7b with SMTP id
- adf61e73a8af0-224873caebbmr3454087637.4.1751552994203; 
- Thu, 03 Jul 2025 07:29:54 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ d=1e100.net; s=20230601; t=1751553439; x=1752158239;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UgN/FxtBkjS1o/sTbqBEuCOXWdexvI4CUOuORGk+ghc=;
+ b=NsXszZ8j8IGenKVKZpwFPzxjIjpu7cJMDWAGAF2rQSvjGddkUUTXxuDFEiq1iT0sBy
+ lO+djP9vZK+2URTwj7KfsZW9SN/iBd67DvhVYuYmoPpvTKvidagrErWErkm/sOzSgcgQ
+ hdbTdvDIjPYWejis6276dLqBk+GID/rdyNgf9FxwyUEPZS5D6q1A8Zythg3T/dtB8tYe
+ INAPvOIbL+YgEeByaQBz0Gq0bZOKV46IAbS+3nU602W8SLkr2ahNksGKnzzSLukQq0tX
+ okooGd1ZJ4j7y8Q76bzSa76nmjODQpDcgmkE9meWOjQBdh8UcUdbGS8w6lsQMWoslxCz
+ w/uA==
+X-Gm-Message-State: AOJu0YxmGnYc1ibQ/v36xfSDGoVTCcc3qXMj28cn1i+K3VJq3UPc9WoN
+ qnZ1LLrVJcSKSVakiBc+QdvPm+urPAlvgGLMFNQm4NHNNYg5pnzm09p3I6wpIv6NabQ=
+X-Gm-Gg: ASbGncuxAZlCJhl51HOEukNAIh5P+MpXPz0CkYlLtjjRSc0Hukvtuy9KQpnRZPL7T2f
+ GOkHFhdQAgX0m7+FJhocSLtzDE/4cXDQMtmAVhxlPFdk5Ys3cKqmApTamFjPpYSljfESguQyJ7e
+ hMOpl+WkrQhfZaLOR4egUI17pCFYwrHtmxT7B+sSjjvdMnEb1ybA26LP0Y/SuPRWUP61u579RQb
+ AjXv2UviMMQE2zpB+GjwhfE1onQp/pgP4D2TUN/cbI+SFK4KqJCRFcaaxDkEXuPinnLQLMXUPvZ
+ yaHTGP6aMz6hXks5fMFnVGqXk3nN/zDqOicFYI2UuoPoD9593FhjNyEUxEpqiQk3XkSvfeNt9AV
+ 8za4IokENillhiRUAh0eVmexkIFyfRr0=
+X-Google-Smtp-Source: AGHT+IGbAmCPrQ7pBgdLUQqn37lad7ouRjDl7odnYpk8w4LkYwZ5ihI1XR5EYsHVgtAiLYrr6AXM/Q==
+X-Received: by 2002:a17:906:7953:b0:ae3:64ec:5eb0 with SMTP id
+ a640c23a62f3a-ae3d83c9f66mr332125466b.11.1751553438410; 
+ Thu, 03 Jul 2025 07:37:18 -0700 (PDT)
+Received: from [127.0.1.1] (ppp-2-86-212-125.home.otenet.gr. [2.86.212.125])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74af57ef4dbsm17331923b3a.160.2025.07.03.07.29.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Jul 2025 07:29:53 -0700 (PDT)
-Message-ID: <31053a0b-1ab6-4897-ac22-234e1a98e8f2@linaro.org>
-Date: Thu, 3 Jul 2025 07:29:52 -0700
+ a640c23a62f3a-ae353c01980sm1250103866b.81.2025.07.03.07.37.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 03 Jul 2025 07:37:17 -0700 (PDT)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Thu, 03 Jul 2025 17:37:02 +0300
+Subject: [PATCH RFC v2] rust: add qdev DeviceProperties derive macro
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/functional: test device passthrough on aarch64
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, thuth@redhat.com, jean-philippe@linaro.org,
- alex.bennee@linaro.org, eric.auger@redhat.com, smostafa@google.com
-References: <20250627200222.5172-1-pierrick.bouvier@linaro.org>
- <aGUvc6XJjsluZtH_@redhat.com>
- <2862e805-e2b5-4b4b-a21e-6e7e61d39639@linaro.org>
- <aGZN9fE7jERCWEQC@redhat.com>
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <aGZN9fE7jERCWEQC@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42d.google.com
+Message-Id: <20250703-rust-qdev-properties-v2-1-d4afac766e94@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAI2VZmgC/32PzWrDMBCEXyXoXBVLkeSfU6DQB+i1BCNba0dgS
+ 85KdhtC3r1bt/TYwx5ml/lm9s4SoIfEmsOdIWw++RhIyKcD6y82jMC9I81kIXWhpeS4psyvDja
+ +YFwAM7l5KSuoBmOVqYCRdUEY/OeOfWdvry/sTMuLTznibY/axH76n7oJLrjuRNVJGuvEafLBY
+ nyOOLLz4ycH4bpS6/wb9leafviGl8Vxh7edD86HMbV2muJHu4YAPaRk8dZmtCHNKyG4M0K5Tml
+ RWtVQScrobALex3n2uTn0Jb16dE67shaqHhSUUINzRTEYrYTpjaoAdE31Hl/IkdPxXAEAAA==
+X-Change-ID: 20250522-rust-qdev-properties-728e8f6a468e
+To: qemu-devel@nongnu.org
+Cc: qemu-rust@nongnu.org, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=20174;
+ i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
+ bh=/VO5zP5Lo+XvaHQwOkGYbNjfoknEuyrHlAKbcgzewMg=;
+ b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
+ 25RQWNzbVlnQm9acFdkYng3bFJENktoYlQ1bXhnT05XekpYR3ppCllvQ0RWVTMzVWNKTjQrR3Br
+ dmVKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYUdhVm5RQUt
+ DUkIzS2Nkd2YzNEowSloyRUFDQjBuM0lBU3dvSkozaEJ1clQwNWE2UHdVUzV5OUEzeW1wd3JLVA
+ p5WlkrOUIrc2ptSU9PYjhKbDJQWmt5aFF5VDAvUDliSGxNRnB2UWd6Wm5Gc3lhRWRBbEc3a2dtY
+ TV1YVRsSHRYCm9jRzluNXF4dUlTY2YvSk1ZNVUxbmpCWVVCd0RVL2QwR2p6YnMxNTVxNGhYZ01Z
+ Ni9yZkdtWDlvMU51UGhVaHEKRVU4OVpFcWZ6YnZLeGlFZVF0Z1RraU5kNzN2UUVMUmV2S21ZSWs
+ yU0RtM0NITSt2SkljY3FZYkZtbGVMY1VZUgpXOWtlZko2cHJYOVI5dzdybHdOTFg5emNHZU00cD
+ RjOTd4RW5pVXNjSnN0OWMyeGJySC9QMnZObE44VXY3c1NMCnc1YUMvdEdYRHVRT3o1UmtVZVcyW
+ mo5TXgxSDB4cXVxVW5ybCs2d0JlTnJWOTZDWlpuMTlJWmZrVzRDUFdZNysKQ2ROL3hidDFNRzJ5
+ UGc1S1FRMXI5aVp3Tzl0VnJXUmI4RkgyeFJUblY2R2hlR1VWOVhTTk1DT0ZGWWY4dkVVcwpqR2V
+ STFVFdEJHem1ieEhGOXNyVGYxVWFCS3lyTllCNU1MTXJEWmw2WkhGQkJ5WVNGU1UwNjhjYnBqZG
+ 9rdjNBCkpPQVE1QnREQXFUNnNkdEJ2SG5UTS9zUUdOZFkxWHBMNmVLMFJ4S3ZibTNIcUVBSDJ4a
+ XZQTVI4WWNWRmRjT0QKNXJJOWg5RS91NkJMTEw4ekhKaXlLdU53NjJ6emdUQnhkaSttOHB5MlhE
+ V21ZOFdWVENDTnE4dlV5OUlVeHF6TQphRDQwdStoaGUvWVVzbC96RWJqVUFPdUlHQ2hsenhFVTZ
+ jNG1uaWtUaFdQQ0pZMklNYWtQYmFyZDFHRzJSMVZDCmlYUEFoUT09Cj1YeXJFCi0tLS0tRU5EIF
+ BHUCBNRVNTQUdFLS0tLS0K
+X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
+ fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,190 +128,518 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/25 2:32 AM, Daniel P. Berrangé wrote:
-> On Wed, Jul 02, 2025 at 01:08:41PM -0700, Pierrick Bouvier wrote:
->> On 7/2/25 6:09 AM, Daniel P. Berrangé wrote:
->>> On Fri, Jun 27, 2025 at 01:02:22PM -0700, Pierrick Bouvier wrote:
->>>> This test allows to document and exercise device passthrough, using a
->>>> nested virtual machine setup. Two disks are generated and passed to the
->>>> VM, and their content is compared to original images.
->>>>
->>>> Guest and nested guests commands are executed through two scripts, and
->>>> init used in both system is configured to trigger a kernel panic in case
->>>> any command fails. This is more reliable and readable than executing all
->>>> commands through prompt injection and trying to guess what failed.
->>>>
->>>> Initially, this test was supposed to test smmuv3 nested emulation
->>>> (combining both stages of translation), but I could not find any setup
->>>> (kernel + vmm) able to do the passthrough correctly, despite several
->>>> tries.
->>>>
->>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>> ---
->>>>    tests/functional/meson.build                  |   2 +
->>>>    .../test_aarch64_device_passthrough.py        | 142 ++++++++++++++++++
->>>>    2 files changed, 144 insertions(+)
->>>>    create mode 100755 tests/functional/test_aarch64_device_passthrough.py
->>>>
->>>> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
->>>> index 3021928a9d4..6cc78abb123 100644
->>>> --- a/tests/functional/meson.build
->>>> +++ b/tests/functional/meson.build
->>>> @@ -13,6 +13,7 @@ endif
->>>>    test_timeouts = {
->>>>      'aarch64_aspeed_ast2700' : 600,
->>>>      'aarch64_aspeed_ast2700fc' : 600,
->>>> +  'aarch64_device_passthrough' : 720,
->>>>      'aarch64_imx8mp_evk' : 240,
->>>>      'aarch64_raspi4' : 480,
->>>>      'aarch64_reverse_debug' : 180,
->>>> @@ -84,6 +85,7 @@ tests_aarch64_system_quick = [
->>>>    tests_aarch64_system_thorough = [
->>>>      'aarch64_aspeed_ast2700',
->>>>      'aarch64_aspeed_ast2700fc',
->>>> +  'aarch64_device_passthrough',
->>>>      'aarch64_imx8mp_evk',
->>>>      'aarch64_raspi3',
->>>>      'aarch64_raspi4',
->>>> diff --git a/tests/functional/test_aarch64_device_passthrough.py b/tests/functional/test_aarch64_device_passthrough.py
->>>> new file mode 100755
->>>> index 00000000000..1f3f158a9ff
->>>> --- /dev/null
->>>> +++ b/tests/functional/test_aarch64_device_passthrough.py
->>>> @@ -0,0 +1,142 @@
->>>> +#!/usr/bin/env python3
->>>> +#
->>>> +# Boots a nested guest and compare content of a device (passthrough) to a
->>>> +# reference image. Both vfio group and iommufd passthrough methods are tested.
->>>> +#
->>>> +# Copyright (c) 2025 Linaro Ltd.
->>>> +#
->>>> +# Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>> +#
->>>> +# SPDX-License-Identifier: GPL-2.0-or-later
->>>> +
->>>> +import os
->>>> +
->>>> +from qemu_test import QemuSystemTest, Asset
->>>> +from qemu_test import exec_command, wait_for_console_pattern
->>>> +from qemu_test import exec_command_and_wait_for_pattern
->>>> +from random import randbytes
->>>> +
->>>> +guest_script = '''
->>>> +#!/usr/bin/env bash
->>>> +
->>>> +set -euo pipefail
->>>> +set -x
->>>> +
->>>> +# find disks from nvme serial
->>>> +dev_vfio=$(lsblk --nvme | grep vfio | cut -f 1 -d ' ')
->>>> +dev_iommufd=$(lsblk --nvme | grep iommufd | cut -f 1 -d ' ')
->>>> +pci_vfio=$(basename $(readlink -f /sys/block/$dev_vfio/../../../))
->>>> +pci_iommufd=$(basename $(readlink -f /sys/block/$dev_iommufd/../../../))
->>>> +
->>>> +# bind disks to vfio
->>>> +for p in "$pci_vfio" "$pci_iommufd"; do
->>>> +    if [ "$(cat /sys/bus/pci/devices/$p/driver_override)" == vfio-pci ]; then
->>>> +        continue
->>>> +    fi
->>>> +    echo $p > /sys/bus/pci/drivers/nvme/unbind
->>>> +    echo vfio-pci > /sys/bus/pci/devices/$p/driver_override
->>>> +    echo $p > /sys/bus/pci/drivers/vfio-pci/bind
->>>> +done
->>>> +
->>>> +# boot nested guest and execute /host/nested_guest.sh
->>>> +# one disk is passed through vfio group, the other, through iommufd
->>>> +qemu-system-aarch64 \
->>>> +-M virt \
->>>> +-display none \
->>>> +-serial stdio \
->>>> +-cpu host \
->>>> +-enable-kvm \
->>>> +-m 1G \
->>>> +-kernel /host/Image.gz \
->>>> +-drive format=raw,file=/host/guest.ext4,if=virtio \
->>>> +-append "root=/dev/vda init=/init -- bash /host/nested_guest.sh" \
->>>> +-virtfs local,path=/host,mount_tag=host,security_model=mapped,readonly=off \
->>>> +-device vfio-pci,host=$pci_vfio \
->>>> +-object iommufd,id=iommufd0 \
->>>> +-device vfio-pci,host=$pci_iommufd,iommufd=iommufd0
->>>> +'''
->>>> +
->>>> +nested_guest_script = '''
->>>> +#!/usr/bin/env bash
->>>> +
->>>> +set -euo pipefail
->>>> +set -x
->>>> +
->>>> +image_vfio=/host/disk_vfio
->>>> +image_iommufd=/host/disk_iommufd
->>>> +
->>>> +dev_vfio=$(lsblk --nvme | grep vfio | cut -f 1 -d ' ')
->>>> +dev_iommufd=$(lsblk --nvme | grep iommufd | cut -f 1 -d ' ')
->>>> +
->>>> +# compare if devices are identical to original images
->>>> +diff $image_vfio /dev/$dev_vfio
->>>> +diff $image_iommufd /dev/$dev_iommufd
->>>> +
->>>> +echo device_passthrough_test_ok
->>>> +'''
->>>> +
->>>> +class Aarch64DevicePassthrough(QemuSystemTest):
->>>> +
->>>> +    # https://github.com/pbo-linaro/qemu-linux-stack
->>>> +    #
->>>> +    # Linux kernel is compiled with defconfig +
->>>> +    # IOMMUFD + VFIO_DEVICE_CDEV + ARM_SMMU_V3_IOMMUFD
->>>> +    # https://docs.kernel.org/driver-api/vfio.html#vfio-device-cde
->>>> +    ASSET_DEVICE_PASSTHROUGH_STACK = Asset(
->>>> +        ('https://fileserver.linaro.org/s/fx5DXxBYme8dw2G/'
->>>> +         'download/device_passthrough.tar.xz'),
->>>> +         '812750b664d61c2986f2b149939ae28cafbd60d53e9c7e4b16e97143845e196d')
->>>> +
->>>> +    # This tests the device passthrough implementation, by booting a VM
->>>> +    # supporting it with two nvme disks attached, and launching a nested VM
->>>> +    # reading their content.
->>>> +    def test_aarch64_device_passthrough(self):
->>>> +        self.set_machine('virt')
->>>> +        self.require_accelerator('tcg')
->>>> +
->>>> +        self.vm.set_console()
->>>> +
->>>> +        stack_path_tar_gz = self.ASSET_DEVICE_PASSTHROUGH_STACK.fetch()
->>>> +        self.archive_extract(stack_path_tar_gz, format="tar")
->>>> +
->>>> +        stack = self.scratch_file('out')
->>>> +        kernel = os.path.join(stack, 'Image.gz')
->>>> +        rootfs_host = os.path.join(stack, 'host.ext4')
->>>> +        disk_vfio = os.path.join(stack, 'disk_vfio')
->>>> +        disk_iommufd = os.path.join(stack, 'disk_iommufd')
->>>> +        guest_cmd = os.path.join(stack, 'guest.sh')
->>>> +        nested_guest_cmd = os.path.join(stack, 'nested_guest.sh')
->>>
->>> Don't incrementally create paths like this - use the
->>> 'scratch_file' method for all components
->>>
->>>    ie
->>>
->>>      kernel = self.scratch_file('out', 'Image.gz')
->>>      rootfs_host =  self.scratch_file('out', 'host.ext4')
->>>      ...etc...
->>>
->>
->> May I ask what's the benefit of this?
->>
->> It forces you to repeat full path (luckily short in this case), but I don't
->> see the difference with simply joining paths.
-> 
-> The intent is to eliminate use of os.path.* in general, such that instead
-> of passing around strings, we can eventually pass around pathlib.Path
-> objects.
->
+Add derive macro for declaring qdev properties directly above the field
+definitions. To do this, we split DeviceImpl::properties method on a
+separate trait so we can implement only that part in the derive macro
+expansion (we cannot partially implement the DeviceImpl trait).
 
-Ok, thanks.
-It seems that this patch as been pulled and merged already.
+Adding a `property` attribute above the field declaration will generate
+a `qemu_api::bindings::Property` array member in the device's property
+list.
 
-> With regards,
-> Daniel
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+---
+TODOs:
+
+- Update hpet code to use the derive macro
+- Change MacroError use to syn::Error use if changed in upstream too
+
+Changes in v2:
+- Rewrite to take advantage of const_refs_to_static feature, we still
+  need to update to a newer MSRV.
+- Use existing get_fields function (Paolo)
+- return errors instead of panicking (Paolo)
+- Link to v1: https://lore.kernel.org/qemu-devel/20250522-rust-qdev-properties-v1-1-5b18b218bad1@linaro.org
+---
+ rust/hw/char/pl011/src/device.rs       |  13 +-
+ rust/hw/char/pl011/src/device_class.rs |  26 +---
+ rust/hw/timer/hpet/src/device.rs       |   4 +-
+ rust/qemu-api-macros/src/lib.rs        | 217 ++++++++++++++++++++++++++++++++-
+ rust/qemu-api/src/qdev.rs              |  57 +++++++--
+ rust/qemu-api/tests/tests.rs           |   9 +-
+ 6 files changed, 282 insertions(+), 44 deletions(-)
+
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 5b53f2649f161287f40f79075afba47db6d9315c..b2b8dcdfeb6797286918a5ec3e94e1c254e176fe 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -12,7 +12,10 @@
+     log_mask_ln,
+     memory::{hwaddr, MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder},
+     prelude::*,
+-    qdev::{Clock, ClockEvent, DeviceImpl, DeviceState, Property, ResetType, ResettablePhasesImpl},
++    qdev::{
++        Clock, ClockEvent, DeviceImpl, DevicePropertiesImpl, DeviceState, ResetType,
++        ResettablePhasesImpl,
++    },
+     qom::{ObjectImpl, Owned, ParentField, ParentInit},
+     static_assert,
+     sysbus::{SysBusDevice, SysBusDeviceImpl},
+@@ -101,12 +104,13 @@ pub struct PL011Registers {
+ }
+ 
+ #[repr(C)]
+-#[derive(qemu_api_macros::Object)]
++#[derive(qemu_api_macros::Object, qemu_api_macros::DeviceProperties)]
+ /// PL011 Device Model in QEMU
+ pub struct PL011State {
+     pub parent_obj: ParentField<SysBusDevice>,
+     pub iomem: MemoryRegion,
+     #[doc(alias = "chr")]
++    #[property(rename = "chardev")]
+     pub char_backend: CharBackend,
+     pub regs: BqlRefCell<PL011Registers>,
+     /// QEMU interrupts
+@@ -125,6 +129,7 @@ pub struct PL011State {
+     #[doc(alias = "clk")]
+     pub clock: Owned<Clock>,
+     #[doc(alias = "migrate_clk")]
++    #[property(rename = "migrate-clk", default = true)]
+     pub migrate_clock: bool,
+ }
+ 
+@@ -172,9 +177,6 @@ impl ObjectImpl for PL011State {
+ }
+ 
+ impl DeviceImpl for PL011State {
+-    fn properties() -> &'static [Property] {
+-        &device_class::PL011_PROPERTIES
+-    }
+     fn vmsd() -> Option<&'static VMStateDescription> {
+         Some(&device_class::VMSTATE_PL011)
+     }
+@@ -709,6 +711,7 @@ impl PL011Impl for PL011Luminary {
+     const DEVICE_ID: DeviceId = DeviceId(&[0x11, 0x00, 0x18, 0x01, 0x0d, 0xf0, 0x05, 0xb1]);
+ }
+ 
++impl DevicePropertiesImpl for PL011Luminary {}
+ impl DeviceImpl for PL011Luminary {}
+ impl ResettablePhasesImpl for PL011Luminary {}
+ impl SysBusDeviceImpl for PL011Luminary {}
+diff --git a/rust/hw/char/pl011/src/device_class.rs b/rust/hw/char/pl011/src/device_class.rs
+index d328d846323f6080a9573053767e51481eb32941..83d70d7d82aac4a3252a0b4cb24af705b01d3635 100644
+--- a/rust/hw/char/pl011/src/device_class.rs
++++ b/rust/hw/char/pl011/src/device_class.rs
+@@ -8,11 +8,8 @@
+ };
+ 
+ use qemu_api::{
+-    bindings::{qdev_prop_bool, qdev_prop_chr},
+-    prelude::*,
+-    vmstate::VMStateDescription,
+-    vmstate_clock, vmstate_fields, vmstate_of, vmstate_struct, vmstate_subsections, vmstate_unused,
+-    zeroable::Zeroable,
++    prelude::*, vmstate::VMStateDescription, vmstate_clock, vmstate_fields, vmstate_of,
++    vmstate_struct, vmstate_subsections, vmstate_unused, zeroable::Zeroable,
+ };
+ 
+ use crate::device::{PL011Registers, PL011State};
+@@ -82,22 +79,3 @@ extern "C" fn pl011_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
+     },
+     ..Zeroable::ZERO
+ };
+-
+-qemu_api::declare_properties! {
+-    PL011_PROPERTIES,
+-    qemu_api::define_property!(
+-        c"chardev",
+-        PL011State,
+-        char_backend,
+-        unsafe { &qdev_prop_chr },
+-        CharBackend
+-    ),
+-    qemu_api::define_property!(
+-        c"migrate-clk",
+-        PL011State,
+-        migrate_clock,
+-        unsafe { &qdev_prop_bool },
+-        bool,
+-        default = true
+-    ),
+-}
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index acf7251029e912f18a5690b0d6cf04ea8151c5e1..35b8e57fa897f625a6b3e266f9a751a630c21a64 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -1031,11 +1031,13 @@ impl ObjectImpl for HPETState {
+     ..Zeroable::ZERO
+ };
+ 
+-impl DeviceImpl for HPETState {
++impl qemu_api::qdev::DevicePropertiesImpl for HPETState {
+     fn properties() -> &'static [Property] {
+         &HPET_PROPERTIES
+     }
++}
+ 
++impl DeviceImpl for HPETState {
+     fn vmsd() -> Option<&'static VMStateDescription> {
+         Some(&VMSTATE_HPET)
+     }
+diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-api-macros/src/lib.rs
+index c18bb4e036f4e7737f9b95ac300b7d1e8742ef1f..1746da4d967b7ec733c0d97c26d3275fb1cd6645 100644
+--- a/rust/qemu-api-macros/src/lib.rs
++++ b/rust/qemu-api-macros/src/lib.rs
+@@ -3,10 +3,11 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ use proc_macro::TokenStream;
+-use quote::quote;
++use quote::{quote, quote_spanned, ToTokens};
+ use syn::{
+-    parse_macro_input, parse_quote, punctuated::Punctuated, spanned::Spanned, token::Comma, Data,
+-    DeriveInput, Field, Fields, FieldsUnnamed, Ident, Meta, Path, Token, Variant,
++    parse::Parse, parse_macro_input, parse_quote, punctuated::Punctuated, spanned::Spanned,
++    token::Comma, Data, DeriveInput, Field, Fields, FieldsUnnamed, Ident, Meta, Path, Token,
++    Variant,
+ };
+ 
+ mod utils;
+@@ -146,6 +147,216 @@ pub const fn raw_get(slot: *mut Self) -> *mut <Self as crate::cell::Wrapper>::Wr
+     })
+ }
+ 
++#[derive(Debug)]
++enum DevicePropertyName {
++    CStr(syn::LitCStr),
++    Str(syn::LitStr),
++}
++
++#[derive(Debug)]
++struct DeviceProperty {
++    rename: Option<DevicePropertyName>,
++    qdev_prop: Option<syn::Path>,
++    bitnr: Option<syn::Expr>,
++    defval: Option<syn::Expr>,
++}
++
++impl Parse for DeviceProperty {
++    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
++        let _: syn::Token![#] = input.parse()?;
++        let bracketed;
++        _ = syn::bracketed!(bracketed in input);
++        let _attribute = bracketed.parse::<syn::Ident>()?;
++        debug_assert_eq!(&_attribute.to_string(), "property");
++        let mut retval = Self {
++            rename: None,
++            qdev_prop: None,
++            bitnr: None,
++            defval: None,
++        };
++        let content;
++        _ = syn::parenthesized!(content in bracketed);
++        while !content.is_empty() {
++            let value: syn::Ident = content.parse()?;
++            if value == "rename" {
++                let _: syn::Token![=] = content.parse()?;
++                if retval.rename.is_some() {
++                    return Err(syn::Error::new(
++                        value.span(),
++                        "`rename` can only be used at most once",
++                    ));
++                }
++                if content.peek(syn::LitStr) {
++                    retval.rename = Some(DevicePropertyName::Str(content.parse::<syn::LitStr>()?));
++                } else {
++                    retval.rename =
++                        Some(DevicePropertyName::CStr(content.parse::<syn::LitCStr>()?));
++                }
++            } else if value == "qdev_prop" {
++                let _: syn::Token![=] = content.parse()?;
++                if retval.qdev_prop.is_some() {
++                    return Err(syn::Error::new(
++                        value.span(),
++                        "`qdev_prop` can only be used at most once",
++                    ));
++                }
++                retval.qdev_prop = Some(content.parse()?);
++            } else if value == "bitnr" {
++                let _: syn::Token![=] = content.parse()?;
++                if retval.bitnr.is_some() {
++                    return Err(syn::Error::new(
++                        value.span(),
++                        "`bitnr` can only be used at most once",
++                    ));
++                }
++                retval.bitnr = Some(content.parse()?);
++            } else if value == "default" {
++                let _: syn::Token![=] = content.parse()?;
++                if retval.defval.is_some() {
++                    return Err(syn::Error::new(
++                        value.span(),
++                        "`default` can only be used at most once",
++                    ));
++                }
++                retval.defval = Some(content.parse()?);
++            } else {
++                return Err(syn::Error::new(
++                    value.span(),
++                    format!("unrecognized field `{value}`"),
++                ));
++            }
++
++            if !content.is_empty() {
++                let _: syn::Token![,] = content.parse()?;
++            }
++        }
++        Ok(retval)
++    }
++}
++
++#[proc_macro_derive(DeviceProperties, attributes(property))]
++pub fn derive_device_properties(input: TokenStream) -> TokenStream {
++    let input = parse_macro_input!(input as DeriveInput);
++    let expanded = derive_device_properties_or_error(input).unwrap_or_else(Into::into);
++
++    TokenStream::from(expanded)
++}
++
++fn derive_device_properties_or_error(
++    input: DeriveInput,
++) -> Result<proc_macro2::TokenStream, MacroError> {
++    let span = proc_macro::Span::call_site();
++    let properties: Vec<(syn::Field, proc_macro2::Span, DeviceProperty)> =
++        get_fields(&input, "#[derive(DeviceProperties)]")?
++            .iter()
++            .flat_map(|f| {
++                f.attrs
++                    .iter()
++                    .filter(|a| a.path().is_ident("property"))
++                    .map(|a| {
++                        Ok((
++                            f.clone(),
++                            f.span(),
++                            syn::parse(a.to_token_stream().into()).map_err(|err| {
++                                MacroError::Message(
++                                    format!("Could not parse `property` attribute: {err}"),
++                                    f.span(),
++                                )
++                            })?,
++                        ))
++                    })
++            })
++            .collect::<Result<Vec<_>, MacroError>>()?;
++    let name = &input.ident;
++    let mut properties_expanded = vec![];
++    let zero = syn::Expr::Verbatim(quote! { 0 });
++
++    for (field, field_span, prop) in properties {
++        let DeviceProperty {
++            rename,
++            qdev_prop,
++            bitnr,
++            defval,
++        } = prop;
++        let field_name = field.ident.as_ref().unwrap();
++        let prop_name = rename
++            .as_ref()
++            .map(|lit| -> Result<proc_macro2::TokenStream, MacroError> {
++                match lit {
++                DevicePropertyName::CStr(lit) => {
++                    let span = lit.span();
++                    Ok(quote_spanned! {span=>
++                        #lit
++                    })
++                }
++                DevicePropertyName::Str(lit) => {
++                    let span = lit.span();
++                    let value = lit.value();
++                    let lit = std::ffi::CString::new(value.as_str())
++                        .map_err(|err| {
++                            MacroError::Message(
++                                format!("Property name `{value}` cannot be represented as a C string: {err}"),
++                                span
++                            )
++                        })?;
++                    let lit = syn::LitCStr::new(&lit, span);
++                    Ok(quote_spanned! {span=>
++                        #lit
++                    })
++                }
++            }})
++            .unwrap_or_else(|| {
++                let span = field_name.span();
++                let field_name_value = field_name.to_string();
++                let lit = std::ffi::CString::new(field_name_value.as_str()).map_err(|err| {
++                    MacroError::Message(
++                        format!("Field `{field_name_value}` cannot be represented as a C string: {err}\nPlease set an explicit property name using the `rename=...` option in the field's `property` attribute."),
++                        span
++                    )
++                })?;
++                let lit = syn::LitCStr::new(&lit, span);
++                Ok(quote_spanned! {span=>
++                    #lit
++                })
++            })?;
++        let field_ty = field.ty.clone();
++        let qdev_prop = qdev_prop
++            .as_ref()
++            .map(|path| {
++                quote_spanned! {field_span=>
++                    unsafe { &#path }
++                }
++            })
++            .unwrap_or_else(
++                || quote_spanned! {field_span=> <#field_ty as ::qemu_api::qdev::QDevProp>::VALUE },
++            );
++        let set_default = defval.is_some();
++        let bitnr = bitnr.as_ref().unwrap_or(&zero);
++        let defval = defval.as_ref().unwrap_or(&zero);
++        properties_expanded.push(quote_spanned! {field_span=>
++            ::qemu_api::bindings::Property {
++                name: ::std::ffi::CStr::as_ptr(#prop_name),
++                info: #qdev_prop ,
++                offset: ::core::mem::offset_of!(#name, #field_name) as isize,
++                bitnr: #bitnr,
++                set_default: #set_default,
++                defval: ::qemu_api::bindings::Property__bindgen_ty_1 { u: #defval as u64 },
++                ..::qemu_api::zeroable::Zeroable::ZERO
++            }
++        });
++    }
++
++    Ok(quote_spanned! {span.into()=>
++        impl ::qemu_api::qdev::DevicePropertiesImpl for #name {
++            fn properties() -> &'static [::qemu_api::bindings::Property] {
++                static PROPERTIES: &'static [::qemu_api::bindings::Property] = &[#(#properties_expanded),*];
++
++                PROPERTIES
++            }
++        }
++    })
++}
++
+ #[proc_macro_derive(Wrapper)]
+ pub fn derive_opaque(input: TokenStream) -> TokenStream {
+     let input = parse_macro_input!(input as DeriveInput);
+diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
+index 36f02fb57dbffafb21a2e7cc96419ca42e865269..01f199f198c6a5f8a761beb143e567fc267028aa 100644
+--- a/rust/qemu-api/src/qdev.rs
++++ b/rust/qemu-api/src/qdev.rs
+@@ -101,8 +101,54 @@ pub trait ResettablePhasesImpl {
+     T::EXIT.unwrap()(unsafe { state.as_ref() }, typ);
+ }
+ 
++/// Helper trait to return pointer to a [`bindings::PropertyInfo`] for a type.
++///
++/// This trait is used by [`qemu_api_macros::DeviceProperty`] derive macro.
++///
++/// # Safety
++///
++/// This trait is marked as `unsafe` because currently having a `const` refer to an `extern static`
++/// results in this compiler error:
++///
++/// ```text
++/// constructing invalid value: encountered reference to `extern` static in `const`
++/// ```
++///
++/// It is the implementer's responsibility to provide a valid [`bindings::PropertyInfo`] pointer
++/// for the trait implementation to be safe.
++pub unsafe trait QDevProp {
++    const VALUE: *const bindings::PropertyInfo;
++}
++
++/// Use [`bindings::qdev_prop_bool`] for `bool`.
++unsafe impl QDevProp for bool {
++    const VALUE: *const bindings::PropertyInfo = unsafe { &bindings::qdev_prop_bool };
++}
++
++/// Use [`bindings::qdev_prop_uint64`] for `u64`.
++unsafe impl QDevProp for u64 {
++    const VALUE: *const bindings::PropertyInfo = unsafe { &bindings::qdev_prop_uint64 };
++}
++
++/// Use [`bindings::qdev_prop_chr`] for [`crate::chardev::CharBackend`].
++unsafe impl QDevProp for crate::chardev::CharBackend {
++    const VALUE: *const bindings::PropertyInfo = unsafe { &bindings::qdev_prop_chr };
++}
++
++/// Trait to define device properties.
++pub trait DevicePropertiesImpl {
++    /// An array providing the properties that the user can set on the
++    /// device.  Not a `const` because referencing statics in constants
++    /// is unstable until Rust 1.83.0.
++    fn properties() -> &'static [Property] {
++        &[]
++    }
++}
++
+ /// Trait providing the contents of [`DeviceClass`].
+-pub trait DeviceImpl: ObjectImpl + ResettablePhasesImpl + IsA<DeviceState> {
++pub trait DeviceImpl:
++    ObjectImpl + ResettablePhasesImpl + DevicePropertiesImpl + IsA<DeviceState>
++{
+     /// _Realization_ is the second stage of device creation. It contains
+     /// all operations that depend on device properties and can fail (note:
+     /// this is not yet supported for Rust devices).
+@@ -111,13 +157,6 @@ pub trait DeviceImpl: ObjectImpl + ResettablePhasesImpl + IsA<DeviceState> {
+     /// with the function pointed to by `REALIZE`.
+     const REALIZE: Option<fn(&Self) -> Result<()>> = None;
+ 
+-    /// An array providing the properties that the user can set on the
+-    /// device.  Not a `const` because referencing statics in constants
+-    /// is unstable until Rust 1.83.0.
+-    fn properties() -> &'static [Property] {
+-        &[]
+-    }
+-
+     /// A `VMStateDescription` providing the migration format for the device
+     /// Not a `const` because referencing statics in constants is unstable
+     /// until Rust 1.83.0.
+@@ -175,7 +214,7 @@ pub fn class_init<T: DeviceImpl>(&mut self) {
+         if let Some(vmsd) = <T as DeviceImpl>::vmsd() {
+             self.vmsd = vmsd;
+         }
+-        let prop = <T as DeviceImpl>::properties();
++        let prop = <T as DevicePropertiesImpl>::properties();
+         if !prop.is_empty() {
+             unsafe {
+                 bindings::device_class_set_props_n(self, prop.as_ptr(), prop.len());
+diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
+index a658a49fcfdda8fa4b9d139c10afb6ff3243790b..e8eadfd6e9add385ffc97de015b84aae825c18ee 100644
+--- a/rust/qemu-api/tests/tests.rs
++++ b/rust/qemu-api/tests/tests.rs
+@@ -9,7 +9,7 @@
+     cell::{self, BqlCell},
+     declare_properties, define_property,
+     prelude::*,
+-    qdev::{DeviceImpl, DeviceState, Property, ResettablePhasesImpl},
++    qdev::{DeviceImpl, DevicePropertiesImpl, DeviceState, Property, ResettablePhasesImpl},
+     qom::{ObjectImpl, ParentField},
+     sysbus::SysBusDevice,
+     vmstate::VMStateDescription,
+@@ -68,10 +68,13 @@ impl ObjectImpl for DummyState {
+ 
+ impl ResettablePhasesImpl for DummyState {}
+ 
+-impl DeviceImpl for DummyState {
++impl DevicePropertiesImpl for DummyState {
+     fn properties() -> &'static [Property] {
+         &DUMMY_PROPERTIES
+     }
++}
++
++impl DeviceImpl for DummyState {
+     fn vmsd() -> Option<&'static VMStateDescription> {
+         Some(&VMSTATE)
+     }
+@@ -85,6 +88,8 @@ pub struct DummyChildState {
+ 
+ qom_isa!(DummyChildState: Object, DeviceState, DummyState);
+ 
++impl DevicePropertiesImpl for DummyChildState {}
++
+ pub struct DummyChildClass {
+     parent_class: <DummyState as ObjectType>::Class,
+ }
+
+---
+base-commit: c77283dd5d79149f4e7e9edd00f65416c648ee59
+change-id: 20250522-rust-qdev-properties-728e8f6a468e
+prerequisite-change-id: 20250703-rust_bindings_allow_unnecessary_transmutes-d614db4517a4:v1
+prerequisite-patch-id: 570fede8eee168ade58c7c7599bdc8b94c8c1a22
+
+--
+γαῖα πυρί μιχθήτω
 
 
