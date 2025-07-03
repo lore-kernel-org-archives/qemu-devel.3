@@ -4,71 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E82CC77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 14:41:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED788C83F03
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 14:43:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXL7P-00024r-S4; Thu, 03 Jul 2025 10:40:56 -0400
+	id 1uXL9k-0003Hc-Jr; Thu, 03 Jul 2025 10:43:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1uXL7H-00023K-JM
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 10:40:47 -0400
-Received: from smtp-out-60.livemail.co.uk ([213.171.216.60]
- helo=dkim.livemail.co.uk)
+ (Exim 4.90_1) (envelope-from <etanous@nvidia.com>)
+ id 1uXL9i-0003Gt-UU; Thu, 03 Jul 2025 10:43:18 -0400
+Received: from mail-bn8nam11on2060a.outbound.protection.outlook.com
+ ([2a01:111:f403:2414::60a]
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1uXL7E-0003h2-VB
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 10:40:47 -0400
-Received: from smtp.livemail.co.uk (unknown [10.44.132.82])
- by dkim.livemail.co.uk (Postfix) with ESMTPS id 1FFFC400EC;
- Thu,  3 Jul 2025 15:40:41 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=randomman.co.uk;
- s=livemail2; t=1751553641;
- bh=0tKTxF475nxxuahMywRx3D1DtdmsYeVVzdjrVY6z4/w=;
- h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
- b=ekSVndht20JglEIFyxALwjshVuCF58+nHAqEgQuC3x1aJ1FtBOLJbWjc6CE+dPxMG
- G82CqbZTpZdlz1r8UzVT1U3FscQ/4B5nkNY1He/LTUTwb3po1w+9LRIW0HXeZ4RVcl
- 3JmrXL+JSleqiUIc2oaGspVt+/amElBZHGZ9do/M=
-Received: from [172.22.54.5] (unknown [145.40.191.116])
- (Authenticated sender: roy.hopkins@randomman.co.uk)
- by smtp.livemail.co.uk (Postfix) with ESMTPSA id 8F645C094E;
- Thu,  3 Jul 2025 15:40:36 +0100 (BST)
-Message-ID: <16935982ffbb8e70d5bfb2f0fc623f78c342525c.camel@randomman.co.uk>
-Subject: Re: [PATCH v8 14/16] backends/igvm: Handle policy for SEV guests
-From: Roy Hopkins <roy.hopkins@randomman.co.uk>
-To: Liam Merwick <liam.merwick@oracle.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Daniel P . Berrange"
- <berrange@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>, Marcelo
- Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>, Eduardo
- Habkost <eduardo@habkost.net>, Alistair Francis <alistair@alistair23.me>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, Igor
- Mammedov <imammedo@redhat.com>, Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>, Gerd
- Hoffman <kraxel@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>, Joerg
- Roedel <joro@8bytes.org>
-Date: Thu, 03 Jul 2025 15:40:36 +0100
-In-Reply-To: <394194f3-4653-4625-b121-364bd22f8b87@oracle.com>
-References: <cover.1749820158.git.roy.hopkins@randomman.co.uk>
- <dc9525b51a7e5872f96dac0468d2f7816b8c9c01.1749820158.git.roy.hopkins@randomman.co.uk>
- <394194f3-4653-4625-b121-364bd22f8b87@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4-0ubuntu2 
+ (Exim 4.90_1) (envelope-from <etanous@nvidia.com>)
+ id 1uXL9c-0004DF-8T; Thu, 03 Jul 2025 10:43:18 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JJQb4jZZc2jmfLaopij3UMB2VyXT0vgNZEl6JwxYVjhw5471hQzQ2jpvYIhp/7y1nmfT73xrCy/JjVTUfS2rpsXN+EYmD3OrlIwsgw1B4+6aFBDCw3BKE4sdhJon9trdAhm/NpIBGVRhShSaTMvfpVo/OEzsdcKIc3mkWu7xDrMYzE00BARUBfpjbAjXSUdRt9KoPq73NI7ay9rgNNf5h8e+nhdY4qgRO8nbOk23cX3M1xcvYYhuMKQ6smDhGom87aZAjsADuXXnXVnpaKASwHhw+lHp8fAVUDJ5YlQahw3Zlcdv5bvlFH1YyNMoVunvNU/OiJCCHj2K3zje3UJr7A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1RMFeR/nU6PmGaeCB9106GiwyXanoBm7GEcsoPR1Xt4=;
+ b=y3ubbPuh31UkcBQUhCyVlrPEwO9ccKPC24BJsHvv41wBsL2hWvZhmyrfDjMIs5SAIsSWFzryrao89F3WDXaIh07z7iK1NCZk+7B2Vl7tyFwDdFXLhk11RCGO2RBQvPxhb3K4V89nJKpYVqSiJpG1PKAQPZClpEW9TmKeHbbST1w0w2chf4d6SPDLhDOh5jsgQbDc4Dj/YyCbLUrjXhBP8BLFhCoetp+DT5R3tKahaCH/MQpW/PVryOQhDzo09Qz0pe4sXTxwC76rIWCKwvcfETAH5EaMV98Z7o4S50Gjmjn8UKf5cQVEqdCmCzojIPZWKHQd8y20PuFZeWTmztMUAA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1RMFeR/nU6PmGaeCB9106GiwyXanoBm7GEcsoPR1Xt4=;
+ b=C0SYTAcvNe6VFhkwVdawhCmGrmXYplTBVtII1fkeO9j7zASorHX9xdk6synMaIoQQaD1LKot+kb00cS/9GjEcsWNvA2SvF2UWSUgXR2Up07WHGpits88ywpeZNo9FVXtsvXBk5gdPVijeaGFH7mOuSUMtXKG790Bg3hH1dNy6XOltlRmh4H2qOL7stcrtTJds6S9OD+HBXE8nI84tyEgquMRrp0Y7hJQgZdh7GoTM6+GSYCAuUo1YXNN4peHvnFRHmACdBBxkBSUbpJpS6xQgR0MgCaoAdMcN69nVFvUAcQeKRoXz7kt+ctqc/2Tfy61BNjVVCj9ewgV9zL7yTTW7Q==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH2PR12MB4277.namprd12.prod.outlook.com (2603:10b6:610:ae::23)
+ by SN7PR12MB7836.namprd12.prod.outlook.com (2603:10b6:806:34e::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.19; Thu, 3 Jul
+ 2025 14:43:01 +0000
+Received: from CH2PR12MB4277.namprd12.prod.outlook.com
+ ([fe80::8857:98e9:8b64:787]) by CH2PR12MB4277.namprd12.prod.outlook.com
+ ([fe80::8857:98e9:8b64:787%4]) with mapi id 15.20.8880.021; Thu, 3 Jul 2025
+ 14:43:00 +0000
+From: Ed Tanous <etanous@nvidia.com>
+To: qemu-devel@nongnu.org
+Cc: Troy Lee <leetroy@gmail.com>, Steven Lee <steven_lee@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Ed Tanous <etanous@nvidia.com>
+Subject: [PATCH v2 3/4] hw/arm/aspeed: Add GB200 BMC target
+Date: Thu,  3 Jul 2025 07:42:48 -0700
+Message-ID: <20250703144249.3348879-4-etanous@nvidia.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250703144249.3348879-1-etanous@nvidia.com>
+References: <20250703144249.3348879-1-etanous@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: BYAPR21CA0027.namprd21.prod.outlook.com
+ (2603:10b6:a03:114::37) To CH2PR12MB4277.namprd12.prod.outlook.com
+ (2603:10b6:610:ae::23)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=213.171.216.60;
- envelope-from=roy.hopkins@randomman.co.uk; helo=dkim.livemail.co.uk
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PR12MB4277:EE_|SN7PR12MB7836:EE_
+X-MS-Office365-Filtering-Correlation-Id: bb59d04c-d9c7-4964-6409-08ddba3fe8bc
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?hqPCA8NynUzBWtS9/LuVSE/gEhJrA+TljoH9veYUrVhwy4xtzdYRFvxTA8wj?=
+ =?us-ascii?Q?a+ZAttvJ1Jn0hT60a3/W1jvnvh4kLgO5FOJIGw6GU02/gzN1uUzy4rzhNNhN?=
+ =?us-ascii?Q?z3LSsOEwjAzUDiZjMvARkLjHGvJwWR3TPG1SFN2W8coI0xVLvt6kXj8OWfPi?=
+ =?us-ascii?Q?kJ0TTGqPPYTtw0zZ/uejaA/9SRNgIv8Q2W2YUZ6i6qWYkNCiqcB/PmCrR12X?=
+ =?us-ascii?Q?75yWQ1voyt4MeSE/GXc4flClrDxgzvmjJ+FMMx4+dGh5x3yrk9ufkLcTPCq6?=
+ =?us-ascii?Q?u+VQi6ARSj8lhSMLWkR/MlCH8RXwtmVfTyp6muhXBRfIBjEjKsZeuoDknRYh?=
+ =?us-ascii?Q?KZCJAvw8mipIzDOqyBNDlC007OZQwD1J87sDo9iPg++vwjetQqf9WOIEpQjq?=
+ =?us-ascii?Q?d9ktODqvm6BcIWh+NTs7twGiiAk11xIDxxMJ9eP8y6yRv5N6psPa4BFU7y/a?=
+ =?us-ascii?Q?2jg1X//T1TPV0YGefK8p/vBdpCFT4Es4KtQmF09kNdD0ESzYlRo3EJWNwJxT?=
+ =?us-ascii?Q?xaDJLtykk7K2r1aPQothjZpqaspdS+ozAiWXsAxjiXByFxAFyTDqVcuCmEw2?=
+ =?us-ascii?Q?mXPfZ7N+/lv4EaXR49XmKg9D3ucRw2UZ1P84f2KIc/Cta0CnNqwEDhhPuklk?=
+ =?us-ascii?Q?ifRr8mBqWmHfogdmonm6GiK4JrFJdbaYczKPUa28w83oc3PL3Sf/BUjqh9ss?=
+ =?us-ascii?Q?0K/zChGKbJ+XDCsSeq7uhWnKXFVCyx1IywJNxXwHKugZo+2xhdYgbVoyZdwy?=
+ =?us-ascii?Q?3MDAHU9AIozXy7BXN9y/S6qlGVOaM3zOLlH9R7N1gG3wVjTGgzqCEhgLTUS+?=
+ =?us-ascii?Q?1mz3DHFzvn61T/KuFbQ6thMY69JiAiGQe1aPzzbGyCopi9xD57UnoK/5yZZp?=
+ =?us-ascii?Q?TV/QrZsHBLV3wM5o1djXF/He23cwY+Zvcuqjj9a4ZweGvZ4O0DCR+ZU4eEMH?=
+ =?us-ascii?Q?LL1+pH9OEM/S+e8rpYxBong92g1fm53R0PWGffGLcT1jh4q8RaQljJ4lej8T?=
+ =?us-ascii?Q?GNpMUQKBZ2J8k0pucwGAmlO1ZK3BMgxkfqO+7Wza7TgguVEJKqmc+Cr6Cl4r?=
+ =?us-ascii?Q?ro1lVfY/F+Zndw/J12BXaSrYpWvCFdwncvit06Ghip+ijo6ZlwBefwC/rGze?=
+ =?us-ascii?Q?o0UqggeMuW5hnjewtP141rN0/SOfEUdRJesSDpW/haEtfwnjCwiq+dejvROC?=
+ =?us-ascii?Q?bks52hIpP+H599pgh9NIr/nlxBJNvoo3bSU0vh5B8FDbsK3U6wSvjkq2O7s7?=
+ =?us-ascii?Q?UozEASJoqZmsXZKDwR1Kp4xrVW6abOZOZ09+TY/ztOtReRE2NeYa8pDM57jO?=
+ =?us-ascii?Q?3uyhjtbzOFw1si6muLMoWZyGaEI6yAMnvdU9ty5Efy2Fs046y8eAf8ThIbiM?=
+ =?us-ascii?Q?2Ui3dhfLAUAu07ttGmaOQGHB3HoAI0UsIowHO7KQx48FdGP+42D0cogQT3pt?=
+ =?us-ascii?Q?ik30y4iIVFA=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH2PR12MB4277.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(366016)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Zi0Uh4My21WG+a8Woyth81OaRJFvDc4oZWeqtPIPxUfaRNrRVhV6vgIHlq31?=
+ =?us-ascii?Q?GIZC2u70HYFUbx90HeJtQTOQoNPsMX2crf450EAr9515gyTuRDnRw/vRavkG?=
+ =?us-ascii?Q?NiS3KuVv6RUp3yxcGeszRtwskjsvFiFBhaJxVxMsBZ3vg4utVNsmN9s1JHbw?=
+ =?us-ascii?Q?NsDKIzv2PjHiDuuP/KsCfPwAVFeSmdzpDQbzAk0WCfjH9Y/uyBNkYnzCjYxN?=
+ =?us-ascii?Q?FifxNjoKn5rt8cwK2XVkMZiBs5gg22TW1+xLJWtcW3C+jT+Jvg9GJrQXtBD0?=
+ =?us-ascii?Q?a+d0NnR1aEHTrd/u09+f2uqhLCz2FKPsQ3qncF2hbXpBc3pJPvPOseeW7U9t?=
+ =?us-ascii?Q?/3tTsPfmhCTr9ocHh1PneQcYBSRz4HGOibtp/QPJM9J1KDf17E9lMZLSGdBy?=
+ =?us-ascii?Q?vTQdHaORd1c86fA8/7Aa9JL1AsTVAbJIQQiQyG9d3HIO2xGeZbI2oyKewOZP?=
+ =?us-ascii?Q?aYsngoc4EZKv9OdQTgQYeYII42MDEkUrzedFGhWxEU0YUfyeIq76rhc2Icbi?=
+ =?us-ascii?Q?hnkphQlgF8aPCz3KBpd7dczuxZ0ljqN34E2RQSCfCZP/1XcosbvBC2hTzmxX?=
+ =?us-ascii?Q?IvuGLLucUaW54Wf6/hiVQgKcq9lBRlEZEkyfYsA+ZJhGx0KAntCAzrzxOi/j?=
+ =?us-ascii?Q?bU+4OpEgThyy/PK9OxGXut+sRHI8PFv18FisVEZLCRSVvbOR4TFXT2/eqXK6?=
+ =?us-ascii?Q?Lp0qudAfiin1EwUQZUOsUHu6831K6cOfDec3lttKY5cTabfyDtfZIzlJwkAc?=
+ =?us-ascii?Q?rQYgqCuHEJpSsEIGzUV5HkLyqjI8cxd7AfrVQ/6v7TAUy05SQ2PdjL4qic9W?=
+ =?us-ascii?Q?SzrZCMiNAQu+CQChdHdwHr78GfDfdIxQwcCHB+fUKbaTEY/wbV0EPBkVXpK6?=
+ =?us-ascii?Q?33Hadnie7iUNDxz4URpoaO3b01XgQV84BWGCoZEF/q3HmZ45mfrHxzMAXXWA?=
+ =?us-ascii?Q?5XEJC9KlKr8MURp4Q/nkxA/f7raJ+FiodYdq/cAoyXXj6jIevToRvW79Skta?=
+ =?us-ascii?Q?J76ocvh9baHrr1coHmS8TA9AKe7c1OJ8KKPjWD1Z3Y/ZN8DOofe6KLWhH6ai?=
+ =?us-ascii?Q?Cex4LfBsRQN/ylk/fVVFrep+YwhGvtG/hOyrbwvm+Yy5nm5vbcTNy1bCgHdM?=
+ =?us-ascii?Q?7KRnPQPi5T5NID2gsW4zkEJbwo/7Q+GdqkIzoHLAdB9IQrknn7v3ZAqtzYZD?=
+ =?us-ascii?Q?DhdXQIHqZv4oJ37nMNhuyG82Mw+zypQNfbhXMNjDiEPemj8qEe3xiLv7yR35?=
+ =?us-ascii?Q?iGEClpFGCQyvWqxArTv5yNNtD144yxHo0H2d+3Mo4Jw1psF9rYzp6AAxgnLS?=
+ =?us-ascii?Q?inSkN6VjVToVQrH9RxpfhVQ4y6jD1pjXlAKf8v+nlUWa3xFs0/m2c6CMrBBd?=
+ =?us-ascii?Q?nX/IQzk7J6toxqGmtaW0Xbj9NJSeFzVmlTkg2+bkJmE+gnHTN6vTBdWHRAxF?=
+ =?us-ascii?Q?2ZNymXujPiJ6tCesy+TyRGf6I54msMnuraz3l/9mbqyeKES8QDukwZf2iQoO?=
+ =?us-ascii?Q?7uW9B8C4P5Mfr8hyjJvxRC0V0WqhqXGWAlqqYMGmKPsGAKaC6ZcD2G61Hqla?=
+ =?us-ascii?Q?QeaIly3ObNyK1Vj/qgPxNcawYYAW+D1Pi2d6Wr52?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bb59d04c-d9c7-4964-6409-08ddba3fe8bc
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR12MB4277.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2025 14:43:00.9035 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 87f8HBmOMK+8UelxFm2ro9jaXazJDHBAjtsmVXLn+rVWCkfHfHQxPCNOe+9oeiqHLy6aDZB9z5C9iYcKl9ST3w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7836
+Received-SPF: permerror client-ip=2a01:111:f403:2414::60a;
+ envelope-from=etanous@nvidia.com;
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,283 +163,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> On 13/06/2025 16:22, Roy Hopkins wrote:
-> > Adds a handler for the guest policy initialization IGVM section and
-> > builds an SEV policy based on this information and the ID block
-> > directive if present. The policy is applied using by calling
-> > 'set_guest_policy()' on the ConfidentialGuestSupport object.
-> >=20
-> > Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
-> > Acked-by: Michael S. Tsirkin <mst@redhat.com>
-> > Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-> > Acked-by: Gerd Hoffman <kraxel@redhat.com>
-> > ---
-> > backends/igvm.c | 138 ++++++++++++++++++++++++++++++++++++++++++++++++
-> > 1 file changed, 138 insertions(+)
-> >=20
-> > diff --git a/backends/igvm.c b/backends/igvm.c
-> > index ebdb4594d1..034f504716 100644
-> > --- a/backends/igvm.c
-> > +++ b/backends/igvm.c
-> > @@ -27,6 +27,33 @@ typedef struct QIgvmParameterData {
-> > uint32_t index;
-> > } QIgvmParameterData;
-> >=20
-> > +/*
-> > + * Some directives are specific to particular confidential computing p=
-latforms.
-> > + * Define required types for each of those platforms here.
-> > + */
-> > +
-> > +/* SEV/SEV-ES/SEV-SNP */
->=20
->=20
-> Could mention that the following are in Chapter 8 of
-> "SEV Secure Nested Paging Firmware ABI Specification"
->=20
-Good suggestion. I'll add it.
->=20
-> > +struct QEMU_PACKED sev_id_block {
-> > + uint8_t ld[48];
-> > + uint8_t family_id[16];
-> > + uint8_t image_id[16];
-> > + uint32_t version;
-> > + uint32_t guest_svn;
-> > + uint64_t policy;
-> > +};
-> > +
-> > +struct QEMU_PACKED sev_id_authentication {
-> > + uint32_t id_key_alg;
-> > + uint32_t auth_key_algo;
-> > + uint8_t reserved[56];
-> > + uint8_t id_block_sig[512];
-> > + uint8_t id_key[1028];
-> > + uint8_t reserved2[60];
-> > + uint8_t id_key_sig[512];
-> > + uint8_t author_key[1028];
-> > + uint8_t reserved3[892];
-> > +};
-> > +
->=20
-> In the next patch (#15), sev_snp_id_authentication is in target/i386/sev.=
-h
-> Should they be all together? (and sev_snp_id_authentication seems
-> identical to sev_id_authentication - do we we need both structs?)
->=20
-That does make sense and I hoped to do that, but the two files should not r=
-eally
-depend on each other in their current locations. Perhaps we can look at mov=
-ing
-the SEV definitions into a common location in a future patch?=20
+GB200nvl72 is a system for for accelerated compute.  This is a model for
+the BMC target within the system.
 
-> > /*
-> > * QIgvm contains the information required during processing
-> > * of a single IGVM file.
-> > @@ -38,6 +65,17 @@ typedef struct QIgvm {
-> > uint32_t compatibility_mask;
-> > unsigned current_header_index;
-> > QTAILQ_HEAD(, QIgvmParameterData) parameter_data;
-> > + IgvmPlatformType platform_type;
-> > +
-> > + /*
-> > + * SEV-SNP platforms can contain an ID block and authentication
-> > + * that should be verified by the guest.
-> > + */
-> > + struct sev_id_block *id_block;
-> > + struct sev_id_authentication *id_auth;
-> > +
-> > + /* Define the guest policy for SEV guests */
-> > + uint64_t sev_policy;
-> >=20
-> > /* These variables keep track of contiguous page regions */
-> > IGVM_VHS_PAGE_DATA region_prev_page_data;
-> > @@ -67,6 +105,11 @@ static int qigvm_directive_environment_info(QIgvm *=
-ctx,
-> > static int qigvm_directive_required_memory(QIgvm *ctx,
-> > const uint8_t *header_data,
-> > Error **errp);
-> > +static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *hea=
-der_data,
-> > + Error **errp);
-> > +static int qigvm_initialization_guest_policy(QIgvm *ctx,
-> > + const uint8_t *header_data,
-> > + Error **errp);
-> >=20
-> > struct QIGVMHandler {
-> > uint32_t type;
-> > @@ -91,6 +134,10 @@ static struct QIGVMHandler handlers[] =3D {
-> > qigvm_directive_environment_info },
-> > { IGVM_VHT_REQUIRED_MEMORY, IGVM_HEADER_SECTION_DIRECTIVE,
-> > qigvm_directive_required_memory },
-> > + { IGVM_VHT_SNP_ID_BLOCK, IGVM_HEADER_SECTION_DIRECTIVE,
-> > + qigvm_directive_snp_id_block },
-> > + { IGVM_VHT_GUEST_POLICY, IGVM_HEADER_SECTION_INITIALIZATION,
-> > + qigvm_initialization_guest_policy },
-> > };
-> >=20
-> > static int qigvm_handler(QIgvm *ctx, uint32_t type, Error **errp)
-> > @@ -632,6 +679,70 @@ static int qigvm_directive_required_memory(QIgvm *=
-ctx,
-> > return 0;
-> > }
-> >=20
-> > +static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *hea=
-der_data,
-> > + Error **errp)
-> > +{
-> > + const IGVM_VHS_SNP_ID_BLOCK *igvm_id =3D
-> > + (const IGVM_VHS_SNP_ID_BLOCK *)header_data;
-> > +
-> > + if (!(igvm_id->compatibility_mask & ctx->compatibility_mask)) {
-> > + return 0;
-> > + }
-> > +
-> > + if (ctx->id_block) {
-> > + error_setg(errp, "IGVM: Multiple ID blocks encountered "
-> > + "in IGVM file.");
->=20
-> Error string should be on one line to make it easier to search/grep for.
+This is based on the device tree aspeed-bmc-nvidia-gb200nvl-bmc.dts
+from:
 
-This, and the other formatting comments are this way due to the formatting
-requirements in the project. checkpatch.pl fails with an error if I try
-to stretch these lines out.
+[1] https://github.com/openbmc/linux/blob/dev-6.6/arch/arm/boot/dts/aspeed/aspeed-bmc-nvidia-gb200nvl-bmc.dts
 
->=20
-> > + return -1;
-> > + }
-> > + ctx->id_block =3D g_new0(struct sev_id_block, 1);
-> > + ctx->id_auth =3D g_new0(struct sev_id_authentication, 1);
-> > +
-> > + memcpy(ctx->id_block->family_id, igvm_id->family_id,
-> > + sizeof(ctx->id_block->family_id));
-> > + memcpy(ctx->id_block->image_id, igvm_id->image_id,
-> > + sizeof(ctx->id_block->image_id));
-> > + ctx->id_block->guest_svn =3D igvm_id->guest_svn;
-> > + ctx->id_block->version =3D 1;
->=20
-> Worth a #define for version?
->=20
-Yes. Done.
+Signed-off-by: Ed Tanous <etanous@nvidia.com>
+---
+ hw/arm/aspeed.c        | 79 ++++++++++++++++++++++++++++++++++++++++++
+ hw/arm/aspeed_eeprom.c | 21 +++++++++++
+ hw/arm/aspeed_eeprom.h |  3 ++
+ 3 files changed, 103 insertions(+)
 
-> > + memcpy(ctx->id_block->ld, igvm_id->ld, sizeof(ctx->id_block->ld));
-> > +
-> > + ctx->id_auth->id_key_alg =3D igvm_id->id_key_algorithm;
-> > + memcpy(ctx->id_auth->id_block_sig, &igvm_id->id_key_signature,
-> > + sizeof(igvm_id->id_key_signature));
-> > +
->=20
-> Should the sizeof be ctx->id_auth->id_block_sig (the dest) ?
->=20
-> > + ctx->id_auth->auth_key_algo =3D igvm_id->author_key_algorithm;
-> > + memcpy(ctx->id_auth->id_key_sig, &igvm_id->author_key_signature,
-> > + sizeof(igvm_id->author_key_signature));
-> > +
->=20
-> Should the sizeof be ctx->id_auth->id_key_sig ?
->=20
-Unfortunately the two structures are different sizes. I've added an assert
-for this and the other one below to catch any future errors.
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 3ef7f6c5b2..98144ced86 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -19,6 +19,7 @@
+ #include "hw/i2c/i2c_mux_pca954x.h"
+ #include "hw/i2c/smbus_eeprom.h"
+ #include "hw/gpio/pca9552.h"
++#include "hw/gpio/pca9554.h"
+ #include "hw/nvram/eeprom_at24c.h"
+ #include "hw/sensor/tmp105.h"
+ #include "hw/misc/led.h"
+@@ -201,6 +202,10 @@ struct AspeedMachineState {
+ #define BLETCHLEY_BMC_HW_STRAP1 AST2600_EVB_HW_STRAP1
+ #define BLETCHLEY_BMC_HW_STRAP2 AST2600_EVB_HW_STRAP2
+ 
++/* GB200NVL hardware value */
++#define GB200NVL_BMC_HW_STRAP1 AST2600_EVB_HW_STRAP1
++#define GB200NVL_BMC_HW_STRAP2 AST2600_EVB_HW_STRAP2
++
+ /* Qualcomm DC-SCM hardware value */
+ #define QCOM_DC_SCM_V1_BMC_HW_STRAP1  0x00000000
+ #define QCOM_DC_SCM_V1_BMC_HW_STRAP2  0x00000041
+@@ -647,6 +652,12 @@ static void create_pca9552(AspeedSoCState *soc, int bus_id, int addr)
+                             TYPE_PCA9552, addr);
+ }
+ 
++static I2CSlave *create_pca9554(AspeedSoCState *soc, int bus_id, int addr)
++{
++    return i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, bus_id),
++                            TYPE_PCA9554, addr);
++}
++
+ static void sonorapass_bmc_i2c_init(AspeedMachineState *bmc)
+ {
+     AspeedSoCState *soc = bmc->soc;
+@@ -1052,6 +1063,45 @@ static void bletchley_bmc_i2c_init(AspeedMachineState *bmc)
+     i2c_slave_create_simple(i2c[12], TYPE_PCA9552, 0x67);
+ }
+ 
++
++static void gb200nvl_bmc_i2c_init(AspeedMachineState *bmc)
++{
++    AspeedSoCState *soc = bmc->soc;
++    I2CBus *i2c[15] = {};
++    DeviceState *dev;
++    for (int i = 0; i < sizeof(i2c) / sizeof(i2c[0]); i++) {
++        if ((i == 11) || (i == 12) || (i == 13)) {
++            continue;
++        }
++        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
++    }
++
++    /* Bus 5 Expander */
++    create_pca9554(soc, 4, 0x21);
++
++    /* Mux I2c Expanders */
++    i2c_slave_create_simple(i2c[5], "pca9546", 0x71);
++    i2c_slave_create_simple(i2c[5], "pca9546", 0x72);
++    i2c_slave_create_simple(i2c[5], "pca9546", 0x73);
++    i2c_slave_create_simple(i2c[5], "pca9546", 0x75);
++    i2c_slave_create_simple(i2c[5], "pca9546", 0x76);
++    i2c_slave_create_simple(i2c[5], "pca9546", 0x77);
++
++    /* Bus 10 */
++    dev = DEVICE(create_pca9554(soc, 9, 0x20));
++
++    /* Set FPGA_READY */
++    object_property_set_str(OBJECT(dev), "pin1", "high", &error_fatal);
++
++    create_pca9554(soc, 9, 0x21);
++    at24c_eeprom_init(i2c[9], 0x50, 64 * KiB);
++    at24c_eeprom_init(i2c[9], 0x51, 64 * KiB);
++
++    /* Bus 11 */
++    at24c_eeprom_init_rom(i2c[10], 0x50, 256, gb200nvl_bmc_fruid,
++                          gb200nvl_bmc_fruid_len);
++}
++
+ static void fby35_i2c_init(AspeedMachineState *bmc)
+ {
+     AspeedSoCState *soc = bmc->soc;
+@@ -1587,6 +1637,31 @@ static void aspeed_machine_bletchley_class_init(ObjectClass *oc,
+     aspeed_machine_class_init_cpus_defaults(mc);
+ }
+ 
++#define GB200NVL_BMC_RAM_SIZE ASPEED_RAM_SIZE(1 * GiB)
++
++static void aspeed_machine_gb200nvl_class_init(ObjectClass *oc,
++                                               const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
++
++    mc->desc       = "Nvidia GB200NVL BMC (Cortex-A7)";
++    amc->soc_name  = "ast2600-a3";
++    amc->hw_strap1 = GB200NVL_BMC_HW_STRAP1;
++    amc->hw_strap2 = GB200NVL_BMC_HW_STRAP2;
++    amc->fmc_model = "mx66u51235f";
++    amc->spi_model = "mx66u51235f";
++    amc->num_cs    = 2;
++
++    amc->spi2_model = "mx66u51235f";
++    amc->num_cs2   = 1;
++    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
++    amc->i2c_init  = gb200nvl_bmc_i2c_init;
++    mc->default_ram_size = GB200NVL_BMC_RAM_SIZE;
++    aspeed_machine_class_init_cpus_defaults(mc);
++    aspeed_machine_ast2600_class_emmc_init(oc);
++}
++
+ static void fby35_reset(MachineState *state, ResetType type)
+ {
+     AspeedMachineState *bmc = ASPEED_MACHINE(state);
+@@ -1879,6 +1954,10 @@ static const TypeInfo aspeed_machine_types[] = {
+         .name          = MACHINE_TYPE_NAME("bletchley-bmc"),
+         .parent        = TYPE_ASPEED_MACHINE,
+         .class_init    = aspeed_machine_bletchley_class_init,
++    }, {
++        .name          = MACHINE_TYPE_NAME("gb200nvl-bmc"),
++        .parent        = TYPE_ASPEED_MACHINE,
++        .class_init    = aspeed_machine_gb200nvl_class_init,
+     }, {
+         .name          = MACHINE_TYPE_NAME("fby35-bmc"),
+         .parent        = MACHINE_TYPE_NAME("ast2600-evb"),
+diff --git a/hw/arm/aspeed_eeprom.c b/hw/arm/aspeed_eeprom.c
+index daa3d329d1..8bbbdec834 100644
+--- a/hw/arm/aspeed_eeprom.c
++++ b/hw/arm/aspeed_eeprom.c
+@@ -162,6 +162,25 @@ const uint8_t rainier_bmc_fruid[] = {
+     0x31, 0x50, 0x46, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00,
+ };
+ 
++const uint8_t gb200nvl_bmc_fruid[] = {
++    0x01, 0x00, 0x00, 0x01, 0x0b, 0x00, 0x00, 0xf3, 0x01, 0x0a, 0x19, 0x1f,
++    0x0f, 0xe6, 0xc6, 0x4e, 0x56, 0x49, 0x44, 0x49, 0x41, 0xc5, 0x50, 0x33,
++    0x38, 0x30, 0x39, 0xcd, 0x31, 0x35, 0x38, 0x33, 0x33, 0x32, 0x34, 0x38,
++    0x30, 0x30, 0x31, 0x35, 0x30, 0xd2, 0x36, 0x39, 0x39, 0x2d, 0x31, 0x33,
++    0x38, 0x30, 0x39, 0x2d, 0x30, 0x34, 0x30, 0x34, 0x2d, 0x36, 0x30, 0x30,
++    0xc0, 0x01, 0x01, 0xd6, 0x4d, 0x41, 0x43, 0x3a, 0x20, 0x33, 0x43, 0x3a,
++    0x36, 0x44, 0x3a, 0x36, 0x36, 0x3a, 0x31, 0x34, 0x3a, 0x43, 0x38, 0x3a,
++    0x37, 0x41, 0xc1, 0x3b, 0x01, 0x09, 0x19, 0xc6, 0x4e, 0x56, 0x49, 0x44,
++    0x49, 0x41, 0xc9, 0x50, 0x33, 0x38, 0x30, 0x39, 0x2d, 0x42, 0x4d, 0x43,
++    0xd2, 0x36, 0x39, 0x39, 0x2d, 0x31, 0x33, 0x38, 0x30, 0x39, 0x2d, 0x30,
++    0x34, 0x30, 0x34, 0x2d, 0x36, 0x30, 0x30, 0xc4, 0x41, 0x45, 0x2e, 0x31,
++    0xcd, 0x31, 0x35, 0x38, 0x33, 0x33, 0x32, 0x34, 0x38, 0x30, 0x30, 0x31,
++    0x35, 0x30, 0xc0, 0xc4, 0x76, 0x30, 0x2e, 0x31, 0xc1, 0x00, 0x00, 0x00,
++    0x00, 0x00, 0x00, 0xb4, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
++
++};
++
+ const size_t tiogapass_bmc_fruid_len = sizeof(tiogapass_bmc_fruid);
+ const size_t fby35_nic_fruid_len = sizeof(fby35_nic_fruid);
+ const size_t fby35_bb_fruid_len = sizeof(fby35_bb_fruid);
+@@ -169,3 +188,5 @@ const size_t fby35_bmc_fruid_len = sizeof(fby35_bmc_fruid);
+ const size_t yosemitev2_bmc_fruid_len = sizeof(yosemitev2_bmc_fruid);
+ const size_t rainier_bb_fruid_len = sizeof(rainier_bb_fruid);
+ const size_t rainier_bmc_fruid_len = sizeof(rainier_bmc_fruid);
++const size_t gb200nvl_bmc_fruid_len = sizeof(gb200nvl_bmc_fruid);
++
+diff --git a/hw/arm/aspeed_eeprom.h b/hw/arm/aspeed_eeprom.h
+index f08c16ef50..3ed9bc1d9a 100644
+--- a/hw/arm/aspeed_eeprom.h
++++ b/hw/arm/aspeed_eeprom.h
+@@ -26,4 +26,7 @@ extern const size_t rainier_bb_fruid_len;
+ extern const uint8_t rainier_bmc_fruid[];
+ extern const size_t rainier_bmc_fruid_len;
+ 
++extern const uint8_t gb200nvl_bmc_fruid[];
++extern const size_t gb200nvl_bmc_fruid_len;
++
+ #endif
+-- 
+2.43.0
 
-> > + /*
-> > + * SEV and IGVM public key structure population are slightly different=
-.
-> > + * See SEV Secure Nested Paging Firmware ABI Specification, Chapter 10=
-.
-> > + */
-> > + *((uint32_t *)ctx->id_auth->id_key) =3D igvm_id->id_public_key.curve;
-> > + memcpy(&ctx->id_auth->id_key[4], &igvm_id->id_public_key.qx, 72);
-> > + memcpy(&ctx->id_auth->id_key[76], &igvm_id->id_public_key.qy, 72);
-> > +
-> > + *((uint32_t *)ctx->id_auth->author_key) =3D
-> > + igvm_id->author_public_key.curve;
-> > + memcpy(&ctx->id_auth->author_key[4], &igvm_id->author_public_key.qx,
-> > + 72);
-> > + memcpy(&ctx->id_auth->author_key[76], &igvm_id->author_public_key.qy,
-> > + 72);
-> > +
->=20
-> For both memcpy calls, they could fit on one line and be more readable.
->=20
-> > + return 0;
-> > +}
-> > +
-> > +static int qigvm_initialization_guest_policy(QIgvm *ctx,
-> > + const uint8_t *header_data, Error **errp)
-> > +{
-> > + const IGVM_VHS_GUEST_POLICY *guest =3D
-> > + (const IGVM_VHS_GUEST_POLICY *)header_data;
-> > +
-> > + if (guest->compatibility_mask & ctx->compatibility_mask) {
-> > + ctx->sev_policy =3D guest->policy;
-> > + }
-> > + return 0;
-> > +}
-> > +
-> > static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **err=
-p)
-> > {
-> > int32_t header_count;
-> > @@ -701,12 +812,16 @@ static int qigvm_supported_platform_compat_mask(Q=
-Igvm *ctx, Error **errp)
-> > /* Choose the strongest supported isolation technology */
-> > if (compatibility_mask_sev_snp !=3D 0) {
-> > ctx->compatibility_mask =3D compatibility_mask_sev_snp;
-> > + ctx->platform_type =3D IGVM_PLATFORM_TYPE_SEV_SNP;
-> > } else if (compatibility_mask_sev_es !=3D 0) {
-> > ctx->compatibility_mask =3D compatibility_mask_sev_es;
-> > + ctx->platform_type =3D IGVM_PLATFORM_TYPE_SEV_ES;
-> > } else if (compatibility_mask_sev !=3D 0) {
-> > ctx->compatibility_mask =3D compatibility_mask_sev;
-> > + ctx->platform_type =3D IGVM_PLATFORM_TYPE_SEV;
-> > } else if (compatibility_mask !=3D 0) {
-> > ctx->compatibility_mask =3D compatibility_mask;
-> > + ctx->platform_type =3D IGVM_PLATFORM_TYPE_NATIVE;
-> > } else {
-> > error_setg(
-> > errp,
-> > @@ -716,6 +831,23 @@ static int qigvm_supported_platform_compat_mask(QI=
-gvm *ctx, Error **errp)
-> > return 0;
-> > }
-> >=20
-> > +static int qigvm_handle_policy(QIgvm *ctx, Error **errp)
-> > +{
-> > + if (ctx->platform_type =3D=3D IGVM_PLATFORM_TYPE_SEV_SNP) {
-> > + int id_block_len =3D 0;
-> > + int id_auth_len =3D 0;
-> > + if (ctx->id_block) {
-> > + ctx->id_block->policy =3D ctx->sev_policy;
-> > + id_block_len =3D sizeof(struct sev_id_block);
-> > + id_auth_len =3D sizeof(struct sev_id_authentication);
-> > + }
-> > + return ctx->cgsc->set_guest_policy(GUEST_POLICY_SEV, ctx->sev_policy,
-> > + ctx->id_block, id_block_len,
-> > + ctx->id_auth, id_auth_len, errp);
-> > + }
-> > + return 0;
-> > +}
-> > +
-> > static IgvmHandle qigvm_file_init(char *filename, Error **errp)
-> > {
-> > IgvmHandle igvm;
-> > @@ -814,12 +946,18 @@ int qigvm_process_file(IgvmCfg *cfg, Confidential=
-GuestSupport *cgs,
-> > */
-> > retval =3D qigvm_process_mem_page(&ctx, NULL, errp);
-> >=20
-> > + if (retval =3D=3D 0) {
-> > + retval =3D qigvm_handle_policy(&ctx, errp);
-> > + }
-> > +
-> > cleanup_parameters:
-> > QTAILQ_FOREACH(parameter, &ctx.parameter_data, next)
-> > {
-> > g_free(parameter->data);
-> > parameter->data =3D NULL;
-> > }
-> > + g_free(ctx.id_block);
-> > + g_free(ctx.id_auth);
-> >=20
-> > cleanup:
-> > igvm_free(ctx.file);
 
