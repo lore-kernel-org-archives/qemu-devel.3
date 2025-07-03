@@ -4,53 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18804C83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 09:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F033FC77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 09:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXGab-000863-84; Thu, 03 Jul 2025 05:50:45 -0400
+	id 1uXGbC-0002G4-UK; Thu, 03 Jul 2025 05:51:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uXGZh-0007Hu-E1
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 05:49:52 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uXGZd-0000QS-1H
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 05:49:49 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxaWoyUmZoPMAhAQ--.11334S3;
- Thu, 03 Jul 2025 17:49:38 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCxM+QuUmZoNv4HAA--.46770S4;
- Thu, 03 Jul 2025 17:49:38 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: maobibo@loongson.cn
-Cc: qemu-devel@nongnu.org,
-	philmd@linaro.org,
-	jiaxun.yang@flygoat.com
-Subject: [PATCH v4 02/11] hw/loongarch: add virt feature avecintc support
-Date: Thu,  3 Jul 2025 17:26:41 +0800
-Message-Id: <20250703092650.2598059-3-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20250703092650.2598059-1-gaosong@loongson.cn>
-References: <20250703092650.2598059-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXGbA-00028w-IF
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 05:51:20 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXGb8-0000tP-QV
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 05:51:20 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-70e64b430daso59469857b3.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 02:51:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751536277; x=1752141077; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=/NoHf2a1Zo6RocIxZitcR//DWchIRQTyoNenFJdE110=;
+ b=JsK/05Ph3YbfVP/ByX8pExnn8dlYrm7+0uc4dumVxAbKa0dVrbatHt+0fCjpRP0rkJ
+ s/+l35nKDb8KfPxNrm2xkskt5IlwG7pzqtOvTbOAIz9x8pD1jCLRsLTl7kcyN6tLah7P
+ FcJJWCON6f4+W5ppmzr+XdQBFj8J9yoLpmOBv1GfALeRFKqg/VYyZqOaNuN/dqvRY//L
+ 1/EdTkP3CfmiG8Q03xyDmwdaPAFHDwqogfjc2zxnNi5l1uhzxR04e3sYw/JISDhhI5eI
+ /qmW+NRQCK9omME8sLWPRUxOc0SGhvNgrL2pqoj56+nQg7Vme4sFDTw0fTVENccvIbWd
+ Y/IQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751536277; x=1752141077;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/NoHf2a1Zo6RocIxZitcR//DWchIRQTyoNenFJdE110=;
+ b=Xn+aqlvZTgt8ryl9JEZLD1Hj7nOqzQ7zTXymCLhhpTo7V4cq6fK1P2h/9FUNtcDUj0
+ LonO4k19BCQ5HaAd8CHxMCtiY6rklEyBm35e/F0fX/nMu7kmkczGHox7vZFo1ku6ZDcI
+ 4u+LPNiB2d36771/X3YBzinkifaoDAcicO3QmZvvu/qnMX5mSlCoh9z1p+9tDLwkqiHx
+ 4R6ct46wJHuTG8DTYFQDknvAK2nkewzigT5zQT0v2NtLbajM7Roa8xSsEPy0DxuizzM+
+ tR7iUIUuDBWKNwmHDxnuf+WRCmC2SaV7hkGj08z2Z2uDZ4hlj9itAZX30hhV0xkzB4PB
+ t2Pw==
+X-Gm-Message-State: AOJu0YzAjgpkR2MjOtpf+s1cKHtYt69G7Qksk8rNJLxQ3mRFJ7S1QdId
+ B1xPqDfwNjxG6OSNXtEefgik9ZTSreKDVE2Ez0/3I622zHjiPGA/SXTvj8/dhFOMngqWFoZNUFu
+ 2KdZfN6F2mYxKfHXDp7RReGFHSew06asxoeigN4LsNgHwWVBMExoD
+X-Gm-Gg: ASbGncu3FVOlXz1CzngHUrNxFqdm4UIVh8kCbCYsVCUMcK5HEi/MZ+Mqfm8J5cXKgMo
+ FnSMWz/TnFN+cD9jSWeSp9AI15wwTuYMYM8ik2Wz8rk4cGpuuC0GRh39uzVl9xzse+bJoSWghdD
+ CsjXMn7JFW1xiWcSCbl7nGTeg6IWSvlftCeI7osRsxhQZJ
+X-Google-Smtp-Source: AGHT+IGKKWUa8M9rE6jWLkeRt5OWt9bk63aHJuuRF6sMsDtGNRhijkMJm95EQacj1GWIi4T62F2e5B39x0BnK7fXTd4=
+X-Received: by 2002:a05:690c:64c7:b0:70e:7ae4:5a3e with SMTP id
+ 00721157ae682-7164d2cb17bmr96914047b3.11.1751536277594; Thu, 03 Jul 2025
+ 02:51:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxM+QuUmZoNv4HAA--.46770S4
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20250702123410.761208-1-richard.henderson@linaro.org>
+ <20250702123410.761208-41-richard.henderson@linaro.org>
+In-Reply-To: <20250702123410.761208-41-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 3 Jul 2025 10:51:06 +0100
+X-Gm-Features: Ac12FXzjj2X34VeGZRD6FBw9FZdPBaPVVvALvmDb_4SJQUfxkaXQ9UDWjxPSU20
+Message-ID: <CAFEAcA-e6hSoEMh=2TUieqmBMnmX1-uAd2PRkHsGVW8jV-BT=g@mail.gmail.com>
+Subject: Re: [PATCH v3 40/97] target/arm: Implement SME2 FADD, FSUB, BFADD,
+ BFSUB
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,126 +93,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-LoongArchVirtMachinState add avecintc features, and
-it use to check whether virt machine support advance interrupt controller
-and default set avecintc = ON_OFF_AUTO_ON.
-LoongArchVirtMachineState add misc_feature and misc_status for
-misc fetures and status. and set default avec feture bit.
+On Wed, 2 Jul 2025 at 13:38, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/helper.h        |  2 ++
+>  target/arm/tcg/translate-sme.c | 44 ++++++++++++++++++++++++++++++++++
+>  target/arm/tcg/vec_helper.c    |  2 ++
+>  target/arm/tcg/sme.decode      | 25 +++++++++++++++++++
+>  4 files changed, 73 insertions(+)
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- hw/loongarch/virt.c         | 30 ++++++++++++++++++++++++++++++
- include/hw/loongarch/virt.h | 13 +++++++++++++
- 2 files changed, 43 insertions(+)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index b15ada2078..112cf9a9db 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -47,6 +47,27 @@
- #include "hw/virtio/virtio-iommu.h"
- #include "qemu/error-report.h"
- 
-+static void virt_get_avecintc(Object *obj, Visitor *v, const char *name,
-+                             void *opaque, Error **errp)
-+{
-+    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-+    OnOffAuto avecintc = lvms->avecintc;
-+
-+    visit_type_OnOffAuto(v, name, &avecintc, errp);
-+
-+}
-+static void virt_set_avecintc(Object *obj, Visitor *v, const char *name,
-+                              void *opaque, Error **errp)
-+{
-+    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-+
-+    visit_type_OnOffAuto(v, name, &lvms->avecintc, errp);
-+    if (lvms->avecintc == ON_OFF_AUTO_OFF) {
-+        lvms->misc_feature &= ~BIT(IOCSRF_AVEC);
-+        lvms->misc_status &= ~BIT(IOCSRM_AVEC_EN);
-+    }
-+}
-+
- static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
-                               void *opaque, Error **errp)
- {
-@@ -846,6 +867,9 @@ static void virt_initfn(Object *obj)
-     if (tcg_enabled()) {
-         lvms->veiointc = ON_OFF_AUTO_OFF;
-     }
-+
-+    lvms->misc_feature = BIT(IOCSRF_AVEC);
-+    lvms->avecintc = ON_OFF_AUTO_ON;
-     lvms->acpi = ON_OFF_AUTO_AUTO;
-     lvms->oem_id = g_strndup(ACPI_BUILD_APPNAME6, 6);
-     lvms->oem_table_id = g_strndup(ACPI_BUILD_APPNAME8, 8);
-@@ -1238,6 +1262,12 @@ static void virt_class_init(ObjectClass *oc, const void *data)
-         NULL, NULL);
-     object_class_property_set_description(oc, "v-eiointc",
-                             "Enable Virt Extend I/O Interrupt Controller.");
-+#ifdef CONFIG_TCG
-+    object_class_property_add(oc, "avecintc", "OnOffAuto",
-+        virt_get_avecintc, virt_set_avecintc, NULL, NULL);
-+    object_class_property_set_description(oc, "avecintc",
-+                            "Enable Advance Interrupt Controller.");
-+#endif
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
- #ifdef CONFIG_TPM
-diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-index 7120b46714..9e5b32292b 100644
---- a/include/hw/loongarch/virt.h
-+++ b/include/hw/loongarch/virt.h
-@@ -23,6 +23,7 @@
- #define IOCSRF_DVFSV1           7
- #define IOCSRF_GMOD             9
- #define IOCSRF_VM               11
-+#define IOCSRF_AVEC             15
- 
- #define VERSION_REG             0x0
- #define FEATURE_REG             0x8
-@@ -31,6 +32,7 @@
- #define MISC_FUNC_REG           0x420
- #define IOCSRM_EXTIOI_EN        48
- #define IOCSRM_EXTIOI_INT_ENCODE 49
-+#define IOCSRM_AVEC_EN          51
- 
- #define LOONGARCH_MAX_CPUS      256
- 
-@@ -69,6 +71,7 @@ struct LoongArchVirtMachineState {
-     Notifier     powerdown_notifier;
-     OnOffAuto    acpi;
-     OnOffAuto    veiointc;
-+    OnOffAuto    avecintc;
-     char         *oem_id;
-     char         *oem_table_id;
-     DeviceState  *acpi_ged;
-@@ -84,6 +87,8 @@ struct LoongArchVirtMachineState {
-     DeviceState *extioi;
-     struct memmap_entry *memmap_table;
-     unsigned int memmap_entries;
-+    uint64_t misc_feature;
-+    uint64_t misc_status;
- };
- 
- #define TYPE_LOONGARCH_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
-@@ -91,6 +96,14 @@ OBJECT_DECLARE_SIMPLE_TYPE(LoongArchVirtMachineState, LOONGARCH_VIRT_MACHINE)
- void virt_acpi_setup(LoongArchVirtMachineState *lvms);
- void virt_fdt_setup(LoongArchVirtMachineState *lvms);
- 
-+static inline bool virt_is_avecintc_enabled(LoongArchVirtMachineState *lvms)
-+{
-+    if (!(lvms->misc_feature & BIT(IOCSRF_AVEC))) {
-+        return false;
-+    }
-+    return true;
-+}
-+
- static inline bool virt_is_veiointc_enabled(LoongArchVirtMachineState *lvms)
- {
-     if (lvms->veiointc == ON_OFF_AUTO_OFF) {
--- 
-2.34.1
-
+thanks
+-- PMM
 
