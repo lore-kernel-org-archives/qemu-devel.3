@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7924EC77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 15:01:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9AE3C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 15:01:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXLQW-0006dg-GJ; Thu, 03 Jul 2025 11:00:45 -0400
+	id 1uXLR7-0007Ec-3q; Thu, 03 Jul 2025 11:01:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1uXLQ5-0006Um-Ek
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 11:00:16 -0400
+ id 1uXLR4-00077R-LO
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 11:01:14 -0400
 Received: from smtp-out-60.livemail.co.uk ([213.171.216.60]
  helo=dkim.livemail.co.uk)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1uXLPz-0000lv-8o
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 11:00:12 -0400
+ id 1uXLR0-00015t-Le
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 11:01:14 -0400
 Received: from smtp.livemail.co.uk (unknown [10.44.132.82])
- by dkim.livemail.co.uk (Postfix) with ESMTPS id ED9E9A0362;
- Thu,  3 Jul 2025 16:00:03 +0100 (BST)
+ by dkim.livemail.co.uk (Postfix) with ESMTPS id 0BB2EA034E;
+ Thu,  3 Jul 2025 16:01:07 +0100 (BST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=randomman.co.uk;
- s=livemail2; t=1751554804;
- bh=JsqSuAO9jCXZwkQrZNBV+9jfU2sj7VCwBQFQMXg3aUM=;
- h=From:To:Cc:Subject:Date:From;
- b=k5txAGoGyJpumSAgLdEbFzrq5tWEG1OWIbyJSSLX76Om2mfDhnjZ8NfrViLxY0e9k
- QK+QSOiOdwFoi6nJ/Ra1vPYt+CxmwGAT4DfAml/8l+9XFfRoYgkGeqB/BFEBwv/yES
- natRwQ3uujFyFkDezSE/m8YKneaevHOGzlkOtlOc=
+ s=livemail2; t=1751554868;
+ bh=wZ3yi+1UJzxh3642N7vmOfnAoxnOjMOt/9bT8q/kreg=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=EPBc7g43Oe19i5GpDqUjzPIRocmzHzFEhbiT1rSWNeh7vd0EM6CptTlO5dSLmPn5x
+ NIlALN1hGuio5uC3mX9Qxkib6RaP9lPvVxkxOO+wJvsAPm8zW7rscKUprJQCDF8cTh
+ oX3iGaa5L3kVkIXe6gfUDnWvYlxWrzHAHyNzJXrY=
 Received: from localhost.localdomain (unknown [145.40.191.116])
  (Authenticated sender: roy.hopkins@randomman.co.uk)
- by smtp.livemail.co.uk (Postfix) with ESMTPSA id 6D8A2C094C;
- Thu,  3 Jul 2025 15:59:59 +0100 (BST)
+ by smtp.livemail.co.uk (Postfix) with ESMTPSA id 6DDAFC0291;
+ Thu,  3 Jul 2025 16:01:03 +0100 (BST)
 From: Roy Hopkins <roy.hopkins@randomman.co.uk>
 To: qemu-devel@nongnu.org
 Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>,
@@ -51,10 +51,12 @@ Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>,
  Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
  Gerd Hoffman <kraxel@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
  Joerg Roedel <joro@8bytes.org>
-Subject: [PATCH v9 00/16] Introduce support for IGVM files
-Date: Thu,  3 Jul 2025 15:59:33 +0100
-Message-ID: <cover.1751554099.git.roy.hopkins@randomman.co.uk>
+Subject: [PATCH v9 01/16] meson: Add optional dependency on IGVM library
+Date: Thu,  3 Jul 2025 16:00:36 +0100
+Message-ID: <45945a83a638c3f08e68c025f378e7b7f4f6d593.1751554099.git.roy.hopkins@randomman.co.uk>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1751554099.git.roy.hopkins@randomman.co.uk>
+References: <cover.1751554099.git.roy.hopkins@randomman.co.uk>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,96 +85,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Here is v9 of the set of patches to add support for IGVM files to QEMU. This is
-based on commit c77283dd5d79149f4e7e9edd00f65416c648ee59 of qemu.
+The IGVM library allows Independent Guest Virtual Machine files to be
+parsed and processed. IGVM files are used to configure guest memory
+layout, initial processor state and other configuration pertaining to
+secure virtual machines.
 
-Once again, this is mostly a rebase of the previous patch series. However,
-thanks to those reviewers who have provided feedback on v8 which has now been
-addressed in this new version.
+This adds the --enable-igvm configure option, enabled by default, which
+attempts to locate and link against the IGVM library via pkgconfig and
+sets CONFIG_IGVM if found.
 
-This v9 patch series is also available on github: [2]
+The library is added to the system_ss target in backends/meson.build
+where the IGVM parsing will be performed by the ConfidentialGuestSupport
+object.
 
-For testing IGVM support in QEMU you need to generate an IGVM file that is
-configured for the platform you want to launch. You can use the `buildigvm`
-test tool [3] to allow generation of IGVM files for all currently supported
-platforms. Patch 11/17 contains information on how to generate an IGVM file
-using this tool.
+Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Gerd Hoffman <kraxel@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+---
+ backends/meson.build          | 3 +++
+ meson.build                   | 8 ++++++++
+ meson_options.txt             | 2 ++
+ scripts/meson-buildoptions.sh | 3 +++
+ 4 files changed, 16 insertions(+)
 
-Changes in v9:
-
-* Address review comments from v8
-* Add metadata to relevant commits.
-
-Patch summary:
-
-1-11: Add support and documentation for processing IGVM files for SEV, SEV-ES,
-SEV-SNP and native platforms. 
-
-12-15: Processing of policy and SEV-SNP ID_BLOCK from IGVM file. 
-
-16: Add pre-processing of IGVM file to support synchronization of 'SEV_FEATURES'
-from IGVM VMSA to KVM.
-
-[1] Link to v8:
-https://lists.gnu.org/archive/html/qemu-devel/2025-06/msg02324.html
-
-[2] v8 patches also available here:
-https://github.com/roy-hopkins/qemu/tree/igvm_master_v9
-
-[3] `buildigvm` tool v0.2.0
-https://github.com/roy-hopkins/buildigvm/releases/tag/v0.2.0
-
-Roy Hopkins (16):
-  meson: Add optional dependency on IGVM library
-  backends/confidential-guest-support: Add functions to support IGVM
-  backends/igvm: Add IGVM loader and configuration
-  hw/i386: Add igvm-cfg object and processing for IGVM files
-  i386/pc_sysfw: Ensure sysfw flash configuration does not conflict with
-    IGVM
-  sev: Update launch_update_data functions to use Error handling
-  target/i386: Allow setting of R_LDTR and R_TR with
-    cpu_x86_load_seg_cache()
-  i386/sev: Refactor setting of reset vector and initial CPU state
-  i386/sev: Implement ConfidentialGuestSupport functions for SEV
-  docs/system: Add documentation on support for IGVM
-  docs/interop/firmware.json: Add igvm to FirmwareDevice
-  backends/confidential-guest-support: Add set_guest_policy() function
-  backends/igvm: Process initialization sections in IGVM file
-  backends/igvm: Handle policy for SEV guests
-  i386/sev: Add implementation of CGS set_guest_policy()
-  sev: Provide sev_features flags from IGVM VMSA to KVM_SEV_INIT2
-
- backends/confidential-guest-support.c       |  43 +
- backends/igvm-cfg.c                         |  51 +
- backends/igvm.c                             | 988 ++++++++++++++++++++
- backends/igvm.h                             |  22 +
- backends/meson.build                        |   5 +
- docs/interop/firmware.json                  |  30 +-
- docs/system/i386/amd-memory-encryption.rst  |   2 +
- docs/system/igvm.rst                        | 173 ++++
- docs/system/index.rst                       |   1 +
- hw/i386/pc.c                                |  12 +
- hw/i386/pc_piix.c                           |  10 +
- hw/i386/pc_q35.c                            |  10 +
- hw/i386/pc_sysfw.c                          |  31 +-
- include/hw/i386/x86.h                       |   3 +
- include/system/confidential-guest-support.h |  88 ++
- include/system/igvm-cfg.h                   |  49 +
- meson.build                                 |   8 +
- meson_options.txt                           |   2 +
- qapi/qom.json                               |  17 +
- qemu-options.hx                             |  28 +
- scripts/meson-buildoptions.sh               |   3 +
- target/i386/cpu.h                           |   9 +-
- target/i386/sev.c                           | 850 +++++++++++++++--
- target/i386/sev.h                           | 124 +++
- 24 files changed, 2475 insertions(+), 84 deletions(-)
- create mode 100644 backends/igvm-cfg.c
- create mode 100644 backends/igvm.c
- create mode 100644 backends/igvm.h
- create mode 100644 docs/system/igvm.rst
- create mode 100644 include/system/igvm-cfg.h
-
+diff --git a/backends/meson.build b/backends/meson.build
+index 9b88d22685..ac0fac7845 100644
+--- a/backends/meson.build
++++ b/backends/meson.build
+@@ -34,6 +34,9 @@ if have_vhost_user_crypto
+ endif
+ system_ss.add(when: gio, if_true: files('dbus-vmstate.c'))
+ system_ss.add(when: 'CONFIG_SGX', if_true: files('hostmem-epc.c'))
++if igvm.found()
++  system_ss.add(igvm)
++endif
+ 
+ system_ss.add(when: 'CONFIG_SPDM_SOCKET', if_true: files('spdm-socket.c'))
+ 
+diff --git a/meson.build b/meson.build
+index b5f74aa37a..200352c244 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1424,6 +1424,12 @@ if host_os == 'linux' and (have_system or have_tools)
+                        method: 'pkg-config',
+                        required: get_option('libudev'))
+ endif
++igvm = not_found
++if not get_option('igvm').auto() or have_system
++  igvm = dependency('igvm', version: '>= 0.3.0',
++                    method: 'pkg-config',
++                    required: get_option('igvm'))
++endif
+ 
+ mpathlibs = [libudev]
+ mpathpersist = not_found
+@@ -2601,6 +2607,7 @@ config_host_data.set('CONFIG_CFI', get_option('cfi'))
+ config_host_data.set('CONFIG_SELINUX', selinux.found())
+ config_host_data.set('CONFIG_XEN_BACKEND', xen.found())
+ config_host_data.set('CONFIG_LIBDW', libdw.found())
++config_host_data.set('CONFIG_IGVM', igvm.found())
+ if xen.found()
+   # protect from xen.version() having less than three components
+   xen_version = xen.version().split('.') + ['0', '0']
+@@ -4965,6 +4972,7 @@ summary_info += {'seccomp support':   seccomp}
+ summary_info += {'GlusterFS support': glusterfs}
+ summary_info += {'hv-balloon support': hv_balloon}
+ summary_info += {'TPM support':       have_tpm}
++summary_info += {'IGVM support':      igvm}
+ summary_info += {'libssh support':    libssh}
+ summary_info += {'lzo support':       lzo}
+ summary_info += {'snappy support':    snappy}
+diff --git a/meson_options.txt b/meson_options.txt
+index a442be2995..1e429311a2 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -117,6 +117,8 @@ option('tpm', type : 'feature', value : 'auto',
+        description: 'TPM support')
+ option('valgrind', type : 'feature', value: 'auto',
+        description: 'valgrind debug support for coroutine stacks')
++option('igvm', type: 'feature', value: 'auto',
++       description: 'Independent Guest Virtual Machine (IGVM) file support')
+ 
+ # Do not enable it by default even for Mingw32, because it doesn't
+ # work on Wine.
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 73e0770f42..7851540445 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -130,6 +130,7 @@ meson_options_help() {
+   printf "%s\n" '  hv-balloon      hv-balloon driver (requires Glib 2.68+ GTree API)'
+   printf "%s\n" '  hvf             HVF acceleration support'
+   printf "%s\n" '  iconv           Font glyph conversion support'
++  printf "%s\n" '  igvm            IGVM file support'
+   printf "%s\n" '  jack            JACK sound support'
+   printf "%s\n" '  keyring         Linux keyring support'
+   printf "%s\n" '  kvm             KVM acceleration support'
+@@ -346,6 +347,8 @@ _meson_option_parse() {
+     --iasl=*) quote_sh "-Diasl=$2" ;;
+     --enable-iconv) printf "%s" -Diconv=enabled ;;
+     --disable-iconv) printf "%s" -Diconv=disabled ;;
++    --enable-igvm) printf "%s" -Digvm=enabled ;;
++    --disable-igvm) printf "%s" -Digvm=disabled ;;
+     --includedir=*) quote_sh "-Dincludedir=$2" ;;
+     --enable-install-blobs) printf "%s" -Dinstall_blobs=true ;;
+     --disable-install-blobs) printf "%s" -Dinstall_blobs=false ;;
 -- 
 2.43.0
 
