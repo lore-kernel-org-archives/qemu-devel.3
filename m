@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73BE9C83F03
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:33:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 453A2C83F03
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:33:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXMri-000610-Ry; Thu, 03 Jul 2025 12:32:52 -0400
+	id 1uXMrm-00062B-Sp; Thu, 03 Jul 2025 12:32:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXMrK-0005rm-Pu
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:32:28 -0400
-Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
+ id 1uXMrd-0005zg-7F
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:32:46 -0400
+Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXMr9-0001L7-44
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:32:22 -0400
-Received: by mail-yb1-xb2a.google.com with SMTP id
- 3f1490d57ef6-e7b4ba530feso5164966276.1
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:32:10 -0700 (PDT)
+ id 1uXMrX-0001Th-R3
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:32:44 -0400
+Received: by mail-yb1-xb35.google.com with SMTP id
+ 3f1490d57ef6-e81749142b3so6552610276.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:32:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751560329; x=1752165129; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751560356; x=1752165156; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+k2gtyeQo7uAkZlHY3AA6iIKGiYvlMVTDh+AjcUxqlQ=;
- b=ctEGokKe7XW5aFYGFU/NyhniCi3mIQooq4ORWaYmLsXdxbrhjIi9AHHHUDBez6h5mg
- EpiyaK7NjmJ5ItS8Hi5Qs+wiCq+Kji2QD0jTjrMxfY4qOShLWZXiV0BioFOz/gWq6lEb
- yrdv6Z2fNqpbk5GHhFPXmh8YdZAkmhqtusj/fGdmfF2CEMLqOrKXD297Od88OAXa4ffh
- k0U2lfJUX5F9wIlb5CIHhgkuSfi98Ggu5zTC988K1pXzya/m1s2/Y+h6k0n6KnBvSv1f
- XQizfPuCF0ICBtF52iuasJKxPwI1fj/qKgRY8tx2uI7wScq4Ce+C1behl9jVowvudhW1
- QPTw==
+ bh=Pn5w1GsCyCVtzHTNJdoRMgZpRqJbtnjrQ18l0UfDKrk=;
+ b=j+6n4oO2PX/nBiZFQt42GWAPEX7NGu7AVV8ffsh8ZdUM7pecd2D6dfUOTmhTgtWpf3
+ YZk+12q4TAttm/VxVR1jTxOLrGbv/FAmkXDS5SFo0E0PFAZMZTpo+Vm6TI+EkHIWDl4x
+ OTkJHU7uWbRX9NiahcF7qcjhY580wMrDwdK3py0zAKfF3ivVjBisIrBtXLBewZgSXtfn
+ bDVlwNDxmzbauVW7wJVgE7hqDh2pbeV/u93AR6P8AokB6CRV9CvN8WVFQGrLLPBDGyvu
+ G8WnWSJJD5D+WqBXJ1RovFX7Ay9EnBFd2ie4CJ9H437oGclQHQWTN9qWexNDk+G7wqES
+ CY7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751560329; x=1752165129;
+ d=1e100.net; s=20230601; t=1751560356; x=1752165156;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+k2gtyeQo7uAkZlHY3AA6iIKGiYvlMVTDh+AjcUxqlQ=;
- b=XOvfRNR9HAMHSZi3CtiP1rpX1aCUJXz7Y1CN2v5SN/cT4ELZcBkBhMnVCOo1VA5PAy
- 2E1SsKLkw/ZUjrwwijv577kzvcQuHQGLP8grQqpV+gXP8/qu6WakSzX/stX6nlwJMWvg
- YPy91VQdh6Pq0qt7MpQPq1VLEF3Q8DsMS4VSjT/u9PQUrAJfy4k/I51wGZeHE3gc8PXU
- ShrCdzrJz8fDDi/YGyaYwlVRHs2exsHTGgxfKEkV18yJQFHw+n/VHjp91ffiEomxuo7V
- 2K7KZPgAE7g5OpRhjzgLIluqCqJuuw8CQpiU/fhIkV1Tpl7IBRt5htQe4C++F9EpR5da
- rI9Q==
-X-Gm-Message-State: AOJu0YyDKtK4Zn+HbDRpiK8ttaitLKJ66ngcGk3Ig2YUGmidKtaAeGa5
- fJZcmIeO5SZKrAJTUFT40dz69/GK7KIpWbGnAD1+u02DD9YPDWv3ASLo4rGjRIXEm4gcSN7eXo3
- +z35OLjRbb3NNO0zj1dgVuOzCFJ+v5OCmJarODeGw8nBDhbLs6ucK
-X-Gm-Gg: ASbGncvN4LqtCpkV0WM3I+OmLQCPYO1emN+M41BW/kpQeALKmGdV79jA56C3XRcEuNK
- R5WnuQNP9GV+PicLGN/L0EadkRFa9rZBhoZ94NrVgpkuwMUK2ZOuMe1zdz3hs1/yKQySsa7PrqR
- iY+jv6/nJCLX+cYcqPDi8ZzYYLD9U760AVnkNN0BqR9ujt
-X-Google-Smtp-Source: AGHT+IGQDjSW9wiBWlveayY74kflWVZE8EAukYCTCEy3gY3REvI80fYsicKPiesCS7ml3Ux6DuE/kh8JDRFKwDqEF20=
-X-Received: by 2002:a05:690c:650a:b0:712:d70b:45cc with SMTP id
- 00721157ae682-71658fda9c5mr59483517b3.8.1751560328583; Thu, 03 Jul 2025
- 09:32:08 -0700 (PDT)
+ bh=Pn5w1GsCyCVtzHTNJdoRMgZpRqJbtnjrQ18l0UfDKrk=;
+ b=Q64Usj5dMNhGg5XkHRK0nrAr2Z79uS1Uo15esQD+HfZV8p3JgSJKTkZNnMOf4Xr0aF
+ mT1LCrzI6zam9aGMKzpyplPIqQB0GzkBXXDsFfvQZeEygfkmveYJL7w1xFcJTeUVKHZ6
+ Ql2LgQSNrpgJ+GWtTkB7n1n2AVSScLSVBMRxDIEqhzxsTwH+j42Q68NY/CBgeK2uYMss
+ RFNzdSVFda/XpR/nPv3RyzuG+9KL5hM/B6qUPtsoj7VRr8ui9tDlJlkpD3GVACH1uhAr
+ ZgDIaL6bOy1W7g+oqL9HiX+bNLNPPJVJE2zg4EhHZ8CVzCQxreVQa/K6CnanEpOaIZM9
+ AeXw==
+X-Gm-Message-State: AOJu0YzaVfb+9TQ299oCzXOWWBOMTeLs24GPBpp+4sQyFEUYX+jwKE08
+ dNo0t+hGz4tNu4thJ9+6GJfXs3z1oRrcid4TMPLLRmDy0WKQvBkJjPA26ErOw6ZRvr7xLFA/Roc
+ BFkZ597kPJm1P0g/Q9Tc0QKRVcuYoCFDBji/Hm1FnHSn51dzFf4B+
+X-Gm-Gg: ASbGncttRZzygj0ZJrjydCRCSxAQCjOAgnwrtxnmdLAcdhpsLZVxktkz5OR4CIgDt6y
+ XpBOkv5ZdoyTuw1RA7B9CKSynd5I6rmCJrv6Qx2zq4mp24eM5vw7GXRuBJN6ltlqkHvPJyeigAA
+ wDl+LKgHHSNiz3fKTI87716L+fogAs1Ilr2jn91m1SY8IB
+X-Google-Smtp-Source: AGHT+IFJZ1599vFfxDnyXlEEmgVFCBdQpH4QWWDGW6IGzGqNlv/BMnhTQ6NGtTG13d0GYv6Y4xrq2gWowv1ZuClJ1KA=
+X-Received: by 2002:a05:690c:309:b0:6ef:5097:5daa with SMTP id
+ 00721157ae682-7164d56acc2mr114095247b3.34.1751560356440; Thu, 03 Jul 2025
+ 09:32:36 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250618230549.3351152-1-jcksn@duck.com>
- <20250618230549.3351152-11-jcksn@duck.com>
-In-Reply-To: <20250618230549.3351152-11-jcksn@duck.com>
+ <20250618230549.3351152-12-jcksn@duck.com>
+In-Reply-To: <20250618230549.3351152-12-jcksn@duck.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 3 Jul 2025 17:31:57 +0100
-X-Gm-Features: Ac12FXwmWdBGqmwt6pfAAJ5FdWTViSWiuvcdYKsbE6-17BpRK3FvjuKh8li2C2s
-Message-ID: <CAFEAcA-3m42gWJE-iKM_87n08nUxamQ21KmcdFEosONUReLAcg@mail.gmail.com>
-Subject: Re: [PATCH v2 10/11] MAX78000: AES implementation
+Date: Thu, 3 Jul 2025 17:32:25 +0100
+X-Gm-Features: Ac12FXxa0GCFt8QMKllfrw0NVPhjtPLKkMF3uB42p4IlbukCsT9QitI1D8pcTMU
+Message-ID: <CAFEAcA-OQDE57TjZ9dVnW69GS_bqwULgENoYh0koJim9M5A3Yg@mail.gmail.com>
+Subject: Re: [PATCH v2 11/11] MAX78000: Add AES to SOC
 To: Jackson Donaldson <jackson88044@gmail.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,125 +94,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu, 19 Jun 2025 at 00:06, Jackson Donaldson <jackson88044@gmail.com> wrote:
 >
-> This commit implements AES for the MAX78000
+> This commit adds AES to max78000_soc
 >
-> Signed-off-by: Jackson Donaldson
+> Signed-off-by: Jackson Donaldson <jcksn@duck.com>
 > ---
-
-
-> +static uint64_t max78000_aes_read(void *opaque, hwaddr addr,
-> +                                    unsigned int size)
-> +{
-> +    Max78000AesState *s = opaque;
-> +    switch (addr) {
-> +    case CTRL:
-> +        return s->ctrl;
+>  hw/arm/max78000_soc.c         | 12 +++++++++---
+>  include/hw/arm/max78000_soc.h |  2 ++
+>  2 files changed, 11 insertions(+), 3 deletions(-)
+>
+> diff --git a/hw/arm/max78000_soc.c b/hw/arm/max78000_soc.c
+> index 09667b578c..f6d599a62e 100644
+> --- a/hw/arm/max78000_soc.c
+> +++ b/hw/arm/max78000_soc.c
+> @@ -43,6 +43,8 @@ static void max78000_soc_initfn(Object *obj)
+>
+>      object_initialize_child(obj, "trng", &s->trng, TYPE_MAX78000_TRNG);
+>
+> +    object_initialize_child(obj, "aes", &s->aes, TYPE_MAX78000_AES);
 > +
-> +    case STATUS:
-> +        return s->status;
+>      s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
+>  }
+>
+> @@ -133,6 +135,13 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
+>      dev->id = g_strdup("trng");
+>      object_property_set_link(OBJECT(gcrdev), "trng", OBJECT(dev), &err);
+>
+> +    dev = DEVICE(&s->aes);
+> +    sysbus_realize(SYS_BUS_DEVICE(dev), errp);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x40007400);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(armv7m, 5));
+> +    dev->id = g_strdup("aes");
+> +    object_property_set_link(OBJECT(gcrdev), "aes", OBJECT(dev), &err);
 > +
-> +    case INTFL:
-> +        return s->intfl;
-> +
-> +    case INTEN:
-> +        return s->inten;
-> +
-> +    case FIFO:
-> +        if (s->result_index >= 4) {
-> +            s->intfl &= ~DONE;
-> +            s->result_index -= 4;
-> +            max78000_aes_set_status(s);
-> +            return (s->result[s->result_index] << 24) +
-> +                (s->result[s->result_index + 1] << 16) +
-> +                (s->result[s->result_index + 2] << 8) +
-> +                s->result[s->result_index + 3];
 
-You can write this more simply as
-      return ldl_be_p(&s->result[s->result_index]);
-
-(that's a function which loads a big-endian 32-bit value from
-the given possibly-unaligned host address).
-
-> +        } else{
-> +            return 0;
-> +        }
-> +
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"
-> +            HWADDR_PRIx "\n", __func__, addr);
-> +        break;
-> +
-> +    }
-> +    return 0;
-> +}
-
-> +static void max78000_aes_write(void *opaque, hwaddr addr,
-> +                    uint64_t val64, unsigned int size)
-> +{
-> +    Max78000AesState *s = opaque;
-> +    uint32_t val = val64;
-> +    int i;
-> +    switch (addr) {
-> +    case CTRL:
-> +        if (val & OUTPUT_FLUSH) {
-> +            s->result_index = 0;
-> +            val &= ~OUTPUT_FLUSH;
-> +        }
-> +        if (val & INPUT_FLUSH) {
-> +            s->data_index = 0;
-> +            val &= ~INPUT_FLUSH;
-> +        }
-> +        if (val & START) {
-> +            max78000_aes_do_crypto(s);
-> +        }
-> +
-> +        /* Hardware appears to stay enabled even if 0 written */
-> +        s->ctrl = val | (s->ctrl & AES_EN);
-> +        break;
-> +
-> +    case FIFO:
-> +        for (i = 0; i < 4; i++) {
-> +            s->data[(12 - s->data_index) + i] =
-> +                        (val >> ((3 - i) * 8)) & 0xff;
-> +        }
-
-Similarly here this is
-           stl_be_p(&s->data[12 - s->data_index], val);
-
-There should be some kind of check here that s->data_index is
-in range here before we write to s->data[] (either an assert,
-if the device code is supposed to maintain data_index in range
-at all times, or else some kind of error handling path if
-guest software can do funny things to put it out of range).
-
-> +        s->data_index += 4;
-> +        if (s->data_index >= 16) {
-> +            s->data_index = 0;
-> +            max78000_aes_do_crypto(s);
-> +        }
-> +        break;
-> +
-> +    case KEY_BASE ... KEY_END - 4:
-> +        for (i = 0; i < 4; i++) {
-> +            s->key[(KEY_END - KEY_BASE - 4) - (addr - KEY_BASE) + i] =
-> +                        (val >> ((3 - i) * 8)) & 0xff;
-
-   stl_be_p(&s->key[...something...], val);
-
-
-
-
-> +        }
-> +        break;
-> +
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"
-> +            HWADDR_PRIx "\n", __func__, addr);
-> +        break;
-> +
-> +    }
-> +    max78000_aes_set_status(s);
-> +}
+Same comment about not touching dev->id as for earlier patches.
 
 thanks
 -- PMM
