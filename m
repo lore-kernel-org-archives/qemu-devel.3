@@ -4,86 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3222AC83F03
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:21:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D565C83F03
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:23:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXMgw-0006Dd-IS; Thu, 03 Jul 2025 12:21:42 -0400
+	id 1uXMhh-0006jR-DR; Thu, 03 Jul 2025 12:22:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uXMgv-0006DF-5z
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:21:41 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXMhY-0006dd-D7
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:22:20 -0400
+Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uXMgs-00062K-SX
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:21:40 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-748f5a4a423so123455b3a.1
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:21:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXMhW-0006DM-JT
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:22:20 -0400
+Received: by mail-yb1-xb2c.google.com with SMTP id
+ 3f1490d57ef6-e81cf6103a6so5802342276.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:22:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751559696; x=1752164496; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=aZFeZiaK7j01bOKFMbxZm25zvRe4iY1lXYKU44Azw2Q=;
- b=TBrlkE1nOz5CJHmoqAvH1benYUhV6u49j7cC+qavrK74emTk+SRN9atVSSsqQ5E2Dc
- NWZbXbGCliYFiC1zFO0XN5u93jPR6mB+LM3/jVCvbI4B/TxWXy54oMTB3pDz3N/3Rszx
- /8JtQRbT7NbpQVukL1mtjf23uH0NZtXdw27y2+yrdm5+u5qdjan1hBDBFIpttaWrType
- WsqU8nshCWM+vvILtSHtAFzSkMMT2Ain5c4T7DWIc6Ttl5aXPWscsr5635/p5hhVh02H
- DfIcCF64sNYnwI7L7Brn2uQ2DZQLiIY8zOYUv1IaRNZ33MUL71XLhE/O8DnMjPlWRyi1
- EGrw==
+ d=linaro.org; s=google; t=1751559736; x=1752164536; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=aBSvS76xILHIDpjwE/w9YCKWfqGz7fpfO4FGe7DpX1Q=;
+ b=MNC7XT3kPY6ZOcQmMr1fVWp1QMfgNpjn4ckkik94/gJSSTcQPPM9AjlUCj3naolqFm
+ QHAnAkcWWRBx943ZQs8tn9sGmWppz/N+OI6YIWkcbztQEmcNyDLyiE4oqaBG6YzWNCbD
+ LkljL16MMPEhGme1hndFKzm4C12+yu4qGuMCZMmjJ/VGf52wOAPdjQ04mbcDdJ8RZwEX
+ A2LsFhT5ab9Cv0GXOk9AiNKXP+yt7cHNJpkOXi2KIZiZxOOLiGp3kQrPB8uanqtNU4Sf
+ hZQc4JiMUjW7r4NrvOew77pZzxE4xST1DTYmcX5TE0BwdkE15O5v8/XStM96qAiA4fW6
+ wZXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751559696; x=1752164496;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aZFeZiaK7j01bOKFMbxZm25zvRe4iY1lXYKU44Azw2Q=;
- b=Fcs1YY+L89Sdsol0iKINiWAla4JMkWw848lJOGfh8aDKpnPDWgFi2jyv7qT5nuFhlZ
- 3s4Ir6hzeo7HwgemOmsBQViXyDuW1fVBR7zosSgO49iA8bS24fWCMMjlFVaF3J5YrKFK
- 16JJBqNxRZO6Y3HZGqCeKuy0M7L/+Dps2CUS/JxQK8l31SzYlBEFoilH2ucxaHUozX0Z
- h4lDRl9zCjL8HepKdp6TvutLjbd7pNDqmLwVSGu1tIPelt1mkCRrYWApzqXUCjrpQGFT
- oHKYZwvaUCGX2qTO+sIwNvOcZfuCsfDmcbfgpMp0+jb08C6iwJj2spx4TQhDmYooCb86
- /KBg==
-X-Gm-Message-State: AOJu0YymXpBanq8zjSVJpzgVjW+dViLYUrX4zPDV8UQa5vgpV0+4MuMk
- EJPyI0KisXDCtPX782A4KPDapSRmUm/p2II6yBUpGPvFtIIVqAQNxu+U
-X-Gm-Gg: ASbGncvPL8LttLSj4LL7lZIuGGV2pWMty8g13eoCBWz81i8La1ogqgbNukQh39wUF2O
- mGetO7u0Y+YZyw5zL6aJVV1SV5rRaEvG6TGPqp2/O5QXUNhYdQVY7FWItOJgZgelqe+5J9tSCIx
- qGGF8WxpLwr1dv5yllcIW4qbr4+lrWuf2LZRYUFv4qGQGv4LD7wYjznKFQs5S3eJcQk2jG5vucR
- rTq9DitOGka2qdAad1UqFYESFbKKz5IAsQLX/72uyRF+bRJFFe4+WtRgho7S9oTGxr53Flxtrri
- mBl5fWR4U6iKVlVD0niKOOF1x12DZcRGwLkbg0VGq7ZFJWdeDoy+y/gEl3IrouV0PQ==
-X-Google-Smtp-Source: AGHT+IEywsg/XtG05fb3AGPsxsQcAMkuLAt7+/85wkPC54jqt0jKBL2TnqTBgDYXK2wUSU8PzvSZlw==
-X-Received: by 2002:a05:6a00:848:b0:73e:10ea:b1e9 with SMTP id
- d2e1a72fcca58-74b5103e10amr9496914b3a.6.1751559695788; 
- Thu, 03 Jul 2025 09:21:35 -0700 (PDT)
-Received: from smc-140338-bm01 ([149.97.161.244])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74ce35d0014sm20436b3a.67.2025.07.03.09.21.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Jul 2025 09:21:35 -0700 (PDT)
-From: Fan Ni <nifan.cxl@gmail.com>
-X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
-Date: Thu, 3 Jul 2025 16:21:33 +0000
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: qemu-devel@nongnu.org, Michael Tsirkin <mst@redhat.com>,
- linux-cxl@vger.kernel.org, linuxarm@huawei.com
-Subject: Re: [PATCH qemu 09/11] hw/cxl: Create helper function to create DC
- Event Records from extents
-Message-ID: <aGauDb295pVVBWiv@smc-140338-bm01>
-References: <20250702160219.989731-1-Jonathan.Cameron@huawei.com>
- <20250702160219.989731-10-Jonathan.Cameron@huawei.com>
+ d=1e100.net; s=20230601; t=1751559736; x=1752164536;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aBSvS76xILHIDpjwE/w9YCKWfqGz7fpfO4FGe7DpX1Q=;
+ b=sAZZWqzdaq9qKTqtuady6LmtuQovIgjVm1ZJgeBRYGlyfhII7GCxUWGJsC0ObHFlgv
+ 6CmoU9SKhbx1r2NtOSvtwvT9cUPt6xHnASrZgTkAIBW0iilTjlHPK0wvrJqQ/Nbb/mV4
+ eUE7kCknsjA+ddsmIEsOkMVAUdiP3o1qTaRwWPiyeYQDLuztgBJTxXOpCzc6YAzZlNfK
+ 0IltLeNSljGK/qR5PwHkBSogPcK2SUR+MbUKWZ2sI55+lA4Sc2cBT8Mah7Rch758pKP6
+ c8N9f/16NS9KfimYiHxlvKVFiezV6Dhb7DwGmbrgp1HO8G2bPPD5mE+fr31VQjqRrgLZ
+ dziQ==
+X-Gm-Message-State: AOJu0YybtoDCNjoipv6RJDHHhqgbWzNsh05vBlIhXTzmIZCTyQtEbprR
+ nFPRmlATo9hGuEZg9eW/T8HoR/IRY8Gs+BVZjKIUExAGkXs0VJfMOSyqu2MOr3i6cRqlCtMAqlc
+ jKpz7oOrLY8FWU5+kBfe+5+L4/c/GAyDD7lcU54h1I808rhAu3j2e
+X-Gm-Gg: ASbGncuc0S2yE7WBEZwFIpAQscZ51qjzN2MU8CPwZgJ8NHOtJUrKJLPckMe8oZtmiCc
+ uPFPIBKPNN3eRQgoE/09DCvb1lq1ea7snzb0Rc4TwJU5gJDKs01hJ1LdfJ16o5PzMbGWwdgqekE
+ eTlTLvgbgxVFItj8U7BjhmGWUSQBjDI+MhxUWkS3DJgNXqZdpVT3sgzEQ=
+X-Google-Smtp-Source: AGHT+IHhMZb7Gqqyr/HF/xZ8JCHdNqNtX0bahLmL5RoiX7APKsSX50sHb8TOYVug2As6/4LdpNvbmMVWUVuQ0NhhXpY=
+X-Received: by 2002:a05:690c:3704:b0:716:4da5:a01c with SMTP id
+ 00721157ae682-71658ff8fe7mr72133377b3.11.1751559736458; Thu, 03 Jul 2025
+ 09:22:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250702160219.989731-10-Jonathan.Cameron@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x433.google.com
+References: <20250618230549.3351152-1-jcksn@duck.com>
+ <20250618230549.3351152-9-jcksn@duck.com>
+In-Reply-To: <20250618230549.3351152-9-jcksn@duck.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 3 Jul 2025 17:22:03 +0100
+X-Gm-Features: Ac12FXz3WO05I_QJoAycSzwc51SEZWMxRD7d7VuDSpFIpTWzkwevRKi6e0N5wpM
+Message-ID: <CAFEAcA-xLUCGsV+9PrsskADppG3Xcb-qwkcTyTuzKbotF2+2uw@mail.gmail.com>
+Subject: Re: [PATCH v2 08/11] MAX78000: TRNG Implementation
+To: Jackson Donaldson <jackson88044@gmail.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,177 +92,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 02, 2025 at 05:02:15PM +0100, Jonathan Cameron wrote:
-> From: Anisa Su <anisa.su@samsung.com>
-> 
-> Prepatory patch for following FMAPI Add/Release Patches. Refactors part
-> of qmp_cxl_process_dynamic_capacity_prescriptive() into a helper
-> function to create DC Event Records and insert in the event log.
-> 
-> Moves definition for CXL_NUM_EXTENTS_SUPPORTED to cxl.h so it can be
-> accessed by cxl-mailbox-utils.c and cxl-events.c, where the helper
-> function is defined.
-> 
-> Signed-off-by: Anisa Su <anisa.su@samsung.com>
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> ---
+On Thu, 19 Jun 2025 at 00:06, Jackson Donaldson <jackson88044@gmail.com> wrote:
+>
+> This commit implements the True Random Number
+> Generator for the MAX78000
+>
+> Signed-off-by: Jackson Donaldson <jcksn@duck.com>
 
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-
->  include/hw/cxl/cxl.h        |  1 +
->  include/hw/cxl/cxl_device.h |  4 ++++
->  hw/cxl/cxl-events.c         | 38 +++++++++++++++++++++++++++++++++++++
->  hw/cxl/cxl-mailbox-utils.c  |  1 -
->  hw/mem/cxl_type3.c          | 37 +-----------------------------------
->  5 files changed, 44 insertions(+), 37 deletions(-)
-> 
-> diff --git a/include/hw/cxl/cxl.h b/include/hw/cxl/cxl.h
-> index 75e47b6864..3ae4303383 100644
-> --- a/include/hw/cxl/cxl.h
-> +++ b/include/hw/cxl/cxl.h
-> @@ -23,6 +23,7 @@
->  #define CXL_DEVICE_REG_BAR_IDX 2
->  
->  #define CXL_WINDOW_MAX 10
-> +#define CXL_NUM_EXTENTS_SUPPORTED 512
->  
->  typedef struct PXBCXLDev PXBCXLDev;
->  
-> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-> index 76af75d2d0..ed91e5387e 100644
-> --- a/include/hw/cxl/cxl_device.h
-> +++ b/include/hw/cxl/cxl_device.h
-> @@ -724,4 +724,8 @@ bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
->  void cxl_assign_event_header(CXLEventRecordHdr *hdr,
->                               const QemuUUID *uuid, uint32_t flags,
->                               uint8_t length, uint64_t timestamp);
-> +void cxl_create_dc_event_records_for_extents(CXLType3Dev *ct3d,
-> +                                             CXLDCEventType type,
-> +                                             CXLDCExtentRaw extents[],
-> +                                             uint32_t ext_count);
->  #endif
-> diff --git a/hw/cxl/cxl-events.c b/hw/cxl/cxl-events.c
-> index 12dee2e467..724055f2cf 100644
-> --- a/hw/cxl/cxl-events.c
-> +++ b/hw/cxl/cxl-events.c
-> @@ -260,3 +260,41 @@ void cxl_event_irq_assert(CXLType3Dev *ct3d)
->          }
->      }
->  }
+>  static const MemoryRegionOps max78000_gcr_ops = {
+> diff --git a/hw/misc/max78000_trng.c b/hw/misc/max78000_trng.c
+> new file mode 100644
+> index 0000000000..f406681730
+> --- /dev/null
+> +++ b/hw/misc/max78000_trng.c
+> @@ -0,0 +1,127 @@
+> +/*
+> + * MAX78000 True Random Number Generator
+> + *
+> + * Copyright (c) 2025 Jackson Donaldson <jcksn@duck.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
 > +
-> +void cxl_create_dc_event_records_for_extents(CXLType3Dev *ct3d,
-> +                                             CXLDCEventType type,
-> +                                             CXLDCExtentRaw extents[],
-> +                                             uint32_t ext_count)
+> +#include "qemu/osdep.h"
+> +#include "qemu/log.h"
+> +#include "trace.h"
+> +#include "hw/irq.h"
+> +#include "migration/vmstate.h"
+> +#include "hw/misc/max78000_trng.h"
+> +#include "qemu/guest-random.h"
+> +
+> +static uint64_t max78000_trng_read(void *opaque, hwaddr addr,
+> +                                    unsigned int size)
 > +{
-> +    CXLEventDynamicCapacity event_rec = {};
-> +    int i;
+> +    uint32_t data;
 > +
-> +    cxl_assign_event_header(&event_rec.hdr,
-> +                            &dynamic_capacity_uuid,
-> +                            (1 << CXL_EVENT_TYPE_INFO),
-> +                            sizeof(event_rec),
-> +                            cxl_device_get_timestamp(&ct3d->cxl_dstate));
-> +    event_rec.type = type;
-> +    event_rec.validity_flags = 1;
-> +    event_rec.host_id = 0;
-> +    event_rec.updated_region_id = 0;
-> +    event_rec.extents_avail = CXL_NUM_EXTENTS_SUPPORTED -
-> +                              ct3d->dc.total_extent_count;
+> +    Max78000TrngState *s = opaque;
+> +    switch (addr) {
+> +    case CTRL:
+> +        return s->ctrl;
 > +
-> +    for (i = 0; i < ext_count; i++) {
-> +        memcpy(&event_rec.dynamic_capacity_extent,
-> +               &extents[i],
-> +               sizeof(CXLDCExtentRaw));
-> +        event_rec.flags = 0;
-> +        if (i < ext_count - 1) {
-> +            /* Set "More" flag */
-> +            event_rec.flags |= BIT(0);
+> +    case STATUS:
+> +        return 1;
+> +
+> +    case DATA:
+> +        qemu_guest_getrandom_nofail(&data, sizeof(data));
+> +        return data;
+> +
+> +    default:
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"
+> +            HWADDR_PRIx "\n", __func__, addr);
+> +        break;
+> +    }
+> +    return 0;
+> +}
+> +
+> +static void max78000_trng_write(void *opaque, hwaddr addr,
+> +                    uint64_t val64, unsigned int size)
+> +{
+> +    Max78000TrngState *s = opaque;
+> +    uint32_t val = val64;
+> +    switch (addr) {
+> +    case CTRL:
+> +        /* TODO: implement AES keygen */
+> +        s->ctrl = val;
+> +        if (val & RND_IE) {
+> +            qemu_set_irq(s->irq, 1);
+> +        } else{
+> +            qemu_set_irq(s->irq, 0);
 > +        }
+> +        break;
 > +
-> +        if (cxl_event_insert(&ct3d->cxl_dstate,
-> +                             CXL_EVENT_TYPE_DYNAMIC_CAP,
-> +                             (CXLEventRecordRaw *)&event_rec)) {
-> +            cxl_event_irq_assert(ct3d);
-> +        }
+> +    default:
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"
+> +            HWADDR_PRIx "\n", __func__, addr);
+> +        break;
 > +    }
 > +}
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index 24e4ba0200..d0a1d63582 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -27,7 +27,6 @@
->  
->  #define CXL_CAPACITY_MULTIPLIER   (256 * MiB)
->  #define CXL_DC_EVENT_LOG_SIZE 8
-> -#define CXL_NUM_EXTENTS_SUPPORTED 512
->  #define CXL_NUM_TAGS_SUPPORTED 0
->  #define CXL_ALERTS_LIFE_USED_WARN_THRESH (1 << 0)
->  #define CXL_ALERTS_OVER_TEMP_WARN_THRESH (1 << 1)
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index ee554a77be..9c2b9d197b 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -1957,15 +1957,11 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
->          CxlDynamicCapacityExtentList *records, Error **errp)
->  {
->      Object *obj;
-> -    CXLEventDynamicCapacity dCap = {};
-> -    CXLEventRecordHdr *hdr = &dCap.hdr;
->      CXLType3Dev *dcd;
-> -    uint8_t flags = 1 << CXL_EVENT_TYPE_INFO;
->      uint32_t num_extents = 0;
->      CxlDynamicCapacityExtentList *list;
->      CXLDCExtentGroup *group = NULL;
->      g_autofree CXLDCExtentRaw *extents = NULL;
-> -    uint8_t enc_log = CXL_EVENT_TYPE_DYNAMIC_CAP;
->      uint64_t dpa, offset, len, block_size;
->      g_autofree unsigned long *blk_bitmap = NULL;
->      int i;
-> @@ -2078,38 +2074,7 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
->          dcd->dc.total_extent_count += num_extents;
->      }
->  
-> -    /*
-> -     * CXL r3.1 section 8.2.9.2.1.6: Dynamic Capacity Event Record
-> -     *
-> -     * All Dynamic Capacity event records shall set the Event Record Severity
-> -     * field in the Common Event Record Format to Informational Event. All
-> -     * Dynamic Capacity related events shall be logged in the Dynamic Capacity
-> -     * Event Log.
-> -     */
-> -    cxl_assign_event_header(hdr, &dynamic_capacity_uuid, flags, sizeof(dCap),
-> -                            cxl_device_get_timestamp(&dcd->cxl_dstate));
-> -
-> -    dCap.type = type;
-> -    /* FIXME: for now, validity flag is cleared */
-> -    dCap.validity_flags = 0;
-> -    stw_le_p(&dCap.host_id, hid);
-> -    /* only valid for DC_REGION_CONFIG_UPDATED event */
-> -    dCap.updated_region_id = 0;
-> -    for (i = 0; i < num_extents; i++) {
-> -        memcpy(&dCap.dynamic_capacity_extent, &extents[i],
-> -               sizeof(CXLDCExtentRaw));
-> -
-> -        dCap.flags = 0;
-> -        if (i < num_extents - 1) {
-> -            /* Set "More" flag */
-> -            dCap.flags |= BIT(0);
-> -        }
-> -
-> -        if (cxl_event_insert(&dcd->cxl_dstate, enc_log,
-> -                             (CXLEventRecordRaw *)&dCap)) {
-> -            cxl_event_irq_assert(dcd);
-> -        }
-> -    }
-> +    cxl_create_dc_event_records_for_extents(dcd, type, extents, num_extents);
->  }
->  
->  void qmp_cxl_add_dynamic_capacity(const char *path, uint16_t host_id,
-> -- 
-> 2.48.1
-> 
 
--- 
-Fan Ni (From gmail)
+The interrupt generation logic still doesn't look right
+here to me -- see my comments on the TRNG patch in v1
+of this patchset.
+
+thanks
+-- PMM
 
