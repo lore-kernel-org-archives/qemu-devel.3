@@ -4,62 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C429AC83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 12:52:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FDF0C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 12:52:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXJMV-0006wc-9y; Thu, 03 Jul 2025 08:48:26 -0400
+	id 1uXJI3-0007x4-QG; Thu, 03 Jul 2025 08:43:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uXJLk-0005eO-4z; Thu, 03 Jul 2025 08:47:36 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uXJF5-0004AO-Hc
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:40:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uXJLc-0006oa-KY; Thu, 03 Jul 2025 08:47:34 -0400
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c10:4a1:0:640:2691:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id CA9E560C88;
- Thu,  3 Jul 2025 15:47:21 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:73d::1:28])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id HlbMgQ0FgSw0-6ElfXpBj; Thu, 03 Jul 2025 15:47:21 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1751546841;
- bh=5bC95VXV5236FRUQzBWj4uboAIkxgDmBkiRLwpbUVcM=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=vSq4yMnJCH4Z+3npji4HTDunBMV+STb/geUoV7g3IKtARGEjN+ctq+/FJkRgJ1RPr
- /Kw6QU5GBFCeS81t67EdvcL9AMISAlYyYYrARwPPsU4I11CVFe4/vOyjf220StdZRR
- VINz2oow8YYu0ZwuR8R6dyHtbO+LSu7QbPpsswPA=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: qemu-devel@nongnu.org,
-	mst@redhat.com
-Cc: qemu-block@nongnu.org, fam@euphon.net, pbonzini@redhat.com,
- jasowang@redhat.com, hreitz@redhat.com, kwolf@redhat.com,
- sgarzare@redhat.com, raphael@enfabrica.net,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH 4/4] hw/vhost: finally drop vhost_dev.backend_features field
-Date: Thu,  3 Jul 2025 15:47:12 +0300
-Message-ID: <20250703124713.2530079-5-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250703124713.2530079-1-vsementsov@yandex-team.ru>
-References: <20250703124713.2530079-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uXJEt-0001TC-G4
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 08:40:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751546428;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qOo0M/gBODBY/l4vKN4I8WgeRJue6j7oGCUoicYhs58=;
+ b=A6ac9a1b/TxBBy6+fO63hIfcdoOTk4Q1qF25mMN7XM8PX3kUKm5kt8uzsVvkg9CzZ6wztx
+ ZhP+ympsBb9eUxEfI20KLGYR06V8+6B4ZnGtve2Xw5ddAqrIcXdjZr+9+nm67OLXr/R1W/
+ 8wjYba7bfQsXBdgUAPV1dbYMNAG1HPg=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-151-YacpWBbyMqKWyBI4UfuuqA-1; Thu,
+ 03 Jul 2025 08:40:25 -0400
+X-MC-Unique: YacpWBbyMqKWyBI4UfuuqA-1
+X-Mimecast-MFC-AGG-ID: YacpWBbyMqKWyBI4UfuuqA_1751546424
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 47F6A19560A2; Thu,  3 Jul 2025 12:40:24 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.44.32.16])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C73EE180045C; Thu,  3 Jul 2025 12:40:19 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
+ Jonathan.Cameron@huawei.com, gustavo.romero@linaro.org,
+ anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com
+Cc: pbonzini@redhat.com,
+	philmd@linaro.org,
+	alex.bennee@linaro.org
+Subject: [PATCH v5 32/36] hw/arm/virt: Let virt support pci hotplug/unplug GED
+ event
+Date: Thu,  3 Jul 2025 14:35:32 +0200
+Message-ID: <20250703123728.414386-33-eric.auger@redhat.com>
+In-Reply-To: <20250703123728.414386-1-eric.auger@redhat.com>
+References: <20250703123728.414386-1-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 15
+X-Spam_score: 1.5
+X-Spam_bar: +
+X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,101 +90,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's unused now.
+Set up the IO registers used to communicate between QEMU
+and ACPI.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+
 ---
- hw/block/vhost-user-blk.c | 1 -
- hw/scsi/vhost-scsi.c      | 1 -
- hw/scsi/vhost-user-scsi.c | 1 -
- hw/virtio/vdpa-dev.c      | 1 -
- hw/virtio/virtio-qmp.c    | 2 --
- include/hw/virtio/vhost.h | 7 -------
- 6 files changed, 13 deletions(-)
+v2 -> v3:
+- remove acpi_ged_state->pcihp_state.use_acpi_hotplug_bridge = true;
+- use sysbus_mmio_map_name for all regs (Igor)
+- create_pcie left at its original place
 
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index 0eebbcd80d8..079a6492355 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -343,7 +343,6 @@ static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
-     s->dev.nvqs = s->num_queues;
-     s->dev.vqs = s->vhost_vqs;
-     s->dev.vq_index = 0;
--    s->dev.backend_features = 0;
+v1 -> v2:
+- use ACPI_PCIHP_REGION_NAME
+---
+ hw/arm/virt.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 7b247ad30c..4f6fe16675 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -686,6 +686,7 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
+     SysBusDevice *sbdev;
+     int irq = vms->irqmap[VIRT_ACPI_GED];
+     uint32_t event = ACPI_GED_PWR_DOWN_EVT;
++    bool acpi_pcihp;
  
-     vhost_dev_set_config_notifier(&s->dev, &blk_ops);
+     if (ms->ram_slots) {
+         event |= ACPI_GED_MEM_HOTPLUG_EVT;
+@@ -704,6 +705,18 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
+     sysbus_mmio_map_name(sbdev, TYPE_ACPI_GED, vms->memmap[VIRT_ACPI_GED].base);
+     sysbus_mmio_map_name(sbdev, ACPI_MEMHP_REGION_NAME,
+                          vms->memmap[VIRT_PCDIMM_ACPI].base);
++
++    acpi_pcihp = object_property_get_bool(OBJECT(dev),
++                                          ACPI_PM_PROP_ACPI_PCIHP_BRIDGE, NULL);
++
++    if (acpi_pcihp) {
++        int pcihp_region_index;
++
++        pcihp_region_index = sysbus_mmio_map_name(sbdev, ACPI_PCIHP_REGION_NAME,
++                                                  vms->memmap[VIRT_ACPI_PCIHP].base);
++        assert(pcihp_region_index >= 0);
++    }
++
+     sysbus_connect_irq(sbdev, 0, qdev_get_gpio_in(vms->gic, irq));
  
-diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
-index cdf405b0f86..d694a25fe2d 100644
---- a/hw/scsi/vhost-scsi.c
-+++ b/hw/scsi/vhost-scsi.c
-@@ -276,7 +276,6 @@ static void vhost_scsi_realize(DeviceState *dev, Error **errp)
-     vqs = g_new0(struct vhost_virtqueue, vsc->dev.nvqs);
-     vsc->dev.vqs = vqs;
-     vsc->dev.vq_index = 0;
--    vsc->dev.backend_features = 0;
- 
-     ret = vhost_dev_init(&vsc->dev, (void *)(uintptr_t)vhostfd,
-                          VHOST_BACKEND_TYPE_KERNEL, 0, errp);
-diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
-index 25f2d894e7c..0c80a271d8b 100644
---- a/hw/scsi/vhost-user-scsi.c
-+++ b/hw/scsi/vhost-user-scsi.c
-@@ -159,7 +159,6 @@ static int vhost_user_scsi_connect(DeviceState *dev, Error **errp)
-     vsc->dev.nvqs = VIRTIO_SCSI_VQ_NUM_FIXED + vs->conf.num_queues;
-     vsc->dev.vqs = s->vhost_vqs;
-     vsc->dev.vq_index = 0;
--    vsc->dev.backend_features = 0;
- 
-     ret = vhost_dev_init(&vsc->dev, &s->vhost_user, VHOST_BACKEND_TYPE_USER, 0,
-                          errp);
-diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
-index d1da40afc80..3c0eed3e8e1 100644
---- a/hw/virtio/vdpa-dev.c
-+++ b/hw/virtio/vdpa-dev.c
-@@ -104,7 +104,6 @@ static void vhost_vdpa_device_realize(DeviceState *dev, Error **errp)
-     v->dev.vqs = vqs;
-     v->dev.vq_index = 0;
-     v->dev.vq_index_end = v->dev.nvqs;
--    v->dev.backend_features = 0;
-     v->started = false;
- 
-     ret = vhost_vdpa_get_iova_range(v->vhostfd, &iova_range);
-diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-index 3b6377cf0d2..e514a4797e3 100644
---- a/hw/virtio/virtio-qmp.c
-+++ b/hw/virtio/virtio-qmp.c
-@@ -788,8 +788,6 @@ VirtioStatus *qmp_x_query_virtio_status(const char *path, Error **errp)
-             qmp_decode_features(vdev->device_id, hdev->features);
-         status->vhost_dev->acked_features =
-             qmp_decode_features(vdev->device_id, hdev->acked_features);
--        status->vhost_dev->backend_features =
--            qmp_decode_features(vdev->device_id, hdev->backend_features);
-         status->vhost_dev->protocol_features =
-             qmp_decode_protocols(hdev->protocol_features);
-         status->vhost_dev->max_queues = hdev->max_queues;
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index 38800a7156b..d6afde8b5dd 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -99,16 +99,9 @@ struct vhost_dev {
-      *
-      * @features: available features provided by the backend
-      * @acked_features: final negotiated features with front-end driver
--     *
--     * @backend_features: this is used in a couple of places to either
--     * store VHOST_USER_F_PROTOCOL_FEATURES to apply to
--     * VHOST_USER_SET_FEATURES or VHOST_NET_F_VIRTIO_NET_HDR. Its
--     * future use should be discouraged and the variable retired as
--     * its easy to confuse with the VirtIO backend_features.
-      */
-     uint64_t features;
-     uint64_t acked_features;
--    uint64_t backend_features;
- 
-     /**
-      * @protocol_features: is the vhost-user only feature set by
+     return dev;
 -- 
-2.48.1
+2.49.0
 
 
