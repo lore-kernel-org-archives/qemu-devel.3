@@ -4,88 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23F49C77B7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25BB8C83F09
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 06:23:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXDKu-0001Ww-6h; Thu, 03 Jul 2025 02:22:20 -0400
+	id 1uXDL1-0001bo-0Y; Thu, 03 Jul 2025 02:22:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uXDKr-0001Uc-Gi
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 02:22:17 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uXDKy-0001Zy-Dq
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 02:22:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uXDKo-00049K-Dk
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 02:22:17 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uXDKw-0004BB-15
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 02:22:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751523732;
+ s=mimecast20190719; t=1751523739;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=LgIQjr5Ht4UF0jk6FdqTd/wPdt0Nvrs1ekCJzosPVDM=;
- b=TlMUzrUAYTh8s32O6s8MywbBUxVpmMOSiFudRJzXyrgTkelgsTDq0ROVnpStcZwueWPyNJ
- OYPvZmX6kwy8EfMhhyr+PeSZoSzDDGQdWOkW2cb/Z7qzno2qVYhOTAVPwyalW/4bwXTvMM
- SYth3QIcSimrTFK4kKF5aRSlsbkQuH8=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8MmwHKGuBoDy7o5IE96NmoPGYvWIIWNLi7gbQUFWMRo=;
+ b=Yk6Hm6iplqV+9Hzy5QfbNRD+TtRxsMcN+qhALtklcLgUk1yB00W3ydlnrv0s3kq32l90OP
+ Im+/oYNBQQtY8nGzshjXWrQuAKu2DqwbXGNSGKjKLNSQyWk/2MD5nKXnYYlg3De7Uo0YBL
+ 3+l2+/G8x0fkSooQyRuWKPNg5hdm7mk=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-572-709PJOpEP3SfSBtenfmQiw-1; Thu, 03 Jul 2025 02:22:10 -0400
-X-MC-Unique: 709PJOpEP3SfSBtenfmQiw-1
-X-Mimecast-MFC-AGG-ID: 709PJOpEP3SfSBtenfmQiw_1751523729
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-453018b4ddeso43649035e9.3
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 23:22:10 -0700 (PDT)
+ us-mta-502-fEjp3OkDMzOZ4A8VnFQkVg-1; Thu, 03 Jul 2025 02:22:18 -0400
+X-MC-Unique: fEjp3OkDMzOZ4A8VnFQkVg-1
+X-Mimecast-MFC-AGG-ID: fEjp3OkDMzOZ4A8VnFQkVg_1751523737
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a4f65a705dso3096896f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 23:22:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751523729; x=1752128529;
+ d=1e100.net; s=20230601; t=1751523737; x=1752128537;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :references:cc:to:from:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=LgIQjr5Ht4UF0jk6FdqTd/wPdt0Nvrs1ekCJzosPVDM=;
- b=Fpg3ZYzs5bGKoo1KR+MqAPfKqJdb779ZH4RjLfeeIrU/+6FrTaEv1XRg+YRyzQtaxT
- FzdUvgmAOgZnMe6x0pybemO3irXCwJUKfJvl5pGzC9Io3UBoVlUXAzTYL2rzKSxtMQcD
- 2kw8n4cQx3sR2aU2imjwpxfXHT/fG8qnNOjxyQBLQggv67M17iy2+s8o9pqRvE5lmNKZ
- Xek2Y+WxwzuS//uf8h2PBHpzE7J0bCPF75C4tj7/MnxvClAIFbXmSIEzYZK8J9Q4ETrz
- Y0zCgCBcfAKL2m+FMfqgNxMaxa518T/asfoPCUhxLi+1Nq/h796ryvnxphPdrC0r3uEo
- 8GBw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4r0i7Deb3DYXDLTc2LewnKJxJuWy2Wh/cjhUSc6oJzYCrf76FFQxTn2rA8rO57pqdmhEbBIt8iYJI@nongnu.org
-X-Gm-Message-State: AOJu0Yx+OZVhVJ0j55e2OUSfe73b5hmVcv8Og7wAtKGxclpD5kHqQm6/
- LF+NXB1YJzgP4FKLmEPb3Cjp7xa1GRHAnVi0P1rqTxcCEs7TTw2hVzns6AHyqNoWxf1YF2FZLwN
- UmFOelCLR2LJj2hp+hxWUI+JiEQAeATgsNVy47FiJo0HQJ3vXyQsYyFGP
-X-Gm-Gg: ASbGncsNVViWq3XU03hvtSe072WZzTo5w7TF/iPwHKSliGOJLU5YNpYQab4RGitUtJG
- wyy4EYG94wdNSAx9Ginlib1+oWVCSNWRKapIl3/CAmrvq+VBhDTy/NEnt+M04iW8S2k+lcJMdsO
- +BK4ya2wSBxG9H8/A9KkhRiSDANXVHec3nvDMygPFjQS1jAegqNRv7gghc5lRVtYbLRoP/Wo+p0
- mMGJV16z3d/2bqHJIBVeOMsgQKzTk9w4cXYbUIuvM0mAHj2o0MOMBJC4mLg9wRILSVlmFuOjSoL
- aQuT2KzdMKaNuSevnYg4snJNaR6vVw2Rfhz0NlfyZ4qWh8/C6nBTBbTFTxGp
-X-Received: by 2002:a05:600c:1c01:b0:442:d5dd:5b4b with SMTP id
- 5b1f17b1804b1-454ab3bbdb4mr14058425e9.31.1751523728811; 
- Wed, 02 Jul 2025 23:22:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHNlM90ZoPFP24oCfXHffnDCHUgoLS+ugCzB4Ic0eLSY73G9DwXQU+v8222urbDnrGJjFIIyw==
-X-Received: by 2002:a05:600c:1c01:b0:442:d5dd:5b4b with SMTP id
- 5b1f17b1804b1-454ab3bbdb4mr14058135e9.31.1751523728404; 
- Wed, 02 Jul 2025 23:22:08 -0700 (PDT)
+ bh=8MmwHKGuBoDy7o5IE96NmoPGYvWIIWNLi7gbQUFWMRo=;
+ b=sjMYr9nqe/lozQS2sAngxpoMxLohJ1eR368qMg7tGaGnotx3sQQH8jtnXFtz1TUVAD
+ 7WuOBTFGe2l2N+HLebu/j2UpIwUEeCQKa6PjVSVouZE4EkjdYOCvig6LBuBcTrnRqxkh
+ wy8+Ex9GZO5v3v7nFNATH+u8zj7il5zbgyCIE9jF9Lz2bV5baj5BRYn/DLmQp2lCv94i
+ 2cc7h9PYHeryq0FrIAy2ZwfNHiW5OLM8VK+r5gMM8sPbGHKgIgBzuUSBiTZ6ZMduN0Ni
+ cgvn5GRL6T2Vb9sa1KRhmXL57FJPfasGErBI3spIrbyAXLNKK5tyXdinIlTaQnDDTRam
+ tO4A==
+X-Gm-Message-State: AOJu0YwAqt/ZmM1iIkRW7ytFciMPfeCap/5hinZvuQQT9Gu7Pxb2uNbY
+ RGdXo5Bz1cjUeqX+BNG4cxkD7MIiCUM3j3o+wz9W3E+0a4lVOhkclbiBHoxBuSGKMprBgbKWxRs
+ 1AYtmwW12qTHCw68Lc8IdGpiR7Jog7P6M5aYPQMgpETavXR4WxePVOEkyvpQrCp3pciNyLP6ogL
+ 8C+klUjycgIg1cQ8yKnOY/UsXfIYR3mGAvCA==
+X-Gm-Gg: ASbGnctW6gdq2/gC1mDF6nwG8Fc7gZh5ywcrlqy7iDh9cRcgGjcEOwFrtfV9+7zexbN
+ UmP1EwKDvPHPHeSRCnqe1cPsOpWrmsoRKN5pIwBA1sKScYQ9LeKmYxK501KS/kZB004k/UuG6SG
+ H57uqTHg0nN3aaTKVJXMV7YZLVMyj3U9nSXvRykcYbX1Q9BBelrvO/hfeJodndC8Erelj6GceRs
+ DGwfKze65L8J33LhiebMUVGZJGM3tBsGeJepZv2vp/L4zPZnzlRve4GmUefs2UTuCaSWoTWRAkX
+ 5cH96bhqmrRS+g1VX5iniXayjSDcFQFqAu6cvZzaDxHI1oBllKn5MXX55bQ1
+X-Received: by 2002:a05:6000:25c7:b0:3a4:ec23:dba5 with SMTP id
+ ffacd0b85a97d-3b1fe0f0915mr4400726f8f.5.1751523736863; 
+ Wed, 02 Jul 2025 23:22:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGJzpjZ7VIubWwGGIXPRZFCnyQTeKLrPkrN2dosQo2PTUP36/CEZvYVx5BWEVEcP0o7ikqgWw==
+X-Received: by 2002:a05:6000:25c7:b0:3a4:ec23:dba5 with SMTP id
+ ffacd0b85a97d-3b1fe0f0915mr4400696f8f.5.1751523736316; 
+ Wed, 02 Jul 2025 23:22:16 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454a999d399sm16977275e9.25.2025.07.02.23.22.07
+ 5b1f17b1804b1-454a9bde8c8sm16966015e9.31.2025.07.02.23.22.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Jul 2025 23:22:07 -0700 (PDT)
-Message-ID: <8d8ea15d-19a2-4186-b8fd-5b70556b7418@redhat.com>
-Date: Thu, 3 Jul 2025 08:22:07 +0200
+ Wed, 02 Jul 2025 23:22:15 -0700 (PDT)
+Message-ID: <9ff50c09-07c6-403e-956d-9e660e471abf@redhat.com>
+Date: Thu, 3 Jul 2025 08:22:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] b4: Drop linktrailermask
+Subject: Re: [PATCH] Makefile: prune quilt source files for cscope
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
-References: <20250630172301.519848-1-clg@redhat.com>
- <23065936-513e-4240-afaf-3d25de747dcd@linaro.org>
- <257986c3-54b6-4ae7-8176-8c4c74e0b8db@redhat.com>
- <85a81af2-fe92-4f74-b1fe-4ba030e32129@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250630172048.519182-1-clg@redhat.com>
+ <53990724-f80d-48e3-bab7-604aa4f3e92d@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
  xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
@@ -130,7 +127,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <85a81af2-fe92-4f74-b1fe-4ba030e32129@redhat.com>
+In-Reply-To: <53990724-f80d-48e3-bab7-604aa4f3e92d@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -158,24 +155,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/2/25 23:42, Cédric Le Goater wrote:
-> On 7/1/25 14:16, Cédric Le Goater wrote:
->> On 7/1/25 12:04, Philippe Mathieu-Daudé wrote:
->>> On 30/6/25 19:23, Cédric Le Goater wrote:
->>>>
->>>> When grabbing a patch series, the link trailer is replaced with a
->>>> Message-ID, which is not useful compared to an URL. Fix that by
->>>> dropping the linktrailermask config.
->>>>
->>>> Cc: Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>
->>> Hmm :)
+On 7/2/25 23:41, Cédric Le Goater wrote:
+> On 6/30/25 19:20, Cédric Le Goater wrote:
+>> Both quilt, to apply patches, and cscope, to navigate in the code, are
+>> useful tools. Make sure source files that quilt saves when applying
+>> patches are not taken into account when building the cscope database.
 >>
->> Copy&paste error from 838cf72b5d2c. Sorry ...
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>>   Makefile | 1 +
+>>   1 file changed, 1 insertion(+)
 >>
->> Who maintains .b4-config  ?
+>> diff --git a/Makefile b/Makefile
+>> index c92a3cf7857a..74c2da203720 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -227,6 +227,7 @@ distclean: clean recurse-distclean
+>>       rm -Rf .sdk qemu-bundle
+>>   find-src-path = find "$(SRC_PATH)" -path "$(SRC_PATH)/meson" -prune -o \
+>> +    -path "$(SRC_PATH)/.pc" -prune -o \
+>>       -type l -prune -o \( -name "*.[chsS]" -o -name "*.[ch].inc" \)
+>>   .PHONY: ctags
 > 
-> if no one objects, I will add it the vfio queue with the Cc: fix.
+> if no one objects, I will add it to the vfio queue.
 > 
 > Thanks,
 > 
