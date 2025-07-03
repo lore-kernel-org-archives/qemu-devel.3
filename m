@@ -4,88 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B66AC77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:24:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0EBEC77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:26:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXMjh-00018u-TJ; Thu, 03 Jul 2025 12:24:33 -0400
+	id 1uXMkw-0002ie-J9; Thu, 03 Jul 2025 12:25:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uXMje-00012S-PJ
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:24:30 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uXMkt-0002hj-Vd
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:25:48 -0400
+Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uXMjX-0006q4-Fs
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:24:30 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-23636167b30so1436595ad.1
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:24:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uXMkh-0007Iq-IF
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:25:47 -0400
+Received: by mail-oi1-x232.google.com with SMTP id
+ 5614622812f47-407a6c6a6d4so62529b6e.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:25:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751559862; x=1752164662; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=aTwGKwFQ62Eqawv1d7F6pjBSbRdUA0VSPj456ky5A3k=;
- b=BAP5/FRVMtO7PgDrQUVbRGkJ9hZbE6IZYoqXXyglTkUAVdeYU31COa/MOLJA36GfYA
- hjq+93mdY/pnjOG1sdeFESJDPbLUov3q4peEn9NQcxKToUiMdv0udKw42npTS31KlOO5
- h0PHyQeFyPcWunnKkHHm6yTxFwB61cMSJZiaAXK+qdnuJTI4LwnbqUkbbPvH33zTPGRQ
- idWLlY6m5LVk0W4TmeiBCQJzlsixwJL52xUle30E8n6f59V1zoyAh2aK6dWlHoblJw3n
- zoKvo8McnTXH5/FaUwx/eqLZPMz+Ah7IwF4slRIocrQ21WmLm872BDOD74bEoPPLLNDv
- xUjQ==
+ d=linaro.org; s=google; t=1751559931; x=1752164731; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=iuA9MTMi0aNFWovQAIYAzCslGaCVz5WTerEbR0coeMw=;
+ b=G0uxV/Iryxe9k7FQyNnn3sgHap/fSEJYIAP4lIOzfzF/32OCYBOOsmFGP+kj+HV7O6
+ XmyvBWSj1pFLoSMoMkNikfBGGnzPtBB1Xa/IHwYwJ+0jQt6eZ0wrIXoX5QLx5wPXt8oV
+ /xpfZAqtIBW+zIafLmZj9gzqMc2M6raoP/+YeP3xq+EBU5I53UZ/4jeUZCAXDyaxF6hu
+ anUD6eSAaEWzbxR2cAaPvSFz1EXbDiNNVHjCyNk+8z1EzazHQ/arOwXF7unXok0FBZcZ
+ bRf77TqT8Qo3VwJX/lt3dSyKCFf6DE7Jf4+2dfeXXs8b/C8DStKFxtt1RzsfeVMu6heo
+ 7LVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751559862; x=1752164662;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aTwGKwFQ62Eqawv1d7F6pjBSbRdUA0VSPj456ky5A3k=;
- b=tS2gthvOGDyrawmEty542Ze1IU3ZqYdROOtNeiNpH6npQ7A+V9GWzN95vCAogrxedI
- u/X0E3sf4/ppBXNyJeOdGwi+hN0z3oFj1Z7zGv69hijAEBTBPHGVngGPd34ZVU7ISNN3
- jnYNHmMfwPzNbpH40b82jScVx6YkFaVGhA8IJDZ+wXVcOqCY1mK8jf1xxys5S5EABnnF
- xcPU2GTwxtNepbNeN3VBU3OiqPc9/tUHu0IVLBZtgxaCZb1dXFI+zvVOylN6eclryhIF
- iA/k1sWp7/bdjIazsvbaZmpxvpZMpvKfdznV9KgKQwU/EUbJN+CD1t+/fM3Qq/2ku8cI
- i8mg==
-X-Gm-Message-State: AOJu0Yxd/fkFtPaUtgb9zzXPa49pMnQjw6U8mOmg5a43zcIzSFL09pB0
- hOb1HjT1+kbDrtaKSPf4I3+HvP3KfUKrXSp7j/QoMIRK4q5TcNp/Vlft
-X-Gm-Gg: ASbGncsp3AreMGRGy51FuWmTgXuddCQLQaJv9ax15GkVkBUTsWXKQyy63kigJqSGiKo
- r/egROMoEzQoVMr2AuIGnJzYgrdTY3I6XYGMUIthNxnF3pkUqcc7c5xBTuHmI14C3HuiSHc9Cpg
- f6AEV0BAbAQ+kEMOUHgWHROtKNyAYu311jm1ovFP8EmS1EIiX/Hj0DI3KP1nwhFumQswVC6nRSR
- ufYZ7KmXz0W3PcPjZTMV4kCACwTEzkBiQfaxdn3oINaB4g1j1XUn/y6B8YkyTy8Kg1i86RO9+UO
- txa0glNP/TXDL1Rho80/ir1yIKTth1eou2A/E7O4EM95bCVuZTXxYcuVzpRTVx1h7g==
-X-Google-Smtp-Source: AGHT+IG93Mc4+t846eF2fY9hnaaPDxJ5/oVc2LiDUopjjqffI4wdH9UnPwFeO5/FleUMiQ/IVtnJ4w==
-X-Received: by 2002:a17:903:3510:b0:235:225d:30a2 with SMTP id
- d9443c01a7336-23c797d1470mr56513715ad.48.1751559861721; 
- Thu, 03 Jul 2025 09:24:21 -0700 (PDT)
-Received: from smc-140338-bm01 ([149.97.161.244])
+ d=1e100.net; s=20230601; t=1751559931; x=1752164731;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=iuA9MTMi0aNFWovQAIYAzCslGaCVz5WTerEbR0coeMw=;
+ b=HPdBncZBM6QYedEiwK+9BS813RTeejp0LfBgOcp3+Uhjp8FGNe//C9Rt2BawmxRLMa
+ iBNQLvyLKOvWtxusGM5UG4dtfvRKUrVf3oYq/8d4uoq840aie7K41XyBaOPfKIRnaksO
+ nJWdxtIx1Fmv9b6jUeLAKiz5Q4c8pzne3+CrbUOtCJy7vyadB8z4IMMYumxzkZl4ozm5
+ acxrW2GptAVUxtEUmGuPjpnkSQd8+cVhW0gXcaqfhp10gfxI31nCTG1HsI4G+eHzvKYh
+ ptburSB3AWiVPMUr3IyPH2A68H9y1QWEGYVfhKdKGTWqwMFUWckj26MLAz9l1Wb8TlKr
+ SJzA==
+X-Gm-Message-State: AOJu0Ywz2qONdJkr3Dt8lenOwy7NMCB0sPKFJmBfFtcEgcQTkuFvcHrE
+ t5yex/Fhg5mSu7DE4x+sY9NdBWZrTLsXjLLinavW+xX2cYx3Yp22J6AZ0Qwua6MVI2o=
+X-Gm-Gg: ASbGncvIbqrIXwP2AmbGrSKI4eZqwNjA9uRP4mQXg/urytAWQiXQPXE3q2110zdIaON
+ 0vRm7rtXzhUYYIYUBXrVX4eZkptm3zXulz/3hUBUyAzz7I8AjFP24XrrdM3IdCh49hYvJMIOlkP
+ kbRo8Sgc7y/juqBSsWNNZVyA9ngoOJ64w3t8z2lvvfbVEQzQ8GJDqc6fEh6l8mwyhZGNtIIQqMv
+ iBASyKePY+Wbv/vMBdaDaR8r1/ctQ+BJu11Y1XnTkNz/a1imRt9Vi8ZL0ckgzR49AdO25gmVyw3
+ 4fee/pBmgINKMmyTme8OKyEcVtpIjtMbbn89T3kkX1p4iGfGNRgq9GDhCMQWI2/feYFOAxHmIZa
+ nIrnoBSBiPVo=
+X-Google-Smtp-Source: AGHT+IHiWGk0ej2oEfekoak9qb/NDGMDMa7XjuE+5cqVSvh81hGgE5NwZtnE2JC8t6xItURmzFlMuQ==
+X-Received: by 2002:a05:6808:1691:b0:40a:532a:7102 with SMTP id
+ 5614622812f47-40b88789c19mr5626321b6e.16.1751559931383; 
+ Thu, 03 Jul 2025 09:25:31 -0700 (PDT)
+Received: from [10.25.6.71] ([187.210.107.185])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23acb3adeeasm165134555ad.156.2025.07.03.09.24.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Jul 2025 09:24:21 -0700 (PDT)
-From: Fan Ni <nifan.cxl@gmail.com>
-X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
-Date: Thu, 3 Jul 2025 16:24:19 +0000
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: qemu-devel@nongnu.org, Michael Tsirkin <mst@redhat.com>,
- linux-cxl@vger.kernel.org, linuxarm@huawei.com
-Subject: Re: [PATCH qemu 11/11] hw/cxl: mailbox-utils: 0x5605 - FMAPI
- Initiate DC Release
-Message-ID: <aGausxNbtyEyT8GG@smc-140338-bm01>
-References: <20250702160219.989731-1-Jonathan.Cameron@huawei.com>
- <20250702160219.989731-12-Jonathan.Cameron@huawei.com>
+ 5614622812f47-40b3243dd8csm3031351b6e.47.2025.07.03.09.25.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Jul 2025 09:25:31 -0700 (PDT)
+Message-ID: <2767ec10-d08d-4de0-95f1-3362e2acf15e@linaro.org>
+Date: Thu, 3 Jul 2025 10:25:28 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250702160219.989731-12-Jonathan.Cameron@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pl1-x62d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 31/97] target/arm: Implemement SME2 SDOT, UDOT, USDOT, 
+ SUDOT
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20250702123410.761208-1-richard.henderson@linaro.org>
+ <20250702123410.761208-32-richard.henderson@linaro.org>
+ <CAFEAcA8szLP4mEvkatHhbBJzU5A6w0XGcMRRJYr_HPSNgZmU7Q@mail.gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAFEAcA8szLP4mEvkatHhbBJzU5A6w0XGcMRRJYr_HPSNgZmU7Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::232;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,137 +104,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 02, 2025 at 05:02:17PM +0100, Jonathan Cameron wrote:
-> From: Anisa Su <anisa.su@samsung.com>
+On 7/3/25 03:45, Peter Maydell wrote:
+> On Wed, 2 Jul 2025 at 13:34, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > 
-> FM DCD Management command 0x5605 implemented per CXL r3.2 Spec Section 7.6.7.6.6
 > 
-> Signed-off-by: Anisa Su <anisa.su@samsung.com>
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> ---
+> 
+>> +/* Similar for 2-way dot product */
+>> +#define DO_DOT(NAME, TYPED, TYPEN, TYPEM) \
+>> +void HELPER(NAME)(void *vd, void *vn, void *vm, void *va, uint32_t desc)  \
+>> +{                                                                         \
+>> +    intptr_t i, opr_sz = simd_oprsz(desc);                                \
+>> +    TYPED *d = vd, *a = va;                                               \
+>> +    TYPEN *n = vn;                                                        \
+>> +    TYPEM *m = vm;                                                        \
+>> +    for (i = 0; i < opr_sz / sizeof(TYPED); ++i) {                        \
+>> +        d[i] = (a[i] +                                                    \
+>> +                (TYPED)n[i * 2 + 0] * m[i * 2 + 0] +                      \
+>> +                (TYPED)n[i * 2 + 1] * m[i * 2 + 1]);                      \
+> 
+> Don't we need some H macros here for the big-endian host case?
+> (For that matter, the existing 4-way dot product helpers also
+> look like they won't work on big-endian...)
 
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
+The logic here is that all columns are treated identically.
 
->  hw/cxl/cxl-mailbox-utils.c | 88 ++++++++++++++++++++++++++++++++++++++
->  1 file changed, 88 insertions(+)
-> 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index 5ea0d07808..43a0d503aa 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -123,6 +123,7 @@ enum {
->          #define SET_DC_REGION_CONFIG        0x2
->          #define GET_DC_REGION_EXTENT_LIST   0x3
->          #define INITIATE_DC_ADD             0x4
-> +        #define INITIATE_DC_RELEASE         0x5
->  };
->  
->  /* CCI Message Format CXL r3.1 Figure 7-19 */
-> @@ -3644,6 +3645,86 @@ static CXLRetCode cmd_fm_initiate_dc_add(const struct cxl_cmd *cmd,
->      }
->  }
->  
-> +#define CXL_EXTENT_REMOVAL_POLICY_MASK 0x0F
-> +#define CXL_FORCED_REMOVAL_MASK (1 << 4)
-> +/*
-> + * CXL r3.2 Section 7.6.7.6.6:
-> + * Initiate Dynamic Capacity Release (Opcode 5605h)
-> + */
-> +static CXLRetCode cmd_fm_initiate_dc_release(const struct cxl_cmd *cmd,
-> +                                             uint8_t *payload_in,
-> +                                             size_t len_in,
-> +                                             uint8_t *payload_out,
-> +                                             size_t *len_out,
-> +                                             CXLCCI *cci)
-> +{
-> +    struct {
-> +        uint16_t host_id;
-> +        uint8_t flags;
-> +        uint8_t reg_num;
-> +        uint64_t length;
-> +        uint8_t tag[0x10];
-> +        uint32_t ext_count;
-> +        CXLDCExtentRaw extents[];
-> +    } QEMU_PACKED *in = (void *)payload_in;
-> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> +    int i, rc;
-> +
-> +    switch (in->flags & CXL_EXTENT_REMOVAL_POLICY_MASK) {
-> +        case CXL_EXTENT_REMOVAL_POLICY_PRESCRIPTIVE: {
-> +            CXLDCExtentList updated_list;
-> +            uint32_t updated_list_size;
-> +            g_autofree CXLUpdateDCExtentListInPl *list =
-> +                g_malloc0(sizeof(*list) +
-> +                    in->ext_count * sizeof(*list->updated_entries));
-> +
-> +            convert_raw_extents(in->extents, list, in->ext_count);
-> +            rc = cxl_detect_malformed_extent_list(ct3d, list);
-> +            if (rc) {
-> +                return rc;
-> +            }
-> +
-> +            /*
-> +             * Fail with Invalid PA if an extent is pending and Forced Removal
-> +             * flag not set.
-> +             */
-> +            if (!(in->flags & CXL_FORCED_REMOVAL_MASK)) {
-> +                for (i = 0; i < in->ext_count; i++) {
-> +                    CXLDCExtentRaw ext = in->extents[i];
-> +                    /*
-> +                     * Check requested extents don't overlap with pending
-> +                     * extents.
-> +                     */
-> +                    if (cxl_extent_groups_overlaps_dpa_range(
-> +                            &ct3d->dc.extents_pending,
-> +                            ext.start_dpa,
-> +                            ext.len)) {
-> +                        return CXL_MBOX_INVALID_PA;
-> +                    }
-> +                }
-> +            }
-> +
-> +            rc = cxl_dc_extent_release_dry_run(ct3d,
-> +                                               list,
-> +                                               &updated_list,
-> +                                               &updated_list_size);
-> +            if (rc) {
-> +                return rc;
-> +            }
-> +            cxl_create_dc_event_records_for_extents(ct3d,
-> +                                                    DC_EVENT_RELEASE_CAPACITY,
-> +                                                    in->extents,
-> +                                                    in->ext_count);
-> +            return CXL_MBOX_SUCCESS;
-> +        }
-> +        default: {
-> +            qemu_log_mask(LOG_UNIMP,
-> +                "CXL extent removal policy not supported.\n");
-> +            return CXL_MBOX_INVALID_INPUT;
-> +        }
-> +    }
-> +}
-> +
->  static const struct cxl_cmd cxl_cmd_set[256][256] = {
->      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
->          cmd_infostat_bg_op_abort, 0, 0 },
-> @@ -3778,6 +3859,13 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
->          CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
->          CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
->          CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
-> +    [FMAPI_DCD_MGMT][INITIATE_DC_RELEASE] = { "INIT_DC_RELEASE",
-> +        cmd_fm_initiate_dc_release, ~0,
-> +        (CXL_MBOX_CONFIG_CHANGE_COLD_RESET |
-> +         CXL_MBOX_CONFIG_CHANGE_CONV_RESET |
-> +         CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
-> +         CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
-> +         CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
->  };
->  
->  /*
-> -- 
-> 2.48.1
-> 
+...a0... ...a1...
+.n0..n1. .n2..n3.
+.m0..m1. .m2..m3.
 
--- 
-Fan Ni (From gmail)
+vs
+
+...a1... ...a0...
+.n3..n2. .n1..n0.
+.m3..m2. .m1..m0.
+
+d0 = a0 + n0 * m0 + n1 * m1 -- it doesn't matter if n0 or n1 is at the lowest or highest 
+address, because it still gets multiplied by the corresponding element in m, and then the 
+two products are added to the sum that is addressed the same way.
+
+The existing 4-way dot product uses the same endian independent logic, fwiw.
+
+
+r~
 
