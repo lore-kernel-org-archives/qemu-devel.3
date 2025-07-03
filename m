@@ -4,88 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2B96C77B7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF298C83F03
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 16:24:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXMjJ-0000ja-6j; Thu, 03 Jul 2025 12:24:09 -0400
+	id 1uXMjP-0000o6-0b; Thu, 03 Jul 2025 12:24:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uXMjF-0000hV-17
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:24:05 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uXMjC-0006j9-QG
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:24:04 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-74264d1832eso284677b3a.0
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 09:24:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751559840; x=1752164640; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=oAR9pDVF5hUoGujqZRHMIvGAE0u3AiggpsjR/ihLtZg=;
- b=OKSRhRzKiEYqP4nAzkrz7Xmprk2UAeecFmc1bCeL5BfyI48JFhlsGOB8DLl1EXnyWI
- jmGZ6fSKQKjJK6f10Y5DMnpl7YBNbSDIm+HaG7fbqo0J++vmUcExgJgaEqa0hWl61Cx6
- oxIy1G5RqRpUsUNnzQHXieOlaUQunj9oyAYYWW9sqEPtx9q4OAIoT7RqXA4f6iRAHrps
- GgC3nBWMXKI3+146EM6n9DpOYqCFJkUA/7BWzGiP0+newM4rQU1LfztTMEGPcSh1KxNM
- QoG4rBKvX5fuod5lLxbch09kD2oxM+io7Q1gJ3y0ip5m0Ln4mVkpgDNUsYPCNJKU3bJu
- Igpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751559840; x=1752164640;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oAR9pDVF5hUoGujqZRHMIvGAE0u3AiggpsjR/ihLtZg=;
- b=i/7hZfbaYUHHnNM+ak9UqWMSpQp7xo0+pIiBF8L/8kWhztKNx8Pcgtheba6+mGw92X
- O7G9YETMz3igqVvELR5nqUUfqF66UudhnpTMRndnqvFiDlNqliZdzWScKBBHUW2k/r+9
- Y0oqhpjIiqAzzWJtZVBhiDwf842TMS9ZCeonOWx+c7idlEVM/aUD13Mf4rlPBIinTkB3
- W6sl4CZ1MSUNa/1D2XtL4cpoFOHuaiXgwG9H7U2ssy7O5/fbu8KYSmWMYkAffW6geGnr
- ylTN3Mi6/VJ/cLiVtuWFTFqXbACejj5HwYNghS6ejKR6N+UnuxxdlvyoSYt8/sYhNuR9
- lYpA==
-X-Gm-Message-State: AOJu0YwtPDE/3wRLX27u7ysP6zlaVEPNy+WF0K2ScqYKXqZfnU2DfDgJ
- haHYgukcth3xfNRffCi+ohHvAmha3j7IFoD+JSdMO4z5O7Glg0IGprWp
-X-Gm-Gg: ASbGnct/Uy6RbUvjQBGn8a2ye5NroHgNNcMo3myj6irK2Y0H7Ae3cpQMB5glh3ycn4g
- RTKR+fjLNEzseNZV9IArV0vN0/qgVZw8xMcO+j8FZQwr20r9BuurWLba3Y8txSNdtZkJryKoBZ9
- Q9c9btFv/dzwVl7NWGEvrgDsVEAk4nVM06Bdf6/K0mAyC8bhAyXWwL9Q/xoEDaug5cv7d+j84Z7
- pHQM0gqylQVIdPLv2eKWdaagska0ZFmxmO7qMYvEmX8P/FmdPiwbmp2+B6xQFX3ZmC1mdPPVjLr
- HBWnj1pbjWXcf8d4B2s8pF0/D/UyeEQCZA4toGjiSa2ogdVSI2NImZUB0xTmMTRJvg==
-X-Google-Smtp-Source: AGHT+IG958++ZBfQ2mwL/heVpUWlSKautY3lAE2wrUlCD8oQiuac13gIaQnOBlCxgeedSaTULXhmDw==
-X-Received: by 2002:a05:6a00:2307:b0:748:2d1d:f7b7 with SMTP id
- d2e1a72fcca58-74b515128ccmr9942294b3a.21.1751559839526; 
- Thu, 03 Jul 2025 09:23:59 -0700 (PDT)
-Received: from smc-140338-bm01 ([149.97.161.244])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74ce359df31sm29610b3a.29.2025.07.03.09.23.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Jul 2025 09:23:58 -0700 (PDT)
-From: Fan Ni <nifan.cxl@gmail.com>
-X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
-Date: Thu, 3 Jul 2025 16:23:57 +0000
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: qemu-devel@nongnu.org, Michael Tsirkin <mst@redhat.com>,
- linux-cxl@vger.kernel.org, linuxarm@huawei.com
-Subject: Re: [PATCH qemu 10/11] hw/cxl: mailbox-utils: 0x5604 - FMAPI
- Initiate DC Add
-Message-ID: <aGaunVxcE8aOyg2V@smc-140338-bm01>
-References: <20250702160219.989731-1-Jonathan.Cameron@huawei.com>
- <20250702160219.989731-11-Jonathan.Cameron@huawei.com>
+ (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
+ id 1uXMjJ-0000lG-Mp
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:24:10 -0400
+Received: from smtp-out-60.livemail.co.uk ([213.171.216.60]
+ helo=dkim.livemail.co.uk)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
+ id 1uXMjA-0006iM-1t
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 12:24:06 -0400
+Received: from smtp.livemail.co.uk (unknown [10.44.132.84])
+ by dkim.livemail.co.uk (Postfix) with ESMTPS id 7803EA0362;
+ Thu,  3 Jul 2025 17:23:56 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=randomman.co.uk;
+ s=livemail2; t=1751559836;
+ bh=Z2b2RFBruQbE12fKsbZVl5t/k3TEmL2JB/f4BNuvBIE=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=EgaBbqLhG+EjtuiU3xzF/60ER/MOV9d3PwYkp48QCbjkwHD7CB0W2Lppr+pJlGTw+
+ 4DxGJh8Vv8kHr9DxTKXpkmwxnudjpJNFzylkIfkfzmfTAedN22HhJDWNNgFVGXAK9h
+ KgIgYO80iVNygyOm32qHU1j03DcewKeyY3dpXXlE=
+Received: from localhost.localdomain (unknown [145.40.191.116])
+ (Authenticated sender: roy.hopkins@randomman.co.uk)
+ by smtp.livemail.co.uk (Postfix) with ESMTPSA id C2C36A01C5;
+ Thu,  3 Jul 2025 17:23:51 +0100 (BST)
+From: Roy Hopkins <roy.hopkins@randomman.co.uk>
+To: qemu-devel@nongnu.org
+Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P . Berrange" <berrange@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
+ Gerd Hoffman <kraxel@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
+ Joerg Roedel <joro@8bytes.org>
+Subject: [PATCH v9 14/16] backends/igvm: Handle policy for SEV guests
+Date: Thu,  3 Jul 2025 17:21:57 +0100
+Message-ID: <57707230bef331b53e9366ce6a23ed25cd6f1293.1751554099.git.roy.hopkins@randomman.co.uk>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1751554099.git.roy.hopkins@randomman.co.uk>
+References: <cover.1751554099.git.roy.hopkins@randomman.co.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250702160219.989731-11-Jonathan.Cameron@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=213.171.216.60;
+ envelope-from=roy.hopkins@randomman.co.uk; helo=dkim.livemail.co.uk
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,205 +84,242 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 02, 2025 at 05:02:16PM +0100, Jonathan Cameron wrote:
-> From: Anisa Su <anisa.su@samsung.com>
-> 
-> FM DCD Management command 0x5604 implemented per CXL r3.2 Spec Section 7.6.7.6.5
-> 
-> Signed-off-by: Anisa Su <anisa.su@samsung.com>
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Adds a handler for the guest policy initialization IGVM section and
+builds an SEV policy based on this information and the ID block
+directive if present. The policy is applied using by calling
+'set_guest_policy()' on the ConfidentialGuestSupport object.
 
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
+Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+Acked-by: Gerd Hoffman <kraxel@redhat.com>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+---
+ backends/igvm.c | 149 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 149 insertions(+)
 
-Only a minor comment inline ...
-> ---
->  include/hw/cxl/cxl_device.h |   4 ++
->  hw/cxl/cxl-mailbox-utils.c  | 109 ++++++++++++++++++++++++++++++++++++
->  hw/mem/cxl_type3.c          |   8 +--
->  3 files changed, 117 insertions(+), 4 deletions(-)
-> 
-> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-> index ed91e5387e..fdee60b977 100644
-> --- a/include/hw/cxl/cxl_device.h
-> +++ b/include/hw/cxl/cxl_device.h
-> @@ -728,4 +728,8 @@ void cxl_create_dc_event_records_for_extents(CXLType3Dev *ct3d,
->                                               CXLDCEventType type,
->                                               CXLDCExtentRaw extents[],
->                                               uint32_t ext_count);
-> +bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
-> +                                    uint64_t dpa, uint64_t len);
-> +bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
-> +                                          uint64_t dpa, uint64_t len);
->  #endif
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index d0a1d63582..5ea0d07808 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -122,6 +122,7 @@ enum {
->          #define GET_HOST_DC_REGION_CONFIG   0x1
->          #define SET_DC_REGION_CONFIG        0x2
->          #define GET_DC_REGION_EXTENT_LIST   0x3
-> +        #define INITIATE_DC_ADD             0x4
->  };
->  
->  /* CCI Message Format CXL r3.1 Figure 7-19 */
-> @@ -3542,6 +3543,107 @@ static CXLRetCode cmd_fm_get_dc_region_extent_list(const struct cxl_cmd *cmd,
->      return CXL_MBOX_SUCCESS;
->  }
->  
-> +/*
-> + * Helper function to convert CXLDCExtentRaw to CXLUpdateDCExtentListInPl
-> + * in order to reuse cxl_detect_malformed_extent_list() function which accepts
-> + * CXLUpdateDCExtentListInPl as a parameter.
-> + */
-> +static void convert_raw_extents(CXLDCExtentRaw raw_extents[],
-> +                                CXLUpdateDCExtentListInPl *extent_list,
-> +                                int count)
-> +{
-> +    int i;
-> +
-> +    extent_list->num_entries_updated = count;
-> +
-> +    for (i = 0; i < count; i++) {
-> +        extent_list->updated_entries[i].start_dpa = raw_extents[i].start_dpa;
-> +        extent_list->updated_entries[i].len = raw_extents[i].len;
-> +    }
-> +}
-> +
-> +/* CXL r3.2 Section 7.6.7.6.5 Initiate Dynamic Capacity Add (Opcode 5604h) */
-
-/* CXL r3.2 Section 7.6.7.6.5: Initiate Dynamic Capacity Add (Opcode 5604h) */
-
-Fan
-
-> +static CXLRetCode cmd_fm_initiate_dc_add(const struct cxl_cmd *cmd,
-> +                                         uint8_t *payload_in,
-> +                                         size_t len_in,
-> +                                         uint8_t *payload_out,
-> +                                         size_t *len_out,
-> +                                         CXLCCI *cci)
-> +{
-> +    struct {
-> +        uint16_t host_id;
-> +        uint8_t selection_policy;
-> +        uint8_t reg_num;
-> +        uint64_t length;
-> +        uint8_t tag[0x10];
-> +        uint32_t ext_count;
-> +        CXLDCExtentRaw extents[];
-> +    } QEMU_PACKED *in = (void *)payload_in;
-> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> +    int i, rc;
-> +
-> +    switch (in->selection_policy) {
-> +        case CXL_EXTENT_SELECTION_POLICY_PRESCRIPTIVE: {
-> +            /* Adding extents exceeds device's extent tracking ability. */
-> +            if (in->ext_count + ct3d->dc.total_extent_count >
-> +                CXL_NUM_EXTENTS_SUPPORTED) {
-> +                return CXL_MBOX_RESOURCES_EXHAUSTED;
-> +            }
-> +
-> +            g_autofree CXLUpdateDCExtentListInPl *list =
-> +                g_malloc0(sizeof(*list) +
-> +                    in->ext_count * sizeof(*list->updated_entries));
-> +
-> +            convert_raw_extents(in->extents, list, in->ext_count);
-> +            rc = cxl_detect_malformed_extent_list(ct3d, list);
-> +
-> +            for (i = 0; i < in->ext_count; i++) {
-> +                CXLDCExtentRaw *ext = &in->extents[i];
-> +
-> +                /* Check requested extents do not overlap with pending ones. */
-> +                if (cxl_extent_groups_overlaps_dpa_range(&ct3d->dc.extents_pending,
-> +                                                         ext->start_dpa,
-> +                                                         ext->len)) {
-> +                    return CXL_MBOX_INVALID_EXTENT_LIST;
-> +                }
-> +                /* Check requested extents do not overlap with existing ones. */
-> +                if (cxl_extents_overlaps_dpa_range(&ct3d->dc.extents,
-> +                                                   ext->start_dpa,
-> +                                                   ext->len)) {
-> +                    return CXL_MBOX_INVALID_EXTENT_LIST;
-> +                }
-> +            }
-> +
-> +            if (rc) {
-> +                return rc;
-> +            }
-> +
-> +            CXLDCExtentGroup *group = NULL;
-> +            for (i = 0; i < in->ext_count; i++) {
-> +                CXLDCExtentRaw *ext = &in->extents[i];
-> +
-> +                group = cxl_insert_extent_to_extent_group(group, ext->start_dpa,
-> +                                                          ext->len, ext->tag,
-> +                                                          ext->shared_seq);
-> +            }
-> +
-> +            cxl_extent_group_list_insert_tail(&ct3d->dc.extents_pending, group);
-> +            ct3d->dc.total_extent_count += in->ext_count;
-> +            cxl_create_dc_event_records_for_extents(ct3d,
-> +                                                    DC_EVENT_ADD_CAPACITY,
-> +                                                    in->extents,
-> +                                                    in->ext_count);
-> +
-> +            return CXL_MBOX_SUCCESS;
-> +        }
-> +        default: {
-> +            qemu_log_mask(LOG_UNIMP,
-> +                          "CXL extent selection policy not supported.\n");
-> +            return CXL_MBOX_INVALID_INPUT;
-> +        }
-> +    }
-> +}
-> +
->  static const struct cxl_cmd cxl_cmd_set[256][256] = {
->      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
->          cmd_infostat_bg_op_abort, 0, 0 },
-> @@ -3669,6 +3771,13 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
->           CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
->      [FMAPI_DCD_MGMT][GET_DC_REGION_EXTENT_LIST] = { "GET_DC_REGION_EXTENT_LIST",
->          cmd_fm_get_dc_region_extent_list, 12, 0 },
-> +    [FMAPI_DCD_MGMT][INITIATE_DC_ADD] = { "INIT_DC_ADD",
-> +        cmd_fm_initiate_dc_add, ~0,
-> +        (CXL_MBOX_CONFIG_CHANGE_COLD_RESET |
-> +        CXL_MBOX_CONFIG_CHANGE_CONV_RESET |
-> +        CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
-> +        CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
-> +        CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
->  };
->  
->  /*
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index 9c2b9d197b..7676d785c2 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -1885,8 +1885,8 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
->   * the list.
->   * Return value: return true if has overlaps; otherwise, return false
->   */
-> -static bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
-> -                                           uint64_t dpa, uint64_t len)
-> +bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
-> +                                    uint64_t dpa, uint64_t len)
->  {
->      CXLDCExtent *ent;
->      Range range1, range2;
-> @@ -1931,8 +1931,8 @@ bool cxl_extents_contains_dpa_range(CXLDCExtentList *list,
->      return false;
->  }
->  
-> -static bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
-> -                                                 uint64_t dpa, uint64_t len)
-> +bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
-> +                                          uint64_t dpa, uint64_t len)
->  {
->      CXLDCExtentGroup *group;
->  
-> -- 
-> 2.48.1
-> 
-
+diff --git a/backends/igvm.c b/backends/igvm.c
+index ebdb4594d1..b568f06c76 100644
+--- a/backends/igvm.c
++++ b/backends/igvm.c
+@@ -27,6 +27,40 @@ typedef struct QIgvmParameterData {
+     uint32_t index;
+ } QIgvmParameterData;
+ 
++/*
++ * Some directives are specific to particular confidential computing platforms.
++ * Define required types for each of those platforms here.
++ */
++
++/* SEV/SEV-ES/SEV-SNP */
++
++/*
++ * These structures are defined in "SEV Secure Nested Paging Firmware ABI
++ * Specification" Rev 1.58, section 8.18.
++ */
++struct QEMU_PACKED sev_id_block {
++    uint8_t ld[48];
++    uint8_t family_id[16];
++    uint8_t image_id[16];
++    uint32_t version;
++    uint32_t guest_svn;
++    uint64_t policy;
++};
++
++struct QEMU_PACKED sev_id_authentication {
++    uint32_t id_key_alg;
++    uint32_t auth_key_algo;
++    uint8_t reserved[56];
++    uint8_t id_block_sig[512];
++    uint8_t id_key[1028];
++    uint8_t reserved2[60];
++    uint8_t id_key_sig[512];
++    uint8_t author_key[1028];
++    uint8_t reserved3[892];
++};
++
++#define IGVM_SEV_ID_BLOCK_VERSION 1
++
+ /*
+  * QIgvm contains the information required during processing
+  * of a single IGVM file.
+@@ -38,6 +72,17 @@ typedef struct QIgvm {
+     uint32_t compatibility_mask;
+     unsigned current_header_index;
+     QTAILQ_HEAD(, QIgvmParameterData) parameter_data;
++    IgvmPlatformType platform_type;
++
++    /*
++     * SEV-SNP platforms can contain an ID block and authentication
++     * that should be verified by the guest.
++     */
++    struct sev_id_block *id_block;
++    struct sev_id_authentication *id_auth;
++
++    /* Define the guest policy for SEV guests */
++    uint64_t sev_policy;
+ 
+     /* These variables keep track of contiguous page regions */
+     IGVM_VHS_PAGE_DATA region_prev_page_data;
+@@ -67,6 +112,11 @@ static int qigvm_directive_environment_info(QIgvm *ctx,
+ static int qigvm_directive_required_memory(QIgvm *ctx,
+                                            const uint8_t *header_data,
+                                            Error **errp);
++static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
++                                  Error **errp);
++static int qigvm_initialization_guest_policy(QIgvm *ctx,
++                                       const uint8_t *header_data,
++                                       Error **errp);
+ 
+ struct QIGVMHandler {
+     uint32_t type;
+@@ -91,6 +141,10 @@ static struct QIGVMHandler handlers[] = {
+       qigvm_directive_environment_info },
+     { IGVM_VHT_REQUIRED_MEMORY, IGVM_HEADER_SECTION_DIRECTIVE,
+       qigvm_directive_required_memory },
++    { IGVM_VHT_SNP_ID_BLOCK, IGVM_HEADER_SECTION_DIRECTIVE,
++      qigvm_directive_snp_id_block },
++    { IGVM_VHT_GUEST_POLICY, IGVM_HEADER_SECTION_INITIALIZATION,
++      qigvm_initialization_guest_policy },
+ };
+ 
+ static int qigvm_handler(QIgvm *ctx, uint32_t type, Error **errp)
+@@ -632,6 +686,74 @@ static int qigvm_directive_required_memory(QIgvm *ctx,
+     return 0;
+ }
+ 
++static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
++                                  Error **errp)
++{
++    const IGVM_VHS_SNP_ID_BLOCK *igvm_id =
++        (const IGVM_VHS_SNP_ID_BLOCK *)header_data;
++
++    if (!(igvm_id->compatibility_mask & ctx->compatibility_mask)) {
++        return 0;
++    }
++
++    if (ctx->id_block) {
++        error_setg(errp, "IGVM: Multiple ID blocks encountered "
++                            "in IGVM file.");
++        return -1;
++    }
++    ctx->id_block = g_new0(struct sev_id_block, 1);
++    ctx->id_auth = g_new0(struct sev_id_authentication, 1);
++
++    memcpy(ctx->id_block->family_id, igvm_id->family_id,
++            sizeof(ctx->id_block->family_id));
++    memcpy(ctx->id_block->image_id, igvm_id->image_id,
++            sizeof(ctx->id_block->image_id));
++    ctx->id_block->guest_svn = igvm_id->guest_svn;
++    ctx->id_block->version = IGVM_SEV_ID_BLOCK_VERSION;
++    memcpy(ctx->id_block->ld, igvm_id->ld, sizeof(ctx->id_block->ld));
++
++    ctx->id_auth->id_key_alg = igvm_id->id_key_algorithm;
++    assert(sizeof(igvm_id->id_key_signature) <=
++           sizeof(ctx->id_auth->id_block_sig));
++    memcpy(ctx->id_auth->id_block_sig, &igvm_id->id_key_signature,
++           sizeof(igvm_id->id_key_signature));
++
++    ctx->id_auth->auth_key_algo = igvm_id->author_key_algorithm;
++    assert(sizeof(igvm_id->author_key_signature) <=
++           sizeof(ctx->id_auth->id_key_sig));
++    memcpy(ctx->id_auth->id_key_sig, &igvm_id->author_key_signature,
++           sizeof(igvm_id->author_key_signature));
++
++    /*
++     * SEV and IGVM public key structure population are slightly different.
++     * See SEV Secure Nested Paging Firmware ABI Specification, Chapter 10.
++     */
++    *((uint32_t *)ctx->id_auth->id_key) = igvm_id->id_public_key.curve;
++    memcpy(&ctx->id_auth->id_key[4], &igvm_id->id_public_key.qx, 72);
++    memcpy(&ctx->id_auth->id_key[76], &igvm_id->id_public_key.qy, 72);
++
++    *((uint32_t *)ctx->id_auth->author_key) =
++        igvm_id->author_public_key.curve;
++    memcpy(&ctx->id_auth->author_key[4], &igvm_id->author_public_key.qx,
++            72);
++    memcpy(&ctx->id_auth->author_key[76], &igvm_id->author_public_key.qy,
++            72);
++
++    return 0;
++}
++
++static int qigvm_initialization_guest_policy(QIgvm *ctx,
++                                       const uint8_t *header_data, Error **errp)
++{
++    const IGVM_VHS_GUEST_POLICY *guest =
++        (const IGVM_VHS_GUEST_POLICY *)header_data;
++
++    if (guest->compatibility_mask & ctx->compatibility_mask) {
++        ctx->sev_policy = guest->policy;
++    }
++    return 0;
++}
++
+ static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
+ {
+     int32_t header_count;
+@@ -701,12 +823,16 @@ static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
+     /* Choose the strongest supported isolation technology */
+     if (compatibility_mask_sev_snp != 0) {
+         ctx->compatibility_mask = compatibility_mask_sev_snp;
++        ctx->platform_type = IGVM_PLATFORM_TYPE_SEV_SNP;
+     } else if (compatibility_mask_sev_es != 0) {
+         ctx->compatibility_mask = compatibility_mask_sev_es;
++        ctx->platform_type = IGVM_PLATFORM_TYPE_SEV_ES;
+     } else if (compatibility_mask_sev != 0) {
+         ctx->compatibility_mask = compatibility_mask_sev;
++        ctx->platform_type = IGVM_PLATFORM_TYPE_SEV;
+     } else if (compatibility_mask != 0) {
+         ctx->compatibility_mask = compatibility_mask;
++        ctx->platform_type = IGVM_PLATFORM_TYPE_NATIVE;
+     } else {
+         error_setg(
+             errp,
+@@ -716,6 +842,23 @@ static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
+     return 0;
+ }
+ 
++static int qigvm_handle_policy(QIgvm *ctx, Error **errp)
++{
++    if (ctx->platform_type == IGVM_PLATFORM_TYPE_SEV_SNP) {
++        int id_block_len = 0;
++        int id_auth_len = 0;
++        if (ctx->id_block) {
++            ctx->id_block->policy = ctx->sev_policy;
++            id_block_len = sizeof(struct sev_id_block);
++            id_auth_len = sizeof(struct sev_id_authentication);
++        }
++        return ctx->cgsc->set_guest_policy(GUEST_POLICY_SEV, ctx->sev_policy,
++                                          ctx->id_block, id_block_len,
++                                          ctx->id_auth, id_auth_len, errp);
++    }
++    return 0;
++}
++
+ static IgvmHandle qigvm_file_init(char *filename, Error **errp)
+ {
+     IgvmHandle igvm;
+@@ -814,12 +957,18 @@ int qigvm_process_file(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
+      */
+     retval = qigvm_process_mem_page(&ctx, NULL, errp);
+ 
++    if (retval == 0) {
++        retval = qigvm_handle_policy(&ctx, errp);
++    }
++
+ cleanup_parameters:
+     QTAILQ_FOREACH(parameter, &ctx.parameter_data, next)
+     {
+         g_free(parameter->data);
+         parameter->data = NULL;
+     }
++    g_free(ctx.id_block);
++    g_free(ctx.id_auth);
+ 
+ cleanup:
+     igvm_free(ctx.file);
 -- 
-Fan Ni (From gmail)
+2.43.0
+
 
