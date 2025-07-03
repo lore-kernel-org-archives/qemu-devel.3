@@ -4,88 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 336E1C83030
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 03:59:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAD8CC83030
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 04:15:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXB5w-0003IV-0o; Wed, 02 Jul 2025 23:58:44 -0400
+	id 1uXBLl-0006ln-KI; Thu, 03 Jul 2025 00:15:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uXB5v-0003IN-2B
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 23:58:43 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uXB5s-0003ug-FE
- for qemu-devel@nongnu.org; Wed, 02 Jul 2025 23:58:42 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-3135f3511bcso4274477a91.0
- for <qemu-devel@nongnu.org>; Wed, 02 Jul 2025 20:58:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751515117; x=1752119917; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=8Go8oYBd2sxtyrP6WJqHWWOw27H9fU4zxt1+fi7opBI=;
- b=QzBeYBfshtlZBSgtr0w6GLfR7HaVO5OsdlSCyNFHA7C1jzrz54sizc5yFaoYDKbCDZ
- kJB2iSyZln3I/OLCt6t03PLPmkNpa4ilkZMj9ZL+N4XgoE+jINpxjATQVOhvqyubOYlx
- s2569/cz/5Y1Re6dXPa4YRpveSeTwa+lBf3Z2rBb1sHYcK6RT5tTb6gqueRNSBgBtooY
- w+o5LVlNrt+6QvVmq4209CiI/ACxZubgusoJCQ9FTTacp1/THVdiuhSsPQhVRK7B/CgW
- GPjtOoNzoaxkaBQfjiC1RLgtkF3OEwIoNx4QAQC6hLs1MoRwpoEgqpsDwG2NPdt5m6Gv
- gAng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751515117; x=1752119917;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8Go8oYBd2sxtyrP6WJqHWWOw27H9fU4zxt1+fi7opBI=;
- b=qyq0y19fpQXCjdwpNH8PKsOYOC1ti12Klb9gtQ0qOox0veUVwv1zM121Ujn3S/pxwl
- bv+H39E3bd5Y0U3qn5lwuBWG+wsJvdM+tnv2ONshENq4hEpUt9alZlt9egPqFw4cWe5m
- 1eRxZNECqb7boCvFjwA87bIPeOw5+RpyNi7x+2NdnOjGgh5cJcmiTcIwrZsewiGmvulI
- tBNG7Uv4j6qIDfy8OCdFSEyGKty1Jjc46QS12GwsQ1BKxb6+kZSxrr+q+BqDSd0o8oHD
- Dw4OooLeb/sqMcHmFztjaQ7giqR42hnjw9sEWG6QZjzKYy3q0/2vVvq2u8QuTPHcR4k3
- /M4g==
-X-Gm-Message-State: AOJu0YwmlWOGgq4256wlLQlkR1sodX7zC79Jc2XMXY2zH0nJtZ4fr+eo
- 9O2Q0GRiByFafJf4Fdt6wHnFOHvr9DXeLzqsl3rO7gfwiewwKgJAymqv
-X-Gm-Gg: ASbGnctzwHzIqaLXAFfIFmkUFsMQEXBjvg65icwUV9Qv9DKhUEVZ43lfX9br8o0t/Cb
- WbZlSavv8S3Qnwnf8s8xhsFsYy2jB7fh7pOp5cPhcUZHC8B/kP8G5/CwTBLup8M6KeTQWdeoSFr
- XNWKGc/U8RCFzgb4I5cEtktNjHqwA+9VW6gk5GWNC5DAiWZOdvlHjSMwMdgnk/TDQNsfoxrW/X4
- HOQ0gLargtaZ3yiSBtmJfVwTuiYkKvb+ShLXcSKGK04ssjkQdNCDwo/yJKQXfviJdEEOkM3KSfi
- ESPXXcF3d7PPHFh32f2XkyGXc/Ds0J+i44zdBCFgt8Pz6+OexT0kYHmOs37r7UkhFkyc
-X-Google-Smtp-Source: AGHT+IEy2EBV5wygliAxQ1KH/cRgjS8XYzieVtx7l+itL8MEy6pNnTw5RW11X1TihQZBbbvCvL+vUw==
-X-Received: by 2002:a17:90b:3b8c:b0:311:ab20:159a with SMTP id
- 98e67ed59e1d1-31a9d6998d2mr2235412a91.29.1751515117043; 
- Wed, 02 Jul 2025 20:58:37 -0700 (PDT)
-Received: from fanair.local ([67.131.46.202]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31a9cc67568sm1097844a91.15.2025.07.02.20.58.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Jul 2025 20:58:36 -0700 (PDT)
-From: Fan Ni <nifan.cxl@gmail.com>
-X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
-Date: Wed, 2 Jul 2025 20:58:34 -0700
-To: anisa.su887@gmail.com
-Cc: qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com, nifan.cxl@gmail.com,
- dave@stgolabs.net, alok.a.tiwari@oracle.com,
- linux-cxl@vger.kernel.org, Anisa Su <anisa.su@samsung.com>
-Subject: Re: [QEMU PATCH v4 08/10] hw/cxl: create helper function to create
- DC Event Records from extents
-Message-ID: <aGX_6ihs4lp-RSr4@fanair.local>
-References: <20250626222743.1766404-1-anisa.su887@gmail.com>
- <20250626222743.1766404-9-anisa.su887@gmail.com>
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1uXBLh-0006kD-MN
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 00:15:03 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1uXBLe-0000of-OK
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 00:15:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1751516098; x=1783052098;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=mOAUPLylIi7fAJo3wVvgPuNI2NNOupe5ZVOD2CTejP0=;
+ b=WMNxPZVq5TKEg19wQ4Vh/IWTSTMFdcBXqq0TQ5to9GU3us2RMSAOC1Wm
+ Dp4/Sv6ws2as6vVysTWsS9O4H+WrHD+jR59OuZWN/gupLOfpM7C23tFZr
+ qveU4JH/JC6KQkb09Qsilgv/QGvI2mUswGEH8pjeTLOru9wIRCU8skHou
+ 6IgR2U26py3k7vi1elwnH2YKW8u6a8ZUWni2vIL/n8THv19YkjJYPxJjz
+ TtugW9jY9p5MEJNVOc29aK4uXpDcfAY4Ny1oy94r9uJhZklIF/lgcKAng
+ cva9PS7OE5h34ff1HsxE8i5S8iQhqIYyHXMUHRQ/J7ICaTZDNjIm+LNy8 w==;
+X-CSE-ConnectionGUID: u9lobOB2QIWRNXf25oaA+Q==
+X-CSE-MsgGUID: /Iq1d3nNRfCLAuhDeHgyRw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="64524941"
+X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="64524941"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jul 2025 21:14:50 -0700
+X-CSE-ConnectionGUID: UZqpjDe9TO6CNE0t4gAgxA==
+X-CSE-MsgGUID: WdCQMLVJRwaCymaURJ6/Aw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,283,1744095600"; d="scan'208";a="191425678"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.240.80])
+ ([10.124.240.80])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jul 2025 21:14:46 -0700
+Message-ID: <bb437e9d-c0af-4fb6-9c47-d495781ba29d@linux.intel.com>
+Date: Thu, 3 Jul 2025 12:14:42 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250626222743.1766404-9-anisa.su887@gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pj1-x102f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/16] i386/cpu: Present same cache model in CPUID 0x2 &
+ 0x4
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Babu Moger <babu.moger@amd.com>, Ewan Hai <ewanhai-oc@zhaoxin.com>,
+ Pu Wen <puwen@hygon.cn>, Tao Su <tao1.su@intel.com>,
+ Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org, Alexander Graf <agraf@csgraf.de>
+References: <20250620092734.1576677-1-zhao1.liu@intel.com>
+ <20250620092734.1576677-5-zhao1.liu@intel.com>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20250620092734.1576677-5-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=192.198.163.9;
+ envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,173 +96,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 26, 2025 at 10:23:31PM +0000, anisa.su887@gmail.com wrote:
-> From: Anisa Su <anisa.su@samsung.com>
-> 
-> Prepatory patch for following FMAPI Add/Release Patches. Refactors part
-> of qmp_cxl_process_dynamic_capacity_prescriptive() into a helper
-> function to create DC Event Records and insert in the event log.
-> 
-> Moves definition for CXL_NUM_EXTENTS_SUPPORTED to cxl.h so it can be
-> accessed by cxl-mailbox-utils.c and cxl-events.c, where the helper
-> function is defined.
-> 
-> Signed-off-by: Anisa Su <anisa.su@samsung.com>
 
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-
+On 6/20/2025 5:27 PM, Zhao Liu wrote:
+> For a long time, the default cache models used in CPUID 0x2 and
+> 0x4 were inconsistent and had a FIXME note from Eduardo at commit
+> 5e891bf8fd50 ("target-i386: Use #defines instead of magic numbers for
+> CPUID cache info"):
+>
+> "/*FIXME: CPUID leaf 2 descriptor is inconsistent with CPUID leaf 4 */".
+>
+> This difference is wrong, in principle, both 0x2 and 0x4 are used for
+> Intel's cache description. 0x2 leaf is used for ancient machines while
+> 0x4 leaf is a subsequent addition, and both should be based on the same
+> cache model. Furthermore, on real hardware, 0x4 leaf should be used in
+> preference to 0x2 when it is available.
+>
+> Revisiting the git history, that difference occurred much earlier.
+>
+> Current legacy_l2_cache_cpuid2 (hardcode: "0x2c307d"), which is used for
+> CPUID 0x2 leaf, is introduced in commit d8134d91d9b7 ("Intel cache info,
+> by Filip Navara."). Its commit message didn't said anything, but its
+> patch [1] mentioned the cache model chosen is "closest to the ones
+> reported in the AMD registers". Now it is not possible to check which
+> AMD generation this cache model is based on (unfortunately, AMD does not
+> use 0x2 leaf), but at least it is close to the Pentium 4.
+>
+> In fact, the patch description of commit d8134d91d9b7 is also a bit
+> wrong, the original cache model in leaf 2 is from Pentium Pro, and its
+> cache descriptor had specified the cache line size ad 32 byte by default,
+> while the updated cache model in commit d8134d91d9b7 has 64 byte line
+> size. But after so many years, such judgments are no longer meaningful.
+>
+> On the other hand, for legacy_l2_cache, which is used in CPUID 0x4 leaf,
+> is based on Intel Core Duo (patch [2]) and Core2 Duo (commit e737b32a3688
+> ("Core 2 Duo specification (Alexander Graf).")
+>
+> The patches of Core Duo and Core 2 Duo add the cache model for CPUID
+> 0x4, but did not update CPUID 0x2 encoding. This is the reason that
+> Intel Guests use two cache models in 0x2 and 0x4 all the time.
+>
+> Of course, while no Core Duo or Core 2 Duo machines have been found for
+> double checking, this still makes no sense to encode different cache
+> models on a single machine.
+>
+> Referring to the SDM and the real hardware available, 0x2 leaf can be
+> directly encoded 0xFF to instruct software to go to 0x4 leaf to get the
+> cache information, when 0x4 is available.
+>
+> Therefore, it's time to clean up Intel's default cache models. As the
+> first step, add "x-consistent-cache" compat option to allow newer
+> machines (v10.1 and newer) to have the consistent cache model in CPUID
+> 0x2 and 0x4 leaves.
+>
+> This doesn't affect the CPU models with CPUID level < 4 ("486",
+> "pentium", "pentium2" and "pentium3"), because they have already had the
+> special default cache model - legacy_intel_cpuid2_cache_info.
+>
+> [1]: https://lore.kernel.org/qemu-devel/5b31733c0709081227w3e5f1036odbc649edfdc8c79b@mail.gmail.com/
+> [2]: https://lore.kernel.org/qemu-devel/478B65C8.2080602@csgraf.de/
+>
+> Cc: Alexander Graf <agraf@csgraf.de>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->  hw/cxl/cxl-events.c         | 38 +++++++++++++++++++++++++++++++++++++
->  hw/cxl/cxl-mailbox-utils.c  |  1 -
->  hw/mem/cxl_type3.c          | 37 +-----------------------------------
->  include/hw/cxl/cxl.h        |  1 +
->  include/hw/cxl/cxl_device.h |  4 ++++
->  5 files changed, 44 insertions(+), 37 deletions(-)
-> 
-> diff --git a/hw/cxl/cxl-events.c b/hw/cxl/cxl-events.c
-> index 12dee2e467..724055f2cf 100644
-> --- a/hw/cxl/cxl-events.c
-> +++ b/hw/cxl/cxl-events.c
-> @@ -260,3 +260,41 @@ void cxl_event_irq_assert(CXLType3Dev *ct3d)
->          }
->      }
->  }
-> +
-> +void cxl_create_dc_event_records_for_extents(CXLType3Dev *ct3d,
-> +                                             CXLDCEventType type,
-> +                                             CXLDCExtentRaw extents[],
-> +                                             uint32_t ext_count)
-> +{
-> +    CXLEventDynamicCapacity event_rec = {};
-> +    int i;
-> +
-> +    cxl_assign_event_header(&event_rec.hdr,
-> +                            &dynamic_capacity_uuid,
-> +                            (1 << CXL_EVENT_TYPE_INFO),
-> +                            sizeof(event_rec),
-> +                            cxl_device_get_timestamp(&ct3d->cxl_dstate));
-> +    event_rec.type = type;
-> +    event_rec.validity_flags = 1;
-> +    event_rec.host_id = 0;
-> +    event_rec.updated_region_id = 0;
-> +    event_rec.extents_avail = CXL_NUM_EXTENTS_SUPPORTED -
-> +                              ct3d->dc.total_extent_count;
-> +
-> +    for (i = 0; i < ext_count; i++) {
-> +        memcpy(&event_rec.dynamic_capacity_extent,
-> +               &extents[i],
-> +               sizeof(CXLDCExtentRaw));
-> +        event_rec.flags = 0;
-> +        if (i < ext_count - 1) {
-> +            /* Set "More" flag */
-> +            event_rec.flags |= BIT(0);
+>  hw/i386/pc.c      | 4 +++-
+>  target/i386/cpu.c | 7 ++++++-
+>  target/i386/cpu.h | 7 +++++++
+>  3 files changed, 16 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index b2116335752d..ad2d6495ebde 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -81,7 +81,9 @@
+>      { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
+>      { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
+>  
+> -GlobalProperty pc_compat_10_0[] = {};
+> +GlobalProperty pc_compat_10_0[] = {
+> +    { TYPE_X86_CPU, "x-consistent-cache", "false" },
+> +};
+>  const size_t pc_compat_10_0_len = G_N_ELEMENTS(pc_compat_10_0);
+>  
+>  GlobalProperty pc_compat_9_2[] = {};
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 0a2c32214cc3..2f895bf13523 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -8931,7 +8931,11 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+>          /* Build legacy cache information */
+>          env->cache_info_cpuid2.l1d_cache = &legacy_l1d_cache;
+>          env->cache_info_cpuid2.l1i_cache = &legacy_l1i_cache;
+> -        env->cache_info_cpuid2.l2_cache = &legacy_l2_cache_cpuid2;
+> +        if (!cpu->consistent_cache) {
+> +            env->cache_info_cpuid2.l2_cache = &legacy_l2_cache_cpuid2;
+> +        } else {
+> +            env->cache_info_cpuid2.l2_cache = &legacy_l2_cache;
 > +        }
+
+This would encode the valid L1 and L3 cache descriptors and "0xff"
+descriptor into CPUID leaf 0x2 when there is CPUID leaf 0x4. It seems a
+little bit of ambiguous to mix "0xff" descriptor with other valid
+descriptors and it isn't identical with real HW. Do we consider to make it
+identical with real HW? Thanks.
+
+
+>          env->cache_info_cpuid2.l3_cache = &legacy_l3_cache;
+>  
+>          env->cache_info_cpuid4.l1d_cache = &legacy_l1d_cache;
+> @@ -9457,6 +9461,7 @@ static const Property x86_cpu_properties[] = {
+>       * own cache information (see x86_cpu_load_def()).
+>       */
+>      DEFINE_PROP_BOOL("legacy-cache", X86CPU, legacy_cache, true),
+> +    DEFINE_PROP_BOOL("x-consistent-cache", X86CPU, consistent_cache, true),
+>      DEFINE_PROP_BOOL("legacy-multi-node", X86CPU, legacy_multi_node, false),
+>      DEFINE_PROP_BOOL("xen-vapic", X86CPU, xen_vapic, false),
+>  
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 5910dcf74d42..3c7e59ffb12a 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -2259,6 +2259,13 @@ struct ArchCPU {
+>       */
+>      bool legacy_cache;
+>  
+> +    /*
+> +     * Compatibility bits for old machine types.
+> +     * If true, use the same cache model in CPUID leaf 0x2
+> +     * and 0x4.
+> +     */
+> +    bool consistent_cache;
 > +
-> +        if (cxl_event_insert(&ct3d->cxl_dstate,
-> +                             CXL_EVENT_TYPE_DYNAMIC_CAP,
-> +                             (CXLEventRecordRaw *)&event_rec)) {
-> +            cxl_event_irq_assert(ct3d);
-> +        }
-> +    }
-> +}
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index e3d54ed124..382c41c025 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -27,7 +27,6 @@
->  
->  #define CXL_CAPACITY_MULTIPLIER   (256 * MiB)
->  #define CXL_DC_EVENT_LOG_SIZE 8
-> -#define CXL_NUM_EXTENTS_SUPPORTED 512
->  #define CXL_NUM_TAGS_SUPPORTED 0
->  #define CXL_ALERTS_LIFE_USED_WARN_THRESH (1 << 0)
->  #define CXL_ALERTS_OVER_TEMP_WARN_THRESH (1 << 1)
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index ee554a77be..9c2b9d197b 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -1957,15 +1957,11 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
->          CxlDynamicCapacityExtentList *records, Error **errp)
->  {
->      Object *obj;
-> -    CXLEventDynamicCapacity dCap = {};
-> -    CXLEventRecordHdr *hdr = &dCap.hdr;
->      CXLType3Dev *dcd;
-> -    uint8_t flags = 1 << CXL_EVENT_TYPE_INFO;
->      uint32_t num_extents = 0;
->      CxlDynamicCapacityExtentList *list;
->      CXLDCExtentGroup *group = NULL;
->      g_autofree CXLDCExtentRaw *extents = NULL;
-> -    uint8_t enc_log = CXL_EVENT_TYPE_DYNAMIC_CAP;
->      uint64_t dpa, offset, len, block_size;
->      g_autofree unsigned long *blk_bitmap = NULL;
->      int i;
-> @@ -2078,38 +2074,7 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
->          dcd->dc.total_extent_count += num_extents;
->      }
->  
-> -    /*
-> -     * CXL r3.1 section 8.2.9.2.1.6: Dynamic Capacity Event Record
-> -     *
-> -     * All Dynamic Capacity event records shall set the Event Record Severity
-> -     * field in the Common Event Record Format to Informational Event. All
-> -     * Dynamic Capacity related events shall be logged in the Dynamic Capacity
-> -     * Event Log.
-> -     */
-> -    cxl_assign_event_header(hdr, &dynamic_capacity_uuid, flags, sizeof(dCap),
-> -                            cxl_device_get_timestamp(&dcd->cxl_dstate));
-> -
-> -    dCap.type = type;
-> -    /* FIXME: for now, validity flag is cleared */
-> -    dCap.validity_flags = 0;
-> -    stw_le_p(&dCap.host_id, hid);
-> -    /* only valid for DC_REGION_CONFIG_UPDATED event */
-> -    dCap.updated_region_id = 0;
-> -    for (i = 0; i < num_extents; i++) {
-> -        memcpy(&dCap.dynamic_capacity_extent, &extents[i],
-> -               sizeof(CXLDCExtentRaw));
-> -
-> -        dCap.flags = 0;
-> -        if (i < num_extents - 1) {
-> -            /* Set "More" flag */
-> -            dCap.flags |= BIT(0);
-> -        }
-> -
-> -        if (cxl_event_insert(&dcd->cxl_dstate, enc_log,
-> -                             (CXLEventRecordRaw *)&dCap)) {
-> -            cxl_event_irq_assert(dcd);
-> -        }
-> -    }
-> +    cxl_create_dc_event_records_for_extents(dcd, type, extents, num_extents);
->  }
->  
->  void qmp_cxl_add_dynamic_capacity(const char *path, uint16_t host_id,
-> diff --git a/include/hw/cxl/cxl.h b/include/hw/cxl/cxl.h
-> index 75e47b6864..3ae4303383 100644
-> --- a/include/hw/cxl/cxl.h
-> +++ b/include/hw/cxl/cxl.h
-> @@ -23,6 +23,7 @@
->  #define CXL_DEVICE_REG_BAR_IDX 2
->  
->  #define CXL_WINDOW_MAX 10
-> +#define CXL_NUM_EXTENTS_SUPPORTED 512
->  
->  typedef struct PXBCXLDev PXBCXLDev;
->  
-> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-> index 82e3bc1a71..91ec1ba299 100644
-> --- a/include/hw/cxl/cxl_device.h
-> +++ b/include/hw/cxl/cxl_device.h
-> @@ -732,4 +732,8 @@ bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
->  void cxl_assign_event_header(CXLEventRecordHdr *hdr,
->                               const QemuUUID *uuid, uint32_t flags,
->                               uint8_t length, uint64_t timestamp);
-> +void cxl_create_dc_event_records_for_extents(CXLType3Dev *ct3d,
-> +                                             CXLDCEventType type,
-> +                                             CXLDCExtentRaw extents[],
-> +                                             uint32_t ext_count);
->  #endif
-> -- 
-> 2.47.2
-> 
+>      /* Compatibility bits for old machine types.
+>       * If true decode the CPUID Function 0x8000001E_ECX to support multiple
+>       * nodes per processor
 
