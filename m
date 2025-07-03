@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BA6DC83F03
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 15:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99530C77B7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 15:19:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXLhM-0006h7-ET; Thu, 03 Jul 2025 11:18:04 -0400
+	id 1uXLha-0006jQ-Bl; Thu, 03 Jul 2025 11:18:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=EggC=ZQ=kaod.org=clg@ozlabs.org>)
- id 1uXLhC-0006gD-6E; Thu, 03 Jul 2025 11:17:55 -0400
+ id 1uXLhU-0006hz-3h; Thu, 03 Jul 2025 11:18:12 -0400
 Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=EggC=ZQ=kaod.org=clg@ozlabs.org>)
- id 1uXLh9-0006NS-7l; Thu, 03 Jul 2025 11:17:53 -0400
+ id 1uXLhP-0006VW-UL; Thu, 03 Jul 2025 11:18:10 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bY0k46Hqtz4x11;
- Fri,  4 Jul 2025 01:17:16 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bY0kY1xyPz4wyk;
+ Fri,  4 Jul 2025 01:17:41 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bY0jz0Q3yz4wbR;
- Fri,  4 Jul 2025 01:17:10 +1000 (AEST)
-Message-ID: <ea805ebc-877d-48b0-861c-ac9b5c855acf@kaod.org>
-Date: Thu, 3 Jul 2025 17:17:31 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bY0kT73s7z4wbR;
+ Fri,  4 Jul 2025 01:17:37 +1000 (AEST)
+Message-ID: <bc7da423-bf4e-4736-b2fa-0627309941ee@kaod.org>
+Date: Thu, 3 Jul 2025 17:18:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] tests/functional: Add gb200 tests
+Subject: Re: [PATCH v2 2/4] docs: add support for gb200-bmc
 To: Ed Tanous <etanous@nvidia.com>, qemu-devel@nongnu.org
 Cc: Troy Lee <leetroy@gmail.com>, Steven Lee <steven_lee@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>,
@@ -39,7 +39,7 @@ Cc: Troy Lee <leetroy@gmail.com>, Steven Lee <steven_lee@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
  qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
 References: <20250703144249.3348879-1-etanous@nvidia.com>
- <20250703144249.3348879-5-etanous@nvidia.com>
+ <20250703144249.3348879-3-etanous@nvidia.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -84,9 +84,9 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250703144249.3348879-5-etanous@nvidia.com>
+In-Reply-To: <20250703144249.3348879-3-etanous@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=EggC=ZQ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -39
@@ -112,98 +112,41 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/3/25 16:42, Ed Tanous wrote:
-> To support the newly added gb200 machine, add appropriate tests.
+> This patch updates the docs for support of gb200-bmc.
 > 
 > Signed-off-by: Ed Tanous <etanous@nvidia.com>
-> ---
->   tests/functional/aspeed.py                    |  9 +++++--
->   tests/functional/meson.build                  |  2 ++
->   .../test_arm_aspeed_gb200nvl_bmc.py           | 26 +++++++++++++++++++
->   3 files changed, 35 insertions(+), 2 deletions(-)
->   create mode 100755 tests/functional/test_arm_aspeed_gb200nvl_bmc.py
-> 
-> diff --git a/tests/functional/aspeed.py b/tests/functional/aspeed.py
-> index 7a40d5dda7..b131703c52 100644
-> --- a/tests/functional/aspeed.py
-> +++ b/tests/functional/aspeed.py
-> @@ -8,8 +8,13 @@
->   class AspeedTest(LinuxKernelTest):
->   
->       def do_test_arm_aspeed_openbmc(self, machine, image, uboot='2019.04',
-> -                                   cpu_id='0x0', soc='AST2500 rev A1'):
-> -        hostname = machine.removesuffix('-bmc')
-> +                                   cpu_id='0x0', soc='AST2500 rev A1',
-> +                                   image_hostname=None):
-> +        # Allow for the image hostname to not end in "-bmc"
-> +        if image_hostname is not None:
-> +            hostname = image_hostname
-> +        else:
-> +            hostname = machine.removesuffix('-bmc')
 
 
-This change belongs to another patch and it doesn't seem that
-this series needs it. Does it ?
 
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
 
-
->           self.set_machine(machine)
->           self.vm.set_console()
-> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> index 85158562a2..d2864543a5 100644
-> --- a/tests/functional/meson.build
-> +++ b/tests/functional/meson.build
-> @@ -32,6 +32,7 @@ test_timeouts = {
->     'arm_aspeed_ast2500' : 720,
->     'arm_aspeed_ast2600' : 1200,
->     'arm_aspeed_bletchley' : 480,
-> +  'arm_aspeed_gb200nvl_bmc' : 480,
->     'arm_aspeed_rainier' : 480,
->     'arm_bpim2u' : 500,
->     'arm_collie' : 180,
-> @@ -126,6 +127,7 @@ tests_arm_system_thorough = [
->     'arm_aspeed_ast2500',
->     'arm_aspeed_ast2600',
->     'arm_aspeed_bletchley',
-> +  'arm_aspeed_gb200nvl_bmc',
->     'arm_aspeed_rainier',
->     'arm_bpim2u',
->     'arm_canona1100',
-> diff --git a/tests/functional/test_arm_aspeed_gb200nvl_bmc.py b/tests/functional/test_arm_aspeed_gb200nvl_bmc.py
-> new file mode 100755
-> index 0000000000..8e8e3f05c1
-> --- /dev/null
-> +++ b/tests/functional/test_arm_aspeed_gb200nvl_bmc.py
-> @@ -0,0 +1,26 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Functional test that boots the ASPEED machines
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +from qemu_test import Asset
-> +from aspeed import AspeedTest
-> +
-> +
-> +class GB200Machine(AspeedTest):
-> +
-> +    ASSET_GB200_FLASH = Asset(
-> +        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/master/images/gb200nvl-obmc/obmc-phosphor-image-gb200nvl-obmc-20250702182348.static.mtd.xz',
-> +        'b84819317cb3dc762895ad507705978ef000bfc77c50c33a63bdd37921db0dbc')
-> +
-> +    def test_arm_aspeed_gb200_openbmc(self):
-> +        image_path = self.uncompress(self.ASSET_GB200_FLASH)
-> +
-> +        self.do_test_arm_aspeed_openbmc('gb200nvl-bmc', image=image_path,
-> +                                        uboot='2019.04', cpu_id='0xf00',
-> +                                        soc='AST2600 rev A3',
-> +                                        image_hostname='gb200nvl-obmc')
-> +
-> +if __name__ == '__main__':
-> +    AspeedTest.main()
+> ---
+>   docs/system/arm/aspeed.rst | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+> index 43d27d83cb..bec0a1dfa8 100644
+> --- a/docs/system/arm/aspeed.rst
+> +++ b/docs/system/arm/aspeed.rst
+> @@ -1,5 +1,4 @@
+> -Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
+> -=================================================================================================================================================================================================================================================================================================================================================================================================================================
+> +Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``gb200nvl-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
+>   
+>   The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
+>   Aspeed evaluation boards. They are based on different releases of the
+> @@ -35,6 +34,7 @@ AST2600 SoC based machines :
+>   - ``fuji-bmc``             Facebook Fuji BMC
+>   - ``bletchley-bmc``        Facebook Bletchley BMC
+>   - ``fby35-bmc``            Facebook fby35 BMC
+> +- ``gb200nvl-bmc``         Nvidia GB200nvl BMC
+>   - ``qcom-dc-scm-v1-bmc``   Qualcomm DC-SCM V1 BMC
+>   - ``qcom-firework-bmc``    Qualcomm Firework BMC
+>   
 
 
