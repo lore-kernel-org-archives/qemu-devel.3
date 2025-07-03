@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0AB9C77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 08:58:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BFA9C83030
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 08:58:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXFk4-0002Qg-1p; Thu, 03 Jul 2025 04:56:28 -0400
+	id 1uXFkt-0003gT-SQ; Thu, 03 Jul 2025 04:57:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kosasihwilliam4@gmail.com>)
- id 1uXFk2-0002Pr-OE; Thu, 03 Jul 2025 04:56:26 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1uXFkn-0003TU-4T; Thu, 03 Jul 2025 04:57:13 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <kosasihwilliam4@gmail.com>)
- id 1uXFjz-0007vZ-MM; Thu, 03 Jul 2025 04:56:25 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-739b3fe7ce8so8294382b3a.0; 
- Thu, 03 Jul 2025 01:56:21 -0700 (PDT)
+ id 1uXFkk-0008HL-Dg; Thu, 03 Jul 2025 04:57:12 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-742c7a52e97so7473886b3a.3; 
+ Thu, 03 Jul 2025 01:57:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751532977; x=1752137777; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1751533027; x=1752137827; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ue+TRUQ4zOoNWn0fMMKkbL+MC+6NF+Rulh2d0yliDEM=;
- b=jpMp1D/Wig4EyvWL6yRCrUJtN3wlInjAEHR8LlR04TV835qDlKFtA+0xiFhFZBvjjl
- WIstFs+KjpGlE3Ri8CkZ46towjw3ZTKp+B9AfHTlVr1P9jFQOfKBMwADHCtJmhsGKUL6
- T5RpSlte5SKwWgkfFnQRpS5Nlq0i1SUCHnwrVuGr6/nVg9EEvPpP4zllCSeISKWOvqz/
- jHLyeqvqAQ3DSzCvO92A4OcD2dCaVpzhd7KBleZiY17hnxBJIdv/g+noxeSibsffYg7/
- gi5WRH9e0evnyYoBY2KIK1X43C1GbZSY4SkN+v2IsmFAvNb3kpblUXAedhE8qEIFWx5c
- zX/g==
+ bh=TdpPRtQvmGX5FMXgJZ9zxoWkisAb+D1p74rPq+2zohI=;
+ b=XekqtNL6GOgCFT5wR45UNgAccRX7OceNTYfxrW1p9ql5x0DJ/me2R++0GWZmXHN5wa
+ IxvjOEE1Sbhhp3gxVHe1ARafjhjs03D/lWfrA7NX69/jEcKiO/RhgZNZv84GrVbjgngI
+ YxArWbNcpK7gKElOPj9QR7MhT+KmGDmwNgXwAKMmtw7ZZCpz385xcerr7CYv//yt0Xj0
+ AJmtWoDpb0hV0G8mZldURI8KXlzoPd3R3ZaX6AE0uWRiCD/rlUNeA/sl7gw9dhsx3A2O
+ 7avRDTEbhpzBrtKtL1zn/h0qKJO+RO1hCBVxrnR5tz/yibP7yUU2IL42C2VupADQJi8D
+ jJug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751532977; x=1752137777;
+ d=1e100.net; s=20230601; t=1751533027; x=1752137827;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ue+TRUQ4zOoNWn0fMMKkbL+MC+6NF+Rulh2d0yliDEM=;
- b=NrxlHOmnO+RViRlr69lG3hhNduO/q4/8bayhefQL8eVLpBAESoL8WMrOgl3ezFyj0Y
- T7Zqfbx6ECz82Wwrjw4FErrHqvZJFUcuC5Vgvs9/AFm7Bl9yn5HbbhFtw8fzj3pOqow8
- OPo8aoBJTODKcrgD5/sSBda38rcUgE+pY4SFMsGg6cpCl48SYsg/UiX4VxgLLqTjnYZ1
- vZrGdCp7T9GOdgXRHRqcLOztfsF+986T4cyNN2pHeFcl92ya7mVkbT/fR2QfxUgLEJRk
- rjx10nOEEDi15Wb+d8rta34BYQbGoEz6KPWED68GxSdSYZcPg7SsOB+lCPh818YOvXb9
- WFXg==
+ bh=TdpPRtQvmGX5FMXgJZ9zxoWkisAb+D1p74rPq+2zohI=;
+ b=R6+kmSu6xlFmY/hq2onzwXVK3DzJk8D5EZWAWKNGxPa/QKfLQM8ssz4gVzOFf24mWv
+ sp+KPYA04zpumjihdY0eWIx1KicPtuUK2/ZoI90/5z3fVrymky/DzggLHFbVgm+naixh
+ piYCkSmnm8hC1j5XtH/SZNUgzyIVdXY20NA1sOL1IPjmWQUIRSragjRbaN35oF+eBAjq
+ XWNSWD0C7NCL6hV5nWNgr/rOuSIzeNizAWUmuaH8AMEdBZpw5smIxtGwIz7e451th9UA
+ 2NdX4JrG497hq+9IEV143lIDLsG5+4bIm+GLI+SY6OPvqBWsjo+1vlViZlS44coecC6U
+ X7vw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXqjMquyVXm+sSVKxht5vw3AOaVyf4AFhH1/oXBF7MJEu4EuGIc905RkL11uggPlMKqBzbfugVZsA==@nongnu.org
-X-Gm-Message-State: AOJu0YwRQuZm/F2OhvzZKa26T1U/NokKn3LK0HGnZRlE+HtWWDv+KaXA
- csu487kbVMW43meENrfyTqHhCrZFKrS360RCc+Uw7dckSVxK6fJ8jNCnhdeTOPh0E7I=
-X-Gm-Gg: ASbGncvW1YyRWGEfy5dxmptUaWuaNcCcFpB4n/b40pdJFp8rK7rW7TcNBih8ChleRx9
- nYW70AccRojawAoAJm2Oio2MuesN8kmd0+W6aupOAaUT//J8/cKUMgqBU02U2ZWHGD9BV43A3P/
- Kl33UXlPYRI6ueeL5JF5OJGL0tKWnZg8CiLonuePt368RTNwglH2QeIxMLSTRoQ7O1XzfqS+egC
- j+nDpMGcvVdLFrZ4kMtlLzTzpX0z4bEigkfmMCVDUVFIB7lS/xzHuMGWsCh5H/lGuIntswEiMzM
- v60ApLrsuCZe+jVdzkJVrzBjOb2wlCtL5z1taTTD5K2r3UuLrJxCaRhjBK7XweoKcGvaF4f/A9y
- SSYmPioBWqFwdjtgINcEw4Mv/7byrCCcPAzLW0AuM5OI=
-X-Google-Smtp-Source: AGHT+IGxmGehSByD6+KCQPrmX1GUgbnZQPJXWMID+loawjcZBI7PJhntn5KOq7bdgxnNXIEDfE6/IA==
-X-Received: by 2002:aa7:8881:0:b0:748:2fa4:14c0 with SMTP id
- d2e1a72fcca58-74b50c84cb2mr8726323b3a.0.1751532977206; 
- Thu, 03 Jul 2025 01:56:17 -0700 (PDT)
+ AJvYcCV8GLzZGm8I+tbMsPrm8FjRRQmdz/kCc6AsR8xPY+YQ1TsoljJsHl2JVsMm+2TlQNGTUs5ZglLnJw==@nongnu.org
+X-Gm-Message-State: AOJu0YxZZI/kq0SN+L7QpvQbXf1C2WjCkMTyrImkwsX7YMATddgo6mkX
+ PQgy42nrK+yNZAEWnCnn9Me3Su53gecFZyXlAEq8V/Pi1OTR7EHz5kJ41YJ7qErPulk=
+X-Gm-Gg: ASbGnctdg2ecKqKV7Zatbx15l10f6XfrtsjHqvkiSF6V+mHyqE4obsRS1235sR9xoXk
+ 1CYy2g1TpxEkFAtRC8ZkHdsyjIjxjhku9jHJ417AuWYLlKHuLDtIYDmZSoTLZg0xx5biHkcjhYA
+ B355LHIpX/bZPxpQHBWQt6UtN5/iqpW49Ngjoh+o0Gu9YsQBfXwkWCtJfw1Mwu3hS76/ye5SuUV
+ mPKHMmJvj/cjeFmILmHJuy6bgsy60sgN0OkFDktdO+5tzScRJ0mlJ+7edkCmQlJujRum15xpDf9
+ 7V0wDt8lIsUEmSxsLcsauX/Qoc/vdnZeZIMuzsNsQ/Gg74O1i9HsVTZ1QyYIOxB991DoWokSxMr
+ Epdxb28r1p/Yx5SRbZbU2EojB+MbZyeNI3EGg2nCRatE=
+X-Google-Smtp-Source: AGHT+IFbX7YcSUfog4QzLnbphQVSoqksthcJcJ548UG/PpRApEA+r8WSBFSqaCQ1O8QPkEnpFKQ58Q==
+X-Received: by 2002:a05:6a00:228f:b0:749:bc7:1577 with SMTP id
+ d2e1a72fcca58-74c99830bb7mr2772559b3a.9.1751533027005; 
+ Thu, 03 Jul 2025 01:57:07 -0700 (PDT)
 Received: from localhost (pa49-178-74-199.pa.nsw.optusnet.com.au.
  [49.178.74.199]) by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-74af557b3bcsm16409931b3a.101.2025.07.03.01.56.16
+ d2e1a72fcca58-74af557790dsm16476366b3a.100.2025.07.03.01.57.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Jul 2025 01:56:16 -0700 (PDT)
+ Thu, 03 Jul 2025 01:57:06 -0700 (PDT)
 From: William Kosasih <kosasihwilliam4@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  William Kosasih <kosasihwilliam4@gmail.com>
-Subject: [PATCH v4 01/11] target/arm: Bring VLSTM/VLLDM helper store/load
- closer to the ARM pseudocode
-Date: Thu,  3 Jul 2025 18:25:54 +0930
-Message-ID: <20250703085604.154449-2-kosasihwilliam4@gmail.com>
+Subject: [PATCH v4 11/11] target/arm: Fix VST2 helper store alignment checks
+Date: Thu,  3 Jul 2025 18:26:04 +0930
+Message-ID: <20250703085604.154449-12-kosasihwilliam4@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250703085604.154449-1-kosasihwilliam4@gmail.com>
 References: <20250703085604.154449-1-kosasihwilliam4@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=kosasihwilliam4@gmail.com; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=kosasihwilliam4@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,93 +102,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch brings the VLSTM and VLLDM helper functions closer to the ARM
-pseudocode by adding MO_ALIGN to the MemOpIdx of the associated store
-(`cpu_stl_mmu`) operations and load (`cpu_ldl_mmu`) operations.
+This patch adds alignment checks in the store operations in the VST2
+instruction.
 
-Note that this is not a bug fix: an 8-byte alignment check already exists
-and remains in place, enforcing stricter alignment than the 4 bytes
-requirement in the individual loads and stores. This change merely makes the
-helper implementations closer to the ARM pseudocode.
-
-That said, as a side effect, the MMU index is now resolved once instead of
-on every `cpu_*_data_ra` call, reducing redundant lookups
-
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1154
 Signed-off-by: William Kosasih <kosasihwilliam4@gmail.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/m_helper.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ target/arm/tcg/mve_helper.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
-index 6614719832..251e12edf9 100644
---- a/target/arm/tcg/m_helper.c
-+++ b/target/arm/tcg/m_helper.c
-@@ -1048,6 +1048,9 @@ void HELPER(v7m_vlstm)(CPUARMState *env, uint32_t fptr)
-     bool s = env->v7m.fpccr[M_REG_S] & R_V7M_FPCCR_S_MASK;
-     bool lspact = env->v7m.fpccr[s] & R_V7M_FPCCR_LSPACT_MASK;
-     uintptr_t ra = GETPC();
-+    ARMMMUIdx mmu_idx = arm_mmu_idx(env);
-+    MemOpIdx oi = make_memop_idx(MO_TEUL | MO_ALIGN,
-+                                 arm_to_core_mmu_idx(mmu_idx));
+diff --git a/target/arm/tcg/mve_helper.c b/target/arm/tcg/mve_helper.c
+index 5273411389..42bb3b979b 100644
+--- a/target/arm/tcg/mve_helper.c
++++ b/target/arm/tcg/mve_helper.c
+@@ -669,6 +669,8 @@ DO_VST4W(vst43w, 6, 7, 8, 9)
+         static const uint8_t off[4] = { O1, O2, O3, O4 };               \
+         uint32_t addr, data;                                            \
+         uint8_t *qd;                                                    \
++        int mmu_idx = arm_to_core_mmu_idx(arm_mmu_idx(env));            \
++        MemOpIdx oi = make_memop_idx(MO_TEUL | MO_ALIGN, mmu_idx);      \
+         for (beat = 0; beat < 4; beat++, mask >>= 4) {                  \
+             if ((mask & 1) == 0) {                                      \
+                 /* ECI says skip this beat */                           \
+@@ -680,7 +682,7 @@ DO_VST4W(vst43w, 6, 7, 8, 9)
+                 qd = (uint8_t *)aa32_vfp_qreg(env, qnidx + (e & 1));    \
+                 data = (data << 8) | qd[H1(off[beat] + (e >> 1))];      \
+             }                                                           \
+-            cpu_stl_le_data_ra(env, addr, data, GETPC());               \
++            cpu_stl_mmu(env, addr, data, oi, GETPC());                  \
+         }                                                               \
+     }
  
-     assert(env->v7m.secure);
+@@ -694,6 +696,8 @@ DO_VST4W(vst43w, 6, 7, 8, 9)
+         uint32_t addr, data;                                            \
+         int e;                                                          \
+         uint16_t *qd;                                                   \
++        int mmu_idx = arm_to_core_mmu_idx(arm_mmu_idx(env));            \
++        MemOpIdx oi = make_memop_idx(MO_TEUL | MO_ALIGN, mmu_idx);      \
+         for (beat = 0; beat < 4; beat++, mask >>= 4) {                  \
+             if ((mask & 1) == 0) {                                      \
+                 /* ECI says skip this beat */                           \
+@@ -705,7 +709,7 @@ DO_VST4W(vst43w, 6, 7, 8, 9)
+                 qd = (uint16_t *)aa32_vfp_qreg(env, qnidx + e);         \
+                 data = (data << 16) | qd[H2(off[beat])];                \
+             }                                                           \
+-            cpu_stl_le_data_ra(env, addr, data, GETPC());               \
++            cpu_stl_mmu(env, addr, data, oi, GETPC());                  \
+         }                                                               \
+     }
  
-@@ -1073,7 +1076,7 @@ void HELPER(v7m_vlstm)(CPUARMState *env, uint32_t fptr)
-      * Note that we do not use v7m_stack_write() here, because the
-      * accesses should not set the FSR bits for stacking errors if they
-      * fail. (In pseudocode terms, they are AccType_NORMAL, not AccType_STACK
--     * or AccType_LAZYFP). Faults in cpu_stl_data_ra() will throw exceptions
-+     * or AccType_LAZYFP). Faults in cpu_stl_mmu() will throw exceptions
-      * and longjmp out.
-      */
-     if (!(env->v7m.fpccr[M_REG_S] & R_V7M_FPCCR_LSPEN_MASK)) {
-@@ -1089,12 +1092,12 @@ void HELPER(v7m_vlstm)(CPUARMState *env, uint32_t fptr)
-             if (i >= 16) {
-                 faddr += 8; /* skip the slot for the FPSCR */
-             }
--            cpu_stl_data_ra(env, faddr, slo, ra);
--            cpu_stl_data_ra(env, faddr + 4, shi, ra);
-+            cpu_stl_mmu(env, faddr, slo, oi, ra);
-+            cpu_stl_mmu(env, faddr + 4, shi, oi, ra);
-         }
--        cpu_stl_data_ra(env, fptr + 0x40, vfp_get_fpscr(env), ra);
-+        cpu_stl_mmu(env, fptr + 0x40, vfp_get_fpscr(env), oi, ra);
-         if (cpu_isar_feature(aa32_mve, cpu)) {
--            cpu_stl_data_ra(env, fptr + 0x44, env->v7m.vpr, ra);
-+            cpu_stl_mmu(env, fptr + 0x44, env->v7m.vpr, oi, ra);
-         }
- 
-         /*
-@@ -1121,6 +1124,9 @@ void HELPER(v7m_vlldm)(CPUARMState *env, uint32_t fptr)
- {
-     ARMCPU *cpu = env_archcpu(env);
-     uintptr_t ra = GETPC();
-+    ARMMMUIdx mmu_idx = arm_mmu_idx(env);
-+    MemOpIdx oi = make_memop_idx(MO_TEUL | MO_ALIGN,
-+                                 arm_to_core_mmu_idx(mmu_idx));
- 
-     /* fptr is the value of Rn, the frame pointer we load the FP regs from */
-     assert(env->v7m.secure);
-@@ -1155,16 +1161,16 @@ void HELPER(v7m_vlldm)(CPUARMState *env, uint32_t fptr)
-                 faddr += 8; /* skip the slot for the FPSCR and VPR */
-             }
- 
--            slo = cpu_ldl_data_ra(env, faddr, ra);
--            shi = cpu_ldl_data_ra(env, faddr + 4, ra);
-+            slo = cpu_ldl_mmu(env, faddr, oi, ra);
-+            shi = cpu_ldl_mmu(env, faddr + 4, oi, ra);
- 
-             dn = (uint64_t) shi << 32 | slo;
-             *aa32_vfp_dreg(env, i / 2) = dn;
-         }
--        fpscr = cpu_ldl_data_ra(env, fptr + 0x40, ra);
-+        fpscr = cpu_ldl_mmu(env, fptr + 0x40, oi, ra);
-         vfp_set_fpscr(env, fpscr);
-         if (cpu_isar_feature(aa32_mve, cpu)) {
--            env->v7m.vpr = cpu_ldl_data_ra(env, fptr + 0x44, ra);
-+            env->v7m.vpr = cpu_ldl_mmu(env, fptr + 0x44, oi, ra);
-         }
+@@ -718,6 +722,8 @@ DO_VST4W(vst43w, 6, 7, 8, 9)
+         static const uint8_t off[4] = { O1, O2, O3, O4 };               \
+         uint32_t addr, data;                                            \
+         uint32_t *qd;                                                   \
++        int mmu_idx = arm_to_core_mmu_idx(arm_mmu_idx(env));            \
++        MemOpIdx oi = make_memop_idx(MO_TEUL | MO_ALIGN, mmu_idx);      \
+         for (beat = 0; beat < 4; beat++, mask >>= 4) {                  \
+             if ((mask & 1) == 0) {                                      \
+                 /* ECI says skip this beat */                           \
+@@ -726,7 +732,7 @@ DO_VST4W(vst43w, 6, 7, 8, 9)
+             addr = base + off[beat];                                    \
+             qd = (uint32_t *)aa32_vfp_qreg(env, qnidx + (beat & 1));    \
+             data = qd[H4(off[beat] >> 3)];                              \
+-            cpu_stl_le_data_ra(env, addr, data, GETPC());               \
++            cpu_stl_mmu(env, addr, data, oi, GETPC());                  \
+         }                                                               \
      }
  
 -- 
