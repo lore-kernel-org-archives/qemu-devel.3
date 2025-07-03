@@ -4,72 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8D78C77B7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 15:43:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96C61C83F03
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 15:43:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXM4p-0004sI-D0; Thu, 03 Jul 2025 11:42:19 -0400
+	id 1uXM5S-0004wJ-7C; Thu, 03 Jul 2025 11:42:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1uXM4o-0004s2-GK
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 11:42:18 -0400
-Received: from smtp-out-60.livemail.co.uk ([213.171.216.60]
- helo=dkim.livemail.co.uk)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1uXM4k-00050Z-0g
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 11:42:18 -0400
-Received: from smtp.livemail.co.uk (unknown [10.44.132.83])
- by dkim.livemail.co.uk (Postfix) with ESMTPS id E1E15200CF;
- Thu,  3 Jul 2025 16:42:11 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=randomman.co.uk;
- s=livemail2; t=1751557331;
- bh=Z1gZe0eQHLDx6qaTp68b/fF6rCJe+om4XjGczBb/AZc=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=HIlJSAoUOmI86gib+AWAk9OkK0HdmtJKdfjd8cNgPZL01vyxM5CPMMRqZ4m+SDpT7
- LKnPzglz7Z4JsraUAyartAI8cSVM/0cSFXCNVnoYU/9BSiijjvdYc1JWarLpQEMy2U
- 78AJxj9irgvGqj6gzg6wELEQEpDyEA0esoTt7lv8=
-Received: from localhost.localdomain (unknown [145.40.191.116])
- (Authenticated sender: roy.hopkins@randomman.co.uk)
- by smtp.livemail.co.uk (Postfix) with ESMTPSA id 5BCCF40267;
- Thu,  3 Jul 2025 16:42:07 +0100 (BST)
-From: Roy Hopkins <roy.hopkins@randomman.co.uk>
-To: qemu-devel@nongnu.org
-Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P . Berrange" <berrange@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
- Gerd Hoffman <kraxel@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
- Joerg Roedel <joro@8bytes.org>
-Subject: [PATCH v9 10/16] docs/system: Add documentation on support for IGVM
-Date: Thu,  3 Jul 2025 16:41:51 +0100
-Message-ID: <b4dc920a30717e19cd79bbbe2cc769f3b9ff3d37.1751554099.git.roy.hopkins@randomman.co.uk>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1751554099.git.roy.hopkins@randomman.co.uk>
-References: <cover.1751554099.git.roy.hopkins@randomman.co.uk>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXM5Q-0004vi-80
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 11:42:56 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXM5N-00052l-Uz
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 11:42:55 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-453647147c6so87341795e9.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 08:42:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751557371; x=1752162171; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ntlonvLeCaKhhtUx/ayDLB+iJ8zvvDDgN8XCnp0Kqf8=;
+ b=l7sqYBrmqMiMTh5/fNIPde2pUCwRmtdh/obMyag4yrUOehWls37rOgvzeZrjaGfSkR
+ /O/7W97et2TLKcISDRvW2aeT3Pmh3K3ZqbCt+ziAmzzvA+WZl3XQId4yP3CxdN5WlZQ9
+ KEExS8Cj+8f0JPR9GNlqsdizDMui/ZXaPp+0NEXMCj7Fmb6CD7pnd+D4h76xgqZBUeMa
+ evlRT3fekFOtE1mvjOlTQFRTix3GLYJ7zDQTpGQ+CjQ45jRmFFB6/1ZZsLrdwEn1TTUX
+ XiAKzJ6tZBT3L9BR5SyqZB6t3tmjGz3dp9NsVPZWgIweYOLr6RLKKcqHdTxpNKvsa53v
+ yHoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751557371; x=1752162171;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ntlonvLeCaKhhtUx/ayDLB+iJ8zvvDDgN8XCnp0Kqf8=;
+ b=WfsGmTRfob54eLubmT9txqSo5xIbItgshUXvl3lUcotpnIqXz9azIWX2MG6MOg/goW
+ 8Qn7fB6wUEBgd9qhjr7yHhOh2lDE6NzhnLI5hF0XU8WzCP4Y2gP9hiEo4JvVDqVPitLw
+ tM1CZDY/ymaKVWPm62WuFruRgBD5MwOqnA3xUdfgRP9dSbzjr/F10rpvypa8fvgQel4N
+ 4Jg49NXuJGymCNZ9JsHJL+5T9f2xYFIo7Is+sFHk3NxqZCq7k1AER2sVy2VAe4LiSlt9
+ H98qY/8uWHQWU2mJ26vH/v5FmZxqAhaRz9EIqde9KwkwB3Wp2azdv/RuZ1a2HR5h2Th4
+ 2Ynw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXRz+P8LfmADRw4bnMSIA9YnBwV8Rpcgm3d6D8lsQqtw72/6UIIw9Ob4qmX2Y1wR7kGOXwxK9ORZmzX@nongnu.org
+X-Gm-Message-State: AOJu0Yzbm+I0c5gqxdk97yOyrlQRbIVeWEs/wNVU5hREVWc5ROWkb2vH
+ s3v0P7GiDyLCF6f1Ig7YW/iu1JHvQxur4RQw8sD9fqq9lXa6q3yZt4fJV9sdHTJ0zlY=
+X-Gm-Gg: ASbGnctsE/mRXI8LUVdR4xxLV1QOArl98NfynoesDqJvcxK4VdNVtFnRuzpkRvYEp9H
+ h/d92Qvta2XWAFr6ROGFbNROoPRwZ3H0w88KZPcUfA5KPVbPQrwB2kJcsliD8EX5xCJuG2704xL
+ FmNnNWmG1WUwyTmi+/IVEP0/iaX296nwkQEHdauXHJGX6i+z0qdzW7xXqStL7CDgMofaGp7Frdv
+ bXFNvvzmxEZbgmxwlDTnZUQ5y0LtyOvA1/xPCpIFbnr+KFOJ3NB5yi6x1ECGJ1m4fv+7z9QX4pf
+ c0RW1MkMCJyKGUkvP8LZr9J9Yv2gRLIx3Psv8tWwk3wJOJ2J9LexdTU9sKb924f7wpVMzBpsgY6
+ ONTMOPPc+kNBH0IbI36GFY9tlBKV3AZmd/R0GmD2i
+X-Google-Smtp-Source: AGHT+IHqAxkDw4k5ySFbRhB9iq50aBVHRWqsssUVzLGsjgyA1DuPYmM0JUsTGYsCZmkxBxuldqrp5A==
+X-Received: by 2002:a05:600c:1909:b0:451:833f:483c with SMTP id
+ 5b1f17b1804b1-454a3c0740dmr72460755e9.7.1751557371101; 
+ Thu, 03 Jul 2025 08:42:51 -0700 (PDT)
+Received: from [192.168.69.218] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454a9be0bacsm29120195e9.32.2025.07.03.08.42.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Jul 2025 08:42:50 -0700 (PDT)
+Message-ID: <4def8695-076c-4348-9bba-c3c62d2f25de@linaro.org>
+Date: Thu, 3 Jul 2025 17:42:49 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] memattrs.h: make MemTxAttrs into enum
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-rust@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+References: <20250703-rust-mem-api-v1-0-cd5314bdf580@linaro.org>
+ <20250703-rust-mem-api-v1-2-cd5314bdf580@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250703-rust-mem-api-v1-2-cd5314bdf580@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=213.171.216.60;
- envelope-from=roy.hopkins@randomman.co.uk; helo=dkim.livemail.co.uk
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,227 +103,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-IGVM support has been implemented for Confidential Guests that support
-AMD SEV and AMD SEV-ES. Add some documentation that gives some
-background on the IGVM format and how to use it to configure a
-confidential guest.
+On 3/7/25 15:58, Manos Pitsidianakis wrote:
+> Convert MemTxResult defines into an enum. This will allow bindgen to
+> generate a bitflag using the enum variants as its domain of values.
+> 
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> ---
+>   include/exec/memattrs.h | 11 ++++++-----
+>   1 file changed, 6 insertions(+), 5 deletions(-)
 
-Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Gerd Hoffman <kraxel@redhat.com>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
----
- docs/system/i386/amd-memory-encryption.rst |   2 +
- docs/system/igvm.rst                       | 173 +++++++++++++++++++++
- docs/system/index.rst                      |   1 +
- 3 files changed, 176 insertions(+)
- create mode 100644 docs/system/igvm.rst
-
-diff --git a/docs/system/i386/amd-memory-encryption.rst b/docs/system/i386/amd-memory-encryption.rst
-index 748f5094ba..6c23f3535f 100644
---- a/docs/system/i386/amd-memory-encryption.rst
-+++ b/docs/system/i386/amd-memory-encryption.rst
-@@ -1,3 +1,5 @@
-+.. _amd-sev:
-+
- AMD Secure Encrypted Virtualization (SEV)
- =========================================
- 
-diff --git a/docs/system/igvm.rst b/docs/system/igvm.rst
-new file mode 100644
-index 0000000000..79508d9588
---- /dev/null
-+++ b/docs/system/igvm.rst
-@@ -0,0 +1,173 @@
-+Independent Guest Virtual Machine (IGVM) support
-+================================================
-+
-+IGVM files are designed to encapsulate all the information required to launch a
-+virtual machine on any given virtualization stack in a deterministic way. This
-+allows the cryptographic measurement of initial guest state for Confidential
-+Guests to be calculated when the IGVM file is built, allowing a relying party to
-+verify the initial state of a guest via a remote attestation.
-+
-+Although IGVM files are designed with Confidential Computing in mind, they can
-+also be used to configure non-confidential guests. Multiple platforms can be
-+defined by a single IGVM file, allowing a single IGVM file to configure a
-+virtual machine that can run on, for example, TDX, SEV and non-confidential
-+hosts.
-+
-+QEMU supports IGVM files through the user-creatable ``igvm-cfg`` object. This
-+object is used to define the filename of the IGVM file to process. A reference
-+to the object is added to the ``-machine`` to configure the virtual machine
-+to use the IGVM file for configuration.
-+
-+Confidential platform support is provided through the use of
-+the ``ConfidentialGuestSupport`` object. If the virtual machine provides an
-+instance of this object then this is used by the IGVM loader to configure the
-+isolation properties of the directives within the file.
-+
-+Further Information on IGVM
-+---------------------------
-+
-+Information about the IGVM format, including links to the format specification
-+and documentation for the Rust and C libraries can be found at the project
-+repository:
-+
-+https://github.com/microsoft/igvm
-+
-+
-+Supported Platforms
-+-------------------
-+
-+Currently, IGVM files can be provided for Confidential Guests on host systems
-+that support AMD SEV, SEV-ES and SEV-SNP with KVM. IGVM files can also be
-+provided for non-confidential guests.
-+
-+
-+Limitations when using IGVM with AMD SEV, SEV-ES and SEV-SNP
-+------------------------------------------------------------
-+
-+IGVM files configure the initial state of the guest using a set of directives.
-+Not every directive is supported by every Confidential Guest type. For example,
-+AMD SEV does not support encrypted save state regions, therefore setting the
-+initial CPU state using IGVM for SEV is not possible. When an IGVM file contains
-+directives that are not supported for the active platform, an error is generated
-+and the guest launch is aborted.
-+
-+The table below describes the list of directives that are supported for SEV,
-+SEV-ES, SEV-SNP and non-confidential platforms.
-+
-+.. list-table:: SEV, SEV-ES, SEV-SNP & non-confidential Supported Directives
-+   :widths: 35 65
-+   :header-rows: 1
-+
-+   * - IGVM directive
-+     - Notes
-+   * - IGVM_VHT_PAGE_DATA
-+     - ``NORMAL`` zero, measured and unmeasured page types are supported. Other
-+       page types result in an error.
-+   * - IGVM_VHT_PARAMETER_AREA
-+     -
-+   * - IGVM_VHT_PARAMETER_INSERT
-+     -
-+   * - IGVM_VHT_VP_COUNT_PARAMETER
-+     - The guest parameter page is populated with the CPU count.
-+   * - IGVM_VHT_ENVIRONMENT_INFO_PARAMETER
-+     - The ``memory_is_shared`` parameter is set to 1 in the guest parameter
-+       page.
-+
-+.. list-table:: Additional SEV, SEV-ES & SEV_SNP Supported Directives
-+   :widths: 25 75
-+   :header-rows: 1
-+
-+   * - IGVM directive
-+     - Notes
-+   * - IGVM_VHT_MEMORY_MAP
-+     - The memory map page is populated using entries from the E820 table.
-+   * - IGVM_VHT_REQUIRED_MEMORY
-+     - Ensures memory is available in the guest at the specified range.
-+
-+.. list-table:: Additional SEV-ES & SEV-SNP Supported Directives
-+   :widths: 25 75
-+   :header-rows: 1
-+
-+   * - IGVM directive
-+     - Notes
-+   * - IGVM_VHT_VP_CONTEXT
-+     - Setting of the initial CPU state for the boot CPU and additional CPUs is
-+       supported with limitations on the fields that can be provided in the
-+       VMSA. See below for details on which fields are supported.
-+
-+Initial CPU state with VMSA
-+---------------------------
-+
-+The initial state of guest CPUs can be defined in the IGVM file for AMD SEV-ES
-+and SEV-SNP. The state data is provided as a VMSA structure as defined in Table
-+B-4 in the AMD64 Architecture Programmer's Manual, Volume 2 [1].
-+
-+The IGVM VMSA is translated to CPU state in QEMU which is then synchronized
-+by KVM to the guest VMSA during the launch process where it contributes to the
-+launch measurement. See :ref:`amd-sev` for details on the launch process and
-+guest launch measurement.
-+
-+It is important that no information is lost or changed when translating the
-+VMSA provided by the IGVM file into the VSMA that is used to launch the guest.
-+Therefore, QEMU restricts the VMSA fields that can be provided in the IGVM
-+VMSA structure to the following registers:
-+
-+RAX, RCX, RDX, RBX, RBP, RSI, RDI, R8-R15, RSP, RIP, CS, DS, ES, FS, GS, SS,
-+CR0, CR3, CR4, XCR0, EFER, PAT, GDT, IDT, LDTR, TR, DR6, DR7, RFLAGS, X87_FCW,
-+MXCSR.
-+
-+When processing the IGVM file, QEMU will check if any fields other than the
-+above are non-zero and generate an error if this is the case.
-+
-+KVM uses a hardcoded GPA of 0xFFFFFFFFF000 for the VMSA. When an IGVM file
-+defines initial CPU state, the GPA for each VMSA must match this hardcoded
-+value.
-+
-+Firmware Images with IGVM
-+-------------------------
-+
-+When an IGVM filename is specified for a Confidential Guest Support object it
-+overrides the default handling of system firmware: the firmware image, such as
-+an OVMF binary should be contained as a payload of the IGVM file and not
-+provided as a flash drive or via the ``-bios`` parameter. The default QEMU
-+firmware is not automatically populated into the guest memory space.
-+
-+If an IGVM file is provided along with either the ``-bios`` parameter or pflash
-+devices then an error is displayed and the guest startup is aborted.
-+
-+Running a guest configured using IGVM
-+-------------------------------------
-+
-+To run a guest configured with IGVM you firstly need to generate an IGVM file
-+that contains a guest configuration compatible with the platform you are
-+targeting.
-+
-+The ``buildigvm`` tool [2] is an example of a tool that can be used to generate
-+IGVM files for non-confidential X86 platforms as well as for SEV, SEV-ES and
-+SEV-SNP confidential platforms.
-+
-+Example using this tool to generate an IGVM file for AMD SEV-SNP::
-+
-+    buildigvm --firmware /path/to/OVMF.fd --output sev-snp.igvm \
-+              --cpucount 4 sev-snp
-+
-+To run a guest configured with the generated IGVM you need to add an
-+``igvm-cfg`` object and refer to it from the ``-machine`` parameter:
-+
-+Example (for AMD SEV)::
-+
-+    qemu-system-x86_64 \
-+        <other parameters> \
-+        -machine ...,confidential-guest-support=sev0,igvm-cfg=igvm0 \
-+        -object sev-guest,id=sev0,cbitpos=47,reduced-phys-bits=1 \
-+        -object igvm-cfg,id=igvm0,file=/path/to/sev-snp.igvm
-+
-+References
-+----------
-+
-+[1] AMD64 Architecture Programmer's Manual, Volume 2: System Programming
-+  Rev 3.41
-+  https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs/programmer-references/24593.pdf
-+
-+[2] ``buildigvm`` - A tool to build example IGVM files containing OVMF firmware
-+  https://github.com/roy-hopkins/buildigvm
-\ No newline at end of file
-diff --git a/docs/system/index.rst b/docs/system/index.rst
-index 718e9d3c56..427b020483 100644
---- a/docs/system/index.rst
-+++ b/docs/system/index.rst
-@@ -38,5 +38,6 @@ or Hypervisor.Framework.
-    security
-    multi-process
-    confidential-guest-support
-+   igvm
-    vm-templating
-    sriov
--- 
-2.43.0
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
