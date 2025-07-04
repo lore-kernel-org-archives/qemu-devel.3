@@ -4,74 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23504C83030
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 08:23:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91F2DC83030
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 08:24:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXbhE-0000fU-Bx; Fri, 04 Jul 2025 04:23:00 -0400
+	id 1uXbiT-0001fk-PS; Fri, 04 Jul 2025 04:24:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXbhA-0000WS-BK
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 04:22:57 -0400
-Received: from mgamail.intel.com ([192.198.163.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXbh7-0004kF-2o
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 04:22:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751617373; x=1783153373;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=ov3O7tN6DVYC4ytU2cHkbdsDS17LhYpZYAnjqYcbkaQ=;
- b=hnz5mefMGIW2CnwLoet6qfqBdzOXUl9lztGaHcF0fIt/NnX9IW687b8R
- LOqY+0fTxc/v+IHrgJLeLJICDfTuyvWh7tUcERIrMAdKlXP4LlKL5qTA/
- E16cn2SWRR1k7fwu21XaEqyYEBIcMoHHMpFHO/AVtQFueYWBYAltnB0LQ
- +czHh3dOb3rF8GUA0ELWuqfRWLEV8Dy4WkhJiAZrPTUDtqXEfdEVZEbda
- JykiAZuc8VbgOO5Qb88sFuibU+GpkD6hJjewFfyCIu2QTzEtOwZ/rvCuW
- MCV9YxUFxzSIM4f2wS+jSvAyApk72bjj59G35kewXcLEtcLgDu4X92XA5 A==;
-X-CSE-ConnectionGUID: aiNv6hXAS5Wh623iURWk5A==
-X-CSE-MsgGUID: UGQE/rorTxGvcgAE/KcrAA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="53874921"
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="53874921"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Jul 2025 01:22:50 -0700
-X-CSE-ConnectionGUID: I/Pg+eXzQ1KrpZRUhv6cNQ==
-X-CSE-MsgGUID: t903/aCuQY6esIG55TJgYg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="155162950"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa008.fm.intel.com with ESMTP; 04 Jul 2025 01:22:48 -0700
-Date: Fri, 4 Jul 2025 16:44:14 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXbiS-0001fS-Jb
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 04:24:16 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXbiP-00055L-VU
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 04:24:16 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-451e2f0d9c2so4488815e9.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 01:24:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751617452; x=1752222252; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gbVbXkk5gDrDkKIlQNzN2k5Qj4CadpnxfSGFBliSJPE=;
+ b=hgPPl+o3Y91296Ct5i+QPr7vVE9DqGUNyHf/GqhPeiAA37O3v1vguYADejHn+3Cfrn
+ 3C1W5NTQ+CB9AwPlBQxcd5C+qBtHH4cmrRPsdluTuH88RE5VDKD5OFIUYY/TfB81U4JW
+ X8zh+/9r/I/AIxbs1tpuh9pBkcqwQ+V+fmBwxwPhXLFIxkf/r0AmmEoLXwWPd0SCNMcS
+ KWPOPLieMw9I7tRUHI8rPIxBFKd4+XeQhyiGyjC5AlYNj5W1x7U/rCEsFlwcIFgxo59g
+ XTOhLJPjLIkRcsNLKqZeYCiNm0VqEt5kbQBUAuANyorCjyKGpygXjHZeoBz45i5hxIHz
+ VhUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751617452; x=1752222252;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gbVbXkk5gDrDkKIlQNzN2k5Qj4CadpnxfSGFBliSJPE=;
+ b=SjagSQdiHZjwipR7PTIpDuZm1Rifz800pafcgmPdJ02hU8RKlhpPPxGQngAF60LnSN
+ W6jtuEO4g/TOc3gCirbKSLNBhP4ztKBMSHb+p787Y7PGhk+kGxRYxTp1a4CHfMNPlRD+
+ M/sStkXTTL4fyz/Iz3O2jX7SdWHBLC4wD3mClTo2Q9qqty60Q3dQ30wcgorVuSe/QU/V
+ 4uRlsQtWEJgmz7oZFF9zHjZBF72kBgd793eu153jH7MJjkqPyyp6D36P7+UIBDibgvga
+ qnjVc7fWYOUjN1wcnmlJuytTIRdS8k4yEHXA4NOrT+AESImwp6CYQWuN5z8TCEkWTHRW
+ GNBQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXFhvXtUW0k/mRicUpCtQHV373bPFTNXw/gMdbvzDWw+NrbwQ7ETvMpz+WMLs1gbbgzqZe8AVepqY/P@nongnu.org
+X-Gm-Message-State: AOJu0YwnmLGeVTH787W81ljy+r6zrI6hDx5P7yZ3eXN0NA9R3NmVLOhi
+ KBOoHFyrdtlFxQuTubZNfSERxsaP20hjHifkvLfiMAM9vi2GC7aOJQaeSKNwQyEoyqg=
+X-Gm-Gg: ASbGncvLLli6E39TXWpo6Culpzz3E6IA5cwU3z5Hy6D87QA3CxnhE8p+GG0sfgMd7EJ
+ 1Br+xpESBnnTVu9mfsQeNCTbTKq3WkCsvDdXXIdUyIthswfQ6ZmLfaTstLMpzLugaZ8KT2QCj7G
+ Ylrdeh2F5ziaY11vn3g9WNeqaGoD4LPuwPeZ0xC+3Un/wpIsTTfs3L7VGShPIps3HrlX+jk88Cp
+ +8+H/q72cjwNgkr8xkWhqIOeAGvBoJtHEHqH6VPauSSS5ZzjsTP32IAHP1dP4VRyGfh9mU6IFyM
+ BOKx9+8aVGk3VqidkBei5wkYmdRbHJ/+44dx+hkw3tB0SBbKVmnXTVC4Ztck66ZBdmHhiAtmxxa
+ f1/T/QQeedtI9EKbiCNVU7XOB//VCIg==
+X-Google-Smtp-Source: AGHT+IFUpR6YVd+jwwGoGAPDXDizijOZsEJuq4QgesB8hsZrhPWodKx66l1+jFS6o4KLQyfu2as9sg==
+X-Received: by 2002:a05:600c:a385:b0:43d:5264:3cf0 with SMTP id
+ 5b1f17b1804b1-454b1f63e81mr14382345e9.11.1751617451892; 
+ Fri, 04 Jul 2025 01:24:11 -0700 (PDT)
+Received: from [192.168.69.218] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454b1893479sm19374815e9.39.2025.07.04.01.24.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 04 Jul 2025 01:24:11 -0700 (PDT)
+Message-ID: <7e3cd619-e934-4c2d-8ac6-a9d9bcdc798d@linaro.org>
+Date: Fri, 4 Jul 2025 10:24:10 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 05/39] accel/kvm: Remove kvm_init_cpu_signals() stub
+To: Xiaoyao Li <xiaoyao.li@intel.com>, qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH v6 11/39] accel/tcg: Extract statistic related code to
- tcg-stats.c
-Message-ID: <aGeUXqeAISaPCECH@intel.com>
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, kvm@vger.kernel.org
 References: <20250703173248.44995-1-philmd@linaro.org>
- <20250703173248.44995-12-philmd@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+ <20250703173248.44995-6-philmd@linaro.org>
+ <9292a723-eb6f-4106-bbf4-e046146686e4@intel.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <9292a723-eb6f-4106-bbf4-e046146686e4@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250703173248.44995-12-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,26 +106,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 03, 2025 at 07:32:17PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Thu,  3 Jul 2025 19:32:17 +0200
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v6 11/39] accel/tcg: Extract statistic related code to
->  tcg-stats.c
-> X-Mailer: git-send-email 2.49.0
+On 4/7/25 06:13, Xiaoyao Li wrote:
+> On 7/4/2025 1:32 AM, Philippe Mathieu-DaudÃ© wrote:
+>> Since commit 57038a92bb0 ("cpus: extract out kvm-specific code
+>> to accel/kvm") the kvm_init_cpu_signals() stub is not necessary.
+>>
+>> Signed-off-by: Philippe Mathieu-DaudÃ© <philmd@linaro.org>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > 
-> Statistic code is not specific to system emulation (except
-> cross-page checks) and can be used to analyze user-mode binaries.
-> Extract statistic related code to its own file: tcg-stats.c,
-> keeping the original LGPL-2.1-or-later license tag.
+> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  accel/tcg/monitor.c   | 193 ---------------------------------------
->  accel/tcg/tcg-stats.c | 206 ++++++++++++++++++++++++++++++++++++++++++
->  accel/tcg/meson.build |   1 +
->  3 files changed, 207 insertions(+), 193 deletions(-)
->  create mode 100644 accel/tcg/tcg-stats.c
+> BTW, it seems we can further move kvm_init_cpu_signals() into
+> kvm-accel-ops.c and make it internal static function?
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+I suppose we can if we move kvm_immediate_exit to KVM's AccelState,
+but KVM code isn't really using it. We ought to move KVM specific
+fields from CPUState to KVM's AccelState. Not a priority.
 
+> 
+>> ---
+>> Â  accel/stubs/kvm-stub.c | 5 -----
+>> Â  1 file changed, 5 deletions(-)
 
