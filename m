@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C25FAC8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 12:59:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4CD9C8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 13:04:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXg0f-0001eH-Sp; Fri, 04 Jul 2025 08:59:24 -0400
+	id 1uXg59-0003sZ-2p; Fri, 04 Jul 2025 09:03:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXg0b-0001cK-N2
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 08:59:17 -0400
-Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
+ id 1uXg57-0003rv-8y
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 09:03:57 -0400
+Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXg0Z-0007tx-7C
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 08:59:17 -0400
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-e818a572828so595123276.1
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 05:59:14 -0700 (PDT)
+ id 1uXg54-00016R-IF
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 09:03:57 -0400
+Received: by mail-yb1-xb32.google.com with SMTP id
+ 3f1490d57ef6-e8600a33792so605686276.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 06:03:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751633953; x=1752238753; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ep8RwMJ0M9i5BPjIgEJpfQPQz9oWccG3B4OGUcUZy5A=;
- b=NjJLyuBFXmUJTj9CG9xsXIOdtdBFxGBN9JjFrGZjZyT4ak0BIAg+ruzmpU7Vzyv+kF
- VDrKmTXDBRpUShZl6YMTKFRFF3B+oMfjA3gxDKzSbotRE4m79PiMcbAvZtObDHsxlRDb
- XrM7B7pCSWQtq+qifSqRB4dL1c5x5F9ZN/FkiBMgljsM3LQwD694V4I45Bz8lpirCKgX
- VTzrMSMjDPogFmUVmGLwW6Hkbq7AYmUNnEEk4lyD/sCr/zNbYefdjAc55L3yY+T1P4HH
- hwd7a6UOsOcwWAQLMulLs/szd1ZKiWeQNwdSjFlL8k4eyFzaOGnqenDJqv7nIZ8hwbbT
- rHrw==
+ d=linaro.org; s=google; t=1751634232; x=1752239032; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FwW+K+s3MMXLuj1meDNa1wI7pdgz+LYYco3rFHvLV30=;
+ b=iqg0By+ETE0jD2tbCNtDvfApIcZSpXEJClSMxWaEb6gTiUKvOMnGQ9jKgx1aUZBgun
+ svHJjtl6UHlFInuOAx6rLF12gxlyAx7FSjX3RQDKuiFclyArn6Sjh+q3h9pzRxcWModt
+ xSZ1eiJjkC7vj90d6EVH3XWVwY6PxKWA83qAFeXb/8a9gLO8UiW910GvUQYxPxanieIm
+ BrwLIKohJrlX/Jlwb88vViNuamStObOa4URXbPl75qNoh9Hm0yM9HQaopxyqAYBQNEJ8
+ iAgzhmRSfRgXRzmsG76efLf1Z5lFlBNC3VpYTdhlTrd6XTfeIgzsT7hYuxwnJg8sR2Aq
+ 5y6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751633953; x=1752238753;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ep8RwMJ0M9i5BPjIgEJpfQPQz9oWccG3B4OGUcUZy5A=;
- b=S0DciVYXaoe+LeBo4r1wcS5xQiu4Oi+RjdwhjAu2HCdoR5zLZWYTbSGpVNI92ol08J
- IY9HJp+nHALMZi5zaTAkBpzqUc+VbnsmkLTFN5KdcnIPe4l/qnWRSdbaWe/Jn5Ni+EEn
- EB3nTrq6o3T14bKhaDRjlU1F+/xDJNswCcQ8VbOorYeK6DC9Vu0AOuU6Qgx6NmWlQ7sR
- +9TW3AZsudS1YVBb6ARhMHc7+MG/mEhiug6vauQbxprbE4EfoNV6WLo2EkyY5KITfkxc
- 9u4DS28ehPzNO0bHh/RQbGRzzStSBoYduEA4Y1IfyVkrms4Dhb08CtdnuGoGhIJ0CN5P
- jdiw==
-X-Gm-Message-State: AOJu0Yz7lO92DqAuaAHF7i+w6tOTYRETdLtlpxqxKhD31c88gHO+VKXC
- nwdML1BH4aZ2vBFXjNmg1D6H/5VVpr6tqTTigTmUY76pSaXgFHrDYTevIIzP6IeAr99DCMO9L0z
- DsNpSGxe/rKoJJDSJyy4EA5CU/N82ImbeYfFMqrU0Ng==
-X-Gm-Gg: ASbGncsrIik7g5azvvv1PwJeNHjlGExnJbMiErcp8uOu1GnEOq5Avta45A6FRDcC497
- OrX5R6Tl5GVF/vAhuBdxXsD646PnUOtLvzc6up6c+1Gee8ZAgFzCdLaYgF9U4pPcWwEEixjtv3z
- V/XlgYBTu0H7V1dVU4xIxmOHrZT1GxNkFaJ6TlAL8Ht15b
-X-Google-Smtp-Source: AGHT+IGMQGviKbzldM1FzPYcyVqko0XIZR+sqNGa1ZBLIq01DsKwGHUF7OUvIKEo1097WzreNcNSIbFjOCoBu9T+V34=
-X-Received: by 2002:a05:690c:6:b0:70f:6ebb:b29a with SMTP id
- 00721157ae682-71668d04e88mr29643897b3.29.1751633953648; Fri, 04 Jul 2025
- 05:59:13 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1751634232; x=1752239032;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FwW+K+s3MMXLuj1meDNa1wI7pdgz+LYYco3rFHvLV30=;
+ b=byZMSySrEcl8+o0Cs7nfv0xxPF0bINQrZn+ki0ImgzyZtlfhgupJ4x7qMs+YL4S0bD
+ 1UNXp+4rAl0WOXoFIAlBCkzuFUA8Wv95FZyY2/wTH+moZUFXjYuc7Xdy4yIbO54kbUgu
+ EqhdWDYhknax4Uov3piIA32L6sCGUB5XgqOWvSiSbNNpRM4nfa4i+JiZQAYb7LWfj67+
+ VH9NjJTi/EQrbw6edQFSjd/3ZPjaYdX+38F0bbYbU2B3EHmQBITi+GNIVAWVQI/dEqDk
+ /LeNZ9+tAylwVsCMqD6y0+A3MCLgbRQ5x12rwrHwCvz9qT9a4QHfkFvGw1TO2UpAvGXN
+ oMOw==
+X-Gm-Message-State: AOJu0YzmNWMdU42lEQP4ggGWBb7+f0FUAtt16F13QEvYJUvL0EO7Veoc
+ GNZPq3ul/BZFG3PgUsHiBu1w2/r4NxAZMpYVuKhHsAe2xMSrA0P3V7uIzNWqvgnKiJSKsGrdwIh
+ G7o2yIa1Rm8gybtt7zwa0Jf3LhgYMPxE9gSiJGzQTNIlxIAxcOVC+
+X-Gm-Gg: ASbGnctE9sHr2rJGJxS5j3nTri5afG1IYtLsys/bL009PKgctq77oEAj4KWW7NsnxP5
+ 6xBhPBrvgy3KsjWsacPTKFFGky+weggzqkWCqn3wkWcUNABIacTKq3uQGzH2KrU20HFfbmaz9Mg
+ YZl4woNrf+T2dxNlTvkR8A16WgXOoPZChPlfPCU2SsLlqT
+X-Google-Smtp-Source: AGHT+IF+c5EgzFng7hZvgo2/mMwQZYJnDlYCJKxinyxUjpOwVwN7lfObz6CJ25ORLlOd+Hx79rMhNw4xX23kFK3h15Y=
+X-Received: by 2002:a05:690c:6105:b0:70e:2cfb:1848 with SMTP id
+ 00721157ae682-71668e382b1mr31524887b3.31.1751634232388; Fri, 04 Jul 2025
+ 06:03:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250703085604.154449-1-kosasihwilliam4@gmail.com>
-In-Reply-To: <20250703085604.154449-1-kosasihwilliam4@gmail.com>
+References: <20250630130937.3487-1-philmd@linaro.org>
+ <20250630130937.3487-3-philmd@linaro.org>
+In-Reply-To: <20250630130937.3487-3-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 4 Jul 2025 13:59:01 +0100
-X-Gm-Features: Ac12FXwSac9Laj_vHcH-p-uxJpINs0H5g3o7vcUg3xomduQF3ebXgfUpIq6Bmnw
-Message-ID: <CAFEAcA97cvAmtRYEr3hD-BG=LNjoaZFAThYWNKa2zok1MOxgGA@mail.gmail.com>
-Subject: Re: [PATCH v4 00/11] target/arm: Fix M-profile helper loads/stores
- alignment checks
-To: William Kosasih <kosasihwilliam4@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>
+Date: Fri, 4 Jul 2025 14:03:40 +0100
+X-Gm-Features: Ac12FXx7P3ArMOGQRe61EH7qWxFpfmO4w_v5IJ9p8OK_V08-WhWfAYP9Z-BfgG0
+Message-ID: <CAFEAcA8KBTfJqUbBeUm9_=JoMf133Tt3tcWhJ=sSSy-Yc6Cdcg@mail.gmail.com>
+Subject: Re: [PATCH 2/6] target/arm: Only allow disabling NEON when using TCG
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,29 +97,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 3 Jul 2025 at 09:56, William Kosasih <kosasihwilliam4@gmail.com> wrote:
+On Mon, 30 Jun 2025 at 14:09, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> Historically, M-profile helper functions in m_helper.c and mve_helper.c
-> used the unaligned cpu_*_data_ra() routines to perform guest memory
-> accesses. This meant we had no way to enforce alignment constraints
-> when executing helper-based loads/stores. With the addition of the
-> cpu_*_mmu() APIs, we can now combine the current MMU state with MO_ALIGN
-> flags to build a MemOpIdx that enforces alignment at the helper level.
+> Only allow disabling NEON when using TCG.
 >
-> This patch series:
-> - Replaces all calls to cpu_ld*_data_ra(), cpu_st*_data_ra()
->   in the M-profile helpers (m_helper.c) and the MVE helpers
->   (mve_helper.c) with their cpu_*_mmu() equivalents.
-> - Leaves SME and SVE helper code untouched, as those extensions
->   support unaligned accesses by design.
+> This avoids confusing user experience:
 >
-> With this change, all M-profile and MVE helper-based loads and stores
-> will now correctly honor their alignment requirements.
+>   $ qemu-system-aarch64 -M virt -accel hvf \
+>                         -cpu host,neon=3Doff,vfp=3Doff,vfp-d32=3Doff
+>   qemu-system-aarch64: AArch64 CPUs must have both VFP and Neon or neithe=
+r
 >
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1154
-> Signed-off-by: William Kosasih <kosasihwilliam4@gmail.com>
+>   $ qemu-system-aarch64 -M virt -accel hvf \
+>                         -cpu host,neon=3Doff,vfp=3Doff,vfp-d32=3Doff
+>   qemu-system-aarch64: ARM CPUs must have both VFP-D32 and Neon or neithe=
+r
+>
+>   $ qemu-system-aarch64 -M virt -accel hvf \
+>                         -cpu host,neon=3Doff,vfp=3Doff,vfp-d32=3Doff
+>   qemu-system-aarch64: can't apply global host-arm-cpu.vfp-d32=3Doff: Pro=
+perty 'host-arm-cpu.vfp-d32' not found
 
-Applied to target-arm.next. Thanks for these patches!
+I don't know about users, but I'm definitely confused.
+Aren't these three all the same command line ? What's
+the problem it's trying to show ?
 
 -- PMM
 
