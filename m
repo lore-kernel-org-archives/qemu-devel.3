@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05F8CC8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 14:53:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D98EEC83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 14:53:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXhVW-0005r0-4t; Fri, 04 Jul 2025 10:35:20 -0400
+	id 1uXhKW-0008G8-9M; Fri, 04 Jul 2025 10:23:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uXhPU-0003Ox-Rd
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:29:08 -0400
-Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
+ id 1uXhIC-00051k-O5
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:21:36 -0400
+Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uXhPQ-0001oC-Se
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:29:02 -0400
-Received: by mail-oa1-x2d.google.com with SMTP id
- 586e51a60fabf-2eff5d1c7efso818231fac.2
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 07:29:00 -0700 (PDT)
+ id 1uXhIA-0005ba-Nj
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:21:32 -0400
+Received: by mail-oa1-x32.google.com with SMTP id
+ 586e51a60fabf-2ef461b9daeso865592fac.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 07:21:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751639339; x=1752244139; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751638889; x=1752243689; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=31ee4gbuG+xTnvzONPAYhTdNeczCnwl4Vw3AePUR+UU=;
- b=FEckNf9FAf+GRN1M9yKwpwMvtEpgZx3qrABEcNALRpupI3CEJOGxr/eXnko18XaFK2
- Gm0+xeiirpmcuo0F97lWXdUneLIlsxpJ2ml6zPMqavXo2fgUjomeQo/VliTy3dyq7ZVa
- pKi3Qvaa+LQJmWMwaIth2WJDVnyEhYgt+4kwId8yUdsWNk5/L/sI3jop0DajVDmYVjrq
- EDonF2r9LSeKmNyYOVucPAzXmfQ3YU7hFKyecKknMap54vo5eaF3LZvEGUrD39N5wKeR
- BsfSzeCfluSLYSB4hWMVYpj89e3PfNUxQeO4AImQNwP6roAhirFxRx/nMKZINCnqB+wx
- lWsw==
+ bh=ptP8uenLAkSHPDYCtgTrB8bgYvjR4QRgpRat8308Fdc=;
+ b=an24kuDSIMyYJxTyl9M4Dk24Oh+5EgIvcWHxmbGFmTCL11C2ihFQP2Z4dkxAqBgs76
+ 6BJyfi8sZnOPHpLswdBOlGdyPMHwAlZ0NSFDobdvAWXc3OAHalK5GskD/+oL6ys5xD3I
+ W8mq93UzcI4GxcRs6WvnaLQodeamnTA7g9PgEuiozpbEzXUMnySIsBQZvVSxJ6qP566N
+ ePjNEY7HY/fs1zXWis7zjD3X82aJrQrgvgMH240LgnHaa11RSZFwKeMrrCSELFyq0wE5
+ zJUugq//QKQoK7k2IfnKshcoS9rlMFyS8UQP3leIcIYpIZK40gYKn8acqLTtRxd6D27C
+ auUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751639339; x=1752244139;
+ d=1e100.net; s=20230601; t=1751638889; x=1752243689;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=31ee4gbuG+xTnvzONPAYhTdNeczCnwl4Vw3AePUR+UU=;
- b=gbhmVXWGwBSXgtik3rFQ/3O2QEIEa/THUVqF1jkFNkO0f8TJa3fZptNEgjSnIuX4UL
- f5GzeKYDhG7pb/I9Ywv++mux9dEtEbk30y+kMl9jRJ1DymfY258bjpogqSWjIUOnFwS9
- JBbHXMU4E1C7FZXp34jY+OPBJ/tph+yOjJisz5m4HeTYS4bHIkAMeDyvBCUfgN4G544R
- r15qsDlAaMWrvYEV6lhi/5YRC8TikaYZliFyEUZRdAKn2nzoyu5FcMj7rpIAMN0gAGpo
- cYhE7YobCFR5Mm2mdm+FdvcpAwINh1GMnFUDB3ySd5YxWENaMuUZVgIzlhoFH0DHT/T4
- h25Q==
-X-Gm-Message-State: AOJu0Yy4dCt9s1S7g8Apb2LpJNnvuVTyUbmeqXagPlmzDSb1ZZO5smyY
- TiOTAcSw8fCm/rDf1KFgBUem657A2VZ6astP8ujQauIL9YLaqBYBUmjXKPDsNX4axrh9jpiAYG+
- zW7ludbQ=
-X-Gm-Gg: ASbGnctZ5wFHOwavmWaKRaJphU01CelY1rI3K4bq/DC2OcLqKKESh2p5MbRFoJiuU7i
- DBh8ObSWhCvbwo4oJ/c9d1CKX31nWhXEjQeC2meBHhYzbmEy9Lbx+RplnD7EOVYqB6ZIHw9ryMA
- DDaZkN9BV2SbWGvOlXMowTCXcjZMN2I4EB6L9YwAigsRKqvya56OYXu8KhfoHXNI8ObCu/soKLY
- 4xmzwXhUDnoHCmcqsxSPpiWWC5LOqfgvtH3pW+UEb/fbcUgaS5VsEmROmROicfRgftvlNMBH/F/
- TfP0R3zu5rizCKBCg5fdipk0SqiQT4WFg2koRSJLu5rdZ8aCYJhWyDNMxZmwwqv45V7ETeaCD1S
- b5nRRv/BA9Wqqfg6lnDSR/2a6GGcGPnhMuqLfauf7bEgDHVzUPe/jfk7lneo=
-X-Google-Smtp-Source: AGHT+IHAE8aaiYZO+ocae4GufCCQ6VOO6mCzh2OZKy0b8XlHOIsf76iV7ig2rZDnluyaUqGN/723aQ==
-X-Received: by 2002:a05:6870:224c:b0:2d5:2955:aa58 with SMTP id
- 586e51a60fabf-2f79651b55emr1603817fac.0.1751639339467; 
- Fri, 04 Jul 2025 07:28:59 -0700 (PDT)
+ bh=ptP8uenLAkSHPDYCtgTrB8bgYvjR4QRgpRat8308Fdc=;
+ b=UlKYUDBxMUipOfFKg+D4W6PR/0DW0i6fUoFgLfQCxeSrKL/vsVGGFK5/VBLOc1mz46
+ CyqWHBN1j3ZNKDCIU5SraD3O/mNWi0W82hNdBs/KVU02XYLTbfi3sOxzX+Cf/Flcdh7a
+ iAKJ3lVII+SyoO+1cmGibYybgyQaOM4r+2+koeKAtczfx8axPQCQckHv+5KZ5OJ53yM1
+ iHYOAZscNYRo3zoQT/vv+LavSXnc16KBviSzQnmU5oYT/fCLofoUNcZ8PEyYPHANts/Y
+ gCQAx65EWA3wVErhr1TlbK8RpKfQHsUTq06LBEy/QMUBN1TPI61ypWeX+ZjtJ8Oq3zMQ
+ JLfQ==
+X-Gm-Message-State: AOJu0YxOb+z5d8RE7JJtG2CUCEc0w+VZyVUEqiP4MM35l41l9f+/Tx2/
+ N7+T+g1mg9GMyjVrZz3nc858bPxOfDFpniFWR1FYrezxnu4HeaquEopwIVOabzw0j+fwsNeuij+
+ B0NEWGAk=
+X-Gm-Gg: ASbGncsenRoRFPW/Fqu1/LxdzR+wvVPwn5kNov2WMRkTYKtyvER6i7uvWZQ6hZOsKUh
+ ITLV7gkkgwsmehLNp6oIzWauAtu8d96smHwjfGrsmQFXwjJ3W411ot356CeF3MsdYu+aLStmuub
+ XA9o4O2DbI6RXn1P4bcViQwQTLNYJOFM1rs+D3fVMBnx8nj7poR7CeGkTyMIs86EEAB1OsK0EBZ
+ HGJvswmK8wU8MSLR+ItMhkIjBJisxyQM7gamlfnlsGQnmXmpJ22yDuLpKdbQFbF4YC6422cXlfr
+ 2DU7jM8pxBGPz0SN0LB4WMzY1uE7kbZdgpRGVBDAiFPMia/86ZCjZGDMWqPyaYBW6e4aElrK7zu
+ hkR1TthYD1hFxP/fx8+PR028sLaxcsaP64CazVC4SOkiuj2ga
+X-Google-Smtp-Source: AGHT+IF4vXr61T81CSpAnC8x7j7tq/7rKgn5Pmqk7pWPY6GLmTPHXMIv3xrWsm9Hs97Rx8/LoFPAOQ==
+X-Received: by 2002:a05:6871:5b18:b0:2f7:93bf:4eaa with SMTP id
+ 586e51a60fabf-2f796bac1bdmr1620103fac.11.1751638889465; 
+ Fri, 04 Jul 2025 07:21:29 -0700 (PDT)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2f78ff55633sm531448fac.20.2025.07.04.07.28.58
+ 586e51a60fabf-2f78ff0471esm528016fac.3.2025.07.04.07.21.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 07:28:58 -0700 (PDT)
+ Fri, 04 Jul 2025 07:21:28 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	peter.maydell@linaro.org
-Subject: [PATCH v4 100/108] target/arm: Implement LUTI2, LUTI4 for SME2/SME2p1
-Date: Fri,  4 Jul 2025 08:21:03 -0600
-Message-ID: <20250704142112.1018902-101-richard.henderson@linaro.org>
+Subject: [PATCH v4 013/108] target/arm: Rename zarray to za_state.za
+Date: Fri,  4 Jul 2025 08:19:36 -0600
+Message-ID: <20250704142112.1018902-14-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250704142112.1018902-1-richard.henderson@linaro.org>
 References: <20250704142112.1018902-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2d;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2d.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::32;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,257 +101,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The whole ZA state will also contain ZT0.
+Make things easier in aarch64_set_svcr to zero both
+by wrapping them in a common structure.
+
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/helper.h        | 24 ++++++++++
- target/arm/tcg/translate-sme.c | 56 ++++++++++++++++++++++
- target/arm/tcg/vec_helper.c    | 88 ++++++++++++++++++++++++++++++++++
- target/arm/tcg/sme.decode      | 42 ++++++++++++++++
- 4 files changed, 210 insertions(+)
+ target/arm/cpu.h               | 48 +++++++++++++++++++---------------
+ linux-user/aarch64/signal.c    |  4 +--
+ target/arm/cpu.c               |  4 +--
+ target/arm/helper.c            |  2 +-
+ target/arm/machine.c           |  2 +-
+ target/arm/tcg/sme_helper.c    |  6 ++---
+ target/arm/tcg/translate-sme.c |  4 +--
+ 7 files changed, 38 insertions(+), 32 deletions(-)
 
-diff --git a/target/arm/tcg/helper.h b/target/arm/tcg/helper.h
-index 392bf7b9b5..d9565c8069 100644
---- a/target/arm/tcg/helper.h
-+++ b/target/arm/tcg/helper.h
-@@ -1188,3 +1188,27 @@ DEF_HELPER_FLAGS_4(gvec_uminp_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 2530aaca22..7db97e8038 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -715,27 +715,33 @@ typedef struct CPUArchState {
  
- DEF_HELPER_FLAGS_3(gvec_urecpe_s, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
- DEF_HELPER_FLAGS_3(gvec_ursqrte_s, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
-+
-+DEF_HELPER_FLAGS_4(sme2_luti2_1b, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+DEF_HELPER_FLAGS_4(sme2_luti2_1h, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+DEF_HELPER_FLAGS_4(sme2_luti2_1s, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+
-+DEF_HELPER_FLAGS_4(sme2_luti2_2b, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+DEF_HELPER_FLAGS_4(sme2_luti2_2h, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+DEF_HELPER_FLAGS_4(sme2_luti2_2s, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+
-+DEF_HELPER_FLAGS_4(sme2_luti2_4b, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+DEF_HELPER_FLAGS_4(sme2_luti2_4h, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+DEF_HELPER_FLAGS_4(sme2_luti2_4s, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+
-+DEF_HELPER_FLAGS_4(sme2_luti4_1b, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+DEF_HELPER_FLAGS_4(sme2_luti4_1h, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+DEF_HELPER_FLAGS_4(sme2_luti4_1s, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+
-+DEF_HELPER_FLAGS_4(sme2_luti4_2b, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+DEF_HELPER_FLAGS_4(sme2_luti4_2h, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+DEF_HELPER_FLAGS_4(sme2_luti4_2s, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+
-+DEF_HELPER_FLAGS_4(sme2_luti4_4b, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+DEF_HELPER_FLAGS_4(sme2_luti4_4h, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+DEF_HELPER_FLAGS_4(sme2_luti4_4s, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 9592f6a996..d38b8a5ca2 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -1697,3 +1697,59 @@ static bool trans_SEL(DisasContext *s, arg_SEL *a)
+     uint64_t scxtnum_el[4];
+ 
+-    /*
+-     * SME ZA storage -- 256 x 256 byte array, with bytes in host word order,
+-     * as we do with vfp.zregs[].  This corresponds to the architectural ZA
+-     * array, where ZA[N] is in the least-significant bytes of env->zarray[N].
+-     * When SVL is less than the architectural maximum, the accessible
+-     * storage is restricted, such that if the SVL is X bytes the guest can
+-     * see only the bottom X elements of zarray[], and only the least
+-     * significant X bytes of each element of the array. (In other words,
+-     * the observable part is always square.)
+-     *
+-     * The ZA storage can also be considered as a set of square tiles of
+-     * elements of different sizes. The mapping from tiles to the ZA array
+-     * is architecturally defined, such that for tiles of elements of esz
+-     * bytes, the Nth row (or "horizontal slice") of tile T is in
+-     * ZA[T + N * esz]. Note that this means that each tile is not contiguous
+-     * in the ZA storage, because its rows are striped through the ZA array.
+-     *
+-     * Because this is so large, keep this toward the end of the reset area,
+-     * to keep the offsets into the rest of the structure smaller.
+-     */
+-    ARMVectorReg zarray[ARM_MAX_VQ * 16];
++    struct {
++        /*
++         * SME ZA storage -- 256 x 256 byte array, with bytes in host
++         * word order, as we do with vfp.zregs[].  This corresponds to
++         * the architectural ZA array, where ZA[N] is in the least
++         * significant bytes of env->za_state.za[N].
++         *
++         * When SVL is less than the architectural maximum, the accessible
++         * storage is restricted, such that if the SVL is X bytes the guest
++         * can see only the bottom X elements of zarray[], and only the least
++         * significant X bytes of each element of the array. (In other words,
++         * the observable part is always square.)
++         *
++         * The ZA storage can also be considered as a set of square tiles of
++         * elements of different sizes. The mapping from tiles to the ZA array
++         * is architecturally defined, such that for tiles of elements of esz
++         * bytes, the Nth row (or "horizontal slice") of tile T is in
++         * ZA[T + N * esz]. Note that this means that each tile is not
++         * contiguous in the ZA storage, because its rows are striped through
++         * the ZA array.
++         *
++         * Because this is so large, keep this toward the end of the
++         * reset area, to keep the offsets into the rest of the structure
++         * smaller.
++         */
++        ARMVectorReg za[ARM_MAX_VQ * 16];
++    } za_state;
+ 
+     struct CPUBreakpoint *cpu_breakpoint[16];
+     struct CPUWatchpoint *cpu_watchpoint[16];
+diff --git a/linux-user/aarch64/signal.c b/linux-user/aarch64/signal.c
+index bc7a13800d..d50cab78d8 100644
+--- a/linux-user/aarch64/signal.c
++++ b/linux-user/aarch64/signal.c
+@@ -248,7 +248,7 @@ static void target_setup_za_record(struct target_za_context *za,
+     for (i = 0; i < vl; ++i) {
+         uint64_t *z = (void *)za + TARGET_ZA_SIG_ZAV_OFFSET(vq, i);
+         for (j = 0; j < vq * 2; ++j) {
+-            __put_user_e(env->zarray[i].d[j], z + j, le);
++            __put_user_e(env->za_state.za[i].d[j], z + j, le);
+         }
+     }
+ }
+@@ -397,7 +397,7 @@ static bool target_restore_za_record(CPUARMState *env,
+     for (i = 0; i < vl; ++i) {
+         uint64_t *z = (void *)za + TARGET_ZA_SIG_ZAV_OFFSET(vq, i);
+         for (j = 0; j < vq * 2; ++j) {
+-            __get_user_e(env->zarray[i].d[j], z + j, le);
++            __get_user_e(env->za_state.za[i].d[j], z + j, le);
+         }
      }
      return true;
- }
-+
-+static bool do_lut(DisasContext *s, arg_lut *a,
-+                   gen_helper_gvec_2_ptr *fn, bool strided)
-+{
-+    if (sme_sm_enabled_check(s) && sme2_zt0_enabled_check(s)) {
-+        int svl = streaming_vec_reg_size(s);
-+        tcg_gen_gvec_2_ptr(vec_full_reg_offset(s, a->zd),
-+                           vec_full_reg_offset(s, a->zn),
-+                           tcg_env, svl, svl, strided | (a->idx << 1), fn);
-+    }
-+    return true;
-+}
-+
-+TRANS_FEAT(LUTI2_c_1b, aa64_sme2, do_lut, a, gen_helper_sme2_luti2_1b, false)
-+TRANS_FEAT(LUTI2_c_1h, aa64_sme2, do_lut, a, gen_helper_sme2_luti2_1h, false)
-+TRANS_FEAT(LUTI2_c_1s, aa64_sme2, do_lut, a, gen_helper_sme2_luti2_1s, false)
-+
-+TRANS_FEAT(LUTI2_c_2b, aa64_sme2, do_lut, a, gen_helper_sme2_luti2_2b, false)
-+TRANS_FEAT(LUTI2_c_2h, aa64_sme2, do_lut, a, gen_helper_sme2_luti2_2h, false)
-+TRANS_FEAT(LUTI2_c_2s, aa64_sme2, do_lut, a, gen_helper_sme2_luti2_2s, false)
-+
-+TRANS_FEAT(LUTI2_c_4b, aa64_sme2, do_lut, a, gen_helper_sme2_luti2_4b, false)
-+TRANS_FEAT(LUTI2_c_4h, aa64_sme2, do_lut, a, gen_helper_sme2_luti2_4h, false)
-+TRANS_FEAT(LUTI2_c_4s, aa64_sme2, do_lut, a, gen_helper_sme2_luti2_4s, false)
-+
-+TRANS_FEAT(LUTI4_c_1b, aa64_sme2, do_lut, a, gen_helper_sme2_luti4_1b, false)
-+TRANS_FEAT(LUTI4_c_1h, aa64_sme2, do_lut, a, gen_helper_sme2_luti4_1h, false)
-+TRANS_FEAT(LUTI4_c_1s, aa64_sme2, do_lut, a, gen_helper_sme2_luti4_1s, false)
-+
-+TRANS_FEAT(LUTI4_c_2b, aa64_sme2, do_lut, a, gen_helper_sme2_luti4_2b, false)
-+TRANS_FEAT(LUTI4_c_2h, aa64_sme2, do_lut, a, gen_helper_sme2_luti4_2h, false)
-+TRANS_FEAT(LUTI4_c_2s, aa64_sme2, do_lut, a, gen_helper_sme2_luti4_2s, false)
-+
-+TRANS_FEAT(LUTI4_c_4h, aa64_sme2, do_lut, a, gen_helper_sme2_luti4_4h, false)
-+TRANS_FEAT(LUTI4_c_4s, aa64_sme2, do_lut, a, gen_helper_sme2_luti4_4s, false)
-+
-+static bool do_lut_s4(DisasContext *s, arg_lut *a, gen_helper_gvec_2_ptr *fn)
-+{
-+    return !(a->zd & 0b01100) && do_lut(s, a, fn, true);
-+}
-+
-+static bool do_lut_s8(DisasContext *s, arg_lut *a, gen_helper_gvec_2_ptr *fn)
-+{
-+    return !(a->zd & 0b01000) && do_lut(s, a, fn, true);
-+}
-+
-+TRANS_FEAT(LUTI2_s_2b, aa64_sme2p1, do_lut_s8, a, gen_helper_sme2_luti2_2b)
-+TRANS_FEAT(LUTI2_s_2h, aa64_sme2p1, do_lut_s8, a, gen_helper_sme2_luti2_2h)
-+
-+TRANS_FEAT(LUTI2_s_4b, aa64_sme2p1, do_lut_s4, a, gen_helper_sme2_luti2_4b)
-+TRANS_FEAT(LUTI2_s_4h, aa64_sme2p1, do_lut_s4, a, gen_helper_sme2_luti2_4h)
-+
-+TRANS_FEAT(LUTI4_s_2b, aa64_sme2p1, do_lut_s8, a, gen_helper_sme2_luti4_2b)
-+TRANS_FEAT(LUTI4_s_2h, aa64_sme2p1, do_lut_s8, a, gen_helper_sme2_luti4_2h)
-+
-+TRANS_FEAT(LUTI4_s_4h, aa64_sme2p1, do_lut_s4, a, gen_helper_sme2_luti4_4h)
-diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
-index d4ee6f4d29..0603db0909 100644
---- a/target/arm/tcg/vec_helper.c
-+++ b/target/arm/tcg/vec_helper.c
-@@ -3443,3 +3443,91 @@ void HELPER(gvec_ursqrte_s)(void *vd, void *vn, uint32_t desc)
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 7b207f2620..6265627762 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1335,8 +1335,8 @@ static void aarch64_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+             qemu_fprintf(f, "ZA[%0*d]=", svl_lg10, i);
+             for (j = zcr_len; j >= 0; --j) {
+                 qemu_fprintf(f, "%016" PRIx64 ":%016" PRIx64 "%c",
+-                             env->zarray[i].d[2 * j + 1],
+-                             env->zarray[i].d[2 * j],
++                             env->za_state.za[i].d[2 * j + 1],
++                             env->za_state.za[i].d[2 * j],
+                              j ? ':' : '\n');
+             }
+         }
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index c311d2df21..3879bce848 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -6663,7 +6663,7 @@ void aarch64_set_svcr(CPUARMState *env, uint64_t new, uint64_t mask)
+      * when disabled either.
+      */
+     if (change & new & R_SVCR_ZA_MASK) {
+-        memset(env->zarray, 0, sizeof(env->zarray));
++        memset(&env->za_state, 0, sizeof(env->za_state));
      }
-     clear_tail(d, opr_sz, simd_maxsz(desc));
+ 
+     if (tcg_enabled()) {
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index e442d48524..6e73368ef9 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -315,7 +315,7 @@ static const VMStateDescription vmstate_za = {
+     .minimum_version_id = 1,
+     .needed = za_needed,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_STRUCT_ARRAY(env.zarray, ARMCPU, ARM_MAX_VQ * 16, 0,
++        VMSTATE_STRUCT_ARRAY(env.za_state.za, ARMCPU, ARM_MAX_VQ * 16, 0,
+                              vmstate_vreg, ARMVectorReg),
+         VMSTATE_END_OF_LIST()
+     }
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index 9942d717aa..7b0bc1b17c 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -39,12 +39,12 @@ void helper_sme_zero(CPUARMState *env, uint32_t imm, uint32_t svl)
+     uint32_t i;
+ 
+     /*
+-     * Special case clearing the entire ZA space.
++     * Special case clearing the entire ZArray.
+      * This falls into the CONSTRAINED UNPREDICTABLE zeroing of any
+      * parts of the ZA storage outside of SVL.
+      */
+     if (imm == 0xff) {
+-        memset(env->zarray, 0, sizeof(env->zarray));
++        memset(env->za_state.za, 0, sizeof(env->za_state.za));
+         return;
+     }
+ 
+@@ -54,7 +54,7 @@ void helper_sme_zero(CPUARMState *env, uint32_t imm, uint32_t svl)
+      */
+     for (i = 0; i < svl; i++) {
+         if (imm & (1 << (i % 8))) {
+-            memset(&env->zarray[i], 0, svl);
++            memset(&env->za_state.za[i], 0, svl);
+         }
+     }
  }
-+
-+static inline void do_lut_b(void *zd, uint64_t *indexes, uint64_t *table,
-+                            unsigned elements, unsigned segbase,
-+                            unsigned dstride, unsigned isize,
-+                            unsigned tsize, unsigned nreg)
-+{
-+    for (unsigned r = 0; r < nreg; ++r) {
-+        uint8_t *dst = zd + dstride * r;
-+        unsigned base = segbase + r * elements;
-+
-+        for (unsigned e = 0; e < elements; ++e) {
-+            unsigned index = extractn(indexes, (base + e) * isize, isize);
-+            dst[H1(e)] = extractn(table, index * tsize, 8);
-+        }
-+    }
-+}
-+
-+static inline void do_lut_h(void *zd, uint64_t *indexes, uint64_t *table,
-+                            unsigned elements, unsigned segbase,
-+                            unsigned dstride, unsigned isize,
-+                            unsigned tsize, unsigned nreg)
-+{
-+    for (unsigned r = 0; r < nreg; ++r) {
-+        uint16_t *dst = zd + dstride * r;
-+        unsigned base = segbase + r * elements;
-+
-+        for (unsigned e = 0; e < elements; ++e) {
-+            unsigned index = extractn(indexes, (base + e) * isize, isize);
-+            dst[H2(e)] = extractn(table, index * tsize, 16);
-+        }
-+    }
-+}
-+
-+static inline void do_lut_s(void *zd, uint64_t *indexes, uint32_t *table,
-+                            unsigned elements, unsigned segbase,
-+                            unsigned dstride, unsigned isize,
-+                            unsigned tsize, unsigned nreg)
-+{
-+    for (unsigned r = 0; r < nreg; ++r) {
-+        uint32_t *dst = zd + dstride * r;
-+        unsigned base = segbase + r * elements;
-+
-+        for (unsigned e = 0; e < elements; ++e) {
-+            unsigned index = extractn(indexes, (base + e) * isize, isize);
-+            dst[H4(e)] = table[H4(index)];
-+        }
-+    }
-+}
-+
-+#define DO_SME2_LUT(ISIZE, NREG, SUFF, ESIZE) \
-+void helper_sme2_luti##ISIZE##_##NREG##SUFF                             \
-+    (void *zd, void *zn, CPUARMState *env, uint32_t desc)               \
-+{                                                                       \
-+    unsigned vl = simd_oprsz(desc);                                     \
-+    unsigned strided = extract32(desc, SIMD_DATA_SHIFT, 1);             \
-+    unsigned idx = extract32(desc, SIMD_DATA_SHIFT + 1, 4);             \
-+    unsigned elements = vl / ESIZE;                                     \
-+    unsigned dstride = (!strided ? 1 : NREG == 4 ? 4 : 8);              \
-+    unsigned segments = (ESIZE * 8) / (ISIZE * NREG);                   \
-+    unsigned segment = idx & (segments - 1);                            \
-+    ARMVectorReg indexes;                                               \
-+    memcpy(&indexes, zn, vl);                                           \
-+    do_lut_##SUFF(zd, indexes.d, (void *)env->za_state.zt0, elements,   \
-+                  segment * NREG * elements,                            \
-+                  dstride * sizeof(ARMVectorReg), ISIZE, 32, NREG);     \
-+}
-+
-+DO_SME2_LUT(2,1,b, 1)
-+DO_SME2_LUT(2,1,h, 2)
-+DO_SME2_LUT(2,1,s, 4)
-+DO_SME2_LUT(2,2,b, 1)
-+DO_SME2_LUT(2,2,h, 2)
-+DO_SME2_LUT(2,2,s, 4)
-+DO_SME2_LUT(2,4,b, 1)
-+DO_SME2_LUT(2,4,h, 2)
-+DO_SME2_LUT(2,4,s, 4)
-+
-+DO_SME2_LUT(4,1,b, 1)
-+DO_SME2_LUT(4,1,h, 2)
-+DO_SME2_LUT(4,1,s, 4)
-+DO_SME2_LUT(4,2,b, 1)
-+DO_SME2_LUT(4,2,h, 2)
-+DO_SME2_LUT(4,2,s, 4)
-+DO_SME2_LUT(4,4,b, 1)
-+DO_SME2_LUT(4,4,h, 2)
-+DO_SME2_LUT(4,4,s, 4)
-+
-+#undef DO_SME2_LUT
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index f7e4143b7d..5a5b8ff8a5 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -945,3 +945,45 @@ ZERO_za         11000000 000011 110 .. 0000000000 00.   \
-                 &zero_za ngrp=2 nvec=4 rv=%mova_rv off=%off1_x4
- ZERO_za         11000000 000011 111 .. 0000000000 00.   \
-                 &zero_za ngrp=4 nvec=4 rv=%mova_rv off=%off1_x4
-+
-+### SME Lookup Table Read
-+
-+&lut            zd zn idx
-+
-+# LUTI2, consecutive
-+LUTI2_c_1b      1100 0000 1100 11 idx:4    00 00 zn:5 zd:5      &lut
-+LUTI2_c_1h      1100 0000 1100 11 idx:4    01 00 zn:5 zd:5      &lut
-+LUTI2_c_1s      1100 0000 1100 11 idx:4    10 00 zn:5 zd:5      &lut
-+
-+LUTI2_c_2b      1100 0000 1000 11 idx:3  1 00 00 zn:5 .... 0    &lut zd=%zd_ax2
-+LUTI2_c_2h      1100 0000 1000 11 idx:3  1 01 00 zn:5 .... 0    &lut zd=%zd_ax2
-+LUTI2_c_2s      1100 0000 1000 11 idx:3  1 10 00 zn:5 .... 0    &lut zd=%zd_ax2
-+
-+LUTI2_c_4b      1100 0000 1000 11 idx:2 10 00 00 zn:5 ... 00    &lut zd=%zd_ax4
-+LUTI2_c_4h      1100 0000 1000 11 idx:2 10 01 00 zn:5 ... 00    &lut zd=%zd_ax4
-+LUTI2_c_4s      1100 0000 1000 11 idx:2 10 10 00 zn:5 ... 00    &lut zd=%zd_ax4
-+
-+# LUTI2, strided (must check zd alignment)
-+LUTI2_s_2b      1100 0000 1001 11 idx:3  1 00 00 zn:5 zd:5      &lut
-+LUTI2_s_2h      1100 0000 1001 11 idx:3  1 01 00 zn:5 zd:5      &lut
-+
-+LUTI2_s_4b      1100 0000 1001 11 idx:2 10 00 00 zn:5 zd:5      &lut
-+LUTI2_s_4h      1100 0000 1001 11 idx:2 10 01 00 zn:5 zd:5      &lut
-+
-+# LUTI4, consecutive
-+LUTI4_c_1b      1100 0000 1100 101 idx:3    00 00 zn:5 zd:5     &lut
-+LUTI4_c_1h      1100 0000 1100 101 idx:3    01 00 zn:5 zd:5     &lut
-+LUTI4_c_1s      1100 0000 1100 101 idx:3    10 00 zn:5 zd:5     &lut
-+
-+LUTI4_c_2b      1100 0000 1000 101 idx:2  1 00 00 zn:5 .... 0   &lut zd=%zd_ax2
-+LUTI4_c_2h      1100 0000 1000 101 idx:2  1 01 00 zn:5 .... 0   &lut zd=%zd_ax2
-+LUTI4_c_2s      1100 0000 1000 101 idx:2  1 10 00 zn:5 .... 0   &lut zd=%zd_ax2
-+
-+LUTI4_c_4h      1100 0000 1000 101 idx:1 10 01 00 zn:5 ... 00   &lut zd=%zd_ax4
-+LUTI4_c_4s      1100 0000 1000 101 idx:1 10 10 00 zn:5 ... 00   &lut zd=%zd_ax4
-+
-+# LUTI4, strided (must check zd alignment)
-+LUTI4_s_2b      1100 0000 1001 101 idx:2  1 00 00 zn:5 zd:5     &lut
-+LUTI4_s_2h      1100 0000 1001 101 idx:2  1 01 00 zn:5 zd:5     &lut
-+
-+LUTI4_s_4h      1100 0000 1001 101 idx:1 10 01 00 zn:5 zd:5     &lut
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index 51175c923e..e8b3578174 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -92,7 +92,7 @@ static TCGv_ptr get_tile_rowcol(DisasContext *s, int esz, int rs,
+     offset = tile * sizeof(ARMVectorReg);
+ 
+     /* Include the byte offset of zarray to make this relative to env. */
+-    offset += offsetof(CPUARMState, zarray);
++    offset += offsetof(CPUARMState, za_state.za);
+     tcg_gen_addi_i32(tmp, tmp, offset);
+ 
+     /* Add the byte offset to env to produce the final pointer. */
+@@ -112,7 +112,7 @@ static TCGv_ptr get_tile(DisasContext *s, int esz, int tile)
+     TCGv_ptr addr = tcg_temp_new_ptr();
+     int offset;
+ 
+-    offset = tile * sizeof(ARMVectorReg) + offsetof(CPUARMState, zarray);
++    offset = tile * sizeof(ARMVectorReg) + offsetof(CPUARMState, za_state.za);
+ 
+     tcg_gen_addi_ptr(addr, tcg_env, offset);
+     return addr;
 -- 
 2.43.0
 
