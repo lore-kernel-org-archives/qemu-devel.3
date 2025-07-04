@@ -4,75 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42D09C83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 12:35:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4364FC83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 12:42:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXfc8-0000qM-9O; Fri, 04 Jul 2025 08:34:00 -0400
+	id 1uXfiw-0003QL-6r; Fri, 04 Jul 2025 08:41:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uXfc6-0000pQ-MR
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 08:33:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uXfc4-0004KW-1M
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 08:33:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751632434;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=F0srp+1l+CtodTy1pgBVmtHeWlwutDTE0/4Jev5mR7g=;
- b=L73gKNVoIitcz6uEijfc1ZjleXuwhUBFR+56QYdldylCVgjpPn2/ylEArpRCTryyjyeRlV
- pyGdQR7KzW206BvAxcTZOOocZFwdU1VzyzcFYjp9+mqNCEi/2H0/halZwwCMpkMpJS69yG
- gsBdCtzaUbAhrYIObnCZS1EFnvHEdZI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-659-sb0TEgfZMHqo1GUBs5cnng-1; Fri,
- 04 Jul 2025 08:33:52 -0400
-X-MC-Unique: sb0TEgfZMHqo1GUBs5cnng-1
-X-Mimecast-MFC-AGG-ID: sb0TEgfZMHqo1GUBs5cnng_1751632431
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7E0E31801212; Fri,  4 Jul 2025 12:33:51 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E07EA19560AB; Fri,  4 Jul 2025 12:33:50 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2D8D121E6A27; Fri, 04 Jul 2025 14:33:48 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org,  John Snow <jsnow@redhat.com>,  Cleber Rosa
- <crosa@redhat.com>,  Eric Blake <eblake@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  "Daniel P. Berrange" <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,  Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH V2 0/5] fast qom tree get
-In-Reply-To: <1747057635-124298-1-git-send-email-steven.sistare@oracle.com>
- (Steve Sistare's message of "Mon, 12 May 2025 06:47:10 -0700")
-References: <1747057635-124298-1-git-send-email-steven.sistare@oracle.com>
-Date: Fri, 04 Jul 2025 14:33:48 +0200
-Message-ID: <87qzywm8yb.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXfis-0003PQ-5t
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 08:40:58 -0400
+Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXfin-0005XK-AW
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 08:40:57 -0400
+Received: by mail-yb1-xb30.google.com with SMTP id
+ 3f1490d57ef6-e81a7d90835so720840276.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 05:40:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751632852; x=1752237652; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Oi+QwgFyUTXPn1NiJvGnj1atO4ZVxhr1ZCjf+8aeKe8=;
+ b=eDmK1JJ+foxfmVOqoSmm91cxLnNV9MUkSNDR1/c4s4lwKeHm4tAd8bJXot7sPNFZ2Z
+ 3hGz4tWtZuJY9VpjIzL2OSczSWeO3D257KIPm5VhJWvlvfVIdpmdkTZ2Ll6hF1OMixfn
+ 98ct0rJjwjBnJ0jw0vcm48S7Uiw02noTWarTAXVppLzerXe2o/gfzzm4kGnIvT7tjqlR
+ O7KeCmBYK0mZ1/6rjmOir+WcSm+I7NjjMdcxG84pmQ0hi2Fm2y4p3uZxPMTrSYj1MdFq
+ 9pEjwQ4/zX69UXVAVNrkcNFuzlr1bXCNkgYePTYNRxQa/DAO5BD5ASKwRChW3vW5VyEy
+ /tVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751632852; x=1752237652;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Oi+QwgFyUTXPn1NiJvGnj1atO4ZVxhr1ZCjf+8aeKe8=;
+ b=V893bSykTrI+qjkhjOMepVAYg3qS6j8mR+XZ4lCkR1pYH4GFsBBe+Zn3aj67c3iAak
+ 1v1JBP0ESLkIUn5qqvIkee8azizklJooirw4fpH14HBT3h+3LZ+gLD7mcvOWTiaHlnaV
+ no5bwuAYffUHivFH3fPW8AN0S1bMftT868UrXQVJ4uM35ChkMe6JudrSbsVIUgd8NGpz
+ tDp5aMCY3gPs88ZdBnq4/uZTjULPbVdj0B4XZcgdvYxXq8jD43yYS6VJSxhlETfXS6Ed
+ zUnxSmmOuiHzhJJ5QopBSa+kdieKc1nFHC7Z40SbpqGBqMmCDn5NOaCf+J9DT15DksqB
+ MluA==
+X-Gm-Message-State: AOJu0Yyjskvu5mUmlFMTi2byVTMYFm6udNJvB2SPwn8y1KZ0gkqlw8ON
+ wSBA8BdNYIt+SYu+ZflfbUdXuDyNH59xeZcOnB2u5QUJsFFo4mjbKmm8+sHJpw63E7SY7xE1O3T
+ YQFS3xOOA1lLtMyBR8PZ+eIH4TQb6NgmR0A+QkuQA7w==
+X-Gm-Gg: ASbGncuMO1HX0OGBfCQv063/KG5jq6osYEpxEX3lQLdf/PDeb5wz/YMEv60rQ9tQTwo
+ z0dBoEvkXm9BUAVbpzq09nyTeKuwQmISxqqFqnAPtyTSELCOXuGXBNUkFrETxL+0liw5MWAqpM7
+ GQt7FQqi0Uwvv5RJ2udiTAwmxuaQyqYUFPEW7imvx/5JJI
+X-Google-Smtp-Source: AGHT+IHhmNrp+sKEwZN46UY2pwI2Xf6dOQEvJTuk75d33NUNqeuDCXDRa5PYDcGesFF/eTlhP4o3uAwrA9FSnCEtarQ=
+X-Received: by 2002:a05:690c:388:b0:70e:2d77:3cfe with SMTP id
+ 00721157ae682-7166b59391fmr21731377b3.2.1751632851568; Fri, 04 Jul 2025
+ 05:40:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.218, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250702113051.46483-1-thuth@redhat.com>
+In-Reply-To: <20250702113051.46483-1-thuth@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 4 Jul 2025 13:40:39 +0100
+X-Gm-Features: Ac12FXwAQy-fGZxl-rZPBqEozJPVINFPiXiYb--VfE338vSNvFl3U_AX-A4dhzY
+Message-ID: <CAFEAcA8_D035si+3n-A=px4nF+2fVvPqRvq7A9HcwSxW6rpx4g@mail.gmail.com>
+Subject: Re: [PATCH] hw/arm/highbank: Mark the "highbank" and the "midway"
+ machine as deprecated
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Rob Herring <robh@kernel.org>, qemu-arm@nongnu.org, 
+ Guenter Roeck <linux@roeck-us.net>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb30.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,15 +93,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steve,
+On Wed, 2 Jul 2025 at 12:30, Thomas Huth <thuth@redhat.com> wrote:
+>
+> From: Thomas Huth <thuth@redhat.com>
+>
+> We don't have any automatic regression tests for these machines and
+> when asking the usual suspects on the mailing list we came to the
+> conclusion that nobody tests these machines manually, too, so it seems
+> like this is currently just completely unused code. Mark them as depre-
+> cated to see whether anybody still speaks up during the deprecation
+> period, otherwise we can likely remove these two machines in a couple
+> of releases.
+>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  Here's the preceeding discussion on the mailing list:
+>  https://lore.kernel.org/qemu-devel/CAFEAcA_0Hu8+G50sy0FJ2rX-=cNymLddDdrS2nN5ZY-doKiT8w@mail.gmail.com/
+>
 
-My sincere apologies for the long, long delay.
 
-It wasn't just for the usual reasons.  It was also because I had a vague
-feeling of unease about qom-tree, and had trouble figuring out why.
 
-I'll try do your work justice before the window for 10.1 closes.
+Applied to target-arm.next, thanks.
 
-QOM maintainers, please have a look, too.
-
+-- PMM
 
