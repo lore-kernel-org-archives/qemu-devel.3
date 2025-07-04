@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 766D5C83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:35:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3469EC83F0B
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:35:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXjEE-0008UE-ME; Fri, 04 Jul 2025 12:25:34 -0400
+	id 1uXjDs-00087N-J8; Fri, 04 Jul 2025 12:25:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXjEC-0008Sq-VR
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:25:32 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1uXjDq-00086H-0l
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:25:10 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXjEA-0006Au-Fq
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:25:32 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-453398e90e9so7306895e9.1
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:25:30 -0700 (PDT)
+ id 1uXjDo-0005s2-3M
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:25:09 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3a536ecbf6fso620463f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:25:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751646329; x=1752251129; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751646305; x=1752251105; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=oKJajPVNDiBfbKBnnOuTzq+dn0t+mh0UzlVR45H+DLw=;
- b=knqimNeG+h6yAIiapTRSSinF+TGmXw9LhGzHAAVCIK4v9on4bIqEj0ShbDfrAWKEwM
- R7GHvfnCAsVohdE0TNKjClHgOrm1SrtwvaGoO7iGvFYfGpbZmwHplFGnwHDFO3VsgZj5
- hUitvA6nRrC1TJBxiEcu3higRQauK3bkDm+geeyN6XwI66D3LhqgKCDTPrThKERzvNO/
- lzCjdCy0MEDr+aj23y1KLRfboZ9BzHuGucBkvkvDJhQz2sqCWXItB9tqDvM5SNsJ7QOi
- pDiLfjsYMSg/Bj7X6mbZlWVYoEJVzQG6KQQmVYqsHhAMpI8s6AnC1eSQtkQBaXB8985I
- 026g==
+ :reply-to; bh=/2btOuqcn6Xe57qmXPDc5kx7Q5nom+ioP+Bpq02iGrQ=;
+ b=xDZ+HFa63I12Gb8MHs3yC9l16B2eGJCY+ZSZndKyqqtaEJ/ynyWnOPFSBdgq76R0FV
+ und5qW9Dz+VwODSalJosW0zvwLvFjnQ7ka/bhGvwYufDNxpJywmL/6kQoyVGVD4NHceb
+ 0o/wwo2A8USWL7TOJSFm18ZxC/85SOiuzMNhS9CxBskNGfmrktnuB/uA9oqbAIqvR9/j
+ ELNW5TW4IRAzZAqv4Rx5otd6/4N9TOTnyPL03AfNO1M4YW3W4BxJeULeYfNI+zH2Z2b3
+ KKYK7unkZcQo8xQ42hkfcI9WG67QRngzUdg9FtBZjn27AcefJBSoTMC6Gnj2Jq09gGRR
+ CRTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751646329; x=1752251129;
+ d=1e100.net; s=20230601; t=1751646305; x=1752251105;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oKJajPVNDiBfbKBnnOuTzq+dn0t+mh0UzlVR45H+DLw=;
- b=kleTGQGiPJFGZkVVnE4YLll51H8cYkXaSzppgjiBXB2mqUfk2gFc3lCX2TyLmcc2JC
- hnG+XQB+UC0TInHmNrh7wHsUKeurUr2INRST/G8LEKus5ajE0EYxGhvihTzIp8tcUrhM
- pyG5kC5gSBJYza5fsRIpJT6KW7YYxcgrLehAiqSd7YLkshSKf7jM22VMHrQYQdSSQs7S
- o5Kov0jrMW2aucrkTLcZxeIJLmwKo+p2ar9UKuuM//JS4XE+Gt43OPoLtcPctxEUMT9Y
- aBPrAHsOFlA3B1Iowl5Ww75/neH20z308vFBGdDMxvTqwkZw/zBwEdEpYN+e7srnzxD4
- eesA==
-X-Gm-Message-State: AOJu0YyIG8f6034qH/gK921hiGEaqVfG82erd6PvLEAk5+605OzE0oXx
- qoAuT/FgO/rODHXODhf6Q5WruW1ug1Znr/UC5dpmN8cW/X1cz+0qeYkp57THMyrdGqQmYt6fS4i
- y1UH0
-X-Gm-Gg: ASbGncsPMfMgMSJi3VBBIG4x8vBOi1yDdpDX+BX+AADDrxASKJN9e2223FA8GScwGCG
- hs9m1UkQMb8vjvmrrgX2KiTYbto0mxF4fiiZxIjksrMhHm4c88/iHlorEMODSFXBaztQTUKT6Kh
- HyWfCIA2Kuu9T8uyFWo+iK1TnAZN4rBawIwSmU+O6AhkYpel+A0siDRDmysZqMTfTLV/6lFA9NX
- m4HWUw7g+CbSIemTEP4KZdD6LfnPDkfm1e1KSOoyOcq4FE0pe8O4nQW24LHFayNdCt0lkJHWn0C
- Dah6kRt81SeDiSt1lWoZqPlcSpsmyAPadUTsRUvXQLw7GwJxdggS2pEsRf6pYQxixOfH
-X-Google-Smtp-Source: AGHT+IH9pn28oN5TDzdIacOObSEE+Q+rNEPLkXjkJUkLUJjybSElrDeASVAL4CwRugL9f/rDXpwqSA==
-X-Received: by 2002:a05:600c:46c8:b0:43d:563:6fef with SMTP id
- 5b1f17b1804b1-454b9f2f337mr917955e9.21.1751646328792; 
- Fri, 04 Jul 2025 09:25:28 -0700 (PDT)
+ bh=/2btOuqcn6Xe57qmXPDc5kx7Q5nom+ioP+Bpq02iGrQ=;
+ b=ZZQAoZUBzp6eEgsLD1VEuq7p4WS1+cqg3fGE0m3N7P7qljUaKx8DH6j/0oJ4Ac7Ges
+ 5kgkv0dkke7qx/IYQODB+PTu7ntXSLCyDHq8R/08A46GuYRHzWD3qExkFJe2MfNa+cCA
+ K8rw4ouLvPQAtdcumLd8nxQLaK2UP3NUONloPPQ/w4wetVhhyrRJ0/mQEjVTmUvXS9r5
+ FwJPEk11Swsw2L9Qe89hrQbAtj9Z87DtxhhSld3vxlgeTDRFgwNH5ahqnwM5ObmZylU9
+ GYPCUhHeFRpZUxRgMvAcGVaiG0Tsm24BOCrHwm/7q8iyh/fpGNotXOUKNNj8686XH/O0
+ acfg==
+X-Gm-Message-State: AOJu0YzCCYleNsOcjOnHCvVJNKBCXKDgpcOQNQXRh0THdC1dGIC6cg5Y
+ B/4T7jnso/aq7jhyj+c+cQjTAfdeGrxAibVi9c0rf6vlDSix2y02kP4X+Y8HRdXSfxkkuFnfsvY
+ k1xx+
+X-Gm-Gg: ASbGnctjZaH2Om5/ciRF/4qBjBnHtrEGVlBYxIVZrYWP7ga22iI0s2553YixfmkzsZN
+ wsvGtlk7u+uEnfM/3bVb9R329nFehUPgL0qbOPdkG7RcB45V6xM64THkhnO185MswoyoyCrhsVo
+ Pooe4bK3C62E0RGQBYkmt/GtbiCUmCNn3v2zQ6G4p9GSXVustHuxHPmyLINMGfjgWg/l5fL0uQL
+ 3Ti/yzDS4q6F7RH08PYthJk/yt80tGRabukQUXBfM2+unAbFjSbtSmKLkue1dWLFkcynpRXy7iV
+ LoVhAL3OnSUpcMhaU3PnBvXbe32LcUrDgCMRwNDVa7yPSG91XnzCb8b2hrUtzoU66P+r
+X-Google-Smtp-Source: AGHT+IFAIq254uDjtYhKdAJwPXJZF29XCpMFCPqByjsJDWuZVaQlXWL+Piy1MExqph81cwrU1B/FQA==
+X-Received: by 2002:a5d:64cd:0:b0:3a5:39bb:3d61 with SMTP id
+ ffacd0b85a97d-3b4964f1dfcmr2811134f8f.27.1751646305277; 
+ Fri, 04 Jul 2025 09:25:05 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b471b96534sm2816857f8f.48.2025.07.04.09.25.27
+ ffacd0b85a97d-3b471b96534sm2816857f8f.48.2025.07.04.09.25.04
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 09:25:28 -0700 (PDT)
+ Fri, 04 Jul 2025 09:25:04 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 028/119] target/arm: Add zt0_excp_el to DisasContext
-Date: Fri,  4 Jul 2025 17:23:28 +0100
-Message-ID: <20250704162501.249138-29-peter.maydell@linaro.org>
+Subject: [PULL 002/119] target/arm: Bring VLSTM/VLLDM helper store/load closer
+ to the ARM pseudocode
+Date: Fri,  4 Jul 2025 17:23:02 +0100
+Message-ID: <20250704162501.249138-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250704162501.249138-1-peter.maydell@linaro.org>
 References: <20250704162501.249138-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,154 +99,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: William Kosasih <kosasihwilliam4@gmail.com>
 
-Pipe the value through from SMCR_ELx through hflags and into
-the disassembly context.  Enable EZT0 in smcr_write.
+This patch brings the VLSTM and VLLDM helper functions closer to the ARM
+pseudocode by adding MO_ALIGN to the MemOpIdx of the associated store
+(`cpu_stl_mmu`) operations and load (`cpu_ldl_mmu`) operations.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250704142112.1018902-17-richard.henderson@linaro.org
+Note that this is not a bug fix: an 8-byte alignment check already exists
+and remains in place, enforcing stricter alignment than the 4 bytes
+requirement in the individual loads and stores. This change merely makes the
+helper implementations closer to the ARM pseudocode.
+
+That said, as a side effect, the MMU index is now resolved once instead of
+on every `cpu_*_data_ra` call, reducing redundant lookups
+
+Signed-off-by: William Kosasih <kosasihwilliam4@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250703085604.154449-2-kosasihwilliam4@gmail.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu.h               |  2 ++
- target/arm/tcg/translate.h     |  1 +
- target/arm/cpu.c               |  3 +++
- target/arm/helper.c            |  6 +++++-
- target/arm/tcg/hflags.c        | 34 +++++++++++++++++++++++++++++++++-
- target/arm/tcg/translate-a64.c |  1 +
- 6 files changed, 45 insertions(+), 2 deletions(-)
+ target/arm/tcg/m_helper.c | 24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index cbc20434836..39a9234ff28 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1513,6 +1513,7 @@ FIELD(SVCR, ZA, 1, 1)
+diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
+index 6614719832e..251e12edf9c 100644
+--- a/target/arm/tcg/m_helper.c
++++ b/target/arm/tcg/m_helper.c
+@@ -1048,6 +1048,9 @@ void HELPER(v7m_vlstm)(CPUARMState *env, uint32_t fptr)
+     bool s = env->v7m.fpccr[M_REG_S] & R_V7M_FPCCR_S_MASK;
+     bool lspact = env->v7m.fpccr[s] & R_V7M_FPCCR_LSPACT_MASK;
+     uintptr_t ra = GETPC();
++    ARMMMUIdx mmu_idx = arm_mmu_idx(env);
++    MemOpIdx oi = make_memop_idx(MO_TEUL | MO_ALIGN,
++                                 arm_to_core_mmu_idx(mmu_idx));
  
- /* Fields for SMCR_ELx. */
- FIELD(SMCR, LEN, 0, 4)
-+FIELD(SMCR, EZT0, 30, 1)
- FIELD(SMCR, FA64, 31, 1)
+     assert(env->v7m.secure);
  
- /* Write a new value to v7m.exception, thus transitioning into or out
-@@ -3084,6 +3085,7 @@ FIELD(TBFLAG_A64, NV2_MEM_E20, 35, 1)
- FIELD(TBFLAG_A64, NV2_MEM_BE, 36, 1)
- FIELD(TBFLAG_A64, AH, 37, 1)   /* FPCR.AH */
- FIELD(TBFLAG_A64, NEP, 38, 1)   /* FPCR.NEP */
-+FIELD(TBFLAG_A64, ZT0EXC_EL, 39, 2)
- 
- /*
-  * Helpers for using the above. Note that only the A64 accessors use
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index 0004a97219b..b03956a7937 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -70,6 +70,7 @@ typedef struct DisasContext {
-     int fp_excp_el; /* FP exception EL or 0 if enabled */
-     int sve_excp_el; /* SVE exception EL or 0 if enabled */
-     int sme_excp_el; /* SME exception EL or 0 if enabled */
-+    int zt0_excp_el; /* ZT0 exception EL or 0 if enabled */
-     int vl;          /* current vector length in bytes */
-     int svl;         /* current streaming vector length in bytes */
-     bool vfp_enabled; /* FP enabled via FPSCR.EN */
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 62656277625..08c43f674a2 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -635,6 +635,9 @@ void arm_emulate_firmware_reset(CPUState *cpustate, int target_el)
-                 env->cp15.cptr_el[3] |= R_CPTR_EL3_ESM_MASK;
-                 env->cp15.scr_el3 |= SCR_ENTP2;
-                 env->vfp.smcr_el[3] = 0xf;
-+                if (cpu_isar_feature(aa64_sme2, cpu)) {
-+                    env->vfp.smcr_el[3] |= R_SMCR_EZT0_MASK;
-+                }
+@@ -1073,7 +1076,7 @@ void HELPER(v7m_vlstm)(CPUARMState *env, uint32_t fptr)
+      * Note that we do not use v7m_stack_write() here, because the
+      * accesses should not set the FSR bits for stacking errors if they
+      * fail. (In pseudocode terms, they are AccType_NORMAL, not AccType_STACK
+-     * or AccType_LAZYFP). Faults in cpu_stl_data_ra() will throw exceptions
++     * or AccType_LAZYFP). Faults in cpu_stl_mmu() will throw exceptions
+      * and longjmp out.
+      */
+     if (!(env->v7m.fpccr[M_REG_S] & R_V7M_FPCCR_LSPEN_MASK)) {
+@@ -1089,12 +1092,12 @@ void HELPER(v7m_vlstm)(CPUARMState *env, uint32_t fptr)
+             if (i >= 16) {
+                 faddr += 8; /* skip the slot for the FPSCR */
              }
-             if (cpu_isar_feature(aa64_hcx, cpu)) {
-                 env->cp15.scr_el3 |= SCR_HXEN;
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 3879bce8489..b3f0d6f17a8 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6682,10 +6682,14 @@ static void smcr_write(CPUARMState *env, const ARMCPRegInfo *ri,
- {
-     int cur_el = arm_current_el(env);
-     int old_len = sve_vqm1_for_el(env, cur_el);
-+    uint64_t valid_mask = R_SMCR_LEN_MASK | R_SMCR_FA64_MASK;
-     int new_len;
- 
-     QEMU_BUILD_BUG_ON(ARM_MAX_VQ > R_SMCR_LEN_MASK + 1);
--    value &= R_SMCR_LEN_MASK | R_SMCR_FA64_MASK;
-+    if (cpu_isar_feature(aa64_sme2, env_archcpu(env))) {
-+        valid_mask |= R_SMCR_EZT0_MASK;
-+    }
-+    value &= valid_mask;
-     raw_write(env, ri, value);
- 
-     /*
-diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
-index 1ccec63bbd4..59ab5263753 100644
---- a/target/arm/tcg/hflags.c
-+++ b/target/arm/tcg/hflags.c
-@@ -214,6 +214,31 @@ static CPUARMTBFlags rebuild_hflags_a32(CPUARMState *env, int fp_el,
-     return rebuild_hflags_common_32(env, fp_el, mmu_idx, flags);
- }
- 
-+/*
-+ * Return the exception level to which exceptions should be taken for ZT0.
-+ * C.f. the ARM pseudocode function CheckSMEZT0Enabled, after the ZA check.
-+ */
-+static int zt0_exception_el(CPUARMState *env, int el)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    if (el <= 1
-+        && !el_is_in_host(env, el)
-+        && !FIELD_EX64(env->vfp.smcr_el[1], SMCR, EZT0)) {
-+        return 1;
-+    }
-+    if (el <= 2
-+        && arm_is_el2_enabled(env)
-+        && !FIELD_EX64(env->vfp.smcr_el[2], SMCR, EZT0)) {
-+        return 2;
-+    }
-+    if (arm_feature(env, ARM_FEATURE_EL3)
-+        && !FIELD_EX64(env->vfp.smcr_el[3], SMCR, EZT0)) {
-+        return 3;
-+    }
-+#endif
-+    return 0;
-+}
-+
- static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
-                                         ARMMMUIdx mmu_idx)
- {
-@@ -269,7 +294,14 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
-             DP_TBFLAG_A64(flags, PSTATE_SM, 1);
-             DP_TBFLAG_A64(flags, SME_TRAP_NONSTREAMING, !sme_fa64(env, el));
+-            cpu_stl_data_ra(env, faddr, slo, ra);
+-            cpu_stl_data_ra(env, faddr + 4, shi, ra);
++            cpu_stl_mmu(env, faddr, slo, oi, ra);
++            cpu_stl_mmu(env, faddr + 4, shi, oi, ra);
          }
--        DP_TBFLAG_A64(flags, PSTATE_ZA, FIELD_EX64(env->svcr, SVCR, ZA));
-+
-+        if (FIELD_EX64(env->svcr, SVCR, ZA)) {
-+            DP_TBFLAG_A64(flags, PSTATE_ZA, 1);
-+            if (cpu_isar_feature(aa64_sme2, env_archcpu(env))) {
-+                int zt0_el = zt0_exception_el(env, el);
-+                DP_TBFLAG_A64(flags, ZT0EXC_EL, zt0_el);
-+            }
-+        }
+-        cpu_stl_data_ra(env, fptr + 0x40, vfp_get_fpscr(env), ra);
++        cpu_stl_mmu(env, fptr + 0x40, vfp_get_fpscr(env), oi, ra);
+         if (cpu_isar_feature(aa32_mve, cpu)) {
+-            cpu_stl_data_ra(env, fptr + 0x44, env->v7m.vpr, ra);
++            cpu_stl_mmu(env, fptr + 0x44, env->v7m.vpr, oi, ra);
+         }
+ 
+         /*
+@@ -1121,6 +1124,9 @@ void HELPER(v7m_vlldm)(CPUARMState *env, uint32_t fptr)
+ {
+     ARMCPU *cpu = env_archcpu(env);
+     uintptr_t ra = GETPC();
++    ARMMMUIdx mmu_idx = arm_mmu_idx(env);
++    MemOpIdx oi = make_memop_idx(MO_TEUL | MO_ALIGN,
++                                 arm_to_core_mmu_idx(mmu_idx));
+ 
+     /* fptr is the value of Rn, the frame pointer we load the FP regs from */
+     assert(env->v7m.secure);
+@@ -1155,16 +1161,16 @@ void HELPER(v7m_vlldm)(CPUARMState *env, uint32_t fptr)
+                 faddr += 8; /* skip the slot for the FPSCR and VPR */
+             }
+ 
+-            slo = cpu_ldl_data_ra(env, faddr, ra);
+-            shi = cpu_ldl_data_ra(env, faddr + 4, ra);
++            slo = cpu_ldl_mmu(env, faddr, oi, ra);
++            shi = cpu_ldl_mmu(env, faddr + 4, oi, ra);
+ 
+             dn = (uint64_t) shi << 32 | slo;
+             *aa32_vfp_dreg(env, i / 2) = dn;
+         }
+-        fpscr = cpu_ldl_data_ra(env, fptr + 0x40, ra);
++        fpscr = cpu_ldl_mmu(env, fptr + 0x40, oi, ra);
+         vfp_set_fpscr(env, fpscr);
+         if (cpu_isar_feature(aa32_mve, cpu)) {
+-            env->v7m.vpr = cpu_ldl_data_ra(env, fptr + 0x44, ra);
++            env->v7m.vpr = cpu_ldl_mmu(env, fptr + 0x44, oi, ra);
+         }
      }
  
-     sctlr = regime_sctlr(env, stage1);
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index b0caccca46e..ad293c08858 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -10139,6 +10139,7 @@ static void aarch64_tr_init_disas_context(DisasContextBase *dcbase,
-     dc->trap_eret = EX_TBFLAG_A64(tb_flags, TRAP_ERET);
-     dc->sve_excp_el = EX_TBFLAG_A64(tb_flags, SVEEXC_EL);
-     dc->sme_excp_el = EX_TBFLAG_A64(tb_flags, SMEEXC_EL);
-+    dc->zt0_excp_el = EX_TBFLAG_A64(tb_flags, ZT0EXC_EL);
-     dc->vl = (EX_TBFLAG_A64(tb_flags, VL) + 1) * 16;
-     dc->svl = (EX_TBFLAG_A64(tb_flags, SVL) + 1) * 16;
-     dc->pauth_active = EX_TBFLAG_A64(tb_flags, PAUTH_ACTIVE);
 -- 
 2.43.0
 
