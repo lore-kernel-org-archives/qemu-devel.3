@@ -4,113 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B1DEC8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 13:16:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1A24C83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 13:17:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXgGW-0004gY-B4; Fri, 04 Jul 2025 09:15:44 -0400
+	id 1uXgIJ-0006K5-8x; Fri, 04 Jul 2025 09:17:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uXgGM-0004cU-Mg
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 09:15:35 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXgIG-0006Jp-91
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 09:17:32 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uXgGE-0008SL-K0
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 09:15:28 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 8F76D211A3;
- Fri,  4 Jul 2025 13:15:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1751634924; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2DC272G/WYtTmxxNvMcMR6RnRzFLcQaoyTQqH67jvUQ=;
- b=cegGvlva1OvBI9amUmv/m3+pexI04rdD7wJXqHwNBedA6GkTpnkUvDNR6Er/B+h5j1vDEo
- 0J8N56DNUD+qt4xPTyqxY+ifhRB9i1xdzQcwD5Qtm1DapAfa6Ahu97uKsyql7ui5ka9jSn
- AK6l6qtHmsHFSOyltLbME3ZVL7SvHv0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1751634924;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2DC272G/WYtTmxxNvMcMR6RnRzFLcQaoyTQqH67jvUQ=;
- b=zGJVP3RGh9QSvYzrtuk2E9yq2ti828YbOoVg1wAb05Vn/xEVE4b3cHNtH28l+MgRv8FgcB
- BRI3Lfwitiv8lUAw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=pn68AOoo;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=xBLr74BK
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1751634922; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2DC272G/WYtTmxxNvMcMR6RnRzFLcQaoyTQqH67jvUQ=;
- b=pn68AOooMaCIduYFAIbydxHZVRZjhyCM4UteIgQSRDhSL1TfeBn3/BwQsaOCHWozP5Bm40
- VPjLj+aEdJYZfX+LpGSWIEGGq/7CuHWHLIPEVfnrs7740FB5R7ujFH11WqqFwuTstNOxOx
- KkOrvTgwNRmTKcavYz1NH/ZTBapRADs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1751634922;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2DC272G/WYtTmxxNvMcMR6RnRzFLcQaoyTQqH67jvUQ=;
- b=xBLr74BK18D3/1H6y9HMpodzsirNvVzGyK0tTPTesyL9kj9Xz81aLHpI7ve0mOs4telRoj
- 9qqK3f+vo1INmhAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1C19D13757;
- Fri,  4 Jul 2025 13:15:21 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id nB6cNenTZ2jYYQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 04 Jul 2025 13:15:21 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, Peter Xu
- <peterx@redhat.com>, Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v2 16/24] migration: Add capabilities into
- MigrationParameters
-In-Reply-To: <87jz4sz5b6.fsf@pond.sub.org>
-References: <20250630195913.28033-1-farosas@suse.de>
- <20250630195913.28033-17-farosas@suse.de> <87jz4sz5b6.fsf@pond.sub.org>
-Date: Fri, 04 Jul 2025 10:15:15 -0300
-Message-ID: <87h5zs3xng.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXgIE-0000eL-1B
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 09:17:31 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-32b561a861fso8173631fa.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 06:17:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751635047; x=1752239847; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gZ+i/+5+N8ewOkII9wT2HLBtCT2glQpVzPe1qJqXJDI=;
+ b=nHq9McgrnKEJJPqt6NIT9030ubFUakNO6LM7AZfTpLulsZcaBUfD/ZkQX66zZmfWnh
+ 7HIriXHM/wJGDWzNLxnGBZFctsmnUJpa/MVoHYsErmG6F0R5j0/sltzv1WDBRRhKDiZ3
+ z4QjRtgSmwTq+arOvk0dITu4wZ69y5XdLKdgIV027Ccinp5msc9WKe6ZFGr4oYo0GnOa
+ GA0Lo8eHOLOtA3jOvAJtxUSmT7EK/qQnS7HNt3QoeSfKYnvcqnSI+5ozueXmfq1+cmwL
+ rlxMtr5Ep5hWXRt9zkoy1YHxWsCWPPcDMKc8GxKQuMZrbSTDTQl0jeD/0PiGFyLZW+dD
+ yN5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751635047; x=1752239847;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gZ+i/+5+N8ewOkII9wT2HLBtCT2glQpVzPe1qJqXJDI=;
+ b=O/ES2r2N9X1wud7yMiPMwmq1BRjVb83BKKqkpdZSN62TlPgaoU+pF9nXByHq/+DD4V
+ Hx1hLPDtEzNHCNx7oHCDjVH1TO8sOY6W8mmBuI317Wbhqo5DD0Ff10h+GXrVpp16Ww3e
+ DoPpiQq4osLFC/u/QyNm3O14TJawCnMFGPbtfMgc8fAu7eEL20QIar79Xr75TcUO+/sS
+ gdBMWFcZCNy6gJktVD4s8mga/LvLRg6PPVfPQ7Pg/PHi6IFf7wc+6yTiI4Cu4IOqtosX
+ GkyoUfYVQZsfkuqmOTF0JBkdzv4fkz3YnfBr7uakvUmBgmW5uUhupDrgXCY2a6f5OT4m
+ RROw==
+X-Gm-Message-State: AOJu0YwmVX3HS0aA74xz0twMR/yLzCYNj9cYEq6rZnTmP7+ftPcAeuYd
+ 4dW860/87ESIdHiPW7nDarUDB72a9arrU9wbY3M3fes7Ckr074Jo9iKMG8jEK3xB88I=
+X-Gm-Gg: ASbGncuSTc4lle6wnuT0thOgZo+MtcVI10Ro/4TCQe07wFbI12CRhc74/ssxY0KmUVp
+ g1orAI5w9zr5I9DmWDlERcbXBIwbteMdW6PlhLDvlZImGPIWArANGG2Pf9V4f4ZBeU4mEulzpQH
+ 1ipXc6T2bplVTI3+/OGN88lNFjiXTBtuUsCk2ggpSwEIc7TDsWMG7drxWbxsYdh9n+6yp+K73xQ
+ OSGDCtmPX5D8TDEoEjb3azCdEfRlikdW71iI3M/PVDQZGClVZnPvGY1zb3nscOfGl/EDlX1+IRu
+ EB2+PnlUKZpiWJzKLy2ehgAo54PgMC+bXduMZYhbvjDjJLUolj1Me0HgiYXJs7MbWOIMgLPe7uR
+ zv5B8uWF8Wcks2+J8MF+hmw0d+BB9rLVRM+E=
+X-Google-Smtp-Source: AGHT+IFMIpYwULNg+lU45xyfQ2tIwlIKt9q9LpasQiHw0WDa8dR4mT/eYFUNz1hUoByo8ABQ9vBfSg==
+X-Received: by 2002:a2e:bea5:0:b0:32b:3aeb:5533 with SMTP id
+ 38308e7fff4ca-32e5f55bbcdmr8785901fa.3.1751635046949; 
+ Fri, 04 Jul 2025 06:17:26 -0700 (PDT)
+Received: from [192.168.69.218] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-32e1b120281sm1933051fa.59.2025.07.04.06.17.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 04 Jul 2025 06:17:25 -0700 (PDT)
+Message-ID: <eab8d30e-011a-4ec0-ab70-827f6a33a5c5@linaro.org>
+Date: Fri, 4 Jul 2025 15:17:22 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 8F76D211A3
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_FIVE(0.00)[5];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim]; MISSING_XM_UA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
- imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/6] target/arm: Only allow disabling NEON when using TCG
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Alexander Graf <agraf@csgraf.de>,
+ qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250630130937.3487-1-philmd@linaro.org>
+ <20250630130937.3487-3-philmd@linaro.org>
+ <CAFEAcA8KBTfJqUbBeUm9_=JoMf133Tt3tcWhJ=sSSy-Yc6Cdcg@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA8KBTfJqUbBeUm9_=JoMf133Tt3tcWhJ=sSSy-Yc6Cdcg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,56 +103,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
-
-> Fabiano Rosas <farosas@suse.de> writes:
->
->> Add capabilities to MigrationParameters. This structure will hold all
->> migration options. Capabilities will go away in the next patch.
+On 4/7/25 15:03, Peter Maydell wrote:
+> On Mon, 30 Jun 2025 at 14:09, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
 >>
->> Also add capabilities to MigrationParameter as the enum needs to be
->> kept in sync with MigrationParameters. This affects the parsing of
->> migration HMP commands so make the necessary additions there too.
+>> Only allow disabling NEON when using TCG.
 >>
->> From this point on, both QMP and HMP versions of
->> migrate-set-parameters and query-migrate-parameters gain the ability
->> to work with capabilities.
+>> This avoids confusing user experience:
 >>
->> With MigrationParameters now having members for each capability, the
->> migration capabilities commands (query-migrate-capabilities,
->> migrate-set-capabilities) will soon be deprecated. Add a set of
->> helpers to convert between the old MigrationCapability representation
->> and the new representation as members of MigrationParameters.
+>>    $ qemu-system-aarch64 -M virt -accel hvf \
+>>                          -cpu host,neon=off,vfp=off,vfp-d32=off
+>>    qemu-system-aarch64: AArch64 CPUs must have both VFP and Neon or neither
 >>
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->
-> [...]
->
->> diff --git a/qapi/migration.json b/qapi/migration.json
->> index 40e00fb86e..3d3f5624c5 100644
->> --- a/qapi/migration.json
->> +++ b/qapi/migration.json
->> @@ -763,7 +763,14 @@
->>             'vcpu-dirty-limit',
->>             'mode',
->>             'zero-page-detection',
->> -           'direct-io'] }
->> +           'direct-io', 'xbzrle', 'rdma-pin-all', 'auto-converge',
->> +           'zero-blocks', 'events', 'postcopy-ram', 'x-colo',
->> +           'release-ram', 'return-path', 'pause-before-switchover',
->> +           'multifd', 'dirty-bitmaps', 'postcopy-blocktime',
->> +           'late-block-activate', 'x-ignore-shared',
->> +           'validate-uuid', 'background-snapshot',
->> +           'zero-copy-send', 'postcopy-preempt',
->> +           'switchover-ack', 'dirty-limit', 'mapped-ram' ] }
->
-> This is MigrateParameter.  Different order than in MigrationParameters.
-> Intentional?
->
+>>    $ qemu-system-aarch64 -M virt -accel hvf \
+>>                          -cpu host,neon=off,vfp=off,vfp-d32=off
+>>    qemu-system-aarch64: ARM CPUs must have both VFP-D32 and Neon or neither
+>>
+>>    $ qemu-system-aarch64 -M virt -accel hvf \
+>>                          -cpu host,neon=off,vfp=off,vfp-d32=off
+>>    qemu-system-aarch64: can't apply global host-arm-cpu.vfp-d32=off: Property 'host-arm-cpu.vfp-d32' not found
+> 
+> I don't know about users, but I'm definitely confused.
+> Aren't these three all the same command line ? What's
+> the problem it's trying to show ?
 
-I think you mean the pre-existing difference in the order of the
-compression options multifd-*-level? I'll fix that.
+I should have only shared this confusing example:
 
-If it's something else, it eludes my gaze.
-
+$ qemu-system-aarch64 -M virt -accel hvf -cpu host,vfp-d32=off
+qemu-system-aarch64: can't apply global host-arm-cpu.vfp-d32=off: 
+Property 'host-arm-cpu.vfp-d32' not found
 
