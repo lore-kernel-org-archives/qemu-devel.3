@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89496C83F12
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 11:21:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99BC5C83F05
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 11:22:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXeMr-00049o-Hi; Fri, 04 Jul 2025 07:14:09 -0400
+	id 1uXeMm-0003bT-Ib; Fri, 04 Jul 2025 07:14:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uXeMK-0002od-Ln
+ id 1uXeMK-0002oc-La
  for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:13:38 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uXeMG-0003hu-5o
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:13:34 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-23636167b30so8771315ad.1
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 04:13:31 -0700 (PDT)
+ id 1uXeMD-0003hX-6J
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:13:33 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-234c5b57557so8811225ad.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 04:13:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751627610; x=1752232410; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1751627607; x=1752232407; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SfgYizL3Nti5AIlWXmYjR2yepmyv1s+FueD5D7oVVKY=;
- b=DuE8TaIYBhPhibPZFPtvrAOvD3t0wAjNpKRHFK62a6Uj32VM/aivyZVbhMW52OwOaD
- CStt4kr/VGD4pkoXqMmAbCoypWwES+xIwZKSWfgiYBq/1VyNYGTNroIuuXqdhH5ITnrp
- 3QAoYpYDL2NXdlkbCG81BFmjTgznb5dboSCs10oRF1wLjuwiOd7UCaE49lHaxLAgI9Nj
- VPQyWvDS4jUjYmNXHP6k7bgO9+P8YxzPxc5vdPQ+ZPMn8EvbVGg6QUhRYQhvdK3+HeR+
- OqTUSq8f0NWH7akN2mXcg8fG4i/FYBYI6VGI+wszQIp/m6E+WyC4YC6+il4rrTmmfabX
- dTAg==
+ bh=mNwvyAn7RyjFpGw6JKkmxkBSLazntAxbNaqKwuNDhZs=;
+ b=exnGgfmh9Jqj10IxRBw5cA6r3cTGbc5zUgHS1kzDWTsCZjbG4GJcbADeldZ7UXv98t
+ xFzn8msDX80w0v6AolOg6mqMF4QTAjt5I5PqkWhdTs/X+vixHwxKlq3cRtbIvNS7gbUU
+ y/3/5mhO21ym3GkBRZVKOhYnnUXOdMc0ac5WzgEUGCdA7iU1lspJ/Ebc0ryQ2XZ0iBw3
+ K28C5AEGxp/0yuregx24do61gaczDrvnXKJDzzXws5EDIm8H3Rjrr8y3a3GaRJYRyCBK
+ h7vSVRJWWNmrsipoQvIy6DmGHwLFv8R18oaQiwMUmC5/DFrIqWKdxctAlME8Rshi65X7
+ +u9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751627610; x=1752232410;
+ d=1e100.net; s=20230601; t=1751627607; x=1752232407;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SfgYizL3Nti5AIlWXmYjR2yepmyv1s+FueD5D7oVVKY=;
- b=vlM1c9Ge5I4dCqdxeKYBKHGWbL3bcXSQQhT48cUS+BBmS0vwKhdy3SZExwcO/PpKtG
- FxuIdL+yhRvEw/hNNPqK3xB79XcpxMlxmtmXNAhlRxp0mpzx8/4d6kzHUPANDQQDkwWn
- 6J0aJtZMHlpH6Zm+H5FdOAxwYv3GjPblnIlvIrlSQEG2UTQiOuo7qjNAKAmDClYei51f
- OZHta0eSBDuNgn0eyiIEZtASzQ5nLbVG/ovZEm/+UowljPpCYbDTnPSjFnWJBwJ0D14K
- puoewd5MzfyDvy/Y73QmIt4yrp/3Qx0lDi1bEXHBmbHJnVhO9UpMIDClvfTtwnKZeb8J
- XHNw==
-X-Gm-Message-State: AOJu0Yy995bVGzD7rq3Qx7cvrblbJC0YLuU149lbSdaboQJOUkt0nVxs
- WV648P11qENZ31yzkM3qAgyeGr1Chza8MBWR1PXIxDR2XbA8R1TgG0XwxsSDWQ==
-X-Gm-Gg: ASbGnctw5tWiXpfQe2DgZHSQS63xeho1YiHqDXWhqRSMySrAwN4ZT1yNbnzvZGWReiV
- TIV2723M2xzOtP3e5h1sdNsBI+JQlI2zGQ3mYPo21uqnDTLi2tzapg3Fl11/jT/0Z6RqxhQEUl2
- mCPFLKc2sB94Ud9/pLcldb8+msSSCDzCnCqapiNQPqT3VIYp5BGt3Uw/i48PYvP+9LcJ4W0cKFX
- 1WeYN8YyuxTWu5w/KxJ8QIchuXQcZWtTA4m462VmJNfP6MgwjvnpS02OvlbtAMnTDgMm2ICccr2
- zf/D/vRlFhUAc/MhHUHX6+/uPbIjTK/xrg00UmSEeoEcW9mTbxyEwo/1rpSxTBK3nLol1xsgkxr
- L+ZCaYodAqqzgG9oG4dno/cabHfHuExxxHYxuOaZFRY8gLP5rI7nWNJ41Ar0BMq4yRuw=
-X-Google-Smtp-Source: AGHT+IFUnENo47JM81cL/SFxQLnOlrBkgwo/xvBuXr8pK6rVpvRfOJC2XUrT7CLxtLwKccq81gweEQ==
-X-Received: by 2002:a17:903:acb:b0:234:d7b2:2ac5 with SMTP id
- d9443c01a7336-23c85dff02bmr42380275ad.21.1751627610072; 
- Fri, 04 Jul 2025 04:13:30 -0700 (PDT)
+ bh=mNwvyAn7RyjFpGw6JKkmxkBSLazntAxbNaqKwuNDhZs=;
+ b=vD7pUdtUXbelY9DkEEJUpYFU0/4ahvXCFiabcx+nXkibp7AltEsHsLXmgFd8JcbHa1
+ Hr9TYYQ2xBG/lFmYhJr9xyGUV5TdPgndmR/fzGBSNcFX+OQT58Ng8THdxNeyTNjExql0
+ R1ojLz1ceU6LluKW9CUJLZggueZdabk5khZCtVci2u4RCiM12JxId0WoNhSFDoMWHWyr
+ Q4H6VGV6UEVu7NgRqxOC6/TnPzApfqHQIbQBbl+yDsbiPCvAbr/COZus+SKSJFwdmLbN
+ UwN2NKxYpLajMWrOgiNTmF3/1+5tJJlWZEnkoJhO614UAxCttL3uXa9wJ6xjT3gh6nlX
+ 8gEQ==
+X-Gm-Message-State: AOJu0Yz62Ru4eEHisWdbF8BQaW13dc7EQ+3P/Nw4OLa9ehA/dcOtC4KS
+ ykn71vnGdRqBty9zu3lgVDxC8fZTv+V3zz8W6/6i7G763wbHyG2KxTrqNTI3Aw==
+X-Gm-Gg: ASbGncuAZ4x+lb5MDwFPDSa81gJvSDBJRDy8MqUMxtnDsqrlqNiU4+NILgg/rYp1wor
+ DwDWuzrt5NPZhFoDStQXDxSpZkKt6B2tFLR8cc/lqe8ffkSP5t7hXIzuQYl788y0eaW6irdsq/T
+ dcVhUA0F3tFrnK0PWiWRuWnhzg8bnlcOUndiFWjTF4cni4g2A5lKrptqxQlWlNHTJNujDNG2uMI
+ 9ETOsblFj7UDcG2kIJ5rqW5rm1ay+3WICETcP1GygTq/DFBhZyfTA3s85tVqx5zSn2OjD3iT+/F
+ pBFwF6ye8HCJi2ytiIOfHwIZu2NZ20wxrfaSEVsQ3S8MT42D2Jja8xk7ydSDqvWtiosEgh32bjB
+ Md2tU2isncX9KzCUK7/hEEZK/mXao+ALOIOY3of7J44W62M0S6HFeQ04U1wJ5jdegF2I=
+X-Google-Smtp-Source: AGHT+IEW5b2CKsmjAVSjWYEXNqTkbTuLPAY1OLnAOcGTTCo3jn8F9o1AsUf3CcXoGg5FhCZ1ozq8WQ==
+X-Received: by 2002:a17:903:1b68:b0:235:27b6:a897 with SMTP id
+ d9443c01a7336-23c85e9c18fmr38752395ad.34.1751627607371; 
+ Fri, 04 Jul 2025 04:13:27 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23c8431a206sm18002655ad.28.2025.07.04.04.13.27
+ d9443c01a7336-23c8431a206sm18002655ad.28.2025.07.04.04.13.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 04:13:29 -0700 (PDT)
+ Fri, 04 Jul 2025 04:13:26 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Florian Lugou <florian.lugou@provenrun.com>,
+Cc: alistair23@gmail.com, Anton Blanchard <antonb@tenstorrent.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 20/40] hw/char: sifive_uart: Avoid infinite delay of async xmit
- function
-Date: Fri,  4 Jul 2025 21:11:47 +1000
-Message-ID: <20250704111207.591994-21-alistair.francis@wdc.com>
+Subject: [PULL 19/40] target/riscv: Fix fcvt.s.bf16 NaN box checking
+Date: Fri,  4 Jul 2025 21:11:46 +1000
+Message-ID: <20250704111207.591994-20-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250704111207.591994-1-alistair.francis@wdc.com>
 References: <20250704111207.591994-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,45 +104,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Florian Lugou <florian.lugou@provenrun.com>
+From: Anton Blanchard <antonb@tenstorrent.com>
 
-The current handler for TXFIFO writes schedules an async callback to
-pop characters from the queue. When software writes to TXFIFO faster
-than the async callback delay (100ns), the timer may be pushed back
-while the previous character has not be dequeued yet. This happens in
-particular when using -icount with small shift values. This is
-especially worrysome when software repetitively issues amoor.w
-instructions (as suggested by SiFive specification) and the FIFO is
-full, leading to the callback being infinitly pushed back.
+fcvt.s.bf16 uses the FP16 check_nanbox_h() which returns an FP16
+quiet NaN. Add check_nanbox_bf16() which returns a BF16 quiet NaN.
 
-This commit fixes the issue by never pushing back the timer, only
-updating it if it is not already active.
-
-Signed-off-by: Florian Lugou <florian.lugou@provenrun.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250605101255.797162-1-florian.lugou@provenrun.com>
+Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250501114253.594887-1-antonb@tenstorrent.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/char/sifive_uart.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ target/riscv/internals.h  | 16 ++++++++++++++++
+ target/riscv/fpu_helper.c |  2 +-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
-index 0fc89e76d1..9bc697a67b 100644
---- a/hw/char/sifive_uart.c
-+++ b/hw/char/sifive_uart.c
-@@ -128,8 +128,10 @@ static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
-         s->txfifo |= SIFIVE_UART_TXFIFO_FULL;
+diff --git a/target/riscv/internals.h b/target/riscv/internals.h
+index 4570bd50be..9686bb6208 100644
+--- a/target/riscv/internals.h
++++ b/target/riscv/internals.h
+@@ -142,6 +142,22 @@ static inline float16 check_nanbox_h(CPURISCVState *env, uint64_t f)
      }
- 
--    timer_mod(s->fifo_trigger_handle, current_time +
--                  TX_INTERRUPT_TRIGGER_DELAY_NS);
-+    if (!timer_pending(s->fifo_trigger_handle)) {
-+        timer_mod(s->fifo_trigger_handle, current_time +
-+                      TX_INTERRUPT_TRIGGER_DELAY_NS);
-+    }
  }
  
- static uint64_t
++static inline float16 check_nanbox_bf16(CPURISCVState *env, uint64_t f)
++{
++    /* Disable nanbox check when enable zfinx */
++    if (env_archcpu(env)->cfg.ext_zfinx) {
++        return (uint16_t)f;
++    }
++
++    uint64_t mask = MAKE_64BIT_MASK(16, 48);
++
++    if (likely((f & mask) == mask)) {
++        return (uint16_t)f;
++    } else {
++        return 0x7FC0u; /* default qnan */
++    }
++}
++
+ #ifndef CONFIG_USER_ONLY
+ /* Our implementation of SysemuCPUOps::has_work */
+ bool riscv_cpu_has_work(CPUState *cs);
+diff --git a/target/riscv/fpu_helper.c b/target/riscv/fpu_helper.c
+index 706bdfa61d..af40561b31 100644
+--- a/target/riscv/fpu_helper.c
++++ b/target/riscv/fpu_helper.c
+@@ -755,6 +755,6 @@ uint64_t helper_fcvt_bf16_s(CPURISCVState *env, uint64_t rs1)
+ 
+ uint64_t helper_fcvt_s_bf16(CPURISCVState *env, uint64_t rs1)
+ {
+-    float16 frs1 = check_nanbox_h(env, rs1);
++    float16 frs1 = check_nanbox_bf16(env, rs1);
+     return nanbox_s(env, bfloat16_to_float32(frs1, &env->fp_status));
+ }
 -- 
 2.50.0
 
