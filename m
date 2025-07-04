@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 212CDC8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 09:47:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18F53C83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 09:50:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXd14-0003E0-Er; Fri, 04 Jul 2025 05:47:34 -0400
+	id 1uXd3K-0004Oq-Ob; Fri, 04 Jul 2025 05:49:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXd13-0003Dr-CS
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 05:47:33 -0400
-Received: from mgamail.intel.com ([198.175.65.19])
+ id 1uXd3I-0004Nk-5A
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 05:49:52 -0400
+Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXd11-0005xa-MB
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 05:47:32 -0400
+ id 1uXd3G-0006hS-Gq
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 05:49:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751622452; x=1783158452;
+ t=1751622590; x=1783158590;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=rwcV4sKt2apMOij/fd7gqN4SDf9ludDIO8eQzpKKmmU=;
- b=XRLMz55F3A45t1GYTbun+7rP+XHdDklF48P2ULtLA7/hT9uF8WFAGNHa
- TT3cslG+q1jMHRhhxvQZGFWla05V7LHaCDeB7+fLrpapYtJzQfrXhZtxc
- 2HEmqSbtrNuN+QjBk0q9yY44umj35C3DFu2ENQsgABK4G/M+uz56OzZ2+
- PIPKiCZExnPUpJIH7QbTF8gXfdxJ3SXka+DeZljMAe/WqeP9FPUqWBTC7
- pAYyyN8oQL+mVbGReZ8HXOswpEs8Sd0X4KXMvtS3+C+AxBCPBKLyZfE2U
- w3p3SrA4WySr2ghQ/H/sbDhhj1QhR6kBaUvsGT8oGbaZuRC0cp0JpmeWU w==;
-X-CSE-ConnectionGUID: /0juOBrlTrOpJVTesJDUkQ==
-X-CSE-MsgGUID: 3RXkdCHYRyC6l/w+tGFHjw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="53822771"
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="53822771"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Jul 2025 02:47:31 -0700
-X-CSE-ConnectionGUID: D88yNNy9R3W90/RTEHWY5w==
-X-CSE-MsgGUID: nzajWCfyRq6N1rnT0cGAgw==
+ bh=PIS68G1zhqLECHS9Ut4+RGih5rMWO3qh6yCZ+1OvrkQ=;
+ b=MQMN0XmF1bvGGrY3LZ+cKL+QGzQPHZAZSkNPm6OK2b8OujrKK8LSAhVz
+ I2AUTHSM3D1Kzoi+c02FnvcGIZ/kauai5U9lzglO18Lo+lPG+unqs7WFJ
+ dogFAGYvzQzMUqf56yBZeu9eNAHJoXKkGdsj6727C5kL7Lurm37QMvOkU
+ Lkt+xy4s28+RsIJjoJsvzh8x6YQh8WMS6nKVD/2x+GrQJvs2vH6CRF+Dd
+ 2RbntypHUjT8y2IqCp2YNTVixzO4d6UQFWJekEAPnxAwG2mIzg9UOu3G+
+ F7UE/GuEMTAUt+AQYNTM+DeSUmgXC0BY9Rn1O2zdsZ4RJKqsWeRxfw2BA w==;
+X-CSE-ConnectionGUID: L8iiXg0RQI6b3S1HT79mBA==
+X-CSE-MsgGUID: Ii/Q+e1ZRyaR+XQQhTAL6w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="53179105"
+X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="53179105"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Jul 2025 02:49:47 -0700
+X-CSE-ConnectionGUID: L29Oe+YhQlKPiA9AaH3jRw==
+X-CSE-MsgGUID: ZFt0l1xlROqwKnAUA3Tf8Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="185560658"
+X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="155367705"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa001.fm.intel.com with ESMTP; 04 Jul 2025 02:47:29 -0700
-Date: Fri, 4 Jul 2025 18:08:55 +0800
+ by fmviesa010.fm.intel.com with ESMTP; 04 Jul 2025 02:49:47 -0700
+Date: Fri, 4 Jul 2025 18:11:12 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v6 19/39] accel/nvmm: Replace @dirty field by generic
+Subject: Re: [PATCH v6 20/39] accel/whpx: Replace @dirty field by generic
  CPUState::vcpu_dirty field
-Message-ID: <aGeoN6UchE6YynU7@intel.com>
+Message-ID: <aGeowBfypeHVUAJe@intel.com>
 References: <20250703173248.44995-1-philmd@linaro.org>
- <20250703173248.44995-20-philmd@linaro.org>
+ <20250703173248.44995-21-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250703173248.44995-20-philmd@linaro.org>
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250703173248.44995-21-philmd@linaro.org>
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,10 +85,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 03, 2025 at 07:32:25PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Thu,  3 Jul 2025 19:32:25 +0200
+On Thu, Jul 03, 2025 at 07:32:26PM +0200, Philippe Mathieu-Daudé wrote:
+> Date: Thu,  3 Jul 2025 19:32:26 +0200
 > From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v6 19/39] accel/nvmm: Replace @dirty field by generic
+> Subject: [PATCH v6 20/39] accel/whpx: Replace @dirty field by generic
 >  CPUState::vcpu_dirty field
 > X-Mailer: git-send-email 2.49.0
 > 
@@ -98,8 +98,8 @@ On Thu, Jul 03, 2025 at 07:32:25PM +0200, Philippe Mathieu-Daudé wrote:
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  target/i386/nvmm/nvmm-all.c | 21 ++++++++++-----------
->  1 file changed, 10 insertions(+), 11 deletions(-)
+>  target/i386/whpx/whpx-all.c | 23 +++++++++++------------
+>  1 file changed, 11 insertions(+), 12 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
