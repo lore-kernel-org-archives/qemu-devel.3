@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5C2BC83030
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 04:51:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6F9FC83030
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 05:00:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXYO0-0002Di-Lg; Fri, 04 Jul 2025 00:50:56 -0400
+	id 1uXYX2-0003qN-4i; Fri, 04 Jul 2025 01:00:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uXYNs-0002DE-HM
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 00:50:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uXYWy-0003ny-0Y
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 01:00:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uXYNq-0005UU-AU
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 00:50:48 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uXYWu-0000Wo-29
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 01:00:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751604645;
+ s=mimecast20190719; t=1751605206;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NUMW4P3yORtZN8D5J+yiS5FM/C39Lbdc4FB5Dw59YdY=;
- b=fE9UmaYta240KnmfAcF9/5iQmmi56O4qQ04vLSsWoirk33AHfRQloF9AzIhkMs8YO46bPL
- qvHTEYK794STYHEdZROoIxkGG6AE1bbBIstCLuu/KlRzNpAgkgxG0dyrV2RDuNs3xBQzw5
- EXvPJ+N62HDrJpmEeR5GbmjWgEL8WU0=
+ bh=xZJWggfy7+yQgZn1a2ky+wwHtoxmMN8Jx2WZWX7g0CQ=;
+ b=U6h0QYrmdCAce6bc4WkKDdqrPcGPiQ3F/QASqOhHVoen4XLK/w79M0UBpuG79qxAQXUu2m
+ 49+GUp9vwouJ/1wmMLEZhB1zjnAQC5CX7ttc5Buj5xLsX6+5Obbef4W1CxlqBNX5bguIKv
+ P56kPM1C+yQWZsHa5weyIdrG1ycUW+o=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-imHhp12zMBuvaqOZpqx3_A-1; Fri,
- 04 Jul 2025 00:50:41 -0400
-X-MC-Unique: imHhp12zMBuvaqOZpqx3_A-1
-X-Mimecast-MFC-AGG-ID: imHhp12zMBuvaqOZpqx3_A_1751604639
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-660-ePUI0Z_xN3SbOb83mnZcfw-1; Fri,
+ 04 Jul 2025 01:00:03 -0400
+X-MC-Unique: ePUI0Z_xN3SbOb83mnZcfw-1
+X-Mimecast-MFC-AGG-ID: ePUI0Z_xN3SbOb83mnZcfw_1751605201
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4ED2219560A2; Fri,  4 Jul 2025 04:50:39 +0000 (UTC)
+ id 4B45F19560AE; Fri,  4 Jul 2025 05:00:01 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D8EFE180035C; Fri,  4 Jul 2025 04:50:37 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8AB773000223; Fri,  4 Jul 2025 04:59:59 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 48A4721E6A27; Fri, 04 Jul 2025 06:50:35 +0200 (CEST)
+ id DCDE121E6A27; Fri, 04 Jul 2025 06:59:56 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org,  Zhao Liu <zhao1.liu@intel.com>,  Paolo Bonzini
  <pbonzini@redhat.com>,  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,  Alex =?utf-8?Q?Benn?=
  =?utf-8?Q?=C3=A9e?=
- <alex.bennee@linaro.org>,  "Dr. David Alan Gilbert" <dave@treblig.org>,
- Eduardo Habkost <eduardo@habkost.net>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  Yanan Wang <wangyanan55@huawei.com>,  Eric
- Blake <eblake@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Laurent
- Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH v6 07/39] accel/tcg: Remove 'info opcount' and
- @x-query-opcount
-In-Reply-To: <20250703173248.44995-8-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Thu, 3 Jul 2025 19:32:13
+ <alex.bennee@linaro.org>,  Eduardo Habkost <eduardo@habkost.net>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  Yanan Wang
+ <wangyanan55@huawei.com>,  Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v6 01/39] hw/core/machine: Display CPU model name in
+ 'info cpus' command
+In-Reply-To: <20250703173248.44995-2-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Thu, 3 Jul 2025 19:32:07
  +0200")
 References: <20250703173248.44995-1-philmd@linaro.org>
- <20250703173248.44995-8-philmd@linaro.org>
-Date: Fri, 04 Jul 2025 06:50:35 +0200
-Message-ID: <874ivstv8k.fsf@pond.sub.org>
+ <20250703173248.44995-2-philmd@linaro.org>
+Date: Fri, 04 Jul 2025 06:59:56 +0200
+Message-ID: <87zfdksg8j.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 15
 X-Spam_score: 1.5
@@ -100,18 +98,97 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-> Since commit 1b65b4f54c7 ("accel/tcg: remove CONFIG_PROFILER",
-> released with QEMU v8.1.0) we get pointless output:
+> Display the CPU model in 'info cpus'. Example before:
 >
->   (qemu) info opcount
->   [TCG profiler not compiled]
+>  $ qemu-system-aarch64 -M xlnx-versal-virt -S -monitor stdio
+>  QEMU 10.0.0 monitor - type 'help' for more information
+>  (qemu) info cpus
+>  * CPU #0: thread_id=3D42924
+>    CPU #1: thread_id=3D42924
+>    CPU #2: thread_id=3D42924
+>    CPU #3: thread_id=3D42924
+>  (qemu) q
 >
-> Remove that unstable and unuseful command.
+> and after:
+>
+>  $ qemu-system-aarch64 -M xlnx-versal-virt -S -monitor stdio
+>  QEMU 10.0.50 monitor - type 'help' for more information
+>  (qemu) info cpus
+>  * CPU #0: thread_id=3D42916 (cortex-a72)
+>    CPU #1: thread_id=3D42916 (cortex-a72)
+>    CPU #2: thread_id=3D42916 (cortex-r5f)
+>    CPU #3: thread_id=3D42916 (cortex-r5f)
+>  (qemu)
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> Tested-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>  qapi/machine.json          | 3 +++
+>  hw/core/machine-hmp-cmds.c | 3 ++-
+>  hw/core/machine-qmp-cmds.c | 1 +
+>  3 files changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index 0650b8de71a..d5bbb5e367e 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -80,6 +80,8 @@
+>  #
+>  # @thread-id: ID of the underlying host thread
+>  #
+> +# @model: CPU model name (since 10.1)
+> +#
+>  # @props: properties associated with a virtual CPU, e.g. the socket id
+>  #
+>  # @target: the QEMU system emulation target, which determines which
+> @@ -91,6 +93,7 @@
+>    'base'          : { 'cpu-index'    : 'int',
+>                        'qom-path'     : 'str',
+>                        'thread-id'    : 'int',
+> +                      'model'        : 'str',
+>                        '*props'       : 'CpuInstanceProperties',
+>                        'target'       : 'SysEmuTarget' },
+>    'discriminator' : 'target',
+> diff --git a/hw/core/machine-hmp-cmds.c b/hw/core/machine-hmp-cmds.c
+> index c6325cdcaaa..65eeb5e9cc2 100644
+> --- a/hw/core/machine-hmp-cmds.c
+> +++ b/hw/core/machine-hmp-cmds.c
+> @@ -40,7 +40,8 @@ void hmp_info_cpus(Monitor *mon, const QDict *qdict)
+>=20=20
+>          monitor_printf(mon, "%c CPU #%" PRId64 ":", active,
+>                         cpu->value->cpu_index);
+> -        monitor_printf(mon, " thread_id=3D%" PRId64 "\n", cpu->value->th=
+read_id);
+> +        monitor_printf(mon, " thread_id=3D%" PRId64 " (%s)\n",
+> +                       cpu->value->thread_id, cpu->value->model);
+>      }
+>=20=20
+>      qapi_free_CpuInfoFastList(cpu_list);
+> diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+> index d82043e1c68..ab4fd1ec08a 100644
+> --- a/hw/core/machine-qmp-cmds.c
+> +++ b/hw/core/machine-qmp-cmds.c
+> @@ -47,6 +47,7 @@ CpuInfoFastList *qmp_query_cpus_fast(Error **errp)
+>          value->cpu_index =3D cpu->cpu_index;
+>          value->qom_path =3D object_get_canonical_path(OBJECT(cpu));
+>          value->thread_id =3D cpu->thread_id;
+> +        value->model =3D cpu_model_from_type(object_get_typename(OBJECT(=
+cpu)));
+>=20=20
+>          if (mc->cpu_index_to_instance_props) {
+>              CpuInstanceProperties *props;
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Does the conversion from CPU type name to model name lose information?
+
+If yes, should we provide the type name at least in QMP?
+
+Let me also try a different angle...  what's the preferred thing for
+users of HMP and for users of QMP, CPU model name or CPU type name?
+
+Are there any commands that accept one, but not the other?
+
+Are there other commands that return one, but not the other?
 
 
