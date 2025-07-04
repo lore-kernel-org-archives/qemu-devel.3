@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C78DC83F05
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 12:02:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1576EC83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 12:07:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXf6i-0004G5-8j; Fri, 04 Jul 2025 08:01:32 -0400
+	id 1uXfC5-00073S-Ol; Fri, 04 Jul 2025 08:07:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXf6b-0004F9-63
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 08:01:28 -0400
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXf6V-0002PE-Ch
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 08:01:24 -0400
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-710f39f5cb9so7231127b3.3
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 05:01:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751630476; x=1752235276; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=g7em2cNXKnXUibtFakubNMgOKSsBTiBM0K9HagMSvwI=;
- b=TQsgriX6dHEohyXn+4V8fecGJYoyr0mntB70xWtQz5ef9nm2CPcLifmyRhY0tJ55fs
- G9oi7+qk8da9qr6Y1euFqERxdx3qMxKB0eWjqY5Y6HgKOq2UGJ/ZTxDYn4tHREpaexWe
- dmbhXixDUnph7YXPy+XvNXNf9L4QNLvLbTaGijU03alCW1AokY6PZDnBqK0OmMVD5e3g
- ZQr62+xR2ioRRCYU8fmSvEdMjCLn/2UEc5tPxlBYr+TtAkyXb8Qa0FUM+7MSMArK+Gmg
- LlKAtuxYHsuV6jBDItgYzraCNPUgOtMG2qkroN2T1J9bqXUNlSEIZZ6CYqs+7QA8g6Y2
- BFUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751630476; x=1752235276;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=g7em2cNXKnXUibtFakubNMgOKSsBTiBM0K9HagMSvwI=;
- b=E7ErzZ4VwENX7Rt1A8ZFB4rKV5OEQJ9xxhNFKPat3mkFbrD5ScsO8w59XGP5DLjaBh
- m6I/7znHulag4y+Cb9GNA9YFPUOeiG0HKF1G1uDN9XeOpa+05W4+qPIriKaf543uf5uB
- CDi5OvfZf2KlYi0Qp8z9beDJS+YMGxDLyKzXVSt5Ni5hxbHFYSzLMkeYPoAWlpuYf0Sw
- X1VOPMkqKXx2GlXzEL6qGp1vfyNPv1huztyL6H64IL29jm7SspU52D+09QwZ3GKuDKQB
- 5zEYcYlDoSun8K/UQ2z93x4gqPTc8HJld/sWkAtkhhQ2XQk/lQfBzjoTFEac8B/z4Rs2
- Mdcw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU9IpKcoHJ8qjpWgYR8INWJU9YprhdI3LSYat6end1dnl/5z+zc3Nx7AnujZnxwjDwfAA9PQVYTWcNY@nongnu.org
-X-Gm-Message-State: AOJu0YxCfe/JziQYBM5ihyA3acFinYoD9yD3n40zh4tOm2YoBeMZk5GL
- P9+RZ6JkMAvgNTrWVezugkGTfZhFAyzmpdMYdqnrvjDuX/JaAbCOXRxQKr42PPVy3A7akxDWkah
- wrO1dsp/hiHv0Km5ymXfq6CnVuJKQW4C/Tad1O++12Q==
-X-Gm-Gg: ASbGnctaOjlyxX5/TV3yCS9roSFcNWzsczOr4MBlPxSN2BaMdK0dzsEZ5tq4Y2mxFYf
- MBDXcv5redr5nJCI5VfkGhsEuukNW20EhK8D2yuimPAPvk3YshoufKGzwvSXhK7biKmnHRc4Nsm
- QbrxPThbcyp7Udzeevy9JjAM3beZwSDrfe9kcqvUz22O1+
-X-Google-Smtp-Source: AGHT+IHehhFBpfRXGOhunTibaZ8UdR8UbP58vN9Y+ETVwJhel9Fp6cCbV4oHAxkRTJQgvlpq4eP2uGQSJRMtBU6hfV8=
-X-Received: by 2002:a05:690c:316:b0:710:ebdb:83d3 with SMTP id
- 00721157ae682-71668bd1741mr29194787b3.8.1751630476316; Fri, 04 Jul 2025
- 05:01:16 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250702163115.251445-1-eric.auger@redhat.com>
- <20250702163115.251445-2-eric.auger@redhat.com>
-In-Reply-To: <20250702163115.251445-2-eric.auger@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 4 Jul 2025 13:01:05 +0100
-X-Gm-Features: Ac12FXxU2qWCFEJnCsnQzqxfbOYtcDGtugAMlaUkVitxW20uhx4ehzd4LdKhauE
-Message-ID: <CAFEAcA88pUf6tpn7_o-khYjRP6T1NwCuaZKREkC3wmd_YUKEiQ@mail.gmail.com>
-Subject: Re: [PATCH v7 1/4] hw/arm: Allow setting KVM vGIC maintenance IRQ
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- miguel.luis@oracle.com, richard.henderson@linaro.org, maz@kernel.org, 
- gkulkarni@amperecomputing.com, gankulkarni@os.amperecomputing.com, 
- hi@alyssa.is
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uXfC2-00071z-9t
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 08:07:02 -0400
+Received: from p-east3-cluster1-host4-snip4-10.eps.apple.com ([57.103.87.43]
+ helo=outbound.qs.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uXfBz-0006BA-2a
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 08:07:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
+ bh=ABXss1yk4Otbr4a1J29CZmIZb6m6sxx+cAVHmTUup8Y=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=AcaKGYn4MEpK3S2v1/QuwObM6rcsjprm876hznScwg4EiBJ4CeMUnF/gEx1uL2iZl
+ ePDwsE7Hx4KUi3uBKE0lqW+jOMj7/0QuLXKHli6O7A3YJmvH7/yFQVV9RJEUTKAzMU
+ NDffQMeB3zFNGVP1sLDJ31Sq006+Wk2unqALokqSEYjxSmH8/sZ3wghQ6KbFJvLRK6
+ rijJw7zMIiQgvyQv3F2j2eKdaZxHy7+xgktjS4qHpSkIwpCBjj/veSfkJbqZsLWual
+ mQw1Jp6eVoNj9EbAkQ4CHTxMUd/l+AqCeB3+Q/JHf9aMREFZCyk2MUmqFN0N42nYhr
+ bKDH6EVa7E7cg==
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by outbound.qs.icloud.com (Postfix) with ESMTPS id 6E3A01800D04;
+ Fri,  4 Jul 2025 12:06:51 +0000 (UTC)
+Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
+ [17.57.155.37])
+ by outbound.qs.icloud.com (Postfix) with ESMTPSA id 8A609180025D;
+ Fri,  4 Jul 2025 12:06:01 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH v4 27/65] accel/hvf: Implement get_vcpu_stats()
+From: Mads Ynddal <mads@ynddal.dk>
+In-Reply-To: <20250702185332.43650-28-philmd@linaro.org>
+Date: Fri, 4 Jul 2025 14:05:50 +0200
+Cc: qemu-devel@nongnu.org,
+ =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <AAAC3128-4BA8-4085-920A-9512786CA343@ynddal.dk>
+References: <20250702185332.43650-1-philmd@linaro.org>
+ <20250702185332.43650-28-philmd@linaro.org>
+To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
+X-Proofpoint-GUID: JJs5KPXV5DnKbWZS6g9rLCjIM9OPNCHq
+X-Proofpoint-ORIG-GUID: JJs5KPXV5DnKbWZS6g9rLCjIM9OPNCHq
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA0MDA5MSBTYWx0ZWRfX1khnz0mrRzvc
+ 3Msr0mo3VWHQCABmGuGGqRFrM6H9mxyhXsRlSIt6J6+WMS4/dNXWx8J6dvz+s9jG1a6LbiOKavr
+ RLjRonlkcrwa+6fLp3geFinWngrQdpoyG/SU/DETVr3uAqiMV7lTPswUe32nR2HP2TL7rijEXSk
+ xFOyNOSx2yibd/0JCvS7Re9bRAUk4nxw2bpGKuq5KjDNrLgR4GyLLtVPD0YdwODIhsB12u7KT3Z
+ epswYIDWMNc6WU9uualLUevrHMje9OKQm99U3cPSl1BS9z8g4gdeidlnQsKjBAfboNG9P29NY=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-04_04,2025-07-04_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ suspectscore=0 malwarescore=0 mlxscore=0 spamscore=0 clxscore=1030
+ phishscore=0 mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506060001 definitions=main-2507040091
+Received-SPF: pass client-ip=57.103.87.43; envelope-from=mads@ynddal.dk;
+ helo=outbound.qs.icloud.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.218, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,68 +94,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2 Jul 2025 at 17:31, Eric Auger <eric.auger@redhat.com> wrote:
->
-> From: Haibo Xu <haibo.xu@linaro.org>
->
-> Allow virt arm machine to set the interrupt ID for the KVM
-> GIC maintenance interrupt.
->
-> This setting must be done before the KVM_DEV_ARM_VGIC_CTRL_INIT
-> hence the choice to perform the setting in the GICv3 realize
-> instead of proceeding the same way as kvm_arm_pmu_set_irq().
->
-> Signed-off-by: Haibo Xu <haibo.xu@linaro.org>
-> Signed-off-by: Miguel Luis <miguel.luis@oracle.com>
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
 
-> @@ -231,6 +231,7 @@ struct GICv3State {
->      uint32_t num_cpu;
->      uint32_t num_irq;
->      uint32_t revision;
-> +    uint32_t maint_irq;
->      bool lpi_enable;
->      bool nmi_support;
->      bool security_extn;
-
-> +    if (s->maint_irq) {
-> +        int ret;
+> On 2 Jul 2025, at 20.52, Philippe Mathieu-Daud=C3=A9 =
+<philmd@linaro.org> wrote:
+>=20
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+> accel/hvf/hvf-accel-ops.c | 19 +++++++++++++++++++
+> 1 file changed, 19 insertions(+)
+>=20
+> diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
+> index e7f40888c26..c07ebf8a652 100644
+> --- a/accel/hvf/hvf-accel-ops.c
+> +++ b/accel/hvf/hvf-accel-ops.c
+> @@ -358,6 +358,12 @@ static inline int =
+hvf_gdbstub_sstep_flags(AccelState *as)
+>     return SSTEP_ENABLE | SSTEP_NOIRQ;
+> }
+>=20
+> +static void do_hvf_get_vcpu_exec_time(CPUState *cpu, run_on_cpu_data =
+arg)
+> +{
+> +    int r =3D hv_vcpu_get_exec_time(cpu->accel->fd, arg.host_ptr);
+> +    assert_hvf_ok(r);
+> +}
 > +
-> +        ret = kvm_device_check_attr(s->dev_fd,
-> +                                    KVM_DEV_ARM_VGIC_GRP_MAINT_IRQ, 0);
-> +        if (!ret) {
-> +            error_setg_errno(errp, errno,
-> +                             "VGICv3 setting maintenance IRQ is not "
-> +                             "supported by this host kernel");
-> +            return;
-> +        }
+> static void hvf_accel_class_init(ObjectClass *oc, const void *data)
+> {
+>     AccelClass *ac =3D ACCEL_CLASS(oc);
+> @@ -583,6 +589,16 @@ static void hvf_remove_all_breakpoints(CPUState =
+*cpu)
+>     }
+> }
+>=20
+> +static void hvf_get_vcpu_stats(CPUState *cpu, GString *buf)
+> +{
+> +    uint64_t time_us; /* units of mach_absolute_time() */
 > +
-> +        ret = kvm_device_access(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_MAINT_IRQ, 0,
-> +                                &s->maint_irq, true, errp);
+> +    run_on_cpu(cpu, do_hvf_get_vcpu_exec_time, =
+RUN_ON_CPU_HOST_PTR(&time_us));
+> +
+> +    g_string_append_printf(buf, "HVF cumulative execution time: =
+%llu.%.3llus\n",
+> +                                time_us / 1000000, (time_us % =
+1000000) / 1000);
+> +}
+> +
+> static void hvf_accel_ops_class_init(ObjectClass *oc, const void =
+*data)
+> {
+>     AccelOpsClass *ops =3D ACCEL_OPS_CLASS(oc);
+> @@ -601,7 +617,10 @@ static void hvf_accel_ops_class_init(ObjectClass =
+*oc, const void *data)
+>     ops->remove_breakpoint =3D hvf_remove_breakpoint;
+>     ops->remove_all_breakpoints =3D hvf_remove_all_breakpoints;
+>     ops->update_guest_debug =3D hvf_update_guest_debug;
+> +
+> +    ops->get_vcpu_stats =3D hvf_get_vcpu_stats;
+> };
+> +
+> static const TypeInfo hvf_accel_ops_type =3D {
+>     .name =3D ACCEL_OPS_NAME("hvf"),
+>=20
+> --=20
+> 2.49.0
+>=20
 
-This doesn't seem to line up with what the kernel documents
-for KVM_DEV_ARM_VGIC_GRP_MAINT_IRQ:
+This doesn't return the right time for me (M3 Pro). If you tested on =
+Intel, it might have a different time scale for mach units?
 
-https://www.kernel.org/doc/Documentation/virt/kvm/devices/arm-vgic-v3.rst
-says
+This is what I needed to change to make it work. Tested with 'yes > =
+/dev/null' in the guest and 'info accel' in monitor.
 
-# KVM_DEV_ARM_VGIC_GRP_MAINT_IRQ
-# Attributes:
-#
-#    The attr field of kvm_device_attr encodes the following values:
-#
-#      bits:     | 31   ....    5 | 4  ....  0 |
-#      values:   |      RES0      |   vINTID   |
-#
-#    The vINTID specifies which interrupt is generated when the vGIC
-#    must generate a maintenance interrupt. This must be a PPI.
 
-but this code sets kvmattr.addr to 0 and kvmaddr.addr to
-the address of a uint32_t with the vINTID in it.
+diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
+index cf623a1ea4..5b3bcd553d 100644
+--- a/accel/hvf/hvf-accel-ops.c
++++ b/accel/hvf/hvf-accel-ops.c
+@@ -59,6 +59,7 @@
+ #include "system/hvf.h"
+ #include "system/hvf_int.h"
+ #include "hw/core/cpu.h"
++#include <mach/mach_time.h>
 
-Looking at the kernel code in vgic_v3_attr_regs_access() it
-looks like maybe the kernel docs are wrong, but I'm not sure.
+ HVFState *hvf_state;
 
-thanks
--- PMM
+@@ -340,12 +341,16 @@ static void hvf_remove_all_breakpoints(CPUState =
+*cpu)
+
+ static void hvf_get_vcpu_stats(CPUState *cpu, GString *buf)
+ {
+-    uint64_t time_us; /* units of mach_absolute_time() */
++    uint64_t time_mach; /* units of mach_absolute_time() */
+
+-    run_on_cpu(cpu, do_hvf_get_vcpu_exec_time, =
+RUN_ON_CPU_HOST_PTR(&time_us));
++    run_on_cpu(cpu, do_hvf_get_vcpu_exec_time, =
+RUN_ON_CPU_HOST_PTR(&time_mach));
++
++    mach_timebase_info_data_t timebase;
++    mach_timebase_info(&timebase);
++    uint64_t time_ns =3D time_mach * timebase.numer / timebase.denom;
+
+     g_string_append_printf(buf, "HVF cumulative execution time: =
+%llu.%.3llus\n",
+-                                time_us / 1000000, (time_us % 1000000) =
+/ 1000);
++                                time_ns / 1000000000, (time_ns % =
+1000000000) / 1000000);
+ }
+
+ static void hvf_accel_ops_class_init(ObjectClass *oc, const void *data)
+
+
 
