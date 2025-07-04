@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54B9AC83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 13:26:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CCB6C8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 13:34:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXgPf-0007p1-Ua; Fri, 04 Jul 2025 09:25:12 -0400
+	id 1uXgXb-0004Q1-MY; Fri, 04 Jul 2025 09:33:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXgPb-0007nu-NB
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 09:25:08 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXgXQ-0004M6-1D
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 09:33:19 -0400
+Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXgPa-0004zf-15
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 09:25:07 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-451d7b50815so7175185e9.2
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 06:25:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXgXK-0003Zf-FY
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 09:33:09 -0400
+Received: by mail-yb1-xb2c.google.com with SMTP id
+ 3f1490d57ef6-e7db5c13088so825588276.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 06:33:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751635504; x=1752240304; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=WW9Q+1Ychm1T/OrkD3pPeF361asFBCHUsKp/U4TTPHE=;
- b=MOxkIL96LF6fljMBKFLFROPtp+2he+8T8uuPk/c1IM0RdGDQbrBdCHyiySko+Rx4mZ
- OJEf2SCgZWGw3GDSYqTq9xnzBl9Zr6Wm0fHQ8qofiQLJTGyrsZiLwv19jHe6rTDWqYL6
- dE2sxOGBRVwtLedHsY+wMJ+RFpidwbvGrq4haijsXsUyaA4ChbO2eIGQT4xEoxKPmkAu
- jdOpcW2I3jfX4rGZisW8DxGfoplc4KINQeaNpjWEUnHNF1cqqEqi3mSDeAkzjh9d+wgo
- njpTKZWlJHM/jUBpk/WdR7ClbVSCvSHELr+TNl7urpUmko9NuxOjoZ0fYbW7rQj5fHO6
- SZ2Q==
+ d=linaro.org; s=google; t=1751635985; x=1752240785; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DwaDmSI+c+ULG0pcs+kC8v9tTILpDgFwM3hxFcbfcyI=;
+ b=dVsEBwQi7oMDmlAbrc/SnV87WqdsKBjUWIfRfMt05aEMa8k8yPorOeke6mFAM/sEsZ
+ d1h4+IdureXF7l1N9h1YKYyDp7xTdwzgL4LGTE9dPR4AQ3d+7vAtOyO06vrXxtFFOkBW
+ be1S7Qd+qhsJs9OV4fh3W/4Kh9lXlpPkCAOT2WSQXrqD1vxq4VXKPl0DNLfd+j+LK8Mh
+ Q04iOU/lnTOgkzFGDphxJvw0kPjM+Oq8O3maXYFlW5K/LndnmNFu4dmhpwaGkDRLSBLk
+ gZNam0Oz3XyS02+EzUTI7uVKVHfB1TCKtqJqXiroYX/CVJV1Be9IFmJDml1+O3iOTeGA
+ OiwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751635504; x=1752240304;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1751635985; x=1752240785;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WW9Q+1Ychm1T/OrkD3pPeF361asFBCHUsKp/U4TTPHE=;
- b=LokT5JZUKJ1hYWu+WzkGtSlp3sMFbWd6azG6b35Ur7CwS5i6mO2Enokv3W2nPRDsDa
- fiU5jABCT6DBnal9Gs1++Mx9OHmC1E+hAdH9vHbqDgw4kFPPpPxGN5gzp9Qji2DGWzBX
- flbbpeiBAUQ6r9gpgKuaGmJ8SbpnXZc/jCZVtojOklTnb+l7LM+TZ1wOGOyRykj+Zuj/
- 9uj/JEBB32n8ykA3O1HI8aKvFphDQMubEeJmZr+xG8TTNgwM2OPjBUG6oMNiKGEu0fxV
- uzUawFsmO5Ap3c5ZaWm//FpLGTtSmbsA5cNKC6HLVKDMycvCFxUjkZB+5bqY9ZmBtRRM
- 0tkQ==
-X-Gm-Message-State: AOJu0YzgBEf9RRy69i7scpwct3tOu4C1V0RffkjV93/SJhRBcFT9ASjK
- I51HVOqYnjM2HSjeYIBqw2MDGiCX20C7pwVMd8tmNO9gZOnYLw+A2q8X7w66su1G150px++xhKA
- ninnk
-X-Gm-Gg: ASbGncvv3iLpAnCTByVJnpMe4LbnqTXYcrSH9zBtRNXER7hI8nSUm5N2bRUB+Z1SrLr
- FCt0NzV9ihqlvR2WUH/DBinYl/omfoCdJYjqexaLa44mEOWqJQ57fckz3wyBpL9o7WdbQ6slHbP
- kz4tO1bhFhmz3671ZVE3PGwSdhol/rLuJQWaWJua5+PuYF4oyYavpUMYhGPyYV7bJJKWdHFNXg5
- P/PdNBwaCerNtde3RE79McntI1j07/hziRZ3q3fLo3jof0RYbAC+QCz340ZifMBeRYXxhdMYhBN
- Vfqeb/Hdt8A7R7+RvEaULlvuqebJUslRDEMF8i9Smi70As7RaegHCPNq+FEFXi/w7QlvdirgQip
- QdsqPpqrULSa7rFoZC9eHTdh1PhvSL8Q6c+rQAlKi2Q==
-X-Google-Smtp-Source: AGHT+IHWyc7l6fB1/OjsFh6tNcjcF3ZX87EUB0ejEOCq1gKYFGov54N9uuvu6iaoMT75N8bVFdsCAg==
-X-Received: by 2002:a05:6000:3104:b0:3a4:ead4:5ea4 with SMTP id
- ffacd0b85a97d-3b4964c6243mr1942265f8f.24.1751635503974; 
- Fri, 04 Jul 2025 06:25:03 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b47030bd90sm2529450f8f.15.2025.07.04.06.25.03
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 04 Jul 2025 06:25:03 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL v2 27/36] accel/hvf: Re-use QOM allocated state
-Date: Fri,  4 Jul 2025 15:24:38 +0200
-Message-ID: <20250704132439.25743-6-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250704132439.25743-1-philmd@linaro.org>
-References: <20250704132439.25743-1-philmd@linaro.org>
+ bh=DwaDmSI+c+ULG0pcs+kC8v9tTILpDgFwM3hxFcbfcyI=;
+ b=p5ewrGttgSpAkxbgNkc5D8vEpvOUbRBzVxYYhjy0zuyEH/xnGcVKP1q2edeSqmCu7I
+ p756TSnW7FuWvpH6jqY8G63opBM/t6crzqebfurkISPj6AL0biOMANptYetlDeicWdzH
+ rymj72qwQ8PmKqloxeQY70m2O3OuR/qw6KwjeHtxL9VyAGG0imnAY/WZ8K5+qAgDyrou
+ AValbw5NZDjvKp+iHqNmg/dv9S4m+t1h+0fg/h0PP1ZmxNnZvS8cLMHdX6po1tj+H0YC
+ xTzUqUW3is9H762Yx6fh0jYoRCtwoFAs/GufqaC5VslB2tGVLxTxX/MCKzWIsTWxtuNj
+ Fkjg==
+X-Gm-Message-State: AOJu0YzYGXzDhH4r0MnBjVv6ctDEX93nMtTJzZkDcb39zHxILs9ohK/D
+ 7XtTDXQeZj5A/Y+9ld7EZRLThDiwnAkhACSEEVDmSb5zv3/fcl0pyK+h1zVhZYpovRIo+aFeHh4
+ n8PlbxzcBae/lYJhk+cHI43Ao8eZT6sm10RLS9QpwgQ==
+X-Gm-Gg: ASbGnctbDQ+kYkNoR49TE2rZAdUfdE1q0EQOoFulIVBBSzGggYyZ8yfoXxq916o0Sl2
+ HRx77QWscWHXWDBBvk/fH++kJV/YQYKXaV1N7JA0Z4CxG7wGYCvxdncyJsaOEmPemPO7eIKQKEv
+ oEs2VDOH4BoiWoO5nsuxTss8AqvUnC6qgagnQ/y3kG1w38
+X-Google-Smtp-Source: AGHT+IFCAnEZls9tvJ2p1vJqD4nxu7483ggQioJYTrgA1iflgq8Prd6RdGmdyuEWQ5cYALjCPuoaeUD1L63dzhiU3Gc=
+X-Received: by 2002:a05:6902:2849:b0:e89:9a4a:42cd with SMTP id
+ 3f1490d57ef6-e899d13b7c5mr3492974276.12.1751635984913; Fri, 04 Jul 2025
+ 06:33:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+References: <20250630130937.3487-1-philmd@linaro.org>
+ <20250630130937.3487-3-philmd@linaro.org>
+ <CAFEAcA8KBTfJqUbBeUm9_=JoMf133Tt3tcWhJ=sSSy-Yc6Cdcg@mail.gmail.com>
+ <eab8d30e-011a-4ec0-ab70-827f6a33a5c5@linaro.org>
+In-Reply-To: <eab8d30e-011a-4ec0-ab70-827f6a33a5c5@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 4 Jul 2025 14:32:53 +0100
+X-Gm-Features: Ac12FXx9p9M4oe1SZla9vu98oaZURWdG2Izp3rDg0x0klQ7UiXTxUxNHCnc1V2k
+Message-ID: <CAFEAcA8sH8HyskYEfoNKFi9N3Bq7e0ze15_ouus82nEZSchrJw@mail.gmail.com>
+Subject: Re: [PATCH 2/6] target/arm: Only allow disabling NEON when using TCG
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,36 +99,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250606164418.98655-8-philmd@linaro.org>
----
- accel/hvf/hvf-all.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+On Fri, 4 Jul 2025 at 14:17, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
+>
+> On 4/7/25 15:03, Peter Maydell wrote:
+> > On Mon, 30 Jun 2025 at 14:09, Philippe Mathieu-Daud=C3=A9 <philmd@linar=
+o.org> wrote:
+> >>
+> >> Only allow disabling NEON when using TCG.
+> >>
+> >> This avoids confusing user experience:
+> >>
+> >>    $ qemu-system-aarch64 -M virt -accel hvf \
+> >>                          -cpu host,neon=3Doff,vfp=3Doff,vfp-d32=3Doff
+> >>    qemu-system-aarch64: AArch64 CPUs must have both VFP and Neon or ne=
+ither
+> >>
+> >>    $ qemu-system-aarch64 -M virt -accel hvf \
+> >>                          -cpu host,neon=3Doff,vfp=3Doff,vfp-d32=3Doff
+> >>    qemu-system-aarch64: ARM CPUs must have both VFP-D32 and Neon or ne=
+ither
+> >>
+> >>    $ qemu-system-aarch64 -M virt -accel hvf \
+> >>                          -cpu host,neon=3Doff,vfp=3Doff,vfp-d32=3Doff
+> >>    qemu-system-aarch64: can't apply global host-arm-cpu.vfp-d32=3Doff:=
+ Property 'host-arm-cpu.vfp-d32' not found
+> >
+> > I don't know about users, but I'm definitely confused.
+> > Aren't these three all the same command line ? What's
+> > the problem it's trying to show ?
+>
+> I should have only shared this confusing example:
+>
+> $ qemu-system-aarch64 -M virt -accel hvf -cpu host,vfp-d32=3Doff
+> qemu-system-aarch64: can't apply global host-arm-cpu.vfp-d32=3Doff:
+> Property 'host-arm-cpu.vfp-d32' not found
 
-diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
-index 9e4012e2d10..df95ba74d6e 100644
---- a/accel/hvf/hvf-all.c
-+++ b/accel/hvf/hvf-all.c
-@@ -251,7 +251,7 @@ static int hvf_accel_init(AccelState *as, MachineState *ms)
- {
-     int x;
-     hv_return_t ret;
--    HVFState *s;
-+    HVFState *s = HVF_STATE(as);
-     int pa_range = 36;
-     MachineClass *mc = MACHINE_GET_CLASS(ms);
- 
-@@ -270,8 +270,6 @@ static int hvf_accel_init(AccelState *as, MachineState *ms)
-     }
-     assert_hvf_ok(ret);
- 
--    s = g_new0(HVFState, 1);
--
-     s->num_slots = ARRAY_SIZE(s->slots);
-     for (x = 0; x < s->num_slots; ++x) {
-         s->slots[x].size = 0;
--- 
-2.49.0
+That seems correct, though ? We say
+     * Allow user to turn off VFP and Neon support, but only for TCG --
+     * KVM does not currently allow us to lie to the guest about its
+     * ID/feature registers, so the guest always sees what the host has.
+and hvf is currently the same. The bug the patch is fixing
+looks like it is that -accel hvf lets us say '-cpu host,neon=3Doff'
+but it won't actually do what the user might be intending. So
+we should avoid creating the property, as we already do for KVM.
 
+(The other odd thing here is that hvf CPUs don't support
+AArch32, but ARM_FEATURE_NEON is about AArch32. But that's
+a separate thing and we'd need to cross-check that nothing
+aarch64 is incorrectly looking at that feature flag before
+we suppressed it for CPUs without any AArch32 support.)
+
+-- PMM
 
