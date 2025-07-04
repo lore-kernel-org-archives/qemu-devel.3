@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94D9BC83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 22:00:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 109DDC83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 22:30:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXoRQ-0001tw-IO; Fri, 04 Jul 2025 17:59:32 -0400
+	id 1uXouO-0000Bq-9I; Fri, 04 Jul 2025 18:29:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uXoRP-0001tN-4w
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 17:59:31 -0400
-Received: from mail-oo1-xc35.google.com ([2607:f8b0:4864:20::c35])
+ id 1uXouN-0000BX-8U
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 18:29:27 -0400
+Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uXoRN-0000GY-FM
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 17:59:30 -0400
-Received: by mail-oo1-xc35.google.com with SMTP id
- 006d021491bc7-611b246727cso730125eaf.0
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 14:59:28 -0700 (PDT)
+ id 1uXouL-0004ye-KA
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 18:29:26 -0400
+Received: by mail-ot1-x335.google.com with SMTP id
+ 46e09a7af769-7382ffcb373so858579a34.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 15:29:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751666367; x=1752271167; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=ev7KsC0b9BR/+p9nRfGPqAOeby21hJM34Dq1OG5FbAQ=;
- b=H/C9VwIZ9JB8fpI7CJIq1+W/Kztr303wcqEFQCUwVEcLu/ISceUJPe8Dgdl9qclBXm
- etEels9wMqMPmX0rzCpCOLdt+NunNQr6VxK9xSfu/bTT4psEC0p71U95BgwQWpB3h/X6
- QDI9gJBy89nvjJDIf9SF5gdBYUbW+7fbKh1/fRItqw4aJo4i6O838OZhRQLveBZCOCdQ
- i5e/G62qjOZSLnMuiFMf3soj/UIkmF31y2FsHmqdHlk3PkpQCHPZ7lWcaY1im2x+ZJto
- cXxmv12GLel/CSyEbbZ2Es0jsNiNlIeuy+7eurZmFIz9H3raIfMxGeCOMrRujo9gEYgB
- AfPA==
+ d=linaro.org; s=google; t=1751668164; x=1752272964; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PSW5Sd3fMRcO+9pF1PYCNd4U9ckjj4wNXGVkuLJI+50=;
+ b=J1iitQrLBxH///ssODG5zfEDxcLOSJjHEo4XMR2fbIiIaqkEF8ICoAYVpNf8Uc6Nim
+ feXv30sNg+WQcvD4b1FBrdxI6jDBMHNY3jeM8yzF0HCh9Hl4ovDoVVXwur+gPAoE6jvv
+ crAL7KAyXc4NZLZfTqytmJ5ImUGLdti8fMoe0EJ4CRjg4ZTWf3X1hvTb/vzaSCdtWzbZ
+ r+1xtV2F5uLU1LgwDfgeam2M7Wt/o1C3vSF2mEvatjHVesAnr9ycFD66Ix/cv9Yqtzpm
+ 9PuLIVxhsvVZnG6mkD9r8YKjwaMhPX9EuRqbADg7BCVxQNay1AN+t30+6y5Zfz/CtEtn
+ mlRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751666367; x=1752271167;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:subject:from:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1751668164; x=1752272964;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ev7KsC0b9BR/+p9nRfGPqAOeby21hJM34Dq1OG5FbAQ=;
- b=vQCn0T6aJCnhQGsh6kfcCzrkzU08xdGnctknSTXakzrYeN+sv5dT3FlWHZZPOnTL2p
- MsFQ5WHWmDatQy6mPk32a4H/+KPN2Jvt/kpRNIW81GTwDqNGHUzhbGMm61ZHrFUgbTXq
- VtU8KVXADLRr6f6kn6sSo5LASiI8Dz9xs71S98jRfKiqi9IJHP60uiPgJ1uW8H+0vQav
- z6PzqPbJH2bxCdvE1ZDiWwK4lI80l/OaDFWbmdcGKwwrCQ/p1b/p3fyyWQ7E5DeCRn82
- QqknU8FffzmBUmU5pwlxz3fx5sGIO8Tx5CMgWzh4eQbDOYsrsNLheagw1xl/4mqleRDW
- 9UkQ==
-X-Gm-Message-State: AOJu0YwJrqQuyoYc6+WeuaXZH724Edt6oheiixQB4DCb+h3KRTfXY6Al
- ILIOJklsU/k+coBa+0JrjH0iwFA2Zo2Op8Ux/2CNhyB+PsjdcbtbIAlfTkzesjMF3mI=
-X-Gm-Gg: ASbGnctSY3PjPcHIV3d/+jg0WB4uTaInrj0/vNxxrAUqeC1s3dR5BF6swBBeztndqb6
- YDIAAgF6MD0Y0LFTWn42+clk7OrkCmXT1Zv+Yx/VJnigZlaWpA2Yqt9FXo2fIt9DXo6oqzQGkIL
- yKKU+uySOTt4kX9Eq7q2legAa8kFRXfwziBddwwhuqEE24kv1BHSFv1BCHh0IqKxBbpIUNdLXNd
- pP0HCFmMEQoUxk4taydMKo7rGtoZQ0wCSKNqjFdt3sDvh919sGefMmgFJzsKxEBE553+ZZrCnL1
- 36LPDSjNsuC6Mzl4HcFVDzA8PD8GJ7NsYA0niqbIxGJQrbR/jicBDxyCCsxfyzzxwYU5DVnYuKA
- KGCWaczICub2AXotTS9ytrlcgmoZPvfwkkQBDu8ZeSCVpvPmVEgo=
-X-Google-Smtp-Source: AGHT+IEsrDtFGguJ116PDfJMP2MxORvHetPFKsc4Ot8546vGb6vyVsLQS+OAP5EogM/1YV4/208bvA==
-X-Received: by 2002:a05:6808:2191:b0:40c:fcb9:90b9 with SMTP id
- 5614622812f47-40d0737f61bmr2536416b6e.16.1751666367379; 
- Fri, 04 Jul 2025 14:59:27 -0700 (PDT)
+ bh=PSW5Sd3fMRcO+9pF1PYCNd4U9ckjj4wNXGVkuLJI+50=;
+ b=HHA8eqTIT1Hp9fn7AMHn/Y9zRUaHHvBUU1j1xbTxU0kFwx5ufcMt4CaBtVnKGz3w3r
+ lBgpI+vdyB0GwhntYZqr8SOMcmOmJju5pU0MI6ocl8EulvCxxxnc2wdGr/Ba3VSYZPRt
+ cAppwmKm1meKxuvhD0Ylc6vfZ9qHTDbszwdqGZ94zO/78f93GUDrMY2mR8sT/d5Fg6ep
+ P7zgLx7daEIWKafK9AEdBLDDMiK0Lt7JgpeYGy51PZX2j1OE8z7q8s4BSI6u95LZAeJp
+ St8jsKAcy2Sn8ivlbP/LvpOwBEYQsU+cXhh5eRSpM3gZCIcx/HkgKwvzjSGaQRY3bTcV
+ KazQ==
+X-Gm-Message-State: AOJu0Yyn96DODujciKqmaVud11jC5qZV6OjF5Jt0pRWoFbLLaPMqd4om
+ fy15gniv6MONEGybzFfSs4FBQBVg6mFRHZf+k6e9gIcJ/kaLNas4QnzrmfClOeaBvCw=
+X-Gm-Gg: ASbGncvXsH7Qchybx+IhQp9p+E3C4kzWfSPHoR1ih8G32p+yU73cltoqVXssS6KRAPm
+ TXgJaYnCdpN4vXINx9+By24Rs492Sm1/zxLJMtrrBIG+uO5Nospq77HWBF2EmiXPTOoR+Ao9T5p
+ Sd7fS+UQxhUq2hFmw99TTZ5UekJYzid8EtGHawK0u+CA23Hh2fEb4N07nLk9MZrYX4XkMwOmdlv
+ uQWBSIhpPrxdtTTjWCD61TEUVqlJVHXl383pTRZmKZ7GRF3bZQK4wlSeTlJRRK8RJeP3ret8YLZ
+ 5AFWDWta4mEGf3l17h/ND6jrf2/Y63YGz5gkvcD8v5Gd6n4Xy4GH2g/w/vdS3ijwtsPsSw2/BXp
+ rXzKqjHTi0mMXm+M2i2zk/oBj5eo5Kw9nQ2Vo+8Ur
+X-Google-Smtp-Source: AGHT+IFNltfHEPPmzoHupTJkq0BusMmkW8D5wSxtbZ0PuXL0cTpWykazdEPe2SQ/Gw2J+K8yY/PfiQ==
+X-Received: by 2002:a05:6808:2183:b0:40b:4208:710f with SMTP id
+ 5614622812f47-40d2cc40ef2mr206202b6e.24.1751668164146; 
+ Fri, 04 Jul 2025 15:29:24 -0700 (PDT)
 Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-40d02adbd55sm432967b6e.40.2025.07.04.14.59.26
+ 5614622812f47-40d02a442d3sm453991b6e.13.2025.07.04.15.29.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Jul 2025 14:59:26 -0700 (PDT)
-Message-ID: <bffb3cf0-25ce-41fe-bca9-5ce387f7f02e@linaro.org>
-Date: Fri, 4 Jul 2025 15:59:24 -0600
+ Fri, 04 Jul 2025 15:29:23 -0700 (PDT)
+Message-ID: <04076187-3892-48dd-9b6d-60bd9dc4a16c@linaro.org>
+Date: Fri, 4 Jul 2025 16:29:15 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [WIP-for-10.1 v2 3/5] target/arm: Add FEAT_SCTLR2
+Subject: Re: [WIP-for-10.1 v2 4/5] target/arm: Add FEAT_TCR2
 To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
  alex.bennee@linaro.org
 Cc: qemu-devel@nongnu.org
 References: <20250704151431.1033520-1-gustavo.romero@linaro.org>
- <20250704151431.1033520-4-gustavo.romero@linaro.org>
+ <20250704151431.1033520-5-gustavo.romero@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250704151431.1033520-4-gustavo.romero@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250704151431.1033520-5-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c35;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc35.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,84 +104,48 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/4/25 09:14, Gustavo Romero wrote:
-> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-> index 4452e7c21e..a42d1133c2 100644
-> --- a/target/arm/cpu-features.h
-> +++ b/target/arm/cpu-features.h
-> @@ -296,6 +296,11 @@ static inline bool isar_feature_aa32_ats1e1(const ARMISARegisters *id)
->       return FIELD_EX32(id->id_mmfr3, ID_MMFR3, PAN) >= 2;
->   }
->   
-> +static inline bool isar_feature_aa64_sctlr2(const ARMISARegisters *id)
+> +static CPAccessResult tcr2_access(CPUARMState *env, const ARMCPRegInfo *ri,
+> +                                  bool isread)
 > +{
-> +    return FIELD_EX64(id->id_mmfr3, ID_AA64MMFR3, SCTLRX) == 1;
-> +}
+> +    return CP_ACCESS_OK;
+> +};
 
-!= 0.  Value 2 will mean "value 1, plus ..."
+Eh?  This is missing everything: TRVM, HCRX_EL2.TCR2En, SCR_EL3.TCR2En.
+Two different functions required for TCR2_EL1 and TCR2_EL2.
 
-This also needs updating for the IDREG reorg that landed this week.
-
-> @@ -1692,6 +1706,7 @@ static inline void xpsr_write(CPUARMState *env, uint32_t val, uint32_t mask)
->   #define SCR_HXEN              (1ULL << 38)
->   #define SCR_TRNDR             (1ULL << 40)
->   #define SCR_ENTP2             (1ULL << 41)
-> +#define SCR_SCTLR2EN          (1ULL << 42)
-
-44.  Bit 42 is RCWMASKEn.
-
-> +static CPAccessResult sctlr2_access(CPUARMState *env, const ARMCPRegInfo *ri,
-> +                                    bool isread)
-> +{
-> +    int el = arm_current_el(env);
 > +
-> +    if (!cpu_isar_feature(aa64_sctlr2, env_archcpu(env))) {
-> +        return CP_ACCESS_UNDEFINED;
-> +    }
-
-Not needed, because the cpregs will not be registered otherwise.
-
-> +    if ((el < 3)  && !(env->cp15.scr_el3 & SCR_SCTLR2EN)) {
-
-Remove extra () and extra space.
-
-For SCTLR2_EL1, this is missing the TVM/TRVM check (use access_tvm_trvm first), and the 
-HCRX_EL2.SCTLR2En check.
-
-> +static void sctlr2_write(CPUARMState *env, const ARMCPRegInfo *ri,
-> +                         uint64_t value)
+> +static void tcr2_write(CPUARMState *env, const ARMCPRegInfo *ri,
+> +                       uint64_t value)
 > +{
 > +    int el = arm_current_el(env);
 > +    uint64_t valid_mask = 0ULL;
-
-ULL is unnecessary.
-
 > +
-> +    if (el > 1 && cpu_isar_feature(aa64_mec, env_archcpu(env))) {
-> +        /* SCTLR2_EL1 does not implement the EMEC bit */
+> +    valid_mask |= TCR2_AMEC0;
+> +    if (el_is_in_host(env, el)) {
+> +        if (cpu_isar_feature(aa64_mec, env_archcpu(env))) {
+> +            valid_mask |= TCR2_AMEC1;
+> +	}
 
-Incorrect test for SCTLR2_EL1: EL is the current cpu state, nothing to do with the 
-register.  You might notice that all three registers have different sets of supported 
-bits.  If you want to properly validate, you might as well you three different functions.
+This is incorrect.
 
-> +static const ARMCPRegInfo sctlr2_reginfo[] = {
-> +    { .name = "SCTLR2_EL1", .state = ARM_CP_STATE_AA64,
-> +      .opc0 = 3, .opc1 = 0, .opc2 = 3, .crn = 1, .crm = 0,
-> +      .access = PL1_RW, .accessfn = sctlr2_access,
-> +      .writefn = sctlr2_write,
-> +      .fieldoffset = offsetof(CPUARMState, cp15.sctlr2_el[1]) },
+(1) Both bits are reserved unless FEAT_MEC.
+(2) Bits that change interpretation based on el_is_in_host must always be writable, but 
+ignored when !el_is_in_host.
 
-Missing .fgt = FGT_SCTLR_EL1, .nv2_redirect_offset.
+> +    }
+> +
+> +    value &= valid_mask;
+> +    raw_write(env, ri, value);
+> +}
+> +
+> +static const ARMCPRegInfo tcr2_reginfo[] = {
+> +    { .name = "TCR2_EL1", .state = ARM_CP_STATE_AA64,
+> +      .opc0 = 3, .opc1 = 0, .opc2 = 3, .crn = 2, .crm = 0,
+> +      .access = PL1_RW, .accessfn = tcr2_access,
+> +      .writefn = tcr2_write,
+> +      .fieldoffset = offsetof(CPUARMState, cp15.tcr2_el[1]) },
 
-> +    { .name = "SCTLR2_EL2", .state = ARM_CP_STATE_AA64,
-> +      .opc0 = 3, .opc1 = 4, .opc2 = 3, .crn = 1, .crm = 0,
-> +      .access = PL2_RW, .accessfn = sctlr2_access,
-> +      .writefn = sctlr2_write,
-> +      .fieldoffset = offsetof(CPUARMState, cp15.sctlr2_el[2]) },
-> +    { .name = "SCTLR2_EL3", .state = ARM_CP_STATE_AA64,
-> +      .opc0 = 3, .opc1 = 6, .opc2 = 3, .crn = 1, .crm = 0,
-> +      .access = PL3_RW, .accessfn = sctlr2_access,
-
-No accessfn.
+Missing FGT and NV2 settings.
 
 
 r~
