@@ -4,85 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D56DC83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 11:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A6CBC8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 11:13:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXeKm-0001V6-95; Fri, 04 Jul 2025 07:12:00 -0400
+	id 1uXeLd-0001rG-UA; Fri, 04 Jul 2025 07:12:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXeKh-0001Tj-Dx
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:11:55 -0400
-Received: from mgamail.intel.com ([192.198.163.15])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXeKe-0001PX-1D
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:11:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751627512; x=1783163512;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=o1Nrk5RUp6fY1bkTBtN3Hp9y0X6x3rmoyVhWTfb40es=;
- b=PdIH6utue9QzyoVdnS8Oxxu0x2bEA0uYpuJJSXp4PYtWRzz9mbbeOQ5V
- zV/M0j7BUC53tj+r22mqt9ITSHkzDFGWZVna2OFSKETZBgJgVoYoKpZua
- qTsBEtJWOX9hw/qNa5Vq2dDdFzadUktGi2dorGcFHmOLvxK6gMGnDZK+S
- RcOiWXKF+K6wOqeX4lszZKBP24ieB7Au/HIrmCYWhQUdiGKtCQSv0arFY
- EthL6QymsnPPKJktMQIJqGAKbktxpj94rOL0HHDOjFQV4kmc+pY/BTsiS
- YEP41N5grtuDS2dhTLAE6E/Jqq4mv9t+A8G+MAUhT0Q5NTI+Pu4UC56Zi w==;
-X-CSE-ConnectionGUID: 5t3m/BQxQCSLB/4+FH855Q==
-X-CSE-MsgGUID: uwWJ5dzZSPW7tGPwV/6FhQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="54104361"
-X-IronPort-AV: E=Sophos;i="6.16,287,1744095600"; d="scan'208";a="54104361"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Jul 2025 04:11:48 -0700
-X-CSE-ConnectionGUID: 9GV3W5YtQfabXlm8uFAwUA==
-X-CSE-MsgGUID: Rb2p5PN2TDWcFZtsdBilyw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,287,1744095600"; d="scan'208";a="154746779"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa007.jf.intel.com with ESMTP; 04 Jul 2025 04:11:44 -0700
-Date: Fri, 4 Jul 2025 19:33:09 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Mads Ynddal <mads@ynddal.dk>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- Reinoud Zandijk <reinoud@netbsd.org>,
- Sunil Muthuswamy <sunilmut@microsoft.com>, kvm@vger.kernel.org,
- xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v6 30/39] accel: Propagate AccelState to
- AccelClass::init_machine()
-Message-ID: <aGe79U/acV51nQM9@intel.com>
-References: <20250703173248.44995-1-philmd@linaro.org>
- <20250703173248.44995-31-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uXeLT-0001jX-JB
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:12:44 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uXeLR-0002TR-4N
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:12:43 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-234bfe37cccso9920435ad.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 04:12:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1751627559; x=1752232359; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BgqeX0mSl6R03zp1vleVuhsTxzUAqtSjxphovdOwj2I=;
+ b=ZDQ4rS0wI3Mj1SDX1CYr+di0YUvXFgr17eSj98CIWywpns8Q2PvkkBp0LH3GqBMH1S
+ +KmOB4emNGQFIcK+Vmy3g+khoKAa0Qpcs37yp5acn1OBCyKDPA/oERKyFrcpGsPY3zjp
+ SegDddVcgkXJNGxv1HMqQHanjVNwmlD1Nm4f7/P3lPmY0D2De19uD3rzpl/CNV9rYyrc
+ rKI9AANiwdwdQtsnitkZcW91Gg9G+O6K38bWlLRkEv6+zTQbGVGxk/uV9suQN2OPV97I
+ Ww1u8GkbF/kIZJo522qOBnUhQXIzmfdo6LAlQ3jQL5YT4+xRLMdTRNLEF+EFhV8aoHZg
+ gVUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751627559; x=1752232359;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BgqeX0mSl6R03zp1vleVuhsTxzUAqtSjxphovdOwj2I=;
+ b=CqG2FIiK9q3KjS+Taa1XFm2gz72uDnQEyVb1/yOvYfoXSZAFopp7kVE4iWBBn+q9oy
+ U8CKxHL0O3Gvufokl6zMBdvTSjnZgF78LkIBfuWOhF67hS5j3fiKzqWoQrDwxWO2WcwW
+ bx5DCjIkZdSaDUlFKi2fFK4gvFL0o+9IKXwgO4LWm0JdGCcDq8BYnOOHtgDfNyEIWSoG
+ 3d9HDPiW+07hWuZ2IVxTOvTaSM0F/e3HkG6/AMZU8IsQhHpB1hUuqyGjpo73HLbVACOz
+ sg0E6F7gEF0KxXD+ifjVe7dGeMw/kH/US4QmjexeLZhHqiZtutGYvm31EfSZCYbM8zMC
+ O0lw==
+X-Gm-Message-State: AOJu0YwhWBIvbhmV+qb6cQPsPALAGV6IxpfPxVuB2ObSlG9on9gQoK2G
+ fbbTT4w4MxgGMPjO8+UujAvUyghUSnCWZgJ+hPNjSl+gqjy7REi4I2Jhj9T41A==
+X-Gm-Gg: ASbGncvinZhgrFyVGzHngOFy7aS7/FXNaccwYyArN0jDJArYpwyMS29uTzp8+l2AD8m
+ U2uKbgBNHnOOFBQ5wML0zXmUBY2IuVus1XFkXaCMmcuE5AlCOqB+aRXxtyv/cmoh8yjpCAcqNNF
+ en/ve3+T4xDwLD2DLZRdGJaW0/SkIQqpC6mJyXqhhl1398WFgtVTiiy599S+3GPSwd7OjW7Mb1a
+ UiHDVGWB9e131Dfj741VgGhDo83JkPnZ4tvfZuC6FlM9OP9ojPejo6dX/PBaj9l8pWnOM4HV4D5
+ mv5Z8imbEInQA0eFg85kvqBhLMOSsX8+bCrDU9vEBbMySU/zddCKje/YVhqnSCV3blLO9qnBoCk
+ sRMBSLEoEbFZd3wh5xrZfwXW6Tyb8HwRK7j4mB5D95d82iMZt77mrujZAybKEP6ufgLM=
+X-Google-Smtp-Source: AGHT+IH6oDjl5klLbujOYGOkB1dxs9ZjKU3hV5XJ53ed1V1iZ1Oey5PyP/VrSJ0El7DvQ2c6EsggHw==
+X-Received: by 2002:a17:902:f550:b0:235:129e:f640 with SMTP id
+ d9443c01a7336-23c8613842amr36822345ad.38.1751627559229; 
+ Fri, 04 Jul 2025 04:12:39 -0700 (PDT)
+Received: from toolbx.alistair23.me
+ (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
+ [2403:580b:97e8:0:82ce:f179:8a79:69f4])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-23c8431a206sm18002655ad.28.2025.07.04.04.12.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Jul 2025 04:12:38 -0700 (PDT)
+From: alistair23@gmail.com
+X-Google-Original-From: alistair.francis@wdc.com
+To: qemu-devel@nongnu.org
+Cc: alistair23@gmail.com, Jim Shu <jim.shu@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 03/40] target/riscv: Fix VSTIP bit in sstc extension.
+Date: Fri,  4 Jul 2025 21:11:30 +1000
+Message-ID: <20250704111207.591994-4-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.50.0
+In-Reply-To: <20250704111207.591994-1-alistair.francis@wdc.com>
+References: <20250704111207.591994-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250703173248.44995-31-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.218,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,94 +104,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 03, 2025 at 07:32:36PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Thu,  3 Jul 2025 19:32:36 +0200
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v6 30/39] accel: Propagate AccelState to
->  AccelClass::init_machine()
-> X-Mailer: git-send-email 2.49.0
-> 
-> In order to avoid init_machine() to call current_accel(),
-> pass AccelState along.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->  include/qemu/accel.h        | 2 +-
->  accel/accel-system.c        | 2 +-
->  accel/hvf/hvf-all.c         | 2 +-
->  accel/kvm/kvm-all.c         | 2 +-
->  accel/qtest/qtest.c         | 2 +-
->  accel/tcg/tcg-all.c         | 2 +-
->  accel/xen/xen-all.c         | 2 +-
->  bsd-user/main.c             | 2 +-
->  linux-user/main.c           | 2 +-
->  target/i386/nvmm/nvmm-all.c | 2 +-
->  target/i386/whpx/whpx-all.c | 2 +-
->  11 files changed, 11 insertions(+), 11 deletions(-)
+From: Jim Shu <jim.shu@sifive.com>
 
-...
+VSTIP is only writable when both [mh]envcfg.STCE is enabled, or it will
+revert it's defined behavior as if sstc extension is not implemented.
 
-> diff --git a/accel/accel-system.c b/accel/accel-system.c
-> index b5b368c6a9c..fb8abe38594 100644
-> --- a/accel/accel-system.c
-> +++ b/accel/accel-system.c
-> @@ -37,7 +37,7 @@ int accel_init_machine(AccelState *accel, MachineState *ms)
->      int ret;
->      ms->accelerator = accel;
->      *(acc->allowed) = true;
-> -    ret = acc->init_machine(ms);
-> +    ret = acc->init_machine(accel, ms);
+Signed-off-by: Jim Shu <jim.shu@sifive.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250519143518.11086-4-jim.shu@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/csr.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-Now we've already set "ms->accelerator", so that we could get @accel
-by ms->accelerator.
-
-But considerring the user emulation, where the @ms is NULL, and for
-these cases, it needs to bring current_accel() back in patch 32.
-
-Anyway, this solution is also fine for me, so,
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
-
-...But there're still more comments/questions about user emulation:
-
-> --- a/bsd-user/main.c
-> +++ b/bsd-user/main.c
-> @@ -474,7 +474,7 @@ int main(int argc, char **argv)
->                                   opt_one_insn_per_tb, &error_abort);
->          object_property_set_int(OBJECT(accel), "tb-size",
->                                  opt_tb_size, &error_abort);
-> -        ac->init_machine(NULL);
-> +        ac->init_machine(accel, NULL);
-
-Not the issue about this patch though,
-
-it seems user emulation doesn't set acc->allowed. At least TCG enabled
-is necessary, I guess?
-
->      }
->  
->      /*
-> diff --git a/linux-user/main.c b/linux-user/main.c
-> index 5ac5b55dc65..a9142ee7268 100644
-> --- a/linux-user/main.c
-> +++ b/linux-user/main.c
-> @@ -820,7 +820,7 @@ int main(int argc, char **argv, char **envp)
->                                   opt_one_insn_per_tb, &error_abort);
->          object_property_set_int(OBJECT(accel), "tb-size",
->                                  opt_tb_size, &error_abort);
-> -        ac->init_machine(NULL);
-> +        ac->init_machine(accel, NULL);
-
-Ditto.
-
->      }
->  
->      /*
-
-Thanks,
-Zhao
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index fb14972169..d8102943dd 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -3651,7 +3651,14 @@ static RISCVException rmw_mip64(CPURISCVState *env, int csrno,
+     if (riscv_cpu_cfg(env)->ext_sstc && (env->priv == PRV_M) &&
+         get_field(env->menvcfg, MENVCFG_STCE)) {
+         /* sstc extension forbids STIP & VSTIP to be writeable in mip */
+-        mask = mask & ~(MIP_STIP | MIP_VSTIP);
++
++        /* STIP is not writable when menvcfg.STCE is enabled. */
++        mask = mask & ~MIP_STIP;
++
++        /* VSTIP is not writable when both [mh]envcfg.STCE are enabled. */
++        if (get_field(env->henvcfg, HENVCFG_STCE)) {
++            mask = mask & ~MIP_VSTIP;
++        }
+     }
+ 
+     if (mask) {
+-- 
+2.50.0
 
 
