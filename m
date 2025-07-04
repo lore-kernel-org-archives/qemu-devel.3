@@ -4,75 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 281F9C83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 08:00:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7866C83030
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 08:11:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXbKY-0002Ix-Dw; Fri, 04 Jul 2025 03:59:34 -0400
+	id 1uXbUl-0005Hr-A9; Fri, 04 Jul 2025 04:10:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXbKW-0002Im-Rk
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 03:59:32 -0400
-Received: from mgamail.intel.com ([192.198.163.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXbKU-0000xl-59
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 03:59:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751615970; x=1783151970;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=h/yd3x62+ErzCjfz6VjlsW7DzyX0IY5tBB3jhhuP14Y=;
- b=E54YvNyEUEm+gwLnDvQpFbfXXNQvkzWxYk8M/ahRH9dbn8x9GGUdbmmW
- 04nHtGLtgltIrPbKmqDyGfoah18WjfzetGfnPhd3xZy4qcYxTfhnrQ6uu
- LSJYVafMsMMoaSZ0KvugJ62cF5viYPeXRcSLKYHrjNLQ4jWbWi3AEqJJH
- HehkKEXb3srBhv5am2d/al2VPjHC8/0z7nOlYQh48rV8ajbkJg2nWKhOJ
- ktygubaga1jxbNWCDTeyLvFmyJDCEM1uPAaEklMQmHCXdwKg+4+X5tQ7b
- aIWSW0s4hFj1BqD4fCWK92oZ3CgupmdQ1bgf+8AVUeyHjMzvFqY/cvbOg Q==;
-X-CSE-ConnectionGUID: L43nYgYpSyiWepk7FaqJvQ==
-X-CSE-MsgGUID: DxhfyHfIS3u+rtLs7E0QvQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="53171239"
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="53171239"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Jul 2025 00:59:19 -0700
-X-CSE-ConnectionGUID: YctiEbZmQMCJES7W1E/hZQ==
-X-CSE-MsgGUID: rbERHeHpRDuVGDS98tCSWA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="154002583"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 04 Jul 2025 00:59:17 -0700
-Date: Fri, 4 Jul 2025 16:20:43 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Kirill Martynov <stdcalllevi@yandex-team.ru>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] x86/cpu: Handle SMM mode in x86_cpu_dump_state for softmmu
-Message-ID: <aGeO2zCKep7StDA8@intel.com>
-References: <20250523154431.506993-1-stdcalllevi@yandex-team.ru>
- <3096f21e-d8dd-4434-afbd-ee2b56adb20f@intel.com>
- <6a18dfcc-1686-4e3e-8e0a-b96d7034f4ab@intel.com>
- <1d12e519-9f3c-41a0-90ff-8e4655000d21@intel.com>
- <09AD44D6-E381-46B0-9B86-B248EB9582D7@yandex-team.ru>
- <4985e648-6505-4321-8e3a-f987b9d03bde@intel.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1uXbUh-0005EQ-CW
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 04:10:04 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1uXbUc-0006JP-VB
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 04:10:03 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8AxquBQjGdo_UUiAQ--.33834S3;
+ Fri, 04 Jul 2025 16:09:53 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJAxQMJOjGdoewcJAA--.47885S3;
+ Fri, 04 Jul 2025 16:09:52 +0800 (CST)
+Subject: Re: [PATCH 3/3] target/loongarch: Remove unnecessary page size
+ validity checking
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org
+References: <20250618062607.1479699-1-maobibo@loongson.cn>
+ <20250618062607.1479699-4-maobibo@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <854e0c64-2ef5-e0cc-707e-b07dc712a60f@loongson.cn>
+Date: Fri, 4 Jul 2025 16:12:39 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4985e648-6505-4321-8e3a-f987b9d03bde@intel.com>
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20250618062607.1479699-4-maobibo@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowJAxQMJOjGdoewcJAA--.47885S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxZF15CF48CF4rXr4UGr15trc_yoW5GrWkpr
+ sIk3929a48KrZrC3Z3tas0kw13Zr1xGws2q3s3GryFvrnxX34xXrWFg347KryIy345Aw4x
+ ZFsIyry5uFWUZacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CPfJUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: 0
+X-Spam_score: -0.1
+X-Spam_bar: /
+X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-0.932, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,180 +84,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> yes, QEMU supports separate address space for SMM mode with KVM. It's just
-> that QEMU doesn't connect it with the CPU address space.
+ÔÚ 2025/6/18 ÏÂÎç2:26, Bibo Mao Ð´µÀ:
+> Page size of TLB entry comes from CSR STLBPS and pwcl register. With
+> huge page, it is dir_base + dir_width from pwcl register. With normal
+> page, it is field of PTBASE from pwcl register.
+>
+> So it is ok to check validity in function helper_ldpte() and function
+> helper_csrwr_stlbps(). And it is unnecessary in tlb entry fill path.
+>
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   target/loongarch/tcg/tlb_helper.c | 24 ++++++++----------------
+>   1 file changed, 8 insertions(+), 16 deletions(-)
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 
-Yes, you're right.
-
-(But initially, it might have been intentional, as KVM's SMM address
-space is global. It is consistent with the current KVM/memory interface.
-Creating a separate CPUAddressSpace for each CPU would involve a lot of
-redundant work.)
-
-> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-> index a68485547d50..7d6f4a86d802 100644
-> --- a/include/exec/cpu-common.h
-> +++ b/include/exec/cpu-common.h
-> @@ -130,6 +130,8 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
->   */
->  void cpu_address_space_destroy(CPUState *cpu, int asidx);
-> 
-> +void cpu_address_space_add(CPUState *cpu, AddressSpace *as);
+Thanks.
+Song Gao
+> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+> index dc48b0f4d2..21381ba59f 100644
+> --- a/target/loongarch/tcg/tlb_helper.c
+> +++ b/target/loongarch/tcg/tlb_helper.c
+> @@ -173,12 +173,6 @@ static void fill_tlb_entry(CPULoongArchState *env, int index)
+>           lo1 = env->CSR_TLBELO1;
+>       }
+>   
+> -    /*check csr_ps */
+> -    if (!check_ps(env, csr_ps)) {
+> -        qemu_log_mask(LOG_GUEST_ERROR, "csr_ps %d is illegal\n", csr_ps);
+> -        return;
+> -    }
+> -
+>       /* Only MTLB has the ps fields */
+>       if (index >= LOONGARCH_STLB) {
+>           tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, PS, csr_ps);
+> @@ -340,23 +334,16 @@ void helper_tlbfill(CPULoongArchState *env)
+>   
+>       if (FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
+>           entryhi = env->CSR_TLBREHI;
+> +        /* Validity of pagesize is checked in helper_ldpte() */
+>           pagesize = FIELD_EX64(env->CSR_TLBREHI, CSR_TLBREHI, PS);
+>       } else {
+>           entryhi = env->CSR_TLBEHI;
+> +        /* Validity of pagesize is checked in helper_tlbrd() */
+>           pagesize = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, PS);
+>       }
+>   
+> -    if (!check_ps(env, pagesize)) {
+> -        qemu_log_mask(LOG_GUEST_ERROR, "pagesize %d is illegal\n", pagesize);
+> -        return;
+> -    }
+> -
+> +    /* Validity of stlb_ps is checked in helper_csrwr_stlbps() */
+>       stlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+> -    if (!check_ps(env, stlb_ps)) {
+> -        qemu_log_mask(LOG_GUEST_ERROR, "stlb_ps %d is illegal\n", stlb_ps);
+> -        return;
+> -    }
+> -
+>       if (pagesize == stlb_ps) {
+>           /* Only write into STLB bits [47:13] */
+>           address = entryhi & ~MAKE_64BIT_MASK(0, R_CSR_TLBEHI_64_VPPN_SHIFT);
+> @@ -651,6 +638,11 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+>           if (odd) {
+>               tmp0 += MAKE_64BIT_MASK(ps, 1);
+>           }
 > +
-
-Instead of introducing a "redundant" interfaces, it's better to lift the
-restrictions of cpu_address_space_init() on KVM and reuse it.  Moreover,
-not explicitly setting asidx can be risky.
-
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index a68485547d50..e3c70ccb1ea0 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -106,6 +106,8 @@ size_t qemu_ram_pagesize_largest(void);
-  * @asidx: integer index of this address space
-  * @prefix: prefix to be used as name of address space
-  * @mr: the root memory region of address space
-+ * @as: the pre-created AddressSpace. If have, no need to
-+ *      specify @mr.
-  *
-  * Add the specified address space to the CPU's cpu_ases list.
-  * The address space added with @asidx 0 is the one used for the
-@@ -117,10 +119,10 @@ size_t qemu_ram_pagesize_largest(void);
-  * cpu->num_ases to the total number of address spaces it needs
-  * to support.
-  *
-- * Note that with KVM only one address space is supported.
-  */
- void cpu_address_space_init(CPUState *cpu, int asidx,
--                            const char *prefix, MemoryRegion *mr);
-+                            const char *prefix, MemoryRegion *mr,
-+                            AddressSpace *as);
- /**
-  * cpu_address_space_destroy:
-  * @cpu: CPU for which address space needs to be destroyed
-diff --git a/system/physmem.c b/system/physmem.c
-index ff0ca40222d3..15aedfb58055 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -776,16 +776,23 @@ hwaddr memory_region_section_get_iotlb(CPUState *cpu,
- #endif /* CONFIG_TCG */
-
- void cpu_address_space_init(CPUState *cpu, int asidx,
--                            const char *prefix, MemoryRegion *mr)
-+                            const char *prefix, MemoryRegion *mr,
-+                            AddressSpace *as)
- {
-     CPUAddressSpace *newas;
--    AddressSpace *as = g_new0(AddressSpace, 1);
--    char *as_name;
-+    AddressSpace *cpu_as;
-
--    assert(mr);
--    as_name = g_strdup_printf("%s-%d", prefix, cpu->cpu_index);
--    address_space_init(as, mr, as_name);
--    g_free(as_name);
-+    if (!as) {
-+        cpu_as = g_new0(AddressSpace, 1);
-+        char *as_name;
-+
-+        assert(mr);
-+        as_name = g_strdup_printf("%s-%d", prefix, cpu->cpu_index);
-+        address_space_init(cpu_as, mr, as_name);
-+        g_free(as_name);
-+    } else {
-+        cpu_as = as;
-+    }
-
-     /* Target code should have set num_ases before calling us */
-     assert(asidx < cpu->num_ases);
-
-     if (asidx == 0) {
-         /* address space 0 gets the convenience alias */
--        cpu->as = as;
-+        cpu->as = cpu_as;
-     }
-
--    /* KVM cannot currently support multiple address spaces. */
--    assert(asidx == 0 || !kvm_enabled());
--
-     if (!cpu->cpu_ases) {
-         cpu->cpu_ases = g_new0(CPUAddressSpace, cpu->num_ases);
-         cpu->cpu_ases_count = cpu->num_ases;
-@@ -805,12 +809,12 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
-
-     newas = &cpu->cpu_ases[asidx];
-     newas->cpu = cpu;
--    newas->as = as;
-+    newas->as = cpu_as;
-     if (tcg_enabled()) {
-         newas->tcg_as_listener.log_global_after_sync = tcg_log_global_after_sync;
-         newas->tcg_as_listener.commit = tcg_commit;
-         newas->tcg_as_listener.name = "tcg";
--        memory_listener_register(&newas->tcg_as_listener, as);
-+        memory_listener_register(&newas->tcg_as_listener, cpu_as);
-     }
- }
-
----
-
-In this interface, whether to reuse the existing address space (@as
-argument) or create a new one for the CPU depends on the maintainer's
-final opinion anyway. If the choice is to reuse, as in the code above,
-need to adjust other calling cases. If so, I suggest Kirill handle this
-in a separate patch.
-
->  #include "kvm_i386.h"
-> @@ -90,6 +91,12 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
->          kvm_set_guest_phys_bits(cs);
->      }
-> 
-> +    for (int i = 0; i < kvm_state->nr_as; i++) {
-> +        if (kvm_state->as[i].as) {
-> +            cpu_address_space_add(cs, kvm_state->as[i].as);
+> +        if (!check_ps(env, ps)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "Illegal huge pagesize %ld\n", ps);
+> +            return;
 > +        }
-> +    }
-> +
-
-This will add smram twice, with the following cpu_address_space_add().
-
-Why are all KVM as unconditionally added to each CPU?
-
-Another issue is the SMM AS index would be "unknown"...
-
->      return true;
->  }
-> 
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 234878c613f6..3ba7b26e5a74 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -2700,6 +2700,7 @@ static MemoryRegion smram_as_mem;
-> 
->  static void register_smram_listener(Notifier *n, void *unused)
->  {
-> +    CPUState *cpu;
->      MemoryRegion *smram =
->          (MemoryRegion *) object_resolve_path("/machine/smram", NULL);
-> 
-> @@ -2724,6 +2725,9 @@ static void register_smram_listener(Notifier *n, void
-> *unused)
->      address_space_init(&smram_address_space, &smram_as_root, "KVM-SMRAM");
->      kvm_memory_listener_register(kvm_state, &smram_listener,
->                                   &smram_address_space, 1, "kvm-smram");
-> +    CPU_FOREACH(cpu) {
-> +        cpu_address_space_add(cpu, &smram_address_space);
-> +    }
->  }
-
-With the cpu_address_space_init(), here could be:
-
-CPU_FOREACH(cpu) {
-	/* Ensure SMM Address Space has the index 1.  */
-	assert(cpu->num_ases == 1);
-	cpu->num_ases = 2;
-	cpu_address_space_init(cpu, 1, NULL, NULL, &smram_address_space);
-}
-
-
+>       } else {
+>           badv = env->CSR_TLBRBADV;
+>   
 
 
