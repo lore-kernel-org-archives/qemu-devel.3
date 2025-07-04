@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9FB6C8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 17:27:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31587C83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 17:29:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXkC8-0003cf-1B; Fri, 04 Jul 2025 13:27:28 -0400
+	id 1uXkDP-0004ag-83; Fri, 04 Jul 2025 13:28:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXkC5-0003bo-8v
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 13:27:25 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ id 1uXkDM-0004Zl-Q3
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 13:28:44 -0400
+Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXkC3-0005ux-Hj
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 13:27:25 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-7170344c100so1947377b3.0
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 10:27:23 -0700 (PDT)
+ id 1uXkDL-00067k-10
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 13:28:44 -0400
+Received: by mail-yb1-xb33.google.com with SMTP id
+ 3f1490d57ef6-e731a56e111so989905276.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 10:28:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751650042; x=1752254842; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751650122; x=1752254922; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=bOiOTqRcRNJJoDMRFcgcdMSWMsm2l6BNIFO/6a5P1cU=;
- b=Wu90Z/Fb1XAHUiButYZsehxUezAgcyKX+zp3TlfBPTmIUOrVuNuzhOXixFulMPYA7U
- hzV/AXVVTQelIBIlEUHqCej8AxDf+ZxcRC8OHBvrIL60JEUn9soSR25OLITW9PmUR5r4
- +GSfEjf6xNuBU9XWJOr+nQlcHXjGE91pmp7VXFsyq7WlLeY4i6ohFsCo+fc2gmc9gvnc
- U6EHzct3UGZAtXBfPBqqNw9DMxfTvYQXR4yUF+nC+9Ng1PB9sHR63PhG2a/ioXIzhOvF
- qblQDqEKn0k2UZCsNos/O5Wz/PHEQ9mmoF5kYHOT2zQk1yzv/xiDMxy4KhBtPiz0nSk8
- UmaQ==
+ bh=9KCN9mYaUWXyO4j8AMRdwOZNpBoYuHmpDR2+2xoPko4=;
+ b=kjY4Hq5nGthuwB9+iz9NeOFcz5CsBw0ckoJ40UOj65N88vhKinOz4Nxn30CpwZWJpA
+ dNWsMgh6X3QDgQZfCVZ1rSCUP7xFzhf1+vMw6OVCYtQR0z2/INBlYplX7UB/vf07Fc08
+ lh7vyBcAs9IGW0+/YwXfytmmFLlEQKLo53fgvZDxUiNtmOtm5rAYFvAHthMDYtNGNxJ4
+ 27b9TllqlGWYlz4pAq9yzQ8tQsF7SF+nM2Z6TsHtRtWe5LzUXrryeZClGADlexFLEOQt
+ DC5trmhpnhSPHMZuYCUQDVcctDl28DEroKMgHVS0JSel+AF7H+fmAtef3E5XcrpSEpjQ
+ xkaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751650042; x=1752254842;
+ d=1e100.net; s=20230601; t=1751650122; x=1752254922;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=bOiOTqRcRNJJoDMRFcgcdMSWMsm2l6BNIFO/6a5P1cU=;
- b=HhkKwOAhvNrt7OvvTM1z39OFMUcqOJ7SDZP8hRYEh0rMEmhq6tQd6V61AH9fWQFtTS
- PV4PMMDidT4Z+DzWf31GKpzs7+q20XJHyA8fE6R1EKhfXdq86FAfw+uwYKDHkC2tkj1i
- nWQdS9TUGOgIdNdcvZOIJIJ1euD8T/GJdu6NOPyUYtb7faUBUkGu8d1+NIyVFPADUkAp
- IN8qJekfzqCULp4rkUu8jSiN15MhiJ13TT5dvbs5t2cSMI9DFHndQ8FWz09xmB6uhwFB
- O3xQ5fSZsEElomBary9x9CSfS6ZeKIS5e00f2z2hR/Mu58OyLpL3Cfl1071miYvdsD+G
- OmgA==
-X-Gm-Message-State: AOJu0YwsQP6PrnGJkq9RQwd4hfILAgeLFXXVhVEta4XhyRJB2bonknsj
- nGS9suHlIK1Iqa40ZfqVpRqkAwwNo26Ieftf6Z/ysPI9RgDQtMgeQ0+PlvqTcxX01FSG3lJtdOv
- Os0odHmiGUFZN6KtFQpI1F8ARGV2ts4ssanjqYz2DG2JdmImqu1ok
-X-Gm-Gg: ASbGncv7lCrS2G7NYdeDM8pLeqqp5d6tc7hFoAizjwpo76cS+us6ERo2uoAqxFRQ2wQ
- jWCg+YxkCywh2DA8qh/Q+4+sgf0HSWxuCckV3S9DYycMKdr2eyBG1XoekFfwVrbvSGgXqS0L8d/
- QBQZ1kv+KYnCznBMnl3N4PIw8ZVEh0EtbtNVFJVQ7DKiLu
-X-Google-Smtp-Source: AGHT+IGHCrhCZRGfO1Ka/Ul1Q/TH2EYeV43hGiRlV8DMQfmqznCDa5n1UAwOr+b00raSI/P/Zk1qNsE0b2S+Xea5tmw=
-X-Received: by 2002:a05:690c:38a:b0:712:d946:788e with SMTP id
- 00721157ae682-7166b5f6d7emr33683587b3.14.1751650042358; Fri, 04 Jul 2025
- 10:27:22 -0700 (PDT)
+ bh=9KCN9mYaUWXyO4j8AMRdwOZNpBoYuHmpDR2+2xoPko4=;
+ b=iSsXljKJLoqiSrd3Cgvvtbmpe1Z1jaOBo8PBK4bAhQ4QeFrYW3C54C9qvkKVBip1Q2
+ OuG7w+iPqaWbeJu6uPm8XCDQy+2jAyPEqf1N1262aQBSDcwT4ESiYYqunQ91AlajF/nT
+ lq+depjFR9e+1r8OXi7WlH0WECvJ0khgGr6lN+F4XzcF/cZR04a8gUtqfblrMuUkZGHb
+ X63ehW0uQu7EESXGIuhL1zhshqx9x11gil2/1fb4mLBMnLC2EpytUl/y9iyK5UuqJ94V
+ rd8gwS7NTiczHUZ7REeLqkW+iujwIw7AtqU4kL4yBWkqLbX38bdK6skxw5cJvAI+a6Ml
+ vkyg==
+X-Gm-Message-State: AOJu0YyOOmDhzyjIr6F7IDBME2VB49GL10ESqirEKqkCnZ05tPmAc88f
+ YpY4GDGjoTUV/1bhAPqpoy8vGIdvJ1h8xZusEguHEseujD+jhRDNi29pmtAOHuZ1NRA/2Ih2yrV
+ K3JgnOlkNArlz0KKMUQCkFsQjHUD2j05eZC5JEpTqu5fP9vv/F8RI
+X-Gm-Gg: ASbGncs1kjUX+onEtKprU0qrp5dsZf4FjZ3Lxgg+91Iz9uWIPYG7wz4NA2T+O+gwcRc
+ 475XC+BXzmV1Oq5evZvi+OJCB+IoJK0a3/0xqjfpx3UQiq0DI2bVx5vo/T5DfCkmP2syXMPXeqe
+ KW0mlDrlYNW/K2CbiKBe/Cl38ClHlxfQVmSoLYioQSkLMn
+X-Google-Smtp-Source: AGHT+IFQTmng8owKrPdXh1dnOIXzXz9tgfRJ0z7QedtlmFz/t1DDsKmQuY7Ju83fVqRIODXvFShgdf7fKEM1NovmIuY=
+X-Received: by 2002:a05:6902:110a:b0:e81:52ff:b40 with SMTP id
+ 3f1490d57ef6-e89a0c1f5eamr3127635276.20.1751650121727; Fri, 04 Jul 2025
+ 10:28:41 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250704165729.208381-1-jcksn@duck.com>
- <20250704165729.208381-8-jcksn@duck.com>
-In-Reply-To: <20250704165729.208381-8-jcksn@duck.com>
+ <20250704165729.208381-10-jcksn@duck.com>
+In-Reply-To: <20250704165729.208381-10-jcksn@duck.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 4 Jul 2025 18:27:11 +0100
-X-Gm-Features: Ac12FXwZXR6bs4p6fpRcl5BCjGIjSGSxKeNuX37eggC0NQrDm2ZcKPIRKuvhbFQ
-Message-ID: <CAFEAcA_2t1FSK9frDLiS6fdOcGKVT20hgCZCxB52fp=uhGKrKA@mail.gmail.com>
-Subject: Re: [PATCH v3 07/11] MAX78000: Add GCR to SOC
+Date: Fri, 4 Jul 2025 18:28:29 +0100
+X-Gm-Features: Ac12FXzm31NI7VlPP3f2T_q2tX1iw-6RKhT6tbaYp6_LIe6di2YnSBWgt3wdse4
+Message-ID: <CAFEAcA94PWJDgd=8cwmiKOOPGfqmyOqzzV73hzXjzH3xdha7_w@mail.gmail.com>
+Subject: Re: [PATCH v3 09/11] MAX78000: Add TRNG to SOC
 To: Jackson Donaldson <jackson88044@gmail.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,63 +94,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Fri, 4 Jul 2025 at 17:57, Jackson Donaldson <jackson88044@gmail.com> wrote:
 >
-> This commit adds the Global Control Register to
-> max78000_soc
+> This commit adds TRNG to max78000_soc
 >
-> Signed-off-by: Jackson Donaldson <jcksn@duck.com>
-
-> @@ -94,12 +101,14 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
->          return;
+> Signed-off-by: Jackson Donaldson
+> ---
+>  hw/arm/max78000_soc.c         | 12 +++++++++++-
+>  include/hw/arm/max78000_soc.h |  2 ++
+>  2 files changed, 13 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/arm/max78000_soc.c b/hw/arm/max78000_soc.c
+> index eddd9616f0..074fb1da8b 100644
+> --- a/hw/arm/max78000_soc.c
+> +++ b/hw/arm/max78000_soc.c
+> @@ -43,6 +43,8 @@ static void max78000_soc_initfn(Object *obj)
+>                                  TYPE_MAX78000_UART);
 >      }
 >
+> +    object_initialize_child(obj, "trng", &s->trng, TYPE_MAX78000_TRNG);
 > +
->      for (i = 0; i < MAX78000_NUM_ICC; i++) {
->          dev = DEVICE(&(s->icc[i]));
->          sysbus_realize(SYS_BUS_DEVICE(dev), errp);
->          sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, max78000_icc_addr[i]);
->      }
+>      s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
+>  }
 >
-> +
->      for (i = 0; i < MAX78000_NUM_UART; i++) {
->          dev = DEVICE(&(s->uart[i]));
->          qdev_prop_set_chr(dev, "chardev", serial_hd(i));
-
-Stray whitespace changes.
-
-> @@ -107,13 +116,22 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
->              return;
->          }
->
-> +        g_autofree char *link = g_strdup_printf("uart%d", i);
-> +        object_property_set_link(OBJECT(gcrdev), link, OBJECT(dev),
-> +                                 &err);
-
-Our coding style wants variable declarations at the top of a block,
-not in the middle.
-
-> +
->          busdev = SYS_BUS_DEVICE(dev);
->          sysbus_mmio_map(busdev, 0, max78000_uart_addr[i]);
->          sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m,
+> @@ -51,6 +53,7 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
+>      MAX78000State *s = MAX78000_SOC(dev_soc);
+>      MemoryRegion *system_memory = get_system_memory();
+>      DeviceState *dev, *gcrdev, *armv7m;
+> +    g_autofree char *trng_link = NULL;
+>      SysBusDevice *busdev;
+>      Error *err = NULL;
+>      int i;
+> @@ -126,6 +129,14 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
 >                                                         max78000_uart_irq[i]));
 >      }
 >
-> -    create_unimplemented_device("globalControl",        0x40000000, 0x400);
-> +    dev = DEVICE(&s->gcr);
+> +    dev = DEVICE(&s->trng);
 > +    sysbus_realize(SYS_BUS_DEVICE(dev), errp);
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x40000000);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x4004d000);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(armv7m, 4));
 > +
+> +    trng_link = g_strdup("trng");
+> +    object_property_set_link(OBJECT(gcrdev), trng_link, OBJECT(dev), &err);
+
+This string is constant, so you can just pass it in:
+   object_property_set_link(OBJECT(gcrdev), "trng", ...)
+rather than having a local variable and allocating memory.
+
 > +
-> +
-
-One blank line is enough.
-
->      create_unimplemented_device("systemInterface",      0x40000400, 0x400);
->      create_unimplemented_device("functionControl",      0x40000800, 0x400);
->      create_unimplemented_device("watchdogTimer0",       0x40003000, 0x400);
-
-Otherwise
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+>      dev = DEVICE(&s->gcr);
+>      sysbus_realize(SYS_BUS_DEVICE(dev), errp);
+>      sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x40000000);
 
 thanks
 -- PMM
