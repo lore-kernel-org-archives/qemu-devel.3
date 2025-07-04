@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA1A9C83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:58:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33914C83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:58:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXjjJ-000727-DW; Fri, 04 Jul 2025 12:57:41 -0400
+	id 1uXjjK-00075H-B4; Fri, 04 Jul 2025 12:57:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
- id 1uXjjI-0006ys-AK
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:57:40 -0400
-Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
+ id 1uXjjG-0006se-1n
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:57:38 -0400
+Received: from mail-qv1-xf33.google.com ([2607:f8b0:4864:20::f33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
- id 1uXjjG-0000PE-Bq
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:57:40 -0400
-Received: by mail-qk1-x732.google.com with SMTP id
- af79cd13be357-7c5b8d13f73so116350585a.0
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:57:38 -0700 (PDT)
+ id 1uXjjD-0000Ns-Qu
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:57:37 -0400
+Received: by mail-qv1-xf33.google.com with SMTP id
+ 6a1803df08f44-6fa980d05a8so11377356d6.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:57:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751648257; x=1752253057; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1751648254; x=1752253054; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GY7MJBZ+jVGFNfvqDhRAHNzOKhw8Qpr4ty2QBdtSrdE=;
- b=BL2/GGOVaiKZOprZ/Vc2rZzSHngwwNMeuET99JpxGZE7H5bKXma1YL7fq/u4JnzXv8
- iKDzoExhF+mD8s+ytdkerNB7sUwj7foGt94cCKLi7r4Jhwxa6/6mE3ieqBPAakfkxMns
- +YlZVOi45hWm6xVO5Zul+L59LwslxTHnH4YdmhbyGDipZU5RvMCsnXjGjaMmh20NW3rd
- +Vd45O1CvRgV+bbuqhC+Dz/T1P6Jtzb7+8mX0Z2amj4yDs1hRMmaPc8SXxpfSO2AGJQR
- szfL3k4SFAqu2A+ao/wkZ2y/wi0fARgtmIl6QRAvBh1rjjbmIKsODDpG1SKXh8YO7jnP
- iLjA==
+ bh=AWnu/oAAzVkXqcGwl/ibho3UTNb/WrEZ456/ajF/M5o=;
+ b=STDolJBsmHvLGG/N6vza4RO0l/YKY0wNIo7CCqUraFe/2hqyCudp57SpFEPGNOfeRd
+ RgMy/kdjWY/dWjCdnWKun/x/EEg79Atrx1G4tCIfFdPcZ2zq34fz+RsIOOTRVwBTOa0d
+ MgHTv3kVfqEArlQ2Fju9OqnFD41TxPQgjbS3e7U9x5Ea94tpL4XP8eraGcJ5jz/iyR2u
+ Onn3plWRhi4h94z0v9hxnjrlDsinHLkDJ3a3WLDNpmE2QECpbvrEXgSiXOHOvyWD91XI
+ yfhk4E8Shp7txUBHJfRTA0Lgr5cnDdl8sEtmINcIOCAbEuXnBQayLI2dMjEiHr5fX7xu
+ ujXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751648257; x=1752253057;
+ d=1e100.net; s=20230601; t=1751648254; x=1752253054;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GY7MJBZ+jVGFNfvqDhRAHNzOKhw8Qpr4ty2QBdtSrdE=;
- b=M9lYQR0wd5xO7c6lSzKkaa+2T1j3gVIeC+OFBjfTITannLMNOcLerspmzUC7TrZ6DF
- lHN3nihAsvHu/o5F7C2FoTsE3fFF+M2tg51t/zhbMKA8MD6aKdYyO/ahvLuCmP2+eDXQ
- eao18SXFrPUbtjBIRHNidurvJSa29l7FCW8ouKoQ0uRhc5VcCT4sp1WP9hEgpuyw0Qkt
- YnPXoJ85ybo2zSlRlI5S033KlGT5HWlm9IMVrImr7NulYd4iR+/A6AAKf/mD07x3xml5
- 7YSwBduu1Of5CpMhU3Iz3D3zeJwMCOrcj0ro6Mr/KptZsHaZHS1bzxSHvABuo79vgK2m
- o2IA==
-X-Gm-Message-State: AOJu0YzGnpWvs5+LXmP2ceXuJ3Aj+VQoxcd2ai7wcm0F72AHyUrJaHyL
- Om3eChEJeeKNAq5Frw7oA56ktc7dm6c5dDAeAUswSp9QhYwv4TuXUg3H38JjKQ==
-X-Gm-Gg: ASbGnctOxvSWc4sol/JryMBnsoYfeMnajKku0TqMWBJGho7+m6n2qqeXMKFNq8cs09D
- GTztgNjaIzpjQ6NdYlU0p0LQyw0/2bwOiry1G2Fg+GaYxDXbDf1I9H4NiAyPkFZVERFo2kGoyJb
- +4VJiYKL3Pnw+0JQSPgMJVI1TJiFqXbwJoTt/VQMbw2ceW2OpwGZKN3Oxk5vyyPlna8iXvhCb+L
- kTXSCI9fZW3LL96dsQfil7pu2gtX0YS6j0mAgfzwnzfRP1usPplrTfQNruJJIcDFKPEgJSb3F3Z
- SbIZnqGzOuHhbZcO1t6tGchUNH8zD7y9MB5jIAPW1m36piLI1313j3aTzwutksOfWNEtJW5oN2K
- 9Ln9i
-X-Google-Smtp-Source: AGHT+IEWwT51sLRg2hCyfFN+d9oR89PiAj5gqRRuHu0fhhvBVSj5Tp8UgNoAHsAcmQgxtR8fWeZtJQ==
-X-Received: by 2002:a05:620a:1929:b0:7d4:4b09:e326 with SMTP id
- af79cd13be357-7d5df152b2bmr356790785a.30.1751648256851; 
- Fri, 04 Jul 2025 09:57:36 -0700 (PDT)
+ bh=AWnu/oAAzVkXqcGwl/ibho3UTNb/WrEZ456/ajF/M5o=;
+ b=lpqJptM/EDN+HrY5RIuoHmLIgfXRLKIRrI+BUt/gYqlVcnopFNg1SAsS5QgAq3gx+O
+ J6FjiAFt8sIzLaki8Pwp5gor4vs5m2R6Xc7hwd+D6KLWg/FRco/vvJx2yl0a3n/2iajt
+ tFEkpRTWxRI4PJRa+lsxkCBTkqdlaEmrxnkKfJcT6I0OXF2VQPCkNVnZNbED9Wy7MseB
+ AVWyGbnIWsjlwkVKDN9kMC1fAP4Cf4PuclzgiHlHkWDFnIGfNZLLNcS6iJqbTqmJOhvX
+ OIz2iJ025QGb+RxMlFErZxJmi4XZ1oCy64VzErr9czoxTatmPzx+zLbgb9pW4Kl0KA70
+ fCnw==
+X-Gm-Message-State: AOJu0YzSrU6rY7ok47KRXmcsGpwW2tXunsGXvo3TXnI5VWYyP3+yspZR
+ kdmuDOG2fQFe5wvxJoWCMxQPtda4TU94+53DaKfV/uHcHirexmCCBd1k6j+3RQ==
+X-Gm-Gg: ASbGnctnZUClMEspgVQwc5WMiSHDCuf1i+0fA5nQhqr3/qGlIeKAZMFAtRcKklUfsdG
+ XvGX/zs8EVSHBNUGr2zXNr+Zbb4bVHjM2vxAQxB6IBA5aRBAaOXNVeCCNmWwclMnvsxSbUYcQpb
+ O4x65HLp7GWdkwl8+YHozCRC97cNKTBgp1Kge3h3PgXqyq4QD3SBibbbOA8BChNJjMc4IV94C7b
+ W9RYB5rdkv7FImKOjhJyUDyJx5ozzH+eNo9X9KdGdKaAbWmvEFWnUUeOtFRsCedfl0NiTBKRLB9
+ EMCfyPBds1JUc6Beli+al7jcTfkpCwg1vQymQrD3hr0lGaj27HWMDZowD13xv7IGzszOxOWeREK
+ 6PpHg
+X-Google-Smtp-Source: AGHT+IFD4oC7BgTGZFdig+zVWwyDXA47SZYYpgYdoPP5OqLedpP1sXTfSijlIv/URPVT9aD9Pn63Sw==
+X-Received: by 2002:a05:6214:260e:b0:700:bce1:495a with SMTP id
+ 6a1803df08f44-702c6d118bamr38527576d6.1.1751648253785; 
+ Fri, 04 Jul 2025 09:57:33 -0700 (PDT)
 Received: from user-jcksn.myfiosgateway.com
  ([2600:4040:2bcd:3800:e3f4:4cee:828f:52d])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-702c4ccc6easm15345826d6.26.2025.07.04.09.57.36
+ 6a1803df08f44-702c4ccc6easm15345826d6.26.2025.07.04.09.57.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 09:57:36 -0700 (PDT)
+ Fri, 04 Jul 2025 09:57:33 -0700 (PDT)
 From: Jackson Donaldson <jackson88044@gmail.com>
 X-Google-Original-From: Jackson Donaldson <jcksn@duck.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-Subject: [PATCH v3 08/11] MAX78000: TRNG Implementation
-Date: Fri,  4 Jul 2025 12:57:26 -0400
-Message-Id: <20250704165729.208381-9-jcksn@duck.com>
+Subject: [PATCH v3 04/11] MAX78000: UART Implementation
+Date: Fri,  4 Jul 2025 12:57:22 -0400
+Message-Id: <20250704165729.208381-5-jcksn@duck.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250704165729.208381-1-jcksn@duck.com>
 References: <20250704165729.208381-1-jcksn@duck.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::732;
- envelope-from=jackson88044@gmail.com; helo=mail-qk1-x732.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f33;
+ envelope-from=jackson88044@gmail.com; helo=mail-qv1-xf33.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,87 +102,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit implements the True Random Number
-Generator for the MAX78000
+This commit implements UART support for the MAX78000
 
 Signed-off-by: Jackson Donaldson <jcksn@duck.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
  hw/arm/Kconfig                  |   1 +
- hw/misc/Kconfig                 |   3 +
- hw/misc/max78000_gcr.c          |   6 ++
- hw/misc/max78000_trng.c         | 139 ++++++++++++++++++++++++++++++++
- hw/misc/meson.build             |   1 +
- include/hw/misc/max78000_gcr.h  |   1 +
- include/hw/misc/max78000_trng.h |  35 ++++++++
- 7 files changed, 186 insertions(+)
- create mode 100644 hw/misc/max78000_trng.c
- create mode 100644 include/hw/misc/max78000_trng.h
+ hw/char/Kconfig                 |   3 +
+ hw/char/max78000_uart.c         | 285 ++++++++++++++++++++++++++++++++
+ hw/char/meson.build             |   1 +
+ include/hw/char/max78000_uart.h |  78 +++++++++
+ 5 files changed, 368 insertions(+)
+ create mode 100644 hw/char/max78000_uart.c
+ create mode 100644 include/hw/char/max78000_uart.h
 
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 41bb64458f..fcac62be6f 100644
+index e3b419b468..031e0bf59e 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -369,6 +369,7 @@ config MAX78000_SOC
+@@ -367,6 +367,7 @@ config MAX78000_SOC
+     bool
+     select ARM_V7M
      select MAX78000_ICC
-     select MAX78000_UART
-     select MAX78000_GCR
-+    select MAX78000_TRNG
++    select MAX78000_UART
  
  config RASPI
      bool
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index fde2266b8f..dd6a6e54da 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -53,6 +53,9 @@ config MAX78000_GCR
- config MAX78000_ICC
-     bool
+diff --git a/hw/char/Kconfig b/hw/char/Kconfig
+index 9d517f3e28..020c0a84bb 100644
+--- a/hw/char/Kconfig
++++ b/hw/char/Kconfig
+@@ -48,6 +48,9 @@ config VIRTIO_SERIAL
+     default y
+     depends on VIRTIO
  
-+config MAX78000_TRNG
++config MAX78000_UART
 +    bool
 +
- config MOS6522
+ config STM32F2XX_USART
      bool
  
-diff --git a/hw/misc/max78000_gcr.c b/hw/misc/max78000_gcr.c
-index 8c282f3916..5916ee615a 100644
---- a/hw/misc/max78000_gcr.c
-+++ b/hw/misc/max78000_gcr.c
-@@ -14,6 +14,7 @@
- #include "migration/vmstate.h"
- #include "hw/qdev-properties.h"
- #include "hw/char/max78000_uart.h"
-+#include "hw/misc/max78000_trng.h"
- #include "hw/misc/max78000_gcr.h"
- 
- 
-@@ -157,6 +158,9 @@ static void max78000_gcr_write(void *opaque, hwaddr addr,
-         if (val & UART0_RESET) {
-             device_cold_reset(s->uart0);
-         }
-+        if (val & TRNG_RESET) {
-+            device_cold_reset(s->trng);
-+        }
-         /* TODO: As other devices are implemented, add them here */
-         break;
- 
-@@ -257,6 +261,8 @@ static const Property max78000_gcr_properties[] = {
-                      TYPE_MAX78000_UART, DeviceState*),
-     DEFINE_PROP_LINK("uart2", Max78000GcrState, uart2,
-                      TYPE_MAX78000_UART, DeviceState*),
-+    DEFINE_PROP_LINK("trng", Max78000GcrState, trng,
-+                        TYPE_MAX78000_TRNG, DeviceState*),
- };
- 
- static const MemoryRegionOps max78000_gcr_ops = {
-diff --git a/hw/misc/max78000_trng.c b/hw/misc/max78000_trng.c
+diff --git a/hw/char/max78000_uart.c b/hw/char/max78000_uart.c
 new file mode 100644
-index 0000000000..ecdaef53b6
+index 0000000000..19506d52ef
 --- /dev/null
-+++ b/hw/misc/max78000_trng.c
-@@ -0,0 +1,139 @@
++++ b/hw/char/max78000_uart.c
+@@ -0,0 +1,285 @@
 +/*
-+ * MAX78000 True Random Number Generator
++ * MAX78000 UART
 + *
 + * Copyright (c) 2025 Jackson Donaldson <jcksn@duck.com>
 + *
@@ -190,201 +157,378 @@ index 0000000000..ecdaef53b6
 + */
 +
 +#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "trace.h"
++#include "hw/char/max78000_uart.h"
 +#include "hw/irq.h"
++#include "hw/qdev-properties.h"
++#include "hw/qdev-properties-system.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
 +#include "migration/vmstate.h"
-+#include "hw/misc/max78000_trng.h"
-+#include "qemu/guest-random.h"
++#include "trace.h"
 +
-+static uint64_t max78000_trng_read(void *opaque, hwaddr addr,
-+                                    unsigned int size)
++
++static int max78000_uart_can_receive(void *opaque)
 +{
-+    uint32_t data;
-+
-+    Max78000TrngState *s = opaque;
-+    switch (addr) {
-+    case CTRL:
-+        return s->ctrl;
-+
-+    case STATUS:
-+        return 1;
-+
-+    case DATA:
-+        /*
-+         * When interrupts are enabled, reading random data should cause a
-+         * new interrupt to be generated; since there's always a random number
-+         * available, we could qemu_set_irq(s->irq, s->ctrl & RND_IE). Because
-+         * of how trng_write is set up, this is always a noop, so don't
-+         */
-+        qemu_guest_getrandom_nofail(&data, sizeof(data));
-+        return data;
-+
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"
-+            HWADDR_PRIx "\n", __func__, addr);
-+        break;
++    Max78000UartState *s = opaque;
++    if (!(s->ctrl & UART_BCLKEN)) {
++        return 0;
 +    }
-+    return 0;
++    return fifo8_num_free(&s->rx_fifo);
 +}
 +
-+static void max78000_trng_write(void *opaque, hwaddr addr,
-+                    uint64_t val64, unsigned int size)
++static void max78000_update_irq(Max78000UartState *s)
 +{
-+    Max78000TrngState *s = opaque;
-+    uint32_t val = val64;
-+    switch (addr) {
-+    case CTRL:
-+        /* TODO: implement AES keygen */
-+        s->ctrl = val;
++    int interrupt_level;
 +
-+        /*
-+         * This device models random number generation as taking 0 time.
-+         * A new random number is always available, so the condition for the
-+         * RND interrupt is always fulfilled; we can just set irq to 1.
-+         */
-+        if (val & RND_IE) {
-+            qemu_set_irq(s->irq, 1);
-+        } else{
-+            qemu_set_irq(s->irq, 0);
++    interrupt_level = s->int_fl & s->int_en;
++    qemu_set_irq(s->irq, interrupt_level);
++}
++
++static void max78000_uart_receive(void *opaque, const uint8_t *buf, int size)
++{
++    Max78000UartState *s = opaque;
++
++    assert(size <= fifo8_num_free(&s->rx_fifo));
++
++    fifo8_push_all(&s->rx_fifo, buf, size);
++
++    uint32_t rx_threshold = s->ctrl & 0xf;
++
++    if (fifo8_num_used(&s->rx_fifo) >= rx_threshold) {
++        s->int_fl |= UART_RX_THD;
++    }
++
++    max78000_update_irq(s);
++}
++
++static void max78000_uart_reset_hold(Object *obj, ResetType type)
++{
++    Max78000UartState *s = MAX78000_UART(obj);
++
++    s->ctrl = 0;
++    s->status = UART_TX_EM | UART_RX_EM;
++    s->int_en = 0;
++    s->int_fl = 0;
++    s->osr = 0;
++    s->txpeek = 0;
++    s->pnr = UART_RTS;
++    s->fifo = 0;
++    s->dma = 0;
++    s->wken = 0;
++    s->wkfl = 0;
++    fifo8_reset(&s->rx_fifo);
++}
++
++static uint64_t max78000_uart_read(void *opaque, hwaddr addr,
++                                       unsigned int size)
++{
++    Max78000UartState *s = opaque;
++    uint64_t retvalue = 0;
++    switch (addr) {
++    case UART_CTRL:
++        retvalue = s->ctrl;
++        break;
++    case UART_STATUS:
++        retvalue = (fifo8_num_used(&s->rx_fifo) << UART_RX_LVL) |
++                    UART_TX_EM |
++                    (fifo8_is_empty(&s->rx_fifo) ? UART_RX_EM : 0);
++        break;
++    case UART_INT_EN:
++        retvalue = s->int_en;
++        break;
++    case UART_INT_FL:
++        retvalue = s->int_fl;
++        break;
++    case UART_CLKDIV:
++        retvalue = s->clkdiv;
++        break;
++    case UART_OSR:
++        retvalue = s->osr;
++        break;
++    case UART_TXPEEK:
++        if (!fifo8_is_empty(&s->rx_fifo)) {
++            retvalue = fifo8_peek(&s->rx_fifo);
 +        }
 +        break;
++    case UART_PNR:
++        retvalue = s->pnr;
++        break;
++    case UART_FIFO:
++        if (!fifo8_is_empty(&s->rx_fifo)) {
++            retvalue = fifo8_pop(&s->rx_fifo);
++            max78000_update_irq(s);
++        }
++        break;
++    case UART_DMA:
++        /* DMA not implemented */
++        retvalue = s->dma;
++        break;
++    case UART_WKEN:
++        retvalue = s->wken;
++        break;
++    case UART_WKFL:
++        retvalue = s->wkfl;
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++            "%s: Bad offset 0x%"HWADDR_PRIx"\n", __func__, addr);
++        break;
++    }
 +
++    return retvalue;
++}
++
++static void max78000_uart_write(void *opaque, hwaddr addr,
++                                  uint64_t val64, unsigned int size)
++{
++    Max78000UartState *s = opaque;
++
++    uint32_t value = val64;
++    uint8_t data;
++
++    switch (addr) {
++    case UART_CTRL:
++        if (value & UART_FLUSH_RX) {
++            fifo8_reset(&s->rx_fifo);
++        }
++        if (value & UART_BCLKEN) {
++            value = value | UART_BCLKRDY;
++        }
++        s->ctrl = value & ~(UART_FLUSH_RX | UART_FLUSH_TX);
++
++        /*
++         * Software can manage UART flow control manually by setting hfc_en
++         * in UART_CTRL. This would require emulating uart at a lower level,
++         * and is currently unimplemented.
++         */
++
++        return;
++    case UART_STATUS:
++        /* UART_STATUS is read only */
++        return;
++    case UART_INT_EN:
++        s->int_en = value;
++        return;
++    case UART_INT_FL:
++        s->int_fl = s->int_fl & ~(value);
++        max78000_update_irq(s);
++        return;
++    case UART_CLKDIV:
++        s->clkdiv = value;
++        return;
++    case UART_OSR:
++        s->osr = value;
++        return;
++    case UART_PNR:
++        s->pnr = value;
++        return;
++    case UART_FIFO:
++        data = value & 0xff;
++        /*
++         * XXX this blocks entire thread. Rewrite to use
++         * qemu_chr_fe_write and background I/O callbacks
++         */
++        qemu_chr_fe_write_all(&s->chr, &data, 1);
++
++        /* TX is always empty */
++        s->int_fl |= UART_TX_HE;
++        max78000_update_irq(s);
++
++        return;
++    case UART_DMA:
++        /* DMA not implemented */
++        s->dma = value;
++        return;
++    case UART_WKEN:
++        s->wken = value;
++        return;
++    case UART_WKFL:
++        s->wkfl = value;
++        return;
 +    default:
 +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"
 +            HWADDR_PRIx "\n", __func__, addr);
-+        break;
 +    }
 +}
 +
-+static void max78000_trng_reset_hold(Object *obj, ResetType type)
-+{
-+    Max78000TrngState *s = MAX78000_TRNG(obj);
-+    s->ctrl = 0;
-+    s->status = 0;
-+    s->data = 0;
-+}
-+
-+static const MemoryRegionOps max78000_trng_ops = {
-+    .read = max78000_trng_read,
-+    .write = max78000_trng_write,
++static const MemoryRegionOps max78000_uart_ops = {
++    .read = max78000_uart_read,
++    .write = max78000_uart_write,
 +    .endianness = DEVICE_LITTLE_ENDIAN,
 +    .valid.min_access_size = 4,
 +    .valid.max_access_size = 4,
 +};
 +
-+static const VMStateDescription max78000_trng_vmstate = {
-+    .name = TYPE_MAX78000_TRNG,
++static const Property max78000_uart_properties[] = {
++    DEFINE_PROP_CHR("chardev", Max78000UartState, chr),
++};
++
++static const VMStateDescription max78000_uart_vmstate = {
++    .name = TYPE_MAX78000_UART,
 +    .version_id = 1,
 +    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(ctrl, Max78000TrngState),
-+        VMSTATE_UINT32(status, Max78000TrngState),
-+        VMSTATE_UINT32(data, Max78000TrngState),
++    .fields = (VMStateField[]) {
++        VMSTATE_UINT32(ctrl, Max78000UartState),
++        VMSTATE_UINT32(status, Max78000UartState),
++        VMSTATE_UINT32(int_en, Max78000UartState),
++        VMSTATE_UINT32(int_fl, Max78000UartState),
++        VMSTATE_UINT32(clkdiv, Max78000UartState),
++        VMSTATE_UINT32(osr, Max78000UartState),
++        VMSTATE_UINT32(txpeek, Max78000UartState),
++        VMSTATE_UINT32(pnr, Max78000UartState),
++        VMSTATE_UINT32(fifo, Max78000UartState),
++        VMSTATE_UINT32(dma, Max78000UartState),
++        VMSTATE_UINT32(wken, Max78000UartState),
++        VMSTATE_UINT32(wkfl, Max78000UartState),
++        VMSTATE_FIFO8(rx_fifo, Max78000UartState),
 +        VMSTATE_END_OF_LIST()
 +    }
 +};
 +
-+static void max78000_trng_init(Object *obj)
++static void max78000_uart_init(Object *obj)
 +{
-+    Max78000TrngState *s = MAX78000_TRNG(obj);
++    Max78000UartState *s = MAX78000_UART(obj);
++    fifo8_create(&s->rx_fifo, 8);
++
 +    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
 +
-+    memory_region_init_io(&s->mmio, obj, &max78000_trng_ops, s,
-+                        TYPE_MAX78000_TRNG, 0x1000);
++    memory_region_init_io(&s->mmio, obj, &max78000_uart_ops, s,
++                          TYPE_MAX78000_UART, 0x400);
 +    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
-+
 +}
 +
-+static void max78000_trng_class_init(ObjectClass *klass, const void *data)
++static void max78000_uart_realize(DeviceState *dev, Error **errp)
 +{
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+    DeviceClass *dc = DEVICE_CLASS(klass);
++    Max78000UartState *s = MAX78000_UART(dev);
 +
-+    rc->phases.hold = max78000_trng_reset_hold;
-+    dc->vmsd = &max78000_trng_vmstate;
-+
++    qemu_chr_fe_set_handlers(&s->chr, max78000_uart_can_receive,
++                             max78000_uart_receive, NULL, NULL,
++                             s, NULL, true);
 +}
 +
-+static const TypeInfo max78000_trng_info = {
-+    .name          = TYPE_MAX78000_TRNG,
++static void max78000_uart_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    rc->phases.hold = max78000_uart_reset_hold;
++
++    device_class_set_props(dc, max78000_uart_properties);
++    dc->realize = max78000_uart_realize;
++
++    dc->vmsd = &max78000_uart_vmstate;
++}
++
++static const TypeInfo max78000_uart_info = {
++    .name          = TYPE_MAX78000_UART,
 +    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(Max78000TrngState),
-+    .instance_init = max78000_trng_init,
-+    .class_init    = max78000_trng_class_init,
++    .instance_size = sizeof(Max78000UartState),
++    .instance_init = max78000_uart_init,
++    .class_init    = max78000_uart_class_init,
 +};
 +
-+static void max78000_trng_register_types(void)
++static void max78000_uart_register_types(void)
 +{
-+    type_register_static(&max78000_trng_info);
++    type_register_static(&max78000_uart_info);
 +}
 +
-+type_init(max78000_trng_register_types)
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 283d06dad4..c7c57d924b 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -72,6 +72,7 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files(
- ))
- system_ss.add(when: 'CONFIG_MAX78000_GCR', if_true: files('max78000_gcr.c'))
- system_ss.add(when: 'CONFIG_MAX78000_ICC', if_true: files('max78000_icc.c'))
-+system_ss.add(when: 'CONFIG_MAX78000_TRNG', if_true: files('max78000_trng.c'))
- system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files(
-   'npcm_clk.c',
-   'npcm_gcr.c',
-diff --git a/include/hw/misc/max78000_gcr.h b/include/hw/misc/max78000_gcr.h
-index f04c8a3ee7..23ddf0885b 100644
---- a/include/hw/misc/max78000_gcr.h
-+++ b/include/hw/misc/max78000_gcr.h
-@@ -123,6 +123,7 @@ struct Max78000GcrState {
-     DeviceState *uart0;
-     DeviceState *uart1;
-     DeviceState *uart2;
-+    DeviceState *trng;
- 
- };
- 
-diff --git a/include/hw/misc/max78000_trng.h b/include/hw/misc/max78000_trng.h
++type_init(max78000_uart_register_types)
+diff --git a/hw/char/meson.build b/hw/char/meson.build
+index 4e439da8b9..a9e1dc26c0 100644
+--- a/hw/char/meson.build
++++ b/hw/char/meson.build
+@@ -26,6 +26,7 @@ system_ss.add(when: 'CONFIG_AVR_USART', if_true: files('avr_usart.c'))
+ system_ss.add(when: 'CONFIG_COLDFIRE', if_true: files('mcf_uart.c'))
+ system_ss.add(when: 'CONFIG_DIGIC', if_true: files('digic-uart.c'))
+ system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_uart.c'))
++system_ss.add(when: 'CONFIG_MAX78000_UART', if_true: files('max78000_uart.c'))
+ system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_uart.c'))
+ system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_aux.c'))
+ system_ss.add(when: 'CONFIG_RENESAS_SCI', if_true: files('renesas_sci.c'))
+diff --git a/include/hw/char/max78000_uart.h b/include/hw/char/max78000_uart.h
 new file mode 100644
-index 0000000000..c5a8129b6a
+index 0000000000..cf90d51dbf
 --- /dev/null
-+++ b/include/hw/misc/max78000_trng.h
-@@ -0,0 +1,35 @@
++++ b/include/hw/char/max78000_uart.h
+@@ -0,0 +1,78 @@
 +/*
-+ * MAX78000 True Random Number Generator
++ * MAX78000 UART
 + *
 + * Copyright (c) 2025 Jackson Donaldson <jcksn@duck.com>
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+#ifndef HW_MAX78000_TRNG_H
-+#define HW_MAX78000_TRNG_H
++
++#ifndef HW_MAX78000_UART_H
++#define HW_MAX78000_UART_H
 +
 +#include "hw/sysbus.h"
++#include "chardev/char-fe.h"
++#include "qemu/fifo8.h"
 +#include "qom/object.h"
 +
-+#define TYPE_MAX78000_TRNG "max78000-trng"
-+OBJECT_DECLARE_SIMPLE_TYPE(Max78000TrngState, MAX78000_TRNG)
++#define UART_CTRL       0x0
++#define UART_STATUS     0x4
++#define UART_INT_EN     0x8
++#define UART_INT_FL     0xc
++#define UART_CLKDIV     0x10
++#define UART_OSR        0x14
++#define UART_TXPEEK     0x18
++#define UART_PNR        0x1c
++#define UART_FIFO       0x20
++#define UART_DMA        0x30
++#define UART_WKEN       0x34
++#define UART_WKFL       0x38
 +
-+#define CTRL 0
-+#define STATUS 4
-+#define DATA 8
++/* CTRL */
++#define UART_CTF_DIS    (1 << 7)
++#define UART_FLUSH_TX   (1 << 8)
++#define UART_FLUSH_RX   (1 << 9)
++#define UART_BCLKEN     (1 << 15)
++#define UART_BCLKRDY    (1 << 19)
 +
-+#define RND_IE (1 << 1)
++/* STATUS */
++#define UART_RX_LVL     8
++#define UART_TX_EM      (1 << 6)
++#define UART_RX_FULL    (1 << 5)
++#define UART_RX_EM      (1 << 4)
 +
-+struct Max78000TrngState {
++/* PNR (Pin Control Register) */
++#define UART_CTS        1
++#define UART_RTS        (1 << 1)
++
++/* INT_EN / INT_FL */
++#define UART_RX_THD     (1 << 4)
++#define UART_TX_HE      (1 << 6)
++
++#define UART_RXBUFLEN   0x100
++#define TYPE_MAX78000_UART "max78000-uart"
++OBJECT_DECLARE_SIMPLE_TYPE(Max78000UartState, MAX78000_UART)
++
++struct Max78000UartState {
 +    SysBusDevice parent_obj;
 +
 +    MemoryRegion mmio;
 +
 +    uint32_t ctrl;
 +    uint32_t status;
-+    uint32_t data;
++    uint32_t int_en;
++    uint32_t int_fl;
++    uint32_t clkdiv;
++    uint32_t osr;
++    uint32_t txpeek;
++    uint32_t pnr;
++    uint32_t fifo;
++    uint32_t dma;
++    uint32_t wken;
++    uint32_t wkfl;
 +
++    Fifo8 rx_fifo;
++
++    CharBackend chr;
 +    qemu_irq irq;
 +};
-+
-+#endif
++#endif /* HW_STM32F2XX_USART_H */
 -- 
 2.34.1
 
