@@ -4,82 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 636EEC8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 14:48:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37FC9C8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 14:48:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXhgj-00062l-WA; Fri, 04 Jul 2025 10:46:54 -0400
+	id 1uXhTZ-00019c-32; Fri, 04 Jul 2025 10:33:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kosasihwilliam4@gmail.com>)
- id 1uXhgS-0005wa-B1; Fri, 04 Jul 2025 10:46:37 -0400
-Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uXhM9-0004k4-Tf
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:25:41 -0400
+Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <kosasihwilliam4@gmail.com>)
- id 1uXhgQ-0000bM-JJ; Fri, 04 Jul 2025 10:46:36 -0400
-Received: by mail-yb1-xb2c.google.com with SMTP id
- 3f1490d57ef6-e81f8679957so813606276.2; 
- Fri, 04 Jul 2025 07:46:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uXhM5-0008Ax-C5
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:25:37 -0400
+Received: by mail-ot1-x32c.google.com with SMTP id
+ 46e09a7af769-735a8be4ea9so242228a34.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 07:25:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751640393; x=1752245193; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=8KN5kjPgG7Y3cd0Dfh0iSQPxyXBCyujt7qtT5C2AlO0=;
- b=QfcXkFyPPI8Om7U762qYukAKIfqLxycPFufXm8gr7DiCZd/8KQEc3TC7VUoPEEc677
- FYD+PZhkHFsDj6IdWG0YX4dtIR50gO4QDyssKm9OS50VBdO1IvmNerqZ+cZZVbNnlegq
- 33LnnwpT2O7FEPiljtWoaaF+ih9Zrt1zQ8firnhJTj9XtBfAFyCzCYtd1VHdx5rZZMdU
- D2B3Dmjetet4sf/ymfwV+K9n6HDgZzr7ggaZTeuqSSYXpPwJ6QwPO6S0xmnhxESwaUsV
- tgO2lzVwlNkfSPb8Xwirmxf8oyk6d63j2xCbIigWG0KpBnk2gnYf+Y5uqKgRgaEcVYIE
- 5SKQ==
+ d=linaro.org; s=google; t=1751639132; x=1752243932; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BEQcB1/UqEbBB8OYjKzTOMJUu4ZO4MlGo9qVante+Ao=;
+ b=q5c5kDqs7FP2TkfuRA7Or/rYB4UM49aheV2n55sUuw9FpMeTB7E7kxHqJjLgTOL+cY
+ IxC1cVQ/WmKE7FXywUwRYOKfKuplW1EORanzZXbHeLLIjPNCv5LRpuTeOf7P7JX+ojTV
+ RI5mO8IOoxKsLhJhbraxujRclng2K3nUFLCOJozKHoUvgjlaNlNVEIB0ZF3NPuy1vJfC
+ sI7+IH0r++hdQpsW7F9yTVKvDVW5qGxyS7VPXgY1VjeD3P7ha9b4XlLCnLUKmipOLB0t
+ IEBv/xZpebtMVBodHKZXsJNP7wpugDTp0uNlYq1UxK1P2SWymcnIny6RbrOMPxzHNG/J
+ ZNvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751640393; x=1752245193;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8KN5kjPgG7Y3cd0Dfh0iSQPxyXBCyujt7qtT5C2AlO0=;
- b=XkduxisvghIQ4Q5biR6owy+rVHsLjKixcA8UgN7rOAHD7ule8cSrqZKLPzm2l09e6Y
- 9QI4+pgcYEwcquH0HZOfD0j5Yi1jldOUb90bJVyytyaCAr7DxXaHpf85gYneIuj5KNRJ
- M0zwf+MMqfllbap2rDrqNoc/qb7QTSKlre/YJVlKcKqUTR5/Zd+Hc/W4BooNoZ/R9q81
- q9n8A1TX6iDFXurircEp4UrA6WyMu9nBwq0/KZ3XGbMQIRXMXIspZIaX6Nd4aBwGYSdI
- T7ME+Q/Adbwf52BwH/+Mwb1vZtRwHwI+Kyg+nWiGbxf8jOXYufLtxOtKP/EGBPMdWiB9
- 7CIg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUC+IYlDIrmxvgwUfCdCR5tu4SoMLUijvRH9f4LSmxekYCSdz24bmTfIqqo9Q0J7NKDs+xqUpcgvA==@nongnu.org
-X-Gm-Message-State: AOJu0YwntksQ6EBOT3JTRB8FBkNzzp1UxP1IOfHqyt2vQm30JcUnniVw
- jnDmixaDCO8MrMymwmSzMWUirBKR4hrq4smwyZ5ECQb5AYa9uBc4wU56j+Lw+jY5qnbWp8GkXPh
- C8ixYSHOWUTz5KoPxnVbDYJ7EB/y8UMdNYS2r
-X-Gm-Gg: ASbGncvbYmhp1vN11SF70MT2gCqJxlNB6BymcnLTHFMnMQkTCJfgfSUyr8fxXtGhXkR
- bjVFKDu1186MCE5qZmUPGq+drnnV+ZJfQyndBe2m9iTs97p5zF2x+n6YbDp5KdyG/XYUmi+jpzW
- Nbow1q9TvRo/p5PtZ7RPbCUSmofffEjFgxd3+wxMx03AI=
-X-Google-Smtp-Source: AGHT+IFMTXeG8sPX1yWeDJAsQX3jRRGC6f/ZBO66CgbgQr1PZKH1ekzSf6j5S7z+qygxyidZANDisjdpmdGY9U4wEsA=
-X-Received: by 2002:a05:6902:1790:b0:e84:940:e86c with SMTP id
- 3f1490d57ef6-e89a0c25c6amr2572462276.22.1751640392781; Fri, 04 Jul 2025
- 07:46:32 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1751639132; x=1752243932;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BEQcB1/UqEbBB8OYjKzTOMJUu4ZO4MlGo9qVante+Ao=;
+ b=AVpuBL09N6NtcqezMf5Q9yIgq7gZdY1Wmw0zovfulZ/hIgh+r9QVMEu97DdRGJQdht
+ keXgiLG+oVhjU06/SuKrWBlc3G58kBxobc+6aHOLjeTkxeBce6iZ+jSjmAFBYkmXCykn
+ 0XrHFB4FiBLEMtwimkVYttaxNlAagkDP/BaC9RtDQrzAkeeG+8JFq4wW7C1zNSY38Acf
+ tmGCTJ0N0v+Bj0OrSJ4JMxqrFKZ5YqEoDCAgHgWEWnETv2F7T1DyM493LV1xSpf21FJo
+ 9df0mASzRKnRmwHOho43TL384r74xxyJMehQD2OlHoZXyCjbSXLVm+aVAjE1TAlXy+mT
+ mEiw==
+X-Gm-Message-State: AOJu0YzLfeUUxyAH8I0DgXNqpC8pfU8caSS5+14YOZZElXm1i8QHYuDb
+ CVfLHenz/T8BwulFwteP6GHAHZ+hOqqaNiZEd/rxbXxysBWq2fisdH1m1gfxzYU+DfN/o0/k2kb
+ 51GDibC4=
+X-Gm-Gg: ASbGnctanfUyScItBtH3jhnt7Fwb2+8lBHpj2tq1j2AEX4kpTDOPIWDrNRfIiT8mG3Q
+ rFqhpAdksGk464tOf/3FbzKcL5EPKYE07cUT6UmLXx/Po4ZLqLY27MWMcUCYRCQk9/0NvbsCfH0
+ OZWLwupDBPXkESt8on5dFrPuH4uB9aY6IjLPBh7vws1d1j27R9zhLI0Yp8zP2lmGtHKOLRCYcnT
+ yUqF9LXA2lJ8m+Ka7D3M/SPykvFL0f2EtjHbXcFePkWtXV0QJMYGtf6F6dHlNWrOuHNST8phlQk
+ nRqJrwxOmo1t3AFcZEjnT42k4a4Crvi2N1ZqJZ/TPeVYokW6g+C8Za9JsBWmT8fiaiWJITRjdkz
+ hVmIcObTYcEhT/rnjdTzPfyVcRKJVqkM5YpfErjjGWUMzdIew
+X-Google-Smtp-Source: AGHT+IEQFeyvEF0LGOOD1QdtPhdFsvaO/T1sqTybhYh2WMgI9NQfx7d2/jFMDNJ9d2dYG14bPeQ90w==
+X-Received: by 2002:a05:6808:3090:b0:408:fbb6:f4cb with SMTP id
+ 5614622812f47-40d04198e5bmr1962397b6e.6.1751639131908; 
+ Fri, 04 Jul 2025 07:25:31 -0700 (PDT)
+Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-6138e5ac5eesm310233eaf.29.2025.07.04.07.25.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Jul 2025 07:25:31 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+	peter.maydell@linaro.org
+Subject: [PATCH v4 074/108] target/arm: Split out do_whileg from
+ helper_sve_whileg
+Date: Fri,  4 Jul 2025 08:20:37 -0600
+Message-ID: <20250704142112.1018902-75-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250704142112.1018902-1-richard.henderson@linaro.org>
+References: <20250704142112.1018902-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20250703085604.154449-1-kosasihwilliam4@gmail.com>
- <CAFEAcA97cvAmtRYEr3hD-BG=LNjoaZFAThYWNKa2zok1MOxgGA@mail.gmail.com>
-In-Reply-To: <CAFEAcA97cvAmtRYEr3hD-BG=LNjoaZFAThYWNKa2zok1MOxgGA@mail.gmail.com>
-From: William Kosasih <kosasihwilliam4@gmail.com>
-Date: Sat, 5 Jul 2025 00:16:19 +0930
-X-Gm-Features: Ac12FXwf3VuMMOCMZcrUeWeR9n6Ip0r6DCfKEviPXY4T003qmkWjvRSyn26oFmg
-Message-ID: <CAG66A_cgmq==OZfbPbr+qEjosObu5Rx+XHMCa57Dz1H-i9Vyqg@mail.gmail.com>
-Subject: Re: [PATCH v4 00/11] target/arm: Fix M-profile helper loads/stores
- alignment checks
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: multipart/alternative; boundary="00000000000062da6606391b8f25"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
- envelope-from=kosasihwilliam4@gmail.com; helo=mail-yb1-xb2c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- HTML_FONT_LOW_CONTRAST=0.001, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,107 +102,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000062da6606391b8f25
-Content-Type: text/plain; charset="UTF-8"
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/sve_helper.c | 39 +++++++++++++++++++------------------
+ 1 file changed, 20 insertions(+), 19 deletions(-)
 
-This really made my day :-) Thanks Peter!
+diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
+index 741d04309c..5e11e86e5e 100644
+--- a/target/arm/tcg/sve_helper.c
++++ b/target/arm/tcg/sve_helper.c
+@@ -4138,34 +4138,35 @@ uint32_t HELPER(sve_whilel)(void *vd, uint32_t count, uint32_t pred_desc)
+     return pred_count_test(oprbits, count, false);
+ }
+ 
+-uint32_t HELPER(sve_whileg)(void *vd, uint32_t count, uint32_t pred_desc)
++/* D must be cleared on entry. */
++static void do_whileg(ARMPredicateReg *d, uint64_t esz_mask,
++                      uint32_t count, uint32_t oprbits)
+ {
+-    intptr_t oprsz = FIELD_EX32(pred_desc, PREDDESC, OPRSZ);
+-    intptr_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
+-    uint64_t esz_mask = pred_esz_masks[esz];
+-    ARMPredicateReg *d = vd;
+-    intptr_t i, invcount, oprbits = oprsz * 8;
+-    uint64_t bits;
+-
+     tcg_debug_assert(count <= oprbits);
+-
+-    /* Begin with a zero predicate register.  */
+-    memset(d, 0, sizeof(*d));
+     if (count) {
+-        /* Set all of the requested bits.  */
+-        bits = esz_mask;
+-        if (oprbits & 63) {
+-            bits &= MAKE_64BIT_MASK(0, oprbits & 63);
+-        }
++        uint32_t i, invcount = oprbits - count;
++        uint64_t bits = esz_mask & MAKE_64BIT_MASK(invcount & 63, 64);
+ 
+-        invcount = oprbits - count;
+-        for (i = (oprsz - 1) / 8; i > invcount / 64; --i) {
++        for (i = invcount / 64; i < oprbits / 64; ++i) {
+             d->p[i] = bits;
+             bits = esz_mask;
+         }
+-        d->p[i] = bits & MAKE_64BIT_MASK(invcount & 63, 64);
++        if (oprbits & 63) {
++            d->p[i] = bits & MAKE_64BIT_MASK(0, oprbits & 63);
++        }
+     }
++}
+ 
++uint32_t HELPER(sve_whileg)(void *vd, uint32_t count, uint32_t pred_desc)
++{
++    uint32_t oprsz = FIELD_EX32(pred_desc, PREDDESC, OPRSZ);
++    uint32_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
++    uint32_t oprbits = oprsz * 8;
++    uint64_t esz_mask = pred_esz_masks[esz];
++    ARMPredicateReg *d = vd;
++
++    memset(d, 0, sizeof(*d));
++    do_whileg(d, esz_mask, count, oprbits);
+     return pred_count_test(oprbits, count, true);
+ }
+ 
+-- 
+2.43.0
 
-Best regards,
-William
-
-On Fri, Jul 4, 2025 at 22:29 Peter Maydell <peter.maydell@linaro.org> wrote:
-
-> On Thu, 3 Jul 2025 at 09:56, William Kosasih <kosasihwilliam4@gmail.com>
-> wrote:
-> >
-> > Historically, M-profile helper functions in m_helper.c and mve_helper.c
-> > used the unaligned cpu_*_data_ra() routines to perform guest memory
-> > accesses. This meant we had no way to enforce alignment constraints
-> > when executing helper-based loads/stores. With the addition of the
-> > cpu_*_mmu() APIs, we can now combine the current MMU state with MO_ALIGN
-> > flags to build a MemOpIdx that enforces alignment at the helper level.
-> >
-> > This patch series:
-> > - Replaces all calls to cpu_ld*_data_ra(), cpu_st*_data_ra()
-> >   in the M-profile helpers (m_helper.c) and the MVE helpers
-> >   (mve_helper.c) with their cpu_*_mmu() equivalents.
-> > - Leaves SME and SVE helper code untouched, as those extensions
-> >   support unaligned accesses by design.
-> >
-> > With this change, all M-profile and MVE helper-based loads and stores
-> > will now correctly honor their alignment requirements.
-> >
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1154
-> > Signed-off-by: William Kosasih <kosasihwilliam4@gmail.com>
->
-> Applied to target-arm.next. Thanks for these patches!
->
-> -- PMM
->
-
---00000000000062da6606391b8f25
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div><div><div dir=3D"auto" style=3D"font-size:16px;font-style:normal;font-=
-weight:400;letter-spacing:normal;text-indent:0px;text-transform:none;white-=
-space:normal;word-spacing:0px;text-decoration:none;background-color:rgba(0,=
-0,0,0);border-color:rgb(0,0,0);color:rgb(0,0,0)">This really made my day :-=
-) Thanks Peter!</div><div dir=3D"auto" style=3D"font-size:16px;font-style:n=
-ormal;font-weight:400;letter-spacing:normal;text-indent:0px;text-transform:=
-none;white-space:normal;word-spacing:0px;text-decoration:none;background-co=
-lor:rgba(0,0,0,0);border-color:rgb(0,0,0);color:rgb(0,0,0)"><br></div><div =
-dir=3D"auto" style=3D"font-size:16px;font-style:normal;font-weight:400;lett=
-er-spacing:normal;text-indent:0px;text-transform:none;white-space:normal;wo=
-rd-spacing:0px;text-decoration:none;background-color:rgba(0,0,0,0);border-c=
-olor:rgb(0,0,0);color:rgb(0,0,0)">Best regards,</div><div dir=3D"auto" styl=
-e=3D"font-size:16px;font-style:normal;font-weight:400;letter-spacing:normal=
-;text-indent:0px;text-transform:none;white-space:normal;word-spacing:0px;te=
-xt-decoration:none;background-color:rgba(0,0,0,0);border-color:rgb(0,0,0);c=
-olor:rgb(0,0,0)">William</div></div></div><div><br><div class=3D"gmail_quot=
-e gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jul =
-4, 2025 at 22:29 Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.o=
-rg">peter.maydell@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"g=
-mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-=
-left-style:solid;padding-left:1ex;border-left-color:rgb(204,204,204)">On Th=
-u, 3 Jul 2025 at 09:56, William Kosasih &lt;<a href=3D"mailto:kosasihwillia=
-m4@gmail.com" target=3D"_blank">kosasihwilliam4@gmail.com</a>&gt; wrote:<br=
->
-&gt;<br>
-&gt; Historically, M-profile helper functions in m_helper.c and mve_helper.=
-c<br>
-&gt; used the unaligned cpu_*_data_ra() routines to perform guest memory<br=
->
-&gt; accesses. This meant we had no way to enforce alignment constraints<br=
->
-&gt; when executing helper-based loads/stores. With the addition of the<br>
-&gt; cpu_*_mmu() APIs, we can now combine the current MMU state with MO_ALI=
-GN<br>
-&gt; flags to build a MemOpIdx that enforces alignment at the helper level.=
-<br>
-&gt;<br>
-&gt; This patch series:<br>
-&gt; - Replaces all calls to cpu_ld*_data_ra(), cpu_st*_data_ra()<br>
-&gt;=C2=A0 =C2=A0in the M-profile helpers (m_helper.c) and the MVE helpers<=
-br>
-&gt;=C2=A0 =C2=A0(mve_helper.c) with their cpu_*_mmu() equivalents.<br>
-&gt; - Leaves SME and SVE helper code untouched, as those extensions<br>
-&gt;=C2=A0 =C2=A0support unaligned accesses by design.<br>
-&gt;<br>
-&gt; With this change, all M-profile and MVE helper-based loads and stores<=
-br>
-&gt; will now correctly honor their alignment requirements.<br>
-&gt;<br>
-&gt; Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/115=
-4" rel=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qem=
-u/-/issues/1154</a><br>
-&gt; Signed-off-by: William Kosasih &lt;<a href=3D"mailto:kosasihwilliam4@g=
-mail.com" target=3D"_blank">kosasihwilliam4@gmail.com</a>&gt;<br>
-<br>
-Applied to target-arm.next. Thanks for these patches!<br>
-<br>
--- PMM<br>
-</blockquote></div></div>
-
---00000000000062da6606391b8f25--
 
