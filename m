@@ -4,90 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4962C8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 03:12:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F01DC83030
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 03:28:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXWqc-0003KT-GA; Thu, 03 Jul 2025 23:12:22 -0400
+	id 1uXX5m-0005jZ-Fw; Thu, 03 Jul 2025 23:28:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uXWqX-0003Jl-U1
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 23:12:17 -0400
-Received: from mail-oa1-x34.google.com ([2001:4860:4864:20::34])
+ id 1uXX5e-0005gI-SU
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 23:27:54 -0400
+Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uXWqU-0007T2-Oy
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 23:12:17 -0400
-Received: by mail-oa1-x34.google.com with SMTP id
- 586e51a60fabf-2d09d495c6cso245038fac.3
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 20:12:14 -0700 (PDT)
+ id 1uXX5R-0004gR-2w
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 23:27:53 -0400
+Received: by mail-oo1-xc31.google.com with SMTP id
+ 006d021491bc7-60d666804ebso955774eaf.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 20:23:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751598733; x=1752203533; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751599420; x=1752204220; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=0EioKaM8sJL4SY4I1DN+rMfzBhecT8dcNSRvDuxOOjc=;
- b=ZLMUSy4N3w+3ZANTQfFOfGeHLD8G8460aZmGwwaEKeYFJxZLhefjvHQgFJIO0srZfo
- y7vqnRytr01+jXGWHykAcW8Xyc9gO4YN06IavBvNZXZLeDCqB5sp9tDNyRLy18Cy6mY1
- AidMR9gI3GTukHFLtfzUzEgA3UiAv+qLvyOOWh77y6uiY8aQKvoMMdIL5awi+0zhEPW0
- +q9EmHyWjtubgX4wCCdvqYl9lM9xciyNkqzPnS8VUsykPEeNaj45rGTVaBHinoYdKr5r
- LsTU70qTYH16y3FLxJIZoLyXa4K4TJTiVRWHMTUhi9BPMfk4on88XePJGY6unKbU6pU1
- bolQ==
+ bh=Nh3jJ8bDFB5ahixra5Mg10UMCf525DQw21oT2/4YTE0=;
+ b=vgEfgN7+m1vLkrDroND095p3PD9GvYQxzD1eSzKNwgor48w3M7Dts2vLt16eUc0m/d
+ axfzoXruz7dt1KAGBgmLPIRPsjz6rH5751OI3OqlrkoFh1XQ3ZM3I0d4k7uE6VnPBNsm
+ DP91VMNPU1H/3uLeLwTNpL3h8G59RHBzRQrD+ntWr2cxOxuyW1P4XPUbYn2xGqqK1zoI
+ n064zGcPx9TBGC7DCsDmfM+nuAJAubvsJT+c6Ee/hM864zQRN33iggR2Xq/KN1ruFVjU
+ J6UDagO5WrjlOzTQTxHw5RHbGd2OGb9Xk+cQAmiboAbHOC7uPMmoG9Z/wuZ0mQVX+HlH
+ rVlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751598733; x=1752203533;
+ d=1e100.net; s=20230601; t=1751599420; x=1752204220;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0EioKaM8sJL4SY4I1DN+rMfzBhecT8dcNSRvDuxOOjc=;
- b=MeG/j/6rA6JkPjwGlc1mlULxrMu6EJ0pu/ehftpuRxCiIU3/ZRNVRIavYIgS4sErns
- 1P9NNJGBEotDHsqQ76ncoLmCFQGvG2PcVCB7jXKGhND1OGm3yFJXmbHTBy/8ag6LgalX
- /6AZM84lDQkb1AaygJUza+bkO3sobtLIJg6ibM/Lm05W36UspEDb4nP0o0a591+yITzl
- yRUITseyo1G/CSBbN9skboXDbanDQzeHHlSBVUpVwQcHzWy6i7IBCEuikBqsKpwInb4w
- bar4Ly9tiQdpSGRzO8RuHjA23SiT6YkcEGYIZE8/2Qib+XtD7TUz780AuaVzTXtYWiRL
- HzJg==
-X-Gm-Message-State: AOJu0YxeZ4lu8HRpAXxDRxMktl5Hd5UWS2uw1EMZSZ6/MX+BstJBTjfv
- Ldkllmdr7SQwlvjMi/V22TdFXLXI54P/eYshSoGQGB8JEQ2i96bgJAab27Zp0TsPQM8=
-X-Gm-Gg: ASbGncvClXM6ExgGolwpYlibhYcLoErn8kJL6BFu07zUD8pq7R6rj6qD8xl/YFtfzv4
- FRIL0SjQoEvWi+36z6B9Bv8pyovRXJNjrX6d9prnWtie9qvniRYh6bePuJJlvRjKhNwQA6Ao6Jx
- K1OW5uIVOAx/hScyfjeoX7SCfc09Iyic2pLkiEmStl7HXCw5upW5rMIkpTmhvndnAhpM8KkiJSB
- HC9icu/4bSCr/5yNhH4J7YJP8gOqRE6coCfwmFvIxRduAOMS34fK4MO0xokZMgR89/NEqj2samL
- X3ME9ZUj97eH0DlM9kJ0S8KCGFbsXNnDQgo41Z6AhmkvyEXIlmtmiQ1jzF71QlzZ9nLAGzB6Lzo
- Zj84T3GzOVtAcHeR6X3/S97waGxkPhaDE+FsW+9TP
-X-Google-Smtp-Source: AGHT+IHtVvHlzb9pe6AYizvK475AMNHbfWAishd8by4r4npn0YngM/EqsEfzMpZhbZsslSejEYLRJg==
-X-Received: by 2002:a05:6870:c05:b0:2e8:7505:638e with SMTP id
- 586e51a60fabf-2f792168420mr987601fac.39.1751598732944; 
- Thu, 03 Jul 2025 20:12:12 -0700 (PDT)
+ bh=Nh3jJ8bDFB5ahixra5Mg10UMCf525DQw21oT2/4YTE0=;
+ b=LTGRJOoN+v+5PH0d3b9dqrWPGckuRSuhqusnfqOKK34DI08xsT3+k2KJklFEoh042n
+ 1iBovLWQ/h7t7QI3cwb/9zhZrk6pJg1JzoDb9aBYelFrZHZ2dVzmX5Y7v40BIioVT+Wg
+ +TNgYjjhiqkuhocQWtEgeTcYYZdu2UjqTyILUDnWMl60UfNS92DT3YAeIE5QVZzFGXCK
+ Ua/zCZ1vZqfThIsveWJ1DUCS/mVPk4OCHIUCi74ULL3CgBW4X/GIu+6siinVi5lsMlp0
+ yklfRufFuOgoYH01Yj2Af6unNkps92XwGYvPOqXzKh74DpEdBtbiXd3Op1Ystf/efVi1
+ Tagg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU1CvhC7pn/yGsICtO0vVwM28sj2YtSkrmDNulO+OqN2Q1evMpwM1fEz3ZF0qZ6XQgLKQY/QZji1VTI@nongnu.org
+X-Gm-Message-State: AOJu0YzHQKMr/V2GjbaY4Y/ODJOKqbj3XEPami0bJgK4OJxyl5F0UBrA
+ DErAi5vu3V0eq4xatETjvbI4wQhb6wU5DeoCxa9NIC696H+0uhBG24e5wm0PdESVXhE=
+X-Gm-Gg: ASbGncsmrl2UJW8rDs3KgifjQwaeciWmkm0oGIXK4chkflwH3Cd0cGHUUfnHX3Z4qf6
+ TuqlTXIKur0hx0ZFbfwCfjY0tiZKKImjDMYERq24ICXT9nTc/ekeXR3AIGjbtrjCw9RAjFFEswB
+ pKXvaYmGpF95GjO7hYADuW+MfswLG+eHRy1chU63X+2/T2kulcrEqjQVAk33BLeCDFUOywohIXo
+ SwKUXA2oTrDWEIrxcXRgzYAIc060ERVeLKqA5CFci9xxdVqN1l+6i+IVEMgklcuW86ObEn3rhVN
+ C/PnXNjWAkeX7YsgtEMfhVjuCFU154tbgfsAAYIXngiS4urQASYhy6q+EGaoXGZvNCh063CYTEs
+ edXa4LOHllzyjT1gddd3OYJy9zn8LSSHuMlqvjqSB
+X-Google-Smtp-Source: AGHT+IFhE8+SwkEa8me6+KEWOxR3eG8enNDQGCD/ak1MegXpyi9GSX0ewei/IJYN+ZtPhf5c+Kqv7g==
+X-Received: by 2002:a05:6870:6590:b0:2d4:c1f4:4309 with SMTP id
+ 586e51a60fabf-2f7919c0f16mr1082131fac.0.1751599419878; 
+ Thu, 03 Jul 2025 20:23:39 -0700 (PDT)
 Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2f78ff050a4sm281054fac.7.2025.07.03.20.12.11
+ 46e09a7af769-73c9f735144sm245401a34.14.2025.07.03.20.23.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Jul 2025 20:12:12 -0700 (PDT)
-Message-ID: <65fc2bca-eba1-4736-96c6-59009d298476@linaro.org>
-Date: Thu, 3 Jul 2025 21:12:10 -0600
+ Thu, 03 Jul 2025 20:23:39 -0700 (PDT)
+Message-ID: <afc71f1a-cb76-449e-9961-7e77d43ab839@linaro.org>
+Date: Thu, 3 Jul 2025 21:23:37 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 95/97] target/arm: Enable FEAT_SME2p1 on -cpu max
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org
-References: <20250702123410.761208-1-richard.henderson@linaro.org>
- <20250702123410.761208-96-richard.henderson@linaro.org>
- <87plehb3d6.fsf@draig.linaro.org>
+Subject: Re: [PATCH v6 39/39] MAINTAINERS: Add me as reviewer of overall
+ accelerators section
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250703173248.44995-1-philmd@linaro.org>
+ <20250703173248.44995-40-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <87plehb3d6.fsf@draig.linaro.org>
+In-Reply-To: <20250703173248.44995-40-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::34;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,30 +108,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/25 11:17, Alex Bennée wrote:
-> Richard Henderson <richard.henderson@linaro.org> writes:
+On 7/3/25 11:32, Philippe Mathieu-Daudé wrote:
+> I'd like to be informed of overall changes of accelerators.
 > 
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   target/arm/tcg/cpu64.c        | 10 ++++++++--
->>   docs/system/arm/emulation.rst |  6 ++++++
->>   2 files changed, 14 insertions(+), 2 deletions(-)
->>
->> diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
->> index 5d8ed2794d..f73729926b 100644
->> --- a/target/arm/tcg/cpu64.c
->> +++ b/target/arm/tcg/cpu64.c
->> @@ -1194,7 +1194,7 @@ void aarch64_max_tcg_initfn(Object *obj)
->>        */
->>       t = FIELD_DP64(t, ID_AA64PFR1, MTE, 3);       /* FEAT_MTE3 */
->>       t = FIELD_DP64(t, ID_AA64PFR1, RAS_FRAC, 0);  /* FEAT_RASv1p1 + FEAT_DoubleFault */
->> -    t = FIELD_DP64(t, ID_AA64PFR1, SME, 1);       /* FEAT_SME */
->> +    t = FIELD_DP64(t, ID_AA64PFR1, SME, 2);       /* FEAT_SME2 */
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   MAINTAINERS | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> With -cpu max moving to SME2 is there any way to test just plain SME
-> now?
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index e3e08d4607f..a8bf3f9ccfa 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -495,6 +495,7 @@ Guest CPU Cores (other accelerators)
+>   Overall
+>   M: Richard Henderson <richard.henderson@linaro.org>
+>   R: Paolo Bonzini <pbonzini@redhat.com>
+> +M: Philippe Mathieu-Daudé <philmd@linaro.org>
+>   S: Maintained
+>   F: include/exec/cpu*.h
+>   F: include/exec/target_long.h
 
-No.  What we'd want, I guess, is a real cpu model with just sme1.
+With R:,
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
 r~
