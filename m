@@ -4,81 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8E97C8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 09:21:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 748FCC8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 09:21:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXcbI-00011h-Ss; Fri, 04 Jul 2025 05:20:56 -0400
+	id 1uXcbm-0001Tv-5Y; Fri, 04 Jul 2025 05:21:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uXcbH-00011O-4d
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 05:20:55 -0400
-Received: from p-east3-cluster5-host5-snip4-1.eps.apple.com ([57.103.86.172]
- helo=outbound.qs.icloud.com)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uXcbk-0001R5-A1
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 05:21:24 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uXcbF-0005OX-4o
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 05:20:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
- bh=LerEEwkc8yxfphpYBPoanqa5SssV8KcQm2F3J/oqn3E=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=CL7Ewk7tivSVs9QuYeBGL8Isd0sDZyLydcw5AJjAXgrsKfnz/9ASjWy0iOaG9DjaL
- IEFUiNMmViw6ck9pRi/0ZeP4uCZ83cNDfZG7iMag2a+cj/tfBqdCnhSWZdrDlq9Ows
- xb5xLJlKHK5BJjSS5+8YDS5xiNtgYbn3iwTcHPUhZIGj/Aq6XWmt98Ih3I62n8mVmY
- JT+s0BJRKxj5OAQlmSFdYLatEqY3DI7YLy15/t4CHR9zb/VdJIzdr+rjCqTefIGynq
- YcAoH0xae8gksymiXZfsvfkWzq9r6U8L94RxXsRXjWlDtzeJeZSQNyzH5Xjwr5KUMJ
- xzhvEnuzonOkw==
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by outbound.qs.icloud.com (Postfix) with ESMTPS id 7301C1800177;
- Fri,  4 Jul 2025 09:20:49 +0000 (UTC)
-Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
- [17.57.155.37])
- by outbound.qs.icloud.com (Postfix) with ESMTPSA id 710571874768;
- Fri,  4 Jul 2025 09:20:47 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [PATCH v4 28/65] accel/hvf: Report missing
- com.apple.security.hypervisor entitlement
-From: Mads Ynddal <mads@ynddal.dk>
-In-Reply-To: <20250702185332.43650-29-philmd@linaro.org>
-Date: Fri, 4 Jul 2025 11:20:35 +0200
-Cc: qemu-devel@nongnu.org,
- =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Shatyuka <shatyuka@qq.com>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <28D7CFAA-B19B-4F5B-9B2A-2DD4E3FE1770@ynddal.dk>
-References: <20250702185332.43650-1-philmd@linaro.org>
- <20250702185332.43650-29-philmd@linaro.org>
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
-X-Proofpoint-GUID: 0V-m4ugA8RLTEn5U9e9uhlk93mFZJlBw
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA0MDA3MiBTYWx0ZWRfX78u44BlWz1hp
- Fi2+nS+epsXw8622oIXZublM01s0OHHxAJL90RBglbIGFPIKMYVFgYHvtkA4dtj2m8SGgmVtzd9
- vToI2j0efjL17+VhjmnOpRsMi+mM/ULiRQAKE7+uQL3RnLhR5HvU28lhZSelcXn7QwrJEygzWxL
- XLV+8PsHod6YV2pi8qsqHbbn/QwYvoX3583o9wxsx+xFRYVj+AcfXjJycO9to+hPsmr6Eo1gU+I
- HtadG2nM9kIBkQUAPt2MCrHby1XmAj6JtZy9t9Hyq7v69OguTYv9V3BjN+rG/PUcMGIlw6VgQ=
-X-Proofpoint-ORIG-GUID: 0V-m4ugA8RLTEn5U9e9uhlk93mFZJlBw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-04_03,2025-07-02_04,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- clxscore=1030 spamscore=0 malwarescore=0 suspectscore=0 phishscore=0
- mlxscore=0 adultscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506060001 definitions=main-2507040072
-Received-SPF: pass client-ip=57.103.86.172; envelope-from=mads@ynddal.dk;
- helo=outbound.qs.icloud.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uXcbi-0005VI-KZ
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 05:21:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1751620883; x=1783156883;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=inr+3FwlB9sc9YcOOYVxwbJmvIIoEDSr6BDierq+drE=;
+ b=kQC1VO2xikFn0xe33JCRKx87YCsZcjWRRJ2IniAcVaQ/+y0w/4HmJuH5
+ 8pevu+JWAhKp4Lh2wJd5WD4y667dkqc3ByUD+Gn6p8TS0S5Xekr+sf2Wd
+ sPH9B/bV//NTKBE3c2Uq24u3TmwCas4UUANgOBxgvddRgpbvHfJW0hRLM
+ CV59TMGCVa5OYyPs2CMEiwOwyUpTO9Kf2MfZ/t4795xJn0rMk0LYYlWXC
+ tEe+XY0+RvJFmLDX8dAU3XDkCPoIc5h/RCTotWZmC8b5QrLyJ7rnslwdc
+ dnish42vgVfTkP6yfz6tmui02c8tc4FFCr4FhqgHfqqa9AXae6Z18B/Qc w==;
+X-CSE-ConnectionGUID: a0lik0N8S9+DKadMT+FnIw==
+X-CSE-MsgGUID: gTvJoLgJThmrLr+p0YQ8JA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="54097940"
+X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="54097940"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Jul 2025 02:21:21 -0700
+X-CSE-ConnectionGUID: DxX1hGH6QsG+0u/Wg7IiCg==
+X-CSE-MsgGUID: HbVV904qSka382ewDD1GgQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="154965016"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa009.fm.intel.com with ESMTP; 04 Jul 2025 02:21:19 -0700
+Date: Fri, 4 Jul 2025 17:42:45 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v6 12/39] accel: Move supports_guest_debug() declaration
+ to AccelClass
+Message-ID: <aGeiFZb4spI4uwqd@intel.com>
+References: <20250703173248.44995-1-philmd@linaro.org>
+ <20250703173248.44995-13-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250703173248.44995-13-philmd@linaro.org>
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,33 +85,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-> On 2 Jul 2025, at 20.52, Philippe Mathieu-Daud=C3=A9 =
-<philmd@linaro.org> wrote:
->=20
-> We need the QEMU binary signed to be able to use HVF.
-> Improve the following:
->=20
->  $ ./qemu-system-aarch64-unsigned -M virt -accel hvf
->  qemu-system-aarch64-unsigned: -accel hvf: Error: ret =3D HV_DENIED =
-(0xfae94007, at ../../accel/hvf/hvf-accel-ops.c:339)
->  Abort trap: 6
->=20
-> to:
->=20
->  $ ./qemu-system-aarch64-unsigned -M virt -accel hvf
->  qemu-system-aarch64-unsigned: -accel hvf: Could not access HVF. Is =
-the executable signed with com.apple.security.hypervisor entitlement?
->=20
-> Suggested-by: Shatyuka <shatyuka@qq.com>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2800
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Acked-by: Richard Henderson <richard.henderson@linaro.org>
+On Thu, Jul 03, 2025 at 07:32:18PM +0200, Philippe Mathieu-Daudé wrote:
+> Date: Thu,  3 Jul 2025 19:32:18 +0200
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Subject: [PATCH v6 12/39] accel: Move supports_guest_debug() declaration to
+>  AccelClass
+> X-Mailer: git-send-email 2.49.0
+> 
+> AccelOpsClass is for methods dealing with vCPUs.
+> When only dealing with AccelState, AccelClass is sufficient.
+> 
+> In order to have AccelClass methods instrospect their state,
+> we need to pass AccelState by argument.
+> 
+> Restrict kvm_supports_guest_debug() scope.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
-> accel/hvf/hvf-accel-ops.c | 5 +++++
-> 1 file changed, 5 insertions(+)
->=20
+>  accel/kvm/kvm-cpus.h       | 1 -
+>  include/qemu/accel.h       | 1 +
+>  include/system/accel-ops.h | 1 -
+>  include/system/hvf.h       | 2 +-
+>  accel/hvf/hvf-accel-ops.c  | 2 +-
+>  accel/kvm/kvm-accel-ops.c  | 1 -
+>  accel/kvm/kvm-all.c        | 5 ++++-
+>  accel/tcg/tcg-accel-ops.c  | 6 ------
+>  accel/tcg/tcg-all.c        | 6 ++++++
+>  gdbstub/system.c           | 8 +++++---
+>  target/arm/hvf/hvf.c       | 2 +-
+>  target/i386/hvf/hvf.c      | 2 +-
+>  12 files changed, 20 insertions(+), 17 deletions(-)
 
-Reviewed-by: Mads Ynddal <mads@ynddal.dk>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
