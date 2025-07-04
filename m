@@ -4,106 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EBF6C8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 14:04:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D4DAC83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 14:04:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXh18-0004R1-NO; Fri, 04 Jul 2025 10:03:57 -0400
+	id 1uXh1R-0004Yu-G6; Fri, 04 Jul 2025 10:04:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uXh0U-0004AH-Pc
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:03:25 -0400
-Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXh0e-0004Kx-O7
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:03:36 -0400
+Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uXh0N-0000Y5-GA
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:03:12 -0400
-Received: by mail-ot1-x32e.google.com with SMTP id
- 46e09a7af769-739f2508ffaso854794a34.2
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 07:03:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXh0d-0000cD-1M
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:03:24 -0400
+Received: by mail-yb1-xb33.google.com with SMTP id
+ 3f1490d57ef6-e8276224c65so844733276.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 07:03:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751637786; x=1752242586; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XNq0c8GL5ZyhDYOqX8QVyvyzFsqz5xU7FqcEI7jxulc=;
- b=gEtcZ4C6Z5d9dgIe6WmAA5O+Hv5ehwEeT7yoKuaJG/cN2CTqzBoPzQe0UAb1AHLwwc
- xBmG9e+TRpMnbYIHMMn6c3UvghE7DeY8T4YQbEaRclv/NrqI5RHJUsKsGtCX9CqG93t5
- 3WgiDZc1JMuDE3Zh8LjGgejQ1ir5w37nW6fbrqWADB5FSLlu6zNXPMmjnpffqph0cue/
- PGnZsEetcM9YsEGGBljCoJ5idXQlnuY1aeaumZSy71J3LIhPHjKmNARiqxIEsg9XL1Lh
- QKH8OGFxVgCRR1itOm2T17xzMNcM9W3Kyp408gplBQtSxWAgz4v+d6b7cLEh+sRoIaaN
- IbfQ==
+ d=linaro.org; s=google; t=1751637799; x=1752242599; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=fEOguAl/E9+enpXT7inQRZjrSGrT4GgdC/exifKAu0U=;
+ b=D5fXRZzocUswboZFHsgTHWBtYvMHFRdQhW9O1UZ7xY90yiXVtehLoYtakHRgG8kym+
+ 8GyqordsCSjnmiFGrWa+aO1oihB2AiVSjP4xggIPRpmflW5QEywLKTzCO0SXc5AKVk3F
+ OQY5uueggfpAjZJJxdJqmZ1Ctoq6tlDDuY36l9Z2dlVQb/d19x1RPsfr2M24ary1m0UK
+ pIxPiNOGPKPCK0iNl6JdewWjm3mWnPq7Tg7P+WL2WmyjfXw5J8fkmuT5MCuxO7IneRFs
+ waBXfSXAx7tXeLYaJlW0WgzR5NCxGsx7S6D+gRY23/uPS8jQ8/Nuje0P5HAbNsaw1ATU
+ KCIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751637786; x=1752242586;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XNq0c8GL5ZyhDYOqX8QVyvyzFsqz5xU7FqcEI7jxulc=;
- b=TlZDPN8OGYw+M4SdVUW1xt2PVsa3wk4RB7vZ1/TLM5Wcustpj5lM0FCN0HvFxICoVa
- +rdX1AiJB5JFe9Z9WUcf0yBw8zBBWV4421m6avdoHvzIVKyHtz0Z8WF58+9oszk9BnLo
- MpQHVWXWRT7re/81llQggjtRbcwhbZG8KOS3jP0ZV+ReMm3EeSwoyZCkVmH+rtGa7oY2
- QKHTYColfaUQduA8EeP+tkL/YCVajgTerWeLkd4SpXUcbxaGR6OXejHrNFXfXeTrXkew
- gHmpkEGRG1mRQiifQsbEe9Z5vjbzB++HV+N5kFlWsKHf1T4f7GEkxfDwVXL3uyP7O9po
- aBJg==
+ d=1e100.net; s=20230601; t=1751637799; x=1752242599;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fEOguAl/E9+enpXT7inQRZjrSGrT4GgdC/exifKAu0U=;
+ b=jirQfgggD/jy9SC84u0L7iw048ogA53+xG2L9a4mrnCNJ58SgANx4b6zdHqaKQYJ95
+ fYZaFmYmeCNIth4UUaJtG8DqtqfHOowsaGzmn6fTovIQCLE2nUe5aIaBDW4ZrnI1p6Wz
+ GzP5Zs+1ZfwuwCZCfkoDoKdULgyGnBOTSR39H9GxHpeXR4k/8omE+W/Z9UeRaUKNtdsE
+ 0HCLUPIUSwUczJm3IcLEeQnGjS4gH0//fdBTWcLk59tvNB2a8/qOpUKNLkEZZOTWfZp/
+ grYRJb+k1d2g4o2fPmOZgM8yo9pugRCJyTGmW0uNYF4QTXxMoRJ1RGTJoeuRLEtdgE1r
+ 2DvA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXb909HcwqUcIsvmR59yW/UdeaSEpDIrWqap+/Rc0ZvmIG3Ex9y9k64RPlCP20S1MetMeFKMopgLxTF@nongnu.org
-X-Gm-Message-State: AOJu0YyiVVlCCBZUS3DsibMgsUweh8+XLduRozU+raENwk5jSK4+nN71
- s/6BoD9McmAvCdcCkGX4Wonkh3WvlPdyNlI8pLxamm5BijhXXChpGuSof39lytAPMqo=
-X-Gm-Gg: ASbGncujXLgtQ+zEaVmkHUanrmUoDt0tEFwqPFKlxigDzVbzjZC50O4oy7R14ITFThq
- xhpwrU8U78unJUzmU1fBVeZuEXg+XKhXPyuJywYRUBvIUJExdwzpeZn30Old26o5oTp3Dz3Guqi
- mXkUAtGzZkK5myXv2MzPb5BQBpTmRxKs5r5uhrwo2CXTNzlchkOsFtB7BR3BjVBN5yFDqbyUqcj
- vPwqE+2DMr9BGsgxcykPRDBzvXpOQ+C44Rzy2LSRvUDCJyqnZ3y+PFn6Y/FsSVPQRZcoK9u3Ydv
- MwvFScqKy1TpavEaPK4k1AGXw+lcqU6q+dzTIzZ/0zg5Hxmf13XZb67J3DJH9NDPLb4Ji9DsCJA
- FJ4dLOu40i65Ou7LA5lfhz2TaWE6KT+/2ZYRmd7P7
-X-Google-Smtp-Source: AGHT+IHCjZMWku2sXb4MaomGmkFzos2MmBGatOccfc0k+r2F+uBCum+atRQEn6lI9s8yQAG5RNVFtg==
-X-Received: by 2002:a05:6830:4d86:b0:73a:8a8a:5151 with SMTP id
- 46e09a7af769-73ca66dc922mr1238051a34.17.1751637786225; 
- Fri, 04 Jul 2025 07:03:06 -0700 (PDT)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-73c9f735144sm388064a34.14.2025.07.04.07.03.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Jul 2025 07:03:05 -0700 (PDT)
-Message-ID: <68bd424d-0249-4c74-a7a1-d0f46d46a835@linaro.org>
-Date: Fri, 4 Jul 2025 08:03:02 -0600
+ AJvYcCVSUgAvtqhviyF393coQqJCPQTNnswhX/owDlHjoKMm6Wp4tC6/q7+teyg6xXUKpKU38vCf0n++IeDL@nongnu.org
+X-Gm-Message-State: AOJu0YyjyMwtTaL0UqZfgKr0VCS04yZfHabUTqYKN3nG475NHXWsjivA
+ cgy9nHX/+VTPQpP27R4qra9DJvooU2ZIFuBTgMLxG2oyyDZVTVuLgfdr9efXcOEwTFlooNevQ+D
+ VZnu+0DUSijQBBayXFVQaKL9gxX/IVY8RneubWljvHQ==
+X-Gm-Gg: ASbGncsaLnhsosATpKhkHV7exmCcqz3FXqQ+CsltA3WnySvyZQ0+qKoiEOmGR2paDJW
+ Y1acdHljzgNvZT3+O/nLYMqAJD8I2fh/BC8r+GRIWVfwSGXt8k5Gk+x5RZG7r5NFDpIUeSeh+eE
+ ifxW9D9u1PqJG6KTc3qq14r13FL6s5iFEa7DQWAX5xi0A7
+X-Google-Smtp-Source: AGHT+IHV/2GF6o2yg3b4NbA2xzV490F+Y7/J6aFHUiuCtoX3O1kSZHnXbIYvd3DpSbS7gWjigk/1Y4u9ANHr6VbTflc=
+X-Received: by 2002:a05:690c:692:b0:70e:2c7f:2ee7 with SMTP id
+ 00721157ae682-71668bf27b3mr33452547b3.12.1751637798735; Fri, 04 Jul 2025
+ 07:03:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 38/39] accel: Extract AccelClass definition to
- 'accel/accel-ops.h'
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Mads Ynddal <mads@ynddal.dk>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, Warner Losh
- <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Reinoud Zandijk <reinoud@netbsd.org>,
- Sunil Muthuswamy <sunilmut@microsoft.com>, kvm@vger.kernel.org,
- xen-devel@lists.xenproject.org
-References: <20250703173248.44995-1-philmd@linaro.org>
- <20250703173248.44995-39-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250703173248.44995-39-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32e.google.com
+References: <20250702163115.251445-1-eric.auger@redhat.com>
+ <20250702163115.251445-2-eric.auger@redhat.com>
+ <CAFEAcA88pUf6tpn7_o-khYjRP6T1NwCuaZKREkC3wmd_YUKEiQ@mail.gmail.com>
+ <86zfdk9i98.wl-maz@kernel.org>
+In-Reply-To: <86zfdk9i98.wl-maz@kernel.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 4 Jul 2025 15:03:06 +0100
+X-Gm-Features: Ac12FXwkS6O-indDBiOlHX3su1HKo9gysc05zwEokHnxb9jIGMJYHKt2dZWRcv0
+Message-ID: <CAFEAcA9Z5bSgsYvHMwDEbw7e-1V_Yi62X8r2pH_LRHQfVonJVg@mail.gmail.com>
+Subject: Re: [PATCH v7 1/4] hw/arm: Allow setting KVM vGIC maintenance IRQ
+To: Marc Zyngier <maz@kernel.org>
+Cc: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, 
+ qemu-arm@nongnu.org, miguel.luis@oracle.com, richard.henderson@linaro.org, 
+ gkulkarni@amperecomputing.com, gankulkarni@os.amperecomputing.com, 
+ hi@alyssa.is
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,36 +100,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/25 11:32, Philippe Mathieu-Daudé wrote:
-> Only accelerator implementations (and the common accelator
-> code) need to know about AccelClass internals. Move the
-> definition out but forward declare AccelState and AccelClass.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   MAINTAINERS                 |  2 +-
->   include/accel/accel-ops.h   | 50 +++++++++++++++++++++++++++++++++++++
->   include/qemu/accel.h        | 40 ++---------------------------
->   include/system/hvf_int.h    |  3 ++-
->   include/system/kvm_int.h    |  1 +
->   accel/accel-common.c        |  1 +
->   accel/accel-system.c        |  1 +
->   accel/hvf/hvf-all.c         |  1 +
->   accel/kvm/kvm-all.c         |  1 +
->   accel/qtest/qtest.c         |  1 +
->   accel/tcg/tcg-accel-ops.c   |  1 +
->   accel/tcg/tcg-all.c         |  1 +
->   accel/xen/xen-all.c         |  1 +
->   bsd-user/main.c             |  1 +
->   gdbstub/system.c            |  1 +
->   linux-user/main.c           |  1 +
->   system/memory.c             |  1 +
->   target/i386/nvmm/nvmm-all.c |  1 +
->   target/i386/whpx/whpx-all.c |  1 +
->   19 files changed, 70 insertions(+), 40 deletions(-)
->   create mode 100644 include/accel/accel-ops.h
+On Fri, 4 Jul 2025 at 14:51, Marc Zyngier <maz@kernel.org> wrote:
+>
+> On Fri, 04 Jul 2025 13:01:05 +0100,
+> Peter Maydell <peter.maydell@linaro.org> wrote:
+> > https://www.kernel.org/doc/Documentation/virt/kvm/devices/arm-vgic-v3.rst
+> > says
+> >
+> > # KVM_DEV_ARM_VGIC_GRP_MAINT_IRQ
+> > # Attributes:
+> > #
+> > #    The attr field of kvm_device_attr encodes the following values:
+> > #
+> > #      bits:     | 31   ....    5 | 4  ....  0 |
+> > #      values:   |      RES0      |   vINTID   |
+> > #
+> > #    The vINTID specifies which interrupt is generated when the vGIC
+> > #    must generate a maintenance interrupt. This must be a PPI.
+> >
+> > but this code sets kvmattr.addr to 0 and kvmaddr.addr to
+> > the address of a uint32_t with the vINTID in it.
+> >
+> > Looking at the kernel code in vgic_v3_attr_regs_access() it
+> > looks like maybe the kernel docs are wrong, but I'm not sure.
+>
+> I think this is a pretty bad case of one person implementing
+> something, and another (me) hoping (but not checking) it would be
+> implemented in a particular way. Oh well.
+>
+> Would the following match your expectations (and the code)?
+>
+> diff --git a/Documentation/virt/kvm/devices/arm-vgic-v3.rst b/Documentation/virt/kvm/devices/arm-vgic-v3.rst
+> index e860498b1e359..4843c91052786 100644
+> --- a/Documentation/virt/kvm/devices/arm-vgic-v3.rst
+> +++ b/Documentation/virt/kvm/devices/arm-vgic-v3.rst
+> @@ -299,7 +299,7 @@ Groups:
+>    KVM_DEV_ARM_VGIC_GRP_MAINT_IRQ
+>     Attributes:
+>
+> -    The attr field of kvm_device_attr encodes the following values:
+> +    The attribute data pointed to by kvm_device_attr.addr is a __u32 value::
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+I think it's maybe better to explicitly say "Attributes: ignored"
+or "Attributes: none" or similar. Otherwise it looks like the text
+is describing attr, because it follows the "Attributes:" subheader.
+(Though we don't do this for KVM_DEV_ARM_VGIC_GRP_NR_IRQS either,
+which also ignores attrs and reads/writes a value pointed to by
+addr.)
 
-r~
+>
+>        bits:     | 31   ....    5 | 4  ....  0 |
+>        values:   |      RES0      |   vINTID   |
+
+Is the kvmattr.attr field mandatorily 0, or does the kernel
+ignore it? (I think the answer is "ignored".)
+
+Side note, we seem to allow this attribute to be read via
+get_attr for gicv2, even though has_attr denies it exists there,
+because the get code is in vgic_get_common_attr(). set_attr
+is in the gicv3-only vgic_v3_attr_regs_access().
+
+-- PMM
 
