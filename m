@@ -4,77 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A0F3C83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 12:22:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66452C83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 12:23:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXfQz-0004Xq-Tm; Fri, 04 Jul 2025 08:22:33 -0400
+	id 1uXfRB-0004am-7U; Fri, 04 Jul 2025 08:22:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uXfQv-0004XI-Bf
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 08:22:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uXfQp-00073T-3C
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 08:22:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751631735;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=bHwQemYNBv8V2Zk5S3Q689F/PckNzKTmczPjCZFYp7w=;
- b=eVhytWfUW//8n/Q+vKS4zOnTi1376AM42VOnIw5FsgqK9nOWehjed/CQiypqoEJt4RHH/E
- agxXqAras8NRuB2mObn2vRQ1vMzHI++jnncErGrR+FRRgkztBEANdbpOCVuHntv4xsst9S
- ydPmxE0GdLqoDZPb3hAbme55oADDdxM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-65-iwqBnigRPkSKNpbAULvuDA-1; Fri,
- 04 Jul 2025 08:22:11 -0400
-X-MC-Unique: iwqBnigRPkSKNpbAULvuDA-1
-X-Mimecast-MFC-AGG-ID: iwqBnigRPkSKNpbAULvuDA_1751631730
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7DD9818011DF; Fri,  4 Jul 2025 12:22:10 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 94B331944CCC; Fri,  4 Jul 2025 12:22:09 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DF01821E6A27; Fri, 04 Jul 2025 14:22:06 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org,  John Snow <jsnow@redhat.com>,  Cleber Rosa
- <crosa@redhat.com>,  Eric Blake <eblake@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  "Daniel P. Berrange" <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,  Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Peter Krempa <pkrempa@redhat.com>, devel@lists.libvirt.org
-Subject: Re: [PATCH V2 1/5] qom: qom-tree-get
-In-Reply-To: <1747057635-124298-2-git-send-email-steven.sistare@oracle.com>
- (Steve Sistare's message of "Mon, 12 May 2025 06:47:11 -0700")
-References: <1747057635-124298-1-git-send-email-steven.sistare@oracle.com>
- <1747057635-124298-2-git-send-email-steven.sistare@oracle.com>
-Date: Fri, 04 Jul 2025 14:22:06 +0200
-Message-ID: <877c0ono29.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXfR3-0004YF-EH
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 08:22:33 -0400
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uXfQx-00074v-49
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 08:22:31 -0400
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-e7b4ba530feso726488276.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 05:22:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751631745; x=1752236545; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=iMBIiHQc0yjE/REZp+XDiEkuacvEtho3L9zfi80FAbQ=;
+ b=aes5+PyUq/aCCT2lB61lGGjU+ai19OfVKVQYyXixM6crjUaxWU5SAZpVm2Y+auJkop
+ yRbomX+z1MlOTDFSKt5A4H5YR459H5ccU/qTfB6qaGWILaRDeaiZu+g3I7FWCUN86BOr
+ hpeCYRPvpIr9iQV65SlP1ei/LkpcFZtGh3rxHU5rt32LD+R+uFEWtgBmaVTFJVhNlJ7M
+ sMNo2gQy6r3VXpsqjfgt50jLbHPysp22/HJrZrBIN/DW8ukbagJu7by/2Hk/HngzqeoW
+ Wp3wpDapd77/tptD33jzPTFTEZvu9bUvne/vBtwQjM6A2zbbLdjYFQIbVwoSB42Omobu
+ nZqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751631745; x=1752236545;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=iMBIiHQc0yjE/REZp+XDiEkuacvEtho3L9zfi80FAbQ=;
+ b=wPKaQdFRuP8KDnFTMK+hyJhIO17CpjmLKtMGBTLLuVnuIMPnCjMNJ/65Kb5klVHuDD
+ mVM8mdi4fqPTlEGVYAAUnQQKfk096VkXj3OAOGWCY93kvtyZQp4TOYLvjalgpbJMjCGC
+ iuPU8S9nRoSh095tilifDtkw84yd3DS+WOFwFhVTweCs/AQu6z1k6cZa//qSBg+d3EJk
+ aj71b9rssTrOl7Y/Wk5UWHa0xA+L1IJJ9Zwazark09TFNM9sDDMkAmy8sHoYAwr21/oT
+ wo1n/+Dw94dS/fK1lgItUrpEmOwb29vTKIBthdYT+JBTsqUzuR3VQtacnK7FdhERviVD
+ XZXg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV0oqxLKoB1NW02zM3jCyxyc577NAOJjLNSLdoGPLnnQpJ67jENLjfFal0ZCf9LcNIgY+/SVP5qfQ4v@nongnu.org
+X-Gm-Message-State: AOJu0YzbXJHaxlcvw4BdLFP3CK+HQOaEK5fAzrRKplk3YrwIT8Pd3MVP
+ ZJGvHDpYuK8hnVSGLJbTLT4iU5HjvdMdcA+tu74H3yLkB1N7Y+FhPUHGzm0eL9ChVDY2w7HBU1B
+ nqpv2jJlIxuX/tPcHEtRi0D/xGz24rf9TWWUiSCk4Cw==
+X-Gm-Gg: ASbGncs+j6Pye4eBrgwz3M1TfEG1XuONitkEfPPqFSCJ+cMG/6Nnjz95FKIQxCn1Ip1
+ xY1AZOQ2B9by47ghb9u8lgAITLe/p0y0tfUqTMIDRqxgbS3uZdSO64Yp/kLftEeh9Srp2aAG8oh
+ TDylDbirAsaS7LE0nzcw6abu1RVH7gsAfF/lpx3YoZk03lZ4ZNHLgQhr4=
+X-Google-Smtp-Source: AGHT+IGfWdp77I+9zhcSBR8KxW+kTvMaR6HnFCzmr6OWbowL4Jm1njk3vLbEhhoPdUJI9ceeuC/WnLUiKJ+2KHvM4DQ=
+X-Received: by 2002:a05:690c:387:b0:712:d70b:45cc with SMTP id
+ 00721157ae682-71668cf2015mr28891327b3.8.1751631745068; Fri, 04 Jul 2025
+ 05:22:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <20250702163115.251445-1-eric.auger@redhat.com>
+ <20250702163115.251445-5-eric.auger@redhat.com>
+In-Reply-To: <20250702163115.251445-5-eric.auger@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 4 Jul 2025 13:22:13 +0100
+X-Gm-Features: Ac12FXzT3OfEfz5CdBbVNt4SvHHsZqLdVbTfeyDedc84_69uDnEINS86BXYsLM4
+Message-ID: <CAFEAcA9hhdwHNrBfEqO4GD6kSb3Efcw-Rztq=CqvcOGMG3+z6A@mail.gmail.com>
+Subject: Re: [PATCH v7 4/4] hw/arm/virt: Allow virt extensions with KVM
+To: Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ miguel.luis@oracle.com, richard.henderson@linaro.org, maz@kernel.org, 
+ gkulkarni@amperecomputing.com, gankulkarni@os.amperecomputing.com, 
+ hi@alyssa.is
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.218, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,269 +96,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steve Sistare <steven.sistare@oracle.com> writes:
-
-> Define the qom-tree-get QAPI command, which fetches an entire tree of
-> properties and values with a single QAPI call.  This is much faster
-> than using qom-list plus qom-get for every node and property of the
-> tree.  See qom.json for details.
+On Wed, 2 Jul 2025 at 17:31, Eric Auger <eric.auger@redhat.com> wrote:
 >
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> From: Haibo Xu <haibo.xu@linaro.org>
+>
+> Up to now virt support on guest has been only supported with TCG.
+> Now it becomes feasible to use it with KVM acceleration.
+>
+> Also check only in-kernel GICv3 is used along with KVM EL2.
+>
+> Signed-off-by: Haibo Xu <haibo.xu@linaro.org>
+> Signed-off-by: Miguel Luis <miguel.luis@oracle.com>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>
 > ---
->  qapi/qom.json      | 56 ++++++++++++++++++++++++++++++++++++++++++
->  qom/qom-qmp-cmds.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 128 insertions(+)
+> v6 -> v7:
+> - rebase on top of "hw/arm/virt: Make EL2 accelerator check an
+>   accept-list". I dared to keep Richard's R-b though.
 >
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index 28ce24c..94662ad 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -46,6 +46,38 @@
->              '*default-value': 'any' } }
->  
->  ##
-> +# @ObjectPropertyValue:
-> +#
-> +# @name: the name of the property
-> +#
-> +# @type: the type of the property, as described in @ObjectPropertyInfo
-
-That description is crap.  In part because what it tries to describe is
-crap.  Neither is this patch's problem.
-
-> +#
-> +# @value: the value of the property.  Omitted if cannot be read.
-
-Suggest "Absent when the property cannot be read."
-
-> +#
-> +# Since 10.1
-> +##
-> +{ 'struct': 'ObjectPropertyValue',
-> +  'data': { 'name': 'str',
-> +            'type': 'str',
-> +            '*value': 'any' } }
-
-ObjectPropertyValue suggests this describes a property's value.  It does
-not.  It includes the name, i.e. it describes the *property*.
-
-So does ObjectPropertyInfo.
-
-The two overlap: both habe name and type.  Only ObjectPropertyValue has
-the current value.  Only ObjectPropertyInfo has the default value and
-description (I suspect the latter is useless in practice).
-
-ObjectPropertyInfo is used with qom-list and qom-list-properties.
-
-qom-list takes a QOM path, like your qom-tree-get and qom-list-getv.
-I'd expect your commands to supersede qom-list in practice.
-
-qom-list-properties is unlike your qom-tree-get and qom-list-getv: it
-takes a type name.  It's unreliable for non-abstract types: it can miss
-dynamically created properties.
-
-Let's ignore all this for now.
-
+> v2 -> v3:
+> - check gic version/in-kernel implementation when kvm el2 is set (Peter)
+>
+> v1 -> v2:
+> - fixed test ordering: virt && ((kvm && !kvm_el2) || hvf) [Richard]
+> - tweeked the commit title & message
+> ---
+>  hw/arm/virt.c | 10 +++++++++-
+>  1 file changed, 9 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 550a272fbb..1c0a2c43c4 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -792,6 +792,13 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+>      default:
+>          g_assert_not_reached();
+>      }
 > +
-> +##
-> +# @ObjectNode:
-> +#
-> +# @name: the name of the node
-> +#
-> +# @children: child nodes
-> +#
-> +# @properties: properties of the node
-> +#
-> +# Since 10.1
-> +##
-> +{ 'struct': 'ObjectNode',
-> +  'data': { 'name': 'str',
-> +            'children': [ 'ObjectNode' ],
-> +            'properties': [ 'ObjectPropertyValue' ] }}
-> +
-> +##
->  # @qom-list:
->  #
->  # This command will list any properties of a object given a path in
-> @@ -126,6 +158,30 @@
->    'allow-preconfig': true }
->  
->  ##
-> +# @qom-tree-get:
-> +#
-> +# This command returns a tree of objects and their properties,
-> +# rooted at the specified path.
-> +#
-> +# @path: The absolute or partial path within the object model, as
-> +#     described in @qom-get
-> +#
-> +# Errors:
-> +#     - If path is not valid or is ambiguous, returns an error.
+> +    if (kvm_enabled() && vms->virt &&
+> +        (revision != 3 || !kvm_irqchip_in_kernel())) {
+> +        error_report("KVM EL2 only is supported with in-kernel GICv3");
 
-By convention, we use "If <condition>, <error>, where <error> is a
-member of QapiErrorClass.
+"is only supported"
 
-What are the possible error classes?  As far as I can tell:
-
-         - If path is ambiguous, GenericError
-         - If path cannot be resolved, DeviceNotFound
-
-However, use of error classes other than GenericError is strongly
-discouraged (see error_set() in qapi/error.h).
-
-Is the ability to distinguish between these two errors useful?
-
-Existing related commands such as qom-get also use DeviceNotFound.
-Entirely undocumented, exact error conditions unclear.  Awesome.
-
-Libvirt seems to rely on this undocumented behavior: I can see code
-checking for DeviceNotFound.  Hyrum's law strikes.
-
-qom-get fails with DeviceNotFound in both of the above cases.  It fails
-with GenericError when @property doesn't exist or cannot be read.  Your
-qom-tree-get fails differently.  Awesome again.
-
-Choices:
-
-1. Leave errors undocumented and inconsistent.
-
-2. Document errors for all related commands.  Make the new ones as
-consistent as we can.
-
-> +#     - If a property cannot be read, the value field is omitted in
-> +#       the corresponding @ObjectPropertyValue.
-
-This is not an error, and therefore doesn't belong here.
-ObjectPropertyValue's documentation also mentions it.  Good enough?
-
-> +#
-> +# Returns: A tree of @ObjectNode.  Each node contains its name, list
-> +#     of properties, and list of child nodes.
-
-Hmm.
-
-A struct Object has no name.  Only properties have a name.
-
-An ObjectNode has a name, and an ObjectPropertyValue has a name.
-
-I may get back to this in a later message.
-
-> +#
-> +# Since 10.1
-> +##
-> +{ 'command': 'qom-tree-get',
-> +  'data': { 'path': 'str' },
-> +  'returns': 'ObjectNode',
-> +  'allow-preconfig': true }
-> +
-> +##
->  # @qom-set:
->  #
->  # This command will set a property from a object model path.
-> diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
-> index 293755f..b876681 100644
-> --- a/qom/qom-qmp-cmds.c
-> +++ b/qom/qom-qmp-cmds.c
-> @@ -69,6 +69,78 @@ ObjectPropertyInfoList *qmp_qom_list(const char *path, Error **errp)
->      return props;
->  }
->  
-> +static void qom_list_add_property_value(Object *obj, ObjectProperty *prop,
-> +                                        ObjectPropertyValueList **props)
-> +{
-> +    ObjectPropertyValue *item = g_new0(ObjectPropertyValue, 1);
-> +    Error *err = NULL;
-> +
-> +    QAPI_LIST_PREPEND(*props, item);
-
-List elements are in reverse iteration order.  Not wrong.  I would've
-reached for QAPI_LIST_APPEND(), though.
-
-Wait!  Existing command code uses QAPI_LIST_PREPEND().  Nevermind, carry
-on!
-
-> +
-> +    item->name = g_strdup(prop->name);
-> +    item->type = g_strdup(prop->type);
-> +    item->value = object_property_get_qobject(obj, prop->name, &err);
-> +
-> +    if (!item->value) {
-> +        /*
-> +         * For bulk get, the error message is dropped, but the value field
-> +         * is omitted so the caller knows this property could not be read.
-> +         */
-> +        error_free(err);
-
-Simpler: pass NULL to object_property_get_qobject().
-
-> +    }
-> +}
-> +
-> +static ObjectNode *qom_tree_get(const char *path, Error **errp)
-> +{
-> +    Object *obj;
-> +    ObjectProperty *prop;
-> +    ObjectNode *result, *child;
-> +    ObjectPropertyIterator iter;
-> +
-> +    obj = qom_resolve_path(path, errp);
-> +    if (obj == NULL) {
-> +        return NULL;
+> +        exit(1);
 > +    }
 > +
-> +    result = g_new0(ObjectNode, 1);
-> +
-> +    object_property_iter_init(&iter, obj);
-> +    while ((prop = object_property_iter_next(&iter))) {
-> +        if (strstart(prop->type, "child<", NULL)) {
-> +            g_autofree char *child_path = g_strdup_printf("%s/%s",
-> +                                                          path, prop->name);
-> +            child = qom_tree_get(child_path, errp);
-> +            if (!child) {
-> +                qapi_free_ObjectNode(result);
-> +                return NULL;
-> +            }
-> +            child->name = g_strdup(prop->name);
+>      vms->gic = qdev_new(gictype);
+>      qdev_prop_set_uint32(vms->gic, "revision", revision);
+>      qdev_prop_set_uint32(vms->gic, "num-cpu", smp_cpus);
+> @@ -2211,7 +2218,8 @@ static void machvirt_init(MachineState *machine)
+>          exit(1);
+>      }
+>
+> -    if (vms->virt && !tcg_enabled() && !qtest_enabled()) {
+> +    if (vms->virt && !(kvm_enabled() && kvm_arm_el2_supported()) &&
+> +                     !tcg_enabled() && !qtest_enabled()) {
+>          error_report("mach-virt: %s does not support providing "
+>                       "Virtualization extensions to the guest CPU",
+>                       current_accel_name());
 
-WAT?
+Have you tested doing a VM migration of a KVM with EL2 setup?
+I suppose the system registers probably generally Just Work
+via the sysreg GET/SET_ONE_REG API, but won't the in-kernel
+GICv3 have extra state that we need to migrate in
+hw/intc/arm_gicv3_kvm.c ?
 
-> +            QAPI_LIST_PREPEND(result->children, child);
-> +        } else {
-> +            qom_list_add_property_value(obj, prop, &result->properties);
-> +        }
-> +    }
-> +
-
-Oh, result->name remains unset, and the caller is expected to fill it
-in.  Two callers, "WAT" above, and ...
-
-> +    return result;
-> +}
-> +
-> +ObjectNode *qmp_qom_tree_get(const char *path, Error **errp)
-> +{
-> +    ObjectNode *result = qom_tree_get(path, errp);
-> +
-> +    if (result) {
-> +        /* Strip the path prefix if any */
-> +        const char *basename = strrchr(path, '/');
-> +
-> +        if (!basename || !basename[1]) {
-> +            result->name = g_strdup(path);
-> +        } else {
-> +            result->name = g_strdup(basename + 1);
-> +        }
-> +    }
-
-... this one.
-
-Not a fan.  But it works.
-
-> +    return result;
-> +}
-> +
->  void qmp_qom_set(const char *path, const char *property, QObject *value,
->                   Error **errp)
->  {
-
+thanks
+-- PMM
 
