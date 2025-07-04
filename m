@@ -4,92 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1D05C83030
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 06:19:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E40CAC83030
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 06:33:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXZlw-0000PZ-CU; Fri, 04 Jul 2025 02:19:44 -0400
+	id 1uXZyb-0006Gi-QI; Fri, 04 Jul 2025 02:32:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uXZlr-0000O6-21; Fri, 04 Jul 2025 02:19:39 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uXZyZ-0006GF-UM
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 02:32:47 -0400
+Received: from mgamail.intel.com ([198.175.65.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uXZlp-0007Xu-61; Fri, 04 Jul 2025 02:19:38 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A65EB1332B5;
- Fri, 04 Jul 2025 09:19:09 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A773F23AE14;
- Fri,  4 Jul 2025 09:19:24 +0300 (MSK)
-Message-ID: <2825ccc0-9d99-42e4-b6ab-24c8cdc2c2f2@tls.msk.ru>
-Date: Fri, 4 Jul 2025 09:19:24 +0300
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uXZyW-0000R3-T1
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 02:32:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1751610765; x=1783146765;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=Qw6bzewriL21oMuleRkiEa31G7c8ozNNgkYXmj82q0g=;
+ b=kmPrTZcfijE75IaTN+vl8gOYJ+zavOLjm9Dg2auW6xNs0LMlks2vkZ1e
+ fltsLiHT86F+RO9S7u3g242+Dq0hQzlzoLy+voVwlY/I6aSIUZTASNKeL
+ oNu7YCPfagBOuHSaRleX/g+62OEp6n/bDlTbcqxX+EKvuPjNiSXBA07o6
+ ch+jnnT2f6wnXaSGpA/cHyGKYjOxD17PDidSIGHNEZBC3YCJPUd7Gbd3d
+ 5cB5Dj5VS0//ayeBwhDWilWvYTt9zPwwItoFHUwvZNgL+E1tvjT1uSdz5
+ jNLNJQjwI5PclcWlyrbEBt/OIUNQiatKlG9LaXvqI4bNdxLjYPQlXtSCl w==;
+X-CSE-ConnectionGUID: B/hPq0m1SgukVMQlPU5A+g==
+X-CSE-MsgGUID: oRKV2+TQRJSlLutGSebBoA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="65393175"
+X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="65393175"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jul 2025 23:32:42 -0700
+X-CSE-ConnectionGUID: /39/9IWiSxaT/z45FOFIxA==
+X-CSE-MsgGUID: JPc6KZViSWiMz/74tFJIHQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="158601471"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jul 2025 23:32:38 -0700
+Message-ID: <81e3775f-88b1-4cdc-981a-f5ffcc3c7c28@intel.com>
+Date: Fri, 4 Jul 2025 14:32:36 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/kvm: Adjust the note about the minimum required
- kernel version
-To: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+Subject: Re: [PATCH v6 27/39] accel: Pass old/new interrupt mask to
+ handle_interrupt() handler
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: kvm@vger.kernel.org, qemu-stable@nongnu.org, qemu-trivial@nongnu.org
-References: <20250702060319.13091-1-thuth@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250702060319.13091-1-thuth@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250703173248.44995-1-philmd@linaro.org>
+ <20250703173248.44995-28-philmd@linaro.org>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250703173248.44995-28-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.12; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,20 +91,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02.07.2025 09:03, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 7/4/2025 1:32 AM, Philippe Mathieu-Daudé wrote:
+> Update CPUState::interrupt_request once in cpu_interrupt().
+> Pass the old and new masks along.
 > 
-> Since commit 126e7f78036 ("kvm: require KVM_CAP_IOEVENTFD and
-> KVM_CAP_IOEVENTFD_ANY_LENGTH") we require at least kernel 4.4 to
-> be able to use KVM. Adjust the upgrade_note accordingly.
-> While we're at it, remove the text about kvm-kmod and the
-> SourceForge URL since this is not actively maintained anymore.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   accel/tcg/tcg-accel-ops-icount.h |  2 +-
+>   accel/tcg/tcg-accel-ops.h        |  2 +-
+>   include/system/accel-ops.h       |  2 +-
+>   accel/tcg/tcg-accel-ops-icount.c |  8 +++-----
+>   accel/tcg/tcg-accel-ops.c        |  4 +---
+>   system/cpus.c                    | 12 +++++++-----
+>   6 files changed, 14 insertions(+), 16 deletions(-)
+> 
+> diff --git a/accel/tcg/tcg-accel-ops-icount.h b/accel/tcg/tcg-accel-ops-icount.h
+> index 16a301b6dc0..1d9d66f0707 100644
+> --- a/accel/tcg/tcg-accel-ops-icount.h
+> +++ b/accel/tcg/tcg-accel-ops-icount.h
+> @@ -15,6 +15,6 @@ void icount_prepare_for_run(CPUState *cpu, int64_t cpu_budget);
+>   int64_t icount_percpu_budget(int cpu_count);
+>   void icount_process_data(CPUState *cpu);
+>   
+> -void icount_handle_interrupt(CPUState *cpu, int mask);
+> +void icount_handle_interrupt(CPUState *cpu, int old_mask, int new_mask);
+>   
+>   #endif /* TCG_ACCEL_OPS_ICOUNT_H */
+> diff --git a/accel/tcg/tcg-accel-ops.h b/accel/tcg/tcg-accel-ops.h
+> index 6feeb3f3e9b..6e7c2aae5a8 100644
+> --- a/accel/tcg/tcg-accel-ops.h
+> +++ b/accel/tcg/tcg-accel-ops.h
+> @@ -16,7 +16,7 @@
+>   
+>   void tcg_cpu_destroy(CPUState *cpu);
+>   int tcg_cpu_exec(CPUState *cpu);
+> -void tcg_handle_interrupt(CPUState *cpu, int mask);
+> +void tcg_handle_interrupt(CPUState *cpu, int old_mask, int new_mask);
+>   void tcg_cpu_init_cflags(CPUState *cpu, bool parallel);
+>   
+>   #endif /* TCG_ACCEL_OPS_H */
+> diff --git a/include/system/accel-ops.h b/include/system/accel-ops.h
+> index 2075691331c..d84eaa376c2 100644
+> --- a/include/system/accel-ops.h
+> +++ b/include/system/accel-ops.h
+> @@ -61,7 +61,7 @@ struct AccelOpsClass {
+>       void (*synchronize_pre_loadvm)(CPUState *cpu);
+>       void (*synchronize_pre_resume)(bool step_pending);
+>   
+> -    void (*handle_interrupt)(CPUState *cpu, int mask);
+> +    void (*handle_interrupt)(CPUState *cpu, int old_mask, int new_mask);
+>   
+>       /**
+>        * @get_virtual_clock: fetch virtual clock
+> diff --git a/accel/tcg/tcg-accel-ops-icount.c b/accel/tcg/tcg-accel-ops-icount.c
+> index d0f7b410fab..500b5dd4942 100644
+> --- a/accel/tcg/tcg-accel-ops-icount.c
+> +++ b/accel/tcg/tcg-accel-ops-icount.c
+> @@ -147,14 +147,12 @@ void icount_process_data(CPUState *cpu)
+>       replay_mutex_unlock();
+>   }
+>   
+> -void icount_handle_interrupt(CPUState *cpu, int mask)
+> +void icount_handle_interrupt(CPUState *cpu, int old_mask, int new_mask)
+>   {
+> -    int old_mask = cpu->interrupt_request;
+> -
+> -    tcg_handle_interrupt(cpu, mask);
+> +    tcg_handle_interrupt(cpu, old_mask, new_mask);
+>       if (qemu_cpu_is_self(cpu) &&
+>           !cpu->neg.can_do_io
+> -        && (mask & ~old_mask) != 0) {
+> +        && (new_mask & ~old_mask) != 0) {
 
-Let's be consistent and require kernel 4.5.
+This patch changes the behavior,
 
-With this, applied to qemu-trivial (keeping Philippe's R-b).
+Assume the @mask is the value passed to cpu_interrupt()
 
-Thanks,
+- before this patch:
 
-/mjt
+	(mask & ~old_mask) is
+
+	(@mask & ~cpu->interrupt_request)
+
+- after this patch:
+
+	(new_mask & ~old_mask) is
+
+	((@mask | cpu->interrupt_request) & ~cpu->interrupt_request)
+
 
