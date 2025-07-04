@@ -4,72 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01501C8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 10:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6311C83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 10:41:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXdqX-0000Xs-IT; Fri, 04 Jul 2025 06:40:45 -0400
+	id 1uXdqY-0000YP-18; Fri, 04 Jul 2025 06:40:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXdqO-0000W0-8e
+ (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uXdqO-0000Vz-5x
  for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:40:37 -0400
-Received: from mgamail.intel.com ([192.198.163.8])
+Received: from p-east3-cluster3-host8-snip4-2.eps.apple.com ([57.103.86.75]
+ helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXdqI-0002Zg-8q
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:40:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751625630; x=1783161630;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=r/LyXDlTM6n+25NJ7EdQ/38jL0iGcxKQzEGV0nprR2s=;
- b=dTLAv4F59llPAtp992f/Y4SUiPl19naZ2CPG1b51+cjrg4RfaTWSJYvo
- l1k254v6xcHcexmTpA3fFhDF7OrogwDbQEFs4ALCEB8wdJjckgXZ7fvCG
- wRbBBhDF+3ZZm/tICdkJBX6F3R5IPy930S6dTKDdELWv6JeKlNdYKm8Te
- l9ilitGxv/ILFB2GmBMODFsGuoHYhur+wzEFOiM/dwBH1WOoFlJX5wWO/
- II3uTQjWnPSuAJ7awTeWDjloOINnumopXFeGBDoDJD5rvTWIXvOaqFOiQ
- T27UGaevcFIzZQeBNNlKj+VCORVTQ0rhbZV5o1bwzi7AMiqsGZI10+G72 A==;
-X-CSE-ConnectionGUID: 9s+u6MFdTMeeRkCUYuYnvA==
-X-CSE-MsgGUID: gZgOPpIrSb2CaY3IX3D7lA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="71532108"
-X-IronPort-AV: E=Sophos;i="6.16,287,1744095600"; d="scan'208";a="71532108"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Jul 2025 03:40:26 -0700
-X-CSE-ConnectionGUID: SKbAhh8CQOSDs0VpScZUYQ==
-X-CSE-MsgGUID: Bkj2bqzmT32ScMuDUfxWZQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,287,1744095600"; d="scan'208";a="154740513"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa007.jf.intel.com with ESMTP; 04 Jul 2025 03:40:25 -0700
-Date: Fri, 4 Jul 2025 19:01:50 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v6 29/39] accel: Keep reference to AccelOpsClass in
- AccelClass
-Message-ID: <aGe0ntqyCnlhzXal@intel.com>
-References: <20250703173248.44995-1-philmd@linaro.org>
- <20250703173248.44995-30-philmd@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250703173248.44995-30-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uXdqE-0002ZC-Us
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:40:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
+ bh=wA9O8GpU1RffYD0QdjQuLE48gweREtqMni7yHIHOGP8=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=b9wvfymnaad619MUtxtjryFyOVz6pbK3QU2vuzujFXkT+1T9niTA0BqBS5Lm6CRGp
+ IhFv3dpy+4iA2eVcHPyCk1o8oAFtfdGFpI7f/0dhoOONztvryge4J88pjabQ0yma1G
+ zYowfSwGfpxcmAXEOEBQwf/aJQ3ykmqfqhPNWyMnQYV4GGm29cKEdAd8OEzIMnRw+h
+ 6Wcgbl3nyom1gKes9uFSTXrcoBzAfTwI+qylPxrIqd9tCtZmseUlhRZMq5Jo/DZ4CY
+ yLp580O1wtgNYlrGwT5WE/uSIob2ZTHAU0ciGqB89AFc4W3Nw3CJ2J41eecfCeT58G
+ utJl/dDc6SCMg==
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by outbound.qs.icloud.com (Postfix) with ESMTPS id 671DE180014D;
+ Fri,  4 Jul 2025 10:40:19 +0000 (UTC)
+Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
+ [17.57.155.37])
+ by outbound.qs.icloud.com (Postfix) with ESMTPSA id A19101800127;
+ Fri,  4 Jul 2025 10:40:17 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH v4 33/65] accel/hvf: Replace @dirty field by generic
+ CPUState::vcpu_dirty field
+From: Mads Ynddal <mads@ynddal.dk>
+In-Reply-To: <20250702185332.43650-34-philmd@linaro.org>
+Date: Fri, 4 Jul 2025 12:40:06 +0200
+Cc: qemu-devel@nongnu.org,
+ =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Alexander Graf <agraf@csgraf.de>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <D6976823-5443-47C6-BB9F-A457D71FA0A0@ynddal.dk>
+References: <20250702185332.43650-1-philmd@linaro.org>
+ <20250702185332.43650-34-philmd@linaro.org>
+To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
+X-Proofpoint-GUID: oJiluUS6wIuhdirv8vTfgQBS2awDhsx1
+X-Proofpoint-ORIG-GUID: oJiluUS6wIuhdirv8vTfgQBS2awDhsx1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA0MDA4MiBTYWx0ZWRfX3RaVDKJDT/SD
+ 3FZvkheal41M812L1Whg0ZiyipLgcUsLKcYJb87N+e2UagaagQvOG9U+DHck2vu+NSFpkiB3V2G
+ pR8kq2ro8RfhbiX2lownRu9VrAqCh4Nin+RH9Na2rx16RoRZY9pxO80BDw/SSJ+Ibasiw5lBHtp
+ HPVsYUjLoD3FggTORC0uphrOHVo7QmgT8UShpC0GE64auUNgzBwsOlHxRd6a8F2z/M40WQFdjuD
+ BYR8yznHfTtV8/Qd1VIIRNHnKAZu0ZQSLaWHk+XcV2I5UnH0pNMUkUhaxaFXPPvCRld5q01xk=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-04_04,2025-07-02_04,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ mlxscore=0 clxscore=1030 phishscore=0 bulkscore=0
+ adultscore=0 suspectscore=0
+ spamscore=0 mlxlogscore=445 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2506060001 definitions=main-2507040082
+Received-SPF: pass client-ip=57.103.86.75; envelope-from=mads@ynddal.dk;
+ helo=outbound.qs.icloud.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,26 +96,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 03, 2025 at 07:32:35PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Thu,  3 Jul 2025 19:32:35 +0200
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v6 29/39] accel: Keep reference to AccelOpsClass in
->  AccelClass
-> X-Mailer: git-send-email 2.49.0
-> 
-> Allow dereferencing AccelOpsClass outside of accel/accel-system.c.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->  include/qemu/accel.h       | 3 +++
->  include/system/accel-ops.h | 3 ++-
->  accel/accel-common.c       | 1 +
->  accel/accel-system.c       | 3 ++-
->  accel/tcg/tcg-accel-ops.c  | 4 +++-
->  5 files changed, 11 insertions(+), 3 deletions(-)> 
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> On 2 Jul 2025, at 20.52, Philippe Mathieu-Daud=C3=A9 =
+<philmd@linaro.org> wrote:
+>=20
+> No need for accel-specific @dirty field when we have
+> a generic one in CPUState.
+>=20
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+> include/system/hvf_int.h  |  1 -
+> accel/hvf/hvf-accel-ops.c | 10 +++++-----
+> target/arm/hvf/hvf.c      |  4 ++--
+> target/i386/hvf/hvf.c     |  4 ++--
+> target/i386/hvf/x86hvf.c  |  2 +-
+> 5 files changed, 10 insertions(+), 11 deletions(-)
+>=20
+
+Reviewed-by: Mads Ynddal <mads@ynddal.dk>
 
 
