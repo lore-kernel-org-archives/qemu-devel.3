@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8B00C83030
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 06:43:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76337C83030
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 07:19:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXa8J-00005Z-1k; Fri, 04 Jul 2025 02:42:52 -0400
+	id 1uXagO-0000g5-Nl; Fri, 04 Jul 2025 03:18:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1uXa8H-000056-Cv
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 02:42:49 -0400
+ id 1uXagL-0000d4-Vt
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 03:18:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1uXa8E-0000Xz-MO
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 02:42:49 -0400
+ id 1uXagH-000228-PU
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 03:18:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751611364;
+ s=mimecast20190719; t=1751613475;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Bb//kfBOMV55JIXpAmVvh3fJBmXRK+Z1T1c3lcmtNuk=;
- b=PtBTJpo0PaCF6r+wbIlTnWQhKqVKhcxEXGsB7MF4tBv+ONmgOjt964bQ505bI2E7UY6WDI
- gkKZy0HJvLluPcyFcklKLS75W6WRAOPhwhh3HOQoSsMpI+GFFiH1OOa/EXFqrjOpKqP6v2
- w8WjIqkayq10oW+ih00o5O6I01VIek0=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=z0zK9RuLQcCPLc9zqpwhT4ee0vHP0Uc0958cuXJMN0k=;
+ b=Tn9qAuiOnjr85SEePb6P5alHG95VxOCwn0pfg0QVttVZ/8yZiwJ5HLYFlh2UZVru+8JKMU
+ l1bi9tjaXWC/GnHFHvD16w78qm4djHPYj6ZDlBZmkysKu3Bzf7QftojgfTRqLlbNWJ+zsX
+ uQez+BGOaVLJ9lowrb4d+rj1m3uaw4U=
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-518-fVAXUBiDPbS-9UjDYg6F-w-1; Fri, 04 Jul 2025 02:42:42 -0400
-X-MC-Unique: fVAXUBiDPbS-9UjDYg6F-w-1
-X-Mimecast-MFC-AGG-ID: fVAXUBiDPbS-9UjDYg6F-w_1751611362
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2349498f00eso15150985ad.0
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 23:42:42 -0700 (PDT)
+ us-mta-668-mqDgLRlGPpK_hm_uschYdQ-1; Fri, 04 Jul 2025 03:17:54 -0400
+X-MC-Unique: mqDgLRlGPpK_hm_uschYdQ-1
+X-Mimecast-MFC-AGG-ID: mqDgLRlGPpK_hm_uschYdQ_1751613473
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-748764d84feso1018607b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 00:17:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751611362; x=1752216162;
+ d=1e100.net; s=20230601; t=1751613473; x=1752218273;
  h=to:references:message-id:content-transfer-encoding:cc:date
  :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Bb//kfBOMV55JIXpAmVvh3fJBmXRK+Z1T1c3lcmtNuk=;
- b=noCPp6d9QJVu+Js4cA5YviE50fvIQHFLo8wgK7eUfHjQBN+eDrISmAWg09udxR25lF
- 4/urjRTnkj6EUBbn5g8kHp6boHKH8DTK2rLDfOZy3ebW19bcHIPfvyfA3sOvTljAVRYL
- b/MJw+dBuDqucVJ2AKJF3J3l6IkpbQ+8SzFio71+ZYD4yU00Vyd9nRNafJfZd9swK7La
- U4BIMGfLWVFWniIzy4JbKiY+cJoVMCNqVD0CUOfFr0TC+bZjrE4tdelKAypbUDTJR0wi
- v34s3SWmzJKVX/OtRyDJqZoo8FzR9x8RX2lHGsJFDg8nSXmbaNbKxcL5WjPZvq3HxIz/
- cxKg==
-X-Gm-Message-State: AOJu0Ywk8YWcw6FJOz8JwB8CR5N6rYU/5w1f9427rOC9VnGLyLAlZTGD
- ijxv766GgzyIwmt6f3tewZCS1qrEMk1I0UqNizPwZupj51H3Dw3N2ArYIe0IPPsmtivswoMp1n0
- kA0KL4TdbZdfO3ZLueEyM8aXZwjacESqYWRNamGUyZQ6jQSiDoBWZ2kBp
-X-Gm-Gg: ASbGncsZuPUDDmMOt+z4GEU2VsNxpphdgfrDMEHLZ3Jre1o+/MxgkfdijZTGMJcg/oh
- h73NI4v5s3y/tzcrj+L5qvpugAIaoEUUGdS1bQkA3lPyjCrGCVajdM5JSqi550J2i7yxiMBcRxX
- Wyy0uycmLs5o+LbNbWcoHaHhrxopzP9I2+tFv7l3wHocUHId9SKMEBPJUImHozk7XbTVAziRpFV
- eY88guR/PIJPjAfIAODBhhkpM3WdAG7OTfI4zXqgXuy/JZcNjqsBlnIBCTEn2MfWR/7nmwnur8o
- 6zpmk8NxJ0tD7woLZXFI2rzCvbA/vU+8mRo6
-X-Received: by 2002:a17:903:98b:b0:215:b1e3:c051 with SMTP id
- d9443c01a7336-23c858d019emr25814795ad.11.1751611361722; 
- Thu, 03 Jul 2025 23:42:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGdMazdocxZVWe2cW67elwGgXI9IiUis9nPbcwDwFLNgCU55XyctFGN3V66a/6RhyyHrHVhFA==
-X-Received: by 2002:a17:903:98b:b0:215:b1e3:c051 with SMTP id
- d9443c01a7336-23c858d019emr25814475ad.11.1751611361267; 
- Thu, 03 Jul 2025 23:42:41 -0700 (PDT)
+ bh=z0zK9RuLQcCPLc9zqpwhT4ee0vHP0Uc0958cuXJMN0k=;
+ b=KqYJgcyjw3Nwc9tgyd9Tkq3qLMdFoBo4t0wc++QKW+NsLJfumWM4KM17r0GN6Usrlc
+ o9mO2xaJwqg57XHwSY0pI3It3ClmGhepc8+TXNHVCz1jp0eHpSQI7JzwUv+PtTU5v8Ka
+ WK4lJTx5kScb+1KpsbnjD+P6bgg3OSpjmYAG6iNf1qUlBuCaiGYAzFeF0MQcxtYftu1z
+ FcANpe0y9Qwyt4UGsZcIS7OPTWi6CEikZffcoWI22OJoIyXK2Enod0RkoDSh/2Pk99Eh
+ k36N3MbUJmiecuDTSPWu21esPmY5aNtyybZtOOyaDRUaEtqZci4QuWYhfECARlRuBVu9
+ 8Azw==
+X-Gm-Message-State: AOJu0Yx9Clr8fG/WnFp5OqpDm+J0c8ThK1ehvkNqX6aLyQrRFb90GEFY
+ TR01RmfthrmEHgt9T8NaedsLf93f7PwN5EfEhlkVS8qYpsiTptgE9eehe9DPx86PEqR+/uVGzYG
+ EeBCA4f5ydTkGrDTcusTkrDMmpIM76V2licOahBTIxh9hI6k0JHATbKHv
+X-Gm-Gg: ASbGncsrBJXyUrh/JTsy2yfvpxjxshgRNOeAYWTKeedWkK5edOvak6X6P0hWeBQWceu
+ NVgWbWN/iol4oVI/VSnWPkHZ02w0BPuVfg9taGsTLvC2mmhG03DXSR5pHd2ErmvLYPHBEofA5uD
+ C/IzOdH52AdTmZt8mVB26lCTG0wFdtNkvCay3Zih0XBPdjLqcyriOQXoUTIxXVuVVsaFTKUMzan
+ uCOY2/PFUI/u98bno4Qdgn+OHkxmQy8f5EyazFDtmd0bcuXhEfMfkkpTMEcOWd3MuRZw3MoTXyS
+ WLyWdlrzd4wdCgC8SLLhCpHweuuEeztczc2a
+X-Received: by 2002:a05:6a00:10c2:b0:748:38fa:89bd with SMTP id
+ d2e1a72fcca58-74ce884e342mr1400490b3a.9.1751613473033; 
+ Fri, 04 Jul 2025 00:17:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEQrqeqKKnn1aSqtlWPnYRbh3sAcDS3vVF37trAdzI22RfUfVmoy28DM0IvQY7oKss/PqjORQ==
+X-Received: by 2002:a05:6a00:10c2:b0:748:38fa:89bd with SMTP id
+ d2e1a72fcca58-74ce884e342mr1400467b3a.9.1751613472597; 
+ Fri, 04 Jul 2025 00:17:52 -0700 (PDT)
 Received: from smtpclient.apple ([106.201.63.6])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23c8434ea21sm13400375ad.56.2025.07.03.23.42.35
+ d2e1a72fcca58-74ce43d69d7sm1464271b3a.177.2025.07.04.00.17.46
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 03 Jul 2025 23:42:40 -0700 (PDT)
+ Fri, 04 Jul 2025 00:17:52 -0700 (PDT)
 Content-Type: text/plain;
 	charset=utf-8
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.4\))
-Subject: Re: [PATCH v8 13/16] backends/igvm: Process initialization sections
- in IGVM file
+Subject: Re: [PATCH v8 03/16] backends/igvm: Add IGVM loader and configuration
 From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <b4800e3cc61e4531d96e7c4a2bb2f0841f98c98c.camel@randomman.co.uk>
-Date: Fri, 4 Jul 2025 12:12:23 +0530
+In-Reply-To: <016694bcb0658e7bb0f0fe83be8cec5d2a6d185d.camel@randomman.co.uk>
+Date: Fri, 4 Jul 2025 12:47:34 +0530
 Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
  Daniel Berrange <berrange@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>,
@@ -92,11 +91,11 @@ Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Pankaj Gupta <pankaj.gupta@amd.com>, Joerg Roedel <joro@8bytes.org>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <23BAF4B2-16C6-4DD7-BB8C-67CB170B720E@redhat.com>
+Message-Id: <D6A9F166-4647-442C-9FFD-0CF8595E980D@redhat.com>
 References: <cover.1749820158.git.roy.hopkins@randomman.co.uk>
- <12d0e71fd1b37ae132f78498d497cb72b90da5d1.1749820158.git.roy.hopkins@randomman.co.uk>
- <CAK3XEhPJncqwL6V6KOhOGLHOjSy-9OQTRWyTPQBP0NsHeVxr6A@mail.gmail.com>
- <b4800e3cc61e4531d96e7c4a2bb2f0841f98c98c.camel@randomman.co.uk>
+ <faf5775bd7d83b023e14f6c04cccec78a8a80037.1749820158.git.roy.hopkins@randomman.co.uk>
+ <CAK3XEhM0V=UmqLxhSjO_5Z-mi4VBWQWKvdhwG30DKgw-+ZmmNg@mail.gmail.com>
+ <016694bcb0658e7bb0f0fe83be8cec5d2a6d185d.camel@randomman.co.uk>
 To: Roy Hopkins <roy.hopkins@randomman.co.uk>
 X-Mailer: Apple Mail (2.3776.700.51.11.4)
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
@@ -126,112 +125,221 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-> On 3 Jul 2025, at 7:22=E2=80=AFPM, Roy Hopkins =
+> On 3 Jul 2025, at 6:56=E2=80=AFPM, Roy Hopkins =
 <roy.hopkins@randomman.co.uk> wrote:
 >=20
-> On Fri, 2025-06-27 at 16:58 +0530, Ani Sinha wrote:
->> On Fri, Jun 13, 2025 at 8:52=E2=80=AFPM Roy Hopkins =
+> On Fri, 2025-06-27 at 15:41 +0530, Ani Sinha wrote:
+>> On Fri, Jun 13, 2025 at 7:24=E2=80=AFPM Roy Hopkins =
 <roy.hopkins@randomman.co.uk> wrote:
 >>>=20
->>> The initialization sections in IGVM files contain configuration that
->>> should be applied to the guest platform before it is started. This
->>> includes guest policy and other information that can affect the =
-security
->>> level and the startup measurement of a guest.
+>>> Adds an IGVM loader to QEMU which processes a given IGVM file and
+>>> applies the directives within the file to the current guest
+>>> configuration.
 >>>=20
->>> This commit introduces handling of the initialization sections =
-during
->>> processing of the IGVM file.
+>>> The IGVM loader can be used to configure both confidential and
+>>> non-confidential guests. For confidential guests, the
+>>> ConfidentialGuestSupport object for the system is used to encrypt
+>>> memory, apply the initial CPU state and perform other confidential =
+guest
+>>> operations.
+>>>=20
+>>> The loader is configured via a new IgvmCfg QOM object which allows =
+the
+>>> user to provide a path to the IGVM file to process.
 >>>=20
 >>> Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
 >>> Acked-by: Michael S. Tsirkin <mst@redhat.com>
 >>> Acked-by: Gerd Hoffman <kraxel@redhat.com>
 >>> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 >>> ---
->>>  backends/igvm.c | 21 +++++++++++++++++++++
->>>  1 file changed, 21 insertions(+)
+>>>  backends/igvm-cfg.c       |  51 +++
+>>>  backends/igvm.c           | 807 =
+++++++++++++++++++++++++++++++++++++++
+>>>  backends/igvm.h           |  22 ++
+>>>  backends/meson.build      |   2 +
+>>>  include/system/igvm-cfg.h |  46 +++
+>>>  qapi/qom.json             |  17 +
+>>>  6 files changed, 945 insertions(+)
+>>>  create mode 100644 backends/igvm-cfg.c
+>>>  create mode 100644 backends/igvm.c
+>>>  create mode 100644 backends/igvm.h
+>>>  create mode 100644 include/system/igvm-cfg.h
 >>>=20
->>> diff --git a/backends/igvm.c b/backends/igvm.c
->>> index 2a31021d44..ebdb4594d1 100644
->>> --- a/backends/igvm.c
->>> +++ b/backends/igvm.c
->>> @@ -786,6 +786,27 @@ int qigvm_process_file(IgvmCfg *cfg, =
-ConfidentialGuestSupport *cgs,
->>>          }
->>>      }
->>>=20
->>> +    header_count =3D
->>> +        igvm_header_count(ctx.file, =
-IGVM_HEADER_SECTION_INITIALIZATION);
->>> +    if (header_count < 0) {
->>> +        error_setg(
->>> +            errp,
->>> +            "Invalid initialization header count in IGVM file. =
-Error code: %X",
->>> +            header_count);
->>> +        goto cleanup_parameters;
+>>=20
+>> <snip>
+>>=20
+>>> +
+>>> +static int qigvm_process_mem_region(QIgvm *ctx, unsigned =
+start_index,
+>>> +                                    uint64_t gpa_start, unsigned =
+page_count,
+>>> +                                    const IgvmPageDataFlags *flags,
+>>> +                                    const IgvmPageDataType =
+page_type,
+>>> +                                    Error **errp)
+>>> +{
+>>> +    uint8_t *region;
+>>> +    IgvmHandle data_handle;
+>>> +    const void *data;
+>>> +    uint32_t data_size;
+>>> +    unsigned page_index;
+>>> +    bool zero =3D true;
+>>> +    const uint64_t page_size =3D flags->is_2mb_page ? 0x200000 : =
+0x1000;
+>>> +    int result;
+>>> +    int cgs_page_type;
+>>> +
+>>> +    region =3D qigvm_prepare_memory(ctx, gpa_start, page_count * =
+page_size,
+>>> +                                  start_index, errp);
+>>> +    if (!region) {
+>>> +        return -1;
 >>> +    }
 >>> +
->>> +    for (ctx.current_header_index =3D 0;
->>> +         ctx.current_header_index < (unsigned)header_count;
->>> +         ctx.current_header_index++) {
->>> +        IgvmVariableHeaderType type =3D
->>> +            igvm_get_header_type(ctx.file, =
-IGVM_HEADER_SECTION_INITIALIZATION,
->>> +                                 ctx.current_header_index);
->>> +        if (qigvm_handler(&ctx, type, errp) < 0) {
->>=20
->> So the next patch, patch #14 actually defines the handler.
->>=20
->> @@ -92,6 +135,10 @@ static struct QIGVMHandler handlers[] =3D {
->>        qigvm_directive_environment_info },
->>      { IGVM_VHT_REQUIRED_MEMORY, IGVM_HEADER_SECTION_DIRECTIVE,
->>        qigvm_directive_required_memory },
->> +    { IGVM_VHT_SNP_ID_BLOCK, IGVM_HEADER_SECTION_DIRECTIVE,
->> +      qigvm_directive_snp_id_block },
->> +    { IGVM_VHT_GUEST_POLICY, IGVM_HEADER_SECTION_INITIALIZATION,
->> +      qigvm_initialization_guest_policy },
->>  };
->>=20
->>=20
->> So I think patch #14 should come before this patch in the series.
->>=20
->=20
-> This was deliberately placed before #14 as it introduces the mechanism =
-for processing
-> initialization sections, allowing future patches to then add sections =
-as necessary.
-> Patch #14 then uses this new capability to handle guest policy.
-
-My concern was that qigvm_handler() would return -1 and throw "IGVM: =
-Unknown header type encountered when processing file:=E2=80=9D without =
-patch 14.
-
-> This patch does
-> compile successfully without patch #14 being applied.=20
-
-I see. IGVM_HEADER_SECTION_INITIALIZATION actually comes from igvm.h =
-header=20
-enum IgvmHeaderSection {
-  IGVM_HEADER_SECTION_PLATFORM,
-  IGVM_HEADER_SECTION_INITIALIZATION,
-  IGVM_HEADER_SECTION_DIRECTIVE,
-};
-So that explains successful compilation.
-
-
->=20
->>> +            goto cleanup_parameters;
+>>> +    for (page_index =3D 0; page_index < page_count; page_index++) {
+>>> +        data_handle =3D igvm_get_header_data(
+>>> +            ctx->file, IGVM_HEADER_SECTION_DIRECTIVE, page_index + =
+start_index);
+>>> +        if (data_handle =3D=3D IGVMAPI_NO_DATA) {
+>>> +            /* No data indicates a zero page */
+>>> +            memset(&region[page_index * page_size], 0, page_size);
+>>> +        } else if (data_handle < 0) {
+>>> +            error_setg(
+>>> +                errp,
+>>> +                "IGVM file contains invalid page data for directive =
+with "
+>>> +                "index %d",
+>>> +                page_index + start_index);
+>>> +            return -1;
+>>> +        } else {
+>>> +            zero =3D false;
+>>> +            data_size =3D igvm_get_buffer_size(ctx->file, =
+data_handle);
+>>> +            if (data_size < page_size) {
+>>> +                memset(&region[page_index * page_size], 0, =
+page_size);
+>>> +            } else if (data_size > page_size) {
+>>> +                error_setg(errp,
+>>> +                           "IGVM file contains page data with =
+invalid size for "
+>>> +                           "directive with index %d",
+>>> +                           page_index + start_index);
+>>> +                return -1;
+>>> +            }
+>>> +            data =3D igvm_get_buffer(ctx->file, data_handle);
+>>> +            memcpy(&region[page_index * page_size], data, =
+data_size);
+>>> +            igvm_free_buffer(ctx->file, data_handle);
 >>> +        }
 >>> +    }
 >>> +
->>>      /*
->>>       * Contiguous pages of data with compatible flags are grouped =
-together in
->>>       * order to reduce the number of memory regions we create. Make =
-sure the
->>> --
->>> 2.43.0
+>>> +    /*
+>>> +     * If a confidential guest support object is provided then use =
+it to set the
+>>> +     * guest state.
+>>> +     */
+>>> +    if (ctx->cgs) {
+>>> +        cgs_page_type =3D
+>>> +            qigvm_type_to_cgs_type(page_type, flags->unmeasured, =
+zero);
+>>> +        if (cgs_page_type < 0) {
+>>> +            error_setg(errp,
+>>> +                       "Invalid page type in IGVM file. Directives: =
+%d to %d, "
+>>> +                       "page type: %d",
+>>> +                       start_index, start_index + page_count, =
+page_type);
+>>> +            return -1;
+>>> +        }
+>>> +
+>>> +        result =3D ctx->cgsc->set_guest_state(
+>>> +            gpa_start, region, page_size * page_count, =
+cgs_page_type, 0, errp);
+>>> +        if (result < 0) {
+>>> +            return result;
+>>> +        }
+>>> +    }
+>>> +    return 0;
+>>> +}
+>>> +
+>>> +static int qigvm_process_mem_page(QIgvm *ctx,
+>>> +                                  const IGVM_VHS_PAGE_DATA =
+*page_data,
+>>> +                                  Error **errp)
+>>> +{
+>>> +    if (page_data) {
+>>> +        if (ctx->region_page_count =3D=3D 0) {
+>>> +            ctx->region_start =3D page_data->gpa;
+>>> +            ctx->region_start_index =3D ctx->current_header_index;
+>>> +        } else {
+>>> +            if (!qigvm_page_attrs_equal(ctx->file, =
+ctx->current_header_index,
+>>> +                                        page_data,
+>>> +                                        =
+&ctx->region_prev_page_data) ||
+>>> +                ((ctx->region_prev_page_data.gpa +
+>>> +                  (ctx->region_prev_page_data.flags.is_2mb_page ? =
+0x200000 :
+>>> +                                                                  =
+0x1000)) !=3D
+>>> +                 page_data->gpa) ||
+>>> +                (ctx->region_last_index !=3D =
+(ctx->current_header_index - 1))) {
+>>> +                /* End of current region */
+>>> +                if (qigvm_process_mem_region(
+>>> +                        ctx, ctx->region_start_index, =
+ctx->region_start,
+>>> +                        ctx->region_page_count,
+>>> +                        &ctx->region_prev_page_data.flags,
+>>> +                        ctx->region_prev_page_data.data_type, errp) =
+< 0) {
+>>> +                    return -1;
+>>> +                }
+>>> +                ctx->region_page_count =3D 0;
+>>> +                ctx->region_start =3D page_data->gpa;
+>>> +                ctx->region_start_index =3D =
+ctx->current_header_index;
+>>=20
+>> Should we return here? Is there any need for the memcpy() below?
+>>=20
+>=20
+> No. In this case the new region is not contiguous with the previous =
+region so the
+> previous region is completed and the current region variables =
+initialized (using
+> the same values as the case where no previous region existed above). =
+The code then
+> falls through to populate the new region with the first page, hence =
+the memcpy.
+
+Yes with your explanation it makes sense. Can you please add some =
+comments to this code if you need to respin, otherwise I can add it once =
+it merges.
+
+>=20
+>>> +            }
+>>> +        }
+>>> +        memcpy(&ctx->region_prev_page_data, page_data,
+>>> +               sizeof(ctx->region_prev_page_data));
+>>> +        ctx->region_last_index =3D ctx->current_header_index;
+>>> +        ctx->region_page_count++;
+>>> +    } else {
+>>> +        if (ctx->region_page_count > 0) {
+>>> +            if (qigvm_process_mem_region(
+>>> +                    ctx, ctx->region_start_index, =
+ctx->region_start,
+>>> +                    ctx->region_page_count, =
+&ctx->region_prev_page_data.flags,
+>>> +                    ctx->region_prev_page_data.data_type, errp) < =
+0) {
+>>> +                return -1;
+>>> +            }
+>>> +            ctx->region_page_count =3D 0;
+>>> +        }
+>>> +    }
+>>> +    return 0;
+>>> +}
+>>> +
 
 
 
