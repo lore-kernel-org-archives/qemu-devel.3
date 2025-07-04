@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5824FC83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 09:54:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F65AC8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 09:56:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXd7l-0006MR-QH; Fri, 04 Jul 2025 05:54:29 -0400
+	id 1uXd9b-0007G4-4H; Fri, 04 Jul 2025 05:56:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXd7c-0006Je-2t
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 05:54:20 -0400
-Received: from mgamail.intel.com ([198.175.65.11])
+ id 1uXd9W-0007FZ-Jn
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 05:56:18 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXd7X-0008SA-Jy
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 05:54:19 -0400
+ id 1uXd9U-0000Zz-54
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 05:56:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751622856; x=1783158856;
+ t=1751622976; x=1783158976;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=7a9+P8cFf8usiWhMqJ5dnpH8Nu0pfOoPxzmDBwgBXOs=;
- b=VknkgnYSxOiWGGgmOzHNLhHF2qCc0UO2ab4XqliHU9FtQgtBUk82c+eg
- aNqRvYYh0ie8vVhITpSbNRXKQ/CVHcd3KrF2Sins6e1T0vo2otTay7BHw
- qjVivBU03vMaXR2HMhsW0+e0/s4iROJBTL3+xr/aUKVdym90U/pfxf8KB
- X0gatRelYrIJNluji/B8xWppS37hKdklLkQtNwxoiDWM9MMxw+JtO5qiK
- e27tqUtmKB5FeY8BuM7bgFcp9rW8sF1NqQMJl8QG03yO+0IfkaHDa8qBS
- ix4pkNyoflYjviZaVaTsKZdmkhzqILk0z6NDhu80DIMWpB4Kx9XcKHniu A==;
-X-CSE-ConnectionGUID: hyIADgIsRy2hBFYSXfVr6w==
-X-CSE-MsgGUID: UHqd8gdKQ72eaP1iUHeHoQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="64202604"
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="64202604"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Jul 2025 02:54:13 -0700
-X-CSE-ConnectionGUID: wKeRTb8yTE+pxF/QGHLdhw==
-X-CSE-MsgGUID: EgStgWSdQcSr2EEK3s2Caw==
+ bh=uW1nv3mKz5l0yYBOrOUKSnM1vhjZclQooiyT8V3CS5Y=;
+ b=ZW5DqxzBC/5FOyv4Da6hGJidVPCNRtuS/iZ3hjXLQ2sRnM/wXtrbYyyG
+ Y1YfRXeYTnat00FryjY/xOaZBIKiivQv0s/iYpIdS/N4NBr98HFn7JiSL
+ P1nXWoU+CAIvAgLDTHLE9RwY4WRLEbdAbVj879Q5wgKhLfsOCfolDb5Dl
+ YvNHc2Lds7G0SB01bg5cFghJlTu9qgllqtFv5Ew8L8YX0nQwF9SpxHVL6
+ mMHDCVA7dICAx0DLe6emUluZf5RJL/yBICOfL7VCrV0yX3PRNoubOd6I0
+ +35HrpsYcLld5LRSZdQizlP6EDdFiV/MZo0Nj1JYiRJbCt5kINWNR9CMS w==;
+X-CSE-ConnectionGUID: ejpZmu6JSc+nDDmXS5hOQg==
+X-CSE-MsgGUID: m4J61CNsQgaOXDleaTWNOw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="65306650"
+X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="65306650"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Jul 2025 02:56:14 -0700
+X-CSE-ConnectionGUID: SBAuCUhhRYmUzWsTflubQQ==
+X-CSE-MsgGUID: BaFtMaN9SIeQKEYYcbwOIQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="159162186"
+X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="154357358"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa004.jf.intel.com with ESMTP; 04 Jul 2025 02:54:12 -0700
-Date: Fri, 4 Jul 2025 18:15:37 +0800
+ by orviesa009.jf.intel.com with ESMTP; 04 Jul 2025 02:56:13 -0700
+Date: Fri, 4 Jul 2025 18:17:38 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v6 21/39] accel/kvm: Remove kvm_cpu_synchronize_state()
- stub
-Message-ID: <aGepyeVJvTVZ+hvy@intel.com>
+Subject: Re: [PATCH v6 22/39] accel/system: Document cpu_synchronize_state()
+Message-ID: <aGeqQnAufjC9tQRC@intel.com>
 References: <20250703173248.44995-1-philmd@linaro.org>
- <20250703173248.44995-22-philmd@linaro.org>
+ <20250703173248.44995-23-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250703173248.44995-22-philmd@linaro.org>
-Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250703173248.44995-23-philmd@linaro.org>
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
@@ -85,22 +84,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 03, 2025 at 07:32:27PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Thu,  3 Jul 2025 19:32:27 +0200
+On Thu, Jul 03, 2025 at 07:32:28PM +0200, Philippe Mathieu-Daudé wrote:
+> Date: Thu,  3 Jul 2025 19:32:28 +0200
 > From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v6 21/39] accel/kvm: Remove kvm_cpu_synchronize_state() stub
+> Subject: [PATCH v6 22/39] accel/system: Document cpu_synchronize_state()
 > X-Mailer: git-send-email 2.49.0
 > 
-> Since commit 57038a92bb0 ("cpus: extract out kvm-specific code
-> to accel/kvm") the kvm_cpu_synchronize_state() stub is not
-> necessary.
-> 
-> Fixes: e0715f6abce ("kvm: remove kvm specific functions from global includes")
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  accel/stubs/kvm-stub.c | 4 ----
->  1 file changed, 4 deletions(-)
+>  include/system/accel-ops.h |  8 ++++++++
+>  include/system/hw_accel.h  | 13 +++++++++++--
+>  2 files changed, 19 insertions(+), 2 deletions(-)> 
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
