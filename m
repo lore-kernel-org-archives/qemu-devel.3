@@ -4,87 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B20BC8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 13:15:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B1DEC8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 13:16:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXgFi-00046x-Sz; Fri, 04 Jul 2025 09:14:54 -0400
+	id 1uXgGW-0004gY-B4; Fri, 04 Jul 2025 09:15:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXgFf-000469-EZ
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 09:14:51 -0400
-Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uXgGM-0004cU-Mg
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 09:15:35 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXgFd-000868-Fy
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 09:14:51 -0400
-Received: by mail-yb1-xb34.google.com with SMTP id
- 3f1490d57ef6-e7311e66a8eso849668276.2
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 06:14:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751634887; x=1752239687; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sgWVAeX696ADS4wvC22eym6C0NlcHUXH23NkY2yCwBQ=;
- b=N9VPMoXcA54iOkIGTLEZIbvy5geY9tasx6opWtUzMEdLPwRZMZFvbNlN4c0B/7XsOx
- zqNyronemTz2XgawjRboaWEWg1G6TxGtxWR4n+D/9htfrTozKsQQLs7mxJgNDcPYO9yJ
- nODbZWs1eORFB5gVyzcbIuMRR3nDPkpS1+3nw0sr9DgYaw7F6kQxO0b317Y25TWEJO2o
- 2EVNI43qGk9qH5Luaq3ISKGbGKGDXiaqQg6MGNv5Z6yIz0AbcPz+QBQorIj8wt3h0cS6
- N7wm+An/EGjMUVtf6ksK5gjSbH6PX4QLYpicC026STL9yWWPNK71ugIq2tLSOhygIA6I
- LlHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751634887; x=1752239687;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sgWVAeX696ADS4wvC22eym6C0NlcHUXH23NkY2yCwBQ=;
- b=pBLZTObvSAa/NaFsN6E/TtuHXCMqfNQW2V/5nQjIRaJfdHlXHDIzs46P7/b4mYKUhF
- DKSaCFA6JsZMKo6dJBFElyHGkVpC8FErUvk6Cv/Jqu14OB0UV5aZcdo8lk/ksy7ky1sP
- Erq8RQZmJnGAzF677XvfXAh/Kk+jQm3qn6vGWbXablzVpAr6How8UvWM8zD4ytsrUSF3
- 93F4wIuNjltPmkTSmCG5LK1Ks70pUGV9jsqY1t5dcn4VE9Ip73nNmCSX4CsTTj01uIXB
- Pm5+H2oyTBR1Y2zaQKFn82imMmpoc8MzAn/FreRbK4AbRfKlzeerBOJQcebgk1PtW329
- 3PbA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWKHAUC0jK7QEkY4DdVALjXeeOEa8TKLOG+0T1Q0TfhhqqffRuv4g944GCX8J755wK8INJzWqhkpUYK@nongnu.org
-X-Gm-Message-State: AOJu0Yw4pan8eVOxRCzy9R6a8/CcPufPlhJVNSgDwZjCzKZy6l43DDYn
- h28rdIXH/sZ40uN2XNdmhyJ8MaGm9IzMWXVT7+oLvwnboyIm8D7+Fevwd/dCkDZLZX/oROVN3+X
- XOsUw0gKQhIk4qFLJvN+Ham82737DZrpbWWNthb4CQg==
-X-Gm-Gg: ASbGnct4zhBeg/3NqXqTCg84gUk6aaK7rgM+xfCL9cSphU+rqoZj9tJr0Y9khmAMHFp
- DVVN3ZwsQILQgFGBroKaaTYwaxejQebHIU5KwvLCuSP80QmLU5h8ycVVa3THkdJHnBiY5qY+06X
- fDBmgJ4gi1/PBXk5tVQhUso4DrST4OGqVuX1HEnyOlVYIj
-X-Google-Smtp-Source: AGHT+IEHxTsdq5sMOzOnAwfpPI4wg9delp+RPxDCQpnHTDrXLQVwhIyURHz98cxNnYgMDTeSEIqW8ZsAm+f12EfyNFU=
-X-Received: by 2002:a05:690c:88e:b0:712:d70b:45f0 with SMTP id
- 00721157ae682-7166b81c144mr23919717b3.32.1751634887184; Fri, 04 Jul 2025
- 06:14:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uXgGE-0008SL-K0
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 09:15:28 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 8F76D211A3;
+ Fri,  4 Jul 2025 13:15:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1751634924; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2DC272G/WYtTmxxNvMcMR6RnRzFLcQaoyTQqH67jvUQ=;
+ b=cegGvlva1OvBI9amUmv/m3+pexI04rdD7wJXqHwNBedA6GkTpnkUvDNR6Er/B+h5j1vDEo
+ 0J8N56DNUD+qt4xPTyqxY+ifhRB9i1xdzQcwD5Qtm1DapAfa6Ahu97uKsyql7ui5ka9jSn
+ AK6l6qtHmsHFSOyltLbME3ZVL7SvHv0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1751634924;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2DC272G/WYtTmxxNvMcMR6RnRzFLcQaoyTQqH67jvUQ=;
+ b=zGJVP3RGh9QSvYzrtuk2E9yq2ti828YbOoVg1wAb05Vn/xEVE4b3cHNtH28l+MgRv8FgcB
+ BRI3Lfwitiv8lUAw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=pn68AOoo;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=xBLr74BK
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1751634922; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2DC272G/WYtTmxxNvMcMR6RnRzFLcQaoyTQqH67jvUQ=;
+ b=pn68AOooMaCIduYFAIbydxHZVRZjhyCM4UteIgQSRDhSL1TfeBn3/BwQsaOCHWozP5Bm40
+ VPjLj+aEdJYZfX+LpGSWIEGGq/7CuHWHLIPEVfnrs7740FB5R7ujFH11WqqFwuTstNOxOx
+ KkOrvTgwNRmTKcavYz1NH/ZTBapRADs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1751634922;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2DC272G/WYtTmxxNvMcMR6RnRzFLcQaoyTQqH67jvUQ=;
+ b=xBLr74BK18D3/1H6y9HMpodzsirNvVzGyK0tTPTesyL9kj9Xz81aLHpI7ve0mOs4telRoj
+ 9qqK3f+vo1INmhAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1C19D13757;
+ Fri,  4 Jul 2025 13:15:21 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id nB6cNenTZ2jYYQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 04 Jul 2025 13:15:21 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, Peter Xu
+ <peterx@redhat.com>, Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v2 16/24] migration: Add capabilities into
+ MigrationParameters
+In-Reply-To: <87jz4sz5b6.fsf@pond.sub.org>
+References: <20250630195913.28033-1-farosas@suse.de>
+ <20250630195913.28033-17-farosas@suse.de> <87jz4sz5b6.fsf@pond.sub.org>
+Date: Fri, 04 Jul 2025 10:15:15 -0300
+Message-ID: <87h5zs3xng.fsf@suse.de>
 MIME-Version: 1.0
-References: <20250630130937.3487-1-philmd@linaro.org>
- <20250630130937.3487-6-philmd@linaro.org>
- <e3e2f53a-33ad-49b0-99fc-c7af4b76a0d8@linaro.org>
-In-Reply-To: <e3e2f53a-33ad-49b0-99fc-c7af4b76a0d8@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 4 Jul 2025 14:14:35 +0100
-X-Gm-Features: Ac12FXwb63s5deve8w9I1Hy8-x-UmmimYtbFzSHox7twYcg-uVB5CEEY8rdhakg
-Message-ID: <CAFEAcA82LrhSz47_Q_FwbBmC-Nve-WR2bhfWoWyvYi_60MSBaw@mail.gmail.com>
-Subject: Re: [PATCH 5/6] target/arm: Share ARM_PSCI_CALL trace event between
- TCG and HVF
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org, 
- Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 8F76D211A3
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_FIVE(0.00)[5];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim]; MISSING_XM_UA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,60 +127,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 30 Jun 2025 at 17:53, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
+Markus Armbruster <armbru@redhat.com> writes:
+
+> Fabiano Rosas <farosas@suse.de> writes:
 >
-> On 6/30/25 6:09 AM, Philippe Mathieu-Daud=C3=A9 wrote:
-> > It is useful to compare PSCI calls of the same guest running
-> > under TCG or HVF.
-> >
-> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > ---
-> >   target/arm/hvf/hvf.c    | 3 ++-
-> >   target/arm/tcg/psci.c   | 3 +++
-> >   target/arm/trace-events | 3 +++
-> >   3 files changed, 8 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> > index 7a99118c8c2..6309c5b872e 100644
-> > --- a/target/arm/hvf/hvf.c
-> > +++ b/target/arm/hvf/hvf.c
-> > @@ -34,6 +34,7 @@
-> >   #include "target/arm/multiprocessing.h"
-> >   #include "target/arm/gtimer.h"
-> >   #include "trace.h"
-> > +#include "../trace.h"
+>> Add capabilities to MigrationParameters. This structure will hold all
+>> migration options. Capabilities will go away in the next patch.
+>>
+>> Also add capabilities to MigrationParameter as the enum needs to be
+>> kept in sync with MigrationParameters. This affects the parsing of
+>> migration HMP commands so make the necessary additions there too.
+>>
+>> From this point on, both QMP and HMP versions of
+>> migrate-set-parameters and query-migrate-parameters gain the ability
+>> to work with capabilities.
+>>
+>> With MigrationParameters now having members for each capability, the
+>> migration capabilities commands (query-migrate-capabilities,
+>> migrate-set-capabilities) will soon be deprecated. Add a set of
+>> helpers to convert between the old MigrationCapability representation
+>> and the new representation as members of MigrationParameters.
+>>
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>
+> [...]
+>
+>> diff --git a/qapi/migration.json b/qapi/migration.json
+>> index 40e00fb86e..3d3f5624c5 100644
+>> --- a/qapi/migration.json
+>> +++ b/qapi/migration.json
+>> @@ -763,7 +763,14 @@
+>>             'vcpu-dirty-limit',
+>>             'mode',
+>>             'zero-page-detection',
+>> -           'direct-io'] }
+>> +           'direct-io', 'xbzrle', 'rdma-pin-all', 'auto-converge',
+>> +           'zero-blocks', 'events', 'postcopy-ram', 'x-colo',
+>> +           'release-ram', 'return-path', 'pause-before-switchover',
+>> +           'multifd', 'dirty-bitmaps', 'postcopy-blocktime',
+>> +           'late-block-activate', 'x-ignore-shared',
+>> +           'validate-uuid', 'background-snapshot',
+>> +           'zero-copy-send', 'postcopy-preempt',
+>> +           'switchover-ack', 'dirty-limit', 'mapped-ram' ] }
+>
+> This is MigrateParameter.  Different order than in MigrationParameters.
+> Intentional?
+>
 
+I think you mean the pre-existing difference in the order of the
+compression options multifd-*-level? I'll fix that.
 
-> Just a nit, using 'target/arm/trace.h' might be more readable than
-> '../trace.h'.
+If it's something else, it eludes my gaze.
 
-Mmm. docs/devel/tracing.rst rather discourages this:
-
-# While it is possible to include a trace.h file from outside a source
-file's own
-# sub-directory, this is discouraged in general. It is strongly preferred t=
-hat
-# all events be declared directly in the sub-directory that uses them. The =
-only
-# exception is where there are some shared trace events defined in the top =
-level
-# directory trace-events file.
-
-I don't know if we want to loosen that to permit events
-that are shared between multiple subdirs (cc'ing the
-trace subsystem maintainers for their view).
-
-git grep 'include.*trace.h' | grep -v '"trace.h"'| grep -v 'trace.h:'|less
-
-suggests that the only current place where we're including
-a trace.h not in the same directory is linux-user, where
-we opt to use the full linux-user/trace.h path. So probably
-for consistency we should use target/arm/trace.h here.
-
-(That grep also shows up that hw/uefi is missing its
-trace.h header and the .c files are including
-trace-hw_uefi.h directly...)
-
--- PMM
 
