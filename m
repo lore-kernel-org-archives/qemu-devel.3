@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEB41C83F05
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABCD3C8303D
 	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 11:18:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXeMo-0003oG-TS; Fri, 04 Jul 2025 07:14:07 -0400
+	id 1uXeM0-0002TP-Aa; Fri, 04 Jul 2025 07:13:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uXeMS-0002tE-1w
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:13:46 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1uXeLo-0001yE-DT
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:13:04 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uXeMM-0003o5-8e
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:13:41 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-23602481460so9195155ad.0
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 04:13:37 -0700 (PDT)
+ id 1uXeLd-0002mI-BS
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:13:02 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-23694cec0feso7598505ad.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 04:12:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751627616; x=1752232416; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1751627571; x=1752232371; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AkXTAF5RCQS+GqZ4d/g2zMqXNejGjj+dNtOpEx2fPrc=;
- b=fXBRj1+Jwz38qQti0HQmZAlWyvayjUvi1PQkbi+amK827RHLTiAvqVhjqvd5mBtS5e
- i9ms7gczVGnQN6NzMzBi7jRfsoIKBc11pqRSqyKuMDCB39Vw7+EufC1G/aniy96cjRQ3
- 57q0ubb80yzPuv09+MVe+M44fIFj54RVxfc6rTcmCNC46am0Di+1xZIGEE2kJacGE5qn
- pr1HqJNesUNFYpbvd9ovwyJ+eJB5O8l9tsNzRP2wNEN2v6BFPwRYjAPHmnZueNPOf5qm
- X+8TjSSs/vHYPYPgtWjb8pncRygxhFzFoGo+14w8wQ53ftluTHEd+ml/lzbBtjpUQDXC
- g8zw==
+ bh=0YdLnpcgCTV0XB5ow8eV7/MKeKU1pwUDrFprn8g+bog=;
+ b=NotIgmkTZzIaMTC4oZXUQQ/t9ec7vOpsCi4FJvViUKpcqA7/IA3qVbzT+BaIRliT5u
+ J6HbnlJ4LzCCLKZYrA5RudSvbpaJ+WdnGfceYsmMqTE7R4/QSyiVcx4Iu44ZTNoRgRVq
+ ocdXD1RlURFpmUokivdQSuOqo6wf8t/ciJo0ytX7E4UdPut7a5gTrcBnm3KOP2tmtXx4
+ sol0S/gYcH7mlBpeOUFUuFdnvaODn9VOS6ou4ViSENsDNVD9dLx5tkCVjMv85e1EFT4c
+ 8F7Gd4N4VYAkI0bN0kEWH1YqiFNhMqb+ZyACYTe2Xc7hL2yAgyKv8+D3jsNYVv8r0zrq
+ RFsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751627616; x=1752232416;
+ d=1e100.net; s=20230601; t=1751627572; x=1752232372;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AkXTAF5RCQS+GqZ4d/g2zMqXNejGjj+dNtOpEx2fPrc=;
- b=BokeJqJfH5OyMZkgCT/r2EfLL9o+HqeVH/j3DOVOx/195cxC2WTAkkWhKq6zsaEETR
- wjdxeJt59TPR5Acxgh+hGr/pEw7XfaHtK4N75z9zHyoIjKGVJMh75zXoVDYXafz1YbpB
- z2DoTi1AR9wqCB3JoSRBSQxYsY35oHRE54+AV9iyELJzbHRCGumVrJukRmTlg+Ct1A/Q
- 4TZPdObWLj5XKXtvkNGUVGz6mPsVpfpBFzDp174ejCQb/EK3H71MHHjr5VTSV/FmxY7y
- +iB+V8YJRRj5ScGwXbjklHYXkXFw4bZ8ySy5pmhxSLfwBVKEUAn1qJgCY8K+p283WNEe
- wvdQ==
-X-Gm-Message-State: AOJu0Yzdd0a5iEoyKJHMTjyLoMILsbi520hLxPkK9XBmKqsaUzZl1dwu
- RSkJyp5GjbUo9r5X3gnVvhjrA39ueRHUJmcvf0fc8+VoL53J2ZVuKrg9lFSpdA==
-X-Gm-Gg: ASbGncsxVO2jNUbVP6m7c2YFXRrgCHka0OpDkOHsRvM7JINpIsYDizsIZvciuX6J/Kb
- PpUncvc4gK1voNZuWsieBDK86TufzEwmWbdVlHmqQCKgI39VMEsPZucbvhhTmtD4woPBg0zI2YU
- +9Ymhddm8HuOVtU3DjmUbIXiqH1Tl9sZdZEWid1duyIqjpCL2WsbUs0JhqyNALdLBl3PIoa703X
- uFdqbu+7TTU0yNwiJHnOwxaB6/IQ6ci4JDRfKJkVHgS6fsCJ6JDHkgIMPjNKRakpwzHLZ/5lrkx
- 7GqNLNhXCajzBNWr0RZPAQJ7jjm/mOb8d14MQhuadHY6hdXUl2uHASYmVG/3ioE2Cm/rRg0vSnf
- N/FSqRNfz9Ymsf/IFrZO7ch6jkioJ2k1Z1IuUDOi7Z29nkglgG2Vg1yig4QczF9CLumzLlgccVw
- UWSQ==
-X-Google-Smtp-Source: AGHT+IEk2hLw6Clz6m68XYFerMMXfp7ARRCSPAaB6bQdV5a7QKkicwYzdq5MHjNSs4qaB02epXW/kg==
-X-Received: by 2002:a17:902:ce01:b0:237:e696:3d56 with SMTP id
- d9443c01a7336-23c8624b992mr35068495ad.32.1751627616006; 
- Fri, 04 Jul 2025 04:13:36 -0700 (PDT)
+ bh=0YdLnpcgCTV0XB5ow8eV7/MKeKU1pwUDrFprn8g+bog=;
+ b=fVBO2QMX0VD22Pm0PLPgBn5xshZNluIN+iWkRch+TiwZbpgfoK2nhnIJETew50cliU
+ IXjOZFrf1ePFZa0TgDS7jy+QLsONPlA8+l5sI4A1A6MaKmXQIN5DxMECdd/5mJYdoWoH
+ fxmrjdyeGTIqKZq3QphIMFmBz8rKvTO/Wxu65nRqldAl5avDqYtHY/6PggcDUQ7s1evs
+ VVKCfoKj/XDrtFp4VbWJfUgxciE6e1uypymyJILUzjUB3UBmorc/HVKr7auWfsZXRHUS
+ 9YfFsiaZiefYK3sx0rt+8i06Lzm/vcWtfyoHB2BloCRXmtrA7C7hnqqipuOnV0kXS171
+ RZ8Q==
+X-Gm-Message-State: AOJu0YwRSymHzHTGOQrd63KIGqlMxF64+h9sTWWwWjJlvbf2fLSoGzvk
+ DiJoEkRoIgOlTDkTV1pUgZwjYm1XI4n3DREagFDpYX+W9OoIpnfdWVPqL2yPTQ==
+X-Gm-Gg: ASbGnctVZnPanur31nrNff0MvPsk3w9VWu7VagYA/rPdzUaOA3EMrrcSFo+B0Q8l2Kh
+ fgjN/BRsuYBMpphZYgN9Z2uYwP7jPP1iMGVUlQKesGd71OGl8N1sRN6TPxwj3sig/X5aaWTapHP
+ +0C4UUDZDGX/wdzeDnKaHHnfp5LEJ6pvW6yX7rsbYB3ikTJFffiLshJVcg69BqR9EjOhL98P42R
+ t7qYF4AKvQ9dfBn3s7yqI73GxVBM3F31JJYcGi7xc2Tg0Q6nqzQ9d/pdklaaqms54j7TLhxJ78+
+ OcgWNHcpeg2IOx/2l5eR+4k9DTafhOFKu35x4y8uK4mQbryaVZ8a00vd6+zDR5jP13ycnhS9zF8
+ DMJwaI4TkNGvc//fOGLVMK5ZtbZjZi88iflNr8NH//QX5+r25ZtovLSKlH1Uk5NOjltMpK/IdmA
+ xHMg==
+X-Google-Smtp-Source: AGHT+IEdvIuadjWzlkK+ILzCJbDiAR5xuW6Zruu6F68t13m2y8EmrHg0vBSWmbuPbPWFyo4mDI4ibg==
+X-Received: by 2002:a17:903:1ac6:b0:23c:7876:e6a8 with SMTP id
+ d9443c01a7336-23c86244ed0mr38107665ad.51.1751627571516; 
+ Fri, 04 Jul 2025 04:12:51 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23c8431a206sm18002655ad.28.2025.07.04.04.13.33
+ d9443c01a7336-23c8431a206sm18002655ad.28.2025.07.04.04.12.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 04:13:35 -0700 (PDT)
+ Fri, 04 Jul 2025 04:12:51 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Joel Stanley <joel@jms.id.au>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Andrew Jones <ajones@ventanamicro.com>,
+ =?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 22/40] hw/riscv/virt: Use setprop_sized_cells for clint
-Date: Fri,  4 Jul 2025 21:11:49 +1000
-Message-ID: <20250704111207.591994-23-alistair.francis@wdc.com>
+Subject: [PULL 07/40] target/riscv/tcg: decouple profile enablement from user
+ prop
+Date: Fri,  4 Jul 2025 21:11:34 +1000
+Message-ID: <20250704111207.591994-8-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250704111207.591994-1-alistair.francis@wdc.com>
 References: <20250704111207.591994-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -90,7 +93,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,39 +109,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joel Stanley <joel@jms.id.au>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-The current device tree property uses two cells for the address (and for
-the size), but assumes the they are less than 32 bits by hard coding the
-high cell to zero.
+We have code in riscv_cpu_add_profiles() to enable a profile right away
+in case a CPU chose the profile during its cpu_init(). But we're using
+the user callback option to do so, setting profile->user_set.
 
-Use qemu_fdt_setprop_sized_cells to do the job of splitting the upper
-and lower 32 bits across cells.
+Create a new helper that does all the grunt work to enable/disable a
+given profile. Use this new helper in the cases where we want a CPU to
+be compatible to a certain profile, leaving the user callback to be used
+exclusively by users.
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
-Message-ID: <20250604025450.85327-3-joel@jms.id.au>
+Fixes: fba92a92e3 ("target/riscv: add 'rva22u64' CPU")
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
+Tested-by: Björn Töpel <bjorn@rivosinc.com>
+Message-ID: <20250528184407.1451983-3-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/virt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/riscv/tcg/tcg-cpu.c | 127 +++++++++++++++++++------------------
+ 1 file changed, 67 insertions(+), 60 deletions(-)
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 875eb7155a..5143a46555 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -346,8 +346,8 @@ static void create_fdt_socket_clint(RISCVVirtState *s,
-     qemu_fdt_setprop_string_array(ms->fdt, clint_name, "compatible",
-                                   (char **)&clint_compat,
-                                   ARRAY_SIZE(clint_compat));
--    qemu_fdt_setprop_cells(ms->fdt, clint_name, "reg",
--        0x0, clint_addr, 0x0, s->memmap[VIRT_CLINT].size);
-+    qemu_fdt_setprop_sized_cells(ms->fdt, clint_name, "reg",
-+        2, clint_addr, 2, s->memmap[VIRT_CLINT].size);
-     qemu_fdt_setprop(ms->fdt, clint_name, "interrupts-extended",
-         clint_cells, s->soc[socket].num_harts * sizeof(uint32_t) * 4);
-     riscv_socket_fdt_write_id(ms, clint_name, socket);
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 39de32cf76..e10e03a577 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -1166,6 +1166,70 @@ static bool riscv_cpu_is_generic(Object *cpu_obj)
+     return object_dynamic_cast(cpu_obj, TYPE_RISCV_DYNAMIC_CPU) != NULL;
+ }
+ 
++static void riscv_cpu_set_profile(RISCVCPU *cpu,
++                                  RISCVCPUProfile *profile,
++                                  bool enabled)
++{
++    int i, ext_offset;
++
++    if (profile->u_parent != NULL) {
++        riscv_cpu_set_profile(cpu, profile->u_parent, enabled);
++    }
++
++    if (profile->s_parent != NULL) {
++        riscv_cpu_set_profile(cpu, profile->s_parent, enabled);
++    }
++
++    profile->enabled = enabled;
++
++    if (profile->enabled) {
++        cpu->env.priv_ver = profile->priv_spec;
++
++#ifndef CONFIG_USER_ONLY
++        if (profile->satp_mode != RISCV_PROFILE_ATTR_UNUSED) {
++            object_property_set_bool(OBJECT(cpu), "mmu", true, NULL);
++            const char *satp_prop = satp_mode_str(profile->satp_mode,
++                                                  riscv_cpu_is_32bit(cpu));
++            object_property_set_bool(OBJECT(cpu), satp_prop, true, NULL);
++        }
++#endif
++    }
++
++    for (i = 0; misa_bits[i] != 0; i++) {
++        uint32_t bit = misa_bits[i];
++
++        if  (!(profile->misa_ext & bit)) {
++            continue;
++        }
++
++        if (bit == RVI && !profile->enabled) {
++            /*
++             * Disabling profiles will not disable the base
++             * ISA RV64I.
++             */
++            continue;
++        }
++
++        cpu_misa_ext_add_user_opt(bit, profile->enabled);
++        riscv_cpu_write_misa_bit(cpu, bit, profile->enabled);
++    }
++
++    for (i = 0; profile->ext_offsets[i] != RISCV_PROFILE_EXT_LIST_END; i++) {
++        ext_offset = profile->ext_offsets[i];
++
++        if (profile->enabled) {
++            if (cpu_cfg_offset_is_named_feat(ext_offset)) {
++                riscv_cpu_enable_named_feat(cpu, ext_offset);
++            }
++
++            cpu_bump_multi_ext_priv_ver(&cpu->env, ext_offset);
++        }
++
++        cpu_cfg_ext_add_user_opt(ext_offset, profile->enabled);
++        isa_ext_update_enabled(cpu, ext_offset, profile->enabled);
++    }
++}
++
+ /*
+  * We'll get here via the following path:
+  *
+@@ -1332,7 +1396,6 @@ static void cpu_set_profile(Object *obj, Visitor *v, const char *name,
+     RISCVCPUProfile *profile = opaque;
+     RISCVCPU *cpu = RISCV_CPU(obj);
+     bool value;
+-    int i, ext_offset;
+ 
+     if (riscv_cpu_is_vendor(obj)) {
+         error_setg(errp, "Profile %s is not available for vendor CPUs",
+@@ -1351,64 +1414,8 @@ static void cpu_set_profile(Object *obj, Visitor *v, const char *name,
+     }
+ 
+     profile->user_set = true;
+-    profile->enabled = value;
+-
+-    if (profile->u_parent != NULL) {
+-        object_property_set_bool(obj, profile->u_parent->name,
+-                                 profile->enabled, NULL);
+-    }
+-
+-    if (profile->s_parent != NULL) {
+-        object_property_set_bool(obj, profile->s_parent->name,
+-                                 profile->enabled, NULL);
+-    }
+-
+-    if (profile->enabled) {
+-        cpu->env.priv_ver = profile->priv_spec;
+-
+-#ifndef CONFIG_USER_ONLY
+-        if (profile->satp_mode != RISCV_PROFILE_ATTR_UNUSED) {
+-            object_property_set_bool(obj, "mmu", true, NULL);
+-            const char *satp_prop = satp_mode_str(profile->satp_mode,
+-                                                  riscv_cpu_is_32bit(cpu));
+-            object_property_set_bool(obj, satp_prop, true, NULL);
+-        }
+-#endif
+-    }
+-
+-    for (i = 0; misa_bits[i] != 0; i++) {
+-        uint32_t bit = misa_bits[i];
+-
+-        if  (!(profile->misa_ext & bit)) {
+-            continue;
+-        }
+ 
+-        if (bit == RVI && !profile->enabled) {
+-            /*
+-             * Disabling profiles will not disable the base
+-             * ISA RV64I.
+-             */
+-            continue;
+-        }
+-
+-        cpu_misa_ext_add_user_opt(bit, profile->enabled);
+-        riscv_cpu_write_misa_bit(cpu, bit, profile->enabled);
+-    }
+-
+-    for (i = 0; profile->ext_offsets[i] != RISCV_PROFILE_EXT_LIST_END; i++) {
+-        ext_offset = profile->ext_offsets[i];
+-
+-        if (profile->enabled) {
+-            if (cpu_cfg_offset_is_named_feat(ext_offset)) {
+-                riscv_cpu_enable_named_feat(cpu, ext_offset);
+-            }
+-
+-            cpu_bump_multi_ext_priv_ver(&cpu->env, ext_offset);
+-        }
+-
+-        cpu_cfg_ext_add_user_opt(ext_offset, profile->enabled);
+-        isa_ext_update_enabled(cpu, ext_offset, profile->enabled);
+-    }
++    riscv_cpu_set_profile(cpu, profile, value);
+ }
+ 
+ static void cpu_get_profile(Object *obj, Visitor *v, const char *name,
+@@ -1423,7 +1430,7 @@ static void cpu_get_profile(Object *obj, Visitor *v, const char *name,
+ static void riscv_cpu_add_profiles(Object *cpu_obj)
+ {
+     for (int i = 0; riscv_profiles[i] != NULL; i++) {
+-        const RISCVCPUProfile *profile = riscv_profiles[i];
++        RISCVCPUProfile *profile = riscv_profiles[i];
+ 
+         object_property_add(cpu_obj, profile->name, "bool",
+                             cpu_get_profile, cpu_set_profile,
+@@ -1435,7 +1442,7 @@ static void riscv_cpu_add_profiles(Object *cpu_obj)
+          * case.
+          */
+         if (profile->enabled) {
+-            object_property_set_bool(cpu_obj, profile->name, true, NULL);
++            riscv_cpu_set_profile(RISCV_CPU(cpu_obj), profile, true);
+         }
+     }
+ }
 -- 
 2.50.0
 
