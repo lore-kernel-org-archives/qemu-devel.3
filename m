@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D3C8C83F0B
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:44:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AE83C83F09
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:44:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXjDy-0008G7-8l; Fri, 04 Jul 2025 12:25:18 -0400
+	id 1uXjE2-0008KF-Rr; Fri, 04 Jul 2025 12:25:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXjDt-00088y-Nh
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:25:13 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1uXjE0-0008Ix-HY
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:25:20 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXjDr-00064K-Jv
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:25:13 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-45348bff79fso11613335e9.2
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:25:11 -0700 (PDT)
+ id 1uXjDy-00066q-9a
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:25:19 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3a54700a463so653461f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:25:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751646310; x=1752251110; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751646316; x=1752251116; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=505chJ/it5n+B86DZgwN9X8NZyo5CALyFKYv93L9Mxw=;
- b=uhOGT5HvbdEQkptUa87XxvOOMaU56GLrzWZi8w43efc3v3aVCtBe1Q+Z06Qt5ram45
- tXc74hRRkbHr+4Nk8o26adkN3+MfCm6NZaZ3I1Rff6/a1sMv/0AgR1Jc0LHV+dYEuOUK
- gRpcUzOEr4GSAaM2DLDEic5uqYiUY5QM2L4L40eSxPsHtOwd6IYYO2Z7B+lYO3Ld7o6b
- vQ2z2pc8WbjhEukKDrL90EB2IdKc/w/Og3I0W4uWZVXiqX+snBjFDCkgEfZK8kCRFWKa
- bHuXCf/w7HZSHuCTVtpjNOMmEvZuLbma0WPREGbv+Fb7TSDqCwYyScRfX2pdfNwCWfU0
- Sc1Q==
+ :reply-to; bh=sdksj7AhuX3HdoRD316K9aYl//4+2BwqWbea6b6KLvM=;
+ b=UolMWZFThgPsCsYDIae2zdWkdmFT8FPtej7dmTG9vxX49yTx3DzUCqBtFnK4cl2OIk
+ wRZxKz00adx6Nbx0AmerHLsrz8suP/S0dEdZT5QheMm9mNo6ecc2EYiInbK6YmQ4OSfo
+ Zmv0704OexoPq0BrsYBReD998w+KHyv1KKMnDy1vnQhy1tsUUDFr7b2LO6GY77Tz6meJ
+ b74IOjlqR4DmwB2aRea0N+pgKNch6Pb8GTB+hCOaRA2n/R1N0z724ypHx1jSaSvx08J1
+ xaM5Skk2/cQT8DbiMESi8b9ZrQuoJYRMT4dBtbqfC4WbmWaka1ZdOYl3BG+4rbFmfkoj
+ g/8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751646310; x=1752251110;
+ d=1e100.net; s=20230601; t=1751646316; x=1752251116;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=505chJ/it5n+B86DZgwN9X8NZyo5CALyFKYv93L9Mxw=;
- b=cfpRPIyi4bs8zfBXnSuSDL7ut1XMdVWUgzdpI2vmogDT97xfT2WC/uj0SsNaZpL4HM
- fWh6nVWLE/sr3Zt7HVwzCa2b3R63QJ9I376Dm7/Q41TAfS8opGv7f3pFLXswAqdxo6zU
- u2s+HL4Z16ROpRT/XWg8yVGTw/Snz3K0QH5y9mi6eI6tMv8RjKw2reZTnlBA990YCIt2
- 5d4t2DM0gIt6NnngRyT8ZxIgChLRDl7sPDSNhAnaFVEMhOkqPGU9Jm+601a/2KzZZUQD
- LEEf+JiaozAsMIwSjdUmjfvlXmePkI3UVvQ2g8icuO0vJjw4DsUG0Cwwdypy21FXbROb
- NdNw==
-X-Gm-Message-State: AOJu0YwO5+SSeFCOxTqGEADaPywMBglCJD9NyFiPaqSX+ldL2RWR+kic
- 8eOP2eOwKMro2XoNljpBSOib6kyj/nAYbRD6qXoALls90RYySJT2u9kyiyu6zl9/ZKUDXNm5bB6
- PHWKp
-X-Gm-Gg: ASbGncsn4nDwQkJaQ/S9q9z4c+RVKB+mQW7D+Grj6z52vyOUnxlmPhgbW3D8CermNsj
- Gb1GdDs83HWrqNKHFGLa2eB6Mi40VwA8E6wJijMHdN+lI2Qo7VN1u4xE5jjFhF5qcag9HGR8+H6
- 5/vPIo7IRihNIfn+m6AC501vQl4n5Ttbbh1DXblCvb3OCAZYXWumlCsNkafjus9dyQE0y6W5lEH
- afSYHwNqDR0k+74Ur9LKmZgUg4Pwb41mNvkzhnFzUmCGUMTURktUhKS9B2z9WIGCm1uQc6LXNFY
- ujT9w3PCc0M824myak/eIdmP9giW0dMp3tzL54oowVI/v5nOoovnru1Msj124TeRSa4Z
-X-Google-Smtp-Source: AGHT+IFq2VK3peUUWIkB4VW1xhGemh1PX96vjweQPlDVm+54lNXELCHEW1C/m9kmte7kbQhlsBLkBQ==
-X-Received: by 2002:a05:600c:83cc:b0:454:ab87:a0a0 with SMTP id
- 5b1f17b1804b1-454b4eadc2fmr32027825e9.17.1751646310151; 
- Fri, 04 Jul 2025 09:25:10 -0700 (PDT)
+ bh=sdksj7AhuX3HdoRD316K9aYl//4+2BwqWbea6b6KLvM=;
+ b=oHWoExeUlDXjXwMpPPauDw2vgNMnuKCQBEMrRO30si4+D40vbjPbFl8Uc/wWVPuloB
+ SgSabJjik40QAHz6j1RCZDfI9M2UtQRi9MyWGKd515DbXVmGIIy0w2gxKep84Y10SJ2o
+ JD4nDzng/54sDIYHPWh87XxCAjYZdbRTEzlbrvfrTJGhzV3GGegMohmDfrOGuo6nlhk7
+ aZOldMsupEi0iyNk7OJCUwiP5aQftQih5MHklsk+3t59Gs2KOtAIjRcj2OCSlFklmZQg
+ /ieFHP0qrLRQYo3ZYNPEb8LiD4icijTzk3R6+/aH9lojpcUicXLuO6yKDSRelHoLuxhE
+ 3vnA==
+X-Gm-Message-State: AOJu0YxhmenCVPPQCh0SA/1KuaS7sNSV45onx3b6tfpDRinkxm5t1i5m
+ 1LrRINJP/tIUFYh0ik77CAc8XBJcUBR41wFDlbJFfV29hPsp+QeeeN0SA7oxTrH3JTC3M2FVZx7
+ 66EBS
+X-Gm-Gg: ASbGncuCc6VjuMU4NQB1rG7srSkvSFWJBVcB0BVL4kYsmI6HZQUDLfqrMpHwDzvWzbw
+ 4jNlch6ugeXFhehs4ohLXba7I/ydUyRbqLCMixLwpGo08NynquWJTuF9mLpvMTLLLDuboe5aLQI
+ sIZqVKkszr9n+fztv/kIFkq5infUw2nDu7hIq7jo2LzUKpdvNUhcrj4IwDaovl9LrIfcXAiIJA4
+ tLnNhC/nvSG+dPsiFcQ7itS0Vlpu50v3UENZK6qpg5Gr7waAr1PSM9jda+TZ/rYQQU15gCjuNtU
+ Njqj3E2OjeyM9qRk/GfBv6X0u3R46S2ElkyV21UlnegyiKRe5I+q2ZigTFBISXwYE3sz/LHqins
+ bpz4=
+X-Google-Smtp-Source: AGHT+IGvC1Coz2Sx4wU3o62QTM1Uhkxp1Y4GPeHWzPFpJfud2OWwmRSUUIbF1RlrNE07TU/Zjc9S3A==
+X-Received: by 2002:a05:6000:4a0a:b0:3a4:da0e:517a with SMTP id
+ ffacd0b85a97d-3b495589716mr3643563f8f.23.1751646316446; 
+ Fri, 04 Jul 2025 09:25:16 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b471b96534sm2816857f8f.48.2025.07.04.09.25.09
+ ffacd0b85a97d-3b471b96534sm2816857f8f.48.2025.07.04.09.25.15
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 09:25:09 -0700 (PDT)
+ Fri, 04 Jul 2025 09:25:15 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 007/119] target/arm: Fix VLDR_SG helper load alignment checks
-Date: Fri,  4 Jul 2025 17:23:07 +0100
-Message-ID: <20250704162501.249138-8-peter.maydell@linaro.org>
+Subject: [PULL 014/119] target/arm: Fix sve_access_check for SME
+Date: Fri,  4 Jul 2025 17:23:14 +0100
+Message-ID: <20250704162501.249138-15-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250704162501.249138-1-peter.maydell@linaro.org>
 References: <20250704162501.249138-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,116 +99,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: William Kosasih <kosasihwilliam4@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-This patch adds alignment checks in the load operations in the VLDR_SG
-instructions.
+Do not assume SME implies SVE.  Ensure that the non-streaming
+check is present along the SME path, since it is not implied
+by sme_*_enabled_check.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1154
-Signed-off-by: William Kosasih <kosasihwilliam4@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250703085604.154449-7-kosasihwilliam4@gmail.com
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250704142112.1018902-3-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/mve_helper.c | 42 ++++++++++++++++++++++---------------
- 1 file changed, 25 insertions(+), 17 deletions(-)
+ target/arm/tcg/translate-a64.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/target/arm/tcg/mve_helper.c b/target/arm/tcg/mve_helper.c
-index 9587f2da7da..633f511a7e6 100644
---- a/target/arm/tcg/mve_helper.c
-+++ b/target/arm/tcg/mve_helper.c
-@@ -218,7 +218,7 @@ DO_VSTR(vstrh_w, MO_TEUW, 2, stw, 4, int32_t)
-  * For loads, predicated lanes are zeroed instead of retaining
-  * their previous values.
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 5c44a5dece9..b0caccca46e 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -1381,11 +1381,8 @@ static bool fp_access_check_only(DisasContext *s)
+     return true;
+ }
+ 
+-static bool fp_access_check(DisasContext *s)
++static bool nonstreaming_check(DisasContext *s)
+ {
+-    if (!fp_access_check_only(s)) {
+-        return false;
+-    }
+     if (s->sme_trap_nonstreaming && s->is_nonstreaming) {
+         gen_exception_insn(s, 0, EXCP_UDEF,
+                            syn_smetrap(SME_ET_Streaming, false));
+@@ -1394,6 +1391,11 @@ static bool fp_access_check(DisasContext *s)
+     return true;
+ }
+ 
++static bool fp_access_check(DisasContext *s)
++{
++    return fp_access_check_only(s) && nonstreaming_check(s);
++}
++
+ /*
+  * Return <0 for non-supported element sizes, with MO_16 controlled by
+  * FEAT_FP16; return 0 for fp disabled; otherwise return >0 for success.
+@@ -1444,14 +1446,24 @@ static int fp_access_check_vector_hsd(DisasContext *s, bool is_q, MemOp esz)
   */
--#define DO_VLDR_SG(OP, LDTYPE, ESIZE, TYPE, OFFTYPE, ADDRFN, WB)        \
-+#define DO_VLDR_SG(OP, MFLAG, MTYPE, LDTYPE, ESIZE, TYPE, OFFTYPE, ADDRFN, WB)\
-     void HELPER(mve_##OP)(CPUARMState *env, void *vd, void *vm,         \
-                           uint32_t base)                                \
-     {                                                                   \
-@@ -228,13 +228,15 @@ DO_VSTR(vstrh_w, MO_TEUW, 2, stw, 4, int32_t)
-         uint16_t eci_mask = mve_eci_mask(env);                          \
-         unsigned e;                                                     \
-         uint32_t addr;                                                  \
-+        int mmu_idx = arm_to_core_mmu_idx(arm_mmu_idx(env));            \
-+        MemOpIdx oi = make_memop_idx(MFLAG | MO_ALIGN, mmu_idx);        \
-         for (e = 0; e < 16 / ESIZE; e++, mask >>= ESIZE, eci_mask >>= ESIZE) { \
-             if (!(eci_mask & 1)) {                                      \
-                 continue;                                               \
-             }                                                           \
-             addr = ADDRFN(base, m[H##ESIZE(e)]);                        \
-             d[H##ESIZE(e)] = (mask & 1) ?                               \
--                cpu_##LDTYPE##_data_ra(env, addr, GETPC()) : 0;         \
-+                (MTYPE)cpu_##LDTYPE##_mmu(env, addr, oi, GETPC()) : 0;  \
-             if (WB) {                                                   \
-                 m[H##ESIZE(e)] = addr;                                  \
-             }                                                           \
-@@ -286,13 +288,15 @@ DO_VSTR(vstrh_w, MO_TEUW, 2, stw, 4, int32_t)
-         uint16_t eci_mask = mve_eci_mask(env);                          \
-         unsigned e;                                                     \
-         uint32_t addr;                                                  \
-+        int mmu_idx = arm_to_core_mmu_idx(arm_mmu_idx(env));            \
-+        MemOpIdx oi = make_memop_idx(MO_TEUL | MO_ALIGN, mmu_idx);      \
-         for (e = 0; e < 16 / 4; e++, mask >>= 4, eci_mask >>= 4) {      \
-             if (!(eci_mask & 1)) {                                      \
-                 continue;                                               \
-             }                                                           \
-             addr = ADDRFN(base, m[H4(e & ~1)]);                         \
-             addr += 4 * (e & 1);                                        \
--            d[H4(e)] = (mask & 1) ? cpu_ldl_data_ra(env, addr, GETPC()) : 0; \
-+            d[H4(e)] = (mask & 1) ? cpu_ldl_mmu(env, addr, oi, GETPC()) : 0; \
-             if (WB && (e & 1)) {                                        \
-                 m[H4(e & ~1)] = addr - 4;                               \
-             }                                                           \
-@@ -331,22 +335,26 @@ DO_VSTR(vstrh_w, MO_TEUW, 2, stw, 4, int32_t)
- #define ADDR_ADD_OSW(BASE, OFFSET) ((BASE) + ((OFFSET) << 2))
- #define ADDR_ADD_OSD(BASE, OFFSET) ((BASE) + ((OFFSET) << 3))
+ bool sve_access_check(DisasContext *s)
+ {
+-    if (s->pstate_sm || !dc_isar_feature(aa64_sve, s)) {
++    if (dc_isar_feature(aa64_sme, s)) {
+         bool ret;
  
--DO_VLDR_SG(vldrb_sg_sh, ldsb, 2, int16_t, uint16_t, ADDR_ADD, false)
--DO_VLDR_SG(vldrb_sg_sw, ldsb, 4, int32_t, uint32_t, ADDR_ADD, false)
--DO_VLDR_SG(vldrh_sg_sw, ldsw, 4, int32_t, uint32_t, ADDR_ADD, false)
-+DO_VLDR_SG(vldrb_sg_sh, MO_SB, int8_t, ldb, 2, int16_t, uint16_t, ADDR_ADD, false)
-+DO_VLDR_SG(vldrb_sg_sw, MO_SB, int8_t, ldb, 4, int32_t, uint32_t, ADDR_ADD, false)
-+DO_VLDR_SG(vldrh_sg_sw, MO_TESW, int16_t, ldw, 4, int32_t, uint32_t, ADDR_ADD, false)
- 
--DO_VLDR_SG(vldrb_sg_ub, ldub, 1, uint8_t, uint8_t, ADDR_ADD, false)
--DO_VLDR_SG(vldrb_sg_uh, ldub, 2, uint16_t, uint16_t, ADDR_ADD, false)
--DO_VLDR_SG(vldrb_sg_uw, ldub, 4, uint32_t, uint32_t, ADDR_ADD, false)
--DO_VLDR_SG(vldrh_sg_uh, lduw, 2, uint16_t, uint16_t, ADDR_ADD, false)
--DO_VLDR_SG(vldrh_sg_uw, lduw, 4, uint32_t, uint32_t, ADDR_ADD, false)
--DO_VLDR_SG(vldrw_sg_uw, ldl, 4, uint32_t, uint32_t, ADDR_ADD, false)
-+DO_VLDR_SG(vldrb_sg_ub, MO_UB, uint8_t, ldb, 1, uint8_t, uint8_t, ADDR_ADD, false)
-+DO_VLDR_SG(vldrb_sg_uh, MO_UB, uint8_t, ldb, 2, uint16_t, uint16_t, ADDR_ADD, false)
-+DO_VLDR_SG(vldrb_sg_uw, MO_UB, uint8_t, ldb, 4, uint32_t, uint32_t, ADDR_ADD, false)
-+DO_VLDR_SG(vldrh_sg_uh, MO_TEUW, uint16_t, ldw, 2, uint16_t, uint16_t, ADDR_ADD, false)
-+DO_VLDR_SG(vldrh_sg_uw, MO_TEUW, uint16_t, ldw, 4, uint32_t, uint32_t, ADDR_ADD, false)
-+DO_VLDR_SG(vldrw_sg_uw, MO_TEUL, uint32_t, ldl, 4, uint32_t, uint32_t, ADDR_ADD, false)
- DO_VLDR64_SG(vldrd_sg_ud, ADDR_ADD, false)
- 
--DO_VLDR_SG(vldrh_sg_os_sw, ldsw, 4, int32_t, uint32_t, ADDR_ADD_OSH, false)
--DO_VLDR_SG(vldrh_sg_os_uh, lduw, 2, uint16_t, uint16_t, ADDR_ADD_OSH, false)
--DO_VLDR_SG(vldrh_sg_os_uw, lduw, 4, uint32_t, uint32_t, ADDR_ADD_OSH, false)
--DO_VLDR_SG(vldrw_sg_os_uw, ldl, 4, uint32_t, uint32_t, ADDR_ADD_OSW, false)
-+DO_VLDR_SG(vldrh_sg_os_sw, MO_TESW, int16_t, ldw, 4,
-+           int32_t, uint32_t, ADDR_ADD_OSH, false)
-+DO_VLDR_SG(vldrh_sg_os_uh, MO_TEUW, uint16_t, ldw, 2,
-+           uint16_t, uint16_t, ADDR_ADD_OSH, false)
-+DO_VLDR_SG(vldrh_sg_os_uw, MO_TEUW, uint16_t, ldw, 4,
-+           uint32_t, uint32_t, ADDR_ADD_OSH, false)
-+DO_VLDR_SG(vldrw_sg_os_uw, MO_TEUL, uint32_t, ldl, 4,
-+           uint32_t, uint32_t, ADDR_ADD_OSW, false)
- DO_VLDR64_SG(vldrd_sg_os_ud, ADDR_ADD_OSD, false)
- 
- DO_VSTR_SG(vstrb_sg_ub, stb, 1, uint8_t, ADDR_ADD, false)
-@@ -362,7 +370,7 @@ DO_VSTR_SG(vstrh_sg_os_uw, stw, 4, uint32_t, ADDR_ADD_OSH, false)
- DO_VSTR_SG(vstrw_sg_os_uw, stl, 4, uint32_t, ADDR_ADD_OSW, false)
- DO_VSTR64_SG(vstrd_sg_os_ud, ADDR_ADD_OSD, false)
- 
--DO_VLDR_SG(vldrw_sg_wb_uw, ldl, 4, uint32_t, uint32_t, ADDR_ADD, true)
-+DO_VLDR_SG(vldrw_sg_wb_uw, MO_TEUL, uint32_t, ldl, 4, uint32_t, uint32_t, ADDR_ADD, true)
- DO_VLDR64_SG(vldrd_sg_wb_ud, ADDR_ADD, true)
- DO_VSTR_SG(vstrw_sg_wb_uw, stl, 4, uint32_t, ADDR_ADD, true)
- DO_VSTR64_SG(vstrd_sg_wb_ud, ADDR_ADD, true)
+-        assert(dc_isar_feature(aa64_sme, s));
+-        ret = sme_sm_enabled_check(s);
++        if (s->pstate_sm) {
++            ret = sme_enabled_check(s);
++        } else if (dc_isar_feature(aa64_sve, s)) {
++            goto continue_sve;
++        } else {
++            ret = sme_sm_enabled_check(s);
++        }
++        if (ret) {
++            ret = nonstreaming_check(s);
++        }
+         s->sve_access_checked = (ret ? 1 : -1);
+         return ret;
+     }
++
++ continue_sve:
+     if (s->sve_excp_el) {
+         /* Assert that we only raise one exception per instruction. */
+         assert(!s->sve_access_checked);
 -- 
 2.43.0
 
