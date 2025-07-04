@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA7F1C83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 14:25:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1952C8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 14:25:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXhKl-0000nT-Bx; Fri, 04 Jul 2025 10:24:14 -0400
+	id 1uXhKx-00015j-5k; Fri, 04 Jul 2025 10:24:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uXhIG-00056j-D4
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:21:40 -0400
-Received: from mail-oa1-x36.google.com ([2001:4860:4864:20::36])
+ id 1uXhIJ-0005G6-DN
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:21:43 -0400
+Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uXhID-0005gd-TY
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:21:35 -0400
-Received: by mail-oa1-x36.google.com with SMTP id
- 586e51a60fabf-2ea34731c5dso859227fac.0
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 07:21:33 -0700 (PDT)
+ id 1uXhIG-0005iG-4i
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:21:38 -0400
+Received: by mail-oa1-x33.google.com with SMTP id
+ 586e51a60fabf-2efc0ed41efso403708fac.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 07:21:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751638892; x=1752243692; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751638894; x=1752243694; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dTGa4kMhNDj9wa1wac77ORndiv7EhCr8PS2fgvtfjbU=;
- b=GZ2AM7Pi4yGWdye+JKA3fGB7b86UqMigLlYIdr8j4UM09DXw6Y15D7qyDwU2CDFLfH
- dNLYX0pRO5WTjwSXR82Jx9rW+VqfwHMIlce9TE1pMKV5uWqL0pqwKjExlR3D5aXsPO+D
- H1NvwMX8frtp1azlwXqBS/YGvYfF/0UC1KEkoNcM+s1XyDn4QI7MLvnZAvZ9ID/G/BUw
- DCvYvOBWmPkWU9NjnsWQcrMmdzT9idn+FsrJX5yMhbaRqcAZD8+UjYw3rJo5rfHrRW8m
- 74Md5Fazv62hitISYlOvngeMPYWO7MLdW0ABiw4hGDvddbvZKIDcyak46EM8q+Ygm+Jq
- yhCw==
+ bh=0C56pC53rSBiH1gXw8XOmTDoJ0Tu3GpRT/rtSHM5KQI=;
+ b=j2qDHgHIqX9qRoMRLoduWM9EoIuTMuySk+OrBIqC+1QtkB1iaKP7L/DgL8xgynadAf
+ WYdkoBF2lQjdMvT1LjurWN7NrZz/uH5X+pSeVgTBg/0q7JTq+r+SLO4i03IykQp9zWJS
+ 4UzkIV8minP730+NSoPS9u5qoGqdHPyZHGOqi+FL11KAXaHO+VguRpedmNFWlyt1t06N
+ CysiC86OSzJw+sOxo8Pt4wWYyzAySXgWyp5qxiaDsfq2UEoB1LipeWnm9aqLO9WhS5f1
+ J8XbO414RAcUmCbpWvpHkU7qOLaBbhSSt7y2ecSSF8AFDVz/Ueeca42KjNlgAuzzmMsA
+ ieaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751638892; x=1752243692;
+ d=1e100.net; s=20230601; t=1751638894; x=1752243694;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dTGa4kMhNDj9wa1wac77ORndiv7EhCr8PS2fgvtfjbU=;
- b=DhC7rxa25YtDtDLl5EAHp/WoRLGN+y5/fVpJ3XuDMM9w7IGvlry7jFo/9cc7JrErN/
- WhkhijkFB2TDqi9iGBUw/MF3U/bB96lCexutO2VPmRRl0cn1KiIpqQsR597VT3AvFIda
- /FTfYv27bSPTwblNVYazK3j4NrBUZHTY+u0nXX/dJ//6T2Rh8P0KVZykb8ADhYMDEcbQ
- yKQHx30s99YofQxpPnZTUzwf9XLlQ4gwCHD999Pu31oFTlvFqLB4NPbwYsf13W8YHqhs
- MWttYpwTR2imoWQ/d+LkUZXQxkVf7UPoQbtCo/kgLpTe/5ngJFSst5rxBTkA7jkLO9Y8
- t0JA==
-X-Gm-Message-State: AOJu0Yz0RXRBp2IphvnqXpf9zVbqjZSYQQqF+v1tBmnHmoMSaT2MS8i9
- +7/ruI0w+ds1bUJlfAfjf0oyaD7Zmyf2OoXIpix5D77qm7PhtMfmM3pKBYU9p0rP8mbtb2TINL0
- 8omUo7jQ=
-X-Gm-Gg: ASbGncvNXUX9WJhfwh9TT4WmXD/wL+MnRaLXURGiYnQHwUTcpxAkwR17+Wi9jwHo11s
- o61VQneSPhj5t+NHyIu0OEHZZrSamblkTny46tyZV3wLtSjo34QYMItwQYzIJamqPif9IFsmowg
- InaLFN1qguOxCtAdaLwwKJD5k5kDHdueze80sJfgZlBGpIpP59iRIt+B89hCOCIL78EBjKevIta
- PCtT6kHdOM+LvKRDif/zwW6/y2hiCMKGci2rF3+xqpszFe6Y1Eq4dLZ6S6y9+LzC9okCMxgAD/h
- fz8VzkWRN1F1dcTW/p7YfdF+qehrSbTPg98mod2dgjODlEP3n3QQjxSX8/yrwJnTbyfI01PDiJ7
- 6XUJXAR6MfMV5tlkgRONKHNVOsR532DKYsgvyyL/6swVJR7AC
-X-Google-Smtp-Source: AGHT+IEhDfWOscyz0ed/xxzhZQpPNiLmdNPKN3CO+Z0b5I2MaEdRh0RA3I8AalyAqCT+flmcvMtH4A==
-X-Received: by 2002:a05:6870:4211:b0:2eb:b4f8:fe7f with SMTP id
- 586e51a60fabf-2f791d4c954mr2288251fac.11.1751638892522; 
- Fri, 04 Jul 2025 07:21:32 -0700 (PDT)
+ bh=0C56pC53rSBiH1gXw8XOmTDoJ0Tu3GpRT/rtSHM5KQI=;
+ b=p3jyKlPnlcKINVhEdlpF2KRydJ8J8ZxmHi16ot+auhbXebvKZFJNOZxcWU4fKF0eHy
+ 8XWnm+mD0179h2OBYdx6lNwTCCTJ70UHYlRvR5sjdglb1tVF4UcW41On+unIaQIqKDHm
+ CNIDQ7GC+pIjAS6KXJyBaCxgz7BJntAeyoo/PcsKWVY91yU0oTilFisNLnwLgb39J8vN
+ 7vFwmk1+NJ1i/XGVALOFLMTBbQ4JY6s9REOpkNpIHhw0yKVYUvEALgXSs0Z+blKe3knx
+ eVr+RB2/M23LvuKWfQ5lmZEVIXWc2Itq3GgFpQ1hxiQ/UxuRtxbpyvzMyBb4n1gLnHcE
+ ilKw==
+X-Gm-Message-State: AOJu0YzQ6Bjq4SvvNpymQKbhe6RMNVw90YYEnoLlEclv0VSuwNCysRiZ
+ hUig+i6n8rxtJxHy/S46RRoLfnauYVurwVEOpoOvi6rLmVSZ/tWf0CHd1QiLpLmOIpEv0wrOzi1
+ iKeDYLO4=
+X-Gm-Gg: ASbGnctYhx2Zx7OKpcorbgeDTQXKzqLmCjXqOk+PQ8dp+Se/qPaiP3Otw8bHoT6kjw3
+ 1tEHeu8+jyicoNDylJwMjaLtzUBnAqtrgiixkySOHPCv4eg5eIHz8EQghNIKt4U2wVbJxju7zdP
+ NCwXy5uk3Sa3WgsFkAvZt6ZZNxto1W+FkX3QrYqSCAFgsJ8IyMcSLSwIiBiqFeffbmFJUox+Jkz
+ 6NJN89hnzPBanxZZTpDBEL/ZKgh/iOvC5BEvX4IwzqugMJnDW80+iQdUidm/wOJc/g8h8hZfm4B
+ 8zaYGgAMC/TUIYY0PvMUfpVFdBcV3gj+GDjTU3rfS6jspEj30/lVik5IPGEi8XxMJJDgd0/PpxO
+ 3fMy8zkwI/9mHds7fBv86qgyCef5Nlry1r57BBYJASuEsnkYn86ReAivjbhQ=
+X-Google-Smtp-Source: AGHT+IFvcAH1ZtDoeiZpdQe7ntcTZWl0wftoBJ4jdiJbgiXORm7aNJtCWuqhD8DnpiT8qLBxrL3vYg==
+X-Received: by 2002:a05:6870:391e:b0:2ef:de7e:544d with SMTP id
+ 586e51a60fabf-2f796c848f8mr1783872fac.27.1751638894363; 
+ Fri, 04 Jul 2025 07:21:34 -0700 (PDT)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2f78ff0471esm528016fac.3.2025.07.04.07.21.31
+ 586e51a60fabf-2f78ff0471esm528016fac.3.2025.07.04.07.21.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 07:21:32 -0700 (PDT)
+ Fri, 04 Jul 2025 07:21:34 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	peter.maydell@linaro.org
-Subject: [PATCH v4 016/108] target/arm: Add zt0_excp_el to DisasContext
-Date: Fri,  4 Jul 2025 08:19:39 -0600
-Message-ID: <20250704142112.1018902-17-richard.henderson@linaro.org>
+Subject: [PATCH v4 018/108] target/arm: Add alignment argument to gen_sve_{ldr, str}
+Date: Fri,  4 Jul 2025 08:19:41 -0600
+Message-ID: <20250704142112.1018902-19-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250704142112.1018902-1-richard.henderson@linaro.org>
 References: <20250704142112.1018902-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::36;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x36.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::33;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,150 +101,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pipe the value through from SMCR_ELx through hflags and into
-the disassembly context.  Enable EZT0 in smcr_write.
+Honor AlignmentEnforced() for LDR/STR (vector),
+(predicate), and (array vector).
+
+Within the expansion functions, clear @align when we're
+done emitting loads at the largest size.
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu.h               |  2 ++
- target/arm/tcg/translate.h     |  1 +
- target/arm/cpu.c               |  3 +++
- target/arm/helper.c            |  6 +++++-
- target/arm/tcg/hflags.c        | 34 +++++++++++++++++++++++++++++++++-
- target/arm/tcg/translate-a64.c |  1 +
- 6 files changed, 45 insertions(+), 2 deletions(-)
+ target/arm/tcg/translate-a64.h |  6 ++--
+ target/arm/tcg/translate-sme.c |  5 ++--
+ target/arm/tcg/translate-sve.c | 50 ++++++++++++++++++++++++----------
+ 3 files changed, 42 insertions(+), 19 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index cbc2043483..39a9234ff2 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1513,6 +1513,7 @@ FIELD(SVCR, ZA, 1, 1)
+diff --git a/target/arm/tcg/translate-a64.h b/target/arm/tcg/translate-a64.h
+index b2420f59eb..8a9f4b2053 100644
+--- a/target/arm/tcg/translate-a64.h
++++ b/target/arm/tcg/translate-a64.h
+@@ -225,7 +225,9 @@ void gen_gvec_usqadd_qc(unsigned vece, uint32_t rd_ofs,
+                         uint32_t rn_ofs, uint32_t rm_ofs,
+                         uint32_t opr_sz, uint32_t max_sz);
  
- /* Fields for SMCR_ELx. */
- FIELD(SMCR, LEN, 0, 4)
-+FIELD(SMCR, EZT0, 30, 1)
- FIELD(SMCR, FA64, 31, 1)
+-void gen_sve_ldr(DisasContext *s, TCGv_ptr, int vofs, int len, int rn, int imm);
+-void gen_sve_str(DisasContext *s, TCGv_ptr, int vofs, int len, int rn, int imm);
++void gen_sve_ldr(DisasContext *s, TCGv_ptr, int vofs,
++                 int len, int rn, int imm, MemOp align);
++void gen_sve_str(DisasContext *s, TCGv_ptr, int vofs,
++                 int len, int rn, int imm, MemOp align);
  
- /* Write a new value to v7m.exception, thus transitioning into or out
-@@ -3084,6 +3085,7 @@ FIELD(TBFLAG_A64, NV2_MEM_E20, 35, 1)
- FIELD(TBFLAG_A64, NV2_MEM_BE, 36, 1)
- FIELD(TBFLAG_A64, AH, 37, 1)   /* FPCR.AH */
- FIELD(TBFLAG_A64, NEP, 38, 1)   /* FPCR.NEP */
-+FIELD(TBFLAG_A64, ZT0EXC_EL, 39, 2)
- 
- /*
-  * Helpers for using the above. Note that only the A64 accessors use
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index 0004a97219..b03956a793 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -70,6 +70,7 @@ typedef struct DisasContext {
-     int fp_excp_el; /* FP exception EL or 0 if enabled */
-     int sve_excp_el; /* SVE exception EL or 0 if enabled */
-     int sme_excp_el; /* SME exception EL or 0 if enabled */
-+    int zt0_excp_el; /* ZT0 exception EL or 0 if enabled */
-     int vl;          /* current vector length in bytes */
-     int svl;         /* current streaming vector length in bytes */
-     bool vfp_enabled; /* FP enabled via FPSCR.EN */
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 6265627762..08c43f674a 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -635,6 +635,9 @@ void arm_emulate_firmware_reset(CPUState *cpustate, int target_el)
-                 env->cp15.cptr_el[3] |= R_CPTR_EL3_ESM_MASK;
-                 env->cp15.scr_el3 |= SCR_ENTP2;
-                 env->vfp.smcr_el[3] = 0xf;
-+                if (cpu_isar_feature(aa64_sme2, cpu)) {
-+                    env->vfp.smcr_el[3] |= R_SMCR_EZT0_MASK;
-+                }
-             }
-             if (cpu_isar_feature(aa64_hcx, cpu)) {
-                 env->cp15.scr_el3 |= SCR_HXEN;
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 3879bce848..b3f0d6f17a 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6682,10 +6682,14 @@ static void smcr_write(CPUARMState *env, const ARMCPRegInfo *ri,
- {
-     int cur_el = arm_current_el(env);
-     int old_len = sve_vqm1_for_el(env, cur_el);
-+    uint64_t valid_mask = R_SMCR_LEN_MASK | R_SMCR_FA64_MASK;
-     int new_len;
- 
-     QEMU_BUILD_BUG_ON(ARM_MAX_VQ > R_SMCR_LEN_MASK + 1);
--    value &= R_SMCR_LEN_MASK | R_SMCR_FA64_MASK;
-+    if (cpu_isar_feature(aa64_sme2, env_archcpu(env))) {
-+        valid_mask |= R_SMCR_EZT0_MASK;
-+    }
-+    value &= valid_mask;
-     raw_write(env, ri, value);
- 
-     /*
-diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
-index 1ccec63bbd..59ab526375 100644
---- a/target/arm/tcg/hflags.c
-+++ b/target/arm/tcg/hflags.c
-@@ -214,6 +214,31 @@ static CPUARMTBFlags rebuild_hflags_a32(CPUARMState *env, int fp_el,
-     return rebuild_hflags_common_32(env, fp_el, mmu_idx, flags);
+ #endif /* TARGET_ARM_TRANSLATE_A64_H */
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index 246f191eca..1dbd0199af 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -269,7 +269,7 @@ static bool trans_LDST1(DisasContext *s, arg_LDST1 *a)
+     return true;
  }
  
-+/*
-+ * Return the exception level to which exceptions should be taken for ZT0.
-+ * C.f. the ARM pseudocode function CheckSMEZT0Enabled, after the ZA check.
-+ */
-+static int zt0_exception_el(CPUARMState *env, int el)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    if (el <= 1
-+        && !el_is_in_host(env, el)
-+        && !FIELD_EX64(env->vfp.smcr_el[1], SMCR, EZT0)) {
-+        return 1;
-+    }
-+    if (el <= 2
-+        && arm_is_el2_enabled(env)
-+        && !FIELD_EX64(env->vfp.smcr_el[2], SMCR, EZT0)) {
-+        return 2;
-+    }
-+    if (arm_feature(env, ARM_FEATURE_EL3)
-+        && !FIELD_EX64(env->vfp.smcr_el[3], SMCR, EZT0)) {
-+        return 3;
-+    }
-+#endif
-+    return 0;
-+}
-+
- static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
-                                         ARMMMUIdx mmu_idx)
+-typedef void GenLdStR(DisasContext *, TCGv_ptr, int, int, int, int);
++typedef void GenLdStR(DisasContext *, TCGv_ptr, int, int, int, int, MemOp);
+ 
+ static bool do_ldst_r(DisasContext *s, arg_ldstr *a, GenLdStR *fn)
  {
-@@ -269,7 +294,14 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
-             DP_TBFLAG_A64(flags, PSTATE_SM, 1);
-             DP_TBFLAG_A64(flags, SME_TRAP_NONSTREAMING, !sme_fa64(env, el));
+@@ -284,7 +284,8 @@ static bool do_ldst_r(DisasContext *s, arg_ldstr *a, GenLdStR *fn)
+     /* ZA[n] equates to ZA0H.B[n]. */
+     base = get_tile_rowcol(s, MO_8, a->rv, imm, false);
+ 
+-    fn(s, base, 0, svl, a->rn, imm * svl);
++    fn(s, base, 0, svl, a->rn, imm * svl,
++       s->align_mem ? MO_ALIGN_16 : MO_UNALN);
+     return true;
+ }
+ 
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 8403034a0e..d2cd298b5b 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -4160,7 +4160,7 @@ TRANS_FEAT(UCVTF_dd, aa64_sve, gen_gvec_fpst_arg_zpz,
+  */
+ 
+ void gen_sve_ldr(DisasContext *s, TCGv_ptr base, int vofs,
+-                 int len, int rn, int imm)
++                 int len, int rn, int imm, MemOp align)
+ {
+     int len_align = QEMU_ALIGN_DOWN(len, 16);
+     int len_remain = len % 16;
+@@ -4189,12 +4189,15 @@ void gen_sve_ldr(DisasContext *s, TCGv_ptr base, int vofs,
+ 
+         for (i = 0; i < len_align; i += 16) {
+             tcg_gen_qemu_ld_i128(t16, clean_addr, midx,
+-                                 MO_LE | MO_128 | MO_ATOM_NONE);
++                                 MO_LE | MO_128 | MO_ATOM_NONE | align);
+             tcg_gen_extr_i128_i64(t0, t1, t16);
+             tcg_gen_st_i64(t0, base, vofs + i);
+             tcg_gen_st_i64(t1, base, vofs + i + 8);
+             tcg_gen_addi_i64(clean_addr, clean_addr, 16);
          }
--        DP_TBFLAG_A64(flags, PSTATE_ZA, FIELD_EX64(env->svcr, SVCR, ZA));
-+
-+        if (FIELD_EX64(env->svcr, SVCR, ZA)) {
-+            DP_TBFLAG_A64(flags, PSTATE_ZA, 1);
-+            if (cpu_isar_feature(aa64_sme2, env_archcpu(env))) {
-+                int zt0_el = zt0_exception_el(env, el);
-+                DP_TBFLAG_A64(flags, ZT0EXC_EL, zt0_el);
-+            }
++        if (len_align) {
++            align = MO_UNALN;
 +        }
+     } else {
+         TCGLabel *loop = gen_new_label();
+         TCGv_ptr tp, i = tcg_temp_new_ptr();
+@@ -4204,7 +4207,7 @@ void gen_sve_ldr(DisasContext *s, TCGv_ptr base, int vofs,
+ 
+         t16 = tcg_temp_new_i128();
+         tcg_gen_qemu_ld_i128(t16, clean_addr, midx,
+-                             MO_LE | MO_128 | MO_ATOM_NONE);
++                             MO_LE | MO_128 | MO_ATOM_NONE | align);
+         tcg_gen_addi_i64(clean_addr, clean_addr, 16);
+ 
+         tp = tcg_temp_new_ptr();
+@@ -4219,6 +4222,7 @@ void gen_sve_ldr(DisasContext *s, TCGv_ptr base, int vofs,
+         tcg_gen_st_i64(t1, tp, vofs + 8);
+ 
+         tcg_gen_brcondi_ptr(TCG_COND_LTU, i, len_align, loop);
++        align = MO_UNALN;
      }
  
-     sctlr = regime_sctlr(env, stage1);
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index b0caccca46..ad293c0885 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -10139,6 +10139,7 @@ static void aarch64_tr_init_disas_context(DisasContextBase *dcbase,
-     dc->trap_eret = EX_TBFLAG_A64(tb_flags, TRAP_ERET);
-     dc->sve_excp_el = EX_TBFLAG_A64(tb_flags, SVEEXC_EL);
-     dc->sme_excp_el = EX_TBFLAG_A64(tb_flags, SMEEXC_EL);
-+    dc->zt0_excp_el = EX_TBFLAG_A64(tb_flags, ZT0EXC_EL);
-     dc->vl = (EX_TBFLAG_A64(tb_flags, VL) + 1) * 16;
-     dc->svl = (EX_TBFLAG_A64(tb_flags, SVL) + 1) * 16;
-     dc->pauth_active = EX_TBFLAG_A64(tb_flags, PAUTH_ACTIVE);
+     /*
+@@ -4227,7 +4231,9 @@ void gen_sve_ldr(DisasContext *s, TCGv_ptr base, int vofs,
+      */
+     if (len_remain >= 8) {
+         t0 = tcg_temp_new_i64();
+-        tcg_gen_qemu_ld_i64(t0, clean_addr, midx, MO_LEUQ | MO_ATOM_NONE);
++        tcg_gen_qemu_ld_i64(t0, clean_addr, midx,
++                            MO_LEUQ | MO_ATOM_NONE | align);
++        align = MO_UNALN;
+         tcg_gen_st_i64(t0, base, vofs + len_align);
+         len_remain -= 8;
+         len_align += 8;
+@@ -4242,12 +4248,14 @@ void gen_sve_ldr(DisasContext *s, TCGv_ptr base, int vofs,
+         case 4:
+         case 8:
+             tcg_gen_qemu_ld_i64(t0, clean_addr, midx,
+-                                MO_LE | ctz32(len_remain) | MO_ATOM_NONE);
++                                MO_LE | ctz32(len_remain)
++                                | MO_ATOM_NONE | align);
+             break;
+ 
+         case 6:
+             t1 = tcg_temp_new_i64();
+-            tcg_gen_qemu_ld_i64(t0, clean_addr, midx, MO_LEUL | MO_ATOM_NONE);
++            tcg_gen_qemu_ld_i64(t0, clean_addr, midx,
++                                MO_LEUL | MO_ATOM_NONE | align);
+             tcg_gen_addi_i64(clean_addr, clean_addr, 4);
+             tcg_gen_qemu_ld_i64(t1, clean_addr, midx, MO_LEUW | MO_ATOM_NONE);
+             tcg_gen_deposit_i64(t0, t0, t1, 32, 32);
+@@ -4262,7 +4270,7 @@ void gen_sve_ldr(DisasContext *s, TCGv_ptr base, int vofs,
+ 
+ /* Similarly for stores.  */
+ void gen_sve_str(DisasContext *s, TCGv_ptr base, int vofs,
+-                 int len, int rn, int imm)
++                 int len, int rn, int imm, MemOp align)
+ {
+     int len_align = QEMU_ALIGN_DOWN(len, 16);
+     int len_remain = len % 16;
+@@ -4294,9 +4302,12 @@ void gen_sve_str(DisasContext *s, TCGv_ptr base, int vofs,
+             tcg_gen_ld_i64(t1, base, vofs + i + 8);
+             tcg_gen_concat_i64_i128(t16, t0, t1);
+             tcg_gen_qemu_st_i128(t16, clean_addr, midx,
+-                                 MO_LE | MO_128 | MO_ATOM_NONE);
++                                 MO_LE | MO_128 | MO_ATOM_NONE | align);
+             tcg_gen_addi_i64(clean_addr, clean_addr, 16);
+         }
++        if (len_align) {
++            align = MO_UNALN;
++        }
+     } else {
+         TCGLabel *loop = gen_new_label();
+         TCGv_ptr tp, i = tcg_temp_new_ptr();
+@@ -4320,13 +4331,16 @@ void gen_sve_str(DisasContext *s, TCGv_ptr base, int vofs,
+         tcg_gen_addi_i64(clean_addr, clean_addr, 16);
+ 
+         tcg_gen_brcondi_ptr(TCG_COND_LTU, i, len_align, loop);
++        align = MO_UNALN;
+     }
+ 
+     /* Predicate register stores can be any multiple of 2.  */
+     if (len_remain >= 8) {
+         t0 = tcg_temp_new_i64();
+         tcg_gen_ld_i64(t0, base, vofs + len_align);
+-        tcg_gen_qemu_st_i64(t0, clean_addr, midx, MO_LEUQ | MO_ATOM_NONE);
++        tcg_gen_qemu_st_i64(t0, clean_addr, midx,
++                            MO_LEUQ | MO_ATOM_NONE | align);
++        align = MO_UNALN;
+         len_remain -= 8;
+         len_align += 8;
+         if (len_remain) {
+@@ -4342,11 +4356,13 @@ void gen_sve_str(DisasContext *s, TCGv_ptr base, int vofs,
+         case 4:
+         case 8:
+             tcg_gen_qemu_st_i64(t0, clean_addr, midx,
+-                                MO_LE | ctz32(len_remain) | MO_ATOM_NONE);
++                                MO_LE | ctz32(len_remain)
++                                | MO_ATOM_NONE | align);
+             break;
+ 
+         case 6:
+-            tcg_gen_qemu_st_i64(t0, clean_addr, midx, MO_LEUL | MO_ATOM_NONE);
++            tcg_gen_qemu_st_i64(t0, clean_addr, midx,
++                                MO_LEUL | MO_ATOM_NONE | align);
+             tcg_gen_addi_i64(clean_addr, clean_addr, 4);
+             tcg_gen_shri_i64(t0, t0, 32);
+             tcg_gen_qemu_st_i64(t0, clean_addr, midx, MO_LEUW | MO_ATOM_NONE);
+@@ -4366,7 +4382,8 @@ static bool trans_LDR_zri(DisasContext *s, arg_rri *a)
+     if (sve_access_check(s)) {
+         int size = vec_full_reg_size(s);
+         int off = vec_full_reg_offset(s, a->rd);
+-        gen_sve_ldr(s, tcg_env, off, size, a->rn, a->imm * size);
++        gen_sve_ldr(s, tcg_env, off, size, a->rn, a->imm * size,
++                    s->align_mem ? MO_ALIGN_16 : MO_UNALN);
+     }
+     return true;
+ }
+@@ -4379,7 +4396,8 @@ static bool trans_LDR_pri(DisasContext *s, arg_rri *a)
+     if (sve_access_check(s)) {
+         int size = pred_full_reg_size(s);
+         int off = pred_full_reg_offset(s, a->rd);
+-        gen_sve_ldr(s, tcg_env, off, size, a->rn, a->imm * size);
++        gen_sve_ldr(s, tcg_env, off, size, a->rn, a->imm * size,
++                    s->align_mem ? MO_ALIGN_2 : MO_UNALN);
+     }
+     return true;
+ }
+@@ -4392,7 +4410,8 @@ static bool trans_STR_zri(DisasContext *s, arg_rri *a)
+     if (sve_access_check(s)) {
+         int size = vec_full_reg_size(s);
+         int off = vec_full_reg_offset(s, a->rd);
+-        gen_sve_str(s, tcg_env, off, size, a->rn, a->imm * size);
++        gen_sve_str(s, tcg_env, off, size, a->rn, a->imm * size,
++                    s->align_mem ? MO_ALIGN_16 : MO_UNALN);
+     }
+     return true;
+ }
+@@ -4405,7 +4424,8 @@ static bool trans_STR_pri(DisasContext *s, arg_rri *a)
+     if (sve_access_check(s)) {
+         int size = pred_full_reg_size(s);
+         int off = pred_full_reg_offset(s, a->rd);
+-        gen_sve_str(s, tcg_env, off, size, a->rn, a->imm * size);
++        gen_sve_str(s, tcg_env, off, size, a->rn, a->imm * size,
++                    s->align_mem ? MO_ALIGN_2 : MO_UNALN);
+     }
+     return true;
+ }
 -- 
 2.43.0
 
