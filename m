@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A280FC83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 08:47:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CB39C83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 08:47:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXc3v-000814-1M; Fri, 04 Jul 2025 04:46:27 -0400
+	id 1uXc3f-0007ms-Co; Fri, 04 Jul 2025 04:46:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uXc3m-0007tX-3X
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 04:46:19 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uXc3a-0007jl-Mv
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 04:46:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uXc3k-0000Xe-6R
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 04:46:17 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uXc3Y-0000I5-VG
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 04:46:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751618775;
+ s=mimecast20190719; t=1751618764;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=H9ByR+nusummn7w7/LyYZYoD8r4c90VPIODzS0/Fy8g=;
- b=e42SipCYBtXIsqzTNttKMnUcK48/iCx00frT2ebc1VXzTJD4yvEKAH5wxa7v3WSo/20ggo
- Mp43dY43wvIpdhwLVQJD/y3h6mtoe8aI/hxur1MoYXupoaZPVU+NC07Q0WCYSCAkZhQein
- JFsx1Ra7qt5SZpe6p0ZkL2K3Dcmhn70=
+ bh=QCmQhzgK8imggIgqcbYivoAqw0X5+C7YbCCtSUdop2w=;
+ b=Y4YERoVChFd7Te7jQax4U7/s2we2oYcI7lP9HtJD4hQAoC00Lcv0wGeRMP0Or0LLAxli6G
+ 2oSL7qT2FwKcOtPOHbA3AizHmofVF3afFx7sOhOYTXocaH6BCP4ZGz/nyEx0fcZ9loUxMi
+ Vjvn+E29J6QmJOe3pip5QvSG59lb7kc=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-508-EVrEYhTWMQ2CbYRHnO94Zw-1; Fri,
- 04 Jul 2025 04:46:12 -0400
-X-MC-Unique: EVrEYhTWMQ2CbYRHnO94Zw-1
-X-Mimecast-MFC-AGG-ID: EVrEYhTWMQ2CbYRHnO94Zw_1751618771
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-604-W9q-DJeUP3uIcqk2AnJuXQ-1; Fri,
+ 04 Jul 2025 04:46:01 -0400
+X-MC-Unique: W9q-DJeUP3uIcqk2AnJuXQ-1
+X-Mimecast-MFC-AGG-ID: W9q-DJeUP3uIcqk2AnJuXQ_1751618760
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C288418089B4; Fri,  4 Jul 2025 08:46:11 +0000 (UTC)
+ id 0C0C01809C82; Fri,  4 Jul 2025 08:46:00 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.43])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DB3A1195E74A; Fri,  4 Jul 2025 08:46:09 +0000 (UTC)
+ id E2E5A19560A7; Fri,  4 Jul 2025 08:45:57 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Steve Sistare <steven.sistare@oracle.com>, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 14/27] vfio/iommufd: use IOMMU_IOAS_MAP_FILE
-Date: Fri,  4 Jul 2025 10:45:15 +0200
-Message-ID: <20250704084528.1412959-15-clg@redhat.com>
+Subject: [PULL 10/27] migration: cpr_get_fd_param helper
+Date: Fri,  4 Jul 2025 10:45:11 +0200
+Message-ID: <20250704084528.1412959-11-clg@redhat.com>
 In-Reply-To: <20250704084528.1412959-1-clg@redhat.com>
 References: <20250704084528.1412959-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -87,99 +86,96 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Steve Sistare <steven.sistare@oracle.com>
 
-Use IOMMU_IOAS_MAP_FILE when the mapped region is backed by a file.
-Such a mapping can be preserved without modification during CPR,
-because it depends on the file's address space, which does not change,
-rather than on the process's address space, which does change.
+Add the helper function cpr_get_fd_param, to use when preserving
+a file descriptor that is opened externally and passed to QEMU.
+cpr_get_fd_param returns a descriptor number either from a QEMU
+command-line parameter, from a getfd command, or from CPR state.
+
+When a descriptor is passed to new QEMU via SCM_RIGHTS, its number
+changes.  Hence, during CPR, the command-line parameter is ignored
+in new QEMU, and over-ridden by the value found in CPR state.
+
+Similarly, if the descriptor was originally specified by a getfd
+command in old QEMU, the fd number is not known outside of QEMU,
+and it changes when sent to new QEMU via SCM_RIGHTS.  Hence the
+user cannot send getfd to new QEMU, but when the user sends a
+hotplug command that references the fd, cpr_get_fd_param finds
+its value in CPR state.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Link: https://lore.kernel.org/qemu-devel/1751493538-202042-9-git-send-email-steven.sistare@oracle.com
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/qemu-devel/1751493538-202042-5-git-send-email-steven.sistare@oracle.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/vfio/vfio-container-base.h | 15 +++++++++++++++
- hw/vfio/container-base.c              |  9 +++++++++
- hw/vfio/iommufd.c                     | 13 +++++++++++++
- 3 files changed, 37 insertions(+)
+ include/migration/cpr.h |  2 ++
+ migration/cpr.c         | 37 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-index 3cd86ec59e1a4605dea92fadeca5816145ae409b..bded6e993ffd34910f5583bf8e94c81c41f4885f 100644
---- a/include/hw/vfio/vfio-container-base.h
-+++ b/include/hw/vfio/vfio-container-base.h
-@@ -167,6 +167,21 @@ struct VFIOIOMMUClass {
-     int (*dma_map)(const VFIOContainerBase *bcontainer,
-                    hwaddr iova, ram_addr_t size,
-                    void *vaddr, bool readonly, MemoryRegion *mr);
-+    /**
-+     * @dma_map_file
-+     *
-+     * Map a file range for the container.
-+     *
-+     * @bcontainer: #VFIOContainerBase to use for map
-+     * @iova: start address to map
-+     * @size: size of the range to map
-+     * @fd: descriptor of the file to map
-+     * @start: starting file offset of the range to map
-+     * @readonly: map read only if true
-+     */
-+    int (*dma_map_file)(const VFIOContainerBase *bcontainer,
-+                        hwaddr iova, ram_addr_t size,
-+                        int fd, unsigned long start, bool readonly);
-     /**
-      * @dma_unmap
-      *
-diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
-index d834bd482290a8b195f94c07832b7f8020504c3a..56304978e1e8ec456e0eb5f13e8bddc091e76208 100644
---- a/hw/vfio/container-base.c
-+++ b/hw/vfio/container-base.c
-@@ -78,7 +78,16 @@ int vfio_container_dma_map(VFIOContainerBase *bcontainer,
-                            void *vaddr, bool readonly, MemoryRegion *mr)
- {
-     VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-+    RAMBlock *rb = mr->ram_block;
-+    int mfd = rb ? qemu_ram_get_fd(rb) : -1;
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 07858e93fa2fbd9ca0c31af218216025c14369a6..eb27a933017a09c480029a50cd6b1457e69cec8a 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -32,6 +32,8 @@ void cpr_state_close(void);
+ struct QIOChannel *cpr_state_ioc(void);
  
-+    if (mfd >= 0 && vioc->dma_map_file) {
-+        unsigned long start = vaddr - qemu_ram_get_host_addr(rb);
-+        unsigned long offset = qemu_ram_get_fd_offset(rb);
+ bool cpr_incoming_needed(void *opaque);
++int cpr_get_fd_param(const char *name, const char *fdname, int index,
++                     Error **errp);
+ 
+ QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
+ QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
+diff --git a/migration/cpr.c b/migration/cpr.c
+index a50a57edca754b50e68fa9c294b3c89791e62ba8..535d587aee16d2411d20ee549f8e3cf5a4120a88 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -13,6 +13,7 @@
+ #include "migration/qemu-file.h"
+ #include "migration/savevm.h"
+ #include "migration/vmstate.h"
++#include "monitor/monitor.h"
+ #include "system/runstate.h"
+ #include "trace.h"
+ 
+@@ -264,3 +265,39 @@ bool cpr_incoming_needed(void *opaque)
+     MigMode mode = migrate_mode();
+     return mode == MIG_MODE_CPR_TRANSFER;
+ }
 +
-+        return vioc->dma_map_file(bcontainer, iova, size, mfd, start + offset,
-+                                  readonly);
-+    }
-     g_assert(vioc->dma_map);
-     return vioc->dma_map(bcontainer, iova, size, vaddr, readonly, mr);
- }
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index d3efef71afd4fd9e68455cefe7666c9f70e8c61e..962a1e2b1f28b297cc876fffa2677bd525479c8c 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -45,6 +45,18 @@ static int iommufd_cdev_map(const VFIOContainerBase *bcontainer, hwaddr iova,
-                                    iova, size, vaddr, readonly);
- }
- 
-+static int iommufd_cdev_map_file(const VFIOContainerBase *bcontainer,
-+                                 hwaddr iova, ram_addr_t size,
-+                                 int fd, unsigned long start, bool readonly)
++/*
++ * cpr_get_fd_param: find a descriptor and return its value.
++ *
++ * @name: CPR name for the descriptor
++ * @fdname: An integer-valued string, or a name passed to a getfd command
++ * @index: CPR index of the descriptor
++ * @errp: returned error message
++ *
++ * If CPR is not being performed, then use @fdname to find the fd.
++ * If CPR is being performed, then ignore @fdname, and look for @name
++ * and @index in CPR state.
++ *
++ * On success returns the fd value, else returns -1.
++ */
++int cpr_get_fd_param(const char *name, const char *fdname, int index,
++                     Error **errp)
 +{
-+    const VFIOIOMMUFDContainer *container =
-+        container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
++    ERRP_GUARD();
++    int fd;
 +
-+    return iommufd_backend_map_file_dma(container->be,
-+                                        container->ioas_id,
-+                                        iova, size, fd, start, readonly);
++    if (cpr_is_incoming()) {
++        fd = cpr_find_fd(name, index);
++        if (fd < 0) {
++            error_setg(errp, "cannot find saved value for fd %s", fdname);
++        }
++    } else {
++        fd = monitor_fd_param(monitor_cur(), fdname, errp);
++        if (fd >= 0) {
++            cpr_save_fd(name, index, fd);
++        } else {
++            error_prepend(errp, "Could not parse object fd %s:", fdname);
++        }
++    }
++    return fd;
 +}
-+
- static int iommufd_cdev_unmap(const VFIOContainerBase *bcontainer,
-                               hwaddr iova, ram_addr_t size,
-                               IOMMUTLBEntry *iotlb, bool unmap_all)
-@@ -807,6 +819,7 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, const void *data)
-     VFIOIOMMUClass *vioc = VFIO_IOMMU_CLASS(klass);
- 
-     vioc->dma_map = iommufd_cdev_map;
-+    vioc->dma_map_file = iommufd_cdev_map_file;
-     vioc->dma_unmap = iommufd_cdev_unmap;
-     vioc->attach_device = iommufd_cdev_attach;
-     vioc->detach_device = iommufd_cdev_detach;
 -- 
 2.50.0
 
