@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E274C83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 11:19:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E090C8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 11:19:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXeOl-0008TQ-Rl; Fri, 04 Jul 2025 07:16:08 -0400
+	id 1uXeM0-0002TS-B4; Fri, 04 Jul 2025 07:13:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uXeN1-0004qZ-Sw
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:14:20 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1uXeLu-00027f-J6
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:13:10 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uXeMz-0004MI-Rx
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:14:19 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-234b440afa7so9365725ad.0
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 04:14:17 -0700 (PDT)
+ id 1uXeLs-0003Bx-In
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:13:09 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-234d366e5f2so13002425ad.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 04:13:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751627656; x=1752232456; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1751627587; x=1752232387; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rTSow9pTiEtZE4+cEk1d0BTAuVgvunpVUSHTyJlNheo=;
- b=dV71zFS/9f42Zix4c0Lbpi4DXZfZWHJ+s+SLVWFMGl3E5eaZSXjO6Z1hASo/gYu7O7
- 34fmfhkcUPGIkdCwFAhMnKY2xct8fBWwuDONc2vonGm+WUYMsYlNQhjyrqOYPzkRJBTj
- u2lCydupLn65MojS4J9bnKSl4wVw6QuwfcUs0chz2aCeHnP2Ep2IDCgkH7K/xVzExIqM
- 8POHOpItn+cNCvgI/u8T+ENJ9qBNn58L+eBDew67G2SWjZkwRqhR/0uskGwo6c8KXWiO
- 9AyH2cxKPs81hp6VGsQtuXMdWeyK6M5YHiJT/PD/XOd7GrsbS6O864GeVyBbr+PmNvZp
- 4mXw==
+ bh=76WPPZHQq4LKV1s9IuHTeixJXupaUC4s7ONmVql1/4g=;
+ b=fSHGoFz6MyQqL8bBnOEEPc8ENc4sOzu1brX981p5C0wlJv8a1AU115JBsqCzlV+39g
+ RagsTfJF9kAfa+LiJSeXPao61EQQXqw0BgIrqGCtU/JDwvPg3OI1/iNFBjA+A//QN1IQ
+ mak4razsm7IdUZaviUza7RYyuoLicjhGJoUBlXGjfYIwwOChD6JB5VR+d+Uf6z8fMGPw
+ DB37P04Y+QGGAfUcUZjAq6PQQn2iQXAJnu9FGkvkKhcq/rzlxZei3bteI/lud6mZf8z2
+ NIfJmmuxQaFZlT7ABZpotz/U8X20RQaq0MI3wBJ0XZYaNK3zJdwCLZh4TATWzOUnkwC5
+ cGpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751627656; x=1752232456;
+ d=1e100.net; s=20230601; t=1751627587; x=1752232387;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rTSow9pTiEtZE4+cEk1d0BTAuVgvunpVUSHTyJlNheo=;
- b=s7v6QJBGWSpKnXIAho+ugwmAGbgdbiRtXJBtzmFKrlneyCDnCzW53FA1TaMXML1eQs
- jx2BZ+5p1x0x4St5ZT2fzT0A60u813aAG/+TMJJ9SDt8U0cv8xQcXD5USviTKtgN3WNb
- WVPWdwWCiDpoYZRsuoklu9+qQaXw2amUt9V+NNp7p+IYK5p/RPJOu+fPm+XdpCh6HaPl
- rLlYDO+oVaNFdEm1BLSFc3DkRJjhu+JA9gMHed8oTkdWkcjUWvMyfMqJJiJREM/qQd+1
- ijpnlF8uGEIu3+8dSLwxFgM34p/pbiPVY1xSY3Y+hpfu8U5W6sIyekk/3LmFOgGvZazI
- vxxA==
-X-Gm-Message-State: AOJu0YxzF5F64aYERaGfTN0vsSdkwCQzxga1+dN1HG9Uq2/Nw1DuCi39
- lVAa7n8/EwmQ9dzE6VMIRsiRXgZ8rucBM/suc2u4RcXNOAfwJNlsaCERFP3UuQ==
-X-Gm-Gg: ASbGncvX5hGKJTmAwuKvRirWnD9Go8ltpur4+mrxRZHi16O38Ybeas6lpGuxp1u1FCM
- 9+JUC3/toxsqFNEs4b7r+PZWkvahEB1Kbvwwgi4YxXu7thiuBJbO0A5qSJUAwroFVjCnynSXCJz
- 6sv9vt9NW80BpHphtFODxLip4PPmGuNFwc68GGQ8vGSzlEbQyPmO9ePoMlRJaUIQdqldVPBgSyE
- WZLJVxpcln+fPPYGbH7zuZec1gAga3G6o/+Vj54avtJhD6vxicrtSw3xFSyC7UdnFo+d2UIWfUS
- SfpAqRS1kpPlsDfZHTIAGSRVJOnfIdu451vU3NT9h0psh4Wh7qs/xKa9uDcJ9Zf7yYSa6CEkQwn
- BPvrHzB031+/tXOsYH7cr7lSoPr2rf5h/r0fygyg4aMvpwSssdzW8ae4mlSBbUuRhIvM=
-X-Google-Smtp-Source: AGHT+IG6mZiW19ayDX48ICOlRBrwJCvcG8KIxMcw3Fj7caXky9WdXzLYi5+ot84kmTmvn5zUjDv+rQ==
-X-Received: by 2002:a17:902:f78a:b0:234:c549:da14 with SMTP id
- d9443c01a7336-23c860d39fbmr42556645ad.29.1751627656326; 
- Fri, 04 Jul 2025 04:14:16 -0700 (PDT)
+ bh=76WPPZHQq4LKV1s9IuHTeixJXupaUC4s7ONmVql1/4g=;
+ b=Mfv4MMnLz0KAIzAICU8cG7W08Sr6ANoAXIiBg4FONtw/lQDHMWq51r3t9DDEO2ovWL
+ 8Y/fZvD0/Bs8+8sM++/5dncNdCEfuMXKQbx0C+bOprctDQ9AleKlOs2ycClo3C5KHWtc
+ TRzSNw8Jqm3dLqcHoqMfVFeUcD5nQ/VmCMQk1oFO7lY7FhH5369lm/Pf+cxVVW8yLk8F
+ 29DRgkPZEmsOMgEIut+gOQ+enbS08klUuXIsuVMMevtw+2xAGJI7xhHazfTas5nlG4wv
+ ojgVRgNEPvGnH5T7HioCEX2vYX/1t4PpHFSf19QEin+vu4rEYZxdxUoPkGWZ8Jab/1dt
+ Tacg==
+X-Gm-Message-State: AOJu0Yw+i7Wadjpd7Z7SP6RlIOp9Pdd+E8Zk0URL7sI/hi6PFzuXMXLq
+ 4p9qnuJbjBmHd5vrMH/kOawEb3LCDxAvppAV/l/+nPSD7KK9Q273Jq8B87DM3w==
+X-Gm-Gg: ASbGncuUeJLt78HrCkx1gOBkAnWGn8nRNPEaUpOojcT6Tv2Cgvt4ECZURDDLzWcA2DX
+ vRm68JbffhPGfDoq4aAfMVkRONYSKr4veMu094/rOXffXbQWFqjHp7e7Fq6ikyYzgOreMo9O42T
+ sZpRCQ1JupmdzLi6O+OJsXJ6MXCQcUO5RFFhwwlyUaKydXKOrBP2P4nRpmnNpZiSmt8Br9AFJ3x
+ fUyMd/Yr6ahbSYiDk4mjXhsOQwgC47fw8LGxITzF+4ok2OlNkLFBQjsxtp/JtGrZD2RaYiDTAv+
+ SI+Y/+5kM1LSgAHM03eDpdGw823okjaDwDtJx4vKv3TOj5KgdG1IcnNmuNLdf7kk0P03wEpcDSG
+ 7L5U3a2+GvA4Dh709Kebv7qkrzGa41tBD8QOo+ZhYWzDt+jvB8yxFJlFFIgA9ZpuAmFM=
+X-Google-Smtp-Source: AGHT+IGnxhfk9nL9iM+cynY9XgQB8O9vtNY521rMyUjgjvjFypr8Z4FW4izA3Iv/m1Eae0tid12G6A==
+X-Received: by 2002:a17:902:ccd0:b0:235:f078:473e with SMTP id
+ d9443c01a7336-23c875aacb4mr32980925ad.43.1751627586986; 
+ Fri, 04 Jul 2025 04:13:06 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23c8431a206sm18002655ad.28.2025.07.04.04.14.13
+ d9443c01a7336-23c8431a206sm18002655ad.28.2025.07.04.04.13.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 04:14:15 -0700 (PDT)
+ Fri, 04 Jul 2025 04:13:06 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Max Chou <max.chou@sifive.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Andrew Jones <ajones@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 35/40] target/riscv: rvv: Fix missing exit TB flow for
- ldff_trans
-Date: Fri,  4 Jul 2025 21:12:02 +1000
-Message-ID: <20250704111207.591994-36-alistair.francis@wdc.com>
+Subject: [PULL 12/40] target/riscv/cpu.c: add 'ssstrict' to riscv, isa
+Date: Fri,  4 Jul 2025 21:11:39 +1000
+Message-ID: <20250704111207.591994-13-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250704111207.591994-1-alistair.francis@wdc.com>
 References: <20250704111207.591994-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,39 +105,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-According to the V spec, the vector fault-only-first load instructions
-may change the VL CSR.
-So the ldff_trans TCG translation function should generate the
-lookup_and_goto_ptr flow as the vsetvl/vsetvli translation function to
-make sure the vl_eq_vlmax TB flag is correct.
+'ssstrict' is a RVA23 profile-defined extension defined as follows:
 
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250627133013.443997-1-max.chou@sifive.com>
+"No non-conforming extensions are present. Attempts to execute
+unimplemented opcodes or access unimplemented CSRs in the standard or
+reserved encoding spaces raises an illegal instruction exception that
+results in a contained trap to the supervisor-mode trap handler."
+
+In short, we need to throw an exception when accessing unimplemented
+CSRs or opcodes. We do that, so let's advertise it.
+
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Message-ID: <20250529202315.1684198-3-dbarboza@ventanamicro.com>
+Message-ID: <20250604174329.1147549-3-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/insn_trans/trans_rvv.c.inc | 6 ++++++
- 1 file changed, 6 insertions(+)
+ target/riscv/cpu.c                |   1 +
+ tests/data/acpi/riscv64/virt/RHCT | Bin 406 -> 416 bytes
+ 2 files changed, 1 insertion(+)
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 2b6077ac06..4cd030c7eb 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -1361,6 +1361,12 @@ static bool ldff_trans(uint32_t vd, uint32_t rs1, uint32_t data,
-     fn(dest, mask, base, tcg_env, desc);
- 
-     finalize_rvv_inst(s);
-+
-+    /* vector unit-stride fault-only-first load may modify vl CSR */
-+    gen_update_pc(s, s->cur_insn_len);
-+    lookup_and_goto_ptr(s);
-+    s->base.is_jmp = DISAS_NORETURN;
-+
-     return true;
- }
- 
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index b4e7eff331..626b0b8b26 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -217,6 +217,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(ssnpm, PRIV_VERSION_1_13_0, ext_ssnpm),
+     ISA_EXT_DATA_ENTRY(sspm, PRIV_VERSION_1_13_0, ext_sspm),
+     ISA_EXT_DATA_ENTRY(ssstateen, PRIV_VERSION_1_12_0, ext_ssstateen),
++    ISA_EXT_DATA_ENTRY(ssstrict, PRIV_VERSION_1_12_0, has_priv_1_12),
+     ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
+     ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
+     ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
+diff --git a/tests/data/acpi/riscv64/virt/RHCT b/tests/data/acpi/riscv64/virt/RHCT
+index 156607dec4..52a4cc4b63 100644
+Binary files a/tests/data/acpi/riscv64/virt/RHCT and b/tests/data/acpi/riscv64/virt/RHCT differ
 -- 
 2.50.0
 
