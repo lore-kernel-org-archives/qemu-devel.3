@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E77CC8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 15:15:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1253CC83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 15:15:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXi8E-000272-ME; Fri, 04 Jul 2025 11:15:18 -0400
+	id 1uXi8A-0001zB-DJ; Fri, 04 Jul 2025 11:15:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uXi87-0001zI-OJ
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 11:15:14 -0400
-Received: from mail-qv1-xf36.google.com ([2607:f8b0:4864:20::f36])
+ id 1uXi85-0001yJ-4N
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 11:15:09 -0400
+Received: from mail-qv1-xf2c.google.com ([2607:f8b0:4864:20::f2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uXi85-0004cx-PG
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 11:15:11 -0400
-Received: by mail-qv1-xf36.google.com with SMTP id
- 6a1803df08f44-702cbfe860cso4267856d6.1
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 08:15:09 -0700 (PDT)
+ id 1uXi82-0004bm-Ah
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 11:15:07 -0400
+Received: by mail-qv1-xf2c.google.com with SMTP id
+ 6a1803df08f44-6fb0eb0f0fbso12943536d6.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 08:15:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751642109; x=1752246909; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=I2pA8Kdl7I3oMXH8ei53t6GkTDaEspN8YWJLUEgwyNk=;
- b=mIYuFd0tF+N4tEuCtIpQhHyLIJ/ZYWQyx3urdJDpaG+vIrMl/sGzWYn3zLngNm4lcY
- yoHHYJqtqdZKkeZ9tewrJl7cx+HTLLM99P8AQNhQixI3Z1z/fbG8zjBhKcdcv4/gSQeB
- mYMQw/fJH39hM3nTu2+vlIiEfCurDZBrwaI5UBJ2Ulk/B7Q7u+AalBgr+NwYWV9LHXQV
- JHlOVHipLT7gdOaRHkviPu+kr5OMkyXKq3BrC4BjZpZizm8/aTrrEGd5yt0/EtuG/HiQ
- sEE4IUSkD+Zs4TWhj1d4xr+xcES63TpnrU+69VoiDWU4jsS6MvynRyrIddvtG1F4hYwg
- dlsg==
+ d=linaro.org; s=google; t=1751642104; x=1752246904; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Oa2zhtn7SrMvQwPB1AlA+6y1mdRzYmiTTXZ1QyH4Dk0=;
+ b=w+TCcSOV1ULqUwR/OYomS9/P7nWqN/tUYUHnKznv6Qi8ZjjBURNz/HmXe5od2akcw6
+ j+SueM8YR8ZCkmMLqPjGm5lK+YtNuqwpvVWu2I/lb0OqS8jpzHHHvewrYCP0bJIKkaXv
+ jPFzVhyuUV3mZGq4SEC9pNDd65vyfreDuZYM2P0zb6uU6QvGi8HYQq3Pu7ZTnwjv5Ak1
+ QduEvyEwwWEK8nvw/zofEZp+5TizVojMK2V8gqnB3z2mBjAMkoj4f0AguAfjXntIrnbc
+ 8+4N4I5bmuiBvCSFcFN1mriOeG5uCD21N//8KgpSSSHKsNkVcQsLkJJyxMS1IUOR+oIK
+ c7CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751642109; x=1752246909;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=I2pA8Kdl7I3oMXH8ei53t6GkTDaEspN8YWJLUEgwyNk=;
- b=Igwl4DkjQ2VPjOIjt2ilbwa2cEmCKf5IWMaxsXFsq3p0oweePxmpi2uhQpScd+rHYR
- +ljfwL/bEUFsnrBPxtnXY8MGxQkyB3V322Aqpw5d9GD3J2l4od+v+PljBfkHe0tUnc4a
- yRqc9dX8iU/RdXfzwVYKCPF7HDmFKKSo76vx/Rj0fCAsK3qJEbMfajLgD+Jp3Melw7V2
- cHj8NyL+SXSTemmnRYIFCGTUkn1ExyOhTs8jOJ87XWjxK16yz/MawWZRZrOsC9mh9TEy
- +pPGsJ3b3O+i6rg2j7lASp8fBfO4GEXx6B6t+LVo3/dxDSMyPpEq6Joq/xtgmQGYGFwW
- XMKw==
-X-Gm-Message-State: AOJu0YwQTHjTJocT2h1oT/5rVQm4PJ1ilkka635Ufo8J44E9qBpUoXBc
- j87fi8HcbqowMQapQ5c7h8xYjt8fIiy1mmk+rdnjl0PXJ4TRNrAvRayBAyCcWVNGW8I=
-X-Gm-Gg: ASbGncvcPUYDEDMhhnLZdmfzxc3O69fN+l40XslygE14pqgfdc/7IcEt3Iyipifjsso
- 7W9TNimGcJwFEkN2WgHHSaVYCWBWKclNn2/irWbW8WTgxVti3bgEqHaLCDzG/dmWV1UTOSB9DjC
- mt7cVqbZyNliw7Qvzi4dZ3YWCaf6qRju8sJ18YgdipqVXtV7me4OZ5Xi17yB1GhDlogsuCW8/oD
- HRHX282jcYtqKWogjl+87jUxDTiRydTUvLtthuoWTM7ANjZnRs1ek/m/poDlC7zylu8Fus/ofrH
- HIMRJjgkTp5ArMgJWANIYgcrgJnj5qPopIiydLMQAtiz5XLEgITCqk21c0wV3RUnLp4=
-X-Google-Smtp-Source: AGHT+IHj77mXCr/eo8Y9pVElKQB6QlMeINThWHuNNEHwQi2m0hzBWii/jY6k/xnVh3sxR5m+fSPUHA==
-X-Received: by 2002:a05:6214:301a:b0:702:c150:46c2 with SMTP id
- 6a1803df08f44-702c6d33a2dmr42807526d6.10.1751642108469; 
- Fri, 04 Jul 2025 08:15:08 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1751642104; x=1752246904;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Oa2zhtn7SrMvQwPB1AlA+6y1mdRzYmiTTXZ1QyH4Dk0=;
+ b=EcYYlE7y+PW+Wf2EjIZWQtZM3VCgmRCZ1iWTnlUrqQ/p6BydJ3noyOVUxqN2wZOmKm
+ YP4+ioAE1U06Y8g9uuueEok+ER1MpPHLihqbcQNAcLyvyYrRY0QgjvcYbfhnVgJ62iAY
+ MhD6OpGt5Xa4jDFGAJvb5zEBi3LIv3SJ1oWmgAQtW//h7MHA8XzeLHIzoNg2Z5LCHmnr
+ ZnW8jwMXyJSDIFXwryYn9szWsm8cLsKQOxYnJIvUtdLGhY1Vgw7hBU5gt9niFk45vnyL
+ uiPE2Ph6ejNR+N/Z6VTCYsBMe7UVr2movsl82Ny3DSXHz56nDd4zYZS6Oo+3bTrQSU+H
+ ZDyw==
+X-Gm-Message-State: AOJu0YxqTLPluooQ9tFD94OmPPMO/1nSdr8Rz58VaBcjYiWkz0MHP7GH
+ mV07HuujVy4+cjUoBNCmO9LyCPoYQ8fA2du+2PBpsBXrrDDMP5oKbdIIVZGHift3oQeLZtgbESC
+ lSjsh
+X-Gm-Gg: ASbGncvLcsdb/fD/D5V9DSs1OVXB6aubfyTPfrhyIC/RzquwglXJf0hHA92wFFKFh/g
+ N2ArzrFrklCy3zdo6V3QV6Y3nFsqL883HSjFgXUTfBDlhL0vwuV6wPFnTaORNlr53Nj9eYnKwjV
+ OHM4v0jtSaiAit/6cisi1Ho48hDqRSVwdcYr/sA31c+ig5NxC7uRxv1MMHLXYPgDe1SfQ3b2sMD
+ zlSlRXCm7t2dDcXfXYy8sHv8YaZ0SiSS/lzH+0yggl53nB3MUayaNLLJ42BmiuUkTCkNWFhXrpc
+ 6HiO7i93NKlxBxexTHQJVzrqhScV/FO6+TxkSvWe4kRSHoai8Em9wVxA+tr2h1vgnHE=
+X-Google-Smtp-Source: AGHT+IEbbVpxdtR4FV6sLGWAzkFGZo5K/VevjnVXsId49D3E1OpNEN5Xg8ZeQCesuYGmQBd4KdOrbQ==
+X-Received: by 2002:a05:6214:4b09:b0:6fd:27:5a43 with SMTP id
+ 6a1803df08f44-702c5696090mr50371326d6.4.1751642104274; 
+ Fri, 04 Jul 2025 08:15:04 -0700 (PDT)
 Received: from gromero0.. ([189.110.24.38]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-702c4d6039fsm13658666d6.111.2025.07.04.08.15.06
+ 6a1803df08f44-702c4d6039fsm13658666d6.111.2025.07.04.08.15.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 08:15:07 -0700 (PDT)
+ Fri, 04 Jul 2025 08:15:03 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-arm@nongnu.org,
 	alex.bennee@linaro.org
 Cc: qemu-devel@nongnu.org,
 	gustavo.romero@linaro.org
-Subject: [WIP-for-10.1 v2 2/5] target/arm: Add FEAT_MEC registers
-Date: Fri,  4 Jul 2025 15:14:28 +0000
-Message-Id: <20250704151431.1033520-3-gustavo.romero@linaro.org>
+Subject: [WIP-for-10.1 v2 0/5] target/arm: Add FEAT_MEC to max cpu
+Date: Fri,  4 Jul 2025 15:14:26 +0000
+Message-Id: <20250704151431.1033520-1-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250704151431.1033520-1-gustavo.romero@linaro.org>
-References: <20250704151431.1033520-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f36;
- envelope-from=gustavo.romero@linaro.org; helo=mail-qv1-xf36.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2c;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-qv1-xf2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,170 +97,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add all FEAT_MEC registers.
+This series adds support for all FEAT_MEC registers to the arm64 max CPU.
 
-To work properly, FEAT_MEC also depends on FEAT_SCTLR2 and FEAT_TCR2,
-which are not implemented in this commit. The bits in SCTLR2 and TCR2
-control which translation regimes use MECIDs, and determine which MECID
-is selected.
+It includes the FEAT_MEC registers but does not modify the translation regimes
+to support the MECIDs. It also does not yet implement the two cache management
+instructions introduced with FEAT_MEC. Despite these limitations, most software
+stacks that rely on FEAT_MEC should work properly with this minimal support at
+the moment.
 
-FEAT_MEC also requires two new cache management instructions, not
-included in this commit, that will be implemented in subsequent commits.
+I'm currently exploring possibilities to support FEAT_MEC encryption (or
+obfuscation, for testing purposes) in QEMU for the various translation regimes
+used on arm64.
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
----
- target/arm/cpu.h    | 14 +++++++
- target/arm/helper.c | 98 +++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 112 insertions(+)
+Gustavo Romero (5):
+  target/arm: Add the MECEn SCR_EL3 bit
+  target/arm: Add FEAT_MEC registers
+  target/arm: Add FEAT_SCTLR2
+  target/arm: Add FEAT_TCR2
+  target/arm: Advertise FEAT_MEC in cpu max
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 8ce30ca857..9509217486 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -565,6 +565,16 @@ typedef struct CPUArchState {
- 
-         /* NV2 register */
-         uint64_t vncr_el2;
-+
-+        /* MEC registers */
-+        uint64_t mecidr_el2;
-+        uint64_t mecid_p0_el2;
-+        uint64_t mecid_a0_el2;
-+        uint64_t mecid_p1_el2;
-+        uint64_t mecid_a1_el2;
-+        uint64_t mecid_rl_a_el3;
-+        uint64_t vmecid_p_el2;
-+        uint64_t vmecid_a_el2;
-     } cp15;
- 
-     struct {
-@@ -2389,6 +2399,10 @@ FIELD(MFAR, FPA, 12, 40)
- FIELD(MFAR, NSE, 62, 1)
- FIELD(MFAR, NS, 63, 1)
- 
-+FIELD(MECIDR, MECIDW, 0, 4)
-+FIELD(MECID, MECID, 0, 16)
-+FIELD(VMECID, MECID, 0, 16)
-+
- QEMU_BUILD_BUG_ON(ARRAY_SIZE(((ARMCPU *)0)->ccsidr) <= R_V7M_CSSELR_INDEX_MASK);
- 
- /* If adding a feature bit which corresponds to a Linux ELF
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 889d308807..9f8a284261 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6823,6 +6823,100 @@ static const ARMCPRegInfo nmi_reginfo[] = {
-       .resetfn = arm_cp_reset_ignore },
- };
- 
-+static void mecidr_reset(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    /* MECIDWidthm1 = 15, i.e. 16 bits is the width of a MECID. */
-+    env->cp15.mecidr_el2 = FIELD_DP64(0, MECIDR, MECIDW, 15);
-+}
-+
-+static uint64_t mecidr_read(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    uint64_t valid_mask;
-+
-+    if (!arm_is_el2_enabled(env)) {
-+        /* All bits are RES0. */
-+        return 0ULL;
-+    }
-+
-+    valid_mask = R_MECIDR_MECIDW_MASK;
-+    return env->cp15.mecidr_el2 & valid_mask;
-+}
-+
-+static CPAccessResult mecid_access(CPUARMState *env,
-+                                   const ARMCPRegInfo *ri, bool isread)
-+{
-+    int el;
-+
-+    el = arm_current_el(env);
-+    if (el == 2 && !(env->cp15.scr_el3 & SCR_MECEN)) {
-+        return CP_ACCESS_TRAP_EL3;
-+    }
-+
-+    return CP_ACCESS_OK;
-+}
-+
-+static void mecid_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                        uint64_t value)
-+{
-+    uint64_t valid_mask;
-+
-+    valid_mask = R_MECID_MECID_MASK;
-+    value &= valid_mask;
-+    raw_write(env, ri, value);
-+}
-+
-+static uint64_t mecid_read(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    uint64_t valid_mask;
-+
-+    valid_mask = R_MECID_MECID_MASK;
-+    return raw_read(env, ri) & valid_mask;
-+}
-+
-+static const ARMCPRegInfo mec_reginfo[] = {
-+    { .name = "MECIDR_EL2", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 3, .opc1 = 4, .opc2 = 7, .crn = 10, .crm = 8,
-+      .resetfn = mecidr_reset,
-+      .access = PL2_RW, .accessfn = mecid_access, .readfn = mecidr_read,
-+      .writefn = arm_cp_write_ignore,
-+      .fieldoffset = offsetof(CPUARMState, cp15.mecidr_el2) },
-+    { .name = "MECID_P0_EL2", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 3, .opc1 = 4, .opc2 = 0, .crn = 10, .crm = 8,
-+      .access = PL2_RW, .accessfn = mecid_access,
-+      .readfn = mecid_read, .writefn = mecid_write,
-+      .fieldoffset = offsetof(CPUARMState, cp15.mecid_p0_el2) },
-+    { .name = "MECID_A0_EL2", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 3, .opc1 = 4, .opc2 = 1, .crn = 10, .crm = 8,
-+      .access = PL2_RW, .accessfn = mecid_access,
-+      .readfn = mecid_read, .writefn = mecid_write,
-+      .fieldoffset = offsetof(CPUARMState, cp15.mecid_a0_el2) },
-+    { .name = "MECID_P1_EL2", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 3, .opc1 = 4, .opc2 = 2, .crn = 10, .crm = 8,
-+      .access = PL2_RW, .accessfn = mecid_access,
-+      .readfn = mecid_read, .writefn = mecid_write,
-+      .fieldoffset = offsetof(CPUARMState, cp15.mecid_p1_el2) },
-+    { .name = "MECID_A1_EL2", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 3, .opc1 = 4, .opc2 = 3, .crn = 10, .crm = 8,
-+      .access = PL2_RW, .accessfn = mecid_access,
-+      .readfn = mecid_read, .writefn = mecid_write,
-+      .fieldoffset = offsetof(CPUARMState, cp15.mecid_a1_el2) },
-+    { .name = "MECID_RL_A_EL3", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 3, .opc1 = 6, .opc2 = 1, .crn = 10, .crm = 10,
-+      .access = PL2_RW, .accessfn = mecid_access,
-+      .readfn = mecid_read, .writefn = mecid_write,
-+      .fieldoffset = offsetof(CPUARMState, cp15.mecid_rl_a_el3) },
-+    { .name = "VMECID_P_EL2", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 3, .opc1 = 4, .opc2 = 0, .crn = 10, .crm = 9,
-+      .access = PL2_RW, .accessfn = mecid_access,
-+      .readfn = mecid_read, .writefn = mecid_write,
-+      .fieldoffset = offsetof(CPUARMState, cp15.vmecid_p_el2) },
-+    { .name = "VMECID_A_EL2", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 3, .opc1 = 4, .opc2 = 1, .crn = 10, .crm = 9,
-+      .access = PL2_RW, .accessfn = mecid_access,
-+      .readfn = mecid_read, .writefn = mecid_write,
-+      .fieldoffset = offsetof(CPUARMState, cp15.vmecid_a_el2) },
-+};
-+
- static void define_pmu_regs(ARMCPU *cpu)
- {
-     /*
-@@ -9008,6 +9102,10 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-         define_arm_cp_regs(cpu, nmi_reginfo);
-     }
- 
-+    if (cpu_isar_feature(aa64_mec, cpu)) {
-+        define_arm_cp_regs(cpu, mec_reginfo);
-+    }
-+
-     if (cpu_isar_feature(any_predinv, cpu)) {
-         define_arm_cp_regs(cpu, predinv_reginfo);
-     }
+ docs/system/arm/emulation.rst |   3 +
+ target/arm/cpu-features.h     |  15 +++
+ target/arm/cpu.h              |  31 ++++++
+ target/arm/helper.c           | 189 ++++++++++++++++++++++++++++++++++
+ target/arm/internals.h        |  18 ++++
+ target/arm/tcg/cpu64.c        |   2 +
+ 6 files changed, 258 insertions(+)
+
 -- 
 2.34.1
 
