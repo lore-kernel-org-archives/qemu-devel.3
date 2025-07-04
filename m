@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B448C8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 11:16:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A21A6C8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 11:16:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXeLx-0002EW-5N; Fri, 04 Jul 2025 07:13:13 -0400
+	id 1uXeMy-0004VN-Gt; Fri, 04 Jul 2025 07:14:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uXeLr-00023c-NT
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:13:07 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1uXeMa-00033O-A6
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:13:54 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uXeLo-000312-4r
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:13:07 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-23633a6ac50so12207825ad.2
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 04:13:02 -0700 (PDT)
+ id 1uXeMY-0004D4-0R
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:13:51 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-235f9e87f78so9676365ad.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 04:13:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751627581; x=1752232381; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1751627628; x=1752232428; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NpC4Yp9xAW0N3T6Tteiy7UBN259S4dShS5JJ++ECn+Q=;
- b=auRDZzubeYuRpiMVdAOxMpAGZf5yaas0VYnPmG7589MAy9m4AWOEWlgcBQ4B1dQ+Fa
- LSkj7s9OQQQ73Q9rXdqMTJDZV7hoWZPXhh/tmuoonmFSC7kyiji6ax0TYmw9LZC4XMnk
- WUEizgLCdZbUNBHpypiE2HxjGwgJeXGKT1krmnJcuf2soglod9XPIiqjCUh1ebYycWEb
- yzRRLgHiPLi2fcuymRIYLSAIX/ZxpANoiY7V/HMAs+noxaNy3/B1QpC92umQl/+GDK86
- m7/HCz+XAGt2CvdBFSksbfXbbNosHQBaqYcx0NUPoo3pfs9diW8BexO9KOmZOjpY8z42
- /oNw==
+ bh=PdSAk97v2JSe8k5QnqQFx0dJz3dX1gSeCclLDALqBQs=;
+ b=NLujgNwxXHJR+5bTxYTQ0WXM6q662oMU5vyhln4TQ6KECAnDTEj92Ifzy1z0zhrwqD
+ 2f55QzRbVTlyakYWWDkv3I6O6COeGw+5ZX8ro/jawuQlXIR3+inifvb6tDRy4hgsmLkm
+ UASv0OFcoCqf99O8ChYRxFeVTY69pbcI3tQfBn63ckh4BwBl1rdEJ+ohV1wu5feUkJee
+ /cwPCQSVu0LfAErqGK88Qn52o1WVagiLIvhB5ULh4QLKKYKiVIrTN2Kz18fVf4BVslVw
+ r1b4WCX6b33XE1oIUPsRpXCft9xTBAeW5s6wmPiFnBufkMAZMqG6QKjJAQCuo1NT7sWC
+ oMLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751627581; x=1752232381;
+ d=1e100.net; s=20230601; t=1751627628; x=1752232428;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NpC4Yp9xAW0N3T6Tteiy7UBN259S4dShS5JJ++ECn+Q=;
- b=oNrgjwsDvKebX0jUe1PQfFfOuwSIIrTylYUx0e3bOh0/+aJ5uNniJejQOfr4BVvXEG
- /dkLjYIuKJRH6Cl/YQ7ylozlrGO4MgHpjBbal4urTbbtTD8tLnuZYAyLaUUwoL+n1vGl
- y16BLsZu251ciJF9DwKaRhibwVdS0grsYKT1sUW0xRGGKigxwa7uVNQgTkSomvQxRocP
- CIrAQh+1SXArc4XR1rFFd4gEzOw8TJRXxT0L+KO/oV0nvZSC5yqwFsQx0/9Vyi1IRjNe
- 7FsTLh6S5Zpn+0oZevAG/ynXicPouEv0MxkWqWQlHMBBST1GSXCSAI5HBE67oU9YGPGE
- dThw==
-X-Gm-Message-State: AOJu0Yy8YNA9clUlnTykGxy7u82CS+wDp127+KIE2Z577TEjnfw2VeFq
- clIer4rDSK/6WLPVcatmqOa/zhkvsO1Q4VRRqIr8yxhx0imQ70GxvX1u69IpnA==
-X-Gm-Gg: ASbGncuelFOmrZWVRP8ElFLJgFgmyxwS1wu3bwhHlPN1YI46XXn6GUHlgtRvR4oo5BG
- +RzYGNyZzpHKNdvFyZb37X+B5dYI45MgnZXZY9dxaPX8dX2DQw0rSsA/Zhc67PesouUqZyizt9+
- AhRd+WpP73Litv8dUVJV4tYz18JkgyQNWu35c3L1uknAggQT23SoFdVSjko09i5I1/dPPtlJGj4
- CF4NoZ/BSNXMedpedaQNLG0VRH/lRCqk4nfFrNR4HPh59qc7cTo+HWcPXmgwD/MTrs6bHScmQdY
- UsF0AY691VrvnfbHNWqbUb/ay2JI3me2I7ov8hJuzFiExeO5kMUiEzZ0MicUDZY9hPLJ109pKCM
- Q7f/7+t1Nm0GzNvr0jBy17QO6YuKbnIOFzplx+gMRlfCol/193eFVWn+cdDIwYHoOsy8=
-X-Google-Smtp-Source: AGHT+IFG9pmmPG7wqpdzTObXC3oJblhN7r4WFFSKwXdh8QKBIt5IinMXklbMz49Kdc6cHH4LR5LtVw==
-X-Received: by 2002:a17:902:ea06:b0:236:8df9:ab38 with SMTP id
- d9443c01a7336-23c860d4f93mr40811565ad.34.1751627581292; 
- Fri, 04 Jul 2025 04:13:01 -0700 (PDT)
+ bh=PdSAk97v2JSe8k5QnqQFx0dJz3dX1gSeCclLDALqBQs=;
+ b=aLh8FvQtuQXHiDc8SAEXJOre4GiDpDjVWGKgNdQQbNuoT5wNT5rnf1FM3AFKce0zTb
+ BuIoJM2k+CthWRPiesKzlxtnWg4XLOMK0VRzAsIDSbyoZAQAD1igeRAltQoLohsDktdK
+ b0sp+YgSDIwYgJ2hp2J56YVlBvj1jWw6e+LnWZclySinMKBb5+P8Fsavi++fBNT+rAGZ
+ HhrAFU4/dFJ4MIrNfKzj9fkxhVHxuym5QKqkVZ8hgPrpYoJ4+jOzbX3cb0v2++YtkKEi
+ a4+mvHyI665xAFSydw93o6m9xKrkJKRZmEse8M66Igq/vaQBeLySqdUyZGnNVZkhfKpd
+ VSGg==
+X-Gm-Message-State: AOJu0Yx4iifNdKBAlj8jBCWVCWT8YdRizKNWmj+++PGsA/KE4hxtCq0N
+ 2h0KvhQ1+TDBKSiS2Nhto1wPYpuznxgzRzlH/kxMAXeTwwaLvr0qlDcGZHKt5Q==
+X-Gm-Gg: ASbGncvK/Rr7ZbzB4944AAe9nWVDdeuMRZ5BQLKSw7fQALu6B62lMyMSr6uj//CCS44
+ SLnVjNrV3bZkVjF3A33DUg2BYKy0JBG5j7ZrlVeTrSU+fhgrnbIa79UKGgi1lyaxnZkXmt2TWFp
+ BVWoYMjD7u2n8OthvWRON6ANY2J44/LQYukM4g91Jj4RX4j1gw8mOKrP64DwZkQAfo0vYL1wzT1
+ ssFTZ1TVCRbPrYp7d9xb5p9tR25i6twmkaMPIpnY8E6VFcLg6tLcf+BXJYrzxsVeMfFEIRQY3Q3
+ Cginf5Pxi7P238nnxdQC0cA25ivN8whAnLxXYqqvR1K4bIbEe53gv8VmNgC3jclAlIgDl/L3dfz
+ QCwbBtsbyS42nByLF4iitV0te5V3eO7hx58qaTUyeLsFfBBz3GaTqF7pGqGOe1/HL64E=
+X-Google-Smtp-Source: AGHT+IHQeGkZZnVT2amVEwLqnPlF9vkywSYadPhY2CNRS6gJbTwdQCKmi2Lno1hS2EBiOZ09a3vRfQ==
+X-Received: by 2002:a17:903:1446:b0:235:e942:cb9c with SMTP id
+ d9443c01a7336-23c85d9f014mr38510715ad.5.1751627627816; 
+ Fri, 04 Jul 2025 04:13:47 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23c8431a206sm18002655ad.28.2025.07.04.04.12.58
+ d9443c01a7336-23c8431a206sm18002655ad.28.2025.07.04.04.13.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 04:13:00 -0700 (PDT)
+ Fri, 04 Jul 2025 04:13:47 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: alistair23@gmail.com, Joel Stanley <joel@jms.id.au>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 10/40] target/riscv: remove capital 'Z' CPU properties
-Date: Fri,  4 Jul 2025 21:11:37 +1000
-Message-ID: <20250704111207.591994-11-alistair.francis@wdc.com>
+Subject: [PULL 26/40] hw/riscv/virt: Use setprop_sized_cells for plic
+Date: Fri,  4 Jul 2025 21:11:53 +1000
+Message-ID: <20250704111207.591994-27-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250704111207.591994-1-alistair.francis@wdc.com>
 References: <20250704111207.591994-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,129 +105,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Joel Stanley <joel@jms.id.au>
 
-These properties were deprecated in QEMU 8.2, commit 8043effd9b.
+The current device tree property uses two cells for the address (and for
+the size), but assumes the they are less than 32 bits by hard coding the
+high cell to zero.
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Use qemu_fdt_setprop_sized_cells to do the job of splitting the upper
+and lower 32 bits across cells.
+
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250530134608.1806922-1-dbarboza@ventanamicro.com>
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+Message-ID: <20250604025450.85327-7-joel@jms.id.au>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h         |  1 -
- target/riscv/cpu.c         | 17 -----------------
- target/riscv/tcg/tcg-cpu.c | 31 +------------------------------
- 3 files changed, 1 insertion(+), 48 deletions(-)
+ hw/riscv/virt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 2a6793e022..17bf4e7579 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -951,7 +951,6 @@ extern const RISCVCPUMultiExtConfig riscv_cpu_extensions[];
- extern const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[];
- extern const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[];
- extern const RISCVCPUMultiExtConfig riscv_cpu_named_features[];
--extern const RISCVCPUMultiExtConfig riscv_cpu_deprecated_exts[];
- 
- typedef struct isa_ext_data {
-     const char *name;
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index fe21e0fb44..7c6e0844d0 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1387,23 +1387,6 @@ const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
-     { },
- };
- 
--/* Deprecated entries marked for future removal */
--const RISCVCPUMultiExtConfig riscv_cpu_deprecated_exts[] = {
--    MULTI_EXT_CFG_BOOL("Zifencei", ext_zifencei, true),
--    MULTI_EXT_CFG_BOOL("Zicsr", ext_zicsr, true),
--    MULTI_EXT_CFG_BOOL("Zihintntl", ext_zihintntl, true),
--    MULTI_EXT_CFG_BOOL("Zihintpause", ext_zihintpause, true),
--    MULTI_EXT_CFG_BOOL("Zawrs", ext_zawrs, true),
--    MULTI_EXT_CFG_BOOL("Zfa", ext_zfa, true),
--    MULTI_EXT_CFG_BOOL("Zfh", ext_zfh, false),
--    MULTI_EXT_CFG_BOOL("Zfhmin", ext_zfhmin, false),
--    MULTI_EXT_CFG_BOOL("Zve32f", ext_zve32f, false),
--    MULTI_EXT_CFG_BOOL("Zve64f", ext_zve64f, false),
--    MULTI_EXT_CFG_BOOL("Zve64d", ext_zve64d, false),
--
--    { },
--};
--
- static void cpu_set_prop_err(RISCVCPU *cpu, const char *propname,
-                              Error **errp)
- {
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index c5e260e360..81174de409 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1442,25 +1442,6 @@ static void riscv_cpu_add_profiles(Object *cpu_obj)
-     }
- }
- 
--static bool cpu_ext_is_deprecated(const char *ext_name)
--{
--    return isupper(ext_name[0]);
--}
--
--/*
-- * String will be allocated in the heap. Caller is responsible
-- * for freeing it.
-- */
--static char *cpu_ext_to_lower(const char *ext_name)
--{
--    char *ret = g_malloc0(strlen(ext_name) + 1);
--
--    strcpy(ret, ext_name);
--    ret[0] = tolower(ret[0]);
--
--    return ret;
--}
--
- static void cpu_set_multi_ext_cfg(Object *obj, Visitor *v, const char *name,
-                                   void *opaque, Error **errp)
- {
-@@ -1473,13 +1454,6 @@ static void cpu_set_multi_ext_cfg(Object *obj, Visitor *v, const char *name,
-         return;
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 4fd966a342..67e60eec1f 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -493,8 +493,8 @@ static void create_fdt_socket_plic(RISCVVirtState *s,
+                          s->soc[socket].num_harts * sizeof(uint32_t) * 4);
      }
  
--    if (cpu_ext_is_deprecated(multi_ext_cfg->name)) {
--        g_autofree char *lower = cpu_ext_to_lower(multi_ext_cfg->name);
--
--        warn_report("CPU property '%s' is deprecated. Please use '%s' instead",
--                    multi_ext_cfg->name, lower);
--    }
--
-     cpu_cfg_ext_add_user_opt(multi_ext_cfg->offset, value);
- 
-     prev_val = isa_ext_is_enabled(cpu, multi_ext_cfg->offset);
-@@ -1515,14 +1489,13 @@ static void cpu_add_multi_ext_prop(Object *cpu_obj,
-                                    const RISCVCPUMultiExtConfig *multi_cfg)
- {
-     bool generic_cpu = riscv_cpu_is_generic(cpu_obj);
--    bool deprecated_ext = cpu_ext_is_deprecated(multi_cfg->name);
- 
-     object_property_add(cpu_obj, multi_cfg->name, "bool",
-                         cpu_get_multi_ext_cfg,
-                         cpu_set_multi_ext_cfg,
-                         NULL, (void *)multi_cfg);
- 
--    if (!generic_cpu || deprecated_ext) {
-+    if (!generic_cpu) {
-         return;
-     }
- 
-@@ -1565,8 +1538,6 @@ static void riscv_cpu_add_user_properties(Object *obj)
-     riscv_cpu_add_multiext_prop_array(obj, riscv_cpu_vendor_exts);
-     riscv_cpu_add_multiext_prop_array(obj, riscv_cpu_experimental_exts);
- 
--    riscv_cpu_add_multiext_prop_array(obj, riscv_cpu_deprecated_exts);
--
-     riscv_cpu_add_profiles(obj);
- }
- 
+-    qemu_fdt_setprop_cells(ms->fdt, plic_name, "reg",
+-        0x0, plic_addr, 0x0, s->memmap[VIRT_PLIC].size);
++    qemu_fdt_setprop_sized_cells(ms->fdt, plic_name, "reg",
++                                 2, plic_addr, 2, s->memmap[VIRT_PLIC].size);
+     qemu_fdt_setprop_cell(ms->fdt, plic_name, "riscv,ndev",
+                           VIRT_IRQCHIP_NUM_SOURCES - 1);
+     riscv_socket_fdt_write_id(ms, plic_name, socket);
 -- 
 2.50.0
 
