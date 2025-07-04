@@ -4,91 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A951BC83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 10:30:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B1A1C8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 10:31:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXdgL-0004Jl-30; Fri, 04 Jul 2025 06:30:13 -0400
+	id 1uXdhY-0005a5-CG; Fri, 04 Jul 2025 06:31:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1uXdgE-0004Dq-A2
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:30:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uXdhN-0005T2-NC
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:31:18 -0400
+Received: from p-east3-cluster6-host10-snip4-1.eps.apple.com ([57.103.85.222]
+ helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1uXdgC-0001KO-6u
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:30:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751625003;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2h2rAV017uEKqWEIGcSEbzOinhT5LzoN/6/oyd9KrLw=;
- b=AqYlanxkwlailJJWu9V5yQVTFyYJ7ALXCo05MloNpAsrp8KExfHMTBTKf1VRCBVGNBNAkh
- FtcjWzeQbZ+5LhyIUbmv8QrsCikIxgQORXa9D2NKvooPznO2jxHcZNDX5nqLwWnscEgnoN
- t2p4aMSCOLEpUxZCmW5PLrjGuTmRuDs=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-170-h4jQEPOlPUenrTmjRirKlA-1; Fri, 04 Jul 2025 06:30:02 -0400
-X-MC-Unique: h4jQEPOlPUenrTmjRirKlA-1
-X-Mimecast-MFC-AGG-ID: h4jQEPOlPUenrTmjRirKlA_1751625001
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ae0d798398bso61924466b.1
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 03:30:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751625001; x=1752229801;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2h2rAV017uEKqWEIGcSEbzOinhT5LzoN/6/oyd9KrLw=;
- b=C+NwLEKoFq7yhOQUiMHkEqpBHW5nFtsW0wqu/tY2phqOvP9+YwSjf69agiZm/d4zoQ
- 8KJS3kBPpm/XnE9M+e0xVnJrode7FDY5IA0ofeaGkBE97AQ/vO4elnCTyLwPOXUSx52+
- Wk3rCc4ClrOakSP1dSXmJCUpVmJ8HTi/FB7XqbXMQkaf3N6S7egoc4L6t5BC0i/Ws3KX
- A+cw6n3Cgcc7SAKH+mVr/aHnXx9q13vAWI3n4k0HFqma/lZwRPjigDf0TQY2wIWAVXFU
- jt7NSTc7Zb1M2oejR/FwHnsynJ9gQawvM7vTlFSBZPf9vB7/8VsaXsWnY6tGcKrPkWfH
- eTHA==
-X-Gm-Message-State: AOJu0Yx5b+xWMq4Wbexuw5N8jqsEBmgAMIpgCXTchoFvBFL3itumYD18
- 0lI2ETAjHNRi4yRcpf+t+hbpt5lhupRQLvgaN+tC2kQ91o6+9E5S+tivhdMrpf/6dGeMHHYWZOh
- KbA4Mp3vEkolUKshKPT9YrWTS/xYhio4GxgXXvialbJ+y62LD/ODVKaeqdHpQ46Y/V+3n6wQDoY
- 8s9N8uS2b7yuxARY39OxIKjagbHLFdmBw=
-X-Gm-Gg: ASbGncvWbtFLBAjDRXEVHvVJH1hECiw0LpRbwWzMwFEHjycyLQAfZUFg8A5pUd40SSK
- xVycvpV7rzJZ40xGvDuxr5stEDl0Z8X4DexPMqYql5QKT3aV8VqD7abjAv7W1FJhPz/fxunqb4b
- q0qDXl
-X-Received: by 2002:a17:907:3f96:b0:ae3:b9c3:ddd7 with SMTP id
- a640c23a62f3a-ae3fbdc86a3mr165202466b.45.1751625000905; 
- Fri, 04 Jul 2025 03:30:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHta5ypLs4t4rs0EItZBL3DFgjfStplR4KXTFdWjgzcSFc+RLOxWKHv1bFE15eBglV1UvKrJIAjHDXArDkwi4I=
-X-Received: by 2002:a17:907:3f96:b0:ae3:b9c3:ddd7 with SMTP id
- a640c23a62f3a-ae3fbdc86a3mr165201466b.45.1751625000431; Fri, 04 Jul 2025
- 03:30:00 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250703124713.2530079-1-vsementsov@yandex-team.ru>
-In-Reply-To: <20250703124713.2530079-1-vsementsov@yandex-team.ru>
-From: Lei Yang <leiyang@redhat.com>
-Date: Fri, 4 Jul 2025 18:29:22 +0800
-X-Gm-Features: Ac12FXzw-KdP2Whb5x0-nZw-6voxt9smofl__PW8D92R908sM7z5SYzq706oUQA
-Message-ID: <CAPpAL=wLSfYSBed4ZOPJBHv+O7B9HkGUsA78WbhG_seDFYmhSw@mail.gmail.com>
-Subject: Re: [PATCH 0/4] vhost: drop backend_features
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, qemu-block@nongnu.org, 
- fam@euphon.net, pbonzini@redhat.com, jasowang@redhat.com, hreitz@redhat.com, 
- kwolf@redhat.com, sgarzare@redhat.com, raphael@enfabrica.net
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uXdhL-0005tf-Mk
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:31:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
+ bh=sMuvWNAlThdQUT/Jm7Bs2UfiTYxk4u/ZKdImK+MyzHE=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=KQA9ilY+zLk/ev5yDcg6mI7uP2UwKDDek2FgQNBPu3X8F6yeTpo9yz9NTJqLzh7q0
+ fbA8xsY06V3wI5Tnb97jXJoG1InjTd5e6qTcqUbQXqhbb/0WyKEAgtfpUCplAZ5BcH
+ m+hdCMd9TaUu2n+COz/CB3+G7iDgGf8kC7mVVJNX9LJMDuDIoyLqTUzEPuPG2dnTb8
+ FiHULwMsMARvwg0ew8zkoTqppFU6hopNzdttzWfXO587RQHWA3w3T9fmDye0tEa48f
+ AuyWM0DIyaMYqYCZFNbzX6NbcRyDhp327CwGQyVQv5Ty7I9Wt8FQmvLAxD/VBhnn9I
+ 4y5tDZvqmpHPA==
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by outbound.qs.icloud.com (Postfix) with ESMTPS id AF6B218474DD;
+ Fri,  4 Jul 2025 10:31:08 +0000 (UTC)
+Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
+ [17.57.155.37])
+ by outbound.qs.icloud.com (Postfix) with ESMTPSA id 201081800D26;
+ Fri,  4 Jul 2025 10:31:05 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH v4 56/65] accel: Expose and register
+ generic_handle_interrupt()
+From: Mads Ynddal <mads@ynddal.dk>
+In-Reply-To: <20250702185332.43650-57-philmd@linaro.org>
+Date: Fri, 4 Jul 2025 12:30:53 +0200
+Cc: qemu-devel@nongnu.org,
+ =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Reinoud Zandijk <reinoud@netbsd.org>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>, kvm@vger.kernel.org,
+ xen-devel@lists.xenproject.org
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Message-Id: <2974E816-ED2F-45A3-988C-ABA4F52B3CCE@ynddal.dk>
+References: <20250702185332.43650-1-philmd@linaro.org>
+ <20250702185332.43650-57-philmd@linaro.org>
+To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
+X-Proofpoint-GUID: KQj32bSACKGkz9oeNzR-NIMXRigV6oVh
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA0MDA4MCBTYWx0ZWRfX9balHnkxxi/e
+ VU0upZooqQ0VYpwfKxM8EcAGk4hlTjFqBvN4x6d2apopuSDiOED5VzlE/O2FLhnWsp3LR4a/vzX
+ vFLAMIEhhf/uxwm1MbJRzh6XhgsHqE+7xQ1HfBe8xym7SL/++rJRO6L0bbCMiP85fT+gr9BpUOV
+ TDZsUjpZ6r4uNldEPAkDBJSEVqUQAliaffVx/0Q9Gbk93bAfFbav4DKAFqhQfPe+tiIbYty7Ic5
+ FjyUTPSVQ3qfJGGVguN7cFDqT12dQ3NZB89x0HES3JRu0OZ8mqBC/trvm0E1/ul19OIU8j3i4=
+X-Proofpoint-ORIG-GUID: KQj32bSACKGkz9oeNzR-NIMXRigV6oVh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-04_04,2025-07-02_04,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ clxscore=1030 phishscore=0 spamscore=0 mlxlogscore=704 malwarescore=0
+ adultscore=0 suspectscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506060001 definitions=main-2507040080
+Received-SPF: pass client-ip=57.103.85.222; envelope-from=mads@ynddal.dk;
+ helo=outbound.qs.icloud.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,39 +101,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I tested this series of patches with virtio-net regression tests which
-were triggered because the virtio-net code was changed. Everything
-works fine.
 
-Tested-by: Lei Yang <leiyang@redhat.com>
+> On 2 Jul 2025, at 20.53, Philippe Mathieu-Daud=C3=A9 =
+<philmd@linaro.org> wrote:
+>=20
+> In order to dispatch over AccelOpsClass::handle_interrupt(),
+> we need it always defined, not calling a hidden handler under
+> the hood. Make AccelOpsClass::handle_interrupt() mandatory.
+> Expose generic_handle_interrupt() prototype and register it
+> for each accelerator.
+>=20
+> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+> include/system/accel-ops.h        | 3 +++
+> accel/hvf/hvf-accel-ops.c         | 1 +
+> accel/kvm/kvm-accel-ops.c         | 1 +
+> accel/qtest/qtest.c               | 1 +
+> accel/xen/xen-all.c               | 1 +
+> system/cpus.c                     | 9 +++------
+> target/i386/nvmm/nvmm-accel-ops.c | 1 +
+> target/i386/whpx/whpx-accel-ops.c | 1 +
+> 8 files changed, 12 insertions(+), 6 deletions(-)
+>=20
 
-On Thu, Jul 3, 2025 at 8:55=E2=80=AFPM Vladimir Sementsov-Ogievskiy
-<vsementsov@yandex-team.ru> wrote:
->
-> This field is mostly unused and sometimes confusing (we even have
-> a TODO-like comment to drop it). Let's finally do.
->
-> Vladimir Sementsov-Ogievskiy (4):
->   vhost: introduce vhost_ops->vhost_set_vring_enable_supported method
->   vhost-user: stop use backend_features
->   vhost_net: stop use backend_features
->   hw/vhost: finally drop vhost_dev.backend_features field
->
->  hw/block/vhost-user-blk.c         |  1 -
->  hw/net/vhost_net.c                | 14 ++++++--------
->  hw/scsi/vhost-scsi.c              |  1 -
->  hw/scsi/vhost-user-scsi.c         |  1 -
->  hw/virtio/vdpa-dev.c              |  1 -
->  hw/virtio/vhost-user.c            | 25 ++++++++++++++++---------
->  hw/virtio/vhost.c                 | 15 ++++++---------
->  hw/virtio/virtio-qmp.c            |  2 --
->  include/hw/virtio/vhost-backend.h |  2 ++
->  include/hw/virtio/vhost.h         |  7 -------
->  10 files changed, 30 insertions(+), 39 deletions(-)
->
-> --
-> 2.48.1
->
->
+Reviewed-by: Mads Ynddal <mads@ynddal.dk>
 
 
