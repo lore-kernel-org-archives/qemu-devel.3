@@ -4,84 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC2DFC83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 10:06:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C85CAC8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 10:15:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXdJ9-0003DV-Q7; Fri, 04 Jul 2025 06:06:15 -0400
+	id 1uXdRg-0005yi-16; Fri, 04 Jul 2025 06:15:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXdJ6-0003BS-Qx
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:06:14 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXdRX-0005vu-2j
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:14:55 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXdIy-0003Dd-I8
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:06:10 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3a365a6804eso324066f8f.3
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 03:06:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXdRU-0006Au-K7
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:14:54 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-450cf0120cdso5757155e9.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 03:14:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751623563; x=1752228363; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=6mE77olLD1i/c2F6gH3IajYNMeuJm97QYEnUCwe9orY=;
- b=IBWZ5dJzqqIM/vOmEXFCYkh9pc936auXB9UVWsUmgsHqiJCUQ/1zZNpdrSSzlrqo8Z
- kba6Nk3dIdijWZzWZmaOMHvzaYc/aIhbuMGpx8lj+QrKvuEZ8xWSgw028T20ARXpS3YV
- 8d5ZZI2WsJHVMUSQ0tZwi0hfBGwrMbFWO67YfIfBulpJJ4qqVLVVo0CjwFHraNYKQfa3
- 6lkceLzXod0nq/wM6nwssW59hqXfViRtbYJLhDQ3/OPUbZuVrj/XkCzsBsb7z8NYw9HG
- V6QXv/m5lsNH6GkeAVEqaUrW1lcg0L+6v6ZpzKPgR4HA0m3SJ/beV0F66l7QKh3t9rEL
- 7ljg==
+ d=linaro.org; s=google; t=1751624090; x=1752228890; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=g1qUi+6m397zoKQpfNej+VqjNFsZRTFYtagMj07jt4U=;
+ b=zcQwY8zxSd4HGsirKLKZFDViTvkIQhS2LGAiNwOQfLB1nNIWsolxUVtsmC+LfF4fLS
+ Cp73joyYhm+/i+6rs9SXrsd5IrXXS2lhFDhnWkI6J1B2XS31OkBNE3816ectAWepHpN3
+ XEF8iWt7i76jqs7EvxtGgjvc2CUAg18LWBIa36ANaqHOaOUA3aeegLS4NOHz/jZz6f6j
+ 27VcbQMTtajlRDK9pLy2VNFn4JYvLwmPezYHB+Frj1NtBqHEd4JDtmjSsrDmFiTs7S6o
+ dyqdlPNMhfDHb1y7V0MEqJmUY7vFJKMEIDyzb5DmHRwkvS5/ccXNTNuUSoDDdtCyeYj1
+ POsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751623563; x=1752228363;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6mE77olLD1i/c2F6gH3IajYNMeuJm97QYEnUCwe9orY=;
- b=cFIc4fY6sfOPoCufx6M5ijbqfXAyrfA0YIcT/XWJLbiaT0xYeckzzdsSvMzEZFfZ7Y
- uVNeWB4ysVxilK30/AorUFaDQrMMsqhOHueG1qfdEgO0PYXuTUuusUZSZJP7oQycZbnQ
- Y/mW95YVEovGgiQt3aoOqxF3477Ed83ubNJcaHOZvrP/cXPPOo4C/ngn3ycSxjpDUi3Y
- tYxZpHe6Kv7l5mZdjbLskRcV55zotoo7+Bq0CCDeLtvhf2Fx3S3ZL0JMm/fyI5uIPLB0
- hltLqnWCMlK8bk3tmD2IZXCSEHQI3Tw+EHl3HRWY/fWkx4n8OcXOXaI4OnJrcdWr/wUM
- MetQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXLJy2eZWRLyYl7kTF0h5WvDWEuFYDtbb3AYl55U1MEX25Ra29sTwcfUSFn58FC2uzMGEXYkuMGfe2A@nongnu.org
-X-Gm-Message-State: AOJu0YzzJQw7Ehi61BFq4zIbL8BgKz8WQBLHKukPbJRhayToAcXAxgZR
- NtHsgqyNJkMqox9wFxgfWSU9+1nlJk/T4SZh3N01HIy2EHQdIGUtCqN/w7jy6HweTsA=
-X-Gm-Gg: ASbGncubA9UE9l0gOZ9I4+R5BJAtfjqWCXIVV+0OfBTMFWAqU6vSaTUSCibAnL3rKR3
- yNcUqDrxLAEpL6SQeMVUerhvtrjGBRaORsU18QHaj95RLU7vbdOLGZl8ZYOrQf4GN9lfD9sRFzc
- 48VEhWEGFCRGWAHK3b+1zhr9yFC/hi3r6fNQBjGLPKTF8pbjHJkN6Imr+SKHTkdUFqMwZxtMTys
- iE/ecQdnYP3+uDXQ2aWLd38AwoX6bDImpunliEWNqeBBFVxvjQOYgtJQkNeWNG2VQL89iccSdOe
- 3LbQ3b0YyPfUPgbMIBlMdjPYGbXPKNXyfv1kIFlCPVfVcekai8d02j96qv26W/QMNaqn1LsoTM/
- KFiwibTrRyv0xmkYNB6rqcxDPNsvudA==
-X-Google-Smtp-Source: AGHT+IFVPCRNr/nTQWbw9s7waCjzAb0IBSUKx9ynZRIpOxwWVoTaLtP3Ovovt1acIOdgc1qljJ1EjA==
-X-Received: by 2002:a05:6000:240c:b0:3b3:9cc4:6830 with SMTP id
- ffacd0b85a97d-3b4964f7c5fmr1770107f8f.48.1751623562783; 
- Fri, 04 Jul 2025 03:06:02 -0700 (PDT)
-Received: from [192.168.69.218] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1751624090; x=1752228890;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=g1qUi+6m397zoKQpfNej+VqjNFsZRTFYtagMj07jt4U=;
+ b=dwEI3puQSqTItMlbL/1kzmYl6k/66rQILQDbxqxOoKQz5fjYkho+TMYyjaAiIF/Akp
+ CKWD1lnlc/tyyRXZzAUynLHgAPtBGdjS/N62A+D31L/XDXGyexSObTQ/OidW+dpd59yc
+ 4f3pitbTrE9bYUXguiHw+z3xgjXb++mI9bypxxdzPanfnsEhU6BspxeERkVhcJb25QhM
+ BN5wrUfz6Q3oVRm1meREDOqs6YZZSPABV8wGmv9K/jCT2EjkRW4PVvAaGUgXOngyLLSy
+ jNDJk6e75mfzLRJam/PUFns5hiK4kAwua3jdRKwh5BWuopIPNB7U04sH2m9G2W2OW0T4
+ ijDA==
+X-Gm-Message-State: AOJu0YzOBi++amEEJM+IDtEyhbqDFNAZRf0mDemzjeopHlMVJh68GBi/
+ F1EG1COzayZSsFcbaI0IvMsUZCfcmR4ppsrk9xw3JipnVPvkt/LmWEIOcOY2zfUwTH506OGqCf6
+ NpFiHeMg=
+X-Gm-Gg: ASbGnctrH118L3lNgI3mi9J54xpLZHb3ppdlgR31HulSIOXSrPMyg0ll2wyNAPKnixD
+ msuf0vqFVGPJO8hfOJ8uPxx4iCXDdZCIL8f26XxknR5Cy9iujlqtPZ+3nxExWKg5Q7fw87IJnWh
+ k/4HRzqK+XeKjg/0/f9W/LjCGBu2dsVhoH8bc818M/vkXVxDftrVbp0h1BEhC5xtgvIB7U9wkf/
+ /MgqP8PRlh/mLDVZ5sRgMFPson2/bpkU5NPCTMk5rrdqAoQAJqp06b2Wc34H8nBcFSnt5M/dROE
+ wsaIKcAu4eLplnLafBmP5+zhfbcp5WOb0XVcnIM1ddHTTDsYjyQPyrQ9uAqcfswohT77WkyzM6D
+ 8/k/6u5ovMO1Dvy8or9PyhGwC+2n4Uzk7fjCq
+X-Google-Smtp-Source: AGHT+IGbV2KHuWPiLNbT3/342ZnMYwodrHJWWLDozZd3WAa1wCGRj3YhdF+8YnZENcmhm+76zwUc/A==
+X-Received: by 2002:a05:600c:19d1:b0:450:d61f:dd45 with SMTP id
+ 5b1f17b1804b1-454b4e6b9fdmr15451665e9.4.1751624090262; 
+ Fri, 04 Jul 2025 03:14:50 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b471b9736bsm2111808f8f.60.2025.07.04.03.06.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Jul 2025 03:06:02 -0700 (PDT)
-Message-ID: <0c01766d-577b-440f-9139-a095bd74da72@linaro.org>
-Date: Fri, 4 Jul 2025 12:06:01 +0200
+ ffacd0b85a97d-3b47285d3bbsm2110255f8f.96.2025.07.04.03.14.49
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 04 Jul 2025 03:14:49 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 03/31] accel/kvm: Reduce kvm_create_vcpu() declaration scope
+Date: Fri,  4 Jul 2025 12:14:04 +0200
+Message-ID: <20250704101433.8813-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250704101433.8813-1-philmd@linaro.org>
+References: <20250704101433.8813-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hmp-cmds-target.c: add CPU_DUMP_VPU in
- hmp_info_registers()
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-References: <20250623145306.991562-1-dbarboza@ventanamicro.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250623145306.991562-1-dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,27 +98,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/6/25 16:53, Daniel Henrique Barboza wrote:
-> Commit b84694defb added the CPU_DUMP_VPU to allow vector registers to be
-> logged by log_cpu_exec() in TCG. This flag was then used in commit
-> b227f6a8a7 to print RISC-V vector registers using this flag. Note that
-> this change was done in riscv_cpu_dump_state(), the cpu_dump_state()
-> callback for RISC-V, the same callback used in hmp_info_registers().
-> 
-> Back then we forgot to change hmp_info_registers(), and 'info registers'
-> isn't showing RISC-V vector registers as a result. No other target is
-> impacted since only RISC-V is using CPU_DUMP_VPU.
-> 
-> There's no reason to not show VPU regs in info_registers(), so add
-> CPU_DUMP_VPU to hmp_info_registers(). This will print vector registers
-> for all RISC-V machines and, as said above, has no impact in other
-> archs.
-> 
-> Cc: Dr. David Alan Gilbert <dave@treblig.org>
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->   monitor/hmp-cmds-target.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+kvm_create_vcpu() is only used within the same file unit.
 
-Patch queued, thanks.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Message-Id: <20250703173248.44995-7-philmd@linaro.org>
+---
+ include/system/kvm.h | 8 --------
+ accel/kvm/kvm-all.c  | 8 +++++++-
+ 2 files changed, 7 insertions(+), 9 deletions(-)
+
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index 7cc60d26f24..e943df2c09d 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -316,14 +316,6 @@ int kvm_create_device(KVMState *s, uint64_t type, bool test);
+  */
+ bool kvm_device_supported(int vmfd, uint64_t type);
+ 
+-/**
+- * kvm_create_vcpu - Gets a parked KVM vCPU or creates a KVM vCPU
+- * @cpu: QOM CPUState object for which KVM vCPU has to be fetched/created.
+- *
+- * @returns: 0 when success, errno (<0) when failed.
+- */
+-int kvm_create_vcpu(CPUState *cpu);
+-
+ /**
+  * kvm_park_vcpu - Park QEMU KVM vCPU context
+  * @cpu: QOM CPUState object for which QEMU KVM vCPU context has to be parked.
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index d095d1b98f8..17235f26464 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -453,7 +453,13 @@ static void kvm_reset_parked_vcpus(KVMState *s)
+     }
+ }
+ 
+-int kvm_create_vcpu(CPUState *cpu)
++/**
++ * kvm_create_vcpu - Gets a parked KVM vCPU or creates a KVM vCPU
++ * @cpu: QOM CPUState object for which KVM vCPU has to be fetched/created.
++ *
++ * @returns: 0 when success, errno (<0) when failed.
++ */
++static int kvm_create_vcpu(CPUState *cpu)
+ {
+     unsigned long vcpu_id = kvm_arch_vcpu_id(cpu);
+     KVMState *s = kvm_state;
+-- 
+2.49.0
+
 
