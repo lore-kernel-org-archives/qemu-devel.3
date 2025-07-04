@@ -4,86 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECC39C8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 10:21:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ACC5C8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 10:21:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXdST-0006an-KO; Fri, 04 Jul 2025 06:15:53 -0400
+	id 1uXdXs-000744-2z; Fri, 04 Jul 2025 06:21:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXdSL-0006Jx-3e
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:15:45 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXdSJ-0006iL-2z
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:15:44 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3a50fc7ac4dso317889f8f.0
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 03:15:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751624141; x=1752228941; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=1AkDLUIDoYeXz0B32G8TfwPxxxgPR7nn1gNxi5L7EiE=;
- b=luB5qGZdVDPgIsl+7jUuczhATbx3bWzkJgskPN5yjr6DHxo15sQSdTGrmEBBLrrTQe
- ABZCKcjZD3NcA89tLvk7VfzVn4wZkfSGjn/DRdml6I3N6RBc/UwZFDlxk/zFX6C5tuuv
- 1qx1LWRv+GFbPYFAhH+e7Ntj2gKwM3JZARmS5PYZlsXLxtzKP3DpPWJ02/bZQgBeucnc
- 5WqnwRZY5igM/hSeToNCH/wsbb9ag9MRKu4ut017j2azLaeQ9RQMpARKZsBXhth5AHaD
- wji1TARgruFQxBENwn8Z2BaLfnfqv7qGTupQn3J6rbr99rUYo8jqaGI9QU9j+bvHb2JK
- gufw==
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1uXdXn-0006yI-LQ
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:21:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1uXdXh-0000w2-4m
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:21:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751624475;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=A9DnjmH5m3RZGvHr1tc7b1GKTed+CpJj8sS8UiupzxE=;
+ b=Fecxn4Otx5zagvJoW15RwkTIEFRdyWTnJ5M9rTkVANAKYKAZ0ZZ1ztNgeSheALv7YVvcM8
+ BYwNBPseJLz+0NrsamdAH9A9Pofq28FWdeo/Ng0KbGJxbPwWOm2x/08Qv9KnRvmOlHbvEO
+ MqR1NOhcQMrXx1x/P3CoZwSiPNZQo70=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-340-f9T_MbIpMu2XD3N49stjTA-1; Fri, 04 Jul 2025 06:21:13 -0400
+X-MC-Unique: f9T_MbIpMu2XD3N49stjTA-1
+X-Mimecast-MFC-AGG-ID: f9T_MbIpMu2XD3N49stjTA_1751624473
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-ae0c11adcd2so55955366b.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 03:21:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751624141; x=1752228941;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1751624472; x=1752229272;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1AkDLUIDoYeXz0B32G8TfwPxxxgPR7nn1gNxi5L7EiE=;
- b=hn6E6uB828An5Off6zYkFCcCmVY82FOYImgf04cKSR88zhEDTJ0Ow+/JmQ+JcXsovw
- WoL52iypgff8IdKe9LjJVTGHf+c7Bgsaixhe+Yz4c0BY7g6Yt8OxAbi+gxgKGTIgwynt
- VYiF0qyZg/m8/+AJPMqldGQREljyvPd6qgU1OiY3unAIjJq3J2EpmZHKoCpJ30i6SB0R
- npjXZ1O7lXuBO1fwBMX7MrFeeaYq/5Ximti7yOYurO7tBlrv6UDMsqTKi3m2OM3myMWI
- C814nMNpS+8EvJydY4jrgh/wjznV2tQePkYleIqmR55gCSv0MG6OL9k8xQ5TQd2ob9Ef
- dXXA==
-X-Gm-Message-State: AOJu0YySYg1sc0tllbkSWJRaFFpoct07rwn29q2t8GxBJA4aAbKgQk2d
- Vxk7McXvV3642PBN+1p8/MQBwuWPWoo3YOZE9o9AfaSq8kvOuKwZ1AgRUtoTGyT8/vPoLVkIdQD
- Wmy1FNe0=
-X-Gm-Gg: ASbGncs8gIfzHtZPPsasfH1oVSWW+PJ0YgUejlIutpQXAMAOdPuggjJQksrf1Qu6OlC
- Pzd2sV60vuKalnd6wMG27JMVCbfKF93sOWw8fTnpeoWw4YakpO3eonLKfc58Gpt5m8Rt1vFsaAw
- mpIXe+9Xj7AXqEBrTVp++en6ytySGqOyWbCxDfaEHf7DBUz0ct8ekBgang0vhh7p1mpaGoiO6QC
- Vel2RXwljxWJOZh88oRct6PDPQyxqmBjX8ccoNbUbb3yq22HSSBHv7ODMxmvjBTLCXE5oQ2Xjni
- Pz26JuSbNIBKXvv3vxBBGm/clT07uDUafqqjPsnEgAuIs6JPjJRQ7w4nTaXH/kt/IuWsIJ+qQJt
- Uj/yeInnBu3giiyisvplwyYrBnMaUuWZmOGbC
-X-Google-Smtp-Source: AGHT+IG/HgEBUTT88wK7/BwJk08r3jrp/DIfryKaaz82R3YFViYDpBq5guH0biNJQtynZlyqTdT4lQ==
-X-Received: by 2002:a05:6000:250d:b0:3a4:dd8e:e16b with SMTP id
- ffacd0b85a97d-3b4964d4079mr1364888f8f.20.1751624140864; 
- Fri, 04 Jul 2025 03:15:40 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454b1698f54sm22234415e9.33.2025.07.04.03.15.40
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 04 Jul 2025 03:15:40 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 14/31] accel/whpx: Replace @dirty field by generic
- CPUState::vcpu_dirty field
-Date: Fri,  4 Jul 2025 12:14:15 +0200
-Message-ID: <20250704101433.8813-15-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250704101433.8813-1-philmd@linaro.org>
-References: <20250704101433.8813-1-philmd@linaro.org>
+ bh=A9DnjmH5m3RZGvHr1tc7b1GKTed+CpJj8sS8UiupzxE=;
+ b=iyWf9v/ZALdjksgRlv+tIAE37uPjvrSnqBDnYVuj3BPRr9A0l2UlXoW48mbdnhVZCT
+ Up8Xz8iFXKMGclkHP3KhbWU8AB6YAi+em1V+9UvLX8k1dWnPylxHBu3bwXy/y6qeCCJJ
+ zzmfG9YubCSrVG8wl2k3IHrZ6vhNZdABn5VMtN9us6A9ACouxCso5H9Z9dyPL+TGKqpG
+ 3JF9kO89YmrBosW/rUDFvtm+kuvCYvD2s8KuzKBUlDpwV2EDz815rDptWNHchadflcPN
+ x87xFKEWYPydHhcRCOK3OhsVGknrktKGZuOGS/tHELPE/y2MdgoknCYQqLMd/qUmpk19
+ UtrQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXVnJs2HQDbMZiCmjGkFPgthYYDaZILsFq/F/8mPy/QEGE6tGdt4GQoHO+LqLyMCrNcquzCXITxoHXe@nongnu.org
+X-Gm-Message-State: AOJu0Yxmnhm9EZN/Es2Gc3By/V8L+KUujAag+2MN8KVaibpfLHBRkx0m
+ d4pW+nwRHP7v+sOjbblpSNd1f1/gWObY/9hDclVWBd9rWZF4BWIG/19yo7B6Qt2StEeOCv4GOJ1
+ FnjGvPxUy9xZ369DXF6mz+BFSWKbWaH3wBQug3Kui5PC+wbmK2GTXu2WLlAExPNYqUt5xD/V5dQ
+ o+zDeEHZ3cgqNnrC3S91tgh5mLm3I8L5cVa9kht98=
+X-Gm-Gg: ASbGnctoMdxKhOzM56RFIRbI+7hNHh//yBuI9+X2M+YAMPEY/43Qx2DoHvwQrVnij2A
+ 5HRsvv8zoKL1xUl3cj2RYN/GAYjCapv1r8a5mw/wHnWbuqyyp/B6tRjo7DyQ4iguB0BKJMDS7U+
+ /bO1Uz
+X-Received: by 2002:a17:907:1c15:b0:ae3:674a:9af1 with SMTP id
+ a640c23a62f3a-ae3fe6290c6mr144367966b.57.1751624471821; 
+ Fri, 04 Jul 2025 03:21:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGwZpcWShBT4BZonJ3/Fu50dKwkAtg9mlW8looFfMx4YdL8KzJXa9suHk1WOVWuw/CMnwU7urKTtz08B4rXrEc=
+X-Received: by 2002:a17:907:1c15:b0:ae3:674a:9af1 with SMTP id
+ a640c23a62f3a-ae3fe6290c6mr144366866b.57.1751624471473; Fri, 04 Jul 2025
+ 03:21:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250703105508.2380494-1-vsementsov@yandex-team.ru>
+ <d7a66374-12d3-4b4b-975f-90202d83cbdf@yandex-team.ru>
+In-Reply-To: <d7a66374-12d3-4b4b-975f-90202d83cbdf@yandex-team.ru>
+From: Lei Yang <leiyang@redhat.com>
+Date: Fri, 4 Jul 2025 18:20:34 +0800
+X-Gm-Features: Ac12FXwJq6n_5aca6MOgrfnlib5NWXRqBJIzq30jWWUK8iJofmWEys1jo0X0H1o
+Message-ID: <CAPpAL=wQym6xpq_0zDaaoqS=7XmCSCfAT0OL3WHcd94v41Ph6Q@mail.gmail.com>
+Subject: Re: [PATCH] net/tap: drop too small packets
+To: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ jasowang@redhat.com, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,115 +106,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No need for accel-specific @dirty field when we have
-a generic one in CPUState.
+I tested this patch with virtio-net regression tests, everything works fine=
+.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-Id: <20250703173248.44995-21-philmd@linaro.org>
----
- target/i386/whpx/whpx-all.c | 23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+Tested-by: Lei Yang <leiyang@redhat.com>
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index cf6d3e4cdd4..5001afad3a7 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -237,7 +237,6 @@ struct AccelCPUState {
-     uint64_t tpr;
-     uint64_t apic_base;
-     bool interruption_pending;
--    bool dirty;
- 
-     /* Must be the last field as it may have a tail */
-     WHV_RUN_VP_EXIT_CONTEXT exit_ctx;
-@@ -836,7 +835,7 @@ static HRESULT CALLBACK whpx_emu_setreg_callback(
-      * The emulator just successfully wrote the register state. We clear the
-      * dirty state so we avoid the double write on resume of the VP.
-      */
--    cpu->accel->dirty = false;
-+    cpu->vcpu_dirty = false;
- 
-     return hr;
- }
-@@ -1391,7 +1390,7 @@ static int whpx_last_vcpu_stopping(CPUState *cpu)
- /* Returns the address of the next instruction that is about to be executed. */
- static vaddr whpx_vcpu_get_pc(CPUState *cpu, bool exit_context_valid)
- {
--    if (cpu->accel->dirty) {
-+    if (cpu->vcpu_dirty) {
-         /* The CPU registers have been modified by other parts of QEMU. */
-         return cpu_env(cpu)->eip;
-     } else if (exit_context_valid) {
-@@ -1704,9 +1703,9 @@ static int whpx_vcpu_run(CPUState *cpu)
-     }
- 
-     do {
--        if (cpu->accel->dirty) {
-+        if (cpu->vcpu_dirty) {
-             whpx_set_registers(cpu, WHPX_SET_RUNTIME_STATE);
--            cpu->accel->dirty = false;
-+            cpu->vcpu_dirty = false;
-         }
- 
-         if (exclusive_step_mode == WHPX_STEP_NONE) {
-@@ -2054,9 +2053,9 @@ static int whpx_vcpu_run(CPUState *cpu)
- 
- static void do_whpx_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
- {
--    if (!cpu->accel->dirty) {
-+    if (!cpu->vcpu_dirty) {
-         whpx_get_registers(cpu);
--        cpu->accel->dirty = true;
-+        cpu->vcpu_dirty = true;
-     }
- }
- 
-@@ -2064,20 +2063,20 @@ static void do_whpx_cpu_synchronize_post_reset(CPUState *cpu,
-                                                run_on_cpu_data arg)
- {
-     whpx_set_registers(cpu, WHPX_SET_RESET_STATE);
--    cpu->accel->dirty = false;
-+    cpu->vcpu_dirty = false;
- }
- 
- static void do_whpx_cpu_synchronize_post_init(CPUState *cpu,
-                                               run_on_cpu_data arg)
- {
-     whpx_set_registers(cpu, WHPX_SET_FULL_STATE);
--    cpu->accel->dirty = false;
-+    cpu->vcpu_dirty = false;
- }
- 
- static void do_whpx_cpu_synchronize_pre_loadvm(CPUState *cpu,
-                                                run_on_cpu_data arg)
- {
--    cpu->accel->dirty = true;
-+    cpu->vcpu_dirty = true;
- }
- 
- /*
-@@ -2086,7 +2085,7 @@ static void do_whpx_cpu_synchronize_pre_loadvm(CPUState *cpu,
- 
- void whpx_cpu_synchronize_state(CPUState *cpu)
- {
--    if (!cpu->accel->dirty) {
-+    if (!cpu->vcpu_dirty) {
-         run_on_cpu(cpu, do_whpx_cpu_synchronize_state, RUN_ON_CPU_NULL);
-     }
- }
-@@ -2226,7 +2225,7 @@ int whpx_init_vcpu(CPUState *cpu)
-     }
- 
-     vcpu->interruptable = true;
--    vcpu->dirty = true;
-+    cpu->vcpu_dirty = true;
-     cpu->accel = vcpu;
-     max_vcpu_index = max(max_vcpu_index, cpu->cpu_index);
-     qemu_add_vm_change_state_handler(whpx_cpu_update_state, env);
--- 
-2.49.0
+On Thu, Jul 3, 2025 at 10:59=E2=80=AFPM Daniil Tatianin
+<d-tatianin@yandex-team.ru> wrote:
+>
+> On 7/3/25 1:55 PM, Vladimir Sementsov-Ogievskiy wrote:
+>
+> > Theoretically tap_read_packet() may return size less than
+> > s->host_vnet_hdr_len, and next, we'll work with negative size
+> > (in case of !s->using_vnet_hdr). Let's avoid it.
+> >
+> > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> > ---
+> >   net/tap.c | 5 +++++
+> >   1 file changed, 5 insertions(+)
+> >
+> > diff --git a/net/tap.c b/net/tap.c
+> > index ae1c7e39832..20d0dc2eb35 100644
+> > --- a/net/tap.c
+> > +++ b/net/tap.c
+> > @@ -172,6 +172,11 @@ static void tap_send(void *opaque)
+> >               break;
+> >           }
+> >
+> > +        if (s->host_vnet_hdr_len && size < s->host_vnet_hdr_len) {
+> > +            /* Invalid packet */
+> > +            break;
+> > +        }
+> > +
+> >           if (s->host_vnet_hdr_len && !s->using_vnet_hdr) {
+> >               buf  +=3D s->host_vnet_hdr_len;
+> >               size -=3D s->host_vnet_hdr_len;
+>
+> Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+>
+>
 
 
