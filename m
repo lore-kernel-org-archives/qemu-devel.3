@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E50CEC8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59007C83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:12:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXiuZ-0004Zz-6h; Fri, 04 Jul 2025 12:05:15 -0400
+	id 1uXj0V-0000BJ-H0; Fri, 04 Jul 2025 12:11:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uXiuX-0004Zk-Sa
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:05:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uXj0S-00006w-0E
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:11:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uXiuU-00057v-Du
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:05:13 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uXj0O-0008Kb-OF
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:11:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751645108;
+ s=mimecast20190719; t=1751645474;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=uwP8AxRIMdKc/BdGp+NHOKLkPuM5xjeEB+IJKXPWZvU=;
- b=QWYxzbvNVtwbRsyAZSp6ciqjdJKXt4Grjk4VPD+RudPxYqgdl0XwZYABeFsZIXPULlH1fx
- c+gMqhoORXCrr0fprMCc7O9gNa8qmEIetmFEFOdyhb0lqWjG46LZJGwZ9MEJGnu91WcQS4
- w7La7Mk7sYFgE4BE2SrW2WBZ7FZgIY8=
-Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com
- [209.85.161.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HgxPOI9RVjIp72gb7XHSpbJiWsRqlhocYcjpy2vAbQA=;
+ b=N4E+nCUhix9e/gD/Ju6/gp/whgGolkfO/CymqNg69062VUPf5hU7pmhyNbQzSs7LnOx55o
+ eUQjZOYcL1EqHeHygIihdatTXpGMzPc10oIGEwLwRH1aOI8zRst1NUya07wE4Zy9iJ/Kc5
+ XrMwTF76qtxCgny64r/16uMYDCSlTMc=
+Received: from mail-oa1-f72.google.com (mail-oa1-f72.google.com
+ [209.85.160.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-282-jR7Px4avMcW1UZ2mBcgyxA-1; Fri, 04 Jul 2025 12:05:06 -0400
-X-MC-Unique: jR7Px4avMcW1UZ2mBcgyxA-1
-X-Mimecast-MFC-AGG-ID: jR7Px4avMcW1UZ2mBcgyxA_1751645106
-Received: by mail-oo1-f69.google.com with SMTP id
- 006d021491bc7-6118b00040aso831011eaf.0
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:05:06 -0700 (PDT)
+ us-mta-281-hQdECSdSMuiFhySMw_XN-w-1; Fri, 04 Jul 2025 12:11:13 -0400
+X-MC-Unique: hQdECSdSMuiFhySMw_XN-w-1
+X-Mimecast-MFC-AGG-ID: hQdECSdSMuiFhySMw_XN-w_1751645472
+Received: by mail-oa1-f72.google.com with SMTP id
+ 586e51a60fabf-2e8f1365181so777555fac.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:11:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751645106; x=1752249906;
+ d=1e100.net; s=20230601; t=1751645472; x=1752250272;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uwP8AxRIMdKc/BdGp+NHOKLkPuM5xjeEB+IJKXPWZvU=;
- b=DShEqAZhs20DNyu4KBSupEB2Xbx9I2o934JlD8OwIg0XsKEi0RXLaHdwALLb6wbHvZ
- 3/4CR2gt+x9y7o5nVzgRbotGG+bWXSM4V1o7pw4gb9jjxVbFsvfGrWTf8dhx2Nf67Uq6
- hmHyQYMYqd9UXKmwT1/lhGWgBuLg8yH0hpPksi39czCG/rw2EdDZ4FpEuZ8p7qe4p5Y1
- QkVnLz8EOneNKWDTlvfejAOpRtYJW+ah1HvzYeWlk3CrXR8x9u4vSnNS8KUw4C2LZGz5
- C8iK6qZDHhdxAJ6uM4k9MjzxNT/yRQc5XnvUR+Zxj3jtcqo7A83/zpSoIiQaOe1/h3RP
- 7d7Q==
-X-Gm-Message-State: AOJu0Yy9RSi0z/E/arQlTcgy0iVCm8G/Tsu6CXVPl/RGBZaB6CaPoQ0e
- tVmtZw6RFvEbjgjPE2RvG5zii9UFDMlF+vZMDM0m8IchQkkCuHcJiPaAwpThk/EawoD9+qNKyrW
- 5IZJLOqwrVTjyQs88tuAGfiJHC5tkqHFnJ88Kv7kckq+1IuFkwpUtCXRL
-X-Gm-Gg: ASbGncsK7HhuV23g+8e7v/dzwfn/WoWi0BZ5JrT/IFFbXRtjkSaRpUXxiM9BWQv1TgB
- 1nbT+Y3I97VQULMAj0PLlig8NZt67foDNBAf36Cnjl3nv+Lm2LCnn2vSR78RqHc3cmlb3a9NVNi
- bORwRFKwc7Opw5BspDeGLxsvfg22xOnZGrAK+3FMqkr8/SpyskVblH0ViLn3+DGMKQp62UV7N3l
- TAgEOgV9iFDBxndXoX63IPQP1bkC/nE6bys2mzPtR+Hx4FzvUTfrwPZCgeijw2vHHPWyb6rrkwb
- k+JL++wgh4K2dA==
-X-Received: by 2002:a05:6820:2903:b0:611:f244:dfa5 with SMTP id
- 006d021491bc7-6138ffa9905mr2617115eaf.2.1751645105777; 
- Fri, 04 Jul 2025 09:05:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEoqluflMRXamDCHRwB2qzxD3h24z1yiKpi+Z2QTL7zGFT9FN2rQplZZdiiIDLiA4ZC7KYaGQ==
-X-Received: by 2002:a05:6820:2903:b0:611:f244:dfa5 with SMTP id
- 006d021491bc7-6138ffa9905mr2616974eaf.2.1751645103146; 
- Fri, 04 Jul 2025 09:05:03 -0700 (PDT)
+ bh=HgxPOI9RVjIp72gb7XHSpbJiWsRqlhocYcjpy2vAbQA=;
+ b=wNBzXyduCD6Mcd7tzNqcE6Ry1FkIdlNFaYSS9C0p1oqYIWmCrqnLrRPqq1toGWpY2d
+ M4P4XPz6FVBwXE/ynnus3+/2aVpSYiqCaRtsd4i8hTSPR7WwzPl0QcMnq1KUCxHi6BbV
+ JCg3uhUUzYbvIwjvjfKu+avetrLgQRLvEJfqkZUkDbgH8jv5T12onyz1pGhCILTj0ivS
+ Y5QUIlwuof1okd0fG3ifzbKAAkxTNL6x4yYepqePiPRTOgGkY/7miRpzWgbjETQDeq2X
+ zy0fgwYa7LX8Dlni5y2Q44V5Jv1C5sZym9qBUXuMB5p9EAjMpGckdpWxSUcjYG1KJvke
+ yhfA==
+X-Gm-Message-State: AOJu0Yyz3ZvAE1oW+bngN5p0rC0Ck/EHjEVk32I0LQUxbIu1UDVSTsLn
+ Kteqlh9aRuGGS2h4yS8+IG20pG0PiDdjROIEw0bF9h+OroE/S+YaCQNcYWOTlXiqEnKzP0lS46N
+ mmcXZgKsdbAASLaYXjTRaax23FDTO8z4J47Bcu4tFvLNFv/AnpwTKADR+
+X-Gm-Gg: ASbGnct4AptceQc5v0gZXs2kHo52XKrAqcDi+ro8TfcE0d86t4Wuyg4YC3/Zp6PpMl3
+ x5HHN4I/e7t6aIKHGNUl5JR+GClAnX5fmSvNVVUAv5lwFoo29O2jVvMdxIiGMN6b74P2jYYUOra
+ RaxtdAGC13kkqEAtrCr8OVUWknQC1yoXzs23VIrU1QGJoPU57HDOvp06P87vMz5ywiRZAXMFBqL
+ TkFT5jOcaqCeAWGcdgHQqq7IfPPL4DPVNC1aZJeKYkCPz4SoljeFzUxIJKYoHriRcsvmBkhPEx2
+ P4Sxe7PcGFiGWQ==
+X-Received: by 2002:a05:6871:741f:b0:2e4:4617:f6e1 with SMTP id
+ 586e51a60fabf-2f796b79ab4mr2208600fac.2.1751645472541; 
+ Fri, 04 Jul 2025 09:11:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHIMrd7CZ3R80qVPjF6p18E8Gq1Ti4UPJUXHHMX/3+d0floSRQ3a17ORWIisklY2cezBWzO7w==
+X-Received: by 2002:a05:6871:741f:b0:2e4:4617:f6e1 with SMTP id
+ 586e51a60fabf-2f796b79ab4mr2208575fac.2.1751645472153; 
+ Fri, 04 Jul 2025 09:11:12 -0700 (PDT)
 Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6138e590d63sm350085eaf.26.2025.07.04.09.05.01
+ 586e51a60fabf-2f78f95f19asm579964fac.0.2025.07.04.09.11.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 09:05:02 -0700 (PDT)
-Date: Fri, 4 Jul 2025 12:04:56 -0400
+ Fri, 04 Jul 2025 09:11:11 -0700 (PDT)
+Date: Fri, 4 Jul 2025 12:11:07 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com
-Subject: Re: [PATCH v2 09/24] migration: Do away with usage of
- QERR_INVALID_PARAMETER_VALUE
-Message-ID: <aGf7qC9mMHkVkbMX@x1.local>
+Subject: Re: [PATCH v2 11/24] migration: Use QAPI_CLONE_MEMBERS in
+ query_migrate_parameters
+Message-ID: <aGf9Gyen03fL8s43@x1.local>
 References: <20250630195913.28033-1-farosas@suse.de>
- <20250630195913.28033-10-farosas@suse.de>
+ <20250630195913.28033-12-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250630195913.28033-10-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20250630195913.28033-12-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
@@ -105,9 +105,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 30, 2025 at 04:58:58PM -0300, Fabiano Rosas wrote:
-> The QERR_INVALID_PARAMETER_VALUE macro is documented as not to be used
-> in new code. Remove the usage from migration/options.c.
+On Mon, Jun 30, 2025 at 04:59:00PM -0300, Fabiano Rosas wrote:
+> QAPI_CLONE_MEMBERS is a better option than copying parameters one by
+> one because it operates on the entire struct and follows pointers. It
+> also avoids the need to alter this function every time a new parameter
+> is added.
+> 
+> For this to work, the has_* fields of s->parameters need to be already
+> set beforehand, so move migrate_mark_all_params_present() to the init
+> routine.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
