@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31587C83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 17:29:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7586C8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 17:29:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXkDP-0004ag-83; Fri, 04 Jul 2025 13:28:47 -0400
+	id 1uXkDv-0005L2-QJ; Fri, 04 Jul 2025 13:29:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXkDM-0004Zl-Q3
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 13:28:44 -0400
-Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
+ id 1uXkDs-0005GR-VD
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 13:29:17 -0400
+Received: from mail-yb1-xb36.google.com ([2607:f8b0:4864:20::b36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXkDL-00067k-10
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 13:28:44 -0400
-Received: by mail-yb1-xb33.google.com with SMTP id
- 3f1490d57ef6-e731a56e111so989905276.1
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 10:28:42 -0700 (PDT)
+ id 1uXkDr-0006FO-FH
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 13:29:16 -0400
+Received: by mail-yb1-xb36.google.com with SMTP id
+ 3f1490d57ef6-e81749142b3so1034214276.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 10:29:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751650122; x=1752254922; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751650154; x=1752254954; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=9KCN9mYaUWXyO4j8AMRdwOZNpBoYuHmpDR2+2xoPko4=;
- b=kjY4Hq5nGthuwB9+iz9NeOFcz5CsBw0ckoJ40UOj65N88vhKinOz4Nxn30CpwZWJpA
- dNWsMgh6X3QDgQZfCVZ1rSCUP7xFzhf1+vMw6OVCYtQR0z2/INBlYplX7UB/vf07Fc08
- lh7vyBcAs9IGW0+/YwXfytmmFLlEQKLo53fgvZDxUiNtmOtm5rAYFvAHthMDYtNGNxJ4
- 27b9TllqlGWYlz4pAq9yzQ8tQsF7SF+nM2Z6TsHtRtWe5LzUXrryeZClGADlexFLEOQt
- DC5trmhpnhSPHMZuYCUQDVcctDl28DEroKMgHVS0JSel+AF7H+fmAtef3E5XcrpSEpjQ
- xkaA==
+ bh=nMkIAivR8A07/e7hTxG37AHAXq+zZDKU4zZIBDChe5k=;
+ b=L65wCWWq/YbAHikNdR55tvG691PJPhtBgQ8T/sDyuEyzOaRxpXamYBJV+9+LDViuJg
+ TxDw9BV5G7GgNYCPZXNt0YyQVAUHtjva45LzNj7cz/dZhqUu+w4uvXfaTTX2siQ538M0
+ 4M3Xn1IaTbLg+jx5fyilfVp3J/PUtnI3IhAWTQXXEeXBopmqEegliesJ5sbfPThbd0nx
+ 52JgQ5St46Fb1hMRUUbFnW5CQEczTXk19Df1UgC+78OKqvJNYLNseddRKlsPgf9succr
+ XzlRiDRpFM1QFpU1JjKIKwlEXE//0YF4caoWpc7hQ2JEZ2bUEKWa/V1Lhv+T7/38kkTl
+ p/3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751650122; x=1752254922;
+ d=1e100.net; s=20230601; t=1751650154; x=1752254954;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=9KCN9mYaUWXyO4j8AMRdwOZNpBoYuHmpDR2+2xoPko4=;
- b=iSsXljKJLoqiSrd3Cgvvtbmpe1Z1jaOBo8PBK4bAhQ4QeFrYW3C54C9qvkKVBip1Q2
- OuG7w+iPqaWbeJu6uPm8XCDQy+2jAyPEqf1N1262aQBSDcwT4ESiYYqunQ91AlajF/nT
- lq+depjFR9e+1r8OXi7WlH0WECvJ0khgGr6lN+F4XzcF/cZR04a8gUtqfblrMuUkZGHb
- X63ehW0uQu7EESXGIuhL1zhshqx9x11gil2/1fb4mLBMnLC2EpytUl/y9iyK5UuqJ94V
- rd8gwS7NTiczHUZ7REeLqkW+iujwIw7AtqU4kL4yBWkqLbX38bdK6skxw5cJvAI+a6Ml
- vkyg==
-X-Gm-Message-State: AOJu0YyOOmDhzyjIr6F7IDBME2VB49GL10ESqirEKqkCnZ05tPmAc88f
- YpY4GDGjoTUV/1bhAPqpoy8vGIdvJ1h8xZusEguHEseujD+jhRDNi29pmtAOHuZ1NRA/2Ih2yrV
- K3JgnOlkNArlz0KKMUQCkFsQjHUD2j05eZC5JEpTqu5fP9vv/F8RI
-X-Gm-Gg: ASbGncs1kjUX+onEtKprU0qrp5dsZf4FjZ3Lxgg+91Iz9uWIPYG7wz4NA2T+O+gwcRc
- 475XC+BXzmV1Oq5evZvi+OJCB+IoJK0a3/0xqjfpx3UQiq0DI2bVx5vo/T5DfCkmP2syXMPXeqe
- KW0mlDrlYNW/K2CbiKBe/Cl38ClHlxfQVmSoLYioQSkLMn
-X-Google-Smtp-Source: AGHT+IFQTmng8owKrPdXh1dnOIXzXz9tgfRJ0z7QedtlmFz/t1DDsKmQuY7Ju83fVqRIODXvFShgdf7fKEM1NovmIuY=
-X-Received: by 2002:a05:6902:110a:b0:e81:52ff:b40 with SMTP id
- 3f1490d57ef6-e89a0c1f5eamr3127635276.20.1751650121727; Fri, 04 Jul 2025
- 10:28:41 -0700 (PDT)
+ bh=nMkIAivR8A07/e7hTxG37AHAXq+zZDKU4zZIBDChe5k=;
+ b=plnn2jO3F4mtLYBfvTQ5FCRjID598EYVzVqXZ+4+L6iHdNWjeg8JklNat3A8FHx8Su
+ miqw3Xw59xt6KftzXAsnqYyX2vJtNynShaDaCwGS3RkxU/FqlqLLkfHj+uLbzrJjsN6t
+ HF0CnqWsKpkmHzNsosUg3BUZJzPnvpE1rJE63w25ZG4hU+yxrsN/LF2ohxLzgifXukFM
+ ILIyNyLCzxBVEwXSixpxgsJNSAPHX//i0yGDmCBtFcS4pBUspSZEKwQdGtjZ32EZrzOo
+ kFMcZBjSCcev69B/73p9pd8eznbF1a0lpX0RvYt03++fJzBjAktz0ya5u8Zbfd9t/9cs
+ pg5g==
+X-Gm-Message-State: AOJu0YxFNL4YFNJMjHdSkgVx/8FsMjScOpm/IKsP4WtNqjjkaGphRnof
+ 4X0wgWlhToWQZSMJhZrBIlW6krcCCy52sjQzpQuB6Sc58IInkQIY3rHwjRE3TzR/VCPbyf9LYQX
+ eXYLKs7qnOz/Fm7sAYezSx0aNECL+n+uJQP8PMF7uEQ==
+X-Gm-Gg: ASbGncv6K9NnxpyifE1WRLO4OgG6Sm7zrQqvaC6cCPG2G3ideNJlscvlRgQuNcATG09
+ 5einFVcfu2py80yRv4GHg2AxXD+4cpF6uXk3PMY3XuqNZEyuiV1KYZCU2/erd+pzbrvJjXa0LoY
+ 19d17iFlhPsX0H4HzZy1r2wl5NJ9ESgKmZ72GAHpu4LMIv
+X-Google-Smtp-Source: AGHT+IGHtqW6rrvCNMjn47rqMvL1xEzjMI9IORZBxCJ6Gdql937wszCv2Ih4iXVyZjHdRna2c3KmuLu0HQdrvLHzX40=
+X-Received: by 2002:a05:690c:4989:b0:70c:9364:2c62 with SMTP id
+ 00721157ae682-71668d5b732mr46235807b3.25.1751650154352; Fri, 04 Jul 2025
+ 10:29:14 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250704165729.208381-1-jcksn@duck.com>
- <20250704165729.208381-10-jcksn@duck.com>
-In-Reply-To: <20250704165729.208381-10-jcksn@duck.com>
+ <20250704165729.208381-12-jcksn@duck.com>
+In-Reply-To: <20250704165729.208381-12-jcksn@duck.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 4 Jul 2025 18:28:29 +0100
-X-Gm-Features: Ac12FXzm31NI7VlPP3f2T_q2tX1iw-6RKhT6tbaYp6_LIe6di2YnSBWgt3wdse4
-Message-ID: <CAFEAcA94PWJDgd=8cwmiKOOPGfqmyOqzzV73hzXjzH3xdha7_w@mail.gmail.com>
-Subject: Re: [PATCH v3 09/11] MAX78000: Add TRNG to SOC
+Date: Fri, 4 Jul 2025 18:29:02 +0100
+X-Gm-Features: Ac12FXwLOinZUAmv9ooylTV6km-QV2FTo9MZYDFjEPszhZwkrS-Hw09fccRpam4
+Message-ID: <CAFEAcA9B914uJELAAggfqKYCFHku3CPac97FHHR05_QHVs_VFw@mail.gmail.com>
+Subject: Re: [PATCH v3 11/11] MAX78000: Add AES to SOC
 To: Jackson Donaldson <jackson88044@gmail.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b36;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,55 +94,52 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Fri, 4 Jul 2025 at 17:57, Jackson Donaldson <jackson88044@gmail.com> wrote:
 >
-> This commit adds TRNG to max78000_soc
+> This commit adds AES to max78000_soc
 >
-> Signed-off-by: Jackson Donaldson
+> Signed-off-by: Jackson Donaldson <jcksn@duck.com>
 > ---
->  hw/arm/max78000_soc.c         | 12 +++++++++++-
+>  hw/arm/max78000_soc.c         | 14 +++++++++++---
 >  include/hw/arm/max78000_soc.h |  2 ++
->  2 files changed, 13 insertions(+), 1 deletion(-)
+>  2 files changed, 13 insertions(+), 3 deletions(-)
 >
 > diff --git a/hw/arm/max78000_soc.c b/hw/arm/max78000_soc.c
-> index eddd9616f0..074fb1da8b 100644
+> index 074fb1da8b..39ae4e0396 100644
 > --- a/hw/arm/max78000_soc.c
 > +++ b/hw/arm/max78000_soc.c
-> @@ -43,6 +43,8 @@ static void max78000_soc_initfn(Object *obj)
->                                  TYPE_MAX78000_UART);
->      }
+> @@ -45,6 +45,8 @@ static void max78000_soc_initfn(Object *obj)
 >
-> +    object_initialize_child(obj, "trng", &s->trng, TYPE_MAX78000_TRNG);
+>      object_initialize_child(obj, "trng", &s->trng, TYPE_MAX78000_TRNG);
+>
+> +    object_initialize_child(obj, "aes", &s->aes, TYPE_MAX78000_AES);
 > +
 >      s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
 >  }
 >
-> @@ -51,6 +53,7 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
->      MAX78000State *s = MAX78000_SOC(dev_soc);
+> @@ -54,6 +56,7 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
 >      MemoryRegion *system_memory = get_system_memory();
 >      DeviceState *dev, *gcrdev, *armv7m;
-> +    g_autofree char *trng_link = NULL;
+>      g_autofree char *trng_link = NULL;
+> +    g_autofree char *aes_link = NULL;
 >      SysBusDevice *busdev;
 >      Error *err = NULL;
 >      int i;
-> @@ -126,6 +129,14 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
->                                                         max78000_uart_irq[i]));
->      }
+> @@ -137,6 +140,14 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
+>      trng_link = g_strdup("trng");
+>      object_property_set_link(OBJECT(gcrdev), trng_link, OBJECT(dev), &err);
 >
-> +    dev = DEVICE(&s->trng);
+> +    dev = DEVICE(&s->aes);
 > +    sysbus_realize(SYS_BUS_DEVICE(dev), errp);
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x4004d000);
-> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(armv7m, 4));
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x40007400);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(armv7m, 5));
 > +
-> +    trng_link = g_strdup("trng");
-> +    object_property_set_link(OBJECT(gcrdev), trng_link, OBJECT(dev), &err);
+> +    aes_link = g_strdup("aes");
+> +    object_property_set_link(OBJECT(gcrdev), aes_link, OBJECT(dev), &err);
 
-This string is constant, so you can just pass it in:
-   object_property_set_link(OBJECT(gcrdev), "trng", ...)
-rather than having a local variable and allocating memory.
+Here again you can just pass "aes" as a direct argument.
 
-> +
->      dev = DEVICE(&s->gcr);
->      sysbus_realize(SYS_BUS_DEVICE(dev), errp);
->      sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x40000000);
+Otherwise
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
