@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB5F6C8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:28:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F754C83F09
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:28:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXjE8-0008Ow-It; Fri, 04 Jul 2025 12:25:28 -0400
+	id 1uXjGJ-0007eE-Q6; Fri, 04 Jul 2025 12:27:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXjE4-0008MA-TT
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:25:24 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1uXjFb-0005yC-Md
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:27:00 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXjE3-00068X-2p
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:25:24 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4537edf2c3cso11808805e9.3
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:25:22 -0700 (PDT)
+ id 1uXjFZ-0006zi-Gb
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:26:58 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3a507e88b0aso848812f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:26:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751646321; x=1752251121; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751646415; x=1752251215; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ZzBhsK295U+QrtJeMulwQMRMjYmffakd1q/LVwjhdAQ=;
- b=h2WMMofP5NjQYQHtGjeprZVljZ/zlbWWOmiR9J0q11OOcHC4c6Knd7XoRFsre6eAUJ
- 9rD/NBG52OyeiSz+LW/2+vQTSEXwDEdLnxfjzhlbQyBSioqQQFDYJN0OqcKKeDMYDQuj
- MG9tafh0nUO6dq/+wJ8ag8xPqD+7fY64it8Z/cMgaUfPpyZRaJ5VXqxtgcadg1wICJ4v
- jIzPYI3dTtmp4V1Fc0iOk+O1D2WnutElBjTMPPnoCBFeqLIFE8/IyHu4YTTBeybpBnjV
- XM9ef7iAw7gFW2N9XoYB0rmBxuK/vW1Fs9T7jioAJIUxkSU4AQcKe+yOdPjZty2Jas9a
- qb8w==
+ :reply-to; bh=SRH0loritoMIYj/jPR+rUTfl0mRjYm32LpALRWJqQHc=;
+ b=AMljl6H7UrO415TICMd06pNZ7Z0nm9HM9XldB0URrwWsxMXBeBaP0fCMTnH/pa3kG7
+ dIQ1pCmOCp5o3JlZCsCPJfi4f3S2/eYMteu8tjrXAuzyn2JueaB0zBAkHw4LbnsleuIc
+ d/U4/65MzNjXrw3JZzu5csp3EaiN+ZM68J+L5eccT0kKegWie9F54tJ7TH0sFsWgSkY3
+ 8/Oa0jHtRDK+CS845yW1UrJKBGnUwFCU4bH35Qzu8gVw1PVSZNAaUdv0A4u0knmr5e9p
+ IZluJraACnSVjwsRPaOpL4e2K7kQ0cnC9NsL/SoNSTSw1/aLr6QjiAMZpySVM/HEIyDN
+ s90g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751646321; x=1752251121;
+ d=1e100.net; s=20230601; t=1751646415; x=1752251215;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZzBhsK295U+QrtJeMulwQMRMjYmffakd1q/LVwjhdAQ=;
- b=OEDk5ofJs6PHzIcNDND+rPGe+SEAbtG6jOsKwbjd0JGQBfk++XcUz1V8OfOP9DJ2gG
- L72G1gR0fKnLFKqfXUX0jKXfFszTAei5kEb9HyFu0ALn+HxLJZOqON52ueQBYyW7O0qN
- z3pfmj27o7SNolE9np2GIAaGaDUY3a9r00SRti/z7H0OQoeK5ZF41SoLLjGX6RF0OLJF
- BAfJCVnrc6gE0O4P3U8akwmubuaHBAuQ0WF7/HPkp7rJ+tGmPgKQEszB6MUpJensmn1P
- 1VU6izCFPm0Qu76KwYDpsYBNaIVCGrObnKOj0r4AyWP0oaHHARcLOl+3bWKW6blcCP04
- GI8w==
-X-Gm-Message-State: AOJu0Yyfu+j6CLdKxdffgXQrusdfFqjQ404KPA+xA6OKX3t5dYNtDkoi
- fLl0hLY4Pw/wx+EgV/mgQyK5x3J6QmnISSwwy5SmQ8hrVvMsT2QCCGk/hI4pcgybGhso9+wGlMf
- mU/qs
-X-Gm-Gg: ASbGncvKdUdzU3WpCTbQjIFbUiCUfJ2NDQV2KOqetx3j08VVldeuedi0gt2ivo0bimg
- ypUgXpqnyVyQ1LOJ1fgZJy2EdrdkxdfkscNflccxtuFs5gjuYcAhuk/F3G4uWIcBp6AEEBX/eaG
- KjOdMjjlCTZzocWmkt0ta2jMdRRmt2hIkBMAWrfylnKZ6O+kCiKdaoNp7+Y4J52ZgPPeXJCvJ0F
- R54/Ey2M7mrZuZidliMoQ03sguJ17ghUsgHG8mE26lSM2RVfXJN2A47WsO3bli2T+pzl9EOFPjM
- 3RHFCvLfCRazH0P8vMztJkSR3mQTNMu/jwLQAYViAJ2KR/EOeQs8Dx+KqQWqts/T9sn5
-X-Google-Smtp-Source: AGHT+IH19NFgdKVeWxiKF3q0+XaBnOQJ/99B0bkV6A+HVtTmeNSQZiKQeT1JK4HJok2PFFrxut498g==
-X-Received: by 2002:a05:600c:3b10:b0:441:a715:664a with SMTP id
- 5b1f17b1804b1-454b91597d9mr9365025e9.20.1751646321561; 
- Fri, 04 Jul 2025 09:25:21 -0700 (PDT)
+ bh=SRH0loritoMIYj/jPR+rUTfl0mRjYm32LpALRWJqQHc=;
+ b=ToLfQDatwuSf1LtWT3SzshEMasY6QNPAYnCgJh6iitRUto9hkljPpgvYJRGzXKYopM
+ ENnfhQrBbDsX9xLfsalAytTQmHZJdeiSaDMDcHsWW56KsQCHn1ZZn2h+0jq3GmJtmN5s
+ rooopRb85jr0U6hTVQAZ8UIluVE26tvkVuTsip/wkuFoMOn+LRjbGVYDS8hqIATsf8ew
+ JuPlUQ6H8i+s3O3M+yNmHejeN3woi0ld8/YW7SdQxOAjvxEUfPJec6aIZTMa0XT0AXQz
+ ogaHA3stOHZdkozr0DrLrvIpkAok3vAPqew4eSeV+oXOVy2x5D/dh972ovGoFAu8ugpY
+ EWLA==
+X-Gm-Message-State: AOJu0YwfLRDFhKBwQO442tpki3c087GV5qZIvAp++H6/LG/dc8mH+AR5
+ /HFdIyB7/DoQyMEAWiKJSmNN/LZJ9UUJcztY22nt/1c3ZcrUHpsd+zLsNbJ2aoRKyYQjHTi0L1D
+ 8/6gK
+X-Gm-Gg: ASbGncvDIE4w9u/BBavvxYmpeDzvs/0L2/yt3uedJ8rzwrr16p5rtr9uT9A3bjqeYi6
+ RVEkHf50730zaZwIhSom+IxYu3/4zRVyxceB2OaGliLivwl0hHNFaGYeTfj+vJ32FJ+6IoLHwnQ
+ kqzzYCgpJGNCE4W3H/IoSvvRLQ180s845tTDl7Ae9Njgb5MvGIxrtk/DXLjbu7Zav3eXV/TAPDK
+ JHC467uEEFAryP0xIGZV8qKF7M91CtvF3pnDFKcUu5w/ruu4kWie+YP4h44e9humntEwOFseF7K
+ uFMjvbBkPLA66f4cxOU7XsWnuih5v5BPXwg0fnQCRHtgd599EoH6OXdKzwRWbU/bDdY+
+X-Google-Smtp-Source: AGHT+IGPOPkZKv/HdueKrLSPYRV5gKqKMTxUFMheGYKcc1zyKtX93MSBI2yXWU47k4ASF+ayJCuV/Q==
+X-Received: by 2002:a05:6000:4207:b0:3a4:ef33:e60 with SMTP id
+ ffacd0b85a97d-3b49661d63fmr2446143f8f.40.1751646414947; 
+ Fri, 04 Jul 2025 09:26:54 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b471b96534sm2816857f8f.48.2025.07.04.09.25.20
+ ffacd0b85a97d-3b471b96534sm2816857f8f.48.2025.07.04.09.26.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 09:25:21 -0700 (PDT)
+ Fri, 04 Jul 2025 09:26:54 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 020/119] target/arm: Fix f16_dotadd vs nan selection
-Date: Fri,  4 Jul 2025 17:23:20 +0100
-Message-ID: <20250704162501.249138-21-peter.maydell@linaro.org>
+Subject: [PULL 119/119] linux-user/aarch64: Set hwcap bits for SME2p1/SVE2p1
+Date: Fri,  4 Jul 2025 17:24:59 +0100
+Message-ID: <20250704162501.249138-120-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250704162501.249138-1-peter.maydell@linaro.org>
 References: <20250704162501.249138-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,95 +100,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Implement FPProcessNaNs4 within f16_dotadd, rather than
-simply letting NaNs propagate through the function.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 3916841ac75 ("target/arm: Implement FMOPA, FMOPS (widening)")
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250704142112.1018902-9-richard.henderson@linaro.org
+Message-id: 20250704142112.1018902-108-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/sme_helper.c | 62 +++++++++++++++++++++++++++----------
- 1 file changed, 46 insertions(+), 16 deletions(-)
+ linux-user/elfload.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index de0c6e54d4b..8f33387e4bd 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -1005,25 +1005,55 @@ static float32 f16_dotadd(float32 sum, uint32_t e1, uint32_t e2,
-      *  - we have pre-set-up copy of s_std which is set to round-to-odd,
-      *    for the multiply (see below)
-      */
--    float64 e1r = float16_to_float64(e1 & 0xffff, true, s_f16);
--    float64 e1c = float16_to_float64(e1 >> 16, true, s_f16);
--    float64 e2r = float16_to_float64(e2 & 0xffff, true, s_f16);
--    float64 e2c = float16_to_float64(e2 >> 16, true, s_f16);
--    float64 t64;
-+    float16 h1r = e1 & 0xffff;
-+    float16 h1c = e1 >> 16;
-+    float16 h2r = e2 & 0xffff;
-+    float16 h2c = e2 >> 16;
-     float32 t32;
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 2add1665c75..ea214105ff8 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -915,6 +915,14 @@ uint64_t get_elf_hwcap2(void)
+     GET_FEATURE_ID(aa64_sme_fa64, ARM_HWCAP2_A64_SME_FA64);
+     GET_FEATURE_ID(aa64_hbc, ARM_HWCAP2_A64_HBC);
+     GET_FEATURE_ID(aa64_mops, ARM_HWCAP2_A64_MOPS);
++    GET_FEATURE_ID(aa64_sve2p1, ARM_HWCAP2_A64_SVE2P1);
++    GET_FEATURE_ID(aa64_sme2, (ARM_HWCAP2_A64_SME2 |
++                               ARM_HWCAP2_A64_SME_I16I32 |
++                               ARM_HWCAP2_A64_SME_BI32I32));
++    GET_FEATURE_ID(aa64_sme2p1, ARM_HWCAP2_A64_SME2P1);
++    GET_FEATURE_ID(aa64_sme_b16b16, ARM_HWCAP2_A64_SME_B16B16);
++    GET_FEATURE_ID(aa64_sme_f16f16, ARM_HWCAP2_A64_SME_F16F16);
++    GET_FEATURE_ID(aa64_sve_b16b16, ARM_HWCAP2_A64_SVE_B16B16);
  
--    /*
--     * The ARM pseudocode function FPDot performs both multiplies
--     * and the add with a single rounding operation.  Emulate this
--     * by performing the first multiply in round-to-odd, then doing
--     * the second multiply as fused multiply-add, and rounding to
--     * float32 all in one step.
--     */
--    t64 = float64_mul(e1r, e2r, s_odd);
--    t64 = float64r32_muladd(e1c, e2c, t64, 0, s_std);
-+    /* C.f. FPProcessNaNs4 */
-+    if (float16_is_any_nan(h1r) || float16_is_any_nan(h1c) ||
-+        float16_is_any_nan(h2r) || float16_is_any_nan(h2c)) {
-+        float16 t16;
- 
--    /* This conversion is exact, because we've already rounded. */
--    t32 = float64_to_float32(t64, s_std);
-+        if (float16_is_signaling_nan(h1r, s_f16)) {
-+            t16 = h1r;
-+        } else if (float16_is_signaling_nan(h1c, s_f16)) {
-+            t16 = h1c;
-+        } else if (float16_is_signaling_nan(h2r, s_f16)) {
-+            t16 = h2r;
-+        } else if (float16_is_signaling_nan(h2c, s_f16)) {
-+            t16 = h2c;
-+        } else if (float16_is_any_nan(h1r)) {
-+            t16 = h1r;
-+        } else if (float16_is_any_nan(h1c)) {
-+            t16 = h1c;
-+        } else if (float16_is_any_nan(h2r)) {
-+            t16 = h2r;
-+        } else {
-+            t16 = h2c;
-+        }
-+        t32 = float16_to_float32(t16, true, s_f16);
-+    } else {
-+        float64 e1r = float16_to_float64(h1r, true, s_f16);
-+        float64 e1c = float16_to_float64(h1c, true, s_f16);
-+        float64 e2r = float16_to_float64(h2r, true, s_f16);
-+        float64 e2c = float16_to_float64(h2c, true, s_f16);
-+        float64 t64;
-+
-+        /*
-+         * The ARM pseudocode function FPDot performs both multiplies
-+         * and the add with a single rounding operation.  Emulate this
-+         * by performing the first multiply in round-to-odd, then doing
-+         * the second multiply as fused multiply-add, and rounding to
-+         * float32 all in one step.
-+         */
-+        t64 = float64_mul(e1r, e2r, s_odd);
-+        t64 = float64r32_muladd(e1c, e2c, t64, 0, s_std);
-+
-+        /* This conversion is exact, because we've already rounded. */
-+        t32 = float64_to_float32(t64, s_std);
-+    }
- 
-     /* The final accumulation step is not fused. */
-     return float32_add(sum, t32, s_std);
+     return hwcaps;
+ }
 -- 
 2.43.0
 
