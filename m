@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10481C8303D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF9DC83F09
 	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 14:26:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXhKZ-0000IR-Jr; Fri, 04 Jul 2025 10:23:59 -0400
+	id 1uXhLq-0003qZ-A2; Fri, 04 Jul 2025 10:25:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uXhID-00053n-Cq
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:21:36 -0400
-Received: from mail-oa1-x2b.google.com ([2001:4860:4864:20::2b])
+ id 1uXhIL-0005Hf-4V
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:21:43 -0400
+Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uXhIB-0005cP-KU
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:21:33 -0400
-Received: by mail-oa1-x2b.google.com with SMTP id
- 586e51a60fabf-2e9071e3706so775983fac.0
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 07:21:31 -0700 (PDT)
+ id 1uXhIJ-0005qK-1M
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:21:40 -0400
+Received: by mail-oo1-xc2b.google.com with SMTP id
+ 006d021491bc7-60d666804ebso1198981eaf.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 07:21:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751638890; x=1752243690; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751638897; x=1752243697; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MESEd0mA1nIIoktuVnBsPsHvzltJ4JN+uRnJz4lGeYA=;
- b=u6l1jDgEJr+umjKiWJlYj2NkpOdLoP3Mjm+yJy/7Z+LaO3Y83+K6uMDh07qMhpv3kF
- SzAyVqADxAgx/ta37/HhJRYXUHHh5USWkrp6WxGPtAeqLYU3doMka+/fsphGYvBe6Ohb
- hMComGFMAfbOtaM6nWgPmH06NOzGxCOex+dxsprmqAvVnfiQoaq3wfxqxawVPvDYw5oa
- 7HTe3nn7S+dnZo7xNkT4ogbGsZyAeJsyo11h9dDYs6tJ2jpsMCgsgD/bV7L5m2iXI9Ez
- aw3FIuCQ1qVS9UKm7D09YAanPGXen1ShDpvsUGJ34dq+ayQ6ZMvw/icjADpIcGqRAj6m
- qipg==
+ bh=BGYgwCm9XTJh3Jv7tUzNjmQDxtUUB3eW8c2+NqQ6fB4=;
+ b=C4shi1ACYr3AZDxvxj1gB7KJuxxB055i98/W/47IhEtP9yCv4qgyDr88m7zqUBWrhY
+ dFHBlykGderhVVzzYsd2CsT4owv7fXYYsxDBOgrQjsF6TY1UolAQCZBJT1qYVCSoHMMa
+ B6mDMp4kqnZhLrKdC7y5kFWz3elKBxhwM95IIcMthiCQDiticJXs3gMV1uHlTWG3rym7
+ bL4nfSbzjQYTscQW2hQYfB/b43zTxhdS7ZTQ/thtYFPgL6yHWWDqjW5FM+s+YHURzZLB
+ X+h8bnrWOZEmKXFSTmeKdRccDp/hCoUgopdSAMsYmepWUCXjHS/aVNehHcd9h+KXfl/J
+ 5ZrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751638890; x=1752243690;
+ d=1e100.net; s=20230601; t=1751638897; x=1752243697;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MESEd0mA1nIIoktuVnBsPsHvzltJ4JN+uRnJz4lGeYA=;
- b=aPcNrwpRR9TUc9WnZVbXrdimTqIeW+y2g9+l2Zu91TIrZfRokpsuPbbLn4xfIuFfHe
- 98fJsJnoRAv+MlNp4lWxxcECkBk7dpKNPsKAyWTCyog0CdUD/9w1jS9oDwop0E9mAU1v
- j5A00blwbjr7B9oR+wmdRm8W2fArK50i4qW8GcRk2MXlNU8ixxWqp1nkp4S8j2j8v5Tt
- SbXp+KXB5ESoCBZ3K4vUxYSjef2r1YqiQz+5a31O0Q9wCJBndaM65H3QEQZM+0dxbsyA
- h8CUNBzlZtSVXOLCBVG+PdjE26ZWJV+VyyDAcC/qGRyhDjTnGTCnNiFsi6P6w48wON0P
- B/SA==
-X-Gm-Message-State: AOJu0YwgItVeLdKALJywd1NvD2whL1AoM+ygYxWAsHvNgw2TNzGhI6iy
- qsPBLuM25adf0T5yBP74LlAcF3Clc2ravE9BVoNt3fy3mL8LrW0jESI3ULm/scIv2IWLrbkbtdi
- Z5qmp9Pw=
-X-Gm-Gg: ASbGnctLpb75kUt9+ZtFr96tFaC4GYcLBHR6qVDVqtY/zENOUTRTbDOo9eGEqfn5bS2
- HzIQsyBS40biGc9aJ6GaDtU42rTrptO9ymFfXHQSH6LKw8k/5qUPwSqpk7kc5ejIPFiYOw2u8Jr
- 9n0A6I34PZHLcH6kvhoQljCnokA/hbT5afkETKlJxMxANXLOQzEn7rca5mXOLKA/s8brWgKwixc
- r6G3c88mMOLWMqj6+DxIeqGMkx1e033DLjMhRfmeUPBDgJimcXBWxyUXGvT8IVTLb6ODUGdy4t/
- aU55AR+2E7Yw2sYLA2OIR5bjhC83dal0DddPz2FGeb7NJbpXVNVQXYhYsmr9s/IegXmKgJLv4HL
- 47FJRNyW3mF5To5jJw70G1SqYE/pFGGDTVUGd9AAOs3cW2xR6/HNSYKSLYkQ=
-X-Google-Smtp-Source: AGHT+IEs8F8Cw2QSEbFO9xtIfXdRyHcRL+0oiF5LD6GAUq/YuuDxOoIQB0yTh/47iLTlJHmTWLxpDg==
-X-Received: by 2002:a05:6870:b614:b0:2b8:e4b9:47a3 with SMTP id
- 586e51a60fabf-2f796caade4mr1568371fac.22.1751638890419; 
- Fri, 04 Jul 2025 07:21:30 -0700 (PDT)
+ bh=BGYgwCm9XTJh3Jv7tUzNjmQDxtUUB3eW8c2+NqQ6fB4=;
+ b=MAUp06piY1OCSEDm0scBmvzcajIWhMRuaMo1CsvKpt7Q+kCSJ+TOPVn/UvIqCbxu5Y
+ PMMtwCh9dMpWrxeLRR/0gMQiwkxe2Ki/4KWLgLuENKALfkjP9C4a67sVihRr4rfjFnkO
+ e3x/VAhj6IRAgxt2NNjFGFaTv4E1MNilOIIcMAQzw5vQ445i3JPBBg9IBfIl0jLvJkX5
+ wva1ftKLVyw59V0jjtjSTM0gtdRzrXe/pH5N6/bZuTo1wwjsoZtWEfXQECP6yT0GIUJK
+ /+0PJdTbhev0+tAwDbweLc4R1o1sD3Z8akeo05pbdG2q6Lqed7+fXasuYnJtSsgTBUUd
+ QVlA==
+X-Gm-Message-State: AOJu0YzVDZvuiD20+WSDgAcx/7diSSaqGNOfIVtQZ4TQsQrttGn85QgW
+ sISo4ltiskgQAG2/7adyAK8aG9F7aoL6Fy0u2+f/V1Kdb7HCwnV69gEwmcoCseCRKR7BLZOxsZS
+ 1+J520Yc=
+X-Gm-Gg: ASbGncsqMScSksYL0nuNrJvLrxsoqIQXbXvJ4NphJj7Y+CsEJ4BguAIzDkHQo54gxbN
+ W4hV2FYeNMEUmd9/2/J5Zd2i5g99ITB+DQjx9Jpz5CViuk/JRHwnZtQPKFHSJ/oQTvkicNsvspH
+ 1vP9Qlt34KML/LnoLh9mP+gfHfwsri6MNwvLiWQMCzbEbSeilKkLHITL4DfingwrCQrma+hthVR
+ gH9Rb1UnvNtaeKifwr1NIwpDZDIy1f42dju84OXhGkOZMuKloOJPsC5X062YWZlXUSxWdJxrCl3
+ o15BtEuktKnBA6GvQVAwAUcFJwIQL/h5sKYGsQRLggMuTdvFdBhJ4FyvKKO4fZ/Jo0MshfOnxpx
+ Ov4YL5PTouWtoRJYqVSvAfTqRuru7BDaPjYDnOcHeBTood2nuVarnkzQDYcQ=
+X-Google-Smtp-Source: AGHT+IFSHi0RvfK3+yVRW1UTA4Vowz2RMZLpC4PI7MFtKTY9ju5ZXR4nUXKxojKoPxrBybSHes9YBg==
+X-Received: by 2002:a05:6870:2103:b0:2eb:a2ec:dc02 with SMTP id
+ 586e51a60fabf-2f7903f154emr2599345fac.11.1751638897229; 
+ Fri, 04 Jul 2025 07:21:37 -0700 (PDT)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2f78ff0471esm528016fac.3.2025.07.04.07.21.29
+ 586e51a60fabf-2f78ff0471esm528016fac.3.2025.07.04.07.21.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 07:21:29 -0700 (PDT)
+ Fri, 04 Jul 2025 07:21:36 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	peter.maydell@linaro.org
-Subject: [PATCH v4 014/108] target/arm: Add isar feature tests for SME2p1,
- SVE2p1
-Date: Fri,  4 Jul 2025 08:19:37 -0600
-Message-ID: <20250704142112.1018902-15-richard.henderson@linaro.org>
+Subject: [PATCH v4 021/108] target/arm: Split get_tile_rowcol argument
+ tile_index
+Date: Fri,  4 Jul 2025 08:19:44 -0600
+Message-ID: <20250704142112.1018902-22-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250704142112.1018902-1-richard.henderson@linaro.org>
 References: <20250704142112.1018902-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2b;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,120 +102,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Decode tile number and index offset beforehand and separately.
+
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu-features.h | 63 +++++++++++++++++++++++++++++++++++++++
- target/arm/cpu.h          |  1 +
- 2 files changed, 64 insertions(+)
+ target/arm/tcg/translate-sme.c | 17 +++++--------
+ target/arm/tcg/sme.decode      | 46 +++++++++++++++++++++++-----------
+ 2 files changed, 38 insertions(+), 25 deletions(-)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 5d8adfb73b..5876162428 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -604,6 +604,11 @@ static inline bool isar_feature_aa64_rpres(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64ISAR2, RPRES);
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index 797035e289..e22ec393fd 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -41,15 +41,10 @@ static bool sme2_zt0_enabled_check(DisasContext *s)
+     return true;
  }
  
-+static inline bool isar_feature_aa64_lut(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64ISAR2, LUT);
-+}
-+
- static inline bool isar_feature_aa64_fp_simd(const ARMISARegisters *id)
+-/*
+- * Resolve tile.size[index] to a host pointer, where tile and index
+- * are always decoded together, dependent on the element size.
+- */
++/* Resolve tile.size[rs+imm] to a host pointer. */
+ static TCGv_ptr get_tile_rowcol(DisasContext *s, int esz, int rs,
+-                                int tile_index, bool vertical)
++                                int tile, int imm, bool vertical)
  {
-     /* We always set the AdvSIMD and FP fields identically.  */
-@@ -932,6 +937,11 @@ static inline bool isar_feature_aa64_sve2(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64ZFR0, SVEVER) != 0;
- }
+-    int tile = tile_index >> (4 - esz);
+-    int index = esz == MO_128 ? 0 : extract32(tile_index, 0, 4 - esz);
+     int pos, len, offset;
+     TCGv_i32 tmp;
+     TCGv_ptr addr;
+@@ -57,7 +52,7 @@ static TCGv_ptr get_tile_rowcol(DisasContext *s, int esz, int rs,
+     /* Compute the final index, which is Rs+imm. */
+     tmp = tcg_temp_new_i32();
+     tcg_gen_trunc_tl_i32(tmp, cpu_reg(s, rs));
+-    tcg_gen_addi_i32(tmp, tmp, index);
++    tcg_gen_addi_i32(tmp, tmp, imm);
  
-+static inline bool isar_feature_aa64_sve2p1(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64ZFR0, SVEVER) >=2;
-+}
-+
- static inline bool isar_feature_aa64_sve2_aes(const ARMISARegisters *id)
- {
-     return FIELD_EX64_IDREG(id, ID_AA64ZFR0, AES) != 0;
-@@ -977,6 +987,21 @@ static inline bool isar_feature_aa64_sve_f64mm(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64ZFR0, F64MM) != 0;
- }
+     /* Prepare a power-of-two modulo via extraction of @len bits. */
+     len = ctz32(streaming_vec_reg_size(s)) - esz;
+@@ -185,7 +180,7 @@ static bool trans_MOVA(DisasContext *s, arg_MOVA *a)
+         return true;
+     }
  
-+static inline bool isar_feature_aa64_sve_b16b16(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64ZFR0, B16B16);
-+}
-+
-+static inline bool isar_feature_aa64_sme_b16b16(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64SMFR0, B16B16);
-+}
-+
-+static inline bool isar_feature_aa64_sme_f16f16(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64SMFR0, F16F16);
-+}
-+
- static inline bool isar_feature_aa64_sme_f64f64(const ARMISARegisters *id)
- {
-     return FIELD_EX64_IDREG(id, ID_AA64SMFR0, F64F64);
-@@ -992,6 +1017,44 @@ static inline bool isar_feature_aa64_sme_fa64(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64SMFR0, FA64);
- }
+-    t_za = get_tile_rowcol(s, a->esz, a->rs, a->za_imm, a->v);
++    t_za = get_tile_rowcol(s, a->esz, a->rs, a->za, a->off, a->v);
+     t_zr = vec_full_reg_ptr(s, a->zr);
+     t_pg = pred_full_reg_ptr(s, a->pg);
  
-+static inline bool isar_feature_aa64_sme2(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64SMFR0, SMEVER) != 0;
-+}
-+
-+static inline bool isar_feature_aa64_sme2p1(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64SMFR0, SMEVER) >= 2;
-+}
-+
-+/*
-+ * Combinations of feature tests, for ease of use with TRANS_FEAT.
-+ */
-+static inline bool isar_feature_aa64_sme_or_sve2p1(const ARMISARegisters *id)
-+{
-+    return isar_feature_aa64_sme(id) || isar_feature_aa64_sve2p1(id);
-+}
-+
-+static inline bool isar_feature_aa64_sme2_or_sve2p1(const ARMISARegisters *id)
-+{
-+    return isar_feature_aa64_sme2(id) || isar_feature_aa64_sve2p1(id);
-+}
-+
-+static inline bool isar_feature_aa64_sme2p1_or_sve2p1(const ARMISARegisters *id)
-+{
-+    return isar_feature_aa64_sme2p1(id) || isar_feature_aa64_sve2p1(id);
-+}
-+
-+static inline bool isar_feature_aa64_sme2_i16i64(const ARMISARegisters *id)
-+{
-+    return isar_feature_aa64_sme2(id) && isar_feature_aa64_sme_i16i64(id);
-+}
-+
-+static inline bool isar_feature_aa64_sme2_f64f64(const ARMISARegisters *id)
-+{
-+    return isar_feature_aa64_sme2(id) && isar_feature_aa64_sme_f64f64(id);
-+}
-+
- /*
-  * Feature tests for "does this exist in either 32-bit or 64-bit?"
-  */
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 7db97e8038..c6041a9357 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -2211,6 +2211,7 @@ FIELD(ID_AA64ISAR2, SYSINSTR_128, 36, 4)
- FIELD(ID_AA64ISAR2, PRFMSLC, 40, 4)
- FIELD(ID_AA64ISAR2, RPRFM, 48, 4)
- FIELD(ID_AA64ISAR2, CSSC, 52, 4)
-+FIELD(ID_AA64ISAR2, LUT, 56, 4)
- FIELD(ID_AA64ISAR2, ATS1A, 60, 4)
+@@ -264,7 +259,7 @@ static bool trans_LDST1(DisasContext *s, arg_LDST1 *a)
+         return true;
+     }
  
- FIELD(ID_AA64PFR0, EL0, 0, 4)
+-    t_za = get_tile_rowcol(s, a->esz, a->rs, a->za_imm, a->v);
++    t_za = get_tile_rowcol(s, a->esz, a->rs, a->za, a->off, a->v);
+     t_pg = pred_full_reg_ptr(s, a->pg);
+     addr = tcg_temp_new_i64();
+ 
+@@ -295,7 +290,7 @@ static bool do_ldst_r(DisasContext *s, arg_ldstr *a, GenLdStR *fn)
+     }
+ 
+     /* ZA[n] equates to ZA0H.B[n]. */
+-    base = get_tile_rowcol(s, MO_8, a->rv, imm, false);
++    base = get_tile_rowcol(s, MO_8, a->rv, 0, imm, false);
+ 
+     fn(s, base, 0, svl, a->rn, imm * svl,
+        s->align_mem ? MO_ALIGN_16 : MO_UNALN);
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index 83ca6a9104..efe369e079 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -27,17 +27,29 @@ ZERO_zt0        11000000 01 001 00000000000 00000001
+ ### SME Move into/from Array
+ 
+ %mova_rs        13:2 !function=plus_12
+-&mova           esz rs pg zr za_imm v:bool to_vec:bool
++&mova           esz rs pg zr za off v:bool to_vec:bool
+ 
+-MOVA            11000000 esz:2 00000 0 v:1 .. pg:3 zr:5 0 za_imm:4  \
+-                &mova to_vec=0 rs=%mova_rs
+-MOVA            11000000 11    00000 1 v:1 .. pg:3 zr:5 0 za_imm:4  \
+-                &mova to_vec=0 rs=%mova_rs esz=4
++MOVA            11000000 00 00000 0 v:1 .. pg:3 zr:5 0 off:4  \
++                &mova to_vec=0 rs=%mova_rs esz=0 za=0
++MOVA            11000000 01 00000 0 v:1 .. pg:3 zr:5 0 za:1 off:3  \
++                &mova to_vec=0 rs=%mova_rs esz=1
++MOVA            11000000 10 00000 0 v:1 .. pg:3 zr:5 0 za:2 off:2  \
++                &mova to_vec=0 rs=%mova_rs esz=2
++MOVA            11000000 11 00000 0 v:1 .. pg:3 zr:5 0 za:3 off:1  \
++                &mova to_vec=0 rs=%mova_rs esz=3
++MOVA            11000000 11 00000 1 v:1 .. pg:3 zr:5 0 za:4  \
++                &mova to_vec=0 rs=%mova_rs esz=4 off=0
+ 
+-MOVA            11000000 esz:2 00001 0 v:1 .. pg:3 0 za_imm:4 zr:5  \
+-                &mova to_vec=1 rs=%mova_rs
+-MOVA            11000000 11    00001 1 v:1 .. pg:3 0 za_imm:4 zr:5  \
+-                &mova to_vec=1 rs=%mova_rs esz=4
++MOVA            11000000 00 00001 0 v:1 .. pg:3 0 off:4      zr:5  \
++                &mova to_vec=1 rs=%mova_rs esz=0 za=0
++MOVA            11000000 01 00001 0 v:1 .. pg:3 0 za:1 off:3 zr:5  \
++                &mova to_vec=1 rs=%mova_rs esz=1
++MOVA            11000000 10 00001 0 v:1 .. pg:3 0 za:2 off:2 zr:5  \
++                &mova to_vec=1 rs=%mova_rs esz=2
++MOVA            11000000 11 00001 0 v:1 .. pg:3 0 za:3 off:1 zr:5  \
++                &mova to_vec=1 rs=%mova_rs esz=3
++MOVA            11000000 11 00001 1 v:1 .. pg:3 0 za:4       zr:5  \
++                &mova to_vec=1 rs=%mova_rs esz=4 off=0
+ 
+ ### SME Move into/from ZT0
+ 
+@@ -46,12 +58,18 @@ MOVT_ztr        1100 0000 0100 1110 0 off:3 00 11111 rt:5
+ 
+ ### SME Memory
+ 
+-&ldst           esz rs pg rn rm za_imm v:bool st:bool
++&ldst           esz rs pg rn rm za off v:bool st:bool
+ 
+-LDST1           1110000 0 esz:2 st:1 rm:5 v:1 .. pg:3 rn:5 0 za_imm:4  \
+-                &ldst rs=%mova_rs
+-LDST1           1110000 111     st:1 rm:5 v:1 .. pg:3 rn:5 0 za_imm:4  \
+-                &ldst esz=4 rs=%mova_rs
++LDST1           1110000 0 00 st:1 rm:5 v:1 .. pg:3 rn:5 0 off:4  \
++                &ldst rs=%mova_rs esz=0 za=0
++LDST1           1110000 0 01 st:1 rm:5 v:1 .. pg:3 rn:5 0 za:1 off:3  \
++                &ldst rs=%mova_rs esz=1
++LDST1           1110000 0 10 st:1 rm:5 v:1 .. pg:3 rn:5 0 za:2 off:2  \
++                &ldst rs=%mova_rs esz=2
++LDST1           1110000 0 11 st:1 rm:5 v:1 .. pg:3 rn:5 0 za:3 off:1  \
++                &ldst rs=%mova_rs esz=3
++LDST1           1110000 1 11 st:1 rm:5 v:1 .. pg:3 rn:5 0 za:4  \
++                &ldst rs=%mova_rs esz=4 off=0
+ 
+ &ldstr          rv rn imm
+ @ldstr          ....... ... . ...... .. ... rn:5 . imm:4 \
 -- 
 2.43.0
 
