@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80907C83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 17:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57E5FC83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 17:26:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXkAF-0002CH-CH; Fri, 04 Jul 2025 13:25:31 -0400
+	id 1uXkAk-0002GO-2z; Fri, 04 Jul 2025 13:26:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXkAE-0002C9-9J
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 13:25:30 -0400
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ id 1uXkAi-0002Fo-13
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 13:26:00 -0400
+Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXkAC-0003rZ-Gj
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 13:25:29 -0400
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-71101668dedso8298447b3.1
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 10:25:27 -0700 (PDT)
+ id 1uXkAf-0004Tg-Tf
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 13:25:58 -0400
+Received: by mail-yb1-xb2e.google.com with SMTP id
+ 3f1490d57ef6-e82278e3889so822978276.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 10:25:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751649927; x=1752254727; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751649957; x=1752254757; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=WtZeJrmJk9u0FGNZ8moIbXR2K+bgnaH8uMSkA6Ti51Y=;
- b=fZKge7l4FCO8RjxaIgzBphh2Yvhtm6dXDot08ZeWkSJh0ONDofzDXjCMn9DnnxD0yk
- 7mPHvCrm9VdgBHqZphhzJnAyhjoWUMWlI32IAVdXeX1TPcuu9JF9oiIwyeIkp3CnllVl
- RYlWCtsXo/xpsnzZwFGBNmd1kG9Fctd+b5+PxWVn7zvNDqDubLgZwh3wLCx7bAQyQYiK
- lhY5x2pdRpJvvGe9N2TNR9k+68jlXj4kgH+wREvi0x7ZwUT/sCsnq3bGHvSPVM2qglu8
- YS6htvVSefDaNo+YgkkrhjbMONNrWDaTRg9Kc+Yx3ofDzpTyyUPTPRHp4oAMB0ElCLFW
- RmVQ==
+ bh=mrfecAbSmjbX6e6b9Z+wVz+JalRW7xrqzCQz9jMHwrs=;
+ b=sN+viqKdwo3Xe7/S69Xwz6JZYE8ElYj9Lagk2gY6Q8DqCFsmy403z7FWmaHyyQfpcQ
+ wq/YZNqImk2WWrQpyQqafgRximj7f5As4HBkQ4IhMCyrE9dwzW4cpBXF+HTsf6/K5vgf
+ 3ZzVPxcj5YCx3UGz4QHt0tyloKgIw+87wzFoRLbUI1/yyyjTBPwBcup4Dn/I/Yktd6cu
+ Sy8cHj4etx4rUj8R/CDn2Mx1U+aYLwMKrx9NZLZ9/k02yhfuE/AdF6sTD8c5RsFtNbiF
+ /jZvmvPzNi7KUMpDF80PEH/k3Dba1IndQO+9LHw2VwlmVg8Go2Cqc9NJ3YxaOBm3XJTJ
+ bkkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751649927; x=1752254727;
+ d=1e100.net; s=20230601; t=1751649957; x=1752254757;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=WtZeJrmJk9u0FGNZ8moIbXR2K+bgnaH8uMSkA6Ti51Y=;
- b=nysKHVSiNBC+wfmZXyf/CoDJe6wiyOp48w2PaQKqAFV/XuFKH8q0i0yHvY3MG3q4s5
- DL0g0Tsq263/weCP79zeaiDWsnnXXHwYLDlQK9TiPZ5umadBsbPKH3R8+KpVAh00d1hs
- wMHh1SIKrPY/2KPNCjG6Ks/lGGpfC2dKUA2yd6zXSd1DPozQQvNIdmgum/BGcbT0jfTn
- s8DA3JELnbfyNdtZ74rsoOjA4jbIiyRXBSd9LMX5qVReccV/9wsdPHH/U4ebvOgS/qDR
- hQDmGEEoKLAk/8I1h+MZ+920gA034YnUGMZpCMmna59gSFHRnv81x9MkAthpNFsB+rq+
- 4aaA==
-X-Gm-Message-State: AOJu0YwArPrlhf3E8TnOVXPxSVawwAKD2vC0OvcWlU2ntz23pn0ax9ma
- Iprh4S+dABYS1GWMCXYDUUIj+D4XNL0m6Y3vPd7jgvSUWiO8fDmEbJBS+0vos2gqB1Uj4TF+x2D
- seeujOW2i7PsTviPvDmKDd81XWOqgDz7xQ9C0u0FkDg==
-X-Gm-Gg: ASbGncvgJ/eZGJY/Z86WdN8m3oDNm5UvTYD902cGWywNvZJYcGA8V6xRARApRRiigYU
- 18kA/9T1d+l3eJXrQl5YgFdfK6OLohzsGI/M7mRSda/W0Abj0gwbZ/+72BrPSrg7N1bLH5lJcHs
- nppLox+LfC/+ELexQrCS1RCZsugdHwXLIjWidspu89FO+t
-X-Google-Smtp-Source: AGHT+IFcz1yXFBQgQFbExKYN3T4TpBBFdj6u3xmujwzNW0dD1fT9c00Z6vIKkNjimr5nAqyOjXUxfUXnM1ulmKYgR+M=
-X-Received: by 2002:a05:690c:7704:10b0:716:5986:e4c7 with SMTP id
- 00721157ae682-71668c51b51mr34441617b3.11.1751649927139; Fri, 04 Jul 2025
- 10:25:27 -0700 (PDT)
+ bh=mrfecAbSmjbX6e6b9Z+wVz+JalRW7xrqzCQz9jMHwrs=;
+ b=cvFGyGPj5nYXT7EB/rHFQbMyPRwtcr6bisZZFSvYX8jx7Y6nCVRykjXsV0FSSHkJZF
+ jgO5Xsj2czQDNINMl/wKk9lBown4iTmJuDRA+E0jP32B+u0Rw+jgHrxilwO9V/o2vbSy
+ u+CMEjSrknhcgemskVgE+MD0YmBdGq1S1xkSlwH//UOxwer2x54Bqtdg1VvoaUyV91DK
+ HdSdoyx/kbK6cZ2Xf7xvIlJEJhc6jY/LjQUM5xduC3DTCMa8pA1jGu5UjHt2Vzbamj7a
+ htb0vAelOJawJvp0fy7rbuFLr8h5jfa88EkBcK6xXkJ57c0UJVkXJsE5dEhBqCM0Fnn1
+ HxyA==
+X-Gm-Message-State: AOJu0YzqDs3YdBwdXthCjV+zgLlZigo3Z5BD7m10SRUgyVJzRsAg9aNJ
+ +aZ7hxeB9uVcD6+whZRftTPhgl8l2ggkNMmk3Vr4o+sVjPc4E1+K8v/KkLbJhKj+13hmsZYi4su
+ 4QlvuMuEp0KJc4RHWZY0YsWcxvVx28Wx9G3xQ9jkWCAxbiphJj89V
+X-Gm-Gg: ASbGncsfDBBNDqOlhxpZepmF3luK+yczzE+ArQsYngq1TDcFvf9FRFi/Vitlp2SzkAw
+ nmbNPHJUTUUcYVmX/jZ7ZDAKeVcRth2keiqAy1uAA2xNPcM9yqcOGqxm404DO6M1z2+k0OPzbPt
+ 0AZhesz+LbiqQXL0SAp6z+aZKGdSVILom54oMJ41a2f2n9
+X-Google-Smtp-Source: AGHT+IH1cpJGrsZmTXbS288FxULKBkn2zivhZ6nU3xHBBnbpMpcHqpx3m1sJdmZDxNy0cef9+sZHVvx2bSkCjW/RZlo=
+X-Received: by 2002:a05:6902:1887:b0:e84:940:e866 with SMTP id
+ 3f1490d57ef6-e899e3fb4c7mr3394716276.6.1751649956798; Fri, 04 Jul 2025
+ 10:25:56 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250704165729.208381-1-jcksn@duck.com>
- <20250704165729.208381-4-jcksn@duck.com>
-In-Reply-To: <20250704165729.208381-4-jcksn@duck.com>
+ <20250704165729.208381-6-jcksn@duck.com>
+In-Reply-To: <20250704165729.208381-6-jcksn@duck.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 4 Jul 2025 18:25:15 +0100
-X-Gm-Features: Ac12FXxBh-OSGB8s1937FP0K9HBVvyW_79Zrt6o7zSz3Yffi-jpfpVqprGfSnVw
-Message-ID: <CAFEAcA_FAeRqDqsLhv-1q4daBycoms3dGDtamoxCfQ=5huT_Tg@mail.gmail.com>
-Subject: Re: [PATCH v3 03/11] MAX78000: Add ICC to SOC
+Date: Fri, 4 Jul 2025 18:25:45 +0100
+X-Gm-Features: Ac12FXw6OSs42-2ayJJ12wt8M7DosRiH_94ImGfTFsMxh8rnig--pZTBLcpAuHM
+Message-ID: <CAFEAcA8YfZjwS-DWGDCBK8gR4ShcQ-a+NC=AZk5b7BGNK6JUig@mail.gmail.com>
+Subject: Re: [PATCH v3 05/11] MAX78000: Add UART to SOC
 To: Jackson Donaldson <jackson88044@gmail.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,15 +94,10 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Fri, 4 Jul 2025 at 17:57, Jackson Donaldson <jackson88044@gmail.com> wrote:
 >
-> This commit adds the instruction cache controller
-> to max78000_soc
+> This commit adds UART to max78000_soc
 >
 > Signed-off-by: Jackson Donaldson <jcksn@duck.com>
 > ---
->  hw/arm/max78000_soc.c         | 20 ++++++++++++++++----
->  include/hw/arm/max78000_soc.h |  6 ++++++
->  2 files changed, 22 insertions(+), 4 deletions(-)
->
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
