@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E67DC83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:39:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14A68C8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:39:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXjGP-0007uk-RW; Fri, 04 Jul 2025 12:27:49 -0400
+	id 1uXjGu-0000Pv-7F; Fri, 04 Jul 2025 12:28:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXjFD-00030R-4M
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:26:35 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1uXjFR-0004WG-6p
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:26:49 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXjFB-0006sM-4v
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:26:34 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-453608ed113so12313485e9.0
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:26:32 -0700 (PDT)
+ id 1uXjFO-0006wO-BU
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:26:48 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3a6e2d85705so481719f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:26:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751646392; x=1752251192; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751646405; x=1752251205; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VVVUOYWFici2h8tZN2zcUXcpvjVGxn+olwomTA5DCH0=;
- b=iUFmSBC6ibYIEtl249EcMfvU2lJf9+GjNBkm3feT3vMEhEr08iJgUSoOu8NGbqAu1s
- XGcYobS6RykIZgKP2FyVSdIjmTLzVMystp3wACgKzkMEZgZtEukEu8RafYrBkh5Teg0P
- QqYzaBD/B3z1fYGLiBXH7MZ1xoDwkElA0DgRQ3mZko9MqsGtbzGGWHDL6rammBiQf8/b
- GXbsGHOrIrhrZ8AdEmf1Kui3QWm29yyky++8CrHOWTNR1w66URIlLcQGz5YArRZ1xnVI
- NhmoVuoDmJ/rPweZtwVBpHBTyldE+z/PJeaGPeE7bHk6IR7NPNoKNRVqkW22ZtUKUYNo
- wR2g==
+ :reply-to; bh=q638xM7x9lLv6t8aWS5h2DnITOOQdyI00w41MrG7A2Q=;
+ b=R8H/lCIm+pa4bQa9vNHgXP7OIjAVmqiBGvABfYbbKBNQHWyWbaNABFOnrCCiVk9XNd
+ 39H/BI9ApL7TZLTvoLp3dfYC9VolpJI1H1uE5qL6ahVOGStBTorjYXEK6aKk7M5gBBA7
+ wtpQolO0XMBreDX0ZdqLga7q5UXK721o55oxKBF/Phm2rZY8/FtRhq+MWD1EF5spVK4C
+ bX7xeM1hWheuKq3LnRBPgU9TfvVHMks4I02TmPH6ziNbnMzRWJm5clvu+U48fyTHz020
+ rZ8ZKHVKP7JU+zT0r40zDVSpSHF3VJSqn0qumy7yUe3FR9u2sjLEuijvxTymhf7bOD8O
+ NXgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751646392; x=1752251192;
+ d=1e100.net; s=20230601; t=1751646405; x=1752251205;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VVVUOYWFici2h8tZN2zcUXcpvjVGxn+olwomTA5DCH0=;
- b=B4LJU4rvlCGYPjEhf6+jCR3eYNPXJDdE3xe7EJXPnQ3kdQyCTpwfZ4BUxhyiz2KLyN
- 2gXHyWrGc/yNOvEGG6eUpp63AQ4NJvNtBaMOnuUaCzxi0xU37A3N85TGeG38z/wJ+Si/
- myLeqGThNUyHlqv3wlr9pk37kYnymENfd3wviPoWjC/vqhJ31nsT1Td8ZrfcFbvWJ2aA
- Xf7iRBv2Zil4pTr+ZfTq03+YwyxI0HGxr+/Dib94c7uk8C+W3VNMsfZinH214LgqHfjV
- SMUfpvwW81ufhwlw++ggL9QBquMNpuZu3yvyVXRRQcMW5doa/l7G1Tk8h4AjhC3TQO3Q
- YgZw==
-X-Gm-Message-State: AOJu0Ywb2ab1nqUQ26dmMWxFrQ6Flf2nmSBdNRkubRIVPRKQMr3r0qiu
- hV55kRYmv03cRc9DmoMdGQVzolw+8bm5dW0cVKlmewNpu+PPWuNPwptlbp4zYi90jW8BoCZhf01
- 11J6w
-X-Gm-Gg: ASbGnctvPCeTyLdKUovfHz4zM8+VqwcAKbAg53PzTF0uf9ZtBy3qaQMEzCs1qBwiQfR
- d1rbUYaYLRTVrV5vXzjGsnTlYtXAAHjxNOu+YxRFuyHaDSnVz0VcbyNUNUqtIpboeycoM7m6RaO
- 2v+2A2yK08/SEtXmro2t4BIfinpdRCvoC4mVQvh2OLeYF+58T/Xeo6fC3VMiQIP+QCHCtp/48A/
- Q4UX//JDiHpqeq94S6ByfvkfTsj3oXW3bdLNlLUMOeSJWxm12kD3FFwuSpqnD+78pyBLI/EYyh6
- GyXJe1Ea/Deh6cqmnSUZ2v7UCnskQ4GAkiyLg4r5oY8MaDM5q16DhxerUPCPUxKdGK5L
-X-Google-Smtp-Source: AGHT+IEQ/Was444msNuBlJrrsPyG30FtYzSPLtH405XVmrW5FRebC8KA7HAY23zz180RqDWDfecbFw==
-X-Received: by 2002:a05:600c:468b:b0:453:6146:1182 with SMTP id
- 5b1f17b1804b1-454b31198e4mr27301185e9.32.1751646391752; 
- Fri, 04 Jul 2025 09:26:31 -0700 (PDT)
+ bh=q638xM7x9lLv6t8aWS5h2DnITOOQdyI00w41MrG7A2Q=;
+ b=NfV/hm2gDxuh52jASL8SVY+1f4d6GpBXZNyTeJ8ZaF6UIcPZeMeOkFp0vq2O555aTy
+ kk5ocS/q9o7zLfn3WMRKdFBFqP/jCAVYSctjZiGKeReH/D0G76FCMI676z8bqY+9Z1Q/
+ JhX1Aj2FLr6Aw6N3ADi/COd1FkM1GQTwfEY4ClDzo3W8dr8zIHkg3BpZ3ie6+gom616l
+ IT+MSOAMa+karMo6COAaCRQ8eTAtnqqDWuz2E7EqM1MhnQyzhFoi7w07EMbuW1DxsP6n
+ 9DAVEJCi3cLaiZ3pD/Nby8z861AzDYGHoTqe0qv79D/7g2G4BtayiFZH6z73IcGnSsGr
+ JWSA==
+X-Gm-Message-State: AOJu0Ywad6Y7QUtgVvnnmB7baBy/hjWCYP5KYIe31RecvtY89Gpy0v83
+ 2avxcAuxq9Q5A4hBHhwwBVauWc0q0niLsSEAuAs4bVD1/Tpdytr/P8XG5Szr6dOQfPQcwoPVJ1A
+ XopQ0
+X-Gm-Gg: ASbGncuTz/FPPSCIiH28M7/Y4/4w3/R+9oSyrUEK7ngUcW595IeRtrMEEgJajbVNqf6
+ mnI2szfqLyifuiYvJbkQ07/bqDRGp+1sd//28e66+/OxxX5VHGQj/FNvI63DOjYv1OGy3GGpiyz
+ immKYHTJkQ19RJ+XT+ZQ15DoCw880gmVLyukvsF0xF1JKcR1o0o2KdWdDAqdcQUriU9EMZs6oHp
+ VgzLZehHhUuTjGMRSN8WTlA4xaEjkJZvbPFqBTwT0zZ7EuLykGJBq5dXoXrkvzF10pDAld5HsFc
+ xSZIWDLepWT6ouJiUn1YOzgt3+obf5pnogSZXftFgc0wrbBOfgbl2tOjeFjkRKafYElcUspWCEn
+ T5O8=
+X-Google-Smtp-Source: AGHT+IEJwi+u9hIx8yNeZ6Xd+K0ln9Fyu6AigVwTFN4WjIJ+RfLmVdq6rPh+QDuw8pd3LsfcosiACw==
+X-Received: by 2002:a05:6000:2307:b0:3a5:26eb:b4af with SMTP id
+ ffacd0b85a97d-3b4964f1f58mr2494339f8f.18.1751646404809; 
+ Fri, 04 Jul 2025 09:26:44 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b471b96534sm2816857f8f.48.2025.07.04.09.26.30
+ ffacd0b85a97d-3b471b96534sm2816857f8f.48.2025.07.04.09.26.44
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 09:26:31 -0700 (PDT)
+ Fri, 04 Jul 2025 09:26:44 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 093/119] target/arm: Implement {ADD, SMIN, SMAX, UMIN,
- UMAX}QV for SVE2p1
-Date: Fri,  4 Jul 2025 17:24:33 +0100
-Message-ID: <20250704162501.249138-94-peter.maydell@linaro.org>
+Subject: [PULL 108/119] target/arm: Move ld1qq and st1qq primitives to
+ sve_ldst_internal.h
+Date: Fri,  4 Jul 2025 17:24:48 +0100
+Message-ID: <20250704162501.249138-109-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250704162501.249138-1-peter.maydell@linaro.org>
 References: <20250704162501.249138-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,171 +102,175 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
+Move from sme_helper.c to the shared header.
+Add a comment noting the lack of atomicity.
+
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250704142112.1018902-82-richard.henderson@linaro.org
+Message-id: 20250704142112.1018902-97-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/helper-sve.h    | 25 ++++++++++++++++++
- target/arm/tcg/sve.decode      |  7 ++++++
- target/arm/tcg/sve_helper.c    | 46 ++++++++++++++++++++++++++++++++++
- target/arm/tcg/translate-sve.c | 35 ++++++++++++++++++++++++++
- 4 files changed, 113 insertions(+)
+ target/arm/tcg/sve_ldst_internal.h | 63 ++++++++++++++++++++++++++++++
+ target/arm/tcg/sme_helper.c        | 44 +++------------------
+ 2 files changed, 69 insertions(+), 38 deletions(-)
 
-diff --git a/target/arm/tcg/helper-sve.h b/target/arm/tcg/helper-sve.h
-index 74029c641bb..5f5ecc2e0de 100644
---- a/target/arm/tcg/helper-sve.h
-+++ b/target/arm/tcg/helper-sve.h
-@@ -2928,3 +2928,28 @@ DEF_HELPER_FLAGS_4(sve2_sqshlu_b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(sve2_sqshlu_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(sve2_sqshlu_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(sve2_sqshlu_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+
-+DEF_HELPER_FLAGS_4(sve2p1_addqv_b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sve2p1_addqv_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sve2p1_addqv_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sve2p1_addqv_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+
-+DEF_HELPER_FLAGS_4(sve2p1_smaxqv_b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sve2p1_smaxqv_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sve2p1_smaxqv_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sve2p1_smaxqv_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+
-+DEF_HELPER_FLAGS_4(sve2p1_sminqv_b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sve2p1_sminqv_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sve2p1_sminqv_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sve2p1_sminqv_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+
-+DEF_HELPER_FLAGS_4(sve2p1_umaxqv_b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sve2p1_umaxqv_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sve2p1_umaxqv_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sve2p1_umaxqv_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+
-+DEF_HELPER_FLAGS_4(sve2p1_uminqv_b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sve2p1_uminqv_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sve2p1_uminqv_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sve2p1_uminqv_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index 3517efb31b3..a3221308ad4 100644
---- a/target/arm/tcg/sve.decode
-+++ b/target/arm/tcg/sve.decode
-@@ -340,6 +340,13 @@ UMAXV           00000100 .. 001 001 001 ... ..... .....         @rd_pg_rn
- SMINV           00000100 .. 001 010 001 ... ..... .....         @rd_pg_rn
- UMINV           00000100 .. 001 011 001 ... ..... .....         @rd_pg_rn
+diff --git a/target/arm/tcg/sve_ldst_internal.h b/target/arm/tcg/sve_ldst_internal.h
+index e87beba4357..c67cda9d3b5 100644
+--- a/target/arm/tcg/sve_ldst_internal.h
++++ b/target/arm/tcg/sve_ldst_internal.h
+@@ -141,6 +141,69 @@ DO_LD_PRIM_3(ld1dqu_le, ld1dd_le)
+ #define sve_st1dq_be_tlb   sve_st1dd_be_tlb
+ #define sve_st1dq_le_tlb   sve_st1dd_le_tlb
  
-+# SVE2.1 segment reduction
-+ADDQV           00000100 .. 000 101 001 ... ..... .....         @rd_pg_rn
-+SMAXQV          00000100 .. 001 100 001 ... ..... .....         @rd_pg_rn
-+SMINQV          00000100 .. 001 110 001 ... ..... .....         @rd_pg_rn
-+UMAXQV          00000100 .. 001 101 001 ... ..... .....         @rd_pg_rn
-+UMINQV          00000100 .. 001 111 001 ... ..... .....         @rd_pg_rn
++/*
++ * The ARMVectorReg elements are stored in host-endian 64-bit units.
++ * For 128-bit quantities, the sequence defined by the Elem[] pseudocode
++ * corresponds to storing the two 64-bit pieces in little-endian order.
++ */
++/* FIXME: Nothing in this file makes any effort at atomicity. */
 +
- ### SVE Shift by Immediate - Predicated Group
- 
- # SVE bitwise shift by immediate (predicated)
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index 713642d4c89..625734fff9a 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -1814,6 +1814,52 @@ DO_VPZ_D(sve_uminv_d, uint64_t, uint64_t, -1, DO_MIN)
- #undef DO_VPZ
- #undef DO_VPZ_D
- 
-+#define DO_VPQ(NAME, TYPE, H, INIT, OP) \
-+void HELPER(NAME)(void *vd, void *vn, void *vg, uint32_t desc)          \
-+{                                                                       \
-+    TYPE tmp[16 / sizeof(TYPE)] = { [0 ... 16 / sizeof(TYPE) - 1] = INIT }; \
-+    TYPE *n = vn; uint16_t *g = vg;                                     \
-+    uintptr_t oprsz = simd_oprsz(desc);                                 \
-+    uintptr_t nseg = oprsz / 16, nsegelt = 16 / sizeof(TYPE);           \
-+    for (uintptr_t s = 0; s < nseg; s++) {                              \
-+        uint16_t pg = g[H2(s)];                                         \
-+        for (uintptr_t e = 0; e < nsegelt; e++, pg >>= sizeof(TYPE)) {  \
-+            if (pg & 1) {                                               \
-+                tmp[e] = OP(tmp[H(e)], n[s * nsegelt + H(e)]);          \
-+            }                                                           \
-+        }                                                               \
-+    }                                                                   \
-+    memcpy(vd, tmp, 16);                                                \
-+    clear_tail(vd, 16, simd_maxsz(desc));                               \
++static inline void sve_ld1qq_be_host(void *vd, intptr_t reg_off, void *host)
++{
++    sve_ld1dd_be_host(vd, reg_off + 8, host);
++    sve_ld1dd_be_host(vd, reg_off, host + 8);
 +}
 +
-+DO_VPQ(sve2p1_addqv_b, uint8_t, H1, 0, DO_ADD)
-+DO_VPQ(sve2p1_addqv_h, uint16_t, H2, 0, DO_ADD)
-+DO_VPQ(sve2p1_addqv_s, uint32_t, H4, 0, DO_ADD)
-+DO_VPQ(sve2p1_addqv_d, uint64_t, H8, 0, DO_ADD)
++static inline void sve_ld1qq_le_host(void *vd, intptr_t reg_off, void *host)
++{
++    sve_ld1dd_le_host(vd, reg_off, host);
++    sve_ld1dd_le_host(vd, reg_off + 8, host + 8);
++}
 +
-+DO_VPQ(sve2p1_smaxqv_b, int8_t, H1, INT8_MIN, DO_MAX)
-+DO_VPQ(sve2p1_smaxqv_h, int16_t, H2, INT16_MIN, DO_MAX)
-+DO_VPQ(sve2p1_smaxqv_s, int32_t, H4, INT32_MIN, DO_MAX)
-+DO_VPQ(sve2p1_smaxqv_d, int64_t, H8, INT64_MIN, DO_MAX)
++static inline void
++sve_ld1qq_be_tlb(CPUARMState *env, void *vd, intptr_t reg_off,
++                 target_ulong addr, uintptr_t ra)
++{
++    sve_ld1dd_be_tlb(env, vd, reg_off + 8, addr, ra);
++    sve_ld1dd_be_tlb(env, vd, reg_off, addr + 8, ra);
++}
 +
-+DO_VPQ(sve2p1_sminqv_b, int8_t, H1, INT8_MAX, DO_MIN)
-+DO_VPQ(sve2p1_sminqv_h, int16_t, H2, INT16_MAX, DO_MIN)
-+DO_VPQ(sve2p1_sminqv_s, int32_t, H4, INT32_MAX, DO_MIN)
-+DO_VPQ(sve2p1_sminqv_d, int64_t, H8, INT64_MAX, DO_MIN)
++static inline void
++sve_ld1qq_le_tlb(CPUARMState *env, void *vd, intptr_t reg_off,
++                 target_ulong addr, uintptr_t ra)
++{
++    sve_ld1dd_le_tlb(env, vd, reg_off, addr, ra);
++    sve_ld1dd_le_tlb(env, vd, reg_off + 8, addr + 8, ra);
++}
 +
-+DO_VPQ(sve2p1_umaxqv_b, uint8_t, H1, 0, DO_MAX)
-+DO_VPQ(sve2p1_umaxqv_h, uint16_t, H2, 0, DO_MAX)
-+DO_VPQ(sve2p1_umaxqv_s, uint32_t, H4, 0, DO_MAX)
-+DO_VPQ(sve2p1_umaxqv_d, uint64_t, H8, 0, DO_MAX)
++static inline void sve_st1qq_be_host(void *vd, intptr_t reg_off, void *host)
++{
++    sve_st1dd_be_host(vd, reg_off + 8, host);
++    sve_st1dd_be_host(vd, reg_off, host + 8);
++}
 +
-+DO_VPQ(sve2p1_uminqv_b, uint8_t, H1, -1, DO_MIN)
-+DO_VPQ(sve2p1_uminqv_h, uint16_t, H2, -1, DO_MIN)
-+DO_VPQ(sve2p1_uminqv_s, uint32_t, H4, -1, DO_MIN)
-+DO_VPQ(sve2p1_uminqv_d, uint64_t, H8, -1, DO_MIN)
++static inline void sve_st1qq_le_host(void *vd, intptr_t reg_off, void *host)
++{
++    sve_st1dd_le_host(vd, reg_off, host);
++    sve_st1dd_le_host(vd, reg_off + 8, host + 8);
++}
 +
-+#undef DO_VPQ
++static inline void
++sve_st1qq_be_tlb(CPUARMState *env, void *vd, intptr_t reg_off,
++                 target_ulong addr, uintptr_t ra)
++{
++    sve_st1dd_be_tlb(env, vd, reg_off + 8, addr, ra);
++    sve_st1dd_be_tlb(env, vd, reg_off, addr + 8, ra);
++}
 +
- /* Two vector operand, one scalar operand, unpredicated.  */
- #define DO_ZZI(NAME, TYPE, OP)                                       \
- void HELPER(NAME)(void *vd, void *vn, uint64_t s64, uint32_t desc)   \
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 651b4aa3781..2e29dff9895 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -828,6 +828,41 @@ TRANS_FEAT(SXTW, aa64_sve, gen_gvec_ool_arg_zpz,
- TRANS_FEAT(UXTW, aa64_sve, gen_gvec_ool_arg_zpz,
-            a->esz == 3 ? gen_helper_sve_uxtw_d : NULL, a, 0)
++static inline void
++sve_st1qq_le_tlb(CPUARMState *env, void *vd, intptr_t reg_off,
++                 target_ulong addr, uintptr_t ra)
++{
++    sve_st1dd_le_tlb(env, vd, reg_off, addr, ra);
++    sve_st1dd_le_tlb(env, vd, reg_off + 8, addr + 8, ra);
++}
++
+ #undef DO_LD_TLB
+ #undef DO_ST_TLB
+ #undef DO_LD_HOST
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index c1166e4ffa9..df16bb2f9c4 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -415,54 +415,22 @@ static inline void sme_##NAME##_v_tlb(CPUARMState *env, void *za,           \
+     TLB(env, useronly_clean_ptr(addr), val, ra);                            \
+ }
  
-+static gen_helper_gvec_3 * const addqv_fns[4] = {
-+    gen_helper_sve2p1_addqv_b, gen_helper_sve2p1_addqv_h,
-+    gen_helper_sve2p1_addqv_s, gen_helper_sve2p1_addqv_d,
-+};
-+TRANS_FEAT(ADDQV, aa64_sme2p1_or_sve2p1,
-+           gen_gvec_ool_arg_zpz, addqv_fns[a->esz], a, 0)
-+
-+static gen_helper_gvec_3 * const smaxqv_fns[4] = {
-+    gen_helper_sve2p1_smaxqv_b, gen_helper_sve2p1_smaxqv_h,
-+    gen_helper_sve2p1_smaxqv_s, gen_helper_sve2p1_smaxqv_d,
-+};
-+TRANS_FEAT(SMAXQV, aa64_sme2p1_or_sve2p1,
-+           gen_gvec_ool_arg_zpz, smaxqv_fns[a->esz], a, 0)
-+
-+static gen_helper_gvec_3 * const sminqv_fns[4] = {
-+    gen_helper_sve2p1_sminqv_b, gen_helper_sve2p1_sminqv_h,
-+    gen_helper_sve2p1_sminqv_s, gen_helper_sve2p1_sminqv_d,
-+};
-+TRANS_FEAT(SMINQV, aa64_sme2p1_or_sve2p1,
-+           gen_gvec_ool_arg_zpz, sminqv_fns[a->esz], a, 0)
-+
-+static gen_helper_gvec_3 * const umaxqv_fns[4] = {
-+    gen_helper_sve2p1_umaxqv_b, gen_helper_sve2p1_umaxqv_h,
-+    gen_helper_sve2p1_umaxqv_s, gen_helper_sve2p1_umaxqv_d,
-+};
-+TRANS_FEAT(UMAXQV, aa64_sme2p1_or_sve2p1,
-+           gen_gvec_ool_arg_zpz, umaxqv_fns[a->esz], a, 0)
-+
-+static gen_helper_gvec_3 * const uminqv_fns[4] = {
-+    gen_helper_sve2p1_uminqv_b, gen_helper_sve2p1_uminqv_h,
-+    gen_helper_sve2p1_uminqv_s, gen_helper_sve2p1_uminqv_d,
-+};
-+TRANS_FEAT(UMINQV, aa64_sme2p1_or_sve2p1,
-+           gen_gvec_ool_arg_zpz, uminqv_fns[a->esz], a, 0)
-+
- /*
-  *** SVE Integer Reduction Group
-  */
+-/*
+- * The ARMVectorReg elements are stored in host-endian 64-bit units.
+- * For 128-bit quantities, the sequence defined by the Elem[] pseudocode
+- * corresponds to storing the two 64-bit pieces in little-endian order.
+- */
+-#define DO_LDQ(HNAME, VNAME, BE, HOST, TLB)                                 \
+-static inline void HNAME##_host(void *za, intptr_t off, void *host)         \
+-{                                                                           \
+-    uint64_t val0 = HOST(host), val1 = HOST(host + 8);                      \
+-    uint64_t *ptr = za + off;                                               \
+-    ptr[0] = BE ? val1 : val0, ptr[1] = BE ? val0 : val1;                   \
+-}                                                                           \
++#define DO_LDQ(HNAME, VNAME) \
+ static inline void VNAME##_v_host(void *za, intptr_t off, void *host)       \
+ {                                                                           \
+     HNAME##_host(za, tile_vslice_offset(off), host);                        \
+ }                                                                           \
+-static inline void HNAME##_tlb(CPUARMState *env, void *za, intptr_t off,    \
+-                               target_ulong addr, uintptr_t ra)             \
+-{                                                                           \
+-    uint64_t val0 = TLB(env, useronly_clean_ptr(addr), ra);                 \
+-    uint64_t val1 = TLB(env, useronly_clean_ptr(addr + 8), ra);             \
+-    uint64_t *ptr = za + off;                                               \
+-    ptr[0] = BE ? val1 : val0, ptr[1] = BE ? val0 : val1;                   \
+-}                                                                           \
+ static inline void VNAME##_v_tlb(CPUARMState *env, void *za, intptr_t off,  \
+                                target_ulong addr, uintptr_t ra)             \
+ {                                                                           \
+     HNAME##_tlb(env, za, tile_vslice_offset(off), addr, ra);                \
+ }
+ 
+-#define DO_STQ(HNAME, VNAME, BE, HOST, TLB)                                 \
+-static inline void HNAME##_host(void *za, intptr_t off, void *host)         \
+-{                                                                           \
+-    uint64_t *ptr = za + off;                                               \
+-    HOST(host, ptr[BE]);                                                    \
+-    HOST(host + 8, ptr[!BE]);                                               \
+-}                                                                           \
++#define DO_STQ(HNAME, VNAME) \
+ static inline void VNAME##_v_host(void *za, intptr_t off, void *host)       \
+ {                                                                           \
+     HNAME##_host(za, tile_vslice_offset(off), host);                        \
+ }                                                                           \
+-static inline void HNAME##_tlb(CPUARMState *env, void *za, intptr_t off,    \
+-                               target_ulong addr, uintptr_t ra)             \
+-{                                                                           \
+-    uint64_t *ptr = za + off;                                               \
+-    TLB(env, useronly_clean_ptr(addr), ptr[BE], ra);                        \
+-    TLB(env, useronly_clean_ptr(addr + 8), ptr[!BE], ra);                   \
+-}                                                                           \
+ static inline void VNAME##_v_tlb(CPUARMState *env, void *za, intptr_t off,  \
+                                target_ulong addr, uintptr_t ra)             \
+ {                                                                           \
+@@ -477,8 +445,8 @@ DO_LD(ld1s_le, uint32_t, ldl_le_p, cpu_ldl_le_data_ra)
+ DO_LD(ld1d_be, uint64_t, ldq_be_p, cpu_ldq_be_data_ra)
+ DO_LD(ld1d_le, uint64_t, ldq_le_p, cpu_ldq_le_data_ra)
+ 
+-DO_LDQ(sve_ld1qq_be, sme_ld1q_be, 1, ldq_be_p, cpu_ldq_be_data_ra)
+-DO_LDQ(sve_ld1qq_le, sme_ld1q_le, 0, ldq_le_p, cpu_ldq_le_data_ra)
++DO_LDQ(sve_ld1qq_be, sme_ld1q_be)
++DO_LDQ(sve_ld1qq_le, sme_ld1q_le)
+ 
+ DO_ST(st1b, uint8_t, stb_p, cpu_stb_data_ra)
+ DO_ST(st1h_be, uint16_t, stw_be_p, cpu_stw_be_data_ra)
+@@ -488,8 +456,8 @@ DO_ST(st1s_le, uint32_t, stl_le_p, cpu_stl_le_data_ra)
+ DO_ST(st1d_be, uint64_t, stq_be_p, cpu_stq_be_data_ra)
+ DO_ST(st1d_le, uint64_t, stq_le_p, cpu_stq_le_data_ra)
+ 
+-DO_STQ(sve_st1qq_be, sme_st1q_be, 1, stq_be_p, cpu_stq_be_data_ra)
+-DO_STQ(sve_st1qq_le, sme_st1q_le, 0, stq_le_p, cpu_stq_le_data_ra)
++DO_STQ(sve_st1qq_be, sme_st1q_be)
++DO_STQ(sve_st1qq_le, sme_st1q_le)
+ 
+ #undef DO_LD
+ #undef DO_ST
 -- 
 2.43.0
 
