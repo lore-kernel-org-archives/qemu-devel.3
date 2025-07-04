@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DBECC83F09
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:41:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1294BC8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:41:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXjE0-0008J0-Hc; Fri, 04 Jul 2025 12:25:20 -0400
+	id 1uXjH8-0002F6-3T; Fri, 04 Jul 2025 12:28:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXjDy-0008Gu-UP
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:25:18 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1uXjFW-00055r-PS
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:26:54 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXjDx-00066e-9P
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:25:18 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-450ce3a2dd5so9571765e9.3
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:25:16 -0700 (PDT)
+ id 1uXjFT-0006xo-5v
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:26:53 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-451dbe494d6so12234125e9.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:26:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751646316; x=1752251116; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751646410; x=1752251210; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=CjmSifyultKO92TqHZgAe9D2aJBwtyFLFYx6SMlRFYs=;
- b=nnx5cexLhSujvJnJScaBf+LXC0N5uS4OqiVd2IZE8V5JLtRnCM+NBvHUl4950Tw3Uo
- p6b5BTGOUCHiuKNO42LT2IUiNWEUQQEFrtEev0ng+m7Jq582ly7B1rF0a1+Zf/VwFBwS
- LjwmFSh2wb2JMHEBJPNwzlmPErgmcmzIGCJFlpFs+Oxj1y25Tko9D1v/egFVzNMUOnZ1
- AF1QxMJhc11snY4bdRlftivNxufnTspJ+27R9cy+fT5P7PL2I2bnDKf6+dGO75e222zd
- Rk2RijEHkb6pkA6AtSQyayKBVL61BCrVnkmJ/txVQj8RtehLBKUOp3x7lH60n9jMr8gy
- kH0g==
+ :reply-to; bh=rWosasfNf2wqBh/OQOVO0cuyunlck4/a010xI3ZiaXQ=;
+ b=UoTB9VVVXttWHDesju8YNblSBMZs6jp+oM6jqlaJkQJseHGW9UMEp5sAbMJC0rBaDY
+ 5fgB6aX6klgJeKFHFNT6bb5IT/XOEjitKJKitPceHWSQH0yh0zN0dplFn8rApn1Vi7gz
+ muBC7wd/xm7f5eVglOi55cTEq3q3hheXtDNKY4zFrnOcH+pX2Onz1bXl3XgNDQEihYpR
+ LrJlDVDVgrW9AFb5Y8XZZADXa24ldDO22d1o2GXqWxYDiP8ApWZO8LUpOdAna+pgdWzJ
+ O6YRU5xpRrE/s+QPtQU5fJ/FG9Ku5aFjwJEjzeKCWLGzigUQhy3hHC2FD7XveYpv/qRU
+ 1hRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751646316; x=1752251116;
+ d=1e100.net; s=20230601; t=1751646410; x=1752251210;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CjmSifyultKO92TqHZgAe9D2aJBwtyFLFYx6SMlRFYs=;
- b=qiRX6ZetLsYOw5Ltej9+iPQ5I25bNxMb5SdT/GrrpydWtVKKckQN6ecByDgW3F4qBj
- 6lhEjNiQOuroAkOQZ1GGyPBiD4SKszdE0WMsBsnlkhSYXLGPk4sLxmjuSulZJgoBihXP
- tcAvihVKSLx+FJN4dItUGxvtgW+C2NkeqYDo6Dp0j6cDeq+bD9TIuLriXNOWe7g84zmI
- Zgy4ipcYpddDiQDVISy4bGN1H7bV+lG6RNsIeD0uT84nrtR9qYT7/WhKMneuDcu/INfU
- EaDVbBc/1E8WD2ii3BjES0PTO463wWCmwASOXJh2nxRdqG/EAVI4taqfANpGTCPxQoYh
- PyfQ==
-X-Gm-Message-State: AOJu0YwYeha4fcu0t4bA3Tx6zHRQUJhwiGHb63fzReJiqn6VDgBY0j7+
- QJVR4xABk7PaERQf93fa1mt0rqLZ1JW3GQBlYRgRY/GcoHC7e6y1aPBw+JXaT/JW+ZOcXwyu1AS
- B06R1
-X-Gm-Gg: ASbGncu2svE0eX9s3L5e6Ev2rAWka0AksMqv6Xzie7i6KsIBohV+WW7p4D97yjQMFaE
- fCVCFGZ4DMGk/o0dGPs35AsAPW+DMXirEvRUHEJcKS3HpkMh3NKb9Qu+hPMWL3sGGtB0uwcD27o
- 34gw74qzFPgXiSCeAAP1wjkyJq6aEZVyWzOnQrvBZ+0Ez/O+Hc+trRS30JonEU/1lvZZx0Dh+OZ
- BWS0BBdUg4e/zPZWw0JLBZ0C5n3OaWO0pGX+JxmsgELP5/m/0BYXL06Ti3TGUfpx1YG5h1HoWO6
- HTyiaf3mDF7FsJ0FCaG+DFgqutKup75Cmo7n5+PUGDWvkI28Im5mS3zX+J+6s+oRWmVA
-X-Google-Smtp-Source: AGHT+IHZZMdoHpjn3K6htzrnEVlnZpXGQVws6eCSO7YQPlVcWWBn2ak3UPc/xCAVo97OQOHNoE8s2w==
-X-Received: by 2002:a05:600c:648a:b0:43d:878c:7c40 with SMTP id
- 5b1f17b1804b1-454b4e769e4mr31289875e9.10.1751646315554; 
- Fri, 04 Jul 2025 09:25:15 -0700 (PDT)
+ bh=rWosasfNf2wqBh/OQOVO0cuyunlck4/a010xI3ZiaXQ=;
+ b=S3+q2cAlZcYUm0Gpf9qfU/kmcn12pr6XLvu3Zju4zvLS3HFT7oIDVVdqTLvcTnt2Yq
+ jx6ycADNYMw/IC/xtgZekPuIgF0DQD8H7v1CWx8PGoByWsxoWpq8xFiwntQbEvZLEL4Y
+ IkqDswNRVGfzLaEL3F8pbG2C9PkfriNqZwEG0BWdv2ab/Skx6v0K+jkxvMT+spuJxlDU
+ MVZ/boMyQf0yqcDnPerqFqN6HSesmM0dHC3AO/3ZQM2lBq9ugXI4URZx0TdQgBimsxpD
+ FhJDFSSA6VwwvjwPj1MaRVNvDY+aNGmJjsEoUpV2wJgDTxVWMHWMpme/GPdPNaMd6Ko5
+ MfYw==
+X-Gm-Message-State: AOJu0Ywa6luhIuro3ttBHtPIHD3Up7hM0htdo/IZ5A7ZALvgGbYwAbOT
+ 7CNFSfu54FXJQd1fe4RWZcN3ozZExyorkAcCHcNDujGrisIIE4YbT6E29NnYMTvovzlXOaK0/39
+ BdHBR
+X-Gm-Gg: ASbGncu7HezCl5Nxpp0m5tg8kLWLuQ6428PR3yGTXL74vBiSKTZy3UYM5dA+IODh+Qa
+ x/VptQNwEqmcTWZ4yLi4AUOjLaAUIQ6iQE4AahdX0gSLNw6j0+TQrkf/WKxb96f1j3ivd5QDg0a
+ joAreiPdpKOkcRBavaImbESL+01P4uHlrfAJpMuTlHB57Sjjq32etzb0853EYeYAlkBWK8bBkKY
+ vN7NCQkiYRaGQadaGW/nd01qYFG40C9curQPiWYUAlluM67bN6MQLrrYBTf0zZGcKkL2n7Pn/cj
+ iTTQwor82AGTeCIrq2DOG7jxvIp5npcJ4VtBpHqZkP6Z6jyJr87QPJcESwpF85s25Mmk
+X-Google-Smtp-Source: AGHT+IEDLYx2ZIybV02huAca28UIn9mWDNWwBY178aI9ZqCCVi1V/qwmv5VTBgrs2nc8C9hofzDPSg==
+X-Received: by 2002:a05:600c:8b0d:b0:441:b19c:96fe with SMTP id
+ 5b1f17b1804b1-454b4e79652mr35307555e9.10.1751646409608; 
+ Fri, 04 Jul 2025 09:26:49 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b471b96534sm2816857f8f.48.2025.07.04.09.25.14
+ ffacd0b85a97d-3b471b96534sm2816857f8f.48.2025.07.04.09.26.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 09:25:14 -0700 (PDT)
+ Fri, 04 Jul 2025 09:26:49 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 013/119] target/arm: Fix SME vs AdvSIMD exception priority
-Date: Fri,  4 Jul 2025 17:23:13 +0100
-Message-ID: <20250704162501.249138-14-peter.maydell@linaro.org>
+Subject: [PULL 113/119] target/arm: Rename FMOPA_h to FMOPA_w_h
+Date: Fri,  4 Jul 2025 17:24:53 +0100
+Message-ID: <20250704162501.249138-114-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250704162501.249138-1-peter.maydell@linaro.org>
 References: <20250704162501.249138-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,35 +98,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+The pattern we currently have as FMOPA_h is the "widening" insn
+that takes fp16 inputs and produces single-precision outputs.
+This is unlike FMOPA_s and FMOPA_d, which are non-widening
+produce outputs the same size as their inputs.
 
-We failed to raise an exception when
-sme_excp_el == 0 and fp_excp_el == 1.
+SME2 introduces a non-widening fp16 FMOPA operation; rename
+FMOPA_h to FMOPA_w_h (for 'widening'), so we can use FMOPA_h
+for the non-widening version, giving it a name in line with
+the other non-widening ops FMOPA_s and FMOPA_d.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 3d74825f4d6 ("target/arm: Add SME enablement checks")
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250704142112.1018902-2-richard.henderson@linaro.org
+Message-id: 20250704142112.1018902-102-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/translate-a64.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ target/arm/tcg/helper-sme.h    | 2 +-
+ target/arm/tcg/sme.decode      | 2 +-
+ target/arm/tcg/sme_helper.c    | 4 ++--
+ target/arm/tcg/translate-sme.c | 4 ++--
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 815225b1301..5c44a5dece9 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -1488,7 +1488,8 @@ bool sme_enabled_check(DisasContext *s)
-      * to be zero when fp_excp_el has priority.  This is because we need
-      * sme_excp_el by itself for cpregs access checks.
-      */
--    if (!s->fp_excp_el || s->sme_excp_el < s->fp_excp_el) {
-+    if (s->sme_excp_el
-+        && (!s->fp_excp_el || s->sme_excp_el <= s->fp_excp_el)) {
-         bool ret = sme_access_check(s);
-         s->fp_access_checked = (ret ? 1 : -1);
-         return ret;
+diff --git a/target/arm/tcg/helper-sme.h b/target/arm/tcg/helper-sme.h
+index c9961d6b7ff..67d620e456c 100644
+--- a/target/arm/tcg/helper-sme.h
++++ b/target/arm/tcg/helper-sme.h
+@@ -135,7 +135,7 @@ DEF_HELPER_FLAGS_5(sme_addva_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_5(sme_addha_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_5(sme_addva_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+ 
+-DEF_HELPER_FLAGS_7(sme_fmopa_h, TCG_CALL_NO_RWG,
++DEF_HELPER_FLAGS_7(sme_fmopa_w_h, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_FLAGS_7(sme_fmopa_s, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index 5a5b8ff8a5a..77744eef4fd 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -190,7 +190,7 @@ FMOPA_s         10000000 100 ..... ... ... ..... . 00 ..        @op_32
+ FMOPA_d         10000000 110 ..... ... ... ..... . 0 ...        @op_64
+ 
+ BFMOPA          10000001 100 ..... ... ... ..... . 00 ..        @op_32
+-FMOPA_h         10000001 101 ..... ... ... ..... . 00 ..        @op_32
++FMOPA_w_h       10000001 101 ..... ... ... ..... . 00 ..        @op_32
+ 
+ SMOPA_s         1010000 0 10 0 ..... ... ... ..... . 00 ..      @op_32
+ SUMOPA_s        1010000 0 10 1 ..... ... ... ..... . 00 ..      @op_32
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index 424fc006be4..1575a2f20c5 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -1146,8 +1146,8 @@ static float32 f16_dotadd(float32 sum, uint32_t e1, uint32_t e2,
+     return float32_add(sum, t32, s_std);
+ }
+ 
+-void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
+-                         void *vpm, CPUARMState *env, uint32_t desc)
++void HELPER(sme_fmopa_w_h)(void *vza, void *vzn, void *vzm, void *vpn,
++                           void *vpm, CPUARMState *env, uint32_t desc)
+ {
+     intptr_t row, col, oprsz = simd_maxsz(desc);
+     uint32_t neg = simd_data(desc) * 0x80008000u;
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index d38b8a5ca23..1167aa4964c 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -565,8 +565,8 @@ static bool do_outprod_env(DisasContext *s, arg_op *a, MemOp esz,
+     return true;
+ }
+ 
+-TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_env, a,
+-           MO_32, gen_helper_sme_fmopa_h)
++TRANS_FEAT(FMOPA_w_h, aa64_sme, do_outprod_env, a,
++           MO_32, gen_helper_sme_fmopa_w_h)
+ TRANS_FEAT(FMOPA_s, aa64_sme, do_outprod_fpst, a,
+            MO_32, FPST_ZA, gen_helper_sme_fmopa_s)
+ TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a,
 -- 
 2.43.0
 
