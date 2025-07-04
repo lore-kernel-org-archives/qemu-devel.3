@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06728C83F09
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 05:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CB3CC83F09
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 05:56:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXZOQ-0007hm-FE; Fri, 04 Jul 2025 01:55:26 -0400
+	id 1uXZOs-0008Qu-LM; Fri, 04 Jul 2025 01:55:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uXZOO-0007ft-8p
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 01:55:24 -0400
-Received: from mgamail.intel.com ([192.198.163.13])
+ id 1uXZOn-0008O9-8W
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 01:55:49 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uXZOM-0001Ah-Iv
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 01:55:23 -0400
+ id 1uXZOl-0001IR-1d
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 01:55:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751608522; x=1783144522;
+ t=1751608547; x=1783144547;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
  bh=o67P1q5Q52pVrNMFWAYOas0D/uvRyXq8gx1ScWIhf8s=;
- b=ntR54OhOFK6RwzRAutP3ENqZJR8OWkUHOloDyoVANhiIAVc9+V+ONeV5
- WIt2f37AStfUHhNE9joWOvNP7UZstX97IB7kK0UJhmL5jWILm0cLcTPXC
- 1cNsCp2jNkdmPWt8BQlxMtfAFM+bp1LMh9anlt3vxZNxBRnM7IzjHOcwM
- KDClz4T37cqiq/G/UojewI71zAtKKwmReJtWCnGHJRLVggW2Sj/srx6/Y
- /P0swgNvNkfKJE1rsOTG9ck9AgGj2Hmtdy/zlkb07IDqNZ3wejRmtcnFP
- jtr9JSF5CdIUYSqCCY7ZFJEkOu/7beJGRfXuZNh7+7rlwoLLJmecXyHp8 g==;
-X-CSE-ConnectionGUID: MBd29gXbTlesZqQFus7vlw==
-X-CSE-MsgGUID: eGyBEnSFQDmblcFUSA0H/g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="56565460"
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="56565460"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2025 22:55:21 -0700
-X-CSE-ConnectionGUID: eavHOzfrRNe+B9u2V5DbIQ==
-X-CSE-MsgGUID: /76/2Q6UTgeb/+IfK4mOvg==
+ b=IStEI8HnCJplLWUedAvx8lDq+FxcrZ2AG5RWD8r5OhFbIEjdtlHcOk1e
+ KLya6guWNKv7Mz4ds5v9Q66zU1v/XJ0rXbNgI96PV//iPxPIJJclZ0AgI
+ 6ViAo5RsIwC0Y4Rfxyqr0DCMUSvqzzhyq7/9rFwUbj7qpTaQ94l72l0Tx
+ RK8qBS3AGd+Xs+iXzZy+TSwbBRBVAPWj8pCR0wGAT58LTp10M0yeyoBhZ
+ pfz8eQ7RU3dbaGniQNlyx7K9H0AlxMt4sBQcXG2SWUWVmbNIygUnE1A18
+ nrxJmPLVfHXYBJm/qrst4sTc9L59dcua330/Ysi4ewnP0q1OHyaJpgxNx w==;
+X-CSE-ConnectionGUID: 6kXPhOIBRzG3gcE+M6tTqg==
+X-CSE-MsgGUID: YWnoYDgIRVKbmQ6ZzUu5Iw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="53864841"
+X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="53864841"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jul 2025 22:55:45 -0700
+X-CSE-ConnectionGUID: U/Q/q4u9RnSiPr/6DolI0A==
+X-CSE-MsgGUID: dGaQe+HyQeKifzfAEoVdtA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="159111763"
+X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="191736064"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
  ([10.124.247.1])
- by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2025 22:55:19 -0700
-Message-ID: <c6d60147-d3bf-4f87-a550-e5cb0f8bf2ee@intel.com>
-Date: Fri, 4 Jul 2025 13:55:15 +0800
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jul 2025 22:55:43 -0700
+Message-ID: <cc6f6b22-59dc-481e-95c0-3ac4c61d8fb4@intel.com>
+Date: Fri, 4 Jul 2025 13:55:38 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 19/39] accel/nvmm: Replace @dirty field by generic
+Subject: Re: [PATCH v6 20/39] accel/whpx: Replace @dirty field by generic
  CPUState::vcpu_dirty field
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -59,15 +59,15 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Reinoud Zandijk <reinoud@netbsd.org>
+ Sunil Muthuswamy <sunilmut@microsoft.com>
 References: <20250703173248.44995-1-philmd@linaro.org>
- <20250703173248.44995-20-philmd@linaro.org>
+ <20250703173248.44995-21-philmd@linaro.org>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250703173248.44995-20-philmd@linaro.org>
+In-Reply-To: <20250703173248.44995-21-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=xiaoyao.li@intel.com;
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
