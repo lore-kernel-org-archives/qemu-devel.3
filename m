@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 127B6C83F03
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C292C83F0D
 	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:40:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXjFD-00031W-T4; Fri, 04 Jul 2025 12:26:35 -0400
+	id 1uXjDt-00088d-Er; Fri, 04 Jul 2025 12:25:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXjEl-0001IN-J9
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:26:07 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1uXjDr-00086w-SS
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:25:12 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXjEj-0006Ug-H1
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:26:07 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4535fbe0299so6166105e9.3
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:26:03 -0700 (PDT)
+ id 1uXjDp-0005yH-Rc
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:25:11 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4537edf2c3cso11807095e9.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:25:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751646362; x=1752251162; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751646308; x=1752251108; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=uF28X6Q5gCFd9Ll0xLQpSOBKr1raaNTNHM4U8+GRmQI=;
- b=r0bz2AAsPDTjNjHcfDrgMuqkylPdZMsSvkPH+uyWjeo4P25ff18EJtkTqDOm+LFhpv
- syvFv0KAyp/gB/V01V2hQtxf8fh0cdnArrZYwlGz1FynLVvPVil7J4pLO8dqfyNNJCKU
- c/m2dTy0fgwJjmgwBO1G1kvsRk9GjywfdHV66vrh5x6QqiFRatXb+VFsZQSNHtWLFrHh
- 8ptFUCiAchE1wOruq5O/Vg2jtFxNjktSJwe3W7Et/r96Y9yycCVpUEQdLPIZgFd7MZkO
- g4JZHSpFQf1H9fk9lSKE7t8FfQ+QMYzvn2P0RKNzQvCwS0E6YTrrd4X+TQimK9M1zGgO
- Kscw==
+ :reply-to; bh=d/LfvC3NRJWTIueu6Kv0svLLOIPKIUa3RlTtXD3PzRg=;
+ b=u5ZVDZln6xgbwH8knvLNpQ8f5v8HPxw1WO1SujB4fjplKSZ9MEck5xSoJZbREvLziD
+ gwqS9MRrI98/ZmSBopxxwKf/ATspQNRm6+uHwPdQuIcdIr7/fGKawsIBoFzTTreXA1Jg
+ EQduhjWWpNUKNzN6igFR9PvXNRkHsWl3WG4/ewUY70aR0NwhO5fQN7P/CXkXeV1OxP24
+ gI5WLvavN6Q6qpCghNcoowcFPwI+LmgXY+DBfI26CC8cVjl5MFguysWWS997KfPyTzv8
+ Urpzz4mrjp0sMRXXBrAUcYiS1jTQmesB+2h8sMFYYveHR4ea3LQxLbQ4Gv1zq2qY7Spy
+ OwTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751646362; x=1752251162;
+ d=1e100.net; s=20230601; t=1751646308; x=1752251108;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uF28X6Q5gCFd9Ll0xLQpSOBKr1raaNTNHM4U8+GRmQI=;
- b=RGMkvtbeVos/bzxTJd4yNAtnBUs43tITg2TurlnQm4bArycnh9HVR3Cv7UHawyDKwa
- O494KR3i51wrWtnU91gU3eDwVwlQoICR1WYjEnjSm1P4p902g6DIxic4ymkk+2sp9u/C
- UHLc94y8MIzH4kG20UYm0/4Uhr/YoS5AfDDIJu3neO76dX84IzEeDrnoyMCXqPcm2j9V
- yJyL98pWCwlWSWqT8jR98hd3X/Uqricnd59DBwUoucK86oj6bU/n7/7Fax8MHJ/zMVur
- 7Am9JaxSxO4BDrBm7snm93LhU0DVujFzIy70riNTSYQVYiLpUNkqpk4PyqQWudCjg+72
- 0t6A==
-X-Gm-Message-State: AOJu0YxGR8e7H9rIL8VlapCsAxp3RXR9Rzz2+O8xcRBXWLmT+01nf9jU
- SJ83A47qSHjNRKLtB3krs3GtG8bS518u6LhqJ/5l6tCNrMXAR8UnImhgjCkPA8XCntJ7ay+KV5h
- ORH8/
-X-Gm-Gg: ASbGncuH75e2wAd9AxLWR3iJ4qcmaMhFgkBVzkD4mxoa2veQRKIwvp9/Wq7ivqxLZ6m
- 5whRG2ZT3TJb5mpZQlic8TK/pvB/FPbX3KYzdvPavCs5SxfQMx3IDildsMWZjyhQNt05T3P+6ij
- wqmieZvm+9cAjxKP5t6PUMB+g3pB9w5iP6Lg37Jvjz7hKAYAX9SuBjhAfhMIieJuSBpHIG8dkt+
- 7lsKqAzak0MAWocqxkyj4IZSWujNj97tdwLg4mcA3tkQ3M1eshvTc5LuL/rx1tNUsPc+BpdQ5j6
- /koOtBin8E9T3psriA+mzUXqQYnKMXjg/SnjVM6izqzdQZEEYeZ51bk+iwOpt3KjIyzQ
-X-Google-Smtp-Source: AGHT+IGvjFKH7ywj+i9X4uWUAck5U2sMnSEPoCuut7BHsC5cmrAUP7q3H0NXpJzHN5h4b3vRDJA1jA==
-X-Received: by 2002:a05:600c:19c9:b0:43c:f629:66f4 with SMTP id
- 5b1f17b1804b1-454b305fcb1mr37222865e9.0.1751646362446; 
- Fri, 04 Jul 2025 09:26:02 -0700 (PDT)
+ bh=d/LfvC3NRJWTIueu6Kv0svLLOIPKIUa3RlTtXD3PzRg=;
+ b=Xr/JuQTj2RwOtOR8v+wlusNxf43mtwHnKEzcwnWxrUA8iJULW6WQak1miJa1TXqX1V
+ O+174Fm6R4G83yavPBTRXJCuE/rXwLB+Y6rKtx1lUPs6UwTQ+4NgFnB1KmqikElOA7Kk
+ x4wzlnWE4Ee4boKRdLe9H10g0WTZEt1U1OvPPE92g4BDLloIiZONffMxS62/NiFP0yNk
+ fFSFbDpQKDL9ZgQ8HKSpEQnxthQnGq6InH2ruspMYMZMxQHAgxxon/vXiaC24JO1r0yT
+ RyV6+R0plObAvnAcsD84e6gbWKQ3qQoWsNUzSxi2Dq3Ez2uFYWK2942/MG208Dqtj+89
+ R3/g==
+X-Gm-Message-State: AOJu0Ywx/CNT+VlFG+8XndMPWj3WOZ/NWDsk71hTPLK2D/uYfnhlUNLi
+ apr+r6kaHdFgTWVaNF7aonH0qIdVUEFQ7ruqDFwNAX7nfIGJ9cq2befRsxzN4ADNUVWdkF63TAX
+ mUnoV
+X-Gm-Gg: ASbGnctTByiY14Ydx1LP4b2XlJ8/g1t0nt3lVjiWNTfuKJH6Qbdfb/85FAR1UZj8gxw
+ /F1dULGcxv89pKvyKmcxdOVQCwrqxSxi44X5ixmwKO9Gsvb6wW2WYxSqOYWfoMohGDSNowarx2d
+ z/bTIKjDPDWHu520shZuUiNF//MSzDtUcbGILdeVVnV+jgbGORUudelvCHkckivEJ1lNlrtW+Gr
+ xpVMClszY7DpnQfSrm9QYkQ8mz+dakqzvA/29fTfyy/yBoTHhcBFESjEOWay0wJWcmyg2kKb1LG
+ CrFGO6BcDPNXNZy2TEKIK1MLhlZVp+43EFlotUDBpC/+4iUt0UjQAlFZ787kCFupfsUr
+X-Google-Smtp-Source: AGHT+IHOjKAvkLt/51nVnbJGX61nFsWcEcXrag0hCWPzrdYmw9+SKiH9Kich9iGJajSw8nFpy4+sBg==
+X-Received: by 2002:a05:600c:8b52:b0:442:f98e:f37 with SMTP id
+ 5b1f17b1804b1-454b30df071mr30296615e9.21.1751646308227; 
+ Fri, 04 Jul 2025 09:25:08 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b471b96534sm2816857f8f.48.2025.07.04.09.26.01
+ ffacd0b85a97d-3b471b96534sm2816857f8f.48.2025.07.04.09.25.07
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 09:26:01 -0700 (PDT)
+ Fri, 04 Jul 2025 09:25:07 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 063/119] target/arm: Implement SME2 ADD/SUB (array accumulator)
-Date: Fri,  4 Jul 2025 17:24:03 +0100
-Message-ID: <20250704162501.249138-64-peter.maydell@linaro.org>
+Subject: [PULL 005/119] target/arm: Fix VLDR helper load alignment checks
+Date: Fri,  4 Jul 2025 17:23:05 +0100
+Message-ID: <20250704162501.249138-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250704162501.249138-1-peter.maydell@linaro.org>
 References: <20250704162501.249138-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,76 +98,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: William Kosasih <kosasihwilliam4@gmail.com>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250704142112.1018902-52-richard.henderson@linaro.org
+This patch adds alignment checks in the load operations in the VLDR
+instruction.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1154
+Signed-off-by: William Kosasih <kosasihwilliam4@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250703085604.154449-5-kosasihwilliam4@gmail.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/sme.decode      | 12 ++++++++++++
- target/arm/tcg/translate-sme.c | 28 ++++++++++++++++++++++++++++
- 2 files changed, 40 insertions(+)
+ target/arm/tcg/mve_helper.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index 0badc8f9fa3..22e2a68b1b9 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -708,3 +708,15 @@ BFMLS_nx        11000001 0001 .... 1 .. 1.. ...01 1 ....    @azx_4x1_i3_o3
- FMLS_nx_h       11000001 0001 .... 1 .. 1.. ...00 1 ....    @azx_4x1_i3_o3
- FMLS_nx_s       11000001 0101 .... 1 .. 0.. ...00 10 ...    @azx_4x1_i2_o3
- FMLS_nx_d       11000001 1101 .... 1 .. 00. ...00 10 ...    @azx_4x1_i1_o3
-+
-+### SME2 Add / Sub array accumulators
-+
-+ADD_aaz_s       11000001 101 000000 .. 111 ....0 10 ...     @az_2x2_o3
-+ADD_aaz_s       11000001 101 000010 .. 111 ...00 10 ...     @az_4x4_o3
-+ADD_aaz_d       11000001 111 000000 .. 111 ....0 10 ...     @az_2x2_o3
-+ADD_aaz_d       11000001 111 000010 .. 111 ...00 10 ...     @az_4x4_o3
-+
-+SUB_aaz_s       11000001 101 000000 .. 111 ....0 11 ...     @az_2x2_o3
-+SUB_aaz_s       11000001 101 000010 .. 111 ...00 11 ...     @az_4x4_o3
-+SUB_aaz_d       11000001 111 000000 .. 111 ....0 11 ...     @az_2x2_o3
-+SUB_aaz_d       11000001 111 000010 .. 111 ...00 11 ...     @az_4x4_o3
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 664fdd86aa5..4c3b9aa7d6c 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -806,6 +806,34 @@ TRANS_FEAT(SUB_azz_nn_s, aa64_sme2, do_azz_nn, a, MO_32, tcg_gen_gvec_sub_var)
- TRANS_FEAT(ADD_azz_nn_d, aa64_sme2_i16i64, do_azz_nn, a, MO_64, tcg_gen_gvec_add_var)
- TRANS_FEAT(SUB_azz_nn_d, aa64_sme2_i16i64, do_azz_nn, a, MO_64, tcg_gen_gvec_sub_var)
+diff --git a/target/arm/tcg/mve_helper.c b/target/arm/tcg/mve_helper.c
+index 506d1c34757..8834523c23f 100644
+--- a/target/arm/tcg/mve_helper.c
++++ b/target/arm/tcg/mve_helper.c
+@@ -148,13 +148,15 @@ static void mve_advance_vpt(CPUARMState *env)
+ }
  
-+/* Add/Sub each ZA[d*N] += Z[m*N] */
-+static bool do_aaz(DisasContext *s, arg_az_n *a, int esz, GVecGen3FnVar *fn)
-+{
-+    TCGv_ptr t_za;
-+    int svl, n;
-+
-+    if (!sme_smza_enabled_check(s)) {
-+        return true;
-+    }
-+
-+    n = a->n;
-+    t_za = get_zarray(s, a->rv, a->off, n, 0);
-+    svl = streaming_vec_reg_size(s);
-+
-+    for (int i = 0; i < n; ++i) {
-+        int o_za = (svl / n * sizeof(ARMVectorReg)) * i;
-+        int o_zm = vec_full_reg_offset(s, a->zm + i);
-+
-+        fn(esz, t_za, o_za, t_za, o_za, tcg_env, o_zm, svl, svl);
-+    }
-+    return true;
-+}
-+
-+TRANS_FEAT(ADD_aaz_s, aa64_sme2, do_aaz, a, MO_32, tcg_gen_gvec_add_var)
-+TRANS_FEAT(SUB_aaz_s, aa64_sme2, do_aaz, a, MO_32, tcg_gen_gvec_sub_var)
-+TRANS_FEAT(ADD_aaz_d, aa64_sme2_i16i64, do_aaz, a, MO_64, tcg_gen_gvec_add_var)
-+TRANS_FEAT(SUB_aaz_d, aa64_sme2_i16i64, do_aaz, a, MO_64, tcg_gen_gvec_sub_var)
-+
- /*
-  * Expand array multi-vector single (n1), array multi-vector (nn),
-  * and array multi-vector indexed (nx), for floating-point accumulate.
+ /* For loads, predicated lanes are zeroed instead of keeping their old values */
+-#define DO_VLDR(OP, MSIZE, LDTYPE, ESIZE, TYPE)                         \
++#define DO_VLDR(OP, MFLAG, MSIZE, MTYPE, LDTYPE, ESIZE, TYPE)           \
+     void HELPER(mve_##OP)(CPUARMState *env, void *vd, uint32_t addr)    \
+     {                                                                   \
+         TYPE *d = vd;                                                   \
+         uint16_t mask = mve_element_mask(env);                          \
+         uint16_t eci_mask = mve_eci_mask(env);                          \
+         unsigned b, e;                                                  \
++        int mmu_idx = arm_to_core_mmu_idx(arm_mmu_idx(env));            \
++        MemOpIdx oi = make_memop_idx(MFLAG | MO_ALIGN, mmu_idx);        \
+         /*                                                              \
+          * R_SXTM allows the dest reg to become UNKNOWN for abandoned   \
+          * beats so we don't care if we update part of the dest and     \
+@@ -163,7 +165,7 @@ static void mve_advance_vpt(CPUARMState *env)
+         for (b = 0, e = 0; b < 16; b += ESIZE, e++) {                   \
+             if (eci_mask & (1 << b)) {                                  \
+                 d[H##ESIZE(e)] = (mask & (1 << b)) ?                    \
+-                    cpu_##LDTYPE##_data_ra(env, addr, GETPC()) : 0;     \
++                    (MTYPE)cpu_##LDTYPE##_mmu(env, addr, oi, GETPC()) : 0;\
+             }                                                           \
+             addr += MSIZE;                                              \
+         }                                                               \
+@@ -185,20 +187,20 @@ static void mve_advance_vpt(CPUARMState *env)
+         mve_advance_vpt(env);                                           \
+     }
+ 
+-DO_VLDR(vldrb, 1, ldub, 1, uint8_t)
+-DO_VLDR(vldrh, 2, lduw, 2, uint16_t)
+-DO_VLDR(vldrw, 4, ldl, 4, uint32_t)
++DO_VLDR(vldrb, MO_UB, 1, uint8_t, ldb, 1, uint8_t)
++DO_VLDR(vldrh, MO_TEUW, 2, uint16_t, ldw, 2, uint16_t)
++DO_VLDR(vldrw, MO_TEUL, 4, uint32_t, ldl, 4, uint32_t)
+ 
+ DO_VSTR(vstrb, 1, stb, 1, uint8_t)
+ DO_VSTR(vstrh, 2, stw, 2, uint16_t)
+ DO_VSTR(vstrw, 4, stl, 4, uint32_t)
+ 
+-DO_VLDR(vldrb_sh, 1, ldsb, 2, int16_t)
+-DO_VLDR(vldrb_sw, 1, ldsb, 4, int32_t)
+-DO_VLDR(vldrb_uh, 1, ldub, 2, uint16_t)
+-DO_VLDR(vldrb_uw, 1, ldub, 4, uint32_t)
+-DO_VLDR(vldrh_sw, 2, ldsw, 4, int32_t)
+-DO_VLDR(vldrh_uw, 2, lduw, 4, uint32_t)
++DO_VLDR(vldrb_sh, MO_SB, 1, int8_t, ldb, 2, int16_t)
++DO_VLDR(vldrb_sw, MO_SB, 1, int8_t, ldb, 4, int32_t)
++DO_VLDR(vldrb_uh, MO_UB, 1, uint8_t, ldb, 2, uint16_t)
++DO_VLDR(vldrb_uw, MO_UB, 1, uint8_t, ldb, 4, uint32_t)
++DO_VLDR(vldrh_sw, MO_TESW, 2, int16_t, ldw, 4, int32_t)
++DO_VLDR(vldrh_uw, MO_TEUW, 2, uint16_t, ldw, 4, uint32_t)
+ 
+ DO_VSTR(vstrb_h, 1, stb, 2, int16_t)
+ DO_VSTR(vstrb_w, 1, stb, 4, int32_t)
 -- 
 2.43.0
 
