@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE5BDC83F05
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 08:48:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53865C83030
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 08:49:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXc3v-00080b-0m; Fri, 04 Jul 2025 04:46:27 -0400
+	id 1uXc41-0008Ej-6w; Fri, 04 Jul 2025 04:46:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uXc3n-0007xM-Eb
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 04:46:20 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uXc3y-00087L-Rx
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 04:46:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uXc3k-0000Xy-Po
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 04:46:19 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uXc3w-0000wN-Tc
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 04:46:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751618776;
+ s=mimecast20190719; t=1751618788;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ulbI3NpOKSsNZ8nhES+eA9VoPutBs8AfUXJ+hy3Y7UI=;
- b=YbdbMzygWmBLrPr4ZgzautntQzMMt60dcqPoCqRKjjmCvTVgREAMao9MngKvvHBS/6lmRh
- PoWQeKSpEfYUWdIEQOjYA63l17Lqz6kLO99pbKNr0YEwYkM/rg0hORitP1Um8TWB+yCC8n
- ZsOeJb5YPVume94E6iRgvhsC0QbtvRQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=FATOxFjlqOdGSfi9TLGXPwRXGcPggsJ2RP2fosVbyPQ=;
+ b=cJus7HoLYn9y4v+k87w1bIq+gQ9szLFTQFdievW9FAPolFBJsm/oIAoZNUlWKjfxzbzxzE
+ z3He6AL+vR+G57bjibx/9m6M9YYpAYwzWM8kY7feGkD9gzb9rJkJIFFhOEZFIn885VB1ev
+ lXteEfu1GovKi9oM6WRav0TqSRHlIc4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-288-IjwxZeOgOD-0myZ7ceWXjA-1; Fri,
- 04 Jul 2025 04:46:10 -0400
-X-MC-Unique: IjwxZeOgOD-0myZ7ceWXjA-1
-X-Mimecast-MFC-AGG-ID: IjwxZeOgOD-0myZ7ceWXjA_1751618769
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-228-eoX-xCADNA-_dIGSZ3Ff5g-1; Fri,
+ 04 Jul 2025 04:46:20 -0400
+X-MC-Unique: eoX-xCADNA-_dIGSZ3Ff5g-1
+X-Mimecast-MFC-AGG-ID: eoX-xCADNA-_dIGSZ3Ff5g_1751618779
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7CAFD180029E; Fri,  4 Jul 2025 08:46:09 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 26F5F1809C81; Fri,  4 Jul 2025 08:46:19 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.43])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 653FD19560A7; Fri,  4 Jul 2025 08:46:06 +0000 (UTC)
+ id 59C8319560A7; Fri,  4 Jul 2025 08:46:15 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>, Peter Xu <peterx@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 13/27] physmem: qemu_ram_get_fd_offset
-Date: Fri,  4 Jul 2025 10:45:14 +0200
-Message-ID: <20250704084528.1412959-14-clg@redhat.com>
+ Steve Sistare <steven.sistare@oracle.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PULL 16/27] vfio/iommufd: add vfio_device_free_name
+Date: Fri,  4 Jul 2025 10:45:17 +0200
+Message-ID: <20250704084528.1412959-17-clg@redhat.com>
 In-Reply-To: <20250704084528.1412959-1-clg@redhat.com>
 References: <20250704084528.1412959-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -87,47 +87,122 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Steve Sistare <steven.sistare@oracle.com>
 
-Define qemu_ram_get_fd_offset, so CPR can map a memory region using
-IOMMU_IOAS_MAP_FILE in a subsequent patch.
+Define vfio_device_free_name to free the name created by
+vfio_device_get_name.  A subsequent patch will do more there.
+No functional change.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Link: https://lore.kernel.org/qemu-devel/1751493538-202042-8-git-send-email-steven.sistare@oracle.com
+Link: https://lore.kernel.org/qemu-devel/1751493538-202042-11-git-send-email-steven.sistare@oracle.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/exec/cpu-common.h | 1 +
- system/physmem.c          | 5 +++++
- 2 files changed, 6 insertions(+)
+ include/hw/vfio/vfio-device.h | 1 +
+ hw/vfio/ap.c                  | 4 ++--
+ hw/vfio/ccw.c                 | 4 ++--
+ hw/vfio/device.c              | 5 +++++
+ hw/vfio/pci.c                 | 2 +-
+ hw/vfio/platform.c            | 2 +-
+ 6 files changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index a68485547d5002e84306f5d82185fa7c6b2c2fcd..9b658a3f48f78ecd9ac49464c44d7e3dc3e5644c 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -85,6 +85,7 @@ void qemu_ram_unset_idstr(RAMBlock *block);
- const char *qemu_ram_get_idstr(RAMBlock *rb);
- void *qemu_ram_get_host_addr(RAMBlock *rb);
- ram_addr_t qemu_ram_get_offset(RAMBlock *rb);
-+ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb);
- ram_addr_t qemu_ram_get_used_length(RAMBlock *rb);
- ram_addr_t qemu_ram_get_max_length(RAMBlock *rb);
- bool qemu_ram_is_shared(RAMBlock *rb);
-diff --git a/system/physmem.c b/system/physmem.c
-index ff0ca40222d3471f746632a21195dab1783e8345..130c148ffb5c1f8336bef0d346ee1e8035771fcf 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1593,6 +1593,11 @@ ram_addr_t qemu_ram_get_offset(RAMBlock *rb)
-     return rb->offset;
+diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+index f503837ccc6936b730a7752ca092da5acba1806f..1901a35aa90214c36369f8ac0b0cfef36acbbaa8 100644
+--- a/include/hw/vfio/vfio-device.h
++++ b/include/hw/vfio/vfio-device.h
+@@ -279,6 +279,7 @@ int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
+ 
+ /* Returns 0 on success, or a negative errno. */
+ bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
++void vfio_device_free_name(VFIODevice *vbasedev);
+ void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp);
+ void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops,
+                       DeviceState *dev, bool ram_discard);
+diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+index 1df4438149d2a06ef176e03e358336381bfa4caa..7719f245797ef45b6392270741c7dd0a36527fd2 100644
+--- a/hw/vfio/ap.c
++++ b/hw/vfio/ap.c
+@@ -265,7 +265,7 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
+ 
+ error:
+     error_prepend(errp, VFIO_MSG_PREFIX, vbasedev->name);
+-    g_free(vbasedev->name);
++    vfio_device_free_name(vbasedev);
  }
  
-+ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb)
+ static void vfio_ap_unrealize(DeviceState *dev)
+@@ -275,7 +275,7 @@ static void vfio_ap_unrealize(DeviceState *dev)
+     vfio_ap_unregister_irq_notifier(vapdev, VFIO_AP_REQ_IRQ_INDEX);
+     vfio_ap_unregister_irq_notifier(vapdev, VFIO_AP_CFG_CHG_IRQ_INDEX);
+     vfio_device_detach(&vapdev->vdev);
+-    g_free(vapdev->vdev.name);
++    vfio_device_free_name(&vapdev->vdev);
+ }
+ 
+ static const Property vfio_ap_properties[] = {
+diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
+index cea9d6e00562c241832184cafe862005fcdc992b..9560b8d851b6b25e647476c51efe845ebff10410 100644
+--- a/hw/vfio/ccw.c
++++ b/hw/vfio/ccw.c
+@@ -619,7 +619,7 @@ out_io_notifier_err:
+ out_region_err:
+     vfio_device_detach(vbasedev);
+ out_attach_dev_err:
+-    g_free(vbasedev->name);
++    vfio_device_free_name(vbasedev);
+ out_unrealize:
+     if (cdc->unrealize) {
+         cdc->unrealize(cdev);
+@@ -637,7 +637,7 @@ static void vfio_ccw_unrealize(DeviceState *dev)
+     vfio_ccw_unregister_irq_notifier(vcdev, VFIO_CCW_IO_IRQ_INDEX);
+     vfio_ccw_put_region(vcdev);
+     vfio_device_detach(&vcdev->vdev);
+-    g_free(vcdev->vdev.name);
++    vfio_device_free_name(&vcdev->vdev);
+ 
+     if (cdc->unrealize) {
+         cdc->unrealize(cdev);
+diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+index 3cd365fb8b10a180c454d07efb4b7d4e6f403046..97eddd04f5756a0e9e4763c4fef84c9829272053 100644
+--- a/hw/vfio/device.c
++++ b/hw/vfio/device.c
+@@ -333,6 +333,11 @@ bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
+     return true;
+ }
+ 
++void vfio_device_free_name(VFIODevice *vbasedev)
 +{
-+    return rb->fd_offset;
++    g_clear_pointer(&vbasedev->name, g_free);
 +}
 +
- ram_addr_t qemu_ram_get_used_length(RAMBlock *rb)
+ void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp)
  {
-     return rb->used_length;
+     ERRP_GUARD();
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index dd0b2a0b947d4f9c788c6cd8b41e8ac916098724..1093b28df7c3f5f37e622e6d76a99ad8d2b7e01e 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -2996,7 +2996,7 @@ void vfio_pci_put_device(VFIOPCIDevice *vdev)
+ 
+     vfio_device_detach(&vdev->vbasedev);
+ 
+-    g_free(vdev->vbasedev.name);
++    vfio_device_free_name(&vdev->vbasedev);
+     g_free(vdev->msix);
+ }
+ 
+diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
+index 9a21f2e50a2945a6658b9be4fdec1bc1c98d0f20..5c1795a26fe79b98a9886e15f365fa7a921409a4 100644
+--- a/hw/vfio/platform.c
++++ b/hw/vfio/platform.c
+@@ -530,7 +530,7 @@ static bool vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
+ {
+     /* @fd takes precedence over @sysfsdev which takes precedence over @host */
+     if (vbasedev->fd < 0 && vbasedev->sysfsdev) {
+-        g_free(vbasedev->name);
++        vfio_device_free_name(vbasedev);
+         vbasedev->name = g_path_get_basename(vbasedev->sysfsdev);
+     } else if (vbasedev->fd < 0) {
+         if (!vbasedev->name || strchr(vbasedev->name, '/')) {
 -- 
 2.50.0
 
