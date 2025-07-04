@@ -4,77 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D999FC8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 15:05:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E77CC8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 15:15:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXhy7-00078R-La; Fri, 04 Jul 2025 11:04:51 -0400
+	id 1uXi8E-000272-ME; Fri, 04 Jul 2025 11:15:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uXhy4-000773-H4
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 11:04:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uXhy2-0007TG-8d
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 11:04:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751641485;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8yjiydpozAeGiYzreYXhPRjXABy7L+dbIXX0O+spGMk=;
- b=bQu8dRh/8kw9sYMAnU/LBuZiY6MHOlKouhrymrQXefrsTaHNTlvmhh/qDRq9Kp4nOQ/Uou
- ryZUodX16eGgirqxlI8wNWfi3V/Ldx0dcNJxpLTSYKGfFuIa6IXtMNZHVHDjFw0Oo7dIDO
- R9ajcHxnSBpyVzmuQjAf0/6rflxGwc0=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-pS3uP2WrMAaIyLS-dD7_gw-1; Fri,
- 04 Jul 2025 11:04:43 -0400
-X-MC-Unique: pS3uP2WrMAaIyLS-dD7_gw-1
-X-Mimecast-MFC-AGG-ID: pS3uP2WrMAaIyLS-dD7_gw_1751641483
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CC65719560AE; Fri,  4 Jul 2025 15:04:42 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79EBF194128F; Fri,  4 Jul 2025 15:04:42 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CA3F921E6A27; Fri, 04 Jul 2025 17:04:39 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,  berrange@redhat.com,  Peter Xu
- <peterx@redhat.com>,  Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v2 16/24] migration: Add capabilities into
- MigrationParameters
-In-Reply-To: <87cyag3tbb.fsf@suse.de> (Fabiano Rosas's message of "Fri, 04 Jul
- 2025 11:48:56 -0300")
-References: <20250630195913.28033-1-farosas@suse.de>
- <20250630195913.28033-17-farosas@suse.de>
- <87jz4sz5b6.fsf@pond.sub.org> <87h5zs3xng.fsf@suse.de>
- <8734bckq6n.fsf@pond.sub.org> <87cyag3tbb.fsf@suse.de>
-Date: Fri, 04 Jul 2025 17:04:39 +0200
-Message-ID: <8734bcj8u0.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uXi87-0001zI-OJ
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 11:15:14 -0400
+Received: from mail-qv1-xf36.google.com ([2607:f8b0:4864:20::f36])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uXi85-0004cx-PG
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 11:15:11 -0400
+Received: by mail-qv1-xf36.google.com with SMTP id
+ 6a1803df08f44-702cbfe860cso4267856d6.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 08:15:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751642109; x=1752246909; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=I2pA8Kdl7I3oMXH8ei53t6GkTDaEspN8YWJLUEgwyNk=;
+ b=mIYuFd0tF+N4tEuCtIpQhHyLIJ/ZYWQyx3urdJDpaG+vIrMl/sGzWYn3zLngNm4lcY
+ yoHHYJqtqdZKkeZ9tewrJl7cx+HTLLM99P8AQNhQixI3Z1z/fbG8zjBhKcdcv4/gSQeB
+ mYMQw/fJH39hM3nTu2+vlIiEfCurDZBrwaI5UBJ2Ulk/B7Q7u+AalBgr+NwYWV9LHXQV
+ JHlOVHipLT7gdOaRHkviPu+kr5OMkyXKq3BrC4BjZpZizm8/aTrrEGd5yt0/EtuG/HiQ
+ sEE4IUSkD+Zs4TWhj1d4xr+xcES63TpnrU+69VoiDWU4jsS6MvynRyrIddvtG1F4hYwg
+ dlsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751642109; x=1752246909;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=I2pA8Kdl7I3oMXH8ei53t6GkTDaEspN8YWJLUEgwyNk=;
+ b=Igwl4DkjQ2VPjOIjt2ilbwa2cEmCKf5IWMaxsXFsq3p0oweePxmpi2uhQpScd+rHYR
+ +ljfwL/bEUFsnrBPxtnXY8MGxQkyB3V322Aqpw5d9GD3J2l4od+v+PljBfkHe0tUnc4a
+ yRqc9dX8iU/RdXfzwVYKCPF7HDmFKKSo76vx/Rj0fCAsK3qJEbMfajLgD+Jp3Melw7V2
+ cHj8NyL+SXSTemmnRYIFCGTUkn1ExyOhTs8jOJ87XWjxK16yz/MawWZRZrOsC9mh9TEy
+ +pPGsJ3b3O+i6rg2j7lASp8fBfO4GEXx6B6t+LVo3/dxDSMyPpEq6Joq/xtgmQGYGFwW
+ XMKw==
+X-Gm-Message-State: AOJu0YwQTHjTJocT2h1oT/5rVQm4PJ1ilkka635Ufo8J44E9qBpUoXBc
+ j87fi8HcbqowMQapQ5c7h8xYjt8fIiy1mmk+rdnjl0PXJ4TRNrAvRayBAyCcWVNGW8I=
+X-Gm-Gg: ASbGncvcPUYDEDMhhnLZdmfzxc3O69fN+l40XslygE14pqgfdc/7IcEt3Iyipifjsso
+ 7W9TNimGcJwFEkN2WgHHSaVYCWBWKclNn2/irWbW8WTgxVti3bgEqHaLCDzG/dmWV1UTOSB9DjC
+ mt7cVqbZyNliw7Qvzi4dZ3YWCaf6qRju8sJ18YgdipqVXtV7me4OZ5Xi17yB1GhDlogsuCW8/oD
+ HRHX282jcYtqKWogjl+87jUxDTiRydTUvLtthuoWTM7ANjZnRs1ek/m/poDlC7zylu8Fus/ofrH
+ HIMRJjgkTp5ArMgJWANIYgcrgJnj5qPopIiydLMQAtiz5XLEgITCqk21c0wV3RUnLp4=
+X-Google-Smtp-Source: AGHT+IHj77mXCr/eo8Y9pVElKQB6QlMeINThWHuNNEHwQi2m0hzBWii/jY6k/xnVh3sxR5m+fSPUHA==
+X-Received: by 2002:a05:6214:301a:b0:702:c150:46c2 with SMTP id
+ 6a1803df08f44-702c6d33a2dmr42807526d6.10.1751642108469; 
+ Fri, 04 Jul 2025 08:15:08 -0700 (PDT)
+Received: from gromero0.. ([189.110.24.38]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-702c4d6039fsm13658666d6.111.2025.07.04.08.15.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Jul 2025 08:15:07 -0700 (PDT)
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: qemu-arm@nongnu.org,
+	alex.bennee@linaro.org
+Cc: qemu-devel@nongnu.org,
+	gustavo.romero@linaro.org
+Subject: [WIP-for-10.1 v2 2/5] target/arm: Add FEAT_MEC registers
+Date: Fri,  4 Jul 2025 15:14:28 +0000
+Message-Id: <20250704151431.1033520-3-gustavo.romero@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250704151431.1033520-1-gustavo.romero@linaro.org>
+References: <20250704151431.1033520-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 15
-X-Spam_score: 1.5
-X-Spam_bar: +
-X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.218,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f36;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-qv1-xf36.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,77 +99,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+Add all FEAT_MEC registers.
 
->> Markus Armbruster <armbru@redhat.com> writes:
->
->> Fabiano Rosas <farosas@suse.de> writes:
->>
->>> Markus Armbruster <armbru@redhat.com> writes:
->>>
->>>> Fabiano Rosas <farosas@suse.de> writes:
->>>>
->>>>> Add capabilities to MigrationParameters. This structure will hold all
->>>>> migration options. Capabilities will go away in the next patch.
->>>>>
->>>>> Also add capabilities to MigrationParameter as the enum needs to be
->>>>> kept in sync with MigrationParameters. This affects the parsing of
->>>>> migration HMP commands so make the necessary additions there too.
->>>>>
->>>>> From this point on, both QMP and HMP versions of
->>>>> migrate-set-parameters and query-migrate-parameters gain the ability
->>>>> to work with capabilities.
->>>>>
->>>>> With MigrationParameters now having members for each capability, the
->>>>> migration capabilities commands (query-migrate-capabilities,
->>>>> migrate-set-capabilities) will soon be deprecated. Add a set of
->>>>> helpers to convert between the old MigrationCapability representation
->>>>> and the new representation as members of MigrationParameters.
->>>>>
->>>>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->>>>
->>>> [...]
->>>>
->>>>> diff --git a/qapi/migration.json b/qapi/migration.json
->>>>> index 40e00fb86e..3d3f5624c5 100644
->>>>> --- a/qapi/migration.json
->>>>> +++ b/qapi/migration.json
->>>>> @@ -763,7 +763,14 @@
->>>>>             'vcpu-dirty-limit',
->>>>>             'mode',
->>>>>             'zero-page-detection',
->>>>> -           'direct-io'] }
->>>>> +           'direct-io', 'xbzrle', 'rdma-pin-all', 'auto-converge',
->>>>> +           'zero-blocks', 'events', 'postcopy-ram', 'x-colo',
->>>>> +           'release-ram', 'return-path', 'pause-before-switchover',
->>>>> +           'multifd', 'dirty-bitmaps', 'postcopy-blocktime',
->>>>> +           'late-block-activate', 'x-ignore-shared',
->>>>> +           'validate-uuid', 'background-snapshot',
->>>>> +           'zero-copy-send', 'postcopy-preempt',
->>>>> +           'switchover-ack', 'dirty-limit', 'mapped-ram' ] }
->>>>
->>>> This is MigrateParameter.  Different order than in MigrationParameters.
->>>> Intentional?
->>>>
->>>
->>> I think you mean the pre-existing difference in the order of the
->>> compression options multifd-*-level? I'll fix that.
->>
->> I noticed the new members are in a different order than in
->> MigrationParameters.  I didn't notice the existing members differ, too.
->>
->
-> Sorry, I don't see it, we must be looking at different things.
+To work properly, FEAT_MEC also depends on FEAT_SCTLR2 and FEAT_TCR2,
+which are not implemented in this commit. The bits in SCTLR2 and TCR2
+control which translation regimes use MECIDs, and determine which MECID
+is selected.
 
-Misunderstanding?  Quite possibly on my part!
+FEAT_MEC also requires two new cache management instructions, not
+included in this commit, that will be implemented in subsequent commits.
 
-Let's keep the members of MigrationParameter in the same order as the
-members of MigrationParameters.  In case they already are: nevermind!
->
->>> If it's something else, it eludes my gaze.
->>
->> No.
->>
->> Thanks!
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+---
+ target/arm/cpu.h    | 14 +++++++
+ target/arm/helper.c | 98 +++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 112 insertions(+)
+
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 8ce30ca857..9509217486 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -565,6 +565,16 @@ typedef struct CPUArchState {
+ 
+         /* NV2 register */
+         uint64_t vncr_el2;
++
++        /* MEC registers */
++        uint64_t mecidr_el2;
++        uint64_t mecid_p0_el2;
++        uint64_t mecid_a0_el2;
++        uint64_t mecid_p1_el2;
++        uint64_t mecid_a1_el2;
++        uint64_t mecid_rl_a_el3;
++        uint64_t vmecid_p_el2;
++        uint64_t vmecid_a_el2;
+     } cp15;
+ 
+     struct {
+@@ -2389,6 +2399,10 @@ FIELD(MFAR, FPA, 12, 40)
+ FIELD(MFAR, NSE, 62, 1)
+ FIELD(MFAR, NS, 63, 1)
+ 
++FIELD(MECIDR, MECIDW, 0, 4)
++FIELD(MECID, MECID, 0, 16)
++FIELD(VMECID, MECID, 0, 16)
++
+ QEMU_BUILD_BUG_ON(ARRAY_SIZE(((ARMCPU *)0)->ccsidr) <= R_V7M_CSSELR_INDEX_MASK);
+ 
+ /* If adding a feature bit which corresponds to a Linux ELF
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 889d308807..9f8a284261 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -6823,6 +6823,100 @@ static const ARMCPRegInfo nmi_reginfo[] = {
+       .resetfn = arm_cp_reset_ignore },
+ };
+ 
++static void mecidr_reset(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    /* MECIDWidthm1 = 15, i.e. 16 bits is the width of a MECID. */
++    env->cp15.mecidr_el2 = FIELD_DP64(0, MECIDR, MECIDW, 15);
++}
++
++static uint64_t mecidr_read(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    uint64_t valid_mask;
++
++    if (!arm_is_el2_enabled(env)) {
++        /* All bits are RES0. */
++        return 0ULL;
++    }
++
++    valid_mask = R_MECIDR_MECIDW_MASK;
++    return env->cp15.mecidr_el2 & valid_mask;
++}
++
++static CPAccessResult mecid_access(CPUARMState *env,
++                                   const ARMCPRegInfo *ri, bool isread)
++{
++    int el;
++
++    el = arm_current_el(env);
++    if (el == 2 && !(env->cp15.scr_el3 & SCR_MECEN)) {
++        return CP_ACCESS_TRAP_EL3;
++    }
++
++    return CP_ACCESS_OK;
++}
++
++static void mecid_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                        uint64_t value)
++{
++    uint64_t valid_mask;
++
++    valid_mask = R_MECID_MECID_MASK;
++    value &= valid_mask;
++    raw_write(env, ri, value);
++}
++
++static uint64_t mecid_read(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    uint64_t valid_mask;
++
++    valid_mask = R_MECID_MECID_MASK;
++    return raw_read(env, ri) & valid_mask;
++}
++
++static const ARMCPRegInfo mec_reginfo[] = {
++    { .name = "MECIDR_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .opc2 = 7, .crn = 10, .crm = 8,
++      .resetfn = mecidr_reset,
++      .access = PL2_RW, .accessfn = mecid_access, .readfn = mecidr_read,
++      .writefn = arm_cp_write_ignore,
++      .fieldoffset = offsetof(CPUARMState, cp15.mecidr_el2) },
++    { .name = "MECID_P0_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .opc2 = 0, .crn = 10, .crm = 8,
++      .access = PL2_RW, .accessfn = mecid_access,
++      .readfn = mecid_read, .writefn = mecid_write,
++      .fieldoffset = offsetof(CPUARMState, cp15.mecid_p0_el2) },
++    { .name = "MECID_A0_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .opc2 = 1, .crn = 10, .crm = 8,
++      .access = PL2_RW, .accessfn = mecid_access,
++      .readfn = mecid_read, .writefn = mecid_write,
++      .fieldoffset = offsetof(CPUARMState, cp15.mecid_a0_el2) },
++    { .name = "MECID_P1_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .opc2 = 2, .crn = 10, .crm = 8,
++      .access = PL2_RW, .accessfn = mecid_access,
++      .readfn = mecid_read, .writefn = mecid_write,
++      .fieldoffset = offsetof(CPUARMState, cp15.mecid_p1_el2) },
++    { .name = "MECID_A1_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .opc2 = 3, .crn = 10, .crm = 8,
++      .access = PL2_RW, .accessfn = mecid_access,
++      .readfn = mecid_read, .writefn = mecid_write,
++      .fieldoffset = offsetof(CPUARMState, cp15.mecid_a1_el2) },
++    { .name = "MECID_RL_A_EL3", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 6, .opc2 = 1, .crn = 10, .crm = 10,
++      .access = PL2_RW, .accessfn = mecid_access,
++      .readfn = mecid_read, .writefn = mecid_write,
++      .fieldoffset = offsetof(CPUARMState, cp15.mecid_rl_a_el3) },
++    { .name = "VMECID_P_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .opc2 = 0, .crn = 10, .crm = 9,
++      .access = PL2_RW, .accessfn = mecid_access,
++      .readfn = mecid_read, .writefn = mecid_write,
++      .fieldoffset = offsetof(CPUARMState, cp15.vmecid_p_el2) },
++    { .name = "VMECID_A_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .opc2 = 1, .crn = 10, .crm = 9,
++      .access = PL2_RW, .accessfn = mecid_access,
++      .readfn = mecid_read, .writefn = mecid_write,
++      .fieldoffset = offsetof(CPUARMState, cp15.vmecid_a_el2) },
++};
++
+ static void define_pmu_regs(ARMCPU *cpu)
+ {
+     /*
+@@ -9008,6 +9102,10 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+         define_arm_cp_regs(cpu, nmi_reginfo);
+     }
+ 
++    if (cpu_isar_feature(aa64_mec, cpu)) {
++        define_arm_cp_regs(cpu, mec_reginfo);
++    }
++
+     if (cpu_isar_feature(any_predinv, cpu)) {
+         define_arm_cp_regs(cpu, predinv_reginfo);
+     }
+-- 
+2.34.1
 
 
