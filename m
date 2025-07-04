@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03ADDC8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 09:47:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 212CDC8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 09:47:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXczm-0002g2-CN; Fri, 04 Jul 2025 05:46:14 -0400
+	id 1uXd14-0003E0-Er; Fri, 04 Jul 2025 05:47:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXczZ-0002fT-0m
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 05:46:02 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
+ id 1uXd13-0003Dr-CS
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 05:47:33 -0400
+Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uXczU-0005Bh-2T
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 05:45:59 -0400
+ id 1uXd11-0005xa-MB
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 05:47:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751622356; x=1783158356;
+ t=1751622452; x=1783158452;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=5qSGiSXOKcAKV/h8so7GZZe+pHC4rBtVv0yxLpt2vEg=;
- b=EdmKSAzEvmRFnMGwo/YadgTo2wPL5IDyj9G+c67P/HxRJTkubGl8F4Gw
- LnUkIdT+UTdaWNlyMdgktDGc7SVQRKb/sbWZ4gHKkwCecm2phHaGcpTcX
- togIvI0lri5zQwbLTunO9a8zL8+mnWBqE+jX6bFQMhuS/qAl3U9wzqNF9
- G9Z0ZtAVaxS7yWIMKI8dcLuWS7AKSBPBikqACjPOGaEdZOY9+cg3f48R5
- pwX2bdP2nbEwz2cp0KVvQV9q6iubDqekVhVrOkHtC6s4GXm/NrGZH1myi
- SArdEop14oyhTfXnDrXBjMlqAh8VfxXjEqiw+rdzsgWu+GP1ySUGX8fqv Q==;
-X-CSE-ConnectionGUID: IqABEzXPT0mZM9wAfb21bQ==
-X-CSE-MsgGUID: MbjFkmwUTPuz504NdXl1Gw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="71393714"
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="71393714"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Jul 2025 02:45:53 -0700
-X-CSE-ConnectionGUID: 5kSuDYzoRGKavZPd0khEAw==
-X-CSE-MsgGUID: EKR+H+lWQpmfY2mJXcCuFA==
+ bh=rwcV4sKt2apMOij/fd7gqN4SDf9ludDIO8eQzpKKmmU=;
+ b=XRLMz55F3A45t1GYTbun+7rP+XHdDklF48P2ULtLA7/hT9uF8WFAGNHa
+ TT3cslG+q1jMHRhhxvQZGFWla05V7LHaCDeB7+fLrpapYtJzQfrXhZtxc
+ 2HEmqSbtrNuN+QjBk0q9yY44umj35C3DFu2ENQsgABK4G/M+uz56OzZ2+
+ PIPKiCZExnPUpJIH7QbTF8gXfdxJ3SXka+DeZljMAe/WqeP9FPUqWBTC7
+ pAYyyN8oQL+mVbGReZ8HXOswpEs8Sd0X4KXMvtS3+C+AxBCPBKLyZfE2U
+ w3p3SrA4WySr2ghQ/H/sbDhhj1QhR6kBaUvsGT8oGbaZuRC0cp0JpmeWU w==;
+X-CSE-ConnectionGUID: /0juOBrlTrOpJVTesJDUkQ==
+X-CSE-MsgGUID: 3RXkdCHYRyC6l/w+tGFHjw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="53822771"
+X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="53822771"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Jul 2025 02:47:31 -0700
+X-CSE-ConnectionGUID: D88yNNy9R3W90/RTEHWY5w==
+X-CSE-MsgGUID: nzajWCfyRq6N1rnT0cGAgw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="191776557"
+X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="185560658"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa001.jf.intel.com with ESMTP; 04 Jul 2025 02:45:51 -0700
-Date: Fri, 4 Jul 2025 18:07:17 +0800
+ by fmviesa001.fm.intel.com with ESMTP; 04 Jul 2025 02:47:29 -0700
+Date: Fri, 4 Jul 2025 18:08:55 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v6 18/39] accel/hvf: Replace @dirty field by generic
+Subject: Re: [PATCH v6 19/39] accel/nvmm: Replace @dirty field by generic
  CPUState::vcpu_dirty field
-Message-ID: <aGen1bJ0N65NT5oH@intel.com>
+Message-ID: <aGeoN6UchE6YynU7@intel.com>
 References: <20250703173248.44995-1-philmd@linaro.org>
- <20250703173248.44995-19-philmd@linaro.org>
+ <20250703173248.44995-20-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250703173248.44995-19-philmd@linaro.org>
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250703173248.44995-20-philmd@linaro.org>
+Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
@@ -85,10 +85,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 03, 2025 at 07:32:24PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Thu,  3 Jul 2025 19:32:24 +0200
+On Thu, Jul 03, 2025 at 07:32:25PM +0200, Philippe Mathieu-Daudé wrote:
+> Date: Thu,  3 Jul 2025 19:32:25 +0200
 > From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v6 18/39] accel/hvf: Replace @dirty field by generic
+> Subject: [PATCH v6 19/39] accel/nvmm: Replace @dirty field by generic
 >  CPUState::vcpu_dirty field
 > X-Mailer: git-send-email 2.49.0
 > 
@@ -98,12 +98,8 @@ On Thu, Jul 03, 2025 at 07:32:24PM +0200, Philippe Mathieu-Daudé wrote:
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  include/system/hvf_int.h  |  1 -
->  accel/hvf/hvf-accel-ops.c | 10 +++++-----
->  target/arm/hvf/hvf.c      |  4 ++--
->  target/i386/hvf/hvf.c     |  4 ++--
->  target/i386/hvf/x86hvf.c  |  2 +-
->  5 files changed, 10 insertions(+), 11 deletions(-)
+>  target/i386/nvmm/nvmm-all.c | 21 ++++++++++-----------
+>  1 file changed, 10 insertions(+), 11 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
