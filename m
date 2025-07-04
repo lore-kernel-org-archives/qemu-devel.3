@@ -4,111 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19CC2C83F05
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 10:28:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2EB2C83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 10:29:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXddX-0001SQ-1K; Fri, 04 Jul 2025 06:27:19 -0400
+	id 1uXdfp-0003ih-P4; Fri, 04 Jul 2025 06:29:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uXddR-0001RG-9h
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:27:13 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uXddM-0005Rf-Qf
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:27:12 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4537edf2c3cso7957555e9.3
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 03:27:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751624827; x=1752229627; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=XcG193KL04Vyt8IK+5wFFCt320k2qvBu9/epx6xtd4A=;
- b=XycNIsvaK5KCv4Nm4cKOOOHjAEOI6CKQTBn9OmzytMC/aNFZVH4wWDH9ItV9XmXIYs
- qD1d8zHkSQ0r3xV8fEfD/zsNevvZ1JQzkjXkcTdi9U0CtQy6IcW98PQyXUJL7rmeqZIf
- Bi4iRjTcl1MryTGpw69BG6h8NUZO4ttdZG2NBRGGQvdQjdyZ0vu6/TZSflRJvPpZ8xN2
- 3PEG0cPpahR9487zWizaUSrsKtOacR9a+icPKrtC9IOP603v7PP1uZNlraZIzAPy7YYg
- nBVgQ0IBXOJFqhJ/r6DJ0FPBsrQDwA2yQXCMgF/mNc2GfuhwInucsPS21bQ81500+KDQ
- p0wA==
+ (Exim 4.90_1) (envelope-from <mvogt@redhat.com>) id 1uXdfj-0003iL-PF
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:29:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mvogt@redhat.com>) id 1uXdfg-0007GN-UQ
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 06:29:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751624970;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=uGysQ4zd9SWmPMYTJ5afHF857JJ1IW4lu8cBVoj4QD8=;
+ b=fBEV+KtcaXxlIfOhZ5Nb4CBsZVs03L0V2R3W50Q9oCooUAyKs+gpp2Sn71VSAZaoAUPFdn
+ QlYGX5t9s3mvRSFO8u1csqTTiHRKPK7Jp9/R6v6hpdeq4BNbmHFa+1DSU+oHBwEkYEWZ/w
+ 7Em8mbSfN9Lyo9zWu2BR5OGUb77t7Us=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-122-qiVUAhi0P56hyijVAkn8UQ-1; Fri, 04 Jul 2025 06:28:23 -0400
+X-MC-Unique: qiVUAhi0P56hyijVAkn8UQ-1
+X-Mimecast-MFC-AGG-ID: qiVUAhi0P56hyijVAkn8UQ_1751624902
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-60c4d1b0aa4so723456a12.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 03:28:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751624827; x=1752229627;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XcG193KL04Vyt8IK+5wFFCt320k2qvBu9/epx6xtd4A=;
- b=s6+AFOdOQD/u5t1yBObyd3Z/yf5Ighd2F5ISRlYKaYwXg2ziIsL/9QLoMcYIAHlaVP
- 0RaymXAErqRhCbTvS0B/OCPZ3ndI05GfeUlp0h3mgf9TI0H6fdMqGukb7rrF1aS7NnPm
- rxSIzMp6RyesSA5FSfqJgU4mMgrjs69jrRuGywrKF+8KutRJLe346E19e5oDDLlO2FYx
- aw4Ozd2QrJjMy1ebtNwxBgd9mxe1cQdMLq/7npdeETgL6TqnIlZYuKZ2FZ7Q9j7THqt2
- wNaEAGkUS0vnIT4RNJ8MhZlZBm4rhu0n47UEIOCBvDNZjrNjALs0w72cMnnC9WAFFZsG
- y8Iw==
-X-Gm-Message-State: AOJu0YxNLDFUZ+ZDSLakVT46chCt+FvQ18ZW+sIaqmIvY6FIrd8POk2I
- n4KMRNRK0Jip1BU8E+NQr+6P4cGzlq+n6hI/wcKCYhHUMhWQQ2qV2loIJJz7O6CWBt0=
-X-Gm-Gg: ASbGncvo90BlEqWlZa7t1/YII32zjbqu+CH/XnLXh80gqh8uGR78CfNyJ2PoL7oGOk8
- TAc6zGASwP2xkxPZltOjCZUA11tPacbrdsBIwsfFdNYkzCCom8cGeH9O5cc+nHUExhxUUEkuHgb
- 0QfrS9Pc2PEZiSbzm4oGPyKm3oIx17bNLFHvXtmu3tJSWGx7Hd2f8MRuzzMRGvYoCuIc9OCAg6S
- szmgBmkqDYZe4/WXMYsZG+TbWTqbYktYAtNn4Zrxr/2/S1jkeL2vHl2o2IgB8iEJo/oXvlyns92
- CmpyNiqUT/tMMVmChRW6E0DhaTdcqZTcIXgCtABmfDLSqLNBqHXsG66puL+98xlMenTtD3+pMBH
- F1rcBXJIQmQyEOINioCU1OsLizKbW+8I=
-X-Google-Smtp-Source: AGHT+IGIrwbGfGHZ2CaiInXJ01X26/gPoKi/ZtUq8Acj6KKYibHGmeG/JNlC9svtXZpzUYaobsx9lA==
-X-Received: by 2002:a05:600c:c4a5:b0:453:8bc7:5c9b with SMTP id
- 5b1f17b1804b1-454b3105598mr20525425e9.24.1751624826956; 
- Fri, 04 Jul 2025 03:27:06 -0700 (PDT)
-Received: from [127.0.1.1] (ppp-2-86-212-125.home.otenet.gr. [2.86.212.125])
+ d=1e100.net; s=20230601; t=1751624902; x=1752229702;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=uGysQ4zd9SWmPMYTJ5afHF857JJ1IW4lu8cBVoj4QD8=;
+ b=S91PlUGJCZe0x+Z7xZ5tGzKqi8pT05TxiaFxGttuAS3S2dhCMLUwCU3JT4yOKKWwLm
+ DGShbp+0s79s1ejkpg+25mbo9YHWZLIkUypzSrKce+xwNazlMeyJBIR5IyHWZarCi4Lv
+ Tf0ff4lJD0CVgZ+wi9tyQ9AqVWOGtwxFSZQfY0Gxjou7Lj66kWibF7l7jZZzPO2GyMls
+ wqFmWuNcKyBGWJlo+gIIQsQEScT+KtHFriPC8xywC1IR90emi/0B/6rqPQc8TVlFhMGJ
+ hf8MrckiQCyK4DbB6otA1CTxtvSaob6uG1O8tEo2IFAjTp7EuqlUfaW0xhq+v/QWNPnS
+ 2O7g==
+X-Gm-Message-State: AOJu0Yxk3mdROHcg0EfEC7jZEGFkinMTEckScQ9RE0BrwOFsQBEdhC6O
+ FOkgtRDgEkx62w0zWumVUqxEQ+LVFpXkX9lTV/9YXKIvRYP57wws775urbGUKzcWvp4VtqHVQkS
+ bKI0yzAxqyTFKlTFFqRyLT7rfHwPnYFVb9YYEUhnIEicCp9c8tIwagfJ8skdg1/q30oYL7K44/m
+ /KObod3M9WSnROZ95Qe65vPEY8j+6O7IRRp9aPqg0=
+X-Gm-Gg: ASbGncvEB4G8aKYpG8mfRoNf9JcOT4Ppy52y9APJHW9CU6e/r0XCmLhum+mbLByTlh6
+ UK7vrm5GhWK0RiQfmwplMP9p0AObM3npn4mmz8wYPBNN4+A06Q1sLnajLmEghpIbqXWdMfGAFdC
+ NjTqs45C35JDTUNJkw6b5uO6+i5sEmdQJ+N15VXYMW8VDmaBW96EN5+RbMAJXlB7LgnXNfpKWkZ
+ NZ0T0PEeyQwsO9l6Z+m1XjPYhQbEn66f5Z0VQy6+jfguoBxp8pTXJwNG2mG4H4lyzHAeUiPRhQm
+ x4rrvgNrOAZFPRhf4XvmNvpqST1xuEKbFA==
+X-Received: by 2002:a05:6402:5112:b0:60e:23d:43b1 with SMTP id
+ 4fb4d7f45d1cf-60fd3371b33mr1480282a12.16.1751624901914; 
+ Fri, 04 Jul 2025 03:28:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHvCS19AqrOhj32yAym6Qbb2TYEZytFf3xaKlyo24vv6cQF8nsYUNPNdNyQmwMSqGqkCKvE+A==
+X-Received: by 2002:a05:6402:5112:b0:60e:23d:43b1 with SMTP id
+ 4fb4d7f45d1cf-60fd3371b33mr1480259a12.16.1751624901306; 
+ Fri, 04 Jul 2025 03:28:21 -0700 (PDT)
+Received: from top.fritz.box ([2a00:6020:4c20:5100:b554:58b6:5239:7d31])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454a9bead7csm51037475e9.39.2025.07.04.03.27.05
+ 4fb4d7f45d1cf-60fcb1fa9b8sm1118480a12.54.2025.07.04.03.28.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 03:27:06 -0700 (PDT)
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Fri, 04 Jul 2025 13:26:58 +0300
-Subject: [PATCH 2/2] rust/qemu-api-macros: add unit tests
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250704-rust_add_derive_macro_unit_tests-v1-2-ebd47fa7f78f@linaro.org>
-References: <20250704-rust_add_derive_macro_unit_tests-v1-0-ebd47fa7f78f@linaro.org>
-In-Reply-To: <20250704-rust_add_derive_macro_unit_tests-v1-0-ebd47fa7f78f@linaro.org>
+ Fri, 04 Jul 2025 03:28:20 -0700 (PDT)
+From: Michael Vogt <mvogt@redhat.com>
+X-Google-Original-From: Michael Vogt <michael.vogt@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6628;
- i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=80zbO5iIpVqM83OtEbnFWqLbbSQHskxNes79FFPF+SE=;
- b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm9aNngzUU9NcFFFc2g1Z2tTb1Q1NW5VZUlhT1pXCkh1ZUk4Vk4raHAzZ2ZKVS9x
- NWlKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYUdlc2R3QUt
- DUkIzS2Nkd2YzNEowQmJaRC85TnN6d0xlVGt2aXFBSy85MDdKeUZldUdRaXlvYkl1WXE3dFI0Yw
- owa0t4T3hIdXhNOXRLTDkzeFQ4L2VjYU9pTEducjUwYTBSMUtVaWYreGRRSlFEN0JCWVZqcU0yV
- DlJc0g1aDhyCmFhNzlTcTlaRncwMzBsbW4vR1J1RnI4TXcwaENvRXBLMEtJZ3FrSit5NE9seUsy
- eVUyKzZqUFdPS3FwRmtBVmwKV05CQXlmOG51UUJ4am9wTnNCUUZpeEdUSnRESWQxZWdaOW9waWl
- KeHRycDBrVUo5Qm9rMnhtbHJmVE5TRTJ4YwpLWTBZa0RXUWZkeXY0REZOZzU3blJGNnlGdXdsWj
- lqU2hiS1NmWmtKbzFzY2pBcDJZTkh5MlhlYnhuSmVTT0g0ClRGL3J1d2M1czRRRmRZNFpnamRVb
- GJVVVNJWFN2aGxtTFNwK012N1ZCTUx4WEtwMXFMVU1OSTRpWG4vYWFIOVoKY2RiRWszeUZySitD
- Z1RsZkJhOUhWRGxmZUgySDFJdnVFMnVxcks4WEFkSVBWb0UwckJnaXVoT3U4Vkp0NFhObgpNYU4
- yT1NZKy9CMkg0cDQxcVlDRzN0bDZWZFp5d3Mxc2E3a2xKdXJCaWhvVDdJMklkQm9NaVRLYUliVm
- k5dDVoCllrRGtGTndwckhZcmlsRTcvc1VhditvNGRBbDFHK2E4eWNMa1BLTk1STFNtTlVNOXUvb
- XQ0RzlWQVNTdkNlOWkKc0lMNFdaZU04QzIzVGJLSjhYTkdyazA2OEYrVHVONTZZWFQvbHFOcm9L
- aHNaaGpjRTJTdXlyd1J2WEpqelBUVQoxb0VtVjIzSVFOU3cxVzFPNThzM0Nad1lKcXlJdlFSc1d
- IQ21DVXVNdHZ3bGNYTkhuYzVvZWJPZzJhSmlROTFNCm9NNUFRQT09Cj0zWHZwCi0tLS0tRU5EIF
- BHUCBNRVNTQUdFLS0tLS0K
-X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
- fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: Laurent Vivier <laurent@vivier.eu>, Michael Vogt <michael.vogt@gmail.com>
+Subject: [RFC] linux-user: return success in TARGET_NR_set_robust_list
+Date: Fri,  4 Jul 2025 12:26:38 +0200
+Message-ID: <20250704102637.32341-2-michael.vogt@gmail.com>
+X-Mailer: git-send-email 2.47.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mvogt@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,196 +104,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add unit tests to check Derive macro output for expected error messages,
-or for expected correct codegen output.
+The linux set_robust_list() syscall cannot be supported by
+qemu-user as explained in e9a970a8316 and hence we return
+ENOSYS.
 
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+With that understanding this commit still changes the
+return to "0". This is of course wrong because we do not
+actually support  set_robust_list() *but* for qemu-user
+based processes the call result makes less practical
+difference:
+1. glibc does not actually check the return value and assumes
+   robust lists anyway (see below for details) on the common
+   architectures. As their is only one per-thread list of
+   robust locks this will cover everything that uses glibc
+   threading.
+2. set_robust_list is about dealing with crashes while
+   holding the lock [1]. Without robust futexes only a system
+   reboot can release a deadlocked futex. However for
+   qemu-user its "only" a restart of the qemu-user process.
+
+Why is this relevant? Because it means we get inconsistent
+behavior from qemu-user when trying to run programs like
+podman via qemu-user that can request:
+```
+pthread_mutexattr_setpshared(&attr, PTHREAD_PROCESS_SHARED);
+pthread_mutexattr_setrobust(&attr, PTHREAD_MUTEX_ROBUST);
+```
+This will run fine in qemu-user for x86_64, aarch64 targets
+but it fails on riscv64 targets because of
+https://github.com/bminor/glibc/blob/glibc-2.41/nptl/pthread_mutex_init.c#L96
+
+With this commit we get the same behavior on riscv64 as
+on x86_64 and aarch64.
+
+This commit does not change TARGET_NR_get_robust_list
+which is not used by glibc but according to [2] it
+is used by steam which will still get TARGET_ENOSYS
+which seems fine (but equaly fine to change it).
+
+Note also that with the new set_robust_list2 described
+in https://lwn.net/Articles/1027135/ we could actually
+implement the real behavior.
+
+Glibc details:
+
+Nowdays glibc does not actually check the
+return code of the syscall anymore for the common
+architectures because of __ASSUME_SET_ROBUST_LIST, c.f.
+https://github.com/bminor/glibc/blob/glibc-2.41/sysdeps/nptl/dl-tls_init_tp.c#L93
+
+And __ASSUME_SET_ROBUST_LIST is set by default but can be
+unset in the per architecture kernel-features.h. But for
+e.g. X86_64,aarch64 it is left alone. It his however set
+on riscv64 conditionally:
+https://github.com/bminor/glibc/blob/glibc-2.41/sysdeps/unix/sysv/linux/riscv/kernel-features.h#L25
+which means it will end up in the riscv libc there
+(output from a debian/testing system with libc6:{riscv64,..}/2.41-9)
+```
+$ for libc in /usr/lib/*/libc.so.6; do echo "$libc:"; strings "$libc"| grep -n __nptl_set_robust_list_avail; done
+/usr/lib/aarch64-linux-gnu/libc.so.6:
+/usr/lib/arm-linux-gnueabihf/libc.so.6:
+/usr/lib/arm-linux-gnueabi/libc.so.6:
+/usr/lib/riscv64-linux-gnu/libc.so.6:
+1963:__nptl_set_robust_list_avail
+/usr/lib/x86_64-linux-gnu/libc.so.6:
+```
+
+Because on riscv64 __ASSUME_SET_ROBUST_LIST is not set this
+https://github.com/bminor/glibc/blob/glibc-2.41/nptl/pthread_mutex_init.c#L96
+triggers the error.
+
+[1] https://lwn.net/Articles/172134/
+[2] https://github.com/FEX-Emu/FEX/commit/310252b97d0fce5c63d07c7911d6d4ec6c2a4efe#diff-8a33d992b7143e73a0235215985c690b61d3b0ef8e5a31e9afb8531914fa3ea2R141
+
+Signed-off-by: Michael Vogt <michael.vogt@gmail.com>
 ---
- rust/qemu-api-macros/meson.build  |   3 +
- rust/qemu-api-macros/src/lib.rs   |   3 +
- rust/qemu-api-macros/src/tests.rs | 135 ++++++++++++++++++++++++++++++++++++++
- rust/qemu-api-macros/src/utils.rs |   1 +
- 4 files changed, 142 insertions(+)
+ linux-user/syscall.c | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/rust/qemu-api-macros/meson.build b/rust/qemu-api-macros/meson.build
-index 8610ce1c8440c4b6e38a8462d4975bf76d72fb05..2152bcb99b30e4bdcc1c5b887b7903a37f6181c3 100644
---- a/rust/qemu-api-macros/meson.build
-+++ b/rust/qemu-api-macros/meson.build
-@@ -17,3 +17,6 @@ _qemu_api_macros_rs = rust.proc_macro(
- qemu_api_macros = declare_dependency(
-   link_with: _qemu_api_macros_rs,
- )
-+
-+rust.test('rust-qemu-api-macros-tests', _qemu_api_macros_rs,
-+          suite: ['unit', 'rust'])
-diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-api-macros/src/lib.rs
-index 4b30bea9eafc7924bf593113c3f42c5b1010c4b9..6c6e9b683f047f79cb377e6d30e23490f66bd711 100644
---- a/rust/qemu-api-macros/src/lib.rs
-+++ b/rust/qemu-api-macros/src/lib.rs
-@@ -15,6 +15,9 @@
- mod bits;
- use bits::BitsConstInternal;
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index fc37028597..415be7124b 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -12931,18 +12931,30 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
  
-+#[cfg(test)]
-+mod tests;
-+
- fn get_fields<'a>(
-     input: &'a DeriveInput,
-     msg: &str,
-diff --git a/rust/qemu-api-macros/src/tests.rs b/rust/qemu-api-macros/src/tests.rs
-new file mode 100644
-index 0000000000000000000000000000000000000000..dfca7d4838f141783472a4e728312aebeb9b5a8b
---- /dev/null
-+++ b/rust/qemu-api-macros/src/tests.rs
-@@ -0,0 +1,135 @@
-+// Copyright 2025, Linaro Limited
-+// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+
-+use super::*;
-+use quote::quote;
-+
-+macro_rules! derive_compile_fail {
-+    ($derive_fn:ident, $input:expr, $error_msg:expr) => {{
-+        let input: proc_macro2::TokenStream = $input;
-+        let error_msg: &str = $error_msg;
-+        let derive_fn: fn(input: syn::DeriveInput) -> Result<proc_macro2::TokenStream, MacroError> =
-+            $derive_fn;
-+
-+        let input: syn::DeriveInput = syn::parse2(input).unwrap();
-+        let result = derive_fn(input);
-+        let MacroError::Message(err, _) = result.unwrap_err() else {
-+            panic!()
-+        };
-+        assert_eq!(err, error_msg);
-+    }};
-+}
-+
-+macro_rules! derive_compile {
-+    ($derive_fn:ident, $input:expr, $($expected:tt)*) => {{
-+        let input: proc_macro2::TokenStream = $input;
-+        let expected: proc_macro2::TokenStream = $($expected)*;
-+        let derive_fn: fn(input: syn::DeriveInput) -> Result<proc_macro2::TokenStream, MacroError> =
-+            $derive_fn;
-+
-+        let input: syn::DeriveInput = syn::parse2(input).unwrap();
-+        let result = derive_fn(input).unwrap();
-+        assert_eq!(result.to_string(), expected.to_string());
-+    }};
-+}
-+
-+#[test]
-+fn test_derive_object() {
-+    derive_compile_fail!(
-+        derive_object_or_error,
-+        quote! {
-+            #[derive(Object)]
-+            struct Foo {
-+                _unused: [u8; 0],
-+            }
-+        },
-+        "#[repr(C)] required for #[derive(Object)]"
-+    );
-+    derive_compile!(
-+        derive_object_or_error,
-+        quote! {
-+            #[derive(Object)]
-+            #[repr(C)]
-+            struct Foo {
-+                _unused: [u8; 0],
-+            }
-+        },
-+        quote! {
-+            ::qemu_api::assert_field_type!(
-+                Foo,
-+                _unused,
-+                ::qemu_api::qom::ParentField<<Foo as ::qemu_api::qom::ObjectImpl>::ParentType>
-+            );
-+            ::qemu_api::module_init! {
-+                MODULE_INIT_QOM => unsafe {
-+                    ::qemu_api::bindings::type_register_static(&<Foo as ::qemu_api::qom::ObjectImpl>::TYPE_INFO);
-+                }
-+            }
-+        }
-+    );
-+}
-+
-+#[test]
-+fn test_derive_tryinto() {
-+    derive_compile_fail!(
-+        derive_tryinto_or_error,
-+        quote! {
-+            #[derive(TryInto)]
-+            struct Foo {
-+                _unused: [u8; 0],
-+            }
-+        },
-+        "#[repr(u8/u16/u32/u64) required for #[derive(TryInto)]"
-+    );
-+    derive_compile!(
-+        derive_tryinto_or_error,
-+        quote! {
-+            #[derive(TryInto)]
-+            #[repr(u8)]
-+            enum Foo {
-+                First = 0,
-+                Second,
-+            }
-+        },
-+        quote! {
-+            impl Foo {
-+                #[allow(dead_code)]
-+                pub const fn into_bits(self) -> u8 {
-+                    self as u8
-+                }
-+
-+                #[allow(dead_code)]
-+                pub const fn from_bits(value: u8) -> Self {
-+                    match ({
-+                        const First: u8 = Foo::First as u8;
-+                        const Second: u8 = Foo::Second as u8;
-+                        match value {
-+                            First => core::result::Result::Ok(Foo::First),
-+                            Second => core::result::Result::Ok(Foo::Second),
-+                            _ => core::result::Result::Err(value),
-+                        }
-+                    }) {
-+                        Ok(x) => x,
-+                        Err(_) => panic!("invalid value for Foo"),
-+                    }
-+                }
-+            }
-+
-+            impl core::convert::TryFrom<u8> for Foo {
-+                type Error = u8;
-+
-+                #[allow(ambiguous_associated_items)]
-+                fn try_from(value: u8) -> Result<Self, u8> {
-+                    const First: u8 = Foo::First as u8;
-+                    const Second: u8 = Foo::Second as u8;
-+                    match value {
-+                        First => core::result::Result::Ok(Foo::First),
-+                        Second => core::result::Result::Ok(Foo::Second),
-+                        _ => core::result::Result::Err(value),
-+                    }
-+                }
-+            }
-+        }
-+    );
-+}
-diff --git a/rust/qemu-api-macros/src/utils.rs b/rust/qemu-api-macros/src/utils.rs
-index 02c91aed7f6a6d33075bbaa8b4fec4536da94e60..6287d06090b60e7fc1da7fbd563d44effcc0039c 100644
---- a/rust/qemu-api-macros/src/utils.rs
-+++ b/rust/qemu-api-macros/src/utils.rs
-@@ -5,6 +5,7 @@
- use proc_macro2::Span;
- use quote::quote_spanned;
- 
-+#[derive(Debug)]
- pub enum MacroError {
-     Message(String, Span),
-     ParseError(syn::Error),
-
+ #ifdef TARGET_NR_set_robust_list
+     case TARGET_NR_set_robust_list:
+-    case TARGET_NR_get_robust_list:
+         /* The ABI for supporting robust futexes has userspace pass
+          * the kernel a pointer to a linked list which is updated by
+          * userspace after the syscall; the list is walked by the kernel
+          * when the thread exits. Since the linked list in QEMU guest
+          * memory isn't a valid linked list for the host and we have
+          * no way to reliably intercept the thread-death event, we can't
+-         * support these. Silently return ENOSYS so that guest userspace
+-         * falls back to a non-robust futex implementation (which should
+-         * be OK except in the corner case of the guest crashing while
+-         * holding a mutex that is shared with another process via
+-         * shared memory).
++         * support these.
++         *
++         * We still return "0" here as for qemu-user based processes
++         * the call makes less practical difference:
++         * 1. glibc does not actually check the return value and assumes
++         *    robust lists anyway on the common architectures. As
++         *    their is only one per-thread list of robust locks this
++         *    will cover everything that uses glibc threading.
++         * 2. set_robust_list is about dealing with crashes while
++         *    holding the lock. Without robust futexes only a system
++         *    reboot can release a deadlocked futex. However for
++         *    qemu-user its "only" a restart of the qemu-user process.
++         */
++        return 0;
++    case TARGET_NR_get_robust_list:
++        /* For systems that double check via get_robust_list() we
++         * silently return ENOSYS so that guest userspace can fall
++         * back to a non-robust futex implementation.
+          */
+         return -TARGET_ENOSYS;
+ #endif
 -- 
 2.47.2
 
