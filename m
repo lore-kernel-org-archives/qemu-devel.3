@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52A75C8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:29:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1E85C83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:29:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXjDu-00088R-8F; Fri, 04 Jul 2025 12:25:14 -0400
+	id 1uXjEG-0008UN-6y; Fri, 04 Jul 2025 12:25:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXjDq-00086d-Nr
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:25:10 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1uXjEE-0008UA-HB
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:25:34 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXjDp-0005sT-18
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:25:10 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-451e2f0d9c2so7682085e9.1
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:25:08 -0700 (PDT)
+ id 1uXjEC-0006BH-O0
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:25:34 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3a54690d369so1116103f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:25:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751646307; x=1752251107; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751646330; x=1752251130; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IJZT982rv2FiWLlGvuubYPPwI8y9TaD7lxYnflFDfTs=;
- b=kw4vZ3nq7i7REMV+Nahhh92hikKHnQG5PQ2cMir+JE206I012dck0Dl2y5hHxSo1Ou
- ff4EDceINowmy5kZCMIF7wPSV1a/4zmsSCQDTSCsaXh7ia5US6W3on5Fl8WnNapOYrFE
- ty9OMeJjTDZcwtKGLz4eTPUREdt9hLjWcgpWyD4GhHmcSMXXazVQfKzgnA/vBHBg8T+6
- 5UwJrQYv3Ho9VqhTnXkN21dhVzB4tX+jiz1qPt/2UyHeM7lsOafrWovZOKKac1fu4pLS
- qzcp+nFDnApeBnZ9+KyIGuSORGoBLmFCcX5QgOuFXCQG9rizzPsEZRca+oTZXozPvt77
- OR+Q==
+ :reply-to; bh=CXGsqn2ldYgeN44ysuqaE8o/89zuJWxYO0GwSq5pdq0=;
+ b=y/0qhdbyLNh4RyQ22qRFzj/7K0+E+xux5UA6lQSeiStp4EEF21wtACN3RnHOtrATFR
+ eLtnfMoLDrZfekbA5AS6OSQ3nDKYHbr4azx1Omg/PvZOeJji2L4zqmq9N0yqSRaBLz0k
+ 6GRX5Gy4dFn1uXKIxtiAoSk1JtbPbWnPLEeSSbHiJ4Q5YwmLD5nAa80qhjKWBKWm+ytg
+ rchxqHeqK7Vk9a/eqvRkcnKLqTlyJS7fzW6R7R+rQi0i7k3V4jbMzFRw19B9j51L3WYo
+ KvK5WeqgJeIGwDXeX+EHP5baqjcUu4aKxFVtkdWRABmnp4VIgwRPWlLGBzPQlpWsKNew
+ VTNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751646307; x=1752251107;
+ d=1e100.net; s=20230601; t=1751646330; x=1752251130;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IJZT982rv2FiWLlGvuubYPPwI8y9TaD7lxYnflFDfTs=;
- b=Ca+sufr3EBpy5ZuzjGcmJof2T3sEvrQRdfDSc0JEETPMBCzEAPEibFPhmFZ5Y3ajpF
- ZmNrwH6k/xggnjtqArNZ8ghjBlgPgYVICdvaBEJz2Wm5ko7WitJZ9aIp0/OGUkHLe4Xf
- xFakFWWLAbXs+kwcUJ8dxdJ1MOogCFEyg2Mo2YpCOWA0PC9KV4lehq9Cf8dr7iv3aAzu
- tqNWh790pZS5/3caMgrQC0P6+QAR2y6klSHUA0BPKSf3Mx9Q9G8Y5XMzdERvpgbdCLCU
- OTqEL+69tgAomKSSx13BV/b/yXZZPD09vOGDXO8JpL3G3sPdw5PsOIk78Uw3k7fYLqSH
- NdNQ==
-X-Gm-Message-State: AOJu0Yy5xU+8DXt1GVWKYQ9cUxfDUVOp8KIgsaFZQ8PLCe0Z7e9yTDes
- kcNcxv/pwYEtK4F3npBvqroySp00FeZY4MfoGJdDjNyF3lHkc2LRpvlMNvgA97NPf8KbxgFVgFx
- qnxXu
-X-Gm-Gg: ASbGncsAR85ys459lMTHLK49qdyMzQBQ4DmfqnacN/dJMLn1IOPg4aNDgkasPX5Pt+p
- 5R7nS+Ei62t83ceccKmI9Gp8HwxRfeyoLn6Yi6d/LO3nXu/vSzh+o/GMEv0OO3EjfW7uTc7JjwB
- vT3r2/QUZg8rVK6K2zCE1YdGqBjSZLGSYjvXyYt2DzNcwbAwLHtwQm+gO4kBiyyV2c1lCoaDTeO
- xMO/aAe1nnV2pKyYf6dF7PlFJyyGgAPclyWhwsma9JoIx2xCtdY/c5V6CGXzliP7FGK/3AZEPF+
- LWE2NC5kbkJeG/iJvrXdmdNMY21CCcVOTnTPYy76HxK81LPDz2O3wFkoN6aLVdytWW1+aibmlyZ
- P0zo=
-X-Google-Smtp-Source: AGHT+IEkd3lgkCato2O43K96ck/dFsBWMSzKV/LkfESqbwoIZo333m/0TDGYARTgyitAPTvQoBE9Lg==
-X-Received: by 2002:a05:600c:1f82:b0:453:ec2:c7b2 with SMTP id
- 5b1f17b1804b1-454b26b2c22mr36722285e9.7.1751646307367; 
- Fri, 04 Jul 2025 09:25:07 -0700 (PDT)
+ bh=CXGsqn2ldYgeN44ysuqaE8o/89zuJWxYO0GwSq5pdq0=;
+ b=IWWxAbW/DmFSImjcXLYefYZi7r+M0FlLruSBvHPZGqgOi+rb9Lzyq7Aw6uLMpEg/HT
+ DdEojVq+rQgPKGYQpJnBqTAQ3f8W8RLNbH+Rukjt8/lBbBb3mCxkhBWs1bzxkCFl1XPg
+ RDLcXWr/T8U6XG31JzZGBkNw4WsKGo4zPHuaFG2b/TTLSmwozdKaE59Kb2KtQ6XMueh8
+ ozAYJv1ghpFFbkm9H4TJMNzv+f+tufImvQkG7wfSBSz2ze1Sd42JXKehA78Mxl4isrjh
+ U7U13FiunHBRFYzb/DyKZQYtSDUERAhOi6OdcP5MLDvKbTXURAOwwMPxAGRd+E8wfXHV
+ oe6w==
+X-Gm-Message-State: AOJu0YzL9cxR3LEFC+RUChvSEJRJi6PGu8+r/8MoWZuK6irrhBkqFhsC
+ w89MRq5xv2zx2l+4vcVxDzpuc2AOkJbD54UI3lndiWLdTP8F8g+FkO6N/hcNCLnCn9fNBi6kro+
+ qr1jX
+X-Gm-Gg: ASbGncsHEbUzTNys8FTB/Qg2h8Dq5qWDr1KwOLGGHp1/3eUikfAjRXr4NwAudWdXuCD
+ bzTLQd74lbe9xnL1g11Oe97wz0V9MMsyOKKDZdfy8f919D6KFgcNv3fPW92x9SQsvTuKpNOwTAO
+ ETTDIlEXKrdwoCKzIl7LrFLt5Ynvs+eNlKkjvFtr0V4aox+RWj2nhYL2rMKuDV/O6v+wsbikYy5
+ Dhmc2dl+uF6ZZBGfd/6+CEks/DTtPtAKIcdBWvABBpOC2mRyf4kBqZPZBlj0/xEX4KxlYF9vYgw
+ Pq3ObG7k6YRU7qaHF8zDLMakMDIC1DgUVaac9A5MmS/6k/50iWHYAHrtZF2LH/cYT6rU
+X-Google-Smtp-Source: AGHT+IFhYuteHg1OpNUXl3629XiOV20PKgQrm1XPH1kJX+0v7IjT+F8ubbW7B+wRJqR7Ao2A/BWBfQ==
+X-Received: by 2002:a05:6000:642:b0:3b4:9721:2b31 with SMTP id
+ ffacd0b85a97d-3b497212dd7mr2596166f8f.5.1751646329677; 
+ Fri, 04 Jul 2025 09:25:29 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b471b96534sm2816857f8f.48.2025.07.04.09.25.06
+ ffacd0b85a97d-3b471b96534sm2816857f8f.48.2025.07.04.09.25.28
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 09:25:06 -0700 (PDT)
+ Fri, 04 Jul 2025 09:25:29 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 004/119] target/arm: Fix function_return helper load alignment
- checks
-Date: Fri,  4 Jul 2025 17:23:04 +0100
-Message-ID: <20250704162501.249138-5-peter.maydell@linaro.org>
+Subject: [PULL 029/119] target/arm: Implement SME2 ZERO ZT0
+Date: Fri,  4 Jul 2025 17:23:29 +0100
+Message-ID: <20250704162501.249138-30-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250704162501.249138-1-peter.maydell@linaro.org>
 References: <20250704162501.249138-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,33 +98,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: William Kosasih <kosasihwilliam4@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-This patch adds alignment checks in the load operations (when unstacking the
-return pc and psr) in the FunctionReturn pseudocode.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1154
-Signed-off-by: William Kosasih <kosasihwilliam4@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250703085604.154449-4-kosasihwilliam4@gmail.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250704142112.1018902-18-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/m_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/syndrome.h          |  1 +
+ target/arm/tcg/sme.decode      |  1 +
+ target/arm/tcg/translate-sme.c | 26 ++++++++++++++++++++++++++
+ 3 files changed, 28 insertions(+)
 
-diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
-index f342d934896..28307b56151 100644
---- a/target/arm/tcg/m_helper.c
-+++ b/target/arm/tcg/m_helper.c
-@@ -1946,7 +1946,7 @@ static bool do_v7m_function_return(ARMCPU *cpu)
-          * do them as secure, so work out what MMU index that is.
-          */
-         mmu_idx = arm_v7m_mmu_idx_for_secstate(env, true);
--        oi = make_memop_idx(MO_LEUL, arm_to_core_mmu_idx(mmu_idx));
-+        oi = make_memop_idx(MO_LEUL | MO_ALIGN, arm_to_core_mmu_idx(mmu_idx));
-         newpc = cpu_ldl_mmu(env, frameptr, oi, 0);
-         newpsr = cpu_ldl_mmu(env, frameptr + 4, oi, 0);
+diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
+index 3244e0740dd..c48d3b85871 100644
+--- a/target/arm/syndrome.h
++++ b/target/arm/syndrome.h
+@@ -80,6 +80,7 @@ typedef enum {
+     SME_ET_Streaming,
+     SME_ET_NotStreaming,
+     SME_ET_InactiveZA,
++    SME_ET_InaccessibleZT0,
+ } SMEExceptionType;
  
+ #define ARM_EL_EC_LENGTH 6
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index 628804e37a8..dd1f983941a 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -22,6 +22,7 @@
+ ### SME Misc
+ 
+ ZERO            11000000 00 001 00000000000 imm:8
++ZERO_zt0        11000000 01 001 00000000000 00000001
+ 
+ ### SME Move into/from Array
+ 
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index e8b35781741..246f191eca2 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -27,6 +27,19 @@
+ 
+ #include "decode-sme.c.inc"
+ 
++static bool sme2_zt0_enabled_check(DisasContext *s)
++{
++    if (!sme_za_enabled_check(s)) {
++        return false;
++    }
++    if (s->zt0_excp_el) {
++        gen_exception_insn_el(s, 0, EXCP_UDEF,
++                              syn_smetrap(SME_ET_InaccessibleZT0, false),
++                              s->zt0_excp_el);
++        return false;
++    }
++    return true;
++}
+ 
+ /*
+  * Resolve tile.size[index] to a host pointer, where tile and index
+@@ -130,6 +143,19 @@ static bool trans_ZERO(DisasContext *s, arg_ZERO *a)
+     return true;
+ }
+ 
++static bool trans_ZERO_zt0(DisasContext *s, arg_ZERO_zt0 *a)
++{
++    if (!dc_isar_feature(aa64_sme2, s)) {
++        return false;
++    }
++    if (sme_enabled_check(s) && sme2_zt0_enabled_check(s)) {
++        tcg_gen_gvec_dup_imm(MO_64, offsetof(CPUARMState, za_state.zt0),
++                             sizeof_field(CPUARMState, za_state.zt0),
++                             sizeof_field(CPUARMState, za_state.zt0), 0);
++    }
++    return true;
++}
++
+ static bool trans_MOVA(DisasContext *s, arg_MOVA *a)
+ {
+     static gen_helper_gvec_4 * const h_fns[5] = {
 -- 
 2.43.0
 
