@@ -4,88 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98F4AC8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 14:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35E48C83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 14:57:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXhUB-0002qF-HW; Fri, 04 Jul 2025 10:33:55 -0400
+	id 1uXhiy-0000qG-LU; Fri, 04 Jul 2025 10:49:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uXhMD-0004pS-F0
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:25:47 -0400
-Received: from mail-oo1-xc30.google.com ([2607:f8b0:4864:20::c30])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uXhit-0000Vv-Ev
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:49:08 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uXhM4-0008AJ-Ev
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:25:40 -0400
-Received: by mail-oo1-xc30.google.com with SMTP id
- 006d021491bc7-610d87553b6so521572eaf.2
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 07:25:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751639131; x=1752243931; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KLxGKgXk0i72IBBIKzoJmYKjoJRmgOO7veT/d3JwQic=;
- b=ZsskRs2JeeCoTws/9vtWOyB3Q4ROGPXE2rBodtR1UrN9mD733DrI3X/53soPyW54uL
- 3TTSfgKBIlLTKEGxZWsVvYLyrJOm5QhrdVg9nOaLOdkA1JmJKslbUeeMGPV2q4gPaN87
- Pfw8YG9ifab1a1mbve7wYOs/nHF4KUZckyTQ1khVNBJARqvvzV7wrGepfBkcL/cyoNRY
- DxNNy6e/oFpj58V1YFH+sCDC2A2LTjQZxLUD44U5DBUSyrw2NAG1RmOzukUcfbnvqXkH
- 1jmnRMAcHi7rBTMd0IwadLNHfV7CznxFSNdLf3TKaiNTkN0GmVznhdKqO/fFoLk9IHct
- Bm4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751639131; x=1752243931;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KLxGKgXk0i72IBBIKzoJmYKjoJRmgOO7veT/d3JwQic=;
- b=wEVlDmG1c6CX4gDNnaYABjbne6QjPKXfn8W9R4zFxu9VqmJ8YD9s0uZkEg+nCsah/F
- JqaYCkVSXFWKJQOCPzBtpMEqK3axm5WeS0uODMIP2Gx0dn7Xpyx8X3W551P4LL31Xmlo
- rG5DKSafnTBvrcoV/dW/wI/wZKAQIW4jNjl71EpB8a/L4vgdmyAJlfKCOKMH2gxhjOpx
- B2jHeXym/70j84mbip6+IcU/+JdEeof4s5BSkWUz+C9sqd4KEoZVFyXJnk1qthB8KcHL
- LvcQLBchGBMA07keItILE/l7Nz0wbv2uOP8kLZWFzpykFY6KhzGzrNc2Q0KBZcj8xG7J
- zekQ==
-X-Gm-Message-State: AOJu0YyOwtciKSsnE0OksfxXPCqLQ8H69s1ejDlQYKOBf0w6Sd777IqV
- UECT1a82PY8bLfqYj8FFXmIxpFmRE2ooa20OAceVQGxUNRC6QLZih69oNOCIQase2mrjbE+aJ8a
- CPpoWSL8=
-X-Gm-Gg: ASbGncsqV0rqo6LYs2sH3wr9fU2IFuC2fL5Hryyh/wIsv27046qWKtEBC93pCBDXB7m
- pO4TkjQZsjqN4qg8UT6GLOlRIACPVl6Ss61IhPwFsEFq1Xeu6e977qF4Urq8OVuxTg+Sja7hiN5
- afK032e8k0WGZjxnRxIWj5LeoWq6Q2+s+cTbAxtAHfKV76tiX3wGYPNA4SjFyuqqiaEbok2i5eG
- BHa/k6ar86eiercn9dXmjw9lZT3z+mqZIer/vs1nNK+/OfcDbJ0FywwFK4FgcA7J7o0bP368Nf7
- je+g4cH5ssmxlnim/7viBTrdkDSmitujDmuMzhP0tYuNiriDg6Mh0nQBhGs0vx3Kx3TBWrXoV57
- ToHRMje8qyVAUW1BObxBHUhncE+TFoSQyCn4FilxQyHHKG2z6
-X-Google-Smtp-Source: AGHT+IFWLiMqb36n7W69C9mVSUC3BMx487QaF9Z94zhZQnHJU0FnhDclxWxuTA6QSf2BGmrkh9OZXA==
-X-Received: by 2002:a05:6808:2124:b0:401:e67c:b3be with SMTP id
- 5614622812f47-40d04a2815fmr1945797b6e.4.1751639131031; 
- Fri, 04 Jul 2025 07:25:31 -0700 (PDT)
-Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6138e5ac5eesm310233eaf.29.2025.07.04.07.25.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 07:25:30 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	peter.maydell@linaro.org
-Subject: [PATCH v4 073/108] target/arm: Split out do_whilel from
- helper_sve_whilel
-Date: Fri,  4 Jul 2025 08:20:36 -0600
-Message-ID: <20250704142112.1018902-74-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250704142112.1018902-1-richard.henderson@linaro.org>
-References: <20250704142112.1018902-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uXhir-0000vg-OB
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:49:07 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 00287211A2;
+ Fri,  4 Jul 2025 14:49:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1751640543; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=U8SZh0rOPjup85DuMeh0/kTZzd4nWo9n+jCNMsKY1Z4=;
+ b=SSu7zxnkuuViJ+N25e3H2Hyq1p7/ov8nmgt/IHyS8Rd1hQLHa2nM7IFM6QbXHTQCIek7rl
+ RR5ZdCIc0yH3dGn+jHAagOJIHT2cuw9i1JtkVvFFDPuVgW0YPw5tlM3vO94Wxhs/Y30XBR
+ RUJl6nmch3HGQxiS8CGbUeFX/Hx4n1s=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1751640543;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=U8SZh0rOPjup85DuMeh0/kTZzd4nWo9n+jCNMsKY1Z4=;
+ b=Zg6AlSgb0Ou2UQO/Cmnk0QaR74RbqYu2wv/ucRmMS35vnp70vN5miNHCmEp2qw5EpoqnIT
+ R/+7zP/r7KFHLrCw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=SSu7zxnk;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Zg6AlSgb
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1751640543; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=U8SZh0rOPjup85DuMeh0/kTZzd4nWo9n+jCNMsKY1Z4=;
+ b=SSu7zxnkuuViJ+N25e3H2Hyq1p7/ov8nmgt/IHyS8Rd1hQLHa2nM7IFM6QbXHTQCIek7rl
+ RR5ZdCIc0yH3dGn+jHAagOJIHT2cuw9i1JtkVvFFDPuVgW0YPw5tlM3vO94Wxhs/Y30XBR
+ RUJl6nmch3HGQxiS8CGbUeFX/Hx4n1s=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1751640543;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=U8SZh0rOPjup85DuMeh0/kTZzd4nWo9n+jCNMsKY1Z4=;
+ b=Zg6AlSgb0Ou2UQO/Cmnk0QaR74RbqYu2wv/ucRmMS35vnp70vN5miNHCmEp2qw5EpoqnIT
+ R/+7zP/r7KFHLrCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8354313A71;
+ Fri,  4 Jul 2025 14:49:02 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id JIMpE97pZ2jwfQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 04 Jul 2025 14:49:02 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, Peter Xu
+ <peterx@redhat.com>, Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v2 16/24] migration: Add capabilities into
+ MigrationParameters
+In-Reply-To: <8734bckq6n.fsf@pond.sub.org>
+References: <20250630195913.28033-1-farosas@suse.de>
+ <20250630195913.28033-17-farosas@suse.de> <87jz4sz5b6.fsf@pond.sub.org>
+ <87h5zs3xng.fsf@suse.de> <8734bckq6n.fsf@pond.sub.org>
+Date: Fri, 04 Jul 2025 11:48:56 -0300
+Message-ID: <87cyag3tbb.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c30;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc30.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 00287211A2
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
+ ARC_NA(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:mid,suse.de:email];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.218,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,61 +127,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/sve_helper.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+Markus Armbruster <armbru@redhat.com> writes:
 
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index a62a647f3a..741d04309c 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -4107,19 +4107,14 @@ static uint32_t pred_count_test(uint32_t elements, uint32_t count, bool invert)
-     return flags;
- }
- 
--uint32_t HELPER(sve_whilel)(void *vd, uint32_t count, uint32_t pred_desc)
-+/* D must be cleared on entry. */
-+static void do_whilel(ARMPredicateReg *d, uint64_t esz_mask,
-+                      uint32_t count, uint32_t oprbits)
- {
--    intptr_t oprsz = FIELD_EX32(pred_desc, PREDDESC, OPRSZ);
--    intptr_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
--    uint64_t esz_mask = pred_esz_masks[esz];
--    ARMPredicateReg *d = vd;
--    intptr_t i, oprbits = oprsz * 8;
--
-     tcg_debug_assert(count <= oprbits);
--
--    /* Begin with a zero predicate register.  */
--    memset(d, 0, sizeof(*d));
-     if (count) {
-+        uint32_t i;
-+
-         /* Set all of the requested bits.  */
-         for (i = 0; i < count / 64; ++i) {
-             d->p[i] = esz_mask;
-@@ -4128,7 +4123,18 @@ uint32_t HELPER(sve_whilel)(void *vd, uint32_t count, uint32_t pred_desc)
-             d->p[i] = MAKE_64BIT_MASK(0, count & 63) & esz_mask;
-         }
-     }
-+}
- 
-+uint32_t HELPER(sve_whilel)(void *vd, uint32_t count, uint32_t pred_desc)
-+{
-+    uint32_t oprsz = FIELD_EX32(pred_desc, PREDDESC, OPRSZ);
-+    uint32_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
-+    uint32_t oprbits = oprsz * 8;
-+    uint64_t esz_mask = pred_esz_masks[esz];
-+    ARMPredicateReg *d = vd;
-+
-+    memset(d, 0, sizeof(*d));
-+    do_whilel(d, esz_mask, count, oprbits);
-     return pred_count_test(oprbits, count, false);
- }
- 
--- 
-2.43.0
+> Fabiano Rosas <farosas@suse.de> writes:
+>
+>> Markus Armbruster <armbru@redhat.com> writes:
+>>
+>>> Fabiano Rosas <farosas@suse.de> writes:
+>>>
+>>>> Add capabilities to MigrationParameters. This structure will hold all
+>>>> migration options. Capabilities will go away in the next patch.
+>>>>
+>>>> Also add capabilities to MigrationParameter as the enum needs to be
+>>>> kept in sync with MigrationParameters. This affects the parsing of
+>>>> migration HMP commands so make the necessary additions there too.
+>>>>
+>>>> From this point on, both QMP and HMP versions of
+>>>> migrate-set-parameters and query-migrate-parameters gain the ability
+>>>> to work with capabilities.
+>>>>
+>>>> With MigrationParameters now having members for each capability, the
+>>>> migration capabilities commands (query-migrate-capabilities,
+>>>> migrate-set-capabilities) will soon be deprecated. Add a set of
+>>>> helpers to convert between the old MigrationCapability representation
+>>>> and the new representation as members of MigrationParameters.
+>>>>
+>>>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>>>
+>>> [...]
+>>>
+>>>> diff --git a/qapi/migration.json b/qapi/migration.json
+>>>> index 40e00fb86e..3d3f5624c5 100644
+>>>> --- a/qapi/migration.json
+>>>> +++ b/qapi/migration.json
+>>>> @@ -763,7 +763,14 @@
+>>>>             'vcpu-dirty-limit',
+>>>>             'mode',
+>>>>             'zero-page-detection',
+>>>> -           'direct-io'] }
+>>>> +           'direct-io', 'xbzrle', 'rdma-pin-all', 'auto-converge',
+>>>> +           'zero-blocks', 'events', 'postcopy-ram', 'x-colo',
+>>>> +           'release-ram', 'return-path', 'pause-before-switchover',
+>>>> +           'multifd', 'dirty-bitmaps', 'postcopy-blocktime',
+>>>> +           'late-block-activate', 'x-ignore-shared',
+>>>> +           'validate-uuid', 'background-snapshot',
+>>>> +           'zero-copy-send', 'postcopy-preempt',
+>>>> +           'switchover-ack', 'dirty-limit', 'mapped-ram' ] }
+>>>
+>>> This is MigrateParameter.  Different order than in MigrationParameters.
+>>> Intentional?
+>>>
+>>
+>> I think you mean the pre-existing difference in the order of the
+>> compression options multifd-*-level? I'll fix that.
+>
+> I noticed the new members are in a different order than in
+> MigrationParameters.  I didn't notice the existing members differ, too.
+>
 
+Sorry, I don't see it, we must be looking at different things.
+
+>> If it's something else, it eludes my gaze.
+>
+> No.
+>
+> Thanks!
 
