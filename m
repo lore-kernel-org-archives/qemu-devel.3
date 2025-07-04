@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2085CC83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 14:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A083C83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 14:49:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXhU0-0002b0-Sl; Fri, 04 Jul 2025 10:33:44 -0400
+	id 1uXhKV-0008EC-Lu; Fri, 04 Jul 2025 10:23:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uXhMD-0004pU-NF
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:25:46 -0400
-Received: from mail-oo1-xc33.google.com ([2607:f8b0:4864:20::c33])
+ id 1uXhIA-000503-D9
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:21:32 -0400
+Received: from mail-oa1-x2f.google.com ([2001:4860:4864:20::2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uXhM9-0008E1-CK
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:25:41 -0400
-Received: by mail-oo1-xc33.google.com with SMTP id
- 006d021491bc7-6114114daddso500762eaf.2
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 07:25:36 -0700 (PDT)
+ id 1uXhI7-0005Qk-Ib
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 10:21:30 -0400
+Received: by mail-oa1-x2f.google.com with SMTP id
+ 586e51a60fabf-2f77591f208so515719fac.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 07:21:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751639135; x=1752243935; darn=nongnu.org;
+ d=linaro.org; s=google; t=1751638886; x=1752243686; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CY8GPK9LjD5vvFu1A4yXRIWcAh0FAk2ttUM/giYYY2o=;
- b=b2fr6xug8Yd8HH0LGuwEfGrc4BJsGrQvs9FcHyv2PPMJbR2/4a80civbXD7scPm4SW
- /+hVZX9mc6UC4OPAajRFFG7BjzUbs5cHYRCE/S793T/8FuCHvVPPHomnmk5pfv0pn+9X
- ReL17/wW9FQhbGRx092S0JpOKtWyNdyA3LyRXK9xM94LKp7j0uH1UdN2KeT+AfDQXn3G
- P+Wf2vGCekoMZrHc/0z5q43ckh/7OKprGyBZuwesef4fvB9VH43bZN/NiFWxaMW8vVys
- /M7QWCmhCFUH4PrnWClxAiyrrNDcP8VmGHP1hO76vCheXzhum31If+knfXIgSgivhx1h
- E8VQ==
+ bh=zli7CnBxcZoWcfFlVjjdFH46Lnu/RU9mJkmtTaLHjlQ=;
+ b=rwe5smuho1ybzkHBJBiZzDjCm3Xr9PJocSCrqiXQaOox75fi2rb9Sqr3sdTT1Mi/+R
+ XwuPetp7Hhl8HoNDvb3AQzHpM5iMyumWJBjnUgwkNfVogMIAxSFeZiO8LAhBZeyutW1M
+ hsVFWk3U8rCRsp3o0L10MQ+OPCGC21SAfirEXGJDwzX6yTjwhcpc2ZpAK4a0MYqL0+Av
+ KY8IYnNuQ8oCKtD9G6NzR3MsmtPElnJ+hhrBrkllbAf2rvfIw4E1vHxqsSkovyI65v0K
+ 6/vZ9XuUbgCHfhhJ3TXntv7KU2yMnjy4lFpJNP+dmdIQCm2HZVD3Vwdya/1ing7LZq+M
+ 9ISg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751639135; x=1752243935;
+ d=1e100.net; s=20230601; t=1751638886; x=1752243686;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CY8GPK9LjD5vvFu1A4yXRIWcAh0FAk2ttUM/giYYY2o=;
- b=BQk6sT0Y7rsN2t58ByBrMsF3XbvEd2ZoizmrFdWMi/88Xq4jMW+d8S8f1hz38kXKdN
- 6xZQ3ivinGuQDko+b+dv+U1X88N61Mg7HClkWzvz8E2IViLXMUtcAodC+tD+S5UCtYum
- NYdRY8oxdojTNBaejN6zM5ezeICFsoHAkZ5Jp+hUTpz5Hmrt2OeAfsrjWaZTeBOXo9Zv
- afpHP0TR112vqEomEJAWMYBV6egiZWK6vJXJ2KNgvRdGP5iyuBcckiXckmz5/lYJPqvu
- PtorrHWuKwaLGtN2Z2ngSYfLTzfTtYQx8nhYbd0lmCZMjZ7vqXIbKjErKyvYOhQF16/a
- ytzg==
-X-Gm-Message-State: AOJu0YwAf4ZfrEAQe8An/IwuXQ8QU10VFLT7koh8fJugWF/JKp4Hy3J8
- zMkE8RRUaDn8NzAt6/RR+GPoYL4shG+rdE5fhz2GxdQb15K98w440HVfFmgNx6DXTE00yNMgCQC
- CkgJl5L4=
-X-Gm-Gg: ASbGncuFcwskF7f5v3CmMe/0tGVnlD0cM2bdAZX/zCKfqhhIXY2NUMB35quz64yrU/c
- 24rpBpD0mVLfoR5fniH8kSi8HFPaEK7ZCMg+CwLrh2SS9VSr3Mj45vR+Q5I1XozzJj68X8FiLWx
- Yixs9ktPTjQTTHcv62TgLus2M560Kje1h7uQHbgJZLTjHY8bc7Fs5jFOgMRAPMr17EZiG5aFaOt
- Uw99sUcTFrzdUbRaX8XWgDkuU0xbOQi0+kF6AJ4o2zG6Bio1H64C3cc5nlNWjEcmJFfIC7FuT0K
- 7OpFB1VycuN7fqbQPOSU+S6dZoc3VkU3UPfK9Pxz7RRtccZTX9T4D9iohzJIDKeNo6OsK0eFd/c
- Bjmu/3DSf8qfixzKKsrfV7O1C0RYbl9SNphxl9muDaDnIfarTm7zK80VbgyM=
-X-Google-Smtp-Source: AGHT+IGJzOhDMr0P378vuCGmuxu4MVYz/oA/QT8Lv4kI1cc00b/uGQOcUAhyA7rAd/eO213HmC3/0Q==
-X-Received: by 2002:a05:6820:1e82:b0:611:befc:38e5 with SMTP id
- 006d021491bc7-6138fd6a38cmr2315074eaf.4.1751639135429; 
- Fri, 04 Jul 2025 07:25:35 -0700 (PDT)
+ bh=zli7CnBxcZoWcfFlVjjdFH46Lnu/RU9mJkmtTaLHjlQ=;
+ b=cAekeXgapr32HPU8P+2BZ1y7N3+bTv2b5Jj6Sv6dH9x7CamUcdsab/eH2xsgUOLfLY
+ 4C3ZxrE2UZCHYFcsglvgdkHhEXZWmj2yXMqBTerb2PekoZHCacEpHSiMwjWsc0wspVx7
+ NnnyMIf4xxPdd9xhjLz592bLyTymVJfPVqlfeyteMAjOSff7hN7yNbQQ6WMkaaH2cSUE
+ Sa2lOkDfixgl9MJ4Gg2VixZmtaoy0Av8kT4g1k40qIuqu91FjD5ct101RhSG+cGMC7V/
+ 3VgFwudszF6f86G6biFCP5wrL/leLlA6NoKnCR8EuCi1XTPLoPopcu6lDw3OwZDbq6VA
+ woZA==
+X-Gm-Message-State: AOJu0YyqzBDZPDrL3IQ2LMRt8IlrndOpKAejsJm++v1316mu0laP5zD6
+ QV6vl2ad+AuuyI8E5U69gd8D0VhYrq2r/BgCSYakl5aYExaeS1P5ikxOtlyAxWugJJAYJ1goai2
+ ljmdCtXo=
+X-Gm-Gg: ASbGncsJXKJtxShoS2L2em4foIfOsf+E/9MWH+ljEKawIK22CONqkJkNXSoRAcVZ1rd
+ jNyFPQbrMViJb/6cuGmsPu0aaCFEQLjZO0mYCmJbB9jFmxVL98KFPEWBpzAKWGFvk56q9Hw+RkN
+ g84TNnYHlH2gj8Sxu4VrDkgAY9b3d3eJB/0UD7rf9gTEsxKV8O1NP15yeWt4wms+BQyIHH//oXS
+ YT7cB1CrhlwUfPvpt7WvG2wQ+eqcvzc+OjGl8mRhpg6MYPdbZzc3SnyZ+QJOrTlJpkE8FCNKDQV
+ kptbMCVDOIDxCznMlMFBu5vnFjtiKVB+BU0f5fMuq7vdkMdFhW2/W7C0trh9CCR/DSZUTgfcqNt
+ pEhj9QCZ4b+cuH2c01aZ0nD9f2qhpfu99JopW9DZSZxByM2ev
+X-Google-Smtp-Source: AGHT+IHYjHRamIYHXSMNeTIZ1EdnaL9nhwbnOLmAbma5vi0NPG8ytkaYFy9039nT6nQJpjfkwQdunQ==
+X-Received: by 2002:a05:6870:e243:b0:2d4:e101:13f1 with SMTP id
+ 586e51a60fabf-2f791fb366fmr2213415fac.13.1751638886254; 
+ Fri, 04 Jul 2025 07:21:26 -0700 (PDT)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6138e5ac5eesm310233eaf.29.2025.07.04.07.25.34
+ 586e51a60fabf-2f78ff0471esm528016fac.3.2025.07.04.07.21.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 07:25:34 -0700 (PDT)
+ Fri, 04 Jul 2025 07:21:26 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	peter.maydell@linaro.org
-Subject: [PATCH v4 078/108] target/arm: Implement SVE2p1 WHILE (predicate pair)
-Date: Fri,  4 Jul 2025 08:20:41 -0600
-Message-ID: <20250704142112.1018902-79-richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v4 010/108] target/arm: Remove CPUARMState.vfp.scratch
+Date: Fri,  4 Jul 2025 08:19:33 -0600
+Message-ID: <20250704142112.1018902-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250704142112.1018902-1-richard.henderson@linaro.org>
 References: <20250704142112.1018902-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c33;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc33.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,145 +102,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The last use of this field was removed in b2fc7be972b9.
+
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/helper-sve.h    |  3 +++
- target/arm/tcg/sve_helper.c    | 40 ++++++++++++++++++++++++++++++++++
- target/arm/tcg/translate-sve.c | 14 ++++++++----
- target/arm/tcg/sve.decode      |  8 +++++++
- 4 files changed, 61 insertions(+), 4 deletions(-)
+ target/arm/cpu.h | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/target/arm/tcg/helper-sve.h b/target/arm/tcg/helper-sve.h
-index 0b1b588783..eac23e75b9 100644
---- a/target/arm/tcg/helper-sve.h
-+++ b/target/arm/tcg/helper-sve.h
-@@ -941,6 +941,9 @@ DEF_HELPER_FLAGS_3(sve_cntp, TCG_CALL_NO_RWG, i64, ptr, ptr, i32)
- DEF_HELPER_FLAGS_3(sve_whilel, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
- DEF_HELPER_FLAGS_3(sve_whileg, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 0338153923..96a4907266 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -669,9 +669,6 @@ typedef struct CPUArchState {
  
-+DEF_HELPER_FLAGS_3(sve_while2l, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
-+DEF_HELPER_FLAGS_3(sve_while2g, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
-+
- DEF_HELPER_FLAGS_4(sve_subri_b, TCG_CALL_NO_RWG, void, ptr, ptr, i64, i32)
- DEF_HELPER_FLAGS_4(sve_subri_h, TCG_CALL_NO_RWG, void, ptr, ptr, i64, i32)
- DEF_HELPER_FLAGS_4(sve_subri_s, TCG_CALL_NO_RWG, void, ptr, ptr, i64, i32)
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index b8f3fbb816..30394f4880 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -4139,6 +4139,26 @@ uint32_t HELPER(sve_whilel)(void *vd, uint32_t count, uint32_t pred_desc)
-     return pred_count_test(oprbits, count, false);
- }
+         uint32_t xregs[16];
  
-+uint32_t HELPER(sve_while2l)(void *vd, uint32_t count, uint32_t pred_desc)
-+{
-+    uint32_t oprsz = FIELD_EX32(pred_desc, PREDDESC, OPRSZ);
-+    uint32_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
-+    uint32_t oprbits = oprsz * 8;
-+    uint64_t esz_mask = pred_esz_masks[esz];
-+    ARMPredicateReg *d = vd;
-+
-+    count <<= esz;
-+    memset(d, 0, 2 * sizeof(*d));
-+    if (count <= oprbits) {
-+        do_whilel(&d[0], esz_mask, count, oprbits);
-+    } else {
-+        do_whilel(&d[0], esz_mask, oprbits, oprbits);
-+        do_whilel(&d[1], esz_mask, count - oprbits, oprbits);
-+    }
-+
-+    return pred_count_test(2 * oprbits, count, false);
-+}
-+
- /* D must be cleared on entry. */
- static void do_whileg(ARMPredicateReg *d, uint64_t esz_mask,
-                       uint32_t count, uint32_t oprbits)
-@@ -4172,6 +4192,26 @@ uint32_t HELPER(sve_whileg)(void *vd, uint32_t count, uint32_t pred_desc)
-     return pred_count_test(oprbits, count, true);
- }
+-        /* Scratch space for aa32 neon expansion.  */
+-        uint32_t scratch[8];
+-
+         /* There are a number of distinct float control structures. */
+         float_status fp_status[FPST_COUNT];
  
-+uint32_t HELPER(sve_while2g)(void *vd, uint32_t count, uint32_t pred_desc)
-+{
-+    uint32_t oprsz = FIELD_EX32(pred_desc, PREDDESC, OPRSZ);
-+    uint32_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
-+    uint32_t oprbits = oprsz * 8;
-+    uint64_t esz_mask = pred_esz_masks[esz];
-+    ARMPredicateReg *d = vd;
-+
-+    count <<= esz;
-+    memset(d, 0, 2 * sizeof(*d));
-+    if (count <= oprbits) {
-+        do_whileg(&d[1], esz_mask, count, oprbits);
-+    } else {
-+        do_whilel(&d[1], esz_mask, oprbits, oprbits);
-+        do_whileg(&d[0], esz_mask, count - oprbits, oprbits);
-+    }
-+
-+    return pred_count_test(2 * oprbits, count, true);
-+}
-+
- /* Recursive reduction on a function;
-  * C.f. the ARM ARM function ReducePredicated.
-  *
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index cb60b533e9..de6ffe7511 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -3109,7 +3109,8 @@ static bool trans_CTERM(DisasContext *s, arg_CTERM *a)
- }
- 
- typedef void gen_while_fn(TCGv_i32, TCGv_ptr, TCGv_i32, TCGv_i32);
--static bool do_WHILE(DisasContext *s, arg_while *a, bool lt, gen_while_fn *fn)
-+static bool do_WHILE(DisasContext *s, arg_while *a,
-+                     bool lt, int scale, gen_while_fn *fn)
- {
-     TCGv_i64 op0, op1, t0, t1, tmax;
-     TCGv_i32 t2;
-@@ -3164,7 +3165,7 @@ static bool do_WHILE(DisasContext *s, arg_while *a, bool lt, gen_while_fn *fn)
-         }
-     }
- 
--    tmax = tcg_constant_i64(vsz >> a->esz);
-+    tmax = tcg_constant_i64((vsz << scale) >> a->esz);
-     if (eq) {
-         /* Equality means one more iteration.  */
-         tcg_gen_addi_i64(t0, t0, 1);
-@@ -3205,8 +3206,13 @@ static bool do_WHILE(DisasContext *s, arg_while *a, bool lt, gen_while_fn *fn)
-     return true;
- }
- 
--TRANS_FEAT(WHILE_lt, aa64_sve, do_WHILE, a, true, gen_helper_sve_whilel)
--TRANS_FEAT(WHILE_gt, aa64_sve2, do_WHILE, a, false, gen_helper_sve_whileg)
-+TRANS_FEAT(WHILE_lt, aa64_sve, do_WHILE, a, true, 0, gen_helper_sve_whilel)
-+TRANS_FEAT(WHILE_gt, aa64_sve2, do_WHILE, a, false, 0, gen_helper_sve_whileg)
-+
-+TRANS_FEAT(WHILE_lt_pair, aa64_sme2_or_sve2p1, do_WHILE,
-+           a, true, 1, gen_helper_sve_while2l)
-+TRANS_FEAT(WHILE_gt_pair, aa64_sme2_or_sve2p1, do_WHILE,
-+           a, false, 1, gen_helper_sve_while2g)
- 
- static bool trans_WHILE_ptr(DisasContext *s, arg_WHILE_ptr *a)
- {
-diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index c90d975ebf..968b2a57e9 100644
---- a/target/arm/tcg/sve.decode
-+++ b/target/arm/tcg/sve.decode
-@@ -796,6 +796,14 @@ WHILE_gt        00100101 esz:2 1 rm:5 000 sf:1 u:1 0 rn:5 eq:1 rd:4  &while
- # SVE2 pointer conflict compare
- WHILE_ptr       00100101 esz:2 1 rm:5 001 100 rn:5 rw:1 rd:4
- 
-+# SVE2.1 predicate pair
-+%pd_pair        1:3 !function=times_2
-+@while_pair     ........ esz:2 . rm:5 .... u:1 . rn:5 . ... eq:1 \
-+                &while rd=%pd_pair sf=1
-+
-+WHILE_lt_pair   00100101 .. 1 ..... 0101 . 1 ..... 1 ... .  @while_pair
-+WHILE_gt_pair   00100101 .. 1 ..... 0101 . 0 ..... 1 ... .  @while_pair
-+
- ### SVE Integer Wide Immediate - Unpredicated Group
- 
- # SVE broadcast floating-point immediate (unpredicated)
 -- 
 2.43.0
 
