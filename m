@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A7C5C83F03
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Jul 2025 23:38:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED570C83030
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 00:05:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXTUs-0000rO-H6; Thu, 03 Jul 2025 19:37:42 -0400
+	id 1uXTut-0003fT-LU; Thu, 03 Jul 2025 20:04:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uXTUr-0000r3-39; Thu, 03 Jul 2025 19:37:41 -0400
-Received: from mail-ua1-x92a.google.com ([2607:f8b0:4864:20::92a])
+ id 1uXTuX-0003e6-Ad; Thu, 03 Jul 2025 20:04:14 -0400
+Received: from mail-qk1-x72e.google.com ([2607:f8b0:4864:20::72e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uXTUp-000283-C0; Thu, 03 Jul 2025 19:37:40 -0400
-Received: by mail-ua1-x92a.google.com with SMTP id
- a1e0cc1a2514c-88131f0badcso199527241.2; 
- Thu, 03 Jul 2025 16:37:38 -0700 (PDT)
+ id 1uXTuU-00060c-Oq; Thu, 03 Jul 2025 20:04:12 -0400
+Received: by mail-qk1-x72e.google.com with SMTP id
+ af79cd13be357-7d3f5796755so40039785a.1; 
+ Thu, 03 Jul 2025 17:04:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751585857; x=1752190657; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1751587449; x=1752192249; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CiH0dO9xaQS0h7mvAzmMvteIkFQrlKpWzGvGxcCJ7Kw=;
- b=lq10Xfrqcdt5EH93cLeplAgTGgK3464L3iPbd0SJ2fISJNCgM67apAD2xeg+kXYaP6
- 7JSrO5FPh7s5H/B/LB2vatfOFE8KXna7+8vxmHWCBzSwTf5fYPbICeVjDs2rU2epX/Sp
- KawMpHI7MlB7M8WE1Fy5m4jZYJdgkyiCl6iYvkxEEBixV1hSUuc6RAwoeqvdqOD45T55
- 8bCeEjfxnoPWZBm6O6+DPM3T1lQIPk3xfbDkgdcI2pYR5bJKxFMqYadoHdF3D1gUZsex
- zwlksjrKg7+YW/FtxC2HVI139C5N4PNumjH2RKrCRqd/QYoDqJczIxzfm+ihb9r9By74
- LwxA==
+ bh=LiK2t6Wl2jy+x06Y3TU3LBvKmXHH/54qSxIIAXLeGyU=;
+ b=gdeQCCiP3+sndHtUr7jFbtLu1C+A+aMHwPKewVckZGT6BwPvgKcABgtuu83HujwDi4
+ s6AqrcwxUEwKx8Dihj7fJQiz6UG7zaZ/+xsc+OGMXUX5A6gzAufaLZW8LEcRXk6C6A8L
+ JaHlVRa2+rUZSRNn/P8wILyvt07j59qjUHH0k8paltlAt9NjwEK4wiW1QAw0dVCL5Jmi
+ rRPyzscVctpQL6U1gd6PE6Ht6OOXycQGUTuHx7DKHetB8509RNPXn5uAjiHD7xuR1YdP
+ kK1l6MktPydbtp2FYUWTVokbERdD/LG3wWJQcPLFjPmORYKyVzlVDs8QLrbgQjl8l1+7
+ eiWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751585857; x=1752190657;
+ d=1e100.net; s=20230601; t=1751587449; x=1752192249;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CiH0dO9xaQS0h7mvAzmMvteIkFQrlKpWzGvGxcCJ7Kw=;
- b=wNXkgnhs47YcVk0N8ZUQ8/jAPPKJTqE/PmHBBFc08zJACjBuQKiVJNJkXdnURiy6oH
- 8QzNl+gOLZZdsuvcK4c6GJmzbent/HGMKmMPamyKy/kqpSen8NM0382MV3/RJ9tXZcyV
- Miz0DzlwCmhSuKWjonBII65SP4mBKK0AUET8/wc5qdl7yHAueEcRmvvATayI/rcufDOW
- CUSmouSdsvQViXsLIruL+3GjPELIShSvd6RPc0zImTJ95AMWCuAqIKnNuLAsSLtz7r9l
- xsDdkLE7Z+PxfaauDzalbfwBkboX4Wx7NBrm7J4IfTII2gpSjHbUHzKfjdTjBnCl59xl
- NeTQ==
+ bh=LiK2t6Wl2jy+x06Y3TU3LBvKmXHH/54qSxIIAXLeGyU=;
+ b=fNKqspjdYfSc7DX6mhXR5Yxe9Xs2vuV2XJJiQfEOAwtV0AB/fRVr0x141E2CsGEMJC
+ ElZ0NCjRlxJ0mUUnDjM5lFAv9I+ld5GYQFAMsZeFmbZCJkgkUnRUi9D7cT6Njb7SfG2V
+ jH/a8Rwj3KX35dW7khm6SOPOVmecNcyQ1V22XknbINbpSSYcbJtynChbjYgWkaVhAitz
+ 57rq8UJRwFO1Vg/akZm2jHM7NU6K7u2BwmtotMPebUDlabvZZWLQwM8vdKO6M/g5suCk
+ CybguX0X6VMlacIW7E49IhLL+BnqAAyn9M26IjtjLreYlA80r58ZsMEpoOSGy95Rttje
+ e8sA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUtMVKLhGJxjNCvM3d1vXv9C0chN0CaBtF+qYLDPd+xQiVfFMYMso3N3NEn2f8nMbhubNoDuvQMDgt7LA==@nongnu.org,
- AJvYcCW2yhWBHL1FJrstkRhmtlfavttSrMs+WGveE3RP6toGYERf+uTuENMp05nkx9p4Wh49WMmIUwEGk6C+@nongnu.org
-X-Gm-Message-State: AOJu0YwzsnWDKQF8UW+LpTRDagQtFeztewtUnunCYO9AHfIgEmlHKdPm
- z/5uoaFnY7YggyDdzFLBbXBfRq1xN0cLD9Go1dv17cUdE4pbpjfzsZ+Hp9uBcrpZUEejr2wwbW8
- FzYeTbdqfX6dtFN50Iz4FoIKj8CGRNUM=
-X-Gm-Gg: ASbGnctp3YA1W7I2eEXPIHQwPn3mv6Qly6CDAMz3am65FhnNlc4WMvmZ8OVjrG4+FDo
- MeQHdoJqJ7YaSUKdKqKLmfdpcc8oZheBQSnzlSpWAdmZIJkIVt+0ID0szKc0Qb7L75zhMExRpJn
- Fkar35Sl8NJuUFhJC4J9guv7jit4mM/mHHWgjT7hubpu8Tyc9OV0LpGfjmyrfa2TOEzQ1Kt5U4d
- w==
-X-Google-Smtp-Source: AGHT+IFOAaSaetZ/yXLzkES+BWGx+GHMN+a8ko9QX+qiJ8vev8NzSSK/e6Nt4LcOg9TSSiFQqfljcIexkPp5zJ8liSA=
-X-Received: by 2002:a05:6102:8029:b0:4e5:c51b:ace4 with SMTP id
- ada2fe7eead31-4f2f23fccd0mr7396137.20.1751585857487; Thu, 03 Jul 2025
- 16:37:37 -0700 (PDT)
+ AJvYcCUf4i2NBLCSXIJlZsjt2m6A5Bpa7xJE77H4XbNrl8loNHZUMfRvXJfY0sEaNK6DRe4mTL6Jtg2fNvcT@nongnu.org
+X-Gm-Message-State: AOJu0Yy/n8BorMnskFiZpm6iLbzeOzRdiXosL++4oznlW5JpotI8wbm/
+ 3bFQnVxbV9ZsCU9UZ/KzhLoAXuM77SUhepEzK46P/V0z4FV6mxASVU5Vl2j+xQo859OJV/iLIz5
+ iUbzzy2IDetM26mPf7vavlpJ/AONKAkI=
+X-Gm-Gg: ASbGncshWynr4Kx71XG0M6OMr2aZMyhnrLej81kYOqi+JyjFvg4xCdo5SujK184Pf/O
+ bAh6NPexHTKSvsw42ct1O5X7V3EKMB+jIRKg+tZC17gpNMawxQehV70FB3aby8B5vCCpRPLPvll
+ QZ1F6avv0coDtmKFzevb4TNRnWI9EGZ6FaPiZDZfv3SFq/fXBBHHAK1cjvtxqHjl6HYL5xowNR3
+ Q==
+X-Google-Smtp-Source: AGHT+IGg5bwhBw5RRWsvSkrjPAH1pBTeMh5p+QhGrf3q6mIGrzs2ZYkR/bde/kT6OROoqvp10SA2M1E4JLX8Me28LYY=
+X-Received: by 2002:a05:620a:1a0b:b0:7d5:dcd9:57f4 with SMTP id
+ af79cd13be357-7d5ddb7266emr50774985a.18.1751587448806; Thu, 03 Jul 2025
+ 17:04:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250616150034827wuHs_ffe3Qm8cqFXT7HeW@zte.com.cn>
-In-Reply-To: <20250616150034827wuHs_ffe3Qm8cqFXT7HeW@zte.com.cn>
+References: <20250703182157.281320-1-charmitro@posteo.net>
+ <20250703182157.281320-2-charmitro@posteo.net>
+In-Reply-To: <20250703182157.281320-2-charmitro@posteo.net>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 4 Jul 2025 09:37:11 +1000
-X-Gm-Features: Ac12FXx3D1FLgn8PayxMzOH4IWuyH3lvX508uZp6_k-yiMAYZL_LW3PNktkuPR4
-Message-ID: <CAKmqyKPZTp3HGU3xAwQRv5KDFpoYALqgWwEr8Ut2h4ShmKKnsw@mail.gmail.com>
-Subject: Re: [PATCH v3 RESEND] migration: Fix migration failure when aia is
- configured as aplic-imsic
-To: liu.xuemei1@zte.com.cn
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Date: Fri, 4 Jul 2025 10:03:41 +1000
+X-Gm-Features: Ac12FXwY6fuEoMgDu6J41jDoqwZ46NsUeKa-mgVQ2V7emlngNjzt7bO8yY6BgVQ
+Message-ID: <CAKmqyKOtb7JxV_f4ei2q14kuQkoT7-Ni1uq_tJNehm=HO+XFew@mail.gmail.com>
+Subject: Re: [PATCH 1/2] target/riscv: Fix MEPC/SEPC bit masking for IALIGN
+To: Charalampos Mitrodimas <charmitro@posteo.net>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
+ zhiwei_liu@linux.alibaba.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92a;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72e;
+ envelope-from=alistair23@gmail.com; helo=mail-qk1-x72e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,94 +98,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 16, 2025 at 5:02=E2=80=AFPM <liu.xuemei1@zte.com.cn> wrote:
+On Fri, Jul 4, 2025 at 4:25=E2=80=AFAM Charalampos Mitrodimas
+<charmitro@posteo.net> wrote:
 >
-> Address an error in migration when aia is configured as 'aplic-imsic' in
-> riscv kvm vm by adding riscv_aplic_state_needed() and
-> riscv_imsic_state_needed() to determine whether the corresponding sates a=
-re
-> needed.
+> According to the RISC-V Privileged Architecture specification, the low
+> bit of MEPC/SEPC must always be zero. When IALIGN=3D32, the two low bits
+> must be zero.
 >
-> Previously, the fields in the vmsds of 'riscv_aplic' and 'riscv_imsic' ca=
-n
-> only be initialized under certain special conditions in commit 95a97b3fd2=
-.
-> However, the corresponding ses of these vmsds are inserted into the
-> savevm_state.handlers unconditionally. This led to migration failure
-> characterized by uninitialized fields when save vm state:
-> qemu-system-riscv64: ../migration/vmstate.c:433: vmstate_save_state_v:
-> Assertion 'first_elem || !n_elems || !size' failed.
+> This commit fixes the behavior of MEPC/SEPC CSR reads and writes, and
+> the implicit reads by MRET/SRET instructions to properly mask the
+> lowest bit(s) based on whether the C extension is enabled:
+> - When C extension is enabled (IALIGN=3D16): mask bit 0
+> - When C extension is disabled (IALIGN=3D32): mask bits [1:0]
 >
-> Fixes: 95a97b3fd2 ("target/riscv: update APLIC and IMSIC to support KVM A=
-IA")
+> Previously, when vectored mode bits from STVEC (which sets bit 0 for
+> vectored mode) were written to MEPC, the bits would not be cleared
+> correctly, causing incorrect behavior on MRET.
 >
-> Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2855
+> Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  Changes in v3:
->  - Increase version_id and minimum_version_id
+>  target/riscv/csr.c       |  8 ++++----
+>  target/riscv/internals.h | 11 +++++++++++
+>  target/riscv/op_helper.c |  4 ++--
+>  3 files changed, 17 insertions(+), 6 deletions(-)
 >
->  hw/intc/riscv_aplic.c | 12 ++++++++++--
->  hw/intc/riscv_imsic.c | 10 ++++++++--
->  2 files changed, 18 insertions(+), 4 deletions(-)
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index fb14972169..c33a6e86d2 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -3126,14 +3126,14 @@ static RISCVException write_mscratch(CPURISCVStat=
+e *env, int csrno,
+>  static RISCVException read_mepc(CPURISCVState *env, int csrno,
+>                                  target_ulong *val)
+>  {
+> -    *val =3D env->mepc;
+> +    *val =3D env->mepc & get_xepc_mask(env);
+>      return RISCV_EXCP_NONE;
+>  }
 >
-> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-> index 8bcd9f4697..4fa5f7597b 100644
-> --- a/hw/intc/riscv_aplic.c
-> +++ b/hw/intc/riscv_aplic.c
-> @@ -962,10 +962,18 @@ static const Property riscv_aplic_properties[] =3D =
-{
->      DEFINE_PROP_BOOL("mmode", RISCVAPLICState, mmode, 0),
->  };
+>  static RISCVException write_mepc(CPURISCVState *env, int csrno,
+>                                   target_ulong val, uintptr_t ra)
+>  {
+> -    env->mepc =3D val;
+> +    env->mepc =3D val & get_xepc_mask(env);
+>      return RISCV_EXCP_NONE;
+>  }
 >
-> +static bool riscv_aplic_state_needed(void *opaque)
+> @@ -4113,14 +4113,14 @@ static RISCVException write_sscratch(CPURISCVStat=
+e *env, int csrno,
+>  static RISCVException read_sepc(CPURISCVState *env, int csrno,
+>                                  target_ulong *val)
+>  {
+> -    *val =3D env->sepc;
+> +    *val =3D env->sepc & get_xepc_mask(env);
+>      return RISCV_EXCP_NONE;
+>  }
+>
+>  static RISCVException write_sepc(CPURISCVState *env, int csrno,
+>                                   target_ulong val, uintptr_t ra)
+>  {
+> -    env->sepc =3D val;
+> +    env->sepc =3D val & get_xepc_mask(env);
+>      return RISCV_EXCP_NONE;
+>  }
+>
+> diff --git a/target/riscv/internals.h b/target/riscv/internals.h
+> index 4570bd50be..89ac6a160f 100644
+> --- a/target/riscv/internals.h
+> +++ b/target/riscv/internals.h
+> @@ -142,6 +142,17 @@ static inline float16 check_nanbox_h(CPURISCVState *=
+env, uint64_t f)
+>      }
+>  }
+>
+> +static inline target_ulong get_xepc_mask(CPURISCVState *env)
 > +{
-> +    RISCVAPLICState *aplic =3D opaque;
-> +
-> +    return riscv_use_emulated_aplic(aplic->msimode);
+> +    /* When IALIGN=3D32, both low bits must be zero.
+> +     * When IALIGN=3D16 (has C extension), only bit 0 must be zero. */
+> +    if (riscv_has_ext(env, RVC)) {
+> +        return ~(target_ulong)1;
+> +    } else {
+> +        return ~(target_ulong)3;
+> +    }
 > +}
 > +
->  static const VMStateDescription vmstate_riscv_aplic =3D {
->      .name =3D "riscv_aplic",
-> -    .version_id =3D 2,
-> -    .minimum_version_id =3D 2,
-> +    .version_id =3D 3,
-> +    .minimum_version_id =3D 3,
-> +    .needed =3D riscv_aplic_state_needed,
->      .fields =3D (const VMStateField[]) {
->              VMSTATE_UINT32(domaincfg, RISCVAPLICState),
->              VMSTATE_UINT32(mmsicfgaddr, RISCVAPLICState),
-> diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
-> index 2169988167..6174e1a05d 100644
-> --- a/hw/intc/riscv_imsic.c
-> +++ b/hw/intc/riscv_imsic.c
-> @@ -398,10 +398,16 @@ static const Property riscv_imsic_properties[] =3D =
-{
->      DEFINE_PROP_UINT32("num-irqs", RISCVIMSICState, num_irqs, 0),
->  };
+>  #ifndef CONFIG_USER_ONLY
+>  /* Our implementation of SysemuCPUOps::has_work */
+>  bool riscv_cpu_has_work(CPUState *cs);
+> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+> index 557807ba4b..15460bf84b 100644
+> --- a/target/riscv/op_helper.c
+> +++ b/target/riscv/op_helper.c
+> @@ -280,7 +280,7 @@ target_ulong helper_sret(CPURISCVState *env)
+>          riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
+>      }
 >
-> +static bool riscv_imsic_state_needed(void *opaque)
-> +{
-> +    return !kvm_irqchip_in_kernel();
-> +}
-> +
->  static const VMStateDescription vmstate_riscv_imsic =3D {
->      .name =3D "riscv_imsic",
-> -    .version_id =3D 1,
-> -    .minimum_version_id =3D 1,
-> +    .version_id =3D 2,
-> +    .minimum_version_id =3D 2,
-> +    .needed =3D riscv_imsic_state_needed,
->      .fields =3D (const VMStateField[]) {
->              VMSTATE_VARRAY_UINT32(eidelivery, RISCVIMSICState,
->                                    num_pages, 0,
+> -    target_ulong retpc =3D env->sepc;
+> +    target_ulong retpc =3D env->sepc & get_xepc_mask(env);
+>      if (!riscv_cpu_allow_16bit_insn(&env_archcpu(env)->cfg,
+>                                      env->priv_ver,
+>                                      env->misa_ext) && (retpc & 0x3)) {
+> @@ -391,7 +391,7 @@ static target_ulong ssdbltrp_mxret(CPURISCVState *env=
+, target_ulong mstatus,
+>
+>  target_ulong helper_mret(CPURISCVState *env)
+>  {
+> -    target_ulong retpc =3D env->mepc;
+> +    target_ulong retpc =3D env->mepc & get_xepc_mask(env);
+>      uint64_t mstatus =3D env->mstatus;
+>      target_ulong prev_priv =3D get_field(mstatus, MSTATUS_MPP);
+>
 > --
-> 2.27.0
+> 2.47.2
+>
 >
 
