@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51C3FC8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 15:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A970C83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 15:39:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXiVK-0004xx-Gd; Fri, 04 Jul 2025 11:39:10 -0400
+	id 1uXiVn-0005mO-VY; Fri, 04 Jul 2025 11:39:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXiVG-0004wn-8D
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 11:39:06 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXiVE-0007OO-PC
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 11:39:06 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-451dbe494d6so11804845e9.1
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 08:39:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751643543; x=1752248343; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NHIDvLFsE01jmoXKQows53ZFy1xLZz1kAcDhK5XFIDs=;
- b=R/Sc0JwI/TMEWLri888pDjcfELBg4rHFzydkv/6ht7gpzQi4aHWOUrMSlNC4Rx+qXN
- 54aDWaOvhe5GR0BmIj9t4f3Y8vVpoZu/R+5Zbc7Y7m8KIM5xqWlgaENwreGia7ZEr039
- cAbWho+XOaDtOdaS8FhMFvCRV9BrnkVBblBWv7Z+N1QZv5BbXTNMyes+zm8xhi9LLAbR
- 3WRC3I5gX0uGcJi5oKz+XBDVeUKQX5VSGkLV5XKE67+nLDwAhpT4eMbbAdbtFLH2GbPC
- DisydWGZaiNQ55xBYH1B5svLu+IKHJOrp2HGh1rYAC/InnHwdEj5WwzRU/YMLgZFlj1Y
- CftA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uXiVk-0005ku-Vc
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 11:39:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uXiVj-0007dt-Fs
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 11:39:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751643574;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=n36UyVWIgxfe52Y1m9fDCPkKNvUc3aarkdo8vp7w9mA=;
+ b=NEkjF006/NrVOqnV20IxYEI4wf+w8C6CM+mjbS9NZPRrrRuQGn79WUCfNDxOj4h4UuXGp9
+ 5vjL4U5m6VPVmP2lS8jZSixiRG1raOs5W1gaaz2WP9sHZRaxevxPSD2H6Zjm36RWIkhF3i
+ 6lYo3PSDuwtFESzYqwKLg2TsOShCgQc=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-608-KhqwBklENNiACcoTn97KNA-1; Fri, 04 Jul 2025 11:39:32 -0400
+X-MC-Unique: KhqwBklENNiACcoTn97KNA-1
+X-Mimecast-MFC-AGG-ID: KhqwBklENNiACcoTn97KNA_1751643572
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6fad8b4c92cso23138556d6.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 08:39:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751643543; x=1752248343;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NHIDvLFsE01jmoXKQows53ZFy1xLZz1kAcDhK5XFIDs=;
- b=AcKHYN+ItWrYBTtwOpZxH+UB2xANciOQJlOR52WmWpKxnE+ymtMGY0uJNPnw9ncRey
- CSTkkDnn/m1vUKj9eZQW8IaifCIjwJcGH7ez618CfhAR2NkdM3CKO/mu9Y8697mcP7PA
- XgSBgg+n+6oEUwwQK4qLHyq0AM2sbuO/smeFl6UjCGYxbhpe/kW2+wolKZLtOJI0Ep3p
- TCnUMApW5Za5T+MbU5XsLZS9lS3nAoZbTQiny5wNNAuYCvLv9saWduxDtp/ILHsCi3PB
- 2obbo/tRyzF437iuDbWtVLYC8+hbbmX4a0Lch4oP5HjcMl0PhI7mHk5unBXUH4yfJwbU
- kpfQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXmdxaWkeVG/gWywtrwlKYU51DnjGC183mcYTO3I8+BdfnY8z1kV7oCNHT47juBt/PcwuizgZvqcOtm@nongnu.org
-X-Gm-Message-State: AOJu0YzPsSegoxWx0xVCfUk71hEWnAvQQoyCf3NLBJk0nY9II90GZIj7
- ioSJ9IRMzuRP+vhOEe6UGB11qqBghEftKjx4xZ9VPgiBaPLDgRCG4kCDJ/6UmhnqnCQM6DYdFII
- N4DXX
-X-Gm-Gg: ASbGncuRmmZmJV5if1OfRqZTvHkURSHlGwpnU8PnWhIIe0cVQQ6J5Y0kAuBl5Id8oeV
- 10BwW1lGyR6pNRUvdFvGKuKG51wL4X419bI24kOWv9bk+NpjFXGXuwwiOFvzAKslDqcwsPWYXd6
- 5pabcgoW8yfOrddsAGr2xKkjoC3peF88ziSXeXz0gE9mrMFnEz4pWOXmp3HOijGGhqWfQeUYmGm
- Gu1sKrs0mHJiMqZndeGtBDd8ylizujVJr/LYruJeYgnK/4nE8RyFXntC3rl11N21R/PhC/9lgrp
- W/8CcxlUy4c1z/jBVRNVw9A7QVmIrDIgnGw1Pw2xZA2qjyXgVC6IJlw6c25FvNXy6vmkybEKhM+
- RlGzt4Jd2NTGE+XyHvgYkWWgf2PIge6I9zoo=
-X-Google-Smtp-Source: AGHT+IFKanwTwTRdh0qryB5TDrAXpMSnhQ5zGB0Awqhw6FLCnxrr6FSi8OTi6uXus6pTG1aWI7EJuA==
-X-Received: by 2002:a05:6000:653:b0:3b4:9721:2b2b with SMTP id
- ffacd0b85a97d-3b497212ca8mr2781419f8f.12.1751643542964; 
- Fri, 04 Jul 2025 08:39:02 -0700 (PDT)
-Received: from [192.168.69.218] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b47030ba29sm2736541f8f.2.2025.07.04.08.39.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Jul 2025 08:39:02 -0700 (PDT)
-Message-ID: <4b6ab777-9c25-4ad4-95c8-ea31c4c8ddec@linaro.org>
-Date: Fri, 4 Jul 2025 17:39:01 +0200
+ d=1e100.net; s=20230601; t=1751643569; x=1752248369;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=n36UyVWIgxfe52Y1m9fDCPkKNvUc3aarkdo8vp7w9mA=;
+ b=hQlBTXBnvL22KOaAue6YVQiWXmxGvSnac8rrzhnLCaDzwQu6Xal/DXrW3FkCjFwBqH
+ eJu7cvB+VlDJ0whz6/LjXEieYmIfRFBnUZUNUFXFC7W6JmwLjTlLqPcNCO0C9VufiPbU
+ rlY4HcwuoYq4IT/FLewy6UVtdD2L4+JvqYwiHtBU9N4flGxBAqztgBW7RPIQOw/M9w0r
+ MnpjJZRHh79PNEE1oLZbIbG7YXTAzSkOqSRa1Bk4Wbs8EaXbFZfuAdzdJdjrfUqErpg3
+ SiQwdE26JVzgb5TlNjjuO/8KBwF/Kxs0bvEjdf9SKIVK6coCl1FUdRwADFEAxKnuJ39U
+ 9cJg==
+X-Gm-Message-State: AOJu0YzEQ8/rlbAsdn50l+aAc7Z0/7acheEBlF5KuOGQlOot8pNSIEWf
+ 4+WyVaQJaAMPQN876+nk07LE86xd/vcj8DudBjehu8HWudCe2k5LeTaZgoeKFvXfRBvXbYJvIZE
+ xGogqmGp/CGtth7C3JmXni1RaSM9Jc0sM10CwHMssKqTYEiYqPYVEO5hs
+X-Gm-Gg: ASbGncvhG+6PgddELR0JKJG0xNyWQyThMGQEaENObUx83zcHI6cdk0DVeYpP6hCxWh8
+ /msv8m6nNyVWWFU6SJUBaJ7WJ2FIIxgFq2+5NpRwhz+P3wDvHQ6Fx3SVl7d2KZu+bBRHkz4GUbu
+ F0cOpydth2pYeC2kjjB53UPzfRBnmP5hBGHau8641eFtTukyC4GzvYVbxzwtZYpWCkxVwBiuPzg
+ TmaWkYRmmTratbIxBCFv2Dh5LKl7XssTUjFGKsqTonW9bfhDpvfNC8HWhPMj9cGgdRYQjy9f3Ec
+ 3aMBmquHu87YXA==
+X-Received: by 2002:ad4:5fce:0:b0:6fa:9b1c:740b with SMTP id
+ 6a1803df08f44-702c6ded514mr36514036d6.42.1751643569182; 
+ Fri, 04 Jul 2025 08:39:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEFYmFUias5jHRDOlrYfeknrehgTmr5z8sHKTdsJlEb1ob8jlrcNfcaESf0Wx/5BpObv0corg==
+X-Received: by 2002:ad4:5fce:0:b0:6fa:9b1c:740b with SMTP id
+ 6a1803df08f44-702c6ded514mr36513686d6.42.1751643568794; 
+ Fri, 04 Jul 2025 08:39:28 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-702c4d60460sm13927676d6.109.2025.07.04.08.39.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Jul 2025 08:39:28 -0700 (PDT)
+Date: Fri, 4 Jul 2025 11:39:25 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
+ Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v2 04/24] migration: Remove MigrateSetParameters
+Message-ID: <aGf1rQ7wLoY1L0Se@x1.local>
+References: <20250630195913.28033-1-farosas@suse.de>
+ <20250630195913.28033-5-farosas@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] arm/cpu: fix trailing ',' for SET_IDREG
-To: Cornelia Huck <cohuck@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Eric Auger <eric.auger@redhat.com>, Sebastian Ott <sebott@redhat.com>
-References: <20250704141927.38963-1-cohuck@redhat.com>
- <20250704141927.38963-4-cohuck@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250704141927.38963-4-cohuck@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250630195913.28033-5-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.218, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,17 +105,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/7/25 16:19, Cornelia Huck wrote:
-> While a trailing comma is not broken for SET_IDREG invocations, it
-> does look odd; use a semicolon instead.
+On Mon, Jun 30, 2025 at 04:58:53PM -0300, Fabiano Rosas wrote:
+> Now that the TLS options have been made the same between
+> migrate-set-parameters and query-migrate-parameters, a single type can
+> be used. Remove MigrateSetParameters.
 > 
-> Fixes: f1fd81291c91 ("arm/cpu: Store aa64mmfr0-3 into the idregs array")
-> Fixes: def3f1c1026a ("arm/cpu: Store aa64dfr0/1 into the idregs array")
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-> ---
->   target/arm/tcg/cpu64.c | 14 +++++++-------
->   1 file changed, 7 insertions(+), 7 deletions(-)
+> The TLS options documentation from MigrationParameters were replaced
+> with the ones from MigrateSetParameters which was more complete.
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Peter Xu <peterx@redhat.com>
+
+-- 
+Peter Xu
 
 
