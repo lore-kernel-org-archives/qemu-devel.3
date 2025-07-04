@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F32EFC8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 11:20:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD574C83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 11:20:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXeMl-0003SD-CG; Fri, 04 Jul 2025 07:14:03 -0400
+	id 1uXeOH-0007ex-1o; Fri, 04 Jul 2025 07:15:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uXeM0-0002W9-Lu
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:13:18 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1uXeN7-0004w7-I5
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:14:26 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uXeLy-0003IM-Ph
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:13:16 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-311c95ddfb5so798763a91.2
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 04:13:14 -0700 (PDT)
+ id 1uXeN5-0004O2-Mi
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:14:25 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-234f17910d8so7527465ad.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 04:14:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751627593; x=1752232393; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1751627662; x=1752232462; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=N57kfUKQDmNxAKJP5RLugaPyuMP/7dcniyDLG0IHlCM=;
- b=E198ui4B5qLr6grfLWqdO/CzXSlwPl/H11hnhG2HxYePNevwmftaRO/qraXfW8P/NF
- KpBAz+LyW5O5xlnHKzxy3PK86gzPDFoC+PtJksPRd9k1USfaXlOBmMMRyhK3NkDhndAM
- 3TUIVDmQ/4+NRy3gErI2s2CWGOjtEYHA4AfGoy8wRjYHu/d1uZuZCmDDOWuSto7jJBvE
- uHNNz1o2kv9L8tlLNnNjdPXvMtQxAoylK1Dj8IHQEj5nvRrpqoYOhQ9nRAkz610fm6LG
- cm+D/UmX1g23I2PNVcRrOl4swwUUcYQzOCF9KOMc8k+/pSVFYu+2mUXw1dJ7U5ZH/opf
- RV5Q==
+ bh=ONjmGA/ciZhqBcIWB+pcuvZnH4RBOoReODO2aO4hpOQ=;
+ b=D20cpfIcBExfpHU4SEeKFm0LNOe0PcPacNqutXH3FRcLCyGuLSLJZdbaFp/WdE7IGP
+ I2qSmxn8xLyX/evLzKmOcHeiMqfvXOrhr73QuN9koZ3sphx1Cje86XkLjyTkfmW3r6dZ
+ fxvQlSKxW2uP0Utir7pI/VWYQRLRdmvmLxLrSjCbNgIPiOjv0PJZYyfvd+1e/PoYTDOd
+ JdWsY64gdZT/Q2p8mwfGE6+aD3Wpv2Bb20drmdgT1lWLH7VzxfYzMHaQ/y7WxDAV7K3/
+ Z1T3ZMyStMuyylMj++ktV4MyTHOT1ay5IhcnUqlZkq1H1S3lPWUGL1HNnOyvLZWmg40s
+ WhXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751627593; x=1752232393;
+ d=1e100.net; s=20230601; t=1751627662; x=1752232462;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=N57kfUKQDmNxAKJP5RLugaPyuMP/7dcniyDLG0IHlCM=;
- b=HDlJP63Rz1eeq+77PLTAc5IeT4oucjOSLLOxWlCBnzTdi+n8EOW0wpr7VleTX8dXpR
- AOvgGTKh46HlwrzkEpEvBcxYeJQfBC7ZBXp2rG5bO0pOtox156CdQt9F9pw8t9fHZ6iq
- SSdfQQ34LRY/EaMQ6w4wgQgZ0gZ6HWCq/Hb7y/DiHqpojw1khAYcIox+SO6HkkDkUTK2
- lV7VTinzTCQAE+rVQve3kd+d3c+A87sXdwpveTYBkWDZbrpG0EXNhOYoYdZ462PDNbZV
- 6wZ7Ss9nt+uTswiYziWiM1vbZqd7DbKPkAhrUcpGRuAfcWSjcX9TCY1StFAyGGZ1RaEX
- iAHg==
-X-Gm-Message-State: AOJu0Yw+8zVzn0zrLELQwu07WWPWa/D5LfuzwJbg/7uaPRyM/uVAYCEA
- XdI7C6KpGEvEdRKH5LHykEc3wy/HPpRiAttRGE0B39+FMIQpsd8891uhzxTEpw==
-X-Gm-Gg: ASbGncu+A+lM6FyczBxBkpK9YKnq/Ot8I3STRURF456bMrks59cg8lJCkTFkoXhV/8V
- eBVoP4omdcCjusR1Ds6gtNv0SFdyNwupWzfGmAOEjRpQRsLhmEwHbRSnzesRTKjylX5yc+oPwpF
- uD32JTCs3Wxxh7HCTKkTUgqHOMD2O0Gu1rgyjdQsBME6V0VtirruzAoGE/UPW3Cz1V0auIpkDjh
- y+jvusQPJP5+OUJbObrhQeIi8txkYG49tS2OJTae/I3B5zN0TVz352o3SNg2W4NFU5spXp309zY
- sI2XdzPaxjHaeMERRzrYrGgK7P6WWZbkI1ea/2gzd7e1pKLR84Fbjuya7z8VFpMPGM7CBpBHSJm
- yfkNz/H1uQ+SI9q4lij/8Y8b+NsDtpdA23LJa6jNhTcyaO+1yksgJ19OLcpynFV5UFgM=
-X-Google-Smtp-Source: AGHT+IHRu6FAlEm0CK50kvE71F7X1sWPt3OU5mm2MiTtLWiFyKSbJkss5p9YnJl1K2x+CDOjG7lFGg==
-X-Received: by 2002:a17:90b:52c5:b0:312:1b53:5e98 with SMTP id
- 98e67ed59e1d1-31aac5456e8mr2541933a91.34.1751627592696; 
- Fri, 04 Jul 2025 04:13:12 -0700 (PDT)
+ bh=ONjmGA/ciZhqBcIWB+pcuvZnH4RBOoReODO2aO4hpOQ=;
+ b=GqY35zKp0UTiVV1IJ7SZ6fJs4PGShtrD2k/ZgQvyOZoq5+o8S82pZoOQmbWNrXYXlm
+ hkqq2spGcJ445fLfeaGAiyfZT2olFdWLoA+rC/7BZW0ZqQN2woqQOdDkXIZU/CjDhy8y
+ OPszhfZaInXZmkS2LCbXdd1N0isS11XqgJxgGcx8in7bLCL5G6m9XXV9eo7IGx65qVTL
+ vR7uXg1/2IhgS/QdGEBqsfAcMGIZTEJ5tm+cne4b7X792CvbcOIzJ3wK8ISMxwtXV65a
+ lR1E7gwOZkPe3kElUm7+dgXnIL2e1tp8zh4SUD7na46Et+33BdLOeBlDmfh93qJ5i385
+ /lLA==
+X-Gm-Message-State: AOJu0YzNXskN/6bKaYa5lkPzhsaB0LU+Q6UlQ/BCM2OCuGGi+gbJOzzC
+ 7dmY0m4DQNz5VT6L5fwE4j/sW0EPaZSQEUTCB5TkPjVYwUOrL9WoR9DXbRJEyQ==
+X-Gm-Gg: ASbGncsJZtlEqdyrawVjE+UHjTGbO4iJv39AaJwzBcrL5k7Vj1UFk6/ZoHGUR/uKTqk
+ qmYim+YCEMYqiz1jPi/jtv9BboqRsfsbsOK2WKGsO63E8//lgt6Cjzp3vZDA54wTQS3hrV+YQSQ
+ S6miFd646ryVoCQo7B4enbcAEUoTtud0OsPZ42baIBSkmfi2FkFlTRDEneFRlhpPujOIzjZHNdB
+ rsimKLA52xZ6JCYyXjqKgkedxUGTlQQVv9Rf4c/vAC8dljsWPnlqpUv2ZRF9ORbsujMRZ6FvpdE
+ A56aI7Fr/duzb0pKPgcnbEdjkaFOGPIWXzen1Jfro0kTVnBqHO37NsQyWiijtC1nXQ/VYOftTUy
+ nWoYJoZWsu0LSIf4OtSuCiG0pspRTMBbzCKIjoOc4vrl6iyY1FMbStiZTesCgA6/qoVY=
+X-Google-Smtp-Source: AGHT+IGJ43Dtnc88RzA7Q+cI8EGrxx2rdkV506T0e7Cb4gnxSyairFv6cTrghVTaZU2TI1jn5unaSQ==
+X-Received: by 2002:a17:903:13ce:b0:234:f6ba:e681 with SMTP id
+ d9443c01a7336-23c8606b87emr37720535ad.5.1751627661984; 
+ Fri, 04 Jul 2025 04:14:21 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23c8431a206sm18002655ad.28.2025.07.04.04.13.10
+ d9443c01a7336-23c8431a206sm18002655ad.28.2025.07.04.04.14.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 04:13:12 -0700 (PDT)
+ Fri, 04 Jul 2025 04:14:21 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Jim Shu <jim.shu@sifive.com>,
- Frank Chang <frank.chang@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 14/40] target/riscv: support atomic instruction fetch (Ziccif)
-Date: Fri,  4 Jul 2025 21:11:41 +1000
-Message-ID: <20250704111207.591994-15-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Charalampos Mitrodimas <charmitro@posteo.net>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PULL 37/40] target/riscv: Fix MEPC/SEPC bit masking for IALIGN
+Date: Fri,  4 Jul 2025 21:12:04 +1000
+Message-ID: <20250704111207.591994-38-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250704111207.591994-1-alistair.francis@wdc.com>
 References: <20250704111207.591994-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,118 +105,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jim Shu <jim.shu@sifive.com>
+From: Charalampos Mitrodimas <charmitro@posteo.net>
 
-Support 4-byte atomic instruction fetch when instruction is natural
-aligned.
+According to the RISC-V Privileged Architecture specification, the low
+bit of MEPC/SEPC must always be zero. When IALIGN=32, the two low bits
+must be zero.
 
-Current implementation is not atomic because it loads instruction twice
-for first and last 2 bytes. We load 4 bytes at once to keep the
-atomicity. This instruction preload method only applys when instruction
-is 4-byte aligned. If instruction is unaligned, it could be across pages
-so that preload will trigger additional page fault.
+This commit fixes the behavior of MEPC/SEPC CSR reads and writes, and
+the implicit reads by MRET/SRET instructions to properly mask the
+lowest bit(s) based on whether the C extension is enabled:
+- When C extension is enabled (IALIGN=16): mask bit 0
+- When C extension is disabled (IALIGN=32): mask bits [1:0]
 
-We encounter this issue when doing pressure test of enabling & disabling
-Linux kernel ftrace. Ftrace with kernel preemption requires concurrent
-modification and execution of instruction, so non-atomic instruction
-fetch will cause the race condition. We may fetch the wrong instruction
-which is the mixing of 2 instructions.
+Previously, when vectored mode bits from STVEC (which sets bit 0 for
+vectored mode) were written to MEPC, the bits would not be cleared
+correctly, causing incorrect behavior on MRET.
 
-Also, RISC-V Profile wants to provide this feature by HW. RVA20U64
-Ziccif protects the atomicity of instruction fetch when it is
-natural aligned.
-
-This commit depends on the atomic read support of translator_ld in
-the commit 6a9dfe1984b0c593fb0ddb52d4e70832e6201dd6.
-
-Signed-off-by: Jim Shu <jim.shu@sifive.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2855
+Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250508094838.19394-1-jim.shu@sifive.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <20250703182157.281320-2-charmitro@posteo.net>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/translate.c | 46 +++++++++++++++++++++++++++++-----------
- 1 file changed, 34 insertions(+), 12 deletions(-)
+ target/riscv/internals.h | 11 +++++++++++
+ target/riscv/csr.c       |  8 ++++----
+ target/riscv/op_helper.c |  4 ++--
+ 3 files changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index d7a6de02df..9ddef2d6e2 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -1217,13 +1217,35 @@ const RISCVDecoder decoder_table[] = {
+diff --git a/target/riscv/internals.h b/target/riscv/internals.h
+index 9686bb6208..172296f12e 100644
+--- a/target/riscv/internals.h
++++ b/target/riscv/internals.h
+@@ -158,6 +158,17 @@ static inline float16 check_nanbox_bf16(CPURISCVState *env, uint64_t f)
+     }
+ }
  
- const size_t decoder_table_size = ARRAY_SIZE(decoder_table);
- 
--static void decode_opc(CPURISCVState *env, DisasContext *ctx, uint16_t opcode)
-+static void decode_opc(CPURISCVState *env, DisasContext *ctx)
- {
-+    uint32_t opcode;
-+    bool pc_is_4byte_align = ((ctx->base.pc_next % 4) == 0);
-+
-     ctx->virt_inst_excp = false;
--    ctx->cur_insn_len = insn_len(opcode);
-+    if (pc_is_4byte_align) {
-+        /*
-+         * Load 4 bytes at once to make instruction fetch atomically.
-+         *
-+         * Note: When pc is 4-byte aligned, 4-byte instruction wouldn't be
-+         * across pages. We could preload 4 bytes instruction no matter
-+         * real one is 2 or 4 bytes. Instruction preload wouldn't trigger
-+         * additional page fault.
-+         */
-+        opcode = translator_ldl(env, &ctx->base, ctx->base.pc_next);
++static inline target_ulong get_xepc_mask(CPURISCVState *env)
++{
++    /* When IALIGN=32, both low bits must be zero.
++     * When IALIGN=16 (has C extension), only bit 0 must be zero. */
++    if (riscv_has_ext(env, RVC)) {
++        return ~(target_ulong)1;
 +    } else {
-+        /*
-+         * For unaligned pc, instruction preload may trigger additional
-+         * page fault so we only load 2 bytes here.
-+         */
-+        opcode = (uint32_t) translator_lduw(env, &ctx->base, ctx->base.pc_next);
++        return ~(target_ulong)3;
 +    }
-+    ctx->ol = ctx->xl;
++}
 +
-+    ctx->cur_insn_len = insn_len((uint16_t)opcode);
-     /* Check for compressed insn */
-     if (ctx->cur_insn_len == 2) {
--        ctx->opcode = opcode;
-+        ctx->opcode = (uint16_t)opcode;
-         /*
-          * The Zca extension is added as way to refer to instructions in the C
-          * extension that do not include the floating-point loads and stores
-@@ -1233,15 +1255,17 @@ static void decode_opc(CPURISCVState *env, DisasContext *ctx, uint16_t opcode)
-             return;
-         }
-     } else {
--        uint32_t opcode32 = opcode;
--        opcode32 = deposit32(opcode32, 16, 16,
--                             translator_lduw(env, &ctx->base,
--                                             ctx->base.pc_next + 2));
--        ctx->opcode = opcode32;
-+        if (!pc_is_4byte_align) {
-+            /* Load last 2 bytes of instruction here */
-+            opcode = deposit32(opcode, 16, 16,
-+                               translator_lduw(env, &ctx->base,
-+                                               ctx->base.pc_next + 2));
-+        }
-+        ctx->opcode = opcode;
- 
-         for (guint i = 0; i < ctx->decoders->len; ++i) {
-             riscv_cpu_decode_fn func = g_ptr_array_index(ctx->decoders, i);
--            if (func(ctx, opcode32)) {
-+            if (func(ctx, opcode)) {
-                 return;
-             }
-         }
-@@ -1319,10 +1343,8 @@ static void riscv_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+ #ifndef CONFIG_USER_ONLY
+ /* Our implementation of SysemuCPUOps::has_work */
+ bool riscv_cpu_has_work(CPUState *cs);
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 6296ecd1e1..8631be97c5 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -3129,14 +3129,14 @@ static RISCVException write_mscratch(CPURISCVState *env, int csrno,
+ static RISCVException read_mepc(CPURISCVState *env, int csrno,
+                                 target_ulong *val)
  {
-     DisasContext *ctx = container_of(dcbase, DisasContext, base);
-     CPURISCVState *env = cpu_env(cpu);
--    uint16_t opcode16 = translator_lduw(env, &ctx->base, ctx->base.pc_next);
+-    *val = env->mepc;
++    *val = env->mepc & get_xepc_mask(env);
+     return RISCV_EXCP_NONE;
+ }
  
--    ctx->ol = ctx->xl;
--    decode_opc(env, ctx, opcode16);
-+    decode_opc(env, ctx);
-     ctx->base.pc_next += ctx->cur_insn_len;
+ static RISCVException write_mepc(CPURISCVState *env, int csrno,
+                                  target_ulong val, uintptr_t ra)
+ {
+-    env->mepc = val;
++    env->mepc = val & get_xepc_mask(env);
+     return RISCV_EXCP_NONE;
+ }
  
-     /*
+@@ -4169,14 +4169,14 @@ static RISCVException write_sscratch(CPURISCVState *env, int csrno,
+ static RISCVException read_sepc(CPURISCVState *env, int csrno,
+                                 target_ulong *val)
+ {
+-    *val = env->sepc;
++    *val = env->sepc & get_xepc_mask(env);
+     return RISCV_EXCP_NONE;
+ }
+ 
+ static RISCVException write_sepc(CPURISCVState *env, int csrno,
+                                  target_ulong val, uintptr_t ra)
+ {
+-    env->sepc = val;
++    env->sepc = val & get_xepc_mask(env);
+     return RISCV_EXCP_NONE;
+ }
+ 
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 557807ba4b..15460bf84b 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -280,7 +280,7 @@ target_ulong helper_sret(CPURISCVState *env)
+         riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
+     }
+ 
+-    target_ulong retpc = env->sepc;
++    target_ulong retpc = env->sepc & get_xepc_mask(env);
+     if (!riscv_cpu_allow_16bit_insn(&env_archcpu(env)->cfg,
+                                     env->priv_ver,
+                                     env->misa_ext) && (retpc & 0x3)) {
+@@ -391,7 +391,7 @@ static target_ulong ssdbltrp_mxret(CPURISCVState *env, target_ulong mstatus,
+ 
+ target_ulong helper_mret(CPURISCVState *env)
+ {
+-    target_ulong retpc = env->mepc;
++    target_ulong retpc = env->mepc & get_xepc_mask(env);
+     uint64_t mstatus = env->mstatus;
+     target_ulong prev_priv = get_field(mstatus, MSTATUS_MPP);
+ 
 -- 
 2.50.0
 
