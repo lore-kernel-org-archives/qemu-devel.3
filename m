@@ -4,69 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E40CAC83030
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 06:33:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B8C8C83030
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 06:39:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXZyb-0006Gi-QI; Fri, 04 Jul 2025 02:32:49 -0400
+	id 1uXa4F-0007Wz-S1; Fri, 04 Jul 2025 02:38:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uXZyZ-0006GF-UM
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 02:32:47 -0400
-Received: from mgamail.intel.com ([198.175.65.12])
+ id 1uXa4C-0007Wb-GA
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 02:38:36 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uXZyW-0000R3-T1
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 02:32:47 -0400
+ id 1uXa49-0006TJ-KA
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 02:38:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751610765; x=1783146765;
+ t=1751611114; x=1783147114;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=Qw6bzewriL21oMuleRkiEa31G7c8ozNNgkYXmj82q0g=;
- b=kmPrTZcfijE75IaTN+vl8gOYJ+zavOLjm9Dg2auW6xNs0LMlks2vkZ1e
- fltsLiHT86F+RO9S7u3g242+Dq0hQzlzoLy+voVwlY/I6aSIUZTASNKeL
- oNu7YCPfagBOuHSaRleX/g+62OEp6n/bDlTbcqxX+EKvuPjNiSXBA07o6
- ch+jnnT2f6wnXaSGpA/cHyGKYjOxD17PDidSIGHNEZBC3YCJPUd7Gbd3d
- 5cB5Dj5VS0//ayeBwhDWilWvYTt9zPwwItoFHUwvZNgL+E1tvjT1uSdz5
- jNLNJQjwI5PclcWlyrbEBt/OIUNQiatKlG9LaXvqI4bNdxLjYPQlXtSCl w==;
-X-CSE-ConnectionGUID: B/hPq0m1SgukVMQlPU5A+g==
-X-CSE-MsgGUID: oRKV2+TQRJSlLutGSebBoA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="65393175"
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="65393175"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2025 23:32:42 -0700
-X-CSE-ConnectionGUID: /39/9IWiSxaT/z45FOFIxA==
-X-CSE-MsgGUID: JPc6KZViSWiMz/74tFJIHQ==
+ bh=bt+MTwmO3BdtCKtgNnE3EHY/qUg+x29ETWPNNozM6Uk=;
+ b=BuQYBHittyXwoMXDDxFtnR2vrAiPcTA/OhKTbP/MZ8WAv4S3N5RTlEru
+ Xn9R9q6NGk5NvSYIO4XjhuC4YbcG7mkXvBFKIQlDy0KknMXWRkxsbgOrY
+ DVl4kGItOdmBwWbwp/+Kh8yFsl4Py8naQE9e5Vy6DF5xPLXDGVfP7T3SA
+ ShH8WonlPF1g8t/5QIDoEj10mhKMtJxu+0hgPvX2ZD912Gvlv9xCXcDc+
+ T3o2iqtalB3vBT0THX2GoIR5YplQfgdlN9umo4y6Wq4tqNTMj4x5SsTFg
+ 1jRdUvkJKufXLiPJwzlSGiSFC/m4dCpXLkwFh7v/hMvJ6n19iLeCH6NbT Q==;
+X-CSE-ConnectionGUID: kOfTMbdAQlGWYlje6ddEfg==
+X-CSE-MsgGUID: iBcJ/OFiS9usvpNptXlJ4A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="53868366"
+X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="53868366"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jul 2025 23:38:30 -0700
+X-CSE-ConnectionGUID: YnxIqBSgSI+gHjnXHTDRRA==
+X-CSE-MsgGUID: sJO6J26bS56wxee9BAsRiw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="158601471"
+X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="159118769"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
  ([10.124.247.1])
- by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2025 23:32:38 -0700
-Message-ID: <81e3775f-88b1-4cdc-981a-f5ffcc3c7c28@intel.com>
-Date: Fri, 4 Jul 2025 14:32:36 +0800
+ by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jul 2025 23:38:24 -0700
+Message-ID: <e8d0edca-f79c-4d6c-b1a3-69ad506bf470@intel.com>
+Date: Fri, 4 Jul 2025 14:38:20 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 27/39] accel: Pass old/new interrupt mask to
- handle_interrupt() handler
+Subject: Re: [PATCH v6 28/39] accel: Expose and register
+ generic_handle_interrupt()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Mads Ynddal <mads@ynddal.dk>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Reinoud Zandijk <reinoud@netbsd.org>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>, kvm@vger.kernel.org,
+ xen-devel@lists.xenproject.org
 References: <20250703173248.44995-1-philmd@linaro.org>
- <20250703173248.44995-28-philmd@linaro.org>
+ <20250703173248.44995-29-philmd@linaro.org>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250703173248.44995-28-philmd@linaro.org>
+In-Reply-To: <20250703173248.44995-29-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=xiaoyao.li@intel.com;
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -92,92 +101,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/4/2025 1:32 AM, Philippe Mathieu-Daudé wrote:
-> Update CPUState::interrupt_request once in cpu_interrupt().
-> Pass the old and new masks along.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   accel/tcg/tcg-accel-ops-icount.h |  2 +-
->   accel/tcg/tcg-accel-ops.h        |  2 +-
->   include/system/accel-ops.h       |  2 +-
->   accel/tcg/tcg-accel-ops-icount.c |  8 +++-----
->   accel/tcg/tcg-accel-ops.c        |  4 +---
->   system/cpus.c                    | 12 +++++++-----
->   6 files changed, 14 insertions(+), 16 deletions(-)
-> 
-> diff --git a/accel/tcg/tcg-accel-ops-icount.h b/accel/tcg/tcg-accel-ops-icount.h
-> index 16a301b6dc0..1d9d66f0707 100644
-> --- a/accel/tcg/tcg-accel-ops-icount.h
-> +++ b/accel/tcg/tcg-accel-ops-icount.h
-> @@ -15,6 +15,6 @@ void icount_prepare_for_run(CPUState *cpu, int64_t cpu_budget);
->   int64_t icount_percpu_budget(int cpu_count);
->   void icount_process_data(CPUState *cpu);
->   
-> -void icount_handle_interrupt(CPUState *cpu, int mask);
-> +void icount_handle_interrupt(CPUState *cpu, int old_mask, int new_mask);
->   
->   #endif /* TCG_ACCEL_OPS_ICOUNT_H */
-> diff --git a/accel/tcg/tcg-accel-ops.h b/accel/tcg/tcg-accel-ops.h
-> index 6feeb3f3e9b..6e7c2aae5a8 100644
-> --- a/accel/tcg/tcg-accel-ops.h
-> +++ b/accel/tcg/tcg-accel-ops.h
-> @@ -16,7 +16,7 @@
->   
->   void tcg_cpu_destroy(CPUState *cpu);
->   int tcg_cpu_exec(CPUState *cpu);
-> -void tcg_handle_interrupt(CPUState *cpu, int mask);
-> +void tcg_handle_interrupt(CPUState *cpu, int old_mask, int new_mask);
->   void tcg_cpu_init_cflags(CPUState *cpu, bool parallel);
->   
->   #endif /* TCG_ACCEL_OPS_H */
-> diff --git a/include/system/accel-ops.h b/include/system/accel-ops.h
-> index 2075691331c..d84eaa376c2 100644
-> --- a/include/system/accel-ops.h
-> +++ b/include/system/accel-ops.h
-> @@ -61,7 +61,7 @@ struct AccelOpsClass {
->       void (*synchronize_pre_loadvm)(CPUState *cpu);
->       void (*synchronize_pre_resume)(bool step_pending);
->   
-> -    void (*handle_interrupt)(CPUState *cpu, int mask);
-> +    void (*handle_interrupt)(CPUState *cpu, int old_mask, int new_mask);
->   
->       /**
->        * @get_virtual_clock: fetch virtual clock
-> diff --git a/accel/tcg/tcg-accel-ops-icount.c b/accel/tcg/tcg-accel-ops-icount.c
-> index d0f7b410fab..500b5dd4942 100644
-> --- a/accel/tcg/tcg-accel-ops-icount.c
-> +++ b/accel/tcg/tcg-accel-ops-icount.c
-> @@ -147,14 +147,12 @@ void icount_process_data(CPUState *cpu)
->       replay_mutex_unlock();
->   }
->   
-> -void icount_handle_interrupt(CPUState *cpu, int mask)
-> +void icount_handle_interrupt(CPUState *cpu, int old_mask, int new_mask)
->   {
-> -    int old_mask = cpu->interrupt_request;
-> -
-> -    tcg_handle_interrupt(cpu, mask);
-> +    tcg_handle_interrupt(cpu, old_mask, new_mask);
->       if (qemu_cpu_is_self(cpu) &&
->           !cpu->neg.can_do_io
-> -        && (mask & ~old_mask) != 0) {
-> +        && (new_mask & ~old_mask) != 0) {
+> In order to dispatch over AccelOpsClass::handle_interrupt(),
+> we need it always defined, 
 
-This patch changes the behavior,
+It seems I can only understand it until I see the code to really require 
+it to be mandatory.
 
-Assume the @mask is the value passed to cpu_interrupt()
+But anyway, the change itself is correct.
 
-- before this patch:
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
-	(mask & ~old_mask) is
-
-	(@mask & ~cpu->interrupt_request)
-
-- after this patch:
-
-	(new_mask & ~old_mask) is
-
-	((@mask | cpu->interrupt_request) & ~cpu->interrupt_request)
-
+> not calling a hidden handler under
+> the hood. Make AccelOpsClass::handle_interrupt() mandatory.
+> Expose generic_handle_interrupt() prototype and register it
+> for each accelerator.
 
