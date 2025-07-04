@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3173C83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 11:15:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28150C83F05
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 11:16:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXeLu-00026J-GS; Fri, 04 Jul 2025 07:13:10 -0400
+	id 1uXeNJ-0005RU-F9; Fri, 04 Jul 2025 07:14:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uXeLa-0001qK-R6; Fri, 04 Jul 2025 07:12:51 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1uXeMB-0002jy-LD
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:13:38 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uXeLZ-0002cq-1F; Fri, 04 Jul 2025 07:12:50 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-236192f8770so5821835ad.0; 
- Fri, 04 Jul 2025 04:12:46 -0700 (PDT)
+ id 1uXeM7-0003YB-VE
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:13:27 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-235ef62066eso13493135ad.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 04:13:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751627565; x=1752232365; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1751627602; x=1752232402; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s6UGTgPYir33A0rgIBH+C4iVYyQtEZW7GZky2on9WjU=;
- b=QjYJCxhtVICYs5lG54LZAopHkXNbhHAOwVpfek4dMj3rwgo5nWxIaK9T8GQWX2wBfd
- 2Of1BDi5+Muw7leP/WcejQJlCa0uYwZms5ASvS/WYAqgDVIHbjIz6ijrSs6c7PN0QYhk
- SJ5MG/0Fi+tQHm3Ny6+AYm6R2lqDi1+3MpkFFtu8/sOOst4JibLo4/KEh0uLMqVi//4D
- uP5ABFRFRtR0m+GQZ7LbRIEySMad5vTOEjv3LN2rHjnRuEtPgBC2uCeZeNZwjDh527gq
- I6HVKsgnbWQmJnoT+ga4oFQntt8Y5hlFdUCmwTbNorV9XtuDdVuqRbP9v4cyoTdlBESz
- riOQ==
+ bh=4wVtmKRoiqYUXx5KXTyHSEPgvf3O8R5eArt39DWc1Ag=;
+ b=eF5z5D+Uwgf8W+/3w/O2jJMHiqKRD2d3inmxAMHWwFUw0L2nZuB6+Co2AK+zPB4nVV
+ 3qOuNkKx4DjA+N4TNFusocExKyE1RyM7yhZcgaXlJHOPOGseTttOzdVYxweKi/IKlmyX
+ HFZs6OX3gCXODltks62Axm65rrjh5BxNwWjHWALuwNicHQmyf/C6zHAU9LoH1F/hKJBR
+ KQLhFLrV/KGFgoHAfTMbPprzZv0RA8Rd7xL+I3h9wfxoa8LWvqhusJvytYagInwgG6oj
+ MY+f1qwGfyK7syTVtVFKwRISjj54KtJxmkn3SJlpsTX0yWfWf7iVZcBElmQpRkd1K+79
+ G0ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751627565; x=1752232365;
+ d=1e100.net; s=20230601; t=1751627602; x=1752232402;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s6UGTgPYir33A0rgIBH+C4iVYyQtEZW7GZky2on9WjU=;
- b=P8UOpSl3TGRltn2Kf3u6BZ8rA5s24Bht24ohoyAtchvVKfF8UIAPfObVA1PPT3Y98x
- P78BwOJg84UnN0u9q1iDqIRChL5sFZDXHI9Yp07BLQ9XM1kISeam4edzLhOvwP/5s4Yq
- lbEiQ+WlwneAikHOB/MOdPYkVLi3sat69wrAZUVrxWA46ai4ZsZnEskjHspCurBqmRn4
- ADbY0TVmtlv8GMvzMPn8HsFjIGNzVyCvCDXI/2J1I/kgLZwXmBe3pk2s7K8OMYHcpYTY
- KVbCE/3g/aAMcbf/n8dYQRjHORW9MSIMvmWm8QhT7eSMXb5AEw/hmQhDhncNlUhNfp5W
- 5dCg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWKImpDQ6trDm3joNWynfe5HfSahSVOq9QF6rWxd/XlbQRSIB5xIj5ZHzVSEmaMjv/jbP3SW6G1omPwv9M=@nongnu.org
-X-Gm-Message-State: AOJu0YxtPZ6UiqJkorukaW6GxalUs9SRqz24XK6VQ9mu1vTvMgTpJEUy
- I8Qm18bY9WH/6Yf4z+slF8+U0gjwgKkuFVuJDxjTCxbDBNopTqpgBOnJDZxopA==
-X-Gm-Gg: ASbGnculzt6hglV4yzIJqpskNE+LSy0QxGP6w4iCjXUAhQ2PjqgLY/JH6O6t5cJnV03
- HSxIIzlcbkDOkgt4qwgGU0gpwA1jts/leUlee2DZEe48x0mDk67rPAWORPXK1otsdOPGjMzZ/4q
- uEJZHvHeixzsggi60AktH6ciJfUNbe1AlABjByIbneTHbROk2nSCToEZidZ0EHabfpjPjTwpFNl
- v0u2hey3/9W2oT56DEp6ZyRYa4EFdhNfOqnHsBRtNr7apexbNMpjaX404uXJaQQviMZK5/WWNNo
- KKra0sTU1ewaJLf5AEw0eX28HFTrC5YLbmK5mg2TBS3gJbe7KbexR2TVJb94JYjZABw1KCU9i5w
- 9RKOPosPts/wNOAan+9jNDSSoKQ7KQKx/qG7RMJWEe4UxzWwF2RByoHaEQh34Zi/dibE=
-X-Google-Smtp-Source: AGHT+IHs6p+BA2JJOIcVeEjWoz6p3TD+YAHGkfDpP0BUEy1TbBBo1sAF1L2jkKy+hDijgRZjyK22TA==
-X-Received: by 2002:a17:903:11c8:b0:234:11e2:f41 with SMTP id
- d9443c01a7336-23c84ad0d7cmr39714455ad.6.1751627564972; 
- Fri, 04 Jul 2025 04:12:44 -0700 (PDT)
+ bh=4wVtmKRoiqYUXx5KXTyHSEPgvf3O8R5eArt39DWc1Ag=;
+ b=taOQL6A6KUkXSKcizjo/0nWvTx369VBh5oICMHfN/YK63BI8BW0idYcjWnrC/M33ch
+ 02cqqnCUbSgcn/xmCXnEAENvfG2gz++HxYNU7aoX3C7XfeX/BGLNyykwSZdnM7wayIJk
+ EtRvjyxd3c7w6lkUzIYPBbHa9NaZcIOkHtEdQUKj4C5XAfnFjQAaciNTm++a9MN+IlOx
+ 98qVd8ep2RqVWprhLcBpwYK1nDsne2JB1Ho3dZsWJ5PqjoZJ4uG6OGLl+bb1H51HExYL
+ cYqM1DHJIXehMYPSc34gSq91BIr8ycyiChea7z+bi7YOUWwFpU3d49/CtNuqe898K2eX
+ uTaQ==
+X-Gm-Message-State: AOJu0YzCxO0qo3otFvwLg9jnanAGWPo4GiKkbGOrEdaiiTet8b529ue/
+ cRFvKjr0vSBhOgBZGczouJE5tpjdPXnYEzXKZ70GBJy/vxeNeaKh2NZdE7f/FA==
+X-Gm-Gg: ASbGncvSF6WxjqhACjTVZsvQyvz4Ka2diE4TsqnKtJOLY39NwbcnHwMwgKz0zkrZSDe
+ OhWDFzqY3v6Czi3eqf8vo18IAzkZRETS2cRvlShN1lRz63Y91HQX5UxQ9EO2i9wxBo+FHmWHvQH
+ gsdqa2etrH1Yw1bvmCL+XroKAmftsTrSWDXiq50RZYmZWGB+pTTr4MwUo4P/dLHts7c+wifV/AL
+ Gri+67CKPTZtsiPxFOxXg3DWKG9fZnuBgQ7nziD/8iolR7WXqpM0q9yTM/aWk0fu0qDWciffrEj
+ BKJ82seLGFy/21XG2XLp6tOs+9gKjyCYCfO0kBpqcBSAwdZgUnmg75jBuUF+tVKJOZknXpM/VEM
+ ONNuSYEtpycmQ2gI7pVif6FYu5bhBT5vmUwJ5xkZPnfACO0Y9MV0seNzUWUGCfJE2tak=
+X-Google-Smtp-Source: AGHT+IGO69hgrMc8dt3YwIvRSu+9xL3eHDPga1I+5gmPhECX3viFJOgBjLgX/FyOpZKZkfEF88XEhQ==
+X-Received: by 2002:a17:902:ecc8:b0:235:caa8:1a72 with SMTP id
+ d9443c01a7336-23c860d3c4bmr33062415ad.30.1751627601777; 
+ Fri, 04 Jul 2025 04:13:21 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23c8431a206sm18002655ad.28.2025.07.04.04.12.42
+ d9443c01a7336-23c8431a206sm18002655ad.28.2025.07.04.04.13.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 04:12:44 -0700 (PDT)
+ Fri, 04 Jul 2025 04:13:21 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- qemu-trivial@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 05/40] target/riscv/cpu.c: fix zama16b order in isa_edata_arr[]
-Date: Fri,  4 Jul 2025 21:11:32 +1000
-Message-ID: <20250704111207.591994-6-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Nutty Liu <liujingqi@lanxincomputing.com>,
+ Tomasz Jeznach <tjeznach@rivosinc.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 17/40] hw/riscv/riscv-iommu: Fix PPN field of
+ Translation-reponse register
+Date: Fri,  4 Jul 2025 21:11:44 +1000
+Message-ID: <20250704111207.591994-18-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250704111207.591994-1-alistair.francis@wdc.com>
 References: <20250704111207.591994-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,34 +106,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Nutty Liu <liujingqi@lanxincomputing.com>
 
-Put it after zalrsc and before zawrs.
+The original implementation incorrectly performed a bitwise AND
+operation between the PPN of iova and PPN Mask, leading to an
+incorrect PPN field in Translation-reponse register.
 
-Cc: qemu-trivial@nongnu.org
-Fixes: a60ce58fd9 ("target/riscv: Support Zama16b extension")
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250522113344.823294-1-dbarboza@ventanamicro.com>
+The PPN of iova should be set entirely in the PPN field of
+Translation-reponse register.
+
+Also remove the code that was used to clear S field since this
+field is already zero.
+
+Signed-off-by: Nutty Liu <liujingqi@lanxincomputing.com>
+Reviewed-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+Message-ID: <20250605124848.1248-1-liujingqi@lanxincomputing.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/riscv/riscv-iommu.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 629ac37501..fe21e0fb44 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -127,8 +127,8 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(zaamo, PRIV_VERSION_1_12_0, ext_zaamo),
-     ISA_EXT_DATA_ENTRY(zabha, PRIV_VERSION_1_13_0, ext_zabha),
-     ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
--    ISA_EXT_DATA_ENTRY(zama16b, PRIV_VERSION_1_13_0, ext_zama16b),
-     ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
-+    ISA_EXT_DATA_ENTRY(zama16b, PRIV_VERSION_1_13_0, ext_zama16b),
-     ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
-     ISA_EXT_DATA_ENTRY(zfa, PRIV_VERSION_1_12_0, ext_zfa),
-     ISA_EXT_DATA_ENTRY(zfbfmin, PRIV_VERSION_1_12_0, ext_zfbfmin),
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index a877e5da84..d8b1cb03a8 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -1935,11 +1935,7 @@ static void riscv_iommu_process_dbg(RISCVIOMMUState *s)
+             iova = RISCV_IOMMU_TR_RESPONSE_FAULT | (((uint64_t) fault) << 10);
+         } else {
+             iova = iotlb.translated_addr & ~iotlb.addr_mask;
+-            iova >>= TARGET_PAGE_BITS;
+-            iova &= RISCV_IOMMU_TR_RESPONSE_PPN;
+-
+-            /* We do not support superpages (> 4kbs) for now */
+-            iova &= ~RISCV_IOMMU_TR_RESPONSE_S;
++            iova = set_field(0, RISCV_IOMMU_TR_RESPONSE_PPN, PPN_DOWN(iova));
+         }
+         riscv_iommu_reg_set64(s, RISCV_IOMMU_REG_TR_RESPONSE, iova);
+     }
 -- 
 2.50.0
 
