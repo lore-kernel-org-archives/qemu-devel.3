@@ -4,83 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78BAAC8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 12:20:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A0F3C83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 12:22:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXfO1-0003Mj-12; Fri, 04 Jul 2025 08:19:27 -0400
+	id 1uXfQz-0004Xq-Tm; Fri, 04 Jul 2025 08:22:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uXfNm-0003Kw-83
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 08:19:10 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uXfNh-0003kM-S5
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 08:19:07 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-60c6fea6742so1778699a12.1
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 05:19:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751631542; x=1752236342; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oJfIR9UWsxS+bqd1tEuMyoRls3ClDB7lB9jYjN8f+ck=;
- b=NbvGuKaXdGy6vlJHqB6R0hTyaasE8TtBELA7NnrvTKyy0D8IDggmPqeglUozoMNPAR
- V1FWeWflNZUsgC/2J5YVCugIGVz3nQaszy5JT0nGA09poZ7RnaD5aAc3UVZzCyo52tQa
- Dt8YOojiExWS3nyVz0xPol3dIuHNR9ssZc9TZzxARFcTY5NN5QDbXbSq5DqMlhZ3kKzI
- 2N0sNa16RO6bI2rZ1B0I/IBjEDSciZy9HgWuvO2Q+GnCgb1vyhP1KadQ1Jz1dZ27MWOU
- 8rcZqQoLcUo3OIsWEDJPIOjUJwdp6n0MwsZaYJX0LGnpuj7wBBtvd5QHBrjc78cmBOy3
- dxSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751631542; x=1752236342;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oJfIR9UWsxS+bqd1tEuMyoRls3ClDB7lB9jYjN8f+ck=;
- b=HzxE72Yq+FuAmDqTJLlg0YnhZKjSmND2ybbYntlIsr7PuxBUi9rDpOIJrNCw8ZtjQB
- E8ESihA89eI49eOpFQyEMCsHnj2gv0e0r7WA2Av3D8AWcq+2h8jj7ce6+nIJorBTSNiR
- fqPovGbaIpCqg2Z1iKDB25Om7srnl5Xtsnd8MY+ObO5Lb2pQGftlOY1qik7iDGYLTAQl
- +RTn2vzlPGiN76GcPitkxHqGZgWkM3Zz+3YesTaPqcYCTLlMNLVJdXgxM4TXrR9hn7Br
- vi271iif4Hx+Dd5NnKT/12U1KXxB1YZT2XcX7hjafOF3jxXoAvsGNhmE9eB/2K83H7wS
- hg2Q==
-X-Gm-Message-State: AOJu0YxyF3RyMgAiw+cT57SvjMGXt+ba04pklQeSWxVrawG5Qh+emSsr
- hC9l+1zDpf6wg7ly9UhdgFTHgQRvUfNVWKwN6Zkt4j3JuS3/CJtfBc2SBO0u8wpm2SiexuYf5Ag
- 4bb0N4uSxFbH3TD2cLtDHGa3nfjm5v/vXp3u3L7aIMOag9J18lOts+gfIKQ==
-X-Gm-Gg: ASbGnct3oo2i7WjuR/OysnEEcQJ4LTXSAI+rPwQ8CzsMYZNBianpo6z2IMo3kvallF7
- uByfI4atBNRLOiUJk4C8Yj2JCH3z60dwuuV5fiiWVgDqcd7HsPkBfwWhFhiSWtAoc/Uf9urqU9+
- NHZVCDva83KfsicdKOVeUEoTqF+b7tB9ZULC1YPt0Kd8k=
-X-Google-Smtp-Source: AGHT+IG9gO9hDSEDs9TdXGLVglUNhefZJCU/vSM31F8AZB4cRpN4KdvlB5Qzcbu7EihJSWszmFisKItdNp/FO9jht3A=
-X-Received: by 2002:a17:907:d94:b0:ad8:a329:b490 with SMTP id
- a640c23a62f3a-ae3fbc56cbamr223334666b.23.1751631542216; Fri, 04 Jul 2025
- 05:19:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uXfQv-0004XI-Bf
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 08:22:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uXfQp-00073T-3C
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 08:22:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751631735;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=bHwQemYNBv8V2Zk5S3Q689F/PckNzKTmczPjCZFYp7w=;
+ b=eVhytWfUW//8n/Q+vKS4zOnTi1376AM42VOnIw5FsgqK9nOWehjed/CQiypqoEJt4RHH/E
+ agxXqAras8NRuB2mObn2vRQ1vMzHI++jnncErGrR+FRRgkztBEANdbpOCVuHntv4xsst9S
+ ydPmxE0GdLqoDZPb3hAbme55oADDdxM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-65-iwqBnigRPkSKNpbAULvuDA-1; Fri,
+ 04 Jul 2025 08:22:11 -0400
+X-MC-Unique: iwqBnigRPkSKNpbAULvuDA-1
+X-Mimecast-MFC-AGG-ID: iwqBnigRPkSKNpbAULvuDA_1751631730
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7DD9818011DF; Fri,  4 Jul 2025 12:22:10 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.10])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 94B331944CCC; Fri,  4 Jul 2025 12:22:09 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id DF01821E6A27; Fri, 04 Jul 2025 14:22:06 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org,  John Snow <jsnow@redhat.com>,  Cleber Rosa
+ <crosa@redhat.com>,  Eric Blake <eblake@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  "Daniel P. Berrange" <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,  Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Peter Krempa <pkrempa@redhat.com>, devel@lists.libvirt.org
+Subject: Re: [PATCH V2 1/5] qom: qom-tree-get
+In-Reply-To: <1747057635-124298-2-git-send-email-steven.sistare@oracle.com>
+ (Steve Sistare's message of "Mon, 12 May 2025 06:47:11 -0700")
+References: <1747057635-124298-1-git-send-email-steven.sistare@oracle.com>
+ <1747057635-124298-2-git-send-email-steven.sistare@oracle.com>
+Date: Fri, 04 Jul 2025 14:22:06 +0200
+Message-ID: <877c0ono29.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20250704-rust_add_derive_macro_unit_tests-v1-0-ebd47fa7f78f@linaro.org>
- <aGfKqbywpiZEUr37@intel.com>
-In-Reply-To: <aGfKqbywpiZEUr37@intel.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Fri, 4 Jul 2025 15:18:18 +0300
-X-Gm-Features: Ac12FXwJFj4tmBXIKE-Le9yl85wKgJs-a03DIJc5x9ddVZvMRDKl8DF45VekluM
-Message-ID: <CAAjaMXbcMUmdUFMYfiZsygjhrmzKWqBWhdtBwwtt2JgvnrxoKg@mail.gmail.com>
-Subject: Re: [PATCH 0/2] rust: add Derive macro unit tests
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.218, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,44 +90,269 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 4, 2025 at 3:14=E2=80=AFPM Zhao Liu <zhao1.liu@intel.com> wrote=
-:
+Steve Sistare <steven.sistare@oracle.com> writes:
+
+> Define the qom-tree-get QAPI command, which fetches an entire tree of
+> properties and values with a single QAPI call.  This is much faster
+> than using qom-list plus qom-get for every node and property of the
+> tree.  See qom.json for details.
 >
-> > You can run the added tests directly with this meson command:
-> >
-> >   meson test rust-qemu-api-macros-tests
->
-> Hi Manos, do you meet this error:
->
-> Traceback (most recent call last):
->   File "/usr/lib/python3/dist-packages/mesonbuild/mesonmain.py", line 146=
-, in run
->     return options.run_func(options)
->   File "/usr/lib/python3/dist-packages/mesonbuild/mtest.py", line 2004, i=
-n run
->     b =3D build.load(options.wd)
->   File "/usr/lib/python3/dist-packages/mesonbuild/build.py", line 2868, i=
-n load
->     obj =3D pickle.load(f)
-> ModuleNotFoundError: No module named 'mesonbuild.options'
->
-> ERROR: Unhandled python exception
->
->     This is a Meson bug and should be reported!
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 > ---
+>  qapi/qom.json      | 56 ++++++++++++++++++++++++++++++++++++++++++
+>  qom/qom-qmp-cmds.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 128 insertions(+)
 >
-> But I've tested this series via `make check`.
->
->
->
->
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 28ce24c..94662ad 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -46,6 +46,38 @@
+>              '*default-value': 'any' } }
+>  
+>  ##
+> +# @ObjectPropertyValue:
+> +#
+> +# @name: the name of the property
+> +#
+> +# @type: the type of the property, as described in @ObjectPropertyInfo
 
-Sounds like it used your global meson installation instead of the one
-from the virtual environment of your build directory.
+That description is crap.  In part because what it tries to describe is
+crap.  Neither is this patch's problem.
 
-Thank you for testing!
+> +#
+> +# @value: the value of the property.  Omitted if cannot be read.
 
---=20
-Manos Pitsidianakis
-Emulation and Virtualization Engineer at Linaro Ltd
+Suggest "Absent when the property cannot be read."
+
+> +#
+> +# Since 10.1
+> +##
+> +{ 'struct': 'ObjectPropertyValue',
+> +  'data': { 'name': 'str',
+> +            'type': 'str',
+> +            '*value': 'any' } }
+
+ObjectPropertyValue suggests this describes a property's value.  It does
+not.  It includes the name, i.e. it describes the *property*.
+
+So does ObjectPropertyInfo.
+
+The two overlap: both habe name and type.  Only ObjectPropertyValue has
+the current value.  Only ObjectPropertyInfo has the default value and
+description (I suspect the latter is useless in practice).
+
+ObjectPropertyInfo is used with qom-list and qom-list-properties.
+
+qom-list takes a QOM path, like your qom-tree-get and qom-list-getv.
+I'd expect your commands to supersede qom-list in practice.
+
+qom-list-properties is unlike your qom-tree-get and qom-list-getv: it
+takes a type name.  It's unreliable for non-abstract types: it can miss
+dynamically created properties.
+
+Let's ignore all this for now.
+
+> +
+> +##
+> +# @ObjectNode:
+> +#
+> +# @name: the name of the node
+> +#
+> +# @children: child nodes
+> +#
+> +# @properties: properties of the node
+> +#
+> +# Since 10.1
+> +##
+> +{ 'struct': 'ObjectNode',
+> +  'data': { 'name': 'str',
+> +            'children': [ 'ObjectNode' ],
+> +            'properties': [ 'ObjectPropertyValue' ] }}
+> +
+> +##
+>  # @qom-list:
+>  #
+>  # This command will list any properties of a object given a path in
+> @@ -126,6 +158,30 @@
+>    'allow-preconfig': true }
+>  
+>  ##
+> +# @qom-tree-get:
+> +#
+> +# This command returns a tree of objects and their properties,
+> +# rooted at the specified path.
+> +#
+> +# @path: The absolute or partial path within the object model, as
+> +#     described in @qom-get
+> +#
+> +# Errors:
+> +#     - If path is not valid or is ambiguous, returns an error.
+
+By convention, we use "If <condition>, <error>, where <error> is a
+member of QapiErrorClass.
+
+What are the possible error classes?  As far as I can tell:
+
+         - If path is ambiguous, GenericError
+         - If path cannot be resolved, DeviceNotFound
+
+However, use of error classes other than GenericError is strongly
+discouraged (see error_set() in qapi/error.h).
+
+Is the ability to distinguish between these two errors useful?
+
+Existing related commands such as qom-get also use DeviceNotFound.
+Entirely undocumented, exact error conditions unclear.  Awesome.
+
+Libvirt seems to rely on this undocumented behavior: I can see code
+checking for DeviceNotFound.  Hyrum's law strikes.
+
+qom-get fails with DeviceNotFound in both of the above cases.  It fails
+with GenericError when @property doesn't exist or cannot be read.  Your
+qom-tree-get fails differently.  Awesome again.
+
+Choices:
+
+1. Leave errors undocumented and inconsistent.
+
+2. Document errors for all related commands.  Make the new ones as
+consistent as we can.
+
+> +#     - If a property cannot be read, the value field is omitted in
+> +#       the corresponding @ObjectPropertyValue.
+
+This is not an error, and therefore doesn't belong here.
+ObjectPropertyValue's documentation also mentions it.  Good enough?
+
+> +#
+> +# Returns: A tree of @ObjectNode.  Each node contains its name, list
+> +#     of properties, and list of child nodes.
+
+Hmm.
+
+A struct Object has no name.  Only properties have a name.
+
+An ObjectNode has a name, and an ObjectPropertyValue has a name.
+
+I may get back to this in a later message.
+
+> +#
+> +# Since 10.1
+> +##
+> +{ 'command': 'qom-tree-get',
+> +  'data': { 'path': 'str' },
+> +  'returns': 'ObjectNode',
+> +  'allow-preconfig': true }
+> +
+> +##
+>  # @qom-set:
+>  #
+>  # This command will set a property from a object model path.
+> diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
+> index 293755f..b876681 100644
+> --- a/qom/qom-qmp-cmds.c
+> +++ b/qom/qom-qmp-cmds.c
+> @@ -69,6 +69,78 @@ ObjectPropertyInfoList *qmp_qom_list(const char *path, Error **errp)
+>      return props;
+>  }
+>  
+> +static void qom_list_add_property_value(Object *obj, ObjectProperty *prop,
+> +                                        ObjectPropertyValueList **props)
+> +{
+> +    ObjectPropertyValue *item = g_new0(ObjectPropertyValue, 1);
+> +    Error *err = NULL;
+> +
+> +    QAPI_LIST_PREPEND(*props, item);
+
+List elements are in reverse iteration order.  Not wrong.  I would've
+reached for QAPI_LIST_APPEND(), though.
+
+Wait!  Existing command code uses QAPI_LIST_PREPEND().  Nevermind, carry
+on!
+
+> +
+> +    item->name = g_strdup(prop->name);
+> +    item->type = g_strdup(prop->type);
+> +    item->value = object_property_get_qobject(obj, prop->name, &err);
+> +
+> +    if (!item->value) {
+> +        /*
+> +         * For bulk get, the error message is dropped, but the value field
+> +         * is omitted so the caller knows this property could not be read.
+> +         */
+> +        error_free(err);
+
+Simpler: pass NULL to object_property_get_qobject().
+
+> +    }
+> +}
+> +
+> +static ObjectNode *qom_tree_get(const char *path, Error **errp)
+> +{
+> +    Object *obj;
+> +    ObjectProperty *prop;
+> +    ObjectNode *result, *child;
+> +    ObjectPropertyIterator iter;
+> +
+> +    obj = qom_resolve_path(path, errp);
+> +    if (obj == NULL) {
+> +        return NULL;
+> +    }
+> +
+> +    result = g_new0(ObjectNode, 1);
+> +
+> +    object_property_iter_init(&iter, obj);
+> +    while ((prop = object_property_iter_next(&iter))) {
+> +        if (strstart(prop->type, "child<", NULL)) {
+> +            g_autofree char *child_path = g_strdup_printf("%s/%s",
+> +                                                          path, prop->name);
+> +            child = qom_tree_get(child_path, errp);
+> +            if (!child) {
+> +                qapi_free_ObjectNode(result);
+> +                return NULL;
+> +            }
+> +            child->name = g_strdup(prop->name);
+
+WAT?
+
+> +            QAPI_LIST_PREPEND(result->children, child);
+> +        } else {
+> +            qom_list_add_property_value(obj, prop, &result->properties);
+> +        }
+> +    }
+> +
+
+Oh, result->name remains unset, and the caller is expected to fill it
+in.  Two callers, "WAT" above, and ...
+
+> +    return result;
+> +}
+> +
+> +ObjectNode *qmp_qom_tree_get(const char *path, Error **errp)
+> +{
+> +    ObjectNode *result = qom_tree_get(path, errp);
+> +
+> +    if (result) {
+> +        /* Strip the path prefix if any */
+> +        const char *basename = strrchr(path, '/');
+> +
+> +        if (!basename || !basename[1]) {
+> +            result->name = g_strdup(path);
+> +        } else {
+> +            result->name = g_strdup(basename + 1);
+> +        }
+> +    }
+
+... this one.
+
+Not a fan.  But it works.
+
+> +    return result;
+> +}
+> +
+>  void qmp_qom_set(const char *path, const char *property, QObject *value,
+>                   Error **errp)
+>  {
+
 
