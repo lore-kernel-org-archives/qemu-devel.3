@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70B4FC83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 22:34:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CA33C83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 22:35:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXoxz-0001lX-8E; Fri, 04 Jul 2025 18:33:11 -0400
+	id 1uXoxz-0001lR-1E; Fri, 04 Jul 2025 18:33:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
- id 1uXoxd-0001fM-FM
+ id 1uXoxl-0001gT-9f
  for qemu-devel@nongnu.org; Fri, 04 Jul 2025 18:32:58 -0400
-Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
+Received: from mail-qt1-x834.google.com ([2607:f8b0:4864:20::834])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
- id 1uXoxX-00077p-Ps
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 18:32:47 -0400
-Received: by mail-qt1-x82e.google.com with SMTP id
- d75a77b69052e-4a77ea7ed49so32703971cf.0
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 15:32:42 -0700 (PDT)
+ id 1uXoxf-0007Dm-9R
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 18:32:56 -0400
+Received: by mail-qt1-x834.google.com with SMTP id
+ d75a77b69052e-4a585dc5f4aso17254921cf.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 15:32:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751668362; x=1752273162; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1751668369; x=1752273169; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nx+xC+J/lP71Qi4WUZDurONxg6YN8jBhmpt2oNrZWbI=;
- b=ke9tpbg8CYnk/Qj/9NcqTo0Sjo38von18BMNGSlkLWFkkkeh5mysWkBqtzQtWN19ei
- T539DZncRajSSI2UZZD3M9YS05u/1YFICj3B13u0wbUJwlW8kXkhURLlLhPePcpEkthM
- HB74ImD0udtGWw+/lIlvxMMI/YS9d/vt27pRPMQlxpjuHaYN3C43Cssi1mg/Zd5j72/m
- e+VvaKA78rlpa7A2oKfpcKmFihowWBM6A+umLTBHI+kNjjQOaE4TIL+08LCmOwNq3dRQ
- J3Otar1F9mSKoD+E/qcabmkldWLcJiy+LoV/8mfoR8eWsBj9MHjezbtHD6C5o0CCv58w
- WIEA==
+ bh=6E+EqxxfU5SNy6RouBOnTMgirqhhPAntczpBQffoP6Y=;
+ b=nFpvM3DcKzHyn7MLnLCN7jusH0cNYOGwVJvLOM0gZSrdSllK13L48r7rzIXwtZpw0o
+ BSLbrIlwIM5ObEfqUnEEDu2H2JPnaK+QzgEeM3O341qiLEbmsUuz0pbQEV/+Hw/IVZlF
+ nRHCyzaM2dbewxfmWoIrnVZAVVNMD1vozPetacx8RQ0pQy/6kHFI8cgMcdITA9/RDkjG
+ 9D6W0TO9TMvM1iUEQVPrRrLdgFQszLFeBIeWF3hV+lY+PooxrzIKr4JT/enwTbHXVoKn
+ X0GvVJo3MkDlu3aDYiUpnYpWCtNkL90xwd4R9Ad/SALLElHAOs4BPOt1Qjyl/LsZITqu
+ EY+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751668362; x=1752273162;
+ d=1e100.net; s=20230601; t=1751668369; x=1752273169;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nx+xC+J/lP71Qi4WUZDurONxg6YN8jBhmpt2oNrZWbI=;
- b=GUOkizL6YGEqBYNAd6e0KYDomwabpwhtQLULx+kLKDcwoU5NNBxo4w04LfiC0qk1Cr
- JkoyVsDf9IqM9BEhDINi6EetttKdstZqIUNQ7VJl0/lvYcSn5itd0FkGOJj5rM2q9LBh
- gRyNL3DoKwng1pnAlfNouGRJM9AAugDBxXb4Fe4zgTTkBe5aX8rgSnkAi1pOqquvnLFj
- NV8gw3wZ3Z53veMY7U5JDumVpyCQFnQKE+JgyUPcPS/V1rQ7y3TVWwRO+WER89FMC3MH
- 5nK8kkvNVzfqydBaZn4u+8ov1UtwNuG427i4f1WfihB6JY0TpM/d/gIanbsSbHBkSyGe
- 8kJg==
-X-Gm-Message-State: AOJu0YxQuT6LfzOjAYhXxC7xN9J8Sv2moT43pxGzDddlAdk9+v+Fx9RB
- tuVrIeQfdUwtVVk8ifdURdDh9I10daXaesmZhhgx0CcTwCGZf55nytO0x52SuQ==
-X-Gm-Gg: ASbGncsHxwYh4lQf2XLqRsfT3ojAl8opVu0dnpccv90FaMJAVjZDtnUfA/6/ZAnG1s4
- /pOSwqIzwrrKhvh/6OCDPdj4L0Qx4NfVTFNFkdodOXsC/tbS6hAJdef5otxdURv51Ym46UqwxIn
- KlASjvZXUkRJIip9zS68tKQajUVQ9XgAlJziAGfSOl5PixOoSPnVMqQlJF2xQAYGAv1DU48uE8U
- ai5u6kctdmx93VP9L1f3F6gcybsNgyjDUKZ5s7H8+jluVCdLEFrQ1lxP3jsg+deCwONrLmk3f2Q
- BIbbfIMbiHyxXfvNgGwdPwCjYOkD+Eux8XJjRzHiplhB8/V8B0HTqOSIERuFT7AMAzpbRSBmZ5z
- +A+TI4Rh7XmM77+o2
-X-Google-Smtp-Source: AGHT+IHjzLCvSMgJehRsY6Q+l+veoyifLgWrtg5Vdc6xHyqwj5DShTykX9hTMl4dPuLn2RDwLhLN2w==
-X-Received: by 2002:ac8:58d0:0:b0:4a9:91fa:7fe9 with SMTP id
- d75a77b69052e-4a9957d86dbmr71667311cf.22.1751668361656; 
- Fri, 04 Jul 2025 15:32:41 -0700 (PDT)
+ bh=6E+EqxxfU5SNy6RouBOnTMgirqhhPAntczpBQffoP6Y=;
+ b=ozo4nAmR4dOg0UcAtETANjS8hzo7Z7g1Xro4J/ub/5ux1S4EDJHzomcKfkbefrWZuF
+ WKJ7z/yYwWb6azei0S+UeXpvwFrTBFbQqLwvPTpSVo2Dbzhts6Sntv6LQ6BWTgHxSTBU
+ FHXBUd+Xj/W7xU/ZVg99hmD6f9hC1/ptU0o79VfZhSpzP6D30r+q0qfMCW0BMtwZQhOh
+ idrZIFLsKXsGs5KwV9OQDpsQaBBQ2Oj1NOKLWeaJoV9wiw3XzeTdLu1iSf5ZTeVHxQyD
+ xUy0fNqTEWEtL1zh8hA9I/bc/W6PHRKjA48BZ1lvwHfq0kEo8ixlCGldKe7xRFth/l1t
+ +X4A==
+X-Gm-Message-State: AOJu0YzrJOMgWZBpejiwfNlTi0RixVIA/Fys4GrodslTooCMWFuZgUYf
+ 3oaq4hIJLs5EpTVdpArwwdR88S+Stp4oLOutdG4/Dt1cfxhWTDbn5O4rd6isWA==
+X-Gm-Gg: ASbGncsWyDb7T3mu8MZTXMHREpY1hJIS/jaabqu3zOTC+F6JFydQQfmUDaTm16McfKI
+ ZC06HlEhejbgHoVR4y3lUcBdF2Rgibbya9nHWr6qHC/XN0pKHcrZfwtCTbN1Hvz359NghMltRie
+ E5qyBEZZQMEYgrD22OstgylQHwqC0AVUPs4izZTpUueNmz9POYGEmDqLI6CbI2HRDz6A8UnaRMd
+ VKRKAWC0UwWXMdW0vT3pqLPS37ixrFKHiC58IzTSprsJGqye6f6R2gDcjzDFbxtrIf6avpeLnzN
+ ubMweWwD6zEWU8jaalwQ6c8qwLzbmoPPlQg3FObsUPsYZdvMJeUmayEIhARqSKZGGnCSsp4tnp1
+ Vbn/NpSAtSjpw7dVA
+X-Google-Smtp-Source: AGHT+IHBWz6iNrxqrRHS8gjFzRcaUislvS05owmy7mmeq71X8RqDEhOZFYLhnkNjwT3W6ah9YRSwwg==
+X-Received: by 2002:ac8:574c:0:b0:4a7:a905:d5b1 with SMTP id
+ d75a77b69052e-4a9a68aa826mr8565151cf.15.1751668368859; 
+ Fri, 04 Jul 2025 15:32:48 -0700 (PDT)
 Received: from user-jcksn.myfiosgateway.com
  ([2600:4040:2bcd:3800:7cf4:c69f:10f5:f5b9])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4a994a3093asm21528851cf.36.2025.07.04.15.32.41
+ d75a77b69052e-4a994a3093asm21528851cf.36.2025.07.04.15.32.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 15:32:41 -0700 (PDT)
+ Fri, 04 Jul 2025 15:32:48 -0700 (PDT)
 From: Jackson Donaldson <jackson88044@gmail.com>
 X-Google-Original-From: Jackson Donaldson <jcksn@duck.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-Subject: [PATCH v4 01/11] MAX78000: Add MAX78000FTHR Machine
-Date: Fri,  4 Jul 2025 18:32:29 -0400
-Message-Id: <20250704223239.248781-2-jcksn@duck.com>
+Subject: [PATCH v4 10/11] MAX78000: AES implementation
+Date: Fri,  4 Jul 2025 18:32:38 -0400
+Message-Id: <20250704223239.248781-11-jcksn@duck.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250704223239.248781-1-jcksn@duck.com>
 References: <20250704223239.248781-1-jcksn@duck.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
- envelope-from=jackson88044@gmail.com; helo=mail-qt1-x82e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::834;
+ envelope-from=jackson88044@gmail.com; helo=mail-qt1-x834.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,349 +102,406 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds support for the MAX78000FTHR machine.
-
-The MAX78000FTHR contains a MAX78000 and a RISC-V core. This patch
-implements only the MAX78000, which is Cortex-M4 based.
-Details can be found at:
-https://www.analog.com/media/en/technical-documentation/user-guides/max78000-user-guide.pdf
+This commit implements AES for the MAX78000
 
 Signed-off-by: Jackson Donaldson <jcksn@duck.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/Kconfig                |  10 ++
- hw/arm/max78000_soc.c         | 172 ++++++++++++++++++++++++++++++++++
- hw/arm/max78000fthr.c         |  50 ++++++++++
- hw/arm/meson.build            |   2 +
- include/hw/arm/max78000_soc.h |  35 +++++++
- 5 files changed, 269 insertions(+)
- create mode 100644 hw/arm/max78000_soc.c
- create mode 100644 hw/arm/max78000fthr.c
- create mode 100644 include/hw/arm/max78000_soc.h
+ hw/arm/Kconfig                 |   1 +
+ hw/misc/Kconfig                |   3 +
+ hw/misc/max78000_aes.c         | 223 +++++++++++++++++++++++++++++++++
+ hw/misc/max78000_gcr.c         |   6 +
+ hw/misc/meson.build            |   1 +
+ include/hw/misc/max78000_aes.h |  68 ++++++++++
+ include/hw/misc/max78000_gcr.h |   1 +
+ 7 files changed, 303 insertions(+)
+ create mode 100644 hw/misc/max78000_aes.c
+ create mode 100644 include/hw/misc/max78000_aes.h
 
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index f543d944c3..ddaafa8faa 100644
+index fcac62be6f..3e41120c89 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -95,6 +95,12 @@ config INTEGRATOR
-     select PL181 # display
-     select SMC91C111
+@@ -370,6 +370,7 @@ config MAX78000_SOC
+     select MAX78000_UART
+     select MAX78000_GCR
+     select MAX78000_TRNG
++    select MAX78000_AES
  
-+config MAX78000FTHR
-+    bool
-+    default y
-+    depends on TCG && ARM
-+    select MAX78000_SOC
-+
- config MPS3R
-     bool
-     default y
-@@ -357,6 +363,10 @@ config ALLWINNER_R40
-     select USB_EHCI_SYSBUS
-     select SD
- 
-+config MAX78000_SOC
-+    bool
-+    select ARM_V7M
-+
  config RASPI
      bool
-     default y
-diff --git a/hw/arm/max78000_soc.c b/hw/arm/max78000_soc.c
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index dd6a6e54da..c27285b47a 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -47,6 +47,9 @@ config A9SCU
+ config ARM11SCU
+     bool
+ 
++config MAX78000_AES
++    bool
++
+ config MAX78000_GCR
+     bool
+ 
+diff --git a/hw/misc/max78000_aes.c b/hw/misc/max78000_aes.c
 new file mode 100644
-index 0000000000..9676ada6a2
+index 0000000000..0bfb2f02b5
 --- /dev/null
-+++ b/hw/arm/max78000_soc.c
-@@ -0,0 +1,172 @@
++++ b/hw/misc/max78000_aes.c
+@@ -0,0 +1,223 @@
 +/*
-+ * MAX78000 SOC
++ * MAX78000 AES
 + *
 + * Copyright (c) 2025 Jackson Donaldson <jcksn@duck.com>
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Implementation based on stm32f205 and Max78000 user guide at
-+ * https://www.analog.com/media/en/technical-documentation/user-guides/max78000-user-guide.pdf
 + */
 +
 +#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "system/address-spaces.h"
-+#include "system/system.h"
-+#include "hw/arm/max78000_soc.h"
-+#include "hw/qdev-clock.h"
-+#include "hw/misc/unimp.h"
++#include "qemu/log.h"
++#include "trace.h"
++#include "hw/irq.h"
++#include "migration/vmstate.h"
++#include "hw/misc/max78000_aes.h"
++#include "crypto/aes.h"
 +
-+static void max78000_soc_initfn(Object *obj)
++static void max78000_aes_set_status(Max78000AesState *s)
 +{
-+    MAX78000State *s = MAX78000_SOC(obj);
-+
-+    object_initialize_child(obj, "armv7m", &s->armv7m, TYPE_ARMV7M);
-+
-+    s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
++    s->status = 0;
++    if (s->result_index >= 16) {
++        s->status |= OUTPUT_FULL;
++    }
++    if (s->result_index == 0) {
++        s->status |= OUTPUT_EMPTY;
++    }
++    if (s->data_index >= 16) {
++        s->status |= INPUT_FULL;
++    }
++    if (s->data_index == 0) {
++        s->status |= INPUT_EMPTY;
++    }
 +}
 +
-+static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
++static uint64_t max78000_aes_read(void *opaque, hwaddr addr,
++                                    unsigned int size)
 +{
-+    MAX78000State *s = MAX78000_SOC(dev_soc);
-+    MemoryRegion *system_memory = get_system_memory();
-+    DeviceState *armv7m;
-+    Error *err = NULL;
++    Max78000AesState *s = opaque;
++    switch (addr) {
++    case CTRL:
++        return s->ctrl;
 +
-+    if (!clock_has_source(s->sysclk)) {
-+        error_setg(errp, "sysclk clock must be wired up by the board code");
-+        return;
++    case STATUS:
++        return s->status;
++
++    case INTFL:
++        return s->intfl;
++
++    case INTEN:
++        return s->inten;
++
++    case FIFO:
++        if (s->result_index >= 4) {
++            s->intfl &= ~DONE;
++            s->result_index -= 4;
++            max78000_aes_set_status(s);
++            return ldl_be_p(&s->result[s->result_index]);
++        } else{
++            return 0;
++        }
++
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"
++            HWADDR_PRIx "\n", __func__, addr);
++        break;
++
 +    }
-+
-+    memory_region_init_rom(&s->flash, OBJECT(dev_soc), "MAX78000.flash",
-+                           FLASH_SIZE, &err);
-+    if (err != NULL) {
-+        error_propagate(errp, err);
-+        return;
-+    }
-+
-+    memory_region_add_subregion(system_memory, FLASH_BASE_ADDRESS, &s->flash);
-+
-+    memory_region_init_ram(&s->sram, NULL, "MAX78000.sram", SRAM_SIZE,
-+                           &err);
-+    if (err != NULL) {
-+        error_propagate(errp, err);
-+        return;
-+    }
-+    memory_region_add_subregion(system_memory, SRAM_BASE_ADDRESS, &s->sram);
-+
-+    armv7m = DEVICE(&s->armv7m);
-+
-+    /*
-+     * The MAX78000 user guide's Interrupt Vector Table section
-+     * suggests that there are 120 IRQs in the text, while only listing
-+     * 104 in table 5-1. Implement the more generous of the two.
-+     * This has not been tested in hardware.
-+     */
-+    qdev_prop_set_uint32(armv7m, "num-irq", 120);
-+    qdev_prop_set_uint8(armv7m, "num-prio-bits", 3);
-+    qdev_prop_set_string(armv7m, "cpu-type", ARM_CPU_TYPE_NAME("cortex-m4"));
-+    qdev_prop_set_bit(armv7m, "enable-bitband", true);
-+    qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
-+    object_property_set_link(OBJECT(&s->armv7m), "memory",
-+                             OBJECT(system_memory), &error_abort);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->armv7m), errp)) {
-+        return;
-+    }
-+
-+    create_unimplemented_device("globalControl",        0x40000000, 0x400);
-+    create_unimplemented_device("systemInterface",      0x40000400, 0x400);
-+    create_unimplemented_device("functionControl",      0x40000800, 0x400);
-+    create_unimplemented_device("watchdogTimer0",       0x40003000, 0x400);
-+    create_unimplemented_device("dynamicVoltScale",     0x40003c00, 0x40);
-+    create_unimplemented_device("SIMO",                 0x40004400, 0x400);
-+    create_unimplemented_device("trimSystemInit",       0x40005400, 0x400);
-+    create_unimplemented_device("generalCtrlFunc",      0x40005800, 0x400);
-+    create_unimplemented_device("wakeupTimer",          0x40006400, 0x400);
-+    create_unimplemented_device("powerSequencer",       0x40006800, 0x400);
-+    create_unimplemented_device("miscControl",          0x40006c00, 0x400);
-+
-+    create_unimplemented_device("aes",                  0x40007400, 0x400);
-+    create_unimplemented_device("aesKey",               0x40007800, 0x400);
-+
-+    create_unimplemented_device("gpio0",                0x40008000, 0x1000);
-+    create_unimplemented_device("gpio1",                0x40009000, 0x1000);
-+
-+    create_unimplemented_device("parallelCamInterface", 0x4000e000, 0x1000);
-+    create_unimplemented_device("CRC",                  0x4000f000, 0x1000);
-+
-+    create_unimplemented_device("timer0",               0x40010000, 0x1000);
-+    create_unimplemented_device("timer1",               0x40011000, 0x1000);
-+    create_unimplemented_device("timer2",               0x40012000, 0x1000);
-+    create_unimplemented_device("timer3",               0x40013000, 0x1000);
-+
-+    create_unimplemented_device("i2c0",                 0x4001d000, 0x1000);
-+    create_unimplemented_device("i2c1",                 0x4001e000, 0x1000);
-+    create_unimplemented_device("i2c2",                 0x4001f000, 0x1000);
-+
-+    create_unimplemented_device("standardDMA",          0x40028000, 0x1000);
-+    create_unimplemented_device("flashController0",     0x40029000, 0x400);
-+
-+    create_unimplemented_device("icc0",                 0x4002a000, 0x800);
-+    create_unimplemented_device("icc1",                 0x4002a800, 0x800);
-+
-+    create_unimplemented_device("adc",                  0x40034000, 0x1000);
-+    create_unimplemented_device("pulseTrainEngine",     0x4003c000, 0xa0);
-+    create_unimplemented_device("oneWireMaster",        0x4003d000, 0x1000);
-+    create_unimplemented_device("semaphore",            0x4003e000, 0x1000);
-+
-+    create_unimplemented_device("uart0",                0x40042000, 0x1000);
-+    create_unimplemented_device("uart1",                0x40043000, 0x1000);
-+    create_unimplemented_device("uart2",                0x40044000, 0x1000);
-+
-+    create_unimplemented_device("spi1",                 0x40046000, 0x2000);
-+    create_unimplemented_device("trng",                 0x4004d000, 0x1000);
-+    create_unimplemented_device("i2s",                  0x40060000, 0x1000);
-+    create_unimplemented_device("lowPowerControl",      0x40080000, 0x400);
-+    create_unimplemented_device("gpio2",                0x40080400, 0x200);
-+    create_unimplemented_device("lowPowerWatchdogTimer",    0x40080800, 0x400);
-+    create_unimplemented_device("lowPowerTimer4",       0x40080c00, 0x400);
-+
-+    create_unimplemented_device("lowPowerTimer5",       0x40081000, 0x400);
-+    create_unimplemented_device("lowPowerUART0",        0x40081400, 0x400);
-+    create_unimplemented_device("lowPowerComparator",   0x40088000, 0x400);
-+
-+    create_unimplemented_device("spi0",                 0x400be000, 0x400);
-+
-+    /*
-+     * The MAX78000 user guide's base address map lists the CNN TX FIFO as
-+     * beginning at 0x400c0400 and ending at 0x400c0400. Given that CNN_FIFO
-+     * is listed as having data accessible up to offset 0x1000, the user
-+     * guide is likely incorrect.
-+     */
-+    create_unimplemented_device("cnnTxFIFO",            0x400c0400, 0x2000);
-+
-+    create_unimplemented_device("cnnGlobalControl",     0x50000000, 0x10000);
-+    create_unimplemented_device("cnnx16quad0",          0x50100000, 0x40000);
-+    create_unimplemented_device("cnnx16quad1",          0x50500000, 0x40000);
-+    create_unimplemented_device("cnnx16quad2",          0x50900000, 0x40000);
-+    create_unimplemented_device("cnnx16quad3",          0x50d00000, 0x40000);
-+
++    return 0;
 +}
 +
-+static void max78000_soc_class_init(ObjectClass *klass, const void *data)
++static void max78000_aes_do_crypto(Max78000AesState *s)
 +{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
++    int keylen = 256;
++    uint8_t *keydata = s->key;
++    if ((s->ctrl & KEY_SIZE) == 0) {
++        keylen = 128;
++        keydata += 16;
++    } else if ((s->ctrl & KEY_SIZE) == 1 << 6) {
++        keylen = 192;
++        keydata += 8;
++    }
 +
-+    dc->realize = max78000_soc_realize;
++    AES_KEY key;
++    if ((s->ctrl & TYPE) == 0) {
++        AES_set_encrypt_key(keydata, keylen, &key);
++        AES_set_decrypt_key(keydata, keylen, &s->internal_key);
++        AES_encrypt(s->data, s->result, &key);
++        s->result_index = 16;
++    } else if ((s->ctrl & TYPE) == 1 << 8) {
++        AES_set_decrypt_key(keydata, keylen, &key);
++        AES_set_decrypt_key(keydata, keylen, &s->internal_key);
++        AES_decrypt(s->data, s->result, &key);
++        s->result_index = 16;
++    } else{
++        AES_decrypt(s->data, s->result, &s->internal_key);
++        s->result_index = 16;
++    }
++    s->intfl |= DONE;
 +}
 +
-+static const TypeInfo max78000_soc_info = {
-+    .name          = TYPE_MAX78000_SOC,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(MAX78000State),
-+    .instance_init = max78000_soc_initfn,
-+    .class_init    = max78000_soc_class_init,
++static void max78000_aes_write(void *opaque, hwaddr addr,
++                    uint64_t val64, unsigned int size)
++{
++    Max78000AesState *s = opaque;
++    uint32_t val = val64;
++    switch (addr) {
++    case CTRL:
++        if (val & OUTPUT_FLUSH) {
++            s->result_index = 0;
++            val &= ~OUTPUT_FLUSH;
++        }
++        if (val & INPUT_FLUSH) {
++            s->data_index = 0;
++            val &= ~INPUT_FLUSH;
++        }
++        if (val & START) {
++            max78000_aes_do_crypto(s);
++        }
++
++        /* Hardware appears to stay enabled even if 0 written */
++        s->ctrl = val | (s->ctrl & AES_EN);
++        break;
++
++    case FIFO:
++        assert(s->data_index <= 12);
++        stl_be_p(&s->data[12 - s->data_index], val);
++        s->data_index += 4;
++        if (s->data_index >= 16) {
++            s->data_index = 0;
++            max78000_aes_do_crypto(s);
++        }
++        break;
++
++    case KEY_BASE ... KEY_END - 4:
++        stl_be_p(&s->key[(KEY_END - KEY_BASE - 4) - (addr - KEY_BASE)], val);
++        break;
++
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"
++            HWADDR_PRIx "\n", __func__, addr);
++        break;
++
++    }
++    max78000_aes_set_status(s);
++}
++
++static void max78000_aes_reset_hold(Object *obj, ResetType type)
++{
++    Max78000AesState *s = MAX78000_AES(obj);
++    s->ctrl = 0;
++    s->status = 0;
++    s->intfl = 0;
++    s->inten = 0;
++
++    s->data_index = 0;
++    s->result_index = 0;
++
++    memset(s->data, 0, sizeof(s->data));
++    memset(s->key, 0, sizeof(s->key));
++    memset(s->result, 0, sizeof(s->result));
++    memset(&s->internal_key, 0, sizeof(s->internal_key));
++}
++
++static const MemoryRegionOps max78000_aes_ops = {
++    .read = max78000_aes_read,
++    .write = max78000_aes_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid.min_access_size = 4,
++    .valid.max_access_size = 4,
 +};
 +
-+static void max78000_soc_types(void)
++static const VMStateDescription vmstate_max78000_aes = {
++    .name = TYPE_MAX78000_AES,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(ctrl, Max78000AesState),
++        VMSTATE_UINT32(status, Max78000AesState),
++        VMSTATE_UINT32(intfl, Max78000AesState),
++        VMSTATE_UINT32(inten, Max78000AesState),
++        VMSTATE_UINT8_ARRAY(data, Max78000AesState, 16),
++        VMSTATE_UINT8_ARRAY(key, Max78000AesState, 32),
++        VMSTATE_UINT8_ARRAY(result, Max78000AesState, 16),
++        VMSTATE_UINT32_ARRAY(internal_key.rd_key, Max78000AesState, 60),
++        VMSTATE_INT32(internal_key.rounds, Max78000AesState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static void max78000_aes_init(Object *obj)
 +{
-+    type_register_static(&max78000_soc_info);
++    Max78000AesState *s = MAX78000_AES(obj);
++    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
++
++    memory_region_init_io(&s->mmio, obj, &max78000_aes_ops, s,
++                        TYPE_MAX78000_AES, 0xc00);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
++
 +}
 +
-+type_init(max78000_soc_types)
-diff --git a/hw/arm/max78000fthr.c b/hw/arm/max78000fthr.c
++static void max78000_aes_class_init(ObjectClass *klass, const void *data)
++{
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    rc->phases.hold = max78000_aes_reset_hold;
++    dc->vmsd = &vmstate_max78000_aes;
++
++}
++
++static const TypeInfo max78000_aes_info = {
++    .name          = TYPE_MAX78000_AES,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(Max78000AesState),
++    .instance_init = max78000_aes_init,
++    .class_init    = max78000_aes_class_init,
++};
++
++static void max78000_aes_register_types(void)
++{
++    type_register_static(&max78000_aes_info);
++}
++
++type_init(max78000_aes_register_types)
+diff --git a/hw/misc/max78000_gcr.c b/hw/misc/max78000_gcr.c
+index 5916ee615a..fbbc92cca3 100644
+--- a/hw/misc/max78000_gcr.c
++++ b/hw/misc/max78000_gcr.c
+@@ -15,6 +15,7 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/char/max78000_uart.h"
+ #include "hw/misc/max78000_trng.h"
++#include "hw/misc/max78000_aes.h"
+ #include "hw/misc/max78000_gcr.h"
+ 
+ 
+@@ -161,6 +162,9 @@ static void max78000_gcr_write(void *opaque, hwaddr addr,
+         if (val & TRNG_RESET) {
+             device_cold_reset(s->trng);
+         }
++        if (val & AES_RESET) {
++            device_cold_reset(s->aes);
++        }
+         /* TODO: As other devices are implemented, add them here */
+         break;
+ 
+@@ -263,6 +267,8 @@ static const Property max78000_gcr_properties[] = {
+                      TYPE_MAX78000_UART, DeviceState*),
+     DEFINE_PROP_LINK("trng", Max78000GcrState, trng,
+                         TYPE_MAX78000_TRNG, DeviceState*),
++    DEFINE_PROP_LINK("aes", Max78000GcrState, aes,
++                        TYPE_MAX78000_AES, DeviceState*),
+ };
+ 
+ static const MemoryRegionOps max78000_gcr_ops = {
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index c7c57d924b..b1d8d8e5d2 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -70,6 +70,7 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files(
+   'imx_ccm.c',
+   'imx_rngc.c',
+ ))
++system_ss.add(when: 'CONFIG_MAX78000_AES', if_true: files('max78000_aes.c'))
+ system_ss.add(when: 'CONFIG_MAX78000_GCR', if_true: files('max78000_gcr.c'))
+ system_ss.add(when: 'CONFIG_MAX78000_ICC', if_true: files('max78000_icc.c'))
+ system_ss.add(when: 'CONFIG_MAX78000_TRNG', if_true: files('max78000_trng.c'))
+diff --git a/include/hw/misc/max78000_aes.h b/include/hw/misc/max78000_aes.h
 new file mode 100644
-index 0000000000..c4f6b5b1b0
+index 0000000000..407c45ef61
 --- /dev/null
-+++ b/hw/arm/max78000fthr.c
-@@ -0,0 +1,50 @@
++++ b/include/hw/misc/max78000_aes.h
+@@ -0,0 +1,68 @@
 +/*
-+ * MAX78000FTHR Evaluation Board
++ * MAX78000 AES
 + *
 + * Copyright (c) 2025 Jackson Donaldson <jcksn@duck.com>
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
++#ifndef HW_MAX78000_AES_H
++#define HW_MAX78000_AES_H
 +
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "hw/boards.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/qdev-clock.h"
-+#include "qemu/error-report.h"
-+#include "hw/arm/max78000_soc.h"
-+#include "hw/arm/boot.h"
-+
-+/* 60MHz is the default, but other clocks can be selected. */
-+#define SYSCLK_FRQ 60000000ULL
-+static void max78000_init(MachineState *machine)
-+{
-+    DeviceState *dev;
-+    Clock *sysclk;
-+
-+    sysclk = clock_new(OBJECT(machine), "SYSCLK");
-+    clock_set_hz(sysclk, SYSCLK_FRQ);
-+
-+    dev = qdev_new(TYPE_MAX78000_SOC);
-+    object_property_add_child(OBJECT(machine), "soc", OBJECT(dev));
-+    qdev_connect_clock_in(dev, "sysclk", sysclk);
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+
-+    armv7m_load_kernel(ARM_CPU(first_cpu),
-+                       machine->kernel_filename,
-+                       0x00000000, FLASH_SIZE);
-+}
-+
-+static void max78000_machine_init(MachineClass *mc)
-+{
-+    static const char * const valid_cpu_types[] = {
-+        ARM_CPU_TYPE_NAME("cortex-m4"),
-+        NULL
-+    };
-+
-+    mc->desc = "MAX78000FTHR Board (Cortex-M4 / (Unimplemented) RISC-V)";
-+    mc->init = max78000_init;
-+    mc->valid_cpu_types = valid_cpu_types;
-+}
-+
-+DEFINE_MACHINE("max78000fthr", max78000_machine_init)
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index d90be8f4c9..dc68391305 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -27,6 +27,7 @@ arm_common_ss.add(when: 'CONFIG_OMAP', if_true: files('omap1.c'))
- arm_common_ss.add(when: 'CONFIG_ALLWINNER_A10', if_true: files('allwinner-a10.c', 'cubieboard.c'))
- arm_common_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-h3.c', 'orangepi.c'))
- arm_common_ss.add(when: 'CONFIG_ALLWINNER_R40', if_true: files('allwinner-r40.c', 'bananapi_m2u.c'))
-+arm_common_ss.add(when: 'CONFIG_MAX78000_SOC', if_true: files('max78000_soc.c'))
- arm_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2836.c', 'raspi.c'))
- arm_common_ss.add(when: ['CONFIG_RASPI', 'TARGET_AARCH64'], if_true: files('bcm2838.c', 'raspi4b.c'))
- arm_common_ss.add(when: 'CONFIG_STM32F100_SOC', if_true: files('stm32f100_soc.c'))
-@@ -71,6 +72,7 @@ arm_ss.add(when: 'CONFIG_XEN', if_true: files(
- arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmu-common.c'))
- arm_common_ss.add(when: 'CONFIG_COLLIE', if_true: files('collie.c'))
- arm_common_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4_boards.c'))
-+arm_common_ss.add(when: 'CONFIG_MAX78000FTHR', if_true: files('max78000fthr.c'))
- arm_common_ss.add(when: 'CONFIG_NETDUINO2', if_true: files('netduino2.c'))
- arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_peripherals.c'))
- arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2838_peripherals.c'))
-diff --git a/include/hw/arm/max78000_soc.h b/include/hw/arm/max78000_soc.h
-new file mode 100644
-index 0000000000..97bf4099c9
---- /dev/null
-+++ b/include/hw/arm/max78000_soc.h
-@@ -0,0 +1,35 @@
-+/*
-+ * MAX78000 SOC
-+ *
-+ * Copyright (c) 2025 Jackson Donaldson <jcksn@duck.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_ARM_MAX78000_SOC_H
-+#define HW_ARM_MAX78000_SOC_H
-+
-+#include "hw/or-irq.h"
-+#include "hw/arm/armv7m.h"
++#include "hw/sysbus.h"
++#include "crypto/aes.h"
 +#include "qom/object.h"
 +
-+#define TYPE_MAX78000_SOC "max78000-soc"
-+OBJECT_DECLARE_SIMPLE_TYPE(MAX78000State, MAX78000_SOC)
++#define TYPE_MAX78000_AES "max78000-aes"
++OBJECT_DECLARE_SIMPLE_TYPE(Max78000AesState, MAX78000_AES)
 +
-+#define FLASH_BASE_ADDRESS 0x10000000
-+#define FLASH_SIZE (512 * 1024)
-+#define SRAM_BASE_ADDRESS 0x20000000
-+#define SRAM_SIZE (128 * 1024)
++#define CTRL 0
++#define STATUS 4
++#define INTFL 8
++#define INTEN 0xc
++#define FIFO 0x10
 +
-+struct MAX78000State {
++#define KEY_BASE 0x400
++#define KEY_END 0x420
++
++/* CTRL */
++#define TYPE (1 << 9 | 1 << 8)
++#define KEY_SIZE (1 << 7 | 1 << 6)
++#define OUTPUT_FLUSH (1 << 5)
++#define INPUT_FLUSH (1 << 4)
++#define START (1 << 3)
++
++#define AES_EN (1 << 0)
++
++/* STATUS */
++#define OUTPUT_FULL (1 << 4)
++#define OUTPUT_EMPTY (1 << 3)
++#define INPUT_FULL (1 << 2)
++#define INPUT_EMPTY (1 << 1)
++#define BUSY (1 << 0)
++
++/* INTFL*/
++#define DONE (1 << 0)
++
++struct Max78000AesState {
 +    SysBusDevice parent_obj;
 +
-+    ARMv7MState armv7m;
++    MemoryRegion mmio;
 +
-+    MemoryRegion sram;
-+    MemoryRegion flash;
++    uint32_t ctrl;
++    uint32_t status;
++    uint32_t intfl;
++    uint32_t inten;
++    uint32_t data_index;
++    uint8_t data[16];
 +
-+    Clock *sysclk;
++    uint8_t key[32];
++    AES_KEY internal_key;
++
++    uint32_t result_index;
++    uint8_t result[16];
++
++
++    qemu_irq irq;
 +};
 +
 +#endif
+diff --git a/include/hw/misc/max78000_gcr.h b/include/hw/misc/max78000_gcr.h
+index 23ddf0885b..d5858a40f3 100644
+--- a/include/hw/misc/max78000_gcr.h
++++ b/include/hw/misc/max78000_gcr.h
+@@ -124,6 +124,7 @@ struct Max78000GcrState {
+     DeviceState *uart1;
+     DeviceState *uart2;
+     DeviceState *trng;
++    DeviceState *aes;
+ 
+ };
+ 
 -- 
 2.34.1
 
