@@ -4,96 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 477C7C83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 15:38:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87658C83F03
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 15:38:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXiUL-00034h-Qk; Fri, 04 Jul 2025 11:38:10 -0400
+	id 1uXiUZ-0003X7-G8; Fri, 04 Jul 2025 11:38:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uXiUD-00030g-QB
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 11:38:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uXiUA-0006mI-Pq
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 11:38:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751643477;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=K2ksY8Fp2uO8mBcppvE25UYfkZuvPfN0axMJ+iX86yM=;
- b=IfPObvB2CgDomWhrrahG6r2LBtmp9ss74/iwnFowcp/mAR54VvoWQ4BVEEXnuH0UGjprDv
- ezxQxbnmXE+Wk4jQXCAbeqvLJ0SieeKmYXZpsaMn9oiCSvOU9EqjrMA7c9knlZEFiUptEj
- K2d5u1dgwodEbIjEmVSDuQGI8LdjWF0=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-480-cV2ccxOSN3iu_ZC-7TQtlg-1; Fri, 04 Jul 2025 11:37:55 -0400
-X-MC-Unique: cV2ccxOSN3iu_ZC-7TQtlg-1
-X-Mimecast-MFC-AGG-ID: cV2ccxOSN3iu_ZC-7TQtlg_1751643475
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7d40d2308a4so132413885a.0
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 08:37:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXiUU-0003R9-Uv
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 11:38:18 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXiUT-0006pp-9H
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 11:38:18 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4537deebb01so6309005e9.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 08:38:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751643496; x=1752248296; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=X+1qdRe8xdVibZVctag5le32T2XQilUjEKnUgN01u1I=;
+ b=VInX977Ixg4a8vRbMrhE7rHRCRuG4DYxki8KBXunzoWcxOjjcMKYCe5pPZDLx3dGba
+ a3I+w63cc1vQFNR9spo9GMMZqe4vm98DTZHioZR+GM17HA6iTruWXT/evXXBjgBD2hZF
+ ioPwudX29oab268fwOMFHwxUvwIrhf4kKm9+lo7r4cGqsVoAOmUYk4AOUJjLpqFjuxu2
+ 4rvDQNRUQM7MGJmA2yIbltntejx9ilNwkPCZ/UkGPsX6RVMlYivISaq/uRPkFvYiLb4n
+ WK4tyc65aWH6QufX3kzYytiF0P3iFHG5n5D2fzvGphHhbfR0zIEKmBlHJk1bsipNJdu9
+ zTKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751643475; x=1752248275;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=K2ksY8Fp2uO8mBcppvE25UYfkZuvPfN0axMJ+iX86yM=;
- b=C1PNLAWQqjZtpPkQMMTitkm5OCLDLQXY8aPjJLTVSbi0jTSuyBj/qCG5TNLCFr0ZDn
- F6/tL9joLBeZGJXxwoTLFyAK52yfwe1Hjgv0OkilyabfHLgyq01K2ts+vcK4M8uynwgH
- 1+cmiS5t8ee3d7qIxTmQOP+M6In+t5hVA85u7RjXhHnW5X10Nn8ifzc24o0Cp2X+mgf2
- QgZvGC8lX3IFNy/al6MPK92wdDD+VKMyFC3uI8T3xa/nTs23NtbqJhYANWpaHnpjkCwe
- AkBRqf95CHRlpJtJX1fNw33zLFGHopxKtQT3qXQDm+NsP3MHTe9gdt1gzXqZQdC8e5Br
- 1tPw==
+ d=1e100.net; s=20230601; t=1751643496; x=1752248296;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=X+1qdRe8xdVibZVctag5le32T2XQilUjEKnUgN01u1I=;
+ b=qaKTj3v90moiimLUD08VHAdFvRqx4vARIfURU/qhtR06Te726B+rVYmJrSmwOE9aNc
+ frsGvngF2hYzcxgKqiIS867NIHDFF0IM+R/myGHzJAHAG3GTedfBs7SL/V11hP2kP/Qz
+ dRyvTz8tshv5/bpnpyW0eKjyz/HGhnT6YFL1kVgKLtCA72IjNBO7r0t2CK1QGEW/bI+G
+ +yF6VtndaOHxMiJOQc/Nl6zJHYS7ceWnGoAgC/K9T8q77eAL/cJsumYIzOIZvNmF9vb5
+ w6AQVSngALZrcupyqiYBo14bYLpEweurhXTE30FhYwAKwTg4T3WADXNG16QCRXsEiueO
+ eyFQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVGd4GD+R4abU/XN+T5ddga7PGlP8DVhzFq3Za6Nd27LA+hriE2GlbH0/ryA/INmRdXhITjYTI2x9hU@nongnu.org
-X-Gm-Message-State: AOJu0Yxi5vQsRT+thclNwug0YEuLc8PzxlTLDpq4WRtZ87DuqUn+EOFt
- nL9QDjKloJusJaJKuVUzL1lVu38mQ2bMJPfyH9su0Evw32RnNiusaDP/oQK1lWE8cGiPFDrPtCA
- 2gdPQ+8zgEAyO8rsT00qW2Yc5GUbKtG9cvW5/1QhGfxKmCPUgZHHyWfAa
-X-Gm-Gg: ASbGncs904YqoljpppmOekhzM8zgJGQu3Q/gL1yUq60w3uLAaGZloFAguvYNC2WZkZq
- A+pjgA8VWsCPTmkmlyQ/+PGKxZX+5hgKVmYmVXk6s78rGTQZmu61vZva6a0uJT9v78tsGqr89Vy
- LJWtxJmNhxHmyP8H0KJALNUe2DIW0CMMowXDpDcYuNQZnusSoGdcPJXqPesFA18TrqKg7cGSQk+
- VhYhwE85WI7eZ0YeESAwpHpymSX7L7f5Ne/YRVvlAndSSzteerg8kh7uUlxcZPkyYSXOKUIamj8
- agiwW+8UbS6PEA==
-X-Received: by 2002:a05:620a:414d:b0:7d4:4c40:8e02 with SMTP id
- af79cd13be357-7d5ddad8964mr447389485a.23.1751643475248; 
- Fri, 04 Jul 2025 08:37:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGXzrfplpW8bSmQ3udDKkMQxHNntgTTIldf5h1Kqp2pKQCxNMEyRS6VOZlvC+gJyN/cxNOF1w==
-X-Received: by 2002:a05:620a:414d:b0:7d4:4c40:8e02 with SMTP id
- af79cd13be357-7d5ddad8964mr447385785a.23.1751643474838; 
- Fri, 04 Jul 2025 08:37:54 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7d5dbe919afsm158375485a.93.2025.07.04.08.37.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 08:37:54 -0700 (PDT)
-Date: Fri, 4 Jul 2025 11:37:51 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- berrange@redhat.com, Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v2 03/24] migration: Normalize tls arguments
-Message-ID: <aGf1T8CAQpyf8YoY@x1.local>
-References: <20250630195913.28033-1-farosas@suse.de>
- <20250630195913.28033-4-farosas@suse.de>
- <87y0t81hg1.fsf@pond.sub.org> <87o6u456xn.fsf@suse.de>
- <87jz4o3xry.fsf@suse.de>
+ AJvYcCVIBwoiqByXlMqB+HMs1GpnRgWozfnwQETAguUoufRvpnUUVafS3kevlQ0Lu+KovHjVYwr4F+8cLL1m@nongnu.org
+X-Gm-Message-State: AOJu0YwSzh6c6xoN4j3bUcbGO4JXAW1uZXF9NNVQg1JqxAH8AiHoHdBf
+ bgNwwhTH2ipvWLt0MqZVZpFjoxVY2TDtqpnPW6gAaOUJh1lMRdOVMMwgIX7xKNAy4bM=
+X-Gm-Gg: ASbGncvBDK4VH/ax7y6R146vwz1rCnozRu9xcUZ0PYVM0Jqf4fLENWwltmz8tsSv/zc
+ 0fY1+WIfQGWfsgPKGSS9v0o70y2rcw8vIfEEL+8LFMCt646DqpdcKCmy3U9c8kkDTz5qi4HmXrH
+ F8pLjlGvnGCQI1PUkk9Gcs4l4kGv3DbhlxjczT3yfbSbFuebdL8oiHT9/iu6OwrGMiYWufO/auG
+ ISF7Pdyt5N7q+IVqcHrLOpPQW6PJJdE2mvwACgfkrW+18bWTuReSWsabDEwv4W0tgZ3RCQ2KbhZ
+ V9aMaaWY6VfR/0o4Q4lO1SvoGXib5v1MFMICkQyGL2mlqZ4LNzkK/3cIagcS+UkO98YV/869Qd1
+ DsFfbKB3tf9t79FsPmm0JDG8FGnxknbjh1j4=
+X-Google-Smtp-Source: AGHT+IHcuHHEjdUxb/M2/nYp/Y7UU9l7VBD5evkn10b3F9rJKXR4hMJh3JkKziAT6lAW/WHWxWWugQ==
+X-Received: by 2002:a05:600c:8595:b0:43d:82c:2b11 with SMTP id
+ 5b1f17b1804b1-454b5110eb1mr19523955e9.23.1751643495625; 
+ Fri, 04 Jul 2025 08:38:15 -0700 (PDT)
+Received: from [192.168.69.218] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454b1687488sm29576705e9.25.2025.07.04.08.38.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 04 Jul 2025 08:38:15 -0700 (PDT)
+Message-ID: <05f558c0-9047-496d-9d47-b66d02d7b8fe@linaro.org>
+Date: Fri, 4 Jul 2025 17:38:14 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87jz4o3xry.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.218, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] arm/cpu: store id_aa64afr{0,1} into the idregs array
+To: Cornelia Huck <cohuck@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Eric Auger <eric.auger@redhat.com>, Sebastian Ott <sebott@redhat.com>
+References: <20250704141927.38963-1-cohuck@redhat.com>
+ <20250704141927.38963-3-cohuck@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250704141927.38963-3-cohuck@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,73 +103,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 04, 2025 at 10:12:33AM -0300, Fabiano Rosas wrote:
+On 4/7/25 16:19, Cornelia Huck wrote:
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+> ---
+>   target/arm/cpu-sysregs.h.inc |  2 ++
+>   target/arm/cpu.h             |  2 --
+>   target/arm/helper.c          |  4 ++--
+>   target/arm/tcg/cpu64.c       | 16 ++++++++--------
+>   4 files changed, 12 insertions(+), 12 deletions(-)
 
-[...]
-
-> >>> +static void tls_opt_to_str(StrOrNull **tls_opt)
-> >>> +{
-> >>> +    StrOrNull *opt = *tls_opt;
-> >>> +
-> >>> +    if (!opt) {
-> >>> +        return;
-> >>
-> >> ... it can also be null.
-> >>
-> >
-> > Hmm, I'll have to double check, but with the StrOrNull property being
-> > initialized, NULL should not be possible. This looks like a mistake.
-> >
-> 
-> The code is correct, this is coming from the QAPI, so it could be NULL
-> in case the user hasn't provided the option. I'll use your suggested
-> wording and the code suggestion as well.
-
-One more trivial question:
-
-> 
-> >> Maybe
-> >>
-> >>    /* Normalize QTYPE_QNULL to QTYPE_QSTRING "" */
-> >>
-> >>> +    }
-> >>> +
-> >>> +    switch (opt->type) {
-> >>> +    case QTYPE_QSTRING:
-> >>> +        return;
-> >>> +    case QTYPE_QNULL:
-> >>> +        qobject_unref(opt->u.n);
-> >>> +        break;
-> >>> +    default:
-> >>> +        g_assert_not_reached();
-> >>> +    }
-> >>> +
-> >>> +    opt->type = QTYPE_QSTRING;
-> >>> +    opt->u.s = g_strdup("");
-> >>> +    *tls_opt = opt;
-
-Does tls_opt ever change?   I wonder if this line is not needed, instead
-tls_opt_to_str() can take an "StrOrNull *opt" directly.
-
-> >>> +}
-> >>
-> >> I'd prefer something like
-> >>
-> >>        if (!opt || opt->type == QTYPE_QSTRING) {
-> >>            return;
-> >>        }
-> >>        qobject_unref(opt->u.n);
-> >>        opt->type = QTYPE_QSTRING;
-> >>        opt->u.s = g_strdup("");
-> >>        *tls_opt = opt;
-> >>
-> >> But this is clearly a matter of taste.
-> 
-> This is better indeed. I was moving back-and-forth between
-> implementations and the code ended up a bit weird. Thanks!
-> 
-
--- 
-Peter Xu
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
