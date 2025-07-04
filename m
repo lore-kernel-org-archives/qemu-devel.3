@@ -4,93 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F01DC83030
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 03:28:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EBCFC83030
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 03:29:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXX5m-0005jZ-Fw; Thu, 03 Jul 2025 23:28:02 -0400
+	id 1uXX6m-0006qg-HX; Thu, 03 Jul 2025 23:29:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uXX5e-0005gI-SU
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 23:27:54 -0400
-Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uXX6j-0006ib-R6; Thu, 03 Jul 2025 23:29:01 -0400
+Received: from mail-vs1-xe32.google.com ([2607:f8b0:4864:20::e32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uXX5R-0004gR-2w
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 23:27:53 -0400
-Received: by mail-oo1-xc31.google.com with SMTP id
- 006d021491bc7-60d666804ebso955774eaf.1
- for <qemu-devel@nongnu.org>; Thu, 03 Jul 2025 20:23:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uXX6h-0006P2-NZ; Thu, 03 Jul 2025 23:29:01 -0400
+Received: by mail-vs1-xe32.google.com with SMTP id
+ ada2fe7eead31-4e7fc3309f2so106554137.2; 
+ Thu, 03 Jul 2025 20:28:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751599420; x=1752204220; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Nh3jJ8bDFB5ahixra5Mg10UMCf525DQw21oT2/4YTE0=;
- b=vgEfgN7+m1vLkrDroND095p3PD9GvYQxzD1eSzKNwgor48w3M7Dts2vLt16eUc0m/d
- axfzoXruz7dt1KAGBgmLPIRPsjz6rH5751OI3OqlrkoFh1XQ3ZM3I0d4k7uE6VnPBNsm
- DP91VMNPU1H/3uLeLwTNpL3h8G59RHBzRQrD+ntWr2cxOxuyW1P4XPUbYn2xGqqK1zoI
- n064zGcPx9TBGC7DCsDmfM+nuAJAubvsJT+c6Ee/hM864zQRN33iggR2Xq/KN1ruFVjU
- J6UDagO5WrjlOzTQTxHw5RHbGd2OGb9Xk+cQAmiboAbHOC7uPMmoG9Z/wuZ0mQVX+HlH
- rVlw==
+ d=gmail.com; s=20230601; t=1751599737; x=1752204537; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cgMx1VqGDaJScVb9v2ZWDwgZ1dxspOT9ckd4vbNED1w=;
+ b=HkUCuFLCWcBKW7bQ8xY1+5xoUbZU8B4X8+z0efALxr6OlLZJh8jeCvjpplb3Pi1tKo
+ d2HMTadXksFEhLDI1AxgNaJdjUJicqewqrgL5vQlbXqNHwduzkM2Hw358c2/1t26xkvb
+ awD8WaiNlf6KpBhvOCwWqfy0cD08wAU2ksnevtEf4NgjO9IdtslFeQ5IUyFU3C54p4Is
+ 713+aTXNP8ZKwTQHvhFIl38FtkTN5Oa2ygK6mwbZqnnS/bbhXKaFVqG+6PaH/pz2NKxu
+ ugCEXIUaPgsV5e499L8kHnbg9PuOgwnk88L1eFW1myim32H8r9Pd2h/uThOLqN3EsNOQ
+ NDtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751599420; x=1752204220;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Nh3jJ8bDFB5ahixra5Mg10UMCf525DQw21oT2/4YTE0=;
- b=LTGRJOoN+v+5PH0d3b9dqrWPGckuRSuhqusnfqOKK34DI08xsT3+k2KJklFEoh042n
- 1iBovLWQ/h7t7QI3cwb/9zhZrk6pJg1JzoDb9aBYelFrZHZ2dVzmX5Y7v40BIioVT+Wg
- +TNgYjjhiqkuhocQWtEgeTcYYZdu2UjqTyILUDnWMl60UfNS92DT3YAeIE5QVZzFGXCK
- Ua/zCZ1vZqfThIsveWJ1DUCS/mVPk4OCHIUCi74ULL3CgBW4X/GIu+6siinVi5lsMlp0
- yklfRufFuOgoYH01Yj2Af6unNkps92XwGYvPOqXzKh74DpEdBtbiXd3Op1Ystf/efVi1
- Tagg==
+ d=1e100.net; s=20230601; t=1751599737; x=1752204537;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cgMx1VqGDaJScVb9v2ZWDwgZ1dxspOT9ckd4vbNED1w=;
+ b=rMq0pwc17nQTGMZ61GA67RK7iE0dJ5Xt4VApNk+s9Ap5yuwEWe3uoWrznfSHrcMLTJ
+ osw8fS04ym7oUX2hg8lsCxnj1wGMIoNQ2nOot1/D2WKAGU/JBWBCZES34q7Tp80UBnEd
+ 29RIgIbhN8vY8VSe6v9CttlKHXnsPjtl9VGh8VWatwjqMpP3L+uqTPaD+QDBTwGpfacy
+ XpUkwaxV3QJN1nAsUUuV8qZcqvebjQKa0IrMRgB5lBdHbGUuurKtG10IfdzJpxiBcHxP
+ kGxpEproE8+eE5UekqbnzHh4f5J1Zg+G95RdpJSR6yPRDjJN5XERcE28oM25H9F9rvr+
+ itww==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU1CvhC7pn/yGsICtO0vVwM28sj2YtSkrmDNulO+OqN2Q1evMpwM1fEz3ZF0qZ6XQgLKQY/QZji1VTI@nongnu.org
-X-Gm-Message-State: AOJu0YzHQKMr/V2GjbaY4Y/ODJOKqbj3XEPami0bJgK4OJxyl5F0UBrA
- DErAi5vu3V0eq4xatETjvbI4wQhb6wU5DeoCxa9NIC696H+0uhBG24e5wm0PdESVXhE=
-X-Gm-Gg: ASbGncsmrl2UJW8rDs3KgifjQwaeciWmkm0oGIXK4chkflwH3Cd0cGHUUfnHX3Z4qf6
- TuqlTXIKur0hx0ZFbfwCfjY0tiZKKImjDMYERq24ICXT9nTc/ekeXR3AIGjbtrjCw9RAjFFEswB
- pKXvaYmGpF95GjO7hYADuW+MfswLG+eHRy1chU63X+2/T2kulcrEqjQVAk33BLeCDFUOywohIXo
- SwKUXA2oTrDWEIrxcXRgzYAIc060ERVeLKqA5CFci9xxdVqN1l+6i+IVEMgklcuW86ObEn3rhVN
- C/PnXNjWAkeX7YsgtEMfhVjuCFU154tbgfsAAYIXngiS4urQASYhy6q+EGaoXGZvNCh063CYTEs
- edXa4LOHllzyjT1gddd3OYJy9zn8LSSHuMlqvjqSB
-X-Google-Smtp-Source: AGHT+IFhE8+SwkEa8me6+KEWOxR3eG8enNDQGCD/ak1MegXpyi9GSX0ewei/IJYN+ZtPhf5c+Kqv7g==
-X-Received: by 2002:a05:6870:6590:b0:2d4:c1f4:4309 with SMTP id
- 586e51a60fabf-2f7919c0f16mr1082131fac.0.1751599419878; 
- Thu, 03 Jul 2025 20:23:39 -0700 (PDT)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-73c9f735144sm245401a34.14.2025.07.03.20.23.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Jul 2025 20:23:39 -0700 (PDT)
-Message-ID: <afc71f1a-cb76-449e-9961-7e77d43ab839@linaro.org>
-Date: Thu, 3 Jul 2025 21:23:37 -0600
+ AJvYcCWm4eEbIwKjp4mdZ8W6MTMgK6Fb/XbuZyoGOHNSxJX2q6aZm1RQU6nt0nm/YPIK7Jv7Mqm6WnwDmO4t@nongnu.org
+X-Gm-Message-State: AOJu0YzEUyVLWHNAR6gO/s8s+GLQY0Uqg2l3raroCENTQzXqwWL+/9Ed
+ f6RvHL+t7pQkCwq5CKvZ0UgAHP2OcCX59/PnXK2foZAYXCH7svsCks8E8kwYcSIQJLaA0tzCb70
+ 37kt6qD7lbJiNY/zdqu6RkILldWfhQ94=
+X-Gm-Gg: ASbGnctjc0yJey+pQZ8tFN/S2bq8htWSApYrN3Yorc8rjN8n56ls3yryx8U7ubirpLF
+ 2W8nUKHB2b4QALx3ZiIc4rCRPjBTtIAEc51NO2GdZSVPWB9XPI867HiEFlfB56c6VLN4P+Bg+HJ
+ 07KF/ZhbGPPK4CVpQnfn0QRZH8pTGz700P0cJOX9KUchDkjrzv6Ff7R2hSfTnuNris3o2Y4UE/1
+ A==
+X-Google-Smtp-Source: AGHT+IEDjtl4x17nVzwh8CIw89Dyz9AuEIELaDE/YJ0WmTZvDqWTujWxAmT1/MNGFN4yfgiIa5ueV9sjGfWTMoD8Phw=
+X-Received: by 2002:a05:6102:4494:b0:4de:81a:7d42 with SMTP id
+ ada2fe7eead31-4f2f170ea7emr293941137.1.1751599737301; Thu, 03 Jul 2025
+ 20:28:57 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 39/39] MAINTAINERS: Add me as reviewer of overall
- accelerators section
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+References: <20250619135545.61956-1-roan.richmond@codethink.co.uk>
+In-Reply-To: <20250619135545.61956-1-roan.richmond@codethink.co.uk>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 4 Jul 2025 13:28:31 +1000
+X-Gm-Features: Ac12FXzzLbweuHcFzM_yNL0LtuVR7DvTwvwMVWOvqC6LaRCgD2t4lOxUDTv4ka0
+Message-ID: <CAKmqyKMQQwHCJVgguGzMxQx16dVB5uD=stAiF8ZYV8fsDF0dmA@mail.gmail.com>
+Subject: Re: [PATCH v3] Add RISCV ZALASR extension
+To: Roan Richmond <roan.richmond@codethink.co.uk>
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
  qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250703173248.44995-1-philmd@linaro.org>
- <20250703173248.44995-40-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250703173248.44995-40-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc31.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e32;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe32.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,31 +97,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/25 11:32, Philippe Mathieu-Daudé wrote:
-> I'd like to be informed of overall changes of accelerators.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Thu, Jun 19, 2025 at 11:56=E2=80=AFPM Roan Richmond
+<roan.richmond@codethink.co.uk> wrote:
+>
+> This is based on version v0.8.3 of the ZALASR specification [1].
+> The specification is listed as in Frozen state [2].
+>
+> [1]: https://github.com/riscv/riscv-zalasr/tree/v0.8.3
+> [2]: https://lf-riscv.atlassian.net/wiki/spaces/HOME/pages/16154882/All+R=
+ISC-V+Specifications+Under+Active+Development
+>
+> Signed-off-by: Roan Richmond <roan.richmond@codethink.co.uk>
 > ---
->   MAINTAINERS | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index e3e08d4607f..a8bf3f9ccfa 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -495,6 +495,7 @@ Guest CPU Cores (other accelerators)
->   Overall
->   M: Richard Henderson <richard.henderson@linaro.org>
->   R: Paolo Bonzini <pbonzini@redhat.com>
-> +M: Philippe Mathieu-Daudé <philmd@linaro.org>
->   S: Maintained
->   F: include/exec/cpu*.h
->   F: include/exec/target_long.h
+>
+> Ping! resending this as no movement on previous send.
+>
+> V3:
+>   - rebased patch onto master branch
+>   - added check for aq on Load Acquire, as pointed out by Alistair Franci=
+s
+>   - added check for rl on Store Release, as mentioned by Alistair Francis
+>
+>  target/riscv/cpu.c                           |   1 +
+>  target/riscv/insn32.decode                   |  10 ++
+>  target/riscv/insn_trans/trans_rvzalasr.c.inc | 120 +++++++++++++++++++
+>  target/riscv/translate.c                     |   1 +
+>  4 files changed, 132 insertions(+)
+>  create mode 100644 target/riscv/insn_trans/trans_rvzalasr.c.inc
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 629ac37501..b52bbf0936 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -128,6 +128,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(zabha, PRIV_VERSION_1_13_0, ext_zabha),
+>      ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
+>      ISA_EXT_DATA_ENTRY(zama16b, PRIV_VERSION_1_13_0, ext_zama16b),
+> +    ISA_EXT_DATA_ENTRY(zalasr, PRIV_VERSION_1_12_0, ext_zalasr),
+>      ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
+>      ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
+>      ISA_EXT_DATA_ENTRY(zfa, PRIV_VERSION_1_12_0, ext_zfa),
+> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+> index cd23b1f3a9..c848c0c1c5 100644
+> --- a/target/riscv/insn32.decode
+> +++ b/target/riscv/insn32.decode
+> @@ -1066,3 +1066,13 @@ amominu_h  11000 . . ..... ..... 001 ..... 0101111=
+ @atom_st
+>  amomaxu_h  11100 . . ..... ..... 001 ..... 0101111 @atom_st
+>  amocas_b    00101 . . ..... ..... 000 ..... 0101111 @atom_st
+>  amocas_h    00101 . . ..... ..... 001 ..... 0101111 @atom_st
+> +
+> +# *** Zalasr Standard Extension ***
+> +lb_aqrl  00110 . . ..... ..... 000 ..... 0101111 @atom_st
+> +lh_aqrl  00110 . . ..... ..... 001 ..... 0101111 @atom_st
+> +lw_aqrl  00110 . . ..... ..... 010 ..... 0101111 @atom_st
+> +ld_aqrl  00110 . . ..... ..... 011 ..... 0101111 @atom_st
+> +sb_aqrl  00111 . . ..... ..... 000 ..... 0101111 @atom_st
+> +sh_aqrl  00111 . . ..... ..... 001 ..... 0101111 @atom_st
+> +sw_aqrl  00111 . . ..... ..... 010 ..... 0101111 @atom_st
+> +sd_aqrl  00111 . . ..... ..... 011 ..... 0101111 @atom_st
+> diff --git a/target/riscv/insn_trans/trans_rvzalasr.c.inc b/target/riscv/=
+insn_trans/trans_rvzalasr.c.inc
+> new file mode 100644
+> index 0000000000..8761508de3
+> --- /dev/null
+> +++ b/target/riscv/insn_trans/trans_rvzalasr.c.inc
+> @@ -0,0 +1,120 @@
+> +/*
+> + * RISC-V translation routines for the ZALASR (Load-Aquire and Store-Rel=
+ease)
+> + * Extension.
+> + *
+> + * Copyright (c) 2025 Roan Richmond, roan.richmond@codethink.co.uk
+> + *
+> + * This program is free software; you can redistribute it and/or modify =
+it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2 or later, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOU=
+T
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License=
+ for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License alo=
+ng with
+> + * this program.  If not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#define REQUIRE_ZALASR(ctx) do {     \
+> +    if (!ctx->cfg_ptr->ext_zalasr) { \
 
-With R:,
+Wait, this variable doesn't exist.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+How are you testing this?
 
-
-r~
+Alistair
 
