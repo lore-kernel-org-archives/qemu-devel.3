@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A776C83030
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 03:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43039C83030
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 03:33:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXXA9-0000Uq-Aj; Thu, 03 Jul 2025 23:32:33 -0400
+	id 1uXXB0-00015H-UR; Thu, 03 Jul 2025 23:33:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uXXA4-0000UO-UW
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 23:32:30 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1uXXAv-00013p-T4
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 23:33:21 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uXXA2-0001ec-2F
- for qemu-devel@nongnu.org; Thu, 03 Jul 2025 23:32:28 -0400
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1uXXAt-0001kr-Nu
+ for qemu-devel@nongnu.org; Thu, 03 Jul 2025 23:33:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751599946; x=1783135946;
+ t=1751599999; x=1783135999;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=mfE/VDlmRHtwZHG5YH1KhJM1ldUSq8FuB9VJ06z5Bmc=;
- b=e+VOiEpNAqlVYUfQXZhx2V5JZYRngq25RfB0IaA8s6RaY4EEa06azfNd
- oEXsx9i9E9nm2+NGVzw8gHYh59LxdM6YvXYrlPKwR7GmVNMhualRTD/m+
- /J4W2piNDDGXoGONsJ8GwwgI13T2J3220I/L4MbcOFQqXIxJcgRdCgXtY
- BlnqrHSVfYvHTKdbSJB7dKwLWlEYw86aQ9Y+euAxJlDK22hg3SEnS2LFG
- 9vX1QEgVYngu9vQSlQCJdzv9o0U/uMN7NrW1VSjWezjTCmO0KdW5cLZLa
- ypJqvFnYAYNbql3zRSxYw+jEPj0IcjnKZYpm/IXs3KRnqTA45GdMVEArs w==;
-X-CSE-ConnectionGUID: Nl52pU9xQR6at8R4OXQBsw==
-X-CSE-MsgGUID: sSGhYQBqTeywcFnWpi3/tQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="41561885"
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="41561885"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2025 20:32:23 -0700
-X-CSE-ConnectionGUID: 9c+vJACqQQ+aOwmjhg/AxA==
-X-CSE-MsgGUID: hMPFATv8QdunGKcDLi/9Ow==
+ bh=74TFkrUkuS4CzdF1kFVu2CDenGtnF7XLOwlmBdCa8jk=;
+ b=YtoYKoEyW8UI34FMKMg2lLRYTr2KVOE/PEmdx5un4IJ6snr1iJhajSOH
+ I1NMmxjwoTGR2bvBOjzgL1sjZf/2+NsqGfNS/VQsK2nW7DjStwL5tcYwy
+ J436uCvT8j94UiFELEz0iAHPmzs8SvbouaKa24sd2/0vTPWc3i2y6NnKp
+ 1C5lhYEyaDtLCoKQ/y6CopF2/g4ObcUzK3oBEMdS2tZA4s8KT8Y5ub0eV
+ 5oZOwTgTeoR8EL+VpYVI08TgQ8fnlwqAvk0QEGPxHhT4dFlTIilEwgrgI
+ EzJNZ0I8vNev0W4MEaeXUt2NLwqDSsthSvHrkX7v8GOoF1lGmP3nXeitO Q==;
+X-CSE-ConnectionGUID: bJNyLUXgTV+j4TYKuWdEFA==
+X-CSE-MsgGUID: 27MFQp+/R2e0h/8+5F9xxw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="57707715"
+X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="57707715"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jul 2025 20:33:16 -0700
+X-CSE-ConnectionGUID: z5cH9KKASfGu/BDf4JMJDg==
+X-CSE-MsgGUID: xAQqCxn1TxSbS5/iJfjY1g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="158571042"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2025 20:32:21 -0700
-Message-ID: <4d57f96b-ee72-484f-a1f5-dadbf773ef64@intel.com>
-Date: Fri, 4 Jul 2025 11:32:18 +0800
+X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="160223311"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.240.37])
+ ([10.124.240.37])
+ by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jul 2025 20:33:12 -0700
+Message-ID: <c52077e1-750b-4e9b-9832-6f767f451cf1@linux.intel.com>
+Date: Fri, 4 Jul 2025 11:33:09 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 02/39] system/memory: Restrict eventfd dispatch_write()
- to emulators
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Subject: Re: [PATCH 1/8] i386/cpu: Introduce cache model for SierraForest
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+Cc: Ewan Hai <ewanhai-oc@zhaoxin.com>, Jason Zeng <jason.zeng@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Tao Su <tao1.su@intel.com>,
+ Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
+ Tejus GK <tejus.gk@nutanix.com>, Manish Mishra <manish.mishra@nutanix.com>,
  qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>
-References: <20250703173248.44995-1-philmd@linaro.org>
- <20250703173248.44995-3-philmd@linaro.org>
+References: <20250626083105.2581859-1-zhao1.liu@intel.com>
+ <20250626083105.2581859-2-zhao1.liu@intel.com>
 Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250703173248.44995-3-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20250626083105.2581859-2-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+Received-SPF: none client-ip=198.175.65.14;
+ envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,59 +91,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/4/2025 1:32 AM, Philippe Mathieu-Daudé wrote:
-> Commit 8c56c1a592b ("memory: emulate ioeventfd") added a !KVM
-> check because the only accelerator available back then were TCG,
-> QTest and KVM. Then commit 126e7f78036 ("kvm: require
-> KVM_CAP_IOEVENTFD and KVM_CAP_IOEVENTFD_ANY_LENGTH") suggested
-> '!KVM' check should be '(TCG || QTest)'. Later more accelerator
-> were added. Implement the suggestion as a safety measure, not
-> dispatching to eventfd when hardware accelerator is used.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+On 6/26/2025 4:30 PM, Zhao Liu wrote:
+> Add the cache model to SierraForest (v3) to better emulate its
+> environment.
+>
+> The cache model is based on SierraForest-SP (Scalable Performance):
+>
+>       --- cache 0 ---
+>       cache type                         = data cache (1)
+>       cache level                        = 0x1 (1)
+>       self-initializing cache level      = true
+>       fully associative cache            = false
+>       maximum IDs for CPUs sharing cache = 0x0 (0)
+>       maximum IDs for cores in pkg       = 0x3f (63)
+>       system coherency line size         = 0x40 (64)
+>       physical line partitions           = 0x1 (1)
+>       ways of associativity              = 0x8 (8)
+>       number of sets                     = 0x40 (64)
+>       WBINVD/INVD acts on lower caches   = false
+>       inclusive to lower caches          = false
+>       complex cache indexing             = false
+>       number of sets (s)                 = 64
+>       (size synth)                       = 32768 (32 KB)
+>       --- cache 1 ---
+>       cache type                         = instruction cache (2)
+>       cache level                        = 0x1 (1)
+>       self-initializing cache level      = true
+>       fully associative cache            = false
+>       maximum IDs for CPUs sharing cache = 0x0 (0)
+>       maximum IDs for cores in pkg       = 0x3f (63)
+>       system coherency line size         = 0x40 (64)
+>       physical line partitions           = 0x1 (1)
+>       ways of associativity              = 0x8 (8)
+>       number of sets                     = 0x80 (128)
+>       WBINVD/INVD acts on lower caches   = false
+>       inclusive to lower caches          = false
+>       complex cache indexing             = false
+>       number of sets (s)                 = 128
+>       (size synth)                       = 65536 (64 KB)
+>       --- cache 2 ---
+>       cache type                         = unified cache (3)
+>       cache level                        = 0x2 (2)
+>       self-initializing cache level      = true
+>       fully associative cache            = false
+>       maximum IDs for CPUs sharing cache = 0x7 (7)
+>       maximum IDs for cores in pkg       = 0x3f (63)
+>       system coherency line size         = 0x40 (64)
+>       physical line partitions           = 0x1 (1)
+>       ways of associativity              = 0x10 (16)
+>       number of sets                     = 0x1000 (4096)
+>       WBINVD/INVD acts on lower caches   = false
+>       inclusive to lower caches          = false
+>       complex cache indexing             = false
+>       number of sets (s)                 = 4096
+>       (size synth)                       = 4194304 (4 MB)
+>       --- cache 3 ---
+>       cache type                         = unified cache (3)
+>       cache level                        = 0x3 (3)
+>       self-initializing cache level      = true
+>       fully associative cache            = false
+>       maximum IDs for CPUs sharing cache = 0x1ff (511)
+>       maximum IDs for cores in pkg       = 0x3f (63)
+>       system coherency line size         = 0x40 (64)
+>       physical line partitions           = 0x1 (1)
+>       ways of associativity              = 0xc (12)
+>       number of sets                     = 0x24000 (147456)
+>       WBINVD/INVD acts on lower caches   = false
+>       inclusive to lower caches          = false
+>       complex cache indexing             = true
+>       number of sets (s)                 = 147456
+>       (size synth)                       = 113246208 (108 MB)
+>       --- cache 4 ---
+>       cache type                         = no more caches (0)
+>
+> Suggested-by: Tejus GK <tejus.gk@nutanix.com>
+> Suggested-by: Jason Zeng <jason.zeng@intel.com>
+> Suggested-by: "Daniel P . Berrangé" <berrange@redhat.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->   system/memory.c | 9 ++-------
->   1 file changed, 2 insertions(+), 7 deletions(-)
-> 
-> diff --git a/system/memory.c b/system/memory.c
-> index 76b44b8220f..4f713889a8e 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -25,7 +25,7 @@
->   #include "qom/object.h"
->   #include "trace.h"
->   #include "system/ram_addr.h"
-> -#include "system/kvm.h"
-> +#include "system/qtest.h"
->   #include "system/runstate.h"
->   #include "system/tcg.h"
->   #include "qemu/accel.h"
-> @@ -1530,12 +1530,7 @@ MemTxResult memory_region_dispatch_write(MemoryRegion *mr,
->   
->       adjust_endianness(mr, &data, op);
->   
-> -    /*
-> -     * FIXME: it's not clear why under KVM the write would be processed
-> -     * directly, instead of going through eventfd.  This probably should
-> -     * test "tcg_enabled() || qtest_enabled()", or should just go away.
-> -     */
-> -    if (!kvm_enabled() &&
-> +    if ((tcg_enabled() || qtest_enabled()) &&
+>  target/i386/cpu.c | 96 +++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 96 insertions(+)
+>
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 28e5b7859fef..fcaa2625b023 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -2883,6 +2883,97 @@ static const CPUCaches epyc_turin_cache_info = {
+>          .no_invd_sharing = true,
+>          .complex_indexing = false,
+>          .share_level = CPU_TOPOLOGY_LEVEL_DIE,
+> +    }
+> +};
+> +
+> +static const CPUCaches xeon_srf_cache_info = {
+> +    .l1d_cache = &(CPUCacheInfo) {
+> +        /* CPUID 0x4.0x0.EAX */
+> +        .type = DATA_CACHE,
+> +        .level = 1,
+> +        .self_init = true,
+> +
+> +        /* CPUID 0x4.0x0.EBX */
+> +        .line_size = 64,
+> +        .partitions = 1,
+> +        .associativity = 8,
+> +
+> +        /* CPUID 0x4.0x0.ECX */
+> +        .sets = 64,
+> +
+> +        /* CPUID 0x4.0x0.EDX */
+> +        .no_invd_sharing = false,
+> +        .inclusive = false,
+> +        .complex_indexing = false,
+> +
+> +        .size = 32 * KiB,
+> +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
+> +    },
+> +    .l1i_cache = &(CPUCacheInfo) {
+> +        /* CPUID 0x4.0x1.EAX */
+> +        .type = INSTRUCTION_CACHE,
+> +        .level = 1,
+> +        .self_init = true,
+> +
+> +        /* CPUID 0x4.0x1.EBX */
+> +        .line_size = 64,
+> +        .partitions = 1,
+> +        .associativity = 8,
+> +
+> +        /* CPUID 0x4.0x1.ECX */
+> +        .sets = 128,
+> +
+> +        /* CPUID 0x4.0x1.EDX */
+> +        .no_invd_sharing = false,
+> +        .inclusive = false,
+> +        .complex_indexing = false,
+> +
+> +        .size = 64 * KiB,
+> +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
+> +    },
+> +    .l2_cache = &(CPUCacheInfo) {
+> +        /* CPUID 0x4.0x2.EAX */
+> +        .type = UNIFIED_CACHE,
+> +        .level = 2,
+> +        .self_init = true,
+> +
+> +        /* CPUID 0x4.0x2.EBX */
+> +        .line_size = 64,
+> +        .partitions = 1,
+> +        .associativity = 16,
+> +
+> +        /* CPUID 0x4.0x2.ECX */
+> +        .sets = 4096,
+> +
+> +        /* CPUID 0x4.0x2.EDX */
+> +        .no_invd_sharing = false,
+> +        .inclusive = false,
+> +        .complex_indexing = false,
+> +
+> +        .size = 4 * MiB,
+> +        .share_level = CPU_TOPOLOGY_LEVEL_MODULE,
+> +    },
+> +    .l3_cache = &(CPUCacheInfo) {
+> +        /* CPUID 0x4.0x3.EAX */
+> +        .type = UNIFIED_CACHE,
+> +        .level = 3,
+> +        .self_init = true,
+> +
+> +        /* CPUID 0x4.0x3.EBX */
+> +        .line_size = 64,
+> +        .partitions = 1,
+> +        .associativity = 12,
+> +
+> +        /* CPUID 0x4.0x3.ECX */
+> +        .sets = 147456,
+> +
+> +        /* CPUID 0x4.0x3.EDX */
+> +        .no_invd_sharing = false,
+> +        .inclusive = false,
+> +        .complex_indexing = true,
+> +
+> +        .size = 108 * MiB,
+> +        .share_level = CPU_TOPOLOGY_LEVEL_SOCKET,
+>      },
+>  };
+>  
+> @@ -5008,6 +5099,11 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+>                      { /* end of list */ }
+>                  }
+>              },
+> +            {
+> +                .version = 3,
+> +                .note = "with srf-sp cache model",
+> +                .cache_info = &xeon_srf_cache_info,
+> +            },
+>              { /* end of list */ },
+>          },
+>      },
 
-The FIXME provides two options:
-1. change to "tcg_enabled() || qtest_enabled()"
-2. remove !kvm_enabled()
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-And as the FIXME said, it's not clear why under KVM the write would be 
-processed directly. Now, the question becomes why under hardware 
-accelerator is used the write would be processed directly instead of 
-going through eventfd. I think it needs to answer this question when we 
-do such change, and it's better to put the answer as the comment in the 
-code.
-
->           memory_region_dispatch_write_eventfds(mr, addr, data, size, attrs)) {
->           return MEMTX_OK;
->       }
 
 
