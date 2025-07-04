@@ -4,86 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CCB6C8303D
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 13:34:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C32FBC8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 13:51:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXgXb-0004Q1-MY; Fri, 04 Jul 2025 09:33:23 -0400
+	id 1uXgoQ-0000II-OQ; Fri, 04 Jul 2025 09:50:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXgXQ-0004M6-1D
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 09:33:19 -0400
-Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uXgXK-0003Zf-FY
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 09:33:09 -0400
-Received: by mail-yb1-xb2c.google.com with SMTP id
- 3f1490d57ef6-e7db5c13088so825588276.1
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 06:33:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751635985; x=1752240785; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DwaDmSI+c+ULG0pcs+kC8v9tTILpDgFwM3hxFcbfcyI=;
- b=dVsEBwQi7oMDmlAbrc/SnV87WqdsKBjUWIfRfMt05aEMa8k8yPorOeke6mFAM/sEsZ
- d1h4+IdureXF7l1N9h1YKYyDp7xTdwzgL4LGTE9dPR4AQ3d+7vAtOyO06vrXxtFFOkBW
- be1S7Qd+qhsJs9OV4fh3W/4Kh9lXlpPkCAOT2WSQXrqD1vxq4VXKPl0DNLfd+j+LK8Mh
- Q04iOU/lnTOgkzFGDphxJvw0kPjM+Oq8O3maXYFlW5K/LndnmNFu4dmhpwaGkDRLSBLk
- gZNam0Oz3XyS02+EzUTI7uVKVHfB1TCKtqJqXiroYX/CVJV1Be9IFmJDml1+O3iOTeGA
- OiwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751635985; x=1752240785;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DwaDmSI+c+ULG0pcs+kC8v9tTILpDgFwM3hxFcbfcyI=;
- b=p5ewrGttgSpAkxbgNkc5D8vEpvOUbRBzVxYYhjy0zuyEH/xnGcVKP1q2edeSqmCu7I
- p756TSnW7FuWvpH6jqY8G63opBM/t6crzqebfurkISPj6AL0biOMANptYetlDeicWdzH
- rymj72qwQ8PmKqloxeQY70m2O3OuR/qw6KwjeHtxL9VyAGG0imnAY/WZ8K5+qAgDyrou
- AValbw5NZDjvKp+iHqNmg/dv9S4m+t1h+0fg/h0PP1ZmxNnZvS8cLMHdX6po1tj+H0YC
- xTzUqUW3is9H762Yx6fh0jYoRCtwoFAs/GufqaC5VslB2tGVLxTxX/MCKzWIsTWxtuNj
- Fkjg==
-X-Gm-Message-State: AOJu0YzYGXzDhH4r0MnBjVv6ctDEX93nMtTJzZkDcb39zHxILs9ohK/D
- 7XtTDXQeZj5A/Y+9ld7EZRLThDiwnAkhACSEEVDmSb5zv3/fcl0pyK+h1zVhZYpovRIo+aFeHh4
- n8PlbxzcBae/lYJhk+cHI43Ao8eZT6sm10RLS9QpwgQ==
-X-Gm-Gg: ASbGnctbDQ+kYkNoR49TE2rZAdUfdE1q0EQOoFulIVBBSzGggYyZ8yfoXxq916o0Sl2
- HRx77QWscWHXWDBBvk/fH++kJV/YQYKXaV1N7JA0Z4CxG7wGYCvxdncyJsaOEmPemPO7eIKQKEv
- oEs2VDOH4BoiWoO5nsuxTss8AqvUnC6qgagnQ/y3kG1w38
-X-Google-Smtp-Source: AGHT+IFCAnEZls9tvJ2p1vJqD4nxu7483ggQioJYTrgA1iflgq8Prd6RdGmdyuEWQ5cYALjCPuoaeUD1L63dzhiU3Gc=
-X-Received: by 2002:a05:6902:2849:b0:e89:9a4a:42cd with SMTP id
- 3f1490d57ef6-e899d13b7c5mr3492974276.12.1751635984913; Fri, 04 Jul 2025
- 06:33:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uXgo8-0000DM-KH
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 09:50:30 -0400
+Received: from mgamail.intel.com ([192.198.163.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uXgo4-0007je-TT
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 09:50:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1751637025; x=1783173025;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=pZbjF9L8/k6Gz3LvBTsPfeBGilQcCyPRRWsfx3142Pk=;
+ b=ES/8PTPJardgYBC6/GntYCXNmzNSjVuaQzwwvC9LSmOGrvzDNvjVJY/F
+ 05XyWm39PWw8JmHen/T155r5LtNCpgqPNFqnd4CMg79lWEesxs47sDs6B
+ ulh3FrEiCs7yoD4aJU6ablvv5kaLhRVsZpgwKm8IXJBiJnXgC3hawXJoP
+ Uj2H6bMUicPVKnuDL3zTcapN4H4np6ycp7L89w8BhMl/qxZvtjT+lu9a5
+ plul+x+lxgJjk+bkEmfZEHgRMjh+0oNETWJkOCCVRRGA/r6fiX9taZFfU
+ 0rcVtpEROG7kDZ6UNDZnRC2giJqgN7xsIgBMvLThbgv6iHHv+/AQyBt39 Q==;
+X-CSE-ConnectionGUID: 4Cs3miGySuGnI4bnZiYc3A==
+X-CSE-MsgGUID: W7q1JV4FTpu2l8yo8y8ZzQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11484"; a="64572408"
+X-IronPort-AV: E=Sophos;i="6.16,287,1744095600"; d="scan'208";a="64572408"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Jul 2025 06:50:21 -0700
+X-CSE-ConnectionGUID: mVQF93FsTUCR5CDaa7jOFg==
+X-CSE-MsgGUID: zcmL0abFRpm1682rMC8YZg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,287,1744095600"; d="scan'208";a="160319453"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Jul 2025 06:50:15 -0700
+Message-ID: <cf64058e-e5a2-4cf2-9851-92925553e72c@intel.com>
+Date: Fri, 4 Jul 2025 21:50:11 +0800
 MIME-Version: 1.0
-References: <20250630130937.3487-1-philmd@linaro.org>
- <20250630130937.3487-3-philmd@linaro.org>
- <CAFEAcA8KBTfJqUbBeUm9_=JoMf133Tt3tcWhJ=sSSy-Yc6Cdcg@mail.gmail.com>
- <eab8d30e-011a-4ec0-ab70-827f6a33a5c5@linaro.org>
-In-Reply-To: <eab8d30e-011a-4ec0-ab70-827f6a33a5c5@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 4 Jul 2025 14:32:53 +0100
-X-Gm-Features: Ac12FXx9p9M4oe1SZla9vu98oaZURWdG2Izp3rDg0x0klQ7UiXTxUxNHCnc1V2k
-Message-ID: <CAFEAcA8sH8HyskYEfoNKFi9N3Bq7e0ze15_ouus82nEZSchrJw@mail.gmail.com>
-Subject: Re: [PATCH 2/6] target/arm: Only allow disabling NEON when using TCG
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] x86/cpu: Handle SMM mode in x86_cpu_dump_state for softmmu
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Kirill Martynov <stdcalllevi@yandex-team.ru>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250523154431.506993-1-stdcalllevi@yandex-team.ru>
+ <3096f21e-d8dd-4434-afbd-ee2b56adb20f@intel.com>
+ <6a18dfcc-1686-4e3e-8e0a-b96d7034f4ab@intel.com>
+ <1d12e519-9f3c-41a0-90ff-8e4655000d21@intel.com>
+ <09AD44D6-E381-46B0-9B86-B248EB9582D7@yandex-team.ru>
+ <4985e648-6505-4321-8e3a-f987b9d03bde@intel.com> <aGeO2zCKep7StDA8@intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <aGeO2zCKep7StDA8@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.11; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.218, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,56 +91,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 4 Jul 2025 at 14:17, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
->
-> On 4/7/25 15:03, Peter Maydell wrote:
-> > On Mon, 30 Jun 2025 at 14:09, Philippe Mathieu-Daud=C3=A9 <philmd@linar=
-o.org> wrote:
-> >>
-> >> Only allow disabling NEON when using TCG.
-> >>
-> >> This avoids confusing user experience:
-> >>
-> >>    $ qemu-system-aarch64 -M virt -accel hvf \
-> >>                          -cpu host,neon=3Doff,vfp=3Doff,vfp-d32=3Doff
-> >>    qemu-system-aarch64: AArch64 CPUs must have both VFP and Neon or ne=
-ither
-> >>
-> >>    $ qemu-system-aarch64 -M virt -accel hvf \
-> >>                          -cpu host,neon=3Doff,vfp=3Doff,vfp-d32=3Doff
-> >>    qemu-system-aarch64: ARM CPUs must have both VFP-D32 and Neon or ne=
-ither
-> >>
-> >>    $ qemu-system-aarch64 -M virt -accel hvf \
-> >>                          -cpu host,neon=3Doff,vfp=3Doff,vfp-d32=3Doff
-> >>    qemu-system-aarch64: can't apply global host-arm-cpu.vfp-d32=3Doff:=
- Property 'host-arm-cpu.vfp-d32' not found
-> >
-> > I don't know about users, but I'm definitely confused.
-> > Aren't these three all the same command line ? What's
-> > the problem it's trying to show ?
->
-> I should have only shared this confusing example:
->
-> $ qemu-system-aarch64 -M virt -accel hvf -cpu host,vfp-d32=3Doff
-> qemu-system-aarch64: can't apply global host-arm-cpu.vfp-d32=3Doff:
-> Property 'host-arm-cpu.vfp-d32' not found
+On 7/4/2025 4:20 PM, Zhao Liu wrote:
+>> yes, QEMU supports separate address space for SMM mode with KVM. It's just
+>> that QEMU doesn't connect it with the CPU address space.
+> 
+> Yes, you're right.
+> 
+> (But initially, it might have been intentional, as KVM's SMM address
+> space is global. It is consistent with the current KVM/memory interface.
+> Creating a separate CPUAddressSpace for each CPU would involve a lot of
+> redundant work.)
 
-That seems correct, though ? We say
-     * Allow user to turn off VFP and Neon support, but only for TCG --
-     * KVM does not currently allow us to lie to the guest about its
-     * ID/feature registers, so the guest always sees what the host has.
-and hvf is currently the same. The bug the patch is fixing
-looks like it is that -accel hvf lets us say '-cpu host,neon=3Doff'
-but it won't actually do what the user might be intending. So
-we should avoid creating the property, as we already do for KVM.
+I think Paolo can answer why didn't associate SMM support with KVM with 
+CPU addresspace, since Paolo enabled the KVM smm support in QEMU. I 
+guess maybe it's just overlooked.
 
-(The other odd thing here is that hvf CPUs don't support
-AArch32, but ARM_FEATURE_NEON is about AArch32. But that's
-a separate thing and we'd need to cross-check that nothing
-aarch64 is incorrectly looking at that feature flag before
-we suppressed it for CPUs without any AArch32 support.)
+>> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+>> index a68485547d50..7d6f4a86d802 100644
+>> --- a/include/exec/cpu-common.h
+>> +++ b/include/exec/cpu-common.h
+>> @@ -130,6 +130,8 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
+>>    */
+>>   void cpu_address_space_destroy(CPUState *cpu, int asidx);
+>>
+>> +void cpu_address_space_add(CPUState *cpu, AddressSpace *as);
+>> +
+> 
+> Instead of introducing a "redundant" interfaces, it's better to lift the
+> restrictions of cpu_address_space_init() on KVM and reuse it.  Moreover,
+> not explicitly setting asidx can be risky.
 
--- PMM
+I thought about it. I just wanted to provide a poc implementation for 
+Kirill to try, so I didn't touch the existing interface by purpose.
+
+Meanwhile, I also had the idea of just calling existing 
+cpu_address_space_init() instead of adjusting it, but it needs to be 
+called for SMRAM as well to cover SMM. This way, it would still create a 
+(when counting the smram, then two) redundant address space for each 
+CPU. But it is how it behaves today that with KVM, each CPU has a 
+separate address space for system memory.
+
+And I'm still investigating if switching to reuse the existing address 
+space instead of creating a new one in cpu_address_space_init() would 
+cause incompatible problem or not. And this is also the reason why I 
+just provided a draft POC diff instead of formal patch.
+
+> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+> index a68485547d50..e3c70ccb1ea0 100644
+> --- a/include/exec/cpu-common.h
+> +++ b/include/exec/cpu-common.h
+> @@ -106,6 +106,8 @@ size_t qemu_ram_pagesize_largest(void);
+>    * @asidx: integer index of this address space
+>    * @prefix: prefix to be used as name of address space
+>    * @mr: the root memory region of address space
+> + * @as: the pre-created AddressSpace. If have, no need to
+> + *      specify @mr.
+>    *
+>    * Add the specified address space to the CPU's cpu_ases list.
+>    * The address space added with @asidx 0 is the one used for the
+> @@ -117,10 +119,10 @@ size_t qemu_ram_pagesize_largest(void);
+>    * cpu->num_ases to the total number of address spaces it needs
+>    * to support.
+>    *
+> - * Note that with KVM only one address space is supported.
+>    */
+>   void cpu_address_space_init(CPUState *cpu, int asidx,
+> -                            const char *prefix, MemoryRegion *mr);
+> +                            const char *prefix, MemoryRegion *mr,
+> +                            AddressSpace *as);
+>   /**
+>    * cpu_address_space_destroy:
+>    * @cpu: CPU for which address space needs to be destroyed
+> diff --git a/system/physmem.c b/system/physmem.c
+> index ff0ca40222d3..15aedfb58055 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -776,16 +776,23 @@ hwaddr memory_region_section_get_iotlb(CPUState *cpu,
+>   #endif /* CONFIG_TCG */
+> 
+>   void cpu_address_space_init(CPUState *cpu, int asidx,
+> -                            const char *prefix, MemoryRegion *mr)
+> +                            const char *prefix, MemoryRegion *mr,
+> +                            AddressSpace *as)
+>   {
+>       CPUAddressSpace *newas;
+> -    AddressSpace *as = g_new0(AddressSpace, 1);
+> -    char *as_name;
+> +    AddressSpace *cpu_as;
+> 
+> -    assert(mr);
+> -    as_name = g_strdup_printf("%s-%d", prefix, cpu->cpu_index);
+> -    address_space_init(as, mr, as_name);
+> -    g_free(as_name);
+> +    if (!as) {
+> +        cpu_as = g_new0(AddressSpace, 1);
+> +        char *as_name;
+> +
+> +        assert(mr);
+> +        as_name = g_strdup_printf("%s-%d", prefix, cpu->cpu_index);
+> +        address_space_init(cpu_as, mr, as_name);
+> +        g_free(as_name);
+> +    } else {
+> +        cpu_as = as;
+> +    }
+> 
+>       /* Target code should have set num_ases before calling us */
+>       assert(asidx < cpu->num_ases);
+> 
+>       if (asidx == 0) {
+>           /* address space 0 gets the convenience alias */
+> -        cpu->as = as;
+> +        cpu->as = cpu_as;
+>       }
+> 
+> -    /* KVM cannot currently support multiple address spaces. */
+> -    assert(asidx == 0 || !kvm_enabled());
+> -
+>       if (!cpu->cpu_ases) {
+>           cpu->cpu_ases = g_new0(CPUAddressSpace, cpu->num_ases);
+>           cpu->cpu_ases_count = cpu->num_ases;
+> @@ -805,12 +809,12 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
+> 
+>       newas = &cpu->cpu_ases[asidx];
+>       newas->cpu = cpu;
+> -    newas->as = as;
+> +    newas->as = cpu_as;
+>       if (tcg_enabled()) {
+>           newas->tcg_as_listener.log_global_after_sync = tcg_log_global_after_sync;
+>           newas->tcg_as_listener.commit = tcg_commit;
+>           newas->tcg_as_listener.name = "tcg";
+> -        memory_listener_register(&newas->tcg_as_listener, as);
+> +        memory_listener_register(&newas->tcg_as_listener, cpu_as);
+>       }
+>   }
+> 
+> ---
+> 
+> In this interface, whether to reuse the existing address space (@as
+> argument) or create a new one for the CPU depends on the maintainer's
+> final opinion anyway. If the choice is to reuse, as in the code above,
+> need to adjust other calling cases. If so, I suggest Kirill handle this
+> in a separate patch.
+> 
+>>   #include "kvm_i386.h"
+>> @@ -90,6 +91,12 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
+>>           kvm_set_guest_phys_bits(cs);
+>>       }
+>>
+>> +    for (int i = 0; i < kvm_state->nr_as; i++) {
+>> +        if (kvm_state->as[i].as) {
+>> +            cpu_address_space_add(cs, kvm_state->as[i].as);
+>> +        }
+>> +    }
+>> +
+> 
+> This will add smram twice, with the following cpu_address_space_add().
+
+No, SMRAM is initialize at machine init done notifier, which is after this.
+
+> Why are all KVM as unconditionally added to each CPU?
+> 
+> Another issue is the SMM AS index would be "unknown"...
+> 
+>>       return true;
+>>   }
+>>
+>> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+>> index 234878c613f6..3ba7b26e5a74 100644
+>> --- a/target/i386/kvm/kvm.c
+>> +++ b/target/i386/kvm/kvm.c
+>> @@ -2700,6 +2700,7 @@ static MemoryRegion smram_as_mem;
+>>
+>>   static void register_smram_listener(Notifier *n, void *unused)
+>>   {
+>> +    CPUState *cpu;
+>>       MemoryRegion *smram =
+>>           (MemoryRegion *) object_resolve_path("/machine/smram", NULL);
+>>
+>> @@ -2724,6 +2725,9 @@ static void register_smram_listener(Notifier *n, void
+>> *unused)
+>>       address_space_init(&smram_address_space, &smram_as_root, "KVM-SMRAM");
+>>       kvm_memory_listener_register(kvm_state, &smram_listener,
+>>                                    &smram_address_space, 1, "kvm-smram");
+>> +    CPU_FOREACH(cpu) {
+>> +        cpu_address_space_add(cpu, &smram_address_space);
+>> +    }
+>>   }
+> 
+> With the cpu_address_space_init(), here could be:
+> 
+> CPU_FOREACH(cpu) {
+> 	/* Ensure SMM Address Space has the index 1.  */
+> 	assert(cpu->num_ases == 1);
+> 	cpu->num_ases = 2;
+> 	cpu_address_space_init(cpu, 1, NULL, NULL, &smram_address_space);
+> }
+> 
+> 
+> 
+
 
