@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B28A6C83F05
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A92F9C83F03
 	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 11:19:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXeOm-0000KZ-UJ; Fri, 04 Jul 2025 07:16:09 -0400
+	id 1uXeOc-00085F-0J; Fri, 04 Jul 2025 07:16:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uXeNH-0005R1-Ce
+ id 1uXeND-0005M5-UU
  for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:14:35 -0400
 Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uXeNF-0004Vc-3q
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:14:35 -0400
+ id 1uXeNB-0004S3-I2
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 07:14:31 -0400
 Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2366e5e4dbaso14995485ad.1
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 04:14:32 -0700 (PDT)
+ d9443c01a7336-23c8a5053c2so2285455ad.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 04:14:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751627671; x=1752232471; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1751627668; x=1752232468; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NqE5fVFQfHyb6UDdosLT6q2NRwyGZ/+U3lfNU21fzaw=;
- b=jxjhTwoKWvq6bLGPBTS+773odY0j1v8roVNUJX0DPrQIAkyYIxCwqgF0orzPUdyfpv
- k/2cqQNRhxTnCoHLeQyiKFAY8PA/KpTx7ExPfvpeZSCVA3BVaS8ZQ54wzjSLZGTaR2SL
- A5DnkGyuPLZVPpIqYkm8nNXw4VkrIrO/Mkx7G/8NplTy6Im3bfGojJUFXrQ7a5gEIbU0
- auSkiDd6GSCs7q7GAyso865UEQ6y+sH4xvnyWYtAas/Jm2G58cvsXXdwXTocgmaKmIW/
- JmXLyoA0M3jb6Fx9LdcCEakFeNu7i4PUIIAnyaLCx9z94bluE3ntCZ8UmQwvHRFuZknd
- QTaQ==
+ bh=6LeQAAogdZ6utUWU8uZD20yEC9hkJc37e9nimWKPLx0=;
+ b=kCJfBjNaW7DnUcznVJSlyQ1k7U6JLfuSVxo6vamiPtPybEH/KKKFAu3ZznGW/CtQev
+ kx7agtkEUdH/ip2EV9O9LBEOiywhF8uhtnqDcP6RuHwOYogCHphdDlR6lXeL2taJvTgy
+ M0zW3nuN11C0qvoYx66+FUeuuebCrwKCNnQ5w6+Q2ihreB7LGrxqqUpKePTtu4sD7jzO
+ UfgYPJIYITq1uk6iqL56PRNN8ywVq+Y7YqdUO0JxoH/noojp83yhPB2QM5nTJC9or/Gy
+ UKgpSfemV0tXJwdiFfUQKVaALxgISqQUIW8yznwYrEf6AY2k1m1jRpgv7FYDS820MzJS
+ 8S5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751627671; x=1752232471;
+ d=1e100.net; s=20230601; t=1751627668; x=1752232468;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NqE5fVFQfHyb6UDdosLT6q2NRwyGZ/+U3lfNU21fzaw=;
- b=jTod3/3uIe24lZ9pfeebGw3atkn/y+pAVIxFZ+AvHi3aQM1B3J0wtbfowRMs/pCkZ1
- 6vgRIomz6foFEB7JzaHeISXO5cnDYpGpBMv9uEOhlnUODc9bTQPgWu0UrowBf9ifPgQj
- vwy3ifCV7nBuUmnD+VxzAN5ZSk+YCT940cPJ2KPneQcdgRaI+lQNQEFT11aR5zcVr5r9
- uVEwov0rsHwQNPS2Eb21Hl5kkm19Bee3ppgMxykVnt6MJuSSK/6+RcCXf+v50n28RiHh
- zZaMqw4xBnMMq0130X8BN5XNmzGP+vJTBvngxgxeGEeU5hkwwn+P1VFATnMoiy3h0M/h
- q6ug==
-X-Gm-Message-State: AOJu0YzUfdmwws8WI2PfJ5QFVyb3FFCHa/DRWwd2c7zKvbd/1xTvDsSH
- pTA0EwASP55sMx5GWnHb41cVxbjq+WVEv4o/JGX/1g6kBgn8fs+qOpvJ7L1P/g==
-X-Gm-Gg: ASbGncvd73HfY3sOA3/zCwm0RXvaMQvLxNL7JS5TZmXBKuwOj/sjqSvtHCjdJ7m8+Xd
- A8Zzh6a9sdzYzMwBkYYPe5Qhs1ixaHAvectZNFZq+9+sxv6doGsuE08yeCSHiGnFEqO+ZKjl+eO
- 0reM4qvb0OX7m9FL7LnmDciBBJKC3rx2AyezioeRbPdowezgkIX8XlGQLX272pziuOeHYzverbl
- 859TfkICR//uNgmei8x3NCLdXD5e/Q3+TodZg8y+wsocTgzDc3ZrWXAeA4HzpJyMFveGUiM6w4A
- hif+JaZnIUdSbqnLi8UQ4jyMdaZwhUf7ObiYSwlXa81b3Qr6b7xMLcGqd3LTm36tPxAmS0N3efM
- 9WCJuLmsS3/Y2BdJ/6Kcr5HlQUctYxm89u6JFLickIqRHytHm3q1edcrMv+TMQDP0jwQ=
-X-Google-Smtp-Source: AGHT+IELRC4nApgmQVoI2EPIDY80ZcIwXWLiU6MMxWxl7m7bEpKxELKvjtWZDJhhfj9h/ZMBiNLiFQ==
-X-Received: by 2002:a17:903:22d0:b0:234:1e11:95a3 with SMTP id
- d9443c01a7336-23c84b6842dmr43353245ad.13.1751627671528; 
- Fri, 04 Jul 2025 04:14:31 -0700 (PDT)
+ bh=6LeQAAogdZ6utUWU8uZD20yEC9hkJc37e9nimWKPLx0=;
+ b=AvwbmgRlTqmOP39ezeVAHnOVStruneEvSELEf8O4s6gUCXULZ5oS4+RWVd80OI2E43
+ fk+gUIol0E59xmiuBA6spLSkDrqyQDgA6fiK9hRIqKkYR5mryvlIfATkKoDbfuBR7jBk
+ wac/1mJV5xD3Fnt/IKhXyEea6gLbiv2N59LzWmUOVFn2zJXOlIOamOOP5k+lVI+TpEoA
+ YMvdi12egre+n9L/2zuVJNs2opooHjFLCWAFUcZx/S2tR7P1WJ2201J0IRqE7FqPj+xG
+ JiksM50+ICblnSGaAdNAYkgEHzuOyf8kZi1ey45whFmzW9fnhZKTjCukq3MyxM1NdAW7
+ LmqQ==
+X-Gm-Message-State: AOJu0YwnItwhCGEfaFhBvmh9fGuWatx2PRJXtcO40XLj8ZlMKUAVZ8bG
+ kE0Q6EyHkVBTawhrpfdNDZAefgXWuQ8S7Qp57sNfjhOzM68W8OERZrThOdwBXw==
+X-Gm-Gg: ASbGnctY1gJIBRIHzp8xSDwvXKKNkpqtle+Qnf5kyPkNvpKlASlghzNyGd2o/Ne++tb
+ 7VM2oie0cUwgisokZR31M6NAQOiI0MaGuHxzARmUFlzGyukmv3fMXPBJNxC+Er/Lp5/zVNb/hkF
+ /tozxDkCEzHzJZrWJhZCDFB7wSi7HYc2O3ggCQQGflZWgo0stebzfkD/i69Lb9pwEk4zrls7gnh
+ LNN95faUgeRZI31BFSCq2x+/57UZk6q0MiLqVyUzlLaAuVp574TfT5AKVfjMvJKBtjpGEBPLJ0I
+ zneylRjYdG4aMA7akILDtlGqjdXYDdRf/FYRuzI76XdXaWVC6Rbw+k/ArX6Lj2I2qzeybt7IZ4s
+ FzXFuAypUn5o1+j+nSyfDB75vTWBM9nUvkn0YNOyrMDwxgZw2vVaLhKyIrDShs1VBwS4=
+X-Google-Smtp-Source: AGHT+IHgIhtJkgUSheu5mR9p8B+GF/abC0ifNtVn4z7tskl9K2HaIPavnUbm7fdqKF38JOIL65FrIA==
+X-Received: by 2002:a17:903:faf:b0:236:9726:7264 with SMTP id
+ d9443c01a7336-23c8609c053mr38721285ad.5.1751627667985; 
+ Fri, 04 Jul 2025 04:14:27 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23c8431a206sm18002655ad.28.2025.07.04.04.14.28
+ d9443c01a7336-23c8431a206sm18002655ad.28.2025.07.04.04.14.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 04:14:31 -0700 (PDT)
+ Fri, 04 Jul 2025 04:14:27 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Alexandre Ghiti <alexghiti@rivosinc.com>,
- Deepak Gupta <debug@rivosinc.com>,
+Cc: alistair23@gmail.com, Vasilis Liaskovitis <vliaskovitis@suse.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Nutty Liu <liujingqi@lanxincomputing.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 40/40] target: riscv: Add Svrsw60t59b extension support
-Date: Fri,  4 Jul 2025 21:12:07 +1000
-Message-ID: <20250704111207.591994-41-alistair.francis@wdc.com>
+Subject: [PULL 39/40] target/riscv: Add a property to set vill bit on reserved
+ usage of vsetvli instruction
+Date: Fri,  4 Jul 2025 21:12:06 +1000
+Message-ID: <20250704111207.591994-40-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250704111207.591994-1-alistair.francis@wdc.com>
 References: <20250704111207.591994-1-alistair.francis@wdc.com>
@@ -107,146 +106,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Vasilis Liaskovitis <vliaskovitis@suse.com>
 
-The Svrsw60t59b extension allows to free the PTE reserved bits 60 and 59
-for software to use.
+Usage of vsetvli instruction is reserved if VLMAX is changed when vsetvli rs1
+and rd arguments are x0.
 
-Reviewed-by: Deepak Gupta <debug@rivosinc.com>
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+In this case, if the new property is true, only the vill bit will be set.
+
+See https://github.com/riscv/riscv-isa-manual/blob/main/src/v-st-ext.adoc#avl-encoding
+According to the spec, the above use cases are reserved, and
+"Implementations may set vill in either case."
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2422
+Signed-off-by: Vasilis Liaskovitis <vliaskovitis@suse.com>
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Nutty Liu<liujingqi@lanxincomputing.com>
-Message-ID: <20250702-dev-alex-svrsw60b59b_v2-v2-1-504ddf0f8530@rivosinc.com>
+Message-ID: <20250618213542.22873-1-vliaskovitis@suse.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/riscv-iommu-bits.h       | 1 +
- target/riscv/cpu_bits.h           | 3 ++-
- target/riscv/cpu_cfg_fields.h.inc | 1 +
- hw/riscv/riscv-iommu.c            | 3 ++-
- target/riscv/cpu.c                | 2 ++
- target/riscv/cpu_helper.c         | 3 ++-
- target/riscv/tcg/tcg-cpu.c        | 8 ++++++++
- 7 files changed, 18 insertions(+), 3 deletions(-)
+ target/riscv/helper.h                   |  2 +-
+ target/riscv/cpu_cfg_fields.h.inc       |  1 +
+ target/riscv/cpu.c                      |  1 +
+ target/riscv/vector_helper.c            | 12 +++++++++++-
+ target/riscv/insn_trans/trans_rvv.c.inc |  4 ++--
+ 5 files changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
-index 1017d73fc6..47fe01bee5 100644
---- a/hw/riscv/riscv-iommu-bits.h
-+++ b/hw/riscv/riscv-iommu-bits.h
-@@ -79,6 +79,7 @@ struct riscv_iommu_pq_record {
- #define RISCV_IOMMU_CAP_SV39            BIT_ULL(9)
- #define RISCV_IOMMU_CAP_SV48            BIT_ULL(10)
- #define RISCV_IOMMU_CAP_SV57            BIT_ULL(11)
-+#define RISCV_IOMMU_CAP_SVRSW60T59B     BIT_ULL(14)
- #define RISCV_IOMMU_CAP_SV32X4          BIT_ULL(16)
- #define RISCV_IOMMU_CAP_SV39X4          BIT_ULL(17)
- #define RISCV_IOMMU_CAP_SV48X4          BIT_ULL(18)
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index e6b3e28386..b62dd82fe7 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -735,7 +735,8 @@ typedef enum {
- #define PTE_SOFT            0x300 /* Reserved for Software */
- #define PTE_PBMT            0x6000000000000000ULL /* Page-based memory types */
- #define PTE_N               0x8000000000000000ULL /* NAPOT translation */
--#define PTE_RESERVED        0x1FC0000000000000ULL /* Reserved bits */
-+#define PTE_RESERVED(svrsw60t59b)    \
-+    (svrsw60t59b ? 0x07C0000000000000ULL : 0x1FC0000000000000ULL) /* Reserved bits */
- #define PTE_ATTR            (PTE_N | PTE_PBMT) /* All attributes bits */
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 85d73e492d..f712b1c368 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -159,7 +159,7 @@ DEF_HELPER_FLAGS_3(hyp_hsv_d, TCG_CALL_NO_WG, void, env, tl, tl)
+ #endif
  
- /* Page table PPN shift amount */
+ /* Vector functions */
+-DEF_HELPER_3(vsetvl, tl, env, tl, tl)
++DEF_HELPER_4(vsetvl, tl, env, tl, tl, tl)
+ DEF_HELPER_5(vle8_v, void, ptr, ptr, tl, env, i32)
+ DEF_HELPER_5(vle16_v, void, ptr, ptr, tl, env, i32)
+ DEF_HELPER_5(vle32_v, void, ptr, ptr, tl, env, i32)
 diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index 98ceb7b340..e2d116f0df 100644
+index 33c4f9bac8..98ceb7b340 100644
 --- a/target/riscv/cpu_cfg_fields.h.inc
 +++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -57,6 +57,7 @@ BOOL_FIELD(ext_svadu)
- BOOL_FIELD(ext_svinval)
- BOOL_FIELD(ext_svnapot)
- BOOL_FIELD(ext_svpbmt)
-+BOOL_FIELD(ext_svrsw60t59b)
- BOOL_FIELD(ext_svvptc)
- BOOL_FIELD(ext_svukte)
- BOOL_FIELD(ext_zdinx)
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index d8b1cb03a8..96a7fbdefc 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -2351,7 +2351,8 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
-     }
-     if (s->enable_g_stage) {
-         s->cap |= RISCV_IOMMU_CAP_SV32X4 | RISCV_IOMMU_CAP_SV39X4 |
--                  RISCV_IOMMU_CAP_SV48X4 | RISCV_IOMMU_CAP_SV57X4;
-+                  RISCV_IOMMU_CAP_SV48X4 | RISCV_IOMMU_CAP_SV57X4 |
-+                  RISCV_IOMMU_CAP_SVRSW60T59B;
-     }
- 
-     if (s->hpm_cntrs > 0) {
+@@ -114,6 +114,7 @@ BOOL_FIELD(ext_supm)
+ BOOL_FIELD(rvv_ta_all_1s)
+ BOOL_FIELD(rvv_ma_all_1s)
+ BOOL_FIELD(rvv_vl_half_avl)
++BOOL_FIELD(rvv_vsetvl_x0_vill)
+ /* Named features  */
+ BOOL_FIELD(ext_svade)
+ BOOL_FIELD(ext_zic64b)
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 6f1d0618f1..d055ddf462 100644
+index e3f8ecef68..6f1d0618f1 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -230,6 +230,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
-     ISA_EXT_DATA_ENTRY(svnapot, PRIV_VERSION_1_12_0, ext_svnapot),
-     ISA_EXT_DATA_ENTRY(svpbmt, PRIV_VERSION_1_12_0, ext_svpbmt),
-+    ISA_EXT_DATA_ENTRY(svrsw60t59b, PRIV_VERSION_1_13_0, ext_svrsw60t59b),
-     ISA_EXT_DATA_ENTRY(svukte, PRIV_VERSION_1_13_0, ext_svukte),
-     ISA_EXT_DATA_ENTRY(svvptc, PRIV_VERSION_1_13_0, ext_svvptc),
-     ISA_EXT_DATA_ENTRY(xtheadba, PRIV_VERSION_1_11_0, ext_xtheadba),
-@@ -1285,6 +1286,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("svinval", ext_svinval, false),
-     MULTI_EXT_CFG_BOOL("svnapot", ext_svnapot, false),
-     MULTI_EXT_CFG_BOOL("svpbmt", ext_svpbmt, false),
-+    MULTI_EXT_CFG_BOOL("svrsw60t59b", ext_svrsw60t59b, false),
-     MULTI_EXT_CFG_BOOL("svvptc", ext_svvptc, true),
+@@ -2632,6 +2632,7 @@ static const Property riscv_cpu_properties[] = {
+     DEFINE_PROP_BOOL("rvv_ta_all_1s", RISCVCPU, cfg.rvv_ta_all_1s, false),
+     DEFINE_PROP_BOOL("rvv_ma_all_1s", RISCVCPU, cfg.rvv_ma_all_1s, false),
+     DEFINE_PROP_BOOL("rvv_vl_half_avl", RISCVCPU, cfg.rvv_vl_half_avl, false),
++    DEFINE_PROP_BOOL("rvv_vsetvl_x0_vill", RISCVCPU, cfg.rvv_vsetvl_x0_vill, false),
  
-     MULTI_EXT_CFG_BOOL("zicntr", ext_zicntr, true),
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 2ed69d7c2d..3479a62cc7 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1309,6 +1309,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-     bool svade = riscv_cpu_cfg(env)->ext_svade;
-     bool svadu = riscv_cpu_cfg(env)->ext_svadu;
-     bool adue = svadu ? env->menvcfg & MENVCFG_ADUE : !svade;
-+    bool svrsw60t59b = riscv_cpu_cfg(env)->ext_svrsw60t59b;
+     /*
+      * write_misa() is marked as experimental for now so mark
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 5dc1c10012..b41c29da0b 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -35,7 +35,7 @@
+ #include <math.h>
  
-     if (first_stage && two_stage && env->virt_enabled) {
-         pbmte = pbmte && (env->henvcfg & HENVCFG_PBMTE);
-@@ -1376,7 +1377,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-         if (riscv_cpu_sxl(env) == MXL_RV32) {
-             ppn = pte >> PTE_PPN_SHIFT;
-         } else {
--            if (pte & PTE_RESERVED) {
-+            if (pte & PTE_RESERVED(svrsw60t59b)) {
-                 qemu_log_mask(LOG_GUEST_ERROR, "%s: reserved bits set in PTE: "
-                               "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_FMT_lx "\n",
-                               __func__, pte_addr, pte);
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 163e7ce364..78fb279184 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -839,6 +839,12 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         cpu->cfg.ext_ssctr = false;
+ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+-                            target_ulong s2)
++                            target_ulong s2, target_ulong x0)
+ {
+     int vlmax, vl;
+     RISCVCPU *cpu = env_archcpu(env);
+@@ -83,6 +83,16 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+     } else {
+         vl = vlmax;
      }
- 
-+    if (cpu->cfg.ext_svrsw60t59b &&
-+        (!cpu->cfg.mmu || mcc->def->misa_mxl_max == MXL_RV32)) {
-+        error_setg(errp, "svrsw60t59b is not supported on RV32 and MMU-less platforms");
-+        return;
++
++    if (cpu->cfg.rvv_vsetvl_x0_vill && x0 && (env->vl != vl)) {
++        /* only set vill bit. */
++        env->vill = 1;
++        env->vtype = 0;
++        env->vl = 0;
++        env->vstart = 0;
++        return 0;
 +    }
 +
-     /*
-      * Disable isa extensions based on priv spec after we
-      * validated and set everything we need.
-@@ -1588,6 +1594,8 @@ static void riscv_init_max_cpu_extensions(Object *obj)
- 
-     if (env->misa_mxl != MXL_RV32) {
-         isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_zcf), false);
-+    } else {
-+        isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_svrsw60t59b), false);
+     env->vl = vl;
+     env->vtype = s2;
+     env->vstart = 0;
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index 4cd030c7eb..610bf9ff30 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -202,7 +202,7 @@ static bool do_vsetvl(DisasContext *s, int rd, int rs1, TCGv s2)
+         s1 = get_gpr(s, rs1, EXT_ZERO);
      }
  
-     /*
+-    gen_helper_vsetvl(dst, tcg_env, s1, s2);
++    gen_helper_vsetvl(dst, tcg_env, s1, s2, tcg_constant_tl((int) (rd == 0 && rs1 == 0)));
+     gen_set_gpr(s, rd, dst);
+     finalize_rvv_inst(s);
+ 
+@@ -222,7 +222,7 @@ static bool do_vsetivli(DisasContext *s, int rd, TCGv s1, TCGv s2)
+ 
+     dst = dest_gpr(s, rd);
+ 
+-    gen_helper_vsetvl(dst, tcg_env, s1, s2);
++    gen_helper_vsetvl(dst, tcg_env, s1, s2, tcg_constant_tl(0));
+     gen_set_gpr(s, rd, dst);
+     finalize_rvv_inst(s);
+     gen_update_pc(s, s->cur_insn_len);
 -- 
 2.50.0
 
