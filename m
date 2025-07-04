@@ -4,92 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBE02C83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 08:32:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04D66C83F05
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 08:38:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXbqQ-0004qk-Kd; Fri, 04 Jul 2025 04:32:30 -0400
+	id 1uXbvN-0006VY-6l; Fri, 04 Jul 2025 04:37:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXbqO-0004qW-E3
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 04:32:28 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uXbqI-0001FO-F8
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 04:32:25 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3a4f379662cso562188f8f.0
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 01:32:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751617940; x=1752222740; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LNRFm4DpSiJ4w69Kjp9TondYYaGPSu18RIpRtHTS29o=;
- b=oHlO/fGKb0qOyLoPk8qKjDKCBVQ/Y6PBT29X7tZonmVgiml+CmE+76bvF1olbek7AJ
- 26YLiA9CGhECCyflaCz+qWR0N3ukcUlVF8z2/8b7EnqiPqxx1C8zTv9uBU11IsXiAHAS
- 4WQ//HzDMcAspx7zA5CS9pnPuvt3T29SCmv4hecAS/zWbFWc47sw26mgO0MiH3MRM2z9
- C1CxSizNmbWX7/025iYbzfRFe4Vb4WVYh3J9FbP/br3/FTRxq8NscuHmCLZO1koJKpdK
- ONb9fUsRf44yIMC46IvHWiaZTVem88oQNmbt4VUgJo6sJ85P8zH+BElCQ67P4VgYflHg
- OpHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751617940; x=1752222740;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LNRFm4DpSiJ4w69Kjp9TondYYaGPSu18RIpRtHTS29o=;
- b=YDXq9NLT2Eln7y64WdSVwL/Erlumi6U2svRbsElXBHLvox8hkJytfeN3nEq2ZiKb3t
- deYBFIzWjmWE7wD8L0c5aCudPepasBAjmdrahviLwhwIZOEtLQVSyr/aE73oXZ685kgf
- 8B0Ipp0Un07OLaNITqQ0h2kpJ83OgHwK2fE7zVLrCNN1yPRf0PMu8J4NBBux8yCeJcbk
- PDoGfcJbnqtmbX4SaQ7JJ2NA53TIk//IPMrEikU22WWGxAomWMQxSbnrHYFktmjMtue9
- tlRnsccFQTxQ6RzOoGDHnhxRZxpdfB/fSteKL2VF7FbpLjy189mB8dUmVeXDQ6sD9Td2
- SHwg==
-X-Gm-Message-State: AOJu0Yw7zVQES5TAkLlmFxr3Pp7DIrxfoXatsq3jTfX6EgAX3UbuhNnt
- VUm5kRlZyo6cZJ4FWMGJ77zzsm+fdw49ayVKp3D+2/I55vj3Iv6rpyyvLafncDKZ4YvykMJdjfb
- LzYfHVYA=
-X-Gm-Gg: ASbGncuJdJzEr7OyPQdV8l1Kl60UEcP67179beptgMSjMWRxG4zMT+bXcuF7QxHY4Kr
- evgoXe7jCoxj1hmCpWeD176HYkY6cEtSWZC4MmPDQ3mVjeAzqG/784FokOFIkdT1coNMGknQG0a
- UGoPCugImgnWFNDs0mQJf5XH3YxipnP1daRc8mFy7olIBqDITREnuvVWAGieX9bQrhN0D+Pldlu
- xvLTcXaFNY4w23v4UnlC2++cmL6S0rjXXf7nBI4pe6V8aJVvrpsEvwKFgMaLAxWgJXKrq+7fSEO
- mbfbiujpr2spsOICTH7Ep7fBZvG/1HcNmpxzPodLw91CHjHLFfpG4G7LHuLcHi74oZg6P+y5nKf
- vm/CY5PkohfcADtJFoEU3ugkFp2IO7A==
-X-Google-Smtp-Source: AGHT+IHVjRWZI7TIh0eKGPguez3Ohh+8H60DhsXyidR6HkftxDz2Jjoq2aSI+J9nfsupGGd13SAI8w==
-X-Received: by 2002:a05:6000:4009:b0:3b4:6577:eed5 with SMTP id
- ffacd0b85a97d-3b496fef620mr1040578f8f.12.1751617939845; 
- Fri, 04 Jul 2025 01:32:19 -0700 (PDT)
-Received: from [192.168.69.218] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b471b9736bsm1896801f8f.60.2025.07.04.01.32.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Jul 2025 01:32:19 -0700 (PDT)
-Message-ID: <f97f016b-7e84-47f4-9ec6-654a5f9e6a63@linaro.org>
-Date: Fri, 4 Jul 2025 10:32:18 +0200
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uXbvL-0006V3-0Y
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 04:37:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uXbvJ-0004KN-7c
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 04:37:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751618252;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=yxaQ+EcmWinLO/Ba1OIN+3Db80U4EeXXX7CeZzYnTRc=;
+ b=e004DMFii+aT+/AQ8bBbibCDBoJzQKgX/w0+XpVqW9uOWDVdrmbDSbjGrZmYAhqU0bP/ot
+ KE+oX6prGxxvyq1O9qcNQWNxdq5t2Su7gcKlX9pQOOJkHRK5hKo+MC8MoTM+boz8QbbjmW
+ ylnGcd3SsSzQIr30lHPfv/Z/Gy5YZKc=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-378-JxGyCDwIOx2sGYpCoJzwHA-1; Fri,
+ 04 Jul 2025 04:37:28 -0400
+X-MC-Unique: JxGyCDwIOx2sGYpCoJzwHA-1
+X-Mimecast-MFC-AGG-ID: JxGyCDwIOx2sGYpCoJzwHA_1751618248
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DC4461954215; Fri,  4 Jul 2025 08:37:27 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.32.43])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 233F8180045B; Fri,  4 Jul 2025 08:37:25 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 00/11] aspeed queue
+Date: Fri,  4 Jul 2025 10:37:12 +0200
+Message-ID: <20250704083723.1410455-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 24/39] accel/nvmm: Expose nvmm_enabled() to common code
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Reinoud Zandijk <reinoud@netbsd.org>
-References: <20250703173248.44995-1-philmd@linaro.org>
- <20250703173248.44995-25-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250703173248.44995-25-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 15
+X-Spam_score: 1.5
+X-Spam_bar: +
+X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.237,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,38 +81,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/25 19:32, Philippe Mathieu-Daudé wrote:
-> Currently nvmm_enabled() is restricted to target-specific code.
-> By defining CONFIG_NVMM_IS_POSSIBLE we allow its use anywhere.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/system/nvmm.h       | 23 ++++++++++++-----------
->   accel/stubs/nvmm-stub.c     | 12 ++++++++++++
->   target/i386/nvmm/nvmm-all.c |  8 +-------
->   accel/stubs/meson.build     |  1 +
->   4 files changed, 26 insertions(+), 18 deletions(-)
->   create mode 100644 accel/stubs/nvmm-stub.c
+The following changes since commit c77283dd5d79149f4e7e9edd00f65416c648ee59:
 
+  Merge tag 'pull-request-2025-07-02' of https://gitlab.com/thuth/qemu into staging (2025-07-03 06:01:41 -0400)
 
-> diff --git a/accel/stubs/nvmm-stub.c b/accel/stubs/nvmm-stub.c
-> new file mode 100644
-> index 00000000000..cc58114ceb3
-> --- /dev/null
-> +++ b/accel/stubs/nvmm-stub.c
-> @@ -0,0 +1,12 @@
-> +/*
-> + * NVMM stubs for QEMU
-> + *
-> + *  Copyright (c) Linaro
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "system/hvf.h"
+are available in the Git repository at:
 
-"system/nvmm.h" ;)
+  https://github.com/legoater/qemu/ tags/pull-aspeed-20250704
+
+for you to fetch changes up to 3a34dad2c0d25cebafed40696bbbdeb7ff4b9c7d:
+
+  tests/functional: Add gb200 tests (2025-07-03 17:36:45 +0200)
+
+----------------------------------------------------------------
+aspeed queue:
+
+* Improved AST2700 SoC modeling (SDMC, SCU)
+* Fixed hardware strapping of 'bletchley-bmc' machine
+* Added new Meta 'catalina-bmc' machine and functional test using OpenBMC
+* Improved AST2600 SCU protection key modeling
+* Introduced AST2600 SCU unit tests
+* Deprecated 'ast2700a0-evb' machine
+* Added new NVIDIA 'gb200-bmc' machine and functional test using OpenBMC
+
+----------------------------------------------------------------
+Ed Tanous (4):
+      hw/arm/aspeed: Add second SPI chip to Aspeed model
+      docs: add support for gb200-bmc
+      hw/arm/aspeed: Add GB200 BMC target
+      tests/functional: Add gb200 tests
+
+Jamin Lin (3):
+      hw/misc/aspeed_sdmc: Skipping dram_init in u-boot for AST2700
+      hw/misc/aspeed_scu: Support the Frequency Counter Control register for AST2700
+      aspeed: Deprecate the ast2700a0-evb machine
+
+Patrick Williams (2):
+      hw/arm/aspeed: bletchley: update hw strap values
+      hw/arm/aspeed: add Catalina machine type
+
+Tan Siewert (2):
+      hw/misc/aspeed_scu: Handle AST2600 protection key registers correctly
+      tests/qtest: Add test for ASPEED SCU
+
+ docs/about/deprecated.rst                        |   8 +
+ docs/system/arm/aspeed.rst                       |   4 +-
+ hw/arm/aspeed_eeprom.h                           |   3 +
+ include/hw/arm/aspeed.h                          |   2 +
+ hw/arm/aspeed.c                                  | 285 ++++++++++++++++++++++-
+ hw/arm/aspeed_eeprom.c                           |  21 ++
+ hw/misc/aspeed_scu.c                             |  22 +-
+ hw/misc/aspeed_sdmc.c                            |   3 +
+ tests/qtest/aspeed_scu-test.c                    | 231 ++++++++++++++++++
+ hw/arm/Kconfig                                   |   1 +
+ tests/functional/aspeed.py                       |   9 +-
+ tests/functional/meson.build                     |   4 +
+ tests/functional/test_arm_aspeed_catalina.py     |  25 ++
+ tests/functional/test_arm_aspeed_gb200nvl_bmc.py |  26 +++
+ tests/qtest/meson.build                          |   1 +
+ 15 files changed, 636 insertions(+), 9 deletions(-)
+ create mode 100644 tests/qtest/aspeed_scu-test.c
+ create mode 100755 tests/functional/test_arm_aspeed_catalina.py
+ create mode 100644 tests/functional/test_arm_aspeed_gb200nvl_bmc.py
 
 
