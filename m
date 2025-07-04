@@ -4,72 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0962C83F09
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DE94C83030
 	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 04:24:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXXxy-0008U9-6C; Fri, 04 Jul 2025 00:24:02 -0400
+	id 1uXXyM-0000A1-EQ; Fri, 04 Jul 2025 00:24:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uXXxv-0008Ty-4p
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 00:23:59 -0400
+ id 1uXXyG-00007A-KC
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 00:24:20 -0400
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uXXxs-0005fp-OM
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 00:23:58 -0400
+ id 1uXXyF-0005k4-3I
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 00:24:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751603037; x=1783139037;
+ t=1751603059; x=1783139059;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=o1Ti4ap9IX3EpjQTCi/FIBX132ZaaBPsZIHR2n5peio=;
- b=B+J6CuWu42arkJ+qZLimLn2BkJofJU2YvwwLm9ch1Djp1+gGRxIFKsXj
- jwMmaaKwUTEfEBEUa8NIH3dkVgiia2oBB7XtxlH2qxuQvRVmJ8K1mBR4m
- IE6FOF1mjtx28NhW9/SYnfd+wF5Fd+GNgRElFgQpubJ6kYpbUrJna/ro1
- p3Rm5A74JnAZSHvVQ6kGLEkiYUxLwj+Fu9jDuQt6zA4Es/u1bY4VwYqP0
- 2iNSKYEMxPYHKoKg446BUNZ5k5zPiYJ4RhMuacySCm4VAohzZO1y9gzin
- /GvYX3mWokJQeI8eiryLffVoxxdEFGOoFcc3sCUCJOpb+3RnCHJPR03FT g==;
-X-CSE-ConnectionGUID: jyKWuwMzRVioMCDT3kPEOw==
-X-CSE-MsgGUID: 0dpdSzEpTw+CH/1pqyrA3A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="53066346"
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="53066346"
+ bh=IonCr8oAnMztQuZpb+KsGbSWrGWygyibaH+1YPsCfpY=;
+ b=EmCPK2DIKI7WIDSKFuIvx9xI5Jg5kahPeYBtIhnk1/+x+TBTxLt/w87W
+ 3w/KtlrArt0XLCMDNku/5m+4/09nZVY7qCJE65x+gIeSk0QDfgYxZMKhn
+ 27CZJfmZrDMbDl95t7gAcb8+5c2CZ7V7bwGAnCZlWOKXM2EeTIeHTrR9e
+ 0z5rkGNtIzYwMLcAcqXYo0LqSwJQpa69NTCewPoR5VGVEedZHWKubC4jS
+ Y/QKFbwJq9Xdh7ePxvmPjxOC19aPz14JxaT8oz5HceYoZEga/BJWrWbFA
+ Gugtmf/kBDt2a3JCwXmvhNnk4APz4M8mYVOaFTiQ32D14PAlKaxOvIYmd g==;
+X-CSE-ConnectionGUID: bsaDobmDToOjbbW06kwSTA==
+X-CSE-MsgGUID: WLN6j6buRG6181YWroOJtg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="53066422"
+X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="53066422"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2025 21:23:54 -0700
-X-CSE-ConnectionGUID: 8s4KpUnBSb+YZkRT201d+g==
-X-CSE-MsgGUID: SW8gJGz2RiWixFRXhEOu1A==
+ 03 Jul 2025 21:24:17 -0700
+X-CSE-ConnectionGUID: RQD+Z72QR4ekfkATTmuXFw==
+X-CSE-MsgGUID: FHeT3dJyQ4CMExXVvC5EcQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="154192718"
+X-IronPort-AV: E=Sophos;i="6.16,286,1744095600"; d="scan'208";a="154192759"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
  ([10.124.247.1])
  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2025 21:23:50 -0700
-Message-ID: <421a0117-c885-4003-94eb-54267a311c7c@intel.com>
-Date: Fri, 4 Jul 2025 12:23:47 +0800
+ 03 Jul 2025 21:24:15 -0700
+Message-ID: <014fde5a-d7ca-4d20-bffb-6ac30f868986@intel.com>
+Date: Fri, 4 Jul 2025 12:24:13 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 07/39] accel/tcg: Remove 'info opcount' and
- @x-query-opcount
+Subject: Re: [PATCH v6 08/39] accel/tcg: Remove profiler leftover
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 References: <20250703173248.44995-1-philmd@linaro.org>
- <20250703173248.44995-8-philmd@linaro.org>
+ <20250703173248.44995-9-philmd@linaro.org>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250703173248.44995-8-philmd@linaro.org>
+In-Reply-To: <20250703173248.44995-9-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.19; envelope-from=xiaoyao.li@intel.com;
@@ -98,16 +91,10 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/4/2025 1:32 AM, Philippe Mathieu-Daudé wrote:
-> Since commit 1b65b4f54c7 ("accel/tcg: remove CONFIG_PROFILER",
-> released with QEMU v8.1.0) we get pointless output:
+> TCG profiler was removed in commit 1b65b4f54c7.
 > 
->    (qemu) info opcount
->    [TCG profiler not compiled]
-> 
-> Remove that unstable and unuseful command.
-> 
+> Fixes: 1b65b4f54c7 ("accel/tcg: remove CONFIG_PROFILER")
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
