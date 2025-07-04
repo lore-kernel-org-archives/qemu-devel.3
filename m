@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33914C83F03
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 692F9C8303D
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Jul 2025 16:58:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uXjjK-00075H-B4; Fri, 04 Jul 2025 12:57:42 -0400
+	id 1uXjjN-0007D0-Ti; Fri, 04 Jul 2025 12:57:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
- id 1uXjjG-0006se-1n
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:57:38 -0400
+ id 1uXjjH-0006w3-20
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:57:39 -0400
 Received: from mail-qv1-xf33.google.com ([2607:f8b0:4864:20::f33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
- id 1uXjjD-0000Ns-Qu
- for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:57:37 -0400
+ id 1uXjjE-0000OR-KU
+ for qemu-devel@nongnu.org; Fri, 04 Jul 2025 12:57:38 -0400
 Received: by mail-qv1-xf33.google.com with SMTP id
- 6a1803df08f44-6fa980d05a8so11377356d6.2
- for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:57:35 -0700 (PDT)
+ 6a1803df08f44-6fd0a7d3949so19301876d6.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Jul 2025 09:57:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1751648254; x=1752253054; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1751648255; x=1752253055; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AWnu/oAAzVkXqcGwl/ibho3UTNb/WrEZ456/ajF/M5o=;
- b=STDolJBsmHvLGG/N6vza4RO0l/YKY0wNIo7CCqUraFe/2hqyCudp57SpFEPGNOfeRd
- RgMy/kdjWY/dWjCdnWKun/x/EEg79Atrx1G4tCIfFdPcZ2zq34fz+RsIOOTRVwBTOa0d
- MgHTv3kVfqEArlQ2Fju9OqnFD41TxPQgjbS3e7U9x5Ea94tpL4XP8eraGcJ5jz/iyR2u
- Onn3plWRhi4h94z0v9hxnjrlDsinHLkDJ3a3WLDNpmE2QECpbvrEXgSiXOHOvyWD91XI
- yfhk4E8Shp7txUBHJfRTA0Lgr5cnDdl8sEtmINcIOCAbEuXnBQayLI2dMjEiHr5fX7xu
- ujXQ==
+ bh=3HwpcHBBUn2dcbW8T3vErv8M1+Kd3LAIXbcCOF5JP6o=;
+ b=IrMCg49LQ/JdasiHdiRzWddu8AYNI7cibVES5ADr0jaZrYzIwfnV5LuR9XDj3YveK9
+ MQxvLRG+HdHxb4FGk+8KlKCLOjVOGWzscUld4TLXa5WZa4O9wYxowxPMS/dePh5CyE1l
+ fShyRNcl0xJJuMgIxlUsHz4EG0n3p+4blMfJu3SF14fthXul0X1Ope0NN4V/M8EXOmy2
+ ns8n0H7yQ77yf6uG+nxwPr0L+J8Lc2DZwi276+rlZ5JKAhIOtgLetb0mIiIwcbT0Spt5
+ l8YL9vQgneyEmcgW+Kp0QwRWotTbPIiMQRhMiuSf+SWDm2eHUE4p905dTZ09W3Vd1R6m
+ QAXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751648254; x=1752253054;
+ d=1e100.net; s=20230601; t=1751648255; x=1752253055;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AWnu/oAAzVkXqcGwl/ibho3UTNb/WrEZ456/ajF/M5o=;
- b=lpqJptM/EDN+HrY5RIuoHmLIgfXRLKIRrI+BUt/gYqlVcnopFNg1SAsS5QgAq3gx+O
- J6FjiAFt8sIzLaki8Pwp5gor4vs5m2R6Xc7hwd+D6KLWg/FRco/vvJx2yl0a3n/2iajt
- tFEkpRTWxRI4PJRa+lsxkCBTkqdlaEmrxnkKfJcT6I0OXF2VQPCkNVnZNbED9Wy7MseB
- AVWyGbnIWsjlwkVKDN9kMC1fAP4Cf4PuclzgiHlHkWDFnIGfNZLLNcS6iJqbTqmJOhvX
- OIz2iJ025QGb+RxMlFErZxJmi4XZ1oCy64VzErr9czoxTatmPzx+zLbgb9pW4Kl0KA70
- fCnw==
-X-Gm-Message-State: AOJu0YzSrU6rY7ok47KRXmcsGpwW2tXunsGXvo3TXnI5VWYyP3+yspZR
- kdmuDOG2fQFe5wvxJoWCMxQPtda4TU94+53DaKfV/uHcHirexmCCBd1k6j+3RQ==
-X-Gm-Gg: ASbGnctnZUClMEspgVQwc5WMiSHDCuf1i+0fA5nQhqr3/qGlIeKAZMFAtRcKklUfsdG
- XvGX/zs8EVSHBNUGr2zXNr+Zbb4bVHjM2vxAQxB6IBA5aRBAaOXNVeCCNmWwclMnvsxSbUYcQpb
- O4x65HLp7GWdkwl8+YHozCRC97cNKTBgp1Kge3h3PgXqyq4QD3SBibbbOA8BChNJjMc4IV94C7b
- W9RYB5rdkv7FImKOjhJyUDyJx5ozzH+eNo9X9KdGdKaAbWmvEFWnUUeOtFRsCedfl0NiTBKRLB9
- EMCfyPBds1JUc6Beli+al7jcTfkpCwg1vQymQrD3hr0lGaj27HWMDZowD13xv7IGzszOxOWeREK
- 6PpHg
-X-Google-Smtp-Source: AGHT+IFD4oC7BgTGZFdig+zVWwyDXA47SZYYpgYdoPP5OqLedpP1sXTfSijlIv/URPVT9aD9Pn63Sw==
-X-Received: by 2002:a05:6214:260e:b0:700:bce1:495a with SMTP id
- 6a1803df08f44-702c6d118bamr38527576d6.1.1751648253785; 
- Fri, 04 Jul 2025 09:57:33 -0700 (PDT)
+ bh=3HwpcHBBUn2dcbW8T3vErv8M1+Kd3LAIXbcCOF5JP6o=;
+ b=m9lVr9Gai2DpcKnFkwm+Kan/hm7d13q/DsrLhBkusrFcP6jy14Cy8nR9KQhLesgUSy
+ OvJQxKVZqrLGLAZD7OYI/Ub621LUBpN5IpGH5m9aVKZUPVBJ365pkENEh2h7Ae7HQG3k
+ Wbpx0Mgh+Nx78CAFzAqpMISm6mVeqKI1CLsvbCFm5qQSauQWc2qFX4aIRFF8HPjJWKdA
+ R5boZG95bWsII73Py0kS8h5nNwZR7V0lxVrq1O/5vbWShMQPE0t5/FyQB71t9g8y80NF
+ XrjxaQwi75YR8jmM38uyD7DVmaqI9993QdISwSinEIWb7z50ZBdB5zWe3LRi6k/FK/W/
+ wl6Q==
+X-Gm-Message-State: AOJu0Yz2726vbivAoVuCNx95t3dDWi1bdu7J2ZpV4O2OR5vf4Mxj11+F
+ 8JVrRt4Kyk0CpKdYe7ldy70RTLyUOZ68oSvpo/3eT85EO9KHDYpluhrG6jHYuA==
+X-Gm-Gg: ASbGncsAOoLiWbnXW1R1Lff0nxwZ7xX0aPQEqgSXNd6QNIZxDaOF8UjCpTxkYXeHqf/
+ oMRioD4+lseIxLyGVMNnCSLChSNqK18smn7EvRY2zaY2CErPf+TK72IA1Zq6Jl+ZlDB0yafnaxD
+ Ih4me3Wqif7ZP63GX3+H1GKSkuK1Y/GJl8/8pkXPf7XBLhGqlrcbLmv6JaTi6e8Vbz0sOsX5C2Q
+ a86NGHKYfx7ErCJc49/IHmWGvt4j9HVI6s3XBm8XMa5tV+KexNny9zlph4X2CIeSve4U2RHZVcH
+ ruWnTcyxPdn3C3g7NMx1/kZbFU3Kx83viRFziiUjt7adDtG8k906Hv0b2f1MfKcDyUpRos64aVS
+ a3CIb
+X-Google-Smtp-Source: AGHT+IEKvExQWSW5j2DvXiXCg+zJSpnE0l+dBmV0L0Owfnpu82/rY7eZrcQGRO1t5lyi4jdLs1NXqg==
+X-Received: by 2002:a05:6214:588b:b0:6fa:a0ac:8d57 with SMTP id
+ 6a1803df08f44-702c6d49559mr41258546d6.12.1751648255272; 
+ Fri, 04 Jul 2025 09:57:35 -0700 (PDT)
 Received: from user-jcksn.myfiosgateway.com
  ([2600:4040:2bcd:3800:e3f4:4cee:828f:52d])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-702c4ccc6easm15345826d6.26.2025.07.04.09.57.33
+ 6a1803df08f44-702c4ccc6easm15345826d6.26.2025.07.04.09.57.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jul 2025 09:57:33 -0700 (PDT)
+ Fri, 04 Jul 2025 09:57:34 -0700 (PDT)
 From: Jackson Donaldson <jackson88044@gmail.com>
 X-Google-Original-From: Jackson Donaldson <jcksn@duck.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-Subject: [PATCH v3 04/11] MAX78000: UART Implementation
-Date: Fri,  4 Jul 2025 12:57:22 -0400
-Message-Id: <20250704165729.208381-5-jcksn@duck.com>
+Subject: [PATCH v3 06/11] MAX78000: GCR Implementation
+Date: Fri,  4 Jul 2025 12:57:24 -0400
+Message-Id: <20250704165729.208381-7-jcksn@duck.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250704165729.208381-1-jcksn@duck.com>
 References: <20250704165729.208381-1-jcksn@duck.com>
@@ -102,54 +102,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit implements UART support for the MAX78000
+This commit implements the Global Control Register
+for the MAX78000
 
 Signed-off-by: Jackson Donaldson <jcksn@duck.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/Kconfig                  |   1 +
- hw/char/Kconfig                 |   3 +
- hw/char/max78000_uart.c         | 285 ++++++++++++++++++++++++++++++++
- hw/char/meson.build             |   1 +
- include/hw/char/max78000_uart.h |  78 +++++++++
- 5 files changed, 368 insertions(+)
- create mode 100644 hw/char/max78000_uart.c
- create mode 100644 include/hw/char/max78000_uart.h
+ hw/arm/Kconfig                 |   1 +
+ hw/misc/Kconfig                |   3 +
+ hw/misc/max78000_gcr.c         | 339 +++++++++++++++++++++++++++++++++
+ hw/misc/meson.build            |   1 +
+ include/hw/misc/max78000_gcr.h | 129 +++++++++++++
+ 5 files changed, 473 insertions(+)
+ create mode 100644 hw/misc/max78000_gcr.c
+ create mode 100644 include/hw/misc/max78000_gcr.h
 
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index e3b419b468..031e0bf59e 100644
+index 031e0bf59e..41bb64458f 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -367,6 +367,7 @@ config MAX78000_SOC
-     bool
+@@ -368,6 +368,7 @@ config MAX78000_SOC
      select ARM_V7M
      select MAX78000_ICC
-+    select MAX78000_UART
+     select MAX78000_UART
++    select MAX78000_GCR
  
  config RASPI
      bool
-diff --git a/hw/char/Kconfig b/hw/char/Kconfig
-index 9d517f3e28..020c0a84bb 100644
---- a/hw/char/Kconfig
-+++ b/hw/char/Kconfig
-@@ -48,6 +48,9 @@ config VIRTIO_SERIAL
-     default y
-     depends on VIRTIO
- 
-+config MAX78000_UART
-+    bool
-+
- config STM32F2XX_USART
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index 781bcf74cc..fde2266b8f 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -47,6 +47,9 @@ config A9SCU
+ config ARM11SCU
      bool
  
-diff --git a/hw/char/max78000_uart.c b/hw/char/max78000_uart.c
++config MAX78000_GCR
++    bool
++
+ config MAX78000_ICC
+     bool
+ 
+diff --git a/hw/misc/max78000_gcr.c b/hw/misc/max78000_gcr.c
 new file mode 100644
-index 0000000000..19506d52ef
+index 0000000000..8c282f3916
 --- /dev/null
-+++ b/hw/char/max78000_uart.c
-@@ -0,0 +1,285 @@
++++ b/hw/misc/max78000_gcr.c
+@@ -0,0 +1,339 @@
 +/*
-+ * MAX78000 UART
++ * MAX78000 Global Control Registers
 + *
 + * Copyright (c) 2025 Jackson Donaldson <jcksn@duck.com>
 + *
@@ -157,378 +158,483 @@ index 0000000000..19506d52ef
 + */
 +
 +#include "qemu/osdep.h"
-+#include "hw/char/max78000_uart.h"
-+#include "hw/irq.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/qdev-properties-system.h"
 +#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "migration/vmstate.h"
 +#include "trace.h"
++#include "hw/irq.h"
++#include "system/runstate.h"
++#include "migration/vmstate.h"
++#include "hw/qdev-properties.h"
++#include "hw/char/max78000_uart.h"
++#include "hw/misc/max78000_gcr.h"
 +
 +
-+static int max78000_uart_can_receive(void *opaque)
++static void max78000_gcr_reset_hold(Object *obj, ResetType type)
 +{
-+    Max78000UartState *s = opaque;
-+    if (!(s->ctrl & UART_BCLKEN)) {
-+        return 0;
-+    }
-+    return fifo8_num_free(&s->rx_fifo);
++    DeviceState *dev = DEVICE(obj);
++    Max78000GcrState *s = MAX78000_GCR(dev);
++    s->sysctrl = 0x21002;
++    s->rst0 = 0;
++    /* All clocks are always ready */
++    s->clkctrl = 0x3e140008;
++    s->pm = 0x3f000;
++    s->pclkdiv = 0;
++    s->pclkdis0 = 0xffffffff;
++    s->memctrl = 0x5;
++    s->memz = 0;
++    s->sysst = 0;
++    s->rst1 = 0;
++    s->pckdis1 = 0xffffffff;
++    s->eventen = 0;
++    s->revision = 0xa1;
++    s->sysie = 0;
++    s->eccerr = 0;
++    s->ecced = 0;
++    s->eccie = 0;
++    s->eccaddr = 0;
 +}
 +
-+static void max78000_update_irq(Max78000UartState *s)
++static uint64_t max78000_gcr_read(void *opaque, hwaddr addr,
++                                     unsigned int size)
 +{
-+    int interrupt_level;
-+
-+    interrupt_level = s->int_fl & s->int_en;
-+    qemu_set_irq(s->irq, interrupt_level);
-+}
-+
-+static void max78000_uart_receive(void *opaque, const uint8_t *buf, int size)
-+{
-+    Max78000UartState *s = opaque;
-+
-+    assert(size <= fifo8_num_free(&s->rx_fifo));
-+
-+    fifo8_push_all(&s->rx_fifo, buf, size);
-+
-+    uint32_t rx_threshold = s->ctrl & 0xf;
-+
-+    if (fifo8_num_used(&s->rx_fifo) >= rx_threshold) {
-+        s->int_fl |= UART_RX_THD;
-+    }
-+
-+    max78000_update_irq(s);
-+}
-+
-+static void max78000_uart_reset_hold(Object *obj, ResetType type)
-+{
-+    Max78000UartState *s = MAX78000_UART(obj);
-+
-+    s->ctrl = 0;
-+    s->status = UART_TX_EM | UART_RX_EM;
-+    s->int_en = 0;
-+    s->int_fl = 0;
-+    s->osr = 0;
-+    s->txpeek = 0;
-+    s->pnr = UART_RTS;
-+    s->fifo = 0;
-+    s->dma = 0;
-+    s->wken = 0;
-+    s->wkfl = 0;
-+    fifo8_reset(&s->rx_fifo);
-+}
-+
-+static uint64_t max78000_uart_read(void *opaque, hwaddr addr,
-+                                       unsigned int size)
-+{
-+    Max78000UartState *s = opaque;
-+    uint64_t retvalue = 0;
-+    switch (addr) {
-+    case UART_CTRL:
-+        retvalue = s->ctrl;
-+        break;
-+    case UART_STATUS:
-+        retvalue = (fifo8_num_used(&s->rx_fifo) << UART_RX_LVL) |
-+                    UART_TX_EM |
-+                    (fifo8_is_empty(&s->rx_fifo) ? UART_RX_EM : 0);
-+        break;
-+    case UART_INT_EN:
-+        retvalue = s->int_en;
-+        break;
-+    case UART_INT_FL:
-+        retvalue = s->int_fl;
-+        break;
-+    case UART_CLKDIV:
-+        retvalue = s->clkdiv;
-+        break;
-+    case UART_OSR:
-+        retvalue = s->osr;
-+        break;
-+    case UART_TXPEEK:
-+        if (!fifo8_is_empty(&s->rx_fifo)) {
-+            retvalue = fifo8_peek(&s->rx_fifo);
-+        }
-+        break;
-+    case UART_PNR:
-+        retvalue = s->pnr;
-+        break;
-+    case UART_FIFO:
-+        if (!fifo8_is_empty(&s->rx_fifo)) {
-+            retvalue = fifo8_pop(&s->rx_fifo);
-+            max78000_update_irq(s);
-+        }
-+        break;
-+    case UART_DMA:
-+        /* DMA not implemented */
-+        retvalue = s->dma;
-+        break;
-+    case UART_WKEN:
-+        retvalue = s->wken;
-+        break;
-+    case UART_WKFL:
-+        retvalue = s->wkfl;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+            "%s: Bad offset 0x%"HWADDR_PRIx"\n", __func__, addr);
-+        break;
-+    }
-+
-+    return retvalue;
-+}
-+
-+static void max78000_uart_write(void *opaque, hwaddr addr,
-+                                  uint64_t val64, unsigned int size)
-+{
-+    Max78000UartState *s = opaque;
-+
-+    uint32_t value = val64;
-+    uint8_t data;
++    Max78000GcrState *s = opaque;
 +
 +    switch (addr) {
-+    case UART_CTRL:
-+        if (value & UART_FLUSH_RX) {
-+            fifo8_reset(&s->rx_fifo);
-+        }
-+        if (value & UART_BCLKEN) {
-+            value = value | UART_BCLKRDY;
-+        }
-+        s->ctrl = value & ~(UART_FLUSH_RX | UART_FLUSH_TX);
++    case SYSCTRL:
++        return s->sysctrl;
 +
-+        /*
-+         * Software can manage UART flow control manually by setting hfc_en
-+         * in UART_CTRL. This would require emulating uart at a lower level,
-+         * and is currently unimplemented.
-+         */
++    case RST0:
++        return s->rst0;
 +
-+        return;
-+    case UART_STATUS:
-+        /* UART_STATUS is read only */
-+        return;
-+    case UART_INT_EN:
-+        s->int_en = value;
-+        return;
-+    case UART_INT_FL:
-+        s->int_fl = s->int_fl & ~(value);
-+        max78000_update_irq(s);
-+        return;
-+    case UART_CLKDIV:
-+        s->clkdiv = value;
-+        return;
-+    case UART_OSR:
-+        s->osr = value;
-+        return;
-+    case UART_PNR:
-+        s->pnr = value;
-+        return;
-+    case UART_FIFO:
-+        data = value & 0xff;
-+        /*
-+         * XXX this blocks entire thread. Rewrite to use
-+         * qemu_chr_fe_write and background I/O callbacks
-+         */
-+        qemu_chr_fe_write_all(&s->chr, &data, 1);
++    case CLKCTRL:
++        return s->clkctrl;
 +
-+        /* TX is always empty */
-+        s->int_fl |= UART_TX_HE;
-+        max78000_update_irq(s);
++    case PM:
++        return s->pm;
 +
-+        return;
-+    case UART_DMA:
-+        /* DMA not implemented */
-+        s->dma = value;
-+        return;
-+    case UART_WKEN:
-+        s->wken = value;
-+        return;
-+    case UART_WKFL:
-+        s->wkfl = value;
-+        return;
++    case PCLKDIV:
++        return s->pclkdiv;
++
++    case PCLKDIS0:
++        return s->pclkdis0;
++
++    case MEMCTRL:
++        return s->memctrl;
++
++    case MEMZ:
++        return s->memz;
++
++    case SYSST:
++        return s->sysst;
++
++    case RST1:
++        return s->rst1;
++
++    case PCKDIS1:
++        return s->pckdis1;
++
++    case EVENTEN:
++        return s->eventen;
++
++    case REVISION:
++        return s->revision;
++
++    case SYSIE:
++        return s->sysie;
++
++    case ECCERR:
++        return s->eccerr;
++
++    case ECCED:
++        return s->ecced;
++
++    case ECCIE:
++        return s->eccie;
++
++    case ECCADDR:
++        return s->eccaddr;
++
 +    default:
 +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"
 +            HWADDR_PRIx "\n", __func__, addr);
++        return 0;
++
 +    }
 +}
 +
-+static const MemoryRegionOps max78000_uart_ops = {
-+    .read = max78000_uart_read,
-+    .write = max78000_uart_write,
++static void max78000_gcr_write(void *opaque, hwaddr addr,
++                       uint64_t val64, unsigned int size)
++{
++    Max78000GcrState *s = opaque;
++    uint32_t val = val64;
++    uint8_t zero[0xc000] = {0};
++    switch (addr) {
++    case SYSCTRL:
++        /* Checksum calculations always pass immediately */
++        s->sysctrl = (val & 0x30000) | 0x1002;
++        break;
++
++    case RST0:
++        if (val & SYSTEM_RESET) {
++            qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
++        }
++        if (val & PERIPHERAL_RESET) {
++            /*
++             * Peripheral reset resets all peripherals. The CPU
++             * retains its state. The GPIO, watchdog timers, AoD,
++             * RAM retention, and general control registers (GCR),
++             * including the clock configuration, are unaffected.
++             */
++            val = UART2_RESET | UART1_RESET | UART0_RESET |
++                    ADC_RESET | CNN_RESET | TRNG_RESET |
++                    RTC_RESET | I2C0_RESET | SPI1_RESET |
++                    TMR3_RESET | TMR2_RESET | TMR1_RESET |
++                    TMR0_RESET | WDT0_RESET | DMA_RESET;
++        }
++        if (val & SOFT_RESET) {
++            /* Soft reset also resets GPIO */
++            val = UART2_RESET | UART1_RESET | UART0_RESET |
++                    ADC_RESET | CNN_RESET | TRNG_RESET |
++                    RTC_RESET | I2C0_RESET | SPI1_RESET |
++                    TMR3_RESET | TMR2_RESET | TMR1_RESET |
++                    TMR0_RESET | GPIO1_RESET | GPIO0_RESET |
++                    DMA_RESET;
++        }
++        if (val & UART2_RESET) {
++            device_cold_reset(s->uart2);
++        }
++        if (val & UART1_RESET) {
++            device_cold_reset(s->uart1);
++        }
++        if (val & UART0_RESET) {
++            device_cold_reset(s->uart0);
++        }
++        /* TODO: As other devices are implemented, add them here */
++        break;
++
++    case CLKCTRL:
++        s->clkctrl = val | SYSCLK_RDY;
++        break;
++
++    case PM:
++        s->pm = val;
++        break;
++
++    case PCLKDIV:
++        s->pclkdiv = val;
++        break;
++
++    case PCLKDIS0:
++        s->pclkdis0 = val;
++        break;
++
++    case MEMCTRL:
++        s->memctrl = val;
++        break;
++
++    case MEMZ:
++        if (val & ram0) {
++            address_space_write(&s->sram_as, SYSRAM0_START,
++                                MEMTXATTRS_UNSPECIFIED, zero, 0x8000);
++        }
++        if (val & ram1) {
++            address_space_write(&s->sram_as, SYSRAM1_START,
++                                MEMTXATTRS_UNSPECIFIED, zero, 0x8000);
++        }
++        if (val & ram2) {
++            address_space_write(&s->sram_as, SYSRAM2_START,
++                                MEMTXATTRS_UNSPECIFIED, zero, 0xC000);
++        }
++        if (val & ram3) {
++            address_space_write(&s->sram_as, SYSRAM3_START,
++                                MEMTXATTRS_UNSPECIFIED, zero, 0x4000);
++        }
++        break;
++
++    case SYSST:
++        s->sysst = val;
++        break;
++
++    case RST1:
++        /* TODO: As other devices are implemented, add them here */
++        s->rst1 = val;
++        break;
++
++    case PCKDIS1:
++        s->pckdis1 = val;
++        break;
++
++    case EVENTEN:
++        s->eventen = val;
++        break;
++
++    case REVISION:
++        s->revision = val;
++        break;
++
++    case SYSIE:
++        s->sysie = val;
++        break;
++
++    case ECCERR:
++        s->eccerr = val;
++        break;
++
++    case ECCED:
++        s->ecced = val;
++        break;
++
++    case ECCIE:
++        s->eccie = val;
++        break;
++
++    case ECCADDR:
++        s->eccaddr = val;
++        break;
++
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIx "\n",
++                      __func__, addr);
++        break;
++
++    }
++}
++
++static const Property max78000_gcr_properties[] = {
++    DEFINE_PROP_LINK("sram", Max78000GcrState, sram,
++                     TYPE_MEMORY_REGION, MemoryRegion*),
++    DEFINE_PROP_LINK("uart0", Max78000GcrState, uart0,
++                     TYPE_MAX78000_UART, DeviceState*),
++    DEFINE_PROP_LINK("uart1", Max78000GcrState, uart1,
++                     TYPE_MAX78000_UART, DeviceState*),
++    DEFINE_PROP_LINK("uart2", Max78000GcrState, uart2,
++                     TYPE_MAX78000_UART, DeviceState*),
++};
++
++static const MemoryRegionOps max78000_gcr_ops = {
++    .read = max78000_gcr_read,
++    .write = max78000_gcr_write,
 +    .endianness = DEVICE_LITTLE_ENDIAN,
 +    .valid.min_access_size = 4,
 +    .valid.max_access_size = 4,
 +};
 +
-+static const Property max78000_uart_properties[] = {
-+    DEFINE_PROP_CHR("chardev", Max78000UartState, chr),
-+};
-+
-+static const VMStateDescription max78000_uart_vmstate = {
-+    .name = TYPE_MAX78000_UART,
++static const VMStateDescription vmstate_max78000_gcr = {
++    .name = TYPE_MAX78000_GCR,
 +    .version_id = 1,
 +    .minimum_version_id = 1,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_UINT32(ctrl, Max78000UartState),
-+        VMSTATE_UINT32(status, Max78000UartState),
-+        VMSTATE_UINT32(int_en, Max78000UartState),
-+        VMSTATE_UINT32(int_fl, Max78000UartState),
-+        VMSTATE_UINT32(clkdiv, Max78000UartState),
-+        VMSTATE_UINT32(osr, Max78000UartState),
-+        VMSTATE_UINT32(txpeek, Max78000UartState),
-+        VMSTATE_UINT32(pnr, Max78000UartState),
-+        VMSTATE_UINT32(fifo, Max78000UartState),
-+        VMSTATE_UINT32(dma, Max78000UartState),
-+        VMSTATE_UINT32(wken, Max78000UartState),
-+        VMSTATE_UINT32(wkfl, Max78000UartState),
-+        VMSTATE_FIFO8(rx_fifo, Max78000UartState),
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(sysctrl, Max78000GcrState),
++        VMSTATE_UINT32(rst0, Max78000GcrState),
++        VMSTATE_UINT32(clkctrl, Max78000GcrState),
++        VMSTATE_UINT32(pm, Max78000GcrState),
++        VMSTATE_UINT32(pclkdiv, Max78000GcrState),
++        VMSTATE_UINT32(pclkdis0, Max78000GcrState),
++        VMSTATE_UINT32(memctrl, Max78000GcrState),
++        VMSTATE_UINT32(memz, Max78000GcrState),
++        VMSTATE_UINT32(sysst, Max78000GcrState),
++        VMSTATE_UINT32(rst1, Max78000GcrState),
++        VMSTATE_UINT32(pckdis1, Max78000GcrState),
++        VMSTATE_UINT32(eventen, Max78000GcrState),
++        VMSTATE_UINT32(revision, Max78000GcrState),
++        VMSTATE_UINT32(sysie, Max78000GcrState),
++        VMSTATE_UINT32(eccerr, Max78000GcrState),
++        VMSTATE_UINT32(ecced, Max78000GcrState),
++        VMSTATE_UINT32(eccie, Max78000GcrState),
++        VMSTATE_UINT32(eccaddr, Max78000GcrState),
 +        VMSTATE_END_OF_LIST()
 +    }
 +};
 +
-+static void max78000_uart_init(Object *obj)
++static void max78000_gcr_init(Object *obj)
 +{
-+    Max78000UartState *s = MAX78000_UART(obj);
-+    fifo8_create(&s->rx_fifo, 8);
++    Max78000GcrState *s = MAX78000_GCR(obj);
 +
-+    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
-+
-+    memory_region_init_io(&s->mmio, obj, &max78000_uart_ops, s,
-+                          TYPE_MAX78000_UART, 0x400);
++    memory_region_init_io(&s->mmio, obj, &max78000_gcr_ops, s,
++                          TYPE_MAX78000_GCR, 0x400);
 +    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
++
 +}
 +
-+static void max78000_uart_realize(DeviceState *dev, Error **errp)
++static void max78000_gcr_realize(DeviceState *dev, Error **errp)
 +{
-+    Max78000UartState *s = MAX78000_UART(dev);
++    Max78000GcrState *s = MAX78000_GCR(dev);
 +
-+    qemu_chr_fe_set_handlers(&s->chr, max78000_uart_can_receive,
-+                             max78000_uart_receive, NULL, NULL,
-+                             s, NULL, true);
++    address_space_init(&s->sram_as, s->sram, "sram");
 +}
 +
-+static void max78000_uart_class_init(ObjectClass *klass, const void *data)
++static void max78000_gcr_class_init(ObjectClass *klass, const void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
 +    ResettableClass *rc = RESETTABLE_CLASS(klass);
 +
-+    rc->phases.hold = max78000_uart_reset_hold;
++    device_class_set_props(dc, max78000_gcr_properties);
 +
-+    device_class_set_props(dc, max78000_uart_properties);
-+    dc->realize = max78000_uart_realize;
-+
-+    dc->vmsd = &max78000_uart_vmstate;
++    dc->realize = max78000_gcr_realize;
++    dc->vmsd = &vmstate_max78000_gcr;
++    rc->phases.hold = max78000_gcr_reset_hold;
 +}
 +
-+static const TypeInfo max78000_uart_info = {
-+    .name          = TYPE_MAX78000_UART,
++static const TypeInfo max78000_gcr_info = {
++    .name          = TYPE_MAX78000_GCR,
 +    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(Max78000UartState),
-+    .instance_init = max78000_uart_init,
-+    .class_init    = max78000_uart_class_init,
++    .instance_size = sizeof(Max78000GcrState),
++    .instance_init = max78000_gcr_init,
++    .class_init     = max78000_gcr_class_init,
 +};
 +
-+static void max78000_uart_register_types(void)
++static void max78000_gcr_register_types(void)
 +{
-+    type_register_static(&max78000_uart_info);
++    type_register_static(&max78000_gcr_info);
 +}
 +
-+type_init(max78000_uart_register_types)
-diff --git a/hw/char/meson.build b/hw/char/meson.build
-index 4e439da8b9..a9e1dc26c0 100644
---- a/hw/char/meson.build
-+++ b/hw/char/meson.build
-@@ -26,6 +26,7 @@ system_ss.add(when: 'CONFIG_AVR_USART', if_true: files('avr_usart.c'))
- system_ss.add(when: 'CONFIG_COLDFIRE', if_true: files('mcf_uart.c'))
- system_ss.add(when: 'CONFIG_DIGIC', if_true: files('digic-uart.c'))
- system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_uart.c'))
-+system_ss.add(when: 'CONFIG_MAX78000_UART', if_true: files('max78000_uart.c'))
- system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_uart.c'))
- system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_aux.c'))
- system_ss.add(when: 'CONFIG_RENESAS_SCI', if_true: files('renesas_sci.c'))
-diff --git a/include/hw/char/max78000_uart.h b/include/hw/char/max78000_uart.h
++type_init(max78000_gcr_register_types)
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index a21a994ff8..283d06dad4 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -70,6 +70,7 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files(
+   'imx_ccm.c',
+   'imx_rngc.c',
+ ))
++system_ss.add(when: 'CONFIG_MAX78000_GCR', if_true: files('max78000_gcr.c'))
+ system_ss.add(when: 'CONFIG_MAX78000_ICC', if_true: files('max78000_icc.c'))
+ system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files(
+   'npcm_clk.c',
+diff --git a/include/hw/misc/max78000_gcr.h b/include/hw/misc/max78000_gcr.h
 new file mode 100644
-index 0000000000..cf90d51dbf
+index 0000000000..f04c8a3ee7
 --- /dev/null
-+++ b/include/hw/char/max78000_uart.h
-@@ -0,0 +1,78 @@
++++ b/include/hw/misc/max78000_gcr.h
+@@ -0,0 +1,129 @@
 +/*
-+ * MAX78000 UART
++ * MAX78000 Global Control Register
 + *
 + * Copyright (c) 2025 Jackson Donaldson <jcksn@duck.com>
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+
-+#ifndef HW_MAX78000_UART_H
-+#define HW_MAX78000_UART_H
++#ifndef HW_MAX78000_GCR_H
++#define HW_MAX78000_GCR_H
 +
 +#include "hw/sysbus.h"
-+#include "chardev/char-fe.h"
-+#include "qemu/fifo8.h"
 +#include "qom/object.h"
 +
-+#define UART_CTRL       0x0
-+#define UART_STATUS     0x4
-+#define UART_INT_EN     0x8
-+#define UART_INT_FL     0xc
-+#define UART_CLKDIV     0x10
-+#define UART_OSR        0x14
-+#define UART_TXPEEK     0x18
-+#define UART_PNR        0x1c
-+#define UART_FIFO       0x20
-+#define UART_DMA        0x30
-+#define UART_WKEN       0x34
-+#define UART_WKFL       0x38
++#define TYPE_MAX78000_GCR "max78000-gcr"
++OBJECT_DECLARE_SIMPLE_TYPE(Max78000GcrState, MAX78000_GCR)
 +
-+/* CTRL */
-+#define UART_CTF_DIS    (1 << 7)
-+#define UART_FLUSH_TX   (1 << 8)
-+#define UART_FLUSH_RX   (1 << 9)
-+#define UART_BCLKEN     (1 << 15)
-+#define UART_BCLKRDY    (1 << 19)
++#define SYSCTRL     0x0
++#define RST0        0x4
++#define CLKCTRL     0x8
++#define PM          0xc
++#define PCLKDIV     0x18
++#define PCLKDIS0    0x24
++#define MEMCTRL     0x28
++#define MEMZ        0x2c
++#define SYSST       0x40
++#define RST1        0x44
++#define PCKDIS1     0x48
++#define EVENTEN     0x4c
++#define REVISION    0x50
++#define SYSIE       0x54
++#define ECCERR      0x64
++#define ECCED       0x68
++#define ECCIE       0x6c
++#define ECCADDR     0x70
 +
-+/* STATUS */
-+#define UART_RX_LVL     8
-+#define UART_TX_EM      (1 << 6)
-+#define UART_RX_FULL    (1 << 5)
-+#define UART_RX_EM      (1 << 4)
++/* RST0 */
++#define SYSTEM_RESET (1 << 31)
++#define PERIPHERAL_RESET (1 << 30)
++#define SOFT_RESET (1 << 29)
++#define UART2_RESET (1 << 28)
 +
-+/* PNR (Pin Control Register) */
-+#define UART_CTS        1
-+#define UART_RTS        (1 << 1)
++#define ADC_RESET (1 << 26)
++#define CNN_RESET (1 << 25)
++#define TRNG_RESET (1 << 24)
 +
-+/* INT_EN / INT_FL */
-+#define UART_RX_THD     (1 << 4)
-+#define UART_TX_HE      (1 << 6)
++#define RTC_RESET (1 << 17)
++#define I2C0_RESET (1 << 16)
 +
-+#define UART_RXBUFLEN   0x100
-+#define TYPE_MAX78000_UART "max78000-uart"
-+OBJECT_DECLARE_SIMPLE_TYPE(Max78000UartState, MAX78000_UART)
++#define SPI1_RESET (1 << 13)
++#define UART1_RESET (1 << 12)
++#define UART0_RESET (1 << 11)
 +
-+struct Max78000UartState {
++#define TMR3_RESET (1 << 8)
++#define TMR2_RESET (1 << 7)
++#define TMR1_RESET (1 << 6)
++#define TMR0_RESET (1 << 5)
++
++#define GPIO1_RESET (1 << 3)
++#define GPIO0_RESET (1 << 2)
++#define WDT0_RESET (1 << 1)
++#define DMA_RESET (1 << 0)
++
++/* CLKCTRL */
++#define SYSCLK_RDY (1 << 13)
++
++/* MEMZ */
++#define ram0 (1 << 0)
++#define ram1 (1 << 1)
++#define ram2 (1 << 2)
++#define ram3 (1 << 3)
++
++/* RST1 */
++#define CPU1_RESET (1 << 31)
++
++#define SIMO_RESET (1 << 25)
++#define DVS_RESET (1 << 24)
++
++#define I2C2_RESET (1 << 20)
++#define I2S_RESET (1 << 19)
++
++#define SMPHR_RESET (1 << 16)
++
++#define SPI0_RESET (1 << 11)
++#define AES_RESET (1 << 10)
++#define CRC_RESET (1 << 9)
++
++#define PT_RESET (1 << 1)
++#define I2C1_RESET (1 << 0)
++
++
++#define SYSRAM0_START 0x20000000
++#define SYSRAM1_START 0x20008000
++#define SYSRAM2_START 0x20010000
++#define SYSRAM3_START 0x2001C000
++
++struct Max78000GcrState {
 +    SysBusDevice parent_obj;
 +
 +    MemoryRegion mmio;
 +
-+    uint32_t ctrl;
-+    uint32_t status;
-+    uint32_t int_en;
-+    uint32_t int_fl;
-+    uint32_t clkdiv;
-+    uint32_t osr;
-+    uint32_t txpeek;
-+    uint32_t pnr;
-+    uint32_t fifo;
-+    uint32_t dma;
-+    uint32_t wken;
-+    uint32_t wkfl;
++    uint32_t sysctrl;
++    uint32_t rst0;
++    uint32_t clkctrl;
++    uint32_t pm;
++    uint32_t pclkdiv;
++    uint32_t pclkdis0;
++    uint32_t memctrl;
++    uint32_t memz;
++    uint32_t sysst;
++    uint32_t rst1;
++    uint32_t pckdis1;
++    uint32_t eventen;
++    uint32_t revision;
++    uint32_t sysie;
++    uint32_t eccerr;
++    uint32_t ecced;
++    uint32_t eccie;
++    uint32_t eccaddr;
 +
-+    Fifo8 rx_fifo;
++    MemoryRegion *sram;
++    AddressSpace sram_as;
 +
-+    CharBackend chr;
-+    qemu_irq irq;
++    DeviceState *uart0;
++    DeviceState *uart1;
++    DeviceState *uart2;
++
 +};
-+#endif /* HW_STM32F2XX_USART_H */
++
++#endif
 -- 
 2.34.1
 
