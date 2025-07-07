@@ -4,70 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3C1FC8303C
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 09:57:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59DC4C83F07
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 10:01:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYibD-0007mX-3B; Mon, 07 Jul 2025 05:57:23 -0400
+	id 1uYieq-0002bD-UG; Mon, 07 Jul 2025 06:01:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1uYib3-0007jC-2X
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 05:57:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1uYib1-00023X-Hi
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 05:57:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751882229;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=KO/848AFze51SF+thiHgkzVZ2ibmg/Rqf1ZMBvbfj6E=;
- b=EvLYgpfgr6LcOzXtHEBimBZnCPQV9hIXUaAIxEKfKBSdJuZcDeBl93BdFLHTfKD2zfFMUL
- 3LphjRNvazJoWqpB5q+Nl63E6ImXlLaBx72LSCwk2MFV5M/Kg8FtQhZKeg18plnMGs6vsc
- qakDEJgtnu/oe2AAT3ybffdhfLP2shI=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-313-Px6xDRDLMfWIsCmxhihMUA-1; Mon,
- 07 Jul 2025 05:55:56 -0400
-X-MC-Unique: Px6xDRDLMfWIsCmxhihMUA-1
-X-Mimecast-MFC-AGG-ID: Px6xDRDLMfWIsCmxhihMUA_1751882156
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BC9561955EC1; Mon,  7 Jul 2025 09:55:55 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.7])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 754ED19560AB; Mon,  7 Jul 2025 09:55:53 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: stefanb@linux.vnet.ibm.com, yanqzhan@redhat.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH] tpm: "qemu -tpmdev help" should return success
-Date: Mon,  7 Jul 2025 13:55:50 +0400
-Message-ID: <20250707095550.2049280-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uYieg-0002ZI-Qb
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 06:01:00 -0400
+Received: from mail-yb1-xb29.google.com ([2607:f8b0:4864:20::b29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uYieZ-0002bb-Il
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 06:00:56 -0400
+Received: by mail-yb1-xb29.google.com with SMTP id
+ 3f1490d57ef6-e819ebc3144so2541051276.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 03:00:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751882449; x=1752487249; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OaUdMQcxOXRLk47Ye9FXQboOl+cPo2mgmn2mPBloldc=;
+ b=o9ffTRUWR0KWXg3sKndJB+yeB8M2+irkp6TK5yfB042J8xHXoguFPY6fPpGOifzt8m
+ ywh70t4DCqJ8xNF7WLohiiS0eRQa2v4eBp8LeOoXfvfj5/hBgrnQV3VsezfTZ2Kz3VfJ
+ I4qEIBbvwm7xEwL+G7Jrc0//Y/GjcJLxp5jmT132zvDhQxDRl/29k07Oi7aiWuOIc5RO
+ Pe3MQz30KBhxSTYwudWvH37mleSKozq0PGwzwZpqT3AZ50Ocv307ONKQgphxLIViWp4E
+ Nn8BCfVeA3qfig0eTQ239R867xcdwJxJ/kW30SCM8jx12QxRuxDwxssWqYkXHgxX2QOt
+ Of8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751882449; x=1752487249;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=OaUdMQcxOXRLk47Ye9FXQboOl+cPo2mgmn2mPBloldc=;
+ b=NwS20eiS3ndURwglIdthbTPQxqY8Lf8Th+TE0YDMfqvc/OfPgbtK/xbWcI63IO+d15
+ Dnid0y484P2/4b5X7FoY4uW0ZCapaazIM7MgQDxw7ePLKTnJRYXNrtQ0kqkTjjZCLKWU
+ BVo9jGXr2eG8bNmFzIpVbEXCvTW+6pbnkoZAwYp1uDD9dfqiRMZYB20s96oo6NU9UpNc
+ GxGNWtxiJYyyX30RvUw3qo82ySyD2WUIdzybD24zrPYmDcDw+tCvX/3NYPxaG30J9uYv
+ F0gX2NwKKFoGd8oNaTUlcTcG8CabvrsHwFdHfQPrmioJ1zVZVjwoODI6mlALTWdxpn2b
+ uBBg==
+X-Gm-Message-State: AOJu0YzgBVi4JPINnWiImM0X3lQ1f/c6sSSVpXdrmlOQHm6MEUzVLgiW
+ tX2a/f0rmuL9YrhWue6a9ZazXy98Nwyq8BCI3o3RUiQWGXxb3Yw6MohvrUMhtp6LevRsrM45/82
+ RRElXIS5xTLDD0E9x9s8S/2x863MAI8o+qFjiD4BjFGhKdN8q7u+A
+X-Gm-Gg: ASbGncuUH02SSG/HTtuSmu5WHwCKaMtZTlUWYHuk+xaPGoUHgKzQicvBMbt4PJHVCuQ
+ SzdZPNppwHdYdpS4JR3O+sNllV4nMu03HpE1VeyBHtNJjMwaxjwAozYPnJX0rECY0QPEjLpOFBv
+ 3Y93apKnv6/29d+04coDsp7xXIVOHz2HMy4ktCjz77xZ4w
+X-Google-Smtp-Source: AGHT+IG6b8Q94+N3QYRFmIoa8JBD7Xl2Mo2qznvMNRwnS6sXzKQIx1hUN7zfTrpbprzvN51Q0BQMPNKtLBVVPHixd6k=
+X-Received: by 2002:a05:690c:48c1:b0:710:e7ad:9d52 with SMTP id
+ 00721157ae682-7176ca2b219mr106536697b3.14.1751882448940; Mon, 07 Jul 2025
+ 03:00:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250707095550.2049280-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20250707095550.2049280-1-marcandre.lureau@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 7 Jul 2025 11:00:37 +0100
+X-Gm-Features: Ac12FXwEHmXrce8Ji2bWtHYafzkoJW8rJwASOPqB4k4VtPOa6JiwlSDaaVL5BpA
+Message-ID: <CAFEAcA-FX2gW49=1gNiE+9+P128EJzcYPWhM=TxjiQyM7Ts-tw@mail.gmail.com>
+Subject: Re: [PATCH] tpm: "qemu -tpmdev help" should return success
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, stefanb@linux.vnet.ibm.com, yanqzhan@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b29;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb29.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,30 +93,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Mon, 7 Jul 2025 at 10:57, <marcandre.lureau@redhat.com> wrote:
+>
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> Like other "-foo help" CLI, the qemu process should return 0 for
+> "-tpmdev help".
+>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  system/tpm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/system/tpm.c b/system/tpm.c
+> index 8df0f6e72b..5f12a62c4a 100644
+> --- a/system/tpm.c
+> +++ b/system/tpm.c
+> @@ -181,7 +181,7 @@ int tpm_config_parse(QemuOptsList *opts_list, const c=
+har *optstr)
+>
+>      if (!strcmp(optstr, "help")) {
 
-Like other "-foo help" CLI, the qemu process should return 0 for
-"-tpmdev help".
+We have an is_help_option() utility function for this, incidentally.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- system/tpm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+>          tpm_display_backend_drivers();
+> -        return -1;
+> +        exit(EXIT_SUCCESS);
+>      }
+>      opts =3D qemu_opts_parse_noisily(opts_list, optstr, true);
+>      if (!opts) {
+> --
+> 2.50.0
 
-diff --git a/system/tpm.c b/system/tpm.c
-index 8df0f6e72b..5f12a62c4a 100644
---- a/system/tpm.c
-+++ b/system/tpm.c
-@@ -181,7 +181,7 @@ int tpm_config_parse(QemuOptsList *opts_list, const char *optstr)
- 
-     if (!strcmp(optstr, "help")) {
-         tpm_display_backend_drivers();
--        return -1;
-+        exit(EXIT_SUCCESS);
-     }
-     opts = qemu_opts_parse_noisily(opts_list, optstr, true);
-     if (!opts) {
--- 
-2.50.0
-
+thanks
+-- PMM
 
