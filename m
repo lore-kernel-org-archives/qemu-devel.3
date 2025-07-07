@@ -4,106 +4,168 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED20C83F07
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 09:31:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5CE2C8303C
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 09:33:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYiBU-0007oO-WA; Mon, 07 Jul 2025 05:30:49 -0400
+	id 1uYiDf-0000pl-8V; Mon, 07 Jul 2025 05:33:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uYiBQ-0007n1-Ij
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 05:30:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1uYiDG-0000gC-16; Mon, 07 Jul 2025 05:32:39 -0400
+Received: from mail-mw2nam10on20606.outbound.protection.outlook.com
+ ([2a01:111:f403:2412::606]
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uYiBN-0005au-0U
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 05:30:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751880638;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1bEVeAiJoPDALZpo/EPEPCbrdt1HWzqoldkLgwyBifY=;
- b=iL0AEVNXwerJFDCByZnOqw7QuEMypf/SA+D+RCnx3gyHkUKnQdIolPHH5JL6Xv55qYr451
- BA5M5oIW2xycZypMHoEMeX9Lt7hUk52Qxx1lIDA+zmt68CbG7gMf5ECW3QUP0wQVmuTaQl
- mLmP+oswaDta7QIYC3KEnee9f8m2W94=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-58-dLpzCy5yOECtZJHcEefv5g-1; Mon, 07 Jul 2025 05:30:36 -0400
-X-MC-Unique: dLpzCy5yOECtZJHcEefv5g-1
-X-Mimecast-MFC-AGG-ID: dLpzCy5yOECtZJHcEefv5g_1751880635
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3b39cb4ca2eso1096797f8f.3
- for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 02:30:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751880635; x=1752485435;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1bEVeAiJoPDALZpo/EPEPCbrdt1HWzqoldkLgwyBifY=;
- b=tTggea50o91R9hQGeEIcXey9OgkrsU5kKlKyUDneGIP2bp5RjYi8QLgPHFEfJaNxNb
- BewnrOe2ejERCX94R8Zr5U4gcWUg/8bXQQYreDY8YavuOGrKFK+XAd7iNb0SSullfmik
- N8KT8I1ueiSs6hHIOFOn4FeI+Euvg9m/xUTYb89/WSecMLKV4iipnatllTWk9sidPIyn
- mWwSjhvogxw/v8R2o2yw0jTLyLGCCTwBhChGEB38kad2TEo9q43y54qQYDg+p+Rty2uS
- 1iSdGkeC8sD0MWwofnwUpop1Lu1/P8Q9oQBPvkgCh8p3z+AVfgjcOx30/zWv3non0iRO
- B24Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUEXoJGrNnPhlzJGiG4YVbyWoeBpl9NnxyG9kFoUV1V+X1CLm8n/D0XXlq3gWZuIuIjgnUPyJMNq2Sf@nongnu.org
-X-Gm-Message-State: AOJu0YzlIr3BvLPkmSj7C8Wpr7y5U28Q6Jzja9501CKKFA5Uz4cbwdfF
- 3tS9kl5VaqsYubMMGxneNNjWWdR3qSERpV45aQb4Eewcn1JupUUxVf8uGcgMfOsbm4DsIWuSdIh
- ys89PZ335sWVZWYU60QW8dqaKIluSFr9LzFb/AyRNjSD/vwxkJ/tMDHV6
-X-Gm-Gg: ASbGncvPzocXPcfzw3JpXyT1h+984Z6PH3KDncLZJWUONQFjWKsH0KoSL+0eLOxK7gP
- PusqX/82IexwaeWQmpAHwTKpzR9fUWMHZYUJMFsMIEtdnulNCZ+5JUOUuLi4Op2lrnlXfabUeFW
- uvVFAkvXCMQldJTtp+Z9O5RZYxXrU6MPCmKV20RI9zgeZdYg+lzPv9eLUB/Oy9MZTDVnvPLvUmZ
- g6eeN6EvxXuYyp7d0gYN0lmOtfWSpZEhtMEugqB0ycqTJK9Fig/tv6U5l/224P1UtwiSFLFlOP6
- WzUj3EkMaLuK8+dboTnyDSHmFywJQUTd0WvE3Bsmy8a/oh2jv+cAKZWMsrbvIJW8hqzcNQ==
-X-Received: by 2002:a05:6000:40df:b0:3a3:7987:945f with SMTP id
- ffacd0b85a97d-3b4964ee23emr9838554f8f.57.1751880635125; 
- Mon, 07 Jul 2025 02:30:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE3U4EOgBmMjBhH5w9BEqMefdEoNaLLzbIQAUQHdAQJrv4VAu6pvuDOfJZ7g3sOia1TG1HAeg==
-X-Received: by 2002:a05:6000:40df:b0:3a3:7987:945f with SMTP id
- ffacd0b85a97d-3b4964ee23emr9838524f8f.57.1751880634661; 
- Mon, 07 Jul 2025 02:30:34 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454b161e8fcsm108249795e9.7.2025.07.07.02.30.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Jul 2025 02:30:33 -0700 (PDT)
-Message-ID: <9c78f7c0-88ce-4c4d-b6c0-5b77b4d83367@redhat.com>
-Date: Mon, 7 Jul 2025 11:30:32 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1uYiDC-0005sv-AB; Mon, 07 Jul 2025 05:32:36 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=F0bNtCTCMoCI64+WccYpYm/qU8Fe7/v37NVV+f14ypznVGoOxowj+itqoR1M798S45TOKF1fQMWkNAFrg8H11UBRQMfqNDdwsvrxZJqr++vKWAdEdkW2xbANIP8dYQn4WnI6U/rLVrmlcwiP1tYLFVJA5+5gUOt9YyPu2RxHEyHrbYjsQGXlmkZVImI4CyQwwvWwETTNkjb5Ms9JfZoVL5NyRuY65yREjNcak/Ew71yTElVN3lZnSP3yB2nlUZCyh37V4rmlNvMUv/IsSlVWgeSgLKEGMrtXQyxhOJfXAU8u9QCkOWPtR15FQD2njzkWXZ80CQu8agabaX8T4JIQXg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9pJRuQgLKW9Bq4d+xX80f7qtuzbcRicE3osfhjohyOo=;
+ b=CBDYTHqOpCC1lSkpw4ZQ2+dGRqSMF5HzTVtQsftMu+yp5t5tyjqXacXEwI3wUqXOinpU1dPf1yGAlCW/pLenBG694FvWzf1nldjuv2HPWoAAl9c3ISS92cyza9YSA/kuVVnC0GIYVTflU0rhl32IhUcfMxZ4eJ+Z2FwXhjOXaa1MlmnPQ9LDmm/uDvj1N7eqh9P2M99qCJjVbJDsePW0ZzSeE6FcFHoK92k0RYlKSC5bzqMNxnEpg6NUGGyZhRcw+AsgiF0gwyIamRIOBXSgoB8PKJ5jeZw5yIRZQaLTfI7E7fmqkx8oXl7X99wNMMdjF/GzjjnWa84x+7lBq/+jdA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9pJRuQgLKW9Bq4d+xX80f7qtuzbcRicE3osfhjohyOo=;
+ b=FXkdPsAkldvpmLm+YXytPW/hWSi7zAEOnyRQp3vi8sYlCH2ihDQm9ge38EZBGvdxWyS4ocsMqvJoLDbJpP14EmVpY52yPajoTLss0PYCW76S/nWX54/XtngZHH96UkptaSaMjDyXgRJvfL9USXFIiYDlwhufVBHDXaf8Rt1UrfVjDg/2zaq6ZFVaUVrXStLPPbyjX8iNRyN6jQ7koD0vvPQu2lA5JSm901FswP7xIaCxXKLVA9ptMZENFPka/mkxmdDNrL8lXYE7F1LKE2QadGG5vlUJ316d7k+/FkVzNZ0LeeGuYHy2GQfvwFsm2g5C7lD5+ZMbL2eHVueNsThwsg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
+ by SJ2PR12MB9138.namprd12.prod.outlook.com (2603:10b6:a03:565::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.25; Mon, 7 Jul
+ 2025 09:32:28 +0000
+Received: from DM6PR12MB5549.namprd12.prod.outlook.com
+ ([fe80::e2a0:b00b:806b:dc91]) by DM6PR12MB5549.namprd12.prod.outlook.com
+ ([fe80::e2a0:b00b:806b:dc91%6]) with mapi id 15.20.8901.021; Mon, 7 Jul 2025
+ 09:32:28 +0000
+Message-ID: <65f666d6-0aa1-4117-9e47-d52ac3a0c70d@nvidia.com>
+Date: Mon, 7 Jul 2025 12:32:23 +0300
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 4/4] hw/arm/virt: Allow virt extensions with KVM
+Subject: Re: [PATCH 3/3] vfio/migration: Add also max in-flight VFIO device
+ state buffers size limit
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <cover.1750787338.git.maciej.szmigiero@oracle.com>
+ <65a132db72807ec6341015e7079b10352d718b96.1750787338.git.maciej.szmigiero@oracle.com>
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- miguel.luis@oracle.com, richard.henderson@linaro.org, maz@kernel.org,
- gkulkarni@amperecomputing.com, gankulkarni@os.amperecomputing.com,
- hi@alyssa.is
-References: <20250702163115.251445-1-eric.auger@redhat.com>
- <20250702163115.251445-5-eric.auger@redhat.com>
- <CAFEAcA9hhdwHNrBfEqO4GD6kSb3Efcw-Rztq=CqvcOGMG3+z6A@mail.gmail.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CAFEAcA9hhdwHNrBfEqO4GD6kSb3Efcw-Rztq=CqvcOGMG3+z6A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <65a132db72807ec6341015e7079b10352d718b96.1750787338.git.maciej.szmigiero@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-ClientProxiedBy: TL2P290CA0024.ISRP290.PROD.OUTLOOK.COM (2603:1096:950:3::8)
+ To DM6PR12MB5549.namprd12.prod.outlook.com
+ (2603:10b6:5:209::13)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|SJ2PR12MB9138:EE_
+X-MS-Office365-Filtering-Correlation-Id: 681b3388-e0e7-414a-2901-08ddbd393077
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?RDNKQ1FMNEpJeXJ5SWpEOE5NR3MwYzVXekpQQkFSS0JsYU85SDNHRGYwY3lE?=
+ =?utf-8?B?MUlOWlNwa1JLNUI2V1VUS3FRbXV0eXFpNUJ0MzVtWGQvWXU1SDJ2MVVjeDRr?=
+ =?utf-8?B?Y3YvK1J2YWh1ZjRTd0Y0UHlaajhhUGkzTzBmTCtFUjJ5L3ZKUU9PRU5pTm5U?=
+ =?utf-8?B?aTdobVpBVWVKNkprL21TS2paQmxKTDVzc3pXeHkvSWVjWXdPbDV5b0NjZy9w?=
+ =?utf-8?B?U3o4TzU0b1I3ZmYzeGpLOWorendVRTRraFZFcURFcDNTQ2VkcnlOYi93UitT?=
+ =?utf-8?B?SGRqcGlmQU9Vc05XVk5NNGhEYVFudnhCRUxSemZSK3NzMjcrTnI0L0JPdkl3?=
+ =?utf-8?B?Zlg4TkxuSTNIMUxhbitKMVV6WEZ3Vi9xbThqM1NTS1UwODljdXR3Y2YwYVpD?=
+ =?utf-8?B?Z1RQWXNtMGxhMHZCMUdrWEVTcmdsOGp5TksxaW9mcEw2SDZoWUZyZWE5cXk5?=
+ =?utf-8?B?Mk0zYm1rVk5sTm9QVndRSnpsaGN3RjRYVXdkdFVPT2pKRzJWSEhPMFRwSnpF?=
+ =?utf-8?B?c3J3TGh1ZFNkemNPNWg3eHE3UUUvYUxhaHhJSUViTW5UcHBjZDYyY2o5c2hD?=
+ =?utf-8?B?VGJhclJhNnQrODFodWNlVnpzUVl1UkV3ajV5dVlBRkVhQ0FCdjhJYVJHZDJT?=
+ =?utf-8?B?UXpaRWRMamhveGpqUmtpRitjQ21HQjlNdFQ1TVpDTVovU1hoemZxb3FWenlC?=
+ =?utf-8?B?VWRvdzNrTU9wb2FnYnRiRkM5cDZXdEVxa3ArWllqZkdZbXFlMG4rVEhsMHMv?=
+ =?utf-8?B?eUlGSnFWbXN5d1VkdDQxNTZuN1dsbGJMNlNGZzlRZHFWR1p1TUEzVnQxTUwr?=
+ =?utf-8?B?UVd4WkhSa1dyeGgxOHN4QXdodW1HOEZXOGZQU2tibmRtWU9ZZFRTLzBDRXp6?=
+ =?utf-8?B?K1VzMGt1UjBVSmEzcHdzemJOVWMzSDF5cjEwckdTRlpTald1WWpVNlZTdnF0?=
+ =?utf-8?B?N3VNMmdtVFRyL1VUV0h0NzJ6d3owOXZTUXhhOGNHNWZaVVdJdm5xbE4ya0l4?=
+ =?utf-8?B?eGlJUFBJTm5UZjdqQU1FWHJrdUlzT3cyRVh5bXBHY21nalNsQTFSa1FyRHlB?=
+ =?utf-8?B?aXd6VGd0QkV3OU03VkRRYWw5UFFlbW1TdFlTVzZDanM4QXlOWWdiSUNsb0JK?=
+ =?utf-8?B?NEZpbnBGdmV0cE5ocS9vMXVWRFg2RVBrZXg0N05Tb04vVVN4RlVEdjVjTFY0?=
+ =?utf-8?B?WHk2VUVUc3lVRGR5TE1aMUt0dllpYmlZOVByUDR6cnBib0xINmZibGdtRGcy?=
+ =?utf-8?B?bS95OGFJOHUxNWZYck9ic3paNVYwQjNJMGoxbkV5azJjcnNSTlc0ZmM2QmR4?=
+ =?utf-8?B?Q2t1N2xlTHJEWGNaOG9BNkpyNkczNzdQdGQrMmY3bWRadHZWNmVkTldyMHRS?=
+ =?utf-8?B?WEcyUHd5WnFmRHYrUkdUMGk0NDNOOUQzMXlvUC9hQWRxNGVsM2RGUi8rUGdy?=
+ =?utf-8?B?OG9CNTU1WnZlK1BHUGM0WHU2dGJPVjh1cWpSYlVrOHdEOE1aMWo0TWNheHNZ?=
+ =?utf-8?B?aHFEb05zNXp6Q2sxTG9XeVlaSFA5eVArQUFFbjBOT0puM1VuYW10N0xVdmNT?=
+ =?utf-8?B?bFdVWGFvUHYzRnF5ZGdFM29lWU96S3piUGF6K0t0dVpSMTVGZ3A5K01OazRz?=
+ =?utf-8?B?REdRNEpnN09tcnJsRFlEaDF0WThaOHJoSHFaZ1ZkbFdpbURGTFd3c1U0a2l0?=
+ =?utf-8?B?WkpJdkwyQ2lTVXNpUnRJVG82cll5aE1RMTJMWkRwa1c0OFBBWmdHcUlTVThB?=
+ =?utf-8?B?WFhjcDFKem1Ld215RUxLM2dwNy9zcTh1TDBVMHJqbVUwVThKd1I0NU9lV3p0?=
+ =?utf-8?B?SjVJWDl1Vm1weUUycGQ2bkd1Qzg3dnFVVTdwTmpPcSsyYWRndThScm9vRE80?=
+ =?utf-8?B?cksvZTFKMUo5d2Z5eWordnBNcXhFcHBJT01DeEtYQjltWi95MG5xVzJIQnkv?=
+ =?utf-8?Q?KgUMT3cCue4=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TTF3RERXN2UycDhZRVRRZkhVYUdxeitDOHNTMXViZHJOcHNtQUluUENUQVlE?=
+ =?utf-8?B?S0xtcWhMbTlHOTlQejRFSUU2SFArSkpwN3BOK0tocVFGeXdIemtuRzlFaEly?=
+ =?utf-8?B?WEQ2bHhEYlNPdlphZStPVEgwTTJVazBrSk1vWTNLN1NvUlNuSjR2ZUxSVHdy?=
+ =?utf-8?B?bThpVUdjNzVMOTlMMzRrNXY0Wm5TSmFMNmxYOUdadlVwUmYrZE9yM0FGaXpw?=
+ =?utf-8?B?OXpxNnI2ZjhBVk54WkRYbzRBbzlJV3ovRG9UMjkwdjNWU2xpN3I3b1p0VXYr?=
+ =?utf-8?B?WHpkM1kzd0cwU3d5dnkzZnBBT1hZaEdtblpFOHJqdXNoZS8rOGlLOHdCWWJO?=
+ =?utf-8?B?RUJhYnhDR25SNmE1d2pQU2JyWEFEYmYvQ01DU3dEMFFNbFlJd3NGNHAwN0d2?=
+ =?utf-8?B?YWpZQ05jdHg5cUkyczBDaDBQMUU4bTVBR1R3UGp4MTlsTHpKMDNLdXkwZGNq?=
+ =?utf-8?B?Mzh2WUxqemRGVXlacWVTRW5LOXd2STNqY2I1QmhEc1NOWW5EaFJXeG9hcElO?=
+ =?utf-8?B?ay92NURDMkQxbndvcjJSL3hUQXlyTER2SEFyZFE2cWdEQ0g1ME5NOHBIUnhI?=
+ =?utf-8?B?N3I5Nm5uYmJXZFlMdk9vbmV5WUUzWDUwam5yL1NHTGM2bTJDWnE1cHlrb3dE?=
+ =?utf-8?B?aGhJTUtvbmdodk9XdmlMN1NPNWkwK0xpc0dnNjdmV3Jua2JXZkRMMGRidWlx?=
+ =?utf-8?B?ZnNGUS9Vb2c1aTNoVFFnVnpqa1BlaTBYdGVvL0JRNVgwT3JLWUlkK2pLSHRY?=
+ =?utf-8?B?ajFaLzdDRmZtWHY0YlVwMUJ4dTJVNk55ZDBjZzZ5NHRWaE5TdlZQUjVLS1Z6?=
+ =?utf-8?B?WXdJUUs3a2VOV2tMSU9Rekw4MEM4TlZMUGR6MTBJaGROTkNSYzVZa2NvbTJv?=
+ =?utf-8?B?VVBJdmRORVJ2Ym1RV0VFTytVMUZ3Z3R6WS81T05LVVY4cWxoNmtQTXo5SmMx?=
+ =?utf-8?B?MFVlck1aWjZZTHVZZlo2dFVzTUxkVXNkS25CVGJRNUo5blIvWmRIckF1eEU2?=
+ =?utf-8?B?by9mNVBKZkxKaUdKTVI5K0N5OG0xcjFlR2w5dWxvd0dkU0MvOXRkYXZ1NVkw?=
+ =?utf-8?B?YTJ4UzhlWnpaOVFEcWd6dk9IbGdTU0UxaXIxTmFGNGJKdmdmVTZwWnplS1Fv?=
+ =?utf-8?B?MFQxclNhVmJDSzg4dFg4Tm9KZ202bXVtMFlHWkhvamorNVhUeDk0VU9GWTVs?=
+ =?utf-8?B?S0pueUc2S3NmZW5kNm9JK0JCN1dTL3Uza1BYZU9Gd1JKRHJsZGtHWFpSeHcr?=
+ =?utf-8?B?aW5ITlZOcXlZRkVSellxREtCcXVpbGlzYmJoQ3RRZWRMSE13UjhIbHhtSXpT?=
+ =?utf-8?B?NEpadTZ5bE1Gdnp2czFqYzhWUUxlWHhLL0FMTVJSWDNCNzlPVmpqSDVZd3Yz?=
+ =?utf-8?B?SWRPdnUvdWZyNTZYdG5xdUEyakVnQ3VBYU1VRGxPWEQ3MmR5UC9rc04vSnZO?=
+ =?utf-8?B?MFpsazE2U2tRRjZ1QWJyYXkzVUxaSkd3aXJ2c1N1R2JTNHFqYTd5Y1lXbEtE?=
+ =?utf-8?B?UnJQQ2liVXBDUVpkeHhobVJyUk1GOEFxYlhLakJubFJoRTZSZTFyQ1J6L2Vw?=
+ =?utf-8?B?czlrbFBwZEhSdnhiRkxJeXFmakJPNmRGWHVSd1BjRW96RS9qMUlJOUxuelhB?=
+ =?utf-8?B?WXJhQzhibHhzbUFNWDIyWFc5cHNlVEdMNlFmOWsxUzZMTnpEMVhxb1pxeXJl?=
+ =?utf-8?B?RWhhZUJqdXpXV295UkVMTDk0TFpGMHl6WE9kOEM5YldRcVNUM01UNFZ6QVo3?=
+ =?utf-8?B?S3R5bS94TkdoZXgrcDlnU285WDFHQnpmSFFqdWg0eHhad2l4aXFRTEx0dGRn?=
+ =?utf-8?B?WTRKOEdvNSszVDM1Tlo1TzlJMGFXMGxpQjNCV0JjcGZPYWFIaG9nWmFaRkFm?=
+ =?utf-8?B?T1pqUStlOFcyV0tla0ZLU1dkS3QyNjUrNWgzZjM0WVZZQkJhbnVzd0x4MWN4?=
+ =?utf-8?B?anA0OTA1bC9TN09Lb1lQMzBob2I5c2pXcXF5TlB6Nk5EeExGeWxpNDM2d3Zq?=
+ =?utf-8?B?ZElHcXdsKzRlVFdVSmwwWGpoZGsvRWdaeFFBU2NhL0hveFFRa3kyMzVMVG85?=
+ =?utf-8?B?M1ZGSi9qNmNCR1o3NDZlMGZZSUY0Zm85KzBhTEZ2ZFl1WXB3NTV6S3F5WHFE?=
+ =?utf-8?Q?nvWgQ5EWDoVEim1Y8nX9OLa5F?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 681b3388-e0e7-414a-2901-08ddbd393077
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jul 2025 09:32:28.3456 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: oEbHVS1WwehBonsoPtQtmsyGW8AoHmbXVm5rluFtsYnMoPVhOYmfPvewI8lD1y9WgxpHadjVmR2Ac9SsIf6PJQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB9138
+Received-SPF: permerror client-ip=2a01:111:f403:2412::606;
+ envelope-from=avihaih@nvidia.com;
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,95 +178,21 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter, Marc,
 
-On 7/4/25 2:22 PM, Peter Maydell wrote:
-> On Wed, 2 Jul 2025 at 17:31, Eric Auger <eric.auger@redhat.com> wrote:
->> From: Haibo Xu <haibo.xu@linaro.org>
->>
->> Up to now virt support on guest has been only supported with TCG.
->> Now it becomes feasible to use it with KVM acceleration.
->>
->> Also check only in-kernel GICv3 is used along with KVM EL2.
->>
->> Signed-off-by: Haibo Xu <haibo.xu@linaro.org>
->> Signed-off-by: Miguel Luis <miguel.luis@oracle.com>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->>
->> ---
->> v6 -> v7:
->> - rebase on top of "hw/arm/virt: Make EL2 accelerator check an
->>   accept-list". I dared to keep Richard's R-b though.
->>
->> v2 -> v3:
->> - check gic version/in-kernel implementation when kvm el2 is set (Peter)
->>
->> v1 -> v2:
->> - fixed test ordering: virt && ((kvm && !kvm_el2) || hvf) [Richard]
->> - tweeked the commit title & message
->> ---
->>  hw/arm/virt.c | 10 +++++++++-
->>  1 file changed, 9 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->> index 550a272fbb..1c0a2c43c4 100644
->> --- a/hw/arm/virt.c
->> +++ b/hw/arm/virt.c
->> @@ -792,6 +792,13 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
->>      default:
->>          g_assert_not_reached();
->>      }
->> +
->> +    if (kvm_enabled() && vms->virt &&
->> +        (revision != 3 || !kvm_irqchip_in_kernel())) {
->> +        error_report("KVM EL2 only is supported with in-kernel GICv3");
-> "is only supported"
-OK
+On 24/06/2025 20:51, Maciej S. Szmigiero wrote:
+> External email: Use caution opening links or attachments
 >
->> +        exit(1);
->> +    }
->> +
->>      vms->gic = qdev_new(gictype);
->>      qdev_prop_set_uint32(vms->gic, "revision", revision);
->>      qdev_prop_set_uint32(vms->gic, "num-cpu", smp_cpus);
->> @@ -2211,7 +2218,8 @@ static void machvirt_init(MachineState *machine)
->>          exit(1);
->>      }
->>
->> -    if (vms->virt && !tcg_enabled() && !qtest_enabled()) {
->> +    if (vms->virt && !(kvm_enabled() && kvm_arm_el2_supported()) &&
->> +                     !tcg_enabled() && !qtest_enabled()) {
->>          error_report("mach-virt: %s does not support providing "
->>                       "Virtualization extensions to the guest CPU",
->>                       current_accel_name());
-> Have you tested doing a VM migration of a KVM with EL2 setup?
-Yes I did. Marc fixed some save/restore bugs in the past and I was able
-to migrate after this fix.
-
-Now I would lie if I'd tell you it works well. It is extremely slow to
-converge. Usually you get rcu stalls in the L2 guest on source too.
-
-
-> I suppose the system registers probably generally Just Work
-> via the sysreg GET/SET_ONE_REG API, but won't the in-kernel
-> GICv3 have extra state that we need to migrate in
-> hw/intc/arm_gicv3_kvm.c ?
-Do you see some specific registers/resources that would need attention?
-
-Otherwise I can put a migration blocker until we spend more time
-analyzing migration slowness
-
-What do you think?
-
-Eric
 >
-> thanks
-> -- PMM
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >
+> There's already a max in-flight VFIO device state buffers *count* limit,
+> add also max queued buffers *size* limit.
+>
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+
+Reviewed-by: Avihai Horon <avihaih@nvidia.com>
 
 
