@@ -4,104 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A809C8303C
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 16:03:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDDCCC71130
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 16:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYoHw-0001Kg-SK; Mon, 07 Jul 2025 12:01:52 -0400
+	id 1uYoJx-0002TM-E6; Mon, 07 Jul 2025 12:03:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uYnyn-0005IL-RM
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 11:42:06 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uYo65-0002wq-QY
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 11:49:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uYnyk-0005UO-Ia
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 11:42:05 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uYo62-0006Hu-7l
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 11:49:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751902917;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1751903371;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=o1bEPp2GKT7T8VOS9kKxycYzQjJ5MzMf5vCzoG2U6fM=;
- b=aYBGWohv3Io3NvtR8/ORQ5JBhzvChTz5F58rzR2H6Me/zRQnO0TZE88gfAM3BujUHOBeuy
- uhbxmd//5Wc/A6F06zZyJ9H9dFCWLQ3INEeLdLdq/VgI2TimvkGvkA+/lVY6AWuY6exLAG
- 06amgzfs9wSKNRXxG9kLhtx6gXzR4PY=
+ bh=u4kfDPJj48M0hWmEQ/7VvCIaZlwIKeOHROkeaDqCJO0=;
+ b=SZS4Jh9l/GIfNvV9ilQcvK9rYdswedHUvoJSdLheNRpXpLMMrK7cnfpmBc6g87On4xZ5AL
+ ecJMhacHmVLOIz3nuDZGffWA1ldZyqQlC9jALmRvKtlErx1RdEFgL6BsYOjAT8Ff6azCOC
+ tw6aNOcFqQYDzeGTZtVq44FGVa5rv/A=
 Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
  [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-407-VciJuSb9NCevS124pX6gnw-1; Mon, 07 Jul 2025 11:41:55 -0400
-X-MC-Unique: VciJuSb9NCevS124pX6gnw-1
-X-Mimecast-MFC-AGG-ID: VciJuSb9NCevS124pX6gnw_1751902915
+ us-mta-19-zD5XPQnZNMmnAWFj9cLkQA-1; Mon, 07 Jul 2025 11:49:29 -0400
+X-MC-Unique: zD5XPQnZNMmnAWFj9cLkQA-1
+X-Mimecast-MFC-AGG-ID: zD5XPQnZNMmnAWFj9cLkQA_1751903369
 Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a503f28b09so1923633f8f.0
- for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 08:41:55 -0700 (PDT)
+ ffacd0b85a97d-3a5281ba3a4so1340528f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 08:49:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751902915; x=1752507715;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1751903369; x=1752508169;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=o1bEPp2GKT7T8VOS9kKxycYzQjJ5MzMf5vCzoG2U6fM=;
- b=D6Xg94YylTXB0zAEsjwW3bzdet84DOXyGKWTnKRR4fzyEMtpfsltLYJKnF0X1jrL8G
- k4qTFkLAxm+RNwPCI2RNZhpGK35RzyDRHg3HBSAOPIkcC74/sbOd1m2srimX5aM58yb+
- 4UeL4Zh7dbASHaxgjnM26t0cjOZB5ecgLk1i70irRx/y9qkJwpNhb/oqBcCUIWx6tuM1
- qQESMWgz3CXoRMK0mvJI6aDRfMGz4kMBIDcMM+yETda0Iws61rPfGqGNjlfkryNY4JsT
- GYUXyk/wyuGVPkkCEHCEElpfLH1ZuGZfaH+7UR+45o0HSN3grRGtYPibnTp3WpSgDEg5
- TAkQ==
+ bh=u4kfDPJj48M0hWmEQ/7VvCIaZlwIKeOHROkeaDqCJO0=;
+ b=FEPg0w7DvCpkYDdKMiiQH02PJyaVGAfBFdx79qO3hCRIPyI/nsCHw7tjiZplCtl0I5
+ iiVRzvyLG2/ix7tTG1CpH96E0FX9tpBcAgb94wQ47/uulzYWNsye5FqexFNEEEWLEVEl
+ +EdZX0Bdu3kh/CiPUlIu/JcPqnzQRpknXSx+Voc4HxtfjT+4WolosIyhMw2Pu0xv3DaB
+ KrCGKpboMHONqBZAJ5EhRCNlwCkUF3kzdi0fRRWJ7qUQs6FcRfkgW4Z/bKo4HLdBSuFU
+ hv1ofVcYN4Y4P3P8sqrUlblfyH2MJSOvYw1YMalt9TtcgfLbghje0f/wFBWm4R+AErzu
+ JBcw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXoNFKNRXUWGWfjmjenACmbvkzV7d28twAOElT5zZxO0MgeMgd8saHOP+KiRcuBYpv//oDy6+X0J/Wb@nongnu.org
-X-Gm-Message-State: AOJu0Yycgs2rVZM6yVVxf3J+ZHlRoYpheCKXQjKQcA5ny58A6VrYfRVi
- nSvdJtCRlQSTgUTM9fqyZhyMx5oNNv90di+iTUnzZlD4JnBIOt4PEXl+xRKEYJZBT4PQKBoUepw
- PgBl5v5YhOLCPIwDvEPJNOtT0kql3y9JYFcpa1tSBED5fIbtuV0VkdcqSZxA0sjZrKjES/EVYZ0
- Q7Wu/wlNXczDDj/S6P0wlZkPp4g5ti7fc=
-X-Gm-Gg: ASbGnctMJMVEcUYGmzjhSxHBQ6Szo9i1nXEwX5IRxjpEzY+y7kyiL1QEpQLzzD76YpZ
- pMP2w6Gx06iioLcVAuv3q5hk2L9+horoFzQrd60GvkAVMkSvEjO3acFAxSJDqMZCenjJf8N886V
- lq6Q==
-X-Received: by 2002:adf:e189:0:b0:3a5:8977:e0f8 with SMTP id
- ffacd0b85a97d-3b495cbca06mr9976831f8f.19.1751902914639; 
- Mon, 07 Jul 2025 08:41:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEFzTWgBma65zaIV4vq9tz3mzYgfeBNzGFOCFCDxgoqb4chvP0q2n17ZcDBcAuc5ECRvnhnJYU1Dt5RPumUXvA=
-X-Received: by 2002:adf:e189:0:b0:3a5:8977:e0f8 with SMTP id
- ffacd0b85a97d-3b495cbca06mr9976813f8f.19.1751902914238; Mon, 07 Jul 2025
- 08:41:54 -0700 (PDT)
+ AJvYcCUg4pLnVQMgc/cB31MZKHI+Lt7OK3A2MJ9dYXYRwhX6/VC1CME2bAPRjgPXZ0B0EMtD1I+Id8pPqPD3@nongnu.org
+X-Gm-Message-State: AOJu0YzGkSIU822EMJM/gAuxZQ4m4h//K5GKBn28JycNTEkNu/cdHZkB
+ zb3hSlqCklL7kwMXVObkSGVUcqS44l1M6LZIgB9/OYQUKK88b7v3Mq8Nm05xhuTwvM/Lz3VNwQ/
+ VLvEpxwgTcUSx7t13wO9DghI2iL8zoVeCCBPhGF0seMiRz9Sa3p2A0q9K
+X-Gm-Gg: ASbGncvmVHg0b8n6o4FjCyS/fw1fs3pB4+K5lqgwCTUrfJ4OI9ZYbKztTM7pa5P1M79
+ N8pSre5HxrE/xTDwXcQsqzuoTj6ybjx/DHd0VVuIh5jCdYAJEjxgktG3uNeV+XZz1sX6DQdT35Z
+ PdWxU0JaB6im3f8mKB/GkjkNx17+W9zKssKNEFT+RsUiiG1VjGR0UzjBBb1pI+yn6HvWfOK+WuG
+ 9iVs2VnLWJbkrrAqEcZLvrOpfXVQVIwIzAWT6Dxk2yK91RJliRpB0Y7oFDBSdpfY+SiTnruBeHX
+ VNUOeA2/lCUmK20ApfdSKWY2j5a877wY15mfyTRMBpXzs4Y96AFv29d/LaS0vjBsXjc7BA==
+X-Received: by 2002:a05:6000:4008:b0:3a4:dc32:6cbc with SMTP id
+ ffacd0b85a97d-3b49aa186f4mr6743184f8f.20.1751903368499; 
+ Mon, 07 Jul 2025 08:49:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFgLqmtk/PhuU0Q7kcre4CnRg/iMogk4sjW2ZIZk5tzC1rBTtW3vULQgjY1/dDM5GnfCjgHiA==
+X-Received: by 2002:a05:6000:4008:b0:3a4:dc32:6cbc with SMTP id
+ ffacd0b85a97d-3b49aa186f4mr6743155f8f.20.1751903368065; 
+ Mon, 07 Jul 2025 08:49:28 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454a9bea4a9sm142820715e9.37.2025.07.07.08.49.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 07 Jul 2025 08:49:27 -0700 (PDT)
+Message-ID: <0027ad47-173e-495b-bcca-363b43851d7b@redhat.com>
+Date: Mon, 7 Jul 2025 17:49:26 +0200
 MIME-Version: 1.0
-References: <aFpocfTpBLB34N3l@intel.com> <aGKryLSGlFTMSKHv@intel.com>
- <690b5bca-4345-4ee9-a332-4c2e38532309@intel.com>
- <31387ca1-4fa0-482e-8e11-e8857c10cb6c@linaro.org>
- <aGTmFGC9vZB2yEwv@intel.com> <76f8e877-e203-421f-b301-4b321534bd8b@intel.com>
- <CABgObfY-sDqw3kPSgr8b3OycA2wZVYQLcxcavierdbr-U0S_Dw@mail.gmail.com>
- <f7545434-f51f-4cb5-b1b9-afbaa26d11e8@intel.com>
- <CABgObfax21xZDKGN9b8tH-HBVeEgTjWD-xLO6DRkr3uCvkyHQQ@mail.gmail.com>
- <a7d2691b-ce43-454e-aec9-3589787dea5c@intel.com> <aGX0Im2F6R4nTUh4@intel.com>
- <83c1bd59-8e61-4585-b68e-ba9de57c749c@intel.com>
- <CABgObfZf=hK7gU_6yun2-rKCDU2d4L29A1fQKirGUj6_AaEqSA@mail.gmail.com>
-In-Reply-To: <CABgObfZf=hK7gU_6yun2-rKCDU2d4L29A1fQKirGUj6_AaEqSA@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 7 Jul 2025 17:41:44 +0200
-X-Gm-Features: Ac12FXxlv5BQenCN_Lm994SshyJxyjR6V5NYgixqKkcqRA_tMExHtPcz9DrUi8g
-Message-ID: <CABgObfYfNCtRFyCKuOLed3C58iGGVgw32VFOrWfjj5pXiLLxgQ@mail.gmail.com>
-Subject: Re: [Regression] Re: [PULL 35/35] qom: reverse order of
- instance_post_init calls
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Dongli Zhang <dongli.zhang@oracle.com>, Thomas Huth <thuth@redhat.com>, 
- qemu-devel <qemu-devel@nongnu.org>, Alistair Francis <alistair.francis@wdc.com>,
- Like Xu <like.xu.linux@gmail.com>, Igor Mammedov <imammedo@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000e26f2a063958ae99"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 4/4] hw/arm/virt: Allow virt extensions with KVM
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ miguel.luis@oracle.com, richard.henderson@linaro.org, maz@kernel.org,
+ gkulkarni@amperecomputing.com, gankulkarni@os.amperecomputing.com,
+ hi@alyssa.is
+References: <20250707131530.1141759-1-eric.auger@redhat.com>
+ <20250707131530.1141759-5-eric.auger@redhat.com>
+ <CAFEAcA9VxC6CXK+iFFAyktuX1jsJ=znpamkvG5TuwowLxdWSsA@mail.gmail.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <CAFEAcA9VxC6CXK+iFFAyktuX1jsJ=znpamkvG5TuwowLxdWSsA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
 X-Spam_bar: ---
 X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1,
- RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,235 +116,67 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e26f2a063958ae99
-Content-Type: text/plain; charset="UTF-8"
+Hi Peter,
 
-Il gio 3 lug 2025, 06:51 Paolo Bonzini <pbonzini@redhat.com> ha scritto:
+On 7/7/25 3:29 PM, Peter Maydell wrote:
+> On Mon, 7 Jul 2025 at 14:16, Eric Auger <eric.auger@redhat.com> wrote:
+>> From: Haibo Xu <haibo.xu@linaro.org>
+>>
+>> Up to now virt support on guest has been only supported with TCG.
+>> Now it becomes feasible to use it with KVM acceleration.
+>>
+>> Check neither in-kernel GICv3 nor aarch64=off is used along with KVM
+>> EL2.
+>>
+>> Also add a migration blocker in case KVM NV is set as some
+>> GIC registers are most probably not properly saved/restored:
+>> ICH_AP*R<n>_EL2, ICH_EISR_EL2, ICH_ELRSR_EL2, ICH_HCR_EL2,
+>> ICH_LR<n>_EL2, etc etc.
+>
+>> +    if (vms->virt) {
+>> +        if (!(kvm_enabled() && kvm_arm_el2_supported()) &&
+>> +            !tcg_enabled() && !qtest_enabled()) {
+>> +            error_report("mach-virt: %s does not support providing "
+>> +                         "Virtualization extensions to the guest CPU",
+>> +                         current_accel_name());
+>> +            exit(1);
+>> +        }
+>> +        if (kvm_enabled()) {
+>> +            Error *kvm_nv_migration_blocker = NULL;
+>> +
+>> +            error_setg(&kvm_nv_migration_blocker,
+>> +                       "Live migration disabled due to KVM nested virt enabled");
+>> +            if (migrate_add_blocker(&kvm_nv_migration_blocker, NULL)) {
+>> +                error_free(kvm_nv_migration_blocker);
+>> +                return;
+>> +            }
+>> +        }
+>>      }
+> I think a better place to set the migration blocker is in
+> the GIC code itself (maybe in kvm_arm_gicv3_realize() ?) : we
+> want to disable migration for any setup with a GICv3 + KVM + EL2,
+> not just the virt board.
+OK
+>
+> I also don't understand why we don't hit the assert
+> in gicv3_init_cpuif() that checks that if we're not TCG
+> or qtest accelerators then the CPU doesn't have EL2 or EL3.
+> It looks to me from reading the code that we ought to go
+> through that function in the KVM case.
 
->
->
-> Il mer 2 lug 2025, 23:36 Xiaoyao Li <xiaoyao.li@intel.com> ha scritto:
->
->> The reason why accelerator's instance_init() was moved to post_init, was
->> just it needs to consider other factors. Please see commit 4db4385a7ab6
->> ("i386: run accel_cpu_instance_init as post_init")
->>
->
-> You're right and this can be a problem with the simple split that Zhao
-> proposed. But the root cause is that post_init is confusing many kinds of
-> defaults (the KVM vendor case, globals which are different for compat
-> properties and -global and which CPUs also abuse to implement -cpu by the
-> way, max_features handling, maybe more; all of which have different
-> priorities).
->
+with kvm gicv3 we enter
+kvm_arm_gicv3_realize/arm_gicv3_common_realize
 
-I checked and it seems to me that all of the accelerator-specific
-initialization should be doable in instance_init (which risc-v already
-does), the only problem is the max_features field. But max_features is
-*not* a qdev property so it can be moved to the class side.
-
-I will try to send patches tomorrow.
-
-Paolo
-
-
-TDX added checks on top, and instance_post_init worked when applying class
-> defaults but not for checks. But as mentioned in the commit message for
-> this patch, cxl_dsp_instance_post_init and
-> rp_instance_post_init have similar issues so reverting is also incorrect.
+but we don't enter arm_gic_realize which calls gicv3_init_cpuif Thanks Eric
 >
-> Maybe DeviceClass needs another callback that is called before Device's
-> own instance_post_init. The accelerator could use it.
+> The rest of the series looks OK to me.
 >
-> Or maybe, more long term, instance_post_init could be replaced by a set of
-> Notifiers that are registered by instance_init and that have a priority
-> (FIXUP_CLASS_DEFAULTS, APPLY_GLOBAL_DEFAULTS, and a third for TDX).
+> thanks
+> -- PMM
 >
-> Paolo
->
-> accelerator needs to do different tweak for "max/host", "xcc->model".
->>
->> Of course we can split it and put specific handling at the end of each
->> sub-class's instance_init(), like below:
->>
->> - in TYPE_X86_CPU instance_init()
->>
->>         if (accelerator_kvm) {
->>                 kvm_instance_init_common_for_x86_cpu();
->>         }
->>
->> - in "base" instance_init()
->>
->>         if (accelerator_kvm) {
->>                 kvm_instance_init_for_base();
->>         }
->>
->> - in "max" instance_init()
->>
->>         if (accelerator_kvm) {
->>                 kvm_instance_init_for_max();
->>         }
->>
->> - in "host" instance_init()
->>
->>         if (accelerator_kvm) {
->>                 kvm_instance_init_for_host();
->>         }
->>
->> - in "named cpu model" instance_init()
->>
->>         if (xcc->model) {
->>                 kvm_instance_init_for_xcc_model();
->>         }
->>
->> Contrast to the current implementation in post_init()
->>
->>         if (accelerator_kvm) {
->>                 kvm_instance_init_common_for_x86_cpu();
->>
->>                 if (base)
->>                         ...
->>                 if (max)
->>                         ...
->>                 if (host)
->>                         ...
->>                 if (xcc->model)
->>                         ...
->>         }
->>
->> The reality for the former might be simpler since "base" doesn't have
->> instance_init(), and "max/host" are same to KVM as "cpu->max_features"
->>
->> But I still like the latter.
->>
->>
->>
-
---000000000000e26f2a063958ae99
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il gio 3 lug 2025, 06:51 Paolo B=
-onzini &lt;<a href=3D"mailto:pbonzini@redhat.com">pbonzini@redhat.com</a>&g=
-t; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0=
-px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><=
-div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" c=
-lass=3D"gmail_attr">Il mer 2 lug 2025, 23:36 Xiaoyao Li &lt;<a href=3D"mail=
-to:xiaoyao.li@intel.com" rel=3D"noreferrer noreferrer" target=3D"_blank">xi=
-aoyao.li@intel.com</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
-204);padding-left:1ex">The reason why accelerator&#39;s instance_init() was=
- moved to post_init, was <br>
-just it needs to consider other factors. Please see commit 4db4385a7ab6 <br=
->
-(&quot;i386: run accel_cpu_instance_init as post_init&quot;)<br></blockquot=
-e></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">You&#39;re righ=
-t and this can be a problem with the simple split that Zhao proposed. But t=
-he root cause is that post_init is confusing many kinds of defaults (the KV=
-M vendor case, globals which are different for compat properties and -globa=
-l and which CPUs also abuse to implement -cpu by the way, max_features hand=
-ling, maybe more; all of which have different priorities).</div></div></blo=
-ckquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">I checked=
- and it seems to me that all of the accelerator-specific initialization sho=
-uld be doable in instance_init (which risc-v already does), the only proble=
-m is the max_features field. But max_features is *not* a qdev property so i=
-t can be moved to the class side.</div><div dir=3D"auto"><br></div><div dir=
-=3D"auto">I will try to send patches tomorrow.</div><div dir=3D"auto"><br><=
-/div><div dir=3D"auto">Paolo=C2=A0</div><div dir=3D"auto"><br></div><div di=
-r=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quot=
-e_container"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"=
-auto"><div dir=3D"auto">TDX added checks on top, and instance_post_init wor=
-ked when applying class defaults but not for checks. But as mentioned in th=
-e commit message for this patch, cxl_dsp_instance_post_init and</div><div d=
-ir=3D"auto">rp_instance_post_init have similar issues so reverting is also =
-incorrect.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Maybe DeviceC=
-lass needs another callback that is called before Device&#39;s own instance=
-_post_init. The accelerator could use it.=C2=A0</div><div dir=3D"auto"><br>=
-</div><div dir=3D"auto">Or maybe, more long term, instance_post_init could =
-be replaced by a set of Notifiers that are registered by instance_init and =
-that have a priority (FIXUP_CLASS_DEFAULTS, APPLY_GLOBAL_DEFAULTS, and a th=
-ird for TDX).</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div=
-><div dir=3D"auto"><div dir=3D"auto"><div dir=3D"auto"><br></div><div dir=
-=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" styl=
-e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
-g-left:1ex">accelerator needs to do different tweak for &quot;max/host&quot=
-;, &quot;xcc-&gt;model&quot;.<br>
-<br>
-Of course we can split it and put specific handling at the end of each <br>
-sub-class&#39;s instance_init(), like below:<br>
-<br>
-- in TYPE_X86_CPU instance_init()<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (accelerator_kvm) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 kvm_instance_init_c=
-ommon_for_x86_cpu();<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-<br>
-- in &quot;base&quot; instance_init()<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (accelerator_kvm) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 kvm_instance_init_f=
-or_base();<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-<br>
-- in &quot;max&quot; instance_init()<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (accelerator_kvm) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 kvm_instance_init_f=
-or_max();<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-<br>
-- in &quot;host&quot; instance_init()<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (accelerator_kvm) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 kvm_instance_init_f=
-or_host();<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-<br>
-- in &quot;named cpu model&quot; instance_init()<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (xcc-&gt;model) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 kvm_instance_init_f=
-or_xcc_model();<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-<br>
-Contrast to the current implementation in post_init()<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (accelerator_kvm) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 kvm_instance_init_c=
-ommon_for_x86_cpu();<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (base)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 ...<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (max)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 ...<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (host)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 ...<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (xcc-&gt;model)<=
-br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 ...<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-<br>
-The reality for the former might be simpler since &quot;base&quot; doesn&#3=
-9;t have <br>
-instance_init(), and &quot;max/host&quot; are same to KVM as &quot;cpu-&gt;=
-max_features&quot;<br>
-<br>
-But I still like the latter.<br>
-<br>
-<br>
-</blockquote></div></div></div></div></div>
-</blockquote></div></div></div>
-
---000000000000e26f2a063958ae99--
 
 
