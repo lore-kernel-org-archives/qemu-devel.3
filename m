@@ -4,86 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE76BC8303C
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 21:06:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D09F4C71130
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 21:37:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYt2g-0000cK-6l; Mon, 07 Jul 2025 17:06:26 -0400
+	id 1uYtVo-0003tm-8X; Mon, 07 Jul 2025 17:36:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uYsLb-0005Rx-9k
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 16:22:05 -0400
-Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uYsLX-0004Ov-T5
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 16:21:54 -0400
-Received: by mail-qt1-x830.google.com with SMTP id
- d75a77b69052e-4a77ffcb795so33804561cf.0
- for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 13:21:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751919711; x=1752524511; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AngDFfAbXxT0VBr2TBjfR0UyDG0Wft7yK5h399FKsbU=;
- b=das8aIW5ga1+trD/Lnhi1wtNuQ5fLMU0wsIZI4EHNNxXITfvVvGAAmYY6pGU0NxXcX
- iEjr5F2eoImbKglQqrrd3HF6576NXvve5gcbDZv1TZwF9lfOjv8Lobwf6roKUkY83vB4
- GqHci8as6FN1RhJVWvoGYPELNt3eA5ykeqFufvK9ZXg5gMr6euJRlBEpegSIdkOEWHEi
- 0e58rSNlvUs5gtv+tqR+Wu+3dSBXnpRJ8yhUXdNlxbiVdGMCVlasUhC1qD4EHnpVRKv+
- 1nWi/GFhyBqEBKP40Ftf91kbZjHcLhZ/ewvPPaJ84q8fnWWt9hH/M5lgWLFWSRw7X/rT
- tibQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751919711; x=1752524511;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AngDFfAbXxT0VBr2TBjfR0UyDG0Wft7yK5h399FKsbU=;
- b=elSEESOzOT8+96Gvg/PlBqvLjfmU5C01ab3WGMona7XJgJ7hZcHGZ2Bwi9TTt967G3
- 48zsce9XOnNu9teaTbk2wRNDve+REE+VWMl7DyvoSSRDOZGvljXiNBPUiwQCrgwWD0Cz
- hsB07YoGPd+s43ig5sDw0TZi7+BmGvpn4mSuet/sQUjN2vzazJqGvFwA8I9S0N7+rBlS
- JH+AkpW4+6FyHkXuQAeUprHeCzAta+vKwdyt5AtOfShkMgqeLu9CCMCaSez9hEet5BHA
- CwI2c9KI8xWeadJjSfiX9ED+NUlM//TTZFfYZvClVXc1Xo6vx/UjG7gcEQIOyH6gbEAb
- 82Zw==
-X-Gm-Message-State: AOJu0Yz+OvjVZMlUwGmvaTQ42KkssZ/hKaBiE6PS/jprITo6C3+nhV0V
- YJnIJyv60ue8n8knyMqbZV0SBU3pCfQw+UPvxj8ZneKRHzzi3F79zMp4nGkKoxClur5zcAzMNrG
- ABHlUrkk=
-X-Gm-Gg: ASbGncuWfYLz36gbxguRRmI7xVh/aD+BKfRtcQ09TnXK+U2yKzaWE8rvRfjlMRDi2vO
- OSgSf7/s8ObMG+O7bU2shIwU6vK25tgTC/H7ITiGdCKp5OPFQtsx3MrU242YN6QzUmUQ0IU3Ay7
- OmeX3whnetWrXrMOZfE8S4MGFjycwycBNwjrnWgU8oW4VSf76BRyQjU9IEbbL0PwbR9un4SpHvu
- c60iDv/50y/LM2TIluvpI1n+Qho5alC3hzlY4wcZcjF1VFXMRt/mUfS2UiKE5ZOQOqWz1GCqceP
- sg4FUiI5+1/dKo0Vj2Uk9hMhXDZu3kAlSKMYBfrGRb/Tjc55/jCvp4xnNbAYSeAO6dF19cuP6PI
- 0RzhPepEIaK9NAoJN
-X-Google-Smtp-Source: AGHT+IFiOG9P+P0Vt7vLU2ovOSbdok2M6F+s7AA57BnaTBjmtkkkElGjCguSuYLjTT6/aFzzH24ZAg==
-X-Received: by 2002:a05:622a:34c:b0:4a9:a729:1c35 with SMTP id
- d75a77b69052e-4a9cd7e5289mr6088331cf.37.1751919710672; 
- Mon, 07 Jul 2025 13:21:50 -0700 (PDT)
-Received: from stoup.. ([172.58.142.143]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4a994a78dd4sm69050351cf.51.2025.07.07.13.21.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Jul 2025 13:21:50 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH 20/20] target/arm: Implement FEAT_ATS1A
-Date: Mon,  7 Jul 2025 14:21:11 -0600
-Message-ID: <20250707202111.293787-21-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250707202111.293787-1-richard.henderson@linaro.org>
-References: <20250707202111.293787-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <den@openvz.org>)
+ id 1uYsuz-0003mB-7c; Mon, 07 Jul 2025 16:58:32 -0400
+Received: from relay.virtuozzo.com ([130.117.225.111])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>)
+ id 1uYsuw-00016C-MA; Mon, 07 Jul 2025 16:58:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
+ Content-Type; bh=vKJfN/5eI2Tx7cOQbP82vfjVOaa6HYkeO85lIn8f0Ow=; b=iPwNuz0HIlBZ
+ Hvtj1HhbeAlIyvL4fTqmDlCb7RimfojLPCN/SXl5j4Qs/d4BhVLBpzDIWGFZnhGVPSMQBJ7WPYyhG
+ ada5Td0Ls3ZRFv7i5bQynY3b2lBfP3qYyGNlXCurSsLSTQJpaWqK0I9iv2tboq1mgG5QNYNzknpOV
+ W7IpnaQB4hpVdYyOSNBIfoh0VV8zpWRThCRqJoH0udep9nG7svIFfi8VD5PuaVt5lLC8NU0xdVYQG
+ Nqhm9F1D5P/ojWXBnzg02ouDBIgA171VMYf3AUVFdqP4NK9mwuP7WHhUnRKqK9wt/9Qq7CLNj47nO
+ 9TW80vE8cSBMjxl+Kk8CeQ==;
+Received: from ch-vpn.virtuozzo.com ([130.117.225.6] helo=iris.sw.ru)
+ by relay.virtuozzo.com with esmtp (Exim 4.96)
+ (envelope-from <den@openvz.org>) id 1uYspc-006WQT-1F;
+ Mon, 07 Jul 2025 22:58:14 +0200
+To: qemu-block@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: den@openvz.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH 1/1] qemu-img: add sub-command --remove-all to 'qemu-img
+ bitmap'
+Date: Mon,  7 Jul 2025 22:58:22 +0200
+Message-ID: <20250707205822.614350-1-den@openvz.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x830.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: softfail client-ip=130.117.225.111; envelope-from=den@openvz.org;
+ helo=relay.virtuozzo.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_SOFTFAIL=0.665 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,133 +62,192 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Denis V. Lunev" <den@openvz.org>
+From:  "Denis V. Lunev" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement FEAT_ATS1A and enable for -cpu max.
+From time to time it is needed to remove all bitmaps from the image.
+Before this patch the process is not very convinient. One should
+perform
+    qemu-img info
+and parse the output to obtain all names. After that one should
+sequentially call
+    qemu-img bitmap --remove
+for each present bitmap.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+The patch adds --remove-all sub-command to 'qemu-img bitmap'.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
 ---
- target/arm/cpregs.h           |  1 +
- target/arm/cpu-features.h     |  5 ++++
- target/arm/tcg/cpregs-at.c    | 44 +++++++++++++++++++++++++++++++++++
- target/arm/tcg/cpu64.c        |  1 +
- docs/system/arm/emulation.rst |  1 +
- 5 files changed, 52 insertions(+)
+ docs/tools/qemu-img.rst |  4 +++-
+ qemu-img.c              | 43 ++++++++++++++++++++++++++++++++++-------
+ 2 files changed, 39 insertions(+), 8 deletions(-)
 
-diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
-index 88b3d63424..58c6326fce 100644
---- a/target/arm/cpregs.h
-+++ b/target/arm/cpregs.h
-@@ -835,6 +835,7 @@ typedef enum FGTBit {
-     DO_BIT(HFGITR, DVPRCTX),
-     DO_BIT(HFGITR, CPPRCTX),
-     DO_BIT(HFGITR, DCCVAC),
-+    DO_BIT(HFGITR, ATS1E1A),
- } FGTBit;
+diff --git a/docs/tools/qemu-img.rst b/docs/tools/qemu-img.rst
+index 3653adb963..a08fd6019f 100644
+--- a/docs/tools/qemu-img.rst
++++ b/docs/tools/qemu-img.rst
+@@ -301,7 +301,7 @@ Command description:
+   For write tests, by default a buffer filled with zeros is written. This can be
+   overridden with a pattern byte specified by *PATTERN*.
  
- #undef DO_BIT
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 5d8adfb73b..91e6c5b7d2 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -604,6 +604,11 @@ static inline bool isar_feature_aa64_rpres(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64ISAR2, RPRES);
- }
+-.. option:: bitmap (--merge SOURCE | --add | --remove | --clear | --enable | --disable)... [-b SOURCE_FILE [-F SOURCE_FMT]] [-g GRANULARITY] [--object OBJECTDEF] [--image-opts | -f FMT] FILENAME BITMAP
++.. option:: bitmap (--merge SOURCE | --add | --remove | --remove-all | --clear | --enable | --disable)... [-b SOURCE_FILE [-F SOURCE_FMT]] [-g GRANULARITY] [--object OBJECTDEF] [--image-opts | -f FMT] FILENAME BITMAP
  
-+static inline bool isar_feature_aa64_ats1a(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64ISAR2, ATS1A);
-+}
+   Perform one or more modifications of the persistent bitmap *BITMAP*
+   in the disk image *FILENAME*.  The various modifications are:
+@@ -310,6 +310,8 @@ Command description:
+ 
+   ``--remove`` to remove *BITMAP*.
+ 
++  ``--remove-all`` to remove all bitmaps.
 +
- static inline bool isar_feature_aa64_fp_simd(const ARMISARegisters *id)
- {
-     /* We always set the AdvSIMD and FP fields identically.  */
-diff --git a/target/arm/tcg/cpregs-at.c b/target/arm/tcg/cpregs-at.c
-index 39141c83aa..b764dd54c3 100644
---- a/target/arm/tcg/cpregs-at.c
-+++ b/target/arm/tcg/cpregs-at.c
-@@ -490,6 +490,47 @@ static const ARMCPRegInfo ats1cp_reginfo[] = {
-       .writefn = ats_write },
+   ``--clear`` to clear *BITMAP*.
+ 
+   ``--enable`` to change *BITMAP* to start recording future edits.
+diff --git a/qemu-img.c b/qemu-img.c
+index e75707180d..920ede2a6a 100644
+--- a/qemu-img.c
++++ b/qemu-img.c
+@@ -86,6 +86,7 @@ enum {
+     OPTION_BITMAPS = 275,
+     OPTION_FORCE = 276,
+     OPTION_SKIP_BROKEN = 277,
++    OPTION_REMOVE_ALL = 278,
  };
  
-+static void ats_s1e1a(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
-+{
-+    uint64_t hcr_el2 = arm_hcr_el2_eff(env);
-+    bool regime_e20 = (hcr_el2 & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE);
-+    ARMMMUIdx mmu_idx = regime_e20 ? ARMMMUIdx_E20_2 : ARMMMUIdx_Stage1_E1;
-+    ARMSecuritySpace ss = arm_security_space_below_el3(env);
-+
-+    env->cp15.par_el[1] = do_ats_write(env, value, 0, mmu_idx, ss);
-+}
-+
-+static void ats_s1e2a(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
-+{
-+    uint64_t hcr_el2 = arm_hcr_el2_eff(env);
-+    ARMMMUIdx mmu_idx = hcr_el2 & HCR_E2H ? ARMMMUIdx_E20_2 : ARMMMUIdx_E2;
-+    ARMSecuritySpace ss = arm_security_space_below_el3(env);
-+
-+    env->cp15.par_el[1] = do_ats_write(env, value, 0, mmu_idx, ss);
-+}
-+
-+static void ats_s1e3a(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
-+{
-+    env->cp15.par_el[1] = do_ats_write(env, value, 0, ARMMMUIdx_E3,
-+                                       arm_security_space(env));
-+}
-+
-+static const ARMCPRegInfo ats1a_reginfo[] = {
-+    { .name = "AT_S1E1A", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 0, .crn = 7, .crm = 9, .opc2 = 2,
-+      .access = PL1_W, .type = ARM_CP_NO_RAW | ARM_CP_RAISES_EXC,
-+      .fgt = FGT_ATS1E1A,
-+      .accessfn = at_s1e01_access, .writefn = ats_s1e1a },
-+    { .name = "AT_S1E2A", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 4, .crn = 7, .crm = 9, .opc2 = 2,
-+      .access = PL2_W, .type = ARM_CP_NO_RAW | ARM_CP_RAISES_EXC,
-+      .accessfn = at_s1e2_access, .writefn = ats_s1e2a },
-+    { .name = "AT_S1E3A", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 6, .crn = 7, .crm = 9, .opc2 = 2,
-+      .access = PL3_W, .type = ARM_CP_NO_RAW | ARM_CP_RAISES_EXC,
-+      .writefn = ats_s1e3a },
-+};
-+
- void define_at_insn_regs(ARMCPU *cpu)
- {
-     CPUARMState *env = &cpu->env;
-@@ -511,4 +552,7 @@ void define_at_insn_regs(ARMCPU *cpu)
-     if (cpu_isar_feature(aa32_ats1e1, cpu)) {
-         define_arm_cp_regs(cpu, ats1cp_reginfo);
+ typedef enum OutputFormat {
+@@ -191,7 +192,7 @@ void help(void)
+            "Parameters to bitmap subcommand:\n"
+            "  'bitmap' is the name of the bitmap to manipulate, through one or more\n"
+            "       actions from '--add', '--remove', '--clear', '--enable', '--disable',\n"
+-           "       or '--merge source'\n"
++           "       '--remove-all' or '--merge source'\n"
+            "  '-g granularity' sets the granularity for '--add' actions\n"
+            "  '-b source' and '-F src_fmt' tell '--merge' actions to find the source\n"
+            "       bitmaps from an alternative file\n"
+@@ -4770,6 +4771,7 @@ enum ImgBitmapAct {
+     BITMAP_ENABLE,
+     BITMAP_DISABLE,
+     BITMAP_MERGE,
++    BITMAP_REMOVE_ALL,
+ };
+ typedef struct ImgBitmapAction {
+     enum ImgBitmapAct act;
+@@ -4788,7 +4790,7 @@ static int img_bitmap(int argc, char **argv)
+     BlockDriverState *bs = NULL, *src_bs = NULL;
+     bool image_opts = false;
+     int64_t granularity = 0;
+-    bool add = false, merge = false;
++    bool add = false, merge = false, remove_all = false, any = false;
+     QSIMPLEQ_HEAD(, ImgBitmapAction) actions;
+     ImgBitmapAction *act, *act_next;
+     const char *op;
+@@ -4803,6 +4805,7 @@ static int img_bitmap(int argc, char **argv)
+             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
+             {"add", no_argument, 0, OPTION_ADD},
+             {"remove", no_argument, 0, OPTION_REMOVE},
++            {"remove-all", no_argument, 0, OPTION_REMOVE_ALL},
+             {"clear", no_argument, 0, OPTION_CLEAR},
+             {"enable", no_argument, 0, OPTION_ENABLE},
+             {"disable", no_argument, 0, OPTION_DISABLE},
+@@ -4846,34 +4849,44 @@ static int img_bitmap(int argc, char **argv)
+             act = g_new0(ImgBitmapAction, 1);
+             act->act = BITMAP_ADD;
+             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
+-            add = true;
++            add = any = true;
+             break;
+         case OPTION_REMOVE:
+             act = g_new0(ImgBitmapAction, 1);
+             act->act = BITMAP_REMOVE;
+             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
++            any = true;
++            break;
++        case OPTION_REMOVE_ALL:
++            act = g_new0(ImgBitmapAction, 1);
++            act->act = BITMAP_REMOVE_ALL;
++            QSIMPLEQ_INSERT_TAIL(&actions, act, next);
++            remove_all = true;
+             break;
+         case OPTION_CLEAR:
+             act = g_new0(ImgBitmapAction, 1);
+             act->act = BITMAP_CLEAR;
+             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
++            any = true;
+             break;
+         case OPTION_ENABLE:
+             act = g_new0(ImgBitmapAction, 1);
+             act->act = BITMAP_ENABLE;
+             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
++            any = true;
+             break;
+         case OPTION_DISABLE:
+             act = g_new0(ImgBitmapAction, 1);
+             act->act = BITMAP_DISABLE;
+             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
++            any = true;
+             break;
+         case OPTION_MERGE:
+             act = g_new0(ImgBitmapAction, 1);
+             act->act = BITMAP_MERGE;
+             act->src = optarg;
+             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
+-            merge = true;
++            any = merge = true;
+             break;
+         case OPTION_OBJECT:
+             user_creatable_process_cmdline(optarg);
+@@ -4885,8 +4898,8 @@ static int img_bitmap(int argc, char **argv)
      }
-+    if (cpu_isar_feature(aa64_ats1a, cpu)) {
-+        define_arm_cp_regs(cpu, ats1a_reginfo);
-+    }
- }
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 937f29e253..5916a32043 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1178,6 +1178,7 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64ISAR2, MOPS, 1);     /* FEAT_MOPS */
-     t = FIELD_DP64(t, ID_AA64ISAR2, BC, 1);       /* FEAT_HBC */
-     t = FIELD_DP64(t, ID_AA64ISAR2, WFXT, 2);     /* FEAT_WFxT */
-+    t = FIELD_DP64(t, ID_AA64ISAR2, ATS1A, 1);    /* FEAT_ATS1A */
-     SET_IDREG(isar, ID_AA64ISAR2, t);
  
-     t = GET_IDREG(isar, ID_AA64PFR0);
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 78c2fd2113..1c3da23623 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -23,6 +23,7 @@ the following architecture extensions:
- - FEAT_AFP (Alternate floating-point behavior)
- - FEAT_Armv9_Crypto (Armv9 Cryptographic Extension)
- - FEAT_ASID16 (16 bit ASID)
-+- FEAT_ATS1A (Address Translation operations that ignore stage 1 permissions)
- - FEAT_BBM at level 2 (Translation table break-before-make levels)
- - FEAT_BF16 (AArch64 BFloat16 instructions)
- - FEAT_BTI (Branch Target Identification)
+     if (QSIMPLEQ_EMPTY(&actions)) {
+-        error_report("Need at least one of --add, --remove, --clear, "
+-                     "--enable, --disable, or --merge");
++        error_report("Need at least one of --add, --remove, --remove-all, "
++                     "--clear, --enable, --disable, or --merge");
+         goto out;
+     }
+ 
+@@ -4904,10 +4917,14 @@ static int img_bitmap(int argc, char **argv)
+         goto out;
+     }
+ 
+-    if (optind != argc - 2) {
++    if (any && optind != argc - 2) {
+         error_report("Expecting filename and bitmap name");
+         goto out;
+     }
++    if (!any && remove_all && optind != argc - 1) {
++        error_report("Expecting filename");
++        goto out;
++    }
+ 
+     filename = argv[optind];
+     bitmap = argv[optind + 1];
+@@ -4945,6 +4962,18 @@ static int img_bitmap(int argc, char **argv)
+             qmp_block_dirty_bitmap_remove(bs->node_name, bitmap, &err);
+             op = "remove";
+             break;
++        case BITMAP_REMOVE_ALL: {
++            while (1) {
++                BdrvDirtyBitmap *bm = bdrv_dirty_bitmap_first(bs);
++                if (bm == NULL) {
++                    break;
++                }
++                qmp_block_dirty_bitmap_remove(bs->node_name,
++                                              bdrv_dirty_bitmap_name(bm), &err);
++            }
++            op = "remove-all";
++            break;
++        }
+         case BITMAP_CLEAR:
+             qmp_block_dirty_bitmap_clear(bs->node_name, bitmap, &err);
+             op = "clear";
 -- 
-2.43.0
+2.45.2
 
 
