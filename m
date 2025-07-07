@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3EE7C8303C
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 15:04:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DF28C8303C
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 15:05:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYnNJ-0006Od-Mp; Mon, 07 Jul 2025 11:03:21 -0400
+	id 1uYnNl-0006af-97; Mon, 07 Jul 2025 11:03:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uYn1Z-0006Cp-3s
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 10:41:05 -0400
+ id 1uYn54-0008VN-B9
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 10:44:35 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uYn1V-0005ql-6J
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 10:40:52 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 567BMN31027044;
- Mon, 7 Jul 2025 14:40:39 GMT
+ id 1uYn51-00069M-SA
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 10:44:30 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 567Eb9vw032407;
+ Mon, 7 Jul 2025 14:44:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=3IKsEimeJ9TwJIp2F3ihTlFiCC1IR43qLExr5ZBVkc4=; b=
- rSMwSt0bLPgsqmMwxBk2dY10NlesdElUssadKT1S/dVNUrL8ZBrO4tZpuG71FUkR
- DaDrUjDW+1KSJxvZSQ0yZlIMYzJdtMca1EYCFyBMexE+KcMD/Wp1tdz+MJ2pFz/F
- 883JRMm7vNqz5zoSMBxAgJquj/UvhvH02ssgW+2erFv68KlBcAtkZXbSUkE6nS1B
- eEuhc9l7H6hyDsASwN21xmwcfPySBH/kkC/sgQvIX9jM0oILwbMf/ohnFv8ZDvwm
- a3ahMzFoA9eUTCW1I8F1yoHFAK4TSs1ykGqbuWfWwvhDXFUlThHoZ185QJz94XGB
- AeB5osnfeizKLMhcFjhQEw==
+ corp-2025-04-25; bh=Ew3lTMOw+OOMAhCZPxcRMXJM2nAazAezzIdTuwV02nE=; b=
+ BtlMNCJ1jn/y+d8aq5wKwN8cMANwqXFwYOytPoLiakTRDx9fY/byasY8l8+Qsr8y
+ HPWKR42XC0/WqJKR183e8tH2Xz57Qsr9g47XCaaVVRu+KyGw6cFy8ArejHGqiylG
+ aA0SjeIvSv25H/duI5bOhx3GihJJZhsDfJndsfyhynL2LleN4EakP52j08XqDdad
+ HFti4r3eOBS/N2mev/gYFk2OO3zlMBVBYJme2PXfkS0ukfv0AfFWK9yaao4yFxX4
+ GuCd++0Zgy/ttYiztlMFsVF1UdWt5p98yy+OKs5+AE2NkZ2LFhT8b00wnzJtrJe0
+ A1scNg/JaZc2ItcCvvNNuQ==
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47rda18eq3-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47rg5hg0he-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 07 Jul 2025 14:40:38 +0000 (GMT)
+ Mon, 07 Jul 2025 14:44:23 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 567EVE6F023596; Mon, 7 Jul 2025 14:40:38 GMT
-Received: from dm1pr04cu001.outbound.protection.outlook.com
- (mail-centralusazon11010036.outbound.protection.outlook.com [52.101.61.36])
+ with ESMTP id 567EUPJ0024388; Mon, 7 Jul 2025 14:44:23 GMT
+Received: from sj2pr03cu001.outbound.protection.outlook.com
+ (mail-westusazon11012052.outbound.protection.outlook.com [52.101.43.52])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 47ptg8keky-1
+ 47ptg8kk3j-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 07 Jul 2025 14:40:37 +0000
+ Mon, 07 Jul 2025 14:44:22 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=n5WgPN9yO6uLOmhn3aqsA9HSHKTBXWDoNrD7hGUrBmsLNFT3kTj7GzzScMp4AHhbwNC/f1qZRdryfSHkXdfo/K//8e2oKskJm19FlDzgZ8Fn+H5uiiemH/7eNDs5+5b6+gtTxvjSGKvoc0d0+bh7ZYp9RuOzQT9dYvVss2c2VxryxIwGNs2eGsXzXDjBlfMEYMg0e1tpx4xpu6baTEHQVqijsKUgzUW3D9ruQ8xg50+25GevL339gITlstBTTtuZgj5ktAS42UFwC+i7OEgR9O3vyNfuXdx181CnDbCYg0K2dkDmKGScD85GiKL4B4TyAsCyKZCFXzH1qcnfjHUKZA==
+ b=jQf8ccAdo7RWqeiXiwPwgWTM1uSW7/vfC3viHWc/Qe4xlGGVJ2qqzWMXPygwl+HddK2HjrfG8rBtjIlXwxGLRd8rs1FtwoKwtjN4oFkBplgDk8zCu7b9AIQYjluymfyFb43oh03eEP7hemcdM5ANZAwNuzPAluLi36V7aagyDSYMEfgBwkQ0kjRBpXkkl59N7IDAV/ZVUOgPMwKs2+oRYblCH8fKavL8kXyWgMJfRco3xPpcqW5l/g5EYblY6V1SpaZ/HxIewsKCoyfqNEo8nooDlbOmeZJKQODGY1usHtWL7nNz+9Qws68JRpckCSaushaPhbzSKku0Wuux1NCUNA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3IKsEimeJ9TwJIp2F3ihTlFiCC1IR43qLExr5ZBVkc4=;
- b=VP5TKlK16BrMgJggsCJCGDyIsUxIRoRjRA1ePWWCpfkYu5fQ2urUHEnfajFOMiIoklRu7lwq7n7FMvabsKpYy69TcACAfVRVGofP6fp/C/u4VvS8MpS/Cw21hywc7jESIP5t5gGIS7hfguG8/Dnq9+l8dbojbb+iQOOmSe3gI15gpjYuSx2wrCp40VM1nTnipmajbwFZxgKDMWCPckpeSGMzNbOs2BrLD8jG3pAoj1YPPJdk8IQYYgDwDIxoHMaDdEDYTzCVmJOS6TbcBQoZmK+3YpzIw2tltVLdOJNd14VVhCdCD4J9kEE+ooLIj1rEPyOHw09VJ4IzOu8ecgFX3A==
+ bh=Ew3lTMOw+OOMAhCZPxcRMXJM2nAazAezzIdTuwV02nE=;
+ b=tri8m3ekDx7a6Y6ABD7fYmsBSHB9mbNYrCuO0oUopIgn5SeYUsy8YNTwxSzUpS3c+vuCpFAHXgGLO8dpoab1wbr1oeC6fBvl9dt6YYLhxNwWcsx5CA+w/dP9VHFc/CJnharFgW6kWDmq+oREBzSLa8ALuw7o0KM7keYg/PPHDrL2LxVR8cG14y8f3yHIgW5eeSXYVg7siBU4/6Q9B7gK8EamW9vlLL5Yf9EYmYHWizzT+h7tvkzE1hoBbjaAB0Kg/dbPwPWGpTr28PiShY8x6Dt+NtqAZh8bIJUlYXcxm865aQ9XRDa3o5C2jEdsWmg51/jXzE1Ip4VGlS4MGPmf6Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3IKsEimeJ9TwJIp2F3ihTlFiCC1IR43qLExr5ZBVkc4=;
- b=ER7e6KDdAMqSfTL9ZF88cd1VUtPYVIUQejNT1rK6FBJqYqTPbbR1r+cphGe3DWGLCO/HP08SxxBrrYxCAhjqi0Lv4QBVxuVYPNsKJcvh9tcMz7zYawtetqTzQsl4PktlPumH/YChj0x5pA+506OpBxMZOnaxBRT8HEYPwNzgxLQ=
+ bh=Ew3lTMOw+OOMAhCZPxcRMXJM2nAazAezzIdTuwV02nE=;
+ b=NE4QsY9DCNqH5rFp+hC4TWw4JaUq5JdtqwZKP4SnVDSSvXrI44c1uov3Qh+9itoB14b1UAqCoB8ff46jR2IK4r+neClG59O53sGIH1eshqUDZ1bFoVO/x+1ViFSqR06nKs2SSxmF9jjoMWjg7avlxHd9BE4reVl8HjzZ0vAABww=
 Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
- by CY5PR10MB6216.namprd10.prod.outlook.com (2603:10b6:930:43::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.22; Mon, 7 Jul
- 2025 14:40:30 +0000
+ by DS7PR10MB5927.namprd10.prod.outlook.com (2603:10b6:8:85::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.25; Mon, 7 Jul
+ 2025 14:44:18 +0000
 Received: from IA1PR10MB7447.namprd10.prod.outlook.com
  ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
  ([fe80::f2fe:d6c6:70c4:4572%3]) with mapi id 15.20.8901.021; Mon, 7 Jul 2025
- 14:40:29 +0000
-Message-ID: <282efc8a-c37e-4afe-8e1e-f28436e74efe@oracle.com>
-Date: Mon, 7 Jul 2025 10:40:23 -0400
+ 14:44:17 +0000
+Message-ID: <76271add-d9b3-4b45-a272-3cbe336c2103@oracle.com>
+Date: Mon, 7 Jul 2025 10:44:17 -0400
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 4/5] qom: qom-list-getv
+Subject: Re: [PATCH V2 1/5] qom: qom-tree-get
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
  Cleber Rosa <crosa@redhat.com>, Eric Blake <eblake@redhat.com>,
@@ -85,109 +85,109 @@ Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>, Peter Krempa <pkrempa@redhat.com>,
  devel@lists.libvirt.org
 References: <1747057635-124298-1-git-send-email-steven.sistare@oracle.com>
- <1747057635-124298-5-git-send-email-steven.sistare@oracle.com>
- <874ivsno15.fsf@pond.sub.org>
+ <1747057635-124298-2-git-send-email-steven.sistare@oracle.com>
+ <877c0ono29.fsf@pond.sub.org>
 Content-Language: en-US
 From: Steven Sistare <steven.sistare@oracle.com>
-In-Reply-To: <874ivsno15.fsf@pond.sub.org>
+In-Reply-To: <877c0ono29.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BYAPR01CA0052.prod.exchangelabs.com (2603:10b6:a03:94::29)
- To IA1PR10MB7447.namprd10.prod.outlook.com
+X-ClientProxiedBy: SJ0PR05CA0054.namprd05.prod.outlook.com
+ (2603:10b6:a03:33f::29) To IA1PR10MB7447.namprd10.prod.outlook.com
  (2603:10b6:208:44c::10)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|CY5PR10MB6216:EE_
-X-MS-Office365-Filtering-Correlation-Id: f1ed2675-15a3-413a-776b-08ddbd643859
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|DS7PR10MB5927:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8225143d-db6b-415f-7fc1-08ddbd64bfb5
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?SmVHcWkrK29UOUpxUTErd3l1RFV1NVZZbFlQU2F6ODRoYmRESFhGa1AwQyt1?=
- =?utf-8?B?YnRYNC9ML3ZqMnpvMTd2Z0cwdXJRZ1BqWEttWVF3UG9zMCt5TmlybUZZT1Ar?=
- =?utf-8?B?Q2pxZ0NGUGNHYURwR2lMcGRKU3l5Z29VeGVuTi9hYUN3amVYQjdYMGdINjNF?=
- =?utf-8?B?Z1M3MDFZRjRNQldkQlA5eGZOeTlVWlU5ZWNsTjY4Zmp0YXR5c3JOSkxWVHlU?=
- =?utf-8?B?eFZ3dXhacDFxQ0xERnAwMGRuSmtPM0trOTJoNTJYYmVwL09iTTMwa2VyU0t2?=
- =?utf-8?B?dEtCV0hLZXBXWkJWU3Vua0RxSFVtUG5MQlV1QzZMeHFLMjR6OEFDTElRc2tx?=
- =?utf-8?B?b2J5TjNQVjBjeHBaSWlKWUFYelhGUHRFY3NSTVJZUm1WdnBVRjZ4NU5vVHdT?=
- =?utf-8?B?RVplbEtiSzVIQzdTVG83Sjd1YXBGTm9wZ0N0RTJiSWNCeDFwZVJMTkgvY0cx?=
- =?utf-8?B?Z050SU8vaDVLRmVqT1Z4VTI4bzd5bGtodFlDOTBEdTl3ZzVQK3dpaSs5OThJ?=
- =?utf-8?B?RFNiclZJZjIzOEplelFMc2tGQlhXMjN3ekdQUkwrWExjeHZXSWpjKzlCdnRp?=
- =?utf-8?B?empaWkxhQmtHSDMybk9uMFhxdWhyK1JKTjQ0bms3d1ZHaXBkVythRzJ3Z3Z2?=
- =?utf-8?B?dXZ4bWRSbDVOTVkvMzRudDVVekwzZkMxN0pnOHgvUmJqUzNPRTE4UnZTWFk4?=
- =?utf-8?B?VVZQK0pHbUp4aERqdENncDBUR1dkdDhLRjkwZzBnQ2dpZ09BbElFMEpDeGcy?=
- =?utf-8?B?bS81SDNaM3NKbHhSVXo2WHo1Ym04ako5V2diVkNEbXJoMDNPbFBuaU5zWnIz?=
- =?utf-8?B?U0tZb2hzL2lPMUwyZVd1VU1yekpwTVhpU2I5R2RDSVVQNndVRzlhVkF3VTFX?=
- =?utf-8?B?eDRxUzB6cU5yczZJbTBDT2N2TUtkSjFQWTEzTmJBV2hEZE81clhmOWVVTmR6?=
- =?utf-8?B?L0M0MHlqNDFsNVFkaVNBOHc3Y2xTWlRnOGtlR2NRMTVMaDVua3RyVThpNzNt?=
- =?utf-8?B?cStqOFhRWGcvMlBDazJkdGRlWWRGaXQwc01BLzd5U2hVR3ozRVNjSWVMdW9S?=
- =?utf-8?B?aHhLTVdwZkhWaVJIZkZIbUJ4VWNLSGhENWgzQXJSMkkxTVlmbTMvZkJMTUJp?=
- =?utf-8?B?bEY2c0J1cTN2NTZaWDhSL1VMaHpVUEF1eE9Nem5Mamo4V3hqU0VjbVV5dXdP?=
- =?utf-8?B?aU16dGtEVmdWWEd2SzdiVVFad2ZXdHR5L0poUEJ1Z3RQUWdUMmZFUmM5MnU5?=
- =?utf-8?B?UEtjUHp3TDVEOHppMjQzRXFRdGVTcis1T3ZwSGJGMkFYZFlIMDFDQVMwQ2VO?=
- =?utf-8?B?bVpOOS9NYUdvWGxSNy9FWmxad2d0SDFKUEZpQzVYemZMODRBSkNjMGlwQncy?=
- =?utf-8?B?Vnk4ZWlOQkRaQ0lIZG0wczArMlc1TUN2SzhaWjZqekEzeHNkQXJDYVBpWm92?=
- =?utf-8?B?WFRLWkVZZ2xqRldlMHM3TEd1aUMveDdicW1UL2FvbDRoL3dVcjZzL0Zjc2dr?=
- =?utf-8?B?OFZQUXlyKzVjTnk4eEpINHZKYm5KcTNEbDJpTDBZN3FKcGl3SWRub0RzZFRs?=
- =?utf-8?B?eXhBTzA5UjQ1R2w4MzFUcExHZm9jQUtqQ09tUVJkQUlMa0p5cHEvbDhmNG9S?=
- =?utf-8?B?MzhDR2gydzdMdCs1by9aTmdWd3NNRTAxbmUxOE5ESVUrWXprNjN1bFd2aDFa?=
- =?utf-8?B?SGxISStxS2NPeW13RUkxRXdzR0FhVWsyQktKa1FTdWN1OWp3MGFOdXIyYUNh?=
- =?utf-8?B?bDM2OXBRcnFaUFdBZVFmYjYwWG9uMG1vOXcwakRqWm9pQldRN3pXbm81bjQw?=
- =?utf-8?B?N09SYkdUWXJkVWZLTmdlQ1BhRXBsSnY0b0ducEZlOVFsdjMzdDlvM2xQdmlx?=
- =?utf-8?B?RSs4UE9aNTlaOStHMWRkVmhTNUtDRlFSWGNrSkVYOVgrVHJrSVZEeElRQU11?=
- =?utf-8?Q?UAhopmOeTvk=3D?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?UkZ3UHBlZ1JqRHdNbFdXSUV1WE9maStDbVcwajVYa0FIbGNCQktlbU90WlFI?=
+ =?utf-8?B?NmgyNzQ2ckl3UmN2ZHExTldaWTBqaHkwTjY3aU8yMUZQZ25oQ2FHQ3Q4VHdp?=
+ =?utf-8?B?d3d1amU4L1piVXJlVnVaektaYWJUWCtwUTZJcXpKeitoeVkyN3VlM3JQRVB3?=
+ =?utf-8?B?L1ZLdnRxNW5iNFdjUGsrYng0cE5FdHR1SS9UVGVXUTBCQU0zTFQyaks4VmQ5?=
+ =?utf-8?B?SmR5NGRUY25TUTBEdE40bTVMOEwzUHY5b09IN04vSnFDUy9FVnRSS0pydmlW?=
+ =?utf-8?B?cEhxdkZTWThPbTFNZkg3UDhjQjlnZWdiaXVyelR4OExBNnZ2clRlWXM5SVJD?=
+ =?utf-8?B?NEZTb3ZTc29QMTE2NnRvQ0VUamJLK2N5dzlkY201WHZhVU84aWpuSTd4TXR1?=
+ =?utf-8?B?S2hVdGc4eWlnd01maUJuOW1WSGRVb0pGdXAzZUtuZ29rODR0UEh2VldoTFJj?=
+ =?utf-8?B?cktocWhQZHpGSnA1bUw4MTFneFVMcnpmTTF3bjBaVytFd09LbENyVGtyQTU3?=
+ =?utf-8?B?cEFib05wb1ZoYjVxaHFzR2JCTTBPK1ZRNS9xVXNYM0N6TjFNVjB3b0pvaXdP?=
+ =?utf-8?B?eU5IK3R4bDhHdHhmRkJrd1pLdlJ1WVNCNkRXUkQ1dW9UQzROb3lDcHFBdDk0?=
+ =?utf-8?B?bFdwK0svNzhTczQ3bzNJd0hmNWprZlRUK3ZWeUprdWxwNVV3cXRqSU5MU3k5?=
+ =?utf-8?B?MHR5MjdZaFF6VlowYnEyaWl2TEtuNkZUTkRmZy9hbXpXMVdONHBqTWtrUWdi?=
+ =?utf-8?B?WG1xTDZhZGJrcmtFUUg3bjlVb2k2V0h2VWk0dmVWaWN0MmhOTUhBMUVid01U?=
+ =?utf-8?B?bVpDcFBVYlY3SDdrcVBKMGE1WWxLckVZNldYSTlBakE5bzhqTGZaTUY0U1RO?=
+ =?utf-8?B?ZG1aMzVXNEpvdGhpSWRIeis1YllBMFB4Wm5NbWtqUytqLzVGcFNMaEFtdkRI?=
+ =?utf-8?B?L3NlWGJ4bXIwVmF2aStEQktWS0RXUkpmaXhLZlhndTcwRjF6dmxROTd6dnlV?=
+ =?utf-8?B?MkV3bSt0Q1F0NkxxMTA3MWE3NW1RTWNTV0FnTXN6a3dCRWN5L09hUmdWRjlp?=
+ =?utf-8?B?R2J6bU1IdmVkT0x2enpGSlJJa21WbVB1WkhHdTJudGNta0tzejFoYTdrWDZB?=
+ =?utf-8?B?cEk1MUkzSVpWSTBtSitFZFNYYUZ2NnJBQlZBN0U1RlNia2x2M0dLenZ5dGhP?=
+ =?utf-8?B?OEhveUtIdTRBK3lyVDc2QnZlcHcrSERFd0p5Y28zWUdVL3FIV1RJSktPMVJU?=
+ =?utf-8?B?bWhXWUdDemZQQmg3N05zSUZaWG1XRFlIcGJLSFNIWm9rTnAyUWFYVnNqL1Av?=
+ =?utf-8?B?N0IvTWZrTmhPUm1HakV2Qk1kZXlTR0tBRDJXaGcvalFpbE1kWHlnZnBxNXcx?=
+ =?utf-8?B?VHNseGdwVFV4a3J0ZWhOT2xKaG04c0hSU2RGSWp1L0ZFK1BWWEp3OHA2VEJG?=
+ =?utf-8?B?S3l1ajkxSElLWStyTzFIMWlMM3VPakF1eTdnU2NSOGNKVFFZdTE0SVdKQWhq?=
+ =?utf-8?B?bTBHUGF0aXB4clV4dmVDZXU5TjN6QkFwZ0x2OWlsbnpPSmN0VmV0QVlxUHlC?=
+ =?utf-8?B?SDJnQTk0ZHhnbkI3OGFVdkgxNzZLdWcvTVhBb0ZpSlZrWHZHc05sT2Z1Wm5I?=
+ =?utf-8?B?aWN5RjZvZWF6aWM0TGYreDNHUk01VzZ4RmRJSjdlQVdJb1VPYUNSS2JHQ2Zy?=
+ =?utf-8?B?ZGJYQkRUMXI0c0JjbVRNVWMvSVpmVVlUZGYyOUF5Z3RWNFB4M3J0ZVdJSDBi?=
+ =?utf-8?B?NnF1dGNrbzFmYnJOa2lNQVBEb3EzOVlKZkI3YzF2T240WUZsNkRUd25LUmV1?=
+ =?utf-8?B?M3h6QlRmT0JvUmFGaEo1eWRlTk5jaGxlczhVbjJ2MDM1Kzkra0QvYTlVYlVC?=
+ =?utf-8?B?Q1gvM0hkRFRRL1pRK0xmSlNxWnFCZGZlWGlXV1E3NThxeG5uYVdhN0NEaGZT?=
+ =?utf-8?Q?UptUYW1csns=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(366016)(1800799024)(7416014)(376014); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dzVWTkUzVTMvTTlUVmUrNnRjVlB4SG4ySzVxMUhlblVrK2JFOFFwODdqZENh?=
- =?utf-8?B?RlJhUXk0V3AzZVVuYThETHNpVkg3Z3Y5L1NpSEV0YlJYeVkwM0pvWnhEN3BF?=
- =?utf-8?B?bUIzdFZsYXZ4dkhIQVhoL3ZpRjRUK1U0TkdiMTREbnJnVlZwU0J4UjlXSzRm?=
- =?utf-8?B?ZS9VMkM5MERManFrdVNqc1hCV0tjdDBDY09TV1R5NmZZcFIwbklTVDlCZy9P?=
- =?utf-8?B?aUxWYmkwNlYzbmFNeXR3a1lLMnhpL29IN21nQ01iMzdPcGp0M2YyT0c3L25D?=
- =?utf-8?B?OWE5Y0EveWNWMXNUMDNmSnVtMTE1THh1cXUrYkNqUEVraVdSK3UrRUswK1Qr?=
- =?utf-8?B?TWpCRGV2Y0k3U3d0T2srMkREWk8wT1ZyS3ErUFR5VFNXQUNVQlNmcER3OXVJ?=
- =?utf-8?B?WGMwK0F2eVJoRGR3Q1RKajVFUDZYQjlxRnNSMmg4RHQvVVZKc1FhZEpqd2Vt?=
- =?utf-8?B?S1JEcXpxUjNqUXJFYnZxL012UHZOdVNMR3ZKZC8vM3UwRzFEVzdPN2xYdVJM?=
- =?utf-8?B?T2kvT1gwekdYS0x1Sy9QTURPcHZGblJuQXhSeStZdVdRQnZtWlk4M216aTlU?=
- =?utf-8?B?VjZuVGlrVmZML2xzcWRscWRQTDhHOHhzVjR1bUxCdTJSbWVsVG9uUXE3Tkti?=
- =?utf-8?B?WFdQVmxEb2xvY29BK2RsYjlTL0VyeUxydEMrUnhHYmRWOUxDc0JOVHh2Z2ZM?=
- =?utf-8?B?NFpBUWZTVkN3MWswMnlocnQzNUZTK0NNQXBhWmIzMFk4T1JkMktuSFVSZlBj?=
- =?utf-8?B?blBhMzcyZ21Rd0Y1UXNtT3FBTlk1VEdPSWhCQlczdzFycUNEZnRVS25hb3lt?=
- =?utf-8?B?YXNWMmJabGhzSm5BTFlDS0hwUFI2ak5WOTVvZyt3dGp3TTUzMUkyamtZMU93?=
- =?utf-8?B?Tlc0ejdFSk9KZVcwdlo5MFhmc21zUFBvWlJTSkNRTXRZeUMxUmF4UW8xbmlp?=
- =?utf-8?B?cy9yTDg5NExBcE9ja3BlUXJRR1RRMVFncmNRNlVudmJSV2Vib1R2NnlVbnFw?=
- =?utf-8?B?UVdNSTF6T2VYWnVJNTZ1SnZNSkZoNk9teDlQSFBWY294MldWU1Q4K3EzSTdv?=
- =?utf-8?B?ckZLV05YVVZGVGNqNkQ4cnZjc0Y0RHR0T1FGWmF5bk1oMGhlUTJUYzE4WHJl?=
- =?utf-8?B?S3dnZExkSWw3OHc2SnErZDZTdkFVMUlHU2JTdU1DbExTU3VDdjh2clN0Nk4v?=
- =?utf-8?B?SFh4VlYyVUErQllFN3g3RDg1LzNraldSbUM2aDZreGNkakY2dkZyNFFsSGJM?=
- =?utf-8?B?aTNWNUVWQzdtQVZXVzZQNEg5TnVhMjdKbThHR2E0S3ZiditjQUgzM3NNMWho?=
- =?utf-8?B?NmY2R3RQNVBNNGdxL2lPYnhHL2MrUzNWSUVFSjkzVjVpL0FBZVduQTg0MUpx?=
- =?utf-8?B?M1NWUmYrQmdTNHBqT2ZuWlZCa0JRU2s4ZUVEQnhUQWpmRHozZ2svQ2JWV2Zj?=
- =?utf-8?B?YVNVQTQrZmR5TE1TQ2xHQlEzVEljMllvWDBMVElCRjY1SDYweDdTdEN0UnNq?=
- =?utf-8?B?bTlYellFaHRQdFE3WVFremlyL0g3YUtqcHNGY0NOam5NdTNSb3FmQUNVVmRV?=
- =?utf-8?B?ay9lNjRHcFBRUnVxN1dYeXFFSGxNU1J1OHZ2Qjk1WDF2OVk4c3pienN2bGEz?=
- =?utf-8?B?SnZIVW14Y25qZUJWZVcvSDcvbmoyV0JBT1ZCWWVMd3NNcjJsUTE2bjlwcGo4?=
- =?utf-8?B?cEFyQjBaZnpPbmVET1djK2oxZjhZMTdVVXBvbG5vRjJ6aWRIdE8wanFkd2cz?=
- =?utf-8?B?dSszS0JhSURxR0E0bDQ4bnZuYkJKZnBGVTJ2QjljV2luNlJqNkZpMkhaR3J1?=
- =?utf-8?B?aExLR3VoRmEyWGlDR3RrU1k4cWQrUUliRThPbU84a08yb2dhSjgrb2M3dG5G?=
- =?utf-8?B?cUwyWkY3dFNJdDJXMHc2aEptMFhoM21xRFY5ejlnd3RJa2xMOXl4U1RwWU5R?=
- =?utf-8?B?Q2QxSGh3ZDlEbkxLNTh1OWdMUHZZdnBRdUdIK3kyWFEvdkM0S1B0dHhsY2Iy?=
- =?utf-8?B?bDJjaHNVQWRtdTdCaTBjL2JUbXJXMmVEekU4VGRkeDdSSU9IMk40RzcyeTNX?=
- =?utf-8?B?eFZ4OEg4d2hYUWhRbUs2SFhkajJINVE5MW5wUUVDS2RmNHVSWjJ5SSt3UVE5?=
- =?utf-8?B?OUE4UWN1TWUzODFtV2JqZEtObjRtVnFnZUtpaC90MGdZTWNVNWdTMG9YUkps?=
- =?utf-8?B?YkE9PQ==?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VmduUlJzaWJuRXBuN1I3c25JQUNRbkFadGg0eHRPSVN0QVgvc3dyY2RpYlBM?=
+ =?utf-8?B?dnRGT2hzNUE3Y0lGRmpJU0xQdU1MaG1NZUxyMzRnUWQ1V28xVXgxVDlkMFZT?=
+ =?utf-8?B?WitDbGlTZHJxd25obktFdVBXRXdHbTNWUXJ2VS9tNTdpQ3g1Mlh1aXhraWN0?=
+ =?utf-8?B?eDlqTWpudWRSdUlaYUNGNU5HM1psVFBDMDdvcVhTVm9wQXpqOXcyR09UbkhG?=
+ =?utf-8?B?YUZJTGpLOUJTU3M5Yyt0SVB5MTVITmdsNE11Wkd2WmVXMXJvR2piNVI3UVBG?=
+ =?utf-8?B?SEpKbGl3c1ltb3JOUzVuR25NdkdtTzhEVEhIcVdORm9vdGpDdythOEZuRSt2?=
+ =?utf-8?B?aHExWFZvRjNMblBOM0YxM1p0WTFkZ0dTaWdmQjBsdlJXa0YyaHlTNVVPNVZV?=
+ =?utf-8?B?aDgxVGhqUklLRmlkSVpKR1pXZm9zMDg1QjJCVDltSktTR2FWRUZicmVZYVk3?=
+ =?utf-8?B?S0ZRNzl5alNDYU1UaHpBLzJ6bXlzVGxsaUdtQkFVQ3lQR0dVVTVyektOWndO?=
+ =?utf-8?B?U3NVUktSSWJ1cExzUDhmZUkrckUxTEVtRE5tbno2ZUYyZzR2cjF1NlE2ZmRp?=
+ =?utf-8?B?TURGeC9hN2JNbEhHOFJvRWx2VHFRekI3SWVyejRxcTFSZG1zV0RUV1JxMzVm?=
+ =?utf-8?B?N3lkR0dFakE5UXJ1TzFtK0UwYWtYNTVYcWVDM0pHTmlveUZhcmUwN1FVVHJ6?=
+ =?utf-8?B?UHc2VUVwRkZYV3EwUGxGeXZZYThYdEpoYVh3Ti9GYWpaMFlaWXNZUVZKUDlz?=
+ =?utf-8?B?Ukl4UHZ1UFFneFErUWJzeEwxSmJQWXZmQksyd0VIOHRueDFpUXJIaWJ0YnRJ?=
+ =?utf-8?B?NDN5RzA4YWMwTUxXWHVjWDJSSTBuQU5xRXM1bC9VM0sveVBmK2pndWVnS1BC?=
+ =?utf-8?B?S3NRQW84R2tWc0RocEZFclRqMm9tS2sxTExGaWJOMmtYbnpiWThwbzBlUEZJ?=
+ =?utf-8?B?RHdTaUVvVWE4ejVMSnBtQVN0dEJCTFM1NGtnVys0emZYeFVuUkZCN1AwVHRQ?=
+ =?utf-8?B?ck9LSUs5N1owUnNjUEFmL0hpMVc0MmkyU0VPSWJETkRlZ3lZcDNXZUtqWkhX?=
+ =?utf-8?B?dW1BVy9XU3VtT3BSMXU1MVVrbmFmbW5zZjBPVUlSZUtPN2JNdUNvWWh0NVdj?=
+ =?utf-8?B?cUlSL243NHJKYXV6eExSS2d5NVFNaWRaT3oxTkUrdElNUTN6WWhSOUdBeUI0?=
+ =?utf-8?B?L0xWencvM1FEUXREZVZpeFpWb1BDV2RIWmcwMXRSYk8venhwU3F0RkNSVFlI?=
+ =?utf-8?B?ZnBYcklvSHArY3prSloya01SV3NIdUJyZlczZGJuTWwzTE44cXZEZVl0Tnh5?=
+ =?utf-8?B?K2l2aXdPdFYveDRwTlRXN28yR0MvRjNXb2xxL1BUMENab3NkVUtFQWVJajlh?=
+ =?utf-8?B?QVBNT2pFcTk4Q1UxU1FFcDQvdFJNdkU0MVlCQVNwZDJrNWZ4K0U3K0VBS3Ax?=
+ =?utf-8?B?bVJ0QWJLbENwQ2hYd0h2dFFQWktvOXN6eGhDckhkSC9laDAvcnRTbzVjdU8r?=
+ =?utf-8?B?MVVLQ3RDdWhFM1kyQ2x2dUREOFlxTXhlRG5OUHBCK1o5VXhaeG9qQVB2WGJX?=
+ =?utf-8?B?ck93TXFFU2w0dy9zc0pLWDhKQUg2MHV0QThGS1RVUFh1WGI3YU5LajFwTm8x?=
+ =?utf-8?B?T0JVVDJwTHFRVmhyOGRqMTNoZDNOMlNDWC9iQ3BFNDkxek9hajMvVVdYcU1q?=
+ =?utf-8?B?UVRHcHhmSXdqSWlHb1FRRHZpZ0twYzJHOTcwSHl5YW43ckNHVjVRb3BuZnN6?=
+ =?utf-8?B?S2hTZThXWFRyTmNwMGEzbmlGd3d0eG1EelBCYk1wTDhVTmt5WFFLaEJkTW9w?=
+ =?utf-8?B?c2c2QXBWRm52SEFRbW1DLytzdGtrcjJON24wUzVvdldTamJVNk9vanowYlZk?=
+ =?utf-8?B?ZkUzc2cyeEs2QmJBSlFSamdma3BoaW5RUXptRkV5Z3l4eXFaM1NwSWI4c2Jl?=
+ =?utf-8?B?cUdoQ0w2cEtkeGlWMXdwN1VGcHVYZHlTU2dUaVhMZHdob2tFTGdZVEFZREt6?=
+ =?utf-8?B?dWhKS0h4VVIreVRUYklzdXpTTjZOdFdGWEdIYmZvRS9mSjlUVUpvV0hIVXV3?=
+ =?utf-8?B?L24wU0pWQytZKytSVEJrU2V3d3Q5WGIrVTZLVGpQMUNUSXYzTjdCYnZDeGNO?=
+ =?utf-8?B?OVh6SDVJT0pGUkJTRERBcEptUE9XeFNoYkF4N0FoaFNwMmlqWnNucXdqalRw?=
+ =?utf-8?B?YVE9PQ==?=
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: oiGCt/W3aX1QMCMAoDijO96us/MP2aHsqG/16uxr1ESPbg9Nhftuy+b0y29nDR3v01v5nYTd34Ivh7MhV7Osq1FUm3P16cKlz/WDh7cDnnJc770iBJZl3W2SAYx31dZrG+tfIIGNPC6UTs0iR9j7yewWYmnAIaAXbhYX/obj5B6MXIhEW8gN1c0dGWoIcaKnMBoOmGFgvdeuqSRbGqJPJM5lz3qkudMTkc0QiWfTg54MnwYnBPnj0NOGipkX9YN5TZvMYnGOvHkoWc9YFeKk4LWMOCMfhNniUoPf+ZTq+KJteAjvS26/MTfmsUYpsfHBhczB+JlUh1T9NgDezr8G1t7sPycKGK/kxmZdE9hBOCxhaDFqRIl9hHri4MR9YAC910E+vi/UOriMipZ0Okxn71BO+DgClwedDlKsr6KrlGGSw6YlMOwD27EHn/cBnARsYmS9zpy93PB1gTOvmQiPO0chVSK2wHNNcOtqvswDmazr5E4d/PPk5tWMzMJzASAwV7ctrXRiKS/iQYS9RGkqzA7BPPmhNhSpjSGY5VF/MGg9nUfCyjvJgNIzeCRmpHcROOlUTfESJSUVgSNaAQtR8ymDBq3JTA/dmib6/4SRMOs=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: OF9UG4H0FUiEf4npri81df5/hadfmQQe4SFMcOJ1H3mF5UOZPrZ3/dOPUue2OHyIJf402H2pRGCRePj9aFw9z0Ivk2o50sUrLNMqylYPukB3ATLwW0GcRm9ydn81RuuAR0bceVZazRfPiCn6dE6kYswvAnbv3/c1PnDtoNHJdJEcXnLKzTQhYtjLl3u0/aBBJixriJLy1SY9sPNcxuM5s82PjyJG95XnzlaR2zAR3mmaA69L5tiwi3UZaDfCZprqlPB9+KTrddFog2jBpIVbQDg+GIkdB0KIzG9E1gqng+klDAusUVXMHUAZK/1eV0hE6JT/a/1vM/YLYjZIYCWFPCEM4u1pAZpXZGIwLFk2uWTKa+W4+bab2a4+098yibTHzQyxT9iRnurFIUlbsO7k9GJF7fi+Sh00qsToVRo3RQoUm29a2naheosK9WMPryM4N0MbCmkica+6DcDxaBFgoBb7zFBqwjuxIURva9dlM4FnggE5fnops99IwZIsQj0VE1o5DgyaJMyc8Q68kJamuR7OE5oUM9m75sz5c/oAjG+4j1KlvK6JdzL2FP7mjzRVVEkkVfwkSooZyCU7ynvkyozVmZHRCyvwXNAFCTP4Ncc=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f1ed2675-15a3-413a-776b-08ddbd643859
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8225143d-db6b-415f-7fc1-08ddbd64bfb5
 X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jul 2025 14:40:29.8161 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jul 2025 14:44:16.8954 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: uu3iO30LUXwBG9uAJJXeTjzVRCcY7zLvb7+fBhA4YyFNtOfCT55hDEInkEVrjT+V8ppX2e/n2y93no5kCulFJzJPhi7kj5PTmTcxL8GmQzo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR10MB6216
+X-MS-Exchange-CrossTenant-UserPrincipalName: xI7lg2aYo8OlEkMCyAZB3LYD5VG3wuFEAHd2wSoI2H1cFqiTWjTUnmArtVpDDpfbpKaT11DEM75sy9DPGA2kKsq7VGw5v02mWTwml+o4sxg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR10MB5927
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-07_03,2025-07-07_01,2025-03-28_01
@@ -196,22 +196,22 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  malwarescore=0 mlxscore=0 mlxlogscore=999 adultscore=0 suspectscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2507070086
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA3MDA4NSBTYWx0ZWRfXz3DzgIQUnEpX
- FLM7/wdcZO7lpnWRF1JRFm4UyBKnh8wFzqk+hvIYQ+MXkpibH7C7At42gCnxEUkoLUVTQBeVRc5
- niBougQHINVs7b6CxS+6+wckbUjE7/tk/7DlOjT5Su/FUilKuQE6cMP+ogcNs+cgYoAu6aqH/1x
- bErfRWcrBBW20IAQmYP9PRMAiwLRD14qtq8zN4IPVfVPPGyp1L0vWvO7nEpR69Esk0TuXbmqH02
- 7IL8gHn08xAPgRz27+i1kKngKBq0sBpSWn7UBxLFh1YLzpDp6A1D4lema02OQqUeBec+EETVMWO
- vIBR/lZQB9buAbYRXC6u5eXeG/oVzdX6VLCScMKRshPjqD0kj3ONgguALN4cqfJ633HAUZinsbD
- O+lUB4Dp1LsuW8O4IrNTIRWVBOaZXIDpCZoq55wG5ZOvE4N5b29gIJCBZnGagmhB6AEKSpVJ
-X-Authority-Analysis: v=2.4 cv=QMNoRhLL c=1 sm=1 tr=0 ts=686bdc66 b=1 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA3MDA4NiBTYWx0ZWRfX2nFAhgN6MTqo
+ I2P2orAP+hHO4lRpth/6nfeC0T4rdm3tdN78GV/uxX9a52exV09j9mzkKq3mtQ4ucK/yCq4iMf7
+ zkLPIHAyLDcBcLjEfFVUKA3gFTdD8rpl/cWJEupewINRDFmxYO6qB6RFiNN7HFlQzjuukS6/4dR
+ cufMnZsXuZdnE41DxBdNZbYzLP0OJvxeG2iQPTMwbCGJwSy6fv7IW+cPPa0Oz85+xN7rlaDIBYU
+ a/Oj6Dc8g2s/8otAjTFLG9FZ5dl7oylDsCyOUoH/bf5nnAoZRmkErIs67JCY6TDVVVS4dx4oA4l
+ EzciomJKMkc+vVCPZ3TifSyOffQX1Ss8shEonYmSZh1blFMypSmrY64y9thxWh5DsAsyna2q7gS
+ UvTF8e9rhz9s61kfYVVcZ9hxkHbY6jFqj5iksixnYgo/SZFGzQqYjrxXUt/q28zG0tgDRNbk
+X-Proofpoint-GUID: IiUeNRMikv-D2UasBC2ZCgmoLYbG4Mdp
+X-Proofpoint-ORIG-GUID: IiUeNRMikv-D2UasBC2ZCgmoLYbG4Mdp
+X-Authority-Analysis: v=2.4 cv=KtdN2XWN c=1 sm=1 tr=0 ts=686bdd47 b=1 cx=c_pps
  a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
  a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
  a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
  a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=Wb1JkmetP80A:10 a=GoEa3M9JfhUA:10 a=yPCof4ZbAAAA:8 a=jAX77Vw3n8nvGF-l-hAA:9
+ a=Wb1JkmetP80A:10 a=GoEa3M9JfhUA:10 a=yPCof4ZbAAAA:8 a=Vi23gfwIoTsdFQIdcHcA:9
  a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: Nv5Y9qr5sV_aZ_7ca0fmlDmBVfThU4xs
-X-Proofpoint-ORIG-GUID: Nv5Y9qr5sV_aZ_7ca0fmlDmBVfThU4xs
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -37
@@ -240,154 +240,296 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 7/4/2025 8:22 AM, Markus Armbruster wrote:
 > Steve Sistare <steven.sistare@oracle.com> writes:
 > 
->> Define the qom-list-getv command, which fetches all the properties and
->> values for a list of paths.  This is faster than qom-tree-get when
->> fetching a subset of the QOM tree.  See qom.json for details.
+>> Define the qom-tree-get QAPI command, which fetches an entire tree of
+>> properties and values with a single QAPI call.  This is much faster
+>> than using qom-list plus qom-get for every node and property of the
+>> tree.  See qom.json for details.
 >>
 >> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 >> ---
->>   qapi/qom.json      | 34 ++++++++++++++++++++++++++++++++++
->>   qom/qom-qmp-cmds.c | 40 ++++++++++++++++++++++++++++++++++++++++
->>   2 files changed, 74 insertions(+)
+>>   qapi/qom.json      | 56 ++++++++++++++++++++++++++++++++++++++++++
+>>   qom/qom-qmp-cmds.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>>   2 files changed, 128 insertions(+)
 >>
 >> diff --git a/qapi/qom.json b/qapi/qom.json
->> index 94662ad..dc710d6 100644
+>> index 28ce24c..94662ad 100644
 >> --- a/qapi/qom.json
 >> +++ b/qapi/qom.json
->> @@ -62,6 +62,16 @@
->>               '*value': 'any' } }
+>> @@ -46,6 +46,38 @@
+>>               '*default-value': 'any' } }
 >>   
 >>   ##
->> +# @ObjectPropertiesValues:
+>> +# @ObjectPropertyValue:
 >> +#
->> +# @properties: a list of properties.
+>> +# @name: the name of the property
+>> +#
+>> +# @type: the type of the property, as described in @ObjectPropertyInfo
+> 
+> That description is crap.  In part because what it tries to describe is
+> crap.  Neither is this patch's problem.
+> 
+>> +#
+>> +# @value: the value of the property.  Omitted if cannot be read.
+> 
+> Suggest "Absent when the property cannot be read."
+
+OK.
+
 >> +#
 >> +# Since 10.1
 >> +##
->> +{ 'struct': 'ObjectPropertiesValues',
->> +  'data': { 'properties': [ 'ObjectPropertyValue' ] }}
+>> +{ 'struct': 'ObjectPropertyValue',
+>> +  'data': { 'name': 'str',
+>> +            'type': 'str',
+>> +            '*value': 'any' } }
+> 
+> ObjectPropertyValue suggests this describes a property's value.
+
+I would agree with you if the name included "info" or "desc", but it
+does not.  To me, "ObjectPropertyValue" says this is an object's
+property and value.  But it's subjective.
+
+Perhaps: ObjectPropertyWithValue
+
+>  It does
+> not.  It includes the name, i.e. it describes the *property*.
+> 
+> So does ObjectPropertyInfo.
+> 
+> The two overlap: both habe name and type.  Only ObjectPropertyValue has
+> the current value.  Only ObjectPropertyInfo has the default value and
+> description (I suspect the latter is useless in practice).
+> 
+> ObjectPropertyInfo is used with qom-list and qom-list-properties.
+> 
+> qom-list takes a QOM path, like your qom-tree-get and qom-list-getv.
+> I'd expect your commands to supersede qom-list in practice.
+> 
+> qom-list-properties is unlike your qom-tree-get and qom-list-getv: it
+> takes a type name.  It's unreliable for non-abstract types: it can miss
+> dynamically created properties.
+> 
+> Let's ignore all this for now.
+> 
 >> +
 >> +##
->>   # @ObjectNode:
+>> +# @ObjectNode:
+>> +#
+>> +# @name: the name of the node
+>> +#
+>> +# @children: child nodes
+>> +#
+>> +# @properties: properties of the node
+>> +#
+>> +# Since 10.1
+>> +##
+>> +{ 'struct': 'ObjectNode',
+>> +  'data': { 'name': 'str',
+>> +            'children': [ 'ObjectNode' ],
+>> +            'properties': [ 'ObjectPropertyValue' ] }}
+>> +
+>> +##
+>>   # @qom-list:
 >>   #
->>   # @name: the name of the node
->> @@ -158,6 +168,30 @@
+>>   # This command will list any properties of a object given a path in
+>> @@ -126,6 +158,30 @@
 >>     'allow-preconfig': true }
 >>   
 >>   ##
->> +# @qom-list-getv:
+>> +# @qom-tree-get:
 >> +#
->> +# This command returns a list of properties and their values for
->> +# each object path in the input list.
-> 
-> Imperative mood, please: "Return a list of ..."
-
-OK.  (I followed the style of qom-get and qom-list).
-
+>> +# This command returns a tree of objects and their properties,
+>> +# rooted at the specified path.
 >> +#
->> +# @paths: The absolute or partial path for each object, as described
->> +#     in @qom-get
+>> +# @path: The absolute or partial path within the object model, as
+>> +#     described in @qom-get
 >> +#
 >> +# Errors:
->> +#     - If any path is not valid or is ambiguous, returns an error.
+>> +#     - If path is not valid or is ambiguous, returns an error.
+> 
+> By convention, we use "If <condition>, <error>, where <error> is a
+> member of QapiErrorClass.
+
+OK.  I was following the minimal Errors examples from this same file.
+
+> What are the possible error classes?  As far as I can tell:
+> 
+>           - If path is ambiguous, GenericError
+>           - If path cannot be resolved, DeviceNotFound
+> 
+> However, use of error classes other than GenericError is strongly
+> discouraged (see error_set() in qapi/error.h).
+> 
+> Is the ability to distinguish between these two errors useful?
+> 
+> Existing related commands such as qom-get also use DeviceNotFound.
+> Entirely undocumented, exact error conditions unclear.  Awesome.
+> 
+> Libvirt seems to rely on this undocumented behavior: I can see code
+> checking for DeviceNotFound.  Hyrum's law strikes.
+> 
+> qom-get fails with DeviceNotFound in both of the above cases.  It fails
+> with GenericError when @property doesn't exist or cannot be read.  Your
+> qom-tree-get fails differently.  Awesome again.
+> 
+> Choices:
+> 
+> 1. Leave errors undocumented and inconsistent.
+> 
+> 2. Document errors for all related commands.  Make the new ones as
+> consistent as we can.
+
+Ignoring qom-tree-get since we are dropping it.
+
+Do you prefer that qom-list-getv be consistent with qom-list (GenericError
+and DeviceNotFound, as created by the common subroutine qom_resolve_path),
+or only return GenericError with a customized message per best practices?
+
+(Regardless, it will still succeed when @property cannot be read).
+
 >> +#     - If a property cannot be read, the value field is omitted in
 >> +#       the corresponding @ObjectPropertyValue.
 > 
-> My comment on qom-tree-get's Errors: section applies.
+> This is not an error, and therefore doesn't belong here.
+> ObjectPropertyValue's documentation also mentions it.  Good enough?
 
-Will do.
+OK.
 
 >> +#
->> +# Returns: A list of @ObjectPropertiesValues.  Each element contains
->> +#     the properties of the corresponding element in @paths.
+>> +# Returns: A tree of @ObjectNode.  Each node contains its name, list
+>> +#     of properties, and list of child nodes.
 > 
-> Again, ObjectPropertiesValues is an unfortunate name.
-
-See other thread.
-
+> Hmm.
+> 
+> A struct Object has no name.  Only properties have a name.
+> 
+> An ObjectNode has a name, and an ObjectPropertyValue has a name.
+> 
+> I may get back to this in a later message.
+> 
 >> +#
 >> +# Since 10.1
 >> +##
->> +{ 'command': 'qom-list-getv',
->> +  'data': { 'paths': [ 'str' ] },
->> +  'returns': [ 'ObjectPropertiesValues' ],
+>> +{ 'command': 'qom-tree-get',
+>> +  'data': { 'path': 'str' },
+>> +  'returns': 'ObjectNode',
 >> +  'allow-preconfig': true }
 >> +
 >> +##
->>   # @qom-tree-get:
+>>   # @qom-set:
 >>   #
->>   # This command returns a tree of objects and their properties,
-> 
-> I find this command *much* simpler than qom-tree-get.
-> 
-> qom-list-getv treats all properties the same.  References, whether they
-> are children and links, are the same: a QOM path.
-> 
-> qom-tree-get separates properties into children and non-children.
-> Children become nested ObjectNodes, links remain QOM paths.
-> 
+>>   # This command will set a property from a object model path.
 >> diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
->> index b876681..1f05956 100644
+>> index 293755f..b876681 100644
 >> --- a/qom/qom-qmp-cmds.c
 >> +++ b/qom/qom-qmp-cmds.c
->> @@ -90,6 +90,46 @@ static void qom_list_add_property_value(Object *obj, ObjectProperty *prop,
->>       }
+>> @@ -69,6 +69,78 @@ ObjectPropertyInfoList *qmp_qom_list(const char *path, Error **errp)
+>>       return props;
 >>   }
 >>   
->> +static ObjectPropertyValueList *qom_get_property_value_list(const char *path,
->> +                                                            Error **errp)
+>> +static void qom_list_add_property_value(Object *obj, ObjectProperty *prop,
+>> +                                        ObjectPropertyValueList **props)
+>> +{
+>> +    ObjectPropertyValue *item = g_new0(ObjectPropertyValue, 1);
+>> +    Error *err = NULL;
+>> +
+>> +    QAPI_LIST_PREPEND(*props, item);
+> 
+> List elements are in reverse iteration order.  Not wrong.  I would've
+> reached for QAPI_LIST_APPEND(), though.
+> 
+> Wait!  Existing command code uses QAPI_LIST_PREPEND().  Nevermind, carry
+> on!
+
+Exactly so.
+
+>> +
+>> +    item->name = g_strdup(prop->name);
+>> +    item->type = g_strdup(prop->type);
+>> +    item->value = object_property_get_qobject(obj, prop->name, &err);
+>> +
+>> +    if (!item->value) {
+>> +        /*
+>> +         * For bulk get, the error message is dropped, but the value field
+>> +         * is omitted so the caller knows this property could not be read.
+>> +         */
+>> +        error_free(err);
+> 
+> Simpler: pass NULL to object_property_get_qobject().
+
+Yes, thanks.
+
+- Steve
+
+>> +    }
+>> +}
+>> +
+>> +static ObjectNode *qom_tree_get(const char *path, Error **errp)
 >> +{
 >> +    Object *obj;
 >> +    ObjectProperty *prop;
+>> +    ObjectNode *result, *child;
 >> +    ObjectPropertyIterator iter;
->> +    ObjectPropertyValueList *props = NULL;
 >> +
 >> +    obj = qom_resolve_path(path, errp);
 >> +    if (obj == NULL) {
 >> +        return NULL;
 >> +    }
 >> +
+>> +    result = g_new0(ObjectNode, 1);
+>> +
 >> +    object_property_iter_init(&iter, obj);
 >> +    while ((prop = object_property_iter_next(&iter))) {
->> +        qom_list_add_property_value(obj, prop, &props);
->> +    }
->> +
->> +    return props;
->> +}
->> +
->> +ObjectPropertiesValuesList *qmp_qom_list_getv(strList *paths, Error **errp)
->> +{
->> +    ObjectPropertiesValuesList *head = NULL, **tail = &head;
->> +
->> +    for ( ; paths ; paths = paths->next) {
+>> +        if (strstart(prop->type, "child<", NULL)) {
+>> +            g_autofree char *child_path = g_strdup_printf("%s/%s",
+>> +                                                          path, prop->name);
+>> +            child = qom_tree_get(child_path, errp);
+>> +            if (!child) {
+>> +                qapi_free_ObjectNode(result);
+>> +                return NULL;
+>> +            }
+>> +            child->name = g_strdup(prop->name);
 > 
-> I'd prefer a separate variable:
+> WAT?
 > 
->         for (tail = paths; tail; tail = tail->next) {
-
-OK.
-
-- Steve
-
->> +        ObjectPropertiesValues *item = g_new0(ObjectPropertiesValues, 1);
->> +
->> +        QAPI_LIST_APPEND(tail, item);
->> +
->> +        item->properties = qom_get_property_value_list(paths->value, errp);
->> +        if (!item->properties) {
->> +            qapi_free_ObjectPropertiesValuesList(head);
->> +            return NULL;
+>> +            QAPI_LIST_PREPEND(result->children, child);
+>> +        } else {
+>> +            qom_list_add_property_value(obj, prop, &result->properties);
 >> +        }
 >> +    }
 >> +
->> +    return head;
+> 
+> Oh, result->name remains unset, and the caller is expected to fill it
+> in.  Two callers, "WAT" above, and ...
+> 
+>> +    return result;
 >> +}
 >> +
->>   static ObjectNode *qom_tree_get(const char *path, Error **errp)
->>   {
->>       Object *obj;
+>> +ObjectNode *qmp_qom_tree_get(const char *path, Error **errp)
+>> +{
+>> +    ObjectNode *result = qom_tree_get(path, errp);
+>> +
+>> +    if (result) {
+>> +        /* Strip the path prefix if any */
+>> +        const char *basename = strrchr(path, '/');
+>> +
+>> +        if (!basename || !basename[1]) {
+>> +            result->name = g_strdup(path);
+>> +        } else {
+>> +            result->name = g_strdup(basename + 1);
+>> +        }
+>> +    }
 > 
-> The implementation is simpler than qom-tree's, too.
+> ... this one.
+> 
+> Not a fan.  But it works.
+> 
+>> +    return result;
+>> +}
+>> +
+>>   void qmp_qom_set(const char *path, const char *property, QObject *value,
+>>                    Error **errp)
+>>   {
 > 
 
 
