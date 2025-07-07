@@ -4,63 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04FB4C71130
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 16:44:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57154C71130
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 16:59:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYovB-0004ve-Rs; Mon, 07 Jul 2025 12:42:25 -0400
+	id 1uYpAw-0000vg-Rq; Mon, 07 Jul 2025 12:58:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uYoue-0004Xv-Tm
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 12:41:53 -0400
+ id 1uYp6q-0005dC-LV
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 12:54:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uYoud-0005xq-6q
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 12:41:52 -0400
+ id 1uYp6o-0007ZY-Hp
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 12:54:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751906510;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ s=mimecast20190719; t=1751907264;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZsHiLyesL0Y/NnctlwgnwdP450YRPgXWU1voGY5y8VA=;
- b=EafDo2N6WnclrGhiD7akp+f1t/PWXXf5zbnJDyoEGYgQwtaNtm0giRqd61mxdQzYNlzuXX
- 29AmAnSme6XRg5Q+B/+3JU8H8hFCSPOarTVxm4y6isMGSHrhZUd4Ou+6xMykp4YR46yGtU
- bDKytJ3Q1lo/iqZDcOv5Yne7+MwMFaU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-299-C5dFEkACPqGBGrCCEjWMTA-1; Mon,
- 07 Jul 2025 12:41:47 -0400
-X-MC-Unique: C5dFEkACPqGBGrCCEjWMTA-1
-X-Mimecast-MFC-AGG-ID: C5dFEkACPqGBGrCCEjWMTA_1751906505
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1738A1809C80; Mon,  7 Jul 2025 16:41:45 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.32.187])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 65FA41800285; Mon,  7 Jul 2025 16:41:41 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, miguel.luis@oracle.com, peter.maydell@linaro.org,
- richard.henderson@linaro.org, maz@kernel.org,
- gkulkarni@amperecomputing.com, gankulkarni@os.amperecomputing.com
-Cc: hi@alyssa.is
-Subject: [PATCH v9 1/5] hw/arm: Allow setting KVM vGIC maintenance IRQ
-Date: Mon,  7 Jul 2025 18:40:27 +0200
-Message-ID: <20250707164129.1167837-2-eric.auger@redhat.com>
-In-Reply-To: <20250707164129.1167837-1-eric.auger@redhat.com>
-References: <20250707164129.1167837-1-eric.auger@redhat.com>
+ bh=hJUba9+yTZu+99k9uS5OXkEe6ctGoTCs3ackjTQQfqg=;
+ b=RtY3Kv1Ug+nbnifKER1FWBNMeKzy2SDNcb5kj/qTnS7DrbGXBVccPw6wKV8GtnEIKIUmGB
+ dbkEbwFqvZewzCIoWTqqJfZOser/Kx9BbVh87IHMjPytz7ZZXvUpdTvpZMKVtJvN+1wxBh
+ Es8RywsRqomrYtUguQYHAoyROdJtsg4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-161-8nAOC5nUPyyH8keoSDj3RQ-1; Mon, 07 Jul 2025 12:54:23 -0400
+X-MC-Unique: 8nAOC5nUPyyH8keoSDj3RQ-1
+X-Mimecast-MFC-AGG-ID: 8nAOC5nUPyyH8keoSDj3RQ_1751907262
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-451ecc3be97so17311605e9.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 09:54:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751907262; x=1752512062;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hJUba9+yTZu+99k9uS5OXkEe6ctGoTCs3ackjTQQfqg=;
+ b=CNsYk6Lk1tVy6K1EjbLhXB1k0teDK+lcBefjk/6ekUE3cQH+15jBYJoElhDMWj9ht3
+ PTYFUSJt3+XyaveE6P/rxw+B6LZeidhkVfHTH3B/hfG+rkhx1+FtAw2JJgI9EkqjQvzI
+ d2z4Lv9tjPcRukaOHVuULRDa+zDd/y0mm06+SAADUSURksf2MqETNifIktaVrVpcZ0gO
+ W3ERyeGDxInvhmJNHmwmStrdAZyOnSsixGvaPTKZ48uX9xuhV0HbNqmcfVlB5qDHVkHS
+ bGM5gSz3esxQoVDDfl7GirbYd+Yf8zEVf/NBNSu2RqZmMWg0262C8qhZJj+5cOanhns+
+ OW3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXOCaNsibGYIT2Dqq4VANTs+hajI71Nqm6VRWBvonQ7Wjg7aPvuHd4m7d0JjvpHte20b+FQCaHntolp@nongnu.org
+X-Gm-Message-State: AOJu0YyS+uYaP/z6GgQ0M5Y0KpDLKhcfF4dZRRtpdbo1TlZa+Q67MVrc
+ Imor7OLuUxovdcsyKqeFjIskNqj7SsPZ393YeV0iNO/sxuxX4WcQiDRIhwmtx9fU9Ep1xhTI6RT
+ jPRyxpdgbXHlS8aJfqYwvxX1uGjaAZvCyh4yCeumpTYk2RXdcXHkNuYdF
+X-Gm-Gg: ASbGnctaZfbWbl/VSx6S1krlhjZ+Wo0oDcvztDnsXzonNPyJfBDMb1ALe2feFPqstRT
+ kcyHkprTu2chp0dme2TPBiC+Jry+b3wMoD/qPzgvqv0FmoskkVtus32mSLX+Hy+1Bekmz1yjLCJ
+ yxQMQT41vrowtbrC1M+8WpB8zdcWUBT7J1Zksug2n2NDywrzxG3zEYMpjDA8Cb5X/jN5uBf6w3W
+ BmjYWS1KfhYWbYP6URPeBrQt+m8rB3tPNl8StxtAC3OTtVLlySkeU6tRj3f2hpCYR6zduYzjtPv
+ j0pJwuGIKTvGXzHp+S7Q3yTjK1ssdSH+TK8Ul6COzFB1+9CDSf04va+ap5aQV7fvS/bcrQ==
+X-Received: by 2002:a05:600c:c104:b0:43d:2313:7b49 with SMTP id
+ 5b1f17b1804b1-454ccc5d2b3mr3241695e9.12.1751907261644; 
+ Mon, 07 Jul 2025 09:54:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEkZcM1ZfOCWlMBkQjTTEGs4PCnKjwreL9ZJRtODlQFeeTNOxIlxDfaHDWzGhRsHd1DaPQO/w==
+X-Received: by 2002:a05:600c:c104:b0:43d:2313:7b49 with SMTP id
+ 5b1f17b1804b1-454ccc5d2b3mr3241295e9.12.1751907261072; 
+ Mon, 07 Jul 2025 09:54:21 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454a997e367sm144967715e9.15.2025.07.07.09.54.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 07 Jul 2025 09:54:20 -0700 (PDT)
+Message-ID: <77e9dcb3-1704-4418-8d6c-b349c02ff2e7@redhat.com>
+Date: Mon, 7 Jul 2025 18:54:19 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 09/19] intel_iommu: Introduce two helpers
+ vtd_as_from/to_iommu_pasid_locked
+Content-Language: en-US
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>,
+ "peterx@redhat.com" <peterx@redhat.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "shameerali.kolothum.thodi@huawei.com"
+ <shameerali.kolothum.thodi@huawei.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
+ "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20250620071813.55571-1-zhenzhong.duan@intel.com>
+ <20250620071813.55571-10-zhenzhong.duan@intel.com>
+ <3babbbd5-23e3-4b6b-9f9c-e879d4ddb125@redhat.com>
+ <IA3PR11MB9136359F208103BA9F3DB8F79278A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <IA3PR11MB9136005A33841A077E546E9E924FA@IA3PR11MB9136.namprd11.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <IA3PR11MB9136005A33841A077E546E9E924FA@IA3PR11MB9136.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
@@ -70,7 +118,7 @@ X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,121 +131,183 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Haibo Xu <haibo.xu@linaro.org>
+Hi Zhenzhong,
 
-Allow virt arm machine to set the interrupt ID for the KVM
-GIC maintenance interrupt.
+On 7/7/25 5:12 AM, Duan, Zhenzhong wrote:
+> Hi Eric,
+>
+>> -----Original Message-----
+>> From: Duan, Zhenzhong
+>> Subject: RE: [PATCH v2 09/19] intel_iommu: Introduce two helpers
+>> vtd_as_from/to_iommu_pasid_locked
+>>
+>>
+>>
+>>> -----Original Message-----
+>>> From: Eric Auger <eric.auger@redhat.com>
+>>> Subject: Re: [PATCH v2 09/19] intel_iommu: Introduce two helpers
+>>> vtd_as_from/to_iommu_pasid_locked
+>>>
+>>> Hi Zhenzhong,
+>>>
+>>> On 6/20/25 9:18 AM, Zhenzhong Duan wrote:
+>>>> PCI device supports two request types, Requests-without-PASID and
+>>>> Requests-with-PASID. Requests-without-PASID doesn't include a PASID TLP
+>>>> prefix, IOMMU fetches rid_pasid from context entry and use it as
+>> IOMMU's
+>>>> pasid to index pasid table.
+>>>>
+>>>> So we need to translate between PCI's pasid and IOMMU's pasid specially
+>>>> for Requests-without-PASID, e.g., PCI_NO_PASID(-1) <-> rid_pasid.
+>>>> For Requests-with-PASID, PCI's pasid and IOMMU's pasid are same value.
+>>>>
+>>>> vtd_as_from_iommu_pasid_locked() translates from BDF+iommu_pasid to
+>>> vtd_as
+>>>> which contains PCI's pasid vtd_as->pasid.
+>>>>
+>>>> vtd_as_to_iommu_pasid_locked() translates from BDF+vtd_as->pasid to
+>>> iommu_pasid.
+>>>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>>>> ---
+>>>>  hw/i386/intel_iommu.c | 58
+>>> +++++++++++++++++++++++++++++++++++++++++++
+>>>>  1 file changed, 58 insertions(+)
+>>>>
+>>>> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+>>>> index 9d4adc9458..8948b8370f 100644
+>>>> --- a/hw/i386/intel_iommu.c
+>>>> +++ b/hw/i386/intel_iommu.c
+>>>> @@ -1602,6 +1602,64 @@ static int
+>>> vtd_dev_to_context_entry(IntelIOMMUState *s, uint8_t bus_num,
+>>>>      return 0;
+>>>>  }
+>>>>
+>>>> +static inline int vtd_as_to_iommu_pasid_locked(VTDAddressSpace
+>> *vtd_as,
+>>>> +                                               uint32_t
+>> *pasid)
+>>> Is it meaningful to use inline here and below? Below I guess you do so
+>>> to avoid "defined but not used" compilation error but I don't think it
+>>> should stay as is.
+>> Yes, that's the only reason I define the both inline.
+>> Do you have other suggestions to avoid compilation error if not use inline?
+> I find I am not clear on above comments yet, do you just want to remove inline flag?
+> Maybe merging the two helpers to other patches using them to avoid inline?
+In the past what I did in such situation consisted in introducing a
+declaration of the static function before its definition and when the
+actual user is introduced, in a subsequent patch, remove the spurious
+declaration.
+Now, reading 
+https://www.reddit.com/r/cpp_questions/comments/15kfije/how_to_decide_if_a_function_should_be_inline_or/,
+maybe adding the inline here is not a problem given the compiler may or
+may not inline the function.
 
-This setting must be done before the KVM_DEV_ARM_VGIC_CTRL_INIT
-hence the choice to perform the setting in the GICv3 realize
-instead of proceeding the same way as kvm_arm_pmu_set_irq().
+Thanks
 
-Signed-off-by: Haibo Xu <haibo.xu@linaro.org>
-Signed-off-by: Miguel Luis <miguel.luis@oracle.com>
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-
----
-
-v3 -> v4:
-- only set maint_irq if vms->virt
-
-v2 -> v3:
-- tweak the commit message and explain why we do not proceed
-  the same way as kvm_arm_pmu_set_irq (Peter)
-
-v1 -> v2:
-- [Miguel] replaced the has_virt_extensions by the maintenance irq
-  intid property. [Eric] restored kvm_device_check_attr and
-  kvm_device_access standard usage and conditionally call those
-  if the prop is set.
----
- include/hw/intc/arm_gicv3_common.h |  1 +
- hw/arm/virt.c                      |  3 +++
- hw/intc/arm_gicv3_common.c         |  1 +
- hw/intc/arm_gicv3_kvm.c            | 21 +++++++++++++++++++++
- 4 files changed, 26 insertions(+)
-
-diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
-index a3d6a0e507..c18503869f 100644
---- a/include/hw/intc/arm_gicv3_common.h
-+++ b/include/hw/intc/arm_gicv3_common.h
-@@ -231,6 +231,7 @@ struct GICv3State {
-     uint32_t num_cpu;
-     uint32_t num_irq;
-     uint32_t revision;
-+    uint32_t maint_irq;
-     bool lpi_enable;
-     bool nmi_support;
-     bool security_extn;
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 3bcdf92e2f..550a272fbb 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -828,6 +828,9 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
-                                          OBJECT(mem), &error_fatal);
-                 qdev_prop_set_bit(vms->gic, "has-lpi", true);
-             }
-+        } else if (vms->virt) {
-+            qdev_prop_set_uint32(vms->gic, "maintenance-interrupt-id",
-+                                 ARCH_GIC_MAINT_IRQ);
-         }
-     } else {
-         if (!kvm_irqchip_in_kernel()) {
-diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
-index 1cee68193c..e438d8c042 100644
---- a/hw/intc/arm_gicv3_common.c
-+++ b/hw/intc/arm_gicv3_common.c
-@@ -612,6 +612,7 @@ static const Property arm_gicv3_common_properties[] = {
-     DEFINE_PROP_BOOL("has-lpi", GICv3State, lpi_enable, 0),
-     DEFINE_PROP_BOOL("has-nmi", GICv3State, nmi_support, 0),
-     DEFINE_PROP_BOOL("has-security-extensions", GICv3State, security_extn, 0),
-+    DEFINE_PROP_UINT32("maintenance-interrupt-id", GICv3State, maint_irq, 0),
-     /*
-      * Compatibility property: force 8 bits of physical priority, even
-      * if the CPU being emulated should have fewer.
-diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
-index 3be3bf6c28..b30aac7aee 100644
---- a/hw/intc/arm_gicv3_kvm.c
-+++ b/hw/intc/arm_gicv3_kvm.c
-@@ -22,6 +22,7 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "hw/intc/arm_gicv3_common.h"
-+#include "hw/arm/virt.h"
- #include "qemu/error-report.h"
- #include "qemu/module.h"
- #include "system/kvm.h"
-@@ -825,6 +826,26 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    if (s->maint_irq) {
-+        int ret;
-+
-+        ret = kvm_device_check_attr(s->dev_fd,
-+                                    KVM_DEV_ARM_VGIC_GRP_MAINT_IRQ, 0);
-+        if (!ret) {
-+            error_setg_errno(errp, errno,
-+                             "VGICv3 setting maintenance IRQ is not "
-+                             "supported by this host kernel");
-+            return;
-+        }
-+
-+        ret = kvm_device_access(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_MAINT_IRQ, 0,
-+                                &s->maint_irq, true, errp);
-+        if (ret) {
-+            error_setg_errno(errp, errno, "Failed to set VGIC maintenance IRQ");
-+            return;
-+       }
-+    }
-+
-     multiple_redist_region_allowed =
-         kvm_device_check_attr(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_ADDR,
-                               KVM_VGIC_V3_ADDR_TYPE_REDIST_REGION);
--- 
-2.49.0
+Eric
+>
+> If I misunderstood, could you share more light on what changes you want this piece of code to have?
+>
+> Thanks
+> Zhenzhong
+>
+>>> I don't really understand the iommu_pasid terminology. Either it is a
+>>> pasid passed through the PCI transaction or it is the default pasid
+>>> found in rid2passid ce field. So that's a pasid both ways ;-) can't you
+>>> simply call it pasid.
+>> Yes, PCI side we call it just pasid, the other side I name it iommu pasid to
+>> distinguish.
+>> Does that work for you?
+>>
+>>>> +{
+>>>> +    VTDContextCacheEntry *cc_entry = &vtd_as->context_cache_entry;
+>>>> +    IntelIOMMUState *s = vtd_as->iommu_state;
+>>>> +    uint8_t bus_num = pci_bus_num(vtd_as->bus);
+>>>> +    uint8_t devfn = vtd_as->devfn;
+>>>> +    VTDContextEntry ce;
+>>>> +    int ret;
+>>>> +
+>>>> +    if (cc_entry->context_cache_gen == s->context_cache_gen) {
+>>>> +        ce = cc_entry->context_entry;
+>>>> +    } else {
+>>>> +        ret = vtd_dev_to_context_entry(s, bus_num, devfn, &ce);
+>>>> +        if (ret) {
+>>>> +            return ret;
+>>>> +        }
+>>>> +    }
+>>> if the above pattern is used at many locations I still think it may be
+>>> valuable to have a _locked helper.
+>> Not get, both vtd_as_to_iommu_pasid_locked() and
+>> vtd_as_from_iommu_pasid_locked()
+>> are already _locked helper, isn't it?
+>>
+>> Do you mean adding a comment saying "Caller of this function should hold
+>> iommu_lock."
+>>
+>>>> +
+>>>> +    /* Translate to iommu pasid if PCI_NO_PASID */
+>>>> +    if (vtd_as->pasid == PCI_NO_PASID) {
+>>>> +        *pasid = VTD_CE_GET_RID2PASID(&ce);
+>>>> +    } else {
+>>>> +        *pasid = vtd_as->pasid;
+>>>> +    }
+>>>> +
+>>>> +    return 0;
+>>>> +}
+>>>> +
+>>>> +static gboolean vtd_find_as_by_sid_and_iommu_pasid(gpointer key,
+>> gpointer
+>>> value,
+>>>> +                                                   gpointer
+>> user_data)
+>>>> +{
+>>>> +    VTDAddressSpace *vtd_as = (VTDAddressSpace *)value;
+>>>> +    struct vtd_as_raw_key *target = (struct vtd_as_raw_key
+>> *)user_data;
+>>> why target? can't you name it key instead?
+>> There is already a parameter named key, maybe target_key?
+>>
+>> Thanks
+>> Zhenzhong
+>>
+>>>> +    uint16_t sid = PCI_BUILD_BDF(pci_bus_num(vtd_as->bus),
+>> vtd_as->devfn);
+>>>> +    uint32_t pasid;
+>>>> +
+>>>> +    if (vtd_as_to_iommu_pasid_locked(vtd_as, &pasid)) {
+>>>> +        return false;
+>>>> +    }
+>>>> +
+>>>> +    return (pasid == target->pasid) && (sid == target->sid);
+>>>> +}
+>>>> +
+>>>> +/* Translate iommu pasid to vtd_as */
+>>> same here
+>>>> +static inline
+>>>> +VTDAddressSpace *vtd_as_from_iommu_pasid_locked(IntelIOMMUState
+>> *s,
+>>>> +                                                uint16_t sid,
+>> uint32_t pasid)
+>>>> +{
+>>>> +    struct vtd_as_raw_key key = {
+>>>> +        .sid = sid,
+>>>> +        .pasid = pasid
+>>>> +    };
+>>>> +
+>>>> +    return g_hash_table_find(s->vtd_address_spaces,
+>>>> +
+>> vtd_find_as_by_sid_and_iommu_pasid, &key);
+>>>> +}
+>>>> +
+>>>>  static int vtd_sync_shadow_page_hook(const IOMMUTLBEvent *event,
+>>>>                                       void *private)
+>>>>  {
+>>> Thanks
+>>>
+>>> Eric
 
 
