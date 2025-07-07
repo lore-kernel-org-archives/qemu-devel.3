@@ -4,77 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB44CC83F03
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 01:07:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D512C83F03
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 03:13:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYaJm-0008GD-Oe; Sun, 06 Jul 2025 21:06:50 -0400
+	id 1uYcIB-0006gg-A9; Sun, 06 Jul 2025 23:13:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
- id 1uYaJ4-0007wB-A9
- for qemu-devel@nongnu.org; Sun, 06 Jul 2025 21:06:06 -0400
-Received: from mgamail.intel.com ([192.198.163.19])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
- id 1uYaJ2-000417-FP
- for qemu-devel@nongnu.org; Sun, 06 Jul 2025 21:06:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1751850364; x=1783386364;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=ToxmXaLsQNlK3QaYIfDs7YDpxVItDtnwa4wii+5k+do=;
- b=RcLunMM+FSFlx3wXz3+XCjPbf0/wJ30dYEw5BkaO1mF8iRqt1JP2Wo/F
- mvSAayTy6JjUWtK9SP4h8AoDNIAj7EotHGdBKM36dykwl/EOXNAYpoT1z
- EhJ7QK7++JKs6X7NI02zV9iwuJWcyZd1OAnglh3Qj6PKHkkbn5unoAZ3z
- jYc6PPw7xYxqZWEJgycJx/34aWa1CknfsODNZ6/44dSX2daCh2a192j2G
- 6VAdXsy1EADahkXVOes0tBYDJcYYJL6GzRIvtUtYtn98UX5+0BXFmhIXJ
- 1X5qco5/5RRydgyMfSgvpVy1ZVkqYMmsN7qLVrmfSaQfgaQ69ls+L3Vn8 w==;
-X-CSE-ConnectionGUID: 9bljTI5bTB+PUuH3saDUJA==
-X-CSE-MsgGUID: ibm6HjPkSAmOx0KDvawlWQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11486"; a="53189443"
-X-IronPort-AV: E=Sophos;i="6.16,292,1744095600"; d="scan'208";a="53189443"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Jul 2025 18:06:02 -0700
-X-CSE-ConnectionGUID: oxNggD5MQNuASkZlWezRlg==
-X-CSE-MsgGUID: 7Varrn6MQaix9GFq+9AAOQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,292,1744095600"; d="scan'208";a="159352794"
-Received: from linux.bj.intel.com ([10.238.157.71])
- by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Jul 2025 18:05:59 -0700
-Date: Mon, 7 Jul 2025 08:58:54 +0800
-From: Tao Su <tao1.su@linux.intel.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Ewan Hai <ewanhai-oc@zhaoxin.com>, Jason Zeng <jason.zeng@intel.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, Tao Su <tao1.su@intel.com>,
- Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
- Tejus GK <tejus.gk@nutanix.com>,
- Manish Mishra <manish.mishra@nutanix.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 3/8] i386/cpu: Introduce cache model for SapphireRapids
-Message-ID: <aGsbzuHnZcjciRxM@linux.bj.intel.com>
-References: <20250626083105.2581859-1-zhao1.liu@intel.com>
- <20250626083105.2581859-4-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <raphael@enfabrica.net>)
+ id 1uYcI4-0006fU-Qw
+ for qemu-devel@nongnu.org; Sun, 06 Jul 2025 23:13:14 -0400
+Received: from mail-qv1-xf30.google.com ([2607:f8b0:4864:20::f30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <raphael@enfabrica.net>)
+ id 1uYcI0-0006On-V9
+ for qemu-devel@nongnu.org; Sun, 06 Jul 2025 23:13:12 -0400
+Received: by mail-qv1-xf30.google.com with SMTP id
+ 6a1803df08f44-6fadd3ad18eso29659436d6.2
+ for <qemu-devel@nongnu.org>; Sun, 06 Jul 2025 20:13:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=enfabrica.net; s=google; t=1751857987; x=1752462787; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=S+rs1+bAnCzAXWlRHqSV5A8qHxIhBhZKPZaZqvDN0es=;
+ b=YOz/1b5TCmLrLMVNa38+LDEhIfoD8Qx5MoZK8mjXcM0MQuoO/XtfhoSJcr3ucIFxZF
+ wyWWXgF9HnBzzE/NPFQYzIDUo0pS/MZePDc1Snu0SxHv0SlwWj41OafZ/xIZsSmEaG49
+ DncyL/gni96cuzUEjS1oq4NGvA8nacc/iSGNLmlXe8z6c5AwaQkM1r3cvmSUCIebeXJE
+ zC25yjOp4LftoiM/DlHU4SIT8LH1qU7WoPNfPWoJRhNiCGJ8Tq4gpAaYYJE7uCmgY46y
+ XPdgvoIi1OL7Ha0rGaaVVxm7AXJIeyXJ7tHodQzNg66DlEOsRnT9NCAaeZbgEgiPWpH4
+ rTiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751857987; x=1752462787;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=S+rs1+bAnCzAXWlRHqSV5A8qHxIhBhZKPZaZqvDN0es=;
+ b=Vbu/mZbJ5aHDelW58SkyDoMOUOiWZeX71L78pyVsyFoIYGoPBbhUQSm5Wk5jSUE+1l
+ HJ2gSZXjiLjrWi3vwhzShLo9ZjfUd9w3+i4VzKIlqz2FyK9Pfy7hn4XLfDxpZQ6zwQTh
+ +tCljrhfbyJ1DVSnUT7LvvUxwOP9DkLHI3lID0LwGq3hEqsNcmFsv7YZkTRnZPYg7nIo
+ jYMzBTbAEFwvdiCvnfQXVg5uXn/GZfJDVT/6KTOf7Zrju3zuKuZnLQljrGmT2XhLKVOD
+ Lahcbs4iaTcsOsemULV62bQpKTNTN913X1/VjFVfuZAKQte4eBpoG/pwCxS5UMwYUlDF
+ Sf7g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUc2OAWB5nTAA9FXJZ0YBlQ6GAjvFKonunUAvC71E366dK3DjKsgdpHNaxyLisgS2aWwahhl6zAu6ja@nongnu.org
+X-Gm-Message-State: AOJu0YzdBq+YedcJf332xpXzUvZk7r42s28N5hnsDD4NOVd4uSSn1rv+
+ ueujW17Ej5jLLo1ZFxzlZeQHP8ALhmVm0maGYGZxvmlqFvqIyNKZazPU8S9xJd+vbiobDRqyuQY
+ PiLBXNAWGhyZnsXAI/aaBxB4ezNGJu+w5PhRRAmc1jw==
+X-Gm-Gg: ASbGncvJ28R6tnRLLZ9PCDSCPUFRdU0PDUtDBjJcip0N1JXqHpfkJqujW906Fo3UGH0
+ t4IU9vBlSLht6iaKZAejN+tMwP6ErjqvcAbsVQJIpj4kpczS6oJkDYVeVOZ0neSg2dsFjVGqI3z
+ X1e6XZcMhwgN3B9ndUjT3ySx0N6OmAmXx/n2S/rWKrZPg=
+X-Google-Smtp-Source: AGHT+IHf37tNUrF1ad2JjMmiqhOoivtvwUcI3kGejpIdtiy66XYEQ8/ouSOB+BIyya3NIN+gsBedZ1ofDbIoghhmlq8=
+X-Received: by 2002:a05:6214:469f:b0:6fd:6fc6:3961 with SMTP id
+ 6a1803df08f44-702d16a4676mr139694436d6.37.1751857987229; Sun, 06 Jul 2025
+ 20:13:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250626083105.2581859-4-zhao1.liu@intel.com>
-Received-SPF: none client-ip=192.198.163.19;
- envelope-from=tao1.su@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+References: <20250609212547.2859224-1-d-tatianin@yandex-team.ru>
+ <20250609212547.2859224-4-d-tatianin@yandex-team.ru>
+In-Reply-To: <20250609212547.2859224-4-d-tatianin@yandex-team.ru>
+From: Raphael Norwitz <raphael@enfabrica.net>
+Date: Sun, 6 Jul 2025 23:12:56 -0400
+X-Gm-Features: Ac12FXw3TRJkGXChJ3y2vDcVj4rtANhQZ7YDLIOPnUNyeeC2frSpdUHWQuSwEz0
+Message-ID: <CAMDpr=e3S2BB5Kzyzg9v=dMZ1G9vVN5Phm4x0YjpXimeBomaXg@mail.gmail.com>
+Subject: Re: [PATCH 3/3] vhost-user-blk: add an option to skip GET_VRING_BASE
+ for force shutdown
+To: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f30;
+ envelope-from=raphael@enfabrica.net; helo=mail-qv1-xf30.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,206 +100,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 26, 2025 at 04:31:00PM +0800, Zhao Liu wrote:
-> Add the cache model to SapphireRapids (v4) to better emulate its
-> environment.
-> 
-> The cache model is based on SapphireRapids-SP (Scalable Performance):
-> 
->       --- cache 0 ---
->       cache type                         = data cache (1)
->       cache level                        = 0x1 (1)
->       self-initializing cache level      = true
->       fully associative cache            = false
->       maximum IDs for CPUs sharing cache = 0x1 (1)
->       maximum IDs for cores in pkg       = 0x3f (63)
->       system coherency line size         = 0x40 (64)
->       physical line partitions           = 0x1 (1)
->       ways of associativity              = 0xc (12)
->       number of sets                     = 0x40 (64)
->       WBINVD/INVD acts on lower caches   = false
->       inclusive to lower caches          = false
->       complex cache indexing             = false
->       number of sets (s)                 = 64
->       (size synth)                       = 49152 (48 KB)
->       --- cache 1 ---
->       cache type                         = instruction cache (2)
->       cache level                        = 0x1 (1)
->       self-initializing cache level      = true
->       fully associative cache            = false
->       maximum IDs for CPUs sharing cache = 0x1 (1)
->       maximum IDs for cores in pkg       = 0x3f (63)
->       system coherency line size         = 0x40 (64)
->       physical line partitions           = 0x1 (1)
->       ways of associativity              = 0x8 (8)
->       number of sets                     = 0x40 (64)
->       WBINVD/INVD acts on lower caches   = false
->       inclusive to lower caches          = false
->       complex cache indexing             = false
->       number of sets (s)                 = 64
->       (size synth)                       = 32768 (32 KB)
->       --- cache 2 ---
->       cache type                         = unified cache (3)
->       cache level                        = 0x2 (2)
->       self-initializing cache level      = true
->       fully associative cache            = false
->       maximum IDs for CPUs sharing cache = 0x1 (1)
->       maximum IDs for cores in pkg       = 0x3f (63)
->       system coherency line size         = 0x40 (64)
->       physical line partitions           = 0x1 (1)
->       ways of associativity              = 0x10 (16)
->       number of sets                     = 0x800 (2048)
->       WBINVD/INVD acts on lower caches   = false
->       inclusive to lower caches          = false
->       complex cache indexing             = false
->       number of sets (s)                 = 2048
->       (size synth)                       = 2097152 (2 MB)
->       --- cache 3 ---
->       cache type                         = unified cache (3)
->       cache level                        = 0x3 (3)
->       self-initializing cache level      = true
->       fully associative cache            = false
->       maximum IDs for CPUs sharing cache = 0x7f (127)
->       maximum IDs for cores in pkg       = 0x3f (63)
->       system coherency line size         = 0x40 (64)
->       physical line partitions           = 0x1 (1)
->       ways of associativity              = 0xf (15)
->       number of sets                     = 0x10000 (65536)
->       WBINVD/INVD acts on lower caches   = false
->       inclusive to lower caches          = false
->       complex cache indexing             = true
->       number of sets (s)                 = 65536
->       (size synth)                       = 62914560 (60 MB)
->       --- cache 4 ---
->       cache type                         = no more caches (0)
-> 
-> Suggested-by: Tejus GK <tejus.gk@nutanix.com>
-> Suggested-by: Jason Zeng <jason.zeng@intel.com>
-> Suggested-by: "Daniel P . Berrangé" <berrange@redhat.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+I think others should weigh in on the higher level abstractions you're
+adding for vhost_user_blk_force_stop() - I don't have a strong
+perspective on them. I'm ok with this for vhost-user-blk.
+
+Acked-by: Raphael Norwitz <raphael@enfabrica.net>
+
+On Mon, Jun 9, 2025 at 5:26=E2=80=AFPM Daniil Tatianin
+<d-tatianin@yandex-team.ru> wrote:
+>
+> If we have a server running disk requests that is for whatever reason
+> hanging or not able to process any more IO requests but still has some
+> in-flight requests previously issued by the guest OS, QEMU will still
+> try to drain the vring before shutting down even if it was explicitly
+> asked to do a "force shutdown" via SIGTERM or QMP quit. This is not
+> useful since the guest is no longer running at this point since it was
+> killed by QEMU earlier in the process. At this point, we don't care
+> about whatever in-flight IO it might have pending, we just want QEMU
+> to shut down.
+>
+> Add an option called "skip-get-vring-base-on-force-shutdown" to allow
+> SIGTERM/QMP quit() to actually act like a "force shutdown" at least
+> for vhost-user-blk devices since those require the drain operation
+> to shut down gracefully unlike, for example, network devices.
+>
+> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
 > ---
->  target/i386/cpu.c | 96 +++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 96 insertions(+)
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index b40f1a5b6648..a7f2e5dd3fcb 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -2886,6 +2886,97 @@ static const CPUCaches epyc_turin_cache_info = {
+>  hw/block/vhost-user-blk.c          | 9 ++++++++-
+>  include/hw/virtio/vhost-user-blk.h | 2 ++
+>  2 files changed, 10 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+> index 0eebbcd80d..c0cc5f6942 100644
+> --- a/hw/block/vhost-user-blk.c
+> +++ b/hw/block/vhost-user-blk.c
+> @@ -210,6 +210,7 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+>      BusState *qbus =3D BUS(qdev_get_parent_bus(DEVICE(vdev)));
+>      VirtioBusClass *k =3D VIRTIO_BUS_GET_CLASS(qbus);
+>      int ret;
+> +    bool force_stop =3D false;
+>
+>      if (!s->started_vu) {
+>          return 0;
+> @@ -220,7 +221,11 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+>          return 0;
 >      }
+>
+> -    ret =3D vhost_dev_stop(&s->dev, vdev, true);
+> +    force_stop =3D s->skip_get_vring_base_on_force_shutdown &&
+> +                 qemu_force_shutdown_requested();
+> +
+> +    ret =3D force_stop ? vhost_dev_force_stop(&s->dev, vdev, true) :
+> +                       vhost_dev_stop(&s->dev, vdev, true);
+>
+>      if (k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false) < 0) {
+>          error_report("vhost guest notifier cleanup failed: %d", ret);
+> @@ -584,6 +589,8 @@ static const Property vhost_user_blk_properties[] =3D=
+ {
+>                        VIRTIO_BLK_F_DISCARD, true),
+>      DEFINE_PROP_BIT64("write-zeroes", VHostUserBlk, parent_obj.host_feat=
+ures,
+>                        VIRTIO_BLK_F_WRITE_ZEROES, true),
+> +    DEFINE_PROP_BOOL("skip-get-vring-base-on-force-shutdown", VHostUserB=
+lk,
+> +                     skip_get_vring_base_on_force_shutdown, false),
 >  };
->  
-> +static const CPUCaches xeon_spr_cache_info = {
-> +    .l1d_cache = &(CPUCacheInfo) {
-> +        /* CPUID 0x4.0x0.EAX */
-> +        .type = DATA_CACHE,
-> +        .level = 1,
-> +        .self_init = true,
+>
+>  static void vhost_user_blk_class_init(ObjectClass *klass, const void *da=
+ta)
+> diff --git a/include/hw/virtio/vhost-user-blk.h b/include/hw/virtio/vhost=
+-user-blk.h
+> index ea085ee1ed..a10f785672 100644
+> --- a/include/hw/virtio/vhost-user-blk.h
+> +++ b/include/hw/virtio/vhost-user-blk.h
+> @@ -50,6 +50,8 @@ struct VHostUserBlk {
+>      bool connected;
+>      /* vhost_user_blk_start/vhost_user_blk_stop */
+>      bool started_vu;
 > +
-> +        /* CPUID 0x4.0x0.EBX */
-> +        .line_size = 64,
-> +        .partitions = 1,
-> +        .associativity = 12,
-> +
-> +        /* CPUID 0x4.0x0.ECX */
-> +        .sets = 64,
-> +
-> +        /* CPUID 0x4.0x0.EDX */
-> +        .no_invd_sharing = false,
-> +        .inclusive = false,
-> +        .complex_indexing = false,
-> +
-> +        .size = 48 * KiB,
-> +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-> +    },
-> +    .l1i_cache = &(CPUCacheInfo) {
-> +        /* CPUID 0x4.0x1.EAX */
-> +        .type = INSTRUCTION_CACHE,
-> +        .level = 1,
-> +        .self_init = true,
-> +
-> +        /* CPUID 0x4.0x1.EBX */
-> +        .line_size = 64,
-> +        .partitions = 1,
-> +        .associativity = 8,
-> +
-> +        /* CPUID 0x4.0x1.ECX */
-> +        .sets = 64,
-> +
-> +        /* CPUID 0x4.0x1.EDX */
-> +        .no_invd_sharing = false,
-> +        .inclusive = false,
-> +        .complex_indexing = false,
-> +
-> +        .size = 32 * KiB,
-> +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-> +    },
-> +    .l2_cache = &(CPUCacheInfo) {
-> +        /* CPUID 0x4.0x2.EAX */
-> +        .type = UNIFIED_CACHE,
-> +        .level = 2,
-> +        .self_init = true,
-> +
-> +        /* CPUID 0x4.0x2.EBX */
-> +        .line_size = 64,
-> +        .partitions = 1,
-> +        .associativity = 16,
-> +
-> +        /* CPUID 0x4.0x2.ECX */
-> +        .sets = 2048,
-> +
-> +        /* CPUID 0x4.0x2.EDX */
-> +        .no_invd_sharing = false,
-> +        .inclusive = false,
-> +        .complex_indexing = false,
-> +
-> +        .size = 2 * MiB,
-> +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-> +    },
-> +    .l3_cache = &(CPUCacheInfo) {
-> +        /* CPUID 0x4.0x3.EAX */
-> +        .type = UNIFIED_CACHE,
-> +        .level = 3,
-> +        .self_init = true,
-> +
-> +        /* CPUID 0x4.0x3.EBX */
-> +        .line_size = 64,
-> +        .partitions = 1,
-> +        .associativity = 15,
-> +
-> +        /* CPUID 0x4.0x3.ECX */
-> +        .sets = 65536,
-> +
-> +        /* CPUID 0x4.0x3.EDX */
-> +        .no_invd_sharing = false,
-> +        .inclusive = false,
-> +        .complex_indexing = true,
-> +
-> +        .size = 60 * MiB,
-> +        .share_level = CPU_TOPOLOGY_LEVEL_SOCKET,
-> +    },
-> +};
-> +
->  static const CPUCaches xeon_gnr_cache_info = {
->      .l1d_cache = &(CPUCacheInfo) {
->          /* CPUID 0x4.0x0.EAX */
-> @@ -4892,6 +4983,11 @@ static const X86CPUDefinition builtin_x86_defs[] = {
->                      { /* end of list */ }
->                  }
->              },
-> +            {
-> +                .version = 4,
-> +                .note = "with spr-sp cache model",
-> +                .cache_info = &xeon_spr_cache_info,
-> +            },
->              { /* end of list */ }
->          }
->      },
-
-Reviewed-by: Tao Su <tao1.su@linux.intel.com>
-
-> -- 
+> +    bool skip_get_vring_base_on_force_shutdown;
+>  };
+>
+>  #endif
+> --
 > 2.34.1
-> 
-> 
+>
 
