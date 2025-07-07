@@ -4,92 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C989CC8303C
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 20:29:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DC5AC71130
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 20:58:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYsT4-0003Az-TH; Mon, 07 Jul 2025 16:29:39 -0400
+	id 1uYsuP-0003IH-Rx; Mon, 07 Jul 2025 16:57:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uYs7N-000505-IX
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 16:07:21 -0400
-Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
+ id 1uYsL9-0005H6-G2
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 16:21:29 -0400
+Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uYs7G-0002QY-3U
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 16:07:10 -0400
-Received: by mail-qt1-x833.google.com with SMTP id
- d75a77b69052e-4a43972dcd7so45076701cf.3
- for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 13:07:05 -0700 (PDT)
+ id 1uYsL7-0004Hl-U7
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 16:21:27 -0400
+Received: by mail-qt1-x830.google.com with SMTP id
+ d75a77b69052e-4a9bff7fc6dso11457061cf.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 13:21:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751918825; x=1752523625; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=33FkQa4+h0oN3Ah6xgEFjXlJTGqQVdY3+kPUTsXd5C8=;
- b=ZpyopxDuSpkix368CcVjKMuOo3Nkjverr5n9tHMwFf7qqHQyzoi6kt+I/WTMI4wZNZ
- P+b0p2sQP1IxZOCKwsiGCnrkxm4G2b+GuQqlV4euSuOtvQdmM9Pc/ccb1KZwssV4b5bF
- 5Jtyu+PkdO290sq+3xJ98LWof7tLv5zI88Dq64tvVUyAozjt68PGm5mu+gD+lYYmDiio
- HQVX/jkIFxvA5r3ykNRQlVkEM0RlrYicECDcy4IH2+BIBKye43MP7qeyi72YHcr4Xmru
- ZMDRFhJxfDKy9otRqIxshS3nu9bxXWpCw3iEbk5oVoUwWy/FOthHuCJyZW4IU8DNdMgB
- KeGg==
+ d=linaro.org; s=google; t=1751919685; x=1752524485; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Lcs5SBgIJAZ9jZMJeyubq/bXFbb8f0ayL+4aR6w4j6M=;
+ b=VQd3TNWpaRLCTmZLcjGW4ZdDabUazZCcHV28npaDeJCloScpsvIKaWzB7WKml60+XZ
+ DIbxF/F+pEYZY5gEjUXGygAJrWurCeQ/GTlD8U7THVXSh2A1KI3ju1cbBuQ9vG0LeK+/
+ sYdhEShAzPBMpOYODTJSdVamrk1PId2znJF+RzZhkBvbmcHSMPBwclgS92qkZFztPGAV
+ tJJkFme+jM98EpLAAdwN2lUSoYpJxplSTszbscDyM8riRxeAbx/6/nxR038ssPCOeOz5
+ IIC7+imBw337ijZFALn1TIxVV+67YC0Wn7l6tj0rjDA1zWxYpu0QI1N3lxc2pE6RDrdt
+ ehQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751918825; x=1752523625;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=33FkQa4+h0oN3Ah6xgEFjXlJTGqQVdY3+kPUTsXd5C8=;
- b=ShwYGioAT3RAA+MGLFP9qcT8nefVs8s+87/lvtbXzfBkZfc8ApOwv0l5H7n/qfz/1o
- TF3nBnYvkd1dfY7UzYKr6ioTP1ttXtwkhVJhGoikYajeTz9WIkONhSaZvudHuXzGcNmv
- qVCXY4O65WrPae7ui+RClKQA4vosZpqbD8JcA+kUXAvWjnjdtrUxh9EKa6ESUxu/FdvJ
- vn2lRcGkXkFmSDK1fN5JmuNyWUi1D34DzI3M9RJmH5ly2nJk8o3IR2amUojLcam76048
- peLBCu6d2RvN3FdySUJdZmG+7whQ4k4AMKMRUpEbROZpesYe4kU+vOwVrxZ3FRjzZk8p
- yiLQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWZQvk7s+boXchBSvziqSPa6o32Ebz37VB8BLtg+pRfQbURlLTHYh3UXTH7QRcKM9HKrcQEO9/XsvQC@nongnu.org
-X-Gm-Message-State: AOJu0YzElxQtQA2u/BYOPjwzqNGLerp+4K7aM5iKa+nIqG7MMMIE44VU
- 4TTkxCSoiqqOi06hi7yx8y3nN+SbVsqo1QMW6e81qRAa3z+2yIBiXOBGqzYdD3hFhQU=
-X-Gm-Gg: ASbGncukpxW+NrwNBPyJzBqg9AfRrSC4mAjc22WxgDPLnFIbBkzYCBt2gmjC1nG/gRc
- RWmAfZoz3tJ9zhf5uzkn3qs+0jAyRK2IRIGN+O2hisN5B0MS/ESFg8V0uYym9kGLnxH8iJxtfkl
- G/LrU/vgiHzguahH6BHPiLOcnQpMBmpOtDmu2F7ZXGxHzgb1NCYz6H3HwVZ/qhi53pD5eOVWki4
- 8OSZXbjgVG2pwltssGl/SrZA/IY1tWUpKQypCClgHF0865dpOAButvu9zyDvosFy5vzvHIG1M6U
- nm0ItqcJhPBS962WIqjXY0SlummqQPbhUpiWIeuy+wfjyXAVWoZDhDpl1OkeJA/IpiopaXqCSOa
- 8qKt3b1Hafimtakqx0Fdzl0NzEsQ=
-X-Google-Smtp-Source: AGHT+IE0TB4c0eowcUJXdZRrsr9MyTK+hD+xSVw2bagacVXPZBjA+qPoyQNUfJRDxhDpt9j6RXLRaQ==
-X-Received: by 2002:a05:622a:4006:b0:4a6:fa5b:5438 with SMTP id
- d75a77b69052e-4a9985f91ddmr227991891cf.4.1751918824812; 
- Mon, 07 Jul 2025 13:07:04 -0700 (PDT)
-Received: from [10.225.72.227] ([172.58.142.143])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4a994aa9413sm67532191cf.78.2025.07.07.13.07.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Jul 2025 13:07:04 -0700 (PDT)
-Message-ID: <589efb93-f0c4-41d7-8947-6dadf1f06c56@linaro.org>
-Date: Mon, 7 Jul 2025 14:06:54 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 v6 02/14] qemu/target-info: Factor target_arch()
- out
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-s390x@nongnu.org,
- qemu-arm@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-block@nongnu.org,
- qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-riscv@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20250707172009.3884-1-philmd@linaro.org>
- <20250707172009.3884-3-philmd@linaro.org>
-Content-Language: en-US
+ d=1e100.net; s=20230601; t=1751919685; x=1752524485;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Lcs5SBgIJAZ9jZMJeyubq/bXFbb8f0ayL+4aR6w4j6M=;
+ b=Gmv6De/Qgor1mhcxRoRty59MUTfDYXAd3Ip9TQsgMdLm3nZT9KvQINvDLtL7dTDQzy
+ vbuX8rEu2RsDUIsdgUXEyP3rp2hG+kiJ3S+aiw6UwRgh9QmpNZWV35z8W0qvP59aJ+4+
+ k4XoWNWPjqBJ+1j11ekRHjtvigpFuzNs3yeqgFhFFYCECnt4odNTfZjIXLv4pb9v1W2Z
+ YgeErsXEy/d6FAB+DIEXZVthdCagu+f4MaKYZGsXPhcC0P5dQI2/RIdeKtcgLQrHzAxG
+ 58kU+amzEqcl8kZIvsYtfAuYxCdJ+pbrQ973jCwu6mWeLR4ur4BbsWmz69OBWy6N3WcD
+ k0aA==
+X-Gm-Message-State: AOJu0Yyh/dodTyP3R5z6i8IN4VH1K2luy0qWgDbg4i0SkOUTbSfUbEXk
+ LB3C/6RCCGuBg8yEz810ouKsqNdNkUNSqA4VeG2okFCmCJvwWGMnCgJYVVjBNVqUHUhLfk1EW2A
+ j8RZmgvc=
+X-Gm-Gg: ASbGncs6ORnvu3CVawAZYu7ZKbZynN9cBbhIKeGibaKRtSpUCE0o+0GH9b0gZox7YXY
+ yip1THAnSBIjgNrgZ9F0Hay6wgfP1HRzZOV5sIuso2t2AXMsQqbe5WxAP2LTILZlyqPEstd7f6f
+ xK0W2ieb0nMwoGDMSNcgtGM5zqQalyZfi3epGmwqrUly1C9lcM02VsYncNTRjID9UcLF6pTZAEn
+ QBoPYf3SR7cCu4DqE+efqw7JWqgZ+CYhseieH9PyNCc32t2SxC9QUsrIpvzbrNehvAUYUxVsFem
+ I0DIc/Shk0vuUBaNN2sMDsgA+Uj/UXuX4lRUn1vYCNYouvTg6Ya1Sy+DNi5xty/1F1WHvwqMx/e
+ xRrMwlJijilen/PpT
+X-Google-Smtp-Source: AGHT+IHcg99kHdal5tT5OsSoG4UYiUxEru/PPPPhEfsILtDe01ysQKrZsFBEUkc5macndgt4cwjc0w==
+X-Received: by 2002:a05:622a:4109:b0:494:70e7:1528 with SMTP id
+ d75a77b69052e-4a9ce6bba4emr476881cf.24.1751919684410; 
+ Mon, 07 Jul 2025 13:21:24 -0700 (PDT)
+Received: from stoup.. ([172.58.142.143]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4a994a78dd4sm69050351cf.51.2025.07.07.13.21.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 07 Jul 2025 13:21:24 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250707172009.3884-3-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH 05/20] target/arm: Convert get_phys_addr_pmsav7 to access_perm
+Date: Mon,  7 Jul 2025 14:20:56 -0600
+Message-ID: <20250707202111.293787-6-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250707202111.293787-1-richard.henderson@linaro.org>
+References: <20250707202111.293787-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x833.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x830.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,36 +99,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/7/25 11:19, Philippe Mathieu-Daudé wrote:
-> To keep "qemu/target-info.h" self-contained to native
-> types, declare target_arch() -- which returns a QAPI
-> type -- in "qemu/target-info-qapi.h".
-> 
-> No logical change.
-> 
-> Keeping native types in "qemu/target-info.h" is necessary
-> to keep building tests such tests/tcg/plugins/mem.c, as
-> per the comment added in commit ecbcc9ead2f ("tests/tcg:
-> add a system test to check memory instrumentation"):
-> 
-> /*
->   * plugins should not include anything from QEMU aside from the
->   * API header. However as this is a test plugin to exercise the
->   * internals of QEMU and we want to avoid needless code duplication we
->   * do so here. bswap.h is pretty self-contained although it needs a
->   * few things provided by compiler.h.
->   */
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   include/qemu/target-info-qapi.h | 21 +++++++++++++++++++++
->   include/qemu/target-info.h      |  2 +-
->   hw/core/machine-qmp-cmds.c      |  8 +++-----
->   target-info.c                   |  8 ++++++++
->   4 files changed, 33 insertions(+), 6 deletions(-)
->   create mode 100644 include/qemu/target-info-qapi.h
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/ptw.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index adceeabfe4..b71c963f67 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -2350,7 +2350,7 @@ static bool pmsav7_use_background_region(ARMCPU *cpu, ARMMMUIdx mmu_idx,
+ static bool get_phys_addr_pmsav7(CPUARMState *env,
+                                  S1Translate *ptw,
+                                  uint32_t address,
+-                                 MMUAccessType access_type,
++                                 unsigned access_perm,
+                                  GetPhysAddrResult *result,
+                                  ARMMMUFaultInfo *fi)
+ {
+@@ -2537,7 +2537,7 @@ static bool get_phys_addr_pmsav7(CPUARMState *env,
+ 
+     fi->type = ARMFault_Permission;
+     fi->level = 1;
+-    return !(result->f.prot & (1 << access_type));
++    return access_perm & ~result->f.prot;
+ }
+ 
+ static uint32_t *regime_rbar(CPUARMState *env, ARMMMUIdx mmu_idx,
+@@ -3481,7 +3481,7 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
+                                        result, fi);
+         } else if (arm_feature(env, ARM_FEATURE_V7)) {
+             /* PMSAv7 */
+-            ret = get_phys_addr_pmsav7(env, ptw, address, access_type,
++            ret = get_phys_addr_pmsav7(env, ptw, address, 1 << access_type,
+                                        result, fi);
+         } else {
+             /* Pre-v7 MPU */
+-- 
+2.43.0
 
-r~
 
