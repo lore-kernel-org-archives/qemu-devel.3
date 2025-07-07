@@ -4,97 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E498C71130
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 19:42:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88251C71130
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 20:08:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYrii-00059G-Aa; Mon, 07 Jul 2025 15:41:44 -0400
+	id 1uYs78-0004wc-8l; Mon, 07 Jul 2025 16:06:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uYriX-0004uJ-0G
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 15:41:33 -0400
-Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
+ (Exim 4.90_1) (envelope-from
+ <36iVsaAYKCjEfRNaWPTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--seanjc.bounces.google.com>)
+ id 1uYrv2-0000He-RV
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 15:54:29 -0400
+Received: from mail-pf1-x449.google.com ([2607:f8b0:4864:20::449])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uYriV-0006cE-72
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 15:41:32 -0400
-Received: by mail-qt1-x82f.google.com with SMTP id
- d75a77b69052e-4a9b08740e3so21183511cf.3
- for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 12:41:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from
+ <36iVsaAYKCjEfRNaWPTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--seanjc.bounces.google.com>)
+ id 1uYruv-0008QV-DA
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 15:54:27 -0400
+Received: by mail-pf1-x449.google.com with SMTP id
+ d2e1a72fcca58-74928291bc3so2626869b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 12:54:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751917290; x=1752522090; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yBVWDazkAqSpFZc3h4CUWkWuKD4FAAJ7y7dz4UisrEY=;
- b=Li28Tkx4Poex6NEFvjcUzCDBnRogM9t9Y7uBqQuwJhK9fYNe/7JE+2VppZhGico4KK
- R59EIkxCKdRwLwRKwKnWty+1hsBMxrkLhEhmiTnlF0FN+b2TbL8TKfUWZXbAHRK6DjbV
- yUspxPpMLOw3g3lr/kb0dQVCGB5ZtOzA4ZGPJxo1xKDwVWhdCMha26IUMWMxI/Ecq/tz
- gNxP0y+wQ1Gu7vXymhCACgXl1hWhr9BJYRrUrnDLDKnimUX06LbsT/qn4YvnX8KZjoGC
- itAPz+L85jbr8p+jXhsvG+MP8MdoYx58OSRTGAbX26i/5LAFJoKSPZVT0jS9WbiPazIA
- nApA==
+ d=google.com; s=20230601; t=1751918058; x=1752522858; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=Dvkjx2/EXKNVPNHMXsjFWWDExhVd8STolUBKVwumVSQ=;
+ b=UFt8AGpYjhx5Rppn5Sy+adjVBL3bw3W1iybIYU4XqJRKbyaFrlGP9HyDn0OBA4EdOk
+ JdMHMTj7QbkcdqBBtoXD8oBCq1XUun5C1oH/EFUWg+l1kqg5eZQ40EnYb+mxPqdP8hqf
+ w72ZEOoj9/cbdJctVH10xZLV+JVaMwspyUuHxWlpsLQgzWJW+nBqNmgdnZATZK5IZJz1
+ LLA6MXmXHYpL7B+HL6hV2MJXTL+24/FbvqPpOP+oWI5ymdhWn5KohgHVeBaFrS0jOt0U
+ M7vOTuFpKn+l3tiHNyz4KqAg4qmkrTafdVqR6WI1y+4j0PTQeSJrswtlaMCvBtIQppIV
+ 207A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751917290; x=1752522090;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yBVWDazkAqSpFZc3h4CUWkWuKD4FAAJ7y7dz4UisrEY=;
- b=IlPsNtyaeoMhwEsjyyBmwRIzFOT7QxO/FnhDGg9wV5GKAtCsmwZ+U2aiTW0o8XyYP5
- fN3FnElYxD8H24Tg9HXm+DuIPr/ev4CDXEl1zOpNvHQUAyySdoUZ7/rVdVDJZ6r5L8ze
- Y43GYSP9Skp7hy/uhmM2otA0w09FwfYi3nT0/ZRE7oRciT5Gm7wZD/M8+hUz1e0Ca8Oi
- x980wyrqRi6sNqfTeVIQfiBW/OLiLziePp+MlxSR/5SMKn5/e5h53zfY4tjvtxHR3uPy
- XTpXGe2N01GD6/e2IG1eeK1AAuz1U500rriZ58aExjwjxhDcyWMbysQUzipCvaoK0Y8M
- sOCA==
+ d=1e100.net; s=20230601; t=1751918058; x=1752522858;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Dvkjx2/EXKNVPNHMXsjFWWDExhVd8STolUBKVwumVSQ=;
+ b=gTXKDFNTMG2E/kxa9rRRQjJsj8LFZzD6QVDVV2zEJeF0atdqvnxRNOZluO6NcCN4Rr
+ pr8aBs/BZculqS592IhNpPBwBFFBcXNVWNSgN5Sbc2thR3ghwhtZTHUQquB643mu6lIB
+ HETh5RNYqwEkYngQTX+V4PTzgkZIWYseaXnkpmhnsUkPLzsJbjmx3wNHrN2RE6XYtPD6
+ hMig+myCLmjyZy0lGTklWvY3/SLeshDyQ9YNHlAH9plDVUHRB0am4i2x2D98LBUrkjkD
+ 7KpRxnPnraZWEQAuZmuHFDzWh7wnThQhcDzUO9S23OL7PIK8BnQ3gMJ9RS8yW8c40rbu
+ TntQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW4VYddo4gOKRsvFDG9JwVH/GhAC9YjkdJ9/d5mo5YAitkCEoNbugwA9oYkzKogYHndpwYch4rBvPCo@nongnu.org
-X-Gm-Message-State: AOJu0YwjSsr8/VqdW5WyFc6JWC3Z4VnUNqsE228p1uPwlxVU3wiZyuQD
- s9uqxDc8PUuPTlcBqjy1Yy0qOApqL7lEH4eM7hCqL//ZolkUGNlobZGhSwqxm1RWZsU=
-X-Gm-Gg: ASbGncvDJKTuNPHVFTvDm2OR7eJQ9lReziPq9hZAGazYMWaDz1VOXsAOLlAQI12kxFj
- Q3/XpN+A8pwS5sUDTzbtHpwqbmDILqDT7p7Xk5fWyZOO4ql1Lq7VCckiqgj2OVeNGlZ4TJf9REO
- /VS/v8Lzq3rf+a8u3wvOyBtWn3aLa3jdjlFbWepH1hF9W5IPhlvd2S00n5mbV+GNwugMPco2f6F
- 4opz2SWqeM3XR/SaB7YSdT8vrSpPO2Z+SMj4T6+ERJISI2yOtBoBhd9nElHjeZvTvZOtbJMg8uD
- e9MAiDOA8DWAE3CwVjW8QkQ/LZWHH5Ddxw8FCsJ7MKk6ooXxBLgMqPNYHT5Ynw6bztybSB3+abB
- PyOyN5F6dXrqQ/YuzCX9WMVzTD5I=
-X-Google-Smtp-Source: AGHT+IGhhqIMfq4jkdNeyJocLPBdHaBkjPFyWiwJHiMr/CW0BF068M7sSLQPNbB1i+VWNlZvmJF1wA==
-X-Received: by 2002:ac8:59c8:0:b0:4a3:96b7:2a73 with SMTP id
- d75a77b69052e-4a9cccb1011mr7214541cf.16.1751917289714; 
- Mon, 07 Jul 2025 12:41:29 -0700 (PDT)
-Received: from [10.225.72.227] ([172.58.142.143])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4a9949f99d1sm69053781cf.24.2025.07.07.12.41.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Jul 2025 12:41:29 -0700 (PDT)
-Message-ID: <a5915062-d5d3-44a6-bfbf-f9c4e234a7ad@linaro.org>
-Date: Mon, 7 Jul 2025 13:41:24 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] target/s390x/tcg: Use vaddr in s390_probe_access()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>
-References: <20250707171059.3064-1-philmd@linaro.org>
- <20250707171059.3064-3-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250707171059.3064-3-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ AJvYcCWXv+HntbyooggFzXGpFLFjEdE2bvig/4YOqGsiq9yXao+7C6NX4n6lWrxtlYLYDkZuFd7jKuLgSyUb@nongnu.org
+X-Gm-Message-State: AOJu0Yy+QgElQtDrxG69go6LQANmKNk68D05hvwG37KYwM4UZ0YEzegH
+ QYc9wv5MMXKb8CWUB5L9GONcjwqbCnHINfCZoJR0nqniga/ReZtxYyodwEjFJRCCCNH61pkstLG
+ QL1VLUA==
+X-Google-Smtp-Source: AGHT+IE/n24T+yY82t7dVRDwU/3hR1H7fbmnSobXXAgaDbo+nhrjc/FK4GpjJIoi0wiHsG3fN7p26DN5fIY=
+X-Received: from pfbfc40.prod.google.com
+ ([2002:a05:6a00:2e28:b0:746:fd4c:1fcf])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a00:4483:b0:748:fd94:e62a
+ with SMTP id d2e1a72fcca58-74d242e8ad6mr793708b3a.1.1751918058346; Mon, 07
+ Jul 2025 12:54:18 -0700 (PDT)
+Date: Mon, 7 Jul 2025 12:54:16 -0700
+In-Reply-To: <20250702132307.71e3b783@fedora>
+Mime-Version: 1.0
+References: <20250630133025.4189544-1-alexandre.chartre@oracle.com>
+ <aGO3vOfHUfjgvBQ9@intel.com> <c6a79077-024f-4d2f-897c-118ac8bb9b58@intel.com>
+ <aGPWW/joFfohy05y@intel.com> <20250701150500.3a4001e9@fedora>
+ <aGQ-ke-pZhzLnr8t@char.us.oracle.com> <20250702132307.71e3b783@fedora>
+Message-ID: <aGwl6GUwYsGVXG5k@google.com>
+Subject: Re: [PATCH] i386/cpu: ARCH_CAPABILITIES should not be advertised on
+ AMD
+From: Sean Christopherson <seanjc@google.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Alexandre Chartre <alexandre.chartre@oracle.com>, 
+ qemu-devel@nongnu.org, pbonzini@redhat.com, qemu-stable@nongnu.org, 
+ boris.ostrovsky@oracle.com, maciej.szmigiero@oracle.com, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::449;
+ envelope-from=36iVsaAYKCjEfRNaWPTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--seanjc.bounces.google.com;
+ helo=mail-pf1-x449.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,63 +102,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/7/25 11:10, Philippe Mathieu-Daudé wrote:
-> Commit 70ebd9ce1cb ("s390x/tcg: Fault-safe memset") passed
-> vaddr type to access_prepare(), and commit b6c636f2cd6
-> ("s390x/tcg: Fault-safe memmove") to do_access_get_byte(),
-> but declared S390Access::vaddr[1,2] as target_ulong.
-> Directly declare these as vaddr type, and have
-> s390_probe_access() use that type as argument.
+On Wed, Jul 02, 2025, Igor Mammedov wrote:
+> Or even better a single KVM optin feature 'do_not_advertise_features_not_supported_by_host_cpu',
+> and then QEMU could use that for disabling all nonsense in one go.
+> Plus all of that won't be breaking KVM ABI nor qemu had to add fixups for this and that feature.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/s390x/tcg/mem_helper.c | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
-> index a03609a1406..f1acb1618f7 100644
-> --- a/target/s390x/tcg/mem_helper.c
-> +++ b/target/s390x/tcg/mem_helper.c
-> @@ -126,8 +126,8 @@ static inline void cpu_stsize_data_ra(CPUS390XState *env, uint64_t addr,
->   
->   /* An access covers at most 4096 bytes and therefore at most two pages. */
->   typedef struct S390Access {
-> -    target_ulong vaddr1;
-> -    target_ulong vaddr2;
-> +    vaddr vaddr1;
-> +    vaddr vaddr2;
->       void *haddr1;
->       void *haddr2;
->       uint16_t size1;
-> @@ -148,7 +148,7 @@ typedef struct S390Access {
->    * For !CONFIG_USER_ONLY, the TEC is stored stored to env->tlb_fill_tec.
->    * For CONFIG_USER_ONLY, the faulting address is stored to env->__excp_addr.
->    */
-> -static inline int s390_probe_access(CPUArchState *env, target_ulong addr,
-> +static inline int s390_probe_access(CPUArchState *env, vaddr addr,
->                                       int size, MMUAccessType access_type,
->                                       int mmu_idx, bool nonfault,
->                                       void **phost, uintptr_t ra)
-> @@ -258,7 +258,7 @@ static void access_memset(CPUS390XState *env, S390Access *desta,
->   static uint8_t access_get_byte(CPUS390XState *env, S390Access *access,
->                                  int offset, uintptr_t ra)
->   {
-> -    target_ulong vaddr = access->vaddr1;
-> +    vaddr vaddr = access->vaddr1;
->       void *haddr = access->haddr1;
->   
->       if (unlikely(offset >= access->size1)) {
-> @@ -278,7 +278,7 @@ static uint8_t access_get_byte(CPUS390XState *env, S390Access *access,
->   static void access_set_byte(CPUS390XState *env, S390Access *access,
->                               int offset, uint8_t byte, uintptr_t ra)
->   {
-> -    target_ulong vaddr = access->vaddr1;
-> +    vaddr vaddr = access->vaddr1;
->       void *haddr = access->haddr1;
->   
->       if (unlikely(offset >= access->size1)) {
+> After some time when old machine types are deprecated/gone, KVM could make it default and eventually
+> remove advertising 'fake' features.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Such a feature/quirk wouldn't be useful in practice.  There are several features
+that KVM emulates irrespective of hardware support, and that generally speaking
+every VMM will want to enable whenever possible, e.g. x2APIC, TSC deadline timer,
+TSC adjust, and the amusing "no SMM_CTL MSR" anti-feature.  Throwing out x2APIC
+and TSC deadline timer in particular would be a significant regression, i.e. not
+something any end user actually wants.
 
-r~
+If QEMU or any other VMM wants to filter KVM's support against bare metal, then
+QEMU can simply do CPUID itself.
+
+Somewhat of a side topic, the somewhat confusingly-named KVM_GET_EMULATED_CPUID
+exists to allow KVM to differentiate between features that KVM can emulate and/or
+virtualize without additional overhead, and those that KVM can emulate but with
+non-trivial cost.  E.g. KVM advertises MOVBE and RDPID in KVM_GET_SUPPORTED_CPUID
+if and only if they are natively suppored, because enabling those instructions in
+the guest's CPUID model turns exitless instruction execution into expensive #UD
+VM-Exits and slow emulation.  But KVM unconditionally advertises support for them
+in KVM_GET_EMULATED_CPUID so that userspace can run a "newer" VM on old hardware.
+
+I mention KVM_GET_EMULATED_CPUID purely to stave off any exploration into trying
+to move ARCH_CAPABILITIES to KVM_GET_EMULATED_CPUID.  Name aside, it's not the
+correct fit (and would still be an ABI change).
 
