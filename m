@@ -4,92 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC229C83F07
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 10:54:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD039C8303C
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 12:22:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYjTM-0002xi-AZ; Mon, 07 Jul 2025 06:53:20 -0400
+	id 1uYkqb-0002NF-GK; Mon, 07 Jul 2025 08:21:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1uYjTA-0002uJ-6i; Mon, 07 Jul 2025 06:53:09 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1uYkot-0001y8-IY; Mon, 07 Jul 2025 08:19:42 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1uYjSj-0002hy-LX; Mon, 07 Jul 2025 06:53:07 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1uYjNr-00000000Lva-1kgy; Mon, 07 Jul 2025 12:47:39 +0200
-Message-ID: <cb4049d8-b6e4-46ab-956e-5f65029e50bf@maciej.szmigiero.name>
-Date: Mon, 7 Jul 2025 12:47:34 +0200
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1uYkol-0001to-RI; Mon, 07 Jul 2025 08:19:37 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bbNYY6650z6M54c;
+ Mon,  7 Jul 2025 20:18:09 +0800 (CST)
+Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
+ by mail.maildlp.com (Postfix) with ESMTPS id 4F4901402F8;
+ Mon,  7 Jul 2025 20:19:12 +0800 (CST)
+Received: from a2303103017.china.huawei.com (10.45.147.207) by
+ frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 7 Jul 2025 14:19:10 +0200
+To: <qemu-devel@nongnu.org>
+CC: <anisinha@redhat.com>, <armbru@redhat.com>, <berrange@redhat.com>,
+ <dapeng1.mi@linux.intel.com>, <eric.auger@redhat.com>,
+ <farman@linux.ibm.com>, <gustavo.romero@linaro.org>, <imammedo@redhat.com>,
+ <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
+ <linuxarm@huawei.com>, <maobibo@loongson.cn>, <mst@redhat.com>,
+ <mtosatti@redhat.com>, <peter.maydell@linaro.org>, <philmd@linaro.org>,
+ <qemu-arm@nongnu.org>, <richard.henderson@linaro.org>,
+ <shameerali.kolothum.thodi@huawei.com>, <shannon.zhaosl@gmail.com>,
+ <yangyicong@hisilicon.com>, <zhao1.liu@intel.com>
+Subject: [PATCH v14 0/7] Specifying cache topology on ARM 
+Date: Mon, 7 Jul 2025 13:19:01 +0100
+Message-ID: <20250707121908.155-1-alireza.sanaee@huawei.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] vfio/migration: Max in-flight VFIO device state
- buffer count limit
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <cover.1750787338.git.maciej.szmigiero@oracle.com>
- <0e88a253e06647f6c01bdeba45848501b3631bd3.1750787338.git.maciej.szmigiero@oracle.com>
- <4fbc3288-edb4-4942-b3dc-df7beb1e3f24@nvidia.com>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <4fbc3288-edb4-4942-b3dc-df7beb1e3f24@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.056, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.45.147.207]
+X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
+ frapeml500003.china.huawei.com (7.182.85.28)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,46 +71,172 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7.07.2025 11:29, Avihai Horon wrote:
-> 
-> On 24/06/2025 20:51, Maciej S. Szmigiero wrote:
->> External email: Use caution opening links or attachments
->>
->>
->> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>
->> Allow capping the maximum count of in-flight VFIO device state buffers
->> queued at the destination, otherwise a malicious QEMU source could
->> theoretically cause the target QEMU to allocate unlimited amounts of memory
->> for buffers-in-flight.
->>
->> Since this is not expected to be a realistic threat in most of VFIO live
->> migration use cases and the right value depends on the particular setup
->> disable the limit by default by setting it to UINT64_MAX.
->>
->> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> 
-> Reviewed-by: Avihai Horon <avihaih@nvidia.com>
+Specifying the cache layout in virtual machines is useful for
+applications and operating systems to fetch accurate information about
+the cache structure and make appropriate adjustments. Enforcing correct
+sharing information can lead to better optimizations. Patches that allow
+for an interface to express caches was landed in the prior cycles. This
+patchset uses the interface as a foundation.  Thus, the device tree and
+ACPI/PPTT table, and device tree are populated based on
+user-provided information and CPU topology.
 
-Thanks.
+Example:
 
-> But do we really need both x-migration-max-queued-buffers and x-migration-max-queued-buffers-size?
-> I think one is sufficient.
-> 
-> I vote for x-migration-max-queued-buffers-size as the actual memory limit won't change depending on VFIO migration buffer size.
 
-If just one of these limits were to be implemented my vote would be also for the size limit rather than the count limit.
++----------------+                            +----------------+
+|    Socket 0    |                            |    Socket 1    |
+|    (L3 Cache)  |                            |    (L3 Cache)  |
++--------+-------+                            +--------+-------+
+         |                                             |
++--------+--------+                            +--------+--------+
+|   Cluster 0     |                            |   Cluster 0     |
+|   (L2 Cache)    |                            |   (L2 Cache)    |
++--------+--------+                            +--------+--------+
+         |                                             |
++--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
+|   Core 0         | |   Core 1        |    |   Core 0        |  |   Core 1    |
+|   (L1i, L1d)     | |   (L1i, L1d)    |    |   (L1i, L1d)    |  |   (L1i, L1d)|
++--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
+         |                   |                       |                   |
++--------+              +--------+              +--------+          +--------+
+|Thread 0|              |Thread 1|              |Thread 1|          |Thread 0|
++--------+              +--------+              +--------+          +--------+
+|Thread 1|              |Thread 0|              |Thread 0|          |Thread 1|
++--------+              +--------+              +--------+          +--------+
 
-> However, if you pick x-migration-max-queued-buffers, maybe it's worth mentioning in the docs what is the size of a buffer?
 
-I think it's not a constant number since it's a MIN(VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE, stop_copy_size)?
-On the other hand, one could say it's "at most VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE".
+The following command will represent the system relying on **ACPI PPTT tables**.
 
-> Thanks.
-Thanks,
-Maciej
+./qemu-system-aarch64 \
+ -machine virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
+ -cpu max \
+ -m 2048 \
+ -smp sockets=2,clusters=1,cores=2,threads=2 \
+ -kernel ./Image.gz \
+ -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=force" \
+ -initrd rootfs.cpio.gz \
+ -bios ./edk2-aarch64-code.fd \
+ -nographic
+
+The following command will represent the system relying on **the device tree**.
+
+./qemu-system-aarch64 \
+ -machine virt,acpi=off,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
+ -cpu max \
+ -m 2048 \
+ -smp sockets=2,clusters=1,cores=2,threads=2 \
+ -kernel ./Image.gz \
+ -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=off" \
+ -initrd rootfs.cpio.gz \
+ -nographic
+
+Failure cases:
+    1) There are scenarios where caches exist in systems' registers but
+    left unspecified by users. In this case qemu returns failure.
+
+    2) SMT threads cannot share caches which is not very common. More
+    discussions here [1].
+
+Currently only three levels of caches are supported to be specified from
+the command line. However, increasing the value does not require
+significant changes. Further, this patch assumes l2 and l3 unified
+caches and does not allow l(2/3)(i/d). The level terminology is
+thread/core/cluster/socket right now. Hierarchy assumed in this patch:
+Socket level = Cluster level + 1 = Core level + 2 = Thread level + 3;
+
+TODO:
+  1) Making the code to work with arbitrary levels
+  2) Separated data and instruction cache at L2 and L3.
+  3) Additional cache controls.  e.g. size of L3 may not want to just
+  match the underlying system, because only some of the associated host
+  CPUs may be bound to this VM.
+
+[1] https://lore.kernel.org/devicetree-spec/20250203120527.3534-1-alireza.sanaee@huawei.com/
+
+Change Log:
+  v13->v14:
+   * Rebased on latest staging.
+   * Made some naming changes to machine-smp.c, addd docs added to the
+        same file.
+
+  v12->v13:
+   * Applied comments from Zhao.
+   * Introduced a new patch for machine specific cache topology functions.
+   * Base: bc98ffdc7577e55ab8373c579c28fe24d600c40f.
+
+  v11->v12:
+   * Patch #4 couldn't not merge properly as the main file diverged. Now it is fixed (hopefully).
+   * Loonarch build_pptt function updated.
+   * Rebased on 09be8a511a2e278b45729d7b065d30c68dd699d0.
+
+  v10->v11:
+   * Fix some coding style issues.
+   * Rename some variables.
+
+  v9->v10:
+   * PPTT rev down to 2.
+
+  v8->v9:
+   * rebase to 10
+   * Fixed a bug in device-tree generation related to a scenario when
+        caches are shared at core in higher levels than 1.
+  v7->v8:
+   * rebase: Merge tag 'pull-nbd-2024-08-26' of https://repo.or.cz/qemu/ericb into staging
+   * I mis-included a file in patch #4 and I removed it in this one.
+
+  v6->v7:
+   * Intel stuff got pulled up, so rebase.
+   * added some discussions on device tree.
+
+  v5->v6:
+   * Minor bug fix.
+   * rebase based on new Intel patchset.
+     - https://lore.kernel.org/qemu-devel/20250110145115.1574345-1-zhao1.liu@intel.com/
+
+  v4->v5:
+    * Added Reviewed-by tags.
+    * Applied some comments.
+
+  v3->v4:
+    * Device tree added.
+
+Depends-on: Building PPTT with root node and identical implementation flag
+Depends-on: Msg-id: <20250604115233.1234-1-alireza.sanaee@huawei.com>
+
+Alireza Sanaee (7):
+  target/arm/tcg: increase cache level for cpu=max
+  hw/core/machine: topology functions capabilities added
+  hw/arm/virt: add cache hierarchy to device tree
+  bios-tables-test: prepare to change ARM ACPI virt PPTT
+  hw/acpi: add cache hierarchy to pptt table
+  tests/qtest/bios-table-test: testing new ARM ACPI PPTT topology
+  Update the ACPI tables based on new aml-build.c
+
+ hw/acpi/aml-build.c                           | 248 ++++++++++-
+ hw/arm/virt-acpi-build.c                      |   8 +-
+ hw/arm/virt.c                                 | 412 +++++++++++++++++-
+ hw/core/machine-smp.c                         |  59 +++
+ hw/loongarch/virt-acpi-build.c                |   2 +-
+ include/hw/acpi/aml-build.h                   |   6 +-
+ include/hw/acpi/cpu.h                         |  13 +-
+ include/hw/arm/virt.h                         |   7 +-
+ include/hw/boards.h                           |   7 +
+ include/hw/cpu/core.h                         |   1 +
+ target/arm/tcg/cpu64.c                        |  13 +
+ tests/data/acpi/aarch64/virt/PPTT             | Bin 76 -> 96 bytes
+ .../data/acpi/aarch64/virt/PPTT.acpihmatvirt  | Bin 156 -> 176 bytes
+ tests/data/acpi/aarch64/virt/PPTT.topology    | Bin 336 -> 540 bytes
+ tests/qtest/bios-tables-test.c                |   4 +
+ 15 files changed, 764 insertions(+), 16 deletions(-)
+
+
+ base-commit: e240f6cc25917f3138d9e95e0343ae23b63a3f8c
+-- 
+2.43.0
 
 
