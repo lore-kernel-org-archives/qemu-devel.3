@@ -4,142 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E67BC71130
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 18:55:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1637C8303C
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 19:07:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYqzn-0005HB-6n; Mon, 07 Jul 2025 14:55:19 -0400
+	id 1uYrAV-00008u-S7; Mon, 07 Jul 2025 15:06:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uYqzh-0005Dj-BX
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 14:55:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uYqzf-0000Zu-Gm
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 14:55:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751914510;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=duuNnGimM3BBVhD3wPxdrHkpz9c4CGWV/3V68tch7d8=;
- b=itpNpjdk/W7Riy1kaSxlI+YfVaq33b0/rjcfjxIpaAkISm1hYRqutC3a0tMvPz1C9M46Tu
- HH7w56om9bJy/6BxlXt06KV/HJrmiPPeeKbpRmyjWUfXRpwKdnWYLMRWyxaOYDqgXPoFNO
- wLFvevu4ZB/kH+iHfrxVTvkdxaWYLiA=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-456-EcQoyv6FNBaxHakSu9OTbw-1; Mon, 07 Jul 2025 14:55:08 -0400
-X-MC-Unique: EcQoyv6FNBaxHakSu9OTbw-1
-X-Mimecast-MFC-AGG-ID: EcQoyv6FNBaxHakSu9OTbw_1751914507
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-451d3f03b74so18954525e9.3
- for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 11:55:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from
+ <3khpsaAYKCsEzlhuqjnvvnsl.jvtxlt1-kl2lsuvunu1.vyn@flex--seanjc.bounces.google.com>)
+ id 1uYrA8-0007qK-6z
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 15:06:02 -0400
+Received: from mail-pf1-x449.google.com ([2607:f8b0:4864:20::449])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3khpsaAYKCsEzlhuqjnvvnsl.jvtxlt1-kl2lsuvunu1.vyn@flex--seanjc.bounces.google.com>)
+ id 1uYrA6-00024s-9g
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 15:05:59 -0400
+Received: by mail-pf1-x449.google.com with SMTP id
+ d2e1a72fcca58-74880a02689so2705514b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 12:05:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1751915155; x=1752519955; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=uhnPibTiFpdOU0rxGQkwLUax6xi0Sb89X0hOrW81VOE=;
+ b=uoaG/4U5dkoOiiqUR4rdpDKYHE0Dy3gOImpQco8enEWfr4p34XD//fYR60BuHArw2+
+ wKKYWBmW+WXUwatp7f6DTrz4GA/M38uouQKeK0vtbxiJkAXXa5Hm9Npgmoy8TRqAp9+r
+ YFaHXUXjAldnyk0UP3nKPSlwRcZkD2iNrmlwaJqkXCJdaHJGPn40McAWfgz410+1gCK7
+ ZSaL21obTVcNw9y40xKRmjHXv9WGrAtxR/fUtd3NUgyBF1OgwD3RiaZpAen9caqKo3Ug
+ uZJMRkai/VWJbhKdjE1HgSdpTv4j8xFJdkcZ//txVJfL52VL38Og9zguCSZrSelBsjND
+ z7OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751914507; x=1752519307;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=duuNnGimM3BBVhD3wPxdrHkpz9c4CGWV/3V68tch7d8=;
- b=kPe4D1bCBgMpQkTZeDonLU563s592r+prA1EROU2jmtysnhUgnKdGyLSZC+MwptTaf
- psNm+C0hqjPJgKWM1KlzZILwU3XVRYCcIro6ZJV/7Z5Y9bRMmkyIioTAvakYypYW5IRA
- yT3W+wT/rI96DgI0zyyqUEPxT3OMODCmyuwYOddZHnnsvivlT2BdaEJBek0JI82GM8lZ
- mX6ZfGBcFgpOxDM2ZqZhT7/hzMFMbI0Upakzx+ewdh5KUvC9QwuXNFhdoh7k8SyD+7LX
- dqXDQAaW2izjE+V59zL19yP5E6kyHdabKw6lveBWlT1g0v8ZtEkhDkJmOMm4n2cDeysK
- wwCQ==
-X-Gm-Message-State: AOJu0Yx1MQmP5/DNGmE9g2HTpMcHK+zf3BL10IN/cnTGwbI0bvy28eJ0
- YPQQArBjoTLxX1lIPg59aauRhBj5/4ikmbhPT/R21qlfWqyibyEGWSe2jK6lLMIMd5lOaTPzhEx
- q7gfL+DkMLzDHRAl6X0K8gUmvzvDSP/uXrScG1rBIZj0MmTZzxfOPBpnq
-X-Gm-Gg: ASbGncuDMCvwxhVCEEqZNJSKYZ/6zc+mzyHEAX5TNkcKNznB+iXw7FB/ZhAg9JCPZBk
- Ie/zchCjwhYM5bEc6Pk0eRUp3fqvBsfXLW/SfOltLNyB7QT5jntAFpqWM+XjDn+ybyY+AGFkIO/
- EMvPo0YSGDr1LmFMSKqX/+C4DxitdNho3CKXCoaQcEEIpAwJqtsb40E07mcNWvVn1Kb17EX/jWb
- I1A9gaaAXjjBrqP3HcF8BJ4TgGxDB/NOJg1gFJp10rUOpJcLmRX89ik7eThPwDlLMrxgNVTKmXE
- EU4/B8uAFRUEADxQehmnt2CjAegIIIst6MNKmYVRuLptvgbV/TVC9t/b7eo1AW8=
-X-Received: by 2002:a05:600c:4e13:b0:43c:e7ae:4bcf with SMTP id
- 5b1f17b1804b1-454ccbf082cmr9066285e9.0.1751914507306; 
- Mon, 07 Jul 2025 11:55:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF8g0dyPAYcmB9XZz8SR3JQmfjBarISL3B8Vmyby+IV2d6leHcudpvKoPzHRSGLBrMUM5l0Cg==
-X-Received: by 2002:a05:600c:4e13:b0:43c:e7ae:4bcf with SMTP id
- 5b1f17b1804b1-454ccbf082cmr9066155e9.0.1751914506922; 
- Mon, 07 Jul 2025 11:55:06 -0700 (PDT)
-Received: from [192.168.0.6] (ltea-047-064-114-131.pools.arcor-ip.net.
- [47.64.114.131]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454cd38f03fsm419515e9.5.2025.07.07.11.55.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Jul 2025 11:55:06 -0700 (PDT)
-Message-ID: <69248945-a655-403d-a8f7-e763f74d335a@redhat.com>
-Date: Mon, 7 Jul 2025 20:55:04 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Bamboo ppc Linux image URL is 404
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Stefan Hajnoczi <stefanha@gmail.com>,
- "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>
-References: <CAJSP0QX+WARJQ_6oN=vPyzkotQ01W0Jk5S65Z=Npw0BYp3jdpQ@mail.gmail.com>
- <407bcd9b-6f80-4d5c-aa28-5b95cbfd61bd@redhat.com>
- <ffb0c416-a6ef-4669-9f38-56bd41ba3c39@kaod.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <ffb0c416-a6ef-4669-9f38-56bd41ba3c39@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ d=1e100.net; s=20230601; t=1751915155; x=1752519955;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uhnPibTiFpdOU0rxGQkwLUax6xi0Sb89X0hOrW81VOE=;
+ b=i3tc70t74P8Qw1dKw1Oz15hBN9zUpUg6fmMm62I5VyPIVH67v61fvRz1ANhKw4jNKe
+ 0gi6jACHTWhBZVUEFuR1ACsOypGIVPJ4afY7JM99S44w0w0UPqzDyNXUh+fq5kuUHGsn
+ GQI4f3+mtkB74YObYd22kgk3HvzkeyPm1en42fjH6fNL0NrUW5EKCKr5vNgb/V5M6iFU
+ ZHw6zpVDj3HFvMqGGIbZ0x6BkMploL0Vt7nFAIhQFUCraLLJb6PUNJocPClekEgdOVxk
+ Ox01jhrI/rhqCMRHTC+rA0ZQzeW6xcqsKrHOtMwNhKi2MHDHVC6qvCVBSGh5JOC4DjRH
+ Ebjw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW3ysx3iV96iuUsv7pn2Art+Qfun26P8ZFZxW7YQpDYbJJSSEkaVKRcKDIwjLr3DVhN+hyk1K4+TPi4@nongnu.org
+X-Gm-Message-State: AOJu0YylOYjSdeXfsnzXdvDMYJKM0Yy1I0/b5quEEgoJuewcgo1cmnzZ
+ CYriOqZpRBOBVjzXtlmf420Azgj5zxPzmeu2F7hxgzIr/ezveS0kgv2yvFp2WOzWPRF0N+R8b+1
+ fsGxJQQ==
+X-Google-Smtp-Source: AGHT+IEBQH7ZAAioHEOJOcMTVuu8EoOLPcu5RnHuohgxSMP6k/swZ2jlTt5pK3I3H0WX2gK7DOSf8TnWxNs=
+X-Received: from pfbeq4.prod.google.com ([2002:a05:6a00:37c4:b0:746:683a:6104])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a00:3c94:b0:748:2fa4:14c0
+ with SMTP id d2e1a72fcca58-74d24513e6bmr508036b3a.0.1751915154684; Mon, 07
+ Jul 2025 12:05:54 -0700 (PDT)
+Date: Mon, 7 Jul 2025 12:05:53 -0700
+In-Reply-To: <aGQ-ke-pZhzLnr8t@char.us.oracle.com>
+Mime-Version: 1.0
+References: <20250630133025.4189544-1-alexandre.chartre@oracle.com>
+ <aGO3vOfHUfjgvBQ9@intel.com> <c6a79077-024f-4d2f-897c-118ac8bb9b58@intel.com>
+ <aGPWW/joFfohy05y@intel.com> <20250701150500.3a4001e9@fedora>
+ <aGQ-ke-pZhzLnr8t@char.us.oracle.com>
+Message-ID: <aGwakUTUQ7ZxYlUe@google.com>
+Subject: Re: [PATCH] i386/cpu: ARCH_CAPABILITIES should not be advertised on
+ AMD
+From: Sean Christopherson <seanjc@google.com>
+To: Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Xiaoyao Li <xiaoyao.li@intel.com>,
+ Alexandre Chartre <alexandre.chartre@oracle.com>, 
+ qemu-devel@nongnu.org, pbonzini@redhat.com, qemu-stable@nongnu.org, 
+ boris.ostrovsky@oracle.com, maciej.szmigiero@oracle.com, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::449;
+ envelope-from=3khpsaAYKCsEzlhuqjnvvnsl.jvtxlt1-kl2lsuvunu1.vyn@flex--seanjc.bounces.google.com;
+ helo=mail-pf1-x449.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,46 +101,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07/07/2025 19.35, Cédric Le Goater wrote:
-> Hello Thomas,
+On Tue, Jul 01, 2025, Konrad Rzeszutek Wilk wrote:
+> On Tue, Jul 01, 2025 at 03:05:00PM +0200, Igor Mammedov wrote:
+> > On Tue, 1 Jul 2025 20:36:43 +0800
+> > Zhao Liu <zhao1.liu@intel.com> wrote:
+> > 
+> > > On Tue, Jul 01, 2025 at 07:12:44PM +0800, Xiaoyao Li wrote:
+> > > > Date: Tue, 1 Jul 2025 19:12:44 +0800
+> > > > From: Xiaoyao Li <xiaoyao.li@intel.com>
+> > > > Subject: Re: [PATCH] i386/cpu: ARCH_CAPABILITIES should not be advertised
+> > > >  on AMD
+> > > > 
+> > > > On 7/1/2025 6:26 PM, Zhao Liu wrote:  
+> > > > > > unless it was explicitly requested by the user.  
+> > > > > But this could still break Windows, just like issue #3001, which enables
+> > > > > arch-capabilities for EPYC-Genoa. This fact shows that even explicitly
+> > > > > turning on arch-capabilities in AMD Guest and utilizing KVM's emulated
+> > > > > value would even break something.
+> > > > > 
+> > > > > So even for named CPUs, arch-capabilities=on doesn't reflect the fact
+> > > > > that it is purely emulated, and is (maybe?) harmful.  
+> > > > 
+> > > > It is because Windows adds wrong code. So it breaks itself and it's just the
+> > > > regression of Windows.  
+> > > 
+> > > Could you please tell me what the Windows's wrong code is? And what's
+> > > wrong when someone is following the hardware spec?
+> > 
+> > the reason is that it's reserved on AMD hence software shouldn't even try
+> > to use it or make any decisions based on that.
+> > 
+> > 
+> > PS:
+> > on contrary, doing such ad-hoc 'cleanups' for the sake of misbehaving
+> > guest would actually complicate QEMU for no big reason.
 > 
-> On 7/7/25 19:07, Thomas Huth wrote:
->> On 07/07/2025 16.13, Stefan Hajnoczi wrote:
->>> Hi Thomas,
->>> The following URL is 404 and is causing the functional-system-fedora
->>> CI job to fail:
->>>
->>> qemu_test.asset.AssetError:
->>> http://landley.net/aboriginal/downloads/binaries/system-image- 
->>> powerpc-440fp.tar.gz:
->>> Unable to download: HTTP error 404
->>>
->>> https://gitlab.com/qemu-project/qemu/-/jobs/10592622177#L1047
->>>
->>> Please take action to make the job pass again. Thanks!
->>
->> With a quick search in the web, I did not spot any other location of this 
->> asset. Looking at the MAINTAINERS file, the Bamboo machine is also Orphan, 
->> so maybe it's finally time to deprecate and remove it if the last known 
->> working image has vanished from the internet?
+> The guest is not misbehaving. It is following the spec.
+> > 
+> > Also
+> > KVM does do have plenty of such code, and it's not actively preventing guests from using it.
+> > Given that KVM is not welcoming such change, I think QEMU shouldn't do that either.
 > 
-> Linux still has support for the bamboo machine.
-> 
-> As a replacement for the asset, we could use  :
-> 
->    https://github.com/legoater/qemu-ppc-boot/tree/main/buildroot/ 
-> qemu_ppc_bamboo-2023.11-8-gdcd9f0f6eb-20240105
+> Because KVM maintainer does not want to touch the guest ABI. He agrees
+> this is a bug.
 
-Ah, great, that seems to work, thanks a lot for this!
+No, I agreed that KVM's behavior is pointless, annoying, and odd[*].  I do not
+agree that KVM's behavior is an outright bug.
 
-I just sent a patch:
-
-https://lore.kernel.org/qemu-devel/20250707184736.88660-1-thuth@redhat.com/
-
-> I plan to remove ppc405 in the next cycle though.
-
-Only 405, or also 440? (I think bamboo is 440, isn't it?)
-
-  Thomas
-
+[*] https://lore.kernel.org/all/aF1S2EIJWN47zLDG@google.com
 
