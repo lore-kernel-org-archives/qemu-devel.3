@@ -4,84 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E86ADC83F07
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 13:47:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF704C8303C
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 13:56:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYmBw-0004os-6S; Mon, 07 Jul 2025 09:47:32 -0400
+	id 1uYmJe-0000w0-2L; Mon, 07 Jul 2025 09:55:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uYlue-0005eJ-Be
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 09:29:48 -0400
-Received: from mail-yb1-xb36.google.com ([2607:f8b0:4864:20::b36])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uYmHP-00085d-Eg
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 09:53:12 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uYlua-00031M-4p
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 09:29:38 -0400
-Received: by mail-yb1-xb36.google.com with SMTP id
- 3f1490d57ef6-e898fb745beso3593513276.1
- for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 06:29:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uYmHM-0006Mq-TS
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 09:53:10 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3a51481a598so1717972f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 06:53:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751894974; x=1752499774; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=TYnMcPleIYNAkshJTZhrTCfgOjED3VmCaQJtjNszuTQ=;
- b=n8sZtd3LuVQWxsLezoy0L4QA6bZ6WDMfN+n+2rpH802jRs5Mjx+LU6kp2Llwi7tA53
- ohWnTVTlzlPZ5C6vWoQCe+5xmyVmctqIQGxAuqOvJNtw3uJUuAE2yk+mtN34kbq8lsSq
- huUevfup4n4Zz/nbPsnmYxirsPSz6Nwrq69c8urkyQzmA3n30msJU2hDOMtKg99gTWYs
- dno2iZrxYDBeD6iyy+pUJL++TqB4oSPE+E8voydxI7fAWEe17nztz+1hSNwGwbc33m5o
- +55AkMfZMJxl5UcZ4kzac5v/cT99lY/ojI6+PykKoUG0VDFIOJUtqTnQAsTpBERIlHvy
- IB7w==
+ d=linaro.org; s=google; t=1751896386; x=1752501186; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=mtQCTXgjC/bkSTSnq9Tu3F19JkIq5zQp+GbJ+smqpoA=;
+ b=tP/Q3+G8VQbYmleX0BueAgqjaeUIcf4ym+f97EK1doZiVBCDmGABc71mCLG1UgxM/o
+ 1vsXPBQa1TgAHneBflbTnfZUAtlvffRKHq1Np76qO6Uu02sgGkz6OayW0nz5YollBg7h
+ iW8IM5CyBiR1YeesQCAJw+MGw2WJy25NWdF96AqlGcsLsJdoUifRvxxev7n6acKTxyMl
+ UmHc1H/XkRYN0Jm1iR5p5wwxrgDu8Ey/zldsIixTSsYxkaN40dQuCMn/1JrNJXAh+LSP
+ AiW2d3gN4zu4S2VCduGvDLqQ9LXiL3zu1Vq/o5ZuHRdBrvUEvTYb2ns2YZC3nTEpMWZ4
+ yLVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751894974; x=1752499774;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TYnMcPleIYNAkshJTZhrTCfgOjED3VmCaQJtjNszuTQ=;
- b=d1UuTBxpE0/ITLsJE7ULPcB/EJhVKdcZmZEEQTKRPaeLUUBphglu58GRCnPi+rWZsK
- vAnhqW0CSr36RjTl1PnROZIajcGrVXNvya4htdARjXj2JJLNXtVkrrWwx2nU75Iu/fuv
- bUZc67ljzfOP5lo4+e5tFIF1liP8Xha0GbW0/rnhIbMwouftW9jKPtDH9cwIgdDipK/C
- gYqZqK78hHXp3irdOdwQgfKWv7VD+ib2sh/0sCMqHxdDXpdwGk7fAEqTk0WANI2gKvcO
- EQya0Ulu8lNLeenBqIx8SOXhG9yLv1pXcH/IsXt5H8TB5lb0y1a88dA3Jlv4xsIjyRhE
- SCvQ==
+ d=1e100.net; s=20230601; t=1751896386; x=1752501186;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :subject:to:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mtQCTXgjC/bkSTSnq9Tu3F19JkIq5zQp+GbJ+smqpoA=;
+ b=MZCCOgypwkpQ7MydQj+Ftm2MhGShE1N31JDDpgCFJOtHxqfgyQ3asn7G7q5FSXmjtc
+ U6g3v8Wha6gMMAYzLHv0birfmG+8qsmp/QtYYEZIy4KlG7Glrx+2KnecBkxR5ozvI9Pw
+ lYZ8H+jlco9pwPEaJYTB2TDlNcc9vJl8cG0KpSn62I8w2YkUgW6H1Wz7RzoHITY4ZsJ0
+ fJWliErPCoYY05JKjx5KMUKO6K/2MScQ/nrffCVsfh55VAke6S/Xt/vRvMrjrCUlO1HH
+ /6IElsZFyJuh7P0ZRnpqc2WVcDzS1ascWqnQOh01V/aA25/9sewDxCHQekyomzQCZVrL
+ Fi6A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXqxwRQ7UUZ2RlmZ5cp3Bu040AXXXANL0idjfvhIfyjJxTcpdt9lmnw+/6tRdY6UaFPDGnZk6n5J7nG@nongnu.org
-X-Gm-Message-State: AOJu0Yxf0evzF2Awq/SaCjbv3u6ffXh1Ca953I1OnrgW9AOOifKQMf/y
- Vh4cVMBoqSKCbgBWunWI5LpOyq81WF41E3ij4w8NNp7l9GBm8qrB94v78LAIz746eewobmhpHCY
- KgtzcnXmnJ1RKfc/sa06ebYEJgJ7Zdax0UrXsz5o63A==
-X-Gm-Gg: ASbGncs65ESWg+2ISjGhyyKzoVv8PlpoMjPrvgvqBk7hYLD3/X8zvq1ZtKAMEHC0Grh
- vM28YjJaf0N7eeFSb8wQpbER7ciWWC6xuxvimnsTHe3exvryWopegaw7gU+cWe78Rtf4PfJw8Xx
- inRqylvqeqSh3GMDbIw0wQJZZqYOK2ubXOClqMD5+WuSw9
-X-Google-Smtp-Source: AGHT+IHDSrZ19p9N/wYEnBvnzOuQ++DPQ26XnYlMUv0Gf03nDnidVAFP+U1UHR3jDFsRM69SAai7Txk3JPFbS9SCNfU=
-X-Received: by 2002:a05:690c:4491:b0:70e:61b:afed with SMTP id
- 00721157ae682-71667e2423emr159371187b3.7.1751894974319; Mon, 07 Jul 2025
- 06:29:34 -0700 (PDT)
+ AJvYcCWdCeASTuDDTfDBcSu0rrxDMHTmXWJBYHIdCohK/gonw/MS6KaEILEDCSyKg5VmSBW4+z0uMTx0ta9F@nongnu.org
+X-Gm-Message-State: AOJu0YyIBuuP1/gX/bX7Xiw9X0SAutjp8c6JIQiPsFoe9eAw4F54bRj4
+ t9E83oAs/NFbAK+On+m/YpKnY5TNCAKeWVZ2JWvM2U6c5PhYpb6RrgnPyT1OvJVgQ2k=
+X-Gm-Gg: ASbGncshJOX7ICAJM6YQYF58nE1abWXJwn8b4MWPXc4s26CC9g33jW+3dLv8S8+sqjR
+ UX4gp4mYb6frhmNOQdI4jl/UCCyVCha3+Fdb210suL6H3tZ0T5CgPZsx3gFcHY6wWhkVV3t6WeZ
+ g3XMR024zMR5kAycPwy13LXBvhcUkruAu6Xo4K5iBP4Q4BDJLqm1vVrFqVODuanUQ8GUfE2JziG
+ p0Yyn7h/+FlmJ0qJnZQHpZ5RczR8hV0pXYn1Brcm5Tk49Nkj84BQ7rrjY7VVwtJqOl0xveNMmo6
+ 03AqlImW/nIpy57oueCbF+QUU+NSbDq1o4xHuWoHVAwcLDCGj/TxCgaRK9s7XPM=
+X-Google-Smtp-Source: AGHT+IFn4yqkXmOcNSoR8mygmbLJyGSmieTef4QkU2iCKwQREaL6gXjLpO5Y7GTo6YkWsi+W3IFeoA==
+X-Received: by 2002:a05:6000:2910:b0:3a4:ec23:dba7 with SMTP id
+ ffacd0b85a97d-3b497038e99mr8743165f8f.31.1751896385731; 
+ Mon, 07 Jul 2025 06:53:05 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b47225a409sm10251085f8f.70.2025.07.07.06.53.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 07 Jul 2025 06:53:04 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 00F5A5F818;
+ Mon, 07 Jul 2025 14:53:04 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Alessandro Di Federico <ale@rev.ng>, Alistair Francis
+ <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
+ Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
+ Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
+ cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ cw@f00f.org, demiobenour@gmail.com, dhedde@kalrayinc.com, Eric Blake
+ <eblake@redhat.com>, eblot@rivosinc.com, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Elena
+ Ufimtseva <elena.ufimtseva@oracle.com>, Auger Eric
+ <eric.auger@redhat.com>, felipe@nutanix.com, Alyssa Ross <hi@alyssa.is>,
+ iggy@theiggy.com, Warner Losh <imp@bsdimp.com>, Jan Kiszka
+ <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
+ jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>, Joao Martins
+ <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
+ <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>, Max Chou <max.chou@sifive.com>, Mark
+ Burton <mburton@qti.qualcomm.com>, mdean@redhat.com,
+ mimu@linux.vnet.ibm.com, "Ho, Nelson" <nelson.ho@windriver.com>, Paul
+ Walmsley <paul.walmsley@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Phil =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@linaro.org>, QEMU Developers <qemu-devel@nongnu.org>, Roberto
+ Campesato <rbc@meta.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
+ <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
+ <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
+ <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>, z.huo@139.com, LIU
+ Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
+Subject: KVM/QEMU community call for agenda items (8/7/2025)
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Mon, 07 Jul 2025 14:53:03 +0100
+Message-ID: <87qzysumyo.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20250707131530.1141759-1-eric.auger@redhat.com>
- <20250707131530.1141759-5-eric.auger@redhat.com>
-In-Reply-To: <20250707131530.1141759-5-eric.auger@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 7 Jul 2025 14:29:23 +0100
-X-Gm-Features: Ac12FXxoX9eHgJt5918SpI5ulGCGvE-uQ_KIvtF32w-Dus9nAWJ6HJhVz8fs8vQ
-Message-ID: <CAFEAcA9VxC6CXK+iFFAyktuX1jsJ=znpamkvG5TuwowLxdWSsA@mail.gmail.com>
-Subject: Re: [PATCH v8 4/4] hw/arm/virt: Allow virt extensions with KVM
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- miguel.luis@oracle.com, richard.henderson@linaro.org, maz@kernel.org, 
- gkulkarni@amperecomputing.com, gankulkarni@os.amperecomputing.com, 
- hi@alyssa.is
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b36;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb36.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: 37
+X-Spam_score: 3.7
+X-Spam_bar: +++
+X-Spam_report: (3.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,55 +126,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 7 Jul 2025 at 14:16, Eric Auger <eric.auger@redhat.com> wrote:
->
-> From: Haibo Xu <haibo.xu@linaro.org>
->
-> Up to now virt support on guest has been only supported with TCG.
-> Now it becomes feasible to use it with KVM acceleration.
->
-> Check neither in-kernel GICv3 nor aarch64=off is used along with KVM
-> EL2.
->
-> Also add a migration blocker in case KVM NV is set as some
-> GIC registers are most probably not properly saved/restored:
-> ICH_AP*R<n>_EL2, ICH_EISR_EL2, ICH_ELRSR_EL2, ICH_HCR_EL2,
-> ICH_LR<n>_EL2, etc etc.
 
+Hi,
 
-> +    if (vms->virt) {
-> +        if (!(kvm_enabled() && kvm_arm_el2_supported()) &&
-> +            !tcg_enabled() && !qtest_enabled()) {
-> +            error_report("mach-virt: %s does not support providing "
-> +                         "Virtualization extensions to the guest CPU",
-> +                         current_accel_name());
-> +            exit(1);
-> +        }
-> +        if (kvm_enabled()) {
-> +            Error *kvm_nv_migration_blocker = NULL;
-> +
-> +            error_setg(&kvm_nv_migration_blocker,
-> +                       "Live migration disabled due to KVM nested virt enabled");
-> +            if (migrate_add_blocker(&kvm_nv_migration_blocker, NULL)) {
-> +                error_free(kvm_nv_migration_blocker);
-> +                return;
-> +            }
-> +        }
->      }
+Hopefully I've fixed up the timezone on the calendar entry and fixed my
+snippet script for this email.
 
-I think a better place to set the migration blocker is in
-the GIC code itself (maybe in kvm_arm_gicv3_realize() ?) : we
-want to disable migration for any setup with a GICv3 + KVM + EL2,
-not just the virt board.
+The KVM/QEMU community call is at:
 
-I also don't understand why we don't hit the assert
-in gicv3_init_cpuif() that checks that if we're not TCG
-or qtest accelerators then the CPU doesn't have EL2 or EL3.
-It looks to me from reading the code that we ought to go
-through that function in the KVM case.
+https://meet.jit.si/kvmcallmeeting
+@
+08/07/2025 13:00 UTC
 
-The rest of the series looks OK to me.
+Are there any agenda items for the sync-up?
 
-thanks
--- PMM
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
