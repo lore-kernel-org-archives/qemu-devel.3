@@ -4,42 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1C83C83030
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 21:52:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF38DC83030
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 21:52:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYtkF-0002ac-6L; Mon, 07 Jul 2025 17:51:27 -0400
+	id 1uYtkn-0002vM-Uc; Mon, 07 Jul 2025 17:52:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=0qb7=ZU=kaod.org=clg@ozlabs.org>)
- id 1uYtNm-000885-28; Mon, 07 Jul 2025 17:28:21 -0400
+ id 1uYtMX-0007UP-9M; Mon, 07 Jul 2025 17:27:03 -0400
 Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=0qb7=ZU=kaod.org=clg@ozlabs.org>)
- id 1uYtNk-0005Mv-3Q; Mon, 07 Jul 2025 17:28:13 -0400
+ id 1uYtMV-0005FB-60; Mon, 07 Jul 2025 17:26:57 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bbcl5536fz4wbW;
- Tue,  8 Jul 2025 07:27:13 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bbcjX5S2mz4wbW;
+ Tue,  8 Jul 2025 07:25:52 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bbcl34RX4z4w2Q;
- Tue,  8 Jul 2025 07:27:11 +1000 (AEST)
-Message-ID: <eac1633b-c7aa-4421-b492-beacd5655a65@kaod.org>
-Date: Mon, 7 Jul 2025 23:28:03 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bbcjV4H0Cz4w2Q;
+ Tue,  8 Jul 2025 07:25:49 +1000 (AEST)
+Message-ID: <4817f7fe-69bf-4a4a-89d2-dbae735626a1@kaod.org>
+Date: Mon, 7 Jul 2025 23:26:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Bamboo ppc Linux image URL is 404
-To: Thomas Huth <thuth@redhat.com>, Stefan Hajnoczi <stefanha@gmail.com>,
- "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>
-References: <CAJSP0QX+WARJQ_6oN=vPyzkotQ01W0Jk5S65Z=Npw0BYp3jdpQ@mail.gmail.com>
- <407bcd9b-6f80-4d5c-aa28-5b95cbfd61bd@redhat.com>
- <ffb0c416-a6ef-4669-9f38-56bd41ba3c39@kaod.org>
- <69248945-a655-403d-a8f7-e763f74d335a@redhat.com>
+Subject: Re: [PATCH] tests/functional/test_ppc_bamboo: Replace broken link
+ with working assets
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-ppc@nongnu.org
+References: <20250707184736.88660-1-thuth@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -84,7 +81,7 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <69248945-a655-403d-a8f7-e763f74d335a@redhat.com>
+In-Reply-To: <20250707184736.88660-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=150.107.74.76;
@@ -111,46 +108,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/7/25 20:55, Thomas Huth wrote:
-> On 07/07/2025 19.35, Cédric Le Goater wrote:
->> Hello Thomas,
->>
->> On 7/7/25 19:07, Thomas Huth wrote:
->>> On 07/07/2025 16.13, Stefan Hajnoczi wrote:
->>>> Hi Thomas,
->>>> The following URL is 404 and is causing the functional-system-fedora
->>>> CI job to fail:
->>>>
->>>> qemu_test.asset.AssetError:
->>>> http://landley.net/aboriginal/downloads/binaries/system-image- powerpc-440fp.tar.gz:
->>>> Unable to download: HTTP error 404
->>>>
->>>> https://gitlab.com/qemu-project/qemu/-/jobs/10592622177#L1047
->>>>
->>>> Please take action to make the job pass again. Thanks!
->>>
->>> With a quick search in the web, I did not spot any other location of this asset. Looking at the MAINTAINERS file, the Bamboo machine is also Orphan, so maybe it's finally time to deprecate and remove it if the last known working image has vanished from the internet?
->>
->> Linux still has support for the bamboo machine.
->>
->> As a replacement for the asset, we could use  :
->>
->>    https://github.com/legoater/qemu-ppc-boot/tree/main/buildroot/ qemu_ppc_bamboo-2023.11-8-gdcd9f0f6eb-20240105
+On 7/7/25 20:47, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
 > 
-> Ah, great, that seems to work, thanks a lot for this!
+> The old image that we used for testing the bamboo machine has disappeared
+> from the internet. Fortunately there is another kernel + initrd provided
+> by Cédric that can be used for testing this machine, too.
 > 
-> I just sent a patch:
-> 
-> https://lore.kernel.org/qemu-devel/20250707184736.88660-1-thuth@redhat.com/
-> 
->> I plan to remove ppc405 in the next cycle though.
-> 
-> Only 405, or also 440? (I think bamboo is 440, isn't it?)
+> Reported-by: Stefan Hajnoczi <stefanha@gmail.com>
+> Suggested-by: Cédric Le Goater <clg@kaod.org>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-Only 405. Linux support was removed 1 or 2y ago. No FW images are
-available anymore.
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
 
 C.
 
+
+> ---
+>   tests/functional/test_ppc_bamboo.py | 34 ++++++++++++++++-------------
+>   1 file changed, 19 insertions(+), 15 deletions(-)
+> 
+> diff --git a/tests/functional/test_ppc_bamboo.py b/tests/functional/test_ppc_bamboo.py
+> index fddcc24d0da..c634ae7b4a7 100755
+> --- a/tests/functional/test_ppc_bamboo.py
+> +++ b/tests/functional/test_ppc_bamboo.py
+> @@ -16,28 +16,32 @@ class BambooMachine(QemuSystemTest):
+>   
+>       timeout = 90
+>   
+> -    ASSET_IMAGE = Asset(
+> -        ('http://landley.net/aboriginal/downloads/binaries/'
+> -         'system-image-powerpc-440fp.tar.gz'),
+> -        'c12b58f841c775a0e6df4832a55afe6b74814d1565d08ddeafc1fb949a075c5e')
+> +    ASSET_KERNEL = Asset(
+> +        ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/'
+> +         'buildroot/qemu_ppc_bamboo-2023.11-8-gdcd9f0f6eb-20240105/vmlinux'),
+> +        'a2e12eb45b73491ac62fc0bbeb68dead0dc5c0f22cf83146558389209b420ad1')
+> +    ASSET_INITRD = Asset(
+> +        ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/'
+> +         'buildroot/qemu_ppc_bamboo-2023.11-8-gdcd9f0f6eb-20240105/rootfs.cpio'),
+> +        'd2a36bdb8763b389765dc8c29d4904cec2bd001c587f92e85ab9eb10d5ddda54')
+>   
+>       def test_ppc_bamboo(self):
+>           self.set_machine('bamboo')
+>           self.require_accelerator("tcg")
+>           self.require_netdev('user')
+> -        self.archive_extract(self.ASSET_IMAGE)
+> +
+> +        kernel = self.ASSET_KERNEL.fetch()
+> +        initrd = self.ASSET_INITRD.fetch()
+> +
+>           self.vm.set_console()
+> -        self.vm.add_args('-kernel',
+> -                         self.scratch_file('system-image-powerpc-440fp',
+> -                                           'linux'),
+> -                         '-initrd',
+> -                         self.scratch_file('system-image-powerpc-440fp',
+> -                                           'rootfs.cpio.gz'),
+> -                         '-nic', 'user,model=rtl8139,restrict=on')
+> +        self.vm.add_args('-kernel', kernel,
+> +                         '-initrd', initrd,
+> +                         '-nic', 'user,model=virtio-net-pci,restrict=on')
+>           self.vm.launch()
+> -        wait_for_console_pattern(self, 'Type exit when done')
+> -        exec_command_and_wait_for_pattern(self, 'ping 10.0.2.2',
+> -                                          '10.0.2.2 is alive!')
+> +        wait_for_console_pattern(self, 'buildroot login:')
+> +        exec_command_and_wait_for_pattern(self, 'root', '#')
+> +        exec_command_and_wait_for_pattern(self, 'ping -c1 10.0.2.2',
+> +                '1 packets transmitted, 1 packets received, 0% packet loss')
+>           exec_command_and_wait_for_pattern(self, 'halt', 'System Halted')
+>   
+>   if __name__ == '__main__':
 
 
