@@ -4,55 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50810C71130
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 19:29:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C6D3C71130
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 19:30:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYrWR-0003CB-S3; Mon, 07 Jul 2025 15:29:04 -0400
+	id 1uYrWW-0003Rn-Bg; Mon, 07 Jul 2025 15:29:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uYrWA-0002v1-C1; Mon, 07 Jul 2025 15:28:46 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
+ id 1uYrWT-0003Jo-E6
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 15:29:05 -0400
+Received: from mailout12.t-online.de ([194.25.134.22])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uYrW7-0004yD-CG; Mon, 07 Jul 2025 15:28:45 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 3BD1B55C170;
- Mon, 07 Jul 2025 21:28:40 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id MYCfXSN-muic; Mon,  7 Jul 2025 21:28:37 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id C278255BC02; Mon, 07 Jul 2025 21:28:37 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id BFE39745682;
- Mon, 07 Jul 2025 21:28:37 +0200 (CEST)
-Date: Mon, 7 Jul 2025 21:28:37 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- qemu-s390x@nongnu.org, qemu-arm@nongnu.org, 
- =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-block@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org
-Subject: Re: [RFC PATCH-for-10.1 v6 00/14] target-info: Add more API for
- VirtIO cleanups & introduce ARM macros
-In-Reply-To: <20250707172009.3884-1-philmd@linaro.org>
-Message-ID: <ad9997da-1372-1edf-0aa9-5fc4d1e82c41@eik.bme.hu>
-References: <20250707172009.3884-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
+ id 1uYrWR-0004zp-1u
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 15:29:05 -0400
+Received: from fwd73.aul.t-online.de (fwd73.aul.t-online.de [10.223.144.99])
+ by mailout12.t-online.de (Postfix) with SMTP id 035AFE88D;
+ Mon,  7 Jul 2025 21:28:58 +0200 (CEST)
+Received: from [192.168.211.200] ([93.236.150.188]) by fwd73.t-online.de
+ with (TLSv1.3:TLS_AES_256_GCM_SHA384 encrypted)
+ esmtp id 1uYrWK-4Fcx3R0; Mon, 7 Jul 2025 21:28:56 +0200
+Message-ID: <48576e83-54ba-4ebd-8a3e-6b8306655483@t-online.de>
+Date: Mon, 7 Jul 2025 21:28:56 +0200
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-816273641-1751916517=:98682"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+From: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
+Subject: [PATCH 0/3] hw/audio/sb16: reduce the CPU load
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TOI-EXPURGATEID: 150726::1751916536-A57F856B-FE05C0A2/0/0 CLEAN NORMAL
+X-TOI-MSGID: b0fb70bf-4fd5-482d-9abd-e81c7aaedb78
+Received-SPF: pass client-ip=194.25.134.22; envelope-from=vr_qemu@t-online.de;
+ helo=mailout12.t-online.de
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -70,109 +64,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Three patches for the Sound Blaster 16 emulation.
 
---3866299591-816273641-1751916517=:98682
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Patch 2/3 "improve DMA handling" reduces the CPU load and fixes issue
+#469 at https://gitlab.com/qemu-project/qemu/-/issues/469.
 
-On Mon, 7 Jul 2025, Philippe Mathieu-Daudé wrote:
-> Rather than re-spinning the whole "single-binary: Make hw/arm/
-> common" series, restrict to the API additions, but include
-> examples of their usefulness (hundreds of virtio objects
-> removed from default Linux build).
-> Time passed since I context-switched out of this work so I'm
-> not sure the DEFINE_MACHINE_WITH_INTERFACES() implementation
-> is in the form Zoltan asked.
+Don't forget to add the AdLib device to the QEMU command line if you
+want to test the patches. The OPL2 chip is part of the Sound Blaster 16
+emulation. The real Sound Blaster 16 used an OPL3 chip.
 
-I've sent the patch here:
-https://patchew.org/QEMU/cover.1751494995.git.balaton@eik.bme.hu/3c2aa5b895adbb5244b643a6672603d65dce4298.1751494995.git.balaton@eik.bme.hu/
-that will hopefully be merged before the freeze so you can rebase on that.
+Volker Rümelin (3):
+  hw/audio/sb16: introduce DMA helper functions
+  hw/audio/sb16: improve DMA handling
+  hw/audio/sb16: block structure coding style fixes
 
-Regards,
-BALATON Zoltan
+ hw/audio/sb16.c | 105 ++++++++++++++++++++++++++++--------------------
+ 1 file changed, 61 insertions(+), 44 deletions(-)
 
-> Philippe Mathieu-Daudé (14):
->  target/qmp: Use target_cpu_type()
->  qemu/target-info: Factor target_arch() out
->  qemu/target-info: Add %target_arch field to TargetInfo
->  qemu/target-info: Introduce target_base_arch()
->  qemu/target-info: Add target_endian_mode()
->  qemu: Convert target_words_bigendian() to TargetInfo API
->  gdbstub/helpers: Replace TARGET_BIG_ENDIAN -> target_big_endian()
->  qemu: Declare all load/store helpert in 'qemu/bswap.h'
->  hw/virtio: Build various files once
->  hw/core/null-machine: Define machine as generic QOM type
->  hw/arm: Register TYPE_TARGET_ARM/AARCH64_MACHINE QOM interfaces
->  hw/core: Allow ARM/Aarch64 binaries to use the 'none' machine
->  hw/boards: Introduce DEFINE_MACHINE_WITH_INTERFACES() macro
->  hw/arm: Add DEFINE_MACHINE_[ARM_]AARCH64() macros
->
-> meson.build                           |  1 +
-> include/exec/tswap.h                  | 83 +--------------------------
-> include/gdbstub/helpers.h             | 15 ++---
-> include/hw/arm/machines-qom.h         | 31 ++++++++++
-> include/hw/boards.h                   |  6 +-
-> include/qemu/bswap.h                  | 73 +++++++++++++++++++++++
-> include/qemu/target-info-impl.h       |  8 ++-
-> include/qemu/target-info-qapi.h       | 36 ++++++++++++
-> include/qemu/target-info.h            | 10 +++-
-> include/system/memory.h               |  1 -
-> include/user/abitypes.h               |  1 -
-> target/ppc/mmu-hash64.h               |  2 -
-> cpu-target.c                          |  7 ---
-> hw/acpi/bios-linker-loader.c          |  2 -
-> hw/arm/allwinner-r40.c                |  1 -
-> hw/arm/boot.c                         |  2 +
-> hw/arm/npcm7xx.c                      |  2 +-
-> hw/block/hd-geometry.c                |  1 -
-> hw/char/riscv_htif.c                  |  1 -
-> hw/core/cpu-system.c                  |  2 +-
-> hw/core/machine-qmp-cmds.c            |  8 +--
-> hw/core/null-machine.c                | 20 ++++++-
-> hw/cxl/cxl-events.c                   |  2 -
-> hw/display/artist.c                   |  1 +
-> hw/display/ati.c                      |  1 +
-> hw/display/vga.c                      |  2 +-
-> hw/net/can/ctucan_core.c              |  1 -
-> hw/net/lan9118.c                      |  1 +
-> hw/net/rtl8139.c                      |  1 +
-> hw/net/vmxnet3.c                      |  1 -
-> hw/pci-host/gt64120.c                 |  1 +
-> hw/pci-host/pnv_phb3.c                |  1 +
-> hw/pci-host/pnv_phb4.c                |  1 +
-> hw/pci-host/ppce500.c                 |  1 -
-> hw/pci-host/sh_pci.c                  |  1 -
-> hw/s390x/s390-pci-inst.c              |  1 +
-> hw/sensor/lsm303dlhc_mag.c            |  1 -
-> hw/smbios/smbios.c                    |  1 +
-> hw/vfio/migration-multifd.c           |  1 -
-> hw/virtio/virtio-config-io.c          |  1 -
-> hw/virtio/virtio-pci.c                |  1 +
-> hw/virtio/virtio.c                    |  2 +-
-> hw/vmapple/virtio-blk.c               |  1 -
-> system/memory.c                       |  1 +
-> system/qtest.c                        |  1 +
-> target-info-qom.c                     | 24 ++++++++
-> target-info-stub.c                    |  3 +
-> target-info.c                         | 33 +++++++++++
-> target/arm/arm-qmp-cmds.c             |  3 +-
-> target/arm/cpu.c                      |  1 -
-> target/arm/machine.c                  | 12 ++++
-> target/i386/tcg/system/excp_helper.c  |  1 -
-> target/i386/xsave_helper.c            |  1 -
-> target/loongarch/loongarch-qmp-cmds.c |  3 +-
-> target/mips/system/mips-qmp-cmds.c    |  3 +-
-> target/riscv/vector_helper.c          |  1 -
-> tests/tcg/plugins/mem.c               |  1 +
-> hw/block/meson.build                  |  6 +-
-> hw/virtio/meson.build                 | 20 ++++---
-> 59 files changed, 302 insertions(+), 149 deletions(-)
-> create mode 100644 include/hw/arm/machines-qom.h
-> create mode 100644 include/qemu/target-info-qapi.h
-> create mode 100644 target-info-qom.c
->
->
---3866299591-816273641-1751916517=:98682--
+-- 
+2.43.0
+
 
