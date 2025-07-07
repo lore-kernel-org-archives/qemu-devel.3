@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DC5AC71130
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B55F2C8303C
 	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 20:58:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYsuP-0003IH-Rx; Mon, 07 Jul 2025 16:57:53 -0400
+	id 1uYsuO-0003Fy-P4; Mon, 07 Jul 2025 16:57:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uYsL9-0005H6-G2
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 16:21:29 -0400
-Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
+ id 1uYsL3-0005F4-Bg
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 16:21:25 -0400
+Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uYsL7-0004Hl-U7
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 16:21:27 -0400
-Received: by mail-qt1-x830.google.com with SMTP id
- d75a77b69052e-4a9bff7fc6dso11457061cf.1
- for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 13:21:25 -0700 (PDT)
+ id 1uYsKy-0004Fd-EJ
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 16:21:19 -0400
+Received: by mail-qt1-x82b.google.com with SMTP id
+ d75a77b69052e-4a7a8c2b7b9so53192681cf.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 13:21:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751919685; x=1752524485; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Lcs5SBgIJAZ9jZMJeyubq/bXFbb8f0ayL+4aR6w4j6M=;
- b=VQd3TNWpaRLCTmZLcjGW4ZdDabUazZCcHV28npaDeJCloScpsvIKaWzB7WKml60+XZ
- DIbxF/F+pEYZY5gEjUXGygAJrWurCeQ/GTlD8U7THVXSh2A1KI3ju1cbBuQ9vG0LeK+/
- sYdhEShAzPBMpOYODTJSdVamrk1PId2znJF+RzZhkBvbmcHSMPBwclgS92qkZFztPGAV
- tJJkFme+jM98EpLAAdwN2lUSoYpJxplSTszbscDyM8riRxeAbx/6/nxR038ssPCOeOz5
- IIC7+imBw337ijZFALn1TIxVV+67YC0Wn7l6tj0rjDA1zWxYpu0QI1N3lxc2pE6RDrdt
- ehQQ==
+ d=linaro.org; s=google; t=1751919675; x=1752524475; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=gdwyjgqLV2mmRAFlL+Vg+s+HAk+o0jZAFb0Tu/qecK4=;
+ b=Y8Uy+Y5qNyZqioxpEdsrUPGoN3i0ygmRR+yCZ90tLm1iEPp3RLxUA34acc+vJ/HwAJ
+ 2lGeWE1CT8FHz/qtcyNDV3raoyCIBbojSwfiJ6p7zLiuoWVn4fp67iGe+S5XIxGDYoQO
+ DolkR1NS2WfyXQynGOZ3ig61fuCGXMS8qw45aFIlkfaPH/njyop5N+KZPJtfZzyDFra1
+ tTgepXrW6ZMJk34xsUJyfDqwE6PpAJPT/pRbohLs4KxKHdxHd7OS6YeMPpkCZPBxvZBS
+ c6dMsde9f1pMEgQB81UuzUqA4HHybtHN70OoiX/Ynr1PQOVLic7hsuD31NDrhyWFiRpa
+ 1sFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751919685; x=1752524485;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Lcs5SBgIJAZ9jZMJeyubq/bXFbb8f0ayL+4aR6w4j6M=;
- b=Gmv6De/Qgor1mhcxRoRty59MUTfDYXAd3Ip9TQsgMdLm3nZT9KvQINvDLtL7dTDQzy
- vbuX8rEu2RsDUIsdgUXEyP3rp2hG+kiJ3S+aiw6UwRgh9QmpNZWV35z8W0qvP59aJ+4+
- k4XoWNWPjqBJ+1j11ekRHjtvigpFuzNs3yeqgFhFFYCECnt4odNTfZjIXLv4pb9v1W2Z
- YgeErsXEy/d6FAB+DIEXZVthdCagu+f4MaKYZGsXPhcC0P5dQI2/RIdeKtcgLQrHzAxG
- 58kU+amzEqcl8kZIvsYtfAuYxCdJ+pbrQ973jCwu6mWeLR4ur4BbsWmz69OBWy6N3WcD
- k0aA==
-X-Gm-Message-State: AOJu0Yyh/dodTyP3R5z6i8IN4VH1K2luy0qWgDbg4i0SkOUTbSfUbEXk
- LB3C/6RCCGuBg8yEz810ouKsqNdNkUNSqA4VeG2okFCmCJvwWGMnCgJYVVjBNVqUHUhLfk1EW2A
- j8RZmgvc=
-X-Gm-Gg: ASbGncs6ORnvu3CVawAZYu7ZKbZynN9cBbhIKeGibaKRtSpUCE0o+0GH9b0gZox7YXY
- yip1THAnSBIjgNrgZ9F0Hay6wgfP1HRzZOV5sIuso2t2AXMsQqbe5WxAP2LTILZlyqPEstd7f6f
- xK0W2ieb0nMwoGDMSNcgtGM5zqQalyZfi3epGmwqrUly1C9lcM02VsYncNTRjID9UcLF6pTZAEn
- QBoPYf3SR7cCu4DqE+efqw7JWqgZ+CYhseieH9PyNCc32t2SxC9QUsrIpvzbrNehvAUYUxVsFem
- I0DIc/Shk0vuUBaNN2sMDsgA+Uj/UXuX4lRUn1vYCNYouvTg6Ya1Sy+DNi5xty/1F1WHvwqMx/e
- xRrMwlJijilen/PpT
-X-Google-Smtp-Source: AGHT+IHcg99kHdal5tT5OsSoG4UYiUxEru/PPPPhEfsILtDe01ysQKrZsFBEUkc5macndgt4cwjc0w==
-X-Received: by 2002:a05:622a:4109:b0:494:70e7:1528 with SMTP id
- d75a77b69052e-4a9ce6bba4emr476881cf.24.1751919684410; 
- Mon, 07 Jul 2025 13:21:24 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1751919675; x=1752524475;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gdwyjgqLV2mmRAFlL+Vg+s+HAk+o0jZAFb0Tu/qecK4=;
+ b=TKjbb+Qd9nzswF2Fnqy2Y5dj+X9FCLg5m5clJZPbXAM0i0EYcYcP7sF9fg30XaZRNb
+ c0o+7Lq+86/fAYES9IoiglD3aI2rF8xKIDIoplqMOCHmMBadsBBBkfxRo6b3VkQtl121
+ fFY0WNKL6h9Jya0KJa6Q+jyg5nLT2XddEdBMMMTazIH3W2az/FWEhhXibnkUDE1Bhfxt
+ 9AJYPq0utcOjpZv2GVKa/0AoAvsLO3OSJGn498hodQ/f+QZ5FE42DJObtSwiBZUl0nOv
+ 6mu7OEv3TWhZjARvvzKMmcTPV5sFo6q87CSH2RndYyaP5Rf12BA0jXRnkHnTiynkdzjf
+ 7P7w==
+X-Gm-Message-State: AOJu0Yycim7j9Xta+Ey7CsMiEMxoC41kOSu5UoPQc+mofdBG9HuO3flj
+ B5jbvIG8az60mVw8LyHofJy7vQPOs2GkO2ajsI1DLBd1fJBVGg3R/MkieceaBXOlbqzBtMW4mfU
+ FPtRlJcU=
+X-Gm-Gg: ASbGncv9fa0SdnarNp/DfpuAM34u3a9wWA2zHXYgBiOLYmxIBATZHXYAlBZmoWn/BxY
+ mJzLTme38gOqxK2ikZR/3wgm/U8Ns2mnI+ZRb7mZNu3Tr0ftzPMczX4K2NzZzy8stMWNcgN6Zvq
+ tlTb8ehmbIlJ4scnB1P2+A06a7AibNKDbrFtFbGZkKa0h46isyK8jMf+MEHkM0gYWQCzLw1hm/c
+ BUQk0PiidoGrANnRdC6LhL9vpHSQHAGDJ1GWDxvTirOURJe6xX3+a9mq/0a70IyAJGesL0wx7Gq
+ 1WxhTbksVpXNRjy424kSFi7WpbbpitQUyI4Dmv3Za5j1QKTyzde3uF4pY3LDYgGp9/aCa7nqjA1
+ G2Ef9nTajw/d3xEwv
+X-Google-Smtp-Source: AGHT+IFsSvSSpH4EVQOmi2EwSdvLVfVe3zInpAu8F/yOtahHFu0N2uWNcfckhHG/In8gitb0z1wglg==
+X-Received: by 2002:a05:622a:4114:b0:4a9:c4a7:4a76 with SMTP id
+ d75a77b69052e-4a9c4a74bbdmr44603411cf.8.1751919675121; 
+ Mon, 07 Jul 2025 13:21:15 -0700 (PDT)
 Received: from stoup.. ([172.58.142.143]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4a994a78dd4sm69050351cf.51.2025.07.07.13.21.22
+ d75a77b69052e-4a994a78dd4sm69050351cf.51.2025.07.07.13.21.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Jul 2025 13:21:24 -0700 (PDT)
+ Mon, 07 Jul 2025 13:21:14 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 05/20] target/arm: Convert get_phys_addr_pmsav7 to access_perm
-Date: Mon,  7 Jul 2025 14:20:56 -0600
-Message-ID: <20250707202111.293787-6-richard.henderson@linaro.org>
+Subject: [PATCH 00/20] target/arm: Implement FEAT_ATS1A
+Date: Mon,  7 Jul 2025 14:20:51 -0600
+Message-ID: <20250707202111.293787-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250707202111.293787-1-richard.henderson@linaro.org>
-References: <20250707202111.293787-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x830.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,42 +96,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/ptw.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Based-on: 20250707151547.196393-1-richard.henderson@linaro.org
+("[PATCH 0/3] target/arm: Split out AT and PMU cpregs")
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index adceeabfe4..b71c963f67 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -2350,7 +2350,7 @@ static bool pmsav7_use_background_region(ARMCPU *cpu, ARMMMUIdx mmu_idx,
- static bool get_phys_addr_pmsav7(CPUARMState *env,
-                                  S1Translate *ptw,
-                                  uint32_t address,
--                                 MMUAccessType access_type,
-+                                 unsigned access_perm,
-                                  GetPhysAddrResult *result,
-                                  ARMMMUFaultInfo *fi)
- {
-@@ -2537,7 +2537,7 @@ static bool get_phys_addr_pmsav7(CPUARMState *env,
- 
-     fi->type = ARMFault_Permission;
-     fi->level = 1;
--    return !(result->f.prot & (1 << access_type));
-+    return access_perm & ~result->f.prot;
- }
- 
- static uint32_t *regime_rbar(CPUARMState *env, ARMMMUIdx mmu_idx,
-@@ -3481,7 +3481,7 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
-                                        result, fi);
-         } else if (arm_feature(env, ARM_FEATURE_V7)) {
-             /* PMSAv7 */
--            ret = get_phys_addr_pmsav7(env, ptw, address, access_type,
-+            ret = get_phys_addr_pmsav7(env, ptw, address, 1 << access_type,
-                                        result, fi);
-         } else {
-             /* Pre-v7 MPU */
+(1) Lots of tiny cleanups allowing the permission check to be skipped.
+(2) Skip the permission check for gdbstub.
+(3) A fix for existing AT instructions in that hw should not update the
+    PTE dirty bit (and we choose not to update the access flag as well).
+(4) Implement FEAT_ATS1A.
+
+
+r~
+
+
+Richard Henderson (20):
+  target/arm: Convert get_phys_addr_v5 to access_perm
+  target/arm: Convert get_phys_addr_v6 to access_perm
+  target/arm: Convert get_phys_addr_lpae to access_perm
+  target/arm: Convert get_phys_addr_pmsav5 to access_perm
+  target/arm: Convert get_phys_addr_pmsav7 to access_perm
+  target/arm: Convert pmsav8_mpu_lookup to access_perm
+  target/arm: Convert v8m_is_sau_exempt to access_perm
+  target/arm: Convert v8m_security_lookup to access_perm
+  target/arm: Convert get_phys_addr_pmsav8 to access_perm
+  target/arm: Convert get_phys_addr_disabled to access_perm
+  target/arm: Convert get_phys_addr_nogpc to access_perm
+  target/arm: Convert get_phys_addr_gpc to access_perm
+  target/arm: Convert get_phys_addr_with_space_nogpc to access_perm
+  target/arm: Convert get_phys_addr to access_perm
+  target/arm: Skip permission check from
+    arm_cpu_get_phys_page_attrs_debug
+  target/arm: Introduce get_phys_addr_for_at
+  target/arm: Skip AF and DB updates for AccessType_AT
+  target/arm: Convert do_ats_write to access_perm
+  target/arm: Fill in HFGITR_EL2 bits for Arm v9.5
+  target/arm: Implement FEAT_ATS1A
+
+ target/arm/cpregs.h           |   6 ++
+ target/arm/cpu-features.h     |   5 ++
+ target/arm/internals.h        |  27 +++----
+ target/arm/ptw.c              | 134 +++++++++++++++++++---------------
+ target/arm/tcg/cpregs-at.c    |  67 +++++++++++++----
+ target/arm/tcg/cpu64.c        |   1 +
+ target/arm/tcg/m_helper.c     |  17 ++---
+ docs/system/arm/emulation.rst |   1 +
+ 8 files changed, 161 insertions(+), 97 deletions(-)
+
 -- 
 2.43.0
 
