@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCBABC83F07
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 08:18:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 374D2C8303C
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 08:29:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYh1A-0000G4-0d; Mon, 07 Jul 2025 04:16:04 -0400
+	id 1uYhDe-0004QY-Hg; Mon, 07 Jul 2025 04:28:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1uYh18-0000FA-FW
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 04:16:02 -0400
+ id 1uYhDW-0004Ot-5c
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 04:28:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1uYh16-0007TS-HZ
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 04:16:02 -0400
+ id 1uYhDS-0001hU-RN
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 04:28:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751876159;
+ s=mimecast20190719; t=1751876923;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qrDrFGgxVI/5jPLGv6XBLu49UEWzUDEnHNCSZAEK+0k=;
- b=QlDy8yE8sjAyO9CTobkuod+/Nv+Zgw1VJrq6ZPAymuhukXh33hbqpiZNbdkC0CstgzG4fv
- zLBv8/Xujxtfl4mpG6y+JoKtlqoSotKxeov0/NouKJdEe14ImOxregCfK1RM7IROS5/bN0
- B0T0GPXjiNVcWTdMAgM2XtT6urn/vBc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=TEHH5PwPPhiBn0zoqbiFaFLfogPQjxS5hORUtCtU9hk=;
+ b=e9APFLEdRAFrPtmznyNzBpv4XylP9kl/6OTy0MJCkp1W0hCSZtEiIeFajzF64Om88ZVlsY
+ UpMp7TM5vaZL2S7JdwpNh6PIEKBMDyuFgr6qscShTT1d/aY9nPFZgf8+6fN53cj0CXC/G6
+ BNPsSlc4Q1jvNViX53OYxZi0g+co5aw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-477-Vwex5cGIO9-jhEUwiWko3w-1; Mon,
- 07 Jul 2025 04:15:58 -0400
-X-MC-Unique: Vwex5cGIO9-jhEUwiWko3w-1
-X-Mimecast-MFC-AGG-ID: Vwex5cGIO9-jhEUwiWko3w_1751876157
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-245-Du5oivRuMuCvWyDNopPPFg-1; Mon,
+ 07 Jul 2025 04:15:49 -0400
+X-MC-Unique: Du5oivRuMuCvWyDNopPPFg-1
+X-Mimecast-MFC-AGG-ID: Du5oivRuMuCvWyDNopPPFg_1751876148
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 74C8819560A1; Mon,  7 Jul 2025 08:15:57 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BDF501809C9D; Mon,  7 Jul 2025 08:15:47 +0000 (UTC)
 Received: from lenovo-t14s.redhat.com (unknown [10.45.225.147])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 31C5218046C5; Mon,  7 Jul 2025 08:15:52 +0000 (UTC)
+ id 18CBF180045B; Mon,  7 Jul 2025 08:15:42 +0000 (UTC)
 From: Laurent Vivier <lvivier@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -58,9 +58,9 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH v3 09/11] net: Add is_vhost_user flag to vhost_net struct
-Date: Mon,  7 Jul 2025 10:15:03 +0200
-Message-ID: <20250707081505.127519-10-lvivier@redhat.com>
+Subject: [PATCH v3 07/11] net: Add save_acked_features callback to vhost_net
+Date: Mon,  7 Jul 2025 10:15:01 +0200
+Message-ID: <20250707081505.127519-8-lvivier@redhat.com>
 In-Reply-To: <20250707081505.127519-1-lvivier@redhat.com>
 References: <20250707081505.127519-1-lvivier@redhat.com>
 MIME-Version: 1.0
@@ -91,140 +91,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a boolean is_vhost_user field to the vhost_net
-structure. This flag is initialized during vhost_net_init based
-on whether the backend is vhost-user.
+This commit introduces a save_acked_features function pointer to
+vhost_net and converts the vhost_net function into a generic dispatcher.
 
-This refactoring simplifies checks for vhost-user specific behavior,
-replacing direct comparisons of 'net->nc->info->type' with the new
-flag. It improves readability and encapsulates the backend type
-information directly within the vhost_net instance.
+The vhost-user backend provides the callback, making its function static.
+With this change, no other module has a direct dependency on the
+vhost-user implementation.
+
+This cleanup allows for the complete removal of the net/vhost-user.h
+header file.
 
 Signed-off-by: Laurent Vivier <lvivier@redhat.com>
 ---
- hw/net/vhost_net.c        | 3 ++-
- hw/net/virtio-net.c       | 8 ++++++--
- include/hw/virtio/vhost.h | 1 +
- include/net/vhost_net.h   | 1 +
- net/tap.c                 | 1 +
- net/vhost-user.c          | 1 +
- net/vhost-vdpa.c          | 1 +
- 7 files changed, 13 insertions(+), 3 deletions(-)
+ hw/net/vhost_net-stub.c   |  1 -
+ hw/net/vhost_net.c        | 10 +++++-----
+ include/hw/virtio/vhost.h |  2 ++
+ include/net/vhost-user.h  | 16 ----------------
+ include/net/vhost_net.h   |  2 ++
+ net/tap.c                 |  1 +
+ net/vhost-user-stub.c     |  1 -
+ net/vhost-user.c          |  4 ++--
+ net/vhost-vdpa.c          |  1 +
+ 9 files changed, 13 insertions(+), 25 deletions(-)
+ delete mode 100644 include/net/vhost-user.h
 
+diff --git a/hw/net/vhost_net-stub.c b/hw/net/vhost_net-stub.c
+index 7bed0bf92b8e..7d49f82906a9 100644
+--- a/hw/net/vhost_net-stub.c
++++ b/hw/net/vhost_net-stub.c
+@@ -13,7 +13,6 @@
+ #include "qemu/osdep.h"
+ #include "net/net.h"
+ #include "net/tap.h"
+-#include "net/vhost-user.h"
+ 
+ #include "hw/virtio/virtio-net.h"
+ #include "net/vhost_net.h"
 diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index 74d2e3ed90f5..540492b37ddc 100644
+index fb169af0e81b..976d2b315a2f 100644
 --- a/hw/net/vhost_net.c
 +++ b/hw/net/vhost_net.c
-@@ -246,6 +246,7 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
+@@ -16,7 +16,6 @@
+ #include "qemu/osdep.h"
+ #include "net/net.h"
+ #include "net/tap.h"
+-#include "net/vhost-user.h"
+ #include "net/vhost-vdpa.h"
+ 
+ #include "standard-headers/linux/vhost_types.h"
+@@ -70,11 +69,11 @@ uint64_t vhost_net_get_acked_features(VHostNetState *net)
+ 
+ void vhost_net_save_acked_features(NetClientState *nc)
+ {
+-#ifdef CONFIG_VHOST_NET_USER
+-    if (nc->info->type == NET_CLIENT_DRIVER_VHOST_USER) {
+-        vhost_user_save_acked_features(nc);
++    struct vhost_net *net = get_vhost_net(nc);
++
++    if (net && net->save_acked_features) {
++        net->save_acked_features(nc);
+     }
+-#endif
+ }
+ 
+ static void vhost_net_disable_notifiers_nvhosts(VirtIODevice *dev,
+@@ -245,6 +244,7 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
+     net->nc = options->net_backend;
+     net->dev.nvqs = options->nvqs;
      net->feature_bits = options->feature_bits;
-     net->save_acked_features = options->save_acked_features;
-     net->max_tx_queue_size = options->max_tx_queue_size;
-+    net->is_vhost_user = options->is_vhost_user;
++    net->save_acked_features = options->save_acked_features;
  
      net->dev.max_queues = 1;
      net->dev.vqs = net->vqs;
-@@ -440,7 +441,7 @@ int vhost_net_start(VirtIODevice *dev, NetClientState *ncs,
-          * because vhost user doesn't interrupt masking/unmasking
-          * properly.
-          */
--        if (net->nc->info->type == NET_CLIENT_DRIVER_VHOST_USER) {
-+        if (net->is_vhost_user) {
-             dev->use_guest_notifier_mask = false;
-         }
-      }
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 789717818317..3b5448de8191 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -691,12 +691,14 @@ default_value:
- static int peer_attach(VirtIONet *n, int index)
- {
-     NetClientState *nc = qemu_get_subqueue(n->nic, index);
-+    struct vhost_net *net;
- 
-     if (!nc->peer) {
-         return 0;
-     }
- 
--    if (nc->peer->info->type == NET_CLIENT_DRIVER_VHOST_USER) {
-+    net = get_vhost_net(nc->peer);
-+    if (net && net->is_vhost_user) {
-         vhost_net_set_vring_enable(nc->peer, 1);
-     }
- 
-@@ -714,12 +716,14 @@ static int peer_attach(VirtIONet *n, int index)
- static int peer_detach(VirtIONet *n, int index)
- {
-     NetClientState *nc = qemu_get_subqueue(n->nic, index);
-+    struct vhost_net *net;
- 
-     if (!nc->peer) {
-         return 0;
-     }
- 
--    if (nc->peer->info->type == NET_CLIENT_DRIVER_VHOST_USER) {
-+    net = get_vhost_net(nc->peer);
-+    if (net && net->is_vhost_user) {
-         vhost_net_set_vring_enable(nc->peer, 0);
-     }
- 
 diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index a62992c8192e..f178cf9e1d57 100644
+index 6a75fdc0213c..b0830bac798a 100644
 --- a/include/hw/virtio/vhost.h
 +++ b/include/hw/virtio/vhost.h
-@@ -147,6 +147,7 @@ struct vhost_net {
+@@ -1,6 +1,7 @@
+ #ifndef VHOST_H
+ #define VHOST_H
+ 
++#include "net/vhost_net.h"
+ #include "hw/virtio/vhost-backend.h"
+ #include "hw/virtio/virtio.h"
+ #include "system/memory.h"
+@@ -144,6 +145,7 @@ struct vhost_net {
+     struct vhost_virtqueue vqs[2];
+     int backend;
      const int *feature_bits;
-     int max_tx_queue_size;
-     SaveAcketFeatures *save_acked_features;
-+    bool is_vhost_user;
++    SaveAcketFeatures *save_acked_features;
      NetClientState *nc;
  };
  
+diff --git a/include/net/vhost-user.h b/include/net/vhost-user.h
+deleted file mode 100644
+index a4d0ce4b8dd1..000000000000
+--- a/include/net/vhost-user.h
++++ /dev/null
+@@ -1,16 +0,0 @@
+-/*
+- * vhost-user.h
+- *
+- * Copyright (c) 2013 Virtual Open Systems Sarl.
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#ifndef VHOST_USER_H
+-#define VHOST_USER_H
+-
+-void vhost_user_save_acked_features(NetClientState *nc);
+-
+-#endif /* VHOST_USER_H */
 diff --git a/include/net/vhost_net.h b/include/net/vhost_net.h
-index 8f4fddfb69ea..879781dad7b6 100644
+index a8d281c8f7c2..eb26ed9bdcbf 100644
 --- a/include/net/vhost_net.h
 +++ b/include/net/vhost_net.h
-@@ -17,6 +17,7 @@ typedef struct VhostNetOptions {
+@@ -8,6 +8,7 @@ struct vhost_net;
+ typedef struct vhost_net VHostNetState;
+ 
+ typedef uint64_t (GetAckedFeatures)(NetClientState *nc);
++typedef void (SaveAcketFeatures)(NetClientState *nc);
+ 
+ typedef struct VhostNetOptions {
+     VhostBackendType backend_type;
+@@ -16,6 +17,7 @@ typedef struct VhostNetOptions {
      unsigned int nvqs;
      const int *feature_bits;
-     int max_tx_queue_size;
-+    bool is_vhost_user;
      GetAckedFeatures *get_acked_features;
-     SaveAcketFeatures *save_acked_features;
++    SaveAcketFeatures *save_acked_features;
      void *opaque;
+ } VhostNetOptions;
+ 
 diff --git a/net/tap.c b/net/tap.c
-index 2f0cb55c9a77..23536c09b465 100644
+index acd77f816fec..79fa02a65c91 100644
 --- a/net/tap.c
 +++ b/net/tap.c
-@@ -747,6 +747,7 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+@@ -745,6 +745,7 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         options.nvqs = 2;
+         options.feature_bits = kernel_feature_bits;
          options.get_acked_features = NULL;
-         options.save_acked_features = NULL;
-         options.max_tx_queue_size = 0;
-+        options.is_vhost_user = false;
++        options.save_acked_features = NULL;
  
          s->vhost_net = vhost_net_init(&options);
          if (!s->vhost_net) {
+diff --git a/net/vhost-user-stub.c b/net/vhost-user-stub.c
+index 52ab4e13f12a..283dee87db2d 100644
+--- a/net/vhost-user-stub.c
++++ b/net/vhost-user-stub.c
+@@ -11,7 +11,6 @@
+ #include "qemu/osdep.h"
+ #include "clients.h"
+ #include "net/vhost_net.h"
+-#include "net/vhost-user.h"
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
+ 
 diff --git a/net/vhost-user.c b/net/vhost-user.c
-index bf892915def1..1c3b8b36f351 100644
+index 93b413b49f34..8a3df27b02cf 100644
 --- a/net/vhost-user.c
 +++ b/net/vhost-user.c
-@@ -141,6 +141,7 @@ static int vhost_user_start(int queues, NetClientState *ncs[],
-         options.max_tx_queue_size = VIRTQUEUE_MAX_SIZE;
+@@ -11,7 +11,6 @@
+ #include "qemu/osdep.h"
+ #include "clients.h"
+ #include "net/vhost_net.h"
+-#include "net/vhost-user.h"
+ #include "hw/virtio/vhost.h"
+ #include "hw/virtio/vhost-user.h"
+ #include "standard-headers/linux/virtio_net.h"
+@@ -88,7 +87,7 @@ static uint64_t vhost_user_get_acked_features(NetClientState *nc)
+     return s->acked_features;
+ }
+ 
+-void vhost_user_save_acked_features(NetClientState *nc)
++static void vhost_user_save_acked_features(NetClientState *nc)
+ {
+     NetVhostUserState *s;
+ 
+@@ -140,6 +139,7 @@ static int vhost_user_start(int queues, NetClientState *ncs[],
+         options.nvqs = 2;
+         options.feature_bits = user_feature_bits;
          options.get_acked_features = vhost_user_get_acked_features;
-         options.save_acked_features = vhost_user_save_acked_features;
-+        options.is_vhost_user = true;
++        options.save_acked_features = vhost_user_save_acked_features;
  
          net = vhost_net_init(&options);
          if (!net) {
 diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index 353392b3d741..943e9c585c4c 100644
+index a3980d1fb5ed..c63225d3d2ed 100644
 --- a/net/vhost-vdpa.c
 +++ b/net/vhost-vdpa.c
-@@ -205,6 +205,7 @@ static int vhost_vdpa_add(NetClientState *ncs, void *be,
+@@ -203,6 +203,7 @@ static int vhost_vdpa_add(NetClientState *ncs, void *be,
+     options.nvqs = nvqs;
+     options.feature_bits = vdpa_feature_bits;
      options.get_acked_features = NULL;
-     options.save_acked_features = NULL;
-     options.max_tx_queue_size = VIRTQUEUE_MAX_SIZE;
-+    options.is_vhost_user = false;
++    options.save_acked_features = NULL;
  
      net = vhost_net_init(&options);
      if (!net) {
