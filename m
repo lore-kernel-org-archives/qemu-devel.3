@@ -4,90 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 336FDC8303C
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 16:33:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3135C8303C
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 16:42:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYomH-0008Vh-5F; Mon, 07 Jul 2025 12:33:13 -0400
+	id 1uYouj-0004ZG-24; Mon, 07 Jul 2025 12:41:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uYom9-0008TY-67
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 12:33:08 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uYom7-0004vP-Iu
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 12:33:04 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3a57ae5cb17so2082266f8f.0
- for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 09:33:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751905980; x=1752510780; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=P84JBEneExTFpF5YWTkcLBi9etN/U4Q1iAkPi1MIWik=;
- b=EHuEMqC2Ahb7AojKm0ziXYgKr+xXCewx+w5P6pBUIeB2dfVVMuH5WKvwEfF5fFjpkG
- cHlXjnCYhyWtfwmF7ghfaeJjbO6uWXPchX/I/8psJls6Q8b5Ar+n/lHRtdWGKR4/2VuK
- zxpB6dkeWniJ13rlNORB9AOk6wLBlQBsZmbIY0M7ptX76MMhMSm4sn/Cn0VUkFZgJvWb
- k0T8PZI7BuMF+3Q7/BLVLyFslFIno08uojiTCN5Bl1M10MfLhWdUmnCG2KeoYI3NawvD
- Bv4aF0IHJPhtdVZyL/QrN0Dpw9oh2t/Z6WqyshKApGB8N6loHZ4R6D7GgTa9b9bNjUoD
- CENw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751905980; x=1752510780;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=P84JBEneExTFpF5YWTkcLBi9etN/U4Q1iAkPi1MIWik=;
- b=pGk34XpLfrAf9kolBdQUEp4kRvEY4eKRafSEGBTJpGj2aTK6lKjpNhAq5TcKo30vnB
- SAaq0dR/1r2OXdKIWGAuy+XBVFXTZWZFQdq3QgFIROP5Ms7yJbR9Yr1XlgNXGatRmdaw
- LFbnLeRtCIZ/ZXN5krim6rRgRzyOijC9T7xKU4ZILPIHUZq+MzY7wxjcFBRpNRRP59ua
- EPdv1Fh7Mrcgb5u9fecagDifMKkHeRzDXUixsJ8oyqhGYQ6hc3Ta1GKxomyJW0t9JvJW
- TR4YiGLuLxdlQ868KSFoBxB2KQ/A/Xj11uuPg/FqGyYlSTM4x7qXTmftjICNHgKEs3mM
- k9iQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVc1G+jEaNmOHkZLzFLSuYnNLJnAFrXHAYaCungfvZssy7ya1Dqids6HrbsiKEg7lnaVoYcstWHD5LJ@nongnu.org
-X-Gm-Message-State: AOJu0YwaQBeR6Gm1BHN0lGV/j5TORAhw7A/Et5b5QaVc8/iN+dSUredP
- 7gWe5/wFQPF8eZoBqoBoEtYn0eGAM4az8nDtKfqYR9W3a0duxvL4JJovU7/UOW/eAqmYJ1Bl31e
- AbPv3EOo=
-X-Gm-Gg: ASbGncsZWN+Z4FSV2p4OqTE3ZsGWvvX7j+Moo0/fXcO0S0LT2zMITwaO+zGsJte+nZw
- 8OA7CKpmxVFz7J+mgS0fr6twti6iD846pGZN4G+nUe3GgARkCtFdNeexKE/Ia29DRVDVmY5ApZi
- sDq+xuz+xt1c2sspPcTdpQKOdSCbMd/IDJMzTE/RGNuUgAfI/pE2HKFJSNsDPA+KCVz9sN6Azzy
- nyQ4v4+ixQdWuGuBXRJkc0sFQvr80UVHueAl2Og5f7wFikW62dcKAq8xxjjMYkMAZisxt5y0orZ
- AxmAG/oZS1MhMG4uXjiTKD9Vc8t6+j74vI66LNBCIPcP6hLEc6hLn4lAoGXj/7414WZ83z3rpDb
- GtE8s/qYCo2KPswR7VAIyQQMUeP90lA==
-X-Google-Smtp-Source: AGHT+IG5AMfCbEX4TAdoDVTKjrpgzg6MjO0r9JRv/6/x3VxfdC0R4uZQiSgfBZwEdOYA4r6sn3Nftw==
-X-Received: by 2002:a5d:5f8b:0:b0:3a4:e193:e707 with SMTP id
- ffacd0b85a97d-3b4964e52c0mr10445692f8f.41.1751905980492; 
- Mon, 07 Jul 2025 09:33:00 -0700 (PDT)
-Received: from [192.168.69.242] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b4708d0beesm10838782f8f.36.2025.07.07.09.32.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Jul 2025 09:32:58 -0700 (PDT)
-Message-ID: <e146d57b-4430-42a2-9914-9eed94e2668b@linaro.org>
-Date: Mon, 7 Jul 2025 18:32:57 +0200
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uYoud-0004XI-0q
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 12:41:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uYoua-0005wp-OR
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 12:41:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751906506;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=j3abTcWeTJI6w5yRxgG1Y3BRun00qav2IQy3v4fDNv4=;
+ b=cYQT3rrPNmH+wbloRamr5BEmUmMSEyFAu+j0AH42DXNuEovVc+CbS7JL8u5u2X4yA/7cJi
+ 7y7QuH0pLZKUV4xGRlo5U8C0kYEzLyVWeNHNyJcG+y1omYqEl6cOjxFkWpM8pgc3Mg0tET
+ 5KM9HO0qqtzxEJJo/HHXKffjf/Wf7fQ=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-jDpYEqtRN1-6bYDb4M7OIg-1; Mon,
+ 07 Jul 2025 12:41:43 -0400
+X-MC-Unique: jDpYEqtRN1-6bYDb4M7OIg-1
+X-Mimecast-MFC-AGG-ID: jDpYEqtRN1-6bYDb4M7OIg_1751906501
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D753119560A2; Mon,  7 Jul 2025 16:41:40 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.44.32.187])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7EEF81800288; Mon,  7 Jul 2025 16:41:36 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, miguel.luis@oracle.com, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, maz@kernel.org,
+ gkulkarni@amperecomputing.com, gankulkarni@os.amperecomputing.com
+Cc: hi@alyssa.is
+Subject: [PATCH v9 0/5] ARM Nested Virt Support
+Date: Mon,  7 Jul 2025 18:40:26 +0200
+Message-ID: <20250707164129.1167837-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/uefi: Create and use trace.h wrapper header
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-References: <20250707142412.558561-1-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250707142412.558561-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,25 +84,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/7/25 16:24, Peter Maydell wrote:
-> The documentation of the trace subsystem (docs/devel/tracing.rst)
-> says that each subdirectory which uses trace events should create a
-> wrapper trace.h file which includes the trace/trace-foo.h generated
-> header, and that .c files then #include "trace.h".
-> 
-> We didn't follow this pattern in hw/uefi/.  Correct this by creating
-> and using the trace.h wrapper header.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   hw/uefi/trace.h              | 2 ++
->   hw/uefi/var-service-core.c   | 2 +-
->   hw/uefi/var-service-policy.c | 2 +-
->   hw/uefi/var-service-utils.c  | 2 +-
->   hw/uefi/var-service-vars.c   | 2 +-
->   5 files changed, 6 insertions(+), 4 deletions(-)
->   create mode 100644 hw/uefi/trace.h
+This is candidate for 10.1.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+For gaining virt functionality in KVM accelerated L1, The host needs to
+be booted with "kvm-arm.mode=nested" option and qemu needs to be invoked
+with: -machine virt,virtualization=on.
+
+This series can be found at:
+https://github.com/eauger/qemu/tree/v10.0.0-nv-v9
+previous:
+https://github.com/eauger/qemu/tree/v10.0.0-nv-v8
+
+Original version from Miguel:
+[1] https://lore.kernel.org/all/20230227163718.62003-1-miguel.luis@oracle.com/
+version from Haibo:
+[2] https://lore.kernel.org/qemu-devel/cover.1617281290.git.haibo.xu@linaro.org/
+
+History:
+v8 -> v9:
+- Move the migration blocker to the GIC code
+
+v7 -> v8
+- add migration blocker when virt is set along with kvm enabled
+- test virt is not set with -cpu host,aarch64=off
+- s/only is/is only
+
+v6 -> v7:
+- rebase on Peter's target-arm.next. as a result linux header update could be
+  dropped. Faced a small conflict in hw/arm/virt: Allow virt extensions with KVM
+  due to recently landed hw/arm/virt: Make EL2 accelerator check an accept-list.
+  I dared to keep Richard's R-b though.
+
+v5 -> v6:
+- linux header update against v6.16-rc2
+
+v4 -> v5:
+- rebase on top of v10.0.0
+
+v3 -> v4:
+- fix: only set maint_irq if vms->virt
+
+v2 -> v3:
+- KVM EL2 only is set if virtualization option is set
+- fixes regression with virtualization=off
+- Add checks against unsupported GIC configs until the kernel does
+
+
+Eric Auger (1):
+  hw/arm/arm_gicv3_kvm: Add a migration blocker with kvm nested virt
+
+Haibo Xu (4):
+  hw/arm: Allow setting KVM vGIC maintenance IRQ
+  target/arm/kvm: Add helper to detect EL2 when using KVM
+  target/arm: Enable feature ARM_FEATURE_EL2 if EL2 is supported
+  hw/arm/virt: Allow virt extensions with KVM
+
+ include/hw/intc/arm_gicv3_common.h |  1 +
+ target/arm/kvm_arm.h               |  7 +++++++
+ hw/arm/virt.c                      | 17 ++++++++++++++++-
+ hw/intc/arm_gicv3_common.c         |  1 +
+ hw/intc/arm_gicv3_kvm.c            | 29 +++++++++++++++++++++++++++++
+ target/arm/kvm-stub.c              |  5 +++++
+ target/arm/kvm.c                   | 21 +++++++++++++++++++++
+ 7 files changed, 80 insertions(+), 1 deletion(-)
+
+-- 
+2.49.0
 
 
