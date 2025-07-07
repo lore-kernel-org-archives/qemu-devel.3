@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39C20C8303C
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 14:36:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 346BAC83F07
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 14:53:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYmwh-0002I8-Vb; Mon, 07 Jul 2025 10:35:53 -0400
+	id 1uYnCM-0004Xm-M6; Mon, 07 Jul 2025 10:52:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uYmlY-0001YD-FD
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 10:24:21 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uYmlU-0003h8-Bv
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 10:24:18 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-450ce671a08so16271935e9.3
- for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 07:24:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751898254; x=1752503054; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=4HaH+kUume+fg2FMjUxdlmgquGzVKExAQM709OB1vig=;
- b=V9voB1tmh+1GWjqaDZde3m75jFY8BOiYwAhXejco7gDfskaJCrmAEezRR03LwEdFYZ
- vAdZUf7eUf0CouoVQLbyl3wQKibuV6kssD39iwJ6VF1XLS9SOhszKs9MgH0Q/j6niRYx
- ZRKqb/BmhzSMooQLDjpxoeeBnKBylK4wfaylHSAMnUg6xJEtclII9RjPBhevxd2DLEOW
- l6Vv8kAQmnGcKE1zPU/SBfPYkObBReRLMp74bMauiKtCuuvIJqU5PF8TmqyTinX1wmvk
- r/vbHl/jAYKkx+ozDtR0v+h/hZEWM6yCAuLxIoO7Fm2XmG4H8PrkGyfuV7d3YD4fo9kF
- x7rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751898254; x=1752503054;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4HaH+kUume+fg2FMjUxdlmgquGzVKExAQM709OB1vig=;
- b=NC8KV6fhl0GzkHZqQFuiOOYb7SyTNmO5Woa/bSAvqNsAVRZnbjdf6K9lQPvyomSbMa
- XHGr8J8h0uP2eM0rdYZl6r8Ogqc++cAbF9715+OvB9mc+LRuuc+ezAeHPZPJkkI+0WDN
- b3N6cRo26Z2yWuXbIKf1UxbRrzdKp+3zsNrnuValsB1W+WHax8qJajZpRz7cNRi7FVsm
- PfeNL/4356OpTwwirNXV8pi6cQAAbOlMADWvn1jF/gWnxeP/AmNhTjDPKE3P7s23w2ot
- AkdgeIMIve0rZyls5w8xree4PI6SQbbfBA2LsHtE7U/FeKwPNlkchz3WiD3WuNPbsnWr
- T6Ng==
-X-Gm-Message-State: AOJu0Yy9kO4Qf+FFGBNUrwnWlTn1KxOs1DDCING7Zmt8UNb494ZQ0n8n
- FialYxyoxblrb4WVvQHME8k1GhVQ0lF1cXXu70Ifh5tGwnH7VFVptsaKyygv/7lH4F4mVOpTik4
- oZCyV
-X-Gm-Gg: ASbGnctrN0baeiH5hi2m0wWTfaHQhigaCx/5+HJEH0NspqBg9cIsseyffRe2KHpnzL7
- ZkIMJuQpT6pcx5+/AqdWrq9SLHdSx75GGveczL8QzYnoybbbeAAfa0v221YkRKWw+yRApvSlrrV
- MFS5DD9gfEzI4H88f9dMKGmrcEKoUtHe1np5/HyxxCdcLxsYdVC5DXQ4XI6PXX0AaSUTr4ytSpB
- 47nbmwEQQziXDXCrNpx/9z7sBuhHLcCulhvUONeDizd/Ap1aySzyxskoXc+ziYpW0g5vGbp8728
- /6ORcyWWtIfN/08UapQbWJiMj4EUqNFujBhZWgPtm13xn7Z7euaQG4SHV2ejagKrvRPu
-X-Google-Smtp-Source: AGHT+IHMCbBO+MCD1RhezlGF/6JUHeqLHzsIJIHVxKvjRbhObjxIY35cDl4Bcsp/u6M1S6aCQ1xvMQ==
-X-Received: by 2002:a05:600c:540f:b0:445:1984:247d with SMTP id
- 5b1f17b1804b1-454b4e67f8bmr114513615e9.7.1751898254207; 
- Mon, 07 Jul 2025 07:24:14 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454c2732201sm49234665e9.29.2025.07.07.07.24.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Jul 2025 07:24:13 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org,
-	qemu-trivial@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH] hw/uefi: Create and use trace.h wrapper header
-Date: Mon,  7 Jul 2025 15:24:12 +0100
-Message-ID: <20250707142412.558561-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <maz@kernel.org>)
+ id 1uYmts-0008Fh-PF; Mon, 07 Jul 2025 10:33:06 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <maz@kernel.org>)
+ id 1uYmtp-0004mB-Jg; Mon, 07 Jul 2025 10:32:56 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 024FD5C5693;
+ Mon,  7 Jul 2025 14:32:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F83C4CEE3;
+ Mon,  7 Jul 2025 14:32:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1751898761;
+ bh=DdUOUP5mOqQ5AnhbWh7hEm+EvlHejcuQ1bLOlyqiBL4=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=KSzJDC7lf2TlnSN+8kHxQ427RalmOl1e56t6vJU6DWxWL/ZfHmNEDjly0g4SG74d9
+ 4sLXOJ/fkwwxeX5szGb/SXp+qeYFzOsYfEt/DBsWK3dNGi0s50tsF3teP1Uqm02yRL
+ SDn3GLazy4uTzfXuPyCYiQNso8ALdq2TXxW4OvNvjtvnNOxo+uj8p35S43dWv8jzEe
+ 3fobCEMrzgKp3J7rB91JJ82OCQv/vWGXVtR1eDO88p10eXXyv/C+o2e7i4eF8VIFxc
+ ijTRTox4UBWmCa+F0DdEiRPJkFEhhZDbql76io7FLNjDZduzirVNlqFAKtJFQkxUjQ
+ qzjhuQrVENnjw==
+Received: from sofa.misterjones.org ([185.219.108.64]
+ helo=goblin-girl.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
+ (envelope-from <maz@kernel.org>) id 1uYmtb-00DQz6-Bn;
+ Mon, 07 Jul 2025 15:32:39 +0100
+Date: Mon, 07 Jul 2025 15:32:38 +0100
+Message-ID: <86y0t09im1.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: eric.auger@redhat.com, eric.auger.pro@gmail.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, miguel.luis@oracle.com, richard.henderson@linaro.org,
+ gkulkarni@amperecomputing.com, gankulkarni@os.amperecomputing.com,
+ hi@alyssa.is
+Subject: Re: [PATCH v7 4/4] hw/arm/virt: Allow virt extensions with KVM
+In-Reply-To: <CAFEAcA-qh5zPUY6q-TH3T8CCrD2KEfXNDrZbVzr2H-HX5n7sSw@mail.gmail.com>
+References: <20250702163115.251445-1-eric.auger@redhat.com>
+ <20250702163115.251445-5-eric.auger@redhat.com>
+ <CAFEAcA9hhdwHNrBfEqO4GD6kSb3Efcw-Rztq=CqvcOGMG3+z6A@mail.gmail.com>
+ <9c78f7c0-88ce-4c4d-b6c0-5b77b4d83367@redhat.com>
+ <CAFEAcA-qh5zPUY6q-TH3T8CCrD2KEfXNDrZbVzr2H-HX5n7sSw@mail.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: peter.maydell@linaro.org, eric.auger@redhat.com,
+ eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ miguel.luis@oracle.com, richard.henderson@linaro.org,
+ gkulkarni@amperecomputing.com, gankulkarni@os.amperecomputing.com,
+ hi@alyssa.is
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Received-SPF: pass client-ip=139.178.84.217; envelope-from=maz@kernel.org;
+ helo=dfw.source.kernel.org
+X-Spam_score_int: -70
+X-Spam_score: -7.1
+X-Spam_bar: -------
+X-Spam_report: (-7.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,85 +93,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The documentation of the trace subsystem (docs/devel/tracing.rst)
-says that each subdirectory which uses trace events should create a
-wrapper trace.h file which includes the trace/trace-foo.h generated
-header, and that .c files then #include "trace.h".
+On Mon, 07 Jul 2025 10:53:38 +0100,
+Peter Maydell <peter.maydell@linaro.org> wrote:
+> 
+> On Mon, 7 Jul 2025 at 10:30, Eric Auger <eric.auger@redhat.com> wrote:
+> >
+> > Hi Peter, Marc,
+> >
+> > On 7/4/25 2:22 PM, Peter Maydell wrote:
+> > > I suppose the system registers probably generally Just Work
+> > > via the sysreg GET/SET_ONE_REG API, but won't the in-kernel
+> > > GICv3 have extra state that we need to migrate in
+> > > hw/intc/arm_gicv3_kvm.c ?
+> > Do you see some specific registers/resources that would need attention?
+> 
+> All the EL2-only-accessible GIC registers: ICH_AP*R<n>_EL2,
+> ICH_EISR_EL2, ICH_ELRSR_EL2, ICH_HCR_EL2, ICH_LR<n>_EL2,
+> etc etc.
 
-We didn't follow this pattern in hw/uefi/.  Correct this by creating
-and using the trace.h wrapper header.
+It isn't obvious to me why we'd expose any of the status registers to
+userspace. ICH_{EISR,ELRSR,MISR}_EL2 are entirely synthetic, and are
+directly generated by the emulation from the rest of the state.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/uefi/trace.h              | 2 ++
- hw/uefi/var-service-core.c   | 2 +-
- hw/uefi/var-service-policy.c | 2 +-
- hw/uefi/var-service-utils.c  | 2 +-
- hw/uefi/var-service-vars.c   | 2 +-
- 5 files changed, 6 insertions(+), 4 deletions(-)
- create mode 100644 hw/uefi/trace.h
+Save/restoring this state would make things pointlessly complicated,
+unless I'm missing something obvious.
 
-diff --git a/hw/uefi/trace.h b/hw/uefi/trace.h
-new file mode 100644
-index 00000000000..6aa1c938960
---- /dev/null
-+++ b/hw/uefi/trace.h
-@@ -0,0 +1,2 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#include "trace/trace-hw_uefi.h"
-diff --git a/hw/uefi/var-service-core.c b/hw/uefi/var-service-core.c
-index 4836a0cb811..feec5a59583 100644
---- a/hw/uefi/var-service-core.c
-+++ b/hw/uefi/var-service-core.c
-@@ -12,7 +12,7 @@
- #include "hw/uefi/var-service-api.h"
- #include "hw/uefi/var-service-edk2.h"
- 
--#include "trace/trace-hw_uefi.h"
-+#include "trace.h"
- 
- static int uefi_vars_pre_load(void *opaque)
- {
-diff --git a/hw/uefi/var-service-policy.c b/hw/uefi/var-service-policy.c
-index 3b1155fe4ea..58da4adbeba 100644
---- a/hw/uefi/var-service-policy.c
-+++ b/hw/uefi/var-service-policy.c
-@@ -14,7 +14,7 @@
- #include "hw/uefi/var-service-api.h"
- #include "hw/uefi/var-service-edk2.h"
- 
--#include "trace/trace-hw_uefi.h"
-+#include "trace.h"
- 
- static void calc_policy(uefi_var_policy *pol);
- 
-diff --git a/hw/uefi/var-service-utils.c b/hw/uefi/var-service-utils.c
-index c9ef46570f4..258013f436a 100644
---- a/hw/uefi/var-service-utils.c
-+++ b/hw/uefi/var-service-utils.c
-@@ -8,7 +8,7 @@
- 
- #include "hw/uefi/var-service.h"
- 
--#include "trace/trace-hw_uefi.h"
-+#include "trace.h"
- 
- /* ------------------------------------------------------------------ */
- 
-diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
-index 7f98d77a38d..37d05b71cf7 100644
---- a/hw/uefi/var-service-vars.c
-+++ b/hw/uefi/var-service-vars.c
-@@ -12,7 +12,7 @@
- #include "hw/uefi/var-service-api.h"
- #include "hw/uefi/var-service-edk2.h"
- 
--#include "trace/trace-hw_uefi.h"
-+#include "trace.h"
- 
- #define EFI_VARIABLE_ATTRIBUTE_SUPPORTED                                \
-     (EFI_VARIABLE_NON_VOLATILE |                                        \
+> These all need to be exposed via KVM_DEV_ARM_VGIC_GRP_CPU_SYSREG
+> and hw/intc/arm_gicv3_kvm.c needs code to be able to save and
+> restore them into the GIC data structures (and we need to make
+> sure the kernel isn't accidentally exposing them as CPU registers
+> via the GET/SET_ONE_REG API, I think, in whatever way we do
+> that for the existing EL1 GIC cpuif registers).
+>
+> I don't see any of the EL2 sysregs listed in the kernel's
+> gic_v3_icc_reg_descs[], which looks like it's what drives
+> the handling of KVM_DEV_ARM_VGIC_GRP_CPU_SYSREG.
+
+Hmmm... This is indeed pretty inconsistent. I'll have a look at it.
+
+Thanks,
+
+	M.
+
 -- 
-2.43.0
-
+Without deviation from the norm, progress is not possible.
 
