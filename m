@@ -4,95 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF38DC83030
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 21:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 450A8C71130
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 23:00:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYtkn-0002vM-Uc; Mon, 07 Jul 2025 17:52:02 -0400
+	id 1uYuo5-0006E2-VC; Mon, 07 Jul 2025 18:59:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=0qb7=ZU=kaod.org=clg@ozlabs.org>)
- id 1uYtMX-0007UP-9M; Mon, 07 Jul 2025 17:27:03 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=0qb7=ZU=kaod.org=clg@ozlabs.org>)
- id 1uYtMV-0005FB-60; Mon, 07 Jul 2025 17:26:57 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bbcjX5S2mz4wbW;
- Tue,  8 Jul 2025 07:25:52 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bbcjV4H0Cz4w2Q;
- Tue,  8 Jul 2025 07:25:49 +1000 (AEST)
-Message-ID: <4817f7fe-69bf-4a4a-89d2-dbae735626a1@kaod.org>
-Date: Mon, 7 Jul 2025 23:26:39 +0200
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uYunw-0005VL-GB
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 18:59:22 -0400
+Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uYunr-00031j-Cf
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 18:59:18 -0400
+Received: by mail-ot1-x32a.google.com with SMTP id
+ 46e09a7af769-72c47631b4cso3116892a34.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 15:59:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751929154; x=1752533954; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=R0j5X5MDymO8m8T2LqtmuKWbmHxKuLrAzIPD/9rOxys=;
+ b=wFhGN1KVqCWxPJW40eW77Q7JKAKDcGHYU03oyIXgC6rYYMGiLSg6Gz1R/oNwFBLHSl
+ hxOuKkzcb6Cu+26UKijVUcr34UwGPtgaeru7yGhPbCQ3L6MqbPXrXg7T4pVmBn2M4OfJ
+ zvv9B6WgE5DrDmuOgSXCRoXmsdqPISPVbHIjBfqgXLw81UKgkebhPrCNWW33cg1Kkjri
+ pQ7yKkaH+idLOUhBnshcMPg4TphvPjGLynunPiZUjC7fKMZ04r3vlgRL5Oz6UWBVlSaQ
+ sn65d8DRdvIRkRrreoQv6FGZUMtbKd0dJBN6C4j29eOsnUtOxHHbId4km5GZIpNLYe6+
+ RbVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751929154; x=1752533954;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=R0j5X5MDymO8m8T2LqtmuKWbmHxKuLrAzIPD/9rOxys=;
+ b=v6AnlAaKteqoFWaRCk9Rq7BTIfj7ONHBt8v2h7xXUnYT9muQmvlA9fhXHqmvlqyn8Q
+ a1fmioJTu0I13Ilawbs114HfhSd9I03VezCGlvj7NuOivaXscGuENHzYZYnxXMuYRShk
+ LSQItMvvWF8W9i8sVSEyU0EagV+ImrJ/AB2jm2lHuTfBbugiJt9LNKC1EkXB9Lv81lOl
+ QQciiVx8Wu96waEiFLB36ByGANe2b7iWP1Ju5qLitz2muBOcJHoDD2v1KhMDkFhLEiES
+ 0mzhlk+tHb6yI4sxARfL4IB8OfbT3iYPaIMkqEp27yeQGR5q2kpbIvDHvUTOtdvLu7Mw
+ K/qw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUiUyZc06KH4NQOk5Eh/Aj4RfM+cvIrjxCrq9+KzIRHS/KsqPBVY9RwgGbEVvqJ5NWJTm1wHgHSN62W@nongnu.org
+X-Gm-Message-State: AOJu0YxZEBiQyLfB6lKQvSao0E4+HZCNxmeqX2pWiIwGUOfCxC9rdugd
+ AQlZ9RZfRzYDMpKSqOL9XGm5LSd00U6UiCbxQ8F561MHdW5uKoAnJqJ/1In9qE80EqY=
+X-Gm-Gg: ASbGncvVq+Fg1bfKkASr5i3KC9UPnim+l3qIIKMHOUlCU+b4bn2gIpAQcz4FpZ6ZoyP
+ V2GQkv0pFNO9qIbpBzRlKFNBjJJ+aBI2IImgAd4DJdTS5Za2OiDBLiwA3sDBAWqfqly/DBlwhZT
+ nwXmweCWPN40a91uMLzKQXIffoNwiVoLLVGCptMLHKuRrrtkoTY3T/VkUO2+6BP97E91yAcHBmS
+ X46ZL6GCfWnzjCGr0YlVPpxRYHv+10lmTDtPBx6WCXBDIskJgQZNYt7aJn8KWbfFt0+syTvh2GY
+ rtva/SVSb7bcQH2U+pqYRp4jzxPEeLEwld8yX9efX50I1uFuVH82hvdkloBfqJNwxi9p/if3RrP
+ P8IAjwm8+eJoN634+cxTeXEWyLCJmNaQul9xKP1Az
+X-Google-Smtp-Source: AGHT+IG28sglKTHo5b2qcR+h5/P2Z4mnesEnVRLFkzFYDZMo7gYZ8cLzwCRSk0mc0IdwDIev/flD0g==
+X-Received: by 2002:a05:6870:80d3:b0:2ea:fc66:3775 with SMTP id
+ 586e51a60fabf-2f796e0fbcamr10269433fac.32.1751929153804; 
+ Mon, 07 Jul 2025 15:59:13 -0700 (PDT)
+Received: from [10.225.72.227] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-2f7901a35c1sm2512233fac.25.2025.07.07.15.59.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 07 Jul 2025 15:59:13 -0700 (PDT)
+Message-ID: <59984d23-3e5f-4d86-8111-0255ae51e76c@linaro.org>
+Date: Mon, 7 Jul 2025 16:59:03 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional/test_ppc_bamboo: Replace broken link
- with working assets
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-ppc@nongnu.org
-References: <20250707184736.88660-1-thuth@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250707184736.88660-1-thuth@redhat.com>
+Subject: Re: [PATCH-for-10.1 v6 10/14] hw/core/null-machine: Define machine as
+ generic QOM type
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-s390x@nongnu.org,
+ qemu-arm@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-block@nongnu.org,
+ qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-riscv@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>
+References: <20250707172009.3884-1-philmd@linaro.org>
+ <20250707172009.3884-11-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250707172009.3884-11-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=0qb7=ZU=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.056, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32a.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,80 +112,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/7/25 20:47, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 7/7/25 11:20, Philippe Mathieu-Daudé wrote:
+> While DEFINE_MACHINE() is a succinct macro, it doesn't
+> allow registering QOM interfaces to the defined machine.
+> Convert to the generic DEFINE_TYPES() in preparation to
+> register interfaces.
 > 
-> The old image that we used for testing the bamboo machine has disappeared
-> from the internet. Fortunately there is another kernel + initrd provided
-> by Cédric that can be used for testing this machine, too.
-> 
-> Reported-by: Stefan Hajnoczi <stefanha@gmail.com>
-> Suggested-by: Cédric Le Goater <clg@kaod.org>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   tests/functional/test_ppc_bamboo.py | 34 ++++++++++++++++-------------
->   1 file changed, 19 insertions(+), 15 deletions(-)
+>   hw/core/null-machine.c | 14 ++++++++++++--
+>   1 file changed, 12 insertions(+), 2 deletions(-)
 > 
-> diff --git a/tests/functional/test_ppc_bamboo.py b/tests/functional/test_ppc_bamboo.py
-> index fddcc24d0da..c634ae7b4a7 100755
-> --- a/tests/functional/test_ppc_bamboo.py
-> +++ b/tests/functional/test_ppc_bamboo.py
-> @@ -16,28 +16,32 @@ class BambooMachine(QemuSystemTest):
+> diff --git a/hw/core/null-machine.c b/hw/core/null-machine.c
+> index a6e477a2d88..3e03771d570 100644
+> --- a/hw/core/null-machine.c
+> +++ b/hw/core/null-machine.c
+> @@ -42,8 +42,10 @@ static void machine_none_init(MachineState *mch)
+>       }
+>   }
 >   
->       timeout = 90
->   
-> -    ASSET_IMAGE = Asset(
-> -        ('http://landley.net/aboriginal/downloads/binaries/'
-> -         'system-image-powerpc-440fp.tar.gz'),
-> -        'c12b58f841c775a0e6df4832a55afe6b74814d1565d08ddeafc1fb949a075c5e')
-> +    ASSET_KERNEL = Asset(
-> +        ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/'
-> +         'buildroot/qemu_ppc_bamboo-2023.11-8-gdcd9f0f6eb-20240105/vmlinux'),
-> +        'a2e12eb45b73491ac62fc0bbeb68dead0dc5c0f22cf83146558389209b420ad1')
-> +    ASSET_INITRD = Asset(
-> +        ('https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/'
-> +         'buildroot/qemu_ppc_bamboo-2023.11-8-gdcd9f0f6eb-20240105/rootfs.cpio'),
-> +        'd2a36bdb8763b389765dc8c29d4904cec2bd001c587f92e85ab9eb10d5ddda54')
->   
->       def test_ppc_bamboo(self):
->           self.set_machine('bamboo')
->           self.require_accelerator("tcg")
->           self.require_netdev('user')
-> -        self.archive_extract(self.ASSET_IMAGE)
+> -static void machine_none_machine_init(MachineClass *mc)
+> +static void null_machine_class_init(ObjectClass *oc, const void *data)
+>   {
+> +    MachineClass *mc = MACHINE_CLASS(oc);
 > +
-> +        kernel = self.ASSET_KERNEL.fetch()
-> +        initrd = self.ASSET_INITRD.fetch()
-> +
->           self.vm.set_console()
-> -        self.vm.add_args('-kernel',
-> -                         self.scratch_file('system-image-powerpc-440fp',
-> -                                           'linux'),
-> -                         '-initrd',
-> -                         self.scratch_file('system-image-powerpc-440fp',
-> -                                           'rootfs.cpio.gz'),
-> -                         '-nic', 'user,model=rtl8139,restrict=on')
-> +        self.vm.add_args('-kernel', kernel,
-> +                         '-initrd', initrd,
-> +                         '-nic', 'user,model=virtio-net-pci,restrict=on')
->           self.vm.launch()
-> -        wait_for_console_pattern(self, 'Type exit when done')
-> -        exec_command_and_wait_for_pattern(self, 'ping 10.0.2.2',
-> -                                          '10.0.2.2 is alive!')
-> +        wait_for_console_pattern(self, 'buildroot login:')
-> +        exec_command_and_wait_for_pattern(self, 'root', '#')
-> +        exec_command_and_wait_for_pattern(self, 'ping -c1 10.0.2.2',
-> +                '1 packets transmitted, 1 packets received, 0% packet loss')
->           exec_command_and_wait_for_pattern(self, 'halt', 'System Halted')
+>       mc->desc = "empty machine";
+>       mc->init = machine_none_init;
+>       mc->max_cpus = 1;
+> @@ -55,4 +57,12 @@ static void machine_none_machine_init(MachineClass *mc)
+>       mc->no_cdrom = 1;
+>   }
 >   
->   if __name__ == '__main__':
+> -DEFINE_MACHINE("none", machine_none_machine_init)
+> +static const TypeInfo null_machine_types[] = {
+> +    {
+> +        .name           = MACHINE_TYPE_NAME("none"),
+> +        .parent         = TYPE_MACHINE,
+> +        .class_init     = null_machine_class_init,
+> +    },
+> +};
+> +
+> +DEFINE_TYPES(null_machine_types)
 
+Ought this use DEFINE_MACHINE_WITH_INTERFACES that you introduce later?
+
+r~
 
