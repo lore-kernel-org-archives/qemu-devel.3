@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B55F2C8303C
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 20:58:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B74DAC71130
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 20:59:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYsuO-0003Fy-P4; Mon, 07 Jul 2025 16:57:52 -0400
+	id 1uYsvL-0004SF-CX; Mon, 07 Jul 2025 16:58:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uYsL3-0005F4-Bg
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 16:21:25 -0400
-Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
+ id 1uYsLK-0005Mv-6Y
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 16:21:44 -0400
+Received: from mail-qt1-x82c.google.com ([2607:f8b0:4864:20::82c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uYsKy-0004Fd-EJ
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 16:21:19 -0400
-Received: by mail-qt1-x82b.google.com with SMTP id
- d75a77b69052e-4a7a8c2b7b9so53192681cf.1
- for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 13:21:15 -0700 (PDT)
+ id 1uYsLH-0004KY-6S
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 16:21:36 -0400
+Received: by mail-qt1-x82c.google.com with SMTP id
+ d75a77b69052e-4a77ffcb795so33802391cf.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 13:21:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751919675; x=1752524475; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=gdwyjgqLV2mmRAFlL+Vg+s+HAk+o0jZAFb0Tu/qecK4=;
- b=Y8Uy+Y5qNyZqioxpEdsrUPGoN3i0ygmRR+yCZ90tLm1iEPp3RLxUA34acc+vJ/HwAJ
- 2lGeWE1CT8FHz/qtcyNDV3raoyCIBbojSwfiJ6p7zLiuoWVn4fp67iGe+S5XIxGDYoQO
- DolkR1NS2WfyXQynGOZ3ig61fuCGXMS8qw45aFIlkfaPH/njyop5N+KZPJtfZzyDFra1
- tTgepXrW6ZMJk34xsUJyfDqwE6PpAJPT/pRbohLs4KxKHdxHd7OS6YeMPpkCZPBxvZBS
- c6dMsde9f1pMEgQB81UuzUqA4HHybtHN70OoiX/Ynr1PQOVLic7hsuD31NDrhyWFiRpa
- 1sFg==
+ d=linaro.org; s=google; t=1751919693; x=1752524493; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MjEHLUFNmDP4O5aZmFwPD33ITZa8oo06PNRAd4Vt/6M=;
+ b=pXHFJ4TDNMq762oPVidszhMNLgCsdzNTZEMNB9a3xWoWweBtVNQq33keOWpqGzspZZ
+ adG41xSL1fWYWAtgufUd1dFe4pqWnUIcU/Y9MM0/ttz8mT4kZLoXKHj3qanj4Lr2HuHq
+ pDTWn/A4fAzwrpZmZF4da4VpxTlKXHstshdvM2uk6k/m+Edv+r2xxuPvprBw6hRJZ9hj
+ TnBhO1NW4DbfpqWNBnO3vx2J0rUKUlN8QHw6WBK54tAhiPX/y/y0zBTI/DlFWAuFL4cF
+ 8XhW6ucbNh6pjoSbs3eE+voeRdjpLAcjzkjh5ORDYWEUmCayaoy73RoJPuCabOO2rkG2
+ zpLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751919675; x=1752524475;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gdwyjgqLV2mmRAFlL+Vg+s+HAk+o0jZAFb0Tu/qecK4=;
- b=TKjbb+Qd9nzswF2Fnqy2Y5dj+X9FCLg5m5clJZPbXAM0i0EYcYcP7sF9fg30XaZRNb
- c0o+7Lq+86/fAYES9IoiglD3aI2rF8xKIDIoplqMOCHmMBadsBBBkfxRo6b3VkQtl121
- fFY0WNKL6h9Jya0KJa6Q+jyg5nLT2XddEdBMMMTazIH3W2az/FWEhhXibnkUDE1Bhfxt
- 9AJYPq0utcOjpZv2GVKa/0AoAvsLO3OSJGn498hodQ/f+QZ5FE42DJObtSwiBZUl0nOv
- 6mu7OEv3TWhZjARvvzKMmcTPV5sFo6q87CSH2RndYyaP5Rf12BA0jXRnkHnTiynkdzjf
- 7P7w==
-X-Gm-Message-State: AOJu0Yycim7j9Xta+Ey7CsMiEMxoC41kOSu5UoPQc+mofdBG9HuO3flj
- B5jbvIG8az60mVw8LyHofJy7vQPOs2GkO2ajsI1DLBd1fJBVGg3R/MkieceaBXOlbqzBtMW4mfU
- FPtRlJcU=
-X-Gm-Gg: ASbGncv9fa0SdnarNp/DfpuAM34u3a9wWA2zHXYgBiOLYmxIBATZHXYAlBZmoWn/BxY
- mJzLTme38gOqxK2ikZR/3wgm/U8Ns2mnI+ZRb7mZNu3Tr0ftzPMczX4K2NzZzy8stMWNcgN6Zvq
- tlTb8ehmbIlJ4scnB1P2+A06a7AibNKDbrFtFbGZkKa0h46isyK8jMf+MEHkM0gYWQCzLw1hm/c
- BUQk0PiidoGrANnRdC6LhL9vpHSQHAGDJ1GWDxvTirOURJe6xX3+a9mq/0a70IyAJGesL0wx7Gq
- 1WxhTbksVpXNRjy424kSFi7WpbbpitQUyI4Dmv3Za5j1QKTyzde3uF4pY3LDYgGp9/aCa7nqjA1
- G2Ef9nTajw/d3xEwv
-X-Google-Smtp-Source: AGHT+IFsSvSSpH4EVQOmi2EwSdvLVfVe3zInpAu8F/yOtahHFu0N2uWNcfckhHG/In8gitb0z1wglg==
-X-Received: by 2002:a05:622a:4114:b0:4a9:c4a7:4a76 with SMTP id
- d75a77b69052e-4a9c4a74bbdmr44603411cf.8.1751919675121; 
- Mon, 07 Jul 2025 13:21:15 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1751919693; x=1752524493;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MjEHLUFNmDP4O5aZmFwPD33ITZa8oo06PNRAd4Vt/6M=;
+ b=mFtsAX+9UHuK5PQjESb3j42D0RlYvdW8P6K95jcStyMIP/5NjNnNeau4Bk18FXpvTl
+ cxo3c6jxv+ovbpKz2LXsOk22AcoPjlHrEH0UVrk1B8q9zcFGYlJqDZRgiyMQJ8iXu29b
+ RP+yw6/tWSgSybfWR6CpSyvnkBCZs57IXkjZQiL7rgKog0tEFm6BW4jqH6gZpSXOEAYA
+ H2iO96Ai+2ws/r0MObe6zbBIhCIXUeGKcoQZ/V+3XFN5vf+s1hKUjjv3igIRt8WcjU59
+ vpxmPIfEdLRIGNUso0c7wrMAU/XfR8YgWTRxlcYnishPaQ3Unor9szkS1o1PF+Pn1Z9O
+ QBOw==
+X-Gm-Message-State: AOJu0YysCfbnDCWaeCEwMlyk6RHiZVPsVzQwYtn02OBISdoAhLVwiXgK
+ zcFWVJyKY/5CSZaSLtLmPmzJzZd82JIy7pFe6696QDd7LBAw0A0KImjKl3p3jh8qDMTDaMYGCKN
+ +7FyT+yw=
+X-Gm-Gg: ASbGncvG9yX0C4GekTiLb6cCHPabOSlqm+9bjmKTWcWrukuiaE+USSjBr9WBPsZPgS1
+ fjuzOvJXMHfKqbnTNDYri6mUlJNppTIBOqNkJzvz0I5bFr1sWiQv/YRSZz8F+ScGGG2/h14pWU6
+ SUDb0Q1PFXq35d5ph741wMfOfv+L0g8SGAaQgCZekap1A9TKJDcl7FmRfw3XjaI8VLdxJF+7cy5
+ 2Lzb2MuKW4T6lGp7YnvBeXSHZYsicFJfdMJGP3m6BAhte4mLu9aiZLjPoiXC1MSSduTuhFW8nPl
+ PHumw5mSlpYXicEuTUAHeYr2Nx2GHx4XwiQY/DhaSsk3svMMb4VYukCQJxoG4FLhVcScH8z3WOb
+ zs/Qx+EKES83wb8Gk74Ek5uc9MLM=
+X-Google-Smtp-Source: AGHT+IERxHsB9WAVKYFv9ZZfYCBz16Nidq5zfOay2Jv7keY/MXKU2XWXc+1CH1L5S2TP+au1rY4MqQ==
+X-Received: by 2002:a05:622a:424b:b0:4a6:ea91:7e9 with SMTP id
+ d75a77b69052e-4a9cd7b1b75mr5019911cf.25.1751919693448; 
+ Mon, 07 Jul 2025 13:21:33 -0700 (PDT)
 Received: from stoup.. ([172.58.142.143]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4a994a78dd4sm69050351cf.51.2025.07.07.13.21.13
+ d75a77b69052e-4a994a78dd4sm69050351cf.51.2025.07.07.13.21.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Jul 2025 13:21:14 -0700 (PDT)
+ Mon, 07 Jul 2025 13:21:33 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 00/20] target/arm: Implement FEAT_ATS1A
-Date: Mon,  7 Jul 2025 14:20:51 -0600
-Message-ID: <20250707202111.293787-1-richard.henderson@linaro.org>
+Subject: [PATCH 10/20] target/arm: Convert get_phys_addr_disabled to
+ access_perm
+Date: Mon,  7 Jul 2025 14:21:01 -0600
+Message-ID: <20250707202111.293787-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250707202111.293787-1-richard.henderson@linaro.org>
+References: <20250707202111.293787-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,52 +100,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based-on: 20250707151547.196393-1-richard.henderson@linaro.org
-("[PATCH 0/3] target/arm: Split out AT and PMU cpregs")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/ptw.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-(1) Lots of tiny cleanups allowing the permission check to be skipped.
-(2) Skip the permission check for gdbstub.
-(3) A fix for existing AT instructions in that hw should not update the
-    PTE dirty bit (and we choose not to update the access flag as well).
-(4) Implement FEAT_ATS1A.
-
-
-r~
-
-
-Richard Henderson (20):
-  target/arm: Convert get_phys_addr_v5 to access_perm
-  target/arm: Convert get_phys_addr_v6 to access_perm
-  target/arm: Convert get_phys_addr_lpae to access_perm
-  target/arm: Convert get_phys_addr_pmsav5 to access_perm
-  target/arm: Convert get_phys_addr_pmsav7 to access_perm
-  target/arm: Convert pmsav8_mpu_lookup to access_perm
-  target/arm: Convert v8m_is_sau_exempt to access_perm
-  target/arm: Convert v8m_security_lookup to access_perm
-  target/arm: Convert get_phys_addr_pmsav8 to access_perm
-  target/arm: Convert get_phys_addr_disabled to access_perm
-  target/arm: Convert get_phys_addr_nogpc to access_perm
-  target/arm: Convert get_phys_addr_gpc to access_perm
-  target/arm: Convert get_phys_addr_with_space_nogpc to access_perm
-  target/arm: Convert get_phys_addr to access_perm
-  target/arm: Skip permission check from
-    arm_cpu_get_phys_page_attrs_debug
-  target/arm: Introduce get_phys_addr_for_at
-  target/arm: Skip AF and DB updates for AccessType_AT
-  target/arm: Convert do_ats_write to access_perm
-  target/arm: Fill in HFGITR_EL2 bits for Arm v9.5
-  target/arm: Implement FEAT_ATS1A
-
- target/arm/cpregs.h           |   6 ++
- target/arm/cpu-features.h     |   5 ++
- target/arm/internals.h        |  27 +++----
- target/arm/ptw.c              | 134 +++++++++++++++++++---------------
- target/arm/tcg/cpregs-at.c    |  67 +++++++++++++----
- target/arm/tcg/cpu64.c        |   1 +
- target/arm/tcg/m_helper.c     |  17 ++---
- docs/system/arm/emulation.rst |   1 +
- 8 files changed, 161 insertions(+), 97 deletions(-)
-
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index f1edbbee5b..5b8040a174 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -3193,7 +3193,7 @@ static ARMCacheAttrs combine_cacheattrs(uint64_t hcr,
+ static bool get_phys_addr_disabled(CPUARMState *env,
+                                    S1Translate *ptw,
+                                    vaddr address,
+-                                   MMUAccessType access_type,
++                                   unsigned access_perm,
+                                    GetPhysAddrResult *result,
+                                    ARMMMUFaultInfo *fi)
+ {
+@@ -3219,7 +3219,7 @@ static bool get_phys_addr_disabled(CPUARMState *env,
+             int addrtop, tbi;
+ 
+             tbi = aa64_va_parameter_tbi(tcr, mmu_idx);
+-            if (access_type == MMU_INST_FETCH) {
++            if (access_perm & PAGE_EXEC) {
+                 tbi &= ~aa64_va_parameter_tbid(tcr, mmu_idx);
+             }
+             tbi = (tbi >> extract64(address, 55, 1)) & 1;
+@@ -3253,7 +3253,7 @@ static bool get_phys_addr_disabled(CPUARMState *env,
+             }
+         }
+         if (memattr == 0) {
+-            if (access_type == MMU_INST_FETCH) {
++            if (access_perm & PAGE_EXEC) {
+                 if (regime_sctlr(env, mmu_idx) & SCTLR_I) {
+                     memattr = 0xee;  /* Normal, WT, RA, NT */
+                 } else {
+@@ -3404,7 +3404,7 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
+     case ARMMMUIdx_Phys_Root:
+     case ARMMMUIdx_Phys_Realm:
+         /* Checking Phys early avoids special casing later vs regime_el. */
+-        return get_phys_addr_disabled(env, ptw, address, access_type,
++        return get_phys_addr_disabled(env, ptw, address, 1 << access_type,
+                                       result, fi);
+ 
+     case ARMMMUIdx_Stage1_E0:
+@@ -3504,7 +3504,7 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
+     /* Definitely a real MMU, not an MPU */
+ 
+     if (regime_translation_disabled(env, mmu_idx, ptw->in_space)) {
+-        return get_phys_addr_disabled(env, ptw, address, access_type,
++        return get_phys_addr_disabled(env, ptw, address, 1 << access_type,
+                                       result, fi);
+     }
+ 
 -- 
 2.43.0
 
