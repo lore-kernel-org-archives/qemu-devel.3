@@ -4,70 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 374D2C8303C
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 08:29:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5660C83F07
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Jul 2025 08:32:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uYhDe-0004QY-Hg; Mon, 07 Jul 2025 04:28:58 -0400
+	id 1uYhGg-0006EF-N4; Mon, 07 Jul 2025 04:32:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1uYhDW-0004Ot-5c
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 04:28:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uYhGe-0006Cx-Cj
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 04:32:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1uYhDS-0001hU-RN
- for qemu-devel@nongnu.org; Mon, 07 Jul 2025 04:28:49 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uYhGc-0002We-Mh
+ for qemu-devel@nongnu.org; Mon, 07 Jul 2025 04:32:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751876923;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ s=mimecast20190719; t=1751877120;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TEHH5PwPPhiBn0zoqbiFaFLfogPQjxS5hORUtCtU9hk=;
- b=e9APFLEdRAFrPtmznyNzBpv4XylP9kl/6OTy0MJCkp1W0hCSZtEiIeFajzF64Om88ZVlsY
- UpMp7TM5vaZL2S7JdwpNh6PIEKBMDyuFgr6qscShTT1d/aY9nPFZgf8+6fN53cj0CXC/G6
- BNPsSlc4Q1jvNViX53OYxZi0g+co5aw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-245-Du5oivRuMuCvWyDNopPPFg-1; Mon,
- 07 Jul 2025 04:15:49 -0400
-X-MC-Unique: Du5oivRuMuCvWyDNopPPFg-1
-X-Mimecast-MFC-AGG-ID: Du5oivRuMuCvWyDNopPPFg_1751876148
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BDF501809C9D; Mon,  7 Jul 2025 08:15:47 +0000 (UTC)
-Received: from lenovo-t14s.redhat.com (unknown [10.45.225.147])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 18CBF180045B; Mon,  7 Jul 2025 08:15:42 +0000 (UTC)
-From: Laurent Vivier <lvivier@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, Stefan Weil <sw@weilnetz.de>,
- Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH v3 07/11] net: Add save_acked_features callback to vhost_net
-Date: Mon,  7 Jul 2025 10:15:01 +0200
-Message-ID: <20250707081505.127519-8-lvivier@redhat.com>
-In-Reply-To: <20250707081505.127519-1-lvivier@redhat.com>
-References: <20250707081505.127519-1-lvivier@redhat.com>
+ bh=jgXvvyjR+4D05P4w8bP5FzwbXRioeu/Bwc1AJUs2C+w=;
+ b=gaqOfDHkhbmmw+jsmRztNu832+Ymp3/Iz9tu96h+BF0/RRSGiVM6sTSLvWU/aJO3vfOZEy
+ qsl8l4iHRGBoeOxPmt9JyAzEAZPxDJ1z+IkvAHkHm64QjKFm2FQo0K/DIAnJkt/e2meXoL
+ UzNVg1e48ji0EPhC7AF4EDz/7hSsv1g=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-680-Fheufk_yO3ef4Qjt7hlUEg-1; Mon, 07 Jul 2025 04:31:59 -0400
+X-MC-Unique: Fheufk_yO3ef4Qjt7hlUEg-1
+X-Mimecast-MFC-AGG-ID: Fheufk_yO3ef4Qjt7hlUEg_1751877118
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a50816ccc6so1776427f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Jul 2025 01:31:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751877118; x=1752481918;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jgXvvyjR+4D05P4w8bP5FzwbXRioeu/Bwc1AJUs2C+w=;
+ b=Hb66sYnUj49xk8jY2gw01nL1KKhO1rqZhuAO/iI5gpYIWUZkocCxeNAG/r39hjKO4X
+ iNWe4NUVSxP5ZBA/TkrL+i4yDpUVqAFjhfk6NbZOcCBZHSMn5acn9G8Wc2nNVGU2BT0h
+ H2uxjyrEPh2gPlP9eTFXVxAYRNTVQIBvZgNGHlc0PfNEHMIXxjMrqzpxNGJO1MT9X0O5
+ T113r7FP51CoLTPkMZ3Ul2ZmuhlQR29zDRfIM5EeoyJHlfICVIRsHMXPwnNq64uXKT2a
+ rSh/BLy09cDMyEM8VrxQ6KnAi/WYio6yX2DSonVUECC1Fs80XSgt4gP/UVRwPYcjblnz
+ s+uw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUBcswLK/5yRgug9z6KUzORnjylllKvC2LYtSO/ojjbRXTIGwTbPwtsJnYpVf/TG3cKGOwlPbQbW1/l@nongnu.org
+X-Gm-Message-State: AOJu0Yyqauv0scdN+4W3pvwQowoTh1wv4Arus20Q5ihyHOERGUVa2/Na
+ LE7A1LM9u7APGl0zkyR0Zs1peIw4XKaTpn6JuqPsKq8WuobEa+PiyAO5uX1KOlhQ+jSp4uJn3tw
+ qVkUsCHPY2ReUpwMcEgntEF5jzFejmPvqxEkyejXZr1uAPDtLmn30wnkc
+X-Gm-Gg: ASbGncv16p1h6zpbsBPR0eyGMiRKfidjdsKfl8qnnbNcvr+Em+8gvdwPaqkBJG48hmS
+ k1KVK1+rn26jborKwyfzBrNQt4iI5VU9faBXCcQ5B0DMppv+8VG63gqkM7gfWD0M6dFDLys5BBa
+ OfBtSOsd3f1wTBLDrBx2YpN2F6yKFmHJEowXLd3dFblJ4NLpZatnyKyS+lTQhKffrF2lEjlfxq1
+ u9JTbiEgU0NBrXy3AHsh92UFfd99CwHlUaXxgOfDRUWj0747sbVCtsSh6/FUdzr8XKdBiAdGraE
+ zsqnJzcLv8F05H6XO/5VdnBvpPkcrELvd35EE41VxOFmQo45OQODAMZnL+8sUbLYUSLEhw==
+X-Received: by 2002:a05:6000:481c:b0:3a4:d64a:3df6 with SMTP id
+ ffacd0b85a97d-3b49700c535mr8401051f8f.3.1751877118136; 
+ Mon, 07 Jul 2025 01:31:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEpYMCjiAJZbppgeTo3UaDEz8wahEHHMGoJND/KY7TYox65AQ2t1+TwoSLbD0yIP3OJYyYQ8g==
+X-Received: by 2002:a05:6000:481c:b0:3a4:d64a:3df6 with SMTP id
+ ffacd0b85a97d-3b49700c535mr8401019f8f.3.1751877117661; 
+ Mon, 07 Jul 2025 01:31:57 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454b16865c2sm103959195e9.19.2025.07.07.01.31.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 07 Jul 2025 01:31:56 -0700 (PDT)
+Message-ID: <d174bfd7-aac2-46ec-9cf4-8999b6340614@redhat.com>
+Date: Mon, 7 Jul 2025 10:31:55 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=lvivier@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 3/4] target/arm: Enable feature ARM_FEATURE_EL2 if EL2
+ is supported
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ miguel.luis@oracle.com, richard.henderson@linaro.org, maz@kernel.org,
+ gkulkarni@amperecomputing.com, gankulkarni@os.amperecomputing.com,
+ hi@alyssa.is
+References: <20250702163115.251445-1-eric.auger@redhat.com>
+ <20250702163115.251445-4-eric.auger@redhat.com>
+ <CAFEAcA_4AAprfa_TV48rwbxx7ndjbFYy74ykQQ8s=Ej-nBe4EA@mail.gmail.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <CAFEAcA_4AAprfa_TV48rwbxx7ndjbFYy74ykQQ8s=Ej-nBe4EA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
 X-Spam_bar: ---
@@ -88,209 +117,99 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit introduces a save_acked_features function pointer to
-vhost_net and converts the vhost_net function into a generic dispatcher.
+Hi Peter,
 
-The vhost-user backend provides the callback, making its function static.
-With this change, no other module has a direct dependency on the
-vhost-user implementation.
+On 7/4/25 2:14 PM, Peter Maydell wrote:
+> On Wed, 2 Jul 2025 at 17:31, Eric Auger <eric.auger@redhat.com> wrote:
+>> From: Haibo Xu <haibo.xu@linaro.org>
+>>
+>> KVM_CAP_ARM_EL2 must be supported by the cpu to enable ARM_FEATURE_EL2.
+>> In case the host does support NV, expose the feature.
+>>
+>> Signed-off-by: Haibo Xu <haibo.xu@linaro.org>
+>> Signed-off-by: Miguel Luis <miguel.luis@oracle.com>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>>
+>> ---
+>> v2 -> v3:
+>> - check pmu->has_el2 on kvm_arch_init_vcpu() when setting
+>>   KVM_ARM_VCPU_HAS_EL2 feature (Peter)
+>>
+>> v1 -> v2:
+>> - remove isar_feature_aa64_aa32_el2 modif in target/arm/cpu.h
+>>   [Richard] and use el2_supported in kvm_arch_init_vcpu
+>> ---
+>>  target/arm/kvm.c | 16 ++++++++++++++++
+>>  1 file changed, 16 insertions(+)
+>>
+>> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+>> index e5708e54ae..46e5f19637 100644
+>> --- a/target/arm/kvm.c
+>> +++ b/target/arm/kvm.c
+>> @@ -250,6 +250,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>>       */
+>>      int fdarray[3];
+>>      bool sve_supported;
+>> +    bool el2_supported;
+>>      bool pmu_supported = false;
+>>      uint64_t features = 0;
+>>      int err;
+>> @@ -269,6 +270,14 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>>          init.features[0] |= 1 << KVM_ARM_VCPU_SVE;
+>>      }
+>>
+>> +    /*
+>> +     * Ask for EL2 if supported.
+>> +     */
+>> +    el2_supported = kvm_arm_el2_supported();
+>> +    if (el2_supported) {
+>> +        init.features[0] |= 1 << KVM_ARM_VCPU_HAS_EL2;
+>> +    }
+>> +
+>>      /*
+>>       * Ask for Pointer Authentication if supported, so that we get
+>>       * the unsanitized field values for AA64ISAR1_EL1.
+>> @@ -422,6 +431,10 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>>      features |= 1ULL << ARM_FEATURE_AARCH64;
+>>      features |= 1ULL << ARM_FEATURE_GENERIC_TIMER;
+>>
+>> +    if (el2_supported) {
+>> +        features |= 1ULL << ARM_FEATURE_EL2;
+>> +    }
+>> +
+>>      ahcf->features = features;
+>>
+>>      return true;
+>> @@ -1887,6 +1900,9 @@ int kvm_arch_init_vcpu(CPUState *cs)
+>>          cpu->kvm_init_features[0] |= (1 << KVM_ARM_VCPU_PTRAUTH_ADDRESS |
+>>                                        1 << KVM_ARM_VCPU_PTRAUTH_GENERIC);
+>>      }
+>> +    if (cpu->has_el2 && kvm_arm_el2_supported()) {
+>> +        cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_HAS_EL2;
+>> +    }
+>>
+>>      /* Do KVM_ARM_VCPU_INIT ioctl */
+>>      ret = kvm_arm_vcpu_init(cpu);
+>> --
+> How does this interact with creating an aarch32 VM with
+> "-cpu host,aarch64=off" ?  Looking at the kernel, it will
+> fail vcpu_init if you ask for a vcpu with both EL1_32BIT
+> and HAS_EL2. I guess since the virt board will only request
+> HAS_EL2 if you say virtualization=on this is fine. Do we
+> give a sensible error message if the user tries
+>  -accel kvm -M virt,virtualization=on -cpu host,aarch64=off   ?
+Not yet. I will add one.
 
-This cleanup allows for the complete removal of the net/vhost-user.h
-header file.
+Thanks!
 
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
----
- hw/net/vhost_net-stub.c   |  1 -
- hw/net/vhost_net.c        | 10 +++++-----
- include/hw/virtio/vhost.h |  2 ++
- include/net/vhost-user.h  | 16 ----------------
- include/net/vhost_net.h   |  2 ++
- net/tap.c                 |  1 +
- net/vhost-user-stub.c     |  1 -
- net/vhost-user.c          |  4 ++--
- net/vhost-vdpa.c          |  1 +
- 9 files changed, 13 insertions(+), 25 deletions(-)
- delete mode 100644 include/net/vhost-user.h
-
-diff --git a/hw/net/vhost_net-stub.c b/hw/net/vhost_net-stub.c
-index 7bed0bf92b8e..7d49f82906a9 100644
---- a/hw/net/vhost_net-stub.c
-+++ b/hw/net/vhost_net-stub.c
-@@ -13,7 +13,6 @@
- #include "qemu/osdep.h"
- #include "net/net.h"
- #include "net/tap.h"
--#include "net/vhost-user.h"
- 
- #include "hw/virtio/virtio-net.h"
- #include "net/vhost_net.h"
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index fb169af0e81b..976d2b315a2f 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -16,7 +16,6 @@
- #include "qemu/osdep.h"
- #include "net/net.h"
- #include "net/tap.h"
--#include "net/vhost-user.h"
- #include "net/vhost-vdpa.h"
- 
- #include "standard-headers/linux/vhost_types.h"
-@@ -70,11 +69,11 @@ uint64_t vhost_net_get_acked_features(VHostNetState *net)
- 
- void vhost_net_save_acked_features(NetClientState *nc)
- {
--#ifdef CONFIG_VHOST_NET_USER
--    if (nc->info->type == NET_CLIENT_DRIVER_VHOST_USER) {
--        vhost_user_save_acked_features(nc);
-+    struct vhost_net *net = get_vhost_net(nc);
-+
-+    if (net && net->save_acked_features) {
-+        net->save_acked_features(nc);
-     }
--#endif
- }
- 
- static void vhost_net_disable_notifiers_nvhosts(VirtIODevice *dev,
-@@ -245,6 +244,7 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
-     net->nc = options->net_backend;
-     net->dev.nvqs = options->nvqs;
-     net->feature_bits = options->feature_bits;
-+    net->save_acked_features = options->save_acked_features;
- 
-     net->dev.max_queues = 1;
-     net->dev.vqs = net->vqs;
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index 6a75fdc0213c..b0830bac798a 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -1,6 +1,7 @@
- #ifndef VHOST_H
- #define VHOST_H
- 
-+#include "net/vhost_net.h"
- #include "hw/virtio/vhost-backend.h"
- #include "hw/virtio/virtio.h"
- #include "system/memory.h"
-@@ -144,6 +145,7 @@ struct vhost_net {
-     struct vhost_virtqueue vqs[2];
-     int backend;
-     const int *feature_bits;
-+    SaveAcketFeatures *save_acked_features;
-     NetClientState *nc;
- };
- 
-diff --git a/include/net/vhost-user.h b/include/net/vhost-user.h
-deleted file mode 100644
-index a4d0ce4b8dd1..000000000000
---- a/include/net/vhost-user.h
-+++ /dev/null
-@@ -1,16 +0,0 @@
--/*
-- * vhost-user.h
-- *
-- * Copyright (c) 2013 Virtual Open Systems Sarl.
-- *
-- * This work is licensed under the terms of the GNU GPL, version 2 or later.
-- * See the COPYING file in the top-level directory.
-- *
-- */
--
--#ifndef VHOST_USER_H
--#define VHOST_USER_H
--
--void vhost_user_save_acked_features(NetClientState *nc);
--
--#endif /* VHOST_USER_H */
-diff --git a/include/net/vhost_net.h b/include/net/vhost_net.h
-index a8d281c8f7c2..eb26ed9bdcbf 100644
---- a/include/net/vhost_net.h
-+++ b/include/net/vhost_net.h
-@@ -8,6 +8,7 @@ struct vhost_net;
- typedef struct vhost_net VHostNetState;
- 
- typedef uint64_t (GetAckedFeatures)(NetClientState *nc);
-+typedef void (SaveAcketFeatures)(NetClientState *nc);
- 
- typedef struct VhostNetOptions {
-     VhostBackendType backend_type;
-@@ -16,6 +17,7 @@ typedef struct VhostNetOptions {
-     unsigned int nvqs;
-     const int *feature_bits;
-     GetAckedFeatures *get_acked_features;
-+    SaveAcketFeatures *save_acked_features;
-     void *opaque;
- } VhostNetOptions;
- 
-diff --git a/net/tap.c b/net/tap.c
-index acd77f816fec..79fa02a65c91 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -745,6 +745,7 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-         options.nvqs = 2;
-         options.feature_bits = kernel_feature_bits;
-         options.get_acked_features = NULL;
-+        options.save_acked_features = NULL;
- 
-         s->vhost_net = vhost_net_init(&options);
-         if (!s->vhost_net) {
-diff --git a/net/vhost-user-stub.c b/net/vhost-user-stub.c
-index 52ab4e13f12a..283dee87db2d 100644
---- a/net/vhost-user-stub.c
-+++ b/net/vhost-user-stub.c
-@@ -11,7 +11,6 @@
- #include "qemu/osdep.h"
- #include "clients.h"
- #include "net/vhost_net.h"
--#include "net/vhost-user.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- 
-diff --git a/net/vhost-user.c b/net/vhost-user.c
-index 93b413b49f34..8a3df27b02cf 100644
---- a/net/vhost-user.c
-+++ b/net/vhost-user.c
-@@ -11,7 +11,6 @@
- #include "qemu/osdep.h"
- #include "clients.h"
- #include "net/vhost_net.h"
--#include "net/vhost-user.h"
- #include "hw/virtio/vhost.h"
- #include "hw/virtio/vhost-user.h"
- #include "standard-headers/linux/virtio_net.h"
-@@ -88,7 +87,7 @@ static uint64_t vhost_user_get_acked_features(NetClientState *nc)
-     return s->acked_features;
- }
- 
--void vhost_user_save_acked_features(NetClientState *nc)
-+static void vhost_user_save_acked_features(NetClientState *nc)
- {
-     NetVhostUserState *s;
- 
-@@ -140,6 +139,7 @@ static int vhost_user_start(int queues, NetClientState *ncs[],
-         options.nvqs = 2;
-         options.feature_bits = user_feature_bits;
-         options.get_acked_features = vhost_user_get_acked_features;
-+        options.save_acked_features = vhost_user_save_acked_features;
- 
-         net = vhost_net_init(&options);
-         if (!net) {
-diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index a3980d1fb5ed..c63225d3d2ed 100644
---- a/net/vhost-vdpa.c
-+++ b/net/vhost-vdpa.c
-@@ -203,6 +203,7 @@ static int vhost_vdpa_add(NetClientState *ncs, void *be,
-     options.nvqs = nvqs;
-     options.feature_bits = vdpa_feature_bits;
-     options.get_acked_features = NULL;
-+    options.save_acked_features = NULL;
- 
-     net = vhost_net_init(&options);
-     if (!net) {
--- 
-2.49.0
+Eric
+>
+> -- PMM
+>
 
 
