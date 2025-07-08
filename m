@@ -4,130 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6B11C83F0F
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B951C83F09
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:27:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFDj-0003w9-20; Tue, 08 Jul 2025 16:47:19 -0400
+	id 1uZFFH-0002Sk-3R; Tue, 08 Jul 2025 16:48:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZDnh-0004iu-Gn
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:16:25 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZDnd-0007Mk-6k
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:16:21 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-60c79bedc19so7421791a12.3
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 12:16:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752002175; x=1752606975; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rdBIXTavtg6pNFCK5VZLNyddFa1VV1Q1VDfkVeBkEjg=;
- b=dzacxMQdeqGnAIOHtZcALSF6bW9SxQmWMdlfxoTFU7PyZbxhI59PVxKGbvzcBVGniw
- hEyhDO8+rQP21v6NMvAePYU2nbkCleUGxghIbhdMzJ8xApqhjEs6zyXRUh333H/dOatN
- OKFQhSaerBXC04z2I7+kbqrdMa3kojCCS7IAvLJoWx2fLkd/shgBy1WG4v2uUtUsfUvQ
- mYfTNOfNKzSCsN68sG+RZMI93lwDL/wz9dP/KEfotV1BhRjdSRpMOycMn2pUuA57x8fX
- F8z1l0WsoWSWYWJ07IOnwvPfs0LVeUHszVg0cjdVY200Vt3Q+zPYLfId/+YaKeBJ3U5j
- idRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752002175; x=1752606975;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rdBIXTavtg6pNFCK5VZLNyddFa1VV1Q1VDfkVeBkEjg=;
- b=ivqHesuX8M9vg+LTxZsIjpKPG7wOLsxiXqmj1b0kMy2vO3wC/Vlgalp68PjEQ/mIH/
- XpH99c33N+xju+0S+LT809TBZMrlolPvxSbh+pEsOHtXbUNt5uak+UR3bbj0sHvkhMX0
- vtMnmrZHxfpaD7AGuCIQB6YI9w3QHw4fjvxnvHUf5Y7bzVuCIho0f5aGKuMi7UuEOep5
- WzDORejfPS0oXaVyeaaXD3f85fJYVHq/z+AnERyI7rVF9n4chwaEomQdWbCrAMQqk34y
- 2I3T1RkMepWopBQlQQdDQkJpW6aCGshU0aW2aKKkCMu8wTa+4OGGYe4mtlccwJU7h2sY
- Vlvw==
-X-Gm-Message-State: AOJu0YyFtkuhYfSbSBZvNtjbr6UEDXtYRcrMm/3kBCtXBHRrWxX+HYU/
- BuSjGJI7bvwgJpifv1xaAOs8KjmEOwcOtsZ5cxnC9VRC+ZdmQaPq1HBaf0Bca40VtqarK6YcpVg
- slMzG
-X-Gm-Gg: ASbGncv/BXlefMrhYmqgZSzq8rg8PtR4ARuUThG++/ZSW89ycof8bRPAOFNRT+MBIol
- Bjus6QpYOBTanRlv3RvmemCRCtRPOVrYkIeCVFsmdn84yVlyBDdCV7NHN1AtEfU2sHyF3YEi6Ex
- MrAtlW0lEiO5X4I8Q5DUKtiYNDYuamghsvcJvudDnOzHssHg8mldbk9slsILPUDKqh09HCY73nL
- 3JZMIlBv2clzJqerjQgFGPSkHdsc+hDDaVMAIqDy8S9vIAMRTPPtHU01MWGSbDdscrVXgInpmkY
- 6aU6W9Q9x6ZTQRUMDqL86Hl5iXhYHXJx5nTH1vsPUG+eLPbF0U1t9ZuLpVeMzna5kh+zVldxdaN
- 9C5mEaeeU0eecCWLtkv88KM/KjVxsMu5xpmNCBxGPYyWnMDc=
-X-Google-Smtp-Source: AGHT+IFV+g34WvWk4fFmJMfbidxBMeG+bOyMg6P21RXF1+TrS4p4+WPGBBxZ3CcOWTROJtkYGu1rsw==
-X-Received: by 2002:a05:600c:8b6b:b0:454:ac20:d157 with SMTP id
- 5b1f17b1804b1-454b311616fmr201532255e9.30.1751995429336; 
- Tue, 08 Jul 2025 10:23:49 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454cd49379fsm27387165e9.25.2025.07.08.10.23.18
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 08 Jul 2025 10:23:48 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-riscv@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>, qemu-block@nongnu.org,
- qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Beniamino Galvani <b.galvani@gmail.com>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
- John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- Fan Ni <fan.ni@samsung.com>, Helge Deller <deller@gmx.de>,
- Pavel Pisa <pisa@cmp.felk.cvut.cz>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- Vikram Garhwal <vikram.garhwal@bytedance.com>,
- Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
- Bernhard Beschow <shentey@gmail.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- Magnus Damm <magnus.damm@gmail.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Alexander Graf <agraf@csgraf.de>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Peter Xu <peterx@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
- Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH-for-10.1 v7 7/8] qemu: Declare all load/store helper in
- 'qemu/bswap.h'
-Date: Tue,  8 Jul 2025 19:19:47 +0200
-Message-ID: <20250708171949.62500-8-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250708171949.62500-1-philmd@linaro.org>
-References: <20250708171949.62500-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1uZE3e-0006xa-5b; Tue, 08 Jul 2025 15:32:57 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1uZE3R-0003kM-99; Tue, 08 Jul 2025 15:32:45 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bbvzF4Sywz6DBPV;
+ Tue,  8 Jul 2025 16:53:45 +0800 (CST)
+Received: from frapeml100007.china.huawei.com (unknown [7.182.85.133])
+ by mail.maildlp.com (Postfix) with ESMTPS id 5910B1402EA;
+ Tue,  8 Jul 2025 16:54:49 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml100007.china.huawei.com (7.182.85.133) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Tue, 8 Jul 2025 10:54:49 +0200
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Tue, 8 Jul 2025 10:54:49 +0200
+To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "imammedo@redhat.com" <imammedo@redhat.com>,
+ "nathanc@nvidia.com" <nathanc@nvidia.com>, "mochs@nvidia.com"
+ <mochs@nvidia.com>, "smostafa@google.com" <smostafa@google.com>,
+ "gustavo.romero@linaro.org" <gustavo.romero@linaro.org>, "mst@redhat.com"
+ <mst@redhat.com>, "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ Linuxarm <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>,
+ jiangkunkun <jiangkunkun@huawei.com>, Jonathan Cameron
+ <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
+ <zhangfei.gao@linaro.org>
+Subject: RE: [PATCH v6 08/12] hw/arm/virt: Allow user-creatable SMMUv3 dev
+ instantiation
+Thread-Topic: [PATCH v6 08/12] hw/arm/virt: Allow user-creatable SMMUv3 dev
+ instantiation
+Thread-Index: AQHb6/xJlPtpAHu5pEuj91bLuyZP37QnvekAgAA0r1A=
+Date: Tue, 8 Jul 2025 08:54:49 +0000
+Message-ID: <e4cd2ccede7b46df9bbcf63dcf492fcf@huawei.com>
+References: <20250703084643.85740-1-shameerali.kolothum.thodi@huawei.com>
+ <20250703084643.85740-9-shameerali.kolothum.thodi@huawei.com>
+ <b05cd1f5-db7a-45d3-a582-85c808adcd04@redhat.com>
+In-Reply-To: <b05cd1f5-db7a-45d3-a582-85c808adcd04@redhat.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,616 +88,104 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Restrict "exec/tswap.h" to the tswap*() methods,
-move the load/store helpers with the other ones
-declared in "qemu/bswap.h".
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/exec/tswap.h                 | 70 --------------------------
- include/qemu/bswap.h                 | 73 ++++++++++++++++++++++++++++
- include/system/memory.h              |  1 -
- include/user/abitypes.h              |  1 -
- target/ppc/mmu-hash64.h              |  2 -
- hw/acpi/bios-linker-loader.c         |  2 -
- hw/arm/allwinner-r40.c               |  1 -
- hw/arm/boot.c                        |  2 +
- hw/arm/npcm7xx.c                     |  2 +-
- hw/block/hd-geometry.c               |  1 -
- hw/char/riscv_htif.c                 |  1 -
- hw/cxl/cxl-events.c                  |  2 -
- hw/display/artist.c                  |  1 +
- hw/display/ati.c                     |  1 +
- hw/net/can/ctucan_core.c             |  1 -
- hw/net/lan9118.c                     |  1 +
- hw/net/rtl8139.c                     |  1 +
- hw/net/vmxnet3.c                     |  1 -
- hw/pci-host/gt64120.c                |  1 +
- hw/pci-host/pnv_phb3.c               |  1 +
- hw/pci-host/pnv_phb4.c               |  1 +
- hw/pci-host/ppce500.c                |  1 -
- hw/pci-host/sh_pci.c                 |  1 -
- hw/s390x/s390-pci-inst.c             |  1 +
- hw/sensor/lsm303dlhc_mag.c           |  1 -
- hw/smbios/smbios.c                   |  1 +
- hw/vfio/migration-multifd.c          |  1 -
- hw/virtio/virtio-pci.c               |  1 +
- hw/vmapple/virtio-blk.c              |  1 -
- target/arm/cpu.c                     |  1 -
- target/i386/tcg/system/excp_helper.c |  1 -
- target/i386/xsave_helper.c           |  1 -
- target/riscv/vector_helper.c         |  1 -
- tests/tcg/plugins/mem.c              |  1 +
- 34 files changed, 87 insertions(+), 93 deletions(-)
-
-diff --git a/include/exec/tswap.h b/include/exec/tswap.h
-index 55ffa633598..72219e2c431 100644
---- a/include/exec/tswap.h
-+++ b/include/exec/tswap.h
-@@ -69,74 +69,4 @@ static inline void tswap64s(uint64_t *s)
-     }
- }
- 
--/* Return ld{word}_{le,be}_p following target endianness. */
--#define LOAD_IMPL(word, args...)                    \
--do {                                                \
--    if (target_big_endian()) {                      \
--        return glue(glue(ld, word), _be_p)(args);   \
--    } else {                                        \
--        return glue(glue(ld, word), _le_p)(args);   \
--    }                                               \
--} while (0)
--
--static inline int lduw_p(const void *ptr)
--{
--    LOAD_IMPL(uw, ptr);
--}
--
--static inline int ldsw_p(const void *ptr)
--{
--    LOAD_IMPL(sw, ptr);
--}
--
--static inline int ldl_p(const void *ptr)
--{
--    LOAD_IMPL(l, ptr);
--}
--
--static inline uint64_t ldq_p(const void *ptr)
--{
--    LOAD_IMPL(q, ptr);
--}
--
--static inline uint64_t ldn_p(const void *ptr, int sz)
--{
--    LOAD_IMPL(n, ptr, sz);
--}
--
--#undef LOAD_IMPL
--
--/* Call st{word}_{le,be}_p following target endianness. */
--#define STORE_IMPL(word, args...)           \
--do {                                        \
--    if (target_big_endian()) {              \
--        glue(glue(st, word), _be_p)(args);  \
--    } else {                                \
--        glue(glue(st, word), _le_p)(args);  \
--    }                                       \
--} while (0)
--
--
--static inline void stw_p(void *ptr, uint16_t v)
--{
--    STORE_IMPL(w, ptr, v);
--}
--
--static inline void stl_p(void *ptr, uint32_t v)
--{
--    STORE_IMPL(l, ptr, v);
--}
--
--static inline void stq_p(void *ptr, uint64_t v)
--{
--    STORE_IMPL(q, ptr, v);
--}
--
--static inline void stn_p(void *ptr, int sz, uint64_t v)
--{
--    STORE_IMPL(n, ptr, sz, v);
--}
--
--#undef STORE_IMPL
--
- #endif  /* TSWAP_H */
-diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
-index 9a117645360..39ba64046a6 100644
---- a/include/qemu/bswap.h
-+++ b/include/qemu/bswap.h
-@@ -1,6 +1,8 @@
- #ifndef BSWAP_H
- #define BSWAP_H
- 
-+#include "qemu/target-info.h"
-+
- #undef  bswap16
- #define bswap16(_x) __builtin_bswap16(_x)
- #undef  bswap32
-@@ -432,4 +434,75 @@ DO_STN_LDN_P(be)
- #undef le_bswaps
- #undef be_bswaps
- 
-+
-+/* Return ld{word}_{le,be}_p following target endianness. */
-+#define LOAD_IMPL(word, args...)                    \
-+do {                                                \
-+    if (target_big_endian()) {                      \
-+        return glue(glue(ld, word), _be_p)(args);   \
-+    } else {                                        \
-+        return glue(glue(ld, word), _le_p)(args);   \
-+    }                                               \
-+} while (0)
-+
-+static inline int lduw_p(const void *ptr)
-+{
-+    LOAD_IMPL(uw, ptr);
-+}
-+
-+static inline int ldsw_p(const void *ptr)
-+{
-+    LOAD_IMPL(sw, ptr);
-+}
-+
-+static inline int ldl_p(const void *ptr)
-+{
-+    LOAD_IMPL(l, ptr);
-+}
-+
-+static inline uint64_t ldq_p(const void *ptr)
-+{
-+    LOAD_IMPL(q, ptr);
-+}
-+
-+static inline uint64_t ldn_p(const void *ptr, int sz)
-+{
-+    LOAD_IMPL(n, ptr, sz);
-+}
-+
-+#undef LOAD_IMPL
-+
-+/* Call st{word}_{le,be}_p following target endianness. */
-+#define STORE_IMPL(word, args...)           \
-+do {                                        \
-+    if (target_big_endian()) {              \
-+        glue(glue(st, word), _be_p)(args);  \
-+    } else {                                \
-+        glue(glue(st, word), _le_p)(args);  \
-+    }                                       \
-+} while (0)
-+
-+
-+static inline void stw_p(void *ptr, uint16_t v)
-+{
-+    STORE_IMPL(w, ptr, v);
-+}
-+
-+static inline void stl_p(void *ptr, uint32_t v)
-+{
-+    STORE_IMPL(l, ptr, v);
-+}
-+
-+static inline void stq_p(void *ptr, uint64_t v)
-+{
-+    STORE_IMPL(q, ptr, v);
-+}
-+
-+static inline void stn_p(void *ptr, int sz, uint64_t v)
-+{
-+    STORE_IMPL(n, ptr, sz, v);
-+}
-+
-+#undef STORE_IMPL
-+
- #endif /* BSWAP_H */
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 46248d4a52c..3ba34d49ba3 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -19,7 +19,6 @@
- #include "exec/memattrs.h"
- #include "exec/memop.h"
- #include "exec/ramlist.h"
--#include "exec/tswap.h"
- #include "qemu/bswap.h"
- #include "qemu/queue.h"
- #include "qemu/int128.h"
-diff --git a/include/user/abitypes.h b/include/user/abitypes.h
-index 7528124b62f..be7a8765238 100644
---- a/include/user/abitypes.h
-+++ b/include/user/abitypes.h
-@@ -6,7 +6,6 @@
- #endif
- 
- #include "exec/cpu-defs.h"
--#include "exec/tswap.h"
- #include "user/tswap-target.h"
- 
- #ifdef TARGET_ABI32
-diff --git a/target/ppc/mmu-hash64.h b/target/ppc/mmu-hash64.h
-index b8fb12a9705..ae8d4b37aed 100644
---- a/target/ppc/mmu-hash64.h
-+++ b/target/ppc/mmu-hash64.h
-@@ -1,8 +1,6 @@
- #ifndef MMU_HASH64_H
- #define MMU_HASH64_H
- 
--#include "exec/tswap.h"
--
- #ifndef CONFIG_USER_ONLY
- 
- #ifdef TARGET_PPC64
-diff --git a/hw/acpi/bios-linker-loader.c b/hw/acpi/bios-linker-loader.c
-index 108061828b1..c9ffe449aac 100644
---- a/hw/acpi/bios-linker-loader.c
-+++ b/hw/acpi/bios-linker-loader.c
-@@ -22,8 +22,6 @@
- #include "hw/acpi/bios-linker-loader.h"
- #include "hw/nvram/fw_cfg.h"
- 
--#include "qemu/bswap.h"
--
- /*
-  * Linker/loader is a paravirtualized interface that passes commands to guest.
-  * The commands can be used to request guest to
-diff --git a/hw/arm/allwinner-r40.c b/hw/arm/allwinner-r40.c
-index 0bf700865c2..c8eda39957c 100644
---- a/hw/arm/allwinner-r40.c
-+++ b/hw/arm/allwinner-r40.c
-@@ -20,7 +20,6 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
--#include "qemu/bswap.h"
- #include "qemu/module.h"
- #include "qemu/units.h"
- #include "hw/boards.h"
-diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-index becd827af13..d391cd01bb1 100644
---- a/hw/arm/boot.c
-+++ b/hw/arm/boot.c
-@@ -15,6 +15,7 @@
- #include "hw/arm/boot.h"
- #include "hw/arm/linux-boot-if.h"
- #include "cpu.h"
-+#include "exec/tswap.h"
- #include "exec/target_page.h"
- #include "system/kvm.h"
- #include "system/tcg.h"
-@@ -29,6 +30,7 @@
- #include "qemu/config-file.h"
- #include "qemu/option.h"
- #include "qemu/units.h"
-+#include "qemu/bswap.h"
- 
- /* Kernel boot protocol is specified in the kernel docs
-  * Documentation/arm/Booting and Documentation/arm64/booting.txt
-diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
-index 2f30c49df55..ecfae328a96 100644
---- a/hw/arm/npcm7xx.c
-+++ b/hw/arm/npcm7xx.c
-@@ -24,7 +24,7 @@
- #include "hw/qdev-clock.h"
- #include "hw/qdev-properties.h"
- #include "qapi/error.h"
--#include "qemu/bswap.h"
-+#include "exec/tswap.h"
- #include "qemu/units.h"
- #include "system/system.h"
- #include "target/arm/cpu-qom.h"
-diff --git a/hw/block/hd-geometry.c b/hw/block/hd-geometry.c
-index f3939e73f42..db221901cf4 100644
---- a/hw/block/hd-geometry.c
-+++ b/hw/block/hd-geometry.c
-@@ -33,7 +33,6 @@
- #include "qemu/osdep.h"
- #include "system/block-backend.h"
- #include "qapi/qapi-types-block.h"
--#include "qemu/bswap.h"
- #include "hw/block/block.h"
- #include "trace.h"
- 
-diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
-index c884be5d757..a78ea9b01c0 100644
---- a/hw/char/riscv_htif.c
-+++ b/hw/char/riscv_htif.c
-@@ -29,7 +29,6 @@
- #include "qemu/timer.h"
- #include "qemu/error-report.h"
- #include "system/address-spaces.h"
--#include "exec/tswap.h"
- #include "system/dma.h"
- #include "system/runstate.h"
- #include "trace.h"
-diff --git a/hw/cxl/cxl-events.c b/hw/cxl/cxl-events.c
-index 12dee2e4675..f90470930d6 100644
---- a/hw/cxl/cxl-events.c
-+++ b/hw/cxl/cxl-events.c
-@@ -8,8 +8,6 @@
-  */
- 
- #include "qemu/osdep.h"
--
--#include "qemu/bswap.h"
- #include "qemu/error-report.h"
- #include "hw/pci/msi.h"
- #include "hw/pci/msix.h"
-diff --git a/hw/display/artist.c b/hw/display/artist.c
-index 3fafc8a222b..3c884c92437 100644
---- a/hw/display/artist.c
-+++ b/hw/display/artist.c
-@@ -12,6 +12,7 @@
- #include "qemu/log.h"
- #include "qemu/module.h"
- #include "qemu/units.h"
-+#include "qemu/bswap.h"
- #include "qapi/error.h"
- #include "hw/sysbus.h"
- #include "hw/loader.h"
-diff --git a/hw/display/ati.c b/hw/display/ati.c
-index 7de27732cdc..f7c0006a879 100644
---- a/hw/display/ati.c
-+++ b/hw/display/ati.c
-@@ -22,6 +22,7 @@
- #include "vga-access.h"
- #include "hw/qdev-properties.h"
- #include "vga_regs.h"
-+#include "qemu/bswap.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
- #include "qemu/error-report.h"
-diff --git a/hw/net/can/ctucan_core.c b/hw/net/can/ctucan_core.c
-index 17131a4e18f..6bd99c477b2 100644
---- a/hw/net/can/ctucan_core.c
-+++ b/hw/net/can/ctucan_core.c
-@@ -28,7 +28,6 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/log.h"
--#include "qemu/bswap.h"
- #include "qemu/bitops.h"
- #include "hw/irq.h"
- #include "migration/vmstate.h"
-diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
-index 6dda1e5c940..3017e129710 100644
---- a/hw/net/lan9118.c
-+++ b/hw/net/lan9118.c
-@@ -21,6 +21,7 @@
- #include "hw/ptimer.h"
- #include "hw/qdev-properties.h"
- #include "qapi/error.h"
-+#include "qemu/bswap.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
- #include <zlib.h> /* for crc32 */
-diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
-index 654a087d80a..324fb932aac 100644
---- a/hw/net/rtl8139.c
-+++ b/hw/net/rtl8139.c
-@@ -57,6 +57,7 @@
- #include "system/dma.h"
- #include "qemu/module.h"
- #include "qemu/timer.h"
-+#include "qemu/bswap.h"
- #include "net/net.h"
- #include "net/eth.h"
- #include "system/system.h"
-diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
-index 7c0ca56b7c0..af73aa8ef28 100644
---- a/hw/net/vmxnet3.c
-+++ b/hw/net/vmxnet3.c
-@@ -22,7 +22,6 @@
- #include "net/tap.h"
- #include "net/checksum.h"
- #include "system/system.h"
--#include "qemu/bswap.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
- #include "hw/pci/msix.h"
-diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
-index b12a25696c4..b1d96f62fe9 100644
---- a/hw/pci-host/gt64120.c
-+++ b/hw/pci-host/gt64120.c
-@@ -28,6 +28,7 @@
- #include "qapi/error.h"
- #include "qemu/units.h"
- #include "qemu/log.h"
-+#include "qemu/bswap.h"
- #include "hw/qdev-properties.h"
- #include "hw/registerfields.h"
- #include "hw/pci/pci_device.h"
-diff --git a/hw/pci-host/pnv_phb3.c b/hw/pci-host/pnv_phb3.c
-index a4335f44f22..5d8383fac30 100644
---- a/hw/pci-host/pnv_phb3.c
-+++ b/hw/pci-host/pnv_phb3.c
-@@ -8,6 +8,7 @@
-  */
- #include "qemu/osdep.h"
- #include "qemu/log.h"
-+#include "qemu/bswap.h"
- #include "qapi/visitor.h"
- #include "qapi/error.h"
- #include "hw/pci-host/pnv_phb3_regs.h"
-diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-index 77ea35299d3..18992054e83 100644
---- a/hw/pci-host/pnv_phb4.c
-+++ b/hw/pci-host/pnv_phb4.c
-@@ -8,6 +8,7 @@
-  */
- #include "qemu/osdep.h"
- #include "qemu/log.h"
-+#include "qemu/bswap.h"
- #include "qapi/visitor.h"
- #include "qapi/error.h"
- #include "target/ppc/cpu.h"
-diff --git a/hw/pci-host/ppce500.c b/hw/pci-host/ppce500.c
-index 52269b05bb1..975d191ccb8 100644
---- a/hw/pci-host/ppce500.c
-+++ b/hw/pci-host/ppce500.c
-@@ -20,7 +20,6 @@
- #include "migration/vmstate.h"
- #include "hw/pci/pci_device.h"
- #include "hw/pci/pci_host.h"
--#include "qemu/bswap.h"
- #include "hw/pci-host/ppce500.h"
- #include "qom/object.h"
- 
-diff --git a/hw/pci-host/sh_pci.c b/hw/pci-host/sh_pci.c
-index de8f6a84aab..62fb945075f 100644
---- a/hw/pci-host/sh_pci.c
-+++ b/hw/pci-host/sh_pci.c
-@@ -28,7 +28,6 @@
- #include "hw/irq.h"
- #include "hw/pci/pci_device.h"
- #include "hw/pci/pci_host.h"
--#include "qemu/bswap.h"
- #include "qemu/module.h"
- #include "qom/object.h"
- 
-diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index b5dddb22b84..a3bb5aa2216 100644
---- a/hw/s390x/s390-pci-inst.c
-+++ b/hw/s390x/s390-pci-inst.c
-@@ -16,6 +16,7 @@
- #include "exec/target_page.h"
- #include "system/memory.h"
- #include "qemu/error-report.h"
-+#include "qemu/bswap.h"
- #include "system/hw_accel.h"
- #include "hw/boards.h"
- #include "hw/pci/pci_device.h"
-diff --git a/hw/sensor/lsm303dlhc_mag.c b/hw/sensor/lsm303dlhc_mag.c
-index f9e501da840..cd5773ae64e 100644
---- a/hw/sensor/lsm303dlhc_mag.c
-+++ b/hw/sensor/lsm303dlhc_mag.c
-@@ -28,7 +28,6 @@
- #include "qapi/visitor.h"
- #include "qemu/module.h"
- #include "qemu/log.h"
--#include "qemu/bswap.h"
- 
- enum LSM303DLHCMagReg {
-     LSM303DLHC_MAG_REG_CRA          = 0x00,
-diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-index ad4cd6721e6..1ac063cfb4b 100644
---- a/hw/smbios/smbios.c
-+++ b/hw/smbios/smbios.c
-@@ -17,6 +17,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/units.h"
-+#include "qemu/bswap.h"
- #include "qapi/error.h"
- #include "qemu/config-file.h"
- #include "qemu/module.h"
-diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-index 850a3194887..69e57833dbd 100644
---- a/hw/vfio/migration-multifd.c
-+++ b/hw/vfio/migration-multifd.c
-@@ -13,7 +13,6 @@
- #include "hw/vfio/vfio-device.h"
- #include "migration/misc.h"
- #include "qapi/error.h"
--#include "qemu/bswap.h"
- #include "qemu/error-report.h"
- #include "qemu/lockable.h"
- #include "qemu/main-loop.h"
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index fba2372c93b..767216d7959 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -30,6 +30,7 @@
- #include "qemu/error-report.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
-+#include "qemu/bswap.h"
- #include "hw/pci/msi.h"
- #include "hw/pci/msix.h"
- #include "hw/loader.h"
-diff --git a/hw/vmapple/virtio-blk.c b/hw/vmapple/virtio-blk.c
-index 532b5649ab7..9de9aaae0bf 100644
---- a/hw/vmapple/virtio-blk.c
-+++ b/hw/vmapple/virtio-blk.c
-@@ -19,7 +19,6 @@
- #include "hw/vmapple/vmapple.h"
- #include "hw/virtio/virtio-blk.h"
- #include "hw/virtio/virtio-pci.h"
--#include "qemu/bswap.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
- #include "qapi/error.h"
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index ebac86f70d3..baaa13aed6d 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -23,7 +23,6 @@
- #include "qemu/timer.h"
- #include "qemu/log.h"
- #include "exec/page-vary.h"
--#include "exec/tswap.h"
- #include "target/arm/idau.h"
- #include "qemu/module.h"
- #include "qapi/error.h"
-diff --git a/target/i386/tcg/system/excp_helper.c b/target/i386/tcg/system/excp_helper.c
-index c1626215877..50040f6fcaf 100644
---- a/target/i386/tcg/system/excp_helper.c
-+++ b/target/i386/tcg/system/excp_helper.c
-@@ -25,7 +25,6 @@
- #include "exec/page-protection.h"
- #include "exec/target_page.h"
- #include "exec/tlb-flags.h"
--#include "exec/tswap.h"
- #include "tcg/helper-tcg.h"
- 
- typedef struct TranslateParams {
-diff --git a/target/i386/xsave_helper.c b/target/i386/xsave_helper.c
-index 24ab7be8e9a..996e9f3bfef 100644
---- a/target/i386/xsave_helper.c
-+++ b/target/i386/xsave_helper.c
-@@ -5,7 +5,6 @@
- #include "qemu/osdep.h"
- 
- #include "cpu.h"
--#include "exec/tswap.h"
- 
- void x86_cpu_xsave_all_areas(X86CPU *cpu, void *buf, uint32_t buflen)
- {
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index b41c29da0be..7c67d67a13f 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -27,7 +27,6 @@
- #include "exec/helper-proto.h"
- #include "exec/tlb-flags.h"
- #include "exec/target_page.h"
--#include "exec/tswap.h"
- #include "fpu/softfloat.h"
- #include "tcg/tcg-gvec-desc.h"
- #include "internals.h"
-diff --git a/tests/tcg/plugins/mem.c b/tests/tcg/plugins/mem.c
-index ca4e8883dd2..9649bce99ca 100644
---- a/tests/tcg/plugins/mem.c
-+++ b/tests/tcg/plugins/mem.c
-@@ -20,6 +20,7 @@
-  * few things provided by compiler.h.
-  */
- #include <compiler.h>
-+#include <stdbool.h>
- #include <bswap.h>
- #include <qemu-plugin.h>
- 
--- 
-2.49.0
-
+SGkgRXJpYywNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBFcmljIEF1
+Z2VyIDxlcmljLmF1Z2VyQHJlZGhhdC5jb20+DQo+IFNlbnQ6IFR1ZXNkYXksIEp1bHkgOCwgMjAy
+NSA4OjQxIEFNDQo+IFRvOiBTaGFtZWVyYWxpIEtvbG90aHVtIFRob2RpDQo+IDxzaGFtZWVyYWxp
+LmtvbG90aHVtLnRob2RpQGh1YXdlaS5jb20+OyBxZW11LWFybUBub25nbnUub3JnOw0KPiBxZW11
+LWRldmVsQG5vbmdudS5vcmcNCj4gQ2M6IHBldGVyLm1heWRlbGxAbGluYXJvLm9yZzsgamdnQG52
+aWRpYS5jb207IG5pY29saW5jQG52aWRpYS5jb207DQo+IGRkdXRpbGVAcmVkaGF0LmNvbTsgYmVy
+cmFuZ2VAcmVkaGF0LmNvbTsgaW1hbW1lZG9AcmVkaGF0LmNvbTsNCj4gbmF0aGFuY0BudmlkaWEu
+Y29tOyBtb2Noc0BudmlkaWEuY29tOyBzbW9zdGFmYUBnb29nbGUuY29tOw0KPiBndXN0YXZvLnJv
+bWVyb0BsaW5hcm8ub3JnOyBtc3RAcmVkaGF0LmNvbTsNCj4gbWFyY2VsLmFwZmVsYmF1bUBnbWFp
+bC5jb207IExpbnV4YXJtIDxsaW51eGFybUBodWF3ZWkuY29tPjsNCj4gV2FuZ3pob3UgKEIpIDx3
+YW5nemhvdTFAaGlzaWxpY29uLmNvbT47IGppYW5na3Vua3VuDQo+IDxqaWFuZ2t1bmt1bkBodWF3
+ZWkuY29tPjsgSm9uYXRoYW4gQ2FtZXJvbg0KPiA8am9uYXRoYW4uY2FtZXJvbkBodWF3ZWkuY29t
+PjsgemhhbmdmZWkuZ2FvQGxpbmFyby5vcmcNCj4gU3ViamVjdDogUmU6IFtQQVRDSCB2NiAwOC8x
+Ml0gaHcvYXJtL3ZpcnQ6IEFsbG93IHVzZXItY3JlYXRhYmxlIFNNTVV2Mw0KPiBkZXYgaW5zdGFu
+dGlhdGlvbg0KPiANCj4gSGkgU2hhbWVlciwNCj4gDQo+IE9uIDcvMy8yNSAxMDo0NiBBTSwgU2hh
+bWVlciBLb2xvdGh1bSB3cm90ZToNCj4gPiBBbGxvdyBjb2xkLXBsdWdnaW5nIG9mIGFuIFNNTVV2
+MyBkZXZpY2Ugb24gdGhlIHZpcnQgbWFjaGluZSB3aGVuIG5vDQo+ID4gZ2xvYmFsIChsZWdhY3kp
+IFNNTVV2MyBpcyBwcmVzZW50IG9yIHdoZW4gYSB2aXJ0aW8taW9tbXUgaXMgc3BlY2lmaWVkLg0K
+PiA+DQo+ID4gVGhpcyB1c2VyLWNyZWF0ZWQgU01NVXYzIGRldmljZSBpcyB0aWVkIHRvIGEgc3Bl
+Y2lmaWMgUENJIGJ1cyBwcm92aWRlZA0KPiA+IGJ5IHRoZSB1c2VyLCBzbyBlbnN1cmUgdGhlIElP
+TU1VIG9wcyBhcmUgY29uZmlndXJlZCBhY2NvcmRpbmdseS4NCj4gPg0KPiA+IER1ZSB0byBjdXJy
+ZW50IGxpbWl0YXRpb25zIGluIFFFTVXigJlzIGRldmljZSB0cmVlIHN1cHBvcnQsIHNwZWNpZmlj
+YWxseQ0KPiA+IGl0cyBpbmFiaWxpdHkgdG8gcHJvcGVybHkgcHJlc2VudCBweGItcGNpZSBiYXNl
+ZCByb290IGNvbXBsZXhlcyBhbmQNCj4gPiB0aGVpciBkZXZpY2VzLCB0aGUgZGV2aWNlIHRyZWUg
+c3VwcG9ydCBmb3IgdGhlIG5ldyBTTU1VdjMgZGV2aWNlIGlzDQo+ID4gbGltaXRlZCB0byBjYXNl
+cyB3aGVyZSBpdCBpcyBhdHRhY2hlZCB0byB0aGUgZGVmYXVsdCBwY2llLjAgcm9vdCBjb21wbGV4
+Lg0KPiA+DQo+ID4gUmV2aWV3ZWQtYnk6IEpvbmF0aGFuIENhbWVyb24gPGpvbmF0aGFuLmNhbWVy
+b25AaHVhd2VpLmNvbT4NCj4gPiBSZXZpZXdlZC1ieTogRXJpYyBBdWdlciA8ZXJpYy5hdWdlckBy
+ZWRoYXQuY29tPg0KPiA+IFRlc3RlZC1ieTogTmF0aGFuIENoZW4gPG5hdGhhbmNAbnZpZGlhLmNv
+bT4NCj4gPiBTaWduZWQtb2ZmLWJ5OiBTaGFtZWVyIEtvbG90aHVtDQo+IDxzaGFtZWVyYWxpLmtv
+bG90aHVtLnRob2RpQGh1YXdlaS5jb20+DQo+ID4gLS0tDQo+ID4gIGh3L2FybS9zbW11LWNvbW1v
+bi5jICAgICAgICAgfCAgOCArKysrKy0NCj4gPiAgaHcvYXJtL3NtbXV2My5jICAgICAgICAgICAg
+ICB8ICAyICsrDQo+ID4gIGh3L2FybS92aXJ0LmMgICAgICAgICAgICAgICAgfCA1MCArKysrKysr
+KysrKysrKysrKysrKysrKysrKysrKysrKysrKysNCj4gPiAgaHcvY29yZS9zeXNidXMtZmR0LmMg
+ICAgICAgICB8ICAzICsrKw0KPiA+ICBpbmNsdWRlL2h3L2FybS9zbW11LWNvbW1vbi5oIHwgIDEg
+Kw0KPiA+ICA1IGZpbGVzIGNoYW5nZWQsIDYzIGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkN
+Cj4gPg0KPiA+IGRpZmYgLS1naXQgYS9ody9hcm0vc21tdS1jb21tb24uYyBiL2h3L2FybS9zbW11
+LWNvbW1vbi5jDQo+ID4gaW5kZXggYjE1ZTdmZDBlNC4uMmVlNDY5MTI5OSAxMDA2NDQNCj4gPiAt
+LS0gYS9ody9hcm0vc21tdS1jb21tb24uYw0KPiA+ICsrKyBiL2h3L2FybS9zbW11LWNvbW1vbi5j
+DQo+ID4gQEAgLTk1OSw3ICs5NTksMTIgQEAgc3RhdGljIHZvaWQgc21tdV9iYXNlX3JlYWxpemUo
+RGV2aWNlU3RhdGUgKmRldiwNCj4gRXJyb3IgKiplcnJwKQ0KPiA+ICAgICAgICAgICAgICAgICAg
+Z290byBvdXRfZXJyOw0KPiA+ICAgICAgICAgICAgICB9DQo+ID4gICAgICAgICAgfQ0KPiA+IC0g
+ICAgICAgIHBjaV9zZXR1cF9pb21tdShwY2lfYnVzLCAmc21tdV9vcHMsIHMpOw0KPiA+ICsNCj4g
+PiArICAgICAgICBpZiAocy0+c21tdV9wZXJfYnVzKSB7DQo+ID4gKyAgICAgICAgICAgIHBjaV9z
+ZXR1cF9pb21tdV9wZXJfYnVzKHBjaV9idXMsICZzbW11X29wcywgcyk7DQo+ID4gKyAgICAgICAg
+fSBlbHNlIHsNCj4gPiArICAgICAgICAgICAgcGNpX3NldHVwX2lvbW11KHBjaV9idXMsICZzbW11
+X29wcywgcyk7DQo+ID4gKyAgICAgICAgfQ0KPiA+ICAgICAgICAgIHJldHVybjsNCj4gPiAgICAg
+IH0NCj4gPiAgb3V0X2VycjoNCj4gPiBAQCAtOTg0LDYgKzk4OSw3IEBAIHN0YXRpYyB2b2lkIHNt
+bXVfYmFzZV9yZXNldF9leGl0KE9iamVjdCAqb2JqLA0KPiBSZXNldFR5cGUgdHlwZSkNCj4gPg0K
+PiA+ICBzdGF0aWMgY29uc3QgUHJvcGVydHkgc21tdV9kZXZfcHJvcGVydGllc1tdID0gew0KPiA+
+ICAgICAgREVGSU5FX1BST1BfVUlOVDgoImJ1c19udW0iLCBTTU1VU3RhdGUsIGJ1c19udW0sIDAp
+LA0KPiA+ICsgICAgREVGSU5FX1BST1BfQk9PTCgic21tdV9wZXJfYnVzIiwgU01NVVN0YXRlLCBz
+bW11X3Blcl9idXMsDQo+IGZhbHNlKSwNCj4gPiAgICAgIERFRklORV9QUk9QX0xJTksoInByaW1h
+cnktYnVzIiwgU01NVVN0YXRlLCBwcmltYXJ5X2J1cywNCj4gPiAgICAgICAgICAgICAgICAgICAg
+ICAgVFlQRV9QQ0lfQlVTLCBQQ0lCdXMgKiksDQo+ID4gIH07DQo+ID4gZGlmZiAtLWdpdCBhL2h3
+L2FybS9zbW11djMuYyBiL2h3L2FybS9zbW11djMuYw0KPiA+IGluZGV4IGFiNjc5NzIzNTMuLmJj
+ZjhhZjhkYzcgMTAwNjQ0DQo+ID4gLS0tIGEvaHcvYXJtL3NtbXV2My5jDQo+ID4gKysrIGIvaHcv
+YXJtL3NtbXV2My5jDQo+ID4gQEAgLTE5OTYsNiArMTk5Niw4IEBAIHN0YXRpYyB2b2lkIHNtbXV2
+M19jbGFzc19pbml0KE9iamVjdENsYXNzDQo+ICprbGFzcywgY29uc3Qgdm9pZCAqZGF0YSkNCj4g
+PiAgICAgIGRldmljZV9jbGFzc19zZXRfcGFyZW50X3JlYWxpemUoZGMsIHNtbXVfcmVhbGl6ZSwN
+Cj4gPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJmMtPnBhcmVudF9yZWFs
+aXplKTsNCj4gPiAgICAgIGRldmljZV9jbGFzc19zZXRfcHJvcHMoZGMsIHNtbXV2M19wcm9wZXJ0
+aWVzKTsNCj4gPiArICAgIGRjLT5ob3RwbHVnZ2FibGUgPSBmYWxzZTsNCj4gPiArICAgIGRjLT51
+c2VyX2NyZWF0YWJsZSA9IHRydWU7DQo+ID4gIH0NCj4gPg0KPiA+ICBzdGF0aWMgaW50IHNtbXV2
+M19ub3RpZnlfZmxhZ19jaGFuZ2VkKElPTU1VTWVtb3J5UmVnaW9uICppb21tdSwNCj4gPiBkaWZm
+IC0tZ2l0IGEvaHcvYXJtL3ZpcnQuYyBiL2h3L2FybS92aXJ0LmMNCj4gPiBpbmRleCAwNWExNDg4
+MWNmLi44NjYyMTczYzQzIDEwMDY0NA0KPiA+IC0tLSBhL2h3L2FybS92aXJ0LmMNCj4gPiArKysg
+Yi9ody9hcm0vdmlydC5jDQo+ID4gQEAgLTU2LDYgKzU2LDcgQEANCj4gPiAgI2luY2x1ZGUgInFl
+bXUvY3V0aWxzLmgiDQo+ID4gICNpbmNsdWRlICJxZW11L2Vycm9yLXJlcG9ydC5oIg0KPiA+ICAj
+aW5jbHVkZSAicWVtdS9tb2R1bGUuaCINCj4gPiArI2luY2x1ZGUgImh3L3BjaS9wY2lfYnVzLmgi
+DQo+ID4gICNpbmNsdWRlICJody9wY2ktaG9zdC9ncGV4LmgiDQo+ID4gICNpbmNsdWRlICJody92
+aXJ0aW8vdmlydGlvLXBjaS5oIg0KPiA+ICAjaW5jbHVkZSAiaHcvY29yZS9zeXNidXMtZmR0Lmgi
+DQo+ID4gQEAgLTE0NDAsNiArMTQ0MSwyOCBAQCBzdGF0aWMgdm9pZCBjcmVhdGVfc21tdXYzX2R0
+X2JpbmRpbmdzKGNvbnN0DQo+IFZpcnRNYWNoaW5lU3RhdGUgKnZtcywgaHdhZGRyIGJhc2UsDQo+
+ID4gICAgICBnX2ZyZWUobm9kZSk7DQo+ID4gIH0NCj4gPg0KPiA+ICtzdGF0aWMgdm9pZCBjcmVh
+dGVfc21tdXYzX2Rldl9kdGIoVmlydE1hY2hpbmVTdGF0ZSAqdm1zLA0KPiA+ICsgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgRGV2aWNlU3RhdGUgKmRldiwgUENJQnVzICpidXMpDQo+
+ID4gK3sNCj4gPiArICAgIFBsYXRmb3JtQnVzRGV2aWNlICpwYnVzID0gUExBVEZPUk1fQlVTX0RF
+VklDRSh2bXMtDQo+ID5wbGF0Zm9ybV9idXNfZGV2KTsNCj4gPiArICAgIFN5c0J1c0RldmljZSAq
+c2JkZXYgPSBTWVNfQlVTX0RFVklDRShkZXYpOw0KPiA+ICsgICAgaW50IGlycSA9IHBsYXRmb3Jt
+X2J1c19nZXRfaXJxbihwYnVzLCBzYmRldiwgMCk7DQo+ID4gKyAgICBod2FkZHIgYmFzZSA9IHBs
+YXRmb3JtX2J1c19nZXRfbW1pb19hZGRyKHBidXMsIHNiZGV2LCAwKTsNCj4gPiArICAgIE1hY2hp
+bmVTdGF0ZSAqbXMgPSBNQUNISU5FKHZtcyk7DQo+ID4gKw0KPiA+ICsgICAgaWYgKHN0cmNtcCgi
+cGNpZS4wIiwgYnVzLT5xYnVzLm5hbWUpKSB7DQo+ID4gKyAgICAgICAgd2Fybl9yZXBvcnQoIlNN
+TVV2MyBkZXZpY2Ugb25seSBzdXBwb3J0ZWQgd2l0aCBwY2llLjAgZm9yIERUIik7DQo+IHdoaWxl
+IHRlc3RpbmcgdGhlIHNlcmllcyBJIGhpdCB0aGUgd2FybmluZyB3aXRoIGEgcmhlbCBndWVzdCB3
+aGljaCBib290cw0KPiB3aXRoIEFDUEkuDQo+IEkgdGhpbmsgd2Ugc2hhbGwgbWFrZSB0aGUgY2hl
+Y2sgc21hcnRlciB0byBhdm9pZCB0aGF0Lg0KPiBtYXliZSBhbHNvIGNoZWNrIGZpcm13YXJlX2xv
+YWRlZCBhbmQgdmlydF9pc19hY3BpX2VuYWJsZWQoKT8NCg0KVGhhbmtzIGZvciBnaXZpbmcgaXQg
+YSBzcGluLiBZZXMsIGp1c3QgY29uZmlybWVkIHRoYXQgdGhlIHdhcm5pbmcgYXBwZWFycy4NClRo
+ZSBhYm92ZSBjaGVjayB3aWxsIHdvcmssIGJ1dCBjYW4gd2UgbWFrZSB1c2Ugb2Ygdm1zLT5hY3Bp
+X2RldiBmb3INCnRoaXMgY2hlY2sgaW5zdGVhZD8gSXQgaXMgZXNzZW50aWFsbHkgdGhlIHNhbWUg
+YW5kIEkgdGhpbmsgdGhhdCB3aWxsIHdvcmsuIA0KDQogICAgaWYgKCF2bXMtPmFjcGlfZGV2ICYm
+IHN0cmNtcCgicGNpZS4wIiwgYnVzLT5xYnVzLm5hbWUpKQ0KDQpQbGVhc2UgbGV0IG1lIGtub3cu
+DQoNClRoYW5rcywNClNoYW1lZXINCg==
 
