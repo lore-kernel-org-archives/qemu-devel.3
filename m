@@ -4,76 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B2A7C83F10
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66FFDC8303C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:13:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFDb-000309-BB; Tue, 08 Jul 2025 16:47:11 -0400
+	id 1uZFKN-0003cj-B6; Tue, 08 Jul 2025 16:54:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uZDsL-0000eT-0y
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:21:12 -0400
-Received: from mgamail.intel.com ([198.175.65.14])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uZDsA-0008BN-JT
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:21:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752002459; x=1783538459;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=ShIehTFb3p9MKkiVPnCmMIig5SMIJy5XRedD7Veywv8=;
- b=GI9hGU2QcO14NUcXxeHFu9RODDgSEZWMBSqV0VLeBjDTYPBQoTpOxSuT
- 3SFuxAH3KpVV2zM416/w11gRWG67G9jsqiEzhNO4kctklnFXD8gIAw600
- lQNj83yepP6Y1nExzxrxfyT71Mno6jNu/8bkiWHgWLjwMU1peWvrcsDij
- WuJW5qOKOzcZnLWsbKnWXE8gk7bJLFJPuZ2afVnlp6YzYfmQ77gpm25OL
- GEs2tqL76/0d4Z2shsU1bNUekOc+/WcPrsFsxxAz/ihI+pkepC5Pcaz4g
- gHJoHGNxgAdIAubhLsnXHoWCFAfwaetTFWlzzv1oprsO/HuyLG/w/C/I7 g==;
-X-CSE-ConnectionGUID: k4lxSEq/RK+3cWvcD0QC/A==
-X-CSE-MsgGUID: xqQVJcRQTp6AEw4ignma4g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11487"; a="57974075"
-X-IronPort-AV: E=Sophos;i="6.16,297,1744095600"; d="scan'208";a="57974075"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Jul 2025 04:07:21 -0700
-X-CSE-ConnectionGUID: Ma1qJf7ySBGUD/B47JIUbg==
-X-CSE-MsgGUID: TsCjrEuBRrKPn78hXtH+vw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,297,1744095600"; d="scan'208";a="192648014"
-Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Jul 2025 04:07:17 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- mst@redhat.com, jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com,
- jgg@nvidia.com, nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
- joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
- Yi Sun <yi.y.sun@linux.intel.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v3 16/20] intel_iommu: Propagate PASID-based iotlb
- invalidation to host
-Date: Tue,  8 Jul 2025 07:05:57 -0400
-Message-ID: <20250708110601.633308-17-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250708110601.633308-1-zhenzhong.duan@intel.com>
-References: <20250708110601.633308-1-zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uZESt-0007k2-Pk
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:59:00 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uZESr-0002lt-UO
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:58:55 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-60c6fea6742so9941574a12.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 12:58:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752004732; x=1752609532; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3HsYTLj5EGS3LIX+JzyfOQ8PUo130XOAvWfkSjLItdQ=;
+ b=F27+2sn4kDlv1DDXbe5JInZeZjtr5hBt64PE/HyydP5yV7pxpprZZ07pfzMG8jQqyx
+ /2sIT89UU88hya8otOALGxsVryRm/63UGvFzukttiUP28o691byyJbTg5MVEitLhBOeB
+ /A8Uk2fO9lQ8UHMXaT7i8wq4vtx0lFlSp5B6iCDgPw6/hIgxqmAAS7R+rZAJTCx6CzBX
+ lRlCbIDU/Sjp80c/cudc47fZww1aPHvih/58uNTBE602k+4NC9QbbWVe92KTWW9fLg8r
+ rWDhWv9sa5qOEH2mqLMTjmZXV95BFoPYMrqYJnjJOrI7X6B+27S37+lwAHiiL3oQYQBA
+ B+nQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752004732; x=1752609532;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3HsYTLj5EGS3LIX+JzyfOQ8PUo130XOAvWfkSjLItdQ=;
+ b=WcUy5zqf7BCswvRnA8GGcZ6YMk/qaTyV0gkHiufkod5wSCYKn5/KSPylkW3FPHDVJx
+ 8bHd70HAurB0FKxbvM6mdEsFX+6YiMZ90APvhvZ93TMwFa1tDwAHy6CAY7EI8Up8Jhr8
+ GtmYFFvV6P7vJqJodlOP+6hFgsDQGK6JDPOl0Z8s9KDIjA623yefFf+pmKeM9UoBCmiQ
+ LKjeHKURhOT2gLhMfUlexd7OvUDX+fzEVJQ9/yLO1uLJSLMF1I5/JKi9fFeRRJfRO5rx
+ 469XhEk3DRmOVY3hCgqwbFH13MAdkq27Z6GQ8uNoXnEr9PVdUC//qSPUTI8q9K79+J7a
+ Cp/A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXMAoPZXYPPrCcg7vvuYKJrhGxtGi4hB0XzcfzUEeWqmcjHiKm1nl41cSNkDyTXbVW18qDs4i37vmrQ@nongnu.org
+X-Gm-Message-State: AOJu0YyvAtAZv+H6rISPjWS7YHRTc5rOFMqEBBLsaPrgu7boiKlB4kad
+ Gb6Ew4JlBcg5YYqn40kSFEMRpNw1VcN1tV5JeiBB2PKPINDEzj0y/Zzr4G3d80zdmExl75x0RpL
+ UQqz9
+X-Gm-Gg: ASbGncuDMhZjInI34igbSsl7T9yt6jX7omMELT8iZksr3fejaP6lEnHAzgk0yOhUyxk
+ NNKOlI9F18lGLIXtkO9eO+ridvjmeCjYeDlqz3RUccMrM2ned/jk8+TUKU/dfip1VcefqUQiXkQ
+ AVXH/q5I15zQdS2dN29cO+iuwCWC3kofv7awGDanq4U9l+MYbEvTeYnvsyBMCKZN8jmGcBrPdd5
+ pfW0h3JH44/Xu3v+8QN9ICpsIYdAhs3jWNwfvQpyCMKekbml8jY+diKHTFRVBI4jnryZNr5a6Bi
+ REXouLf0wTIo3fzEzoQAv6XKWbdUmzBPCMv1sFehB8+FZsHWsqd93ZhwhNWpxitoBVEB
+X-Google-Smtp-Source: AGHT+IH7zJde7I8fbcPdzlEJEgC+vFaRV9u7yJkZcHsXc+sVNVghZbtval3q9/JwE3wy5rU8Hts/jQ==
+X-Received: by 2002:a05:600c:64ca:b0:453:9317:8aa0 with SMTP id
+ 5b1f17b1804b1-454ccce358emr27822845e9.32.1751975561259; 
+ Tue, 08 Jul 2025 04:52:41 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454cd4a68ebsm19731255e9.39.2025.07.08.04.52.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 08 Jul 2025 04:52:40 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Eric Auger <eric.auger@redhat.com>
+Subject: [PATCH v2 0/3] hw/intc: handle GICD_TYPER2 for KVM GICv3
+Date: Tue,  8 Jul 2025 12:52:35 +0100
+Message-ID: <20250708115238.667050-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.14;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,187 +99,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yi Liu <yi.l.liu@intel.com>
+The GICD_TYPER2 GICv3 distributor register is one that is added
+for GICv4.1; previously this was architected as a RES0 location.
+Our TCG GIC doesn't implement GICv4.1, but for KVM the kernel
+might support it.
 
-This traps the guest PASID-based iotlb invalidation request and propagate it
-to host.
+This patchset:
+ * makes GICD_TYPER0 reads not trigger a bad-read trace
+   event on the TCG GICv3, for the benefit of GICv4.1-aware
+   guest code
+ * migrates the GICD_TYPER2 register value on a KVM GIC,
+   so that a mismatch between source and destination
+   can be caught by the destination kernel
 
-Intel VT-d 3.0 supports nested translation in PASID granularity. Guest SVA
-support could be implemented by configuring nested translation on specific
-pasid. This is also known as dual stage DMA translation.
+Note that I have only very lightly tested this, on a
+host which (I believe) doesn't have a GICv4.1.
 
-Under such configuration, guest owns the GVA->GPA translation which is
-configured as stage-1 page table on host side for a specific pasid, and host
-owns GPA->HPA translation. As guest owns stage-1 translation table, piotlb
-invalidation should be propagated to host since host IOMMU will cache first
-level page table related mappings during DMA address translation.
+Changes v1->v2:
+ * fix comment missing bracket
+ * fix reset handling so this works on GICv4.1 hosts
+ * move get/put code to be with the other GICD regs
+ * new patch 3 to drop a barely-used debug printf macro
 
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
----
- hw/i386/intel_iommu.c          | 95 +++++++++++++++++++++++++++++++++-
- hw/i386/intel_iommu_internal.h |  6 +++
- 2 files changed, 99 insertions(+), 2 deletions(-)
+thanks
+-- PMM
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 887830a855..d8b4296fe4 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -2606,12 +2606,99 @@ static int vtd_bind_guest_pasid(VTDAddressSpace *vtd_as, VTDPASIDOp op,
- 
-     return ret;
- }
-+
-+static void
-+vtd_invalidate_piotlb_locked(VTDAddressSpace *vtd_as,
-+                             struct iommu_hwpt_vtd_s1_invalidate *cache)
-+{
-+    IntelIOMMUState *s = vtd_as->iommu_state;
-+    VTDHostIOMMUDevice *vtd_hiod = vtd_find_hiod_iommufd(s, vtd_as);
-+    HostIOMMUDeviceIOMMUFD *idev;
-+    uint32_t entry_num = 1; /* Only implement one request for simplicity */
-+    Error *local_err = NULL;
-+
-+    if (!vtd_hiod || !vtd_as->s1_hwpt) {
-+        return;
-+    }
-+    idev = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
-+
-+    if (!iommufd_backend_invalidate_cache(idev->iommufd, vtd_as->s1_hwpt,
-+                                          IOMMU_HWPT_INVALIDATE_DATA_VTD_S1,
-+                                          sizeof(*cache), &entry_num, cache,
-+                                          &local_err)) {
-+        /* Something wrong in kernel, but trying to continue */
-+        error_report_err(local_err);
-+    }
-+}
-+
-+/*
-+ * This function is a loop function for the s->vtd_address_spaces
-+ * list with VTDPIOTLBInvInfo as execution filter. It propagates
-+ * the piotlb invalidation to host.
-+ */
-+static void vtd_flush_host_piotlb_locked(gpointer key, gpointer value,
-+                                         gpointer user_data)
-+{
-+    VTDPIOTLBInvInfo *piotlb_info = user_data;
-+    VTDAddressSpace *vtd_as = value;
-+    VTDPASIDCacheEntry *pc_entry = &vtd_as->pasid_cache_entry;
-+    uint32_t pasid;
-+    uint16_t did;
-+
-+    /* Replay only fills pasid entry cache for passthrough device */
-+    if (!pc_entry->valid ||
-+        !vtd_pe_pgtt_is_flt(&pc_entry->pasid_entry)) {
-+        return;
-+    }
-+
-+    if (vtd_as_to_iommu_pasid_locked(vtd_as, &pasid)) {
-+        return;
-+    }
-+
-+    did = VTD_SM_PASID_ENTRY_DID(&pc_entry->pasid_entry);
-+
-+    if (piotlb_info->domain_id == did && piotlb_info->pasid == pasid) {
-+        vtd_invalidate_piotlb_locked(vtd_as, piotlb_info->inv_data);
-+    }
-+}
-+
-+static void
-+vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s,
-+                                 uint16_t domain_id, uint32_t pasid,
-+                                 hwaddr addr, uint64_t npages, bool ih)
-+{
-+    struct iommu_hwpt_vtd_s1_invalidate cache_info = { 0 };
-+    VTDPIOTLBInvInfo piotlb_info;
-+
-+    cache_info.addr = addr;
-+    cache_info.npages = npages;
-+    cache_info.flags = ih ? IOMMU_VTD_INV_FLAGS_LEAF : 0;
-+
-+    piotlb_info.domain_id = domain_id;
-+    piotlb_info.pasid = pasid;
-+    piotlb_info.inv_data = &cache_info;
-+
-+    /*
-+     * Go through each vtd_as instance in s->vtd_address_spaces, find out
-+     * the affected host device which need host piotlb invalidation. Piotlb
-+     * invalidation should check pasid cache per architecture point of view.
-+     */
-+    g_hash_table_foreach(s->vtd_address_spaces,
-+                         vtd_flush_host_piotlb_locked, &piotlb_info);
-+}
- #else
- static int vtd_bind_guest_pasid(VTDAddressSpace *vtd_as, VTDPASIDOp op,
-                                 Error **errp)
- {
-     return 0;
- }
-+
-+static void
-+vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s,
-+                                 uint16_t domain_id, uint32_t pasid,
-+                                 hwaddr addr, uint64_t npages, bool ih)
-+{
-+}
- #endif
- 
- static int vtd_bind_guest_pasid_report_err(VTDAddressSpace *vtd_as,
-@@ -3286,6 +3373,7 @@ static void vtd_piotlb_pasid_invalidate(IntelIOMMUState *s,
-     vtd_iommu_lock(s);
-     g_hash_table_foreach_remove(s->iotlb, vtd_hash_remove_by_pasid,
-                                 &info);
-+    vtd_flush_host_piotlb_all_locked(s, domain_id, pasid, 0, (uint64_t)-1, 0);
-     vtd_iommu_unlock(s);
- 
-     QLIST_FOREACH(vtd_as, &s->vtd_as_with_notifiers, next) {
-@@ -3307,7 +3395,8 @@ static void vtd_piotlb_pasid_invalidate(IntelIOMMUState *s,
- }
- 
- static void vtd_piotlb_page_invalidate(IntelIOMMUState *s, uint16_t domain_id,
--                                       uint32_t pasid, hwaddr addr, uint8_t am)
-+                                       uint32_t pasid, hwaddr addr, uint8_t am,
-+                                       bool ih)
- {
-     VTDIOTLBPageInvInfo info;
- 
-@@ -3319,6 +3408,7 @@ static void vtd_piotlb_page_invalidate(IntelIOMMUState *s, uint16_t domain_id,
-     vtd_iommu_lock(s);
-     g_hash_table_foreach_remove(s->iotlb,
-                                 vtd_hash_remove_by_page_piotlb, &info);
-+    vtd_flush_host_piotlb_all_locked(s, domain_id, pasid, addr, 1 << am, ih);
-     vtd_iommu_unlock(s);
- 
-     vtd_iotlb_page_invalidate_notify(s, domain_id, addr, am, pasid);
-@@ -3350,7 +3440,8 @@ static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
-     case VTD_INV_DESC_PIOTLB_PSI_IN_PASID:
-         am = VTD_INV_DESC_PIOTLB_AM(inv_desc->val[1]);
-         addr = (hwaddr) VTD_INV_DESC_PIOTLB_ADDR(inv_desc->val[1]);
--        vtd_piotlb_page_invalidate(s, domain_id, pasid, addr, am);
-+        vtd_piotlb_page_invalidate(s, domain_id, pasid, addr, am,
-+                                   VTD_INV_DESC_PIOTLB_IH(inv_desc->val[1]));
-         break;
- 
-     default:
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index 9af073d843..f4982b19a2 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -595,6 +595,12 @@ typedef struct VTDPASIDCacheInfo {
-     uint16_t devfn;
- } VTDPASIDCacheInfo;
- 
-+typedef struct VTDPIOTLBInvInfo {
-+    uint16_t domain_id;
-+    uint32_t pasid;
-+    struct iommu_hwpt_vtd_s1_invalidate *inv_data;
-+} VTDPIOTLBInvInfo;
-+
- /* PASID Table Related Definitions */
- #define VTD_PASID_DIR_BASE_ADDR_MASK  (~0xfffULL)
- #define VTD_PASID_TABLE_BASE_ADDR_MASK (~0xfffULL)
+Peter Maydell (3):
+  hw/intc/arm_gicv3_dist: Implement GICD_TYPER2 as 0
+  hw/intc/arm_gicv3_kvm: Migrate GICD_TYPER2
+  hw/intc/arm_gicv3_kvm: Drop DPRINTF macro
+
+ hw/intc/gicv3_internal.h           |  1 +
+ include/hw/intc/arm_gicv3_common.h |  6 +++++
+ hw/intc/arm_gicv3_common.c         | 24 +++++++++++++++++++
+ hw/intc/arm_gicv3_dist.c           |  9 +++++++
+ hw/intc/arm_gicv3_kvm.c            | 38 ++++++++++++++++++------------
+ 5 files changed, 63 insertions(+), 15 deletions(-)
+
 -- 
-2.47.1
+2.43.0
 
 
