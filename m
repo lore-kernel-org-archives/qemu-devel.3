@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5460DC83F14
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:55:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3FF0C8303C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:55:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFGC-0006st-11; Tue, 08 Jul 2025 16:49:52 -0400
+	id 1uZFJs-0001Eb-C1; Tue, 08 Jul 2025 16:53:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZEBL-0002k9-Ir
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:40:47 -0400
+ id 1uZEDj-0003pY-8Z
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:43:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZEBI-0005jP-5i
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:40:46 -0400
+ id 1uZEDh-0006O8-EC
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:43:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752003643;
+ s=mimecast20190719; t=1752003792;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NIVmB9T7X9elVC/gEk8odcOfXiEnBnk9LzN+nIeRoJE=;
- b=T7h+0AxVdL/g/VCVyMMJVc33yXxH70qyHhhc2OcUNabZRP1nZPgJVcbifR1urBS3H/Ek2C
- KnXpbeWl2cNlLpLDDYeXj/IEoDYjCZO9h6GeD1WPdN/XB6Kup9rQm+LPshacQCEHTjGL/v
- uju6gE291dSpiJv64APtd6OQpkmy/QU=
+ bh=VIeycjAWB5Y3e/OsAKShYgyRoeDu8FNvB+cY9/fz4GA=;
+ b=ijbD7ud+UHmufMKrOp1R1OTTRCgDZ3nuxqNuMxKG2qRixjwWQuzaPHt56Apz9Oas/QKDx1
+ oPpx6Rj5W677c+5zzs2EtBcBNwES82rlRizvGnbiPLegzB5FtJh5uoS0cl9wXdrMLH140U
+ +9VKoraHgb47+v1ONy6v8g46CQrKs6o=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-161-rhI1ZX1GMbWPzxkKp91JEQ-1; Tue,
- 08 Jul 2025 10:25:00 -0400
-X-MC-Unique: rhI1ZX1GMbWPzxkKp91JEQ-1
-X-Mimecast-MFC-AGG-ID: rhI1ZX1GMbWPzxkKp91JEQ_1751984698
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-628-xxFjsEWPP9iFZWl8sjTSww-1; Tue,
+ 08 Jul 2025 10:27:33 -0400
+X-MC-Unique: xxFjsEWPP9iFZWl8sjTSww-1
+X-Mimecast-MFC-AGG-ID: xxFjsEWPP9iFZWl8sjTSww_1751984851
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 784381800366; Tue,  8 Jul 2025 14:24:58 +0000 (UTC)
+ id 1F34C1809C82; Tue,  8 Jul 2025 14:27:31 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.32.187])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6526E30001B1; Tue,  8 Jul 2025 14:24:51 +0000 (UTC)
+ id 408FF3000218; Tue,  8 Jul 2025 14:27:25 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
@@ -55,13 +55,12 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: pbonzini@redhat.com,
 	philmd@linaro.org,
 	alex.bennee@linaro.org
-Subject: [PATCH v6 01/36] hw/i386/acpi-build: Make aml_pci_device_dsm() static
-Date: Tue,  8 Jul 2025 16:22:43 +0200
-Message-ID: <20250708142437.1344644-2-eric.auger@redhat.com>
+Subject: [PATCH v6 25/36] hw/arm/virt: Pass the bus on the ged creation
+Date: Tue,  8 Jul 2025 16:23:07 +0200
+Message-ID: <20250708142437.1344644-26-eric.auger@redhat.com>
 In-Reply-To: <20250708142437.1344644-1-eric.auger@redhat.com>
 References: <20250708142437.1344644-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
@@ -89,44 +88,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No need to export aml_pci_device_dsm() as it is only used
-in hw/i386/acpi-build.c.
+The bus will be needed on ged realize for acpi pci hp setup.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 ---
- include/hw/acpi/pci.h | 1 -
- hw/i386/acpi-build.c  | 2 +-
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ hw/arm/virt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/hw/acpi/pci.h b/include/hw/acpi/pci.h
-index 6359d574fd..ab0187a894 100644
---- a/include/hw/acpi/pci.h
-+++ b/include/hw/acpi/pci.h
-@@ -36,7 +36,6 @@ typedef struct AcpiMcfgInfo {
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 8024a0b6b3..34a3831530 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -696,6 +696,7 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
  
- void build_mcfg(GArray *table_data, BIOSLinker *linker, AcpiMcfgInfo *info,
-                 const char *oem_id, const char *oem_table_id);
--Aml *aml_pci_device_dsm(void);
+     dev = qdev_new(TYPE_ACPI_GED);
+     qdev_prop_set_uint32(dev, "ged-event", event);
++    object_property_set_link(OBJECT(dev), "bus", OBJECT(vms->bus), &error_abort);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
  
- void build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus);
- void build_pci_bridge_aml(AcpiDevAmlIf *adev, Aml *scope);
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 61851cc840..f59026524f 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -338,7 +338,7 @@ build_facs(GArray *table_data)
-     g_array_append_vals(table_data, reserved, 40); /* Reserved */
- }
- 
--Aml *aml_pci_device_dsm(void)
-+static Aml *aml_pci_device_dsm(void)
- {
-     Aml *method;
- 
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, vms->memmap[VIRT_ACPI_GED].base);
 -- 
 2.49.0
 
