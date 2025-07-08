@@ -4,89 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CE2CC8303C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:39:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DB5AC8303C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:39:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZG1J-0006yd-Ct; Tue, 08 Jul 2025 17:38:33 -0400
+	id 1uZG1O-0007Yd-4p; Tue, 08 Jul 2025 17:38:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uZFEj-0006w9-F5; Tue, 08 Jul 2025 16:48:23 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1uZFFm-0004aP-TP; Tue, 08 Jul 2025 16:49:27 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uZFEg-00030s-13; Tue, 08 Jul 2025 16:48:20 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-6088d856c6eso9352436a12.0; 
- Tue, 08 Jul 2025 13:48:16 -0700 (PDT)
+ id 1uZFFj-0003Hj-Ta; Tue, 08 Jul 2025 16:49:26 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-ae0de1c378fso745867466b.3; 
+ Tue, 08 Jul 2025 13:49:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1752007695; x=1752612495; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qxDzbC3+dod/Dyop0Reaz9nyV0vyvHAmdIBbxAEj8z8=;
- b=OgiT4LWSl0iVdNON3nveGRUS0NsTRUlVTKQN/ETufGphnx7LvXrwIVOGCBp8mKkCyp
- mZWlKbv4KZsPEMn/Wmv8MQggSpprW9ofRuMyXwVxXE0TJN0m8e5HSdHXCUjhI3bpURVO
- 7cQ2KwXYvPVa8tz2vzJpERS91Oygp8aJJxVCWWVgjUmByX2Kwa9PhUy7QqCg1jA+PK2H
- u9+SOi3Pfd63EGgW3wjOxUSa7cxP63w6RweTjQ4FjN6Auu3vapVQngJQ/aQbuEJclcxH
- puR5jHMzdSzSf+1jG9WQjT7+CHU/kNQvc+9xkPNuk1LfucZnWz1r1+SWJg0dgWjTARXU
- z96w==
+ d=gmail.com; s=20230601; t=1752007761; x=1752612561; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=2g2vupcFVT83dTeIRjMpe9CpeCnq618xPyfNG6np5fk=;
+ b=W5iCuq2vt4ZYvoIHdlJEz6/mUQc9Pi7NGhpDu5uD35U8d3/lg/SnVHpl71YSMfqo7K
+ X/aKIQjFeaFPs/E2JCGbeheD2odsv9Za6coPoDds5zrZahwmqmx2+v/nO+wLJ1W3+wKu
+ Bdm7pQhsqjRhPjdzGrCWB0LUQPU5/c/1oyZBNtAV1bVeLcKuAZ/AX0Uu12/eR5vRHPFU
+ /91PuedDAUoFahMmhYdsnUSmbsxnijxJ0PbV79zumf1AVD5yz9shziSzf/bA7MSVebQi
+ PhxVFh/ZF4/EBoYwlqmPEz9uyxMA25qo4/eAme1owhjO1DdHn7rjMMaIXk3euNWFne2f
+ mNgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752007695; x=1752612495;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qxDzbC3+dod/Dyop0Reaz9nyV0vyvHAmdIBbxAEj8z8=;
- b=ACKsUAslItcOkGkYvyPLOO+a3ezBhmA4EA3f1pRgUf4z98YR9Grw/Ihp89z7IQYxmf
- vqRB1T9hzdU9MUrnx3gjqQJNqBdwTiv+BnQKE6cx29WpvOWwg86IvbRLYWcyGi2AEMvU
- 87KPdat2IykddF89Lwr6hryZCM1j4b3hOlbK0P0xaAwF7oNZB8V7fckU/0rrEZ/EXw3M
- UBY7jvTYHlyVgWjCiaVShwlcC75j/ED6al2K77UhrahaBC+Xi95pmuARxHoPgG3sUPeC
- ZQhJnS2gM0ItsBBQeDypgn2FV0ejOxAMmV9/m6Y4FNipQfRxJIxTJtgL7U/ZvncM7Ntq
- Wnxw==
+ d=1e100.net; s=20230601; t=1752007761; x=1752612561;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2g2vupcFVT83dTeIRjMpe9CpeCnq618xPyfNG6np5fk=;
+ b=qg4LcQIXB38rNNHlN07Yek3xmUghGuoMjP4McLPL/Ygl7wCSBejFk18ku+PC3WpnIy
+ aDPsRehuYC93M3VGVBHRvDCARi3yT20rzPJZsIdpuGFhqMDgfn6OpZSxxBiZZ3KYw+w1
+ rAUziDbLoESpuv91OA16DoVUBGl0uE9iFTKcilfHrwH6yQa7kk14hxmFE+VNC2+4pbt4
+ vW+B3PFmJ0e+KfusFrAQ6KnuiZD+LV+hh6fnA8WWZ2ZdNfKLc6lBDmVfhW6OR/jyJ4tv
+ vyuGdMeDInI+WZLqukmgHKaiINkwZzt9C8TNB2D8P6HG83fc8zf/NcwD/b3sQ90deF4u
+ iCAA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUXGbQIZbrSmXGkSIX13IbAWJjk88iAcP6NFB5/VXzqihDSAwI5d/whHMWjAxfiV93bR/jAFxgBaJE=@nongnu.org,
- AJvYcCVOJQ4TKeZYDHvUwkwjfXRLJCHC1GNTKBK5b0MhRWNQHV8m2GjzIrUciXLdfhPKPplM2GsOJLlLpw==@nongnu.org
-X-Gm-Message-State: AOJu0YxYR+3zRVMX72ixCAvzwkwsu8feUHG699QJ7xncMj0j+8q62rOO
- +rBLH45asEQOQSmxj34HATDZpU+xUF+ltn/ervibtsWmzBP1WcMv9jLH7R/oSQ==
-X-Gm-Gg: ASbGncvWP7aiVnrPWvhS1OkU641iaaf5poFSwdBmT4Vj+l96f+SwL4ac0sgJad9Ruhn
- R1Rn7QY6WRWcPnat7h2AeJHxaOYOzJdQ5jf8tnIQxVGHMsVaCg0dYtcmwR6xSi8pcyo7yPag+1T
- oFOZV6A6AfRtFugOYnAJKG6YV7cA/ZgBdeKYckWqEIUYWMVp3xu1mUJYgOh4YyM+UOyRAUtKn7y
- x1ehVvofM77XFZggpU/2NkDxurRUvZBWMGvMBjyHV/I4XcKJ2LYTca37i0tWAhGz4MjJGiX6DQy
- klCcsw9RWXFmQWInRv8XBDEOL5PyObMlGYkLBplHqxKTtr9qWAofs9XI69xkfQd2rCF6mrQFbpV
- 7O/WhgvPb26EaRqgdfb3bYo/WkiHAHF3cvce3sF84vvjjButW3as9y11N4QLZYzh2v+zAzJF6z+
- w/hCw2Zw==
-X-Google-Smtp-Source: AGHT+IH1ryzbQ4ssSSuR+5VjPU2L2XtXoXRBzTpN0U4xuAIy/ppTxnyH/LUG3bwC3UsuB4XZDI4tAA==
-X-Received: by 2002:a05:6402:5d0:b0:608:a7a0:48 with SMTP id
- 4fb4d7f45d1cf-6104ae4310fmr3988741a12.28.1752007695188; 
- Tue, 08 Jul 2025 13:48:15 -0700 (PDT)
+ AJvYcCVU8cjf4SUDVC6tNlcRNNYAnUPEq7J7J1Ng7Nco5XCH4uEJIuAbOX7+9pe+W5w+Ulx6aOlIpfAOGUo=@nongnu.org
+X-Gm-Message-State: AOJu0Yzm7owR6Zls+LvNKeeHI7dthiKm3Qmdrw5vzf7OqF0h102msiBS
+ Jg4mrYKVd867i4OSJ7N5C5rWPdwNuiDrayJrayPeYsMLAmXdgeUJeC/Fnxit8Q==
+X-Gm-Gg: ASbGncuvJK+26V3MgB443Vg+GHBCqXsC60WQ6ymB7qcemqBbxOp/OCLDnUGhzZOlGOA
+ nZuhf8jiSAhr9ceN/TmiainX2UaagW9iyOr86AeAb8aAHsmHgV7FYjKleNKsyv4a6PwErl7GH7q
+ +3tv+wOu2omHN+/CYY8pQdz/9XPsNwzORSrwB5WqnwvTpAjs7wJHWAKeq/CdCNJIHqpwaBj4W2C
+ DEKo1WE+a3GCo3rlw8OCF3sI2yHI1Zjr4MIVtogkeWkrvVL6+e2otsgwf/1MH6q0CNLxMkPcAz5
+ 0yi5igkfrAjxUAzV1pjXzh9P8akCMnokodoXuoNF7IA/9xhmPdTrF0oxeVPDBc+bqOsMKctL5K4
+ umbSlLRHT4hnVxray9Sz9mG7ilsn3JMRCYEzC9kezn8rw8+A7jXvD7foGoZzZmPeraqDVqcQOHK
+ O2HfTPtQ==
+X-Google-Smtp-Source: AGHT+IFj/79km7AS/9Gq76dCR9RT5f8QC7HYk0MuWZKCFRjrQEsFiSY89wQiZfk06r0x4pDu4FFaNQ==
+X-Received: by 2002:a17:907:7e8f:b0:ae3:dad1:70c8 with SMTP id
+ a640c23a62f3a-ae6cf7a849emr497566b.42.1752007761132; 
+ Tue, 08 Jul 2025 13:49:21 -0700 (PDT)
 Received: from Provence.localdomain
  (dynamic-2a02-3100-18f0-be00-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:18f0:be00:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-60fca66410bsm7647461a12.1.2025.07.08.13.48.14
+ a640c23a62f3a-ae3f692fbddsm963788166b.62.2025.07.08.13.49.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Jul 2025 13:48:14 -0700 (PDT)
+ Tue, 08 Jul 2025 13:49:20 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>, qemu-arm@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 1/3] hw/microblaze: Add missing FDT dependency
-Date: Tue,  8 Jul 2025 22:48:04 +0200
-Message-ID: <20250708204806.1898-2-shentey@gmail.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH] rust: Fix compilation with rustc v1.88
+Date: Tue,  8 Jul 2025 22:49:07 +0200
+Message-ID: <20250708204907.2178-1-shentey@gmail.com>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250708204806.1898-1-shentey@gmail.com>
-References: <20250708204806.1898-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,36 +100,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These boards ship with a bundled DTB, and dtc will be required for generating
-these from device tree sources. Prepare for that by adding an FDT dependency.
+Rustc v1.88 ships with a new lint `unnecessary_transmutes` which triggers the
+following error when compiling code generated by bindgen:
+
+  error: unnecessary transmute
+     --> rust/qemu-api/libqemu_api.rlib.p/structured/bindings.inc.rs:792:18
+      |
+  792 |         unsafe { ::std::mem::transmute(self._bitfield_1.get(0usize, 24u8) as u32) }
+      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  help: replace this with: `u32::cast_signed(self._bitfield_1.get(0usize, 24u8) as u32)`
+      |
+      = note: `-D unnecessary-transmutes` implied by `-D warnings`
+      = help: to override `-D warnings` add `#[allow(unnecessary_transmutes)]`
+
+  error: unnecessary transmute
+    --> rust/qemu-api/libqemu_api.rlib.p/structured/bindings.inc.rs:797:28
+      |
+  797 |             let val: u32 = ::std::mem::transmute(val);
+      |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  help: replace this with: `i32::cast_unsigned(val)`
+
+  error: unnecessary transmute
+     --> rust/qemu-api/libqemu_api.rlib.p/structured/bindings.inc.rs:804:13
+      |
+  804 | /             ::std::mem::transmute(<__BindgenBitfieldUnit<[u8; 3usize]>>::raw_get(
+  805 | |                 ::std::ptr::addr_of!((*this)._bitfield_1),
+  806 | |                 0usize,
+  807 | |                 24u8,
+  808 | |             ) as u32)
+      | |_____________________^
+      |
+  help: replace this with
+      |
+  804 ~             u32::cast_signed(<__BindgenBitfieldUnit<[u8; 3usize]>>::raw_get(
+  805 +                 ::std::ptr::addr_of!((*this)._bitfield_1),
+  806 +                 0usize,
+  807 +                 24u8,
+  808 +             ) as u32)
+      |
+
+  error: unnecessary transmute
+     --> rust/qemu-api/libqemu_api.rlib.p/structured/bindings.inc.rs:814:28
+      |
+  814 |             let val: u32 = ::std::mem::transmute(val);
+      |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  help: replace this with: `i32::cast_unsigned(val)`
+
+  error: unnecessary transmute
+     --> rust/qemu-api/libqemu_api.rlib.p/structured/bindings.inc.rs:827:41
+      |
+  827 |             let _flags2: u32 = unsafe { ::std::mem::transmute(_flags2) };
+      |                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  help: replace this with: `i32::cast_unsigned(_flags2)`
+
+  error: aborting due to 5 previous errors
+
+Silence the lint in the generated code by adding it to the allow list.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/microblaze/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ rust/qemu-api/src/bindings.rs | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/microblaze/Kconfig b/hw/microblaze/Kconfig
-index b0214b2c8b..72d8072f76 100644
---- a/hw/microblaze/Kconfig
-+++ b/hw/microblaze/Kconfig
-@@ -1,7 +1,7 @@
- config PETALOGIX_S3ADSP1800
-     bool
-     default y
--    depends on MICROBLAZE
-+    depends on MICROBLAZE && FDT
-     select PFLASH_CFI01
-     select XILINX
-     select XILINX_AXI
-@@ -11,7 +11,7 @@ config PETALOGIX_S3ADSP1800
- config PETALOGIX_ML605
-     bool
-     default y
--    depends on MICROBLAZE
-+    depends on MICROBLAZE && FDT
-     select PFLASH_CFI01
-     select SERIAL_MM
-     select SSI_M25P80
+diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.rs
+index 057de4b646..3cdad0f0ec 100644
+--- a/rust/qemu-api/src/bindings.rs
++++ b/rust/qemu-api/src/bindings.rs
+@@ -6,6 +6,7 @@
+     non_camel_case_types,
+     non_snake_case,
+     non_upper_case_globals,
++    unnecessary_transmutes,
+     unsafe_op_in_unsafe_fn,
+     clippy::pedantic,
+     clippy::restriction,
 -- 
 2.50.0
 
