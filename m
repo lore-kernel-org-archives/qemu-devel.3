@@ -4,101 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48077C83F0F
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 629A8C83F09
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:46:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFAT-0003G4-Ob; Tue, 08 Jul 2025 16:43:57 -0400
+	id 1uZFBF-0004WM-9B; Tue, 08 Jul 2025 16:44:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZDXl-0005XO-9Z
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 14:59:57 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZDXY-00027D-AV
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 14:59:49 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-60c51860bf5so7726923a12.1
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 11:59:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752001143; x=1752605943; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hg2dyL7tW3tL/dDdSwNEK/JVBUdUtkDstPfeG3qxYtE=;
- b=wEsKloeiQsjYQZdTYGkDHPDjHFKt/8p5TwlH4raKwcZsz3hvPfYjbgI/fz6MncJDKg
- HOPEkI9tBkeqtLjbH9uJKUZzvfLRRQjP8SVI6BOKBvPHr22cxj/OgqO5/fBreS8imQsV
- RTpXCmngMVNxYnmBfi1Hqu+9kk7kOAtMg6srloOEN/Vzukv1ba2X9Ehc3yXun+HC1H0Y
- 9VYzWyR5by+wOm1PFXMEI8r59xknwFg1hBc4qpxn5k51DptuI0Wu5kDJNPRjscEvPcBi
- qRyrO3c/ol/F+zFK07kMFUS8x2wq8rBfX4PRRYlzh9FrnqKWVv1VU1ep5+xaDuOOyopw
- rruw==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uZDg8-0006HP-3b
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:08:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uZDg0-0004nY-Ai
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:08:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752001677;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=s7KHsXJrtbup55Ej/trK6623yLGEmQ02IyXSe57j9ME=;
+ b=cgsadX7I+G0om12nEGxAN9RSWHwml/FadpadtCIAxI+zlp5/UsZwd+wJddrY+Py7SU24Da
+ /R4ARpII1VcMz4OQwYlXRcma2CF66quQjzMJjcI9gA0KUtp+hsJxN1aKWBmjPeWQwu9K90
+ BdADxUk60A9mw/vSiUEKKXrYTSdnoJY=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-576-YFAmshiJP9mxAj7WtpJ_kg-1; Tue, 08 Jul 2025 06:43:42 -0400
+X-MC-Unique: YFAmshiJP9mxAj7WtpJ_kg-1
+X-Mimecast-MFC-AGG-ID: YFAmshiJP9mxAj7WtpJ_kg_1751971421
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3b39cb4ca2eso1637916f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 03:43:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752001143; x=1752605943;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hg2dyL7tW3tL/dDdSwNEK/JVBUdUtkDstPfeG3qxYtE=;
- b=nvcmexEU/x+cze1PC5fLsqT6oTlf4teuZTRGYeE6eGuqeJArvMk9J9GzwRj+Lkx32W
- BQNsEzR2wk/WzAs6nEgG+PU6neU2dzveHObjZsd81xbDfoz9t0ZBNClGzoQvmfbx1W6d
- fWH49SBjTwbJAXmqocMk9k2qvqqAKkhujU5ItasTHLRi4uHGgWvQ8BEtYyMleoEqBXLd
- k2blCVEoBanqnTicGk5QpGkYhfYqBLsdgyjEw+zX0+7T0Wn235bTHjb66Y7SYrnuNFAJ
- j2WGZzySIw3Rt3k1K2HgO+v77eG+jceXUalHWw0YAq8rTRQM3TmWYr5faft7eASYh6+r
- qidA==
-X-Gm-Message-State: AOJu0YxZqkIVladgrt4gwjiwCZXM8a6nHQYKcxpfdQEpteTNMIhRHgiO
- PYsCqsZaBcTa19ESTA8dubqVZPXtY2cKhV7aKRtW7ofruvyZk7doC5MwAoh9Vwws5Nj2rwrAIcE
- Q0dHV
-X-Gm-Gg: ASbGncteMzXKNk8k28W792Z0A16BrWCHLKfJHO24i2GQ32Qn9SkUflzHU7JOR4/D/Y2
- n6QafESeGgJ8rsCmcreBN1wZzRpoy9n5HIK/BimKkWDJsUZHqdYIa7Mr1Hb9C/u75dVdlMcj+RF
- vMt0OrJw6yooJwhi6fvPSXnDhCzabs1OwARRLtsbV1dk81ipcwLXinWMfuq2oEXdNB5tKCprGQd
- yZ1Dyzj8SFcfCn2rxuNr6uYdBclBvXufDJkBVZD1yFGOH7HJM393bAaUNxhHrjdTvBr4ipsLGxi
- XOPbddXp4mhfgAYKAkdmxY4FdJPe5I/sOZqDVGqk65NcdziwV+1jpxu/vUxbjKGKgeWwahP78Lq
- M/Rhi8TxNyiWbZOu3d27ggPPv13iqACZiPzqV
-X-Google-Smtp-Source: AGHT+IEl3xAFgAOmbbj7qgMvicNw9rf+A5S0u5RVkXBNEJvLMdLB/qGhc6bLcFco17sXFzqEy1AtOw==
-X-Received: by 2002:adf:9c81:0:b0:3a4:cbc6:9db0 with SMTP id
- ffacd0b85a97d-3b5ddea1b98mr3138124f8f.51.1751995365618; 
- Tue, 08 Jul 2025 10:22:45 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b471b975efsm13281509f8f.46.2025.07.08.10.22.29
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 08 Jul 2025 10:22:45 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-riscv@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>, qemu-block@nongnu.org,
- qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH-for-10.1 v7 5/8] qemu: Convert target_words_bigendian() to
- TargetInfo API
-Date: Tue,  8 Jul 2025 19:19:45 +0200
-Message-ID: <20250708171949.62500-6-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250708171949.62500-1-philmd@linaro.org>
-References: <20250708171949.62500-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1751971421; x=1752576221;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=s7KHsXJrtbup55Ej/trK6623yLGEmQ02IyXSe57j9ME=;
+ b=UGM23ieFm7ls/dipeWETMojpA8yecxYprk4a4hq/vCEpM4TG/GCHDTASilOxixrGNg
+ eQYMIS5EHkOZmCWVT34T8OTbkzZdogxXPysaNEwUp/LVvha52hl/5dVa9zgEKw9qSFRe
+ z3WgZCBPik58izjnIhlCKAqOMx+w6Jr1b+ujw5lQ8TiCo2G4u6jSNmOR1kIZ8useEVop
+ cVzpZKlrDjUIPB0+fxT/K0wVeHT4AqOLSuCnMHXRtra3e76oW4fHhi1Q4YW2qjPGXe66
+ mpEY5dmardZf3LFqDeUHfYsPGpzZP7sKBZZAs3aT7IFwuAURC0R+rkO0uXw3sEIZyhse
+ HUZQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVsYcnI4N0gdeyX+UOpBUYMBcuJEaiFJoCFfhnzEUf2hWIV0wTdQ9U1pxvPDDDAm3FMXnQC+Pqx6BAt@nongnu.org
+X-Gm-Message-State: AOJu0YycrS9qWF5ARcCgCjbkdsx5ghH7ui6h7KKXV8GnEEJ2ExtXuO7n
+ nKJYcEzqijDymfyEXXLYHOB5zGVPzKad0tg7pH2iJ57LguE+6MmnVYTDZj3nxTimDsaX95t8Dfl
+ 4fnCeobHVBqfHUq4AXaOrCOdg0i2tEmhRDEQAaYXy9wqRfrDqAFemjfPr
+X-Gm-Gg: ASbGncs9ORQtSA9Ryl6lYbs2jBHHz7BA3T93lnbn1LHYqOFMTM8t+43rdm7b3yT+lkx
+ T6AN5SHEmB+c8MLRC0cAUrYqSLPYl9VF0+e8Oc0ZjotTPS/ncVALqAtc+B0pKYZuNYir7aE6llY
+ G3PXlMHN+sMb/h1MLbM4Qlmv+ELD04tXXYOwF1ALC9vU2TaihnkNh4Cfvzi+pkQOboWaGGFCRHs
+ oiq+qKD1TlXPIuQ3dxReNVf6KwdCqYvs6GIbxA+1dAhCqfCam6bBjiGZHJqv/b/aDaKhWWxvREn
+ 6XQPICOBYj7zz5bHkjfmna0EoDGckAcDOjX9RgYBwjreHlkqTv0jYcqIBKNI6YzPAW/G6A==
+X-Received: by 2002:a5d:5f55:0:b0:3a4:f52d:8b05 with SMTP id
+ ffacd0b85a97d-3b4964df03fmr15413644f8f.35.1751971421113; 
+ Tue, 08 Jul 2025 03:43:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8JvXxldYpwpXsSioxikdestTUNuNGRs5+UWJq5KdWk2eaCp6dsNnyD1SXHPtXHIH4bc6GLQ==
+X-Received: by 2002:a5d:5f55:0:b0:3a4:f52d:8b05 with SMTP id
+ ffacd0b85a97d-3b4964df03fmr15413623f8f.35.1751971420646; 
+ Tue, 08 Jul 2025 03:43:40 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454cd45b8a2sm18420575e9.18.2025.07.08.03.43.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 08 Jul 2025 03:43:39 -0700 (PDT)
+Message-ID: <23c5ce54-f4a2-4429-876b-b67cb488bfb4@redhat.com>
+Date: Tue, 8 Jul 2025 12:43:38 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 19/36] qtest/bios-tables-test: Generate DSDT.viot
+Content-Language: en-US
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, imammedo@redhat.com, gustavo.romero@linaro.org,
+ anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com,
+ pbonzini@redhat.com, philmd@linaro.org, alex.bennee@linaro.org
+References: <20250703123728.414386-1-eric.auger@redhat.com>
+ <20250703123728.414386-20-eric.auger@redhat.com>
+ <20250703155221.00004c71@huawei.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250703155221.00004c71@huawei.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,163 +116,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/exec/tswap.h       | 13 +------------
- include/qemu/target-info.h |  8 ++++++++
- cpu-target.c               |  7 -------
- hw/core/cpu-system.c       |  2 +-
- hw/display/vga.c           |  2 +-
- hw/virtio/virtio.c         |  2 +-
- system/memory.c            |  1 +
- system/qtest.c             |  1 +
- target-info.c              |  5 +++++
- 9 files changed, 19 insertions(+), 22 deletions(-)
+Hi Jonathan,
 
-diff --git a/include/exec/tswap.h b/include/exec/tswap.h
-index 49511f26117..55ffa633598 100644
---- a/include/exec/tswap.h
-+++ b/include/exec/tswap.h
-@@ -9,18 +9,7 @@
- #define TSWAP_H
- 
- #include "qemu/bswap.h"
--
--/**
-- * target_big_endian:
-- * Returns true if the (default) endianness of the target is big endian,
-- * false otherwise. Common code should normally never need to know about the
-- * endianness of the target, so please do *not* use this function unless you
-- * know very well what you are doing!
-- */
--bool target_big_endian(void);
--#ifdef COMPILING_PER_TARGET
--#define target_big_endian()   TARGET_BIG_ENDIAN
--#endif
-+#include "qemu/target-info.h"
- 
- /*
-  * If we're in target-specific code, we can hard-code the swapping
-diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-index dde0e7d968a..18a8c4ff6e8 100644
---- a/include/qemu/target-info.h
-+++ b/include/qemu/target-info.h
-@@ -38,4 +38,12 @@ const char *target_machine_typename(void);
-  */
- const char *target_cpu_type(void);
- 
-+/**
-+ * target_big_endian:
-+ *
-+ * Returns: %true if the (default) endianness of the target is big endian,
-+ *          %false otherwise.
-+ */
-+bool target_big_endian(void);
-+
- #endif
-diff --git a/cpu-target.c b/cpu-target.c
-index 1c90a307593..20db5ff3108 100644
---- a/cpu-target.c
-+++ b/cpu-target.c
-@@ -22,7 +22,6 @@
- #include "system/accel-ops.h"
- #include "system/cpus.h"
- #include "exec/cpu-common.h"
--#include "exec/tswap.h"
- #include "exec/replay-core.h"
- #include "exec/log.h"
- #include "hw/core/cpu.h"
-@@ -85,9 +84,3 @@ void cpu_abort(CPUState *cpu, const char *fmt, ...)
- #endif
-     abort();
- }
--
--#undef target_big_endian
--bool target_big_endian(void)
--{
--    return TARGET_BIG_ENDIAN;
--}
-diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
-index 3c84176a0c5..a975405d3a0 100644
---- a/hw/core/cpu-system.c
-+++ b/hw/core/cpu-system.c
-@@ -24,7 +24,7 @@
- #include "exec/cputlb.h"
- #include "system/memory.h"
- #include "exec/tb-flush.h"
--#include "exec/tswap.h"
-+#include "qemu/target-info.h"
- #include "hw/qdev-core.h"
- #include "hw/qdev-properties.h"
- #include "hw/core/sysemu-cpu-ops.h"
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index 20475ebbd31..90b89cf4044 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -26,7 +26,7 @@
- #include "qemu/units.h"
- #include "system/reset.h"
- #include "qapi/error.h"
--#include "exec/tswap.h"
-+#include "qemu/target-info.h"
- #include "hw/display/vga.h"
- #include "hw/i386/x86.h"
- #include "hw/pci/pci.h"
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 82a285a31d1..0f4d28033d7 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -20,7 +20,7 @@
- #include "qemu/log.h"
- #include "qemu/main-loop.h"
- #include "qemu/module.h"
--#include "exec/tswap.h"
-+#include "qemu/target-info.h"
- #include "qom/object_interfaces.h"
- #include "hw/core/cpu.h"
- #include "hw/virtio/virtio.h"
-diff --git a/system/memory.c b/system/memory.c
-index e8d9b15b28f..38da62f5052 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -22,6 +22,7 @@
- #include "qemu/error-report.h"
- #include "qemu/main-loop.h"
- #include "qemu/qemu-print.h"
-+#include "qemu/target-info.h"
- #include "qom/object.h"
- #include "trace.h"
- #include "system/ram_addr.h"
-diff --git a/system/qtest.c b/system/qtest.c
-index 301b03be2d3..fa42c9f9215 100644
---- a/system/qtest.c
-+++ b/system/qtest.c
-@@ -29,6 +29,7 @@
- #include "qemu/error-report.h"
- #include "qemu/module.h"
- #include "qemu/cutils.h"
-+#include "qemu/target-info.h"
- #include "qom/object_interfaces.h"
- 
- #define MAX_IRQ 256
-diff --git a/target-info.c b/target-info.c
-index a756c0714c4..3110ab32f75 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -47,3 +47,8 @@ EndianMode target_endian_mode(void)
- {
-     return target_info()->endianness;
- }
-+
-+bool target_big_endian(void)
-+{
-+    return target_endian_mode() == ENDIAN_MODE_BIG;
-+}
--- 
-2.49.0
+On 7/3/25 4:52 PM, Jonathan Cameron wrote:
+> On Thu,  3 Jul 2025 14:35:19 +0200
+> Eric Auger <eric.auger@redhat.com> wrote:
+>
+>> Use a specific DSDT.viot reference blob instead of relying on
+>> the default DSDT blob. The context has not changed.
+I meant s/context/content
+> So this is the same as the default until the next patch?
+yes that's correct.
+> Maybe should introduce the file only then instead.
+>
+> Not important though given how short a time this lasts
+> for.
+bah yes I thought it made sense to introduce this intermediate state. If
+you don't mind I will keep as is.
+
+Thanks!
+
+Eric
+>
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+>
+>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> ---
+>>  tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+>>  tests/data/acpi/aarch64/virt/DSDT.viot      | Bin 0 -> 5158 bytes
+>>  2 files changed, 1 deletion(-)
+>>
+>> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+>> index 7a74beab3d..dfb8523c8b 100644
+>> --- a/tests/qtest/bios-tables-test-allowed-diff.h
+>> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
+>> @@ -1,2 +1 @@
+>>  /* List of comma-separated changed AML files to ignore */
+>> -"tests/data/acpi/aarch64/virt/DSDT.viot",
+>> diff --git a/tests/data/acpi/aarch64/virt/DSDT.viot b/tests/data/acpi/aarch64/virt/DSDT.viot
+>> index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..acab6e65febbc210158d4c39be0680bbb90250f5 100644
+>> GIT binary patch
+>> literal 5158
+>> zcmZvg%WoT16o=2)6MH;<Wc*0%I8N+Bsd!dnyJ^zWmfB+{aj_HQNgE_rawJql$)*w&
+>> zQmK&AELzBpMq(YL{vk-LkXW!|(KQ?X0d^SOc{t~%o>|y)ALqOG8=sMmZ^!NIT`CYo
+>> z{%G$y+itD>`OvA=YBi0B)V=z)p54~&Pu%uod|Y;H+cqZKy-vF2412b1uahyk+w0Ky
+>> z_`0(@2**Z)ZQHKbgE3>`jNEM5EIv<=0w%~J`Y}eDc7ceV(D-;`bKlwYxu10hcWv8l  
+>> zkTG%hT4vIiI8ICR5m__iBO-}X5ZTi2jlwPUcSgImZLgg#JBvJD+@wgbxXlrDe|1Et
+>> zW#2$V7@{5^+G-aK31LPghRzrb&S;8^sKkgdMw2tHhzwm~7>sd+GuA}LoWw90V~sPe
+>> zij0`VNHNA$&R7>2afy*(jCIb~5E+KVuoz>5Gp>n@gv7`(#x=&M2QLSvm}yFk0%Kg~  
+>> z3^7gdB?(h~kug5z3^`9z(mqOzaf37DJWWfCGGpB23^`9T5~IQxw>U%2(|L)p${3$;  
+>> zhMcFC#HcaGZO)MMG%GRQVvH7N$a$KR7#A6%%^7l@<|W1@#&8&;A?Im9V!X>39nO&R
+>> zbU|Xg&lp|Kkn?m=VtmLLo17u%X;ETaW{fS)kn^-8F>J=z<_tMcmn24mF?yUK=V@7D
+>> zTw#nmoFV7wvc$N`7@u;6oTn9uvB4O9&XDtTMPgiMi~(ab<vd-L7&jPWhco0ntxAkr
+>> zjIkRqdU}6W5Dj;RwqtM3ijU#Q&1TG`SLeL#&G(BK>?_13?#R`~J}TG_pfm$e7X_5x  
+>> zH$&Y~y9(YOK&fJcZ|fa_<@X^gc#Dt~Mb;&O<@cSlUJjjJ@T)0S%id7Wq}K^rO;z)C
+>> zx5${Z+dH%8=<bcORkJcAhkEpYYGhN5I`n|PrHAwdJs?sLuS^?`_VWF2%%faVPfn+#
+>> zejD=dwZ3iFDVI|HW<))nuo3Osc9U{xJvE(bq+;r`mWpanF5{1Ran19linN2d5ihba
+>> zYpKX^YQ&GUgUASZk>M&)FEZRg)Qb$KM*YZo5E=C&!&P)IGTedgMTS##KQi3B?nj2J
+>> z%z@_|c+R2coF5sk5(Cc|c*f8(hMsZojDu$!J>%$UfTsbT26`IknE=lOcqY&@fu1IK  
+>> zn&4@or-`0P@Jxbd5<QdXnF7xgc&5-Zg`R2fOoL|{J=5r!0nZG0X3#T(p7Y>251#Yr
+>> zIgg$ecv|3Tp{IqOS@6t)XBIuP=$Ql09C+r?Gl!me@XUi}9zFBuSpd%hcoxvJfSwEB
+>> zxd5IE=(&KNi{QBko{Q+Yh@M68EP`hdJ&WjB0?!h7me8|=o=f1l1fEOixrCl&@GOI8
+>> z89mGBxeT7m;JJ*R%jj7F&kA@}(6fS`E8w{To-63Nf}X43xeA`E=(&oXRq(8WXB9oG
+>> zp=ZIGIPDg_%BWKx_5a4NShnNl;~&x#Ns+py>O*@`Buc5n9CcaK>3`~PnHs(PqDWdQ  
+>> z>bHod-t_4$B8^TyU@_ix<jt7+lh~#DpHQJ6pX|DhesV}oXTN^7Gk5w`Hg8(v!RzL~  
+>> z)ynOk_aC=@z4_OdCx@o)boLu3ho<3l_M4B?$HCJBvwCo5y*z!WeXqj3vHDs5<*7I9
+>> z_gQM>(ShpuCFOT1RQ=Uq;iE~%9q4Bl{5Ahv|NU=w?YqHG#eW7%zd3`m#Oc@cDjU@_  
+>> z^+Ds~fj;WGthjN!BP@0B)imul%)O^OoldLjDYMH`_v%Ef9lw8Bow;pwI}`ux!9Q@T
+>> zt0L)cuan;DcA%h)YVY}>N8M3(i&8{J!qmsllB(%+-EO~DSebP1?Ij+m#=)6&`t-n5  
+>> ZwaN40{-|vpjgObqjlY;*>N!CX_CM8!>@ENR
+>>
+>> literal 0
+>> HcmV?d00001
+>>
 
 
