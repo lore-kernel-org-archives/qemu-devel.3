@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EED2AC83F09
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 19:41:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FA68C83F09
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 19:42:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZEBq-0001g5-FP; Tue, 08 Jul 2025 15:41:18 -0400
-Received: from eggs.gnu.org ([2001:470:142:3::10])
+	id 1uZED0-0000Pt-Ii; Tue, 08 Jul 2025 15:42:31 -0400
+Received: from eggs.gnu.org ([209.51.188.92])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uZBMH-0005uQ-5i
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 12:40:28 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uZBLV-0007wQ-FQ
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 12:39:24 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-60c79bedc19so7132562a12.3
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 09:34:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751992486; x=1752597286; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rQnPm7OMUxUj9kgIE7V/5Xg89kaFsjsthn3fZVSeLuM=;
- b=bG6WcPR/ReTLZFc2ANM5Mdbahbv1x1KMYbQHGyUL08Uvar6aSwE060AOCKk5aZrkND
- nMaCNo7gcJAo0cAGywR8D6dwlLpsP14aaU/fC/bAD/yW2Vu69qzL1+9oN/qUF0UVww2k
- 6kXgZrgERpvuZvlCOaU8W4Mkrb/uTvwD5EL4IIajpaZRqLeNnqTdkBbXZ1v4Pzs5gVnV
- +Et9rRsFjTziX5zSlGUfCsmK9ttaV25THEhVriVRq5EHxlPDRoKgEAl7D8Vfc6ECHDvP
- p1FfrTodXN2u8eMC7ZGmHUAGTndaEWNmXybsfB+10GD/RAwbQaXUL/I+7wTg9suTBaEV
- P4NA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751992486; x=1752597286;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rQnPm7OMUxUj9kgIE7V/5Xg89kaFsjsthn3fZVSeLuM=;
- b=qkytoMxTnCQ87Kqj/KO3Mgepci0DLZ2a9kHYnhH8XEmkMFTyKdjgweOfNyFCrIXGhX
- 5bw1lVnS0yvnIYpOX5imU8fsWMy+HlU55KAxh8nK3hMknFbV1aimYHbHyfVzm0LWE6vo
- WGhoih9wX+tf6/IeqkGtKtiXnQ5yqPaKpeMdYt0WZS1Z+IV8Kn/xDUpJA56fAkeu3EWt
- PUO8SF1JzEooQzgGY88RDv3yARsyVS7xMRiBNTEdVzQ5/F72YrDuSNDZeakicbtRuQlD
- UsIS4zE9g4iphsyYfRcbTsxhLqckNUOXtR2zmzpwOk/S4kaUJ1Vai4WjLQJQCvx8Src4
- GYPA==
-X-Gm-Message-State: AOJu0Yz7BOErznYdYDXJ1jt4rLYtMuq2SrIy56oNM41iEJuON6DnkIkn
- A8c3kpl7qGeZuPVQY6oSmBP3CE8xhmOJLCOtJccQjqW2B129YSNKoD6xq/8JQcuXPrIQ5+Mk2md
- tFfgWENx9av7f10rdXJsIgII/mCh9upiqMMGwMBQL5TLj+hCeGCL0hVfGqw==
-X-Gm-Gg: ASbGncv+wuxYqmQKcBt47q0GCe72zRrTKm1Fe1I2cGoDjzGpSvSu4GjnzbdOIsZNJ0X
- kkR8Vfcr0/hQF+XFCxscZyUME7tUpxwc8EuvNQOdAXPC4AjdGcDY0cUzJbpEQ0K+ihgQibxlfUD
- 1YL080imGGof3US/+98xxd8fbD2IpbeNnQl3zpKfc1GGE=
-X-Google-Smtp-Source: AGHT+IFfpggFdOxj172OW8RoiRnOg8d7/ZBIpPvPeI6W60v/YNcVFVsXg4hutuy34RcOlZ+7dHMKG46fAMK1ZcNruGY=
-X-Received: by 2002:a05:6402:51ce:b0:608:66ce:14d1 with SMTP id
- 4fb4d7f45d1cf-60fd2f85538mr13613177a12.6.1751965911713; Tue, 08 Jul 2025
- 02:11:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uZBOU-0008HM-Ts
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 12:42:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uZBLn-0004TU-0J
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 12:41:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751992629;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=llfg70zwZvemKREO+Y3xvA/utKhwZhzTm3ME815tZgY=;
+ b=A/3dJyt96kKdzO2FnfarhMCO1BuCtwRU+AvNXBaYJrNgsUWE5DEYpKxVYbx8kH9R8Dix1A
+ 0plT8Lia6FX3XLiU+/KTrRtw761v974GNJQ6aEttO8Qv0iEkbcMR9ep2XSVqgJ9OnQAZw3
+ w9RUDwbO7K2Qaj0+YlcyPEJawVqizSk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-WQXw6uIOPhO_3CffQGuvkQ-1; Tue,
+ 08 Jul 2025 11:25:27 -0400
+X-MC-Unique: WQXw6uIOPhO_3CffQGuvkQ-1
+X-Mimecast-MFC-AGG-ID: WQXw6uIOPhO_3CffQGuvkQ_1751988326
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9E4431809C9A; Tue,  8 Jul 2025 15:25:25 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.99])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 885D9180035C; Tue,  8 Jul 2025 15:25:18 +0000 (UTC)
+Date: Tue, 8 Jul 2025 16:25:15 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Roy Hopkins <roy.hopkins@randomman.co.uk>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Ani Sinha <anisinha@redhat.com>, Gerd Hoffman <kraxel@redhat.com>,
+ Pankaj Gupta <pankaj.gupta@amd.com>, Joerg Roedel <joro@8bytes.org>
+Subject: Re: [PATCH v9 08/16] i386/sev: Refactor setting of reset vector and
+ initial CPU state
+Message-ID: <aG04W_upzY6p7M1H@redhat.com>
+References: <cover.1751554099.git.roy.hopkins@randomman.co.uk>
+ <d3c2debca496c4366a278b135f951908f3b9c341.1751554099.git.roy.hopkins@randomman.co.uk>
 MIME-Version: 1.0
-References: <20250703-rust-mem-api-v1-0-cd5314bdf580@linaro.org>
- <20250703-rust-mem-api-v1-1-cd5314bdf580@linaro.org>
- <591f8a81-2c8e-4e30-abf2-4571afed41b4@redhat.com>
-In-Reply-To: <591f8a81-2c8e-4e30-abf2-4571afed41b4@redhat.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 8 Jul 2025 12:11:25 +0300
-X-Gm-Features: Ac12FXxuB6uXlv8JaSfaIgQfWwvDlv35gmb2UGJcAEboo3yqOfQmRkMT69epVEo
-Message-ID: <CAAjaMXZ3JziZ6gUHF67=nqvxzUF0M46SPqftRKgHOYYLaUxjJg@mail.gmail.com>
-Subject: Re: [PATCH 1/3] rust/memory: replace size arg with Bits enum
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, 
- Zhao Liu <zhao1.liu@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52a.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <d3c2debca496c4366a278b135f951908f3b9c341.1751554099.git.roy.hopkins@randomman.co.uk>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,62 +86,519 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 8, 2025 at 11:35=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
->
-> > We have the ability to make memory accesses use a typesafe access width
-> > type in Rust, which the C API currently lacks as it does not use a
-> > newtype wrapper for specifying the amount of bytes a memory access has;
-> > it uses a plain 32-bit integer value instead.
->
-> I find this both verbose and (ok, that's subjective) ugly due to the
-> extra import, the underscore.
+On Thu, Jul 03, 2025 at 04:31:59PM +0100, Roy Hopkins wrote:
+> When an SEV guest is started, the reset vector and state are
+> extracted from metadata that is contained in the firmware volume.
+> 
+> In preparation for using IGVM to setup the initial CPU state,
+> the code has been refactored to populate vmcb_save_area for each
+> CPU which is then applied during guest startup and CPU reset.
+> 
+> Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
+> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+> Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+> Acked-by: Gerd Hoffman <kraxel@redhat.com>
+> Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+> ---
+>  target/i386/sev.c | 322 +++++++++++++++++++++++++++++++++++++++++-----
+>  target/i386/sev.h | 110 ++++++++++++++++
+>  2 files changed, 399 insertions(+), 33 deletions(-)
+> 
+> diff --git a/target/i386/sev.c b/target/i386/sev.c
+> index a84f5f5d28..a13f91e615 100644
+> --- a/target/i386/sev.c
+> +++ b/target/i386/sev.c
 
-Yep, I agree on that, but I wasn't sure what name would be better.
-Whatever type-level improvement this patch brings, it's small, though
-nice-to-have. We can drop it, no problem.
 
->
-> There are two parts on the patches:
->
-> 1) the extra checking on impl_sizes and valid_sizes.  That's valuable,
-> what about just adding something like this:
->
->          assert!(min =3D=3D 1 || min =3D=3D 2 || min =3D=3D 4 || min =3D=
-=3D 8);
->          assert!(max =3D=3D 1 || max =3D=3D 2 || max =3D=3D 4 || max =3D=
-=3D 8);
->          assert!(max >=3D min);
->
-> It can be validated at compile time anyway, since the functions are
-> pretty much always used in const context (in fact, for C code there's a
-> scripts/checkpatch.pl check that they are declared as const).
+> +static void sev_apply_cpu_context(CPUState *cpu)
+> +{
+> +    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
+> +    X86CPU *x86;
+> +    CPUX86State *env;
+> +    struct SevLaunchVmsa *launch_vmsa;
+> +
+> +    /* See if an initial VMSA has been provided for this CPU */
+> +    QTAILQ_FOREACH(launch_vmsa, &sev_common->launch_vmsa, next)
+> +    {
+> +        if (cpu->cpu_index == launch_vmsa->cpu_index) {
+> +            x86 = X86_CPU(cpu);
+> +            env = &x86->env;
+> +
+> +            /*
+> +             * Ideally we would provide the VMSA directly to kvm which would
+> +             * ensure that the resulting initial VMSA measurement which is
+> +             * calculated during KVM_SEV_LAUNCH_UPDATE_VMSA is calculated from
+> +             * exactly what we provide here. Currently this is not possible so
+> +             * we need to copy the parts of the VMSA structure that we currently
+> +             * support into the CPU state.
+> +             */
 
-Yes sounds good!
+Are there any parts of the VMSA described in the IGVM that we are
+unable to handle here ?
 
->
->
-> 2) Passing Bits to the read and write callbacks.  The argument is
-> ignored for pl011, and converted with "as u32" for HPET.  I find this to
-> be worse than before, because it's very unobvious that _32 is defined to
-> 4 rather than 32.
+If so, what happens if those parts are set in the IGVM and their
+value doesn't match KVM's default ? Presumably that would become
+a measurement failure ?
 
-Maybe do a `Size` enum instead that has variants: 1 instead of 8, 2
-instead of 16, 4 instead of 32, etc.?
+> +            cpu_load_efer(env, launch_vmsa->vmsa.efer);
+> +            cpu_x86_update_cr4(env, launch_vmsa->vmsa.cr4);
+> +            cpu_x86_update_cr0(env, launch_vmsa->vmsa.cr0);
+> +            cpu_x86_update_cr3(env, launch_vmsa->vmsa.cr3);
+> +            env->xcr0 = launch_vmsa->vmsa.xcr0;
+> +            env->pat = launch_vmsa->vmsa.g_pat;
+> +
+> +            cpu_x86_load_seg_cache(
+> +                env, R_CS, launch_vmsa->vmsa.cs.selector,
+> +                launch_vmsa->vmsa.cs.base, launch_vmsa->vmsa.cs.limit,
+> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.cs.attrib));
+> +            cpu_x86_load_seg_cache(
+> +                env, R_DS, launch_vmsa->vmsa.ds.selector,
+> +                launch_vmsa->vmsa.ds.base, launch_vmsa->vmsa.ds.limit,
+> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ds.attrib));
+> +            cpu_x86_load_seg_cache(
+> +                env, R_ES, launch_vmsa->vmsa.es.selector,
+> +                launch_vmsa->vmsa.es.base, launch_vmsa->vmsa.es.limit,
+> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.es.attrib));
+> +            cpu_x86_load_seg_cache(
+> +                env, R_FS, launch_vmsa->vmsa.fs.selector,
+> +                launch_vmsa->vmsa.fs.base, launch_vmsa->vmsa.fs.limit,
+> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.fs.attrib));
+> +            cpu_x86_load_seg_cache(
+> +                env, R_GS, launch_vmsa->vmsa.gs.selector,
+> +                launch_vmsa->vmsa.gs.base, launch_vmsa->vmsa.gs.limit,
+> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.gs.attrib));
+> +            cpu_x86_load_seg_cache(
+> +                env, R_SS, launch_vmsa->vmsa.ss.selector,
+> +                launch_vmsa->vmsa.ss.base, launch_vmsa->vmsa.ss.limit,
+> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ss.attrib));
+> +
+> +            env->gdt.base = launch_vmsa->vmsa.gdtr.base;
+> +            env->gdt.limit = launch_vmsa->vmsa.gdtr.limit;
+> +            env->gdt.flags =
+> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.gdtr.attrib);
+> +            env->idt.base = launch_vmsa->vmsa.idtr.base;
+> +            env->idt.limit = launch_vmsa->vmsa.idtr.limit;
+> +            env->idt.flags =
+> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.idtr.attrib);
+> +
+> +            cpu_x86_load_seg_cache(
+> +                env, R_LDTR, launch_vmsa->vmsa.ldtr.selector,
+> +                launch_vmsa->vmsa.ldtr.base, launch_vmsa->vmsa.ldtr.limit,
+> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ldtr.attrib));
+> +            cpu_x86_load_seg_cache(
+> +                env, R_TR, launch_vmsa->vmsa.tr.selector,
+> +                launch_vmsa->vmsa.ldtr.base, launch_vmsa->vmsa.tr.limit,
+> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.tr.attrib));
+> +
+> +            env->dr[6] = launch_vmsa->vmsa.dr6;
+> +            env->dr[7] = launch_vmsa->vmsa.dr7;
+> +
+> +            env->regs[R_EAX] = launch_vmsa->vmsa.rax;
+> +            env->regs[R_ECX] = launch_vmsa->vmsa.rcx;
+> +            env->regs[R_EDX] = launch_vmsa->vmsa.rdx;
+> +            env->regs[R_EBX] = launch_vmsa->vmsa.rbx;
+> +            env->regs[R_ESP] = launch_vmsa->vmsa.rsp;
+> +            env->regs[R_EBP] = launch_vmsa->vmsa.rbp;
+> +            env->regs[R_ESI] = launch_vmsa->vmsa.rsi;
+> +            env->regs[R_EDI] = launch_vmsa->vmsa.rdi;
+> +#ifdef TARGET_X86_64
+> +            env->regs[R_R8] = launch_vmsa->vmsa.r8;
+> +            env->regs[R_R9] = launch_vmsa->vmsa.r9;
+> +            env->regs[R_R10] = launch_vmsa->vmsa.r10;
+> +            env->regs[R_R11] = launch_vmsa->vmsa.r11;
+> +            env->regs[R_R12] = launch_vmsa->vmsa.r12;
+> +            env->regs[R_R13] = launch_vmsa->vmsa.r13;
+> +            env->regs[R_R14] = launch_vmsa->vmsa.r14;
+> +            env->regs[R_R15] = launch_vmsa->vmsa.r15;
+> +#endif
+> +            env->eip = launch_vmsa->vmsa.rip;
+> +            env->eflags = launch_vmsa->vmsa.rflags;
+> +
+> +            cpu_set_fpuc(env, launch_vmsa->vmsa.x87_fcw);
+> +            env->mxcsr = launch_vmsa->vmsa.mxcsr;
+> +
+> +            break;
+> +        }
+> +    }
+> +}
+> +
+> +static int sev_set_cpu_context(uint16_t cpu_index, const void *ctx,
+> +                               uint32_t ctx_len, hwaddr gpa, Error **errp)
+> +{
+> +    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
+> +    SevLaunchVmsa *launch_vmsa;
+> +    CPUState *cpu;
+> +    bool exists = false;
+> +
+> +    /*
+> +     * Setting the CPU context is only supported for SEV-ES and SEV-SNP. The
+> +     * context buffer will contain a sev_es_save_area from the Linux kernel
+> +     * which is defined by "Table B-4. VMSA Layout, State Save Area for SEV-ES"
+> +     * in the AMD64 APM, Volume 2.
+> +     */
+> +
+> +    if (!sev_es_enabled()) {
+> +        error_setg(errp, "SEV: unable to set CPU context: Not supported");
+> +        return -1;
+> +    }
+> +
+> +    if (ctx_len < sizeof(struct sev_es_save_area)) {
+> +        error_setg(errp, "SEV: unable to set CPU context: "
+> +                     "Invalid context provided");
+> +        return -1;
+> +    }
+> +
+> +    cpu = qemu_get_cpu(cpu_index);
+> +    if (!cpu) {
+> +        error_setg(errp, "SEV: unable to set CPU context for out of bounds "
+> +                     "CPU index %d", cpu_index);
+> +        return -1;
+> +    }
+> +
+> +    /*
+> +     * If the context of this VP has already been set then replace it with the
+> +     * new context.
+> +     */
+> +    QTAILQ_FOREACH(launch_vmsa, &sev_common->launch_vmsa, next)
+> +    {
+> +        if (cpu_index == launch_vmsa->cpu_index) {
+> +            launch_vmsa->gpa = gpa;
+> +            memcpy(&launch_vmsa->vmsa, ctx, sizeof(launch_vmsa->vmsa));
+> +            exists = true;
+> +            break;
+> +        }
+> +    }
+> +
+> +    if (!exists) {
+> +        /* New VP context */
+> +        launch_vmsa = g_new0(SevLaunchVmsa, 1);
+> +        memcpy(&launch_vmsa->vmsa, ctx, sizeof(launch_vmsa->vmsa));
+> +        launch_vmsa->cpu_index = cpu_index;
+> +        launch_vmsa->gpa = gpa;
+> +        QTAILQ_INSERT_TAIL(&sev_common->launch_vmsa, launch_vmsa, next);
+> +    }
+> +
+> +    /* Synchronise the VMSA with the current CPU state */
+> +    sev_apply_cpu_context(cpu);
+> +
+> +    return 0;
+> +}
+> +
+>  bool
+>  sev_enabled(void)
+>  {
+> @@ -998,6 +1176,16 @@ static int
+>  sev_launch_update_vmsa(SevGuestState *sev_guest)
+>  {
+>      int ret, fw_error;
+> +    CPUState *cpu;
+> +
+> +    /*
+> +     * The initial CPU state is measured as part of KVM_SEV_LAUNCH_UPDATE_VMSA.
+> +     * Synchronise the CPU state to any provided launch VMSA structures.
+> +     */
+> +    CPU_FOREACH(cpu) {
+> +        sev_apply_cpu_context(cpu);
+> +    }
+> +
+>  
+>      ret = sev_ioctl(SEV_COMMON(sev_guest)->sev_fd, KVM_SEV_LAUNCH_UPDATE_VMSA,
+>                      NULL, &fw_error);
+> @@ -1780,40 +1968,109 @@ sev_es_find_reset_vector(void *flash_ptr, uint64_t flash_size,
+>      return sev_es_parse_reset_block(info, addr);
+>  }
+>  
+> -void sev_es_set_reset_vector(CPUState *cpu)
+> +
+> +static void seg_to_vmsa(const SegmentCache *cpu_seg, struct vmcb_seg *vmsa_seg)
+>  {
+> -    X86CPU *x86;
+> -    CPUX86State *env;
+> -    ConfidentialGuestSupport *cgs = MACHINE(qdev_get_machine())->cgs;
+> -    SevCommonState *sev_common = SEV_COMMON(
+> -        object_dynamic_cast(OBJECT(cgs), TYPE_SEV_COMMON));
+> +    vmsa_seg->selector = cpu_seg->selector;
+> +    vmsa_seg->base = cpu_seg->base;
+> +    vmsa_seg->limit = cpu_seg->limit;
+> +    vmsa_seg->attrib = FLAGS_SEGCACHE_TO_VMSA(cpu_seg->flags);
+> +}
+>  
+> -    /* Only update if we have valid reset information */
+> -    if (!sev_common || !sev_common->reset_data_valid) {
+> -        return;
+> -    }
+> +static void initialize_vmsa(const CPUState *cpu, struct sev_es_save_area *vmsa)
+> +{
+> +    const X86CPU *x86 = X86_CPU(cpu);
+> +    const CPUX86State *env = &x86->env;
+>  
+> -    /* Do not update the BSP reset state */
+> -    if (cpu->cpu_index == 0) {
+> -        return;
+> +    /*
+> +     * Initialize the SEV-ES save area from the current state of
+> +     * the CPU. The entire state does not need to be copied, only the state
+> +     * that is copied back to the CPUState in sev_apply_cpu_context.
+> +     */
+> +    memset(vmsa, 0, sizeof(struct sev_es_save_area));
+> +    vmsa->efer = env->efer;
+> +    vmsa->cr0 = env->cr[0];
+> +    vmsa->cr3 = env->cr[3];
+> +    vmsa->cr4 = env->cr[4];
+> +    vmsa->xcr0 = env->xcr0;
+> +    vmsa->g_pat = env->pat;
+> +
+> +    seg_to_vmsa(&env->segs[R_CS], &vmsa->cs);
+> +    seg_to_vmsa(&env->segs[R_DS], &vmsa->ds);
+> +    seg_to_vmsa(&env->segs[R_ES], &vmsa->es);
+> +    seg_to_vmsa(&env->segs[R_FS], &vmsa->fs);
+> +    seg_to_vmsa(&env->segs[R_GS], &vmsa->gs);
+> +    seg_to_vmsa(&env->segs[R_SS], &vmsa->ss);
+> +
+> +    seg_to_vmsa(&env->gdt, &vmsa->gdtr);
+> +    seg_to_vmsa(&env->idt, &vmsa->idtr);
+> +    seg_to_vmsa(&env->ldt, &vmsa->ldtr);
+> +    seg_to_vmsa(&env->tr, &vmsa->tr);
+> +
+> +    vmsa->dr6 = env->dr[6];
+> +    vmsa->dr7 = env->dr[7];
+> +
+> +    vmsa->rax = env->regs[R_EAX];
+> +    vmsa->rcx = env->regs[R_ECX];
+> +    vmsa->rdx = env->regs[R_EDX];
+> +    vmsa->rbx = env->regs[R_EBX];
+> +    vmsa->rsp = env->regs[R_ESP];
+> +    vmsa->rbp = env->regs[R_EBP];
+> +    vmsa->rsi = env->regs[R_ESI];
+> +    vmsa->rdi = env->regs[R_EDI];
+> +
+> +#ifdef TARGET_X86_64
+> +    vmsa->r8 = env->regs[R_R8];
+> +    vmsa->r9 = env->regs[R_R9];
+> +    vmsa->r10 = env->regs[R_R10];
+> +    vmsa->r11 = env->regs[R_R11];
+> +    vmsa->r12 = env->regs[R_R12];
+> +    vmsa->r13 = env->regs[R_R13];
+> +    vmsa->r14 = env->regs[R_R14];
+> +    vmsa->r15 = env->regs[R_R15];
+> +#endif
+> +
+> +    vmsa->rip = env->eip;
+> +    vmsa->rflags = env->eflags;
+> +}
+> +
+> +static void sev_es_set_ap_context(uint32_t reset_addr)
+> +{
+> +    CPUState *cpu;
+> +    struct sev_es_save_area vmsa;
+> +    SegmentCache cs;
+> +
+> +    cs.selector = 0xf000;
+> +    cs.base = reset_addr & 0xffff0000;
+> +    cs.limit = 0xffff;
+> +    cs.flags = DESC_P_MASK | DESC_S_MASK | DESC_CS_MASK | DESC_R_MASK |
+> +               DESC_A_MASK;
+> +
+> +    CPU_FOREACH(cpu) {
+> +        if (cpu->cpu_index == 0) {
+> +            /* Do not update the BSP reset state */
+> +            continue;
+> +        }
+> +        initialize_vmsa(cpu, &vmsa);
+> +        seg_to_vmsa(&cs, &vmsa.cs);
+> +        vmsa.rip = reset_addr & 0x0000ffff;
+> +        sev_set_cpu_context(cpu->cpu_index, &vmsa,
+> +                            sizeof(struct sev_es_save_area),
+> +                            0, &error_fatal);
+>      }
+> +}
+>  
+> -    x86 = X86_CPU(cpu);
+> -    env = &x86->env;
+> -
+> -    cpu_x86_load_seg_cache(env, R_CS, 0xf000, sev_common->reset_cs, 0xffff,
+> -                           DESC_P_MASK | DESC_S_MASK | DESC_CS_MASK |
+> -                           DESC_R_MASK | DESC_A_MASK);
+> -
+> -    env->eip = sev_common->reset_ip;
+> +void sev_es_set_reset_vector(CPUState *cpu)
+> +{
+> +    if (sev_enabled()) {
+> +        sev_apply_cpu_context(cpu);
+> +    }
+>  }
+>  
+>  int sev_es_save_reset_vector(void *flash_ptr, uint64_t flash_size)
+>  {
+> -    CPUState *cpu;
+>      uint32_t addr;
+>      int ret;
+> -    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
+>  
+>      if (!sev_es_enabled()) {
+>          return 0;
+> @@ -1826,14 +2083,12 @@ int sev_es_save_reset_vector(void *flash_ptr, uint64_t flash_size)
+>          return ret;
+>      }
+>  
+> +    /*
+> +     * The reset vector is saved into a CPU context for each AP but not for
+> +     * the BSP. This is applied during guest startup or when the CPU is reset.
+> +     */
+>      if (addr) {
+> -        sev_common->reset_cs = addr & 0xffff0000;
+> -        sev_common->reset_ip = addr & 0x0000ffff;
+> -        sev_common->reset_data_valid = true;
+> -
+> -        CPU_FOREACH(cpu) {
+> -            sev_es_set_reset_vector(cpu);
+> -        }
+> +        sev_es_set_ap_context(addr);
+>      }
+>  
+>      return 0;
+> @@ -2068,6 +2323,7 @@ sev_common_instance_init(Object *obj)
+>      object_property_add_uint32_ptr(obj, "reduced-phys-bits",
+>                                     &sev_common->reduced_phys_bits,
+>                                     OBJ_PROP_FLAG_READWRITE);
+> +    QTAILQ_INIT(&sev_common->launch_vmsa);
+>  }
+>  
+>  /* sev guest info common to sev/sev-es/sev-snp */
+> diff --git a/target/i386/sev.h b/target/i386/sev.h
+> index 373669eaac..38caa849f5 100644
+> --- a/target/i386/sev.h
+> +++ b/target/i386/sev.h
+> @@ -55,6 +55,116 @@ typedef struct SevKernelLoaderContext {
+>      size_t cmdline_size;
+>  } SevKernelLoaderContext;
+>  
+> +/* Save area definition for SEV-ES and SEV-SNP guests */
+> +struct QEMU_PACKED sev_es_save_area {
+> +    struct vmcb_seg es;
+> +    struct vmcb_seg cs;
+> +    struct vmcb_seg ss;
+> +    struct vmcb_seg ds;
+> +    struct vmcb_seg fs;
+> +    struct vmcb_seg gs;
+> +    struct vmcb_seg gdtr;
+> +    struct vmcb_seg ldtr;
+> +    struct vmcb_seg idtr;
+> +    struct vmcb_seg tr;
+> +    uint64_t vmpl0_ssp;
+> +    uint64_t vmpl1_ssp;
+> +    uint64_t vmpl2_ssp;
+> +    uint64_t vmpl3_ssp;
+> +    uint64_t u_cet;
+> +    uint8_t reserved_0xc8[2];
+> +    uint8_t vmpl;
+> +    uint8_t cpl;
+> +    uint8_t reserved_0xcc[4];
+> +    uint64_t efer;
+> +    uint8_t reserved_0xd8[104];
+> +    uint64_t xss;
+> +    uint64_t cr4;
+> +    uint64_t cr3;
+> +    uint64_t cr0;
+> +    uint64_t dr7;
+> +    uint64_t dr6;
+> +    uint64_t rflags;
+> +    uint64_t rip;
+> +    uint64_t dr0;
+> +    uint64_t dr1;
+> +    uint64_t dr2;
+> +    uint64_t dr3;
+> +    uint64_t dr0_addr_mask;
+> +    uint64_t dr1_addr_mask;
+> +    uint64_t dr2_addr_mask;
+> +    uint64_t dr3_addr_mask;
+> +    uint8_t reserved_0x1c0[24];
+> +    uint64_t rsp;
+> +    uint64_t s_cet;
+> +    uint64_t ssp;
+> +    uint64_t isst_addr;
+> +    uint64_t rax;
+> +    uint64_t star;
+> +    uint64_t lstar;
+> +    uint64_t cstar;
+> +    uint64_t sfmask;
+> +    uint64_t kernel_gs_base;
+> +    uint64_t sysenter_cs;
+> +    uint64_t sysenter_esp;
+> +    uint64_t sysenter_eip;
+> +    uint64_t cr2;
+> +    uint8_t reserved_0x248[32];
+> +    uint64_t g_pat;
+> +    uint64_t dbgctl;
+> +    uint64_t br_from;
+> +    uint64_t br_to;
+> +    uint64_t last_excp_from;
+> +    uint64_t last_excp_to;
+> +    uint8_t reserved_0x298[80];
+> +    uint32_t pkru;
+> +    uint32_t tsc_aux;
+> +    uint8_t reserved_0x2f0[24];
+> +    uint64_t rcx;
+> +    uint64_t rdx;
+> +    uint64_t rbx;
+> +    uint64_t reserved_0x320; /* rsp already available at 0x01d8 */
+> +    uint64_t rbp;
+> +    uint64_t rsi;
+> +    uint64_t rdi;
+> +    uint64_t r8;
+> +    uint64_t r9;
+> +    uint64_t r10;
+> +    uint64_t r11;
+> +    uint64_t r12;
+> +    uint64_t r13;
+> +    uint64_t r14;
+> +    uint64_t r15;
+> +    uint8_t reserved_0x380[16];
+> +    uint64_t guest_exit_info_1;
+> +    uint64_t guest_exit_info_2;
+> +    uint64_t guest_exit_int_info;
+> +    uint64_t guest_nrip;
+> +    uint64_t sev_features;
+> +    uint64_t vintr_ctrl;
+> +    uint64_t guest_exit_code;
+> +    uint64_t virtual_tom;
+> +    uint64_t tlb_id;
+> +    uint64_t pcpu_id;
+> +    uint64_t event_inj;
+> +    uint64_t xcr0;
+> +    uint8_t reserved_0x3f0[16];
+> +
+> +    /* Floating point area */
+> +    uint64_t x87_dp;
+> +    uint32_t mxcsr;
+> +    uint16_t x87_ftw;
+> +    uint16_t x87_fsw;
+> +    uint16_t x87_fcw;
+> +    uint16_t x87_fop;
+> +    uint16_t x87_ds;
+> +    uint16_t x87_cs;
+> +    uint64_t x87_rip;
+> +    uint8_t fpreg_x87[80];
+> +    uint8_t fpreg_xmm[256];
+> +    uint8_t fpreg_ymm[256];
+> +};
+> +
+>  bool sev_add_kernel_loader_hashes(SevKernelLoaderContext *ctx, Error **errp);
+>  
+>  int sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp);
+> -- 
+> 2.43.0
+> 
 
->
-> The main effect on generated code is to add an assert! to
-> memory_region_ops_read_cb() and memory_region_ops_write_cb() that's
-> similar to the above.  I'm not sure of its value, either: if the size is
-> not 1/2/4/8, memory.c/physmem.c must have screwed up big.  It's not a
-> safety concern, either, since the size is not used in any unsafe code.
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-Yep it's more of a guard rail since we can't have refined integer types.
-
---=20
-Manos Pitsidianakis
-Emulation and Virtualization Engineer at Linaro Ltd
 
