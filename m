@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45A9BC8303C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 22:17:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E5B2C83F09
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 22:32:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZGcM-0003Le-8R; Tue, 08 Jul 2025 18:16:50 -0400
+	id 1uZGpB-0006bo-Uc; Tue, 08 Jul 2025 18:30:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZGYv-0005XY-6m
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 18:13:18 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1uZGoy-0006Ii-Al; Tue, 08 Jul 2025 18:29:52 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZGYs-00086v-K1
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 18:13:16 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-3a54700a46eso2720259f8f.1
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 15:13:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1uZGow-0002yz-8o; Tue, 08 Jul 2025 18:29:51 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-604bff84741so8822841a12.2; 
+ Tue, 08 Jul 2025 15:29:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752012792; x=1752617592; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=+kbUNrPjCxqJMdGOcYTq49UvPqoFqRW4yRvrM7RsdxQ=;
- b=Id624D/IVFn2+JAruffGCnjmD30JkWK029KM3vUUhnLECjp+CRPblkkKpy+vIHiFQW
- DQsxeGCnOGrET90z7VZGkc8DAfCG2/TOQcRZnl9/6kUJo1KXzcoKBDoJgLZDrCkQDck5
- Rk3H5QR65Z9DWzwzpOoWYol506LM5MEDS5VGRPeSyMfp8TIw01QYb/y9QwsduUMhJoIO
- JRXD1WnLTdLzWgeWTgY2LyWoz655fbszrDbUORmQnwFUWURYXzyLuU9LkSZNAOYuGXmY
- 8x2C1ZLIv3HBxNdkLsK8kpYEkbi6oNVzDLi0omq+dL/eeC2HQnAHrg5NB0WvZTwnU2r8
- 1ceA==
+ d=gmail.com; s=20230601; t=1752013787; x=1752618587; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=A0385rxh4A4bhncIOA31K9h3EFgQvYvoodbJ30+ciqY=;
+ b=m3D3Dajm9GBd2csQ42e1ihLS7rGJZgSlYNMwVI0F4Nr3vofFM6lKkoNr71bgMJ9pIZ
+ TrbFV31hWox09kHTvgaZk9Cha+xu0VA2VAu6TdcwxZw5HNoWUMfa3bXCSBm4Zv3dKV8U
+ yq7Pe14q4lHl4eLa9pNGR6jDvwHrDu0r1ZxZXKuNHbLn0EkN1CKZ8BtLz3eWG0Ep5fFH
+ D9W0a/Z/tde7qxY0X1YjFXvE9ndimRU/wbw3Mw6gedvokj9jCUqoTDNercfWF6lV3RBG
+ f7K6yF1Nd86fNw/BDY/Mqt0aaqdkxM5Sjvc/VeSMA8K1njZZ2w4EPtM/UF149Bl6+xG1
+ ITTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752012792; x=1752617592;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+kbUNrPjCxqJMdGOcYTq49UvPqoFqRW4yRvrM7RsdxQ=;
- b=nCoIdebzsnv2ORZGTLFCPspz95T7AjOFW3x+frhSiOPlyOrlh3B8r5M2x0MJYNZNmD
- nqueiGUd53AMv+AOLhjKxZER01lcih0rucfG+6ZotQhDG7rJ0JRGclSheIXNVScYG6ZY
- rFzysbSPOyM9xlLezUU9qpcy67kVZo4bVuMxv0HGQCdZrF4JMEWogR7SedfjTkye/zjh
- 0iraDvTqp7ik9EQoElL/AmgqhAjdeXqCZY8ctYHcTX/9hSfSv1ABssx+4kFBgYoRI6Pr
- Hw0N0TihTGOmTrkYR0vq1rmvpFr40OoXowETOj7RSz2rYzzpdN/kQRqIN/s02u3UEf6g
- nxpA==
-X-Gm-Message-State: AOJu0Yy65/RslPlSL+y/E63yPGVmtE7quSax2kxHc8jyfYkyYQV+MSX5
- v8fVdKi8cf3lDwb9FATRs2wwbgQvSj0CvbkpEXKkTrDMLvGEyy/WdJg7sNKjRxtkLPvgVF2sfhN
- sWibv
-X-Gm-Gg: ASbGnctzYzRpd2bI3eiAcQ3KqDnlEnB4BhYZi39kYniOm4ALPCDR6BjRtGPfo2gMX5T
- YBs9T/Ca6xb0cbS6W5VtnKlu+idfMQR7H2kgfRge3nRMQNKak+fr78zYDCu42HsChSBR919D8Gp
- Sm1o6ixuKK0HKGThJZb7tjurFo+bHAq9Ehv6X+vVd2ffZetIycm0bhGMfOezG/Mok4VoOrN5nRY
- y8e2+yNBHhqUgnCn9clvbtFGQDf7H/X/gI3B0Ob0PanN/ngmiMsvkyRkVj8MNnCzWyGula9tVAh
- 8zieiWcTh2fATJ9uH2tDHycBjCM6VrodRGa9j5TIvA4ywyPkh3jNl8b1MEZOIu73k5DGBxePgKf
- G6v4KwxW6A6pqsqu/qELguWrHZ5osNwp2
-X-Google-Smtp-Source: AGHT+IFGiqwIs56ZAhE27Y5U1Nv0hRYcCpdysNZDEfPzjh6bN8zkva6qm0uF/n6ONNw+W85FM22yqA==
-X-Received: by 2002:a05:6000:210a:b0:3a4:d53d:be20 with SMTP id
- ffacd0b85a97d-3b5e2fec82fmr800201f8f.18.1752012791810; 
- Tue, 08 Jul 2025 15:13:11 -0700 (PDT)
-Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
+ d=1e100.net; s=20230601; t=1752013787; x=1752618587;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=A0385rxh4A4bhncIOA31K9h3EFgQvYvoodbJ30+ciqY=;
+ b=vDieZi07NJ4SEp2JQKaFaIS8i+spSJf8xehz2+6HVns7oGGiEWA87hYF8lnY0bsIxx
+ ociw+DjVlEzCj/i1K1N02K+6D33SfX1NER7q721/O05jbvbSOuOiDvHmmx1WQhijibd2
+ cDBrRCO/O6UAg8Y987ffKeimFGz0MLWUipalOGtbm0TWDE52jyjYhj+ecAWgV10k3fv8
+ EH0GgASshQi1b7+pJWcLy9jnGoeItkMUOFIe7NtVUI5+lL6APnfAWoLkfWBYwraEmypY
+ Qtpqi01I/jH5g2gHNkziV7gfwimNEghUsnwKzNtBatQcqpZDKX1axIsDOKSbVRv+id8k
+ QVvQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWUNfKCOt1Iiooc8nnIAtpxns2UqlBEDSezeFXPmI9y6FWXXAch+Hkgi4Rq9n/bCnTlM+6pZok1IZMh@nongnu.org
+X-Gm-Message-State: AOJu0YxkkUV8JR/q46aG+VRNFYb2ST9PG0vK7x1aPRWKp13Rsx8l0Gq8
+ bn4qjjLCUbHuyvEoyOC+8Gl/zLsfXh4uHEVzh45cwDzLJzDuOF1u3kHE
+X-Gm-Gg: ASbGnctQh9QbSbfU6sr4suYVv3PuEcrcR8nRU23gfKcSAuKT9F026/i3+LowEd1eAzT
+ oxmC9NvdhIxwBMNjAjZ5BlP1mw9xIK990gGXseymEKaYZpDTPAn0FzTQ7WTzaxb/VPaJZ2zx9jW
+ B4pVjhdRsxpaC4luZAWeIItx5JUyOJRCkavsXACImFT1LoXPF2lpiMV6DOBOj4ldHFMhAtsnWMo
+ 3mkXG/ORG9N960OXF8qK7TSytO79/cgYaqAzedNs3zKx205ci/NAszCA2dNjCAR3Q/DucvjhYba
+ fW5xUcYvTC83roYZiW1i6jqQ7xFwk65+FxIePRi8vcUJzB+wTyNUelQKQ5QxXq5tBihup8K7TcQ
+ yt2jzII3LMSXWKLP2Bq70H5BgqTjc1tbmGfOzP97dkTXe3P1qEVy04wBR0btmTQ0V5vLMVQ==
+X-Google-Smtp-Source: AGHT+IHfcBtWI+vCtqNz+9Vgx1rMk1onAkTKHkHqPfsb+m3eVvhyW34zVyniKjOc2t5T/qiBPj/v+w==
+X-Received: by 2002:a17:907:25c6:b0:ae1:a6a0:f2fe with SMTP id
+ a640c23a62f3a-ae6cfbeb38emr22567966b.36.1752013787178; 
+ Tue, 08 Jul 2025 15:29:47 -0700 (PDT)
+Received: from ?IPv6:::1?
+ (dynamic-2a02-3100-18f0-be00-bd73-623e-7632-a2ac.310.pool.telefonica.de.
+ [2a02:3100:18f0:be00:bd73:623e:7632:a2ac])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454d50ded8csm937445e9.20.2025.07.08.15.13.10
+ a640c23a62f3a-ae3f6b6a5f0sm961284966b.169.2025.07.08.15.29.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Jul 2025 15:13:11 -0700 (PDT)
-Message-ID: <9df05684-af4a-4317-90d3-660494c73fac@linaro.org>
-Date: Wed, 9 Jul 2025 00:13:10 +0200
+ Tue, 08 Jul 2025 15:29:46 -0700 (PDT)
+Date: Tue, 08 Jul 2025 22:29:45 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+CC: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 1/2] hw/arm/fsl-imx8mp: Wire VIRQ and VFIQ
+In-Reply-To: <4c966437-91b4-4c07-a07e-1a54f51329fe@linaro.org>
+References: <20250629204851.1778-1-shentey@gmail.com>
+ <20250629204851.1778-2-shentey@gmail.com>
+ <4c966437-91b4-4c07-a07e-1a54f51329fe@linaro.org>
+Message-ID: <770CC742-A924-45CC-ADEC-1300910B2AA6@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] system/os-win32: Remove unnecessary
- 'qemu/typedefs.h' include
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
- Alex Williamson <alex.williamson@redhat.com>
-References: <20250708085859.7885-1-philmd@linaro.org>
- <20250708085859.7885-4-philmd@linaro.org>
- <37e9f347-f7ba-4ea6-93f8-879d8169012a@linaro.org>
-Content-Language: en-US
-In-Reply-To: <37e9f347-f7ba-4ea6-93f8-879d8169012a@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,46 +106,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/7/25 22:53, Philippe Mathieu-Daudé wrote:
-> On 8/7/25 10:58, Philippe Mathieu-Daudé wrote:
->> Commit f5fd677ae7c ("win32/socket: introduce qemu_socket_select()
->> helper") included the "qemu/typedefs.h" header for the Error type,
->> but files including "system/os-win32.h" should already include
->> "qemu/osdep.h", and thus "qemu/typedefs.h".
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   include/system/os-win32.h | 1 -
->>   1 file changed, 1 deletion(-)
->>
->> diff --git a/include/system/os-win32.h b/include/system/os-win32.h
->> index 3aa6cee4c23..662cfabc5e7 100644
->> --- a/include/system/os-win32.h
->> +++ b/include/system/os-win32.h
->> @@ -29,7 +29,6 @@
->>   #include <winsock2.h>
->>   #include <windows.h>
->>   #include <ws2tcpip.h>
->> -#include "qemu/typedefs.h"
-> 
-> FTR, copying Peter's comment on v1:
-> http://lore.kernel.org/qemu-devel/ 
-> CAFEAcA9rcJHBaeAqCM1BszrhzkE4=gxJkx9h62BVhEz9hB7OMA@mail.gmail.com
-> 
->  > This one's tricky -- osdep.h includes system/os-win32.h
->  > *before* it includes typedefs.h. If you want to remove this
->  > include I think you need to move the include of typedefs.h
->  > a bit further up in osdep.h (taking care that it's still
->  > wrapped in an "extern C").
->  >
->  > (Or we could declare the functions in os-win32.h which
->  > use the Error type somewhere else. That header I think is
->  > intended to be "Windows specifics and compatibility wrappers
->  > that everywhere needs to have sorted out", not "this
->  > function happens to only be needed on Windows": a lot
->  > of the functions declared in it are only used in a
->  > handful of files and don't need to be declared to every
->  > source file in the project. But that's a bit more effort.)
 
-Amusingly qemu_socket_[un]select() are always called with Error=NULL.
+
+Am 30=2E Juni 2025 08:59:22 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <phi=
+lmd@linaro=2Eorg>:
+>On 29/6/25 22:48, Bernhard Beschow wrote:
+>> Allows to run KVM guests inside the imx8mp-evk machine=2E
+>>=20
+>> Fixes: a4eefc69b237 ("hw/arm: Add i=2EMX 8M Plus EVK board")
+>> CC: qemu-stable
+>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>> ---
+>>   hw/arm/fsl-imx8mp=2Ec | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>
+>Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
+
+Ping
+
+This patch doesn't shift the security boundary and is already reviewed=2E
+
+Best regards,
+Bernhard
+
 
