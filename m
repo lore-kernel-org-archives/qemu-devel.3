@@ -4,90 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECBAAC8303C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 22:13:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31053C83F09
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 22:16:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZGYA-00041F-27; Tue, 08 Jul 2025 18:12:30 -0400
+	id 1uZGZy-0007tc-4m; Tue, 08 Jul 2025 18:14:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZGG8-0001Ig-NC
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 17:53:52 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZGOE-00020x-2U
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 18:02:14 -0400
 Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZGG6-0003Nx-06
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 17:53:52 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZGOC-0004ZE-2X
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 18:02:13 -0400
 Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-453647147c6so46495755e9.2
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 14:53:49 -0700 (PDT)
+ 5b1f17b1804b1-451d6ade159so43374075e9.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 15:02:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752011628; x=1752616428; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7IgGHEeRKsG0dre7n+N4g7EyPm5kGW3Qo9EDGG86lSM=;
- b=vKdxD2lX7jUT9PuFe8dTvhnxcm5/i2F5FeRcLAu2IGEst5XqkIGROInKsB6wZX+6g0
- zWPkN5sGhuEZGaJXgFAj+coSGGgH/YFt+rDhLrWR5VhS+ht+KsUEjt3iGPqrBkecVw+U
- cWwqNTNxaRlYTAORUbB4SM4+zSkVGFNyjBpUKzEJMM7MB0u5clhU175KrS+Y48ZlivFb
- IPI+yyF6a+oiP+jRpG8ecSbWOogDL6C8Bbq+N0eM0K3wwm3fZbmyGM+uaa6LAYVlhHzz
- xur9qM7aZepRgS3+YuTpIEOAGEzLyxq+F4QOxURDLh5lAMNPxsKEdsyYj8TEYOTim9Ua
- IOTw==
+ d=linaro.org; s=google; t=1752012129; x=1752616929; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gypyUV1zEJlvjHKMKE4WvpYJ2muJvWwpp3t+miyRnww=;
+ b=ge5p5tPgwlkgtm82yB3xsYI5/aN43LDp3nLJ2YvwhDplfQ5UJKUzs/jZbJTTgeKXM1
+ CWQOt5l/kF16SyKhClM7LVEykPUKzdUiqHw4CWjP2+eqFHhBs6puA2L5cfe65JhEUKZC
+ jSZRMhEQFOv8YDKOl37Fp85YKVQ/whVqtS8k51PrRrJE7ly1tZ2y4iC3Ds6BVSaUGtQ6
+ VLKm4JocdOuVS4FDrT01MFJq84IxLGuXnT0IDJ0Vz66jLy2jD7yYK5NW6hdDHI8X2OOD
+ khoYB7bP5MOEHKWCPlsyyT4QcdMofVImw25yhlObJJOv1DfabRCdy07aCa3nD3YiFnk2
+ zcBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752011628; x=1752616428;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7IgGHEeRKsG0dre7n+N4g7EyPm5kGW3Qo9EDGG86lSM=;
- b=Hs7DKkd00epWZTE+zuPicsFlEKGMcedDuMhgp0V3o0qUFqkfMnMViI2oxDHSzIaTyu
- a5peQ+o6dtUvU0dCal5DYzqRS9SPApetWA4w7ndSAUrtn9CGTBlM0SpVZJRmQM+BbKN/
- IS7oP3Qd6T3+DUF9tulTlX5As342hTzkgB8YxB4icUkHFr+Ds4mPot9gyWzfSr86t1pS
- nJEDBD5k7G7OoVYIJeyxgE0aQh1ahGgbctalyF6aAHaAXLzVQnVGIU0A9KNTSuSI3JeJ
- quXCVOHuU7XoIRjZ3c71oSC5O7sCfGGTYZub36j70Iw+iF6apjkzwlBE2jqQdYd0ti6R
- XLcg==
-X-Gm-Message-State: AOJu0YyhT7qnsxaw7Mf6DdH4+mHNIxlZf2oW9HUFCfAjlFXlj0s4025N
- 4XmoglRJKDH7sOM8UYKty6WESRS4oKIGuG+2VbyQ5o/Fki9fw/YjDzlv9HSPrjRSZA2xjaqhVZG
- 9mkRw
-X-Gm-Gg: ASbGncu938xae155ljKmIyFpCS+UydLluk1ir6E/CVsVsf8iv53u0ZJ6Y1eKGKjHdIH
- HQ9XiGWKEYJOlbGQPLGE5c+HkJVeGL9PJZR9ppxHqnMk/QWaPuMOadCtN7ZppE4L6JJXjeR+3S7
- Mn8VAOZi8WhiUUquMMmKEUC67LY7ERdd9NpdvMq05SR727RqagrivQ2CI476+ZoqeXyy2oauSoi
- HpDxSHFzh9qMtgsqjk/a1x1CwiykZRoH608/X5xTTx6DgzTRUaitJUu87QciT2tIp/tYAo14dof
- 9L5fhSrehZpA9T1M4HzIG7YeHcjVgTwb3IL5AUQbnAJGu6fNYrBmxFizAL//JJtgI085w1j0swR
- czV/KHw6w7BtvpYFF0QTo9KOxnEfcOUe+Zb+IeJFhvQ==
-X-Google-Smtp-Source: AGHT+IFeaWgOKj7t5yQFnUIXH0oo7NKnJrFXSy/62Kfs+U7jSOYUVIQsEOfGc3tdvvFn67udLJCFFw==
-X-Received: by 2002:a05:600c:5020:b0:43d:300f:fa1d with SMTP id
- 5b1f17b1804b1-454d3695a62mr14601115e9.31.1752011627689; 
- Tue, 08 Jul 2025 14:53:47 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454d50503c4sm799795e9.11.2025.07.08.14.53.46
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 08 Jul 2025 14:53:47 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Thomas Huth <thuth@redhat.com>, qemu-riscv@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-block@nongnu.org,
- qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH-for-10.1 RESEND v8 5/8] qemu: Convert target_words_bigendian()
- to TargetInfo API
-Date: Tue,  8 Jul 2025 23:53:16 +0200
-Message-ID: <20250708215320.70426-6-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250708215320.70426-1-philmd@linaro.org>
-References: <20250708215320.70426-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1752012129; x=1752616929;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gypyUV1zEJlvjHKMKE4WvpYJ2muJvWwpp3t+miyRnww=;
+ b=jdhKD+uDFft8yaAfkDgxVbO5u2fhV4bk03sD/e2S8+fDlWzAiT+kvN6ozQv7vyqhXI
+ oriwgk5qCGEJqFcgk9GfI7WEonHWgTeRZgK82m/b7gyM6RylTeUiH2cTCo7VnXCFf8ip
+ Ve77qF42BtK3EoTSElUwQgBeUzGPtN6XP+vI5K9UU2I7ePHbIreo8IoUk17ror+2ZE6G
+ Dn/Nug46Ifd2X9bVnMMmjdjICMHjs91xzPoPQdJBpDGg6EqS3M/QyojcwBsCebn3zI+F
+ zfM9LNcoDBkJkOrfN902kmM1TVtd9nKzGdN9h4k1edHWg/MpWEm0u7YIQTVxGK2HeF9I
+ 0l2A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXMriMrt9+7Lom2L8veJt525+nSuS3sb29qQxc5j20zaNh7828D+uV4DsvGtCnoV7OsOYYxp03qBkzP@nongnu.org
+X-Gm-Message-State: AOJu0Yz0vA03fyha8jz+4bmp+m+gGeMHpeyZE0reZ4dRMwhYMKiS7nsJ
+ qJa+e2ehV4aUeo3bukQKo4C3K1MmFe7N2Y5uzEY1kEbiot6IBy6ZA1kwpHqosLsNlp8=
+X-Gm-Gg: ASbGncvZze8YhNiJQXKpm8G1RFZKAuf11ZzhrSInAAFb++5YFQ9nMiBi9ICYx7Th4VM
+ wNNPiJjmS0lL0m2Dck17iXsQlgbBOIWutty+XMImd2qXVbp27ekILyfSWsHw6P273AaLyggXRZm
+ hza1oSfxbgyWjcBFSqXTh9tj4ONF/4GUkK89JBqXL4MBroWPDxuzc/kVOxMb236tLaDKkVvPc/J
+ 8oMIUgPe9pDejOsj5TS7QZ/PTAT+mXmtBL+uD+E3rRlJHcG7lyDoHcOZZjAzugG8WQ4vUfISAh+
+ S+NQ0Q9gpG5dUS/otbueg7Jtp9I83JD4wuXFiQMsDA9LIsN+dhu+vN4mNB49/Yu07lGa1G0qmZg
+ 1r2jkmurlka+BhIOfsZRvXfQCcn4u0wWTljD42JQ12EQ=
+X-Google-Smtp-Source: AGHT+IEzf/lWKiD+9nrhuvSKc+BGD+DquwR1N4skWGHH2rCEQiHjlgy6V0YeKBUQgKwMKTd6bLgEEA==
+X-Received: by 2002:a05:6000:470f:b0:3a5:3b63:58f0 with SMTP id
+ ffacd0b85a97d-3b49701c86cmr12533525f8f.18.1752012129354; 
+ Tue, 08 Jul 2025 15:02:09 -0700 (PDT)
+Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b47030cdf5sm13785745f8f.1.2025.07.08.15.02.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 08 Jul 2025 15:02:08 -0700 (PDT)
+Message-ID: <bdb92ceb-59d3-4e82-83f7-d4bde9b96583@linaro.org>
+Date: Wed, 9 Jul 2025 00:02:07 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 3/3] tests/qtest/qom-test: unit test for qom-list-getv
+To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+References: <1751995472-211897-1-git-send-email-steven.sistare@oracle.com>
+ <1751995472-211897-4-git-send-email-steven.sistare@oracle.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <1751995472-211897-4-git-send-email-steven.sistare@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::334;
  envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
@@ -113,165 +106,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/exec/tswap.h       | 13 +------------
- include/qemu/target-info.h | 12 ++++++++++++
- cpu-target.c               |  7 -------
- hw/core/cpu-system.c       |  2 +-
- hw/display/vga.c           |  2 +-
- hw/virtio/virtio.c         |  2 +-
- system/memory.c            |  1 +
- system/qtest.c             |  1 +
- target-info.c              |  5 +++++
- 9 files changed, 23 insertions(+), 22 deletions(-)
+Hi Steve,
 
-diff --git a/include/exec/tswap.h b/include/exec/tswap.h
-index 49511f26117..55ffa633598 100644
---- a/include/exec/tswap.h
-+++ b/include/exec/tswap.h
-@@ -9,18 +9,7 @@
- #define TSWAP_H
- 
- #include "qemu/bswap.h"
--
--/**
-- * target_big_endian:
-- * Returns true if the (default) endianness of the target is big endian,
-- * false otherwise. Common code should normally never need to know about the
-- * endianness of the target, so please do *not* use this function unless you
-- * know very well what you are doing!
-- */
--bool target_big_endian(void);
--#ifdef COMPILING_PER_TARGET
--#define target_big_endian()   TARGET_BIG_ENDIAN
--#endif
-+#include "qemu/target-info.h"
- 
- /*
-  * If we're in target-specific code, we can hard-code the swapping
-diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-index dde0e7d968a..abcf25db6fa 100644
---- a/include/qemu/target-info.h
-+++ b/include/qemu/target-info.h
-@@ -38,4 +38,16 @@ const char *target_machine_typename(void);
-  */
- const char *target_cpu_type(void);
- 
-+/**
-+ * target_big_endian:
-+ *
-+ * Returns: %true if the (default) endianness of the target is big endian,
-+ *          %false otherwise.
-+ *
-+ * Common code should normally never need to know about the endianness of
-+ * the target, so please do *not* use this function unless you  know very
-+ * well what you are doing!
-+ */
-+bool target_big_endian(void);
-+
- #endif
-diff --git a/cpu-target.c b/cpu-target.c
-index 1c90a307593..20db5ff3108 100644
---- a/cpu-target.c
-+++ b/cpu-target.c
-@@ -22,7 +22,6 @@
- #include "system/accel-ops.h"
- #include "system/cpus.h"
- #include "exec/cpu-common.h"
--#include "exec/tswap.h"
- #include "exec/replay-core.h"
- #include "exec/log.h"
- #include "hw/core/cpu.h"
-@@ -85,9 +84,3 @@ void cpu_abort(CPUState *cpu, const char *fmt, ...)
- #endif
-     abort();
- }
--
--#undef target_big_endian
--bool target_big_endian(void)
--{
--    return TARGET_BIG_ENDIAN;
--}
-diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
-index 3c84176a0c5..a975405d3a0 100644
---- a/hw/core/cpu-system.c
-+++ b/hw/core/cpu-system.c
-@@ -24,7 +24,7 @@
- #include "exec/cputlb.h"
- #include "system/memory.h"
- #include "exec/tb-flush.h"
--#include "exec/tswap.h"
-+#include "qemu/target-info.h"
- #include "hw/qdev-core.h"
- #include "hw/qdev-properties.h"
- #include "hw/core/sysemu-cpu-ops.h"
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index 20475ebbd31..90b89cf4044 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -26,7 +26,7 @@
- #include "qemu/units.h"
- #include "system/reset.h"
- #include "qapi/error.h"
--#include "exec/tswap.h"
-+#include "qemu/target-info.h"
- #include "hw/display/vga.h"
- #include "hw/i386/x86.h"
- #include "hw/pci/pci.h"
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 82a285a31d1..0f4d28033d7 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -20,7 +20,7 @@
- #include "qemu/log.h"
- #include "qemu/main-loop.h"
- #include "qemu/module.h"
--#include "exec/tswap.h"
-+#include "qemu/target-info.h"
- #include "qom/object_interfaces.h"
- #include "hw/core/cpu.h"
- #include "hw/virtio/virtio.h"
-diff --git a/system/memory.c b/system/memory.c
-index e8d9b15b28f..38da62f5052 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -22,6 +22,7 @@
- #include "qemu/error-report.h"
- #include "qemu/main-loop.h"
- #include "qemu/qemu-print.h"
-+#include "qemu/target-info.h"
- #include "qom/object.h"
- #include "trace.h"
- #include "system/ram_addr.h"
-diff --git a/system/qtest.c b/system/qtest.c
-index 301b03be2d3..fa42c9f9215 100644
---- a/system/qtest.c
-+++ b/system/qtest.c
-@@ -29,6 +29,7 @@
- #include "qemu/error-report.h"
- #include "qemu/module.h"
- #include "qemu/cutils.h"
-+#include "qemu/target-info.h"
- #include "qom/object_interfaces.h"
- 
- #define MAX_IRQ 256
-diff --git a/target-info.c b/target-info.c
-index a756c0714c4..3110ab32f75 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -47,3 +47,8 @@ EndianMode target_endian_mode(void)
- {
-     return target_info()->endianness;
- }
-+
-+bool target_big_endian(void)
-+{
-+    return target_endian_mode() == ENDIAN_MODE_BIG;
-+}
--- 
-2.49.0
+On 8/7/25 19:24, Steve Sistare wrote:
+> Add a unit test for qom-list-getv.
+> 
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> ---
+>   tests/qtest/qom-test.c | 64 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 64 insertions(+)
+> 
+> diff --git a/tests/qtest/qom-test.c b/tests/qtest/qom-test.c
+> index 27d70bc..4defff1 100644
+> --- a/tests/qtest/qom-test.c
+> +++ b/tests/qtest/qom-test.c
+> @@ -11,11 +11,72 @@
+>   
+>   #include "qobject/qdict.h"
+>   #include "qobject/qlist.h"
+> +#include "qobject/qstring.h"
+>   #include "qemu/cutils.h"
+>   #include "libqtest.h"
+>   
+>   static int verbosity_level;
+>   
+> +static void test_getv(QTestState *qts, QList *paths)
+> +{
+> +    QListEntry *entry, *prop_entry, *path_entry;
+> +    g_autoptr(QDict) response = NULL;
+> +    QDict *args = qdict_new();
+> +    QDict *prop;
+> +    QList *return_list;
+> +
+> +    if (verbosity_level >= 2) {
 
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+But I note this doesn't assert anything except if you use V=3 and
+look at the output.
+
+Maybe stick it to a particular machine and check for a particular
+path and its properties?
+
+> +        g_test_message("Obtaining properties for paths:");
+> +        QLIST_FOREACH_ENTRY(paths, path_entry) {
+> +            QString *qstr = qobject_to(QString, qlist_entry_obj(path_entry));
+> +            g_test_message("  %s", qstring_get_str(qstr));
+> +        }
+> +    }
+> +
+> +    qdict_put_obj(args, "paths", QOBJECT(qlist_copy(paths)));
+> +    response = qtest_qmp(qts, "{ 'execute': 'qom-list-getv',"
+> +                              "  'arguments': %p }", args);
+> +    g_assert(response);
+> +    g_assert(qdict_haskey(response, "return"));
+> +    return_list = qobject_to(QList, qdict_get(response, "return"));
+> +
+> +    path_entry = QTAILQ_FIRST(&paths->head);
+> +    QLIST_FOREACH_ENTRY(return_list, entry) {
+> +        QDict *obj = qobject_to(QDict, qlist_entry_obj(entry));
+> +        g_assert(qdict_haskey(obj, "properties"));
+> +        QList *properties = qobject_to(QList, qdict_get(obj, "properties"));
+> +        bool has_child = false;
+> +
+> +        QLIST_FOREACH_ENTRY(properties, prop_entry) {
+> +            prop = qobject_to(QDict, qlist_entry_obj(prop_entry));
+> +            g_assert(qdict_haskey(prop, "name"));
+> +            g_assert(qdict_haskey(prop, "type"));
+> +            has_child |= strstart(qdict_get_str(prop, "type"), "child<", NULL);
+> +        }
+> +
+> +        if (has_child) {
+> +            /* build a list of child paths */
+> +            QString *qstr = qobject_to(QString, qlist_entry_obj(path_entry));
+> +            const char *path = qstring_get_str(qstr);
+> +            g_autoptr(QList) child_paths = qlist_new();
+> +
+> +            QLIST_FOREACH_ENTRY(properties, prop_entry) {
+> +                prop = qobject_to(QDict, qlist_entry_obj(prop_entry));
+> +                if (strstart(qdict_get_str(prop, "type"), "child<", NULL)) {
+> +                    g_autofree char *child_path = g_strdup_printf(
+> +                        "%s/%s", path, qdict_get_str(prop, "name"));
+> +                    qlist_append_str(child_paths, child_path);
+> +                }
+> +            }
+> +
+> +            /* fetch props for all children with one qom-list-getv call */
+> +            test_getv(qts, child_paths);
+> +        }
+> +
+> +        path_entry = QTAILQ_NEXT(path_entry, next);
+> +    }
+> +}
 
