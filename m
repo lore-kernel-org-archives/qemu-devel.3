@@ -4,53 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F1BFC83F09
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:06:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E90CC83F09
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:06:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZEZo-0005kp-Od; Tue, 08 Jul 2025 16:06:09 -0400
+	id 1uZEaL-0000lq-0e; Tue, 08 Jul 2025 16:06:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1uZDSg-00018e-Cr; Tue, 08 Jul 2025 14:54:56 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1uZDSJ-0008WG-Kp; Tue, 08 Jul 2025 14:54:26 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 8 Jul
- 2025 13:58:10 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 8 Jul 2025 13:58:10 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v4 2/5] hw/misc/aspeed_sbc: Connect ASPEED OTP memory device
- to SBC
-Date: Tue, 8 Jul 2025 13:57:54 +0800
-Message-ID: <20250708055810.2868680-3-kane_chen@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250708055810.2868680-1-kane_chen@aspeedtech.com>
-References: <20250708055810.2868680-1-kane_chen@aspeedtech.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="y"
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=kane_chen@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <3ZFBtaAkKCgUfspjjxqjwlttlqj.htrvjrz-ij0jqstslsz.twl@flex--ankeesler.bounces.google.com>)
+ id 1uZDX6-0004zZ-Hw
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 14:59:18 -0400
+Received: from mail-qv1-xf49.google.com ([2607:f8b0:4864:20::f49])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3ZFBtaAkKCgUfspjjxqjwlttlqj.htrvjrz-ij0jqstslsz.twl@flex--ankeesler.bounces.google.com>)
+ id 1uZDWx-0001jA-Ai
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 14:59:11 -0400
+Received: by mail-qv1-xf49.google.com with SMTP id
+ 6a1803df08f44-6ff810877aaso115730466d6.3
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 11:58:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1752001093; x=1752605893; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=w2qEX1zf6G9ZPjVsXEBuhmYw703se86rNQBAuotHINA=;
+ b=vZqZPrXF3FAvWojevKZTcB9WiPsRXZZnjv7pFJ7xcf0LJYDj7hvYn9yQBVbuhTGGDY
+ AgFM2geUPyFxkmRBJDZVnH7kY4PwQPmDKCX1FmWcnXWwP5+yYE0bAuCBA7RE3be+0xP3
+ kxNoz9xL2v7cnl6dB1pba8/E9UaAB6egXarlcyaa1nBhTdgnSOSXeHYVEfM2G7maA7VA
+ lMP/T7r+atoIH6z2kr70yaT3ZYqcEo7BrIgrpPNj8NedmYe4gkIDxoCoseXVoaC08luF
+ aoA+y2+MKJTu+KY7Dtj1+rz83tkkr+E7XKdq0+WRH9Y/VkoG60weKEqO3iGsbha09YZX
+ rXjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752001093; x=1752605893;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=w2qEX1zf6G9ZPjVsXEBuhmYw703se86rNQBAuotHINA=;
+ b=rXiJgSb+c23PiVYfX3/GlQ+9/nLWUc5D899wis8uITGLBmGB7xefZTRFJ4qDsURJo9
+ ziY9OYCmB/qthnuybJqzkVeimbB6+sI05dS9uo3lPf11DlyiT7AK4kS9SJq+AuNQNXHA
+ 5b4mupNMJo/yXUrRXhLbrsNxoDY9mCZNLYwDaOhzznsoPXNuDtqKfeLHFCZrnK+cPwaX
+ j8lCJFDrGJHCxNWi/FnUTK3n3cABcGadG8+EjIQGhixq4nSWC1smIb07ISbuaCoVJjtZ
+ w4p5t7ZOqb7JVqgrIEdpAkgfpwmFt4mihquVSExjXnr49m07HEjXxtmyWLBhpHH328WY
+ J9pg==
+X-Gm-Message-State: AOJu0Yy++5G+TBXdmxooK+mTu6UhQCGutmcDoIBYC6J3gbJE/5KZV4Cx
+ srOL7QlZ+V4GUIUXKOVnR5uoHwQjJi4iLt8IU+SvyH2dTOF02hS7DKNaWcwHlHNIyhio7GAY69r
+ Ww/AkNvhIQvZ3VcYs
+X-Google-Smtp-Source: AGHT+IGZ77XMRQDNFBcCdYxUXNIuY+jnB5NzvJHiBCzV2lmyDXngV2oGod1hFX5ZMGeAb62OyNRwA6FCCw7TyR0=
+X-Received: from vsbka1.prod.google.com ([2002:a05:6102:8001:b0:4e7:c796:d4f])
+ (user=ankeesler job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6102:8016:b0:4dd:b037:d239 with SMTP id
+ ada2fe7eead31-4f2ee1ab47amr13117331137.14.1751994468622; 
+ Tue, 08 Jul 2025 10:07:48 -0700 (PDT)
+Date: Tue,  8 Jul 2025 17:07:44 +0000
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.50.0.727.gbf7dc18ff4-goog
+Message-ID: <20250708170745.141040-1-ankeesler@google.com>
+Subject: [PATCH v5 0/1] Allow injection of virtio-gpu EDID name
+From: Andrew Keesler <ankeesler@google.com>
+To: berrange@redhat.com, marcandre.lureau@gmail.com, armbru@redhat.com
+Cc: qemu-devel@nongnu.org, Andrew Keesler <ankeesler@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f49;
+ envelope-from=3ZFBtaAkKCgUfspjjxqjwlttlqj.htrvjrz-ij0jqstslsz.twl@flex--ankeesler.bounces.google.com;
+ helo=mail-qv1-xf49.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,240 +87,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Kane Chen <kane_chen@aspeedtech.com>
-From:  Kane Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kane-Chen-AS <kane_chen@aspeedtech.com>
+Thanks to 72d277a7, 1ed2cb32, and others, EDID (Extended Display
+Identification Data) is propagated by QEMU such that a virtual display
+presents legitimate metadata (e.g., name, serial number, preferred
+resolutions, etc.) to its connected guest.
 
-This patch connects the aspeed.otp device to the ASPEED Secure Boot
-Controller (SBC) model. It implements OTP memory access via the SBC's
-command interface and enables emulation of secure fuse programming flows.
+This change adds the ability to specify the EDID name for a particular
+virtio-vga display. Previously, every virtual display would have the same
+name: "QEMU Monitor". Now, we can inject names of displays in order to test
+guest behavior that is specific to display names. We provide the ability to
+inject the display name from the frontend since this is guest visible
+data. Furthermore, this makes it clear where N potential display outputs
+would get their name from (which will be added in a future change).
 
-The following OTP commands are supported:
-  - READ: reads a 32-bit word from OTP memory into internal registers
-  - PROG: programs a 32-bit word value to the specified OTP address
+Note that we have elected to use a struct here for output data for
+extensibility - we intend to add per-output fields like resolution in a
+future change.
 
-Trace events are added to observe read/program operations and command
-handling flow.
+It should be noted that EDID names longer than 12 bytes will be truncated
+per spec (I think?).
 
-Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/misc/aspeed_sbc.h |   5 ++
- hw/misc/aspeed_sbc.c         | 111 +++++++++++++++++++++++++++++++++++
- hw/misc/trace-events         |   5 ++
- 3 files changed, 121 insertions(+)
+Testing: verified that when I specified 2 outputs for a virtio-gpu with
+edid_name set, the names matched those that I configured with my vnc
+display.
 
-diff --git a/include/hw/misc/aspeed_sbc.h b/include/hw/misc/aspeed_sbc.h
-index 405e6782b9..0c2746d392 100644
---- a/include/hw/misc/aspeed_sbc.h
-+++ b/include/hw/misc/aspeed_sbc.h
-@@ -10,6 +10,7 @@
- #define ASPEED_SBC_H
- 
- #include "hw/sysbus.h"
-+#include "hw/nvram/aspeed_otp.h"
- 
- #define TYPE_ASPEED_SBC "aspeed.sbc"
- #define TYPE_ASPEED_AST2600_SBC TYPE_ASPEED_SBC "-ast2600"
-@@ -36,10 +37,14 @@ struct AspeedSBCState {
-     MemoryRegion iomem;
- 
-     uint32_t regs[ASPEED_SBC_NR_REGS];
-+
-+    AspeedOTPState otp;
- };
- 
- struct AspeedSBCClass {
-     SysBusDeviceClass parent_class;
-+
-+    bool has_otp;
- };
- 
- #endif /* ASPEED_SBC_H */
-diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
-index a7d101ba71..46a038337c 100644
---- a/hw/misc/aspeed_sbc.c
-+++ b/hw/misc/aspeed_sbc.c
-@@ -15,9 +15,13 @@
- #include "hw/misc/aspeed_sbc.h"
- #include "qapi/error.h"
- #include "migration/vmstate.h"
-+#include "trace.h"
- 
- #define R_PROT          (0x000 / 4)
-+#define R_CMD           (0x004 / 4)
-+#define R_ADDR          (0x010 / 4)
- #define R_STATUS        (0x014 / 4)
-+#define R_CAMP1         (0x020 / 4)
- #define R_QSR           (0x040 / 4)
- 
- /* R_STATUS */
-@@ -41,6 +45,11 @@
- #define QSR_RSA_MASK           (0x3 << 12)
- #define QSR_HASH_MASK          (0x3 << 10)
- 
-+#define OTP_MEMORY_SIZE 0x4000
-+/* OTP command */
-+#define SBC_OTP_CMD_READ 0x23b1e361
-+#define SBC_OTP_CMD_PROG 0x23b1e364
-+
- static uint64_t aspeed_sbc_read(void *opaque, hwaddr addr, unsigned int size)
- {
-     AspeedSBCState *s = ASPEED_SBC(opaque);
-@@ -57,6 +66,84 @@ static uint64_t aspeed_sbc_read(void *opaque, hwaddr addr, unsigned int size)
-     return s->regs[addr];
- }
- 
-+static bool aspeed_sbc_otp_read(AspeedSBCState *s,
-+                                   uint32_t otp_addr)
-+{
-+    MemTxResult ret;
-+    AspeedOTPState *otp = &s->otp;
-+    uint32_t value, otp_offset;
-+
-+    otp_offset = otp_addr << 2;
-+    ret = address_space_read(&otp->as, otp_offset, MEMTXATTRS_UNSPECIFIED,
-+                             &value, sizeof(value));
-+    if (ret != MEMTX_OK) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "Failed to read OTP memory, addr = %x\n",
-+                      otp_addr);
-+        return false;
-+    }
-+    s->regs[R_CAMP1] = value;
-+    trace_aspeed_sbc_otp_read(otp_addr, value);
-+
-+    return true;
-+}
-+
-+static bool aspeed_sbc_otp_prog(AspeedSBCState *s,
-+                                   uint32_t otp_addr)
-+{
-+    MemTxResult ret;
-+    AspeedOTPState *otp = &s->otp;
-+    uint32_t value = s->regs[R_CAMP1];
-+
-+    ret = address_space_write(&otp->as, otp_addr, MEMTXATTRS_UNSPECIFIED,
-+                        &value, sizeof(value));
-+    if (ret != MEMTX_OK) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "Failed to write OTP memory, addr = %x\n",
-+                      otp_addr);
-+        return false;
-+    }
-+
-+    trace_aspeed_sbc_otp_prog(otp_addr, value);
-+
-+    return true;
-+}
-+
-+static void aspeed_sbc_handle_command(void *opaque, uint32_t cmd)
-+{
-+    AspeedSBCState *s = ASPEED_SBC(opaque);
-+    AspeedSBCClass *sc = ASPEED_SBC_GET_CLASS(opaque);
-+    bool ret = false;
-+    uint32_t otp_addr;
-+
-+    if (!sc->has_otp) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: OTP memory is not supported\n",
-+                      __func__);
-+        return;
-+    }
-+
-+    s->regs[R_STATUS] &= ~(OTP_MEM_IDLE | OTP_IDLE);
-+    otp_addr = s->regs[R_ADDR];
-+
-+    switch (cmd) {
-+    case SBC_OTP_CMD_READ:
-+        ret = aspeed_sbc_otp_read(s, otp_addr);
-+        break;
-+    case SBC_OTP_CMD_PROG:
-+        ret = aspeed_sbc_otp_prog(s, otp_addr);
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Unknown command 0x%x\n",
-+                      __func__, cmd);
-+        break;
-+    }
-+
-+    trace_aspeed_sbc_handle_cmd(cmd, otp_addr, ret);
-+    s->regs[R_STATUS] |= (OTP_MEM_IDLE | OTP_IDLE);
-+}
-+
- static void aspeed_sbc_write(void *opaque, hwaddr addr, uint64_t data,
-                               unsigned int size)
- {
-@@ -78,6 +165,9 @@ static void aspeed_sbc_write(void *opaque, hwaddr addr, uint64_t data,
-                       "%s: write to read only register 0x%" HWADDR_PRIx "\n",
-                       __func__, addr << 2);
-         return;
-+    case R_CMD:
-+        aspeed_sbc_handle_command(opaque, data);
-+        return;
-     default:
-         break;
-     }
-@@ -115,10 +205,30 @@ static void aspeed_sbc_reset(DeviceState *dev)
-     s->regs[R_QSR] = s->signing_settings;
- }
- 
-+static void aspeed_sbc_instance_init(Object *obj)
-+{
-+    AspeedSBCClass *sc = ASPEED_SBC_GET_CLASS(obj);
-+    AspeedSBCState *s = ASPEED_SBC(obj);
-+
-+    if (sc->has_otp) {
-+        object_initialize_child(OBJECT(s), "otp", &s->otp,
-+                                TYPE_ASPEED_OTP);
-+    }
-+}
-+
- static void aspeed_sbc_realize(DeviceState *dev, Error **errp)
- {
-     AspeedSBCState *s = ASPEED_SBC(dev);
-     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+    AspeedSBCClass *sc = ASPEED_SBC_GET_CLASS(dev);
-+
-+    if (sc->has_otp) {
-+        object_property_set_int(OBJECT(&s->otp), "size",
-+                                OTP_MEMORY_SIZE, &error_abort);
-+        if (!qdev_realize(DEVICE(&s->otp), NULL, errp)) {
-+            return;
-+        }
-+    }
- 
-     memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_sbc_ops, s,
-             TYPE_ASPEED_SBC, 0x1000);
-@@ -155,6 +265,7 @@ static const TypeInfo aspeed_sbc_info = {
-     .name = TYPE_ASPEED_SBC,
-     .parent = TYPE_SYS_BUS_DEVICE,
-     .instance_size = sizeof(AspeedSBCState),
-+    .instance_init = aspeed_sbc_instance_init,
-     .class_init = aspeed_sbc_class_init,
-     .class_size = sizeof(AspeedSBCClass)
- };
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index e3f64c0ff6..9e05b82f37 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -90,6 +90,11 @@ slavio_sysctrl_mem_readl(uint32_t ret) "Read system control 0x%08x"
- slavio_led_mem_writew(uint32_t val) "Write diagnostic LED 0x%04x"
- slavio_led_mem_readw(uint32_t ret) "Read diagnostic LED 0x%04x"
- 
-+# aspeed_sbc.c
-+aspeed_sbc_handle_cmd(uint32_t cmd, uint32_t addr, bool ret) "Handling command 0x%" PRIx32 " for OTP addr 0x%" PRIx32 " Result: %d"
-+aspeed_sbc_otp_read(uint32_t addr, uint32_t value) "OTP Memory read: addr 0x%" PRIx32 " value 0x%" PRIx32
-+aspeed_sbc_otp_prog(uint32_t addr, uint32_t value) "OTP Memory write: addr 0x%" PRIx32 " value 0x%" PRIx32
-+
- # aspeed_scu.c
- aspeed_scu_write(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
- aspeed_scu_read(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
+  -display vnc=localhost:0,id=aaa,display=vga,head=0 \
+  -display vnc=localhost:1,id=bbb,display=vga,head=1 \
+  -device '{"driver":"virtio-vga",
+            "max_outputs":2,
+            "id":"vga",
+            "outputs":[
+              {
+                 "name":"AAA",
+              },
+              {
+                 "name":"BBB",
+              }
+            ]}'
+
+Changelog:
+* v5 - minor code cleanup: JSON syntax, QAPI "Since", control flow
+* v4 - fixed copy-paste issue in virtio_gpu_base_generate_edid()
+* v3 - report an error at realize time if request name is too long
+* v2 - migrated configuration surface to virtio-gpu device
+
+Andrew Keesler (1):
+  hw/display: Allow injection of virtio-gpu EDID name
+
+ hw/core/qdev-properties-system.c    | 44 +++++++++++++++++++++++++++++
+ hw/display/virtio-gpu-base.c        | 27 ++++++++++++++++++
+ include/hw/display/edid.h           |  2 ++
+ include/hw/qdev-properties-system.h |  5 ++++
+ include/hw/virtio/virtio-gpu.h      |  3 ++
+ qapi/virtio.json                    | 18 ++++++++++--
+ 6 files changed, 97 insertions(+), 2 deletions(-)
+
 -- 
-2.43.0
+2.50.0.727.gbf7dc18ff4-goog
 
 
