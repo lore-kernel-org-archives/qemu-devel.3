@@ -4,76 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 929CFC8303C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:05:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E321C83F09
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:06:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZEYW-0003QR-M1; Tue, 08 Jul 2025 16:04:53 -0400
+	id 1uZEZc-0004Sl-KQ; Tue, 08 Jul 2025 16:05:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZCPY-0002Mb-O7
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uZCPY-0002Mh-St
  for qemu-devel@nongnu.org; Tue, 08 Jul 2025 13:47:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZCOb-0004aT-SG
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 13:47:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751996766;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7z4t23L2CEjvRbW4POxEjlHbPc7Y86a0BBQtX1AsNc0=;
- b=SQHudvk78TgIUqllSYsPgzjyBQh9bqLAvOropzrWAAeUcWK04qeDK/xa9jXZRG7Mxw02ef
- 9ywmgw2HQLxpMvRU+cdUqyO5n0H5gqIEPJyzrpFIhjHQs10A9tLW8rOzkGfTJihG8IpMIM
- VxW4vOWMLP3TMdJbwotFQpiI5y0AbzY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-504-0GWrLl4hNM2sABSYqBbU6Q-1; Tue,
- 08 Jul 2025 10:28:39 -0400
-X-MC-Unique: 0GWrLl4hNM2sABSYqBbU6Q-1
-X-Mimecast-MFC-AGG-ID: 0GWrLl4hNM2sABSYqBbU6Q_1751984917
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C1A6A191FFAA; Tue,  8 Jul 2025 14:28:26 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.32.187])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9617A30001B9; Tue,  8 Jul 2025 14:28:20 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
- Jonathan.Cameron@huawei.com, gustavo.romero@linaro.org,
- anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com
-Cc: pbonzini@redhat.com,
-	philmd@linaro.org,
-	alex.bennee@linaro.org
-Subject: [PATCH v6 34/36] tests/qtest/bios-tables-test: Add aarch64 ACPI PCI
- hotplug test
-Date: Tue,  8 Jul 2025 16:23:16 +0200
-Message-ID: <20250708142437.1344644-35-eric.auger@redhat.com>
-In-Reply-To: <20250708142437.1344644-1-eric.auger@redhat.com>
-References: <20250708142437.1344644-1-eric.auger@redhat.com>
+Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uZCOZ-0004Tk-77
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 13:46:59 -0400
+Received: by mail-oi1-x229.google.com with SMTP id
+ 5614622812f47-407aac76036so2488339b6e.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 10:46:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751996761; x=1752601561; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Mzc1sOSa0wi9ySmpflggXiVzpPCSM/CTP/TCoAyaoyc=;
+ b=ZyLpJH294SImabDia7F8Pni2M2PSS6TCMC7Z2jZlaGw806WSebh6oekZZNvE4ItMnT
+ 9Iza3f2kX6gXkDWGYkHt8WfVL+cG3JVEEkU2gnw3MPDp89viq0wK/S6IT2uK59a2vGLE
+ 7+fq0uSB2/vsw8bEcQFvMHuVO1zX9VIrqxNBHFr/YExv89JyNsIdUWnW6pIaZ9cEky0e
+ 5lmrXaC7OhbcNZdYFxAjRIkR7YxNrxC9V0f1+mJ3BS7sIoLsKG262sf/+Saf2tpjjH9m
+ 2KtVfhDNGPRsskyX3bUbzlpUebynm50/FmDxZ9o6KpmQrN1llFsrcOuHUomowBn7Ncvo
+ viUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751996761; x=1752601561;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Mzc1sOSa0wi9ySmpflggXiVzpPCSM/CTP/TCoAyaoyc=;
+ b=mSiS6Jv5sx2wltuymZaXdbqDKIO4AzVCJqryt5htHYFPxPNEFjaSa0urlV6gr6U5hO
+ 1hZg7jMZaNi+w19gkRnGUlmscI8jXmvlEgD3VoUOrjjREwWdxybhjmW8c94W/e7jo0vM
+ JEHSLhBGaL2SsOg3FJNihhJwLOz7vEJpfQgdyv0cSR+OXmd5KrupWZA3bYO37cajk3yX
+ M8LIn6mUfvcpB1jFN0t0LBvubqKYAiOsbdIbeKxT0jLcMMG3PbThVFFA5Vamm6lxEZS7
+ dwWD/Cvbp6D+gBFT2xIqh8jshjUP7iKPE1/ArDa4Oy13BkqdhPTTlUw37YnPe8tmQ5sS
+ ghKw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWnYM99lD1PITEionSztnsR7p8UfeqM9HG+sa+GD8XuNW9wjpmR/LzRv2smkb2f2W2SJARrtodfZm+0@nongnu.org
+X-Gm-Message-State: AOJu0YybvEJqLodMa16I1U6pvhAcJj8KEXF/bw3oQE9aBMEuvxd8DqLb
+ AYTKfSAD3hPo1ejIy93DIv8kFG+b5GikfQ7+3m/g3Y+j+Tnuln/rXOvgG/Kew0tkVnY=
+X-Gm-Gg: ASbGnctooZEKxwIUyBiOcEu9084fQ+Ja/4MTQvfUoqX8aEAC8SrV9Dt1PVWAiMK+p//
+ C3hfivyd5G5JREWRhSCNc/UJjuD0JKx/MvO01iWbQWEA8EJm1u0UD6U+6m/UUfssOyR/Zn3DHpP
+ QVDGXNLYt4D6FYUoj09G7mGHm+aBSRhXpAPxyYUh78oiGVHWWQW9RuO6bJUAMLmunxrjxV9vI4d
+ dGgUs7dB9aGDB2pdfe585cQulqKDX1Si9e4S4dEaIq7zgfFCI5fZ8q0/8LKgnALdWYnUbUC5lzB
+ car6bv+LWbjp+6Exhmvg8x+ZevuyfIRcimJlAZ/yD2iNP2ai2nFZNQ0DD0jlN8cMCf/8Irt2Bkt
+ GuzDmTfF0aJihSRY5DwEt0B+DbeFOh8u/wPh/B4wQ
+X-Google-Smtp-Source: AGHT+IHcVUpdPlimuoJyFTlRNbFCLxvVh8PfULCpGXXEhAnlHQvJVlUli8jCcpmYxy40Plk2GqoZ9Q==
+X-Received: by 2002:a05:6808:5285:b0:40b:15ac:df1b with SMTP id
+ 5614622812f47-40d072725c3mr13864950b6e.7.1751996761486; 
+ Tue, 08 Jul 2025 10:46:01 -0700 (PDT)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-6138e59123csm1687912eaf.19.2025.07.08.10.46.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 08 Jul 2025 10:46:01 -0700 (PDT)
+Message-ID: <26f11120-c983-452b-bade-f06a35bfb6dc@linaro.org>
+Date: Tue, 8 Jul 2025 11:45:58 -0600
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1 v7 6/8] gdbstub/helpers: Replace
+ TARGET_BIG_ENDIAN -> target_big_endian()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-riscv@nongnu.org,
+ qemu-block@nongnu.org, qemu-ppc@nongnu.org
+References: <20250708171949.62500-1-philmd@linaro.org>
+ <20250708171949.62500-7-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250708171949.62500-7-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::229;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x229.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,98 +112,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gustavo Romero <gustavo.romero@linaro.org>
+On 7/8/25 11:19, Philippe Mathieu-Daudé wrote:
+> Check endianness at runtime to remove the target-specific
+> TARGET_BIG_ENDIAN definition.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/gdbstub/helpers.h | 15 ++++++---------
+>   1 file changed, 6 insertions(+), 9 deletions(-)
+> 
+> diff --git a/include/gdbstub/helpers.h b/include/gdbstub/helpers.h
+> index 6f7cc48adcb..1411b136d5c 100644
+> --- a/include/gdbstub/helpers.h
+> +++ b/include/gdbstub/helpers.h
+> @@ -16,6 +16,7 @@
+>   #error "gdbstub helpers should only be included by target specific code"
+>   #endif
+>   
+> +#include "qemu/target-info.h"
+>   #include "exec/tswap.h"
+>   #include "cpu-param.h"
+>   
+> @@ -55,18 +56,14 @@ static inline int gdb_get_reg64(GByteArray *buf, uint64_t val)
+>   static inline int gdb_get_reg128(GByteArray *buf, uint64_t val_hi,
+>                                    uint64_t val_lo)
+>   {
+> +    bool be = target_big_endian();
+>       uint64_t to_quad;
+> -#if TARGET_BIG_ENDIAN
+> -    to_quad = tswap64(val_hi);
+> +
+> +    to_quad = tswap64(be ? val_hi : val_lo);
+>       g_byte_array_append(buf, (uint8_t *) &to_quad, 8);
+> -    to_quad = tswap64(val_lo);
+> +    to_quad = tswap64(be ? val_lo : val_hi);
+>       g_byte_array_append(buf, (uint8_t *) &to_quad, 8);
+> -#else
+> -    to_quad = tswap64(val_lo);
+> -    g_byte_array_append(buf, (uint8_t *) &to_quad, 8);
+> -    to_quad = tswap64(val_hi);
+> -    g_byte_array_append(buf, (uint8_t *) &to_quad, 8);
+> -#endif
 
-Add 2 new tests:
-- test_acpi_aarch64_virt_acpi_pci_hotplug tests the acpi pci hotplug
-  using -global acpi-ged.acpi-pci-hotplug-with-bridge-support=on
-- test_acpi_aarch64_virt_pcie_root_port_hpoff tests static-acpi index
-  on a root port with disabled hotplug
+Don't split the endianness check between here and also within tswap64.
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+This would be much better as
 
----
-v3 -> v4:
-- add -device pci-testdev for the first test case
-- fix the chassis
-- add a test for static acpi-index
----
- tests/qtest/bios-tables-test.c | 52 ++++++++++++++++++++++++++++++++++
- 1 file changed, 52 insertions(+)
+     uint64_t tmp[2];
+     if (target_big_endian()) {
+         tmp[0] = cpu_to_be64(val_hi);
+         tmp[1] = cpu_to_be64(val_lo);
+     } else {
+         tmp[0] = cpu_to_le64(val_lo);
+         tmp[1] = cpu_to_le64(val_hi);
+     }
+     g_byte_array_append(buf, (uint8_t *)&tmp, 16);
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index 357bcefd37..1074b8d67a 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -1643,6 +1643,54 @@ static void test_acpi_aarch64_virt_tcg_memhp(void)
- 
- }
- 
-+static void test_acpi_aarch64_virt_acpi_pci_hotplug(void)
-+{
-+    test_data data = {
-+        .machine = "virt",
-+        .arch = "aarch64",
-+        .tcg_only = true,
-+        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
-+        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-+        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
-+        .ram_start = 0x40000000ULL,
-+        .scan_len = 256ULL * MiB,
-+        .variant = ".acpipcihp",
-+    };
-+
-+   /* Use ACPI PCI Hotplug */
-+   test_acpi_one(" -global acpi-ged.acpi-pci-hotplug-with-bridge-support=on"
-+                 " -cpu cortex-a57"
-+                 " -device pcie-root-port,id=pcie.1,bus=pcie.0,chassis=0,slot=1,addr=7.0"
-+                 " -device pci-testdev,bus=pcie.1",
-+                 &data);
-+
-+    free_test_data(&data);
-+}
-+
-+static void test_acpi_aarch64_virt_pcie_root_port_hpoff(void)
-+{
-+    test_data data = {
-+        .machine = "virt",
-+        .arch = "aarch64",
-+        .tcg_only = true,
-+        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
-+        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-+        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
-+        .ram_start = 0x40000000ULL,
-+        .scan_len = 256ULL * MiB,
-+        .variant = ".hpoffacpiindex",
-+    };
-+
-+   /* turn hotplug off on the pcie-root-port and use static acpi-index*/
-+   test_acpi_one(" -device pcie-root-port,id=pcie.1,chassis=0,"
-+                                          "slot=1,hotplug=off,addr=7.0"
-+                 " -device pci-testdev,bus=pcie.1,acpi-index=12"
-+                 " -cpu cortex-a57",
-+                 &data);
-+
-+    free_test_data(&data);
-+}
-+
- static void test_acpi_microvm_prepare(test_data *data)
- {
-     data->machine = "microvm";
-@@ -2602,6 +2650,10 @@ int main(int argc, char *argv[])
-             qtest_add_func("acpi/virt/numamem",
-                            test_acpi_aarch64_virt_tcg_numamem);
-             qtest_add_func("acpi/virt/memhp", test_acpi_aarch64_virt_tcg_memhp);
-+            qtest_add_func("acpi/virt/acpipcihp",
-+                           test_acpi_aarch64_virt_acpi_pci_hotplug);
-+            qtest_add_func("acpi/virt/hpoffacpiindex",
-+                          test_acpi_aarch64_virt_pcie_root_port_hpoff);
-             qtest_add_func("acpi/virt/pxb", test_acpi_aarch64_virt_tcg_pxb);
-             qtest_add_func("acpi/virt/oem-fields",
-                            test_acpi_aarch64_virt_oem_fields);
--- 
-2.49.0
 
+r~
 
