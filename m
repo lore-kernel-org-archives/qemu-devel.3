@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33787C83F09
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:59:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10CC8C83F09
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:01:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFFC-00023S-La; Tue, 08 Jul 2025 16:48:51 -0400
+	id 1uZFJz-0001x9-N6; Tue, 08 Jul 2025 16:53:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uZDrW-0008Hg-PB
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:20:23 -0400
-Received: from mgamail.intel.com ([198.175.65.14])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uZEFm-00028x-1z
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:45:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uZDrQ-00086x-KZ
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:20:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752002413; x=1783538413;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=2RiIr4+eavDZWdSlMVoyWZlpg5A1dJBD7bC9x9Ek84g=;
- b=mUdYXdEH74m9pr4As/QK19QztLVqNjqLSEAQ32MMAN6d45xEBqZ8r3U6
- b3fScNsIkLDaN49WOG91cuIAHh+x+4p4pVx8HDZ61/2wnOug+gCgyP4P6
- XCQlhDz4N6OT7z0jhwQeKIJkV8lCMA8kVko1PH3CgZYejOJSFc3+sBd4r
- wgPm1maKHlmP6ZZ6ktiUQ6jXOIBdcrfUFsEBhZj76yZBvgJNdZMIGwOJg
- 5dCsS/iA8qC911lgJPMVXr2qD15oBnzKSyBEsjjYGwx7uupUw5ZsXa9sb
- 8PGYDoJkGe7GnZfAIf7bdpWQOrspd2tCMrqYtrqtGam8tHFxBfA10R64w A==;
-X-CSE-ConnectionGUID: s3qhotHNRyGUwudavqt10g==
-X-CSE-MsgGUID: WGBnYywYSFOUJFYQIUJPHA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11487"; a="57973910"
-X-IronPort-AV: E=Sophos;i="6.16,297,1744095600"; d="scan'208";a="57973910"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Jul 2025 04:06:21 -0700
-X-CSE-ConnectionGUID: vODf6lIERFep+cdj9Cjllw==
-X-CSE-MsgGUID: 0c6MqHjBQFyehb393xa7Cw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,297,1744095600"; d="scan'208";a="192647930"
-Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Jul 2025 04:06:17 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- mst@redhat.com, jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com,
- jgg@nvidia.com, nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
- joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v3 02/20] hw/pci: Introduce pci_device_get_viommu_cap()
-Date: Tue,  8 Jul 2025 07:05:43 -0400
-Message-ID: <20250708110601.633308-3-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250708110601.633308-1-zhenzhong.duan@intel.com>
-References: <20250708110601.633308-1-zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uZEFj-0006xF-RO
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:45:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752003918;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1HSMLnRPbnF6OXBap7NtZPM/Y9so/IkI//K6rZ9XUXg=;
+ b=Tj70CzjiuVw/JuNh1rR02WPSRAoe1xtg4Y48KH53g4Bcla6U3YF99T2Pl1Dg3ZsSqj6p86
+ U+YUZoKOqLGLLAv+vXBOci3PP5bwAPZ3SgD3ZCPMBF9994w9nBQNLVbvQbGfXkZH7Pmxqx
+ s/MBN77kHHT0U3ehfyXdIeFXOkx6htI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-rNdVUkC0Nqmvbfzwd6xGYA-1; Tue,
+ 08 Jul 2025 10:25:13 -0400
+X-MC-Unique: rNdVUkC0Nqmvbfzwd6xGYA-1
+X-Mimecast-MFC-AGG-ID: rNdVUkC0Nqmvbfzwd6xGYA_1751984711
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 40E811801BD8; Tue,  8 Jul 2025 14:25:11 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.44.32.187])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2B4333000218; Tue,  8 Jul 2025 14:25:05 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
+ Jonathan.Cameron@huawei.com, gustavo.romero@linaro.org,
+ anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com
+Cc: pbonzini@redhat.com,
+	philmd@linaro.org,
+	alex.bennee@linaro.org
+Subject: [PATCH v6 03/36] hw/pci-host/gpex-acpi: Add native_pci_hotplug arg to
+ acpi_dsdt_add_pci_osc
+Date: Tue,  8 Jul 2025 16:22:45 +0200
+Message-ID: <20250708142437.1344644-4-eric.auger@redhat.com>
+In-Reply-To: <20250708142437.1344644-1-eric.auger@redhat.com>
+References: <20250708142437.1344644-1-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.14;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,118 +89,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-pci_device_get_viommu_cap() call pci_device_get_iommu_bus_devfn()
-to get iommu_bus->iommu_ops and call get_viommu_cap() callback to
-get a bitmap with each bit represents a vIOMMU exposed capability.
+Add a new argument to acpi_dsdt_add_pci_osc to be able to disable
+native pci hotplug.
 
-Suggested-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+
 ---
- MAINTAINERS          |  1 +
- hw/pci/pci.c         | 11 +++++++++++
- include/hw/iommu.h   | 16 ++++++++++++++++
- include/hw/pci/pci.h | 23 +++++++++++++++++++++++
- 4 files changed, 51 insertions(+)
- create mode 100644 include/hw/iommu.h
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 1842c3dd83..d9fc977b81 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2302,6 +2302,7 @@ F: include/system/iommufd.h
- F: backends/host_iommu_device.c
- F: include/system/host_iommu_device.h
- F: include/qemu/chardev_open.h
-+F: include/hw/iommu.h
- F: util/chardev_open.c
- F: docs/devel/vfio-iommufd.rst
- 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index c70b5ceeba..df1fb615a8 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -2992,6 +2992,17 @@ void pci_device_unset_iommu_device(PCIDevice *dev)
+rfc -> v1:
+- updated the "Allow OS control for all 5 features" comment
+---
+ hw/pci-host/gpex-acpi.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
+
+diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
+index 0aba47c71c..f34b7cf25e 100644
+--- a/hw/pci-host/gpex-acpi.c
++++ b/hw/pci-host/gpex-acpi.c
+@@ -50,7 +50,7 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq,
      }
  }
  
-+uint64_t pci_device_get_viommu_cap(PCIDevice *dev)
-+{
-+    PCIBus *iommu_bus;
-+
-+    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, NULL, NULL);
-+    if (iommu_bus && iommu_bus->iommu_ops->get_viommu_cap) {
-+        return iommu_bus->iommu_ops->get_viommu_cap(iommu_bus->iommu_opaque);
-+    }
-+    return 0;
-+}
-+
- int pci_pri_request_page(PCIDevice *dev, uint32_t pasid, bool priv_req,
-                          bool exec_req, hwaddr addr, bool lpig,
-                          uint16_t prgi, bool is_read, bool is_write)
-diff --git a/include/hw/iommu.h b/include/hw/iommu.h
-new file mode 100644
-index 0000000000..e80aaf4431
---- /dev/null
-+++ b/include/hw/iommu.h
-@@ -0,0 +1,16 @@
-+/*
-+ * General vIOMMU capabilities, flags, etc
-+ *
-+ * Copyright (C) 2025 Intel Corporation.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_IOMMU_H
-+#define HW_IOMMU_H
-+
-+enum {
-+    VIOMMU_CAP_STAGE1 = BIT_ULL(0),  /* stage1 page table supported */
-+};
-+
-+#endif /* HW_IOMMU_H */
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index df3cc7b875..a11ab14bdc 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -453,6 +453,19 @@ typedef struct PCIIOMMUOps {
-      * @devfn: device and function number of the PCI device.
-      */
-     void (*unset_iommu_device)(PCIBus *bus, void *opaque, int devfn);
-+    /**
-+     * @get_viommu_cap: get vIOMMU capabilities
-+     *
-+     * Optional callback, if not implemented, then vIOMMU doesn't
-+     * support exposing capabilities to other subsystem, e.g., VFIO.
-+     * vIOMMU can choose which capabilities to expose.
-+     *
-+     * @opaque: the data passed to pci_setup_iommu().
-+     *
-+     * Returns: 64bit bitmap with each bit represents a capability emulated
-+     * by VIOMMU_CAP_* in include/hw/iommu.h
-+     */
-+    uint64_t (*get_viommu_cap)(void *opaque);
-     /**
-      * @get_iotlb_info: get properties required to initialize a device IOTLB.
-      *
-@@ -633,6 +646,16 @@ bool pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *hiod,
-                                  Error **errp);
- void pci_device_unset_iommu_device(PCIDevice *dev);
+-static void acpi_dsdt_add_pci_osc(Aml *dev)
++static void acpi_dsdt_add_pci_osc(Aml *dev, bool enable_native_pcie_hotplug)
+ {
+     Aml *method, *UUID, *ifctx, *ifctx1, *elsectx, *buf;
  
-+/**
-+ * pci_device_get_viommu_cap: get vIOMMU capabilities.
-+ *
-+ * Returns a 64bit bitmap with each bit represents a vIOMMU exposed
-+ * capability, 0 if vIOMMU doesn't support esposing capabilities.
-+ *
-+ * @dev: PCI device pointer.
-+ */
-+uint64_t pci_device_get_viommu_cap(PCIDevice *dev);
-+
- /**
-  * pci_iommu_get_iotlb_info: get properties required to initialize a
-  * device IOTLB.
+@@ -77,11 +77,12 @@ static void acpi_dsdt_add_pci_osc(Aml *dev)
+     aml_append(ifctx, aml_store(aml_name("CDW3"), aml_name("CTRL")));
+ 
+     /*
+-     * Allow OS control for all 5 features:
+-     * PCIeHotplug SHPCHotplug PME AER PCIeCapability.
++     * Allow OS control for SHPCHotplug, PME, AER, PCIeCapability,
++     * and PCIeHotplug depending on enable_native_pcie_hotplug
+      */
+-    aml_append(ifctx, aml_and(aml_name("CTRL"), aml_int(0x1F),
+-                              aml_name("CTRL")));
++    aml_append(ifctx, aml_and(aml_name("CTRL"),
++               aml_int(0x1E | (enable_native_pcie_hotplug ? 0x1 : 0x0)),
++               aml_name("CTRL")));
+ 
+     ifctx1 = aml_if(aml_lnot(aml_equal(aml_arg(1), aml_int(0x1))));
+     aml_append(ifctx1, aml_or(aml_name("CDW1"), aml_int(0x08),
+@@ -192,7 +193,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+             if (is_cxl) {
+                 build_cxl_osc_method(dev);
+             } else {
+-                acpi_dsdt_add_pci_osc(dev);
++                acpi_dsdt_add_pci_osc(dev, true);
+             }
+ 
+             aml_append(scope, dev);
+@@ -267,7 +268,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+     }
+     aml_append(dev, aml_name_decl("_CRS", rbuf));
+ 
+-    acpi_dsdt_add_pci_osc(dev);
++    acpi_dsdt_add_pci_osc(dev, true);
+ 
+     Aml *dev_res0 = aml_device("%s", "RES0");
+     aml_append(dev_res0, aml_name_decl("_HID", aml_string("PNP0C02")));
 -- 
-2.47.1
+2.49.0
 
 
