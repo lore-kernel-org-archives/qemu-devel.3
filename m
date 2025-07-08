@@ -4,92 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DF66C83F09
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6B28C8303C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:49:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFBb-0005mC-BC; Tue, 08 Jul 2025 16:45:07 -0400
+	id 1uZFFS-0003SN-4R; Tue, 08 Jul 2025 16:49:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZDhF-0007OV-DF
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:09:57 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZDhB-0005Po-Fm
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:09:39 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-ae361e8ec32so946204866b.3
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 12:09:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752001776; x=1752606576; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hI8sAmJ13x4dAhHqQ5KRW0VbwKRcg/Fsqe6mUGhQqN4=;
- b=tE16JDNUTAD1IbF93TC+Q4tuYCEg+x6kzQvuzKJJ4aot1w7KBeYkyYv+QlfKoe/gRt
- kqxQ0YD7yRzW3emFFmAf0OHg4oL5BmkgpiNX5eDrIJa60vB5tkFHH5f3aeMbAZFRKfQe
- 13pO6gLYsq867rV59s6ZPqM8jqDShDew7AZUywn2c1hGgJA1jG7NBAcWd0lBjY5lnDM8
- i/3FYtP4c+VBRABd9Ha9eLAggwOIj3QcpbfieozadD3EdYP69soYyMb+L8abyl2TNCIS
- EQr9mD12VEZWioh28aNF/OpV6z1VVdA6Qbp2WNRs92DwGUMF/tGjjMTomCmsOy4bWEqN
- JE3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752001776; x=1752606576;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hI8sAmJ13x4dAhHqQ5KRW0VbwKRcg/Fsqe6mUGhQqN4=;
- b=u28RlemITbv1+N2zq8HFFcLvnymhHeyM/dx9fHvFpKJl4eY1jIdhe+0Vb6SGaynG+F
- AYzmXdCH+Uh14vlExYuCPnqZbWN42vQKTpFILgJkVJGwY6NinEMq7DPIs1lwJo/kFuuS
- 5XUBgC2weqVitx2fLvxIscv0pBo+Hg6w8SYP076GgqNG3y6iJZp3zwkCkqEpr235k8Ga
- ZAmnjo+bmypXfgTTPfjLT3qcT7QI5okwtNbaeeBv55sVj9sVdXMShj29pk+v54sPckYU
- 8wvg2R07ygLzp4BK2l8fVmK32T7A5cjQXyvNvna4eEc6QqpImpsJfbX2bpjz+ToxnkHx
- i0bQ==
-X-Gm-Message-State: AOJu0YwekYWETWJSM6j8wdo0YS6//lXMEfAkMSubRMzWsU8EBcc8MyYD
- 7t7hh87qKs0BWT91jpymtJtDL74YbSUO/LHVROcqTAOqTM50Y73RZFjq3A7n6LeLcWrDuPnsa48
- OfXEAtys=
-X-Gm-Gg: ASbGnctpvlCQqxV7KjmAaihyt0OHgvBSs/minSLn1wGqbNDN1xBqcWYtc09wIhUSSwr
- nn2nQq5iOP9VPb8yr7VTWvd7ink/AWAy+5xL9ROzX0axXsgJqEt0HOCI+Wr8C2uKdSu0PhTQlWs
- jxxG92J8qUjx02oeSKWMuNUINhl64aVI4tZteMlo6PGaT7UGj5gLqhybMr2i48PmoEe9XW0uqO1
- SqURzVT06Ky9aeXuHeScqlC/kGtEfzPz2xOiAMp7oNcRRbEX123TZRnoX1Kv/CXvRWNOXhh4Ma4
- XX2EK5oNEGQbJNtkEogx+qDqUF2gC1i39MyEJ1Ank7tGtftRmyk5FDCkzAuFg6I2hTNqkc4IAWo
- rfo8MauaU5OGHYguDEgVb1Q4TwTIdEA==
-X-Google-Smtp-Source: AGHT+IEBF8Dg32b2zfK2LEUCiBIqsCkszQ/RmitWt476HpBfkMyJozJs4eVA6oF9QsJ7q9Ox3RaC1w==
-X-Received: by 2002:a05:600c:4e05:b0:43d:2313:7b49 with SMTP id
- 5b1f17b1804b1-454cd4cbd79mr24423785e9.12.1751970430502; 
- Tue, 08 Jul 2025 03:27:10 -0700 (PDT)
-Received: from [192.168.69.242] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454cd39d0f6sm18081605e9.16.2025.07.08.03.27.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Jul 2025 03:27:09 -0700 (PDT)
-Message-ID: <21692283-9767-4109-b14b-ef0ff787d856@linaro.org>
-Date: Tue, 8 Jul 2025 12:27:08 +0200
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uZDrx-0000Jr-4Y
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:20:47 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uZDrp-00082f-3D
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:20:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1752002438; x=1783538438;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=XWC3s87S3Ok/g4vNhclhAx5UOVWaOsLS9KdSua9BHU0=;
+ b=Fv5hNfbOtaCg/Rw1PqwXaeTDhBuxdhfsN3K/Zir1TV6c+NBYOWLr5CHA
+ sQDgpkAwhsqUFpdT4cjPmIcpT/6Mu+9Mr9UhUB3OVNIe+hdvkx6stiaCB
+ m0AcIuOuAi/FdnCOgPXGYi/1cBTRKKE/1DIBjfENTVI1eC9+Ejpw7EMex
+ S13lioZy5YhzlJ4HeFgwT5gmhKarxXO8/tInWmaU8fX0W1iGHmsjynSYz
+ MDv4FxPC0THcsX+oSWZ0VHnDBpZMTN/IUQNPQL8BTqM/xKL4x6NzkXPyW
+ 1Z5LOmujYQJoJfP48cuzXVD5DFQMcnf/cpY1RroreejfJ6O0sGRSfS4T0 A==;
+X-CSE-ConnectionGUID: SI3XZthOR/GCRSuqZlQMIA==
+X-CSE-MsgGUID: 4XA3raoUQbe0JavlrzIWzg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11487"; a="57974037"
+X-IronPort-AV: E=Sophos;i="6.16,297,1744095600"; d="scan'208";a="57974037"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Jul 2025 04:07:04 -0700
+X-CSE-ConnectionGUID: +yhSRuX4Q9SrJk7IOUrWRA==
+X-CSE-MsgGUID: SQLPJVImSXyUJ14O97GJ0w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,297,1744095600"; d="scan'208";a="192647983"
+Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Jul 2025 04:07:00 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ mst@redhat.com, jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com,
+ jgg@nvidia.com, nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Yi Sun <yi.y.sun@linux.intel.com>
+Subject: [PATCH v3 12/20] intel_iommu: Introduce a new pasid cache
+ invalidation type FORCE_RESET
+Date: Tue,  8 Jul 2025 07:05:53 -0400
+Message-ID: <20250708110601.633308-13-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250708110601.633308-1-zhenzhong.duan@intel.com>
+References: <20250708110601.633308-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH-for-10.1 v6 00/14] target-info: Add more API for
- VirtIO cleanups & introduce ARM macros
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-block@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org
-References: <20250707172009.3884-1-philmd@linaro.org>
- <20250707135403-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250707135403-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=198.175.65.14;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,35 +89,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/7/25 19:55, Michael S. Tsirkin wrote:
-> On Mon, Jul 07, 2025 at 07:19:54PM +0200, Philippe Mathieu-Daudé wrote:
->> Rather than re-spinning the whole "single-binary: Make hw/arm/
->> common" series, restrict to the API additions, but include
->> examples of their usefulness (hundreds of virtio objects
->> removed from default Linux build).
->> Time passed since I context-switched out of this work so I'm
->> not sure the DEFINE_MACHINE_WITH_INTERFACES() implementation
->> is in the form Zoltan asked.
-> 
-> 
-> I think I'd prefer to defer cleanups to post 10.1 - already
-> too much on my plate as I was out sick. Unless there's a reason
-> I'm missing to rush this in? Is there a feature we want in
-> 10.1 that depends on it?
+FORCE_RESET is different from GLOBAL_INV which updates pasid cache if
+underlying pasid entry is still valid, it drops all the pasid caches.
 
-Fair enough for the virtio patch.
+FORCE_RESET isn't a VTD spec defined invalidation type for pasid cache,
+only used internally in system level reset.
 
-Hopefully the previous ones (TargetInfo related, not touching
-virtio) could get in (you don't have to look a them ;P).
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ hw/i386/intel_iommu.c          | 25 +++++++++++++++++++++++++
+ hw/i386/intel_iommu_internal.h |  9 +++++++++
+ hw/i386/trace-events           |  1 +
+ 3 files changed, 35 insertions(+)
 
-> 
->> Philippe Mathieu-Daudé (14):
->>    target/qmp: Use target_cpu_type()
->>    qemu/target-info: Factor target_arch() out
->>    qemu/target-info: Add %target_arch field to TargetInfo
->>    qemu/target-info: Introduce target_base_arch()
->>    qemu/target-info: Add target_endian_mode()
->>    qemu: Convert target_words_bigendian() to TargetInfo API
->>    gdbstub/helpers: Replace TARGET_BIG_ENDIAN -> target_big_endian()
->>    qemu: Declare all load/store helpert in 'qemu/bswap.h'
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index cf2c959b60..cf263498db 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -87,6 +87,8 @@ struct vtd_iotlb_key {
+ static void vtd_address_space_refresh_all(IntelIOMMUState *s);
+ static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n);
+ 
++static void vtd_pasid_cache_reset_locked(IntelIOMMUState *s);
++
+ static void vtd_panic_require_caching_mode(void)
+ {
+     error_report("We need to set caching-mode=on for intel-iommu to enable "
+@@ -391,6 +393,7 @@ static void vtd_reset_caches(IntelIOMMUState *s)
+     vtd_iommu_lock(s);
+     vtd_reset_iotlb_locked(s);
+     vtd_reset_context_cache_locked(s);
++    vtd_pasid_cache_reset_locked(s);
+     vtd_iommu_unlock(s);
+ }
+ 
+@@ -3171,6 +3174,8 @@ static gboolean vtd_flush_pasid_locked(gpointer key, gpointer value,
+         /* fall through */
+     case VTD_PASID_CACHE_GLOBAL_INV:
+         break;
++    case VTD_PASID_CACHE_FORCE_RESET:
++        goto remove;
+     default:
+         error_setg(&error_fatal, "invalid pc_info->type for flush");
+     }
+@@ -3211,6 +3216,23 @@ remove:
+     return true;
+ }
+ 
++static void vtd_pasid_cache_reset_locked(IntelIOMMUState *s)
++{
++    VTDPASIDCacheInfo pc_info;
++
++    trace_vtd_pasid_cache_reset();
++
++    pc_info.type = VTD_PASID_CACHE_FORCE_RESET;
++
++    /*
++     * Reset pasid cache is a big hammer, so use g_hash_table_foreach_remove
++     * which will free all vtd_as instances except those created for PCI
++     * sub-system.
++     */
++    g_hash_table_foreach_remove(s->vtd_address_spaces,
++                                vtd_flush_pasid_locked, &pc_info);
++}
++
+ static void vtd_sm_pasid_table_walk_one(IntelIOMMUState *s,
+                                         dma_addr_t pt_base,
+                                         int start,
+@@ -3344,6 +3366,9 @@ static void vtd_replay_guest_pasid_bindings(IntelIOMMUState *s,
+     case VTD_PASID_CACHE_GLOBAL_INV:
+         /* loop all assigned devices */
+         break;
++    case VTD_PASID_CACHE_FORCE_RESET:
++        /* For force reset, no need to go further replay */
++        return;
+     default:
+         error_setg(&error_fatal, "invalid pc_info->type for replay");
+     }
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index 621e1f6947..887f93bac9 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -568,6 +568,15 @@ typedef enum VTDPCInvType {
+     VTD_PASID_CACHE_DOMSI = VTD_INV_DESC_PASIDC_G_DSI,
+     VTD_PASID_CACHE_PASIDSI = VTD_INV_DESC_PASIDC_G_PASID_SI,
+     VTD_PASID_CACHE_GLOBAL_INV = VTD_INV_DESC_PASIDC_G_GLOBAL,
++
++    /*
++     * Internally used PASID cache invalidation type starts here,
++     * 0x10 is large enough as invalidation type in pc_inv_desc
++     * is 2bits in size.
++     */
++
++    /* Reset all PASID cache entries, used in system level reset */
++    VTD_PASID_CACHE_FORCE_RESET = 0x10,
+ } VTDPCInvType;
+ 
+ typedef struct VTDPASIDCacheInfo {
+diff --git a/hw/i386/trace-events b/hw/i386/trace-events
+index ae5bbfcdc0..c8a936eb46 100644
+--- a/hw/i386/trace-events
++++ b/hw/i386/trace-events
+@@ -24,6 +24,7 @@ vtd_inv_qi_head(uint16_t head) "read head %d"
+ vtd_inv_qi_tail(uint16_t head) "write tail %d"
+ vtd_inv_qi_fetch(void) ""
+ vtd_context_cache_reset(void) ""
++vtd_pasid_cache_reset(void) ""
+ vtd_pasid_cache_gsi(void) ""
+ vtd_pasid_cache_dsi(uint16_t domain) "Domain selective PC invalidation domain 0x%"PRIx16
+ vtd_pasid_cache_psi(uint16_t domain, uint32_t pasid) "PASID selective PC invalidation domain 0x%"PRIx16" pasid 0x%"PRIx32
+-- 
+2.47.1
+
 
