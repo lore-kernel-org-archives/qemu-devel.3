@@ -4,100 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8B86C8303C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:53:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 635DFC8303C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:53:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFFz-0005ht-Dy; Tue, 08 Jul 2025 16:49:39 -0400
+	id 1uZFBd-0005nx-Ic; Tue, 08 Jul 2025 16:45:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uZDtW-0002Br-PT
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:22:30 -0400
-Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uZDtO-0000y7-VD
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:22:21 -0400
-Received: by mail-ot1-x335.google.com with SMTP id
- 46e09a7af769-73ce08ff1d9so111528a34.1
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 12:22:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752002520; x=1752607320; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NHI/pe/hYxCWaN7ZHnWIgGI8hQCDTXyWj/FvjsArrTs=;
- b=C3pLvICouBfZWt38IybJ/kQEk/L5ExTfXnKoeOVvLMFzIFsCPDKaPravg9GvUJQdoQ
- XpWRj5d5di8UyhR07egXNGTEjq1NxTg0cis5+uYgsmCH0Np43tyrW2XzKdn1LeA420wn
- zMlFSfi3Ce4YrsSCrXxJNyvS0fLiLhx6ldGYAw8MoIMAmrEdoxM9tgZoP0naqFlsUAhS
- MaessjhfoUkxkqPXy1+mdLng6R795NGmhJJ7yNAuWAMLD2m4GbWwLDl30mpF3EyFy995
- wxnPfPppTfRvuM6yYLfUsjQtY+d1Og5uJHB5ZS0hcPjjV4xzk8KD8cTHiqcL0atKJy6f
- eowg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752002520; x=1752607320;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NHI/pe/hYxCWaN7ZHnWIgGI8hQCDTXyWj/FvjsArrTs=;
- b=jr67baAXF1IkEr6pNawp36QcbVmpam6rT2CnrzXnJr1LFCU+TPbb6gfOVJyaDlhG0a
- KJ5lg7gfRiERqPSi+vkhOfNaL2ELtFTiwVbW8Lq4N0+dKv7WTvyjt8iTvnO0LjOLW9m7
- duMR+G4CYGBdp6BvysosX2ohlDe065XIXlCVxSkGP75C2eLdKTk9B2V+docSnl/oZ747
- X+ZAepaQFQz97NfGjxKsNtKWBu9L12ln8jYjMRj75tfS2r4Y6zFuzbM1g6kjFjAz5NUJ
- 3/bfBVhAzB9JvNAWG49WXV1HDc2ZLFbTwZfuExgYBKHG9TyTt6CeTnNCRQ70cTsbeagy
- N3/g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV/fuqn7561ta5lQlffzEs0yG0fNjhXenl+5KwUu6IaFV6FVVNXeuUgg+xuQR4bXJLqLAB19st+Iy0X@nongnu.org
-X-Gm-Message-State: AOJu0Yx+Uzch7ITC30Qj40n4AGGIKIgHvAlaq1z4B4hxKSKJb2WcvMM2
- 07JiGgx6QPCvPnqvVmD2q6e4t8V4WjQXSbaa01rxOkKIc9NH3QwOXYA3le7/xhlIRjEsOfhuk6s
- TYm8j
-X-Gm-Gg: ASbGnctRwgAEUK7dkwhJItDmvR7DOja/pQir9oWbusVTZs0H+3h8jL4T0pwOSOku07F
- JU3fELUI1kY99nGmvqVBd79H/GjMfqYoaX+TuPlO1fdR6s4MO2OXBP1l0UAFBF5B8CSR1aJsKG6
- GLRetu39ii9ndCcZq7ecdURUQnIeq9r9LNBAOv6QEeDFpEAoJef5hHagcfCHYc64ltLH0Nli2LZ
- 5ZZoF3MsiBDqdTQFXrU16LpmjPkJDMyWZHwKV71oJbitfn6idcA4FxhCNCYUEowKAFkIlCY/AII
- I6fqLnD5h/d5Hi9lNNI9J5QwRUq7VAmky4ldE+KzfXr/TEM+eT/m0rtGugSLUi4bnzU2SRbPi28
- =
-X-Google-Smtp-Source: AGHT+IHVgoyd0HH+KmsdHkQpMJxYW0hptSnGBPEC8SUBQ0yvzQICg0NnhyPOCx14mOIWwKBsXyhJFQ==
-X-Received: by 2002:a05:6a00:1ad0:b0:744:a240:fb1b with SMTP id
- d2e1a72fcca58-74d2678c6c4mr5240287b3a.5.1751996182113; 
- Tue, 08 Jul 2025 10:36:22 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74ce42cefccsm12116590b3a.156.2025.07.08.10.36.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Jul 2025 10:36:21 -0700 (PDT)
-Message-ID: <e319122d-f7f6-4b37-930e-87d2750557f3@linaro.org>
-Date: Tue, 8 Jul 2025 10:36:20 -0700
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1uZDpG-0005ny-VU; Tue, 08 Jul 2025 15:18:02 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1uZDp0-0007f7-T9; Tue, 08 Jul 2025 15:17:49 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bc50P5TPdz6GFB7;
+ Tue,  8 Jul 2025 23:40:21 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id E44AD1404C5;
+ Tue,  8 Jul 2025 23:41:25 +0800 (CST)
+Received: from A2303104131.china.huawei.com (10.203.177.241) by
+ frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Tue, 8 Jul 2025 17:41:16 +0200
+To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
+ <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
+ <imammedo@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <smostafa@google.com>, <gustavo.romero@linaro.org>, <mst@redhat.com>,
+ <marcel.apfelbaum@gmail.com>, <linuxarm@huawei.com>,
+ <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
+ <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
+Subject: [PATCH v7 01/12] hw/arm/virt-acpi-build: Don't create ITS id mappings
+ by default
+Date: Tue, 8 Jul 2025 16:40:44 +0100
+Message-ID: <20250708154055.101012-2-shameerali.kolothum.thodi@huawei.com>
+X-Mailer: git-send-email 2.12.0.windows.1
+In-Reply-To: <20250708154055.101012-1-shameerali.kolothum.thodi@huawei.com>
+References: <20250708154055.101012-1-shameerali.kolothum.thodi@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1? v7 8/8] hw/virtio: Build various files once
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-riscv@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>, qemu-block@nongnu.org,
- qemu-ppc@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-References: <20250708171949.62500-1-philmd@linaro.org>
- <20250708171949.62500-9-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250708171949.62500-9-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-ot1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.203.177.241]
+X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,25 +72,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/8/25 10:19 AM, Philippe Mathieu-Daudé wrote:
-> Now that various VirtIO files don't use target specific
-> API anymore, we can move them to the system_ss[] source
-> set to build them once.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> ---
-> MST prefers to defer this one to 10.2.
-> 
->   hw/virtio/virtio-config-io.c |  1 -
->   hw/block/meson.build         |  6 ++++--
->   hw/virtio/meson.build        | 20 +++++++++++---------
->   3 files changed, 15 insertions(+), 12 deletions(-)
+Commit d6afe18b7242 ("hw/arm/virt-acpi-build: Fix ACPI IORT and MADT tables
+when its=off") moved ITS group node generation under the its=on condition.
+However, it still creates rc_its_idmaps unconditionally, which results in
+duplicate ID mappings in the IORT table.
 
-Good job!
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Fixes:d6afe18b7242 ("hw/arm/virt-acpi-build: Fix ACPI IORT and MADT tables when its=off")
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Donald Dutile <ddutile@redhat.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+---
+ hw/arm/virt-acpi-build.c | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index cd90c47976..724fad5ffa 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -329,12 +329,6 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+         /* Sort the smmu idmap by input_base */
+         g_array_sort(rc_smmu_idmaps, iort_idmap_compare);
+ 
+-        /*
+-         * Knowing the ID ranges from the RC to the SMMU, it's possible to
+-         * determine the ID ranges from RC that are directed to the ITS.
+-         */
+-        create_rc_its_idmaps(rc_its_idmaps, rc_smmu_idmaps);
+-
+         nb_nodes = 2; /* RC and SMMUv3 */
+         rc_mapping_count = rc_smmu_idmaps->len;
+ 
+-- 
+2.47.0
 
 
