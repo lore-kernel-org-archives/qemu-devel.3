@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 430B9C8303C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:22:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19F4FC8303C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:22:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFJa-0007mb-GI; Tue, 08 Jul 2025 16:53:23 -0400
+	id 1uZFFE-0002D3-5T; Tue, 08 Jul 2025 16:48:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZEBq-0002M3-Tf
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:41:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uZDrb-0008SS-Az
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:20:24 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZEBo-0005vx-EY
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:41:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752003675;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8tsfNnFgjFSMarOZ/Ey2DdHtTx77eO4HAyY+2EP63+M=;
- b=FK7C3r1jQS8eOdTW1bxECjHQVUH0D/RaXkdNFc1MlJG7y0wVXCmN/EgFnfp75EONYD+UCb
- 31FK++KxEI6DbzJPpAwNW3Zg+WWwBpGFmsWtr2l9uSRA5IEFlZTnfcoT9TfM8r13z/+/VF
- HBej69A0dGyErOkkTY26NrIe8lLNnLg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-408-poevAXy0OkOZxhLQ5lB3lw-1; Tue,
- 08 Jul 2025 10:25:23 -0400
-X-MC-Unique: poevAXy0OkOZxhLQ5lB3lw-1
-X-Mimecast-MFC-AGG-ID: poevAXy0OkOZxhLQ5lB3lw_1751984721
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B6153180120B; Tue,  8 Jul 2025 14:25:21 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.32.187])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3874330001B1; Tue,  8 Jul 2025 14:25:16 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
- Jonathan.Cameron@huawei.com, gustavo.romero@linaro.org,
- anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com
-Cc: pbonzini@redhat.com,
-	philmd@linaro.org,
-	alex.bennee@linaro.org
-Subject: [PATCH v6 05/36] hw/pci-host/gpex-acpi: Split host bridge OSC and DSM
- generation
-Date: Tue,  8 Jul 2025 16:22:47 +0200
-Message-ID: <20250708142437.1344644-6-eric.auger@redhat.com>
-In-Reply-To: <20250708142437.1344644-1-eric.auger@redhat.com>
-References: <20250708142437.1344644-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uZDrQ-0008BN-BI
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:20:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1752002413; x=1783538413;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=JvvhniYOGljHl/kopdCojhByjmKO1fjRQmn9E59WiUY=;
+ b=gZnIDcaYJg9GtvOUSsrIfmNzkLQ1hzkxdYMxoLXwUszyuonRWJHzjhM8
+ 0usHviO4mIY3VUHGhTmN3mm7p322Qa4jLEWLGTQ2ztdxx+sx6kCrS/69h
+ 6V9fWhiz7aUqYRH7BHQjwh6sTARegwQjHNA74d8k+o3RDVMW3lBWpymXi
+ 2lptFxlFqyYbgxcw0OGqo668As5RU4r4eDdoxDFpn2kqS3vK9Uw/FxfBG
+ VgBrpURJkIBVjPyes0blKcoR+f3oVesN3CLh9Rjvn41E5JFNNrvh/r04S
+ PRVUMt+/kLkwKmrNxob9UEwsaRj3/cfh4sOJI6L+AG6siyCJp7Q+mnhhU g==;
+X-CSE-ConnectionGUID: EY0Sa3PwRHOpfgOt6JVfKA==
+X-CSE-MsgGUID: JdjI7dE/Tpi/AnD5dM/uoQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11487"; a="57973960"
+X-IronPort-AV: E=Sophos;i="6.16,297,1744095600"; d="scan'208";a="57973960"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Jul 2025 04:06:37 -0700
+X-CSE-ConnectionGUID: egwCBXf5QbOpKzbG/n3EaQ==
+X-CSE-MsgGUID: cOZ9T2MbRcap460ODKMmBA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,297,1744095600"; d="scan'208";a="192647949"
+Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Jul 2025 04:06:33 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ mst@redhat.com, jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com,
+ jgg@nvidia.com, nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v3 06/20] intel_iommu: Introduce a new structure
+ VTDHostIOMMUDevice
+Date: Tue,  8 Jul 2025 07:05:47 -0400
+Message-ID: <20250708110601.633308-7-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250708110601.633308-1-zhenzhong.duan@intel.com>
+References: <20250708110601.633308-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=198.175.65.14;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,111 +88,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-acpi_dsdt_add_pci_osc() name is confusing as it gives the impression
-it appends the _OSC method but in fact it also appends the _DSM method
-for the host bridge. Let's split the function into two separate ones
-and let them return the method Aml pointer instead. This matches the
-way it is done on x86 (build_q35_osc_method). In a subsequent patch
-we will replace the gpex method by the q35 implementation that will
-become shared between ARM and x86.
+Introduce a new structure VTDHostIOMMUDevice which replaces
+HostIOMMUDevice to be stored in hash table.
 
-acpi_dsdt_add_host_bridge_methods is a new top helper that generates
-both the _OSC and _DSM methods.
+It includes a reference to HostIOMMUDevice and IntelIOMMUState,
+also includes BDF information which will be used in future
+patches.
 
-We take the opportunity to move SUPP and CTRL in the _osc method
-that use them.
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 ---
+ hw/i386/intel_iommu.c          | 15 +++++++++++++--
+ hw/i386/intel_iommu_internal.h |  7 +++++++
+ include/hw/i386/intel_iommu.h  |  2 +-
+ 3 files changed, 21 insertions(+), 3 deletions(-)
 
-v2 -> v3:
-- moved
-    aml_append(dev, aml_name_decl("SUPP", aml_int(0)));
-    aml_append(dev, aml_name_decl("CTRL", aml_int(0)));
-  into the _osc function. (Jonathan)
-  hence discarded Gustavo's and Igor's R-bs
----
- hw/pci-host/gpex-acpi.c | 32 +++++++++++++++++++++-----------
- 1 file changed, 21 insertions(+), 11 deletions(-)
-
-diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
-index f34b7cf25e..80fc2bf032 100644
---- a/hw/pci-host/gpex-acpi.c
-+++ b/hw/pci-host/gpex-acpi.c
-@@ -50,14 +50,12 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq,
-     }
- }
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 702973da5c..e90fd2f28f 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -281,7 +281,10 @@ static gboolean vtd_hiod_equal(gconstpointer v1, gconstpointer v2)
  
--static void acpi_dsdt_add_pci_osc(Aml *dev, bool enable_native_pcie_hotplug)
-+static Aml *build_host_bridge_osc(bool enable_native_pcie_hotplug)
+ static void vtd_hiod_destroy(gpointer v)
  {
--    Aml *method, *UUID, *ifctx, *ifctx1, *elsectx, *buf;
--
--    /* Declare an _OSC (OS Control Handoff) method */
--    aml_append(dev, aml_name_decl("SUPP", aml_int(0)));
--    aml_append(dev, aml_name_decl("CTRL", aml_int(0)));
-+    Aml *method, *UUID, *ifctx, *ifctx1, *elsectx;
-     method = aml_method("_OSC", 4, AML_NOTSERIALIZED);
-+    aml_append(method, aml_name_decl("SUPP", aml_int(0)));
-+    aml_append(method, aml_name_decl("CTRL", aml_int(0)));
-     aml_append(method,
-         aml_create_dword_field(aml_arg(3), aml_int(0), "CDW1"));
- 
-@@ -103,9 +101,13 @@ static void acpi_dsdt_add_pci_osc(Aml *dev, bool enable_native_pcie_hotplug)
-                                aml_name("CDW1")));
-     aml_append(elsectx, aml_return(aml_arg(3)));
-     aml_append(method, elsectx);
--    aml_append(dev, method);
-+    return method;
-+}
- 
--    method = aml_method("_DSM", 4, AML_NOTSERIALIZED);
-+static Aml *build_host_bridge_dsm(void)
-+{
-+    Aml *method = aml_method("_DSM", 4, AML_NOTSERIALIZED);
-+    Aml *UUID, *ifctx, *ifctx1, *buf;
- 
-     /* PCI Firmware Specification 3.0
-      * 4.6.1. _DSM for PCI Express Slot Information
-@@ -124,7 +126,15 @@ static void acpi_dsdt_add_pci_osc(Aml *dev, bool enable_native_pcie_hotplug)
-     byte_list[0] = 0;
-     buf = aml_buffer(1, byte_list);
-     aml_append(method, aml_return(buf));
--    aml_append(dev, method);
-+    return method;
-+}
+-    object_unref(v);
++    VTDHostIOMMUDevice *vtd_hiod = v;
 +
-+static void acpi_dsdt_add_host_bridge_methods(Aml *dev,
-+                                              bool enable_native_pcie_hotplug)
-+{
-+    /* Declare an _OSC (OS Control Handoff) method */
-+    aml_append(dev, build_host_bridge_osc(enable_native_pcie_hotplug));
-+    aml_append(dev, build_host_bridge_dsm());
++    object_unref(vtd_hiod->hiod);
++    g_free(vtd_hiod);
  }
  
- void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
-@@ -193,7 +203,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
-             if (is_cxl) {
-                 build_cxl_osc_method(dev);
-             } else {
--                acpi_dsdt_add_pci_osc(dev, true);
-+                acpi_dsdt_add_host_bridge_methods(dev, true);
-             }
- 
-             aml_append(scope, dev);
-@@ -268,7 +278,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+ static gboolean vtd_hash_remove_by_domain(gpointer key, gpointer value,
+@@ -4360,6 +4363,7 @@ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+                                      HostIOMMUDevice *hiod, Error **errp)
+ {
+     IntelIOMMUState *s = opaque;
++    VTDHostIOMMUDevice *vtd_hiod;
+     struct vtd_as_key key = {
+         .bus = bus,
+         .devfn = devfn,
+@@ -4376,7 +4380,14 @@ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+         return false;
      }
-     aml_append(dev, aml_name_decl("_CRS", rbuf));
  
--    acpi_dsdt_add_pci_osc(dev, true);
-+    acpi_dsdt_add_host_bridge_methods(dev, true);
++    vtd_hiod = g_malloc0(sizeof(VTDHostIOMMUDevice));
++    vtd_hiod->bus = bus;
++    vtd_hiod->devfn = (uint8_t)devfn;
++    vtd_hiod->iommu_state = s;
++    vtd_hiod->hiod = hiod;
++
+     if (!vtd_check_hiod(s, hiod, errp)) {
++        g_free(vtd_hiod);
+         vtd_iommu_unlock(s);
+         return false;
+     }
+@@ -4386,7 +4397,7 @@ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+     new_key->devfn = devfn;
  
-     Aml *dev_res0 = aml_device("%s", "RES0");
-     aml_append(dev_res0, aml_name_decl("_HID", aml_string("PNP0C02")));
+     object_ref(hiod);
+-    g_hash_table_insert(s->vtd_host_iommu_dev, new_key, hiod);
++    g_hash_table_insert(s->vtd_host_iommu_dev, new_key, vtd_hiod);
+ 
+     vtd_iommu_unlock(s);
+ 
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index e8b211e8b0..7aba259ef8 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -28,6 +28,7 @@
+ #ifndef HW_I386_INTEL_IOMMU_INTERNAL_H
+ #define HW_I386_INTEL_IOMMU_INTERNAL_H
+ #include "hw/i386/intel_iommu.h"
++#include "system/host_iommu_device.h"
+ 
+ /*
+  * Intel IOMMU register specification
+@@ -607,4 +608,10 @@ typedef struct VTDRootEntry VTDRootEntry;
+ /* Bits to decide the offset for each level */
+ #define VTD_LEVEL_BITS           9
+ 
++typedef struct VTDHostIOMMUDevice {
++    IntelIOMMUState *iommu_state;
++    PCIBus *bus;
++    uint8_t devfn;
++    HostIOMMUDevice *hiod;
++} VTDHostIOMMUDevice;
+ #endif
+diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+index e95477e855..50f9b27a45 100644
+--- a/include/hw/i386/intel_iommu.h
++++ b/include/hw/i386/intel_iommu.h
+@@ -295,7 +295,7 @@ struct IntelIOMMUState {
+     /* list of registered notifiers */
+     QLIST_HEAD(, VTDAddressSpace) vtd_as_with_notifiers;
+ 
+-    GHashTable *vtd_host_iommu_dev;             /* HostIOMMUDevice */
++    GHashTable *vtd_host_iommu_dev;             /* VTDHostIOMMUDevice */
+ 
+     /* interrupt remapping */
+     bool intr_enabled;              /* Whether guest enabled IR */
 -- 
-2.49.0
+2.47.1
 
 
