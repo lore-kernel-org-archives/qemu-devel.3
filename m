@@ -4,75 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9128FC83F09
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:20:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 509ADC83F0F
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:20:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFHa-0002n6-Bn; Tue, 08 Jul 2025 16:51:24 -0400
+	id 1uZFDu-0005Rm-7l; Tue, 08 Jul 2025 16:47:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZEE8-0006mR-CE
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:43:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZEE6-0006VN-Ra
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:43:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752003816;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qykNbq9Z1KR/RSUyv3WPhqM899KG4p1hewVkFgNUlDM=;
- b=GrvM675LXS8/eN5XaIpT+VaT8OXhRtEyKhMAWtI8htDo11FMiCVId1CdiffPuXFV2ESSte
- naZao50NuWL64AwZiyx18Q6YluMTxOCt5Yq/91vGRC1FKJzMVJfWGGMFWsKM5CVaSueFSW
- Lq9cv9x81gUhRJZRe67ldvc1tANTjGk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-tQQP-uuHP0i5n10883s28w-1; Tue,
- 08 Jul 2025 10:27:44 -0400
-X-MC-Unique: tQQP-uuHP0i5n10883s28w-1
-X-Mimecast-MFC-AGG-ID: tQQP-uuHP0i5n10883s28w_1751984863
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 489D218011FB; Tue,  8 Jul 2025 14:27:43 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.32.187])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 467E530001B1; Tue,  8 Jul 2025 14:27:38 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
- Jonathan.Cameron@huawei.com, gustavo.romero@linaro.org,
- anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com
-Cc: pbonzini@redhat.com,
-	philmd@linaro.org,
-	alex.bennee@linaro.org
-Subject: [PATCH v6 27/36] hw/acpi/pcihp: Remove root arg in acpi_pcihp_init
-Date: Tue,  8 Jul 2025 16:23:09 +0200
-Message-ID: <20250708142437.1344644-28-eric.auger@redhat.com>
-In-Reply-To: <20250708142437.1344644-1-eric.auger@redhat.com>
-References: <20250708142437.1344644-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uZDqm-000764-Tr
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:19:38 -0400
+Received: from mail-qv1-xf29.google.com ([2607:f8b0:4864:20::f29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uZDqi-0008AW-Jl
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:19:30 -0400
+Received: by mail-qv1-xf29.google.com with SMTP id
+ 6a1803df08f44-6facba680a1so65832506d6.3
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 12:19:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752002365; x=1752607165; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5B4J7cwfIkU9OopnPqIRveaXurIgb8F7x1j5VTGinLY=;
+ b=W5G2pyveSbDQXh6H2bKHZxp4ysIs5gWYCPGcgYanAeaZYXWZeDFKHqiUvOUQtc5NuS
+ rIwolvS+kooSkCdWIPWSIybsP3691j2oUl9PQutVOPplQIrMbTeZZnBivDMkYMRQ/hp9
+ 0lqeFJVMP2yp+Y29pOetW3buSxSWpPhG0JjvBpzjkUNV2ephcGltpJwtyiXY6Z6lyiSg
+ FR2xRu5XBUq2FqXeEJO0NTltTeZmhprI1r5sHadYRDYnuK7FgTQ0JKJsxhXXArGBE88O
+ xdjJrVxdctHjeJJoXju7uMzH+hwssu/cW06iVU0x+/3u7UaXSv5xiV3d41XLDBux4Zsg
+ YtiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752002365; x=1752607165;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5B4J7cwfIkU9OopnPqIRveaXurIgb8F7x1j5VTGinLY=;
+ b=wUHhl7aZ7Y8EkXt/6/XMawGxOl3Ddr8JRSMUWULk3R15nxXnSpoq7vV6yJpXwOdFEg
+ zmGcAMTPvuvJF9pNxHrYQLgyieZMSRtnH4gWPqhntbeLom63YPTsb2U3RTknJ0nC+0qj
+ j9FAgvXwqfpgb3VKvQPWkEMCAgcjLm3StnsCm+6PBXcWcnQRs8CVTLCRiOOSyCv+xEwo
+ SJq0SKVMvSVhjXbvmyGux1pHg/xE93qXqfH0I06vVrBPCbktwDCC5zkE7epbRAgcpxYg
+ J+FB72I0kKDZy69QR2IyP8ax0IMzs9gh49oEEdX8xj75U1wG5ijmC9ZD09RCwE+8sYJM
+ MSlQ==
+X-Gm-Message-State: AOJu0Yw/FJh+wtrkrxkFla+PhKMDdPpmIpBesNVmc4m+ovyz9195ad/i
+ y+ACmrICYlRHBLiK+/9L0gjs5muhSIGT8mn/Fb5vEtjtQwIXHVG1eFoJdDRjIZxpd60=
+X-Gm-Gg: ASbGncuZcRPJ8C47+VFzih4dR5mkKIg4GF4XOA8nuFu+9CIXkMrIEmlbKgdZjD/AXG4
+ VQEH9c1EaX3804E9Jog0JefexLnvEGrsU1QQ+FqTKbNAsVGc0SM8BQCPuajftKZrth6nsmoh/Z5
+ CpldwKygglV6453iDxjqRXPQjsXMGFSvxthHHLbDQkFtZlnPpQrSPNQKUDYimZu/J3NHvrX5lZe
+ Om9kmrujvGk3JAfvfbdfGYWkiHRf+OKIMKczirohMpPQ3M/frFYxmk4jcHr2TRrXb01y/iGdnYB
+ hEjIZB2nypUkv8/oUF70eofCwUVbnJFRBebA2LZCiYtS0kCt7HHpMeJ7QUpqgUpsnrQ=
+X-Google-Smtp-Source: AGHT+IFIxemT5zTXsvX807OPlqqSJw+6IW0L98Yt7/taekt84gzT9ouA5Ea8ZCgScRnlKT2w5xinJg==
+X-Received: by 2002:a05:6214:5016:b0:701:a5d:7e37 with SMTP id
+ 6a1803df08f44-702c8b7e6a2mr249166666d6.13.1752002363630; 
+ Tue, 08 Jul 2025 12:19:23 -0700 (PDT)
+Received: from gromero0.. ([189.110.24.38]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-702d638846asm56289096d6.22.2025.07.08.12.19.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 08 Jul 2025 12:19:22 -0700 (PDT)
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: qemu-arm@nongnu.org, richard.henderson@linaro.org, alex.bennee@linaro.org
+Cc: qemu-devel@nongnu.org,
+	gustavo.romero@linaro.org
+Subject: [RFC PATCH-for-10.1 v3 5/5] target/arm: Advertise FEAT_MEC in cpu max
+Date: Tue,  8 Jul 2025 19:17:04 +0000
+Message-Id: <20250708191704.1068604-6-gustavo.romero@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250708191704.1068604-1-gustavo.romero@linaro.org>
+References: <20250708191704.1068604-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f29;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-qv1-xf29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,123 +98,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Let pass the root bus to ich9 and piix4 through a property link
-instead of through an argument passed to acpi_pcihp_init().
+Advertise FEAT_MEC in AA64MMFR3 ID register for the Arm64 cpu max as a
+first step to fully support FEAT_MEC.
 
-Also make sure the root bus is set at the entry of acpi_pcihp_init().
+The FEAT_MEC is an extension to FEAT_RME that implements multiple
+Memory Encryption Contexts (MEC) so the memory in a realm can be
+encrypted and accessing it from the wrong encryption context is not
+possible. An encryption context allow the selection of a memory
+encryption engine.
 
-The rationale of that change is to be consistent with the forecoming ARM
-implementation where the machine passes the root bus (steming from GPEX)
-to the GED device through a link property.
+At this point, no real memory encryption or obfuscation is supported,
+but software stacks that rely on FEAT_MEC to run should work properly,
+except if they use the new cache management instructions, which will
+be implement in a subsequent commit.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Suggested-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- include/hw/acpi/pcihp.h         | 2 +-
- hw/acpi/acpi-pci-hotplug-stub.c | 2 +-
- hw/acpi/ich9.c                  | 7 ++++++-
- hw/acpi/pcihp.c                 | 4 ++--
- hw/acpi/piix4.c                 | 5 ++++-
- 5 files changed, 14 insertions(+), 6 deletions(-)
+ docs/system/arm/emulation.rst | 1 +
+ target/arm/tcg/cpu64.c        | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/include/hw/acpi/pcihp.h b/include/hw/acpi/pcihp.h
-index 9ff548650b..ca6a258825 100644
---- a/include/hw/acpi/pcihp.h
-+++ b/include/hw/acpi/pcihp.h
-@@ -62,7 +62,7 @@ typedef struct AcpiPciHpState {
-     bool use_acpi_root_pci_hotplug;
- } AcpiPciHpState;
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index 1c597d8673..1b47246d2a 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -89,6 +89,7 @@ the following architecture extensions:
+ - FEAT_LSE (Large System Extensions)
+ - FEAT_LSE2 (Large System Extensions v2)
+ - FEAT_LVA (Large Virtual Address space)
++- FEAT_MEC (Memory Encryption Contexts)
+ - FEAT_MixedEnd (Mixed-endian support)
+ - FEAT_MixedEndEL0 (Mixed-endian support at EL0)
+ - FEAT_MOPS (Standardization of memory operations)
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 173528175a..2c63940878 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1249,6 +1249,7 @@ void aarch64_max_tcg_initfn(Object *obj)
  
--void acpi_pcihp_init(Object *owner, AcpiPciHpState *, PCIBus *root,
-+void acpi_pcihp_init(Object *owner, AcpiPciHpState *,
-                      MemoryRegion *io, uint16_t io_base);
+     FIELD_DP64_IDREG(isar, ID_AA64MMFR3, TCRX, 1);       /* FEAT_TCR2 */
+     FIELD_DP64_IDREG(isar, ID_AA64MMFR3, SCTLRX, 1);     /* FEAT_SCTLR2 */
++    FIELD_DP64_IDREG(isar, ID_AA64MMFR3, MEC, 1);        /* FEAT_MEC */
+     FIELD_DP64_IDREG(isar, ID_AA64MMFR3, SPEC_FPACC, 1); /* FEAT_FPACC_SPEC */
  
- bool acpi_pcihp_is_hotpluggable_bus(AcpiPciHpState *s, BusState *bus);
-diff --git a/hw/acpi/acpi-pci-hotplug-stub.c b/hw/acpi/acpi-pci-hotplug-stub.c
-index b7bc6e40a1..d58ea726a8 100644
---- a/hw/acpi/acpi-pci-hotplug-stub.c
-+++ b/hw/acpi/acpi-pci-hotplug-stub.c
-@@ -4,7 +4,7 @@
- 
- const VMStateDescription vmstate_acpi_pcihp_pci_status;
- 
--void acpi_pcihp_init(Object *owner, AcpiPciHpState *s, PCIBus *root_bus,
-+void acpi_pcihp_init(Object *owner, AcpiPciHpState *s,
-                      MemoryRegion *address_space_io, uint16_t io_base)
- {
- }
-diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-index 967b67485e..2b3b493c01 100644
---- a/hw/acpi/ich9.c
-+++ b/hw/acpi/ich9.c
-@@ -322,9 +322,10 @@ void ich9_pm_init(PCIDevice *lpc_pci, ICH9LPCPMRegs *pm, qemu_irq sci_irq)
-     }
- 
-     if (pm->acpi_pci_hotplug.use_acpi_hotplug_bridge) {
-+        object_property_set_link(OBJECT(lpc_pci), "bus",
-+                                 OBJECT(pci_get_bus(lpc_pci)), &error_abort);
-         acpi_pcihp_init(OBJECT(lpc_pci),
-                         &pm->acpi_pci_hotplug,
--                        pci_get_bus(lpc_pci),
-                         pci_address_space_io(lpc_pci),
-                         ACPI_PCIHP_ADDR_ICH9);
- 
-@@ -428,6 +429,10 @@ void ich9_pm_add_properties(Object *obj, ICH9LPCPMRegs *pm)
- 
-     object_property_add_uint32_ptr(obj, ACPI_PM_PROP_PM_IO_BASE,
-                                    &pm->pm_io_base, OBJ_PROP_FLAG_READ);
-+    object_property_add_link(obj, "bus", TYPE_PCI_BUS,
-+                             (Object **)&pm->acpi_pci_hotplug.root,
-+                             object_property_allow_set_link,
-+                             OBJ_PROP_LINK_STRONG);
-     object_property_add(obj, ACPI_PM_PROP_GPE0_BLK, "uint32",
-                         ich9_pm_get_gpe0_blk,
-                         NULL, NULL, pm);
-diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
-index f1594e664a..4922bbc778 100644
---- a/hw/acpi/pcihp.c
-+++ b/hw/acpi/pcihp.c
-@@ -493,13 +493,13 @@ static const MemoryRegionOps acpi_pcihp_io_ops = {
-     },
- };
- 
--void acpi_pcihp_init(Object *owner, AcpiPciHpState *s, PCIBus *root_bus,
-+void acpi_pcihp_init(Object *owner, AcpiPciHpState *s,
-                      MemoryRegion *io, uint16_t io_base)
- {
-     s->io_len = ACPI_PCIHP_SIZE;
-     s->io_base = io_base;
- 
--    s->root = root_bus;
-+    assert(s->root);
- 
-     memory_region_init_io(&s->io, owner, &acpi_pcihp_io_ops, s,
-                           "acpi-pci-hotplug", s->io_len);
-diff --git a/hw/acpi/piix4.c b/hw/acpi/piix4.c
-index d98b80df6d..7a18f18dda 100644
---- a/hw/acpi/piix4.c
-+++ b/hw/acpi/piix4.c
-@@ -567,7 +567,8 @@ static void piix4_acpi_system_hot_add_init(MemoryRegion *parent,
- 
-     if (s->acpi_pci_hotplug.use_acpi_hotplug_bridge ||
-         s->acpi_pci_hotplug.use_acpi_root_pci_hotplug) {
--        acpi_pcihp_init(OBJECT(s), &s->acpi_pci_hotplug, bus, parent,
-+        object_property_set_link(OBJECT(s), "bus", OBJECT(bus), &error_abort);
-+        acpi_pcihp_init(OBJECT(s), &s->acpi_pci_hotplug, parent,
-                         ACPI_PCIHP_ADDR_PIIX4);
-         qbus_set_hotplug_handler(BUS(pci_get_bus(PCI_DEVICE(s))), OBJECT(s));
-     }
-@@ -611,6 +612,8 @@ static const Property piix4_pm_properties[] = {
-                      acpi_pci_hotplug.use_acpi_hotplug_bridge, true),
-     DEFINE_PROP_BOOL(ACPI_PM_PROP_ACPI_PCI_ROOTHP, PIIX4PMState,
-                      acpi_pci_hotplug.use_acpi_root_pci_hotplug, true),
-+    DEFINE_PROP_LINK("bus", PIIX4PMState, acpi_pci_hotplug.root,
-+                     TYPE_PCI_BUS, PCIBus *),
-     DEFINE_PROP_BOOL("memory-hotplug-support", PIIX4PMState,
-                      acpi_memory_hotplug.is_enabled, true),
-     DEFINE_PROP_BOOL("smm-compat", PIIX4PMState, smm_compat, false),
+     t = GET_IDREG(isar, ID_AA64ZFR0);
 -- 
-2.49.0
+2.34.1
 
 
