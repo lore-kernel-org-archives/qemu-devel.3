@@ -4,87 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E760BC8303C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA74EC83F0F
 	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:42:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZG4E-00080Y-HL; Tue, 08 Jul 2025 17:41:34 -0400
+	id 1uZG4W-0008IJ-HV; Tue, 08 Jul 2025 17:41:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZEsm-0003Je-Uz
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 16:25:49 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uZEx2-0004cB-03
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 16:30:07 -0400
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZEsl-0007nE-8t
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 16:25:40 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-6070293103cso8010629a12.0
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 13:25:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uZEwz-00088G-4q
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 16:30:03 -0400
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-32f3ef6178bso7181571fa.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 13:30:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752006337; x=1752611137; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4y0Se23pGHN7QDFGDD2v+scmtqBfXFRB7VhnG6jKf7Y=;
- b=QOdvF43WZ9oR6oCgw2KgiiJv70sJbSWsQvUXmnkKBRBQuki0VvZ5tC6TlsZqlI6YSA
- AFGCfmb87ybzAAPbyyFqFwwg1x3Si9Y7p4exrgsAiN2zGuDgns1bBI90wNscvr4fvJy1
- bSIMQ94S1047gfzQYTGUlWKXqObBe9e3hhMDUyxS0zA7ZicZgUP+LPdtua98CAUDzS6C
- xxzPqeGvIsn+2kNWFef0dMEX8IUjJo78sREn/9H4Z7QvULaI9u9qwWwABroOM+lzFWAc
- s2Smvdq7IT6e5WbRnv1cBfPyW+wAauKPkKXtHBfQOmPCi3Vv0QwX/edE0Kg9wrC/SeXG
- 2lfg==
+ d=linaro.org; s=google; t=1752006599; x=1752611399; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gt2m6Pn6JVQPqk/mSrP0CK0ENC9R9D3MSBFUWpA9k1g=;
+ b=S8e6WaRg1WL26cSSAy/oe3L7anUfVUtEWGXPd0/PuSk2zLfQQM2SmcMkLcBVuMSuQR
+ LbEvvOeJZ4ZZDlsIeKfRFCnmt1Fm1GykTZOZidIzkR1gQ63IcPV5LQpOW1+4n6+XxQjf
+ eisPi/M9fdymjrBwEhqD5k9cSJlZcjyB/yC0OovOJrwPSGls8Xy+u6yVuDDc7x+VdLQ+
+ P05dRh33hOXGsW3JQWBoPYQT9pLy6A7jP4sTIOZKdmOsDyOqB/RdqAAJHNN6iuNGE1gl
+ qqsKw3ypsA+aIiST+hsvV82bebp7dtCkjKdZLi8OTeKqpjQioiuWaTSdA1cJlSQT/yYT
+ QOXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752006337; x=1752611137;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4y0Se23pGHN7QDFGDD2v+scmtqBfXFRB7VhnG6jKf7Y=;
- b=lwlFSkCd0lQP9g9O7tQlNRmlIx+SiMXJtS8bMnSGiseLZE3wfg5mCRa7DUhDEhD7kM
- Q141VNhiHQNbtF+wGsXTxk4wZx9sa2swPMTcfHRRHZ9OlrqFyRi9gI5xNvsXi8phWn1i
- tMXOTVOXrUWm9b7QgDTB52u/0Oxr9f2TEJzvsJwnHh6uXLnMD3gj7oyVNLFLOzkYXAbO
- ismGzaE79tx1eH7YINx7D/aklNp1DT8YY9k5gN753LpPRJuG+2Mljn36BwRmHDjEZppa
- vPzVWqVDf1wy+GeZ4SF6FdP7yakX5eCldlxAI9srXKtfBaM4d7zsteMO7hwzE9K68TdA
- KtJg==
+ d=1e100.net; s=20230601; t=1752006599; x=1752611399;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=gt2m6Pn6JVQPqk/mSrP0CK0ENC9R9D3MSBFUWpA9k1g=;
+ b=GpeXlt0Rh1VeoEOzIIc6hWgfjigoDewLByx1yPcmxkgFqHLModUzG/WSJWd1BTi5Cc
+ kjtvhT1Xmpy/CIgX8qFcMYlac322y0kNRQlO4+76g/dPypja6VP7ijjuuZ5soyvtH0UB
+ IqMilgg4QJKRDl/jcbik4fXwDAR9548eDZtc8sRme9UpW9V+NrmQ2kBae/QeFMYBEQO5
+ rmB4Ef9d948/vLGyvz6SSgRlnyKtoZr+0ue3rYwCr5alImpN5SBs5dxhNf28FRCZ+CbW
+ ck8Y46OqKk93qtXWcr0N7Hr9pMo1FRWIXWzEh7cvX85NL/A/1IodV16S6e+o6/R9SBND
+ 6qmw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWaq7age7R0Z1jmnv76iodQKDJwTV5nXhHME2FQ0+cJr9890KZkOPSenhwdbdFAAJET5mIWuNTvJ/vH@nongnu.org
-X-Gm-Message-State: AOJu0YxnmesQ6vBttYzhu5luebQVLPhJ0S/MbzeH80W+ej492nLhc6i/
- rp/ZFEvkOWpHSif5Q5azEuMw4WI1zJaz8p2QVu91KS2rZJ12OAXxV0MtISuyYvvPFOgUaJV3ZB/
- iu31A2t8=
-X-Gm-Gg: ASbGncv7eAaP17XsmH37FThlH9fkbyE6xgCUNyEFTLySq4D7ILCnBwRIzHjkV6CIUU6
- K/k98ykUGgCim8fec0dszSXsYnV+8JqU2sLQd4I16IdR31NrGOEl9yI9km3DD5uraJr5oME5wxy
- JUX4c1uIlvxDKW962Yyn2l8xTZVex8LtMYNK0vsDTXpogPWkKAqvTLZ1Q66OxmlN8wp3IvXPjzS
- s+3k8zzTL9PsDpbMr2iDL7kc/GB1wGi7wL9wMhAyk7+DX6a5BcoCatF0/fX462bjF3wpDSygn7a
- r8Fd3bYMpbIUwLPUwYYDWGYUTxqxwAhVzSyQ8Lvwdpt6ykGRKWMM2wi3Rm6IvdyrhrK8+/wS2ju
- cA/I4xZv3rbJIjHn4YFPlOjrAPi9f2Q==
-X-Google-Smtp-Source: AGHT+IGE3RFds1RsdX2V7WIeyYcWV0cwBK+dV6e8XlQc6P+Pv7pzZmizjLUY29zz7lvyn9NwwzGlSw==
-X-Received: by 2002:a05:600c:400f:b0:43c:ea1a:720a with SMTP id
- 5b1f17b1804b1-454b3b8a453mr93939645e9.1.1751958843571; 
- Tue, 08 Jul 2025 00:14:03 -0700 (PDT)
-Received: from [192.168.69.242] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454cd44ffb9sm13061975e9.14.2025.07.08.00.14.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Jul 2025 00:14:03 -0700 (PDT)
-Message-ID: <526f5090-eeae-4eb8-8d1c-e006d9501f62@linaro.org>
-Date: Tue, 8 Jul 2025 09:14:02 +0200
+ AJvYcCXDv0nCuHG62vccev9OuAnBfUu3yOYBpuXn7SniSzHzwoakMRFiW3a5djj0fGpLLFcnvsm6u7292xho@nongnu.org
+X-Gm-Message-State: AOJu0Yy+r1K9roD/9zFwsG5r/HKgTdk9okeLSEdveeGJpmjXDrm7S/N/
+ WBadEQFIuGGrP5CRwMCjHyqonS6RVojiNo0tsdsUpDTeJGgYvhQhd8FQkQTx8o5pjWshLncwqL3
+ kA1oC
+X-Gm-Gg: ASbGncsrMZ2OB+d9f7GtOYauHoWIkpQTzD3MIRX84TfHxsOwCmBKPbi3AvdjxctuJlv
+ qqBUL+l7XsIvHy/sq0N7RUoWjNnXF57OQB+XiGp+vIl7sD1QGjMgAAmukj2gJwN/53oUbLtacQ4
+ iO5Hb+oNebBf7qYd9CEE3R5LjQYwHKX54mBJgybwtwvxDhAI/M1yYlJBCrNeHk+1bl+0h0+Eqa9
+ vNies5JI03w169A7y1lzVaNpVCmrdt/ZcDsoLZOAh6hy+Gthe69fz49Gg94j5bS83gM2neSmfjk
+ ZlEQ6FMeSGi16lxsUO0V4JnQ6bLIegzn9qm7ORZ4yslq0Ypeg2tYBKkLbBDlpya9d+n2
+X-Google-Smtp-Source: AGHT+IE+L0yyX0pqFiJ3uAV6sFE1o6IeVh74gnbcE4SKwIJoSVN52SpMbF87UHOdIMUbTOSf5tVLwQ==
+X-Received: by 2002:a05:6000:2209:b0:3a3:7115:5e7a with SMTP id
+ ffacd0b85a97d-3b5ddebd150mr2232338f8f.42.1751975563813; 
+ Tue, 08 Jul 2025 04:52:43 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454cd4a68ebsm19731255e9.39.2025.07.08.04.52.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 08 Jul 2025 04:52:42 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Eric Auger <eric.auger@redhat.com>
+Subject: [PATCH v2 2/3] hw/intc/arm_gicv3_kvm: Migrate GICD_TYPER2
+Date: Tue,  8 Jul 2025 12:52:37 +0100
+Message-ID: <20250708115238.667050-3-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250708115238.667050-1-peter.maydell@linaro.org>
+References: <20250708115238.667050-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 1/5] qom: qom-tree-get
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-References: <1747057635-124298-1-git-send-email-steven.sistare@oracle.com>
- <1747057635-124298-2-git-send-email-steven.sistare@oracle.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <1747057635-124298-2-git-send-email-steven.sistare@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,18 +102,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/5/25 15:47, Steve Sistare wrote:
-> Define the qom-tree-get QAPI command, which fetches an entire tree of
-> properties and values with a single QAPI call.  This is much faster
-> than using qom-list plus qom-get for every node and property of the
-> tree.  See qom.json for details.
-> 
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->   qapi/qom.json      | 56 ++++++++++++++++++++++++++++++++++++++++++
->   qom/qom-qmp-cmds.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 128 insertions(+)
+The GICD_TYPER2 register is new for GICv4.1.  As an ID register, we
+migrate it so that on the destination the kernel can check that the
+destination supports the same configuration that the source system
+had.  This avoids confusing behaviour if the user tries to migrate a
+VM from a GICv3 system to a GICv4.1 system or vice-versa.  (In
+practice the inability to migrate between different CPU types
+probably already prevented this.)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Note that older kernels pre-dating GICv4.1 support in the KVM GIC
+will just ignore whatever userspace writes to GICD_TYPER2, so
+migration where the destination is one of those kernels won't have
+this safety-check.
+
+(The reporting of a mismatch will be a bit clunky, because this
+file currently uses error_abort for all failures to write the
+data to the kernel. Ideally we would fix this by making them
+propagate the failure information back up to the post_load hook
+return value, to cause a migration failure.)
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+v1->v2:
+ * fix comment missing bracket
+ * fix reset handling so this works on GICv4.1 hosts
+ * move get/put code to be with the other GICD regs
+---
+ include/hw/intc/arm_gicv3_common.h |  6 ++++++
+ hw/intc/arm_gicv3_common.c         | 24 ++++++++++++++++++++++++
+ hw/intc/arm_gicv3_kvm.c            | 25 +++++++++++++++++++++++--
+ 3 files changed, 53 insertions(+), 2 deletions(-)
+
+diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
+index a3d6a0e5077..bcbcae1fbe7 100644
+--- a/include/hw/intc/arm_gicv3_common.h
++++ b/include/hw/intc/arm_gicv3_common.h
+@@ -267,6 +267,12 @@ struct GICv3State {
+     GICv3CPUState *gicd_irouter_target[GICV3_MAXIRQ];
+     uint32_t gicd_nsacr[DIV_ROUND_UP(GICV3_MAXIRQ, 16)];
+ 
++    /*
++     * GICv4.1 extended ID information. This is currently only needed
++     * for migration of a KVM GIC.
++     */
++    uint32_t gicd_typer2;
++
+     GICv3CPUState *cpu;
+     /* List of all ITSes connected to this GIC */
+     GPtrArray *itslist;
+diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
+index 1cee68193ca..7b09771310e 100644
+--- a/hw/intc/arm_gicv3_common.c
++++ b/hw/intc/arm_gicv3_common.c
+@@ -275,6 +275,29 @@ const VMStateDescription vmstate_gicv3_gicd_nmi = {
+     }
+ };
+ 
++static bool gicv3_typer2_needed(void *opaque)
++{
++    /*
++     * GICD_TYPER2 ID register for GICv4.1. Was RES0 for
++     * GICv3 and GICv4.0; don't migrate if zero for backwards
++     * compatibility.
++     */
++    GICv3State *cs = opaque;
++
++    return cs->gicd_typer2 != 0;
++}
++
++const VMStateDescription vmstate_gicv3_gicd_typer2 = {
++    .name = "arm_gicv3/gicd_typer2",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = gicv3_typer2_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(gicd_typer2, GICv3State),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static const VMStateDescription vmstate_gicv3 = {
+     .name = "arm_gicv3",
+     .version_id = 1,
+@@ -304,6 +327,7 @@ static const VMStateDescription vmstate_gicv3 = {
+     .subsections = (const VMStateDescription * const []) {
+         &vmstate_gicv3_gicd_no_migration_shift_bug,
+         &vmstate_gicv3_gicd_nmi,
++        &vmstate_gicv3_gicd_typer2,
+         NULL
+     }
+ };
+diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
+index 3be3bf6c28d..8e34d08b415 100644
+--- a/hw/intc/arm_gicv3_kvm.c
++++ b/hw/intc/arm_gicv3_kvm.c
+@@ -405,7 +405,16 @@ static void kvm_arm_gicv3_put(GICv3State *s)
+         }
+     }
+ 
+-    /* Distributor state (shared between all CPUs */
++    /* Distributor state (shared between all CPUs) */
++
++    /*
++     * This ID register is restored so that the kernel can fail
++     * the write if the migration source is GICv4.1 but the
++     * destination is not.
++     */
++    reg = s->gicd_typer2;
++    kvm_gicd_access(s, GICD_TYPER2, &reg, true);
++
+     reg = s->gicd_statusr[GICV3_NS];
+     kvm_gicd_access(s, GICD_STATUSR, &reg, true);
+ 
+@@ -572,7 +581,10 @@ static void kvm_arm_gicv3_get(GICv3State *s)
+         }
+     }
+ 
+-    /* Distributor state (shared between all CPUs */
++    /* Distributor state (shared between all CPUs) */
++
++    kvm_gicd_access(s, GICD_TYPER2, &reg, false);
++    s->gicd_typer2 = reg;
+ 
+     kvm_gicd_access(s, GICD_STATUSR, &reg, false);
+     s->gicd_statusr[GICV3_NS] = reg;
+@@ -707,6 +719,7 @@ static void kvm_arm_gicv3_reset_hold(Object *obj, ResetType type)
+ {
+     GICv3State *s = ARM_GICV3_COMMON(obj);
+     KVMARMGICv3Class *kgc = KVM_ARM_GICV3_GET_CLASS(s);
++    uint32_t reg;
+ 
+     DPRINTF("Reset\n");
+ 
+@@ -719,6 +732,14 @@ static void kvm_arm_gicv3_reset_hold(Object *obj, ResetType type)
+         return;
+     }
+ 
++    /*
++     * The reset value of the GICD_TYPER2 ID register should be whatever
++     * the kernel says it is; otherwise the attempt to put the value
++     * in kvm_arm_gicv3_put() will fail.
++     */
++    kvm_gicd_access(s, GICD_TYPER2, &reg, false);
++    s->gicd_typer2 = reg;
++
+     kvm_arm_gicv3_put(s);
+ }
+ 
+-- 
+2.43.0
 
 
