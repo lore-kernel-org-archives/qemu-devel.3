@@ -4,77 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F529C8303C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 19:54:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E9E9C83F09
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 19:57:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZEO8-0008PE-Ay; Tue, 08 Jul 2025 15:54:00 -0400
-Received: from eggs.gnu.org ([209.51.188.92])
+	id 1uZERR-0006zO-65; Tue, 08 Jul 2025 15:57:25 -0400
+Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZBQ3-00010S-5S
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 12:44:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZBPp-0005zQ-72
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 12:43:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751992887;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QxwfYEvRpYO+ysfGn4l7Ic5LE5Wsaju89hTYULgExAg=;
- b=b50xpQ2lF05PCw8pcRxccnwIjHIQl3Kf/9gT0+lJw4XL+LZp3XKX7q+NRV6QPiLWi36+eX
- CiJ3JDtZDbRmisJJg40gWqmOzfrkjhi5amFrtbxOPAvDuarNVYc+pjq3Jn9kdDm5z9Agli
- ssn1bw6Xbca/3RUh+6atUc9DtB9Nz5s=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-63-IrR8yYlJPQ-QlBvGFkhJOg-1; Tue,
- 08 Jul 2025 10:28:11 -0400
-X-MC-Unique: IrR8yYlJPQ-QlBvGFkhJOg-1
-X-Mimecast-MFC-AGG-ID: IrR8yYlJPQ-QlBvGFkhJOg_1751984887
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5618B180136B; Tue,  8 Jul 2025 14:28:07 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.32.187])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EDF3830001B9; Tue,  8 Jul 2025 14:28:01 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
- Jonathan.Cameron@huawei.com, gustavo.romero@linaro.org,
- anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com
-Cc: pbonzini@redhat.com,
-	philmd@linaro.org,
-	alex.bennee@linaro.org
-Subject: [PATCH v6 31/36] hw/arm/virt: Minor code reshuffling in
- create_acpi_ged
-Date: Tue,  8 Jul 2025 16:23:13 +0200
-Message-ID: <20250708142437.1344644-32-eric.auger@redhat.com>
-In-Reply-To: <20250708142437.1344644-1-eric.auger@redhat.com>
-References: <20250708142437.1344644-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uZCMv-0006RF-AE
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 13:44:48 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uZBMA-0000An-3v
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 12:41:46 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8CxLGsUBm1ojF0kAQ--.12777S3;
+ Tue, 08 Jul 2025 19:50:44 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowJDxQ+QQBm1oiVEOAA--.17600S6;
+ Tue, 08 Jul 2025 19:50:43 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH 4/6] target/loongarch: Add header file cpu-mmu.h
+Date: Tue,  8 Jul 2025 19:50:37 +0800
+Message-Id: <20250708115039.2724551-5-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250708115039.2724551-1-maobibo@loongson.cn>
+References: <20250708115039.2724551-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
-X-Spam_action: no action
+X-CM-TRANSID: qMiowJDxQ+QQBm1oiVEOAA--.17600S6
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,62 +58,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use a local SysBusDevice handle. Also use the newly introduced
-sysbus_mmio_map_name which brings better readability about the region
-being mapped. GED device has regions which exist depending on some
-external properties and it becomes difficult to guess the index of
-a region. Better refer to a region by its name.
+New header file cpu-mmu.h is added and move mmu relative function
+declaration to this file.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- include/hw/acpi/generic_event_device.h |  1 +
- hw/arm/virt.c                          | 11 +++++++----
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ target/loongarch/cpu-mmu.h        | 30 ++++++++++++++++++++++++++++++
+ target/loongarch/cpu.c            |  1 +
+ target/loongarch/cpu_helper.c     |  1 +
+ target/loongarch/internals.h      | 20 --------------------
+ target/loongarch/tcg/csr_helper.c |  1 +
+ target/loongarch/tcg/tlb_helper.c |  1 +
+ 6 files changed, 34 insertions(+), 20 deletions(-)
+ create mode 100644 target/loongarch/cpu-mmu.h
 
-diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
-index d56adaa626..2c5b055327 100644
---- a/include/hw/acpi/generic_event_device.h
-+++ b/include/hw/acpi/generic_event_device.h
-@@ -111,6 +111,7 @@ typedef struct GEDState {
- } GEDState;
+diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
+new file mode 100644
+index 0000000000..4c5cbd7425
+--- /dev/null
++++ b/target/loongarch/cpu-mmu.h
+@@ -0,0 +1,30 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * LoongArch CPU parameters for QEMU.
++ *
++ * Copyright (c) 2025 Loongson Technology Corporation Limited
++ */
++
++#ifndef LOONGARCH_CPU_MMU_H
++#define LOONGARCH_CPU_MMU_H
++
++enum {
++    TLBRET_MATCH = 0,
++    TLBRET_BADADDR = 1,
++    TLBRET_NOMATCH = 2,
++    TLBRET_INVALID = 3,
++    TLBRET_DIRTY = 4,
++    TLBRET_RI = 5,
++    TLBRET_XI = 6,
++    TLBRET_PE = 7,
++};
++
++bool check_ps(CPULoongArchState *ent, uint8_t ps);
++int get_physical_address(CPULoongArchState *env, hwaddr *physical,
++                         int *prot, target_ulong address,
++                         MMUAccessType access_type, int mmu_idx, int is_debug);
++void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
++                               uint64_t *dir_width, target_ulong level);
++hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
++
++#endif  /* LOONGARCH_CPU_MMU_H */
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index b96429ffb1..990985708e 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -17,6 +17,7 @@
+ #include "hw/qdev-properties.h"
+ #include "exec/translation-block.h"
+ #include "cpu.h"
++#include "cpu-mmu.h"
+ #include "internals.h"
+ #include "fpu/softfloat-helpers.h"
+ #include "csr.h"
+diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+index e172b11ce1..2e8d3d7cfb 100644
+--- a/target/loongarch/cpu_helper.c
++++ b/target/loongarch/cpu_helper.c
+@@ -13,6 +13,7 @@
+ #include "exec/target_page.h"
+ #include "internals.h"
+ #include "cpu-csr.h"
++#include "cpu-mmu.h"
+ #include "tcg/tcg_loongarch.h"
  
- #define ACPI_PCIHP_REGION_NAME "pcihp container"
-+#define ACPI_MEMHP_REGION_NAME "memhp container"
+ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index a7384b0d31..e50d109767 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -32,19 +32,6 @@ void restore_fp_status(CPULoongArchState *env);
+ #endif
  
- struct AcpiGedState {
-     SysBusDevice parent_obj;
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 34a3831530..7b247ad30c 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -683,6 +683,7 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
+ #ifndef CONFIG_USER_ONLY
+-enum {
+-    TLBRET_MATCH = 0,
+-    TLBRET_BADADDR = 1,
+-    TLBRET_NOMATCH = 2,
+-    TLBRET_INVALID = 3,
+-    TLBRET_DIRTY = 4,
+-    TLBRET_RI = 5,
+-    TLBRET_XI = 6,
+-    TLBRET_PE = 7,
+-};
+-
+-bool check_ps(CPULoongArchState *ent, uint8_t ps);
+-
+ extern const VMStateDescription vmstate_loongarch_cpu;
+ 
+ void loongarch_cpu_set_irq(void *opaque, int irq, int level);
+@@ -54,13 +41,6 @@ uint64_t cpu_loongarch_get_constant_timer_counter(LoongArchCPU *cpu);
+ uint64_t cpu_loongarch_get_constant_timer_ticks(LoongArchCPU *cpu);
+ void cpu_loongarch_store_constant_timer_config(LoongArchCPU *cpu,
+                                                uint64_t value);
+-int get_physical_address(CPULoongArchState *env, hwaddr *physical,
+-                         int *prot, target_ulong address,
+-                         MMUAccessType access_type, int mmu_idx, int is_debug);
+-void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+-                               uint64_t *dir_width, target_ulong level);
+-hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
+-
+ #endif /* !CONFIG_USER_ONLY */
+ 
+ uint64_t read_fcc(CPULoongArchState *env);
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 2942d7feb8..49000b2418 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -16,6 +16,7 @@
+ #include "accel/tcg/cpu-ldst.h"
+ #include "hw/irq.h"
+ #include "cpu-csr.h"
++#include "cpu-mmu.h"
+ 
+ target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
  {
-     DeviceState *dev;
-     MachineState *ms = MACHINE(vms);
-+    SysBusDevice *sbdev;
-     int irq = vms->irqmap[VIRT_ACPI_GED];
-     uint32_t event = ACPI_GED_PWR_DOWN_EVT;
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 871a8f3e76..a2855209e2 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -10,6 +10,7 @@
+ #include "qemu/guest-random.h"
  
-@@ -697,11 +698,13 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
-     dev = qdev_new(TYPE_ACPI_GED);
-     qdev_prop_set_uint32(dev, "ged-event", event);
-     object_property_set_link(OBJECT(dev), "bus", OBJECT(vms->bus), &error_abort);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sbdev = SYS_BUS_DEVICE(dev);
-+    sysbus_realize_and_unref(sbdev, &error_fatal);
- 
--    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, vms->memmap[VIRT_ACPI_GED].base);
--    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 1, vms->memmap[VIRT_PCDIMM_ACPI].base);
--    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(vms->gic, irq));
-+    sysbus_mmio_map_name(sbdev, TYPE_ACPI_GED, vms->memmap[VIRT_ACPI_GED].base);
-+    sysbus_mmio_map_name(sbdev, ACPI_MEMHP_REGION_NAME,
-+                         vms->memmap[VIRT_PCDIMM_ACPI].base);
-+    sysbus_connect_irq(sbdev, 0, qdev_get_gpio_in(vms->gic, irq));
- 
-     return dev;
- }
+ #include "cpu.h"
++#include "cpu-mmu.h"
+ #include "internals.h"
+ #include "exec/helper-proto.h"
+ #include "exec/cputlb.h"
 -- 
-2.49.0
+2.39.3
 
 
