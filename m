@@ -4,87 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7BD8C8303C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:06:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F93C83F09
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:06:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFL2-0005CH-MK; Tue, 08 Jul 2025 16:54:52 -0400
+	id 1uZFGX-0000Ld-Bb; Tue, 08 Jul 2025 16:50:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1uZEVR-0002yU-C6
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 16:01:38 -0400
-Received: from mail-qt1-x843.google.com ([2607:f8b0:4864:20::843])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1uZEVJ-0003Zr-0C
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 16:01:28 -0400
-Received: by mail-qt1-x843.google.com with SMTP id
- d75a77b69052e-4a442a3a2bfso78702751cf.1
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 13:01:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1752004881; x=1752609681; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=MoncLiotR2i8htK3M42jgU29xEXPnqSxiRLcPBGmgMo=;
- b=QKuvyRgTB1BhEPLJSVqCNGL35LecdiJVYSyXMNSxqqlbuTFWFPlNXpcP+soIRwHGIt
- W9EfmpjvDS3OeREMyntriGKm1MbMyG9/OJ9ZcsKDwHTEdkjjD0waCc+2+BsLzyjb0Mm9
- 1ZIvg+E0bbN43ooUmpJZuSj5+LfXBcjJTXUJE37r2yJHBRxN5oWN+cZo6B+U1dwTAA5u
- 3V4OThx4jzvcNKJMWKQl6q9c/R2mlP3Zb94JEU7Z7xcBuht7l4UG4XU1zleXgkS0TaKT
- 4NYNMHf6UELTSzM0uurpkkH1RHpet1Pf+mdXxR4ptgEFzweLiWzMQ/7jWeEeSUd4YUM/
- TjOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752004881; x=1752609681;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MoncLiotR2i8htK3M42jgU29xEXPnqSxiRLcPBGmgMo=;
- b=bkPhNmAAIvotDbmwX+W1wyk2yYDrl6X26MhSJYEgeTFTWktU5+Agnlt0eOhqWOKr3K
- /cyuTUk8duJIK5d96g3bdxGWhoN2ENAkmIqSA8IMxdqN07FcLygNobm/0jS/77Si5rdO
- K1PLJ1hMzZQ1J+NkM8ESgUA/U7cjjuahChkJLXs74Nf8iCsT3FPeWumL0hgfmboIfg/H
- ou05vdE5kb24uHaPWxPc1UjXvgbkTTW1EAAS2mbTOEJfmpI3TupxBq0VwtEdWbYrbrq7
- U6reetsy0pKoEyiHt+aUxKVQspcSZNgb7GFI8mrslmBqDs7VlZGirZz2/yaD0ZOEdPo9
- UBAA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVcKL5/i//xvW7HY/+BrsTFbDJtjtr9HJCAQok5QGOkFhXi4LLUiS8rKxmFhmD9dKLB2/P1iI9MkHqy@nongnu.org
-X-Gm-Message-State: AOJu0YxiCvN9i4SsNRAkwO6WB/J0SHIFMaLNyab8w5FaTjghGb1XYGg2
- L4HFNK17mfZ96J4urtOHJBsBmlubJ00zSYpR5PgEz73eplpI6aouG6fCzHKac+P47A==
-X-Gm-Gg: ASbGncv6mkaSpSEh4CxEzYW3XO+J1RRKBKkxBOfyVgaSpL82k8rjnwXzQiy88x2bdv+
- CDIiH11jEi4kbKYQx8nRsiVwlRG/1+xHXaNKVEfaePhmdW9Fpq5rUMqhaEuJnLBIIm2fcUZ3fEU
- FZLkkZN83WOBOzEx2jtLIp27unqDW4q0od1oIQGMockWtg8RIbM1JtRn/Wm6mEnG+GEiHWMDUSp
- pN+cggdraP+v3Iet84zzsk5nWddRULcFA43KDfHCb9VU5nlbsm+CShKwEuCgyuRWjRya6TuymIv
- Ti/pVim9vKztiNUcWYkjr06mUbeE2fcLWFnWBmkFKNAuxRxJZSjWUZvksiGDCFW2xyV/DHLmdyd
- UY/6a9nxuDA==
-X-Google-Smtp-Source: AGHT+IEA7Q47Km+FlWpn9hwjYSo+hMCLX9DwGMPGw4uzbflOtPa4sKLF8MUnJvJq86mqwFIbwouAGg==
-X-Received: by 2002:a05:6a21:2d8f:b0:21f:4459:c032 with SMTP id
- adf61e73a8af0-225b85f42edmr26203574637.18.1751986345510; 
- Tue, 08 Jul 2025 07:52:25 -0700 (PDT)
-Received: from localhost.localdomain ([139.227.17.93])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74ce43d69d7sm12635484b3a.177.2025.07.08.07.52.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Jul 2025 07:52:25 -0700 (PDT)
-From: Tomita Moeko <tomitamoeko@gmail.com>
-To: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Cc: Tomita Moeko <tomitamoeko@gmail.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH v3] vfio/pci: Introduce x-pci-class-code option
-Date: Tue,  8 Jul 2025 22:52:11 +0800
-Message-ID: <20250708145211.6179-1-tomitamoeko@gmail.com>
-X-Mailer: git-send-email 2.47.2
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uZEDI-00073A-Sp
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:42:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uZEDD-0006BW-Pw
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:42:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752003762;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=i04cmer+zgmp/zgnejGv+wu5anHK1zJfyvXqP+A/Vjg=;
+ b=aVAdIQRKhzpvuo/qaK21Hmt4eMt8dF45lWGlnoEtFE4UGO0UYNmCd5UqQVSU7H1rrF6U+t
+ oiAg0EDOc0Y9A0oEMoF0AlT+uqo3JHEQ+bn8nGsOmt+1uJZccrVERLkGX+//v3R8Uf24WO
+ BCqCae0jSTHrt+yjcYgFpw9UMUWUDZ4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-79-VBtFwyTyPIGVpcxJRB9_6w-1; Tue,
+ 08 Jul 2025 10:25:54 -0400
+X-MC-Unique: VBtFwyTyPIGVpcxJRB9_6w-1
+X-Mimecast-MFC-AGG-ID: VBtFwyTyPIGVpcxJRB9_6w_1751984753
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3BE42195FCD2; Tue,  8 Jul 2025 14:25:53 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.44.32.187])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C74C830001B9; Tue,  8 Jul 2025 14:25:47 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
+ Jonathan.Cameron@huawei.com, gustavo.romero@linaro.org,
+ anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com
+Cc: pbonzini@redhat.com,
+	philmd@linaro.org,
+	alex.bennee@linaro.org
+Subject: [PATCH v6 10/36] tests/qtest/bios-tables-test: Update DSDT blobs
+ after GPEX _OSC change
+Date: Tue,  8 Jul 2025 16:22:52 +0200
+Message-ID: <20250708142437.1344644-11-eric.auger@redhat.com>
+In-Reply-To: <20250708142437.1344644-1-eric.auger@redhat.com>
+References: <20250708142437.1344644-1-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::843;
- envelope-from=tomitamoeko@gmail.com; helo=mail-qt1-x843.google.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,137 +89,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce x-pci-class-code option to allow users to override PCI class
-code of a device, similar to the existing x-pci-vendor-id option. Only
-the lower 24 bits of this option are used, though a uint32 is used here
-for determining whether the value is valid and set by user.
+Update the reference DSDT blobs after GPEX _OSC change. The _OSC change
+affects the aarch64 'virt' and the x86 'microvm' machines.
 
-Additionally, to ensure VGA ranges are only exposed on VGA devices,
-pci_register_vga() is now called in vfio_pci_config_setup(), after
-the class code override is completed.
+DSDT diff is the same for all the machines/tests:
 
-This is mainly intended for IGD devices that expose themselves either
-as VGA controller (primary display) or Display controller (non-primary
-display). The UEFI GOP driver depends on the device reporting a VGA
-controller class code (0x030000).
+  * Original Table Header:
+  *     Signature        "DSDT"
+- *     Length           0x00001A4F (6735)
++ *     Length           0x00001A35 (6709)
+  *     Revision         0x02
+- *     Checksum         0xBF
++ *     Checksum         0xDD
+  *     OEM ID           "BOCHS "
+  *     OEM Table ID     "BXPC    "
+  *     OEM Revision     0x00000001 (1)
+@@ -1849,27 +1849,26 @@ DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
+                 {
+                     CreateDWordField (Arg3, 0x04, CDW2)
+                     CreateDWordField (Arg3, 0x08, CDW3)
+-                    SUPP = CDW2 /* \_SB_.PCI0._OSC.CDW2 */
+-                    CTRL = CDW3 /* \_SB_.PCI0._OSC.CDW3 */
+-                    CTRL &= 0x1F
++                    Local0 = CDW3 /* \_SB_.PCI0._OSC.CDW3 */
++                    Local0 &= 0x1F
+                     If ((Arg1 != One))
+                     {
+                         CDW1 |= 0x08
+                     }
 
-Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+-                    If ((CDW3 != CTRL))
++                    If ((CDW3 != Local0))
+                     {
+                         CDW1 |= 0x10
+                     }
+
+-                    CDW3 = CTRL /* \_SB_.PCI0.CTRL */
+-                    Return (Arg3)
++                    CDW3 = Local0
+                 }
+                 Else
+                 {
+                     CDW1 |= 0x04
+-                    Return (Arg3)
+                 }
++
++                Return (Arg3)
+             }
+
+             Method (_DSM, 4, NotSerialized)  // _DSM: Device-Specific Method
+
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+
 ---
-v3:
-* Save the vdev class code when it is unspecified.
-* Call pci_register_vga() in vfio_pci_config_setup() to ensure VGA
-  regions are only get exposed when vdev is VGA.
-* Check vdev class code in vfio_is_vga().
-Link: https://lore.kernel.org/qemu-devel/20250528155548.29344-1-tomitamoeko@gmail.com/
+v3 -> v4
+- fix the commit msg: dsl reverse diff (Jonathan)
+---
+ tests/qtest/bios-tables-test-allowed-diff.h   |   7 -------
+ tests/data/acpi/aarch64/virt/DSDT             | Bin 5196 -> 5158 bytes
+ .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5282 -> 5244 bytes
+ tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6557 -> 6519 bytes
+ tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7679 -> 7603 bytes
+ tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5398 -> 5360 bytes
+ tests/data/acpi/riscv64/virt/DSDT             | Bin 3576 -> 3538 bytes
+ tests/data/acpi/x86/microvm/DSDT.pcie         | Bin 3023 -> 2985 bytes
+ 8 files changed, 7 deletions(-)
 
-v2:
-* Add vdev class code check in vfio_populate_vga().
-* Fix type in trace-events.
-Link: https://lore.kernel.org/all/20250524153102.19747-1-tomitamoeko@gmail.com/
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 333e5acf63..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,8 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/aarch64/virt/DSDT",
+-"tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt",
+-"tests/data/acpi/aarch64/virt/DSDT.memhp",
+-"tests/data/acpi/aarch64/virt/DSDT.pxb",
+-"tests/data/acpi/aarch64/virt/DSDT.topology",
+-"tests/data/acpi/x86/microvm/DSDT.pcie",
+-"tests/data/acpi/riscv64/virt/DSDT",
+diff --git a/tests/data/acpi/aarch64/virt/DSDT b/tests/data/acpi/aarch64/virt/DSDT
+index 36d3e5d5a5e47359b6dcb3706f98b4f225677591..acab6e65febbc210158d4c39be0680bbb90250f5 100644
+GIT binary patch
+delta 114
+zcmX@3u}p)@CD<iIO@x7g>C8kfX{JVpjp}Y(OkR^V=X2?C2#NTx$NL96vvg%MIJ<-!
+zF7RWWyjw`i#5kckflEGNfxx86nT)j{87>a6yzr#S&Mx7`2@o*>kXS(iNMs?;W@BMV
+FMgSUfAKd@|
 
- hw/vfio/pci.c        | 29 +++++++++++++++++++++++++----
- hw/vfio/pci.h        |  6 ++----
- hw/vfio/trace-events |  1 +
- 3 files changed, 28 insertions(+), 8 deletions(-)
+delta 152
+zcmZ3caYlp7CD<jzM}&caNqQoeG*i3NMs+tXCWon;^SSgm<T!#u0|FR0oI`?q7)0DS
+z<Nbr3S-P?roL#~V7kIEwUN5BOX9QAG;Or7^3{q7MBDmy1<N|?7lQS7>L29`;z&gYx
+bO@^t12n&FO3qXoN;!Cm@@@?i7mSh9~5Tq&5
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 1093b28df7..910042c6c2 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2893,10 +2893,6 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
-                           "vfio-vga-io@0x3c0",
-                           QEMU_PCI_VGA_IO_HI_SIZE);
- 
--    pci_register_vga(&vdev->pdev, &vdev->vga->region[QEMU_PCI_VGA_MEM].mem,
--                     &vdev->vga->region[QEMU_PCI_VGA_IO_LO].mem,
--                     &vdev->vga->region[QEMU_PCI_VGA_IO_HI].mem);
--
-     return true;
- }
- 
-@@ -3228,6 +3224,23 @@ bool vfio_pci_config_setup(VFIOPCIDevice *vdev, Error **errp)
-                                               vdev->sub_device_id);
-     }
- 
-+    /*
-+     * Class code is a 24-bit value at config space 0x09. Allow overriding it
-+     * with any 24-bit value.
-+     */
-+    if (vdev->class_code != PCI_ANY_ID) {
-+        if (vdev->class_code > 0xffffff) {
-+            error_setg(errp, "invalid PCI class code provided");
-+            return false;
-+        }
-+        /* Higher 24 bits of PCI_CLASS_REVISION are class code */
-+        vfio_add_emulated_long(vdev, PCI_CLASS_REVISION,
-+                               vdev->class_code << 8, ~0xff);
-+        trace_vfio_pci_emulated_class_code(vbasedev->name, vdev->class_code);
-+    } else {
-+        vdev->class_code = pci_get_long(pdev->config + PCI_CLASS_REVISION) >> 8;
-+    }
-+
-     /* QEMU can change multi-function devices to single function, or reverse */
-     vdev->emulated_config_bits[PCI_HEADER_TYPE] =
-                                               PCI_HEADER_TYPE_MULTI_FUNCTION;
-@@ -3257,6 +3270,12 @@ bool vfio_pci_config_setup(VFIOPCIDevice *vdev, Error **errp)
- 
-     vfio_bars_register(vdev);
- 
-+    if (vdev->vga && vfio_is_vga(vdev)) {
-+        pci_register_vga(&vdev->pdev, &vdev->vga->region[QEMU_PCI_VGA_MEM].mem,
-+                         &vdev->vga->region[QEMU_PCI_VGA_IO_LO].mem,
-+                         &vdev->vga->region[QEMU_PCI_VGA_IO_HI].mem);
-+    }
-+
-     return true;
- }
- 
-@@ -3643,6 +3662,8 @@ static const Property vfio_pci_dev_properties[] = {
-                        sub_vendor_id, PCI_ANY_ID),
-     DEFINE_PROP_UINT32("x-pci-sub-device-id", VFIOPCIDevice,
-                        sub_device_id, PCI_ANY_ID),
-+    DEFINE_PROP_UINT32("x-pci-class-code", VFIOPCIDevice,
-+                       class_code, PCI_ANY_ID),
-     DEFINE_PROP_UINT32("x-igd-gms", VFIOPCIDevice, igd_gms, 0),
-     DEFINE_PROP_UNSIGNED_NODEFAULT("x-nv-gpudirect-clique", VFIOPCIDevice,
-                                    nv_gpudirect_clique,
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 495fae737d..4aa6461117 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -157,6 +157,7 @@ struct VFIOPCIDevice {
-     uint32_t device_id;
-     uint32_t sub_vendor_id;
-     uint32_t sub_device_id;
-+    uint32_t class_code;
-     uint32_t features;
- #define VFIO_FEATURE_ENABLE_VGA_BIT 0
- #define VFIO_FEATURE_ENABLE_VGA (1 << VFIO_FEATURE_ENABLE_VGA_BIT)
-@@ -205,10 +206,7 @@ static inline bool vfio_pci_is(VFIOPCIDevice *vdev, uint32_t vendor, uint32_t de
- 
- static inline bool vfio_is_vga(VFIOPCIDevice *vdev)
- {
--    PCIDevice *pdev = &vdev->pdev;
--    uint16_t class = pci_get_word(pdev->config + PCI_CLASS_DEVICE);
--
--    return class == PCI_CLASS_DISPLAY_VGA;
-+    return (vdev->class_code >> 8) == PCI_CLASS_DISPLAY_VGA;
- }
- 
- /* MSI/MSI-X/INTx */
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index 8ec0ad0cde..fc6ed230d0 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -48,6 +48,7 @@ vfio_pci_emulated_vendor_id(const char *name, uint16_t val) "%s 0x%04x"
- vfio_pci_emulated_device_id(const char *name, uint16_t val) "%s 0x%04x"
- vfio_pci_emulated_sub_vendor_id(const char *name, uint16_t val) "%s 0x%04x"
- vfio_pci_emulated_sub_device_id(const char *name, uint16_t val) "%s 0x%04x"
-+vfio_pci_emulated_class_code(const char *name, uint32_t val) "%s 0x%06x"
- 
- # pci-quirks.c
- vfio_quirk_rom_in_denylist(const char *name, uint16_t vid, uint16_t did) "%s %04x:%04x"
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt b/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt
+index e6154d0355f84fdcc51387b4db8f9ee63acae4e9..54c27e7d95b4956ed1b5dee0d299ccb08dc2a73e 100644
+GIT binary patch
+delta 114
+zcmZ3a`A37xCD<jTMudTZsdFNiG*i3lM)f&dOkR^VALY{H5EAiWkM|FDX6ediaCQkd
+zT;Rt#Sx{KZ#5kckflEGNfxx86nT)j{87>a6yzr#S&Mx7`2@o*>kXS(iNMs?;=1yTr
+FMgUJNAb|h?
+
+delta 152
+zcmeyPu}G84CD<iokq83=(~XH-(oDVX8`bA<F*!`#e3VO%LyjXjG$4S1!#O0#he5=R
+zGu}VgnWZb6!PzC;aDfN=WL9A<KO>Nm0%w<SW00z95Wyu6A{Piunw-g43sTF)0oEZl
+bX);V5L|6bMTmVuG5?_+NkZ*Icup}b@<J&8B
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.memhp b/tests/data/acpi/aarch64/virt/DSDT.memhp
+index 33f011d6b635035a04c0b39ce9b4e219f7ae74b7..4330bc97cba0950191c45ac833533db7a190db81 100644
+GIT binary patch
+delta 114
+zcmbPh{N0GlCD<jTT#|u->Fq==X{M&B8`a&on7k%!&gatO5EAiWkM|FDX6ediaCQkd
+zT;Rt#dAE?3iE%=80+)Qk0)a`BGZ||^GF%*BdErTuon69>6Ch#&AhCi3kjO%w&Bnr6
+FYyg6XAvXX3
+
+delta 152
+zcmexvG}oBRCD<iot|S8klg&gfX{L_p8`a&om>i~V&gatOkmCpr4G3W1a1IIbVGwcS
+zjQ0<AX6ediaCQkdT;RbzdA*R9pAkq&fwN1vF-TQ4h~Sb3kqZPSP0nPj1*zrY0P7H&
+bG#RE2A}jzBE&wS8i7&}s$hVnSIExJcpiV0*
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.pxb b/tests/data/acpi/aarch64/virt/DSDT.pxb
+index c0fdc6e9c1396cc2259dc4bc665ba023adcf4c9b..7fdbc03e2bf9fb7d35704779253de36e362f0bf9 100644
+GIT binary patch
+delta 207
+zcmexwz1f<}CD<iovn&Gx)9r~|(oB6fHmbXEG5NM`&ga^|E+pc^9`7IQ%+i(3;Or7^
+zxWJEfa-NKqiE%=80+)Qk0)a`BGZ||^GF%*BdErTuon69>6Ch#&AhCi3kjO%w$<JhL
+aH-8e+V`TE0v{^|+kAs?qZ+<2t$p`>t?mg51
+
+delta 282
+zcmdmN{ok6)CD<k8zbpd-Q^!OuX{N5b8`a&on4CK{=W}gfm*WTy4G3W1a1IIbVGwcS
+zjQ0<AX6ediaCQkdT;Rbz*-%K!&j_TXz}Y3-7^JEiL~zN2$OQtECTB9%g4A+xfOUvX
+unhaA15f%Um7l0Il#Fu0*<lEdYl+DQGFm>}EVLcA|TR*v9$aeB|nL7Yd7E^Zs
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.topology b/tests/data/acpi/aarch64/virt/DSDT.topology
+index 029d03eecc4efddc001e5377e85ac8e831294362..969b4f6560d3ae39f5b7e0064b7122905476fce8 100644
+GIT binary patch
+delta 114
+zcmbQH^+A)%CD<k8g9rly)24}B(oEex8`TB4nY<=#w&d315EAiWkM|FDX6ediaCQkd
+zT;Rt#xm8%p#5kckflEGNfxx86nT)j{87>a6yzr#S&Mx7`2@o*>kXS(iNMs?;=D)&{
+Fi~vUbAmso6
+
+delta 152
+zcmeyMIZcbpCD<iIOq79viGL!OG*hGhMs)#hCWon;ExGkL<T!#u0|FR0oI`?q7)0DS
+z<Nbr3S-P?roL#~V7kIEwt`yetGXg0oaCQkd2C1qB5nS>ha)H34$(f9`Ahlc^U>#zU
+bCd1T0gatst1t7&B@g>;{`8Hn{mSh9~yBaCk
+
+diff --git a/tests/data/acpi/riscv64/virt/DSDT b/tests/data/acpi/riscv64/virt/DSDT
+index 6a33f5647ddd6de3a0f000f718b58f6fff44f0fd..527f239dab13a00ad42e5a70b8dc2b89f12aa84a 100644
+GIT binary patch
+delta 113
+zcmew%eMy?jCD<k85-$S-lgdOcX(r!W8`WD`nA|39UdN)vAtd6%9`7IQ%+i(3;Or7^
+zxWJEf@;4qW6XS&H1TMLR1p<>MXEN4;WVkrM^1_oQJG+D%CqTpmKw<?6Ad!VUlk<4H
+E0ByV>p#T5?
+
+delta 151
+zcmca4{X?3|CD<k82QLEyQ_(~&X(s2p8`WD`n0%&eUdN)vA;%FM8W6z1;T#g=!yw|u
+z8SfwL%+i(3;Or7^xWI#b@+%%KKO>Nm0%w<SW00z95Wyu6A{Piunw-g43sTF)0oEZl
+aX);V5L|6bMTmVuG5?_+NkZ-aFZx;X$O)QlF
+
+diff --git a/tests/data/acpi/x86/microvm/DSDT.pcie b/tests/data/acpi/x86/microvm/DSDT.pcie
+index 8eacd21d6ecdf9a3cd3e4f03cf1b40748dcbf53e..ba258f454dc0e59ef2fd67e0ce37e270e7c122e8 100644
+GIT binary patch
+delta 113
+zcmX>vzEYgaCD<ioB{u^D)Axy7(oD|VH>#&HG5Ji`+{YxqAtd6%9`7IQ%+i(3;Or7^
+zxWJEf@*XZN6XS&H1TMLR1p<>MXEN4;WVkrM^1_oQJG+D%CqTpmKw<?6Ad!VUlTEm1
+F0{}^9AprmY
+
+delta 151
+zcmZ1}eqNl*CD<k8JU0Ualj}q-X(rE|8`V>pn4BhW?qd?*kmCpr4G3W1a1IIbVGwcS
+zjQ0<AX6ediaCQkdT;Rbzc>|Z0pAkq&fwN1vF-TQ4h~Sb3kqZPSP0nPj1*zrY0P7H&
+aG#RE2A}jzBE&wS8i7&}s$Tyjfdo}=5#47aw
+
 -- 
-2.47.2
+2.49.0
 
 
