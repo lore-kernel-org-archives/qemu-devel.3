@@ -4,76 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B617C83F09
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:07:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E4E7C83F09
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:07:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFGd-0000dX-JV; Tue, 08 Jul 2025 16:50:20 -0400
+	id 1uZFAR-00033p-AZ; Tue, 08 Jul 2025 16:43:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZEDJ-0007AW-55
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:42:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZEDE-0006BT-0v
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:42:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752003762;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=U1+5pFH9ZS4T/6rQ4qakmzxG4wH5SKnJlyZa12uuIic=;
- b=X896/+MzD4m/5FVhOspXxd7V1Xublgm+2mh7eRSkfy/qsFke1qgsDVGpTg3EP2vW90k50c
- og1i4EOgDX7TyMOQIOQeRwfGyiQTL0h8W0vy32l1YtldDK/OLI6INXgM6NH6pwYvFnjdVl
- sV39/ZLT2wtHVBObp5B7zTaH7oXetDw=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-548-34x6vSxxNpKmsZ-iGg2LqQ-1; Tue,
- 08 Jul 2025 10:26:50 -0400
-X-MC-Unique: 34x6vSxxNpKmsZ-iGg2LqQ-1
-X-Mimecast-MFC-AGG-ID: 34x6vSxxNpKmsZ-iGg2LqQ_1751984807
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A85E41955ED5; Tue,  8 Jul 2025 14:26:47 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.32.187])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 71EF530001B1; Tue,  8 Jul 2025 14:26:42 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
- Jonathan.Cameron@huawei.com, gustavo.romero@linaro.org,
- anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com
-Cc: pbonzini@redhat.com,
-	philmd@linaro.org,
-	alex.bennee@linaro.org
-Subject: [PATCH v6 18/36] qtest/bios-tables-test: Add a variant to the aarch64
- viot test
-Date: Tue,  8 Jul 2025 16:23:00 +0200
-Message-ID: <20250708142437.1344644-19-eric.auger@redhat.com>
-In-Reply-To: <20250708142437.1344644-1-eric.auger@redhat.com>
-References: <20250708142437.1344644-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZDai-0000UJ-3B
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:03:06 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZDab-0003KU-Vh
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:02:54 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-ae223591067so790638166b.3
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 12:02:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752001368; x=1752606168; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=K9MeYWno9//WEkluE3Tl/0Oq7GlgozTz3zFV14cG8Q8=;
+ b=fOcKVDs9SnFgbWGw7hLHFBsq9weFLss095UC214ppxvvmhPhEn/iRnLCTVkv7k3g1r
+ SD61Xn4OL/v6YD8MUyNCp/Y85d6sdaAzHYEyQu0vx6zjN9OmXKE4Wly/wQIat4QpvrsG
+ k2T5CL8s5NKQd1jfbjrk4+aB2pJAtusXQnSAFDxMt4nlyO/T5fn1Przf7O3YojEHrV4Z
+ BnobxuwXB1CwIhJztVn2bq5CltEo6Q1N48hgmjlD67VYk0ChyHdBVl3/hxGHC694dZsQ
+ 5CPD8ObUGc01vk5knRjisDZIR8VEyeQcJKwRwFqh40sR03rc0S9ggTwLmSwBCbyjmQJM
+ 9BUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752001368; x=1752606168;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=K9MeYWno9//WEkluE3Tl/0Oq7GlgozTz3zFV14cG8Q8=;
+ b=BzUiBpsCNiQYoV18m9Eir9SQPS7frq36NYKXoU//AFi19do+/ekCEUlTcbtDimVCqm
+ vNVBqzQiYNB2V0b9sJRv25vrUxo4A/9TVufbq38uNuZCXvEpGZUyGpTTc/DYX37Q5HYE
+ Yf8MWj/SFY9XW3XkpPrOAHAQ6qhGmf3L+TCZrciwv1Gy6qkZPh4/d3va+crtsgQsNx2U
+ agI0B70Y3y4kbS28dueN0A0adtLkJjbnVQMBvv1RlqGi2R7fg+3b90TTU+/HJKUV/Cj2
+ Yikpyu9ZjqbNIozVUApGi5cQiMqqdcYKw+vsV0cgCpazGkyA1jfAwbO/zACUw2EMzzgq
+ r2sQ==
+X-Gm-Message-State: AOJu0YwVwAzrY+xi888TCRTLZyXq0CJOL5VlaaY/orGZMGK8x/rpZmd1
+ p5BmNqqMllUv7FYi6K01IH08B3ScGdnmKeul5Bl5knWWug2wcE5ncJe9YIb0czvrw5IMq2KZNkP
+ 52R9K
+X-Gm-Gg: ASbGnctS9yQdZ23/6SUkk0fCSg5gA/fC0B2kMofyoAqqBVieYb3PJHs6i9iVBvbg6JG
+ npE5GVcpN1ZpiZCrjQ8YxbbCp+wlc1uJbYdyR9dZdSW6E//LDbUI+pIMZsk2XH/NrBVYp9dKpKc
+ lgrs0z8pUTmIiJk4/TwBv/kJs9ZHULR7u1au4l877U2En8CipNq5HgvRsuHYhNJulucq/V82SZY
+ Pq0CwWpM/Ea+BgWeE6o+NULNozJG/xg9PfogOKdTtDY+IpWWN9nlqypocbhJgphhUigXMCI622n
+ anf335wxKzvSaWbdUcpL+rLFvHpijBT/94HBnmiyT2volOYUQpVnI4//j5GFFJ2nPhZLtyXxj1l
+ S7Rsg0zKKyRCwM0IBqdcR+hyigWhmL3ixSjq9
+X-Google-Smtp-Source: AGHT+IHUfown0RCeaPbaYi6Ti0Qx48c6i6HY1oN1sTkXfdLePbkDffIiRX1FBTDGzWBceusNHNsWwA==
+X-Received: by 2002:a05:6000:41d5:b0:3a4:e5bc:9892 with SMTP id
+ ffacd0b85a97d-3b4964c3dc3mr13388695f8f.21.1751995343022; 
+ Tue, 08 Jul 2025 10:22:23 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b4722597f0sm13733424f8f.68.2025.07.08.10.21.29
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 08 Jul 2025 10:22:22 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-riscv@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-block@nongnu.org,
+ qemu-ppc@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-10.1 v7 4/8] qemu/target-info: Add target_endian_mode()
+Date: Tue,  8 Jul 2025 19:19:44 +0200
+Message-ID: <20250708171949.62500-5-philmd@linaro.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250708171949.62500-1-philmd@linaro.org>
+References: <20250708171949.62500-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,24 +107,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
----
- tests/qtest/bios-tables-test.c | 1 +
- 1 file changed, 1 insertion(+)
+target_endian_mode() returns the default endianness (QAPI type)
+of a target.
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index 4dbc07ec5e..357bcefd37 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -2237,6 +2237,7 @@ static void test_acpi_aarch64_virt_viot(void)
-     test_data data = {
-         .machine = "virt",
-         .arch = "aarch64",
-+        .variant = ".viot",
-         .tcg_only = true,
-         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
-         .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/qemu/target-info-impl.h | 2 ++
+ include/qemu/target-info-qapi.h | 8 ++++++++
+ target-info-stub.c              | 1 +
+ target-info.c                   | 5 +++++
+ 4 files changed, 16 insertions(+)
+
+diff --git a/include/qemu/target-info-impl.h b/include/qemu/target-info-impl.h
+index a8b34d150ab..17887f64e26 100644
+--- a/include/qemu/target-info-impl.h
++++ b/include/qemu/target-info-impl.h
+@@ -22,6 +22,8 @@ typedef struct TargetInfo {
+     const char *cpu_type;
+     /* QOM typename machines for this binary must implement */
+     const char *machine_typename;
++    /* related to TARGET_BIG_ENDIAN definition */
++    EndianMode endianness;
+ } TargetInfo;
+ 
+ /**
+diff --git a/include/qemu/target-info-qapi.h b/include/qemu/target-info-qapi.h
+index dae92c47eb1..bdf207e6a3e 100644
+--- a/include/qemu/target-info-qapi.h
++++ b/include/qemu/target-info-qapi.h
+@@ -9,6 +9,7 @@
+ #ifndef QEMU_TARGET_INFO_EXTRA_H
+ #define QEMU_TARGET_INFO_EXTRA_H
+ 
++#include "qapi/qapi-types-common.h"
+ #include "qapi/qapi-types-machine.h"
+ 
+ /**
+@@ -18,4 +19,11 @@
+  */
+ SysEmuTarget target_arch(void);
+ 
++/**
++ * target_endian_mode:
++ *
++ * Returns: QAPI EndianMode enum (i.e. ENDIAN_MODE_LITTLE).
++ */
++EndianMode target_endian_mode(void);
++
+ #endif
+diff --git a/target-info-stub.c b/target-info-stub.c
+index 2e4407ff04b..ca0caa3686c 100644
+--- a/target-info-stub.c
++++ b/target-info-stub.c
+@@ -18,6 +18,7 @@ static const TargetInfo target_info_stub = {
+     .long_bits = TARGET_LONG_BITS,
+     .cpu_type = CPU_RESOLVING_TYPE,
+     .machine_typename = TYPE_MACHINE,
++    .endianness = TARGET_BIG_ENDIAN ? ENDIAN_MODE_BIG : ENDIAN_MODE_LITTLE,
+ };
+ 
+ const TargetInfo *target_info(void)
+diff --git a/target-info.c b/target-info.c
+index 8e29553b4ef..a756c0714c4 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -42,3 +42,8 @@ const char *target_machine_typename(void)
+ {
+     return target_info()->machine_typename;
+ }
++
++EndianMode target_endian_mode(void)
++{
++    return target_info()->endianness;
++}
 -- 
 2.49.0
 
