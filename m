@@ -4,97 +4,227 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 547D3C83F09
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:22:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4436EC83F0F
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:23:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFF4-0000vY-SO; Tue, 08 Jul 2025 16:48:43 -0400
+	id 1uZFKj-0004V6-VP; Tue, 08 Jul 2025 16:54:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZDrM-000870-Pk
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:20:14 -0400
-Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZDrI-0008O0-1C
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:20:06 -0400
-Received: by mail-lj1-x22c.google.com with SMTP id
- 38308e7fff4ca-32b5226e6beso43473791fa.2
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 12:19:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uZEa3-0007w4-2a
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 16:06:22 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uZEa0-0004TI-Vs
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 16:06:18 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 568AM29b006607;
+ Tue, 8 Jul 2025 11:50:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=Iz4UYZO4WjYwiI38oQdEkyjwOqb073kcqXCpYjQtsE8=; b=
+ IWjmKAXKk3ySjyFWGpD5tEQiFYIMTrilj9BhQX1LThA6ewUgFPwCILt2qf+KQ/pO
+ hUGlEdQSzInZjfj2l4dBSvzbQutpj7J2ajgPCscZQu7xc+fymE7EWv/n134jTUDx
+ zdqBSTQgErNHOFdHsiqD1Xlofc+HbFx+4ZceM2m88eqpI3BSvI2i8TLlML1Adb/T
+ 8gVfEGCGnIwxWfz0sGF/LBjRY6PhLpZvGTzj8AyiCGbkj5y7PDvcCIiik6SznJ6W
+ D7jdTNHxQq1zyzGjj9gloOJN35PrQ8TSdwroVIaHPNFSsN13VZzLWMATfH23uAma
+ Jg+y5pkvd7zwt0a+ci0QKQ==
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47s1gqr53j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 08 Jul 2025 11:50:33 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 568B5fN1014029; Tue, 8 Jul 2025 11:50:33 GMT
+Received: from nam04-bn8-obe.outbound.protection.outlook.com
+ (mail-bn8nam04on2069.outbound.protection.outlook.com [40.107.100.69])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 47ptg9gq5e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 08 Jul 2025 11:50:33 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LslE0n95EZbNjsL6NyCfMRSgK0NejDUV6tsToww1tMM1YwOkWR8uROfVdH0zJlrz4ZVv9k642oD5BDn9C9PpgScxW3O0LMKgTyrgZ5UQqVJoAnImH9ptR3Vrqn8PiaS3gQ9fQTnRya46o0EXn1dh/U73MKMo7PxkUp06VowLhWtj2amSfZ3epaGIU9fyLpGJ1Vqcj/mg4MIQW4KY+cyceSWwGHwNCH4bavsoSEpJe5CK8soEdrHelnoX6pwaa2Gl4yv7WU2FG6o0wmRdSlY9HidMJYixoZ0/XdPfGTglM4gxoueR6ISeinfJV1sptakAc8HR6MBSS0tSlFbgcHQGEg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Iz4UYZO4WjYwiI38oQdEkyjwOqb073kcqXCpYjQtsE8=;
+ b=PUTVDfiv0mbX///f+a8gLl3QXDfMnoCZKb7n1BfbNlZ+s604RUI36Q3ozPPFKZMFhElCXiVSeEBu1U6JsTcRCZZaUG+5HQODlKRRYgw2h8sj37tUENGTh/h9wo52WXux4gGP7JZqbQtWei32lNF+bikEdikFE1v765nu5bb+srQv0K3miP/KzziZFsNEOc1MnS7Ss5NBF/GzOC3MLO9sgY34tgvILFXjVZeWRbElL9ecaQcmUjV7TVlIm1wCezmFEeAv3rjs/lpGD8aiabGUyVfL36ulNND6Y3onDLno/d5tl/qhzADvDYh7IM3LuX99YtYRm3lLlal7QGLEaJS07Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752002387; x=1752607187; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rAL/ETRijy4/iQ3UXazRTb8RTZUYHHKVtD2BscpxpCQ=;
- b=XuySZ14cHPOGQ5BmAbLds6Absx0GY8fEAvSF3+roiqZRGbitrU7Vc+e8obAbQSaQ0b
- xmn2BOldOaYmi7LwjHk61uMKq4LvgY5q0UwHdaIhmiir28fhBPEbInzc9ZH9YT3Yzkeg
- 2aeUvmkjeYFICMHuwL8bVn5Uk4x+4u6OKaIkVD4J12pm7/MUQsNGqj2GYnV5U9RqKx9H
- TVSv9tSrE6NkdA4WNRP6AZXPk3RqlYXqDdHTXaLhgzSatgiJxCOTq3TBzMOnxmjDjzaC
- xvEJJp9BeAZrg04im3/lFZpaJj6E4xNvyJFguFauQLelGU40CxoqRrWjsHDAFIRFkYs6
- EkFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752002387; x=1752607187;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rAL/ETRijy4/iQ3UXazRTb8RTZUYHHKVtD2BscpxpCQ=;
- b=Fvtku7Ka8ojHAoW2fBpALMgltBQMbvMyCNwzGbHdzXQQUPigtSOvgSPmutQO0vOCfb
- C5ZeyTeEua5dBgcDfizyRS/qk5fHwU7TguRzoaPagG9JHCG4/rxHm9VW17xDoZ2Xz/i5
- 4BJlVZORMrG1Ir+7Uy4jGpFxc3TywQW+U6zjJ8uXnFiW4sSM7SmcTTGyp9MPlbpPSt2z
- dzQlMfnDP2UGZjz/OT8jUriby3bQ0PqgSNRHA9hJwCat3U6QtMZlovC0/9xAiqbOGxrB
- 8Sz3nUJ9C3btjqoWliXvt/65owHjki19W1GbvLFN7c3bDMkZXSp5IcXJu4LCRQFLp85q
- XfjA==
-X-Gm-Message-State: AOJu0YxtoDVISjc38itz/M8ogNV603r54hKhIaCL7X4LY9AcYDgf9eBt
- 2p2SaM1kGbgMiCWFNGvoKX/p17utZAlO4my+sKZy4xK8aJr2yVr6mY9QB4u941ySXnjlfC6xJiT
- 4V04x
-X-Gm-Gg: ASbGncswZuDKfL8epi5tpxbVErlbOGqnw5/9ljQBW9vQvROgXTMLXc8IxUfvRkefHTb
- LBRXA5tUQMhpwuY9zwBVRQ5J9utSg85dov9IPDXT5U8Sv/HdCTuTb/F3x5l7E+6u9cgTPfK3JgD
- p0biM3WkoKTserE3I9yYh226x9SSKAExvDM4EfaKe+PgNyOZtx6qlmfCa6+Qtg/gZijEesmPyrC
- 4WemMFiUux9tww8/07x1W41D9RD4lOh/pRwDoEg8lBUbef2LSZfM2MoO2JwxwKrek+/kcguBf/4
- 30Yk5HSzGLuEsf5q9RivyeEfdsn+bohCMnqwDia5Vt+Xn2w+O4o2kwkgoGJrbtgBW2wAeww30dT
- Zqt9Km/z86pMUopQ6FtO4slYS9ID1TEvOgz/b
-X-Google-Smtp-Source: AGHT+IHLZ/ykY7TZOQ2MzTMugvmnHDJCgJFHffcGRPTy37tNNZ378jls3SdJIi/LF+8ECz9D0Bqdzg==
-X-Received: by 2002:a05:600c:821b:b0:453:5c30:a1d0 with SMTP id
- 5b1f17b1804b1-454b4eadb5amr140127105e9.21.1751995268172; 
- Tue, 08 Jul 2025 10:21:08 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454cd38f092sm28331705e9.1.2025.07.08.10.20.50
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 08 Jul 2025 10:21:07 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-riscv@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>, qemu-block@nongnu.org,
- qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH-for-10.1 v7 2/8] qemu/target-info: Factor target_arch() out
-Date: Tue,  8 Jul 2025 19:19:42 +0200
-Message-ID: <20250708171949.62500-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250708171949.62500-1-philmd@linaro.org>
-References: <20250708171949.62500-1-philmd@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Iz4UYZO4WjYwiI38oQdEkyjwOqb073kcqXCpYjQtsE8=;
+ b=Zmk7e91nBoUstVKPi0ZBpKxpAPC+57APTpu/qVbXGaQSBy/8ExaEC7ZbFn3ugtnzWIsaO4qMxhzvZ9yK8YY5OWrbStayYsmDbIIUkVGXyuafZMRbqsMu0VrxyXODXzJTFCZ2Jv/nkf8h5ep8doRIXPTtD7xDom+jL+gOQUxK6f8=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by BL3PR10MB6113.namprd10.prod.outlook.com (2603:10b6:208:3b8::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.23; Tue, 8 Jul
+ 2025 11:50:29 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%3]) with mapi id 15.20.8901.021; Tue, 8 Jul 2025
+ 11:50:29 +0000
+Message-ID: <5f3ee337-ee4d-4bc7-835d-fc9ba2469b10@oracle.com>
+Date: Tue, 8 Jul 2025 07:50:30 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 1/5] qom: qom-tree-get
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
+ <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org
+References: <1747057635-124298-1-git-send-email-steven.sistare@oracle.com>
+ <1747057635-124298-2-git-send-email-steven.sistare@oracle.com>
+ <526f5090-eeae-4eb8-8d1c-e006d9501f62@linaro.org>
+Content-Language: en-US
+From: Steven Sistare <steven.sistare@oracle.com>
+In-Reply-To: <526f5090-eeae-4eb8-8d1c-e006d9501f62@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-ClientProxiedBy: BYAPR05CA0006.namprd05.prod.outlook.com
+ (2603:10b6:a03:c0::19) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|BL3PR10MB6113:EE_
+X-MS-Office365-Filtering-Correlation-Id: f1b85e54-ad64-4b71-f115-08ddbe15a2d4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|1800799024|366016|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?ZGhNYkR0dE9GRWdoNzIxTHpGZHJhaEZhV1pmVlVOUDA3NUZhM3RBY1BMR01H?=
+ =?utf-8?B?dkN5VVYvVitVVmZGN2VoRURuV2I0eHZhdjV6akNrOW42c05FcCtDZStCcm1X?=
+ =?utf-8?B?Ymp6N0xJTUV1RWVTS2lZcjE3elQyTjg4SitNSWdnU2tocis5MUJjMEVEdkFn?=
+ =?utf-8?B?V3hCb1NEZlJucjF6WktTWEczRWwyTmpWUVV4cytyL1poVGExKysrMVVHcHZH?=
+ =?utf-8?B?YlhhbVRKWWIwTXhHKytOMnYySURPZ2NSTGN1NDgxY3FQK1ZrYk9pQktKUkhp?=
+ =?utf-8?B?WGNIVldUVnlGd3FkY0hCeWh2TGpwc2V3TzU1VXU0ZTJ6a1AwUXBKNk1PNTRC?=
+ =?utf-8?B?UHVCdU5md2hCYjJCT3hDbVdseGRmbFVPWWxKVWIvOE9Wc2wyZkM4YzZvaUp4?=
+ =?utf-8?B?WERVNUwyMW41TmwvTGZQTCtrU0t0S3A0RndaRFMzYnlIbEs4Z3JlSDhEMDh1?=
+ =?utf-8?B?WmRpNlc5akg4MC81TzRrZ1J3eC9rdTF4TnRUc0FLSzJaejdZajFvbXlCeGQ3?=
+ =?utf-8?B?K05VSEduK09GaHF3YUxnYlpjSnR5cW1MeUROQURRN0hCdkprM0gwVjFWNTEw?=
+ =?utf-8?B?amlOc1phakRkWGlvbTBTdDNlZTlsWFZtd2xRZkc3eW5PYnZlZjlJN2VROVZx?=
+ =?utf-8?B?clY0M3I2L0g1ZEl6WjNsNWNDdCszMjlzZzdTaTUwajlUWFBsdlZwb2ZKNVBm?=
+ =?utf-8?B?V3JpN1gvQVNlNGoweWkrV1JLZExVSEVkOElTZkI4a0dRTGl2UDN6dnVmT252?=
+ =?utf-8?B?M1lSMkZBdGFTTDRJd1BKZVFtVVBXdEVEV0gycVRzZEp4UkU5Y3I2bzFQNVhM?=
+ =?utf-8?B?ckdUZjFGVkhwZ0VEbG1ZY1FiWWdCRjFwQVVUaDQraktsemd4NDc4OXcrUGtP?=
+ =?utf-8?B?eTB5V2ZXQkJ3M3psWHFpMjM0cU93YXNuMUQ3SUx4K1lLaHdoaEVzR0o1NSty?=
+ =?utf-8?B?WElYM05CUHdQc1Z0UWkrWk9qTi9Td1lHQTE4ZUV0WTA1b2M1cWxOc0RicTZX?=
+ =?utf-8?B?L25XSERod0k1WjRtVWxmY2c1T09NUEdid2NzclFOMVlnK1VYckE0Mi94aEVT?=
+ =?utf-8?B?YTZGdGxWaFJRYXNqM2VyeHlSSk5xTHF4T09RMU9HeUJaZXRDZzZrZ3NObUI2?=
+ =?utf-8?B?allyWmVkZGQ5a29GaHhYSWwwcGw0N2lPOFNvWjVkNXhYZVBFOFZmVzljczJi?=
+ =?utf-8?B?bDZQdFVka1VhdGU3UThmbTdHL05wSHA1Q0RnNUVYeVpKRzR2Sk85cFZtdnpU?=
+ =?utf-8?B?YUE2bEJLamhOQWZLYnkxMUE4Q1pMMzhKSG1zWFVaamtVdmFqOElwQ0dyZlQ1?=
+ =?utf-8?B?Z1NxU2dEMlhFK2ppWGE0d1RJbkZTazhHVVlrTkdCN0tYeEtTSFZoa20yTzJ0?=
+ =?utf-8?B?UHl5S1dNQ3RTZzlDemJYbUhhZ2hEZGVpK2trL3gwWllKaFdWQUN3Qk9DZGlu?=
+ =?utf-8?B?S2dVbWNGQmcyUlBQbXVaQzhwMlY2MitFT2pnK0J2RS9NTm5teFk5NndmT3N5?=
+ =?utf-8?B?dGQ2cktkemN3aFJRV0w0aVMveHhDd25BQXZISlFPdlBNRXRFUEdpTDl1U2xZ?=
+ =?utf-8?B?T21VN1BUeXl2ODN2Ynd3UEhUR1RpUXFMcW9UZnVBckV0UmRUb1dGcXBOaDgr?=
+ =?utf-8?B?UTFJTXNkWXFsNnRkeWxVNlUxTGJxK0NyamUxanJ1MTdZWERQa2RYNFF5QWwv?=
+ =?utf-8?B?MXFSMDFpcW5GMmxVNkF0N2VlcmV5VzZZTWYzVnVqMHdrdmE0R0pjRGxxbFpN?=
+ =?utf-8?B?bmVoLzFiblNrYWNJUWF0RU4wRGtEZEpHbFc1aUVFaEp3ZlRId21DVUlrY3M3?=
+ =?utf-8?B?a2FvVUt1SDlPTzkwbmdGYmUzcmtlZUhGbUkyVS9QV0xQOVFjek5DdnA0U3Zz?=
+ =?utf-8?B?RDlMaFBaZHA2d1BjVHRtQ2MxM1R0aEgrME1nSzQ2RmVHZ1Y5ZUVSUDRjaHl3?=
+ =?utf-8?Q?zP+IZCukzRg=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(1800799024)(366016)(7053199007); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?c2Z3dm1BRG9EMXRhV2NkZ3NlV2ZGUTNEd1VMUS95aHMvVmNDcFZPU0ZWTkdB?=
+ =?utf-8?B?SXpXVmtlU1JLbWhBaFZnV1JZLzNPKzZsR3p2amhieWNISzB5akdITkVLM2gx?=
+ =?utf-8?B?OHlXNENjb3RBWFhBdjJsUU9Jd2RuK3NkNUtHRko1QXNEVHU0c2F5Q2dWUWxZ?=
+ =?utf-8?B?cStiUmVLRjBudGIvb1NOckZJa3dGMC9FRm9QSEVnWTlyR3BKR1IzVHY5UXRW?=
+ =?utf-8?B?TG9DZ1hGNnJ3emtZNjZxQkd5dTByTmt6cFBsNFpuaEZXRG1SMkxBR2F6b1Iy?=
+ =?utf-8?B?elVEbmJLbWpNVjF5YXNwUG01SGFRVlR0WHp5YWtMck1qNllOOGFrbXA5a2Jx?=
+ =?utf-8?B?VTh5U3B1eE1HaXZNWnJITklQNjFtVG1Vc2FqVy94anJWYzBwbjZTN20xL2ov?=
+ =?utf-8?B?YkxRSW1mTEhGZzhZTXhPd0VndDJsV2pEaitlTmlhN3NldDFnbDNNKzR0OTN3?=
+ =?utf-8?B?UEw0dkJOZE5XZ1YxVlhyMVUzRTB3Wk1vemUyQzFzclR3L3FVdjB4dGhYL2xw?=
+ =?utf-8?B?dk11QVlOakpYbGdieXV2MmFYNVNDem80TkRxRDBLbTlodTd4SGpSOWVJZml0?=
+ =?utf-8?B?UUMzMFQrWG9oa1dsSEE2bGZrUlEwaEJUUDhHUUN0ZWZOL1gvczBIMXRZYy9i?=
+ =?utf-8?B?Z2lKaVljWDNNK2RtSEZLYXkxL0hXRHBwUTRySUxXU3p6TzFoRUNFSVpmWlBi?=
+ =?utf-8?B?N1Nydld1aUhlek93dWw0SHVCQkFyMmZGQTF4SjVjRHU3MWxvWk9XSWtSaE00?=
+ =?utf-8?B?L0N1TkJvLzNUNTVXZXVBMEtDc1hQSG1jVlR0NnYvdzNtQmNwb1hkczZhcFVm?=
+ =?utf-8?B?cHZBdGlPMHkrcEE4OE9LcEVEQmlUWUFxRDRRSmlZeEwzMVZSS3BjbUd6eHpL?=
+ =?utf-8?B?eFFJdVZVRi9ENHErSjJINklycGtTU1NTL0FtRFczODBVRVJCVmZBRW9ocmVn?=
+ =?utf-8?B?ZU01eCtldWhLZU9DcEJmUlJJMEkwaS9uTmRiK1R3b0RZbGtUbnBGUkR2NjBt?=
+ =?utf-8?B?RzNIU0hoNllaUjdtNTdxTHZuSVBMN2dtQkQ4a3V6aGlBcURydzhraC8rWm5h?=
+ =?utf-8?B?WFVnTjVRMXFoMHVzNWdRRmtVNThVN201SnEzd3BHc2xpM09EMzYxbUJKK3A2?=
+ =?utf-8?B?bUx6VERjeWp2MnVzQVVURXB4OGUycDluZS83RGE4ODRoc2xEeXlJaHdZODFu?=
+ =?utf-8?B?aU5kNmZFN3Nyc2lNVmJ2MnN2dTV2dG4zWXc2U0daUnZoMUNtY1NGaTBEZnZO?=
+ =?utf-8?B?K3Brai9xU3UyWk1QUjU0RjdzNEltdFdQUHJsWnk2cEVJTE4wNEVEU05oM1Jw?=
+ =?utf-8?B?MklTaWJZTXFEUTFLS3RRUnNjYjV2ejRVUWVyKzZIeFlVOXVtS2lJWUVQcDBh?=
+ =?utf-8?B?d214WVBiRzV0MEdPK2gxcEpLcFdiaDB1b2duc2xoSGtxVHJkRlZqRkRyZFpP?=
+ =?utf-8?B?WTF0a09tcUpDclFRU255dTdtNEFKTFZlV2ljMEpKeXJrU2ZZNDhwRy80K25z?=
+ =?utf-8?B?eWY4d0xQaUFPYjJvb0VwUlIzZDdOTUlrUXBJeGZ5aERjZHZFbDVpSFhJNDlh?=
+ =?utf-8?B?YWp0a2w0aDdieHk0U0ZJOU95Z2RaK0hyVTlvVmNtRlh6U1RWZDZpTzR2OXFs?=
+ =?utf-8?B?L1ZPeldQME8wM3N1c2JKVjlpeUFpWUU0NHB1K3hWQm5zaG1Kdm5wUTJHUVBF?=
+ =?utf-8?B?QkpnUGJnYjVobkQwc0IwcjFnQ3dna1FyeFZhWWJjVk1TOFZIaUFRNUpnbFdr?=
+ =?utf-8?B?WDY1aXV5WFJ3K2dpL0hRa21HTGFYbldOdWtFcnZrWENOZlVNZWMyTzZIUjFz?=
+ =?utf-8?B?cHIwVkZOTUsvWGp5dytveEpWM04rM1dLbmFrSjZnbDRiZ0wzQmdhMDlwTGlz?=
+ =?utf-8?B?d0RMN09UaGtOMEd0QUxEYmhwbGw3Q0R5OENDTlRhcVdhYlJCbk1DUFAxbjR1?=
+ =?utf-8?B?eUJpVUNPNUpYU08vTDhacW03R2ZLU3BLNFJGbWxMSGxXTUlhcmEzanRmK0xk?=
+ =?utf-8?B?anpZOVloQlpFY0pHN2M4aU95bEh0ZjdGUnBySytRK1g4aWtsMUhtYXB4a1Jv?=
+ =?utf-8?B?VE5rMDl2Ymk4cWxuUElla0lQZzM5am1YMEh2eEZZbjRkZkFPNjg2Vlplcktl?=
+ =?utf-8?B?TGZQQzBXZDZKYS9VK1ArcUdSVHJIMFpqSGxpa3pUZ3BOU1g1OElJOGVyRGpa?=
+ =?utf-8?B?blE9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 1p7HF0VUvA9WTVsC2rQiaRv9jBgtMhWeRrvh01y8W3YllS6lx9sc3oxXpS/GT93v1pgQZPxYI5SRjWySk1Pk/DlK00fth2CWZPsKB1UcvcK8CzR9Orh0s8Pf544IBsWBI+F23srEcZVVaCM9B8G6d884dHUPrCynhI/JeyOwZMWZcj3DbWxspvrR7y3h4EznIevh8lt4h0Hh1vMmiw++bdhIA5NscgMR4k+5J/K0yeuAVqlc9NYiQNNDV3RFIN3CC02pdTIoPeSI4dQBScI393YntWH9Fu6SCV4FasSdBx8HEtEqTwSWJ5uC7GldPGX77IiRLHtzxe9Adi37gxOvyklM/110veTpPwM1EF0GIZvWUx9PsHBMlnHRSHZyrAeD+ezuv21jQDdu56Uo/3aqvuCzovuQ6O5jTrqxfaX6BXQDgpkFUAqHVztwEoirm1RYfXDorWo4h0RCkmbEAedHVhIS/kuThKcDI62Wp6sK/Zpk7I5hG6WzsYcc95IRnd/NKYHdRFbcBzVg8iea2KNLDjkXqz8qI9eSzm7fmJbT9ATPDkqKrlDNS9WZRzXd+MjuIcAio49aW1CBPdcFmWteXgn7Md19ngfbM/7VzDJ3wmI=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f1b85e54-ad64-4b71-f115-08ddbe15a2d4
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jul 2025 11:50:29.5474 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4H+dA4Q/d2xZX5GpMbEY3pAZmi0JfxMKy/q/o0vZTqaRRmNYpbLDqFuZAUiBYi9vFTYMJmyTZePwlJck0KZXIZpWV693WptkqjmpcSq1knE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR10MB6113
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-08_03,2025-07-07_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ adultscore=0
+ suspectscore=0 malwarescore=0 bulkscore=0 mlxlogscore=999 spamscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2505160000 definitions=main-2507080098
+X-Authority-Analysis: v=2.4 cv=Z/HsHGRA c=1 sm=1 tr=0 ts=686d0609 b=1 cx=c_pps
+ a=qoll8+KPOyaMroiJ2sR5sw==:117 a=qoll8+KPOyaMroiJ2sR5sw==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=Wb1JkmetP80A:10 a=GoEa3M9JfhUA:10 a=yPCof4ZbAAAA:8 a=KKAkSRfTAAAA:8
+ a=4riZc8Qjg92iqy8GitEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=ZXulRonScM0A:10 a=cvBusfyB2V15izCimMoJ:22 cc=ntf
+ awl=host:12058
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzA4MDA5NyBTYWx0ZWRfX+sjmJ9XBuLSp
+ 1g+neHTwmqQyZlHynfnr1lhIdU8iK5q9aVBDPJz1wGN6cI1n9SJGnhq0+lJ/AroVxT9g43eGswJ
+ ug9P7EL+HAVkqodH4Q9AAInsmSDnYWBW91SzRVOJK8r5OPzJAbVTE1oc9mIrTo/BeL8XpC8v8qG
+ o/3ERiPm6VJGh1MwLxwVnri4ccUn9nOvQYHUe+jOFTVgxed60uLq7iHYnkT0830MCcOhGNbAa9n
+ KaAjWZL83VdYBoa8zulvVw/W4GJp1cgrGMCMdtQGzJ8wacGebF1BISXHW0h5LP1m+4QCRJTRkRd
+ PEB065WDuPHKHtHiX0+NEn20WS/j7Aho9USivPYW+YQEc5g/aiyOOSOkuOCKIg8oDlGUQG2QoA1
+ 0uAiQyrgVwLi2rjnyTrCUaa7/G21u8zOBSmaLzSqtPwG482nFejPUjSg4aQEKvqEw99+x+WJ
+X-Proofpoint-GUID: khlprWYphRMK-bj3ergbzBcbPUrazklO
+X-Proofpoint-ORIG-GUID: khlprWYphRMK-bj3ergbzBcbPUrazklO
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,134 +240,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To keep "qemu/target-info.h" self-contained to native
-types, declare target_arch() -- which returns a QAPI
-type -- in "qemu/target-info-qapi.h".
+On 7/8/2025 3:14 AM, Philippe Mathieu-Daudé wrote:
+> On 12/5/25 15:47, Steve Sistare wrote:
+>> Define the qom-tree-get QAPI command, which fetches an entire tree of
+>> properties and values with a single QAPI call.  This is much faster
+>> than using qom-list plus qom-get for every node and property of the
+>> tree.  See qom.json for details.
+>>
+>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>> ---
+>>   qapi/qom.json      | 56 ++++++++++++++++++++++++++++++++++++++++++
+>>   qom/qom-qmp-cmds.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>>   2 files changed, 128 insertions(+)
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-No logical change.
+Hi Philippe, thank you for reviewing this.
 
-Keeping native types in "qemu/target-info.h" is necessary
-to keep building tests such tests/tcg/plugins/mem.c, as
-per the comment added in commit ecbcc9ead2f ("tests/tcg:
-add a system test to check memory instrumentation"):
+Markus has requested that I drop qom-tree-get, and only provide qom-list-getv,
+to simplify things.  Do you prefer that we keep qom-tree-get?
 
-/*
- * plugins should not include anything from QEMU aside from the
- * API header. However as this is a test plugin to exercise the
- * internals of QEMU and we want to avoid needless code duplication we
- * do so here. bswap.h is pretty self-contained although it needs a
- * few things provided by compiler.h.
- */
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/qemu/target-info-qapi.h | 21 +++++++++++++++++++++
- include/qemu/target-info.h      |  2 +-
- hw/core/machine-qmp-cmds.c      |  8 +++-----
- target-info.c                   |  8 ++++++++
- 4 files changed, 33 insertions(+), 6 deletions(-)
- create mode 100644 include/qemu/target-info-qapi.h
-
-diff --git a/include/qemu/target-info-qapi.h b/include/qemu/target-info-qapi.h
-new file mode 100644
-index 00000000000..dae92c47eb1
---- /dev/null
-+++ b/include/qemu/target-info-qapi.h
-@@ -0,0 +1,21 @@
-+/*
-+ * QEMU target info API (returning QAPI types)
-+ *
-+ *  Copyright (c) Linaro
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef QEMU_TARGET_INFO_EXTRA_H
-+#define QEMU_TARGET_INFO_EXTRA_H
-+
-+#include "qapi/qapi-types-machine.h"
-+
-+/**
-+ * target_arch:
-+ *
-+ * Returns: QAPI SysEmuTarget enum (i.e. SYS_EMU_TARGET_X86_64).
-+ */
-+SysEmuTarget target_arch(void);
-+
-+#endif
-diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-index 850a2958b9c..dde0e7d968a 100644
---- a/include/qemu/target-info.h
-+++ b/include/qemu/target-info.h
-@@ -1,5 +1,5 @@
- /*
-- * QEMU target info API
-+ * QEMU target info API (returning native types)
-  *
-  *  Copyright (c) Linaro
-  *
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index d82043e1c68..cd98daedd18 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -19,7 +19,7 @@
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/type-helpers.h"
- #include "qemu/uuid.h"
--#include "qemu/target-info.h"
-+#include "qemu/target-info-qapi.h"
- #include "qom/qom-qobject.h"
- #include "system/hostmem.h"
- #include "system/hw_accel.h"
-@@ -37,8 +37,7 @@ CpuInfoFastList *qmp_query_cpus_fast(Error **errp)
-     MachineState *ms = MACHINE(qdev_get_machine());
-     MachineClass *mc = MACHINE_GET_CLASS(ms);
-     CpuInfoFastList *head = NULL, **tail = &head;
--    SysEmuTarget target = qapi_enum_parse(&SysEmuTarget_lookup, target_name(),
--                                          -1, &error_abort);
-+    SysEmuTarget target = target_arch();
-     CPUState *cpu;
- 
-     CPU_FOREACH(cpu) {
-@@ -139,8 +138,7 @@ QemuTargetInfo *qmp_query_target(Error **errp)
- {
-     QemuTargetInfo *info = g_malloc0(sizeof(*info));
- 
--    info->arch = qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
--                                 &error_abort);
-+    info->arch = target_arch();
- 
-     return info;
- }
-diff --git a/target-info.c b/target-info.c
-index 16fdca7aaaf..9ebabec988f 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -8,7 +8,9 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/target-info.h"
-+#include "qemu/target-info-qapi.h"
- #include "qemu/target-info-impl.h"
-+#include "qapi/error.h"
- 
- const char *target_name(void)
- {
-@@ -20,6 +22,12 @@ unsigned target_long_bits(void)
-     return target_info()->long_bits;
- }
- 
-+SysEmuTarget target_arch(void)
-+{
-+    return qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
-+                           &error_abort);
-+}
-+
- const char *target_cpu_type(void)
- {
-     return target_info()->cpu_type;
--- 
-2.49.0
+- Steve
 
 
