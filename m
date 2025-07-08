@@ -4,69 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38B1CC83F09
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:03:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBA30C8303C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:03:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFIk-0006I2-CX; Tue, 08 Jul 2025 16:52:30 -0400
+	id 1uZFJU-0007KD-Dq; Tue, 08 Jul 2025 16:53:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uZEBV-0004O8-PR; Tue, 08 Jul 2025 15:40:57 -0400
-Received: from mgamail.intel.com ([192.198.163.19])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uZEDL-0007y8-3Y
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:42:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uZEBS-0005kz-NV; Tue, 08 Jul 2025 15:40:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752003655; x=1783539655;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=eqW/GZxVmXxa6Rs8JzPHetgNBfIq7ooBhf8uaasmLf0=;
- b=XZ3YSuwk5AHYLqAzEH68o6hXULh7nkgf/bPG2uVBgqLcQSsz1ExQHncR
- RJKRbvh5D5JQAm4grAWOTVqJsUo0Znk/sWeJIzkCQjkjTVLyNH91WT2RW
- sWdv3/Z1KBY+sOfEZH76yeRKHpqQPW3o0rtEuk8Rjza7OWBRmd7i2AQcu
- mTdCcYiWK/z0BRRKGOVLPNgtuPn5usH6dMl5atrCZbSOnAxuXbak1Fv1B
- 2zlXT6m3cpAKpUADl5FvyTD/Hzjcbez1qpzL/BUrVMtqfFVQzZc4lHnSB
- 7hpsfOLm3nFlbbAEpQHGDWFzB2tlM5fMs05vYv5yAjTKHzmXVLYgiwuQQ Q==;
-X-CSE-ConnectionGUID: CXhnn8wNSoih55ElZkCQew==
-X-CSE-MsgGUID: LsmlR17nQ4iBRoawWl72sQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11487"; a="53311488"
-X-IronPort-AV: E=Sophos;i="6.16,296,1744095600"; d="scan'208";a="53311488"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Jul 2025 01:21:29 -0700
-X-CSE-ConnectionGUID: sX6WYzgDSYmoTN+MIKEsbA==
-X-CSE-MsgGUID: 0i8rHPW3Rhy1bEfXAbFyUQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,296,1744095600"; d="scan'208";a="186392256"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa001.fm.intel.com with ESMTP; 08 Jul 2025 01:21:27 -0700
-Date: Tue, 8 Jul 2025 16:42:55 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 1/3] rust/memory: replace size arg with Bits enum
-Message-ID: <aGzaD5RM6qPYlkSQ@intel.com>
-References: <20250703-rust-mem-api-v1-0-cd5314bdf580@linaro.org>
- <20250703-rust-mem-api-v1-1-cd5314bdf580@linaro.org>
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uZEDG-0006CW-P8
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:42:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752003765;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qrdM5Qv5B/f5uJagCphvmvd7g7H1raHqAypDeISaWyY=;
+ b=f045SfgWUngBvj21JKkB/RuRE2zJE+PKBY1uiCiKUBCwifuIqm6yqR9ThUxAs9BGQP7I6e
+ 1ePkw+ZoEWiZjj+eJBNfdwE6fqe+w2UynRkwVSgoih+CQPd3IaFHo7PmhIiKav/Vxghd1M
+ Kom7oE0S1215kfjkAdXAVgZJfnp9hCs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-231-3Q_K4Mi9P9WD3hndJa6VZA-1; Tue,
+ 08 Jul 2025 10:26:38 -0400
+X-MC-Unique: 3Q_K4Mi9P9WD3hndJa6VZA-1
+X-Mimecast-MFC-AGG-ID: 3Q_K4Mi9P9WD3hndJa6VZA_1751984796
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 94088180028A; Tue,  8 Jul 2025 14:26:36 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.44.32.187])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BADAF30001B1; Tue,  8 Jul 2025 14:26:31 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
+ Jonathan.Cameron@huawei.com, gustavo.romero@linaro.org,
+ anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com
+Cc: pbonzini@redhat.com,
+	philmd@linaro.org,
+	alex.bennee@linaro.org
+Subject: [PATCH v6 16/36] hw/i386/acpi-build: Move aml_pci_edsm to a generic
+ place
+Date: Tue,  8 Jul 2025 16:22:58 +0200
+Message-ID: <20250708142437.1344644-17-eric.auger@redhat.com>
+In-Reply-To: <20250708142437.1344644-1-eric.auger@redhat.com>
+References: <20250708142437.1344644-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250703-rust-mem-api-v1-1-cd5314bdf580@linaro.org>
-Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,30 +89,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 03, 2025 at 04:58:11PM +0300, Manos Pitsidianakis wrote:
-> Date: Thu, 03 Jul 2025 16:58:11 +0300
-> From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Subject: [PATCH 1/3] rust/memory: replace size arg with Bits enum
-> X-Mailer: b4 0.14.2
-> 
-> We have the ability to make memory accesses use a typesafe access width
-> type in Rust, which the C API currently lacks as it does not use a
-> newtype wrapper for specifying the amount of bytes a memory access has;
-> it uses a plain 32-bit integer value instead.
-> 
-> Replace use of u32 size arguments with a Bits enum that has only the
-> allowed byte sizes as variants and has a u32 representation so that it
-> can be fed back into C as well.
-> 
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> ---
->  rust/hw/char/pl011/src/device.rs |  8 ++++----
->  rust/hw/timer/hpet/src/device.rs | 14 +++++++-------
->  rust/qemu-api/src/memory.rs      | 34 ++++++++++++++++++++++++----------
->  3 files changed, 35 insertions(+), 21 deletions(-)
+Move aml_pci_edsm to pci-bridge.c since we want to reuse that for
+ARM and acpi-index support. Also rename it into build_pci_bridge_edsm.
 
-LGTM,
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+---
+
+v3->v4:
+- renamed into build_pci_bridge_edsm() (Jonathan, Igor)
+
+v2 -> v3:
+- move to pci-bridge.c instead of pcihp.c (Igor)
+---
+ include/hw/acpi/pci.h |  1 +
+ hw/acpi/pci-bridge.c  | 54 ++++++++++++++++++++++++++++++++++++++++
+ hw/i386/acpi-build.c  | 57 ++-----------------------------------------
+ 3 files changed, 57 insertions(+), 55 deletions(-)
+
+diff --git a/include/hw/acpi/pci.h b/include/hw/acpi/pci.h
+index 69bae95eac..20b672575f 100644
+--- a/include/hw/acpi/pci.h
++++ b/include/hw/acpi/pci.h
+@@ -42,5 +42,6 @@ void build_pci_bridge_aml(AcpiDevAmlIf *adev, Aml *scope);
+ void build_srat_generic_affinity_structures(GArray *table_data);
+ 
+ Aml *build_pci_host_bridge_osc_method(bool enable_native_pcie_hotplug);
++Aml *build_pci_bridge_edsm(void);
+ 
+ #endif
+diff --git a/hw/acpi/pci-bridge.c b/hw/acpi/pci-bridge.c
+index 7baa7034a1..394a919479 100644
+--- a/hw/acpi/pci-bridge.c
++++ b/hw/acpi/pci-bridge.c
+@@ -35,3 +35,57 @@ void build_pci_bridge_aml(AcpiDevAmlIf *adev, Aml *scope)
+         }
+     }
+ }
++
++Aml *build_pci_bridge_edsm(void)
++{
++    Aml *method, *ifctx;
++    Aml *zero = aml_int(0);
++    Aml *func = aml_arg(2);
++    Aml *ret = aml_local(0);
++    Aml *aidx = aml_local(1);
++    Aml *params = aml_arg(4);
++
++    method = aml_method("EDSM", 5, AML_SERIALIZED);
++
++    /* get supported functions */
++    ifctx = aml_if(aml_equal(func, zero));
++    {
++        /* 1: have supported functions */
++        /* 7: support for function 7 */
++        const uint8_t caps = 1 | BIT(7);
++        build_append_pci_dsm_func0_common(ifctx, ret);
++        aml_append(ifctx, aml_store(aml_int(caps), aml_index(ret, zero)));
++        aml_append(ifctx, aml_return(ret));
++    }
++    aml_append(method, ifctx);
++
++    /* handle specific functions requests */
++    /*
++     * PCI Firmware Specification 3.1
++     * 4.6.7. _DSM for Naming a PCI or PCI Express Device Under
++     *        Operating Systems
++     */
++    ifctx = aml_if(aml_equal(func, aml_int(7)));
++    {
++       Aml *pkg = aml_package(2);
++       aml_append(pkg, zero);
++       /* optional, if not impl. should return null string */
++       aml_append(pkg, aml_string("%s", ""));
++       aml_append(ifctx, aml_store(pkg, ret));
++
++       /*
++        * IASL is fine when initializing Package with computational data,
++        * however it makes guest unhappy /it fails to process such AML/.
++        * So use runtime assignment to set acpi-index after initializer
++        * to make OSPM happy.
++        */
++       aml_append(ifctx,
++           aml_store(aml_derefof(aml_index(params, aml_int(0))), aidx));
++       aml_append(ifctx, aml_store(aidx, aml_index(ret, zero)));
++       aml_append(ifctx, aml_return(ret));
++    }
++    aml_append(method, ifctx);
++
++    return method;
++}
++
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index fe8bc62c03..423c4959fe 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -338,59 +338,6 @@ build_facs(GArray *table_data)
+     g_array_append_vals(table_data, reserved, 40); /* Reserved */
+ }
+ 
+-static Aml *aml_pci_edsm(void)
+-{
+-    Aml *method, *ifctx;
+-    Aml *zero = aml_int(0);
+-    Aml *func = aml_arg(2);
+-    Aml *ret = aml_local(0);
+-    Aml *aidx = aml_local(1);
+-    Aml *params = aml_arg(4);
+-
+-    method = aml_method("EDSM", 5, AML_SERIALIZED);
+-
+-    /* get supported functions */
+-    ifctx = aml_if(aml_equal(func, zero));
+-    {
+-        /* 1: have supported functions */
+-        /* 7: support for function 7 */
+-        const uint8_t caps = 1 | BIT(7);
+-        build_append_pci_dsm_func0_common(ifctx, ret);
+-        aml_append(ifctx, aml_store(aml_int(caps), aml_index(ret, zero)));
+-        aml_append(ifctx, aml_return(ret));
+-    }
+-    aml_append(method, ifctx);
+-
+-    /* handle specific functions requests */
+-    /*
+-     * PCI Firmware Specification 3.1
+-     * 4.6.7. _DSM for Naming a PCI or PCI Express Device Under
+-     *        Operating Systems
+-     */
+-    ifctx = aml_if(aml_equal(func, aml_int(7)));
+-    {
+-       Aml *pkg = aml_package(2);
+-       aml_append(pkg, zero);
+-       /* optional, if not impl. should return null string */
+-       aml_append(pkg, aml_string("%s", ""));
+-       aml_append(ifctx, aml_store(pkg, ret));
+-
+-       /*
+-        * IASL is fine when initializing Package with computational data,
+-        * however it makes guest unhappy /it fails to process such AML/.
+-        * So use runtime assignment to set acpi-index after initializer
+-        * to make OSPM happy.
+-        */
+-       aml_append(ifctx,
+-           aml_store(aml_derefof(aml_index(params, aml_int(0))), aidx));
+-       aml_append(ifctx, aml_store(aidx, aml_index(ret, zero)));
+-       aml_append(ifctx, aml_return(ret));
+-    }
+-    aml_append(method, ifctx);
+-
+-    return method;
+-}
+-
+ /*
+  * build_prt - Define interrupt routing rules
+  *
+@@ -937,7 +884,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+         dev = aml_device("PCI0");
+         aml_append(dev, aml_name_decl("_HID", aml_eisaid("PNP0A03")));
+         aml_append(dev, aml_name_decl("_UID", aml_int(pcmc->pci_root_uid)));
+-        aml_append(dev, aml_pci_edsm());
++        aml_append(dev, build_pci_bridge_edsm());
+         aml_append(sb_scope, dev);
+         aml_append(dsdt, sb_scope);
+ 
+@@ -952,7 +899,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+         aml_append(dev, aml_name_decl("_CID", aml_eisaid("PNP0A03")));
+         aml_append(dev, aml_name_decl("_UID", aml_int(pcmc->pci_root_uid)));
+         aml_append(dev, build_pci_host_bridge_osc_method(!pm->pcihp_bridge_en));
+-        aml_append(dev, aml_pci_edsm());
++        aml_append(dev, build_pci_bridge_edsm());
+         aml_append(sb_scope, dev);
+         if (mcfg_valid) {
+             aml_append(sb_scope, build_q35_dram_controller(&mcfg));
+-- 
+2.49.0
 
 
