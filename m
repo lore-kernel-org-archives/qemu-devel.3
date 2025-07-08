@@ -4,77 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E90CC83F09
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:06:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37772C83F09
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:07:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZEaL-0000lq-0e; Tue, 08 Jul 2025 16:06:37 -0400
+	id 1uZEar-0003yD-CW; Tue, 08 Jul 2025 16:07:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3ZFBtaAkKCgUfspjjxqjwlttlqj.htrvjrz-ij0jqstslsz.twl@flex--ankeesler.bounces.google.com>)
- id 1uZDX6-0004zZ-Hw
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 14:59:18 -0400
-Received: from mail-qv1-xf49.google.com ([2607:f8b0:4864:20::f49])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3ZFBtaAkKCgUfspjjxqjwlttlqj.htrvjrz-ij0jqstslsz.twl@flex--ankeesler.bounces.google.com>)
- id 1uZDWx-0001jA-Ai
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 14:59:11 -0400
-Received: by mail-qv1-xf49.google.com with SMTP id
- 6a1803df08f44-6ff810877aaso115730466d6.3
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 11:58:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1752001093; x=1752605893; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=w2qEX1zf6G9ZPjVsXEBuhmYw703se86rNQBAuotHINA=;
- b=vZqZPrXF3FAvWojevKZTcB9WiPsRXZZnjv7pFJ7xcf0LJYDj7hvYn9yQBVbuhTGGDY
- AgFM2geUPyFxkmRBJDZVnH7kY4PwQPmDKCX1FmWcnXWwP5+yYE0bAuCBA7RE3be+0xP3
- kxNoz9xL2v7cnl6dB1pba8/E9UaAB6egXarlcyaa1nBhTdgnSOSXeHYVEfM2G7maA7VA
- lMP/T7r+atoIH6z2kr70yaT3ZYqcEo7BrIgrpPNj8NedmYe4gkIDxoCoseXVoaC08luF
- aoA+y2+MKJTu+KY7Dtj1+rz83tkkr+E7XKdq0+WRH9Y/VkoG60weKEqO3iGsbha09YZX
- rXjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752001093; x=1752605893;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=w2qEX1zf6G9ZPjVsXEBuhmYw703se86rNQBAuotHINA=;
- b=rXiJgSb+c23PiVYfX3/GlQ+9/nLWUc5D899wis8uITGLBmGB7xefZTRFJ4qDsURJo9
- ziY9OYCmB/qthnuybJqzkVeimbB6+sI05dS9uo3lPf11DlyiT7AK4kS9SJq+AuNQNXHA
- 5b4mupNMJo/yXUrRXhLbrsNxoDY9mCZNLYwDaOhzznsoPXNuDtqKfeLHFCZrnK+cPwaX
- j8lCJFDrGJHCxNWi/FnUTK3n3cABcGadG8+EjIQGhixq4nSWC1smIb07ISbuaCoVJjtZ
- w4p5t7ZOqb7JVqgrIEdpAkgfpwmFt4mihquVSExjXnr49m07HEjXxtmyWLBhpHH328WY
- J9pg==
-X-Gm-Message-State: AOJu0Yy++5G+TBXdmxooK+mTu6UhQCGutmcDoIBYC6J3gbJE/5KZV4Cx
- srOL7QlZ+V4GUIUXKOVnR5uoHwQjJi4iLt8IU+SvyH2dTOF02hS7DKNaWcwHlHNIyhio7GAY69r
- Ww/AkNvhIQvZ3VcYs
-X-Google-Smtp-Source: AGHT+IGZ77XMRQDNFBcCdYxUXNIuY+jnB5NzvJHiBCzV2lmyDXngV2oGod1hFX5ZMGeAb62OyNRwA6FCCw7TyR0=
-X-Received: from vsbka1.prod.google.com ([2002:a05:6102:8001:b0:4e7:c796:d4f])
- (user=ankeesler job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6102:8016:b0:4dd:b037:d239 with SMTP id
- ada2fe7eead31-4f2ee1ab47amr13117331137.14.1751994468622; 
- Tue, 08 Jul 2025 10:07:48 -0700 (PDT)
-Date: Tue,  8 Jul 2025 17:07:44 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.50.0.727.gbf7dc18ff4-goog
-Message-ID: <20250708170745.141040-1-ankeesler@google.com>
-Subject: [PATCH v5 0/1] Allow injection of virtio-gpu EDID name
-From: Andrew Keesler <ankeesler@google.com>
-To: berrange@redhat.com, marcandre.lureau@gmail.com, armbru@redhat.com
-Cc: qemu-devel@nongnu.org, Andrew Keesler <ankeesler@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f49;
- envelope-from=3ZFBtaAkKCgUfspjjxqjwlttlqj.htrvjrz-ij0jqstslsz.twl@flex--ankeesler.bounces.google.com;
- helo=mail-qv1-xf49.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
+ id 1uZDRs-0000WK-JR; Tue, 08 Jul 2025 14:53:57 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
+ id 1uZDRY-00087Z-08; Tue, 08 Jul 2025 14:53:44 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 8 Jul
+ 2025 13:58:10 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Tue, 8 Jul 2025 13:58:10 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
+Subject: [PATCH v4 0/5] ASPEED OTP QEMU model: block backend, machine alias,
+ SoC integration
+Date: Tue, 8 Jul 2025 13:57:52 +0800
+Message-ID: <20250708055810.2868680-1-kane_chen@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=kane_chen@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,65 +60,70 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Kane Chen <kane_chen@aspeedtech.com>
+From:  Kane Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks to 72d277a7, 1ed2cb32, and others, EDID (Extended Display
-Identification Data) is propagated by QEMU such that a virtual display
-presents legitimate metadata (e.g., name, serial number, preferred
-resolutions, etc.) to its connected guest.
+From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-This change adds the ability to specify the EDID name for a particular
-virtio-vga display. Previously, every virtual display would have the same
-name: "QEMU Monitor". Now, we can inject names of displays in order to test
-guest behavior that is specific to display names. We provide the ability to
-inject the display name from the frontend since this is guest visible
-data. Furthermore, this makes it clear where N potential display outputs
-would get their name from (which will be added in a future change).
+This patch series extends the QEMU model for the ASPEED OTP (One-Time
+Programmable) memory device with block backend support and tighter
+integration with the SoC and machine configuration.
 
-Note that we have elected to use a struct here for output data for
-extensibility - we intend to add per-output fields like resolution in a
-future change.
+The OTP model simulates a simple fuse array, used in ASPEED SoCs
+for secure boot and configuration purposes. The updated model now
+supports loading initial OTP content from a file via the QEMU CLI.
 
-It should be noted that EDID names longer than 12 bytes will be truncated
-per spec (I think?).
+Example usage:
+  ./qemu-system-arm \
+    -machine ast2600-evb,otpmem=otp \
+    -blockdev driver=file,filename=otpmem.img,node-name=otp \
+    -global aspeed-otp.drive=otp \
+    ...
 
-Testing: verified that when I specified 2 outputs for a virtio-gpu with
-edid_name set, the names matched those that I configured with my vnc
-display.
+ChangeLog
+---------
+v4:
+- Add a 'drive' property to allow backing OTP data with a block device
+- Expose a machine parameter (`-machine otpmem=XXX`) for convenient
+  aliasing of the OTP drive via QOM path
 
-  -display vnc=localhost:0,id=aaa,display=vga,head=0 \
-  -display vnc=localhost:1,id=bbb,display=vga,head=1 \
-  -device '{"driver":"virtio-vga",
-            "max_outputs":2,
-            "id":"vga",
-            "outputs":[
-              {
-                 "name":"AAA",
-              },
-              {
-                 "name":"BBB",
-              }
-            ]}'
+v3:
+- Switched to object_property_set_int() for setting "size"
+- Simplified qdev_realize() error handling by passing errp directly
+- Added "drive" property to OTP model for future extensibility
 
-Changelog:
-* v5 - minor code cleanup: JSON syntax, QAPI "Since", control flow
-* v4 - fixed copy-paste issue in virtio_gpu_base_generate_edid()
-* v3 - report an error at realize time if request name is too long
-* v2 - migrated configuration surface to virtio-gpu device
+v2:
+- Rename device from 'aspeed_otpmem' to 'aspeed_otp' and move it to hw/nvram/
+- Move OTP device realization from instance_init to the realize function
+- Improve error logging with qemu_log_mask() and remove unused error propagation
 
-Andrew Keesler (1):
-  hw/display: Allow injection of virtio-gpu EDID name
+v1:
+- Initial version
 
- hw/core/qdev-properties-system.c    | 44 +++++++++++++++++++++++++++++
- hw/display/virtio-gpu-base.c        | 27 ++++++++++++++++++
- include/hw/display/edid.h           |  2 ++
- include/hw/qdev-properties-system.h |  5 ++++
- include/hw/virtio/virtio-gpu.h      |  3 ++
- qapi/virtio.json                    | 18 ++++++++++--
- 6 files changed, 97 insertions(+), 2 deletions(-)
+---
+
+Kane-Chen-AS (5):
+  hw/misc/aspeed_otp: Add ASPEED OTP memory device model
+  hw/misc/aspeed_sbc: Connect ASPEED OTP memory device to SBC
+  hw/arm: Integrate ASPEED OTP memory support into AST2600 SoCs
+  hw/misc/aspeed_otp: Add 'drive' property to support block backend
+  hw/misc/aspeed_sbc: Add machine parameter to alias OTP drive property
+
+ include/hw/misc/aspeed_sbc.h  |   5 ++
+ include/hw/nvram/aspeed_otp.h |  33 ++++++++++
+ hw/arm/aspeed.c               |  20 ++++++
+ hw/arm/aspeed_ast2600.c       |   2 +-
+ hw/misc/aspeed_sbc.c          | 121 ++++++++++++++++++++++++++++++++++
+ hw/nvram/aspeed_otp.c         | 113 +++++++++++++++++++++++++++++++
+ hw/misc/trace-events          |   5 ++
+ hw/nvram/meson.build          |   4 ++
+ 8 files changed, 302 insertions(+), 1 deletion(-)
+ create mode 100644 include/hw/nvram/aspeed_otp.h
+ create mode 100644 hw/nvram/aspeed_otp.c
 
 -- 
-2.50.0.727.gbf7dc18ff4-goog
+2.43.0
 
 
