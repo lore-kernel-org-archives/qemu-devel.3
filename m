@@ -4,91 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C761C83F0F
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:52:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50D33C8303C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:53:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFFB-0001uD-Iz; Tue, 08 Jul 2025 16:48:49 -0400
+	id 1uZFFq-0004sx-FD; Tue, 08 Jul 2025 16:49:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david.milosevic@9elements.com>)
- id 1uZE32-0005yV-38
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:32:17 -0400
-Received: from mail-lj1-x243.google.com ([2a00:1450:4864:20::243])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <david.milosevic@9elements.com>)
- id 1uZE2v-0003if-EF
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:32:09 -0400
-Received: by mail-lj1-x243.google.com with SMTP id
- 38308e7fff4ca-32e14ce168eso43478971fa.1
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 12:32:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=9elements.com; s=google; t=1752003121; x=1752607921; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=5aSk/AO/sTI8eSneU/X1SshCQUW99idUCChZjHIHGIc=;
- b=b7BQDlUbnTqbfLSNxKOfRqfNWrpImeLxQ/PdD9kGBoyTQiijhIuDbWY7X4GaBI3jMF
- CD69mRo5CW9HwXiEh36QxbipeWclMXgsPTO7lBbgyKAZyR+MIhCUIdFnbXYh7EcH6yxN
- OucjInIuXqZWMgZBw9x6Z+pJ41E5NRovgodxK5taviZvCvG5tDtqFeknl3MBue6RsusK
- eNyBcC+thX4OrIkWPfb4Ny2U9ZRc4AirEfK7gJxbPWw3n+ULQuSwmRFOLIOHkg/A8mfD
- JgSbQnLZ9BBdOAsu62Q0rI5CxvbCtW8Y52CHINxfs6Rr/6SJhrmHfPQ9BsB4pvEqCeDM
- tmQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752003121; x=1752607921;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5aSk/AO/sTI8eSneU/X1SshCQUW99idUCChZjHIHGIc=;
- b=EqypsRPSi62P06xtklI+ppa59sbcKQH+9eyTyF10mX+m7xbdZu8FiZlHm2roSil6fz
- ktbyTk6z4+RjYESIvOTZyABbNJr1SAxQL0LDvJ5Rb8IXUIgOeCHER0RRzowEqlGb0oE3
- XQRIR1bnqSAMuGYIBQIvfN6zgtPeeXGQgg7uGAKmI0nBz34EVLbYP+9OdhwxRTeotg8a
- 3ne8HEM4uBYowzuhGamSvBr/33OKo+YHjRWnZicKvzrSVujKZMdueAnlhjlfK7vnxQc8
- kAUh/B9jDWZ9XkzTPzCx94Gqb/e+8nuj1G2AW1z+q/pE/vkPOlC+Jf6YROvjwA9cax36
- dQGw==
-X-Gm-Message-State: AOJu0YxtiNgpAqEUeyT8lJbTkzBuQNNNGRk1m+HsZcaj+6V92jBm6BI+
- HrFe3zKcWQrlStAqfXJVsgaZS+LY1G0GHVKCWUUX7ppQC/l/A+nPtCxUGLSfXx6SApuw39cW2MG
- ABPlFM9TVPt5zWUs=
-X-Gm-Gg: ASbGncurLgRappndYH6Uvq4bXL1gnzFKHZV9vk59OxE5wY0JZnEfv/Ee0U63hoI2AyL
- 1aV6pMaXKg+x4A+6LWlBJTuqjFdUZ4lQiNJwgc1A1Gu77kEC2V7QGlNvRMss3hRCtWOsnbbMDc3
- tz24JgMdAPltT2zgVKI0DyBkxsHEKt3kDe7J/wMUiysQiFqLs+BkGteLxKvf0MKVw74AiZJnmNh
- Zy0+bCnN0ttMybAN7HJ9gXuaN6uoGjJOc1qvnvKxdoBX1lKnHreIbVKIfKBIb8i3/TUg8Tnm6el
- qZsRS9pTgFoIunhHuS7rufr4fRk1z+5YfwYtNf28dj0rjSVHPpaP+knyljkEDWIJ1csDIttWb11
- qQWwgOdChQaTwQ6AbjRIR/nCgGEhOprhyoOP8wTXzHVT//fV6f/L9
-X-Google-Smtp-Source: AGHT+IGY0DMXbfm1Bil3ebWbVGBeUC5peDKUvUZgiXljqbyp4YJ2EiMMvy7GfN4eg/P7DpQf9mCWqw==
-X-Received: by 2002:a05:600c:8b07:b0:454:aac0:ce1a with SMTP id
- 5b1f17b1804b1-454b4e76cf4mr156216525e9.14.1751986711023; 
- Tue, 08 Jul 2025 07:58:31 -0700 (PDT)
-Received: from cbox.sec.9e.network
- (p200300f75f10f341000000000000002d.dip0.t-ipconnect.de.
- [2003:f7:5f10:f341::2d]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454cd3d2749sm25445735e9.25.2025.07.08.07.58.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Jul 2025 07:58:30 -0700 (PDT)
-From: David Milosevic <david.milosevic@9elements.com>
-X-Google-Original-From: David Milosevic <David.Milosevic@9elements.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uZDsA-0000c5-Dv
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:21:08 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uZDs6-00082f-23
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:20:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1752002455; x=1783538455;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=SR4FjrzFxmx6ILcaxKJKK6EBtEpMukiad4HTKi/4A20=;
+ b=lAUyZ3sNzHirNiwDCijM3HdqTLOLRVh/oYf4qSGF93FG9g07lidwgQa1
+ QisTkH7bnL3bE76aAu4GBlsOsrpHmlSKicHd+1c/b2xNjA9FVQu3YDPSs
+ LiXcAEWPAkDXQjPTjijq6hz+AGmTNKW0y5Cf8SuYoWPirQZ6bTMcXrhUY
+ lc4+C4qPSjm9j5KLhPYEquxzNmTGpD/smn6vcBK7AWv7gXsdnIpImg2xp
+ EWI/VdlnXaaM0ohSV0XgGLXewSUTR4CaTz2KEye+Nn/F8saQ4CDy55ul4
+ 0eNMcBesF9JEuYNeLjy78k6MJ7su/FZhsaAcqQTX2I09mhOBkvnqfXCxF w==;
+X-CSE-ConnectionGUID: HL42Z9NxQKmNoW2AY816Eg==
+X-CSE-MsgGUID: 7EuhZFEHR8So2In5+arG4Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11487"; a="57974066"
+X-IronPort-AV: E=Sophos;i="6.16,297,1744095600"; d="scan'208";a="57974066"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Jul 2025 04:07:17 -0700
+X-CSE-ConnectionGUID: 6jG3VQW6TauI9HFEoFHmrQ==
+X-CSE-MsgGUID: BlN3Q734QA2SQbQvj1I6EA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,297,1744095600"; d="scan'208";a="192648006"
+Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Jul 2025 04:07:13 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- pizhenwei@bytedance.com, marcello.bauer@9elements.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- David Milosevic <David.Milosevic@9elements.com>
-Subject: [PATCH 0/3] Introduce new video subsystem with multiple backends
-Date: Tue,  8 Jul 2025 16:56:47 +0200
-Message-ID: <20250708145828.63295-1-David.Milosevic@9elements.com>
-X-Mailer: git-send-email 2.47.0
-Content-Type: text/plain; charset="utf-8"
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ mst@redhat.com, jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com,
+ jgg@nvidia.com, nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
+ Yi Sun <yi.y.sun@linux.intel.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v3 15/20] intel_iommu: Replay pasid bindings after context
+ cache invalidation
+Date: Tue,  8 Jul 2025 07:05:56 -0400
+Message-ID: <20250708110601.633308-16-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250708110601.633308-1-zhenzhong.duan@intel.com>
+References: <20250708110601.633308-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::243;
- envelope-from=david.milosevic@9elements.com; helo=mail-lj1-x243.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=198.175.65.14;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,117 +89,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As previously mentioned in our RFC, we at 9elements were working
-on a new video subsystem for QEMU.
+From: Yi Liu <yi.l.liu@intel.com>
 
-This subsystem includes a USB Video Class (UVC) frontend that exposes
-a virtual camera device to the guest OS, backed by host-side
-video sources like v4l2, GStreamer and libcamera.
+This replays guest pasid bindings after context cache invalidation.
+This is a behavior to ensure safety. Actually, programmer should issue
+pasid cache invalidation with proper granularity after issuing a context
+cache invalidation.
 
-The patch series is split into three parts
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ hw/i386/intel_iommu.c          | 42 ++++++++++++++++++++++++++++++++++
+ hw/i386/intel_iommu_internal.h |  2 ++
+ hw/i386/trace-events           |  1 +
+ 3 files changed, 45 insertions(+)
 
-    - the first patch introduces the video subsystem with its
-      first backend (v4l2) and implements the UVC device logic
-    - the second patch adds the GStreamer backend
-    - the third and final patch implements libcamera support
-
-Currently we are able to:
-
-    - stream frames (currently YUYV only)
-    - dynamically enumerate supported camera modes (pixelformat, ...)
-    - discover and access camera controls (brightness, ...)
-
-The patch series was tested on two different host devices and in
-combination with several guests
-
-    1. Fedora39 as host with ubuntu-24.04, Fedora41 and Fedora42 as guests
-    2. Fedora42 as host with Fedora42 as guest
-
-Video streaming was successfully tested with, for example guvcview,
-v4l2-ctl, gst-launch-1.0 (v4l2src, pipewiresrc), cheese, snapshot, vlc,
-and Google Meet (from within Firefox) using the internal camera
-and several external USB cameras.
-
-v4l2-ctl and qv4l2 were used to test camera controls.
-
-Known issues:
-
-We currently do not always achieve the target fps. Higher frame resolutions
-tend to reduce the fps observed in the guest. The following values were
-recorded using the v4l2 backend and guvcview
-
-internal webcam (HP EliteBook):
-  640x360@30fps: 17.52fps
-  320x180@30fps: 30.00fps
-  320x240@30fps: 30.00fps
-  424x240@30fps: 30.00fps
-  640x480@30fps: 13.14fps
-
-jiga webcam
-  1920x1080@5fps: 2.01fps
-  800x600@20fps:  8.44fps
-
-I attempted to improve streaming performance by implementing a
-producer-consumer model. The idea was for the producer
-to fetch frames from the backend and enqueue them, while the
-consumer (USBDeviceClass.handle_data) would dequeue and process them.
-However, I'm not very familiar with QEMU's threading model, and I likely
-didn’t implement it correctly - the producer and consumer are probably
-still running in the same event loop
-
-The experimental async version can be found here:
-https://github.com/9elements/qemu/tree/nlnet/qemu-video/dev-async
-
-Another issue is that v4l2-ctl fails to stream certain video resolutions,
-even though other tools handle the same resolutions without problems. For
-some resolutions, v4l2-ctl only receives frames marked with the
-V4L2_BUF_FLAG_ERROR flag. This behavior requires further investigation.
-
-Any help is very welcome!
-
-RFC: https://lists.gnu.org/archive/html/qemu-devel/2025-03/msg02804.html
-nlnet: https://nlnet.nl/project/Qemu-Camera/
-
-Best regards,
-David Milosevic
-
-David Milosevic (3):
-  video: introduce video subsystem with inital v4l2 backend
-  video: add GStreamer backend
-  video: add libcamera backend extension
-
- hw/core/qdev-properties-system.c    |   52 ++
- hw/usb/Kconfig                      |    5 +
- hw/usb/dev-video.c                  | 1333 +++++++++++++++++++++++++++
- hw/usb/meson.build                  |    1 +
- hw/usb/trace-events                 |   10 +
- include/hw/qdev-properties-system.h |    4 +
- include/hw/usb.h                    |    2 +
- include/hw/usb/video.h              |  322 +++++++
- meson.build                         |   31 +
- meson_options.txt                   |    5 +
- qemu-options.hx                     |    9 +
- scripts/meson-buildoptions.sh       |    6 +
- system/vl.c                         |   39 +-
- video/gstreamer-common.h            |   49 +
- video/gstreamer.c                   |  642 +++++++++++++
- video/libcamera.c                   |  148 +++
- video/meson.build                   |   24 +
- video/v4l2.c                        |  619 +++++++++++++
- video/video.c                       |  450 +++++++++
- video/video.h                       |  298 ++++++
- 20 files changed, 4048 insertions(+), 1 deletion(-)
- create mode 100644 hw/usb/dev-video.c
- create mode 100644 include/hw/usb/video.h
- create mode 100644 video/gstreamer-common.h
- create mode 100644 video/gstreamer.c
- create mode 100644 video/libcamera.c
- create mode 100644 video/meson.build
- create mode 100644 video/v4l2.c
- create mode 100644 video/video.c
- create mode 100644 video/video.h
-
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index c35673eb58..887830a855 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -91,6 +91,10 @@ static void vtd_address_space_refresh_all(IntelIOMMUState *s);
+ static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n);
+ 
+ static void vtd_pasid_cache_reset_locked(IntelIOMMUState *s);
++static void vtd_pasid_cache_sync(IntelIOMMUState *s,
++                                 VTDPASIDCacheInfo *pc_info);
++static void vtd_pasid_cache_devsi(IntelIOMMUState *s,
++                                  PCIBus *bus, uint16_t devfn);
+ 
+ static void vtd_panic_require_caching_mode(void)
+ {
+@@ -2437,6 +2441,8 @@ static void vtd_iommu_replay_all(IntelIOMMUState *s)
+ 
+ static void vtd_context_global_invalidate(IntelIOMMUState *s)
+ {
++    VTDPASIDCacheInfo pc_info;
++
+     trace_vtd_inv_desc_cc_global();
+     /* Protects context cache */
+     vtd_iommu_lock(s);
+@@ -2454,6 +2460,9 @@ static void vtd_context_global_invalidate(IntelIOMMUState *s)
+      * VT-d emulation codes.
+      */
+     vtd_iommu_replay_all(s);
++
++    pc_info.type = VTD_PASID_CACHE_GLOBAL_INV;
++    vtd_pasid_cache_sync(s, &pc_info);
+ }
+ 
+ #ifdef CONFIG_IOMMUFD
+@@ -2686,6 +2695,15 @@ static void vtd_context_device_invalidate(IntelIOMMUState *s,
+              * happened.
+              */
+             vtd_address_space_sync(vtd_as);
++            /*
++             * Per spec, context flush should also be followed with PASID
++             * cache and iotlb flush. In order to work with a guest which
++             * doesn't follow spec and missed PASID cache flush, we have
++             * vtd_pasid_cache_devsi() to invalidate PASID caches of the
++             * passthrough device. Host iommu driver would flush piotlb
++             * when a pasid unbind is pass down to it.
++             */
++             vtd_pasid_cache_devsi(s, vtd_as->bus, devfn);
+         }
+     }
+ }
+@@ -3410,6 +3428,11 @@ static gboolean vtd_flush_pasid_locked(gpointer key, gpointer value,
+         break;
+     case VTD_PASID_CACHE_FORCE_RESET:
+         goto remove;
++    case VTD_PASID_CACHE_DEVSI:
++        if (pc_info->bus != vtd_as->bus || pc_info->devfn != vtd_as->devfn) {
++            return false;
++        }
++        break;
+     default:
+         error_setg(&error_fatal, "invalid pc_info->type for flush");
+     }
+@@ -3616,6 +3639,11 @@ static void vtd_replay_guest_pasid_bindings(IntelIOMMUState *s,
+     case VTD_PASID_CACHE_FORCE_RESET:
+         /* For force reset, no need to go further replay */
+         return;
++    case VTD_PASID_CACHE_DEVSI:
++        walk_info.bus = pc_info->bus;
++        walk_info.devfn = pc_info->devfn;
++        vtd_replay_pasid_bind_for_dev(s, start, end, &walk_info);
++        return;
+     default:
+         error_setg(&error_fatal, "invalid pc_info->type for replay");
+     }
+@@ -3666,6 +3694,20 @@ static void vtd_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
+     vtd_replay_guest_pasid_bindings(s, pc_info);
+ }
+ 
++static void vtd_pasid_cache_devsi(IntelIOMMUState *s,
++                                  PCIBus *bus, uint16_t devfn)
++{
++    VTDPASIDCacheInfo pc_info;
++
++    trace_vtd_pasid_cache_devsi(devfn);
++
++    pc_info.type = VTD_PASID_CACHE_DEVSI;
++    pc_info.bus = bus;
++    pc_info.devfn = devfn;
++
++    vtd_pasid_cache_sync(s, &pc_info);
++}
++
+ static bool vtd_process_pasid_desc(IntelIOMMUState *s,
+                                    VTDInvDesc *inv_desc)
+ {
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index c87e59554d..9af073d843 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -583,6 +583,8 @@ typedef enum VTDPCInvType {
+ 
+     /* Reset all PASID cache entries, used in system level reset */
+     VTD_PASID_CACHE_FORCE_RESET = 0x10,
++    /* Invalidate all PASID entries in a device */
++    VTD_PASID_CACHE_DEVSI,
+ } VTDPCInvType;
+ 
+ typedef struct VTDPASIDCacheInfo {
+diff --git a/hw/i386/trace-events b/hw/i386/trace-events
+index 1c31b9a873..830b11f68b 100644
+--- a/hw/i386/trace-events
++++ b/hw/i386/trace-events
+@@ -28,6 +28,7 @@ vtd_pasid_cache_reset(void) ""
+ vtd_pasid_cache_gsi(void) ""
+ vtd_pasid_cache_dsi(uint16_t domain) "Domain selective PC invalidation domain 0x%"PRIx16
+ vtd_pasid_cache_psi(uint16_t domain, uint32_t pasid) "PASID selective PC invalidation domain 0x%"PRIx16" pasid 0x%"PRIx32
++vtd_pasid_cache_devsi(uint16_t devfn) "Dev selective PC invalidation dev: 0x%"PRIx16
+ vtd_re_not_present(uint8_t bus) "Root entry bus %"PRIu8" not present"
+ vtd_ce_not_present(uint8_t bus, uint8_t devfn) "Context entry bus %"PRIu8" devfn %"PRIu8" not present"
+ vtd_iotlb_page_hit(uint16_t sid, uint64_t addr, uint64_t slpte, uint16_t domain) "IOTLB page hit sid 0x%"PRIx16" iova 0x%"PRIx64" slpte 0x%"PRIx64" domain 0x%"PRIx16
 -- 
-2.47.0
+2.47.1
 
 
