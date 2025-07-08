@@ -4,92 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C8F6C83F09
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:43:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47E0BC8303C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:43:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZG5N-0002tI-C7; Tue, 08 Jul 2025 17:42:45 -0400
+	id 1uZG4Y-0008MZ-Eu; Tue, 08 Jul 2025 17:41:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZFJZ-0007eQ-Bm
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 16:53:21 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZFJX-0003rz-AE
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 16:53:20 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3a57ae5cb17so3068916f8f.0
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 13:53:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752007997; x=1752612797; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=srgEDpGFqHVp83wO3nsWrDzTxJ6oIFK+IEA/umVgPdU=;
- b=V30+a5v3s6AmTFvJJ/TS7Zv69qJPLIJs4gHWsZoDGXjFJThf+2E9TbgEvgenAYNo8E
- D/jVwLf8uhAWGJQP4csL+olXCh/5WqRXwQAWVw+dOCqu3Vw7JCzHWdugoZAOa8HWp9UM
- IGgW4XUNsQEkWzpe5hTOnMMGljHer2uZfOoHiTLFrwrhUiG1sLZYaQACuWnOog5fBNdI
- t1iP4/eXVVr+8nNqTpY2Tkb7VG8/lt/H1jIY7qAcwkORoze85b0+n897T4sdL3oZEaXv
- TiMnTugjf/zsDWQgvt6Xkjbo+QDuMCxYKrtbRRxCFe9UV7bLgFDWQphmLvTGBNm0VCrQ
- n7Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752007997; x=1752612797;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=srgEDpGFqHVp83wO3nsWrDzTxJ6oIFK+IEA/umVgPdU=;
- b=LU6WXzJzOc+X0SRpKrlyMIAjAc+H7WNr9twtyDrbb/mSrgYz/lPa8J4JigLGELfvOR
- 1bVitPQwYjFP24AUU5RTfWCViKML5xOHO5BKpTcd7mwffPBHtMYUvKYz2xvAuOsTFixb
- FPcBVxig2xsdaRDyuBffoXkVZOB1pseaukNr9mqqPq2TK0WUQ8qgWQZWxgR3NQYfej8Z
- jCDjnYiCn0cDyOVHWwUw7xum9uq++RjIEyN3pUKM0TViJ1llbYqr1v1wFCXZpd3msTTm
- gXGOzHyFnCZqyZ8w5OmZ2vAozHeWRyQ+uxGxOjJ8ZzpnuQM/pNJ6rG9h2kE23Qs+1MQN
- 1DoA==
-X-Gm-Message-State: AOJu0YxnLZ9VikR6sBtslo8sUWSpea6SgMX2WW8UKRIbT78mUKr94vG1
- /K6kWrHuUxBEaRJd9G0QyRF2jwADg8VDf0cG15/35FbYpcYS6jmi5jxE/NBI00V+xalpTihGjGi
- ihB1C
-X-Gm-Gg: ASbGnct7utcnp4ypDQSGjuDq5O6hC2lTXbVWhew9ZgcCqey7+zFc2bBEV8Nx0o3FU4i
- 9+F3wUv/+T5Sow2nm212iKMIvOTjchBOEyaKXC8IwSNo3qu5gYolYlLNDD3hTOXAXnIT+Emar5x
- SSyAUbIVLbKyvFSD5MlFOislGJXUYAHOqavn3orRIF/rrQz+6X1S1ihWxtt2hnx2NLa1Le9jACZ
- c8YebuWsmuZvntXsy2P8rtygTECBYFSwnxUF9kGqS5xmHPIZbmjB7yz+zFvF4k23L+2Bf+cDo8n
- JoAQlYeKCprhbPH3nwfFf3OA4patftrzG5CdymfbqXu9cGWmSzI+QzaIPTK8QwmPIixhk8IdnDx
- 9pMIwDmDgURi9+j7nVBDXIf/RZMKp4g==
-X-Google-Smtp-Source: AGHT+IFBSq2sJCMTs7NgzEYiUgBJnrbUxSgRp46Nz9q4YNF5tKUFY6p8ZKQnQ46CkbDQnRPQ2hst3g==
-X-Received: by 2002:a05:6000:4a04:b0:3a5:2b75:56cc with SMTP id
- ffacd0b85a97d-3b4964c5d3emr12503077f8f.23.1752007997123; 
- Tue, 08 Jul 2025 13:53:17 -0700 (PDT)
-Received: from [192.168.69.242] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454cd3d275fsm31573375e9.20.2025.07.08.13.53.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Jul 2025 13:53:16 -0700 (PDT)
-Message-ID: <37e9f347-f7ba-4ea6-93f8-879d8169012a@linaro.org>
-Date: Tue, 8 Jul 2025 22:53:13 +0200
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1uZElg-0000GU-En; Tue, 08 Jul 2025 16:18:20 -0400
+Received: from mail-mw2nam10on2060d.outbound.protection.outlook.com
+ ([2a01:111:f403:2412::60d]
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1uZEld-0006Z9-UM; Tue, 08 Jul 2025 16:18:19 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ahS8ajCK3O9En1DkksZo06VQqY3+aIBMlWHyWCHm5GBA+gJAjiamPlWMkAyr8s6s8dioLfVeDhzIOs3FtdwKhK22VGuRqQBw7eXcnioIiSABsNYhR1gyjcPkNzAPJ0YJFufb7vJBSryEwuHboDUtkZb/8JgtErBFe65c8RHo+sVULU56tR9vNBNUi8X1djiSkNGSjJuk4AUsSeD1WTij2MKzDM3BlMz6kMby6mtfYgemEles8a4i6d/fT+cUdCFOrKXrt7IQIN7PrHTRp2zM3zCXsFgWWhR6nN8Em/0yUhIWkKDrugfTvwTyeA/7HJJFpamdqOlLwmip0HX4PveR1Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HKOBrOM/m48kxkmIbL3Cr9HP8SKLTxirjHaWIn63VcU=;
+ b=zVdyJv6Z6CQ6UlATG4cWThVQwXDHMgYpIyx5pOtvSVE50DvKZBmnK+EH4oiaf+BwZb+ChuYXPQ+UVhm2IarFCbiIzU6lRP+5D9enTdoYGkjkH1NcYO2e281WEv2Rze5fgfxJo2imqsr8KUQzxYuf8cINHmj66v1ZsqNBgyn71tVCeYJT+xVQyq/5tOGgTQcB749nELMHTUCzbtYRzlXrIXcSHXi2Wnt3MZ/0of0gaBYcHsIrplZuXiwlEz/8Hq8VisjS9L9iQc+KxdMUOcvLeFD7piDexvZAUH+lubKwEMUsMYLAOHzudDF4p11N/0dSrEJCOgbbWf7nBVTwntwXUw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=huawei.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HKOBrOM/m48kxkmIbL3Cr9HP8SKLTxirjHaWIn63VcU=;
+ b=eTN6A9XR/a3ItHkq3li45mBuxw9uuByRyyRr0QHgHoLYFxMw9kteGbESdMIt7zqJ2OG8sJxKen+4HK9QTXFwJMZOBozNYiXLko1NID50jaYZ5M3nPLdOBvrQYw7f2QojPe+a0CtRRFcr24QNWBqxix3miW2tfh/TTz7NPaizmDl4AL8cs+QD8MfcBayvOUam8En6yVIyEb4jcfgPh/8CuCr8AeAt2dyfBrLXct0zZ2F0UR2pKFVgp4kjScbh1nfVFdwGevGl5Vz77WfagoJGrV9aWc5OdqKINm53A2UN+nKNkvzMROTMXUWp3xDTuYCjNNDxrKeG+QpVnqBhxf67DA==
+Received: from DM6PR03CA0053.namprd03.prod.outlook.com (2603:10b6:5:100::30)
+ by CH3PR12MB9145.namprd12.prod.outlook.com (2603:10b6:610:19b::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.25; Tue, 8 Jul
+ 2025 20:18:09 +0000
+Received: from DS1PEPF00017093.namprd03.prod.outlook.com
+ (2603:10b6:5:100:cafe::94) by DM6PR03CA0053.outlook.office365.com
+ (2603:10b6:5:100::30) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8922.21 via Frontend Transport; Tue,
+ 8 Jul 2025 20:18:09 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ DS1PEPF00017093.mail.protection.outlook.com (10.167.17.136) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8901.15 via Frontend Transport; Tue, 8 Jul 2025 20:18:09 +0000
+Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 8 Jul 2025
+ 13:18:01 -0700
+Received: from drhqmail202.nvidia.com (10.126.190.181) by
+ drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Tue, 8 Jul 2025 13:18:00 -0700
+Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com
+ (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Tue, 8 Jul 2025 13:17:59 -0700
+Date: Tue, 8 Jul 2025 13:17:58 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, "imammedo@redhat.com"
+ <imammedo@redhat.com>, "nathanc@nvidia.com" <nathanc@nvidia.com>,
+ "mochs@nvidia.com" <mochs@nvidia.com>, "smostafa@google.com"
+ <smostafa@google.com>, "gustavo.romero@linaro.org"
+ <gustavo.romero@linaro.org>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>, Linuxarm
+ <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+Subject: Re: [PATCH v6 00/12] hw/arm/virt: Add support for user creatable
+ SMMUv3 device
+Message-ID: <aG189lO48Yz+Xef2@Asurada-Nvidia>
+References: <20250703084643.85740-1-shameerali.kolothum.thodi@huawei.com>
+ <aGzPgZEhORuRyIdl@Asurada-Nvidia>
+ <8e57288e83b24db5a09ab00e39d42940@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] system/os-win32: Remove unnecessary
- 'qemu/typedefs.h' include
-To: qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
- Alex Williamson <alex.williamson@redhat.com>
-References: <20250708085859.7885-1-philmd@linaro.org>
- <20250708085859.7885-4-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250708085859.7885-4-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <8e57288e83b24db5a09ab00e39d42940@huawei.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS1PEPF00017093:EE_|CH3PR12MB9145:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2f0d4d03-5c9b-46e0-5eb7-08ddbe5c8e9d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|36860700013|1800799024|7416014|376014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?JO9zEqA8e2shmMYECvLU9Dof0DAsVaFjSETG7fdiFvZLuMBb5Vq39qt8HRO1?=
+ =?us-ascii?Q?EvlNPsTO/Ilaq4l8TKVnOS0+Lf6SI9vbXoZtVy3MRxnzBbWldPZgwxzFF1cc?=
+ =?us-ascii?Q?95xhw46443WXpqOuggH9Zg1MBGpRpMgpaDwbmiknkAJgrRe9OT8m5wC/vvCt?=
+ =?us-ascii?Q?p0Qeb4QhBnD+C1TV/LDXvdyQ/PrnLoQF1Fvcr6ztYMRoCunL9vbxAui9865r?=
+ =?us-ascii?Q?Fscs3Hf71nV8s3VtZBFyZDdNjkLxzaxtnDWeU76Go7cDSdwuxM4u7Y9LsmtA?=
+ =?us-ascii?Q?xqwMkMYFnlRD9/LaXu5+z9UNgFwKCgAT/sYstAaVBW07foLY3sT8XoS05c80?=
+ =?us-ascii?Q?UDcOKD6/nRWWlgcObieO/pidHctBYjAHpjkIJ3ME3pPXx7e2ffM9rCCbpSYM?=
+ =?us-ascii?Q?yEtuHYa0LJe23as4gpVlhEeCJ3FsCSW1ZWGj+ZXms2ZHr+nBb/9J9v6LGcD8?=
+ =?us-ascii?Q?OFhT7HFfg9itb3jSJP1qCAoXBWSPbEZTaQsNH9DYPOofcZ3xylXP3hjb+olY?=
+ =?us-ascii?Q?5k1DTyELOjfPvbFK5rn1kA8R9IEy61G61mfzHasKIp5j3RGU8vxtb8ME/9gw?=
+ =?us-ascii?Q?F5AIo/CksR3ZJYpoz6UZj4Zcoc4kxHe/NqZmlJ/ZrTQmt9VYaFB7gK0eoRxy?=
+ =?us-ascii?Q?i27nYu6xpW+9En4Tmjbgp2AwSK4YH6O0rfGCbOWT5uifLgZYHUBTtmnUVg5L?=
+ =?us-ascii?Q?dsynjNGqQH0wvrsdkqSrYWc0NypW+b9GWskl5+4HAe8QxZHJ3Hs/Xc+O9224?=
+ =?us-ascii?Q?0Z0t4PjwJIYbIe+WLIufF7tcBFwYRuFdJzt9zYZJ+79IrucQ2CFbC+eAF4FA?=
+ =?us-ascii?Q?toin1U+0CJkpW47CFik+0V83JgZtWMSWXgW/eKbFo7EhWb3U6cusrM24ESqa?=
+ =?us-ascii?Q?U00y/KdCKXFywXGkeZShF+7C6wo5DL6Z45zffB8FUl8xTx1yjEj8fYIULxrx?=
+ =?us-ascii?Q?cKmYw3pbMpAEo80s2pSvT7CvbeCBH32q1U2FHUEIcvlJc5fTIqZNI1ZlTIhM?=
+ =?us-ascii?Q?/6PDBHqpFlLDVlYm+rMD0k8H8ey3kLkZGdQ09lUMpade35WTpvkxJNqveS9k?=
+ =?us-ascii?Q?wH5oXoOgC50yfjBFrE7IW35vpC5ycBdotj851Anh+5YIeyYpy3aaUKXPB6Gq?=
+ =?us-ascii?Q?nqr1q+MDTZhrNsHR5aT/sroIMh7Fs2/aOEMkKTJr302zrwqstE35a0m5Jqfp?=
+ =?us-ascii?Q?w2rJ5P8JEz/UVVqME9I4vMXViFhMjWlUCj2qy1+E7wNiCesOlXs6ojxEbP6P?=
+ =?us-ascii?Q?EMe+bdNYiqKcnrUamleH6AKwQ3W7Pbo5Y3NY+e5qSbW+nZFOaI7YvSx3XjHD?=
+ =?us-ascii?Q?Pc5/Yk0vhRuk1FaHK/xN3jB+qCefSOTUNHSWaWymaVHoxQ3hw2JHIHA2uvQ7?=
+ =?us-ascii?Q?F+9jnFZMpC7aiD4/MVJV2Nd4RqRacnmW3gGmz7WQYd7kRg70Ade636AggwBA?=
+ =?us-ascii?Q?42jyd66+wAzlv1VMqCzx73JWcPZeaa+0vnbCCLOeiVVfmtTxVWU00eIgLvuw?=
+ =?us-ascii?Q?W4GygV9zjEGwK4jEuhGoNMHZrx7+SKItyQjT?=
+X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(36860700013)(1800799024)(7416014)(376014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jul 2025 20:18:09.3994 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2f0d4d03-5c9b-46e0-5eb7-08ddbe5c8e9d
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: DS1PEPF00017093.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9145
+Received-SPF: permerror client-ip=2a01:111:f403:2412::60d;
+ envelope-from=nicolinc@nvidia.com;
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,43 +168,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/7/25 10:58, Philippe Mathieu-Daudé wrote:
-> Commit f5fd677ae7c ("win32/socket: introduce qemu_socket_select()
-> helper") included the "qemu/typedefs.h" header for the Error type,
-> but files including "system/os-win32.h" should already include
-> "qemu/osdep.h", and thus "qemu/typedefs.h".
+On Tue, Jul 08, 2025 at 08:57:37AM +0000, Shameerali Kolothum Thodi wrote:
+> > Thank you for the effort and the work here.
+> > 
+> > A separate topic: do you have any preparation for the vIOMMU uAPI
+> > patches (iommufd backends) in QEMU?
+> > 
+> > I think it should be the next step after this series, so I wonder
+> > if you have done some worked already to test this series.
+> > 
+> > And maybe I can start that review process in parallel, or we will
+> > have to wait for the vSMMU code.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/system/os-win32.h | 1 -
->   1 file changed, 1 deletion(-)
-> 
-> diff --git a/include/system/os-win32.h b/include/system/os-win32.h
-> index 3aa6cee4c23..662cfabc5e7 100644
-> --- a/include/system/os-win32.h
-> +++ b/include/system/os-win32.h
-> @@ -29,7 +29,6 @@
->   #include <winsock2.h>
->   #include <windows.h>
->   #include <ws2tcpip.h>
-> -#include "qemu/typedefs.h"
+> Yes, I have something on top of this series that enables the accelerated
+> support.  I need do a bit more testing and then will send out that as an
+> RFC v3. Hopefully later this week.
 
-FTR, copying Peter's comment on v1:
-http://lore.kernel.org/qemu-devel/CAFEAcA9rcJHBaeAqCM1BszrhzkE4=gxJkx9h62BVhEz9hB7OMA@mail.gmail.com
+Sounds great. It'd be nicer if there is a branch to try :)
 
- > This one's tricky -- osdep.h includes system/os-win32.h
- > *before* it includes typedefs.h. If you want to remove this
- > include I think you need to move the include of typedefs.h
- > a bit further up in osdep.h (taking care that it's still
- > wrapped in an "extern C").
- >
- > (Or we could declare the functions in os-win32.h which
- > use the Error type somewhere else. That header I think is
- > intended to be "Windows specifics and compatibility wrappers
- > that everywhere needs to have sorted out", not "this
- > function happens to only be needed on Windows": a lot
- > of the functions declared in it are only used in a
- > handful of files and don't need to be declared to every
- > source file in the project. But that's a bit more effort.)
-
+Thanks
+Nicolin
 
