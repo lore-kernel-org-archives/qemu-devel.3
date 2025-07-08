@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D45EFC83F0F
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:03:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB2A7C8303C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZEWe-00039J-7O; Tue, 08 Jul 2025 16:02:50 -0400
+	id 1uZEXr-0000F7-KO; Tue, 08 Jul 2025 16:04:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uZCNu-0007TP-2C
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 13:45:38 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uZCMK-0002CK-Rt
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 13:45:27 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-31223a4cddeso3506383a91.1
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 10:43:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1751996636; x=1752601436; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=S0LH90vcz1GOtJ9aUwnYZjq9sOvu3QPsISmol2AG6ZM=;
- b=pi7Y4JjM6jFMCVyqiNKJCefwc0x4SMJ6W4+lLvJocO5RaWNV5KY1gbX9bIMGRnuNzN
- szwdBsCSk1WfJYa8R0jrcpoRdIpVR7JPVR00d+Q0SpLyHBVTPv8EA25vdjsgnSAyOnIV
- suJsIIVSR1dkgSHjgFDalFdTuU64kNt3Ke8Jpt5Ra5z6zW9syVqBMzMH6pTEFBxHNI8m
- 08Rt53m8/orGrsrRo4J2P5+cgBxbnhfnB5W5MNk2QlAmZZuHixfVsQNFIsjG08mi4Adw
- mtSLshBi2oEYUutsZ5KPGlPX/KYa2pngOqwndXENLRhitJGdcL0C/3SraxCjAZF8K+Vj
- o9tw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uZCRU-00041A-5J
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 13:50:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uZCQQ-0005K3-O4
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 13:48:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751996826;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=b4eakUl1ltj5XPn29ft+YlM5niASE2dTzYNqHfnFkes=;
+ b=SHSTq9ULGHmqD88R8JtUwKlvP+RtP3E/o0CAjg0LZujV7ULkq3QkdaD6vjiHozXTg+g5XB
+ VvnkTO0XekPjC94hnS0VF2Q9ulzQHoi6mqHgvOgb42NC2TnYrYBS1UoSCvPi8Khp6Z2SU6
+ TkqEoGZRbLvO4l04PUFeztSl6y6/xTA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-626-0-iGDB3JNgeybC7iO4g0VQ-1; Tue, 08 Jul 2025 08:25:25 -0400
+X-MC-Unique: 0-iGDB3JNgeybC7iO4g0VQ-1
+X-Mimecast-MFC-AGG-ID: 0-iGDB3JNgeybC7iO4g0VQ_1751977524
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a54a8a0122so2032990f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 05:25:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751996636; x=1752601436;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=S0LH90vcz1GOtJ9aUwnYZjq9sOvu3QPsISmol2AG6ZM=;
- b=YBeUXB6Tk9Pw8JZFLn/e7vxg9lPycdm/NmRvFL2ncwt5Z2MmvxcswNC3d30vmm+Cog
- iN+PIXhkldNRNYs5W9rRWu0DpfIz5mNjgaaWKRhQ1mcz9EX1VE2sPYiR+VGmc0TbssaK
- sIGZ10DjsyFvnBr50f34HeE8n81IxHVzsQRuumgkJ4grtvfrZ1sNsTAMMVaTiI9r96Vu
- zsJGptMdtgiLTgCaUOvMmNLT6P2DWP+DSK2hqoaSawSjVdeT0BgwHzt/NDcsc+6cbsoH
- ASkU1qdY6CG2OOm9Y0DBK2jUH2PAhdKmvcmdP692GMraoTgezFcYj/CQLW/3d1/NhQwe
- sVgQ==
-X-Gm-Message-State: AOJu0Yw7d4Bfnp2oKPGemzIkLmtLusY29c5hhjTIFs206G18X++C77Vm
- gROWn1jKHStoPts4uYoGr2tl6LkmkvRPQm4k+xrrXRlMc2ZXqpaWuIoXjxs1CxP8uaEvSfLxSGY
- tN56F
-X-Gm-Gg: ASbGncugsqfe4D0vmVEUlj2m2WlQBQYFfHJnW22N/41iBhl/AXxi5sAq2WJev2KQAL/
- P4dbFP/3teF7jTIw0FChjF3QFKHzqSA8xLcITldOalcimb4+3jmCnPeW5PAaBHOfz5emcjaYJmJ
- xACi8KVmlDAl1U3lzPGk3vFVaBG0dBzigZlM9/bHUT2X8qpHnS2zmsCpcvDaK+BUP4/d18b/Y0W
- PQJIrl6dGkAgFYDg2pb5P7ZLi01zrvKxS6yOMWWnpA/9wcPa0Djd58FzaB1K0qBkkclRPWFhaVQ
- Y0UKKo/boBro9GhlCJTbQpxPQEIVbMLncB7i/035ITRTN0aVN7APdMKkooO9FMZl27rdpubdMm8
- =
-X-Google-Smtp-Source: AGHT+IHSHsK05Ur/dR4MTQ3EXznQ5UZj7RknR8eBaHZSnJ2jeWVTuQNIigxaJRsyx8a61d3gUeJLyg==
-X-Received: by 2002:a17:90b:2ed0:b0:311:f30b:c21 with SMTP id
- 98e67ed59e1d1-31aadd9fd46mr20276988a91.26.1751996636499; 
- Tue, 08 Jul 2025 10:43:56 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31c21ede5ddsm2751646a91.46.2025.07.08.10.43.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Jul 2025 10:43:56 -0700 (PDT)
-Message-ID: <11143a5f-dd2e-49c4-b544-0ab9d3c00877@linaro.org>
-Date: Tue, 8 Jul 2025 10:43:55 -0700
+ d=1e100.net; s=20230601; t=1751977524; x=1752582324;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=b4eakUl1ltj5XPn29ft+YlM5niASE2dTzYNqHfnFkes=;
+ b=uyBMd0JMsRY0neLa+q/p5JiF0fBZKW3w+Cx8W+64DCAKh7H3ghXzekzPqKBDmKgdSf
+ YXZmiOOI2HcMmaRZ7clZ4eARm2CV8SAK+wXhShojl0n3j/yv59ITVRJh23X92FpOrcMH
+ aZZix03V8rjwcZAs4bNFZfshvEzJJ1ryjNugB+pzHuAsBKmW/tPwuF4anarNcEi8O/d1
+ 6Ss7XJC1D/Jt1wvs3VLdnKvpRAiTURxo0+QfK90a/zr2uFFVazx7vH8wpdkzAaOtchxB
+ 1SIK88spWTlRJlO88fmeLk319PFKu5L78CBMFNK1kpyzGiEx4yzMEF8yn4kwy1x72oC0
+ pSzQ==
+X-Gm-Message-State: AOJu0YzAMwS5/2ikMMjeQ08IE2Z9Uh5SJ3/FUpmvh0Us9vCQUYY+mcUA
+ QRDdr3ABJOetrPtX70G8GepF4ZXwdY5OBkwuj1LMV7Ga/kpJGpQqeLtbb5W0yZwNG2VFXvMFINb
+ WTKnjmkDRDk7Xr6noTMRtpbM/bU9MSo1W2csP2CEjEZkKQTdatAdqF3j8h03vNN3wFK6MCkjWT+
+ glj9d51nbzc6ms9GrL89IjgtegEYGJvcY=
+X-Gm-Gg: ASbGncupwu5JAV7X5879eXkBGBiOnM57ylHeCEFbiBh+H2lIqDFN369si324aG9BA9j
+ 7co5XsiDHzMSwAW5crJgTP+0cR5+bB9qWFHqJkg3rRXZl97HhYt6ntN98Sgq4hdxBZwmP+jGieH
+ kYDfut
+X-Received: by 2002:a05:6000:2588:b0:3a5:1cc5:4a17 with SMTP id
+ ffacd0b85a97d-3b5ddedc49cmr2213690f8f.42.1751977523991; 
+ Tue, 08 Jul 2025 05:25:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF45YM4O3HZs6YCkvL0vQJ6r1LvNL6axxGo513DcN7DqQYe0gHQG76rQtGQ41n+FKYsytUr8U3YA8LJCL2ttGc=
+X-Received: by 2002:a05:6000:2588:b0:3a5:1cc5:4a17 with SMTP id
+ ffacd0b85a97d-3b5ddedc49cmr2213665f8f.42.1751977523560; Tue, 08 Jul 2025
+ 05:25:23 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] control guest time using a dilation factor
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com, richard.henderson@linaro.org,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>,
- peter.maydell@linaro.org, philmd@linaro.org
-References: <20250628002431.41823-1-pierrick.bouvier@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250628002431.41823-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102f.google.com
+References: <20250703-rust-mem-api-v1-0-cd5314bdf580@linaro.org>
+ <20250703-rust-mem-api-v1-1-cd5314bdf580@linaro.org>
+ <591f8a81-2c8e-4e30-abf2-4571afed41b4@redhat.com>
+ <CAAjaMXZ3JziZ6gUHF67=nqvxzUF0M46SPqftRKgHOYYLaUxjJg@mail.gmail.com>
+In-Reply-To: <CAAjaMXZ3JziZ6gUHF67=nqvxzUF0M46SPqftRKgHOYYLaUxjJg@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 8 Jul 2025 14:25:10 +0200
+X-Gm-Features: Ac12FXxIyiVAoWAMhhYdBNcRj-Ei6pdc0UOFvXJtkQDGmCSMw6cWSyZKcC_dF2c
+Message-ID: <CABgObfYY-WVcYGno3moOospz-G2vWgo=0LLVzxTZxscRFK7+wg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] rust/memory: replace size arg with Bits enum
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org, 
+ Zhao Liu <zhao1.liu@intel.com>
+Content-Type: multipart/alternative; boundary="000000000000f25e0f06396a0df8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,51 +105,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/27/25 5:24 PM, Pierrick Bouvier wrote:
-> Depending on host cpu speed, and QEMU optimization level, it may sometimes be
-> needed to slow or accelerate time guest is perceiving. A common scenario is
-> hitting a timeout during a boot process, because some operations were not
-> finished on time.
-> 
-> An existing solution for that is -icount shift=X, with low values, which will
-> roughly map virtual time to how many instructions were executed.
-> 
-> This series introduces another approach, based on faking host time returned to
-> the guest, by applying a time-dilation factor. Time will go slower/faster for
-> the guest, without impacting QEMU emulation speed.
-> 
-> It may eventually be used to fix some of the timeouts we hit in CI, by slowing
-> down time in VM, to be less sensitive to varying cpu performance.
-> 
-> v2
+--000000000000f25e0f06396a0df8
+Content-Type: text/plain; charset="UTF-8"
+
+Il mar 8 lug 2025, 11:11 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+ha scritto:
+
+> > I find this both verbose and (ok, that's subjective) ugly due to the
+> > extra import, the underscore.
+>
+> Yep, I agree on that, but I wasn't sure what name would be better.
+> Whatever type-level improvement this patch brings, it's small, though
+> nice-to-have. We can drop it, no problem.
+>
+
+You did identify a small but real problem, which can be fixed with
+assertions.
+
+And also another issue in the API, which is that some code likes to use bit
+sizes and other likes to use byte sizes. And it's not clear whether you
+have to do *8 or /8.
+
+This is the one that is where an enum does work great, but without the "as"
+(because it reintroduces the *8 or /8 problem) and with names that don't
+have digits (because of the underscore, but also because it makes the
+result of "as" confusing).
+
+Byte/Word/Long/Quad would work for me, as it matches the C stb/stw/stl/stq
+APIs. Also please add the enum to the prelude. Still verbose but readable.
+I would also add methods like nbits() and nbytes() that can be used instead
+of "as".
+
+Of course if you go with the enum there is no need for assertions in the
+memory API. Except for the >= one, so perhaps it would also make sense to
+implement Cmp in addition to Eq?
+
+> The main effect on generated code is to add an assert! to
+> > memory_region_ops_read_cb() and memory_region_ops_write_cb() that's
+> > similar to the above.  I'm not sure of its value, either: if the size is
+> > not 1/2/4/8, memory.c/physmem.c must have screwed up big.  It's not a
+> > safety concern, either, since the size is not used in any unsafe code.
+>
+> Yep it's more of a guard rail since we can't have refined integer types.
+>
+
+It's not a lot in the grand scheme of things, but adding a match around all
+reads and writes isn't great. :(
+
+The only way to make an enum from an integer of the same repr is via
+transmute, right? So probably there could be an unsafe method
+Size::from_unchecked(u32) too?
+
+Paolo
+
+
 > --
-> 
-> In review, Paolo mentioned timers deadline should redilated in the other
-> direction. After going through this part, it seems that arrival is always based
-> on one of the clocks we have (which is dilated already), so I don't think we
-> should redilate that, as this would create a discordance between time set, and
-> real time when this happen. Feel free to correct me if this is wrong.
-> 
-> - keep start time per clock and apply accordingly
-> - apply time dilation for cpu_get_host_ticks as well
-> - use a default factor of 1.0
-> - rename cli option to -rtc speed-factor
-> - forbid to use option with kvm, as time is not provided by QEMU for guest
-> 
-> Pierrick Bouvier (2):
->    qemu/timer: introduce time dilation factor
->    system/rtc: introduce -rtc speed-factor option
-> 
->   include/qemu/timer.h     | 60 ++++++++++++++++++++++++++++------------
->   system/rtc.c             | 11 ++++++++
->   system/vl.c              |  9 ++++++
->   util/qemu-timer-common.c |  7 +++++
->   qemu-options.hx          |  7 ++++-
->   5 files changed, 75 insertions(+), 19 deletions(-)
-> 
+> Manos Pitsidianakis
+> Emulation and Virtualization Engineer at Linaro Ltd
+>
+>
 
-Gentle ping on this series.
+--000000000000f25e0f06396a0df8
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Regards,
-Pierrick
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mar 8 lug 2025, 11:11 Manos P=
+itsidianakis &lt;<a href=3D"mailto:manos.pitsidianakis@linaro.org">manos.pi=
+tsidianakis@linaro.org</a>&gt; ha scritto:</div><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
+204);padding-left:1ex">
+&gt; I find this both verbose and (ok, that&#39;s subjective) ugly due to t=
+he<br>
+&gt; extra import, the underscore.<br>
+<br>
+Yep, I agree on that, but I wasn&#39;t sure what name would be better.<br>
+Whatever type-level improvement this patch brings, it&#39;s small, though<b=
+r>
+nice-to-have. We can drop it, no problem.<br></blockquote></div></div><div =
+dir=3D"auto"><br></div><div dir=3D"auto">You did identify a small but real =
+problem, which can be fixed with assertions.</div><div dir=3D"auto"><br></d=
+iv><div dir=3D"auto">And also another issue in the API, which is that some =
+code likes to use bit sizes and other likes to use byte sizes. And it&#39;s=
+ not clear whether you have to do *8 or /8.</div><div dir=3D"auto"><br></di=
+v><div dir=3D"auto">This is the one that is where an enum does work great, =
+but without the &quot;as&quot; (because it reintroduces the *8 or /8 proble=
+m) and with names that don&#39;t have digits (because of the underscore, bu=
+t also because it makes the result of &quot;as&quot; confusing).</div><div =
+dir=3D"auto"><br></div><div dir=3D"auto">Byte/Word/Long/Quad would work for=
+ me, as it matches the C stb/stw/stl/stq APIs. Also please add the enum to =
+the prelude. Still verbose but readable. I would also add methods like nbit=
+s() and nbytes() that can be used instead of &quot;as&quot;.</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">Of course if you go with the enum the=
+re is no need for assertions in the memory API. Except for the &gt;=3D one,=
+ so perhaps it would also make sense to implement Cmp in addition to Eq?</d=
+iv><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote =
+gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0p=
+x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+&gt; The main effect on generated code is to add an assert! to<br>
+&gt; memory_region_ops_read_cb() and memory_region_ops_write_cb() that&#39;=
+s<br>
+&gt; similar to the above.=C2=A0 I&#39;m not sure of its value, either: if =
+the size is<br>
+&gt; not 1/2/4/8, memory.c/physmem.c must have screwed up big.=C2=A0 It&#39=
+;s not a<br>
+&gt; safety concern, either, since the size is not used in any unsafe code.=
+<br>
+<br>
+Yep it&#39;s more of a guard rail since we can&#39;t have refined integer t=
+ypes.<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"a=
+uto">It&#39;s not a lot in the grand scheme of things, but adding a match a=
+round all reads and writes isn&#39;t great. :(</div><div dir=3D"auto"><br><=
+/div><div dir=3D"auto">The only way to make an enum from an integer of the =
+same repr is via transmute, right? So probably there could be an unsafe met=
+hod Size::from_unchecked(u32) too?</div><div dir=3D"auto"><br></div><div di=
+r=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div cl=
+ass=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote"=
+ style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
+adding-left:1ex">
+<br>
+-- <br>
+Manos Pitsidianakis<br>
+Emulation and Virtualization Engineer at Linaro Ltd<br>
+<br>
+</blockquote></div></div></div>
+
+--000000000000f25e0f06396a0df8--
+
 
