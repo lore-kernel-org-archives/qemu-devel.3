@@ -4,62 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7055AC8303C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 766E8C83F0F
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:48:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFDI-0001na-Kf; Tue, 08 Jul 2025 16:46:54 -0400
+	id 1uZFBb-0005mF-7H; Tue, 08 Jul 2025 16:45:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uZDqw-0007Dk-VW; Tue, 08 Jul 2025 15:19:47 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uZDk3-00016v-9g
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:12:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uZDqo-000885-KO; Tue, 08 Jul 2025 15:19:39 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bc50F2JLPz6D8h4;
- Tue,  8 Jul 2025 23:40:13 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 390E2140433;
- Tue,  8 Jul 2025 23:43:23 +0800 (CST)
-Received: from A2303104131.china.huawei.com (10.203.177.241) by
- frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 8 Jul 2025 17:43:13 +0200
-To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
- <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
- <imammedo@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <smostafa@google.com>, <gustavo.romero@linaro.org>, <mst@redhat.com>,
- <marcel.apfelbaum@gmail.com>, <linuxarm@huawei.com>,
- <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: [PATCH v7 12/12] qtest/bios-tables-test: Update tables for smmuv3
- tests
-Date: Tue, 8 Jul 2025 16:40:55 +0100
-Message-ID: <20250708154055.101012-13-shameerali.kolothum.thodi@huawei.com>
-X-Mailer: git-send-email 2.12.0.windows.1
-In-Reply-To: <20250708154055.101012-1-shameerali.kolothum.thodi@huawei.com>
-References: <20250708154055.101012-1-shameerali.kolothum.thodi@huawei.com>
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uZDju-0006Im-Rc
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:12:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752001929;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mRrWJXx5qrcS1aBI12Benqblc8NnA0a1RoEAr2HASco=;
+ b=HrjssBpTweVGyGF8tWDmNSunVlTYzgCO8fuy0RsHFFxXFYax5/8cfgLEFI/PHMDXVbrpkx
+ +bszdczGyhVbzG9qXbYtdlTyoFxl5DiuFg82UiK41aY3d6mlVUs+s/d4IfpiLvz4CjV5pt
+ Gm3DCiP1+JbRfv4sU/HpE903OHEN2Xo=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-362-DQOISW_HOcubMawPRpEg3A-1; Tue, 08 Jul 2025 05:47:28 -0400
+X-MC-Unique: DQOISW_HOcubMawPRpEg3A-1
+X-Mimecast-MFC-AGG-ID: DQOISW_HOcubMawPRpEg3A_1751968048
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4530c186394so16005985e9.0
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 02:47:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751968048; x=1752572848;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mRrWJXx5qrcS1aBI12Benqblc8NnA0a1RoEAr2HASco=;
+ b=VbhJx8qNOPdCx2nvhrz1z/nXPVyU1SGkM53UwgD5Ku5z+RdqlK2eQ3yIdFAZna8eOZ
+ U9T1OqUB8IXaquMROpcSnxsaegEMjeAkwHCiAqlQ/a4gEVchihzZh3NM6fV1YZkK80va
+ 3dx2xNbeUcCSrTloA1DDYOSwXbwd/CgfyRUZvhJAQ68cBobCb1HxSU/hFdm1FqHyZxgc
+ Dy+rkG4kK4gmzoGNNcApejtbebvKhqZaKPJr/ZjaiBs0Zrgvf/4qSy/xr4KPVkRVydqc
+ WoQhj1H5Ph5rHt5ydo+nA8SuVQO16MK+8memn0JFeAgrO1KrAogWfAUVnpOaDF5xDGO3
+ wBtw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWQkD0dzM7rczUaCazooD3mgrKFoC4vcmxXUMAE0SOf3+9bHNHZIx8RG8g3WKjBvp3DC7Orhyib0nKm@nongnu.org
+X-Gm-Message-State: AOJu0YzM1QEW2SZ1nMAofpiVnfpC5BibFDhoG+EK/pLtg+8Rumzbd0tm
+ p1oWDa9OG+Y/09aQUm3jpTO9Obpz6crHStNSTvLdxaCkGuPrrAh4He+IsSeuf7RtsDQKeg3PXh/
+ Riry+hOXfuvJhRHkjQihSg+9spCENc72g4cS9paEl2r4pnyfI+7fyYhfU
+X-Gm-Gg: ASbGncsIf9/KbRVgEUnzd0w92t69imkRzgkCkd6GGHnUhCK3FXowigc+nIWvN/SLsgn
+ eTWbKGehj4SJgy3GZXcvdn79YjUuaCXZwoS0ZmEauMAJMkULBr2I7N0uM5K7qXUJoxfA91yqhVn
+ QRAm/pczymoXo/vQAmWIDqDEAuuHiSbfxwfjKokHo20LfTZRmPvdUxz4j2PgE8GnE6Tv2j/Hk0/
+ aj7HwafrNXcxR5cSLkz6hRqliUHA3vBxXOFEvnFd9urn+O/96Zq2avRoZMEDTfSXP3pwFRwJMyz
+ UxO/HYr0gfoLTE+32hqtYu0eREpiF3Qip2CuqFiDzhlIKHlqKSciIaNBCojwiUhTrRPMoQ==
+X-Received: by 2002:a05:600c:3f0f:b0:43d:4e9:27ff with SMTP id
+ 5b1f17b1804b1-454c81f53a7mr53171955e9.7.1751968047535; 
+ Tue, 08 Jul 2025 02:47:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IENoSXQ2UTf8DjWAuOH3p/YeR2S91YyiJFG62xpbTnNJ9KLyf50vPX6WemiYtAk4Ijshv4+3Q==
+X-Received: by 2002:a05:600c:3f0f:b0:43d:4e9:27ff with SMTP id
+ 5b1f17b1804b1-454c81f53a7mr53171615e9.7.1751968047020; 
+ Tue, 08 Jul 2025 02:47:27 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454cd3d806bsm16913555e9.33.2025.07.08.02.47.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 08 Jul 2025 02:47:26 -0700 (PDT)
+Message-ID: <785c5904-001b-4e1b-8fae-9b8539668e96@redhat.com>
+Date: Tue, 8 Jul 2025 11:47:24 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.203.177.241]
-X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 08/12] hw/arm/virt: Allow user-creatable SMMUv3 dev
+ instantiation
+Content-Language: en-US
+To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
+ <nicolinc@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "imammedo@redhat.com" <imammedo@redhat.com>,
+ "nathanc@nvidia.com" <nathanc@nvidia.com>,
+ "mochs@nvidia.com" <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>,
+ "gustavo.romero@linaro.org" <gustavo.romero@linaro.org>,
+ "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ Linuxarm <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>,
+ jiangkunkun <jiangkunkun@huawei.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+References: <20250703084643.85740-1-shameerali.kolothum.thodi@huawei.com>
+ <20250703084643.85740-9-shameerali.kolothum.thodi@huawei.com>
+ <b05cd1f5-db7a-45d3-a582-85c808adcd04@redhat.com>
+ <e4cd2ccede7b46df9bbcf63dcf492fcf@huawei.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <e4cd2ccede7b46df9bbcf63dcf492fcf@huawei.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,410 +131,150 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-From:  Shameer Kolothum via <qemu-devel@nongnu.org>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For the legacy smmuv3 test case, generated IORT has a single SMMUv3 node,
-a Root Complex(RC) node and 1 ITS node.
-RC node features 4 ID mappings, of which 2 points to SMMU node and the
-remaining ones points to ITS.
+Hi Shameer,
 
-       pcie.0 -> {SMMU0} -> {ITS}
-{RC}   pcie.1 -> {SMMU0} -> {ITS}
-       pcie.2            -> {ITS}
-       [all other ids]   -> {ITS}
+On 7/8/25 10:54 AM, Shameerali Kolothum Thodi wrote:
+> Hi Eric,
+>
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Sent: Tuesday, July 8, 2025 8:41 AM
+>> To: Shameerali Kolothum Thodi
+>> <shameerali.kolothum.thodi@huawei.com>; qemu-arm@nongnu.org;
+>> qemu-devel@nongnu.org
+>> Cc: peter.maydell@linaro.org; jgg@nvidia.com; nicolinc@nvidia.com;
+>> ddutile@redhat.com; berrange@redhat.com; imammedo@redhat.com;
+>> nathanc@nvidia.com; mochs@nvidia.com; smostafa@google.com;
+>> gustavo.romero@linaro.org; mst@redhat.com;
+>> marcel.apfelbaum@gmail.com; Linuxarm <linuxarm@huawei.com>;
+>> Wangzhou (B) <wangzhou1@hisilicon.com>; jiangkunkun
+>> <jiangkunkun@huawei.com>; Jonathan Cameron
+>> <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
+>> Subject: Re: [PATCH v6 08/12] hw/arm/virt: Allow user-creatable SMMUv3
+>> dev instantiation
+>>
+>> Hi Shameer,
+>>
+>> On 7/3/25 10:46 AM, Shameer Kolothum wrote:
+>>> Allow cold-plugging of an SMMUv3 device on the virt machine when no
+>>> global (legacy) SMMUv3 is present or when a virtio-iommu is specified.
+>>>
+>>> This user-created SMMUv3 device is tied to a specific PCI bus provided
+>>> by the user, so ensure the IOMMU ops are configured accordingly.
+>>>
+>>> Due to current limitations in QEMU’s device tree support, specifically
+>>> its inability to properly present pxb-pcie based root complexes and
+>>> their devices, the device tree support for the new SMMUv3 device is
+>>> limited to cases where it is attached to the default pcie.0 root complex.
+>>>
+>>> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+>>> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+>>> Tested-by: Nathan Chen <nathanc@nvidia.com>
+>>> Signed-off-by: Shameer Kolothum
+>> <shameerali.kolothum.thodi@huawei.com>
+>>> ---
+>>>  hw/arm/smmu-common.c         |  8 +++++-
+>>>  hw/arm/smmuv3.c              |  2 ++
+>>>  hw/arm/virt.c                | 50 ++++++++++++++++++++++++++++++++++++
+>>>  hw/core/sysbus-fdt.c         |  3 +++
+>>>  include/hw/arm/smmu-common.h |  1 +
+>>>  5 files changed, 63 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+>>> index b15e7fd0e4..2ee4691299 100644
+>>> --- a/hw/arm/smmu-common.c
+>>> +++ b/hw/arm/smmu-common.c
+>>> @@ -959,7 +959,12 @@ static void smmu_base_realize(DeviceState *dev,
+>> Error **errp)
+>>>                  goto out_err;
+>>>              }
+>>>          }
+>>> -        pci_setup_iommu(pci_bus, &smmu_ops, s);
+>>> +
+>>> +        if (s->smmu_per_bus) {
+>>> +            pci_setup_iommu_per_bus(pci_bus, &smmu_ops, s);
+>>> +        } else {
+>>> +            pci_setup_iommu(pci_bus, &smmu_ops, s);
+>>> +        }
+>>>          return;
+>>>      }
+>>>  out_err:
+>>> @@ -984,6 +989,7 @@ static void smmu_base_reset_exit(Object *obj,
+>> ResetType type)
+>>>  static const Property smmu_dev_properties[] = {
+>>>      DEFINE_PROP_UINT8("bus_num", SMMUState, bus_num, 0),
+>>> +    DEFINE_PROP_BOOL("smmu_per_bus", SMMUState, smmu_per_bus,
+>> false),
+>>>      DEFINE_PROP_LINK("primary-bus", SMMUState, primary_bus,
+>>>                       TYPE_PCI_BUS, PCIBus *),
+>>>  };
+>>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+>>> index ab67972353..bcf8af8dc7 100644
+>>> --- a/hw/arm/smmuv3.c
+>>> +++ b/hw/arm/smmuv3.c
+>>> @@ -1996,6 +1996,8 @@ static void smmuv3_class_init(ObjectClass
+>> *klass, const void *data)
+>>>      device_class_set_parent_realize(dc, smmu_realize,
+>>>                                      &c->parent_realize);
+>>>      device_class_set_props(dc, smmuv3_properties);
+>>> +    dc->hotpluggable = false;
+>>> +    dc->user_creatable = true;
+>>>  }
+>>>
+>>>  static int smmuv3_notify_flag_changed(IOMMUMemoryRegion *iommu,
+>>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+>>> index 05a14881cf..8662173c43 100644
+>>> --- a/hw/arm/virt.c
+>>> +++ b/hw/arm/virt.c
+>>> @@ -56,6 +56,7 @@
+>>>  #include "qemu/cutils.h"
+>>>  #include "qemu/error-report.h"
+>>>  #include "qemu/module.h"
+>>> +#include "hw/pci/pci_bus.h"
+>>>  #include "hw/pci-host/gpex.h"
+>>>  #include "hw/virtio/virtio-pci.h"
+>>>  #include "hw/core/sysbus-fdt.h"
+>>> @@ -1440,6 +1441,28 @@ static void create_smmuv3_dt_bindings(const
+>> VirtMachineState *vms, hwaddr base,
+>>>      g_free(node);
+>>>  }
+>>>
+>>> +static void create_smmuv3_dev_dtb(VirtMachineState *vms,
+>>> +                                  DeviceState *dev, PCIBus *bus)
+>>> +{
+>>> +    PlatformBusDevice *pbus = PLATFORM_BUS_DEVICE(vms-
+>>> platform_bus_dev);
+>>> +    SysBusDevice *sbdev = SYS_BUS_DEVICE(dev);
+>>> +    int irq = platform_bus_get_irqn(pbus, sbdev, 0);
+>>> +    hwaddr base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
+>>> +    MachineState *ms = MACHINE(vms);
+>>> +
+>>> +    if (strcmp("pcie.0", bus->qbus.name)) {
+>>> +        warn_report("SMMUv3 device only supported with pcie.0 for DT");
+>> while testing the series I hit the warning with a rhel guest which boots
+>> with ACPI.
+>> I think we shall make the check smarter to avoid that.
+>> maybe also check firmware_loaded and virt_is_acpi_enabled()?
+> Thanks for giving it a spin. Yes, just confirmed that the warning appears.
+> The above check will work, but can we make use of vms->acpi_dev for
+> this check instead? It is essentially the same and I think that will work. 
+>
+>     if (!vms->acpi_dev && strcmp("pcie.0", bus->qbus.name))
+the logical dependency on acpi_dev is maybe not that straightforward.
+Also it has has_ged and aarch64 check
+I thing I would simply check !(firmware_loaded &&
+virt_is_acpi_enabled(vms)). about the aarch64 check I am not sure this
+is needed.
 
-...
-[030h 0048   1]                         Type : 00
-[031h 0049   2]                       Length : 0018
-[033h 0051   1]                     Revision : 01
-[034h 0052   4]                   Identifier : 00000000
-[038h 0056   4]                Mapping Count : 00000000
-[03Ch 0060   4]               Mapping Offset : 00000000
-
-[040h 0064   4]                     ItsCount : 00000001
-[044h 0068   4]                  Identifiers : 00000000
-
-[048h 0072   1]                         Type : 04
-[049h 0073   2]                       Length : 0058
-[04Bh 0075   1]                     Revision : 04
-[04Ch 0076   4]                   Identifier : 00000001
-[050h 0080   4]                Mapping Count : 00000001
-[054h 0084   4]               Mapping Offset : 00000044
-
-[058h 0088   8]                 Base Address : 0000000009050000
-[060h 0096   4]        Flags (decoded below) : 00000001
-                             COHACC Override : 1
-                               HTTU Override : 0
-                      Proximity Domain Valid : 0
-[064h 0100   4]                     Reserved : 00000000
-[068h 0104   8]                VATOS Address : 0000000000000000
-[070h 0112   4]                        Model : 00000000
-[074h 0116   4]                   Event GSIV : 0000006A
-[078h 0120   4]                     PRI GSIV : 0000006B
-[07Ch 0124   4]                    GERR GSIV : 0000006D
-[080h 0128   4]                    Sync GSIV : 0000006C
-[084h 0132   4]             Proximity Domain : 00000000
-[088h 0136   4]      Device ID Mapping Index : 00000000
-
-[08Ch 0140   4]                   Input base : 00000000
-[090h 0144   4]                     ID Count : 0000FFFF
-[094h 0148   4]                  Output Base : 00000000
-[098h 0152   4]             Output Reference : 00000030
-[09Ch 0156   4]        Flags (decoded below) : 00000000
-                              Single Mapping : 0
-
-[0A0h 0160   1]                         Type : 02
-[0A1h 0161   2]                       Length : 0074
-[0A3h 0163   1]                     Revision : 03
-[0A4h 0164   4]                   Identifier : 00000002
-[0A8h 0168   4]                Mapping Count : 00000004
-[0ACh 0172   4]               Mapping Offset : 00000024
-
-[0B0h 0176   8]            Memory Properties : [IORT Memory Access Properties]
-[0B0h 0176   4]              Cache Coherency : 00000001
-[0B4h 0180   1]        Hints (decoded below) : 00
-                                   Transient : 0
-                              Write Allocate : 0
-                               Read Allocate : 0
-                                    Override : 0
-[0B5h 0181   2]                     Reserved : 0000
-[0B7h 0183   1] Memory Flags (decoded below) : 03
-                                   Coherency : 1
-                            Device Attribute : 1
-[0B8h 0184   4]                ATS Attribute : 00000000
-[0BCh 0188   4]           PCI Segment Number : 00000000
-[0C0h 0192   1]            Memory Size Limit : 40
-[0C1h 0193   2]           PASID Capabilities : 0000
-[0C3h 0195   1]                     Reserved : 00
-
-[0C4h 0196   4]                   Input base : 00000000
-[0C8h 0200   4]                     ID Count : 000001FF
-[0CCh 0204   4]                  Output Base : 00000000
-[0D0h 0208   4]             Output Reference : 00000048
-[0D4h 0212   4]        Flags (decoded below) : 00000000
-                              Single Mapping : 0
-
-[0D8h 0216   4]                   Input base : 00001000
-[0DCh 0220   4]                     ID Count : 000000FF
-[0E0h 0224   4]                  Output Base : 00001000
-[0E4h 0228   4]             Output Reference : 00000048
-[0E8h 0232   4]        Flags (decoded below) : 00000000
-                              Single Mapping : 0
-
-[0ECh 0236   4]                   Input base : 00000200
-[0F0h 0240   4]                     ID Count : 00000DFF
-[0F4h 0244   4]                  Output Base : 00000200
-[0F8h 0248   4]             Output Reference : 00000030
-[0FCh 0252   4]        Flags (decoded below) : 00000000
-                              Single Mapping : 0
-
-[100h 0256   4]                   Input base : 00001100
-[104h 0260   4]                     ID Count : 0000EEFF
-[108h 0264   4]                  Output Base : 00001100
-[10Ch 0268   4]             Output Reference : 00000030
-[110h 0272   4]        Flags (decoded below) : 00000000
-                              Single Mapping : 0
-
-For the smmuv3-dev test case, IORT has 2 SMMUV3 nodes,
-1 RC node and 1 ITS node.
-RC node features 4 ID mappings. 2 of them target the 2
-SMMU nodes while the others targets the ITS.
-
-        pcie.0 -> {SMMU0} -> {ITS}
-{RC}    pcie.1 -> {SMMU1} -> {ITS}
-        pcie.2            -> {ITS}
-        [all other ids]   -> {ITS}
-...
-[030h 0048   1]                         Type : 00
-[031h 0049   2]                       Length : 0018
-[033h 0051   1]                     Revision : 01
-[034h 0052   4]                   Identifier : 00000000
-[038h 0056   4]                Mapping Count : 00000000
-[03Ch 0060   4]               Mapping Offset : 00000000
-
-[040h 0064   4]                     ItsCount : 00000001
-[044h 0068   4]                  Identifiers : 00000000
-
-[048h 0072   1]                         Type : 04
-[049h 0073   2]                       Length : 0058
-[04Bh 0075   1]                     Revision : 04
-[04Ch 0076   4]                   Identifier : 00000001
-[050h 0080   4]                Mapping Count : 00000001
-[054h 0084   4]               Mapping Offset : 00000044
-
-[058h 0088   8]                 Base Address : 000000000C000000
-[060h 0096   4]        Flags (decoded below) : 00000001
-                             COHACC Override : 1
-                               HTTU Override : 0
-                      Proximity Domain Valid : 0
-[064h 0100   4]                     Reserved : 00000000
-[068h 0104   8]                VATOS Address : 0000000000000000
-[070h 0112   4]                        Model : 00000000
-[074h 0116   4]                   Event GSIV : 00000090
-[078h 0120   4]                     PRI GSIV : 00000091
-[07Ch 0124   4]                    GERR GSIV : 00000093
-[080h 0128   4]                    Sync GSIV : 00000092
-[084h 0132   4]             Proximity Domain : 00000000
-[088h 0136   4]      Device ID Mapping Index : 00000000
-
-[08Ch 0140   4]                   Input base : 00000000
-[090h 0144   4]                     ID Count : 0000FFFF
-[094h 0148   4]                  Output Base : 00000000
-[098h 0152   4]             Output Reference : 00000030
-[09Ch 0156   4]        Flags (decoded below) : 00000000
-                              Single Mapping : 0
-
-[0A0h 0160   1]                         Type : 04
-[0A1h 0161   2]                       Length : 0058
-[0A3h 0163   1]                     Revision : 04
-[0A4h 0164   4]                   Identifier : 00000002
-[0A8h 0168   4]                Mapping Count : 00000001
-[0ACh 0172   4]               Mapping Offset : 00000044
-
-[0B0h 0176   8]                 Base Address : 000000000C020000
-[0B8h 0184   4]        Flags (decoded below) : 00000001
-                             COHACC Override : 1
-                               HTTU Override : 0
-                      Proximity Domain Valid : 0
-[0BCh 0188   4]                     Reserved : 00000000
-[0C0h 0192   8]                VATOS Address : 0000000000000000
-[0C8h 0200   4]                        Model : 00000000
-[0CCh 0204   4]                   Event GSIV : 00000094
-[0D0h 0208   4]                     PRI GSIV : 00000095
-[0D4h 0212   4]                    GERR GSIV : 00000097
-[0D8h 0216   4]                    Sync GSIV : 00000096
-[0DCh 0220   4]             Proximity Domain : 00000000
-[0E0h 0224   4]      Device ID Mapping Index : 00000000
-
-[0E4h 0228   4]                   Input base : 00000000
-[0E8h 0232   4]                     ID Count : 0000FFFF
-[0ECh 0236   4]                  Output Base : 00000000
-[0F0h 0240   4]             Output Reference : 00000030
-[0F4h 0244   4]        Flags (decoded below) : 00000000
-                              Single Mapping : 0
-
-[0F8h 0248   1]                         Type : 02
-[0F9h 0249   2]                       Length : 0074
-[0FBh 0251   1]                     Revision : 03
-[0FCh 0252   4]                   Identifier : 00000003
-[100h 0256   4]                Mapping Count : 00000004
-[104h 0260   4]               Mapping Offset : 00000024
-
-[108h 0264   8]            Memory Properties : [IORT Memory Access Properties]
-[108h 0264   4]              Cache Coherency : 00000001
-[10Ch 0268   1]        Hints (decoded below) : 00
-                                   Transient : 0
-                              Write Allocate : 0
-                               Read Allocate : 0
-                                    Override : 0
-[10Dh 0269   2]                     Reserved : 0000
-[10Fh 0271   1] Memory Flags (decoded below) : 03
-                                   Coherency : 1
-                            Device Attribute : 1
-[110h 0272   4]                ATS Attribute : 00000000
-[114h 0276   4]           PCI Segment Number : 00000000
-[118h 0280   1]            Memory Size Limit : 40
-[119h 0281   2]           PASID Capabilities : 0000
-[11Bh 0283   1]                     Reserved : 00
-
-[11Ch 0284   4]                   Input base : 00000000
-[120h 0288   4]                     ID Count : 000001FF
-[124h 0292   4]                  Output Base : 00000000
-[128h 0296   4]             Output Reference : 00000048
-[12Ch 0300   4]        Flags (decoded below) : 00000000
-                              Single Mapping : 0
-
-[130h 0304   4]                   Input base : 00001000
-[134h 0308   4]                     ID Count : 000000FF
-[138h 0312   4]                  Output Base : 00001000
-[13Ch 0316   4]             Output Reference : 000000A0
-[140h 0320   4]        Flags (decoded below) : 00000000
-                              Single Mapping : 0
-
-[144h 0324   4]                   Input base : 00000200
-[148h 0328   4]                     ID Count : 00000DFF
-[14Ch 0332   4]                  Output Base : 00000200
-[150h 0336   4]             Output Reference : 00000030
-[154h 0340   4]        Flags (decoded below) : 00000000
-                              Single Mapping : 0
-
-[158h 0344   4]                   Input base : 00001100
-[15Ch 0348   4]                     ID Count : 0000EEFF
-[160h 0352   4]                  Output Base : 00001100
-[164h 0356   4]             Output Reference : 00000030
-[168h 0360   4]        Flags (decoded below) : 00000000
-                              Single Mapping : 0
-
-Note: DSDT changes are not described here as it is not impacted by the
-way the SMMUv3 is instantiated.
-
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
----
- tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev    | Bin 0 -> 10162 bytes
- tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy | Bin 0 -> 10162 bytes
- tests/data/acpi/aarch64/virt/IORT.smmuv3-dev    | Bin 0 -> 364 bytes
- tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy | Bin 0 -> 276 bytes
- tests/qtest/bios-tables-test-allowed-diff.h     |   4 ----
- 5 files changed, 4 deletions(-)
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev b/tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev
-index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..4b166b836e75f0c049c245b0c1dc7955f0dbcd04 100644
-GIT binary patch
-literal 10162
-zcmds-OK)4(6@?Ee+M=!=rrwq;SxTFxZ-bQlP~0SybR}6zC7UJXxPSsMXwjmnCk7f6
-zX@df;2We`cgGOk_D&SwxUl5?9&I)wULC2Zo4|G;_uXTB~_JL1}z|bfJOmdU^ti9Id
-zq51JrTivb0zkD@>>OVH`<-6VG%^$S$WxG^D2)K{i#_!*+zTN9?_Ku#+=gnrb-rL>V
-z8r{g-dsf^E_1^uxt#I_@c7E@me6Dk_+ibR4{paevywe?@&t^Xy3J@F$jSzl!F;prq
-zS@la>ySDQn-zjvzzkP7ubXRO`_i!T{w#E5IrH~lU#tMn*(B=NhjoMqC($fCj&OKXt
-zLu1cYYIqi^{oze7(JH3L5*YiOL^VjF)tA_Wi<Oi_R!wQtoW_dRSWRjSq%<x%ja9F4
-zJ*iPkY1Ey@b+2(Fsc|8tkvWYUUgKs`<6=r<#A)308n==fgDH(Mr*X?`tR*$-DUF8H
-zSo0dMCN+jq8WT?ARj1MFzd7P9mSri8DW`GUYb3X6{3a>4`i#@~j@L-<(~*>q%TD7p
-zuaVxTqbZGfr}4ViNbl3Jl*WS7c*AR?_vxjS##N{BU9XYer;U`xveQ`i8tHvHp3?Y|
-z)7bDD>3uqp(s<cvY<i9KKAlWyyy7%+r?HaWr&B47uQ`n^uaVxT(<zN_IE`(uk=~~>
-zDUEMAjUBI%-lwxEjcZQhj@L-<)5|H1rqkH<8tHvHm(o~q8hc(Ny-(*;8rPl1n_eTm
-zPp_mjZaR(cd5!cwT}WxHIgNd<k>00^DUI7s<G^XGruXU9l*VgL<F408@6)A}#v4xK
-zUSDIcw!c!+NBeHOnKyUN;G=EKGnNgLbH2=eQ+@8Ssf)dCr&~FCLaDx;NXj6@OTC<s
-zDjqwNdK0et@195sFygholF%w1i?#aiqFBqI#B05h&?+7~)5<?;=jHz{(AsFO+0n`k
-zCW~s-s?E*2*)ow5H{HX|_*^#gD7+tj7?#6U_;L6}csKmWZUdGQ&f1;B$^D;ak0*v}
-z!>6YKuSh8FSL}W(OpM_1tcrtD76VqShKbSI$myveY0=lOu*w?8is!h_TFVkEO`p9+
-zl0|R7!pgGMFcA~2l`E~pN^`^B0j?|^3<Rt!TL+4j*2<MuVx>9a${JUe4r*Lkwi;IU
-zQ*x!1KIerf=LN1Tb6zM`mgcSWIWI;z4cyI7*=iW-b6V+h4n{c#qnv|rPAh%RdX%#s
-z<uq*dIj!_LhoYSJm7_R%JS0PLPAh%REXtWhISq4tPAh%R;V9>Dlyf-FX{FCO66G9;
-zavB!<oL2grqfyS$DCcOL(@LLnEXp|+<ur`;Ij!_LFGV>oML93UIj!_L?JHlg$GM9e
-zQBK2dpVLa8b3Dp99_1X5b6V+hPDD8;qMU~5KBtvF=VX*~GRip_=d{x2oQiTzML7-Y
-zeNHQV&gm%Ubd+;C&S|C3ITPiaiE`T40H4!JpK~_KIUD7ijdNP*bJ`bh_j+EAa@yAh
-zpVLa8b1up`7v-Fbb6V+h&PO@tqn!3N!{@Zp=e!c-yb|TS66dti=Uj+#E<`!)Yl+Wk
-zrO&w-<y?$%F2*^n^f|9aIj=@J?Q4wBX{FD(6y;osaxTR=tt@gDSTdbWd^8%W_TQ0x
-z&@S6`#m>ysyZ77eP|puL`(bKlsCTcM*PcEM`PPHh$?o9sPsb;-#?isQR{y=Uu>Pk9
-z?`?eY`agg2^kG)Bh84T5+wJNj6wtw)RY-k+t859^CykGf->v-Go@ueWbu#nuaoJZq
-z+`yBM(2U2QJ^b@n@i>OGo;{rUc5kbDP&;|4aP#+DfBUq1<5vfNnEmWv?yvd5$<Xo7
-z!n5&#N(EPTs>wL3b$-a!YMvXiwayXQTFrArw(`Wq|3fzWwrpnsGrM^qWV2V~4B70E
-zmXubtm&zfVrE<u|K7N=~Y@4%@AMq7zbGDY{0A6v2Z0zOADp!^$Lu6wsR}$GY1;{1`
-zKsL1!+1SdJL^e$UvdICEO|3*WnJ2Po3Xn|>fNW|dvMDE#O;dnuasXsgE0Im+iENqz
-zWRn9Rn_7u%GEZdF6d;=%0NK<^WRrO!o2CHS<N(N~RwA3s6WKHc$R-CsHnkGjWS+>T
-zDL^(k0J5o-$R_hdHcbJt$pMf}twc7NC$eb@kWCJNY-%O4$vlxwQ-Ex80Ay1ukxk}_
-zY?=aOlLH`|T8V5jPh`^+Ae$Tj+0;s8lX)VWrU2RG0LZ3RBAd(;*)#>nCI>(^wG!E6
-zp2(&tKsGr5vZ<BGCi6r#O#!mW0gz3tL^hcxvS|vCO%8x;Y9+GCJdsUPfNXLAWK%1V
-zP3DPgngV2#10b7PiEJ`YWYZKNn;Zby)JkNNc_N#p0NLaK$fi~zo6Hm0GzG{e2S7Hp
-z64_*)$fhYkHaP&Ysg=kk^F%gH0kX*fkWH;bHkl`~X$p`{4uEWGC9=spkxf&8Y;pi(
-zQ!9~8=80^Y0%Vf|Ae&l=Y%)(|!<6Tct%0A^zQD+K_OoMj4$6*$KLz#q&a&ALlf{oY
-zk<<&FWwW0t6H+gBmaTbS$hQ8+cD~m?H~PPjt-F24j-8!rvupf%TVUH#w$KiF*t4^1
-z%b{uiKHvE^du`6(%?_^M4Zq^{PreQ8TRsPG>^p-uHkPzjEn3SGD?Pli_YB^sTGAR;
-zT5DNirMY1*;7twyZ)zpHv6U+cZ<+#llLNq;S_yA5Pk7T5z?&QZ-qcEXlX=3MrU2gL
-z0Pv<(!kf$!-ZTa9CI^5wwG!TBp75qAfHye+ys4G&Ci8?hO#!^g0pLxogg2QdylD#H
-zO%4EWY9+kMJmF1K0B>>tcvCCkP38%2ngV!}1HhYF32!n_c+(WXn;Zb%)Jk}hdBU5f
-z0N&&P@TOM6o6Hm5GzIV`2Y@%V65eE<@TMt%H#q>jsg>|1^Mp4|0ldip;7zTBH<>5A
-zX$s&?4ghazCA`Tz;Z0KjZ*l;5Q!C+3<_T|_0(g@Hz?)hLZ!%AK(-gp)901<bN_dlb
-z!keZ5-sAxArdGn6%oE-;1@I;ZfH$=g-ejKerYV3oIRLz=mGCC>gf~qAyvYIJO|67C
-znJ2ty3gAr+0B>p~yvaP_O;Z4GasYT!E8$J%32&MLc#{Lbn_3BPGEaEZ6u_Gt0N&I}
-zc$0a;o2CHX<N)xdR>GUi6W%lh@FoX<H?<PpWS;PbDN~JJzPS;e+5ZZmv2Ird&Fv0m
-z@0DlZLa;Z!A>D6nzl>DuE-sDJ)BoU)AMA2^&7P@@*r!@?v7f!{a%#_3!qacMHGKLp
-zp2LNeuJHI5@*Lkmt+U;A2$Y{8^J><7?)dOEu%olIu0w-+AZq?~+UDTf*YNjmceb~B
-z1@9Gq{MNz`mWEHG_C)_hEPn7EsC>Ox`gprzq-7sD^`WeG^qXOn`F3}Ee|c)LxBb@P
-j&?6M@oHUL<cqhZ@rw`i?I-A+!qbGB?<KZ$dW`+L(PyH`>
-
-literal 0
-HcmV?d00001
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy b/tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy
-index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..4b166b836e75f0c049c245b0c1dc7955f0dbcd04 100644
-GIT binary patch
-literal 10162
-zcmds-OK)4(6@?Ee+M=!=rrwq;SxTFxZ-bQlP~0SybR}6zC7UJXxPSsMXwjmnCk7f6
-zX@df;2We`cgGOk_D&SwxUl5?9&I)wULC2Zo4|G;_uXTB~_JL1}z|bfJOmdU^ti9Id
-zq51JrTivb0zkD@>>OVH`<-6VG%^$S$WxG^D2)K{i#_!*+zTN9?_Ku#+=gnrb-rL>V
-z8r{g-dsf^E_1^uxt#I_@c7E@me6Dk_+ibR4{paevywe?@&t^Xy3J@F$jSzl!F;prq
-zS@la>ySDQn-zjvzzkP7ubXRO`_i!T{w#E5IrH~lU#tMn*(B=NhjoMqC($fCj&OKXt
-zLu1cYYIqi^{oze7(JH3L5*YiOL^VjF)tA_Wi<Oi_R!wQtoW_dRSWRjSq%<x%ja9F4
-zJ*iPkY1Ey@b+2(Fsc|8tkvWYUUgKs`<6=r<#A)308n==fgDH(Mr*X?`tR*$-DUF8H
-zSo0dMCN+jq8WT?ARj1MFzd7P9mSri8DW`GUYb3X6{3a>4`i#@~j@L-<(~*>q%TD7p
-zuaVxTqbZGfr}4ViNbl3Jl*WS7c*AR?_vxjS##N{BU9XYer;U`xveQ`i8tHvHp3?Y|
-z)7bDD>3uqp(s<cvY<i9KKAlWyyy7%+r?HaWr&B47uQ`n^uaVxT(<zN_IE`(uk=~~>
-zDUEMAjUBI%-lwxEjcZQhj@L-<)5|H1rqkH<8tHvHm(o~q8hc(Ny-(*;8rPl1n_eTm
-zPp_mjZaR(cd5!cwT}WxHIgNd<k>00^DUI7s<G^XGruXU9l*VgL<F408@6)A}#v4xK
-zUSDIcw!c!+NBeHOnKyUN;G=EKGnNgLbH2=eQ+@8Ssf)dCr&~FCLaDx;NXj6@OTC<s
-zDjqwNdK0et@195sFygholF%w1i?#aiqFBqI#B05h&?+7~)5<?;=jHz{(AsFO+0n`k
-zCW~s-s?E*2*)ow5H{HX|_*^#gD7+tj7?#6U_;L6}csKmWZUdGQ&f1;B$^D;ak0*v}
-z!>6YKuSh8FSL}W(OpM_1tcrtD76VqShKbSI$myveY0=lOu*w?8is!h_TFVkEO`p9+
-zl0|R7!pgGMFcA~2l`E~pN^`^B0j?|^3<Rt!TL+4j*2<MuVx>9a${JUe4r*Lkwi;IU
-zQ*x!1KIerf=LN1Tb6zM`mgcSWIWI;z4cyI7*=iW-b6V+h4n{c#qnv|rPAh%RdX%#s
-z<uq*dIj!_LhoYSJm7_R%JS0PLPAh%REXtWhISq4tPAh%R;V9>Dlyf-FX{FCO66G9;
-zavB!<oL2grqfyS$DCcOL(@LLnEXp|+<ur`;Ij!_LFGV>oML93UIj!_L?JHlg$GM9e
-zQBK2dpVLa8b3Dp99_1X5b6V+hPDD8;qMU~5KBtvF=VX*~GRip_=d{x2oQiTzML7-Y
-zeNHQV&gm%Ubd+;C&S|C3ITPiaiE`T40H4!JpK~_KIUD7ijdNP*bJ`bh_j+EAa@yAh
-zpVLa8b1up`7v-Fbb6V+h&PO@tqn!3N!{@Zp=e!c-yb|TS66dti=Uj+#E<`!)Yl+Wk
-zrO&w-<y?$%F2*^n^f|9aIj=@J?Q4wBX{FD(6y;osaxTR=tt@gDSTdbWd^8%W_TQ0x
-z&@S6`#m>ysyZ77eP|puL`(bKlsCTcM*PcEM`PPHh$?o9sPsb;-#?isQR{y=Uu>Pk9
-z?`?eY`agg2^kG)Bh84T5+wJNj6wtw)RY-k+t859^CykGf->v-Go@ueWbu#nuaoJZq
-z+`yBM(2U2QJ^b@n@i>OGo;{rUc5kbDP&;|4aP#+DfBUq1<5vfNnEmWv?yvd5$<Xo7
-z!n5&#N(EPTs>wL3b$-a!YMvXiwayXQTFrArw(`Wq|3fzWwrpnsGrM^qWV2V~4B70E
-zmXubtm&zfVrE<u|K7N=~Y@4%@AMq7zbGDY{0A6v2Z0zOADp!^$Lu6wsR}$GY1;{1`
-zKsL1!+1SdJL^e$UvdICEO|3*WnJ2Po3Xn|>fNW|dvMDE#O;dnuasXsgE0Im+iENqz
-zWRn9Rn_7u%GEZdF6d;=%0NK<^WRrO!o2CHS<N(N~RwA3s6WKHc$R-CsHnkGjWS+>T
-zDL^(k0J5o-$R_hdHcbJt$pMf}twc7NC$eb@kWCJNY-%O4$vlxwQ-Ex80Ay1ukxk}_
-zY?=aOlLH`|T8V5jPh`^+Ae$Tj+0;s8lX)VWrU2RG0LZ3RBAd(;*)#>nCI>(^wG!E6
-zp2(&tKsGr5vZ<BGCi6r#O#!mW0gz3tL^hcxvS|vCO%8x;Y9+GCJdsUPfNXLAWK%1V
-zP3DPgngV2#10b7PiEJ`YWYZKNn;Zby)JkNNc_N#p0NLaK$fi~zo6Hm0GzG{e2S7Hp
-z64_*)$fhYkHaP&Ysg=kk^F%gH0kX*fkWH;bHkl`~X$p`{4uEWGC9=spkxf&8Y;pi(
-zQ!9~8=80^Y0%Vf|Ae&l=Y%)(|!<6Tct%0A^zQD+K_OoMj4$6*$KLz#q&a&ALlf{oY
-zk<<&FWwW0t6H+gBmaTbS$hQ8+cD~m?H~PPjt-F24j-8!rvupf%TVUH#w$KiF*t4^1
-z%b{uiKHvE^du`6(%?_^M4Zq^{PreQ8TRsPG>^p-uHkPzjEn3SGD?Pli_YB^sTGAR;
-zT5DNirMY1*;7twyZ)zpHv6U+cZ<+#llLNq;S_yA5Pk7T5z?&QZ-qcEXlX=3MrU2gL
-z0Pv<(!kf$!-ZTa9CI^5wwG!TBp75qAfHye+ys4G&Ci8?hO#!^g0pLxogg2QdylD#H
-zO%4EWY9+kMJmF1K0B>>tcvCCkP38%2ngV!}1HhYF32!n_c+(WXn;Zb%)Jk}hdBU5f
-z0N&&P@TOM6o6Hm5GzIV`2Y@%V65eE<@TMt%H#q>jsg>|1^Mp4|0ldip;7zTBH<>5A
-zX$s&?4ghazCA`Tz;Z0KjZ*l;5Q!C+3<_T|_0(g@Hz?)hLZ!%AK(-gp)901<bN_dlb
-z!keZ5-sAxArdGn6%oE-;1@I;ZfH$=g-ejKerYV3oIRLz=mGCC>gf~qAyvYIJO|67C
-znJ2ty3gAr+0B>p~yvaP_O;Z4GasYT!E8$J%32&MLc#{Lbn_3BPGEaEZ6u_Gt0N&I}
-zc$0a;o2CHX<N)xdR>GUi6W%lh@FoX<H?<PpWS;PbDN~JJzPS;e+5ZZmv2Ird&Fv0m
-z@0DlZLa;Z!A>D6nzl>DuE-sDJ)BoU)AMA2^&7P@@*r!@?v7f!{a%#_3!qacMHGKLp
-zp2LNeuJHI5@*Lkmt+U;A2$Y{8^J><7?)dOEu%olIu0w-+AZq?~+UDTf*YNjmceb~B
-z1@9Gq{MNz`mWEHG_C)_hEPn7EsC>Ox`gprzq-7sD^`WeG^qXOn`F3}Ee|c)LxBb@P
-j&?6M@oHUL<cqhZ@rw`i?I-A+!qbGB?<KZ$dW`+L(PyH`>
-
-literal 0
-HcmV?d00001
-
-diff --git a/tests/data/acpi/aarch64/virt/IORT.smmuv3-dev b/tests/data/acpi/aarch64/virt/IORT.smmuv3-dev
-index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..67be268f62afbf2d9459540984da5e9340afdaaa 100644
-GIT binary patch
-literal 364
-zcmebD4+_a)WME)E<>c?|5v<@85#X!<1VAAM5F13Z0I>lOgMkDCNC*yK9F_<M77!bR
-zT_CbNAPOcA5rU8tfYd}Fo(#m3AVP5R|9=P*W*^90CZG_)Tqd06P64W$3dGZacp4BR
-z19WqlN*I`#feJu=QvqVAJ3&HV-~grnLnS<*d<Fpq2Cx%>^a7X|(1HJXfgB(Wb2oz^
-MQ0yI03`oPo01?F*0RR91
-
-literal 0
-HcmV?d00001
-
-diff --git a/tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy b/tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy
-index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..41981a449fc306b80cccd87ddec3c593a8d72c07 100644
-GIT binary patch
-literal 276
-zcmX|*K@NgI3`M`puy8?wi3^u3IDkhWzycE!jI!Vis5{Ti6^7s1@{>QmeVugXHa@5G
-z0SNbY?1op>&X2C5h#<9Ops%#*0ztdHi8G?q;$EluQNrhn>{ys@`b&R|d8G8O{Jrdl
-mkP$_?rfr{mN!3^;8w}Q?1auX1XIzvDUSRruoXA!(rn3!nx)K2Z
-
-literal 0
-HcmV?d00001
-
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index 2e3e3ccdce..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,5 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy",
--"tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev",
--"tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy",
--"tests/data/acpi/aarch64/virt/IORT.smmuv3-dev",
--- 
-2.47.0
+Eric
+>
+> Please let me know.
+>
+> Thanks,
+> Shameer
 
 
