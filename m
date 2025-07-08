@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E126FC83F0F
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:42:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C8F6C83F09
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:43:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZG4b-000077-PG; Tue, 08 Jul 2025 17:41:57 -0400
+	id 1uZG5N-0002tI-C7; Tue, 08 Jul 2025 17:42:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uZF39-0007nF-HF
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 16:36:23 -0400
-Received: from mail-qk1-x72c.google.com ([2607:f8b0:4864:20::72c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZFJZ-0007eQ-Bm
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 16:53:21 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uZF34-0001R1-QV
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 16:36:22 -0400
-Received: by mail-qk1-x72c.google.com with SMTP id
- af79cd13be357-7d7f2600c17so421927085a.0
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 13:36:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZFJX-0003rz-AE
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 16:53:20 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3a57ae5cb17so3068916f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 13:53:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1752006975; x=1752611775; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752007997; x=1752612797; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1X4IAeA2O2T066BMmgQNMiWh7XnPFYJbke9bUDYN7EM=;
- b=TpRJRH29OV+bgpbF4m3c0UlDt0ydz81OkApjRuRilG/EhuzAGoJOayFtRLzsJuCRJP
- fCloZLpshB5Jtwsg0q2v1tCjMlpw+XXIZMFFpDKLx2BI6c5ZMkMZVYFebjjRX5vBml//
- QtUZ0rphWmw0L8QI1NtFeLA+HSUqD7HoYILcY/WjOcCZcgkxD2Jwl9DOwj5UoNAATlT7
- aOpDGKBGgrjsNIpQDAGz/RwsoB096eAHdQyNe9x8H21vMKFm7cgnhtXyiJdOL7RdKNlv
- tvDCeJhPVkt2uf7jKUXVKLHPBEfAtl2Y3YcGwdNGt66xV6nzvDPPVGBn3JDi+IpgE8Sn
- 22qw==
+ bh=srgEDpGFqHVp83wO3nsWrDzTxJ6oIFK+IEA/umVgPdU=;
+ b=V30+a5v3s6AmTFvJJ/TS7Zv69qJPLIJs4gHWsZoDGXjFJThf+2E9TbgEvgenAYNo8E
+ D/jVwLf8uhAWGJQP4csL+olXCh/5WqRXwQAWVw+dOCqu3Vw7JCzHWdugoZAOa8HWp9UM
+ IGgW4XUNsQEkWzpe5hTOnMMGljHer2uZfOoHiTLFrwrhUiG1sLZYaQACuWnOog5fBNdI
+ t1iP4/eXVVr+8nNqTpY2Tkb7VG8/lt/H1jIY7qAcwkORoze85b0+n897T4sdL3oZEaXv
+ TiMnTugjf/zsDWQgvt6Xkjbo+QDuMCxYKrtbRRxCFe9UV7bLgFDWQphmLvTGBNm0VCrQ
+ n7Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752006975; x=1752611775;
+ d=1e100.net; s=20230601; t=1752007997; x=1752612797;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1X4IAeA2O2T066BMmgQNMiWh7XnPFYJbke9bUDYN7EM=;
- b=WiDVydxedQctLmJV33K2u6FWjja6IUBiv1U2OBDLva1dg04LK7uxqOcHFnM6A3xSpX
- BW75vHaQ5zuIQg2Qcw64HEio3mWgZTerQ1b7HJ3Pfgfx7wTH5JZSrgxZ3QysTeRWkqh0
- 4bmXSVt9MfBbBYb5x+A0OX4ueiakl0mljGY4RSgQAc9U2LRuFUsO0ArhVsiegEtifIiT
- ZEm7wR/T+ry3ek1bMr4BpFNyzAno1DSjHa1gCGdS5Y6r2J6mbmlbyYTAgO4llbkEyrvL
- Zf0YEd9FTggHoNmN23BskdbCGz9Px2G86x83yPupocaZdUaPbk67WU8MPvLqOhiVYQZr
- s4+A==
-X-Gm-Message-State: AOJu0YwdlImd8lhtO6vEONhJCn1rzHAEt8EWFdsOkqDzpfR9w+mccaAn
- lvu90vUJahVpxQdlnR3BcskpIfyMu6Gnj6usk6TsYiVJj3/gHTNN8E5DXMpn/0nmP9YVQxhzG1Y
- rb1SL
-X-Gm-Gg: ASbGncsT+/o1ip10/t+f7ReP6qtWvPlKuch+M4vpIWL9WPbXT8pdh2zO28cAJWzduK4
- p+P2MgWKhInm6yLKOMdVdg/rGZQGFIp/O7/a+CmW6ySsd2I33VKjPd+cd5HgRehWYVM/Ln+AOZQ
- g93/4Fuf2sNLslhRBnOoZrSvWSeq65/lvBJqtv+jMQx7wydckreqW7q1vuHKIc17LV1p35rrtYj
- /tmXKt4cWSlBx5D3saGDTRvEFOMFsc3Tr7zcjgdlEuV6jONXR3pL+uXwWQuFyFEEr7Fcpxe9W/O
- untzA2RXACTM3rPvAk+CSlcih3z71o/pdrefZeE0uD3E9svOj3q3fynpAuGdmr6YjxYXKIBiEPh
- 5vQ==
-X-Google-Smtp-Source: AGHT+IE1RAIpgU7PfYmnyNhZFs+JOB2uhU0+u5Bzss/zroThLGY4tIyQjh/pcBTd+I7qj4plzcvEUQ==
-X-Received: by 2002:ae9:ec01:0:b0:7d4:3c5d:3256 with SMTP id
- af79cd13be357-7d9ecdfaea0mr403667685a.53.1751971708033; 
- Tue, 08 Jul 2025 03:48:28 -0700 (PDT)
-Received: from [192.168.68.110] ([189.110.107.157])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7d5dbe8f844sm754423885a.82.2025.07.08.03.48.25
+ bh=srgEDpGFqHVp83wO3nsWrDzTxJ6oIFK+IEA/umVgPdU=;
+ b=LU6WXzJzOc+X0SRpKrlyMIAjAc+H7WNr9twtyDrbb/mSrgYz/lPa8J4JigLGELfvOR
+ 1bVitPQwYjFP24AUU5RTfWCViKML5xOHO5BKpTcd7mwffPBHtMYUvKYz2xvAuOsTFixb
+ FPcBVxig2xsdaRDyuBffoXkVZOB1pseaukNr9mqqPq2TK0WUQ8qgWQZWxgR3NQYfej8Z
+ jCDjnYiCn0cDyOVHWwUw7xum9uq++RjIEyN3pUKM0TViJ1llbYqr1v1wFCXZpd3msTTm
+ gXGOzHyFnCZqyZ8w5OmZ2vAozHeWRyQ+uxGxOjJ8ZzpnuQM/pNJ6rG9h2kE23Qs+1MQN
+ 1DoA==
+X-Gm-Message-State: AOJu0YxnLZ9VikR6sBtslo8sUWSpea6SgMX2WW8UKRIbT78mUKr94vG1
+ /K6kWrHuUxBEaRJd9G0QyRF2jwADg8VDf0cG15/35FbYpcYS6jmi5jxE/NBI00V+xalpTihGjGi
+ ihB1C
+X-Gm-Gg: ASbGnct7utcnp4ypDQSGjuDq5O6hC2lTXbVWhew9ZgcCqey7+zFc2bBEV8Nx0o3FU4i
+ 9+F3wUv/+T5Sow2nm212iKMIvOTjchBOEyaKXC8IwSNo3qu5gYolYlLNDD3hTOXAXnIT+Emar5x
+ SSyAUbIVLbKyvFSD5MlFOislGJXUYAHOqavn3orRIF/rrQz+6X1S1ihWxtt2hnx2NLa1Le9jACZ
+ c8YebuWsmuZvntXsy2P8rtygTECBYFSwnxUF9kGqS5xmHPIZbmjB7yz+zFvF4k23L+2Bf+cDo8n
+ JoAQlYeKCprhbPH3nwfFf3OA4patftrzG5CdymfbqXu9cGWmSzI+QzaIPTK8QwmPIixhk8IdnDx
+ 9pMIwDmDgURi9+j7nVBDXIf/RZMKp4g==
+X-Google-Smtp-Source: AGHT+IFBSq2sJCMTs7NgzEYiUgBJnrbUxSgRp46Nz9q4YNF5tKUFY6p8ZKQnQ46CkbDQnRPQ2hst3g==
+X-Received: by 2002:a05:6000:4a04:b0:3a5:2b75:56cc with SMTP id
+ ffacd0b85a97d-3b4964c5d3emr12503077f8f.23.1752007997123; 
+ Tue, 08 Jul 2025 13:53:17 -0700 (PDT)
+Received: from [192.168.69.242] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454cd3d275fsm31573375e9.20.2025.07.08.13.53.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Jul 2025 03:48:27 -0700 (PDT)
-Message-ID: <b9e539ee-cf63-4a64-a3f2-03dfe7bc82a5@ventanamicro.com>
-Date: Tue, 8 Jul 2025 07:48:23 -0300
+ Tue, 08 Jul 2025 13:53:16 -0700 (PDT)
+Message-ID: <37e9f347-f7ba-4ea6-93f8-879d8169012a@linaro.org>
+Date: Tue, 8 Jul 2025 22:53:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] riscv: add all available CSRs to 'info registers'
+Subject: Re: [PATCH v2 3/3] system/os-win32: Remove unnecessary
+ 'qemu/typedefs.h' include
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
-References: <20250623172119.997166-1-dbarboza@ventanamicro.com>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
+ Alex Williamson <alex.williamson@redhat.com>
+References: <20250708085859.7885-1-philmd@linaro.org>
+ <20250708085859.7885-4-philmd@linaro.org>
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250623172119.997166-1-dbarboza@ventanamicro.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250708085859.7885-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-qk1-x72c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,41 +105,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping
+On 8/7/25 10:58, Philippe Mathieu-Daudé wrote:
+> Commit f5fd677ae7c ("win32/socket: introduce qemu_socket_select()
+> helper") included the "qemu/typedefs.h" header for the Error type,
+> but files including "system/os-win32.h" should already include
+> "qemu/osdep.h", and thus "qemu/typedefs.h".
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/system/os-win32.h | 1 -
+>   1 file changed, 1 deletion(-)
+> 
+> diff --git a/include/system/os-win32.h b/include/system/os-win32.h
+> index 3aa6cee4c23..662cfabc5e7 100644
+> --- a/include/system/os-win32.h
+> +++ b/include/system/os-win32.h
+> @@ -29,7 +29,6 @@
+>   #include <winsock2.h>
+>   #include <windows.h>
+>   #include <ws2tcpip.h>
+> -#include "qemu/typedefs.h"
 
-It would be nice to have all CSRs for 'info registers' for the next release.
-We have one week before the freeze :D
+FTR, copying Peter's comment on v1:
+http://lore.kernel.org/qemu-devel/CAFEAcA9rcJHBaeAqCM1BszrhzkE4=gxJkx9h62BVhEz9hB7OMA@mail.gmail.com
 
-
-Thanks,
-
-Daniel
-
-On 6/23/25 2:21 PM, Daniel Henrique Barboza wrote:
-> Hi,
-> 
-> The output of HMP 'info registers', implemented by the cpu_dump_state
-> callback, returns way less CSRs than what we have available in the
-> default rv64 CPU with default options.
-> 
-> This series changes the callback to add all available non-vector CSRs
-> when issuing 'info registers'. The vector CSRs are being handled by
-> another patch [1].
-> 
-> Patches based on alistair/riscv-to-apply.next.
-> 
-> [1] https://lore.kernel.org/qemu-riscv/20250623145306.991562-1-dbarboza@ventanamicro.com/
-> 
-> 
-> Daniel Henrique Barboza (3):
->    target/riscv/cpu: add riscv_dump_csr() helper
->    target/riscv/cpu: print all FPU CSRs in riscv_cpu_dump_state()
->    target/riscv: print all available CSRs in riscv_cpu_dump_state()
-> 
->   target/riscv/cpu.c | 107 +++++++++++++++++----------------------------
->   target/riscv/cpu.h |   2 +
->   target/riscv/csr.c |  18 ++++++++
->   3 files changed, 61 insertions(+), 66 deletions(-)
-> 
+ > This one's tricky -- osdep.h includes system/os-win32.h
+ > *before* it includes typedefs.h. If you want to remove this
+ > include I think you need to move the include of typedefs.h
+ > a bit further up in osdep.h (taking care that it's still
+ > wrapped in an "extern C").
+ >
+ > (Or we could declare the functions in os-win32.h which
+ > use the Error type somewhere else. That header I think is
+ > intended to be "Windows specifics and compatibility wrappers
+ > that everywhere needs to have sorted out", not "this
+ > function happens to only be needed on Windows": a lot
+ > of the functions declared in it are only used in a
+ > handful of files and don't need to be declared to every
+ > source file in the project. But that's a bit more effort.)
 
 
