@@ -4,147 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAE6FC8303C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:13:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6818C8303C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:21:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZEew-0001j6-P5; Tue, 08 Jul 2025 16:11:31 -0400
-Received: from eggs.gnu.org ([2001:470:142:3::10])
+	id 1uZEnW-0001l5-2F; Tue, 08 Jul 2025 16:20:14 -0400
+Received: from eggs.gnu.org ([209.51.188.92])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uZDYE-0006O6-VR; Tue, 08 Jul 2025 15:00:35 -0400
-Received: from mail-dm6nam10on20614.outbound.protection.outlook.com
- ([2a01:111:f403:2413::614]
- helo=NAM10-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1uZBTN-0003Tk-MK
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 12:47:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uZDXq-0002L2-VA; Tue, 08 Jul 2025 15:00:13 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mv3jABKNBscmzidfu4FEeWcsukGNI44QciQP2tFiN4FM2fvhAbutdyC8zrY8O8rUabTS6u1QlEd/EZZNyutbYxFUWwDeltxG6AMkL80NV7owrsyhu1PgsTJe9f+wE7zeTil9XNrMcQyZ/to/tSJ+zeZO1SdveaR0CoBYtA/aX26AWAQSvnQ5t7djmjNkBY7mhoe50JwsDMbqVBzBSq+ZsNxfeceoaK34pIIZNAdF47LTTlwXibbruDXorgWwpjoEY5qwmJfRTsIoOzimQpDxGANId0aWttq5aIBgPmEvUIb1KQ15Dyjsez6ulJpZ6CVbkvNu77YqNArNUHJuJwX0UQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GVKn1ohe/NAQiif3A2aqvirPGBrtwDFBoVIUSiBuPQE=;
- b=dP5G0Z6oRrCrBPxvoRAR5PThAaJZqcZoOhQD/NirRia7W99P/XxhDmcwxjGWjKyH+xgM2MUNXq1fQBqmcgmYrB9l+rQS3no2bw+mQItbMJCj2ZBp6C7jy5UfkK2zdvIZb7Bq8/eQp9PwKEK3PTpdmeOV8e8klv9eM7uQYcCdiBgMxR1W6e/62FJuNJb1PgH5rIRPndfiEnd+JukekPm9vJsWCGhXVauNQEAnLZqVW3m2h9OU79b1vAGdAWIryT5FPhKjoVV12Rm69z09U/9C+MD5iDXxhikUgotyApvh5RO6H3LnZqWCRxzu8e3HgbmE/YeDnygdiyTN4JAVcDhMUw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=huawei.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GVKn1ohe/NAQiif3A2aqvirPGBrtwDFBoVIUSiBuPQE=;
- b=FRAhg69YnqU+1i6P13LKLRenI3wtIXQsZRodHBNcvueJ4uhxRQz3ToDVllm40V99BcT4V3xAvLjG0KAfFeEVAR73javZPuOuk0w2TTGdWcbVSWLNrbm6A3hskaOlESljs30JjMsUHoNpVhozgsLzs1VTOKY/KmdPZWVanFknDgDnU/0xv+qZf857mHFS7yfgQVPclpZtiNHQmAyP9eU+UuCYxOacUbnaQMERpo5BVmQ/rrZGVW9ZWL+wVnryl5ozWjZ3mwli7lkmXL8+wojFZ8p8trXPRHgVxiFr7gxuTSqkcDDokgIvsRAnGnDEnwRZQvP2+UL5K/dgt1B5+rGm9Q==
-Received: from DM6PR12CA0010.namprd12.prod.outlook.com (2603:10b6:5:1c0::23)
- by LV8PR12MB9134.namprd12.prod.outlook.com (2603:10b6:408:180::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.26; Tue, 8 Jul
- 2025 07:58:07 +0000
-Received: from DS1PEPF00017095.namprd03.prod.outlook.com
- (2603:10b6:5:1c0:cafe::26) by DM6PR12CA0010.outlook.office365.com
- (2603:10b6:5:1c0::23) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8901.27 via Frontend Transport; Tue,
- 8 Jul 2025 07:58:07 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- DS1PEPF00017095.mail.protection.outlook.com (10.167.17.138) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8901.15 via Frontend Transport; Tue, 8 Jul 2025 07:58:05 +0000
-Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 8 Jul 2025
- 00:57:55 -0700
-Received: from drhqmail201.nvidia.com (10.126.190.180) by
- drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Tue, 8 Jul 2025 00:57:55 -0700
-Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com
- (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Tue, 8 Jul 2025 00:57:54 -0700
-Date: Tue, 8 Jul 2025 00:57:53 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <jgg@nvidia.com>, <ddutile@redhat.com>,
- <berrange@redhat.com>, <imammedo@redhat.com>, <nathanc@nvidia.com>,
- <mochs@nvidia.com>, <smostafa@google.com>, <gustavo.romero@linaro.org>,
- <mst@redhat.com>, <marcel.apfelbaum@gmail.com>, <linuxarm@huawei.com>,
- <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: Re: [PATCH v6 00/12] hw/arm/virt: Add support for user creatable
- SMMUv3 device
-Message-ID: <aGzPgZEhORuRyIdl@Asurada-Nvidia>
-References: <20250703084643.85740-1-shameerali.kolothum.thodi@huawei.com>
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1uZBTB-0007d0-6D
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 12:47:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1751993064;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CTs6rOWT79ZGR4KYVvYv4H7kZZHu4zBJKCcStY18YK8=;
+ b=JxX3RupaR9dM4XWJ7u4MhijVyp++RQMPul9x5v+uHfvaOaCDphV7E8GRZ1T/JTE1Zo7+Hj
+ qpaZdW80BIoH5HTYCYkmTeCKR9D1pqV+kN96p35TNGtY0JUpQEcn4k7Ub7fSg/xjO2PeiQ
+ bNmC43ausSI7uBzFJi7/R6bUAwFFsDA=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-655-lwTK8TZ-M4ujfVV1MrWEiQ-1; Tue, 08 Jul 2025 09:28:57 -0400
+X-MC-Unique: lwTK8TZ-M4ujfVV1MrWEiQ-1
+X-Mimecast-MFC-AGG-ID: lwTK8TZ-M4ujfVV1MrWEiQ_1751981337
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7dabc82916cso67583285a.0
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 06:28:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751981337; x=1752586137;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CTs6rOWT79ZGR4KYVvYv4H7kZZHu4zBJKCcStY18YK8=;
+ b=VdRBrr3Z7CkgnVrP2VqR3yMoKjaBA9ce3ZfsIMKoTm5OgO77/equRjtZghfS9xqa0Q
+ tKf9XdOZfhUV8fFd6b4uOhce/w9ced5HR4FO77ugdbrkq9ucJhsYBKWN8xr/83STGpWj
+ xVIdiGL8NK1mrEHqzV8OYQaeyPBzDLd+XzBQboY/BpyCFSMMBzMAC3PDoU9Wlt7GGstv
+ p2h+HavyMXXKb4KdgV4ZiCR9BdTwZe5fBR/z82Bee8QPUlr3g11rcCfcRBPDrD7atnVh
+ RzRxPpIYqD388bZC9OAdK8fvE55/jxioNsz44OfIn8+hy98YFGWIU8M6oOTdJWWxs6L0
+ QTzw==
+X-Gm-Message-State: AOJu0YyWkkcVzkxjH/Jr5IIeHBMoGrEyrSq2s40/UqBz13Zf7+0bO49u
+ Sklkgf/S4aao1NNYRdJIUTFU+uBv+tC2N0xJNlQ+twxbQ/BVcPwUdtZS1WuWYE+6Ucbygl8N7fy
+ NpFyi59kMpxHl+Shs18feRuf5/Qo+bKiNL7zyl6qiiA/XYkhcaJ8LMnc2
+X-Gm-Gg: ASbGnctHDvZRHCGO7Uk/cuqK5jJbj6jaIZjO6ntcwasse9aB5Osic4MakSzwmRHXZV1
+ gAc5kQh3/qy0f4n4rEA6cLlCvUTYLtvSR353fGdCulZDzI6BYDxOsuOnm9ib60AxOtWrLtQdxES
+ JVXge2t66iPhZN7o/lHFygZx+/XBc0810O1POji/jiqtHg7xRr21SlyxvMaprS9senxeR6QnOOM
+ iKaQ7P2ly9pD/msHLLvzwI48cENzdoRmZYokKGcVndLQQKVvwNM4/sZtW4Do+zqdszLMyK453Cs
+ eMJfEj61k4EdhAsOQCD+L5Dm59wy
+X-Received: by 2002:a05:620a:84c1:b0:7d5:c13d:291e with SMTP id
+ af79cd13be357-7d5df0ccf29mr1868867385a.4.1751981336762; 
+ Tue, 08 Jul 2025 06:28:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHw4ISma3/XzrIlUyCJJ+iDvMudrRZA2h1oMCv913hlqu7dcg/MQEYmCEXhIlioreWPEFm0fw==
+X-Received: by 2002:a05:620a:84c1:b0:7d5:c13d:291e with SMTP id
+ af79cd13be357-7d5df0ccf29mr1868862385a.4.1751981336040; 
+ Tue, 08 Jul 2025 06:28:56 -0700 (PDT)
+Received: from sgarzare-redhat ([193.207.163.103])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7d5dbdc536csm776019085a.49.2025.07.08.06.28.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 08 Jul 2025 06:28:55 -0700 (PDT)
+Date: Tue, 8 Jul 2025 15:28:43 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Roy Hopkins <roy.hopkins@randomman.co.uk>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ "Daniel P . Berrange" <berrange@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>, 
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, Tom Lendacky <thomas.lendacky@amd.com>, 
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>, 
+ Gerd Hoffman <kraxel@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>, 
+ Joerg Roedel <joro@8bytes.org>
+Subject: Re: [PATCH v9 00/16] Introduce support for IGVM files
+Message-ID: <2acameuzn4y7dgrvluvna42tcgzi2k6ryin6ykofcrq5vg6x6t@mbr2ewcsayyk>
+References: <cover.1751554099.git.roy.hopkins@randomman.co.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20250703084643.85740-1-shameerali.kolothum.thodi@huawei.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS1PEPF00017095:EE_|LV8PR12MB9134:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6f4ab9f8-de04-48ce-1cf1-08ddbdf52b87
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|7416014|376014|36860700013|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?iXDRplloZTFD1elPJWyKasBr0bPe+znhkZUo9snveLPYP4xLyi1hzhDS0UIv?=
- =?us-ascii?Q?EXcfov2nMyRi3kFU8gamT4A1NwRfv9rrikuTbyQllseytaVV9NY4PpaKnuFZ?=
- =?us-ascii?Q?ch5Rj89gAvBrKh5YBJWH/nxUp01F2znpuEmI5ECQddkOW8Pf/g7TfItBbQlq?=
- =?us-ascii?Q?N/tVqdTsy7Z18mkEC6ngAkjsZACX1QS/E23n0nNv4oEHoc6LF2k03QjXpBCT?=
- =?us-ascii?Q?WCDqwux4Rpfuvn5V1HwCUbJOlVJwoYAXeDQWoKuEkavcFiezSJZb+QXawLww?=
- =?us-ascii?Q?gOCciUQfdGeb+GxZsqXFXzUDgahe6sdyn+hA4ssloSItkAul3KJxCynu6Dr1?=
- =?us-ascii?Q?vcUUot2VSVeNoq2+JP/yAfpfWZnS1s4IBONnPZJHV2oS/Dq6JEGIvg2ysyel?=
- =?us-ascii?Q?2U7UMN2gYHq8L3pE7Eg/9v1HAgjfx5eHEFSnYqcr8ym6jJnQ3hStR1EHX4Ok?=
- =?us-ascii?Q?oaMXhq8Eso5Gh9NuC/cqVHG9gr9mX6sZ/vladrJaVR3JMVnjux/7YDDPl5LH?=
- =?us-ascii?Q?IvZ+dCYeDKHpxw9vZDYj9QbEGy83+5fm75JnJBq7XPgRD+0FNihh59KUzBfY?=
- =?us-ascii?Q?AdpNVb7JDHRCbkhE7U5KMe+Olmlv8l12xj3nIK50mpCYKHduL7XEl3FoIPDd?=
- =?us-ascii?Q?/U4Ps7+caOOpgAu/9GdrQIrwf1hHKKACm1GiY9x4cxmkhSAXEGvmslDflnXq?=
- =?us-ascii?Q?4SGeybMQRzaocg/6GgTvWn+gKJbDpD3iwvY7q/g/YUe6gMayfnYjTQAUf6Ao?=
- =?us-ascii?Q?gT49wELiQd5KLA7G2+yHLyE9d40+SjXTtXW4EliQDBQJcOJGvhVk8Tw3n4Te?=
- =?us-ascii?Q?ZhKuk7i9psN8kukK6oqfKShrXBt88z1Bl6/NbMnQFUDuCoJeeoRkYrAlfhLk?=
- =?us-ascii?Q?BCEnfIn4S7L2m5dlYYPIGMWy1G1nYuOVK94A5p0bqsn9wZtdlmi/E1N4vKj7?=
- =?us-ascii?Q?Nfb5BGxEiM6+S1kN06oSj9UT8Pi2CsTRogkMDd0n33nk09Ll7mhpFNniJzSd?=
- =?us-ascii?Q?Q4/SO3LuMYzEs2Ug5R+a0414f4BQOUUkf5wguci1sB2aOcjk/r47TfCQkw8u?=
- =?us-ascii?Q?XN2XFvQY77sHZc3Nm6YkcrWUk/JxKCongjTcvy/Me8CqB8fc6oG+CSIGRzwb?=
- =?us-ascii?Q?dKPVPhnu8gzrfDivV5odni/I2zdj/MzOriHtfSQPrMwM8L3SumLh6aYaPE2Q?=
- =?us-ascii?Q?jHADbaEkgYdO4dmEEnm0ThLRkNDm3lCqpGeOk8cVLfsIkjXTX5UiOBdotonr?=
- =?us-ascii?Q?AfnvNza17lbGmqsPpQIgF4eukQncrUtZ3UE7W9GpGT/ZTtOWtJVHulHZhbJb?=
- =?us-ascii?Q?AYUMYaEwhifHJfl+qGJ8IHHxFqIbpKvuyHYvote6U9sU0KO5Y7OM7IzRSith?=
- =?us-ascii?Q?vJJ9BCNKpRyZzcguWBGGEwivxG1qCIICKCxNuL5uhYlG69d+4RHYCFiD7Vsj?=
- =?us-ascii?Q?sdjeSTCIASPv7BPGrAzOsteeEHskJzE06suwLJf3bQQC1uFikd7P5EhEoAAz?=
- =?us-ascii?Q?ypU/Csbwf5KJ8qvnJsW3JVzx4W6cRPKgsKsV?=
-X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(82310400026)(7416014)(376014)(36860700013)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jul 2025 07:58:05.0046 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6f4ab9f8-de04-48ce-1cf1-08ddbdf52b87
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS1PEPF00017095.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9134
-Received-SPF: permerror client-ip=2a01:111:f403:2413::614;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM10-DM6-obe.outbound.protection.outlook.com
+In-Reply-To: <cover.1751554099.git.roy.hopkins@randomman.co.uk>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,29 +117,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 03, 2025 at 09:46:31AM +0100, Shameer Kolothum wrote:
-> 1. Rebased to target-arm.next and resolved conflicts with the series 
->    [PATCH-for-10.1 v6 0/9] hw/arm: GIC 'its=off'.
-> 2. While at it, noticed an issue with RC id mappings creation
->    and patch #1 is a fix for that.
-> 3. Patches 3 and 4 have changes because of the conflict resolution with the
->    above series. I have retained the R-by tags, but encourage all to take
->    another look in case I missed anything.
-> 4. Collected R-by and T-by tags. Thanks!.
+On Thu, Jul 03, 2025 at 03:59:33PM +0100, Roy Hopkins wrote:
+>Here is v9 of the set of patches to add support for IGVM files to QEMU. This is
+>based on commit c77283dd5d79149f4e7e9edd00f65416c648ee59 of qemu.
 
-Hi Shameer,
+I successfully tested this series with the IGVM file generated by
+COCONUT SVSM [1] in this way:
 
-Thank you for the effort and the work here.
+$ cd svsm
+$ FW_FILE=/path/to/edk2/Build/OvmfX64/DEBUG_GCC5/FV/OVMF.fd make
+$ ./scripts/launch_guest.sh \
+     --qemu /path/to/qemu/build/qemu-system-x86_64 \
+     --image /path/to/fedora.qcow2 -- -vga none
 
-A separate topic: do you have any preparation for the vIOMMU uAPI
-patches (iommufd backends) in QEMU?
+Host kernel: https://github.com/coconut-svsm/linux/tree/svsm
+QEMU: master (commit df6fe2abf2e990f767ce755d426bc439c7bba336) + this
+       series
+SVSM: commit 00b24f830a318a40b56b492b917466e28fde12e2
+EDK2: https://github.com/coconut-svsm/edk2/tree/svsm
+Guest kernel: Linux 6.16-rc5
 
-I think it should be the next step after this series, so I wonder
-if you have done some worked already to test this series.
+[1] https://github.com/coconut-svsm/svsm
 
-And maybe I can start that review process in parallel, or we will
-have to wait for the vSMMU code.
+Tested-by: Stefano Garzarella <sgarzare@redhat.com>
 
-Thanks
-Nicolin
+Thanks!
+
+>
+>Once again, this is mostly a rebase of the previous patch series. However,
+>thanks to those reviewers who have provided feedback on v8 which has now been
+>addressed in this new version.
+>
+>This v9 patch series is also available on github: [2]
+>
+>For testing IGVM support in QEMU you need to generate an IGVM file that is
+>configured for the platform you want to launch. You can use the `buildigvm`
+>test tool [3] to allow generation of IGVM files for all currently supported
+>platforms. Patch 11/17 contains information on how to generate an IGVM file
+>using this tool.
+>
+>Changes in v9:
+>
+>* Address review comments from v8
+>* Add metadata to relevant commits.
+>
+>Patch summary:
+>
+>1-11: Add support and documentation for processing IGVM files for SEV, SEV-ES,
+>SEV-SNP and native platforms.
+>
+>12-15: Processing of policy and SEV-SNP ID_BLOCK from IGVM file.
+>
+>16: Add pre-processing of IGVM file to support synchronization of 'SEV_FEATURES'
+>from IGVM VMSA to KVM.
+>
+>[1] Link to v8:
+>https://lists.gnu.org/archive/html/qemu-devel/2025-06/msg02324.html
+>
+>[2] v8 patches also available here:
+>https://github.com/roy-hopkins/qemu/tree/igvm_master_v9
+>
+>[3] `buildigvm` tool v0.2.0
+>https://github.com/roy-hopkins/buildigvm/releases/tag/v0.2.0
+>
+>Roy Hopkins (16):
+>  meson: Add optional dependency on IGVM library
+>  backends/confidential-guest-support: Add functions to support IGVM
+>  backends/igvm: Add IGVM loader and configuration
+>  hw/i386: Add igvm-cfg object and processing for IGVM files
+>  i386/pc_sysfw: Ensure sysfw flash configuration does not conflict with
+>    IGVM
+>  sev: Update launch_update_data functions to use Error handling
+>  target/i386: Allow setting of R_LDTR and R_TR with
+>    cpu_x86_load_seg_cache()
+>  i386/sev: Refactor setting of reset vector and initial CPU state
+>  i386/sev: Implement ConfidentialGuestSupport functions for SEV
+>  docs/system: Add documentation on support for IGVM
+>  docs/interop/firmware.json: Add igvm to FirmwareDevice
+>  backends/confidential-guest-support: Add set_guest_policy() function
+>  backends/igvm: Process initialization sections in IGVM file
+>  backends/igvm: Handle policy for SEV guests
+>  i386/sev: Add implementation of CGS set_guest_policy()
+>  sev: Provide sev_features flags from IGVM VMSA to KVM_SEV_INIT2
+>
+> backends/confidential-guest-support.c       |  43 +
+> backends/igvm-cfg.c                         |  51 +
+> backends/igvm.c                             | 988 ++++++++++++++++++++
+> backends/igvm.h                             |  22 +
+> backends/meson.build                        |   5 +
+> docs/interop/firmware.json                  |  30 +-
+> docs/system/i386/amd-memory-encryption.rst  |   2 +
+> docs/system/igvm.rst                        | 173 ++++
+> docs/system/index.rst                       |   1 +
+> hw/i386/pc.c                                |  12 +
+> hw/i386/pc_piix.c                           |  10 +
+> hw/i386/pc_q35.c                            |  10 +
+> hw/i386/pc_sysfw.c                          |  31 +-
+> include/hw/i386/x86.h                       |   3 +
+> include/system/confidential-guest-support.h |  88 ++
+> include/system/igvm-cfg.h                   |  49 +
+> meson.build                                 |   8 +
+> meson_options.txt                           |   2 +
+> qapi/qom.json                               |  17 +
+> qemu-options.hx                             |  28 +
+> scripts/meson-buildoptions.sh               |   3 +
+> target/i386/cpu.h                           |   9 +-
+> target/i386/sev.c                           | 850 +++++++++++++++--
+> target/i386/sev.h                           | 124 +++
+> 24 files changed, 2475 insertions(+), 84 deletions(-)
+> create mode 100644 backends/igvm-cfg.c
+> create mode 100644 backends/igvm.c
+> create mode 100644 backends/igvm.h
+> create mode 100644 docs/system/igvm.rst
+> create mode 100644 include/system/igvm-cfg.h
+>
+>-- 
+>2.43.0
+>
+
 
