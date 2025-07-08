@@ -4,75 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BA05C83F09
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:03:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9833CC83F09
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:06:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFJo-0000wO-Tn; Tue, 08 Jul 2025 16:53:37 -0400
+	id 1uZFGd-0000bD-AU; Tue, 08 Jul 2025 16:50:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZEDm-00040y-0N
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:43:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZEDk-0006Pb-Am
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:43:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752003795;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gui6+S19PIPTP0HqJYWTL54xHSgeFPP1n+ZMQjEgGiQ=;
- b=NPQiiQA0Q9TNu7hRo4UDtlufuFNXsWj5TvAHjUu07mw2kYtRE2MvdxxEuvBC54sU8grr0e
- FvB8JYc0o644iKoTemKrlVGgPPKJG3FcrYjxHh6vS1swEZFzpe4AsrvGhleD4p7VK8GUmX
- 1hXZzOtCduCt6rWFgpm9jHsxVq5i+CA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-530-6Xva8C1_NQ6fTzUfTDrJbw-1; Tue,
- 08 Jul 2025 10:27:27 -0400
-X-MC-Unique: 6Xva8C1_NQ6fTzUfTDrJbw-1
-X-Mimecast-MFC-AGG-ID: 6Xva8C1_NQ6fTzUfTDrJbw_1751984845
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ACD7D1956077; Tue,  8 Jul 2025 14:27:25 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.32.187])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 991C130001B1; Tue,  8 Jul 2025 14:27:20 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
- Jonathan.Cameron@huawei.com, gustavo.romero@linaro.org,
- anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com
-Cc: pbonzini@redhat.com,
-	philmd@linaro.org,
-	alex.bennee@linaro.org
-Subject: [PATCH v6 24/36] hw/acpi/ged: Add a bus link property
-Date: Tue,  8 Jul 2025 16:23:06 +0200
-Message-ID: <20250708142437.1344644-25-eric.auger@redhat.com>
-In-Reply-To: <20250708142437.1344644-1-eric.auger@redhat.com>
-References: <20250708142437.1344644-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZDzo-0000Tt-Tl
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:29:05 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZDzk-0002bl-Rd
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:28:51 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-60c9d8a169bso7760039a12.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 12:28:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752002926; x=1752607726; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Q361PxA3oGLIS+vstXPMdLjk7PTidxEX26bP0T6K5Qc=;
+ b=qNWiETjjoHOb86gQZrYNmw1z4gBnOqp2l+5glhmKGpJ2o6KZ2T436aIJ8/Zz34C7fU
+ Ki6M7NdKVRsDxALwGmnKTx7fbXZRNX4Agn+B69B9MtWZf9YGQlx04hNjzMoEG1hGbNiE
+ Zchn56y4ffBVBSt4gzmki2S1gIY4Cs/cV4reX5S45q3rKpMHje3cjZLeOPI6fW/ZUJMB
+ sYYtVkhfZ1HIhlHY4+USweFuGySBeY7ijyJQHdrL0Uc6bEwfjnp9FYN20QcBbLQR9/oG
+ gPOGGpgM8RJtxYsbzGsGC/272l72SXGAKs9+CUtBGaA60lAFn+aSoUl7yEjodIh4skA/
+ XhIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752002926; x=1752607726;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Q361PxA3oGLIS+vstXPMdLjk7PTidxEX26bP0T6K5Qc=;
+ b=icSR3Y/N2PfcQkcxiEIoMjh/XWvLzR14G15jiR/9nasiiBY6/jK0XaQ2awBg+DuAi7
+ yrCkCP1h9UwpjQFqoR0KB0TMidPtFGbUa74CNN648Z25eSngIv4+hOruiWXln0NvB/aK
+ 1tTiNbjATBGljRA7kYblIv9TTw3hkiFByA1coCyezWZSaDcgs9tTA3TDY4huOMYEfZND
+ sVJMlwa5YU+Yrs0FmbRcqaLI46IgI5HHtDfrnENeUSl0RyqRW7C8HhMf33pph1ceFVfL
+ LVniiTQFbcIAWJ+tiEo+YvW21EXqCPxWMcDgeNCqmja3JCO9riCrhzffElvhxFeAzibF
+ BUwA==
+X-Gm-Message-State: AOJu0Yx2l+guSIyXgdqLh72+KoihZ2+ThycE/gjD1f6UtA/ii1RHc0fA
+ Ks29RTmWRN13RTr91uR+3KLiUcApQy/pwxkHmhEDiEla2l5I0jY/3wx5R3l0vL63TrsfAq3JiJZ
+ HwO4cSUA=
+X-Gm-Gg: ASbGncvFzSCjWDoC6sGatp1GUQWrkZPKVUY9WTIiY/65L/j+3NibSsM7ZDiJ2JfBPqJ
+ dUo1cIuVzoV+59eMz9qJbTpK2971KTo1NlYtUYlbGOgAbZlGYHDPJFaL9nLavY9kYR0UJ+aJFKp
+ w0dFiWrIYQgBBVt+bMxAIrvaD1RJgGFYcJEzIwNzOjOPgue76NWS2XZ3AwiBUvNdpEAdvi7a0e/
+ vDLSNw3QcYKDRN+auDV7byfvIZDrb79gATp2If8xSKdjN5iOA7DnDGscri3ydKc9fkQ6RUfaWhz
+ rJRObJzNze9SjD0fuI5P65K5eP70TSUaYWntiEZkD4mOkyzS0zLrRoTIBwvyV5onlmHBwZaBBa8
+ 3kG/UogIR9lW6LdlEESVuFxq0JaMBGziXmVOk
+X-Google-Smtp-Source: AGHT+IFvFw6bb2r/PXHR/lFrlTkPfLDn6QArrYo5NlZes/IYoj63eWnrlqp8NM8AH39tkYw8cggFEw==
+X-Received: by 2002:a05:6000:2504:b0:3b3:a6c2:1d1b with SMTP id
+ ffacd0b85a97d-3b497029501mr12768373f8f.28.1751965155921; 
+ Tue, 08 Jul 2025 01:59:15 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b47285c903sm12560697f8f.90.2025.07.08.01.59.15
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 08 Jul 2025 01:59:15 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Stefan Weil <sw@weilnetz.de>, Song Gao <gaosong@loongson.cn>,
+ Bibo Mao <maobibo@loongson.cn>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 3/3] system/os-win32: Remove unnecessary 'qemu/typedefs.h'
+ include
+Date: Tue,  8 Jul 2025 10:58:59 +0200
+Message-ID: <20250708085859.7885-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250708085859.7885-1-philmd@linaro.org>
+References: <20250708085859.7885-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,37 +105,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This property will be set by the machine code on the object
-creation. It will be used by acpi pcihp hotplug code.
+Commit f5fd677ae7c ("win32/socket: introduce qemu_socket_select()
+helper") included the "qemu/typedefs.h" header for the Error type,
+but files including "system/os-win32.h" should already include
+"qemu/osdep.h", and thus "qemu/typedefs.h".
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/acpi/generic_event_device.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/system/os-win32.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-index 7831db412b..ef1c1ec51f 100644
---- a/hw/acpi/generic_event_device.c
-+++ b/hw/acpi/generic_event_device.c
-@@ -13,6 +13,7 @@
- #include "qapi/error.h"
- #include "hw/acpi/acpi.h"
- #include "hw/acpi/generic_event_device.h"
-+#include "hw/pci/pci.h"
- #include "hw/irq.h"
- #include "hw/mem/pc-dimm.h"
- #include "hw/mem/nvdimm.h"
-@@ -320,6 +321,8 @@ static const Property acpi_ged_properties[] = {
-     DEFINE_PROP_UINT32("ged-event", AcpiGedState, ged_event_bitmap, 0),
-     DEFINE_PROP_BOOL(ACPI_PM_PROP_ACPI_PCIHP_BRIDGE, AcpiGedState,
-                      pcihp_state.use_acpi_hotplug_bridge, 0),
-+    DEFINE_PROP_LINK("bus", AcpiGedState, pcihp_state.root,
-+                     TYPE_PCI_BUS, PCIBus *),
- };
+diff --git a/include/system/os-win32.h b/include/system/os-win32.h
+index 3aa6cee4c23..662cfabc5e7 100644
+--- a/include/system/os-win32.h
++++ b/include/system/os-win32.h
+@@ -29,7 +29,6 @@
+ #include <winsock2.h>
+ #include <windows.h>
+ #include <ws2tcpip.h>
+-#include "qemu/typedefs.h"
  
- static const VMStateDescription vmstate_memhp_state = {
+ #ifdef HAVE_AFUNIX_H
+ #include <afunix.h>
 -- 
 2.49.0
 
