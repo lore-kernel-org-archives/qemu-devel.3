@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D62DC83F09
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:42:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3FDAC8303C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:42:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZG4I-00087j-RZ; Tue, 08 Jul 2025 17:41:39 -0400
+	id 1uZG50-0001G6-Bf; Tue, 08 Jul 2025 17:42:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZEun-0003iM-Ue
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 16:27:51 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZEuH-0003ZF-K1
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 16:27:30 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZEum-0007xF-8J
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 16:27:45 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-6097b404f58so7037114a12.3
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 13:27:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZEuF-0007uf-Uv
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 16:27:13 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-6097d144923so599730a12.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 13:27:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752006462; x=1752611262; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752006429; x=1752611229; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=7gD989/IHbOEITDmnVpOY1i9RKKNw/TFq+kVhgQcyPs=;
- b=x6fWNRsTHVXEWd0JDtQAYiUrDvQW6Dvum/oYr/yU1zMWN23JLt4EwSwkYDJX6obHk+
- wykKqfXDkkWMRrIevYQqomuRMI8toXp5Phnfs99697BDUYixMZBTVC5Af1p/5RlC2QKe
- l3KiU1AjxQX0iN9fAu5MvuD70cWIEuv+KrYpWaEYi9e4qUaBWSSHXp4z4UazAQoa/Un7
- oI+idmklsGMRtyphk1eIwPAVVxDAIyOHiQRsm7XQjJK8djDZ2Zbwh0rhixrWAkVZvytU
- iuR1NtRTd8CPpGBf9uG8eHKopd26NCnV++vqWBQXqyKqoE2nQIMODiA8CNg70JH0i6/U
- Ry9w==
+ bh=fu1WK/w/9D5J6tMkfVhjTZ9B5iy+dfmpVxjwVLiGPDY=;
+ b=ZjPdcJh/hoOnLw/t0LCVxjQOSdY4/OFDrkbQYublwTk0NFM9ueP+PWY4K2qy8cEQzT
+ ZDGyTWBFE/223KE3f8twVqdcyp/+YpC64t0qIUDsxBvDc3ftrJyDOOGFYTU53DQDOONO
+ m/5MPep6mQnPCcxd9Oy2rzshOjDoIz8j7J8+8urfNnYHgXliOY6rZ3LYd3cd7PkqHJPk
+ kGsSut4FwT70JOfrYXMntpTNeJ954jHC+a+Es6BQMsu2zVBZ7DRpfXqh2Cy8SUa7jhEN
+ Pb3i0r6catAiDfmFNqgrERs5idlQZyj4429bIH+Xa0FGTqzS2PwYg3EAz6hrQGLTw3gA
+ 7XeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752006462; x=1752611262;
+ d=1e100.net; s=20230601; t=1752006429; x=1752611229;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7gD989/IHbOEITDmnVpOY1i9RKKNw/TFq+kVhgQcyPs=;
- b=jm0Z0l8WFBEfCjxeAs9/mZZ4eb2LNxP/P5LjZL0tlAE3c+hUMgQyBN7DDyQxhrYUpe
- 1BXt4Cdvn6JJOzxSGVJOn2OoPsIZqHyd7tX/2i02PZCN+SdH9ijIZmu4wbRFsbwfKeDQ
- WX2BdQ7e1yW7wJW7VaYBuiKjo6B3LbkSHm+8DP8dQEIkOQ9Cc4FP9S+yH0cQ1QsnsTgb
- I8uzI/+1lFxxlj1gt6JjCUlGyfKQkJKcUq2H2MWhgzKEjjiZa5uSzGIw+70e6BZdLz9S
- eialZQhhxthK/G9mF/RDVnrUNyIizZL7nhkE10dEXKBWxeNtjWTk9lprFho1FBqBY1TA
- uzRw==
-X-Gm-Message-State: AOJu0YxRnT0pOgdX+S17KVKE/oqEllzPiK03kIsEMzC4wpnNO0QLkVxq
- 6rEgGXWSnpsoNdTGRit1qYKWPNAyzFJhQEOSPMS9pcaj9RIZ4b7Un/1uPajxiqyi/uSC/kyR7jF
- tltnVkZk=
-X-Gm-Gg: ASbGncvy8+K5Mt8In14ouZed5yliAYhnDCb9RlI3w41rvuJNtDpxkf02+JbXnrm2mjU
- Wj9SsvrzErfnpvl9HUjcV1eJxU7s+5cwkFACJ98Tzl/36sraVvQPplcV+rFgVS3+R7PNeNNhbp6
- nuI4ryE9B2M9NDV27rEeqbrL7m45VK03i/ugZb9e7EC9Bw4UdQlssRUFhe+JcYvZrspTcEssmgR
- MeG4ELQhUSM1/nhFS9YWA07N2Px7/Gg1Lp7KsKle15cJc/vJUZvofaU05l8NMJgDVSC9JmdxJ52
- qh3urLRrYFNv5sSgrEB6v0vsE+G3FYCLjlsGHRd36M4+fDa5GpnGqBwEDr7illLOI1ro8X2sVyE
- 2yEtzhwBX3Eg/WjrHpEOv/Ux4TIm1ZA==
-X-Google-Smtp-Source: AGHT+IEWZpnoQKeFLfTnSEfsXdg67Cdt0sZyuOKGWl1tGNjLw36QOObt8l8PjxR+ae0QDRMyjwgpFQ==
-X-Received: by 2002:a05:600c:6384:b0:43d:46de:b0eb with SMTP id
- 5b1f17b1804b1-454ccc7fff2mr24082935e9.12.1751959237951; 
- Tue, 08 Jul 2025 00:20:37 -0700 (PDT)
+ bh=fu1WK/w/9D5J6tMkfVhjTZ9B5iy+dfmpVxjwVLiGPDY=;
+ b=S6pXqDXlfrVX/2Q4p1avCitRlPx1ejT4IcuE1WnUJrztN+cXfrALqb2StP/DwrhwbG
+ gR1fMNbvNGWMPZHaT6TXXqHxsmM3yBkle6S4velATB3LMJO9BrgBtBZhtWx4VoqKifX/
+ vsXnjJzPqZEJ5ushJIZrMBn7HHqDNi+9Grt9zDbRlmxu7+sRHqbJ4p+C9E5Bq+k82FG5
+ 2MDQknbQKTNwvhVCKvDf4Ftl+PyuGerVHaRU3+JSLQSc2CH4dm1RnZtej4aR1ZQH/qO6
+ lQLo1vJrkE0QBMiIjf6jawvqxANuKP4EMZE0iEB9FgKsQmD7+2MJMXbnLRQfYXzO7nPa
+ URcw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVnfJ67ZfeigtFPEU5alSCVj1EFw6E8T/0rMc9ZDG712/PY08bfpSOnDTD2qNlkXJdc13h496nlgcEh@nongnu.org
+X-Gm-Message-State: AOJu0Yx1sjshURQO99uD370Hqv/pyINHaSyuN9AdjLUIprxcZEllDNKH
+ qlSnBVuQrbPr6CDKTsDa8RwRdE63TpbJDJMzDiy2nAr1L5NR95Eri9VJkR20VOgLEBFgviqZvK0
+ gKVFSvIY=
+X-Gm-Gg: ASbGncsNJoTEkTeSAebCmwVfqZcWz6V0ZOPYw+mPoDfg8Lm0HFYf/NUhPETlsvfvjgY
+ HtgJr+Oh3H/o8dSkrztIPFUk2fbQkJu07d0A3KOR1s7ocnxBzVNnURaRoaUqvG+3KhmkfUj3b7k
+ 2e1DCkHV1qFTnG2NoMptz/Aeg1igIRJLxtRSyw86TVpxXea8jS/PhpnSvuN8PaDjur+Db5eE08l
+ 2XrEa1ffMdSre8fvzM6g4roDi2w8rKKYLiOb8q7CYzsYJwBTpzL5mcZFnI7U/poPpH+ZLD3EnVV
+ zvINaZ4b83eh7RZHTQlgGHhMX8qZCFQTVXVET22jLp+M2eGKX1MkhWcg+z6TBraPScMBakudJEa
+ vp9dDb+u3FaOBPL1HUbHLsksaCQFQoA==
+X-Google-Smtp-Source: AGHT+IHHKrJcuCgu3qsCXiOF3gFkmJrCVSvfc7PDQzDeIQ7hUrfI8nsQQ3NaaVo3H34R35nnFkQ6yA==
+X-Received: by 2002:a05:6000:26cc:b0:3a5:8977:e0f8 with SMTP id
+ ffacd0b85a97d-3b5de11fc9amr1137675f8f.19.1751958275599; 
+ Tue, 08 Jul 2025 00:04:35 -0700 (PDT)
 Received: from [192.168.69.242] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454cd49398csm13095705e9.22.2025.07.08.00.20.36
+ ffacd0b85a97d-3b47030cdf5sm11952429f8f.1.2025.07.08.00.04.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Jul 2025 00:20:37 -0700 (PDT)
-Message-ID: <b1d2f82c-7db6-49dd-8c4b-2f811c8616c6@linaro.org>
-Date: Tue, 8 Jul 2025 09:20:36 +0200
+ Tue, 08 Jul 2025 00:04:34 -0700 (PDT)
+Message-ID: <ca3f5ffe-067e-484f-b5a4-eee0ae029d9e@linaro.org>
+Date: Tue, 8 Jul 2025 09:04:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] bulk: Remove unnecessary 'qemu/typedefs.h' include
-To: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, Stefan Berger <stefanb@linux.vnet.ibm.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Stefan Weil <sw@weilnetz.de>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Song Gao <gaosong@loongson.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Alex Williamson <alex.williamson@redhat.com>, Bibo Mao <maobibo@loongson.cn>
-References: <20250707170904.2908-1-philmd@linaro.org>
+Subject: Re: [PATCH 3/3] hw/audio/sb16: block structure coding style fixes
+To: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+References: <48576e83-54ba-4ebd-8a3e-6b8306655483@t-online.de>
+ <20250707193009.12901-3-vr_qemu@t-online.de>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250707170904.2908-1-philmd@linaro.org>
+In-Reply-To: <20250707193009.12901-3-vr_qemu@t-online.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,27 +105,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/7/25 19:09, Philippe Mathieu-Daudé wrote:
-> "qemu/typedefs.h" is already included by "qemu/osdep.h".
+On 7/7/25 21:30, Volker Rümelin wrote:
+> Change the block structure according to the QEMU Coding Style
+> documentation.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
 > ---
->   hw/vfio/vfio-migration-internal.h | 1 -
->   include/system/os-win32.h         | 1 -
->   hw/intc/loongarch_extioi_kvm.c    | 1 -
->   3 files changed, 3 deletions(-)
+>   hw/audio/sb16.c | 57 +++++++++++++++++--------------------------------
+>   1 file changed, 20 insertions(+), 37 deletions(-)
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-> diff --git a/include/system/os-win32.h b/include/system/os-win32.h
-> index 3aa6cee4c23..662cfabc5e7 100644
-> --- a/include/system/os-win32.h
-> +++ b/include/system/os-win32.h
-> @@ -29,7 +29,6 @@
->   #include <winsock2.h>
->   #include <windows.h>
->   #include <ws2tcpip.h>
-> -#include "qemu/typedefs.h"
-This one was introduced in commit f5fd677ae7c ("win32/socket: introduce
-qemu_socket_select() helper") for Error type, but files including this
-header should already include "qemu/osdep.h".
 
