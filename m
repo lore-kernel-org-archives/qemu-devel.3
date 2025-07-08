@@ -4,94 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABDFFC8303C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 19:41:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EED2AC83F09
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 19:41:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZEBS-0002qC-IW; Tue, 08 Jul 2025 15:40:54 -0400
-Received: from eggs.gnu.org ([209.51.188.92])
+	id 1uZEBq-0001g5-FP; Tue, 08 Jul 2025 15:41:18 -0400
+Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZBOc-0008ML-96
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 12:42:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZBMH-0004Qk-CB
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 12:41:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751992626;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NYadxeNHyeft4vuJmFk2+Tsydm/dqPzo99hMINpb82I=;
- b=WHbc9BXmhWUrX5H5eUSnSjIH/mMqhsjvozj27dcbIAfOzcqtFaXiIDLsNay7ekcHUec8Ln
- uJ0QX3sghKPbYMlCyM0/zrCa+9VtgtlopL/95AnVN1QSunovTsj4soRwiX0keObcsBjnlu
- J4LHQzFA1tgaVLOWDqz90U2VTe3qxK0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-318-8xgDUb7oM4iVAIrBPJzkIw-1; Tue, 08 Jul 2025 11:58:11 -0400
-X-MC-Unique: 8xgDUb7oM4iVAIrBPJzkIw-1
-X-Mimecast-MFC-AGG-ID: 8xgDUb7oM4iVAIrBPJzkIw_1751990290
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4f8192e2cso2566514f8f.3
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 08:58:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uZBMH-0005uQ-5i
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 12:40:28 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uZBLV-0007wQ-FQ
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 12:39:24 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-60c79bedc19so7132562a12.3
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 09:34:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751992486; x=1752597286; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rQnPm7OMUxUj9kgIE7V/5Xg89kaFsjsthn3fZVSeLuM=;
+ b=bG6WcPR/ReTLZFc2ANM5Mdbahbv1x1KMYbQHGyUL08Uvar6aSwE060AOCKk5aZrkND
+ nMaCNo7gcJAo0cAGywR8D6dwlLpsP14aaU/fC/bAD/yW2Vu69qzL1+9oN/qUF0UVww2k
+ 6kXgZrgERpvuZvlCOaU8W4Mkrb/uTvwD5EL4IIajpaZRqLeNnqTdkBbXZ1v4Pzs5gVnV
+ +Et9rRsFjTziX5zSlGUfCsmK9ttaV25THEhVriVRq5EHxlPDRoKgEAl7D8Vfc6ECHDvP
+ p1FfrTodXN2u8eMC7ZGmHUAGTndaEWNmXybsfB+10GD/RAwbQaXUL/I+7wTg9suTBaEV
+ P4NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751990290; x=1752595090;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=NYadxeNHyeft4vuJmFk2+Tsydm/dqPzo99hMINpb82I=;
- b=RqXlCp08JUvummzvOpXr0Wzcf0zFtoQaNVNjziWbxoHTiVYFC8fNvl40cRLF4j08VK
- zwA4S6veFGwOxb4Hhig7Niab8E2PZRKoNpk6VVFdl4hu8AGY9OsAFwOFpy5zgDHC6oCx
- V/D78/Yie3glWp0MHGEH5oGA+WnnRNsTSUqEZXsWqtVE5iuaFUQ8tiOGDJ963anIj1/x
- Kl3EFIIHabtMqq0wLjoawhKSX7jhlyD1oCi79uhB7f9PREfShkxlbVG88VW5LZEIjJkA
- AHk0ry6O2Mp4xqwbgfHpR2yCvBmed+69byvpZMxKZ7Akhql5M74CXvMDd1hyWW/14+jv
- Ho9g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXiVvqbi0WNMi+SEsskeU7GFbe8rbTjylbKg2pCMC0tDJwYS4A+rDYoL2zO7J2NoIBAm+uYnGuWmEQf@nongnu.org
-X-Gm-Message-State: AOJu0YxhI99ufPrDBqPJMV8/DPDuaLAjpbtVcPEz1H4L2qptnuYkv/iA
- TAKxHcw3vP12iZtsynvzhqEN/7UujIGD4hXBLu9K0JsStY+HFJ3orfaQOnQMER0BDgRrLggPgrh
- gMAl+0wgJatOXCG4lWASutySVuh1iSQVZ9kzUow3pasO2/qLpU03GS5kq
-X-Gm-Gg: ASbGncukKCDUxGJUN4DGcdw+zXD3DMdYWNRzpMINOZ06fi0qSl7ThLz/wy/hCknYMPz
- mzyEHIoUI8qo7Ng8b4O95DlJ0LB25xwXJAqCziJ4wCyFl6O6iIEDByUmKoEc3Y3rgi0TQ3ufNLC
- WdUAW49/xsn14RyK4/oRW91hQSskcbbN67Vl71TX4w+fZRFbPai66Vz8Yu/+AXGpjNUDlq9gGHo
- jUNHtOzIh5UcNWU7s0U3nYLwlsqdetENICjXtsDgV/dc7wADo4I0lnn+oghV5xVzvLqWY/WDeCU
- glXA+iOp6PZ2CDyF9hFwoeOeN+TOpfgv5Fb1IwnRlC1dUH4RNZs5fW3cELaKor0LB9Gxuw==
-X-Received: by 2002:adf:e19b:0:b0:3a4:cb4f:ac2a with SMTP id
- ffacd0b85a97d-3b4970110d9mr11589212f8f.21.1751990290078; 
- Tue, 08 Jul 2025 08:58:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IETcHu6CEeeMdueEEZSQvTMD1QVOKBXPassNN6jhIRLrSSvV4Nc26FmmOeLp5VorEoAoAkvWw==
-X-Received: by 2002:adf:e19b:0:b0:3a4:cb4f:ac2a with SMTP id
- ffacd0b85a97d-3b4970110d9mr11589186f8f.21.1751990289510; 
- Tue, 08 Jul 2025 08:58:09 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454cd3d2749sm26893205e9.25.2025.07.08.08.58.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Jul 2025 08:58:08 -0700 (PDT)
-Message-ID: <60bb1600-b9ea-4fd6-8292-79f7a9b6d82c@redhat.com>
-Date: Tue, 8 Jul 2025 17:58:07 +0200
+ d=1e100.net; s=20230601; t=1751992486; x=1752597286;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rQnPm7OMUxUj9kgIE7V/5Xg89kaFsjsthn3fZVSeLuM=;
+ b=qkytoMxTnCQ87Kqj/KO3Mgepci0DLZ2a9kHYnhH8XEmkMFTyKdjgweOfNyFCrIXGhX
+ 5bw1lVnS0yvnIYpOX5imU8fsWMy+HlU55KAxh8nK3hMknFbV1aimYHbHyfVzm0LWE6vo
+ WGhoih9wX+tf6/IeqkGtKtiXnQ5yqPaKpeMdYt0WZS1Z+IV8Kn/xDUpJA56fAkeu3EWt
+ PUO8SF1JzEooQzgGY88RDv3yARsyVS7xMRiBNTEdVzQ5/F72YrDuSNDZeakicbtRuQlD
+ UsIS4zE9g4iphsyYfRcbTsxhLqckNUOXtR2zmzpwOk/S4kaUJ1Vai4WjLQJQCvx8Src4
+ GYPA==
+X-Gm-Message-State: AOJu0Yz7BOErznYdYDXJ1jt4rLYtMuq2SrIy56oNM41iEJuON6DnkIkn
+ A8c3kpl7qGeZuPVQY6oSmBP3CE8xhmOJLCOtJccQjqW2B129YSNKoD6xq/8JQcuXPrIQ5+Mk2md
+ tFfgWENx9av7f10rdXJsIgII/mCh9upiqMMGwMBQL5TLj+hCeGCL0hVfGqw==
+X-Gm-Gg: ASbGncv+wuxYqmQKcBt47q0GCe72zRrTKm1Fe1I2cGoDjzGpSvSu4GjnzbdOIsZNJ0X
+ kkR8Vfcr0/hQF+XFCxscZyUME7tUpxwc8EuvNQOdAXPC4AjdGcDY0cUzJbpEQ0K+ihgQibxlfUD
+ 1YL080imGGof3US/+98xxd8fbD2IpbeNnQl3zpKfc1GGE=
+X-Google-Smtp-Source: AGHT+IFfpggFdOxj172OW8RoiRnOg8d7/ZBIpPvPeI6W60v/YNcVFVsXg4hutuy34RcOlZ+7dHMKG46fAMK1ZcNruGY=
+X-Received: by 2002:a05:6402:51ce:b0:608:66ce:14d1 with SMTP id
+ 4fb4d7f45d1cf-60fd2f85538mr13613177a12.6.1751965911713; Tue, 08 Jul 2025
+ 02:11:51 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] hw/intc/arm_gicv3_kvm: Drop DPRINTF macro
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20250708115238.667050-1-peter.maydell@linaro.org>
- <20250708115238.667050-4-peter.maydell@linaro.org>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250708115238.667050-4-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+References: <20250703-rust-mem-api-v1-0-cd5314bdf580@linaro.org>
+ <20250703-rust-mem-api-v1-1-cd5314bdf580@linaro.org>
+ <591f8a81-2c8e-4e30-abf2-4571afed41b4@redhat.com>
+In-Reply-To: <591f8a81-2c8e-4e30-abf2-4571afed41b4@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Tue, 8 Jul 2025 12:11:25 +0300
+X-Gm-Features: Ac12FXxuB6uXlv8JaSfaIgQfWwvDlv35gmb2UGJcAEboo3yqOfQmRkMT69epVEo
+Message-ID: <CAAjaMXZ3JziZ6gUHF67=nqvxzUF0M46SPqftRKgHOYYLaUxjJg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] rust/memory: replace size arg with Bits enum
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, 
+ Zhao Liu <zhao1.liu@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52a.google.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,73 +85,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 7/8/25 1:52 PM, Peter Maydell wrote:
-> We don't generally like DPRINTF debug macros, preferring tracepoints.
-> In this case the macro is used in only three places (reset, realize,
-> and in the unlikely event the host kernel doesn't have GICv3 register
-> access support). These don't seem worth converting to tracepoints,
-> so simply delete the macro and its uses.
+On Tue, Jul 8, 2025 at 11:35=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
 >
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-Eric
-
-> ---
-> If anybody needs to debug this code they can add useful tracepoints
-> at that point. I don't think these DPRINTFs will help at all.
-> ---
->  hw/intc/arm_gicv3_kvm.c | 13 -------------
->  1 file changed, 13 deletions(-)
+> > We have the ability to make memory accesses use a typesafe access width
+> > type in Rust, which the C API currently lacks as it does not use a
+> > newtype wrapper for specifying the amount of bytes a memory access has;
+> > it uses a plain 32-bit integer value instead.
 >
-> diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
-> index 8e34d08b415..e118c1b1f04 100644
-> --- a/hw/intc/arm_gicv3_kvm.c
-> +++ b/hw/intc/arm_gicv3_kvm.c
-> @@ -34,14 +34,6 @@
->  #include "target/arm/cpregs.h"
->  
->  
-> -#ifdef DEBUG_GICV3_KVM
-> -#define DPRINTF(fmt, ...) \
-> -    do { fprintf(stderr, "kvm_gicv3: " fmt, ## __VA_ARGS__); } while (0)
-> -#else
-> -#define DPRINTF(fmt, ...) \
-> -    do { } while (0)
-> -#endif
-> -
->  #define TYPE_KVM_ARM_GICV3 "kvm-arm-gicv3"
->  typedef struct KVMARMGICv3Class KVMARMGICv3Class;
->  /* This is reusing the GICv3State typedef from ARM_GICV3_ITS_COMMON */
-> @@ -721,14 +713,11 @@ static void kvm_arm_gicv3_reset_hold(Object *obj, ResetType type)
->      KVMARMGICv3Class *kgc = KVM_ARM_GICV3_GET_CLASS(s);
->      uint32_t reg;
->  
-> -    DPRINTF("Reset\n");
-> -
->      if (kgc->parent_phases.hold) {
->          kgc->parent_phases.hold(obj, type);
->      }
->  
->      if (s->migration_blocker) {
-> -        DPRINTF("Cannot put kernel gic state, no kernel interface\n");
->          return;
->      }
->  
-> @@ -807,8 +796,6 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
->      Error *local_err = NULL;
->      int i;
->  
-> -    DPRINTF("kvm_arm_gicv3_realize\n");
-> -
->      kgc->parent_realize(dev, &local_err);
->      if (local_err) {
->          error_propagate(errp, local_err);
+> I find this both verbose and (ok, that's subjective) ugly due to the
+> extra import, the underscore.
 
+Yep, I agree on that, but I wasn't sure what name would be better.
+Whatever type-level improvement this patch brings, it's small, though
+nice-to-have. We can drop it, no problem.
+
+>
+> There are two parts on the patches:
+>
+> 1) the extra checking on impl_sizes and valid_sizes.  That's valuable,
+> what about just adding something like this:
+>
+>          assert!(min =3D=3D 1 || min =3D=3D 2 || min =3D=3D 4 || min =3D=
+=3D 8);
+>          assert!(max =3D=3D 1 || max =3D=3D 2 || max =3D=3D 4 || max =3D=
+=3D 8);
+>          assert!(max >=3D min);
+>
+> It can be validated at compile time anyway, since the functions are
+> pretty much always used in const context (in fact, for C code there's a
+> scripts/checkpatch.pl check that they are declared as const).
+
+Yes sounds good!
+
+>
+>
+> 2) Passing Bits to the read and write callbacks.  The argument is
+> ignored for pl011, and converted with "as u32" for HPET.  I find this to
+> be worse than before, because it's very unobvious that _32 is defined to
+> 4 rather than 32.
+
+Maybe do a `Size` enum instead that has variants: 1 instead of 8, 2
+instead of 16, 4 instead of 32, etc.?
+
+>
+> The main effect on generated code is to add an assert! to
+> memory_region_ops_read_cb() and memory_region_ops_write_cb() that's
+> similar to the above.  I'm not sure of its value, either: if the size is
+> not 1/2/4/8, memory.c/physmem.c must have screwed up big.  It's not a
+> safety concern, either, since the size is not used in any unsafe code.
+
+Yep it's more of a guard rail since we can't have refined integer types.
+
+--=20
+Manos Pitsidianakis
+Emulation and Virtualization Engineer at Linaro Ltd
 
