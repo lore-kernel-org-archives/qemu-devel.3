@@ -4,76 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E898C83F09
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 548CEC83F0F
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:42:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZF6w-0003tG-JR; Tue, 08 Jul 2025 16:40:18 -0400
+	id 1uZF8A-0005o9-P3; Tue, 08 Jul 2025 16:41:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZCPZ-0002My-UH
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZCPd-0002Nm-Gt
  for qemu-devel@nongnu.org; Tue, 08 Jul 2025 13:47:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZCOe-0004eY-FM
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 13:47:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1751996769;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KsfUkLon/+WAZ1K8J1yMGAMyGCY2Z1dhM4JRzV9aVSE=;
- b=AbUdho9215TLCbdZTgjzI191sHDS1nsGhW77RqEVTs65scAYrjNrx3MWKiBM+jpMFZs+Di
- zOnDmxhKkW9PMV+ZfaA76QuIC4cucKlI9w7DAv+24foPk/9cc5mREiRtGsZy1z9F9OsXh+
- IdBep6j7ZuVtV4IyNvtotAaQOTkynHQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-453-0ZhNDNNcPbiceIFEntL6vA-1; Tue,
- 08 Jul 2025 10:28:35 -0400
-X-MC-Unique: 0ZhNDNNcPbiceIFEntL6vA-1
-X-Mimecast-MFC-AGG-ID: 0ZhNDNNcPbiceIFEntL6vA_1751984911
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1080A1809C88; Tue,  8 Jul 2025 14:28:20 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.32.187])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 64B8330001B9; Tue,  8 Jul 2025 14:28:14 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
- Jonathan.Cameron@huawei.com, gustavo.romero@linaro.org,
- anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com
-Cc: pbonzini@redhat.com,
-	philmd@linaro.org,
-	alex.bennee@linaro.org
-Subject: [PATCH v6 33/36] tests/qtest/bios-tables-test: Prepare for addition
- of acpi pci hp tests
-Date: Tue,  8 Jul 2025 16:23:15 +0200
-Message-ID: <20250708142437.1344644-34-eric.auger@redhat.com>
-In-Reply-To: <20250708142437.1344644-1-eric.auger@redhat.com>
-References: <20250708142437.1344644-1-eric.auger@redhat.com>
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZCOj-0004nR-AP
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 13:47:14 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-60c3aafae23so287828a12.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 10:46:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1751996775; x=1752601575; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aLf82i0E4bHsDMZnIc9oDAmicMRD9HvwtBZXyX589m0=;
+ b=a6LGdUjR9MvwZ0hiA2IL4JnIYGJgde+SfbSJXYBueD+Cr/T7VmxPHTAcvrguLLA1jp
+ XtTeKKWWj84bUtgKqD7Jg9a/sjXnfVuxoonLE6pHssgjEHxPhUODYf/viudKQK2My3X1
+ vUt9FvuSmDqSgbMDy6p6j297O3ag5Ho1NWJRiicOXYWM7INdJxR/VFN41inAj7R5TTNi
+ 3o6tj4HIeMadduiuiBIVUrGI8Xw8Ck+JE9Xniy5wVhETZaJHSYZY55iIVCFlxfW2hyWU
+ 4S9vS6hDy2npvvRzuHTpKEaNTBbpqSSdFqfpd/SLMA4lH7MxBDrGRXKz3ml5d+ikCsA9
+ /aKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1751996775; x=1752601575;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=aLf82i0E4bHsDMZnIc9oDAmicMRD9HvwtBZXyX589m0=;
+ b=Ahfd/kglu6YHOhVCHYkDWzX79VkOL1XNrjT/UnM4CqxvZ2q68BS0C6SCnW2WtnW43D
+ t6O2sfJuXl4IH5hPJ+reSklwArsWSTCRGP+YogtaPxLRgLu6mlmdh++tzXzBPsYIW+by
+ 4remZ/movfNGO6kJCcDEA8OoLxg3MHm2uLFdLwWS51rzgDeLQO1tpTBEIXyUSnbYN2O2
+ 27D+nnlLIvowL61Jp119TmAQnZgAOUfBIeTW561N8YnlAo2d8QlOy36rsBfQPOfrJil8
+ hBr3oydRwmgZhOGUAIMvlYl62F0kLcLwe1VGPqu1pVSIabYjrXXkyir4ERn6eOM7uZZR
+ xBLQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUdHKgXmrW8lmrmqnRh0iWcQ7ts0ZX2i667hRVbjQAZ1te0rFP7zlHT9KueaqLfSPFwOgbwjJ4/vqSG@nongnu.org
+X-Gm-Message-State: AOJu0Yyi54C7Ai3jMGkEXGfOvvvH7BVnRyKUsvd8zHBpZIpmEtP9/6/W
+ Cf691T06rw0YKrYW+OD/GF4z95DzbyBFGDJ9ZDNxEzGaz6QXZXe3TkBu8e3ZE3PbhN8nb15bVQl
+ Y/3P8Mvs=
+X-Gm-Gg: ASbGncv6nxlWYMrlklUN35wqxuwSkktOSy8Lho2rG2dOHUW9vHG6UzanlHmfoGN6NZK
+ xvbVMRTaU5Vh9h/v2JOZP3GP6dcouB/xsTcSLJBjv3XtrS93x6rb2LI778F0EWZQDGXIT20W1ol
+ eAJMsE/M9oHKNFsUQ0XeOwmr4+WELuUgbZcLRIwo4hpSqdHezdllw1h+485lIFF6iU0EcJ1XfI3
+ xkt+sXBJ04Pysqco2ZQ4fbU6pvPgOefmkvZ9HmlBu0vsEd77GBhyy2d7PkaMvv/kV3yXvaadfCl
+ wNEVE3FSfTajpB87EEDaaN02GT93JyIFJWevXxOxZqaPcbqTkEhP2tmiCLPcSZSvEbAgKBeax0T
+ zFYRgc9V5gNn1xG/SnybeKVwbtctCMRfp3br5Lltq
+X-Google-Smtp-Source: AGHT+IFxatNnW+QKBMdaxUOxZ6SRs4fusBamvYNO1CzAf2O/0Wh3iQaSBDtflxfWM2FbHILXi8Wf5A==
+X-Received: by 2002:a05:600c:4e14:b0:453:10c1:cb21 with SMTP id
+ 5b1f17b1804b1-454cd85d080mr35094695e9.8.1751987836584; 
+ Tue, 08 Jul 2025 08:17:16 -0700 (PDT)
+Received: from [192.168.69.242] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b4708d085asm13158142f8f.25.2025.07.08.08.17.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 08 Jul 2025 08:17:15 -0700 (PDT)
+Message-ID: <2e462292-7744-44ba-b536-2e1b6a39d6df@linaro.org>
+Date: Tue, 8 Jul 2025 17:17:05 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 1/5] qom: qom-tree-get
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ qemu-devel@nongnu.org
+References: <1747057635-124298-1-git-send-email-steven.sistare@oracle.com>
+ <1747057635-124298-2-git-send-email-steven.sistare@oracle.com>
+ <526f5090-eeae-4eb8-8d1c-e006d9501f62@linaro.org>
+ <5f3ee337-ee4d-4bc7-835d-fc9ba2469b10@oracle.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <5f3ee337-ee4d-4bc7-835d-fc9ba2469b10@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,45 +110,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gustavo Romero <gustavo.romero@linaro.org>
+On 8/7/25 13:50, Steven Sistare wrote:
+> On 7/8/2025 3:14 AM, Philippe Mathieu-Daudé wrote:
+>> On 12/5/25 15:47, Steve Sistare wrote:
+>>> Define the qom-tree-get QAPI command, which fetches an entire tree of
+>>> properties and values with a single QAPI call.  This is much faster
+>>> than using qom-list plus qom-get for every node and property of the
+>>> tree.  See qom.json for details.
+>>>
+>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>>> ---
+>>>   qapi/qom.json      | 56 ++++++++++++++++++++++++++++++++++++++++++
+>>>   qom/qom-qmp-cmds.c | 72 +++++++++++++++++++++++++++++++++++++++++++ 
+>>> +++++++++++
+>>>   2 files changed, 128 insertions(+)
+>>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+> Hi Philippe, thank you for reviewing this.
+> 
+> Markus has requested that I drop qom-tree-get, and only provide qom- 
+> list-getv,
+> to simplify things.  Do you prefer that we keep qom-tree-get?
 
-Soon we will introduce new tests related to ACPI PCI hotplug and
-acpi-index that will use a new reference blob:
+Doh I missed that, I only noticed his "QOM maintainers please review"
+at the end.
 
-tests/data/acpi/aarch64/virt/DSDT.acpipcihp
-tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex
+If you already addressed Markus comments, please respin to get a chance
+to get it merged for 10.1, otherwise I'll try to look at getv in the
+next days.
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Regards,
 
----
-
-v3 -> v4:
-- switch Sign-off's (Jonathan)
----
- tests/qtest/bios-tables-test-allowed-diff.h      | 2 ++
- tests/data/acpi/aarch64/virt/DSDT.acpipcihp      | 0
- tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex | 0
- 3 files changed, 2 insertions(+)
- create mode 100644 tests/data/acpi/aarch64/virt/DSDT.acpipcihp
- create mode 100644 tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex
-
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..02f4f0b29f 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,3 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/aarch64/virt/DSDT.acpipcihp",
-+"tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex",
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.acpipcihp b/tests/data/acpi/aarch64/virt/DSDT.acpipcihp
-new file mode 100644
-index 0000000000..e69de29bb2
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex b/tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex
-new file mode 100644
-index 0000000000..e69de29bb2
--- 
-2.49.0
-
+Phil.
 
