@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31053C83F09
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 22:16:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45A9BC8303C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 22:17:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZGZy-0007tc-4m; Tue, 08 Jul 2025 18:14:22 -0400
+	id 1uZGcM-0003Le-8R; Tue, 08 Jul 2025 18:16:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZGOE-00020x-2U
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 18:02:14 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZGYv-0005XY-6m
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 18:13:18 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZGOC-0004ZE-2X
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 18:02:13 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-451d6ade159so43374075e9.1
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 15:02:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZGYs-00086v-K1
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 18:13:16 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3a54700a46eso2720259f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 15:13:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752012129; x=1752616929; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gypyUV1zEJlvjHKMKE4WvpYJ2muJvWwpp3t+miyRnww=;
- b=ge5p5tPgwlkgtm82yB3xsYI5/aN43LDp3nLJ2YvwhDplfQ5UJKUzs/jZbJTTgeKXM1
- CWQOt5l/kF16SyKhClM7LVEykPUKzdUiqHw4CWjP2+eqFHhBs6puA2L5cfe65JhEUKZC
- jSZRMhEQFOv8YDKOl37Fp85YKVQ/whVqtS8k51PrRrJE7ly1tZ2y4iC3Ds6BVSaUGtQ6
- VLKm4JocdOuVS4FDrT01MFJq84IxLGuXnT0IDJ0Vz66jLy2jD7yYK5NW6hdDHI8X2OOD
- khoYB7bP5MOEHKWCPlsyyT4QcdMofVImw25yhlObJJOv1DfabRCdy07aCa3nD3YiFnk2
- zcBg==
+ d=linaro.org; s=google; t=1752012792; x=1752617592; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=+kbUNrPjCxqJMdGOcYTq49UvPqoFqRW4yRvrM7RsdxQ=;
+ b=Id624D/IVFn2+JAruffGCnjmD30JkWK029KM3vUUhnLECjp+CRPblkkKpy+vIHiFQW
+ DQsxeGCnOGrET90z7VZGkc8DAfCG2/TOQcRZnl9/6kUJo1KXzcoKBDoJgLZDrCkQDck5
+ Rk3H5QR65Z9DWzwzpOoWYol506LM5MEDS5VGRPeSyMfp8TIw01QYb/y9QwsduUMhJoIO
+ JRXD1WnLTdLzWgeWTgY2LyWoz655fbszrDbUORmQnwFUWURYXzyLuU9LkSZNAOYuGXmY
+ 8x2C1ZLIv3HBxNdkLsK8kpYEkbi6oNVzDLi0omq+dL/eeC2HQnAHrg5NB0WvZTwnU2r8
+ 1ceA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752012129; x=1752616929;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1752012792; x=1752617592;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gypyUV1zEJlvjHKMKE4WvpYJ2muJvWwpp3t+miyRnww=;
- b=jdhKD+uDFft8yaAfkDgxVbO5u2fhV4bk03sD/e2S8+fDlWzAiT+kvN6ozQv7vyqhXI
- oriwgk5qCGEJqFcgk9GfI7WEonHWgTeRZgK82m/b7gyM6RylTeUiH2cTCo7VnXCFf8ip
- Ve77qF42BtK3EoTSElUwQgBeUzGPtN6XP+vI5K9UU2I7ePHbIreo8IoUk17ror+2ZE6G
- Dn/Nug46Ifd2X9bVnMMmjdjICMHjs91xzPoPQdJBpDGg6EqS3M/QyojcwBsCebn3zI+F
- zfM9LNcoDBkJkOrfN902kmM1TVtd9nKzGdN9h4k1edHWg/MpWEm0u7YIQTVxGK2HeF9I
- 0l2A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXMriMrt9+7Lom2L8veJt525+nSuS3sb29qQxc5j20zaNh7828D+uV4DsvGtCnoV7OsOYYxp03qBkzP@nongnu.org
-X-Gm-Message-State: AOJu0Yz0vA03fyha8jz+4bmp+m+gGeMHpeyZE0reZ4dRMwhYMKiS7nsJ
- qJa+e2ehV4aUeo3bukQKo4C3K1MmFe7N2Y5uzEY1kEbiot6IBy6ZA1kwpHqosLsNlp8=
-X-Gm-Gg: ASbGncvZze8YhNiJQXKpm8G1RFZKAuf11ZzhrSInAAFb++5YFQ9nMiBi9ICYx7Th4VM
- wNNPiJjmS0lL0m2Dck17iXsQlgbBOIWutty+XMImd2qXVbp27ekILyfSWsHw6P273AaLyggXRZm
- hza1oSfxbgyWjcBFSqXTh9tj4ONF/4GUkK89JBqXL4MBroWPDxuzc/kVOxMb236tLaDKkVvPc/J
- 8oMIUgPe9pDejOsj5TS7QZ/PTAT+mXmtBL+uD+E3rRlJHcG7lyDoHcOZZjAzugG8WQ4vUfISAh+
- S+NQ0Q9gpG5dUS/otbueg7Jtp9I83JD4wuXFiQMsDA9LIsN+dhu+vN4mNB49/Yu07lGa1G0qmZg
- 1r2jkmurlka+BhIOfsZRvXfQCcn4u0wWTljD42JQ12EQ=
-X-Google-Smtp-Source: AGHT+IEzf/lWKiD+9nrhuvSKc+BGD+DquwR1N4skWGHH2rCEQiHjlgy6V0YeKBUQgKwMKTd6bLgEEA==
-X-Received: by 2002:a05:6000:470f:b0:3a5:3b63:58f0 with SMTP id
- ffacd0b85a97d-3b49701c86cmr12533525f8f.18.1752012129354; 
- Tue, 08 Jul 2025 15:02:09 -0700 (PDT)
+ bh=+kbUNrPjCxqJMdGOcYTq49UvPqoFqRW4yRvrM7RsdxQ=;
+ b=nCoIdebzsnv2ORZGTLFCPspz95T7AjOFW3x+frhSiOPlyOrlh3B8r5M2x0MJYNZNmD
+ nqueiGUd53AMv+AOLhjKxZER01lcih0rucfG+6ZotQhDG7rJ0JRGclSheIXNVScYG6ZY
+ rFzysbSPOyM9xlLezUU9qpcy67kVZo4bVuMxv0HGQCdZrF4JMEWogR7SedfjTkye/zjh
+ 0iraDvTqp7ik9EQoElL/AmgqhAjdeXqCZY8ctYHcTX/9hSfSv1ABssx+4kFBgYoRI6Pr
+ Hw0N0TihTGOmTrkYR0vq1rmvpFr40OoXowETOj7RSz2rYzzpdN/kQRqIN/s02u3UEf6g
+ nxpA==
+X-Gm-Message-State: AOJu0Yy65/RslPlSL+y/E63yPGVmtE7quSax2kxHc8jyfYkyYQV+MSX5
+ v8fVdKi8cf3lDwb9FATRs2wwbgQvSj0CvbkpEXKkTrDMLvGEyy/WdJg7sNKjRxtkLPvgVF2sfhN
+ sWibv
+X-Gm-Gg: ASbGnctzYzRpd2bI3eiAcQ3KqDnlEnB4BhYZi39kYniOm4ALPCDR6BjRtGPfo2gMX5T
+ YBs9T/Ca6xb0cbS6W5VtnKlu+idfMQR7H2kgfRge3nRMQNKak+fr78zYDCu42HsChSBR919D8Gp
+ Sm1o6ixuKK0HKGThJZb7tjurFo+bHAq9Ehv6X+vVd2ffZetIycm0bhGMfOezG/Mok4VoOrN5nRY
+ y8e2+yNBHhqUgnCn9clvbtFGQDf7H/X/gI3B0Ob0PanN/ngmiMsvkyRkVj8MNnCzWyGula9tVAh
+ 8zieiWcTh2fATJ9uH2tDHycBjCM6VrodRGa9j5TIvA4ywyPkh3jNl8b1MEZOIu73k5DGBxePgKf
+ G6v4KwxW6A6pqsqu/qELguWrHZ5osNwp2
+X-Google-Smtp-Source: AGHT+IFGiqwIs56ZAhE27Y5U1Nv0hRYcCpdysNZDEfPzjh6bN8zkva6qm0uF/n6ONNw+W85FM22yqA==
+X-Received: by 2002:a05:6000:210a:b0:3a4:d53d:be20 with SMTP id
+ ffacd0b85a97d-3b5e2fec82fmr800201f8f.18.1752012791810; 
+ Tue, 08 Jul 2025 15:13:11 -0700 (PDT)
 Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b47030cdf5sm13785745f8f.1.2025.07.08.15.02.08
+ 5b1f17b1804b1-454d50ded8csm937445e9.20.2025.07.08.15.13.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Jul 2025 15:02:08 -0700 (PDT)
-Message-ID: <bdb92ceb-59d3-4e82-83f7-d4bde9b96583@linaro.org>
-Date: Wed, 9 Jul 2025 00:02:07 +0200
+ Tue, 08 Jul 2025 15:13:11 -0700 (PDT)
+Message-ID: <9df05684-af4a-4317-90d3-660494c73fac@linaro.org>
+Date: Wed, 9 Jul 2025 00:13:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 3/3] tests/qtest/qom-test: unit test for qom-list-getv
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-References: <1751995472-211897-1-git-send-email-steven.sistare@oracle.com>
- <1751995472-211897-4-git-send-email-steven.sistare@oracle.com>
-Content-Language: en-US
+Subject: Re: [PATCH v2 3/3] system/os-win32: Remove unnecessary
+ 'qemu/typedefs.h' include
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <1751995472-211897-4-git-send-email-steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
+ Alex Williamson <alex.williamson@redhat.com>
+References: <20250708085859.7885-1-philmd@linaro.org>
+ <20250708085859.7885-4-philmd@linaro.org>
+ <37e9f347-f7ba-4ea6-93f8-879d8169012a@linaro.org>
+Content-Language: en-US
+In-Reply-To: <37e9f347-f7ba-4ea6-93f8-879d8169012a@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,96 +106,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Steve,
-
-On 8/7/25 19:24, Steve Sistare wrote:
-> Add a unit test for qom-list-getv.
+On 8/7/25 22:53, Philippe Mathieu-Daudé wrote:
+> On 8/7/25 10:58, Philippe Mathieu-Daudé wrote:
+>> Commit f5fd677ae7c ("win32/socket: introduce qemu_socket_select()
+>> helper") included the "qemu/typedefs.h" header for the Error type,
+>> but files including "system/os-win32.h" should already include
+>> "qemu/osdep.h", and thus "qemu/typedefs.h".
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   include/system/os-win32.h | 1 -
+>>   1 file changed, 1 deletion(-)
+>>
+>> diff --git a/include/system/os-win32.h b/include/system/os-win32.h
+>> index 3aa6cee4c23..662cfabc5e7 100644
+>> --- a/include/system/os-win32.h
+>> +++ b/include/system/os-win32.h
+>> @@ -29,7 +29,6 @@
+>>   #include <winsock2.h>
+>>   #include <windows.h>
+>>   #include <ws2tcpip.h>
+>> -#include "qemu/typedefs.h"
 > 
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->   tests/qtest/qom-test.c | 64 ++++++++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 64 insertions(+)
+> FTR, copying Peter's comment on v1:
+> http://lore.kernel.org/qemu-devel/ 
+> CAFEAcA9rcJHBaeAqCM1BszrhzkE4=gxJkx9h62BVhEz9hB7OMA@mail.gmail.com
 > 
-> diff --git a/tests/qtest/qom-test.c b/tests/qtest/qom-test.c
-> index 27d70bc..4defff1 100644
-> --- a/tests/qtest/qom-test.c
-> +++ b/tests/qtest/qom-test.c
-> @@ -11,11 +11,72 @@
->   
->   #include "qobject/qdict.h"
->   #include "qobject/qlist.h"
-> +#include "qobject/qstring.h"
->   #include "qemu/cutils.h"
->   #include "libqtest.h"
->   
->   static int verbosity_level;
->   
-> +static void test_getv(QTestState *qts, QList *paths)
-> +{
-> +    QListEntry *entry, *prop_entry, *path_entry;
-> +    g_autoptr(QDict) response = NULL;
-> +    QDict *args = qdict_new();
-> +    QDict *prop;
-> +    QList *return_list;
-> +
-> +    if (verbosity_level >= 2) {
+>  > This one's tricky -- osdep.h includes system/os-win32.h
+>  > *before* it includes typedefs.h. If you want to remove this
+>  > include I think you need to move the include of typedefs.h
+>  > a bit further up in osdep.h (taking care that it's still
+>  > wrapped in an "extern C").
+>  >
+>  > (Or we could declare the functions in os-win32.h which
+>  > use the Error type somewhere else. That header I think is
+>  > intended to be "Windows specifics and compatibility wrappers
+>  > that everywhere needs to have sorted out", not "this
+>  > function happens to only be needed on Windows": a lot
+>  > of the functions declared in it are only used in a
+>  > handful of files and don't need to be declared to every
+>  > source file in the project. But that's a bit more effort.)
 
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-But I note this doesn't assert anything except if you use V=3 and
-look at the output.
-
-Maybe stick it to a particular machine and check for a particular
-path and its properties?
-
-> +        g_test_message("Obtaining properties for paths:");
-> +        QLIST_FOREACH_ENTRY(paths, path_entry) {
-> +            QString *qstr = qobject_to(QString, qlist_entry_obj(path_entry));
-> +            g_test_message("  %s", qstring_get_str(qstr));
-> +        }
-> +    }
-> +
-> +    qdict_put_obj(args, "paths", QOBJECT(qlist_copy(paths)));
-> +    response = qtest_qmp(qts, "{ 'execute': 'qom-list-getv',"
-> +                              "  'arguments': %p }", args);
-> +    g_assert(response);
-> +    g_assert(qdict_haskey(response, "return"));
-> +    return_list = qobject_to(QList, qdict_get(response, "return"));
-> +
-> +    path_entry = QTAILQ_FIRST(&paths->head);
-> +    QLIST_FOREACH_ENTRY(return_list, entry) {
-> +        QDict *obj = qobject_to(QDict, qlist_entry_obj(entry));
-> +        g_assert(qdict_haskey(obj, "properties"));
-> +        QList *properties = qobject_to(QList, qdict_get(obj, "properties"));
-> +        bool has_child = false;
-> +
-> +        QLIST_FOREACH_ENTRY(properties, prop_entry) {
-> +            prop = qobject_to(QDict, qlist_entry_obj(prop_entry));
-> +            g_assert(qdict_haskey(prop, "name"));
-> +            g_assert(qdict_haskey(prop, "type"));
-> +            has_child |= strstart(qdict_get_str(prop, "type"), "child<", NULL);
-> +        }
-> +
-> +        if (has_child) {
-> +            /* build a list of child paths */
-> +            QString *qstr = qobject_to(QString, qlist_entry_obj(path_entry));
-> +            const char *path = qstring_get_str(qstr);
-> +            g_autoptr(QList) child_paths = qlist_new();
-> +
-> +            QLIST_FOREACH_ENTRY(properties, prop_entry) {
-> +                prop = qobject_to(QDict, qlist_entry_obj(prop_entry));
-> +                if (strstart(qdict_get_str(prop, "type"), "child<", NULL)) {
-> +                    g_autofree char *child_path = g_strdup_printf(
-> +                        "%s/%s", path, qdict_get_str(prop, "name"));
-> +                    qlist_append_str(child_paths, child_path);
-> +                }
-> +            }
-> +
-> +            /* fetch props for all children with one qom-list-getv call */
-> +            test_getv(qts, child_paths);
-> +        }
-> +
-> +        path_entry = QTAILQ_NEXT(path_entry, next);
-> +    }
-> +}
+Amusingly qemu_socket_[un]select() are always called with Error=NULL.
 
