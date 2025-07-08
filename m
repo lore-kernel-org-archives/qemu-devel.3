@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11856C8303C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEAFCC83F09
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:09:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZEaz-00058o-9z; Tue, 08 Jul 2025 16:07:17 -0400
+	id 1uZEbm-00086r-Qv; Tue, 08 Jul 2025 16:08:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uZDS4-0000hx-A3; Tue, 08 Jul 2025 14:54:15 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uZDRh-00080A-CN; Tue, 08 Jul 2025 14:53:57 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bc47j01xtz6GFHW;
- Tue,  8 Jul 2025 23:01:37 +0800 (CST)
-Received: from frapeml100005.china.huawei.com (unknown [7.182.85.132])
- by mail.maildlp.com (Postfix) with ESMTPS id 1B9C3140433;
- Tue,  8 Jul 2025 23:02:41 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml100005.china.huawei.com (7.182.85.132) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 8 Jul 2025 17:02:40 +0200
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Tue, 8 Jul 2025 17:02:40 +0200
-To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "berrange@redhat.com"
- <berrange@redhat.com>, "imammedo@redhat.com" <imammedo@redhat.com>,
- "nathanc@nvidia.com" <nathanc@nvidia.com>, "mochs@nvidia.com"
- <mochs@nvidia.com>, "smostafa@google.com" <smostafa@google.com>,
- "gustavo.romero@linaro.org" <gustavo.romero@linaro.org>, "mst@redhat.com"
- <mst@redhat.com>, "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- Linuxarm <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>,
- jiangkunkun <jiangkunkun@huawei.com>, Jonathan Cameron
- <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
- <zhangfei.gao@linaro.org>
-Subject: RE: [PATCH v6 08/12] hw/arm/virt: Allow user-creatable SMMUv3 dev
- instantiation
-Thread-Topic: [PATCH v6 08/12] hw/arm/virt: Allow user-creatable SMMUv3 dev
- instantiation
-Thread-Index: AQHb6/xJlPtpAHu5pEuj91bLuyZP37QnvekAgAA0r1D///DkgIAAdq2Q
-Date: Tue, 8 Jul 2025 15:02:40 +0000
-Message-ID: <d2b262d012dd4d65a0bccaa036d4faf0@huawei.com>
-References: <20250703084643.85740-1-shameerali.kolothum.thodi@huawei.com>
- <20250703084643.85740-9-shameerali.kolothum.thodi@huawei.com>
- <b05cd1f5-db7a-45d3-a582-85c808adcd04@redhat.com>
- <e4cd2ccede7b46df9bbcf63dcf492fcf@huawei.com>
- <45c112f4-bcd3-44a1-a7b9-1ff0fa807f01@redhat.com>
-In-Reply-To: <45c112f4-bcd3-44a1-a7b9-1ff0fa807f01@redhat.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
+ id 1uZDSp-0001Be-HY
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 14:54:56 -0400
+Received: from mail-oi1-x244.google.com ([2607:f8b0:4864:20::244])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
+ id 1uZDSR-0008OC-Jm
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 14:54:37 -0400
+Received: by mail-oi1-x244.google.com with SMTP id
+ 5614622812f47-40ba3d91c35so2951593b6e.3
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 11:53:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1752000801; x=1752605601; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=v4YZAm19501qatmdakHnxhE51uKPvDDuW89sHsrTH8c=;
+ b=bfm8VR77ZBufbtkSVGZu/qGmfoiKsf4CvZ796qXwpOmMclRi/j/azcC3fU/Cb8ymH3
+ 1HE4jJGJeKovbOqeIdQmIwrG3QomATGwIFQ8+Xfl2Hwzx1Mz4iecGb/uW0zF/eEaV99k
+ XMEZBx5hdUXy9kMZDLP3n5NrdIFfp7qYC/n190GZtrIALnl4mTsB7lzGwCSLmJb9CwXu
+ MHesGaX11Ti0cZq3PEcprnr83PnV7al01S5n5kPqI6+cg5rB0w5wf73TApQ6A0e8gOJR
+ Z07CAeJSYZ4WHnvexmBtYIU3MGVy0YA4BD8gXIcyUaj7E82sB8BT3GsiCKiNbzVdlBgV
+ JhAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752000801; x=1752605601;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=v4YZAm19501qatmdakHnxhE51uKPvDDuW89sHsrTH8c=;
+ b=aFW2qlirV2RQ9Ws4uDvb6dIRTbA/ZM+QNx81iH9iWSpHx+4dHc+Guc/9nWQ3lfm2rD
+ NdrDyNNmyCBEd7gJwE/BweEvNpFsnLrFmmtLdTyYD9HSZBXo5Twpi3Kja6Nid/jbiyb2
+ lV+MI8h0VV9jpM/NSQma+o3krTVlcxzZLts69TAZfJTp61aUY0vyCisp29lxwhmZK5sU
+ iSVKX2Ruoq07fC7qE9NH3oxk80oxjYx1b2PflIl1QjE+TcyxxqrwrNNe6d7W9u5Ykk3I
+ JwadPaW4aEb42vdFSm2+xbJjvU9SO5Rw1tznndTVnravlWuPqOWObPhJpQRiBw1V3FXV
+ EoOw==
+X-Gm-Message-State: AOJu0YxxVly3KWAosaGTOGys9AXRImU613sMRgxxbXWVdCIOsMYQM6MI
+ OBjnYFoELzswBs1C2EGw6zlgN9/xpewQQRNJHoTYhJvPNIjLq3mJv8hQllXl3IfjiPg=
+X-Gm-Gg: ASbGncvuN903d854hvNHG505eHmLQejqswbtKwBNOC5N/AR75OJPHbl0qlqQWxVaoLm
+ VZQcaOWhUMvaV2rZ6HnPc/I95Wyx0ZmrJBkVKSNmoMFYmtdlReHEkRpE3LeC9w4wGPvNEkRQY8f
+ Am33Dr9Ms8G9T+mB/gKCBuAZW7iQ08EWbbLJ4fdphD07eUTO0FesSTFDgHyxt0zP3uDhiXYRv4v
+ jW+XypKeWkApbZmyeSl9HOlSY7v+FgzsA0wTvUCqRLZorQtKh2zBHd3S4GfWyy430odz+1LNgWV
+ Jc4w/bXZK2oEoNkEZBDcBuwI8dkgtfbT8R/ZnGyfd2YC+paJeZw0RFADWTcmvJVbd2MB21k=
+X-Google-Smtp-Source: AGHT+IGJA95WDTEqBtWrMPVVStcoOJA+F1CXVH8dbAIQAI53/Vdb9BlTfaIABPiEEBb+G+4I9KjTtQ==
+X-Received: by 2002:a05:6a20:918d:b0:215:dee4:4808 with SMTP id
+ adf61e73a8af0-2260aa9f41bmr24984906637.18.1751966292874; 
+ Tue, 08 Jul 2025 02:18:12 -0700 (PDT)
+Received: from fedora.. ([118.151.210.82]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b38f55c6490sm10190721a12.74.2025.07.08.02.18.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 08 Jul 2025 02:18:10 -0700 (PDT)
+From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, deller@gmx.de, jasowang@redhat.com,
+ tank0nf <soumyajyotisarkar23@gmail.com>
+Subject: [PATCH] hw/net: Enhancing_transmit_function_i82596
+Date: Tue,  8 Jul 2025 14:47:53 +0530
+Message-ID: <20250708091752.48027-2-soumyajyotisarkar23@gmail.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::244;
+ envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-oi1-x244.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,131 +93,162 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgRXJpYywNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBFcmljIEF1
-Z2VyIDxlcmljLmF1Z2VyQHJlZGhhdC5jb20+DQo+IFNlbnQ6IFR1ZXNkYXksIEp1bHkgOCwgMjAy
-NSAxMDo1NiBBTQ0KPiBUbzogU2hhbWVlcmFsaSBLb2xvdGh1bSBUaG9kaQ0KPiA8c2hhbWVlcmFs
-aS5rb2xvdGh1bS50aG9kaUBodWF3ZWkuY29tPjsgcWVtdS1hcm1Abm9uZ251Lm9yZzsNCj4gcWVt
-dS1kZXZlbEBub25nbnUub3JnDQo+IENjOiBwZXRlci5tYXlkZWxsQGxpbmFyby5vcmc7IGpnZ0Bu
-dmlkaWEuY29tOyBuaWNvbGluY0BudmlkaWEuY29tOw0KPiBkZHV0aWxlQHJlZGhhdC5jb207IGJl
-cnJhbmdlQHJlZGhhdC5jb207IGltYW1tZWRvQHJlZGhhdC5jb207DQo+IG5hdGhhbmNAbnZpZGlh
-LmNvbTsgbW9jaHNAbnZpZGlhLmNvbTsgc21vc3RhZmFAZ29vZ2xlLmNvbTsNCj4gZ3VzdGF2by5y
-b21lcm9AbGluYXJvLm9yZzsgbXN0QHJlZGhhdC5jb207DQo+IG1hcmNlbC5hcGZlbGJhdW1AZ21h
-aWwuY29tOyBMaW51eGFybSA8bGludXhhcm1AaHVhd2VpLmNvbT47DQo+IFdhbmd6aG91IChCKSA8
-d2FuZ3pob3UxQGhpc2lsaWNvbi5jb20+OyBqaWFuZ2t1bmt1bg0KPiA8amlhbmdrdW5rdW5AaHVh
-d2VpLmNvbT47IEpvbmF0aGFuIENhbWVyb24NCj4gPGpvbmF0aGFuLmNhbWVyb25AaHVhd2VpLmNv
-bT47IHpoYW5nZmVpLmdhb0BsaW5hcm8ub3JnDQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjYgMDgv
-MTJdIGh3L2FybS92aXJ0OiBBbGxvdyB1c2VyLWNyZWF0YWJsZSBTTU1VdjMNCj4gZGV2IGluc3Rh
-bnRpYXRpb24NCj4gDQo+IEhpIFNoYW1lZXIsDQo+IA0KPiBPbiA3LzgvMjUgMTA6NTQgQU0sIFNo
-YW1lZXJhbGkgS29sb3RodW0gVGhvZGkgd3JvdGU6DQo+ID4gSGkgRXJpYywNCj4gPg0KPiA+PiAt
-LS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiA+PiBGcm9tOiBFcmljIEF1Z2VyIDxlcmljLmF1
-Z2VyQHJlZGhhdC5jb20+DQo+ID4+IFNlbnQ6IFR1ZXNkYXksIEp1bHkgOCwgMjAyNSA4OjQxIEFN
-DQo+ID4+IFRvOiBTaGFtZWVyYWxpIEtvbG90aHVtIFRob2RpDQo+ID4+IDxzaGFtZWVyYWxpLmtv
-bG90aHVtLnRob2RpQGh1YXdlaS5jb20+OyBxZW11LWFybUBub25nbnUub3JnOw0KPiA+PiBxZW11
-LWRldmVsQG5vbmdudS5vcmcNCj4gPj4gQ2M6IHBldGVyLm1heWRlbGxAbGluYXJvLm9yZzsgamdn
-QG52aWRpYS5jb207IG5pY29saW5jQG52aWRpYS5jb207DQo+ID4+IGRkdXRpbGVAcmVkaGF0LmNv
-bTsgYmVycmFuZ2VAcmVkaGF0LmNvbTsgaW1hbW1lZG9AcmVkaGF0LmNvbTsNCj4gPj4gbmF0aGFu
-Y0BudmlkaWEuY29tOyBtb2Noc0BudmlkaWEuY29tOyBzbW9zdGFmYUBnb29nbGUuY29tOw0KPiA+
-PiBndXN0YXZvLnJvbWVyb0BsaW5hcm8ub3JnOyBtc3RAcmVkaGF0LmNvbTsNCj4gPj4gbWFyY2Vs
-LmFwZmVsYmF1bUBnbWFpbC5jb207IExpbnV4YXJtIDxsaW51eGFybUBodWF3ZWkuY29tPjsNCj4g
-Pj4gV2FuZ3pob3UgKEIpIDx3YW5nemhvdTFAaGlzaWxpY29uLmNvbT47IGppYW5na3Vua3VuDQo+
-ID4+IDxqaWFuZ2t1bmt1bkBodWF3ZWkuY29tPjsgSm9uYXRoYW4gQ2FtZXJvbg0KPiA+PiA8am9u
-YXRoYW4uY2FtZXJvbkBodWF3ZWkuY29tPjsgemhhbmdmZWkuZ2FvQGxpbmFyby5vcmcNCj4gPj4g
-U3ViamVjdDogUmU6IFtQQVRDSCB2NiAwOC8xMl0gaHcvYXJtL3ZpcnQ6IEFsbG93IHVzZXItY3Jl
-YXRhYmxlDQo+IFNNTVV2Mw0KPiA+PiBkZXYgaW5zdGFudGlhdGlvbg0KPiA+Pg0KPiA+PiBIaSBT
-aGFtZWVyLA0KPiA+Pg0KPiA+PiBPbiA3LzMvMjUgMTA6NDYgQU0sIFNoYW1lZXIgS29sb3RodW0g
-d3JvdGU6DQo+ID4+PiBBbGxvdyBjb2xkLXBsdWdnaW5nIG9mIGFuIFNNTVV2MyBkZXZpY2Ugb24g
-dGhlIHZpcnQgbWFjaGluZSB3aGVuIG5vDQo+ID4+PiBnbG9iYWwgKGxlZ2FjeSkgU01NVXYzIGlz
-IHByZXNlbnQgb3Igd2hlbiBhIHZpcnRpby1pb21tdSBpcyBzcGVjaWZpZWQuDQo+ID4+Pg0KPiA+
-Pj4gVGhpcyB1c2VyLWNyZWF0ZWQgU01NVXYzIGRldmljZSBpcyB0aWVkIHRvIGEgc3BlY2lmaWMg
-UENJIGJ1cyBwcm92aWRlZA0KPiA+Pj4gYnkgdGhlIHVzZXIsIHNvIGVuc3VyZSB0aGUgSU9NTVUg
-b3BzIGFyZSBjb25maWd1cmVkIGFjY29yZGluZ2x5Lg0KPiA+Pj4NCj4gPj4+IER1ZSB0byBjdXJy
-ZW50IGxpbWl0YXRpb25zIGluIFFFTVXigJlzIGRldmljZSB0cmVlIHN1cHBvcnQsIHNwZWNpZmlj
-YWxseQ0KPiA+Pj4gaXRzIGluYWJpbGl0eSB0byBwcm9wZXJseSBwcmVzZW50IHB4Yi1wY2llIGJh
-c2VkIHJvb3QgY29tcGxleGVzIGFuZA0KPiA+Pj4gdGhlaXIgZGV2aWNlcywgdGhlIGRldmljZSB0
-cmVlIHN1cHBvcnQgZm9yIHRoZSBuZXcgU01NVXYzIGRldmljZSBpcw0KPiA+Pj4gbGltaXRlZCB0
-byBjYXNlcyB3aGVyZSBpdCBpcyBhdHRhY2hlZCB0byB0aGUgZGVmYXVsdCBwY2llLjAgcm9vdCBj
-b21wbGV4Lg0KPiA+Pj4NCj4gPj4+IFJldmlld2VkLWJ5OiBKb25hdGhhbiBDYW1lcm9uIDxqb25h
-dGhhbi5jYW1lcm9uQGh1YXdlaS5jb20+DQo+ID4+PiBSZXZpZXdlZC1ieTogRXJpYyBBdWdlciA8
-ZXJpYy5hdWdlckByZWRoYXQuY29tPg0KPiA+Pj4gVGVzdGVkLWJ5OiBOYXRoYW4gQ2hlbiA8bmF0
-aGFuY0BudmlkaWEuY29tPg0KPiA+Pj4gU2lnbmVkLW9mZi1ieTogU2hhbWVlciBLb2xvdGh1bQ0K
-PiA+PiA8c2hhbWVlcmFsaS5rb2xvdGh1bS50aG9kaUBodWF3ZWkuY29tPg0KPiA+Pj4gLS0tDQo+
-ID4+PiAgaHcvYXJtL3NtbXUtY29tbW9uLmMgICAgICAgICB8ICA4ICsrKysrLQ0KPiA+Pj4gIGh3
-L2FybS9zbW11djMuYyAgICAgICAgICAgICAgfCAgMiArKw0KPiA+Pj4gIGh3L2FybS92aXJ0LmMg
-ICAgICAgICAgICAgICAgfCA1MCArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysN
-Cj4gPj4+ICBody9jb3JlL3N5c2J1cy1mZHQuYyAgICAgICAgIHwgIDMgKysrDQo+ID4+PiAgaW5j
-bHVkZS9ody9hcm0vc21tdS1jb21tb24uaCB8ICAxICsNCj4gPj4+ICA1IGZpbGVzIGNoYW5nZWQs
-IDYzIGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkNCj4gPj4+DQo+ID4+PiBkaWZmIC0tZ2l0
-IGEvaHcvYXJtL3NtbXUtY29tbW9uLmMgYi9ody9hcm0vc21tdS1jb21tb24uYw0KPiA+Pj4gaW5k
-ZXggYjE1ZTdmZDBlNC4uMmVlNDY5MTI5OSAxMDA2NDQNCj4gPj4+IC0tLSBhL2h3L2FybS9zbW11
-LWNvbW1vbi5jDQo+ID4+PiArKysgYi9ody9hcm0vc21tdS1jb21tb24uYw0KPiA+Pj4gQEAgLTk1
-OSw3ICs5NTksMTIgQEAgc3RhdGljIHZvaWQgc21tdV9iYXNlX3JlYWxpemUoRGV2aWNlU3RhdGUN
-Cj4gKmRldiwNCj4gPj4gRXJyb3IgKiplcnJwKQ0KPiA+Pj4gICAgICAgICAgICAgICAgICBnb3Rv
-IG91dF9lcnI7DQo+ID4+PiAgICAgICAgICAgICAgfQ0KPiA+Pj4gICAgICAgICAgfQ0KPiA+Pj4g
-LSAgICAgICAgcGNpX3NldHVwX2lvbW11KHBjaV9idXMsICZzbW11X29wcywgcyk7DQo+ID4+PiAr
-DQo+ID4+PiArICAgICAgICBpZiAocy0+c21tdV9wZXJfYnVzKSB7DQo+ID4+PiArICAgICAgICAg
-ICAgcGNpX3NldHVwX2lvbW11X3Blcl9idXMocGNpX2J1cywgJnNtbXVfb3BzLCBzKTsNCj4gPj4+
-ICsgICAgICAgIH0gZWxzZSB7DQo+ID4+PiArICAgICAgICAgICAgcGNpX3NldHVwX2lvbW11KHBj
-aV9idXMsICZzbW11X29wcywgcyk7DQo+ID4+PiArICAgICAgICB9DQo+ID4+PiAgICAgICAgICBy
-ZXR1cm47DQo+ID4+PiAgICAgIH0NCj4gPj4+ICBvdXRfZXJyOg0KPiA+Pj4gQEAgLTk4NCw2ICs5
-ODksNyBAQCBzdGF0aWMgdm9pZCBzbW11X2Jhc2VfcmVzZXRfZXhpdChPYmplY3QgKm9iaiwNCj4g
-Pj4gUmVzZXRUeXBlIHR5cGUpDQo+ID4+PiAgc3RhdGljIGNvbnN0IFByb3BlcnR5IHNtbXVfZGV2
-X3Byb3BlcnRpZXNbXSA9IHsNCj4gPj4+ICAgICAgREVGSU5FX1BST1BfVUlOVDgoImJ1c19udW0i
-LCBTTU1VU3RhdGUsIGJ1c19udW0sIDApLA0KPiA+Pj4gKyAgICBERUZJTkVfUFJPUF9CT09MKCJz
-bW11X3Blcl9idXMiLCBTTU1VU3RhdGUsIHNtbXVfcGVyX2J1cywNCj4gPj4gZmFsc2UpLA0KPiA+
-Pj4gICAgICBERUZJTkVfUFJPUF9MSU5LKCJwcmltYXJ5LWJ1cyIsIFNNTVVTdGF0ZSwgcHJpbWFy
-eV9idXMsDQo+ID4+PiAgICAgICAgICAgICAgICAgICAgICAgVFlQRV9QQ0lfQlVTLCBQQ0lCdXMg
-KiksDQo+ID4+PiAgfTsNCj4gPj4+IGRpZmYgLS1naXQgYS9ody9hcm0vc21tdXYzLmMgYi9ody9h
-cm0vc21tdXYzLmMNCj4gPj4+IGluZGV4IGFiNjc5NzIzNTMuLmJjZjhhZjhkYzcgMTAwNjQ0DQo+
-ID4+PiAtLS0gYS9ody9hcm0vc21tdXYzLmMNCj4gPj4+ICsrKyBiL2h3L2FybS9zbW11djMuYw0K
-PiA+Pj4gQEAgLTE5OTYsNiArMTk5Niw4IEBAIHN0YXRpYyB2b2lkIHNtbXV2M19jbGFzc19pbml0
-KE9iamVjdENsYXNzDQo+ID4+ICprbGFzcywgY29uc3Qgdm9pZCAqZGF0YSkNCj4gPj4+ICAgICAg
-ZGV2aWNlX2NsYXNzX3NldF9wYXJlbnRfcmVhbGl6ZShkYywgc21tdV9yZWFsaXplLA0KPiA+Pj4g
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICZjLT5wYXJlbnRfcmVhbGl6ZSk7
-DQo+ID4+PiAgICAgIGRldmljZV9jbGFzc19zZXRfcHJvcHMoZGMsIHNtbXV2M19wcm9wZXJ0aWVz
-KTsNCj4gPj4+ICsgICAgZGMtPmhvdHBsdWdnYWJsZSA9IGZhbHNlOw0KPiA+Pj4gKyAgICBkYy0+
-dXNlcl9jcmVhdGFibGUgPSB0cnVlOw0KPiA+Pj4gIH0NCj4gPj4+DQo+ID4+PiAgc3RhdGljIGlu
-dCBzbW11djNfbm90aWZ5X2ZsYWdfY2hhbmdlZChJT01NVU1lbW9yeVJlZ2lvbg0KPiAqaW9tbXUs
-DQo+ID4+PiBkaWZmIC0tZ2l0IGEvaHcvYXJtL3ZpcnQuYyBiL2h3L2FybS92aXJ0LmMNCj4gPj4+
-IGluZGV4IDA1YTE0ODgxY2YuLjg2NjIxNzNjNDMgMTAwNjQ0DQo+ID4+PiAtLS0gYS9ody9hcm0v
-dmlydC5jDQo+ID4+PiArKysgYi9ody9hcm0vdmlydC5jDQo+ID4+PiBAQCAtNTYsNiArNTYsNyBA
-QA0KPiA+Pj4gICNpbmNsdWRlICJxZW11L2N1dGlscy5oIg0KPiA+Pj4gICNpbmNsdWRlICJxZW11
-L2Vycm9yLXJlcG9ydC5oIg0KPiA+Pj4gICNpbmNsdWRlICJxZW11L21vZHVsZS5oIg0KPiA+Pj4g
-KyNpbmNsdWRlICJody9wY2kvcGNpX2J1cy5oIg0KPiA+Pj4gICNpbmNsdWRlICJody9wY2ktaG9z
-dC9ncGV4LmgiDQo+ID4+PiAgI2luY2x1ZGUgImh3L3ZpcnRpby92aXJ0aW8tcGNpLmgiDQo+ID4+
-PiAgI2luY2x1ZGUgImh3L2NvcmUvc3lzYnVzLWZkdC5oIg0KPiA+Pj4gQEAgLTE0NDAsNiArMTQ0
-MSwyOCBAQCBzdGF0aWMgdm9pZA0KPiBjcmVhdGVfc21tdXYzX2R0X2JpbmRpbmdzKGNvbnN0DQo+
-ID4+IFZpcnRNYWNoaW5lU3RhdGUgKnZtcywgaHdhZGRyIGJhc2UsDQo+ID4+PiAgICAgIGdfZnJl
-ZShub2RlKTsNCj4gPj4+ICB9DQo+ID4+Pg0KPiA+Pj4gK3N0YXRpYyB2b2lkIGNyZWF0ZV9zbW11
-djNfZGV2X2R0YihWaXJ0TWFjaGluZVN0YXRlICp2bXMsDQo+ID4+PiArICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgIERldmljZVN0YXRlICpkZXYsIFBDSUJ1cyAqYnVzKQ0KPiA+Pj4g
-K3sNCj4gPj4+ICsgICAgUGxhdGZvcm1CdXNEZXZpY2UgKnBidXMgPSBQTEFURk9STV9CVVNfREVW
-SUNFKHZtcy0NCj4gPj4+IHBsYXRmb3JtX2J1c19kZXYpOw0KPiA+Pj4gKyAgICBTeXNCdXNEZXZp
-Y2UgKnNiZGV2ID0gU1lTX0JVU19ERVZJQ0UoZGV2KTsNCj4gPj4+ICsgICAgaW50IGlycSA9IHBs
-YXRmb3JtX2J1c19nZXRfaXJxbihwYnVzLCBzYmRldiwgMCk7DQo+ID4+PiArICAgIGh3YWRkciBi
-YXNlID0gcGxhdGZvcm1fYnVzX2dldF9tbWlvX2FkZHIocGJ1cywgc2JkZXYsIDApOw0KPiA+Pj4g
-KyAgICBNYWNoaW5lU3RhdGUgKm1zID0gTUFDSElORSh2bXMpOw0KPiA+Pj4gKw0KPiA+Pj4gKyAg
-ICBpZiAoc3RyY21wKCJwY2llLjAiLCBidXMtPnFidXMubmFtZSkpIHsNCj4gPj4+ICsgICAgICAg
-IHdhcm5fcmVwb3J0KCJTTU1VdjMgZGV2aWNlIG9ubHkgc3VwcG9ydGVkIHdpdGggcGNpZS4wIGZv
-cg0KPiBEVCIpOw0KPiA+PiB3aGlsZSB0ZXN0aW5nIHRoZSBzZXJpZXMgSSBoaXQgdGhlIHdhcm5p
-bmcgd2l0aCBhIHJoZWwgZ3Vlc3Qgd2hpY2ggYm9vdHMNCj4gPj4gd2l0aCBBQ1BJLg0KPiA+PiBJ
-IHRoaW5rIHdlIHNoYWxsIG1ha2UgdGhlIGNoZWNrIHNtYXJ0ZXIgdG8gYXZvaWQgdGhhdC4NCj4g
-Pj4gbWF5YmUgYWxzbyBjaGVjayBmaXJtd2FyZV9sb2FkZWQgYW5kIHZpcnRfaXNfYWNwaV9lbmFi
-bGVkKCk/DQo+ID4gVGhhbmtzIGZvciBnaXZpbmcgaXQgYSBzcGluLiBZZXMsIGp1c3QgY29uZmly
-bWVkIHRoYXQgdGhlIHdhcm5pbmcgYXBwZWFycy4NCj4gPiBUaGUgYWJvdmUgY2hlY2sgd2lsbCB3
-b3JrLCBidXQgY2FuIHdlIG1ha2UgdXNlIG9mIHZtcy0+YWNwaV9kZXYgZm9yDQo+ID4gdGhpcyBj
-aGVjayBpbnN0ZWFkPyBJdCBpcyBlc3NlbnRpYWxseSB0aGUgc2FtZSBhbmQgSSB0aGluayB0aGF0
-IHdpbGwgd29yay4NCj4gPg0KPiA+ICAgICBpZiAoIXZtcy0+YWNwaV9kZXYgJiYgc3RyY21wKCJw
-Y2llLjAiLCBidXMtPnFidXMubmFtZSkpDQo+ID4NCj4gPiBQbGVhc2UgbGV0IG1lIGtub3cuDQo+
-IA0KPiB3aXRoIHRoYXQgZml4ZWQsIGZlZWwgZnJlZSB0byBhZGQgbXkNCj4gDQo+ICpUZXN0ZWQt
-Ynk6IEVyaWMgQXVnZXIgPGVyaWMuYXVnZXJAcmVkaGF0LmNvbT4gSSBoYXZlIHRlc3RlZCBub24N
-Cj4gcmVncmVzc2lvbiBvbiBsZWdhY3kgU01NVSwgU01NVSBkZXZpY2UgcHJvdGVjdGluZyBwY2ll
-LjAgYW5kIHB4Yg0KPiB0b3BvbG9naWVzLiBMb29rcyBnb29kIHRvIG1lLiBUaGFua3MgRXJpYyAq
-DQoNCk9rLiBUaGFua3MuDQoNCkFsc28sIGlmIHlvdSBjYW4gdGFrZSBhIGxvb2sgYXQgdGhlIGxh
-c3QgcGF0Y2ggYW5kIGhhcHB5IHdpdGggdGhlIGNoYW5nZXMsDQpjYW4gSSBoYXZlIGEgUi1ieSBm
-b3IgdGhhdCwgcGxlYXNlID8NCg0KU2hhbWVlcg0K
+From: tank0nf <soumyajyotisarkar23@gmail.com>
+
+---
+ hw/net/i82596.c | 117 +++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 92 insertions(+), 25 deletions(-)
+
+diff --git a/hw/net/i82596.c b/hw/net/i82596.c
+index ee919dab3c..8da1564f9e 100644
+--- a/hw/net/i82596.c
++++ b/hw/net/i82596.c
+@@ -74,13 +74,16 @@ enum commands {
+ #define SIZE_MASK       0x3fff
+
+ /* various flags in the chip config registers */
+-#define I596_PREFETCH   (s->config[0] & 0x80)
+-#define I596_PROMISC    (s->config[8] & 0x01)
+-#define I596_BC_DISABLE (s->config[8] & 0x02) /* broadcast disable */
+-#define I596_NOCRC_INS  (s->config[8] & 0x08)
+-#define I596_CRCINM     (s->config[11] & 0x04) /* CRC appended */
+-#define I596_MC_ALL     (s->config[11] & 0x20)
+-#define I596_MULTIIA    (s->config[13] & 0x40)
++#define I596_PREFETCH       (s->config[0] & 0x80)
++#define I596_LOOPBACK       (s->config[3] >> 6)     /* loopback mode */
++#define I596_PROMISC        (s->config[8] & 0x01)
++#define I596_BC_DISABLE     (s->config[8] & 0x02)   /* broadcast status */
++#define I596_NOCRC_INS      (s->config[8] & 0x08)   /* do not append CRC to Tx frame */
++#define I596_CRC16_32       (s->config[8] & 0x10)   /* CRC-16 or CRC-32 */
++#define I596_PADDING        (s->config[8] & 0x80)   /* Should we add padding?*/
++#define I596_MIN_FRAME_LEN  (s->config[10])         /* minimum frame length */
++#define I596_MC_ALL         (s->config[11] & 0x20)
++#define I596_MULTIIA        (s->config[13] & 0x40)
+
+
+ static uint8_t get_byte(uint32_t addr)
+@@ -132,35 +135,99 @@ struct qemu_ether_header {
+
+ static void i82596_transmit(I82596State *s, uint32_t addr)
+ {
+-    uint32_t tdb_p; /* Transmit Buffer Descriptor */
++    uint32_t tbd_p; /* Transmit Buffer Descriptor */
++    uint16_t tcb_bytes = 0;
++    uint16_t tx_data_len = 0;
++    int insert_crc;
++
++    /* Get TBD pointer */
++    tbd_p = get_uint32(addr + 8);
++
++    /* Get TCB byte count (immediate data in TCB) */
++    tcb_bytes = get_uint16(addr + 12);
++
++    /* Copy immediate data from TCB if present */
++    if (tcb_bytes > 0) {
++        assert(tcb_bytes <= sizeof(s->tx_buffer));
++        address_space_read(&address_space_memory, addr + 16,
++                           MEMTXATTRS_UNSPECIFIED, s->tx_buffer, tcb_bytes);
++        tx_data_len = tcb_bytes;
++    }
+
+-    /* TODO: Check flexible mode */
+-    tdb_p = get_uint32(addr + 8);
+-    while (tdb_p != I596_NULL) {
+-        uint16_t size, len;
++    /* Process TBD chain if present */
++    if (tbd_p != I596_NULL) {
++        while (tbd_p != I596_NULL && tx_data_len < sizeof(s->tx_buffer)) {
++            uint16_t size;
+         uint32_t tba;
++            uint16_t buf_len;
++
++            size = get_uint16(tbd_p);
++            buf_len = size & SIZE_MASK;
++            tba = get_uint32(tbd_p + 8);
+
+-        size = get_uint16(tdb_p);
+-        len = size & SIZE_MASK;
+-        tba = get_uint32(tdb_p + 8);
+-        trace_i82596_transmit(len, tba);
++            trace_i82596_transmit(buf_len, tba);
+
+-        if (s->nic && len) {
+-            assert(len <= sizeof(s->tx_buffer));
++            if (buf_len > 0 && (tx_data_len + buf_len) <= sizeof(s->tx_buffer)) {
+             address_space_read(&address_space_memory, tba,
+-                               MEMTXATTRS_UNSPECIFIED, s->tx_buffer, len);
+-            DBG(PRINT_PKTHDR("Send", &s->tx_buffer));
+-            DBG(printf("Sending %d bytes\n", len));
+-            qemu_send_packet(qemu_get_queue(s->nic), s->tx_buffer, len);
++                                   MEMTXATTRS_UNSPECIFIED,
++                                   &s->tx_buffer[tx_data_len], buf_len);
++                tx_data_len += buf_len;
+         }
+
+-        /* was this the last package? */
++            /* Check if this is the last TBD */
+         if (size & I596_EOF) {
+             break;
+         }
+
+-        /* get next buffer pointer */
+-        tdb_p = get_uint32(tdb_p + 4);
++            /* Get next TBD pointer */
++            tbd_p = get_uint32(tbd_p + 4);
++        }
++    }
++
++    /* We Check if we should insert CRC */
++    insert_crc = (I596_NOCRC_INS == 0) && !I596_LOOPBACK;
++
++    if (s->nic && tx_data_len > 0) {
++        DBG(printf("i82596_transmit: insert_crc = %d, len = %d\n", insert_crc, tx_data_len));
++
++        if (insert_crc && (tx_data_len + 4) <= sizeof(s->tx_buffer)) {
++            uint32_t crc = crc32(~0, s->tx_buffer, tx_data_len);
++            crc = cpu_to_be32(crc);
++            memcpy(&s->tx_buffer[tx_data_len], &crc, sizeof(crc));
++            tx_data_len += sizeof(crc);
++        }
++
++        /* Validate minimum frame size */
++        if (tx_data_len < I596_MIN_FRAME_LEN) {
++            /* Minimum Ethernet frame header */
++            DBG(printf("Adding Padding to reach minimum frame length\n"));
++            if(I596_PADDING){
++                int padding_needed = I596_MIN_FRAME_LEN - tx_data_len;
++                if (padding_needed > 0 && (tx_data_len + padding_needed) <= sizeof(s->tx_buffer)) {
++                    memset(&s->tx_buffer[tx_data_len], 0x7E, padding_needed);
++                    tx_data_len += padding_needed;
++                    DBG(printf("Added %d bytes of padding\n", padding_needed));
++                } else {
++                    /* Buffer overflow would occur if we added padding */
++                    DBG(printf("WARNING: Cannot add %d bytes of padding - would overflow buffer (tx_data_len=%d, buffer_size=%zu)\n",
++                               padding_needed, tx_data_len, sizeof(s->tx_buffer)));
++                }
++            }
++        }
++    }
++
++    DBG(PRINT_PKTHDR("Send", s->tx_buffer));
++    DBG(printf("Sending %d bytes (crc_inserted=%d)\n", tx_data_len, insert_crc));
++
++    switch (I596_LOOPBACK) {
++    case 0:     /* no loopback, send packet */
++        qemu_send_packet_raw(qemu_get_queue(s->nic), s->tx_buffer, tx_data_len);
++        break;
++    case 1:     /* external loopback enabled */
++        i82596_receive(qemu_get_queue(s->nic), s->tx_buffer, tx_data_len);
++        break;
++    default:    /* all other loopback modes: ignore! */
++        break;
+     }
+ }
+
+--
+2.49.0
+
 
