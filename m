@@ -4,72 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB8CDC83F09
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:47:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 065A6C83F09
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:48:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFDT-0002Fh-Ln; Tue, 08 Jul 2025 16:47:03 -0400
+	id 1uZFBI-0004iW-Ho; Tue, 08 Jul 2025 16:44:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uZDn1-00043B-Ec
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:15:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uZDmw-00076L-Cl
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:15:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752002130;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mlDhxjajiD0HswlEAArayWqXuDON4+6UkEhTcFzRuSs=;
- b=K1yAxC52PuyK3ThGziigRbdhC2f65krJ/N7Ah7dCNskYA5aCb18kbcMllIkNs++3wNWy7r
- Y8xof2zaGON8+/+IU0/Dkrif6cvF5iDdoJYfhBfjZaWZebEjOmUyhpUxHDtjo8noT1Ym0/
- IWoXigs1dOtFeLK1jjh3BJMXNIuhdrA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-EjOL4GHfM3en159cJABNAw-1; Tue,
- 08 Jul 2025 08:56:43 -0400
-X-MC-Unique: EjOL4GHfM3en159cJABNAw-1
-X-Mimecast-MFC-AGG-ID: EjOL4GHfM3en159cJABNAw_1751979402
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 89630193F058; Tue,  8 Jul 2025 12:56:42 +0000 (UTC)
-Received: from thuth-p1g4.str.redhat.com (dhcp-192-196.str.redhat.com
- [10.33.192.196])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5F64C19560AB; Tue,  8 Jul 2025 12:56:40 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org, Jared Rossi <jrossi@linux.ibm.com>,
- Zhuoying Cai <zycai@linux.ibm.com>
-Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-Subject: [PATCH 3/5] pc-bios/s390-ccw: Make get_boot_index() from menu.c global
-Date: Tue,  8 Jul 2025 14:56:28 +0200
-Message-ID: <20250708125630.58676-4-thuth@redhat.com>
-In-Reply-To: <20250708125630.58676-1-thuth@redhat.com>
-References: <20250708125630.58676-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uZDjS-0000jF-TB
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:12:02 -0400
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uZDjL-0006CV-96
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:11:56 -0400
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-73cddf31c47so521952a34.2
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 12:11:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752001903; x=1752606703; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Tta5Mdv0u4HyunTJLNPVqLhMBNwh/iE+JErBOo/o8Yc=;
+ b=DRyVxL7zFoozO2ThJgLCVWoBtU8pK2HRQQ/5GR7wUVRWf9aS4SDhKHop+rsSr0caks
+ +8GFhiXnMHIjGOzQ/FpvgC5xoDVd20C9YZp841kkbGHHVfXrLcQ3ecKaYFVonCsIv0V8
+ Dg+Hy8JWPOoEOdpkMr+t8y2swwSLgqZ/fuapTC1gnKSxS2y6RJ3ejqGv7FTHZlkqCflW
+ Z6g1Qg1Qlfz4c3P3wwrIl4Pwye+hjLLpNme3AbWFo0H9076nyOT6oZW28Uwir645wizt
+ P60X+QrzBbPaET8PYqzh5b5S3/MrVTWRwfn2IGzE+Kuc3QLWA7XvY6srfi69OykdwsKh
+ JMcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752001903; x=1752606703;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Tta5Mdv0u4HyunTJLNPVqLhMBNwh/iE+JErBOo/o8Yc=;
+ b=NSCcLEb5ZWnN0/I38EP4vdj7tuJNrFBAIwoxLXLv2ERvUzQnXYJGEw0tARYlVlUDMf
+ iscs0EaVKdzChegwcChabCxKmOtqyVpjS07o2uU9tkrciyWvBUlVjvEkTRiyQ8zqvJT8
+ T4HE6OW4nb6P4E61ey2qjYxqkSFttTgUtCRIMAXWPMP6xscelAWaMDKSNXjpAv9UhPLN
+ mEdC3ry9GZtHWkJQ2IAcia0EzR1qT89xoBjNw/lOZsKb9jkrGuIyB7eRE55s95ekN3DG
+ B4BLYuITOBhUa8Uaoy54vbXhzAIuU8tEqSitGVtmC08vBg4XV/qTrJw3pODJjDzcYkhF
+ +PuA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXHc3fwkPe8dg0JXQKQE8nn7K52WpsfS0uHKTUkchd/0tXu8KP5ZfYtmz0MKnDnh5GwZsEHJFCGpZx0@nongnu.org
+X-Gm-Message-State: AOJu0Yza4dzGSYnfNmHEj6h+RCY/J9aEpEApIMam/bigjrpdFQdZoYOE
+ C0h5fZsfFPHsBIOtCz1bPLx+sM7Reinh6if9DO3tzUQNUyHBEU0KgkMTV3VL3zWjCvDDP5EwVEM
+ gy7mz
+X-Gm-Gg: ASbGncuDkl6cGKgXlsZgWVgjB0g5O++eZ0bBoQWGXiw9d9mHuoPy1ChhHwUIxUIjW2Q
+ awBZxSvtzW0UtvD+p6JgIZ8vFCkdfTH8D5g34GKLJriU+XoH8yeUfd0dxtRtcvYmxQETCGRSv5q
+ TMp/FlXc57ew5iCujHUL/5w+QwhFNY0QwthRbLTsL4+pPVXJDK/upzyjemjKUFesXCy60r0GOQt
+ iFqvDXhQDHzq91wJ5UruqZr7f+Dr7fZfhGkv0O+knIdcaonu0QsSZ06vq7O9Dj/aesew2invd7W
+ 5CuftUFXpvHKE4taFdT3wCWb4Stoib2mPtqzPWjzYBBN7B+k/S2LccvVb7jHXzzN61JLUYuFUWg
+ =
+X-Google-Smtp-Source: AGHT+IGzGrv5wUVsy6z+dn1Bx5Y2gV1AqOR0Neyx1aJCMXa8JqNaYvtMeYEI5OcqDHRG/gCYni+m8g==
+X-Received: by 2002:a17:902:f644:b0:234:d399:f948 with SMTP id
+ d9443c01a7336-23c875428a0mr219465405ad.33.1751996129198; 
+ Tue, 08 Jul 2025 10:35:29 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-23c8459c6e5sm122901325ad.227.2025.07.08.10.35.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 08 Jul 2025 10:35:28 -0700 (PDT)
+Message-ID: <c7af688f-6400-464a-b6ee-f5ae99d827a1@linaro.org>
+Date: Tue, 8 Jul 2025 10:35:27 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1 v7 7/8] qemu: Declare all load/store helper in
+ 'qemu/bswap.h'
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-riscv@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-block@nongnu.org,
+ qemu-ppc@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Beniamino Galvani <b.galvani@gmail.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
+ John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>,
+ Helge Deller <deller@gmx.de>, Pavel Pisa <pisa@cmp.felk.cvut.cz>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>,
+ Jason Wang <jasowang@redhat.com>, Dmitry Fleytman
+ <dmitry.fleytman@gmail.com>, Aurelien Jarno <aurelien@aurel32.net>,
+ Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
+ <fbarrat@linux.ibm.com>, Bernhard Beschow <shentey@gmail.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Magnus Damm <magnus.damm@gmail.com>, Matthew Rosato
+ <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Alexander Graf <agraf@csgraf.de>, Phil Dennis-Jordan <phil@philjordan.eu>,
+ Peter Xu <peterx@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20250708171949.62500-1-philmd@linaro.org>
+ <20250708171949.62500-8-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250708171949.62500-8-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-ot1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,62 +143,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On 7/8/25 10:19 AM, Philippe Mathieu-Daudé wrote:
+> Restrict "exec/tswap.h" to the tswap*() methods,
+> move the load/store helpers with the other ones
+> declared in "qemu/bswap.h".
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/exec/tswap.h                 | 70 --------------------------
+>   include/qemu/bswap.h                 | 73 ++++++++++++++++++++++++++++
+>   include/system/memory.h              |  1 -
+>   include/user/abitypes.h              |  1 -
+>   target/ppc/mmu-hash64.h              |  2 -
+>   hw/acpi/bios-linker-loader.c         |  2 -
+>   hw/arm/allwinner-r40.c               |  1 -
+>   hw/arm/boot.c                        |  2 +
+>   hw/arm/npcm7xx.c                     |  2 +-
+>   hw/block/hd-geometry.c               |  1 -
+>   hw/char/riscv_htif.c                 |  1 -
+>   hw/cxl/cxl-events.c                  |  2 -
+>   hw/display/artist.c                  |  1 +
+>   hw/display/ati.c                     |  1 +
+>   hw/net/can/ctucan_core.c             |  1 -
+>   hw/net/lan9118.c                     |  1 +
+>   hw/net/rtl8139.c                     |  1 +
+>   hw/net/vmxnet3.c                     |  1 -
+>   hw/pci-host/gt64120.c                |  1 +
+>   hw/pci-host/pnv_phb3.c               |  1 +
+>   hw/pci-host/pnv_phb4.c               |  1 +
+>   hw/pci-host/ppce500.c                |  1 -
+>   hw/pci-host/sh_pci.c                 |  1 -
+>   hw/s390x/s390-pci-inst.c             |  1 +
+>   hw/sensor/lsm303dlhc_mag.c           |  1 -
+>   hw/smbios/smbios.c                   |  1 +
+>   hw/vfio/migration-multifd.c          |  1 -
+>   hw/virtio/virtio-pci.c               |  1 +
+>   hw/vmapple/virtio-blk.c              |  1 -
+>   target/arm/cpu.c                     |  1 -
+>   target/i386/tcg/system/excp_helper.c |  1 -
+>   target/i386/xsave_helper.c           |  1 -
+>   target/riscv/vector_helper.c         |  1 -
+>   tests/tcg/plugins/mem.c              |  1 +
+>   34 files changed, 87 insertions(+), 93 deletions(-)
 
-We are going to reuse this function for selecting an entry from
-the pxelinux.cfg menu, so rename this function with a "menu_"
-prefix and make it available globally.
-
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- pc-bios/s390-ccw/s390-ccw.h | 1 +
- pc-bios/s390-ccw/menu.c     | 6 +++---
- 2 files changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-index 6cdce3e5e5b..b1dc35cdedf 100644
---- a/pc-bios/s390-ccw/s390-ccw.h
-+++ b/pc-bios/s390-ccw/s390-ccw.h
-@@ -87,6 +87,7 @@ int menu_get_zipl_boot_index(const char *menu_data);
- bool menu_is_enabled_zipl(void);
- int menu_get_enum_boot_index(bool *valid_entries);
- bool menu_is_enabled_enum(void);
-+int menu_get_boot_index(bool *valid_entries);
- 
- #define MAX_BOOT_ENTRIES  31
- 
-diff --git a/pc-bios/s390-ccw/menu.c b/pc-bios/s390-ccw/menu.c
-index 84062e94af4..eeaff78f870 100644
---- a/pc-bios/s390-ccw/menu.c
-+++ b/pc-bios/s390-ccw/menu.c
-@@ -159,7 +159,7 @@ static void boot_menu_prompt(bool retry)
-     }
- }
- 
--static int get_boot_index(bool *valid_entries)
-+int menu_get_boot_index(bool *valid_entries)
- {
-     int boot_index;
-     bool retry = false;
-@@ -224,7 +224,7 @@ int menu_get_zipl_boot_index(const char *menu_data)
-     }
- 
-     printf("\n");
--    return get_boot_index(valid_entries);
-+    return menu_get_boot_index(valid_entries);
- }
- 
- int menu_get_enum_boot_index(bool *valid_entries)
-@@ -247,7 +247,7 @@ int menu_get_enum_boot_index(bool *valid_entries)
-     }
- 
-     printf("\n");
--    return get_boot_index(valid_entries);
-+    return menu_get_boot_index(valid_entries);
- }
- 
- void menu_set_parms(uint8_t boot_menu_flag, uint32_t boot_menu_timeout)
--- 
-2.50.0
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
