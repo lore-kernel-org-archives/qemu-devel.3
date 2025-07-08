@@ -4,93 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D456C83F0F
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:49:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D8E7C8303C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:49:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFAb-0003gu-Ux; Tue, 08 Jul 2025 16:44:05 -0400
+	id 1uZFCg-0007uB-0p; Tue, 08 Jul 2025 16:46:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david.milosevic@9elements.com>)
- id 1uZDm0-0003Kd-WA
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:14:43 -0400
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <david.milosevic@9elements.com>)
- id 1uZDlq-0006ag-HR
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:14:32 -0400
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-553d52cb80dso228308e87.1
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 12:13:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=9elements.com; s=google; t=1752001996; x=1752606796; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OxxHFyrXTltEtSu/FSF5krOD2MWtyaLZDuYFwuu/n9A=;
- b=RUYDxrQdM07yz8goVkLwrRzK9dj9p/9V6L3bGd2XMbXgPYkxuxa6PQ3DBmN9dbm2qH
- j0B5Gzq8vJgtk6LEGk93BdKfB2KQxpkJSpgTZuR6WOmVwGVblotssnExGSMfg9ng8jX/
- r0GMBMPVceCOULjFfJd81nP1qkAswB+rnagJgr/jqN5/OeVhzhKoal/LKyjEpJ/ltNQG
- rEJSuB/AfXqNHspaLwsfHxokNeJWsHeqhlqhGOzgJPnmnW/VJw5fHwUlq2XX5Ji9oGR7
- mOBH9MvpHgCcYNyebEdhnbJLFy+O1v9AV8lN4Nss+YiBYYzZ591e+gBGZFnJgv1uoksX
- 0hvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752001996; x=1752606796;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=OxxHFyrXTltEtSu/FSF5krOD2MWtyaLZDuYFwuu/n9A=;
- b=NQMph2MdK+eQf6wYMb0P9F4S9z62MIbkysq/OL50+XkGw/tmRlpOcj6NUi4yOjvy1b
- ZUgo0vCbUThndym+M8b6P/g1aJizdsDstnLLrH0itVcA1q7L6g40/q8IVFz7Mzck97wH
- TEwIpqGGMQk209Lap92lfs0xhiQgRNmfK0k6zaMPPB2DMeQgVKvE9Y8mzgyJ0zIghUt5
- Z0qruxwaoDiSMBQ1lwIuHEJzM4lxxcOsiwX5l3WOQUfRqfnBPBFsk3iC86Y71oI9Y/Y2
- MB0yTAlV8t//9S+rUGM67EnKUjaTSgvIFzfVaVnznZpHMryA7nsKgsNfxnPzziGm8CXv
- fzqw==
-X-Gm-Message-State: AOJu0Ywladj2uIcf6YfetGQD3B424c3pUR8Y3XZ6FMjT1kv0sMSktRTS
- TIAqG1CkSPE9YRfxIFM/Tr+KviXQZHPtb/arUNUhHY6IC9p6YdsC+2unWeadCng4nvVCO6BE3fZ
- ueYpFv8OuQnSh
-X-Gm-Gg: ASbGnctwVpYOw0fQ/YuKSIznBMoamk5vRs4+6KF8bkdq+67V70IA8XuuEG7OzEC5Ztr
- FB2oMI2TjN8vU4nt+c+cg4kroV5jYVSsZso1BH5v1ZC4znGgFcnaZiAHTQtIjse0i+tN0ARnrYZ
- /pJDbU/n2ORjDHYvMx/HgND2E0aUuhlPwSMaMbT2a+3YafZeGOZZoxVsUMDuHDyKZVhLp5apqR7
- qLQ/jEAJJLQtmZzQgms7musYrDLNYtSWpEZNx6mVeG+j2DiaB5q12B09nEtiaW4nCK4Tu96wAO5
- QWkQkvMefV2npOAIyogruMnXVg1RvwVsDgonxOBloXaDSNgN+f3ZnzLmi830xHlILUJs2WiOrC0
- fPUqFOlxd+AEwlK1P9MoBSkAQqO2s/4qFeBXDhHfP0rTit90jZhcxD5fK9QTN3+4=
-X-Google-Smtp-Source: AGHT+IFr9Qe5MmXxGgNE/F84d/HE+Mw1+beWaziQOd2Mgqsqr7cld946BJqEc7vE0GPksqTO7+C7DQ==
-X-Received: by 2002:a05:6000:4202:b0:3a4:eee4:cdec with SMTP id
- ffacd0b85a97d-3b5ddfb8a45mr2922637f8f.6.1751986714754; 
- Tue, 08 Jul 2025 07:58:34 -0700 (PDT)
-Received: from cbox.sec.9e.network
- (p200300f75f10f341000000000000002d.dip0.t-ipconnect.de.
- [2003:f7:5f10:f341::2d]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454cd3d2749sm25445735e9.25.2025.07.08.07.58.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Jul 2025 07:58:34 -0700 (PDT)
-From: David Milosevic <david.milosevic@9elements.com>
-X-Google-Original-From: David Milosevic <David.Milosevic@9elements.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- pizhenwei@bytedance.com, marcello.bauer@9elements.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- David Milosevic <David.Milosevic@9elements.com>
-Subject: [PATCH 3/3] video: add libcamera backend extension
-Date: Tue,  8 Jul 2025 16:56:50 +0200
-Message-ID: <20250708145828.63295-4-David.Milosevic@9elements.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20250708145828.63295-1-David.Milosevic@9elements.com>
-References: <20250708145828.63295-1-David.Milosevic@9elements.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uZDqm-000761-IC
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:19:38 -0400
+Received: from mgamail.intel.com ([192.198.163.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uZDqg-00088X-VU
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:19:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1752002367; x=1783538367;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=DOWBNkJ3FXhDMjaVX1XrR48Cz6mtSyrhJrNzdwWEYhc=;
+ b=BpDx0oqS7fjm3QaIp6EzDNkqh978MKVxbDCbb9xc/i+gMT3Rlvnea6KS
+ V5ZBLbnHhcyHqdXa42WT3aRuxH2I3nKPJ6jbSmNCWIIE726WPyCSXd9SW
+ YYcopBrYIDPYx1RL15lNTFMpR7CGLVTdfiVekfC4jYxMS0Ox13gYmGamh
+ S0dM+bHcHeK1mFQ2RamiqHLJFzGTdn6sOs8IxLQRRpDorRZny+r2VMgPt
+ D6lFVpnCS/Ai97AvOrr/40pYDpIddCdtyxm8RDptkn0SYM4q1i8zP0fhf
+ S6H1Ywh1Ic+9p8uLEGrCpoQe/WzeWcO0UHU6Y1Bj/lReQ130QigkY4PkV A==;
+X-CSE-ConnectionGUID: twGVuIRgQf++s+rtU0fpcg==
+X-CSE-MsgGUID: IQZhJZ/vSN6vkjUxd0Qw5A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11487"; a="57994507"
+X-IronPort-AV: E=Sophos;i="6.16,296,1744095600"; d="scan'208";a="57994507"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Jul 2025 01:24:48 -0700
+X-CSE-ConnectionGUID: AFZqXPakR76Bmh1QlF8MLw==
+X-CSE-MsgGUID: IBAijQJJRHWK8QOPBsPYNg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,296,1744095600"; d="scan'208";a="159475782"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa003.fm.intel.com with ESMTP; 08 Jul 2025 01:24:47 -0700
+Date: Tue, 8 Jul 2025 16:46:14 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ tao1.su@intel.com, chenyi.qiang@intel.com
+Subject: Re: [PATCH v2] i386/cpu: Remove FEAT_24_0_EBX for AVX10
+Message-ID: <aGza1j4QaivzC9W7@intel.com>
+References: <20250707141151.4187798-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=david.milosevic@9elements.com; helo=mail-lf1-x12b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250707141151.4187798-1-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,200 +83,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch extends the GStreamer backend by implementing
-the libcamera (pseudo) backend.
+On Mon, Jul 07, 2025 at 10:11:51PM +0800, Xiaoyao Li wrote:
+> Date: Mon, 7 Jul 2025 22:11:51 +0800
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: [PATCH v2] i386/cpu: Remove FEAT_24_0_EBX for AVX10
+> X-Mailer: git-send-email 2.43.0
+> 
+> It turns out that all the Intel processors enumerating the support of
+> Intel AVX10 support all vector widths. It's documented in the latest
+> SDM, vol 1, Chapter 16 "programming with Intel AVX10".
+> 
+> (Note that AVX10.1 spec stops update since AVX10 is subsumed into SDM
+>  while AVX10.2 spec stays update for the future extension of AVX10)
+> 
+> Now SDM [1] marks the bit 16-18 of CPUID.0x24_0.EBX as reserved and they
+> are reserved at 1. The purpose of Intel is to remove the semantic of
+> vector length enumeration from these bits since all the 128/256/512 bit
+> length are supported and no need for enumeration. But Intel has to keep
+> them reserved at 1 to make it compatible with the software written based
+> on earlier avx10 spec that checks the bits to query of the support of each
+> vector length.
+> 
+> For QEMU, it makes no sense to allow the configurability of the bits
+> anymore. Remove the leaf FEAT_24_0_EBX and related stuff. Just hardcore
+> the bits to all 1 when AVX10 is exposed to guest, to comply with the SDM
+> and stop trying to associate them with the enumeration of vector length.
+> 
+> [1] https://cdrdv2.intel.com/v1/dl/getContent/671200 (rev 088)
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> ---
+> changes in v2:
+>  - refine the commit message to reference update from SDM instead of
+>    AVX10 spec;
+>  - call out explicitly the purpose of disassociating the enumeration of
+>    vector length from the CPUID bits.
+> ---
+>  target/i386/cpu.c | 37 ++-----------------------------------
+>  target/i386/cpu.h | 12 ------------
+>  2 files changed, 2 insertions(+), 47 deletions(-)
 
-The Libcamera backend builds on top of GStreamer and uses
-libcamerasrc as source element.
+LGTM,
 
-Example usage:
-  qemu-system-x86_64 \
-    -device qemu-xhci \
-    -videodev libcamera,id=cam0,\
-    camera-name="\\\_SB_.PCI0.XHC_.RHUB.HS07-7:1.0-04f2:b681",\
-    caps="video/x-raw^format=YUY2^width=960^height=540^framerate=15/1" \
-    -device usb-video,videodev=cam0
-
-Known limitations:
-  - libcamersrc does not expose capabilities (supported
-    pixelformat, etc.), which makes it impossible to query
-    them in runtime, hence we have to select format, width, height
-    and framerate via QEMU's cmdline.
-
-Signed-off-by: David Milosevic <David.Milosevic@9elements.com>
----
- video/libcamera.c | 148 ++++++++++++++++++++++++++++++++++++++++++++++
- video/meson.build |   1 +
- 2 files changed, 149 insertions(+)
- create mode 100644 video/libcamera.c
-
-diff --git a/video/libcamera.c b/video/libcamera.c
-new file mode 100644
-index 0000000000..f28914ee20
---- /dev/null
-+++ b/video/libcamera.c
-@@ -0,0 +1,148 @@
-+/*
-+ * Copyright 2025 9elements GmbH
-+ *
-+ * Authors:
-+ *   David Milosevic <david.milosevic@9elements.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qapi/qmp/qerror.h"
-+#include "qemu/option.h"
-+#include "video/video.h"
-+#include "video/gstreamer-common.h"
-+
-+#include <gst/gst.h>
-+#include <gst/app/gstappsink.h>
-+
-+#define TYPE_VIDEODEV_LIBCAMERA TYPE_VIDEODEV"-libcamera"
-+
-+#define VIDEO_LIBCAMERA_PIPELINE_TEMPLATE \
-+    "libcamerasrc name=qemu_src camera-name=\"%s\" ! capsfilter caps=\"%s\" ! videoconvert name=qemu_vc ! capsfilter name=qemu_cf ! appsink name=qemu_sink"
-+
-+struct LibcameraVideodev {
-+
-+    GStreamerVideodev parent;
-+};
-+typedef struct LibcameraVideodev LibcameraVideodev;
-+
-+DECLARE_INSTANCE_CHECKER(LibcameraVideodev, LIBCAMERA_VIDEODEV, TYPE_VIDEODEV_LIBCAMERA)
-+
-+static char *video_libcamera_pipeline_string(const char *cam_name, const char *caps)
-+{
-+    char *pipeline_desc = NULL;
-+    size_t pipeline_template_len, pipeline_len;
-+
-+    pipeline_template_len = strlen(VIDEO_LIBCAMERA_PIPELINE_TEMPLATE) - 4; // minus '%s' (x2)
-+    pipeline_len = strlen(cam_name) + strlen(caps) + pipeline_template_len + 1; // plus '\0'
-+
-+    pipeline_desc = g_malloc(pipeline_len * sizeof(char));
-+    if (!pipeline_desc) {
-+        return NULL;
-+    }
-+
-+    sprintf(pipeline_desc, VIDEO_LIBCAMERA_PIPELINE_TEMPLATE, cam_name, caps);
-+    return pipeline_desc;
-+}
-+
-+static int video_libcamera_open(Videodev *vd, QemuOpts *opts, Error **errp)
-+{
-+    LibcameraVideodev *lv = LIBCAMERA_VIDEODEV(vd);
-+    GStreamerVideodev *gv = &lv->parent;
-+    const char *cam_name = qemu_opt_get(opts, "camera-name");
-+    char *caps = video_gstreamer_qemu_opt_get(opts, "caps");
-+    char *pipeline_desc = NULL;
-+    GError *error = NULL;
-+    GstStateChangeReturn ret;
-+
-+    if (cam_name == NULL) {
-+        vd_error_setg(vd, errp, QERR_MISSING_PARAMETER, "camera-name");
-+        return VIDEODEV_RC_ERROR;
-+    }
-+
-+    if (caps == NULL) {
-+        vd_error_setg(vd, errp, QERR_MISSING_PARAMETER, "caps");
-+        return VIDEODEV_RC_ERROR;
-+    }
-+
-+    pipeline_desc = video_libcamera_pipeline_string(cam_name, caps);
-+    g_free(caps);
-+    if (!pipeline_desc) {
-+        vd_error_setg(vd, errp, "memory allocation failure");
-+        return VIDEODEV_RC_ERROR;
-+    }
-+
-+    if (!gst_is_initialized()) {
-+        gst_init(NULL, NULL);
-+    }
-+
-+    gv->pipeline = gst_parse_bin_from_description(pipeline_desc, false, &error);
-+    g_free(pipeline_desc);
-+    if (error) {
-+        vd_error_setg(vd, errp, "unable to parse pipeline: %s", error->message);
-+        return VIDEODEV_RC_ERROR;
-+    }
-+
-+    gv->head = gst_bin_get_by_name(GST_BIN(gv->pipeline), "qemu_src");
-+    if (unlikely(!gv->head)) {
-+        vd_error_setg(vd, errp, "qemu_src not found");
-+        return VIDEODEV_RC_ERROR;
-+    }
-+
-+    gv->tail = gst_bin_get_by_name(GST_BIN(gv->pipeline), "qemu_vc");
-+    if (unlikely(!gv->tail)) {
-+        vd_error_setg(vd, errp, "qemu_vc not found");
-+        return VIDEODEV_RC_ERROR;
-+    }
-+
-+    gv->filter = gst_bin_get_by_name(GST_BIN(gv->pipeline), "qemu_cf");
-+    if (unlikely(!gv->filter)) {
-+        vd_error_setg(vd, errp, "qemu_cf not found");
-+        return VIDEODEV_RC_ERROR;
-+    }
-+
-+    gv->sink = gst_bin_get_by_name(GST_BIN(gv->pipeline), "qemu_sink");
-+    if (unlikely(!gv->sink)) {
-+        vd_error_setg(vd, errp, "qemu_sink not found");
-+        return VIDEODEV_RC_ERROR;
-+    }
-+
-+    ret = gst_element_set_state(gv->pipeline, GST_STATE_READY);
-+    if (ret == GST_STATE_CHANGE_FAILURE) {
-+
-+        vd_error_setg(vd, errp, "failed to set pipeline to READY");
-+        return VIDEODEV_RC_ERROR;
-+    }
-+
-+    return VIDEODEV_RC_OK;
-+}
-+
-+static void video_libcamera_class_init(ObjectClass *oc, const void *data)
-+{
-+    VideodevClass *vc;
-+    video_gstreamer_class_init(oc, data);
-+
-+    vc = VIDEODEV_CLASS(oc);
-+
-+    /* override GStreamer class methods */
-+    vc->open          = video_libcamera_open;
-+    vc->enum_controls = NULL;
-+    vc->set_control   = NULL;
-+}
-+
-+static const TypeInfo video_libcamera_type_info = {
-+    .name = TYPE_VIDEODEV_LIBCAMERA,
-+    .parent = TYPE_VIDEODEV_GSTREAMER,
-+    .instance_size = sizeof(LibcameraVideodev),
-+    .class_init = video_libcamera_class_init,
-+};
-+
-+static void register_types(void)
-+{
-+    type_register_static(&video_libcamera_type_info);
-+}
-+
-+type_init(register_types);
-diff --git a/video/meson.build b/video/meson.build
-index 33da556ea4..50eaf0c76e 100644
---- a/video/meson.build
-+++ b/video/meson.build
-@@ -11,6 +11,7 @@ video_modules = {}
- foreach m : [
-   ['gstreamer', gstreamer, files('gstreamer.c')],
-   ['gstreamer-app', gstreamer_app, files('gstreamer.c')],
-+  ['libcamera', gstreamer, files('libcamera.c', 'gstreamer.c')],
-   ['v4l2', v4l2, files('v4l2.c')],
- ]
-   if m[dep].found()
--- 
-2.47.0
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
