@@ -4,88 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 644FBC83F09
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:24:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 615E3C83F14
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:24:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFAH-0002ac-NQ; Tue, 08 Jul 2025 16:43:45 -0400
+	id 1uZFFm-0004Rf-HV; Tue, 08 Jul 2025 16:49:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1uZDRN-00007t-72
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 14:53:39 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1uZDQi-0007zk-9B
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 14:53:11 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3a503d9ef59so3609221f8f.3
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 11:52:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1752000733; x=1752605533; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:to:from:date:from:to:cc:subject:date:message-id
- :reply-to; bh=cfUsbJYY1gZ5udUqOW0PuCn4HG7ETHlSxXsrDm3r0QY=;
- b=jITz9BP6XRYLPZXsB3jh9okf8HQ98dIOMCfB05vYkEnDvucfIXj2X6VBUjmfbUbfiP
- 2eGhyCdeMbB2YWUDlWizkIAqi4ahX6uXtOXPdjCguoylD9Pe3KDWhaugtbRu8mu+n2Bq
- f1sngNHAXNu3MQ//cp10P6SfDkeCIjfe3A5Yrbs8nBvml1wBKfpTZEnocRFD6vxiRkwP
- LZJf0Dut+Wgwemi1612OETZGggpcShx01DysaLwbVq/NAi/f6iPV7o/AzgEo20IaN781
- 6VotBHUBOO7F4DnqT6NvIdfHElSKF/TLV84ufE0mdhStIbH1scjUeXHktfGPNQ7F/Rkj
- 4yFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752000733; x=1752605533;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cfUsbJYY1gZ5udUqOW0PuCn4HG7ETHlSxXsrDm3r0QY=;
- b=Z4H86goHneMp5kDbtODz6GvZBUIQib8fKkBYrr6sXFw+uU+TsPGKoL/0Q6npqFFRJF
- fJq48rX8a1Nxy84M2INH04bwkE8y5mJ7ohAWZe6Vyh43Adcg7ph4cJPRBh2CjaQ9NrUp
- 1HTmUyQ/HYfxg/PQuXATndHLBiL3zslAIrmA6GtGkGHAzqoFKPMKPqqHcDaN0J1vaUr8
- Of9N7IjhU/th7sE6kYE4n0yxLr9lsw5iH/75KhJ3yO90p48VIui0/K93xb73scr+jrRy
- Ky4G1nKi3GQfz3HfyByTd+59LVD5FP78k7x1k9UTxn6iXol8BBskfu8qM4VVYxGiGa8E
- iVFA==
-X-Gm-Message-State: AOJu0Yw7tbTcupcomosAsvD+NPiXShhzYTGZ4U7lw4rpT+fDb8GuqsCG
- ZEJ736CSBONlWNLFUtV/LvEfdnW2C1MarouOaMISk0mghyVJJR2Kg4I2FeyKMw==
-X-Gm-Gg: ASbGncukp85I+aNGM/HtiyJdtNCLzH7Ot+q4CjP8B9OzyFt5K8W090svrVkR5HraJQg
- ecdvNA7JD4tKAal5OM7YuuPG3eI8J0Khzufk3fPBmBb6d8eUMXy9OEfpOJvW0VFw7QkUXrgdvNr
- FggwLdsNgekbEPGse68L/wKNWprtr3AjGq33/DhaVLXjK7CYBmJq/ojtZgwEAPNbLvrhKjVmTU9
- qRUhLkMYk23tA5Zred7YTgAnmh7mUcrZC5bKG0mXzjMiVt3cWn/8mtHfW0aZQYxLRe25fcXs5xH
- 45oqCD0tsN7npCjV8EF4UJk5TpoNZYuod2Qk1mSMINXCcm1TPqHxyvgnGavbtp455aScK7Q73lr
- UJeQyqXtevKtohv1b85hRKTQxFzq51/rm/KMFerP6mpt1gMX+w2OGFNnspch3flIIPfrFwg==
-X-Google-Smtp-Source: AGHT+IHrTJOP2MpjMHFy6tZxhB7pXquIFztxbwe09Y7kFduAnB707YsaQGUywEglP4RgPWQsO8IZcg==
-X-Received: by 2002:a17:906:6c8b:b0:ad8:a935:b908 with SMTP id
- a640c23a62f3a-ae3fe5994efmr1311332166b.30.1751999013376; 
- Tue, 08 Jul 2025 11:23:33 -0700 (PDT)
-Received: from ?IPv6:::1?
- (dynamic-2a02-3100-18f0-be00-bd73-623e-7632-a2ac.310.pool.telefonica.de.
- [2a02:3100:18f0:be00:bd73:623e:7632:a2ac])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae3f6b08568sm937656366b.139.2025.07.08.11.23.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Jul 2025 11:23:32 -0700 (PDT)
-Date: Tue, 08 Jul 2025 17:36:48 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- pbonzini@redhat.com, mst@redhat.com, marcel.apfelbaum@gmail.com,
- eduardo@habkost.net, imammedo@redhat.com
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v3_14/14=5D_hw/i386=3A_move_i?=
- =?US-ASCII?Q?sapc_machine_to_separate_isapc=2Ec_file?=
-In-Reply-To: <20250704141018.674268-15-mark.caveayland@nutanix.com>
-References: <20250704141018.674268-1-mark.caveayland@nutanix.com>
- <20250704141018.674268-15-mark.caveayland@nutanix.com>
-Message-ID: <7C9CE1C1-4B5A-4EF0-90DC-EF4FF9BECFAB@gmail.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uZDs9-0000c3-Tj
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:21:08 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uZDs4-0008BN-NZ
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:20:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1752002453; x=1783538453;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=yx3q7fEaiyQjL76h7X90Owo+JKa7Jft2+4mZy+vciR8=;
+ b=lO1z3QfHFu/YXfKIRSfXX8nlBmEr08oeLQeucNrFObYTlxj3cd1FuERL
+ XXV2irFb7XKDYwQqz1eXUaI+4xy2f+or+nGjkdMWOmCocMcat4AqrS7vx
+ 4R40cGn4B10nEH6nbCuZI1jUHpd0iPQYKn3WjqolTp4Y0ZU7sly54ZcND
+ H0hoPkibBDS42j4vA1PYnmUjoXdVqBgH5NleMCSq9m1VJqCFxIlQK4FjG
+ XamZXM7PrYUc+oCSIYidv3ZSwQCPpa/GdJdb7WlLo8ajTE60tck/vYPCS
+ wPz0A95h3YUjDEZZtX2rp+ivMx5CBxsXscDTpABbBUn30a2MuzFBQrZrw g==;
+X-CSE-ConnectionGUID: 5xOQo2H4Rta8iYlxhDccow==
+X-CSE-MsgGUID: +Irfg+OQTpuaIgBKzdTbdA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11487"; a="57974014"
+X-IronPort-AV: E=Sophos;i="6.16,297,1744095600"; d="scan'208";a="57974014"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Jul 2025 04:06:55 -0700
+X-CSE-ConnectionGUID: MXHBRPVsTZaBDb32suObzw==
+X-CSE-MsgGUID: 2n0s/+9VQMSQYv5jw0hYzQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,297,1744095600"; d="scan'208";a="192647969"
+Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Jul 2025 04:06:51 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ mst@redhat.com, jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com,
+ jgg@nvidia.com, nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Yi Sun <yi.y.sun@linux.intel.com>
+Subject: [PATCH v3 10/20] intel_iommu: Handle PASID entry removing and updating
+Date: Tue,  8 Jul 2025 07:05:51 -0400
+Message-ID: <20250708110601.633308-11-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250708110601.633308-1-zhenzhong.duan@intel.com>
+References: <20250708110601.633308-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.14;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,451 +88,361 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This adds an new entry VTDPASIDCacheEntry in VTDAddressSpace to cache the
+pasid entry and track PASID usage and future PASID tagged DMA address
+translation support in vIOMMU.
 
+VTDAddressSpace of PCI_NO_PASID is allocated when device is plugged and
+never freed. For other pasid, VTDAddressSpace instance is created/destroyed
+per the guest pasid entry set up/destroy.
 
-Am 4=2E Juli 2025 14:09:41 UTC schrieb Mark Cave-Ayland <mark=2Ecaveayland=
-@nutanix=2Ecom>:
->Now that pc_init_isa() is independent of any PCI initialisation, move it =
-into a
->separate isapc=2Ec file=2E This enables us to finally fix the dependency =
-of ISAPC on
->I440FX in hw/i386/Kconfig=2E
->
->Note that as part of the move to a separate file we can see that the lice=
-nce text
->is a verbatim copy of the MIT licence=2E The text originates from commit =
-1df912cf9e
->("VL license of the day is MIT/BSD") so we can be sure that this was the =
-original
->intent=2E As a consequence we can update the file header to use a SPDX ta=
-g as per
->the current project contribution guidelines=2E
->
->Signed-off-by: Mark Cave-Ayland <mark=2Ecaveayland@nutanix=2Ecom>
->---
-> hw/i386/Kconfig     |   3 -
-> hw/i386/isapc=2Ec     | 169 ++++++++++++++++++++++++++++++++++++++++++++
-> hw/i386/meson=2Ebuild |   1 +
-> hw/i386/pc_piix=2Ec   | 148 --------------------------------------
-> 4 files changed, 170 insertions(+), 151 deletions(-)
-> create mode 100644 hw/i386/isapc=2Ec
->
->diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
->index eb65bda6e0=2E=2Ea7c746fe9e 100644
->--- a/hw/i386/Kconfig
->+++ b/hw/i386/Kconfig
->@@ -96,9 +96,6 @@ config ISAPC
->     select ISA_BUS
->     select PC
->     select IDE_ISA
->-    # FIXME: it is in the same file as i440fx, and does not compile
->-    # if separated
->-    depends on I440FX
+When guest modifies a PASID entry, QEMU will capture the guest pasid selective
+pasid cache invalidation, allocate or remove a VTDAddressSpace instance per the
+invalidation reasons:
 
-Yay!
+    a) a present pasid entry moved to non-present
+    b) a present pasid entry to be a present entry
+    c) a non-present pasid entry moved to present
 
->=20
-> config Q35
->     bool
->diff --git a/hw/i386/isapc=2Ec b/hw/i386/isapc=2Ec
->new file mode 100644
->index 0000000000=2E=2E5ac077a860
->--- /dev/null
->+++ b/hw/i386/isapc=2Ec
->@@ -0,0 +1,169 @@
->+/*
->+ * QEMU PC System Emulator
->+ *
->+ * Copyright (c) 2003-2004 Fabrice Bellard
->+ *
->+ * SPDX-License-Identifier: MIT
->+ */
->+
->+#include "qemu/osdep=2Eh"
->+
->+#include "hw/char/parallel-isa=2Eh"
->+#include "hw/dma/i8257=2Eh"
->+#include "hw/loader=2Eh"
+This patch handles a) and b), following patch will handle c).
 
-Is loader=2Eh used here? It seems to be unneeded in pc_piix already, so no=
- need for copying it here=2E
+vIOMMU emulator could figure out the reason by fetching latest guest pasid entry
+and compare it with cached PASID entry.
 
->+#include "hw/i386/pc=2Eh"
->+#include "hw/ide/isa=2Eh"
->+#include "hw/ide/ide-bus=2Eh"
->+#include "system/kvm=2Eh"
->+#include "hw/i386/kvm/clock=2Eh"
->+#include "hw/xen/xen-x86=2Eh"
->+#include "system/xen=2Eh"
->+#include "hw/rtc/mc146818rtc=2Eh"
->+#include "target/i386/cpu=2Eh"
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ hw/i386/intel_iommu.c          | 194 +++++++++++++++++++++++++++++++--
+ hw/i386/intel_iommu_internal.h |  27 ++++-
+ hw/i386/trace-events           |   3 +
+ include/hw/i386/intel_iommu.h  |   6 +
+ 4 files changed, 218 insertions(+), 12 deletions(-)
 
-i8257=2Eh, mc146818rtc=2Eh, and probably ide/isa=2Eh can now be removed fr=
-om pc_piix since these are either instantiated in the southbridge or not us=
-ed there=2E
-
->+
->+static const int ide_iobase[MAX_IDE_BUS] =3D { 0x1f0, 0x170 };
->+static const int ide_iobase2[MAX_IDE_BUS] =3D { 0x3f6, 0x376 };
->+static const int ide_irq[MAX_IDE_BUS] =3D { 14, 15 };
->+
->+
->+static void pc_init_isa(MachineState *machine)
->+{
->+    PCMachineState *pcms =3D PC_MACHINE(machine);
->+    PCMachineClass *pcmc =3D PC_MACHINE_GET_CLASS(pcms);
->+    X86MachineState *x86ms =3D X86_MACHINE(machine);
->+    MemoryRegion *system_memory =3D get_system_memory();
->+    MemoryRegion *system_io =3D get_system_io();
->+    ISABus *isa_bus;
->+    GSIState *gsi_state;
->+    MemoryRegion *ram_memory;
->+    MemoryRegion *rom_memory =3D system_memory;
-
-rom_memory isn't needed any more since system_memory can be used directly=
-=2E Same for pc_piix where pci_memory can be used directly (see pc_q35)=2E
-
->+    DriveInfo *hd[MAX_IDE_BUS * MAX_IDE_DEVS];
->+    uint32_t irq;
->+    int i;
->+
->+    /*
->+     * There is no RAM split for the isapc machine
->+     */
->+    if (xen_enabled()) {
->+        xen_hvm_init_pc(pcms, &ram_memory);
->+    } else {
->+        ram_memory =3D machine->ram;
->+
->+        pcms->max_ram_below_4g =3D 0xe0000000; /* default: 3=2E5G */
->+        x86ms->above_4g_mem_size =3D 0;
->+        x86ms->below_4g_mem_size =3D machine->ram_size;
->+    }
->+
->+    /*
->+     * There is a small chance that someone unintentionally passes "-cpu=
- max"
->+     * for the isapc machine, which will provide a much more modern 32-b=
-it
->+     * CPU than would be expected for an ISA-era PC=2E If the "max" cpu =
-type has
->+     * been specified, choose the "best" 32-bit cpu possible which we co=
-nsider
->+     * be the pentium3 (deliberately choosing an Intel CPU given that th=
-e
->+     * default 486 CPU for the isapc machine is also an Intel CPU)=2E
->+     */
->+    if (!strcmp(machine->cpu_type, X86_CPU_TYPE_NAME("max"))) {
->+        machine->cpu_type =3D X86_CPU_TYPE_NAME("pentium3");
->+    }
->+
->+    x86_cpus_init(x86ms, pcmc->default_cpu_version);
->+
->+    if (kvm_enabled()) {
->+        kvmclock_create(pcmc->kvmclock_create_always);
->+    }
->+
->+    /* allocate ram and load rom/bios */
->+    if (!xen_enabled()) {
->+        pc_memory_init(pcms, system_memory, rom_memory, 0);
->+    } else {
->+        assert(machine->ram_size =3D=3D x86ms->below_4g_mem_size +
->+                                    x86ms->above_4g_mem_size);
->+
->+        if (machine->kernel_filename !=3D NULL) {
->+            /* For xen HVM direct kernel boot, load linux here */
->+            xen_load_linux(pcms);
->+        }
->+    }
->+
->+    gsi_state =3D pc_gsi_create(&x86ms->gsi, false);
->+
->+    isa_bus =3D isa_bus_new(NULL, system_memory, system_io,
->+                            &error_abort);
->+    isa_bus_register_input_irqs(isa_bus, x86ms->gsi);
->+
->+    x86ms->rtc =3D isa_new(TYPE_MC146818_RTC);
->+    qdev_prop_set_int32(DEVICE(x86ms->rtc), "base_year", 2000);
->+    isa_realize_and_unref(x86ms->rtc, isa_bus, &error_fatal);
->+    irq =3D object_property_get_uint(OBJECT(x86ms->rtc), "irq",
->+                                   &error_fatal);
->+    isa_connect_gpio_out(ISA_DEVICE(x86ms->rtc), 0, irq);
->+
->+    i8257_dma_init(OBJECT(machine), isa_bus, 0);
->+    pcms->hpet_enabled =3D false;
->+
->+    if (x86ms->pic =3D=3D ON_OFF_AUTO_ON || x86ms->pic =3D=3D ON_OFF_AUT=
-O_AUTO) {
->+        pc_i8259_create(isa_bus, gsi_state->i8259_irq);
->+    }
->+
->+    if (tcg_enabled()) {
->+        x86_register_ferr_irq(x86ms->gsi[13]);
->+    }
->+
->+    pc_vga_init(isa_bus, NULL);
->+
->+    /* init basic PC hardware */
->+    pc_basic_device_init(pcms, isa_bus, x86ms->gsi, x86ms->rtc,
->+                         !MACHINE_CLASS(pcmc)->no_floppy, 0x4);
->+
->+    pc_nic_init(pcmc, isa_bus, NULL);
->+
->+    ide_drive_get(hd, ARRAY_SIZE(hd));
->+    for (i =3D 0; i < MAX_IDE_BUS; i++) {
->+        ISADevice *dev;
->+        char busname[] =3D "ide=2E0";
->+        dev =3D isa_ide_init(isa_bus, ide_iobase[i], ide_iobase2[i],
->+                           ide_irq[i],
->+                           hd[MAX_IDE_DEVS * i], hd[MAX_IDE_DEVS * i + 1=
-]);
->+        /*
->+         * The ide bus name is ide=2E0 for the first bus and ide=2E1 for=
- the
->+         * second one=2E
->+         */
->+        busname[4] =3D '0' + i;
->+        pcms->idebus[i] =3D qdev_get_child_bus(DEVICE(dev), busname);
->+    }
->+}
->+
->+static void isapc_machine_options(MachineClass *m)
->+{
->+    static const char * const valid_cpu_types[] =3D {
->+        X86_CPU_TYPE_NAME("486"),
->+        X86_CPU_TYPE_NAME("athlon"),
->+        X86_CPU_TYPE_NAME("kvm32"),
->+        X86_CPU_TYPE_NAME("pentium"),
->+        X86_CPU_TYPE_NAME("pentium2"),
->+        X86_CPU_TYPE_NAME("pentium3"),
->+        X86_CPU_TYPE_NAME("qemu32"),
->+        X86_CPU_TYPE_NAME("max"),
->+        NULL
->+    };
->+    PCMachineClass *pcmc =3D PC_MACHINE_CLASS(m);
->+
->+    m->desc =3D "ISA-only PC";
->+    m->max_cpus =3D 1;
->+    m->option_rom_has_mr =3D true;
->+    m->rom_file_has_mr =3D false;
->+    pcmc->pci_enabled =3D false;
->+    pcmc->has_acpi_build =3D false;
->+    pcmc->smbios_defaults =3D false;
->+    pcmc->gigabyte_align =3D false;
->+    pcmc->smbios_legacy_mode =3D true;
->+    pcmc->has_reserved_memory =3D false;
->+    m->default_nic =3D "ne2k_isa";
->+    m->default_cpu_type =3D X86_CPU_TYPE_NAME("486");
->+    m->valid_cpu_types =3D valid_cpu_types;
->+    m->no_floppy =3D !module_object_class_by_name(TYPE_ISA_FDC);
->+    m->no_parallel =3D !module_object_class_by_name(TYPE_ISA_PARALLEL);
->+}
->+
->+DEFINE_PC_MACHINE(isapc, "isapc", pc_init_isa,
->+                  isapc_machine_options);
->diff --git a/hw/i386/meson=2Ebuild b/hw/i386/meson=2Ebuild
->index 7896f348cf=2E=2E436b3ce52d 100644
->--- a/hw/i386/meson=2Ebuild
->+++ b/hw/i386/meson=2Ebuild
->@@ -14,6 +14,7 @@ i386_ss=2Eadd(when: 'CONFIG_X86_IOMMU', if_true: files(=
-'x86-iommu=2Ec'),
-> i386_ss=2Eadd(when: 'CONFIG_AMD_IOMMU', if_true: files('amd_iommu=2Ec'),
->                                       if_false: files('amd_iommu-stub=2E=
-c'))
-> i386_ss=2Eadd(when: 'CONFIG_I440FX', if_true: files('pc_piix=2Ec'))
->+i386_ss=2Eadd(when: 'CONFIG_ISAPC', if_true: files('isapc=2Ec'))
-> i386_ss=2Eadd(when: 'CONFIG_MICROVM', if_true: files('x86-common=2Ec', '=
-microvm=2Ec', 'acpi-microvm=2Ec', 'microvm-dt=2Ec'))
-> i386_ss=2Eadd(when: 'CONFIG_NITRO_ENCLAVE', if_true: files('nitro_enclav=
-e=2Ec'))
-> i386_ss=2Eadd(when: 'CONFIG_Q35', if_true: files('pc_q35=2Ec'))
->diff --git a/hw/i386/pc_piix=2Ec b/hw/i386/pc_piix=2Ec
->index c9d8a1cdf7=2E=2E8d0dfd881d 100644
->--- a/hw/i386/pc_piix=2Ec
->+++ b/hw/i386/pc_piix=2Ec
->@@ -71,12 +71,6 @@
->=20
-> #define XEN_IOAPIC_NUM_PIRQS 128ULL
->=20
->-#ifdef CONFIG_ISAPC
->-static const int ide_iobase[MAX_IDE_BUS] =3D { 0x1f0, 0x170 };
->-static const int ide_iobase2[MAX_IDE_BUS] =3D { 0x3f6, 0x376 };
->-static const int ide_irq[MAX_IDE_BUS] =3D { 14, 15 };
->-#endif
->-
-> /*
->  * Return the global irq number corresponding to a given device irq
->  * pin=2E We could also use the bus number to have a more precise mappin=
-g=2E
->@@ -373,111 +367,6 @@ static void pc_set_south_bridge(Object *obj, int va=
-lue, Error **errp)
->     pcms->south_bridge =3D PCSouthBridgeOption_lookup=2Earray[value];
-> }
->=20
->-#ifdef CONFIG_ISAPC
->-static void pc_init_isa(MachineState *machine)
->-{
->-    PCMachineState *pcms =3D PC_MACHINE(machine);
->-    PCMachineClass *pcmc =3D PC_MACHINE_GET_CLASS(pcms);
->-    X86MachineState *x86ms =3D X86_MACHINE(machine);
->-    MemoryRegion *system_memory =3D get_system_memory();
->-    MemoryRegion *system_io =3D get_system_io();
->-    ISABus *isa_bus;
->-    GSIState *gsi_state;
->-    MemoryRegion *ram_memory;
->-    MemoryRegion *rom_memory =3D system_memory;
->-    DriveInfo *hd[MAX_IDE_BUS * MAX_IDE_DEVS];
->-    int i;
->-
->-    /*
->-     * There is no RAM split for the isapc machine
->-     */
->-    if (xen_enabled()) {
->-        xen_hvm_init_pc(pcms, &ram_memory);
->-    } else {
->-        ram_memory =3D machine->ram;
->-
->-        pcms->max_ram_below_4g =3D 0xe0000000; /* default: 3=2E5G */
->-        x86ms->above_4g_mem_size =3D 0;
->-        x86ms->below_4g_mem_size =3D machine->ram_size;
->-    }
->-
->-    /*
->-     * There is a small chance that someone unintentionally passes "-cpu=
- max"
->-     * for the isapc machine, which will provide a much more modern 32-b=
-it
->-     * CPU than would be expected for an ISA-era PC=2E If the "max" cpu =
-type has
->-     * been specified, choose the "best" 32-bit cpu possible which we co=
-nsider
->-     * be the pentium3 (deliberately choosing an Intel CPU given that th=
-e
->-     * default 486 CPU for the isapc machine is also an Intel CPU)=2E
->-     */
->-    if (!strcmp(machine->cpu_type, X86_CPU_TYPE_NAME("max"))) {
->-        machine->cpu_type =3D X86_CPU_TYPE_NAME("pentium3");
->-    }
->-
->-    x86_cpus_init(x86ms, pcmc->default_cpu_version);
->-
->-    if (kvm_enabled()) {
->-        kvmclock_create(pcmc->kvmclock_create_always);
->-    }
->-
->-    /* allocate ram and load rom/bios */
->-    if (!xen_enabled()) {
->-        pc_memory_init(pcms, system_memory, rom_memory, 0);
->-    } else {
->-        assert(machine->ram_size =3D=3D x86ms->below_4g_mem_size +
->-                                    x86ms->above_4g_mem_size);
->-
->-        if (machine->kernel_filename !=3D NULL) {
->-            /* For xen HVM direct kernel boot, load linux here */
->-            xen_load_linux(pcms);
->-        }
->-    }
->-
->-    gsi_state =3D pc_gsi_create(&x86ms->gsi, false);
->-
->-    isa_bus =3D isa_bus_new(NULL, system_memory, system_io,
->-                            &error_abort);
->-    isa_bus_register_input_irqs(isa_bus, x86ms->gsi);
->-
->-    x86ms->rtc =3D isa_new(TYPE_MC146818_RTC);
->-    qdev_prop_set_int32(DEVICE(x86ms->rtc), "base_year", 2000);
->-    isa_realize_and_unref(x86ms->rtc, isa_bus, &error_fatal);
->-
->-    i8257_dma_init(OBJECT(machine), isa_bus, 0);
->-    pcms->hpet_enabled =3D false;
->-
->-    if (x86ms->pic =3D=3D ON_OFF_AUTO_ON || x86ms->pic =3D=3D ON_OFF_AUT=
-O_AUTO) {
->-        pc_i8259_create(isa_bus, gsi_state->i8259_irq);
->-    }
->-
->-    if (tcg_enabled()) {
->-        x86_register_ferr_irq(x86ms->gsi[13]);
->-    }
->-
->-    pc_vga_init(isa_bus, NULL);
->-
->-    /* init basic PC hardware */
->-    pc_basic_device_init(pcms, isa_bus, x86ms->gsi, x86ms->rtc,
->-                         !MACHINE_CLASS(pcmc)->no_floppy, 0x4);
->-
->-    pc_nic_init(pcmc, isa_bus, NULL);
->-
->-    ide_drive_get(hd, ARRAY_SIZE(hd));
->-    for (i =3D 0; i < MAX_IDE_BUS; i++) {
->-        ISADevice *dev;
->-        char busname[] =3D "ide=2E0";
->-        dev =3D isa_ide_init(isa_bus, ide_iobase[i], ide_iobase2[i],
->-                            ide_irq[i],
->-                            hd[MAX_IDE_DEVS * i], hd[MAX_IDE_DEVS * i + =
-1]);
->-        /*
->-         * The ide bus name is ide=2E0 for the first bus and ide=2E1 for=
- the
->-         * second one=2E
->-         */
->-        busname[4] =3D '0' + i;
->-        pcms->idebus[i] =3D qdev_get_child_bus(DEVICE(dev), busname);
->-    }
->-}
->-#endif
->-
-> #ifdef CONFIG_XEN
-> static void pc_xen_hvm_init_pci(MachineState *machine)
-> {
->@@ -839,43 +728,6 @@ static void pc_i440fx_machine_2_6_options(MachineCla=
-ss *m)
->=20
-> DEFINE_I440FX_MACHINE(2, 6);
->=20
->-#ifdef CONFIG_ISAPC
->-static void isapc_machine_options(MachineClass *m)
->-{
->-    static const char * const valid_cpu_types[] =3D {
->-        X86_CPU_TYPE_NAME("486"),
->-        X86_CPU_TYPE_NAME("athlon"),
->-        X86_CPU_TYPE_NAME("kvm32"),
->-        X86_CPU_TYPE_NAME("pentium"),
->-        X86_CPU_TYPE_NAME("pentium2"),
->-        X86_CPU_TYPE_NAME("pentium3"),
->-        X86_CPU_TYPE_NAME("qemu32"),
->-        X86_CPU_TYPE_NAME("max"),
->-        NULL
->-    };
->-    PCMachineClass *pcmc =3D PC_MACHINE_CLASS(m);
->-
->-    m->desc =3D "ISA-only PC";
->-    m->max_cpus =3D 1;
->-    m->option_rom_has_mr =3D true;
->-    m->rom_file_has_mr =3D false;
->-    pcmc->pci_enabled =3D false;
->-    pcmc->has_acpi_build =3D false;
->-    pcmc->smbios_defaults =3D false;
->-    pcmc->gigabyte_align =3D false;
->-    pcmc->smbios_legacy_mode =3D true;
->-    pcmc->has_reserved_memory =3D false;
->-    m->default_nic =3D "ne2k_isa";
->-    m->default_cpu_type =3D X86_CPU_TYPE_NAME("486");
->-    m->valid_cpu_types =3D valid_cpu_types;
->-    m->no_floppy =3D !module_object_class_by_name(TYPE_ISA_FDC);
->-    m->no_parallel =3D !module_object_class_by_name(TYPE_ISA_PARALLEL);
->-}
->-
->-DEFINE_PC_MACHINE(isapc, "isapc", pc_init_isa,
->-                  isapc_machine_options);
->-#endif
->-
-> #ifdef CONFIG_XEN
-> static void xenfv_machine_4_2_options(MachineClass *m)
-> {
-
-With above comments addressed:
-
-Reviewed-by: Bernhard Beschow shentey@gmail=2Ecom>
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 38e7f7b7be..5bda439de6 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -1675,7 +1675,7 @@ static uint16_t vtd_get_domain_id(IntelIOMMUState *s,
+ 
+     if (s->root_scalable) {
+         vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
+-        return VTD_SM_PASID_ENTRY_DID(pe.val[1]);
++        return VTD_SM_PASID_ENTRY_DID(&pe);
+     }
+ 
+     return VTD_CONTEXT_ENTRY_DID(ce->hi);
+@@ -3103,6 +3103,181 @@ static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
+     return true;
+ }
+ 
++static inline int vtd_dev_get_pe_from_pasid(VTDAddressSpace *vtd_as,
++                                            uint32_t pasid, VTDPASIDEntry *pe)
++{
++    IntelIOMMUState *s = vtd_as->iommu_state;
++    VTDContextEntry ce;
++    int ret;
++
++    if (!s->root_scalable) {
++        return -VTD_FR_RTADDR_INV_TTM;
++    }
++
++    ret = vtd_dev_to_context_entry(s, pci_bus_num(vtd_as->bus), vtd_as->devfn,
++                                   &ce);
++    if (ret) {
++        return ret;
++    }
++
++    return vtd_ce_get_pasid_entry(s, &ce, pe, pasid);
++}
++
++static bool vtd_pasid_entry_compare(VTDPASIDEntry *p1, VTDPASIDEntry *p2)
++{
++    return !memcmp(p1, p2, sizeof(*p1));
++}
++
++/*
++ * This function is used to update or clear cached pasid entry in vtd_as.
++ * vtd_as is released when corresponding cached pasid entry is cleared,
++ * except for PCI_NO_PASID which vtd_as is owen by PCI sub-system.
++ */
++static gboolean vtd_flush_pasid_locked(gpointer key, gpointer value,
++                                       gpointer user_data)
++{
++    VTDPASIDCacheInfo *pc_info = user_data;
++    VTDAddressSpace *vtd_as = value;
++    VTDPASIDCacheEntry *pc_entry = &vtd_as->pasid_cache_entry;
++    VTDPASIDEntry pe;
++    uint16_t did;
++    uint32_t pasid;
++    int ret;
++
++    if (!pc_entry->valid) {
++        return false;
++    }
++    did = VTD_SM_PASID_ENTRY_DID(&pc_entry->pasid_entry);
++
++    if (vtd_as_to_iommu_pasid_locked(vtd_as, &pasid)) {
++        goto remove;
++    }
++
++    switch (pc_info->type) {
++    case VTD_PASID_CACHE_PASIDSI:
++        if (pc_info->pasid != pasid) {
++            return false;
++        }
++        /* fall through */
++    case VTD_PASID_CACHE_DOMSI:
++        if (pc_info->did != did) {
++            return false;
++        }
++        /* fall through */
++    case VTD_PASID_CACHE_GLOBAL_INV:
++        break;
++    default:
++        error_setg(&error_fatal, "invalid pc_info->type for flush");
++    }
++
++    /*
++     * pasid cache invalidation may indicate a present pasid
++     * entry to present pasid entry modification. To cover such
++     * case, vIOMMU emulator needs to fetch latest guest pasid
++     * entry and compares with cached pasid entry, then update
++     * pasid cache.
++     */
++    ret = vtd_dev_get_pe_from_pasid(vtd_as, pasid, &pe);
++    if (ret) {
++        /*
++         * No valid pasid entry in guest memory. e.g. pasid entry
++         * was modified to be either all-zero or non-present. Either
++         * case means existing pasid cache should be removed.
++         */
++        goto remove;
++    }
++
++    /* No need to update if cached pasid entry is latest */
++    if (!vtd_pasid_entry_compare(&pe, &pc_entry->pasid_entry)) {
++        pc_entry->pasid_entry = pe;
++    }
++    return false;
++
++remove:
++    pc_entry->valid = false;
++
++    /*
++     * Don't remove address space of PCI_NO_PASID which is created for PCI
++     * sub-system.
++     */
++    if (vtd_as->pasid == PCI_NO_PASID) {
++        return false;
++    }
++    return true;
++}
++
++/* Update the pasid cache in vIOMMU */
++static void vtd_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
++{
++    if (!s->flts || !s->root_scalable || !s->dmar_enabled) {
++        return;
++    }
++
++    /*
++     * Regards to a pasid cache invalidation, e.g. a PSI.
++     * It could be either cases of below:
++     * a) a present pasid entry moved to non-present
++     * b) a present pasid entry to be a present entry
++     * c) a non-present pasid entry moved to present
++     */
++    vtd_iommu_lock(s);
++    /*
++     * a,b): loop all the existing vtd_as instances for pasid cache remove
++       or update.
++     */
++    g_hash_table_foreach_remove(s->vtd_address_spaces, vtd_flush_pasid_locked,
++                                pc_info);
++    vtd_iommu_unlock(s);
++}
++
++static bool vtd_process_pasid_desc(IntelIOMMUState *s,
++                                   VTDInvDesc *inv_desc)
++{
++    uint16_t did;
++    uint32_t pasid;
++    VTDPASIDCacheInfo pc_info;
++    uint64_t mask[4] = {VTD_INV_DESC_PASIDC_RSVD_VAL0, VTD_INV_DESC_ALL_ONE,
++                        VTD_INV_DESC_ALL_ONE, VTD_INV_DESC_ALL_ONE};
++
++    if (!vtd_inv_desc_reserved_check(s, inv_desc, mask, true,
++                                     __func__, "pasid cache inv")) {
++        return false;
++    }
++
++    did = VTD_INV_DESC_PASIDC_DID(inv_desc);
++    pasid = VTD_INV_DESC_PASIDC_PASID(inv_desc);
++
++    switch (VTD_INV_DESC_PASIDC_G(inv_desc)) {
++    case VTD_INV_DESC_PASIDC_G_DSI:
++        trace_vtd_pasid_cache_dsi(did);
++        pc_info.type = VTD_PASID_CACHE_DOMSI;
++        pc_info.did = did;
++        break;
++
++    case VTD_INV_DESC_PASIDC_G_PASID_SI:
++        /* PASID selective implies a DID selective */
++        trace_vtd_pasid_cache_psi(did, pasid);
++        pc_info.type = VTD_PASID_CACHE_PASIDSI;
++        pc_info.did = did;
++        pc_info.pasid = pasid;
++        break;
++
++    case VTD_INV_DESC_PASIDC_G_GLOBAL:
++        trace_vtd_pasid_cache_gsi();
++        pc_info.type = VTD_PASID_CACHE_GLOBAL_INV;
++        break;
++
++    default:
++        error_report_once("invalid granularity field in PASID-cache invalidate "
++                          "descriptor, hi: 0x%"PRIx64" lo: 0x%" PRIx64,
++                           inv_desc->val[1], inv_desc->val[0]);
++        return false;
++    }
++
++    vtd_pasid_cache_sync(s, &pc_info);
++    return true;
++}
++
+ static bool vtd_process_inv_iec_desc(IntelIOMMUState *s,
+                                      VTDInvDesc *inv_desc)
+ {
+@@ -3264,6 +3439,13 @@ static bool vtd_process_inv_desc(IntelIOMMUState *s)
+         }
+         break;
+ 
++    case VTD_INV_DESC_PC:
++        trace_vtd_inv_desc("pasid-cache", inv_desc.val[1], inv_desc.val[0]);
++        if (!vtd_process_pasid_desc(s, &inv_desc)) {
++            return false;
++        }
++        break;
++
+     case VTD_INV_DESC_PIOTLB:
+         trace_vtd_inv_desc("p-iotlb", inv_desc.val[1], inv_desc.val[0]);
+         if (!vtd_process_piotlb_desc(s, &inv_desc)) {
+@@ -3299,16 +3481,6 @@ static bool vtd_process_inv_desc(IntelIOMMUState *s)
+         }
+         break;
+ 
+-    /*
+-     * TODO: the entity of below two cases will be implemented in future series.
+-     * To make guest (which integrates scalable mode support patch set in
+-     * iommu driver) work, just return true is enough so far.
+-     */
+-    case VTD_INV_DESC_PC:
+-        if (s->scalable_mode) {
+-            break;
+-        }
+-    /* fallthrough */
+     default:
+         error_report_once("%s: invalid inv desc: hi=%"PRIx64", lo=%"PRIx64
+                           " (unknown type)", __func__, inv_desc.hi,
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index 18bc22fc72..87059d26aa 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -315,6 +315,7 @@ typedef enum VTDFaultReason {
+                                   * request while disabled */
+     VTD_FR_IR_SID_ERR = 0x26,   /* Invalid Source-ID */
+ 
++    VTD_FR_RTADDR_INV_TTM = 0x31,  /* Invalid TTM in RTADDR */
+     /* PASID directory entry access failure */
+     VTD_FR_PASID_DIR_ACCESS_ERR = 0x50,
+     /* The Present(P) field of pasid directory entry is 0 */
+@@ -492,6 +493,15 @@ typedef union VTDInvDesc VTDInvDesc;
+ #define VTD_INV_DESC_PIOTLB_RSVD_VAL0     0xfff000000000f1c0ULL
+ #define VTD_INV_DESC_PIOTLB_RSVD_VAL1     0xf80ULL
+ 
++/* PASID-cache Invalidate Descriptor (pc_inv_dsc) fields */
++#define VTD_INV_DESC_PASIDC_G(x)        extract64((x)->val[0], 4, 2)
++#define VTD_INV_DESC_PASIDC_G_DSI       0
++#define VTD_INV_DESC_PASIDC_G_PASID_SI  1
++#define VTD_INV_DESC_PASIDC_G_GLOBAL    3
++#define VTD_INV_DESC_PASIDC_DID(x)      extract64((x)->val[0], 16, 16)
++#define VTD_INV_DESC_PASIDC_PASID(x)    extract64((x)->val[0], 32, 20)
++#define VTD_INV_DESC_PASIDC_RSVD_VAL0   0xfff000000000f1c0ULL
++
+ /* Information about page-selective IOTLB invalidate */
+ struct VTDIOTLBPageInvInfo {
+     uint16_t domain_id;
+@@ -552,6 +562,21 @@ typedef struct VTDRootEntry VTDRootEntry;
+ #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL0(aw)  (0x1e0ULL | ~VTD_HAW_MASK(aw))
+ #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL1      0xffffffffffe00000ULL
+ 
++typedef enum VTDPCInvType {
++    /* VTD spec defined PASID cache invalidation type */
++    VTD_PASID_CACHE_DOMSI = VTD_INV_DESC_PASIDC_G_DSI,
++    VTD_PASID_CACHE_PASIDSI = VTD_INV_DESC_PASIDC_G_PASID_SI,
++    VTD_PASID_CACHE_GLOBAL_INV = VTD_INV_DESC_PASIDC_G_GLOBAL,
++} VTDPCInvType;
++
++typedef struct VTDPASIDCacheInfo {
++    VTDPCInvType type;
++    uint16_t did;
++    uint32_t pasid;
++    PCIBus *bus;
++    uint16_t devfn;
++} VTDPASIDCacheInfo;
++
+ /* PASID Table Related Definitions */
+ #define VTD_PASID_DIR_BASE_ADDR_MASK  (~0xfffULL)
+ #define VTD_PASID_TABLE_BASE_ADDR_MASK (~0xfffULL)
+@@ -573,7 +598,7 @@ typedef struct VTDRootEntry VTDRootEntry;
+ #define VTD_SM_PASID_ENTRY_PT          (4ULL << 6)
+ 
+ #define VTD_SM_PASID_ENTRY_AW          7ULL /* Adjusted guest-address-width */
+-#define VTD_SM_PASID_ENTRY_DID(val)    ((val) & VTD_DOMAIN_ID_MASK)
++#define VTD_SM_PASID_ENTRY_DID(x)      extract64((x)->val[1], 0, 16)
+ 
+ #define VTD_SM_PASID_ENTRY_FLPM          3ULL
+ #define VTD_SM_PASID_ENTRY_FLPTPTR       (~0xfffULL)
+diff --git a/hw/i386/trace-events b/hw/i386/trace-events
+index ac9e1a10aa..ae5bbfcdc0 100644
+--- a/hw/i386/trace-events
++++ b/hw/i386/trace-events
+@@ -24,6 +24,9 @@ vtd_inv_qi_head(uint16_t head) "read head %d"
+ vtd_inv_qi_tail(uint16_t head) "write tail %d"
+ vtd_inv_qi_fetch(void) ""
+ vtd_context_cache_reset(void) ""
++vtd_pasid_cache_gsi(void) ""
++vtd_pasid_cache_dsi(uint16_t domain) "Domain selective PC invalidation domain 0x%"PRIx16
++vtd_pasid_cache_psi(uint16_t domain, uint32_t pasid) "PASID selective PC invalidation domain 0x%"PRIx16" pasid 0x%"PRIx32
+ vtd_re_not_present(uint8_t bus) "Root entry bus %"PRIu8" not present"
+ vtd_ce_not_present(uint8_t bus, uint8_t devfn) "Context entry bus %"PRIu8" devfn %"PRIu8" not present"
+ vtd_iotlb_page_hit(uint16_t sid, uint64_t addr, uint64_t slpte, uint16_t domain) "IOTLB page hit sid 0x%"PRIx16" iova 0x%"PRIx64" slpte 0x%"PRIx64" domain 0x%"PRIx16
+diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+index 50f9b27a45..0e3826f6f0 100644
+--- a/include/hw/i386/intel_iommu.h
++++ b/include/hw/i386/intel_iommu.h
+@@ -95,6 +95,11 @@ struct VTDPASIDEntry {
+     uint64_t val[8];
+ };
+ 
++typedef struct VTDPASIDCacheEntry {
++    struct VTDPASIDEntry pasid_entry;
++    bool valid;
++} VTDPASIDCacheEntry;
++
+ struct VTDAddressSpace {
+     PCIBus *bus;
+     uint8_t devfn;
+@@ -107,6 +112,7 @@ struct VTDAddressSpace {
+     MemoryRegion iommu_ir_fault; /* Interrupt region for catching fault */
+     IntelIOMMUState *iommu_state;
+     VTDContextCacheEntry context_cache_entry;
++    VTDPASIDCacheEntry pasid_cache_entry;
+     QLIST_ENTRY(VTDAddressSpace) next;
+     /* Superset of notifier flags that this address space has */
+     IOMMUNotifierFlag notifier_flags;
+-- 
+2.47.1
 
 
