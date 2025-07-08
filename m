@@ -4,74 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E384AC83F09
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:24:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A155C8303C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 21:25:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFFj-00049z-NH; Tue, 08 Jul 2025 16:49:23 -0400
+	id 1uZFE4-0005mB-JP; Tue, 08 Jul 2025 16:47:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uZDs5-0000YH-O2
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:21:04 -0400
-Received: from mgamail.intel.com ([198.175.65.14])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uZDs3-00082f-En
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:20:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752002452; x=1783538452;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=jYiYK1jkfILuoSspWWK6/mpv5mA4dlw0x1IVbMssGHI=;
- b=kB/UATdIqba+1x/BLmTjj/dvYIzbU03UIVkMpLYTafr2rJfmlQDAes7n
- RUIjTb9OF8IeL/yNs62ysPOBQcsmHywxTgqPyjYk8yg0ws9Q9b2KMSOBl
- oJ/89XI4vLni9LIBLouo6CiTuvsLbFIXvT2Eu9QgUScVqz7GhnloWfXxf
- GGvuOUNnqAp+U5RlR7WUrx+sZcRUv5hyZBVg+ae7MVCKyjE+WglVLLz6u
- aBvfTuRr3/O2EXS991rVwVwdQ/DrHXDJ19QD6LHY2LdsOtjJJcikt99WJ
- 0uZ1QV0W/2JuXGtv6GOXCmt8QuUO4hNmWO+e7N4zjKOdBo6Ufjol1cgc6 Q==;
-X-CSE-ConnectionGUID: PdouaHpdSN+2d40AyyLGRQ==
-X-CSE-MsgGUID: E///+mTyRMaheUbY0D9EqQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11487"; a="57974047"
-X-IronPort-AV: E=Sophos;i="6.16,297,1744095600"; d="scan'208";a="57974047"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Jul 2025 04:07:08 -0700
-X-CSE-ConnectionGUID: pvfe/nTYQaGtjJMeiqoOLQ==
-X-CSE-MsgGUID: C5dkz0PCSiC4adZgOh/0Ug==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,297,1744095600"; d="scan'208";a="192647991"
-Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Jul 2025 04:07:04 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- mst@redhat.com, jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com,
- jgg@nvidia.com, nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
- joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v3 13/20] intel_iommu: Stick to system MR for IOMMUFD backed
- host device when x-fls=on
-Date: Tue,  8 Jul 2025 07:05:54 -0400
-Message-ID: <20250708110601.633308-14-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250708110601.633308-1-zhenzhong.duan@intel.com>
-References: <20250708110601.633308-1-zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uZDqm-000762-S3
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:19:38 -0400
+Received: from mail-qv1-xf34.google.com ([2607:f8b0:4864:20::f34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uZDqg-00086D-O0
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:19:29 -0400
+Received: by mail-qv1-xf34.google.com with SMTP id
+ 6a1803df08f44-6fae04a3795so52018746d6.3
+ for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 12:19:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752002354; x=1752607154; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vSHu2C6AHkdi6I2MI+MN+9VTwDs09gk+qY11owIPdS8=;
+ b=nh4K83BCOakJ5XXA29pCLwszfOv10O2HVUmBrG4keb/Jk9Y7NLfk7JcKRPTW8itMFR
+ oe/1T3PiTpswA+ar4EVsl8T+HaA+diLUgm/zzRm79OIJkOVOcynOMyf21o7+qxzfNoU0
+ jvYyFh6dVjJ9jDMBB+loBg3xr7i+gNFt0e1M+xW2bvd//IEpQ53369fc+413nYk+Bui7
+ wYg0PKEBgx9u7EdMWYOGl141qOzcr0wj1NiUAtdKOyJ5OG0pT1g/YS1nrvKgUHROOXcP
+ QLpY6PchjhBzXcMCry9tWqhPW6AsH4oQ7rOrYUHpKloVeHHgRkyZKKHHVqMTJ530s0zs
+ Z3ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752002354; x=1752607154;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vSHu2C6AHkdi6I2MI+MN+9VTwDs09gk+qY11owIPdS8=;
+ b=WlKWpigic082tGcN6w9iNaAK763pt/bIih2/DuxriJNUcs2KCOx8VxCbsciBTDrGzF
+ aFD5UUpkoHJ1/8nqFqtfbL8QLenMEuK6K3LrZYHhGsxUOtnMRt/gTqVAhIAH7HZ6NuVh
+ cerJfsNB77myagwoAJWDq0fYAhfn3eu2HX/fMb0Ty9KhFxQwlnGu2Fslkc+ku92lMmr9
+ dJAXu8tscc7PvMkMY3zb13N651j/ZjdJA8ymh+l9GVQ4BQ3+nzgfE5OsnFyhsolmvxQg
+ 9GDQ3EOWtSifvVhsuMfypYcbs007YXUgTjJL3uvjXUfypJWCKEx46IBFv/kABmjFC3zd
+ Hx8Q==
+X-Gm-Message-State: AOJu0YwYtn+g0r9Tyv+pCoDf4XcPx9/4m10nKoKc1S/RPxwyS5/6HRK0
+ 98NROCMVCl1GshPNrODfTDykugu8x2B2B5UQ+byPM8Ehap+LytzWDYSCoMH6js44D+E=
+X-Gm-Gg: ASbGncsO7iv0wglCDC8ORh/bIgj73nMoKq0Mb/tazbe8BvX2nFAChiFC/dvaE/XPaKO
+ FcbQwhhAktjY/2qymam/HNx9CF5CNcWCHSaYZDgvko1+mq5tG1+85ZY8RdmL1rU6cmFVsNaz7La
+ /OckGqKzAvw0P6t5T8/kchrP2FpbFn6FSO5FqgaBqlx31/5R7kbsy7GmPTweMjVoGRWnM3TGCqA
+ PHgVDv4XkxAiJP4s80YZ00b39Vq/RBIx0rciLOd93G8suMj8rrZHNN9XcEovIX81dX0VhbK4Vu7
+ L1l6LuRMs5DHG76f+QT3rrMYwiOG9zzwcOpwRhwko7iqqMHqFNAsVyCuS6702obf/Yo=
+X-Google-Smtp-Source: AGHT+IEPVtapxFZtywAliaVxF1CHWD1ZAc5Em284q4ol+mGChMbTsCoMBELPXXvtyKtgjOyuBt2igA==
+X-Received: by 2002:a05:6214:31a0:b0:6fb:1fc:788e with SMTP id
+ 6a1803df08f44-70489abc6bcmr10112406d6.2.1752002353700; 
+ Tue, 08 Jul 2025 12:19:13 -0700 (PDT)
+Received: from gromero0.. ([189.110.24.38]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-702d638846asm56289096d6.22.2025.07.08.12.19.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 08 Jul 2025 12:19:13 -0700 (PDT)
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: qemu-arm@nongnu.org, richard.henderson@linaro.org, alex.bennee@linaro.org
+Cc: qemu-devel@nongnu.org,
+	gustavo.romero@linaro.org
+Subject: [RFC PATCH-for-10.1 v3 1/5] target/arm: Add the MECEn SCR_EL3 bit
+Date: Tue,  8 Jul 2025 19:17:00 +0000
+Message-Id: <20250708191704.1068604-2-gustavo.romero@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250708191704.1068604-1-gustavo.romero@linaro.org>
+References: <20250708191704.1068604-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.14;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f34;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-qv1-xf34.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,70 +98,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When guest in scalable mode and x-flts=on, we stick to system MR for IOMMUFD
-backed host device. Then its default hwpt contains GPA->HPA mappings which is
-used directly if PGTT=PT and used as nested parent if PGTT=FLT. Otherwise
-fallback to original processing.
+The MECEn bit in SCR_EL3 enables access to the EL2 MECID registers from
+EL2, so add it to the SCR mask list to use it later on.
 
-Suggested-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/i386/intel_iommu.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ target/arm/cpu.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index cf263498db..030862fb2f 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -1773,6 +1773,28 @@ static bool vtd_dev_pt_enabled(IntelIOMMUState *s, VTDContextEntry *ce,
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index c8cf0ab417..0f64c7b163 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1717,6 +1717,7 @@ static inline void xpsr_write(CPUARMState *env, uint32_t val, uint32_t mask)
+ #define SCR_TRNDR             (1ULL << 40)
+ #define SCR_ENTP2             (1ULL << 41)
+ #define SCR_GPF               (1ULL << 48)
++#define SCR_MECEN             (1ULL << 49)
+ #define SCR_NSE               (1ULL << 62)
  
- }
- 
-+static VTDHostIOMMUDevice *vtd_find_hiod_iommufd(IntelIOMMUState *s,
-+                                                 VTDAddressSpace *as)
-+{
-+    struct vtd_as_key key = {
-+        .bus = as->bus,
-+        .devfn = as->devfn,
-+    };
-+    VTDHostIOMMUDevice *vtd_hiod = g_hash_table_lookup(s->vtd_host_iommu_dev,
-+                                                       &key);
-+
-+    if (vtd_hiod && vtd_hiod->hiod &&
-+        object_dynamic_cast(OBJECT(vtd_hiod->hiod),
-+                            TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
-+        return vtd_hiod;
-+    }
-+    return NULL;
-+}
-+
-+/*
-+ * vtd_switch_address_space() calls vtd_as_pt_enabled() to determine which
-+ * MR to switch to. Switch to system MR if return true, iommu MR otherwise.
-+ */
- static bool vtd_as_pt_enabled(VTDAddressSpace *as)
- {
-     IntelIOMMUState *s;
-@@ -1781,6 +1803,18 @@ static bool vtd_as_pt_enabled(VTDAddressSpace *as)
-     assert(as);
- 
-     s = as->iommu_state;
-+
-+    /*
-+     * When guest in scalable mode and x-flts=on, we stick to system MR
-+     * for IOMMUFD backed host device. Then its default hwpt contains
-+     * GPA->HPA mappings which is used directly if PGTT=PT and used as
-+     * nested parent if PGTT=FLT. Otherwise fallback to original
-+     * processing.
-+     */
-+    if (s->root_scalable && s->flts && vtd_find_hiod_iommufd(s, as)) {
-+        return true;
-+    }
-+
-     if (vtd_dev_to_context_entry(s, pci_bus_num(as->bus), as->devfn,
-                                  &ce)) {
-         /*
+ /* Return the current FPSCR value.  */
 -- 
-2.47.1
+2.34.1
 
 
