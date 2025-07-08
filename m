@@ -4,65 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B24AC83F09
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:53:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA08AC8303C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Jul 2025 20:54:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZFAi-0003yF-JD; Tue, 08 Jul 2025 16:44:12 -0400
+	id 1uZFIk-00068n-0H; Tue, 08 Jul 2025 16:52:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uZDma-0003kU-6i
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:15:27 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uZEDF-0005PU-WF
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:42:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uZDmS-0006z3-N1
- for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:15:07 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uZEDB-0006Aw-Hi
+ for qemu-devel@nongnu.org; Tue, 08 Jul 2025 15:42:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752002101;
+ s=mimecast20190719; t=1752003760;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=e7w874XO5+cxv8XLuTTKyS7I663PEUleYooEMgED50Y=;
- b=LWhaahGIHStmGMNV9Wd38c4XPc7haojEhr02lpHOcrTLoRtjlzY0M18hZIz94gRMLaXuey
- uXuQKcMPcpcIRinVNMT3YG7qYTMTg8W0csUK9EwJR3Ta/j/wFqfkFFROfkuE8nJ4TznmgQ
- VDPreqOizRwtRKht/6W//0apXztw1ZI=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=tJI7GzV1IaW31YhlivvQAx1uPl3s388KcZnwzjfrHbQ=;
+ b=T8kkWDhaXyz5wGVDdA6cnV8busilJBv0YRAIY0VR3J4wTmPSKlRr7lIAtUErSbTkj4whSC
+ wipMRWzYO8s26qOTSV7AU6H9WDPuopOIqycVbImes83yPOSJBAS8zHZsQAPdrGfFggqMT0
+ 57EjTJuhKvwYqdwsuZTcDhjqp18/o9c=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-455-tv3YoOIzN2CgnBSMefVaeQ-1; Tue,
- 08 Jul 2025 08:56:49 -0400
-X-MC-Unique: tv3YoOIzN2CgnBSMefVaeQ-1
-X-Mimecast-MFC-AGG-ID: tv3YoOIzN2CgnBSMefVaeQ_1751979408
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-320-UCWNc9WnO6GYMqiIyBwUdw-1; Tue,
+ 08 Jul 2025 10:26:26 -0400
+X-MC-Unique: UCWNc9WnO6GYMqiIyBwUdw-1
+X-Mimecast-MFC-AGG-ID: UCWNc9WnO6GYMqiIyBwUdw_1751984785
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EFAF7190FBC2; Tue,  8 Jul 2025 12:56:47 +0000 (UTC)
-Received: from thuth-p1g4.str.redhat.com (dhcp-192-196.str.redhat.com
- [10.33.192.196])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C5B6419560B2; Tue,  8 Jul 2025 12:56:45 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org, Jared Rossi <jrossi@linux.ibm.com>,
- Zhuoying Cai <zycai@linux.ibm.com>
-Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-Subject: [PATCH 5/5] tests/functional: Add a test for s390x pxelinux.cfg
- network booting
-Date: Tue,  8 Jul 2025 14:56:30 +0200
-Message-ID: <20250708125630.58676-6-thuth@redhat.com>
-In-Reply-To: <20250708125630.58676-1-thuth@redhat.com>
-References: <20250708125630.58676-1-thuth@redhat.com>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5371A19560A6; Tue,  8 Jul 2025 14:26:25 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.44.32.187])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 45E5530001B1; Tue,  8 Jul 2025 14:26:15 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
+ Jonathan.Cameron@huawei.com, gustavo.romero@linaro.org,
+ anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com
+Cc: pbonzini@redhat.com,
+	philmd@linaro.org,
+	alex.bennee@linaro.org
+Subject: [PATCH v6 14/36] hw/i386/acpi-build: Move
+ build_append_pci_bus_devices/pcihp_slots to pcihp
+Date: Tue,  8 Jul 2025 16:22:56 +0200
+Message-ID: <20250708142437.1344644-15-eric.auger@redhat.com>
+In-Reply-To: <20250708142437.1344644-1-eric.auger@redhat.com>
+References: <20250708142437.1344644-1-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -70,7 +73,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,172 +89,437 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+We intend to reuse build_append_pci_bus_devices and build_append_pcihp_slots
+on ARM. So let's move them to hw/acpi/pcihp.c as well as all static
+helpers they use.
 
-Check the various ways of booting a kernel via pxelinux.cfg file,
-e.g. by specifying the config file name via the MAC address or the
-UUID of the guest. Also check whether we can successfully load an
-alternate kernel via the "loadparm" parameter here and whether the
-boot menu shows up with "-boot menu=on".
+No functional change intended.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+
 ---
- MAINTAINERS                             |   1 +
- tests/functional/meson.build            |   1 +
- tests/functional/test_s390x_pxelinux.py | 119 ++++++++++++++++++++++++
- 3 files changed, 121 insertions(+)
- create mode 100755 tests/functional/test_s390x_pxelinux.py
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 1842c3dd83f..e88ed2c0a97 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1805,6 +1805,7 @@ F: hw/s390x/ipl.*
- F: pc-bios/s390-ccw/
- F: pc-bios/s390-ccw.img
- F: docs/devel/s390-dasd-ipl.rst
-+F: tests/functional/test_s390x_pxelinux.py
- T: git https://github.com/borntraeger/qemu.git s390-next
- L: qemu-s390x@nongnu.org
+v2 -> v3:
+- changed the layout of the commit message
+- reordered the moved functions to match the original ordering
+  (Jonathan)
+---
+ include/hw/acpi/pci.h   |   1 -
+ include/hw/acpi/pcihp.h |   2 +
+ hw/acpi/pcihp.c         | 173 ++++++++++++++++++++++++++++++++++++++++
+ hw/i386/acpi-build.c    | 172 ---------------------------------------
+ 4 files changed, 175 insertions(+), 173 deletions(-)
+
+diff --git a/include/hw/acpi/pci.h b/include/hw/acpi/pci.h
+index 8a328b580c..69bae95eac 100644
+--- a/include/hw/acpi/pci.h
++++ b/include/hw/acpi/pci.h
+@@ -37,7 +37,6 @@ typedef struct AcpiMcfgInfo {
+ void build_mcfg(GArray *table_data, BIOSLinker *linker, AcpiMcfgInfo *info,
+                 const char *oem_id, const char *oem_table_id);
  
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 050c9000b95..1ae5f02fb37 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -281,6 +281,7 @@ tests_rx_system_thorough = [
+-void build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus);
+ void build_pci_bridge_aml(AcpiDevAmlIf *adev, Aml *scope);
  
- tests_s390x_system_thorough = [
-   's390x_ccw_virtio',
-+  's390x_pxelinux',
-   's390x_replay',
-   's390x_topology',
-   's390x_tuxrun',
-diff --git a/tests/functional/test_s390x_pxelinux.py b/tests/functional/test_s390x_pxelinux.py
-new file mode 100755
-index 00000000000..f83cf9aed03
---- /dev/null
-+++ b/tests/functional/test_s390x_pxelinux.py
-@@ -0,0 +1,119 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Functional test that checks the pxelinux.cfg network booting of a s390x VM
-+# (TFTP booting without config file is already tested by the pxe qtest, so
-+#  we don't repeat that here).
+ void build_srat_generic_affinity_structures(GArray *table_data);
+diff --git a/include/hw/acpi/pcihp.h b/include/hw/acpi/pcihp.h
+index f4fd44cb32..5506a58862 100644
+--- a/include/hw/acpi/pcihp.h
++++ b/include/hw/acpi/pcihp.h
+@@ -80,6 +80,8 @@ void build_append_pcihp_resources(Aml *table,
+                                   uint64_t io_addr, uint64_t io_len);
+ bool build_append_notification_callback(Aml *parent_scope, const PCIBus *bus);
+ 
++void build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus);
 +
-+import os
-+import shutil
+ /* Called on reset */
+ void acpi_pcihp_reset(AcpiPciHpState *s);
+ 
+diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
+index b64d06afc9..2c76edeb15 100644
+--- a/hw/acpi/pcihp.c
++++ b/hw/acpi/pcihp.c
+@@ -27,6 +27,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/acpi/pcihp.h"
+ #include "hw/acpi/aml-build.h"
++#include "hw/acpi/acpi_aml_interface.h"
+ #include "hw/pci-host/i440fx.h"
+ #include "hw/pci/pci.h"
+ #include "hw/pci/pci_bridge.h"
+@@ -761,6 +762,178 @@ bool build_append_notification_callback(Aml *parent_scope, const PCIBus *bus)
+     return !!nr_notifiers;
+ }
+ 
++static Aml *aml_pci_device_dsm(void)
++{
++    Aml *method;
 +
-+from qemu_test import QemuSystemTest, Asset, wait_for_console_pattern
++    method = aml_method("_DSM", 4, AML_SERIALIZED);
++    {
++        Aml *params = aml_local(0);
++        Aml *pkg = aml_package(2);
++        aml_append(pkg, aml_int(0));
++        aml_append(pkg, aml_int(0));
++        aml_append(method, aml_store(pkg, params));
++        aml_append(method,
++            aml_store(aml_name("BSEL"), aml_index(params, aml_int(0))));
++        aml_append(method,
++            aml_store(aml_name("ASUN"), aml_index(params, aml_int(1))));
++        aml_append(method,
++            aml_return(aml_call5("PDSM", aml_arg(0), aml_arg(1),
++                                 aml_arg(2), aml_arg(3), params))
++        );
++    }
++    return method;
++}
 +
++static Aml *aml_pci_static_endpoint_dsm(PCIDevice *pdev)
++{
++    Aml *method;
 +
-+pxelinux_cfg_contents='''# pxelinux.cfg style config file
-+default Debian
-+label Nonexisting
-+kernel kernel.notavailable
-+initrd initrd.notavailable
-+label Debian
-+kernel kernel.debian
-+initrd initrd.debian
-+append testoption=teststring
-+label Fedora
-+kernel kernel.fedora
-+'''
++    g_assert(pdev->acpi_index != 0);
++    method = aml_method("_DSM", 4, AML_SERIALIZED);
++    {
++        Aml *params = aml_local(0);
++        Aml *pkg = aml_package(1);
++        aml_append(pkg, aml_int(pdev->acpi_index));
++        aml_append(method, aml_store(pkg, params));
++        aml_append(method,
++            aml_return(aml_call5("EDSM", aml_arg(0), aml_arg(1),
++                                 aml_arg(2), aml_arg(3), params))
++        );
++    }
++    return method;
++}
 +
-+class S390PxeLinux(QemuSystemTest):
++static void build_append_pcihp_notify_entry(Aml *method, int slot)
++{
++    Aml *if_ctx;
++    int32_t devfn = PCI_DEVFN(slot, 0);
 +
-+    ASSET_DEBIAN_KERNEL = Asset(
-+        ('https://snapshot.debian.org/archive/debian/'
-+         '20201126T092837Z/dists/buster/main/installer-s390x/'
-+         '20190702+deb10u6/images/generic/kernel.debian'),
-+        'd411d17c39ae7ad38d27534376cbe88b68b403c325739364122c2e6f1537e818')
++    if_ctx = aml_if(aml_and(aml_arg(0), aml_int(0x1U << slot), NULL));
++    aml_append(if_ctx, aml_notify(aml_name("S%.02X", devfn), aml_arg(1)));
++    aml_append(method, if_ctx);
++}
 +
-+    ASSET_DEBIAN_INITRD = Asset(
-+        ('https://snapshot.debian.org/archive/debian/'
-+         '20201126T092837Z/dists/buster/main/installer-s390x/'
-+         '20190702+deb10u6/images/generic/initrd.debian'),
-+        '836bbd0fe6a5ca81274c28c2b063ea315ce1868660866e9b60180c575fef9fd5')
++static bool is_devfn_ignored_generic(const int devfn, const PCIBus *bus)
++{
++    const PCIDevice *pdev = bus->devices[devfn];
 +
-+    ASSET_FEDORA_KERNEL = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive'
-+         '/fedora-secondary/releases/31/Server/s390x/os'
-+         '/images/kernel.img'),
-+        '480859574f3f44caa6cd35c62d70e1ac0609134e22ce2a954bbed9b110c06e0b')
++    if (PCI_FUNC(devfn)) {
++        if (IS_PCI_BRIDGE(pdev)) {
++            /*
++             * Ignore only hotplugged PCI bridges on !0 functions, but
++             * allow describing cold plugged bridges on all functions
++             */
++            if (DEVICE(pdev)->hotplugged) {
++                return true;
++            }
++        }
++    }
++    return false;
++}
 +
-+    def pxelinux_launch(self, pl_name='default', extra_opts=None):
-+        self.require_netdev('user')
-+        self.set_machine('s390-ccw-virtio')
++static bool is_devfn_ignored_hotplug(const int devfn, const PCIBus *bus)
++{
++    PCIDevice *pdev = bus->devices[devfn];
++    if (pdev) {
++        return is_devfn_ignored_generic(devfn, bus) ||
++               !DEVICE_GET_CLASS(pdev)->hotpluggable ||
++               /* Cold plugged bridges aren't themselves hot-pluggable */
++               (IS_PCI_BRIDGE(pdev) && !DEVICE(pdev)->hotplugged);
++    } else { /* non populated slots */
++         /*
++          * hotplug is supported only for non-multifunction device
++          * so generate device description only for function 0
++          */
++        if (PCI_FUNC(devfn) ||
++            (pci_bus_is_express(bus) && PCI_SLOT(devfn) > 0)) {
++            return true;
++        }
++    }
++    return false;
++}
 +
-+        debian_kernel = self.ASSET_DEBIAN_KERNEL.fetch()
-+        debian_initrd = self.ASSET_DEBIAN_INITRD.fetch()
-+        fedora_kernel = self.ASSET_FEDORA_KERNEL.fetch()
++void build_append_pcihp_slots(Aml *parent_scope, PCIBus *bus)
++{
++    int devfn;
++    Aml *dev, *notify_method = NULL, *method;
++    QObject *bsel = object_property_get_qobject(OBJECT(bus),
++                        ACPI_PCIHP_PROP_BSEL, NULL);
++    uint64_t bsel_val = qnum_get_uint(qobject_to(QNum, bsel));
++    qobject_unref(bsel);
 +
-+        # Prepare a folder for the TFTP "server":
-+        tftpdir = self.scratch_file('tftp')
-+        shutil.rmtree(tftpdir, ignore_errors=True)   # Remove stale stuff
-+        os.mkdir(tftpdir)
-+        shutil.copy(debian_kernel, os.path.join(tftpdir, 'kernel.debian'))
-+        shutil.copy(debian_initrd, os.path.join(tftpdir, 'initrd.debian'))
-+        shutil.copy(fedora_kernel, os.path.join(tftpdir, 'kernel.fedora'))
++    aml_append(parent_scope, aml_name_decl("BSEL", aml_int(bsel_val)));
++    notify_method = aml_method("DVNT", 2, AML_NOTSERIALIZED);
 +
-+        pxelinuxdir = self.scratch_file('tftp', 'pxelinux.cfg')
-+        os.mkdir(pxelinuxdir)
++    for (devfn = 0; devfn < ARRAY_SIZE(bus->devices); devfn++) {
++        int slot = PCI_SLOT(devfn);
++        int adr = slot << 16 | PCI_FUNC(devfn);
 +
-+        cfg_fname = self.scratch_file('tftp', 'pxelinux.cfg', pl_name)
-+        with open(cfg_fname, 'w', encoding='utf-8') as f:
-+            f.write(pxelinux_cfg_contents)
++        if (is_devfn_ignored_hotplug(devfn, bus)) {
++            continue;
++        }
 +
-+        virtio_net_dev = 'virtio-net-ccw,netdev=n1,bootindex=1'
-+        if extra_opts:
-+                virtio_net_dev += ',' + extra_opts
++        if (bus->devices[devfn]) {
++            dev = aml_scope("S%.02X", devfn);
++        } else {
++            dev = aml_device("S%.02X", devfn);
++            aml_append(dev, aml_name_decl("_ADR", aml_int(adr)));
++        }
 +
-+        self.vm.add_args('-m', '384',
-+                         '-netdev', f'user,id=n1,tftp={tftpdir}',
-+                         '-device', virtio_net_dev)
-+        self.vm.set_console()
-+        self.vm.launch()
++        /*
++         * Can't declare _SUN here for every device as it changes 'slot'
++         * enumeration order in linux kernel, so use another variable for it
++         */
++        aml_append(dev, aml_name_decl("ASUN", aml_int(slot)));
++        aml_append(dev, aml_pci_device_dsm());
 +
++        aml_append(dev, aml_name_decl("_SUN", aml_int(slot)));
++        /* add _EJ0 to make slot hotpluggable  */
++        method = aml_method("_EJ0", 1, AML_NOTSERIALIZED);
++        aml_append(method,
++            aml_call2("PCEJ", aml_name("BSEL"), aml_name("_SUN"))
++        );
++        aml_append(dev, method);
 +
-+    def test_default(self):
-+        self.pxelinux_launch()
-+        # The kernel prints its arguments to the console, so we can use
-+        # this to check whether the kernel parameters are correctly handled:
-+        wait_for_console_pattern(self, 'testoption=teststring')
-+        # Now also check that we've successfully loaded the initrd:
-+        wait_for_console_pattern(self, 'Unpacking initramfs...')
-+        wait_for_console_pattern(self, 'Run /init as init process')
++        build_append_pcihp_notify_entry(notify_method, slot);
 +
-+    def test_mac(self):
-+        self.pxelinux_launch(pl_name='01-02-ca-fe-ba-be-42',
-+                             extra_opts='mac=02:ca:fe:ba:be:42,loadparm=3')
-+        wait_for_console_pattern(self, 'Linux version 5.3.7-301.fc31.s390x')
++        /* device descriptor has been composed, add it into parent context */
++        aml_append(parent_scope, dev);
++    }
++    aml_append(parent_scope, notify_method);
++}
 +
-+    def test_uuid(self):
-+        # Also add a non-bootable disk to check the fall back to network boot:
-+        self.vm.add_args('-blockdev', 'null-co,size=65536,node-name=d1',
-+                         '-device', 'virtio-blk,drive=d1,bootindex=0,loadparm=1',
-+                         '-uuid', '550e8400-e29b-11d4-a716-446655441234')
-+        self.pxelinux_launch(pl_name='550e8400-e29b-11d4-a716-446655441234')
-+        wait_for_console_pattern(self, 'Debian 4.19.146-1 (2020-09-17)')
++void build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus)
++{
++    int devfn;
++    Aml *dev;
 +
-+    def test_ip(self):
-+        self.vm.add_args('-M', 'loadparm=3')
-+        self.pxelinux_launch(pl_name='0A00020F')
-+        wait_for_console_pattern(self, 'Linux version 5.3.7-301.fc31.s390x')
++    for (devfn = 0; devfn < ARRAY_SIZE(bus->devices); devfn++) {
++        /* ACPI spec: 1.0b: Table 6-2 _ADR Object Bus Types, PCI type */
++        int adr = PCI_SLOT(devfn) << 16 | PCI_FUNC(devfn);
++        PCIDevice *pdev = bus->devices[devfn];
 +
-+    def test_menu(self):
-+        self.vm.add_args('-boot', 'menu=on,splash-time=10')
-+        self.pxelinux_launch(pl_name='0A00')
-+        wait_for_console_pattern(self, '[1] Nonexisting')
-+        wait_for_console_pattern(self, '[2] Debian')
-+        wait_for_console_pattern(self, '[3] Fedora')
-+        wait_for_console_pattern(self, 'Debian 4.19.146-1 (2020-09-17)')
++        if (!pdev || is_devfn_ignored_generic(devfn, bus)) {
++            continue;
++        }
 +
++        /* start to compose PCI device descriptor */
++        dev = aml_device("S%.02X", devfn);
++        aml_append(dev, aml_name_decl("_ADR", aml_int(adr)));
 +
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
++        call_dev_aml_func(DEVICE(bus->devices[devfn]), dev);
++        /* add _DSM if device has acpi-index set */
++        if (pdev->acpi_index &&
++            !object_property_get_bool(OBJECT(pdev), "hotpluggable",
++                                      &error_abort)) {
++            aml_append(dev, aml_pci_static_endpoint_dsm(pdev));
++        }
++
++        /* device descriptor has been composed, add it into parent context */
++        aml_append(parent_scope, dev);
++    }
++}
++
+ const VMStateDescription vmstate_acpi_pcihp_pci_status = {
+     .name = "acpi_pcihp_pci_status",
+     .version_id = 1,
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 3275675e60..fe8bc62c03 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -338,29 +338,6 @@ build_facs(GArray *table_data)
+     g_array_append_vals(table_data, reserved, 40); /* Reserved */
+ }
+ 
+-static Aml *aml_pci_device_dsm(void)
+-{
+-    Aml *method;
+-
+-    method = aml_method("_DSM", 4, AML_SERIALIZED);
+-    {
+-        Aml *params = aml_local(0);
+-        Aml *pkg = aml_package(2);
+-        aml_append(pkg, aml_int(0));
+-        aml_append(pkg, aml_int(0));
+-        aml_append(method, aml_store(pkg, params));
+-        aml_append(method,
+-            aml_store(aml_name("BSEL"), aml_index(params, aml_int(0))));
+-        aml_append(method,
+-            aml_store(aml_name("ASUN"), aml_index(params, aml_int(1))));
+-        aml_append(method,
+-            aml_return(aml_call5("PDSM", aml_arg(0), aml_arg(1),
+-                                 aml_arg(2), aml_arg(3), params))
+-        );
+-    }
+-    return method;
+-}
+-
+ static Aml *aml_pci_edsm(void)
+ {
+     Aml *method, *ifctx;
+@@ -414,155 +391,6 @@ static Aml *aml_pci_edsm(void)
+     return method;
+ }
+ 
+-static Aml *aml_pci_static_endpoint_dsm(PCIDevice *pdev)
+-{
+-    Aml *method;
+-
+-    g_assert(pdev->acpi_index != 0);
+-    method = aml_method("_DSM", 4, AML_SERIALIZED);
+-    {
+-        Aml *params = aml_local(0);
+-        Aml *pkg = aml_package(1);
+-        aml_append(pkg, aml_int(pdev->acpi_index));
+-        aml_append(method, aml_store(pkg, params));
+-        aml_append(method,
+-            aml_return(aml_call5("EDSM", aml_arg(0), aml_arg(1),
+-                                 aml_arg(2), aml_arg(3), params))
+-        );
+-    }
+-    return method;
+-}
+-
+-static void build_append_pcihp_notify_entry(Aml *method, int slot)
+-{
+-    Aml *if_ctx;
+-    int32_t devfn = PCI_DEVFN(slot, 0);
+-
+-    if_ctx = aml_if(aml_and(aml_arg(0), aml_int(0x1U << slot), NULL));
+-    aml_append(if_ctx, aml_notify(aml_name("S%.02X", devfn), aml_arg(1)));
+-    aml_append(method, if_ctx);
+-}
+-
+-static bool is_devfn_ignored_generic(const int devfn, const PCIBus *bus)
+-{
+-    const PCIDevice *pdev = bus->devices[devfn];
+-
+-    if (PCI_FUNC(devfn)) {
+-        if (IS_PCI_BRIDGE(pdev)) {
+-            /*
+-             * Ignore only hotplugged PCI bridges on !0 functions, but
+-             * allow describing cold plugged bridges on all functions
+-             */
+-            if (DEVICE(pdev)->hotplugged) {
+-                return true;
+-            }
+-        }
+-    }
+-    return false;
+-}
+-
+-static bool is_devfn_ignored_hotplug(const int devfn, const PCIBus *bus)
+-{
+-    PCIDevice *pdev = bus->devices[devfn];
+-    if (pdev) {
+-        return is_devfn_ignored_generic(devfn, bus) ||
+-               !DEVICE_GET_CLASS(pdev)->hotpluggable ||
+-               /* Cold plugged bridges aren't themselves hot-pluggable */
+-               (IS_PCI_BRIDGE(pdev) && !DEVICE(pdev)->hotplugged);
+-    } else { /* non populated slots */
+-         /*
+-         * hotplug is supported only for non-multifunction device
+-         * so generate device description only for function 0
+-         */
+-        if (PCI_FUNC(devfn) ||
+-            (pci_bus_is_express(bus) && PCI_SLOT(devfn) > 0)) {
+-            return true;
+-        }
+-    }
+-    return false;
+-}
+-
+-void build_append_pcihp_slots(Aml *parent_scope, PCIBus *bus)
+-{
+-    int devfn;
+-    Aml *dev, *notify_method = NULL, *method;
+-    QObject *bsel = object_property_get_qobject(OBJECT(bus),
+-                        ACPI_PCIHP_PROP_BSEL, NULL);
+-    uint64_t bsel_val = qnum_get_uint(qobject_to(QNum, bsel));
+-    qobject_unref(bsel);
+-
+-    aml_append(parent_scope, aml_name_decl("BSEL", aml_int(bsel_val)));
+-    notify_method = aml_method("DVNT", 2, AML_NOTSERIALIZED);
+-
+-    for (devfn = 0; devfn < ARRAY_SIZE(bus->devices); devfn++) {
+-        int slot = PCI_SLOT(devfn);
+-        int adr = slot << 16 | PCI_FUNC(devfn);
+-
+-        if (is_devfn_ignored_hotplug(devfn, bus)) {
+-            continue;
+-        }
+-
+-        if (bus->devices[devfn]) {
+-            dev = aml_scope("S%.02X", devfn);
+-        } else {
+-            dev = aml_device("S%.02X", devfn);
+-            aml_append(dev, aml_name_decl("_ADR", aml_int(adr)));
+-        }
+-
+-        /*
+-         * Can't declare _SUN here for every device as it changes 'slot'
+-         * enumeration order in linux kernel, so use another variable for it
+-         */
+-        aml_append(dev, aml_name_decl("ASUN", aml_int(slot)));
+-        aml_append(dev, aml_pci_device_dsm());
+-
+-        aml_append(dev, aml_name_decl("_SUN", aml_int(slot)));
+-        /* add _EJ0 to make slot hotpluggable  */
+-        method = aml_method("_EJ0", 1, AML_NOTSERIALIZED);
+-        aml_append(method,
+-            aml_call2("PCEJ", aml_name("BSEL"), aml_name("_SUN"))
+-        );
+-        aml_append(dev, method);
+-
+-        build_append_pcihp_notify_entry(notify_method, slot);
+-
+-        /* device descriptor has been composed, add it into parent context */
+-        aml_append(parent_scope, dev);
+-    }
+-    aml_append(parent_scope, notify_method);
+-}
+-
+-void build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus)
+-{
+-    int devfn;
+-    Aml *dev;
+-
+-    for (devfn = 0; devfn < ARRAY_SIZE(bus->devices); devfn++) {
+-        /* ACPI spec: 1.0b: Table 6-2 _ADR Object Bus Types, PCI type */
+-        int adr = PCI_SLOT(devfn) << 16 | PCI_FUNC(devfn);
+-        PCIDevice *pdev = bus->devices[devfn];
+-
+-        if (!pdev || is_devfn_ignored_generic(devfn, bus)) {
+-            continue;
+-        }
+-
+-        /* start to compose PCI device descriptor */
+-        dev = aml_device("S%.02X", devfn);
+-        aml_append(dev, aml_name_decl("_ADR", aml_int(adr)));
+-
+-        call_dev_aml_func(DEVICE(bus->devices[devfn]), dev);
+-        /* add _DSM if device has acpi-index set */
+-        if (pdev->acpi_index &&
+-            !object_property_get_bool(OBJECT(pdev), "hotpluggable",
+-                                      &error_abort)) {
+-            aml_append(dev, aml_pci_static_endpoint_dsm(pdev));
+-        }
+-
+-        /* device descriptor has been composed, add it into parent context */
+-        aml_append(parent_scope, dev);
+-    }
+-}
+-
+ /*
+  * build_prt - Define interrupt routing rules
+  *
 -- 
-2.50.0
+2.49.0
 
 
