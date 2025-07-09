@@ -4,63 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12F23C83F03
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 08:36:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D147C83F03
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 08:40:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZQHQ-000688-EN; Wed, 09 Jul 2025 04:35:52 -0400
+	id 1uZQL7-000378-A3; Wed, 09 Jul 2025 04:39:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uZQGx-0005ti-GA
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 04:35:28 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uZQL2-00036P-Gy
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 04:39:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uZQGq-00081O-V5
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 04:35:22 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uZQKy-0000A7-Fo
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 04:39:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752050115;
+ s=mimecast20190719; t=1752050371;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=97KvM5Nj+hUjDbu5oylep3gI4vLnZ+B5tHsGAXFWMNA=;
- b=LuVMcteJ3e6KlITNSju8kFaBRbNQ+Wx7+daCru6AKb1IRWRMjBJPOF3gxwMeZdGk3ZZtpC
- KSIwWVg1TbAH1ntNNGX8++DSRTdoMG2b3WFil3xs1vVsTFYZQpWFJGGi55k60kmiSqe1cT
- DjtgVDhGz2AOYrGipQw/+v2fzPqB+Fc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=mkN6yO9T9kFzneVI0S005xNOWpPTEu41K2zwN3Og3iY=;
+ b=IBW6YZ3A+j/EDU0aL35raYaCFI6UYhJDKP3H6GfqRd1Av8qdmtrB7kSogM4SCZl7s3taxk
+ Fe0I4N2DEQjimSJL6VKpLfyFRcYWsRn8J6+jwdfkTmX0/kqnjE+yjoON3FHzswlAvbmyAz
+ skdL9K8pkGakPOBenw5S+8ZJwZu5vJ4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-Ppqnur2VNT65ElsQuhnM0g-1; Wed,
- 09 Jul 2025 04:35:11 -0400
-X-MC-Unique: Ppqnur2VNT65ElsQuhnM0g-1
-X-Mimecast-MFC-AGG-ID: Ppqnur2VNT65ElsQuhnM0g_1752050110
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-xUgnpV8sOUW0yN7K27KYrw-1; Wed,
+ 09 Jul 2025 04:39:26 -0400
+X-MC-Unique: xUgnpV8sOUW0yN7K27KYrw-1
+X-Mimecast-MFC-AGG-ID: xUgnpV8sOUW0yN7K27KYrw_1752050365
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 527C61809C8B; Wed,  9 Jul 2025 08:35:10 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.32.92])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B45A618003FC; Wed,  9 Jul 2025 08:35:06 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org, Jared Rossi <jrossi@linux.ibm.com>,
- Zhuoying Cai <zycai@linux.ibm.com>
-Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-Subject: [PATCH v2 5/5] tests/functional: Add a test for s390x pxelinux.cfg
- network booting
-Date: Wed,  9 Jul 2025 10:34:43 +0200
-Message-ID: <20250709083443.41574-6-thuth@redhat.com>
-In-Reply-To: <20250709083443.41574-1-thuth@redhat.com>
-References: <20250709083443.41574-1-thuth@redhat.com>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0AAB1195F172; Wed,  9 Jul 2025 08:39:25 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A708B19560AB; Wed,  9 Jul 2025 08:39:24 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id E024421E6A27; Wed, 09 Jul 2025 10:39:21 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org,  John Snow <jsnow@redhat.com>,  Cleber Rosa
+ <crosa@redhat.com>,  Eric Blake <eblake@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  "Daniel P. Berrange" <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,  Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,  Philippe Mathieu-Daude
+ <philmd@linaro.org>
+Subject: Re: [PATCH V3 1/3] qom: qom-list-getv
+In-Reply-To: <1751995472-211897-2-git-send-email-steven.sistare@oracle.com>
+ (Steve Sistare's message of "Tue, 8 Jul 2025 10:24:30 -0700")
+References: <1751995472-211897-1-git-send-email-steven.sistare@oracle.com>
+ <1751995472-211897-2-git-send-email-steven.sistare@oracle.com>
+Date: Wed, 09 Jul 2025 10:39:21 +0200
+Message-ID: <878qkxrc5i.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -69,7 +74,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,172 +90,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+Steve Sistare <steven.sistare@oracle.com> writes:
 
-Check the various ways of booting a kernel via pxelinux.cfg file,
-e.g. by specifying the config file name via the MAC address or the
-UUID of the guest. Also check whether we can successfully load an
-alternate kernel via the "loadparm" parameter here and whether the
-boot menu shows up with "-boot menu=on".
+> Define the qom-list-getv command, which fetches all the properties and
+> values for a list of paths.  This is faster than qom-tree-get when
+> fetching a subset of the QOM tree.  See qom.json for details.
+>
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- MAINTAINERS                             |   1 +
- tests/functional/meson.build            |   1 +
- tests/functional/test_s390x_pxelinux.py | 119 ++++++++++++++++++++++++
- 3 files changed, 121 insertions(+)
- create mode 100755 tests/functional/test_s390x_pxelinux.py
+You cover letter explains *why* we want this.  Please include the
+relevant parts here, so the rationale gets captured in git.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 1842c3dd83f..e88ed2c0a97 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1805,6 +1805,7 @@ F: hw/s390x/ipl.*
- F: pc-bios/s390-ccw/
- F: pc-bios/s390-ccw.img
- F: docs/devel/s390-dasd-ipl.rst
-+F: tests/functional/test_s390x_pxelinux.py
- T: git https://github.com/borntraeger/qemu.git s390-next
- L: qemu-s390x@nongnu.org
- 
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 050c9000b95..1ae5f02fb37 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -281,6 +281,7 @@ tests_rx_system_thorough = [
- 
- tests_s390x_system_thorough = [
-   's390x_ccw_virtio',
-+  's390x_pxelinux',
-   's390x_replay',
-   's390x_topology',
-   's390x_tuxrun',
-diff --git a/tests/functional/test_s390x_pxelinux.py b/tests/functional/test_s390x_pxelinux.py
-new file mode 100755
-index 00000000000..4fc33b8c46d
---- /dev/null
-+++ b/tests/functional/test_s390x_pxelinux.py
-@@ -0,0 +1,119 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Functional test that checks the pxelinux.cfg network booting of a s390x VM
-+# (TFTP booting without config file is already tested by the pxe qtest, so
-+#  we don't repeat that here).
-+
-+import os
-+import shutil
-+
-+from qemu_test import QemuSystemTest, Asset, wait_for_console_pattern
-+
-+
-+pxelinux_cfg_contents='''# pxelinux.cfg style config file
-+default Debian
-+label Nonexisting
-+kernel kernel.notavailable
-+initrd initrd.notavailable
-+label Debian
-+kernel kernel.debian
-+initrd initrd.debian
-+append testoption=teststring
-+label Fedora
-+kernel kernel.fedora
-+'''
-+
-+class S390PxeLinux(QemuSystemTest):
-+
-+    ASSET_DEBIAN_KERNEL = Asset(
-+        ('https://snapshot.debian.org/archive/debian/'
-+         '20201126T092837Z/dists/buster/main/installer-s390x/'
-+         '20190702+deb10u6/images/generic/kernel.debian'),
-+        'd411d17c39ae7ad38d27534376cbe88b68b403c325739364122c2e6f1537e818')
-+
-+    ASSET_DEBIAN_INITRD = Asset(
-+        ('https://snapshot.debian.org/archive/debian/'
-+         '20201126T092837Z/dists/buster/main/installer-s390x/'
-+         '20190702+deb10u6/images/generic/initrd.debian'),
-+        '836bbd0fe6a5ca81274c28c2b063ea315ce1868660866e9b60180c575fef9fd5')
-+
-+    ASSET_FEDORA_KERNEL = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive'
-+         '/fedora-secondary/releases/31/Server/s390x/os'
-+         '/images/kernel.img'),
-+        '480859574f3f44caa6cd35c62d70e1ac0609134e22ce2a954bbed9b110c06e0b')
-+
-+    def pxelinux_launch(self, pl_name='default', extra_opts=None):
-+        self.require_netdev('user')
-+        self.set_machine('s390-ccw-virtio')
-+
-+        debian_kernel = self.ASSET_DEBIAN_KERNEL.fetch()
-+        debian_initrd = self.ASSET_DEBIAN_INITRD.fetch()
-+        fedora_kernel = self.ASSET_FEDORA_KERNEL.fetch()
-+
-+        # Prepare a folder for the TFTP "server":
-+        tftpdir = self.scratch_file('tftp')
-+        shutil.rmtree(tftpdir, ignore_errors=True)   # Remove stale stuff
-+        os.mkdir(tftpdir)
-+        shutil.copy(debian_kernel, os.path.join(tftpdir, 'kernel.debian'))
-+        shutil.copy(debian_initrd, os.path.join(tftpdir, 'initrd.debian'))
-+        shutil.copy(fedora_kernel, os.path.join(tftpdir, 'kernel.fedora'))
-+
-+        pxelinuxdir = self.scratch_file('tftp', 'pxelinux.cfg')
-+        os.mkdir(pxelinuxdir)
-+
-+        cfg_fname = self.scratch_file('tftp', 'pxelinux.cfg', pl_name)
-+        with open(cfg_fname, 'w', encoding='utf-8') as f:
-+            f.write(pxelinux_cfg_contents)
-+
-+        virtio_net_dev = 'virtio-net-ccw,netdev=n1,bootindex=1'
-+        if extra_opts:
-+                virtio_net_dev += ',' + extra_opts
-+
-+        self.vm.add_args('-m', '384',
-+                         '-netdev', f'user,id=n1,tftp={tftpdir}',
-+                         '-device', virtio_net_dev)
-+        self.vm.set_console()
-+        self.vm.launch()
-+
-+
-+    def test_default(self):
-+        self.pxelinux_launch()
-+        # The kernel prints its arguments to the console, so we can use
-+        # this to check whether the kernel parameters are correctly handled:
-+        wait_for_console_pattern(self, 'testoption=teststring')
-+        # Now also check that we've successfully loaded the initrd:
-+        wait_for_console_pattern(self, 'Unpacking initramfs...')
-+        wait_for_console_pattern(self, 'Run /init as init process')
-+
-+    def test_mac(self):
-+        self.pxelinux_launch(pl_name='01-02-ca-fe-ba-be-42',
-+                             extra_opts='mac=02:ca:fe:ba:be:42,loadparm=3')
-+        wait_for_console_pattern(self, 'Linux version 5.3.7-301.fc31.s390x')
-+
-+    def test_uuid(self):
-+        # Also add a non-bootable disk to check the fallback to network boot:
-+        self.vm.add_args('-blockdev', 'null-co,size=65536,node-name=d1',
-+                         '-device', 'virtio-blk,drive=d1,bootindex=0,loadparm=1',
-+                         '-uuid', '550e8400-e29b-11d4-a716-446655441234')
-+        self.pxelinux_launch(pl_name='550e8400-e29b-11d4-a716-446655441234')
-+        wait_for_console_pattern(self, 'Debian 4.19.146-1 (2020-09-17)')
-+
-+    def test_ip(self):
-+        self.vm.add_args('-M', 'loadparm=3')
-+        self.pxelinux_launch(pl_name='0A00020F')
-+        wait_for_console_pattern(self, 'Linux version 5.3.7-301.fc31.s390x')
-+
-+    def test_menu(self):
-+        self.vm.add_args('-boot', 'menu=on,splash-time=10')
-+        self.pxelinux_launch(pl_name='0A00')
-+        wait_for_console_pattern(self, '[1] Nonexisting')
-+        wait_for_console_pattern(self, '[2] Debian')
-+        wait_for_console_pattern(self, '[3] Fedora')
-+        wait_for_console_pattern(self, 'Debian 4.19.146-1 (2020-09-17)')
-+
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
--- 
-2.50.0
+> ---
+>  qapi/qom.json      | 50 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  qom/qom-qmp-cmds.c | 53 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 103 insertions(+)
+>
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index b133b06..c16c2dd 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -46,6 +46,34 @@
+>              '*default-value': 'any' } }
+>  
+>  ##
+> +# @ObjectPropertyValue:
+> +#
+> +# @name: the name of the property
+> +#
+> +# @type: the type of the property, as described in @ObjectPropertyInfo
+> +#
+> +# @value: the value of the property.  Absent when the property cannot
+> +#     be read.
+
+Best to consistently end the descriptions with a period.
+
+> +#
+> +# Since 10.1
+> +##
+> +{ 'struct': 'ObjectPropertyValue',
+> +  'data': { 'name': 'str',
+> +            'type': 'str',
+> +            '*value': 'any' } }
+> +
+> +##
+> +# @ObjectPropertiesValues:
+> +#
+> +# @properties: a list of properties.
+> +#
+> +# Since 10.1
+> +##
+> +{ 'struct': 'ObjectPropertiesValues',
+> +  'data': { 'properties': [ 'ObjectPropertyValue' ] }}
+> +
+> +
+> +##
+>  # @qom-list:
+>  #
+>  # This command will list any properties of a object given a path in
+> @@ -126,6 +154,28 @@
+>    'allow-preconfig': true }
+>  
+>  ##
+> +# @qom-list-getv:
+> +#
+> +# List properties and their values for each object path in the input
+> +# list.
+> +#
+> +# @paths: The absolute or partial path for each object, as described
+> +#     in @qom-get
+
+John Snow's "[PATCH 00/18] QAPI: add cross-references to qapi docs"
+rewrites things so they become links in generated HTML.  @qom-get
+beccomes `qom-get`.  Please use `qom-get` to avoid the semantic
+conflict.
+
+> +#
+> +# Errors:
+> +#     - If any path is not valid or is ambiguous
+> +#
+> +# Returns: A list of @ObjectPropertiesValues.  Each element contains
+> +#     the properties of the corresponding element in @paths.
+
+I understand you patterned this after qom-get.  It comes out like
+
+   Return:
+      "[""ObjectPropertiesValues""]" -- A list of
+      "ObjectPropertiesValues".  Each element contains the properties
+      of the corresponding element in "paths".
+
+in the generated manual.  'A list of "ObjectPropertiesValues"' is
+redundant.  John Snow's "[PATCH v5 4/4] qapi: rephrase return docs to
+avoid type name" cleans up existing instances, including qom-get.
+
+Perhaps something like "A list where each element contains information
+on the properties of the object referenced by the corresponding element
+in @paths."  Or shorter: "A list where each element is the result for
+the corresponding element of @paths".
+
+> +#
+> +# Since 10.1
+> +##
+> +{ 'command': 'qom-list-getv',
+> +  'data': { 'paths': [ 'str' ] },
+> +  'returns': [ 'ObjectPropertiesValues' ],
+> +  'allow-preconfig': true }
+> +
+> +##
+>  # @qom-set:
+>  #
+>  # This command will set a property from a object model path.
+
+The schema looks good.  Not entirely happy with the names.  Naming is
+hard!  Type names are not part of the interface, so let's not worry
+about them too much.  The command name will be set in stone, though.
+
+When you named the command qom-list-getv, you also had qom-list-get.
+qom-list-get works on a single path, and -getv on multiple paths.  The
+"v" suffix feels like a natural choice among people used to C.  But does
+it make sense without its buddy?
+
+How do you feel about calling it qom-list-get?  qom-get-many?  Other
+ideas?
+
+> diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
+
+[...]
+
+The C code looks good to me.
 
 
