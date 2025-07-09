@@ -4,127 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66324C83F09
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 11:27:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E80AC83F03
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 11:36:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZSwg-0004Ds-VH; Wed, 09 Jul 2025 07:26:39 -0400
+	id 1uZT4h-0008Fq-Lj; Wed, 09 Jul 2025 07:34:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
- id 1uZSwa-0001Qs-S5
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 07:26:33 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uZT3r-0007iJ-0V
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 07:34:03 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
- id 1uZSwY-0003pC-B0
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 07:26:31 -0400
-Received: by mail-ed1-f68.google.com with SMTP id
- 4fb4d7f45d1cf-607ec30df2bso10467127a12.1
- for <qemu-devel@nongnu.org>; Wed, 09 Jul 2025 04:26:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752060388; x=1752665188;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:to:subject:cc:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uZT3o-0004ev-Et
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 07:34:02 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-60c5b7cae8bso8827580a12.1
+ for <qemu-devel@nongnu.org>; Wed, 09 Jul 2025 04:33:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752060836; x=1752665636; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/S7AYaLubowLTfUYbcjt0sHgZ0B1vU1xSKBXZ5SoiKM=;
- b=evi9DbX/BVrjrgbCAm9oOy13PUDvL22nOlAp8t+BnfBPzy54VoiQymdi+dDPYAzhJc
- mA6ZJ038vf3QYYhMysZn7Pgb2V3trY8qKu/kKFkJnsD6kulpALVBDVZLdXtc1YOq88ou
- lata0ERZ9ZYshAZqSfu9NZNBkdBcGPYAMSf3nMcbiwIjnm+7KX1bF9MkxpB87NgG1I4S
- RG8xwoF66O1FG3wPPsRIFiBoYkXXmTX9WPsnpJXK1zOEQpTztAGcj8gdmCuQklFSA9nU
- KXkhRB7k1JahTCa6HKESFh0+aE8EH4xh8i66TL58fdFGvUhFgdPHXiReLLlXjJaKGSFT
- cufA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUjJ9xOlGVt9LVWnHfc6ZKjItoYZXiHi4BigWitVRtZwMEiiC/VyCArIpo0+Bk/z9rjKFiVf9SdiwxU@nongnu.org
-X-Gm-Message-State: AOJu0YwPVu0ZXQMFE02myYOMQ6Qd9UWuqEXqk4dXXq3TTcdKFTwMmShT
- dKTAd91fHCeRvpth3mJIzzh5mzZgBWbmIvzo2lDrxZNU1bWBw9IVq3ooaGFytpIF
-X-Gm-Gg: ASbGncsXQF7v/9LzKV9nS1mR2E/KOvCLNr2KV89qxkQvsn2J7Mseno6GyIcXrkOVCN3
- JW3JLupUF9zU3wuQTEiOiUpsIMYkKZy1davQiP8C+PGAPNTb3mbiknrTdT/9FpgJopyv1GJQzsm
- EZKmCaBH6sTxvFJSDAfRmZTjOBayXTVtUdjTTJYL/8oK1ZkKrlwmgML8nJF/rEYj+Tb3IcI/jas
- a2eArrqPUP/9Q5yZHQkcNgAnoh1VFXzKPKyNEXwb+HunMQC18380attlIyBH2HQyu9aufWXcCut
- e0EO+NxO7RleSOR0oVH5I88HcN4ha9mdJieaQHKMcC8/JdLd6I5UbkL9ufQpmebQyN+6W3tmbQg
- ibkmDSZVEu1fFAzZlXA==
-X-Google-Smtp-Source: AGHT+IG+Un85qWqgQ1djyS2GqeveuLX/Mj0tPn6nKRKsC5nof0hTQDZiTJx2VQHXLnmWaUSGScCtNQ==
-X-Received: by 2002:a05:6402:3489:b0:607:94d:9bb0 with SMTP id
- 4fb4d7f45d1cf-611a6e43bdamr1771519a12.22.1752060388180; 
- Wed, 09 Jul 2025 04:26:28 -0700 (PDT)
-Received: from [192.168.88.252] (37-48-10-116.nat.epc.tmcz.cz. [37.48.10.116])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-60fcb2f3122sm8617982a12.57.2025.07.09.04.26.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 09 Jul 2025 04:26:27 -0700 (PDT)
-Message-ID: <92069a98-f3cb-4d51-ac4f-e2676c5ff0ab@ovn.org>
-Date: Wed, 9 Jul 2025 13:26:27 +0200
+ bh=XvAZam0ZQJwkDglxrsrVjW7kXanQqVCIb6b4rhhIE0s=;
+ b=WffrIeOXUTUeDO7G83GOP2kcr8jwoOCS38m+dlA4lrbKt4Gt+6bTZ6O3TTVVXNu/D4
+ 4uYOWE9sL+jS+wikJDBXpPuesQrWDPCY8tgv9k5AnCdoRUZ+eME7fyBrYa7ZaFrqLsez
+ duPccPzVuD8D53rFwl/PzUIza4gbBJz1tracco17vTEE6wUDMZsRadS+vbFW6YopbvHv
+ 8UPDhxSyJij0bYrQ1hAbmh3X8zQbvy8AVXS3b/4OPA75zknVlXvw5KZMqKiyyVfqNZAk
+ zaUAPb4eyoLU01mZMU8wta/OqNmDlQWT1uv1bggw1DGPtpSH1fr5yQs1hCxqkx8BRCw7
+ dWTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752060836; x=1752665636;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XvAZam0ZQJwkDglxrsrVjW7kXanQqVCIb6b4rhhIE0s=;
+ b=XfLbgfkI4evfOE6RZAWBGhESQbuKPMTNjv5DCqKVMqVOnNR1SOOlv5VKHXiMrmvOAK
+ JgNqfuefsESw1A2ph2BqTHnDpvbKBi/dEKNzsfDCMQSah6vnmrHhjr6S1TKVY4W3Yu+b
+ cfLibMbhZDs5VASD4enszVWSI6Fm7GVlnB5abVdDGML9Lg3TE6qDiL8zsRX0SXyIiR1m
+ Q7H8w/LOwmV8edgD2LT5nJ3xqxxKRepix3Qoz4tJ0Ee6o7IrMLW1Y54QTlOarkBmmdmQ
+ cCy/2pK4HLhs1aSbgaGBrjmtQe4Yvd4p/a7IE74AvFwCdDaCV8ypXAMEzeQamd6v9xqk
+ Kl3A==
+X-Gm-Message-State: AOJu0Yy3hYAiq4nqloEdYtDoESMaA6tTfhU69fd0CwysFFsIclEOP24e
+ BxhHomfp+oez+AwQnrOPPc7sq0pxIa7litz3gZB2Bn5o5iNS1QL+M7ioplWsVLSe+ek=
+X-Gm-Gg: ASbGnctSbHNJdnoslJcsnStr+Z3iHHeUsNJXME6fv6s2A8NGuiPBGtrz1R2J3j+zaL7
+ kc+ETJkp0tnQLZJkOsUcpyq8jc5Z0XfoQpWCklvIDNPxLwn57/v2NcYwTws8G+0wxurlA+ev+Fi
+ 9DR10WU0As+ClJnWzEjPZQqKLBqAVWJbAvFPpDxyqkWNp3tVLE7snuElECPI+BxFzmKiqm/fJOk
+ xyfQ1WjyThhBm/TdWPEkx034HMou5NS/hl4yVFfeX/1nI9+JoEFABuYp7itDT6FFCdWCLjADKOx
+ C//fjQkaF1chfK1Hkc8MWagtoRZ8ynxwIraSIfXZLmEMepywtjT2yYlhgJ/mIog=
+X-Google-Smtp-Source: AGHT+IFAKBCfKXMpHXMS3952twYF689K0Vi7JjzWVKoKYwRf2zllsr0H34U0MKUeln2/M2SotKzeYw==
+X-Received: by 2002:a17:907:d15:b0:add:ed3a:e792 with SMTP id
+ a640c23a62f3a-ae6cf7a92ddmr236663966b.47.1752060836499; 
+ Wed, 09 Jul 2025 04:33:56 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ae3f6929852sm1077161066b.43.2025.07.09.04.33.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 09 Jul 2025 04:33:55 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D144A5F767;
+ Wed, 09 Jul 2025 12:33:54 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH] docs: use :kbd: role in sphinx docs
+In-Reply-To: <20250703-docs_rst_improvements-v1-1-0dbbc5eb5871@linaro.org>
+ (Manos Pitsidianakis's message of "Thu, 03 Jul 2025 13:38:01 +0300")
+References: <20250703-docs_rst_improvements-v1-1-0dbbc5eb5871@linaro.org>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Wed, 09 Jul 2025 12:33:54 +0100
+Message-ID: <87y0sxtx7h.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: i.maximets@ovn.org, Jason Wang <jasowang@redhat.com>,
- Anton Protopopov <aspsk@isovalent.com>
-Subject: Re: [PATCH v4 2/3] net/af-xdp: Fix up cleanup path upon failure in
- queue creation
-To: Daniel Borkmann <daniel@iogearbox.net>, qemu-devel@nongnu.org
-References: <20250704130531.144325-1-daniel@iogearbox.net>
- <20250704130531.144325-2-daniel@iogearbox.net>
-Content-Language: en-US
-From: Ilya Maximets <i.maximets@ovn.org>
-Autocrypt: addr=i.maximets@ovn.org; keydata=
- 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
-In-Reply-To: <20250704130531.144325-2-daniel@iogearbox.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=209.85.208.68;
- envelope-from=i.maximets.ovn@gmail.com; helo=mail-ed1-f68.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.039, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,63 +103,220 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/4/25 3:05 PM, Daniel Borkmann wrote:
-> While testing, it turned out that upon error in the queue creation loop,
-> we never trigger the af_xdp_cleanup() handler. This is because we pass
-> errp instead of a local err pointer into the various AF_XDP setup functions
-> instead of a scheme like:
-> 
->     bool fn(..., Error **errp)
->     {
->         Error *err = NULL;
-> 
->         foo(arg, &err);
->         if (err) {
->             handle the error...
->             error_propagate(errp, err);
->             return false;
->         }
->         ...
->     }
-> 
-> With a conversion into the above format, the af_xdp_cleanup() handler is
-> called as expected. Note the error_propagate() handles a NULL err internally.
-> 
-> Fixes: cb039ef3d9e3 ("net: add initial support for AF_XDP network backend")
-> Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-> Cc: Ilya Maximets <i.maximets@ovn.org>
-> Cc: Jason Wang <jasowang@redhat.com>
-> Cc: Anton Protopopov <aspsk@isovalent.com>
+Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
+
+> Sphinx supports the :kbd: role for notating keyboard input. They get
+> formatted as <kbd> HTML elements in the readthedocs theme we currently
+> use for Sphinx.
+>
+> Besides the better visual formatting, it also helps with accessibility
+> as screen readers can announce the semantics of the <kbd> element to the
+> user.
+>
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 > ---
->  net/af-xdp.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/net/af-xdp.c b/net/af-xdp.c
-> index c5d3b6a953..29c5ad16cd 100644
-> --- a/net/af-xdp.c
-> +++ b/net/af-xdp.c
-> @@ -482,9 +482,8 @@ int net_init_af_xdp(const Netdev *netdev,
->          pstrcpy(s->ifname, sizeof(s->ifname), opts->ifname);
->          s->ifindex = ifindex;
->  
-> -        if (af_xdp_umem_create(s, sock_fds ? sock_fds[i] : -1, errp)
-> -            || af_xdp_socket_create(s, opts, errp)) {
-> -            error_propagate(errp, err);
-> +        if (af_xdp_umem_create(s, sock_fds ? sock_fds[i] : -1, &err) ||
-> +            af_xdp_socket_create(s, opts, &err)) {
->              goto err;
->          }
->      }
+>  docs/devel/testing/main.rst     |  4 ++--
+>  docs/system/images.rst          |  2 +-
+>  docs/system/keys.rst.inc        | 22 +++++++++++-----------
+>  docs/system/linuxboot.rst       |  2 +-
+>  docs/system/mux-chardev.rst.inc | 16 ++++++++--------
+>  5 files changed, 23 insertions(+), 23 deletions(-)
 
-We should also convert the "no XDP program loaded", I suppose.
+I would be better to split this into a commit per-file so we can merge
+the easy ones quickly.
 
-> @@ -506,6 +505,7 @@ int net_init_af_xdp(const Netdev *netdev,
->  err:
->      if (nc0) {
->          qemu_del_net_client(nc0);
-> +        error_propagate(errp, err);
->      }
->  
->      return -1;
+>
+> diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
+> index 6b18ed875cd91e961d07b3afa3179c7fba0e5fe3..2b5cb0c148048e3a81d2db8c4=
+a9500591880997f 100644
+> --- a/docs/devel/testing/main.rst
+> +++ b/docs/devel/testing/main.rst
+> @@ -604,9 +604,9 @@ below steps to debug it:
+>  2. Add "V=3D1" to the command line, try again, to see the verbose output.
+>  3. Further add "DEBUG=3D1" to the command line. This will pause in a she=
+ll prompt
+>     in the container right before testing starts. You could either manual=
+ly
+> -   build QEMU and run tests from there, or press Ctrl-D to let the Docker
+> +   build QEMU and run tests from there, or press :kbd:`Ctrl+d` to let th=
+e Docker
+>     testing continue.
+> -4. If you press Ctrl-D, the same building and testing procedure will beg=
+in, and
+> +4. If you press :kbd:`Ctrl+d`, the same building and testing procedure w=
+ill begin, and
+>     will hopefully run into the error again. After that, you will be drop=
+ped to
+>     the prompt for debug.
+>=20=20
+> diff --git a/docs/system/images.rst b/docs/system/images.rst
+> index a5551173c9789323ceb150c51fd68c6d4ef80d71..43706969fddae7bcb83de172b=
+1a04b5c6cffe0f1 100644
+> --- a/docs/system/images.rst
+> +++ b/docs/system/images.rst
+> @@ -30,7 +30,7 @@ Snapshot mode
+>  If you use the option ``-snapshot``, all disk images are considered as
+>  read only. When sectors in written, they are written in a temporary file
+>  created in ``/tmp``. You can however force the write back to the raw
+> -disk images by using the ``commit`` monitor command (or C-a s in the
+> +disk images by using the ``commit`` monitor command (or :kbd:`Ctrl+a s` =
+in the
+>  serial console).
+>=20=20
+>  .. _vm_005fsnapshots:
+> diff --git a/docs/system/keys.rst.inc b/docs/system/keys.rst.inc
+> index 59966a3fe7cf2cbb6a19dacd48612b768b7a1e96..f33f1acd08607c93d2ef250e3=
+ca183f41f237658 100644
+> --- a/docs/system/keys.rst.inc
+> +++ b/docs/system/keys.rst.inc
+> @@ -1,23 +1,23 @@
+>  During the graphical emulation, you can use special key combinations from
+> -the following table to change modes. By default the modifier is Ctrl-Alt
+> +the following table to change modes. By default the modifier is :kbd:`Ct=
+rl+Alt`
+>  (used in the table below) which can be changed with ``-display`` subopti=
+on
+>  ``mod=3D`` where appropriate. For example, ``-display sdl,
+> -grab-mod=3Dlshift-lctrl-lalt`` changes the modifier key to Ctrl-Alt-Shif=
+t,
+> -while ``-display sdl,grab-mod=3Drctrl`` changes it to the right Ctrl key.
+> +grab-mod=3Dlshift-lctrl-lalt`` changes the modifier key to :kbd:`Ctrl+Al=
+t+Shift`,
+> +while ``-display sdl,grab-mod=3Drctrl`` changes it to the right :kbd:`Ct=
+rl` key.
+>=20=20
+> -Ctrl-Alt-f
+> +:kbd:`Ctrl+Alt+f`
+>     Toggle full screen
+>=20=20
+> -Ctrl-Alt-+
+> +:kbd:`Ctrl+Alt++`
+>     Enlarge the screen
+>=20=20
+> -Ctrl-Alt\--
+> +:kbd:`Ctrl+Alt+-`
+>     Shrink the screen
+>=20=20
+> -Ctrl-Alt-u
+> +:kbd:`Ctrl+Alt+u`
+>     Restore the screen's un-scaled dimensions
 
+This still renders weirdly as a semi-title type thing. You do get the
+nice keyboard icons if you format this as a table, e.g:
+
+.. list-table:: Multiplexer Keys
+  :widths: 10 90
+  :header-rows: 1
+
+  * - Key Sequence
+    - Action
+  * - :kbd:`Ctrl+Alt+f`
+    - Toggle full screen
+  * - :kbd:`Ctrl+Alt++`
+    - Enlarge the screen
+  * - :kbd:`Ctrl+Alt+-`
+    - Shrink the screen
+  * - :kbd:`Ctrl+Alt+u`
+    - Restore the screen's un-scaled dimensions
+  * - :kbd:`Ctrl+Alt+n`
+    - Switch to virtual console 'n'. Standard console mappings are:
+      *1*
+      Target system display
+      *2*
+      Monitor
+      *3*
+      Serial port
+  * - :kbd:`Ctrl+Alt+g`
+    - Toggle mouse and keyboard grab.
+
+Although the console mappings still look a bit weird.
+
+>=20=20
+> -Ctrl-Alt-n
+> +:kbd:`Ctrl+Alt+n`
+>     Switch to virtual console 'n'. Standard console mappings are:
+>=20=20
+>     *1*
+> @@ -29,8 +29,8 @@ Ctrl-Alt-n
+>     *3*
+>        Serial port
+>=20=20
+> -Ctrl-Alt-g
+> +:kbd:`Ctrl+Alt+g`
+>     Toggle mouse and keyboard grab.
+>=20=20
+> -In the virtual consoles, you can use Ctrl-Up, Ctrl-Down, Ctrl-PageUp and
+> -Ctrl-PageDown to move in the back log.
+> +In the virtual consoles, you can use :kbd:`Ctrl+Up`, :kbd:`Ctrl+Down`, :=
+kbd:`Ctrl+PageUp` and
+> +:kbd:`Ctrl+PageDown` to move in the back log.
+> diff --git a/docs/system/linuxboot.rst b/docs/system/linuxboot.rst
+> index 2328b4a73d55b47d731497d57ddb1a837ef5d7dd..f7573ab80aa269bac870d7e6e=
+5596a8f02fbd5f3 100644
+> --- a/docs/system/linuxboot.rst
+> +++ b/docs/system/linuxboot.rst
+> @@ -26,5 +26,5 @@ virtual serial port and the QEMU monitor to the console=
+ with the
+>     |qemu_system| -kernel bzImage -drive file=3Drootdisk.img,format=3Draw=
+ \
+>                      -append "root=3D/dev/sda console=3DttyS0" -nographic
+>=20=20
+> -Use Ctrl-a c to switch between the serial console and the monitor (see
+> +Use :kbd:`Ctrl+a c` to switch between the serial console and the monitor=
+ (see
+>  :ref:`GUI_keys`).
+> diff --git a/docs/system/mux-chardev.rst.inc b/docs/system/mux-chardev.rs=
+t.inc
+> index 84ea12cbf58f9550154411f8951e6f608179a091..45d0b2c1d76c382a29076502b=
+4f1234db5e25bb6 100644
+> --- a/docs/system/mux-chardev.rst.inc
+> +++ b/docs/system/mux-chardev.rst.inc
+> @@ -1,27 +1,27 @@
+>  During emulation, if you are using a character backend multiplexer
+>  (which is the default if you are using ``-nographic``) then several
+>  commands are available via an escape sequence. These key sequences all
+> -start with an escape character, which is Ctrl-a by default, but can be
+> +start with an escape character, which is :kbd:`Ctrl+a` by default, but c=
+an be
+>  changed with ``-echr``. The list below assumes you're using the default.
+>=20=20
+> -Ctrl-a h
+> +:kbd:`Ctrl+a h`
+>     Print this help
+>=20=20
+> -Ctrl-a x
+> +:kbd:`Ctrl+a x`
+>     Exit emulator
+>=20=20
+> -Ctrl-a s
+> +:kbd:`Ctrl+a s`
+>     Save disk data back to file (if -snapshot)
+>=20=20
+> -Ctrl-a t
+> +:kbd:`Ctrl+a t`
+>     Toggle console timestamps
+>=20=20
+> -Ctrl-a b
+> +:kbd:`Ctrl+a b`
+>     Send break (magic sysrq in Linux)
+>=20=20
+> -Ctrl-a c
+> +:kbd:`Ctrl+a c`
+>     Rotate between the frontends connected to the multiplexer (usually
+>     this switches between the monitor and the console)
+>=20=20
+> -Ctrl-a Ctrl-a
+> +:kbd:`Ctrl+a Ctrl+a`
+>     Send the escape character to the frontend
+
+Ditto here.
+
+>
+> ---
+> base-commit: 7698afc42b5af9e55f12ab2236618e38e5a1c23f
+> change-id: 20250703-docs_rst_improvements-1f0cb3c578d6
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
