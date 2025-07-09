@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE0A3C83F03
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 18:07:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4836C83F03
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 18:07:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZZBC-00017n-He; Wed, 09 Jul 2025 14:06:02 -0400
+	id 1uZZBj-0001NK-2f; Wed, 09 Jul 2025 14:06:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uZZB4-00012S-0M
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 14:05:54 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1uZZB5-00013j-Iz
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 14:05:57 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uZZB1-00048L-GG
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 14:05:53 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-234fcadde3eso3174585ad.0
- for <qemu-devel@nongnu.org>; Wed, 09 Jul 2025 11:05:49 -0700 (PDT)
+ id 1uZZB1-00048h-Tv
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 14:05:54 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-b3226307787so235382a12.1
+ for <qemu-devel@nongnu.org>; Wed, 09 Jul 2025 11:05:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752084348; x=1752689148; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=SHBBVjxR7SKscGz2bEmo/Upd0VMcbGiwaDjOWYwuGJ4=;
- b=WIXqNgZAm5Lvl8wHmoZE55VvwqPC/FEOFCxOEkgCc+wLG4iZcoq9/jTuGNXVHBwy9B
- UFq079W9GsqKDYO4xKbEbULSHshYCSKHIYE7NZutVEZdFqVBrKsZZo0j9kAo13W/mqSM
- ScKcD1gCtfhc4E34lQKmtNIJ9SetJA1QhL8vmf2scOr6+sT+Qbt6V83xa+ZbanJJmC2t
- 4rrqVPvBJF7/GjDhrAklGTQzNz+ZSj+ewrQuhVNqFx8dVQdHTgW6lH2QEc90SX2gVI/9
- PDDNCK/iLPWhkEgk1RYEfUz9iqeOd/9QKW2yecNkHp3sEZjo8QudS4UKY33w/2i1KEQm
- aBcA==
+ d=linaro.org; s=google; t=1752084350; x=1752689150; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vSHu2C6AHkdi6I2MI+MN+9VTwDs09gk+qY11owIPdS8=;
+ b=GyvGoAZ/ANAFePzdECm7laBFQbFvsGoo95Je9Xu054E7YHLlKU0yOSggLgLq4PK3oY
+ zPGRZ7argdtYrifbGmA53LluwO9cKklk54MGuf/qBFrhhh7V4BREOm/RWWMZffNdzPak
+ gJ3scFiC8JInlkxymTA6nE9AkVUueDhSMywBZOxshTkJAYdee+wMPg0TMEz+vosO/KWr
+ o2hyB0ALKG3x5iHzfRngl5eZKvbT7XZjYnSgsAGfPFz42F29SLTlcu+kwuk2FkZzSSaG
+ 1DVWpfYRE2RCa/xBd4+zVCWNE7cPLf18sF6Hww5CEu9hXNAfULEeVhz5gYM7cgg+O2lt
+ sxcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752084348; x=1752689148;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SHBBVjxR7SKscGz2bEmo/Upd0VMcbGiwaDjOWYwuGJ4=;
- b=Ju+Qk8+3nEb/QBrHTVrTqk/X7tci6pvzcAhAQy4HYZYbWeRd5MA0NFWE9uhfm10uey
- xfVtdYF/locEoNd0ISEs66Np/yRTwpi7vBZy22rYJe6A3jxudW0vFcw1M4os5coJf3wX
- 3BoDmddMOVV4zoHk+DlS2l9c2bBfHznOvcWQXRk4/bq4R/2AwCESqg6i9HoiAd0jAYsB
- S+3Ann36ML3tfev6OK6IKaFT9Z100gvBNmxR7IWd6SlBAN0WDhdoGjls4vvREcAGMwmB
- zQTxbItfMIP6IVrVsCYavsta9Bn6rjxL5/YQRlngCnLHS0HECPH68qgguX+l6a/Nqr4X
- Iw1g==
-X-Gm-Message-State: AOJu0Yz+vYtLYy70ZalX93p3wFW+s1XrHLs++aNIolI96PWwT/gbCRXL
- tVmVUuwNfelkUoiY36cr6CDNOcOLWQ60Gkx0ZYQ8qU74XExp6kMw58Y57w6NQPBvkZM=
-X-Gm-Gg: ASbGncsLfMNa6r+7vHvuLpIX+X28apx+uXJKSxAhdWE4m5iC3u3Rat1QtUqy9ond2g2
- 9g1nxcHV0fNxbwInAWVpIubozm78AXAaIkSJfOmhKHIaVURdQqqdJqlW66iRJpiKG4yxpDF9WLo
- vgcQuJVZ2l6DiMTmPjMJ05yts4jJuz+SWxyWwVx4p/2DkIuAzY9v6FmT99sznCxuaLUmEXH/rOU
- Ixq4lz65alFKob39zLpfCFw/FXL4ijYNdzIbBrLYqthpJ/QovKh+RK5zl63NizbZ1+X1MM0SDjE
- q8litdvBff1pDOe64WtU77J3DXiyHCenP+77IPNVfBGORo22VaD+5vHeas7XbkEA6AA=
-X-Google-Smtp-Source: AGHT+IEts4RLvt56Fj+8VKxok4hb7qbM+eWSkRI1xmQJtnjBPyKdJdjxFdYPUisrdTgg0c75PhYKtw==
-X-Received: by 2002:a17:902:ea06:b0:235:f45f:ed55 with SMTP id
- d9443c01a7336-23ddb1dc49cmr56072535ad.1.1752084347976; 
- Wed, 09 Jul 2025 11:05:47 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752084350; x=1752689150;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vSHu2C6AHkdi6I2MI+MN+9VTwDs09gk+qY11owIPdS8=;
+ b=NtphHdAFOSBEM+2c9YPPEOlfpdHYwS7hfZ+tWnn9MJo5/9Oj7guReL+PMJNvblngb6
+ uQs+zUyMDUvUSAVd4GbzWisSMGeLis7uANaaJCXQjJd7LC1FaOJav7ulwJBr/i3LdybH
+ YhuRIDbPE3+5UNIFvUyds8DT9YrHDwhizWOOnajBW/M96eNaa20SRYv+dnQh77MfnWVe
+ qA3A/mn8U6jhGvxB1SQbG68WbzJkE7jVWkvfuJ0bEy6qlLUWiOvAsqUNkhhcVZtoh+P6
+ raSmZ1HkcFv3CAM7lB7hYId8xBhm6r9mCWCMAxZCVvbKqLhGxmwKKmns1QW2ONfDe3Zt
+ mZLA==
+X-Gm-Message-State: AOJu0Yz0YSv4FyCbeTil0ljeTqSWUxBeBNYqdUzNQHziXL6cSVLTjyJg
+ YZoxjx/2zsCV0fUSRQVSrIJi6XHYoTqw+8eGTuUQR2h6e+RVUhx7rgvbRnS0UK303YU=
+X-Gm-Gg: ASbGnctNXIaP5N0fksSWTnHNn7rvxmqcgpV8mzOBudYViYWHjsU98AIePvoA4n05Upq
+ aI+L8mmz/hDv7LWEa2pX/1W5vS32ARRY3rdnQKULwIq0aaPU20W/h0WTNqglgBV9fKhopj1rNQh
+ JKd9+jHBqq9YHl9NyoxLL2a5VA7afcP4eLrW1y/Bo2zIVd8me3WiANhZFXVTRq8ff2/rmwWFvRS
+ ke4eOr7ipAmHqlCiRYBseHetCbIWMGD3eQhkti3gehiT1O9CrMNilAT43TaorXFN0Xw/5HHQ5/g
+ pC5JEfvaEbHF09TgREFd7pPTIE7+UZnrlnhiFB9Dkqtm9jWoECdytNFDKRSUbfa5++A=
+X-Google-Smtp-Source: AGHT+IHlaKJfJDEhDeguKXFw3p6Nu7oCLURk+bMtTCV7YeCCek8aHndypC4k1qqUj64kyXUeg9BgKA==
+X-Received: by 2002:a17:90b:1c0a:b0:31c:203f:cacd with SMTP id
+ 98e67ed59e1d1-31c2fe001f2mr5359211a91.22.1752084349958; 
+ Wed, 09 Jul 2025 11:05:49 -0700 (PDT)
 Received: from gromero0.. ([189.110.24.38]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23c84599f07sm153380175ad.218.2025.07.09.11.05.46
+ d9443c01a7336-23c84599f07sm153380175ad.218.2025.07.09.11.05.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Jul 2025 11:05:47 -0700 (PDT)
+ Wed, 09 Jul 2025 11:05:49 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-arm@nongnu.org, richard.henderson@linaro.org, alex.bennee@linaro.org
 Cc: qemu-devel@nongnu.org,
 	gustavo.romero@linaro.org
-Subject: [PATCH-for-10.1 v4 0/6] target/arm: Add FEAT_MEC to max cpu
-Date: Wed,  9 Jul 2025 18:03:20 +0000
-Message-Id: <20250709180326.1079826-1-gustavo.romero@linaro.org>
+Subject: [PATCH v4 1/6] target/arm: Add the MECEn SCR_EL3 bit
+Date: Wed,  9 Jul 2025 18:03:21 +0000
+Message-Id: <20250709180326.1079826-2-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250709180326.1079826-1-gustavo.romero@linaro.org>
+References: <20250709180326.1079826-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,39 +98,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds support for all FEAT_MEC registers and cache instructions to
-the arm64 max CPU.
+The MECEn bit in SCR_EL3 enables access to the EL2 MECID registers from
+EL2, so add it to the SCR mask list to use it later on.
 
-It includes the FEAT_MEC registers and cache maintenance instructions, but does
-not modify the translation regimes to support the MECIDs, so no encryption is
-supported yet. However, most software stacks that rely on FEAT_MEC should work
-properly at this point.
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/cpu.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-I'm currently exploring possibilities to support FEAT_MEC encryption (or
-obfuscation, for testing purposes) in QEMU for the various translation regimes
-on arm64, hence the encryption part of FEAT_MEC will be contributed later and is
-not targeted for QEMU 10.1.
-
-
-Cheers,
-Gustavo
-
-Gustavo Romero (6):
-  target/arm: Add the MECEn SCR_EL3 bit
-  target/arm: Add FEAT_MEC registers
-  target/arm: Add FEAT_SCTLR2
-  target/arm: Add FEAT_TCR2
-  target/arm: Implement FEAT_MEC cache instructions
-  target/arm: Advertise FEAT_MEC in cpu max
-
- docs/system/arm/emulation.rst |   5 +
- target/arm/cpu-features.h     |  15 +++
- target/arm/cpu.h              |  29 ++++
- target/arm/helper.c           | 242 ++++++++++++++++++++++++++++++++++
- target/arm/internals.h        |  20 +++
- target/arm/tcg/cpu64.c        |   3 +
- 6 files changed, 314 insertions(+)
-
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index c8cf0ab417..0f64c7b163 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1717,6 +1717,7 @@ static inline void xpsr_write(CPUARMState *env, uint32_t val, uint32_t mask)
+ #define SCR_TRNDR             (1ULL << 40)
+ #define SCR_ENTP2             (1ULL << 41)
+ #define SCR_GPF               (1ULL << 48)
++#define SCR_MECEN             (1ULL << 49)
+ #define SCR_NSE               (1ULL << 62)
+ 
+ /* Return the current FPSCR value.  */
 -- 
 2.34.1
 
