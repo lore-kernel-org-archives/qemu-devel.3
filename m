@@ -4,66 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44629C83F03
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 11:25:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66324C83F09
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 11:27:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZSut-0008Se-Ik; Wed, 09 Jul 2025 07:24:47 -0400
+	id 1uZSwg-0004Ds-VH; Wed, 09 Jul 2025 07:26:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
- id 1uZSun-0006iB-2q
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 07:24:42 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66])
+ id 1uZSwa-0001Qs-S5
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 07:26:33 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
- id 1uZSue-0003M9-F5
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 07:24:40 -0400
-Received: by mail-ed1-f66.google.com with SMTP id
- 4fb4d7f45d1cf-60c5b7cae8bso8810866a12.1
- for <qemu-devel@nongnu.org>; Wed, 09 Jul 2025 04:24:28 -0700 (PDT)
+ id 1uZSwY-0003pC-B0
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 07:26:31 -0400
+Received: by mail-ed1-f68.google.com with SMTP id
+ 4fb4d7f45d1cf-607ec30df2bso10467127a12.1
+ for <qemu-devel@nongnu.org>; Wed, 09 Jul 2025 04:26:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752060267; x=1752665067;
+ d=1e100.net; s=20230601; t=1752060388; x=1752665188;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:to:subject:cc:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=E7DEEw7PLg0TyJTfYNFBJxw2bjY4U88qHl1SOH36jIA=;
- b=DsSYRtMFioj4fVM+LSRPcjr4EKLV5HiwwnoSxp0BOIoNOZq3VI/7psehyfomywMWRv
- /1mmdZYNpj5LQskLNq4g6GBB3ELFNFaOOft15cTGTRRwkJQB5Jvi9hg3NvPcOYrv4CVe
- bQmrAZB7AcJbIm5Mf5/MADyc98UFPalXSyG6M5IArX2RMb25Zgi6IvD/KIf4ca5geV0A
- 5nkquJKAf6eoIAXoGRa2p3TawVTJ2a34OMNyj/Uwzl1yoqcqjJbPrIxTV+NCjQH0Cdhn
- uB1rXlzcxzI49494iVHgZT5gcHBCYZaCz15RDxzC+jGfHoz4mY1iFhG9icCvEtfSGdhb
- 6TGw==
+ bh=/S7AYaLubowLTfUYbcjt0sHgZ0B1vU1xSKBXZ5SoiKM=;
+ b=evi9DbX/BVrjrgbCAm9oOy13PUDvL22nOlAp8t+BnfBPzy54VoiQymdi+dDPYAzhJc
+ mA6ZJ038vf3QYYhMysZn7Pgb2V3trY8qKu/kKFkJnsD6kulpALVBDVZLdXtc1YOq88ou
+ lata0ERZ9ZYshAZqSfu9NZNBkdBcGPYAMSf3nMcbiwIjnm+7KX1bF9MkxpB87NgG1I4S
+ RG8xwoF66O1FG3wPPsRIFiBoYkXXmTX9WPsnpJXK1zOEQpTztAGcj8gdmCuQklFSA9nU
+ KXkhRB7k1JahTCa6HKESFh0+aE8EH4xh8i66TL58fdFGvUhFgdPHXiReLLlXjJaKGSFT
+ cufA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJDMJ7dKQMgDUaRwRlaCKZzR/7Sn/R0k3j5YODkkfOCdWjGUaHoEXChuPPctYaC2WB8Ib2IB1uUO/E@nongnu.org
-X-Gm-Message-State: AOJu0Yw9pUZBTKztRKsZenYL5F+Xv39y6SrGteOxHf2bibup48FJKc4h
- /82cgrFXQgf/+4I2EbMh9mOOFEmiBvvqcp5nVVcqMntKzKCEcz+3YJ+4
-X-Gm-Gg: ASbGncv6ACg261XTPdMnKV35bUFQgqbbQbMBQBNbyUnty93pIaY8BW1azN7EWbhOPHo
- e0bSnTKNDPNVdFMWjZKQRa4VdhLNc88T9RoSYyhWQybK7v3tgX9NvFLtfe8rrY0Zf3NayLRN45N
- 5ox0592X67PU8jlMd4AgKGSiigAVsFKRgZ3WrP+fdajSQYucWjuPQ2777PnST/kLqKLfd1HrTJ1
- m9EC7qUeaXluJCZwkZaC9gPYjqwThMm3XNpXGumt4U0V+eRQv/M2SNNua9J+f7Xcw3n+tlLaZIB
- YtEgukPKeinkOH2G2tESp7UaaeqYo6nMshjpG71KUG8/dX2/ob49UuB0CM5ph+jfdVT+cCly473
- IDyLcRclhMT0R2SHzng==
-X-Google-Smtp-Source: AGHT+IFmbJB7ZbjlAm6UD4nuKWfGsse/WE1IfG2Ftdk++OEAFaTDGhyS/hanx2ohAFOYFCt0PIOL6g==
-X-Received: by 2002:a05:6402:35c9:b0:607:eeb1:b18b with SMTP id
- 4fb4d7f45d1cf-611a65b78b7mr1751182a12.8.1752060266925; 
- Wed, 09 Jul 2025 04:24:26 -0700 (PDT)
+ AJvYcCUjJ9xOlGVt9LVWnHfc6ZKjItoYZXiHi4BigWitVRtZwMEiiC/VyCArIpo0+Bk/z9rjKFiVf9SdiwxU@nongnu.org
+X-Gm-Message-State: AOJu0YwPVu0ZXQMFE02myYOMQ6Qd9UWuqEXqk4dXXq3TTcdKFTwMmShT
+ dKTAd91fHCeRvpth3mJIzzh5mzZgBWbmIvzo2lDrxZNU1bWBw9IVq3ooaGFytpIF
+X-Gm-Gg: ASbGncsXQF7v/9LzKV9nS1mR2E/KOvCLNr2KV89qxkQvsn2J7Mseno6GyIcXrkOVCN3
+ JW3JLupUF9zU3wuQTEiOiUpsIMYkKZy1davQiP8C+PGAPNTb3mbiknrTdT/9FpgJopyv1GJQzsm
+ EZKmCaBH6sTxvFJSDAfRmZTjOBayXTVtUdjTTJYL/8oK1ZkKrlwmgML8nJF/rEYj+Tb3IcI/jas
+ a2eArrqPUP/9Q5yZHQkcNgAnoh1VFXzKPKyNEXwb+HunMQC18380attlIyBH2HQyu9aufWXcCut
+ e0EO+NxO7RleSOR0oVH5I88HcN4ha9mdJieaQHKMcC8/JdLd6I5UbkL9ufQpmebQyN+6W3tmbQg
+ ibkmDSZVEu1fFAzZlXA==
+X-Google-Smtp-Source: AGHT+IG+Un85qWqgQ1djyS2GqeveuLX/Mj0tPn6nKRKsC5nof0hTQDZiTJx2VQHXLnmWaUSGScCtNQ==
+X-Received: by 2002:a05:6402:3489:b0:607:94d:9bb0 with SMTP id
+ 4fb4d7f45d1cf-611a6e43bdamr1771519a12.22.1752060388180; 
+ Wed, 09 Jul 2025 04:26:28 -0700 (PDT)
 Received: from [192.168.88.252] (37-48-10-116.nat.epc.tmcz.cz. [37.48.10.116])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-60fca667676sm8723928a12.7.2025.07.09.04.24.26
+ 4fb4d7f45d1cf-60fcb2f3122sm8617982a12.57.2025.07.09.04.26.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 09 Jul 2025 04:24:26 -0700 (PDT)
-Message-ID: <30112881-1b5f-45d2-88af-3bfd2259fca0@ovn.org>
-Date: Wed, 9 Jul 2025 13:24:25 +0200
+ Wed, 09 Jul 2025 04:26:27 -0700 (PDT)
+Message-ID: <92069a98-f3cb-4d51-ac4f-e2676c5ff0ab@ovn.org>
+Date: Wed, 9 Jul 2025 13:26:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Cc: i.maximets@ovn.org, Jason Wang <jasowang@redhat.com>,
  Anton Protopopov <aspsk@isovalent.com>
-Subject: Re: [PATCH v4 1/3] net/af-xdp: Remove XDP program cleanup logic
+Subject: Re: [PATCH v4 2/3] net/af-xdp: Fix up cleanup path upon failure in
+ queue creation
 To: Daniel Borkmann <daniel@iogearbox.net>, qemu-devel@nongnu.org
 References: <20250704130531.144325-1-daniel@iogearbox.net>
+ <20250704130531.144325-2-daniel@iogearbox.net>
 Content-Language: en-US
 From: Ilya Maximets <i.maximets@ovn.org>
 Autocrypt: addr=i.maximets@ovn.org; keydata=
@@ -109,11 +111,11 @@ Autocrypt: addr=i.maximets@ovn.org; keydata=
  yWOKeCw9bCZX4a/uFw77TZMEq3upjeq21oi6NMTwvvWWMYuEKNi0340yZRrBdcDhbXkl9x/o
  skB2IbnvSB8iikbPng1ihCTXpA2yxioUQ96Akb+WEGopPWzlxTTK+T03G2ljOtspjZXKuywV
  Wu/eHyqHMyTu8UVcMRR44ki8wam0LMs+fH4dRxw5ck69AkV+JsYQVfI7tdOu7+r465LUfg==
-In-Reply-To: <20250704130531.144325-1-daniel@iogearbox.net>
+In-Reply-To: <20250704130531.144325-2-daniel@iogearbox.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=209.85.208.66;
- envelope-from=i.maximets.ovn@gmail.com; helo=mail-ed1-f66.google.com
+Received-SPF: pass client-ip=209.85.208.68;
+ envelope-from=i.maximets.ovn@gmail.com; helo=mail-ed1-f68.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -139,29 +141,62 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/4/25 3:05 PM, Daniel Borkmann wrote:
-> There are two issues with the XDP program removal in af_xdp_cleanup():
+> While testing, it turned out that upon error in the queue creation loop,
+> we never trigger the af_xdp_cleanup() handler. This is because we pass
+> errp instead of a local err pointer into the various AF_XDP setup functions
+> instead of a scheme like:
 > 
-> 1) Starting from libxdp 1.3.0 [0] the XDP program gets automatically
->    detached when we call xsk_socket__delete() for the last successfully
->    configured queue. libxdp internally keeps track of that. For QEMU
->    we require libxdp >= 1.4.0. Given QEMU is not loading the program,
->    lets also not attempt to remove it and delegate this instead.
+>     bool fn(..., Error **errp)
+>     {
+>         Error *err = NULL;
 > 
-> 2) The removal logic is incorrect anyway because we are setting n_queues
->    into the last queue that never has xdp_flags on failure, so the logic
->    is always skipped since the non-zero test for s->xdp_flags in
->    af_xdp_cleanup() fails.
+>         foo(arg, &err);
+>         if (err) {
+>             handle the error...
+>             error_propagate(errp, err);
+>             return false;
+>         }
+>         ...
+>     }
+> 
+> With a conversion into the above format, the af_xdp_cleanup() handler is
+> called as expected. Note the error_propagate() handles a NULL err internally.
 > 
 > Fixes: cb039ef3d9e3 ("net: add initial support for AF_XDP network backend")
-> Suggested-by: Ilya Maximets <i.maximets@ovn.org>
 > Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
 > Cc: Ilya Maximets <i.maximets@ovn.org>
 > Cc: Jason Wang <jasowang@redhat.com>
 > Cc: Anton Protopopov <aspsk@isovalent.com>
-> Link: https://github.com/xdp-project/xdp-tools/commit/38c2914988fd5c1ef65f2381fc8af9f3e8404e2b [0]
 > ---
+>  net/af-xdp.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/net/af-xdp.c b/net/af-xdp.c
+> index c5d3b6a953..29c5ad16cd 100644
+> --- a/net/af-xdp.c
+> +++ b/net/af-xdp.c
+> @@ -482,9 +482,8 @@ int net_init_af_xdp(const Netdev *netdev,
+>          pstrcpy(s->ifname, sizeof(s->ifname), opts->ifname);
+>          s->ifindex = ifindex;
+>  
+> -        if (af_xdp_umem_create(s, sock_fds ? sock_fds[i] : -1, errp)
+> -            || af_xdp_socket_create(s, opts, errp)) {
+> -            error_propagate(errp, err);
+> +        if (af_xdp_umem_create(s, sock_fds ? sock_fds[i] : -1, &err) ||
+> +            af_xdp_socket_create(s, opts, &err)) {
+>              goto err;
+>          }
+>      }
 
-Thanks!
+We should also convert the "no XDP program loaded", I suppose.
 
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+> @@ -506,6 +505,7 @@ int net_init_af_xdp(const Netdev *netdev,
+>  err:
+>      if (nc0) {
+>          qemu_del_net_client(nc0);
+> +        error_propagate(errp, err);
+>      }
+>  
+>      return -1;
+
 
