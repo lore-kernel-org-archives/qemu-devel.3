@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AB13C83F03
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 11:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C96DAC83F03
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 11:19:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZSlN-00078O-3x; Wed, 09 Jul 2025 07:14:57 -0400
+	id 1uZSpH-0000hW-R6; Wed, 09 Jul 2025 07:18:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZSke-0006SZ-Fn
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 07:14:12 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZSlw-0000S7-6R
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 07:15:33 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZSkc-0001wB-8B
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 07:14:12 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4538a2fc7ffso6284535e9.0
- for <qemu-devel@nongnu.org>; Wed, 09 Jul 2025 04:14:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZSlt-0002BN-7N
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 07:15:31 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4538bc1cffdso47305265e9.0
+ for <qemu-devel@nongnu.org>; Wed, 09 Jul 2025 04:15:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752059648; x=1752664448; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752059727; x=1752664527; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=sOao6ok8bQfixpb6MKUZTcbjWHtmeIHvBvlL01aa0NQ=;
- b=bcwIyAhXErSSNwA+uspRU3oXohv61J8HGhvHEwm2azxaWSL6kjBJlmJH7+PeuiMNS5
- YR6qqN9ZzdqpBKNoT38rbFV/u7/G3tOnE+m1yqhYC1H5SSMUNb0qWMIqbiPP0CEgJkgf
- oFLOv0Q2Rq7fa0QmoJ7BrO9Kd+Qxj6hq7Bf283cQBavR8rOhA/uCCW7uOs9xMm23luXh
- CRIW8eRfOA82DdBeS1CiPsv1pD0IG/Mx2Ots1IYhyXLhxdw2lLq5RmiZha675yALh3k0
- MBbdNBqB37wSFJZ8I6Z060Bp2qG6VndkJ3OJjwutdqPF/crQcKmUHEesx9TSEt8tMO8A
- 8cow==
+ bh=RNwagcWbbHIiyBPFQp4O4joAakwIquLe9khZ1zZRoos=;
+ b=LC/VS1Z55Mzeu0nf8Wvht2A9HSkEFcnCSWiHlgsnejOGWlZQkt4YdjTMGIEMbQRPw6
+ R7bMmCJXc1ZiOKHI3GUN1QnBV4ezYefuGiqWy+AvHcv2f8AdV+++Xcszqnf9Wu3PA7fx
+ cnuux3wGcnoXMStKnZ2NdVU1NQEToljnceRzWxLYzgEG+WBkHXnks+oQCnoaMfYvPf5t
+ 6mCKD9exv7QaI9CLeAdB5R6TL8LgvlsWrcDMP4RLribjyS5Uc4i8jru3FxoH7yj9M0rb
+ fIS/IRTRnROLgEod72z29CV84KvS8KFFPOKnunBjlgoRh3fUNQepxP02QqC5CzMJq5Rj
+ 7S5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752059648; x=1752664448;
+ d=1e100.net; s=20230601; t=1752059727; x=1752664527;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sOao6ok8bQfixpb6MKUZTcbjWHtmeIHvBvlL01aa0NQ=;
- b=hYk8hl9YH+qJSugHmJJSiODFxZMxcLasULJvFzzn2vphmgzdgSgeEs2yj/CZ+5igbE
- fwckmbJm3WslpO6XB5oXPKLo9EXyO2/4zPm6aoz8AwW7qBIlwXZ6jtaVpxNR3Oq47D3Z
- Suq08D9RObz3vH74ARlvRwXAlR+JafEI3apnQmoy4QemTHbtHGA/dDPhalWoDVCnnm8X
- JmxmvTfmvUOkIuPfHRlpkT7eS9Rfpvl91uJgRUeMpt747uiqatXqKJMluWIjK7hlWRlN
- 4uL59P1VCJzrvJpQ9UX2hSajDtFif/YSQYJJs8fxfnAaCvMi+YZ8VvRJSyshvN+hColR
- zizA==
+ bh=RNwagcWbbHIiyBPFQp4O4joAakwIquLe9khZ1zZRoos=;
+ b=cuKStP+/0fG5cKn4gTKLUD88D9GoRxlnMNtgT7LzTiADT3bcJYjSIfF8RdKQYrKWJm
+ slhpFfRnaknjQnzTxUhZvy2Ebfv59hL92EmkiTcD1oaRjuc4IyTd1kL7ZuklPcWEwh5y
+ hofZwXZ1pwLoR2+7eaaL0jbzU6CaN1Zzb+U1qZaeI/BpND2zOPG7Q8+lRTk/p5yTvZEI
+ zqpgQMLDyOK6Aye7vZn4SajYMgyzsDXVO3zm+F832IKfFFjANLFe68RVDyFdPb0Q1gv5
+ nwDZFLCz5YQMejN6adbwAVZhn9Qlt/QAqIKOgDzHzcZLCGCNb9IlY1UuodqiZ9sXUB0D
+ 9FKw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWDnQP+AYA1ApafuAnIYf2+iNsfeJViR4Qh13eUqx2bP3PlAlwkPL9Uog+6fG03oGYz+7ONgLSr/dii@nongnu.org
-X-Gm-Message-State: AOJu0Yzgqlt00IImTvn6KL8iBnGyY3gvCojHkjNYvIj5LHGzuOsmX6EU
- vNHQn+QglmgpARDuqH9zk33ulpGLPHUk+SNdDSd2Vi2Q3lvMh/FChlybgbT7McJ9Ybk=
-X-Gm-Gg: ASbGncs5CVok+63FUX1donA8eNTaF94s9JxaD8KEK2JqPlBXVJvcUkkkF4YKT/JAzXR
- jiU+oVRgDBkrgmNx06LRkns60iKJwCfcjtCOyDsbZWwjtrJ1i62599McVKynddZCGbL8I+v+xno
- tA+qIDuSu3AlhXHXJlf7QVJ8yiHtFDHbTM8EWGBOvv9fSkWjxAdGnzNEHHkRN4lD8G21gTA2f9J
- TUCBq6+t0rmkBXVl7+3kXi2xOUjHew059GUVJV9uARHZzIvZ+VHxN2bIfAIJtHG39Ktt/x1urOV
- X3dCGC4dlOTcFI4wUeTtHsUevh9X831zVV7GwXvOh5N6A3mJwC8mAySBNwpgYM192QogPsIi60T
- YdMAaoIH8eabtNXnCJTNhVKNs6xXmLQ==
-X-Google-Smtp-Source: AGHT+IEc2j7l7P9yKtYoeuTComdwHEmVM2ORYFP39uWI7CzhsMXTlERt/Tqxexwls3z/HW+bFYZbcg==
-X-Received: by 2002:a05:600c:64c6:b0:453:10c1:cb21 with SMTP id
- 5b1f17b1804b1-454d5584445mr20685765e9.8.1752059648429; 
- Wed, 09 Jul 2025 04:14:08 -0700 (PDT)
+ AJvYcCV1hIbk5dN8z2gf4Y+/SKF3WlYx4pUbgVKNhnTa70tfzYeQGQkm8UWbKsYn0K/WhqLUOj5wwMxGseNm@nongnu.org
+X-Gm-Message-State: AOJu0Yxwwtkq0ubb0fsW99HsxWyufgAJmz/modUzFtb3PCJ1NvZwLBrB
+ 2j+AY0ABEWF6spNT9tzEDc5/I4vq61ktIvUQAAOeZjCKdHIQ9p7aajK2uPaC2a3vtqM=
+X-Gm-Gg: ASbGncu4l12NOWYy61L7rREGrRAvgYefdqd1rJo/td3idXQ1ADLGPw6TvJgZBvDIDcw
+ nf7bQC8ZJyAsdErR7BMKvChwhwq+EBLSxbpzFM7Ph8s4ofamoOOP5qTIv8+PPv6kb6h1NbUs+6w
+ ga9sQmTA+2zmKZfW1JcS9FcDT/feHB2DsX7R++hH+9wbl4quNWcKX8WYC771xQEv5Pkd63Dq5up
+ ZrDYUsr017mQoNoVrpyF3h/a+UD3w9ChhGsFMsovolpEhZFFazV7csZNKChb9xHjV+D09RpfEK3
+ wpxZ0R+jenXXFGFRxGvB1WM39wJhxhOy6QD4tTaWvVum+lhIJJqxUmpcgZELvmbF7WKQTAw6f/6
+ HZdIv0LSMdXELB9tKsmgfNjA6rkwycA==
+X-Google-Smtp-Source: AGHT+IGYsegGdrI5DFgJRtcmjcohunY2heuqJgocLW+e1/OhducvuCw2ZJYP1adgG1gpdrhiVVnF1g==
+X-Received: by 2002:a05:600c:3111:b0:442:ccfa:1461 with SMTP id
+ 5b1f17b1804b1-454d5325ebemr21343745e9.13.1752059726811; 
+ Wed, 09 Jul 2025 04:15:26 -0700 (PDT)
 Received: from [192.168.69.242] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454d5051e7esm20287755e9.11.2025.07.09.04.14.07
+ 5b1f17b1804b1-454d5053725sm20280415e9.16.2025.07.09.04.15.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 09 Jul 2025 04:14:08 -0700 (PDT)
-Message-ID: <a9d23dc1-60b8-4ad0-a666-ad3770051ec3@linaro.org>
-Date: Wed, 9 Jul 2025 13:14:07 +0200
+ Wed, 09 Jul 2025 04:15:26 -0700 (PDT)
+Message-ID: <5c9f89cb-3416-4f84-bcdc-cf31feb410a0@linaro.org>
+Date: Wed, 9 Jul 2025 13:15:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/7] esp.c: only call dma_memory_write function if
- transfer length is non-zero
+Subject: Re: [PATCH v2 2/7] esp.c: improve comment in esp_transfer_data()
 To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, pbonzini@redhat.com,
  fam@euphon.net, qemu-devel@nongnu.org
 References: <20250618061249.743897-1-mark.cave-ayland@ilande.co.uk>
- <20250618061249.743897-6-mark.cave-ayland@ilande.co.uk>
+ <20250618061249.743897-3-mark.cave-ayland@ilande.co.uk>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250618061249.743897-6-mark.cave-ayland@ilande.co.uk>
+In-Reply-To: <20250618061249.743897-3-mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,53 +103,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 18/6/25 08:12, Mark Cave-Ayland wrote:
-> In the cases where mixed DMA/non-DMA transfers are used or no data is
-> available, it is possible to for the calculated transfer length to be
-> zero. Only call the dma_memory_write function where the transfer length
-> is non-zero to avoid invoking the DMA engine for a zero length transfer
-> which can have side-effects (along with generating additional tracing
-> noise).
+> Whilst working on the previous patch, the existing comment was not enough to
+> document when the TI command codepath was being used. Update and improve the
+> comment accordingly.
 > 
 > Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 > ---
->   hw/scsi/esp.c | 6 +++++-
->   1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-> index ec9fcbeddf..1c7bad8fc0 100644
-> --- a/hw/scsi/esp.c
-> +++ b/hw/scsi/esp.c
-> @@ -631,7 +631,9 @@ static void esp_do_dma(ESPState *s)
->           switch (s->rregs[ESP_CMD]) {
->           case CMD_TI | CMD_DMA:
->               if (s->dma_memory_write) {
-> -                s->dma_memory_write(s->dma_opaque, s->async_buf, len);
-> +                if (len) {
-> +                    s->dma_memory_write(s->dma_opaque, s->async_buf, len);
-> +                }
->               } else {
->                   /* Copy device data to FIFO */
->                   len = MIN(len, fifo8_num_free(&s->fifo));
-> @@ -681,6 +683,7 @@ static void esp_do_dma(ESPState *s)
-
-As future cleanup, indent could be simplified using 'if (!len) break;'.
+>   hw/scsi/esp.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->                   buf[0] = s->status;
->   
->                   if (s->dma_memory_write) {
-> +                    /* Length already non-zero */
->                       s->dma_memory_write(s->dma_opaque, buf, len);
->                   } else {
->                       esp_fifo_push_buf(s, buf, len);
-> @@ -715,6 +718,7 @@ static void esp_do_dma(ESPState *s)
->                   buf[0] = 0;
->   
->                   if (s->dma_memory_write) {
-> +                    /* Length already non-zero */
->                       s->dma_memory_write(s->dma_opaque, buf, len);
->                   } else {
->                       esp_fifo_push_buf(s, buf, len);
 
 
