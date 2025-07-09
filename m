@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B1C5C83F0A
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 20:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD18EC83F0A
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 20:54:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZbZz-0005fe-Gr; Wed, 09 Jul 2025 16:39:49 -0400
+	id 1uZbmk-0002fj-NR; Wed, 09 Jul 2025 16:52:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uZbZn-0005ax-NW
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 16:39:35 -0400
-Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
+ id 1uZbme-0002dx-Rj
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 16:52:55 -0400
+Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uZbZl-0000yX-Oh
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 16:39:35 -0400
-Received: by mail-ot1-x329.google.com with SMTP id
- 46e09a7af769-72c14138668so108813a34.2
- for <qemu-devel@nongnu.org>; Wed, 09 Jul 2025 13:39:33 -0700 (PDT)
+ id 1uZbmd-0002zl-3z
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 16:52:52 -0400
+Received: by mail-ot1-x32c.google.com with SMTP id
+ 46e09a7af769-73a43d327d6so156616a34.2
+ for <qemu-devel@nongnu.org>; Wed, 09 Jul 2025 13:52:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752093572; x=1752698372; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752094369; x=1752699169; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=SYvkKX9rvlgt2s4O3zGo89LmDfVvpAyzm5m0uoXAgLQ=;
- b=cRT6F/UYumbTeFw98Y3b3HSlQee1oXXQgAmHwQQvna0mEUnzPNhH5KRIdvc7XwPyVz
- u5ypg18SajOHFa9bC6474Hn66wE2dfXLekgs1Nly1oUy37elukjmDQPnmxy+fs5IhL3C
- sQwbA+kHD7dpV6gPj5HnQ4hgEfa8YlDh25qvvcxBvfNbdZ1KYLSTdyPOwV+i9oq+Com8
- Uc7F5Q/Upv8SmNVACSrwT0NRuxajW/eXIcsTqhn9SovnpfjZ2AoRjGGQsdBk6q2jTq+W
- nIb0o7w1dR5RCy+l6InNfcBhBLFxakLrF0riRE6TDcUfo5AEyEoTWVVmf0OUfEbnjz23
- AveQ==
+ bh=LdqYgS2PhTUHUUG0AT9NScCCWRii59ZzMo6AJryRxM4=;
+ b=wCoicoEM371WSg3fHl+3Su7+jV3Y+hWS00jLcGFM+nensyezYPfTOJEsyV5eOcETxI
+ kdcnMppmfbTayjMM3gk0axa3Bu8AKHWzpLPi7zMeS41lqL1nX8TuUZHYaC1K6yUTr/YW
+ 9+IEmCthCumcNXIrZ6VnPh5gC9QrPMXbwu/ilYoQwzhrp1HuCt4NB8XG5QaRfonpihHV
+ +rS5P+LGjWFNeifcWNqk8jJR/1yT9jvfcFtzYQ8ugJNnqX3RsadfK7CU0zKLo4uSnCgB
+ yqx5H1CFPepXNrTFnleI9dZOD0MmZ2MGPjd0kjOWtPvFsZMs2kfjmfey20kdnEVW8+TA
+ 6TJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752093572; x=1752698372;
+ d=1e100.net; s=20230601; t=1752094369; x=1752699169;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SYvkKX9rvlgt2s4O3zGo89LmDfVvpAyzm5m0uoXAgLQ=;
- b=d9ERUD5WyAm9Rxp4K9cMqwZfUWXfWgzjeD/C1pT66AQbr+m5PooXhIpY2AEepDX9QV
- qJlv/fbas4w7yopixTIfbJUn1DirgQVXuw63oQy6ThQiy2ekNhLhIZR9O21t0tW1b2U6
- Mg5Z81oDVnM4YQIf/annFIkEiQT/ZK1mi08TMUsc6zC6LxbuFY6r9aMbrkoZhICn2+pX
- Q/Gam9tOzkpqb/NycCKLOjGAS8p4RYYcxTZvePYcKuVz1eL83aOTmtDlu9zdkxNWCsgc
- KYB2Esak4Y3jcCGGiw4S6kwkX+2m1E+pqIh+QSchcehK/29QBB3T6CZzvxWlxEU5hoDS
- Id+Q==
-X-Gm-Message-State: AOJu0YwKw5BXXWE8fJQN10yQUe0QMVwEf2KTNz/Nb243klB9UWZFHgfI
- qH6GtEq1yF07eIPW2Wsk9UhTu6iOCtN9YledQn7mvEJMlk42UwpyQiYkSdUJDJPEhvPvuRKkKx0
- NtMCYQCU=
-X-Gm-Gg: ASbGnctTJSltuMu46J8FvaYik7HByjYAxNszp/2LcMllp3IdrPuegkquvahMAPTnsTJ
- uzlXSbNp2cp+cZ2vaGRmEKAJjrvHmLdad1oxkWe6258z5nkh8sdpiy8GmzvBqD3bjgliiJmMevY
- 2+TVOu8Zs9swGYvjgbrSRhU6p2DJ3BRmQIu/vfqoHqDAyN9Z2k5i6N4aFi0B9eBcQaDrmOkdfDc
- gJt8EJJSVKFCTYUwjUcZlFHwZzJal3TXCsIzxSHLw5mYFghotRsH929f/F4alZfGQTbgSvC0o1f
- Idg8dCSu9Xw8j+6lSj8Gyk4zfdzbTBAbozVul99L7H5BAkC4iehYFn/xp2eCbRi+LQNM7n7/iyE
- ThL4=
-X-Google-Smtp-Source: AGHT+IELzcaJqnYk9TG0A/zSqofxFIbL8BS07QTKIAg0843hWZXBWizzHZqTshfToDRu1yuxit6SVg==
-X-Received: by 2002:a05:6830:280d:b0:73a:8bf8:56b4 with SMTP id
- 46e09a7af769-73cedfe3bf6mr776656a34.13.1752093571873; 
- Wed, 09 Jul 2025 13:39:31 -0700 (PDT)
+ bh=LdqYgS2PhTUHUUG0AT9NScCCWRii59ZzMo6AJryRxM4=;
+ b=Kf2nhJr12bCko54WrzbI0VBAjMIY2EjEM617ldBCJImOIckUO1mb3vhcPe9JBh1V17
+ /1MqQXgq6uZciEXtFBNVQLQ665zEPtxi9ZqQQOQCQtv3GWngNw4wA3t3urb1qavewFoW
+ 5aeyIjRilnOwlQ+IHkqix1ZYz1DxWEyx4t6lUDKHxWuGnbVChSI3flbrdlVgtvUa7Xgw
+ AxTM52oCHOzbXApZTVxvE7oUPMXGOFyW6i3T+Oizr0F16wGv/Q3D+ByjdJYQnSkf77OD
+ ycIfl+/lq1AFVyhBOtOTg6VTNPMv2COKG+4PPjmqHxzf036Ya5p59dWWM50JIYLVY3jz
+ x6Cg==
+X-Gm-Message-State: AOJu0YyqW45OVSTAf7U5f6iJhBdJQLwWKoHrkMViYBCXBuwNNvjCcKCk
+ L7GZE6G9JdObScx7u4mWVjBqrbRfYQ9PDVE8w4qKol/erocsAZawJad+leRPEdV7Lro=
+X-Gm-Gg: ASbGnctTgpkSMKdPFwcbNeCuP9ddkym4EKbWCG6uB8DZIHzOR3P/+OSmB89b7e/QF9/
+ Jh21yWvqlQCFQ2IFKGMdeJA2mucjQ0jp2FJiNer7nEDERmHykzC84qR7PlR7+qR/Ijqu7bxu3da
+ H/WeFrkc/hJB9Zld6rbNLMPKCdMSLF5SLN/W9ylo31AAX1tJkL3Uv0GQ/r1qIMoYobc83QMfsUz
+ uRDG6hvzJz341zVD5KKst7zkmtiMvS1vyeUyFiCIewltnffwseNBj/13jF9YPJLoJjqk43okXgI
+ gGbC6VnlEb0rKYUFyvs3BTBcEszeCtOcZNlm1yFQX4JcYOSTB0zsWMcev71fSaTo8x2G0lQqlzq
+ gz/A=
+X-Google-Smtp-Source: AGHT+IH6IHm4t5djczgWL4jH9xazF+qAabKjnNRARJXHJQwLlV/sv/TJ1TeynOjXoeQjZrVt7scQYA==
+X-Received: by 2002:a05:6830:4883:b0:72c:3235:9c5a with SMTP id
+ 46e09a7af769-73cf058065emr132052a34.1.1752094369216; 
+ Wed, 09 Jul 2025 13:52:49 -0700 (PDT)
 Received: from [172.20.0.130] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-73c9f938806sm2478811a34.55.2025.07.09.13.39.31
+ 46e09a7af769-73c9f7714c4sm2551758a34.28.2025.07.09.13.52.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 09 Jul 2025 13:39:31 -0700 (PDT)
-Message-ID: <0bf03b23-30bd-436d-b0ae-eaf257d37112@linaro.org>
-Date: Wed, 9 Jul 2025 14:39:29 -0600
+ Wed, 09 Jul 2025 13:52:48 -0700 (PDT)
+Message-ID: <0749b8bd-c531-47a2-ad4e-3c0b7f24b390@linaro.org>
+Date: Wed, 9 Jul 2025 14:52:47 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/6] target/arm: Add FEAT_TCR2
+Subject: Re: [PATCH v4 5/6] target/arm: Implement FEAT_MEC cache instructions
 To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
  alex.bennee@linaro.org
 Cc: qemu-devel@nongnu.org
 References: <20250709180326.1079826-1-gustavo.romero@linaro.org>
- <20250709180326.1079826-5-gustavo.romero@linaro.org>
+ <20250709180326.1079826-6-gustavo.romero@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250709180326.1079826-5-gustavo.romero@linaro.org>
+In-Reply-To: <20250709180326.1079826-6-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x329.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,67 +104,86 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/9/25 12:03, Gustavo Romero wrote:
-> Add FEAT_TCR2, which introduces the TCR2_EL1 and TCR2_EL2 registers.
-> These registers are extensions of the TCR_ELx registers and provide
-> top-level control of the EL10 and EL20 translation regimes.
+> This commit implements the two cache maintenance instructions introduced
+> by FEAT_MEC, DC CIPAE and DC CIGDPAE.
 > 
-> Since the bits in these registers depend on other CPU features, and only
-> FEAT_MEC is supported at the moment, the FEAT_TCR2 only implements the
-> AMEC bits for now.
+> Because QEMU does not model the cache topology, all cache maintenance
+> instructions are implemented as NOPs, hence these new instructions are
+> implemented as NOPs too.
 > 
 > Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 > ---
->   docs/system/arm/emulation.rst |  1 +
->   target/arm/cpu-features.h     |  5 +++
->   target/arm/cpu.h              |  2 ++
->   target/arm/helper.c           | 60 +++++++++++++++++++++++++++++++++++
->   target/arm/internals.h        | 19 +++++++++++
->   target/arm/tcg/cpu64.c        |  1 +
->   6 files changed, 88 insertions(+)
+>   target/arm/helper.c | 34 ++++++++++++++++++++++++++++++++++
+>   1 file changed, 34 insertions(+)
 > 
-> diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-> index 66043b0747..1c597d8673 100644
-> --- a/docs/system/arm/emulation.rst
-> +++ b/docs/system/arm/emulation.rst
-> @@ -149,6 +149,7 @@ the following architecture extensions:
->   - FEAT_SPECRES (Speculation restriction instructions)
->   - FEAT_SSBS (Speculative Store Bypass Safe)
->   - FEAT_SSBS2 (MRS and MSR instructions for SSBS version 2)
-> +- FEAT_TCR2 (Support for TCR2_ELx)
->   - FEAT_TGran16K (Support for 16KB memory translation granule size at stage 1)
->   - FEAT_TGran4K (Support for 4KB memory translation granule size at stage 1)
->   - FEAT_TGran64K (Support for 64KB memory translation granule size at stage 1)
-> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-> index 44d6b655a9..3878aed589 100644
-> --- a/target/arm/cpu-features.h
-> +++ b/target/arm/cpu-features.h
-> @@ -486,6 +486,11 @@ static inline bool isar_feature_aa64_xs(const ARMISARegisters *id)
->       return FIELD_EX64_IDREG(id, ID_AA64ISAR1, XS) != 0;
+> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> index 34e12bde90..36cf2b6415 100644
+> --- a/target/arm/helper.c
+> +++ b/target/arm/helper.c
+> @@ -4996,6 +4996,34 @@ static void ic_ivau_write(CPUARMState *env, const ARMCPRegInfo *ri,
 >   }
+>   #endif
 >   
-> +static inline bool isar_feature_aa64_tcr2(const ARMISARegisters *id)
+> +static CPAccessResult cipae_access(CPUARMState *env, const ARMCPRegInfo *ri,
+> +                                   bool isread)
 > +{
-> +    return FIELD_EX64_IDREG(id, ID_AA64MMFR3, TCRX) != 0;
-> +}
+> +    int el = arm_current_el(env);
+> +
+> +    if (!cpu_isar_feature(aa64_mec, env_archcpu(env))) {
+> +        return CP_ACCESS_UNDEFINED;
+> +    }
 
-Should be sorted with other ID_AA64MMFR3 tests (just SCTLR2 so far, which you just added). 
-  Secondary sorting by the bit offset (TCRX < SCTLRx).  This tends to place everything in 
-a predictable order.
+Not required, because the cpreg should not be registered in this case.
 
-> diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-> index bdd2fe7f5b..173528175a 100644
-> --- a/target/arm/tcg/cpu64.c
-> +++ b/target/arm/tcg/cpu64.c
-> @@ -1247,6 +1247,7 @@ void aarch64_max_tcg_initfn(Object *obj)
->       t = FIELD_DP64(t, ID_AA64MMFR2, E0PD, 1);     /* FEAT_E0PD */
->       SET_IDREG(isar, ID_AA64MMFR2, t);
->   
-> +    FIELD_DP64_IDREG(isar, ID_AA64MMFR3, TCRX, 1);       /* FEAT_TCR2 */
->       FIELD_DP64_IDREG(isar, ID_AA64MMFR3, SCTLRX, 1);     /* FEAT_SCTLR2 */
->       FIELD_DP64_IDREG(isar, ID_AA64MMFR3, SPEC_FPACC, 1); /* FEAT_FPACC_SPEC */
+> +    if (el < 3 && arm_security_space(env) != ARMSS_Realm) {
+> +        return CP_ACCESS_UNDEFINED;
+> +    }
 
-It would be better to use GET_IDREG / FIELD_DP64 / SET_IDREG, as we do for MMFR2 above.
-That would begin with the previous patch.
+Correct, but we can simplify this to
+
+     switch (arm_security_space(env)) {
+     case ARMSS_Root:  /* EL3 */
+     case ARMSS_Realm: /* Realm EL2 */
+         return CP_ACCESS_OK;
+     default:
+         return CP_ACCESS_UNDEFINED;
+     }
+
+
+> +static CPAccessResult cigdpae_access(CPUARMState *env, const ARMCPRegInfo *ri,
+> +                                     bool isread)
+> +{
+> +    CPAccessResult ret = cipae_access(env, ri, isread);
+> +
+> +    if (ret != CP_ACCESS_OK) {
+> +        return ret;
+> +    }
+> +    if (!cpu_isar_feature(aa64_mte, env_archcpu(env))) {
+> +        return CP_ACCESS_UNDEFINED;
+> +    }
+
+Likewise not required.  Therefore the two cpregs can share the same accessfn.
+
+> @@ -5094,6 +5122,12 @@ static const ARMCPRegInfo v8_cp_reginfo[] = {
+>         .opc0 = 1, .opc1 = 0, .crn = 7, .crm = 14, .opc2 = 2,
+>         .fgt = FGT_DCCISW,
+>         .access = PL1_W, .accessfn = access_tsw, .type = ARM_CP_NOP },
+> +    { .name = "DC_CIPAE", .state = ARM_CP_STATE_AA64,
+> +      .opc0 = 1, .opc1 = 4, .crn = 7, .crm = 14, .opc2 = 0,
+> +      .access = PL2_W, .accessfn = cipae_access, .type = ARM_CP_NOP },
+> +    { .name = "DC_CIGDPAE", .state = ARM_CP_STATE_AA64,
+> +      .opc0 = 1, .opc1 = 4, .crn = 7, .crm = 14, .opc2 = 7,
+> +      .access = PL2_W, .accessfn = cigdpae_access, .type = ARM_CP_NOP },
+
+You should insert the first into the same mec_reginfo[] structure that you introduced in 
+patch 1.  The second must be in a separate array, like so:
+
+     if (cpu_isar_feature(aa64_mec, cpu)) {
+         define_arm_cp_regs(cpu, mec_reginfo);
+         if (cpu_isar_feature(aa64_mte, cpu)) {
+             define_arm_cp_regs(cpu, mec_mte_reginfo);
+         }
+     }
 
 
 r~
