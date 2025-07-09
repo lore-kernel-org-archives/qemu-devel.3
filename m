@@ -4,79 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C27ACC83F03
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 11:07:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CCA5C83F09
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 11:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZSdZ-0008O1-CK; Wed, 09 Jul 2025 07:06:53 -0400
+	id 1uZSgH-0003jz-Rh; Wed, 09 Jul 2025 07:09:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uZSdP-0008Fp-RZ
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 07:06:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uZSdN-0000wa-9r
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 07:06:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752059196;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LKBgpuwPVY22fh8yAm00FTbzjULaUBz7CroglPCe2Bw=;
- b=KXtApJI7l96quDUoHnitWI0auzlZm+wSQLRqFU6JcbV0IDaS4X5za1CncrhJgiYm5qvZXf
- Nz693+66FB1rGYhijjL9FWIPx2ZXtsSgqtNPjZksgd65M4TwA///20YAtd6kq5SF6ssm4u
- hCYSA8dgTwUrJQh33pUvTUCF5oNwKBw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-48-hCMtwzDpMOWHA4RbDuGEuQ-1; Wed,
- 09 Jul 2025 07:06:30 -0400
-X-MC-Unique: hCMtwzDpMOWHA4RbDuGEuQ-1
-X-Mimecast-MFC-AGG-ID: hCMtwzDpMOWHA4RbDuGEuQ_1752059189
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 86C1619560A6; Wed,  9 Jul 2025 11:06:29 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0B14518003FC; Wed,  9 Jul 2025 11:06:29 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 74A4E21E6A27; Wed, 09 Jul 2025 13:06:26 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  qemu-devel
- <qemu-devel@nongnu.org>,  Daniel =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Akihiko
- Odaki <akihiko.odaki@daynix.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  Thomas Huth <thuth@redhat.com>
-Subject: Re: Python ecosystem versions overview
-In-Reply-To: <CAFn=p-bee25L9Zqyv=LjpCw4WMHqCUAcMaBg0Lbu3gUU6cuakQ@mail.gmail.com>
- (John Snow's message of "Tue, 8 Jul 2025 21:01:07 -0400")
-References: <CAFn=p-bp_hFTu7yDGuQa-Eoctnpb_dd4_fgfhrC3umpX1EuvCA@mail.gmail.com>
- <d1c33e1e-8b26-4a75-8b1d-2ec6c54d72d0@redhat.com>
- <CAFn=p-bee25L9Zqyv=LjpCw4WMHqCUAcMaBg0Lbu3gUU6cuakQ@mail.gmail.com>
-Date: Wed, 09 Jul 2025 13:06:26 +0200
-Message-ID: <87bjptpqrx.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZSg5-0003cX-JG
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 07:09:32 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZSg3-0001MX-8F
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 07:09:28 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-45363645a8eso38030055e9.1
+ for <qemu-devel@nongnu.org>; Wed, 09 Jul 2025 04:09:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752059364; x=1752664164; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=c0OyoIlDbTovuZetW4sc3ZIVjCisywC1wpI9kf3GL1w=;
+ b=TG/bu5jYpFkt4tULyhKgWEhnlLkUeyM1N57gwFKHUjxEa77CHnoCQCAg00DizvVEh6
+ fOymTcJhCjNyI9IQuqM7a9p9cv3D98P7H/UckFEmy4ULhaXmZp3vOAYQ22eyX/BSuTio
+ mgqZgc/Rgisy/xwhcSW0Kzcn2Az70NVmVlqeCI/e/rzRyP1nKhaMPJFbDHk1IBuGuKjV
+ JOgb3f3Ey9dVpKmUb8uQuFXmQJfjwIukP7kFf9Z0s2Cv6b2P9AGvZDwD3HO4PpTSViQX
+ NBF6IVOtrZzV2YuKHCTtwqXFOlD/Ayqq6O8LpJ29UOjrWcHyur16XvzcvCzn8R75oVLf
+ Lf9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752059364; x=1752664164;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=c0OyoIlDbTovuZetW4sc3ZIVjCisywC1wpI9kf3GL1w=;
+ b=frSrjh1LC2XJqr5P4epY/UgWWBKkcdT3hSDbx89yVdrvihzWn9Qm/q/cWtVmAhLvVD
+ fwLvSsrYU/R2VksyUCyospUs2TM54azfPp0x4qYGT4pKv+ZR8PGrgk2P9c5qOjP26LQR
+ jK4ssI5hODdnK1qltlzWM3rBRPCmzaeTbzsnfHN3IS3PEylKPsTesVyEd2lRwa8+aKjy
+ q/YNvs/LSEvvVnURB8ln5qN8hi0EyqF7yjj7VcK2oKlftZUVIN8YoqGj2COFV2Ran+Bu
+ Wrtq70LRBuFH+WeKX30Ac13gagyC/V3JQxKx05jnQSofXF9hn+M86qy+2+W3XXtQQWqR
+ TmCw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW7Y3fNzXI4a5h9bv9kLzozyzh9QeP5dV5jeg9ZvyIjawS51yt5VEAfuDMA0g765i9gL355rjzVV1pN@nongnu.org
+X-Gm-Message-State: AOJu0YyTJDbSP5dCbCuOHRX0yrbyqC2ycX/EonmqpiduQ0wr5LWHf+47
+ gGOdubEbISduH5jnRXSnAL4ozXn/KpyiXAIxGtEedT/c51YmItqNJEfoXKCjZsvK4Og=
+X-Gm-Gg: ASbGnctnuYti7qZ9id0nOVVFEa5D0am2JLbXuEH6gR3kJaGgeUZItS6WoqaFmx/OlrL
+ FAMnY7uqqeeajohrxAQnc8+Z2fJS039deFs80CXdCDnnadCWjLgmZrjOdCLv619OsUJvTkg998X
+ vnAiFF98DcSRdhg/QcMCQ/9wQ2jymatRuxhU5BaiRFExfkjISPEPrhFAUsrFg7pwvn6cZkJydah
+ Vh6qHIIZRZz+ol1H3GyC9qBtKER+j7V0LPzI5t21uil1zdKxYp66ChW+e8zTm20xiYnzqCgKtZK
+ 990sBiKVDJDXW6yeKZGprO5f+U8sw4vSaIee6NMC0OCTR/oK56gTWWYErLD8LDfPpEoKiChfJtg
+ va7YBZMkEdXvdBYLlBj2NkqrVHyDqHA==
+X-Google-Smtp-Source: AGHT+IGgpeoAyCFEH2GPiSafNbIT+h9KgJqwwpR/INNNiHWroRKD9bJwJD7S4veYuD9fcjlFr2BICg==
+X-Received: by 2002:a05:600c:3b12:b0:454:aedd:96fb with SMTP id
+ 5b1f17b1804b1-454d53d65b9mr18452615e9.29.1752059363836; 
+ Wed, 09 Jul 2025 04:09:23 -0700 (PDT)
+Received: from [192.168.69.242] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b5e4ceb587sm1213180f8f.101.2025.07.09.04.09.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 09 Jul 2025 04:09:23 -0700 (PDT)
+Message-ID: <068ed887-f571-46e8-929a-9dc450624ee1@linaro.org>
+Date: Wed, 9 Jul 2025 13:09:22 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/7] esp.c: only raise IRQ in esp_transfer_data() for
+ CMD_SEL, CMD_SELATN and CMD_TI commands
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, pbonzini@redhat.com,
+ fam@euphon.net, qemu-devel@nongnu.org
+References: <20250618061249.743897-1-mark.cave-ayland@ilande.co.uk>
+ <20250618061249.743897-2-mark.cave-ayland@ilande.co.uk>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250618061249.743897-2-mark.cave-ayland@ilande.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,94 +103,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+On 18/6/25 08:12, Mark Cave-Ayland wrote:
+> Clarify the logic in esp_transfer_data() to ensure that the deferred interrupt code
+> can only be triggered for CMD_SEL, CMD_SELATN and CMD_TI commands. This should already
+> be the case, but make it explicit to ensure the logic isn't triggered unexpectedly.
+> 
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> ---
+>   hw/scsi/esp.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
+> index f24991fd16..9181c8810f 100644
+> --- a/hw/scsi/esp.c
+> +++ b/hw/scsi/esp.c
+> @@ -1012,6 +1012,7 @@ void esp_transfer_data(SCSIRequest *req, uint32_t len)
+>                */
+>                s->rregs[ESP_RINTR] |= INTR_BS | INTR_FC;
+>                s->rregs[ESP_RSEQ] = SEQ_CD;
+> +             esp_raise_irq(s);
+>                break;
+>   
+>           case CMD_SELATNS | CMD_DMA:
+> @@ -1022,6 +1023,7 @@ void esp_transfer_data(SCSIRequest *req, uint32_t len)
+>                */
+>                s->rregs[ESP_RINTR] |= INTR_BS;
+>                s->rregs[ESP_RSEQ] = SEQ_MO;
+> +             esp_raise_irq(s);
+>                break;
+>   
+>           case CMD_TI | CMD_DMA:
+> @@ -1032,10 +1034,9 @@ void esp_transfer_data(SCSIRequest *req, uint32_t len)
+>                */
+>               s->rregs[ESP_CMD] = 0;
+>               s->rregs[ESP_RINTR] |= INTR_BS;
+> +            esp_raise_irq(s);
+>               break;
 
-> On Tue, Jul 8, 2025, 7:23=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com> =
-wrote:
->
->> On 7/8/25 22:36, John Snow wrote:
->> > centos_stream_9     3.9.23   21.3.1  53.0.0      3.4.3   BaseOS, CRB
->>
->> Ok, so the lowest version of Sphinx (3.4.3) is currently used for CentOS
->> Stream 9.  It's supported for roughly 2 more years, until 12.0.
->>
->
-> Yep. I am thinking however that because 3.9 is soon to be EOL this autumn,
-> it may become reasonable to start requiring newer Python interpreters for
-> this platform as well. They *are* available.
->
-> I won't do it without a reason, but I think this may be a reasonable poli=
-cy
-> moving forward- If your platform is otherwise supported by our policy but
-> ships a version of Python from more than five years ago (aka is EOL
-> upstream), you *may* be required to install a newer, optional version (if
-> and only if one is reasonably available from official distro repositories=
-.)
->
-> In general, this should have little to no impact except that isolated,
-> offline builds (a la rpmbuild) may fail to produce documentation unless
-> special considerations are taken for the build environment (namely, sphinx
-> needs to be loaded for the newer interpreter).
->
-> I think this is a reasonable compromise. If distributions want to package
-> bleeding edge QEMU with five-years-old dependencies, they can expect to
-> face *some* hurdles, and figuring out how to get sphinx as a builddep to
-> build an optional component is not entirely unreasonable.
+Should we log unexpected CMDs? Regardless,
 
-I agree.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Moreover, I can't see why we should invest into making such packaging
-easy without a shred of evidence for anyone actually doing it.
-
-> TLDR - I pledge to support any platform covered by our promise for
-> building, but testing and documentation *requires* a non-EOL interpreter.
-> This should have little to no effect for developers or users building from
-> source or git, but has minor drawbacks for downstream maintainers of
-> enterprise distributions that may attempt to backport bleeding edge QEMU
-> versions.
->
->
->> > opensuse_leap_15_6  3.6.15   20.0.2  44.1.1      2.3.1   updates/sle,
->>
->> We use the 3.11 runtime in the dockerfile, see
->> tests/lcitool/mappings.yml.  That is a bare minimum install, so
->> configure won't use the distro sphinx and instead use 5.3.0 from
->> pythondeps.toml.
->>
->
-> Yep, this tool was made to show the platform defaults only for now. Maybe
-> I'll add a "show first party backports" flag in the future, if anyone more
-> than just my own personal self would find that useful. (Speak up if so.)
->
->
->> > main/oss
->> > pkgsrc_current      3.12.11  25.1.1  80.9.0      8.2.3   ---
->> > ubuntu_22_04        3.10.12  22.0.2  59.6.0      4.3.2
->> > jammy-updates/main, jammy/universe, jammy/main
->>
->> This is the second oldest version of Sphinx.
->>
->
-> With us until 26.04, in about 0.75 years. This seems like a reasonable new
-> minimum if we wanted to increase it, though that does artificially drop
-> support for RHEL9/CentOS stream building documentation from source under
-> rpmbuild.
->
-> (FWIW I probably can continue to support sphinx 3.x for a little while, t=
-he
-> code is gross but it does appear functional. The only thing we *need* to =
-do
-> is bump the preferred version, I think. This support generally comes at t=
-he
-> expense of type checking support for the docs code, as it's so gross I
-> couldn't get it to work from 3.x to 8.x inclusive.)
-
-It's gross, it's functional, it's impressive in a "don't do this at
-home, kids" way, and it comes with a big, red "John, help!"  button for
-you to smash in case of trouble.  Because the few smart enough to be
-able to maintain that code are almost certainly much too smart to be
-willing to maintain that code.
-
-[...]
+>           }
+> -
+> -        esp_raise_irq(s);
+>       }
+>   
+>       /*
 
 
