@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 867ABC83F09
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 06:23:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88FD5C83F09
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 06:24:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZOCb-00079G-7b; Wed, 09 Jul 2025 02:22:45 -0400
+	id 1uZODJ-0007Rh-Ow; Wed, 09 Jul 2025 02:23:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uZOCX-00077c-Mf
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 02:22:41 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uZOCV-0007BD-He
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 02:22:41 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-60c60f7eeaaso7815697a12.0
- for <qemu-devel@nongnu.org>; Tue, 08 Jul 2025 23:22:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752042157; x=1752646957; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=eU5MkZCjZ3zcKXhUUVHuA9ttfeBxlkWeraWlBe9UDDk=;
- b=HT8ZedC3UGzgjybsXf8vd9KJc09B/yuujYXRU+mj/PBFDC58/DoJCTdmTV+7bBHk93
- s9Hqr+rtIgj3BiIg6felnfT8W5FbA7RF1Uh8mFYet2gN+kaJc6I3SDrbeyUSDGGoHoaM
- ixwPpdxUlET/GPwZGWRrMVUYqPKQ/sbd9miO67H4Ela4cOsa25unOfW4GSevQ+2hQTqW
- V0Bzzw29+1t6kVLd/W/zdXb8fxMs2H4OlnR/XOoOXnzl5fxuJ+SeSwToSX76DGot58DR
- sgfgh/XPXaGIoKldbig6GwAVvjjBLZUWp/98GICKsMtFhWAHK3qmfEDkSQvOYx/vLqUC
- rGzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752042157; x=1752646957;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=eU5MkZCjZ3zcKXhUUVHuA9ttfeBxlkWeraWlBe9UDDk=;
- b=k+DMaCR9C0AN0N93ebRpWoys0UP15GyCdqXIgm9UoVSZK6uArkFnhfDc2O9P4UYFFc
- HDioA0q8O0S+Bf8PrDy+XrMH66/HYdIDgpJ+DXAAGm2q4R7VTL+1YrnJEc3edL8ezBbx
- lTf1fndvmgrfxrpkuIij8tDVRcLDK/B2zdyESK+U+Ueu4BhePGTp18USjM2+Sjc+B6LE
- 22K20q3NDYmUXyq+7OfcsJ26E1LIce0eZnAh4190db3kT8RytKY2CRZ4yyKyimND1rle
- hgzRLIOd7xeN3wZ0ERwx4nv57b6IRzyXI+KD386Ss2JQJVs5MkG6eGe9y72OBDQLTRoN
- Nc+g==
-X-Gm-Message-State: AOJu0Yyi7kb68hJP0P7SX+J3HJwVl0LrGguEeIE5cPS5ds5goRCCgXio
- PrwlG2iH7CpGvMbA4FTB/T57TG+1aUSE3Yf+SidW5SmbD2NKMSQcdtiH84YQW/BcpErqxOxfjkJ
- alzDIRtPnCB2Ztyi3bKOiJt/ScPNGrk6OMKkXrG6fLA==
-X-Gm-Gg: ASbGncvaoddgqEk/KbNoDVW8xzr/MwmeXUydHHkvJz39qiuha2KUhBnzoivJeD76Llx
- PD73J+f4Jb1skgxYuItjta7SNsKknxZccD14o5Ug44lA2Nx4YLxb9MbVX1B8i95bPVMMMqMj679
- coQ0AH/ktj7VF2btsdleWcSFo+LgOIdjqmT3+HYRrXxBZJLc40yRQQDA==
-X-Google-Smtp-Source: AGHT+IHnDGBQG/JpDxUImxaVpn8crQOUWRo8jbi0mjHhkI3WKRL0wIp91nmZNF78kASWeucvSzFx+Y9ZPeWCRLzB4og=
-X-Received: by 2002:a05:6402:2707:b0:604:f62b:4118 with SMTP id
- 4fb4d7f45d1cf-611a659a338mr791401a12.5.1752042157439; Tue, 08 Jul 2025
- 23:22:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uZODD-0007QA-Qe
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 02:23:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uZODB-0007GG-Jx
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 02:23:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752042198;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=n6+rKPfZDrzvBFYIIw5///omdBIt3zBAk6FeauJb59k=;
+ b=coq6CGkcZPNaNKpRizIEcNdJyy/ITQWmdOxBMtLY7wdXp52RZ4qoCy3zPF716WKWDp5/6S
+ thpVYLhNH2nR8dyJ0xI4ioKh/2R7oRtC0X0FItx3cQ3P7GJ7bITn7T6KBWx1lSEHpznW6q
+ hzdGIF1JDyQGKMq56ECLLqQOsKUOUbI=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-aoK_LMikO4mAM6uD5j8yJw-1; Wed,
+ 09 Jul 2025 02:23:14 -0400
+X-MC-Unique: aoK_LMikO4mAM6uD5j8yJw-1
+X-Mimecast-MFC-AGG-ID: aoK_LMikO4mAM6uD5j8yJw_1752042193
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 30D301978C9A; Wed,  9 Jul 2025 06:23:13 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A1366180035C; Wed,  9 Jul 2025 06:23:12 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 15D6521E6A27; Wed, 09 Jul 2025 08:23:10 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Steve Sistare <steven.sistare@oracle.com>,  qemu-devel@nongnu.org,  John
+ Snow <jsnow@redhat.com>,  Cleber Rosa <crosa@redhat.com>,  Eric Blake
+ <eblake@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  "Daniel P.
+ Berrange" <berrange@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,
+ Fabiano Rosas <farosas@suse.de>,  Laurent Vivier <lvivier@redhat.com>
+Subject: Re: [PATCH V3 3/3] tests/qtest/qom-test: unit test for qom-list-getv
+In-Reply-To: <bdb92ceb-59d3-4e82-83f7-d4bde9b96583@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 9 Jul 2025 00:02:07
+ +0200")
+References: <1751995472-211897-1-git-send-email-steven.sistare@oracle.com>
+ <1751995472-211897-4-git-send-email-steven.sistare@oracle.com>
+ <bdb92ceb-59d3-4e82-83f7-d4bde9b96583@linaro.org>
+Date: Wed, 09 Jul 2025 08:23:10 +0200
+Message-ID: <87v7o1righ.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20250708204907.2178-1-shentey@gmail.com>
-In-Reply-To: <20250708204907.2178-1-shentey@gmail.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 9 Jul 2025 09:22:11 +0300
-X-Gm-Features: Ac12FXxDsW7rsiE5qyty_PdDRbkuys9kO07MIeWQU6OglvyrNS4vTld9py4kyP8
-Message-ID: <CAAjaMXb+eo5uUNV6=RjKqf2mQgNeeYxYbt7oj-j5k3ToU=zEJQ@mail.gmail.com>
-Subject: Re: [PATCH] rust: Fix compilation with rustc v1.88
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x529.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,14 +93,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Bernhard,
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Thanks for your patch!
+> Hi Steve,
+>
+> On 8/7/25 19:24, Steve Sistare wrote:
+>> Add a unit test for qom-list-getv.
+>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>> ---
+>>   tests/qtest/qom-test.c | 64 ++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+>>   1 file changed, 64 insertions(+)
+>> diff --git a/tests/qtest/qom-test.c b/tests/qtest/qom-test.c
+>> index 27d70bc..4defff1 100644
+>> --- a/tests/qtest/qom-test.c
+>> +++ b/tests/qtest/qom-test.c
+>> @@ -11,11 +11,72 @@
+>>     #include "qobject/qdict.h"
+>>   #include "qobject/qlist.h"
+>> +#include "qobject/qstring.h"
+>>   #include "qemu/cutils.h"
+>>   #include "libqtest.h"
+>>     static int verbosity_level;
+>>   +static void test_getv(QTestState *qts, QList *paths)
+>> +{
+>> +    QListEntry *entry, *prop_entry, *path_entry;
+>> +    g_autoptr(QDict) response =3D NULL;
+>> +    QDict *args =3D qdict_new();
+>> +    QDict *prop;
+>> +    QList *return_list;
+>> +
+>> +    if (verbosity_level >=3D 2) {
+>
+> Tested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>
+> But I note this doesn't assert anything except if you use V=3D3 and
+> look at the output.
+>
+> Maybe stick it to a particular machine and check for a particular
+> path and its properties?
 
-There was an identical patch last week on the list:
-https://lore.kernel.org/qemu-rust/20250703-rust_bindings_allow_unnecessary_transmutes-v1-1-692ca210d331@linaro.org/
+Or create some suitable thing with -object, and get that.  No machine
+dependence.
 
--- 
-Manos Pitsidianakis
-Emulation and Virtualization Engineer at Linaro Ltd
+[...]
+
 
