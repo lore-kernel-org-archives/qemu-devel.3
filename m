@@ -4,151 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA730C83F0A
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 19:26:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 726CAC83F14
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 19:41:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZaQS-0000Gi-Ar; Wed, 09 Jul 2025 15:25:52 -0400
+	id 1uZaeb-00065e-KS; Wed, 09 Jul 2025 15:40:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uZaQP-0000GG-Kr
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 15:25:49 -0400
-Received: from mail-dm6nam12on2057.outbound.protection.outlook.com
- ([40.107.243.57] helo=NAM12-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uZaea-00065H-9i
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 15:40:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uZaQM-0007by-VQ
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 15:25:49 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bpvHb/cHW+L5RZTlZe6HUIw5ctON47TBTyLcPVa4/hvOhI3h7Fu7rwkksb569WTFcx81Bx27tfNhdCX3G6+cgJ6jhXDu5EHN7/JDOMU/FR451hcHsc37Vgh1R6s4d0LoksF3VblgEQyKFxXiRUxwnT24Suxe9Zqq69MNGnbh59Ga+TSIxqVyxokQwxMf6p/I3OjMnTKz9Xh5UBklwLlVb5z0Nq2gcS7ESIwqCoAmfl0Nw0LYvgAz9Ev7WH5FR2r4boZ39ffRHHQPcViIL3giJhFyNNenM+O5F2XpToV6baXhL0st03MQZUdqXM6v8ooc7hglYMQ411epxUoN3MZrRQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Y/BPLBh8MPWZllXMbp5624ubhVjWH9/apye5MOAfUZs=;
- b=yzQPtSJNokKCzp6esRC1Kz++5xqRjDjgUzRCysd0ZVAx5dbLkjxrXupqJWCl/r2E0ZkK1JtxUHsdJbsS1UgGxnkrZVsbQVWqnSl0SBHecqHLQ2sg/34kDsjxw4sP/UFLSiUz9WMliedg+C6nWbxtz7RRs3c34gn+9/3R1Bp925e9TovL63ZsI0r48IPH0AvsvBUzahkv0D/g3L4m++3+IfW83T4XXS9FjDuWnCvZg/e0xlND3UYrM1FsGfPj2smAeJA+quic6zTmCIAPES4rJvOaVzfLlUnbWUd3pahswJCgQswRRvDQ0eTZfy7tat64VELiDXK5C3oB6bwu4g7T/A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Y/BPLBh8MPWZllXMbp5624ubhVjWH9/apye5MOAfUZs=;
- b=GMzTimrU33mBj7Mjflme+YNlsbxK5sLMg4xsBtu8apGPaWRQMTezqp3QyuMA/mXUs/gkVzwk8QEdaAL+bQpR6QrcLVspcMTRJr4dhGStRd/dsX5OhO/JzJNw/DwJA7hKOkYVyrKSObI3GcWvxfNGwqYx1LRtYX45wMTFDuBct7GWlCevd0qNw9K0YchFZYDFoCmcBmHUo7qu4yE8PVyL9k36uTgOagHeUfn0U0tB8nBwiLhXavT8Pejy5GIPzHtH1+HS6X8yhaHcocpoi8GcJN0DdzDctYaZmWM/1rqXQA/HBnuKQSey7SJjcv808GwGZHU4Nmb2Nz9ijflhHLN15w==
-Received: from SJ0PR05CA0101.namprd05.prod.outlook.com (2603:10b6:a03:334::16)
- by CYYPR12MB8752.namprd12.prod.outlook.com (2603:10b6:930:b9::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8880.26; Wed, 9 Jul
- 2025 19:20:37 +0000
-Received: from SJ5PEPF000001EA.namprd05.prod.outlook.com
- (2603:10b6:a03:334:cafe::57) by SJ0PR05CA0101.outlook.office365.com
- (2603:10b6:a03:334::16) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8922.21 via Frontend Transport; Wed,
- 9 Jul 2025 19:20:37 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- SJ5PEPF000001EA.mail.protection.outlook.com (10.167.242.198) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8922.22 via Frontend Transport; Wed, 9 Jul 2025 19:20:37 +0000
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 9 Jul 2025
- 12:20:22 -0700
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail205.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Wed, 9 Jul
- 2025 12:20:21 -0700
-Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com (10.129.68.6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Wed, 9 Jul 2025 12:20:20 -0700
-Date: Wed, 9 Jul 2025 12:20:18 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Donald Dutile <ddutile@redhat.com>
-CC: Zhenzhong Duan <zhenzhong.duan@intel.com>, <qemu-devel@nongnu.org>,
- <alex.williamson@redhat.com>, <clg@redhat.com>, <eric.auger@redhat.com>,
- <mst@redhat.com>, <jasowang@redhat.com>, <peterx@redhat.com>,
- <jgg@nvidia.com>, <shameerali.kolothum.thodi@huawei.com>,
- <joao.m.martins@oracle.com>, <clement.mathieu--drif@eviden.com>,
- <kevin.tian@intel.com>, <yi.l.liu@intel.com>, <chao.p.peng@intel.com>
-Subject: Re: [PATCH v3 02/20] hw/pci: Introduce pci_device_get_viommu_cap()
-Message-ID: <aG7A8hxd1R4iVhGT@Asurada-Nvidia>
-References: <20250708110601.633308-1-zhenzhong.duan@intel.com>
- <20250708110601.633308-3-zhenzhong.duan@intel.com>
- <aG26VBqzOnLAWC5z@Asurada-Nvidia>
- <01584206-e2c0-4881-aaf5-d6c552a30873@redhat.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uZaeX-0001ag-Fa
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 15:40:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752090022;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=B65STSHE8btl6vvezd+bPg/gQVW3XoYhCiWjKQxYNWQ=;
+ b=idlmvnkrb3vsFIylJ6oTRJtvfZYN20Q0DpaB1HwsQpiQJMpcIxEk6HHD1+BfXrtUVB9H9k
+ INfJhCb7XuDraEcBCId9QvP0ovdaEdmBKPUEfe3dw3vTVDBIW37TsgFazonv6pl/u2DhEo
+ UrphM1PxoItDlNazhYwvRBsqXBaMJWA=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-486-EtO0ef2APE6wxMJs2SMtRQ-1; Wed, 09 Jul 2025 15:40:20 -0400
+X-MC-Unique: EtO0ef2APE6wxMJs2SMtRQ-1
+X-Mimecast-MFC-AGG-ID: EtO0ef2APE6wxMJs2SMtRQ_1752090019
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-453691d0a1dso1727905e9.0
+ for <qemu-devel@nongnu.org>; Wed, 09 Jul 2025 12:40:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752090019; x=1752694819;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=B65STSHE8btl6vvezd+bPg/gQVW3XoYhCiWjKQxYNWQ=;
+ b=kyXpYOV8e2BT1hTH+dGrGTlxpK5SxXoUFGXpNbBgrkzqkFkhRrhGaWLkPz6r5FDH44
+ DfYAUrDMWlXUoPdkZF6HFAn/GrXND7IG/h4nI+algENeW0HS0QRbApUC00xJYIWbRHQB
+ rEaRDOt9jYlzYJu+6TCLbUQqW6B2++B4Z+pApAdLA+RA6is/gJHLE+1mIdn4gJjzfEbf
+ yBk6gK0UnNQCOJTdrm96OWxZbNv7LTQkC4bKr3R91hdkY5bxl2/knIPIasxUnGh2kTk/
+ J6ZeUTP5aO7sHYFA+E8lyJxYeRI8M8xAvMQsllJ21CALwIre+k9oV5sFVMn1M6H8Hzoy
+ OoOg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXJRzCtaSUjBh1xCdhzVo7s5bnNWzawAzkh9pY1DVGO8BvMY5LyL/PANX0m5zTgZ0aG5gAFcykeDcGi@nongnu.org
+X-Gm-Message-State: AOJu0Yx/xqgIBY63ShkYuqz+vFnomln0282BRNupvQbTiKHld8HfsU1S
+ U6L3ImgKSlXNq/nDqQm7QF/E6wMGBPkclUsfv5YBfYgEVItpOEWaoHAHQgZ+PSicv8j2Uh65ix4
+ H/LqKEjVEIfJnflU8CGctqCYXCyTUdWRtcT2i1xcYCQzEqNw/5NlcnDP/kXt0DvJq8xRVI4nqhq
+ lB2u7xOlZnWC/oTi5C98QCSN5WwU4RZsg=
+X-Gm-Gg: ASbGncvScl8DMq25No5rMWMWrLrsmsX/Btim7koftgG6RvXRQ3uCkqzQynZxMbIRO91
+ NdqqB2wA+roB3GJ8myX1HD16hfY/f53j0WMOSbiEbg9wubhHyRCyDErhqczJj9D5dwWlPwOehtT
+ Dhwf6M
+X-Received: by 2002:a05:600c:8b63:b0:43c:ea1a:720c with SMTP id
+ 5b1f17b1804b1-454d53ae798mr39061035e9.18.1752090019391; 
+ Wed, 09 Jul 2025 12:40:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF/fI01z2AF6dNNn67byn6x3jQJj+2w+jmeMZB4FP++9mgZnf9r2wg1/M1w29JWt3XDVbY3V+o1Kw46zW/afVg=
+X-Received: by 2002:a05:600c:8b63:b0:43c:ea1a:720c with SMTP id
+ 5b1f17b1804b1-454d53ae798mr39060815e9.18.1752090018854; Wed, 09 Jul 2025
+ 12:40:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <01584206-e2c0-4881-aaf5-d6c552a30873@redhat.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001EA:EE_|CYYPR12MB8752:EE_
-X-MS-Office365-Filtering-Correlation-Id: 48558887-9359-4aac-9930-08ddbf1dafad
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|82310400026|1800799024|376014|7416014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Q8NOIVLoNPhmLqj8VIz/eCT2U6LhBJm0jPVu21hymYUPuHzGYlFpg5chsFvc?=
- =?us-ascii?Q?Km0dSdfCbq0GnxUtdEhLXmTofbny+AGBZNIJkq8W3EZI+VwiQmeJKnqs7Od6?=
- =?us-ascii?Q?bk5hL+tdVEPcbfnD/iglUmie7PEG+XBg8zkIe462PqzbKChwS6nzMVkOojHb?=
- =?us-ascii?Q?F0zKnPbhbFqTM+e85MIw1YXgY3gk1+svy96hYt4VtKPW3A6daS7IhCzOO/KM?=
- =?us-ascii?Q?FEDQ7fMXg6N/43w91hsXR3LB1C70aYc/WZZAojBIUn0faOvcW/ENKqYyF2JB?=
- =?us-ascii?Q?zRic2JITn01psiaard24vE1QDrzWo/nh10T1w7+pOZd1FU5I4Neap9S89lRM?=
- =?us-ascii?Q?HnComKubRCIWFuxtQmVQXlgUWUyqDyse5swjKX7eOK4NAhidzjkKd5yDnXrw?=
- =?us-ascii?Q?QAurfPUMmaOEiNOMl5V+d2JHQ6ld07rwbj3L6awvjrAf1IrwldUa/IrGP3Hy?=
- =?us-ascii?Q?DD16yjR9AsSbT1ighu3k2iBFYRJ5VXLZqcL0kiYou3xo5sSgZPsqXOB+d2hP?=
- =?us-ascii?Q?0gxXo9Eia+tC09VjGFwlj7Vnxov4vnRS40idNOB1mhwDs80XXD/rwRzWmlbg?=
- =?us-ascii?Q?xShn0Xufgrh8k4mN4w2+7JmpqjRzmY2nIYBzqF4C55BHfCL8PcjvYFwrtL7q?=
- =?us-ascii?Q?2xv6E8S4mpTlQ9CU58Z33myIoRHOoPM/MAsH4Td91/MO2njY3gt3KHdc3is6?=
- =?us-ascii?Q?D0D8k0SRMxvT67td1GqKKWjsjD14aOm13V0QUQ2kMKtLNmnwUpxPl7c4mDUe?=
- =?us-ascii?Q?6bIXa4Pu1zk8l3gTSZEpjUbUm+I9baWn6QXdfoVpRcXA9F8YsR5Ro/VrDgaq?=
- =?us-ascii?Q?XHvsd0aT8Qoy2g1cp+0WQgwj6bgmBRHXcGG/oA7CarB9VQcyTtTTJ3XxDyNH?=
- =?us-ascii?Q?mLk4XUZF3f19HTc8fBG6oxYkAO2cwz0Kebq8WItAWIetQNwq7p0NuIHKv1C5?=
- =?us-ascii?Q?QAgEZ7C42Sf7kp1i3egRZFJa6AtTP9bEwToBAkyblPFLwY3Lvvog6WaC0Ad8?=
- =?us-ascii?Q?fjzYx3bcByn2WvGrJ1ZjDc8IgbxnNxLSb5HAGvb/5cBGnITYrll4kslkXlAX?=
- =?us-ascii?Q?0j87ULk6W2AMJEhlEY8kFir+VKl+fUoNme3Ckt/oAeKapjWznM9FyjbmWVij?=
- =?us-ascii?Q?FGdzbvJoxva4u6qyKtS0ZFG2RCBOKJF09VU/NUPYQZUb5IfOMF6U0Ng1PL6k?=
- =?us-ascii?Q?PVuk8Y+KSrzoO5OEafFsGiNRXlrMwygh2c1M3MRLrA9ky5lUhWm9Evcwqsi3?=
- =?us-ascii?Q?14KOXFSqZALrjgifrNb8vE8Y8wE0H5/suU5AK04EtATOt0CwC+ehHgA9f3bk?=
- =?us-ascii?Q?yD2W4N7iqeanmc4PAmjqcDQnu1NxIuwV8k0a1IJkHvNG3IQ0xQlWL8Z9izTE?=
- =?us-ascii?Q?rceXtytr1kN1xN0Nl8ydETKMbuuH0c/uLmFacCWuRleRY0AcTN//e5SlYaln?=
- =?us-ascii?Q?DhOfc6gla0OYX3YuNoYyW+gDdl3z6a7FCSFJDgil0DwJP2SA+QK7RKuVHCmF?=
- =?us-ascii?Q?KywNnaWk0cSUf4wixoJTeue7bdu4w4T8wSuw?=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(82310400026)(1800799024)(376014)(7416014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2025 19:20:37.7448 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 48558887-9359-4aac-9930-08ddbf1dafad
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001EA.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR12MB8752
-Received-SPF: permerror client-ip=40.107.243.57;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM12-DM6-obe.outbound.protection.outlook.com
+References: <CAFn=p-YuqzXvWF-cGLUc0LVVMe2Rinx9+LOjvpHRY-vRrPyJow@mail.gmail.com>
+ <23559c8d-149a-4ec6-adaa-fe0a8f8533f1@redhat.com>
+ <87qzz9myd0.fsf@pond.sub.org>
+ <CABgObfaqauR5SDe67ueAg9-VvJBxM5+LqrYTF3CYjjzzmY8d+w@mail.gmail.com>
+ <aGuPI4w505EoScGK@redhat.com>
+ <CAFn=p-ZoBPsM9UGJiog6684+jrCy61tGauF-osskMACXV9Nfpg@mail.gmail.com>
+In-Reply-To: <CAFn=p-ZoBPsM9UGJiog6684+jrCy61tGauF-osskMACXV9Nfpg@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 9 Jul 2025 21:40:07 +0200
+X-Gm-Features: Ac12FXxNmioW3sJW4wa57GNTJv3rJio1NMXm_6Csy9aE-ho2Hmev9n235_ZZDnU
+Message-ID: <CABgObfaBe0qA0ewy4jo01o1H+uysk-82Gv=tX5hHZ01vxTfdmQ@mail.gmail.com>
+Subject: Re: Build platform guarantees, docs, tests, and snakes in the garden
+To: John Snow <jsnow@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+Content-Type: multipart/alternative; boundary="000000000000304c5b0639843fad"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,47 +111,236 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 09, 2025 at 01:55:46PM -0400, Donald Dutile wrote:
-> > > +enum {
-> > > +    VIOMMU_CAP_STAGE1 = BIT_ULL(0),  /* stage1 page table supported */
-> > > +};
-> > 
-> > Thanks for this work. I am happy to see that we can share the
-> > common code that allocates a NESTING_PARENT in the core using
-> > this flag.
-> > 
-> > Yet on ARM, a STAGE1 page table isn't always a nested S1, the
-> > hardware accelerated one. More often, it can be just a regular
-> > 1-stage translation table via emulated translation code and an
-> > emulated iotlb.
-> > 
-> Because the user-created smmuv3 started as 'accelerated smmuv3',
-> and had been 'de-accelerated' to simply 'user created smmuv3',
-> I'm looking for some clarification in the above statement/request.
-> 
-> Is the above suppose to reflect that a nested IOMMU has some hw-acceleration
-> in its Stage1 implementation?
-> If so, then call it that: STAGE1_ACCEL.
-> If it's suppose to represent that an IOMMU has nested/2-stage support,
-> then the above is a valid cap;  -but-, having a nested/2-stage support IOMMU
-> doesn't necessarily mean its accelerated.
+--000000000000304c5b0639843fad
+Content-Type: text/plain; charset="UTF-8"
 
-Well, there are an emulated "nested" mode and an hw-accelerated
-"nested" mode in the smmuv3 code, so we had to choose something
-like "accel" over "nested".
+Il mer 9 lug 2025, 20:39 John Snow <jsnow@redhat.com> ha scritto:
 
-Here, on the other hand, I think the core using this CAP would
-unlikely care about an emulated "nested" mode in the individual
-vIOMMU..
+> You are right. However, the mkvenv configuration tool we pioneered has
+> been largely un-noticed by contributors and appears to "just work" for
+> the last several years. I believe that cost has been *largely*
+> amortized by yours truly, and I have spared almost every other
+> contributor from paying it.
+>
 
-So I suggested:
-     /* hardware-accelerated nested stage-1 page table support */
-    VIOMMU_CAP_NESTED_S1 = BIT_ULL(0),
+Especially for sphinx.
 
-which it should be clear IMHO.
+mkvenv/pythondeps.toml has been very stable, perhaps beyond expectations,
+so at least it was a one time cost.
 
-If not, maybe go a bit further like "VIOMMU_CAP_HW_NESTED_S1"?
+So, more or less: your concern is something I share, but I think I
+> have it satisfactorily addressed - hence my seeming overfocus on
+> distro packagers.
+>
 
-Thanks
-Nicolin
+I agree, and I should thank you for hearing me out on the somewhat crazy
+idea that's mkvenv.
+
+> In terms of 3rd party vendors, they can have similar roles to a distro
+> > vendor, but are more likely to package up newer QEMU versions to run
+> > on pre-existing distros.
+>
+> Yes. I think they are also usually more willing and able to bend the
+> rules of the base platform, though.
+
+
+Willing, I am not sure. Able yes, which is what matters even if they're not
+really willing. :)
+
+And they probably care much less about docs to be honest.
+
+I seek to develop and codify a suitable compromise for these
+> situations as they continue to arise and, in all likelihood, will not
+> stop cropping up once per year or so. [...]  In my case, it's only Python
+> packages from over five years
+
+ago that present a difficulty - which is not exactly bleeding edge
+> stuff.
+>
+> I would like to codify something like this for our support policy:
+>
+> "On otherwise supported build platforms, QEMU *may* require a Python
+> interpreter that is considered actively maintained, which is usually a
+> version released within the last five years. When platforms that ship,
+> by default, an EOL Python interpreter also offer an optional package
+> for a newer, actively maintained Python interpreter, QEMU may require
+> this repository package for configuring and building QEMU."
+>
+
+That's basically an extension and clarification of what already exists at
+https://www.qemu.org/docs/master/about/build-platforms.html ("Python
+runtime").
+
+Piggybacking on Python EOL as a necessary but not sufficient condition is
+at the same time conservative and useful.
+
+(Simpler language: I am trying to say that Platforms like OpenSUSE
+> that have an ancient Python by default but also ship newer optional
+> versions may require one of those newer, optional versions to build
+> QEMU
+
+
+OpenSUSE is not a problem since their base Python is not even supported by
+QEMU. CentOS Stream is the more sticky one, unless you have a good reason
+to require 3.10 (personally I don't, other than nicer type annotations I
+have no love for e.g. match expressions).
+
+On platforms that do NOT offer a newer Python version, I am
+> suggesting that I will be shit-out-of-luck. I think this is a pretty
+> mild compromise, all told.)
+>
+
+Yeah, their problem. Both Red Hat and SUSE have figured it out.
+
+"On these platforms, unit tests and documentation may possibly require
+> non-distribution packaged versions of Python dependencies such as
+> Sphinx in order to run using the more modern Python interpreter."
+>
+
+That's the cop out for Red Hat, where you accept 3.9 for building and
+require 3.10 for docs and tests? Not sure about it, especially tests. I
+would either restrict the limitation to docs, or just declare 3.10 the
+minimum once 3.9 is EOL (say January 2026).
+
+I'd like to re-iterate that my motivation here is not to stop
+> supporting EOL python versions "just because they are EOL", but rather
+> instead because the tooling and libraries surrounding Python
+> aggressively drop support for those versions once they become EOL.
+> That is, 3.9 is not difficult to support until e.g. Python 3.14 comes
+> out and setuptools, pip, and sphinx begin targeting 3.14 at the
+> expense of 3.9 and there is an increased burden of hacks and
+> workarounds required to target 3.9-3.14 inclusive.
+>
+
+Yes, this is the real problem. And it's better to have a plan ahead of time.
+
+(As an aside, Meson is the good guy here. It supports old versions of
+Python just fine The only reason to push Meson versions past 1.2 was to
+support Rust-adjacent features and bugfixes that especially after 1.5 we're
+mostly written by yours truly, specifically to evolve Rust support in the
+direction that QEMU is interested in).
+
+Paolo
+
+--000000000000304c5b0639843fad
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mer 9 lug 2025, 20:39 John Sn=
+ow &lt;<a href=3D"mailto:jsnow@redhat.com">jsnow@redhat.com</a>&gt; ha scri=
+tto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">You are rig=
+ht. However, the mkvenv configuration tool we pioneered has<br>
+been largely un-noticed by contributors and appears to &quot;just work&quot=
+; for<br>
+the last several years. I believe that cost has been *largely*<br>
+amortized by yours truly, and I have spared almost every other<br>
+contributor from paying it.<br></blockquote></div></div><div dir=3D"auto"><=
+br></div><div dir=3D"auto">Especially for sphinx.</div><div dir=3D"auto"><b=
+r></div><div dir=3D"auto">mkvenv/pythondeps.toml has been very stable, perh=
+aps beyond expectations, so at least it was a one time cost.</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote=
+_container"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">So, more or l=
+ess: your concern is something I share, but I think I<br>
+have it satisfactorily addressed - hence my seeming overfocus on<br>
+distro packagers.<br></blockquote></div></div><div dir=3D"auto"><br></div><=
+div dir=3D"auto">I agree, and I should thank you for hearing me out on the =
+somewhat crazy idea that&#39;s mkvenv.</div><div dir=3D"auto"><br></div><di=
+v dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex">&gt; In terms of 3rd party vendors, =
+they can have similar roles to a distro<br>
+&gt; vendor, but are more likely to package up newer QEMU versions to run<b=
+r>
+&gt; on pre-existing distros.<br>
+<br>
+Yes. I think they are also usually more willing and able to bend the<br>
+rules of the base platform, though.</blockquote></div></div><div dir=3D"aut=
+o"><br></div><div dir=3D"auto">Willing, I am not sure. Able yes, which is w=
+hat matters even if they&#39;re not really willing. :)</div><div dir=3D"aut=
+o"><br></div><div dir=3D"auto">And they probably care much less about docs =
+to be honest.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=
+=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" st=
+yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
+ing-left:1ex">I seek to develop and codify a suitable compromise for these<=
+br>
+situations as they continue to arise and, in all likelihood, will not<br>
+stop cropping up once per year or so. [...]=C2=A0 In my case, it&#39;s only=
+ Python packages from over five years</blockquote></div></div><div dir=3D"a=
+uto"><div class=3D"gmail_quote gmail_quote_container"><blockquote class=3D"=
+gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
+4,204,204);padding-left:1ex">
+ago that present a difficulty - which is not exactly bleeding edge<br>
+stuff.<br>
+<br>I would like to codify something like this for our support policy:<br>
+<br>
+&quot;On otherwise supported build platforms, QEMU *may* require a Python<b=
+r>
+interpreter that is considered actively maintained, which is usually a<br>
+version released within the last five years. When platforms that ship,<br>
+by default, an EOL Python interpreter also offer an optional package<br>
+for a newer, actively maintained Python interpreter, QEMU may require<br>
+this repository package for configuring and building QEMU.&quot;<br></block=
+quote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">That&#39;s =
+basically an extension and clarification of what already exists at <a href=
+=3D"https://www.qemu.org/docs/master/about/build-platforms.html">https://ww=
+w.qemu.org/docs/master/about/build-platforms.html</a> (&quot;Python runtime=
+&quot;).</div><div dir=3D"auto"><br></div><div dir=3D"auto">Piggybacking on=
+ Python EOL as a necessary but not sufficient condition is at the same time=
+ conservative and useful.</div><div dir=3D"auto"><br></div><div dir=3D"auto=
+"><div class=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gma=
+il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
+04,204);padding-left:1ex">(Simpler language: I am trying to say that Platfo=
+rms like OpenSUSE<br>
+that have an ancient Python by default but also ship newer optional<br>
+versions may require one of those newer, optional versions to build<br>
+QEMU</blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">=
+OpenSUSE is not a problem since their base Python is not even supported by =
+QEMU. CentOS Stream is the more sticky one, unless you have a good reason t=
+o require 3.10 (personally I don&#39;t, other than nicer type annotations I=
+ have no love for e.g. match expressions).</div><div dir=3D"auto"><br></div=
+><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockq=
+uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
+x solid rgb(204,204,204);padding-left:1ex">On platforms that do NOT offer a=
+ newer Python version, I am<br>
+suggesting that I will be shit-out-of-luck. I think this is a pretty<br>
+mild compromise, all told.)<br></blockquote></div></div><div dir=3D"auto"><=
+br></div><div dir=3D"auto">Yeah, their problem. Both Red Hat and SUSE have =
+figured it out.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div cla=
+ss=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" =
+style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
+dding-left:1ex">&quot;On these platforms, unit tests and documentation may =
+possibly require<br>
+non-distribution packaged versions of Python dependencies such as<br>
+Sphinx in order to run using the more modern Python interpreter.&quot;<br><=
+/blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">That&=
+#39;s the cop out for Red Hat, where you accept 3.9 for building and requir=
+e 3.10 for docs and tests? Not sure about it, especially tests. I would eit=
+her restrict the limitation to docs, or just declare 3.10 the minimum once =
+3.9 is EOL (say January 2026).</div><div dir=3D"auto"><br></div><div dir=3D=
+"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">I&#39;d like to re-iterate that my motivat=
+ion here is not to stop<br>
+supporting EOL python versions &quot;just because they are EOL&quot;, but r=
+ather<br>
+instead because the tooling and libraries surrounding Python<br>
+aggressively drop support for those versions once they become EOL.<br>
+That is, 3.9 is not difficult to support until e.g. Python 3.14 comes<br>
+out and setuptools, pip, and sphinx begin targeting 3.14 at the<br>
+expense of 3.9 and there is an increased burden of hacks and<br>
+workarounds required to target 3.9-3.14 inclusive.<br></blockquote></div></=
+div><div dir=3D"auto"><br></div><div dir=3D"auto">Yes, this is the real pro=
+blem. And it&#39;s better to have a plan ahead of time.</div><div dir=3D"au=
+to"><br></div><div dir=3D"auto">(As an aside, Meson is the good guy here. I=
+t supports old versions of Python just fine The only reason to push Meson v=
+ersions past 1.2 was to support Rust-adjacent features and bugfixes that es=
+pecially after 1.5 we&#39;re mostly written by yours truly, specifically to=
+ evolve Rust support in the direction that QEMU is interested in).</div><di=
+v dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div></div>
+
+--000000000000304c5b0639843fad--
+
 
