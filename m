@@ -4,90 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA917C83F03
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 18:12:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44C0CC83F03
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 18:40:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZZH6-0008Kn-4j; Wed, 09 Jul 2025 14:12:08 -0400
+	id 1uZZhW-00058F-Ib; Wed, 09 Jul 2025 14:39:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uZZH3-0008GQ-GX
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 14:12:05 -0400
-Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uZZH1-0005EF-Cf
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 14:12:05 -0400
-Received: by mail-oa1-x33.google.com with SMTP id
- 586e51a60fabf-2ef8df09ce9so100896fac.1
- for <qemu-devel@nongnu.org>; Wed, 09 Jul 2025 11:12:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752084721; x=1752689521; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7xVL6so1Zor4yB1ctCdOrVPtIytuMOBaIFdUxfXoGlc=;
- b=CF3Bc0fSCz/FLNyyAeuDrZzTRAq+De7xMXZLVwNkQy7JZEUpYvV8lF+YA79QnS8FMt
- JNYSSY2mT+DHAZvQPrdw1zZU062yX/CiCh7cgmFvHUNFVCjxyVuAsVgqj/VkfAAAYTaf
- CcOxGEKNDq83banTWM8TWSDmrDNZYER6P71NVUjw1CHI8SykWAQHct/NyQnU6IPJ2oWw
- aRRRfCtNyx7poS7XW7fQcStGWiQnl3dssk3DF8Xv36A+mYp8YiSch7bXmfqN4HSqriT1
- f2wVFBYiiysNyYB/QOmHSWU+Yk2wYu12TeFHWo/T9T3TBQiqNDk4QIpTdbgjPfmI7o61
- VjgA==
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uZZhQ-00053O-Ui
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 14:39:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uZZhN-0000wJ-Li
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 14:39:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752086355;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=B9cA7UrxHRb8dgs+ImmGOLxuh7QQcV2hDCXD94JP/Hs=;
+ b=AUPHmYtPpKcjaJfyZZIpxMe1wZ47ZygI/0gE9kagVSQiaU6jYWS/bLaGoioNxAvCdB0zUU
+ U3UgO68MXPPKgE+WiqCe8f06983Xb0CouRjJcJH48mH4XK2+DqWvTlKJEua+lj48H9jWhb
+ eVX2W72JHVq3ZMbQuDDfqzl8ISgTAag=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-133-0aQEhaVmMzaWUzkJR7I_Og-1; Wed, 09 Jul 2025 14:39:13 -0400
+X-MC-Unique: 0aQEhaVmMzaWUzkJR7I_Og-1
+X-Mimecast-MFC-AGG-ID: 0aQEhaVmMzaWUzkJR7I_Og_1752086353
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-31220ecc586so189355a91.2
+ for <qemu-devel@nongnu.org>; Wed, 09 Jul 2025 11:39:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752084721; x=1752689521;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7xVL6so1Zor4yB1ctCdOrVPtIytuMOBaIFdUxfXoGlc=;
- b=SZRQAFgbA21oUr8873EBT2GVHq7rs/HyCk9tnNJ/xKl6XU3J4pZyE09QSyggxnfg3G
- 2NSF65bPFV2u5SnBMiQpxS//FLQzrfVmWw+uYEG3Tq0KgMHgQn0Oq45Iamw6w5FOTqgJ
- FFpMPb1mnM9vTTxlLnhCDZ1FfYzlW6h5h6SxPVoVTpShe2azggiiARAakx+ggej8R5cX
- LH2527V15h8hxbp1l2dRATz5cl1d7uZkbgSJtPNDvjAyXt+xCR/lKjJi+QJWZ9JbYeaF
- HCU7JK1Z480H32ra45oAu1PgJXUh0HPRUyYH0699kkB3ppBm89mG1e1KBQ8KDgfRpE7U
- H5FA==
-X-Gm-Message-State: AOJu0YxxT9oGFOENiv2b/CmxrU/7xPZqYwkBO30rzAo8axAVZkeLbqeQ
- taw7Q5PWi/WiH+3dYWPE7F3oWeb1Mxky/Avd362NVcoOvf1VoRRAWbCQCcGcid7iPm0=
-X-Gm-Gg: ASbGncvR2zjoZN8Ha2rdUimweLC1J4ina/5kIz1FhCklaxZlNtsTursjgc+yEVldPDC
- C6PUwMx/BZlkY6PDpCAlOBi7wV7JPlyDYKtKlRMd5gAokcCirNyl9kmNT1sbL99lBrOYHorAIZw
- xjoC88k+eW+zvF0EuhL/YQe8qYLJn39Xh57PxtokH+WvI6wNzquTWdwLT8Xx2g9Is++s/HTgY+O
- rfbKSIipN35p2/AiogWe6/c6TYNJ4M8XBZbrBAoKuchZ3KLzRP3ut1Qe2QEKau7EFPV/LZSbNwJ
- Wna/nLE3XUxrUTYc0SL1AvN+SlhtRH/8P3Igb5ilEtT8jJ4NoEQeWj466BA8OAgV26FKTxfhK8Y
- 2Kxs=
-X-Google-Smtp-Source: AGHT+IGyd3en96OIkbMggg51XMBzoltA1AhTVptgw8buhWFEbzMweVMq5e7S6IaJBn63ZQaAwMVtMQ==
-X-Received: by 2002:a05:6870:6b0b:b0:29e:48d6:2e62 with SMTP id
- 586e51a60fabf-2fef84bdef1mr2797960fac.9.1752084721300; 
- Wed, 09 Jul 2025 11:12:01 -0700 (PDT)
-Received: from [172.20.0.130] ([187.217.227.247])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2f79020d10esm3582298fac.38.2025.07.09.11.12.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 09 Jul 2025 11:12:00 -0700 (PDT)
-Message-ID: <ddad508e-fbf2-44af-bb4a-481a39749bc2@linaro.org>
-Date: Wed, 9 Jul 2025 12:11:58 -0600
+ d=1e100.net; s=20230601; t=1752086353; x=1752691153;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=B9cA7UrxHRb8dgs+ImmGOLxuh7QQcV2hDCXD94JP/Hs=;
+ b=ElG1KFLelWVfjft+EywzU0BQlFp00du1XNQSSak5yrqzT5PfCBIoIENltcRH6tkb9u
+ AsQT9GS7MxUrdisc2+yKgVOpXsF1H159A/pTdz1UUQjwJYTsxDhNw6plxJwIFNh4R25j
+ XT/xiKdRxfx2C37k1QS70w6xUyBPkrL6PqqwqSPJ3O06kMXzJkE48ocWoo3gCFOKBdVl
+ d0Z7ImRTFlxOx4w2FDv/tf+B9PO4fRxE8hcgySiv9nhCmHoC47OArlXLiC9O1Y+I3eIS
+ FcmAAREbrfez/W5lZYgXYA07N2uRZKWlx9hjXy2lGKrh/1NUba5sVv3tHyLGlipxPQQr
+ 5lLw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWGMCVC0qtpiPbWGzgWNb7V8llAocUN6UYzNbrSgizvFbfzxCuz7IEM5riDQnaP1X56qCuMFL/aMFeL@nongnu.org
+X-Gm-Message-State: AOJu0Yx032RNanLEFvdC3fvFXq9o/EYR7pKdfVMCZLC3ZjsrUo63zscy
+ PKlGKm3eGJ0P9ZpyahBh6/NyHeULR5z1n3yK5QA0ZzRdcP4xTdoMvHtYg8o7weH6jq+lMnEbyfV
+ SIyDGusBT6hj1FjwKvBAtEakWkfzbgEqJj/lR1IhO57E+IKxYhv6HtAuAkwHkDeErjvMZp9kU30
+ Bjo03MEAVN6GAedIJEBPJJ2coQdEnWaaU=
+X-Gm-Gg: ASbGncs/cliv2Cp1pxOK41BsqslOjLSFtli1NBWvOWaJmluHG1kd6bjRY8fab+Stozy
+ 5+kB3TiY+atwGK0WnLLPMDB1K0MiOww9wqr1TMcRCfyoy5QcaoFa+P9Dm1xKrvcgk0EZyRvtzt5
+ Un7Dz2sn3LDYkE8fjSZw+lHXLzVF1FbKkrJ6o=
+X-Received: by 2002:a17:90b:1b08:b0:315:aa28:9501 with SMTP id
+ 98e67ed59e1d1-31c2fddc381mr6175187a91.24.1752086352457; 
+ Wed, 09 Jul 2025 11:39:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFOTGKBnOGiCSrzlGgKkGId+ePAMdNstg+JGnmXD+ooSJ5h6cmnOthYDdvxlLCaQ/rhopxfKr9PwA2Hwekrp1Q=
+X-Received: by 2002:a17:90b:1b08:b0:315:aa28:9501 with SMTP id
+ 98e67ed59e1d1-31c2fddc381mr6175147a91.24.1752086351929; Wed, 09 Jul 2025
+ 11:39:11 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH-for-10.1 v3 3/5] target/arm: Add FEAT_SCTLR2
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
- alex.bennee@linaro.org
-Cc: qemu-devel@nongnu.org
-References: <20250708191704.1068604-1-gustavo.romero@linaro.org>
- <20250708191704.1068604-4-gustavo.romero@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250708191704.1068604-4-gustavo.romero@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::33;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x33.google.com
+References: <CAFn=p-YuqzXvWF-cGLUc0LVVMe2Rinx9+LOjvpHRY-vRrPyJow@mail.gmail.com>
+ <23559c8d-149a-4ec6-adaa-fe0a8f8533f1@redhat.com>
+ <87qzz9myd0.fsf@pond.sub.org>
+ <CABgObfaqauR5SDe67ueAg9-VvJBxM5+LqrYTF3CYjjzzmY8d+w@mail.gmail.com>
+ <aGuPI4w505EoScGK@redhat.com>
+In-Reply-To: <aGuPI4w505EoScGK@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Wed, 9 Jul 2025 14:39:00 -0400
+X-Gm-Features: Ac12FXzh1YBWSV0D1XCB36lobxLhndYW9w-A2F8dBN0rWDqxoppYqNkukp5ZhJQ
+Message-ID: <CAFn=p-ZoBPsM9UGJiog6684+jrCy61tGauF-osskMACXV9Nfpg@mail.gmail.com>
+Subject: Re: Build platform guarantees, docs, tests, and snakes in the garden
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ qemu-devel <qemu-devel@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,184 +108,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/8/25 13:17, Gustavo Romero wrote:
-> Add FEAT_SCTLR2, which introduces the SCTLR2_EL1, SCTLR2_EL2, and
-> SCTLR2_EL3 registers. These registers are extensions of the SCTLR_ELx
-> ones.
-> 
-> Because the bits in these registers depend on other CPU features, and
-> only FEAT_MEC is supported at the moment, this commit only implements
-> the EMEC bits in CTLR2_EL2 and SCTLR2_EL3.
-> 
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> ---
->   docs/system/arm/emulation.rst |  1 +
->   target/arm/cpu-features.h     |  5 +++
->   target/arm/cpu.h              | 15 +++++++
->   target/arm/helper.c           | 78 +++++++++++++++++++++++++++++++++++
->   target/arm/internals.h        |  1 +
->   target/arm/tcg/cpu64.c        |  1 +
->   6 files changed, 101 insertions(+)
-> 
-> diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-> index 890dc6fee2..66043b0747 100644
-> --- a/docs/system/arm/emulation.rst
-> +++ b/docs/system/arm/emulation.rst
-> @@ -121,6 +121,7 @@ the following architecture extensions:
->   - FEAT_RPRES (Increased precision of FRECPE and FRSQRTE)
->   - FEAT_S2FWB (Stage 2 forced Write-Back)
->   - FEAT_SB (Speculation Barrier)
-> +- FEAT_SCTLR2 (Extension to SCTLR_ELx)
->   - FEAT_SEL2 (Secure EL2)
->   - FEAT_SHA1 (SHA1 instructions)
->   - FEAT_SHA256 (SHA256 instructions)
-> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-> index 552d8757b7..44d6b655a9 100644
-> --- a/target/arm/cpu-features.h
-> +++ b/target/arm/cpu-features.h
-> @@ -416,6 +416,11 @@ static inline bool isar_feature_aa64_rdm(const ARMISARegisters *id)
->       return FIELD_EX64_IDREG(id, ID_AA64ISAR0, RDM) != 0;
->   }
->   
-> +static inline bool isar_feature_aa64_sctlr2(const ARMISARegisters *id)
-> +{
-> +    return FIELD_EX64_IDREG(id, ID_AA64MMFR3, SCTLRX) != 0;
-> +}
-> +
->   static inline bool isar_feature_aa64_sha3(const ARMISARegisters *id)
->   {
->       return FIELD_EX64_IDREG(id, ID_AA64ISAR0, SHA3) != 0;
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index a93eebe077..32d30b7bb9 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -337,6 +337,7 @@ typedef struct CPUArchState {
->               };
->               uint64_t sctlr_el[4];
->           };
-> +        uint64_t sctlr2_el[4]; /* Extension to System control register. */
->           uint64_t vsctlr; /* Virtualization System control register. */
->           uint64_t cpacr_el1; /* Architectural feature access control register */
->           uint64_t cptr_el[4];  /* ARMv8 feature trap registers */
-> @@ -1433,6 +1434,19 @@ void pmu_init(ARMCPU *cpu);
->   #define SCTLR_SPINTMASK (1ULL << 62) /* FEAT_NMI */
->   #define SCTLR_TIDCP   (1ULL << 63) /* FEAT_TIDCP1 */
->   
-> +#define SCTLR2_EMEC (1ULL << 1) /* FEAT_MEC */
-> +#define SCTLR2_NMEA (1ULL << 2) /* FEAT_DoubleFault2 */
-> +#define SCTLR2_ENADERR (1ULL << 3) /* FEAT_ADERR */
-> +#define SCTLR2_ENANERR (1ULL << 4) /* FEAT_ANERR */
-> +#define SCTLR2_EASE (1ULL << 5) /* FEAT_DoubleFault2 */
-> +#define SCTLR2_ENIDCP128 (1ULL << 6) /* FEAT_SYSREG128 */
-> +#define SCTLR2_ENPACM (1ULL << 7) /* FEAT_PAuth_LR */
-> +#define SCTLR2_ENPACM0 (1ULL << 8 /* FEAT_PAuth_LR */
-> +#define SCTLR2_CPTA (1ULL << 9) /* FEAT_CPA2 */
-> +#define SCTLR2_CPTA0 (1ULL << 10) /* FEAT_CPA2 */
-> +#define SCTLR2_CPTM (1ULL << 11) /* FEAT_CPA2 */
-> +#define SCTLR2_CPTM0 (1ULL << 12) /* FEAT_CAP2 */
-> +
->   #define CPSR_M (0x1fU)
->   #define CPSR_T (1U << 5)
->   #define CPSR_F (1U << 6)
-> @@ -1725,6 +1739,7 @@ static inline void xpsr_write(CPUARMState *env, uint32_t val, uint32_t mask)
->   #define SCR_HXEN              (1ULL << 38)
->   #define SCR_TRNDR             (1ULL << 40)
->   #define SCR_ENTP2             (1ULL << 41)
-> +#define SCR_SCTLR2EN          (1ULL << 44)
->   #define SCR_GPF               (1ULL << 48)
->   #define SCR_MECEN             (1ULL << 49)
->   #define SCR_NSE               (1ULL << 62)
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 984406c945..5707eea822 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -6144,6 +6144,8 @@ static void define_arm_vh_e2h_redirects_aliases(ARMCPU *cpu)
->       static const struct E2HAlias aliases[] = {
->           { K(3, 0,  1, 0, 0), K(3, 4,  1, 0, 0), K(3, 5, 1, 0, 0),
->             "SCTLR", "SCTLR_EL2", "SCTLR_EL12" },
-> +        { K(3, 0,  1, 0, 3), K(3, 4,  1, 0, 3), K(3, 5, 1, 0, 3),
-> +          "SCTLR2_EL1", "SCTLR2_EL2", "SCTLR2_EL12" },
->           { K(3, 0,  1, 0, 2), K(3, 4,  1, 1, 2), K(3, 5, 1, 0, 2),
->             "CPACR", "CPTR_EL2", "CPACR_EL12" },
->           { K(3, 0,  2, 0, 0), K(3, 4,  2, 0, 0), K(3, 5, 2, 0, 0),
-> @@ -7816,6 +7818,78 @@ static const ARMCPRegInfo actlr2_hactlr2_reginfo[] = {
->         .resetvalue = 0 },
->   };
->   
-> +static CPAccessResult sctlr2_el2_access(CPUARMState *env,
-> +                                        const ARMCPRegInfo *ri,
-> +                                        bool isread)
-> +{
-> +    if (arm_current_el(env) < 3 && !(env->cp15.scr_el3 & SCR_SCTLR2EN)) {
-> +        return CP_ACCESS_TRAP_EL3;
-> +    }
+On Mon, Jul 7, 2025 at 5:11=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+>
+> On Wed, Jul 02, 2025 at 03:24:09PM -0400, Paolo Bonzini wrote:
+> > Il mar 24 giu 2025, 02:45 Markus Armbruster <armbru@redhat.com> ha scri=
+tto:
+> >
+> > > > ... I think I value this a bit higher than Markus, but not really
+> > > because of offline builds.  Rather, keeping the "accepted" key lower =
+(i.e.
+> > > supporting the packaged sphinx on a wide range of distros) makes it e=
+asier
+> > > to bump the "installed" key when needed, as in this failure to run 5.=
+3.0
+> > > under Python 3.13.
+> > >
+> > > Showing my ignorance again...  I don't understand how keeping "accept=
+ed"
+> > > lower helps.
+> > >
+> >
+> > Because it makes it easier to use distro Python. If distro Python is
+> > <accepted, configure's will try to use the "installed" version. If that
+> > version in turn is too new for distro Python, you're screwed. So you wa=
+nt
+> > to be as conservative as needed for accepted, but not more.
+> >
+> > Regarding fool or pioneer: for sure we're extraordinarily kind towards
+> > distros. To some extent we have to do that because of 1) the possible
+> > competition of other VMMs that completely ignore distros (e.g. because =
+they
+> > just use cargo)=E2=80=94packaging is an area where C still has an edge =
+and we want
+> > to keep that edge 2) we're an infrastructure component that can't just =
+tell
+> > users to grab a flatpak.
+> >
+> > The distro policy (mostly conceived by Dan) has served us well, with on=
+ly
+> > small adjustments needed to have newish version of Meson/Rust(*), and
+> > non-prehistoric versions of Python. I don't see a need to change it, si=
+nce
+> > at this point we have the tools needed to manage the complexity.
+>
+> Note that much of the commentary about distros versions has been in
+> relation to the distro packagers, but that was not my only target
+> in writing the distro policy. It was equally aimed at contributors
+> using such distros, as well as 3rd party vendors building solutions
+> on top of designated distro versions
 
-Missing a check for arm_feature(env, ARM_FEATURE_EL3).
+It's not that I ignore such cases, it's just that distro packagers
+have the more difficult to accommodate use case, so I tend to focus in
+on that when discussing pros/cons of various policies. If I
+accommodate that use case, I accommodate everyone else necessarily, I
+believe. It's just a heuristic and not a truth, but so far a useful
+one.
 
-> +    return CP_ACCESS_OK;
-> +};
+>
+> You can say contributors should just pick newer containers for their
+> build env, or manually download newer deps, or have QEMU build fancy
+> scripts to auto-download newer deps. All of those options have a cost
+> to them, as compared to using what is already present in the distro.
 
-Stray ;
+You are right. However, the mkvenv configuration tool we pioneered has
+been largely un-noticed by contributors and appears to "just work" for
+the last several years. I believe that cost has been *largely*
+amortized by yours truly, and I have spared almost every other
+contributor from paying it.
 
-> +
-> +static CPAccessResult sctlr2_el1_access(CPUARMState *env,
-> +                                        const ARMCPRegInfo *ri,
-> +                                        bool isread)
-> +{
-> +    CPAccessResult ret = access_tvm_trvm(env, ri, isread);
-> +    if (ret != CP_ACCESS_OK) {
-> +        return ret;
-> +    }
-> +    if (arm_current_el(env) < 2 && !(arm_hcrx_el2_eff(env) & HCRX_SCTLR2EN)) {
-> +        return CP_ACCESS_TRAP_EL2;
-> +    }
-> +    return sctlr2_el2_access(env, ri, isread);
-> +};
+The fancy scripts we have do in fact bend over backward to use
+distro-standard packages whenever at all possible, falling back to
+vendored packages and only reaching out to the internet when it
+*absolutely has to*. I think this has served us perfectly well and
+quite nearly invisibly (to everyone else except me, anyway.)
 
-Stray ;
+So, more or less: your concern is something I share, but I think I
+have it satisfactorily addressed - hence my seeming overfocus on
+distro packagers.
 
-> +
-> +static void sctlr2_el1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-> +                             uint64_t value)
-> +{
-> +    /* This register does not control any feature yet. */
-> +};
+>
+> In terms of 3rd party vendors, they can have similar roles to a distro
+> vendor, but are more likely to package up newer QEMU versions to run
+> on pre-existing distros.
 
-Stray ;
+Yes. I think they are also usually more willing and able to bend the
+rules of the base platform, though. I don't want to break platform
+support for things like documentation and tests *needlessly*, but the
+frequent changes to Python packaging subsystems do rather often
+present a difficulty when it comes to supporting both "EOL" versions
+of Python while simultaneously supporting the bleeding edge.
 
-> +
-> +static void sctlr2_el2_write(CPUARMState *env, const ARMCPRegInfo *ri,
-> +                             uint64_t value)
-> +{
-> +    uint64_t valid_mask = 0;
-> +
-> +    if (cpu_isar_feature(aa64_mec, env_archcpu(env))) {
-> +        valid_mask |= SCTLR2_EMEC;
-> +    }
-> +    value &= valid_mask;
-> +    raw_write(env, ri, value);
-> +};
+I seek to develop and codify a suitable compromise for these
+situations as they continue to arise and, in all likelihood, will not
+stop cropping up once per year or so.
 
-Stray ;
+As Markus puts it: If a distro (or a third party vendor of a distro)
+wants to backport bleeding edge packages to a stable platform, they
+must also be willing at times to backport build dependencies. I think
+that's a reasonable view, though not license to go wild ignoring older
+platforms. In my case, it's only Python packages from over five years
+ago that present a difficulty - which is not exactly bleeding edge
+stuff.
 
-> +
-> +static void sctlr2_el3_write(CPUARMState *env, const ARMCPRegInfo *ri,
-> +                             uint64_t value)
-> +{
-> +    uint64_t valid_mask = 0;
-> +
-> +    if (cpu_isar_feature(aa64_mec, env_archcpu(env))) {
-> +        valid_mask |= SCTLR2_EMEC;
-> +    }
-> +    value &= valid_mask;
-> +    raw_write(env, ri, value);
-> +};
+(Of course, my personal wish is that the Python ecosystem wasn't quite
+so aggressive about deprecating things, but I just simply do not
+control that, nor the weather...)
 
-Stray ;
+>
+> A further goal of the support policy was to provide a mechanism to
+> eliminate exactly these kind of mail threads. Before we had the policy,
+> every single time someone wanted to bump the min version of any dep
+> we would have debates over whether it was OK or not, there was always
+> someone who wanted the old version of the distro forever.  Defining
+> the policy has allowed us to unconditionally bump the min versions of
+> our times on a usually reasonable timeframe, without needing to engage
+> in debate. We can just point people to our support policy when they
+> complained that they really wanted old versions X, Y, & Z.
 
-Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+I agree, that is indeed the nice thing about the policy.
+
+... And it's why I would like to codify our behavior around the
+exemptions we make for e.g. requiring newer Python on platforms like
+OpenSUSE Leap 15.6, and quite possibly soon, CentOS Stream 9. It will
+eliminate the need to have this discussion every time.
+
+>
+> Every time we make an exception to the policy, we undermine the benefits
+> we obtain from it, taking us back the old world where our min versions
+> were an inconsistent & arbitrary set, with little clear understanding
+> of when we would change, either by maintainers or users.
+
+I agree again!
+
+I would like to codify something like this for our support policy:
+
+"On otherwise supported build platforms, QEMU *may* require a Python
+interpreter that is considered actively maintained, which is usually a
+version released within the last five years. When platforms that ship,
+by default, an EOL Python interpreter also offer an optional package
+for a newer, actively maintained Python interpreter, QEMU may require
+this repository package for configuring and building QEMU."
+
+(Simpler language: I am trying to say that Platforms like OpenSUSE
+that have an ancient Python by default but also ship newer optional
+versions may require one of those newer, optional versions to build
+QEMU. On platforms that do NOT offer a newer Python version, I am
+suggesting that I will be shit-out-of-luck. I think this is a pretty
+mild compromise, all told.)
+
+"On these platforms, unit tests and documentation may possibly require
+non-distribution packaged versions of Python dependencies such as
+Sphinx in order to run using the more modern Python interpreter."
+
+(Simpler language: Platforms like OpenSUSE do not package Sphinx for
+those newer, optional Python interpreters and the user will either
+need to allow access to PyPI for configure to load what it needs just
+in time, or make preparations to load those packages in advance. This
+is the most unfortunate truth of our workaround for OpenSUSE, but I am
+not aware of any way to mitigate it. The core build will still work,
+but we may indeed lose access to documentation and unit tests from
+time to time using only the platform repositories in these situations.
+I think this is a graceful degradation, but it is one I fight to avoid
+at all costs. It seems to be a necessary evil at times.
+
+OpenSUSE Leap has a Python that is too old to reasonably support, but
+they offer an optional modern version that can be loaded instead. In
+that event, it is possible the user may need PyPI packages to run
+tests and build documentation. To my knowledge, OpenSUSE Leap 15.6 is
+currently our only supported platform where this exception need occur,
+but it is very possible that a similar exception may arise for CentOS
+Stream 9/RHEL9 in the not-so-distant future when Python 3.9 is EOL and
+other packages start aggressively dropping support for it.)
+
+I'd like to re-iterate that my motivation here is not to stop
+supporting EOL python versions "just because they are EOL", but rather
+instead because the tooling and libraries surrounding Python
+aggressively drop support for those versions once they become EOL.
+That is, 3.9 is not difficult to support until e.g. Python 3.14 comes
+out and setuptools, pip, and sphinx begin targeting 3.14 at the
+expense of 3.9 and there is an increased burden of hacks and
+workarounds required to target 3.9-3.14 inclusive.
+
+As it stands, I have no plans or motivation to discontinue support for
+3.9, but based on prior EOL events (3.6, 3.7, and 3.8) there is
+inevitably some incompatibility for which dropping support is usually
+the easiest path forward. I am just thinking ahead, currently.
+
+Basically, I would like to promise I will "do my best" to support the
+"base platforms as-is", but recognize that an exception for Python is
+occasionally required, and, to prevent future discussions like this
+(essentially yearly, now) would like to codify the precise nature of
+that exemption and what degradation we consider an acceptable loss in
+those cases. Namely, core build support is easier to maintain using
+only distro packages, but unit testing and documentation are
+occasionally a bit more difficult.
+
+I would love to adhere to the policy as written as immutable law, but
+it has created genuine friction and non-trivial cost on my end in the
+past - I only want to convey that "I think it's a good policy!" and "I
+have tried to follow it as gospel!" but raise the issue that it's
+quite hard to do in some cases and we do need exemptions for things
+like OpenSUSE that are communicated clearly.
 
 
-r~
+
+>
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
+>
+
 
