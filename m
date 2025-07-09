@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9421C83F03
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 08:25:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 425CAC83F03
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 08:25:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZQ6o-0000nW-Id; Wed, 09 Jul 2025 04:24:54 -0400
+	id 1uZQ6z-0001A3-4L; Wed, 09 Jul 2025 04:25:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1uZQ6f-0000hB-AP
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 04:24:46 -0400
+ id 1uZQ6x-00018u-Kc
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 04:25:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1uZQ6b-00067M-2q
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 04:24:45 -0400
+ id 1uZQ6v-0006Bp-AO
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 04:25:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752049480;
+ s=mimecast20190719; t=1752049500;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pip8H5LhecWwBCKCriggPkC9ndhlmXdBoFMDWaLqcpM=;
- b=HbNGDsB3c+SbqKAbvJ5smMSOmIZfIy1TWhWd1ESYAAMpUTnAF0i8+27dGH+VN5Zky1qu5Y
- rJqGMP9SCuEVvH2U5KIKa5T+vc2AU1ug5pb3XEBfCVtTO8hQ7ZCHwgnpjwTXGYaX/rUwNR
- gjL6WCh7CzxFA+y9DmZl9F/3onoFLkQ=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=tfZjc6j5sXAM2bS0yOshLl4QKC/OUj5fmMiiuI37S1o=;
+ b=WJRiEdx9uurljt6C+GHAfLHbmacSJMrD11OtcdZwfSq1Z7+v4yzqwGxfJ/dAw+ucHCj/5t
+ L7u8LJ1Wox2qwhRlwj30kn5iDs48ULEtt3d7RDOnbg8/1n8UU68NaLJscwC+pjHLBPdVZz
+ +9l6Fz7aXWf1+a02vMWqNoo40cGKQ/I=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-568-szfP2iARMHajx4YjcnSc4w-1; Wed,
- 09 Jul 2025 04:24:38 -0400
-X-MC-Unique: szfP2iARMHajx4YjcnSc4w-1
-X-Mimecast-MFC-AGG-ID: szfP2iARMHajx4YjcnSc4w_1752049477
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-BfpOFSMiP22yFSin00wQ7w-1; Wed,
+ 09 Jul 2025 04:24:57 -0400
+X-MC-Unique: BfpOFSMiP22yFSin00wQ7w-1
+X-Mimecast-MFC-AGG-ID: BfpOFSMiP22yFSin00wQ7w_1752049496
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2382E1978F61; Wed,  9 Jul 2025 08:24:37 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 10D1A1956096; Wed,  9 Jul 2025 08:24:56 +0000 (UTC)
 Received: from lenovo-t14s.redhat.com (unknown [10.45.225.147])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 952C6195608F; Wed,  9 Jul 2025 08:24:32 +0000 (UTC)
+ id D6389195608F; Wed,  9 Jul 2025 08:24:51 +0000 (UTC)
 From: Laurent Vivier <lvivier@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Weil <sw@weilnetz.de>,
@@ -59,9 +59,10 @@ Cc: Stefan Weil <sw@weilnetz.de>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Jason Wang <jasowang@redhat.com>, Eric Blake <eblake@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH v4 01/11] net: Refactor stream logic for reuse in '-net passt'
-Date: Wed,  9 Jul 2025 10:24:15 +0200
-Message-ID: <20250709082425.601990-2-lvivier@redhat.com>
+Subject: [PATCH v4 05/11] net: Consolidate vhost feature bits into vhost_net
+ structure
+Date: Wed,  9 Jul 2025 10:24:19 +0200
+Message-ID: <20250709082425.601990-6-lvivier@redhat.com>
 In-Reply-To: <20250709082425.601990-1-lvivier@redhat.com>
 References: <20250709082425.601990-1-lvivier@redhat.com>
 MIME-Version: 1.0
@@ -92,722 +93,312 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To prepare for the implementation of '-net passt', this patch moves
-the generic stream handling functions from net/stream.c into new
-net/stream_data.c and net/stream_data.h files.
+Previously, the vhost_net_get_feature_bits() function in
+hw/net/vhost_net.c used a large switch statement to determine
+the appropriate feature bits based on the NetClientDriver type.
 
-This refactoring introduces a NetStreamData struct that encapsulates
-the generic fields and logic previously in NetStreamState. The
-NetStreamState now embeds NetStreamData and delegates the core
-stream operations to the new generic functions.
+This created unnecessary coupling between the generic vhost layer
+and specific network backends (like TAP, vhost-user, and
+vhost-vdpa).
 
-To maintain flexibility for different users of this generic code,
-callbacks for send and listen operations are now passed via
-function pointers within the NetStreamData struct. This allows
-callers to provide their own specific implementations while reusing
-the common connection and data transfer logic.
+This patch moves the definition of vhost feature bits directly into the
+vhost_net structure for each relevant network client.
 
 Signed-off-by: Laurent Vivier <lvivier@redhat.com>
 ---
- net/meson.build   |   3 +-
- net/stream.c      | 282 +++++++++++-----------------------------------
- net/stream_data.c | 193 +++++++++++++++++++++++++++++++
- net/stream_data.h |  31 +++++
- 4 files changed, 290 insertions(+), 219 deletions(-)
- create mode 100644 net/stream_data.c
- create mode 100644 net/stream_data.h
+ hw/net/vhost_net.c        | 90 ++-------------------------------------
+ include/hw/virtio/vhost.h |  1 +
+ include/net/vhost-vdpa.h  |  2 -
+ include/net/vhost_net.h   |  1 +
+ net/tap.c                 | 19 +++++++++
+ net/vhost-user.c          | 43 +++++++++++++++++++
+ net/vhost-vdpa.c          |  3 +-
+ 7 files changed, 69 insertions(+), 90 deletions(-)
 
-diff --git a/net/meson.build b/net/meson.build
-index bb97b4dcbeb6..bb3c011e5a30 100644
---- a/net/meson.build
-+++ b/net/meson.build
-@@ -1,6 +1,7 @@
- system_ss.add(files(
-   'announce.c',
-   'checksum.c',
-+  'dgram.c',
-   'dump.c',
-   'eth.c',
-   'filter-buffer.c',
-@@ -12,7 +13,7 @@ system_ss.add(files(
-   'queue.c',
-   'socket.c',
-   'stream.c',
--  'dgram.c',
-+  'stream_data.c',
-   'util.c',
- ))
+diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
+index db8b97b753d8..787c769ccc37 100644
+--- a/hw/net/vhost_net.c
++++ b/hw/net/vhost_net.c
+@@ -36,94 +36,9 @@
+ #include "hw/virtio/virtio-bus.h"
+ #include "linux-headers/linux/vhost.h"
  
-diff --git a/net/stream.c b/net/stream.c
-index 6152d2a05e52..d893f02cabe3 100644
---- a/net/stream.c
-+++ b/net/stream.c
-@@ -27,173 +27,50 @@
- 
- #include "net/net.h"
- #include "clients.h"
--#include "monitor/monitor.h"
- #include "qapi/error.h"
--#include "qemu/error-report.h"
--#include "qemu/option.h"
--#include "qemu/sockets.h"
--#include "qemu/iov.h"
--#include "qemu/main-loop.h"
--#include "qemu/cutils.h"
--#include "io/channel.h"
--#include "io/channel-socket.h"
- #include "io/net-listener.h"
- #include "qapi/qapi-events-net.h"
- #include "qapi/qapi-visit-sockets.h"
- #include "qapi/clone-visitor.h"
- 
-+#include "stream_data.h"
-+
- typedef struct NetStreamState {
--    NetClientState nc;
--    QIOChannel *listen_ioc;
--    QIONetListener *listener;
--    QIOChannel *ioc;
--    guint ioc_read_tag;
--    guint ioc_write_tag;
--    SocketReadState rs;
--    unsigned int send_index;      /* number of bytes sent*/
-+    NetStreamData data;
-     uint32_t reconnect_ms;
-     guint timer_tag;
-     SocketAddress *addr;
- } NetStreamState;
- 
--static void net_stream_listen(QIONetListener *listener,
--                              QIOChannelSocket *cioc,
--                              void *opaque);
- static void net_stream_arm_reconnect(NetStreamState *s);
- 
--static gboolean net_stream_writable(QIOChannel *ioc,
--                                    GIOCondition condition,
--                                    gpointer data)
+-
+-/* Features supported by host kernel. */
+-static const int kernel_feature_bits[] = {
+-    VIRTIO_F_NOTIFY_ON_EMPTY,
+-    VIRTIO_RING_F_INDIRECT_DESC,
+-    VIRTIO_RING_F_EVENT_IDX,
+-    VIRTIO_NET_F_MRG_RXBUF,
+-    VIRTIO_F_VERSION_1,
+-    VIRTIO_NET_F_MTU,
+-    VIRTIO_F_IOMMU_PLATFORM,
+-    VIRTIO_F_RING_PACKED,
+-    VIRTIO_F_RING_RESET,
+-    VIRTIO_F_IN_ORDER,
+-    VIRTIO_F_NOTIFICATION_DATA,
+-    VIRTIO_NET_F_RSC_EXT,
+-    VIRTIO_NET_F_HASH_REPORT,
+-    VHOST_INVALID_FEATURE_BIT
+-};
+-
+-/* Features supported by others. */
+-static const int user_feature_bits[] = {
+-    VIRTIO_F_NOTIFY_ON_EMPTY,
+-    VIRTIO_F_NOTIFICATION_DATA,
+-    VIRTIO_RING_F_INDIRECT_DESC,
+-    VIRTIO_RING_F_EVENT_IDX,
+-
+-    VIRTIO_F_ANY_LAYOUT,
+-    VIRTIO_F_VERSION_1,
+-    VIRTIO_NET_F_CSUM,
+-    VIRTIO_NET_F_GUEST_CSUM,
+-    VIRTIO_NET_F_GSO,
+-    VIRTIO_NET_F_GUEST_TSO4,
+-    VIRTIO_NET_F_GUEST_TSO6,
+-    VIRTIO_NET_F_GUEST_ECN,
+-    VIRTIO_NET_F_GUEST_UFO,
+-    VIRTIO_NET_F_HOST_TSO4,
+-    VIRTIO_NET_F_HOST_TSO6,
+-    VIRTIO_NET_F_HOST_ECN,
+-    VIRTIO_NET_F_HOST_UFO,
+-    VIRTIO_NET_F_MRG_RXBUF,
+-    VIRTIO_NET_F_MTU,
+-    VIRTIO_F_IOMMU_PLATFORM,
+-    VIRTIO_F_RING_PACKED,
+-    VIRTIO_F_RING_RESET,
+-    VIRTIO_F_IN_ORDER,
+-    VIRTIO_NET_F_RSS,
+-    VIRTIO_NET_F_RSC_EXT,
+-    VIRTIO_NET_F_HASH_REPORT,
+-    VIRTIO_NET_F_GUEST_USO4,
+-    VIRTIO_NET_F_GUEST_USO6,
+-    VIRTIO_NET_F_HOST_USO,
+-
+-    /* This bit implies RARP isn't sent by QEMU out of band */
+-    VIRTIO_NET_F_GUEST_ANNOUNCE,
+-
+-    VIRTIO_NET_F_MQ,
+-
+-    VHOST_INVALID_FEATURE_BIT
+-};
+-
+-static const int *vhost_net_get_feature_bits(struct vhost_net *net)
 -{
--    NetStreamState *s = data;
+-    const int *feature_bits = 0;
 -
--    s->ioc_write_tag = 0;
+-    switch (net->nc->info->type) {
+-    case NET_CLIENT_DRIVER_TAP:
+-        feature_bits = kernel_feature_bits;
+-        break;
+-    case NET_CLIENT_DRIVER_VHOST_USER:
+-        feature_bits = user_feature_bits;
+-        break;
+-#ifdef CONFIG_VHOST_NET_VDPA
+-    case NET_CLIENT_DRIVER_VHOST_VDPA:
+-        feature_bits = vdpa_feature_bits;
+-        break;
+-#endif
+-    default:
+-        error_report("Feature bits not defined for this type: %d",
+-                net->nc->info->type);
+-        break;
+-    }
 -
--    qemu_flush_queued_packets(&s->nc);
--
--    return G_SOURCE_REMOVE;
+-    return feature_bits;
 -}
 -
- static ssize_t net_stream_receive(NetClientState *nc, const uint8_t *buf,
-                                   size_t size)
+ uint64_t vhost_net_get_features(struct vhost_net *net, uint64_t features)
  {
--    NetStreamState *s = DO_UPCAST(NetStreamState, nc, nc);
--    uint32_t len = htonl(size);
--    struct iovec iov[] = {
--        {
--            .iov_base = &len,
--            .iov_len  = sizeof(len),
--        }, {
--            .iov_base = (void *)buf,
--            .iov_len  = size,
--        },
--    };
--    struct iovec local_iov[2];
--    unsigned int nlocal_iov;
--    size_t remaining;
--    ssize_t ret;
--
--    remaining = iov_size(iov, 2) - s->send_index;
--    nlocal_iov = iov_copy(local_iov, 2, iov, 2, s->send_index, remaining);
--    ret = qio_channel_writev(s->ioc, local_iov, nlocal_iov, NULL);
--    if (ret == QIO_CHANNEL_ERR_BLOCK) {
--        ret = 0; /* handled further down */
--    }
--    if (ret == -1) {
--        s->send_index = 0;
--        return -errno;
--    }
--    if (ret < (ssize_t)remaining) {
--        s->send_index += ret;
--        s->ioc_write_tag = qio_channel_add_watch(s->ioc, G_IO_OUT,
--                                                 net_stream_writable, s, NULL);
--        return 0;
--    }
--    s->send_index = 0;
--    return size;
--}
--
--static gboolean net_stream_send(QIOChannel *ioc,
--                                GIOCondition condition,
--                                gpointer data);
--
--static void net_stream_send_completed(NetClientState *nc, ssize_t len)
--{
--    NetStreamState *s = DO_UPCAST(NetStreamState, nc, nc);
--
--    if (!s->ioc_read_tag) {
--        s->ioc_read_tag = qio_channel_add_watch(s->ioc, G_IO_IN,
--                                                net_stream_send, s, NULL);
--    }
--}
-+    NetStreamData *d = DO_UPCAST(NetStreamData, nc, nc);
- 
--static void net_stream_rs_finalize(SocketReadState *rs)
--{
--    NetStreamState *s = container_of(rs, NetStreamState, rs);
--
--    if (qemu_send_packet_async(&s->nc, rs->buf,
--                               rs->packet_len,
--                               net_stream_send_completed) == 0) {
--        if (s->ioc_read_tag) {
--            g_source_remove(s->ioc_read_tag);
--            s->ioc_read_tag = 0;
--        }
--    }
-+    return net_stream_data_receive(d, buf, size);
+-    return vhost_get_features(&net->dev, vhost_net_get_feature_bits(net),
++    return vhost_get_features(&net->dev, net->feature_bits,
+             features);
+ }
+ int vhost_net_get_config(struct vhost_net *net,  uint8_t *config,
+@@ -140,7 +55,7 @@ int vhost_net_set_config(struct vhost_net *net, const uint8_t *data,
+ void vhost_net_ack_features(struct vhost_net *net, uint64_t features)
+ {
+     net->dev.acked_features = net->dev.backend_features;
+-    vhost_ack_features(&net->dev, vhost_net_get_feature_bits(net), features);
++    vhost_ack_features(&net->dev, net->feature_bits, features);
  }
  
- static gboolean net_stream_send(QIOChannel *ioc,
-                                 GIOCondition condition,
-                                 gpointer data)
- {
--    NetStreamState *s = data;
--    int size;
--    int ret;
--    QEMU_UNINITIALIZED char buf1[NET_BUFSIZE];
--    const char *buf;
--
--    size = qio_channel_read(s->ioc, buf1, sizeof(buf1), NULL);
--    if (size < 0) {
--        if (errno != EWOULDBLOCK) {
--            goto eoc;
--        }
--    } else if (size == 0) {
--        /* end of connection */
--    eoc:
--        s->ioc_read_tag = 0;
--        if (s->ioc_write_tag) {
--            g_source_remove(s->ioc_write_tag);
--            s->ioc_write_tag = 0;
--        }
--        if (s->listener) {
--            qemu_set_info_str(&s->nc, "listening");
--            qio_net_listener_set_client_func(s->listener, net_stream_listen,
--                                             s, NULL);
--        }
--        object_unref(OBJECT(s->ioc));
--        s->ioc = NULL;
--
--        net_socket_rs_init(&s->rs, net_stream_rs_finalize, false);
--        s->nc.link_down = true;
-+    if (net_stream_data_send(ioc, condition, data) == G_SOURCE_REMOVE) {
-+        NetStreamState *s = DO_UPCAST(NetStreamState, data, data);
- 
--        qapi_event_send_netdev_stream_disconnected(s->nc.name);
-+        qapi_event_send_netdev_stream_disconnected(s->data.nc.name);
-         net_stream_arm_reconnect(s);
- 
-         return G_SOURCE_REMOVE;
+ uint64_t vhost_net_get_max_queues(VHostNetState *net)
+@@ -329,6 +244,7 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
      }
--    buf = buf1;
--
--    ret = net_fill_rstate(&s->rs, (const uint8_t *)buf, size);
--
--    if (ret == -1) {
--        goto eoc;
--    }
+     net->nc = options->net_backend;
+     net->dev.nvqs = options->nvqs;
++    net->feature_bits = options->feature_bits;
  
-     return G_SOURCE_CONTINUE;
- }
- 
- static void net_stream_cleanup(NetClientState *nc)
- {
--    NetStreamState *s = DO_UPCAST(NetStreamState, nc, nc);
-+    NetStreamState *s = DO_UPCAST(NetStreamState, data.nc, nc);
-     if (s->timer_tag) {
-         g_source_remove(s->timer_tag);
-         s->timer_tag = 0;
-@@ -202,28 +79,28 @@ static void net_stream_cleanup(NetClientState *nc)
-         qapi_free_SocketAddress(s->addr);
-         s->addr = NULL;
-     }
--    if (s->ioc) {
--        if (QIO_CHANNEL_SOCKET(s->ioc)->fd != -1) {
--            if (s->ioc_read_tag) {
--                g_source_remove(s->ioc_read_tag);
--                s->ioc_read_tag = 0;
-+    if (s->data.ioc) {
-+        if (QIO_CHANNEL_SOCKET(s->data.ioc)->fd != -1) {
-+            if (s->data.ioc_read_tag) {
-+                g_source_remove(s->data.ioc_read_tag);
-+                s->data.ioc_read_tag = 0;
-             }
--            if (s->ioc_write_tag) {
--                g_source_remove(s->ioc_write_tag);
--                s->ioc_write_tag = 0;
-+            if (s->data.ioc_write_tag) {
-+                g_source_remove(s->data.ioc_write_tag);
-+                s->data.ioc_write_tag = 0;
-             }
-         }
--        object_unref(OBJECT(s->ioc));
--        s->ioc = NULL;
-+        object_unref(OBJECT(s->data.ioc));
-+        s->data.ioc = NULL;
-     }
--    if (s->listen_ioc) {
--        if (s->listener) {
--            qio_net_listener_disconnect(s->listener);
--            object_unref(OBJECT(s->listener));
--            s->listener = NULL;
-+    if (s->data.listen_ioc) {
-+        if (s->data.listener) {
-+            qio_net_listener_disconnect(s->data.listener);
-+            object_unref(OBJECT(s->data.listener));
-+            s->data.listener = NULL;
-         }
--        object_unref(OBJECT(s->listen_ioc));
--        s->listen_ioc = NULL;
-+        object_unref(OBJECT(s->data.listen_ioc));
-+        s->data.listen_ioc = NULL;
-     }
- }
- 
-@@ -235,23 +112,13 @@ static NetClientInfo net_stream_info = {
+     net->dev.max_queues = 1;
+     net->dev.vqs = net->vqs;
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index 38800a7156b0..6a75fdc0213c 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -143,6 +143,7 @@ struct vhost_net {
+     struct vhost_dev dev;
+     struct vhost_virtqueue vqs[2];
+     int backend;
++    const int *feature_bits;
+     NetClientState *nc;
  };
  
- static void net_stream_listen(QIONetListener *listener,
--                              QIOChannelSocket *cioc,
--                              void *opaque)
-+                                  QIOChannelSocket *cioc, gpointer data)
- {
--    NetStreamState *s = opaque;
-+    NetStreamData *d = data;
-     SocketAddress *addr;
-     char *uri;
+diff --git a/include/net/vhost-vdpa.h b/include/net/vhost-vdpa.h
+index 916ead3793d9..f8d7d6c9045b 100644
+--- a/include/net/vhost-vdpa.h
++++ b/include/net/vhost-vdpa.h
+@@ -14,6 +14,4 @@
  
--    object_ref(OBJECT(cioc));
+ #define TYPE_VHOST_VDPA "vhost-vdpa"
+ 
+-extern const int vdpa_feature_bits[];
 -
--    qio_net_listener_set_client_func(s->listener, NULL, s, NULL);
--
--    s->ioc = QIO_CHANNEL(cioc);
--    qio_channel_set_name(s->ioc, "stream-server");
--    s->nc.link_down = false;
--
--    s->ioc_read_tag = qio_channel_add_watch(s->ioc, G_IO_IN, net_stream_send,
--                                            s, NULL);
-+    net_stream_data_listen(listener, cioc, data);
+ #endif /* VHOST_VDPA_H */
+diff --git a/include/net/vhost_net.h b/include/net/vhost_net.h
+index 0f40049f3419..fbed37385a3c 100644
+--- a/include/net/vhost_net.h
++++ b/include/net/vhost_net.h
+@@ -12,6 +12,7 @@ typedef struct VhostNetOptions {
+     NetClientState *net_backend;
+     uint32_t busyloop_timeout;
+     unsigned int nvqs;
++    const int *feature_bits;
+     void *opaque;
+ } VhostNetOptions;
  
-     if (cioc->localAddr.ss_family == AF_UNIX) {
-         addr = qio_channel_socket_get_local_address(cioc, NULL);
-@@ -260,22 +127,22 @@ static void net_stream_listen(QIONetListener *listener,
-     }
-     g_assert(addr != NULL);
-     uri = socket_uri(addr);
--    qemu_set_info_str(&s->nc, "%s", uri);
-+    qemu_set_info_str(&d->nc, "%s", uri);
-     g_free(uri);
--    qapi_event_send_netdev_stream_connected(s->nc.name, addr);
-+    qapi_event_send_netdev_stream_connected(d->nc.name, addr);
-     qapi_free_SocketAddress(addr);
- }
+diff --git a/net/tap.c b/net/tap.c
+index 4beba6d7a784..a33eb2321242 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -42,11 +42,29 @@
+ #include "qemu/error-report.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/sockets.h"
++#include "hw/virtio/vhost.h"
  
- static void net_stream_server_listening(QIOTask *task, gpointer opaque)
- {
--    NetStreamState *s = opaque;
--    QIOChannelSocket *listen_sioc = QIO_CHANNEL_SOCKET(s->listen_ioc);
-+    NetStreamData *d = opaque;
-+    QIOChannelSocket *listen_sioc = QIO_CHANNEL_SOCKET(d->listen_ioc);
-     SocketAddress *addr;
-     int ret;
-     Error *err = NULL;
+ #include "net/tap.h"
  
-     if (qio_task_propagate_error(task, &err)) {
--        qemu_set_info_str(&s->nc, "error: %s", error_get_pretty(err));
-+        qemu_set_info_str(&d->nc, "error: %s", error_get_pretty(err));
-         error_free(err);
-         return;
-     }
-@@ -284,20 +151,21 @@ static void net_stream_server_listening(QIOTask *task, gpointer opaque)
-     g_assert(addr != NULL);
-     ret = qemu_socket_try_set_nonblock(listen_sioc->fd);
-     if (addr->type == SOCKET_ADDRESS_TYPE_FD && ret < 0) {
--        qemu_set_info_str(&s->nc, "can't use file descriptor %s (errno %d)",
-+        qemu_set_info_str(&d->nc, "can't use file descriptor %s (errno %d)",
-                           addr->u.fd.str, -ret);
-         return;
-     }
-     g_assert(ret == 0);
-     qapi_free_SocketAddress(addr);
+ #include "net/vhost_net.h"
  
--    s->nc.link_down = true;
--    s->listener = qio_net_listener_new();
-+    d->nc.link_down = true;
-+    d->listener = qio_net_listener_new();
++static const int kernel_feature_bits[] = {
++    VIRTIO_F_NOTIFY_ON_EMPTY,
++    VIRTIO_RING_F_INDIRECT_DESC,
++    VIRTIO_RING_F_EVENT_IDX,
++    VIRTIO_NET_F_MRG_RXBUF,
++    VIRTIO_F_VERSION_1,
++    VIRTIO_NET_F_MTU,
++    VIRTIO_F_IOMMU_PLATFORM,
++    VIRTIO_F_RING_PACKED,
++    VIRTIO_F_RING_RESET,
++    VIRTIO_F_IN_ORDER,
++    VIRTIO_F_NOTIFICATION_DATA,
++    VIRTIO_NET_F_RSC_EXT,
++    VIRTIO_NET_F_HASH_REPORT,
++    VHOST_INVALID_FEATURE_BIT
++};
++
+ typedef struct TAPState {
+     NetClientState nc;
+     int fd;
+@@ -725,6 +743,7 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         }
+         options.opaque = (void *)(uintptr_t)vhostfd;
+         options.nvqs = 2;
++        options.feature_bits = kernel_feature_bits;
  
--    qemu_set_info_str(&s->nc, "listening");
--    net_socket_rs_init(&s->rs, net_stream_rs_finalize, false);
--    qio_net_listener_set_client_func(s->listener, net_stream_listen, s, NULL);
--    qio_net_listener_add(s->listener, listen_sioc);
-+    qemu_set_info_str(&d->nc, "listening");
-+    net_socket_rs_init(&d->rs, net_stream_data_rs_finalize, false);
-+    qio_net_listener_set_client_func(d->listener, d->listen, d,
-+                                     NULL);
-+    qio_net_listener_add(d->listener, listen_sioc);
- }
+         s->vhost_net = vhost_net_init(&options);
+         if (!s->vhost_net) {
+diff --git a/net/vhost-user.c b/net/vhost-user.c
+index b7bf0d2042e8..bc8e82a09263 100644
+--- a/net/vhost-user.c
++++ b/net/vhost-user.c
+@@ -12,7 +12,9 @@
+ #include "clients.h"
+ #include "net/vhost_net.h"
+ #include "net/vhost-user.h"
++#include "hw/virtio/vhost.h"
+ #include "hw/virtio/vhost-user.h"
++#include "standard-headers/linux/virtio_net.h"
+ #include "chardev/char-fe.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-net.h"
+@@ -22,6 +24,46 @@
+ #include "qemu/option.h"
+ #include "trace.h"
  
- static int net_stream_server_init(NetClientState *peer,
-@@ -307,16 +175,18 @@ static int net_stream_server_init(NetClientState *peer,
-                                   Error **errp)
- {
-     NetClientState *nc;
--    NetStreamState *s;
-+    NetStreamData *d;
-     QIOChannelSocket *listen_sioc = qio_channel_socket_new();
++static const int user_feature_bits[] = {
++    VIRTIO_F_NOTIFY_ON_EMPTY,
++    VIRTIO_F_NOTIFICATION_DATA,
++    VIRTIO_RING_F_INDIRECT_DESC,
++    VIRTIO_RING_F_EVENT_IDX,
++
++    VIRTIO_F_ANY_LAYOUT,
++    VIRTIO_F_VERSION_1,
++    VIRTIO_NET_F_CSUM,
++    VIRTIO_NET_F_GUEST_CSUM,
++    VIRTIO_NET_F_GSO,
++    VIRTIO_NET_F_GUEST_TSO4,
++    VIRTIO_NET_F_GUEST_TSO6,
++    VIRTIO_NET_F_GUEST_ECN,
++    VIRTIO_NET_F_GUEST_UFO,
++    VIRTIO_NET_F_HOST_TSO4,
++    VIRTIO_NET_F_HOST_TSO6,
++    VIRTIO_NET_F_HOST_ECN,
++    VIRTIO_NET_F_HOST_UFO,
++    VIRTIO_NET_F_MRG_RXBUF,
++    VIRTIO_NET_F_MTU,
++    VIRTIO_F_IOMMU_PLATFORM,
++    VIRTIO_F_RING_PACKED,
++    VIRTIO_F_RING_RESET,
++    VIRTIO_F_IN_ORDER,
++    VIRTIO_NET_F_RSS,
++    VIRTIO_NET_F_RSC_EXT,
++    VIRTIO_NET_F_HASH_REPORT,
++    VIRTIO_NET_F_GUEST_USO4,
++    VIRTIO_NET_F_GUEST_USO6,
++    VIRTIO_NET_F_HOST_USO,
++
++    /* This bit implies RARP isn't sent by QEMU out of band */
++    VIRTIO_NET_F_GUEST_ANNOUNCE,
++
++    VIRTIO_NET_F_MQ,
++
++    VHOST_INVALID_FEATURE_BIT
++};
++
+ typedef struct NetVhostUserState {
+     NetClientState nc;
+     CharBackend chr; /* only queue index 0 */
+@@ -96,6 +138,7 @@ static int vhost_user_start(int queues, NetClientState *ncs[],
+         options.opaque      = be;
+         options.busyloop_timeout = 0;
+         options.nvqs = 2;
++        options.feature_bits = user_feature_bits;
+         net = vhost_net_init(&options);
+         if (!net) {
+             error_report("failed to init vhost_net for queue %d", i);
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index 0b86c917ed68..cbbea0eb7198 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -55,7 +55,7 @@ typedef struct VhostVDPAState {
+  * with the exception of VHOST_INVALID_FEATURE_BIT,
+  * which should always be the last entry.
+  */
+-const int vdpa_feature_bits[] = {
++static const int vdpa_feature_bits[] = {
+     VIRTIO_F_ANY_LAYOUT,
+     VIRTIO_F_IOMMU_PLATFORM,
+     VIRTIO_F_NOTIFY_ON_EMPTY,
+@@ -201,6 +201,7 @@ static int vhost_vdpa_add(NetClientState *ncs, void *be,
+     options.opaque      = be;
+     options.busyloop_timeout = 0;
+     options.nvqs = nvqs;
++    options.feature_bits = vdpa_feature_bits;
  
-     nc = qemu_new_net_client(&net_stream_info, peer, model, name);
--    s = DO_UPCAST(NetStreamState, nc, nc);
--    qemu_set_info_str(&s->nc, "initializing");
-+    d = DO_UPCAST(NetStreamData, nc, nc);
-+    d->send = net_stream_send;
-+    d->listen = net_stream_listen;
-+    qemu_set_info_str(&d->nc, "initializing");
- 
--    s->listen_ioc = QIO_CHANNEL(listen_sioc);
-+    d->listen_ioc = QIO_CHANNEL(listen_sioc);
-     qio_channel_socket_listen_async(listen_sioc, addr, 0,
--                                    net_stream_server_listening, s,
-+                                    net_stream_server_listening, d,
-                                     NULL, NULL);
- 
-     return 0;
-@@ -325,49 +195,23 @@ static int net_stream_server_init(NetClientState *peer,
- static void net_stream_client_connected(QIOTask *task, gpointer opaque)
- {
-     NetStreamState *s = opaque;
--    QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(s->ioc);
-+    NetStreamData *d = &s->data;
-+    QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(d->ioc);
-     SocketAddress *addr;
-     gchar *uri;
--    int ret;
--    Error *err = NULL;
- 
--    if (qio_task_propagate_error(task, &err)) {
--        qemu_set_info_str(&s->nc, "error: %s", error_get_pretty(err));
--        error_free(err);
--        goto error;
-+    if (net_stream_data_client_connected(task, d) == -1) {
-+        net_stream_arm_reconnect(s);
-+        return;
-     }
- 
-     addr = qio_channel_socket_get_remote_address(sioc, NULL);
-     g_assert(addr != NULL);
-     uri = socket_uri(addr);
--    qemu_set_info_str(&s->nc, "%s", uri);
-+    qemu_set_info_str(&d->nc, "%s", uri);
-     g_free(uri);
--
--    ret = qemu_socket_try_set_nonblock(sioc->fd);
--    if (addr->type == SOCKET_ADDRESS_TYPE_FD && ret < 0) {
--        qemu_set_info_str(&s->nc, "can't use file descriptor %s (errno %d)",
--                          addr->u.fd.str, -ret);
--        qapi_free_SocketAddress(addr);
--        goto error;
--    }
--    g_assert(ret == 0);
--
--    net_socket_rs_init(&s->rs, net_stream_rs_finalize, false);
--
--    /* Disable Nagle algorithm on TCP sockets to reduce latency */
--    qio_channel_set_delay(s->ioc, false);
--
--    s->ioc_read_tag = qio_channel_add_watch(s->ioc, G_IO_IN, net_stream_send,
--                                            s, NULL);
--    s->nc.link_down = false;
--    qapi_event_send_netdev_stream_connected(s->nc.name, addr);
-+    qapi_event_send_netdev_stream_connected(d->nc.name, addr);
-     qapi_free_SocketAddress(addr);
--
--    return;
--error:
--    object_unref(OBJECT(s->ioc));
--    s->ioc = NULL;
--    net_stream_arm_reconnect(s);
- }
- 
- static gboolean net_stream_reconnect(gpointer data)
-@@ -378,7 +222,7 @@ static gboolean net_stream_reconnect(gpointer data)
-     s->timer_tag = 0;
- 
-     sioc = qio_channel_socket_new();
--    s->ioc = QIO_CHANNEL(sioc);
-+    s->data.ioc = QIO_CHANNEL(sioc);
-     qio_channel_socket_connect_async(sioc, s->addr,
-                                      net_stream_client_connected, s,
-                                      NULL, NULL);
-@@ -388,7 +232,7 @@ static gboolean net_stream_reconnect(gpointer data)
- static void net_stream_arm_reconnect(NetStreamState *s)
- {
-     if (s->reconnect_ms && s->timer_tag == 0) {
--        qemu_set_info_str(&s->nc, "connecting");
-+        qemu_set_info_str(&s->data.nc, "connecting");
-         s->timer_tag = g_timeout_add(s->reconnect_ms, net_stream_reconnect, s);
-     }
- }
-@@ -405,11 +249,13 @@ static int net_stream_client_init(NetClientState *peer,
-     QIOChannelSocket *sioc = qio_channel_socket_new();
- 
-     nc = qemu_new_net_client(&net_stream_info, peer, model, name);
--    s = DO_UPCAST(NetStreamState, nc, nc);
--    qemu_set_info_str(&s->nc, "connecting");
-+    s = DO_UPCAST(NetStreamState, data.nc, nc);
-+    qemu_set_info_str(&s->data.nc, "connecting");
- 
--    s->ioc = QIO_CHANNEL(sioc);
--    s->nc.link_down = true;
-+    s->data.ioc = QIO_CHANNEL(sioc);
-+    s->data.nc.link_down = true;
-+    s->data.send = net_stream_send;
-+    s->data.listen = net_stream_listen;
- 
-     s->reconnect_ms = reconnect_ms;
-     if (reconnect_ms) {
-diff --git a/net/stream_data.c b/net/stream_data.c
-new file mode 100644
-index 000000000000..5af27e0d1d6a
---- /dev/null
-+++ b/net/stream_data.c
-@@ -0,0 +1,193 @@
-+/*
-+ * net stream generic functions
-+ *
-+ * Copyright Red Hat
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/iov.h"
-+#include "qapi/error.h"
-+#include "net/net.h"
-+#include "io/channel.h"
-+#include "io/net-listener.h"
-+
-+#include "stream_data.h"
-+
-+static gboolean net_stream_data_writable(QIOChannel *ioc,
-+                                         GIOCondition condition, gpointer data)
-+{
-+    NetStreamData *d = data;
-+
-+    d->ioc_write_tag = 0;
-+
-+    qemu_flush_queued_packets(&d->nc);
-+
-+    return G_SOURCE_REMOVE;
-+}
-+
-+ssize_t net_stream_data_receive(NetStreamData *d, const uint8_t *buf,
-+                                size_t size)
-+{
-+    uint32_t len = htonl(size);
-+    struct iovec iov[] = {
-+        {
-+            .iov_base = &len,
-+            .iov_len  = sizeof(len),
-+        }, {
-+            .iov_base = (void *)buf,
-+            .iov_len  = size,
-+        },
-+    };
-+    struct iovec local_iov[2];
-+    unsigned int nlocal_iov;
-+    size_t remaining;
-+    ssize_t ret;
-+
-+    remaining = iov_size(iov, 2) - d->send_index;
-+    nlocal_iov = iov_copy(local_iov, 2, iov, 2, d->send_index, remaining);
-+    ret = qio_channel_writev(d->ioc, local_iov, nlocal_iov, NULL);
-+    if (ret == QIO_CHANNEL_ERR_BLOCK) {
-+        ret = 0; /* handled further down */
-+    }
-+    if (ret == -1) {
-+        d->send_index = 0;
-+        return -errno;
-+    }
-+    if (ret < (ssize_t)remaining) {
-+        d->send_index += ret;
-+        d->ioc_write_tag = qio_channel_add_watch(d->ioc, G_IO_OUT,
-+                                                 net_stream_data_writable, d,
-+                                                 NULL);
-+        return 0;
-+    }
-+    d->send_index = 0;
-+    return size;
-+}
-+
-+static void net_stream_data_send_completed(NetClientState *nc, ssize_t len)
-+{
-+    NetStreamData *d = DO_UPCAST(NetStreamData, nc, nc);
-+
-+    if (!d->ioc_read_tag) {
-+        d->ioc_read_tag = qio_channel_add_watch(d->ioc, G_IO_IN, d->send, d,
-+                                                NULL);
-+    }
-+}
-+
-+void net_stream_data_rs_finalize(SocketReadState *rs)
-+{
-+    NetStreamData *d = container_of(rs, NetStreamData, rs);
-+
-+    if (qemu_send_packet_async(&d->nc, rs->buf,
-+                               rs->packet_len,
-+                               net_stream_data_send_completed) == 0) {
-+        if (d->ioc_read_tag) {
-+            g_source_remove(d->ioc_read_tag);
-+            d->ioc_read_tag = 0;
-+        }
-+    }
-+}
-+
-+gboolean net_stream_data_send(QIOChannel *ioc, GIOCondition condition,
-+                              NetStreamData *d)
-+{
-+    int size;
-+    int ret;
-+    QEMU_UNINITIALIZED char buf1[NET_BUFSIZE];
-+    const char *buf;
-+
-+    size = qio_channel_read(d->ioc, buf1, sizeof(buf1), NULL);
-+    if (size < 0) {
-+        if (errno != EWOULDBLOCK) {
-+            goto eoc;
-+        }
-+    } else if (size == 0) {
-+        /* end of connection */
-+    eoc:
-+        d->ioc_read_tag = 0;
-+        if (d->ioc_write_tag) {
-+            g_source_remove(d->ioc_write_tag);
-+            d->ioc_write_tag = 0;
-+        }
-+        if (d->listener) {
-+            qemu_set_info_str(&d->nc, "listening");
-+            qio_net_listener_set_client_func(d->listener,
-+                                             d->listen, d, NULL);
-+        }
-+        object_unref(OBJECT(d->ioc));
-+        d->ioc = NULL;
-+
-+        net_socket_rs_init(&d->rs, net_stream_data_rs_finalize, false);
-+        d->nc.link_down = true;
-+
-+        return G_SOURCE_REMOVE;
-+    }
-+    buf = buf1;
-+
-+    ret = net_fill_rstate(&d->rs, (const uint8_t *)buf, size);
-+
-+    if (ret == -1) {
-+        goto eoc;
-+    }
-+
-+    return G_SOURCE_CONTINUE;
-+}
-+
-+void net_stream_data_listen(QIONetListener *listener,
-+                            QIOChannelSocket *cioc,
-+                            NetStreamData *d)
-+{
-+    object_ref(OBJECT(cioc));
-+
-+    qio_net_listener_set_client_func(d->listener, NULL, d, NULL);
-+
-+    d->ioc = QIO_CHANNEL(cioc);
-+    qio_channel_set_name(d->ioc, "stream-server");
-+    d->nc.link_down = false;
-+
-+    d->ioc_read_tag = qio_channel_add_watch(d->ioc, G_IO_IN, d->send, d, NULL);
-+}
-+
-+int net_stream_data_client_connected(QIOTask *task, NetStreamData *d)
-+{
-+    QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(d->ioc);
-+    SocketAddress *addr;
-+    int ret;
-+    Error *err = NULL;
-+
-+    if (qio_task_propagate_error(task, &err)) {
-+        qemu_set_info_str(&d->nc, "error: %s", error_get_pretty(err));
-+        error_free(err);
-+        goto error;
-+    }
-+
-+    addr = qio_channel_socket_get_remote_address(sioc, NULL);
-+    g_assert(addr != NULL);
-+
-+    ret = qemu_socket_try_set_nonblock(sioc->fd);
-+    if (addr->type == SOCKET_ADDRESS_TYPE_FD && ret < 0) {
-+        qemu_set_info_str(&d->nc, "can't use file descriptor %s (errno %d)",
-+                          addr->u.fd.str, -ret);
-+        qapi_free_SocketAddress(addr);
-+        goto error;
-+    }
-+    g_assert(ret == 0);
-+    qapi_free_SocketAddress(addr);
-+
-+    net_socket_rs_init(&d->rs, net_stream_data_rs_finalize, false);
-+
-+    /* Disable Nagle algorithm on TCP sockets to reduce latency */
-+    qio_channel_set_delay(d->ioc, false);
-+
-+    d->ioc_read_tag = qio_channel_add_watch(d->ioc, G_IO_IN, d->send, d, NULL);
-+    d->nc.link_down = false;
-+
-+    return 0;
-+error:
-+    object_unref(OBJECT(d->ioc));
-+    d->ioc = NULL;
-+
-+    return -1;
-+}
-diff --git a/net/stream_data.h b/net/stream_data.h
-new file mode 100644
-index 000000000000..b868625665ae
---- /dev/null
-+++ b/net/stream_data.h
-@@ -0,0 +1,31 @@
-+/*
-+ * net stream generic functions
-+ *
-+ * Copyright Red Hat
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+typedef struct NetStreamData {
-+    NetClientState nc;
-+    QIOChannel *ioc;
-+    guint ioc_read_tag;
-+    guint ioc_write_tag;
-+    SocketReadState rs;
-+    unsigned int send_index;      /* number of bytes sent*/
-+    QIOChannelFunc send;
-+    /* server data */
-+    QIOChannel *listen_ioc;
-+    QIONetListener *listener;
-+    QIONetListenerClientFunc listen;
-+} NetStreamData;
-+
-+ssize_t net_stream_data_receive(NetStreamData *d, const uint8_t *buf,
-+                                size_t size);
-+void net_stream_data_rs_finalize(SocketReadState *rs);
-+gboolean net_stream_data_send(QIOChannel *ioc, GIOCondition condition,
-+                              NetStreamData *d);
-+int net_stream_data_client_connected(QIOTask *task, NetStreamData *d);
-+void net_stream_data_listen(QIONetListener *listener,
-+                            QIOChannelSocket *cioc,
-+                            NetStreamData *d);
+     net = vhost_net_init(&options);
+     if (!net) {
 -- 
 2.49.0
 
