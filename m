@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D346C83F03
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 13:35:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10C3EC83F09
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Jul 2025 13:49:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZUwO-0007OI-9a; Wed, 09 Jul 2025 09:34:28 -0400
+	id 1uZVAB-0004nn-67; Wed, 09 Jul 2025 09:48:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZUwL-0007NU-P4
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 09:34:26 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uZVA9-0004n2-Oe
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 09:48:42 -0400
+Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZUwJ-0003Wv-Sw
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 09:34:25 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4537edf2c3cso60666865e9.3
- for <qemu-devel@nongnu.org>; Wed, 09 Jul 2025 06:34:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uZVA8-0005e2-6z
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 09:48:41 -0400
+Received: by mail-ot1-x335.google.com with SMTP id
+ 46e09a7af769-73ce7b40d7aso310542a34.1
+ for <qemu-devel@nongnu.org>; Wed, 09 Jul 2025 06:48:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752068062; x=1752672862; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752068917; x=1752673717; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3BtLjJiufxd1sbCojgdZUD+6QFD1z/TFQhALm+l/vs0=;
- b=A5uUtNjhKupPqZ+71yduJ9l0q1Ax8R0mOHWkP1ciRPkttt9qOzJGjuY12EZRMqBh8M
- Zc6T5q+GcaHIXSACJhNzpxMmWGwzK2BqEiZ9uZtpF+kbWJoh8KsqdiOcc62HG9gb/RYI
- m+WvVVb0FPCB2h79/v/Flsbjp3QRZFX3QGJ8ErUMEXNJZCJyMMrtdX/P/3R6wOoWz3k5
- xvsuzIRswphfAY/f1TL6JTgPHSc2YWXDI+e3ffledR1ImIUu7VlD8YGXmQsWUH9UlqB6
- SP9gMKf9nLZFM6kbgs1EJNx3FFusMDvPVGvaumFEyHowMR15YtRLrtwXiTtQRW5J2dmC
- 7rvQ==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=VE42BoWHx3azFelddDoVoUa15MHCuSUyGX50d3xnUaM=;
+ b=GLOYkcTABwWtVxuEYo4tmMFEMDtlKffrorAE5rymzKfUAbhMbg4NVblz77pKwLzSuD
+ ZnocvUKVfML2oVMiVAuX6ZLZakNyiRaFajiUQRjOr1LM0OSZ7KACX+TghqTVNqQtch0v
+ VoZERf6ULduvp9D8ia2KQTG5Ujtdx5/PKSYhoqfQMiFz5pZbstcAE3b+EhEvMdxhOhdd
+ IjKQ9YgbNYpoFPaS9eM/X0uKaVpj0abQWLNgZGrnQAIIqZ5/LGOqMQxf29nSEeKhEL/8
+ EDaqbRDnl/nnQmYCHmmZ/PDx/DXAyFd5GbL68/FsPoXKkwRKNL2pZ4+RJNORFG7qU3E9
+ xILw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752068062; x=1752672862;
+ d=1e100.net; s=20230601; t=1752068917; x=1752673717;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3BtLjJiufxd1sbCojgdZUD+6QFD1z/TFQhALm+l/vs0=;
- b=IIGCe+NfOPNv1hvq1vm6mjCZ02EaA2+h4FEV2twEQghB/SV43tz83vXtZZIMlXM4DQ
- lTE1wVr/e9yjv/R8Lg6jHtAbxBT2SHC/EzB5Cno+JVHCY9rR8oP62DXQMmfeaF5S+bJS
- Klkuyi1I2VcyBKA160KZFYvDDlHjh6+/oJmRCZlZjLTt+CpBe1lZmn+EnKRYdAxJaVmQ
- 8Mjmj/LOnNFqynVSpIKg88QX2+SGEb7f3lToki+j6T1tPn2esmA6HUDPWQXpo5rjqXH9
- iIixyTE1RgEESgWyqk0y64FyTnpVVKFlwafVWAFZl83eN4nURZAA8LXMplW7VXMNThWw
- GEzA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV7TfhJlCNnQwaQzQCJ6xiptowgxP+ew6+obTvaF6KFIl6Ot0NRi+8wUQIsc/R+MZIMczTuHHpG0aqB@nongnu.org
-X-Gm-Message-State: AOJu0YzxU1PR9aubvcDiBQIqFps4RjUMcU0GLrcxbiSNidRlMpNRhCuN
- fPtW1evlhH2HMn5PmMO1rq796PNfRyQTF1w+TQR81AYbKkvfOfye2Ah9vW99icUjdQU=
-X-Gm-Gg: ASbGncvVjCDPm4NynnMv/CIDtFbhAvxnbZ4OjnVJR9BlUg86Od3RpNKCTtqtcAdOVFh
- 4hntQ3/24E2rb/wkQco+SRjuQ5DpIfcMMThscPo2gecfMAvrs7CdAaLkt4s3pY5FZv6tsQ6ijyN
- 67tW9en1/xBc1/P9TegPykbHVBtUxtaupWu7yxqJEJaaondPMxmJ/aY6j+bu4j/2yhGl8F0qwY6
- EzJgVKE3X298HgxC+I3IKmRzc3bM6du6/noUIA+14M/uL6BQ7HoYs287jHajOIFuXBJFAhChQWd
- 9TYqvTxGZZYNKOVTOxC8TcVnTq1ocuvDA2lyWlvxfr80+iOdDzPe1fnkNXFVjIQE7ZqJzPRp8qi
- IOAdVLa6lGYHua3Qst4sMp0XHTNOZyw==
-X-Google-Smtp-Source: AGHT+IF8YgLHV6eegt8ntmMN/dSqofPjd77o5HBon6r37rlTP+Vu3//Vs4LREEozklCzvnihSDfnwA==
-X-Received: by 2002:a05:600c:1d2a:b0:43d:300f:fa1d with SMTP id
- 5b1f17b1804b1-454d9d281eamr7732835e9.31.1752068061883; 
- Wed, 09 Jul 2025 06:34:21 -0700 (PDT)
-Received: from [192.168.69.242] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454d511bd6dsm24026055e9.38.2025.07.09.06.34.20
+ bh=VE42BoWHx3azFelddDoVoUa15MHCuSUyGX50d3xnUaM=;
+ b=R6XxjThMyLZhfsqjKziFaXgnLQZ/715jIdhDmCF/Y1BmykOCdeRUj0L0sUptldUKGR
+ 1FlS3fsaUxqp/X+3+/x4GUEkM6PN3Z0iwrHQcWcXHW18dWEkPicBy7er/1bYicMoWLac
+ f8+6KnFzqt4RGYHXOfgzd44aQ+6CbptmRasK2f+KhyHV1wYQXJxh2yPVZSoYqkzaUWNj
+ zHxwwlTi2K/g+YVlSOG8ZAEi+hJFRVZtkKWnUIwSAYGuKesomP5juLCPRGld7ZPr36Z7
+ Uz0tSd/sBx9az73iIr8JLpqEYbC4sQmRJUFOeWJF+hYgR7BjjR3oxJeoEPHf2TY72KYg
+ XpsQ==
+X-Gm-Message-State: AOJu0Ywgkjfwk1UwjqzJro94+Y4xbA1MvcuCPrbgqMsr7QpzKtcDnzbu
+ Nuf9fv1CUUk7E4ukE8nE0EXw3AC5djIHCiw0Nh1cuEytUvFqWqDL6wKyEVDf15+lwJpq59CuZZD
+ OYSFm
+X-Gm-Gg: ASbGnctChRUAxcJxOA44WNgJlOo/JeDs9V8mZmHL2VDFrDTghp92ViAaPYDUw8zIgvq
+ PQVqizLiS5/0eRRreL4LWIz4RJUEEMJfx3n6ThN+bLbY5qj2XP6yoNQCJbVnqVY9SdtJC7tlpnc
+ 5mzympQJKpTlkAfxqLIN9Yomo4tOiWyyU+k+qEY40uCYK8G4b3CPyQ1VTCKJRn2oVrUsHU31JZO
+ 8pzIV4MaR1M/+Q0wTnqPFO3PxlrxnJV6nKf1n30dP8AtTJ0/kjo2077aX/sOlFnHmWI9UsQxIVd
+ hOg1ZDTj7seKHgMIbqsk+ASXNI75IKjH+S8THCCLsnQB06cUhwUYAkievSo8wOZAmh/1bi5HPUY
+ XKzXCEOGqqEcWfQ==
+X-Google-Smtp-Source: AGHT+IG5effbUd14vQ6hTaTQoGfFOzOuUcrmawyLn3efF5LQm1o25Pgb0NrT3p7+dqUyWJE4JEuyCw==
+X-Received: by 2002:a05:6830:3688:b0:73a:8a05:cd3d with SMTP id
+ 46e09a7af769-73cd7774ca3mr5387225a34.0.1752068917606; 
+ Wed, 09 Jul 2025 06:48:37 -0700 (PDT)
+Received: from [172.20.0.130] ([187.217.227.247])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-2f7902716d9sm3450910fac.40.2025.07.09.06.48.36
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 09 Jul 2025 06:34:21 -0700 (PDT)
-Message-ID: <1c4e3024-3ba4-4ab6-a8ce-f5ab24ffe1d4@linaro.org>
-Date: Wed, 9 Jul 2025 15:34:20 +0200
+ Wed, 09 Jul 2025 06:48:37 -0700 (PDT)
+Message-ID: <a3d766b3-6567-4d7b-9656-7e3d6f3bea94@linaro.org>
+Date: Wed, 9 Jul 2025 07:48:34 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] igvm: add initial support for non-cc firmware in igvm
- format
-To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Blake <eblake@redhat.com>, roy.hopkins@randomman.co.uk
-References: <20250709123007.1039675-1-kraxel@redhat.com>
+Subject: Re: [PATCH v2 3/3] hw/intc/arm_gicv3_kvm: Drop DPRINTF macro
+To: qemu-devel@nongnu.org
+References: <20250708115238.667050-1-peter.maydell@linaro.org>
+ <20250708115238.667050-4-peter.maydell@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250709123007.1039675-1-kraxel@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250708115238.667050-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,35 +103,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Gerd,
-
-On 9/7/25 14:30, Gerd Hoffmann wrote:
-> Implement a ConfidentialGuestSupportClass for non-confidential VMs.
-> This allows the igvm support code work without sev/tdx.
-
-Is this something we only want in non-KVM builds due to security
-boundary concerns?
-
+On 7/8/25 05:52, Peter Maydell wrote:
+> We don't generally like DPRINTF debug macros, preferring tracepoints.
+> In this case the macro is used in only three places (reset, realize,
+> and in the unlikely event the host kernel doesn't have GICv3 register
+> access support). These don't seem worth converting to tracepoints,
+> so simply delete the macro and its uses.
 > 
-> RfC: Not fully sure this is the best way to implement this.
-> Alternatively we could add this directly into the igvm backend and run
-> it in case no confidential guest support object is present.
-> 
-> TODO: Implement proper reset.
->   - re-initialize memory regions from igvm file content.
->   - load initial register state (if present).
-> 
-> Usage:
->    qemu-system-x86_64 \
->      -object nocc,id=nocc0 \
->      -machine confidential-guest-support=nocc0
-> 
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/i386/nocc.c      | 283 ++++++++++++++++++++++++++++++++++++++++
->   qapi/qom.json           |   1 +
->   target/i386/meson.build |   1 +
->   3 files changed, 285 insertions(+)
->   create mode 100644 target/i386/nocc.c
+> If anybody needs to debug this code they can add useful tracepoints
+> at that point. I don't think these DPRINTFs will help at all.
+> ---
+>   hw/intc/arm_gicv3_kvm.c | 13 -------------
+>   1 file changed, 13 deletions(-)
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
