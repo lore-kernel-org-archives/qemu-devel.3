@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6D18C83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 05:32:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3CB2C83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 06:43:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZjsw-0000Xq-0g; Thu, 10 Jul 2025 01:31:54 -0400
+	id 1uZkzl-0003ux-FS; Thu, 10 Jul 2025 02:43:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uZjse-0000Up-Rp
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 01:31:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uZjsY-0007aa-2M
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 01:31:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752125488;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=489ojv2XPS0VBvvpj3mZRJIjnGi5tzYd+qBFkgsD6H0=;
- b=KPUr0h7br7fuVpupEemf27XGHSM0ecrO4A8uqVjWGProNl6RIWX7qH72MWGruEjy+6+kov
- srex/EMchQS9EENKoBNfj+da2krHqI8wMrRqsjir9ndTyS91Q2DBvptq0DhOyYJOD5tTyE
- W6J1P2oXuS1tMxIef0dYptOzN9+00Kk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-148-iQvU18BCNFSs-LWodQzX6w-1; Thu,
- 10 Jul 2025 01:31:27 -0400
-X-MC-Unique: iQvU18BCNFSs-LWodQzX6w-1
-X-Mimecast-MFC-AGG-ID: iQvU18BCNFSs-LWodQzX6w_1752125485
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5293E1956077; Thu, 10 Jul 2025 05:31:25 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B9DD1180035C; Thu, 10 Jul 2025 05:31:24 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E255421E6A27; Thu, 10 Jul 2025 07:31:21 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: Jason Wang <jasowang@redhat.com>,  qemu-devel@nongnu.org,
- eperezma@redhat.com,  peterx@redhat.com,  mst@redhat.com,
- lvivier@redhat.com,  dtatulea@nvidia.com,  leiyang@redhat.com,
- parav@mellanox.com,  sgarzare@redhat.com,  lingshan.zhu@intel.com,
- boris.ostrovsky@oracle.com,  Si-Wei Liu <si-wei.liu@oracle.com>
-Subject: Re: [PATCH v4 0/7] Move memory listener register to vhost_vdpa_init
-In-Reply-To: <71ae1a0a-a697-4199-ab57-426f6252e224@oracle.com> (Jonah Palmer's
- message of "Wed, 9 Jul 2025 15:57:52 -0400")
-References: <20250507184647.15580-1-jonah.palmer@oracle.com>
- <CACGkMEuD7n8QVpgBvHSXJv7kN-hn4cpXX9J8UO8GUCzB0Ssqaw@mail.gmail.com>
- <87plg9ukgq.fsf@pond.sub.org>
- <50a648fa-76ab-47bf-9f6e-c07da913cb52@oracle.com>
- <87frgr7mvk.fsf@pond.sub.org>
- <dcbf9e2e-9442-4439-8593-dff036a4d781@oracle.com>
- <87o6v6muq4.fsf@pond.sub.org> <8734cimtqa.fsf@pond.sub.org>
- <1e58dd8c-3418-4843-9620-3819e9ee31f3@oracle.com>
- <87o6uau2lj.fsf@pond.sub.org>
- <69bc738c-90fd-4a48-9bee-bb7372388810@oracle.com>
- <87frfcj904.fsf@pond.sub.org>
- <face37ee-9850-448f-914b-cd90a39d3451@oracle.com>
- <874ivnxfj6.fsf@pond.sub.org>
- <71ae1a0a-a697-4199-ab57-426f6252e224@oracle.com>
-Date: Thu, 10 Jul 2025 07:31:21 +0200
-Message-ID: <87ikk0ipcm.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZkzZ-0003t0-I6
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 02:42:53 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZkzW-0003vV-71
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 02:42:48 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3a582e09144so373533f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 09 Jul 2025 23:42:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752129762; x=1752734562; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XfwlktBF2xTGDVAo0FUUWvgXS/vYnmeKx3ohXP3wJwo=;
+ b=SYjh5uwIvScg+xfoem0Gf1P8N+OOGS3Z6ITB5RgkTbUCJm4h4EGd6rp9Aj/rfHFj6p
+ gc0js9i0a5/u8QgNT5yHckkaT6yHpHJgCxmQZdGuNR56H3LFDXeldI6PEHx1ugCBKIPs
+ EdSUcocbOP2Cvznyow5sqlrQshHnX54b3uclMaertRM8lIyiDK+g+bgThdX1sIRiPnoM
+ rdRJ5E9/Qnlw3xKvDYPOsaQJ3dFdnOYHxAlR1tcbENMn2Rndqp/dLsTcLCYIYYkFGvJP
+ nSmp3AvBQ4vAFf0xvoCJ8bzt9s51PWE5Mp5/FuZZ4siXlFnY1O+nlOGGMB4CEhsaEEvM
+ CCrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752129762; x=1752734562;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XfwlktBF2xTGDVAo0FUUWvgXS/vYnmeKx3ohXP3wJwo=;
+ b=M2W+C4uj4NzweUsOyGjBND/B+xRuhTCCEEqQe2guX6sYVYW3djiaJVFliYXHDRyP3A
+ YITr8dzj4cgatlziqskZJZLA9rWWtyfDipRTK7cc7TAQGMQ/W+RjXyt563yFikF0Fm3m
+ fMl6mv3fDKqqKSeUsRXXqPCl1Nds4xVNfz+EdfNeZ8wtF4Pvji5qnYQC54qO0xpEs2a3
+ ZQcVzmmykCTFTJ2D74SOtrwcRckWV5tjewlMGnBqjJJJblgovxYcHCiCdFi93tgxreCu
+ 0ebpT8kBOCkNwYRxoJC6DD6ka9L6sE6NuQfwO6KWFm19LzGD4t/BS4SIePZpbMB9Za09
+ WlLQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVC59YIjd+fJdh/BuDJ8x36s6kol8iTj8FTD1N3iWywkwTABV/5sdYu9p+PXXiN4G3kmwd9D67GiSIv@nongnu.org
+X-Gm-Message-State: AOJu0YxeBzWCOtHEZpuukLcSvVhaNEDfoVZLu0zgUHQoUQnCSk1sU3qs
+ O6GDaZTUoYPDGMWI5wa623ZhBrEdj+CRCdsUmWuxvdLDYUVug1JX3pRnIc24y09vUTI=
+X-Gm-Gg: ASbGncuAtgGfx028B/K7aXrrmlSeYYyIuMBB1Rmz4QJKINDtv+4k8hCYkN5n5BLNz+v
+ YAneu+RuUqn9JJXFV4jxssI+1xF1AwuvUXKqDzU3IMQCcgHG+wAAYYjj5b2fKXq74UbLrIPgQXj
+ uedB8TL8bB9AvOR/aNE0NXyhBThY4PvIF7EHtpR8pQte4+7rI90JgZOwIqqPkzE3wBonO8MKcVh
+ 9S8853sTr23aTl4SncGZB0pGEqdlfuojSr3CIqKfb4nhY0HmjGAaIf7MWX53YqhUZC9kvvKpRE2
+ FNX9sU5kg39h5Vi/c7cyoB91uUmxWuFazyBiDxjyyrlYKVVyR64d1MyB7ipujFkCWu7DkYJDM+6
+ dlkwlAowoDkLCmjxu5cA34xcjSgb6O3/mV9vPenvdSw==
+X-Google-Smtp-Source: AGHT+IECdlLmr952QponGcn8taiIeV1MDLZLQIv8E10ctGSf4hV2YDAcPLECYyRT6HZ6UQZU1NqMXg==
+X-Received: by 2002:a05:6000:23c7:b0:3b4:9721:2b32 with SMTP id
+ ffacd0b85a97d-3b5e866c90emr934435f8f.10.1752129761753; 
+ Wed, 09 Jul 2025 23:42:41 -0700 (PDT)
+Received: from [10.132.103.213] (150.red-88-28-29.dynamicip.rima-tde.net.
+ [88.28.29.150]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454dd464011sm9610025e9.10.2025.07.09.23.42.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 09 Jul 2025 23:42:41 -0700 (PDT)
+Message-ID: <8324270e-8de2-4012-99a1-af879acdb71f@linaro.org>
+Date: Thu, 10 Jul 2025 08:42:38 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user/mips/o32: Drop sa_restorer functionality
+To: =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>,
+ qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Cc: Benjamin Berg <benjamin.berg@intel.com>, Willy Tarreau <w@1wt.eu>
+References: <20250709-mips-sa-restorer-v1-1-fc17120e4afe@t-8ch.de>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250709-mips-sa-restorer-v1-1-fc17120e4afe@t-8ch.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,46 +103,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jonah Palmer <jonah.palmer@oracle.com> writes:
+On 9/7/25 22:57, Thomas Weißschuh wrote:
+> The Linux kernel dropped support for sa_restorer on O32 MIPS in the
+> release 2.5.48 because it was unused. See the comment in
+> arch/mips/include/uapi/asm/signal.h.
+> 
+> Applications using the kernels UAPI headers will not reserve enough
+> space for qemu-user to copy the sigaction.sa_restorer field to.
+> Unrelated data may be overwritten.
+> 
+> Align qemu-user with the kernel by also dropping sa_restorer support.
+> 
+> Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
+> ---
+>   linux-user/mips/target_signal.h | 1 -
+>   linux-user/syscall_defs.h       | 4 ----
+>   2 files changed, 5 deletions(-)
 
-[...]
-
->> I think I finally know enough to give you constructive feedback.
->> 
->> Your commit messages should answer the questions I had.  Specifically:
->> 
->> * Why are we doing this?  To shorten guest-visible downtime.
->> 
->> * How are we doing this?  We additionally pin memory before entering the
->>   main loop.  This speeds up the pinning we still do in the main loop.
->> 
->> * Drawback: slower startup.  In particular, QMP becomes
->>   available later.
->> 
->> * Secondary benefit: main loop responsiveness improves, in particular
->>   QMP.
->> 
->> * What uses of QEMU are affected?  Only with vhost-vDPA.  Spell out all
->>    the ways to get vhost-vDPA, please.
->> 
->> * There's a tradeoff.  Show your numbers.  Discuss whether this needs to
->>   be configurable.
->> 
->> If you can make a case for pinning memory this way always, do so.  If
->> you believe making it configurable would be a good idea, do so.  If
->> you're not sure, say so in the cover letter, and add a suitable TODO
->> comment.
->> 
->> Questions?
->
-> No questions, understood.
->
-> As I was writing the responses to your questions I was thinking to 
-> myself that this stuff should've been in the cover letter / commit 
-> messages in the first place.
->
-> Definitely a learning moment for me. Thanks for your time on this Markus!
-
-You're welcome!
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
