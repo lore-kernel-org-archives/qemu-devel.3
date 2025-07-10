@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9890C83F17
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 15:20:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67E94C83F17
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 15:22:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZt4l-0004tn-BM; Thu, 10 Jul 2025 11:20:44 -0400
+	id 1uZt5y-0006jv-AL; Thu, 10 Jul 2025 11:21:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZt4X-0004jv-M4
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 11:20:29 -0400
-Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uZt5l-0006Qy-8u
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 11:21:51 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZt4V-0001xN-Pq
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 11:20:29 -0400
-Received: by mail-yb1-xb2d.google.com with SMTP id
- 3f1490d57ef6-e898fb745beso2352679276.1
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 08:20:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uZt5j-00025K-IU
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 11:21:45 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-b3226307787so1028013a12.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 08:21:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752160826; x=1752765626; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=lStpNvlclqQGLHSJg5wy7W8AoeA01L1kwc4/Dsb2mGo=;
- b=knb2VQnnZA0vxfbPXb1p+D3X5/ezFQK/5qe6zJPOmN0AK1Jay2p5q8YmCGB+3YjRMI
- LhOiGEwhaeukMyZ7YpF/vQJn3o+UmnBrI2BzoHPyOIxBE2urOjTilre5l3hAyLE2fbnj
- qCsWoQkgC/5WIwfrT7dFP2FApSRYHSZ9aOvjVA2zK6dndxAt2DQZCycjlF2p7jWzE7LR
- tmOyhOeJpb8/2AJ1zHFx8OPxHraHVOvhYcouRHCl7z9mro0YsfCI2XrI4QtBWp0Jc1uC
- u6PxmjehYNqwnQg09Rcpi9ZdradyjYxZ2P+7m/oAd7QHZgSFwQOOsx+t6Xahnagsq4Yq
- DkmA==
+ d=linaro.org; s=google; t=1752160899; x=1752765699; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=amuIooxmdQ6Vls2FAyQEa1uAT17Y/FmWIkMrObH7Y7A=;
+ b=tRaXF6+gAyi8+zeqs0awqOLq5qo2oHHrHvQBdodKRG/R1FrAlmyAoRwIGMFudihi2l
+ QLFw203ejbcFzJJygqbIn6x+p3q0fsug5yTwr/ZhCnLSLsQ0QmoiVrLa1NOYNV46fg2x
+ WIh6eGdz1WlleGMoj8R9UN8lyCsIEK86b9t/ebo/KbSiZbykOBMRB0nJaF2tldb8wOYg
+ B+z88I0slGfpcJrCGvnXANZIDPOLarnh3dpqeuvmHnLHRzp7Bg42/bCIwjhwI30MzIpV
+ P+25KsQX3X8rtVH0JaFJREipBEmOxFJNFMUDb1tUqSmL/bog8skANGM7DcpHhhMCen/i
+ 2e3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752160826; x=1752765626;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lStpNvlclqQGLHSJg5wy7W8AoeA01L1kwc4/Dsb2mGo=;
- b=gtNZevo1CzpV3Js7TSl137wfYnivOk12ifTpMOIJY/Km1My8ZUsCXpzXqMWXdUAnMV
- scWpSY00YYQIqw6H02sa4RGj5TO9HOhKHrEZWsA6LQap9Wimsf9VMb1xTSAk/QaiTyEZ
- wa7lP9YstHw7GXswnjVlwixZeBYQliO7VnFWXAn88Hor9rSjiiiADxbHo2lM2PifzNO4
- J6hiodW07BTswADZdK3jK40aSWJAcxa5qJep65HHtUxPAC1GdJ/C4LwAahJZ7UjAeo7Q
- ZHDsIUKdAjSrRt5vwyQIFMuhRl01nVb+3lbGkMX9RjfEyGoJochAo5qy7XZBbhe5awuh
- g/Ng==
+ d=1e100.net; s=20230601; t=1752160899; x=1752765699;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=amuIooxmdQ6Vls2FAyQEa1uAT17Y/FmWIkMrObH7Y7A=;
+ b=iw3DhNBa3H+RoDDGwhcjx2Vw2mFXf/yFZql8c7kJZXuUesWnry3eFoF67wbFa/5OmV
+ pqnhQ+7QxfM8D6eyKn71gr5JwvHG+hEeRhKGpIeANGSgSX3s2zNp8XrwNpMspHwETxY/
+ m4hMMWMC7iIo2A3/Gf2IZUy44U1YO4T7PpvcVLd70B9KD0HlUWf8421IcbPQ/INLOfR5
+ h9ZR0aAx1QPO5jzWHThnK6TbbhtXIQOIqL6ofKsX8Y3Un2cdZqzunlBG7aVnCytawQg7
+ DjqYCudyv25UTonVNRET8jVMSD+vmyizuO8v7bRLyQJ4iFBN2e2fDd0HSe5rI5EkRXTQ
+ WmWw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVl06dx9iHmD0XKE50M/hSeavhDWPtbqci3blF8U+qvLbQXyo19RlESmtTFQwesyhRwab/FUZTwIJz1@nongnu.org
-X-Gm-Message-State: AOJu0YyEMqjQKsM5lvo9IdHffmr8NynorWi5pJSiAXygrhZqeivfOfK9
- eWtOLOgtjLaLZU+3nAYu3Qu+XYcPVqw5S+f/2M7HJcKwE59rDRjEpEOVnXWJsYDbBsC1buj/HZy
- OOwZba6h9JuRjKk9FjZyutM9Hclv6dzAZoI8wtt5ciw==
-X-Gm-Gg: ASbGncvAJ01JAXL5v3pJg+PP3gXqDYaqmaDkj3zlb4jDhnnf2NbMXEhk1EOPg0gbSd7
- qdRSDn+cpSs9aQcCFOj6z9YBq2frc8MQCMJi9mZRG79kYCIQuLsLUSBGUEpfba+cwidDVPDUUyS
- 9XXUb5Vssr1rwAIbwJpeoHEt+FTpRAZcYNlzhAmew2Xl6l
-X-Google-Smtp-Source: AGHT+IEGFB2jIbBsNQKCoBKAUJcFeenrGSdoTYoGbo+6mPQIitw21TZDUxjNfourt7paa/N95Z0zMh14wTbk0PTvM5c=
-X-Received: by 2002:a05:690c:6601:b0:712:c55c:4e5c with SMTP id
- 00721157ae682-717c14d8b82mr57192967b3.5.1752160826429; Thu, 10 Jul 2025
- 08:20:26 -0700 (PDT)
+ AJvYcCWAKrZR1qGganTqBNVWvkztQjlmMR6/IKfxN+U+YZIALX0t/oQzpPplHdXndKIqIGwl+W43si3taaLR@nongnu.org
+X-Gm-Message-State: AOJu0YzIJM1qTYuKXO5B0Fnzn8mrMSDIpFw4lKbG/N3hPW3BWrUZ9fHA
+ GOlt4xeU3bbr+MhfeuV2FAfv3UivosT2UTBbF2bV38xBc8JODlpX4CilH3tWzoGJFJo=
+X-Gm-Gg: ASbGncvHUo2d20VW7TX+GPJ9UWE+XtDk/D4Lbxq5mJp8hMHiLBaeH5wrO0AvgoYbOWb
+ aHlBJE0/wRhwqlObmxdoJzWrjd8KNpNx3+Le6AWImtNTuqjmpV58tqmnKMWaTA0AzyKJYjvVwuy
+ AwwlDvcaSRsmSozxAphD4FgdCuYHGD7jhNcdJjZn3g2NbyNzZN8FhE95zdD5A9dtoI3b7HBg+0e
+ xatntibVacOzwm33qL/noWIYtvCRwE0dRQ+B0/zRxjgF3BED6Rp0syZDTvCACUoL0afrlATaUxB
+ rRhQzJWYGGfA9nQQU5uUf6VBVqTPGytBBfy0wbBl3DTX04y/kjGhe0cNjhe8Spj20gwAdlukuCU
+ =
+X-Google-Smtp-Source: AGHT+IEazxMcukHFt0MEZ8rdSTG4T0kB38aGtdyk4BOGKpvX6PZUJhQEKPXzPj+O+eNnoSbE8BSFCg==
+X-Received: by 2002:a05:6a21:99a3:b0:21f:bdcc:843e with SMTP id
+ adf61e73a8af0-230040daa3amr4616445637.11.1752160899088; 
+ Thu, 10 Jul 2025 08:21:39 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-74eb9e069b7sm2817307b3a.55.2025.07.10.08.21.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 10 Jul 2025 08:21:38 -0700 (PDT)
+Message-ID: <f6c75047-d074-4200-a33a-c864e7beadf1@linaro.org>
+Date: Thu, 10 Jul 2025 08:21:38 -0700
 MIME-Version: 1.0
-References: <20250708154055.101012-1-shameerali.kolothum.thodi@huawei.com>
- <20250708154055.101012-2-shameerali.kolothum.thodi@huawei.com>
- <61464e90-9be3-4be5-a0af-ab15b92776e5@redhat.com>
-In-Reply-To: <61464e90-9be3-4be5-a0af-ab15b92776e5@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 10 Jul 2025 16:20:14 +0100
-X-Gm-Features: Ac12FXwXrK49iN8S6SpNmQv1IC1bvkSc-LrO3vFcRIuFuupyeCT_lLTt9sxkxfI
-Message-ID: <CAFEAcA8YYrkwaU3ghdCDiA3rqLVj_to++yg3R69EVY+2dP0R2w@mail.gmail.com>
-Subject: Re: [PATCH v7 01/12] hw/arm/virt-acpi-build: Don't create ITS id
- mappings by default
-To: eric.auger@redhat.com
-Cc: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- qemu-arm@nongnu.org, 
- qemu-devel@nongnu.org, jgg@nvidia.com, nicolinc@nvidia.com, 
- ddutile@redhat.com, berrange@redhat.com, imammedo@redhat.com, 
- nathanc@nvidia.com, mochs@nvidia.com, smostafa@google.com, 
- gustavo.romero@linaro.org, mst@redhat.com, marcel.apfelbaum@gmail.com, 
- linuxarm@huawei.com, wangzhou1@hisilicon.com, jiangkunkun@huawei.com, 
- jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] contrib/plugins/execlog: Explicitly check for
+ qemu_plugin_read_register() failure
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20250710144543.1187715-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250710144543.1187715-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,21 +105,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 10 Jul 2025 at 15:00, Eric Auger <eric.auger@redhat.com> wrote:
->
-> Hi Peter,
->
-> On 7/8/25 5:40 PM, Shameer Kolothum wrote:
-> > Commit d6afe18b7242 ("hw/arm/virt-acpi-build: Fix ACPI IORT and MADT tables
-> > when its=off") moved ITS group node generation under the its=on condition.
-> > However, it still creates rc_its_idmaps unconditionally, which results in
-> > duplicate ID mappings in the IORT table.
-> >
-> > Fixes:d6afe18b7242 ("hw/arm/virt-acpi-build: Fix ACPI IORT and MADT tables when its=off")
->
-> At least please could you take this fix?
+On 7/10/25 7:45 AM, Peter Maydell wrote:
+> In insn_check_regs() we don't explicitly check whether
+> qemu_plugin_read_register() failed, which confuses Coverity into
+> thinking that sz can be -1 in the memcmp().  In fact the assertion
+> that sz == reg->last->len means this can't happen, but it's clearer
+> to both humans and Coverity if we explicitly assert that sz > 0, as
+> we already do in init_vcpu_register().
+> 
+> Coverity: CID 1611901, 1611902
+> Fixes: af6e4e0a22c1 ("contrib/plugins: extend execlog to track register changes")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   contrib/plugins/execlog.c | 1 +
+>   1 file changed, 1 insertion(+)
 
-Sure; I've taken this patch into target-arm.next.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
--- PMM
 
