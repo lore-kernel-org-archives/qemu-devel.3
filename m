@@ -4,66 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48AEAC83F09
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 05:30:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6D18C83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 05:32:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZjqY-0007Gv-Ht; Thu, 10 Jul 2025 01:29:27 -0400
+	id 1uZjsw-0000Xq-0g; Thu, 10 Jul 2025 01:31:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ebiggers@kernel.org>)
- id 1uZjqT-0007Db-0o; Thu, 10 Jul 2025 01:29:21 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uZjse-0000Up-Rp
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 01:31:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ebiggers@kernel.org>)
- id 1uZjqR-00074n-D0; Thu, 10 Jul 2025 01:29:20 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 2143543E1E;
- Thu, 10 Jul 2025 05:29:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4ACC4CEE3;
- Thu, 10 Jul 2025 05:29:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1752125350;
- bh=Qz1W+r66aQd7m1FcvD672Hhe63W3L239ECIcMlf6PsY=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=W+aNwZl5aBAz65CvBfFsUV5FxV2THn3Y5F1w1T6NoeJgXf4VN35FtlyexHoOSJu4C
- q6vpOQG3gH8NNF1ZH9CMmLRPZeOzXD56PA0/iUGktRD0SlNP2F1/2X2s/jiiENImlO
- 8zsZaoUPntnBhUlNkWiQVMFT2zp+lj0LjmE8cTPiVsCcHE30FYr7eOnxrR5hn6fhAZ
- gJvKS2JDkTEgzUkyDyzsGIYK/mz/EAD/vKhcoEzYxNKMsIkol4bHD08ePtf+3n6Kl2
- /JOK1jZCRMlxZgVObXH9vIYV0Kn1m2CuhnKrEswFe3B3c3HlwdSdI9yAJILwOVJLj2
- vtUNk7QTsn5/g==
-Date: Wed, 9 Jul 2025 22:28:24 -0700
-From: Eric Biggers <ebiggers@kernel.org>
-To: Paolo Savini <paolo.savini@embecosm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Richard Handerson <richard.henderson@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Helene Chelin <helene.chelin@embecosm.com>,
- Nathan Egge <negge@google.com>, Max Chou <max.chou@sifive.com>,
- Jeremy Bennett <jeremy.bennett@embecosm.com>,
- Craig Blackmore <craig.blackmore@embecosm.com>,
- Ard Biesheuvel <ardb@kernel.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: [PATCH 1/1 v2] [RISC-V/RVV] Generate strided vector loads/stores
- with tcg nodes.
-Message-ID: <20250710052824.GA608727@sol>
-References: <20250312155547.289642-1-paolo.savini@embecosm.com>
- <20250312155547.289642-2-paolo.savini@embecosm.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uZjsY-0007aa-2M
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 01:31:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752125488;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=489ojv2XPS0VBvvpj3mZRJIjnGi5tzYd+qBFkgsD6H0=;
+ b=KPUr0h7br7fuVpupEemf27XGHSM0ecrO4A8uqVjWGProNl6RIWX7qH72MWGruEjy+6+kov
+ srex/EMchQS9EENKoBNfj+da2krHqI8wMrRqsjir9ndTyS91Q2DBvptq0DhOyYJOD5tTyE
+ W6J1P2oXuS1tMxIef0dYptOzN9+00Kk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-148-iQvU18BCNFSs-LWodQzX6w-1; Thu,
+ 10 Jul 2025 01:31:27 -0400
+X-MC-Unique: iQvU18BCNFSs-LWodQzX6w-1
+X-Mimecast-MFC-AGG-ID: iQvU18BCNFSs-LWodQzX6w_1752125485
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5293E1956077; Thu, 10 Jul 2025 05:31:25 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B9DD1180035C; Thu, 10 Jul 2025 05:31:24 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id E255421E6A27; Thu, 10 Jul 2025 07:31:21 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: Jason Wang <jasowang@redhat.com>,  qemu-devel@nongnu.org,
+ eperezma@redhat.com,  peterx@redhat.com,  mst@redhat.com,
+ lvivier@redhat.com,  dtatulea@nvidia.com,  leiyang@redhat.com,
+ parav@mellanox.com,  sgarzare@redhat.com,  lingshan.zhu@intel.com,
+ boris.ostrovsky@oracle.com,  Si-Wei Liu <si-wei.liu@oracle.com>
+Subject: Re: [PATCH v4 0/7] Move memory listener register to vhost_vdpa_init
+In-Reply-To: <71ae1a0a-a697-4199-ab57-426f6252e224@oracle.com> (Jonah Palmer's
+ message of "Wed, 9 Jul 2025 15:57:52 -0400")
+References: <20250507184647.15580-1-jonah.palmer@oracle.com>
+ <CACGkMEuD7n8QVpgBvHSXJv7kN-hn4cpXX9J8UO8GUCzB0Ssqaw@mail.gmail.com>
+ <87plg9ukgq.fsf@pond.sub.org>
+ <50a648fa-76ab-47bf-9f6e-c07da913cb52@oracle.com>
+ <87frgr7mvk.fsf@pond.sub.org>
+ <dcbf9e2e-9442-4439-8593-dff036a4d781@oracle.com>
+ <87o6v6muq4.fsf@pond.sub.org> <8734cimtqa.fsf@pond.sub.org>
+ <1e58dd8c-3418-4843-9620-3819e9ee31f3@oracle.com>
+ <87o6uau2lj.fsf@pond.sub.org>
+ <69bc738c-90fd-4a48-9bee-bb7372388810@oracle.com>
+ <87frfcj904.fsf@pond.sub.org>
+ <face37ee-9850-448f-914b-cd90a39d3451@oracle.com>
+ <874ivnxfj6.fsf@pond.sub.org>
+ <71ae1a0a-a697-4199-ab57-426f6252e224@oracle.com>
+Date: Thu, 10 Jul 2025 07:31:21 +0200
+Message-ID: <87ikk0ipcm.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250312155547.289642-2-paolo.savini@embecosm.com>
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=ebiggers@kernel.org;
- helo=sea.source.kernel.org
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -81,40 +101,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Jonah Palmer <jonah.palmer@oracle.com> writes:
 
-On Wed, Mar 12, 2025 at 03:55:47PM +0000, Paolo Savini wrote:
-> This commit improves the performance of QEMU when emulating strided vector
-> loads and stores by substituting the call for the helper function with the
-> generation of equivalent TCG operations.
-> 
-> Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->  target/riscv/insn_trans/trans_rvv.c.inc | 323 ++++++++++++++++++++----
->  1 file changed, 273 insertions(+), 50 deletions(-)
+[...]
 
-This recent QEMU patch broke the RISC-V vector optimized ChaCha20 code
-in the Linux kernel.  I simplified the reproducer to the following,
-which had its behavior changed:
+>> I think I finally know enough to give you constructive feedback.
+>> 
+>> Your commit messages should answer the questions I had.  Specifically:
+>> 
+>> * Why are we doing this?  To shorten guest-visible downtime.
+>> 
+>> * How are we doing this?  We additionally pin memory before entering the
+>>   main loop.  This speeds up the pinning we still do in the main loop.
+>> 
+>> * Drawback: slower startup.  In particular, QMP becomes
+>>   available later.
+>> 
+>> * Secondary benefit: main loop responsiveness improves, in particular
+>>   QMP.
+>> 
+>> * What uses of QEMU are affected?  Only with vhost-vDPA.  Spell out all
+>>    the ways to get vhost-vDPA, please.
+>> 
+>> * There's a tradeoff.  Show your numbers.  Discuss whether this needs to
+>>   be configurable.
+>> 
+>> If you can make a case for pinning memory this way always, do so.  If
+>> you believe making it configurable would be a good idea, do so.  If
+>> you're not sure, say so in the cover letter, and add a suitable TODO
+>> comment.
+>> 
+>> Questions?
+>
+> No questions, understood.
+>
+> As I was writing the responses to your questions I was thinking to 
+> myself that this stuff should've been in the cover letter / commit 
+> messages in the first place.
+>
+> Definitely a learning moment for me. Thanks for your time on this Markus!
 
-rvv_test_func:
-	vsetivli	zero, 1, e32, m1, ta, ma
-	li		t0, 64
+You're welcome!
 
-	vlsseg8e32.v	v0, (a0), t0
-	addi		a0, a0, 32
-	vlsseg8e32.v	v8, (a0), t0
-
-	vssseg8e32.v	v0, (a1), t0
-	addi		a1, a1, 32
-	vssseg8e32.v	v8, (a1), t0
-	ret
-
-Before this patch, it copied 64 bytes from a0 to a1.  After this patch,
-the bytes at 32..47 also incorrectly get copied to 16..31.
-
-Please fix this, or else revert the patch.
-
-- Eric
 
