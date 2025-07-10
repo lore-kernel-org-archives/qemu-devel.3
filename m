@@ -4,139 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE081C83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 14:40:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19F6AC83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 14:42:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubKLF-0005f2-79; Mon, 14 Jul 2025 10:39:41 -0400
+	id 1ubKNC-00087R-4w; Mon, 14 Jul 2025 10:41:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ubImj-0006lS-JH
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:59:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
+ id 1ubIr8-0000SF-49
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:04:30 -0400
+Received: from mailout2.samsung.com ([203.254.224.25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ubImg-00046x-JK
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:59:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752497992;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=n25nSnVkU5GWJyRngy+6SHPj7oMPrluHwavtIra3af8=;
- b=gA7t4Y3K25GebvNemQvKfvuZXfcad2kRyj8lqcNvP+p57WRh4zEavl9Y5xgvKT/rj9J45D
- GLgbhcNF350JolXm/B0CKyhXCoXssMYy7X9mZbe/f85NBkYHYgS5ziUpxGcDdLD/3hynfY
- ULYnHB4eXj86G001d68niMB2LoJ0XW8=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-10-BXiKh7FwNbuw6Ji5osB5Vg-1; Mon, 14 Jul 2025 08:59:47 -0400
-X-MC-Unique: BXiKh7FwNbuw6Ji5osB5Vg-1
-X-Mimecast-MFC-AGG-ID: BXiKh7FwNbuw6Ji5osB5Vg_1752497986
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3b5f97cb8fbso628843f8f.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 05:59:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752497986; x=1753102786;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=n25nSnVkU5GWJyRngy+6SHPj7oMPrluHwavtIra3af8=;
- b=k4YkNM+FwX5k3lGgmKu1u+K0uP7o84nt38YN3SWBrInXnrdgagqcgoVBKnDZOztrbq
- uC6KZULZ6gBkWOk52o+wf3Wxus8RxAtly7lsN7EUxeX/W3KTfK66yvV108dbMFNma4Ob
- Y6MODGo/cPeZH3QbY0qsZXDNMCAK3l9iVSVZxYnhnUkSn18n2kIziZ47tJG6OfU9DLq0
- 7776Rc+rWS2npxfQCK6V9R+jy2ytTjMYQBy5EO3ARj7wonVFstsHmKS+nn0RZBMdmblJ
- SXb0XYEwklbbowhsuja1jj2kZix8Ns6E0YLEtCQRRIUmNAQEA8ZmcSEm917vxTmiTr8E
- DYgQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUmq0SymVBsDaMr/t8rE4tBNaySt/CXiUJxv+rQaeDgCqWZzOJ6/+9xJhpzm2EnmGM09+0M1jFw+CuL@nongnu.org
-X-Gm-Message-State: AOJu0YxzhFuNgNjdbDIhfS7TZq096foRGpV/P30LA4peUprxfJSK0gXr
- rt8L3m5CgNq0CsLVGH1evzPKhXS063KyIFCj6oA3djWQjmeswhdgH1VT0nF0/0zf10j6RskXef3
- W2CULwpYZb1JlW9ibCEG0uxKW2n59s7dMx1wBaO5qKaA3kIrjYxifh7t8
-X-Gm-Gg: ASbGnctEiijVoiG67t8fc9jSiI/A0zfLIgmyHUC8EMlpmx7ubntuxdb8K3YdeKHZux3
- xU9GKstZ8kC9z8AVs7Ug6oDtF0QfnRdgGRiuSj/UVEZweFRXOOQ1KomJQnd07IVpRUxSQvFH2pd
- JXzejabQ6RcL7qJmQzLp/IWzFAqNzHj4oEeha0fdgo6hezwrLQDZwd5cbpxpPn4lCqxyMJcRl9v
- gLx/A0EcgOejYegqKUbYNIj3XC5Y8MJ/OZ6woOo1xMpwrqjBgPf66lEUpOUK3OqDNLowQDvppLT
- Coq4efeWsGEB+NIsW+IYF6qVGd3dTNDBCc/7XFL+IqgOcxk0vW0YNRuGFNckkxOqHzR2XF/fRLC
- LUrQW
-X-Received: by 2002:a5d:5f52:0:b0:3b4:990b:9ee7 with SMTP id
- ffacd0b85a97d-3b5f18959b5mr10515401f8f.22.1752497986249; 
- Mon, 14 Jul 2025 05:59:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE7OAXP65ilRKBLq6w/UglKMd/lVLu2OfwVGlOURR6YpWBx6VA1+63a7+T12qt3x8Jjat8l0A==
-X-Received: by 2002:a5d:5f52:0:b0:3b4:990b:9ee7 with SMTP id
- ffacd0b85a97d-3b5f18959b5mr10515378f8f.22.1752497985815; 
- Mon, 14 Jul 2025 05:59:45 -0700 (PDT)
-Received: from [192.168.0.6] (ltea-047-064-114-106.pools.arcor-ip.net.
- [47.64.114.106]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4560bdcce9dsm70491145e9.20.2025.07.14.05.59.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Jul 2025 05:59:45 -0700 (PDT)
-Message-ID: <b356a6b0-28dc-4ca3-8531-b47b7f60d7d4@redhat.com>
-Date: Mon, 14 Jul 2025 14:59:43 +0200
+ (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
+ id 1ubIr2-0004tE-QF
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:04:29 -0400
+Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
+ by mailout2.samsung.com (KnoxPortal) with ESMTP id
+ 20250714130420epoutp0276b9ccff4508ebe64f11d9512e602fec~SH_Hp9yOi3013930139epoutp02T
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:04:20 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com
+ 20250714130420epoutp0276b9ccff4508ebe64f11d9512e602fec~SH_Hp9yOi3013930139epoutp02T
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1752498260;
+ bh=pqdmardhYLbgukB+gPoJmX2cMN4AhVUGeaD4ZeYNo+0=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=rwwKhN0AlgXXfeHhwfx1BhpT0L4jSHdNxIxaRpOMI6WKP7w7nu1tiDI5rH67m+2NP
+ 8SSoUCD6h+dQQl2XFq6kZgasPKkbbCVcrQeG1wRqivS7QpCmKR4Afu9VkMs9HhR8Ag
+ Ye9eJO5OB3nprzpYmTb2IweQkka3WiAqve/hzNG8=
+Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
+ epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
+ 20250714130419epcas5p24c7c7ba1728165c7ab6820b2f11d08aa~SH_G2G2550632306323epcas5p2N;
+ Mon, 14 Jul 2025 13:04:19 +0000 (GMT)
+Received: from epcas5p1.samsung.com (unknown [182.195.38.88]) by
+ epsnrtp03.localdomain (Postfix) with ESMTP id 4bgjFZ2SyFz3hhT7; Mon, 14 Jul
+ 2025 13:04:18 +0000 (GMT)
+Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
+ epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+ 20250710144358epcas5p1bf06af9ee56880a24421a2f7a7d6c113~Q6v98PwOy2795427954epcas5p1_;
+ Thu, 10 Jul 2025 14:43:58 +0000 (GMT)
+Received: from test-PowerEdge-R740xd.samsungds.net (unknown [107.99.41.79])
+ by epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+ 20250710144356epsmtip248b6d188df39bd80a223fcd4c3289228~Q6v8cigKS1506515065epsmtip2h;
+ Thu, 10 Jul 2025 14:43:56 +0000 (GMT)
+From: Arpit Kumar <arpit1.kumar@samsung.com>
+To: qemu-devel@nongnu.org
+Cc: gost.dev@samsung.com, linux-cxl@vger.kernel.org, nifan.cxl@gmail.com,
+ dave@stgolabs.net, Jonathan.Cameron@huawei.com, vishak.g@samsung.com,
+ krish.reddy@samsung.com, a.manzanares@samsung.com, alok.rathore@samsung.com,
+ cpgs@samsung.com, Arpit Kumar <arpit1.kumar@samsung.com>
+Subject: [PATCH v2 2/2] hw/cxl: Add Physical Port Control (Opcode 5102h)
+Date: Thu, 10 Jul 2025 20:13:38 +0530
+Message-Id: <20250710144338.2839512-3-arpit1.kumar@samsung.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250710144338.2839512-1-arpit1.kumar@samsung.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Regarding the TODO list for contribution
-To: Akshaya Sankar <akshayasankarr@gmail.com>, qemu-devel@nongnu.org
-References: <CA+A3OQ3jcS=r0n_gEMAxrtTDHkCjibL9SPWY37WDBq2tqC-1SQ@mail.gmail.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CA+A3OQ3jcS=r0n_gEMAxrtTDHkCjibL9SPWY37WDBq2tqC-1SQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Transfer-Encoding: 8bit
+X-CMS-MailID: 20250710144358epcas5p1bf06af9ee56880a24421a2f7a7d6c113
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+X-CPGSPASS: Y
+cpgsPolicy: CPGSC10-542,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250710144358epcas5p1bf06af9ee56880a24421a2f7a7d6c113
+References: <20250710144338.2839512-1-arpit1.kumar@samsung.com>
+ <CGME20250710144358epcas5p1bf06af9ee56880a24421a2f7a7d6c113@epcas5p1.samsung.com>
+Received-SPF: pass client-ip=203.254.224.25;
+ envelope-from=arpit1.kumar@samsung.com; helo=mailout2.samsung.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,23 +97,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/07/2025 13.30, Akshaya Sankar wrote:
-> Hi all,
-> 
-> we would like to contribute to this open source community as a fresher / 
-> less experience, and would like to know about the small contributions to be 
-> done as initially. We have hands on experience on embedded, c, python and c++.
-> 
-> Kindly guide us if there is any TODO list.
+-added assert-deassert PERST implementation
+ for physical ports (both USP and DSP's).
+-assert PERST involves bg operation for holding 100ms.
+-reset PPB implementation for physical ports.
 
-  Hi,
+Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
+---
+ hw/cxl/cxl-mailbox-utils.c  | 135 ++++++++++++++++++++++++++++++++++++
+ include/hw/cxl/cxl_device.h |  10 +++
+ 2 files changed, 145 insertions(+)
 
-thanks for your interest in QEMU! There are some "bite sized" tasks in our 
-issue tracker, some of those likely can be done by new contributors, too:
-
-  https://gitlab.com/qemu-project/qemu/-/issues/?state=opened&label_name%5B%5D=Bite%20Sized
-
-  HTH,
-   Thomas
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index c4e83fb2aa..3aa8bd14b9 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -118,6 +118,7 @@ enum {
+     PHYSICAL_SWITCH = 0x51,
+         #define IDENTIFY_SWITCH_DEVICE      0x0
+         #define GET_PHYSICAL_PORT_STATE     0x1
++        #define PHYSICAL_PORT_CONTROL       0X2
+     TUNNEL = 0x53,
+         #define MANAGEMENT_COMMAND     0x0
+     MHD = 0x55,
+@@ -605,6 +606,121 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
+     return CXL_MBOX_SUCCESS;
+ }
+ 
++static void *bg_assertcb(void *opaque)
++{
++    struct pperst *perst = opaque;
++
++    /* holding reset phase for 100ms */
++    while (perst->asrt_time--) {
++        usleep(1000);
++    }
++    perst->issued_assert_perst = true;
++    return NULL;
++}
++
++static CXLRetCode deassert_perst(Object *obj, uint8_t pn, CXLUpstreamPort *pp)
++{
++    if (!pp->pports.perst[pn].issued_assert_perst) {
++        return CXL_MBOX_INTERNAL_ERROR;
++    }
++
++    QEMU_LOCK_GUARD(&pp->pports.perst[pn].lock);
++    resettable_release_reset(obj, RESET_TYPE_COLD);
++    pp->pports.perst[pn].issued_assert_perst = false;
++    pp->pports.pport_info[pn].link_state_flags &=
++        ~LINK_STATE_FLAG_PERST_ASSERTED;
++    pp->pports.perst[pn].asrt_time = ASSERT_WAIT_TIME_MS;
++
++    return CXL_MBOX_SUCCESS;
++}
++
++static CXLRetCode assert_perst(Object *obj, uint8_t pn, CXLUpstreamPort *pp)
++{
++    if (pp->pports.perst[pn].issued_assert_perst ||
++        pp->pports.perst[pn].asrt_time < ASSERT_WAIT_TIME_MS) {
++        return CXL_MBOX_INTERNAL_ERROR;
++    }
++
++    QEMU_LOCK_GUARD(&pp->pports.perst[pn].lock);
++    pp->pports.pport_info[pn].link_state_flags |=
++        LINK_STATE_FLAG_PERST_ASSERTED;
++    resettable_assert_reset(obj, RESET_TYPE_COLD);
++    qemu_thread_create(&pp->pports.perst[pn].asrt_thread, "assert_thread",
++        bg_assertcb, &pp->pports.perst[pn], QEMU_THREAD_DETACHED);
++
++    return CXL_MBOX_SUCCESS;
++}
++
++static struct PCIDevice *cxl_find_port_dev(uint8_t pn, CXLCCI *cci)
++{
++    CXLUpstreamPort *pp = CXL_USP(cci->d);
++    PCIBus *bus = &PCI_BRIDGE(cci->d)->sec_bus;
++
++    if (pp->pports.pport_info[pn].current_port_config_state ==
++        CXL_PORT_CONFIG_STATE_USP) {
++        PCIDevice *usp_dev = pci_bridge_get_device(bus);
++        return usp_dev;
++    }
++
++    if (pp->pports.pport_info[pn].current_port_config_state ==
++        CXL_PORT_CONFIG_STATE_DSP) {
++        PCIDevice *dsp_dev = pcie_find_port_by_pn(bus, pn);
++        return dsp_dev;
++    }
++    return NULL;
++}
++
++/* CXL r3.2 Section 7.6.7.1.3: Get Physical Port Control (Opcode 5102h) */
++static CXLRetCode cmd_physical_port_control(const struct cxl_cmd *cmd,
++                                            uint8_t *payload_in,
++                                            size_t len_in,
++                                            uint8_t *payload_out,
++                                            size_t *len_out,
++                                            CXLCCI *cci)
++{
++   CXLUpstreamPort *pp = CXL_USP(cci->d);
++   PCIDevice *dev;
++   uint8_t ret = CXL_MBOX_SUCCESS;
++
++   struct cxl_fmapi_get_physical_port_control_req_pl {
++        uint8_t ppb_id;
++        uint8_t ports_op;
++    } QEMU_PACKED *in = (void *)payload_in;
++
++    if (len_in < sizeof(*in)) {
++        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
++    }
++
++    uint8_t pn = in->ppb_id;
++    if (pp->pports.pport_info[pn].port_id != pn) {
++        return CXL_MBOX_INTERNAL_ERROR;
++    }
++
++    dev = cxl_find_port_dev(pn, cci);
++    if (!dev) {
++        return CXL_MBOX_INTERNAL_ERROR;
++    }
++
++    switch (in->ports_op) {
++    case 0:
++        ret = assert_perst(OBJECT(&dev->qdev), pn, pp);
++        break;
++    case 1:
++        ret = deassert_perst(OBJECT(&dev->qdev), pn, pp);
++        break;
++    case 2:
++        if (pp->pports.perst[pn].issued_assert_perst ||
++            pp->pports.perst[pn].asrt_time < ASSERT_WAIT_TIME_MS) {
++            return CXL_MBOX_INTERNAL_ERROR;
++        }
++        device_cold_reset(&dev->qdev);
++        break;
++    default:
++        return CXL_MBOX_INVALID_INPUT;
++    }
++    return ret;
++}
++
+ /* CXL r3.1 Section 8.2.9.1.2: Background Operation Status (Opcode 0002h) */
+ static CXLRetCode cmd_infostat_bg_op_sts(const struct cxl_cmd *cmd,
+                                          uint8_t *payload_in,
+@@ -3579,7 +3695,11 @@ void cxl_init_cci(CXLCCI *cci, size_t payload_max)
+ 
+ void cxl_destroy_cci(CXLCCI *cci)
+ {
++    CXLUpstreamPort *pp = CXL_USP(cci->d);
+     qemu_mutex_destroy(&cci->bg.lock);
++    for (int i = 0; i < CXL_MAX_PHY_PORTS; i++) {
++        qemu_mutex_destroy(&pp->pports.perst[i].lock);
++    }
+     cci->initialized = false;
+ }
+ 
+@@ -3798,6 +3918,8 @@ static const struct cxl_cmd cxl_cmd_set_usp_mctp[256][256] = {
+         cmd_identify_switch_device, 0, 0 },
+     [PHYSICAL_SWITCH][GET_PHYSICAL_PORT_STATE] = { "SWITCH_PHYSICAL_PORT_STATS",
+         cmd_get_physical_port_state, ~0, 0 },
++    [PHYSICAL_SWITCH][PHYSICAL_PORT_CONTROL] = { "SWITCH_PHYSICAL_PORT_CONTROL",
++        cmd_physical_port_control, 2, 0 },
+     [TUNNEL][MANAGEMENT_COMMAND] = { "TUNNEL_MANAGEMENT_COMMAND",
+                                      cmd_tunnel_management_cmd, ~0, 0 },
+ };
+@@ -3810,4 +3932,17 @@ void cxl_initialize_usp_mctpcci(CXLCCI *cci, DeviceState *d, DeviceState *intf,
+     cci->intf = intf;
+     cxl_init_cci(cci, payload_max);
+     cxl_set_phy_port_info(cci);
++    /* physical port control */
++    CXLUpstreamPort *pp = CXL_USP(cci->d);
++    for (int i = 0; i < CXL_MAX_PHY_PORTS; i++) {
++        qemu_mutex_init(&pp->pports.perst[i].lock);
++        pp->pports.perst[i].issued_assert_perst = false;
++        /*
++         * Assert PERST involves physical port to be in
++         * hold reset phase for minimum 100ms. No other
++         * physcial port control requests are entertained
++         * until Deassert PERST command.
++         */
++         pp->pports.perst[i].asrt_time = ASSERT_WAIT_TIME_MS;
++    }
+ }
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index 1fa6cf7536..bb47e671eb 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -128,6 +128,7 @@
+                   (1 << 16))
+ 
+ #define CXL_MAX_PHY_PORTS 256
++#define ASSERT_WAIT_TIME_MS 100 /* Assert - Deassert PERST */
+ 
+ #define LINK_STATE_FLAG_LANE_REVERSED    BIT(0)
+ #define LINK_STATE_FLAG_PERST_ASSERTED   BIT(1)
+@@ -203,10 +204,19 @@ struct cxl_phy_port_info {
+     uint8_t supported_ld_count;
+ } QEMU_PACKED;
+ 
++/* Assert - Deassert PERST */
++struct pperst {
++    bool issued_assert_perst;
++    QemuMutex lock;
++    uint64_t asrt_time;
++    QemuThread asrt_thread; /* thread for 100ms delay */
++};
++
+ struct phy_port {
+     uint8_t num_ports;
+     uint8_t active_port_bitmask[0x20];
+     struct cxl_phy_port_info pport_info[CXL_MAX_PHY_PORTS];
++    struct pperst perst[CXL_MAX_PHY_PORTS];
+ };
+ 
+ /* CXL r3.1 Table 8-34: Command Return Codes */
+-- 
+2.34.1
 
 
