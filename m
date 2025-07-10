@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1285C83F1D
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 11:17:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E0ABC83F1D
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 11:32:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZpH2-0002li-Jk; Thu, 10 Jul 2025 07:17:08 -0400
+	id 1uZpUy-0004nW-D6; Thu, 10 Jul 2025 07:31:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uZpGS-0000zc-GT
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 07:16:34 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uZpUw-0004Jv-D2
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 07:31:30 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uZpGO-0007kB-Cq
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 07:16:31 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-ade76b8356cso155994366b.2
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 04:16:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uZpUu-0005Hp-4N
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 07:31:30 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3a54690d369so886277f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 04:31:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752146185; x=1752750985; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jlH7qROmhjyGgV24G5kCHWH60mLAH6jayTl6wCtZZvE=;
- b=uPMffTUFWdA71Rk37nWik0IyEInFVU4xeKPfUtSD5RTunLTynwftgZ0+rkKtvJ4T6h
- /ArRQzGccwpqK4LyVlyJGLwLCcrvcDrT9DP7pxvVDRHJsxo5X2Pr11T7Oy4sOIMomZ6O
- ElYTR/y4QKnoIRM9PP9pTopLDKFjkEeliHgWsLf4OmvVr8HnqlJyYc+FXo8aLcSndFlP
- 9PqPk3lsQEyoQ0f2JnKq5xMTZ4ynHrbfGGrp/skTHyOtMkTu/hPwULGugOcdvw5cJd53
- 0kfcuirHlWvhkmPXESGgNRhKqaspxi5B4WofQmlNqK8ZBSoB5g2BkPSM+gjjSx3yfmpu
- gsdQ==
+ d=linaro.org; s=google; t=1752147085; x=1752751885; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=lDJ2vIkPhvwM5DiRQNz5jjkVQ813bG8xx9tfM2SSO8c=;
+ b=hYFMJGhzKLdYAxhkzjKJkLNDMRNvxS39Kl6rE0IB7Wd1fAP/yzRptwHmJp8Ev4lIlW
+ 6Uyky3du79BQdmA1ZrcTPZZFKAVqGwLqsFPeRrPwKKxaEj6oqxh2evRObc1o/tEEVp46
+ yhr3C/yJ8nUIYEpKh37EUSygaddDUSF0KloWYrrbRYHv7OmK6sMJYeWq1DEHQd6Yqb9y
+ j5f6HNbUUgOuMNoOu4/LK9hmyLTB4CRw+y/ddNxy7zHtZrQpkNsU1u7Q0sG3rIemL+Ke
+ Y8x2pEiB6NJswozpyEfqG0l7vb3EdelSOGzCl5Ze97NbkDpkEroDtcgJ6cNzNegRVmiQ
+ UFkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752146185; x=1752750985;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jlH7qROmhjyGgV24G5kCHWH60mLAH6jayTl6wCtZZvE=;
- b=IcL36uU/hkUKhw4yxP2pGsoR7ptjWK6un+RBwygTG0z/nHGnlcRE1psYvIsmCHEwzA
- WTkzUAUthaIdPphUD9b1UZ10K/ntQOo/97gpC0/sqKbq19rK/d1vu7wupXxhSaqg6W/q
- gA6EKafEHKjWZK/qSoMqElv9pDATa2CNEOOVSMhLI2uK+eoghTvrQmxHVyj79ervW8xm
- dec3fsvUZrWJQXDCVQkqHGw+bawmN6BtGh1Mvwt/MbsuqfuREhD6PdAZlCJT8RT+CJes
- l01RiM7jZLUVoLRTcPNabEMIOXLyi8XO/93tR33kO6fHX6dOmr5tIwx3EufFhJL8gLVS
- OhZg==
-X-Gm-Message-State: AOJu0Yx8/HRct47BhCRBkoJKJI+2E1fpLk9j+Ka3tWV0LS7CYRkpijrK
- NN07OOPVwp3ebpTi/edTvPeQ1YXdzBJM4KyB+RG9NJ28pKnuxvfGsdCw5nY7ClNwgdWt9N+ClG9
- womT7LkHZLfVTTIkaM7MM16wlBzdfxUGHSB8iuVHDtw==
-X-Gm-Gg: ASbGncvDaN/uEpQn5LsfoKYKu9+Enlhi3VsHWn21qIniBibZefxC/IEYqIV2yYYkH6v
- 7ou/uhXM76oIljWp+fdZR/tYAmbTaXDb8xql/G+Tg4JPGLdZv024H+v70eZxhUE3SFpPccTnBQe
- lv71i7SbfJLibFLd3rsd5MwZ4RgT1aoYiI+9YNYhGP4uA=
-X-Google-Smtp-Source: AGHT+IGJUXFkzC/3md9vPfU8BUgytO2b3bpCfjB45dhDChZ92LvAOP1O25iJvzDaEwwHvEWfp0tL5pn6CUO7MWuVnaI=
-X-Received: by 2002:a17:907:3f98:b0:ae3:53ac:2999 with SMTP id
- a640c23a62f3a-ae6e70f4887mr262990566b.53.1752146185333; Thu, 10 Jul 2025
- 04:16:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250710111303.8917-1-philmd@linaro.org>
-In-Reply-To: <20250710111303.8917-1-philmd@linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 10 Jul 2025 14:15:58 +0300
-X-Gm-Features: Ac12FXyZvqu3S6-zse-U5fwyQA8rrK5rvY0BbZS3hqKQFLkwkcbJpoo2s3eXiRs
-Message-ID: <CAAjaMXbb-G0qS+cLGUQOoXr+HNR_zZzprT8iz0vhcQ6269hD6A@mail.gmail.com>
-Subject: Re: [PATCH] accel/tcg: Do not dump NaN statistics
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ d=1e100.net; s=20230601; t=1752147085; x=1752751885;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lDJ2vIkPhvwM5DiRQNz5jjkVQ813bG8xx9tfM2SSO8c=;
+ b=oqztZsxnF0Xd8X89PacBsrBAmoJHYTktkxZD/Y8feOlbGNPVK9qleaW2dM2MnoHgt2
+ PDFvePSI/m7mp44oO7k4C1AXeuvfUTxBD0m1hXDf649FjurID/Limr4WcufTlSXQUkYM
+ W0xAZzOyS8ASdZa23gTz8JHOn9Fv+Exi4mf+yrOivkM9uJlLwp85uu9iDBwp8k+apJI/
+ 7XThOVC5rD2/VS8At3D5zUTOBOt+kDjmxyDqkZubCxHJV6FmxzWIKW1/5FqUJM5Y/lAF
+ 2oNjaDr11O48MaHBB+rtq2p8AnRCzPgCrZlgtjQGMH7mVe9087ZbFqcvTZbQVQLS/oT7
+ FXSw==
+X-Gm-Message-State: AOJu0Yxv+9RcgPsD3wlFdRk6TEm+lMFDI5ijUsUywEglhpcey33kF0J5
+ dyI4pV+j8TxgtQmLvly4sD2mWyPkdPfvz/6D2D1zKFBbZtPiwLLef+L9bMVInECVM4ts1ASydGE
+ W4cTu
+X-Gm-Gg: ASbGncveZoUhtqkHJlALHqbEWN+8f0QTc+BQYdtnhawFz0btn2p0wjQ+X3SHxy1kpIi
+ 41OgUb4tgS23Q6lOfdAKcgX+f6cBa9fv3TtmK0sMVqgJUeYheserqsklUQMxRFIB4tNvzgs0rLN
+ +zr/Tk/Y7vddoSzMyZz6nJFjiXOmysLPNHzM8kSOCuTVcoV101/NCzAa/Ox1E/dMxsD3L6znWkZ
+ HlgS1cpLLsADFniTIO7DhtcVrptPf5ZhwYzOYWUf5fjk9xjvlfl3aqrjSv0uKbxVnXzEr5L7hvP
+ Em90bIyHZd/rljIPesCXui+Xj+uxj1BEC2LhCbtfwmGI5coa49jVTZa1+Fo5iuD4oRf7
+X-Google-Smtp-Source: AGHT+IFmBmAjMZVsA7CQSA/Qtm2zH2jFe2gzq3jIxzdEAMYUIEPtxLXejQtuq0Jj1LVxjKC6DBOkGQ==
+X-Received: by 2002:a05:6000:290b:b0:3b5:e077:af24 with SMTP id
+ ffacd0b85a97d-3b5e866f3b6mr2218812f8f.14.1752147085475; 
+ Thu, 10 Jul 2025 04:31:25 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b5e8e0d289sm1638405f8f.55.2025.07.10.04.31.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 10 Jul 2025 04:31:24 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>,
  Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62f.google.com
+Subject: [PATCH] linux-user: Implement fchmodat2 syscall
+Date: Thu, 10 Jul 2025 12:31:23 +0100
+Message-ID: <20250710113123.1109461-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,76 +97,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 10, 2025 at 2:13=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  accel/tcg/monitor.c | 22 +++++++++++++++-------
->  1 file changed, 15 insertions(+), 7 deletions(-)
->
-> diff --git a/accel/tcg/monitor.c b/accel/tcg/monitor.c
-> index e7ed7281a4b..778b12613f4 100644
-> --- a/accel/tcg/monitor.c
-> +++ b/accel/tcg/monitor.c
-> @@ -19,7 +19,7 @@
->  #include "tcg/tcg.h"
->  #include "internal-common.h"
->  #include "tb-context.h"
-> -
-> +#include <math.h>
->
->  static void dump_drift_info(GString *buf)
->  {
-> @@ -57,6 +57,7 @@ static void print_qht_statistics(struct qht_stats hst, =
-GString *buf)
->      uint32_t hgram_opts;
->      size_t hgram_bins;
->      char *hgram;
-> +    double avg;
->
->      if (!hst.head_buckets) {
->          return;
-> @@ -73,9 +74,13 @@ static void print_qht_statistics(struct qht_stats hst,=
- GString *buf)
->          hgram_opts |=3D QDIST_PR_NODECIMAL;
->      }
->      hgram =3D qdist_pr(&hst.occupancy, 10, hgram_opts);
-> -    g_string_append_printf(buf, "TB hash occupancy   %0.2f%% avg chain o=
-cc. "
-> -                           "Histogram: %s\n",
-> -                           qdist_avg(&hst.occupancy) * 100, hgram);
-> +    avg =3D qdist_avg(&hst.occupancy);
-> +    if (!isnan(avg)) {
-> +        g_string_append_printf(buf, "TB hash occupancy   "
-> +                                    "%0.2f%% avg chain occ. "
-> +                                    "Histogram: %s\n",
-> +                               avg * 100, hgram);
-> +    }
->      g_free(hgram);
->
->      hgram_opts =3D QDIST_PR_BORDER | QDIST_PR_LABELS;
-> @@ -87,9 +92,12 @@ static void print_qht_statistics(struct qht_stats hst,=
- GString *buf)
->          hgram_opts |=3D QDIST_PR_NODECIMAL | QDIST_PR_NOBINRANGE;
->      }
->      hgram =3D qdist_pr(&hst.chain, hgram_bins, hgram_opts);
-> -    g_string_append_printf(buf, "TB hash avg chain   %0.3f buckets. "
-> -                           "Histogram: %s\n",
-> -                           qdist_avg(&hst.chain), hgram);
-> +    avg =3D qdist_avg(&hst.chain);
-> +    if (!isnan(avg)) {
-> +        g_string_append_printf(buf, "TB hash avg chain   %0.3f buckets. =
-"
-> +                                    "Histogram: %s\n",
-> +                               avg, hgram);
-> +    }
->      g_free(hgram);
->  }
->
-> --
-> 2.49.0
->
+The fchmodat2 syscall is new from Linux 6.6; it is like the
+existing fchmodat syscall except that it takes a flags parameter.
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+v1->v2: don't bother with trying to fall back to libc fchmodat();
+add missing braces for if()
+---
+ linux-user/syscall.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index fc37028597c..e1b1476936c 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -790,6 +790,10 @@ safe_syscall6(ssize_t, copy_file_range, int, infd, loff_t *, pinoff,
+               int, outfd, loff_t *, poutoff, size_t, length,
+               unsigned int, flags)
+ #endif
++#if defined(TARGET_NR_fchmodat2) && defined(__NR_fchmodat2)
++safe_syscall4(int, fchmodat2, int, dfd, const char *, filename,
++              unsigned short, mode, unsigned int, flags)
++#endif
+ 
+ /* We do ioctl like this rather than via safe_syscall3 to preserve the
+  * "third argument might be integer or pointer or not present" behaviour of
+@@ -10713,6 +10717,15 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+         ret = get_errno(fchmodat(arg1, p, arg3, 0));
+         unlock_user(p, arg2, 0);
+         return ret;
++#endif
++#if defined(TARGET_NR_fchmodat2) && defined(__NR_fchmodat2)
++    case TARGET_NR_fchmodat2:
++        if (!(p = lock_user_string(arg2))) {
++            return -TARGET_EFAULT;
++        }
++        ret = get_errno(safe_fchmodat2(arg1, p, arg3, arg4));
++        unlock_user(p, arg2, 0);
++        return ret;
+ #endif
+     case TARGET_NR_getpriority:
+         /* Note that negative values are valid for getpriority, so we must
+-- 
+2.43.0
+
 
