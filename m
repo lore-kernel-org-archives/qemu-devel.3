@@ -4,97 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03BA7C83F17
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 10:51:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9D35C83F17
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 10:53:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZon7-00028G-1U; Thu, 10 Jul 2025 06:46:13 -0400
+	id 1uZouP-0004Mz-U8; Thu, 10 Jul 2025 06:53:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uZomf-0001r7-V0
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:45:50 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZouM-0004Kv-3G
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:53:42 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uZomZ-000784-Sn
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:45:44 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3a52874d593so705487f8f.0
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 03:45:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZouJ-0000HK-Vm
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:53:41 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-45363645a8eso5900115e9.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 03:53:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752144336; x=1752749136; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iz/LY4KOmNjK8aVdmnn+2X+hPVBWX9P2bT1YuqmMXP8=;
- b=xGnF/o9vL62rNQM0guLm7ewll9b/nPbuSue+LQW8uQDmEI6l28psxIyvJjgXG6t6FT
- eogFgWoqfSJcMHaYog8vUPdI4oA5icfWgsXni7VJzjDRFn9RtAafurHuThwzw4sD7PIR
- /Pqa6Y7XkRvnZ1H4udD8Phhux+afIYQ16LriOUifXpCY8nameIRUt393h0YsOHl8gDk0
- +AylzaZegYgPOf8VqtZTpOfE4XELCixdr0IfVT/LBKHEu0LSNPQhaunFWN8AfVG1I/zJ
- 97I/paJu3ILGT42GgSFH3dwuQ/hRMDDSOa+KngCljoFyTyOSN+SzG1dgNLjNX37HDZoN
- uZJw==
+ d=linaro.org; s=google; t=1752144818; x=1752749618; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/2D9KdryDH9w3+FY3OKYsbitqI0vEstXZC8lyCAA7DQ=;
+ b=aPjKaUFyUwBaAmF1FQLiwwkZA6JgAdZvPQkBY7IYIJL11LYMjwmxoFZe6H1tdfyzvW
+ hePXYYzoKvzSJOYKgIPF+yEWNa1nShM4HGoxSl8ZnfmXUdRaBYESvGBbIjNsyP2p3BiY
+ /7SjJh1isjV45iMr/cI1xtioTj9HSfl/FzmhpeGO/MxvBtx3Qse8N34XImXuHRImVVUg
+ SvNWeYDyqXOcQ+KXbCOSWeORCvPX+rWvPkwDVl5rUHuTT/OyuvJ3aiUSM2i3s2yEr3Np
+ n1LuvebbwCXwC9T16gRa21N3rwRPZqSgp4fPsIvGBRwu4Box2kJSRjn/jDccnr91oiNG
+ +5aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752144336; x=1752749136;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iz/LY4KOmNjK8aVdmnn+2X+hPVBWX9P2bT1YuqmMXP8=;
- b=EkquMrjQKp3mKjiLzC34F/PC8NA2yytQsRhooq8JZG7kIG9H4gBaUHEVSVfFKjP/uE
- Ql6rEPR6IoUGfi/rsjqQGIBQMzlcjTeoIncSVf1MLgB/AiKF1cYt1qZhAmsQ5zXmwu0W
- +vRQtX2aK5doXbzBd95J2XvXuO+8ljk0f1CJo2OrQKgiglL08O6RSfVZGsdI2uMVyfa3
- bj3iG+xEJqaK022Dr25K8pfRL6QWaUxrK3Nbc45UCTsRBIZ8EHwi9VvPf9rNJlPcJSLz
- rDl7Cs2E1zImRTUE6fu//sQb5kcsdVOEKLOHfa7cztIBGDmRx8ULeJdlrHM9hh2MXMf5
- 6Vnw==
-X-Gm-Message-State: AOJu0YwWOWOKniW1CoavsBPas40J/8+Kkx4jvZT/8+A3daHGiHr711mh
- 9NG6lqkojrfN2ZvoZofYVJylslS+6XDXi39lY6aweshFZcTSNoS3z+T9hnFQ/422UT0=
-X-Gm-Gg: ASbGncsuneqewFzOUjK4T7q7TaIe6SNyVaaV+Jox5y+4lYzRlQ7s3Tib8xsG9Q29C4w
- g0sME2EDJU3riPWOrTkVtinEeNNKqnb1SOfDmcSCXWRN4hNY+w4OLuyu7O96j03NS0DhyXb/uf/
- qgK7eNABHUFr3MPCKBZGIw2V8WHrrNONPnmZ6+gSvQg0BUSEvfUKJ4eJKvH0t3zMutIaaoa9Lq+
- 8vrTfq6irv0AujDYEmvEhVEJBjDjxgldWMl0PQxa00T2HFTSFYHyILhCEvpeWm3Z+dpNxfY3/kI
- +f6BmNpIW6EDHoxrhMnYgvyf8uR0+TnDwBVk5ZGcn0dPeNjb3n/X6JarCU+FLDE=
-X-Google-Smtp-Source: AGHT+IGhQz+1/FpaU9qTEzmSHmCxSUrkMjowKvaC+7X52KGoS+0rQn3z3TvQLs/OgkEQqc/RPevKHQ==
-X-Received: by 2002:adf:e38d:0:b0:3a3:6e85:a529 with SMTP id
- ffacd0b85a97d-3b5e78f891cmr2680481f8f.51.1752144335992; 
- Thu, 10 Jul 2025 03:45:35 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e1e2fasm1499722f8f.77.2025.07.10.03.45.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Jul 2025 03:45:32 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 945175F893;
- Thu, 10 Jul 2025 11:45:31 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Jason Wang <jasowang@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
- Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Yodel Eldar <yodel.eldar@gmail.com>
-Subject: [PATCH 4/7] target/alpha: Add GDB XML feature file
-Date: Thu, 10 Jul 2025 11:45:27 +0100
-Message-ID: <20250710104531.3099313-5-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250710104531.3099313-1-alex.bennee@linaro.org>
-References: <20250710104531.3099313-1-alex.bennee@linaro.org>
+ d=1e100.net; s=20230601; t=1752144818; x=1752749618;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/2D9KdryDH9w3+FY3OKYsbitqI0vEstXZC8lyCAA7DQ=;
+ b=aGm51dHExcYZAaP86yKfl0q/Yq7lGJIPo7Rml0e3hHPSypdw046XmBdiJh/TYa40CN
+ cS9kg8pXNF5nOgx+QJE0R3IhXC7+AEN9bOSkofAMu7znR/jfy3U0Kpq+ZxSBgebeQW4U
+ c0mSNNpn9R2Pu7fcg+WStcUI4gRnJXNA7ShAPewONulj466hYlJs5h8mFsOb0iVhy1Vo
+ 9h4mL4jXOZqMyU/Vi9QpovJJoIFhUSyvLupKLdldI1fIfxXv1Bmq6vrxsi1n+10rvVvk
+ UpLxe4Oa6fXHM/7ejhxNWCEClcpVrhF8ICYGNBQDSp7A6ZWWE/k9ejq+2pZ/n8uecyIA
+ 2jqQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVR6wW+vzLimyZ8d4FbOaT6WZUbabtspyUmXzrhL11jfZSRcjfx3hKx9Uh6JJut4G3WSC/QRaDSywB5@nongnu.org
+X-Gm-Message-State: AOJu0Yw8AkBrR8i+Rmsppq8CX7Ht9EyDxx5ZoXPu1HeMeg92ku6QkISg
+ k6f2VJ12FFuEeHbU0PjjOs7cLwjDNn73nxWhiShqR7MyJSJ8BSWi2nB3ylttW5Burow=
+X-Gm-Gg: ASbGnctTRNYAZ94UU7bAtfW2vYsTb4YHGt4NW1M98piGtH4hZVfbC1ZDzXZz3nlat78
+ xtmXkH2nJzKRY59zomUGhmphP1x2VpsDmIhf+ipKlpXop8lrixZ2zgvQadNcrM2ldCju+0tbtyS
+ e6cO4fzcN7XeGCna9lsoTpxt1NUWZZ0Gxltm2e4hOmGKwKTQxti8Oz0QureJ7/4TuQqfeFaJK1V
+ zidRWO+Dd3h6trEBEQKPzHD6vzilD+J3oGjkDVn3SOpyzlG9Sk0F5MB4BaKpRN7MUiy+ZF/E+PQ
+ bmsfJxhNJonH5a4UQd6w4Df8EuittxVwfKIZzlaWlrCYuY2BHk8/auX3YFBc4lhWLTjkKCETJje
+ bhIMrP1DyNfCCKjnWWtVeuQ+N+3xy8/98cqconkCnpNgaLXYqRAkxpw==
+X-Google-Smtp-Source: AGHT+IGWDK7HS76gTXznsmssW6+DUnZ9WwCwZxyYP/5PLa6m+Dkn5sjnPtHEj95t1Ix16zxSrbZhnA==
+X-Received: by 2002:a05:600c:8717:b0:453:483b:6272 with SMTP id
+ 5b1f17b1804b1-454db7e8730mr30714355e9.7.1752144817772; 
+ Thu, 10 Jul 2025 03:53:37 -0700 (PDT)
+Received: from [192.168.1.117] (lfbn-mon-1-970-120.w86-227.abo.wanadoo.fr.
+ [86.227.5.120]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454dd540a95sm16198805e9.29.2025.07.10.03.53.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 10 Jul 2025 03:53:37 -0700 (PDT)
+Message-ID: <8e9e90f3-eb41-47db-8286-9d96a97c9cac@linaro.org>
+Date: Thu, 10 Jul 2025 12:53:36 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 18/18] hw/i386/isapc.c: replace rom_memory with
+ system_memory
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, pbonzini@redhat.com,
+ mst@redhat.com, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
+ imammedo@redhat.com, qemu-devel@nongnu.org
+References: <20250710085308.420774-1-mark.caveayland@nutanix.com>
+ <20250710085308.420774-19-mark.caveayland@nutanix.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250710085308.420774-19-mark.caveayland@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,197 +104,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yodel Eldar <yodel.eldar@gmail.com>
+On 10/7/25 10:52, Mark Cave-Ayland wrote:
+> Now that we can guarantee the isapc machine will never have a PCI bus, any
+> instances of rom_memory can be replaced by system_memory and rom_memory
+> removed completely.
+> 
+> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> ---
+>   hw/i386/isapc.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/hw/i386/isapc.c b/hw/i386/isapc.c
+> index bb22083821..27c075b5f3 100644
+> --- a/hw/i386/isapc.c
+> +++ b/hw/i386/isapc.c
+> @@ -35,7 +35,6 @@ static void pc_init_isa(MachineState *machine)
+>       ISABus *isa_bus;
+>       GSIState *gsi_state;
+>       MemoryRegion *ram_memory;
+> -    MemoryRegion *rom_memory = system_memory;
+>       DriveInfo *hd[MAX_IDE_BUS * MAX_IDE_DEVS];
+>       uint32_t irq;
+>       int i;
+> @@ -73,7 +72,7 @@ static void pc_init_isa(MachineState *machine)
+>   
+>       /* allocate ram and load rom/bios */
+>       if (!xen_enabled()) {
+> -        pc_memory_init(pcms, system_memory, rom_memory, 0);
+> +        pc_memory_init(pcms, system_memory, system_memory, 0);
 
-This patch adds the GDB XML feature file that describes Alpha's core
-registers.
+I'd prefer just call here:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2569
+   x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, true);
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Yodel Eldar <yodel.eldar@gmail.com>
-Message-ID: <20250630164124.26315-3-yodel.eldar@gmail.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- configs/targets/alpha-linux-user.mak |   1 +
- configs/targets/alpha-softmmu.mak    |   1 +
- target/alpha/cpu.c                   |   1 +
- gdb-xml/alpha-core.xml               | 136 +++++++++++++++++++++++++++
- 4 files changed, 139 insertions(+)
- create mode 100644 gdb-xml/alpha-core.xml
+and in pc_system_firmware_init(): assert(pcmc->pci_enabled).
 
-diff --git a/configs/targets/alpha-linux-user.mak b/configs/targets/alpha-linux-user.mak
-index ef8e365b09..aa25766236 100644
---- a/configs/targets/alpha-linux-user.mak
-+++ b/configs/targets/alpha-linux-user.mak
-@@ -2,3 +2,4 @@ TARGET_ARCH=alpha
- TARGET_SYSTBL_ABI=common
- TARGET_SYSTBL=syscall.tbl
- TARGET_LONG_BITS=64
-+TARGET_XML_FILES= gdb-xml/alpha-core.xml
-diff --git a/configs/targets/alpha-softmmu.mak b/configs/targets/alpha-softmmu.mak
-index 5275076e50..e31f059a52 100644
---- a/configs/targets/alpha-softmmu.mak
-+++ b/configs/targets/alpha-softmmu.mak
-@@ -1,2 +1,3 @@
- TARGET_ARCH=alpha
- TARGET_LONG_BITS=64
-+TARGET_XML_FILES= gdb-xml/alpha-core.xml
-diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
-index 2082db45ea..bf1787a69d 100644
---- a/target/alpha/cpu.c
-+++ b/target/alpha/cpu.c
-@@ -286,6 +286,7 @@ static void alpha_cpu_class_init(ObjectClass *oc, const void *data)
-     cc->get_pc = alpha_cpu_get_pc;
-     cc->gdb_read_register = alpha_cpu_gdb_read_register;
-     cc->gdb_write_register = alpha_cpu_gdb_write_register;
-+    cc->gdb_core_xml_file = "alpha-core.xml";
- #ifndef CONFIG_USER_ONLY
-     dc->vmsd = &vmstate_alpha_cpu;
-     cc->sysemu_ops = &alpha_sysemu_ops;
-diff --git a/gdb-xml/alpha-core.xml b/gdb-xml/alpha-core.xml
-new file mode 100644
-index 0000000000..c9e12f4ffd
---- /dev/null
-+++ b/gdb-xml/alpha-core.xml
-@@ -0,0 +1,136 @@
-+<?xml version="1.0"?>
-+<!-- Copyright (C) 2025 Free Software Foundation, Inc.
-+
-+     Copying and distribution of this file, with or without modification,
-+     are permitted in any medium without royalty provided the copyright
-+     notice and this notice are preserved.  -->
-+
-+<!DOCTYPE feature SYSTEM "gdb-target.dtd">
-+<feature name="org.gnu.gdb.alpha.core">
-+  <!-- IEEE rounding mode values -->
-+  <enum id="dyn_rm_enum" size="8">
-+    <!-- Chopped rounding mode -->
-+    <evalue name="chop" value="0"/>
-+    <!-- Minus infinity -->
-+    <evalue name="-inf" value="1"/>
-+    <!-- Normal rounding -->
-+    <evalue name="norm" value="2"/>
-+    <!-- Plus infinity -->
-+    <evalue name="+inf" value="3"/>
-+  </enum>
-+
-+  <!-- Floating-Point Control Register Flags -->
-+  <flags id="fpcr_flags" size="8">
-+    <!-- Denormal Operand Exception Disable -->
-+    <field name="DNOD"   start="47" end="47"/>
-+    <!-- Denormal Operands to Zero -->
-+    <field name="DNZ"    start="48" end="48"/>
-+    <!-- Invalid Operation Disable -->
-+    <field name="INVD"   start="49" end="49"/>
-+    <!-- Division by Zero Disable -->
-+    <field name="DZED"   start="50" end="50"/>
-+    <!-- Overflow Disable -->
-+    <field name="OVFD"   start="51" end="51"/>
-+    <!-- Invalid Operation -->
-+    <field name="INV"    start="52" end="52"/>
-+    <!-- Division by Zero -->
-+    <field name="DZE"    start="53" end="53"/>
-+    <!-- Overflow -->
-+    <field name="OVF"    start="54" end="54"/>
-+    <!-- Underflow -->
-+    <field name="UNF"    start="55" end="55"/>
-+    <!-- Inexact Result -->
-+    <field name="INE"    start="56" end="56"/>
-+    <!-- Integer Overflow -->
-+    <field name="IOV"    start="57" end="57"/>
-+    <!-- Dynamic Rounding Mode -->
-+    <field name="DYN_RM" start="58" end="59" type="dyn_rm_enum"/>
-+    <!-- Underflow to Zero -->
-+    <field name="UNDZ"   start="60" end="60"/>
-+    <!-- Underflow Disable -->
-+    <field name="UNFD"   start="61" end="61"/>
-+    <!-- Inexact Disable -->
-+    <field name="INED"   start="62" end="62"/>
-+    <!-- Summary Bit -->
-+    <field name="SUM"    start="63" end="63"/>
-+  </flags>
-+
-+  <!-- Integer Registers -->
-+  <reg name="v0"   bitsize="64" type="int64"/>
-+  <reg name="t0"   bitsize="64" type="int64"/>
-+  <reg name="t1"   bitsize="64" type="int64"/>
-+  <reg name="t2"   bitsize="64" type="int64"/>
-+  <reg name="t3"   bitsize="64" type="int64"/>
-+  <reg name="t4"   bitsize="64" type="int64"/>
-+  <reg name="t5"   bitsize="64" type="int64"/>
-+  <reg name="t6"   bitsize="64" type="int64"/>
-+  <reg name="t7"   bitsize="64" type="int64"/>
-+  <reg name="s0"   bitsize="64" type="int64"/>
-+  <reg name="s1"   bitsize="64" type="int64"/>
-+  <reg name="s2"   bitsize="64" type="int64"/>
-+  <reg name="s3"   bitsize="64" type="int64"/>
-+  <reg name="s4"   bitsize="64" type="int64"/>
-+  <reg name="s5"   bitsize="64" type="int64"/>
-+  <reg name="fp"   bitsize="64" type="int64"/>
-+  <reg name="a0"   bitsize="64" type="int64"/>
-+  <reg name="a1"   bitsize="64" type="int64"/>
-+  <reg name="a2"   bitsize="64" type="int64"/>
-+  <reg name="a3"   bitsize="64" type="int64"/>
-+  <reg name="a4"   bitsize="64" type="int64"/>
-+  <reg name="a5"   bitsize="64" type="int64"/>
-+  <reg name="t8"   bitsize="64" type="int64"/>
-+  <reg name="t9"   bitsize="64" type="int64"/>
-+  <reg name="t10"  bitsize="64" type="int64"/>
-+  <reg name="t11"  bitsize="64" type="int64"/>
-+  <reg name="ra"   bitsize="64" type="int64"/>
-+  <reg name="t12"  bitsize="64" type="int64"/>
-+  <reg name="at"   bitsize="64" type="int64"/>
-+  <reg name="gp"   bitsize="64" type="data_ptr"/>
-+  <reg name="sp"   bitsize="64" type="data_ptr"/>
-+  <reg name="zero" bitsize="64" type="int64" save-restore="no"/>
-+
-+  <!-- Floating-Point Registers -->
-+  <reg name="f0"  bitsize="64" type="float" group="float"/>
-+  <reg name="f1"  bitsize="64" type="float" group="float"/>
-+  <reg name="f2"  bitsize="64" type="float" group="float"/>
-+  <reg name="f3"  bitsize="64" type="float" group="float"/>
-+  <reg name="f4"  bitsize="64" type="float" group="float"/>
-+  <reg name="f5"  bitsize="64" type="float" group="float"/>
-+  <reg name="f6"  bitsize="64" type="float" group="float"/>
-+  <reg name="f7"  bitsize="64" type="float" group="float"/>
-+  <reg name="f8"  bitsize="64" type="float" group="float"/>
-+  <reg name="f9"  bitsize="64" type="float" group="float"/>
-+  <reg name="f10" bitsize="64" type="float" group="float"/>
-+  <reg name="f11" bitsize="64" type="float" group="float"/>
-+  <reg name="f12" bitsize="64" type="float" group="float"/>
-+  <reg name="f13" bitsize="64" type="float" group="float"/>
-+  <reg name="f14" bitsize="64" type="float" group="float"/>
-+  <reg name="f15" bitsize="64" type="float" group="float"/>
-+  <reg name="f16" bitsize="64" type="float" group="float"/>
-+  <reg name="f17" bitsize="64" type="float" group="float"/>
-+  <reg name="f18" bitsize="64" type="float" group="float"/>
-+  <reg name="f19" bitsize="64" type="float" group="float"/>
-+  <reg name="f20" bitsize="64" type="float" group="float"/>
-+  <reg name="f21" bitsize="64" type="float" group="float"/>
-+  <reg name="f22" bitsize="64" type="float" group="float"/>
-+  <reg name="f23" bitsize="64" type="float" group="float"/>
-+  <reg name="f24" bitsize="64" type="float" group="float"/>
-+  <reg name="f25" bitsize="64" type="float" group="float"/>
-+  <reg name="f26" bitsize="64" type="float" group="float"/>
-+  <reg name="f27" bitsize="64" type="float" group="float"/>
-+  <reg name="f28" bitsize="64" type="float" group="float"/>
-+  <reg name="f29" bitsize="64" type="float" group="float"/>
-+  <reg name="f30" bitsize="64" type="float" group="float"/>
-+
-+  <!-- Floating-Point Control Register -->
-+  <reg name="fpcr" bitsize="64" type="fpcr_flags" group="float"/>
-+
-+  <!-- Program Counter -->
-+  <reg name="pc" bitsize="64" type="code_ptr"/>
-+
-+  <!-- Reserved Index for Former Virtual Register -->
-+  <reg name="" bitsize="64" type="int64" save-restore="no"/>
-+
-+  <!-- PALcode Memory Slot -->
-+  <reg name="unique" bitsize="64" type="int64" group="system"/>
-+</feature>
--- 
-2.47.2
+WDYT?
+
+>       } else {
+>           assert(machine->ram_size == x86ms->below_4g_mem_size +
+>                                       x86ms->above_4g_mem_size);
 
 
