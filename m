@@ -4,85 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C10CAC83F1D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A187EC83F1A
 	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 08:12:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZmO4-00056L-6p; Thu, 10 Jul 2025 04:12:12 -0400
+	id 1uZmNj-0004r1-Pi; Thu, 10 Jul 2025 04:11:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZmO2-00054g-2F
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 04:12:10 -0400
-Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZmNr-0006L5-Jq
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 04:12:07 -0400
-Received: by mail-yb1-xb33.google.com with SMTP id
- 3f1490d57ef6-e82314f9a51so594641276.0
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 01:11:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752135116; x=1752739916; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=2s/Zqafw8AcoBzgRuZ54ScgDx0pAEPd4KULnehzKxBg=;
- b=E7M7mvRq+Dw0H+3zISFaE0lH2DDj9wIL/E4gyxU/cmzllF0SA4RcvQaYwF8N4/muyB
- BDr1xVSOyIsHieqfm2q1smheqJDyHwYao/xvFE3oBP64YihhSN41abKi5X7cr8SJq0t/
- DpmUVD76T3TjLq8yAkGarlNIswiYazZAoI9GVlt6UbUxnNh/JWGKREDC/eDZMdAjg+1K
- WL02+8ttMyN45hwjsoVoKurkAL1X8mn084g1aXp0QHPtqPQGvZ3Msg7rjvIqTl/E3Pwr
- 0BZwVr+ip46Z0/WlOuc1jV/P19bjLaC/a1Sk+63F/E+JE5MevL7yQy/AGItu51PtWEbr
- yswQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752135116; x=1752739916;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2s/Zqafw8AcoBzgRuZ54ScgDx0pAEPd4KULnehzKxBg=;
- b=Ab0OhABpOJ/49AhvoR6U/LZIuiFIrRzTDB2y5e5Qj4BP0/0XJ9d7xI3RBRMtAVEYV2
- FZWWLfj0W9WGKiQecWXCunFx9yUwqkq1CmndvjLx+x7W2FUjFzkmH/43LwKGCmxwU4KM
- vfS/gayUprvSrM4qp/c7dgzyawO2DqVBZrnYi0iUSElheYTgjy+tFjZRqlpcGxLbvetK
- kWJFR0qZdq9d18xg7JiLOZbMdQpk/zrBu2p+RQv1LxXaVxwFstsJaV2o9lUpvtAJSIgV
- ykaOY04p197OxIC1AejdP12jFCX3UZgexckMLBhvPrKayM0E0wmepU+OltdIyyybPTzw
- v0Sg==
-X-Gm-Message-State: AOJu0Yxe7jWHB7NV/xLz2YdveYJsxHIT9cP4wPaMtOQo3YT+86dO56Cp
- 8jBi6C8TA9xlYly5AbwvdBh0xxptJkkvleQnALju50BRZYI4eZ3ZsYbm0vYSSOQ68VQqCGbRF3l
- GzvZNUfdRppMU/t5FayqWrhW5dqkhqhtxTwAjohsCSQ==
-X-Gm-Gg: ASbGncvcHa4nexSeVleqO+56J4umNUFD5qCcr7f++NLYH3baaV8fA7UDMaQG8ypyPkx
- B2RzGunQN+Ipx0K11Kt/I/vJzIocrpNtcr1vebvX0MWgiGggZ+dY5Sq7vkbNUYDrvC2fHPQYVVK
- 2fgAHN/V3b++WMt1R8fnfPxsVLt9Zl6hTiPrq+SrgEJlF7
-X-Google-Smtp-Source: AGHT+IFP+d3kfFlfXU34Hul8KsHFBVCuvpuCpVKWMgez/2tubk87UqxG1pqPRadEPQ4pauRTaUj/kTpukXVQAtDyNlU=
-X-Received: by 2002:a05:690c:87:b0:70d:ecdd:9bd1 with SMTP id
- 00721157ae682-717b198ef8emr84285357b3.24.1752135116592; Thu, 10 Jul 2025
- 01:11:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1uZmNg-0004oj-Mx
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 04:11:48 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1uZmNb-0006HN-Mo
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 04:11:48 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bd6wF6KLYz6M4vb;
+ Thu, 10 Jul 2025 16:10:21 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 88ECC1402F5;
+ Thu, 10 Jul 2025 16:11:28 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Thu, 10 Jul 2025 10:11:28 +0200
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Thu, 10 Jul 2025 10:11:28 +0200
+To: Nicolin Chen <nicolinc@nvidia.com>, Donald Dutile <ddutile@redhat.com>
+CC: Zhenzhong Duan <zhenzhong.duan@intel.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "alex.williamson@redhat.com"
+ <alex.williamson@redhat.com>, "clg@redhat.com" <clg@redhat.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
+ <mst@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>,
+ "peterx@redhat.com" <peterx@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
+ "kevin.tian@intel.com" <kevin.tian@intel.com>, "yi.l.liu@intel.com"
+ <yi.l.liu@intel.com>, "chao.p.peng@intel.com" <chao.p.peng@intel.com>
+Subject: RE: [PATCH v3 02/20] hw/pci: Introduce pci_device_get_viommu_cap()
+Thread-Topic: [PATCH v3 02/20] hw/pci: Introduce pci_device_get_viommu_cap()
+Thread-Index: AQHb7/hbxXAwWQdQikCUUQpuT+n2ZLQo0noAgAEhcgCAABeeAIAA9YLQ
+Date: Thu, 10 Jul 2025 08:11:28 +0000
+Message-ID: <b3787ed4219743e2a65edd13ff44d9b9@huawei.com>
+References: <20250708110601.633308-1-zhenzhong.duan@intel.com>
+ <20250708110601.633308-3-zhenzhong.duan@intel.com>
+ <aG26VBqzOnLAWC5z@Asurada-Nvidia>
+ <01584206-e2c0-4881-aaf5-d6c552a30873@redhat.com>
+ <aG7A8hxd1R4iVhGT@Asurada-Nvidia>
+In-Reply-To: <aG7A8hxd1R4iVhGT@Asurada-Nvidia>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <20250703104110.992379-1-Jonathan.Cameron@huawei.com>
-In-Reply-To: <20250703104110.992379-1-Jonathan.Cameron@huawei.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 10 Jul 2025 09:11:44 +0100
-X-Gm-Features: Ac12FXwPnQQnWUTVs71FmnCoarOVLcrYujDLpcY0gASudkRZRuyeu7_DF9hc4Qg
-Message-ID: <CAFEAcA9gDM87t0RXWPdu5bi1WxcMcpRiYEcnqjzhdUiys=E0gA@mail.gmail.com>
-Subject: Re: [PATCH qemu v17 0/5] arm/virt: CXL support via pxb_cxl
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: qemu-devel@nongnu.org, Fan Ni <fan.ni@samsung.com>, 
- Eric Auger <eric.auger@redhat.com>, mst@redhat.com,
- Zhijian Li <lizhijian@fujitsu.com>, 
- Itaru Kitayama <itaru.kitayama@linux.dev>, linuxarm@huawei.com,
- linux-cxl@vger.kernel.org, 
- qemu-arm@nongnu.org, Yuquan Wang <wangyuquan1236@phytium.com.cn>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb33.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,24 +87,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 3 Jul 2025 at 11:41, Jonathan Cameron
-<Jonathan.Cameron@huawei.com> wrote:
->
-> v17: Thanks to Eric for review
-> - Add a comment to the high memory map to reduce the chance of nasty
->   surprises in the future as similar to device_memory, the CXL
->   Fixed Memory Windows are of variable size as so can't be represented
->   by explicit entries in the map.
-> - Updated a couple of patch descriptions to provide answers to questions
->   Eric raised.
->
 
 
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: Wednesday, July 9, 2025 8:20 PM
+> To: Donald Dutile <ddutile@redhat.com>
+> Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>; qemu-
+> devel@nongnu.org; alex.williamson@redhat.com; clg@redhat.com;
+> eric.auger@redhat.com; mst@redhat.com; jasowang@redhat.com;
+> peterx@redhat.com; jgg@nvidia.com; Shameerali Kolothum Thodi
+> <shameerali.kolothum.thodi@huawei.com>; joao.m.martins@oracle.com;
+> clement.mathieu--drif@eviden.com; kevin.tian@intel.com;
+> yi.l.liu@intel.com; chao.p.peng@intel.com
+> Subject: Re: [PATCH v3 02/20] hw/pci: Introduce
+> pci_device_get_viommu_cap()
+>=20
+> On Wed, Jul 09, 2025 at 01:55:46PM -0400, Donald Dutile wrote:
+> > > > +enum {
+> > > > +    VIOMMU_CAP_STAGE1 =3D BIT_ULL(0),  /* stage1 page table
+> supported */
+> > > > +};
+> > >
+> > > Thanks for this work. I am happy to see that we can share the
+> > > common code that allocates a NESTING_PARENT in the core using
+> > > this flag.
+> > >
+> > > Yet on ARM, a STAGE1 page table isn't always a nested S1, the
+> > > hardware accelerated one. More often, it can be just a regular
+> > > 1-stage translation table via emulated translation code and an
+> > > emulated iotlb.
+> > >
+> > Because the user-created smmuv3 started as 'accelerated smmuv3',
+> > and had been 'de-accelerated' to simply 'user created smmuv3',
+> > I'm looking for some clarification in the above statement/request.
+> >
+> > Is the above suppose to reflect that a nested IOMMU has some hw-
+> acceleration
+> > in its Stage1 implementation?
+> > If so, then call it that: STAGE1_ACCEL.
+> > If it's suppose to represent that an IOMMU has nested/2-stage support,
+> > then the above is a valid cap;  -but-, having a nested/2-stage support
+> IOMMU
+> > doesn't necessarily mean its accelerated.
+>=20
+> Well, there are an emulated "nested" mode and an hw-accelerated
+> "nested" mode in the smmuv3 code, so we had to choose something
+> like "accel" over "nested".
+>=20
+> Here, on the other hand, I think the core using this CAP would
+> unlikely care about an emulated "nested" mode in the individual
+> vIOMMU..
+>=20
+> So I suggested:
+>      /* hardware-accelerated nested stage-1 page table support */
+>     VIOMMU_CAP_NESTED_S1 =3D BIT_ULL(0),
+>=20
+> which it should be clear IMHO.
+>=20
+> If not, maybe go a bit further like "VIOMMU_CAP_HW_NESTED_S1"?
 
-Applied to target-arm.next, thanks.
+I am not sure the _S1 part makes much sense in ARM case. It doesn't matter
+whether the Guest SMMUv3 is configured in s1/s2 or nested for this CAP.=20
+With the new SMMUv3 dev support, the user can pretty much specify,
 
--- PMM
+-device arm-smmuv3,primary-bus=3Dpcie.0,id=3Dsmmuv3.1,accel=3Don,stage=3D{s=
+tage1|stage2|nested}
+
+And I think it will work with a host SMMUv3 nested configuration in all the
+above cases. Unless I am missing something and we need to restrict its
+use with stage=3Dstage1 only.
+
+Thanks,
+Shameer
+
 
