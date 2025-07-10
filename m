@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCDEBC83F1D
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 13:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 877C6C83F1D
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 13:27:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZrFT-0005kP-9u; Thu, 10 Jul 2025 09:23:39 -0400
+	id 1uZrIv-0001Cf-Ry; Thu, 10 Jul 2025 09:27:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZrFS-0005jn-62
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 09:23:38 -0400
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ id 1uZrI7-0000Ht-ND
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 09:26:23 -0400
+Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZrFO-0006ru-Vh
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 09:23:37 -0400
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-710bbd7a9e2so9822767b3.0
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 06:23:34 -0700 (PDT)
+ id 1uZrI5-0007gL-Kr
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 09:26:23 -0400
+Received: by mail-yb1-xb31.google.com with SMTP id
+ 3f1490d57ef6-e740a09eae0so926061276.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 06:26:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752153813; x=1752758613; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752153979; x=1752758779; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=s6z7C65qwFjanp+WcXfAI65NKJWVNo2kQYZJAA47Yu0=;
- b=rXZJeJrUQZMcPx3EzTyY311SKgaoQCoEwEdkre0tc9m/joocT+PG4wUCmHGqZywF02
- QS/zCfmGC/LogiHyj6uh31ERVYalTEis/Ni05Edutb/Dcp6g7ScptQHQCo79QwBV3tpm
- kzv0qOzXA24I03qV2rj7nas50kMF+3I8YOBvYj/GUFxEaBXJcLVZQZsn7xqmbcMQcoAS
- vYIjbhaZ3ssZM8Ce0eerCGN7bjaan/3RAnMEL3y+pQrCWMvqte7oDDre5v48Y1E3gw1R
- xLwSZC+GyadG+6slV2KqHYELdfPORijhsnbmnwCs7gfe5DDkPowMn3FWSrnQGAWvFv/R
- /DIA==
+ bh=PJRk60/i+29Mq+QF6TUKPvYbMJka1Yla5MR4tq4Ygd4=;
+ b=FvEjI4j93b4dc7Dqpv6KBv3MLh1+MEyFFZck8FOolDylsh+3OO9pSWBfnJXRy4kPHY
+ vzEVR1vcqgX8XVpjigvmiOO+Pt4OnXoAIelQx4oyH3lua7tEFyDA7kfPjOssJ6q/K9of
+ D/y+x9FhWl6SAk0DXwQ8yrzwsNjzla9viGskiZRkcf0iat2LSxp4XqPko3h6K4KHYI7S
+ 2zFEgc39Oxkd5SKG0p8Gzmpv7aPPwCUvz9dvir3amv926eK4HHRGEhQi+fLghIREfWF+
+ aqf5J2rYqW6Fyj2wIXaBqT2XwtSjA4Oo2EqYK5lTJDXDoU20+/waDX1aDbjD13ThteSW
+ 9pig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752153813; x=1752758613;
+ d=1e100.net; s=20230601; t=1752153979; x=1752758779;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=s6z7C65qwFjanp+WcXfAI65NKJWVNo2kQYZJAA47Yu0=;
- b=qNE1BaeCn7DKLwLo/gfDlFWkBqKlVidrNiBEYNRVTwWiLI4i6vhG/psZUYr3lVKULg
- zGCvw0ti8mlIvwIQ2Xg5Zf4F5YdREbzHjGRADBmtpsMJ1L0DZg48FoNApqEBX6K/FfTX
- 3wSjvy0VPbT/PSi6uRKqItPwV6X3274byWNRDYb9EBdTauH1xwqjAZPsOcka5RmcHle+
- QWqfguhT8KY0he7TD3pMYAH114OK/hgFTSf5xXtXeK/9it+VPhnI+Epp+o4O3w7X2qgD
- X//U4d4jzrtB9CHhSsjO8X74oAVutNAihRmAnM57G1fqgXi4usiuETjPyvkJiAj3OzKG
- crag==
-X-Gm-Message-State: AOJu0YxCYVm6QWNlogGmufT8tm/20KDhgPLbd/5lh57FpqeX1jytkwyp
- /ywhwXqkkAPkMuWaWy/uDGqAGGYRMAh1cx3825yjJfZNXqR+/tExke/sSRPZ5rCioBMrvJPpfuS
- 4j/54FrLgGVfoWmIRNEO7npbQPz0N0wnPGnjxb//iqQ==
-X-Gm-Gg: ASbGncvh6ZVVf/XW6r0QiTg1qYvZYRZbXQhru8BeFNcmVUSUUfVLXbGmmPrr59jA45Z
- rlVqbVuhPY2inClUxFiRDsNtyqXU2fBGJJqV+dPYysOMVij3kxTIrXCEcs6ChLbxwyV1+hchbL1
- ptuuWRjn8dfst3cYWH6GNP7mRyOuvR7h8W/Oiwh34pXa05WZkZalkc5x0=
-X-Google-Smtp-Source: AGHT+IGjBa6pXuwwD3/iY1qakHcfO7WMIzcg58EkAYO8CttaWHegMrIEvuHhQNkd26APhmb339H9NsKnKs9ksqYEI70=
-X-Received: by 2002:a05:690c:6804:b0:709:1b68:9f5c with SMTP id
- 00721157ae682-717c46885e3mr41339407b3.16.1752153812914; Thu, 10 Jul 2025
- 06:23:32 -0700 (PDT)
+ bh=PJRk60/i+29Mq+QF6TUKPvYbMJka1Yla5MR4tq4Ygd4=;
+ b=i3seK7gAK2JWClvXybhCaupa3vSfENd0BwLm/AWhi/7ksUjDFMtavCMDVOhu17MzJ8
+ Lcc+TsVTibUCYtRg51i2ZuIJDGIuS6HE0dCNZ5D8AOyjhLcqEX0ktMe06RXvf+Zmf4sn
+ N5FvFAQjpo1idjV1tpAkCkq9xuO75v/woL3mXo/ePBS3glY485JwLPHqFuAO4SKXxKWZ
+ HCkmzDWOB3zPh00863knt109K331htQtgsVawrBvxcRTEYqHZ9lb8KBdUwWYlAsNze0o
+ q2+lLOc9DAYMsbLL+VNHRU8Hg9GKl04oQhLNytmAi09yPXxF3WfwQMlmEqkL8LZoSERl
+ xRUQ==
+X-Gm-Message-State: AOJu0YxCEjIf8xwOsbYTpkzzY9kIinTEtfSkm5T2JsBBqyVWmD1LlVUg
+ YEfT2x4xwDzJO91ChET5z6V9IFiMIx4Z6aGi4h+GvUKzsMbHMfoSBv/mMMvBztp1WRLVJ90AGDF
+ sFIP7G+XX8BCS6l14cZCUzKzcWzMcTGmeEg6Su1R0JkeiokWTMe2S
+X-Gm-Gg: ASbGnctXMsa0pujHjT8GFyO/+xn3rZJVa3EOI2B/mW4ass6eeaq3d9+rrfShkNPKJLs
+ rV8LwuEgAMDZNSVxPMCpAB/ZHix1/ut5859nP+AkO+jFnFkP6z1HIDS0QZDIqpS75BaPO9807nX
+ tgE3HgghmSt5BWHD1JjUpYJ5DrSszMLWQyPNWpB07rqLaw
+X-Google-Smtp-Source: AGHT+IFObqBJ3Mo4ZxlfNQpYRan7BjFFOgg0zCHlL+IoN3fYVdts5FLMvlm4Y/Qk+TqgjkX59+T0XChwPMymKMzw7ek=
+X-Received: by 2002:a05:690c:6b0e:b0:70f:6ec6:62b2 with SMTP id
+ 00721157ae682-717b166f94amr95131907b3.8.1752153979300; Thu, 10 Jul 2025
+ 06:26:19 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1747223385.git.mst@redhat.com>
- <40ab4ed107757e1c5bdccc906e8a44cb4e2cb7a4.1747223385.git.mst@redhat.com>
-In-Reply-To: <40ab4ed107757e1c5bdccc906e8a44cb4e2cb7a4.1747223385.git.mst@redhat.com>
+ <77a8e9fe0ecb71b260d17f43221df5b18769b359.1747223385.git.mst@redhat.com>
+In-Reply-To: <77a8e9fe0ecb71b260d17f43221df5b18769b359.1747223385.git.mst@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 10 Jul 2025 14:23:21 +0100
-X-Gm-Features: Ac12FXw71FkePhuYbsNUYBgJS-eKcaFDjTkvFvv_F7y1j2t_SHsmgrenvqSloFY
-Message-ID: <CAFEAcA8Rqop+ju0fuxN+0T57NBG+bep80z45f6pY0ci2fz_G3A@mail.gmail.com>
-Subject: Re: [PULL 05/27] hw/cxl/cxl-mailbox-utils: Media operations Sanitize
- and Write Zeros commands CXL r3.2(8.2.10.9.5.3)
+Date: Thu, 10 Jul 2025 14:26:07 +0100
+X-Gm-Features: Ac12FXzfwXzP0TfQUZDzIc0xbp1yNAUnkEQwDcK1ud49L6cFMthtKwv34Hse5Nk
+Message-ID: <CAFEAcA-p5wZkNxK7wNVq_3PAzEE-muOd1Def-0O-FSpck4DrBQ@mail.gmail.com>
+Subject: Re: [PULL 03/27] hw/cxl/cxl-mailbox-utils: Add support for Media
+ operations discovery commands cxl r3.2 (8.2.10.9.5.3)
 To: "Michael S. Tsirkin" <mst@redhat.com>
 Cc: qemu-devel@nongnu.org, Vinayak Holikatti <vinayak.kh@samsung.com>, 
  Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,74 +99,88 @@ On Wed, 14 May 2025 at 12:50, Michael S. Tsirkin <mst@redhat.com> wrote:
 > From: Vinayak Holikatti <vinayak.kh@samsung.com>
 >
 > CXL spec 3.2 section 8.2.10.9.5.3 describes media operations commands.
-> CXL devices supports media operations Sanitize and Write zero command.
+> CXL devices supports media operations discovery command.
 >
 > Signed-off-by: Vinayak Holikatti <vinayak.kh@samsung.com>
 > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Message-Id: <20250305092501.191929-6-Jonathan.Cameron@huawei.com>
+> Message-Id: <20250305092501.191929-4-Jonathan.Cameron@huawei.com>
 > Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 > ---
+>  hw/cxl/cxl-mailbox-utils.c | 125 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 125 insertions(+)
 
-> +static int validate_dpa_addr(CXLType3Dev *ct3d, uint64_t dpa_addr,
-> +                             size_t length)
+
+
+> +static CXLRetCode media_operations_discovery(uint8_t *payload_in,
+> +                                             size_t len_in,
+> +                                             uint8_t *payload_out,
+> +                                             size_t *len_out)
 > +{
-> +    uint64_t vmr_size, pmr_size, dc_size;
-> +
-> +    if ((dpa_addr % CXL_CACHE_LINE_SIZE) ||
-> +        (length % CXL_CACHE_LINE_SIZE)  ||
-> +        (length <= 0)) {
-> +        return -EINVAL;
-> +    }
-> +
-> +    vmr_size = get_vmr_size(ct3d, NULL);
-> +    pmr_size = get_pmr_size(ct3d, NULL);
-> +    dc_size = get_dc_size(ct3d, NULL);
-> +
-> +    if (dpa_addr + length > vmr_size + pmr_size + dc_size) {
-
-Hi; Coverity flagged up a potential issue in this function (CID 1610093)
-Partly it is a false positive (it thinks vmr_size etc can
-be -1, but they won't I assume ever be memory regions of that
-size), but it did make me notice that this address/length
-check looks wrong. If the guest can pass us a (dpa_addr, length)
-combination that overflows a 64-bit integer then we can
-incorrectly pass this length test.
-
-> +        return -EINVAL;
-> +    }
-> +
-> +    if (dpa_addr > vmr_size + pmr_size) {
-> +        if (!ct3_test_region_block_backed(ct3d, dpa_addr, length)) {
-> +            return -ENODEV;
-> +        }
-> +    }
-> +
-> +    return 0;
-> +}
-
-
-
-> +static CXLRetCode media_operations_sanitize(CXLType3Dev *ct3d,
-> +                                            uint8_t *payload_in,
-> +                                            size_t len_in,
-> +                                            uint8_t *payload_out,
-> +                                            size_t *len_out,
-> +                                            uint8_t fill_value,
-> +                                            CXLCCI *cci)
-> +{
-> +    struct media_operations_sanitize {
+> +    struct {
 > +        uint8_t media_operation_class;
 > +        uint8_t media_operation_subclass;
 > +        uint8_t rsvd[2];
 > +        uint32_t dpa_range_count;
-> +        struct dpa_range_list_entry dpa_range_list[];
-> +    } QEMU_PACKED *media_op_in_sanitize_pl = (void *)payload_in;
-> +    uint32_t dpa_range_count = media_op_in_sanitize_pl->dpa_range_count;
+> +        struct {
+> +            uint16_t start_index;
+> +            uint16_t num_ops;
+> +        } discovery_osa;
+> +    } QEMU_PACKED *media_op_in_disc_pl = (void *)payload_in;
+> +    struct media_op_discovery_out_pl *media_out_pl =
+> +        (struct media_op_discovery_out_pl *)payload_out;
+> +    int num_ops, start_index, i;
+> +    int count = 0;
+> +
+> +    if (len_in < sizeof(*media_op_in_disc_pl)) {
+> +        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
+> +    }
+> +
+> +    num_ops = media_op_in_disc_pl->discovery_osa.num_ops;
+> +    start_index = media_op_in_disc_pl->discovery_osa.start_index;
+> +
+> +    /*
+> +     * As per spec CXL r3.2 8.2.10.9.5.3 dpa_range_count should be zero and
+> +     * start index should not exceed the total number of entries for discovery
+> +     * sub class command.
+> +     */
+> +    if (media_op_in_disc_pl->dpa_range_count ||
+> +        start_index > ARRAY_SIZE(media_op_matrix)) {
 
-This looks dubious -- a packed struct presumably from the
-guest, with a 32-bit value, that we are reading without
-doing any handling of host endianness ?
+Coverity thinks this bounds check is wrong (CID 1610091):
+we allow start_index equal to the ARRAY_SIZE(media_op_matrix),
+which means that in the loop below we will index off the
+end of the array.
+
+Don't we also need to be checking (start_index + num_ops)
+against the array size bounds, not just start_index ?
+
+> +        return CXL_MBOX_INVALID_INPUT;
+> +    }
+> +
+> +    media_out_pl->dpa_range_granularity = CXL_CACHE_LINE_SIZE;
+> +    media_out_pl->total_supported_operations =
+> +                                     ARRAY_SIZE(media_op_matrix);
+> +    if (num_ops > 0) {
+> +        for (i = start_index; i < start_index + num_ops; i++) {
+> +            media_out_pl->entry[count].media_op_class =
+> +                    media_op_matrix[i].media_op_class;
+> +            media_out_pl->entry[count].media_op_subclass =
+> +                        media_op_matrix[i].media_op_subclass;
+> +            count++;
+> +            if (count == num_ops) {
+> +                break;
+> +            }
+> +        }
+> +    }
+> +
+> +    media_out_pl->num_of_supported_operations = count;
+> +    *len_out = sizeof(*media_out_pl) + count * sizeof(*media_out_pl->entry);
+> +    return CXL_MBOX_SUCCESS;
+> +}
+
+The functions in this patch also look like they aren't correctly
+handling the "guest and host endianness differ" case.
 
 thanks
 -- PMM
