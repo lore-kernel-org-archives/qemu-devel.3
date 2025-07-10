@@ -4,108 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 324C7C83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 14:23:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C341C83F1B
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 14:23:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZsAw-00032P-Pj; Thu, 10 Jul 2025 10:23:02 -0400
+	id 1uZsAw-0002y0-37; Thu, 10 Jul 2025 10:23:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZryZ-0000gA-OD
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:10:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1uZs08-0001fp-5n
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:11:52 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uZryU-0004Jl-Kl
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:10:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752156607;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9bjJYpCH7ZfK0sawPwyP0TDIcWspMQNetqywwvCHqCc=;
- b=JI0qK3NQHqIc6ogpXFqXTRMdnLVXaYTKo5Mo1F+E0T2SDECG9mR3kaQc6xEu936XN2tl/M
- HZ82AR5sPneb8tPPy2eztyw6wPZSQjO+vx/alS7ySiLx/WrUwziqt96AZgpIc6qSggbUf3
- bcDhqBr4Z6j8UR5srSYJydReJqtfe0k=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-460-81UPv23hP-O9j_e5RwbUqw-1; Thu, 10 Jul 2025 10:10:06 -0400
-X-MC-Unique: 81UPv23hP-O9j_e5RwbUqw-1
-X-Mimecast-MFC-AGG-ID: 81UPv23hP-O9j_e5RwbUqw_1752156605
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-450de98b28eso10323845e9.0
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 07:10:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752156605; x=1752761405;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9bjJYpCH7ZfK0sawPwyP0TDIcWspMQNetqywwvCHqCc=;
- b=FEsgwzaVUNQ3srhot/ZVU0wOpO7w8mMxHRNxPUECHvztBkzoIldr+V9TmiCJ7vuUTT
- 4wgHHhGmi53+kl8m4bHrZOlTV5k/Pi7/tPGwvfVd9hgpyxUx2XPJVxB0QSQck4sxzKYh
- vw3A5Y3KKrSlkAtGxzfGD3JYH8+Hu8/V872TtSW1IBF37D1rs9CfTru8uJw+KJqMg+sQ
- NV1or8qPpZ7OC9VEmgLHcCEWgVk+YHbc24otTqnNpPf+utPj+1cbUbNRMWM504fyljzb
- 9bbTLIX833RfiyZERR2TzaJxXYf7FEy6PgBQrARbh7iHuKRS6AF/NzEzEDyESwNEmO/g
- jBcw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUOURsN0P9mF59rATGXi9hWMJhiV1pRtkmnCfk+h2nRLvVw75ghQutT89gHotoFp+61nLHAbaRsn/B8@nongnu.org
-X-Gm-Message-State: AOJu0YxNFXrycCwjvE+95CeWAr/mH2Sg2v6ccByYTtmXRS51LqDMYe34
- fyDmDQpSO8MtwH29+Hw8P09klbKX7EraHevZFAZ+Is/ReUveNalfLGML3VCsqUwUo6L1HAQGsZ0
- g5MT2V9h5JoN0K8sghNn2Vw5axt7njDrpfRXsPGWKkbH89hm59qaqSH51
-X-Gm-Gg: ASbGnctqQ7NOySPrz9bV4LLLg3M3OevZuhnXIL+AGJKqfrZnz/52eNzL/mv6XjBtAo2
- vbpOOMS+7g/48q238gPBjpwkPODwCXVGEnKtJecGOzdvGHuSUOQmtXmLlKUpmwGzUzQjRCLIubY
- kPyfPD1EhbdMsUcJhksy/B36qiEswZKpfOBZsDElRUx4WImzqeqxOCl0iANArU4lFFhCWk00mbj
- b/tORZWZ3+ibAoCYZaRVuqV5Jy+NDEAYmFkiFVmx6ui0SLpKKWLBamdn2Q2SmazDFH+XX7inZfo
- ZlImcZjcCcFAzHQKA8QTWAt38Im0LMhqYxLY8j/SgvLibLvKRShnZ6ZM5JhthTRicacB/w==
-X-Received: by 2002:a05:600c:1e8a:b0:453:45f1:9c96 with SMTP id
- 5b1f17b1804b1-454db8bf413mr39662285e9.14.1752156604814; 
- Thu, 10 Jul 2025 07:10:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE6psRf5P3aN2vGoaXDYQS7IIdKIGys2vxts3vY0vAop44l6lLGzwwi9GjwHLRdCCTUXuK3Qw==
-X-Received: by 2002:a05:600c:1e8a:b0:453:45f1:9c96 with SMTP id
- 5b1f17b1804b1-454db8bf413mr39661625e9.14.1752156604150; 
- Thu, 10 Jul 2025 07:10:04 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454d511bd78sm61242615e9.35.2025.07.10.07.10.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Jul 2025 07:10:03 -0700 (PDT)
-Message-ID: <322a9301-a1ee-4cd9-b423-fbef2fc0593d@redhat.com>
-Date: Thu, 10 Jul 2025 16:10:02 +0200
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1uZs05-0004Sh-I3
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:11:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=8tF56U9L9VOIlvzuB4BsGnOTd3FFf0iz5iF0JfPUG5k=; b=r78/8xJiujelNgRdX9rmGoOyh+
+ IeqgBaeaenvJYQflmCGzOaix72dbl8/VYQWx8LXSioVZgflc0TtXj7gk+32d5gbnLj0TxLYlY7OuI
+ OSTAPaxvOuA3Dos8Xv8wMYHxbpKeh/+8Iqi0pZ2FkGLwzwHO2E0W5fSRaKyyVUIpn2RLuhatq2K/N
+ aWbI9LsUE1RX+hvKzoJpHHEllMWXH7AV3Qd8qpOMbg70xRtksb/ioD12gdVFngRaKsntffLRXviId
+ +qWjcy6Yhfnp4vgX7k+953OYKYgGVFd2T5wRFJIn5xqd3LuReJr/K5xmXg7erQzylytjCHn2OypAB
+ hpy+vwJVk99LPNlYE2kdKt3uVutvdgwqpSMX9X9lQtuq/PgdGbh9dXBkWRDMQJkfV/d4TUiK+JpCy
+ raXW4loTYKtOjl2nYKEuDuyBSAy8BC021DH/hbB3hUeIio9VSyNRcIV3WcIFPuRg4/ez4hmkPKNnl
+ 9AklW039wuT/y7xvx5SVq3WY7TPjulW2cOETnRY4272WFZErheaJzwN3uoxZbLu/2pmFxaRTGKb/B
+ gN2QR5LW6Sj0wPsMZEiE2S7RpQXUjUFs7O7YeYGj5QlFxS4mdUo3bEDH7Og/e+TD8xUpTG6BRuauX
+ TyUEO9u4mQr4fvRyWuF04vWr6vxZT8Gb3mgEdPnDE=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+Cc: Greg Kurz <groug@kaod.org>
+Subject: Re: [PULL 7/9] tests/9p: add 'Tsetattr' request to test client
+Date: Thu, 10 Jul 2025 16:11:44 +0200
+Message-ID: <1956976.W3UK9cqU4Q@silver>
+In-Reply-To: <CAFEAcA8Sc7t25KNzwnEAi=n8SNCAYDsFbs8P8hUKwWRxWzx_QQ@mail.gmail.com>
+References: <cover.1746438650.git.qemu_oss@crudebyte.com>
+ <4719a2d59176a6c850e2b4f1af44cecd25430fce.1746438650.git.qemu_oss@crudebyte.com>
+ <CAFEAcA8Sc7t25KNzwnEAi=n8SNCAYDsFbs8P8hUKwWRxWzx_QQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 4/5] hw/arm/arm_gicv3_kvm: Add a migration blocker with
- kvm nested virt
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- miguel.luis@oracle.com, peter.maydell@linaro.org,
- richard.henderson@linaro.org, maz@kernel.org, gkulkarni@amperecomputing.com,
- gankulkarni@os.amperecomputing.com
-Cc: hi@alyssa.is
-References: <20250707164129.1167837-1-eric.auger@redhat.com>
- <20250707164129.1167837-5-eric.auger@redhat.com>
- <48fca85b-096a-4d1c-97dd-380669cb6604@linaro.org>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <48fca85b-096a-4d1c-97dd-380669cb6604@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,52 +68,159 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thursday, July 10, 2025 3:30:22 PM CEST Peter Maydell wrote:
+> On Mon, 5 May 2025 at 10:54, Christian Schoenebeck
+> <qemu_oss@crudebyte.com> wrote:
+> >
+> > Add and implement functions to 9pfs test client for sending a 9p2000.L
+> > 'Tsetattr' request and receiving its 'Rsetattr' response counterpart.
+> >
+> > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> > Signed-off-by: Greg Kurz <groug@kaod.org>
+> > Message-Id: <20250312152933.383967-6-groug@kaod.org>
+> > ---
+> >  tests/qtest/libqos/virtio-9p-client.c | 49 +++++++++++++++++++++++++++
+> >  tests/qtest/libqos/virtio-9p-client.h | 34 +++++++++++++++++++
+> >  tests/qtest/virtio-9p-test.c          |  1 +
+> >  3 files changed, 84 insertions(+)
+> >
+> > diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
+> > index 98b77db51d..6ab4501c6e 100644
+> > --- a/tests/qtest/libqos/virtio-9p-client.c
+> > +++ b/tests/qtest/libqos/virtio-9p-client.c
+> > @@ -557,6 +557,55 @@ void v9fs_rgetattr(P9Req *req, v9fs_attr *attr)
+> >      v9fs_req_free(req);
+> >  }
+> >
+> > +/*
+> > + * size[4] Tsetattr tag[2] fid[4] valid[4] mode[4] uid[4] gid[4] size[8]
+> > + *                  atime_sec[8] atime_nsec[8] mtime_sec[8] mtime_nsec[8]
+> > + */
+> > +TSetAttrRes v9fs_tsetattr(TSetAttrOpt opt)
+> > +{
+> > +    P9Req *req;
+> > +    uint32_t err;
+> 
+> 
+> Hi -- Coverity warns (CID 1609751) that this function
+> passes by value an argument which is a 184 byte struct.
+> Is this intentional?
+
+Hi Peter!
+
+Yes, that was intentional. It follows the same coding pattern of the 9p test
+cases to hack named function arguments into C:
+
+  someFunc({ .argC = 3, .argH = "foo", .argX = 1 });
+
+That saves a lot of code and makes callers better readable, because some test
+case just needs to pass a value for argument A and C, another test might need
+to pass arguments H, X and Y, and so on.
+
+Before we had numerous function variations for the same thing, just with
+different argument permutations. Now it's only one function per purpose.
+
+> Can we instead pass a pointer to the
+> struct?
+> 
+> This is only a test program and 184 bytes is not super
+> enormous, so if this would be painful to avoid we can mark
+> the coverity report as a false positive.
+
+Well, it would be possible to change this to a pointer, patch below in any
+case. Personally I would just mark this as a false positive though. It's not a
+bug and the resulting binary would probably be identical. No hard opinion
+though.
+
+/Christian
+
+diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
+index 6ab4501c6e..f0b009645d 100644
+--- a/tests/qtest/libqos/virtio-9p-client.c
++++ b/tests/qtest/libqos/virtio-9p-client.c
+@@ -561,35 +561,35 @@ void v9fs_rgetattr(P9Req *req, v9fs_attr *attr)
+  * size[4] Tsetattr tag[2] fid[4] valid[4] mode[4] uid[4] gid[4] size[8]
+  *                  atime_sec[8] atime_nsec[8] mtime_sec[8] mtime_nsec[8]
+  */
+-TSetAttrRes v9fs_tsetattr(TSetAttrOpt opt)
++TSetAttrRes v9fs_tsetattr(TSetAttrOpt *opt)
+ {
+     P9Req *req;
+     uint32_t err;
+ 
+-    g_assert(opt.client);
++    g_assert(opt->client);
+ 
+     req = v9fs_req_init(
+-        opt.client, 4/*fid*/ + 4/*valid*/ + 4/*mode*/ + 4/*uid*/ + 4/*gid*/ +
++        opt->client, 4/*fid*/ + 4/*valid*/ + 4/*mode*/ + 4/*uid*/ + 4/*gid*/ +
+         8/*size*/ + 8/*atime_sec*/ + 8/*atime_nsec*/ + 8/*mtime_sec*/ +
+-        8/*mtime_nsec*/, P9_TSETATTR, opt.tag
++        8/*mtime_nsec*/, P9_TSETATTR, opt->tag
+     );
+-    v9fs_uint32_write(req, opt.fid);
+-    v9fs_uint32_write(req, (uint32_t) opt.attr.valid);
+-    v9fs_uint32_write(req, opt.attr.mode);
+-    v9fs_uint32_write(req, opt.attr.uid);
+-    v9fs_uint32_write(req, opt.attr.gid);
+-    v9fs_uint64_write(req, opt.attr.size);
+-    v9fs_uint64_write(req, opt.attr.atime_sec);
+-    v9fs_uint64_write(req, opt.attr.atime_nsec);
+-    v9fs_uint64_write(req, opt.attr.mtime_sec);
+-    v9fs_uint64_write(req, opt.attr.mtime_nsec);
++    v9fs_uint32_write(req, opt->fid);
++    v9fs_uint32_write(req, (uint32_t) opt->attr.valid);
++    v9fs_uint32_write(req, opt->attr.mode);
++    v9fs_uint32_write(req, opt->attr.uid);
++    v9fs_uint32_write(req, opt->attr.gid);
++    v9fs_uint64_write(req, opt->attr.size);
++    v9fs_uint64_write(req, opt->attr.atime_sec);
++    v9fs_uint64_write(req, opt->attr.atime_nsec);
++    v9fs_uint64_write(req, opt->attr.mtime_sec);
++    v9fs_uint64_write(req, opt->attr.mtime_nsec);
+     v9fs_req_send(req);
+ 
+-    if (!opt.requestOnly) {
++    if (!opt->requestOnly) {
+         v9fs_req_wait_for_reply(req, NULL);
+-        if (opt.expectErr) {
++        if (opt->expectErr) {
+             v9fs_rlerror(req, &err);
+-            g_assert_cmpint(err, ==, opt.expectErr);
++            g_assert_cmpint(err, ==, opt->expectErr);
+         } else {
+             v9fs_rsetattr(req);
+         }
+diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
+index e3221a3104..4b55d7a56d 100644
+--- a/tests/qtest/libqos/virtio-9p-client.h
++++ b/tests/qtest/libqos/virtio-9p-client.h
+@@ -502,7 +502,7 @@ TWalkRes v9fs_twalk(TWalkOpt opt);
+ void v9fs_rwalk(P9Req *req, uint16_t *nwqid, v9fs_qid **wqid);
+ TGetAttrRes v9fs_tgetattr(TGetAttrOpt);
+ void v9fs_rgetattr(P9Req *req, v9fs_attr *attr);
+-TSetAttrRes v9fs_tsetattr(TSetAttrOpt opt);
++TSetAttrRes v9fs_tsetattr(TSetAttrOpt *opt);
+ void v9fs_rsetattr(P9Req *req);
+ TReadDirRes v9fs_treaddir(TReadDirOpt);
+ void v9fs_rreaddir(P9Req *req, uint32_t *count, uint32_t *nentries,
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index ac38ccf595..4397c0738f 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -20,7 +20,7 @@
+ #define tversion(...) v9fs_tversion((TVersionOpt) __VA_ARGS__)
+ #define tattach(...) v9fs_tattach((TAttachOpt) __VA_ARGS__)
+ #define tgetattr(...) v9fs_tgetattr((TGetAttrOpt) __VA_ARGS__)
+-#define tsetattr(...) v9fs_tsetattr((TSetAttrOpt) __VA_ARGS__)
++#define tsetattr(...) v9fs_tsetattr(&((TSetAttrOpt) __VA_ARGS__))
+ #define treaddir(...) v9fs_treaddir((TReadDirOpt) __VA_ARGS__)
+ #define tlopen(...) v9fs_tlopen((TLOpenOpt) __VA_ARGS__)
+ #define twrite(...) v9fs_twrite((TWriteOpt) __VA_ARGS__)
 
 
-On 7/10/25 4:04 PM, Philippe Mathieu-Daudé wrote:
-> On 7/7/25 18:40, Eric Auger wrote:
->> We may be miss some NV related GIC register save/restore. Until
->> we complete the study, let's add a migration blocker when the
->> maintenance IRQ is set.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
->> ---
->>   hw/intc/arm_gicv3_kvm.c | 8 ++++++++
->>   1 file changed, 8 insertions(+)
->>
->> diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
->> index b30aac7aee..fccb3886bf 100644
->> --- a/hw/intc/arm_gicv3_kvm.c
->> +++ b/hw/intc/arm_gicv3_kvm.c
->> @@ -827,8 +827,16 @@ static void kvm_arm_gicv3_realize(DeviceState
->> *dev, Error **errp)
->>       }
->>         if (s->maint_irq) {
->> +        Error *kvm_nv_migration_blocker = NULL;
->>           int ret;
->>   +        error_setg(&kvm_nv_migration_blocker,
->> +                       "Live migration disabled due to KVM nested
->> virt enabled");
->
-> (mis-indentation)
-Did not notice as checkpatch does not complain.
-
-Eric
->
->> +        if (migrate_add_blocker(&kvm_nv_migration_blocker, errp)) {
->> +            error_free(kvm_nv_migration_blocker);
->> +            return;
->> +        }
->> +
->>           ret = kvm_device_check_attr(s->dev_fd,
->>                                       KVM_DEV_ARM_VGIC_GRP_MAINT_IRQ,
->> 0);
->>           if (!ret) {
->
 
 
