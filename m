@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EF00C83F17
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 18:37:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DFDCC83F17
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 18:41:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZw90-0001QJ-2C; Thu, 10 Jul 2025 14:37:18 -0400
+	id 1uZwBj-0006cI-W6; Thu, 10 Jul 2025 14:40:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uZvUL-0007ab-Ns
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 13:55:22 -0400
-Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ id 1uZvXN-0003hc-Ax
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 13:58:39 -0400
+Received: from mail-oa1-x2f.google.com ([2001:4860:4864:20::2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uZvUK-0005PQ-4l
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 13:55:17 -0400
-Received: by mail-ot1-x334.google.com with SMTP id
- 46e09a7af769-73cdff9a27aso299744a34.0
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 10:55:15 -0700 (PDT)
+ id 1uZvXK-0005pT-6s
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 13:58:25 -0400
+Received: by mail-oa1-x2f.google.com with SMTP id
+ 586e51a60fabf-2ea65f5a0easo894119fac.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 10:58:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752170115; x=1752774915; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752170292; x=1752775092; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ixUYbPFhJgJDHiiXUXa7CcYTS+QNrsgIDhV2HktqNTA=;
- b=w5Ts0Qjm18ErASwj1/ThiAv2dhKui2R3aK0BBkxL5HZrCVRR2mq7YMRS8M/z6/yz0C
- UvSCDb+NsEbys55EQyokyK3sE5E+oAUaRAEgVKElWEB7UXRT56ewHOVg/X65ExzOyIW+
- OS8B7EWIr9ILCwbh6K0oW0G7TBFEDMbR7zTsuFVsiIELqLhx7cV/taVPm1Ii+ATe7hY+
- BOBAHiiSL+nDtu46WfndernaoYnnFzodC5nbn066luizhAi93iY/LpjE3M5MIAov/jJP
- OvyvHva5x38IQRIXEDPjb1F2PuxOGtDixecFSkQCLlQnH1AKFsOV+xuMvvVWtAAWcQau
- Eizg==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/Ukm5CD6xYz/03rckvlKVObmuaG1Y9I4P+4Q6jNXL38=;
+ b=i+z3QuvaWVI9e//Gqh48+hWTLK9j9Ta88AqbC2xF+ZD/pZGx/IBbyCGCTuL0L3cIvy
+ HLXfU9QiWwvJpPaAEw2qaVflYWtc0B5uLheBkg38Sw9UWs1SoC9AAJRe89nsh5tpYpAI
+ dfr6noNMJAXGcB2TepJrZe4OmO6PTFASi155BZ/bUOz2gqcx++RFsKe06Ugj5ZMCaEd2
+ 3ZF7J6UIyUqxTaSHlRSmUfio/0m0KHFGjCDqc8trPSd8iLyxaMNkLW0Bb6BRfoMUh5wP
+ BSlKGuxLfV1W97/x8tKmdQ/qUrO3UKIU8008YpOPyzt4tYe2rhmLjNOMV9QJNHd55A9K
+ KQIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752170115; x=1752774915;
+ d=1e100.net; s=20230601; t=1752170292; x=1752775092;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ixUYbPFhJgJDHiiXUXa7CcYTS+QNrsgIDhV2HktqNTA=;
- b=qd27+zCo5AvLzZrXkIQxZ4VB6eMMsOt91jRrAGHf+ZVM87U47xfa2eTvYpROoRzEQC
- BhX6Lorhv1JXY5lKBYvOI0R8xI6vkQwHNNL1rT+rqdOXYdemm6pEOv9wsu4ir6+FHSYE
- 26jhgBIZpx8jqTKzxfoOBXMQTV++HT3tDFu29tPZWacQce5SBMvg2gDGYVc19i5ZzePp
- rlt4xSh5buWpwT9x0Bob56oGPg7NbvQQPoBPrBL/zWEuIAH04Nh3lCmjmsxTkkipDDgl
- LVkyd27SWj5mL8UlexBinHsN/ihsBceF8MJO6EsubzT6J8N2oPrJpOWHVPj6aJssRuSw
- hrRQ==
-X-Gm-Message-State: AOJu0YzxHgThKrvozCMFZqDXYok7/6oKr7B4Ejf+TrPqq39goCXoEuzi
- ZKibfZJ9gbUczmO0mOCLRvh2duj7NRFuDSU2xxqqk9OqXvP3qX3Nl+qHFOM3L/zS9N+Y8F0gPhA
- Smqu1YK4=
-X-Gm-Gg: ASbGncuYsAocockinUZKC1D78+ou62fEXBXLIiRD7CK2RLSY79/AdhrrMLSYJtJGJqC
- dOEDRSix/ck/NWsz/ZjVBbCL/hXTi2NE6Wzg1EjSab6s6awk8zZsWh3EFaPixAz3GhonSwick71
- Bhvjup8vU9NNSA0V5g+OHJAvohvwiYptkexvtKPq5ik1Op22qq6TaX+7lZAyGWWrBAqnPXpcztY
- JHNJ/qEzzbLjgbBqkpFdWyivkdqAIdt6At54ZjMk0ifecuVsLffvZj4euYZoXdjLko1uMCJ605+
- E5y9Q0RMxnPnVj2eQXd13yVoCNcQigcONdsRvjGwY+MNaxAp4lfdtFsM2pGY8C7jE0ppZOll+h+
- G81s=
-X-Google-Smtp-Source: AGHT+IF+ZnZcOBSbKDc2UqLeTHhrWvYEAsrMuN7/KqvMJjsEnws9EOoEZfxiKCSNy996VF4CyKstEA==
-X-Received: by 2002:a05:6830:8209:b0:73b:bd5:b9d9 with SMTP id
- 46e09a7af769-73cf9de52dfmr327309a34.10.1752170114732; 
- Thu, 10 Jul 2025 10:55:14 -0700 (PDT)
+ bh=/Ukm5CD6xYz/03rckvlKVObmuaG1Y9I4P+4Q6jNXL38=;
+ b=ZX+kcksWZD+4oto+IvoNHpARsW0g7EBDFnGMk9P9aWPUjQKCwy0eNgyxDTrul/Fje1
+ 4apcdgou+kmSP70w36+uRCEXNIMG+LYoL6cXGGBv65ETmM9auFGJg+0jmh8Ps5O0ZQI6
+ hXD9764GM/PeyM05wwsaHKT+PkYOBheJcIvksQ6nW3CqdRiuR9TY7ujmxyUU7lEdBUgF
+ LCIaP+pC+MocKY7yybjJX7X6nznG4Qb0IvE+oHQ8Z+gj7vrMQd77UiZpTEn1BpaxlEIs
+ wdlOorc5TpUIFAfSmbVccj774jskWeGDphhjuTMj0MiLui3l9oVWUJ9gcJ1QrQXjW+Bs
+ pjKg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXbBUduEBhcjrPfkGHRnAPZQIkCroD+/gQldVmcCvqMokNRq5+y6lpVbyeXWaW6GaLVtHvEjIYyeXrK@nongnu.org
+X-Gm-Message-State: AOJu0YzKJ5Z961rySITETx0slpmwAG/hYl7yPk6h4bppIE5M0zPNwQfM
+ P0kaL+RedlTDILxgZoRiijbnGlle3fxFOZUxSd8lxYodbTDx3O5Mn0+aQCwdnDBIioPSJ0AU4xA
+ 10pnxdGI=
+X-Gm-Gg: ASbGncv9IIXm3z932hGf2Xq+BkCAASBrPrMRjUaC7q414zmc4qv+Ojem8KfPtUrS6V8
+ JApTWj7e9bGXJjDA67eN7xuJhjusBRBtFAf9ku1i4UoXi9YmjW6n04DjJ5HJsBNPgmheVtf7y3t
+ apGz7vA+AH9lH4jnpVWAKEUG+4X4MIvvKd/SVApcTc4kyjYX8Bwmtq0IXiM2kZgqQYmrkKi7M3I
+ UTLpz2lCA2RVrZiWmhuFClUwHQblIXXehSNvN7T7LrTtepnN5+2pTxWWENcpRzkl4ldOHgoNUkj
+ /dmB/qUWoJ8XIfmG11M4eHd0BqrudIWvziuiKdlCqYA+Gq5cg4mZ4sAlvclR7/eE+XQfxl4rHtg
+ Uv2wZUNK74gWwEA==
+X-Google-Smtp-Source: AGHT+IFY2TjElw0i9YULUHDuCjv1UE8NKI8zW8p/WkhiFHldvEt6xHrFI48IB20zy1Xf1S2O8OWywg==
+X-Received: by 2002:a05:6870:2151:b0:2eb:a2ef:901b with SMTP id
+ 586e51a60fabf-2ff2671375amr174960fac.14.1752170292512; 
+ Thu, 10 Jul 2025 10:58:12 -0700 (PDT)
 Received: from [172.20.0.130] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-73cf10a5ba3sm281474a34.24.2025.07.10.10.55.13
- for <qemu-devel@nongnu.org>
+ 586e51a60fabf-2ff1174bdf9sm392961fac.50.2025.07.10.10.58.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Jul 2025 10:55:14 -0700 (PDT)
-Message-ID: <a78641f8-72ba-498f-a231-bb8adea9e072@linaro.org>
-Date: Thu, 10 Jul 2025 11:55:12 -0600
+ Thu, 10 Jul 2025 10:58:12 -0700 (PDT)
+Message-ID: <98ea92b7-d078-4976-8511-d68818270cf6@linaro.org>
+Date: Thu, 10 Jul 2025 11:58:10 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: Check for EFAULT failure in nanosleep
-To: qemu-devel@nongnu.org
-References: <20250710164355.1296648-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH 0/2] linux-user/gen-vdso: minor error handling improvements
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>
+References: <20250710170707.1299926-1-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250710164355.1296648-1-peter.maydell@linaro.org>
+In-Reply-To: <20250710170707.1299926-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x334.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,49 +104,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/10/25 10:43, Peter Maydell wrote:
-> target_to_host_timespec() returns an error if the memory the guest
-> passed us isn't actually readable.  We check for this everywhere
-> except the callsite in the TARGET_NR_nanosleep case, so this mistake
-> was caught by a Coverity heuristic.
+On 7/10/25 11:07, Peter Maydell wrote:
+> These two small patches improve the error handling in the gen-vdso
+> program. Error handling isn't particularly critical here because
+> the tool only gets run during the QEMU build process on input
+> that we trust (because we generated it by calling a compiler
+> for the guest architecture), but these were easy to do.
 > 
-> Add the missing error checks to the calls that convert between the
-> host and target timespec structs.
+> The main motivation here is that Coverity complained about not
+> checking fseek()'s return value.
 > 
-> Coverity: CID 1507104
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> Tested via the LTP nanosleep tests, but they don't actually exercise
-> the EFAULT codepaths...
+> thanks
+> -- PMM
 > 
->   linux-user/syscall.c | 8 ++++++--
->   1 file changed, 6 insertions(+), 2 deletions(-)
+> Peter Maydell (2):
+>    linux-user/gen-vdso: Handle fseek() failure
+>    linux-user/gen-vdso: Don't write off the end of buf[]
+> 
+>   linux-user/gen-vdso.c | 16 ++++++++++++++--
+>   1 file changed, 14 insertions(+), 2 deletions(-)
+> 
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Queued, thanks.
 
 r~
-
-> 
-> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index fc37028597c..c600d5ccc0e 100644
-> --- a/linux-user/syscall.c
-> +++ b/linux-user/syscall.c
-> @@ -11630,10 +11630,14 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
->       case TARGET_NR_nanosleep:
->           {
->               struct timespec req, rem;
-> -            target_to_host_timespec(&req, arg1);
-> +            if (target_to_host_timespec(&req, arg1)) {
-> +                return -TARGET_EFAULT;
-> +            }
->               ret = get_errno(safe_nanosleep(&req, &rem));
->               if (is_error(ret) && arg2) {
-> -                host_to_target_timespec(arg2, &rem);
-> +                if (host_to_target_timespec(arg2, &rem)) {
-> +                    return -TARGET_EFAULT;
-> +                }
->               }
->           }
->           return ret;
-
 
