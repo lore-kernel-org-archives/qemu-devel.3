@@ -4,88 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D79A8C83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 15:20:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E74A5C83F1B
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 15:20:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZt3W-0003IC-K0; Thu, 10 Jul 2025 11:19:26 -0400
+	id 1uZt3X-0003Jr-SU; Thu, 10 Jul 2025 11:19:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZt35-0003FM-9t
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 11:19:02 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uZt3J-0003Gs-N6
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 11:19:22 -0400
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZt33-0000zc-HF
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 11:18:59 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4537fdec33bso6899635e9.1
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 08:18:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uZt3H-00012G-B6
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 11:19:12 -0400
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-70f94fe1e40so25045557b3.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 08:19:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752160734; x=1752765534; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MfZyp+BAuA2g9PjhPJtLMHhk3jnprAKK1n7JOk5VyB0=;
- b=sWbAhtRjB11dTCnFTi/KfBy2gYiaZUrCGSp8f+dmJE9SN9uo4dNkanPRCG0HZpyvF5
- xYdap6vKVyk6dKd9ZRxOTcBg4lVgvo59enNEar4iS+M7T2e6gPnvySgy0p9het/JixKt
- 8XH4ZQzWa9T/ejB+l98fMfjZey9/2dcN0RCCZLSCwrlqADH75Ay49SUz3z3goy+oPzj1
- 88552hvQgBfhomZlnhxBz41yfMn4wNSZgdndfqkpu2xl2rC426OdUVhrlnL+dA+QlJJD
- +PD1YFZwcSrladY+O+OrQmMkMg0xRJwoCg7pjBeDP1pqABiRVmMx9NhwoK+uuwMFXeN7
- SD4A==
+ d=linaro.org; s=google; t=1752160747; x=1752765547; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+2JnUO3M0YY8rGoeSB+tv7JnTpSpken2SRrv3bQ5Jy4=;
+ b=z8JCkq08oVQZ8FZZAdHNPGHS+wh0LgATwodqkI8RvzihrFo9uxaahGJxlukE5xVUtl
+ Gbl6p9t1CkCUFlw4w5ky3ETFx9LcrLaQ6DAkdCdLu8E9n7WRHdwGq3X/nGhVxBTS64NK
+ J6nd2MaWqTdlufPI6kfZdwbnBs4GGcKJ0Me0yfV4Vv0u1iiE1uMuhDAXPGKJF+5yCZl3
+ VhuUsyauGNfw1sj7nDGXiq8bXUXWLnviXY86mXkdQ6KlkkjPMIJlouZ3ZGjscoUBJqws
+ fJDFrK3+SRfh6ab2qBI4t4fGpVecjd/nuAugOI+PhT4hmJ4C+2idX8WszKmjnJwzhXzh
+ U0LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752160734; x=1752765534;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MfZyp+BAuA2g9PjhPJtLMHhk3jnprAKK1n7JOk5VyB0=;
- b=XNbNLBfzX8ya4cp8onAyAYHmTa/Tpbw/5FF6TrFPLGMOtefbNnWGwRFKtooRFl7pSN
- OlEBF3iB2iJ7Te6g5vuO9MCpzvok6gQe3Q/cZkUQd3+VYyPkBTKPVOTpShN1sy6wB4I4
- 51egD7piulRlbM8qfUoraS11CHMOg4za/AsnV47+OoKrAF3AXq9Lk8PMJwhXbjwiTR3T
- Nk3M/84qkhnKwzfk0i3NpYC/VZKupwVoXAVNJ6vqsGdJxtgdhzOiPGC/A20/JLVulshc
- JTfVW91DHQcACAhyLmDW6LnYNdjrT24/wg1amQ6qbJ0pCy8LxVu4IIWkE0mOaZEe5YWp
- hkGQ==
+ d=1e100.net; s=20230601; t=1752160747; x=1752765547;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+2JnUO3M0YY8rGoeSB+tv7JnTpSpken2SRrv3bQ5Jy4=;
+ b=ir0oXxpO85gWeIh3SDIG8Tyeod3PfMvOtCOXLagvseaBxUDAXUjYgZCdgSEV9GouSs
+ mgGuCyYFJN/R7Wys2ZB/L8qdiYgVHgz8ypkwIh3tPeBJD2pQjKcjUOYO76WLjvTbe4SK
+ BbLzFD4KV+jHqPx89u3fyDwaOzLj4xOSU3Hhzf481N/Pwe21/RAJmlr33fE6XMsbErOA
+ cPDx+FeHp4ApHocbR8xVpXuRBhoczXCnxHwNCdFkn07+E5APeEjz7keJPJ6yoeTmCKjT
+ B5fAtVXqHlKvlXGc4YWkPzSkjIs+GdjAbep6sCf3krZRfKRbvcy/poOqvZ5gtSz1yu6x
+ TvGA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVpJitsGyES42BkWU7lPIERvEmzno3lXdGdeT7Ql0s0mRtE1vrEYLNk0kbytYgPJtF0yPmCQ+moVXB5@nongnu.org
-X-Gm-Message-State: AOJu0YxAlj1BpDjbyp3TL3k86ctNI5saolGCBFV42fTJq9mCEsfz/OMl
- bm6zZdwuY5H+oaHybelSBKx62owkIzZb0OXooPIlPrHGYJcsCZj6GBwiI1n6AdLQL1c=
-X-Gm-Gg: ASbGnctOzG/Iex+VdaMgsQ7zC0ILI9aRtQDfPVITds+YynzqSN4lf4NF4IYGgx/M37q
- G42E0AbdVv70NNpayCeuOJgCqdu8yoZDlnmrAmq6tJ2zuvziI0zyJOug2cj378dpouek0+HRUTh
- NHeDCJ2jcuEoLvU1UI8vEOcglIgSaT+me2gIMyAi6SQAO440d62GDTpq4djAcbNAnDGvJ2NfJiw
- DJgXkJGB3e4raC+r55hw4qlONOM9rpGR4A29yIzI0EUhnISe7eNztpVN9bwtY/UygrFv21MyjGY
- Fz3qGabRrRLTQ5ZfG67bXpjsJZtVRWZ3GrLxp7zEEj+pOReUrjv5QyVQM324XApSMzml6sgprB+
- Eo/PTXCl80ZhZL1ksazCCxCoaTZNXf0NaxssbaPfBbQlo2dVc+PSQ3bwkuLg=
-X-Google-Smtp-Source: AGHT+IE1oZjhzQk0HmsfNxjc+2TH48TEZkrMxRycjdwmoHSN9WIEppocXlx0JxXlZZYHEo6Tvx1UdA==
-X-Received: by 2002:a05:600c:1da8:b0:43d:47b7:b32d with SMTP id
- 5b1f17b1804b1-454dd2ef513mr28837375e9.25.1752160733973; 
- Thu, 10 Jul 2025 08:18:53 -0700 (PDT)
-Received: from [192.168.1.117] (lfbn-mon-1-970-120.w86-227.abo.wanadoo.fr.
- [86.227.5.120]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8dc201asm2114977f8f.22.2025.07.10.08.18.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Jul 2025 08:18:53 -0700 (PDT)
-Message-ID: <dcaa2309-7c6d-4064-94ed-43d4c3ff2430@linaro.org>
-Date: Thu, 10 Jul 2025 17:18:52 +0200
+ AJvYcCVTAlkIYL4JtuBom7j9Q4Uf7gab0ZqsdXdnzmYkaVW7cWK0V337taE6fgq3Xx516PBATQgBkGYZS2yc@nongnu.org
+X-Gm-Message-State: AOJu0YxaXFJ55/Wg+118AhjD4iyhwnjYPG0r80gYuxOfwR+LienSpuWG
+ o4mYdsHNNbEnnWaJz1F0ZiSbE6cMVJ0RwuvOY+7NGlbeSKWYIaaIwOYd53hMfF1kmymC9436CtB
+ CrXuyVqz+bOClXg1wVODqs/iNY9nEvIcMtcDlECy8Tg==
+X-Gm-Gg: ASbGncsYes7chX3mG5e33/SoI83v4CNkOlf0/gYhU4nDtQZJ6+QekZHIZ2KhEb4xVEj
+ RWtI0qq/o0sI8sadRnkZdHNxV0qk34/BHW1QIa0BCSMYDYbW0Oa5Tmn4OeWba2Cql3+B0WgJv+e
+ MqrDkLmK6/zSsRew4r4jDQu18n6uT3xssGmzbzgXVJGZZW
+X-Google-Smtp-Source: AGHT+IH7VzE98NAaYDWBUCzd0xce5lBapm8hKhcHcVWABvn7jOJ81kUkdx68ja5YxLsU4TBy0Bf/jLPsbutF24vRTZk=
+X-Received: by 2002:a05:690c:6308:b0:713:fed3:70a5 with SMTP id
+ 00721157ae682-717c151b1edmr66678767b3.9.1752160747501; Thu, 10 Jul 2025
+ 08:19:07 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 4/5] hw/arm/arm_gicv3_kvm: Add a migration blocker with
- kvm nested virt
-To: eric.auger@redhat.com, eric.auger.pro@gmail.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, miguel.luis@oracle.com, peter.maydell@linaro.org,
- richard.henderson@linaro.org, maz@kernel.org, gkulkarni@amperecomputing.com,
- gankulkarni@os.amperecomputing.com
-Cc: hi@alyssa.is
 References: <20250707164129.1167837-1-eric.auger@redhat.com>
  <20250707164129.1167837-5-eric.auger@redhat.com>
  <48fca85b-096a-4d1c-97dd-380669cb6604@linaro.org>
  <322a9301-a1ee-4cd9-b423-fbef2fc0593d@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 In-Reply-To: <322a9301-a1ee-4cd9-b423-fbef2fc0593d@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 10 Jul 2025 16:18:54 +0100
+X-Gm-Features: Ac12FXzxwGzQ-xJuggpfn0Q7XoT7jchqe7Sb1ozy-EXBRk1eeZ9ETYDG526lBRg
+Message-ID: <CAFEAcA-BYms8AtBPqaohvoGCwqLem-uXmmxiOczWb-RP5GRa4A@mail.gmail.com>
+Subject: Re: [PATCH v9 4/5] hw/arm/arm_gicv3_kvm: Add a migration blocker with
+ kvm nested virt
+To: eric.auger@redhat.com
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ miguel.luis@oracle.com, richard.henderson@linaro.org, maz@kernel.org, 
+ gkulkarni@amperecomputing.com, gankulkarni@os.amperecomputing.com, 
+ hi@alyssa.is
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,38 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/7/25 16:10, Eric Auger wrote:
-> 
-> 
-> On 7/10/25 4:04 PM, Philippe Mathieu-Daudé wrote:
->> On 7/7/25 18:40, Eric Auger wrote:
->>> We may be miss some NV related GIC register save/restore. Until
->>> we complete the study, let's add a migration blocker when the
->>> maintenance IRQ is set.
->>>
->>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
->>> ---
->>>    hw/intc/arm_gicv3_kvm.c | 8 ++++++++
->>>    1 file changed, 8 insertions(+)
->>>
->>> diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
->>> index b30aac7aee..fccb3886bf 100644
->>> --- a/hw/intc/arm_gicv3_kvm.c
->>> +++ b/hw/intc/arm_gicv3_kvm.c
->>> @@ -827,8 +827,16 @@ static void kvm_arm_gicv3_realize(DeviceState
->>> *dev, Error **errp)
->>>        }
->>>          if (s->maint_irq) {
->>> +        Error *kvm_nv_migration_blocker = NULL;
->>>            int ret;
->>>    +        error_setg(&kvm_nv_migration_blocker,
->>> +                       "Live migration disabled due to KVM nested
->>> virt enabled");
->>
->> (mis-indentation)
+On Thu, 10 Jul 2025 at 15:10, Eric Auger <eric.auger@redhat.com> wrote:
+>
+>
+>
+> On 7/10/25 4:04 PM, Philippe Mathieu-Daud=C3=A9 wrote:
+> > On 7/7/25 18:40, Eric Auger wrote:
+> >> We may be miss some NV related GIC register save/restore. Until
+> >> we complete the study, let's add a migration blocker when the
+> >> maintenance IRQ is set.
+> >>
+> >> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> >> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> >> ---
+> >>   hw/intc/arm_gicv3_kvm.c | 8 ++++++++
+> >>   1 file changed, 8 insertions(+)
+> >>
+> >> diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
+> >> index b30aac7aee..fccb3886bf 100644
+> >> --- a/hw/intc/arm_gicv3_kvm.c
+> >> +++ b/hw/intc/arm_gicv3_kvm.c
+> >> @@ -827,8 +827,16 @@ static void kvm_arm_gicv3_realize(DeviceState
+> >> *dev, Error **errp)
+> >>       }
+> >>         if (s->maint_irq) {
+> >> +        Error *kvm_nv_migration_blocker =3D NULL;
+> >>           int ret;
+> >>   +        error_setg(&kvm_nv_migration_blocker,
+> >> +                       "Live migration disabled due to KVM nested
+> >> virt enabled");
+> >
+> > (mis-indentation)
 > Did not notice as checkpatch does not complain.
 
-No worry, it is a simple nudge to Peter for possible maintainer fixup.
+I'll fix the indent in target-arm.next.
 
+thanks
+-- PMM
 
