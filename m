@@ -4,87 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF3DAC83F17
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 14:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7208C83F1B
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 14:48:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZsYZ-0006h2-Fb; Thu, 10 Jul 2025 10:47:27 -0400
+	id 1uZsYx-0007fX-5s; Thu, 10 Jul 2025 10:47:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZsX0-0005lH-37
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:45:58 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZsWx-00085n-4t
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:45:49 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3a51481a598so652071f8f.3
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 07:45:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752158745; x=1752763545; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ctTT9Gcd/K8ncPr6pwIo+D9Zug1wgzZc+9rfVlCsxrQ=;
- b=jZ/2AwOvs3/DHOw9fC6VjGXSc2fLhEMtAKS40cMHolPfZpEuGXwQURtv6MTBT6C7Uz
- Re4/HvbnF/LeLd212WNoFe7Dpv6jTrWSdqhWlxXkAxAwKwwypjFl+b/UWzCs4WIEc/qH
- eaYjlIVN/MXqAZ4sNtCOAoh2MfL7gKac2IDx8ImwsX5EvuG31tIP0iHNuO8uOF/AEg2O
- mF7KLyk1+DO5UElA2/WTb2mMlhsnJXOBJzVWIxkd5q1C2XCAO+MyIPc4Tsu//R3hgfj3
- TYSh1UX4cxDfYXknEyGdVT1qx5/Hq0QPqe6FXV0Qo4f6jT1rUafo2V//iujiw3iMjWCz
- c0Fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752158745; x=1752763545;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ctTT9Gcd/K8ncPr6pwIo+D9Zug1wgzZc+9rfVlCsxrQ=;
- b=h7252uCVPp3rYjcEUpld6s885VnW8yM61XX/ainUH1oEKZOlBrqfTVRar4cY1niln/
- Isv+BI/Wdbf9ERwvB95VK+uwZ1dffVlYbOgvtMGrJIBAXCdUJz+1drzMzxyriHRPLHl9
- 2oxXO2l2O/qAcvSwGoWMVwu9esRKJuFSoQ7jJ6PSG+dcmBCjVs6adPR9R0p/8H78Olr/
- zULR+CJHgenT/PGy876BzsG0LfxxNIU21pYCJVVkW/xD49q3NYGrJUEVFeoIHewUpeid
- 2N/xLZIRK2AcMV+ox8oYk8ebF3fyj6P+6upyfdUyXDzUeHzbnKrZKZIvKaYHesUIYV4e
- mzpQ==
-X-Gm-Message-State: AOJu0YwKsRfkGSZp5zqToSSQZHy4QC8emmu0dbbm+IHSxF+ZO1vRV8c5
- Mx2sx+5aZHY/pjgUk0n4bFm9YfgV6IfjoT2zJ2guJpNfV1+J8vbqwgGUKQhf4a4pxQUk/NoerZm
- SWhv4
-X-Gm-Gg: ASbGncvAA2JH+BmgBxcskG76PTzLTq8gkod5wFRQgutmejyop0Bqi5XmOO1BacB9nhD
- K9iMawhsbWFDc8I7Ulh5fTbJX7hQV/YCAZTxxkrC/lziQLxwxe93mxnGjb5NJ2HrlS5lZYn3o9B
- 5614z/tFjUvj/iGRxR+ibEIpUjYv/OKOq9Yso5+3anoAp/TtfkZTPHZcg5e2iyTXOxgOZzz6BbT
- 0/7Kg+4Be+YSa1YvBVAwy+DoXrK4E2570Q90yHyHpphhbHoCSIPjk0q674GPmOOqtZemzoZjXD5
- arKp1a0DGxFf9HWhk77DN3H+EXd/26rTROFqhCEShR30f7Hbi0Gsszc1yqGfFe39Fs5O
-X-Google-Smtp-Source: AGHT+IEPq717QcYp7Gn8ovn86CMBV/vmZMQGbQsyPFu9cHxN3zGyly8FWxN7prxwFbhN/rGVlo8D4Q==
-X-Received: by 2002:a05:6000:387:b0:3a5:2c18:b181 with SMTP id
- ffacd0b85a97d-3b5e86e3447mr3412550f8f.53.1752158745165; 
- Thu, 10 Jul 2025 07:45:45 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e26f7bsm2081856f8f.95.2025.07.10.07.45.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Jul 2025 07:45:44 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH] contrib/plugins/execlog: Explicitly check for
- qemu_plugin_read_register() failure
-Date: Thu, 10 Jul 2025 15:45:43 +0100
-Message-ID: <20250710144543.1187715-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uZsYW-0006UV-2w
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:47:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uZsYT-0008BH-JN
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:47:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752158839;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LCWxbyEmQcQPWULPp0LZWJvwqnfD7qVZt45dt0xsMts=;
+ b=N05to3aYkRgoOOYFay/bPChsy+AT8aCpnF/ic6mxSvYwjUIwl9WEXKbrAOzr6RjZDEQA/D
+ JeGTh/ZsE7elt3FtN7zUddyMOuH75clbS8fF1/3NwS0bpX77/4FSsdojBTX7YyhcclcJmi
+ M1n3x1rEps+9K4Y1OA4mWGbXtZ00tKI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-WdBuZEp7Nf-rSozvZIBpKw-1; Thu,
+ 10 Jul 2025 10:47:17 -0400
+X-MC-Unique: WdBuZEp7Nf-rSozvZIBpKw-1
+X-Mimecast-MFC-AGG-ID: WdBuZEp7Nf-rSozvZIBpKw_1752158836
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8DD4D19560A1; Thu, 10 Jul 2025 14:47:16 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.76])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7ECB519560AB; Thu, 10 Jul 2025 14:47:15 +0000 (UTC)
+Date: Thu, 10 Jul 2025 15:47:11 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] crypto/x509-utils: Check for error from
+ gnutls_x509_crt_init()
+Message-ID: <aG_SbyU8XiiTc500@redhat.com>
+References: <20250710144417.1187478-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+In-Reply-To: <20250710144417.1187478-1-peter.maydell@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,36 +85,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In insn_check_regs() we don't explicitly check whether
-qemu_plugin_read_register() failed, which confuses Coverity into
-thinking that sz can be -1 in the memcmp().  In fact the assertion
-that sz == reg->last->len means this can't happen, but it's clearer
-to both humans and Coverity if we explicitly assert that sz > 0, as
-we already do in init_vcpu_register().
+On Thu, Jul 10, 2025 at 03:44:17PM +0100, Peter Maydell wrote:
+> Coverity notes that in qcrypto_get_x509_cert_fingerprint() we
+> call gnutls_x509_crt_init() but don't check for an error return.
+> Add the missing check.
+> 
+> Coverity: CID 1593155
+> Fixes: 10a1d34fc0d ("crypto: Introduce x509 utils")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  crypto/x509-utils.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 
-Coverity: CID 1611901, 1611902
-Fixes: af6e4e0a22c1 ("contrib/plugins: extend execlog to track register changes")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- contrib/plugins/execlog.c | 1 +
- 1 file changed, 1 insertion(+)
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
-index d67d0107613..8b07dd773e5 100644
---- a/contrib/plugins/execlog.c
-+++ b/contrib/plugins/execlog.c
-@@ -95,6 +95,7 @@ static void insn_check_regs(CPU *cpu)
- 
-         g_byte_array_set_size(reg->new, 0);
-         sz = qemu_plugin_read_register(reg->handle, reg->new);
-+        g_assert(sz > 0);
-         g_assert(sz == reg->last->len);
- 
-         if (memcmp(reg->last->data, reg->new->data, sz)) {
+> diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
+> index 8bad00a51b8..39bb6d4d8c3 100644
+> --- a/crypto/x509-utils.c
+> +++ b/crypto/x509-utils.c
+> @@ -46,7 +46,11 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+>          return -1;
+>      }
+>  
+> -    gnutls_x509_crt_init(&crt);
+> +    if (gnutls_x509_crt_init(&crt) < 0) {
+> +        error_setg(errp, "Unable to initialize certificate: %s",
+> +                   gnutls_strerror(ret));
+> +        return -1;
+> +    }
+>  
+>      if (gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM) != 0) {
+>          error_setg(errp, "Failed to import certificate");
+> -- 
+> 2.43.0
+> 
+
+With regards,
+Daniel
 -- 
-2.43.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
