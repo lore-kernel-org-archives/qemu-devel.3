@@ -4,80 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F23FC83F17
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 11:13:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1285C83F1D
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 11:17:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZpDR-0005QK-CC; Thu, 10 Jul 2025 07:13:25 -0400
+	id 1uZpH2-0002li-Jk; Thu, 10 Jul 2025 07:17:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZpDG-0005OY-2Q
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 07:13:15 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uZpGS-0000zc-GT
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 07:16:34 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZpDA-00074b-PJ
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 07:13:11 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-453749aef9eso2872105e9.3
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 04:13:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uZpGO-0007kB-Cq
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 07:16:31 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-ade76b8356cso155994366b.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 04:16:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752145986; x=1752750786; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=h1wZWfq/2UJSPBdldh3OwyerpQbabStLVm8h8iaqLJM=;
- b=a6WClqtqZKNVe+w+n/CJtCDPNIAa4dUvij9+mv/G1V1BE0GR/lU1iR9pYrHby12sNY
- 1/DQIgOj7cpF7M5hwXpRACg3cKJgEHn1sdWtOSSmv7AHGmmdHcs0cI7lUUF3Hx2svqQj
- kL0VnIqV3x6KlD8X+HF6ovu+WdGRfeEWOx71vZsnaxPvSEXK8puGirPnyhMAbU8Lozaf
- r88i7M2jKALB+y+wijgadbU4m8ao7y5jWEl2PMSoD4Ja5c5S18DbqrP7bKYIejusbH2h
- k2lVqIfoKFlA4/88ihrQLCV7KDi0AYJ3bQNddFZxTfqZfu3hCu/RiQtD4vBX+e0lyXCi
- J8lA==
+ d=linaro.org; s=google; t=1752146185; x=1752750985; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jlH7qROmhjyGgV24G5kCHWH60mLAH6jayTl6wCtZZvE=;
+ b=uPMffTUFWdA71Rk37nWik0IyEInFVU4xeKPfUtSD5RTunLTynwftgZ0+rkKtvJ4T6h
+ /ArRQzGccwpqK4LyVlyJGLwLCcrvcDrT9DP7pxvVDRHJsxo5X2Pr11T7Oy4sOIMomZ6O
+ ElYTR/y4QKnoIRM9PP9pTopLDKFjkEeliHgWsLf4OmvVr8HnqlJyYc+FXo8aLcSndFlP
+ 9PqPk3lsQEyoQ0f2JnKq5xMTZ4ynHrbfGGrp/skTHyOtMkTu/hPwULGugOcdvw5cJd53
+ 0kfcuirHlWvhkmPXESGgNRhKqaspxi5B4WofQmlNqK8ZBSoB5g2BkPSM+gjjSx3yfmpu
+ gsdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752145986; x=1752750786;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=h1wZWfq/2UJSPBdldh3OwyerpQbabStLVm8h8iaqLJM=;
- b=w7U/Vuvs5SyLo3PnBfrTyzsrRTHUzte2MMd0vfpotgYEVW+N44AHJfqi/oWYj6xILV
- XfMm7l2qkL9UR3ZGDpdzp/9QFoN7r6UXQ9Xrr7CdLKuQuI0yz16QS40vl5a4SEiEzELE
- XCCxDXR9/tuY6fsE3E58CEqeaDErFo5bKHOV/bJoG246X6QFIFjsamN1jC4bNbtpABjP
- fY7PP40fB7qblPjJoDc3sj5Lf4wQ4o0/2rA637uoKd0zQ9xTX69z8VrFG/OJe8aFMq9u
- os1BHUIUco54HXhGqlajAGTEjF7Dyxfz2EuVSRPu6LauQ0Q4EL8LcUC+p8OFvYNFWf72
- lhSg==
-X-Gm-Message-State: AOJu0YyXQ6n4GxNutn2ggsm6dpskEZaVTBkla6RsacJnM95Rh6AFr6FU
- TZdkQ3ePx6Aj9/zcy4bslSv80+PKUWQ5M82fZgE3aVn+Hgj1oJirdvHRU2tKRpTdK/dTFflkUhK
- 7ZinUogg=
-X-Gm-Gg: ASbGncsH/ByEblbGLbXtYWnGEn+c6/shYusmwV2ixla8iFejS/L5Q9iLcTi2e32C+UZ
- +uckgRsFlfj+1qvmqDluFPUXQKgt3zxJ3d8Tm4d9qyt3V2UsXUidnNnDLFi9UMpzVGavsgCQSzr
- iUTsGfM72jgCdhDSj0uoiijm/dlJAnKbeir0E93eL/8J35zoM2VjVdabJjyCWmwo9YTKSOsJFZx
- UAf28L/5cKw13KMDMBnf2/NXVq2ZUBygBZuvX7NGJCVoCbqyWkGt07673ZeTyCMN8s87yO8O+SM
- bpq80RHD+gtbhio3/WAzqEPLIrsdawVnNx3Xy6drCKw9rGyOsXybz+kNfcDqSM5vWAXPTpLZBQJ
- VO9212bWFS1bHu/gBs7sOXGUgOJiniyb/u75biw==
-X-Google-Smtp-Source: AGHT+IGGCydWgtmASFlaXqT0/7MObWznQZZf5PBdEt2Kx/nrJCRJ/8Jq4DnLQ0cI6aEXbEQQJuCqeg==
-X-Received: by 2002:a05:600c:3514:b0:43c:f3e4:d6f6 with SMTP id
- 5b1f17b1804b1-454db890f27mr38624295e9.31.1752145985729; 
- Thu, 10 Jul 2025 04:13:05 -0700 (PDT)
-Received: from pc-248.home (lfbn-mon-1-970-120.w86-227.abo.wanadoo.fr.
- [86.227.5.120]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454d5032ff4sm55658045e9.8.2025.07.10.04.13.04
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 10 Jul 2025 04:13:05 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] accel/tcg: Do not dump NaN statistics
-Date: Thu, 10 Jul 2025 13:13:03 +0200
-Message-ID: <20250710111303.8917-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
+ d=1e100.net; s=20230601; t=1752146185; x=1752750985;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jlH7qROmhjyGgV24G5kCHWH60mLAH6jayTl6wCtZZvE=;
+ b=IcL36uU/hkUKhw4yxP2pGsoR7ptjWK6un+RBwygTG0z/nHGnlcRE1psYvIsmCHEwzA
+ WTkzUAUthaIdPphUD9b1UZ10K/ntQOo/97gpC0/sqKbq19rK/d1vu7wupXxhSaqg6W/q
+ gA6EKafEHKjWZK/qSoMqElv9pDATa2CNEOOVSMhLI2uK+eoghTvrQmxHVyj79ervW8xm
+ dec3fsvUZrWJQXDCVQkqHGw+bawmN6BtGh1Mvwt/MbsuqfuREhD6PdAZlCJT8RT+CJes
+ l01RiM7jZLUVoLRTcPNabEMIOXLyi8XO/93tR33kO6fHX6dOmr5tIwx3EufFhJL8gLVS
+ OhZg==
+X-Gm-Message-State: AOJu0Yx8/HRct47BhCRBkoJKJI+2E1fpLk9j+Ka3tWV0LS7CYRkpijrK
+ NN07OOPVwp3ebpTi/edTvPeQ1YXdzBJM4KyB+RG9NJ28pKnuxvfGsdCw5nY7ClNwgdWt9N+ClG9
+ womT7LkHZLfVTTIkaM7MM16wlBzdfxUGHSB8iuVHDtw==
+X-Gm-Gg: ASbGncvDaN/uEpQn5LsfoKYKu9+Enlhi3VsHWn21qIniBibZefxC/IEYqIV2yYYkH6v
+ 7ou/uhXM76oIljWp+fdZR/tYAmbTaXDb8xql/G+Tg4JPGLdZv024H+v70eZxhUE3SFpPccTnBQe
+ lv71i7SbfJLibFLd3rsd5MwZ4RgT1aoYiI+9YNYhGP4uA=
+X-Google-Smtp-Source: AGHT+IGJUXFkzC/3md9vPfU8BUgytO2b3bpCfjB45dhDChZ92LvAOP1O25iJvzDaEwwHvEWfp0tL5pn6CUO7MWuVnaI=
+X-Received: by 2002:a17:907:3f98:b0:ae3:53ac:2999 with SMTP id
+ a640c23a62f3a-ae6e70f4887mr262990566b.53.1752146185333; Thu, 10 Jul 2025
+ 04:16:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+References: <20250710111303.8917-1-philmd@linaro.org>
+In-Reply-To: <20250710111303.8917-1-philmd@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Thu, 10 Jul 2025 14:15:58 +0300
+X-Gm-Features: Ac12FXyZvqu3S6-zse-U5fwyQA8rrK5rvY0BbZS3hqKQFLkwkcbJpoo2s3eXiRs
+Message-ID: <CAAjaMXbb-G0qS+cLGUQOoXr+HNR_zZzprT8iz0vhcQ6269hD6A@mail.gmail.com>
+Subject: Re: [PATCH] accel/tcg: Do not dump NaN statistics
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,66 +95,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- accel/tcg/monitor.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+On Thu, Jul 10, 2025 at 2:13=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  accel/tcg/monitor.c | 22 +++++++++++++++-------
+>  1 file changed, 15 insertions(+), 7 deletions(-)
+>
+> diff --git a/accel/tcg/monitor.c b/accel/tcg/monitor.c
+> index e7ed7281a4b..778b12613f4 100644
+> --- a/accel/tcg/monitor.c
+> +++ b/accel/tcg/monitor.c
+> @@ -19,7 +19,7 @@
+>  #include "tcg/tcg.h"
+>  #include "internal-common.h"
+>  #include "tb-context.h"
+> -
+> +#include <math.h>
+>
+>  static void dump_drift_info(GString *buf)
+>  {
+> @@ -57,6 +57,7 @@ static void print_qht_statistics(struct qht_stats hst, =
+GString *buf)
+>      uint32_t hgram_opts;
+>      size_t hgram_bins;
+>      char *hgram;
+> +    double avg;
+>
+>      if (!hst.head_buckets) {
+>          return;
+> @@ -73,9 +74,13 @@ static void print_qht_statistics(struct qht_stats hst,=
+ GString *buf)
+>          hgram_opts |=3D QDIST_PR_NODECIMAL;
+>      }
+>      hgram =3D qdist_pr(&hst.occupancy, 10, hgram_opts);
+> -    g_string_append_printf(buf, "TB hash occupancy   %0.2f%% avg chain o=
+cc. "
+> -                           "Histogram: %s\n",
+> -                           qdist_avg(&hst.occupancy) * 100, hgram);
+> +    avg =3D qdist_avg(&hst.occupancy);
+> +    if (!isnan(avg)) {
+> +        g_string_append_printf(buf, "TB hash occupancy   "
+> +                                    "%0.2f%% avg chain occ. "
+> +                                    "Histogram: %s\n",
+> +                               avg * 100, hgram);
+> +    }
+>      g_free(hgram);
+>
+>      hgram_opts =3D QDIST_PR_BORDER | QDIST_PR_LABELS;
+> @@ -87,9 +92,12 @@ static void print_qht_statistics(struct qht_stats hst,=
+ GString *buf)
+>          hgram_opts |=3D QDIST_PR_NODECIMAL | QDIST_PR_NOBINRANGE;
+>      }
+>      hgram =3D qdist_pr(&hst.chain, hgram_bins, hgram_opts);
+> -    g_string_append_printf(buf, "TB hash avg chain   %0.3f buckets. "
+> -                           "Histogram: %s\n",
+> -                           qdist_avg(&hst.chain), hgram);
+> +    avg =3D qdist_avg(&hst.chain);
+> +    if (!isnan(avg)) {
+> +        g_string_append_printf(buf, "TB hash avg chain   %0.3f buckets. =
+"
+> +                                    "Histogram: %s\n",
+> +                               avg, hgram);
+> +    }
+>      g_free(hgram);
+>  }
+>
+> --
+> 2.49.0
+>
 
-diff --git a/accel/tcg/monitor.c b/accel/tcg/monitor.c
-index e7ed7281a4b..778b12613f4 100644
---- a/accel/tcg/monitor.c
-+++ b/accel/tcg/monitor.c
-@@ -19,7 +19,7 @@
- #include "tcg/tcg.h"
- #include "internal-common.h"
- #include "tb-context.h"
--
-+#include <math.h>
- 
- static void dump_drift_info(GString *buf)
- {
-@@ -57,6 +57,7 @@ static void print_qht_statistics(struct qht_stats hst, GString *buf)
-     uint32_t hgram_opts;
-     size_t hgram_bins;
-     char *hgram;
-+    double avg;
- 
-     if (!hst.head_buckets) {
-         return;
-@@ -73,9 +74,13 @@ static void print_qht_statistics(struct qht_stats hst, GString *buf)
-         hgram_opts |= QDIST_PR_NODECIMAL;
-     }
-     hgram = qdist_pr(&hst.occupancy, 10, hgram_opts);
--    g_string_append_printf(buf, "TB hash occupancy   %0.2f%% avg chain occ. "
--                           "Histogram: %s\n",
--                           qdist_avg(&hst.occupancy) * 100, hgram);
-+    avg = qdist_avg(&hst.occupancy);
-+    if (!isnan(avg)) {
-+        g_string_append_printf(buf, "TB hash occupancy   "
-+                                    "%0.2f%% avg chain occ. "
-+                                    "Histogram: %s\n",
-+                               avg * 100, hgram);
-+    }
-     g_free(hgram);
- 
-     hgram_opts = QDIST_PR_BORDER | QDIST_PR_LABELS;
-@@ -87,9 +92,12 @@ static void print_qht_statistics(struct qht_stats hst, GString *buf)
-         hgram_opts |= QDIST_PR_NODECIMAL | QDIST_PR_NOBINRANGE;
-     }
-     hgram = qdist_pr(&hst.chain, hgram_bins, hgram_opts);
--    g_string_append_printf(buf, "TB hash avg chain   %0.3f buckets. "
--                           "Histogram: %s\n",
--                           qdist_avg(&hst.chain), hgram);
-+    avg = qdist_avg(&hst.chain);
-+    if (!isnan(avg)) {
-+        g_string_append_printf(buf, "TB hash avg chain   %0.3f buckets. "
-+                                    "Histogram: %s\n",
-+                               avg, hgram);
-+    }
-     g_free(hgram);
- }
- 
--- 
-2.49.0
-
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
