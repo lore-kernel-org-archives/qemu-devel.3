@@ -4,69 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E74A9C83F17
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 12:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CF9FC83F1D
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 12:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZqpi-0005NP-Kd; Thu, 10 Jul 2025 08:57:02 -0400
+	id 1uZqq9-0005Yt-87; Thu, 10 Jul 2025 08:57:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mkl@pengutronix.de>)
- id 1uZqjp-0002KV-9W
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 08:50:57 -0400
-Received: from metis.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::104])
+ (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
+ id 1uZqpP-0005F4-St
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 08:56:44 -0400
+Received: from ssh.movementarian.org ([139.162.205.133] helo=movementarian.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mkl@pengutronix.de>)
- id 1uZqjm-0006Gk-UK
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 08:50:57 -0400
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
- by metis.whiteo.stw.pengutronix.de with esmtps
- (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
- (envelope-from <mkl@pengutronix.de>)
- id 1uZqjb-0003Cf-2a; Thu, 10 Jul 2025 14:50:43 +0200
-Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b]
- helo=bjornoya.blackshift.org)
- by drehscheibe.grey.stw.pengutronix.de with esmtps (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
- (envelope-from <mkl@pengutronix.de>) id 1uZqja-007kop-1A;
- Thu, 10 Jul 2025 14:50:42 +0200
-Received: from pengutronix.de (p5b1645f7.dip0.t-ipconnect.de [91.22.69.247])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- (Authenticated sender: mkl-all@blackshift.org)
- by smtp.blackshift.org (Postfix) with ESMTPSA id 0D04E43BD28;
- Thu, 10 Jul 2025 12:50:42 +0000 (UTC)
-Date: Thu, 10 Jul 2025 14:50:41 +0200
-From: Marc Kleine-Budde <mkl@pengutronix.de>
-To: Pavel Pisa <pisa@fel.cvut.cz>
-Cc: Matyas Bobek <bobekmat@fel.cvut.cz>, 
- Oliver Hartkopp <socketcan@hartkopp.net>, qemu-devel@nongnu.org,
- Nikita Ostrenkov <n.ostrenkov@gmail.com>, 
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: i.MX6 SabreLite FlexCAN emulation for QEMU progress/working
-Message-ID: <20250710-carrot-pillbug-of-election-eca4ab-mkl@pengutronix.de>
-References: <202507101258.05760.pisa@fel.cvut.cz>
+ (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
+ id 1uZqpO-0006qY-F4
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 08:56:43 -0400
+Received: from movement by movementarian.org with local (Exim 4.97)
+ (envelope-from <movement@movementarian.org>)
+ id 1uZqpK-00000008YqN-1wXo; Thu, 10 Jul 2025 13:56:38 +0100
+Date: Thu, 10 Jul 2025 13:56:38 +0100
+From: John Levon <levon@movementarian.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ John Johnson <john.g.johnson@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>
+Subject: Re: [PULL 08/25] vfio-user: connect vfio proxy to remote server
+Message-ID: <aG-4hkfLDEpDsqo6@movementarian.org>
+References: <20250626074529.1384114-1-clg@redhat.com>
+ <20250626074529.1384114-9-clg@redhat.com>
+ <CAFEAcA9qtR40k6KAiMk2ij4kArVSdLJAH+zRVnTxaVOhOYr1jw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="v3mfxbb2tizlbdgt"
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <202507101258.05760.pisa@fel.cvut.cz>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: mkl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de);
- SAEximRunCond expanded to false
-X-PTX-Original-Recipient: qemu-devel@nongnu.org
-Received-SPF: pass client-ip=2a0a:edc0:2:b01:1d::104;
- envelope-from=mkl@pengutronix.de; helo=metis.whiteo.stw.pengutronix.de
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEAcA9qtR40k6KAiMk2ij4kArVSdLJAH+zRVnTxaVOhOYr1jw@mail.gmail.com>
+X-Url: http://www.movementarian.org/
+Received-SPF: pass client-ip=139.162.205.133;
+ envelope-from=movement@movementarian.org; helo=movementarian.org
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 10 Jul 2025 08:56:50 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,92 +65,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Jul 10, 2025 at 01:33:17PM +0100, Peter Maydell wrote:
 
---v3mfxbb2tizlbdgt
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: i.MX6 SabreLite FlexCAN emulation for QEMU progress/working
-MIME-Version: 1.0
+> On Thu, 26 Jun 2025 at 08:51, Cédric Le Goater <clg@redhat.com> wrote:
+> >
+> > From: John Levon <john.levon@nutanix.com>
+> >
+> > Introduce the vfio-user "proxy": this is the client code responsible for
+> > sending and receiving vfio-user messages across the control socket.
+> >
+> > The new files hw/vfio-user/proxy.[ch] contain some basic plumbing for
+> > managing the proxy; initialize the proxy during realization of the
+> > VFIOUserPCIDevice instance.
+> 
+> Hi; Coverity points out an issue with this code (CID 1611806):
 
-On 10.07.2025 12:58:05, Pavel Pisa wrote:
-> Hello Marc and others,
->=20
-> Matyas Bobek has implemented FlexCAN emulation for i.MX6
-> targets in the frame of his bachelor thesis
->=20
->   https://dspace.cvut.cz/bitstream/handle/10467/122654/F3-BP-2025-Bobek-M=
-atyas-BP_Bobek_FlexCAN_final_4.pdf
->=20
-> with reviews there
->=20
->   https://dspace.cvut.cz/handle/10467/122779
->=20
-> Please, if you have problems to access documents, try that later,
-> our large archive with theses and publications is under
-> "AI" scrape-bots attacks almost permanently... or send me note
-> and I send the document directly.
->=20
-> The project continues and on base of Marc Kleine-Budde
-> review, Matyas Bobek has implemented timestamping
-> which should ensure correct messages ordering
-> even if FIFO mode is not used in the drivers,
-> Linux driver default case. There is even workaround
-> to advance timestamp if the the QEMU virtual time
-> is too coarse to provide unique values for for
-> too fast delivered messages through virtual bus
-> without real bits serialization.
+Cédric sent me the reports separately. They are (as far as I'm able to tell
+without a coverity login) all false positives, except the uninitialized variable
+one which I have sent a patch for.
 
-Nice! Good work!
+The locking reports don't realize the proxy->lock is already held.
 
-> The actual code is available on the "flexcan"
-> branch of the repository
->=20
->   https://gitlab.fel.cvut.cz/bobekmat/qemu-flexcan
->=20
-> The clean, minimal patches sequence will be prepared
-> for review for the proposal for inclusion into QEMU
-> mainline, hopefully soon.
->=20
-> In longer term perspective, I have interrest in i.MX8
-> and other FlexCAN variants with FD support, etc.
-> I do not know if Mr. Bobek will have time and interest
-> to continue in this direction. I can offer that as the
-> another thesis or can offer that as summer job
-> etc. But latter would need some funding for students
-> motivation and their time compensation and I have had
-> never and do not have any QEMU related project for such
-> funding now and even minimal chance is even in future
-> for other than CTU CAN FD IP core where we support
-> silicon and FPGA products. So no timing, chances,
-> estimates for something beyond i.MX6 FlexCAN.=20
+> > +     * Make sure the iothread isn't blocking anywhere
+> > +     * with a ref to this proxy by waiting for a BH
+> > +     * handler to run after the proxy fd handlers were
+> > +     * deleted above.
+> > +     */
+> > +    aio_bh_schedule_oneshot(proxy->ctx, vfio_user_cb, proxy);
+> > +    qemu_cond_wait(&proxy->close_cv, &proxy->lock);
+> 
+> qemu_cond_wait() has essentially the same semantics as
+> pthread_cond_wait(), for which it is a wrapper.
+> pthread_cond_wait() is allowed to wake up spuriously, so
+> any use of it must be in a loop that checks for whatever
+> the actual thing you were waiting for was:
+>   while (something) {
+>       qemu_cond_wait(...);
+>   }
+> 
+> What is the condition this code should be checking ?
 
-ACK, I think getting things mainline is more important than CAN-FD
-support.
+But rethinking about this one, it's theoretically possible, I suppose, if we
+happen get a signal before we actually close. I'll figure out a patch, thanks.
 
-regards,
-Marc
-
---=20
-Pengutronix e.K.                 | Marc Kleine-Budde          |
-Embedded Linux                   | https://www.pengutronix.de |
-Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
-Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
-
---v3mfxbb2tizlbdgt
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEn/sM2K9nqF/8FWzzDHRl3/mQkZwFAmhvtx4ACgkQDHRl3/mQ
-kZy86ggAnbhPkkJr7adi7FBzYYsfah37OiI59qxCjNeWS1JduCA23CPGH9+Bp89H
-rYZFNzSSSxI96hlLi+O76vMQ2ETFceyN0PQKQg5pHgS29J6P4xsRQ3xPXzu1jSwq
-Zk1G4H7TlFKUIqG4UzLxBbb02BhP5+ZCjPLhkIW0Ztj+ogJ9muME/9248dxi9BQ7
-rANwe+UUP/yEF3DpT+2SCGX2+VcXTkU7wMILpdMpKS+Piw1/4An6esb5MqJFX1Gs
-CHCtaQ1VAA3SHbISEvIC2w2HOQfIJM2sI3G2tZZGydvORMLx344h9BZSXIHVounw
-Acg68NImqsZNKz+Au29iro/ig7Efaw==
-=53vH
------END PGP SIGNATURE-----
-
---v3mfxbb2tizlbdgt--
+regards
+john
 
