@@ -4,68 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71799C83F10
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 02:53:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5789C83F10
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 02:58:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZhOQ-0000jg-S3; Wed, 09 Jul 2025 22:52:14 -0400
+	id 1uZhU7-0005Ce-MU; Wed, 09 Jul 2025 22:58:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uZhM8-000829-Ns
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 22:49:54 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uZhM5-0002NX-Qn
- for qemu-devel@nongnu.org; Wed, 09 Jul 2025 22:49:51 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8BxnnNLKm9ouvolAQ--.45363S3;
- Thu, 10 Jul 2025 10:49:47 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJBxpeRGKm9oMfUQAA--.31944S3;
- Thu, 10 Jul 2025 10:49:44 +0800 (CST)
-Subject: Re: [PATCH v4 10/11] target/loongarch:Implement csrrd CSR_MSGIR
- register
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
-References: <20250703092650.2598059-1-gaosong@loongson.cn>
- <20250703092650.2598059-11-gaosong@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <0afd213d-65b1-dcab-78ba-1fae51e9c9b9@loongson.cn>
-Date: Thu, 10 Jul 2025 10:48:07 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uZhU0-0005Aw-NS
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 22:58:00 -0400
+Received: from mgamail.intel.com ([198.175.65.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uZhTx-0005Ac-BV
+ for qemu-devel@nongnu.org; Wed, 09 Jul 2025 22:58:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1752116278; x=1783652278;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=UD7AyJRv2Q23JXKkqMRm90Py0ClGR7am37933AcOywM=;
+ b=BaQwNiZ+8gySWLw/ucBihfXpAzbnHP/bUJvnhFZeFx7L69dvyBNvWJ+H
+ 2EKKPAsR05sYNknC+pYZMp6OaFXNpVz66G6FWq1xnslxnZZ2AbWgD8rbS
+ BFHeWMTVgvp1+6jUYAN4MxDC/M6xrNVZENV/54vBjxL5VSHo9V7LnjBp8
+ A5UplCXLJrFmiCheFz1NHRJtVHVkoEhFIxeu7ae8wuKoz/d4XYsjF7X4Z
+ 8t+/i5UmARiaFKmAGeZL1h9Qlc4BmQZOv7ZVi5mD76q24s/1JiJNFMrpB
+ iioVJcQ0UihWKWEgDtVnTDPc6wlLG1/zl2kOPYOz9rCE8IZv/EIPom5/v w==;
+X-CSE-ConnectionGUID: ZTaJd0jORn2e4/YQPTAigA==
+X-CSE-MsgGUID: Qzq6LHwXQbeXB4y/dUp4GA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11489"; a="64647288"
+X-IronPort-AV: E=Sophos;i="6.16,299,1744095600"; d="scan'208";a="64647288"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Jul 2025 19:57:53 -0700
+X-CSE-ConnectionGUID: skKdKIHQSde7S8GiprDf3Q==
+X-CSE-MsgGUID: G1jIt3NyR0SktmKuUqABhw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,299,1744095600"; d="scan'208";a="156055491"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Jul 2025 19:57:51 -0700
+Message-ID: <de97d1cc-69c9-4fcf-aa7d-3989475549d5@intel.com>
+Date: Thu, 10 Jul 2025 10:57:49 +0800
 MIME-Version: 1.0
-In-Reply-To: <20250703092650.2598059-11-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/i386: Add TSA feature flags
+To: babu.moger@amd.com, "Borislav Petkov (AMD)" <bp@alien8.de>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+References: <20250709104956.GAaG5JVO-74EF96hHO@fat_crate.local>
+ <8ba851bc-e7b3-461b-9bfb-4d7018771f0c@amd.com>
 Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <8ba851bc-e7b3-461b-9bfb-4d7018771f0c@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxpeRGKm9oMfUQAA--.31944S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxXF13uF4xGr45Zryrtr47GFX_yoW5ZFWDpF
- 4xCFWakF4rGrZ7Z3WSqw13tw15Zr48Kw4xXa1xt34I9a13Xr93Wr40q3sFgF4DJa45XFW0
- v3Zakry8AFW7X3XCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v2
- 6r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr
- 1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8vApUUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.691,
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,98 +87,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2025/7/3 下午5:26, Song Gao wrote:
-> implement the read-clear feature for CSR_MSGIR register.
+On 7/9/2025 11:02 PM, Moger, Babu wrote:
+> Hi Boris,
 > 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   target/loongarch/csr.c                        |  5 +++++
->   target/loongarch/tcg/csr_helper.c             | 22 +++++++++++++++++++
->   target/loongarch/tcg/helper.h                 |  1 +
->   .../tcg/insn_trans/trans_privileged.c.inc     |  1 +
->   4 files changed, 29 insertions(+)
+> On 7/9/25 05:49, Borislav Petkov (AMD) wrote:
+>> Hi,
+>>
+>> I *think* this is how it should be done but I might be forgetting something.
+>> It seems to work in my testing here.
+>>
+>> Babu, double-check me pls.
+>>
+>> Thx.
 > 
-> diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
-> index 7ea0a30450..f973780bba 100644
-> --- a/target/loongarch/csr.c
-> +++ b/target/loongarch/csr.c
-> @@ -97,6 +97,11 @@ static CSRInfo csr_info[] = {
->       CSR_OFF(DBG),
->       CSR_OFF(DERA),
->       CSR_OFF(DSAVE),
-> +    CSR_OFF_ARRAY(MSGIS, 0),
-> +    CSR_OFF_ARRAY(MSGIS, 1),
-> +    CSR_OFF_ARRAY(MSGIS, 2),
-> +    CSR_OFF_ARRAY(MSGIS, 3),
-> +    CSR_OFF(MSGIR),
->   };
->   
->   CSRInfo *get_csr(unsigned int csr_num)
-> diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
-> index 2942d7feb8..29eb2d13c8 100644
-> --- a/target/loongarch/tcg/csr_helper.c
-> +++ b/target/loongarch/tcg/csr_helper.c
-> @@ -68,6 +68,28 @@ target_ulong helper_csrrd_tval(CPULoongArchState *env)
->       return cpu_loongarch_get_constant_timer_ticks(cpu);
->   }
->   
-> +target_ulong helper_csrrd_msgir(CPULoongArchState *env)
-> +{
-> +    int irq, new;
-> +
-> +    irq = find_first_bit(env->CSR_MSGIS, 256);
-> +    if (irq < 256) {
-> +        clear_bit(irq, env->CSR_MSGIS);
-> +        new = find_first_bit(env->CSR_MSGIS, 256);
-> +        if (new < 256) {
-> +            return irq;
-> +        }
-> +
-> +        env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
-> +        env->CSR_ECFG = FIELD_DP64(env->CSR_ECFG, CSR_ECFG, MSGINT, 0);
-CSR_ECFG should not be modifed here.
-
-> +    } else {
-> +        /* bit 31 set 1 for no invalid irq */
-> +        irq = -1;
-How about irq = BIT(31), the other bits keeps zero except bit 31?
-
-Regards
-Bibo Mao
-> +    }
-> +
-> +    return irq;
-> +}
-> +
->   target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
->   {
->       int64_t old_v = env->CSR_ESTAT;
-> diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
-> index 1d5cb0198c..db57dbfc16 100644
-> --- a/target/loongarch/tcg/helper.h
-> +++ b/target/loongarch/tcg/helper.h
-> @@ -100,6 +100,7 @@ DEF_HELPER_1(rdtime_d, i64, env)
->   DEF_HELPER_1(csrrd_pgd, i64, env)
->   DEF_HELPER_1(csrrd_cpuid, i64, env)
->   DEF_HELPER_1(csrrd_tval, i64, env)
-> +DEF_HELPER_1(csrrd_msgir, i64, env)
->   DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
->   DEF_HELPER_2(csrwr_estat, i64, env, tl)
->   DEF_HELPER_2(csrwr_asid, i64, env, tl)
-> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-> index ecbfe23b63..2619b5342b 100644
-> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-> @@ -83,6 +83,7 @@ void loongarch_csr_translate_init(void)
->       SET_CSR_FUNC(TCFG,  NULL, gen_helper_csrwr_tcfg);
->       SET_CSR_FUNC(TVAL,  gen_helper_csrrd_tval, NULL);
->       SET_CSR_FUNC(TICLR, NULL, gen_helper_csrwr_ticlr);
-> +    SET_CSR_FUNC(MSGIR, gen_helper_csrrd_msgir, NULL);
->   }
->   #undef SET_CSR_FUNC
->   
 > 
+> Patch looks good. Few comments.
+> 
+> Is KVM aware of these bits? I didn’t notice any patches adding support for
+> them in the kernel.
+
+Hi Boris,
+
+Besides KVM patch, would you please provide the public doc that 
+describes the new bits?
+
+> I recommend splitting this into two separate patches:
+> a. One patch to introduce the new bit 0021_EAX_VERW_CLEAR.
+
+It also needs to be a separate patch to add it to "EPYC-Genoa" as v3, so 
+please make it 3 patches.
+
+> b. Another patch to add the new feature leaf FEAT_8000_0021_ECX.
+> Also, don’t forget to define tsa-sq-no and tsa-l1-no in target/i386/cpu.h.
+> 
+> 
+>>
+>> ---
+>>
+>> Add CPUID leaf 0x8000_0021.ECX support and add the TSA CPUID flags.
+>>
+>> Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+>> ---
+>>   target/i386/cpu.c | 20 +++++++++++++++++++-
+>>   target/i386/cpu.h |  3 +++
+>>   2 files changed, 22 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>> index 0d35e95430fe..b889de61ed9d 100644
+>> --- a/target/i386/cpu.c
+>> +++ b/target/i386/cpu.c
+>> @@ -1274,7 +1274,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+>>           .type = CPUID_FEATURE_WORD,
+>>           .feat_names = {
+>>               "no-nested-data-bp", "fs-gs-base-ns", "lfence-always-serializing", NULL,
+>> -            NULL, NULL, "null-sel-clr-base", NULL,
+>> +            NULL, "verw-clear", "null-sel-clr-base", NULL,
+>>               "auto-ibrs", NULL, NULL, NULL,
+>>               NULL, NULL, NULL, NULL,
+>>               NULL, NULL, NULL, NULL,
+>> @@ -1308,6 +1308,22 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+>>           .tcg_features = 0,
+>>           .unmigratable_flags = 0,
+>>       },
+>> +    [FEAT_8000_0021_ECX] = {
+>> +        .type = CPUID_FEATURE_WORD,
+>> +        .feat_names = {
+>> +            NULL, "tsa-sq-no", "tsa-l1-no", NULL,
+>> +            NULL, NULL, NULL, NULL,
+>> +            NULL, NULL, NULL, NULL,
+>> +            NULL, NULL, NULL, NULL,
+>> +            NULL, NULL, NULL, NULL,
+>> +            NULL, NULL, NULL, NULL,
+>> +            NULL, NULL, NULL, NULL,
+>> +            NULL, NULL, NULL, NULL,
+>> +        },
+>> +        .cpuid = { .eax = 0x80000021, .reg = R_ECX, },
+>> +        .tcg_features = 0,
+>> +        .unmigratable_flags = 0,
+>> +    },
+>>       [FEAT_XSAVE] = {
+>>           .type = CPUID_FEATURE_WORD,
+>>           .feat_names = {
+>> @@ -5835,6 +5851,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+>>           .features[FEAT_8000_0021_EAX] =
+>>               CPUID_8000_0021_EAX_NO_NESTED_DATA_BP |
+>>               CPUID_8000_0021_EAX_LFENCE_ALWAYS_SERIALIZING |
+>> +            CPUID_8000_0021_EAX_VERW_CLEAR |
+>>               CPUID_8000_0021_EAX_NULL_SEL_CLR_BASE |
+>>               CPUID_8000_0021_EAX_AUTO_IBRS,
+>>           .features[FEAT_7_0_EBX] =
+>> @@ -7934,6 +7951,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>>           *eax = *ebx = *ecx = *edx = 0;
+>>           *eax = env->features[FEAT_8000_0021_EAX];
+>>           *ebx = env->features[FEAT_8000_0021_EBX];
+>> +        *ecx = env->features[FEAT_8000_0021_ECX];
+>>           break;
+>>       default:
+>>           /* reserved values: zero */
+>> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+>> index 51e10139dfdf..8b2703f41b73 100644
+>> --- a/target/i386/cpu.h
+>> +++ b/target/i386/cpu.h
+>> @@ -641,6 +641,7 @@ typedef enum FeatureWord {
+>>       FEAT_8000_0008_EBX, /* CPUID[8000_0008].EBX */
+>>       FEAT_8000_0021_EAX, /* CPUID[8000_0021].EAX */
+>>       FEAT_8000_0021_EBX, /* CPUID[8000_0021].EBX */
+>> +    FEAT_8000_0021_ECX, /* CPUID[8000_0021].ECX */
+>>       FEAT_8000_0022_EAX, /* CPUID[8000_0022].EAX */
+>>       FEAT_C000_0001_EDX, /* CPUID[C000_0001].EDX */
+>>       FEAT_KVM,           /* CPUID[4000_0001].EAX (KVM_CPUID_FEATURES) */
+>> @@ -1101,6 +1102,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+>>   #define CPUID_8000_0021_EAX_FS_GS_BASE_NS                (1U << 1)
+>>   /* LFENCE is always serializing */
+>>   #define CPUID_8000_0021_EAX_LFENCE_ALWAYS_SERIALIZING    (1U << 2)
+>> +/* Memory form of VERW mitigates TSA */
+>> +#define CPUID_8000_0021_EAX_VERW_CLEAR                   (1U << 5)
+>>   /* Null Selector Clears Base */
+>>   #define CPUID_8000_0021_EAX_NULL_SEL_CLR_BASE            (1U << 6)
+>>   /* Automatic IBRS */
+> 
+> We need to define tsa-sq-no and tsa-l1-no here.
+> These definitions can be used later when adding a new CPU model.
+
+Add them later along with the patch introduces the new CPU model is also OK.
 
 
