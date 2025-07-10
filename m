@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3741C83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 16:59:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 085FAC83F23
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 16:59:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZubQ-0008K1-AT; Thu, 10 Jul 2025 12:58:32 -0400
+	id 1uZuav-0007Ko-DZ; Thu, 10 Jul 2025 12:58:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZuNM-0007UF-Fe
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 12:44:06 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uZuL3-0003PL-Ol
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 12:41:37 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZuNK-0001Qg-K6
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 12:44:00 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-453643020bdso9430195e9.1
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 09:43:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uZuL2-00018E-65
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 12:41:37 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-b34c068faf8so1368543a12.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 09:41:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752165837; x=1752770637; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Db41WKKXa5CdV/eG95AEOzhzbaLo514xBnU6yI/kY2k=;
- b=MXCCuBJC+x1nkOFKTyb7bK7iwa10u+ygZBtadZcLkUcJOWHUDIkV1yFBtiQSzW6rPp
- 4Si7+11wOIhPJe4Myv0RrwiP4bD4jnHk3qwIJ5/xDXXsCxl5oBNWsr1iA4gMHFs/+7jI
- 99SckPqpsYGixxtzRpsfvOC13XMPMFsyID7jA817zw5i+BCs0oR2FX1c5I884rWzkib2
- hMTBLSAOEZ0VtsdNyBZ3+v2byh8iZfe9ri+cAyAjUgkgpk80f+bLvt2E2w0F8vn/RPUX
- 4ywku5kvmVZ7NqRb3AcEXrKBj8Pb5beU6+eEmdoJG9QgTtqAqkm2scU0thUSyBpZhCmL
- TTcA==
+ d=linaro.org; s=google; t=1752165695; x=1752770495; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vSHu2C6AHkdi6I2MI+MN+9VTwDs09gk+qY11owIPdS8=;
+ b=NxrXbiQN9yu93AEExV/fCjmH6OgZB1JuTjSsrV7nUW3jopBDcojbK+/zETaCuXFO5u
+ +bEPKPmggEIOQeqSZgoZPzxcmS3iXFde8Yjihq3K8WdfMxCYP6T2xQy2s0G2XShi43eA
+ xjK26EEcNq/gB4UVei2HCA+e7Brd5DbeMT/FRyV5M5usM3OTXNtGp4naZsHqZ5fHzrRw
+ Yo7WCUF8Gh6W3xg0wFB4hJj6oHvyTsRpcSl/GvWes/Pt18E1vHUgx3Tc+TcC6efCJeqw
+ Tk/8SkhY2DpA8URs9z4RnKEaFMgULIPIf2v4oVSiiu3KKmYpgEM+0WuutT3g2ecyOPud
+ ptzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752165837; x=1752770637;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Db41WKKXa5CdV/eG95AEOzhzbaLo514xBnU6yI/kY2k=;
- b=KAuOn37n/Kh/1Ojir+YPmoq3kaH9t6IT+YHlOl1a+PBPnRFUYzo/5WbRs3LNlU1+/5
- ObUNlgLiIzSJzbBO9rP/Yw5xpXpCAQxWd8SScsULcE9KA/bGKbs3TSLRGm4a4wMruQYh
- tH+Z939tYyOa4NcEzhrl1Jqu5Cla4PkAYer+kve3wVa528aumpPOnnTIRWWGUGzP6Enq
- EgwwtwHsmi0D2p3FRPt0ZEtkZkINBnEhPwCNhlTkt/sZifcjo/Y0cW8TGo8YgvdP+5zs
- QhtwjNxT5RVH+xTgjnWt+wrnXH9v5JmgwD7dgE1hDJkXQ9SslwWrpOsYa6O6+t4oP3/8
- xM5Q==
-X-Gm-Message-State: AOJu0YwwziCvYal1+/i/Iuk+0C3J3lWe0wR9ALd+pd7weskh4t2S2gim
- 8jLs3FUfN/Qx9ml/9pHWUsigWtgIivlKeDcOEhHrzKTphmFMlq9oYoSB1yRe/cSzuffsIFXLtfh
- H78wQ
-X-Gm-Gg: ASbGncvZyrZTnycrjz67KPL28sMqj1F99vqYt8kaDAhgRWcdty8F25tGDsb4ZrlmKV3
- R6wyk2Wo9xP19w/TinodydDcRLOSc6xKPzhwfeo7TlmjCFvc/2ow/Exy0n3+Eupy8HVFDJlLETB
- 1D3uH2EEWq4tHOfkkb+dTMzR29y7W3aVUcV1j1h/6EyqKJ8K0RmGZOMyPlD8LUSz1RdRwISWyMm
- P9ResOegVf6NA7MnRVp/MJkwXpyA9YKPpVlO9hMfn61Ou0EfAJLwKRDwOfVCceKs7Q2yWlYsdn+
- uyq4eOTRIboXEyGXj8NGczwbtCmbMBRdgwNJpj0WmXSM0YB4O2vmRyhuAv3/UFBbWnkz
-X-Google-Smtp-Source: AGHT+IF9kjEa0IRSFHuKoNWxTyt+LTYNsOdTy1d9VSPCuR2w1M4b7RvsIaN3Fa9YJdavJKQ+aQnu0g==
-X-Received: by 2002:a05:600c:1e26:b0:453:23fe:ca86 with SMTP id
- 5b1f17b1804b1-454d530eb0dmr74979935e9.4.1752165836901; 
- Thu, 10 Jul 2025 09:43:56 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ d=1e100.net; s=20230601; t=1752165695; x=1752770495;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vSHu2C6AHkdi6I2MI+MN+9VTwDs09gk+qY11owIPdS8=;
+ b=UIPDtADF9xYwvaz5MjFNX0mFbZJabZYs56Wb6QS5QoENi7WEtrVevyKgTGaajUD0hu
+ ll08WTQTJaOoV+DeWzJ0s/lASS9ia93LsujxA8EvtHSVY5HZAd9cAqGJM+BuvrZhkZ86
+ 12yYnTSbDFfhBY42iPcNdi2wNa89b/N7RNScq0BhYMT71vwcNsZZ8g8RmI08hM1RKOh1
+ F9Mje7v+bkd+xnuoPy6dbXcbHrOwBpAaYeJJGrPxNYpEwFSqPVjFTIDJ/Fi2QVogWw/1
+ k5aOf0S55yRpUqR9lWA4pJQtZQu2X/INKtpSRIxM21HlRuXbyDxh6JT80txmoPVilKmi
+ E/Fg==
+X-Gm-Message-State: AOJu0YzVroSQm1/FFUwTkuYBMjZB2Z+CjEn7AMeiEwtOzBOaHMiUKXK+
+ PtRizyVqIjOU4f+Lwwc4DoDBcuc2cZ4I1rlQHsZMkj7NKzmIgCv/RT1QR1uNxH+WIzQ=
+X-Gm-Gg: ASbGncudna5USpZ1KsnYsuIAeqPeqr6z8D5w0m0bCvZ5g3VPPY00dJjFw1x83wlrmaO
+ ipBfpvLjsih998ryzD25V5XkDB8dfB5NPQx/s2tTgYthjMyBV05vSYLeVJnjD3GxpnFA2dv79dh
+ bHaj/C+KT0DtLxAP1ZDoUgPmnu+sCDUUsxyVz+D593h24l+Vit/BemYMzkBLEO93bbLaBTgEKns
+ NkGZK/XXPqqd5VWM64885dFqi/EvO+wvzG1kitmniK4ewDnKdLQ9HXYcjiYOE3yGeBwiAE7Wgh+
+ WwA5Yd6G4R08uVISHSitrEdz5uYyKheECfFQh5OM/mrGVT1G4oGt+6Ddc7C93KBxVELrl2ug5qk
+ BX7BSx+XOJLiV/emq9Reoig==
+X-Google-Smtp-Source: AGHT+IHB9V2Vzu7afu7FqCHdjS/MfXtdEF5v+MV/DVnXUBFRlomNYDMZrcS7AKccHT6yeSWFB275eg==
+X-Received: by 2002:a05:6a20:ce43:b0:1f5:889c:3cbd with SMTP id
+ adf61e73a8af0-2312050277emr89472637.35.1752165694709; 
+ Thu, 10 Jul 2025 09:41:34 -0700 (PDT)
+Received: from gromero0.. (189-47-46-41.dsl.telesp.net.br. [189.47.46.41])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454dd55b068sm24259035e9.38.2025.07.10.09.43.56
+ d2e1a72fcca58-74eb9f5c7f7sm2919119b3a.142.2025.07.10.09.41.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Jul 2025 09:43:56 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH] linux-user: Check for EFAULT failure in nanosleep
-Date: Thu, 10 Jul 2025 17:43:54 +0100
-Message-ID: <20250710164355.1296648-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ Thu, 10 Jul 2025 09:41:34 -0700 (PDT)
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: qemu-arm@nongnu.org, richard.henderson@linaro.org, alex.bennee@linaro.org
+Cc: qemu-devel@nongnu.org,
+	gustavo.romero@linaro.org
+Subject: [PATCH v5 1/6] target/arm: Add the MECEn SCR_EL3 bit
+Date: Thu, 10 Jul 2025 16:38:54 +0000
+Message-Id: <20250710163858.1094780-2-gustavo.romero@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250710163858.1094780-1-gustavo.romero@linaro.org>
+References: <20250710163858.1094780-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,45 +100,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-target_to_host_timespec() returns an error if the memory the guest
-passed us isn't actually readable.  We check for this everywhere
-except the callsite in the TARGET_NR_nanosleep case, so this mistake
-was caught by a Coverity heuristic.
+The MECEn bit in SCR_EL3 enables access to the EL2 MECID registers from
+EL2, so add it to the SCR mask list to use it later on.
 
-Add the missing error checks to the calls that convert between the
-host and target timespec structs.
-
-Coverity: CID 1507104
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
-Tested via the LTP nanosleep tests, but they don't actually exercise
-the EFAULT codepaths...
+ target/arm/cpu.h | 1 +
+ 1 file changed, 1 insertion(+)
 
- linux-user/syscall.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index fc37028597c..c600d5ccc0e 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -11630,10 +11630,14 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-     case TARGET_NR_nanosleep:
-         {
-             struct timespec req, rem;
--            target_to_host_timespec(&req, arg1);
-+            if (target_to_host_timespec(&req, arg1)) {
-+                return -TARGET_EFAULT;
-+            }
-             ret = get_errno(safe_nanosleep(&req, &rem));
-             if (is_error(ret) && arg2) {
--                host_to_target_timespec(arg2, &rem);
-+                if (host_to_target_timespec(arg2, &rem)) {
-+                    return -TARGET_EFAULT;
-+                }
-             }
-         }
-         return ret;
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index c8cf0ab417..0f64c7b163 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1717,6 +1717,7 @@ static inline void xpsr_write(CPUARMState *env, uint32_t val, uint32_t mask)
+ #define SCR_TRNDR             (1ULL << 40)
+ #define SCR_ENTP2             (1ULL << 41)
+ #define SCR_GPF               (1ULL << 48)
++#define SCR_MECEN             (1ULL << 49)
+ #define SCR_NSE               (1ULL << 62)
+ 
+ /* Return the current FPSCR value.  */
 -- 
-2.43.0
+2.34.1
 
 
