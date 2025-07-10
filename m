@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95770C83F17
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 15:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C300C83F1B
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 15:15:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZsxw-0006cq-MN; Thu, 10 Jul 2025 11:13:40 -0400
+	id 1uZszh-0000Q2-Kx; Thu, 10 Jul 2025 11:15:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZssm-0002GR-Np
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 11:08:20 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZszW-0000DE-MM
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 11:15:22 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZssk-0006F3-QA
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 11:08:20 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3a548a73ff2so1090302f8f.0
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 08:08:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZszU-0000XU-Lf
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 11:15:18 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3a6f2c6715fso1137260f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 08:15:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752160096; x=1752764896; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752160514; x=1752765314; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=BUnCbiv5ercKFDLix/SpHhgaXGyJI31mUZMLa6N7LrA=;
- b=gEqmZPMzSa5hV0MMqcsmt6Xcrx61G6ABYS7/4EfIltjoI9HeQFhMR4ibjXB2w31yp5
- LsmyiXoOPyHDjCsj8GV33Or4HJfUiheOrdRsP0Ge2ygjS/NlZ/sf55rKBY9hcb4U2CnF
- li8EU8T0fGQvxMwwwlmbc/7UmE2jlFmETdvw3Q2CPrT2dCde+mUKxbumnHnTLdu7KTh7
- 00WMPkV+eWwepETPZUzdlIecgDq1+R7W0IUfNJYg4WnNj6jVzkUZCJrdAG3JuDJzmHym
- Ntot4JmJw3ZsKDzBSZ4et5hvy9Yttbq8A7La/gm1wNIKQXlCzLeBw27SVKVN3Wcs3A93
- sxAQ==
+ bh=sffuV6RIb4hQ/6kzsrOBnM0BsSy3hksaLNByAe6PK+Q=;
+ b=CUg7vpCRYiZcFzGlaAiOF0Lc7m1jmt3o+SHrq5YkMGeHraa6Y1H2KB9WTsFImF6+DR
+ COBfu8bIWehWrQcf0ejmfAnExmDXJTNGr5oRFavYV87BF2QuLcaQPNWFfEJODXQLMkfH
+ 75MtyXo2NOdyYxttY4vSUYIfAjuhF30RRs1e5GH9bcN+nvXAN1Ntig3F75wdnUSQj2LS
+ QBlOsYRbWYa1gjBlvU2p6FzJBQMWdMcmAbmDyWCu4HkRZg7uVL1lJ6h7KuGvsFsPDzlm
+ 7fsSX8bnarKHA/P/i0sXfQ6yeMBB85tkr/wgchEbWmWr7G/bDYBnt2/joiAdroLeEltW
+ 3+EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752160096; x=1752764896;
+ d=1e100.net; s=20230601; t=1752160514; x=1752765314;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BUnCbiv5ercKFDLix/SpHhgaXGyJI31mUZMLa6N7LrA=;
- b=EkyEQKDVk40xdmkaha/4C8dY7Ujlcb41rjHR2ZOntkXRn5EJQQ+q4bdRmKp14UO+9G
- H768JLfXHb3hShzP9DLy3f4jEHbkf96QUXMh7/z6fZgIJq2ZDM/Q01O6NEWyIdqbmfU/
- uPdQeKju9y83DgP/B/p/lYg60FrAAuc+9Pio7150auU/nAbr/cgy7O8oDGfULjcgrb+S
- XFMSHFD/PlB1dB6xUIbiLfX8OgjHqe5pQC10HHfdHFKt9cnExx3rN/u2XvZRLL+Aims2
- XiCgrb+NYcGvE8Czz1pUa6VliBWuNnvcR1mCO8k9zneNfuhSbWhDBXlDJPp/pP2sSbPo
- zwqA==
+ bh=sffuV6RIb4hQ/6kzsrOBnM0BsSy3hksaLNByAe6PK+Q=;
+ b=jZQxK9uVJKCUjh4sIES0iPrRhoIbUPagn4aGRpTWYAU+6JI+r6RUDT7c2bcPg0YQNl
+ MOb3NYwEXJieuzTSCrtX96azaTlocDt8xLsxImI/Wa0IpzMGeG41a0FymPoIQ2A/ish2
+ GLYx8Kwow/Afu4YbIlDaBIW8VI2yhNLM42SmOQK8RNq5WGVhiN/gZ+DIIf2FGzcCwGdm
+ KwctP6vD7uZgY5Axo2VZQ/T07jBPQV3ON/paQQ2ZrJnmiS3xFEi98eYSKtT68oLVwq2V
+ fp147tWrpnisSlD61zHjzMERnoaM+/SdK44Mg/7Q+gMtUokSH4ZiFBzClYnpgfWtIoE6
+ GT1g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUuSi9cJYCqFkLb1ext31QYYk1O2WAbxkZb6jOVWdd8rrFvmqSJzGk+BRGu5+Bi57AeR3RM02g4Fe3p@nongnu.org
-X-Gm-Message-State: AOJu0YwApy7SM3sLedKzNEtjgeDsjEB5YwpEOzrVL9HGJvsVGtiZ0qrs
- lxIOibYNDjvPLPg9SWBEXbqfpEcBHigq67XpzqSuRLK+/X305TOHeZDxzRvojfBSOg2OlnGmmAw
- 6BjXXQ/Y=
-X-Gm-Gg: ASbGncui/cZQVqgmK3KAGfSc5y8iDjVrurqLQpZM6kNkvMWIeGaqcIBF6nCIpIkioFX
- 5PkeLwQ91gu1vbNz8zTj16mLvVrH+ngQCqzvpI13S5Es4AYz/ipLkiW6CfQ0U8kHWXSY/EmGbio
- fpgoiRNTTSMU3hyWpNXJAO0ycPWFvT6hrKXWUJvNagUP2xLi9nuJ6hxd4Ttq3J2AC2TE1y+AtA8
- QxBzITO2upp00Z2dFPHmuXBdiFhb8mCGFVuFUsdFNc8/jCXUZR4DDbvEn1roSs4yOSGWwk6yRaG
- 1zTKi2tQQUUdR82TSWwK3mxjCBDgnavfHbpj2Rzxo2XQbhu/7uIVcsLG0JutE3163ApdiSbARFa
- vCa7PS7IrNjZEw/MFfysTFDy/Vfj8jQljtLv/yF71heHosV/T
-X-Google-Smtp-Source: AGHT+IG51proW1nIh3+i54V89a4RmdZnJASDqpaQtl5/2wr4Qnbm4r7BxjnUOuoRcU0/hiL/Yx858Q==
-X-Received: by 2002:a05:6000:4803:b0:3a5:8cc2:10aa with SMTP id
- ffacd0b85a97d-3b5e45242edmr5391525f8f.32.1752160096108; 
- Thu, 10 Jul 2025 08:08:16 -0700 (PDT)
+ AJvYcCXorXIXHysczMDYG2tyiw1EAJDzW0TmHs/eGnofYAXPYp7GK4POgjQjFo2J1Pr7jqEQxgGskhzf8jE+@nongnu.org
+X-Gm-Message-State: AOJu0Yy+WBDL/kFBNhl37ciypE9cSdZ4tMLeTuwNF6snawYq0MjvIJns
+ JCv0KiPmEiAcvRV2ZvX5CuZGenKQ0XuQ75Zya9XSXEHwdpr/ltquCk+dnEOI+iI7q7w=
+X-Gm-Gg: ASbGncuuBHUyesgczDVEX2Uvbc4qWgMcU5Gzm/1BLxIUwiHb2Zl2w+6KtmXDqjT9J0g
+ MXQ9ezjFSHYkJJ2PeB7dPALra5ZqgAYL1qjXdI7sQoDVk/sFKOTMdPekMxeKq93yXayk3DUH6A7
+ ZfJJK0ZwnM/vmfI+THqUnizcUK2QUzHz18H3Zkb6JX0ueAFx9SFKs3lum4MFYWjN3DU8iYVRXmW
+ sVGRKuU6UPCPfygsVMoJN8/GL6I8HyFz9OC00z3DcJcHSnJ4WsgPT6hz5kJfViQdQkGA9MlBrPZ
+ 2NFOGKV5osyLyyJTG8lJ+OeG5HntrQK2YORpMPdB9T1PfhZc+fUsXF9u5bZxxVdmmYccrq3rbZT
+ /YJjTWjllbAYBtgMy0CpMJJ/zi0fm3qVDF1+eIZ/OO7LNvBuJ
+X-Google-Smtp-Source: AGHT+IHbcFiI45Nn9U7gFTDhrU/0e13ml8rfmcqpbqwoW5Ii7yV7RsvA+dL5Om6cjUi3uZ3fJ+tFkg==
+X-Received: by 2002:adf:b601:0:b0:3a4:d6ed:8e2e with SMTP id
+ ffacd0b85a97d-3b5e86beebemr2137574f8f.41.1752160514036; 
+ Thu, 10 Jul 2025 08:15:14 -0700 (PDT)
 Received: from [192.168.1.117] (lfbn-mon-1-970-120.w86-227.abo.wanadoo.fr.
  [86.227.5.120]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e0d77asm2148856f8f.58.2025.07.10.08.08.15
+ 5b1f17b1804b1-454dd241210sm22967505e9.0.2025.07.10.08.15.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Jul 2025 08:08:15 -0700 (PDT)
-Message-ID: <32fc392c-7380-45c6-96bf-44e57d459dae@linaro.org>
-Date: Thu, 10 Jul 2025 17:08:14 +0200
+ Thu, 10 Jul 2025 08:15:13 -0700 (PDT)
+Message-ID: <1fbb8424-7fb1-410a-9790-3498dc98829b@linaro.org>
+Date: Thu, 10 Jul 2025 17:15:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] crypto/x509-utils: Check for error from
- gnutls_x509_crt_init()
+Subject: Re: [PATCH] hw/net/rocker: Don't overflow in of_dpa_mask2prefix()
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20250710144417.1187478-1-peter.maydell@linaro.org>
+Cc: Jiri Pirko <jiri@resnulli.us>, Jason Wang <jasowang@redhat.com>
+References: <20250710144453.1187576-1-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250710144417.1187478-1-peter.maydell@linaro.org>
+In-Reply-To: <20250710144453.1187576-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,17 +102,56 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/7/25 16:44, Peter Maydell wrote:
-> Coverity notes that in qcrypto_get_x509_cert_fingerprint() we
-> call gnutls_x509_crt_init() but don't check for an error return.
-> Add the missing check.
+> In of_dpa_mask2prefix() we do "(2 << i)" for a loop
+> where i can go up to 31. At i == 31 we shift off the
+> top end of an integer.
 > 
-> Coverity: CID 1593155
-> Fixes: 10a1d34fc0d ("crypto: Introduce x509 utils")
+> Use 2ULL to avoid this overflow.
+> 
+> Fixes: dc488f888060a ("rocker: add new rocker switch device")
+> Coverity: CID 1547602
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   crypto/x509-utils.c | 6 +++++-
->   1 file changed, 5 insertions(+), 1 deletion(-)
+>   hw/net/rocker/rocker_of_dpa.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
+> index 4aed1787566..9c0fc728eee 100644
+> --- a/hw/net/rocker/rocker_of_dpa.c
+> +++ b/hw/net/rocker/rocker_of_dpa.c
+> @@ -202,7 +202,7 @@ static int of_dpa_mask2prefix(uint32_t mask)
+>       int count = 32;
+>   
+>       for (i = 0; i < 32; i++) {
+> -        if (!(ntohl(mask) & ((2 << i) - 1))) {
+> +        if (!(ntohl(mask) & ((2ULL << i) - 1))) {
+>               count--;
+>           }
+>       }
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Alternatively using ctz (untested):
 
+-- >8 --
+diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
+index 4aed1787566..431638dd64e 100644
+--- a/hw/net/rocker/rocker_of_dpa.c
++++ b/hw/net/rocker/rocker_of_dpa.c
+@@ -198,14 +198,5 @@ typedef struct of_dpa_group {
+
+-static int of_dpa_mask2prefix(uint32_t mask)
++static unsigned of_dpa_mask2prefix(uint32_t mask)
+  {
+-    int i;
+-    int count = 32;
+-
+-    for (i = 0; i < 32; i++) {
+-        if (!(ntohl(mask) & ((2 << i) - 1))) {
+-            count--;
+-        }
+-    }
+-
+-    return count;
++    return 32 - ctz32(cpu_to_be32(mask));
+  }
+---
 
