@@ -4,110 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AB5CC83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 21:22:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DC97C83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 21:41:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZyht-0002RN-FN; Thu, 10 Jul 2025 17:21:29 -0400
+	id 1uZz0f-0003XP-9C; Thu, 10 Jul 2025 17:40:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1uZyhr-0002Qm-St; Thu, 10 Jul 2025 17:21:28 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1uZz0c-0003VQ-H9; Thu, 10 Jul 2025 17:40:50 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1uZyhp-0001YF-3A; Thu, 10 Jul 2025 17:21:27 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56AKn6Vl026281;
- Thu, 10 Jul 2025 21:20:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=DlQBU8
- iN1Zn42nIC5RU3DARvLI+9tnYdgOiIOxyQ6yc=; b=XvGuM3zA3jo4J29iwU0RSJ
- sfDTbiE4l6K9qLs4deO4oFAcM+bH2HxTC9/5dp6UbQri6DEYeDivwwtg8LgrGfVJ
- uZs9MfoHbTAwRBrXxNw3dR83umGHYazv/g6Yk8b93B5BnhbmOlSBwt8DYfYYKJ/Z
- QkG324Jt5Q5ImCpwuISu43EvfGQh/FtjbaRWQiSKlb+oq4Z0fEWyxbLGt8y63rgb
- uVEJFuRZ50X4imiNt4QdvOzz/cG0pUAOR9hKyil99CBIsK8/RgHusrX23sPw/aWM
- hq9Q6MCfNYeFv4TI2iReJ4Xa+Wu45HGyptNV8FFGhf//OYZd92rS2OiFfJTQ0LAA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47puqnp5qj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 10 Jul 2025 21:20:56 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56AINjfl002847;
- Thu, 10 Jul 2025 21:20:55 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47qfvmqg8j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 10 Jul 2025 21:20:55 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 56ALKsFj32178888
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 10 Jul 2025 21:20:54 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 450FA58059;
- Thu, 10 Jul 2025 21:20:54 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 937F65805B;
- Thu, 10 Jul 2025 21:20:53 +0000 (GMT)
-Received: from [9.61.107.132] (unknown [9.61.107.132])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 10 Jul 2025 21:20:53 +0000 (GMT)
-Message-ID: <36819228-b4c2-44a7-bc85-f5630c8412b5@linux.ibm.com>
-Date: Thu, 10 Jul 2025 17:20:53 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/s390x/s390-pci-bus.c: Use g_assert_not_reached() in
- functions taking an ett
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>
-References: <20250710161552.1287399-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1uZz0Y-0007zC-5z; Thu, 10 Jul 2025 17:40:50 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bdSqF0Fhgz6L5C9;
+ Fri, 11 Jul 2025 05:37:13 +0800 (CST)
+Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
+ by mail.maildlp.com (Postfix) with ESMTPS id 50C83140157;
+ Fri, 11 Jul 2025 05:40:29 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Thu, 10 Jul 2025 23:40:29 +0200
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Thu, 10 Jul 2025 23:40:29 +0200
+To: Nicolin Chen <nicolinc@nvidia.com>
+CC: Donald Dutile <ddutile@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "jgg@nvidia.com" <jgg@nvidia.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, "imammedo@redhat.com"
+ <imammedo@redhat.com>, "nathanc@nvidia.com" <nathanc@nvidia.com>,
+ "mochs@nvidia.com" <mochs@nvidia.com>, "smostafa@google.com"
+ <smostafa@google.com>, "gustavo.romero@linaro.org"
+ <gustavo.romero@linaro.org>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>, Linuxarm
+ <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+Subject: RE: [PATCH v7 07/12] hw/pci: Introduce pci_setup_iommu_per_bus() for
+ per-bus IOMMU ops retrieval
+Thread-Topic: [PATCH v7 07/12] hw/pci: Introduce pci_setup_iommu_per_bus() for
+ per-bus IOMMU ops retrieval
+Thread-Index: AQHb8B7pgOmyuAHGhEyK6x0wrBLpebQonB8AgADVIJCAAOn5gIAAnLIwgABtrwCAACdXkP//6DAAgABtbwA=
+Date: Thu, 10 Jul 2025 21:40:28 +0000
+Message-ID: <0ef59c7f11454954814501e41724f4fe@huawei.com>
+References: <20250708154055.101012-1-shameerali.kolothum.thodi@huawei.com>
+ <20250708154055.101012-8-shameerali.kolothum.thodi@huawei.com>
+ <aG2M/BI3UAYxKCD3@Asurada-Nvidia>
+ <741503f8f96148b389b875e6b6812c1a@huawei.com>
+ <aG8ECVeOYXPzBEVB@Asurada-Nvidia>
+ <3a51c0e0f3ce4c2580ff596008615439@huawei.com>
+ <aef834e0-d6dc-40d0-a6aa-24ed44b77325@redhat.com>
+ <f3bfc4cdb0ca47da8f3e4bc38b58d3b6@huawei.com>
+ <aG/whNETIoHGnI5O@Asurada-Nvidia>
+In-Reply-To: <aG/whNETIoHGnI5O@Asurada-Nvidia>
+Accept-Language: en-GB, en-US
 Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20250710161552.1287399-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=FZ43xI+6 c=1 sm=1 tr=0 ts=68702eb8 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8
- a=tF9ib_puwyeb5LtTvjEA:9 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: j1oZxdu8S-oXX4Z0SdZjxVPziMmjKsFG
-X-Proofpoint-ORIG-GUID: j1oZxdu8S-oXX4Z0SdZjxVPziMmjKsFG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzEwMDE3OSBTYWx0ZWRfX1bt+hBOTHbEs
- 5D6jY+QG20ai3jLHnH/tZ+UjVWnjOG0lWREgtAdxNS9MexUgba5mIYay5tKwN1Uu7ZCWCs9XEIo
- wdHnjqTDLJMGuX0aPblSOuMldNjNnAKVOTUrUTIFfIMP0wdJuv4qP2PrHVEOWau/NaSVyl0XqmI
- 8kTqZtSm3lQCv2JsTUlMlYuZhzpqY4yXc4xB0y/L51qaLVlS8JPNZbI3UuXV1Kyp64UGBzcOzvB
- 2i8TISOieN4biPFfBEF1Uk7DUn+xIDTava93jSxrxEaQjqRXtgYakgzVIWdaoR2TSQkxMvagsk3
- kp3ZwAyK91p5CsBEMDpfZHzjWvSMBAJCPZ7wP4mYIen1WMEAIqRkOXOuJtuPCaMhddc/YRZhI5c
- JbuqvhEjnz/zMqGFvsN0cJ/mioqLjaPZUNyW4xB/rZGdGdS+A8Vn7U6VrSId+UaSQfHqZNmO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-10_05,2025-07-09_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 mlxscore=0
- priorityscore=1501 malwarescore=0 mlxlogscore=450 clxscore=1015
- spamscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507100179
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.48.153.84]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,42 +94,178 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/10/25 12:15 PM, Peter Maydell wrote:
-> The s390-pci-bus.c code, Coverity complains about a possible overflow
-> because get_table_index() can return -1 if the ett value passed in is
-> not one of the three permitted ZPCI_ETT_PT, ZPCI_ETT_ST, ZPCI_ETT_RT,
-> but the caller in table_translate() doesn't check this and instead
-> uses the return value directly in a calculation of the guest address
-> to read from.
-> 
-> In fact this case cannot happen, because:
->  * get_table_index() is called only from table_translate()
->  * the only caller of table_translate() loops through the ett values
->    in the order RT, ST, PT until table_translate() returns 0
->  * table_translate() will return 0 for the error cases and when
->    translate_iscomplete() returns true
->  * translate_iscomplete() is always true for ZPCI_ETT_PT
-> 
-> So table_translate() is always called with a valid ett value.
-> 
-> Instead of having the various functions called from table_translate()
-> return a default or dummy value when the ett argument is out of range,
-> use g_assert_not_reached() to indicate that this is impossible.
-> 
-> Coverity: CID 1547609
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> Disclaimer: only tested with 'make check/make check-functional'
-
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-
-Also to sanity check I ran various tests with s390x guests and a few different PCI passthrough devices using a guest IOMMU to drive table_translate frequently.
 
 
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: Thursday, July 10, 2025 5:56 PM
+> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+> Cc: Donald Dutile <ddutile@redhat.com>; qemu-arm@nongnu.org; qemu-
+> devel@nongnu.org; eric.auger@redhat.com; peter.maydell@linaro.org;
+> jgg@nvidia.com; berrange@redhat.com; imammedo@redhat.com;
+> nathanc@nvidia.com; mochs@nvidia.com; smostafa@google.com;
+> gustavo.romero@linaro.org; mst@redhat.com;
+> marcel.apfelbaum@gmail.com; Linuxarm <linuxarm@huawei.com>;
+> Wangzhou (B) <wangzhou1@hisilicon.com>; jiangkunkun
+> <jiangkunkun@huawei.com>; Jonathan Cameron
+> <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
+> Subject: Re: [PATCH v7 07/12] hw/pci: Introduce
+> pci_setup_iommu_per_bus() for per-bus IOMMU ops retrieval
+>=20
+> On Thu, Jul 10, 2025 at 04:21:41PM +0000, Shameerali Kolothum Thodi
+> wrote:
+> > > >> On Wed, Jul 09, 2025 at 08:20:35AM +0000, Shameerali Kolothum
+> Thodi
+> > > >> wrote:
+> > > >>>> On Tue, Jul 08, 2025 at 04:40:50PM +0100, Shameer Kolothum
+> wrote:
+> > > >>>>> @@ -2909,6 +2909,19 @@ static void
+> > > >>>> pci_device_get_iommu_bus_devfn(PCIDevice *dev,
+> > > >>>>>               }
+> > > >>>>>           }
+> > > >>>>>
+> > > >>>>> +        /*
+> > > >>>>> +         * When multiple PCI Express Root Buses are defined us=
+ing
+> > > >>>>> + pxb-
+> > > >>>> pcie,
+> > > >>>>> +         * the IOMMU configuration may be specific to each roo=
+t
+> bus.
+> > > >>>> However,
+> > > >>>>> +         * pxb-pcie acts as a special root complex whose paren=
+t
+> > > >>>>> + is
+> > > >>>> effectively
+> > > >>>>> +         * the default root complex(pcie.0). Ensure that we re=
+trieve
+> the
+> > > >>>>> +         * correct IOMMU ops(if any) in such cases.
+> > > >>>>> +         */
+> > > >>>>> +        if (pci_bus_is_express(iommu_bus) &&
+> > > >>>> pci_bus_is_root(iommu_bus)) {
+> > > >>>>> +            if (!iommu_bus->iommu_per_bus && parent_bus-
+> > > >>>>> iommu_per_bus) {
+> > > >>>>> +                break;
+> > > >>>>
+> > > >>>> Mind elaborating why the current bus must unset iommu_per_bus
+> > > >> while
+> > > >>>> its parent sets iommu_per_bus?
+> > > >>>>
+> > > >>>> My understanding is that for a pxb-pcie we should set
+> > > iommu_per_bus
+> > > >>>> but for its parent (the default root complex) we should unset it=
+s
+> > > >>>> iommu_per_bus?
+> > > >>>
+> > > >>> Well, for new arm-smmuv3 dev you need an associated pcie root
+> > > >>> complex. Either the default pcie.0 or a pxb-pcie one. And as I
+> > > >>> mentioned in my reply to the other thread(patch #2) and commit
+> log
+> > > >> here,
+> > > >>> the pxb-pcie is special extra root complex in Qemu which has pcie=
+.0
+> > > >>> has parent bus.
+> > > >>>
+> > > >>> The above pci_device_get_iommu_bus_devfn() at present, iterate
+> over
+> > > >> the
+> > > >>> parent_dev if it is set and returns the parent_bus IOMMU ops even
+> if
+> > > >>> the associated pxb-pcie bus doesn't have any IOMMU. This creates
+> > > >>> problem for a case that is described here in the cover letter her=
+e,
+> > > >>> https://lore.kernel.org/qemu-devel/20250708154055.101012-1-
+> > > >> shameerali.kolothum.thodi@huawei.com/
+> > > >>>
+> > > >>> (Please see "Major changes from v4:" section)
+> > > >>>
+> > > >>> To address that issue, this patch introduces an new helper functi=
+on
+> > > >>> to
+> > > >> specify that
+> > > >>> the IOMMU ops are specific to the associated root
+> > > >> complex(iommu_per_bus) and
+> > > >>> use that to return the correct IOMMU ops.
+> > > >>>
+> > > >>> Hope with that context it is clear now.
+> > > >>
+> > > >> Hmm, I was not questioning the context, I get what the patch is
+> > > >> supposed to do.
+> > > >>
+> > > >> I was asking the logic that is unclear to me why it breaks when:
+> > > >>      !pxb-pcie->iommu_per_bus && pcie.0->iommu_per_bus
+> > > >>
+> > > >> Or in which case pcie.0 would be set to iommu_per_bus=3Dtrue?
+> > > >
+> > > > Yes. Consider the example I gave in cover  letter,
+> > > >
+> > > > -device arm-smmuv3,primary-bus=3Dpcie.0,id=3Dsmmuv3.1 \ -device
+> > > > virtio-net-pci,bus=3Dpcie.0,netdev=3Dnet0,id=3Dvirtionet.0 \ -devic=
+e
+> > > > pxb-pcie,id=3Dpcie.1,bus_nr=3D8,bus=3Dpcie.0 \ -device
+> > > > arm-smmuv3,primary-bus=3Dpcie.1,id=3Dsmmuv3.2 \ -device
+> > > > pcie-root-port,id=3Dpcie.port1,chassis=3D2,bus=3Dpcie.1 \ -device
+> > > > virtio-net-pci,bus=3Dpcie.port1,netdev=3Dnet1,id=3Dvirtionet.1
+> > > >
+> > > > pcie.0 is behind new SMMUv3 dev(smmuv3.1) and has
+> iommu_per_bus
+> > > set.
+> > > > pcie.1 has no SMMv3U and iommu_per_bus is not set for it.
+> > > pcie.1 doesn't?   then what is this line saying/meaning?:
+> > >   -device arm-smmuv3,primary-bus=3Dpcie.1,id=3Dsmmuv3.2 \
+> > >
+> > > I read that as an smmuv3 attached to pcie.1, with an id of smmuv3.2;
+> just
+> > > as I read this config:
+> > >   -device arm-smmuv3,primary-bus=3Dpcie.0,id=3Dsmmuv3.1 \ as an smmuv=
+3
+> > > attached to pcie.0 iwth id smmuv3.1
+> >
+> > Oops..I forgot to delete that from the config:
+> > This is what I meant,
+> >
+> > -device arm-smmuv3,primary-bus=3Dpcie.0,id=3Dsmmuv3.1 \
+> > -device virtio-net-pci,bus=3Dpcie.0,netdev=3Dnet0,id=3Dvirtionet.0 \
+> > -device pxb-pcie,id=3Dpcie.1,bus_nr=3D8,bus=3Dpcie.0 \
+> > -device pcie-root-port,id=3Dpcie.port1,chassis=3D2,bus=3Dpcie.1 \
+> > -device virtio-net-pci,bus=3Dpcie.port1,netdev=3Dnet1,id=3Dvirtionet.1 =
+\
+>=20
+> So, the logic is trying to avoid:
+>         "iommu_bus =3D parent_bus;"
+> for a case that parent_bus (pcie.0) having its own IOMMU.
+>=20
+> But shouldn't it be just "if (parent_bus->iommu_per_bus)"?
+>=20
+> Why does the current iommu_bus->iommu_per_bus has to be unset?
 
+I think that !iommu_bus->iommu_per_bus check will be always true as=20
+it enters the while loop only if !iommu_bus->iommu_ops case,
 
+while (iommu_bus && !iommu_bus->iommu_ops && iommu_bus->parent_dev) {
 
+}
+
+So yes, I think that can be removed. I will double check though as I cant
+recollect why I added that now.
+
+>=20
+> I think "iommu_bus =3D parent_bus" should be avoided too even if
+> the current iommu_bus has its own IOMMU, i.e. iommu_per_bus is
+> set?
+
+Why? Not clear to me. It only enters the loop if the current iommu_bus
+doesn't have Iommu_ops set which in turn means iommu_per_bus is not set.=20
+Isn't it? . Do you have a particular configuration in mind where it will fa=
+il
+otherwise?
+
+Thanks,
+Shameer
 
