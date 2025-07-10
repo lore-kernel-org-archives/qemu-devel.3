@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 351DBC83F17
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 16:58:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3741C83F1B
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 16:59:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZub2-0007UR-7g; Thu, 10 Jul 2025 12:58:08 -0400
+	id 1uZubQ-0008K1-AT; Thu, 10 Jul 2025 12:58:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uZuL2-0003Im-Hc
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 12:41:36 -0400
-Received: from mail-pf1-x442.google.com ([2607:f8b0:4864:20::442])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uZuNM-0007UF-Fe
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 12:44:06 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uZuL0-00017y-FD
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 12:41:36 -0400
-Received: by mail-pf1-x442.google.com with SMTP id
- d2e1a72fcca58-74264d1832eso1704372b3a.0
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 09:41:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uZuNK-0001Qg-K6
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 12:44:00 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-453643020bdso9430195e9.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 09:43:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752165692; x=1752770492; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752165837; x=1752770637; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=l9GrNvpLdGNT/O+Q0jz3mfoYwa7XC1RI8pd4LeYd6qw=;
- b=tPDmED5475P7cAtPRasGui2Gh71U3AbOVfs66AJVxLj7jL9QveiL3PrtNGwlgcMqQA
- syMREy/k1CPOpOZO8CaQ289L4u1Dze+bLqZtee4Mdci0NDFsRz4E71ryhJikHNV0QQ8A
- Lg7ANCn/RfjFoyaLfOYjNc9L1O2kQGZWcbdtfLQD+qkxA6vf1oPEuo0qEgtVjre2y6MJ
- fuzcXVqmkzyKGebFNjorfgBTdi4RaAKD0eh+1QRY2gCqfsV9M5a9l1YQhvKOp3HVsWt4
- oc3r7hPVKpx5U7Kc0ln2B0BZH2FucWYY7YWuGbfLIyfK75WpGBhyb1gFM43Vr5ArwOzU
- Zxhw==
+ bh=Db41WKKXa5CdV/eG95AEOzhzbaLo514xBnU6yI/kY2k=;
+ b=MXCCuBJC+x1nkOFKTyb7bK7iwa10u+ygZBtadZcLkUcJOWHUDIkV1yFBtiQSzW6rPp
+ 4Si7+11wOIhPJe4Myv0RrwiP4bD4jnHk3qwIJ5/xDXXsCxl5oBNWsr1iA4gMHFs/+7jI
+ 99SckPqpsYGixxtzRpsfvOC13XMPMFsyID7jA817zw5i+BCs0oR2FX1c5I884rWzkib2
+ hMTBLSAOEZ0VtsdNyBZ3+v2byh8iZfe9ri+cAyAjUgkgpk80f+bLvt2E2w0F8vn/RPUX
+ 4ywku5kvmVZ7NqRb3AcEXrKBj8Pb5beU6+eEmdoJG9QgTtqAqkm2scU0thUSyBpZhCmL
+ TTcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752165692; x=1752770492;
+ d=1e100.net; s=20230601; t=1752165837; x=1752770637;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=l9GrNvpLdGNT/O+Q0jz3mfoYwa7XC1RI8pd4LeYd6qw=;
- b=AGSAYBUh+lo2mFpMuqbScUrqRlz4cAvo298JnHiopSD/sK7oTu0RE0d3unfLI9mWFj
- O+p1THCnGaFEywog96eRayVe1wMATa8yTWcxa/uPlc1/rh9kx5Wu6hO98SYhYmukUUAz
- eaFrBuIIOCLvc08bO6uwqmj0AAuGzMk2DKqf5I5j+1syz5eUyKB23AXZmVQyGs4QcJrB
- 4QvsOj/7WtYIFfUK4tg4GupjtBub/LGlhb+wmVSBh9QrM0p7h3MrLtzHv2dOmXQJONvC
- UuZT9IdvmkaM7yAER/2lX2i+3nRIASVUvUpRWs0/n8ri/7OhkYj9p8PkFZx2jZk/i/kR
- bplw==
-X-Gm-Message-State: AOJu0YwwqZl6IbOdDYil0XBa+V5Ku6HHh2A5voliQhIOVne3V0hA7qDY
- 9hoX7HQV4cDWA0U0mJpV/R9NG1+LyeFLELtmRgIxgM96GWRnhprwusmjzYc4i2ZzdZY=
-X-Gm-Gg: ASbGnctunPUNULxBoaPtoQYhY42DrkGNf7XUNLmcNc4CbotoVHswTfsIPfPkmD2Q3wW
- Vsovl0rg8gooTQVCVz6vkb3XHyM6zxoZV41CjcW39rzqfZEXROh4MPYBO1VBwKFfIwhdGnQFPaI
- AtL/Ja36T7e+CoTirQlEDxooGS6nRbu35JVeWfQhAb9vlA7sysvkwCN2gGBP39HEDtNy2UVrIrg
- ufMYubEvzuaMwPrGp48pJhrqFvbsP/qoJgDgmlOpJ++RoOGB8EyLQ4vGq6saAwxC4iH6SV9HmXD
- 4ASwBBsCJChgrxq79UM3g6Z+kP8BsToREzl/WnLcXZ9Zsueb20ah5ZXLDSU1wtWzDx03ihYzna2
- oTB0nnmW8o9gms5YlxVGn4w==
-X-Google-Smtp-Source: AGHT+IFFuSKD9T/sjhxr/dVqH2R8RH5i/cees/zXa09JdJyXHA0iM3hL1bzgZxIlHsto9LlczhIrNA==
-X-Received: by 2002:a05:6a00:3e1c:b0:73f:f816:dd78 with SMTP id
- d2e1a72fcca58-74eb8fc3720mr4611823b3a.15.1752165692610; 
- Thu, 10 Jul 2025 09:41:32 -0700 (PDT)
-Received: from gromero0.. (189-47-46-41.dsl.telesp.net.br. [189.47.46.41])
+ bh=Db41WKKXa5CdV/eG95AEOzhzbaLo514xBnU6yI/kY2k=;
+ b=KAuOn37n/Kh/1Ojir+YPmoq3kaH9t6IT+YHlOl1a+PBPnRFUYzo/5WbRs3LNlU1+/5
+ ObUNlgLiIzSJzbBO9rP/Yw5xpXpCAQxWd8SScsULcE9KA/bGKbs3TSLRGm4a4wMruQYh
+ tH+Z939tYyOa4NcEzhrl1Jqu5Cla4PkAYer+kve3wVa528aumpPOnnTIRWWGUGzP6Enq
+ EgwwtwHsmi0D2p3FRPt0ZEtkZkINBnEhPwCNhlTkt/sZifcjo/Y0cW8TGo8YgvdP+5zs
+ QhtwjNxT5RVH+xTgjnWt+wrnXH9v5JmgwD7dgE1hDJkXQ9SslwWrpOsYa6O6+t4oP3/8
+ xM5Q==
+X-Gm-Message-State: AOJu0YwwziCvYal1+/i/Iuk+0C3J3lWe0wR9ALd+pd7weskh4t2S2gim
+ 8jLs3FUfN/Qx9ml/9pHWUsigWtgIivlKeDcOEhHrzKTphmFMlq9oYoSB1yRe/cSzuffsIFXLtfh
+ H78wQ
+X-Gm-Gg: ASbGncvZyrZTnycrjz67KPL28sMqj1F99vqYt8kaDAhgRWcdty8F25tGDsb4ZrlmKV3
+ R6wyk2Wo9xP19w/TinodydDcRLOSc6xKPzhwfeo7TlmjCFvc/2ow/Exy0n3+Eupy8HVFDJlLETB
+ 1D3uH2EEWq4tHOfkkb+dTMzR29y7W3aVUcV1j1h/6EyqKJ8K0RmGZOMyPlD8LUSz1RdRwISWyMm
+ P9ResOegVf6NA7MnRVp/MJkwXpyA9YKPpVlO9hMfn61Ou0EfAJLwKRDwOfVCceKs7Q2yWlYsdn+
+ uyq4eOTRIboXEyGXj8NGczwbtCmbMBRdgwNJpj0WmXSM0YB4O2vmRyhuAv3/UFBbWnkz
+X-Google-Smtp-Source: AGHT+IF9kjEa0IRSFHuKoNWxTyt+LTYNsOdTy1d9VSPCuR2w1M4b7RvsIaN3Fa9YJdavJKQ+aQnu0g==
+X-Received: by 2002:a05:600c:1e26:b0:453:23fe:ca86 with SMTP id
+ 5b1f17b1804b1-454d530eb0dmr74979935e9.4.1752165836901; 
+ Thu, 10 Jul 2025 09:43:56 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74eb9f5c7f7sm2919119b3a.142.2025.07.10.09.41.30
+ 5b1f17b1804b1-454dd55b068sm24259035e9.38.2025.07.10.09.43.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Jul 2025 09:41:32 -0700 (PDT)
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: qemu-arm@nongnu.org, richard.henderson@linaro.org, alex.bennee@linaro.org
-Cc: qemu-devel@nongnu.org,
-	gustavo.romero@linaro.org
-Subject: [PATCH-for-10.1 v5 0/6] target/arm: Add FEAT_MEC to max cpu
-Date: Thu, 10 Jul 2025 16:38:53 +0000
-Message-Id: <20250710163858.1094780-1-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ Thu, 10 Jul 2025 09:43:56 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>
+Subject: [PATCH] linux-user: Check for EFAULT failure in nanosleep
+Date: Thu, 10 Jul 2025 17:43:54 +0100
+Message-ID: <20250710164355.1296648-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::442;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x442.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,55 +96,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v4:
+target_to_host_timespec() returns an error if the memory the guest
+passed us isn't actually readable.  We check for this everywhere
+except the callsite in the TARGET_NR_nanosleep case, so this mistake
+was caught by a Coverity heuristic.
 
-- Moved MECID_WIDTH from cpu.h to internal.h
-- Fixed stray ';'s in access and write functions
-- Use of GET_IDREG/FIELD_DP64/SET_IDREG for setting feature in ID regs
-- Sorted correctly isar_feature_aa64_* AA64MMFR3 tests
-- Simplified/unified accessfn for cache instructions
-- Fixed how cache instruction-related registers are registered in the cpu
+Add the missing error checks to the calls that convert between the
+host and target timespec structs.
 
-v1: https://mail.gnu.org/archive/html/qemu-devel/2025-06/msg04598.html 
-v2: https://mail.gnu.org/archive/html/qemu-devel/2025-07/msg01799.html
-v3: https://mail.gnu.org/archive/html/qemu-devel/2025-07/msg02338.html
-v4: https://mail.gnu.org/archive/html/qemu-devel/2025-07/msg02488.html
+Coverity: CID 1507104
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+Tested via the LTP nanosleep tests, but they don't actually exercise
+the EFAULT codepaths...
 
+ linux-user/syscall.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-This series adds support for all FEAT_MEC registers and cache instructions to
-the Arm64 max CPU.
-
-It includes the FEAT_MEC registers and cache maintenance instructions, but does
-not modify the translation regimes to support the MECIDs, so no encryption is
-supported yet. However, software stacks that rely on FEAT_MEC should work
-properly at this point.
-
-I'm currently exploring possibilities to support FEAT_MEC encryption (or
-obfuscation, for testing purposes) in QEMU for the various translation regimes
-on arm64, hence the encryption part of FEAT_MEC will be contributed later and is
-not targeted for QEMU 10.1.
-
-
-Cheers,
-Gustavo
-
-Gustavo Romero (6):
-  target/arm: Add the MECEn SCR_EL3 bit
-  target/arm: Add FEAT_MEC registers
-  target/arm: Add FEAT_SCTLR2
-  target/arm: Add FEAT_TCR2
-  target/arm: Implement FEAT_MEC cache instructions
-  target/arm: Advertise FEAT_MEC in cpu max
-
- docs/system/arm/emulation.rst |   5 +
- target/arm/cpu-features.h     |  15 +++
- target/arm/cpu.h              |  27 ++++
- target/arm/helper.c           | 232 ++++++++++++++++++++++++++++++++++
- target/arm/internals.h        |  23 ++++
- target/arm/tcg/cpu64.c        |   7 +-
- 6 files changed, 308 insertions(+), 1 deletion(-)
-
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index fc37028597c..c600d5ccc0e 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -11630,10 +11630,14 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+     case TARGET_NR_nanosleep:
+         {
+             struct timespec req, rem;
+-            target_to_host_timespec(&req, arg1);
++            if (target_to_host_timespec(&req, arg1)) {
++                return -TARGET_EFAULT;
++            }
+             ret = get_errno(safe_nanosleep(&req, &rem));
+             if (is_error(ret) && arg2) {
+-                host_to_target_timespec(arg2, &rem);
++                if (host_to_target_timespec(arg2, &rem)) {
++                    return -TARGET_EFAULT;
++                }
+             }
+         }
+         return ret;
 -- 
-2.34.1
+2.43.0
 
 
