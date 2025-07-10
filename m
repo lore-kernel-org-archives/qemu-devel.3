@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20FDEC83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 14:45:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF3DAC83F17
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 14:47:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZsWE-0004fb-2O; Thu, 10 Jul 2025 10:45:02 -0400
+	id 1uZsYZ-0006h2-Fb; Thu, 10 Jul 2025 10:47:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZsWA-0004ZK-Qc
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:44:59 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1uZsX0-0005lH-37
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:45:58 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZsW9-0007py-5v
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:44:58 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3a575a988f9so769733f8f.0
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 07:44:56 -0700 (PDT)
+ id 1uZsWx-00085n-4t
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:45:49 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3a51481a598so652071f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 07:45:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752158695; x=1752763495; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752158745; x=1752763545; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=BBgRy67LNVZpAgZr6ihGvfjSjZdnN3DUg/lDBl0cxq4=;
- b=dU+nTkcoUH+9d2HX7e0UFgWU1SqflhAWTsd14V+Ldwg/VwfPQmU5DkxxnbhEuZHzoJ
- UOPgkXF/npbMFyaQSKXMG98TW+2ZP/anVLXb1ShaZF4J4R6sJA4zEOxSokRFfMoUYCMG
- Ule4EUbdjY2IZoxmzhMF8HJgt7QSsAZV4lXn8oK3H5oFbwNeedkAl5tALjwpmvr9WPnF
- wligMR3C4dc37AvnQWOgaguI8oKJ4qWXKvFnseMqagXuDTVhzJGuLtIDKmIKnaVG7Afg
- /fdsDV01E5pSQeyM/x7mhOlocvGQ5MUNcoqra514m2CL1ox/jM8sg5rb8FZQdtGuVmtl
- Z4oQ==
+ bh=ctTT9Gcd/K8ncPr6pwIo+D9Zug1wgzZc+9rfVlCsxrQ=;
+ b=jZ/2AwOvs3/DHOw9fC6VjGXSc2fLhEMtAKS40cMHolPfZpEuGXwQURtv6MTBT6C7Uz
+ Re4/HvbnF/LeLd212WNoFe7Dpv6jTrWSdqhWlxXkAxAwKwwypjFl+b/UWzCs4WIEc/qH
+ eaYjlIVN/MXqAZ4sNtCOAoh2MfL7gKac2IDx8ImwsX5EvuG31tIP0iHNuO8uOF/AEg2O
+ mF7KLyk1+DO5UElA2/WTb2mMlhsnJXOBJzVWIxkd5q1C2XCAO+MyIPc4Tsu//R3hgfj3
+ TYSh1UX4cxDfYXknEyGdVT1qx5/Hq0QPqe6FXV0Qo4f6jT1rUafo2V//iujiw3iMjWCz
+ c0Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752158695; x=1752763495;
+ d=1e100.net; s=20230601; t=1752158745; x=1752763545;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=BBgRy67LNVZpAgZr6ihGvfjSjZdnN3DUg/lDBl0cxq4=;
- b=E80Ell/Owo4mrT706tVB9mh2rLhK0WkqlP41mqaInuPtAPp4IddM+Zc5e2zaxP4I+K
- +AwdyrRNK1EGBn04nqrvhjNeF67bxhzvn8CwRuvChUy4yOnYWpsNPbfBQgCxhQqi+huc
- s6lCUjVZ9PCy1B/h4XA/b0C4da0U/e4TIq7NhmNrZ3PdiHSeLHcs53NIZTDfAPHwoORS
- gODN/IdWG1EVDBOfDKskFaICp0MRg1fsrdN201VrTmQnApPVB0Nm3JD7/xd+QQlQ0ZDT
- kEHt0jjsqdBUQhpFSKOgmGEJt2eZMTipJibS5ZL5Y811O/JnRW5HSB6dMYH1jorDWZYj
- A9Pw==
-X-Gm-Message-State: AOJu0Yycvjvf+CblcBF6BXgTZKk7cK5mLmCbNWm/+zmuuBmsjcFRmcjK
- A1sCQO0C/uGnG0Ffm/8nL2OIRaGmJfvvSATZYTgvUjp682LFGCMz7qcOfb5oWzt+PoTGBILlLXd
- J9xEb
-X-Gm-Gg: ASbGncvm+UhyZO+G/AvgNY9DSr+P8KrZ8URi67QTLNUXq78xjTgdRPji2g9BjBZkd+c
- EPFDSofW8tu4fvIPDfQIr19Ds9y80qVhoQDXaTdFc/AjaAbuaNYdZfmR6mP9equXthanPhgNoyH
- cL9ND01d+CblLiRkG4NKvObi3eWZPOS2NHhVAE9uJuckoJ5iYHfvJTIEyLuDwR97Ov6bAzb8ZuK
- OEUtmtSf+BLvh9MS0rmR2uKlpH8/w2Anjz7NTweqElLrzlMgknzF4kOWv0AoZLSnGJw9892B5lo
- Q4eA7KpJ2byOlA+bkkvOk0rwCPiFxyoeBF/jW0+7mpVecwBWdfCcbPSBKuPz8IJAdTD5
-X-Google-Smtp-Source: AGHT+IH6C5UAOVoSO13J2fPrj2b2TNp7kNdfk6yf1po+mOekUh8EcxSz1JNyWOte8JxzPsDExgXKzQ==
-X-Received: by 2002:adf:c784:0:b0:3a5:39d7:3f17 with SMTP id
- ffacd0b85a97d-3b5e78d2031mr2894787f8f.47.1752158695387; 
- Thu, 10 Jul 2025 07:44:55 -0700 (PDT)
+ bh=ctTT9Gcd/K8ncPr6pwIo+D9Zug1wgzZc+9rfVlCsxrQ=;
+ b=h7252uCVPp3rYjcEUpld6s885VnW8yM61XX/ainUH1oEKZOlBrqfTVRar4cY1niln/
+ Isv+BI/Wdbf9ERwvB95VK+uwZ1dffVlYbOgvtMGrJIBAXCdUJz+1drzMzxyriHRPLHl9
+ 2oxXO2l2O/qAcvSwGoWMVwu9esRKJuFSoQ7jJ6PSG+dcmBCjVs6adPR9R0p/8H78Olr/
+ zULR+CJHgenT/PGy876BzsG0LfxxNIU21pYCJVVkW/xD49q3NYGrJUEVFeoIHewUpeid
+ 2N/xLZIRK2AcMV+ox8oYk8ebF3fyj6P+6upyfdUyXDzUeHzbnKrZKZIvKaYHesUIYV4e
+ mzpQ==
+X-Gm-Message-State: AOJu0YwKsRfkGSZp5zqToSSQZHy4QC8emmu0dbbm+IHSxF+ZO1vRV8c5
+ Mx2sx+5aZHY/pjgUk0n4bFm9YfgV6IfjoT2zJ2guJpNfV1+J8vbqwgGUKQhf4a4pxQUk/NoerZm
+ SWhv4
+X-Gm-Gg: ASbGncvAA2JH+BmgBxcskG76PTzLTq8gkod5wFRQgutmejyop0Bqi5XmOO1BacB9nhD
+ K9iMawhsbWFDc8I7Ulh5fTbJX7hQV/YCAZTxxkrC/lziQLxwxe93mxnGjb5NJ2HrlS5lZYn3o9B
+ 5614z/tFjUvj/iGRxR+ibEIpUjYv/OKOq9Yso5+3anoAp/TtfkZTPHZcg5e2iyTXOxgOZzz6BbT
+ 0/7Kg+4Be+YSa1YvBVAwy+DoXrK4E2570Q90yHyHpphhbHoCSIPjk0q674GPmOOqtZemzoZjXD5
+ arKp1a0DGxFf9HWhk77DN3H+EXd/26rTROFqhCEShR30f7Hbi0Gsszc1yqGfFe39Fs5O
+X-Google-Smtp-Source: AGHT+IEPq717QcYp7Gn8ovn86CMBV/vmZMQGbQsyPFu9cHxN3zGyly8FWxN7prxwFbhN/rGVlo8D4Q==
+X-Received: by 2002:a05:6000:387:b0:3a5:2c18:b181 with SMTP id
+ ffacd0b85a97d-3b5e86e3447mr3412550f8f.53.1752158745165; 
+ Thu, 10 Jul 2025 07:45:45 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e0d727sm2077390f8f.51.2025.07.10.07.44.54
+ ffacd0b85a97d-3b5e8e26f7bsm2081856f8f.95.2025.07.10.07.45.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Jul 2025 07:44:54 -0700 (PDT)
+ Thu, 10 Jul 2025 07:45:44 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Jiri Pirko <jiri@resnulli.us>,
-	Jason Wang <jasowang@redhat.com>
-Subject: [PATCH] hw/net/rocker: Don't overflow in of_dpa_mask2prefix()
-Date: Thu, 10 Jul 2025 15:44:53 +0100
-Message-ID: <20250710144453.1187576-1-peter.maydell@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH] contrib/plugins/execlog: Explicitly check for
+ qemu_plugin_read_register() failure
+Date: Thu, 10 Jul 2025 15:45:43 +0100
+Message-ID: <20250710144543.1187715-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,32 +100,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In of_dpa_mask2prefix() we do "(2 << i)" for a loop
-where i can go up to 31. At i == 31 we shift off the
-top end of an integer.
+In insn_check_regs() we don't explicitly check whether
+qemu_plugin_read_register() failed, which confuses Coverity into
+thinking that sz can be -1 in the memcmp().  In fact the assertion
+that sz == reg->last->len means this can't happen, but it's clearer
+to both humans and Coverity if we explicitly assert that sz > 0, as
+we already do in init_vcpu_register().
 
-Use 2ULL to avoid this overflow.
-
-Fixes: dc488f888060a ("rocker: add new rocker switch device")
-Coverity: CID 1547602
+Coverity: CID 1611901, 1611902
+Fixes: af6e4e0a22c1 ("contrib/plugins: extend execlog to track register changes")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/net/rocker/rocker_of_dpa.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/plugins/execlog.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
-index 4aed1787566..9c0fc728eee 100644
---- a/hw/net/rocker/rocker_of_dpa.c
-+++ b/hw/net/rocker/rocker_of_dpa.c
-@@ -202,7 +202,7 @@ static int of_dpa_mask2prefix(uint32_t mask)
-     int count = 32;
+diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
+index d67d0107613..8b07dd773e5 100644
+--- a/contrib/plugins/execlog.c
++++ b/contrib/plugins/execlog.c
+@@ -95,6 +95,7 @@ static void insn_check_regs(CPU *cpu)
  
-     for (i = 0; i < 32; i++) {
--        if (!(ntohl(mask) & ((2 << i) - 1))) {
-+        if (!(ntohl(mask) & ((2ULL << i) - 1))) {
-             count--;
-         }
-     }
+         g_byte_array_set_size(reg->new, 0);
+         sz = qemu_plugin_read_register(reg->handle, reg->new);
++        g_assert(sz > 0);
+         g_assert(sz == reg->last->len);
+ 
+         if (memcmp(reg->last->data, reg->new->data, sz)) {
 -- 
 2.43.0
 
