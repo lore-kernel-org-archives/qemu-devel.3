@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01BC3C83F17
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 10:58:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0A3BC83F1D
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 10:58:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZoyb-0008L9-PE; Thu, 10 Jul 2025 06:58:05 -0400
+	id 1uZoyx-00005L-VI; Thu, 10 Jul 2025 06:58:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uZoyZ-0008JU-3W
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:58:03 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uZoyX-0001JP-9a
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:58:02 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-6097d144923so1760962a12.1
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 03:58:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752145079; x=1752749879; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Q6362CF7QurA4HPNtmDK2UXmGBNZSA44Uiw6iYXKcfQ=;
- b=FLOiTY33wgeICie1DXBUkpUV9bkPLXpQJi2MQdql9ZtWBF2T6RLVkObQoi7pYWW8Vo
- Yq75YAN3JzxCjYGlSQehohPuvkWfENC92GLkrVlPkZAK1oghRxIZyXftBvyG5BqHGp4t
- kahIv7zkt69RqwgsOxFjY4113w80vJBYbew2UZRUpFmkQGtl1Ft9murA1nAdaR2ZFwL/
- n0Akd9CCNZd6UV7r8hp+J0N+tzNC6cvqSfFPzK3Ayiftk3Vm9wqBzE8P8hfgVScSOGYy
- 4aXW6FVEMVRxgp8uXCHJx/24i9DeWKkn9OUbA3aXL78YUGDOq958l5dBUNbg3AJyjmiK
- O95Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752145079; x=1752749879;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Q6362CF7QurA4HPNtmDK2UXmGBNZSA44Uiw6iYXKcfQ=;
- b=l6c6CLI+O4KmnmeQmmWfZTk+FZwnDDxTLjZgj/UHseqq2PDkOyFiV2fOxG78zOmYj6
- qAXeV4UfFt5Pojzy+JC4bnRIhUqpxgn1ZMoMsppQvFQlulEJfpaF8rmxKz6Nl0NIoI3h
- IVlEKmeydzJV5E5IzEtyBsWcjrJVUJFrBDJdB263/7wBXi/yxjoLcikxmi9sLeNIBxmW
- H2qsCBfFmNGErSfgljVEzd675p02OoODZDoJo/OQV+vsww6uWlkMhWCFdSrtzKR2/e9m
- ZfOTJDBYCn22POUehG/mezOWaUx2mAuTZ9cIL4WLfVldc0MWEJsvBGnPEqi9tWe6Daa4
- LrsQ==
-X-Gm-Message-State: AOJu0YwtVcGOSwX2RILM8rM5DUlZJtervU4YUdEFU+wDCL2dXStYLqad
- XmVYDOs/HzUeIkgm+X4BsinlhY+f5yHo6VtREIro3meHbiZ7At8yT0kh28usS7NP39R3/E9B3Yc
- RN2QtrM1sH9teHT8VlWHR3IQ7khCJrrKx75XMVqYZhA==
-X-Gm-Gg: ASbGncuAZTReS/+PkNPtrreMqx4CZHJMVpqH+C5mdNHVYhFMoqgNumjr6FDZ5K5ZlAW
- inDJ5g/PxckPs+Xp/7w+iODCee1F6qeSsObllJc134hpLUlg8/TUZ6zzh5HrXAn9eYArSNi/Bto
- /tjGx4ja+J6Zf6SzZf8jqDIfzyGVZ+f21Cru26rgljP4E=
-X-Google-Smtp-Source: AGHT+IGxdubWt+ObbUDkccBpqEJxE638TwZVvMdx/kZtd638yoS4rYV3ciMkKf/KjYmv/M4BfY5LUknMccd2C+GDwJ0=
-X-Received: by 2002:a05:6402:3204:b0:60f:d38f:f3c with SMTP id
- 4fb4d7f45d1cf-611c1cd58e6mr2560792a12.6.1752145078664; Thu, 10 Jul 2025
- 03:57:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1uZoyo-0008V7-SA
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:58:18 -0400
+Received: from smtpx1.feld.cvut.cz ([147.32.210.191])
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1uZoyk-0001Js-V7
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:58:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
+ s=felmail; t=1752145085;
+ bh=KHaMv2A82P8hXXcxeUGG0boA7OJbF2ER1x9Qhwb2VCk=;
+ h=From:To:Subject:Date:Cc:From;
+ b=kIbb5sVo8ucIIs5FSPjh3iESTeFJo2MGKJqrgeseZl/PSo1R2411Vnndo6UrZLCz6
+ 7iDik6mdqFWq7YA71gQlzWx7t1hscY8N0b8AVI6Xgzh+tjz5mkPhNIoulZQ901g0Ck
+ tE8kK50q6WaEJHj1DVkly9sxvNIZBP/j05LO0GBNMsPVf0AqQ65sT0HNPX9f+/OR3+
+ 3BJcb2GW1QEAhXnxuyPu2WaOeUNZ5ZN73IySSs/NnZWxq8LxV+xBOBwdD9vn0YQRcW
+ 6y1kMz8w5ltDLipdet9IqTm7kKclNRLIVbVDZzqpD6rx88G4lDKTWs3lj0r6hSyiEs
+ qqWL1y+xc9aOA==
+Received: from smtpx.fel.cvut.cz (smtpx.feld.cvut.cz [147.32.210.153])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+ (No client certificate requested)
+ by smtpx1.feld.cvut.cz (Postfix) with ESMTPS id F18D826897;
+ Thu, 10 Jul 2025 12:58:04 +0200 (CEST)
+Received: from localhost (unknown [192.168.200.27])
+ by smtpx.fel.cvut.cz (Postfix) with ESMTP id EE67817506;
+ Thu, 10 Jul 2025 12:58:04 +0200 (CEST)
+X-Virus-Scanned: IMAP STYX AMAVIS
+Authentication-Results: cerokez-250.feld.cvut.cz (amavis);
+ dkim=pass (2048-bit key) header.d=fel.cvut.cz
+Received: from smtpx.fel.cvut.cz ([192.168.200.2])
+ by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
+ with ESMTP id Dkda87WogQc5; Thu, 10 Jul 2025 12:58:02 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
+ s=felmail; t=1752145082;
+ bh=KHaMv2A82P8hXXcxeUGG0boA7OJbF2ER1x9Qhwb2VCk=;
+ h=From:To:Subject:Date:Cc:From;
+ b=Wox0yKR2hWUdv6vy3LXEE07j3pb4mfJmePMxaKsFpbdgjFM+G70l2RyMZJHWtnZtX
+ be8aCjLygrJQiJ+yY/69ijG4k/wW5sgO5xw3+nWUxhQiFSXt46kPWF2RaT5OyuD78L
+ jqWL7pvOSXlkhWMhX5AHQ0/hIMy7YObkdg85BtYwQCaAam6TxqJyXfASrgZTRdNo0V
+ roBsMAgUGYqH9LnWHb2jjbgIAku1IDltNQWmtiy1hih7o/x6jFurVy+bpNdYZOKAm3
+ e6m9X+Lq1vS7UgtYsiOKkescUZPKXSry50AmsqrD+cXalUJij0uKcxTpN2pZsSCruA
+ vqcTEgas7Slgw==
+Received: from baree.pikron.com (static-84-242-78-234.bb.vodafone.cz
+ [84.242.78.234])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: pisa)
+ by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id 8E0D317423;
+ Thu, 10 Jul 2025 12:58:01 +0200 (CEST)
+From: Pavel Pisa <pisa@fel.cvut.cz>
+To: "Marc Kleine-Budde" <mkl@pengutronix.de>
+Subject: i.MX6 SabreLite FlexCAN emulation for QEMU progress/working
+Date: Thu, 10 Jul 2025 12:58:05 +0200
+User-Agent: KMail/1.9.10
+Cc: Matyas Bobek <bobekmat@fel.cvut.cz>,
+ Oliver Hartkopp <socketcan@hartkopp.net>, qemu-devel@nongnu.org,
+ Nikita Ostrenkov <n.ostrenkov@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
 MIME-Version: 1.0
-References: <20250710104531.3099313-1-alex.bennee@linaro.org>
- <20250710104531.3099313-3-alex.bennee@linaro.org>
-In-Reply-To: <20250710104531.3099313-3-alex.bennee@linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 10 Jul 2025 13:57:32 +0300
-X-Gm-Features: Ac12FXyDCwH4W3SSUE1gc89Fy7Zi3SFGho8GUXnP1LRcc-xU-VXSMOgg5DioESw
-Message-ID: <CAAjaMXYyXLMvo2dS=FOHJc2DA3fbRvaHoikAGg7JiBJg5m39sg@mail.gmail.com>
-Subject: Re: [PATCH 2/7] gitlab: add -n option to check_units
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Mahmoud Mandour <ma.mandourr@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Alexandre Iooss <erdnaxe@crans.org>, Thomas Huth <thuth@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Jason Wang <jasowang@redhat.com>, 
- Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Message-Id: <202507101258.05760.pisa@fel.cvut.cz>
+Received-SPF: pass client-ip=147.32.210.191; envelope-from=pisa@fel.cvut.cz;
+ helo=smtpx1.feld.cvut.cz
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,66 +99,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 10, 2025 at 1:46=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
-o.org> wrote:
->
-> Mostly a developer aid for those who want to look at the full backlog
-> of multiple build units.
->
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> ---
->  .gitlab-ci.d/check-units.py | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
->
-> diff --git a/.gitlab-ci.d/check-units.py b/.gitlab-ci.d/check-units.py
-> index cdc62ae5ee..cebef0e8be 100755
-> --- a/.gitlab-ci.d/check-units.py
-> +++ b/.gitlab-ci.d/check-units.py
-> @@ -30,7 +30,7 @@ def extract_build_units(cc_path):
->      return build_units
->
->
-> -def analyse_units(build_units):
-> +def analyse_units(build_units, top_n):
->      """
->      Analyse the build units and report stats and the top 10 rebuilds
->      """
-> @@ -44,7 +44,7 @@ def analyse_units(build_units):
->                                  reverse=3DTrue)
->
->      print("Most rebuilt units:")
-> -    for unit, count in sorted_build_units[:20]:
-> +    for unit, count in sorted_build_units[:top_n]:
->          print(f"  {unit} built {count} times")
->
->      print("Least rebuilt units:")
-> @@ -57,12 +57,14 @@ def analyse_units(build_units):
->          description=3D"analyse number of build units in compile_commands=
-.json")
->      parser.add_argument("cc_path", type=3DPath, default=3DNone,
->                          help=3D"Path to compile_commands.json")
-> +    parser.add_argument("-n", type=3Dint, default=3D20,
-> +                        help=3D"Dump the top <n> entries")
->
+Hello Marc and others,
 
-FYI this defaults to n=3D20 always, even if -n isn't given.
+Matyas Bobek has implemented FlexCAN emulation for i.MX6
+targets in the frame of his bachelor thesis
 
-Either way LGTM:
+  https://dspace.cvut.cz/bitstream/handle/10467/122654/F3-BP-2025-Bobek-Matyas-BP_Bobek_FlexCAN_final_4.pdf
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+with reviews there
 
+  https://dspace.cvut.cz/handle/10467/122779
 
->      args =3D parser.parse_args()
->
->      if path.isfile(args.cc_path) and access(args.cc_path, R_OK):
->          units =3D extract_build_units(args.cc_path)
-> -        analyse_units(units)
-> +        analyse_units(units, args.n)
->          exit(0)
->      else:
->          print(f"{args.cc_path} doesn't exist or isn't readable")
-> --
-> 2.47.2
->
->
+Please, if you have problems to access documents, try that later,
+our large archive with theses and publications is under
+"AI" scrape-bots attacks almost permanently... or send me note
+and I send the document directly.
+
+The project continues and on base of Marc Kleine-Budde
+review, Matyas Bobek has implemented timestamping
+which should ensure correct messages ordering
+even if FIFO mode is not used in the drivers,
+Linux driver default case. There is even workaround
+to advance timestamp if the the QEMU virtual time
+is too coarse to provide unique values for for
+too fast delivered messages through virtual bus
+without real bits serialization.
+
+The actual code is available on the "flexcan"
+branch of the repository
+
+  https://gitlab.fel.cvut.cz/bobekmat/qemu-flexcan
+
+The clean, minimal patches sequence will be prepared
+for review for the proposal for inclusion into QEMU
+mainline, hopefully soon.
+
+In longer term perspective, I have interrest in i.MX8
+and other FlexCAN variants with FD support, etc.
+I do not know if Mr. Bobek will have time and interest
+to continue in this direction. I can offer that as the
+another thesis or can offer that as summer job
+etc. But latter would need some funding for students
+motivation and their time compensation and I have had
+never and do not have any QEMU related project for such
+funding now and even minimal chance is even in future
+for other than CTU CAN FD IP core where we support
+silicon and FPGA products. So no timing, chances,
+estimates for something beyond i.MX6 FlexCAN. 
+
+Best wishes, 
+
+                Pavel
+
+                Pavel Pisa
+    phone:      +420 603531357
+    e-mail:     pisa@cmp.felk.cvut.cz
+    Department of Control Engineering FEE CVUT
+    Karlovo namesti 13, 121 35, Prague 2
+    university: http://control.fel.cvut.cz/
+    personal:   http://cmp.felk.cvut.cz/~pisa
+    social:     https://social.kernel.org/ppisa
+    projects:   https://www.openhub.net/accounts/ppisa
+    CAN related:http://canbus.pages.fel.cvut.cz/
+    RISC-V education: https://comparch.edu.cvut.cz/
+    Open Technologies Research Education and Exchange Services
+    https://gitlab.fel.cvut.cz/otrees/org/-/wikis/home
 
