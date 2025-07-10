@@ -4,84 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E0ABC83F1D
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 11:32:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D802FC83F1D
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 11:37:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZpUy-0004nW-D6; Thu, 10 Jul 2025 07:31:32 -0400
+	id 1uZpa7-0008LN-PO; Thu, 10 Jul 2025 07:36:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZpUw-0004Jv-D2
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 07:31:30 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1uZpa0-0007MH-Gg
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 07:36:44 -0400
+Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZpUu-0005Hp-4N
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 07:31:30 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3a54690d369so886277f8f.3
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 04:31:27 -0700 (PDT)
+ id 1uZpZm-0006S0-LK
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 07:36:42 -0400
+Received: by mail-yb1-xb2c.google.com with SMTP id
+ 3f1490d57ef6-e8600c87293so617443276.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 04:36:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752147085; x=1752751885; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=lDJ2vIkPhvwM5DiRQNz5jjkVQ813bG8xx9tfM2SSO8c=;
- b=hYFMJGhzKLdYAxhkzjKJkLNDMRNvxS39Kl6rE0IB7Wd1fAP/yzRptwHmJp8Ev4lIlW
- 6Uyky3du79BQdmA1ZrcTPZZFKAVqGwLqsFPeRrPwKKxaEj6oqxh2evRObc1o/tEEVp46
- yhr3C/yJ8nUIYEpKh37EUSygaddDUSF0KloWYrrbRYHv7OmK6sMJYeWq1DEHQd6Yqb9y
- j5f6HNbUUgOuMNoOu4/LK9hmyLTB4CRw+y/ddNxy7zHtZrQpkNsU1u7Q0sG3rIemL+Ke
- Y8x2pEiB6NJswozpyEfqG0l7vb3EdelSOGzCl5Ze97NbkDpkEroDtcgJ6cNzNegRVmiQ
- UFkg==
+ d=linaro.org; s=google; t=1752147388; x=1752752188; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=qzbciKx2o4pSpRKiGFVWhMcg7GWpf3ibvN0tChYL/+g=;
+ b=gmxfgf/UVd9pAZSIFEwKatbhGhcXRVIX+O2oFk40t0cEb5B11cHfFwub8AcE+OYur3
+ rdqudgpQmNG3fD7QuHUnoF6DvGsnKUiipd9VvXdXmNt/V7wUn2mJrS5RYIE9trGJHCko
+ fBsjbL2jmvG9lrHELH7Tjs3F/Opwg84dNNjCLmfN5fVpMNY9ZOo54PGOhr0ouiqz42KH
+ pcr72qzk1+53+tsFMov/J6mhyB1EfmHBc9QiIKKfFDxnbJ1mEStNUulimoi5O+KHvjKA
+ yHgokoOc+QebyYZhnN5hv5x7JnZr5ELb/kRwTfK3ExWAvwVJnHb1W5v94SGtUttNNipX
+ JqlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752147085; x=1752751885;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1752147388; x=1752752188;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lDJ2vIkPhvwM5DiRQNz5jjkVQ813bG8xx9tfM2SSO8c=;
- b=oqztZsxnF0Xd8X89PacBsrBAmoJHYTktkxZD/Y8feOlbGNPVK9qleaW2dM2MnoHgt2
- PDFvePSI/m7mp44oO7k4C1AXeuvfUTxBD0m1hXDf649FjurID/Limr4WcufTlSXQUkYM
- W0xAZzOyS8ASdZa23gTz8JHOn9Fv+Exi4mf+yrOivkM9uJlLwp85uu9iDBwp8k+apJI/
- 7XThOVC5rD2/VS8At3D5zUTOBOt+kDjmxyDqkZubCxHJV6FmxzWIKW1/5FqUJM5Y/lAF
- 2oNjaDr11O48MaHBB+rtq2p8AnRCzPgCrZlgtjQGMH7mVe9087ZbFqcvTZbQVQLS/oT7
- FXSw==
-X-Gm-Message-State: AOJu0Yxv+9RcgPsD3wlFdRk6TEm+lMFDI5ijUsUywEglhpcey33kF0J5
- dyI4pV+j8TxgtQmLvly4sD2mWyPkdPfvz/6D2D1zKFBbZtPiwLLef+L9bMVInECVM4ts1ASydGE
- W4cTu
-X-Gm-Gg: ASbGncveZoUhtqkHJlALHqbEWN+8f0QTc+BQYdtnhawFz0btn2p0wjQ+X3SHxy1kpIi
- 41OgUb4tgS23Q6lOfdAKcgX+f6cBa9fv3TtmK0sMVqgJUeYheserqsklUQMxRFIB4tNvzgs0rLN
- +zr/Tk/Y7vddoSzMyZz6nJFjiXOmysLPNHzM8kSOCuTVcoV101/NCzAa/Ox1E/dMxsD3L6znWkZ
- HlgS1cpLLsADFniTIO7DhtcVrptPf5ZhwYzOYWUf5fjk9xjvlfl3aqrjSv0uKbxVnXzEr5L7hvP
- Em90bIyHZd/rljIPesCXui+Xj+uxj1BEC2LhCbtfwmGI5coa49jVTZa1+Fo5iuD4oRf7
-X-Google-Smtp-Source: AGHT+IFmBmAjMZVsA7CQSA/Qtm2zH2jFe2gzq3jIxzdEAMYUIEPtxLXejQtuq0Jj1LVxjKC6DBOkGQ==
-X-Received: by 2002:a05:6000:290b:b0:3b5:e077:af24 with SMTP id
- ffacd0b85a97d-3b5e866f3b6mr2218812f8f.14.1752147085475; 
- Thu, 10 Jul 2025 04:31:25 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e0d289sm1638405f8f.55.2025.07.10.04.31.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Jul 2025 04:31:24 -0700 (PDT)
+ bh=qzbciKx2o4pSpRKiGFVWhMcg7GWpf3ibvN0tChYL/+g=;
+ b=BGeqvoYI1vvgrMrgOZHOmPUO14HGUNjGy+hxhdwM3cfqEYaVv11YTaeB4f+Wfp2QPe
+ XacQGPhOdPVQdmNKglHzcm1Xsg/Th5fDvQJyRBFs/26DGzyOwLGsAdDr6dJwxOaPaL5Y
+ kRhwNORPRIYTsDvi0JUKeLnbi+vqexB7FjJ55sESkluKrQKuxIOufGZgMWa80Ija4hIW
+ 4mzspvgGPRvEG1M52tAwaKqrrSWTZE3RLYKgjfiu5uqL9Hu3VnDfH6HRtoOMSx1xs1LM
+ W/W8R1/RaB4CNzqFcIm8Wu8dQBKw7Is0kGpW+xSdasqSHzIKzWpNM5YzpffjrFcdDDEl
+ hcAg==
+X-Gm-Message-State: AOJu0YwL3KM9BHL/6NkN9cE3d432A2zK2P2xj10kNmct5R/VlIM6L+0k
+ YIMzpTei9tnRzonBICAmx1jzwNt/2zeeQOsRHkLkAy0a7g7RgK00tUdZtiVVks4aMCKlxkKbrK/
+ LUn30f7BpTp30ENVzdWz89xW8OGpcOg7L7ajUCjAjAu7gRL6NYS6k
+X-Gm-Gg: ASbGncsIMXrdjAO8KW2HjhT0DOMYeU6hDU7DPHB0+RBJHBsDWpfwfumzzbjugoGmCi3
+ GlyWQMJqbvdr8gLEMYXWW5FAnSeuA57TJBWEzjILNlMlIYq/ZyrpicYQGaGIdWZ52YYvrefghVm
+ ZeNb8WSDUI6FLvLEpL7FAksbVwFXl13WMxuPc+gm8nwwsm
+X-Google-Smtp-Source: AGHT+IEgrqvbP9cFXTn+ZVm7vVqci8geJatcY37crpJc+968FoSbAwLktjruTVDDFFAkkg7vuT2LvrVD1mVb8y6x7gk=
+X-Received: by 2002:a05:690c:fcf:b0:70f:6ec6:62b3 with SMTP id
+ 00721157ae682-717b19e2c1cmr98387247b3.26.1752147387690; Thu, 10 Jul 2025
+ 04:36:27 -0700 (PDT)
+MIME-Version: 1.0
+References: <20250710113123.1109461-1-peter.maydell@linaro.org>
+In-Reply-To: <20250710113123.1109461-1-peter.maydell@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
+Date: Thu, 10 Jul 2025 12:36:15 +0100
+X-Gm-Features: Ac12FXzRxlaZgiHwZ-tLAOQm1jzGpN0qZeZbrigulrmJLAiyxwe0VJYX5jeIIkY
+Message-ID: <CAFEAcA9zJAeYbtQkWC8Za0DGEukdKAcZpnM6vPiAQ358Ue_k6g@mail.gmail.com>
+Subject: Re: [PATCH v2] linux-user: Implement fchmodat2 syscall
+To: QEMU Developers <qemu-devel@nongnu.org>
 Cc: Laurent Vivier <laurent@vivier.eu>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH] linux-user: Implement fchmodat2 syscall
-Date: Thu, 10 Jul 2025 12:31:23 +0100
-Message-ID: <20250710113123.1109461-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,49 +92,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The fchmodat2 syscall is new from Linux 6.6; it is like the
-existing fchmodat syscall except that it takes a flags parameter.
+On Thu, 10 Jul 2025 at 12:31, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> The fchmodat2 syscall is new from Linux 6.6; it is like the
+> existing fchmodat syscall except that it takes a flags parameter.
+>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> v1->v2: don't bother with trying to fall back to libc fchmodat();
+> add missing braces for if()
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-v1->v2: don't bother with trying to fall back to libc fchmodat();
-add missing braces for if()
----
- linux-user/syscall.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+I forgot to put 'v2' in the subject, but this is indeed version 2 :-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index fc37028597c..e1b1476936c 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -790,6 +790,10 @@ safe_syscall6(ssize_t, copy_file_range, int, infd, loff_t *, pinoff,
-               int, outfd, loff_t *, poutoff, size_t, length,
-               unsigned int, flags)
- #endif
-+#if defined(TARGET_NR_fchmodat2) && defined(__NR_fchmodat2)
-+safe_syscall4(int, fchmodat2, int, dfd, const char *, filename,
-+              unsigned short, mode, unsigned int, flags)
-+#endif
- 
- /* We do ioctl like this rather than via safe_syscall3 to preserve the
-  * "third argument might be integer or pointer or not present" behaviour of
-@@ -10713,6 +10717,15 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         ret = get_errno(fchmodat(arg1, p, arg3, 0));
-         unlock_user(p, arg2, 0);
-         return ret;
-+#endif
-+#if defined(TARGET_NR_fchmodat2) && defined(__NR_fchmodat2)
-+    case TARGET_NR_fchmodat2:
-+        if (!(p = lock_user_string(arg2))) {
-+            return -TARGET_EFAULT;
-+        }
-+        ret = get_errno(safe_fchmodat2(arg1, p, arg3, arg4));
-+        unlock_user(p, arg2, 0);
-+        return ret;
- #endif
-     case TARGET_NR_getpriority:
-         /* Note that negative values are valid for getpriority, so we must
--- 
-2.43.0
-
+> ---
+>  linux-user/syscall.c | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+>
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index fc37028597c..e1b1476936c 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -790,6 +790,10 @@ safe_syscall6(ssize_t, copy_file_range, int, infd, loff_t *, pinoff,
+>                int, outfd, loff_t *, poutoff, size_t, length,
+>                unsigned int, flags)
+>  #endif
+> +#if defined(TARGET_NR_fchmodat2) && defined(__NR_fchmodat2)
+> +safe_syscall4(int, fchmodat2, int, dfd, const char *, filename,
+> +              unsigned short, mode, unsigned int, flags)
+> +#endif
+>
+>  /* We do ioctl like this rather than via safe_syscall3 to preserve the
+>   * "third argument might be integer or pointer or not present" behaviour of
+> @@ -10713,6 +10717,15 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+>          ret = get_errno(fchmodat(arg1, p, arg3, 0));
+>          unlock_user(p, arg2, 0);
+>          return ret;
+> +#endif
+> +#if defined(TARGET_NR_fchmodat2) && defined(__NR_fchmodat2)
+> +    case TARGET_NR_fchmodat2:
+> +        if (!(p = lock_user_string(arg2))) {
+> +            return -TARGET_EFAULT;
+> +        }
+> +        ret = get_errno(safe_fchmodat2(arg1, p, arg3, arg4));
+> +        unlock_user(p, arg2, 0);
+> +        return ret;
+>  #endif
+>      case TARGET_NR_getpriority:
+>          /* Note that negative values are valid for getpriority, so we must
+> --
+> 2.43.0
+>
 
