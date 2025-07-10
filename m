@@ -4,58 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C341C83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 14:23:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59FF9C83F1B
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 14:28:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZsAw-0002y0-37; Thu, 10 Jul 2025 10:23:02 -0400
+	id 1uZsFF-0007Bw-4j; Thu, 10 Jul 2025 10:27:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1uZs08-0001fp-5n
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:11:52 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1uZs05-0004Sh-I3
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:11:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=8tF56U9L9VOIlvzuB4BsGnOTd3FFf0iz5iF0JfPUG5k=; b=r78/8xJiujelNgRdX9rmGoOyh+
- IeqgBaeaenvJYQflmCGzOaix72dbl8/VYQWx8LXSioVZgflc0TtXj7gk+32d5gbnLj0TxLYlY7OuI
- OSTAPaxvOuA3Dos8Xv8wMYHxbpKeh/+8Iqi0pZ2FkGLwzwHO2E0W5fSRaKyyVUIpn2RLuhatq2K/N
- aWbI9LsUE1RX+hvKzoJpHHEllMWXH7AV3Qd8qpOMbg70xRtksb/ioD12gdVFngRaKsntffLRXviId
- +qWjcy6Yhfnp4vgX7k+953OYKYgGVFd2T5wRFJIn5xqd3LuReJr/K5xmXg7erQzylytjCHn2OypAB
- hpy+vwJVk99LPNlYE2kdKt3uVutvdgwqpSMX9X9lQtuq/PgdGbh9dXBkWRDMQJkfV/d4TUiK+JpCy
- raXW4loTYKtOjl2nYKEuDuyBSAy8BC021DH/hbB3hUeIio9VSyNRcIV3WcIFPuRg4/ez4hmkPKNnl
- 9AklW039wuT/y7xvx5SVq3WY7TPjulW2cOETnRY4272WFZErheaJzwN3uoxZbLu/2pmFxaRTGKb/B
- gN2QR5LW6Sj0wPsMZEiE2S7RpQXUjUFs7O7YeYGj5QlFxS4mdUo3bEDH7Og/e+TD8xUpTG6BRuauX
- TyUEO9u4mQr4fvRyWuF04vWr6vxZT8Gb3mgEdPnDE=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-Cc: Greg Kurz <groug@kaod.org>
-Subject: Re: [PULL 7/9] tests/9p: add 'Tsetattr' request to test client
-Date: Thu, 10 Jul 2025 16:11:44 +0200
-Message-ID: <1956976.W3UK9cqU4Q@silver>
-In-Reply-To: <CAFEAcA8Sc7t25KNzwnEAi=n8SNCAYDsFbs8P8hUKwWRxWzx_QQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uZs5u-000706-JK
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:17:51 -0400
+Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uZs5r-0006wQ-UN
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:17:50 -0400
+Received: by mail-yb1-xb2d.google.com with SMTP id
+ 3f1490d57ef6-e812c817de0so838288276.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 07:17:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752157066; x=1752761866; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=/S9uJdAR6BPyYxDoKo+lXs/5hE64QsKXfbFXTwXq1R8=;
+ b=u+KLIspzhtyYVF/c8/XekfV6zjrSABduebz2FslYZssGVJnLSyW9OTjZ/kXTPklbXf
+ 26sqpbNzawuFQO7NnyyVpw3v+UNXp/ZxBsAkVfdXgKxj/I8EXP3j9k77/E32TaOZstaO
+ AAk/qneBoJT5GOQmMof6lBhl2h57A1O214BU+vMq+pTFHRCep8lL74mfVkW2gZr5DeR8
+ /sMPj9NeT2hgCk4DnmFaJHQ5TNk0x2wrW0hSUsbGtYLNkgJSKGxDB+omh1IOujCXkekp
+ u/oaFfwf1J9FZ9CJ2j0hOSC2YSk/2BF0CyYT/OrTaCPFMIE2YICGFKvgvbogVoflyfie
+ 7H2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752157066; x=1752761866;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/S9uJdAR6BPyYxDoKo+lXs/5hE64QsKXfbFXTwXq1R8=;
+ b=Hhax90rUufMsNkwOFdhSVCt/BpFQ8EyGFAJQ33T1v2GNQkqEWtEqVsoLQQckswwn2h
+ q/KyYb6uCvk9LHuIXZmikIfTgdVdLc+0WR3AsesaSLdrdTXH+0F3qufwMWHq7NWlcybg
+ sFbG772guK3wPgg1BnOBMXA72gGfD+HSByLuVaVeIuqfx5oovyfZqcV/d2gEU2PFZ/h2
+ vn6NquM08o4F205RFRdhsVQoyeQvyQ4S+3Qm6N/cxRQaY1nZxvLpOw3syb0WG3jAaZ8l
+ YqGtHOnXXuoodmoUeMdIFAj2FDotDbHYlX5sM/SM6yWMp1LN2oQh/zB7rN+HoZO/Dxno
+ 57pg==
+X-Gm-Message-State: AOJu0Yzp8Dj6o++TZ+XASeyyk2DCxU2gxph85ZIBDxNpUD0i1rpbWkfI
+ qYfC2eEBjE74dNMN94UJ3omWFSAlyFLsRG4bFJJcSH6kqFU8o5ts5VXbDnlieL/KNeXfS8adjHs
+ t8CJc3ogPRmgMZeC5UGbdJFxXtPsntG2w6O1501mNag==
+X-Gm-Gg: ASbGncsCyw9bJbblxIj+4AOjUPcEU/pjROofiBnTMaiKzkz6FWGEbe0+yD8KCYFciNd
+ 1mytu3uotgIjaY5Lo4B7zGX4hSOw4ynRkOTZGXkSjrI7MQMt4G2vqetAzXuvJVlDMaCTjsofyY5
+ 0L+vvH8JGrso/vDgUyGV0AzcR+anpgpn/ikqB2ZOGclSkD
+X-Google-Smtp-Source: AGHT+IH+Fvln78iXupr1df6Ftnl5dyuWvfmAj+30yxjEl2Qs3mAFemMzf4/LQwNNLNrICx95bJPvdSGZ8MiFTllofu8=
+X-Received: by 2002:a05:690c:7343:b0:712:d70b:45f0 with SMTP id
+ 00721157ae682-717c47ea62dmr40832447b3.32.1752157065741; Thu, 10 Jul 2025
+ 07:17:45 -0700 (PDT)
+MIME-Version: 1.0
 References: <cover.1746438650.git.qemu_oss@crudebyte.com>
  <4719a2d59176a6c850e2b4f1af44cecd25430fce.1746438650.git.qemu_oss@crudebyte.com>
  <CAFEAcA8Sc7t25KNzwnEAi=n8SNCAYDsFbs8P8hUKwWRxWzx_QQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+ <1956976.W3UK9cqU4Q@silver>
+In-Reply-To: <1956976.W3UK9cqU4Q@silver>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 10 Jul 2025 15:17:32 +0100
+X-Gm-Features: Ac12FXzHnu29B0wZDPInhEnJ7LTueF51Z8aB7_nY_maEyq9KxafQ8nMWbyik0tA
+Message-ID: <CAFEAcA93EtnZcurP4u_z5qpX4xwhCPPDPCb5uOLMin9OtpoUqg@mail.gmail.com>
+Subject: Re: [PULL 7/9] tests/9p: add 'Tsetattr' request to test client
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Cc: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,156 +94,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thursday, July 10, 2025 3:30:22 PM CEST Peter Maydell wrote:
-> On Mon, 5 May 2025 at 10:54, Christian Schoenebeck
-> <qemu_oss@crudebyte.com> wrote:
+On Thu, 10 Jul 2025 at 15:11, Christian Schoenebeck
+<qemu_oss@crudebyte.com> wrote:
+>
+> On Thursday, July 10, 2025 3:30:22 PM CEST Peter Maydell wrote:
+> > On Mon, 5 May 2025 at 10:54, Christian Schoenebeck
+> > <qemu_oss@crudebyte.com> wrote:
+> > >
+> > > Add and implement functions to 9pfs test client for sending a 9p2000.L
+> > > 'Tsetattr' request and receiving its 'Rsetattr' response counterpart.
+> > >
+> > > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> > > Signed-off-by: Greg Kurz <groug@kaod.org>
+> > > Message-Id: <20250312152933.383967-6-groug@kaod.org>
+> > > ---
+> > >  tests/qtest/libqos/virtio-9p-client.c | 49 +++++++++++++++++++++++++++
+> > >  tests/qtest/libqos/virtio-9p-client.h | 34 +++++++++++++++++++
+> > >  tests/qtest/virtio-9p-test.c          |  1 +
+> > >  3 files changed, 84 insertions(+)
+> > >
+> > > diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
+> > > index 98b77db51d..6ab4501c6e 100644
+> > > --- a/tests/qtest/libqos/virtio-9p-client.c
+> > > +++ b/tests/qtest/libqos/virtio-9p-client.c
+> > > @@ -557,6 +557,55 @@ void v9fs_rgetattr(P9Req *req, v9fs_attr *attr)
+> > >      v9fs_req_free(req);
+> > >  }
+> > >
+> > > +/*
+> > > + * size[4] Tsetattr tag[2] fid[4] valid[4] mode[4] uid[4] gid[4] size[8]
+> > > + *                  atime_sec[8] atime_nsec[8] mtime_sec[8] mtime_nsec[8]
+> > > + */
+> > > +TSetAttrRes v9fs_tsetattr(TSetAttrOpt opt)
+> > > +{
+> > > +    P9Req *req;
+> > > +    uint32_t err;
 > >
-> > Add and implement functions to 9pfs test client for sending a 9p2000.L
-> > 'Tsetattr' request and receiving its 'Rsetattr' response counterpart.
 > >
-> > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> > Signed-off-by: Greg Kurz <groug@kaod.org>
-> > Message-Id: <20250312152933.383967-6-groug@kaod.org>
-> > ---
-> >  tests/qtest/libqos/virtio-9p-client.c | 49 +++++++++++++++++++++++++++
-> >  tests/qtest/libqos/virtio-9p-client.h | 34 +++++++++++++++++++
-> >  tests/qtest/virtio-9p-test.c          |  1 +
-> >  3 files changed, 84 insertions(+)
+> > Hi -- Coverity warns (CID 1609751) that this function
+> > passes by value an argument which is a 184 byte struct.
+> > Is this intentional?
+>
+> Hi Peter!
+>
+> Yes, that was intentional. It follows the same coding pattern of the 9p test
+> cases to hack named function arguments into C:
+>
+>   someFunc({ .argC = 3, .argH = "foo", .argX = 1 });
+>
+> That saves a lot of code and makes callers better readable, because some test
+> case just needs to pass a value for argument A and C, another test might need
+> to pass arguments H, X and Y, and so on.
+>
+> Before we had numerous function variations for the same thing, just with
+> different argument permutations. Now it's only one function per purpose.
+>
+> > Can we instead pass a pointer to the
+> > struct?
 > >
-> > diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
-> > index 98b77db51d..6ab4501c6e 100644
-> > --- a/tests/qtest/libqos/virtio-9p-client.c
-> > +++ b/tests/qtest/libqos/virtio-9p-client.c
-> > @@ -557,6 +557,55 @@ void v9fs_rgetattr(P9Req *req, v9fs_attr *attr)
-> >      v9fs_req_free(req);
-> >  }
-> >
-> > +/*
-> > + * size[4] Tsetattr tag[2] fid[4] valid[4] mode[4] uid[4] gid[4] size[8]
-> > + *                  atime_sec[8] atime_nsec[8] mtime_sec[8] mtime_nsec[8]
-> > + */
-> > +TSetAttrRes v9fs_tsetattr(TSetAttrOpt opt)
-> > +{
-> > +    P9Req *req;
-> > +    uint32_t err;
-> 
-> 
-> Hi -- Coverity warns (CID 1609751) that this function
-> passes by value an argument which is a 184 byte struct.
-> Is this intentional?
+> > This is only a test program and 184 bytes is not super
+> > enormous, so if this would be painful to avoid we can mark
+> > the coverity report as a false positive.
+>
+> Well, it would be possible to change this to a pointer, patch below in any
+> case. Personally I would just mark this as a false positive though. It's not a
+> bug and the resulting binary would probably be identical. No hard opinion
+> though.
 
-Hi Peter!
+OK, I'll mark it as a false positive.
 
-Yes, that was intentional. It follows the same coding pattern of the 9p test
-cases to hack named function arguments into C:
-
-  someFunc({ .argC = 3, .argH = "foo", .argX = 1 });
-
-That saves a lot of code and makes callers better readable, because some test
-case just needs to pass a value for argument A and C, another test might need
-to pass arguments H, X and Y, and so on.
-
-Before we had numerous function variations for the same thing, just with
-different argument permutations. Now it's only one function per purpose.
-
-> Can we instead pass a pointer to the
-> struct?
-> 
-> This is only a test program and 184 bytes is not super
-> enormous, so if this would be painful to avoid we can mark
-> the coverity report as a false positive.
-
-Well, it would be possible to change this to a pointer, patch below in any
-case. Personally I would just mark this as a false positive though. It's not a
-bug and the resulting binary would probably be identical. No hard opinion
-though.
-
-/Christian
-
-diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
-index 6ab4501c6e..f0b009645d 100644
---- a/tests/qtest/libqos/virtio-9p-client.c
-+++ b/tests/qtest/libqos/virtio-9p-client.c
-@@ -561,35 +561,35 @@ void v9fs_rgetattr(P9Req *req, v9fs_attr *attr)
-  * size[4] Tsetattr tag[2] fid[4] valid[4] mode[4] uid[4] gid[4] size[8]
-  *                  atime_sec[8] atime_nsec[8] mtime_sec[8] mtime_nsec[8]
-  */
--TSetAttrRes v9fs_tsetattr(TSetAttrOpt opt)
-+TSetAttrRes v9fs_tsetattr(TSetAttrOpt *opt)
- {
-     P9Req *req;
-     uint32_t err;
- 
--    g_assert(opt.client);
-+    g_assert(opt->client);
- 
-     req = v9fs_req_init(
--        opt.client, 4/*fid*/ + 4/*valid*/ + 4/*mode*/ + 4/*uid*/ + 4/*gid*/ +
-+        opt->client, 4/*fid*/ + 4/*valid*/ + 4/*mode*/ + 4/*uid*/ + 4/*gid*/ +
-         8/*size*/ + 8/*atime_sec*/ + 8/*atime_nsec*/ + 8/*mtime_sec*/ +
--        8/*mtime_nsec*/, P9_TSETATTR, opt.tag
-+        8/*mtime_nsec*/, P9_TSETATTR, opt->tag
-     );
--    v9fs_uint32_write(req, opt.fid);
--    v9fs_uint32_write(req, (uint32_t) opt.attr.valid);
--    v9fs_uint32_write(req, opt.attr.mode);
--    v9fs_uint32_write(req, opt.attr.uid);
--    v9fs_uint32_write(req, opt.attr.gid);
--    v9fs_uint64_write(req, opt.attr.size);
--    v9fs_uint64_write(req, opt.attr.atime_sec);
--    v9fs_uint64_write(req, opt.attr.atime_nsec);
--    v9fs_uint64_write(req, opt.attr.mtime_sec);
--    v9fs_uint64_write(req, opt.attr.mtime_nsec);
-+    v9fs_uint32_write(req, opt->fid);
-+    v9fs_uint32_write(req, (uint32_t) opt->attr.valid);
-+    v9fs_uint32_write(req, opt->attr.mode);
-+    v9fs_uint32_write(req, opt->attr.uid);
-+    v9fs_uint32_write(req, opt->attr.gid);
-+    v9fs_uint64_write(req, opt->attr.size);
-+    v9fs_uint64_write(req, opt->attr.atime_sec);
-+    v9fs_uint64_write(req, opt->attr.atime_nsec);
-+    v9fs_uint64_write(req, opt->attr.mtime_sec);
-+    v9fs_uint64_write(req, opt->attr.mtime_nsec);
-     v9fs_req_send(req);
- 
--    if (!opt.requestOnly) {
-+    if (!opt->requestOnly) {
-         v9fs_req_wait_for_reply(req, NULL);
--        if (opt.expectErr) {
-+        if (opt->expectErr) {
-             v9fs_rlerror(req, &err);
--            g_assert_cmpint(err, ==, opt.expectErr);
-+            g_assert_cmpint(err, ==, opt->expectErr);
-         } else {
-             v9fs_rsetattr(req);
-         }
-diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
-index e3221a3104..4b55d7a56d 100644
---- a/tests/qtest/libqos/virtio-9p-client.h
-+++ b/tests/qtest/libqos/virtio-9p-client.h
-@@ -502,7 +502,7 @@ TWalkRes v9fs_twalk(TWalkOpt opt);
- void v9fs_rwalk(P9Req *req, uint16_t *nwqid, v9fs_qid **wqid);
- TGetAttrRes v9fs_tgetattr(TGetAttrOpt);
- void v9fs_rgetattr(P9Req *req, v9fs_attr *attr);
--TSetAttrRes v9fs_tsetattr(TSetAttrOpt opt);
-+TSetAttrRes v9fs_tsetattr(TSetAttrOpt *opt);
- void v9fs_rsetattr(P9Req *req);
- TReadDirRes v9fs_treaddir(TReadDirOpt);
- void v9fs_rreaddir(P9Req *req, uint32_t *count, uint32_t *nentries,
-diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-index ac38ccf595..4397c0738f 100644
---- a/tests/qtest/virtio-9p-test.c
-+++ b/tests/qtest/virtio-9p-test.c
-@@ -20,7 +20,7 @@
- #define tversion(...) v9fs_tversion((TVersionOpt) __VA_ARGS__)
- #define tattach(...) v9fs_tattach((TAttachOpt) __VA_ARGS__)
- #define tgetattr(...) v9fs_tgetattr((TGetAttrOpt) __VA_ARGS__)
--#define tsetattr(...) v9fs_tsetattr((TSetAttrOpt) __VA_ARGS__)
-+#define tsetattr(...) v9fs_tsetattr(&((TSetAttrOpt) __VA_ARGS__))
- #define treaddir(...) v9fs_treaddir((TReadDirOpt) __VA_ARGS__)
- #define tlopen(...) v9fs_tlopen((TLOpenOpt) __VA_ARGS__)
- #define twrite(...) v9fs_twrite((TWriteOpt) __VA_ARGS__)
-
-
-
+thanks
+-- PMM
 
