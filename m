@@ -4,72 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F22F5C83F1D
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 12:03:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B065C83F20
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 12:18:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZpz7-00065a-7V; Thu, 10 Jul 2025 08:02:41 -0400
+	id 1uZqE3-0005yp-UX; Thu, 10 Jul 2025 08:18:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZpyR-0001U5-4n
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 08:02:11 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ id 1uZqDw-0005sG-7I
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 08:18:02 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZpyO-0005bc-D2
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 08:01:58 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-710bbd7a9e2so8972907b3.0
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 05:01:54 -0700 (PDT)
+ id 1uZqDr-0003is-NR
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 08:17:58 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-70a57a8ffc3so9508717b3.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 05:17:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752148912; x=1752753712; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=G4Lh/oYIsokCqRCumrpkEW0ShZKXwoSJIhTNgGFU3tY=;
- b=u1TBSiXxgvs0U8yEzG4xleGe3kJ9ylteH3BBUgFKUYU7ujb4UBTtmmUZCIgZkZ+JgQ
- 1HYRU/Njt8cv2bArILu9nebHNjXfCoY8QaH65hwWSyp780qjQGytr/jkzr7twMLWEL+U
- M4uKU6DITaQtdWMplmBDjaJlvPQuUFZwQz68xAIJn5fOx7ze7T3obliU07i1E4HQYGJt
- C3X0WH4gkkPRckTYV2kU10m96yAwd7mWiANFNFUaYAN1oEWn3sKbmbBQ4M/zIrYRNe64
- 23nQZajTLpU7KrmOZgW2JEgO9F1H4QXxOdwOAgk1uUJn9Wn1O0k73T+jbaI8PGNx4Wud
- ywrw==
+ d=linaro.org; s=google; t=1752149873; x=1752754673; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HFArDah2ssTeH+v280YDihlQ7P+RuuQADEL1JggCiFo=;
+ b=xSNwBBH2A4xIwyUiULEcZ8hASci8XHDEY9cDPVEPrXwSkZ/kOGjDwDOy2+Tu2y5EJr
+ SVzGpCCyfwTBZWuNd8we+MHMJPl0X8Xbls5soYHhNkVKdzWzEmnidPmDMfos7hjIZrRp
+ qHq26yMSvgXh7jgk5gmiI484B4+KVOikH8va1slJkSV1Q5/tEmPe9Lwhb1W95HwymnGE
+ naj+7t6wykvb1/aWaJOm4IqGu6IOhpQbYVKqOa5VVKl38CxwnkQ5swtNC+yFfWWHnUVK
+ 7hB81nTple2b+7JnDClIUAu42XniuQORnWVpdH+e52ipOgkTMvNfeJ5w/UUAzSLzv36R
+ jx6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752148912; x=1752753712;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=G4Lh/oYIsokCqRCumrpkEW0ShZKXwoSJIhTNgGFU3tY=;
- b=GJuGKkwS67/OdERYNajxbUvMwpov6vTW5T2M0iZH4ke9ZcyPsiW3AtDkEE7d0YjAKc
- WU9umtUtca5lBph1sl831N19EiLGiqLdm+Srgfql3cHtCtbtKSOPz73ELkqHphqP9Rg6
- XyC8aUo1EYrCOq9cxSlilsAuRDRniWP5bXQUdRoO6iUjEUYoPED71sC+hIno8QrIJ3fB
- TuzaYCnokIktMiwOBD1Hwpp6vhOxVE4qq3MxNZkdwUUdTuC66zG+EHnpz436gUWYp9M3
- JQbcM4ZMRh7DPWnT21j/AFM8GMP0uW2Cr1HfWtMfcwMjJ1WyAerYvRLiejrB6FYz31+S
- awUA==
-X-Gm-Message-State: AOJu0Yw5Sb8lR330KNaVi40LZyx0VYd6hu6vpEWPdZINyanX25Ts51cT
- Gcnjre0doTBahwccj+EYbnoyJIfOt4XqmeXyxF5G9V6Ix8MeLUkNgPLzF33DqGD7P2sup4+YP8J
- acdkj22dXDEViGWpC2Jy+Byz2EbkEXB52jqD0eupdyQ==
-X-Gm-Gg: ASbGncu43VKcBQFAN9EIEyH4hYw6O0s0oREm/OYlI2VweQI7+lL4XNGM4Umobisyn8v
- K7DTsyRhJhnvKklo+dnWSFY+E9UV/wwS2emZ/TOzm+amoIYzeSmVABX61iidwLgogCqdcW9F2vZ
- ONhWg6hZprMALUMldZ2bbppvwI5rTxUzcxHdTq6ZIK7U41
-X-Google-Smtp-Source: AGHT+IFKm14OnPnasbBfpQXwCr3MFpyCQ6sCYiPnkct/WzJI0OHlYxud5DB5fxX1owWbr4/sz7sDMBUQJ9kr0TpbtQM=
-X-Received: by 2002:a05:690c:2504:b0:711:a4af:43ad with SMTP id
- 00721157ae682-717c4663feemr33342167b3.14.1752148911194; Thu, 10 Jul 2025
- 05:01:51 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752149873; x=1752754673;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HFArDah2ssTeH+v280YDihlQ7P+RuuQADEL1JggCiFo=;
+ b=d9OMSZtCjDV/fdCNAaffkbDUH8B/9pBLyHU21vVjHcGVuM0ACd+Y8qUvqZ50moMGra
+ fpGY5QTH81MHR47kOuWqw13NdlAD5sdoCHSNUYfGHdqRG0KIDAzmngSsP5QjMu/MLDil
+ Zq1pYBxGSMvBHN5Ud7AS0pZOkki8pyRV/zGBxfqokNkU/jqqFQvIcE3N5oNGx53Hw28g
+ eTIzNEVttLQCoFUIano4uGTnbAtECd0wLwE0714Lobejq3dv/cMyUaiY0KcbC1I2NZ4H
+ wYwDL4aBeiJfu3rJUFHsZ/Sbpvy37zDYf1FDbMENVyc/1P26sptCTFdugnZZnDzb/XEy
+ vDXg==
+X-Gm-Message-State: AOJu0Yw0KiF76ge1+LtwGHyFmZdW/2v+EtZqTGbZP6SFsNWER8bjwNJ/
+ /8t8No0zDR3wZZ+/p77mMduHGsjFSgPRm77Uzo2Ew5FbywhlS6Lue21O3BoBxDV16nt6YE7NCrD
+ qO87UxwFY8w3QEP8yYe4EIhfc64SkUoJDRyVuRWl9lw==
+X-Gm-Gg: ASbGncvA8AwJBWLnH4DSktg2Fj1RxuCRjNimAwSRyvzjzyF5iYm7RpfonP+LAyxwDj/
+ +wh8jo2sLm3/swfbw50XmgL4xd++a6BnD5KHrhw9I9IDctIx4bgZU8q4Vl24pdrL6mb6ENqd4p3
+ wtrCnRQlBkWhOB3KirrMUzUFTI6fvvU5T3tj/LwALRwIqwEu/LJE3ihN8=
+X-Google-Smtp-Source: AGHT+IGP4JQZeup6/doDZNz1GaDN13PpljYSGwOFljkBeej2Absml6SsiCmE9Fel8kW/i+gH0sni2BQ5oDZ/44EeoEM=
+X-Received: by 2002:a05:690c:14:b0:711:9770:161f with SMTP id
+ 00721157ae682-717c15e3018mr50689987b3.2.1752149872790; Thu, 10 Jul 2025
+ 05:17:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250707202111.293787-1-richard.henderson@linaro.org>
- <20250707202111.293787-8-richard.henderson@linaro.org>
-In-Reply-To: <20250707202111.293787-8-richard.henderson@linaro.org>
+References: <20250522102923.309452-1-berrange@redhat.com>
+ <20250522102923.309452-20-berrange@redhat.com>
+In-Reply-To: <20250522102923.309452-20-berrange@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 10 Jul 2025 13:01:39 +0100
-X-Gm-Features: Ac12FXwLX1hkjlmfNmoFWYbHGSgARVrM1qbuWMkOoHJ4DlMgTuu3qgk1PibLZtU
-Message-ID: <CAFEAcA9aH_31Z=C++baEMm+9TUCuVbKnYz7LMjoF0-Q_S_RvGw@mail.gmail.com>
-Subject: Re: [PATCH 07/20] target/arm: Convert v8m_is_sau_exempt to access_perm
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Date: Thu, 10 Jul 2025 13:17:40 +0100
+X-Gm-Features: Ac12FXzO4DBHWLYxhLABJgKWVx68G8Eozip7pNRbGpSQ-404RZX9fykzK5gdUGY
+Message-ID: <CAFEAcA9jxiazMKEyoPQQdqRBKydgkbKQobtLPyszSHT1M-LHGA@mail.gmail.com>
+Subject: Re: [PULL 19/23] util/qemu-sockets: Refactor success and failure
+ paths in inet_listen_saddr()
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eric Blake <eblake@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Juraj Marcin <jmarcin@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,37 +100,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 7 Jul 2025 at 21:58, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Thu, 22 May 2025 at 11:33, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
 >
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> From: Juraj Marcin <jmarcin@redhat.com>
+>
+> To get a listening socket, we need to first create a socket, try binding
+> it to a certain port, and lastly starting listening to it. Each of these
+> operations can fail due to various reasons, one of them being that the
+> requested address/port is already in use. In such case, the function
+> tries the same process with a new port number.
+>
+> This patch refactors the port number loop, so the success path is no
+> longer buried inside the 'if' statements in the middle of the loop. Now,
+> the success path is not nested and ends at the end of the iteration
+> after successful socket creation, binding, and listening. In case any of
+> the operations fails, it either continues to the next iteration (and the
+> next port) or jumps out of the loop to handle the error and exits the
+> function.
+>
+> Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 > ---
->  target/arm/ptw.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+>  util/qemu-sockets.c | 51 ++++++++++++++++++++++++---------------------
+>  1 file changed, 27 insertions(+), 24 deletions(-)
 >
-> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-> index a11df31b18..78a9c21fab 100644
-> --- a/target/arm/ptw.c
-> +++ b/target/arm/ptw.c
-> @@ -2754,14 +2754,14 @@ bool pmsav8_mpu_lookup(CPUARMState *env, uint32_t address,
->  }
->
->  static bool v8m_is_sau_exempt(CPUARMState *env,
-> -                              uint32_t address, MMUAccessType access_type)
-> +                              uint32_t address, unsigned access_perm)
->  {
->      /*
->       * The architecture specifies that certain address ranges are
->       * exempt from v8M SAU/IDAU checks.
->       */
->      return
-> -        (access_type == MMU_INST_FETCH && m_is_system_region(env, address)) ||
-> +        ((access_perm & PAGE_EXEC) && m_is_system_region(env, address)) ||
->          (address >= 0xe0000000 && address <= 0xe0002fff) ||
->          (address >= 0xe000e000 && address <= 0xe000efff) ||
+> diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
+> index 4a878e0527..329fdbfd97 100644
+> --- a/util/qemu-sockets.c
+> +++ b/util/qemu-sockets.c
 
-This also is conflating "don't check access permissions" with
-"access is data, not insn".
 
+Hi; Coverity complains about this code (CID 1610306):
+
+> @@ -303,11 +303,20 @@ static int inet_listen_saddr(InetSocketAddress *sad=
+dr,
+>          port_min =3D inet_getport(e);
+>          port_max =3D saddr->has_to ? saddr->to + port_offset : port_min;
+>          for (p =3D port_min; p <=3D port_max; p++) {
+> +            if (slisten >=3D 0) {
+> +                /*
+> +                 * We have a socket we tried with the previous port. It =
+cannot
+> +                 * be rebound, we need to close it and create a new one.
+> +                 */
+> +                close(slisten);
+> +                slisten =3D -1;
+
+Here we set slisten to -1 ...
+
+> +            }
+>              inet_setport(e, p);
+
+...but then two lines later we unconditionally set slisten to
+something else, so the -1 assignment is overwritten without being
+used.
+
+>              slisten =3D create_fast_reuse_socket(e);
+
+What was the intention here ?
+
+thanks
 -- PMM
 
