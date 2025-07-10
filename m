@@ -4,195 +4,176 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A6FBC83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 08:55:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F7F4C83F18
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 08:55:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZn2T-00084t-TG; Thu, 10 Jul 2025 04:53:57 -0400
+	id 1uZn2i-0000QM-PA; Thu, 10 Jul 2025 04:54:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1uZn2P-0007sf-3t
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 04:53:53 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ id 1uZn2f-0000EQ-2a
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 04:54:09 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1uZn2M-0003YR-1m
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 04:53:51 -0400
-Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 569Mgvbw018518;
- Thu, 10 Jul 2025 01:53:47 -0700
+ id 1uZn2c-0003a7-Fp
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 04:54:08 -0400
+Received: from pps.filterd (m0127843.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56A8Xk9F005901;
+ Thu, 10 Jul 2025 01:54:04 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=pm2SRgwQCZ9jiWGwZWNaL21zne5VUj0SrW3LuVusr
- G4=; b=G2sX2cSmyDj3zphsybQ2s1+4DnLk2eVXfJOd0iN8tMQnzCLfWhwEjKt7m
- 6A8362vR2OY19Eml6Esja/m5MDfPuLlgkKrIzdzc8aTmfrAW/AyPogeng9waiJ2v
- L17SezzTPmTfDTgGJD6bINt96ykbAGDxeGpBTqlzlrcmZNPQ6D2T5cIwHNq/EJQP
- t79KMrAAXWblciLF72GPKYRKIDvgA1p3QwYfyh5PgmnToTIECEbJEnVMJljWTjus
- +nGamQBiivLFRWJ7lZ1fHFDTUBodpghrxkNgR3A6yHND9Er7dtoc6j057Nzn2IPw
- +1dK7p2Hqevi8/ZI6MnNxb/r2XvPA==
-Received: from cy7pr03cu001.outbound.protection.outlook.com
- (mail-westcentralusazon11022103.outbound.protection.outlook.com
- [40.93.200.103])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 47q3m150kw-1
+ proofpoint20171006; bh=srwo/MTicQQFXhI1NLoXSJCzuRP7LozOadrVDq6Tl
+ CE=; b=I0XwOqRZLQat4fAkqvxj0/5GVa/DdTsPP/f7VLk2lo5eP21kqKYcgUxEn
+ kUCe5lrX6gy0yGgWDhtVdyxbE2GX985lJXo7L+jlpU4oLyIwLiAtDPp75si3IOJv
+ XIainsfwilEys6sPhPeyeexjzV15P/rCgCDIHSdtR+MPCPpHwpdjit4MsK4fGB0d
+ gjfJ2lTiImivfNWpp2eM/cKXp4IsThrbgTl5SEmzNk6shs0cVD+CpopeVIywSGOs
+ EzP27PHpVmTbBJYvPpQV67XPj8CuUT4K0ns6fZ4g7PMei0KDgmh5b4AxE2I1YAe4
+ VxdiefkHxySWPeENtcDOHN+ba36AA==
+Received: from dm1pr04cu001.outbound.protection.outlook.com
+ (mail-centralusazon11020140.outbound.protection.outlook.com [52.101.61.140])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 47ta49g1h6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 10 Jul 2025 01:53:47 -0700 (PDT)
+ Thu, 10 Jul 2025 01:54:04 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wek8i7YNiJ0JBw/1sCfzE2y9X6/B58xFuqDF612R0TZs5HRUnM4qopRTb9yek4zlQPUYW9p4/fU9V74hUA8iSTsZBd9gz8VMRhdTMI6pSRTar882/7nyOnXi8gIqyoekJHIdG8gQEAwjC9WG90Eamy6pbO3t/u6P1yzdocX47nEVXv3gl21AIEBIOeLoHndu212gAMavDn3LJtSTv92pFAflBd0Bng/qeDe9SL47OI2pkessMO72bSx7uZ8ssTz82XxJ22ezIlqDOmTAwygjQnaGDRAe0gJ9td3GCE1pCjSU5q/GUIsmLx05qLxFdoeDxFjKrTM7y02hMwjCU3smnA==
+ b=R7QbpxO97HMRGIuPCSOeTYWcPJy23AyOTn3VqPavNKBhIB+UZBfh3T5wntDvrEaj0GdX6nq79qY/SUnoBZJRQpsnEEpG7xKWYlEcatzj+8TnfpBZxMHMB+nbWNWGxYohaPbddymB1y2+BX27/+cDV/yX83rB/uaUzPo7W4sUA/vVqTzlZJJOXo5EHFSzGTAUIDVMBeHjy+dNeSrF1MQcpPhMjYy6mtBbSKkNqE6tfPOMMVPOsHYgEPrNdU1C5KqLOvvHt2X+DQD4jupQ02dVhTO+aLmTmQ9DtfIFsKnrQUe85h+TFBVLD2Mlnysd3A429NjzCmmldTkYl7fRZKCS2g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pm2SRgwQCZ9jiWGwZWNaL21zne5VUj0SrW3LuVusrG4=;
- b=jc8jDps1QTKaPyjWTHL+fdsnk5NjIJaLKJ0dcsv/2cq4y7mAr6bm27gpyENHyqVr5oMR8TjEf68m8DIBQOxxnlsx2yI2bOO6JHoSxWen9l3FwaYSxyRmlfo7fxbwv/9m1D6FbVaCy1lLVR4FTSm0Np7AEsRC/Sqgq1lU+CEV//VTQXBmVkHWitO68oIod4zPCtyPqxsJ7/dWKuGsN0TF7iTFtaPFGKELhe2Dou8VTdrdcmWNX7Dz2PdM0Qe84NAuWcQx1Bz+8EvcCB+6Mk0RQtkCrclHbDNf4OGTI//hMfeveJkR6ey9vFBwzhUzatD4Jbv28JOdGojQ7hcR6Lbgpw==
+ bh=srwo/MTicQQFXhI1NLoXSJCzuRP7LozOadrVDq6TlCE=;
+ b=opLEwHEQz8z5mnAMre/3pnpv3bmNiP2sJW93hkQ0mL+QyrLwELNu++0RqfOKzoQrJnvpByvih1ja1rhvXoEQ7Aq6qpB4r9a5kr4UsIvPalyRFpxsezJyOdQ6Hvavv02wnqgvShRzBKGu+mpslP0VJErjBRVyL320NayMnIgIN7hyKOU9idh+8AoEiaXLelwwrUhpLB9jMsxy1BARgNWjl1fDMbpuLZxmJjFiR4SJ/kW8DQ6olIz1GdDr63txRzHInBGyrqUbX17Eq7y3n8W5tooDL9Oue/9IQdd+Roj0RF0HJ/U5ThRk+G85ZqOyAC/DEWMnxpdicKjKBctMYacLcA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pm2SRgwQCZ9jiWGwZWNaL21zne5VUj0SrW3LuVusrG4=;
- b=CUkjcL/a8bJzBK1YVWoxYl+9RbiF07e6M4szDkdGhw11xASgC++O6pDn1MVG0x1pfX+d3zIW+Yt4Ydd82eoN7I+bUmF7uDATIKSWzdgoxOzs4+2xdxHSjEtUPA/JNU2t8s144fdkQgcTrj0cL7f6q6FR6c1r9OE08B+4e+7WUQkEDjIIHpbYPlMm7kIlrYwglQsecXeNSrr/av2rkQrInhOwFFfGOyBEO0SFfwmUs9NuXRWgnE01nT2wPrWnyYQpQFh8H0PuLSohlOqb9E++nyRVHEd4xq4+gdWf0VLsmqjpNw/grRlLfg5RtGLj68bHpD+jRKXkwUPps6Q7ZK8Dow==
+ bh=srwo/MTicQQFXhI1NLoXSJCzuRP7LozOadrVDq6TlCE=;
+ b=eZuuT+h2Ko17JQwMbbFLd9g4BoJ0lGIOeBbQ+eEViu2B4PydHtOyi0BXQ46/sisg1tXZsE5w3wHikEAzr8sS2Gq8dgRqcDw/I5oAxaLWMslmrsc6BTz+9MD8BDS8FFL60kNZa8OKpXS22f6isKiaeWpmyPlx/IahzpKgIpyZWCbDrR1+8PA/jJHLcmzqHEmePo8Ht9iuabNVN9UZup/y9tto8nXxyr3rlfe++yPWch6x9SIRHIV6/eGY9fUdspFcCpA/Hq5r1wkfiM4SZmSmDJVZT0X8JuHvR51b5fbGvGBrX5FPNg3S6j98XO2s5E6lOui7y3cnnadnyJSEYNweaw==
 Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
  by BN0PR02MB8048.namprd02.prod.outlook.com (2603:10b6:408:16a::20) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.29; Thu, 10 Jul
- 2025 08:53:45 +0000
+ 2025 08:54:02 +0000
 Received: from PH0PR02MB7159.namprd02.prod.outlook.com
  ([fe80::6cf9:b35c:b143:bb88]) by PH0PR02MB7159.namprd02.prod.outlook.com
  ([fe80::6cf9:b35c:b143:bb88%5]) with mapi id 15.20.8901.028; Thu, 10 Jul 2025
- 08:53:45 +0000
+ 08:54:02 +0000
 From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 To: pbonzini@redhat.com, mst@redhat.com, marcel.apfelbaum@gmail.com,
  eduardo@habkost.net, imammedo@redhat.com, qemu-devel@nongnu.org
-Subject: [PATCH v4 09/18] hw/i386/pc_piix.c: hardcode hole64_size to 0 in
- pc_init_isa()
-Date: Thu, 10 Jul 2025 09:52:24 +0100
-Message-ID: <20250710085308.420774-10-mark.caveayland@nutanix.com>
+Subject: [PATCH v4 14/18] hw/i386/pc_piix.c: assume pcmc->pci_enabled is
+ always true in pc_init1()
+Date: Thu, 10 Jul 2025 09:52:29 +0100
+Message-ID: <20250710085308.420774-15-mark.caveayland@nutanix.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250710085308.420774-1-mark.caveayland@nutanix.com>
 References: <20250710085308.420774-1-mark.caveayland@nutanix.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: AS4P195CA0042.EURP195.PROD.OUTLOOK.COM
- (2603:10a6:20b:65a::16) To PH0PR02MB7159.namprd02.prod.outlook.com
+Content-Type: text/plain
+X-ClientProxiedBy: AM8P191CA0023.EURP191.PROD.OUTLOOK.COM
+ (2603:10a6:20b:21a::28) To PH0PR02MB7159.namprd02.prod.outlook.com
  (2603:10b6:510:16::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|BN0PR02MB8048:EE_
-X-MS-Office365-Filtering-Correlation-Id: f3171dab-7461-458d-ca22-08ddbf8f4748
+X-MS-Office365-Filtering-Correlation-Id: ff85ec56-bd4a-4389-8135-08ddbf8f5186
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0; ARA:13230040|1800799024|376014|366016|10070799003;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?Vi80NVplRklydUx6MEhrSlRsRldJUjdyK3cwWTVpSk04RDhJQnJqcHh3Zm1S?=
- =?utf-8?B?T3ZkQTh1RFFLcWlITlBjTWg0aUhGQjNMLzdwL1J3UWZ4VHVFREdOZjB4Q1R0?=
- =?utf-8?B?TGtTRVcycS9vYWVJZzB5ZnJQTEhyVmRNL2R6c3BXdjVDeDJiRkZPd0lUbU83?=
- =?utf-8?B?MkVlZlUxalNXaXlnU1JxT3ZLSWJFWlIvZjFuYzVSVHdWQ3pBRHp6Qm5vSU5H?=
- =?utf-8?B?S1h3S0FwNHY0dURnMFRLRG5SM1RQelFVaHlrdlV1RjBteXg5RTRLTmhHd05x?=
- =?utf-8?B?UmJMR3pFZ2ljRlBQcGxwSFBIaEhzVjIvMFZ6K2dTdnVUQnFacy93a3RpdUhL?=
- =?utf-8?B?TEFsRzdKd2hoejd2a3NaYUw4QzVsSExKd3lQZDVMSzdZUGpCTzBrSmZCSldk?=
- =?utf-8?B?NUQ5OC84bzd2eXRSWHZaZ2tqZ1RLODdlRWJQNERSNWRacm9vODdSN0o1Z1Qx?=
- =?utf-8?B?c0puQVJWckFteXd1d3ZYS2xJbldDL2JWY1h1MzloOFdYRWQ4NjZBYWdqTmtM?=
- =?utf-8?B?VjJzMkU2NFNHMGd2UW1zcnBmdW5XY1FmT21mUXZ5alVuUHAweERKOTdFbGFp?=
- =?utf-8?B?VXJvOVh1dkd4SGphOGY0RGRDWVF2SjlPcElscWp6aVpHbGFOQWhVVGRWUTI3?=
- =?utf-8?B?RTcyTTRKSVlQMk5ndnJnbDdnWDB1MVNtTTQ2KzBVdHcvSUJpUjdPYnB2Mk9h?=
- =?utf-8?B?djNnaWNxQUhDREorVXR3VEUvT0lKM1ZOamJxeHBqY282Y3ZoL2ZTZXhkdE13?=
- =?utf-8?B?K2ZOR2FaUGJnSlhjelYrODRZVU1tRzdPUnFVbnByamVTVnhHc1dRTStJMnRq?=
- =?utf-8?B?Q2dVMWlhaDJNcGZFN2oxNDI0UkFacGxKdUJIbzRqT1NqUEE3cS9ub1hsWFRi?=
- =?utf-8?B?ODlGZ1g4c3ZWb3ErNE5hMnR6K2k2Z1o0VU1KOXhFWXVZK3R3aFc1NEJnbnVE?=
- =?utf-8?B?WnIvVC9WWEN3cEYwZCtERDNDek1RYmlwZWVudzQ0OGFmVXpqdnhrdmtSRjQ4?=
- =?utf-8?B?NXA5bk52eis1U2I4M2hCQytYRENNNEZCT3pEdjNyK3FQWCtHV05aNzFxZkVi?=
- =?utf-8?B?S2g0Q2pJUzQyLzZMRW9YVDhMc0VMMWUxSmsxb3lwQ0Nvc0tpTzNzNGR2b3Fx?=
- =?utf-8?B?dFVjUDcxZHRHUzRXSlNkeEd5RTRoNlVrNnBJYWJCTFoyM0xmRnZjM0Q4TSsy?=
- =?utf-8?B?aE9jVzlMZ3RsMjBETVYvQTgyOVFMbVZ3ZmVyKzFQWXI2K0JmTWNOTFI2RStH?=
- =?utf-8?B?cWwwZERaVFluelBVSDBjN2FPTCs4VzJiVVBiek1sYkhyNThGNEo3VjYzTkdi?=
- =?utf-8?B?VTRYUXg0NTZlY3FRZW1Gek50R2l6VjBPbTg3T241YnMyblU1cFVBNlBHZnc5?=
- =?utf-8?B?cTFVbVA4TWRRQ2tsak8yRnpDbmQwZE9tbXhUbno0NXNCaWRkSVF5N1NJdUla?=
- =?utf-8?B?NVNJcVMxNXlSOHQ0NDljK0lYTHE1NnpWZ0tHYkN5cGdWNTFpNnFYcG8yc3Bl?=
- =?utf-8?B?SlVGWE83OUwrdWZ4cWtVOSsvK1RZYzgwUVp3Mk9qVDlFVDNSVzdGNUZXOUN1?=
- =?utf-8?B?WWg2WDAvQ0tJQjZKcDMvS2xPRGhTM1hja2JYdERrTUZIZWtrMjMyTVVPVitx?=
- =?utf-8?B?ajlWSC8xbG9QTVZJZTAwVGJnaTdsMTRmM3F3Szl5U0YvNDJNTEJiTEdJRkpC?=
- =?utf-8?B?RnVKRkY0NnRvLzFicUhEanlwbk8rWmpOL0Z0TnJoZ2FPai9WcVNGSXVMSnNW?=
- =?utf-8?B?TGtKZFZITWFrK1ZRaDllQzh4UXlDaEltOXpCZjhQMVZVdGxNdlN2d204R3E0?=
- =?utf-8?B?TGdSdnhWdWR2elo2b1drWE5udkJqOU5sci94bzdITm11THZNSm85YmpDbjI3?=
- =?utf-8?B?UkNlS0V1dXd6RndzdGhibXMwRkVDdndDRGRUeUd4RnJlUUZMUjdEc2RTWGVq?=
- =?utf-8?Q?cIZbpMBB6y0=3D?=
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?YOanoCffa6+d+9AByA0ttN0WiD2qjavdcjJCYQBT3UZJVboBSAblU/opXahe?=
+ =?us-ascii?Q?PXiwq0+pU6txSznyeH5uTwOluMNeOjFj3pUSGn+kyW1gMAaotCbrN8Yh978D?=
+ =?us-ascii?Q?rWqq5IyPLkR7ZCx6fbAbYYNK+3sL1hMMvhWNjJBEkQE5tJlTVEnWe/LUJCqM?=
+ =?us-ascii?Q?8NWEIFdwXHreqqX2a18kjdlDdTlR1K9G3H9ycS978VzAN/zGN3jJOopQHl3R?=
+ =?us-ascii?Q?7w17avsyCGLy3aLqkQHEEecUtYWUBkpPIhsoO/l8NaPPFZ5cMC9076whP1vf?=
+ =?us-ascii?Q?6EIVSx16UHuUKX6i1npHOB7KLKteNLXzfmxxaOPvxqZ3jCRv/rtdFk/Eq4v7?=
+ =?us-ascii?Q?wYZhu6lxUq34LZ5/bV008vAc37q1XexQzzwY5n/FK3nulxZUJ/+Ayr7ksYco?=
+ =?us-ascii?Q?xZFotJ980FO7astOYfGOrHKGk9UaVBc/lKf8WTka4TUFZkmb3TVOfCab+tqR?=
+ =?us-ascii?Q?7xNLoQaUUrxZkUq7fXs26SJ9tue4lTSm22PoXu7AUMwxrOU0rYZKAutAHeCj?=
+ =?us-ascii?Q?VtwHUOYp1IJrn476uR0C4zWQtLyWDpZ/00HuVr6wwghiBNBA5CvoAKpp2oyr?=
+ =?us-ascii?Q?Hg4Arj0MSFDFIprRmC/5skGHNQQLwC/WYd4cl5WiiRV7qBlKcPkYxKYpxwGe?=
+ =?us-ascii?Q?HDU0YnNTfpQsbCwx7NUK+tuXh8KGWOD8CcposNq//hQDHZFkp3LIkPFmCJwE?=
+ =?us-ascii?Q?Z6qTqsex2Lu+XZ9urhncKlSJEiI7vYPUWNVeBK2k/BhfgDH/RYlAOJ0rwATt?=
+ =?us-ascii?Q?vaakJ978nKUJwiook5hQa4lelCQGBbIlP8sLnC3HNXBLZs/RtLiyWtpreedj?=
+ =?us-ascii?Q?T/uNn3OvfmwD4+2N5a2AZrEIUFHEOGVxA6v+7tdWG5rdlx8xWOhOPzubESI3?=
+ =?us-ascii?Q?GOOoiavUEAAsdEyieUJlGPwhiuXREI9l1ogJRRiV1lpmQiJlS8ve2MksW3L4?=
+ =?us-ascii?Q?yi/G/VovHzHu6GFWuf9xnmVPBuFFRx0/W+fw9n3huflxpsfxBEp9hVvMPNud?=
+ =?us-ascii?Q?hYIAdnebxOwAOlbez2Ew3V0kGOCguai+lkA5innyydx/h7LhHRi9Hs0jx/2q?=
+ =?us-ascii?Q?jRBUvzNbDT5UAJadszUwlTr9c7iqFKpfagonJxVLUYaOG9uCvTV1Aa4R4D+j?=
+ =?us-ascii?Q?CEqdr8BP3kS+x3jZVxE4/PS35/+NyrXrUVinQN2V80+z1RTW22sEyuGa/foN?=
+ =?us-ascii?Q?eOtSNIwgpDhnwPZsxm0pqHDBN39VDdrC2OlgHWpl/iI2ZeY8nrKVjNSIehvu?=
+ =?us-ascii?Q?HbHm3NG3StrTgEA6HqlI1ecUiKzSyvZ10E+ipLki6P+xMFft9Dh7uDD8aADB?=
+ =?us-ascii?Q?O6fW9ASlK7ubm2AQd1oADLodtN2VJCLzLpH32DCidCGlv0YGBWY4groKAGmh?=
+ =?us-ascii?Q?x/C6Kbrmz9m9QRznA/+oUiFxSrlOgog289FHJSH8tn0+Yqy5rND3Nc1V/C5p?=
+ =?us-ascii?Q?fHa2gUTzhuM=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(376014)(366016)(10070799003); DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MHVGMnlHeGFocElmSXQySEJVQVRjeEV6TzRHOUlHR2loanZmL0ZLRDh6aC9p?=
- =?utf-8?B?cms3U3NvODltT2xvZmRvK2xkVGhhQlN1dS8xTGxQVWxRMXZhbEc0dnRSeDdW?=
- =?utf-8?B?NXhBODBtbWlGR3dZSmZPMkRUSVhWWkhEUWtJR0ZFVlZodU9jNmpIN0lHL2o5?=
- =?utf-8?B?aEdMY0hsakFzbjhrdnVmaUVNSWVPeHA5YW02WVN4VThHeWx2NXIweHZSRXJj?=
- =?utf-8?B?eGNHdGtqUmdQMEVFRFNVTGJJa0liaEVJMnk1ZDBWUm1SS3BkZDJtaDZhUmhT?=
- =?utf-8?B?Nm1WcjhXWUpWU0t0MTdWNzNHMVNGT1VBWXB2L05jQTY5Y3FYRUx0Sm1Yb1Yz?=
- =?utf-8?B?RTVGQXpsUGp3VGl2TXF5dy9oTGNsRitKVTdsczZsakFSZnBHZXBoL090V2g3?=
- =?utf-8?B?MVZBc2NLV1M1b1d4UmE1UE1UcWFkdHVNNFdTVWxhWmZEYlZPcTFNdUFuY0wy?=
- =?utf-8?B?ZWZhMG1jYWV0MkJWL0VCRnhFR09maEVCd3VtYmZEcFEvMHZvems4MS94cTFX?=
- =?utf-8?B?ZUI2NzNRMXVYVjY2ek9NWWNTUHVKNWlqQWNYYmpwMlo3OWRtQXlGekZLQndo?=
- =?utf-8?B?M0ViNmpLTnhmNE9kTGhvajMzcmwyMGpLcEhpbUpSV0pPdk5hOUZiM1F2L0pF?=
- =?utf-8?B?c3MwU1FydHhBTUtiYXRTRjJzcmRWZ2dQeFZ3dVB4Y010ZXZnNXcvQ1FZZDVj?=
- =?utf-8?B?VFk1ei9ETlNDQ1UzVG82enZIMWRzcitWVjBGdHNFSEJjeGhjeXR5NGEwMDlp?=
- =?utf-8?B?TjIycGRjbkp3UWhZTDdrYlJ2ZUJ5MzZobjZ2T2ttaGk5MU9nNWc4OE9qMjla?=
- =?utf-8?B?a29OWi9oaU9Yd04wclFveU94U2syT3Izdkl3c0hCV21Pd1p2UFdyMUY3YXE3?=
- =?utf-8?B?VHBSQ1lsUCtrNDVzWk9ZczJsS1BMdUdRRWVrd0pUQ1FVd0lYbSsxV2RYT05U?=
- =?utf-8?B?V3J3MUs3ZjBvM2x1elZZUUdSelRicWVrWU9wcEZDc0xZeFVOakpOVmVhNlNr?=
- =?utf-8?B?dTNhWENFOVd1RnpDY095QjNsSXZ0QXFiakZGRTRVclI3eVBINXpXNFFqQ3Fl?=
- =?utf-8?B?aFlFdGhhZThyNWR2YW9uNjlaQ3VvOTBxaXY5T0U4dTM1NGw2eVR5dTd1MkV6?=
- =?utf-8?B?cEkzbVN1a0l1N3lYSDBBSjB5eW9ObE5OOHZqUXJWV0YyM3RvdkYzTGVJMTFX?=
- =?utf-8?B?ZU82Sk5Fb0ZwSEhXWkU2Tk9NTit0Ti8vNUxVNXBZazZMWm5uYm90SURLaW9n?=
- =?utf-8?B?ZmVDdXVFSmtFTklZZWNBazkrd2FYcVFPYTFtZ0J3SVljOUthYzdRNGlaak91?=
- =?utf-8?B?RGVXOERRckZkb2J4bEs2UU9VRzF0clQrT05WTmV1b3ZRN3N1bDE0TnFBUXJy?=
- =?utf-8?B?SkJsMWk5QWlGemNCUjg4d25TMEwrek90a3pRMW1qTzFER0s4cHFwNGJBbVNw?=
- =?utf-8?B?cENuRDl4STRpMi9XdmhaNjRrakpzQm42eGthQ1VtcHF4SFdJcS9pRjczNFA2?=
- =?utf-8?B?SFJzTWVOblNxQ05ybkdPOTJtSGpCY1Bsc3NaYlNuTXV0Y2kwdjBJN3Z2a3o2?=
- =?utf-8?B?M1RsK3d6eExFN3ZPaXU0bDNYTkNQRFNTbm9tWEUvdkVEQ3ExbTBWMjlDN09X?=
- =?utf-8?B?L3hoemFUTUJwc0RsblZyQWNUUFRFT3hyajNFcHQrT2RjZzFCMmcxMTJDZ1pK?=
- =?utf-8?B?b0NFMEpXc3lhR0ljdXI3TDd3Uk12Szhwd0ZBSVlDM29hLzFpeTNyMGQrQ0lS?=
- =?utf-8?B?aUZSeW8zVTBicWU4NjNSV2kvMmkzVFE1MGhkdmZ3RWo2TUF2VVdaMXl2SzRk?=
- =?utf-8?B?bTMwWHJVNGwxTkltMENHQUdoNG16TExqT01kSVFjZjFqcTl0NzVJN1Z5bmlw?=
- =?utf-8?B?cW0wYnRGV3Q1YVFObzJKbkJmWGV3OVI5TSswZWkzU2YvWkxYQll3aDJUaWxt?=
- =?utf-8?B?YmNFc3VqelhKYkgvbzV4MXVtN0xXK09RdW44MGtKU3lNWEdxR2R5WXdGazcr?=
- =?utf-8?B?SndSK0hwVml4S2grUVdMTyszTWh1OFUrNVorM1M0aGRueWllS05RZWVQYlho?=
- =?utf-8?B?Z1Z3RnJtU2lkL3JzcUwvaWZkSXd3ZXc0QWpvLytBRUlLSXJTcS9GcDBVeDZI?=
- =?utf-8?B?cFhCc3duQVZwVlUzNjZaUkhBNjd4cFpZeFJNUGE3RTF6WlNiM0U0M09uSmlB?=
- =?utf-8?B?WDFDN09uN29oUjRkeHE0M1lJN1BzcE1HT2xOSlltVTRUL0R5UzRLNFc3eHZZ?=
- =?utf-8?B?WE1VYVNwOStGUVB3Z1dmbWtFVG5BPT0=?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?FOgVqFk4Fm/HFPsA3ooQoOjjcZYGG2IJOPKYcb/zhoy9Qb+86wVv70i4DNS6?=
+ =?us-ascii?Q?1aAX11Zl62YclRr7ATUpeUvml2g86GVkC+s5vuLeItoACTermahv9C5hjfAN?=
+ =?us-ascii?Q?ysPtXaQkqdsSy8GhToCBLqr2o4s9f7EN9x+pbTiO0tJMYjYSxHqUC6muaCEO?=
+ =?us-ascii?Q?mYv8XCzdv0q1RIrAVvLshkeeOfBBrNzhnCs7VXjvjjUs1OnSHlF9w/bSOvwb?=
+ =?us-ascii?Q?mq26sEPu6Quxs6PbA8aM4zHyMTTjoLNE+SaZ7fg7smM+Wl+bh+W4BDztICbi?=
+ =?us-ascii?Q?pfZZ1PjlWqVgTQVPFI9PGrw+FfMAD26rUby5gGBUpsHOZfmFzNpzAXOrmTrQ?=
+ =?us-ascii?Q?r59V6NwTNN1KBZ9SFmHcFK6PiZYFLhy7MvZXGirmdLh3NI/WY88acRkmjTh1?=
+ =?us-ascii?Q?UsvP5xd+mMQr1e3Of0kJvza00Styp4XQFfEQj6bCultm3gnzQnSyeIySY39A?=
+ =?us-ascii?Q?EK31zdHcQ8ri1OZsiV8sNmpQ12vZsYIOi6/zwE/DGzfyTl0daLrzimP9u1SY?=
+ =?us-ascii?Q?g6s2Ovhbjk97CT2o3UXs9eBqWTSupe3T27l6gy6kXCIe4RwU2yUlzSRH3qDO?=
+ =?us-ascii?Q?eBhWlNMjW/iUT0XX01lzXgMwdngh7wB6DnC4PncV0VJmLHrbFjtwV5M5Lnni?=
+ =?us-ascii?Q?LNcccaNQviB1c0gdX9TRcgVwgI/+Ws+qxogbcfz8oKJnE0M9hJMwWmIzvnr5?=
+ =?us-ascii?Q?8vKv0DOUtHk+E9c01cdqfecBYeh3tepvuYRqU7+pat4CFOVY+E2303TUVaBT?=
+ =?us-ascii?Q?cbYI7dA3ULrlsplIKJ4bwtS5Dp8aMSjcDYyv+FfkqE41KvLvksBt3EdOTxdY?=
+ =?us-ascii?Q?s4ublmJa9FURMyWzpatv0be6KeqRtl0t9tfO54qErYyGYGZEuldF+gn7dx6/?=
+ =?us-ascii?Q?GeXiI+GS4YWKFIFBMQO+ihIUNymopidVDSO8X2oZJJhtzsYqNwl8dawgRD4a?=
+ =?us-ascii?Q?CV87DDs6mcrdbAXVijHlD0D+WsTX9GwyDkP86RyVnINC4s6UO54Pu753oao5?=
+ =?us-ascii?Q?xfavRGT4wNrKBDiN6wdoyoJVSS4mLyNGzPpAq4Zmi9Fh7sQu8Owwa9V4ksiD?=
+ =?us-ascii?Q?bBGgCNGzZHuUiZ/L800N+jtc92AA2Filjtd42T0obZbPA4V16C+ZXBuW9QPZ?=
+ =?us-ascii?Q?koTt4ldmlG8cu/I5bfrS2Fuc6x0eZGY4k1l1aSgcAarVZX/d1YKeSpdU9aa1?=
+ =?us-ascii?Q?dHOrFv2pmcEJBRyDPJMzJt6JdMsKsexKzfRSFanyW6+k+fsRm36m9uY3y4Dj?=
+ =?us-ascii?Q?lLEewiHQXe8Wtscoi4GmLW6N/nUUTRWtQf7WesonwnIx7KTaJ8nWlMlrhlJP?=
+ =?us-ascii?Q?HTt/2o/DWpsgpjT4zmLJzkbo9KSsgNRDJsDHr3QkAzks6F5a6zl+dd3PuGb8?=
+ =?us-ascii?Q?vA2EdK3z6iQxmmpJgqQckNvY5SzlJF7QtKDGatbytK9BtM9Ii14Bwd4hvlT6?=
+ =?us-ascii?Q?KHAvSuHbfD/egvHB6/eTueUsmo3Nk2pq4SOABUakI67twIWaEasF4H/kt4FL?=
+ =?us-ascii?Q?WLyE9qlfICT3EsxdfSMHNptoHTu04r2exNSepcoDqBVcZiewdi78+si2axuc?=
+ =?us-ascii?Q?rmYgEed2LGH3NoopZSVHWewYIPbBWwynmELuhbbhwIeSUhzJUC5B2c54VyiK?=
+ =?us-ascii?Q?qWdMZj5W4q+usggjh4GdX6ENrd20nZJkDQ6jswbLzhabelnO4GOBJC55n9eI?=
+ =?us-ascii?Q?CNrtsg=3D=3D?=
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f3171dab-7461-458d-ca22-08ddbf8f4748
+X-MS-Exchange-CrossTenant-Network-Message-Id: ff85ec56-bd4a-4389-8135-08ddbf8f5186
 X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jul 2025 08:53:45.4691 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jul 2025 08:54:02.6428 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: gF8ghrqLUEem5vWLl3iejGy5z0rM1UH51oQLRuQrnL1Zf9QIMx7URX+akGzxn9quzFcMkiiDfWcFOxV31f/EFj9fQmSqP0NkBkp6wsclXXY=
+X-MS-Exchange-CrossTenant-UserPrincipalName: nKhuq5GXh8A5OioZjQebwCKlrdDLMR4Hb6snfMWdkdecSEZz471044uzJEedeXKMsWxQ9hcBFKXzr+Zzymn/KAnxxcsReWx2rgrXc03UuF0=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN0PR02MB8048
-X-Authority-Analysis: v=2.4 cv=Nffm13D4 c=1 sm=1 tr=0 ts=686f7f9b cx=c_pps
- a=NRt2x9XRVm29nzkZGme07w==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+X-Proofpoint-ORIG-GUID: 2NmgLb-S3G4aQs6NIFV3dA2yS0v8Xm8M
+X-Proofpoint-GUID: 2NmgLb-S3G4aQs6NIFV3dA2yS0v8Xm8M
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzEwMDA3NSBTYWx0ZWRfX5uSAIqXuzQZm
+ sSVv3DA2MW0zyWgZvgsKWHuUvDO0yBhBCXTRZ+cKGe3WH/3sMHsC1HdLJ1ylROJWYMXsYL1dnbU
+ /N/9Wk8Lva1RtmRl9rWpDmfH/hY4bt4yB35CYEcnQMeBHBH7Sv/X1dA6yGUWNWdgf22ua6cYVj/
+ 4xM78VU07E8jQjTWkDSAXMDWamA25Dv6BNKqC1xvGMmMupak2o43oSZ3ZaEA5oiKDP0PM65fNGi
+ yrPdOdyk8iRpmsxww1er90bKqeF4o/ymj/jgODAyzFTP1fy+XHy1nmRT7Bcg/THlpduVQxElI+y
+ OospVw19hx1i5DD2PFkWZNvtlaSY1d3DPgNbLwOddzrGD6qG55RAvqpoNSiInLuYhAzvDQ42ecT
+ TpZOG8E0mOD4y+k24AzH7r+otYHlSJX1T9v8zRxoMyc4/bHG1qIJfhvjYKWIfKSH49bOcvtC
+X-Authority-Analysis: v=2.4 cv=fNg53Yae c=1 sm=1 tr=0 ts=686f7fac cx=c_pps
+ a=I4ZpZOlEiWfCXB4Cv/CMvA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
  a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=0kUYKlekyDsA:10
- a=64Cc0HZtAAAA:8 a=KKAkSRfTAAAA:8 a=aqeCdxMHYQgX1PSeTiMA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: Y2I9djKr7bSLUkXm4C3lpAcAlFWaZZTP
-X-Proofpoint-ORIG-GUID: Y2I9djKr7bSLUkXm4C3lpAcAlFWaZZTP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzEwMDA3NSBTYWx0ZWRfX7Wo6TEcg91yN
- WxP+fNmfL4R5zD2yWgoPGXh3qYrw/OQRhxWUhg0JF/RlOc0895pUJuwzgS7yiXRSRiVQgdzzyrF
- DGyaSQnVhdyb1gZxKT8uPIGn0DMJMvrMmTZuIhwnRVye/3tkGHiVS1kBJoqGXM7DBW0POc6/5Y1
- PXcS5ALBPn/wMo058MpT/VQPFKsVbAYiDYp/2GD+/94QSBxeuznVegM2MEX1gUpb0kFsWlhqWW5
- /ygrtYj/B+HXeDYR/oIhlrMv/wmVFj7cjlgQpMGYkhZ2iF000ARdJcY2r5uMffYma28NibrDZyS
- 6BH0/LHQtDGDljTkiAlRrBjpci7/YlE+lEUio0Ctd37JYDWXm5XXbyB5P5FH6ogbLtSAjHAkdg9
- jyO/sWvnLi0pTU0DF/I7/LWMmLc53hpS7v+tEimXJDvgTt1WRZGaEprVL6aYnq9ez5kiGt6Y
+ a=xqWC_Br6kY4A:10 a=Wb1JkmetP80A:10 a=0kUYKlekyDsA:10 a=64Cc0HZtAAAA:8
+ a=lP01sPVOnlGqiXarDuQA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-10_01,2025-07-09_01,2025-03-28_01
 X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -216,36 +197,258 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All isapc machines must have 32-bit CPUs and have no PCI 64-bit hole so it can be
-hardcoded to 0.
+PCI is always enabled on the pc-i440fx machine so hardcode the relevant logic
+in pc_init1().
 
 Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i386/pc_piix.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ hw/i386/pc_piix.c | 194 ++++++++++++++++++----------------------------
+ 1 file changed, 76 insertions(+), 118 deletions(-)
 
 diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 80e4ed8c87..48d0b2f5b5 100644
+index 70eaf5ed48..cac016df22 100644
 --- a/hw/i386/pc_piix.c
 +++ b/hw/i386/pc_piix.c
-@@ -426,7 +426,6 @@ static void pc_init_isa(MachineState *machine)
-     GSIState *gsi_state;
-     MemoryRegion *ram_memory;
+@@ -70,7 +70,7 @@
+ 
+ #define XEN_IOAPIC_NUM_PIRQS 128ULL
+ 
+-#ifdef CONFIG_IDE_ISA
++#ifdef CONFIG_ISAPC
+ static const int ide_iobase[MAX_IDE_BUS] = { 0x1f0, 0x170 };
+ static const int ide_iobase2[MAX_IDE_BUS] = { 0x3f6, 0x376 };
+ static const int ide_irq[MAX_IDE_BUS] = { 14, 15 };
+@@ -117,6 +117,9 @@ static void pc_init1(MachineState *machine, const char *pci_type)
      MemoryRegion *rom_memory = system_memory;
--    uint64_t hole64_size = 0;
+     ram_addr_t lowmem;
+     uint64_t hole64_size = 0;
++    PCIDevice *pci_dev;
++    DeviceState *dev;
++    size_t i;
  
      /*
-      * There is no RAM split for the isapc machine
-@@ -461,7 +460,7 @@ static void pc_init_isa(MachineState *machine)
+      * Calculate ram split, for memory below and above 4G.  It's a bit
+@@ -187,38 +190,36 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+         kvmclock_create(pcmc->kvmclock_create_always);
+     }
+ 
+-    if (pcmc->pci_enabled) {
+-        pci_memory = g_new(MemoryRegion, 1);
+-        memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
+-        rom_memory = pci_memory;
+-
+-        phb = OBJECT(qdev_new(TYPE_I440FX_PCI_HOST_BRIDGE));
+-        object_property_add_child(OBJECT(machine), "i440fx", phb);
+-        object_property_set_link(phb, PCI_HOST_PROP_RAM_MEM,
+-                                 OBJECT(ram_memory), &error_fatal);
+-        object_property_set_link(phb, PCI_HOST_PROP_PCI_MEM,
+-                                 OBJECT(pci_memory), &error_fatal);
+-        object_property_set_link(phb, PCI_HOST_PROP_SYSTEM_MEM,
+-                                 OBJECT(system_memory), &error_fatal);
+-        object_property_set_link(phb, PCI_HOST_PROP_IO_MEM,
+-                                 OBJECT(system_io), &error_fatal);
+-        object_property_set_uint(phb, PCI_HOST_BELOW_4G_MEM_SIZE,
+-                                 x86ms->below_4g_mem_size, &error_fatal);
+-        object_property_set_uint(phb, PCI_HOST_ABOVE_4G_MEM_SIZE,
+-                                 x86ms->above_4g_mem_size, &error_fatal);
+-        object_property_set_str(phb, I440FX_HOST_PROP_PCI_TYPE, pci_type,
+-                                &error_fatal);
+-        sysbus_realize_and_unref(SYS_BUS_DEVICE(phb), &error_fatal);
+-
+-        pcms->pcibus = PCI_BUS(qdev_get_child_bus(DEVICE(phb), "pci.0"));
+-        pci_bus_map_irqs(pcms->pcibus,
+-                         xen_enabled() ? xen_pci_slot_get_pirq
+-                                       : pc_pci_slot_get_pirq);
+-
+-        hole64_size = object_property_get_uint(phb,
+-                                               PCI_HOST_PROP_PCI_HOLE64_SIZE,
+-                                               &error_abort);
+-    }
++    pci_memory = g_new(MemoryRegion, 1);
++    memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
++    rom_memory = pci_memory;
++
++    phb = OBJECT(qdev_new(TYPE_I440FX_PCI_HOST_BRIDGE));
++    object_property_add_child(OBJECT(machine), "i440fx", phb);
++    object_property_set_link(phb, PCI_HOST_PROP_RAM_MEM,
++                                OBJECT(ram_memory), &error_fatal);
++    object_property_set_link(phb, PCI_HOST_PROP_PCI_MEM,
++                                OBJECT(pci_memory), &error_fatal);
++    object_property_set_link(phb, PCI_HOST_PROP_SYSTEM_MEM,
++                                OBJECT(system_memory), &error_fatal);
++    object_property_set_link(phb, PCI_HOST_PROP_IO_MEM,
++                                OBJECT(system_io), &error_fatal);
++    object_property_set_uint(phb, PCI_HOST_BELOW_4G_MEM_SIZE,
++                                x86ms->below_4g_mem_size, &error_fatal);
++    object_property_set_uint(phb, PCI_HOST_ABOVE_4G_MEM_SIZE,
++                                x86ms->above_4g_mem_size, &error_fatal);
++    object_property_set_str(phb, I440FX_HOST_PROP_PCI_TYPE, pci_type,
++                            &error_fatal);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(phb), &error_fatal);
++
++    pcms->pcibus = PCI_BUS(qdev_get_child_bus(DEVICE(phb), "pci.0"));
++    pci_bus_map_irqs(pcms->pcibus,
++                        xen_enabled() ? xen_pci_slot_get_pirq
++                                    : pc_pci_slot_get_pirq);
++
++    hole64_size = object_property_get_uint(phb,
++                                            PCI_HOST_PROP_PCI_HOLE64_SIZE,
++                                            &error_abort);
  
      /* allocate ram and load rom/bios */
      if (!xen_enabled()) {
--        pc_memory_init(pcms, system_memory, rom_memory, hole64_size);
-+        pc_memory_init(pcms, system_memory, rom_memory, 0);
-     } else {
-         assert(machine->ram_size == x86ms->below_4g_mem_size +
-                                     x86ms->above_4g_mem_size);
+@@ -234,72 +235,51 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+         }
+     }
+ 
+-    gsi_state = pc_gsi_create(&x86ms->gsi, pcmc->pci_enabled);
+-
+-    if (pcmc->pci_enabled) {
+-        PCIDevice *pci_dev;
+-        DeviceState *dev;
+-        size_t i;
+-
+-        pci_dev = pci_new_multifunction(-1, pcms->south_bridge);
+-        object_property_set_bool(OBJECT(pci_dev), "has-usb",
+-                                 machine_usb(machine), &error_abort);
+-        object_property_set_bool(OBJECT(pci_dev), "has-acpi",
+-                                 x86_machine_is_acpi_enabled(x86ms),
+-                                 &error_abort);
+-        object_property_set_bool(OBJECT(pci_dev), "has-pic", false,
+-                                 &error_abort);
+-        object_property_set_bool(OBJECT(pci_dev), "has-pit", false,
+-                                 &error_abort);
+-        qdev_prop_set_uint32(DEVICE(pci_dev), "smb_io_base", 0xb100);
+-        object_property_set_bool(OBJECT(pci_dev), "smm-enabled",
+-                                 x86_machine_is_smm_enabled(x86ms),
+-                                 &error_abort);
+-        dev = DEVICE(pci_dev);
+-        for (i = 0; i < ISA_NUM_IRQS; i++) {
+-            qdev_connect_gpio_out_named(dev, "isa-irqs", i, x86ms->gsi[i]);
+-        }
+-        pci_realize_and_unref(pci_dev, pcms->pcibus, &error_fatal);
+-
+-        if (xen_enabled()) {
+-            pci_device_set_intx_routing_notifier(
+-                        pci_dev, piix_intx_routing_notifier_xen);
+-
+-            /*
+-             * Xen supports additional interrupt routes from the PCI devices to
+-             * the IOAPIC: the four pins of each PCI device on the bus are also
+-             * connected to the IOAPIC directly.
+-             * These additional routes can be discovered through ACPI.
+-             */
+-            pci_bus_irqs(pcms->pcibus, xen_intx_set_irq, pci_dev,
+-                         XEN_IOAPIC_NUM_PIRQS);
+-        }
++    gsi_state = pc_gsi_create(&x86ms->gsi, true);
++
++    pci_dev = pci_new_multifunction(-1, pcms->south_bridge);
++    object_property_set_bool(OBJECT(pci_dev), "has-usb",
++                                machine_usb(machine), &error_abort);
++    object_property_set_bool(OBJECT(pci_dev), "has-acpi",
++                                x86_machine_is_acpi_enabled(x86ms),
++                                &error_abort);
++    object_property_set_bool(OBJECT(pci_dev), "has-pic", false,
++                                &error_abort);
++    object_property_set_bool(OBJECT(pci_dev), "has-pit", false,
++                                &error_abort);
++    qdev_prop_set_uint32(DEVICE(pci_dev), "smb_io_base", 0xb100);
++    object_property_set_bool(OBJECT(pci_dev), "smm-enabled",
++                                x86_machine_is_smm_enabled(x86ms),
++                                &error_abort);
++    dev = DEVICE(pci_dev);
++    for (i = 0; i < ISA_NUM_IRQS; i++) {
++        qdev_connect_gpio_out_named(dev, "isa-irqs", i, x86ms->gsi[i]);
++    }
++    pci_realize_and_unref(pci_dev, pcms->pcibus, &error_fatal);
+ 
+-        isa_bus = ISA_BUS(qdev_get_child_bus(DEVICE(pci_dev), "isa.0"));
+-        x86ms->rtc = ISA_DEVICE(object_resolve_path_component(OBJECT(pci_dev),
+-                                                              "rtc"));
+-        piix4_pm = object_resolve_path_component(OBJECT(pci_dev), "pm");
+-        dev = DEVICE(object_resolve_path_component(OBJECT(pci_dev), "ide"));
+-        pci_ide_create_devs(PCI_DEVICE(dev));
+-        pcms->idebus[0] = qdev_get_child_bus(dev, "ide.0");
+-        pcms->idebus[1] = qdev_get_child_bus(dev, "ide.1");
+-    } else {
+-        uint32_t irq;
++    if (xen_enabled()) {
++        pci_device_set_intx_routing_notifier(
++                    pci_dev, piix_intx_routing_notifier_xen);
+ 
+-        isa_bus = isa_bus_new(NULL, system_memory, system_io,
+-                              &error_abort);
+-        isa_bus_register_input_irqs(isa_bus, x86ms->gsi);
++        /*
++         * Xen supports additional interrupt routes from the PCI devices to
++         * the IOAPIC: the four pins of each PCI device on the bus are also
++         * connected to the IOAPIC directly.
++         * These additional routes can be discovered through ACPI.
++         */
++        pci_bus_irqs(pcms->pcibus, xen_intx_set_irq, pci_dev,
++                        XEN_IOAPIC_NUM_PIRQS);
++    }
+ 
+-        x86ms->rtc = isa_new(TYPE_MC146818_RTC);
+-        qdev_prop_set_int32(DEVICE(x86ms->rtc), "base_year", 2000);
+-        isa_realize_and_unref(x86ms->rtc, isa_bus, &error_fatal);
+-        irq = object_property_get_uint(OBJECT(x86ms->rtc), "irq",
+-                                       &error_fatal);
+-        isa_connect_gpio_out(ISA_DEVICE(x86ms->rtc), 0, irq);
++    isa_bus = ISA_BUS(qdev_get_child_bus(DEVICE(pci_dev), "isa.0"));
++    x86ms->rtc = ISA_DEVICE(object_resolve_path_component(OBJECT(pci_dev),
++                                                            "rtc"));
++    piix4_pm = object_resolve_path_component(OBJECT(pci_dev), "pm");
++    dev = DEVICE(object_resolve_path_component(OBJECT(pci_dev), "ide"));
++    pci_ide_create_devs(PCI_DEVICE(dev));
++    pcms->idebus[0] = qdev_get_child_bus(dev, "ide.0");
++    pcms->idebus[1] = qdev_get_child_bus(dev, "ide.1");
+ 
+-        i8257_dma_init(OBJECT(machine), isa_bus, 0);
+-        pcms->hpet_enabled = false;
+-    }
+ 
+     if (x86ms->pic == ON_OFF_AUTO_ON || x86ms->pic == ON_OFF_AUTO_AUTO) {
+         pc_i8259_create(isa_bus, gsi_state->i8259_irq);
+@@ -313,7 +293,7 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+         x86_register_ferr_irq(x86ms->gsi[13]);
+     }
+ 
+-    pc_vga_init(isa_bus, pcmc->pci_enabled ? pcms->pcibus : NULL);
++    pc_vga_init(isa_bus, pcms->pcibus);
+ 
+     /* init basic PC hardware */
+     pc_basic_device_init(pcms, isa_bus, x86ms->gsi, x86ms->rtc,
+@@ -321,28 +301,6 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+ 
+     pc_nic_init(pcmc, isa_bus, pcms->pcibus);
+ 
+-#ifdef CONFIG_IDE_ISA
+-    if (!pcmc->pci_enabled) {
+-        DriveInfo *hd[MAX_IDE_BUS * MAX_IDE_DEVS];
+-        int i;
+-
+-        ide_drive_get(hd, ARRAY_SIZE(hd));
+-        for (i = 0; i < MAX_IDE_BUS; i++) {
+-            ISADevice *dev;
+-            char busname[] = "ide.0";
+-            dev = isa_ide_init(isa_bus, ide_iobase[i], ide_iobase2[i],
+-                               ide_irq[i],
+-                               hd[MAX_IDE_DEVS * i], hd[MAX_IDE_DEVS * i + 1]);
+-            /*
+-             * The ide bus name is ide.0 for the first bus and ide.1 for the
+-             * second one.
+-             */
+-            busname[4] = '0' + i;
+-            pcms->idebus[i] = qdev_get_child_bus(DEVICE(dev), busname);
+-        }
+-    }
+-#endif
+-
+     if (piix4_pm) {
+         smi_irq = qemu_allocate_irq(pc_acpi_smi_interrupt, first_cpu, 0);
+ 
 -- 
 2.43.0
 
