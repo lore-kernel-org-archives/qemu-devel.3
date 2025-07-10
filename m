@@ -4,87 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D854C83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 21:14:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AB5CC83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 21:22:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZyY6-0000e9-HP; Thu, 10 Jul 2025 17:11:22 -0400
+	id 1uZyht-0002RN-FN; Thu, 10 Jul 2025 17:21:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uZyXp-0000Vg-Fg
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 17:11:06 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uZyXn-0006dR-Fa
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 17:11:05 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-234bfe37cccso14206235ad.0
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 14:11:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752181862; x=1752786662; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uti/OZVWOOeYrX1bdK4UFURnvbTQVWBdwOki8pgjArM=;
- b=qceTtbxxE1+FOkqOORXz+u3mveq2YCDVPthqxCxHiyDKYwUiODXU27cIw7KFn1LCE6
- 1UOV1m2UawcNG70tS3FSUGKPi+otCEwMQvZDseD2BST2Dvr4VmKbV5iBNWz42MMDj8Kn
- v3EMIIGe2lB9d0m/cfE9HiCbNTaJsTkA1j1YJyDtBh7NIMPGSaer9qAUG5t0ZKNeHy2z
- Lavxn7l6rmVX97/bwcQgbblrnWaj1h40S5Id4BEnDQRMcTHc/RhtoZubRgCn6ncH85WP
- 8KXykkl0fJWcMkeCmL5vQ1Pm2U9Bv1mP6t5AHdamoX3ScdJ8++rHF/I4CiAgPsol+Ui8
- E5Gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752181862; x=1752786662;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=uti/OZVWOOeYrX1bdK4UFURnvbTQVWBdwOki8pgjArM=;
- b=ZoT15V7ITvbM0M4hMlIrQrPHlWafgXeXokT59zsXnh9imYYQ6C2Yj0lFXRmM0MMVcJ
- lINP06qEorhB5YieyTzDyN8w7Tq6V7Cr8/Mw3bCf4wL7OeOZHh9C6ffbFaN5jdidir1Y
- 4tQEW3SrBnKUIwF//BBsd+gbg6Ivn325yInD5tuqLtN0Yw+QZoLkyH1BSHL4PdvmaQoe
- mtwCPHDFJ3gmGjLaa5ZI5PzleUg7SSnvAEXHcrSN3mwgGMq8gkodeJdItHJNZQnlxgCM
- HTLg0sYsR99g7m+OVFm1VO2XKg70sdYGtKlVRZn/KzUajVURrDiZl77ISWZksxxbVAYU
- jT5g==
-X-Gm-Message-State: AOJu0YzdWwUEPn8jGxCxrWSOyUNtACzvtFy5evyy+Q+aSU+S+evosCcp
- 17UZyRRtRT/dvo/gCO/xIrXahrPm4/J0NJ4UMerLUVwqSlB2w5etrzwIQd1ccn8kR/E=
-X-Gm-Gg: ASbGncsbsZtrRneVFGZ4ypGEcxXcfRiPJvhmsBOubDzAhUQ4B7GGvVQn9c32aXHNpgr
- Z5VIdxAL9EVfhfqQ80IR6id8Fr+N2HYgUt//H6BCNEwKy4DcgOaRt+c7w3SbxIuTYCwRA7fJDGI
- WZdkOEAyFbK+Bu6MxctllwEtL4RyjvD9HyZLjK1hKEDJL1AhOSrTuAA/wRz3VxFN12pfUZRScjc
- QTOmINgFDqtbuaYtc+Eu7cf8ykT1IMnyOfGxEOp7glCB5rfQTtAbvWQGpRiH5Vsry9hU2VRhTnq
- RhyZZRSWAAVnnJYBdi+zZgBtunKob3YowtIt+XwGmXlzuS0fqJQAfnKByz2XQrzVyQNiigo7ERT
- ExuoeWpid67HFQWloulS/pN4pRszXowdumks2jTvfQVlyKsFrP37rceK5JMXzDRD1bT/O
-X-Google-Smtp-Source: AGHT+IGzuCy1ouMhZq3YXhlsOA/iqwfW2p2P/G4kuhX3xmiKrxXvXnVP4CikVrkqSwySQ/R38xqAyA==
-X-Received: by 2002:a17:903:166c:b0:235:2375:7ead with SMTP id
- d9443c01a7336-23dede86051mr9539145ad.28.1752181861772; 
- Thu, 10 Jul 2025 14:11:01 -0700 (PDT)
-Received: from gromero0.. (189-47-46-41.dsl.telesp.net.br. [189.47.46.41])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23de434d6b0sm30447775ad.203.2025.07.10.14.10.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Jul 2025 14:11:01 -0700 (PDT)
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: qemu-arm@nongnu.org, richard.henderson@linaro.org, alex.bennee@linaro.org
-Cc: qemu-devel@nongnu.org,
-	gustavo.romero@linaro.org
-Subject: [PATCH v6 4/6] target/arm: Add FEAT_TCR2
-Date: Thu, 10 Jul 2025 21:09:39 +0000
-Message-Id: <20250710210941.1098088-5-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250710210941.1098088-1-gustavo.romero@linaro.org>
-References: <20250710210941.1098088-1-gustavo.romero@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1uZyhr-0002Qm-St; Thu, 10 Jul 2025 17:21:28 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1uZyhp-0001YF-3A; Thu, 10 Jul 2025 17:21:27 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56AKn6Vl026281;
+ Thu, 10 Jul 2025 21:20:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=DlQBU8
+ iN1Zn42nIC5RU3DARvLI+9tnYdgOiIOxyQ6yc=; b=XvGuM3zA3jo4J29iwU0RSJ
+ sfDTbiE4l6K9qLs4deO4oFAcM+bH2HxTC9/5dp6UbQri6DEYeDivwwtg8LgrGfVJ
+ uZs9MfoHbTAwRBrXxNw3dR83umGHYazv/g6Yk8b93B5BnhbmOlSBwt8DYfYYKJ/Z
+ QkG324Jt5Q5ImCpwuISu43EvfGQh/FtjbaRWQiSKlb+oq4Z0fEWyxbLGt8y63rgb
+ uVEJFuRZ50X4imiNt4QdvOzz/cG0pUAOR9hKyil99CBIsK8/RgHusrX23sPw/aWM
+ hq9Q6MCfNYeFv4TI2iReJ4Xa+Wu45HGyptNV8FFGhf//OYZd92rS2OiFfJTQ0LAA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47puqnp5qj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 10 Jul 2025 21:20:56 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56AINjfl002847;
+ Thu, 10 Jul 2025 21:20:55 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47qfvmqg8j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 10 Jul 2025 21:20:55 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 56ALKsFj32178888
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 10 Jul 2025 21:20:54 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 450FA58059;
+ Thu, 10 Jul 2025 21:20:54 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 937F65805B;
+ Thu, 10 Jul 2025 21:20:53 +0000 (GMT)
+Received: from [9.61.107.132] (unknown [9.61.107.132])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 10 Jul 2025 21:20:53 +0000 (GMT)
+Message-ID: <36819228-b4c2-44a7-bc85-f5630c8412b5@linux.ibm.com>
+Date: Thu, 10 Jul 2025 17:20:53 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/s390x/s390-pci-bus.c: Use g_assert_not_reached() in
+ functions taking an ett
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>
+References: <20250710161552.1287399-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20250710161552.1287399-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=FZ43xI+6 c=1 sm=1 tr=0 ts=68702eb8 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8
+ a=tF9ib_puwyeb5LtTvjEA:9 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: j1oZxdu8S-oXX4Z0SdZjxVPziMmjKsFG
+X-Proofpoint-ORIG-GUID: j1oZxdu8S-oXX4Z0SdZjxVPziMmjKsFG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzEwMDE3OSBTYWx0ZWRfX1bt+hBOTHbEs
+ 5D6jY+QG20ai3jLHnH/tZ+UjVWnjOG0lWREgtAdxNS9MexUgba5mIYay5tKwN1Uu7ZCWCs9XEIo
+ wdHnjqTDLJMGuX0aPblSOuMldNjNnAKVOTUrUTIFfIMP0wdJuv4qP2PrHVEOWau/NaSVyl0XqmI
+ 8kTqZtSm3lQCv2JsTUlMlYuZhzpqY4yXc4xB0y/L51qaLVlS8JPNZbI3UuXV1Kyp64UGBzcOzvB
+ 2i8TISOieN4biPFfBEF1Uk7DUn+xIDTava93jSxrxEaQjqRXtgYakgzVIWdaoR2TSQkxMvagsk3
+ kp3ZwAyK91p5CsBEMDpfZHzjWvSMBAJCPZ7wP4mYIen1WMEAIqRkOXOuJtuPCaMhddc/YRZhI5c
+ JbuqvhEjnz/zMqGFvsN0cJ/mioqLjaPZUNyW4xB/rZGdGdS+A8Vn7U6VrSId+UaSQfHqZNmO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-10_05,2025-07-09_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 mlxscore=0
+ priorityscore=1501 malwarescore=0 mlxlogscore=450 clxscore=1015
+ spamscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
+ adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507100179
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,209 +123,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add FEAT_TCR2, which introduces the TCR2_EL1 and TCR2_EL2 registers.
-These registers are extensions of the TCR_ELx registers and provide
-top-level control of the EL10 and EL20 translation regimes.
+On 7/10/25 12:15 PM, Peter Maydell wrote:
+> The s390-pci-bus.c code, Coverity complains about a possible overflow
+> because get_table_index() can return -1 if the ett value passed in is
+> not one of the three permitted ZPCI_ETT_PT, ZPCI_ETT_ST, ZPCI_ETT_RT,
+> but the caller in table_translate() doesn't check this and instead
+> uses the return value directly in a calculation of the guest address
+> to read from.
+> 
+> In fact this case cannot happen, because:
+>  * get_table_index() is called only from table_translate()
+>  * the only caller of table_translate() loops through the ett values
+>    in the order RT, ST, PT until table_translate() returns 0
+>  * table_translate() will return 0 for the error cases and when
+>    translate_iscomplete() returns true
+>  * translate_iscomplete() is always true for ZPCI_ETT_PT
+> 
+> So table_translate() is always called with a valid ett value.
+> 
+> Instead of having the various functions called from table_translate()
+> return a default or dummy value when the ett argument is out of range,
+> use g_assert_not_reached() to indicate that this is impossible.
+> 
+> Coverity: CID 1547609
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> Disclaimer: only tested with 'make check/make check-functional'
 
-Since the bits in these registers depend on other CPU features, and only
-FEAT_MEC is supported at the moment, the FEAT_TCR2 only implements the
-AMEC bits for now.
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
----
- docs/system/arm/emulation.rst |  1 +
- target/arm/cpu-features.h     |  5 +++
- target/arm/cpu.h              |  2 ++
- target/arm/helper.c           | 62 +++++++++++++++++++++++++++++++++++
- target/arm/internals.h        | 19 +++++++++++
- target/arm/tcg/cpu64.c        |  1 +
- 6 files changed, 90 insertions(+)
+Also to sanity check I ran various tests with s390x guests and a few different PCI passthrough devices using a guest IOMMU to drive table_translate frequently.
 
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 66043b0747..1c597d8673 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -149,6 +149,7 @@ the following architecture extensions:
- - FEAT_SPECRES (Speculation restriction instructions)
- - FEAT_SSBS (Speculative Store Bypass Safe)
- - FEAT_SSBS2 (MRS and MSR instructions for SSBS version 2)
-+- FEAT_TCR2 (Support for TCR2_ELx)
- - FEAT_TGran16K (Support for 16KB memory translation granule size at stage 1)
- - FEAT_TGran4K (Support for 4KB memory translation granule size at stage 1)
- - FEAT_TGran64K (Support for 64KB memory translation granule size at stage 1)
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index a5fc2ca572..9579d93cec 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -904,6 +904,11 @@ static inline bool isar_feature_aa64_nv2(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64MMFR2, NV) >= 2;
- }
- 
-+static inline bool isar_feature_aa64_tcr2(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR3, TCRX) != 0;
-+}
-+
- static inline bool isar_feature_aa64_sctlr2(const ARMISARegisters *id)
- {
-     return FIELD_EX64_IDREG(id, ID_AA64MMFR3, SCTLRX) != 0;
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 894e2a2997..9f900ee4f6 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -366,6 +366,7 @@ typedef struct CPUArchState {
-         uint64_t vsttbr_el2; /* Secure Virtualization Translation Table. */
-         /* MMU translation table base control. */
-         uint64_t tcr_el[4];
-+        uint64_t tcr2_el[3];
-         uint64_t vtcr_el2; /* Virtualization Translation Control.  */
-         uint64_t vstcr_el2; /* Secure Virtualization Translation Control. */
-         uint32_t c2_data; /* MPU data cacheable bits.  */
-@@ -1739,6 +1740,7 @@ static inline void xpsr_write(CPUARMState *env, uint32_t val, uint32_t mask)
- #define SCR_HXEN              (1ULL << 38)
- #define SCR_TRNDR             (1ULL << 40)
- #define SCR_ENTP2             (1ULL << 41)
-+#define SCR_TCR2EN            (1ULL << 43)
- #define SCR_SCTLR2EN          (1ULL << 44)
- #define SCR_GPF               (1ULL << 48)
- #define SCR_MECEN             (1ULL << 49)
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 210a50a21a..ecfd53cc5a 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6154,6 +6154,8 @@ static void define_arm_vh_e2h_redirects_aliases(ARMCPU *cpu)
-           "TTBR1_EL1", "TTBR1_EL2", "TTBR1_EL12" },
-         { K(3, 0,  2, 0, 2), K(3, 4,  2, 0, 2), K(3, 5, 2, 0, 2),
-           "TCR_EL1", "TCR_EL2", "TCR_EL12" },
-+        { K(3, 0,  2, 0, 3), K(3, 4,  2, 0, 3), K(3, 5, 2, 0, 3),
-+          "TCR2_EL1", "TCR2_EL2", "TCR2_EL12" },
-         { K(3, 0,  4, 0, 0), K(3, 4,  4, 0, 0), K(3, 5, 4, 0, 0),
-           "SPSR_EL1", "SPSR_EL2", "SPSR_EL12" },
-         { K(3, 0,  4, 0, 1), K(3, 4,  4, 0, 1), K(3, 5, 4, 0, 1),
-@@ -7892,6 +7894,62 @@ static const ARMCPRegInfo sctlr2_reginfo[] = {
-       .fieldoffset = offsetof(CPUARMState, cp15.sctlr2_el[3]) },
- };
- 
-+static CPAccessResult tcr2_el2_access(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                      bool isread)
-+{
-+    if (arm_current_el(env) < 3
-+        && arm_feature(env, ARM_FEATURE_EL3)
-+        && !(env->cp15.scr_el3 & SCR_TCR2EN)) {
-+        return CP_ACCESS_TRAP_EL3;
-+    }
-+    return CP_ACCESS_OK;
-+}
-+
-+static CPAccessResult tcr2_el1_access(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                      bool isread)
-+{
-+    CPAccessResult ret = access_tvm_trvm(env, ri, isread);
-+    if (ret != CP_ACCESS_OK) {
-+        return ret;
-+    }
-+    if (arm_current_el(env) < 2 && !(arm_hcrx_el2_eff(env) & HCRX_TCR2EN)) {
-+        return CP_ACCESS_TRAP_EL2;
-+    }
-+    return tcr2_el2_access(env, ri, isread);
-+}
-+
-+static void tcr2_el1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                           uint64_t value)
-+{
-+    /* This register does not control any feature yet. */
-+}
-+
-+static void tcr2_el2_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                           uint64_t value)
-+{
-+    uint64_t valid_mask = 0;
-+
-+    if (cpu_isar_feature(aa64_mec, env_archcpu(env))) {
-+        valid_mask |= TCR2_AMEC0 | TCR2_AMEC1;
-+    }
-+    value &= valid_mask;
-+    raw_write(env, ri, value);
-+}
-+
-+static const ARMCPRegInfo tcr2_reginfo[] = {
-+    { .name = "TCR2_EL1", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 3, .opc1 = 0, .opc2 = 3, .crn = 2, .crm = 0,
-+      .access = PL1_RW, .accessfn = tcr2_el1_access,
-+      .writefn = tcr2_el1_write, .fgt = FGT_TCR_EL1,
-+      .nv2_redirect_offset = 0x270 | NV2_REDIR_NV1,
-+      .fieldoffset = offsetof(CPUARMState, cp15.tcr2_el[1]) },
-+    { .name = "TCR2_EL2", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 3, .opc1 = 4, .opc2 = 3, .crn = 2, .crm = 0,
-+      .access = PL2_RW, .accessfn = tcr2_el2_access,
-+      .writefn = tcr2_el2_write,
-+      .fieldoffset = offsetof(CPUARMState, cp15.tcr2_el[2]) },
-+};
-+
- void register_cp_regs_for_features(ARMCPU *cpu)
- {
-     /* Register all the coprocessor registers based on feature bits */
-@@ -9164,6 +9222,10 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-         define_arm_cp_regs(cpu, sctlr2_reginfo);
-     }
- 
-+    if (cpu_isar_feature(aa64_tcr2, cpu)) {
-+        define_arm_cp_regs(cpu, tcr2_reginfo);
-+    }
-+
-     if (cpu_isar_feature(any_predinv, cpu)) {
-         define_arm_cp_regs(cpu, predinv_reginfo);
-     }
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index d18d0fb19a..8cb0709abe 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -201,6 +201,24 @@ FIELD(CPTR_EL3, TCPAC, 31, 1)
- #define TTBCR_SH1    (1U << 28)
- #define TTBCR_EAE    (1U << 31)
- 
-+#define TCR2_PNCH    (1ULL << 0)
-+#define TCR2_PIE     (1ULL << 1)
-+#define TCR2_E0POE   (1ULL << 2)
-+#define TCR2_POE     (1ULL << 3)
-+#define TCR2_AIE     (1ULL << 4)
-+#define TCR2_D128    (1ULL << 5)
-+#define TCR2_PTTWI   (1ULL << 10)
-+#define TCR2_HAFT    (1ULL << 11)
-+#define TCR2_AMEC0   (1ULL << 12)
-+#define TCR2_AMEC1   (1ULL << 13)
-+#define TCR2_DISCH0  (1ULL << 14)
-+#define TCR2_DISCH1  (1ULL << 15)
-+#define TCR2_A2      (1ULL << 16)
-+#define TCR2_FNG0    (1ULL << 17)
-+#define TCR2_FNG1    (1ULL << 18)
-+#define TCR2_FNGNA0  (1ULL << 20)
-+#define TCR2_FNGNA1  (1ULL << 21)
-+
- FIELD(VTCR, T0SZ, 0, 6)
- FIELD(VTCR, SL0, 6, 2)
- FIELD(VTCR, IRGN0, 8, 2)
-@@ -232,6 +250,7 @@ FIELD(VTCR, SL2, 33, 1)
- #define HCRX_CMOW     (1ULL << 9)
- #define HCRX_MCE2     (1ULL << 10)
- #define HCRX_MSCEN    (1ULL << 11)
-+#define HCRX_TCR2EN   (1ULL << 14)
- #define HCRX_SCTLR2EN (1ULL << 15)
- 
- #define HPFAR_NS      (1ULL << 63)
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 30505fb293..ae2046a7f6 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1248,6 +1248,7 @@ void aarch64_max_tcg_initfn(Object *obj)
-     SET_IDREG(isar, ID_AA64MMFR2, t);
- 
-     t = GET_IDREG(isar, ID_AA64MMFR3);
-+    t = FIELD_DP64(t, ID_AA64MMFR3, TCRX, 1);       /* FEAT_TCR2 */
-     t = FIELD_DP64(t, ID_AA64MMFR3, SCTLRX, 1);     /* FEAT_SCTLR2 */
-     t = FIELD_DP64(t, ID_AA64MMFR3, SPEC_FPACC, 1); /* FEAT_FPACC_SPEC */
-     SET_IDREG(isar, ID_AA64MMFR3, t);
--- 
-2.34.1
+
+
+
 
 
