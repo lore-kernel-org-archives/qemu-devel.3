@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45A89C83F09
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 07:28:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2905AC83F09
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 07:39:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZlgz-0002HR-Pk; Thu, 10 Jul 2025 03:27:41 -0400
+	id 1uZlrS-0004NC-Jk; Thu, 10 Jul 2025 03:38:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uZlgx-0002Ex-Ck; Thu, 10 Jul 2025 03:27:39 -0400
+ id 1uZlrD-0004IS-Oj; Thu, 10 Jul 2025 03:38:17 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uZlgr-0000py-As; Thu, 10 Jul 2025 03:27:38 -0400
+ id 1uZlr8-0004nW-GI; Thu, 10 Jul 2025 03:38:15 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bd5xS3VHrz6G9YN;
- Thu, 10 Jul 2025 15:26:20 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 8356A1404D8;
- Thu, 10 Jul 2025 15:27:11 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bd69p6LH8z6GBP7;
+ Thu, 10 Jul 2025 15:37:02 +0800 (CST)
+Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
+ by mail.maildlp.com (Postfix) with ESMTPS id EADE91404D8;
+ Thu, 10 Jul 2025 15:37:53 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
+ frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 10 Jul 2025 09:27:11 +0200
+ 15.1.2507.39; Thu, 10 Jul 2025 09:37:53 +0200
 Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
  frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Thu, 10 Jul 2025 09:27:11 +0200
+ Thu, 10 Jul 2025 09:37:53 +0200
 To: Nicolin Chen <nicolinc@nvidia.com>
 CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
  <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
@@ -45,19 +45,19 @@ CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
  <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
  <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
  "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
-Subject: RE: [PATCH v7 02/12] hw/arm/smmu-common: Check SMMU has PCIe Root
- Complex association
-Thread-Topic: [PATCH v7 02/12] hw/arm/smmu-common: Check SMMU has PCIe Root
- Complex association
-Thread-Index: AQHb8B7KpVQQobU9VEOlB+EJbl8SmrQolAuAgADMh6CAAPc4gIAAlyDw
-Date: Thu, 10 Jul 2025 07:27:10 +0000
-Message-ID: <88a55d63d54f4586bd9992b6bdff5729@huawei.com>
+Subject: RE: [PATCH v7 07/12] hw/pci: Introduce pci_setup_iommu_per_bus() for
+ per-bus IOMMU ops retrieval
+Thread-Topic: [PATCH v7 07/12] hw/pci: Introduce pci_setup_iommu_per_bus() for
+ per-bus IOMMU ops retrieval
+Thread-Index: AQHb8B7pgOmyuAHGhEyK6x0wrBLpebQonB8AgADVIJCAAOn5gIAAnLIw
+Date: Thu, 10 Jul 2025 07:37:53 +0000
+Message-ID: <3a51c0e0f3ce4c2580ff596008615439@huawei.com>
 References: <20250708154055.101012-1-shameerali.kolothum.thodi@huawei.com>
- <20250708154055.101012-3-shameerali.kolothum.thodi@huawei.com>
- <aG2GNcXW89stIZHa@Asurada-Nvidia>
- <92ca69322dea4a0b966ce9dd7eff0fb3@huawei.com>
- <aG8BKexuSHtSvySv@Asurada-Nvidia>
-In-Reply-To: <aG8BKexuSHtSvySv@Asurada-Nvidia>
+ <20250708154055.101012-8-shameerali.kolothum.thodi@huawei.com>
+ <aG2M/BI3UAYxKCD3@Asurada-Nvidia>
+ <741503f8f96148b389b875e6b6812c1a@huawei.com>
+ <aG8ECVeOYXPzBEVB@Asurada-Nvidia>
+In-Reply-To: <aG8ECVeOYXPzBEVB@Asurada-Nvidia>
 Accept-Language: en-GB, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -99,7 +99,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 > -----Original Message-----
 > From: Nicolin Chen <nicolinc@nvidia.com>
-> Sent: Thursday, July 10, 2025 12:54 AM
+> Sent: Thursday, July 10, 2025 1:07 AM
 > To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
 > Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
 > eric.auger@redhat.com; peter.maydell@linaro.org; jgg@nvidia.com;
@@ -110,126 +110,94 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 > Wangzhou (B) <wangzhou1@hisilicon.com>; jiangkunkun
 > <jiangkunkun@huawei.com>; Jonathan Cameron
 > <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
-> Subject: Re: [PATCH v7 02/12] hw/arm/smmu-common: Check SMMU has
-> PCIe Root Complex association
+> Subject: Re: [PATCH v7 07/12] hw/pci: Introduce
+> pci_setup_iommu_per_bus() for per-bus IOMMU ops retrieval
 >=20
-> On Wed, Jul 09, 2025 at 08:08:49AM +0000, Shameerali Kolothum Thodi
+> On Wed, Jul 09, 2025 at 08:20:35AM +0000, Shameerali Kolothum Thodi
 > wrote:
-> > > On Tue, Jul 08, 2025 at 04:40:45PM +0100, Shameer Kolothum wrote:
-> > > > @@ -937,11 +939,32 @@ static void smmu_base_realize(DeviceState
-> > > *dev, Error **errp)
-> > > >                                       g_free, g_free);
-> > > >      s->smmu_pcibus_by_busptr =3D g_hash_table_new(NULL, NULL);
-> > >
-> > > Although this is not introduced by this patch, is there a
-> > > g_hash_table_remove() somewhere in the code?
-> >
-> > g_hash_table_remove()  is to remove a key/value pair, isn't it?
->=20
-> Yes.
->=20
-> > Or you meant
-> > a corresponding free in case of failure here?
->=20
-> Yes. But I saw the other two g_hash_table_new_full calls were not
-> reverted in the exit path either. Then I saw smmu_base_reset_exit
-> does the clean up of those two but not this smmu_pcibus_by_busptr.
-
-Ok. I think that is by design. The insert for busptr cache happens during
-early stages of Qemu through get_address_space() callback and
-smmu_base_reset_exit() is called after that, just before the Guest boot.
-So if you clean that cache at that time , you need to handle it differently
-at a later stage. Also I don't think it makes much sense to clear busptr
-before the Guest boot as it is not going to become stale unlike configs
-and iotlb.
-
-> > It's a realize() fn and errp is set
-> > if something goes wrong and QEMU will exit. Not sure we need an explici=
-t
-> > free here.
-> >
-> > > > +    /*
-> > > > +     * We only allow default PCIe Root Complex(pcie.0) or pxb-pcie
-> based
-> > > extra
-> > > > +     * root complexes to be associated with SMMU.
-> > > > +     */
-> > > > +    if (pci_bus_is_express(pci_bus) && pci_bus_is_root(pci_bus) &&
-> > > > +        object_dynamic_cast(OBJECT(pci_bus)->parent,
-> > > TYPE_PCI_HOST_BRIDGE)) {
+> > > On Tue, Jul 08, 2025 at 04:40:50PM +0100, Shameer Kolothum wrote:
+> > > > @@ -2909,6 +2909,19 @@ static void
+> > > pci_device_get_iommu_bus_devfn(PCIDevice *dev,
+> > > >              }
+> > > >          }
+> > > >
 > > > > +        /*
-> > > > +         * For pxb-pcie, parent_dev will be set. Make sure it is
-> > > > +         * pxb-pcie indeed.
+> > > > +         * When multiple PCI Express Root Buses are defined using =
+pxb-
+> > > pcie,
+> > > > +         * the IOMMU configuration may be specific to each root bu=
+s.
+> > > However,
+> > > > +         * pxb-pcie acts as a special root complex whose parent is
+> > > effectively
+> > > > +         * the default root complex(pcie.0). Ensure that we retrie=
+ve the
+> > > > +         * correct IOMMU ops(if any) in such cases.
 > > > > +         */
-> > > > +        if (pci_bus->parent_dev) {
-> > > > +            if (!object_dynamic_cast(OBJECT(pci_bus),
-> TYPE_PXB_PCIE_BUS)) {
+> > > > +        if (pci_bus_is_express(iommu_bus) &&
+> > > pci_bus_is_root(iommu_bus)) {
+> > > > +            if (!iommu_bus->iommu_per_bus && parent_bus-
+> > > >iommu_per_bus) {
+> > > > +                break;
 > > >
-> > > The pci_bus_is_express(pci_bus) at the top is equivalent to:
-> > > 	object_dynamic_cast(OBJECT(pci_bus), TYPE_PCIE_BUS)
-> > > Then here it is doing:
-> > > 	object_dynamic_cast(OBJECT(pci_bus), TYPE_PXB_PCIE_BUS)
+> > > Mind elaborating why the current bus must unset iommu_per_bus
+> while
+> > > its parent sets iommu_per_bus?
+> > >
+> > > My understanding is that for a pxb-pcie we should set iommu_per_bus
+> > > but for its parent (the default root complex) we should unset its
+> > > iommu_per_bus?
 > >
-> > Yes.
->=20
-> Hmm?
->=20
-> We have these two types defined as two different strings, right?
->=20
-> #define TYPE_PCIE_BUS "PCIE"
-> #define TYPE_PXB_PCIE_BUS "pxb-pcie-bus"
->=20
-> So the first test is to make sure pci_bus string is "PCIE",
-> then the second one testing the same pci_bus string will
-> never be true?
->
-
-It will be true.
-
-static const TypeInfo pxb_pcie_bus_info =3D {
-    .name          =3D TYPE_PXB_PCIE_BUS,
-    .parent        =3D TYPE_PCIE_BUS,
-    .instance_size =3D sizeof(PXBBus),
-    .class_init    =3D pxb_bus_class_init,
-};
-
-TYPE_PXB_PCIE_BUS has a parent TYPE_PCIE_BUS. And the function
-object_dynamic_cast() does the magic. It will return non-null for an
-exact object type and also for its parents in the QOM hierarchy.
-
-> > > So, this checks the same pci_bus but expects two different types?
->
-> > In QEMU,  we can have three types of PCIe root complexes to be specifie=
-d
-> for
-> > virt machine.
+> > Well, for new arm-smmuv3 dev you need an associated pcie root
+> > complex. Either the default pcie.0 or a pxb-pcie one. And as I
+> > mentioned in my reply to the other thread(patch #2) and commit log
+> here,
+> > the pxb-pcie is special extra root complex in Qemu which has pcie.0 has
+> > parent bus.
 > >
-> > 1. default pcie.0 (TYPE_GPEX_HOST --> TYPE_PCIE_HOST_BRIDGE -->
-> TYPE_PCI_HOST_BRIDGE)
-> > 2. pxb-pcie (TYPE_PXB_HOST  -->TYPE_PCI_HOST_BRIDGE)
-> > 2. pxb-cxl (TYPE_PXB_CXL_HOST  --> TYPE_PCI_HOST_BRIDGE)
+> > The above pci_device_get_iommu_bus_devfn() at present, iterate over
+> the
+> > parent_dev if it is set and returns the parent_bus IOMMU ops even if th=
+e
+> > associated pxb-pcie bus doesn't have any IOMMU. This creates problem
+> > for a case that is described here in the cover letter here,
+> > https://lore.kernel.org/qemu-devel/20250708154055.101012-1-
+> shameerali.kolothum.thodi@huawei.com/
 > >
-> > The above first check is to see whether the bus is  PCIE && root bus &&
-> parent
-> > of type TYPE_PCI_HOST_BRIDGE. This will identify all the above three
-> cases.
+> > (Please see "Major changes from v4:" section)
 > >
-> > Both pxb-pcie and pxb-cxl are special extra root complexes based on PCI
-> > expansion bridges and has a parent_dev set(both has pcie.0 has parent
-> bus).
+> > To address that issue, this patch introduces an new helper function to
+> specify that
+> > the IOMMU ops are specific to the associated root
+> complex(iommu_per_bus) and
+> > use that to return the correct IOMMU ops.
 > >
-> > Hence we check to see parent_dev is set and make sure it is indeed
-> > TYPE_PXB_PCIE_BUS to avoid attaching to pxb-cxl.
+> > Hope with that context it is clear now.
 >=20
-> I see. That's clear now. I think it'd help by writing:
-> 		/*
-> 		 * While pcie.0 doesn't set the parent_dev, either pxb-pcie
-> or
-> 		 * pxb-cxl does. Re-test the type to make sure it is pxb-pcie.
-> 		 */
+> Hmm, I was not questioning the context, I get what the patch is
+> supposed to do.
+>=20
+> I was asking the logic that is unclear to me why it breaks when:
+>     !pxb-pcie->iommu_per_bus && pcie.0->iommu_per_bus
+>=20
+> Or in which case pcie.0 would be set to iommu_per_bus=3Dtrue?
 
-I think it is already captured in the comments in this patch.
+Yes. Consider the example I gave in cover  letter,
+
+-device arm-smmuv3,primary-bus=3Dpcie.0,id=3Dsmmuv3.1 \
+-device virtio-net-pci,bus=3Dpcie.0,netdev=3Dnet0,id=3Dvirtionet.0 \
+-device pxb-pcie,id=3Dpcie.1,bus_nr=3D8,bus=3Dpcie.0 \
+-device arm-smmuv3,primary-bus=3Dpcie.1,id=3Dsmmuv3.2 \
+-device pcie-root-port,id=3Dpcie.port1,chassis=3D2,bus=3Dpcie.1 \
+-device virtio-net-pci,bus=3Dpcie.port1,netdev=3Dnet1,id=3Dvirtionet.1
+
+pcie.0 is behind new SMMUv3 dev(smmuv3.1) and has iommu_per_bus set.
+pcie.1 has no SMMv3U and iommu_per_bus is not set for it.
+
+And we don't want pci_device_get_iommu_bus_devfn() to return pcie.0's
+IOMMU ops for virtionet.1. Hence the break.
 
 Thanks,
 Shameer
+
 
