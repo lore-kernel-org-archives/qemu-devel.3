@@ -4,91 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFB14C83F17
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 10:44:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4036EC83F17
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 10:46:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZokj-00006z-Mp; Thu, 10 Jul 2025 06:43:45 -0400
+	id 1uZomz-0001zJ-FH; Thu, 10 Jul 2025 06:46:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZokb-0008Vd-4B
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:43:37 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uZomm-0001rr-Gq
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:45:56 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZokX-0006k3-7C
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:43:36 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-453066fad06so4747095e9.2
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 03:43:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uZomd-00078P-IZ
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:45:52 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-453634d8609so4776625e9.3
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 03:45:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752144211; x=1752749011; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=YsH2CsC3SbUWzt01eKgxXS2RO/6o0D1c2Re/SGbbvtk=;
- b=OAAyIYPkZSuN6ug3NvXnFGfHi48aZmxMQG7VaVDB8F93Jn9Eos9pA7h3JK/YrfFKyp
- lW7wwoat31tkXSsCcWh6JQuQveq8tIdEi6E9xdkXGaHI058OTdEiZLtUrM5bE9MIo5HD
- 9tvdEvkH5z/fDtJlvu/F7YdNx8ncHrddTWN5fB+cI/q9Jh8XmXFOXyYsPJ2f0IED9tXE
- GdJCWUNCdZJxJmSU8mAzA6mTVqS4zWYauuxrWl6Ke2c1mWvha7DTfOWNve5Ov7rCAMBF
- BtyuI5N/qTuhCTQSOETuvA+OM51HCUN3KG0A/65jw5acVmntc/be2xhdr32AGtY1auNu
- VZVg==
+ d=linaro.org; s=google; t=1752144339; x=1752749139; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=j1lONaDCGcDF8Vf2dQSf345RzEHUxlyX4PcTEZfK8bc=;
+ b=eIiaPVXZ+TImU06oLM5pJYqSCgTF7Ta6a7H/ojRZQ+LZVCI+v1abe3wj5H7xaDpmwi
+ K/2SbcnafMWSsp+jnJ7se9siFCizWVRBoR61r5XyVyYS92v5GDUIWd1yH8lQWhmmXDkz
+ t/mQ7YnKHws8DMLJHTGkOs0f47kacV8G7Ena32xObT+hG2hxq/R+ewvavqZSM04AEOox
+ h22y6fdYOz9/XMbn7i7SB2Dyd60WCaPwQTIndtDJJ3wnw8cOIf5p3HyMM84hwpAOgtmc
+ Abge8F8nAAg5gb/ae75jHG5RUancu9YrXhXbdncC1NJXYRfWJD47O4lCDvkN7u6ZPzbV
+ C4zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752144211; x=1752749011;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YsH2CsC3SbUWzt01eKgxXS2RO/6o0D1c2Re/SGbbvtk=;
- b=PiGBfUobf55VHWEQp496aA6EEaqIZhhoPzTmbNDaGzaz328OH6Uf8JCElm+L29zAVb
- qeCQyRO55wWpe7Ifs6428HtzbjshYf8svrBUbiAlj5EH813nRb+kPsId/M+vr2W5mgtl
- EoO3Rd2khoWG4NQAC1+/TG8Vrssp5ewnvCUPD/swYi/AP0Hvmn0moSwAkGtoQp6cBRMe
- L9cgsIUJZo5k7OpV7W2I7ezQ1iTXvwzBgrNZ1vHsnaaTfZzX/ozb+XQtorzNYCEcOyp2
- vtjEpzjCtMSLdhwUhbkCC/nbn8vGNRCcYsZxJOxr6dk6UaHO6WVmrwPThYbBz0RPDnb4
- eGPg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWke7npMDkry+O2/CW6IxpmEpIyZBB47sQycsQIQjIWrQ9tND7GsDpoxEWjODdvT357OHDj1Lb/pFet@nongnu.org
-X-Gm-Message-State: AOJu0YyBlJ/pjzyhH3svE3V4M7MWeE4wmKmi73oa3vM/BrxoY5/03DYR
- MADXSTNuccpMlPC8TTPtdmCp5ksG9XTLcd+zjvIhhozOHr5x4Ra7rvrnvB7RYFECYP8=
-X-Gm-Gg: ASbGncvvXmuhgSqvXAnLblcR088W7KxK1Cv8+y309UIiROOcuTuPYd9HrqEN2NfR6RR
- FOL86eyAA7rrqdDrUMsfuFlmu2w8y/6DQPb9TGeR9+gWL2S2HWQBwbJ1XmQb1urvPvGxgUZ0sAw
- eEEGO3945FmhnE8Ij71Wx7SFBrFmryo668figUoU2LfFoYOTLDBkQX72ogfLn92FyiSp2ESe4ox
- CQQQN8I/u1hTruZSQ/BOOXv6GTu6IOdaAeVNVDkCH2X7iFu+2Nmu6IAzJBid3CsEo1GT+F55Obe
- KXHpSuf5ynJvoRapEr23B/9aVYMqgZ4f3xkA9Bdc5XTm51tEGpSlh+kUxaJkxEGHYCo+0UabqO4
- Y/hFGkcSGZq//CcLa2MuD/8GH6tXV83XoCTKEcsAi0Gk=
-X-Google-Smtp-Source: AGHT+IHMXle9Ikkf2slwgJCpQVlfG6z+3m9EkHsW8srqy7rfuwVtBNWhDojrImol1Lsa5xSjBRDDcA==
-X-Received: by 2002:a5d:5d12:0:b0:3b2:ef53:5818 with SMTP id
- ffacd0b85a97d-3b5e44e2010mr4815890f8f.5.1752144211469; 
- Thu, 10 Jul 2025 03:43:31 -0700 (PDT)
-Received: from [192.168.1.117] (lfbn-mon-1-970-120.w86-227.abo.wanadoo.fr.
- [86.227.5.120]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e1e2cfsm1488847f8f.75.2025.07.10.03.43.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Jul 2025 03:43:30 -0700 (PDT)
-Message-ID: <624dc105-25f5-404d-82e9-ee8184d430fa@linaro.org>
-Date: Thu, 10 Jul 2025 12:43:29 +0200
+ d=1e100.net; s=20230601; t=1752144339; x=1752749139;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=j1lONaDCGcDF8Vf2dQSf345RzEHUxlyX4PcTEZfK8bc=;
+ b=gdWUSv4UrXpRE3ygH6Upg8PEm1jWu3fqL6WV2Yy4CN37XsFzbBHsJ8W0ubMGNv7amt
+ /+P9H0/b7RO7eYF/8hAFQwylJSiawpCIJ/TkOED0kULJ67ARYK4r9gUg7QEBmZ9R4ub+
+ W5c5GzztDve4AteHUxkUPNX16x34wBPRdY/0G3RsFWqnO9PtiYDxWwE5Mlo5JqWjqDxx
+ xFq7h5BI4E9JCPdIr8JQOUi6wlA6JpyXazJ083POe1HSAr02hkRdncGzrbJz7FZ5cmcV
+ cy7uPK555lsVJNsqRcAlWaTUqPYWUQPHBCYLC5hZvGBfChJpBBq7Ch1tMLcbRD10h4aa
+ +rYQ==
+X-Gm-Message-State: AOJu0YyMoM7J4/9SpJCIGfRtLjfPKnvndEq1YyuuyjJOuuEM5wo3wF56
+ 1McHPKyb94ywVquc10ss1vJgpRNM+VYnLAniRptgvEjuc2xQGy+/UtlkrRClti5KogI=
+X-Gm-Gg: ASbGnct7Iox+RnF6Nc7EzjS8yUsn73v/vZ+Meg2FPyY9cMw9mq3Q+JUbiPxpBAYORjr
+ NEGVKh2yUi8/Ow0irYeNkhNfc5tqWZWnUWV55+uhBR3tLMt6FqZH1+MevDsXMfzdMTk4Lj5t6De
+ h1HAIlwWNnXt8Ofb6LMfbTrCX4Uk3ProRlgUPIbKx4VYIgNnHLehtJgHdkb/jNPJF7OFHVrnPZr
+ gK8rkpcDs3DKR1LatRUFfaXZ+ip36LygQYFfsjZndG61yxGvBCP+0p+vxQNeEq6DGfNQGE6ncR/
+ suuto9eWIakXqnueI+3G3eOYztalC65O/oRMi3t2+TJfFNw7kjTexloaOgCElPw=
+X-Google-Smtp-Source: AGHT+IHO7PxjfZO7RtVnQlPFZRSaZVs6hRhnMDeQzkKHslS/UfaLWsb7RSXMFKgtd0e2NW4Sgbc8HQ==
+X-Received: by 2002:a05:600c:4454:b0:450:cac5:45e7 with SMTP id
+ 5b1f17b1804b1-454d52db8efmr54057855e9.1.1752144339127; 
+ Thu, 10 Jul 2025 03:45:39 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454d50df5a1sm54634875e9.22.2025.07.10.03.45.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 10 Jul 2025 03:45:36 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id DC9645F8CE;
+ Thu, 10 Jul 2025 11:45:31 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Jason Wang <jasowang@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH 7/7] docs/system: clean-up formatting of virtio-net-failover
+Date: Thu, 10 Jul 2025 11:45:30 +0100
+Message-ID: <20250710104531.3099313-8-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250710104531.3099313-1-alex.bennee@linaro.org>
+References: <20250710104531.3099313-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 13/14] hw/i386/pc_piix.c: assume pcmc->pci_enabled is
- always true in pc_init1()
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, pbonzini@redhat.com,
- mst@redhat.com, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
- imammedo@redhat.com, qemu-devel@nongnu.org
-References: <20250704141018.674268-1-mark.caveayland@nutanix.com>
- <20250704141018.674268-14-mark.caveayland@nutanix.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250704141018.674268-14-mark.caveayland@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,17 +109,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/7/25 16:09, Mark Cave-Ayland wrote:
-> PCI is always enabled on the pc-i440fx machine so hardcode the relevant logic
-> in pc_init1().
-> 
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> ---
->   hw/i386/pc_piix.c | 194 ++++++++++++++++++----------------------------
->   1 file changed, 76 insertions(+), 118 deletions(-)
+We didn't clean-up the rst formatting when we moved this into the
+docs so lets do that now:
 
-We are not far from removing PCMachineClass::pci_enabled.
+ - un-indent the usage/hotplug/migration paragraphs
+ - properly wrap the command line fragments in code-block
+ - highlight parameters in text with ``double quotes``
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+No changes to the actual text.
+
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ docs/system/virtio-net-failover.rst | 51 ++++++++++++++++-------------
+ 1 file changed, 28 insertions(+), 23 deletions(-)
+
+diff --git a/docs/system/virtio-net-failover.rst b/docs/system/virtio-net-failover.rst
+index 6002dc5d96..0cc465454c 100644
+--- a/docs/system/virtio-net-failover.rst
++++ b/docs/system/virtio-net-failover.rst
+@@ -26,43 +26,48 @@ and standby devices are not plugged into the same PCIe slot.
+ Usecase
+ -------
+ 
+-  Virtio-net standby allows easy migration while using a passed-through fast
+-  networking device by falling back to a virtio-net device for the duration of
+-  the migration. It is like a simple version of a bond, the difference is that it
+-  requires no configuration in the guest. When a guest is live-migrated to
+-  another host QEMU will unplug the primary device via the PCIe based hotplug
+-  handler and traffic will go through the virtio-net device.  On the target
+-  system the primary device will be automatically plugged back and the
+-  net_failover module registers it again as the primary device.
++Virtio-net standby allows easy migration while using a passed-through
++fast networking device by falling back to a virtio-net device for the
++duration of the migration. It is like a simple version of a bond, the
++difference is that it requires no configuration in the guest. When a
++guest is live-migrated to another host QEMU will unplug the primary
++device via the PCIe based hotplug handler and traffic will go through
++the virtio-net device. On the target system the primary device will be
++automatically plugged back and the net_failover module registers it
++again as the primary device.
+ 
+ Usage
+ -----
+ 
+-  The primary device can be hotplugged or be part of the startup configuration
++The primary device can be hotplugged or be part of the startup configuration
+ 
+-  -device virtio-net-pci,netdev=hostnet1,id=net1,mac=52:54:00:6f:55:cc, \
+-    bus=root2,failover=on
++.. code-block:: shell
+ 
+-  With the parameter failover=on the VIRTIO_NET_F_STANDBY feature will be enabled.
++  -device virtio-net-pci,netdev=hostnet1,id=net1,mac=52:54:00:6f:55:cc,bus=root2,failover=on
++
++With the parameter ``failover=on`` the VIRTIO_NET_F_STANDBY feature will be enabled.
++
++.. code-block:: shell
+ 
+   -device vfio-pci,host=5e:00.2,id=hostdev0,bus=root1,failover_pair_id=net1
+ 
+-  failover_pair_id references the id of the virtio-net standby device. This
+-  is only for pairing the devices within QEMU. The guest kernel module
+-  net_failover will match devices with identical MAC addresses.
++``failover_pair_id`` references the id of the virtio-net standby device.
++This is only for pairing the devices within QEMU. The guest kernel
++module net_failover will match devices with identical MAC addresses.
+ 
+ Hotplug
+ -------
+ 
+-  Both primary and standby device can be hotplugged via the QEMU monitor.  Note
+-  that if the virtio-net device is plugged first a warning will be issued that it
+-  couldn't find the primary device.
++Both primary and standby device can be hotplugged via the QEMU
++monitor. Note that if the virtio-net device is plugged first a warning
++will be issued that it couldn't find the primary device.
+ 
+ Migration
+ ---------
+ 
+-  A new migration state wait-unplug was added for this feature. If failover primary
+-  devices are present in the configuration, migration will go into this state.
+-  It will wait until the device unplug is completed in the guest and then move into
+-  active state. On the target system the primary devices will be automatically hotplugged
+-  when the feature bit was negotiated for the virtio-net standby device.
++A new migration state wait-unplug was added for this feature. If
++failover primary devices are present in the configuration, migration
++will go into this state. It will wait until the device unplug is
++completed in the guest and then move into active state. On the target
++system the primary devices will be automatically hotplugged when the
++feature bit was negotiated for the virtio-net standby device.
+-- 
+2.47.2
 
 
