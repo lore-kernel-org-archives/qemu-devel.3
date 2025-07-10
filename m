@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 788F3C83F1D
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 10:33:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A601C83F20
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 10:33:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZoaS-0005F8-ES; Thu, 10 Jul 2025 06:33:08 -0400
+	id 1uZoaY-0005Li-WD; Thu, 10 Jul 2025 06:33:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uZoVy-0001UV-6F
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:28:30 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZoVw-0001Tj-5n
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:28:29 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uZoVs-00024G-7V
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:28:28 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-454b1d0a115so2714145e9.2
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 03:28:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZoVs-00024O-UA
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:28:26 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3a54700a463so479252f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 03:28:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752143302; x=1752748102; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jX/a0JUujtIuYmPCHdgHGffMRyymfSnECvYLYAAbLGY=;
- b=IQawixhqpbuO76cDm0iPuo5cg8PLRYzt4YFRveCh+unyxwaOzJgThkdymNovvw7YH0
- qlwiYOaNcK4mvISfk8xy0SruySbjrzmrzOospq9G9FpUB4TxwAVVspujlGngNZfp98sP
- ZYDsjnbUBdAXfV2vjO43RFws6EmV1XDj/SfRqbjmAo5+SptTy/jpijzuyYhdk86evAAA
- ZpAM7iGHMG9fzIjynuFPD5wH+M6iX9GUI/R5YKHxJgAzqDazdZOwV8jh6tZueROUOhp4
- gHjp/d/OouwnjzVGeti5/DBIx6IzeLHhQdHD5jWtEYCfQ77IEQX6DDsrRCAjxEZF+Y91
- ykEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752143302; x=1752748102;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ d=linaro.org; s=google; t=1752143303; x=1752748103; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=jX/a0JUujtIuYmPCHdgHGffMRyymfSnECvYLYAAbLGY=;
- b=sZYZVJZAO3xA0s/uwJ4/zG/YebsvUJUHCkJY0toSeHEzwJbqjb6YUUHcer9EXugZIZ
- URpGuCLs/b0k3CdeBz4vE58eApgW/GTSOTUBpt9EzudoS//5+C/SouUSjA/gRjCy/e7/
- PM4C+3TbDOcK7awuAiIF5qaXHXiKidDlR1k7X0USvQ5DEWnWjXU1o5wjpw/LnSjgu36o
- nXTbWE+QmVd5MK1Mgz/didckRo+HBVXUuvysutgG/RsYMB93avPmilO+vmsGNwatI5z6
- tczMaDdBEO3M35K5poh5M+o0iwcQCH7HI+FqH//59G6i5hpixgtxd2yeWNgoXvL6KtrG
- QIVQ==
-X-Gm-Message-State: AOJu0Yy/GV/fNeLXzBkkrDWYJfD42dLfOrM7+EKMhMg5Mb+zcaak4ZrB
- xNs68qKx6Es34oFcrgOc+tuom5y6+YCDTjPL+ZXvIRr2Cwa2WNUlXo+2Mq6dAfOhreg=
-X-Gm-Gg: ASbGncsVizVINYpUUfgoJ7A8zV4IpN5fUN8UzWpGYlzc50cQoq7fIOy6tk5QxSMh0d2
- cmm1QHZ+ODTIJaNey4bqeWDm108rBfnirgHZgEfphc2YmfCXPnbzeYmeBSJFr7HecVTKg/XYxHY
- oSwcF33LE75QQiLP839YVO/Qq5S/fWJLM8izHGTjzvE5SxGJb090JdPcUjYu6yVNlVJeHCH3SpR
- xQ/hNutDxcTKjpWyHPWIYtyqBSYgE+zkV5emU0rEj58WHXaKOZBQ9HkPI6BPbNrMJV094Q9RvQk
- EMB/EPR6JwKa20kwdXRVSH1HVdlQqkZbpjwcz3/yqSxO1J9kDZ611y0+KLmsoCRIfZBsBa5qDw=
- =
-X-Google-Smtp-Source: AGHT+IE5LWHCupJg2RmXOukOIggHZMNPaG1vungwxinncWEKLIgrY9jmsfj2MBg4xt/uF3ailpUffg==
-X-Received: by 2002:a05:600c:8b0a:b0:43c:f70a:2af0 with SMTP id
- 5b1f17b1804b1-454dd2925f0mr22028385e9.16.1752143301709; 
- Thu, 10 Jul 2025 03:28:21 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8dc21e7sm1505017f8f.36.2025.07.10.03.28.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Jul 2025 03:28:20 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id F21C15F812;
- Thu, 10 Jul 2025 11:28:19 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH v2] docs: use :kbd: role in sphinx docs
-In-Reply-To: <20250709-docs_rst_improvements-v2-1-cb5096ad0022@linaro.org>
- (Manos Pitsidianakis's message of "Wed, 09 Jul 2025 17:32:59 +0300")
-References: <20250709-docs_rst_improvements-v2-1-cb5096ad0022@linaro.org>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Thu, 10 Jul 2025 11:28:19 +0100
-Message-ID: <877c0gtk58.fsf@draig.linaro.org>
+ bh=kz6JSasFg0h3wj7hiMCokQEZUdasqtzAx7B/VK1Oxng=;
+ b=mYxR7eEhy567xYhBqY7fcb4mhLUp5psLJ1BDSnwh7xePn0X7kjXNy372QXAEPdyBd0
+ bxi7xnkJMFl7KaTwep9Tj83bSDNhzrCyI4sijmqDX2jdzO/Qhyf8QwLU1t6ArCxAsucQ
+ uGq70bW6PQkN9vqs2wf06H7TPf2I0UqtcgSTbbzEH27aqRO6aTom/8G8c3GJwoLebjB5
+ bSCpmUggFPnvfnkSni2EqgSvfQbY4ZH4SawaQbEdqdN4B+kY2nd5xk+HWfWV7KC4JTbk
+ rT5RBWefOtMtVTHIBJLG3PuRQd2wM3ThSCdmURt+q5K2JO67/3711UfuGWhbV3t1Efbm
+ Vaew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752143303; x=1752748103;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kz6JSasFg0h3wj7hiMCokQEZUdasqtzAx7B/VK1Oxng=;
+ b=pGimD55NbDm4mQfPLv73YKvym4tEIzeVe62bwmAaFvDEbzHVNbvQPSCU09zEOwK1Mm
+ TD+4W0wm1QJZwEO6IajRuYbGF+f+bo1VEHVrZrf1Hxo2oX+yJaDgyNluqdopISVRFOoV
+ 282pCZW3lB5zZFOsyTl9b9umusYcgM/fMYnFHYoe+mtDstyNfZz7DBoo6Pr5I3BrrzD7
+ puta/7nBX1BgXbK5Qgt9USza0ktQqw+IGdR7GKmycN9YkGGCGdE7NP8g2DaQQDhKy3D6
+ xv+9+MSs/gk8wuv5pMpjfHXlbBIiVBXbTcKq0L3TYhvUDQoIMdlBfnmWHZEgvcVcnyWW
+ C/Iw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUQxv3Q2egnnGRybPwbGJcx5sk6jIKb9TTrvU/OqfTnWcexqd/XMieST0NlhOwfMsaBxFgRDXI3RxM+@nongnu.org
+X-Gm-Message-State: AOJu0Yz6LO/fN/J7UhjR060x+I6xI1n0yrQpp9k3eOmlRUNnhwvdJtDL
+ JAuvzDjM/GPI6ZWTYEEfP7v+NkK5IO2lce4Jqs2gZycJSNx9ITL1nMin5FZnfgvqzXkc7SBrhMU
+ ++K4/6SI=
+X-Gm-Gg: ASbGnctXeuE4KfRBGnm5l/zhnd3u87eAwHluSOqlNYpjSFMzqI+PDL50Au4NG/0kv4O
+ ZlTAFV6klaFawYqVvBo7kvanF81zrxTdd2WZNkp+JsWnrX590xHCMPmFEWhnpMlIlws/pD9Eh+e
+ A2Mi0p1X5ZG7KuWeozTekuF9vC3nMOzr9g/l0g5JUlPeJegdAVJqu1ePae+I/t7+tWPMl/55ebo
+ +cPQgD32LYBB5fGIan8utMagqNqrx9q7o4Mr98z+LijraMjDIZFcLdgCOmLlPQ146bx9+k6c0nG
+ 3v/gEqwRb+/pJG9It6p1PgR7Rd1Yv1c5XI6slpkuF3HZtdWIS/n3vnjuhZDIOxyukNjEng2iTT6
+ MHFdsxC6LQ3yKN98k3dQShPA2RczmRSKSncyzjCqxXYA=
+X-Google-Smtp-Source: AGHT+IHhhlyR9DBlX4e4KM6kRyqP6XjUCnSeWBidBEvKkEBp4CJZS7ljBshOiJMZXLHs9Cn6NSOjYQ==
+X-Received: by 2002:a05:6000:4907:b0:3b3:9c56:b825 with SMTP id
+ ffacd0b85a97d-3b5e7f34e3cmr2760903f8f.22.1752143303158; 
+ Thu, 10 Jul 2025 03:28:23 -0700 (PDT)
+Received: from [192.168.1.117] (lfbn-mon-1-970-120.w86-227.abo.wanadoo.fr.
+ [86.227.5.120]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454dd537cd9sm15834665e9.26.2025.07.10.03.28.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 10 Jul 2025 03:28:22 -0700 (PDT)
+Message-ID: <748a2db5-503f-45ea-9507-575e764cf5f5@linaro.org>
+Date: Thu, 10 Jul 2025 12:28:21 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 09/14] hw/i386/pc_piix.c: remove
+ pc_system_flash_cleanup_unused() from pc_init_isa()
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, pbonzini@redhat.com,
+ mst@redhat.com, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
+ imammedo@redhat.com, qemu-devel@nongnu.org
+References: <20250704141018.674268-1-mark.caveayland@nutanix.com>
+ <20250704141018.674268-10-mark.caveayland@nutanix.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250704141018.674268-10-mark.caveayland@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,21 +105,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
+On 4/7/25 16:09, Mark Cave-Ayland wrote:
+> This function contains 'assert(PC_MACHINE_GET_CLASS(pcms)->pci_enabled)' and so we can
+> safely assume that it should never be used for the isapc machine.
+> 
+> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> ---
+>   hw/i386/pc_piix.c | 1 -
+>   1 file changed, 1 deletion(-)
 
-> Sphinx supports the :kbd: role for notating keyboard input. They get
-> formatted as <kbd> HTML elements in the readthedocs theme we currently
-> use for Sphinx.
->
-> Besides the better visual formatting, it also helps with accessibility
-> as screen readers can announce the semantics of the <kbd> element to the
-> user.
->
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Queued to docs/next, thanks.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
