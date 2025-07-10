@@ -4,66 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D844C83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 14:22:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 324C7C83F1B
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 14:23:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZs9X-0001PY-JS; Thu, 10 Jul 2025 10:21:35 -0400
+	id 1uZsAw-00032P-Pj; Thu, 10 Jul 2025 10:23:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uZs0R-0001tl-Jl
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:12:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uZryZ-0000gA-OD
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:10:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uZs0P-0004UR-4z
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:12:11 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uZryU-0004Jl-Kl
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 10:10:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752156727;
+ s=mimecast20190719; t=1752156607;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=u0qe4pZXWXTu5zop2sq6sWqbGNv19LlFm/2Cc3cn9Bs=;
- b=bd4raWlEsOQ3oeLUUIK3FtM1FkYeyh3Vd74gZRBhOeeUrmm3sx/+YBLbNK3IC4aBF6nZSD
- iGGu7plKqh2/rR5b8yVyIP5J7PfbrWOYJQZBMjNHv7RYtJERaOuUG9hU5hSEhRaCh2uFQB
- yFQsi2rbVkB0hTuu250TYLIJyGi1VW8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-73-poQS5VaZMa-_g_6cAwuG7g-1; Thu,
- 10 Jul 2025 10:12:03 -0400
-X-MC-Unique: poQS5VaZMa-_g_6cAwuG7g-1
-X-Mimecast-MFC-AGG-ID: poQS5VaZMa-_g_6cAwuG7g_1752156722
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 984191809C91; Thu, 10 Jul 2025 14:12:02 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.76])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0B0F9180045B; Thu, 10 Jul 2025 14:12:00 +0000 (UTC)
-Date: Thu, 10 Jul 2025 15:11:57 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org,
- chao.p.peng@intel.com
-Subject: Re: [PATCH] i386/tdx: Fix the report of gpa in QAPI
-Message-ID: <aG_KLeTIIblKbrY9@redhat.com>
-References: <20250710035538.303136-1-zhenzhong.duan@intel.com>
- <3b6c0344-0694-4a56-99dd-c7d437e43428@intel.com>
- <efbbe5f4-6f0c-4470-9968-c389cb206088@intel.com>
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9bjJYpCH7ZfK0sawPwyP0TDIcWspMQNetqywwvCHqCc=;
+ b=JI0qK3NQHqIc6ogpXFqXTRMdnLVXaYTKo5Mo1F+E0T2SDECG9mR3kaQc6xEu936XN2tl/M
+ HZ82AR5sPneb8tPPy2eztyw6wPZSQjO+vx/alS7ySiLx/WrUwziqt96AZgpIc6qSggbUf3
+ bcDhqBr4Z6j8UR5srSYJydReJqtfe0k=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-460-81UPv23hP-O9j_e5RwbUqw-1; Thu, 10 Jul 2025 10:10:06 -0400
+X-MC-Unique: 81UPv23hP-O9j_e5RwbUqw-1
+X-Mimecast-MFC-AGG-ID: 81UPv23hP-O9j_e5RwbUqw_1752156605
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-450de98b28eso10323845e9.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 07:10:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752156605; x=1752761405;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9bjJYpCH7ZfK0sawPwyP0TDIcWspMQNetqywwvCHqCc=;
+ b=FEsgwzaVUNQ3srhot/ZVU0wOpO7w8mMxHRNxPUECHvztBkzoIldr+V9TmiCJ7vuUTT
+ 4wgHHhGmi53+kl8m4bHrZOlTV5k/Pi7/tPGwvfVd9hgpyxUx2XPJVxB0QSQck4sxzKYh
+ vw3A5Y3KKrSlkAtGxzfGD3JYH8+Hu8/V872TtSW1IBF37D1rs9CfTru8uJw+KJqMg+sQ
+ NV1or8qPpZ7OC9VEmgLHcCEWgVk+YHbc24otTqnNpPf+utPj+1cbUbNRMWM504fyljzb
+ 9bbTLIX833RfiyZERR2TzaJxXYf7FEy6PgBQrARbh7iHuKRS6AF/NzEzEDyESwNEmO/g
+ jBcw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUOURsN0P9mF59rATGXi9hWMJhiV1pRtkmnCfk+h2nRLvVw75ghQutT89gHotoFp+61nLHAbaRsn/B8@nongnu.org
+X-Gm-Message-State: AOJu0YxNFXrycCwjvE+95CeWAr/mH2Sg2v6ccByYTtmXRS51LqDMYe34
+ fyDmDQpSO8MtwH29+Hw8P09klbKX7EraHevZFAZ+Is/ReUveNalfLGML3VCsqUwUo6L1HAQGsZ0
+ g5MT2V9h5JoN0K8sghNn2Vw5axt7njDrpfRXsPGWKkbH89hm59qaqSH51
+X-Gm-Gg: ASbGnctqQ7NOySPrz9bV4LLLg3M3OevZuhnXIL+AGJKqfrZnz/52eNzL/mv6XjBtAo2
+ vbpOOMS+7g/48q238gPBjpwkPODwCXVGEnKtJecGOzdvGHuSUOQmtXmLlKUpmwGzUzQjRCLIubY
+ kPyfPD1EhbdMsUcJhksy/B36qiEswZKpfOBZsDElRUx4WImzqeqxOCl0iANArU4lFFhCWk00mbj
+ b/tORZWZ3+ibAoCYZaRVuqV5Jy+NDEAYmFkiFVmx6ui0SLpKKWLBamdn2Q2SmazDFH+XX7inZfo
+ ZlImcZjcCcFAzHQKA8QTWAt38Im0LMhqYxLY8j/SgvLibLvKRShnZ6ZM5JhthTRicacB/w==
+X-Received: by 2002:a05:600c:1e8a:b0:453:45f1:9c96 with SMTP id
+ 5b1f17b1804b1-454db8bf413mr39662285e9.14.1752156604814; 
+ Thu, 10 Jul 2025 07:10:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE6psRf5P3aN2vGoaXDYQS7IIdKIGys2vxts3vY0vAop44l6lLGzwwi9GjwHLRdCCTUXuK3Qw==
+X-Received: by 2002:a05:600c:1e8a:b0:453:45f1:9c96 with SMTP id
+ 5b1f17b1804b1-454db8bf413mr39661625e9.14.1752156604150; 
+ Thu, 10 Jul 2025 07:10:04 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454d511bd78sm61242615e9.35.2025.07.10.07.10.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 10 Jul 2025 07:10:03 -0700 (PDT)
+Message-ID: <322a9301-a1ee-4cd9-b423-fbef2fc0593d@redhat.com>
+Date: Thu, 10 Jul 2025 16:10:02 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <efbbe5f4-6f0c-4470-9968-c389cb206088@intel.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 4/5] hw/arm/arm_gicv3_kvm: Add a migration blocker with
+ kvm nested virt
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ miguel.luis@oracle.com, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, maz@kernel.org, gkulkarni@amperecomputing.com,
+ gankulkarni@os.amperecomputing.com
+Cc: hi@alyssa.is
+References: <20250707164129.1167837-1-eric.auger@redhat.com>
+ <20250707164129.1167837-5-eric.auger@redhat.com>
+ <48fca85b-096a-4d1c-97dd-380669cb6604@linaro.org>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <48fca85b-096a-4d1c-97dd-380669cb6604@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -84,62 +118,52 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 10, 2025 at 10:06:10PM +0800, Xiaoyao Li wrote:
-> On 7/10/2025 7:40 PM, Xiaoyao Li wrote:
-> > On 7/10/2025 11:55 AM, Zhenzhong Duan wrote:
-> > > Gpa is defined in QAPI but never reported to monitor because has_gpa is
-> > > never set to ture.
-> > > 
-> > > Fix it by setting has_gpa to ture when TDX_REPORT_FATAL_ERROR_GPA_VALID
-> > > is set in error_code.
-> > 
-> > Hi Zhenzhong,
-> > 
-> > I would like to understand what the problem is without panic_info-
-> > >u.tdx.has_gpa being set?
-> 
-> Never mind, I figure it out.
-> 
-> qapi_event_send_guest_panicked() in qemu_system_guest_panicked will send the
-> event and data. Libvirt tries to parse the data, but find the .has_data
-> field is not set correctly.
 
-Close, but not quite.
 
-The "has_" fields are only present in the QEMU internal data structures,
-never on the wire in the JSON messages that libvirt receives.
+On 7/10/25 4:04 PM, Philippe Mathieu-Daudé wrote:
+> On 7/7/25 18:40, Eric Auger wrote:
+>> We may be miss some NV related GIC register save/restore. Until
+>> we complete the study, let's add a migration blocker when the
+>> maintenance IRQ is set.
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+>> ---
+>>   hw/intc/arm_gicv3_kvm.c | 8 ++++++++
+>>   1 file changed, 8 insertions(+)
+>>
+>> diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
+>> index b30aac7aee..fccb3886bf 100644
+>> --- a/hw/intc/arm_gicv3_kvm.c
+>> +++ b/hw/intc/arm_gicv3_kvm.c
+>> @@ -827,8 +827,16 @@ static void kvm_arm_gicv3_realize(DeviceState
+>> *dev, Error **errp)
+>>       }
+>>         if (s->maint_irq) {
+>> +        Error *kvm_nv_migration_blocker = NULL;
+>>           int ret;
+>>   +        error_setg(&kvm_nv_migration_blocker,
+>> +                       "Live migration disabled due to KVM nested
+>> virt enabled");
+>
+> (mis-indentation)
+Did not notice as checkpatch does not complain.
 
-The problem is with QEMU's struct -> JSON serialization - if the 'has_gpa'
-field is not set to 'true', then QEMU will *never* emit the 'gpa' field
-in the JSON it sends to the client app.
-
-So what libvirt receives is this:
-
- {"timestamp": {"seconds": 1752156518, "microseconds": 809325},
-  "event": "GUEST_PANICKED",
-  "data": {"action": "pause", "info": {
-      "error-code": 0,
-      "message": "TD misconfiguration: SEPT #VE has to be disabled",
-      "type": "tdx"}}}
-
-which has no 'gpa' present.
-
-> My original patch used (gpa == -1) as the indicator for whether gpa is
-> valid, this needs to be cleaned up. I will send the cleanup patch.
-
-The value you assign to 'gpa' doesn't matter when 'has_gpa' is false,
-as it'll never get into the JSON event, so having it be '-1' is not
-significantly different from leaving it on 0.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Eric
+>
+>> +        if (migrate_add_blocker(&kvm_nv_migration_blocker, errp)) {
+>> +            error_free(kvm_nv_migration_blocker);
+>> +            return;
+>> +        }
+>> +
+>>           ret = kvm_device_check_attr(s->dev_fd,
+>>                                       KVM_DEV_ARM_VGIC_GRP_MAINT_IRQ,
+>> 0);
+>>           if (!ret) {
+>
 
 
