@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81BDEC83F17
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 12:44:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B451C83F1D
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 12:44:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZqdL-0006Bp-Jq; Thu, 10 Jul 2025 08:44:16 -0400
+	id 1uZqdT-0006EU-Cc; Thu, 10 Jul 2025 08:44:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uZqdI-0006BO-RL
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 08:44:12 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uZqdQ-0006Ck-74
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 08:44:20 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uZqd7-0003s0-P1
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 08:44:12 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-60c4521ae2cso1677644a12.0
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 05:43:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uZqdL-0003sZ-9p
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 08:44:19 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-710bbd7a9e2so9387527b3.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 05:44:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1752151438; x=1752756238; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752151451; x=1752756251; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=m5AdhoPt+Z+scusECX+q6g4pSfzf7nFvMyBtqItkHF8=;
- b=A57Xy2bTAHKRsjNpdm9XkYidMOKGdXgtERFY+T+OdZD5WnNkhnkKYOn9mxAg/cdB2n
- eqRCv6CKXaUNCy10ly26sWpU01SBGoivIm08BgN3QN6pH8/Tjqt1iGd2GluJfC4OEvGq
- Zid4S4x1F+7qtY/A6MGY2PGP8E9qSBVq5f2U2HhVK5TvDpb+nnvmE9xzV89j1XleBKti
- lTLYvUVxh0RVJfeCzOME7GTx+nFZfsnQ0rxJg4rkFJD1jB7fKh50oaTCBEcC/tEfellj
- aHX6TTTSFeOE5h4HSsDZkP7NzKl9OZnj1LaTLr9AtNgbpByGI2W4rJ6sJaM/2g3hVK7M
- jX6A==
+ bh=5Kp8bu4jTkRUGbz9b2auc9VSysdtk/0LiI528N49pmI=;
+ b=Cz6cczA72xL5neVG6gBn6+0NVlixGjCg3TonJ/Tbj+Hyp/lerR2Rdoca2QzuzMu1e1
+ wfg3pA7nRc4C/huSzaemkovU5f0oP9rhTIYtXJlFayaEPcLp7zLfBWMW7SABhT6RpqVD
+ SbSlP0JTzgpObLzd7iZODIY5laZq9njxU7GloKHouzPrRf6wGcl/5t1VM8BolBO3Swhu
+ tc2ujih2bwgy1h0hf+ijYbDNkOGN7QSBwe8UavXwvnSdlPKugyUmiY1udHcrk9v9Unhj
+ m1Ad5wHlq+/CGxrUvE34ozHSWyIfJnqCw/NkG/gTqecQNHwxGhXfsRBhU6GtrrQnyQGi
+ 1Qzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752151438; x=1752756238;
+ d=1e100.net; s=20230601; t=1752151451; x=1752756251;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=m5AdhoPt+Z+scusECX+q6g4pSfzf7nFvMyBtqItkHF8=;
- b=QQ868tGv436y+xezAgV+51DOAsKaBD8nEQaxi6zHoGa1F1BEpLbJxXvzqm48SLsX2B
- VCIyfMP8pFn2bht5y0Os3NqX2lj2PBVWs1CodmedrDiO7sdPGTmVkxVpzxmFAWRvjpBg
- Wb5SH1dnrq1ojCDwF4LB6haGvsrCnc7WsIhZHOFTzPvm/Yc8oEUz5ON+0w0XNWrdEZ5m
- qMLPd5WT2RrP2Y4JVQucwXEnzZushrbD214RF8zwDoCurkJjT0AZXvsHT90Y7OF1lP2X
- e8mguNHPnn3zJ2cF3//SUMC5pqnBS4gxheE56OouMZ8wNB8g8BFiPkmIwJPY91OG6xvl
- S++Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWvqNfXUyQZZLs40k2ke8huGcMnRBm87z+1Cf+zw7b9nA/qv3PdIQQG5EEMQlTPrFoDdhPUtaajY/tv@nongnu.org
-X-Gm-Message-State: AOJu0YyxraulSv6y5MwmCvbApwZyYiv4nf+1zMu3Z7rltLL6gcyU+ULS
- MixHgOthyJCAAqytVr4t0Dyhm2w8LtG6U1L6Kj1P9PYgy8291BzYWaEJ+ZCmohth+yYnj4gIMYZ
- RAZuFWyhM5DtlzC1NWjILOQ/4U2wDhKc7e6ie7w4=
-X-Gm-Gg: ASbGnctMyx+b4tCL9xYt+gy44Mi87ymaGeAyg0/20m30qCbzFVnDjDjDmmKPYyrCaQe
- M9FEtsjGvGzWxZt/ismMUhMxd6q8XHsec3HDmSQufNTgrWCdnI2GfPLeIh5khVD5WWQqAQwNYNY
- QBjiMa2eQoWMlPVsIRP7gs3GxpJBXW3nQ6pnCF7Kmxz9kQag==
-X-Google-Smtp-Source: AGHT+IHaxopvZqBbOyPswd0NtSp+6OJ73JFGZ6gRbaZlhpmhU3vXk6aZvZUnkSjgzn5rEziu+Cj+14vVJq+0rq78j4Y=
-X-Received: by 2002:a05:6402:35d3:b0:607:ea0c:65b2 with SMTP id
- 4fb4d7f45d1cf-611c16ad81amr3039506a12.31.1752151437777; Thu, 10 Jul 2025
- 05:43:57 -0700 (PDT)
+ bh=5Kp8bu4jTkRUGbz9b2auc9VSysdtk/0LiI528N49pmI=;
+ b=HRAh5N16BFhs9xMBurz2TMb5eUqIS+PlTroTI6uYqfjtV4IKYVHxR/w5UFROm7pStR
+ XVRHjoF/vbjWpZ2+wNOAFFBVcnF7xSZeHZ6Zne7lGpgdiqrSS0CoeApTQJ8UOVDo/LLj
+ fg2zPE/1UJZSva9SfAb1o7RyePln1NESK2xaMs3mWrkN2qomgS68UYSP6eW5PXG50I/b
+ +ZEP8P1M4r6HuyH1sDwVNKZkmZIbvAyrf8t9txP0Lqr4W9AWKVb0tAbM/fchSGChfJp0
+ syijAkF5FiO0KkPCpBQKF4y/DzHDOIHoaxL2wyg55YSFi63rk6q5vvjfku8rCMeJQdrD
+ onNA==
+X-Gm-Message-State: AOJu0YyCcbIR9kP/yEqqrPXkH3v/Rpe4syYkA7UF7qpUbsl5A6ViFj26
+ mnD3KXbl6S1dBUIHF6T7GRLfGfiKI/D+NtNrFtvCG3lvitcf/MUoKiGk/n5Mw/vgOLVX1g+mtrr
+ i2Iz6xqx52u2PA7RoBWrtb6ggrbjxHd3i+5wnkxdgOQ==
+X-Gm-Gg: ASbGncuAeWMDMBslHkLrzVgLoi8mP9kkpwboWayc/oUQ9ccgYLet+JBZ+xj4bWGHUHS
+ x78TMepvLZaej4qChKabN0/LfkwOFic9gw/oIZAWn73bMADQ80HphErAGOdccpfuQbtLgtXoWQj
+ 8htys73tuP0bWJFE/wFskQbJ/T5NuiATAyA4P+pWga9UBh
+X-Google-Smtp-Source: AGHT+IGmxYKfIoa0JfHEvGj2x5+JqUl6Pe/netVqCOMw67k8ivNG/FTdRy1JaisTuKoj5kGVlu+PmHVHTZBa07dsOUc=
+X-Received: by 2002:a05:690c:6ac7:b0:710:e7e3:ff6 with SMTP id
+ 00721157ae682-717c46618dcmr35977207b3.12.1752151451468; Thu, 10 Jul 2025
+ 05:44:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250710093238.453962-1-maobibo@loongson.cn>
-In-Reply-To: <20250710093238.453962-1-maobibo@loongson.cn>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Thu, 10 Jul 2025 08:43:45 -0400
-X-Gm-Features: Ac12FXxBpi1YLtKK5lmyms-831pIvvFb4yjFGLEyM_DdciO75_VHop-MgGauLbM
-Message-ID: <CAJSP0QXq=d5UC8vp01OB0guvaH+V5SX8PtZ5b1NT78CmGeo6UQ@mail.gmail.com>
-Subject: Re: [PULL 0/4] loongarch-to-apply queue
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+References: <20250626074529.1384114-1-clg@redhat.com>
+ <20250626074529.1384114-10-clg@redhat.com>
+In-Reply-To: <20250626074529.1384114-10-clg@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 10 Jul 2025 13:44:00 +0100
+X-Gm-Features: Ac12FXzlL4s9XP3hSRu1qt_jiqYlIPiGw4aK-aQ83_eDLQ3dbqPbYSXIDTLP4n8
+Message-ID: <CAFEAcA9+EyeWE0QSUhgd7+i3din8J76jnhTuDB7i9hu3x-urOg@mail.gmail.com>
+Subject: Re: [PULL 09/25] vfio-user: implement message receive infrastructure
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>, 
+ John Levon <john.levon@nutanix.com>, John Johnson <john.g.johnson@oracle.com>, 
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,62 +97,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 10, 2025 at 5:34=E2=80=AFAM Bibo Mao <maobibo@loongson.cn> wrot=
-e:
+On Thu, 26 Jun 2025 at 08:47, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
 >
-> The following changes since commit df6fe2abf2e990f767ce755d426bc439c7bba3=
-36:
+> From: John Levon <john.levon@nutanix.com>
 >
->   Merge tag 'pull-target-arm-20250704' of https://gitlab.com/pm215/qemu i=
-nto staging (2025-07-07 09:22:41 -0400)
+> Add the basic implementation for receiving vfio-user messages from the
+> control socket.
 >
-> are available in the Git repository at:
->
->   https://github.com/bibo-mao/qemu.git tags/pull-loongarch-20250710
->
-> for you to fetch changes up to 8ad757642e3a8a283edc29efec73b9bd57fdb365:
->
->   target/loongarch: Remove unnecessary page size validity checking (2025-=
-07-10 16:30:25 +0800)
->
-> ----------------------------------------------------------------
-> pull-loongarch-20250710 queue
->
-> ----------------------------------------------------------------
-> Bibo Mao (4):
->       hw/intc/loongarch_extioi: Move unrealize function to common code
->       target/loongarch: Correct spelling in helper_csrwr_pwcl()
->       target/loongarch: Fix CSR STLBPS register write emulation
->       target/loongarch: Remove unnecessary page size validity checking
 
-Please take a look at the following aarch64 macOS CI failure and
-resend your pull request when it has been fixed:
+Hi; Coverity suggests there are some issues with this code
+(CID 1611807, 1611808, 1611809):
 
-../target/loongarch/tcg/tlb_helper.c:643:75: error: format specifies
-type 'long' but the argument has type 'target_ulong' (aka 'unsigned
-long long') [-Werror,-Wformat]
-643 | qemu_log_mask(LOG_GUEST_ERROR, "Illegal huge pagesize %ld\n", ps);
-| ~~~ ^~
-| %llu
-/private/var/folders/7m/kxwv39y54d9g6lmkzwbqwk8r0000gn/T/cirrus-ci-build/in=
-clude/qemu/log.h:57:30:
-note: expanded from macro 'qemu_log_mask'
-57 | qemu_log(FMT, ## __VA_ARGS__); \
-| ~~~ ^~~~~~~~~~~
+> +/*
+> + * Receive and process one incoming message.
+> + *
+> + * For replies, find matching outgoing request and wake any waiters.
+> + * For requests, queue in incoming list and run request BH.
+> + */
+> +static int vfio_user_recv_one(VFIOUserProxy *proxy, Error **errp)
+> +{
 
-https://gitlab.com/qemu-project/qemu/-/jobs/10637285043
 
-Thanks,
-Stefan
+> +    /*
+> +     * For replies, find the matching pending request.
+> +     * For requests, reap incoming FDs.
+> +     */
+> +    if (isreply) {
+> +        QTAILQ_FOREACH(msg, &proxy->pending, next) {
+> +            if (hdr.id =3D=3D msg->id) {
+> +                break;
+> +            }
+> +        }
+> +        if (msg =3D=3D NULL) {
+> +            error_setg(errp, "unexpected reply");
+> +            goto err;
+> +        }
+> +        QTAILQ_REMOVE(&proxy->pending, msg, next);
+> +
+> +        /*
+> +         * Process any received FDs
+> +         */
+> +        if (numfds !=3D 0) {
+> +            if (msg->fds =3D=3D NULL || msg->fds->recv_fds < numfds) {
+> +                error_setg(errp, "unexpected FDs");
+> +                goto err;
+> +            }
+> +            msg->fds->recv_fds =3D numfds;
+> +            memcpy(msg->fds->fds, fdp, numfds * sizeof(int));
+> +        }
+> +    } else {
+> +        if (numfds !=3D 0) {
+> +            reqfds =3D vfio_user_getfds(numfds);
+> +            memcpy(reqfds->fds, fdp, numfds * sizeof(int));
+> +        } else {
+> +            reqfds =3D NULL;
+> +        }
 
->
->  hw/intc/loongarch_extioi.c                |  9 ---------
->  hw/intc/loongarch_extioi_common.c         |  9 +++++++++
->  include/hw/intc/loongarch_extioi.h        |  1 -
->  include/hw/intc/loongarch_extioi_common.h |  1 +
->  target/loongarch/tcg/csr_helper.c         |  8 ++++++--
->  target/loongarch/tcg/tlb_helper.c         | 24 ++++++++----------------
->  6 files changed, 24 insertions(+), 28 deletions(-)
->
->
+Here we allocate memory into reqfds...
+
+> +    }
+> +
+> +    /*
+> +     * Put the whole message into a single buffer.
+> +     */
+> +    if (isreply) {
+> +        if (hdr.size > msg->rsize) {
+> +            error_setg(errp, "reply larger than recv buffer");
+> +            goto err;
+> +        }
+> +        *msg->hdr =3D hdr;
+> +        data =3D (char *)msg->hdr + sizeof(hdr);
+> +    } else {
+> +        buf =3D g_malloc0(hdr.size);
+> +        memcpy(buf, &hdr, sizeof(hdr));
+> +        data =3D buf + sizeof(hdr);
+> +        msg =3D vfio_user_getmsg(proxy, (VFIOUserHdr *)buf, reqfds);
+> +        msg->type =3D VFIO_MSG_REQ;
+
+...and here we allocate memory into msg...
+
+> +    }
+> +
+> +    /*
+> +     * Read rest of message.
+> +     */
+> +    msgleft =3D hdr.size - sizeof(hdr);
+> +    while (msgleft > 0) {
+> +        ret =3D qio_channel_read(proxy->ioc, data, msgleft, errp);
+> +
+> +        /* prepare to complete read on next iternation */
+> +        if (ret =3D=3D QIO_CHANNEL_ERR_BLOCK) {
+> +            proxy->part_recv =3D msg;
+> +            proxy->recv_left =3D msgleft;
+> +            return ret;
+> +        }
+> +
+> +        if (ret <=3D 0) {
+> +            goto fatal;
+> +        }
+
+...but here we may take an error-exit codepath to the 'fatal'
+label...
+
+> +        trace_vfio_user_recv_read(hdr.id, ret);
+> +
+> +        msgleft -=3D ret;
+> +        data +=3D ret;
+> +    }
+> +
+> +    vfio_user_process(proxy, msg, isreply);
+> +    return 0;
+> +
+> +    /*
+> +     * fatal means the other side closed or we don't trust the stream
+> +     * err means this message is corrupt
+> +     */
+> +fatal:
+> +    vfio_user_shutdown(proxy);
+> +    proxy->state =3D VFIO_PROXY_ERROR;
+> +
+> +    /* set error if server side closed */
+> +    if (ret =3D=3D 0) {
+> +        error_setg(errp, "server closed socket");
+> +    }
+> +
+> +err:
+> +    for (i =3D 0; i < numfds; i++) {
+> +        close(fdp[i]);
+> +    }
+> +    if (isreply && msg !=3D NULL) {
+> +        /* force an error to keep sending thread from hanging */
+> +        vfio_user_set_error(msg->hdr, EINVAL);
+> +        msg->complete =3D true;
+> +        qemu_cond_signal(&msg->cv);
+> +    }
+> +    return -1;
+
+...and in this error handling codepath we don't do anything
+to free either msg or reqfds.
+
+Coverity also wonders if you have missing locking because
+the call to qemu_cond_signal() here is the only place
+that touches msg->cv without holding a lock. But this one's
+a heuristic that may be wrong.
+
+thanks
+-- PMM
 
