@@ -4,82 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B01C83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 19:00:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59709C83F17
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 19:32:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZwUr-0005Ry-1d; Thu, 10 Jul 2025 14:59:53 -0400
+	id 1uZwzd-00070v-Qc; Thu, 10 Jul 2025 15:31:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uZwBg-0006Yu-1b
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 14:40:04 -0400
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uZwzV-0006yY-5E
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 15:31:33 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uZwBd-0001fj-VA
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 14:40:03 -0400
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-73cdce0ee0eso335007a34.3
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 11:40:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uZwzT-0001xP-6P
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 15:31:32 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-710bbd7a9e2so14230557b3.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 12:31:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752172800; x=1752777600; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=P8pr/A2YC3YIqYJz1pODqgDI7xep8x+NaCcdFmWkn3k=;
- b=A4hhGg53DCTGGwiEZk89axo4ovs9aGtZtV1X1DobDldax5W4CzjfEf8CY1ekpLTQom
- maRY70amE6BKXCsoPqoEMPfTMB4SWNoDp/X0ZkQ0Kr34CHLpy90rosq1KFraNz7lwpaw
- ZJ6ryeczmXzfMWGd2//jbCyxnDtHom9c+XU9bnNZriGYNOxoAKzM4SHKhf29ApSu15Qe
- LzSPOZr4/yiTH0N2Z4HpPPu3d0MmFXLNKfCudjqpW8pipCDPwkylMSZrnLZXg085c88T
- riX1wnBa4gQQWp/j+Aer/E29IYFGY1KZ/7QAYU0slTxzqOkXLv10Yp9p2Q7yXz7OOzsD
- mCCg==
+ d=linaro.org; s=google; t=1752175889; x=1752780689; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=U+CVoHFDG09GyMpm6YXkqKO/4WQ7emjQmymhG7B5z3Y=;
+ b=TJJwUvi8wcvd9zaP/XfEdmu9hCB4rZg6cl8DAAbnvHhKTFvU3fUvJCIWPblyvkv18G
+ cHeecgARXDy0qbNu87GMzRwTWsQ6hH1DA4CKB8xacFDB/pUNT9MYeNBFdo97u+529Vqq
+ ak8fL0VNH+1IhYibp8s5g2I/3NfYNybLgD/DLqGzN+R3APLUrhUTUk/wn4ebp9qZItLg
+ 3zSdwvoAVEr07C2uewaQty4BhdWifu7hiArvYOPJ/EPPgeqZsjyoRsVb21oMlvHeTQT0
+ 1Kqo2dZZ3kn0qcxk9ZuM83toxrzSlsDCEF92W/RvXo36yPYHWRHvvA2ebgT4nM2a2126
+ rtHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752172800; x=1752777600;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=P8pr/A2YC3YIqYJz1pODqgDI7xep8x+NaCcdFmWkn3k=;
- b=JA0mPQcjELVzssdjAy/7UhQg4uzmh22Pa9snmuDIEi89z6Hd8QHJAzDecn06CehEzE
- 40oCmAwAqGN91LBeBe6FIASkQoMNdNPYW7thKFJ4iizczHUHL2kLGtoXhDVYPAogADYJ
- 6s1YXAogD90Fz0FyvtyFuAwI6vBsNz+5P+vhiQ/XFw1qxP1GQi++slBvP63JluPXj/5T
- zBbIZQwl5ImsnmQQleD3Ms8BaAvq26zV5b/9mUZkzH2+vAQOTwhaXojsI5Uq6Geckrqi
- +PHySEQF6eGYQ2np+wX4q/1uZsdNj8eKUCoyyUQZSHGORwfikH3Og+n1ZMho/WnuNCSG
- 5kwQ==
-X-Gm-Message-State: AOJu0YzHm7cEaD7058MQ1/PG7pc56umwBtyZvz4KKH4sTW0CBWfqpfad
- LO15LbwgWDskw1V+/+dtSUwda4e/l4NN7EG4hu5YG1YkVwIw9vh52gQilcQ/TaY6fvna48xLCGF
- TkzkH7vA=
-X-Gm-Gg: ASbGncuD/XZo5Ri4TnkeJ+kfTl4EFPQ67+VQUckrNoYd3YcEr9LXUgScoc9XMsNZ95u
- JU4jqVv0WSSQ7chdNXoXy/A4yn64Sh4AMP9Tqrith1XR1SwzGDUasgu1tvkoFOhkOx0NoriV7Cs
- +bsC4Pq3s7kV3fkH4kR+1r+NQTnemjBdKKQ1SefP8EaWCgdbjHLxdLpzT6vRXezZDk+c7y226Gw
- GarTUeyQRqnIB+yaAyOLv+XOtXlbiE30zkfI37FXWU0sBEASYTXbKMtVOeila4HmxeCmK5dkhuz
- 2PFTOTk8UH6Y6U8plIJ+Nn8Wqm0fMU9DcCWWv55fr3DPy+eQU9JmGRvMWoUlJLSjeEXUmoMGaZr
- wFSg=
-X-Google-Smtp-Source: AGHT+IE6GPb295vWa+lRfd8J2iALWud4Uvx370S8t928ycZipyXm+9BRtaZUOhMxGBWu9RZoK3JXAA==
-X-Received: by 2002:a05:6830:2d83:b0:735:b205:fd86 with SMTP id
- 46e09a7af769-73cf9e915c7mr426731a34.19.1752172799629; 
- Thu, 10 Jul 2025 11:39:59 -0700 (PDT)
-Received: from [172.20.0.130] ([187.217.227.247])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-73cf1064954sm291549a34.11.2025.07.10.11.39.58
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Jul 2025 11:39:59 -0700 (PDT)
-Message-ID: <ee750298-9699-44da-928c-422e495d92b5@linaro.org>
-Date: Thu, 10 Jul 2025 12:39:57 -0600
+ d=1e100.net; s=20230601; t=1752175889; x=1752780689;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=U+CVoHFDG09GyMpm6YXkqKO/4WQ7emjQmymhG7B5z3Y=;
+ b=FV1gidX78VvPocxjtrPb6l9A+EhgFR1YyTY6iEPqgEKeE97XsO9O1ZPMA60wDzSVlO
+ TWY+AmMc7w5trB3pbmrAHNSy9XQ77df4/IhAOqmiJjH06M54sy9NC5XfIsQZYKFOcQ0q
+ 4QXI5Zu5IzHyBz+tiRHRPqhmI/LyUzzWn8toAC/gOPSZA7w8wWDNlM06fIpJ9CIVUPZM
+ 5qfsoZoYAcKTtX+0wKR6kMa4dAqSEe2TERIg/ZUjT6Pc0m8te44ogd7jThh4teN9KwGl
+ EL94LZWDnWaQ2pbiAinw0Q036rNT7bvJ28TZF/m6aIommFrTl2L6MVMY+3/ICe+D6opx
+ rY2A==
+X-Gm-Message-State: AOJu0YyLjYPa4FtVIcfGJfjiIJoGutMhttSVojiThDI6F3IhdtYeHqcn
+ JzchlWinuP4NRSjgTRnVd6rmpR6TaVx2EpGjP6fWNneLzqedtnBaN8zEimcZta4JI3G+twX1uue
+ qKt317Nvds1AmnnIG3n7HHXdqvXU7He4r2vJJ6z+o/EBmaD23/PXY
+X-Gm-Gg: ASbGncvfK+JjsmHOfpAz35rafilrYM5M7y0AtG5PsUmrMukPTKpOEiSh51eTukddoe/
+ BeJLKw/XwMjRc9I9pqeewCtGFYs2UjmZ1J4moY7H9pbsMf2241SH4pGSpMuozU3gjvfklCYdmM6
+ skuBPEwzVerfC2DmwwJxKRXUIV04+0ygr3hRQ1k25nNjuq
+X-Google-Smtp-Source: AGHT+IHR0JB9e922jN+Lz2I7W8+/j0XfmvvsWKAkQQs4MB9tKthPS1ttnmii024y9ogmDKawzcTxBdVPM02JJLPHQ6Q=
+X-Received: by 2002:a05:690c:6e88:b0:70e:7ae4:5a3e with SMTP id
+ 00721157ae682-717d78b2f33mr6261297b3.11.1752175889654; Thu, 10 Jul 2025
+ 12:31:29 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] linux-user: Hold the fd-trans lock across fork
+References: <20250710170707.1299926-1-peter.maydell@linaro.org>
+ <20250710170707.1299926-3-peter.maydell@linaro.org>
+In-Reply-To: <20250710170707.1299926-3-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 10 Jul 2025 20:31:15 +0100
+X-Gm-Features: Ac12FXwPiJgqRP0TfKbItnrdf3mzQ_lnF8Nu5h9jibhJVqkgd1tVqG2NC92iJLI
+Message-ID: <CAFEAcA9y3GNTr5o2LPMH=jgnABSgLC7MBxo58aacmTTxScHGig@mail.gmail.com>
+Subject: Re: [PATCH 2/2] linux-user/gen-vdso: Don't write off the end of buf[]
 To: qemu-devel@nongnu.org
-References: <20250314124742.4965-1-geofft@ldpreload.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250314124742.4965-1-geofft@ldpreload.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x331.google.com
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,25 +93,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/14/25 06:47, Geoffrey Thomas wrote:
-> If another thread is holding target_fd_trans_lock during a fork, then the lock
-> becomes permanently locked in the child and the emulator deadlocks at the next
-> interaction with the fd-trans table. As with other locks, acquire the lock in
-> fork_start() and release it in fork_end().
-> 
-> Signed-off-by: Geoffrey Thomas <geofft@ldpreload.com>
-> Fixes: c093364f4d91 "fd-trans: Fix race condition on reallocation of the translation table."
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2846
-> Buglink: https://github.com/astral-sh/uv/issues/6105
+On Thu, 10 Jul 2025 at 18:07, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> In gen-vdso we load in a file and assume it's a valid ELF file.  In
+> particular we assume it's big enough to be able to read the ELF
+> information in e_ident in the ELF header.
+>
+> Add a check that the total file length is at least big enough for all
+> the e_ident bytes, which is good enough for the code in gen-vdso.c.
+> This will catch the most obvious possible bad input file (truncated)
+> and allow us to run the sanity checks like "not actually an ELF file"
+> without potentially crashing.
+>
+> The code in elf32_process() and elf64_process() still makes
+> assumptions about the file being well-formed, but this is OK because
+> we only run it on the vdso binaries that we create ourselves in the
+> build process by running the compiler.
+>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   linux-user/fd-trans.h | 10 ++++++++++
->   linux-user/main.c     |  2 ++
->   2 files changed, 12 insertions(+)
+> Hardening all of elf*_process() seems like overkill, but this is
+> an easy check to add.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Subject line should say "read off the end", of course.
 
-and queued, thanks.
-
-
-r~
+-- PMM
 
