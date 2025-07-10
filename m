@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BBCAC83F17
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6EAEC83F1D
 	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 10:46:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZomx-0001rt-AA; Thu, 10 Jul 2025 06:46:03 -0400
+	id 1uZon0-00020K-Bc; Thu, 10 Jul 2025 06:46:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uZoma-0001pY-2n
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:45:41 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1uZomh-0001rA-DU
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:45:50 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uZomV-00077P-QI
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:45:39 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-451d7b50815so6012075e9.2
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 03:45:34 -0700 (PDT)
+ id 1uZomb-00078F-On
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 06:45:45 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3a54690d369so845244f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 03:45:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752144333; x=1752749133; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752144338; x=1752749138; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sPAaWZS9pbyaeBj3LeenkXr30JcrTD9NQ22BxqPsMYU=;
- b=uNPem30md9MuvYgDlsM40iCXG0H+Q7wxhgV+mnvtDqtl6+A0OGq9P6mMEIRBpM+OZh
- 7AlN293rWsuA9ylbx039e56A0fb3y7290iCr9fCCkLLzVzVIcoPsm7OcYln/Dg3q57Y5
- sy5lUQvSepfDJ1GJY1WPYrvWwIqWkFeWa8iO3uvhLxNRKQ7Mwkak74iqbQhwsHQtBz+Y
- /ljz7toMp0TzMYN+ilG4pnN2Dx9ziVjRA9lMIzMKjLu0KLrFacA8heah2nIoc37u6UnM
- fzFt8VyrO6sS9uAa1+LjA9HcG0iWIOqQQ6F5goa1O26Fz99ruE+iOm7QFFLOvnjqV7sj
- 7SCw==
+ bh=03riluX1eJMP4tE7cuvXHWS+nhsiBt5c4p7l9wITSeg=;
+ b=Jowrm6VxFUvDcJVugFCepGpaIrpd+2h6nhV6uA1nu3AfO1WZUSdKxH+W+sQsmFjV0l
+ /0JpKSU6nv56CgroJaEU7jqQA6wWM36+1l5z+Q+sCuXoHdLwsR1YB2UbYP15pT227qsQ
+ c3d21HYoCBIIRV88ZAUoOqgyHDnvsiU1Khzk5bDPsH/tJIERRLjIxpIyYD85NEfV4UgZ
+ HFuMgsv3+NmtzNcfslznrQFd52jg2tYvhKImKBZHCIMOrvNXv1W+X0r2L9zhRZ2SCPq6
+ /0aAE7BoalRSjg/k4iBvIZOZvymgmMjdZh0grFsKhq5qk4yOsYbz4PjU4bcmnmHZ7ovj
+ x81Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752144333; x=1752749133;
+ d=1e100.net; s=20230601; t=1752144338; x=1752749138;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sPAaWZS9pbyaeBj3LeenkXr30JcrTD9NQ22BxqPsMYU=;
- b=m+y+7cq1WsPB9q/Fau980IlxL4Sop+O/UqCfK5VRohZgzfFNSldc6uhl3pO9noC0jA
- a9WwkSNrnv9IOUOn+6gVNAmkC8TdEHRTXLed/fNG3OH2SxfBNWVkybhkp9aqcB0rz7V0
- 804a0P5aKRW48evGwQmdQP7SyXUWdvRyhnV9KL24R4V5ajpVaJ1I3VE7prtLFxRlHCbP
- UpvFwtAfyLA8rHtCmFsCyq4583Qnn5YO/o86am5TfAHnAHrGfHXJ3ddNxOptLQarUvWi
- AFEMZKEPqZ0ekzxEQ//kZt32b/kCCO4tJyqPeAwBSgKDNa7eiHmqeEt7wA0H/M61V58F
- ldbQ==
-X-Gm-Message-State: AOJu0YyG+lzK7VE0KZ64xEqNAIA8He/t83QObhT2g4A42TXjtpaT4CKm
- plDAZt5y+vVPLA1zLMzMmWg5S0A+X1n7TB+7g316YC+c8tyk6C2niSohT7uwrOWgP5E=
-X-Gm-Gg: ASbGnctXFISzTMSLlsHR2UpqnPchqISPvKv2EfH7o4JS08hjhzJVWo6kZJzffK4xD+D
- PaarBiB+t/fbuNbmQxYFkWdbEAfd1beuM1jXsHEZUktxuIkSIj/R/59WVXq9aJnXIZuOHAH9/By
- PbnyRz5Ulg4dQPBLq8/Bn2eXJb/HolapriEVlew8SFkhHR0QHASCxfpLlDTYgMSfeW7IG9tyIIM
- sQj33AgFh29RpvevYfjVl1eDTheIoIYt+r+ClRalXpKSYmJEDneTGToUdnWyv18PnTTUAzF4Kaq
- awVGxhqq4/SrwzSl2KoeUYSTEl4lNemeUH0Aow/W6Nlv6PhTjGPytnCC8RNfCsU=
-X-Google-Smtp-Source: AGHT+IEcMtc/oDsJJa1KmaF6zHqG68AR4pPzawvBP8mWG8hK/mavUzJNAhurd0r3IQDtq/Z8MshOGQ==
-X-Received: by 2002:a05:600c:1385:b0:43d:563:6fef with SMTP id
- 5b1f17b1804b1-454dd2e1fd3mr18454345e9.21.1752144332951; 
- Thu, 10 Jul 2025 03:45:32 -0700 (PDT)
+ bh=03riluX1eJMP4tE7cuvXHWS+nhsiBt5c4p7l9wITSeg=;
+ b=xJBtzvXFqYnmxkdjrQ79hoR7Pd3+YKEVnSXWR1L2auYn6l4yvej75FUfhV/CNcuyV1
+ rBR7aXzaMhWfrDWzkJPHzrSm4kYRFUZ1QW1E+NgUsIy/tYYKaqh05HZRZMeucTWr/QIz
+ AlS+gp4hiGM/soff9trzJ3U8yuUHDRPmReFhExhEz4AbLlCMaNG7h1UnWnIG3O1dE3zU
+ vHRV6n9UOQO6RWPERfX4OhX1VZRTWAfHShf3TeBlzMoRlHgemz4avxOVitQ8VDrPOy93
+ z1Fapq8LPAJ3NTc8V4yZ6cSvqlLIGjd/maAP8pQp6/nguGKEQNwri8rLnLhjcF+t8OH+
+ FXTw==
+X-Gm-Message-State: AOJu0Yz7IlhUPuoM9AqjBrnTU47IH9bx6iuBf+LCRLHjkq5pAh5sWy0w
+ qn8DNLFxFY4FeNQc1OE0CD9ov0eflKvbumgdFWYgd8zPToVvlLkqCrr9nVlCDXQYsqRvivU4QAw
+ ArDiCCFI=
+X-Gm-Gg: ASbGnctXik4w+HHAtfk1N4qjZffj95oCX0cEbvpTo3ROnsrgwwbRVadsmTyQnHZPA7h
+ 18YR22yjdr3Tp8AnMvrM5IA0QEXu87UbvYbyUzSdZDrOe1vFMKKOe0HThYrz6a7PxeokQbIqmxS
+ X1rRNJNLwk9F8/5+QiY31cBKfP44cOHgTlyckChP7bqKjgLHbNKSdblhxyA/lWT6ccKRRPntmeA
+ PoRkDdwwpFJ96zmI0327YH979LssdgZxONWeSNWaQSA5nXNO+7Qv1/L6UGG44na6IOS5XYkze2H
+ AeYMkGMXY7g2Fj9g03sqJhAoA7wOVpXfQstujunmJGtIsid/MZexKKkWumOCx8A=
+X-Google-Smtp-Source: AGHT+IEkEpkDYS8h/LJ2ZSr33jWevjNrhMbuaEHbfGs/a7uc/uvM735BxMXl8DxT4/jFQVEIpL2HQA==
+X-Received: by 2002:a05:6000:41ce:b0:3a9:dc5:df15 with SMTP id
+ ffacd0b85a97d-3b5e866f829mr2057765f8f.13.1752144338218; 
+ Thu, 10 Jul 2025 03:45:38 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454d5032e17sm60568795e9.5.2025.07.10.03.45.31
+ 5b1f17b1804b1-454dd474a9csm16086125e9.16.2025.07.10.03.45.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Jul 2025 03:45:32 -0700 (PDT)
+ Thu, 10 Jul 2025 03:45:36 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 521775F813;
+ by draig.lan (Postfix) with ESMTP id ABC495F8AD;
  Thu, 10 Jul 2025 11:45:31 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -76,17 +77,17 @@ Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
  Jason Wang <jasowang@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
  Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 1/7] gitlab: use argparse in check-units script
-Date: Thu, 10 Jul 2025 11:45:24 +0100
-Message-ID: <20250710104531.3099313-2-alex.bennee@linaro.org>
+Subject: [PATCH 5/7] plugins: fix inclusion of user-mode APIs
+Date: Thu, 10 Jul 2025 11:45:28 +0100
+Message-ID: <20250710104531.3099313-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250710104531.3099313-1-alex.bennee@linaro.org>
 References: <20250710104531.3099313-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -109,55 +110,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Modernise the argument parsing so we can easily add to the script.
+In 903e870f24 (plugins/api: split out binary path/start/end/entry
+code) we didn't actually enable the building of the new plugin helper.
+However this was missed because only contrib plugins like drcov
+actually used the helpers.
 
+With that fixed we discover we also need some more includes to be able
+to extract the relevant data from TaskState.
+
+Fixes: 903e870f24 (plugins/api: split out binary path/start/end/entry code)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3014
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- .gitlab-ci.d/check-units.py | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ linux-user/plugin-api.c      | 1 +
+ common-user/plugin-api.c.inc | 1 +
+ linux-user/meson.build       | 5 ++++-
+ 3 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/.gitlab-ci.d/check-units.py b/.gitlab-ci.d/check-units.py
-index 268a4118d5..cdc62ae5ee 100755
---- a/.gitlab-ci.d/check-units.py
-+++ b/.gitlab-ci.d/check-units.py
-@@ -8,8 +8,10 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/linux-user/plugin-api.c b/linux-user/plugin-api.c
+index 66755df526..8d6fbb60e0 100644
+--- a/linux-user/plugin-api.c
++++ b/linux-user/plugin-api.c
+@@ -12,4 +12,5 @@
  
- from os import access, R_OK, path
--from sys import argv, exit
-+from sys import exit
- import json
-+import argparse
-+from pathlib import Path
- from collections import Counter
+ #include "qemu/osdep.h"
+ #include "qemu.h"
++#include "loader.h"
+ #include "common-user/plugin-api.c.inc"
+diff --git a/common-user/plugin-api.c.inc b/common-user/plugin-api.c.inc
+index 5b8a1396b6..63f3983271 100644
+--- a/common-user/plugin-api.c.inc
++++ b/common-user/plugin-api.c.inc
+@@ -13,6 +13,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/plugin.h"
++#include "accel/tcg/vcpu-state.h"
+ #include "qemu.h"
  
- 
-@@ -51,16 +53,17 @@ def analyse_units(build_units):
- 
- 
- if __name__ == "__main__":
--    if len(argv) != 2:
--        script_name = path.basename(argv[0])
--        print(f"Usage: {script_name} <path_to_compile_commands.json>")
--        exit(1)
-+    parser = argparse.ArgumentParser(
-+        description="analyse number of build units in compile_commands.json")
-+    parser.add_argument("cc_path", type=Path, default=None,
-+                        help="Path to compile_commands.json")
+ /*
+diff --git a/linux-user/meson.build b/linux-user/meson.build
+index f47a213ca3..efca843369 100644
+--- a/linux-user/meson.build
++++ b/linux-user/meson.build
+@@ -27,7 +27,10 @@ linux_user_ss.add(libdw)
+ linux_user_ss.add(when: 'TARGET_HAS_BFLT', if_true: files('flatload.c'))
+ linux_user_ss.add(when: 'TARGET_I386', if_true: files('vm86.c'))
+ linux_user_ss.add(when: 'CONFIG_ARM_COMPATIBLE_SEMIHOSTING', if_true: files('semihost.c'))
+-linux_user_ss.add(when: 'CONFIG_TCG_PLUGINS', if_true: files('plugin-api.c'))
 +
-+    args = parser.parse_args()
++if get_option('plugins')
++  linux_user_ss.add(files('plugin-api.c'))
++endif
  
--    cc_path = argv[1]
--    if path.isfile(cc_path) and access(cc_path, R_OK):
--        units = extract_build_units(cc_path)
-+    if path.isfile(args.cc_path) and access(args.cc_path, R_OK):
-+        units = extract_build_units(args.cc_path)
-         analyse_units(units)
-         exit(0)
-     else:
--        print(f"{cc_path} doesn't exist or isn't readable")
-+        print(f"{args.cc_path} doesn't exist or isn't readable")
-         exit(1)
+ syscall_nr_generators = {}
+ 
 -- 
 2.47.2
 
