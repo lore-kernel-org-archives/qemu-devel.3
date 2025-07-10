@@ -4,81 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C300C83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 15:15:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D79A8C83F1B
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 15:20:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZszh-0000Q2-Kx; Thu, 10 Jul 2025 11:15:29 -0400
+	id 1uZt3W-0003IC-K0; Thu, 10 Jul 2025 11:19:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZszW-0000DE-MM
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 11:15:22 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZt35-0003FM-9t
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 11:19:02 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZszU-0000XU-Lf
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 11:15:18 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3a6f2c6715fso1137260f8f.1
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 08:15:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uZt33-0000zc-HF
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 11:18:59 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4537fdec33bso6899635e9.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 08:18:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752160514; x=1752765314; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752160734; x=1752765534; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=sffuV6RIb4hQ/6kzsrOBnM0BsSy3hksaLNByAe6PK+Q=;
- b=CUg7vpCRYiZcFzGlaAiOF0Lc7m1jmt3o+SHrq5YkMGeHraa6Y1H2KB9WTsFImF6+DR
- COBfu8bIWehWrQcf0ejmfAnExmDXJTNGr5oRFavYV87BF2QuLcaQPNWFfEJODXQLMkfH
- 75MtyXo2NOdyYxttY4vSUYIfAjuhF30RRs1e5GH9bcN+nvXAN1Ntig3F75wdnUSQj2LS
- QBlOsYRbWYa1gjBlvU2p6FzJBQMWdMcmAbmDyWCu4HkRZg7uVL1lJ6h7KuGvsFsPDzlm
- 7fsSX8bnarKHA/P/i0sXfQ6yeMBB85tkr/wgchEbWmWr7G/bDYBnt2/joiAdroLeEltW
- 3+EQ==
+ bh=MfZyp+BAuA2g9PjhPJtLMHhk3jnprAKK1n7JOk5VyB0=;
+ b=sWbAhtRjB11dTCnFTi/KfBy2gYiaZUrCGSp8f+dmJE9SN9uo4dNkanPRCG0HZpyvF5
+ xYdap6vKVyk6dKd9ZRxOTcBg4lVgvo59enNEar4iS+M7T2e6gPnvySgy0p9het/JixKt
+ 8XH4ZQzWa9T/ejB+l98fMfjZey9/2dcN0RCCZLSCwrlqADH75Ay49SUz3z3goy+oPzj1
+ 88552hvQgBfhomZlnhxBz41yfMn4wNSZgdndfqkpu2xl2rC426OdUVhrlnL+dA+QlJJD
+ +PD1YFZwcSrladY+O+OrQmMkMg0xRJwoCg7pjBeDP1pqABiRVmMx9NhwoK+uuwMFXeN7
+ SD4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752160514; x=1752765314;
+ d=1e100.net; s=20230601; t=1752160734; x=1752765534;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sffuV6RIb4hQ/6kzsrOBnM0BsSy3hksaLNByAe6PK+Q=;
- b=jZQxK9uVJKCUjh4sIES0iPrRhoIbUPagn4aGRpTWYAU+6JI+r6RUDT7c2bcPg0YQNl
- MOb3NYwEXJieuzTSCrtX96azaTlocDt8xLsxImI/Wa0IpzMGeG41a0FymPoIQ2A/ish2
- GLYx8Kwow/Afu4YbIlDaBIW8VI2yhNLM42SmOQK8RNq5WGVhiN/gZ+DIIf2FGzcCwGdm
- KwctP6vD7uZgY5Axo2VZQ/T07jBPQV3ON/paQQ2ZrJnmiS3xFEi98eYSKtT68oLVwq2V
- fp147tWrpnisSlD61zHjzMERnoaM+/SdK44Mg/7Q+gMtUokSH4ZiFBzClYnpgfWtIoE6
- GT1g==
+ bh=MfZyp+BAuA2g9PjhPJtLMHhk3jnprAKK1n7JOk5VyB0=;
+ b=XNbNLBfzX8ya4cp8onAyAYHmTa/Tpbw/5FF6TrFPLGMOtefbNnWGwRFKtooRFl7pSN
+ OlEBF3iB2iJ7Te6g5vuO9MCpzvok6gQe3Q/cZkUQd3+VYyPkBTKPVOTpShN1sy6wB4I4
+ 51egD7piulRlbM8qfUoraS11CHMOg4za/AsnV47+OoKrAF3AXq9Lk8PMJwhXbjwiTR3T
+ Nk3M/84qkhnKwzfk0i3NpYC/VZKupwVoXAVNJ6vqsGdJxtgdhzOiPGC/A20/JLVulshc
+ JTfVW91DHQcACAhyLmDW6LnYNdjrT24/wg1amQ6qbJ0pCy8LxVu4IIWkE0mOaZEe5YWp
+ hkGQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXorXIXHysczMDYG2tyiw1EAJDzW0TmHs/eGnofYAXPYp7GK4POgjQjFo2J1Pr7jqEQxgGskhzf8jE+@nongnu.org
-X-Gm-Message-State: AOJu0Yy+WBDL/kFBNhl37ciypE9cSdZ4tMLeTuwNF6snawYq0MjvIJns
- JCv0KiPmEiAcvRV2ZvX5CuZGenKQ0XuQ75Zya9XSXEHwdpr/ltquCk+dnEOI+iI7q7w=
-X-Gm-Gg: ASbGncuuBHUyesgczDVEX2Uvbc4qWgMcU5Gzm/1BLxIUwiHb2Zl2w+6KtmXDqjT9J0g
- MXQ9ezjFSHYkJJ2PeB7dPALra5ZqgAYL1qjXdI7sQoDVk/sFKOTMdPekMxeKq93yXayk3DUH6A7
- ZfJJK0ZwnM/vmfI+THqUnizcUK2QUzHz18H3Zkb6JX0ueAFx9SFKs3lum4MFYWjN3DU8iYVRXmW
- sVGRKuU6UPCPfygsVMoJN8/GL6I8HyFz9OC00z3DcJcHSnJ4WsgPT6hz5kJfViQdQkGA9MlBrPZ
- 2NFOGKV5osyLyyJTG8lJ+OeG5HntrQK2YORpMPdB9T1PfhZc+fUsXF9u5bZxxVdmmYccrq3rbZT
- /YJjTWjllbAYBtgMy0CpMJJ/zi0fm3qVDF1+eIZ/OO7LNvBuJ
-X-Google-Smtp-Source: AGHT+IHbcFiI45Nn9U7gFTDhrU/0e13ml8rfmcqpbqwoW5Ii7yV7RsvA+dL5Om6cjUi3uZ3fJ+tFkg==
-X-Received: by 2002:adf:b601:0:b0:3a4:d6ed:8e2e with SMTP id
- ffacd0b85a97d-3b5e86beebemr2137574f8f.41.1752160514036; 
- Thu, 10 Jul 2025 08:15:14 -0700 (PDT)
+ AJvYcCVpJitsGyES42BkWU7lPIERvEmzno3lXdGdeT7Ql0s0mRtE1vrEYLNk0kbytYgPJtF0yPmCQ+moVXB5@nongnu.org
+X-Gm-Message-State: AOJu0YxAlj1BpDjbyp3TL3k86ctNI5saolGCBFV42fTJq9mCEsfz/OMl
+ bm6zZdwuY5H+oaHybelSBKx62owkIzZb0OXooPIlPrHGYJcsCZj6GBwiI1n6AdLQL1c=
+X-Gm-Gg: ASbGnctOzG/Iex+VdaMgsQ7zC0ILI9aRtQDfPVITds+YynzqSN4lf4NF4IYGgx/M37q
+ G42E0AbdVv70NNpayCeuOJgCqdu8yoZDlnmrAmq6tJ2zuvziI0zyJOug2cj378dpouek0+HRUTh
+ NHeDCJ2jcuEoLvU1UI8vEOcglIgSaT+me2gIMyAi6SQAO440d62GDTpq4djAcbNAnDGvJ2NfJiw
+ DJgXkJGB3e4raC+r55hw4qlONOM9rpGR4A29yIzI0EUhnISe7eNztpVN9bwtY/UygrFv21MyjGY
+ Fz3qGabRrRLTQ5ZfG67bXpjsJZtVRWZ3GrLxp7zEEj+pOReUrjv5QyVQM324XApSMzml6sgprB+
+ Eo/PTXCl80ZhZL1ksazCCxCoaTZNXf0NaxssbaPfBbQlo2dVc+PSQ3bwkuLg=
+X-Google-Smtp-Source: AGHT+IE1oZjhzQk0HmsfNxjc+2TH48TEZkrMxRycjdwmoHSN9WIEppocXlx0JxXlZZYHEo6Tvx1UdA==
+X-Received: by 2002:a05:600c:1da8:b0:43d:47b7:b32d with SMTP id
+ 5b1f17b1804b1-454dd2ef513mr28837375e9.25.1752160733973; 
+ Thu, 10 Jul 2025 08:18:53 -0700 (PDT)
 Received: from [192.168.1.117] (lfbn-mon-1-970-120.w86-227.abo.wanadoo.fr.
  [86.227.5.120]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454dd241210sm22967505e9.0.2025.07.10.08.15.13
+ ffacd0b85a97d-3b5e8dc201asm2114977f8f.22.2025.07.10.08.18.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Jul 2025 08:15:13 -0700 (PDT)
-Message-ID: <1fbb8424-7fb1-410a-9790-3498dc98829b@linaro.org>
-Date: Thu, 10 Jul 2025 17:15:12 +0200
+ Thu, 10 Jul 2025 08:18:53 -0700 (PDT)
+Message-ID: <dcaa2309-7c6d-4064-94ed-43d4c3ff2430@linaro.org>
+Date: Thu, 10 Jul 2025 17:18:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/net/rocker: Don't overflow in of_dpa_mask2prefix()
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Jiri Pirko <jiri@resnulli.us>, Jason Wang <jasowang@redhat.com>
-References: <20250710144453.1187576-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH v9 4/5] hw/arm/arm_gicv3_kvm: Add a migration blocker with
+ kvm nested virt
+To: eric.auger@redhat.com, eric.auger.pro@gmail.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, miguel.luis@oracle.com, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, maz@kernel.org, gkulkarni@amperecomputing.com,
+ gankulkarni@os.amperecomputing.com
+Cc: hi@alyssa.is
+References: <20250707164129.1167837-1-eric.auger@redhat.com>
+ <20250707164129.1167837-5-eric.auger@redhat.com>
+ <48fca85b-096a-4d1c-97dd-380669cb6604@linaro.org>
+ <322a9301-a1ee-4cd9-b423-fbef2fc0593d@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250710144453.1187576-1-peter.maydell@linaro.org>
+In-Reply-To: <322a9301-a1ee-4cd9-b423-fbef2fc0593d@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,57 +108,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/7/25 16:44, Peter Maydell wrote:
-> In of_dpa_mask2prefix() we do "(2 << i)" for a loop
-> where i can go up to 31. At i == 31 we shift off the
-> top end of an integer.
+On 10/7/25 16:10, Eric Auger wrote:
 > 
-> Use 2ULL to avoid this overflow.
 > 
-> Fixes: dc488f888060a ("rocker: add new rocker switch device")
-> Coverity: CID 1547602
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   hw/net/rocker/rocker_of_dpa.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
-> index 4aed1787566..9c0fc728eee 100644
-> --- a/hw/net/rocker/rocker_of_dpa.c
-> +++ b/hw/net/rocker/rocker_of_dpa.c
-> @@ -202,7 +202,7 @@ static int of_dpa_mask2prefix(uint32_t mask)
->       int count = 32;
->   
->       for (i = 0; i < 32; i++) {
-> -        if (!(ntohl(mask) & ((2 << i) - 1))) {
-> +        if (!(ntohl(mask) & ((2ULL << i) - 1))) {
->               count--;
->           }
->       }
+> On 7/10/25 4:04 PM, Philippe Mathieu-Daudé wrote:
+>> On 7/7/25 18:40, Eric Auger wrote:
+>>> We may be miss some NV related GIC register save/restore. Until
+>>> we complete the study, let's add a migration blocker when the
+>>> maintenance IRQ is set.
+>>>
+>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+>>> ---
+>>>    hw/intc/arm_gicv3_kvm.c | 8 ++++++++
+>>>    1 file changed, 8 insertions(+)
+>>>
+>>> diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
+>>> index b30aac7aee..fccb3886bf 100644
+>>> --- a/hw/intc/arm_gicv3_kvm.c
+>>> +++ b/hw/intc/arm_gicv3_kvm.c
+>>> @@ -827,8 +827,16 @@ static void kvm_arm_gicv3_realize(DeviceState
+>>> *dev, Error **errp)
+>>>        }
+>>>          if (s->maint_irq) {
+>>> +        Error *kvm_nv_migration_blocker = NULL;
+>>>            int ret;
+>>>    +        error_setg(&kvm_nv_migration_blocker,
+>>> +                       "Live migration disabled due to KVM nested
+>>> virt enabled");
+>>
+>> (mis-indentation)
+> Did not notice as checkpatch does not complain.
 
-Alternatively using ctz (untested):
+No worry, it is a simple nudge to Peter for possible maintainer fixup.
 
--- >8 --
-diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
-index 4aed1787566..431638dd64e 100644
---- a/hw/net/rocker/rocker_of_dpa.c
-+++ b/hw/net/rocker/rocker_of_dpa.c
-@@ -198,14 +198,5 @@ typedef struct of_dpa_group {
-
--static int of_dpa_mask2prefix(uint32_t mask)
-+static unsigned of_dpa_mask2prefix(uint32_t mask)
-  {
--    int i;
--    int count = 32;
--
--    for (i = 0; i < 32; i++) {
--        if (!(ntohl(mask) & ((2 << i) - 1))) {
--            count--;
--        }
--    }
--
--    return count;
-+    return 32 - ctz32(cpu_to_be32(mask));
-  }
----
 
