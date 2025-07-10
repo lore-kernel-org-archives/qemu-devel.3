@@ -4,79 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAF0DC83F09
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 08:05:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C10CAC83F1D
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 08:12:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZmGH-0006zs-AC; Thu, 10 Jul 2025 04:04:09 -0400
+	id 1uZmO4-00056L-6p; Thu, 10 Jul 2025 04:12:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZmGF-0006yO-Qx
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 04:04:07 -0400
-Received: from mail-yb1-xb2f.google.com ([2607:f8b0:4864:20::b2f])
+ id 1uZmO2-00054g-2F
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 04:12:10 -0400
+Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZmGC-0003Vc-Fs
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 04:04:07 -0400
-Received: by mail-yb1-xb2f.google.com with SMTP id
- 3f1490d57ef6-e740a09eae0so640626276.1
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 01:04:02 -0700 (PDT)
+ id 1uZmNr-0006L5-Jq
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 04:12:07 -0400
+Received: by mail-yb1-xb33.google.com with SMTP id
+ 3f1490d57ef6-e82314f9a51so594641276.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 01:11:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752134642; x=1752739442; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752135116; x=1752739916; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=GZWLa+M9k2L3rjQyK/F3xb2YnUQvbGBC+Wse0j3Lt8A=;
- b=b7tqUMCgtEWI8PGdLPlOrnrj7AmrhpvvjZFlV6rONzfMd+U9U6rcEznjq/Eh9ODmSR
- 3A7Bqm+J05kR29mP3e5lNmrU29Z2QkDPXxb1SyOjArM9xEWY06d0R8+BtpO5DacNv+sV
- wUsZd3wH7BNeBL7t3k+CT6FL/AZYFIDpU95Aw0FbKXbeCisSBIlNNx0OWjTgWy3PNG6D
- fS8JRyTkSoYYj8btSfBrj5RefQjRa/2qfUzRfXpJrOnFwoc0tqwNo/xH1nM1JM/IeIzX
- CcTHanYbkxKYZ6AzV2ThFiiquRRPNure3daR1Ld6r5cSsXvSjaTbgM2m2l/2lUx1Tp3X
- rZWw==
+ bh=2s/Zqafw8AcoBzgRuZ54ScgDx0pAEPd4KULnehzKxBg=;
+ b=E7M7mvRq+Dw0H+3zISFaE0lH2DDj9wIL/E4gyxU/cmzllF0SA4RcvQaYwF8N4/muyB
+ BDr1xVSOyIsHieqfm2q1smheqJDyHwYao/xvFE3oBP64YihhSN41abKi5X7cr8SJq0t/
+ DpmUVD76T3TjLq8yAkGarlNIswiYazZAoI9GVlt6UbUxnNh/JWGKREDC/eDZMdAjg+1K
+ WL02+8ttMyN45hwjsoVoKurkAL1X8mn084g1aXp0QHPtqPQGvZ3Msg7rjvIqTl/E3Pwr
+ 0BZwVr+ip46Z0/WlOuc1jV/P19bjLaC/a1Sk+63F/E+JE5MevL7yQy/AGItu51PtWEbr
+ yswQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752134642; x=1752739442;
+ d=1e100.net; s=20230601; t=1752135116; x=1752739916;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=GZWLa+M9k2L3rjQyK/F3xb2YnUQvbGBC+Wse0j3Lt8A=;
- b=GMEejKb4NgmoDv1oIYw4kYZtAVOq4W4lMzqCprSCrV0D13T7d/nGhGigNfvc/Sfr0o
- x4XuWw8T/irZVS3oNjL4PKRQX+8tAbnHjW+DUvY5xgLmndyQplMDvIbKEk+ijNGgIuFN
- GygLbwejSvb+IN+NWxghb9os81S5sm753f0f2K76bOfFitFM0L9azZUlkkyv+L3lncxj
- qlJcEAvGRTXmmIHLOnGFCFKUH2q+Zi+NQqv0FsXBhbZG6QGrdrHqTArAWV4UD3sofQCp
- 4OPCeynHmot9iDVIhhBOYehAgzfl18oW7XYweJSwPz5z++3oH6a+EHG6KxgKWkpyEWPc
- lfCg==
-X-Gm-Message-State: AOJu0YzDcomYjYqqNkEJEIxkbbJR5QQ7Zapu5PFeHQS+4P/q3BWi1UsT
- 206hUvQ9cJJXikdOUJifkFdPq9UPUDlM05z3xDL3mfUD6C8swKWQFpvUEke9Od3r9BHZNw0apUj
- NpwnXa8KqVdUipQr+CmVWtCa3HdGexZURAOEAdOPOPw==
-X-Gm-Gg: ASbGnctoUtX8lmuzUhn/WeTB8rETZhN4DZSTsUzwumss7lib56B5a0BRbYe9lnCEX5L
- 7FoXOyVTiSP6LaeQ+z15NC7A3XiyLAv2TE06lAWQezllFsXdu094Vqi1elJyXldr1tqxevWFwhl
- lPfwI8nND6Xx7qnsIPXrG/STPX83j7zxR1+XQUX2Kss4ZZ/iLjiwwFToY=
-X-Google-Smtp-Source: AGHT+IGXqRdTqRVTyqb0Dro0ggW8hGI/4iIFKWvO3BcVZnyG4Hp773VoGa2m4edea+rZWv4ENWPVIwZmPa9XzqukT0s=
-X-Received: by 2002:a05:690c:4a13:b0:6fb:1c5a:80ea with SMTP id
- 00721157ae682-717b19e2986mr81171117b3.32.1752134641866; Thu, 10 Jul 2025
- 01:04:01 -0700 (PDT)
+ bh=2s/Zqafw8AcoBzgRuZ54ScgDx0pAEPd4KULnehzKxBg=;
+ b=Ab0OhABpOJ/49AhvoR6U/LZIuiFIrRzTDB2y5e5Qj4BP0/0XJ9d7xI3RBRMtAVEYV2
+ FZWWLfj0W9WGKiQecWXCunFx9yUwqkq1CmndvjLx+x7W2FUjFzkmH/43LwKGCmxwU4KM
+ vfS/gayUprvSrM4qp/c7dgzyawO2DqVBZrnYi0iUSElheYTgjy+tFjZRqlpcGxLbvetK
+ kWJFR0qZdq9d18xg7JiLOZbMdQpk/zrBu2p+RQv1LxXaVxwFstsJaV2o9lUpvtAJSIgV
+ ykaOY04p197OxIC1AejdP12jFCX3UZgexckMLBhvPrKayM0E0wmepU+OltdIyyybPTzw
+ v0Sg==
+X-Gm-Message-State: AOJu0Yxe7jWHB7NV/xLz2YdveYJsxHIT9cP4wPaMtOQo3YT+86dO56Cp
+ 8jBi6C8TA9xlYly5AbwvdBh0xxptJkkvleQnALju50BRZYI4eZ3ZsYbm0vYSSOQ68VQqCGbRF3l
+ GzvZNUfdRppMU/t5FayqWrhW5dqkhqhtxTwAjohsCSQ==
+X-Gm-Gg: ASbGncvcHa4nexSeVleqO+56J4umNUFD5qCcr7f++NLYH3baaV8fA7UDMaQG8ypyPkx
+ B2RzGunQN+Ipx0K11Kt/I/vJzIocrpNtcr1vebvX0MWgiGggZ+dY5Sq7vkbNUYDrvC2fHPQYVVK
+ 2fgAHN/V3b++WMt1R8fnfPxsVLt9Zl6hTiPrq+SrgEJlF7
+X-Google-Smtp-Source: AGHT+IFP+d3kfFlfXU34Hul8KsHFBVCuvpuCpVKWMgez/2tubk87UqxG1pqPRadEPQ4pauRTaUj/kTpukXVQAtDyNlU=
+X-Received: by 2002:a05:690c:87:b0:70d:ecdd:9bd1 with SMTP id
+ 00721157ae682-717b198ef8emr84285357b3.24.1752135116592; Thu, 10 Jul 2025
+ 01:11:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250704223239.248781-1-jcksn@duck.com>
- <CAFEAcA8ONjmXYsfSfVLQEL7DiPpS-N69BfJDNTa8fuosui_vUQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA8ONjmXYsfSfVLQEL7DiPpS-N69BfJDNTa8fuosui_vUQ@mail.gmail.com>
+References: <20250703104110.992379-1-Jonathan.Cameron@huawei.com>
+In-Reply-To: <20250703104110.992379-1-Jonathan.Cameron@huawei.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 10 Jul 2025 09:03:49 +0100
-X-Gm-Features: Ac12FXz7DFEDyufTe_OKvejOzln5Oy2lcfpuSFuYqaqUAOYz1Pr1nfyqGRIFKuM
-Message-ID: <CAFEAcA_b2BHe6WtpZks9TsY0ij0uTDe=rcE0Rsbj=bC5wdXP2w@mail.gmail.com>
-Subject: Re: [PATCH v4 00/11] MAX78000FTHR Implementation
-To: Jackson Donaldson <jackson88044@gmail.com>
-Cc: qemu-devel@nongnu.org
+Date: Thu, 10 Jul 2025 09:11:44 +0100
+X-Gm-Features: Ac12FXwPnQQnWUTVs71FmnCoarOVLcrYujDLpcY0gASudkRZRuyeu7_DF9hc4Qg
+Message-ID: <CAFEAcA9gDM87t0RXWPdu5bi1WxcMcpRiYEcnqjzhdUiys=E0gA@mail.gmail.com>
+Subject: Re: [PATCH qemu v17 0/5] arm/virt: CXL support via pxb_cxl
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, Fan Ni <fan.ni@samsung.com>, 
+ Eric Auger <eric.auger@redhat.com>, mst@redhat.com,
+ Zhijian Li <lizhijian@fujitsu.com>, 
+ Itaru Kitayama <itaru.kitayama@linux.dev>, linuxarm@huawei.com,
+ linux-cxl@vger.kernel.org, 
+ qemu-arm@nongnu.org, Yuquan Wang <wangyuquan1236@phytium.com.cn>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,36 +98,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 8 Jul 2025 at 20:07, Peter Maydell <peter.maydell@linaro.org> wrote:
+On Thu, 3 Jul 2025 at 11:41, Jonathan Cameron
+<Jonathan.Cameron@huawei.com> wrote:
 >
-> On Fri, 4 Jul 2025 at 23:32, Jackson Donaldson <jackson88044@gmail.com> wrote:
-> >
-> > v4:
-> >
-> > Spacing and style standard changes in GCR SOC, TRNG SOC, and AES SOC
-> >
+> v17: Thanks to Eric for review
+> - Add a comment to the high memory map to reduce the chance of nasty
+>   surprises in the future as similar to device_memory, the CXL
+>   Fixed Memory Windows are of variable size as so can't be represented
+>   by explicit entries in the map.
+> - Updated a couple of patch descriptions to provide answers to questions
+>   Eric raised.
 >
-> I've applied this version to target-arm.next; I expect to get this
-> into the 10.1 release. Thanks!
 
-Something else: for new board models, we would also like:
- * documentation
- * a 'functional test' test case
 
-Documentation is in rST format as a file in docs/system/arm that
-briefly states what the new board model is a model of, lists
-what devices we do and don't implement, and typically gives
-a summary of how to run it. You can check out the other board
-docs (e.g. stm32.rst) to get an idea of the format.
 
-A functional test is a python script in tests/functional/
-which typically speaking downloads some publicly available
-guest image, runs it in QEMU and checks for expected console
-output. tests/functional/test_arm_stellaris.py is an
-example.
+Applied to target-arm.next, thanks.
 
-Would you mind having a look at docs and a test?
-
-thanks
 -- PMM
 
