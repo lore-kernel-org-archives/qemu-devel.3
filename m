@@ -4,87 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B065C83F20
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16BADC83F17
 	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 12:18:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZqE3-0005yp-UX; Thu, 10 Jul 2025 08:18:08 -0400
+	id 1uZqDr-0005So-EB; Thu, 10 Jul 2025 08:17:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZqDw-0005sG-7I
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 08:18:02 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uZqDr-0003is-NR
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 08:17:58 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-70a57a8ffc3so9508717b3.0
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 05:17:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752149873; x=1752754673; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HFArDah2ssTeH+v280YDihlQ7P+RuuQADEL1JggCiFo=;
- b=xSNwBBH2A4xIwyUiULEcZ8hASci8XHDEY9cDPVEPrXwSkZ/kOGjDwDOy2+Tu2y5EJr
- SVzGpCCyfwTBZWuNd8we+MHMJPl0X8Xbls5soYHhNkVKdzWzEmnidPmDMfos7hjIZrRp
- qHq26yMSvgXh7jgk5gmiI484B4+KVOikH8va1slJkSV1Q5/tEmPe9Lwhb1W95HwymnGE
- naj+7t6wykvb1/aWaJOm4IqGu6IOhpQbYVKqOa5VVKl38CxwnkQ5swtNC+yFfWWHnUVK
- 7hB81nTple2b+7JnDClIUAu42XniuQORnWVpdH+e52ipOgkTMvNfeJ5w/UUAzSLzv36R
- jx6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752149873; x=1752754673;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HFArDah2ssTeH+v280YDihlQ7P+RuuQADEL1JggCiFo=;
- b=d9OMSZtCjDV/fdCNAaffkbDUH8B/9pBLyHU21vVjHcGVuM0ACd+Y8qUvqZ50moMGra
- fpGY5QTH81MHR47kOuWqw13NdlAD5sdoCHSNUYfGHdqRG0KIDAzmngSsP5QjMu/MLDil
- Zq1pYBxGSMvBHN5Ud7AS0pZOkki8pyRV/zGBxfqokNkU/jqqFQvIcE3N5oNGx53Hw28g
- eTIzNEVttLQCoFUIano4uGTnbAtECd0wLwE0714Lobejq3dv/cMyUaiY0KcbC1I2NZ4H
- wYwDL4aBeiJfu3rJUFHsZ/Sbpvy37zDYf1FDbMENVyc/1P26sptCTFdugnZZnDzb/XEy
- vDXg==
-X-Gm-Message-State: AOJu0Yw0KiF76ge1+LtwGHyFmZdW/2v+EtZqTGbZP6SFsNWER8bjwNJ/
- /8t8No0zDR3wZZ+/p77mMduHGsjFSgPRm77Uzo2Ew5FbywhlS6Lue21O3BoBxDV16nt6YE7NCrD
- qO87UxwFY8w3QEP8yYe4EIhfc64SkUoJDRyVuRWl9lw==
-X-Gm-Gg: ASbGncvA8AwJBWLnH4DSktg2Fj1RxuCRjNimAwSRyvzjzyF5iYm7RpfonP+LAyxwDj/
- +wh8jo2sLm3/swfbw50XmgL4xd++a6BnD5KHrhw9I9IDctIx4bgZU8q4Vl24pdrL6mb6ENqd4p3
- wtrCnRQlBkWhOB3KirrMUzUFTI6fvvU5T3tj/LwALRwIqwEu/LJE3ihN8=
-X-Google-Smtp-Source: AGHT+IGP4JQZeup6/doDZNz1GaDN13PpljYSGwOFljkBeej2Absml6SsiCmE9Fel8kW/i+gH0sni2BQ5oDZ/44EeoEM=
-X-Received: by 2002:a05:690c:14:b0:711:9770:161f with SMTP id
- 00721157ae682-717c15e3018mr50689987b3.2.1752149872790; Thu, 10 Jul 2025
- 05:17:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1uZqDc-0005Nb-U4
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 08:17:42 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1uZqDS-0003do-7D
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 08:17:38 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8BxnnNLr29oil0mAQ--.46000S3;
+ Thu, 10 Jul 2025 20:17:15 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJDx_8NJr29onHoRAA--.34032S3;
+ Thu, 10 Jul 2025 20:17:15 +0800 (CST)
+Subject: Re: [PATCH v4 09/11] target/loongarch: CPU enable msg interrupts.
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
+References: <20250703092650.2598059-1-gaosong@loongson.cn>
+ <20250703092650.2598059-10-gaosong@loongson.cn>
+ <705cc7d0-f04a-cc19-b059-af907630558d@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <f7baabb2-47c0-7193-065c-f9c1ad4cea1e@loongson.cn>
+Date: Thu, 10 Jul 2025 20:20:12 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20250522102923.309452-1-berrange@redhat.com>
- <20250522102923.309452-20-berrange@redhat.com>
-In-Reply-To: <20250522102923.309452-20-berrange@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 10 Jul 2025 13:17:40 +0100
-X-Gm-Features: Ac12FXzO4DBHWLYxhLABJgKWVx68G8Eozip7pNRbGpSQ-404RZX9fykzK5gdUGY
-Message-ID: <CAFEAcA9jxiazMKEyoPQQdqRBKydgkbKQobtLPyszSHT1M-LHGA@mail.gmail.com>
-Subject: Re: [PULL 19/23] util/qemu-sockets: Refactor success and failure
- paths in inet_listen_saddr()
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eric Blake <eblake@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Juraj Marcin <jmarcin@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <705cc7d0-f04a-cc19-b059-af907630558d@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowJDx_8NJr29onHoRAA--.34032S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxArWrtF4fZFW7Zw4kZr1xCrX_yoW5WrW7pr
+ n7CFyUJrWUGryvq3WxJa45JFyDZr47Gws29w4xXFyUAF1UXr1jgFW0qrnFgFyUAr4rur48
+ ZF1fZry7ZF45XwbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU70PfDUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.606,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,67 +83,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 22 May 2025 at 11:33, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
+在 2025/7/10 上午10:43, Bibo Mao 写道:
 >
-> From: Juraj Marcin <jmarcin@redhat.com>
 >
-> To get a listening socket, we need to first create a socket, try binding
-> it to a certain port, and lastly starting listening to it. Each of these
-> operations can fail due to various reasons, one of them being that the
-> requested address/port is already in use. In such case, the function
-> tries the same process with a new port number.
+> On 2025/7/3 下午5:26, Song Gao wrote:
+>> when loongarch cpu set irq is INT_AVEC, we need set CSR_ESTAT.MSGINT bit
+>> and CSR_ECFG.MSGINT bit.
+>>
+>> Signed-off-by: Song Gao <gaosong@loongson.cn>
+>> ---
+>>   target/loongarch/cpu-csr.h |  6 ++++--
+>>   target/loongarch/cpu.c     | 10 ++++++++++
+>>   2 files changed, 14 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
+>> index 4792677086..6ec13d13d1 100644
+>> --- a/target/loongarch/cpu-csr.h
+>> +++ b/target/loongarch/cpu-csr.h
+>> @@ -34,11 +34,13 @@ FIELD(CSR_MISC, ALCL, 12, 4)
+>>   FIELD(CSR_MISC, DWPL, 16, 3)
+>>     #define LOONGARCH_CSR_ECFG           0x4 /* Exception config */
+>> -FIELD(CSR_ECFG, LIE, 0, 13)
+>> +FIELD(CSR_ECFG, LIE, 0, 15)        /*bit 15 is msg interrupt enabled */
+>> +FIELD(CSR_ECFG, MSGINT, 14, 1)
+>>   FIELD(CSR_ECFG, VS, 16, 3)
+>>     #define LOONGARCH_CSR_ESTAT          0x5 /* Exception status */
+>> -FIELD(CSR_ESTAT, IS, 0, 13)
+>> +FIELD(CSR_ESTAT, IS, 0, 15)        /*bit 15 is msg interrupt enabled */
+>> +FIELD(CSR_ESTAT, MSGINT, 14, 1)
+>>   FIELD(CSR_ESTAT, ECODE, 16, 6)
+>>   FIELD(CSR_ESTAT, ESUBCODE, 22, 9)
+>>   diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+>> index abad84c054..89ea221347 100644
+>> --- a/target/loongarch/cpu.c
+>> +++ b/target/loongarch/cpu.c
+>> @@ -127,6 +127,16 @@ void loongarch_cpu_set_irq(void *opaque, int 
+>> irq, int level)
+>>           return;
+>>       }
+>>   +    /* do INTC_AVEC irqs */
+>> +    if (irq == INT_AVEC) {
+>> +        for (int i = 256; i >= 0; i--) {
+>> +            if (test_bit(i, &(env->CSR_MSGIS[i / 64]))) {
+>> +                env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, 
+>> CSR_ESTAT, MSGINT, 1);
+>> +                env->CSR_ECFG = FIELD_DP64(env->CSR_ECFG, CSR_ECFG, 
+>> MSGINT, 1);
+> why is register CSR_ECFG modified here?
 >
-> This patch refactors the port number loop, so the success path is no
-> longer buried inside the 'if' statements in the middle of the loop. Now,
-> the success path is not nested and ends at the end of the iteration
-> after successful socket creation, binding, and listening. In case any of
-> the operations fails, it either continues to the next iteration (and the
-> next port) or jumps out of the loop to handle the error and exits the
-> function.
+I understand now,  we do'nt need set ecfg bit on qemu.
+
+>> +            }
+>> +        }
+> This piece of code should be put in sentences within tcg_enabled().
 >
-> Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  util/qemu-sockets.c | 51 ++++++++++++++++++++++++---------------------
->  1 file changed, 27 insertions(+), 24 deletions(-)
+> There may be duplicated function call with register CSR_ESTAT.
+> How about something like this?
+>   irq = find_first_bit(env->CSR_MSGIS, 256);
+>   if (irq < 256) {
+>     env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, MSGINT, 1);
+>   }
 >
-> diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
-> index 4a878e0527..329fdbfd97 100644
-> --- a/util/qemu-sockets.c
-> +++ b/util/qemu-sockets.c
+>
+>> +    }
+>> +
+>>       if (kvm_enabled()) {
+>>           kvm_loongarch_set_interrupt(cpu, irq, level);
+>>       } else if (tcg_enabled()) {
+> modification estat should be put here.
+>
+I will correct on v5.
+Thanks.
+Song Gao
+> Regards
+> Bibo Mao
+>>
 
-
-Hi; Coverity complains about this code (CID 1610306):
-
-> @@ -303,11 +303,20 @@ static int inet_listen_saddr(InetSocketAddress *sad=
-dr,
->          port_min =3D inet_getport(e);
->          port_max =3D saddr->has_to ? saddr->to + port_offset : port_min;
->          for (p =3D port_min; p <=3D port_max; p++) {
-> +            if (slisten >=3D 0) {
-> +                /*
-> +                 * We have a socket we tried with the previous port. It =
-cannot
-> +                 * be rebound, we need to close it and create a new one.
-> +                 */
-> +                close(slisten);
-> +                slisten =3D -1;
-
-Here we set slisten to -1 ...
-
-> +            }
->              inet_setport(e, p);
-
-...but then two lines later we unconditionally set slisten to
-something else, so the -1 assignment is overwritten without being
-used.
-
->              slisten =3D create_fast_reuse_socket(e);
-
-What was the intention here ?
-
-thanks
--- PMM
 
