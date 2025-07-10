@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E842C83F17
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 18:25:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2DF1C83F17
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 18:31:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZvvt-0001Qa-Fe; Thu, 10 Jul 2025 14:23:45 -0400
+	id 1uZw2Y-0004sK-CS; Thu, 10 Jul 2025 14:30:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uZvJ4-0000x4-4K
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 13:43:38 -0400
-Received: from mail-oa1-x36.google.com ([2001:4860:4864:20::36])
+ id 1uZvMa-0004Dl-Ia
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 13:47:34 -0400
+Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uZvJ2-0000ES-FU
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 13:43:37 -0400
-Received: by mail-oa1-x36.google.com with SMTP id
- 586e51a60fabf-2da3c572a0bso1075070fac.3
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 10:43:35 -0700 (PDT)
+ id 1uZvMX-0001Nc-NY
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 13:47:15 -0400
+Received: by mail-oa1-x2c.google.com with SMTP id
+ 586e51a60fabf-2efb0b03e40so325956fac.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 10:47:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752169415; x=1752774215; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752169621; x=1752774421; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3CedxPDRQ2FrYfR+32jAcmSwgcLoV3ZJQqOhAvL9lG4=;
- b=l3CJnts81F3iZRv0IPuBudC3CLjB0TaeikAW46OFXfqS1jlUfcEzefLpjbucyZFGMK
- S9g6dGGvpNLse33wOUTwnnWWBpE77SSV9R4GszCJPjfOdzZUfRo0I2K0bPiABmxqnQZW
- OM9AMdmBLQSxCz4ICtjFSfsHmGXRHu1a1f48TxZA2q6o8RUr7VdVNHrjrtqbMNE30Tjo
- V7e8m1GpuOYnvBVGlL3Co3/3TATrX2g6CQ29mXTgiqad4zQYk6SbSKwj9XLcBXQ5nMAt
- ZPS8oMYRycuJZcPkZKys0hEzg3lmzKUtO0xgZkvRmjwOpyBwWqFRSMWyB7lPrufIrRjV
- pUIQ==
+ bh=h4VXI9dQz8PkeFDVbPZMHI6h5TMJPB74mhdSzB8OoQY=;
+ b=p2Rm1V5GKztGEF3+EFFpJF/EtPv9eLBNrID3rJ0/15AFyBFQyh/C+qMLmFPcLlt2yK
+ iSlzlRuae1DxE3ZJeZlSEUBPtgqFSTtszZSkuA9fz+usY5th2fQDZpgHpczPc0mKlbvz
+ 68BxEWAber0SMWY9+w8jl2v9ZaTM11EyQfYoDBcynYRfd5fIXEOa7t4MBWE0yMO2ItQK
+ YNnmXGh4FPTfKc7MfEJQs0jme7RJw6iu/xVWRGQ00vzk3elzoztNbzzVf74bDeOep/ZA
+ nPFppM/1mqEl/6SaqTPA82d4k/47SXygeMiLY1scpnwJEQSRvVhN5tbvQQsQqq77Edwm
+ M5Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752169415; x=1752774215;
+ d=1e100.net; s=20230601; t=1752169621; x=1752774421;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3CedxPDRQ2FrYfR+32jAcmSwgcLoV3ZJQqOhAvL9lG4=;
- b=arU5JRVcJUk+LI12yQK1HhKGUfC7r6guu3Xkh7Ftm7RulayR0SL/LdoNDVcVN7QseS
- KNNlSlfP5Q9ZysprQfl9Qf0A3pg4/4QF/PhCHKOZG/rSYxeOqDwZ7UeZsJbFh+Mj1uXJ
- Je1DIbeZCh7KplQOkPnOtPol6Wui8f1Fp3xX1wuE9fVYPH8Gc87O+A/lgHz8+yspSCPd
- Afkg21xhv/FZodgeyNR5pZTsyH1kO79xLVkd2BOwRHN0DV9oiG+ZzFzdLGD4Nf/Qb0Y2
- dFIDik5cO3W2aUN2Z04LW1WXqErL+S2p+9TV03LINOwSMsc0B8VwingpYqpeJ/eLknWq
- lc/A==
+ bh=h4VXI9dQz8PkeFDVbPZMHI6h5TMJPB74mhdSzB8OoQY=;
+ b=izQpO2H2UMHi7jFAdwXaKX0vUmnCp/A6PvLRfQvIRMqO4OyJkWljXiSoSoaiNWbSEv
+ PthCZRDHVazJdTwBqG4h7jrdvVf0Pkbdv/SAZFHoy+wWo/IvYifV5zoZIR4CwzcBMT04
+ Dc6CHXISPCow4T4/wqewq1ObdLODrWsgzPVOykBSGLeLXQ4QxutGLvJ5MvvZEuVZbAwL
+ DFga2fGVjmqZyi58+MjEq2aYp4vMUQItIoT8GAX6o9aROFuh0ylC3/qEWhWQDSaSjY7A
+ s7dTrl8EYnvJVdN/MqIEHe9BdAV5LHTM+zJ+EsQ+QgL+Iam3bB9KDIZGLXis6z93iO/c
+ rR7w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUwF/dGW+FSf9sSEpsqOwemKL6a1Mk94YVLoCVveOYCjvVfdCP8XByXkaCqQM+4DL2QWX0gDMRtB7II@nongnu.org
-X-Gm-Message-State: AOJu0YxWoNu46Eb3btkR8xHdzlVt7DUh8qxMInTpFHynqQMMendJ7mB1
- nP7d9sgjJhNyfjKv4uHVQxkb26S3/wc1yaMU/AKxhqpEi/lZ53XlWEh6B4pNFZvZ5w6XilCKeLb
- x5vp1Qrg=
-X-Gm-Gg: ASbGncuDN6ba7rKLnoP6XfUjXkUjVXpCL5PtBnlSbWm3Yi11bvpAOVRlGj0UtUIGvmn
- LR4lTFpcSwwob5L0J63TNGlzjU9vS2w0o8/7mbRuFAN9plVRa0dpNPtonoi4Yp/Esz0DuT69yW1
- cmhbBOKmiukxquJroOPG1CRqvryKd5L4hrLXS8Yc2SKPcRrZYJM1n8z4lDPVYc6Iw90p1/QoDTq
- v4J3pyI/4DV3Tm8yE1E+gN7RF0nzUJZGe0PCpKU6l9HRYyLwJOQ9LZolVQ2csY5PLr1cet6ohAS
- 1LD+vQkkqVDUQ6pxUhDIZ+WCQd+owtvNWQ7QoS47YFPQyhrOtORT6TW4pSQ7G37ztDEtRGUiEzX
- 3QdM=
-X-Google-Smtp-Source: AGHT+IFd7M210SMtlZsUOBpas8AFN8SC45Xy3GhIFCNkC1YinvzTaxhP7VGy+KE5wALDwIaN4I76vQ==
-X-Received: by 2002:a05:6870:200b:b0:29e:4340:b1b with SMTP id
- 586e51a60fabf-2ff267625c5mr153711fac.9.1752169414786; 
- Thu, 10 Jul 2025 10:43:34 -0700 (PDT)
+ AJvYcCV+bOE1VevWC9G9yJ+BQYIRZz3NCkUGY8+y51JPCi7oNHKlLb9KxXZdabm6M4EB0moM2SGCt7jECmde@nongnu.org
+X-Gm-Message-State: AOJu0Yy0X/vbffSFTKU+p9akWhFitcIbDWMUwbrGLdKmBSRkAHiMNasH
+ G4YNCBe9P1rkaQQJ+nl5wuj5+hxCuELucT9WNejmZ8KjgHIOnmS8W4cd3WPg0qrRHIo=
+X-Gm-Gg: ASbGnctwKRxpd8a1ecN4/xs6XpQAYDigfuOg5snbqV6LDB1rG0JWaRUO7MH7h4k118g
+ axS0VIaOzMgOkNJPk7TBv+NUPyVSIgMtRnFVaJI0ivu4LlzE+ASpyChh4lhGShoxk9xRkzd6q5j
+ 0kkI1LJCJSDAHsQdv1MC7bfGarl0AO6m8JyfZFQOKZopmBNQXhbWbHerUx/aeJYeFf8pc5Sgk60
+ Ai+hQckpOezfKiEiZuND9/AtrxEUY+M+iKmynUhznd5JZJhVbB6MbqcgWZoTXfp/YSQqbE+ov+v
+ YwKwxmsUCluMbv/Yp4UMtSrbOEwrm/mEM2Y5tgYeRTaHZwuebcmqHsQRVt5vGPaoKVlGXFWvlCp
+ 0QcI=
+X-Google-Smtp-Source: AGHT+IGLcUXESrgeULLz11wo4aYw8fiyrEmsfbUq845mATqz2YVuevaFrDykzmEZTf/Wdh9kYZrzcg==
+X-Received: by 2002:a05:6870:d291:b0:2ea:7963:534e with SMTP id
+ 586e51a60fabf-2ff267742d4mr144042fac.14.1752169620901; 
+ Thu, 10 Jul 2025 10:47:00 -0700 (PDT)
 Received: from [172.20.0.130] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2ff111c4f8asm383833fac.6.2025.07.10.10.43.33
+ 586e51a60fabf-2ff116d8509sm387445fac.40.2025.07.10.10.46.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Jul 2025 10:43:34 -0700 (PDT)
-Message-ID: <d7e76007-10f4-4507-a2cd-1707ca6a8918@linaro.org>
-Date: Thu, 10 Jul 2025 11:43:31 -0600
+ Thu, 10 Jul 2025 10:47:00 -0700 (PDT)
+Message-ID: <b2262e4b-bdf4-42f1-a01c-7a1234c10683@linaro.org>
+Date: Thu, 10 Jul 2025 11:46:58 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] linux-user/gen-vdso: Handle fseek() failure
+Subject: Re: [PATCH 2/2] linux-user/gen-vdso: Don't write off the end of buf[]
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>
 References: <20250710170707.1299926-1-peter.maydell@linaro.org>
- <20250710170707.1299926-2-peter.maydell@linaro.org>
+ <20250710170707.1299926-3-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250710170707.1299926-2-peter.maydell@linaro.org>
+In-Reply-To: <20250710170707.1299926-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::36;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x36.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,17 +105,28 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/10/25 11:07, Peter Maydell wrote:
-> Coverity points out that we don't check for fseek() failure in gen-vdso.c,
-> and so we might pass -1 to malloc(). Add the error checking.
+> In gen-vdso we load in a file and assume it's a valid ELF file.  In
+> particular we assume it's big enough to be able to read the ELF
+> information in e_ident in the ELF header.
 > 
-> (This is a standalone executable that doesn't link against glib, so
-> we can't do the easy thing and use g_file_get_contents().)
+> Add a check that the total file length is at least big enough for all
+> the e_ident bytes, which is good enough for the code in gen-vdso.c.
+> This will catch the most obvious possible bad input file (truncated)
+> and allow us to run the sanity checks like "not actually an ELF file"
+> without potentially crashing.
 > 
-> Coverity: CID 1523742
+> The code in elf32_process() and elf64_process() still makes
+> assumptions about the file being well-formed, but this is OK because
+> we only run it on the vdso binaries that we create ourselves in the
+> build process by running the compiler.
+> 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   linux-user/gen-vdso.c | 11 +++++++++--
->   1 file changed, 9 insertions(+), 2 deletions(-)
+> Hardening all of elf*_process() seems like overkill, but this is
+> an easy check to add.
+> ---
+>   linux-user/gen-vdso.c | 5 +++++
+>   1 file changed, 5 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
