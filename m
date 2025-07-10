@@ -4,80 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28323C83F1D
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 12:57:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E74A9C83F17
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 12:58:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZqph-0005Mt-Ly; Thu, 10 Jul 2025 08:57:01 -0400
+	id 1uZqpi-0005NP-Kd; Thu, 10 Jul 2025 08:57:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <safinaskar@zohomail.com>)
- id 1uZinD-0006GI-Dq
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 00:21:55 -0400
-Received: from sender4-pp-o95.zoho.com ([136.143.188.95])
+ (Exim 4.90_1) (envelope-from <mkl@pengutronix.de>)
+ id 1uZqjp-0002KV-9W
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 08:50:57 -0400
+Received: from metis.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::104])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <safinaskar@zohomail.com>)
- id 1uZinA-0002et-Jb
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 00:21:54 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1752121274; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=jGi44jQwA7tguYk5YZjML2i+Nulyuo9Ynfuhu1ecDj5pcnzZ2W72tZXT6aTn0TLFWhGI+r9LdE7yIStE7CKwyGJnixDvsd5QaecrxTTMFfrQKvWt/By93jWfMpiK9IL2/ByRdu4YhNlkhJAYOlJq7VZFzQTapSMRMX56GEjZ8jQ=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1752121274;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=na0G9oSIayf8FlikNV7gtwZPYaQOEoLGKYXdYzgdS9k=; 
- b=a+V65wFS5esFJUWEc13f9P+NNakTyfo7t82YJPu/is0v64yVcN6PGls9ClCrdUa+oAnan7wcsxQsqsN4dsrDmIudiwOAe+R02gQd15ddOH+BoaIbFMf339RCgdaAoHXK6XKLJfyrxW0tFSXeikRUpBs9Km6jTpFAsF4wO5wj5sk=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=zohomail.com;
- spf=pass  smtp.mailfrom=safinaskar@zohomail.com;
- dmarc=pass header.from=<safinaskar@zohomail.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1752121274; 
- s=zm2022; d=zohomail.com; i=safinaskar@zohomail.com;
- h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Feedback-ID:Message-Id:Reply-To;
- bh=na0G9oSIayf8FlikNV7gtwZPYaQOEoLGKYXdYzgdS9k=;
- b=ZuvkDFZwQeBjmWLmCjVbIgizfhlqTLDV+tQhbMRxfgBVsD+wKYwvJoUny/SsQEIS
- Nxl5gw2CetJSJdrH0U74VEvSSy8Kd/dGrqkuu/0uISWuSsjaFN0VILY6TOnlq1fThk7
- l9P8PaB+MqnaS5+BlzYj2w7D8/V1V8DiAW7jYvW4=
-Received: from mail.zoho.com by mx.zohomail.com
- with SMTP id 1752121271070711.9049000586574;
- Wed, 9 Jul 2025 21:21:11 -0700 (PDT)
-Received: from  [212.73.77.104] by mail.zoho.com
- with HTTP;Wed, 9 Jul 2025 21:21:11 -0700 (PDT)
-Date: Thu, 10 Jul 2025 08:21:11 +0400
-From: Askar Safin <safinaskar@zohomail.com>
-To: "Thomas Zimmermann" <tzimmermann@suse.de>
-Cc: "Gerd Hoffmann" <kraxel@redhat.com>,
- =?UTF-8?Q?=22Noralf_Tr=C3=B8nnes=22?= <noralf@tronnes.org>,
- "Maarten Lankhorst" <maarten.lankhorst@linux.intel.com>,
- "Maxime Ripard" <mripard@kernel.org>,
- "virtualization" <virtualization@lists.linux.dev>,
- "ryasuoka" <ryasuoka@redhat.com>,
- "dri-devel" <dri-devel@lists.freedesktop.org>,
- "qemu-devel" <qemu-devel@nongnu.org>,
- "regressions" <regressions@lists.linux.dev>,
- "Ben Hutchings" <benh@debian.org>
-Message-ID: <197f290e30b.eaadc7bc7913.7315623184036672946@zohomail.com>
-In-Reply-To: 
-Subject: [REGRESSION][BISECTED] kernel panic is not displayed correctly in
- qemu (CONFIG_DRM_BOCHS)
+ (Exim 4.90_1) (envelope-from <mkl@pengutronix.de>)
+ id 1uZqjm-0006Gk-UK
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 08:50:57 -0400
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+ by metis.whiteo.stw.pengutronix.de with esmtps
+ (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
+ (envelope-from <mkl@pengutronix.de>)
+ id 1uZqjb-0003Cf-2a; Thu, 10 Jul 2025 14:50:43 +0200
+Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b]
+ helo=bjornoya.blackshift.org)
+ by drehscheibe.grey.stw.pengutronix.de with esmtps (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
+ (envelope-from <mkl@pengutronix.de>) id 1uZqja-007kop-1A;
+ Thu, 10 Jul 2025 14:50:42 +0200
+Received: from pengutronix.de (p5b1645f7.dip0.t-ipconnect.de [91.22.69.247])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ (Authenticated sender: mkl-all@blackshift.org)
+ by smtp.blackshift.org (Postfix) with ESMTPSA id 0D04E43BD28;
+ Thu, 10 Jul 2025 12:50:42 +0000 (UTC)
+Date: Thu, 10 Jul 2025 14:50:41 +0200
+From: Marc Kleine-Budde <mkl@pengutronix.de>
+To: Pavel Pisa <pisa@fel.cvut.cz>
+Cc: Matyas Bobek <bobekmat@fel.cvut.cz>, 
+ Oliver Hartkopp <socketcan@hartkopp.net>, qemu-devel@nongnu.org,
+ Nikita Ostrenkov <n.ostrenkov@gmail.com>, 
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: i.MX6 SabreLite FlexCAN emulation for QEMU progress/working
+Message-ID: <20250710-carrot-pillbug-of-election-eca4ab-mkl@pengutronix.de>
+References: <202507101258.05760.pisa@fel.cvut.cz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
-Feedback-ID: rr0801122790668314d3e7598558fab2f00000b21b3131e1cba2be67469372c133335d571ffc8e519baac7e9:zu08011227d7920ca060ce8fe32fd401540000013924a5d43a3055ccb51e43fa56fe3fe68126103551561102:rf0801122c2ab99bbc73d925393f3821570000c3b2a3c5e818d6fc6d6488d74d56ca5edd8f3ed2b5cf3f3cc4cb6569b782:ZohoMail
-Received-SPF: pass client-ip=136.143.188.95;
- envelope-from=safinaskar@zohomail.com; helo=sender4-pp-o95.zoho.com
-X-Spam_score_int: 2
-X-Spam_score: 0.2
-X-Spam_bar: /
-X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HEXHASH_WORD=2.297, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="v3mfxbb2tizlbdgt"
+Content-Disposition: inline
+In-Reply-To: <202507101258.05760.pisa@fel.cvut.cz>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: mkl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de);
+ SAEximRunCond expanded to false
+X-PTX-Original-Recipient: qemu-devel@nongnu.org
+Received-SPF: pass client-ip=2a0a:edc0:2:b01:1d::104;
+ envelope-from=mkl@pengutronix.de; helo=metis.whiteo.stw.pengutronix.de
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Thu, 10 Jul 2025 08:56:50 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,139 +81,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steps to reproduce:
 
-- Build Linux v6.16-rc5 so:
+--v3mfxbb2tizlbdgt
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: i.MX6 SabreLite FlexCAN emulation for QEMU progress/working
+MIME-Version: 1.0
 
-$ cat mini
-CONFIG_64BIT=3Dy
+On 10.07.2025 12:58:05, Pavel Pisa wrote:
+> Hello Marc and others,
+>=20
+> Matyas Bobek has implemented FlexCAN emulation for i.MX6
+> targets in the frame of his bachelor thesis
+>=20
+>   https://dspace.cvut.cz/bitstream/handle/10467/122654/F3-BP-2025-Bobek-M=
+atyas-BP_Bobek_FlexCAN_final_4.pdf
+>=20
+> with reviews there
+>=20
+>   https://dspace.cvut.cz/handle/10467/122779
+>=20
+> Please, if you have problems to access documents, try that later,
+> our large archive with theses and publications is under
+> "AI" scrape-bots attacks almost permanently... or send me note
+> and I send the document directly.
+>=20
+> The project continues and on base of Marc Kleine-Budde
+> review, Matyas Bobek has implemented timestamping
+> which should ensure correct messages ordering
+> even if FIFO mode is not used in the drivers,
+> Linux driver default case. There is even workaround
+> to advance timestamp if the the QEMU virtual time
+> is too coarse to provide unique values for for
+> too fast delivered messages through virtual bus
+> without real bits serialization.
 
-CONFIG_EXPERT=3Dy
-CONFIG_EMBEDDED=3Dy
+Nice! Good work!
 
-CONFIG_PRINTK=3Dy
-CONFIG_PRINTK_TIME=3Dy
+> The actual code is available on the "flexcan"
+> branch of the repository
+>=20
+>   https://gitlab.fel.cvut.cz/bobekmat/qemu-flexcan
+>=20
+> The clean, minimal patches sequence will be prepared
+> for review for the proposal for inclusion into QEMU
+> mainline, hopefully soon.
+>=20
+> In longer term perspective, I have interrest in i.MX8
+> and other FlexCAN variants with FD support, etc.
+> I do not know if Mr. Bobek will have time and interest
+> to continue in this direction. I can offer that as the
+> another thesis or can offer that as summer job
+> etc. But latter would need some funding for students
+> motivation and their time compensation and I have had
+> never and do not have any QEMU related project for such
+> funding now and even minimal chance is even in future
+> for other than CTU CAN FD IP core where we support
+> silicon and FPGA products. So no timing, chances,
+> estimates for something beyond i.MX6 FlexCAN.=20
 
-CONFIG_PCI=3Dy
+ACK, I think getting things mainline is more important than CAN-FD
+support.
 
-CONFIG_TTY=3Dy
-CONFIG_VT=3Dy
-CONFIG_VT_CONSOLE=3Dy
-CONFIG_DRM=3Dy
-CONFIG_DRM_FBDEV_EMULATION=3Dy
-CONFIG_DRM_BOCHS=3Dy
-CONFIG_FRAMEBUFFER_CONSOLE=3Dy
-CONFIG_PROC_FS=3Dy
-$ make KCONFIG_ALLCONFIG=3Dmini allnoconfig
-$ make
+regards,
+Marc
 
-- Then boot this Linux image in Qemu so:
+--=20
+Pengutronix e.K.                 | Marc Kleine-Budde          |
+Embedded Linux                   | https://www.pengutronix.de |
+Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
+Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
 
-$ qemu-system-x86_64 -enable-kvm -m 1024 -daemonize -kernel arch/x86_64/boo=
-t/bzImage
+--v3mfxbb2tizlbdgt
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Kernel will (predictably) panic (because it has no initramfs, nor real disk=
-), but actual panic message will not be shown!
+-----BEGIN PGP SIGNATURE-----
 
-Last shown line is "Run /bin/sh as init process"
+iQEzBAABCgAdFiEEn/sM2K9nqF/8FWzzDHRl3/mQkZwFAmhvtx4ACgkQDHRl3/mQ
+kZy86ggAnbhPkkJr7adi7FBzYYsfah37OiI59qxCjNeWS1JduCA23CPGH9+Bp89H
+rYZFNzSSSxI96hlLi+O76vMQ2ETFceyN0PQKQg5pHgS29J6P4xsRQ3xPXzu1jSwq
+Zk1G4H7TlFKUIqG4UzLxBbb02BhP5+ZCjPLhkIW0Ztj+ogJ9muME/9248dxi9BQ7
+rANwe+UUP/yEF3DpT+2SCGX2+VcXTkU7wMILpdMpKS+Piw1/4An6esb5MqJFX1Gs
+CHCtaQ1VAA3SHbISEvIC2w2HOQfIJM2sI3G2tZZGydvORMLx344h9BZSXIHVounw
+Acg68NImqsZNKz+Au29iro/ig7Efaw==
+=53vH
+-----END PGP SIGNATURE-----
 
-My host OS is Debian Trixie. "uname -a":
-
-Linux receipt 6.12.33+deb13-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.12.33-1 (=
-2025-06-19) x86_64 GNU/Linux
-
-Qemu version is:
-
-QEMU emulator version 10.0.2 (Debian 1:10.0.2+ds-1)
-
-Guest kernel is v6.16-rc5 x86_64.
-
-The problem doesn't reproduce on old guest kernels. I. e. old guest kernels=
- actually show panic message.
-
-I did bisect, and bisect showed the following two commits:
-
-=3D=3D=3D
-
-commit a6c3464f69cf5a8a31eb31cc436e7dbd325b8ff9
-Author: Thomas Zimmermann <tzimmermann@suse.de>
-Date:   Thu Jun 13 09:30:33 2019 +0200
-
-    drm/gem-vram: Support pinning buffers to current location
-   =20
-    Pinning a buffer prevents it from being moved to a different memory
-    location. For some operations, such as buffer updates, it is not
-    important where the buffer is located. Setting the pin function's
-    pl_flag argument to 0 will pin the buffer to whereever it is stored.
-   =20
-    v2:
-            * document pin flags in PRIME pin helper
-   =20
-    Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-    Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-    Link: https://patchwork.freedesktop.org/patch/msgid/20190613073041.2935=
-0-2-tzimmermann@suse.de
-
-commit 58540594570778fd149cd8c9b2bff61f2cefa8c9
-Author: Thomas Zimmermann <tzimmermann@suse.de>
-Date:   Wed Jul 3 09:58:34 2019 +0200
-
-    drm/bochs: Use shadow buffer for bochs framebuffer console
-   =20
-    The bochs driver (and virtual hardware) requires buffer objects to
-    reside in video ram to display them to the screen. So it can not
-    display the framebuffer console because the respective buffer object
-    is permanently pinned in system memory.
-   =20
-    Using a shadow buffer for the console solves this problem. The console
-    emulation will pin the buffer object only during updates from the shado=
-w
-    buffer. Otherwise, the bochs driver can freely relocated the buffer
-    between system memory and video ram.
-   =20
-    v2:
-            * select shadow FB via struct drm_mode_config.prefer_shadow_fbd=
-ev
-   =20
-    Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-    Acked-by: Noralf Tr=C3=B8nnes <noralf@tronnes.org>
-    Link: https://patchwork.freedesktop.org/patch/315833/
-    Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-
-=3D=3D=3D
-
-Commit a6c3464f69cf5a8a31e changed good behavior to absolutely wrong: after=
- a6c3464f69cf5a8a31e I see just black screen.
-Then (after many commits) 58540594570778fd149 made screen working again, bu=
-t now panics are not shown.
-
-So, result: all commits in range a6c3464f69cf5a8a31e .. 58540594570778fd149=
- are not testable (black screen), all commits before a6c3464f69cf5a8a31e
-are "good" (panic is shown) and all commits after 58540594570778fd149 (incl=
-usive) (including v6.16-rc5) are "bad" (panic is not shown).
-
-The next commit after 58540594570778fd149 is 5fd5d2b7c53de5a1290d82, thus c=
-orrect regzbot instruction is:
-
-#regzbot introduced: a6c3464f69cf5a8a31e..5fd5d2b7c53de5a1290d82
-
-Config above is not special. It is result of minimizing standard Debian con=
-fig.
-
-The bug is reproducible with standard Debian kernels (if we use them as gue=
-sts).
-
-Reproduction steps are so:
-- Install Debian Trixie to Qemu VM
-- Boot it with "init=3D/bin/true" added (to cause kernel panic)
-
-You will not see panic message.
-
-I minimized this Debian bug to small config shown in the beginning of this =
-letter.
-
---
-Askar Safin
-https://types.pl/@safinaskar
-
+--v3mfxbb2tizlbdgt--
 
