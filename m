@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D88BEC83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 18:55:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B01C83F1B
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Jul 2025 19:00:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uZwPz-0000bV-VX; Thu, 10 Jul 2025 14:54:52 -0400
+	id 1uZwUr-0005Ry-1d; Thu, 10 Jul 2025 14:59:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uZvz7-0002aP-12
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 14:27:09 -0400
-Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ id 1uZwBg-0006Yu-1b
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 14:40:04 -0400
+Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uZvz5-0007Cf-BE
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 14:27:04 -0400
-Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-40af40aee93so827608b6e.0
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 11:27:02 -0700 (PDT)
+ id 1uZwBd-0001fj-VA
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 14:40:03 -0400
+Received: by mail-ot1-x331.google.com with SMTP id
+ 46e09a7af769-73cdce0ee0eso335007a34.3
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 11:40:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752172022; x=1752776822; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752172800; x=1752777600; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=VAmddi9tcRiVQ6AlBdUI0ONKfduCV4XsdW2uOn5XAhA=;
- b=yPGguaKDLIbIFPjBeV+bb8VgB3lE+goXd8T2kxVTKamFWzSwf44qTyYN98o17nIECK
- HzMt9c16doi6eFAoy/+A6qUgdOXCG6erEDi8n1zSWKESL1TA7HRBMKw8BELASbZUeSxu
- LUSS6YSxgAvTKFCceg4nVtf1u48KVr+IrSX/29e68Ad7wxda6hqmieYWKZqPDzefoRlw
- hIRtwEnp0Li87UzU0W+uwEnbRXwEDMSR1alBHnnAn3UlrDRpRO91qWiTnIc5aUJELr4T
- 8KLtkzjWs7PvPE33DR1ivI3yWxXA1o8JnY5Ufp8EwEoOWlihv+4KNa8R+L63Tlx7/T7L
- L6AQ==
+ bh=P8pr/A2YC3YIqYJz1pODqgDI7xep8x+NaCcdFmWkn3k=;
+ b=A4hhGg53DCTGGwiEZk89axo4ovs9aGtZtV1X1DobDldax5W4CzjfEf8CY1ekpLTQom
+ maRY70amE6BKXCsoPqoEMPfTMB4SWNoDp/X0ZkQ0Kr34CHLpy90rosq1KFraNz7lwpaw
+ ZJ6ryeczmXzfMWGd2//jbCyxnDtHom9c+XU9bnNZriGYNOxoAKzM4SHKhf29ApSu15Qe
+ LzSPOZr4/yiTH0N2Z4HpPPu3d0MmFXLNKfCudjqpW8pipCDPwkylMSZrnLZXg085c88T
+ riX1wnBa4gQQWp/j+Aer/E29IYFGY1KZ/7QAYU0slTxzqOkXLv10Yp9p2Q7yXz7OOzsD
+ mCCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752172022; x=1752776822;
+ d=1e100.net; s=20230601; t=1752172800; x=1752777600;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VAmddi9tcRiVQ6AlBdUI0ONKfduCV4XsdW2uOn5XAhA=;
- b=Y7tJzL2XOPd5MALsQayeav8x8zfmHQz8xsrtyg8VA3GWyXodUF3Vnq6gc/kLe13+P5
- ZTIhVs7gRbPkuLRuzY9m9jtfD6hVGlf+tTJCp3aBIHyD0A2zGyVRRzmSDWDXUAW4FZgh
- tN8kDdh46lEcZfwa6XUIAEp6MIvWz5aEbpKPRXuVXg17uoS+shqtywUG+RgaKfn7nEzA
- Z6vsmsuy4YDIrISLRt4LXMbsvIJsUGqxQKNWpRnMrByvmHbYlMfIPStV+Zq/AGtRYDbv
- t+OmpQ6qcCHN1y7wFDSaoLMD2N0kAgihz06jgJbBAjOF6VGfKXvcMmi23s1HVxtCcXPH
- JjQA==
-X-Gm-Message-State: AOJu0Yz1TaL/OBtAQ7P7zWFQBEbpts8zLQx0JzErriQYUBatD3o9hZ1n
- fflYkZHx1b9l995g+b1z/2LsJMNLbQuo4GLgUKOFiW4mM6HNyguO7XtlIFCHqRhaH7uOptT6Mhc
- 9TedtxWA=
-X-Gm-Gg: ASbGncvV/EiS8iJahDxdhfJ2tkzmAHl47HMZThQ9hVs3Pwv176W2I94qgcol8E7qcY2
- YTle3KL1TI6loxRWXt91wy+gIO2/s8HLaHmYIZFlAIOk5pq5HW6CvGWLJFhhU6JZRp07k8K9FnV
- MM4Lgr918Zaoxid+TMSnzCK3cn6FVys8ln3pHqMpnLGfqihdjZew6m51/YywJbhk6fdoYI1wa+f
- OP/iLIeJJxojNQqwemGrTFpH9UsxJNIO6r1eYPzheNdOSAmlZtmi1vKJhl+2qD9Uj2aX+YRxPvL
- 9/zpvPcxJVjaJ4JqvW6cGExuevpEwutYE9xZIHtgNlkgM7o+ajnsoLKx5h4wtxpY+I623HnC29h
- vLSo=
-X-Google-Smtp-Source: AGHT+IGYdiDSavujQSWKRbM/78s+Cc5CDjNU/+QgJgtyZF55GNs7ljvgoXHcrS+FDjXYbEdew4tzmA==
-X-Received: by 2002:a05:6808:2111:b0:408:fef8:9c6d with SMTP id
- 5614622812f47-41511815470mr470734b6e.19.1752172021846; 
- Thu, 10 Jul 2025 11:27:01 -0700 (PDT)
+ bh=P8pr/A2YC3YIqYJz1pODqgDI7xep8x+NaCcdFmWkn3k=;
+ b=JA0mPQcjELVzssdjAy/7UhQg4uzmh22Pa9snmuDIEi89z6Hd8QHJAzDecn06CehEzE
+ 40oCmAwAqGN91LBeBe6FIASkQoMNdNPYW7thKFJ4iizczHUHL2kLGtoXhDVYPAogADYJ
+ 6s1YXAogD90Fz0FyvtyFuAwI6vBsNz+5P+vhiQ/XFw1qxP1GQi++slBvP63JluPXj/5T
+ zBbIZQwl5ImsnmQQleD3Ms8BaAvq26zV5b/9mUZkzH2+vAQOTwhaXojsI5Uq6Geckrqi
+ +PHySEQF6eGYQ2np+wX4q/1uZsdNj8eKUCoyyUQZSHGORwfikH3Og+n1ZMho/WnuNCSG
+ 5kwQ==
+X-Gm-Message-State: AOJu0YzHm7cEaD7058MQ1/PG7pc56umwBtyZvz4KKH4sTW0CBWfqpfad
+ LO15LbwgWDskw1V+/+dtSUwda4e/l4NN7EG4hu5YG1YkVwIw9vh52gQilcQ/TaY6fvna48xLCGF
+ TkzkH7vA=
+X-Gm-Gg: ASbGncuD/XZo5Ri4TnkeJ+kfTl4EFPQ67+VQUckrNoYd3YcEr9LXUgScoc9XMsNZ95u
+ JU4jqVv0WSSQ7chdNXoXy/A4yn64Sh4AMP9Tqrith1XR1SwzGDUasgu1tvkoFOhkOx0NoriV7Cs
+ +bsC4Pq3s7kV3fkH4kR+1r+NQTnemjBdKKQ1SefP8EaWCgdbjHLxdLpzT6vRXezZDk+c7y226Gw
+ GarTUeyQRqnIB+yaAyOLv+XOtXlbiE30zkfI37FXWU0sBEASYTXbKMtVOeila4HmxeCmK5dkhuz
+ 2PFTOTk8UH6Y6U8plIJ+Nn8Wqm0fMU9DcCWWv55fr3DPy+eQU9JmGRvMWoUlJLSjeEXUmoMGaZr
+ wFSg=
+X-Google-Smtp-Source: AGHT+IE6GPb295vWa+lRfd8J2iALWud4Uvx370S8t928ycZipyXm+9BRtaZUOhMxGBWu9RZoK3JXAA==
+X-Received: by 2002:a05:6830:2d83:b0:735:b205:fd86 with SMTP id
+ 46e09a7af769-73cf9e915c7mr426731a34.19.1752172799629; 
+ Thu, 10 Jul 2025 11:39:59 -0700 (PDT)
 Received: from [172.20.0.130] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4141bcd28a1sm290316b6e.32.2025.07.10.11.27.01
+ 46e09a7af769-73cf1064954sm291549a34.11.2025.07.10.11.39.58
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Jul 2025 11:27:01 -0700 (PDT)
-Message-ID: <c6b2eb00-11e7-4e5b-850c-1210c66ae65d@linaro.org>
-Date: Thu, 10 Jul 2025 12:26:59 -0600
+ Thu, 10 Jul 2025 11:39:59 -0700 (PDT)
+Message-ID: <ee750298-9699-44da-928c-422e495d92b5@linaro.org>
+Date: Thu, 10 Jul 2025 12:39:57 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user/mips/o32: Drop sa_restorer functionality
+Subject: Re: [PATCH 1/1] linux-user: Hold the fd-trans lock across fork
 To: qemu-devel@nongnu.org
-References: <20250709-mips-sa-restorer-v1-1-fc17120e4afe@t-8ch.de>
+References: <20250314124742.4965-1-geofft@ldpreload.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250709-mips-sa-restorer-v1-1-fc17120e4afe@t-8ch.de>
+In-Reply-To: <20250314124742.4965-1-geofft@ldpreload.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,24 +102,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/9/25 14:57, Thomas Weißschuh wrote:
-> The Linux kernel dropped support for sa_restorer on O32 MIPS in the
-> release 2.5.48 because it was unused. See the comment in
-> arch/mips/include/uapi/asm/signal.h.
+On 3/14/25 06:47, Geoffrey Thomas wrote:
+> If another thread is holding target_fd_trans_lock during a fork, then the lock
+> becomes permanently locked in the child and the emulator deadlocks at the next
+> interaction with the fd-trans table. As with other locks, acquire the lock in
+> fork_start() and release it in fork_end().
 > 
-> Applications using the kernels UAPI headers will not reserve enough
-> space for qemu-user to copy the sigaction.sa_restorer field to.
-> Unrelated data may be overwritten.
-> 
-> Align qemu-user with the kernel by also dropping sa_restorer support.
-> 
-> Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
+> Signed-off-by: Geoffrey Thomas <geofft@ldpreload.com>
+> Fixes: c093364f4d91 "fd-trans: Fix race condition on reallocation of the translation table."
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2846
+> Buglink: https://github.com/astral-sh/uv/issues/6105
 > ---
->   linux-user/mips/target_signal.h | 1 -
->   linux-user/syscall_defs.h       | 4 ----
->   2 files changed, 5 deletions(-)
+>   linux-user/fd-trans.h | 10 ++++++++++
+>   linux-user/main.c     |  2 ++
+>   2 files changed, 12 insertions(+)
 
-Queued, thanks.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+and queued, thanks.
 
 
 r~
