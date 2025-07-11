@@ -4,83 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9529BC83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 05:45:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66E9FC83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 05:47:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua6Vu-000414-0Q; Fri, 11 Jul 2025 01:41:40 -0400
+	id 1ua6bM-0004l1-KC; Fri, 11 Jul 2025 01:47:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1ua6VT-0003oO-4b
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 01:41:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1ua6bD-0004dJ-Vl
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 01:47:10 -0400
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1ua6VQ-0000CK-K7
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 01:41:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752212466;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PRh4RMKmgKGF1m/pRQxvuyG3jGiERvvIWSQ2GYr8xa4=;
- b=CiSaG8HOt+tQJ053zaxiPhht6ftUluVzlhrwVeEnCSJrjS8jq1ANPLsV3F43MN8Laa/j3i
- 4Mf3FwryQvBeQbqs8JSYZJX/EG2o5y0uLZbZpe3S0Rw4zPdL4efInVx082XQ5DhbMB8yWQ
- EfOee+Z4apPzE+8aNIUHeodD0VoLuJM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-PWFgXE3SMK-9WYyHE27xnQ-1; Fri,
- 11 Jul 2025 01:41:03 -0400
-X-MC-Unique: PWFgXE3SMK-9WYyHE27xnQ-1
-X-Mimecast-MFC-AGG-ID: PWFgXE3SMK-9WYyHE27xnQ_1752212461
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5ED9A1956089; Fri, 11 Jul 2025 05:41:01 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.46])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 657661800285; Fri, 11 Jul 2025 05:40:53 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- John Snow <jsnow@redhat.com>, Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Lukas Straub <lukasstraub2@web.de>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Peter Xu <peterx@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Jason Wang <jasowang@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v2 06/18] qapi: add cross-references to job.json
-Date: Fri, 11 Jul 2025 01:39:53 -0400
-Message-ID: <20250711054005.60969-7-jsnow@redhat.com>
-In-Reply-To: <20250711054005.60969-1-jsnow@redhat.com>
-References: <20250711054005.60969-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1ua6b8-0001Nx-JH
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 01:47:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1752212823; x=1783748823;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=XTfMWWxfBoVL7TGsRDBfdi697a8eROg4D315DGUogFU=;
+ b=Ejg54iCLFZ8FSTWyRq0amO4e+m1QuY3REZzqIK5MDZhfA6SI9foLiNGd
+ 8NN7A4tejXWeYQOOYfpcFXx8Pckv9wLyoMn2VAdS335ScGyFXtKW/Iiux
+ rEQeBNTHkJNrnVfwcVJpcsoyECRKfDpNv38Ch2dNMsL5XE7SLHc2KmNox
+ IgoBTnuzwcIskn4/Jd8apKhvUBGQ3cvSy3CLip+W76MC++Vm/yAleh+xX
+ COZoKwkPWZez4sI2mUCeJo80h9KAGFbjuzQujZKOJgKxIZi5s+wyCXkfA
+ 2K0ti3Q6xr7+xaaIWUUD2kTfZvnCd6UyNwYCb/I+kAFujsYvsXkzl/i9d Q==;
+X-CSE-ConnectionGUID: SeZcKT/uTjibN4CZTEq44g==
+X-CSE-MsgGUID: VwKG+TXjRzGoG1rdh8cMWw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11490"; a="54222488"
+X-IronPort-AV: E=Sophos;i="6.16,302,1744095600"; d="scan'208";a="54222488"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Jul 2025 22:47:00 -0700
+X-CSE-ConnectionGUID: t2EJHNAXRkaXJ5f/jG8VBQ==
+X-CSE-MsgGUID: taI+nktERLmp2bPmzlzT2A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,302,1744095600"; d="scan'208";a="156627222"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa009.fm.intel.com with ESMTP; 10 Jul 2025 22:46:58 -0700
+Date: Fri, 11 Jul 2025 14:08:27 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, xiaoyao.li@intel.com
+Subject: Re: [PATCH 3/4] target/i386: allow reordering max_x86_cpu_initfn vs
+ accel CPU init
+Message-ID: <aHCqW7GkeUy6le4E@intel.com>
+References: <20250711000603.438312-1-pbonzini@redhat.com>
+ <20250711000603.438312-4-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250711000603.438312-4-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,180 +84,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- qapi/job.json | 71 ++++++++++++++++++++++++++-------------------------
- 1 file changed, 36 insertions(+), 35 deletions(-)
+On Fri, Jul 11, 2025 at 02:06:02AM +0200, Paolo Bonzini wrote:
+> Date: Fri, 11 Jul 2025 02:06:02 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 3/4] target/i386: allow reordering max_x86_cpu_initfn vs
+>  accel CPU init
+> X-Mailer: git-send-email 2.50.0
+> 
+> The PMU feature is only supported by KVM, so move it there.  And since
+> all accelerators other than TCG overwrite the vendor, set it in
+> max_x86_cpu_initfn only if it has not been initialized by the
+> superclass.  This makes it possible to run max_x86_cpu_initfn
+> after accelerator init.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  target/i386/cpu.c         | 24 ++++++++++++------------
+>  target/i386/kvm/kvm-cpu.c |  2 ++
+>  2 files changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/qapi/job.json b/qapi/job.json
-index c1ddae9c0fe..a6026f6a810 100644
---- a/qapi/job.json
-+++ b/qapi/job.json
-@@ -10,26 +10,26 @@
- #
- # Type of a background job.
- #
--# @commit: block commit job type, see "block-commit"
-+# @commit: block commit job type, see `block-commit`
- #
--# @stream: block stream job type, see "block-stream"
-+# @stream: block stream job type, see `block-stream`
- #
--# @mirror: drive mirror job type, see "drive-mirror"
-+# @mirror: drive mirror job type, see `drive-mirror`
- #
--# @backup: drive backup job type, see "drive-backup"
-+# @backup: drive backup job type, see `drive-backup`
- #
--# @create: image creation job type, see "blockdev-create" (since 3.0)
-+# @create: image creation job type, see `blockdev-create` (since 3.0)
- #
--# @amend: image options amend job type, see "x-blockdev-amend"
-+# @amend: image options amend job type, see `x-blockdev-amend`
- #     (since 5.1)
- #
--# @snapshot-load: snapshot load job type, see "snapshot-load"
-+# @snapshot-load: snapshot load job type, see `snapshot-load`
- #     (since 6.0)
- #
--# @snapshot-save: snapshot save job type, see "snapshot-save"
-+# @snapshot-save: snapshot save job type, see `snapshot-save`
- #     (since 6.0)
- #
--# @snapshot-delete: snapshot delete job type, see "snapshot-delete"
-+# @snapshot-delete: snapshot delete job type, see `snapshot-delete`
- #     (since 6.0)
- #
- # Since: 1.7
-@@ -59,13 +59,14 @@
- # @standby: The job is ready, but paused.  This is nearly identical to
- #     @paused.  The job may return to @ready or otherwise be canceled.
- #
--# @waiting: The job is waiting for other jobs in the transaction to
--#     converge to the waiting state.  This status will likely not be
--#     visible for the last job in a transaction.
-+# @waiting: The job is waiting for other jobs in the
-+#     transaction to converge to the waiting state.  This
-+#     status will likely not be visible for the last job in a
-+#     transaction.
- #
- # @pending: The job has finished its work, but has finalization steps
- #     that it needs to make prior to completing.  These changes will
--#     require manual intervention via @job-finalize if auto-finalize
-+#     require manual intervention via `job-finalize` if auto-finalize
- #     was set to false.  These pending changes may still fail.
- #
- # @aborting: The job is in the process of being aborted, and will
-@@ -75,7 +76,7 @@
- #
- # @concluded: The job has finished all work.  If auto-dismiss was set
- #     to false, the job will remain in this state until it is
--#     dismissed via @job-dismiss.
-+#     dismissed via `job-dismiss`.
- #
- # @null: The job is in the process of being dismantled.  This state
- #     should not ever be visible externally.
-@@ -91,21 +92,21 @@
- #
- # Represents command verbs that can be applied to a job.
- #
--# @cancel: see @job-cancel
-+# @cancel: see `job-cancel`
- #
--# @pause: see @job-pause
-+# @pause: see `job-pause`
- #
--# @resume: see @job-resume
-+# @resume: see `job-resume`
- #
--# @set-speed: see @block-job-set-speed
-+# @set-speed: see `block-job-set-speed`
- #
--# @complete: see @job-complete
-+# @complete: see `job-complete`
- #
--# @dismiss: see @job-dismiss
-+# @dismiss: see `job-dismiss`
- #
--# @finalize: see @job-finalize
-+# @finalize: see `job-finalize`
- #
--# @change: see @block-job-change (since 8.2)
-+# @change: see `block-job-change` (since 8.2)
- #
- # Since: 2.12
- ##
-@@ -138,7 +139,7 @@
- #
- # The job will pause as soon as possible, which means transitioning
- # into the PAUSED state if it was RUNNING, or into STANDBY if it was
--# READY.  The corresponding JOB_STATUS_CHANGE event will be emitted.
-+# READY.  The corresponding `JOB_STATUS_CHANGE` event will be emitted.
- #
- # Cancelling a paused job automatically resumes it.
- #
-@@ -173,7 +174,7 @@
- # cancellation.
- #
- # The job will cancel as soon as possible and then emit a
--# JOB_STATUS_CHANGE event.  Usually, the status will change to
-+# `JOB_STATUS_CHANGE` event.  Usually, the status will change to
- # ABORTING, but it is possible that a job successfully completes (e.g.
- # because it was almost done and there was no opportunity to cancel
- # earlier than completing the job) and transitions to PENDING instead.
-@@ -192,14 +193,14 @@
- #
- # This is supported only for drive mirroring, where it also switches
- # the device to write to the target path only.  Note that drive
--# mirroring includes drive-mirror, blockdev-mirror and block-commit
-+# mirroring includes `drive-mirror`, `blockdev-mirror` and `block-commit`
- # job (only in case of "active commit", when the node being commited
- # is used by the guest).  The ability to complete is signaled with a
--# BLOCK_JOB_READY event.
-+# `BLOCK_JOB_READY` event.
- #
- # This command completes an active background block operation
- # synchronously.  The ordering of this command's return with the
--# BLOCK_JOB_COMPLETED event is not defined.  Note that if an I/O error
-+# `BLOCK_JOB_COMPLETED` event is not defined.  Note that if an I/O error
- # occurs during the processing of this command: 1) the command itself
- # will fail; 2) the error will be processed according to the
- # rerror/werror arguments that were specified when starting the
-@@ -217,14 +218,14 @@
- # Deletes a job that is in the CONCLUDED state.  This command only
- # needs to be run explicitly for jobs that don't have automatic
- # dismiss enabled.  In turn, automatic dismiss may be enabled only
--# for jobs that have @auto-dismiss option, which are drive-backup,
--# blockdev-backup, drive-mirror, blockdev-mirror, block-commit and
--# block-stream.  @auto-dismiss is enabled by default for these
-+# for jobs that have @auto-dismiss option, which are `drive-backup`,
-+# `blockdev-backup`, `drive-mirror`, `blockdev-mirror`, `block-commit` and
-+# `block-stream`.  @auto-dismiss is enabled by default for these
- # jobs.
- #
- # This command will refuse to operate on any job that has not yet
- # reached its terminal state, CONCLUDED.  For jobs that make use of
--# the JOB_READY event, job-cancel or job-complete will still need to
-+# the JOB_READY event, `job-cancel` or `job-complete` will still need to
- # be used as appropriate.
- #
- # @id: The job identifier.
-@@ -236,10 +237,10 @@
- ##
- # @job-finalize:
- #
--# Instructs all jobs in a transaction (or a single job if it is not
--# part of any transaction) to finalize any graph changes and do any
--# necessary cleanup.  This command requires that all involved jobs are
--# in the PENDING state.
-+# Instructs all jobs in a :qapi:cmd:`transaction` (or a single job if it
-+# is not part of any transaction) to finalize any graph changes and do
-+# any necessary cleanup.  This command requires that all involved jobs
-+# are in the PENDING state.
- #
- # For jobs in a transaction, instructing one job to finalize will
- # force ALL jobs in the transaction to finalize, so it is only
--- 
-2.50.0
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
