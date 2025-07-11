@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92311C83F1B
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 20:32:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68E2BC83F1B
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 20:32:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaKPJ-0004zb-RZ; Fri, 11 Jul 2025 16:31:45 -0400
+	id 1uaKPt-0005EF-2Y; Fri, 11 Jul 2025 16:32:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uaKDM-0007Tr-9i
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 16:19:24 -0400
+ id 1uaKFx-0000A3-5w
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 16:22:05 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uaKDI-0005pC-HQ
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 16:19:21 -0400
+ id 1uaKFv-0006N2-Dq
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 16:22:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
  Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
  Resent-To:Resent-Cc:Resent-Message-ID;
- bh=IHm5W+Kzfrrq6bQFYMWw8pNUYOTbF+Z7NAm/BkVUVkU=; b=Y7+grmHf/ZZKZMEoQ7qIsY+4jC
- ow3btHWDCyxSLHhIhEmk+/Ehb/5qVutbSyQtUzrzVIauPgsupaU8ynYsS+xnYw9/I79TMXMn18pIl
- XkH3LN14JO53vvRXbOXqeYWUuMpUD5iSHUlKVmi8WMsrGYkrdy3ldtUaY2L1mwmgYlET1WZ2TdfyE
- ODYiyOUf4iMK3FPyElkyls1QxB38TbHRZIqwFZUlQfp/MAyq0L25EhweKAu66Ew34JMDlPI2vKm18
- bNBRrzFB/aqTOyQ0GG+lQJDnF0Grav3v2HCY1PUOEYYF++SD1Lm9XczE4vQp/i6saSx9WVzBAnAMa
- pCIXaHvv36pDIzZZgz2QJlQgcnW1lf25Ei2dix62u+rFGD3jlqkHF6UD3wIjcT8nqny0j1EGhNUvu
- 0t0Jlje4udurF2gXYSBs5ZSd4A8/AwPNXZ17OjCJs67BWBLni1itXTt4cPydp6ZJRM99glhYMdut4
- WWNNd6V4I0v6odFw69t7SKUli+LALzRr/3qMJxgZfm4mivRFwYVhAMhjUCCkqwvSQDiHk4q6Lc+fi
- TxeARXEccHhBLQ2bguFH7i7mKWU4q2x3KEh8fr8MR1b0sccNxH85uhqPyYZV0xQXuDlWxmGOiQrnB
- JseAn4mvxzxPd8DpPqsIY547kCxcaq5XgaUNTpGzY=;
+ bh=VCofH/j+GYRl4YFlbd5iGZi4kBubhZv0QsPoqVNXCdQ=; b=RW1PHjpqZUX+kexcZTY9IwJjdo
+ i2mDQpXtsSrGAJc3zr/eIB52lvfVtgDVvmO0IItMOdrDWJxj/ppn0C3l0W5Zfb3fglbE8mnrPuv/e
+ 2MJgBnCwvgMlXXq4CR1i/8vmdTIJfJtAQ7udtS38139KojY4XhViM3FaW9J97uq4nNZsYaYP1Isav
+ u0zb5lNwFog/M1sbOE2BLDggmufMh0QT92oYBINrBYpYdwsw3Zbd9xxCX0twLDNvLs7rH+I+Lk5R3
+ gmxZSPeW0ccQdrOxMv80ymjPbvJ/ztIwvzRLHlpz+D/CrcWZFZkQq8+24LgW4pjUmTZH9hxdiRq0s
+ 8Fdn1KZDlwPHJxYZ2DJ6WFRQGnG9kTgmZf+Z945eLKRT+7Xas6+J6g50e+ogGeRaIxASD8PNSKzJm
+ amgNxUIXIldeltWdg4wy0JgDbdUaypUZ7oRcl1MuSZkEejUHi9zNvbmiK+JXTojOVESgKRNI41TuY
+ v2WneNBeEAP+zcUJSSFe6yQjgfANDrTDXRQTTusmaMWd/WMZv8p91QgXo/EtYfzQrX4iMXos1Q3SM
+ 4gkirw2P0oQaad0Ijea7kmx0cMgsElhSfml0nLez2QOHvPSe1eFQRVYVaF0scUq0rGu07Q2uEssDc
+ jUjDIlAJ8jvl4CGiK4rnTHkKCs0LOyDJCfbCBIpXc=;
 Received: from [2a02:8012:2f01:0:d1ff:478a:c096:2d0c]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uaKBa-000BZS-Q2; Fri, 11 Jul 2025 21:17:38 +0100
-Message-ID: <66e0e799-d84d-470e-bf5f-e03f85cb3463@ilande.co.uk>
-Date: Fri, 11 Jul 2025 21:19:12 +0100
+ id 1uaKEH-000Bao-UA; Fri, 11 Jul 2025 21:20:22 +0100
+Message-ID: <fe2518b0-6d2c-44c2-bc32-a166fa85133b@ilande.co.uk>
+Date: Fri, 11 Jul 2025 21:21:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  pbonzini@redhat.com, fam@euphon.net, qemu-devel@nongnu.org
 References: <20250618061249.743897-1-mark.cave-ayland@ilande.co.uk>
- <20250618061249.743897-6-mark.cave-ayland@ilande.co.uk>
- <a9d23dc1-60b8-4ad0-a666-ad3770051ec3@linaro.org>
+ <30d03eef-c0d8-4864-87d9-a3674d8f64a1@ilande.co.uk>
+ <a515b6ad-b10d-4a78-9960-f75f3189adaf@linaro.org>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -74,13 +74,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <a9d23dc1-60b8-4ad0-a666-ad3770051ec3@linaro.org>
+In-Reply-To: <a515b6ad-b10d-4a78-9960-f75f3189adaf@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:d1ff:478a:c096:2d0c
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v2 5/7] esp.c: only call dma_memory_write function if
- transfer length is non-zero
+Subject: Re: [PATCH v2 0/7] esp.c: only allow ESP commands permitted in the
+ current mode
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -106,59 +106,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09/07/2025 12:14, Philippe Mathieu-Daudé wrote:
+On 09/07/2025 12:16, Philippe Mathieu-Daudé wrote:
 
-> On 18/6/25 08:12, Mark Cave-Ayland wrote:
->> In the cases where mixed DMA/non-DMA transfers are used or no data is
->> available, it is possible to for the calculated transfer length to be
->> zero. Only call the dma_memory_write function where the transfer length
->> is non-zero to avoid invoking the DMA engine for a zero length transfer
->> which can have side-effects (along with generating additional tracing
->> noise).
->>
->> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->> ---
->>   hw/scsi/esp.c | 6 +++++-
->>   1 file changed, 5 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
->> index ec9fcbeddf..1c7bad8fc0 100644
->> --- a/hw/scsi/esp.c
->> +++ b/hw/scsi/esp.c
->> @@ -631,7 +631,9 @@ static void esp_do_dma(ESPState *s)
->>           switch (s->rregs[ESP_CMD]) {
->>           case CMD_TI | CMD_DMA:
->>               if (s->dma_memory_write) {
->> -                s->dma_memory_write(s->dma_opaque, s->async_buf, len);
->> +                if (len) {
->> +                    s->dma_memory_write(s->dma_opaque, s->async_buf, len);
->> +                }
->>               } else {
->>                   /* Copy device data to FIFO */
->>                   len = MIN(len, fifo8_num_free(&s->fifo));
->> @@ -681,6 +683,7 @@ static void esp_do_dma(ESPState *s)
+> Hi Mark,
 > 
-> As future cleanup, indent could be simplified using 'if (!len) break;'.
-
-I remember when I did the large rewrite of esp.c, I found the logic easier to follow 
-with the indentation that way. But of course that is something that could always be 
-revisited later if required.
-
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> On 9/7/25 09:50, Mark Cave-Ayland wrote:
+>> On 18/06/2025 07:12, Mark Cave-Ayland wrote:
+>>
+>>> This series contains a few minor tidy-ups along with an implementation of the
+>>> logic to only allow ESP commands permitted in the current mode. The motivation
+>>> is to fix GitLab issue #2464 which causes Windows NT MIPS to bluescreen on
+>>> boot.
+>>>
+>>> Patches 1 to 5 are simple tidy-ups from investigating the issue. Patch 6 adds
+>>> a new asc_mode variable to indicate the current ESP mode, whilst patch 7 implements
+>>> the feature which fixes GitLab issue #2464.
+>>>
+>>> Note: this series is being reposted as both the SeaBIOS and SeaBIOS hppa binaries
+>>> currently distributed with QEMU have now been fixed so that they do not use an
+>>> illegal ESP command sequence.
 > 
->>                   buf[0] = s->status;
->>                   if (s->dma_memory_write) {
->> +                    /* Length already non-zero */
->>                       s->dma_memory_write(s->dma_opaque, buf, len);
->>                   } else {
->>                       esp_fifo_push_buf(s, buf, len);
->> @@ -715,6 +718,7 @@ static void esp_do_dma(ESPState *s)
->>                   buf[0] = 0;
->>                   if (s->dma_memory_write) {
->> +                    /* Length already non-zero */
->>                       s->dma_memory_write(s->dma_opaque, buf, len);
->>                   } else {
->>                       esp_fifo_push_buf(s, buf, len);
+> 
+>>> Mark Cave-Ayland (7):
+> 
+>>>    esp.c: add asc_mode property to indicate the current ESP mode
+>>>    esp.c: only allow ESP commands permitted in the current asc_mode
+>>>
+>>>   hw/scsi/esp.c         | 94 +++++++++++++++++++++++++++++++++++++------
+>>>   hw/scsi/trace-events  |  1 +
+>>>   include/hw/scsi/esp.h | 15 ++++++-
+>>>   3 files changed, 96 insertions(+), 14 deletions(-)
+>>
+>> Ping?
+> 
+> I reviewed 1-5 but don't have sufficient knowledge for 6-7 so
+> will defer these to Paolo.
+
+Thanks Phil, I really appreciate your effort to help out here.
 
 
 ATB,
