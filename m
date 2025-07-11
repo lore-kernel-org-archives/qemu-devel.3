@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07231C8303C
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:38:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65632C8303C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:38:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua95x-00020i-Dc; Fri, 11 Jul 2025 04:27:01 -0400
+	id 1ua95x-0001yQ-8e; Fri, 11 Jul 2025 04:27:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ua8xU-0004V1-Go; Fri, 11 Jul 2025 04:18:17 -0400
+ id 1ua902-0001LI-Om; Fri, 11 Jul 2025 04:20:55 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ua8xS-00040V-KK; Fri, 11 Jul 2025 04:18:16 -0400
+ id 1ua900-0004e0-J9; Fri, 11 Jul 2025 04:20:54 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7D2011356D1;
- Fri, 11 Jul 2025 11:17:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5FE9F1356EB;
+ Fri, 11 Jul 2025 11:17:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 733ED23FA46;
- Fri, 11 Jul 2025 11:17:45 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 548D423FA60;
+ Fri, 11 Jul 2025 11:17:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Weifeng Liu <weifeng.liu.z@gmail.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Yiwei Zhang <zzyiwei@gmail.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 06/39] ui/gtk: Update scales in fixed-scale mode when
- rendering GL area
-Date: Fri, 11 Jul 2025 11:16:02 +0300
-Message-ID: <20250711081745.1785806-6-mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 32/39] virtio-gpu: support context init multiple
+ timeline
+Date: Fri, 11 Jul 2025 11:16:28 +0300
+Message-ID: <20250711081745.1785806-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
@@ -63,51 +64,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Weifeng Liu <weifeng.liu.z@gmail.com>
+From: Yiwei Zhang <zzyiwei@gmail.com>
 
-When gl=on, scale_x and scale_y were set to 1 on startup that didn't
-reflect the real situation of the scan-out in free scale mode, resulting
-in incorrect cursor coordinates to be sent when moving the mouse
-pointer. Simply updating the scales before rendering the image fixes
-this issue.
+Venus and later native contexts have their own fence context along with
+multiple timelines within. Fences wtih VIRTIO_GPU_FLAG_INFO_RING_IDX in
+the flags must be dispatched to be created on the target context. Fence
+signaling also has to be handled on the specific timeline within that
+target context.
 
-Signed-off-by: Weifeng Liu <weifeng.liu.z@gmail.com>
-Message-ID: <20250511073337.876650-5-weifeng.liu.z@gmail.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit 8fb072472c38cb1778c5b0bebf535a8b13533857)
+Before this change, venus fencing is completely broken if the host
+driver doesn't support implicit fencing with external memory objects.
+Frames can go backwards along with random artifacts on screen if the
+host driver doesn't attach an implicit fence to the render target. The
+symptom could be hidden by certain guest wsi backend that waits on a
+venus native VkFence object for the actual payload with limited present
+modes or under special configs. e.g. x11 mailbox or xwayland.
+
+After this change, everything related to venus fencing starts making
+sense. Confirmed this via guest and host side perfetto tracing.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 94d0ea1c1928 ("virtio-gpu: Support Venus context")
+Signed-off-by: Yiwei Zhang <zzyiwei@gmail.com>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Message-Id: <20250518152651.334115-1-zzyiwei@gmail.com>
+[AJB: remove version history from commit message]
+Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20250627112512.1880708-16-alex.bennee@linaro.org>
+(cherry picked from commit 1fa2ffdbec55d84326e22f046bc3e26322836f5a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index ba9fbec432..db93cd6204 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -43,6 +43,8 @@ void gd_gl_area_draw(VirtualConsole *vc)
-     QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
- #endif
-     int pw, ph, gs, y1, y2;
-+    int ww, wh;
-+    int fbw, fbh;
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 145a0b3879..94ddc01f91 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -970,6 +970,15 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+     }
  
-     if (!vc->gfx.gls) {
-         return;
-@@ -50,8 +52,14 @@ void gd_gl_area_draw(VirtualConsole *vc)
+     trace_virtio_gpu_fence_ctrl(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
++#if VIRGL_VERSION_MAJOR >= 1
++    if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
++        virgl_renderer_context_create_fence(cmd->cmd_hdr.ctx_id,
++                                            VIRGL_RENDERER_FENCE_FLAG_MERGEABLE,
++                                            cmd->cmd_hdr.ring_idx,
++                                            cmd->cmd_hdr.fence_id);
++        return;
++    }
++#endif
+     virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
+ }
  
-     gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
-     gs = gdk_window_get_scale_factor(gtk_widget_get_window(vc->gfx.drawing_area));
--    pw = gtk_widget_get_allocated_width(vc->gfx.drawing_area) * gs;
--    ph = gtk_widget_get_allocated_height(vc->gfx.drawing_area) * gs;
-+    fbw = surface_width(vc->gfx.ds);
-+    fbh = surface_height(vc->gfx.ds);
-+    ww = gtk_widget_get_allocated_width(vc->gfx.drawing_area);
-+    wh = gtk_widget_get_allocated_height(vc->gfx.drawing_area);
-+    pw = ww * gs;
-+    ph = wh * gs;
+@@ -983,6 +992,11 @@ static void virgl_write_fence(void *opaque, uint32_t fence)
+          * the guest can end up emitting fences out of order
+          * so we should check all fenced cmds not just the first one.
+          */
++#if VIRGL_VERSION_MAJOR >= 1
++        if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
++            continue;
++        }
++#endif
+         if (cmd->cmd_hdr.fence_id > fence) {
+             continue;
+         }
+@@ -997,6 +1011,29 @@ static void virgl_write_fence(void *opaque, uint32_t fence)
+     }
+ }
+ 
++#if VIRGL_VERSION_MAJOR >= 1
++static void virgl_write_context_fence(void *opaque, uint32_t ctx_id,
++                                      uint32_t ring_idx, uint64_t fence_id) {
++    VirtIOGPU *g = opaque;
++    struct virtio_gpu_ctrl_command *cmd, *tmp;
 +
-+    gd_update_scale(vc, ww, wh, fbw, fbh);
++    QTAILQ_FOREACH_SAFE(cmd, &g->fenceq, next, tmp) {
++        if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX &&
++            cmd->cmd_hdr.ctx_id == ctx_id && cmd->cmd_hdr.ring_idx == ring_idx &&
++            cmd->cmd_hdr.fence_id <= fence_id) {
++            trace_virtio_gpu_fence_resp(cmd->cmd_hdr.fence_id);
++            virtio_gpu_ctrl_response_nodata(g, cmd, VIRTIO_GPU_RESP_OK_NODATA);
++            QTAILQ_REMOVE(&g->fenceq, cmd, next);
++            g_free(cmd);
++            g->inflight--;
++            if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
++                trace_virtio_gpu_dec_inflight_fences(g->inflight);
++            }
++        }
++    }
++}
++#endif
++
+ static virgl_renderer_gl_context
+ virgl_create_context(void *opaque, int scanout_idx,
+                      struct virgl_renderer_gl_ctx_param *params)
+@@ -1031,11 +1068,18 @@ static int virgl_make_context_current(void *opaque, int scanout_idx,
+ }
  
-     if (vc->gfx.scanout_mode) {
-         if (!vc->gfx.guest_fb.framebuffer) {
+ static struct virgl_renderer_callbacks virtio_gpu_3d_cbs = {
++#if VIRGL_VERSION_MAJOR >= 1
++    .version             = 3,
++#else
+     .version             = 1,
++#endif
+     .write_fence         = virgl_write_fence,
+     .create_gl_context   = virgl_create_context,
+     .destroy_gl_context  = virgl_destroy_context,
+     .make_current        = virgl_make_context_current,
++#if VIRGL_VERSION_MAJOR >= 1
++    .write_context_fence = virgl_write_context_fence,
++#endif
+ };
+ 
+ static void virtio_gpu_print_stats(void *opaque)
 -- 
 2.47.2
 
