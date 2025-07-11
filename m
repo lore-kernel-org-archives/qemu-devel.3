@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A858DC83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 13:36:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63D5FC83F1B
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 13:36:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaDv2-0006rR-DW; Fri, 11 Jul 2025 09:36:04 -0400
+	id 1uaDu1-0004W9-AL; Fri, 11 Jul 2025 09:35:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uaDuD-0004ar-AA
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:35:15 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1uaDts-0004Qw-Ix
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:34:55 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uaDuA-0003Rj-VK
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:35:12 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-451e2f0d9c2so18653085e9.1
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 06:35:10 -0700 (PDT)
+ id 1uaDtq-000348-56
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:34:52 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-45555e3317aso4183795e9.3
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 06:34:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752240909; x=1752845709; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752240888; x=1752845688; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=CVN1z+tWl9V2/IAeWcoVzag1iP6PIT5deFW+qz0vQnE=;
- b=HnyQyU86H1um2vo554ZqQd9/WsiKxr2azRN2sEVX2ftmBFItPe2jdYV8cK/jWkVPvH
- K00EXj8Cp1l+G+z6sBwtvbeLMuXn9RqGF6Heh8sRVQfxdzRpenr7PjOuQK9Hm/54c7qG
- XOygdxm1XK0/ZVOxCP8WlqDMo7X1BEHpQjHlRb6XSlPVLbzGxp+7PhkokY2L6v3mjtmG
- lTLAY3MfSbO/SupjovaoeFOuIWHXVSEC3Nf4EL+zKB9kUttSeADf+PyPJ763sBsV5B2e
- 6elTxrvoneoKCMMPP/eflwiwh1XdVN2aH/s7oCN4OAfSuTV3otoe92BAhTqzbG/G1Pqk
- C6UQ==
+ :reply-to; bh=Z/tqj/ko8WEeVpxtCck+nDGeWxY6ZT+VKsk2/PDMd8Q=;
+ b=gMJl0g4Qa7wFlp20dwQzq6+oE37XbmPyuhMQJWBQ4T7T4o1KPg/guh8my4iSAEj4x3
+ 3c1U9Tw2n/p2FBGu/VYsw3gHuGhR5WfNdyF8ougwriyOpLOKeRZwbJhIrm9BuR/qgh3L
+ oADPqnH92aeL3v+hcmcFa219bmGbggu/7FiFtPUGbbVjl2H2W+qP5GvM9vb3fPbHh5xR
+ ud+gosHISKxq5i/26TmlI1HSr8Veu+ojlBEL30FZgyVGwAgyyKW6aHNEJSlMQ0hHc0Ri
+ tPWfIXR6qSYPzdTScrN0amYG6amppWcwcDM4JynhAqAh0hVT0ryO8XrxhNBIynEEwmVH
+ pkPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752240909; x=1752845709;
+ d=1e100.net; s=20230601; t=1752240888; x=1752845688;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CVN1z+tWl9V2/IAeWcoVzag1iP6PIT5deFW+qz0vQnE=;
- b=BhkeGOhLHivdFHt3azoDVQWFKK+mMAIz3wSqb/vIP6oHpkAHlmqaviXnUdo0Weutsy
- InIsP3QxulTXzrN1CoyKYFTQXO+AAACsLSPFJwDrteHL2IO5hBsSNXpPaL+gbdXahKz6
- t/Kbc9uqflKD1PV3egIi4Ax6xDa5Jk3w7wWhgy3enor4aVOSHZONJU/ZgelaOv8CoHoR
- KgXbjduPCHIBe73hUbZM/C30RrjvS2po0rayyZBTIpOEDayF4WnNRNbVwlkoYnQyheiG
- SNQwGqyy4EfBtU+uQEER+p6vSwPYtf5oyrM5FviGAT7WhuC7e3pDmX3nTa5AwfSYp+hX
- TYeA==
-X-Gm-Message-State: AOJu0YxZpPbJO5/5kXdSPtlAc2MfFFGriG/GGw16jyXuFz7+Z3N88Xi5
- hupC1eYcYIIGDf9i8P7olJ5ilLNXy3cqfi8O1htYxEUaw63/fdDI19asTAz81YMVBk6Bo6TSRNy
- 16cvu
-X-Gm-Gg: ASbGnctOJ0BKbaNxBNZk2+5paqpSH8pq2Qz0DGkEuUOy2IRuud6tYl2y4M8oIp7Bseb
- LGwQYLY+Z3C1CGFaSbZavLjBgInIqJiRV9U0jUtXWi6L1+RLZmUkw01aIZiQH1vrATe58J1YDBF
- LdEg/y6oYZ63h5FDCDmVGb7TReumEAHm0ksNHDkDAKeuZOxRuw4eh4gAlYWfExwD0S1Q1WqT+Po
- B9k2edf1bWz+QzClX7FlYeJv7gSSXujlN+fqzFTle52gxQxf0IK/OUWWA7OWdM6rBlOvTOH61nk
- 56ElKf1jJEQL5695GmDoGYOJkOpreRxznSCOQzYTf3gJWUDgWJZWjG4qFFK2xREE1B7IpY3FPwO
- +nsy6dox0bMOkbNYVg7cqS9QeH+UnULW29wbbJuA=
-X-Google-Smtp-Source: AGHT+IH9HxW9g+Zx/lTj0HcsoMmgK5ccTabBk6Ig2vhD9B+2vgvaPlBIquTLrseS91jpDvhTMcNoMw==
-X-Received: by 2002:a05:600c:4746:b0:453:7713:476c with SMTP id
- 5b1f17b1804b1-455bd8e63aemr21980345e9.2.1752240908883; 
- Fri, 11 Jul 2025 06:35:08 -0700 (PDT)
+ bh=Z/tqj/ko8WEeVpxtCck+nDGeWxY6ZT+VKsk2/PDMd8Q=;
+ b=ZK2qNzGcaFNNr28cdT+xiOOwdis1qoizje2Wb36i0E/tyqYSU0ASRTgIaQhzbrWj7+
+ 2kPgjdcFmpHNdnkrV461+I2mFIZz9/+axeykBhSdu/7wA4vyvhzXOoLktOwrASNryJwq
+ /HdouDQbPBwu5MZ8HkUSmWz47gRsvHKHEKkKjDWZN3u0D+AlvbXXe33tAng+tKztIeWt
+ 2bR7vgeF3xO75fiYT4vrBoHHdlA+/j033BN7MqCP2JpMCZ1UhjUwylUbeUS1Nk4wcmUj
+ YQz9MdJzo71+WJN+n2Tvi8eP4WZSNp1QtWXGXKMIzTfv1IVOMINpr662tiUjMAUT2C1Q
+ xHEg==
+X-Gm-Message-State: AOJu0Ywp4X+OVyz2qeyk+TTJaud04ssJNkvIGPxB2rLmf3jr6qMvzyrs
+ 3OiP9Xjq8Hz4gGuMZ534YWuIrQFA7om3i5tdVS/XmpzU01HsvwZf7nKrk3q16qI7kNFx5T3lnj4
+ huwuW
+X-Gm-Gg: ASbGncsiGQZQsCU4Fnd6v+5HGjVin2R0pJEmK5q6qSvLVHrnDGP6gzn1ikSmxwv493r
+ 2i+sk/IJeITEOltqHHKoiuFDdNFnKP7qc7SNrOBjb6QrIIBZvVHtB9yKP+7yNuOztJX3AEPye3B
+ fWs0JYqiLGCvF5BAUcxMCuEhzggr53dwPJYDjbJBWLEhfl5KCqyRVDfLVXq71MN5U2AhaIKbm2m
+ MI1aHD3DYe7ljASjOpI4W8qYo9B7g1ruF5KeKt/TUseObg6deWEq7N3G52DjKpvlKpaS98Xp+Oy
+ av+4kQwzz2KjBEYkYlCgZH5DIRAMEwQbYqk5fjZPtyZkC2Ea52RF4JOfqubXMwIU3BKFHayyRoe
+ NATjyZbQGTnmWBVijpOYkASss7iGW
+X-Google-Smtp-Source: AGHT+IH1VaYSUQnz3XrsTenMXkbJsXMHztbZz2iPD5JrG4OHiJBcycGhoVBo5LoYYWNg0aIop/4Wow==
+X-Received: by 2002:a05:600c:c11c:b0:453:66f:b96e with SMTP id
+ 5b1f17b1804b1-454ec146a71mr22329455e9.11.1752240888576; 
+ Fri, 11 Jul 2025 06:34:48 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454d50df0cdsm89734145e9.25.2025.07.11.06.35.07
+ 5b1f17b1804b1-454d50df0cdsm89734145e9.25.2025.07.11.06.34.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Jul 2025 06:35:07 -0700 (PDT)
+ Fri, 11 Jul 2025 06:34:47 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 36/36] tests/functional: Add a test for the MAX78000 arm machine
-Date: Fri, 11 Jul 2025 14:34:29 +0100
-Message-ID: <20250711133429.1423030-37-peter.maydell@linaro.org>
+Subject: [PULL 16/36] qtest/cxl: Add aarch64 virt test for CXL
+Date: Fri, 11 Jul 2025 14:34:09 +0100
+Message-ID: <20250711133429.1423030-17-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250711133429.1423030-1-peter.maydell@linaro.org>
 References: <20250711133429.1423030-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,89 +99,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jackson Donaldson <jackson88044@gmail.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-Runs a binary from the max78000test repo used in
-developing the qemu implementation of the max78000
-to verify that the machine and implemented devices
-generally still work.
+Add a single complex case for aarch64 virt machine.
 
-Signed-off-by: Jackson Donaldson <jcksn@duck.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-id: 20250711110626.624534-3-jcksn@duck.com
+Given existing much more comprehensive tests for x86 cover the common
+functionality, a single test should be enough to verify that the aarch64
+part continues to work.
+
+Tested-by: Itaru Kitayama <itaru.kitayama@fujitsu.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Tested-by: Li Zhijian <lizhijian@fujitsu.com>
+Message-id: 20250703104110.992379-6-Jonathan.Cameron@huawei.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/functional/meson.build              |  1 +
- tests/functional/test_arm_max78000fthr.py | 48 +++++++++++++++++++++++
- 2 files changed, 49 insertions(+)
- create mode 100755 tests/functional/test_arm_max78000fthr.py
+ tests/qtest/cxl-test.c  | 58 ++++++++++++++++++++++++++++++++---------
+ tests/qtest/meson.build |  1 +
+ 2 files changed, 46 insertions(+), 13 deletions(-)
 
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 050c9000b95..cd67e6d734e 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -138,6 +138,7 @@ tests_arm_system_thorough = [
-   'arm_cubieboard',
-   'arm_emcraft_sf2',
-   'arm_integratorcp',
-+  'arm_max78000fthr',
-   'arm_microbit',
-   'arm_orangepi',
-   'arm_quanta_gsj',
-diff --git a/tests/functional/test_arm_max78000fthr.py b/tests/functional/test_arm_max78000fthr.py
-new file mode 100755
-index 00000000000..a82980b0f7c
---- /dev/null
-+++ b/tests/functional/test_arm_max78000fthr.py
-@@ -0,0 +1,48 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that checks the max78000fthr machine.
-+# Tests ICC, GCR, TRNG, AES, and UART
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/tests/qtest/cxl-test.c b/tests/qtest/cxl-test.c
+index a6003318439..8fb7e58d4f1 100644
+--- a/tests/qtest/cxl-test.c
++++ b/tests/qtest/cxl-test.c
+@@ -19,6 +19,12 @@
+     "-device pxb-cxl,id=cxl.1,bus=pcie.0,bus_nr=53 " \
+     "-M cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=4G "
+ 
++#define QEMU_VIRT_2PXB_CMD \
++    "-machine virt,cxl=on -cpu max " \
++    "-device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=52 " \
++    "-device pxb-cxl,id=cxl.1,bus=pcie.0,bus_nr=53 " \
++    "-M cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=4G "
 +
-+from qemu_test import QemuSystemTest, Asset, exec_command_and_wait_for_pattern
-+from qemu_test import wait_for_console_pattern
+ #define QEMU_RP \
+     "-device cxl-rp,id=rp0,bus=cxl.0,chassis=0,slot=0 "
+ 
+@@ -197,25 +203,51 @@ static void cxl_2pxb_4rp_4t3d(void)
+     qtest_end();
+     rmdir(tmpfs);
+ }
 +
++static void cxl_virt_2pxb_4rp_4t3d(void)
++{
++    g_autoptr(GString) cmdline = g_string_new(NULL);
++    g_autofree const char *tmpfs = NULL;
 +
-+class Max78000Machine(QemuSystemTest):
++    tmpfs = g_dir_make_tmp("cxl-test-XXXXXX", NULL);
 +
-+    ASSET_FW = Asset(
-+        'https://github.com/JacksonDonaldson/max78000Test/raw/main/build/max78000.bin',
-+        '86940b4bf60931bc6a8aa5db4b9f7f3cf8f64dbbd7ac534647980e536cf3adf7')
++    g_string_printf(cmdline, QEMU_VIRT_2PXB_CMD QEMU_4RP QEMU_4T3D,
++                    tmpfs, tmpfs, tmpfs, tmpfs, tmpfs, tmpfs,
++                    tmpfs, tmpfs);
 +
-+    def test_fthr(self):
-+        self.set_machine('max78000fthr')
-+        fw_path = self.ASSET_FW.fetch()
-+        self.vm.set_console()
-+        self.vm.add_args('-kernel', fw_path)
-+        self.vm.add_args('-device', "loader,file=" + fw_path + ",addr=0x10000000")
-+        self.vm.launch()
++    qtest_start(cmdline->str);
++    qtest_end();
++    rmdir(tmpfs);
++}
+ #endif /* CONFIG_POSIX */
+ 
+ int main(int argc, char **argv)
+ {
+-    g_test_init(&argc, &argv, NULL);
++    const char *arch = qtest_get_arch();
+ 
+-    qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
+-    qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
+-    qtest_add_func("/pci/cxl/pxb_with_window", cxl_pxb_with_window);
+-    qtest_add_func("/pci/cxl/pxb_x2_with_window", cxl_2pxb_with_window);
+-    qtest_add_func("/pci/cxl/rp", cxl_root_port);
+-    qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
++    g_test_init(&argc, &argv, NULL);
++    if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
++        qtest_add_func("/pci/cxl/basic_hostbridge", cxl_basic_hb);
++        qtest_add_func("/pci/cxl/basic_pxb", cxl_basic_pxb);
++        qtest_add_func("/pci/cxl/pxb_with_window", cxl_pxb_with_window);
++        qtest_add_func("/pci/cxl/pxb_x2_with_window", cxl_2pxb_with_window);
++        qtest_add_func("/pci/cxl/rp", cxl_root_port);
++        qtest_add_func("/pci/cxl/rp_x2", cxl_2root_port);
+ #ifdef CONFIG_POSIX
+-    qtest_add_func("/pci/cxl/type3_device", cxl_t3d_deprecated);
+-    qtest_add_func("/pci/cxl/type3_device_pmem", cxl_t3d_persistent);
+-    qtest_add_func("/pci/cxl/type3_device_vmem", cxl_t3d_volatile);
+-    qtest_add_func("/pci/cxl/type3_device_vmem_lsa", cxl_t3d_volatile_lsa);
+-    qtest_add_func("/pci/cxl/rp_x2_type3_x2", cxl_1pxb_2rp_2t3d);
+-    qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4", cxl_2pxb_4rp_4t3d);
++        qtest_add_func("/pci/cxl/type3_device", cxl_t3d_deprecated);
++        qtest_add_func("/pci/cxl/type3_device_pmem", cxl_t3d_persistent);
++        qtest_add_func("/pci/cxl/type3_device_vmem", cxl_t3d_volatile);
++        qtest_add_func("/pci/cxl/type3_device_vmem_lsa", cxl_t3d_volatile_lsa);
++        qtest_add_func("/pci/cxl/rp_x2_type3_x2", cxl_1pxb_2rp_2t3d);
++        qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4",
++                       cxl_2pxb_4rp_4t3d);
+ #endif
++    } else if (strcmp(arch, "aarch64") == 0) {
++#ifdef CONFIG_POSIX
++        qtest_add_func("/pci/cxl/virt/pxb_x2_root_port_x4_type3_x4",
++                       cxl_virt_2pxb_4rp_4t3d);
++#endif
++    }
 +
-+        wait_for_console_pattern(self, 'started')
-+
-+        # i -> prints instruction cache values
-+        exec_command_and_wait_for_pattern(self, 'i', 'CTRL: 00010001')
-+
-+        # r -> gcr resets the machine
-+        exec_command_and_wait_for_pattern(self, 'r', 'started')
-+
-+        # z -> sets some memory, then has gcr zero it
-+        exec_command_and_wait_for_pattern(self, 'z', 'initial value: 12345678')
-+        wait_for_console_pattern(self, "after memz: 00000000")
-+
-+        # t -> runs trng
-+        exec_command_and_wait_for_pattern(self, 't', 'random data:')
-+
-+        # a -> runs aes
-+        exec_command_and_wait_for_pattern(self, 'a',
-+                'encrypted to : a47ca9dd e0df4c86 a070af6e 91710dec')
-+        wait_for_console_pattern(self,
-+                'encrypted to : cab7a28e bf456751 9049fcea 8960494b')
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
+     return g_test_run();
+ }
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 91b4a71a186..5ad969f6165 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -262,6 +262,7 @@ qtests_aarch64 = \
+    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
+   (config_all_devices.has_key('CONFIG_NPCM8XX') ? qtests_npcm8xx : []) + \
++  qtests_cxl +                                                                                  \
+   ['arm-cpu-features',
+    'numa-test',
+    'boot-serial-test',
 -- 
 2.43.0
 
