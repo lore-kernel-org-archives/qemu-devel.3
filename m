@@ -4,133 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8D60C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 07:32:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8370EC83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 07:47:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua8Du-0002TB-1L; Fri, 11 Jul 2025 03:31:10 -0400
+	id 1ua8Sz-0007RU-TX; Fri, 11 Jul 2025 03:46:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ua8DV-0002JA-OD
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 03:31:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ua8Sw-0007NH-T7
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 03:46:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ua8DP-0001OT-R7
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 03:30:43 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ua8St-0004in-V5
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 03:46:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752219036;
+ s=mimecast20190719; t=1752219998;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=aK8AERd/wRVSIHUVQaxfyjHDF+GmReUQAR+oK0rKwCM=;
- b=L5LI6FPlFjs27Ipfl4fQPph/POHeUQmOJcB3C4UMpelj/LeF17fhTt3CHAnOjugQxYqMsg
- zqJFZpZFIVBHXQJLOi2/uzkgOHSLftZEewry2EG9iRC36ESKja7nLFfnRCKgHw5chg7c1e
- mKMrwFVdw0DuWSMMLh8t/iBWMRUFoq0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YhudSPprKYHZ/MzRgQ5lsemVPgOV01PCRNHtve3MWaQ=;
+ b=T1n652lQDLAt0rJP9QEMnK+x+XaFyrihx1U4ZiBnlIVXe5up1jSxGEg5BKDdiO4ApVk2QG
+ 7H6+RHSTM0erGYljBvgBaCozggOGCiNTgMF9HrkGzTL16p8uPmYqcMEgX4bFih+DrdKdp4
+ 1zl83N3IjUoZnLW/dwjAGX1tXcYV3+8=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-505-e328OT1HPbeSM-GZJo03Ww-1; Fri, 11 Jul 2025 03:30:35 -0400
-X-MC-Unique: e328OT1HPbeSM-GZJo03Ww-1
-X-Mimecast-MFC-AGG-ID: e328OT1HPbeSM-GZJo03Ww_1752219034
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4f85f31d9so775888f8f.1
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 00:30:34 -0700 (PDT)
+ us-mta-498-Zz_9sacRNbe7MBbO41HSQA-1; Fri, 11 Jul 2025 03:46:36 -0400
+X-MC-Unique: Zz_9sacRNbe7MBbO41HSQA-1
+X-Mimecast-MFC-AGG-ID: Zz_9sacRNbe7MBbO41HSQA_1752219995
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a4eb6fcd88so1267068f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 00:46:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752219034; x=1752823834;
+ d=1e100.net; s=20230601; t=1752219995; x=1752824795;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=aK8AERd/wRVSIHUVQaxfyjHDF+GmReUQAR+oK0rKwCM=;
- b=k6f5XXF0wtvYxjAd6kRU9pm1FDGDLzbT44kaALM7cBmpAsmwmVOOTC7kcb/T06PurA
- lCOiIo8hD4TBFKhPb61vrLHu0uMMSHNetNCZ8WefKh9mdEaSx6guw1S6aMG+QVmlLr/O
- FSl0NAdx1dcFmNi+jhdSE4Ib56irGft9GqnzdwXtCtJOe+Z7WKH/OSx7eYvvsFD8/2k7
- JF/2TrSFRE+f6bVwAluyZlFtpcw8CZq293uyrqvi/0rfprt3WKsuOZ5w3tHPKsMpOmxM
- KMpRQPSKu5w91yHGR0X3q8StOFWuSnfbtrtcnG2ufepifr0fjivnG3xUimOR7Ypji0RZ
- pZGw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWdktRJU3fyTDcB9J9d9Qg68XJr1cZCB+ZKYTxHCS4gcjB+D0JWQV+kY5vPmIAEeBSkSSqpr1Pf+Y6L@nongnu.org
-X-Gm-Message-State: AOJu0Yxbm651Brxs0F5YZs8F6zdjpearHHCdEjFXGd/Eo/WJ4yJl4aQZ
- GdVm1W1iVE8bwVLOytMwQJPRhCoQcvIbR6h2aCpzqYGMXzZpvQiP1bmTtMTxFmsz0VLQER5y/9x
- FQoBYFTgMkbONBsvAloIZSXLaSyLVQabk8vkh11wTv/zod3W9NP5PyTyq
-X-Gm-Gg: ASbGncuyl5aYrsqzip/cF1wCPfw0z/fdP/O2vaBN3A3i7j6jMRNnf0KlgA5g6TTbBC6
- y06mfE89lN9ayhnl90QH5naSEq3V5jdSnhIhe7mB9/PG2TgkVGC/tFTP17aGfUBFE+1w2DCQhP3
- CIN7QkI8yHq1BHwsEopKHcrikf13gA17ViozrOOR1X2AehgpbQHlulUShTC3tohi8I6OyI0kG0m
- GSYyDHoyj0c/zLb5vj5WqK4zaEpumg2r98P5rSbcTlL+TZyp0dDlKfBLc6MBSk1zRKVysvnmqMk
- Wl+8GsG0CCXui5oNuzeURmPfRvf7+umd7lwtZOnoqIb4cYNDU1aOzxHv8OLhU0jOwP/dHx6U3Ey
- Eh+f9
-X-Received: by 2002:adf:ffcb:0:b0:3a6:d7ec:c701 with SMTP id
- ffacd0b85a97d-3b5f18cec8cmr1809070f8f.30.1752219033861; 
- Fri, 11 Jul 2025 00:30:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEInosx1NUtmujKEENECzFwxwdRpMoseYFsMQQLipZ5MXP+akaIr5tSe+127bF3ZARQdnK3zQ==
-X-Received: by 2002:adf:ffcb:0:b0:3a6:d7ec:c701 with SMTP id
- ffacd0b85a97d-3b5f18cec8cmr1809050f8f.30.1752219033401; 
- Fri, 11 Jul 2025 00:30:33 -0700 (PDT)
-Received: from [192.168.0.6] (ltea-047-064-115-149.pools.arcor-ip.net.
- [47.64.115.149]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454dd47543asm38915615e9.15.2025.07.11.00.30.32
+ bh=YhudSPprKYHZ/MzRgQ5lsemVPgOV01PCRNHtve3MWaQ=;
+ b=MgCwohk15zpi+iyamqqOkcM3hqg5D/ugMWn1BKETTKJ6jLqYvpE2Rh9K6FcGs5fMW1
+ USZgDiDeiQ2B3diPxAN/X/X2XbMTebF7mUSNVgvJaBlnBxVhaAejBrbUqIb3jKvaiqIu
+ JkTv18xHXvCQ35LbBIutbbjN9kX2qauo0DknkhAOQRyoXCOuZNTRyTqszTOsV8sa47cn
+ 3NhEY0jq3lPIXbBXtMXYx2bYUhS+aqyktCETj+v4DK2nzO1E9fUPTGHAsdp7BFYso7EQ
+ 2iYCq0kd85jmRAqXWKIBsqg+MHKnkeg3PbrfRZyWGzYGXWE7SvgFUKh5sYztTTCmqWR9
+ RY6w==
+X-Gm-Message-State: AOJu0Yxk2bV4M3vgtFxci3IhJWf8UlnFkmX3YazOQUvmK4R9ahVxOqOH
+ hvOK3dlBQPVwgsM3DAL5rwdgsao7jV32oDE01CP/p4aBA2vFePaNDPhuL5mr8WL8KUDeALIv8SL
+ tmHG7LmY04n19DjP6mfjkpvS9Wzn5Hoov3F6LoQkkAQMaqAKMBlUZOK/qJTJv4HF0
+X-Gm-Gg: ASbGncvwsrt+8WhU26QFt5cZlYzNFefNwu9EWgR4kjcnBaNFEodonHbuH3oVwtf+aBm
+ pFfXEM6HouA2yzRoK/4171OOtvkh/3n6Z7pMf/dWRitFGr17X9hBctOqG/kBXvUPidEJgnK9FE+
+ 6uAVDdm2emNho2NAFGIC6pd698OCTetDo+eIAtwpVY6OeL/ban9iPy9/aRM8N3yOZ9GI/etGg4w
+ yTHL9xuce6vokXKDtpyUnPolOmLPBs4pOAsUtU486JFrXKPDRwEIvh36HWoTdHeMRp8IU66zZ9j
+ kg1KfhhObDBdOuJmD0a2/tpIf5HwYU6AfJC8t/wKywcA
+X-Received: by 2002:a05:6000:4b1a:b0:3a4:f7ae:77ca with SMTP id
+ ffacd0b85a97d-3b5f2db1588mr1386176f8f.3.1752219995014; 
+ Fri, 11 Jul 2025 00:46:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG495B16slqErVjzHV9UQiAIjDgPhHQ0Ik7bCxPxFS3stR9ghOfClqlP9pzmbPH9zrwfWZtow==
+X-Received: by 2002:a05:6000:4b1a:b0:3a4:f7ae:77ca with SMTP id
+ ffacd0b85a97d-3b5f2db1588mr1386152f8f.3.1752219994555; 
+ Fri, 11 Jul 2025 00:46:34 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.202.169])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-3b5e8e0d4b5sm3824220f8f.53.2025.07.11.00.46.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Jul 2025 00:30:33 -0700 (PDT)
-Message-ID: <ce7ab3ed-3555-40e7-a9f4-31ec8a308f0d@redhat.com>
-Date: Fri, 11 Jul 2025 09:30:31 +0200
+ Fri, 11 Jul 2025 00:46:33 -0700 (PDT)
+Message-ID: <51b63329-6ee5-43cc-809d-1b06cc8d12f2@redhat.com>
+Date: Fri, 11 Jul 2025 09:46:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] tests/functional: Add a test for the MAX78000 arm
- machine
-To: Jackson Donaldson <jackson88044@gmail.com>, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-References: <20250711020338.586222-1-jcksn@duck.com>
- <20250711020338.586222-3-jcksn@duck.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH 2/4] target/i386: nvmm, whpx: add accel/CPU class that
+ sets host vendor
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Zhao Liu <zhao1.liu@intel.com>
+References: <20250711000603.438312-1-pbonzini@redhat.com>
+ <20250711000603.438312-3-pbonzini@redhat.com>
+ <92d23086-7866-44a0-b54e-7690c0306248@intel.com>
+ <CABgObfbPXmBLrScC3nQMT5A7mf1xz0hSnkLdrvcFS=hGr3dxSg@mail.gmail.com>
+ <523e1e29-67f7-4103-bd39-3e06329adc6d@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250711020338.586222-3-jcksn@duck.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <523e1e29-67f7-4103-bd39-3e06329adc6d@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -155,19 +150,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/07/2025 04.03, Jackson Donaldson wrote:
-> Runs a binary from the max78000test repo used in
-> developing the qemu implementation of the max78000
-> to verify that the machine and implemented devices
-> generally still work.
+On 7/11/25 08:40, Xiaoyao Li wrote:
+> On 7/11/2025 2:35 PM, Paolo Bonzini wrote:
+>> Il ven 11 lug 2025, 04:18 Xiaoyao Li <xiaoyao.li@intel.com> ha scritto:
+>>
+>>> Besides, do we need to call host_cpu_max_instance_init() for the case of
+>>> xcc->max_features, like what has been done for kvm and hvf?
+>>
+>> I am intentionally skipping that because it would not have any effect and
+>> there is no equivalent to KVM_GET_SUPPORTED_CPUID2 implemented for those
+>> accelerators.
 > 
-> Signed-off-by: Jackson Donaldson <jcksn@duck.com>
-> ---
->   tests/functional/meson.build              |  1 +
->   tests/functional/test_arm_max78000fthr.py | 48 +++++++++++++++++++++++
->   2 files changed, 49 insertions(+)
->   create mode 100755 tests/functional/test_arm_max78000fthr.py
+> I meant host_cpu_max_instance_init(), not the upper function like 
+> kvm_cpu_max_instance_init() or hvf_cpu_max_instance_init().
+> 
+> host_cpu_max_instance_init() is for the case "-cpu max/host", which not 
+> only sets "vendor" to the host value, but also the "host-phys-bits", 
+> "family" "model" "stepping" and "model-id"
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Ah, thanks - it also does not have any effect so I didn't think about 
+it.  But the separation between host_cpu_instance_init() and 
+host_cpu_max_instance_init() is confusing.  I'll send a patch to merge 
+them into one function, which should resolve your doubt.
+
+Paolo
 
 
