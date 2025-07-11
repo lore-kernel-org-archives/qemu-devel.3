@@ -4,49 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F9BFC83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 20:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28006C83F1D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 20:47:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaKe5-0003It-3p; Fri, 11 Jul 2025 16:47:01 -0400
+	id 1uaKed-0003ah-D5; Fri, 11 Jul 2025 16:47:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uaKdj-0003He-N1; Fri, 11 Jul 2025 16:46:40 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uaKdt-0003Jg-ST
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 16:46:55 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uaKdh-0003g6-BS; Fri, 11 Jul 2025 16:46:39 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2E4E8135CFF;
- Fri, 11 Jul 2025 23:46:04 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0E01823FF3A;
- Fri, 11 Jul 2025 23:46:32 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.19 01/15] hw/misc/aspeed_hace: Ensure HASH_IRQ is always
- set to prevent firmware hang
-Date: Fri, 11 Jul 2025 23:46:16 +0300
-Message-ID: <20250711204632.1804872-1-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <qemu-stable-7.2.19-20250711111933@cover.tls.msk.ru>
-References: <qemu-stable-7.2.19-20250711111933@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uaKdp-0003ib-SC
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 16:46:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ MIME-Version:References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=2csROVQZI1m/Xv7Ap0gy16ro6mTRFLG2FbzahoL7710=; b=QWtUG62MqlO3cTpLnltApzOSPn
+ ihVSS6pl6aYvySC5ucdQuSaUSkY8yfCFKaVBPlnsygLlFrO+Ui8by8FosRHkz1p+Uyfn/4Mh+v7rZ
+ F1HasNtn3JiP4+x3xdSEkVmPY7RcvKLfla4z0458krzQGt7s1i+cRnuD6KdoWyOY18OPALeYZmSKG
+ k0r/Vq4fCnyDB1kH1kktpDZ8VjfwecNQqW3bHN3+WBOucQGyneMLYzIe8NqldPgTKjM294PbGUXIC
+ BiGQWD/gwx+/TJHP+9ITboO4NBOEhyjA3TC9EhqhTUeKSX/rvxUSx6ADssWcbYYRi/RxzVXDOIe5L
+ e8MlX39FlfFW6ja7euMkydMLOyh0WKwLjqhfpqiHbzRLxJYetJ8OgcC9vnUF46s0r5V2nmvBaG7ym
+ fEfhjBxswgvvKf4eCO72ofOPvxDe1B0wg5eW4UZrzjdmTp5vPUqiGh9DRBNb5gtPJWg0BKliO7djd
+ CqQ8xDIUScE1Iyxu9EJ2YnmpRXcBZEGvW+9tlcPmwh4rtMO3TP28t+JiMcLN2C8paLXR74njzjS06
+ 7BsuC0JobfjEFXIsar3TKd56CCLPMCD1wnoQ25VKQzM9LOlTWigB9N4G9QndVQy+SrCLSS9DsDVeX
+ sB/6uJ3erMxG8p7ioYr9Ah5+0Z1JW39FNlyNfP9Bc=;
+Received: from [2a02:8012:2f01:0:d1ff:478a:c096:2d0c]
+ (helo=localhost.localdomain)
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uaKcC-000Bmy-2V; Fri, 11 Jul 2025 21:45:04 +0100
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+To: pbonzini@redhat.com,
+	fam@euphon.net,
+	qemu-devel@nongnu.org
+Date: Fri, 11 Jul 2025 21:46:30 +0100
+Message-Id: <20250711204636.542964-2-mark.cave-ayland@ilande.co.uk>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250711204636.542964-1-mark.cave-ayland@ilande.co.uk>
+References: <20250711204636.542964-1-mark.cave-ayland@ilande.co.uk>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:d1ff:478a:c096:2d0c
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: [PATCH v3 1/7] esp.c: only raise IRQ in esp_transfer_data() for
+ CMD_SEL, CMD_SELATN and CMD_TI commands
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,68 +81,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+Clarify the logic in esp_transfer_data() to ensure that the deferred interrupt code
+can only be triggered for CMD_SEL, CMD_SELATN and CMD_TI commands. This should already
+be the case, but make it explicit to ensure the logic isn't triggered unexpectedly.
 
-Currently, if the program encounters an unsupported algorithm, it does not set
-the HASH_IRQ bit in the status register and send an interrupt to indicate
-command completion. As a result, the FW gets stuck waiting for a completion
-signal from the HACE module.
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/scsi/esp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-Additionally, in do_hash_operation, if an error occurs within the conditional
-statement, the HASH_IRQ bit is not set in the status register. This causes the
-firmware to continuously send HASH commands, as it is unaware that the HACE
-model has completed processing the command.
-
-To fix this, the HASH_IRQ bit in the status register must always be set to
-ensure that the firmware receives an interrupt from the HACE module, preventing
-it from getting stuck or repeatedly sending HASH commands.
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Fixes: c5475b3 ("hw: Model ASPEED's Hash and Crypto Engine")
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250515081008.583578-4-jamin_lin@aspeedtech.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit fb8e59abbe46957cd599bb9aa9221fad1e4e989e)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index 11bd25708e..20f645f49b 100644
---- a/hw/misc/aspeed_hace.c
-+++ b/hw/misc/aspeed_hace.c
-@@ -278,12 +278,6 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
-                             iov[i - 1].iov_len, false,
-                             iov[i - 1].iov_len);
-     }
--
--    /*
--     * Set status bits to indicate completion. Testing shows hardware sets
--     * these irrespective of HASH_IRQ_EN.
--     */
--    s->regs[R_STATUS] |= HASH_IRQ;
- }
+diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
+index f24991fd16..9181c8810f 100644
+--- a/hw/scsi/esp.c
++++ b/hw/scsi/esp.c
+@@ -1012,6 +1012,7 @@ void esp_transfer_data(SCSIRequest *req, uint32_t len)
+              */
+              s->rregs[ESP_RINTR] |= INTR_BS | INTR_FC;
+              s->rregs[ESP_RSEQ] = SEQ_CD;
++             esp_raise_irq(s);
+              break;
  
- static uint64_t aspeed_hace_read(void *opaque, hwaddr addr, unsigned int size)
-@@ -358,10 +352,16 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
-                 qemu_log_mask(LOG_GUEST_ERROR,
-                         "%s: Invalid hash algorithm selection 0x%"PRIx64"\n",
-                         __func__, data & ahc->hash_mask);
--                break;
-+        } else {
-+            do_hash_operation(s, algo, data & HASH_SG_EN,
-+                    ((data & HASH_HMAC_MASK) == HASH_DIGEST_ACCUM));
+         case CMD_SELATNS | CMD_DMA:
+@@ -1022,6 +1023,7 @@ void esp_transfer_data(SCSIRequest *req, uint32_t len)
+              */
+              s->rregs[ESP_RINTR] |= INTR_BS;
+              s->rregs[ESP_RSEQ] = SEQ_MO;
++             esp_raise_irq(s);
+              break;
+ 
+         case CMD_TI | CMD_DMA:
+@@ -1032,10 +1034,9 @@ void esp_transfer_data(SCSIRequest *req, uint32_t len)
+              */
+             s->rregs[ESP_CMD] = 0;
+             s->rregs[ESP_RINTR] |= INTR_BS;
++            esp_raise_irq(s);
+             break;
          }
--        do_hash_operation(s, algo, data & HASH_SG_EN,
--                ((data & HASH_HMAC_MASK) == HASH_DIGEST_ACCUM));
-+
-+        /*
-+         * Set status bits to indicate completion. Testing shows hardware sets
-+         * these irrespective of HASH_IRQ_EN.
-+         */
-+        s->regs[R_STATUS] |= HASH_IRQ;
+-
+-        esp_raise_irq(s);
+     }
  
-         if (data & HASH_IRQ_EN) {
-             qemu_irq_raise(s->irq);
+     /*
 -- 
-2.47.2
+2.39.5
 
 
