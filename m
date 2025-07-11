@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46721C83F22
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:04:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3479C83F1D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:04:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaAa8-00056N-OG; Fri, 11 Jul 2025 06:02:16 -0400
+	id 1uaAZF-0003GF-QU; Fri, 11 Jul 2025 06:01:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uaAZT-0003jJ-7J
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:01:38 -0400
+ id 1uaAYo-0001wQ-GX
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:00:58 -0400
 Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uaAZQ-0005KY-K7
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:01:34 -0400
+ id 1uaAYm-0005H0-BA
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:00:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752228092; x=1783764092;
+ t=1752228052; x=1783764052;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=j8odLVnM9w8fLy47xRX+1dq3IYxvEsda+LnJYmX4Fgk=;
- b=ARiT+dAPe1jjwPgFW7g+2WYj+5qqqU463VIzy5GQD+ex79Z52WXdpJda
- K4sFsEmwnKFZaNX5QJh9oEoznbBH0vK4rqYlnnmZwA7CETkS7yjz5ME2g
- aKY87dnCUmmX62pCMCReaaPwJh9kxU8SCE8EfJeHv735l7OH+BxOOJhzk
- Qivev6iPzkOZujOj1F8WCp48L6BfwNk4tvQDITyr2fIfHCb0U2SJvfLP2
- mMQL4dd67HrfrwUDZ8n7ZfXOpRgedvfU04YBbNgEPT4beHp2sa+/tmDH8
- gUUx1n4VJyDNGnI4fODUQf9FB2E2S18e0gQF6rEEAxXHqLzXy8ynC9TbN g==;
-X-CSE-ConnectionGUID: Tztie6g8SWCxaJgAa0UhIw==
-X-CSE-MsgGUID: sW0+xzJWTXaZIeBXhtaMfg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11490"; a="54496413"
-X-IronPort-AV: E=Sophos;i="6.16,303,1744095600"; d="scan'208";a="54496413"
+ bh=NAdqAYTXJZb5DjKif7WlBLOUKuZAQoUj2XZSaZ6yx2o=;
+ b=M+gVXMA7vmN+9doMeVXD3HURG8s13xJ6Btr835h9/dIzOQC9RD92icQn
+ TaNSc2CRfdo43sijgsh3bxgvjB8qEFg9T6BDQyCjQ0sP34dy2BQSnzNCn
+ FKQE1dMMZC+kDsv5F8hAoeCfF6NzJodob6JAShGYYc2KgPdI4JSNKgmY4
+ s9TjsehSzU1XG7ExBlRxnoZfy+ibN94Iz11Dollyhmqd8XvPQW9xtNr2a
+ QEDLM3M8JPxtjzIwWjWMofD2Pma6j4AXQVW9XtHUv1DHsh6TGzBnDX2P3
+ ed9tpESexQX5hx+9kOkGld7ZzIVSsEJt47zBWp0IQrJPt2fd7qrRLO243 w==;
+X-CSE-ConnectionGUID: U01vystwQL68AC0gt3GryA==
+X-CSE-MsgGUID: eKL86v6SSwWzPWRnO3N4PQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11490"; a="54496265"
+X-IronPort-AV: E=Sophos;i="6.16,303,1744095600"; d="scan'208";a="54496265"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Jul 2025 03:01:30 -0700
-X-CSE-ConnectionGUID: yPrMTo30QZqMGdNTovpZQQ==
-X-CSE-MsgGUID: AX6m/CruRfWq2f/HEzhRTw==
+ 11 Jul 2025 03:00:49 -0700
+X-CSE-ConnectionGUID: TL4xReLGT6GyGPh2jf5l2w==
+X-CSE-MsgGUID: e8KFagqBT5yjLtE1jLAYew==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,303,1744095600"; d="scan'208";a="160662136"
+X-IronPort-AV: E=Sophos;i="6.16,303,1744095600"; d="scan'208";a="160662047"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa003.jf.intel.com with ESMTP; 11 Jul 2025 03:01:25 -0700
+ by orviesa003.jf.intel.com with ESMTP; 11 Jul 2025 03:00:40 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
@@ -59,10 +59,9 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
  qemu-devel@nongnu.org, kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>
-Subject: [PATCH v2 14/18] i386/cpu: Select legacy cache model based on vendor
- in CPUID 0x4
-Date: Fri, 11 Jul 2025 18:21:39 +0800
-Message-Id: <20250711102143.1622339-15-zhao1.liu@intel.com>
+Subject: [PATCH v2 05/18] i386/cpu: Consolidate CPUID 0x4 leaf
+Date: Fri, 11 Jul 2025 18:21:30 +0800
+Message-Id: <20250711102143.1622339-6-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250711102143.1622339-1-zhao1.liu@intel.com>
 References: <20250711102143.1622339-1-zhao1.liu@intel.com>
@@ -93,168 +92,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As preparation for merging cache_info_cpuid4 and cache_info_amd in
-X86CPUState, set legacy cache model based on vendor in the CPUID 0x4
-leaf. For AMD CPU, select legacy AMD cache model (in cache_info_amd) as
-the default cache model, otherwise, select legacy Intel cache model (in
-cache_info_cpuid4) as before.
+Modern Intel CPUs use CPUID 0x4 leaf to describe cache information
+and leave space in 0x2 for prefetch and TLBs (even TLB has its own leaf
+CPUID 0x18).
 
-To ensure compatibility is not broken, add an enable_legacy_vendor_cache
-flag based on x-vendor-only-v2 to indicate cases where the legacy cache
-model should be used regardless of the vendor. For CPUID 0x4 leaf,
-enable_legacy_vendor_cache flag indicates to pick legacy Intel cache
-model, which is for compatibility with the behavior of PC machine v10.0
-and older.
+And 0x2 leaf provides a descriptor 0xFF to instruct software to check
+cache information in 0x4 leaf instead.
 
-The following explains how current vendor-based default legacy cache
-model ensures correctness without breaking compatibility.
+Therefore, follow this behavior to encode 0xFF when Intel CPU has 0x4
+leaf with "x-consistent-cache=true" for compatibility.
 
-* For the PC machine v6.0 and older, vendor_cpuid_only=false, and
-  vendor_cpuid_only_v2=false.
-
-  - If the named CPU model has its own cache model, and doesn't use
-    legacy cache model (legacy_cache=false), then cache_info_cpuid4 and
-    cache_info_amd are same, so 0x4 leaf uses its own cache model
-    regardless of the vendor.
-
-  - For max/host/named CPU (without its own cache model), then the flag
-    enable_legacy_vendor_cache is true, they will use legacy Intel cache
-    model just like their previous behavior.
-
-* For the PC machine v10.0 and older (to v6.1), vendor_cpuid_only=true,
-  and vendor_cpuid_only_v2=false.
-
-  - If the named CPU model has its own cache model (legacy_cache=false),
-    then cache_info_cpuid4 & cache_info_amd both equal to its own cache
-    model, so it uses its own cache model in 0x4 leaf regardless of the
-    vendor. Only AMD CPUs have all-0 leaf due to vendor_cpuid_only=true,
-    and this is exactly the behavior of these old machines.
-
-  - For max/host/named CPU (without its own cache model), then the flag
-    enable_legacy_vendor_cache is true, they will use legacy Intel cache
-    model. Similarly, only AMD CPUs have all-0 leaf, and this is exactly
-    the behavior of these old machines.
-
-* For the PC machine v10.1 and newer, vendor_cpuid_only=true, and
-  vendor_cpuid_only_v2=true.
-
-  - If the named CPU model has its own cache model (legacy_cache=false),
-    then cache_info_cpuid4 & cache_info_amd both equal to its own cache
-    model, so it uses its own cache model in 0x4 leaf regardless of the
-    vendor. And AMD CPUs have all-0 leaf. Nothing will change.
-
-  - For max/host/named CPU (without its own cache model), then the flag
-    enable_legacy_vendor_cache is false, the legacy cache model is
-    selected based on vendor.
-
-    For AMD CPU, it will use legacy AMD cache but still get all-0 leaf
-    due to vendor_cpuid_only=true.
-
-    For non-AMD (Intel/Zhaoxin) CPU, it will use legacy Intel cache as
-    expected.
-
-    Here, selecting the legacy cache model based on the vendor does not
-    change the previous (before the change) behavior.
-
-Therefore, the above analysis proves that, with the help of the flag
-enable_legacy_vendor_cache, it is acceptable to select the default
-legacy cache model based on the vendor.
-
-For the CPUID 0x4 leaf, in X86CPUState, a unified cache_info is enough.
-It only needs to be initialized and configured with the corresponding
-legacy cache model based on the vendor.
+In addition, for older CPUs without 0x4 leaf, still enumerate the cache
+descriptor in 0x2 leaf, except the case that there's no descriptor
+matching the cache model, then directly encode 0xFF in 0x2 leaf. This
+makes sense, as in the 0x2 leaf era, all supported caches should have
+the corresponding descriptor.
 
 Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 Tested-by: Yi Lai <yi1.lai@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/cpu.c | 43 ++++++++++++++++++++++++++++++++++---------
- 1 file changed, 34 insertions(+), 9 deletions(-)
+Changes Since v1:
+ * Fix the typo in comment. (Ewan)
+---
+ target/i386/cpu.c | 48 ++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 37 insertions(+), 11 deletions(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 34a82a378ccb..73872cb74b6f 100644
+index 70ac969a9cdc..37cf591bea8d 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -7509,7 +7509,35 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         encode_cache_cpuid2(cpu, caches, eax, ebx, ecx, edx);
-         break;
-     }
--    case 4:
-+    case 4: {
-+        const CPUCaches *caches;
-+
-+        if (env->enable_legacy_vendor_cache) {
-+            caches = &legacy_intel_cache_info;
-+        } else {
-+            /*
-+             * FIXME: Temporarily select cache info model here based on
-+             * vendor, and merge these 2 cache info models later.
-+             *
-+             * This condition covers the following cases (with
-+             * enable_legacy_vendor_cache=false):
-+             *  - When CPU model has its own cache model and doesn't use legacy
-+             *    cache model (legacy_model=off). Then cache_info_amd and
-+             *    cache_info_cpuid4 are the same.
-+             *
-+             *  - For v10.1 and newer machines, when CPU model uses legacy cache
-+             *    model. Non-AMD CPUs use cache_info_cpuid4 like before and AMD
-+             *    CPU will use cache_info_amd. But this doesn't matter for AMD
-+             *    CPU, because this leaf encodes all-0 for AMD whatever its cache
-+             *    model is.
-+             */
-+            if (IS_AMD_CPU(env)) {
-+                caches = &env->cache_info_amd;
-+            } else {
-+                caches = &env->cache_info_cpuid4;
-+            }
-+        }
-+
-         /* cache info: needed for Core compatibility */
-         if (cpu->cache_info_passthrough) {
-             x86_cpu_get_cache_cpuid(index, count, eax, ebx, ecx, edx);
-@@ -7537,30 +7565,26 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+@@ -223,7 +223,7 @@ struct CPUID2CacheDescriptorInfo cpuid2_cache_descriptors[] = {
+  * Return a CPUID 2 cache descriptor for a given cache.
+  * If no known descriptor is found, return CACHE_DESCRIPTOR_UNAVAILABLE
+  */
+-static uint8_t cpuid2_cache_descriptor(CPUCacheInfo *cache)
++static uint8_t cpuid2_cache_descriptor(CPUCacheInfo *cache, bool *unmacthed)
+ {
+     int i;
  
-             switch (count) {
-             case 0: /* L1 dcache info */
--                encode_cache_cpuid4(env->cache_info_cpuid4.l1d_cache,
--                                    topo_info,
-+                encode_cache_cpuid4(caches->l1d_cache, topo_info,
-                                     eax, ebx, ecx, edx);
-                 if (!cpu->l1_cache_per_core) {
-                     *eax &= ~MAKE_64BIT_MASK(14, 12);
-                 }
-                 break;
-             case 1: /* L1 icache info */
--                encode_cache_cpuid4(env->cache_info_cpuid4.l1i_cache,
--                                    topo_info,
-+                encode_cache_cpuid4(caches->l1i_cache, topo_info,
-                                     eax, ebx, ecx, edx);
-                 if (!cpu->l1_cache_per_core) {
-                     *eax &= ~MAKE_64BIT_MASK(14, 12);
-                 }
-                 break;
-             case 2: /* L2 cache info */
--                encode_cache_cpuid4(env->cache_info_cpuid4.l2_cache,
--                                    topo_info,
-+                encode_cache_cpuid4(caches->l2_cache, topo_info,
-                                     eax, ebx, ecx, edx);
-                 break;
-             case 3: /* L3 cache info */
-                 if (cpu->enable_l3_cache) {
--                    encode_cache_cpuid4(env->cache_info_cpuid4.l3_cache,
--                                        topo_info,
-+                    encode_cache_cpuid4(caches->l3_cache, topo_info,
-                                         eax, ebx, ecx, edx);
-                     break;
-                 }
-@@ -7571,6 +7595,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+@@ -240,9 +240,44 @@ static uint8_t cpuid2_cache_descriptor(CPUCacheInfo *cache)
              }
-         }
-         break;
+     }
+ 
++    *unmacthed |= true;
+     return CACHE_DESCRIPTOR_UNAVAILABLE;
+ }
+ 
++/* Encode cache info for CPUID[2] */
++static void encode_cache_cpuid2(X86CPU *cpu,
++                                uint32_t *eax, uint32_t *ebx,
++                                uint32_t *ecx, uint32_t *edx)
++{
++    CPUX86State *env = &cpu->env;
++    CPUCaches *caches = &env->cache_info_cpuid2;
++    int l1d, l1i, l2, l3;
++    bool unmatched = false;
++
++    *eax = 1; /* Number of CPUID[EAX=2] calls required */
++    *ebx = *ecx = *edx = 0;
++
++    l1d = cpuid2_cache_descriptor(caches->l1d_cache, &unmatched);
++    l1i = cpuid2_cache_descriptor(caches->l1i_cache, &unmatched);
++    l2 = cpuid2_cache_descriptor(caches->l2_cache, &unmatched);
++    l3 = cpuid2_cache_descriptor(caches->l3_cache, &unmatched);
++
++    if (!cpu->consistent_cache ||
++        (env->cpuid_min_level < 0x4 && !unmatched)) {
++        /*
++         * Though SDM defines code 0x40 for cases with no L2 or L3. It's
++         * also valid to just ignore l3's code if there's no l2.
++         */
++        if (cpu->enable_l3_cache) {
++            *ecx = l3;
++        }
++        *edx = (l1d << 16) | (l1i <<  8) | l2;
++    } else {
++        *ecx = 0;
++        *edx = CACHE_DESCRIPTOR_UNAVAILABLE;
 +    }
-     case 5:
-         /* MONITOR/MWAIT Leaf */
-         *eax = cpu->mwait.eax; /* Smallest monitor-line size in bytes */
++}
++
+ /* CPUID Leaf 4 constants: */
+ 
+ /* EAX: */
+@@ -7448,16 +7483,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+             *eax = *ebx = *ecx = *edx = 0;
+             break;
+         }
+-        *eax = 1; /* Number of CPUID[EAX=2] calls required */
+-        *ebx = 0;
+-        if (!cpu->enable_l3_cache) {
+-            *ecx = 0;
+-        } else {
+-            *ecx = cpuid2_cache_descriptor(env->cache_info_cpuid2.l3_cache);
+-        }
+-        *edx = (cpuid2_cache_descriptor(env->cache_info_cpuid2.l1d_cache) << 16) |
+-               (cpuid2_cache_descriptor(env->cache_info_cpuid2.l1i_cache) <<  8) |
+-               (cpuid2_cache_descriptor(env->cache_info_cpuid2.l2_cache));
++        encode_cache_cpuid2(cpu, eax, ebx, ecx, edx);
+         break;
+     case 4:
+         /* cache info: needed for Core compatibility */
 -- 
 2.34.1
 
