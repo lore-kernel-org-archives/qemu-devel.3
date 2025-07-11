@@ -4,40 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E269C8303C
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:35:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0860DC83F1D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:36:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua97v-0007I0-9u; Fri, 11 Jul 2025 04:29:03 -0400
+	id 1ua98y-00024u-9X; Fri, 11 Jul 2025 04:30:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ua8zA-0007uK-7s; Fri, 11 Jul 2025 04:20:00 -0400
+ id 1ua90A-0001bX-J8; Fri, 11 Jul 2025 04:21:02 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ua8z6-0004Mk-Ts; Fri, 11 Jul 2025 04:19:59 -0400
+ id 1ua908-0004hd-Lx; Fri, 11 Jul 2025 04:21:02 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EA4611356E5;
- Fri, 11 Jul 2025 11:17:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9D7A21356EE;
+ Fri, 11 Jul 2025 11:17:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D846E23FA5A;
- Fri, 11 Jul 2025 11:17:46 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9592323FA63;
+ Fri, 11 Jul 2025 11:17:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?J=2E=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 26/39] linux-user/arm: Fix return value of
- SYS_cacheflush
-Date: Fri, 11 Jul 2025 11:16:22 +0300
-Message-ID: <20250711081745.1785806-26-mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 35/39] target/arm: Fix sve_access_check for SME
+Date: Fri, 11 Jul 2025 11:16:31 +0300
+Message-ID: <20250711081745.1785806-35-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,31 +59,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: J. Neuschäfer <j.neuschaefer@gmx.net>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Although the emulated cacheflush syscall does nothing, it still needs to
-return zero to indicate success.
+Do not assume SME implies SVE.  Ensure that the non-streaming
+check is present along the SME path, since it is not implied
+by sme_*_enabled_check.
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: J. Neuschäfer <j.neuschaefer@gmx.net>
-Message-id: 20250613-cache-v1-1-ee9f4a9ba81b@gmx.net
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250704142112.1018902-3-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 5ad2b1f443a96444cf3e7a2fbe17aae696201012)
+(cherry picked from commit b4b2e070f41dd8774a70c6186141678558d79a38)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
-index 7416e3216e..098b54d10e 100644
---- a/linux-user/arm/cpu_loop.c
-+++ b/linux-user/arm/cpu_loop.c
-@@ -362,6 +362,7 @@ void cpu_loop(CPUARMState *env)
-                     switch (n) {
-                     case ARM_NR_cacheflush:
-                         /* nop */
-+                        env->regs[0] = 0;
-                         break;
-                     case ARM_NR_set_tls:
-                         cpu_set_tls(env, env->regs[0]);
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index aebf313e38..8d3a8d7a25 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -1392,11 +1392,8 @@ static bool fp_access_check_only(DisasContext *s)
+     return true;
+ }
+ 
+-static bool fp_access_check(DisasContext *s)
++static bool nonstreaming_check(DisasContext *s)
+ {
+-    if (!fp_access_check_only(s)) {
+-        return false;
+-    }
+     if (s->sme_trap_nonstreaming && s->is_nonstreaming) {
+         gen_exception_insn(s, 0, EXCP_UDEF,
+                            syn_smetrap(SME_ET_Streaming, false));
+@@ -1405,6 +1402,11 @@ static bool fp_access_check(DisasContext *s)
+     return true;
+ }
+ 
++static bool fp_access_check(DisasContext *s)
++{
++    return fp_access_check_only(s) && nonstreaming_check(s);
++}
++
+ /*
+  * Return <0 for non-supported element sizes, with MO_16 controlled by
+  * FEAT_FP16; return 0 for fp disabled; otherwise return >0 for success.
+@@ -1455,14 +1457,24 @@ static int fp_access_check_vector_hsd(DisasContext *s, bool is_q, MemOp esz)
+  */
+ bool sve_access_check(DisasContext *s)
+ {
+-    if (s->pstate_sm || !dc_isar_feature(aa64_sve, s)) {
++    if (dc_isar_feature(aa64_sme, s)) {
+         bool ret;
+ 
+-        assert(dc_isar_feature(aa64_sme, s));
+-        ret = sme_sm_enabled_check(s);
++        if (s->pstate_sm) {
++            ret = sme_enabled_check(s);
++        } else if (dc_isar_feature(aa64_sve, s)) {
++            goto continue_sve;
++        } else {
++            ret = sme_sm_enabled_check(s);
++        }
++        if (ret) {
++            ret = nonstreaming_check(s);
++        }
+         s->sve_access_checked = (ret ? 1 : -1);
+         return ret;
+     }
++
++ continue_sve:
+     if (s->sve_excp_el) {
+         /* Assert that we only raise one exception per instruction. */
+         assert(!s->sve_access_checked);
 -- 
 2.47.2
 
