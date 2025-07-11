@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F369EC83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 13:37:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F2C4C83F1B
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 13:37:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaDv9-0007SN-QC; Fri, 11 Jul 2025 09:36:11 -0400
+	id 1uaDtg-0004Mh-4S; Fri, 11 Jul 2025 09:34:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uaDu4-0004X2-Q3
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:35:06 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1uaDtc-0004Lo-FD
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:34:36 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uaDtz-00039U-Kk
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:35:04 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4530921461aso13857985e9.0
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 06:34:59 -0700 (PDT)
+ id 1uaDta-0002uy-0A
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:34:36 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-454ac069223so17076265e9.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 06:34:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752240898; x=1752845698; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=yJpsUbLyNcANLnSnQf19yaGPSwfDJstWb2tmsgZQyko=;
- b=vs42TLur7bsCJ9TEnof0/QViBZ4EA24rw9mnoV8GIx72kwyiyZMHZqV9U9hG1+14Dn
- L52ne2bq7cIJK7X07jDfh2dmlL6WNqxcTjihMU0OKviqW+JappwrU3T9D8e4ATR0YPHO
- 2Z1bRU7NZodcAwO0j+u81gLPDF6EJaF0jZST5nCPSlwsJ2D2dX8veFPuWd/VnIGyRHo1
- rilmdUlTqZNvQk12PLICVwJ+d2WPfznu+KeRxIb1eQei4PRX3sECJ1JsZZMW8weK8Ijn
- pqRXanS98nSZbR28uxJr0wTBRK0d2NflHSVRQGU/U5f0h/JjhfOnYn3iQxmUvrtUo03B
- t5iw==
+ d=linaro.org; s=google; t=1752240872; x=1752845672; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=xRsTG4P4X0f4QdplRbioZnf6v3d7mTePa4rDIHqnp+E=;
+ b=GxWgp1dD60t74yU8glBbhgaD0uI6J5xukU3LEwjbfDOW1Gpf+zTPe7+cm+0TkCu68P
+ zKgO3dSbayOsdbeKIm850FIIwrBcSvJVYD4gNAs2XJbgsMOlXaW1Hi79PZeXQWgk8o6y
+ 8X0SduD0dfZNWuLQIZQM0DMJ0WUJ53WYmfV/nuKfG6zTxddwKxxTmCRg75QPca2QdG7e
+ BRDAL/+PF/7sa5vjidfEl/lM7VOSIE9+Wp+wfynvywNrUju+XhUMd2lMDLsWGUV4fCIP
+ W0N2tcpUvMSYCVRAy/wKH1pA+8tQWEHmZ5zlvO68+O9jD8Z5Rt2zN/jfk25im8JiqFRm
+ HqGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752240898; x=1752845698;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yJpsUbLyNcANLnSnQf19yaGPSwfDJstWb2tmsgZQyko=;
- b=RQZnYcYvl81GN1vlwrw6hMh9CoesUD3aaISc8iqQAWt6NmY4Fowg5WN7w0ATdP3faV
- FhoqzlwMIf5NZuk3mMI57R0RRxZBmKRLa5ekuZnxf/dCcRpPfMKxVch9Ak/6GLODICTY
- X5GxID5hxn2tDPk49ZjhhUEN/W48u3Chj6n2/5yxXw1wo6vTj911fpzatuKCtEWVoGOw
- ++RZBnoEjyD9vJCKnWcQ7CDxcjmvC/ZDmagnXa8DCxKG0WU8sGbf/T+c0viwn7/RLMcl
- /di3fDZ78e3mc+/guWqi83DjKwkplrPUd3yr/DCMGlxmHn83b5PqJYyqy1YrARY3xB8r
- 9KEA==
-X-Gm-Message-State: AOJu0Yy3tLrIn32bWYCG0D45ohQJTUclicbPZ9di4gK7dBgyEIumTklA
- 3WO6RWmDRcIRDojAqz4qPiNwyTEjmqQMzgVIhsvZKhF1sbt748KxHe2DjMW2vfbZOMu/bMwoUu2
- 0F/DJ
-X-Gm-Gg: ASbGncsNr1a/Z7R5cEjav5wtLa4/CiR9EpoGmFO5fJwDQliStO3y4ala1lF5CaLNejQ
- UTgnb4tSDJIgc1cVAIL3O86mrarSQt3njWeRTGWW8WCK5NkZkZQShWV0v7IDqqIij8y8rzXAvsJ
- V8BBA/mOs2fxrMGTXkPi/1xymJHhA4Gc/C92niGUvLuy4NBxhz9+1xqlWRzaeVng6aguR/lvnpm
- sE/kUng76oUVJVwe4Qcut+qxe0BoA1FiayHUTCg9WLHjlcbt7Rt+V7iJ/8r5aU29Ckcmk0uw1nI
- 1a8XSUFo9lnBoEhL5G83D+Vcyfqk1zzQP9ubKukJ1VZ4qyFm4IbtNCQsPByOWZJK5ewEmKIujIY
- Ws5cWplng4SsQmBL+n1/yWv9IkqdD
-X-Google-Smtp-Source: AGHT+IHmDjd6IBufunn+VXUbW45gEy2L5kG1BIp/bGnrz4HrD/HhnppUFhmPn2QSvyKnWtzFwDWHpg==
-X-Received: by 2002:a05:600c:3d8f:b0:43c:fbba:41ba with SMTP id
- 5b1f17b1804b1-45565edca7emr21236675e9.28.1752240897891; 
- Fri, 11 Jul 2025 06:34:57 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752240872; x=1752845672;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xRsTG4P4X0f4QdplRbioZnf6v3d7mTePa4rDIHqnp+E=;
+ b=G96lIeMbcge2YsCCiAZf98nu8FofzSI8WHdbhPSCEtajR/41m9gV3pqnWvuETSxUT7
+ V3/3gmbNayZ8DfuNGlP8m6ckJnYX9/2sFPr0OaW1XcgxrSC2STBK582X0+mODVwCz1dt
+ bv1I1O85dMARIIixbgit30IoVEj/gfImMdzkgFMc21iqKf6gKfP10ogik7IGfq6HBJzn
+ fSezyt0BphgxwpZs0y9bpHWmzXfzDIKijtnkMOQ27ikkpsy+/x63ug3nVDjI7jz1B27M
+ Mvo2hsiMii9yGBjOF2EBddai4VOQPsIIkCaQ33JIFTRGmq7l6ozcvE7+KVPV7gaAQJ1a
+ 8Bdg==
+X-Gm-Message-State: AOJu0YzZWFu/8AYcLFQVYlwR0C+RuC5lwX3aZuroUH0iHD8RlyyasdbH
+ Fz84PIq/kM6V9eVo4t1fxNo1vkG1JMOUypokpTDh/FH5/0DrIle9Nq8dxBCryUiQiBOwPPiTayJ
+ /3//J
+X-Gm-Gg: ASbGnctdysCwab/3DidwCa52CZjpxjXoWbXeJaojkw5XRP/1ZFgZX7sQ2FPbDkZg/DH
+ i8PFajHEbTrSk4wKSGu5/BKctdEiyMvhLtIpu/ii6NTtQqSwmfQthT2tl9YdbQvSllfhwWhg8Rc
+ u2abIfcOB6366RhkvWuaOAKnVHCvr5jg5jslA7pT7qDhpFz6Xiej880rM1MPaMOsKRgvJRfnDOB
+ KgUQwJdOjETfa5/azWLTYvReSQPkdQOdx8BmNKAEo7Usvx14iwahzlKjgEYD9NyTK7uPDcRR9HY
+ 8xgfKWKdjespwEAFwEo6g789RTaYa+uAAZywKssx4eCyWjE2lF10AaNt31Pl2pMtEdhS5xSU6YI
+ ZIWsUkHfm6AuSY693KMLHWiwlEWyL
+X-Google-Smtp-Source: AGHT+IHR2oVz4QOaR9tqqbMDbCR6GKJQPgRjLKMPUu3nCgSBwhmVzUB/tn8JS/plE2GW/AykEx4WXw==
+X-Received: by 2002:a05:600c:19ca:b0:442:f4a3:a2c0 with SMTP id
+ 5b1f17b1804b1-454e2b4b6d2mr37620565e9.13.1752240871782; 
+ Fri, 11 Jul 2025 06:34:31 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454d50df0cdsm89734145e9.25.2025.07.11.06.34.56
+ 5b1f17b1804b1-454d50df0cdsm89734145e9.25.2025.07.11.06.34.30
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Jul 2025 06:34:57 -0700 (PDT)
+ Fri, 11 Jul 2025 06:34:31 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 25/36] target/arm: Don't enforce NSE,
- NS check for EL3->EL3 returns
-Date: Fri, 11 Jul 2025 14:34:18 +0100
-Message-ID: <20250711133429.1423030-26-peter.maydell@linaro.org>
+Subject: [PULL 00/36] target-arm queue
+Date: Fri, 11 Jul 2025 14:33:53 +0100
+Message-ID: <20250711133429.1423030-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250711133429.1423030-1-peter.maydell@linaro.org>
-References: <20250711133429.1423030-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,67 +97,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the Arm ARM, rule R_TYTWB that defines illegal exception return cases
-includes the case:
- If FEAT_RME is implemented, then if SCR_EL3.{NSE, NS} is {1, 0}, an
- exception return from EL3 to a lower Exception level
+Hi; this should be my last major pullreq before softfreeze: it has
+the nested-virt support, a new Cortex-M4 based board model, and
+the CXL-on-arm patchset.
 
-Our implementation of this check fails to check that the
-return is to a lower exception level, so it will incorrectly fire on
-EL3->EL3 exception returns.
+thanks
+-- PMM
 
-Fix the check condition. This requires us to move it further
-down in the function to a point where we know the new_el value.
+The following changes since commit df6fe2abf2e990f767ce755d426bc439c7bba336:
 
-Fixes: 35aa6715ddcd9 ("target/arm: Catch illegal-exception-return from EL3 with bad NSE/NS")
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3016
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250704165636.261888-1-peter.maydell@linaro.org
----
- target/arm/tcg/helper-a64.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+  Merge tag 'pull-target-arm-20250704' of https://gitlab.com/pm215/qemu into staging (2025-07-07 09:22:41 -0400)
 
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index c66d521278c..71c6c44ee8a 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -658,15 +658,6 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
-         spsr &= ~PSTATE_SS;
-     }
- 
--    /*
--     * FEAT_RME forbids return from EL3 with an invalid security state.
--     * We don't need an explicit check for FEAT_RME here because we enforce
--     * in scr_write() that you can't set the NSE bit without it.
--     */
--    if (cur_el == 3 && (env->cp15.scr_el3 & (SCR_NS | SCR_NSE)) == SCR_NSE) {
--        goto illegal_return;
--    }
--
-     new_el = el_from_spsr(spsr);
-     if (new_el == -1) {
-         goto illegal_return;
-@@ -678,6 +669,17 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
-         goto illegal_return;
-     }
- 
-+    /*
-+     * FEAT_RME forbids return from EL3 to a lower exception level
-+     * with an invalid security state.
-+     * We don't need an explicit check for FEAT_RME here because we enforce
-+     * in scr_write() that you can't set the NSE bit without it.
-+     */
-+    if (cur_el == 3 && new_el < 3 &&
-+        (env->cp15.scr_el3 & (SCR_NS | SCR_NSE)) == SCR_NSE) {
-+        goto illegal_return;
-+    }
-+
-     if (new_el != 0 && arm_el_is_aa64(env, new_el) != return_to_aa64) {
-         /* Return to an EL which is configured for a different register width */
-         goto illegal_return;
--- 
-2.43.0
+are available in the Git repository at:
 
+  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20250711
+
+for you to fetch changes up to 3a323a813fd42fc7c37ef09bc7a714d8e31691ce:
+
+  tests/functional: Add a test for the MAX78000 arm machine (2025-07-11 13:30:32 +0100)
+
+----------------------------------------------------------------
+target-arm queue:
+ * New board type max78000fthr
+ * Enable use of CXL on Arm 'virt' board
+ * Some more tidyup of ID register handling
+ * Refactor AT insns and PMU regs into separate source files
+ * Don't enforce NSE,NS check for EL3->EL3 returns
+ * hw/arm/fsl-imx8mp: Wire VIRQ and VFIQ
+ * Allow nested-virtualization with KVM on the 'virt' board
+ * system/qdev: Remove pointless NULL check in qdev_device_add_from_qdict
+ * hw/arm/virt-acpi-build: Don't create ITS id mappings by default
+ * target/arm: Remove unused helper_sme2_luti4_4b
+
+----------------------------------------------------------------
+Bernhard Beschow (1):
+      hw/arm/fsl-imx8mp: Wire VIRQ and VFIQ
+
+Cornelia Huck (5):
+      arm/cpu: store id_afr0 into the idregs array
+      arm/cpu: store id_aa64afr{0,1} into the idregs array
+      arm/cpu: fix trailing ',' for SET_IDREG
+      arm/cpu: store clidr into the idregs array
+      arm/kvm: shorten one overly long line
+
+Eric Auger (1):
+      hw/arm/arm_gicv3_kvm: Add a migration blocker with kvm nested virt
+
+Haibo Xu (3):
+      hw/arm: Allow setting KVM vGIC maintenance IRQ
+      target/arm/kvm: Add helper to detect EL2 when using KVM
+      target/arm: Enable feature ARM_FEATURE_EL2 if EL2 is supported
+
+Jackson Donaldson (13):
+      MAX78000: Add MAX78000FTHR Machine
+      MAX78000: ICC Implementation
+      MAX78000: Add ICC to SOC
+      MAX78000: UART Implementation
+      MAX78000: Add UART to SOC
+      MAX78000: GCR Implementation
+      MAX78000: Add GCR to SOC
+      MAX78000: TRNG Implementation
+      MAX78000: Add TRNG to SOC
+      MAX78000: AES implementation
+      MAX78000: Add AES to SOC
+      docs/system: arm: Add max78000 board description
+      tests/functional: Add a test for the MAX78000 arm machine
+
+Jonathan Cameron (5):
+      hw/cxl-host: Add an index field to CXLFixedMemoryWindow
+      hw/cxl: Make the CXL fixed memory windows devices.
+      hw/arm/virt: Basic CXL enablement on pci_expander_bridge instances pxb-cxl
+      docs/cxl: Add an arm/virt example.
+      qtest/cxl: Add aarch64 virt test for CXL
+
+Peter Maydell (2):
+      target/arm: Don't enforce NSE,NS check for EL3->EL3 returns
+      hw/arm/virt: Allow virt extensions with KVM
+
+Philippe Mathieu-Daudé (1):
+      system/qdev: Remove pointless NULL check in qdev_device_add_from_qdict
+
+Richard Henderson (4):
+      target/arm: Drop stub for define_tlb_insn_regs
+      target/arm: Split out AT insns to tcg/cpregs-at.c
+      target/arm: Split out performance monitor regs to cpregs-pmu.c
+      target/arm: Remove helper_sme2_luti4_4b
+
+Shameer Kolothum (1):
+      hw/arm/virt-acpi-build: Don't create ITS id mappings by default
+
+ docs/system/arm/max78000.rst              |   37 +
+ docs/system/arm/virt.rst                  |    9 +
+ docs/system/devices/cxl.rst               |   11 +
+ docs/system/target-arm.rst                |    1 +
+ include/hw/arm/max78000_soc.h             |   50 +
+ include/hw/arm/virt.h                     |    4 +
+ include/hw/char/max78000_uart.h           |   78 ++
+ include/hw/cxl/cxl.h                      |    5 +-
+ include/hw/cxl/cxl_host.h                 |    5 +-
+ include/hw/intc/arm_gicv3_common.h        |    1 +
+ include/hw/misc/max78000_aes.h            |   68 ++
+ include/hw/misc/max78000_gcr.h            |  131 +++
+ include/hw/misc/max78000_icc.h            |   33 +
+ include/hw/misc/max78000_trng.h           |   35 +
+ target/arm/cpregs.h                       |    3 +
+ target/arm/cpu.h                          |    6 +-
+ target/arm/internals.h                    |    5 +
+ target/arm/kvm_arm.h                      |    7 +
+ target/arm/tcg/helper.h                   |    1 -
+ target/arm/cpu-sysregs.h.inc              |    4 +
+ hw/acpi/cxl.c                             |   76 +-
+ hw/arm/fsl-imx8mp.c                       |    4 +
+ hw/arm/max78000_soc.c                     |  232 ++++
+ hw/arm/max78000fthr.c                     |   50 +
+ hw/arm/virt-acpi-build.c                  |   40 +-
+ hw/arm/virt.c                             |   52 +-
+ hw/char/max78000_uart.c                   |  285 +++++
+ hw/cxl/cxl-host-stubs.c                   |    7 +-
+ hw/cxl/cxl-host.c                         |  174 ++-
+ hw/i386/pc.c                              |   50 +-
+ hw/intc/arm_gicv3_common.c                |    1 +
+ hw/intc/arm_gicv3_kvm.c                   |   29 +
+ hw/intc/armv7m_nvic.c                     |    4 +-
+ hw/misc/max78000_aes.c                    |  223 ++++
+ hw/misc/max78000_gcr.c                    |  351 ++++++
+ hw/misc/max78000_icc.c                    |  120 ++
+ hw/misc/max78000_trng.c                   |  139 +++
+ system/qdev-monitor.c                     |    9 +-
+ target/arm/cpregs-pmu.c                   | 1309 +++++++++++++++++++++
+ target/arm/cpu64.c                        |    8 +-
+ target/arm/helper.c                       | 1813 +----------------------------
+ target/arm/kvm-stub.c                     |    5 +
+ target/arm/kvm.c                          |   24 +-
+ target/arm/tcg-stubs.c                    |    5 -
+ target/arm/tcg/cpregs-at.c                |  519 +++++++++
+ target/arm/tcg/cpu-v7m.c                  |   16 +-
+ target/arm/tcg/cpu32.c                    |   34 +-
+ target/arm/tcg/cpu64.c                    |   68 +-
+ target/arm/tcg/helper-a64.c               |   20 +-
+ target/arm/tcg/vec_helper.c               |    1 -
+ tests/qtest/cxl-test.c                    |   58 +-
+ hw/arm/Kconfig                            |   15 +
+ hw/arm/meson.build                        |    2 +
+ hw/char/Kconfig                           |    3 +
+ hw/char/meson.build                       |    1 +
+ hw/misc/Kconfig                           |   12 +
+ hw/misc/meson.build                       |    4 +
+ target/arm/meson.build                    |    2 +
+ target/arm/tcg/meson.build                |    1 +
+ tests/functional/meson.build              |    1 +
+ tests/functional/test_arm_max78000fthr.py |   48 +
+ tests/qtest/meson.build                   |    1 +
+ 62 files changed, 4300 insertions(+), 2010 deletions(-)
+ create mode 100644 docs/system/arm/max78000.rst
+ create mode 100644 include/hw/arm/max78000_soc.h
+ create mode 100644 include/hw/char/max78000_uart.h
+ create mode 100644 include/hw/misc/max78000_aes.h
+ create mode 100644 include/hw/misc/max78000_gcr.h
+ create mode 100644 include/hw/misc/max78000_icc.h
+ create mode 100644 include/hw/misc/max78000_trng.h
+ create mode 100644 hw/arm/max78000_soc.c
+ create mode 100644 hw/arm/max78000fthr.c
+ create mode 100644 hw/char/max78000_uart.c
+ create mode 100644 hw/misc/max78000_aes.c
+ create mode 100644 hw/misc/max78000_gcr.c
+ create mode 100644 hw/misc/max78000_icc.c
+ create mode 100644 hw/misc/max78000_trng.c
+ create mode 100644 target/arm/cpregs-pmu.c
+ create mode 100644 target/arm/tcg/cpregs-at.c
+ create mode 100755 tests/functional/test_arm_max78000fthr.py
 
