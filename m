@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAB52C83F1B
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 17:24:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58063C83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 17:24:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaHSm-0001ob-OC; Fri, 11 Jul 2025 13:23:08 -0400
+	id 1uaHSj-0001jb-3x; Fri, 11 Jul 2025 13:23:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uaHSj-0001jv-7g
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 13:23:05 -0400
-Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
+ id 1uaHSh-0001ge-0O
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 13:23:03 -0400
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uaHSh-00030m-Iz
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 13:23:04 -0400
-Received: by mail-oi1-x233.google.com with SMTP id
- 5614622812f47-40b31468da3so742593b6e.0
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 10:23:03 -0700 (PDT)
+ id 1uaHSe-0002zS-5H
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 13:23:02 -0400
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-40aef72f252so718698b6e.0
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 10:22:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752254582; x=1752859382; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752254579; x=1752859379; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KbvFJbF5XPFsYap/Rj9OWqngvL2EB4p0iDRPnlUGu/U=;
- b=y7YNWV8Hbn7MsX7taoPKf03IL900ngkmaJklhsLLCFxTQJNaKeLG7WE3/CtGbSNtJC
- RMBEnEIJIBaHXcfRzlzbwJOTdn9z2xZR8UqoSSDnN//LQ7dxmsYKjZX/5MFjlJIq9Lei
- KgWSGLgXUASrptzOAhOdNeIQw0jAT0U6AmF0qlb3qBVVCsljCQ2hYKcQgUmPDsya/LbN
- MmwCZ9taTimzdxBZIP0HrW7rSGewEtYdeJVwusKgJm+OUBERXGXZYTAoBlDNGxz+fuiU
- APv62OKLY7waLbfNISRpoPTMIMyuQcnTtWgQAtaDNYMDSC5rzJ1wk8JTxZqrRJVQQkPj
- ekuQ==
+ bh=F4bSMi3Nc0BLTJTdgmUkBHkPEiCcYcFpM0gdgLBlkKo=;
+ b=RWg79fR5C7maHQ/SLuglI5rk46/iJtdhZYJ+Lc6czslJX6Drzo5GTYmFw06uvBE7Mq
+ xOnXHyYMGR/zwFbY7B59VRsKuT+kH/f2a51kNidN2p1n1jDAJDYUN6mWql2wJNlMhck/
+ og5unExO/PJ6l4cLBWFpXV7nFdAqxj9Yre2WLhXmYrvFXQFivBeP1UqxR5GhukkakLBo
+ IsiPYL0XbkiuDou1Ujcf8TLFLjjcQc3vWwQQP2qJs1ND8fAwwLHWQNZHf9AaGL69le3+
+ KUj3xObt+UIUXrwdG339O4vy+7FOCFO5aYfhQljOIWhEvFFs1R/dRNzdxi1MIYR4AnwX
+ gnDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752254582; x=1752859382;
+ d=1e100.net; s=20230601; t=1752254579; x=1752859379;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KbvFJbF5XPFsYap/Rj9OWqngvL2EB4p0iDRPnlUGu/U=;
- b=Xg8MiwAT+hP8SqRnaNudOH9kCOOV7nYHEr8b9IY8v0QHdKA+kXTDgeQ9P6mzl3xn92
- wfO+PmnmWzLIrNq2hxpOIEcT3MG/54tvIUxBbltNmM378cDWcnxAYHrZI1ORTBgLgNYt
- cjoyo1jimVfmow/cumlxNZq+TExNcpc5hXkMfLdWs71xoL6/htLn6WD2RJ58sGz4b62x
- zhiNzoKieeJBkc/mexY6oHHKI0lnSe5BpyD5Fpru58btqI9E/axUvyRja1ly0RnKTZhg
- 4mPJhywdm+WCuAGtOvTK4mxHlxAfY/N80fcED0p9KzjQyaMRO3ItR+iXgBdoYbO9IqUj
- 8OBw==
-X-Gm-Message-State: AOJu0Yy6VYkh2rN9J/jgpN92Lo5I/GG44QCLJ7Pw2y9UrqMh2wGhNikV
- uj2yY1iFLLhlmwbDwF9bE2XfVbKWIF0d1RCTrjgLWF5ZASnCU4hVNexFfzRG+8XXQ0dg9MtAtZk
- 6WQJ2j+s=
-X-Gm-Gg: ASbGncuI0hS0JIKxEEZDDM0sw+T5hsyRclhyDxpEPIS54jc0m8Pm18HHAHOnG2gisuc
- odI+Rx99zefhKa+fWeMx+ZyV/QgNyAX0FwFqzibKMOxi2YEp7Htypsfx0qFvNsIgKWxzfSKAuTN
- 6O/U/mow4PW/IOxZ1Wqb6ZJ9Us/nD9i8fpSobDGkyIpuOvZiiaUqYhHfTHDdduyMRKtA97vEujw
- I2ovw8LoK0I7gmIrEB5VUj7aB7vEdk6zCI/PU8vT8Cry3W8YNIqvlRrUIF3beKnWft1NAmnfoRw
- S3I7RftLcMDuZjT32GSxSvvxodbNiKbZa1LSu8hbaBuuCRcXqDTKBALsw5j5yHWOqlzTKIX9JF6
- qnMpD7XF+5Ycmx2E1zf9BAjF20+9Oe7gsmyuvhsaLQeb/BQ/rrkWuLggyu2So0oKT6o63Lxau7l
- 4hzC7wAeWj
-X-Google-Smtp-Source: AGHT+IESlgROdwpepOV+/wYlJRog07cgPlcOGuNab3KUFrXmBvMGhd5f8grJwmewYoCab7KqCd8G8g==
-X-Received: by 2002:a05:6808:6547:20b0:40b:9948:f26c with SMTP id
- 5614622812f47-4150dc288bbmr2277044b6e.12.1752254582130; 
- Fri, 11 Jul 2025 10:23:02 -0700 (PDT)
+ bh=F4bSMi3Nc0BLTJTdgmUkBHkPEiCcYcFpM0gdgLBlkKo=;
+ b=HhNjyal1V+y7djd8n+f8n9qGqDbdGMjhfTa9U0cQI02fQpXE8ZqPrcbu4qh8TFmZJd
+ 4VgkfALb+L0aL4Wj5nNOPRogi6QSiCjSHqfme7mOT1ODmARNLcUulk737T0g5rS6t1jk
+ TGXQoRUGIdD7jzhe4jrx2R8YqQaC//SUTaKKc9weO/sOIenDefBbKibzGzTwzHfWogfC
+ VmeY6vaftRamvRu2YEJjCgMUEZ6rAblBuLOGB9y39ivCjUrIVcgjgNUO2HW6ElutR9I0
+ zvnxZbM2OT4K2KEMPLpDkxPS5j+YAZUey0FcyjF0AQwE5yGsnKZsK7gE55dL2FcryJHX
+ cw4g==
+X-Gm-Message-State: AOJu0Ywbwt1ParD0UMPxFiUa1uGp/PCKnCxZg+xCUQ8xGwvb2+zOZZXP
+ f+gQehluIwpepmBukLXFdKqSeE9PYl3rolnqqG81bBhdf8fvz7LqukNYfYU4fRlCdrGn+Eg2lrG
+ Yq9ID4CA=
+X-Gm-Gg: ASbGncvZmLGPCHrmAp5Zu82l5ZBKRlQ2V/sHADdDkMq94oKXBK07UNDx3dVLr9N6VHB
+ NTD0oJ+dML7gFQaybNEJz/0Atft9mSb8A8Mq8rA54Q6Y4uqu4mAcdsjarxxbu4ueoiWsKi5cwoA
+ XeOoklf1B6DVOe6qOrQfTezm+QqG86/0SNVUoGnOMpM0D30eEhUlbgCTquMCuChASkrhvbOqfgr
+ 80TkS6Ko/SW7qt943Om7vNaPMk6xaijdsJr+tPSsbQ5KdEW6fr4ZX0UqumQr4sqFN1+VLyWMY3A
+ LRrqgv3LE+iJdUiMWObuFFNwEAcgdmRIDXAe5BtmmnazFiyxnVg4HR5FvOOFAu1VxLf0SrzejI3
+ LpbAuRNRXag6NRudxM2EeaUu5lUmvW5/VZbzlgnfq+yTTY8OiTOqi8kJkn3bWn/QneKGT0BsG7i
+ FjNHBuErk5kcnQ9QvF3N4=
+X-Google-Smtp-Source: AGHT+IHAYV5GrI+8/SU6OSnjlp8tsfE83mcXb72e6vGL95FOllWtqP1+KhScS7iW4u/dWcab89JuwA==
+X-Received: by 2002:a05:6808:1483:b0:408:e711:9aa with SMTP id
+ 5614622812f47-4151008211bmr3271568b6e.37.1752254578622; 
+ Fri, 11 Jul 2025 10:22:58 -0700 (PDT)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4141c77ada0sm602041b6e.44.2025.07.11.10.23.01
+ 5614622812f47-4141c77ada0sm602041b6e.44.2025.07.11.10.22.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Jul 2025 10:23:01 -0700 (PDT)
+ Fri, 11 Jul 2025 10:22:58 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 4/9] linux-user/gen-vdso: Handle fseek() failure
-Date: Fri, 11 Jul 2025 11:22:49 -0600
-Message-ID: <20250711172254.229201-5-richard.henderson@linaro.org>
+Cc: WANG Rui <wangrui@loongson.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 1/9] fpu: Process float_muladd_negate_result after rounding
+Date: Fri, 11 Jul 2025 11:22:46 -0600
+Message-ID: <20250711172254.229201-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250711172254.229201-1-richard.henderson@linaro.org>
 References: <20250711172254.229201-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::233;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x233.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,46 +103,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+Changing the sign before rounding affects the correctness of
+the asymmetric rouding modes: float_round_up and float_round_down.
 
-Coverity points out that we don't check for fseek() failure in gen-vdso.c,
-and so we might pass -1 to malloc(). Add the error checking.
-
-(This is a standalone executable that doesn't link against glib, so
-we can't do the easy thing and use g_file_get_contents().)
-
-Coverity: CID 1523742
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reported-by: WANG Rui <wangrui@loongson.cn>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250710170707.1299926-2-peter.maydell@linaro.org>
 ---
- linux-user/gen-vdso.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fpu/softfloat.c                     | 54 +++++++++++++++++++++++------
+ tests/tcg/multiarch/fnmsub.c        | 37 ++++++++++++++++++++
+ fpu/softfloat-parts.c.inc           |  4 ---
+ tests/tcg/multiarch/Makefile.target |  1 +
+ 4 files changed, 82 insertions(+), 14 deletions(-)
+ create mode 100644 tests/tcg/multiarch/fnmsub.c
 
-diff --git a/linux-user/gen-vdso.c b/linux-user/gen-vdso.c
-index fce9d5cbc3..1c406d1b10 100644
---- a/linux-user/gen-vdso.c
-+++ b/linux-user/gen-vdso.c
-@@ -113,9 +113,16 @@ int main(int argc, char **argv)
-      * We expect the vdso to be small, on the order of one page,
-      * therefore we do not expect a partial read.
-      */
--    fseek(inf, 0, SEEK_END);
-+    if (fseek(inf, 0, SEEK_END) < 0) {
-+        goto perror_inf;
-+    }
-     total_len = ftell(inf);
--    fseek(inf, 0, SEEK_SET);
-+    if (total_len < 0) {
-+        goto perror_inf;
-+    }
-+    if (fseek(inf, 0, SEEK_SET) < 0) {
-+        goto perror_inf;
-+    }
+diff --git a/fpu/softfloat.c b/fpu/softfloat.c
+index 34c962d6bd..8094358c2e 100644
+--- a/fpu/softfloat.c
++++ b/fpu/softfloat.c
+@@ -1731,11 +1731,8 @@ static float64 float64_round_pack_canonical(FloatParts64 *p,
+     return float64_pack_raw(p);
+ }
  
-     buf = malloc(total_len);
-     if (buf == NULL) {
+-static float64 float64r32_round_pack_canonical(FloatParts64 *p,
+-                                               float_status *s)
++static float64 float64r32_pack_raw(FloatParts64 *p)
+ {
+-    parts_uncanon(p, s, &float32_params);
+-
+     /*
+      * In parts_uncanon, we placed the fraction for float32 at the lsb.
+      * We need to adjust the fraction higher so that the least N bits are
+@@ -1776,6 +1773,13 @@ static float64 float64r32_round_pack_canonical(FloatParts64 *p,
+     return float64_pack_raw(p);
+ }
+ 
++static float64 float64r32_round_pack_canonical(FloatParts64 *p,
++                                               float_status *s)
++{
++    parts_uncanon(p, s, &float32_params);
++    return float64r32_pack_raw(p);
++}
++
+ static void float128_unpack_canonical(FloatParts128 *p, float128 f,
+                                       float_status *s)
+ {
+@@ -2240,7 +2244,12 @@ float16_muladd_scalbn(float16 a, float16 b, float16 c,
+     float16_unpack_canonical(&pc, c, status);
+     pr = parts_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
+ 
+-    return float16_round_pack_canonical(pr, status);
++    /* Round before applying negate result. */
++    parts_uncanon(pr, status, &float16_params);
++    if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
++        pr->sign ^= 1;
++    }
++    return float16_pack_raw(pr);
+ }
+ 
+ float16 float16_muladd(float16 a, float16 b, float16 c,
+@@ -2260,7 +2269,12 @@ float32_muladd_scalbn(float32 a, float32 b, float32 c,
+     float32_unpack_canonical(&pc, c, status);
+     pr = parts_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
+ 
+-    return float32_round_pack_canonical(pr, status);
++    /* Round before applying negate result. */
++    parts_uncanon(pr, status, &float32_params);
++    if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
++        pr->sign ^= 1;
++    }
++    return float32_pack_raw(pr);
+ }
+ 
+ float64 QEMU_SOFTFLOAT_ATTR
+@@ -2274,7 +2288,12 @@ float64_muladd_scalbn(float64 a, float64 b, float64 c,
+     float64_unpack_canonical(&pc, c, status);
+     pr = parts_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
+ 
+-    return float64_round_pack_canonical(pr, status);
++    /* Round before applying negate result. */
++    parts_uncanon(pr, status, &float64_params);
++    if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
++        pr->sign ^= 1;
++    }
++    return float64_pack_raw(pr);
+ }
+ 
+ static bool force_soft_fma;
+@@ -2428,7 +2447,12 @@ float64 float64r32_muladd(float64 a, float64 b, float64 c,
+     float64_unpack_canonical(&pc, c, status);
+     pr = parts_muladd_scalbn(&pa, &pb, &pc, 0, flags, status);
+ 
+-    return float64r32_round_pack_canonical(pr, status);
++    /* Round before applying negate result. */
++    parts_uncanon(pr, status, &float32_params);
++    if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
++        pr->sign ^= 1;
++    }
++    return float64r32_pack_raw(pr);
+ }
+ 
+ bfloat16 QEMU_FLATTEN bfloat16_muladd(bfloat16 a, bfloat16 b, bfloat16 c,
+@@ -2441,7 +2465,12 @@ bfloat16 QEMU_FLATTEN bfloat16_muladd(bfloat16 a, bfloat16 b, bfloat16 c,
+     bfloat16_unpack_canonical(&pc, c, status);
+     pr = parts_muladd_scalbn(&pa, &pb, &pc, 0, flags, status);
+ 
+-    return bfloat16_round_pack_canonical(pr, status);
++    /* Round before applying negate result. */
++    parts_uncanon(pr, status, &bfloat16_params);
++    if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
++        pr->sign ^= 1;
++    }
++    return bfloat16_pack_raw(pr);
+ }
+ 
+ float128 QEMU_FLATTEN float128_muladd(float128 a, float128 b, float128 c,
+@@ -2454,7 +2483,12 @@ float128 QEMU_FLATTEN float128_muladd(float128 a, float128 b, float128 c,
+     float128_unpack_canonical(&pc, c, status);
+     pr = parts_muladd_scalbn(&pa, &pb, &pc, 0, flags, status);
+ 
+-    return float128_round_pack_canonical(pr, status);
++    /* Round before applying negate result. */
++    parts_uncanon(pr, status, &float128_params);
++    if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
++        pr->sign ^= 1;
++    }
++    return float128_pack_raw(pr);
+ }
+ 
+ /*
+diff --git a/tests/tcg/multiarch/fnmsub.c b/tests/tcg/multiarch/fnmsub.c
+new file mode 100644
+index 0000000000..15dd41d3bd
+--- /dev/null
++++ b/tests/tcg/multiarch/fnmsub.c
+@@ -0,0 +1,37 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include <stdio.h>
++#include <math.h>
++#include <fenv.h>
++
++union U {
++  double d;
++  unsigned long long l;
++};
++
++union U x = { .l = 0x4ff0000000000000ULL };
++union U y = { .l = 0x2ff0000000000000ULL };
++union U r;
++
++int main()
++{
++#ifdef FE_DOWNWARD
++    fesetround(FE_DOWNWARD);
++
++#if defined(__loongarch__)
++    asm("fnmsub.d %0, %1, %1, %2" : "=f"(r.d) : "f"(x.d), "f"(y.d));
++#elif defined(__powerpc64__)
++    asm("fnmsub %0,%1,%1,%2" : "=f"(r.d) : "f"(x.d), "f"(y.d));
++#elif defined(__s390x__) && 0 /* need -march=z14 */
++    asm("vfnms %0,%1,%1,%2,0,3" : "=f"(r.d) : "f"(x.d), "f"(y.d));
++#else
++    r.d = -fma(x.d, x.d, -y.d);
++#endif
++
++    if (r.l != 0xdfefffffffffffffULL) {
++        printf("r = %.18a (%016llx)\n", r.d, r.l);
++        return 1;
++    }
++#endif
++    return 0;
++}
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index 171bfd06e3..5e0438fc0b 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -708,10 +708,6 @@ static FloatPartsN *partsN(muladd_scalbn)(FloatPartsN *a, FloatPartsN *b,
+  return_normal:
+     a->exp += scale;
+  finish_sign:
+-    if (flags & float_muladd_negate_result) {
+-        a->sign ^= 1;
+-    }
+-
+     /*
+      * All result types except for "return the default NaN
+      * because this is an Invalid Operation" go through here;
+diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
+index 45c9cfe18c..bfdf7197a7 100644
+--- a/tests/tcg/multiarch/Makefile.target
++++ b/tests/tcg/multiarch/Makefile.target
+@@ -29,6 +29,7 @@ run-float_%: float_%
+ 	$(call run-test,$<, $(QEMU) $(QEMU_OPTS) $<)
+ 	$(call conditional-diff-out,$<,$(SRC_PATH)/tests/tcg/$(TARGET_NAME)/$<.ref)
+ 
++fnmsub: LDFLAGS+=-lm
+ 
+ testthread: LDFLAGS+=-lpthread
+ 
 -- 
 2.43.0
 
