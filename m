@@ -4,104 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72C23C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 05:48:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35780C8303C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 06:12:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua6c9-0006S0-CP; Fri, 11 Jul 2025 01:48:05 -0400
+	id 1ua6yd-0007tC-4N; Fri, 11 Jul 2025 02:11:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1ua6c6-0006G3-RB
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 01:48:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1ua6yY-0007pq-4C
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 02:11:14 -0400
+Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1ua6c4-0001Tk-F8
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 01:48:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752212879;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5EhnlcjnlQNs6yKbHR/5lcLMJJISSABdIQmZf/Y1KPI=;
- b=CUmO/c+D3SlEfccbODSupzIbEMtSJrB7WzB4dJwpwq7z6A5kLIPCW8Ub0QYp38D4fpoGn6
- 58UTP9wgWzvbCXo3/AwdzSLpEBLKUcv391NiHBWF6yi8/k4vwVgsAEJOBeZwNwC3vPt104
- VpU1Ty3QNWXnRNcMvbvIvUUXGgbdg50=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-195-SSiEo8O1Nhunor3jmLjkRg-1; Fri, 11 Jul 2025 01:47:57 -0400
-X-MC-Unique: SSiEo8O1Nhunor3jmLjkRg-1
-X-Mimecast-MFC-AGG-ID: SSiEo8O1Nhunor3jmLjkRg_1752212876
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ad56a52edc5so165782566b.0
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 22:47:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752212876; x=1752817676;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5EhnlcjnlQNs6yKbHR/5lcLMJJISSABdIQmZf/Y1KPI=;
- b=UhB/Hxt1FTPCAk7aFDrHkn6VzR2ZDanUn8YJgDEJUcSgMYqRANKcLwmPS/DVuaNboQ
- mlaVIy5Ev2IEDgo3WIfisBgH10h6QTpER/Wb723546AAbsVxn9Jk0UMdbcKmxM3kLgcL
- utAmUC1BWicU4biG8pMdYAUscb2cJ4zS+pAgPDLAdbwgc/iFhGlzB3m6T9HQi4wqBO0J
- ipukCd0rTanKY96Yqf5Vab0WRtRLuWp1vlsE9d06Li61IcLGm5qRKu/3x7tijQ7kp40d
- bMvtzIHJB589Aj5i8CYeC1ZvxBaZY8WMqv6EXGGhxBH9xAiyPt7tfIrIiTjxJnS2GaDn
- 5iJA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX477P0hipI4WL7y9n856B694p8PqN2/PHw1RNtOcQRYP12LfoADcsuzNFzOXSV5FlM5BdKl2ouf9bB@nongnu.org
-X-Gm-Message-State: AOJu0YwDi0rPwJF5mXulRLjsQF4n81l7woEIJXqjyoHsHl5NT+NyMmjp
- WJ84FReXrf+BNwGZLdLteOOUVhGqpVAcGnZzr77yugwinY5I6zcz8z35s+AVzmPlNkaWqb6K90J
- 0q8VrC6SrxNe7C2YyKzDTMCA0Td2JENGkC+IweRKbP7pVMEcjjSwo4c0GL1joSDIObm1IKsnOyp
- 5yeCHqb0xi2qb5rbZ1TjiSVo6XDRtLaoI=
-X-Gm-Gg: ASbGnctqjLoh2ct25eRtJNyk2NqCHvbE3UQVqJt9cPMqh/pT1ovSStrArTw5dubdspR
- Aoo6SXi3qoeAiOkGQO9CLUizyxfoqWXTxYy9hEUWfSSbe3KsePvBAA4qbWZ/oMfohKmSOTwLqEu
- o2ULzprf205DDcWUZaAmhQiYY=
-X-Received: by 2002:a17:907:7e89:b0:ae6:fa42:69ab with SMTP id
- a640c23a62f3a-ae6fbf9b01cmr176329066b.45.1752212876327; 
- Thu, 10 Jul 2025 22:47:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFpq/8esfxY8lOOhoiClj6cT4+Kxg+Okxb8n7aHyw+7uTHCkrZHo//86p5Q64Mx6lRMnGnpDe2AS+FRyTBY2BQ=
-X-Received: by 2002:a17:907:7e89:b0:ae6:fa42:69ab with SMTP id
- a640c23a62f3a-ae6fbf9b01cmr176326366b.45.1752212875779; Thu, 10 Jul 2025
- 22:47:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1ua6yT-0006hi-0Y
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 02:11:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1752214269; x=1783750269;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=qxXkCtpl/y24sU1FPu+473TDguqLVckNPEcZqd/MSDI=;
+ b=YexHs1EffSYxz9IFnSC45YB29gMGPh2oNY8Fpu9qtvp3Lng2dwEZy/Wy
+ XmwsK8HrstfsxDXzVRLkbP9OvXlGrj+EfU88azdWvkqSPpIGb0aSDeSMf
+ 1T6KAyetmoUnviTYN3XVIyBPlBmAmcckK3fiadeBXKR1xlYocbdVYNLJn
+ R05SBMnOjlR9s96Zthdzv/KaRl9smzNLBcD7n521rDBii2SJwmFkvvoD6
+ /hTFSygC3xzGwO8ROVDHz5yUi6I+TpC/eZZNx1YEoMFx7KS26WWOqVKM4
+ VKbYaLhhuzo75UuTKgqeNJHSsjprE2mO0Pwbn2KHUEbxn/0/nc89VHXvO g==;
+X-CSE-ConnectionGUID: ib+TABjwRfeUSHu/G121Pw==
+X-CSE-MsgGUID: ZfUqfepcR86058wZxttflA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11490"; a="58315063"
+X-IronPort-AV: E=Sophos;i="6.16,302,1744095600"; d="scan'208";a="58315063"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Jul 2025 23:11:06 -0700
+X-CSE-ConnectionGUID: THfvMRuxTRiXT0lKFU+2hQ==
+X-CSE-MsgGUID: WRoqIScbSBySvtLGXtwVnQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,302,1744095600"; d="scan'208";a="156377693"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa006.fm.intel.com with ESMTP; 10 Jul 2025 23:11:04 -0700
+Date: Fri, 11 Jul 2025 14:32:33 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, xiaoyao.li@intel.com
+Subject: Re: [PATCH 4/4] target/i386: move accel_cpu_instance_init to
+ .instance_init
+Message-ID: <aHCwAXmW0De8ptqK@intel.com>
+References: <20250711000603.438312-1-pbonzini@redhat.com>
+ <20250711000603.438312-5-pbonzini@redhat.com>
 MIME-Version: 1.0
-References: <cover.1751554099.git.roy.hopkins@randomman.co.uk>
- <23e34a106da87427899f93178102e4a6ef50c966.1751554099.git.roy.hopkins@randomman.co.uk>
- <aG00MgIsZdXq9bRy@redhat.com>
-In-Reply-To: <aG00MgIsZdXq9bRy@redhat.com>
-From: Ani Sinha <anisinha@redhat.com>
-Date: Fri, 11 Jul 2025 11:17:44 +0530
-X-Gm-Features: Ac12FXyZ175FE3suxBeCL9iUT64GTre1OcgbKygp5r4Ho4kHFcyM59v_cUgup6o
-Message-ID: <CAK3XEhN3qDHJAykaYbOBXqRf6-qwX+ZPGHVuUuBLWN0o8J+Zpw@mail.gmail.com>
-Subject: Re: [PATCH v9 02/16] backends/confidential-guest-support: Add
- functions to support IGVM
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>, qemu-devel@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>, 
- Marcelo Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, 
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Tom Lendacky <thomas.lendacky@amd.com>, 
- Michael Roth <michael.roth@amd.com>, Gerd Hoffman <kraxel@redhat.com>, 
- Pankaj Gupta <pankaj.gupta@amd.com>, Joerg Roedel <joro@8bytes.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250711000603.438312-5-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,96 +84,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 8, 2025 at 8:37=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
->
-> On Thu, Jul 03, 2025 at 04:03:10PM +0100, Roy Hopkins wrote:
-> > In preparation for supporting the processing of IGVM files to configure
-> > guests, this adds a set of functions to ConfidentialGuestSupport
-> > allowing configuration of secure virtual machines that can be
-> > implemented for each supported isolation platform type such as Intel TD=
-X
-> > or AMD SEV-SNP. These functions will be called by IGVM processing code
-> > in subsequent patches.
-> >
-> > This commit provides a default implementation of the functions that
-> > either perform no action or generate an error when they are called.
-> > Targets that support ConfidentalGuestSupport should override these
-> > implementations.
-> >
-> > Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
-> > Acked-by: Michael S. Tsirkin <mst@redhat.com>
-> > Acked-by: Gerd Hoffman <kraxel@redhat.com>
-> > Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-> > Reviewed-by: Ani Sinha <anisinha@redhat.com>
-> > ---
-> >  backends/confidential-guest-support.c       | 31 ++++++++++
-> >  include/system/confidential-guest-support.h | 67 +++++++++++++++++++++
-> >  2 files changed, 98 insertions(+)
-> >
-> > diff --git a/backends/confidential-guest-support.c b/backends/confident=
-ial-guest-support.c
-> > index 8ff7bfa857..c5bef1fbfa 100644
-> > --- a/backends/confidential-guest-support.c
-> > +++ b/backends/confidential-guest-support.c
-> > @@ -14,15 +14,46 @@
-> >  #include "qemu/osdep.h"
-> >
-> >  #include "system/confidential-guest-support.h"
-> > +#include "qapi/error.h"
-> >
-> >  OBJECT_DEFINE_ABSTRACT_TYPE(ConfidentialGuestSupport,
-> >                              confidential_guest_support,
-> >                              CONFIDENTIAL_GUEST_SUPPORT,
-> >                              OBJECT)
-> >
-> > +static bool check_support(ConfidentialGuestPlatformType platform,
-> > +                         uint16_t platform_version, uint8_t highest_vt=
-l,
-> > +                         uint64_t shared_gpa_boundary)
->
-> Nit-pick - underindented by 1 space.
+On Fri, Jul 11, 2025 at 02:06:03AM +0200, Paolo Bonzini wrote:
+> Date: Fri, 11 Jul 2025 02:06:03 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 4/4] target/i386: move accel_cpu_instance_init to
+>  .instance_init
+> X-Mailer: git-send-email 2.50.0
+> 
+> With the reordering of instance_post_init callbacks that is new in 10.1
+> accel_cpu_instance_init must execute in .instance_init as is already
+> the case for RISC-V.  Otherwise, for example, setting the vendor
+> property is broken when using KVM or Hypervisor.framework, because
+> KVM sets it *after* the user's value is set by DeviceState's
+> intance_post_init callback.
+> 
+> Reported-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
-Speaking of which, running checkpatch on this series reminded me that
-MAINTAINERS needs updating for this area.
+no, Intel doesn't deserve this credit. Instead, this bug is reported
+from these 2 people:
 
->
->
-> > diff --git a/include/system/confidential-guest-support.h b/include/syst=
-em/confidential-guest-support.h
-> > index ea46b50c56..79ecd21f42 100644
-> > --- a/include/system/confidential-guest-support.h
-> > +++ b/include/system/confidential-guest-support.h
->
->
-> > @@ -64,6 +95,42 @@ typedef struct ConfidentialGuestSupportClass {
-> >
-> >      int (*kvm_init)(ConfidentialGuestSupport *cgs, Error **errp);
-> >      int (*kvm_reset)(ConfidentialGuestSupport *cgs, Error **errp);
-> > +
-> > +    /*
-> > +     * Check to see if this confidential guest supports a particular
-> > +     * platform or configuration.
-> > +     *
-> > +     * Return true if supported or false if not supported.
-> > +     */
-> > +    bool (*check_support)(ConfidentialGuestPlatformType platform,
-> > +                         uint16_t platform_version, uint8_t highest_vt=
-l,
-> > +                         uint64_t shared_gpa_boundary);
->
-> Nit-pick: underindented 1 space.
->
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
-ge :|
-> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
-om :|
-> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
-ge :|
->
+"Like Xu" <like.xu.linux@gmail.com> - KUT Test
+"Dongli Zhang" <dongli.zhang@oracle.com> - PMU Fix
+
+For reference: https://lore.kernel.org/qemu-devel/aFpocfTpBLB34N3l@intel.com/
+
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  target/i386/cpu.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+
+LGTM,
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
