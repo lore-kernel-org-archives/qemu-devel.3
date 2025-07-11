@@ -4,93 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5533DC83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 13:56:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF505C83F21
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 14:10:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaEEX-0006GG-Fq; Fri, 11 Jul 2025 09:56:13 -0400
+	id 1uaERX-0007MD-FU; Fri, 11 Jul 2025 10:09:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uaEER-00061K-Mo
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:56:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uaEEP-0003Gm-Fg
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:56:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752242164;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=M5TVHEFg8WK/rWD3bzTI+jxFa/UAo3D45mPFwRsaurw=;
- b=bczUCS4AJboXCW+xRC1A4dP616wHm6+prGDNSv+UxwjBNuHSd46wEA8EosGyvrdszpUqbf
- 3oOaXUNqSLpQTfs3dGaopctuhlViEm/XtblbAGDgZHDPJo/OjK2WtXFrrpRyopna7oH2gY
- DKRa89MXAgqaEewCPW+68wFJg6VePvs=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-thkfgdIjM4eJdbAfDd9jow-1; Fri,
- 11 Jul 2025 09:56:00 -0400
-X-MC-Unique: thkfgdIjM4eJdbAfDd9jow-1
-X-Mimecast-MFC-AGG-ID: thkfgdIjM4eJdbAfDd9jow_1752242155
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 38CFF1809C89; Fri, 11 Jul 2025 13:55:54 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DD78D1956094; Fri, 11 Jul 2025 13:55:50 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5A8B421E6A27; Fri, 11 Jul 2025 15:55:48 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  Jiri Pirko <jiri@resnulli.us>,  Peter Maydell
- <peter.maydell@linaro.org>,  Ani Sinha <anisinha@redhat.com>,  Zhao Liu
- <zhao1.liu@intel.com>,  Peter Xu <peterx@redhat.com>,  Gerd Hoffmann
- <kraxel@redhat.com>,  Fabiano Rosas <farosas@suse.de>,
- qemu-block@nongnu.org,  "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Laurent Vivier <laurent@vivier.eu>,  Jason Wang <jasowang@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>,  qemu-trivial@nongnu.org,  Stefan
- Hajnoczi <stefanha@redhat.com>,  Mads Ynddal <mads@ynddal.dk>,  Lukas
- Straub <lukasstraub2@web.de>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  Kevin Wolf <kwolf@redhat.com>,  Vladimir
- Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,  Michael Tokarev
- <mjt@tls.msk.ru>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Hanna
- Reitz <hreitz@redhat.com>,  Zhenwei Pi <pizhenwei@bytedance.com>,  Stefan
- Berger <stefanb@linux.vnet.ibm.com>,  Michael Roth <michael.roth@amd.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v6 4/4] qapi: rephrase return docs to avoid type name
-In-Reply-To: <20250711051045.51110-5-jsnow@redhat.com> (John Snow's message of
- "Fri, 11 Jul 2025 01:10:45 -0400")
-References: <20250711051045.51110-1-jsnow@redhat.com>
- <20250711051045.51110-5-jsnow@redhat.com>
-Date: Fri, 11 Jul 2025 15:55:48 +0200
-Message-ID: <877c0eygpn.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uaEQq-00063a-2U
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:08:57 -0400
+Received: from mail-pf1-x442.google.com ([2607:f8b0:4864:20::442])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uaEQm-0005tP-Qd
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:08:54 -0400
+Received: by mail-pf1-x442.google.com with SMTP id
+ d2e1a72fcca58-74b54cead6cso1533765b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 07:08:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752242931; x=1752847731; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=QMUZhfwdRbauaa93S3SRTFEhVzXlgQZWXSfc5DTvMmg=;
+ b=uWiUqQV0njoG5MYINxAvoClzIBhFANtNDkQhzoMOVAMDlTc//loXyK9UFzg1zEk4j1
+ oIQWfLOoBtXqbps0GmvuKj4tw1/TtBjzIRcxo6b46DuVz+k4T71IxyVNMEPnUu1iTCNc
+ gzozY9OsdIbXzGUnx/t0Z6KA/E5M/wBsoD5lPVwFzzLIGkAP1Bpb2CJvEtNWBNttXs5I
+ Uin0Fejy+JjjGvjwZ3cZvvOajazvT7jPTXXHZkUKG1Gud0ughC9Ui0VjXBoGvlwXHaP1
+ 3UpvfaA6IVhn+oVZtIerrITAk4iSA3Nzhsqzg0KiRlqMBdjffCWL17/zeNWlyJj+YWlJ
+ g68g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752242931; x=1752847731;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QMUZhfwdRbauaa93S3SRTFEhVzXlgQZWXSfc5DTvMmg=;
+ b=WT5GV+j11nzAPz+fS5566ogua7pXCs2YfKYtIz80WcwNk5jAuuEZ+TogJxL1qbmTWx
+ zmBkeOeUdtfsgwq+3NvoBfnpaL/CGGTc+enAqvX+pOuLPaMVfUAChnkvxINArg/ABsMF
+ Es4bgn0xXnGPTwI1OQWZrb4JryqH4VdQbndLNHsjD/EuJio3IMR6/7yuCKDwgAG4xtjF
+ rnugPi3FWXy3139dsrg3zWo4JB7CS+4MOEAmq13L1b36UsKmpdE/Cr34xT0zT9WBfuRH
+ knsvMzoYw3hROkFxIAMC3kptozp20z85m7rTkc+dzyL6RO+ThjzSkLjOKI2YgpI/gxUq
+ nzmA==
+X-Gm-Message-State: AOJu0YxbVIDNVK6vkkYcClnwGgt97MCVeQdlf69SQDFxCCqWaRWu5K2Y
+ 0kNAnnq5wQmirhgrwC5EFyzYWh72pTdoelbblcnIn+Y166qw2OkNB0wXaFDxytnKr/4=
+X-Gm-Gg: ASbGnctCCUCD+IbmbLKcvWZVX0Q0C3hOI2IaahmdEob47q+rNKs5H3yXesxye/fOSv/
+ MKeEO4vqt4i8oJLOuJ/cS3mUVOyOY+2FhHuiaAw2ydmo6Qu+yrTxD/Cu/Z01pynfjdXZfiYdFYP
+ iZVCWk/xbxGhRHAV909PxGBt9JXp8Oy0MHxjOX1PQ/yT+Ahq3pHGyKZbbjawwJgebgHbGXnTO5r
+ tvNTgu4kGV//urHO5H2h7WZ2hA76skTnzFXu6qVAh5TFVmhEWOacSrsWMJ3SUexfyMrr3dASdgK
+ DBO42TFwl1Vt9iZiwJWdkjNzQX9FnqrFV2mNYOaD3dcp8UNRuja1BEFWztdmunFXHpSGLDNNCsl
+ yxHpZOsXuj9Le6l2edN6XUwCoGji50bGlaaD8weQPiudRHV+rtTZ1V7mfCg==
+X-Google-Smtp-Source: AGHT+IHZ137PLyHh7NqdG3sMmdhVAm+MWYlcrvh+sYlSncmd2oURWpCvrkBplRLc+PLRn6mkXSbSrA==
+X-Received: by 2002:a05:6a20:12d6:b0:220:33e9:15da with SMTP id
+ adf61e73a8af0-2311e04b261mr6087823637.2.1752242931015; 
+ Fri, 11 Jul 2025 07:08:51 -0700 (PDT)
+Received: from gromero0.. (189-47-46-41.dsl.telesp.net.br. [189.47.46.41])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-74eb9dd5d3esm5702280b3a.4.2025.07.11.07.08.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 11 Jul 2025 07:08:50 -0700 (PDT)
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: qemu-arm@nongnu.org, richard.henderson@linaro.org, alex.bennee@linaro.org,
+ peter.maydell@linaro.org
+Cc: qemu-devel@nongnu.org,
+	gustavo.romero@linaro.org
+Subject: [PATCH-for-10.1 v7 0/6] target/arm: Add FEAT_MEC to max cpu
+Date: Fri, 11 Jul 2025 14:08:22 +0000
+Message-Id: <20250711140828.1714666-1-gustavo.romero@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::442;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x442.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,108 +98,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Since v4:
 
-> Well, I tried. Maybe not very hard. Sorry!
+- Moved MECID_WIDTH from cpu.h to internal.h
+- Fixed stray ';'s in access and write functions
+- Use of GET_IDREG/FIELD_DP64/SET_IDREG for setting feature in ID regs
+- Sorted correctly isar_feature_aa64_* AA64MMFR3 tests
+- Simplified/unified accessfn for cache instructions
+- Fixed how cache instruction-related registers are registered in the cpu
 
-Recommend to explain *why* we want to avoid the type name.
+Since v5:
 
-  "Returns: <description>" is rendered like "Return: <Type> =E2=80=93
-  <description>".  Mentioning the type in the description again is
-  commonly redundant.  Rephrase such descriptions not to.
+- Fixed missing checks for ARM_FEATURE_EL3 in sctlr2_el2_access and
+  tcr2_el2_access functions
 
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  qapi/block-core.json   | 6 +++---
->  qapi/block-export.json | 2 +-
->  qapi/block.json        | 2 +-
->  qapi/control.json      | 5 ++---
->  qapi/dump.json         | 5 ++---
->  qapi/introspect.json   | 6 +++---
->  qapi/job.json          | 2 +-
->  qapi/misc-i386.json    | 2 +-
->  qapi/misc.json         | 5 ++---
->  qapi/net.json          | 2 +-
->  qapi/pci.json          | 2 +-
->  qapi/qdev.json         | 3 +--
->  qapi/qom.json          | 8 +++-----
->  qapi/stats.json        | 2 +-
->  qapi/trace.json        | 2 +-
->  qapi/ui.json           | 2 +-
->  qapi/virtio.json       | 6 +++---
->  17 files changed, 28 insertions(+), 34 deletions(-)
->
-> diff --git a/qapi/block-core.json b/qapi/block-core.json
-> index d64f482d9bd..f18db3149a3 100644
-> --- a/qapi/block-core.json
-> +++ b/qapi/block-core.json
-> @@ -763,7 +763,7 @@
->  #
->  # Get a list of BlockInfo for all virtual block devices.
+Since v6:
+ 
+- Added missing feature checks in aliases[] that made 'make check' fail in v6 (pmm)
+- Set feature bits in SCR_EL3 in arm_emulate_firmware_reset for Linux (pmm)
+- Rebased on pmm's target-arm.next
 
-Mentioning the type in the intro is commonly just as redundant as in
-Returns:.
+v1: https://mail.gnu.org/archive/html/qemu-devel/2025-06/msg04598.html 
+v2: https://mail.gnu.org/archive/html/qemu-devel/2025-07/msg01799.html
+v3: https://mail.gnu.org/archive/html/qemu-devel/2025-07/msg02338.html
+v4: https://mail.gnu.org/archive/html/qemu-devel/2025-07/msg02488.html
+v5: https://mail.gnu.org/archive/html/qemu-devel/2025-07/msg02689.html
+v6: https://mail.gnu.org/archive/html/qemu-devel/2025-07/msg02731.html
 
->  #
-> -# Returns: a list of @BlockInfo describing each virtual block device.
-> +# Returns: a list describing each virtual block device.
 
-"A list" is arguably just as redundant as the list's element type.
+This series adds support for all FEAT_MEC registers and cache instructions to
+the Arm64 max CPU.
 
-The entire line is pretty redundant with the intro.
+It includes the FEAT_MEC registers and cache maintenance instructions, but does
+not modify the translation regimes to support the MECIDs, so no encryption is
+supported yet. However, software stacks that rely on FEAT_MEC should work
+properly at this point.
 
->  #     Filter nodes that were created implicitly are skipped over.
->  #
->  # Since: 0.14
-> @@ -1168,7 +1168,7 @@
-   ##
-   # @query-blockstats:
-   #
-   # Query the `BlockStats` for all virtual block devices.
-   #
-   # @query-nodes: If true, the command will query all the block nodes
-   #     that have a node name, in a list which will include "parent"
-   #     information, but not "backing".  If false or omitted, the
-   #     behavior is as before - query all the device backends,
-   #     recursively including their "parent" and "backing".  Filter
->  #     nodes that were created implicitly are skipped over in this
->  #     mode.  (Since 2.3)
->  #
-> -# Returns: A list of @BlockStats for each virtual block devices.
-> +# Returns: A list of statistics for each virtual block device.
+I'm currently exploring possibilities to support FEAT_MEC encryption (or
+obfuscation, for testing purposes) in QEMU for the various translation regimes
+on arm64, hence the encryption part of FEAT_MEC will be contributed later and is
+not targeted for QEMU 10.1.
 
-Again, the entire line is pretty redundant with the intro.
 
->  #
->  # Since: 0.14
->  #
-> @@ -1440,7 +1440,7 @@
->  #
->  # Return information about long-running block device operations.
->  #
-> -# Returns: a list of @BlockJobInfo for each active block job
-> +# Returns: a list of job info for each active block job
+Cheers,
+Gustavo
 
-Best not to abbreviate "information" to "info".
+Gustavo Romero (6):
+  target/arm: Add the MECEn SCR_EL3 bit
+  target/arm: Add FEAT_MEC registers
+  target/arm: Add FEAT_SCTLR2
+  target/arm: Add FEAT_TCR2
+  target/arm: Implement FEAT_MEC cache instructions
+  target/arm: Advertise FEAT_MEC in cpu max
 
->  #
->  # Since: 1.1
->  ##
+ docs/system/arm/emulation.rst |   5 +
+ target/arm/cpu-features.h     |  15 +++
+ target/arm/cpu.c              |   9 ++
+ target/arm/cpu.h              |  27 ++++
+ target/arm/helper.c           | 236 ++++++++++++++++++++++++++++++++++
+ target/arm/internals.h        |  23 ++++
+ target/arm/tcg/cpu64.c        |   7 +-
+ 7 files changed, 321 insertions(+), 1 deletion(-)
 
-I need to stop here to take care of another series.  Gut feeling so far:
-right direction, doesn't go far enough.
-
-Choices:
-
-* Go far enough.  Too close to the freeze for that, I'm afraid.
-
-* Merge it basically as is, come back later to finish the job.
-
-* Drop it for now, adjust your "QAPI: add cross-references to qapi docs"
-  to enclose the type names not removed in `backquotes`.
-
-Thoughts?
-
-[...]
+-- 
+2.34.1
 
 
