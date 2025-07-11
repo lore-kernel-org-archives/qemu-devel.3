@@ -4,97 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 063C2C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 16:18:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D209EC83F1B
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 16:30:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaGRI-0000GE-1V; Fri, 11 Jul 2025 12:17:32 -0400
+	id 1uaGd5-0005nH-F3; Fri, 11 Jul 2025 12:29:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uaGPN-0006ic-4k
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 12:15:36 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uaGcq-0005ek-G0
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 12:29:28 -0400
+Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uaGPK-0006RN-Ql
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 12:15:32 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-749068b9b63so1632583b3a.0
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 09:15:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uaGcm-0001HE-4j
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 12:29:28 -0400
+Received: by mail-oi1-x22e.google.com with SMTP id
+ 5614622812f47-40ba3d91c35so1286459b6e.3
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 09:29:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752250526; x=1752855326; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Q6HBYgpqhq43kLP/CAjgQ8dfvFOzmWLdH7bSoaJLU9A=;
- b=E9NOa5L8/ke44hE1Mx1HAYa9yvEOxJHjmnUAIEQT1o7+BDYl48PwdSbiiAeWPPq1oV
- ZTVGWZyS/9LSmMrHAESgSgxWidqgwA+RGN7SFnA6PEPysU05LffvH9D5oF9wtmCO1FyQ
- qnnvxvPH6QP369F43qRRuOI+9O/uz8/GFoymUXJeL3txvcDWXkRW9hPispI6ricV9TjE
- itopIXJoMTRJoocsgdWL6ZSQVENl1sMLtF370Ie4fFKLfLsjJi5LZETJQthPUh4SYs6P
- a6iXwPkwmBof4+/4//Ar8PmUr5XShFLecLHbs8YHYWUIHAAiBj5uVulefv9JrCKXD7YQ
- wLgg==
+ d=linaro.org; s=google; t=1752251362; x=1752856162; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=mHUslz45xxbHm+hnKGeBnOWg3i2fGj+tAkUWRmPbBvU=;
+ b=sIRjvhocc4CB5n/LRl9fHE8c+VZhV+5copzcnX6pVwwpAa3jnsqvxt3wjHBNQxuau3
+ XHKXQm1xMoMVKUZG1Y1GLOWsa9x09slZAncqtL1wBTSh6iUlbdHDQCH2JHZtjvlGC1cU
+ x+caCbrcddRiei0QRFjNS9hr3xh4Ni6RTqIQiJiwVrKFXowsO6okAfn3tKVlTNWj5zIv
+ zimLIbpjq5o0Yl2yJnAPli/k3VbWlS2Z9mTlppbfFRMfWYNrg6TkUZ7X9pfZLdnpWk2V
+ Hk4zfSQ6CgpYscfM23484hXHFqdtJHSEK2mk2vRBKGfqpXZJ5pBN5/ozYK7h1k/sh7FV
+ 3x1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752250526; x=1752855326;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1752251362; x=1752856162;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Q6HBYgpqhq43kLP/CAjgQ8dfvFOzmWLdH7bSoaJLU9A=;
- b=VDoxOB25MegF3X3LhC/e88ij1fXMyEI9KQbJnBPe0PmSydgiKXZ83I9voTOlkKK+D8
- RqYs7CVVN4If09YuwWTAHIvd1Yu6bkkFUSmMJ/cYwHDaGx1Mk0dcatbtBr7rTD0MyVlk
- 24Ij7PXIHmjbjHGLDQjXMO0IQvGraodLfRzDul2YTkr53YNAIPib9ny3DS8XGExrudPu
- +KRs5PodcT/karChpnohozp1tXKfuC57ocFeOhQqDrSXyy7G61htQucJAAeFhJ7DIIW4
- A/dwVbCs5+WStu3Y4PGcngpdsZRnC7RCd/Fs/UIJDHXbtT7ruCUExhiWR5sUhanO5bux
- mGbw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWXkdbwyOO0A37dre9pH4OlhrF79MfxonuP2P3WvbgdgdJqwPYeA5riDNe5zVwAmgJRz0Z8h0yi3AEi@nongnu.org
-X-Gm-Message-State: AOJu0Ywobf4HZCaLfoJx9tAmeFJaSG7LRApCwjZ04GT6Yavu8kIRYxEr
- xey7e2dOOobqoY2KyKWuRZ3qJvFOYt1DIZ859Vu7NO8piiDO4sQB9ymBLOMi8fqHNwg=
-X-Gm-Gg: ASbGncuv1geDUTZtRJ51+aBsmJrjCiHFRj6N7wU0M+jiXXQ3lQW5mUUYSVHos0LSC1Q
- drHAalK7m7vFH60sevwctHpoitqI336ZMBisV1qxdfTjw678mJNJqkw+Fzyf60IYf7rZxH8Qvmp
- YYig17N66oVYFbq2idhSTaWVh23ZGYT0yN2K2R16mfjiBu1L39tullb9RfcU0ToX3Hnig8EDHlC
- rBX/jSLRI91uj1oN2ENC+38q0zxlk9qYyIA5eG/RawnFtKwhbi8hDaSX5eeIZFsCJ0cjASvY1qL
- Kw6FYT4jZjrYJWjHNNPqwRrPJ+yTq7h9x+npnQDIY/ysWpQUHOaIrbnFWVTMEU1zgWCibWuvySD
- QylHQD9DODmVPNt7gr+4FnTb8M2ffZ1Wpz/8=
-X-Google-Smtp-Source: AGHT+IEH0TJ0IGqQC5mKu0bwf52NWNFjYMZCjL8FYQWrqLmizGzABahU5kJw6M6w2Yx38N79ed6zpQ==
-X-Received: by 2002:a05:6300:6c09:b0:231:c295:136d with SMTP id
- adf61e73a8af0-231c29523bdmr2635525637.14.1752250525789; 
- Fri, 11 Jul 2025 09:15:25 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74eb9e06bd7sm5798268b3a.70.2025.07.11.09.15.24
+ bh=mHUslz45xxbHm+hnKGeBnOWg3i2fGj+tAkUWRmPbBvU=;
+ b=tM3ADdnYR0HZDSoWVHkx4wiHi8FAcbMht3xhOSZgpfuPBSt6yStndjzQBKH9d1KdZw
+ eiHcVTVYfyQxH0EGCYk8WA5q8F4+Nj/hbegUcpDQkjdcXoYJ0TjPahRCQ21ODkkCyz0X
+ r/9SIY9AbKcBqjYNL09evEgzV5aKNDd7GGxEDKFnyeR+26Ka1EZB3T/Zh4qeyu2Nfu27
+ 6ArecUxGa3FwgQCAUfPK/9h0kQJzd4XVNZw61Rnj4pJQKd3nR3aGIs+hWc9ggcqdJsfm
+ z9Qg76XeLJC6wrmiEzOKR1EOm/z+EaRQVGDwyFUxha5SDOrrkZEQ4N/hZxJpqKFYXJl0
+ LUMA==
+X-Gm-Message-State: AOJu0Yx9jEeXScpHglYd3Jy11bNlR33P8LljS180V37ns8FoMt0qkqgA
+ ZG5KIjrtyH6Rc4nJ4CAbe+7STbE6pdQzaAjDQnyt9xhsI0NDFhh5CVW8kpxyGY0R/1qiu9MWaxc
+ pbBVQZGE=
+X-Gm-Gg: ASbGncsuhHnuQL2r1ORDxPPWQgntIwOjgzZj0pziVBqUIMlLTBXisQjds4XT8zt8pRz
+ cHMB+gFfbq+7KU5gcF/FFmw+pMJD06rHWk4sQWiZN6DmNbogtnbUbfo3H/gzfo8xKLbe0KPm4f7
+ lTTswmIy9CNK6DkbNrItT2RvIWo9FON1dZCk21v7++xAFaUcvqrEcZTwaMK/V6hTE6vUAQAOo17
+ nEkHI1Pgw/jo1VGorzd3w1G1DpCLbeA14FwLk7K4AQFykfOd8BmGLwViC45J6B4BN0oV33SwuGk
+ SHdLKs+w13GxF8XKT28ypyrtENW9dC8pvsMwY7NU1htG6sOu5NoI8Mri0dOIiKSjdCvyLkuppVN
+ hwBU1dHyGGfcyrE+03VwES+xBMAFpRM+2vwo7F0buRxtwAyK8uJ1YF3Skfl1Rb/PW7Y9izrs04w
+ l1
+X-Google-Smtp-Source: AGHT+IFkB9VvXjlhcpKONTqmCxjIoVDav/UctGP1YVpC6fm4pbaoqB2n1txFwepu/VpmMTOApVZewA==
+X-Received: by 2002:a05:6808:3998:b0:40c:fcbd:61a4 with SMTP id
+ 5614622812f47-41537277e36mr2479838b6e.2.1752251362341; 
+ Fri, 11 Jul 2025 09:29:22 -0700 (PDT)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-41418c0ca00sm569697b6e.9.2025.07.11.09.29.21
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Jul 2025 09:15:25 -0700 (PDT)
-Message-ID: <6d3cef20-9655-462b-8418-55e68caafea7@linaro.org>
-Date: Fri, 11 Jul 2025 09:15:24 -0700
+ Fri, 11 Jul 2025 09:29:22 -0700 (PDT)
+Message-ID: <98e6e5b0-f786-4a28-ba2c-c35bc58d00cb@linaro.org>
+Date: Fri, 11 Jul 2025 10:29:19 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] tests/functional: Move tests into architecture
- specific folders
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
- qemu-riscv@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20250710094251.139514-1-thuth@redhat.com>
- <643f1db1-4a7a-4bc0-a187-9ff1561f8a3d@linaro.org>
- <8f90fbd7-1edd-45cc-9540-06fd9d0ee978@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH] linux-user: Use qemu_set_cloexec() to mark pidfd as
+ FD_CLOEXEC
+To: qemu-devel@nongnu.org
+References: <20250711141217.1429412-1-peter.maydell@linaro.org>
 Content-Language: en-US
-In-Reply-To: <8f90fbd7-1edd-45cc-9540-06fd9d0ee978@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250711141217.1429412-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,63 +104,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/11/25 4:55 AM, Thomas Huth wrote:
-> On 10/07/2025 17.51, Pierrick Bouvier wrote:
->> On 7/10/25 2:42 AM, Thomas Huth wrote:
->>> This patch tackles two issues. First, the tests/functional folder has
->>> become quite crowded already, some restructuring would be helpful here.
->>> Second, we currently encode the target architecture twice in the test
->>> names since a lot of the test file names contain the target, too.
->>> This contributes to the very long output lines when running "make
->>> check-functional".
->>>
->>
->> I agree with the "crowded" aspect of functional tests, and subfolders are
->> definitely welcome.
->>
->> Concerning the long line, it seems that setup ("thorough" in this example)
->> is repeated 3 times on it, which is a bigger issue than having arch name
->> being repeated.
->>
->> A simpler solution for the "long line" issue would be to change
->> mtest2make.py to generate shorter test target names. This would not benefit
->> for using meson test directly, but from what I understood, this is not
->> recommended nor supported anyway.
+On 7/11/25 08:12, Peter Maydell wrote:
+> In the linux-user do_fork() function we try to set the FD_CLOEXEC
+> flag on a pidfd like this:
 > 
-> I agree that this is a bigger annoyance here, but as far as I understood
-> that that repeated "thorough" term is just a listing of all the test suites
-> that the test is part of. I think this would rather need to be fixed on the
-> meson test runner side - why does meson list all test suites here? The one
-> that applies to the current should be enough, shouldn't it?
->
-
-Meson is usually explicit (thus sometimes verbose) and unambiguous, 
-which are two very nice virtues, especially for build systems and tests, 
-at least for my personal taste. You don't want to spend time reverse 
-engineering the test infrastructure itself when you try to understand 
-why a fail happened or when writing a new test.
-
-Another additional benefit of listing setup + suite + test in an 
-exhaustive way is that your command line never change to run any 
-specific test, whatever your current setup is.
-
-If I had to choose between a wider terminal output and spending time 
-with grep and find to understand what is running, I would pick the 
-former any time.
-
-Maybe the complexity comes from our usage of test setups here, to 
-differentiate categories that will download, vs the one that will not. 
-We already talked about that in another thread, and I still think that 
-having a single setup (thorough), which could be the default, would make 
-things easier, even if people should accept to connect to Internet from 
-time to time to update their tests assets. They do it to download new 
-versions of QEMU or interact with the mailing list anyway. That said, 
-I'm not trying to open the can of worms again, just pointing that it may 
-be related to this topic.
-
->    Thomas
+>      fcntl(pid_fd, F_SETFD, fcntl(pid_fd, F_GETFL) | FD_CLOEXEC);
 > 
+> This has two problems:
+>   (1) it doesn't check errors, which Coverity complains about
+>   (2) we use F_GETFL when we mean F_GETFD
+> 
+> Deal with both of these problems by using qemu_set_cloexec() instead.
+> That function will assert() if the fcntls fail, which is fine (we are
+> inside fork_start()/fork_end() so we know nothing can mess around
+> with our file descriptors here, and we just got this one from
+> pidfd_open()).
+> 
+> (As we are touching the if() statement here, we correct the
+> indentation.)
+> 
+> Coverity: CID 1508111
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   linux-user/syscall.c | 5 ++---
+>   1 file changed, 2 insertions(+), 3 deletions(-)
 
-Regards,
-Pierrick
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
