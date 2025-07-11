@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 958DDC83F1B
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 13:40:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE0D1C83F1B
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 13:40:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaDub-0005RK-2t; Fri, 11 Jul 2025 09:35:37 -0400
+	id 1uaDuy-0006eA-9L; Fri, 11 Jul 2025 09:36:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uaDtm-0004P6-PD
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:34:47 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1uaDu7-0004Xq-KH
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:35:11 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uaDtk-000312-N8
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:34:46 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-453643020bdso16147595e9.1
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 06:34:44 -0700 (PDT)
+ id 1uaDu5-0003Nf-OG
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:35:07 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-454f428038eso6894685e9.2
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 06:35:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752240883; x=1752845683; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752240904; x=1752845704; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=zCEHngMuEKAJlSIQienwre2JI7I+N6ggKt6meJEzMfI=;
- b=EnT1zqo+5WWz9UmA2/Ns/dhG0yWBcxC+t0f3NiAugqFRwQi/6TUDvKBCBsl8kinWID
- VE6EgIS3nvqpKKm9FjY0FOnbLm+HyOcGWzXzrT6ELFM0NP7UvF+BR4RLS8lt5EGulYS4
- akVLQtiWSZXnnnFBEseq5c5TyK2BNdlllQrd4WnTipzHLTcC8NG1XfXEse9Q5WHopnUS
- gFAUZKf7arXVffXMr75OlnCOV8UUtj47KyNkOJWw/AunkRvLPZDET/7zlxmyvAWejAru
- uPbZLlvi3+VmjdoGHT8GEDOajTe8lL/VF3fHm//7tIgzHOtnYExoBP/vwiPfY0nBbTad
- uCtg==
+ :reply-to; bh=3KkAwbN1hZEC2FoNhPdG0KBNKiVsXfiwU6S1weZwVek=;
+ b=YOlY1Syfewh5mmGUwk/O8puHGAC1KMzX/PUNkLXSZaZcfXX1MaGeUVqYK0kIWEniIM
+ FDiM2dDbJi9CNZ36k30QwwjNII7KdmjlamERIEWGpWoFK2b2nwy82lwo1zIq9NkZyARb
+ dZJUl+o7q9P/8zkUVXrlnp4GHMQSJODowyBQZjvHMMtlmftQD2s5nmqQwm4Thn1hBGDm
+ iHn+n93zXV2WhrVOLtdIWgT/ZHm79eZxo+wY7vr7W4hiUiqgtRk2l50OSSxx5rP4JRqT
+ 3byukVjIA4aWSterbQKUCAe5vxnSlTsJGsR44HJ+6NykGAtjLwxaiLjQvLTx6gyf9pQR
+ sI3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752240883; x=1752845683;
+ d=1e100.net; s=20230601; t=1752240904; x=1752845704;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zCEHngMuEKAJlSIQienwre2JI7I+N6ggKt6meJEzMfI=;
- b=SvIgmNA3SlNWs2Yn764c7gF11GzrWBAsk5kquEkkWWzcRMOLMF8da+Z+rsyXV3zLUe
- P3Octqu0J9jPulW4c+J9YjIvspRLahcJlCq+GKYZNa8Jief2ut/YAZILqIKbmb0jojKB
- WSnXXJEkjBvGWshwX2mnEmt61VlgOFc1W0b9u3mp/a8Txl7MtngeU9cxbfIFmeOZscon
- 3m+7s9t9d4G7GsDTKA2OjPP9KJ8AqWfmcHe5zcsCTD1QYE7Bzt//MikyH6SRPlaiXfUW
- jaN7WW4PRVUgiqMHpcjFqKAc6epyxCZJPKdEUY6aUCt0oiEe+DI4FoTTK4B7XmLU8FbU
- RWeA==
-X-Gm-Message-State: AOJu0YxAvPRvJi/HfWxZPinqGlqEZMf8oK+q/4FpUnTrbx3VoKWRyPpE
- eAODiFzd6Xhb6C0UVjOgyVkplcMv3CVNYmd4ow4ySVZeD//ID/pYP522AkbJRYBsTnm3tvshZOi
- 2rMpZ
-X-Gm-Gg: ASbGnctdCMvAAks77mcZg96oDBm5n/fC11b7CJM7oknGPlnAlgWLrD7MhAiqrHWmqxT
- EAAOf7QDnc6NPJx7VFMWuw5V7/d6PIWECzZW9YlTeRRox01VKXQsbxK+JgldroXNy8fpCFjejh2
- 1RgatKCgGb1ry4sFrFHb62E4xnLq8q7d3+oF5pgCzk0nkoEB2FjoSLHw5sFJgrP5pwrqwo4Hfh+
- C2LhkDFNLT738217LDeCiNt7u5CMA2wv4dFFooe+5E6uKq29k0wsfASF2DMgLv0fyF6Pxzy9Pt9
- g/gujsYCbKG2ukPYRkiDLPsjO6PLSjKDyL8gLs6wcbsOa7DqJYASPlreWfaGE6+dpr3NXuT+IZZ
- luKjHWviFeNjRHDgwtmnQ2WtBgiDY
-X-Google-Smtp-Source: AGHT+IFw9iz8Ys08C1N3M3LAAbJ7jMt/1HR0hixOL0zF87fHcXhqrVQtz9roarpJ5GgIDNZBbZbSkQ==
-X-Received: by 2002:a05:600c:628e:b0:43c:fceb:91a with SMTP id
- 5b1f17b1804b1-454f42814bamr29962765e9.11.1752240883231; 
- Fri, 11 Jul 2025 06:34:43 -0700 (PDT)
+ bh=3KkAwbN1hZEC2FoNhPdG0KBNKiVsXfiwU6S1weZwVek=;
+ b=JEnFVST41F3Ih1X6sW4Z/FIYZk28jNfS2zdiiGoN1LcsrtkiP1Nz+I1LbUPvcN4LNe
+ cy4VR1F9NQo3ckV2QyVs0CXGidKKJyZ4te6S9ndJl4fGwK8ML9AxP81I7ujaOe5be6oK
+ AKKlcjVD7u/K3uXFMDt8PhfyN6iB/vukZ0/sQbHAoa45xPuNvDOd2J4I1qRp2BdWKF0q
+ GAnRrfdeVEvPTqihcp2Mb1ci1tyN8pSZT1PC/iWkGiU8fdTivgJ3qUqim9LuxEdUJfBT
+ 1QPXYz9gVIrJtJdc2uxi39j7XPbrb+RBPxsdQpFGtQK+bH/hV8bCEgMySYBT++IQvVMl
+ /c/g==
+X-Gm-Message-State: AOJu0YzbPGVqd8X+i9oXb/r1xsmjZvQT2XEeVaD9YTIctMjolZoDVC0j
+ 7GRrOPmTcWil6BLWWnINq4rNT+i5F0CZqhJOPTZmkhcwSNiO2aGZtvYg+krtCU5DnckqVNnEnff
+ R8SZx
+X-Gm-Gg: ASbGncs8h74jTsWlQAsylWoF+euS7ERToMKkxrOpG1E+Skt+gwwpdKh4k+kpJXKntRt
+ LCeVsozwdZggSSXT4DdvpHy873RzV+lvR2b2PE7RBRNec8vIG4t0cF45baR5lCX6GjMoPp8Xaoq
+ SlIVSAu4akhyl813UPBmv1hBIHiuDlcNpC7rJZv4wFNaEASqhcsFU8ngNdjmzUtO4iLXahKuX51
+ wefpvMNO9h40J/HAkZ5tP7kE5XdphaFKg0lzPav7dpjnBGibgC4VCEdV4D9CC/RcpWWE29KJxii
+ BiVfcxRTZAy+Q02qGFIm2kcivNAMSXaFbHVmjT9c9q66lIuM5ylvpPzoD2QwPeA/U1f1qzYZux2
+ oF/WvmtzIjtPEm0LqvTT/KPP1tdbE
+X-Google-Smtp-Source: AGHT+IE6H5Gc5o93MnQyjSKh7N465kjYDs/s29fC67QCd+EbdvgQnCIccLkbYv1Ns+gFg3fu2ppmLA==
+X-Received: by 2002:a05:600c:1d14:b0:454:afb1:3bcb with SMTP id
+ 5b1f17b1804b1-455f7ed2d73mr4248325e9.25.1752240903743; 
+ Fri, 11 Jul 2025 06:35:03 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454d50df0cdsm89734145e9.25.2025.07.11.06.34.42
+ 5b1f17b1804b1-454d50df0cdsm89734145e9.25.2025.07.11.06.35.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Jul 2025 06:34:42 -0700 (PDT)
+ Fri, 11 Jul 2025 06:35:03 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 11/36] MAX78000: Add AES to SOC
-Date: Fri, 11 Jul 2025 14:34:04 +0100
-Message-ID: <20250711133429.1423030-12-peter.maydell@linaro.org>
+Subject: [PULL 31/36] hw/arm/virt: Allow virt extensions with KVM
+Date: Fri, 11 Jul 2025 14:34:24 +0100
+Message-ID: <20250711133429.1423030-32-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250711133429.1423030-1-peter.maydell@linaro.org>
 References: <20250711133429.1423030-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,76 +99,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jackson Donaldson <jackson88044@gmail.com>
+Up to now virt support on guest has been only supported with TCG.
+Now it becomes feasible to use it with KVM acceleration.
 
-This commit adds AES to max78000_soc
+Check neither in-kernel GICv3 nor aarch64=off is used along with KVM
+EL2.
 
-Signed-off-by: Jackson Donaldson <jcksn@duck.com>
+Signed-off-by: Haibo Xu <haibo.xu@linaro.org>
+Signed-off-by: Miguel Luis <miguel.luis@oracle.com>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250707164129.1167837-6-eric.auger@redhat.com
+[PMM: make "kernel doesn't have EL2 support" error message
+ distinct from the old "QEMU doesn't have KVM EL2 support" one]
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20250704223239.248781-12-jcksn@duck.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/arm/max78000_soc.h |  2 ++
- hw/arm/max78000_soc.c         | 12 +++++++++---
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ hw/arm/virt.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/arm/max78000_soc.h b/include/hw/arm/max78000_soc.h
-index 528598cfcbe..a203079ee9a 100644
---- a/include/hw/arm/max78000_soc.h
-+++ b/include/hw/arm/max78000_soc.h
-@@ -11,6 +11,7 @@
- 
- #include "hw/or-irq.h"
- #include "hw/arm/armv7m.h"
-+#include "hw/misc/max78000_aes.h"
- #include "hw/misc/max78000_gcr.h"
- #include "hw/misc/max78000_icc.h"
- #include "hw/char/max78000_uart.h"
-@@ -41,6 +42,7 @@ struct MAX78000State {
-     Max78000IccState icc[MAX78000_NUM_ICC];
-     Max78000UartState uart[MAX78000_NUM_UART];
-     Max78000TrngState trng;
-+    Max78000AesState aes;
- 
-     Clock *sysclk;
- };
-diff --git a/hw/arm/max78000_soc.c b/hw/arm/max78000_soc.c
-index 3f2069fb039..7f1856f5ba1 100644
---- a/hw/arm/max78000_soc.c
-+++ b/hw/arm/max78000_soc.c
-@@ -45,6 +45,8 @@ static void max78000_soc_initfn(Object *obj)
- 
-     object_initialize_child(obj, "trng", &s->trng, TYPE_MAX78000_TRNG);
- 
-+    object_initialize_child(obj, "aes", &s->aes, TYPE_MAX78000_AES);
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index c9f39919370..8070ff7b113 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -797,6 +797,13 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+     default:
+         g_assert_not_reached();
+     }
 +
-     s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
- }
- 
-@@ -133,6 +135,13 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
- 
-     object_property_set_link(OBJECT(gcrdev), "trng", OBJECT(dev), &err);
- 
-+    dev = DEVICE(&s->aes);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), errp);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x40007400);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(armv7m, 5));
++    if (kvm_enabled() && vms->virt &&
++        (revision != 3 || !kvm_irqchip_in_kernel())) {
++        error_report("KVM EL2 is only supported with in-kernel GICv3");
++        exit(1);
++    }
 +
-+    object_property_set_link(OBJECT(gcrdev), "aes", OBJECT(dev), &err);
+     vms->gic = qdev_new(gictype);
+     qdev_prop_set_uint32(vms->gic, "revision", revision);
+     qdev_prop_set_uint32(vms->gic, "num-cpu", smp_cpus);
+@@ -2092,6 +2099,10 @@ static void virt_post_cpus_gic_realized(VirtMachineState *vms,
+             memory_region_init_ram(pvtime, NULL, "pvtime", pvtime_size, NULL);
+             memory_region_add_subregion(sysmem, pvtime_reg_base, pvtime);
+         }
++        if (!aarch64 && vms->virt) {
++            error_report("KVM does not support EL2 on an AArch32 vCPU");
++            exit(1);
++        }
+ 
+         CPU_FOREACH(cpu) {
+             if (pmu) {
+@@ -2237,7 +2248,13 @@ static void machvirt_init(MachineState *machine)
+         exit(1);
+     }
+ 
+-    if (vms->virt && !tcg_enabled() && !qtest_enabled()) {
++    if (vms->virt && kvm_enabled() && !kvm_arm_el2_supported()) {
++        error_report("mach-virt: host kernel KVM does not support providing "
++                     "Virtualization extensions to the guest CPU");
++        exit(1);
++    }
 +
-     dev = DEVICE(&s->gcr);
-     sysbus_realize(SYS_BUS_DEVICE(dev), errp);
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x40000000);
-@@ -148,9 +157,6 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
-     create_unimplemented_device("powerSequencer",       0x40006800, 0x400);
-     create_unimplemented_device("miscControl",          0x40006c00, 0x400);
- 
--    create_unimplemented_device("aes",                  0x40007400, 0x400);
--    create_unimplemented_device("aesKey",               0x40007800, 0x400);
--
-     create_unimplemented_device("gpio0",                0x40008000, 0x1000);
-     create_unimplemented_device("gpio1",                0x40009000, 0x1000);
- 
++    if (vms->virt && !kvm_enabled() && !tcg_enabled() && !qtest_enabled()) {
+         error_report("mach-virt: %s does not support providing "
+                      "Virtualization extensions to the guest CPU",
+                      current_accel_name());
 -- 
 2.43.0
 
