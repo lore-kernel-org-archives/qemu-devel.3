@@ -4,106 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59EA1C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 21:21:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 756ECC83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 21:58:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaL2N-0000zs-Mo; Fri, 11 Jul 2025 17:12:07 -0400
+	id 1uaLke-0007xF-Jq; Fri, 11 Jul 2025 17:57:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1uaL29-0000mJ-Le; Fri, 11 Jul 2025 17:11:55 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
+ id 1uaLee-0004ms-FC; Fri, 11 Jul 2025 17:51:40 -0400
+Received: from mailout11.t-online.de ([194.25.134.85])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1uaL25-0002zm-Uq; Fri, 11 Jul 2025 17:11:52 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56BIoSdV003186;
- Fri, 11 Jul 2025 21:11:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=1ExRaFO3p3Yfv6Xmr
- OdLRvNGWnXAQ2Y+muIM72B4Z8U=; b=jiiFuhuEwKyJOQP2vMt2sguiFSaCNMrNN
- 1VPqhZCU9jGaCmWwfnV8oLLmm6pNkeUHVH5Z6lvUmivOpzVr5rbflOvfU7n117Yq
- zUN1fAaM2dihW4k0bVt26clAIh12mZIQaCcPU1x1z8izL77WDTLRgdKEfaUVT3h8
- 9oMQGCSjN183Zr0F9xgGvVrSI2qeTy1pvY8XUFJPBEAzmRzVI3kOQbfdx9bJsAam
- 99HcXSaQdzuGKFM37XNFX2qYbMKck+nsAKYjoaHpiAfOyYf9uaTtzRG7VbqK5aff
- LRp8338WzvsZqXQSWGv7TeWiDDn13U6yCmI5UVGl8G0eDYsqUKEqg==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47puk4n6u9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Jul 2025 21:11:47 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56BJkiIH002847;
- Fri, 11 Jul 2025 21:11:46 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47qfvmved5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Jul 2025 21:11:46 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 56BLBiIw22151696
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 11 Jul 2025 21:11:45 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D968F58059;
- Fri, 11 Jul 2025 21:11:44 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 68FB35805B;
- Fri, 11 Jul 2025 21:11:43 +0000 (GMT)
-Received: from fedora-workstation.ibmuc.com (unknown [9.61.25.251])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 11 Jul 2025 21:11:43 +0000 (GMT)
-From: Zhuoying Cai <zycai@linux.ibm.com>
-To: thuth@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
- david@redhat.com, pbonzini@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, zycai@linux.ibm.com
-Subject: [PATCH v4 21/28] s390x: Guest support for Secure-IPL Code Loading
- Attributes Facility (SCLAF)
-Date: Fri, 11 Jul 2025 17:10:57 -0400
-Message-ID: <20250711211105.439554-22-zycai@linux.ibm.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250711211105.439554-1-zycai@linux.ibm.com>
-References: <20250711211105.439554-1-zycai@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
+ id 1uaLec-0003YW-2W; Fri, 11 Jul 2025 17:51:40 -0400
+Received: from fwd75.aul.t-online.de (fwd75.aul.t-online.de [10.223.144.101])
+ by mailout11.t-online.de (Postfix) with SMTP id 844861BFA0;
+ Fri, 11 Jul 2025 23:51:30 +0200 (CEST)
+Received: from [192.168.211.200] ([93.236.150.188]) by fwd75.t-online.de
+ with (TLSv1.3:TLS_AES_256_GCM_SHA384 encrypted)
+ esmtp id 1uaLeT-34Quw50; Fri, 11 Jul 2025 23:51:29 +0200
+Message-ID: <4b096e77-ceb0-4bcd-a288-e110565c957c@t-online.de>
+Date: Fri, 11 Jul 2025 23:51:29 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Stable-10.0.3 00/39] Patch Round-up for stable 10.0.3, freeze on
+ 2025-07-21
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
+References: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
+Content-Language: en-US
+From: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
+In-Reply-To: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzExMDE1NiBTYWx0ZWRfX4Q3SrVyRNsuP
- zZXdAs+4tFZfodnFrJpxTfqN8RunnkcYUYPpldlz/CSatPH5HhodDbVjv32/udAycuIjv4w7FFA
- ZmeNOFlPp5v7lMMBFrAJvLFFRpPSDZGEZHmRU44RVuNrLV8aepBi5MB/YVZjVBDGPyU6fCkEhOh
- CuDX1Kth4XnpBYAvPOBYU9IrSKsbqQCz6Yy85tBjBwnPzCOC6WfOVFfbZOKQcgMJfh2jfZOdZug
- gHfhATB+4EwOV9iV1g29u8WUOnSBL/x0LZ1x3feg/V8CZt+Xd8fF6wwxGOttL/SbJXezgzbGFot
- Zx6rBzEQeaopZPCC7fz6mUtxrezeJjdImx6DiWQA/yX6hSC8mYMFnna2SCjPq8IbQWfgRpTnN4b
- mt7BUTbYY9TdLFlgGW159LW3pXBWtly6Hg4+eVzK2ZSztj28C0Cyv/8+AKdZn/o57HxZJioE
-X-Authority-Analysis: v=2.4 cv=XYeJzJ55 c=1 sm=1 tr=0 ts=68717e13 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=Wb1JkmetP80A:10 a=VnNF1IyMAAAA:8 a=0-YiUMQfkKrkPSOMOgoA:9
-X-Proofpoint-ORIG-GUID: 2xD8DkkLRy-3FfnXnfqxMkOfRD7eSFG0
-X-Proofpoint-GUID: 2xD8DkkLRy-3FfnXnfqxMkOfRD7eSFG0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-11_06,2025-07-09_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 suspectscore=0
- mlxscore=0 impostorscore=0 phishscore=0 bulkscore=0 clxscore=1015
- spamscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507110156
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-TOI-EXPURGATEID: 150726::1752270689-EDFF94D5-3B966F73/0/0 CLEAN NORMAL
+X-TOI-MSGID: 7d264a2f-82d0-4c01-be54-7d1b100d50c6
+Received-SPF: pass client-ip=194.25.134.85; envelope-from=vr_qemu@t-online.de;
+ helo=mailout11.t-online.de
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -121,101 +64,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The secure-IPL-code-loading-attributes facility (SCLAF)
-provides additional security during IPL.
+Am 11.07.25 um 10:15 schrieb Michael Tokarev:
+> The following patches are queued for QEMU stable v10.0.3:
+>
+>   https://gitlab.com/qemu-project/qemu/-/commits/staging-10.0
+>
+> Patch freeze is 2025-07-21, and the release is planned for 2025-07-23:
+>
+>   https://wiki.qemu.org/Planning/10.0
+>
+> Please respond here or CC qemu-stable@nongnu.org on any additional patches
+> you think should (or shouldn't) be included in the release.
 
-Availability of SCLAF is determined by byte 136 bit 3 of the
-SCLP Read Info block.
+Hi Michael,
 
-Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
----
- target/s390x/cpu_features.c         | 1 +
- target/s390x/cpu_features_def.h.inc | 1 +
- target/s390x/cpu_models.c           | 3 +++
- target/s390x/gen-features.c         | 2 ++
- target/s390x/kvm/kvm.c              | 3 +++
- 5 files changed, 10 insertions(+)
+I think commit 0f1d6606c2 ("target/i386: fix TB exit logic in
+gen_movl_seg() when writing to SS") should be included. It fixes a
+regression in stable-10.0.1.
 
-diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
-index 3f3d6a80af..8d5614fa59 100644
---- a/target/s390x/cpu_features.c
-+++ b/target/s390x/cpu_features.c
-@@ -151,6 +151,7 @@ void s390_fill_feat_block(const S390FeatBitmap features, S390FeatType type,
-         break;
-     case S390_FEAT_TYPE_SCLP_FAC_IPL:
-         clear_be_bit(s390_feat_def(S390_FEAT_SIPL)->bit, data);
-+        clear_be_bit(s390_feat_def(S390_FEAT_SCLAF)->bit, data);
-         break;
-     default:
-         return;
-diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
-index 956bd8a123..2e91817d75 100644
---- a/target/s390x/cpu_features_def.h.inc
-+++ b/target/s390x/cpu_features_def.h.inc
-@@ -142,6 +142,7 @@ DEF_FEAT(DIAG_320, "cstore", SCLP_FAC134, 5, "Provide Certificate Store function
- 
- /* Features exposed via SCLP SCCB Facilities byte 136 - 137 (bit numbers relative to byte-136) */
- DEF_FEAT(SIPL, "sipl", SCLP_FAC_IPL, 1, "Secure-IPL facility")
-+DEF_FEAT(SCLAF, "sclaf", SCLP_FAC_IPL, 3, "Secure-IPL-code-loading-attributes facility")
- 
- /* Features exposed via SCLP CPU info. */
- DEF_FEAT(SIE_F2, "sief2", SCLP_CPU, 4, "SIE: interception format 2 (Virtual SIE)")
-diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
-index ab46204d9e..cb1c6b5350 100644
---- a/target/s390x/cpu_models.c
-+++ b/target/s390x/cpu_models.c
-@@ -264,6 +264,7 @@ bool s390_has_feat(S390Feat feat)
-         case S390_FEAT_SIE_PFMFI:
-         case S390_FEAT_SIE_IBS:
-         case S390_FEAT_SIPL:
-+        case S390_FEAT_SCLAF:
-         case S390_FEAT_CONFIGURATION_TOPOLOGY:
-             return false;
-             break;
-@@ -509,6 +510,8 @@ static void check_consistency(const S390CPUModel *model)
-         { S390_FEAT_DIAG_318, S390_FEAT_EXTENDED_LENGTH_SCCB },
-         { S390_FEAT_DIAG_320, S390_FEAT_EXTENDED_LENGTH_SCCB },
-         { S390_FEAT_SIPL, S390_FEAT_EXTENDED_LENGTH_SCCB },
-+        { S390_FEAT_SCLAF, S390_FEAT_EXTENDED_LENGTH_SCCB },
-+        { S390_FEAT_SCLAF, S390_FEAT_SIPL },
-         { S390_FEAT_NNPA, S390_FEAT_VECTOR },
-         { S390_FEAT_RDP, S390_FEAT_LOCAL_TLB_CLEARING },
-         { S390_FEAT_UV_FEAT_AP, S390_FEAT_AP },
-diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
-index 6ee9bad4c6..987e291cf9 100644
---- a/target/s390x/gen-features.c
-+++ b/target/s390x/gen-features.c
-@@ -722,6 +722,7 @@ static uint16_t full_GEN16_GA1[] = {
-     S390_FEAT_UV_FEAT_AP_INTR,
-     S390_FEAT_DIAG_320,
-     S390_FEAT_SIPL,
-+    S390_FEAT_SCLAF,
- };
- 
- static uint16_t full_GEN17_GA1[] = {
-@@ -924,6 +925,7 @@ static uint16_t qemu_MAX[] = {
-     S390_FEAT_EXTENDED_LENGTH_SCCB,
-     S390_FEAT_DIAG_320,
-     S390_FEAT_SIPL,
-+    S390_FEAT_SCLAF,
- };
- 
- /****** END FEATURE DEFS ******/
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index fc9cad32a1..be3ad7316d 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -2523,6 +2523,9 @@ bool kvm_s390_get_host_cpu_model(S390CPUModel *model, Error **errp)
-     /* Secure-IPL facility is handled entirely within QEMU */
-     set_bit(S390_FEAT_SIPL, model->features);
- 
-+    /* Secure-IPL-code-loading-attributes facility is handled entirely within QEMU */
-+    set_bit(S390_FEAT_SCLAF, model->features);
-+
-     /* Test for Ultravisor features that influence secure guest behavior */
-     query_uv_feat_guest(model->features);
- 
--- 
-2.49.0
+The patches
+
+08 7ed96710e82c Daniel P. Berrangé:
+   ui/vnc.c: replace big endian flag with byte order value
+09 70097442853c Daniel P. Berrangé:
+   ui/vnc: take account of client byte order in pixman format
+10 63d320909220 Daniel P. Berrangé:
+   ui/vnc: fix tight palette pixel encoding for 8/16-bpp formats
+
+
+introduce a regression. See the patch at
+https://lore.kernel.org/qemu-devel/20250604162243.452791-2-berrange@redhat.com/.
+This patch is correct but it's still missing in the QEMU master branch.
+
+With best regards,
+Volker
+
+>
+> The changes which are staging for inclusion, with the original commit hash
+> from master branch, are given below the bottom line.
+>
+> Thanks!
+>
+> /mjt
+>
+> --------------------------------------
+> 01 fb8e59abbe46 Jamin Lin:
+>    hw/misc/aspeed_hace: Ensure HASH_IRQ is always set to prevent firmware 
+>    hang
+> 02 e6941ac10619 Jamin Lin:
+>    hw/arm/aspeed_ast27x0: Fix RAM size detection failure on BE hosts
+> 03 9498e2f7e1a2 Weifeng Liu:
+>    ui/gtk: Document scale and coordinate handling
+> 04 3a6b314409b4 Weifeng Liu:
+>    ui/gtk: Use consistent naming for variables in different coordinates
+> 05 a19665448156 Weifeng Liu:
+>    gtk/ui: Introduce helper gd_update_scale
+> 06 8fb072472c38 Weifeng Liu:
+>    ui/gtk: Update scales in fixed-scale mode when rendering GL area
+> 07 30aa105640b0 Weifeng Liu:
+>    ui/sdl: Consider scaling in mouse event handling
+> 08 7ed96710e82c Daniel P. Berrangé:
+>    ui/vnc.c: replace big endian flag with byte order value
+> 09 70097442853c Daniel P. Berrangé:
+>    ui/vnc: take account of client byte order in pixman format
+> 10 63d320909220 Daniel P. Berrangé:
+>    ui/vnc: fix tight palette pixel encoding for 8/16-bpp formats
+> 11 e6bc01777e5a Guenter Roeck:
+>    hw/arm: Add missing psci_conduit to NPCM8XX SoC boot info
+> 12 a9403bfcd930 Huaitong Han:
+>    vhost: Don't set vring call if guest notifier is unused
+> 13 0b006153b7ec Bernhard Beschow:
+>    hw/i386/pc_piix: Fix RTC ISA IRQ wiring of isapc machine
+> 14 31753d5a336f Sairaj Kodilkar:
+>    hw/i386/amd_iommu: Fix device setup failure when PT is on.
+> 15 0f178860df34 Vasant Hegde:
+>    hw/i386/amd_iommu: Fix xtsup when vcpus < 255
+> 16 5ddd6c8dc849 Volker Rümelin:
+>    audio: fix SIGSEGV in AUD_get_buffer_size_out()
+> 17 ccb4fec0e5f2 Volker Rümelin:
+>    audio: fix size calculation in AUD_get_buffer_size_out()
+> 18 d009f26a54f5 Volker Rümelin:
+>    hw/audio/asc: fix SIGSEGV in asc_realize()
+> 19 0b901459a87a Xin Li (Intel):
+>    target/i386: Remove FRED dependency on WRMSRNS
+> 20 2e887187454e Stefan Hajnoczi:
+>    iotests: fix 240
+> 21 eef2dd03f948 Fiona Ebner:
+>    hw/core/qdev-properties-system: Add missing return in set_drive_helper()
+> 22 9c55c03c05c1 Bibo Mao:
+>    hw/loongarch/virt: Fix big endian support with MCFG table
+> 23 f5ec751ee70d Shameer Kolothum:
+>    hw/arm/virt: Check bypass iommu is not set for iommu-map DT property
+> 24 e372214e663a Ethan Chen:
+>    qemu-options.hx: Fix reversed description of icount sleep behavior
+> 25 cd38e638c43e Peter Maydell:
+>    hw/arm/mps2: Configure the AN500 CPU with 16 MPU regions
+> 26 5ad2b1f443a9 J. Neuschäfer:
+>    linux-user/arm: Fix return value of SYS_cacheflush
+> 27 e7788da9860c Song Gao:
+>    target/loongarch: add check for fcond
+> 28 c2a2e1ad2a74 Song Gao:
+>    target/loongarch: fix vldi/xvldi raise wrong error
+> 29 0d0fc3f46589 Richard Henderson:
+>    tcg: Fix constant propagation in tcg_reg_alloc_dup
+> 30 9a3bf0e0ab62 Solomon Tan:
+>    target/arm: Make RETA[AB] UNDEF when pauth is not implemented
+> 31 a412575837b6 Philippe Mathieu-Daudé:
+>    target/arm: Correct KVM & HVF dtb_compatible value
+> 32 1fa2ffdbec55 Yiwei Zhang:
+>    virtio-gpu: support context init multiple timeline
+> 33 78e378154120 Kevin Wolf:
+>    hw/s390x/ccw-device: Fix memory leak in loadparm setter
+> 34 f9b0f6930407 Richard Henderson:
+>    target/arm: Fix SME vs AdvSIMD exception priority
+> 35 b4b2e070f41d Richard Henderson:
+>    target/arm: Fix sve_access_check for SME
+> 36 e6ffd009c771 Richard Henderson:
+>    target/arm: Fix 128-bit element ZIP, UZP, TRN
+> 37 3801c5b75ffc Richard Henderson:
+>    target/arm: Fix PSEL size operands to tcg_gen_gvec_ands
+> 38 cfc688c00ade Richard Henderson:
+>    target/arm: Fix f16_dotadd vs nan selection
+> 39 bf020eaa6741 Richard Henderson:
+>    target/arm: Fix bfdotadd_ebf vs nan selection
+>
+>
 
 
