@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF4D2C83F21
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEDA1C83F1B
 	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 13:35:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaDtr-0004Pu-Te; Fri, 11 Jul 2025 09:34:54 -0400
+	id 1uaDto-0004Of-54; Fri, 11 Jul 2025 09:34:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uaDte-0004MC-61
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:34:39 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1uaDtg-0004N3-F5
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:34:41 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uaDtb-0002w1-Ku
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:34:37 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-454f426b3e5so3490175e9.0
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 06:34:35 -0700 (PDT)
+ id 1uaDte-0002xm-Hm
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:34:40 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3a575a988f9so1361126f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 06:34:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752240874; x=1752845674; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752240877; x=1752845677; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=C5aEQ8IqDu8YxF4SP4TfNZxTFSEpR0LJNTlVcVb/ZfI=;
- b=v0tGUeXd2BzuLTTH7zZjIq0PeXM4NqHC8FMU7y68SyWPFdYWql35pfvqoNT413okYm
- EqFOpRmRvbeUDX3gsC3mgh8osOxOOS89xjebhBxki00gwerCi2PuwolgSS2A0/ICHdFT
- nmC9JI5Lfn15wl2qBUM0Hlumgp+Wbikn/esnXdyHs7eIJ8aTv+8byDc9cwD5TTQV/pFV
- WlrF8bh46KlKoaq3ReveHcMeRsZuQV5lW+IbvUdR4qWwIQEwWNX6+8Ea5o7X8Q+ObkoC
- 0Sjk9JqFYvA41biup+nbAlpIjh+jLSD/shUMNfs+MRn668nEVRlOVal/CcXW7Pc/rVSE
- d70A==
+ :reply-to; bh=Rpu6tGMLacwKLQnq2DPWdLYq4LlbwJy217T8KX+yI1s=;
+ b=Rq4jrFklx7mVxnamH4bmXEz1g8UCHqEYJC2pyC3oSfDNQ57O/GEmv+4ySDeG4jUQ/S
+ HrqmQiOrVehIi+sEHZfkLjRjJjUGtB5nK0YsFg7yqBnMRkSIcbmrPYK3clyAWT6yUvXJ
+ Eu0wFrL/QPI9KcMx9xE3Hq2zHD2mPsRgcWjX3ZkDJaWyy1whSjk3ZOacITshsblyBjjU
+ nWG3YglhezKxSumFGZwJMvMdQFxct/+iJ7CHCG9b5bTGzqerJzDDHZSN2SKBHsRlV5lE
+ XEh828MzBVsfZ4pFHo2kfjUz2IuqmjRB1jcwGqBzWl4dCiWo6jBiCfgspqqielx7/iBz
+ 5u6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752240874; x=1752845674;
+ d=1e100.net; s=20230601; t=1752240877; x=1752845677;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=C5aEQ8IqDu8YxF4SP4TfNZxTFSEpR0LJNTlVcVb/ZfI=;
- b=gCd2agL6vCskH6P2Kws4gJUE6qR1W98jXZB/1bBDiRfbIZLFHENU6JK5K1kYVGY9Td
- 0BeHQ7cz0h7Np/oDUEb3x8YLH6r7t0GHrbq9/DRztnSpy1WDjo/IyYRltdvLuV24b+Ez
- ZS7+IOS7e4tg1A9XFYnCLWuHK97MM6yrZb1sAIp4BrPQLb1xVgRzyKbxzbjtkeAprFWK
- ldAlZrIcU3Et34UrDqNvbwYvkdAez8GRUYFcHLvbrOmNcOhhENIvVkOO68Hs21pelbLM
- 2E/iZdAV7kWYK4PhHN/vgtK3bd0tUnRhUXCwgJI1tJpVys+G/ysZzdOjdFiksc5pwUQU
- Bcaw==
-X-Gm-Message-State: AOJu0YyBqNEgqOEq9uXKItcVBlVWkr7NRth4LbouWoE8BQP0u4eZPZIa
- xq1p3ONtOKOlrx6MauMNG25fixV7z7L8O3QfXaDAjbloyD10MnpK/QfKgeZk9yYL2BfV3UHFIyW
- CYz5W
-X-Gm-Gg: ASbGnctaVrDH8G1jcyt5jFzzCu/idkUH2oVLu79Tra8Nw4r2AEQJu/+ck+4SL/ry0n+
- qi60jcnhm0LdBJv6N1Q5jJAIXNwjm5/I65eEG5CoRBaKxjHBKbfNV94mDbWer/UFUQHP9ob7Pip
- EzBtdySmWV69wAKOwGt/9Ds36HuPrS5CmIKkiglUSX4u4w8QektLXb0FyWTZpez/MioKK0S5xIW
- 56MWjOjt8XGhhRf3r6J2lKQp2CDzUHQpRVkYSCzKVyonDWLfHHxMjHDi5xQxdrswcbzyAp7CeOz
- ARbry3lQC+E6V1ZsCuvufg3/JYzfCqVWgO93YQnGpGDh4l1FLJ+LtWrLpCOziO0I6LiBjtQgyew
- ryJD/7TKnf+wW9Pk7RsA5jLvCJE6h
-X-Google-Smtp-Source: AGHT+IHF30OCZR525rEuWSloObZXsw1nss40gRjKuOpDo4OZ8Pt/K1egOsrJOQThAF6zNYJCfZWPqA==
-X-Received: by 2002:a05:6000:2089:b0:3a6:e1bb:a083 with SMTP id
- ffacd0b85a97d-3b5f2dd2e52mr2847340f8f.25.1752240873919; 
- Fri, 11 Jul 2025 06:34:33 -0700 (PDT)
+ bh=Rpu6tGMLacwKLQnq2DPWdLYq4LlbwJy217T8KX+yI1s=;
+ b=e5M3lMWKkXShsgg030InC94JtpyABQI5uJmVyqB83zRBN8QpEm5j3qttjdLv2ZfvvC
+ fWj2ORTLhahA355qWjuWYDUxJYCoHLI8qT3teyNBw44nOQCSyRk+S9HGCYvWOw4baF/n
+ j2FDBiRO5UOyLaY7Z3e2+rt6jqqflqbESM7SiplJFq8mDU+UL/79zqlUFQBgIRsILXWF
+ bft3Tf0zTPKAnAsW1lfOczCkCNPSJsgItDtKGmohz3yS6+KpRdvurYilXxpjthSQwFQ4
+ 0QwX9ATpBE3Lts2qtEpaxsxzlgShbVYxvXVWYxY3QbsUEdUoLx7gsH5cbdv02w0KSYid
+ OnAA==
+X-Gm-Message-State: AOJu0Yy3+Z1/0noTBfAsp3V/aE7LLZ9Pu99TVRSEpY1sZ8S1/0IN4QnJ
+ rCPVjQ1H6Q/zNDpyzd7Ynf55KjMDfYaijIcplG938HRCtq8IbvTJT5VK7RsTQje02rCbMRwFV9R
+ Kqj4T
+X-Gm-Gg: ASbGncs25g1RX6dI0f6QHZydcmywL26ACrSRGoviIEwuSPw7mYk0KQ9jDrVX5GenNNF
+ s/KKFo3oDwBv9YgVBcBO8917kGdyjkLyy+oLso3avcdi6UeqJGV3TUMML/zbEHXX7H2zUSEhnhh
+ pvYpyyZ1BeQcblVDoZISEo0rdajJxL5RZdy/LzuN0E5NA59Bjn3ZscMEX9F0o0hUCIuPHdR0PZo
+ Pj/8xSBpDx6rZJHOz8e3TT3nVqeuTLddDxzklkayQFnAF9/nRAD6n1hMfgc+SLMX2LIEjmdtE5w
+ x7a5rtohhcW2aqnZ6pXQ84YcenCejjHtf35E6QVmSI16ZODHKu/UyQvOlTfO18u9genyCiRCFP3
+ Og1m2G/jncJugghTgvKjyH0pOTJss
+X-Google-Smtp-Source: AGHT+IGYnFDECpBpJFxq7J5dltHJi/iphKjN6GrGF0v0p0DbduoiL1f8MMpk88qDMhPMPdVZIZlkzg==
+X-Received: by 2002:adf:a347:0:b0:3a4:ec32:e4da with SMTP id
+ ffacd0b85a97d-3b5f18806eemr2433669f8f.15.1752240876823; 
+ Fri, 11 Jul 2025 06:34:36 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454d50df0cdsm89734145e9.25.2025.07.11.06.34.33
+ 5b1f17b1804b1-454d50df0cdsm89734145e9.25.2025.07.11.06.34.35
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Jul 2025 06:34:33 -0700 (PDT)
+ Fri, 11 Jul 2025 06:34:36 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/36] MAX78000: ICC Implementation
-Date: Fri, 11 Jul 2025 14:33:55 +0100
-Message-ID: <20250711133429.1423030-3-peter.maydell@linaro.org>
+Subject: [PULL 05/36] MAX78000: Add UART to SOC
+Date: Fri, 11 Jul 2025 14:33:58 +0100
+Message-ID: <20250711133429.1423030-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250711133429.1423030-1-peter.maydell@linaro.org>
 References: <20250711133429.1423030-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,226 +101,112 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jackson Donaldson <jackson88044@gmail.com>
 
-This commit implements the Instruction Cache Controller
-for the MAX78000
+This commit adds UART to max78000_soc
 
 Signed-off-by: Jackson Donaldson <jcksn@duck.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20250704223239.248781-3-jcksn@duck.com
+Reviewed-by: Peter Maydell <petermaydell@linaro.org>
+Message-id: 20250704223239.248781-6-jcksn@duck.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/misc/max78000_icc.h |  33 +++++++++
- hw/misc/max78000_icc.c         | 120 +++++++++++++++++++++++++++++++++
- hw/arm/Kconfig                 |   1 +
- hw/misc/Kconfig                |   3 +
- hw/misc/meson.build            |   1 +
- 5 files changed, 158 insertions(+)
- create mode 100644 include/hw/misc/max78000_icc.h
- create mode 100644 hw/misc/max78000_icc.c
+ include/hw/arm/max78000_soc.h |  3 +++
+ hw/arm/max78000_soc.c         | 28 ++++++++++++++++++++++++----
+ 2 files changed, 27 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/misc/max78000_icc.h b/include/hw/misc/max78000_icc.h
-new file mode 100644
-index 00000000000..6fe2bb7a156
---- /dev/null
-+++ b/include/hw/misc/max78000_icc.h
-@@ -0,0 +1,33 @@
-+/*
-+ * MAX78000 Instruction Cache
-+ *
-+ * Copyright (c) 2025 Jackson Donaldson <jcksn@duck.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_MAX78000_ICC_H
-+#define HW_MAX78000_ICC_H
-+
-+#include "hw/sysbus.h"
-+#include "qom/object.h"
-+
-+#define TYPE_MAX78000_ICC "max78000-icc"
-+OBJECT_DECLARE_SIMPLE_TYPE(Max78000IccState, MAX78000_ICC)
-+
-+#define ICC_INFO       0x0
-+#define ICC_SZ         0x4
-+#define ICC_CTRL       0x100
-+#define ICC_INVALIDATE 0x700
-+
-+struct Max78000IccState {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion mmio;
-+
-+    uint32_t info;
-+    uint32_t sz;
-+    uint32_t ctrl;
-+};
-+
-+#endif
-diff --git a/hw/misc/max78000_icc.c b/hw/misc/max78000_icc.c
-new file mode 100644
-index 00000000000..6f7d2b20bf5
---- /dev/null
-+++ b/hw/misc/max78000_icc.c
-@@ -0,0 +1,120 @@
-+/*
-+ * MAX78000 Instruction Cache
-+ *
-+ * Copyright (c) 2025 Jackson Donaldson <jcksn@duck.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "trace.h"
-+#include "hw/irq.h"
-+#include "migration/vmstate.h"
-+#include "hw/misc/max78000_icc.h"
-+
-+
-+static uint64_t max78000_icc_read(void *opaque, hwaddr addr,
-+                                    unsigned int size)
-+{
-+    Max78000IccState *s = opaque;
-+    switch (addr) {
-+    case ICC_INFO:
-+        return s->info;
-+
-+    case ICC_SZ:
-+        return s->sz;
-+
-+    case ICC_CTRL:
-+        return s->ctrl;
-+
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Bad offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, addr);
-+        return 0;
-+
-+    }
-+}
-+
-+static void max78000_icc_write(void *opaque, hwaddr addr,
-+                    uint64_t val64, unsigned int size)
-+{
-+    Max78000IccState *s = opaque;
-+
-+    switch (addr) {
-+    case ICC_CTRL:
-+        s->ctrl = 0x10000 | (val64 & 1);
-+        break;
-+
-+    case ICC_INVALIDATE:
-+        break;
-+
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Bad offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, addr);
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps max78000_icc_ops = {
-+    .read = max78000_icc_read,
-+    .write = max78000_icc_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid.min_access_size = 4,
-+    .valid.max_access_size = 4,
-+};
-+
-+static const VMStateDescription max78000_icc_vmstate = {
-+    .name = TYPE_MAX78000_ICC,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(info, Max78000IccState),
-+        VMSTATE_UINT32(sz, Max78000IccState),
-+        VMSTATE_UINT32(ctrl, Max78000IccState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void max78000_icc_reset_hold(Object *obj, ResetType type)
-+{
-+    Max78000IccState *s = MAX78000_ICC(obj);
-+    s->info = 0;
-+    s->sz = 0x10000010;
-+    s->ctrl = 0x10000;
-+}
-+
-+static void max78000_icc_init(Object *obj)
-+{
-+    Max78000IccState *s = MAX78000_ICC(obj);
-+
-+    memory_region_init_io(&s->mmio, obj, &max78000_icc_ops, s,
-+                        TYPE_MAX78000_ICC, 0x800);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
-+}
-+
-+static void max78000_icc_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+
-+    rc->phases.hold = max78000_icc_reset_hold;
-+    dc->vmsd = &max78000_icc_vmstate;
-+}
-+
-+static const TypeInfo max78000_icc_info = {
-+    .name          = TYPE_MAX78000_ICC,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(Max78000IccState),
-+    .instance_init = max78000_icc_init,
-+    .class_init    = max78000_icc_class_init,
-+};
-+
-+static void max78000_icc_register_types(void)
-+{
-+    type_register_static(&max78000_icc_info);
-+}
-+
-+type_init(max78000_icc_register_types)
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 44815af41f5..035568a085e 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -366,6 +366,7 @@ config ALLWINNER_R40
- config MAX78000_SOC
-     bool
-     select ARM_V7M
-+    select MAX78000_ICC
+diff --git a/include/hw/arm/max78000_soc.h b/include/hw/arm/max78000_soc.h
+index 27b506d6eeb..57894f00359 100644
+--- a/include/hw/arm/max78000_soc.h
++++ b/include/hw/arm/max78000_soc.h
+@@ -12,6 +12,7 @@
+ #include "hw/or-irq.h"
+ #include "hw/arm/armv7m.h"
+ #include "hw/misc/max78000_icc.h"
++#include "hw/char/max78000_uart.h"
+ #include "qom/object.h"
  
- config RASPI
-     bool
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index ec0fa5aa9f8..781bcf74ccc 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -47,6 +47,9 @@ config A9SCU
- config ARM11SCU
-     bool
+ #define TYPE_MAX78000_SOC "max78000-soc"
+@@ -24,6 +25,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(MAX78000State, MAX78000_SOC)
  
-+config MAX78000_ICC
-+    bool
+ /* The MAX78k has 2 instruction caches; only icc0 matters, icc1 is for RISC */
+ #define MAX78000_NUM_ICC 2
++#define MAX78000_NUM_UART 3
+ 
+ struct MAX78000State {
+     SysBusDevice parent_obj;
+@@ -34,6 +36,7 @@ struct MAX78000State {
+     MemoryRegion flash;
+ 
+     Max78000IccState icc[MAX78000_NUM_ICC];
++    Max78000UartState uart[MAX78000_NUM_UART];
+ 
+     Clock *sysclk;
+ };
+diff --git a/hw/arm/max78000_soc.c b/hw/arm/max78000_soc.c
+index 0c83b08eca0..2f93ab882d4 100644
+--- a/hw/arm/max78000_soc.c
++++ b/hw/arm/max78000_soc.c
+@@ -18,6 +18,10 @@
+ #include "hw/misc/unimp.h"
+ 
+ static const uint32_t max78000_icc_addr[] = {0x4002a000, 0x4002a800};
++static const uint32_t max78000_uart_addr[] = {0x40042000, 0x40043000,
++                                              0x40044000};
 +
- config MOS6522
-     bool
++static const int max78000_uart_irq[] = {14, 15, 34};
  
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 6d47de482c5..a21a994ff83 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -70,6 +70,7 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files(
-   'imx_ccm.c',
-   'imx_rngc.c',
- ))
-+system_ss.add(when: 'CONFIG_MAX78000_ICC', if_true: files('max78000_icc.c'))
- system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files(
-   'npcm_clk.c',
-   'npcm_gcr.c',
+ static void max78000_soc_initfn(Object *obj)
+ {
+@@ -31,6 +35,12 @@ static void max78000_soc_initfn(Object *obj)
+         object_initialize_child(obj, name, &s->icc[i], TYPE_MAX78000_ICC);
+     }
+ 
++    for (i = 0; i < MAX78000_NUM_UART; i++) {
++        g_autofree char *name = g_strdup_printf("uart%d", i);
++        object_initialize_child(obj, name, &s->uart[i],
++                                TYPE_MAX78000_UART);
++    }
++
+     s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
+ }
+ 
+@@ -39,6 +49,7 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
+     MAX78000State *s = MAX78000_SOC(dev_soc);
+     MemoryRegion *system_memory = get_system_memory();
+     DeviceState *dev, *armv7m;
++    SysBusDevice *busdev;
+     Error *err = NULL;
+     int i;
+ 
+@@ -89,6 +100,19 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
+         sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, max78000_icc_addr[i]);
+     }
+ 
++    for (i = 0; i < MAX78000_NUM_UART; i++) {
++        dev = DEVICE(&(s->uart[i]));
++        qdev_prop_set_chr(dev, "chardev", serial_hd(i));
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart[i]), errp)) {
++            return;
++        }
++
++        busdev = SYS_BUS_DEVICE(dev);
++        sysbus_mmio_map(busdev, 0, max78000_uart_addr[i]);
++        sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m,
++                                                       max78000_uart_irq[i]));
++    }
++
+     create_unimplemented_device("globalControl",        0x40000000, 0x400);
+     create_unimplemented_device("systemInterface",      0x40000400, 0x400);
+     create_unimplemented_device("functionControl",      0x40000800, 0x400);
+@@ -127,10 +151,6 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
+     create_unimplemented_device("oneWireMaster",        0x4003d000, 0x1000);
+     create_unimplemented_device("semaphore",            0x4003e000, 0x1000);
+ 
+-    create_unimplemented_device("uart0",                0x40042000, 0x1000);
+-    create_unimplemented_device("uart1",                0x40043000, 0x1000);
+-    create_unimplemented_device("uart2",                0x40044000, 0x1000);
+-
+     create_unimplemented_device("spi1",                 0x40046000, 0x2000);
+     create_unimplemented_device("trng",                 0x4004d000, 0x1000);
+     create_unimplemented_device("i2s",                  0x40060000, 0x1000);
 -- 
 2.43.0
 
