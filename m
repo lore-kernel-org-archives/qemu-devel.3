@@ -4,95 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CF2FC83F22
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 14:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 592AFC83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 14:22:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaEcJ-000172-Hj; Fri, 11 Jul 2025 10:20:47 -0400
+	id 1uaEdo-0003mu-0N; Fri, 11 Jul 2025 10:22:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uaETa-00020h-OH
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:11:50 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uaEU3-0002u0-Dc
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:12:16 -0400
 Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uaETW-0006kT-KW
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:11:44 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uaETz-0006r4-JV
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:12:14 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id BDEF41F38C;
- Fri, 11 Jul 2025 14:10:59 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 669901F461;
+ Fri, 11 Jul 2025 14:11:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1752243059; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1752243073; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dsttLL8hzDtpH4Kw3GDEfOAB0aWQ2GCHEr5G6/o1gVA=;
- b=sDiot09RFLaATYDrJDgOSGkxLeEygBzQXXKNMisGVYKzEjW2kr7RGQD02keTrtEavYtb0A
- RX1B44suZBmrRXZkIPtMAyVbJ17RYsgo4k14+099NdfiNtvJ4cWKyunjLViBlcteAiRjR1
- i7hlFEBW19tbNhGK8z0rbSI09H2VnZk=
+ bh=ZLVxbUl1QbCpvaOs+8U0flUWK625i092YCFo0WiecoQ=;
+ b=LzQwW1q1pscp5Ja61+ZMgIzV8aoSTo+oVnjkYi+MEx0xH236M9EaCBnfYQTgHk3BBg11wK
+ bZ6RR+6TVrHAUrgDVw3nBoinZWzyMC+4UvNafjRElqBsX6YX5VX+3vxoaTjGzXfqMUoTx8
+ wdLZLiiWI9ErtG5UYxNm0dGQT+yV+6o=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1752243059;
+ s=susede2_ed25519; t=1752243073;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dsttLL8hzDtpH4Kw3GDEfOAB0aWQ2GCHEr5G6/o1gVA=;
- b=fyg97MyY2926JTlQk/tu6OhmAxQBX6yPFL28G9KrMTwTd1wfGYMc7gW0e0X6v4M7coZw4J
- Yw2/q22Vet0yTdCw==
+ bh=ZLVxbUl1QbCpvaOs+8U0flUWK625i092YCFo0WiecoQ=;
+ b=FASXHoFAE2p9UyIYcaBQuEEOc90erJ+G8G2ZV5cqewLNcyMjkVxLhLBVwj71nz5VXWVWyU
+ HO35yFm4/mNAYCCQ==
 Authentication-Results: smtp-out2.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=LzQwW1q1;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=FASXHoFA
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1752243059; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1752243073; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dsttLL8hzDtpH4Kw3GDEfOAB0aWQ2GCHEr5G6/o1gVA=;
- b=sDiot09RFLaATYDrJDgOSGkxLeEygBzQXXKNMisGVYKzEjW2kr7RGQD02keTrtEavYtb0A
- RX1B44suZBmrRXZkIPtMAyVbJ17RYsgo4k14+099NdfiNtvJ4cWKyunjLViBlcteAiRjR1
- i7hlFEBW19tbNhGK8z0rbSI09H2VnZk=
+ bh=ZLVxbUl1QbCpvaOs+8U0flUWK625i092YCFo0WiecoQ=;
+ b=LzQwW1q1pscp5Ja61+ZMgIzV8aoSTo+oVnjkYi+MEx0xH236M9EaCBnfYQTgHk3BBg11wK
+ bZ6RR+6TVrHAUrgDVw3nBoinZWzyMC+4UvNafjRElqBsX6YX5VX+3vxoaTjGzXfqMUoTx8
+ wdLZLiiWI9ErtG5UYxNm0dGQT+yV+6o=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1752243059;
+ s=susede2_ed25519; t=1752243073;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dsttLL8hzDtpH4Kw3GDEfOAB0aWQ2GCHEr5G6/o1gVA=;
- b=fyg97MyY2926JTlQk/tu6OhmAxQBX6yPFL28G9KrMTwTd1wfGYMc7gW0e0X6v4M7coZw4J
- Yw2/q22Vet0yTdCw==
+ bh=ZLVxbUl1QbCpvaOs+8U0flUWK625i092YCFo0WiecoQ=;
+ b=FASXHoFAE2p9UyIYcaBQuEEOc90erJ+G8G2ZV5cqewLNcyMjkVxLhLBVwj71nz5VXWVWyU
+ HO35yFm4/mNAYCCQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AA8C91388B;
- Fri, 11 Jul 2025 14:10:58 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5155113918;
+ Fri, 11 Jul 2025 14:11:12 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id iE0BGnIbcWg7TgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 11 Jul 2025 14:10:58 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 4DtOBIAbcWg7TgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 11 Jul 2025 14:11:12 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL 12/26] migration: Add option to set postcopy-blocktime
-Date: Fri, 11 Jul 2025 11:10:17 -0300
-Message-Id: <20250711141031.423-13-farosas@suse.de>
+Subject: [PULL 20/26] migration/postcopy: Initialize blocktime context only
+ until listen
+Date: Fri, 11 Jul 2025 11:10:25 -0300
+Message-Id: <20250711141031.423-21-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250711141031.423-1-farosas@suse.de>
 References: <20250711141031.423-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.999];
- MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FROM_HAS_DN(0.00)[]; MIME_TRACE(0.00)[0:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; RCPT_COUNT_TWO(0.00)[2];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCPT_COUNT_TWO(0.00)[2];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[]
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: 669901F461
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
  envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
@@ -119,29 +132,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Xu <peterx@redhat.com>
 
-Add a global property to allow enabling postcopy-blocktime feature.
+Before this patch, the blocktime context can be created very early, because
+postcopy_ram_supported_by_host() <- migrate_caps_check() can happen during
+migration object init.
+
+The trick here is the blocktime context needs system vCPU information,
+which seems to be possible to change after that point.  I didn't verify it,
+but it doesn't sound right.
+
+Now move it out and initialize the context only when postcopy listen
+starts.  That is already during a migration so it should be guaranteed the
+vCPU topology can never change on both sides.
+
+While at it, assert that the ctx isn't created instead this time; the old
+"if" trick isn't needed when we're sure it will only happen once now.
 
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20250613141217.474825-2-peterx@redhat.com
+Link: https://lore.kernel.org/r/20250613141217.474825-10-peterx@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/options.c | 2 ++
- 1 file changed, 2 insertions(+)
+ migration/postcopy-ram.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/migration/options.c b/migration/options.c
-index 162c72cda4..4e923a2e07 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -187,6 +187,8 @@ const Property migration_properties[] = {
-     DEFINE_PROP_MIG_CAP("x-postcopy-ram", MIGRATION_CAPABILITY_POSTCOPY_RAM),
-     DEFINE_PROP_MIG_CAP("x-postcopy-preempt",
-                         MIGRATION_CAPABILITY_POSTCOPY_PREEMPT),
-+    DEFINE_PROP_MIG_CAP("postcopy-blocktime",
-+                        MIGRATION_CAPABILITY_POSTCOPY_BLOCKTIME),
-     DEFINE_PROP_MIG_CAP("x-colo", MIGRATION_CAPABILITY_X_COLO),
-     DEFINE_PROP_MIG_CAP("x-release-ram", MIGRATION_CAPABILITY_RELEASE_RAM),
-     DEFINE_PROP_MIG_CAP("x-return-path", MIGRATION_CAPABILITY_RETURN_PATH),
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index fe940f89b9..dd3615663f 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -325,13 +325,13 @@ static bool ufd_check_and_apply(int ufd, MigrationIncomingState *mis,
+     }
+ 
+ #ifdef UFFD_FEATURE_THREAD_ID
++    /*
++     * Postcopy blocktime conditionally needs THREAD_ID feature (introduced
++     * to Linux in 2017). Always try to enable it when QEMU is compiled
++     * with such environment.
++     */
+     if (UFFD_FEATURE_THREAD_ID & supported_features) {
+         asked_features |= UFFD_FEATURE_THREAD_ID;
+-        if (migrate_postcopy_blocktime()) {
+-            if (!mis->blocktime_ctx) {
+-                mis->blocktime_ctx = blocktime_context_new();
+-            }
+-        }
+     }
+ #endif
+ 
+@@ -1239,6 +1239,11 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
+         return -1;
+     }
+ 
++    if (migrate_postcopy_blocktime()) {
++        assert(mis->blocktime_ctx == NULL);
++        mis->blocktime_ctx = blocktime_context_new();
++    }
++
+     /* Now an eventfd we use to tell the fault-thread to quit */
+     mis->userfault_event_fd = eventfd(0, EFD_CLOEXEC);
+     if (mis->userfault_event_fd == -1) {
 -- 
 2.35.3
 
