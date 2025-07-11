@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B96ABC83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 13:08:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEAFDC83F1B
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 13:08:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaDS7-0002YF-Du; Fri, 11 Jul 2025 09:06:11 -0400
+	id 1uaDR1-0001Nm-S4; Fri, 11 Jul 2025 09:05:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uaDQN-0000tz-DZ
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:04:30 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uaDPP-0000QO-0X
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:03:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uaDQK-0004HJ-Gc
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:04:23 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uaDPL-0003jr-7B
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:03:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752239052;
+ s=mimecast20190719; t=1752238998;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9h/vlA1Km9lN9ZPVdJ0cXOMLGrVwzgSg8O+GQhxnv2g=;
- b=cgwSiExxzEmdxwXi8dI7ATd5myvtXGDA5u6vpVhcp1bI2TuneYm8AucDlqf6zXYrOJLCcu
- 5msdQLDDFMOZ0CCqztR9b6WhOHyggcyH5lZBIQfKeOZAB23WjlRqWyeEUlzLSolnpdT8Ep
- 9aRNDOrsm6lqK7mg0grAdh/QcIL5vNQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=Ou9+RkIukUjVmAsDD893wlvynk8pE6hE0EnR3MqKFWg=;
+ b=cAqxGhNcoSFyeBnZx/hS4v+yRvkgcX1BJgSt5vfeLc8sB6fC9YtRWmG1/Czdx72/7I3nOl
+ PgC7bbMTuNd6S7W8MZlP/v6ZbeUHHaAXYgoVMQ8gFB06ZAVgiqKUNBroBGYInQ7DZ/D1Pp
+ Z82of5hYCeue9OgiafpzMUQsuXuzbSo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-4juEY1UKNXqSQ1kx7WazTg-1; Fri,
- 11 Jul 2025 09:04:09 -0400
-X-MC-Unique: 4juEY1UKNXqSQ1kx7WazTg-1
-X-Mimecast-MFC-AGG-ID: 4juEY1UKNXqSQ1kx7WazTg_1752239047
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-523-dUadzoCAN9WYfDF2dEjOKw-1; Fri,
+ 11 Jul 2025 09:03:14 -0400
+X-MC-Unique: dUadzoCAN9WYfDF2dEjOKw-1
+X-Mimecast-MFC-AGG-ID: dUadzoCAN9WYfDF2dEjOKw_1752238993
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A0C811809C85; Fri, 11 Jul 2025 13:04:07 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 531761956089; Fri, 11 Jul 2025 13:03:13 +0000 (UTC)
 Received: from gerbillo.redhat.com (unknown [10.44.33.145])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A0D2819560A3; Fri, 11 Jul 2025 13:04:02 +0000 (UTC)
+ id 6768419560A3; Fri, 11 Jul 2025 13:03:08 +0000 (UTC)
 From: Paolo Abeni <pabeni@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -58,9 +58,10 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
  Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, kvm@vger.kernel.org
-Subject: [PATCH RFC v2 13/13] net: implement UDP tunnel features offloading
-Date: Fri, 11 Jul 2025 15:02:18 +0200
-Message-ID: <509e49207e4dc4a10ef36492a2ee1f90f3c2c237.1752229731.git.pabeni@redhat.com>
+Subject: [PATCH RFC v2 05/13] virtio: add support for negotiating extended
+ features
+Date: Fri, 11 Jul 2025 15:02:10 +0200
+Message-ID: <986e516359285ef5308a4b4be7c1ae3f8be0dad8.1752229731.git.pabeni@redhat.com>
 In-Reply-To: <cover.1752229731.git.pabeni@redhat.com>
 References: <cover.1752229731.git.pabeni@redhat.com>
 MIME-Version: 1.0
@@ -91,195 +92,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When any host or guest GSO over UDP tunnel offload is enabled the
-virtio net header includes the additional tunnel-related fields,
-update the size accordingly.
+The virtio specifications allows for up to 128 bits for the
+device features. Soon we are going to use some of the 'extended'
+bits features (above 64) for the virtio net driver.
 
-Push the GSO over UDP tunnel offloads all the way down to the tap
-device extending the newly introduced NetFeatures struct, and
-eventually enable the associated features.
+Add support to allow extended features negotiation on a per
+devices basis. Devices willing to negotiated extended features
+need to implemented a new pair of features getter/setter, the
+core will conditionally use them instead of the basic one.
 
-As per virtio specification, to convert features bit to offload bit,
-map the extended features into the reserved range.
-
-Finally, make the vhost backend aware of the exact header layout, to
-copy it correctly. The tunnel-related field are present if either
-the guest or the host negotiated any UDP tunnel related feature:
-add them to host kernel supported features list, to allow qemu
-transfer to such backend the needed information.
+Note that 'bad_features' don't need to be extended, as they are
+bound to the 64 bits limit.
 
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 ---
 v1 -> v2:
-  - squashed vhost support into this patch
-  - dropped tun offload consistency checks; they are implemented in
-    the kernel side
-  - virtio_has_tnl_hdr ->virtio_has_tunnel_hdr
+  - uint128_t -> uint64_t[]
 ---
- hw/net/vhost_net.c  |  2 ++
- hw/net/virtio-net.c | 34 ++++++++++++++++++++++++++--------
- include/net/net.h   |  2 ++
- net/net.c           |  3 ++-
- net/tap-linux.c     |  6 ++++++
- 5 files changed, 38 insertions(+), 9 deletions(-)
+ hw/virtio/virtio-bus.c     | 11 ++++++++---
+ hw/virtio/virtio.c         | 18 +++++++++++++-----
+ include/hw/virtio/virtio.h |  4 ++++
+ 3 files changed, 25 insertions(+), 8 deletions(-)
 
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index bae595607a..a15dc51d84 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -52,6 +52,8 @@ static const int kernel_feature_bits[] = {
-     VIRTIO_F_NOTIFICATION_DATA,
-     VIRTIO_NET_F_RSC_EXT,
-     VIRTIO_NET_F_HASH_REPORT,
-+    VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO,
-+    VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
-     VHOST_INVALID_FEATURE_BIT
- };
- 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 8ed1cad363..ff2f34d98a 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -103,6 +103,12 @@
- #define VIRTIO_NET_F2O_SHIFT          (VIRTIO_NET_OFFLOAD_MAP_MIN - \
-                                        VIRTIO_NET_FEATURES_MAP_MIN + 64)
- 
-+static bool virtio_has_tunnel_hdr(const uint64_t *features)
-+{
-+    return virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO) |
-+           virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
-+}
-+
- static const VirtIOFeature feature_sizes[] = {
-     {.flags = 1ULL << VIRTIO_NET_F_MAC,
-      .end = endof(struct virtio_net_config, mac)},
-@@ -659,7 +665,8 @@ static bool peer_has_tunnel(VirtIONet *n)
- }
- 
- static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
--                                       int version_1, int hash_report)
-+                                       int version_1, int hash_report,
-+                                       int tunnel)
- {
-     int i;
-     NetClientState *nc;
-@@ -667,9 +674,11 @@ static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
-     n->mergeable_rx_bufs = mergeable_rx_bufs;
- 
-     if (version_1) {
--        n->guest_hdr_len = hash_report ?
--            sizeof(struct virtio_net_hdr_v1_hash) :
--            sizeof(struct virtio_net_hdr_mrg_rxbuf);
-+        n->guest_hdr_len = tunnel ?
-+            sizeof(struct virtio_net_hdr_v1_hash_tunnel) :
-+            (hash_report ?
-+             sizeof(struct virtio_net_hdr_v1_hash) :
-+             sizeof(struct virtio_net_hdr_mrg_rxbuf));
-         n->rss_data.populate_hash = !!hash_report;
-     } else {
-         n->guest_hdr_len = n->mergeable_rx_bufs ?
-@@ -886,6 +895,10 @@ static void virtio_net_apply_guest_offloads(VirtIONet *n)
-        .ufo  = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_UFO)),
-        .uso4 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO4)),
-        .uso6 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO6)),
-+       .tnl  = !!(n->curr_guest_offloads &
-+                  (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_MAPPED)),
-+       .tnl_csum = !!(n->curr_guest_offloads &
-+                      (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM_MAPPED)),
-     };
- 
-     qemu_set_offload(qemu_get_queue(n->nic)->peer, &ol);
-@@ -907,7 +920,9 @@ virtio_net_guest_offloads_by_features(const uint64_t *features)
-         (1ULL << VIRTIO_NET_F_GUEST_ECN)  |
-         (1ULL << VIRTIO_NET_F_GUEST_UFO)  |
-         (1ULL << VIRTIO_NET_F_GUEST_USO4) |
--        (1ULL << VIRTIO_NET_F_GUEST_USO6);
-+        (1ULL << VIRTIO_NET_F_GUEST_USO6) |
-+        (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_MAPPED) |
-+        (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM_MAPPED);
- 
-     return guest_offloads_mask & virtio_net_features_to_offload(features);
- }
-@@ -1020,7 +1035,8 @@ static void virtio_net_set_features(VirtIODevice *vdev,
-                                virtio_has_feature_ex(features,
-                                                   VIRTIO_F_VERSION_1),
-                                virtio_has_feature_ex(features,
--                                                  VIRTIO_NET_F_HASH_REPORT));
-+                                                  VIRTIO_NET_F_HASH_REPORT),
-+                               virtio_has_tunnel_hdr(features));
- 
-     n->rsc4_enabled = virtio_has_feature_ex(features, VIRTIO_NET_F_RSC_EXT) &&
-         virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4);
-@@ -3132,13 +3148,15 @@ static int virtio_net_post_load_device(void *opaque, int version_id)
-     VirtIONet *n = opaque;
-     VirtIODevice *vdev = VIRTIO_DEVICE(n);
-     int i, link_down;
-+    bool has_tunnel_hdr = virtio_has_tunnel_hdr(vdev->guest_features_array);
- 
-     trace_virtio_net_post_load_device();
-     virtio_net_set_mrg_rx_bufs(n, n->mergeable_rx_bufs,
-                                virtio_vdev_has_feature(vdev,
-                                                        VIRTIO_F_VERSION_1),
-                                virtio_vdev_has_feature(vdev,
--                                                       VIRTIO_NET_F_HASH_REPORT));
-+                                                      VIRTIO_NET_F_HASH_REPORT),
-+                               has_tunnel_hdr);
- 
-     /* MAC_TABLE_ENTRIES may be different from the saved image */
-     if (n->mac_table.in_use > MAC_TABLE_ENTRIES) {
-@@ -3945,7 +3963,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
- 
-     n->vqs[0].tx_waiting = 0;
-     n->tx_burst = n->net_conf.txburst;
--    virtio_net_set_mrg_rx_bufs(n, 0, 0, 0);
-+    virtio_net_set_mrg_rx_bufs(n, 0, 0, 0, 0);
-     n->promisc = 1; /* for compatibility */
- 
-     n->mac_table.macs = g_malloc0(MAC_TABLE_ENTRIES * ETH_ALEN);
-diff --git a/include/net/net.h b/include/net/net.h
-index c71d7c6074..5049d293f2 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -43,6 +43,8 @@ typedef struct NetOffloads {
-     bool ufo;
-     bool uso4;
-     bool uso6;
-+    bool tnl;
-+    bool tnl_csum;
- } NetOffloads;
- 
- #define DEFINE_NIC_PROPERTIES(_state, _conf)                            \
-diff --git a/net/net.c b/net/net.c
-index 5a2f00c108..eb98c8a8b9 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -575,7 +575,8 @@ void qemu_set_vnet_hdr_len(NetClientState *nc, int len)
- 
-     assert(len == sizeof(struct virtio_net_hdr_mrg_rxbuf) ||
-            len == sizeof(struct virtio_net_hdr) ||
--           len == sizeof(struct virtio_net_hdr_v1_hash));
-+           len == sizeof(struct virtio_net_hdr_v1_hash) ||
-+           len == sizeof(struct virtio_net_hdr_v1_hash_tunnel));
- 
-     nc->vnet_hdr_len = len;
-     nc->info->set_vnet_hdr_len(nc, len);
-diff --git a/net/tap-linux.c b/net/tap-linux.c
-index 4ec638add6..5e6c2d3cbd 100644
---- a/net/tap-linux.c
-+++ b/net/tap-linux.c
-@@ -279,6 +279,12 @@ void tap_fd_set_offload(int fd, const NetOffloads *ol)
-         if (ol->uso6) {
-             offload |= TUN_F_USO6;
-         }
-+        if (ol->tnl) {
-+            offload |= TUN_F_UDP_TUNNEL_GSO;
-+        }
-+        if (ol->tnl_csum) {
-+            offload |= TUN_F_UDP_TUNNEL_GSO_CSUM;
-+        }
+diff --git a/hw/virtio/virtio-bus.c b/hw/virtio/virtio-bus.c
+index 11adfbf3ab..4a80f0b4d0 100644
+--- a/hw/virtio/virtio-bus.c
++++ b/hw/virtio/virtio-bus.c
+@@ -62,9 +62,14 @@ void virtio_bus_device_plugged(VirtIODevice *vdev, Error **errp)
      }
  
-     if (ioctl(fd, TUNSETOFFLOAD, offload) != 0) {
+     /* Get the features of the plugged device. */
+-    assert(vdc->get_features != NULL);
+-    vdev->host_features = vdc->get_features(vdev, vdev->host_features,
+-                                            &local_err);
++    if (vdc->get_features_ex) {
++        vdc->get_features_ex(vdev, vdev->host_features_array, &local_err);
++    } else {
++        assert(vdc->get_features != NULL);
++        virtio_features_from_u64(vdev->host_features_array,
++                                 vdc->get_features(vdev, vdev->host_features,
++                                                   &local_err));
++    }
+     if (local_err) {
+         error_propagate(errp, local_err);
+         return;
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 6a313313dd..dd876d058e 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -3089,7 +3089,9 @@ static int virtio_set_features_nocheck(VirtIODevice *vdev, const uint64_t *val)
+ 
+     virtio_features_and(tmp, val, vdev->host_features_array);
+ 
+-    if (k->set_features) {
++    if (k->set_features_ex) {
++        k->set_features_ex(vdev, val);
++    } else if (k->set_features) {
+         bad = bad || virtio_features_use_extended(tmp);
+         k->set_features(vdev, tmp[0]);
+     }
+@@ -3160,9 +3162,8 @@ virtio_set_128bit_features_nocheck_maybe_co(VirtIODevice *vdev,
+     }
+ }
+ 
+-int virtio_set_features(VirtIODevice *vdev, uint64_t val)
++int virtio_set_features_ex(VirtIODevice *vdev, const uint64_t *features)
+ {
+-    uint64_t features[VIRTIO_FEATURES_DWORDS];
+     int ret;
+     /*
+      * The driver must not attempt to set features after feature negotiation
+@@ -3172,13 +3173,12 @@ int virtio_set_features(VirtIODevice *vdev, uint64_t val)
+         return -EINVAL;
+     }
+ 
+-    if (val & (1ull << VIRTIO_F_BAD_FEATURE)) {
++    if (features[0] & (1ull << VIRTIO_F_BAD_FEATURE)) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: guest driver for %s has enabled UNUSED(30) feature bit!\n",
+                       __func__, vdev->name);
+     }
+ 
+-    virtio_features_from_u64(features, val);
+     ret = virtio_set_features_nocheck(vdev, features);
+     if (virtio_vdev_has_feature(vdev, VIRTIO_RING_F_EVENT_IDX)) {
+         /* VIRTIO_RING_F_EVENT_IDX changes the size of the caches.  */
+@@ -3198,6 +3198,14 @@ int virtio_set_features(VirtIODevice *vdev, uint64_t val)
+     return ret;
+ }
+ 
++int virtio_set_features(VirtIODevice *vdev, uint64_t val)
++{
++    uint64_t features[VIRTIO_FEATURES_DWORDS];
++
++    virtio_features_from_u64(features, val);
++    return virtio_set_features_ex(vdev, features);
++}
++
+ void virtio_reset(void *opaque)
+ {
+     VirtIODevice *vdev = opaque;
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index 0d1eb20489..6a22c28d82 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -178,6 +178,9 @@ struct VirtioDeviceClass {
+     /* This is what a VirtioDevice must implement */
+     DeviceRealize realize;
+     DeviceUnrealize unrealize;
++    void (*get_features_ex)(VirtIODevice *vdev, uint64_t *requested_features,
++                            Error **errp);
++    void (*set_features_ex)(VirtIODevice *vdev, const uint64_t *val);
+     uint64_t (*get_features)(VirtIODevice *vdev,
+                              uint64_t requested_features,
+                              Error **errp);
+@@ -367,6 +370,7 @@ void virtio_queue_reset(VirtIODevice *vdev, uint32_t queue_index);
+ void virtio_queue_enable(VirtIODevice *vdev, uint32_t queue_index);
+ void virtio_update_irq(VirtIODevice *vdev);
+ int virtio_set_features(VirtIODevice *vdev, uint64_t val);
++int virtio_set_features_ex(VirtIODevice *vdev, const uint64_t *val);
+ 
+ /* Base devices.  */
+ typedef struct VirtIOBlkConf VirtIOBlkConf;
 -- 
 2.50.0
 
