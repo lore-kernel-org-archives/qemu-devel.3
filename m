@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F701C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 12:00:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6582AC8303C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 12:01:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaCOp-0003OO-UI; Fri, 11 Jul 2025 07:58:43 -0400
+	id 1uaCQd-0004hQ-Py; Fri, 11 Jul 2025 08:00:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uaCHi-0000qL-3P
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 07:51:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uaCLj-0002BB-Sc
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 07:55:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uaCHe-0005oc-9Q
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 07:51:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uaCLf-0006aM-3C
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 07:55:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752234674;
+ s=mimecast20190719; t=1752234925;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=yyFqJukxaIwSQPAoHxFgwqc98y5sJE4fg5Pl3jsxwXk=;
- b=VReYq8PWPpQceHyPd8FsFAso/PhQOVF8oL2Czpfc+v+sOftJJCdgkCOsajvou4RKSmv24z
- 8apsCcjlRiNKS9Kmu+8BozR4eGKoqyAxDKRHgtPxKZBB8OEaSXBDJHCy8+QQv39T1QXLAU
- vOaCwv5EqLx4Kyd8Y82MmpQfMFKxs3E=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rYOoieg3xfj1xk0rOQOiEMyS5aHEKtSzPoIVmGyJ5cQ=;
+ b=i3eeTPlUdgNBqBoqJwgLg9fOroiGRkJKQP499mLjJmSl3XGAZ54fG+Qa760LFB8LlZlSYz
+ GwWUn2m2DJd0At6K5xXJJJ4KKOPAExuJOinFyYIkKx2hvBZWHcycozsI/e/mEuk7LKzrfl
+ CHFucxLcEocYF1YltGvL/N0q9V3gzsU=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-195-7hDcDa4LMHCgo_xo_GOaqA-1; Fri, 11 Jul 2025 07:51:13 -0400
-X-MC-Unique: 7hDcDa4LMHCgo_xo_GOaqA-1
-X-Mimecast-MFC-AGG-ID: 7hDcDa4LMHCgo_xo_GOaqA_1752234672
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a4fabcafecso1028484f8f.0
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 04:51:13 -0700 (PDT)
+ us-mta-326-DggTFKNsMbKR48N7Hdskrw-1; Fri, 11 Jul 2025 07:55:24 -0400
+X-MC-Unique: DggTFKNsMbKR48N7Hdskrw-1
+X-Mimecast-MFC-AGG-ID: DggTFKNsMbKR48N7Hdskrw_1752234923
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-450d64026baso11157305e9.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 04:55:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752234672; x=1752839472;
+ d=1e100.net; s=20230601; t=1752234923; x=1752839723;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=yyFqJukxaIwSQPAoHxFgwqc98y5sJE4fg5Pl3jsxwXk=;
- b=WKhWRShUJLuSjnlesinnWiBijbiw3Lp7Km2vxU9ajSsuYSxqOV7e7K9W7tVoZGZjcp
- cHNb09XHz5/kesuQNWQLsTYDJDXrAMIMxEvDC5p8HXeB4xvWWqh1Nys/GeOFYS+3mV8H
- xPQFbolhCiB1M7O+FPtCSZ4rPtKGT5fuhf/CdmAaBCbiOLk537bzwf15QZf8Vk9STLmO
- KSKDHPzSv9Cv++PsN8CDkblTwKEkNMjZQqkbdgKxEJwth5Z16ZG33IAXBS7u9dOzqm90
- UPvJNuDQNXY/OMUnFWVhOc/dX74ZawFjWM1r8JD1A9b2UJxjJyZkQmFmjczJW6C/ufI5
- URGQ==
-X-Gm-Message-State: AOJu0YwmbK6Zik4iyaUQasgR+jX1sf+4SCVijtMAOfm+0XKddXF5r+W1
- 7e2eOxLz6ZK8e+PDSeuuVlAB8TtOG63bC0Msfjez/imONVbrDRcui7b4bhWAnLlMjpqg5+15mQO
- GnwwRLn1wFyocY7rR8rpIHaWzBRK3KVQTsKHTJBthulESpwD9Jw3oMCSe
-X-Gm-Gg: ASbGncvhKyNhGYEOiSZiNYWHoouIZjj++2Fj+eDCS+9QsfgdbLZR61oGgJS5JAh4jGC
- K2N2Wh+00wwJ/WiPsc8+KmcDAlp0D5DRteWJK2tUkQs5B5oh2P1lzNNK0tn7AMGgcVpPa8RVYtE
- PCT1SgBz3ewZV5FXQd2zXdoUCODiMUS+pIdPBMmb7i/OrjyecZkA/GBST0WOMAubl8Bi0i9CCs3
- cyNaYIql05DHONbyThvDepmnOH4/lSoRC7GZt0aayqP7V+SvIsce6WmZ4WKlnj/3GRqj0t7wveE
- DjO2XRysDfDZxKRR6663n8ZUuzp87l0tRZRsF8o0mfr7Q4OjJeVTuqCd9aQZweDQpBOtcUWxQKy
- 6uCLC
-X-Received: by 2002:a05:6000:3101:b0:3a4:ed10:c14 with SMTP id
- ffacd0b85a97d-3b5f352fc3dmr1817275f8f.14.1752234672014; 
- Fri, 11 Jul 2025 04:51:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGr84vVmTseq8gJlMKAbqLuU0gQW6dnR2ygiNNhhtc4Qouct8XWG0bGF951qoOzs3wFiJ61HA==
-X-Received: by 2002:a05:6000:3101:b0:3a4:ed10:c14 with SMTP id
- ffacd0b85a97d-3b5f352fc3dmr1817244f8f.14.1752234671539; 
- Fri, 11 Jul 2025 04:51:11 -0700 (PDT)
+ bh=rYOoieg3xfj1xk0rOQOiEMyS5aHEKtSzPoIVmGyJ5cQ=;
+ b=a9BJeUmyaT5qDO3Pk7yl5qFtQ+AfyZnn12bIGH9rAFFt7r0ypKhmTcJ87W6Sdpu7b3
+ XrTRtMUm5rQQMWQDuTiGJ/lOpHJ4XZOeDpscmCfQ+2KPrNFO78qX6xS9uaHsIBgrACuT
+ B2zShSqxhJAubkT+m2FZDyLBpvqBwb9Syw2UwuutuEk8BrmuGOC2sPw1ddLBOO17UZiG
+ gFQEVPuqP85dBAYhKRVG71n+9hJ1ffNSnqMCrAndCEMT3m/6gVbxt/TFT3aY/N9WhwnN
+ bKfk4BLCrW4OqqAFKWQbMpGDXyE2ZgVerweMsf28QsrR9KOlMgOEi80xvqgF6vqgYsxX
+ 9kJg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVnsfejoaADkAVcKuZ5VlHoIXC0MRcqDzLTSGNfNOXCbC5OimiJ0i4ROc1CBpkQXQIyxMjzXG44gr37@nongnu.org
+X-Gm-Message-State: AOJu0YxmbNQ5BbqycvTU6EDcoFA2HpJrV9cAQThuol02PUJN3KhxWpum
+ SAAdta34O1XuueKxQN6UvsXtux0sS0IT647p4rhdwDuxQ760egSqfA+PAUZ51i33kpAuwRrNMfY
+ Urw4LaEFiMDSKrmCjBe44Jtx7hU64u4jCaGpgB2ogtNNeRcV+yyQofIjt
+X-Gm-Gg: ASbGncsOH0D+pOzUB5wpsdyldHbS1vI4K0ncnGSZ9VC1yBQ6rXYSBDtjS8lweDXNCy7
+ tY6UwvofDGyb3XqSLd5nveN/QymIrls4UvFibQ/0hpKKo5PdPINmW3KwnN1sf6bBvuoQkMtzMYy
+ jau3xmGI+B3k938OT3dwHhuirAKWvStyw+1YU796IR2dHs88J4WpnZpxxVcDW8z2g1BjJd0iMZ5
+ CnwKDQUKP4+adsd52BoREWSeKhzNW70fqlgf29vxkqfBVwzYkgLv3kMDO67uAx63kOdHHIe572m
+ gApEx250uOg+d0bRtA2B91/kUNoo6jXqnEbq/Jkd1Am56EIFCXpJ2lwHcOIEl1tMbHAA2o/QoLm
+ YHVGE
+X-Received: by 2002:a05:600c:1c25:b0:442:c993:6f94 with SMTP id
+ 5b1f17b1804b1-455f7d131dfmr1167665e9.12.1752234922690; 
+ Fri, 11 Jul 2025 04:55:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE9q9MAa2Bvy/PgZjUdchi6hrPIJZKIPVaRW+2UgKH8mNPNbKXAHPp4i+CTWUOcqPuXvXUUCw==
+X-Received: by 2002:a05:600c:1c25:b0:442:c993:6f94 with SMTP id
+ 5b1f17b1804b1-455f7d131dfmr1167335e9.12.1752234922258; 
+ Fri, 11 Jul 2025 04:55:22 -0700 (PDT)
 Received: from [192.168.0.6] (ltea-047-064-115-149.pools.arcor-ip.net.
  [47.64.115.149]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e2703csm4247342f8f.97.2025.07.11.04.51.10
+ ffacd0b85a97d-3b5e8e211dcsm4165373f8f.84.2025.07.11.04.55.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Jul 2025 04:51:10 -0700 (PDT)
-Message-ID: <cf687af2-fd4e-4fbd-9dcb-824b980795fd@redhat.com>
-Date: Fri, 11 Jul 2025 13:51:09 +0200
+ Fri, 11 Jul 2025 04:55:21 -0700 (PDT)
+Message-ID: <8f90fbd7-1edd-45cc-9540-06fd9d0ee978@redhat.com>
+Date: Fri, 11 Jul 2025 13:55:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH] tests/functional: Move tests into architecture
  specific folders
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
- qemu-s390x@nongnu.org, qemu-riscv@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
+ qemu-riscv@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
 References: <20250710094251.139514-1-thuth@redhat.com>
- <aG_TSITe2VhMfpA9@redhat.com>
+ <643f1db1-4a7a-4bc0-a187-9ff1561f8a3d@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -129,10 +131,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <aG_TSITe2VhMfpA9@redhat.com>
+In-Reply-To: <643f1db1-4a7a-4bc0-a187-9ff1561f8a3d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -141,7 +143,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,8 +159,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/07/2025 16.50, Daniel P. Berrangé wrote:
-> On Thu, Jul 10, 2025 at 11:42:51AM +0200, Thomas Huth wrote:
+On 10/07/2025 17.51, Pierrick Bouvier wrote:
+> On 7/10/25 2:42 AM, Thomas Huth wrote:
 >> This patch tackles two issues. First, the tests/functional folder has
 >> become quite crowded already, some restructuring would be helpful here.
 >> Second, we currently encode the target architecture twice in the test
@@ -166,39 +168,24 @@ On 10/07/2025 16.50, Daniel P. Berrangé wrote:
 >> This contributes to the very long output lines when running "make
 >> check-functional".
 >>
->> So let's move the individual test files to target specific folders now.
->> Then we can drop the target from the file name (and thus from the test
->> name).
 > 
->> ---
->>   Note: Marked as RFC since I'm not that happy about the symlinks yet ...
->>         if someone has a better idea, please let me know!
->>         Also the update to the MAINTAINERS file is still missing - I'll add
->>         that once we agreed on whether this patch is a good idea or not.
+> I agree with the "crowded" aspect of functional tests, and subfolders are 
+> definitely welcome.
 > 
-> FWIW, I don't find the symlinks to be a problem, but if they bother you,
-> we could probably just have a trivial subclass.
+> Concerning the long line, it seems that setup ("thorough" in this example) 
+> is repeated 3 times on it, which is a bigger issue than having arch name 
+> being repeated.
 > 
-> 
->     from ../generic/test_migration import MigrationTest
-> 
->     class MigrateTestX86(MigrationTest):
->         pass
-> 
-> 
-> Unless pytest runner really needs the 'test_XXX' methods to be only on
-> the leaf class, not a parent, in order to enumerate test cases ?
+> A simpler solution for the "long line" issue would be to change 
+> mtest2make.py to generate shorter test target names. This would not benefit 
+> for using meson test directly, but from what I understood, this is not 
+> recommended nor supported anyway.
 
-I played a little bit with this now, and it seems to be worse: If I keep the 
-test_* methods in the parent class, each test is now executed twice, once 
-for the leaf class, and once for the parent class :-/
-
-I guess I could rename the functions in the parent class to use a different 
-prefix ("do_test_...) and then add test_... functions to the leaf classes 
-that call the ones from the parent, but that's quite a bit cumbersome...
-
-I'll ponder for it a little bit longer, but if you have any other ideas, 
-that's welcome, too, of course!
+I agree that this is a bigger annoyance here, but as far as I understood 
+that that repeated "thorough" term is just a listing of all the test suites 
+that the test is part of. I think this would rather need to be fixed on the 
+meson test runner side - why does meson list all test suites here? The one 
+that applies to the current should be enough, shouldn't it?
 
   Thomas
 
