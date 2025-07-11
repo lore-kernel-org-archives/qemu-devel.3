@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6090C83F1D
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 09:24:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4305C8303C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 09:25:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua9za-0002Jg-3U; Fri, 11 Jul 2025 05:24:30 -0400
+	id 1ua9zb-0002Ll-Et; Fri, 11 Jul 2025 05:24:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1ua9xb-0000A7-5V
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:22:27 -0400
+ id 1ua9zM-0002DA-RT
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:24:18 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1ua9xP-0003rO-37
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:22:26 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1ua9zJ-0004Cv-O5
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:24:16 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxSWrE13Boqh8nAQ--.47572S3;
+ by gateway (Coremail) with SMTP id _____8DxOGrE13BosR8nAQ--.21128S3;
  Fri, 11 Jul 2025 17:22:12 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCxdOS813Bo5owSAA--.39837S10;
- Fri, 11 Jul 2025 17:22:11 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJCxdOS813Bo5owSAA--.39837S12;
+ Fri, 11 Jul 2025 17:22:12 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: maobibo@loongson.cn
 Cc: qemu-devel@nongnu.org,
 	philmd@linaro.org,
 	jiaxun.yang@flygoat.com
-Subject: [PATCH v5 08/11] hw/loongarch: Implement avec set irq
-Date: Fri, 11 Jul 2025 16:59:12 +0800
-Message-Id: <20250711085915.3042395-9-gaosong@loongson.cn>
+Subject: [PATCH v5 10/11] target/loongarch:Implement csrrd CSR_MSGIR register
+Date: Fri, 11 Jul 2025 16:59:14 +0800
+Message-Id: <20250711085915.3042395-11-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20250711085915.3042395-1-gaosong@loongson.cn>
 References: <20250711085915.3042395-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxdOS813Bo5owSAA--.39837S10
+X-CM-TRANSID: qMiowJCxdOS813Bo5owSAA--.39837S12
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -49,8 +49,8 @@ X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,69 +66,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement avec set irq and update CSR_MSIS.
+implement the read-clear feature for CSR_MSGIR register.
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/intc/loongarch_avec.c | 34 ++++++++++++++++++++++++++++++++--
- 1 file changed, 32 insertions(+), 2 deletions(-)
+ target/loongarch/csr.c                        |  5 +++++
+ target/loongarch/tcg/csr_helper.c             | 21 +++++++++++++++++++
+ target/loongarch/tcg/helper.h                 |  1 +
+ .../tcg/insn_trans/trans_privileged.c.inc     |  1 +
+ 4 files changed, 28 insertions(+)
 
-diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
-index 1f9f376898..af6c75c4a9 100644
---- a/hw/intc/loongarch_avec.c
-+++ b/hw/intc/loongarch_avec.c
-@@ -16,6 +16,12 @@
- #include "migration/vmstate.h"
- #include "trace.h"
- #include "hw/qdev-properties.h"
-+#include "target/loongarch/cpu.h"
-+
-+/* msg addr field */
-+FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
-+FIELD(MSG_ADDR, CPU_NUM, 12, 8)
-+FIELD(MSG_ADDR, FIX, 28, 12)
+diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
+index 7ea0a30450..f973780bba 100644
+--- a/target/loongarch/csr.c
++++ b/target/loongarch/csr.c
+@@ -97,6 +97,11 @@ static CSRInfo csr_info[] = {
+     CSR_OFF(DBG),
+     CSR_OFF(DERA),
+     CSR_OFF(DSAVE),
++    CSR_OFF_ARRAY(MSGIS, 0),
++    CSR_OFF_ARRAY(MSGIS, 1),
++    CSR_OFF_ARRAY(MSGIS, 2),
++    CSR_OFF_ARRAY(MSGIS, 3),
++    CSR_OFF(MSGIR),
+ };
  
- static uint64_t loongarch_avec_mem_read(void *opaque,
-                                         hwaddr addr, unsigned size)
-@@ -23,12 +29,36 @@ static uint64_t loongarch_avec_mem_read(void *opaque,
-     return 0;
+ CSRInfo *get_csr(unsigned int csr_num)
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 2942d7feb8..48996b62f7 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -68,6 +68,27 @@ target_ulong helper_csrrd_tval(CPULoongArchState *env)
+     return cpu_loongarch_get_constant_timer_ticks(cpu);
  }
  
-+static void avec_set_irq(LoongArchAVECState *s, int cpu_num, int irq_num, int level)
++target_ulong helper_csrrd_msgir(CPULoongArchState *env)
 +{
-+    MachineState *machine = MACHINE(qdev_get_machine());
-+    MachineClass *mc = MACHINE_GET_CLASS(machine);
-+    const CPUArchIdList *id_list = NULL;
-+    CPUState *cpu;
-+    CPULoongArchState *env;
++    int irq, new;
 +
-+    assert(mc->possible_cpu_arch_ids(machine));
-+    id_list = mc->possible_cpu_arch_ids(machine);
-+    cpu = id_list->cpus[cpu_num].cpu;
-+    env = &LOONGARCH_CPU(cpu)->env;
++    irq = find_first_bit(env->CSR_MSGIS, 256);
++    if (irq < 256) {
++        clear_bit(irq, env->CSR_MSGIS);
++        new = find_first_bit(env->CSR_MSGIS, 256);
++        if (new < 256) {
++            return irq;
++        }
 +
-+    if (level) {
-+        set_bit(irq_num, &env->CSR_MSGIS[irq_num / 64]);
++        env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
++    } else {
++        /* bit 31 set 1 for no invalid irq */
++        irq = BIT(31);
 +    }
-+    qemu_set_irq(s->cpu[cpu_num].parent_irq, level);
++
++    return irq;
 +}
 +
- static void loongarch_avec_mem_write(void *opaque, hwaddr addr,
-                                      uint64_t val, unsigned size)
+ target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
  {
--    return;
--}
-+    int irq_num, cpu_num = 0;
-+    LoongArchAVECState *s = LOONGARCH_AVEC(opaque);
-+    uint64_t msg_addr = addr + VIRT_AVEC_BASE;
+     int64_t old_v = env->CSR_ESTAT;
+diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
+index 1d5cb0198c..db57dbfc16 100644
+--- a/target/loongarch/tcg/helper.h
++++ b/target/loongarch/tcg/helper.h
+@@ -100,6 +100,7 @@ DEF_HELPER_1(rdtime_d, i64, env)
+ DEF_HELPER_1(csrrd_pgd, i64, env)
+ DEF_HELPER_1(csrrd_cpuid, i64, env)
+ DEF_HELPER_1(csrrd_tval, i64, env)
++DEF_HELPER_1(csrrd_msgir, i64, env)
+ DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
+ DEF_HELPER_2(csrwr_estat, i64, env, tl)
+ DEF_HELPER_2(csrwr_asid, i64, env, tl)
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index ecbfe23b63..2619b5342b 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -83,6 +83,7 @@ void loongarch_csr_translate_init(void)
+     SET_CSR_FUNC(TCFG,  NULL, gen_helper_csrwr_tcfg);
+     SET_CSR_FUNC(TVAL,  gen_helper_csrrd_tval, NULL);
+     SET_CSR_FUNC(TICLR, NULL, gen_helper_csrwr_ticlr);
++    SET_CSR_FUNC(MSGIR, gen_helper_csrrd_msgir, NULL);
+ }
+ #undef SET_CSR_FUNC
  
-+    cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
-+    irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
-+    avec_set_irq(s, cpu_num, irq_num, 1);
-+}
- 
- static const MemoryRegionOps loongarch_avec_ops = {
-     .read = loongarch_avec_mem_read,
 -- 
 2.34.1
 
