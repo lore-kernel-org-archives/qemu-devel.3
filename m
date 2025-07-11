@@ -4,104 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CC48C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 14:43:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4E7DC83F1B
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 14:48:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaExp-00026Q-Vh; Fri, 11 Jul 2025 10:43:01 -0400
+	id 1uaF2o-00076Y-GN; Fri, 11 Jul 2025 10:48:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uaElL-00072i-BX
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:30:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1uaEnJ-0001PU-V8
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:32:10 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uaElI-0002GN-B9
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:30:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752244201;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Nig9lcgc8UkVvTZy2u8ZAJBEMc1hJziJi7IZqLE91pk=;
- b=V8aLvasup3BraZ19F38a8GvkUWI06CFD+2WGjHleFGcWODXEP+B4pXwdpqPwowEWDBbzPE
- HFEYf20GsTdjychpBgLdMbC5Evwk1ELNMJbvF5wWvJ4Eqdi12086f4Ke3ra/dFI4mgFTsG
- nLkwmFEPAiyHvfbEyn9gwpTdsZa+DCE=
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-277-v4np4779N9GklXqFlJr0KQ-1; Fri, 11 Jul 2025 10:30:00 -0400
-X-MC-Unique: v4np4779N9GklXqFlJr0KQ-1
-X-Mimecast-MFC-AGG-ID: v4np4779N9GklXqFlJr0KQ_1752244199
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-b3ba7659210so1636783a12.2
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 07:30:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752244199; x=1752848999;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Nig9lcgc8UkVvTZy2u8ZAJBEMc1hJziJi7IZqLE91pk=;
- b=Qy9sZ+dht4yD7sA9rx0cgv61HRWrx4io9DktbK7V366MK8jOJpt9u2cfohE8jyVJdU
- W3k8ibB3ZNi3jV8Vv0/snEhmws6K+OoorhaIk6YSPapGIfxEiRBGEzS3uUoxuq2g5UX/
- oCMSkvNWxd6xYxZTdr47ptsDY9ur8lV2nUBb6g2sIdIDMkgFs2B8199AhbSAptuu1e8Q
- dwTzCKSvTL2R7fkjTXJG8nsLBb2dvqLOdUeIMdeYkRVFuMkP5N6d0fwZqFHZ+sTHts5r
- Hf+RlQKvDTohEmfmuB4jyEf+SqSjEHlLGf9fgnr1h6gxM+HaBiQUUny+GZnB6oGR6357
- MUkQ==
-X-Gm-Message-State: AOJu0YxUn0s2K5/YsLWvD+6I9+ovDEeL0TJrsljOLZ1clZRPHTfH1qvw
- b2vTgVaIYOk+0YsNYN95FuuGAkBFKo1F837jPz3qpWzYbp78cFr+mX7DZ6lOcWLw9LeLIER8ENW
- GI6mF49I47MrLO7ifZGyIqRmRhypn9bNh/7KeEAlHT7bnVIbcV/3eLsGTIq7/oJUWeRn2L3P9Y4
- e5Nm+Qsv3r9lAOJPHcm9EwYN7hMpSi4LJTQJhWM7I=
-X-Gm-Gg: ASbGncuDjZR1FHUiJYo881PmUpDtnICxAOTPX9+7fhngPVZb3NVrErWmhK25S2VCosP
- YjwVIV+j/aBi7wBXFi4RgdeFjj+5w5CH/yef7fcUVeB56nGbuSRXJCeVwejo+N69N1jEOjGnjoG
- NGOl+TGar7vNnPuTTRA2dylK4Y4dNlTen5bhalIs73nFnmS3J1xpV9
-X-Received: by 2002:a17:90b:1d84:b0:312:def0:e2dc with SMTP id
- 98e67ed59e1d1-31c4f49ea8amr3840179a91.7.1752244198356; 
- Fri, 11 Jul 2025 07:29:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEJ4AiAU/s1SV9m68Z2C+9OtF0plC+lKTFxw/GsixB8vh/AsaSzsnpK3VXXY3N/3dGsRGTezUYcu43V5ggo4CM=
-X-Received: by 2002:a17:90b:1d84:b0:312:def0:e2dc with SMTP id
- 98e67ed59e1d1-31c4f49ea8amr3840112a91.7.1752244197706; Fri, 11 Jul 2025
- 07:29:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1uaEnG-0002co-Ke
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:32:09 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56BBDROe026463;
+ Fri, 11 Jul 2025 14:32:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=0B8VN9
+ +A3BbaD3Moiu4eFI57LqO4J5mKzn01bJDi8iQ=; b=brMsSxPncK0ySLcZ0w6Sj9
+ Rr8oSzOoLvJO/MdM/Ad+kWyIRUp+CbJ8EEKro9b3ALAXNHrAHFO/MBNbJyNz17oj
+ MVrsLfnZCRyhZxpmvCYqsG8IaoYBViJQlYtcjMwYCURMWjHSrp9+lLNZASfNE91K
+ gSEgrI8Ap36NbuWgaBhI7GX8i0KDgd3j0bQWKHIoUVdTQ4SkHXPoH8gdGq3vVIUQ
+ y48KCuq5ZbH4uIa00zzLB8TZjSJYcOZd36vS8l1O07zWiivD49+Enjfump4dTsaf
+ 0ruxEMNyVokyBqjGOOB5miXOZRXcb9Z5QVZtzPj6KGr2jpVPqTNSdvK1nzyY1YPw
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47puk4kcx7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 11 Jul 2025 14:32:01 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56BBVPTg025668;
+ Fri, 11 Jul 2025 14:32:00 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47qfcpk4ww-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 11 Jul 2025 14:31:59 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 56BEVwmA29229814
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 11 Jul 2025 14:31:58 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0FED420043;
+ Fri, 11 Jul 2025 14:31:58 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D15DA20040;
+ Fri, 11 Jul 2025 14:31:57 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 11 Jul 2025 14:31:57 +0000 (GMT)
+Message-ID: <1f1dfa78e9c53769b95ff3a8b58efef7dbafdc8f.camel@linux.ibm.com>
+Subject: Re: [PATCH] tcg: Use uintptr_t in tcg_malloc implementation
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Date: Fri, 11 Jul 2025 16:31:57 +0200
+In-Reply-To: <20250710225053.168169-1-richard.henderson@linaro.org>
+References: <20250710225053.168169-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-1.fc42) 
 MIME-Version: 1.0
-References: <20250711054005.60969-1-jsnow@redhat.com>
- <20250711054005.60969-9-jsnow@redhat.com>
- <87cya785t8.fsf@pond.sub.org>
-In-Reply-To: <87cya785t8.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Fri, 11 Jul 2025 10:29:45 -0400
-X-Gm-Features: Ac12FXwYiJcawdhyFXzIfq10UAwbG4QuP7ouwuWjxJWifn1cZYo1NrfJMo1sWV0
-Message-ID: <CAFn=p-bfBtoCJnLA9TL3RpDjmnsykfNtOybXgHKMR3oi3rCSUw@mail.gmail.com>
-Subject: Re: [PATCH v2 08/18] qapi: add cross-references to migration.json
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eric Blake <eblake@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Qemu-block <qemu-block@nongnu.org>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Lukas Straub <lukasstraub2@web.de>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Zhao Liu <zhao1.liu@intel.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Peter Xu <peterx@redhat.com>, 
- Yanan Wang <wangyanan55@huawei.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Jason Wang <jasowang@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>
-Content-Type: multipart/alternative; boundary="000000000000f6f5540639a8245e"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzExMDEwMSBTYWx0ZWRfX184/9ryNIvlC
+ HVs0ohNcRbgurqPqTlGd9cYyylGGBI0BeZLIRfWxm+OP2OhnhRvQ8GGnMGtIrmxBGchTra8Hdsi
+ myJAnLxEUdc1C2yrKQ/QQaIVgQMOrVsg0eoHBAeN0JQzeOEA5BzFqzyNhIwGV4kIrtYvNHTG7Kl
+ j/DsmdMVQFdtwFkOVYyk0gQh8SEw2s4G/+tj2YXODNukF3aocmYaPl1tjDmZHmW6BqoEwsBJ+4H
+ elepNTcn5cmtYoqoIiOKXMJ8wc3d9YLv1fMvpwhT98PzSvBq4pVI2QHuI2VWzMMOcJxzXjWh9l6
+ gHww7w/JwoDFQQTXFbdEGyJbcKJ4MSjWy/bHFPCf8F+L+X7+IH43xrcQ9K2eo/ds17Xvg8Vi3kp
+ Kim1VJyPoFlfUB16XpFImvlnXnwL9gdBvKWBZEr8RNIt4jxAZXFjK9bj+aFqTPjhVOP2s/f7
+X-Authority-Analysis: v=2.4 cv=XYeJzJ55 c=1 sm=1 tr=0 ts=68712061 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VnNF1IyMAAAA:8 a=KKAkSRfTAAAA:8
+ a=2p5-5N_fjv6BlIB3O1QA:9 a=QEXdDO2ut3YA:10
+ a=zZCYzV9kfG8A:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: Nz1u2GbijnWWZ7NPF58WpU21wme6cwjU
+X-Proofpoint-GUID: Nz1u2GbijnWWZ7NPF58WpU21wme6cwjU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-11_04,2025-07-09_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0
+ lowpriorityscore=0 adultscore=0 priorityscore=1501 suspectscore=0
+ mlxscore=0 impostorscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ spamscore=0 mlxlogscore=688 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507110101
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,152 +119,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f6f5540639a8245e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Thu, 2025-07-10 at 16:50 -0600, Richard Henderson wrote:
+> Avoid ubsan failure with clang-20,
+> =C2=A0 tcg.h:715:19: runtime error: applying non-zero offset 64 to null
+> pointer
+> by not using pointers.
+>=20
+> Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>=20
+> Supercedes: 20250618183759.9197-1-iii@linux.ibm.com
+> ("[PATCH v2] tcg: Remove NULL arithmetic in tcg_malloc()")
+>=20
+> Ilya, I think I prefer this solution to &dummy_pool.
+> What do you think?
+>=20
+>=20
+> r~
+>=20
+> ---
+> =C2=A0include/tcg/tcg.h | 6 +++---
+> =C2=A0tcg/tcg.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 9 +++++=
+----
+> =C2=A02 files changed, 8 insertions(+), 7 deletions(-)
 
-On Fri, Jul 11, 2025, 4:55=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
- wrote:
-
-> John Snow <jsnow@redhat.com> writes:
->
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  qapi/migration.json | 68 ++++++++++++++++++++++-----------------------
-> >  1 file changed, 34 insertions(+), 34 deletions(-)
-> >
-> > diff --git a/qapi/migration.json b/qapi/migration.json
-> > index 59a213aeb6c..eda27c18102 100644
-> > --- a/qapi/migration.json
-> > +++ b/qapi/migration.json
->
-> [...]
->
-> > @@ -1735,8 +1735,8 @@
-> >  #     list connected to a destination interface endpoint.
-> >  #
-> >  # @exit-on-error: Exit on incoming migration failure.  Default true.
-> > -#     When set to false, the failure triggers a MIGRATION event, and
-> > -#     error details could be retrieved with query-migrate.
-> > +#     When set to false, the failure triggers a :qapi:event:`MIGRATION=
-`
-> > +#     event, and error details could be retrieved with `query-migrate`=
-.
-> >  #     (since 9.1)
->
-> Suggest to have the the commit message note why we need :qapi:event:.
-> Perhaps like this:
->
->   Note that a reference to MIGRATION needs to be disambiguated with a
->   :qapi:event: prefix.  Without this, Sphinx complains
->
->       more than one target found for 'any' cross-reference 'MIGRATION':
-> could be :std:ref:`Migration framework` or
-> :qapi:event:`QMP:migration.MIGRATION`
->
-
-OK
-
-
-> Aside: this fuzzy matching of references feels too clever by half.
->
-
-That's the perils of the `any` syntax. In exchange for something very
-terse, you have to contend with multiple domains of possible match targets.
-
-On the whole, I think it's nice that you can reference `something` without
-needing to know the precise geospatial coordinates of where that thing is.
-Downside is that the matches may occasionally be fuzzier than you'd prefer.
-
-The QAPI domain only ever matches in a case sensitive way, but other
-domains in Sphinx aren't as strict, and I don't control those!
-
-
-> >  #
-> >  # Since: 2.3
->
-> [...]
->
->
-
---000000000000f6f5540639a8245e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jul 11, 2025, 4:55=E2=80=
-=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@red=
-hat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
-margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">John Snow &l=
-t;<a href=3D"mailto:jsnow@redhat.com" target=3D"_blank" rel=3D"noreferrer">=
-jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 qapi/migration.json | 68 ++++++++++++++++++++++-----------------=
-------<br>
-&gt;=C2=A0 1 file changed, 34 insertions(+), 34 deletions(-)<br>
-&gt;<br>
-&gt; diff --git a/qapi/migration.json b/qapi/migration.json<br>
-&gt; index 59a213aeb6c..eda27c18102 100644<br>
-&gt; --- a/qapi/migration.json<br>
-&gt; +++ b/qapi/migration.json<br>
-<br>
-[...]<br>
-<br>
-&gt; @@ -1735,8 +1735,8 @@<br>
-&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0list connected to a destination interface e=
-ndpoint.<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 # @exit-on-error: Exit on incoming migration failure.=C2=A0 Defa=
-ult true.<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0When set to false, the failure triggers a MIGRAT=
-ION event, and<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0error details could be retrieved with query-migr=
-ate.<br>
-&gt; +#=C2=A0 =C2=A0 =C2=A0When set to false, the failure triggers a :qapi:=
-event:`MIGRATION`<br>
-&gt; +#=C2=A0 =C2=A0 =C2=A0event, and error details could be retrieved with=
- `query-migrate`.<br>
-&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0(since 9.1)<br>
-<br>
-Suggest to have the the commit message note why we need :qapi:event:.<br>
-Perhaps like this:<br>
-<br>
-=C2=A0 Note that a reference to MIGRATION needs to be disambiguated with a<=
-br>
-=C2=A0 :qapi:event: prefix.=C2=A0 Without this, Sphinx complains<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 more than one target found for &#39;any&#39; cross-ref=
-erence &#39;MIGRATION&#39;: could be :std:ref:`Migration framework` or :qap=
-i:event:`QMP:migration.MIGRATION`<br></blockquote></div></div><div dir=3D"a=
-uto"><br></div><div dir=3D"auto">OK</div><div dir=3D"auto"><br></div><div d=
-ir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote cl=
-ass=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;p=
-adding-left:1ex">
-<br>
-Aside: this fuzzy matching of references feels too clever by half.<br></blo=
-ckquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">That&#39;=
-s the perils of the `any` syntax. In exchange for something very terse, you=
- have to contend with multiple domains of possible match targets.</div><div=
- dir=3D"auto"><br></div><div dir=3D"auto">On the whole, I think it&#39;s ni=
-ce that you can reference `something` without needing to know the precise g=
-eospatial coordinates of where that thing is. Downside is that the matches =
-may occasionally be fuzzier than you&#39;d prefer.</div><div dir=3D"auto"><=
-br></div><div dir=3D"auto">The QAPI domain only ever matches in a case sens=
-itive way, but other domains in Sphinx aren&#39;t as strict, and I don&#39;=
-t control those!</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div cl=
-ass=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote"=
- style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
-<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 # Since: 2.3<br>
-<br>
-[...]<br>
-<br>
-</blockquote></div></div></div>
-
---000000000000f6f5540639a8245e--
-
+Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
