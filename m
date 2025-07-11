@@ -4,67 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3AD1C83F17
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 01:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C7D9C83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 01:52:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua2mw-0001yk-2x; Thu, 10 Jul 2025 21:42:58 -0400
+	id 1ua2vu-0006mL-DM; Thu, 10 Jul 2025 21:52:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1ua2mq-0001xi-IA
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 21:42:54 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1ua2mn-00069z-IC
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 21:42:52 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxPuMTbHBoLNImAQ--.47267S3;
- Fri, 11 Jul 2025 09:42:43 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJAxQMIPbHBoHCcSAA--.32437S3;
- Fri, 11 Jul 2025 09:42:41 +0800 (CST)
-Subject: Re: [PULL 0/4] loongarch-to-apply queue
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-References: <20250710093238.453962-1-maobibo@loongson.cn>
- <CAJSP0QXq=d5UC8vp01OB0guvaH+V5SX8PtZ5b1NT78CmGeo6UQ@mail.gmail.com>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <5582e09a-d139-167b-7302-9da6de740a97@loongson.cn>
-Date: Fri, 11 Jul 2025 09:41:04 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1ua2vr-0006jL-Su
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 21:52:12 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1ua2vo-0007kw-B0
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 21:52:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1752198728; x=1783734728;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=JKaMQAipjm07ZHenYmiSXJD0s+0zUQA3XWSgJ6fZu+Y=;
+ b=cignk90kQeL0lC8IiXJS+CYoWvSG54d4uuC0aC7Gn91OitLTcycBtng9
+ 3bpKtMVjZrs6aACKznohNnSA668+Xf4JA4OsG8HgvFuM2j0FaAA6baaal
+ movv97hgHJy3dC5Ivj58hxKGKwQUHJkJ7hunSK4oozkmPE6fOPwdq6o5H
+ /m/J4A51YqgkFbJSfOOr9hs+Ohx1AAL1kVgjuD3T9SBibi/fkv5Mmy6WU
+ 37gcby/ih4vG2RbLfGG16Tptzx2gXK83PNuv53JoNTAG8eNGly747NL+u
+ HroiZI1YLtzn41OqSVFx+Yj437pdCxNOqnUrzoTNLPaETXRIbq5bOAvdc Q==;
+X-CSE-ConnectionGUID: f2NBgC4lSymdTi5SvF8o0Q==
+X-CSE-MsgGUID: +F9BVhj2S/iJGPhSjEy5mw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11490"; a="58255150"
+X-IronPort-AV: E=Sophos;i="6.16,302,1744095600"; d="scan'208";a="58255150"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Jul 2025 18:52:05 -0700
+X-CSE-ConnectionGUID: K9dwr8cJQE6tpml6q878MA==
+X-CSE-MsgGUID: gR/0+tJQR2+qksMDdG2SNQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,302,1744095600"; d="scan'208";a="161936265"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Jul 2025 18:52:04 -0700
+Message-ID: <6c381d13-db0e-4b61-b72b-bda9e7727143@intel.com>
+Date: Fri, 11 Jul 2025 09:52:01 +0800
 MIME-Version: 1.0
-In-Reply-To: <CAJSP0QXq=d5UC8vp01OB0guvaH+V5SX8PtZ5b1NT78CmGeo6UQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] target/i386: move max_features to class
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: zhao1.liu@intel.com
+References: <20250711000603.438312-1-pbonzini@redhat.com>
+ <20250711000603.438312-2-pbonzini@redhat.com>
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxQMIPbHBoHCcSAA--.32437S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7AF18Cr45GrWDXFWUGry7CFX_yoW8KF4UpF
- WakF13KrWkGry7Jrs7ta4UZF1UKr4kGw4Iq3Wftry8Crn8Ary8Xr18J34SgFyUJa4UGw1j
- qr1UWw1DZF1UJabCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU25EfUUUU
- U
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.606,
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250711000603.438312-2-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,66 +86,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 7/11/2025 8:06 AM, Paolo Bonzini wrote:
+> max_features is always set to true for instances created by -cpu max or
+> -cpu host; it's always false for other classes.  Therefore it can be
+> turned into a field in the X86CPUClass.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+
+missed one place:
 
 
-On 2025/7/10 下午8:43, Stefan Hajnoczi wrote:
-> On Thu, Jul 10, 2025 at 5:34 AM Bibo Mao <maobibo@loongson.cn> wrote:
->>
->> The following changes since commit df6fe2abf2e990f767ce755d426bc439c7bba336:
->>
->>    Merge tag 'pull-target-arm-20250704' of https://gitlab.com/pm215/qemu into staging (2025-07-07 09:22:41 -0400)
->>
->> are available in the Git repository at:
->>
->>    https://github.com/bibo-mao/qemu.git tags/pull-loongarch-20250710
->>
->> for you to fetch changes up to 8ad757642e3a8a283edc29efec73b9bd57fdb365:
->>
->>    target/loongarch: Remove unnecessary page size validity checking (2025-07-10 16:30:25 +0800)
->>
->> ----------------------------------------------------------------
->> pull-loongarch-20250710 queue
->>
->> ----------------------------------------------------------------
->> Bibo Mao (4):
->>        hw/intc/loongarch_extioi: Move unrealize function to common code
->>        target/loongarch: Correct spelling in helper_csrwr_pwcl()
->>        target/loongarch: Fix CSR STLBPS register write emulation
->>        target/loongarch: Remove unnecessary page size validity checking
-> 
-> Please take a look at the following aarch64 macOS CI failure and
-> resend your pull request when it has been fixed:
-> 
-> ../target/loongarch/tcg/tlb_helper.c:643:75: error: format specifies
-> type 'long' but the argument has type 'target_ulong' (aka 'unsigned
-> long long') [-Werror,-Wformat]
-> 643 | qemu_log_mask(LOG_GUEST_ERROR, "Illegal huge pagesize %ld\n", ps);
-> | ~~~ ^~
-> | %llu
-> /private/var/folders/7m/kxwv39y54d9g6lmkzwbqwk8r0000gn/T/cirrus-ci-build/include/qemu/log.h:57:30:
-> note: expanded from macro 'qemu_log_mask'
-> 57 | qemu_log(FMT, ## __VA_ARGS__); \
-> | ~~~ ^~~~~~~~~~~
-> 
-> https://gitlab.com/qemu-project/qemu/-/jobs/10637285043
-Thanks for your reminder, will resend it after solving this issue.
+----------------8<---------------
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -8302,7 +8302,7 @@ void x86_cpu_expand_features(X86CPU *cpu, Error 
+**errp)
+          }
+      }
 
-Regards
-Bibo Mao
+-    /*TODO: Now cpu->max_features doesn't overwrite features
++    /*TODO: Now xcc->max_features doesn't overwrite features
+       * set using QOM properties, and we can convert
+       * plus_features & minus_features to global properties
+       * inside x86_cpu_parse_featurestr() too.
 
-> 
-> Thanks,
-> Stefan
-> 
->>
->>   hw/intc/loongarch_extioi.c                |  9 ---------
->>   hw/intc/loongarch_extioi_common.c         |  9 +++++++++
->>   include/hw/intc/loongarch_extioi.h        |  1 -
->>   include/hw/intc/loongarch_extioi_common.h |  1 +
->>   target/loongarch/tcg/csr_helper.c         |  8 ++++++--
->>   target/loongarch/tcg/tlb_helper.c         | 24 ++++++++----------------
->>   6 files changed, 24 insertions(+), 28 deletions(-)
->>
->>
+
+
+with above added,
+
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
 
