@@ -4,37 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3477FC83F1D
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 20:52:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAD68C83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 20:52:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaKgO-0005ma-0R; Fri, 11 Jul 2025 16:49:27 -0400
+	id 1uaKgz-0006WW-4v; Fri, 11 Jul 2025 16:50:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uaKeX-0003Yt-K2; Fri, 11 Jul 2025 16:47:34 -0400
+ id 1uaKe8-0003ST-JG; Fri, 11 Jul 2025 16:47:08 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uaKeU-0003pf-Fh; Fri, 11 Jul 2025 16:47:29 -0400
+ id 1uaKe6-0003oT-Oz; Fri, 11 Jul 2025 16:47:04 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F134A135D0C;
+ by isrv.corpit.ru (Postfix) with ESMTP id C9B4B135D09;
  Fri, 11 Jul 2025 23:46:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D090D23FF46;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A7BDD23FF43;
  Fri, 11 Jul 2025 23:46:32 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.19 13/15] target/arm: Fix 128-bit element ZIP, UZP, TRN
-Date: Fri, 11 Jul 2025 23:46:28 +0300
-Message-ID: <20250711204632.1804872-13-mjt@tls.msk.ru>
+Subject: [Stable-7.2.19 10/15] target/arm: Correct KVM & HVF dtb_compatible
+ value
+Date: Fri, 11 Jul 2025 23:46:25 +0300
+Message-ID: <20250711204632.1804872-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-7.2.19-20250711111933@cover.tls.msk.ru>
 References: <qemu-stable-7.2.19-20250711111933@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -59,94 +63,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-We missed the instructions UDEF when the vector size is too small.
-We missed marking the instructions non-streaming with SME.
+Linux kernel knows how to parse "arm,armv8", not "arm,arm-v8".
+
+See arch/arm64/boot/dts/foundation-v8.dts:
+
+  https://github.com/torvalds/linux/commit/90556ca1ebdd
 
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250704142112.1018902-4-richard.henderson@linaro.org
+Fixes: 26861c7ce06 ("target-arm: Add minimal KVM AArch64 support")
+Fixes: 585df85efea ("hvf: arm: Implement -cpu host")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250623121845.7214-10-philmd@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit e6ffd009c7710a8cc98094897fa0af609c114683)
+(cherry picked from commit a412575837b6a46584fba891e3706e87bd09a3e6)
+(Mjt: the change is in target/arm/kvm64.c, not ../kvm.c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/translate-sve.c b/target/arm/translate-sve.c
-index 034e816491..02302abfbd 100644
---- a/target/arm/translate-sve.c
-+++ b/target/arm/translate-sve.c
-@@ -2538,6 +2538,23 @@ TRANS_FEAT(PUNPKHI, aa64_sve, do_perm_pred2, a, 1, gen_helper_sve_punpk_p)
-  *** SVE Permute - Interleaving Group
-  */
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 047cb8fc50..dfce8181f9 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -489,7 +489,7 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     hv_vcpu_exit_t *exit;
+     int i;
  
-+static bool do_interleave_q(DisasContext *s, gen_helper_gvec_3 *fn,
-+                            arg_rrr_esz *a, int data)
-+{
-+    if (sve_access_check(s)) {
-+        unsigned vsz = vec_full_reg_size(s);
-+        if (vsz < 32) {
-+            unallocated_encoding(s);
-+        } else {
-+            tcg_gen_gvec_3_ool(vec_full_reg_offset(s, a->rd),
-+                               vec_full_reg_offset(s, a->rn),
-+                               vec_full_reg_offset(s, a->rm),
-+                               vsz, vsz, data, fn);
-+        }
-+    }
-+    return true;
-+}
-+
- static gen_helper_gvec_3 * const zip_fns[4] = {
-     gen_helper_sve_zip_b, gen_helper_sve_zip_h,
-     gen_helper_sve_zip_s, gen_helper_sve_zip_d,
-@@ -2547,11 +2564,11 @@ TRANS_FEAT(ZIP1_z, aa64_sve, gen_gvec_ool_arg_zzz,
- TRANS_FEAT(ZIP2_z, aa64_sve, gen_gvec_ool_arg_zzz,
-            zip_fns[a->esz], a, vec_full_reg_size(s) / 2)
+-    ahcf->dtb_compatible = "arm,arm-v8";
++    ahcf->dtb_compatible = "arm,armv8";
+     ahcf->features = (1ULL << ARM_FEATURE_V8) |
+                      (1ULL << ARM_FEATURE_NEON) |
+                      (1ULL << ARM_FEATURE_AARCH64) |
+diff --git a/target/arm/kvm64.c b/target/arm/kvm64.c
+index ed85bcfb5c..de69d8ade9 100644
+--- a/target/arm/kvm64.c
++++ b/target/arm/kvm64.c
+@@ -546,7 +546,7 @@ bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     }
  
--TRANS_FEAT(ZIP1_q, aa64_sve_f64mm, gen_gvec_ool_arg_zzz,
--           gen_helper_sve2_zip_q, a, 0)
--TRANS_FEAT(ZIP2_q, aa64_sve_f64mm, gen_gvec_ool_arg_zzz,
--           gen_helper_sve2_zip_q, a,
--           QEMU_ALIGN_DOWN(vec_full_reg_size(s), 32) / 2)
-+TRANS_FEAT_NONSTREAMING(ZIP1_q, aa64_sve_f64mm, do_interleave_q,
-+                        gen_helper_sve2_zip_q, a, 0)
-+TRANS_FEAT_NONSTREAMING(ZIP2_q, aa64_sve_f64mm, do_interleave_q,
-+                        gen_helper_sve2_zip_q, a,
-+                        QEMU_ALIGN_DOWN(vec_full_reg_size(s), 32) / 2)
+     ahcf->target = init.target;
+-    ahcf->dtb_compatible = "arm,arm-v8";
++    ahcf->dtb_compatible = "arm,armv8";
  
- static gen_helper_gvec_3 * const uzp_fns[4] = {
-     gen_helper_sve_uzp_b, gen_helper_sve_uzp_h,
-@@ -2563,10 +2580,10 @@ TRANS_FEAT(UZP1_z, aa64_sve, gen_gvec_ool_arg_zzz,
- TRANS_FEAT(UZP2_z, aa64_sve, gen_gvec_ool_arg_zzz,
-            uzp_fns[a->esz], a, 1 << a->esz)
- 
--TRANS_FEAT(UZP1_q, aa64_sve_f64mm, gen_gvec_ool_arg_zzz,
--           gen_helper_sve2_uzp_q, a, 0)
--TRANS_FEAT(UZP2_q, aa64_sve_f64mm, gen_gvec_ool_arg_zzz,
--           gen_helper_sve2_uzp_q, a, 16)
-+TRANS_FEAT_NONSTREAMING(UZP1_q, aa64_sve_f64mm, do_interleave_q,
-+                        gen_helper_sve2_uzp_q, a, 0)
-+TRANS_FEAT_NONSTREAMING(UZP2_q, aa64_sve_f64mm, do_interleave_q,
-+                        gen_helper_sve2_uzp_q, a, 16)
- 
- static gen_helper_gvec_3 * const trn_fns[4] = {
-     gen_helper_sve_trn_b, gen_helper_sve_trn_h,
-@@ -2578,10 +2595,10 @@ TRANS_FEAT(TRN1_z, aa64_sve, gen_gvec_ool_arg_zzz,
- TRANS_FEAT(TRN2_z, aa64_sve, gen_gvec_ool_arg_zzz,
-            trn_fns[a->esz], a, 1 << a->esz)
- 
--TRANS_FEAT(TRN1_q, aa64_sve_f64mm, gen_gvec_ool_arg_zzz,
--           gen_helper_sve2_trn_q, a, 0)
--TRANS_FEAT(TRN2_q, aa64_sve_f64mm, gen_gvec_ool_arg_zzz,
--           gen_helper_sve2_trn_q, a, 16)
-+TRANS_FEAT_NONSTREAMING(TRN1_q, aa64_sve_f64mm, do_interleave_q,
-+                        gen_helper_sve2_trn_q, a, 0)
-+TRANS_FEAT_NONSTREAMING(TRN2_q, aa64_sve_f64mm, do_interleave_q,
-+                        gen_helper_sve2_trn_q, a, 16)
- 
- /*
-  *** SVE Permute Vector - Predicated Group
+     err = read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64pfr0,
+                          ARM64_SYS_REG(3, 0, 0, 4, 0));
 -- 
 2.47.2
 
