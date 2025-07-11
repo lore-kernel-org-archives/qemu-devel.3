@@ -4,100 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40EA4C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:56:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB2B8C8303C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:56:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua9Xq-00020m-JU; Fri, 11 Jul 2025 04:55:50 -0400
+	id 1ua9Xz-00029y-Bq; Fri, 11 Jul 2025 04:55:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ua9Nh-0002DI-Oj
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 04:45:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1ua9RW-0000ik-Fm; Fri, 11 Jul 2025 04:49:18 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ua9Nf-00026y-BN
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 04:45:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752223517;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=gk3vGHDejppRiPXbD4y70hirt13MRsb3Dma+e41HoveYCGuX0Eg2KbXb4WxKJvy1/Fks7D
- aWQeMGz95h8rv2JpmXlveuNAx2E9IWSAHSTaoGB0EyPpICG4QzwwzO44Zx0PGyo22C4vGs
- Av3jGj7qa7NhYEc8PLobUgF2JMu+CBA=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-ZiguOah5PWeWnQgK_sqZTg-1; Fri, 11 Jul 2025 04:45:15 -0400
-X-MC-Unique: ZiguOah5PWeWnQgK_sqZTg-1
-X-Mimecast-MFC-AGG-ID: ZiguOah5PWeWnQgK_sqZTg_1752223514
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ae1c79fb8a9so204044266b.0
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 01:45:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752223514; x=1752828314;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=AwiBa/bl2nWCX9iwsyEctv7KPMQYr/2eqENorq/hA6/QQnhl0P4NAPny80D8U4yZjv
- Z1hgvzxzufOB3d4yAdEpCDIUpobMlnHswcrlFHQ2gmIdPX9spXNJFqyhVY0++tts3qDD
- +urGlZiOlNF4o5eSZzTIlVwg9Pq3WltSTHfDoxKGcmlt2slgwVxDVwANqYIFtKNGWJAZ
- +KFVVtg5Sb8BLed1Z9Zai5leW9Yq6qxXZkRUh4EKkzde4XkYSiSFoKiYCwacS2jm1yRp
- kbrx3inrCdi2EgMWvBW+JTyKBD0DY2F2hszH447X4OCj40lW2vKDghQscRU3slu4zJ4Z
- otRw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV0590c8GSeb2LeHCHqJXsRj9rAvoD+8dpp+0q09sO1kWGntiCd0j5OykXI2T13OGnsQxdlPTpYa1Zp@nongnu.org
-X-Gm-Message-State: AOJu0YwPrTajJGZE2bBxwo2Lq/SSlohL+IpNMRWOZmQoOdhX8U6nns42
- O/VLVK7re+lx3tr1Nz2X+fhX10krXsvW9u+1y7uqSXiMXS4HVBSUXWoYWQ1hEzEPYUnLGyisxLw
- Bo9Ol1Rf+UIi4C8aLYfhVKy03U1om50QUPhwX8xFh9ocCgArWVP35ajfx
-X-Gm-Gg: ASbGnctdRa1HuwbQ6uWbC/cusB7HF/qN7o1UEzEZyWXqRZv44OTwOHTKfLQU+o4VG9v
- nltBLNzHcg6TAdpMIggUvOD7WFI8AucOlvluZt8ZiuSsCrgmN8iubnd61URTkKZ9T3sKB5tD9WV
- JYkJWbKaG1S+t7mZcZRsv5xde8wYqqldSB4jgSotZD/X+tSAfe2MVSx/frw3SisoOPQOIvv08LU
- Bqds6144CxMP8u9C3y8FC8ecUrEC4yDDzXPXlwZ2dLVlu8s8rwGYOuAmQoYOyZtAvq1GT3Q7imn
- Epcj/gTvZJpAZseUGHKEQAG0/cBrl9haa4BiNNuiRZ8QLmDMF3u1vaeKPXj0hVhEN9cmIQJQXQ=
- =
-X-Received: by 2002:a17:907:cd07:b0:ae3:64ec:5eb0 with SMTP id
- a640c23a62f3a-ae6fbc55069mr243433966b.11.1752223514524; 
- Fri, 11 Jul 2025 01:45:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFKhacqgtaAVSFAsIUT0fwfb5gTQFC880+fEsTr7024y7loKSRc/btQFGd6xMa+dazfoWvAWA==
-X-Received: by 2002:a17:907:cd07:b0:ae3:64ec:5eb0 with SMTP id
- a640c23a62f3a-ae6fbc55069mr243431166b.11.1752223514117; 
- Fri, 11 Jul 2025 01:45:14 -0700 (PDT)
-Received: from [10.35.88.123] (93-44-61-216.ip95.fastwebnet.it. [93.44.61.216])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae6e82645f2sm257700066b.89.2025.07.11.01.45.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Jul 2025 01:45:13 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] i386/tdx: Build TDX only for 64-bit target
-Date: Fri, 11 Jul 2025 10:45:06 +0200
-Message-ID: <20250711084506.458132-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250625073310.2796298-1-xiaoyao.li@intel.com>
-References: 
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1ua9RU-00032E-E7; Fri, 11 Jul 2025 04:49:18 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bdljD2hBGz6M4jN;
+ Fri, 11 Jul 2025 16:48:00 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 8BCF81401F4;
+ Fri, 11 Jul 2025 16:49:08 +0800 (CST)
+Received: from A2303104131.china.huawei.com (10.203.177.241) by
+ frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Fri, 11 Jul 2025 10:48:59 +0200
+To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
+ <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
+ <imammedo@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <smostafa@google.com>, <gustavo.romero@linaro.org>, <mst@redhat.com>,
+ <marcel.apfelbaum@gmail.com>, <linuxarm@huawei.com>,
+ <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
+ <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
+Subject: [PATCH v8 01/12] hw/arm/virt-acpi-build: Don't create ITS id mappings
+ by default
+Date: Fri, 11 Jul 2025 09:47:38 +0100
+Message-ID: <20250711084749.18300-2-shameerali.kolothum.thodi@huawei.com>
+X-Mailer: git-send-email 2.12.0.windows.1
+In-Reply-To: <20250711084749.18300-1-shameerali.kolothum.thodi@huawei.com>
+References: <20250711084749.18300-1-shameerali.kolothum.thodi@huawei.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain
+X-Originating-IP: [10.203.177.241]
+X-ClientProxiedBy: kwepems100001.china.huawei.com (7.221.188.238) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,11 +72,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+Commit d6afe18b7242 ("hw/arm/virt-acpi-build: Fix ACPI IORT and MADT tables
+when its=off") moved ITS group node generation under the its=on condition.
+However, it still creates rc_its_idmaps unconditionally, which results in
+duplicate ID mappings in the IORT table.
 
-Paolo
+Fixes:d6afe18b7242 ("hw/arm/virt-acpi-build: Fix ACPI IORT and MADT tables when its=off")
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Donald Dutile <ddutile@redhat.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+---
+ hw/arm/virt-acpi-build.c | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index c3b9b3f6ea..0dfb8ec2c3 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -358,12 +358,6 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+         /* Sort the smmu idmap by input_base */
+         g_array_sort(rc_smmu_idmaps, iort_idmap_compare);
+ 
+-        /*
+-         * Knowing the ID ranges from the RC to the SMMU, it's possible to
+-         * determine the ID ranges from RC that are directed to the ITS.
+-         */
+-        create_rc_its_idmaps(rc_its_idmaps, rc_smmu_idmaps);
+-
+         nb_nodes = 2; /* RC and SMMUv3 */
+         rc_mapping_count = rc_smmu_idmaps->len;
+ 
+-- 
+2.47.0
 
 
