@@ -4,93 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66200C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:27:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61521C8303C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:27:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaAy1-0004mq-5W; Fri, 11 Jul 2025 06:26:57 -0400
+	id 1uaAwr-0000DN-19; Fri, 11 Jul 2025 06:25:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaAxx-0004cL-0x
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:26:53 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaAxn-0004G6-BZ
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:26:52 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4530921461aso12665715e9.0
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 03:26:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752229601; x=1752834401; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=VvlFFIb/42Wv1yNH47hQVpyhSpu6gSzvkgBb639YkLk=;
- b=jGz/L1cBLP8qgQzisMy+VHjZGsTSMfdoQcp9UdFUXKBnbhPcy2I334ZiDT//vfKNAV
- mZN+WlwRPBm1AcUyi730AJU1NpB0AeXDITjdxARArc35YDqStU3CRAgndJpNzfFGr6Fg
- r29UD/R3mBIaqQdMgJqQuXgUnpRtEBoTv418RaRibzP8QDQWAW5cdIz70PqpuG0wvYPA
- TGA1ZxbxCgsKhVSYbvHUR2QnP4aYiqYRF2OsbwRctDUojvkGJQ5+KlNccfwzAhsUbiCa
- vDfCxlFIgoaPGnbvrv5xhZR6X4LSI6sywh4CsmzkT2hwxIewPjTwh7PjYPr0Wc3z1m8I
- 96Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752229601; x=1752834401;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VvlFFIb/42Wv1yNH47hQVpyhSpu6gSzvkgBb639YkLk=;
- b=EX3mnxdk+GiazJlAO4ytBiOLmr6SV9zy9xOiPMtffTIeZcImEUnWP1PMYWa+y+Nijr
- g6J0pmDRv2Lg6poq+wEQ39JdFPVmpZw3GDBU0X4wH42ll3hUXzDtA8XWuxmIuzLdmClA
- TFCIh+uTUsUzr2tp0FQM7r2hoDzCnVQWTQeF5UwzI1363VKD2S221nQKkh8Nl2h2iVd0
- s63NjqvDltAYN2NWkCIHpidi2OvkcaycNbHMrROU+hFGa7+P+qbzxa3vnDU4p0t7+Sg6
- Mj3uyrGnpcG7xUrAM5dooLklMBg+dtbE4A2ozT8D4VRlEjyCEM1khW8D4kraTzGgP/Rn
- bRcg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVrKhJdtVu2QlEzfka2oYo8nZz+TG+yPZl1k6lgMqjDGvAQG1PBh0ChBveGAbrzPIqJrp0f8tJdCDOQ@nongnu.org
-X-Gm-Message-State: AOJu0YzKrO8gKpY9z7O63PijCZPQpRe5KaIvLzgox+CdH4MtGZgTrbjh
- V8dup6E/iC5B43YivTfxPiiAfmeq2k96kJW8gI+g2VE/izjzIlOdBGbYge9YTKjJUZtW3GakxpT
- Sp5RZgcc=
-X-Gm-Gg: ASbGncvQlevdQqK9GpByWSLqyXefX2TfNL1yjc98WiR/8rujTWmQn6V+g5BbdXwThpy
- 2kOQT6T1jDa5/QaBh2QnDtDG6CiuJ8kuhNxnsNmqp2K+0cV2h9SOqh16cnRbSE7uXB5iAiQs6nP
- tO8SSC+DQ2drpJq1k8wFnLBtCPzlOO7tzAeQPSw9HLOW4AhcgcpmZzNnMIOniOlqU6sgcJYLrH1
- 7/L11f1vAfz9UoUTciEcZCLE8zdM9N2bRa7rdAuexyQiJrZoQevNQceFdWpV4P8cXFKOBbEi8eN
- gABWrsrJ1Ts5c5lcDDNk+AGoX4wZVH8vLTUpoQQmdv4MjMHs6dmKplAWIBHM9/CTeML/BX3TmZI
- Kf4Kk8ChYYNg8FgaoSnTUEjlLdZHwWhZBNQKy0gqyM54+xDDQFyzVMOrLhy3aQVs0ZATbyw==
-X-Google-Smtp-Source: AGHT+IGwzm0htWK00WVShAuVypzfmE7NLITkWyWxO+GO1+aRQN8rRc5tIzfMotYgtH1Te5QvlR/CAw==
-X-Received: by 2002:a05:600c:8b10:b0:43d:2313:7b49 with SMTP id
- 5b1f17b1804b1-45565eaffabmr20194285e9.12.1752229601151; 
- Fri, 11 Jul 2025 03:26:41 -0700 (PDT)
-Received: from [192.168.1.47] (lfbn-mon-1-587-20.w2-4.abo.wanadoo.fr.
- [2.4.165.20]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454d5062119sm84459825e9.18.2025.07.11.03.26.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Jul 2025 03:26:40 -0700 (PDT)
-Message-ID: <0434d08c-b3c6-488f-8ceb-3c36e23770c1@linaro.org>
-Date: Fri, 11 Jul 2025 12:26:39 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uaAw8-00089C-1r
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:25:01 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uaAw5-0003Ck-TG
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:24:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1752229498; x=1783765498;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=/dbJpXZ+WoEY+wWTUOHZZkTlAY66zw+zpoaPJAtvbjw=;
+ b=KB5eJ/lhCbbZLWYhSzFGmHmepd5w3/URsTdPEWm47frT4PGpJCRhRMri
+ CKLKY/Gj0Kpz0z8YboYBtOg0qCdn2WP+G44xCgGdFA1H81mVRj08W5MV1
+ VqYFf7IkZr47nglcmFu3yWZwMwHR6AEKFdGSAVtbmnAGrUgz4nnvpuK0G
+ Eo51FIksami26GHDs5woCkxHCdDVqJz/r4YmGTwGZNlAhqUyzm7zlKyuP
+ LjOB7cGHV+EfscXLZNR4G+LMKba61ExyTJY4rzefrn5Ia+Cl9J/R85JW0
+ 4fdknKOasEqrh52u/Tq2ognp86zaZXAnCyradOKfVW1EuHH8dLjvP5jwE Q==;
+X-CSE-ConnectionGUID: hugTJbURRXW2DrFtDmh99A==
+X-CSE-MsgGUID: WIEyWdgJQQi8TSMz40YYXA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11490"; a="65875719"
+X-IronPort-AV: E=Sophos;i="6.16,303,1744095600"; d="scan'208";a="65875719"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Jul 2025 03:24:57 -0700
+X-CSE-ConnectionGUID: 09HYi2rTTCyvfFtcl4+bRQ==
+X-CSE-MsgGUID: Igb0fkN8SVuowwA6URQ3Iw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,303,1744095600"; d="scan'208";a="156894398"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by fmviesa008.fm.intel.com with ESMTP; 11 Jul 2025 03:24:54 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+Cc: Ewan Hai <ewanhai-oc@zhaoxin.com>, Jason Zeng <jason.zeng@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Tao Su <tao1.su@intel.com>,
+ Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
+ Tejus GK <tejus.gk@nutanix.com>, Manish Mishra <manish.mishra@nutanix.com>,
+ qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>
+Subject: [PATCH v2 5/9] i386/cpu: Add a "x-force-cpuid-0x1f" property
+Date: Fri, 11 Jul 2025 18:45:59 +0800
+Message-Id: <20250711104603.1634832-6-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250711104603.1634832-1-zhao1.liu@intel.com>
+References: <20250711104603.1634832-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] meson: Add most 3rd-party includes as system includes
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>
-References: <20250617203435.41490-1-shentey@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250617203435.41490-1-shentey@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,72 +88,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/6/25 22:34, Bernhard Beschow wrote:
-> When compiling QEMU against fuse3-3.17.1 with --enable-werror the build fails
-> with:
-> 
->    In file included from ../src/block/export/fuse.c:33:
->    /usr/include/fuse3/fuse.h:959:5: error: redundant redeclaration of ‘fuse_main_real_versioned’ [-Werror=redundant-decls]
->      959 | int fuse_main_real_versioned(int argc, char *argv[],
->          |     ^~~~~~~~~~~~~~~~~~~~~~~~
->    /usr/include/fuse3/fuse.h:885:5: note: previous declaration of ‘fuse_main_real_versioned’ with type ‘int(int,  char **, const struct fuse_operations *, size_t,  struct libfuse_version *, void *)’ {aka ‘int(int,  char **, const struct fuse_operations *, long unsigned int,  struct libfuse_version *, void *)’}
->      885 | int fuse_main_real_versioned(int argc, char *argv[],
->          |     ^~~~~~~~~~~~~~~~~~~~~~~~
->    cc1: all warnings being treated as errors
-> 
-> That is, a fuse header triggers a warning within itself. Since QEMU adds the
-> fuse3 include path via `-I`, the compiler thinks that the header is part of the
-> QEMU project, and thus raises a warning. The compiler can be told to ignore
-> warnings within 3rd party headers by adding these paths via `-isystem`. Fix the
-> above build failure by marking fuse as system dependency. While at it mark
-> every 3rd-party dependency as system dependency to prevent similar issues in the
-> future but skip glib since that results in glib include paths to be omitted from
-> bindgen in case of a Rust build.
-> 
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
->   meson.build | 160 ++++++++++++++++++++++++++--------------------------
->   1 file changed, 80 insertions(+), 80 deletions(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index 34729c2a3d..694cf95f6f 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -826,7 +826,7 @@ endif
->   #####################################
->   
->   libm = cc.find_library('m', required: false)
-> -threads = dependency('threads')
-> +threads = dependency('threads', include_type: 'system')
->   util = cc.find_library('util', required: false)
->   winmm = []
->   socket = []
-> @@ -859,11 +859,11 @@ if host_os == 'windows'
->                                         include_directories: include_directories('.'))
->     host_dsosuf = '.dll'
->   elif host_os == 'darwin'
-> -  coref = dependency('appleframeworks', modules: 'CoreFoundation')
-> -  iokit = dependency('appleframeworks', modules: 'IOKit', required: false)
-> +  coref = dependency('appleframeworks', modules: 'CoreFoundation', include_type: 'system')
-> +  iokit = dependency('appleframeworks', modules: 'IOKit', required: false, include_type: 'system')
->     host_dsosuf = '.dylib'
->     pvg = dependency('appleframeworks', modules: ['ParavirtualizedGraphics', 'Metal'],
-> -                   required: get_option('pvg'))
-> +                   required: get_option('pvg'), include_type: 'system')
->   elif host_os == 'sunos'
->     socket = [cc.find_library('socket'),
->               cc.find_library('nsl'),
-> @@ -899,7 +899,7 @@ endif
->   hvf = not_found
->   if get_option('hvf').allowed()
->     hvf = dependency('appleframeworks', modules: 'Hypervisor',
-> -                   required: get_option('hvf'))
-> +                   required: get_option('hvf'), include_type: 'system')
->     if hvf.found()
->       accelerators += 'CONFIG_HVF'
->     endif
+From: Manish Mishra <manish.mishra@nutanix.com>
 
-To the best of my meson knowledge:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Add a "x-force-cpuid-0x1f" property so that CPU models can enable it and
+have 0x1f CPUID leaf natually as the Host CPU.
+
+The advantage is that when the CPU model's cache model is already
+consistent with the Host CPU, for example, SRF defaults to l2 per
+module & l3 per package, 0x1f can better help users identify the
+topology in the VM.
+
+Adding 0x1f for specific CPU models should not cause any trouble in
+principle. This property is only enabled for CPU models that already
+have 0x1f leaf on the Host, so software that originally runs normally on
+the Host won't encounter issues in the Guest with corresponding CPU
+model. Conversely, some software that relies on checking 0x1f might
+have problems in the Guest due to the lack of 0x1f [*]. In
+summary, adding 0x1f is also intended to further emulate the Host CPU
+environment.
+
+[*]: https://lore.kernel.org/qemu-devel/PH0PR02MB738410511BF51B12DB09BE6CF6AC2@PH0PR02MB7384.namprd02.prod.outlook.com/
+
+Signed-off-by: Manish Mishra <manish.mishra@nutanix.com>
+Co-authored-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+[Integrated and rebased 2 previous patches (ordered by post time)]
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Tested-by: Yi Lai <yi1.lai@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+Note:
+  This patch integrates the idea from 2 previous posted patches (ordered
+by post time)[1] [2], following the s-o-b policy of "Re-starting
+abandoned work" in docs/devel/code-provenance.rst.
+
+[1]: From Manish: https://lore.kernel.org/qemu-devel/20240722101859.47408-1-manish.mishra@nutanix.com/
+[2]: From Xiaoyao: https://lore.kernel.org/qemu-devel/20240813033145.279307-1-xiaoyao.li@intel.com/
+---
+Changes since RFC:
+ * Rebase and rename the property as "x-force-cpuid-0x1f". (Igor)
+---
+ target/i386/cpu.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 5676e5526f40..d27eeb1cb718 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -9940,6 +9940,7 @@ static const Property x86_cpu_properties[] = {
+     DEFINE_PROP_BOOL("x-intel-pt-auto-level", X86CPU, intel_pt_auto_level,
+                      true),
+     DEFINE_PROP_BOOL("x-l1-cache-per-thread", X86CPU, l1_cache_per_core, true),
++    DEFINE_PROP_BOOL("x-force-cpuid-0x1f", X86CPU, force_cpuid_0x1f, false),
+ };
+ 
+ #ifndef CONFIG_USER_ONLY
+-- 
+2.34.1
 
 
