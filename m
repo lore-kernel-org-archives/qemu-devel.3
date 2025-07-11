@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBB42C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:20:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71760C8303C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:21:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaAqz-0007fj-E7; Fri, 11 Jul 2025 06:19:41 -0400
+	id 1uaAsF-0000cD-SP; Fri, 11 Jul 2025 06:20:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaAqt-0007Zr-VO
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:19:36 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaAsE-0000XM-FP
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:20:58 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaAqr-00020Q-37
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:19:35 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-453643020bdso14769085e9.1
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 03:19:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaAsC-0002XF-Gh
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:20:58 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3a52874d593so1687217f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 03:20:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752229168; x=1752833968; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752229253; x=1752834053; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zhGqM2BKY3kFj2qnGDPGI0reWpndg40GuwtmL7GUpu4=;
- b=y52QH4rc8lsY1mlTBZmFo49kPF3jLE+8en5y0DL2jWNnwJ1SZ5ZWJmTBpGcLo9Jvqs
- VaV11J6nF6lSfbVbathntZAN6ntqK3uDZf3zamjqlRH4TG7uAlyBkJGSMr3OeqSz6yN1
- aD3MbU28kV4qdsauwHvlrL7wLSDIUL4g3KuZBiTxCZQaNzm0xvkT/Dk1HWTwqNVac/wY
- Hh7kzXJ/ZqaR//tlKhDBbeJSDAF+RJxDgosREO4FVu95QRo8t3N/6UHYsORVYLqcl9ZX
- ByQyR7nlaUEBEDczPrPHxmTmUqVAYecZrTitiRZHBoIUcLGizx9Sj+86i9c5nnkGY/hF
- zQtQ==
+ bh=xSVUXWCMuhFRONHseCY0/oaDPq6vBhrOMPsJnjzGER8=;
+ b=agKF9E1cXWQNA9KsXFg2piJ2SQwzIQ1Nmgb+aFHdVgekaZCgiSkpqQXTZlJPBWb7tH
+ 75onzSrPURqrqS5wcifJbcsV6jIaX7OKdipdErlao0Oo8zRfF/pPhIgwQCJWlNoxLxaT
+ 2y4lk1bdwH8eYL38T+JWqNLaz85KuibyIoWNQ39de3QUYcAfx+Bzz5h4IahythDpjz+B
+ s81XJTYaZOrSOuQxdJnmFzeAe5pREuvxvYmdyOf28qvvqISnjzjn2eLFtY4tIi7HcV5Q
+ NluIonCKQ3l3D5WR7jxJM/VLVzDGlLXLDTTgXIm9eamF2UAs0l95WZBENF3d1Kyu4YeK
+ dbZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752229168; x=1752833968;
+ d=1e100.net; s=20230601; t=1752229253; x=1752834053;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zhGqM2BKY3kFj2qnGDPGI0reWpndg40GuwtmL7GUpu4=;
- b=bZfJtZNSF/RXBsgmvupoGpf/TcsL6NS9iB3VmEJ1lasVYNAcWfyJ7DPnF7vehrVqT2
- UIdC/kCS/WELFsvUc/lPNKYe+Nw/QlYJpWeX3KcS2w/DLQAOQbELHMjwL2dAf9yZysPr
- dIPU4iyTTfMrUCWwSIlf2ygjIfYd0lAVEW/zV/2P+7l3+94hG1wd1loWDXpMqgsyAIZB
- elEdUmlUoyEX4dd1JB0YaOpyl2Soc+ZNOKc+HizL2P9um0dmA9JJIpzWvnnySS2f5d1o
- OjLbi9mfa2zhcV3raZGD0MLxxuJPYZ9GlXwR/p7Qb0dJM05EbeRRJhFJVFMnyKT6sjDA
- wvCA==
-X-Gm-Message-State: AOJu0Yy0odnLZtohUeYRrbkiIhN/5K6FGTkU+lUjBVrd/sMFj+wGrv0n
- 6E7YK34qQ2/ig2eq324Ik8xvVmD5FezJp5LJ6ymakdOOojeaDsjla8vFO9RYpb/BvZY=
-X-Gm-Gg: ASbGnctrYRUFawtgwdgLzOrvrMZ8nOmx5OM3OGH3x/wj0pdkL2sryvQ4M3bgPkQmpla
- 0/E8MSzHCZQnxryOHWsU3FIr5xOmqMgpSGPTuyPeV4xJqLx2ymnEf7TsRR957s6XyZLM5RCryiT
- MhkVinXGXYXpA9mFUm9F9lR+uR2x6msNQMtRFrPYHLKjj9xVF8TaV1Q2GBMjoV81UzsUDrt3309
- Gsiu9lHEMM+mEWcGri95WpsujJOlpGsQ9Z/9hGzPgBlyBmRwNXoKX/ZIWX00kGCIy0uGULO6ojl
- 3xL7tgQ6uAYM6Hni0z8PSzcLHd4Rvv1oYetPL+9Y9xcf6UR64uK2iMe6iwS+nVgINKi+s8YhkC0
- +kZ4jzYydIVfjE58LGFhiBNgWB3LIr+7m/Ez13zJeAba0h5PLRb28iid7/FAaWv68ZcnxZQ==
-X-Google-Smtp-Source: AGHT+IFO4xH0Szvt2qzJUdyV/rPWU4crVI/Zxp+B4cIIg6vl6cqId9cpoF7qvPU+3I8Xxo8PsMEt2w==
-X-Received: by 2002:a5d:5e90:0:b0:3a5:5270:a52c with SMTP id
- ffacd0b85a97d-3b5f18168e9mr2546080f8f.0.1752229168070; 
- Fri, 11 Jul 2025 03:19:28 -0700 (PDT)
+ bh=xSVUXWCMuhFRONHseCY0/oaDPq6vBhrOMPsJnjzGER8=;
+ b=NKIBZlDMI9hgMPG0tFqe8zwxJefYRDuiatUC/m+yrWQG8GHQF0E9O1IZ9E5nZEN9Yz
+ 0KAUbxX6BeYpwlizxzNfoCrt7jnUxyxBavrFMtKwQyLL2Fz+ePz4lOycFBiWbxNWnFOn
+ i5aseIa8cUTLxXUTY8z+6oSVi16ybxuUGPPZtsUM3Gies5s5LvqBcAulkP6laP+PFNMc
+ hg3nwpCcajzznW3rVgmcnGZ8vI6g6PhvwsfrNhYoZJbo1zWUe9jI7VOd6ej/vglOfqtW
+ WWnL0JFNeFqkO7nrIcENg9vcxh7cvWdPrvX3f35l0x1siH4BDCgGqt+zkwUgOtr+5Ez8
+ wsiw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXf1tETU9D0fbds9+OhTmoHEVDmaFoiVqT9XZYaubrbReCQmKLEPn9fFGnMgPSH16xwprTqLKfbp7Bn@nongnu.org
+X-Gm-Message-State: AOJu0YzYbOf5tHEkupVpySK4Uc/t7QOABe+55eNY477CB7gyq/EGA5PB
+ XJy2J4SCSf+FDHJGMZJTKBtDQlUmY4PIhqxtj2HGhvT1Iy90xnjJ1F4XcpRElkyIjrM=
+X-Gm-Gg: ASbGncss0Y5HVLwRewt108ubRqRkCx2nnKHAaYCSwgR2LM9Djmm0FBYtHTEwPfNZoFb
+ jz6IcNSa9rtXJGlFvWa6AkMg0iNftRkSRs69w6mAs0N1BxBCZDg6tdDqgsOZARvMmlA9NLhitUR
+ CfAFsHTLO3FPT41PRWHkOSSPFZ20HgCMKwMfsSclAxw41qxLB9u8XxE3EcZS5TX74cOM/WPzQBI
+ 4kENIFPxmATIKiCWiBzM/pV0yNSPQvI6re6EAsd8wiocSedHoVxVS2X+wPYW9PbxEbdQcUD+3Fp
+ e8Hr0cKhDWnu02CdeBK5SA3UeTYGY/thNP2nygARimCTQDo3cDJlSA4wW0crQcdTzGNpK6bbc6g
+ eddWTmENwU2pyeWHWru2CL4xTfaosqLIbIKje6sjY5Sot+NjiwTzHDVqFO+69CrH3vghm7w==
+X-Google-Smtp-Source: AGHT+IF3T6EV+dqXBNMiEfb970Kd0s86j/WV2DYWLNMw09wsGy2cBKH8ijB0LTBYlS39luf9PtvwaQ==
+X-Received: by 2002:a05:6000:65b:b0:3b5:e6c0:5cb2 with SMTP id
+ ffacd0b85a97d-3b5f1893c01mr2545730f8f.25.1752229253240; 
+ Fri, 11 Jul 2025 03:20:53 -0700 (PDT)
 Received: from [192.168.1.47] (lfbn-mon-1-587-20.w2-4.abo.wanadoo.fr.
  [2.4.165.20]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e26c8bsm4034175f8f.88.2025.07.11.03.19.27
+ 5b1f17b1804b1-454d5062119sm84323975e9.18.2025.07.11.03.20.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Jul 2025 03:19:27 -0700 (PDT)
-Message-ID: <cb840e55-3f12-4005-9fc6-883876971241@linaro.org>
-Date: Fri, 11 Jul 2025 12:19:26 +0200
+ Fri, 11 Jul 2025 03:20:52 -0700 (PDT)
+Message-ID: <305a41f5-6955-495e-a0ac-988f19f98067@linaro.org>
+Date: Fri, 11 Jul 2025 12:20:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: merge host_cpu_instance_init() and
- host_cpu_max_instance_init()
-To: Paolo Bonzini <pbonzini@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: qemu-devel@nongnu.org
-References: <20250711075507.451540-1-pbonzini@redhat.com>
- <c5d96f80-31c0-44dc-8f7a-557367a1abc9@intel.com>
- <CABgObfZ95PAHOZ-2RSj=nPi5J5KGVPmjuB4tzY0oKX07mddg=g@mail.gmail.com>
+Subject: Re: [PATCH] tcg: Use uintptr_t in tcg_malloc implementation
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+References: <20250710225053.168169-1-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CABgObfZ95PAHOZ-2RSj=nPi5J5KGVPmjuB4tzY0oKX07mddg=g@mail.gmail.com>
+In-Reply-To: <20250710225053.168169-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,33 +101,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/7/25 10:17, Paolo Bonzini wrote:
-> On Fri, Jul 11, 2025 at 10:16 AM Xiaoyao Li <xiaoyao.li@intel.com> wrote:
->> On 7/11/2025 3:55 PM, Paolo Bonzini wrote:
->>> Simplify the accelerators' cpu_instance_init callbacks by doing all
->>> host-cpu setup in a single function.
->>
->> btw, it changes the behavior for "-cpu base" with accelerator.
->>
->> I think it should be OK considering "-cpu base" seems only for
->> experiment case.
+On 11/7/25 00:50, Richard Henderson wrote:
+> Avoid ubsan failure with clang-20,
+>    tcg.h:715:19: runtime error: applying non-zero offset 64 to null pointer
+> by not using pointers.
 > 
-> Yeah, I wonder if it should even be user creatable.
+> Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+> 
+> Supercedes: 20250618183759.9197-1-iii@linux.ibm.com
+> ("[PATCH v2] tcg: Remove NULL arithmetic in tcg_malloc()")
+> 
+> Ilya, I think I prefer this solution to &dummy_pool.
+> What do you think?
+> 
+> 
+> r~
+> 
+> ---
+>   include/tcg/tcg.h | 6 +++---
+>   tcg/tcg.c         | 9 +++++----
+>   2 files changed, 8 insertions(+), 7 deletions(-)
 
-Per commit 5adbed3088d ("i386: Define static "base" CPU model"):
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-     Despite having no CPUID data set at all, "-cpu base" is even a
-     functional CPU:
-
-     * It can boot a Slackware Linux 1.01 image with a Linux 0.99.12
-       kernel[1].
-     * It is even possible to boot[2] a modern Fedora x86_64 guest by
-       manually enabling the following CPU features:
-       -cpu base,+lm,+msr,+pae,+fpu,+cx8,+cmov,+sse,+sse2,+fxsr
-
-Anyhow I don't mind if it becomes hidden.
-
-Regards,
-
-Phil.
 
