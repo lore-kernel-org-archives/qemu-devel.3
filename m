@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB940C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:31:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 441E5C8303C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:32:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaB2N-00056e-VN; Fri, 11 Jul 2025 06:31:28 -0400
+	id 1uaB31-0005sP-Hb; Fri, 11 Jul 2025 06:32:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaB2M-00054u-Ow
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:31:27 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaB2y-0005lX-ES
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:32:05 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaB2K-0005VC-Lm
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:31:26 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3a51481a598so1111554f8f.3
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 03:31:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaB2w-0005ZY-Ik
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:32:04 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-454e2463e3aso4687735e9.0
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 03:32:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752229881; x=1752834681; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752229920; x=1752834720; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=C1Z7EpQ03VjvO9kvsktGSJv6yXbrBXhvwHDJoTwCanE=;
- b=y1y/PsxBAWOD2RkMZTWIiR/twjfz6DWRQddor2GTFj5un2PMDF7/VtAupgu3D82QY4
- wwFbdC7P8kdFq4VeITON5I2V6HomTUKIhsJ5PdtKZvsNwQUV6RNJBt6Awr7OA1pLSr8X
- Z2rRnzMypxwQy1bKqFIBNq0ttBJBPl7IqP1qyUc6IeLDMYWE7HJS1De9WVZjkuefZ/5C
- CwMpX45wtB/wlctQgKmw8aS/urYiqvhuDAQ2KJjU7hvhlxHEu2ZMkL81uUdY7ObIGIxW
- Xa4XarSpr/BKfXVP5Xf9ZYgUo6KsT09xkNJS9Va6VctaNl0vkpQFWDgXg3XPCnXRfy/Z
- jUgQ==
+ bh=9eU56WcJffaKPPiVQXHCUgZmEq/DkRsB1HlSOhwH/Qg=;
+ b=Uti2E4QJ5VNOmVyjQRXYYKD5C6PqpNYz8/bY+ofAtTSUj53fhQRqu0qBbxkP5zRe7a
+ 2QQ9pr7krvzTwGZMOB5wO1mXXst1feaCbSApXsNoUmPk/cHSRvu0G1Aj55siOmjeKbTS
+ nAeEAbsAdh/ULNl4jo5qjCenhPxRhIxYjNewkDASwMPp3tBWrPq0gBk1EpxQmZiHb+Ol
+ oN3bcQSsFxMEl9o5F1fr8iVfMDCAHjco+CuxbQ9yRzCpdNtItjcECzgZm0fu8j2YT+SL
+ N/NjZKX6PDvg4HG4Fbw7pkZUdVXuqOcoL0PPtjAwBXsSYhSSllQwW7CB03TH8Y1butny
+ wuXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752229881; x=1752834681;
+ d=1e100.net; s=20230601; t=1752229920; x=1752834720;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=C1Z7EpQ03VjvO9kvsktGSJv6yXbrBXhvwHDJoTwCanE=;
- b=ZwBsP5IA8nUxEKXXAfy1b/FecA5eMqVrBMmYX3Rn/YMQ2qoMGd5CsKChprpOd0Upau
- m3ClUae/kGas60iHR3m3XKaZi3nOh+kHRVR7uNcOxusqPV5OtIYfRhfSw458sVtC5zUZ
- SI376g27Hb8DAvUOi98KLWRAphBhlTWVxZRBIKNXRlG/8Kz8epGm6rtIuRHuGIaXpqyk
- GXXSxBe+CGEazMeAZWaB8rd+X7fzLljrjRY098LI3rNPesivWJG88cCwJ2F/p5wBvKQy
- 4SFz/ECsL5JYlMynKvxdhZneoq7n5gHH0RXpX4BmbyNHWUGlN/Rut9yLzULk2iYLz2NJ
- +dxQ==
+ bh=9eU56WcJffaKPPiVQXHCUgZmEq/DkRsB1HlSOhwH/Qg=;
+ b=cKergL590Wxb+d0YgdjL+usij3/mL5HREaNMfJhdt30CaXHM3ztPBw3ELQeh+7N+mT
+ 8uL+zG1PG+qBkx/XkfnZ3Uf9kwGiXc7euzhDa/iInmZWoyrP5WirshTe/lN/AH+a228E
+ IQkoz7hjTQVUDG2EE8w3s5j6HgFttCs+VN07Co/IMYY5hNFMsJGuG0DA/ZvRMcbpbEYZ
+ p3B+6qJp3j3BK5HIZDrJE1y8dzT1BxZGFmtMfVbgP/IDpy6x5a6HgRFvPVfOtq1MTkSe
+ io8jd33yVAoCBmD9i+qpm4IbEAXOrt0bgcI75CVWcn10Om4zb4uiUbmiBML0R42zlDF6
+ 6AZA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVFj7AxFx3Gw+Jdxkwo6S+6y9/O05GkIevTklUY7J3b2K3fjMjFSeA716LOCDsP6kriYWsOZz+JjM4/@nongnu.org
-X-Gm-Message-State: AOJu0YzWcbgXma85nJKER2pFai0am9N1N8vdeyLIXtoA6SkFPSIfEvlk
- 2eJHoe9+RZSYkWaHMJ6I3S/M7P68dS4k2jUwfDJsnC6YmjZK3Fs1qGaOBqDnP9A7bGQ=
-X-Gm-Gg: ASbGncuLqJLvUv7Nn8c16sMgcsQ4o2AUc2IScUsbSw2OpyMejOniU/iIl50PJVR6Wcd
- S643me02WwaVyFm1shaonC5NFYcPXrkttgJPM6gjZWA3IuCWHsbLDAJFag7rKton48zlENBjH8J
- Jw6rY8mKzY2TWgmWabng8Z+HdsLH0idM/fkelc1vrVaCrT4xaIKC/x0Mu5hrgeT99LYntSXLK/9
- ++QBJL9OmVwLrtrghSt4g4hAYnmMH0AV/9i80ZvLGdj+5+Dow7u+5bMeci15FNnCOHry2/W2mbw
- 1yJTuXk0w7sokU97s5PG1OdTQuAJUSusejVY+TyIfg39a5xfMLjBJd4zc4o+n63LSj66Xq3A6HE
- WTkJ+/qhzsXt9CD41ct15eeXk0O1xG+12AXhBNh4heUm+uSYkAFPS0Z1ZKRs7M/Nqg80AkQ==
-X-Google-Smtp-Source: AGHT+IFLc86d1MD3DUlHHWjO47T0nAW09FCUdyZBg8+h1/8jiYrM3tqPnkUQQdtwgFEuj/aUV7JQ8w==
-X-Received: by 2002:a05:6000:240e:b0:3a4:eef9:818a with SMTP id
- ffacd0b85a97d-3b5f2dfd79dmr1571212f8f.27.1752229880677; 
- Fri, 11 Jul 2025 03:31:20 -0700 (PDT)
+ AJvYcCXZYDXmyH1FnvQV03UnrGzgTrfwZ9G29aQ7nxrcqxIRAPS4TkSunfWJ3B/8LpL94d3sEABYI6cko9KU@nongnu.org
+X-Gm-Message-State: AOJu0YwABMqrAZmyv95h+mBWlk2aaooaP1qlASPtOcgXWo61NmV3jz7p
+ mPtFvAyKOcsLPrzOs53EcvdHb78guVCSr/DOP2ljO/MeSQzepTvsc2mXJBedxOFCkXw=
+X-Gm-Gg: ASbGncuILI0M6PjKQ5yBNwuwa6Qe2+ghCduVryA9oITpEw3UbBBzl30UmENSkXy9QWt
+ mQzlDcFNQKB9LSV5+hrztDOnEedYetVP9fB8sRYut3OE+1W3bWmDWBWWsF0XH0iaS/sNnN1wUmt
+ VXKbjMbTkXRqXhHF/iOsuCPgw+fK1xtCWJZjfQdkNC3VqsOC92ij/8igGK8hLdtRjIxYE+RNQ8H
+ TYgECmZVUreKxgfXluuNLN0uCt0zDf9o6pygV5Msm0iXOIGbvY6OshCEJYDZADiVW+chbMVe0Ij
+ ibyNQF+khHGVoW4r1Ww6hKepWaNcFwE1CgG1LgyfywnWhL+t5si8YLblX5/6tGBPEcqX46KDxYH
+ j/okeEa3U16Jj5dwweWAKvCHgJFwcYvYEWrLNeMdwxrA9KUBko/5vladceQ7sjb0ROTJyiw==
+X-Google-Smtp-Source: AGHT+IGgCfZh0gN0VPBuIA4PDtE1IefqNu7UbvYGQgBvNb9fejWcwx11vk6c/dxFsq4a/JxqAk17jw==
+X-Received: by 2002:a05:600c:c116:b0:453:2066:4a26 with SMTP id
+ 5b1f17b1804b1-4557f0b6245mr17492125e9.16.1752229920378; 
+ Fri, 11 Jul 2025 03:32:00 -0700 (PDT)
 Received: from [192.168.1.47] (lfbn-mon-1-587-20.w2-4.abo.wanadoo.fr.
  [2.4.165.20]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454d5053725sm84337835e9.16.2025.07.11.03.31.19
+ 5b1f17b1804b1-454d511bd6dsm83326475e9.38.2025.07.11.03.31.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Jul 2025 03:31:20 -0700 (PDT)
-Message-ID: <4c6ba00b-a90f-42a4-b4ce-1efdc87b7e03@linaro.org>
-Date: Fri, 11 Jul 2025 12:31:19 +0200
+ Fri, 11 Jul 2025 03:31:59 -0700 (PDT)
+Message-ID: <63393442-bca6-482f-9353-de4b858ac5f7@linaro.org>
+Date: Fri, 11 Jul 2025 12:31:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 03/19] hw/i386/pc_piix.c: inline pc_xen_hvm_init_pci()
- into pc_xen_hvm_init()
+Subject: Re: [PATCH v5 19/19] hw/i386/isapc.c: replace rom_memory with
+ system_memory
 To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, pbonzini@redhat.com,
  mst@redhat.com, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
  imammedo@redhat.com, qemu-devel@nongnu.org
 References: <20250711095812.543857-1-mark.caveayland@nutanix.com>
- <20250711095812.543857-4-mark.caveayland@nutanix.com>
+ <20250711095812.543857-20-mark.caveayland@nutanix.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250711095812.543857-4-mark.caveayland@nutanix.com>
+In-Reply-To: <20250711095812.543857-20-mark.caveayland@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,18 +105,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/7/25 11:57, Mark Cave-Ayland wrote:
-> This helps to simplify the initialisation of the Xen hvm machine.
+> Now that we can guarantee the isapc machine will never have a PCI bus, any
+> instances of rom_memory can be replaced by system_memory and rom_memory
+> removed completely.
 > 
 > Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> ---
+>   hw/i386/isapc.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-or S-o-b per 
-https://lore.kernel.org/qemu-devel/3ebf1793-6d55-4e07-a2b6-cb738d8634fb@linaro.org/ 
-;) I don't mind.
-
-> ---
->   hw/i386/pc_piix.c | 13 ++++---------
->   1 file changed, 4 insertions(+), 9 deletions(-)
 
 
