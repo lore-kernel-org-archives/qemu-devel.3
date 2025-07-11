@@ -4,89 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9466CC83F1D
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:36:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A5E6C83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:36:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua954-0008GX-Rr; Fri, 11 Jul 2025 04:26:06 -0400
+	id 1ua95v-0001pW-FG; Fri, 11 Jul 2025 04:27:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ua8xE-00044f-Db
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 04:18:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ua8xc-0004ii-2Y; Fri, 11 Jul 2025 04:18:24 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ua8x9-0003wO-8k
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 04:17:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752221872;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Jm5m6GDb+HYYG4LISBHMBPB6mESq5agz1IyxXbjbKx8=;
- b=BemaTDETuro1Dl7w2oOiCiR8ZHBfRtmf9TpKeVqQ9Ij5ZVEyK625wdiOnfSHDwEcmPOE02
- pCdRuGrra6H3ob8xbFG1zlRJTzPsLq93jBlGl1ZCGim9S1/Fs5rxUVs+6cOileSdb6QleM
- 6OW1HRaWMWUAd9SsNmjttdsNNtPBCks=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-685-veNVg7t7OSONj4uVYLDSAg-1; Fri, 11 Jul 2025 04:17:49 -0400
-X-MC-Unique: veNVg7t7OSONj4uVYLDSAg-1
-X-Mimecast-MFC-AGG-ID: veNVg7t7OSONj4uVYLDSAg_1752221869
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4ff581df3so873391f8f.1
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 01:17:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752221869; x=1752826669;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Jm5m6GDb+HYYG4LISBHMBPB6mESq5agz1IyxXbjbKx8=;
- b=WQkHq0gRatcRp8X6HQrDbCJiea4JNV0VjD1A0TVzRXeyvHmHGaebczngbjTEUKlXAb
- XmWyeP7flavzdJfZnF3QXoXwArOw+9VEag32wleCT1UJDkWnUWg+q77gAvdnWpFS5mS/
- XqKx0TtyGHBAFLAx5dEL9btzz8LwipVfiw7cnKQDz/CBeLpq7JyTxitAGL5vXqwOZRZp
- 0bcBD/OUeAG/ixd5P8GIRKX8AaxXNbtyu2vcdPIzSsBaRzT7mZtsgUBCOERmxZGua5aJ
- S4VaRulBuJib+DHEcLEaMe04wpnyYsplj8Y+Zq9ehCohZG1yU6oX95UcdELJ3BBDfUYx
- azyw==
-X-Gm-Message-State: AOJu0YwzwShh7ryuXyblVBdonfbaL98eKwzxyHziEz9OPdeMmCAHbQqU
- +/sEH/1pG2nIlok6ob13XSdvregK6hSFTNI4y7D43d/hOXxaBeur9RzVtH4MedpoC0ZANKX8had
- uPj/IuaTNH5BUQkUV2BHXP4DTG9Eny2lWdMaZcO6R9kggjY5QLBCQk2M8Ezb3FFtlMGE/D4BX37
- qBdgQ7GUfARCRH6MCKOMQ77en2QFFVsHA=
-X-Gm-Gg: ASbGnctqrj/laEon+ZFXGnSxxJR3oTIa0XMQvu2xoqVRIsW0TI+BdmWqGYfTnLgd14x
- 1QD9pql/QXjUSB8z5T8Tj3AyPzMywz5KzVOz27ULIvPpCmrg8hXqBZEN5y25HZPuMflq2V2LqOm
- Z8WZfmEzrSTW3VyRvUhy4=
-X-Received: by 2002:a5d:6f1d:0:b0:3a3:64b9:773 with SMTP id
- ffacd0b85a97d-3b5f1c726admr1938932f8f.10.1752221868694; 
- Fri, 11 Jul 2025 01:17:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHRb2b1i0l7IKPLskoEVLQkqnPBz+EKucXOKOz4dumK4o5idEgZo+zROlCN6qsi0QggAaN0ZSuIjfOsuZwt18U=
-X-Received: by 2002:a5d:6f1d:0:b0:3a3:64b9:773 with SMTP id
- ffacd0b85a97d-3b5f1c726admr1938909f8f.10.1752221868196; Fri, 11 Jul 2025
- 01:17:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ua8xa-00042A-5p; Fri, 11 Jul 2025 04:18:23 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id B84D31356D5;
+ Fri, 11 Jul 2025 11:17:18 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id AFC6E23FA4A;
+ Fri, 11 Jul 2025 11:17:45 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 10/39] ui/vnc: fix tight palette pixel encoding for
+ 8/16-bpp formats
+Date: Fri, 11 Jul 2025 11:16:06 +0300
+Message-ID: <20250711081745.1785806-10-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
+References: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
 MIME-Version: 1.0
-References: <20250711075507.451540-1-pbonzini@redhat.com>
- <c5d96f80-31c0-44dc-8f7a-557367a1abc9@intel.com>
-In-Reply-To: <c5d96f80-31c0-44dc-8f7a-557367a1abc9@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 11 Jul 2025 10:17:35 +0200
-X-Gm-Features: Ac12FXzV5zDdCdsEg34-rlNATJ2PTfmxr5CbFevCTFnn4-dd9AIfIO1DVW4cfRY
-Message-ID: <CABgObfZ95PAHOZ-2RSj=nPi5J5KGVPmjuB4tzY0oKX07mddg=g@mail.gmail.com>
-Subject: Re: [PATCH] target/i386: merge host_cpu_instance_init() and
- host_cpu_max_instance_init()
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,19 +63,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 11, 2025 at 10:16=E2=80=AFAM Xiaoyao Li <xiaoyao.li@intel.com> =
-wrote:
-> On 7/11/2025 3:55 PM, Paolo Bonzini wrote:
-> > Simplify the accelerators' cpu_instance_init callbacks by doing all
-> > host-cpu setup in a single function.
->
-> btw, it changes the behavior for "-cpu base" with accelerator.
->
-> I think it should be OK considering "-cpu base" seems only for
-> experiment case.
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Yeah, I wonder if it should even be user creatable.
+When sending a tight rectangle with the palette filter, if the client
+format was 8/16bpp, the colours on big endian hosts are not set as
+we're sending the wrong bytes. We must first cast the 32-bit colour
+to a 16/8-bit value, and then send the result.
 
-Paolo
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+(cherry picked from commit 63d320909220a90647c484263ae5e2f26eb54587)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/ui/vnc-enc-tight.c b/ui/vnc-enc-tight.c
+index a5bdc19ebb..25c7b2c788 100644
+--- a/ui/vnc-enc-tight.c
++++ b/ui/vnc-enc-tight.c
+@@ -1001,16 +1001,24 @@ static int send_mono_rect(VncState *vs, int x, int y,
+         break;
+     }
+     case 2:
+-        vnc_write(vs, &bg, 2);
+-        vnc_write(vs, &fg, 2);
++    {
++        uint16_t bg16 = bg;
++        uint16_t fg16 = fg;
++        vnc_write(vs, &bg16, 2);
++        vnc_write(vs, &fg16, 2);
+         tight_encode_mono_rect16(vs->tight->tight.buffer, w, h, bg, fg);
+         break;
++    }
+     default:
+-        vnc_write_u8(vs, bg);
+-        vnc_write_u8(vs, fg);
++    {
++        uint8_t bg8 = bg;
++        uint8_t fg8 = fg;
++        vnc_write_u8(vs, bg8);
++        vnc_write_u8(vs, fg8);
+         tight_encode_mono_rect8(vs->tight->tight.buffer, w, h, bg, fg);
+         break;
+     }
++    }
+     vs->tight->tight.offset = bytes;
+ 
+     bytes = tight_compress_data(vs, stream, bytes, level, Z_DEFAULT_STRATEGY);
+-- 
+2.47.2
 
 
