@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0730C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 09:36:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19174C8303C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 09:36:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaA9f-0001U9-Iw; Fri, 11 Jul 2025 05:34:55 -0400
+	id 1uaA9e-0001QL-Kk; Fri, 11 Jul 2025 05:34:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uaA9D-0000ub-MW
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:34:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uaA90-0000m6-UZ
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:34:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uaA9A-00079R-QO
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:34:26 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uaA8y-00075y-LC
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:34:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752226461;
+ s=mimecast20190719; t=1752226450;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ouBFunqiWGw+H66woYSQ7t3SshxQYeatQT4/h3zzcxE=;
- b=Z8xuask+d49e5TtoSRmmCKlfICD6jXCBxnOao9S/yLfFKqAgqqIA5qIu0sKbqU/IKPjiTw
- c8Jqk8erttfx+UkuE4dKFT+HbOCNgdsmB+HB/33sfpKQup3HsfsYZURiXiGmRXD9XHVjF6
- NyaqIgrausKhpptLqoDY8xzGoU6x+BA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=VZga9uASmHzbgixzJYxcOZcdjUjgsWPg2RepoUamHWw=;
+ b=I0g9jvV+oZbzX5DQXtl/ScksyxZhBZd/zcMvR3HgkfFxhKWQOciKb96+C0B05v072JmcY4
+ HjSwEm070mFVJ6wcKSBZVfoyI7MATtD+GsJ0hNtHoT/2blkcp98Alc43rqOZbv11YAmzyf
+ bbh1At1csZHCTkOcB+HhnT6gdGJMlqg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-301-z3_d9HfOPo6X8_3MAg2KzA-1; Fri,
- 11 Jul 2025 05:34:20 -0400
-X-MC-Unique: z3_d9HfOPo6X8_3MAg2KzA-1
-X-Mimecast-MFC-AGG-ID: z3_d9HfOPo6X8_3MAg2KzA_1752226460
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-78-108_WaRQPIC8qXxwXa1f5Q-1; Fri,
+ 11 Jul 2025 05:34:07 -0400
+X-MC-Unique: 108_WaRQPIC8qXxwXa1f5Q-1
+X-Mimecast-MFC-AGG-ID: 108_WaRQPIC8qXxwXa1f5Q_1752226446
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 97297180120B
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 09:34:13 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D10A3180ACEF; Fri, 11 Jul 2025 09:34:00 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.54])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4C765195607A; Fri, 11 Jul 2025 09:34:11 +0000 (UTC)
+ id 3EC15195607A; Fri, 11 Jul 2025 09:33:58 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 11/15] tests/functional: Add dependency to the keymap_targets
-Date: Fri, 11 Jul 2025 11:33:36 +0200
-Message-ID: <20250711093340.608485-12-thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Jared Rossi <jrossi@linux.ibm.com>
+Subject: [PULL 06/15] pc-bios/s390-ccw: Make get_boot_index() from menu.c
+ global
+Date: Fri, 11 Jul 2025 11:33:31 +0200
+Message-ID: <20250711093340.608485-7-thuth@redhat.com>
 In-Reply-To: <20250711093340.608485-1-thuth@redhat.com>
 References: <20250711093340.608485-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -84,31 +84,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-When doing a "configure" in a an empty build directory, followed by
-a "make check" without a normal build in between, the vnc functional
-test currently fails since the keymaps have not been built yet.
-Thus add a dependency to the keymap_targets here to make sure that
-the keymaps are built before running the functional tests.
+We are going to reuse this function for selecting an entry from
+the pxelinux.cfg menu, so rename this function with a "menu_"
+prefix and make it available globally.
 
+Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250701104827.363904-1-thuth@redhat.com>
+Message-ID: <20250709083443.41574-4-thuth@redhat.com>
 ---
- tests/functional/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ pc-bios/s390-ccw/s390-ccw.h | 1 +
+ pc-bios/s390-ccw/menu.c     | 6 +++---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 1ae5f02fb37..ae5c52d79fe 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -374,7 +374,7 @@ foreach speed : ['quick', 'thorough']
-       target_tests = get_variable('tests_' + target_base + '_' + sysmode + '_' + speed, [])
-     endif
+diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+index 6cdce3e5e5b..b1dc35cdedf 100644
+--- a/pc-bios/s390-ccw/s390-ccw.h
++++ b/pc-bios/s390-ccw/s390-ccw.h
+@@ -87,6 +87,7 @@ int menu_get_zipl_boot_index(const char *menu_data);
+ bool menu_is_enabled_zipl(void);
+ int menu_get_enum_boot_index(bool *valid_entries);
+ bool menu_is_enabled_enum(void);
++int menu_get_boot_index(bool *valid_entries);
  
--    test_deps = roms
-+    test_deps = [roms, keymap_targets]
-     test_env = environment()
-     if have_tools
-       test_env.set('QEMU_TEST_QEMU_IMG', meson.global_build_root() / 'qemu-img')
+ #define MAX_BOOT_ENTRIES  31
+ 
+diff --git a/pc-bios/s390-ccw/menu.c b/pc-bios/s390-ccw/menu.c
+index 84062e94af4..eeaff78f870 100644
+--- a/pc-bios/s390-ccw/menu.c
++++ b/pc-bios/s390-ccw/menu.c
+@@ -159,7 +159,7 @@ static void boot_menu_prompt(bool retry)
+     }
+ }
+ 
+-static int get_boot_index(bool *valid_entries)
++int menu_get_boot_index(bool *valid_entries)
+ {
+     int boot_index;
+     bool retry = false;
+@@ -224,7 +224,7 @@ int menu_get_zipl_boot_index(const char *menu_data)
+     }
+ 
+     printf("\n");
+-    return get_boot_index(valid_entries);
++    return menu_get_boot_index(valid_entries);
+ }
+ 
+ int menu_get_enum_boot_index(bool *valid_entries)
+@@ -247,7 +247,7 @@ int menu_get_enum_boot_index(bool *valid_entries)
+     }
+ 
+     printf("\n");
+-    return get_boot_index(valid_entries);
++    return menu_get_boot_index(valid_entries);
+ }
+ 
+ void menu_set_parms(uint8_t boot_menu_flag, uint32_t boot_menu_timeout)
 -- 
 2.50.0
 
