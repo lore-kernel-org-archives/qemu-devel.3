@@ -4,95 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A811EC8303C
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 09:05:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EE5CC83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 09:07:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua9gR-0006Yy-Jz; Fri, 11 Jul 2025 05:04:43 -0400
+	id 1ua9fm-0003lO-Lt; Fri, 11 Jul 2025 05:04:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ua9bF-0005lz-Lk
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 04:59:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1ua9SS-0001fT-Tr; Fri, 11 Jul 2025 04:50:18 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ua9bB-0006Kr-4l
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 04:59:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752224356;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ewsO3GTPWkOjioFjgLR3qUmZqRoCqWWIgim6oqucqEw=;
- b=Fujuux7htHvc4+CFI9geTuR8x52vU7S5Y1TOINphQ3WnoLqZV1VU8rPZhY/DQDn6MACFJa
- Utx+0vps8Gtr5r/23oq/X3LkSO72sSc/4IWo5Q4yNRUp0dGoraGeS0JNLWMXOzL6mASX5i
- ASSxmIyzG4JLiB/jQpvZDR09MEvUyxA=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-153-QjKKTppMMLqbVV_WoDehAw-1; Fri, 11 Jul 2025 04:59:14 -0400
-X-MC-Unique: QjKKTppMMLqbVV_WoDehAw-1
-X-Mimecast-MFC-AGG-ID: QjKKTppMMLqbVV_WoDehAw_1752224353
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ae6f9b15604so64821366b.0
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 01:59:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752224353; x=1752829153;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ewsO3GTPWkOjioFjgLR3qUmZqRoCqWWIgim6oqucqEw=;
- b=YkdVdGxB5mbi+duVVc5jktchu7eefdlq4rhfhX7tP5kgppSZUIeD47Cl6oZVyBB11W
- UjhCnEGcIdoIIkhcke6IQoNnJPBKTlCFrqnLBYq0F5Gr3xfsbkv5wfidSrhYs1OeKk2Q
- e7G8dMfQcj/FbI+D4JscrgmWXH56k/FYRUL+vCWq8llwuS8e2jLjCqmjYiHsswL9XySn
- c/yitLkrQrtYIIWwItqmRyUmELU3+4ehMLdfMOq1oHNrx8ZDtCKreUp+YjHVVlPkpxY0
- M+s9SymQEGkxxLIOvXY/LpKd7d2CqE/V9SXFc9R+/UtoQF5OdPNlXGqDlm+XKr9fEiGc
- JLww==
-X-Gm-Message-State: AOJu0YxeDCS/snxqVHMYG7H2hjgHLMV+H1HZLiVoJMRWahH5vKhu5HoQ
- 2/NAlY9iRLzoZwA5izlKqhAQJX42eJ42MhGs0qfPEL9hsFciEYaxRAL3oLcPk7q7RjslU4F2+7s
- a9k8PRGg5u+O0fXAlYKNffQu4z0A6W7W04WamqwRwec+p4P5d1+4Q2LZuH3WwFKLN
-X-Gm-Gg: ASbGnctPg36EN4Ej907dfSpWJ9JRyYxX+5Q/XIS7z9dvMgtDxxHOxn3lETJe9Pnn7Cd
- l/Z5bAbxXpnoxSFkKfaBzn/wBI6LPI1wnEgAzWeb3lUW/fURtTtUespbjXevIuEM0tFtrlS0K6j
- eGaH/z23oaEvYEhree5RMHGKl8lV5yAFboOpwJ0/9qpdIFxT1Ro7NKJHa3+kVXVYe5EtrEUpGRI
- 7MqFvRvmJYo9Je1cr4tK6aTK1nZwboI285fyXgupT4BLmtL+rfURVlFIapidq7Yh2T6moREVWa+
- aZ9uUqNUakgdEizWit5TKChSkufCc5VlJLPiiSDiLcl2cKmyG6vydwM0nJfUZ57YfkxOPmmh/A=
- =
-X-Received: by 2002:a17:907:1b08:b0:ae1:f1e3:ccea with SMTP id
- a640c23a62f3a-ae6fbf40993mr262445866b.7.1752224352831; 
- Fri, 11 Jul 2025 01:59:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEPZAh847t1jxjp4K7F22c/Pxycp24P4AXBfzBj0pBEgQeKNCoyMU6zRKjhkjpGz39mRieFfA==
-X-Received: by 2002:a17:907:1b08:b0:ae1:f1e3:ccea with SMTP id
- a640c23a62f3a-ae6fbf40993mr262443466b.7.1752224352367; 
- Fri, 11 Jul 2025 01:59:12 -0700 (PDT)
-Received: from [10.35.88.123] (93-44-61-216.ip95.fastwebnet.it. [93.44.61.216])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae6e8264663sm261769766b.87.2025.07.11.01.59.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Jul 2025 01:59:11 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] i386/tdx: Don't mask off CPUID_EXT_PDCM
-Date: Fri, 11 Jul 2025 10:58:32 +0200
-Message-ID: <20250711085831.459772-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250625035710.2770679-1-xiaoyao.li@intel.com>
-References: 
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1ua9SP-0003ma-Qi; Fri, 11 Jul 2025 04:50:16 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bdlgr63WWz6L51b;
+ Fri, 11 Jul 2025 16:46:48 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 74C861402ED;
+ Fri, 11 Jul 2025 16:50:06 +0800 (CST)
+Received: from A2303104131.china.huawei.com (10.203.177.241) by
+ frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Fri, 11 Jul 2025 10:49:57 +0200
+To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
+ <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
+ <imammedo@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <smostafa@google.com>, <gustavo.romero@linaro.org>, <mst@redhat.com>,
+ <marcel.apfelbaum@gmail.com>, <linuxarm@huawei.com>,
+ <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
+ <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
+Subject: [PATCH v8 06/12] hw/arm/virt: Add an SMMU_IO_LEN macro
+Date: Fri, 11 Jul 2025 09:47:43 +0100
+Message-ID: <20250711084749.18300-7-shameerali.kolothum.thodi@huawei.com>
+X-Mailer: git-send-email 2.12.0.windows.1
+In-Reply-To: <20250711084749.18300-1-shameerali.kolothum.thodi@huawei.com>
+References: <20250711084749.18300-1-shameerali.kolothum.thodi@huawei.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain
+X-Originating-IP: [10.203.177.241]
+X-ClientProxiedBy: kwepems100001.china.huawei.com (7.221.188.238) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,23 +71,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> It gets below warning when booting TDX VMs:
-> 
->   warning: TDX forcibly sets the feature: CPUID[eax=01h].ECX.pdcm [bit 15]
-> 
-> Because CPUID_EXT_PDCM is fixed1 for TDX, and MSR_IA32_PERF_CAPABILITIES is
-> supported for TDX guest unconditioanlly.
-> 
-> Don't mask off CPUID_EXT_PDCM for TDX.
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-It makes little sense for the TDX module to do this, but I don't see
-any nicer way to comply. :(
+This is useful as the subsequent support for new SMMUv3 dev will also
+use the same.
 
-Queued, thanks.
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Donald Dutile <ddutile@redhat.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Nathan Chen <nathanc@nvidia.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+---
+ hw/arm/virt.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-Paolo
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 6ac53634d0..d8d92ffad2 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -149,6 +149,9 @@ static void arm_virt_compat_set(MachineClass *mc)
+ #define LEGACY_RAMLIMIT_GB 255
+ #define LEGACY_RAMLIMIT_BYTES (LEGACY_RAMLIMIT_GB * GiB)
+ 
++/* MMIO region size for SMMUv3 */
++#define SMMU_IO_LEN 0x20000
++
+ /* Addresses and sizes of our components.
+  * 0..128MB is space for a flash device so we can run bootrom code such as UEFI.
+  * 128MB..256MB is used for miscellaneous device I/O.
+@@ -180,7 +183,7 @@ static const MemMapEntry base_memmap[] = {
+     [VIRT_FW_CFG] =             { 0x09020000, 0x00000018 },
+     [VIRT_GPIO] =               { 0x09030000, 0x00001000 },
+     [VIRT_UART1] =              { 0x09040000, 0x00001000 },
+-    [VIRT_SMMU] =               { 0x09050000, 0x00020000 },
++    [VIRT_SMMU] =               { 0x09050000, SMMU_IO_LEN },
+     [VIRT_PCDIMM_ACPI] =        { 0x09070000, MEMORY_HOTPLUG_IO_LEN },
+     [VIRT_ACPI_GED] =           { 0x09080000, ACPI_GED_EVT_SEL_LEN },
+     [VIRT_NVDIMM_ACPI] =        { 0x09090000, NVDIMM_ACPI_IO_LEN},
+-- 
+2.47.0
 
 
