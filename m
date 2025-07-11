@@ -4,36 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 995ACC83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E25C1C83F22
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:33:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua98M-0008KH-HL; Fri, 11 Jul 2025 04:29:31 -0400
+	id 1ua97G-0004Sm-1T; Fri, 11 Jul 2025 04:28:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ua8zb-0000J7-HD; Fri, 11 Jul 2025 04:20:27 -0400
+ id 1ua8yd-0006TE-OQ; Fri, 11 Jul 2025 04:19:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ua8zZ-0004Va-1m; Fri, 11 Jul 2025 04:20:26 -0400
+ id 1ua8yb-0004IW-AC; Fri, 11 Jul 2025 04:19:26 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 108A51356E7;
- Fri, 11 Jul 2025 11:17:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 780C01356DE;
+ Fri, 11 Jul 2025 11:17:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 06ABC23FA5C;
- Fri, 11 Jul 2025 11:17:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6456623FA53;
+ Fri, 11 Jul 2025 11:17:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Song Gao <gaosong@loongson.cn>,
- Bibo Mao <maobibo@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, "Xin Li (Intel)" <xin@zytor.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 28/39] target/loongarch: fix vldi/xvldi raise wrong
- error
-Date: Fri, 11 Jul 2025 11:16:24 +0300
-Message-ID: <20250711081745.1785806-28-mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 19/39] target/i386: Remove FRED dependency on WRMSRNS
+Date: Fri, 11 Jul 2025 11:16:15 +0300
+Message-ID: <20250711081745.1785806-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
@@ -62,66 +60,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Song Gao <gaosong@loongson.cn>
+From: "Xin Li (Intel)" <xin@zytor.com>
 
-on qemu we got an aborted error
-**
-ERROR:../target/loongarch/tcg/insn_trans/trans_vec.c.inc:3574:vldi_get_value: code should not be reached
-Bail out! ERROR:../target/loongarch/tcg/insn_trans/trans_vec.c.inc:3574:vldi_get_value: code should not be reached
-Aborted (core dumped)
-but on 3A600/3A5000 we got a "Illegal instruction" error.
+WRMSRNS doesn't become a required feature for FERD, and Linux has
+removed the dependency, as such remove it from Qemu.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2971
-
-Fixes: 29bb5d727ff ("target/loongarch: Implement vldi")
- Cc: qemu-stable@nongnu.org
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-(cherry picked from commit c2a2e1ad2a749caa864281b1d4dc3f16c3f344f6)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Xin Li (Intel) <xin@zytor.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://lore.kernel.org/r/20250103084827.1820007-2-xin@zytor.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 0b901459a87a7fdbed36e574aae33e0635a3e9af)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-index d6f0560349..78730029cb 100644
---- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-@@ -3465,7 +3465,7 @@ TRANS(xvmsknz_b, LASX, gen_xx, gen_helper_vmsknz_b)
- static uint64_t vldi_get_value(DisasContext *ctx, uint32_t imm)
- {
-     int mode;
--    uint64_t data, t;
-+    uint64_t data = 0, t;
- 
-     /*
-      * imm bit [11:8] is mode, mode value is 0-12.
-@@ -3570,17 +3570,26 @@ static uint64_t vldi_get_value(DisasContext *ctx, uint32_t imm)
-         }
-         break;
-     default:
--        generate_exception(ctx, EXCCODE_INE);
-         g_assert_not_reached();
-     }
-     return data;
- }
- 
-+static bool check_valid_vldi_mode(arg_vldi *a)
-+{
-+   return  extract32(a->imm, 8, 4) <= 12;
-+}
-+
- static bool gen_vldi(DisasContext *ctx, arg_vldi *a, uint32_t oprsz)
- {
-     int sel, vece;
-     uint64_t value;
- 
-+    if (!check_valid_vldi_mode(a)) {
-+        generate_exception(ctx, EXCCODE_INE);
-+        return true;
-+    }
-+
-     if (!check_vec(ctx, oprsz)) {
-         return true;
-     }
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 5e12cba1b8..2c9517f56d 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1774,10 +1774,6 @@ static FeatureDep feature_dependencies[] = {
+         .from = { FEAT_7_1_EAX,             CPUID_7_1_EAX_LKGS },
+         .to = { FEAT_7_1_EAX,               CPUID_7_1_EAX_FRED },
+     },
+-    {
+-        .from = { FEAT_7_1_EAX,             CPUID_7_1_EAX_WRMSRNS },
+-        .to = { FEAT_7_1_EAX,               CPUID_7_1_EAX_FRED },
+-    },
+     {
+         .from = { FEAT_7_0_EBX,             CPUID_7_0_EBX_SGX },
+         .to = { FEAT_7_0_ECX,               CPUID_7_0_ECX_SGX_LC },
 -- 
 2.47.2
 
