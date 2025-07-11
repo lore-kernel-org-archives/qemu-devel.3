@@ -4,53 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A979DC8303C
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 09:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34E6BC83F1D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 09:23:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua9xc-00008J-Ph; Fri, 11 Jul 2025 05:22:30 -0400
+	id 1ua9xD-0008ES-D9; Fri, 11 Jul 2025 05:22:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1ua9xU-00004w-Qs
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:22:21 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1ua9xN-0003qx-P7
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:22:20 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8BxYa_C13Bomh8nAQ--.43180S3;
- Fri, 11 Jul 2025 17:22:10 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCxdOS813Bo5owSAA--.39837S5;
- Fri, 11 Jul 2025 17:22:09 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: maobibo@loongson.cn
-Cc: qemu-devel@nongnu.org,
-	philmd@linaro.org,
-	jiaxun.yang@flygoat.com
-Subject: [PATCH v5 03/11] hw/loongarch: add misc register supoort avecintc
-Date: Fri, 11 Jul 2025 16:59:07 +0800
-Message-Id: <20250711085915.3042395-4-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20250711085915.3042395-1-gaosong@loongson.cn>
-References: <20250711085915.3042395-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ua9wp-00088S-9P
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:21:45 -0400
+Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ua9wh-0003kh-Md
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:21:37 -0400
+Received: by mail-yb1-xb35.google.com with SMTP id
+ 3f1490d57ef6-e8600a33792so1298066276.0
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 02:21:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752225686; x=1752830486; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=JBK3ePEWjvVjPev4cHFtsdsiP/pjj5vJWvBnCJvZz/o=;
+ b=eJVN/jSi+gLSeWncmv89nfQ3pwUtfj+na0ZhiMbMqDyonh0rcR2w7IuwVhrke/iioi
+ mFZFT7s9FE4SziS5PuN+YTPhCYXLdgRAEX0GWYMmMOb7+eJZgK/DpkV0QjQPnCUfY+Tb
+ 2W/YGkuEa9P/CIRKZX3IJGC4q6YXm4cPpT58tGkTg0Paz4DLqjrgYUcXW8b8RLDC/yvB
+ hTtew7ZQtgbkd881invLnUmYhsfMTacuMWxbSKYuqS13LkCbGNQIML54pWpnHpyabAYA
+ WOpQHUmJQOExUhwoSX+pSp7WoR40THYsD0evbC5MTIG1V5+zCvTI7+iO7eVUJbdCDkkQ
+ kFdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752225686; x=1752830486;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JBK3ePEWjvVjPev4cHFtsdsiP/pjj5vJWvBnCJvZz/o=;
+ b=llG5hV9Uyh6lFkdfDJQ8lH1X225iGt96uamuC/9AJRSaXegNPF/SuRYGz8MD0d68kW
+ JcLjttY0iSu4T3NX5LUvFMxPZY/i7AvWqRa6lFGzia56OUWlVSCCy7wtrRIsQRMsFb+L
+ oYixbHyyEe4/+Q38MBR1GJwHjrnpg1yHTyPf5uikUai+p3bVmgkqVbRt2yJXeRk1zF7y
+ i7+XPwlkQNQ9Y+Lv1W3baKIDm3ejV2rQVWUh6G8MedFesHzQ2Qubtdtos4kl6ql6Pwem
+ T8q6Ov/riGR5KrdxGNIGan44+/b8oZaJSFgsgp5Dzh4nU9k/H5K1PWaCfXqu/Zyzv8iC
+ Rv5Q==
+X-Gm-Message-State: AOJu0YzdG+i78IsX7nVynQjSqog8bLbHZWfaK6rArtgT+9SA/U1IdZNh
+ UQ/ZP6JdfEOqLt2D7QZft0gkA8KZlz/JnO/HoN96R3ti79kO2DY2lwFYIzhZrTlemUMuSBHRp8a
+ hIOsyeT8J5SElDZnchzN+6ubRKYHGll29cH6r8Pxbmw==
+X-Gm-Gg: ASbGnctWb6vneFkMBSWbdoVUV5YAV9f1+s/OKBDdMvJcD5fMaGBPDFkkSVRjMGQamXw
+ AtQYVcKPotx9vH0l0D8EgXvbKl19XhaUS8qD0ErBf4CV2aDGM3SIWmQJql3ap1tjr2Pniyl72/A
+ O+V9j4IIk8xDzKKgZMCYG9e5GTvgSjJ+JuE8KdYEOfb5fjzoI9DrN58+NOhAloB/AMcc49SU5HA
+ y97+LcX
+X-Google-Smtp-Source: AGHT+IGhScNy1QoZ9V7SEoU1ko5x8tugAFMtojRlU87mWt+pS3iCOkgsRmnR0gYtRg+QbdkVDe1qyJl7cMXPQCHWfdE=
+X-Received: by 2002:a05:690c:4c01:b0:70e:a1e:d9f8 with SMTP id
+ 00721157ae682-717d5dade00mr42174647b3.22.1752225686442; Fri, 11 Jul 2025
+ 02:21:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxdOS813Bo5owSAA--.39837S5
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250710173945.115428-1-richard.henderson@linaro.org>
+In-Reply-To: <20250710173945.115428-1-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 11 Jul 2025 10:21:14 +0100
+X-Gm-Features: Ac12FXw7FjjTpKMhpqKvQDQMei6e4MRrjqENgG4HjSGfcA1xYsESkSozoAt7Ibs
+Message-ID: <CAFEAcA_w5jTEjNWmk-RSCvS1H5HJGKsB5_KDmsikqAjXq25_Cw@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: Remove helper_sme2_luti4_4b
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,51 +92,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add feature register and misc register for avecintc feature checking and
-setting
+On Thu, 10 Jul 2025 at 18:39, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> This function isn't used.
+>
+> Resolves: Coverity CID 1612139
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/helper.h     | 1 -
+>  target/arm/tcg/vec_helper.c | 1 -
+>  2 files changed, 2 deletions(-)
+>
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- hw/loongarch/virt.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 112cf9a9db..0d05404eb5 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -560,6 +560,10 @@ static MemTxResult virt_iocsr_misc_write(void *opaque, hwaddr addr,
-             return MEMTX_OK;
-         }
- 
-+        if (val & BIT(IOCSRM_AVEC_EN)) {
-+            lvms->misc_status |= BIT(IOCSRM_AVEC_EN);
-+        }
-+
-         features = address_space_ldl(&lvms->as_iocsr,
-                                      EXTIOI_VIRT_BASE + EXTIOI_VIRT_CONFIG,
-                                      attrs, NULL);
-@@ -595,6 +599,9 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
-         break;
-     case FEATURE_REG:
-         ret = BIT(IOCSRF_MSI) | BIT(IOCSRF_EXTIOI) | BIT(IOCSRF_CSRIPI);
-+        if (virt_has_avecintc(lvms)) {
-+            ret |= BIT(IOCSRF_AVEC);
-+        }
-         if (kvm_enabled()) {
-             ret |= BIT(IOCSRF_VM);
-         }
-@@ -624,6 +631,10 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
-         if (features & BIT(EXTIOI_ENABLE_INT_ENCODE)) {
-             ret |= BIT_ULL(IOCSRM_EXTIOI_INT_ENCODE);
-         }
-+        if (virt_has_avecintc(lvms) &&
-+            (lvms->misc_status & BIT(IOCSRM_AVEC_EN))) {
-+            ret |= BIT_ULL(IOCSRM_AVEC_EN);
-+        }
-         break;
-     default:
-         g_assert_not_reached();
--- 
-2.34.1
 
+Applied to target-arm.next, thanks.
+
+-- PMM
 
