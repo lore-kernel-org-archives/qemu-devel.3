@@ -4,37 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0860DC83F1D
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:36:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 022C6C8303C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:36:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua98y-00024u-9X; Fri, 11 Jul 2025 04:30:08 -0400
+	id 1ua96z-0003Vy-1o; Fri, 11 Jul 2025 04:28:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ua90A-0001bX-J8; Fri, 11 Jul 2025 04:21:02 -0400
+ id 1ua8y6-0005YS-B2; Fri, 11 Jul 2025 04:18:55 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ua908-0004hd-Lx; Fri, 11 Jul 2025 04:21:02 -0400
+ id 1ua8y4-00045U-3w; Fri, 11 Jul 2025 04:18:53 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9D7A21356EE;
- Fri, 11 Jul 2025 11:17:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 200FB1356DA;
+ Fri, 11 Jul 2025 11:17:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9592323FA63;
- Fri, 11 Jul 2025 11:17:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 11DE123FA4F;
+ Fri, 11 Jul 2025 11:17:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 35/39] target/arm: Fix sve_access_check for SME
-Date: Fri, 11 Jul 2025 11:16:31 +0300
-Message-ID: <20250711081745.1785806-35-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Vasant Hegde <vasant.hegde@amd.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Sairaj Kodilkar <sarunkod@amd.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 15/39] hw/i386/amd_iommu: Fix xtsup when vcpus < 255
+Date: Fri, 11 Jul 2025 11:16:11 +0300
+Message-ID: <20250711081745.1785806-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -59,77 +63,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Vasant Hegde <vasant.hegde@amd.com>
 
-Do not assume SME implies SVE.  Ensure that the non-streaming
-check is present along the SME path, since it is not implied
-by sme_*_enabled_check.
+If vCPUs > 255 then x86 common code (x86_cpus_init()) call kvm_enable_x2apic().
+But if vCPUs <= 255 then the common code won't calls kvm_enable_x2apic().
 
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250704142112.1018902-3-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit b4b2e070f41dd8774a70c6186141678558d79a38)
+This is because commit 8c6619f3e692 ("hw/i386/amd_iommu: Simplify non-KVM
+checks on XTSup feature") removed the call to kvm_enable_x2apic when xtsup
+is "on", which break things when guest is booted with x2apic mode and
+there are <= 255 vCPUs.
+
+Fix this by adding back kvm_enable_x2apic() call when xtsup=on.
+
+Fixes: 8c6619f3e692 ("hw/i386/amd_iommu: Simplify non-KVM checks on XTSup feature")
+Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Tested-by: Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Message-Id: <20250516100535.4980-3-sarunkod@amd.com>
+Fixes: 8c6619f3e692 ("hw/i386/amd_iommu: Simplify non-KVM checks on XTSup feature")
+Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Tested-by: Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+(cherry picked from commit 0f178860df3489a9d3c19a5f7f024e6aa6c26515)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index aebf313e38..8d3a8d7a25 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -1392,11 +1392,8 @@ static bool fp_access_check_only(DisasContext *s)
-     return true;
- }
- 
--static bool fp_access_check(DisasContext *s)
-+static bool nonstreaming_check(DisasContext *s)
- {
--    if (!fp_access_check_only(s)) {
--        return false;
--    }
-     if (s->sme_trap_nonstreaming && s->is_nonstreaming) {
-         gen_exception_insn(s, 0, EXCP_UDEF,
-                            syn_smetrap(SME_ET_Streaming, false));
-@@ -1405,6 +1402,11 @@ static bool fp_access_check(DisasContext *s)
-     return true;
- }
- 
-+static bool fp_access_check(DisasContext *s)
-+{
-+    return fp_access_check_only(s) && nonstreaming_check(s);
-+}
-+
- /*
-  * Return <0 for non-supported element sizes, with MO_16 controlled by
-  * FEAT_FP16; return 0 for fp disabled; otherwise return >0 for success.
-@@ -1455,14 +1457,24 @@ static int fp_access_check_vector_hsd(DisasContext *s, bool is_q, MemOp esz)
-  */
- bool sve_access_check(DisasContext *s)
- {
--    if (s->pstate_sm || !dc_isar_feature(aa64_sve, s)) {
-+    if (dc_isar_feature(aa64_sme, s)) {
-         bool ret;
- 
--        assert(dc_isar_feature(aa64_sme, s));
--        ret = sme_sm_enabled_check(s);
-+        if (s->pstate_sm) {
-+            ret = sme_enabled_check(s);
-+        } else if (dc_isar_feature(aa64_sve, s)) {
-+            goto continue_sve;
-+        } else {
-+            ret = sme_sm_enabled_check(s);
-+        }
-+        if (ret) {
-+            ret = nonstreaming_check(s);
-+        }
-         s->sve_access_checked = (ret ? 1 : -1);
-         return ret;
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index df8ba5d39a..af85706b8a 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -1649,6 +1649,14 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
+         exit(EXIT_FAILURE);
      }
+ 
++    if (s->xtsup) {
++        if (kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
++            error_report("AMD IOMMU xtsup=on requires x2APIC support on "
++                          "the KVM side");
++            exit(EXIT_FAILURE);
++        }
++    }
 +
-+ continue_sve:
-     if (s->sve_excp_el) {
-         /* Assert that we only raise one exception per instruction. */
-         assert(!s->sve_access_checked);
+     pci_setup_iommu(bus, &amdvi_iommu_ops, s);
+     amdvi_init(s);
+ }
 -- 
 2.47.2
 
