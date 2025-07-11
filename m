@@ -4,67 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C9A3C83F1B
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 20:47:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75028C83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 20:47:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaKeh-0003dy-5E; Fri, 11 Jul 2025 16:47:39 -0400
+	id 1uaKe5-0003Mn-Ez; Fri, 11 Jul 2025 16:47:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uaKdv-0003KG-ME
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 16:46:58 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uaKdj-0003Hf-Mm; Fri, 11 Jul 2025 16:46:40 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uaKdr-0003jr-NG
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 16:46:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=6FGpWyYgGDQDVT6MYWvX20DRvG0NRanL7OzhHiswAbE=; b=GtoEbVKLN1X6oQNAx07u5OZyqD
- jNHh0bTPDXuPSDvYV3+PlstFAh5QhCpqVH4cz0noKai7OUZosmCLR3JZAmex7IHH2R5D+1+gQhHyA
- uHxtt6xV+MFi7ZNALgxiCfJPJGBuk/Fx3IN7t6moNIU1DURxaRpt2qQoo0YAXTrj2/SVHgwOLYQQk
- IAHzV3Boz8xzOoGwLHxrWcl9tKFI0nbafhjt21CDGNqiaTMvivizMiRPwxEL3mrkxa0fBzvwoZu0i
- 15N7Qi24ufv5nDWzAn/NwDG6FQoVLdkI/VQfN975z/k2HOXzywnh0CJoq5F37RJExEwm3A5Z4NF5N
- XbBH13kRJrmiYdYtVhoJIc2w0Zxm7gmaQEKDJB7PCn4OUL2wtuHVmZXQJWZGVu+3AhtFaKAlZbxNI
- ZxCkj6E352nQE/L3zKYYb/ZqlMZQXMglIu43dQ/96+ykfzWeayvrVqYN/3rTZmGxBE1GeK5wfpGVe
- oGCjUofftHcMocreCsqqGEi2MVsqmlbs/dQMLZWVBlTQIrMkW7fXXdQUDrMRx209ZTl9Q04zkiGcT
- mf94muof3DNsRKJ5RNgsZZauuimN2vvqWxL5+Ma7TQQihcZnb41jxfq/YgVe/GWPdC6lQV5xqSdzx
- 04vRK/aYU/lOfnBx8ZBLGEP2s51pFfauPJ0Xr4q9U=;
-Received: from [2a02:8012:2f01:0:d1ff:478a:c096:2d0c]
- (helo=localhost.localdomain)
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uaKcE-000Bmy-NQ; Fri, 11 Jul 2025 21:45:07 +0100
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: pbonzini@redhat.com,
-	fam@euphon.net,
-	qemu-devel@nongnu.org
-Date: Fri, 11 Jul 2025 21:46:36 +0100
-Message-Id: <20250711204636.542964-8-mark.cave-ayland@ilande.co.uk>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250711204636.542964-1-mark.cave-ayland@ilande.co.uk>
-References: <20250711204636.542964-1-mark.cave-ayland@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uaKdh-0003g8-BT; Fri, 11 Jul 2025 16:46:39 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 25098135CFE;
+ Fri, 11 Jul 2025 23:46:04 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 020F823FF39;
+ Fri, 11 Jul 2025 23:46:31 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.19 00/15] Patch Round-up for stable 7.2.19,
+ freeze on 2025-07-21
+Date: Fri, 11 Jul 2025 23:46:15 +0300
+Message-ID: <qemu-stable-7.2.19-20250711111933@cover.tls.msk.ru>
+X-Mailer: git-send-email 2.47.2
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:d1ff:478a:c096:2d0c
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v3 7/7] esp.c: only allow ESP commands permitted in the
- current asc_mode
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,118 +59,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If an ESP command is issued in an incorrect mode then an illegal command
-interrupt should be generated. Add a new esp_cmd_is_valid() function to
-indicate whether the ESP command is valid for the current mode, and if not
-then raise the illegal command interrupt.
+The following patches are queued for QEMU stable v7.2.19:
 
-This fixes WinNT MIPS which issues ICCS after a Chip Reset which is not
-permitted, but will fail with an INACCESSIBLE_BOOT_DEVICE error unless an
-interrupt is generated.
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
 
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Fixes: 83428f7a97 ("esp.c: move write_response() non-DMA logic to esp_do_nodma()")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2464
----
- hw/scsi/esp.c         | 37 +++++++++++++++++++++++++++++++++++++
- hw/scsi/trace-events  |  1 +
- include/hw/scsi/esp.h |  8 ++++++++
- 3 files changed, 46 insertions(+)
+Patch freeze is 2025-07-21, and the release is planned for 2025-07-23:
 
-diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-index 4aa58f9e48..1d264c40e5 100644
---- a/hw/scsi/esp.c
-+++ b/hw/scsi/esp.c
-@@ -1129,6 +1129,38 @@ static void parent_esp_reset(ESPState *s, int irq, int level)
-     }
- }
- 
-+static bool esp_cmd_is_valid(ESPState *s, uint8_t cmd)
-+{
-+    uint8_t cmd_group = (cmd & CMD_GRP_MASK) >> 4;
-+
-+    /* Always allow misc commands */
-+    if (cmd_group == CMD_GRP_MISC) {
-+        return true;
-+    }
-+
-+    switch (s->asc_mode) {
-+    case ESP_ASC_MODE_DIS:
-+        /* Disconnected mode: only allow disconnected commands */
-+        if (cmd_group == CMD_GRP_DISC) {
-+            return true;
-+        }
-+        break;
-+
-+    case ESP_ASC_MODE_INI:
-+        /* Initiator mode: allow initiator commands */
-+        if (cmd_group == CMD_GRP_INIT) {
-+            return true;
-+        }
-+        break;
-+
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    trace_esp_invalid_cmd(cmd, s->asc_mode);
-+    return false;
-+}
-+
- static void esp_run_cmd(ESPState *s)
- {
-     uint8_t cmd = s->rregs[ESP_CMD];
-@@ -1285,6 +1317,11 @@ void esp_reg_write(ESPState *s, uint32_t saddr, uint64_t val)
-         break;
-     case ESP_CMD:
-         s->rregs[saddr] = val;
-+        if (!esp_cmd_is_valid(s, s->rregs[saddr])) {
-+            s->rregs[ESP_RSTAT] |= INTR_IL;
-+            esp_raise_irq(s);
-+            break;
-+        }
-         esp_run_cmd(s);
-         break;
-     case ESP_WBUSID ... ESP_WSYNO:
-diff --git a/hw/scsi/trace-events b/hw/scsi/trace-events
-index f0f2a98c2e..6c2788e202 100644
---- a/hw/scsi/trace-events
-+++ b/hw/scsi/trace-events
-@@ -198,6 +198,7 @@ esp_mem_writeb_cmd_ensel(uint32_t val) "Enable selection (0x%2.2x)"
- esp_mem_writeb_cmd_dissel(uint32_t val) "Disable selection (0x%2.2x)"
- esp_mem_writeb_cmd_ti(uint32_t val) "Transfer Information (0x%2.2x)"
- esp_set_phase(const char *phase) "setting bus phase to %s"
-+esp_invalid_cmd(uint8_t cmd, uint8_t asc_mode) "command 0x%x asc_mode 0x%x"
- 
- # esp-pci.c
- esp_pci_error_invalid_dma_direction(void) "invalid DMA transfer direction"
-diff --git a/include/hw/scsi/esp.h b/include/hw/scsi/esp.h
-index 6327060c7c..3526bad746 100644
---- a/include/hw/scsi/esp.h
-+++ b/include/hw/scsi/esp.h
-@@ -111,6 +111,13 @@ struct SysBusESPState {
- #define CMD_DMA 0x80
- #define CMD_CMD 0x7f
- 
-+#define CMD_GRP_MASK 0x70
-+
-+#define CMD_GRP_MISC 0x00
-+#define CMD_GRP_INIT 0x01
-+#define CMD_GRP_TRGT 0x02
-+#define CMD_GRP_DISC 0x04
-+
- #define CMD_NOP      0x00
- #define CMD_FLUSH    0x01
- #define CMD_RESET    0x02
-@@ -145,6 +152,7 @@ struct SysBusESPState {
- #define INTR_FC 0x08
- #define INTR_BS 0x10
- #define INTR_DC 0x20
-+#define INTR_IL 0x40
- #define INTR_RST 0x80
- 
- #define SEQ_0 0x0
--- 
-2.39.5
+  https://wiki.qemu.org/Planning/7.2
 
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
+
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01 fb8e59abbe46 Jamin Lin:
+   hw/misc/aspeed_hace: Ensure HASH_IRQ is always set to prevent firmware 
+   hang
+02 a9403bfcd930 Huaitong Han:
+   vhost: Don't set vring call if guest notifier is unused
+03 5ddd6c8dc849 Volker Rümelin:
+   audio: fix SIGSEGV in AUD_get_buffer_size_out()
+04 eef2dd03f948 Fiona Ebner:
+   hw/core/qdev-properties-system: Add missing return in set_drive_helper()
+05 9c55c03c05c1 Bibo Mao:
+   hw/loongarch/virt: Fix big endian support with MCFG table
+06 f5ec751ee70d Shameer Kolothum:
+   hw/arm/virt: Check bypass iommu is not set for iommu-map DT property
+07 e372214e663a Ethan Chen:
+   qemu-options.hx: Fix reversed description of icount sleep behavior
+08 5ad2b1f443a9 J. Neuschäfer:
+   linux-user/arm: Fix return value of SYS_cacheflush
+09 0d0fc3f46589 Richard Henderson:
+   tcg: Fix constant propagation in tcg_reg_alloc_dup
+10 a412575837b6 Philippe Mathieu-Daudé:
+   target/arm: Correct KVM & HVF dtb_compatible value
+11 f9b0f6930407 Richard Henderson:
+   target/arm: Fix SME vs AdvSIMD exception priority
+12 b4b2e070f41d Richard Henderson:
+   target/arm: Fix sve_access_check for SME
+13 e6ffd009c771 Richard Henderson:
+   target/arm: Fix 128-bit element ZIP, UZP, TRN
+14 3801c5b75ffc Richard Henderson:
+   target/arm: Fix PSEL size operands to tcg_gen_gvec_ands
+15 cfc688c00ade Richard Henderson:
+   target/arm: Fix f16_dotadd vs nan selection
 
