@@ -4,87 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDA7AC83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 02:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEF66C83F17
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 02:18:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua3KS-0006xn-L8; Thu, 10 Jul 2025 22:17:36 -0400
+	id 1ua3Ks-0007DD-Ea; Thu, 10 Jul 2025 22:18:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <minglei.liu@smartx.com>)
- id 1ua3KJ-0006vf-US
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 22:17:28 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <minglei.liu@smartx.com>)
- id 1ua3KG-0007b1-DG
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 22:17:27 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-747e41d5469so1756539b3a.3
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 19:17:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1752200241; x=1752805041;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=uTgZ5bnnbftU8a8Cml1e0AOlXjJTra28u9pHp1iziwo=;
- b=cUN0MmZw0C7WeJP5U/ORxgqiY3nj+1P/K8cZ7hwhLkhMCmLxwWXnqRFbs+OrmjrsZW
- U0v8oImr1Rb/EklZAndvvTv22ZZHQnlSQ8xhZpGmaD6EuWILP2Jh/W0XWPatvPRJW/sL
- W2P32+96sIKTkzIx+IUOzFO5r8iuDKCwfs0JaFwQ5fF4twvuY8wrW621CBOgZHJA52EQ
- EU4A3jFUhZczfnH0DJ9JKkdpp/lP8NjdrqFhahIDAqj5gBOpzNYh3QOLhAKqcTNY/0Sw
- Vx2kFIndDY6G4rS/svpM37tE1imQiZPKYUOzffjmcZHmX+SCzmuqN7/XnjCqzR16Rhe8
- CRYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752200241; x=1752805041;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=uTgZ5bnnbftU8a8Cml1e0AOlXjJTra28u9pHp1iziwo=;
- b=vTfTtuht0toZ0A6bTfKFxoHoFUwJW8vLKuXTttURnWPl2ri/cI5CCgIRbRHhUD60AR
- 8wOIQSDuouVzQBZDI/K9c3Ah0uHfIU9ZrUW6zJF6ds460PJJwdAaHckubUOXRNj/Cp+n
- oc3BeAFb9T2Yd5Bxj/aXsYT0Mhe2sofsE7dqSwqQw/PraRXgHfP44x5YnCgzdPh0DVIU
- gdiNnZ2TYIytO2ITD10W+CxBjYE1v2QHApRFllS6TNqJNG8NQQlib8Vy9pGJMMnyxCyq
- nKCNkYHtm9m7S5iv+DsPdwjYRUJ32o3vA5e7YnaUXvdbBM4HoyK58N+OoVWzP4rjO3L0
- /IbQ==
-X-Gm-Message-State: AOJu0YzW6PEtu6r9PT0x0V+5iw7RQ+YDpVk0WHwmLDJ0ZVTGDX9BnCZx
- eKThR3YyDqUEIRFpQyJ/mFZWarzKI7jHuhTtMNbhHIIqWv03rXhC35zK5zaS+XboS38Fjn37umt
- ZxnA7Vy6lDcjj
-X-Gm-Gg: ASbGnctajb8JtArnE5qzQysX6N76Vk50eMx8a9cVyu9UzRI9PAKxBtygHLS9288Mv5d
- nosOwAPAWayYai5fPMqxLUj4muMlgBgA8+qPuCv8EZG2AaGCEqRb+iwuW1kLOfiV88qLGvCb9Na
- jIkuthF7Z25xRxpXqgAfjGyrOtX+XLuIZBvbF+bGV4iMgrCr0W/HitZSpooV3a+8Oob2AwFgonT
- kNRRRatqVwB3K6ToHjDxz3qI/cHPiBrqcCfPzzA68El1/M8fA7udQtA3RtdmfiPYH0mcKbmatC+
- qK2OLmDG0FTzazF8PieI8tE4ilY+7hupPDD838zb3gerdzC5T0IiyrzB51yu20mT7+L705y/Vy+
- H65ytJDTUB6ya0eBvukoItku6FcX8V2/l24TXePvw22Zakg==
-X-Google-Smtp-Source: AGHT+IEdSYK7T2ZFmDz+7hUeesx1q2MJ7m4Dwg5YvuHn7avqMui0R6wH57Poh7C6ZmB4C9FbZsw28A==
-X-Received: by 2002:a05:6300:8d:b0:21f:62e7:cd2d with SMTP id
- adf61e73a8af0-2314937a8d7mr1940453637.34.1752200240583; 
- Thu, 10 Jul 2025 19:17:20 -0700 (PDT)
-Received: from localhost.localdomain ([125.69.0.79])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b3bbe72913csm3569517a12.72.2025.07.10.19.17.18
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 10 Jul 2025 19:17:19 -0700 (PDT)
-From: Minglei Liu <minglei.liu@smartx.com>
-To: qemu-devel@nongnu.org
-Cc: Michael Roth <michael.roth@amd.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- "minglei.liu" <minglei.liu@smartx.com>
-Subject: [PATCH] qga: Fix truncated output handling in guest-exec status
- reporting
-Date: Fri, 11 Jul 2025 10:17:14 +0800
-Message-Id: <20250711021714.91258-1-minglei.liu@smartx.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1ua3Kp-0007Bh-8p
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 22:17:59 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1ua3Kn-0007dn-9K
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 22:17:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1752200277; x=1783736277;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=GKUX10YV9HUquGjUg9E5BkRazDsgYD4I9MWWYPAdsAw=;
+ b=SBE0VW8gL1MpeGjOWU3qRThonq7MAwjIWztsVMCJLPrSRwwUQuir5Drc
+ zFbl7J6wFQhwbTyRTrJH+Ic+kDSoBbTQWOKKlbuvXp+q5JSkyoncFAzS9
+ 0TPIALIJiv96CMAhHwp7EMmJKDnsmZBWPVpGhPjZbUMrjS50/VZ16WZD4
+ ZTQFbezk4sKN97MsrgHj6UOKo7zjLO+6h3qn+WAtY6TuliEmGe06rE/O4
+ 86DTy9wSlB6BRUhldxppDly6CF117FYBHkbpshatlop27eMtAehSD+dnD
+ cd3djyCFpvy+Ql2HrxfHnvu6esMkNdaDrQPlhnYCRk8TFm0JBBeBg+ako A==;
+X-CSE-ConnectionGUID: jiJV9D1EQpiChZHNdYgrtA==
+X-CSE-MsgGUID: vWRyiQ0OTxGX20NH5JuyCw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11490"; a="79926115"
+X-IronPort-AV: E=Sophos;i="6.16,302,1744095600"; d="scan'208";a="79926115"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Jul 2025 19:17:55 -0700
+X-CSE-ConnectionGUID: S9REfpoqSYGShySP9E92Hw==
+X-CSE-MsgGUID: JdxU8wOxTrOtqz5vN0IOtQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,302,1744095600"; d="scan'208";a="161942809"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Jul 2025 19:17:53 -0700
+Message-ID: <92d23086-7866-44a0-b54e-7690c0306248@intel.com>
+Date: Fri, 11 Jul 2025 10:17:50 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=minglei.liu@smartx.com; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] target/i386: nvmm, whpx: add accel/CPU class that
+ sets host vendor
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: zhao1.liu@intel.com
+References: <20250711000603.438312-1-pbonzini@redhat.com>
+ <20250711000603.438312-3-pbonzini@redhat.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250711000603.438312-3-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,36 +87,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "minglei.liu" <minglei.liu@smartx.com>
-
-Signed-off-by: minglei.liu <minglei.liu@smartx.com>
----
- qga/commands.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/qga/commands.c b/qga/commands.c
-index 5a5fad31f8..5f20af25d3 100644
---- a/qga/commands.c
-+++ b/qga/commands.c
-@@ -205,13 +205,15 @@ GuestExecStatus *qmp_guest_exec_status(int64_t pid, Error **errp)
- #endif
-         if (gei->out.length > 0) {
-             ges->out_data = g_base64_encode(gei->out.data, gei->out.length);
--            ges->has_out_truncated = gei->out.truncated;
-+            ges->has_out_truncated = true;
-+            ges->out_truncated = gei->out.truncated;
-         }
-         g_free(gei->out.data);
- 
-         if (gei->err.length > 0) {
-             ges->err_data = g_base64_encode(gei->err.data, gei->err.length);
--            ges->has_err_truncated = gei->err.truncated;
-+            ges->has_err_truncated = true;
-+            ges->err_truncated = gei->err.truncated;
-         }
-         g_free(gei->err.data);
- 
--- 
-2.39.5 (Apple Git-154)
-
+On 7/11/2025 8:06 AM, Paolo Bonzini wrote:
+> NVMM and WHPX are virtualizers, and therefore they need to use
+> (at least by default) the host vendor for the guest CPUID.
+> Add a cpu_instance_init implementation to these accelerators.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   target/i386/cpu.c           |  8 +++++++-
+>   target/i386/nvmm/nvmm-all.c | 23 +++++++++++++++++++++++
+>   target/i386/whpx/whpx-all.c | 23 +++++++++++++++++++++++
+>   3 files changed, 53 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 624cebc3ff7..69bdffbfe46 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -43,6 +43,7 @@
+>   #include "hw/boards.h"
+>   #include "hw/i386/sgx-epc.h"
+>   #endif
+> +#include "system/qtest.h"
+>   #include "tcg/tcg-cpu.h"
+>   
+>   #include "disas/capstone.h"
+> @@ -1943,7 +1944,7 @@ uint32_t xsave_area_size(uint64_t mask, bool compacted)
+>   
+>   static inline bool accel_uses_host_cpuid(void)
+>   {
+> -    return kvm_enabled() || hvf_enabled();
+> +    return !tcg_enabled() && !qtest_enabled();
+>   }
+>   
+>   static inline uint64_t x86_cpu_xsave_xcr0_components(X86CPU *cpu)
+> diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
+> index b4a4d50e860..69125230abb 100644
+> --- a/target/i386/nvmm/nvmm-all.c
+> +++ b/target/i386/nvmm/nvmm-all.c
+> @@ -1207,10 +1207,33 @@ static const TypeInfo nvmm_accel_type = {
+>       .class_init = nvmm_accel_class_init,
+>   };
+>   
+> +static void nvmm_cpu_instance_init(CPUState *cs)
+> +{
+> +    X86CPU *cpu = X86_CPU(cs);
+> +
+> +    host_cpu_instance_init(cpu);
+Besides, do we need to call host_cpu_max_instance_init() for the case of 
+xcc->max_features, like what has been done for kvm and hvf?
 
