@@ -4,88 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 219FEC83F1B
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 20:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90572C83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 20:22:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaK6j-00036w-C9; Fri, 11 Jul 2025 16:12:33 -0400
+	id 1uaKFZ-0008ST-Gr; Fri, 11 Jul 2025 16:21:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uaJsy-0004d1-Mi
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 15:58:21 -0400
-Received: from mail-oa1-x2e.google.com ([2001:4860:4864:20::2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uaJsx-0000ej-5Q
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 15:58:20 -0400
-Received: by mail-oa1-x2e.google.com with SMTP id
- 586e51a60fabf-2ef8dfb3742so561325fac.3
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 12:58:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752263897; x=1752868697; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4CsWiatzJck1QaJtSAHOx+wzX/98K3pxwA4Bg4uXD9o=;
- b=kjQCnsGJBodnhSxIq0vnZFAteR7IDVfYUm1WhcsF26C72Oed071NGvOJ2CyD+lUTPe
- B6ZObY4PQCrA0A7LXYhB6F5VFkZiGZ5PUR1ggv9g10j9j//Fd2QmGOZqYuQsv9hHtw7a
- Et/zy09xzvhxTDDAO6P4kh69ZgXbISpYEYyR/ntxyw/qB3ZnKTc/6HC2wNwG21kn1eje
- xYe0HOlp7btgfWzO24OHJhKvXw+MX0yjIYkmDtCQa3/3gpHVMrGlt2c2AIHvjqOHsfAx
- 834p6LyAsF29CLdM5CufW3+Joz3Z21EzguWf/merk9t5wLEJ9OZxePL5fpnvQu3Qg5C1
- Xi7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752263897; x=1752868697;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4CsWiatzJck1QaJtSAHOx+wzX/98K3pxwA4Bg4uXD9o=;
- b=fyw6lfs53pfjsXgUvvODiG/i6iLFYmoePG3Bvo33YRE14Hc4xvmPzGQr/1U8JYIgHF
- prPCop7qCzjQQSDfLFNcveyb8x4wOLcEwl5OQcfmlyOI1HlciAsoVP1C+CzLj0xCFu8M
- vkfqxQegBGUYhDEwq1Wr5JiXP2vKrvzER/peXLMwRl39jKywGkxQxiEW08mdmoZzFmVJ
- JPpcHg+OA9TPzmDHEqoiLPvimOTZOBJBiKFxQoScMF7Qqzh1d2hLvGKpkczNsuScgkV0
- +4UpA5NCxZxkXM2oQiTaen7nDs2RE/8ptaU3erDxiu9lt0fIk4fjaZOvvkSmy9crw2yD
- emkw==
-X-Gm-Message-State: AOJu0YxRiYFPdGZbc4QkzoWVISzgArBqZL+ABLHG4CKrEbOXi+fi2srY
- iVXC+K3/niCqxOqvJTjaqDacjWF40yRUVJz8twLsp5il+IueKku6Uo9Rcs6BPX4ytxFNyXS1aB2
- AABuEtzo=
-X-Gm-Gg: ASbGnctHtdsNjkqwv44fCTRBsKyqNYZNWTep46fcm565A+v+R/PflcqFByn3APaCHSf
- kmVBmtqwSt48oIiZLXLtpIzYqR8Rbreaou72gDj2omGYvm4rid/33IRxLOTKk/HvGFzn9qnZLJ6
- qvfAL4lXIFAsH6xPz8menzC0IFeVYWUu5pj4aVX6xJsZ+qyKRMrlq+cbr9QQBO3tGQXvJvJDG0l
- 9VpR1hsEQV8McDOHNntQwwzz9vmpRklCB3T0Qcx7EySFeUI1hLQi5fFqIfkppI1xskpEfplyjuy
- WK2EDoi4NJqlz1UOzdyT0G9THcV+OnYtCSWzz87NkAZYovk8EFj/8K3djDvsa+vkW276U6x+xIS
- XBuFm4rDtdMfzg9djPmgIWG6w3OSAZTN94faqpbA9Hz3Wel2diej8cYfsmlTlpbAoy+3g2K4pIa
- zT
-X-Google-Smtp-Source: AGHT+IGSg/QVIWwXqxczev7ybP+4fBNYbegZjhgs8twE1ZxxNVyi2y0BqS42LP6uiPAE2UQg+1Ai/A==
-X-Received: by 2002:a05:6871:c708:b0:2ea:fdd4:ab97 with SMTP id
- 586e51a60fabf-2ff26748604mr3486860fac.2.1752263897215; 
- Fri, 11 Jul 2025 12:58:17 -0700 (PDT)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-613d9f00d46sm545690eaf.22.2025.07.11.12.58.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Jul 2025 12:58:16 -0700 (PDT)
-Message-ID: <c777c6f2-1b61-40ab-b191-a92b58d7b7c0@linaro.org>
-Date: Fri, 11 Jul 2025 13:58:15 -0600
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uaKA2-0005cY-Qk
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 16:15:59 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uaKA1-0004xc-41
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 16:15:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=nzyUAJFFD019EpgHdpFYAlXl5dfE/9QZCkfexTr76S0=; b=Kud59mUi2C7MIfYxbHNe3AtS77
+ Pwo+CaPSfidSzL65RC9bTonZmf1g1ACMhM5VPi5oLp0c/ftEBVSgTSECGJtVr/HqneKIMFybxVfZv
+ Qx+X7+SuzR5a6TO3GNXksCMk70ZtbtKExIjxl5sUTrqXoZ2eVxnvRG0s0vl/CjzPuy/7LcolgsXTq
+ CQI/XCKGoGOPRbTAiFB1hBJm1GDlsabt5QjLPhX8QLSvcC3FGpMFU0DRBUCs+4xlH6DYKJws2wTXf
+ PAmu/24qr2XETQToJS89nqFcZrKIZo76mrcIkcjG+4fsur6pEJMVfNSPadgw19Emxb9tBZzYcdiu+
+ jycPuBQiQhJCoNjaBFp3cK2OGobWeRq14rlAXUdh+r1sjluQDaZXpUblUvERjgNXyZDh6PRVEQV2g
+ hQVzOSlyhexMQTkMR4a7HYSpZZSR6PlTaw/BMvNGfQxL6EigaMNWuk8yCmUqBcU/oZvRjXhI49bqM
+ qo2gf5fVdZfA4nVndcXMLo5d5GBqxzoKnK/S1ClBvW5DBwuYpNK7qr2fMVYKDNW+icfUSJMCgbptf
+ aVTWWOq3fOMQAYL9RpW7twAQo7KX4A7t9i3Mt6XeSNxrOtx8o1+PaEl16qyM7CQiHN26buwD1jiEB
+ GLupZjfEQLoJNJRrWQ0Ok+EtsIKzx+8gHMg8NR2q0=;
+Received: from [2a02:8012:2f01:0:d1ff:478a:c096:2d0c]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uaK8J-000BUb-T3; Fri, 11 Jul 2025 21:14:12 +0100
+Message-ID: <39a12d97-2b7d-4ef9-9fc4-89bdc293fb3e@ilande.co.uk>
+Date: Fri, 11 Jul 2025 21:15:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Added support for SME register exposure to GDB
-To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-References: <20250708221438.347643-1-vacha.bhavsar@oss.qualcomm.com>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ pbonzini@redhat.com, fam@euphon.net, qemu-devel@nongnu.org
+References: <20250618061249.743897-1-mark.cave-ayland@ilande.co.uk>
+ <20250618061249.743897-2-mark.cave-ayland@ilande.co.uk>
+ <068ed887-f571-46e8-929a-9dc450624ee1@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250708221438.347643-1-vacha.bhavsar@oss.qualcomm.com>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <068ed887-f571-46e8-929a-9dc450624ee1@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2e;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2e.google.com
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:d1ff:478a:c096:2d0c
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v2 1/7] esp.c: only raise IRQ in esp_transfer_data() for
+ CMD_SEL, CMD_SELATN and CMD_TI commands
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,18 +106,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/8/25 16:14, Vacha Bhavsar wrote:
-> +            if (isar_feature_aa64_sme(&cpu->isar)) {
+On 09/07/2025 12:09, Philippe Mathieu-Daudé wrote:
 
-Preferred usage is cpu_isar_feature(aa64_sme, cpu)
+> On 18/6/25 08:12, Mark Cave-Ayland wrote:
+>> Clarify the logic in esp_transfer_data() to ensure that the deferred interrupt code
+>> can only be triggered for CMD_SEL, CMD_SELATN and CMD_TI commands. This should already
+>> be the case, but make it explicit to ensure the logic isn't triggered unexpectedly.
+>>
+>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>> ---
+>>   hw/scsi/esp.c | 5 +++--
+>>   1 file changed, 3 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
+>> index f24991fd16..9181c8810f 100644
+>> --- a/hw/scsi/esp.c
+>> +++ b/hw/scsi/esp.c
+>> @@ -1012,6 +1012,7 @@ void esp_transfer_data(SCSIRequest *req, uint32_t len)
+>>                */
+>>                s->rregs[ESP_RINTR] |= INTR_BS | INTR_FC;
+>>                s->rregs[ESP_RSEQ] = SEQ_CD;
+>> +             esp_raise_irq(s);
+>>                break;
+>>           case CMD_SELATNS | CMD_DMA:
+>> @@ -1022,6 +1023,7 @@ void esp_transfer_data(SCSIRequest *req, uint32_t len)
+>>                */
+>>                s->rregs[ESP_RINTR] |= INTR_BS;
+>>                s->rregs[ESP_RSEQ] = SEQ_MO;
+>> +             esp_raise_irq(s);
+>>                break;
+>>           case CMD_TI | CMD_DMA:
+>> @@ -1032,10 +1034,9 @@ void esp_transfer_data(SCSIRequest *req, uint32_t len)
+>>                */
+>>               s->rregs[ESP_CMD] = 0;
+>>               s->rregs[ESP_RINTR] |= INTR_BS;
+>> +            esp_raise_irq(s);
+>>               break;
+> 
+> Should we log unexpected CMDs? Regardless,
 
-Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+All of the valid information transfer commands are included in the switch() statement 
+above, and once patch 7 is applied any command issued in the wrong mode will generate 
+an interrupt. So I think we're good.
 
-PS: I tried this myself a few weeks ago and got an error from gdb.  I had assumed that gdb 
-simply wasn't prepared for the vector-of-vectors type.  I guess I should have investigated 
-further -- it may have just been an xml typo.
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+Thanks!
+
+>>           }
+>> -
+>> -        esp_raise_irq(s);
+>>       }
+>>       /*
 
 
-r~
+ATB,
+
+Mark.
+
 
