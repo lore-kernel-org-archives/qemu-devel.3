@@ -4,96 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53B34C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 14:19:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27656C83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 14:20:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaEXI-0001mi-GL; Fri, 11 Jul 2025 10:15:36 -0400
+	id 1uaEXI-0001q5-T6; Fri, 11 Jul 2025 10:15:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uaETH-0001iN-QS
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:11:31 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uaETs-0002kw-85
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:12:09 -0400
 Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uaETE-0006hL-86
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:11:26 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uaETo-0006of-ID
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:12:03 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 5D0A621192;
- Fri, 11 Jul 2025 14:11:01 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 31C43211A5;
+ Fri, 11 Jul 2025 14:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1752243061; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1752243078; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dk32ib5y9aoYEvyT4wmPbKEXZ0gXCpoEwNJ9W1pwe1U=;
- b=aNIRPkPUcRMcAxKBpRu3aUBkTRV8DqMykXliniA6Jbv3keyHNeJmWPdo2/R2o14YxI8IHw
- kahHDrYTa/EJjreZd/5rj4xzq5/F8NYAG2SUimRBgcMx5tdGt40JYFwo5ybfrFDlEE6GLQ
- A7PTy8watgmqtL1V8oehWoSreqlMX9g=
+ bh=yahr4xTDonbuFFFNBGo8xqPBuH7E+nTTPkcHPHdeRHM=;
+ b=sxqkyAC+85vhlGGdxVXgmQEND0aRP8xyeozCD1Jtis8kxH1U1jbHoWJZ13/k4jkBqgXMMS
+ gEQfuybfvRYb9C7elNYOIaMNM6aTmx60qCrxqfBMITxo4M3oZOCxZpGbW2SKiIwayuAVBO
+ BDQCzHdHfvtKKAYpVzCrTVmuHrQIRtc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1752243061;
+ s=susede2_ed25519; t=1752243078;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dk32ib5y9aoYEvyT4wmPbKEXZ0gXCpoEwNJ9W1pwe1U=;
- b=Bu8MY1yTv1ze2rXjxqgujoSFXWom/zHHiKNHXfWmxhves9h7V5SULVnU3R7AK2y0rdG0mP
- 9UGGZH7UrTuWVGAA==
+ bh=yahr4xTDonbuFFFNBGo8xqPBuH7E+nTTPkcHPHdeRHM=;
+ b=3B+RyH5hPI1OSoz+nKyxTwxPDCxJekmAQMNlLHq+sG8OgJVU1EBZ+sEK3oX6+vRIYsUAK+
+ o0e0mPuu7FV+QMAw==
 Authentication-Results: smtp-out1.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=sxqkyAC+;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=3B+RyH5h
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1752243061; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1752243078; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dk32ib5y9aoYEvyT4wmPbKEXZ0gXCpoEwNJ9W1pwe1U=;
- b=aNIRPkPUcRMcAxKBpRu3aUBkTRV8DqMykXliniA6Jbv3keyHNeJmWPdo2/R2o14YxI8IHw
- kahHDrYTa/EJjreZd/5rj4xzq5/F8NYAG2SUimRBgcMx5tdGt40JYFwo5ybfrFDlEE6GLQ
- A7PTy8watgmqtL1V8oehWoSreqlMX9g=
+ bh=yahr4xTDonbuFFFNBGo8xqPBuH7E+nTTPkcHPHdeRHM=;
+ b=sxqkyAC+85vhlGGdxVXgmQEND0aRP8xyeozCD1Jtis8kxH1U1jbHoWJZ13/k4jkBqgXMMS
+ gEQfuybfvRYb9C7elNYOIaMNM6aTmx60qCrxqfBMITxo4M3oZOCxZpGbW2SKiIwayuAVBO
+ BDQCzHdHfvtKKAYpVzCrTVmuHrQIRtc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1752243061;
+ s=susede2_ed25519; t=1752243078;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dk32ib5y9aoYEvyT4wmPbKEXZ0gXCpoEwNJ9W1pwe1U=;
- b=Bu8MY1yTv1ze2rXjxqgujoSFXWom/zHHiKNHXfWmxhves9h7V5SULVnU3R7AK2y0rdG0mP
- 9UGGZH7UrTuWVGAA==
+ bh=yahr4xTDonbuFFFNBGo8xqPBuH7E+nTTPkcHPHdeRHM=;
+ b=3B+RyH5hPI1OSoz+nKyxTwxPDCxJekmAQMNlLHq+sG8OgJVU1EBZ+sEK3oX6+vRIYsUAK+
+ o0e0mPuu7FV+QMAw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 494C21388B;
- Fri, 11 Jul 2025 14:11:00 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1EFCE1388B;
+ Fri, 11 Jul 2025 14:11:16 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id WJu1AXQbcWg7TgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 11 Jul 2025 14:11:00 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id yFenM4QbcWg7TgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 11 Jul 2025 14:11:16 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL 13/26] migration/postcopy: Push blocktime start/end into page
- req mutex
-Date: Fri, 11 Jul 2025 11:10:18 -0300
-Message-Id: <20250711141031.423-14-farosas@suse.de>
+Subject: [PULL 23/26] migration/postcopy: Optimize blocktime fault tracking
+ with hashtable
+Date: Fri, 11 Jul 2025 11:10:28 -0300
+Message-Id: <20250711141031.423-24-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250711141031.423-1-farosas@suse.de>
 References: <20250711141031.423-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.999];
- MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FROM_HAS_DN(0.00)[]; MIME_TRACE(0.00)[0:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; RCPT_COUNT_TWO(0.00)[2];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCPT_COUNT_TWO(0.00)[2];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[]
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:dkim,suse.de:email];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: 31C43211A5
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
  envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
@@ -119,278 +131,452 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Xu <peterx@redhat.com>
 
-The postcopy blocktime feature was tricky that it used quite some atomic
-operations over quite a few arrays and vars, without explaining how that
-would be thread safe.  The thread safety here is about concurrency between
-the fault thread and the fault resolution threads, possible to access the
-same chunk of data.  All these atomic ops can be expensive too before
-knowing clearly how it works.
+Currently, the postcopy blocktime feature maintains vCPU fault information
+using an array (vcpu_addr[]).  It has two issues.
 
-OTOH, postcopy has one page_request_mutex used to serialize the received
-bitmap updates.  So far it's ok - we don't yet have a lot of threads
-contending the lock.  It might change after multifd will be supported, but
-that's a separate story.  What is important is, with that mutex, it's
-pretty lightweight to move all the blocktime maintenance into the mutex
-critical section.  It's because the blocktime layer is lightweighted:
-almost "remember which vcpu faulted on which address", and "ok we get some
-fault resolved, calculate how long it takes".  It's also an optional
-feature for now (but I have thought of changing that, maybe in the future).
+Issue 1: Performance Concern
+============================
 
-Let's push the blocktime layer into the mutex, so that it's always
-thread-safe even without any atomic ops.
+The old algorithm was almost OK and fast on inserts, except that the lookup
+is slow and won't scale if there are a lot of vCPUs: when a page is copied
+during postcopy, mark_postcopy_blocktime_end() will walk the whole array
+trying to find which vCPUs are blocked by the address.  So it needs
+constant O(N) walk for each page resolution.
 
-To achieve that, I'll need to add a tid parameter on fault path so that
-it'll start to pass the faulted thread ID into deeper the stack, but not
-too deep.  When at it, add a comment for the shared fault handler (for
-example, vhost-user devices running with postcopy), to mention a TODO.  One
-reason it might not be trivial is that vhost-user's userfaultfds should be
-opened by vhost-user process, so it's pretty hard to control making sure
-the TID feature will be around.  It wasn't supported before, so keep it
-like that for now.
+Alexey (the author of postcopy blocktime) mentioned the perf issue and how
+to optimize it in a piece of comment in the page resolution path.  The
+comment was (interestingly..) not complete, but it's relatively clear what
+he wanted to say about this perf issue.
 
-Now we should be as ease when everything is protected by a mutex that we
-always take anyway.
+Issue 2: Wrong Accounting on re-entrancies
+==========================================
 
-One side effect: we can finally remove one ramblock_recv_bitmap_test() in
-mark_postcopy_blocktime_begin(), which was pretty weird and which also
-includes a weird (but maybe necessary.. but maybe not?) operation to inject
-a blocktime entry then quickly erase it..  When we're with the mutex, and
-when we make sure it's invoked after checking the receive bitmap, it's not
-needed anymore.  Instead, we assert.
+People might think that each vCPU should only and always get one fault at a
+time, so that when the blocktime layer captured one fault on one vCPU, we
+should never see another fault message on this vCPU.
 
-As another side effect, this paves way for removing all atomic ops in all
-the mem accesses in blocktime layer.
+It's almost correct, except in some extreme rare cases.
 
-Note that we need a stub for mark_postcopy_blocktime_begin() for Windows
-builds.
+Case 1: it's possible the fault thread processes the userfaultfd messages
+too fast so it can see >1 messages on one vCPU before the previous one was
+resolved.
+
+Case 2: it's theoretically also possible one vCPU can get even more than
+one message on the same fault address if a fault is retried by the
+kernel (e.g., handle_userfault() got interrupted before page resolution).
+
+As this info might be important, instead of using commit message, I put
+more details into the code as comment, when introducing an array
+maintaining concurrent faults on one vCPU.  Please refer to the comments
+for details on both cases, especially case 1 which can be tricky.
+
+Case 1 sounds rare, but it can be easily reproduced locally for me when we
+run blocktime together with the migration-test on the vanilla postcopy.
+
+New Design
+==========
+
+This patch should do almost what Alexey mentioned, but slightly
+differently: instead of having an array to maintain vCPU fault addresses,
+for each of the fault message we push a message into a hash, indexed by the
+fault address.
+
+With the hash, it can replace the old two structs: both the vcpu_addr[]
+array, and also the array to store the start time of the fault.  However
+due to above we need one more counter array to account concurrent faults on
+the same vCPU - that should even be needed in the old code, it's just that
+the old code was buggy and it will blindly overwrite an existing
+entry.. now we'll start to really track everything.
+
+The hash structure might be more efficient than tree to maintain such
+addr->(cpu, fault_time) information, so that the insert() and lookup()
+paths should ideally both be ~O(1).  After all, we do not need to sort.
+
+Here we need to do one remove() though after the lookup().  It could be
+slow but only if many vCPUs faulted exactly on the same address (so when
+the list of cpu entries is long), which should be unlikely. Even with that,
+it's still a worst case O(N) (consider 400 vCPUs faulted on the same
+address and how likely is it..) rather than a constant O(N) complexity.
+
+When at it, touch up the tracepoints to make them slightly more useful.
+One tracepoint is added when walking all the fault entries.
 
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20250613141217.474825-3-peterx@redhat.com
+Link: https://lore.kernel.org/r/20250613141217.474825-13-peterx@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/migration.c    | 25 +++++++++++-------
- migration/migration.h    |  2 +-
- migration/postcopy-ram.c | 56 +++++++++++++++++++++-------------------
- migration/postcopy-ram.h |  2 ++
- migration/trace-events   |  2 +-
- 5 files changed, 48 insertions(+), 39 deletions(-)
+ migration/postcopy-ram.c | 265 +++++++++++++++++++++++++++++++--------
+ migration/trace-events   |   5 +-
+ 2 files changed, 219 insertions(+), 51 deletions(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 923400f801..10c216d25d 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -576,22 +576,27 @@ int migrate_send_rp_message_req_pages(MigrationIncomingState *mis,
- }
- 
- int migrate_send_rp_req_pages(MigrationIncomingState *mis,
--                              RAMBlock *rb, ram_addr_t start, uint64_t haddr)
-+                              RAMBlock *rb, ram_addr_t start, uint64_t haddr,
-+                              uint32_t tid)
- {
-     void *aligned = (void *)(uintptr_t)ROUND_DOWN(haddr, qemu_ram_pagesize(rb));
-     bool received = false;
- 
-     WITH_QEMU_LOCK_GUARD(&mis->page_request_mutex) {
-         received = ramblock_recv_bitmap_test_byte_offset(rb, start);
--        if (!received && !g_tree_lookup(mis->page_requested, aligned)) {
--            /*
--             * The page has not been received, and it's not yet in the page
--             * request list.  Queue it.  Set the value of element to 1, so that
--             * things like g_tree_lookup() will return TRUE (1) when found.
--             */
--            g_tree_insert(mis->page_requested, aligned, (gpointer)1);
--            qatomic_inc(&mis->page_requested_count);
--            trace_postcopy_page_req_add(aligned, mis->page_requested_count);
-+        if (!received) {
-+            if (!g_tree_lookup(mis->page_requested, aligned)) {
-+                /*
-+                 * The page has not been received, and it's not yet in the
-+                 * page request list.  Queue it.  Set the value of element
-+                 * to 1, so that things like g_tree_lookup() will return
-+                 * TRUE (1) when found.
-+                 */
-+                g_tree_insert(mis->page_requested, aligned, (gpointer)1);
-+                qatomic_inc(&mis->page_requested_count);
-+                trace_postcopy_page_req_add(aligned, mis->page_requested_count);
-+            }
-+            mark_postcopy_blocktime_begin(haddr, tid, rb);
-         }
-     }
- 
-diff --git a/migration/migration.h b/migration/migration.h
-index 739289de93..01329bf824 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -546,7 +546,7 @@ void migrate_send_rp_shut(MigrationIncomingState *mis,
- void migrate_send_rp_pong(MigrationIncomingState *mis,
-                           uint32_t value);
- int migrate_send_rp_req_pages(MigrationIncomingState *mis, RAMBlock *rb,
--                              ram_addr_t start, uint64_t haddr);
-+                              ram_addr_t start, uint64_t haddr, uint32_t tid);
- int migrate_send_rp_message_req_pages(MigrationIncomingState *mis,
-                                       RAMBlock *rb, ram_addr_t start);
- void migrate_send_rp_recv_bitmap(MigrationIncomingState *mis,
 diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 75fd310fb2..32fa06dabd 100644
+index fd6c0bdb1e..91c23b446e 100644
 --- a/migration/postcopy-ram.c
 +++ b/migration/postcopy-ram.c
-@@ -752,8 +752,12 @@ int postcopy_wake_shared(struct PostCopyFD *pcfd,
-                        pagesize);
- }
+@@ -112,14 +112,69 @@ void postcopy_thread_create(MigrationIncomingState *mis,
  
-+/*
-+ * NOTE: @tid is only used when postcopy-blocktime feature is enabled, and
-+ * also optional: when zero is provided, the fault accounting will be ignored.
-+ */
- static int postcopy_request_page(MigrationIncomingState *mis, RAMBlock *rb,
--                                 ram_addr_t start, uint64_t haddr)
-+                                 ram_addr_t start, uint64_t haddr, uint32_t tid)
- {
-     void *aligned = (void *)(uintptr_t)ROUND_DOWN(haddr, qemu_ram_pagesize(rb));
+ /* All the time records are in unit of nanoseconds */
+ typedef struct PostcopyBlocktimeContext {
+-    /* time when page fault initiated per vCPU */
+-    uint64_t *vcpu_blocktime_start;
+     /* blocktime per vCPU */
+     uint64_t *vcpu_blocktime_total;
+     /* count of faults per vCPU */
+     uint64_t *vcpu_faults_count;
+-    /* page address per vCPU */
+-    uintptr_t *vcpu_addr;
++    /*
++     * count of currently blocked faults per vCPU.
++     *
++     * NOTE: Normally there should only be one fault in-progress per vCPU
++     * thread, so logically it _seems_ vcpu_faults_count[] for any vCPU
++     * should be either zero or one.  However, there can be reasons we see
++     * >1 faults on the same vCPU thread.
++     *
++     * CASE (1): since the process to resolve faults (ioctl(UFFDIO_COPY),
++     * for example) is done before taking the mutex that protects the
++     * blocktime context, it can happen that we read more than one faulted
++     * addresses per vCPU.
++     *
++     * One example when we can see >1 faulted addresses for one vCPU:
++     *
++     *  vcpu1 thread       fault thread         resolve thread
++     *  ============       ============         ==============
++     *
++     *  faulted on addr1
++     *                     read uffd msg (addr1)
++     *                     MUTEX_LOCK
++     *                     add entry (cpu1, addr1)
++     *                     MUTEX_UNLOCK
++     *                     request remote fault (addr1)
++     *                                          resolve fault (addr1)
++     *  addr1 resolved, continue..
++     *  faulted on addr2
++     *                     read uffd msg (addr2)
++     *                     MUTEX_LOCK
++     *                     add entry (cpu1, addr2) <--------------- [A]
++     *                     MUTEX_UNLOCK
++     *                                          MUTEX_LOCK
++     *                                          remove entry (cpu1, addr1)
++     *                                          MUTEX_UNLOCK
++     *
++     * In above case, we may see (cpu1, addr1) and (cpu1, addr2) entries to
++     * appear together at [A], when it gets the lock before the resolve
++     * thread.  Use this counter to maintain such case, and only when it
++     * reaches zero we know the vCPU is not blocked anymore.
++     *
++     * CASE (2): theoretically (the author admit to not have verified
++     * this..), one vCPU thread can also generate more than one userfaultfd
++     * message on the same address. It can happen e.g. for whatever reason
++     * the fault got retried before a resolution arrives. In that extremely
++     * rare case, we could also see two (cpu1, addr1) entries.
++     *
++     * In all cases, be prepared with such re-entrancies with this array.
++     *
++     * Using uint8_t should be far enough for now.  For example, when
++     * there're only one resolve thread (postcopy ram listening thread),
++     * the max (concurrent fault entries) should be two.
++     */
++    uint8_t *vcpu_faults_current;
++    /*
++     * The hash that contains addr1->[(cpu1,ts1),(cpu2,ts2) ...] mappings.
++     * Each of the entry is a tuple of (CPU index, fault timestamp) showing
++     * that a fault was requested.
++     */
++    GHashTable *vcpu_addr_hash;
+     /* total blocktime when all vCPUs are stopped */
+     uint64_t total_blocktime;
+     /* point in time when last page fault was initiated */
+@@ -145,13 +200,38 @@ typedef struct PostcopyBlocktimeContext {
+     Notifier exit_notifier;
+ } PostcopyBlocktimeContext;
  
-@@ -772,7 +776,7 @@ static int postcopy_request_page(MigrationIncomingState *mis, RAMBlock *rb,
-         return received ? 0 : postcopy_place_page_zero(mis, aligned, rb);
-     }
- 
--    return migrate_send_rp_req_pages(mis, rb, start, haddr);
-+    return migrate_send_rp_req_pages(mis, rb, start, haddr, tid);
- }
- 
- /*
-@@ -793,7 +797,8 @@ int postcopy_request_shared_page(struct PostCopyFD *pcfd, RAMBlock *rb,
-                                         qemu_ram_get_idstr(rb), rb_offset);
-         return postcopy_wake_shared(pcfd, client_addr, rb);
-     }
--    postcopy_request_page(mis, rb, aligned_rbo, client_addr);
-+    /* TODO: support blocktime tracking */
-+    postcopy_request_page(mis, rb, aligned_rbo, client_addr, 0);
-     return 0;
- }
- 
-@@ -819,17 +824,17 @@ static uint32_t get_low_time_offset(PostcopyBlocktimeContext *dc)
- }
- 
- /*
-- * This function is being called when pagefault occurs. It
-- * tracks down vCPU blocking time.
-+ * This function is being called when pagefault occurs. It tracks down vCPU
-+ * blocking time.  It's protected by @page_request_mutex.
-  *
-  * @addr: faulted host virtual address
-  * @ptid: faulted process thread id
-  * @rb: ramblock appropriate to addr
-  */
--static void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
--                                          RAMBlock *rb)
-+void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
-+                                   RAMBlock *rb)
- {
--    int cpu, already_received;
++typedef struct {
++    /* The time the fault was triggered */
++    uint64_t fault_time;
++    /* The vCPU index that was blocked */
 +    int cpu;
-     MigrationIncomingState *mis = migration_incoming_get_current();
-     PostcopyBlocktimeContext *dc = mis->blocktime_ctx;
-     uint32_t low_time_offset;
-@@ -852,24 +857,19 @@ static void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
-     qatomic_xchg(&dc->vcpu_addr[cpu], addr);
++} BlocktimeVCPUEntry;
++
++/* Alloc an entry to record a vCPU fault */
++static BlocktimeVCPUEntry *
++blocktime_vcpu_entry_alloc(int cpu, uint64_t fault_time)
++{
++    BlocktimeVCPUEntry *entry = g_new(BlocktimeVCPUEntry, 1);
++
++    entry->fault_time = fault_time;
++    entry->cpu = cpu;
++
++    return entry;
++}
++
++/* Free a @GList of @BlocktimeVCPUEntry */
++static void blocktime_vcpu_list_free(gpointer data)
++{
++    g_list_free_full(data, g_free);
++}
++
+ static void destroy_blocktime_context(struct PostcopyBlocktimeContext *ctx)
+ {
+     g_hash_table_destroy(ctx->tid_to_vcpu_hash);
+-    g_free(ctx->vcpu_blocktime_start);
++    g_hash_table_destroy(ctx->vcpu_addr_hash);
+     g_free(ctx->vcpu_blocktime_total);
+     g_free(ctx->vcpu_faults_count);
+-    g_free(ctx->vcpu_addr);
++    g_free(ctx->vcpu_faults_current);
+     g_free(ctx);
+ }
+ 
+@@ -198,12 +278,22 @@ static struct PostcopyBlocktimeContext *blocktime_context_new(void)
+     unsigned int smp_cpus = ms->smp.cpus;
+     PostcopyBlocktimeContext *ctx = g_new0(PostcopyBlocktimeContext, 1);
+ 
+-    ctx->vcpu_blocktime_start = g_new0(uint64_t, smp_cpus);
+     ctx->vcpu_blocktime_total = g_new0(uint64_t, smp_cpus);
+     ctx->vcpu_faults_count = g_new0(uint64_t, smp_cpus);
+-    ctx->vcpu_addr = g_new0(uintptr_t, smp_cpus);
++    ctx->vcpu_faults_current = g_new0(uint8_t, smp_cpus);
+     ctx->tid_to_vcpu_hash = blocktime_init_tid_to_vcpu_hash();
+ 
++    /*
++     * The key (host virtual addresses) will always be gpointer-sized on
++     * either 32bits or 64bits systems, so it'll fit as a direct key.
++     *
++     * The value will be a list of BlocktimeVCPUEntry entries.
++     */
++    ctx->vcpu_addr_hash = g_hash_table_new_full(g_direct_hash,
++                                                g_direct_equal,
++                                                NULL,
++                                                blocktime_vcpu_list_free);
++
+     ctx->exit_notifier.notify = migration_exit_cb;
+     qemu_add_exit_notifier(&ctx->exit_notifier);
+ 
+@@ -893,6 +983,39 @@ static uint64_t get_current_ns(void)
+     return (uint64_t)qemu_clock_get_ns(QEMU_CLOCK_REALTIME);
+ }
+ 
++/* Inject an (cpu, fault_time) entry into the database, using addr as key */
++static void blocktime_fault_inject(PostcopyBlocktimeContext *ctx,
++                                   uintptr_t addr, int cpu, uint64_t time)
++{
++    BlocktimeVCPUEntry *entry = blocktime_vcpu_entry_alloc(cpu, time);
++    GHashTable *table = ctx->vcpu_addr_hash;
++    gpointer key = (gpointer)addr;
++    GList *head, *list;
++    gboolean result;
++
++    head = g_hash_table_lookup(table, key);
++    if (head) {
++        /*
++         * If existed, steal the @head for list operation rather than
++         * freeing it, making sure steal succeeded.
++         */
++        result = g_hash_table_steal(table, key);
++        assert(result == TRUE);
++    }
++
++    /*
++     * Now the key is guaranteed to be absent.  Two cases:
++     *
++     * (1) There's no existing entry, list contains the only one. Insert.
++     * (2) There're existing entries, after stealing we own it, prepend the
++     *     result and re-insert.
++     */
++    list = g_list_prepend(head, entry);
++    g_hash_table_insert(table, key, list);
++
++    trace_postcopy_blocktime_begin(addr, time, cpu, !!head);
++}
++
+ /*
+  * This function is being called when pagefault occurs. It tracks down vCPU
+  * blocking time.  It's protected by @page_request_mutex.
+@@ -912,21 +1035,6 @@ void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
+     if (!dc || ptid == 0) {
+         return;
+     }
+-    cpu = blocktime_get_vcpu(dc, ptid);
+-    if (cpu < 0) {
+-        dc->non_vcpu_faults++;
+-        return;
+-    }
+-
+-    current = get_current_ns();
+-    if (dc->vcpu_addr[cpu] == 0) {
+-        dc->smp_cpus_down++;
+-    }
+-
+-    dc->last_begin = current;
+-    dc->vcpu_blocktime_start[cpu] = current;
+-    dc->vcpu_addr[cpu] = addr;
+-    dc->vcpu_faults_count[cpu]++;
  
      /*
--     * check it here, not at the beginning of the function,
--     * due to, check could occur early than bitmap_set in
--     * qemu_ufd_copy_ioctl
-+     * The caller should only inject a blocktime entry when the page is
-+     * yet missing.
+      * The caller should only inject a blocktime entry when the page is
+@@ -934,8 +1042,67 @@ void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
       */
--    already_received = ramblock_recv_bitmap_test(rb, (void *)addr);
--    if (already_received) {
--        qatomic_xchg(&dc->vcpu_addr[cpu], 0);
--        qatomic_xchg(&dc->page_fault_vcpu_time[cpu], 0);
--        qatomic_dec(&dc->smp_cpus_down);
--    }
-+    assert(!ramblock_recv_bitmap_test(rb, (void *)addr));
+     assert(!ramblock_recv_bitmap_test(rb, (void *)addr));
+ 
+-    trace_mark_postcopy_blocktime_begin(addr, dc->vcpu_blocktime_start[cpu],
+-                                        cpu);
++    current = get_current_ns();
++    cpu = blocktime_get_vcpu(dc, ptid);
 +
-     trace_mark_postcopy_blocktime_begin(addr, dc, dc->page_fault_vcpu_time[cpu],
--                                        cpu, already_received);
-+                                        cpu);
++    if (cpu >= 0) {
++        /* How many faults on this vCPU in total? */
++        dc->vcpu_faults_count[cpu]++;
++
++        /*
++         * Account how many concurrent faults on this vCPU we trapped.  See
++         * comments above vcpu_faults_current[] on why it can be more than one.
++         */
++        if (dc->vcpu_faults_current[cpu]++ == 0) {
++            dc->smp_cpus_down++;
++            /*
++             * We use last_begin to cover (1) the 1st fault on this specific
++             * vCPU, but meanwhile (2) the last vCPU that got blocked.  It's
++             * only used to calculate system-wide blocktime.
++             */
++            dc->last_begin = current;
++        }
++
++        /* Making sure it won't overflow - it really should never! */
++        assert(dc->vcpu_faults_current[cpu] <= 255);
++    } else {
++        /* We do not support non-vCPU thread tracking yet */
++        dc->non_vcpu_faults++;
++        return;
++    }
++
++    blocktime_fault_inject(dc, addr, cpu, current);
++}
++
++typedef struct {
++    PostcopyBlocktimeContext *ctx;
++    uint64_t current;
++    int affected_cpus;
++} BlockTimeVCPUIter;
++
++static void blocktime_cpu_list_iter_fn(gpointer data, gpointer user_data)
++{
++    BlockTimeVCPUIter *iter = user_data;
++    PostcopyBlocktimeContext *ctx = iter->ctx;
++    BlocktimeVCPUEntry *entry = data;
++    int cpu = entry->cpu;
++
++    /*
++     * Time should never go back.. so when the fault is resolved it must be
++     * later than when it was faulted.
++     */
++    assert(iter->current >= entry->fault_time);
++
++    /*
++     * If we resolved all pending faults on one vCPU due to this page
++     * resolution, take a note.
++     */
++    if (--ctx->vcpu_faults_current[cpu] == 0) {
++        ctx->vcpu_blocktime_total[cpu] += iter->current - entry->fault_time;
++        iter->affected_cpus += 1;
++    }
++
++    trace_postcopy_blocktime_end_one(cpu, ctx->vcpu_faults_current[cpu]);
  }
  
  /*
-- *  This function just provide calculated blocktime per cpu and trace it.
-- *  Total blocktime is calculated in mark_postcopy_blocktime_end.
-- *
-+ * This function just provide calculated blocktime per cpu and trace it.
-+ * Total blocktime is calculated in mark_postcopy_blocktime_end.  It's
-+ * protected by @page_request_mutex.
-  *
-  * Assume we have 3 CPU
-  *
-@@ -1068,17 +1068,14 @@ static void *postcopy_ram_fault_thread(void *opaque)
-                                                 qemu_ram_get_idstr(rb),
-                                                 rb_offset,
-                                                 msg.arg.pagefault.feat.ptid);
--            mark_postcopy_blocktime_begin(
--                    (uintptr_t)(msg.arg.pagefault.address),
--                                msg.arg.pagefault.feat.ptid, rb);
--
- retry:
-             /*
-              * Send the request to the source - we want to request one
-              * of our host page sizes (which is >= TPS)
-              */
-             ret = postcopy_request_page(mis, rb, rb_offset,
--                                        msg.arg.pagefault.address);
-+                                        msg.arg.pagefault.address,
-+                                        msg.arg.pagefault.feat.ptid);
-             if (ret) {
-                 /* May be network failure, try to wait for recovery */
-                 postcopy_pause_fault_thread(mis);
-@@ -1299,8 +1296,8 @@ static int qemu_ufd_copy_ioctl(MigrationIncomingState *mis, void *host_addr,
-                 qemu_cond_signal(&mis->page_request_cond);
-             }
-         }
--        qemu_mutex_unlock(&mis->page_request_mutex);
-         mark_postcopy_blocktime_end((uintptr_t)host_addr);
-+        qemu_mutex_unlock(&mis->page_request_mutex);
+@@ -971,43 +1138,43 @@ static void mark_postcopy_blocktime_end(uintptr_t addr)
+     PostcopyBlocktimeContext *dc = mis->blocktime_ctx;
+     MachineState *ms = MACHINE(qdev_get_machine());
+     unsigned int smp_cpus = ms->smp.cpus;
+-    int i, affected_cpu = 0;
+-    uint64_t read_vcpu_time, current;
++    BlockTimeVCPUIter iter = {
++        .current = get_current_ns(),
++        .affected_cpus = 0,
++        .ctx = dc,
++    };
++    gpointer key = (gpointer)addr;
++    GHashTable *table;
++    GList *list;
+ 
+     if (!dc) {
+         return;
      }
-     return ret;
- }
-@@ -1430,6 +1427,11 @@ int postcopy_wake_shared(struct PostCopyFD *pcfd,
- {
-     g_assert_not_reached();
- }
+ 
+-    current = get_current_ns();
+-    /* lookup cpu, to clear it,
+-     * that algorithm looks straightforward, but it's not
+-     * optimal, more optimal algorithm is keeping tree or hash
+-     * where key is address value is a list of  */
+-    for (i = 0; i < smp_cpus; i++) {
+-        uint64_t vcpu_blocktime = 0;
+-
+-        read_vcpu_time = dc->vcpu_blocktime_start[i];
+-        if (dc->vcpu_addr[i] != addr || read_vcpu_time == 0) {
+-            continue;
+-        }
+-        dc->vcpu_addr[i] = 0;
+-        vcpu_blocktime = current - read_vcpu_time;
+-        affected_cpu += 1;
+-        /* continue cycle, due to one page could affect several vCPUs */
+-        dc->vcpu_blocktime_total[i] += vcpu_blocktime;
++    table = dc->vcpu_addr_hash;
++    /* the address wasn't tracked at all? */
++    list = g_hash_table_lookup(table, key);
++    if (!list) {
++        return;
+     }
+ 
++    /*
++     * Loop over the set of vCPUs that got blocked on this addr, do the
++     * blocktime accounting.  After that, remove the whole list.
++     */
++    g_list_foreach(list, blocktime_cpu_list_iter_fn, &iter);
++    g_hash_table_remove(table, key);
 +
-+void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
-+                                   RAMBlock *rb)
-+{
-+}
- #endif
+     /*
+      * If all vCPUs used to be down, and copying this page would free some
+      * vCPUs, then the system-level blocktime ends here.
+      */
+-    if (dc->smp_cpus_down == smp_cpus && affected_cpu) {
+-        dc->total_blocktime += current - dc->last_begin;
++    if (dc->smp_cpus_down == smp_cpus && iter.affected_cpus) {
++        dc->total_blocktime += iter.current - dc->last_begin;
+     }
+-    dc->smp_cpus_down -= affected_cpu;
++    dc->smp_cpus_down -= iter.affected_cpus;
  
- /* ------------------------------------------------------------------------- */
-diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
-index a6df1b2811..3852141d7e 100644
---- a/migration/postcopy-ram.h
-+++ b/migration/postcopy-ram.h
-@@ -196,5 +196,7 @@ void postcopy_preempt_new_channel(MigrationIncomingState *mis, QEMUFile *file);
- void postcopy_preempt_setup(MigrationState *s);
- int postcopy_preempt_establish_channel(MigrationState *s);
- bool postcopy_is_paused(MigrationStatus status);
-+void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
-+                                   RAMBlock *rb);
+-    trace_mark_postcopy_blocktime_end(addr, dc->total_blocktime,
+-                                      affected_cpu);
++    trace_postcopy_blocktime_end(addr, iter.current, iter.affected_cpus);
+ }
  
- #endif
+ static void postcopy_pause_fault_thread(MigrationIncomingState *mis)
 diff --git a/migration/trace-events b/migration/trace-events
-index dcd8fe9a0c..917f521e88 100644
+index 9c1f3b7044..a36a78f01a 100644
 --- a/migration/trace-events
 +++ b/migration/trace-events
-@@ -285,7 +285,7 @@ postcopy_nhp_range(const char *ramblock, void *host_addr, size_t offset, size_t
+@@ -285,8 +285,6 @@ postcopy_nhp_range(const char *ramblock, void *host_addr, size_t offset, size_t
  postcopy_place_page(void *host_addr) "host=%p"
  postcopy_place_page_zero(void *host_addr) "host=%p"
  postcopy_ram_enable_notify(void) ""
--mark_postcopy_blocktime_begin(uint64_t addr, void *dd, uint32_t time, int cpu, int received) "addr: 0x%" PRIx64 ", dd: %p, time: %u, cpu: %d, already_received: %d"
-+mark_postcopy_blocktime_begin(uint64_t addr, void *dd, uint32_t time, int cpu) "addr: 0x%" PRIx64 ", dd: %p, time: %u, cpu: %d"
- mark_postcopy_blocktime_end(uint64_t addr, void *dd, uint32_t time, int affected_cpu) "addr: 0x%" PRIx64 ", dd: %p, time: %u, affected_cpu: %d"
+-mark_postcopy_blocktime_begin(uint64_t addr, uint64_t time, int cpu) "addr: 0x%" PRIx64 ", time: %" PRIu64 ", cpu: %d"
+-mark_postcopy_blocktime_end(uint64_t addr, uint64_t time, int affected_cpu) "addr: 0x%" PRIx64 ", time: %" PRIu64 ", affected_cpus: %d"
  postcopy_pause_fault_thread(void) ""
  postcopy_pause_fault_thread_continued(void) ""
+ postcopy_pause_fast_load(void) ""
+@@ -311,6 +309,9 @@ postcopy_preempt_new_channel(void) ""
+ postcopy_preempt_thread_entry(void) ""
+ postcopy_preempt_thread_exit(void) ""
+ postcopy_blocktime_tid_cpu_map(int cpu, uint32_t tid) "cpu: %d, tid: %u"
++postcopy_blocktime_begin(uint64_t addr, uint64_t time, int cpu, bool exists) "addr: 0x%" PRIx64 ", time: %" PRIu64 ", cpu: %d, exist: %d"
++postcopy_blocktime_end(uint64_t addr, uint64_t time, int affected_cpu) "addr: 0x%" PRIx64 ", time: %" PRIu64 ", affected_cpus: %d"
++postcopy_blocktime_end_one(int cpu, uint8_t left_faults) "cpu: %d, left_faults: %" PRIu8
+ 
+ # exec.c
+ migration_exec_outgoing(const char *cmd) "cmd=%s"
 -- 
 2.35.3
 
