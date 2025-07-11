@@ -4,44 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58D8EC83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 20:53:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9893C83F1B
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 21:12:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaKhl-0007hg-FR; Fri, 11 Jul 2025 16:50:49 -0400
+	id 1uaL1n-0000XA-UT; Fri, 11 Jul 2025 17:11:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uaKee-0003ca-ES; Fri, 11 Jul 2025 16:47:37 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1uaL1j-0000TH-VT; Fri, 11 Jul 2025 17:11:28 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uaKec-0003wu-Il; Fri, 11 Jul 2025 16:47:36 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 221BA135D0E;
- Fri, 11 Jul 2025 23:46:05 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0052223FF48;
- Fri, 11 Jul 2025 23:46:32 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.19 15/15] target/arm: Fix f16_dotadd vs nan selection
-Date: Fri, 11 Jul 2025 23:46:30 +0300
-Message-ID: <20250711204632.1804872-15-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <qemu-stable-7.2.19-20250711111933@cover.tls.msk.ru>
-References: <qemu-stable-7.2.19-20250711111933@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1uaL1i-0002pq-4e; Fri, 11 Jul 2025 17:11:27 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56BDZqQ3010735;
+ Fri, 11 Jul 2025 21:11:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=uE38BmxaOBFngUZnx
+ g99HVV1TWXtN8r3dofuEhxFp7E=; b=PlqxWl0uYgesMjjKHKaykOhE+RUe95aXX
+ fGBmqsAtjauyHxphq9lSKMOIROUoveBvbc1pBbzJlC5PmM5loisd62ZPmkF0QiFP
+ R7hrrpq5qIhw4riiZ9V7Uv8kWBy4chRJ2ytATGeE7fnlswkAOGxGcUuYLDUfVyMM
+ 5FutT4sET3HlXPuouXhuTTZr7HEtxZI3TifTfaFAfaXsJCJmBgJ95nzfskhZiIMt
+ jsoV5dvaoUuXQ/q5l1vVhfytqmGIBwAOQoSAr0XNmBQwl1dM95QGPtm7iSkSChGo
+ 4pjA/vgwWKlTk955E1+ZkDS4gz8RXC+WqTcW1rUVLHR8cIdbUVqFA==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47puqnuytr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 11 Jul 2025 21:11:24 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56BL1UMi013583;
+ Fri, 11 Jul 2025 21:11:23 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 47qgkmcbca-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 11 Jul 2025 21:11:23 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 56BLBLjt2687650
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 11 Jul 2025 21:11:21 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B0B2858059;
+ Fri, 11 Jul 2025 21:11:21 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2CDCE5805C;
+ Fri, 11 Jul 2025 21:11:20 +0000 (GMT)
+Received: from fedora-workstation.ibmuc.com (unknown [9.61.25.251])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 11 Jul 2025 21:11:20 +0000 (GMT)
+From: Zhuoying Cai <zycai@linux.ibm.com>
+To: thuth@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
+ david@redhat.com, pbonzini@redhat.com, jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, zycai@linux.ibm.com
+Subject: [PATCH v4 07/28] s390x/diag: Implement DIAG 320 subcode 1
+Date: Fri, 11 Jul 2025 17:10:43 -0400
+Message-ID: <20250711211105.439554-8-zycai@linux.ibm.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250711211105.439554-1-zycai@linux.ibm.com>
+References: <20250711211105.439554-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=FZ43xI+6 c=1 sm=1 tr=0 ts=68717dfc cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=Wb1JkmetP80A:10 a=VnNF1IyMAAAA:8 a=e_kuu1gU4TaIW1Qv6wwA:9
+X-Proofpoint-GUID: aDuiGHIyRYMbhCyiF2jyA1myhSIjx_BQ
+X-Proofpoint-ORIG-GUID: aDuiGHIyRYMbhCyiF2jyA1myhSIjx_BQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzExMDE1NiBTYWx0ZWRfX5flbCSgmYxxl
+ D7agBoJTnIIjTiQCZ4/OOf7Z6beUCqvBzRZOxgeYRXz0blBfGCjU0r95HmBveLKCxMV+qrH2A1T
+ ONIGe3YKKKeFeolLp8MXHTt2HZY8NtArOq4XyDIsBTaz0CSX492ym91yqkiGmxGLM/891xukepC
+ fGzzyPoiCSJbXcsWRb0/1ctNP+irRt/S6cx5B+fqHB17frfB98eBQylGWQFZtDN7vbDkF82WjLf
+ Ri3E6nsPDBAsDADM2PMD+FXD5zy8Az6wWY7yBqnuRmY1C91Z+4EiJFYzS7GKlIWiRKQAhFRPH/3
+ vJjfDAoYryFykQuLc/AR0HSj4pU+irpXug9PBNxo109fEmRSCFRwT60H8xmQNwV19b0Zo82rgnr
+ 98EZhTJJ5r2EcYfvkQllwd4AyocM9nvyp7FXnqRdJX+Uuz+HmmRde4rA7R26LJ0bfte/tum0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-11_06,2025-07-09_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 mlxscore=0
+ priorityscore=1501 malwarescore=0 mlxlogscore=969 clxscore=1015
+ spamscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
+ adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507110156
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -59,97 +120,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+DIAG 320 subcode 1 provides information needed to determine
+the amount of storage to store one or more certificates.
 
-Implement FPProcessNaNs4 within f16_dotadd, rather than
-simply letting NaNs propagate through the function.
+The subcode value is denoted by setting the left-most bit
+of an 8-byte field.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 3916841ac75 ("target/arm: Implement FMOPA, FMOPS (widening)")
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250704142112.1018902-9-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit cfc688c00ade84f6b32c7814b52c217f1d3b5eb1)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+The verification-certificate-storage-size block (VCSSB) contains
+the output data when the operation completes successfully.
 
-diff --git a/target/arm/sme_helper.c b/target/arm/sme_helper.c
-index fd5625c87e..e8b4ca38ff 100644
---- a/target/arm/sme_helper.c
-+++ b/target/arm/sme_helper.c
-@@ -1022,25 +1022,55 @@ static float32 f16_dotadd(float32 sum, uint32_t e1, uint32_t e2,
-      *  - we have pre-set-up copy of s_std which is set to round-to-odd,
-      *    for the multiply (see below)
-      */
--    float64 e1r = float16_to_float64(e1 & 0xffff, true, s_f16);
--    float64 e1c = float16_to_float64(e1 >> 16, true, s_f16);
--    float64 e2r = float16_to_float64(e2 & 0xffff, true, s_f16);
--    float64 e2c = float16_to_float64(e2 >> 16, true, s_f16);
--    float64 t64;
-+    float16 h1r = e1 & 0xffff;
-+    float16 h1c = e1 >> 16;
-+    float16 h2r = e2 & 0xffff;
-+    float16 h2c = e2 >> 16;
-     float32 t32;
+Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+---
+ include/hw/s390x/ipl/diag320.h | 23 ++++++++++++++++++++++
+ target/s390x/diag.c            | 36 +++++++++++++++++++++++++++++++++-
+ 2 files changed, 58 insertions(+), 1 deletion(-)
+
+diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag320.h
+index 713570545d..3916a2915e 100644
+--- a/include/hw/s390x/ipl/diag320.h
++++ b/include/hw/s390x/ipl/diag320.h
+@@ -11,7 +11,30 @@
+ #define S390X_DIAG320_H
  
--    /*
--     * The ARM pseudocode function FPDot performs both multiplies
--     * and the add with a single rounding operation.  Emulate this
--     * by performing the first multiply in round-to-odd, then doing
--     * the second multiply as fused multiply-add, and rounding to
--     * float32 all in one step.
--     */
--    t64 = float64_mul(e1r, e2r, s_odd);
--    t64 = float64r32_muladd(e1c, e2c, t64, 0, s_std);
-+    /* C.f. FPProcessNaNs4 */
-+    if (float16_is_any_nan(h1r) || float16_is_any_nan(h1c) ||
-+        float16_is_any_nan(h2r) || float16_is_any_nan(h2c)) {
-+        float16 t16;
+ #define DIAG_320_SUBC_QUERY_ISM     0
++#define DIAG_320_SUBC_QUERY_VCSI    1
+ 
+ #define DIAG_320_RC_OK              0x0001
+ 
++#define VCSSB_MAX_LEN   128
++#define VCE_HEADER_LEN  128
++#define VCB_HEADER_LEN  64
 +
-+        if (float16_is_signaling_nan(h1r, s_f16)) {
-+            t16 = h1r;
-+        } else if (float16_is_signaling_nan(h1c, s_f16)) {
-+            t16 = h1c;
-+        } else if (float16_is_signaling_nan(h2r, s_f16)) {
-+            t16 = h2r;
-+        } else if (float16_is_signaling_nan(h2c, s_f16)) {
-+            t16 = h2c;
-+        } else if (float16_is_any_nan(h1r)) {
-+            t16 = h1r;
-+        } else if (float16_is_any_nan(h1c)) {
-+            t16 = h1c;
-+        } else if (float16_is_any_nan(h2r)) {
-+            t16 = h2r;
-+        } else {
-+            t16 = h2c;
++#define DIAG_320_ISM_QUERY_VCSI     0x4000000000000000
++
++struct VCStorageSizeBlock {
++    uint32_t length;
++    uint8_t reserved0[3];
++    uint8_t version;
++    uint32_t reserved1[6];
++    uint16_t total_vc_ct;
++    uint16_t max_vc_ct;
++    uint32_t reserved3[7];
++    uint32_t max_vce_len;
++    uint32_t reserved4[3];
++    uint32_t max_single_vcb_len;
++    uint32_t total_vcb_len;
++    uint32_t reserved5[10];
++};
++typedef struct VCStorageSizeBlock VCStorageSizeBlock;
++
+ #endif
+diff --git a/target/s390x/diag.c b/target/s390x/diag.c
+index 7b9b47a171..1f7d0cb2f6 100644
+--- a/target/s390x/diag.c
++++ b/target/s390x/diag.c
+@@ -191,9 +191,13 @@ out:
+     }
+ }
+ 
++QEMU_BUILD_BUG_MSG(sizeof(VCStorageSizeBlock) != 128,
++                   "size of VCStorageSizeBlock is wrong");
++
+ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+ {
+     S390CPU *cpu = env_archcpu(env);
++    S390IPLCertificateStore *qcs = s390_ipl_get_certificate_store();
+     uint64_t subcode = env->regs[r3];
+     uint64_t addr = env->regs[r1];
+     int rc;
+@@ -215,13 +219,43 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+ 
+     switch (subcode) {
+     case DIAG_320_SUBC_QUERY_ISM:
+-        uint64_t ism =  0;
++        uint64_t ism = cpu_to_be64(DIAG_320_ISM_QUERY_VCSI);
+ 
+         if (s390_cpu_virt_mem_write(cpu, addr, r1, &ism, sizeof(ism))) {
+             s390_cpu_virt_mem_handle_exc(cpu, ra);
+             return;
+         }
+ 
++        rc = DIAG_320_RC_OK;
++        break;
++    case DIAG_320_SUBC_QUERY_VCSI:
++        VCStorageSizeBlock vcssb;
++
++        if (!diag_parm_addr_valid(addr, sizeof(VCStorageSizeBlock),
++                                  true)) {
++            s390_program_interrupt(env, PGM_ADDRESSING, ra);
++            return;
 +        }
-+        t32 = float16_to_float32(t16, true, s_f16);
-+    } else {
-+        float64 e1r = float16_to_float64(h1r, true, s_f16);
-+        float64 e1c = float16_to_float64(h1c, true, s_f16);
-+        float64 e2r = float16_to_float64(h2r, true, s_f16);
-+        float64 e2c = float16_to_float64(h2c, true, s_f16);
-+        float64 t64;
- 
--    /* This conversion is exact, because we've already rounded. */
--    t32 = float64_to_float32(t64, s_std);
-+        /*
-+         * The ARM pseudocode function FPDot performs both multiplies
-+         * and the add with a single rounding operation.  Emulate this
-+         * by performing the first multiply in round-to-odd, then doing
-+         * the second multiply as fused multiply-add, and rounding to
-+         * float32 all in one step.
-+         */
-+        t64 = float64_mul(e1r, e2r, s_odd);
-+        t64 = float64r32_muladd(e1c, e2c, t64, 0, s_std);
 +
-+        /* This conversion is exact, because we've already rounded. */
-+        t32 = float64_to_float32(t64, s_std);
-+    }
- 
-     /* The final accumulation step is not fused. */
-     return float32_add(sum, t32, s_std);
++        if (!qcs || !qcs->count) {
++            vcssb.length = cpu_to_be32(4);
++        } else {
++            vcssb.length = cpu_to_be32(VCSSB_MAX_LEN);
++            vcssb.version = 0;
++            vcssb.total_vc_ct = cpu_to_be16(qcs->count);
++            vcssb.max_vc_ct = cpu_to_be16(MAX_CERTIFICATES);
++            vcssb.max_vce_len = cpu_to_be32(VCE_HEADER_LEN + qcs->max_cert_size);
++            vcssb.max_single_vcb_len = cpu_to_be32(VCB_HEADER_LEN + VCE_HEADER_LEN +
++                                                   qcs->max_cert_size);
++            vcssb.total_vcb_len = cpu_to_be32(VCB_HEADER_LEN +
++                                              qcs->count * VCE_HEADER_LEN +
++                                              qcs->total_bytes);
++        }
++
++        if (s390_cpu_virt_mem_write(cpu, addr, r1, &vcssb, sizeof(VCStorageSizeBlock))) {
++            s390_cpu_virt_mem_handle_exc(cpu, ra);
++            return;
++        }
+         rc = DIAG_320_RC_OK;
+         break;
+     default:
 -- 
-2.47.2
+2.49.0
 
 
