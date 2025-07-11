@@ -4,85 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6634DC8303C
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:42:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D8E3C83F1D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:46:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaBC6-0001F3-BM; Fri, 11 Jul 2025 06:41:32 -0400
+	id 1uaBGC-0007IJ-W3; Fri, 11 Jul 2025 06:45:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaBBu-0001Dt-PT
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:41:20 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uaBG0-00077S-Ju
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:45:39 -0400
+Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaBBm-0007UT-Sf
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:41:14 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3a4fb9c2436so1301291f8f.1
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 03:41:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uaBFt-00089Z-Dg
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:45:30 -0400
+Received: by mail-yb1-xb2e.google.com with SMTP id
+ 3f1490d57ef6-e740a09eae0so1908001276.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 03:45:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752230467; x=1752835267; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=kmJNh9Jgp8+8BgYCKh3Q9I2sf1GOqYwi9BQV8NsKg2g=;
- b=tgEHg0axhub0gu7eAKUWrr8dfzOJlJRY9Vgr/uWPEIHf5czWG7lgBKmCno82ef3xhC
- rB56lGRQ7QcMOis9RfdM9mKZnRwe8ri8YgJvRHIKZY2IiEMkBeZbLdzZe1xBksUBUOED
- jSPYwwaqFu69aCW5ivy5PWGIlXE0hNaqt6xTHTNiz/1utvqg/uQnaOXNmGbMs5FhuDw5
- KMUxhpco6UuiauJ8dbilQ3W4bD/MROHHQ3ai9WWKFcR11nJ2oLyysz8CENff80cbm43S
- QBm0wPlTKi33I8JC9W5RSFY6B1op8DZGL4mDNnFB0k6FpYbA2Dg+iY5Yq9N8dnzULp1V
- l+nw==
+ d=linaro.org; s=google; t=1752230720; x=1752835520; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AfsVdgjRwbzcESc4fVfB5MLZD8EyltNALlb5RJELTbs=;
+ b=t2/Mlrv4zscnk3QvijBusHtWf8i3GwQ8VPvjZp5xpRcn1cJVnGHjpMLHjlIffyeDae
+ PX6AEh9GPbU3KD/9yU7XU46GQXv50S6Qojbr1EYivqiv/TGtHG+WZRqmijb30mfx+I6i
+ cX18nh/jXsSnFhdQ4iam8+pe0JaAIqJog1RcoV4BiTh8z4u2MevL0jPx+QdTshxgLBor
+ m0y7WNpAhnUY3NQh1DzXhOPDXtuJupew2LbN3ttCwcGoVoFHg+gzu2zvQAX2s/fYh1pf
+ NEe8TcIL2+SEnMe2LXFXXru0otQvQTqzfHfEaB6PhD1dXUGUP7eqHFKtXFw6mSP1iOaI
+ f+oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752230467; x=1752835267;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kmJNh9Jgp8+8BgYCKh3Q9I2sf1GOqYwi9BQV8NsKg2g=;
- b=ZHJ8G9PjNGLepIyT++QndM7iHPxRKyHkr1Rw83s/lmXwsmVSSVErsb6/IXIs8ZfUQB
- QgTGplCWYwhE2P5Y7f3fAXv4NrH4REwzmxUSMk8seW1hp6T8OyAgb1UZA48dMLYX9qM4
- hrMDPzmUa6Xa5BdNOKCgqZTkYGssawKK1rGjyThjG4GA+PEGRPv9S8yEN8YhsUb5NmUA
- hWXvmuTe0FoHEYNauEbF682fLvt0neimb8DQuEq6aVuwWvhQTwuGiKbeBqj1ysSnxgwi
- j9RRmZyjbdn46K3hC2zlK+Ga1WYMvBd0kCfE8sU0Bx9ix2GTBCvRV3w4kOalTutWtJz1
- 4s0g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX1S8z7/etM0SsUwnF2NccLqogDviylhYWMwP+jK2iJAdiwWK6enTkHxfRM3FjbDmu+7r0xU9Zhvfo/@nongnu.org
-X-Gm-Message-State: AOJu0YyUfitEHWBBc3pOxa4irwJCLR/4bWOfgnO0VSwJRhLEWjS1TBpk
- RAaphnUKQgw3LtRbJxZBtcKK7wBG58jIG2RJX2PEBG0DcJ8aNy7x2BCdvq+C8SYVZ3A=
-X-Gm-Gg: ASbGncvBiUxODxG99wFS56ii5KBSfkNUSk9A70xeyrzPcqJ1+rKX5M+K42cpG9i0/y0
- Bb/CTgmT0ydD0xiZtIbYoqqvGrXFpg7vn8Tg9AGZlaguXEVl7aI8evKZNtXe1QdfO8h0I/8W3TO
- jYgXB4S/jSt1ORlz5Z9K6bzutU1Nxf6zHOcpTNaYaktU/k4p3QZmKO2IixEL9P/3M6mdqIN7wDs
- +KDxlUBaoLHbzBEt2UGwqW57DmLYoTx9S/XcoDErDIW8y6jlxqILv6nfOF3jFIrwa3a0TIvLmX1
- lhg+cePZJWNoqgQfmSpeEMr1a1TebfJXZSOs6PC2B4KdjEFAlKj4yOdBZB+frUV7oX19IcHAbcx
- 5LnhRTnwhpbGtscclL/DvWm1BSbOZBgHZdJ0pOQy5Wl/f7bRCeGKnR6Op2zsqx9vOtvP1G45mJG
- cK/aF6
-X-Google-Smtp-Source: AGHT+IHAfq8PmhFyFg2zRj63ZvT1kfy5e//PKaCHzUh/F1Kp1OidzlgedmkYwpzapCHWjX/xMh7/Dg==
-X-Received: by 2002:a05:6000:24c6:b0:3a3:6991:dcbb with SMTP id
- ffacd0b85a97d-3b5f187a48cmr2400271f8f.12.1752230467358; 
- Fri, 11 Jul 2025 03:41:07 -0700 (PDT)
-Received: from [192.168.1.47] (lfbn-mon-1-587-20.w2-4.abo.wanadoo.fr.
- [2.4.165.20]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8bd1932sm4191113f8f.17.2025.07.11.03.41.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Jul 2025 03:41:06 -0700 (PDT)
-Message-ID: <dc737fa6-7878-40c0-9922-0b2865a95b60@linaro.org>
-Date: Fri, 11 Jul 2025 12:41:06 +0200
+ d=1e100.net; s=20230601; t=1752230720; x=1752835520;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=AfsVdgjRwbzcESc4fVfB5MLZD8EyltNALlb5RJELTbs=;
+ b=aKx8MUgCvWPTmdJH9Zuw2+VafmWmHyWWfviKDuZcRkbV7JbJC7bexihsbVi3BkPKsu
+ GPP//Py2FekFfhvsrcguPHwC4/N7gmDpvwwkFMo9dT6ypEzs3ZOsvXb4Vd8QBJ0k8cVm
+ EV5Ziha6jFjXTrv/xVyIqOiVpttrqaP2bNaHI//2TY7OsnQXhWClZ1s8Obw3ETpkTqp+
+ UhFHSTZt8iFJYkwIiafkd/7GNSzgPw0Wz+WqzGch93BNneZsT+5YSGojgzCwQiFjQyXX
+ JpotyQ/F/DtPdIn6XgF+zSp/91QUFCPinuJ+/2BTgSuDxgROW5mtcv+DMGuueCeYPOPI
+ HRvg==
+X-Gm-Message-State: AOJu0YwNhZXlZyqj9Bj2n2hQvLE9xZG9xfo429y4bUkmzd2fxdgle/v1
+ o+n30eNiV0mdSck3XRQNrEql8QcHD2mzSqp2BMi39K+BV2E9jYXKlRkOCgscxqFhWso0+9iqXBk
+ O1fPHRIy2WFMEHzcXzvkbqu0lkj0/v+aCwssSa/5hiw==
+X-Gm-Gg: ASbGncveFnJ3uVCh3Nks9g17Tey59vnXGQ1V0qldAbMu68/QFH4Ms7Hvm9PdYacsxPx
+ hHZu6/FfGDH7BxHMAuF8XAW2tlfJTzjRFkJpCUnwAgtykn0caljb4CjdUC7p1v7xLY0SkGTuH0E
+ wyaUDYUYZWtQ7AdGXpFkIl0t+xEajpHroSyxZGWPwCv1iO7g9dFNZk0HqmCFZ3q3AC1cyDgtMa9
+ Gk36fUh
+X-Google-Smtp-Source: AGHT+IELHePNp06r4857ulIbZuUv6jdKGcgkYtXG0qdpo7+Q36+gVuuXtFAXyTY1VqzzdyYy0oU6hguqC6p9aNBvmnU=
+X-Received: by 2002:a05:690c:9c08:b0:70e:404:85e5 with SMTP id
+ 00721157ae682-717d5d7e0b7mr53663547b3.11.1752230720192; Fri, 11 Jul 2025
+ 03:45:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 09/19] hw/i386/pc_piix.c: simplify RAM size logic in
- pc_init_isa()
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, pbonzini@redhat.com,
- mst@redhat.com, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
- imammedo@redhat.com, qemu-devel@nongnu.org
-References: <20250711095812.543857-1-mark.caveayland@nutanix.com>
- <20250711095812.543857-10-mark.caveayland@nutanix.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250711095812.543857-10-mark.caveayland@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+References: <20250617203435.41490-1-shentey@gmail.com>
+In-Reply-To: <20250617203435.41490-1-shentey@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 11 Jul 2025 11:45:08 +0100
+X-Gm-Features: Ac12FXxFgqkLCM3VXQKl9eruvHaEAa-CHJNcGaXOsfVetxc7ku2LLglQ0IE7hio
+Message-ID: <CAFEAcA_cfg5je7Nx-qsQoB=cY7KRYan1+wXhWztoLydnjpg15Q@mail.gmail.com>
+Subject: Re: [PATCH] meson: Add most 3rd-party includes as system includes
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,95 +97,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/7/25 11:57, Mark Cave-Ayland wrote:
-> All isapc machines must have 32-bit CPUs and so the RAM split logic can be hardcoded
-> accordingly.
-> 
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> ---
->   hw/i386/pc_piix.c | 58 ++++-------------------------------------------
->   1 file changed, 4 insertions(+), 54 deletions(-)
-> 
-> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> index 78f50a7893..fbd9500061 100644
-> --- a/hw/i386/pc_piix.c
-> +++ b/hw/i386/pc_piix.c
-> @@ -426,69 +426,19 @@ static void pc_init_isa(MachineState *machine)
->       GSIState *gsi_state;
->       MemoryRegion *ram_memory;
->       MemoryRegion *rom_memory = system_memory;
-> -    ram_addr_t lowmem;
->       uint64_t hole64_size = 0;
->   
->       /*
-> -     * Calculate ram split, for memory below and above 4G.  It's a bit
-> -     * complicated for backward compatibility reasons ...
-> -     *
-> -     *  - Traditional split is 3.5G (lowmem = 0xe0000000).  This is the
-> -     *    default value for max_ram_below_4g now.
-> -     *
-> -     *  - Then, to gigabyte align the memory, we move the split to 3G
-> -     *    (lowmem = 0xc0000000).  But only in case we have to split in
-> -     *    the first place, i.e. ram_size is larger than (traditional)
-> -     *    lowmem.  And for new machine types (gigabyte_align = true)
-> -     *    only, for live migration compatibility reasons.
-> -     *
-> -     *  - Next the max-ram-below-4g option was added, which allowed to
-> -     *    reduce lowmem to a smaller value, to allow a larger PCI I/O
-> -     *    window below 4G.  qemu doesn't enforce gigabyte alignment here,
-> -     *    but prints a warning.
-> -     *
-> -     *  - Finally max-ram-below-4g got updated to also allow raising lowmem,
-> -     *    so legacy non-PAE guests can get as much memory as possible in
-> -     *    the 32bit address space below 4G.
-> -     *
-> -     *  - Note that Xen has its own ram setup code in xen_ram_init(),
-> -     *    called via xen_hvm_init_pc().
-> -     *
-> -     * Examples:
-> -     *    qemu -M pc-1.7 -m 4G    (old default)    -> 3584M low,  512M high
-> -     *    qemu -M pc -m 4G        (new default)    -> 3072M low, 1024M high
-> -     *    qemu -M pc,max-ram-below-4g=2G -m 4G     -> 2048M low, 2048M high
-> -     *    qemu -M pc,max-ram-below-4g=4G -m 3968M  -> 3968M low (=4G-128M)
-> +     * There is no RAM split for the isapc machine
->        */
->       if (xen_enabled()) {
->           xen_hvm_init_pc(pcms, &ram_memory);
->       } else {
->           ram_memory = machine->ram;
-> -        if (!pcms->max_ram_below_4g) {
-> -            pcms->max_ram_below_4g = 0xe0000000; /* default: 3.5G */
-> -        }
-> -        lowmem = pcms->max_ram_below_4g;
-> -        if (machine->ram_size >= pcms->max_ram_below_4g) {
-> -            if (pcmc->gigabyte_align) {
-> -                if (lowmem > 0xc0000000) {
-> -                    lowmem = 0xc0000000;
-> -                }
-> -                if (lowmem & (1 * GiB - 1)) {
-> -                    warn_report("Large machine and max_ram_below_4g "
-> -                                "(%" PRIu64 ") not a multiple of 1G; "
-> -                                "possible bad performance.",
-> -                                pcms->max_ram_below_4g);
-> -                }
-> -            }
-> -        }
->   
-> -        if (machine->ram_size >= lowmem) {
-> -            x86ms->above_4g_mem_size = machine->ram_size - lowmem;
-> -            x86ms->below_4g_mem_size = lowmem;
-> -        } else {
-> -            x86ms->above_4g_mem_size = 0;
-> -            x86ms->below_4g_mem_size = machine->ram_size;
-> -        }
-> +        pcms->max_ram_below_4g = 0xe0000000; /* default: 3.5G */
+On Tue, 17 Jun 2025 at 21:35, Bernhard Beschow <shentey@gmail.com> wrote:
+>
+> When compiling QEMU against fuse3-3.17.1 with --enable-werror the build f=
+ails
+> with:
+>
+>   In file included from ../src/block/export/fuse.c:33:
+>   /usr/include/fuse3/fuse.h:959:5: error: redundant redeclaration of =E2=
+=80=98fuse_main_real_versioned=E2=80=99 [-Werror=3Dredundant-decls]
+>     959 | int fuse_main_real_versioned(int argc, char *argv[],
+>         |     ^~~~~~~~~~~~~~~~~~~~~~~~
+>   /usr/include/fuse3/fuse.h:885:5: note: previous declaration of =E2=80=
+=98fuse_main_real_versioned=E2=80=99 with type =E2=80=98int(int,  char **, =
+const struct fuse_operations *, size_t,  struct libfuse_version *, void *)=
+=E2=80=99 {aka =E2=80=98int(int,  char **, const struct fuse_operations *, =
+long unsigned int,  struct libfuse_version *, void *)=E2=80=99}
+>     885 | int fuse_main_real_versioned(int argc, char *argv[],
+>         |     ^~~~~~~~~~~~~~~~~~~~~~~~
+>   cc1: all warnings being treated as errors
+>
+> That is, a fuse header triggers a warning within itself. Since QEMU adds =
+the
+> fuse3 include path via `-I`, the compiler thinks that the header is part =
+of the
+> QEMU project, and thus raises a warning. The compiler can be told to igno=
+re
+> warnings within 3rd party headers by adding these paths via `-isystem`. F=
+ix the
+> above build failure by marking fuse as system dependency. While at it mar=
+k
+> every 3rd-party dependency as system dependency to prevent similar issues=
+ in the
+> future but skip glib since that results in glib include paths to be omitt=
+ed from
+> bindgen in case of a Rust build.
 
-Since nothing to split, I'd expect the whole 4*GiB space here.
+The problem with this is that -isystem does not only do "suppress
+warnings in these headers" -- it also alters the search order
+for includes, in a way that can sometimes cause problems:
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=3D70129
+So this isn't completely risk-free, though I think meson tries to
+avoid some of this by doing something a bit more complex than a
+pure 's/-I/-isystem/'.
 
-> +        x86ms->above_4g_mem_size = 0;
-> +        x86ms->below_4g_mem_size = machine->ram_size;
->       }
->   
->       /*
+We would also lose the warnings about e.g. use of deprecated
+functions in our dependencies.
 
+All that said, this might still be the best tradeoff.
+
+thanks
+-- PMM
 
