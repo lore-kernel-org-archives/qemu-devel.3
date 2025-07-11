@@ -4,87 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9A13C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 17:11:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA611C83F20
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 17:23:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaHGm-0005sx-Op; Fri, 11 Jul 2025 13:10:44 -0400
+	id 1uaHSW-0001RR-7u; Fri, 11 Jul 2025 13:22:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uaHGW-0005rO-EQ
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 13:10:30 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uaHST-0001PL-U4
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 13:22:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uaHGU-0000Jt-C7
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 13:10:28 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uaHSR-0002vy-NI
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 13:22:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752253825;
+ s=mimecast20190719; t=1752254567;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=2BQ23q8rO/4JwlQZO7v+InvClXfpIIGFsmYUMuDuGeI=;
- b=YCyTOb5BcQz/SrsiRSrs+ncXzZQF6mhhZ35gsvuVcghIkDCXtyTFqvG8CR4Vz9S+nVYhLT
- NHEu5lzHInybTeQ4cklXGB7NYgU+zHzaXdl04vAsFBdpYcnQ4Bs79YwOUxnQE0BijLEkxb
- wsZU2itzJf8Wb9XlJuDSDAhTMX9RMBM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-654-s9uCEaYtO4-sFMibmJ5VUg-1; Fri, 11 Jul 2025 13:10:24 -0400
-X-MC-Unique: s9uCEaYtO4-sFMibmJ5VUg-1
-X-Mimecast-MFC-AGG-ID: s9uCEaYtO4-sFMibmJ5VUg_1752253823
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-454acc74f22so14996085e9.2
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 10:10:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752253822; x=1752858622;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2BQ23q8rO/4JwlQZO7v+InvClXfpIIGFsmYUMuDuGeI=;
- b=V1RqDY/zN7Gg0dN0EkYOMvmNYLxZbYhDk3wcbBejGMIZXuu3HRcNGuggYTSor6Jm2G
- FPix3wJoEU4K4G8FcI5Y3Koavch2sZma7E5dY0/qtZDS29XnBlqzReF7kh7Yf+xtS4gY
- SJrYptdqQ3LqliY+B/Bg4p217IHTwF3NV9re0OYJjQitAtCiPv8psLny4sn30tjmdIJH
- zTEuR1D6CapZlU9ECEyBkOhH+aWtQK8gpac4DD4xuJlw+R8WlTGJKcZWW5CSj49T6ytu
- hZVjcL2nCexYsXHQ91+/B2hpQAKHDYzW1H/WE64kRBBzjeV1edK9mM/ThCku4zIM4Mpv
- Sk/g==
-X-Gm-Message-State: AOJu0Yy8KigjPc3WwjO6d4XPj61bSpUAtf0YMNe2g9YQVttEFkp9OB+i
- Un2YVgMqETkjp2bulw3mNpjTEnUkLivUFT0QzATmunFrn0z+TIPL3BfrpbV9T0tDyqKD5AP9kBz
- Pyigf37YODVSGuF7Fqu8Y3nDepk0HU/1zFYGNBqWSZtjeRLI19ALQXZnyrfDgSKFo
-X-Gm-Gg: ASbGnctB1r5iHYVIcl93MGkRDxkgCvmlA9sUvCQoEhN0ICLo21u5t5jYyVluuTA3yoj
- cmVESJRdOmUpcSDrKJk96QClmR2GCWftznQLlswFKZk/pqw2MlpD3tyF1fNSWXYnvNErVsOIZD9
- QMVUiKM8k68cB5xz+xs+OgoleQE6pkcfEQNKPAdVDH1Io2/FKnNmjOZmr/FoluctNp5ZkJxTogf
- 5zA/SdBQLwZZlk9ZU5g4xExpXfVsaRUhJ0QvHHFhKwpOaLulT1jsjyO+eexeaEET1V8Z5eKsgXe
- 6F2Hxzv5CvpLphaFwFOA1s3hKS/LoO1dFouwHc5wjTjn
-X-Received: by 2002:a05:600c:4e8c:b0:453:606b:daea with SMTP id
- 5b1f17b1804b1-45565ed6221mr29690095e9.20.1752253822060; 
- Fri, 11 Jul 2025 10:10:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEvZHqUmb4lfYVRykyJM2NP3n8/BzdQr832ZsSR905aWn6hDITOmsFaYjRTuxQdWrPnIVKbyg==
-X-Received: by 2002:a05:600c:4e8c:b0:453:606b:daea with SMTP id
- 5b1f17b1804b1-45565ed6221mr29689815e9.20.1752253821580; 
- Fri, 11 Jul 2025 10:10:21 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.202.169])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8dc9349sm4905153f8f.45.2025.07.11.10.09.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Jul 2025 10:10:20 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v3] rust: add qdev Device derive macro
-Date: Fri, 11 Jul 2025 19:08:01 +0200
-Message-ID: <20250711170800.503561-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250711-rust-qdev-properties-v3-1-e198624416fb@linaro.org>
-References: 
+ bh=hKq7s+o9FSe0v9gxOi1oL2fSecjASgBXq6NTvNcZRBQ=;
+ b=M2a46hvAeLbjv944Gj1HmLxZihxpIcPxTXwUbqH67Dq77jAahwVG9UDjsn1fC0WF7Q/IFu
+ nKQ6MoLTcqMMMJ1eE6CN3p0K69tFg/Hc1i+Gi+PwASAMF3ViVgfo9VKS1/qpyWQtFaya7U
+ YF1oSCq9qID/ebh7ulh7iY2SkehIBkA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-180-kPy_lqiyNpWXlKYAfF2bKg-1; Fri,
+ 11 Jul 2025 13:22:44 -0400
+X-MC-Unique: kPy_lqiyNpWXlKYAfF2bKg-1
+X-Mimecast-MFC-AGG-ID: kPy_lqiyNpWXlKYAfF2bKg_1752254561
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 996BA1956095; Fri, 11 Jul 2025 17:22:38 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D31C319560A3; Fri, 11 Jul 2025 17:22:36 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 45AA121E6A27; Fri, 11 Jul 2025 19:22:34 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,  Jiri Pirko <jiri@resnulli.us>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Ani Sinha <anisinha@redhat.com>,  Zhao Liu
+ <zhao1.liu@intel.com>,  Peter Xu <peterx@redhat.com>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  Fabiano Rosas <farosas@suse.de>,
+ qemu-block@nongnu.org,  "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Laurent Vivier <laurent@vivier.eu>,  Jason Wang <jasowang@redhat.com>,
+ Yanan Wang <wangyanan55@huawei.com>,  qemu-trivial@nongnu.org,  Stefan
+ Hajnoczi <stefanha@redhat.com>,  Mads Ynddal <mads@ynddal.dk>,  Lukas
+ Straub <lukasstraub2@web.de>,  Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>,  Kevin Wolf <kwolf@redhat.com>,  Vladimir
+ Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,  Michael Tokarev
+ <mjt@tls.msk.ru>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eric Blake
+ <eblake@redhat.com>,  Hanna
+ Reitz <hreitz@redhat.com>,  Zhenwei Pi <pizhenwei@bytedance.com>,  Stefan
+ Berger <stefanb@linux.vnet.ibm.com>,  Michael Roth <michael.roth@amd.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v6 1/4] docs/qapi-domain: add return-nodesc
+In-Reply-To: <20250711051045.51110-2-jsnow@redhat.com> (John Snow's message of
+ "Fri, 11 Jul 2025 01:10:42 -0400")
+References: <20250711051045.51110-1-jsnow@redhat.com>
+ <20250711051045.51110-2-jsnow@redhat.com>
+Date: Fri, 11 Jul 2025 19:22:34 +0200
+Message-ID: <87jz4eskv9.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -93,7 +88,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,25 +104,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Add derive macro for declaring qdev properties directly above the field
-> definitions. To do this, we split DeviceImpl::properties method on a
-> separate trait so we can implement only that part in the derive macro
-> expansion (we cannot partially implement the DeviceImpl trait).
+John Snow <jsnow@redhat.com> writes:
+
+> This form is used to annotate a return type without an accompanying
+> description, for when there is no "Returns:" information in the source
+> doc, but we have a return type we want to generate a cross-reference to.
 >
-> Adding a `property` attribute above the field declaration will generate
-> a `qemu_api::bindings::Property` array member in the device's property
-> list.
+> The syntax is:
 >
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> :return-nodesc: TypeName
+>
+> It's primarily necessary because Sphinx always expects both a type and a
+> description for the prior form and will format it accordingly. To have a
+> reasonable rendering when the body is missing, we need to use a
+> different info field list entirely.
+>
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>  docs/devel/qapi-domain.rst | 30 ++++++++++++++++++++++++++++++
+>  docs/sphinx/qapi_domain.py |  8 ++++++++
+>  2 files changed, 38 insertions(+)
+>
+> diff --git a/docs/devel/qapi-domain.rst b/docs/devel/qapi-domain.rst
+> index 11238723c2d..204abb72ff4 100644
+> --- a/docs/devel/qapi-domain.rst
+> +++ b/docs/devel/qapi-domain.rst
+> @@ -242,6 +242,36 @@ Example::
+>               }
+>  
+>  
+> +``:return-nodesc:``
+> +-------------------
+> +
+> +Document the return type of a QAPI command, without an accompanying description.
 
-Applied to branch rust-next of https://gitlab.com/bonzini/qemu, thanks!
+Recommend to break the long line.
 
-> This patch depends on patches that haven't been merged yet to master
+> +
+> +:availability: This field list is only available in the body of the
+> +               Command directive.
+> +:syntax: ``:return-nodesc: type``
+> +:type: `sphinx.util.docfields.Field
+> +       <https://pydoc.dev/sphinx/latest/sphinx.util.docfields.Field.html?private=1>`_
+> +
+> +
+> +Example::
+> +
+> +   .. qapi:command:: query-replay
+> +      :since: 5.2
+> +
+> +      Retrieve the record/replay information.  It includes current
+> +      instruction count which may be used for ``replay-break`` and
+> +      ``replay-seek`` commands.
+> +
+> +      :return-nodesc: ReplayInfo
+> +
+> +      .. qmp-example::
+> +
+> +          -> { "execute": "query-replay" }
+> +          <- { "return": {
+> +                 "mode": "play", "filename": "log.rr", "icount": 220414 }
+> +             }
+> +
 
-And especially on bumping the minimum supported Rust version to 1.83,
-like the pending vmstate work which is sitting in the branch.  I fixed
-the conflicts and rebased it on top of this patch.
+Same example as in :return:, except for the :return-nodesc: line.  Fine
+with me.
 
-Paolo
+>  ``:value:``
+>  -----------
+>  
+> diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
+> index ebc46a72c61..f561dc465f8 100644
+> --- a/docs/sphinx/qapi_domain.py
+> +++ b/docs/sphinx/qapi_domain.py
+> @@ -532,6 +532,14 @@ class QAPICommand(QAPIObject):
+>                  names=("return",),
+>                  can_collapse=True,
+>              ),
+> +            # :return-nodesc: TypeName
+> +            CompatField(
+> +                "returnvalue",
+> +                label=_("Return"),
+> +                names=("return-nodesc",),
+> +                bodyrolename="type",
+> +                has_arg=False,
+> +            ),
+>          ]
+>      )
+
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
