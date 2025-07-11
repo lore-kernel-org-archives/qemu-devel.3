@@ -4,40 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A49FC8303C
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:28:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D224C83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:29:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua95d-0001HE-2a; Fri, 11 Jul 2025 04:26:41 -0400
+	id 1ua973-0003p9-9M; Fri, 11 Jul 2025 04:28:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ua8xR-0004Mn-38; Fri, 11 Jul 2025 04:18:13 -0400
+ id 1ua90a-0001sT-L7; Fri, 11 Jul 2025 04:21:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ua8xP-0003zV-2Q; Fri, 11 Jul 2025 04:18:12 -0400
+ id 1ua90Y-0004iW-Hf; Fri, 11 Jul 2025 04:21:28 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6D9831356D0;
- Fri, 11 Jul 2025 11:17:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C34AB1356F0;
+ Fri, 11 Jul 2025 11:17:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 63B6823FA45;
- Fri, 11 Jul 2025 11:17:45 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B0C3723FA65;
+ Fri, 11 Jul 2025 11:17:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Weifeng Liu <weifeng.liu.z@gmail.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 05/39] gtk/ui: Introduce helper gd_update_scale
-Date: Fri, 11 Jul 2025 11:16:01 +0300
-Message-ID: <20250711081745.1785806-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 37/39] target/arm: Fix PSEL size operands to
+ tcg_gen_gvec_ands
+Date: Fri, 11 Jul 2025 11:16:33 +0300
+Message-ID: <20250711081745.1785806-37-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,77 +60,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Weifeng Liu <weifeng.liu.z@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The code snippet updating scale_x/scale_y is general and will be used in
-next patch. Make it a function.
+Gvec only operates on size 8 and multiples of 16.
+Predicates may be any multiple of 2.
+Round up the size using the appropriate function.
 
-Signed-off-by: Weifeng Liu <weifeng.liu.z@gmail.com>
-Message-ID: <20250511073337.876650-4-weifeng.liu.z@gmail.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit a19665448156f17b52b7f33e7960d57efcfca067)
+Cc: qemu-stable@nongnu.org
+Fixes: 598ab0b24c0 ("target/arm: Implement PSEL")
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250704142112.1018902-8-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 3801c5b75ffc60957265513338e8fd5f8b6ce8a1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/ui/gtk.h b/include/ui/gtk.h
-index aa3d637029..d3944046db 100644
---- a/include/ui/gtk.h
-+++ b/include/ui/gtk.h
-@@ -224,4 +224,6 @@ int gd_gl_area_make_current(DisplayGLCtx *dgc,
- /* gtk-clipboard.c */
- void gd_clipboard_init(GtkDisplayState *gd);
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 40d3a032d6..b6fa0b67b1 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -7282,6 +7282,7 @@ static bool trans_PSEL(DisasContext *s, arg_psel *a)
+     tcg_gen_neg_i64(tmp, tmp);
  
-+void gd_update_scale(VirtualConsole *vc, int ww, int wh, int fbw, int fbh);
-+
- #endif /* UI_GTK_H */
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 956d4ab9d1..ea3f403b02 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -801,6 +801,24 @@ void gd_update_monitor_refresh_rate(VirtualConsole *vc, GtkWidget *widget)
- #endif
- }
- 
-+void gd_update_scale(VirtualConsole *vc, int ww, int wh, int fbw, int fbh)
-+{
-+    if (!vc) {
-+        return;
-+    }
-+
-+    if (vc->s->full_screen) {
-+        vc->gfx.scale_x = (double)ww / fbw;
-+        vc->gfx.scale_y = (double)wh / fbh;
-+    } else if (vc->s->free_scale) {
-+        double sx, sy;
-+
-+        sx = (double)ww / fbw;
-+        sy = (double)wh / fbh;
-+
-+        vc->gfx.scale_x = vc->gfx.scale_y = MIN(sx, sy);
-+    }
-+}
- /**
-  * DOC: Coordinate handling.
-  *
-@@ -908,17 +926,7 @@ static gboolean gd_draw_event(GtkWidget *widget, cairo_t *cr, void *opaque)
-     ww_widget = gdk_window_get_width(gtk_widget_get_window(widget));
-     wh_widget = gdk_window_get_height(gtk_widget_get_window(widget));
- 
--    if (s->full_screen) {
--        vc->gfx.scale_x = (double)ww_widget / fbw;
--        vc->gfx.scale_y = (double)wh_widget / fbh;
--    } else if (s->free_scale) {
--        double sx, sy;
--
--        sx = (double)ww_widget / fbw;
--        sy = (double)wh_widget / fbh;
--
--        vc->gfx.scale_x = vc->gfx.scale_y = MIN(sx, sy);
--    }
-+    gd_update_scale(vc, ww_widget, wh_widget, fbw, fbh);
- 
-     ww_surface = fbw * vc->gfx.scale_x;
-     wh_surface = fbh * vc->gfx.scale_y;
+     /* Apply to either copy the source, or write zeros. */
++    pl = size_for_gvec(pl);
+     tcg_gen_gvec_ands(MO_64, pred_full_reg_offset(s, a->pd),
+                       pred_full_reg_offset(s, a->pn), tmp, pl, pl);
+     return true;
 -- 
 2.47.2
 
