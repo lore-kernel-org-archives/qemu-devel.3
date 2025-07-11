@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F073C8303C
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:44:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 482C0C83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:48:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua9My-00018g-Qh; Fri, 11 Jul 2025 04:44:37 -0400
+	id 1ua9Q9-0005Rc-M4; Fri, 11 Jul 2025 04:47:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ua9Fc-0002Y0-3n
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 04:37:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ua9IE-0000Xn-IE
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 04:39:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ua9Fa-0007Yl-My
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 04:36:59 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ua9IB-0008HT-Gq
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 04:39:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752223018;
+ s=mimecast20190719; t=1752223178;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=sNxuheiEO6jH5pbSOcCpOn8IJ42/2Y83uWmMJv77Orc=;
- b=SKB/THpPL7STEdVkxo5nzezr7/gWRvIrGdQm/bdYM/6k9TMeQWK3QVLbkvi2ubdnW3wB4R
- fp6KkE3+h6EZuw8LBifrxx8qKtPMmBqGR8Vif+3WeUURBXA5g/7jlEQb+LBWx142RFMeTL
- ivnElsFFOVamdkk4Vzehtg6HIr3ryxk=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=chgpN5y2cNW0V3creZWELA7vmvIvQb8vS5GDbnw3LZM=;
+ b=QaKbzYM8xbvh04ngUor6yyic1QuMx9tVi9O4/yvqaW05nHHanXDjTnyxaPO4aavKvwKkMB
+ CZ1thRVJF2KeGS25dIFC5D3CauPLqrWqOZhHQBOr2RQXwAtORwA4Ygl0x382I/PWOije80
+ FNEOkHilLHLDcN4HL3N5oPQffkPJ1jo=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-655-IRhHZltaPXmseQwStg-IAg-1; Fri, 11 Jul 2025 04:36:54 -0400
-X-MC-Unique: IRhHZltaPXmseQwStg-IAg-1
-X-Mimecast-MFC-AGG-ID: IRhHZltaPXmseQwStg-IAg_1752223013
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4f8192e2cso1150256f8f.3
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 01:36:54 -0700 (PDT)
+ us-mta-592-Pafx1hyGODWNfkqebeq0zw-1; Fri, 11 Jul 2025 04:39:36 -0400
+X-MC-Unique: Pafx1hyGODWNfkqebeq0zw-1
+X-Mimecast-MFC-AGG-ID: Pafx1hyGODWNfkqebeq0zw_1752223176
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-450d64026baso10026205e9.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 01:39:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752223013; x=1752827813;
+ d=1e100.net; s=20230601; t=1752223175; x=1752827975;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=sNxuheiEO6jH5pbSOcCpOn8IJ42/2Y83uWmMJv77Orc=;
- b=w+9yYjmEGs6AMjhFioGo/xteYmffsspQ1LmGeLYN1TUjjJJzk1YzJyme+zfwnM1ZzO
- u556/3BYp57v3+M4KtUk0QXrDp5z2IaAzQFSxgXRG8G431Dmz2Rb/hwrWjOKrAW0/rTp
- 9fOgFNrgn6BtKmj6WKbL/snVAYywNcuumg93yoEne0XG2qihYk6bLgeUQ8VD43gcOKFQ
- vwJr4rNuQT+xrzKKMSbtSPqUCMRfgdGbmbl1jKh7KTpA5jIJDdGQvWSBNIY/H1mFhRIz
- Zu68KmRyVDZtKeravJQHrvXcWlfk+dTLvGfNfcI982oPJD+cTIOCNt/iufT/8QpLrmz9
- lXMw==
+ bh=chgpN5y2cNW0V3creZWELA7vmvIvQb8vS5GDbnw3LZM=;
+ b=bSjHJH9cNohSQVuUVrfxaqKz9SK8V7oJg+z3u7meIqkgbXISYmA9J7USasj3CeDxy8
+ 5hx1cVvTt95833Lp3FhBR60uVr5ngNWfBZ73eTM3gepIAy2yipsJ77lIK6qxXQMXlSUz
+ CczCiqyZUSQp4F2OoXH5vEmo5mkpE3YLI2O5T88r/nC3fvtAeU+f46YpTz1ckVupa5o5
+ KmEI4o4apXU1XSzj8rNPD641GtxZUMpYQ95eoQNKC5O6nUQowao8UyZwqnDtNzxe7WLa
+ MYsP4eY1jUBJt1fXMuCc85c6mRusVlndyZEiO24gkgIapscz3AXqujjZ1yBXXJ3ntDtH
+ s71g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVGYTVo9EfxPogp82HKXWGq4gYUVwGbv5+p3cF5HJWdKdURHq3Au4aTpvgndAnum9J6do8po/HMIXmv@nongnu.org
-X-Gm-Message-State: AOJu0YzYA2/yShjlIksd+e/f1c73Yi9KVdqTo/OgDKancbFfWpn3ODRg
- 8I2EsJdVJVUSQwnn+yycITXGQmnxoyCuP9G0EaHuXjWFSHID+253vSAPVofSHha2wCVHL6t+ZVG
- J29CM5pg6EbVm5JtY6dJ0gF/4O73yXSx0om6PWQ7VkWHHb+0VcH6wyzqW
-X-Gm-Gg: ASbGncubiMijtsU1dYJfVP3Z0OMwDROmUFyxphMTy6INCi9Poj+W848aX10ZYwU9WFu
- t/aJEL9nTNoAO04rKx1h5jFZKAd+waBiM522NRThuvvVUM8nJH6Q9VBBelPlcmuWCYlQyF6YHmD
- WwdwmYxMwITZnkUjRzvI0BeyzpiggU7yn4jvU+GuP3nHsapWlpPX+/uHvuD8YgCM+7ThnSEkvtJ
- 8KpG19YvkC/O0SeY+pG8T/oA4joBmC3sF6zrloufH0YSbKW5N7up/LkxLZBO5kpkxD+NWBD7bbf
- O692yY2/a+TrRl20dpl1p5RXG0whLeOIOT3Dr65SmepBSZ/Uq12Zn7mj76tfq3ihCALFvkPFGT5
- oqEYD
-X-Received: by 2002:a05:6000:2481:b0:3b3:9c75:a4fb with SMTP id
- ffacd0b85a97d-3b5f2dfe003mr1508146f8f.33.1752223013128; 
- Fri, 11 Jul 2025 01:36:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF+FHf44schPRORa+6Gg2z1TOmhYGRCeifV2bRYv2Vb+UAxjRgtmPzj1R/lvviKAPJ3eMOFOA==
-X-Received: by 2002:a05:6000:2481:b0:3b3:9c75:a4fb with SMTP id
- ffacd0b85a97d-3b5f2dfe003mr1508111f8f.33.1752223012693; 
- Fri, 11 Jul 2025 01:36:52 -0700 (PDT)
+ AJvYcCWewOc6qCaU2wLNvy/LeWmdlOioy+Y1L2pqzO0L1Q5vXIGx6uwV5vih8WxA9BH/TYfoYgnCnpyFr9u3@nongnu.org
+X-Gm-Message-State: AOJu0Yx7WR3u5C8U920KxCrncmTsD3UTWDkgmAE/TWUShriiFzcXDZmO
+ yNa5E9o5LRpYDQqH40+9j2JH9FH4VHyJZGrToYbNvCK8rjpYcDBLfNqmm8MYoI1IwHg07hpmV/y
+ tvsJfFM16CfuPiOp6q4/tuucD7NESKJBYZvM+KNv3jz7qNtq9qcdr0uBp
+X-Gm-Gg: ASbGncvXKH/y+jU+FoCneZCgBxKyUHIsRnYaXhLkVbqXqLCoftVjeFqHZRK3lvJ4THe
+ 6B7A2iCmUqhKQAXuGOZ+XukqMUIXwUxuUDjfaS8fg5WVfa47mJvtVDIX6+ld9uSJ3V07pVBgBd8
+ 7IS1iWfJLWDDkQ7cAaTgz6Qp+NR4PPwoyddLNw9lbuh6W7D50zcFRhJO7Ngis4WKOojTEfJW8uY
+ 3eMFsUXcpnQGzzbdi/c6I+3NnWTnnnz1Wq/tKS81dqwsJd/H8BIUFqAs2QIgh9VdWDv6h5yCwmq
+ Az0xZNqf241AC7mXsmF3bTj2fon26DOEMptkbtbOepsUMewG54dxtqg9pU3sGNVDWAzZBYL6z4K
+ +sfND
+X-Received: by 2002:a05:600c:1d8b:b0:455:ed48:144f with SMTP id
+ 5b1f17b1804b1-455ed4815f8mr6871375e9.14.1752223175441; 
+ Fri, 11 Jul 2025 01:39:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGO+8fWXBmuFQLCkqEdRF6l/hZ0kP6jlqEA5H80IW6ZZ+Exgw0A32XL7ZbEDmyv/7QwGNx7kQ==
+X-Received: by 2002:a05:600c:1d8b:b0:455:ed48:144f with SMTP id
+ 5b1f17b1804b1-455ed4815f8mr6871055e9.14.1752223174975; 
+ Fri, 11 Jul 2025 01:39:34 -0700 (PDT)
 Received: from [192.168.0.6] (ltea-047-064-115-149.pools.arcor-ip.net.
  [47.64.115.149]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e0d77asm3936707f8f.58.2025.07.11.01.36.51
+ ffacd0b85a97d-3b5e8dc3a54sm3945833f8f.39.2025.07.11.01.39.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Jul 2025 01:36:52 -0700 (PDT)
-Message-ID: <696abbcf-7d89-428f-b7dd-9d15cc8bfa5e@redhat.com>
-Date: Fri, 11 Jul 2025 10:36:50 +0200
+ Fri, 11 Jul 2025 01:39:34 -0700 (PDT)
+Message-ID: <354f180e-fb09-46bd-a250-9a07fc530ddf@redhat.com>
+Date: Fri, 11 Jul 2025 10:39:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] target/s390x: Remove unused s390_cpu_[un]halt() user
- stubs
+Subject: Re: [PATCH 2/4] target/s390x: Expose s390_count_running_cpus() method
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: David Hildenbrand <david@redhat.com>, Ilya Leoshkevich
  <iii@linux.ibm.com>, Richard Henderson <richard.henderson@linaro.org>,
  qemu-s390x@nongnu.org
 References: <20250708095746.12697-1-philmd@linaro.org>
- <20250708095746.12697-2-philmd@linaro.org>
+ <20250708095746.12697-3-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -130,10 +129,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250708095746.12697-2-philmd@linaro.org>
+In-Reply-To: <20250708095746.12697-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -159,19 +158,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 08/07/2025 11.57, Philippe Mathieu-Daudé wrote:
-> Since commit da944885469 ("target/s390x: make helper.c
-> sysemu-only") target/s390x/helper.c is only built for
-> system mode, so s390_cpu_halt() and s390_cpu_unhalt()
-> are never called from user mode.
+> In order to simplify the next commit where s390_count_running_cpus()
+> is split out of s390_cpu_halt(), make its prototype public as a
+> preliminary step.
 > 
-> Fixes: da944885469 ("target/s390x: make helper.c sysemu-only")
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/s390x/s390x-internal.h | 10 ----------
->   1 file changed, 10 deletions(-)
-
-There is another call to s390_cpu_unhalt() in target/s390x/tcg/excp_helper.c 
-but it is protected by an #ifdef ... so this should be fine.
+>   target/s390x/s390x-internal.h | 1 +
+>   target/s390x/cpu-system.c     | 2 +-
+>   2 files changed, 2 insertions(+), 1 deletion(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
