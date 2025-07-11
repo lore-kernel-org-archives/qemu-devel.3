@@ -4,107 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 980BEC83F1A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 980FEC83F1B
 	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 14:13:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaEUs-0005Gt-QV; Fri, 11 Jul 2025 10:13:07 -0400
+	id 1uaEUr-0005FK-Ss; Fri, 11 Jul 2025 10:13:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uaESh-0000pP-7W
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:10:59 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uaET8-0001N1-WA
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:11:19 -0400
 Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uaESc-0006Vt-Ey
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:10:49 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uaET0-0006e3-7B
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:11:12 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 3061121190;
- Fri, 11 Jul 2025 14:10:41 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id C3EE3211A0;
+ Fri, 11 Jul 2025 14:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1752243041; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1752243050; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l0u6vcmpKguZljP7Odh29cS/hGK5fEOpnoNZOACCmqg=;
- b=BvZwGXZGIjezfKNn4epcUqMB1GUwcwl6IG5hhKFw60MR63IWDulSDvBuRgTXY85RVVVvD8
- w2LFXem8Ak23oB/bbmpmPMhSm8M2vy9+1iRL2AQthBCbuXzTxQ341cj3aL/FT6+MeB9/Og
- 7kcJBnHBCpxMY8ThixDus9vG6HuDLL0=
+ bh=VRaYifWhkJOcWBKaUF8iE1A2dKiwWY17wzieTwSmTFA=;
+ b=AWXYLsX0ahCWYGNpNRMGrvYsiXeH7Kn2NLogsLc3Tmdlk6RoubCBkGTIV1sYcd/1fVNTpy
+ U2lMHJQvEHd0JiAi7CrERxYprxWlu7C5rJrsjjVno6VdSFH1HKFhsXZ5EQIaNf1D8Aa4PQ
+ QbxotNBSFsu3np6mZQhRQVQTtaMZ5HE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1752243041;
+ s=susede2_ed25519; t=1752243050;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l0u6vcmpKguZljP7Odh29cS/hGK5fEOpnoNZOACCmqg=;
- b=CJkf6kYxq9nvfIjDoZxOQmpXpZj/1n660pqRQpdgdtekuPe8wH+7rAizDBr5V5n4XNV+fu
- oYvXJB38cf9seEBw==
+ bh=VRaYifWhkJOcWBKaUF8iE1A2dKiwWY17wzieTwSmTFA=;
+ b=ZblZV7MSJ6ofZt9MEsBx+Yoh41iK/0G/D21gWUjuJthed2XucuQSj/GDhWrP3ksgbIt48i
+ ZyQKHbkC7xB34YCA==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=BvZwGXZG;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=CJkf6kYx
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=AWXYLsX0;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ZblZV7MS
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1752243041; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1752243050; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l0u6vcmpKguZljP7Odh29cS/hGK5fEOpnoNZOACCmqg=;
- b=BvZwGXZGIjezfKNn4epcUqMB1GUwcwl6IG5hhKFw60MR63IWDulSDvBuRgTXY85RVVVvD8
- w2LFXem8Ak23oB/bbmpmPMhSm8M2vy9+1iRL2AQthBCbuXzTxQ341cj3aL/FT6+MeB9/Og
- 7kcJBnHBCpxMY8ThixDus9vG6HuDLL0=
+ bh=VRaYifWhkJOcWBKaUF8iE1A2dKiwWY17wzieTwSmTFA=;
+ b=AWXYLsX0ahCWYGNpNRMGrvYsiXeH7Kn2NLogsLc3Tmdlk6RoubCBkGTIV1sYcd/1fVNTpy
+ U2lMHJQvEHd0JiAi7CrERxYprxWlu7C5rJrsjjVno6VdSFH1HKFhsXZ5EQIaNf1D8Aa4PQ
+ QbxotNBSFsu3np6mZQhRQVQTtaMZ5HE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1752243041;
+ s=susede2_ed25519; t=1752243050;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l0u6vcmpKguZljP7Odh29cS/hGK5fEOpnoNZOACCmqg=;
- b=CJkf6kYxq9nvfIjDoZxOQmpXpZj/1n660pqRQpdgdtekuPe8wH+7rAizDBr5V5n4XNV+fu
- oYvXJB38cf9seEBw==
+ bh=VRaYifWhkJOcWBKaUF8iE1A2dKiwWY17wzieTwSmTFA=;
+ b=ZblZV7MSJ6ofZt9MEsBx+Yoh41iK/0G/D21gWUjuJthed2XucuQSj/GDhWrP3ksgbIt48i
+ ZyQKHbkC7xB34YCA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BF99D1388B;
- Fri, 11 Jul 2025 14:10:38 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 696B41388B;
+ Fri, 11 Jul 2025 14:10:49 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id YJ+RHl4bcWg7TgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 11 Jul 2025 14:10:38 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id YDbiCWkbcWg7TgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 11 Jul 2025 14:10:49 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, "Dr . David Alan Gilbert" <dave@treblig.org>,
- Alexey Perevalov <a.perevalov@samsung.com>,
- Markus Armbruster <armbru@redhat.com>,
- Mario Casquero <mcasquer@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PULL 02/26] migration/hmp: Fix postcopy-blocktime per-vCPU results
-Date: Fri, 11 Jul 2025 11:10:07 -0300
-Message-Id: <20250711141031.423-3-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>,
+	Juraj Marcin <jmarcin@redhat.com>
+Subject: [PULL 07/26] migration: qemu_savevm_complete*() helpers
+Date: Fri, 11 Jul 2025 11:10:12 -0300
+Message-Id: <20250711141031.423-8-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250711141031.423-1-farosas@suse.de>
 References: <20250711141031.423-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-5.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-5.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  DWL_DNSWL_MED(-2.00)[suse.de:dkim];
  NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
  R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
  MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:dkim,suse.de:email,treblig.org:email,samsung.com:email];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:dkim,suse.de:email];
  MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
  TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
  RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_SEVEN(0.00)[7];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
  RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
  DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 3061121190
+X-Rspamd-Queue-Id: C3EE3211A0
 X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
 X-Rspamd-Action: no action
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
@@ -132,73 +130,142 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Xu <peterx@redhat.com>
 
-Unfortunately, it was never correctly shown..
+Since we use the same save_complete() hook for both precopy and postcopy,
+add a set of helpers to invoke the hook() to dedup the code.
 
-This is only found when I started to look into making the blocktime feature
-more useful (so as to avoid using bpftrace, even though I'm not sure which
-one will be harder to use..).
-
-So the old dump would look like this:
-
-  Postcopy vCPU Blocktime: 0-1,4,10,21,33,46,48,59
-
-Even though there're actually 40 vcpus, and the string will merge same
-elements and also sort them.
-
-To fix it, simply loop over the uint32List manually.  Now it looks like:
-
-  Postcopy vCPU Blocktime (ms):
-   [15, 0, 0, 43, 29, 34, 36, 29, 37, 41,
-    33, 37, 45, 52, 50, 38, 40, 37, 40, 49,
-    40, 35, 35, 35, 81, 19, 18, 19, 18, 30,
-    22, 3, 0, 0, 0, 0, 0, 0, 0, 0]
-
-Cc: Dr. David Alan Gilbert <dave@treblig.org>
-Cc: Alexey Perevalov <a.perevalov@samsung.com>
-Cc: Markus Armbruster <armbru@redhat.com>
-Tested-by: Mario Casquero <mcasquer@redhat.com>
 Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20250613140801.474264-3-peterx@redhat.com
+Link: https://lore.kernel.org/r/20250613140801.474264-8-peterx@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/migration-hmp-cmds.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ migration/savevm.c | 78 ++++++++++++++++++++++++++--------------------
+ 1 file changed, 44 insertions(+), 34 deletions(-)
 
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 367ff6037f..867e017b32 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -208,15 +208,19 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
-     }
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 454e914b56..c4fd5f5a5b 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1484,6 +1484,38 @@ bool should_send_vmdesc(void)
+     return !machine->suppress_vmdesc;
+ }
  
-     if (info->has_postcopy_vcpu_blocktime) {
--        Visitor *v;
--        char *str;
--        v = string_output_visitor_new(false, &str);
--        visit_type_uint32List(v, NULL, &info->postcopy_vcpu_blocktime,
--                              &error_abort);
--        visit_complete(v, &str);
--        monitor_printf(mon, "Postcopy vCPU Blocktime: %s\n", str);
--        g_free(str);
--        visit_free(v);
-+        uint32List *item = info->postcopy_vcpu_blocktime;
-+        const char *sep = "";
-+        int count = 0;
++static bool qemu_savevm_complete_exists(SaveStateEntry *se)
++{
++    return se->ops && se->ops->save_complete;
++}
 +
-+        monitor_printf(mon, "Postcopy vCPU Blocktime (ms):\n [");
++/*
++ * Invoke the ->save_complete() if necessary.
++ * Returns: 0 if skip the current SE or succeeded, <0 if error happened.
++ */
++static int qemu_savevm_complete(SaveStateEntry *se, QEMUFile *f)
++{
++    int ret;
 +
-+        while (item) {
-+            monitor_printf(mon, "%s%"PRIu32, sep, item->value);
-+            item = item->next;
-+            /* Each line 10 vcpu results, newline if there's more */
-+            sep = ((++count % 10 == 0) && item) ? ",\n  " : ", ";
++    if (se->ops->is_active) {
++        if (!se->ops->is_active(se->opaque)) {
++            return 0;
 +        }
-+        monitor_printf(mon, "]\n");
++    }
++
++    trace_savevm_section_start(se->idstr, se->section_id);
++    save_section_header(f, se, QEMU_VM_SECTION_END);
++    ret = se->ops->save_complete(f, se->opaque);
++    trace_savevm_section_end(se->idstr, se->section_id, ret);
++    save_section_footer(f, se);
++
++    if (ret < 0) {
++        qemu_file_set_error(f, ret);
++    }
++
++    return ret;
++}
++
+ /*
+  * Complete saving any postcopy-able devices.
+  *
+@@ -1493,27 +1525,13 @@ bool should_send_vmdesc(void)
+ void qemu_savevm_state_complete_postcopy(QEMUFile *f)
+ {
+     SaveStateEntry *se;
+-    int ret;
+ 
+     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+-        if (!se->ops || !se->ops->save_complete) {
++        if (!qemu_savevm_complete_exists(se)) {
+             continue;
+         }
+-        if (se->ops->is_active) {
+-            if (!se->ops->is_active(se->opaque)) {
+-                continue;
+-            }
+-        }
+-        trace_savevm_section_start(se->idstr, se->section_id);
+-        /* Section type */
+-        qemu_put_byte(f, QEMU_VM_SECTION_END);
+-        qemu_put_be32(f, se->section_id);
+ 
+-        ret = se->ops->save_complete(f, se->opaque);
+-        trace_savevm_section_end(se->idstr, se->section_id, ret);
+-        save_section_footer(f, se);
+-        if (ret < 0) {
+-            qemu_file_set_error(f, ret);
++        if (qemu_savevm_complete(se, f) < 0) {
+             return;
+         }
+     }
+@@ -1559,7 +1577,6 @@ int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy)
+ {
+     int64_t start_ts_each, end_ts_each;
+     SaveStateEntry *se;
+-    int ret;
+     bool multifd_device_state = multifd_device_state_supported();
+ 
+     if (multifd_device_state) {
+@@ -1580,32 +1597,25 @@ int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy)
      }
  
- out:
+     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+-        if (!se->ops ||
+-            (in_postcopy && se->ops->has_postcopy &&
+-             se->ops->has_postcopy(se->opaque)) ||
+-            !se->ops->save_complete) {
++        if (!qemu_savevm_complete_exists(se)) {
+             continue;
+         }
+ 
+-        if (se->ops->is_active) {
+-            if (!se->ops->is_active(se->opaque)) {
+-                continue;
+-            }
++        if (in_postcopy && se->ops->has_postcopy &&
++            se->ops->has_postcopy(se->opaque)) {
++            /*
++             * If postcopy will start soon, and if the SE supports
++             * postcopy, then we can skip the SE for the postcopy phase.
++             */
++            continue;
+         }
+ 
+         start_ts_each = qemu_clock_get_us(QEMU_CLOCK_REALTIME);
+-        trace_savevm_section_start(se->idstr, se->section_id);
+-
+-        save_section_header(f, se, QEMU_VM_SECTION_END);
+-
+-        ret = se->ops->save_complete(f, se->opaque);
+-        trace_savevm_section_end(se->idstr, se->section_id, ret);
+-        save_section_footer(f, se);
+-        if (ret < 0) {
+-            qemu_file_set_error(f, ret);
++        if (qemu_savevm_complete(se, f) < 0) {
+             goto ret_fail_abort_threads;
+         }
+         end_ts_each = qemu_clock_get_us(QEMU_CLOCK_REALTIME);
++
+         trace_vmstate_downtime_save("iterable", se->idstr, se->instance_id,
+                                     end_ts_each - start_ts_each);
+     }
 -- 
 2.35.3
 
