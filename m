@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E3B9C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 13:38:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5658C83F1B
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 13:38:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaDus-0006K7-II; Fri, 11 Jul 2025 09:35:55 -0400
+	id 1uaDvB-0007bW-Cl; Fri, 11 Jul 2025 09:36:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uaDu7-0004XX-8O
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:35:11 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1uaDu6-0004XF-AH
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:35:07 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uaDu4-0003Bg-Gi
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:35:06 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4537fdec33bso12537725e9.1
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 06:35:02 -0700 (PDT)
+ id 1uaDu4-0003KE-G7
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:35:05 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-454aaade1fbso21794295e9.3
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 06:35:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752240902; x=1752845702; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752240903; x=1752845703; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=WR2J2zJH+rNDC6JrmtA+Lka4FOQFLeYlEicPF+0JcK4=;
- b=HCwaW2OU7MtVB1CerE3usBaZE6dmScQpZ9/OcNHEcWwp2JdwDFcNoLQbeDSBMBg+wx
- aKfeAUJfXRqL+IXrKOIXkD0CGHo3EIJ4EbUWJu+JkeH64JX1Di9OHHExFxrJuAVOm2n6
- N0bAyRjwwaJXZITejaW+qUiL+qfZDI4FKk33GCxsrrN+uYa3XZG2i7Ff3My4tIY9fK8V
- a9wBWDGoc5JmnQLa+yrCfPKp35ja7lUzKA9TjcoUW301cLCzlgvWVuLIBZShmcVuNjNp
- k/ukxU1B9WQ89DkODGo5WH7ZKmmjo4jlI3dYTkVHJBurrHYSk+t3OJvOCNFKDEs6bn2/
- PS6A==
+ :reply-to; bh=hksHQb99/pB3ZFE24pZ19Vblf7IkY7OyO3TtExD2Tgs=;
+ b=Ttqn/ykLeyKHn6WsmiKbiD1koNMqqs6rX13DcbGwmFujhR2kbUrXTU5Yfyq78p4tAP
+ 8zi5eWilXDTmAuYa12oXNcg4b54iwpMlcG4u5PNcsAsbtZxVlORgP/J5CNMm6Wm/SNJW
+ YewtIsnLHgtpopNhzfYaLW066Pu9u9N/wxeENZ4Hksc2Jz7RPAMzH441KyzrVGJX2x+r
+ ucOe6RYjZKmPPQ1tU0Gnb8huKd+QHaEa8ZYHgWU6m+j2G4gdVhstq7WsWkmHd8gVokAE
+ czEQHFzCeoVqnk//EnvlRpiklNSWHH9/C/RcYAP2yRpnLburUvSeU37xIu1Nv6LQYtN4
+ aAQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752240902; x=1752845702;
+ d=1e100.net; s=20230601; t=1752240903; x=1752845703;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WR2J2zJH+rNDC6JrmtA+Lka4FOQFLeYlEicPF+0JcK4=;
- b=ixGs78aqy+ehGPbIXU4R/RGuI4ODroKwJfUomq/xHkIypvABkF8Ccg2blcCjnRtFbI
- bvg2UJmHER0SDB6UkPdmLOK1fZl7l8Io9qVeYeaLZTlkDyZMfCi6bH1hz40SHtNpP0xW
- BHjxlQCmA8HuIDtPLNHbn5CCLpxC4pm39YPgWP0r530VPUWabAqwE62nidx76o6HfU/M
- CBZcu9s5z6ecaSvX7I3acYFXFF2oPy625vNrsEHqS+r1nkLf7O+2WzdAYFF0GilJXjxl
- vMdopNEWMLdrPm4EDrW3o58mDK1OzBvUxF3jLWp53PCN00Z8RU9Eu6oChSf5Yvo1OZOz
- ymsg==
-X-Gm-Message-State: AOJu0YwEOslK9P4XIMVbirMX7dfGsdfQoYdRl3dg2BV0S7foJpJXeP08
- /GTtOQSN2XDfTMRQWAlcZwavDTFvHUTgf5erJxiyYtmkWNldOPfYEPJwd9OLm5jgBdddIa3KspA
- cgbJj
-X-Gm-Gg: ASbGncsEAHgRnKTqONTlMwOnQiQwAr1ARg1bCqER2QVg16Js4FNgZhaqTo4QVgpWssc
- gkg5DQDShryGoj9y7+WaRymMhLi1CeUGsWzUuRGBGyiZL1K9k6wOqLV1s1v4bxhkWfDD/2uCMbY
- LKz0QEOfBnj97WtxzG1JkHGkYIS92/k4LX8rsZ8wjWELBCnP+chAD0O1QSkINMn3eaH6XzTFUOk
- +C0jZj1inExqyVQSv3/hZSObs15s8cAgVooVsx1ECe81sI8+xIuypn+1xR8Ia0KLV0AFCjaF6BB
- 4V4DmNrCFPLNnuOlIauWN8Ot6dV21HJBE//Dn0haNrTpZQzpIgKV93mKsII/KWB5L8dKRtbtlcS
- RWlgm+4EM/FAVfTIEu5D0IsKJgPBQ
-X-Google-Smtp-Source: AGHT+IGnwClQrp9HmS4pVkheSS6sfKP5A9/hta470XaTJ/KxWYdes0Zzgwbkkw4buiSvfdxqJjjBzA==
-X-Received: by 2002:a05:600c:1c21:b0:43c:fe15:41cb with SMTP id
- 5b1f17b1804b1-454ec1342c8mr29682005e9.15.1752240901817; 
- Fri, 11 Jul 2025 06:35:01 -0700 (PDT)
+ bh=hksHQb99/pB3ZFE24pZ19Vblf7IkY7OyO3TtExD2Tgs=;
+ b=Px9FxdGEJLGhTu82TU4OBFm6f5DeliGxWBz9Jqmqy110aJY5C/t/5krA8tzNQbOOSz
+ HDhEowg7OWDNLW48BXKjLnpcBB7WVGCMJcWcYm5rBDLG1xALYXrzPj3qLgCSzHGtgHKM
+ Gn7OECPjCcbI5w+tbfZvmVKQKZlMxLj5s+Kti8HZBHP0xkWOrDV5aM1bw2vi7wDqrv3k
+ u+lqMGSHAhyZupA+z1+bDRLuGMzkkRqu08lHCZvfofsO/erTh5qjlO0pK33ua2p9EXtp
+ cRrAWbyD6OHge8wnh+ks8TLospjgqjAggiqhVJICrFsuj5Hs8+RZegetrigScMBl4hWt
+ RP2w==
+X-Gm-Message-State: AOJu0YzotgVPhaz6hqtnxYpfR03eq8DvZB1YEK8roTD/AxgqOa9L8hwc
+ HYXsQZW+Oiz6lpBmP2U/3H/+zLeCmv09TWWXfIP5DOoGHmPjf7nUZ5X624n6IHodq1raSX1iaLY
+ zO6Q6
+X-Gm-Gg: ASbGncuc3Vl1CsXiuWSvlattAJ2XMMWxyZWEI0fRAnhbU84n/rjqdp0SR//WexN3bpl
+ NGXVv59P6XH3Q//d0D1cgxd1COaGSZSllO27m6nEpNSjGNjlf9zhvbeWZodjNARu8INHRV1mlV/
+ VxjmeGvP1m3IkqttKWhyeM3keJ1/2ZwjzW9+QKq+2RE9e9sRxoAr7k2XpDjoEpM2qQnXWd4KLUz
+ ZbdfNHfTyTWUONzzjv4B3oJRKXg5FcXEWwG/xg2GRHlpgYh5O60FCz+OvikwmVCiqN+oQEBDaIo
+ bKE/3f9ptb2MNCLjph17nKgPWX6lCgbnhEfPeCSwVjORtk5+PGzjjd5cpDOHZapgDDV820ZWd84
+ mQZAcXFbtp0oTY1zvSGfZyjNjRv+y
+X-Google-Smtp-Source: AGHT+IHmlOtG5Kw1ES7lLzQnuaXpmSsm5MQ7i15J/xVHEAJI4Eb1P13Yc+6YBr72oDW/nv5sqW5Z9w==
+X-Received: by 2002:a05:600c:3d8b:b0:450:cf00:20f5 with SMTP id
+ 5b1f17b1804b1-454ec164bc7mr33558155e9.9.1752240902814; 
+ Fri, 11 Jul 2025 06:35:02 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
  5b1f17b1804b1-454d50df0cdsm89734145e9.25.2025.07.11.06.35.01
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Jul 2025 06:35:01 -0700 (PDT)
+ Fri, 11 Jul 2025 06:35:02 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 29/36] target/arm: Enable feature ARM_FEATURE_EL2 if EL2 is
- supported
-Date: Fri, 11 Jul 2025 14:34:22 +0100
-Message-ID: <20250711133429.1423030-30-peter.maydell@linaro.org>
+Subject: [PULL 30/36] hw/arm/arm_gicv3_kvm: Add a migration blocker with kvm
+ nested virt
+Date: Fri, 11 Jul 2025 14:34:23 +0100
+Message-ID: <20250711133429.1423030-31-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250711133429.1423030-1-peter.maydell@linaro.org>
 References: <20250711133429.1423030-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,70 +100,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Haibo Xu <haibo.xu@linaro.org>
+From: Eric Auger <eric.auger@redhat.com>
 
-KVM_CAP_ARM_EL2 must be supported by the cpu to enable ARM_FEATURE_EL2.
-In case the host does support NV, expose the feature.
+We may be miss some NV related GIC register save/restore. Until
+we complete the study, let's add a migration blocker when the
+maintenance IRQ is set.
 
-Signed-off-by: Haibo Xu <haibo.xu@linaro.org>
-Signed-off-by: Miguel Luis <miguel.luis@oracle.com>
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250707164129.1167837-4-eric.auger@redhat.com
+Message-id: 20250707164129.1167837-5-eric.auger@redhat.com
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/kvm.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ hw/intc/arm_gicv3_kvm.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 9fdf354f3bc..66723448554 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -251,6 +251,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-      */
-     int fdarray[3];
-     bool sve_supported;
-+    bool el2_supported;
-     bool pmu_supported = false;
-     uint64_t features = 0;
-     int err;
-@@ -270,6 +271,14 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-         init.features[0] |= 1 << KVM_ARM_VCPU_SVE;
+diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
+index b30aac7aee1..8ed88e74299 100644
+--- a/hw/intc/arm_gicv3_kvm.c
++++ b/hw/intc/arm_gicv3_kvm.c
+@@ -827,8 +827,16 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
      }
  
-+    /*
-+     * Ask for EL2 if supported.
-+     */
-+    el2_supported = kvm_arm_el2_supported();
-+    if (el2_supported) {
-+        init.features[0] |= 1 << KVM_ARM_VCPU_HAS_EL2;
-+    }
+     if (s->maint_irq) {
++        Error *kvm_nv_migration_blocker = NULL;
+         int ret;
+ 
++        error_setg(&kvm_nv_migration_blocker,
++                   "Live migration disabled because KVM nested virt is enabled");
++        if (migrate_add_blocker(&kvm_nv_migration_blocker, errp)) {
++            error_free(kvm_nv_migration_blocker);
++            return;
++        }
 +
-     /*
-      * Ask for Pointer Authentication if supported, so that we get
-      * the unsanitized field values for AA64ISAR1_EL1.
-@@ -423,6 +432,10 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-     features |= 1ULL << ARM_FEATURE_AARCH64;
-     features |= 1ULL << ARM_FEATURE_GENERIC_TIMER;
- 
-+    if (el2_supported) {
-+        features |= 1ULL << ARM_FEATURE_EL2;
-+    }
-+
-     ahcf->features = features;
- 
-     return true;
-@@ -1888,6 +1901,9 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         cpu->kvm_init_features[0] |= (1 << KVM_ARM_VCPU_PTRAUTH_ADDRESS |
-                                       1 << KVM_ARM_VCPU_PTRAUTH_GENERIC);
-     }
-+    if (cpu->has_el2 && kvm_arm_el2_supported()) {
-+        cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_HAS_EL2;
-+    }
- 
-     /* Do KVM_ARM_VCPU_INIT ioctl */
-     ret = kvm_arm_vcpu_init(cpu);
+         ret = kvm_device_check_attr(s->dev_fd,
+                                     KVM_DEV_ARM_VGIC_GRP_MAINT_IRQ, 0);
+         if (!ret) {
 -- 
 2.43.0
 
