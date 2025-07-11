@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1322C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 995ACC83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:33:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua99g-0003WB-HK; Fri, 11 Jul 2025 04:30:53 -0400
+	id 1ua98M-0008KH-HL; Fri, 11 Jul 2025 04:29:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ua907-0001U4-CW; Fri, 11 Jul 2025 04:20:59 -0400
+ id 1ua8zb-0000J7-HD; Fri, 11 Jul 2025 04:20:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ua904-0004eP-EX; Fri, 11 Jul 2025 04:20:59 -0400
+ id 1ua8zZ-0004Va-1m; Fri, 11 Jul 2025 04:20:26 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 784E31356EC;
+ by isrv.corpit.ru (Postfix) with ESMTP id 108A51356E7;
  Fri, 11 Jul 2025 11:17:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6413523FA61;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 06ABC23FA5C;
  Fri, 11 Jul 2025 11:17:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Eric Farman <farman@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 33/39] hw/s390x/ccw-device: Fix memory leak in
- loadparm setter
-Date: Fri, 11 Jul 2025 11:16:29 +0300
-Message-ID: <20250711081745.1785806-33-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Song Gao <gaosong@loongson.cn>,
+ Bibo Mao <maobibo@loongson.cn>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 28/39] target/loongarch: fix vldi/xvldi raise wrong
+ error
+Date: Fri, 11 Jul 2025 11:16:24 +0300
+Message-ID: <20250711081745.1785806-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
@@ -61,36 +62,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Song Gao <gaosong@loongson.cn>
 
-Commit bdf12f2a fixed the setter for the "loadparm" machine property,
-which gets a string from a visitor, passes it to s390_ipl_fmt_loadparm()
-and then forgot to free it. It left another instance of the same problem
-unfixed in the "loadparm" device property. Fix it.
+on qemu we got an aborted error
+**
+ERROR:../target/loongarch/tcg/insn_trans/trans_vec.c.inc:3574:vldi_get_value: code should not be reached
+Bail out! ERROR:../target/loongarch/tcg/insn_trans/trans_vec.c.inc:3574:vldi_get_value: code should not be reached
+Aborted (core dumped)
+but on 3A600/3A5000 we got a "Illegal instruction" error.
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20250625082751.24896-1-kwolf@redhat.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 78e3781541209b3dcd6f4bb66adf3a3e504b88a4)
-(Mjt: bdf12f2a is 8efe1592 in stable-10.0 branch)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2971
+
+Fixes: 29bb5d727ff ("target/loongarch: Implement vldi")
+ Cc: qemu-stable@nongnu.org
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+(cherry picked from commit c2a2e1ad2a749caa864281b1d4dc3f16c3f344f6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/ccw-device.c b/hw/s390x/ccw-device.c
-index 1ea9934f6c..a5ee9dc84d 100644
---- a/hw/s390x/ccw-device.c
-+++ b/hw/s390x/ccw-device.c
-@@ -57,7 +57,7 @@ static void ccw_device_set_loadparm(Object *obj, Visitor *v,
-                                  Error **errp)
+diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+index d6f0560349..78730029cb 100644
+--- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+@@ -3465,7 +3465,7 @@ TRANS(xvmsknz_b, LASX, gen_xx, gen_helper_vmsknz_b)
+ static uint64_t vldi_get_value(DisasContext *ctx, uint32_t imm)
  {
-     CcwDevice *dev = CCW_DEVICE(obj);
--    char *val;
-+    g_autofree char *val = NULL;
-     int index;
+     int mode;
+-    uint64_t data, t;
++    uint64_t data = 0, t;
  
-     index = object_property_get_int(obj, "bootindex", NULL);
+     /*
+      * imm bit [11:8] is mode, mode value is 0-12.
+@@ -3570,17 +3570,26 @@ static uint64_t vldi_get_value(DisasContext *ctx, uint32_t imm)
+         }
+         break;
+     default:
+-        generate_exception(ctx, EXCCODE_INE);
+         g_assert_not_reached();
+     }
+     return data;
+ }
+ 
++static bool check_valid_vldi_mode(arg_vldi *a)
++{
++   return  extract32(a->imm, 8, 4) <= 12;
++}
++
+ static bool gen_vldi(DisasContext *ctx, arg_vldi *a, uint32_t oprsz)
+ {
+     int sel, vece;
+     uint64_t value;
+ 
++    if (!check_valid_vldi_mode(a)) {
++        generate_exception(ctx, EXCCODE_INE);
++        return true;
++    }
++
+     if (!check_vec(ctx, oprsz)) {
+         return true;
+     }
 -- 
 2.47.2
 
