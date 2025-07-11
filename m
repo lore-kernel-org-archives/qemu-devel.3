@@ -4,91 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E3F1C83F1B
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 16:49:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4641C83F1B
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 16:50:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaGw0-0007y8-7G; Fri, 11 Jul 2025 12:49:16 -0400
+	id 1uaGxE-0000KJ-53; Fri, 11 Jul 2025 12:50:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uaGuN-0006e7-79
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 12:47:35 -0400
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uaGuL-00044r-GS
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 12:47:34 -0400
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-73c89db3dfcso539871a34.3
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 09:47:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752252450; x=1752857250; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GHP/U8/sr9MNZn1qdI1ndYam485XgQ5cvnH3EDQTGrs=;
- b=pnCQHo6PHwP361AjE7GxTW4rnJ/tVLeg0UAH3FwzsPr+23TOYs/+hy9VcUn+O7U1mF
- 87PGfaenMHZ6bv7JvyluaTqxGKM9McwfPzV1mBlcrJkfLOQgqWMIIv3p2NKPM7y+vVLS
- WWHSqsYKCzPNYm/ILR+NDsNibNd75ZtzzNxpCPpfJQdWvPkHtbMzYrHxvOpHOr7DMIzU
- 7hL0lkEhdNylz7ajIyh0tRzvSEribubAyz6dkCWV1feZvSWn0n4ePET0qpZtYrdMw72i
- u/vxW+P7yAltmHPZqRapO0qfKZeM/53Z5eLHXpIkhcaSBm6ZI5W7HXcHInPvFKDGmJkL
- sGuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752252450; x=1752857250;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GHP/U8/sr9MNZn1qdI1ndYam485XgQ5cvnH3EDQTGrs=;
- b=byRvSeaepiAW7eEtfsaYwoUPzJ3ajIrkyEde+GmUdZml7WE1aBSPFcLfj6kwjLCwX3
- 5sdS4IkUDuJm6vSk/pMlvM8Rvx4SsU78Jy6cktML0S+NpEMafCrSFOdMInmI0vtwEsSx
- YpBC0z2MoxtdMRqbmustBy76EBtikferngl0F9qhmVsQEZupAlWubMlbYTxC7boo1nwa
- GnPmifKl4OstUPzMW8af0q3PRw1mhxTZ+looDPAgKEYzvauYoQ80YycC7dur4EEjyRwU
- OTBUvASq43eAuoMUXzpuCiad42UK9emlOwH+9xPo0uGh30iWl+UinkCSFAkklhevAFx5
- KEIw==
-X-Gm-Message-State: AOJu0YyL+xYeXJ75EIv9FC0+GDrqLoQ1LgpPBrvns00L+9/T/UQM6j+P
- jSZ0KDNvsW4SXCdpUIM4253t0nAjTJ4laJ/asM7VvhF6z7/v4e1bqD1Ez0NqKEJ+YhjLMMZtOL/
- vOwJw4KA=
-X-Gm-Gg: ASbGncueAMtjSdwaLQ0QDHrN5nxAHqVqNiMFIDhFaLWJGv0OVeGrsmVglBgqU4QoeA8
- U13f0VIcBAPQQKRzRIMwy2BRxa+uJ/htLzP1d3a45AzCNVct3xPo8TX32VFVkcQ+XqJTOVrlPDm
- Pi1LEpgAqGQjuhu/uPABoJUud7JRU1cf6+C63ftC+Pd48fcVqhfweVRYrjsbP2capcDTt9uBkbz
- vaFAnyURbakv9GTN2A/9apMUSrNRenCcS/6DjLXT6PNlR/2pV/VPvPvUWBRhy0724hRAtyucTgf
- FJtu51OU12G27K9T0lhc07YqJtuFbtEsFAtqroKhKiMxDmgRkVMtO4XuXw6g6g2WSDP+Anj2B3i
- YQAo2w+OR4zcbYk2fF3PXtdSo0JCfmS3xFEAmGzfBGEbUihdjTrVjCpJK/RI7UVGFaItwnKdiQ0
- pi
-X-Google-Smtp-Source: AGHT+IF2ifa0gI5NRayTlKbUe0FUNMYTREZWq1KpVUNzfnlO+fTaa9e+CIiRkLr/iaUabnS52TMYLw==
-X-Received: by 2002:a05:6830:f85:b0:72b:9e3b:82bc with SMTP id
- 46e09a7af769-73cf9ea0788mr3177477a34.11.1752252450239; 
- Fri, 11 Jul 2025 09:47:30 -0700 (PDT)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-73cf12b62e8sm615722a34.60.2025.07.11.09.47.29
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Jul 2025 09:47:29 -0700 (PDT)
-Message-ID: <5b57deca-7174-42e4-9c26-07691c1550f9@linaro.org>
-Date: Fri, 11 Jul 2025 10:47:28 -0600
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uaGwy-00009j-Ms
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 12:50:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uaGwv-0004rf-Uj
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 12:50:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752252611;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2eLuC3l1c3rDDHsFyz6gz7pcYXgvINDuGDm5mDgJtas=;
+ b=Lib58CkOnUh8oMHlliv5FVTxQl5zKUQLvMcxGWIDeXazMiV4gzdLMkgSocnF8/eGLoGDQy
+ xWV8lzr5HLk7Gk7yYg9UHGKuvCk9mfXtEQrn4pv7IscTxExkRaZ8/4PHDzvbG9Ofzmrfa0
+ lKeQ3nU2ctCUM/1D6L8YYpI7x2S6b3g=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-265-e3XSXwVDOfW-ZCjFZI9omg-1; Fri,
+ 11 Jul 2025 12:50:08 -0400
+X-MC-Unique: e3XSXwVDOfW-ZCjFZI9omg-1
+X-Mimecast-MFC-AGG-ID: e3XSXwVDOfW-ZCjFZI9omg_1752252607
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2AA3E1809C83; Fri, 11 Jul 2025 16:50:07 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B33381803AF2; Fri, 11 Jul 2025 16:50:06 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0875E21E6A27; Fri, 11 Jul 2025 18:50:04 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org,  John Snow <jsnow@redhat.com>,  Cleber Rosa
+ <crosa@redhat.com>,  Eric Blake <eblake@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  "Daniel P. Berrange" <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,  Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,  Philippe Mathieu-Daude
+ <philmd@linaro.org>
+Subject: Re: [PATCH V4 2/3] python: use qom-list-get
+In-Reply-To: <a84a1482-4ba4-4520-b875-9b3a9a879868@oracle.com> (Steven
+ Sistare's message of "Fri, 11 Jul 2025 11:23:03 -0400")
+References: <1752164694-215567-1-git-send-email-steven.sistare@oracle.com>
+ <1752164694-215567-3-git-send-email-steven.sistare@oracle.com>
+ <871pqmwzqr.fsf@pond.sub.org>
+ <a84a1482-4ba4-4520-b875-9b3a9a879868@oracle.com>
+Date: Fri, 11 Jul 2025 18:50:04 +0200
+Message-ID: <87ms9au0xv.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: Use qemu_set_cloexec() to mark pidfd as
- FD_CLOEXEC
-To: qemu-devel@nongnu.org
-References: <20250711141217.1429412-1-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250711141217.1429412-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32a.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,32 +92,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/11/25 08:12, Peter Maydell wrote:
-> In the linux-user do_fork() function we try to set the FD_CLOEXEC
-> flag on a pidfd like this:
-> 
->      fcntl(pid_fd, F_SETFD, fcntl(pid_fd, F_GETFL) | FD_CLOEXEC);
-> 
-> This has two problems:
->   (1) it doesn't check errors, which Coverity complains about
->   (2) we use F_GETFL when we mean F_GETFD
-> 
-> Deal with both of these problems by using qemu_set_cloexec() instead.
-> That function will assert() if the fcntls fail, which is fine (we are
-> inside fork_start()/fork_end() so we know nothing can mess around
-> with our file descriptors here, and we just got this one from
-> pidfd_open()).
-> 
-> (As we are touching the if() statement here, we correct the
-> indentation.)
-> 
-> Coverity: CID 1508111
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   linux-user/syscall.c | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
+Steven Sistare <steven.sistare@oracle.com> writes:
 
-Queued, thanks.
+> On 7/11/2025 10:47 AM, Markus Armbruster wrote:
+>> Steve Sistare <steven.sistare@oracle.com> writes:
+>> 
+>>> Use qom-list-get to speed up the qom-tree command.
+>>>
+>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>> 
+>> Quick test...  Differences in output before and after match expectations
+>> (see appended diff).
+>> 
+>> New version:
+>> 
+>>      real    0m0.446s
+>>      user    0m0.062s
+>>      sys     0m0.017s
+>> 
+>> Old version barfs a stack backtrace (appended), and is ~18x slower:
+>> 
+>>      real    0m8.176s
+>>      user    0m0.395s
+>>      sys     0m0.126s
+>> 
+>> Did you see the stack backtrace, too?
+>> 
+>> Regardless
+>> Acked-by: Markus Armbruster <armbru@redhat.com>
+>
+> Thanks.  Do you want a tested-by credit, or is that too little testing
+> for you to stand behind that endorsement?
 
-r~
+Tested-by: Markus Armbruster <armbru@redhat.com>
+
+> I observe the same expected differences.
+>
+> My test did not backtrace.  Must be a different VM.
+
+Let's not worry about it.
+
+[...]
+
 
