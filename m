@@ -4,95 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CDD8C83F17
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 00:12:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3AD1C83F17
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 01:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua1N1-0001JZ-1w; Thu, 10 Jul 2025 20:12:10 -0400
+	id 1ua2mw-0001yk-2x; Thu, 10 Jul 2025 21:42:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ua1LO-0000Pd-1B
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 20:10:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ua1LK-0008Nl-RM
- for qemu-devel@nongnu.org; Thu, 10 Jul 2025 20:10:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752192621;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QhFZBsq2mcH705rIdIS5JbUfLJNtJ82JTmEQMfOv02Y=;
- b=ZDHcEuWEPlXXbPaFsY5KUqudQpiEnLZV8wem34HSTNFtGDAWLy9n12TH5GtH5k9TyNANCo
- X/tzxhMF5ez0dELGDTk4dvvk8eaK4tiJag5D1RyvJzYEG2AMCSUS7dtKuVPMd4i+/b3pmG
- m7WJad6id5V2AZN72GIHoiG4CwbKAao=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-618-icg-pWw4NGKNTz8RPaoFgQ-1; Thu, 10 Jul 2025 20:06:35 -0400
-X-MC-Unique: icg-pWw4NGKNTz8RPaoFgQ-1
-X-Mimecast-MFC-AGG-ID: icg-pWw4NGKNTz8RPaoFgQ_1752192395
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-450de98b28eso12200195e9.0
- for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 17:06:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752192393; x=1752797193;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QhFZBsq2mcH705rIdIS5JbUfLJNtJ82JTmEQMfOv02Y=;
- b=iVLR+GrWYMBoQwKBumWtYmLpmdJIVzmT8fF65YOWufjrPRps4KSLsyMq3kY6mGyWg6
- isp3m+XaOnPMgXCFhbAUwVFXoecOCLrarctGb+nItzuN8+0B1X8bsOKIvlU+WNeE7VQa
- pf+FhCgQ7aV4DBqNC5xgScM0/g7rQbP60p801Cura1axnCJRK2/B65fVkrcDs0WveYlU
- UxzPGpI8SSE9hJwp/o802v1LcjHrtHn0jUlUx3iSkKjgwQdjpQEIget7igphmPKfVO9x
- mVUzc5t6hxsHSQM1BUp9LYJTrWmqA6w+Fq8kuFHAYMaMRZjfmyY2FVemGjIoEXrzoWj4
- FzGA==
-X-Gm-Message-State: AOJu0YxpWV0l9904NADRYUIn1AOPaE1i2p46D9T9F/MDznE/d6w5oNh0
- aHCQfCBvWN6hYWRRYddaTMP6bK+5bclXJcegXWkehZkPzHdGaLKYKb43XuFwo7vlbxiVc2WjjG8
- BFtaKRfNbMasIesLGJEl7d9ZBh9YFKJSH43sPAaXt8AXbl6LLDjNguu99ut7ZH0ZkGyCs+5fbF7
- 3/2/sNLWQ8oVCpF812hNVLf5Qxii7n+LUsZimjV3sv
-X-Gm-Gg: ASbGncvPVusS2SWD5UB6wU0DiwpxKCGw1YYkBJklTecmqstMaSe2F1EMJWyHm0pvFR9
- wDsHI/3XrZiQQkb/NVcoYIJwgzCFI5/3R92yS4ZfjtIRXerhhudT1Obz//q3AXus3Q/1P7r/X0a
- a6doOiH69QiqDAB9FA4zavhIWFjzJ/KXuGBlyS2YI4HT7BRYPxh85QyTaqzB8iXkL3cZhUVFzFI
- AaejYPRQEPQWQXA0l3uzMcr5fZxCzkkmprMJNBFf3rT81iXJ891sKmTCH/TmuKYeuIktHR9uqza
- rhK5a48rCm+pmoOUP4/6rLnFZfyzySlqaYICDbquILkk
-X-Received: by 2002:a05:600c:4ab0:b0:453:79e8:e92d with SMTP id
- 5b1f17b1804b1-454db88fe12mr37626315e9.5.1752192392859; 
- Thu, 10 Jul 2025 17:06:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGiq+8PT+39k8woi1szLsWTlwjyxZzgWbWPZ2b4aKH1GJ2nz38LYvfle0ZMuKv/W5NgZ+/FiQ==
-X-Received: by 2002:a05:600c:4ab0:b0:453:79e8:e92d with SMTP id
- 5b1f17b1804b1-454db88fe12mr37626145e9.5.1752192392211; 
- Thu, 10 Jul 2025 17:06:32 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.202.169])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454dd43915dsm32117665e9.7.2025.07.10.17.06.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Jul 2025 17:06:27 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: xiaoyao.li@intel.com,
-	zhao1.liu@intel.com
-Subject: [PATCH 4/4] target/i386: move accel_cpu_instance_init to
- .instance_init
-Date: Fri, 11 Jul 2025 02:06:03 +0200
-Message-ID: <20250711000603.438312-5-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250711000603.438312-1-pbonzini@redhat.com>
-References: <20250711000603.438312-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1ua2mq-0001xi-IA
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 21:42:54 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1ua2mn-00069z-IC
+ for qemu-devel@nongnu.org; Thu, 10 Jul 2025 21:42:52 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxPuMTbHBoLNImAQ--.47267S3;
+ Fri, 11 Jul 2025 09:42:43 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJAxQMIPbHBoHCcSAA--.32437S3;
+ Fri, 11 Jul 2025 09:42:41 +0800 (CST)
+Subject: Re: [PULL 0/4] loongarch-to-apply queue
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+References: <20250710093238.453962-1-maobibo@loongson.cn>
+ <CAJSP0QXq=d5UC8vp01OB0guvaH+V5SX8PtZ5b1NT78CmGeo6UQ@mail.gmail.com>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <5582e09a-d139-167b-7302-9da6de740a97@loongson.cn>
+Date: Fri, 11 Jul 2025 09:41:04 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <CAJSP0QXq=d5UC8vp01OB0guvaH+V5SX8PtZ5b1NT78CmGeo6UQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-CM-TRANSID: qMiowJAxQMIPbHBoHCcSAA--.32437S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7AF18Cr45GrWDXFWUGry7CFX_yoW8KF4UpF
+ WakF13KrWkGry7Jrs7ta4UZF1UKr4kGw4Iq3Wftry8Crn8Ary8Xr18J34SgFyUJa4UGw1j
+ qr1UWw1DZF1UJabCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU25EfUUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.606,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,53 +82,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With the reordering of instance_post_init callbacks that is new in 10.1
-accel_cpu_instance_init must execute in .instance_init as is already
-the case for RISC-V.  Otherwise, for example, setting the vendor
-property is broken when using KVM or Hypervisor.framework, because
-KVM sets it *after* the user's value is set by DeviceState's
-intance_post_init callback.
 
-Reported-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/cpu.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 46d59229200..5f95bb97b82 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6207,8 +6207,8 @@ static void max_x86_cpu_initfn(Object *obj)
-     CPUX86State *env = &cpu->env;
- 
-     /*
--     * these defaults are used for TCG, other accelerators overwrite these
--     * values
-+     * these defaults are used for TCG, other accelerators have overwritten
-+     * these values
-      */
-     if (!env->cpuid_vendor1) {
-         object_property_set_str(OBJECT(cpu), "vendor", CPUID_VENDOR_AMD,
-@@ -9043,8 +9043,6 @@ static void x86_cpu_post_initfn(Object *obj)
-         }
-     }
- 
--    accel_cpu_instance_init(CPU(obj));
--
- #ifndef CONFIG_USER_ONLY
-     if (current_machine && current_machine->cgs) {
-         x86_confidential_guest_cpu_instance_init(
-@@ -9119,6 +9117,8 @@ static void x86_cpu_initfn(Object *obj)
-     if (xcc->model) {
-         x86_cpu_load_model(cpu, xcc->model);
-     }
-+
-+    accel_cpu_instance_init(CPU(obj));
- }
- 
- static int64_t x86_cpu_get_arch_id(CPUState *cs)
--- 
-2.50.0
+On 2025/7/10 下午8:43, Stefan Hajnoczi wrote:
+> On Thu, Jul 10, 2025 at 5:34 AM Bibo Mao <maobibo@loongson.cn> wrote:
+>>
+>> The following changes since commit df6fe2abf2e990f767ce755d426bc439c7bba336:
+>>
+>>    Merge tag 'pull-target-arm-20250704' of https://gitlab.com/pm215/qemu into staging (2025-07-07 09:22:41 -0400)
+>>
+>> are available in the Git repository at:
+>>
+>>    https://github.com/bibo-mao/qemu.git tags/pull-loongarch-20250710
+>>
+>> for you to fetch changes up to 8ad757642e3a8a283edc29efec73b9bd57fdb365:
+>>
+>>    target/loongarch: Remove unnecessary page size validity checking (2025-07-10 16:30:25 +0800)
+>>
+>> ----------------------------------------------------------------
+>> pull-loongarch-20250710 queue
+>>
+>> ----------------------------------------------------------------
+>> Bibo Mao (4):
+>>        hw/intc/loongarch_extioi: Move unrealize function to common code
+>>        target/loongarch: Correct spelling in helper_csrwr_pwcl()
+>>        target/loongarch: Fix CSR STLBPS register write emulation
+>>        target/loongarch: Remove unnecessary page size validity checking
+> 
+> Please take a look at the following aarch64 macOS CI failure and
+> resend your pull request when it has been fixed:
+> 
+> ../target/loongarch/tcg/tlb_helper.c:643:75: error: format specifies
+> type 'long' but the argument has type 'target_ulong' (aka 'unsigned
+> long long') [-Werror,-Wformat]
+> 643 | qemu_log_mask(LOG_GUEST_ERROR, "Illegal huge pagesize %ld\n", ps);
+> | ~~~ ^~
+> | %llu
+> /private/var/folders/7m/kxwv39y54d9g6lmkzwbqwk8r0000gn/T/cirrus-ci-build/include/qemu/log.h:57:30:
+> note: expanded from macro 'qemu_log_mask'
+> 57 | qemu_log(FMT, ## __VA_ARGS__); \
+> | ~~~ ^~~~~~~~~~~
+> 
+> https://gitlab.com/qemu-project/qemu/-/jobs/10637285043
+Thanks for your reminder, will resend it after solving this issue.
+
+Regards
+Bibo Mao
+
+> 
+> Thanks,
+> Stefan
+> 
+>>
+>>   hw/intc/loongarch_extioi.c                |  9 ---------
+>>   hw/intc/loongarch_extioi_common.c         |  9 +++++++++
+>>   include/hw/intc/loongarch_extioi.h        |  1 -
+>>   include/hw/intc/loongarch_extioi_common.h |  1 +
+>>   target/loongarch/tcg/csr_helper.c         |  8 ++++++--
+>>   target/loongarch/tcg/tlb_helper.c         | 24 ++++++++----------------
+>>   6 files changed, 24 insertions(+), 28 deletions(-)
+>>
+>>
 
 
