@@ -4,108 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 436EDC83F1A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DD58C83F1B
 	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 14:15:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaEWa-0000FE-LO; Fri, 11 Jul 2025 10:14:52 -0400
+	id 1uaEWg-0000gB-EU; Fri, 11 Jul 2025 10:14:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uaETR-0001sg-Hy
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:11:44 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uaETi-00029M-Mc
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:11:58 -0400
 Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uaETL-0006iO-R1
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:11:35 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uaETe-0006mw-83
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:11:52 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 565DD1F454;
- Fri, 11 Jul 2025 14:10:56 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 896C81F45B;
+ Fri, 11 Jul 2025 14:11:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1752243058; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1752243064; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Bnz20s69+Inf6MGIXR/Cgjh2pMWofI8C1iUr1UrS8nM=;
- b=P93/VpFeWZSJ9qojnmvWKA0tf3OSr7EDls9PHtK3P50tLF/4RQgCsb8yKduBjfHEShk21U
- 9vYqy4bp9Ofnx/y2wzSIwwtQY35et4kCHhB7vgMDqnAMhGwwQOhGfuVOACXbXwEs4UnN0W
- miExWSsBdcnHePaaTDWpcjHJ5sHcaDU=
+ bh=54fwsoqL/jMCsGFAHTp3/X/pPU81n3Ezh4sNFqmkJqM=;
+ b=mGbIBY70e/vjS8x4PT+J17kiidAWdyxucnzzIRxU/dnt4kLAeeyISh0/HZ0i4W4XdULswL
+ tL1U+QActGCYG2YwYWsd0KQnQwkyNIsCOLQwsJt+EbddClAIZvpXdMCTgBepDDcBFUmaE+
+ t4FcSxfeo1vVAPl4P7da3YyugSKp1VM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1752243058;
+ s=susede2_ed25519; t=1752243064;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Bnz20s69+Inf6MGIXR/Cgjh2pMWofI8C1iUr1UrS8nM=;
- b=Muq2n5DUnYc286j4WvUDVgi9nJYV7ACmNvYU5iKNZ3pq7P9fYAOt7ZS64EMmxdh3e2FF36
- kmJVFCCyuvb3DEDg==
+ bh=54fwsoqL/jMCsGFAHTp3/X/pPU81n3Ezh4sNFqmkJqM=;
+ b=xbIeizN4qH6O3CdMOJxjzllQLpCexUZzeqW+zsmE1GapWb+2U4kYYNhcTkNH+UrzuaeGVm
+ HFzf+XAbZAdc+uBw==
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=m83txFfz;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=073tuCCW
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1752243056; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1752243064; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Bnz20s69+Inf6MGIXR/Cgjh2pMWofI8C1iUr1UrS8nM=;
- b=m83txFfzEosbzKm3tbKJJCym+hyjf1gqZeIcH2FTBu353mYfU0qQ+CrEM6hbIExUg0trwj
- NlwVf5WW2kIWM2mdrPoP/GOaFCDBCuvsXoemX2jqmhX8UJDBh7XGuFIE8qA6hmDuQQcZkr
- HWx2dfZEF99glNmi1MSTNNn/mBtw9rQ=
+ bh=54fwsoqL/jMCsGFAHTp3/X/pPU81n3Ezh4sNFqmkJqM=;
+ b=mGbIBY70e/vjS8x4PT+J17kiidAWdyxucnzzIRxU/dnt4kLAeeyISh0/HZ0i4W4XdULswL
+ tL1U+QActGCYG2YwYWsd0KQnQwkyNIsCOLQwsJt+EbddClAIZvpXdMCTgBepDDcBFUmaE+
+ t4FcSxfeo1vVAPl4P7da3YyugSKp1VM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1752243056;
+ s=susede2_ed25519; t=1752243064;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Bnz20s69+Inf6MGIXR/Cgjh2pMWofI8C1iUr1UrS8nM=;
- b=073tuCCW5N4TnHnnhvyvTL0vzGkHkv4V11Tl/ruom1ysUdg2CGkvJxAtBZMfLhC1keHLy6
- pfY0KEATADC4BaCw==
+ bh=54fwsoqL/jMCsGFAHTp3/X/pPU81n3Ezh4sNFqmkJqM=;
+ b=xbIeizN4qH6O3CdMOJxjzllQLpCexUZzeqW+zsmE1GapWb+2U4kYYNhcTkNH+UrzuaeGVm
+ HFzf+XAbZAdc+uBw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0220D1388B;
- Fri, 11 Jul 2025 14:10:54 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 757F91388B;
+ Fri, 11 Jul 2025 14:11:03 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id +HWhLG4bcWg7TgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 11 Jul 2025 14:10:54 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ePKwDHcbcWg7TgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 11 Jul 2025 14:11:03 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
-	Juraj Marcin <jmarcin@redhat.com>
-Subject: [PULL 10/26] migration: Rewrite the migration complete detect logic
-Date: Fri, 11 Jul 2025 11:10:15 -0300
-Message-Id: <20250711141031.423-11-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Subject: [PULL 15/26] migration/postcopy: Make all blocktime vars 64bits
+Date: Fri, 11 Jul 2025 11:10:20 -0300
+Message-Id: <20250711141031.423-16-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20250711141031.423-1-farosas@suse.de>
 References: <20250711141031.423-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 565DD1F454
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_COUNT_TWO(0.00)[2]; MIME_TRACE(0.00)[0:+];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- FROM_HAS_DN(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:mid,suse.de:email];
- RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_THREE(0.00)[3];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.999];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FROM_HAS_DN(0.00)[]; MIME_TRACE(0.00)[0:+];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; RCPT_COUNT_TWO(0.00)[2];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
+ TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[]
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
  envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
@@ -132,169 +119,214 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Xu <peterx@redhat.com>
 
-There're a few things off here in that logic, rewrite it.  When at it, add
-rich comment to explain each of the decisions.
+I am guessing it was used to be 32bits because of the atomic ops.  Now all
+the atomic ops are gone and we're protected by a mutex instead, it's ok we
+can switch to 64 bits.
 
-Since this is very sensitive path for migration, below are the list of
-things changed with their reasonings.
+Reasons to move over:
 
-  (1) Exact pending size is only needed for precopy not postcopy
+  - Allow further patches to change the unit from ms to us: with postcopy
+  preempt mode, we're really into hundreds of microseconds level on
+  blocktime.  We'd better be able to trap those.
 
-      Fundamentally it's because "exact" version only does one more deep
-      sync to fetch the pending results, while in postcopy's case it's
-      never going to sync anything more than estimate as the VM on source
-      is stopped.
+  - This also paves way for some other tricks that the original version
+  used to avoid overflows, e.g., start_time was almost only useful before
+  to make sure the sampled timestamp won't overflow a 32-bit field.
 
-  (2) Do _not_ rely on threshold_size anymore to decide whether postcopy
-      should complete
+  - This prepares further reports on top of existing data collected,
+  e.g. average page fault latencies.  When average operation is taken into
+  account, milliseconds are simply too coarse grained.
 
-      threshold_size was calculated from the expected downtime and
-      bandwidth only during precopy as an efficient way to decide when to
-      switchover.  It's not sensible to rely on threshold_size in postcopy.
+When at it:
 
-      For precopy, if switchover is decided, the migration will complete
-      soon.  It's not true for postcopy.  Logically speaking, postcopy
-      should only complete the migration if all pending data is flushed.
+  - Rename page_fault_vcpu_time to vcpu_blocktime_start.
 
-      Here it used to work because save_complete() used to implicitly
-      contain save_live_iterate() when there's pending size.
+  - Rename vcpu_blocktime to vcpu_blocktime_total.
 
-      Even if that looks benign, having RAMs to be migrated in postcopy's
-      save_complete() has other bad side effects:
+  - Touch up the trace-events to not dump blocktime ctx pointer
 
-      (a) Since save_complete() needs to be run once at a time, it means
-      when moving RAM there's no way moving other things (rather than
-      round-robin iterating the vmstate handlers like what we do with
-      ITERABLE phase).  Not an immediate concern, but it may stop working
-      in the future when there're more than one iterables (e.g. vfio
-      postcopy).
-
-      (b) postcopy recovery, unfortunately, only works during ITERABLE
-      phase. IOW, if src QEMU moves RAM during postcopy's save_complete()
-      and network failed, then it'll crash both QEMUs... OTOH if it failed
-      during iteration it'll still be recoverable.  IOW, this change should
-      further reduce the window QEMU split brain and crash in extreme cases.
-
-      If we enable the ram_save_complete() tracepoints, we'll see this
-      before this patch:
-
-      1267959@1748381938.294066:ram_save_complete dirty=9627, done=0
-      1267959@1748381938.308884:ram_save_complete dirty=0, done=1
-
-      It means in this migration there're 9627 pages migrated at complete()
-      of postcopy phase.
-
-      After this change, all the postcopy RAM should be migrated in iterable
-      phase, rather than save_complete():
-
-      1267959@1748381938.294066:ram_save_complete dirty=0, done=0
-      1267959@1748381938.308884:ram_save_complete dirty=0, done=1
-
-  (3) Adjust when to decide to switch to postcopy
-
-      This shouldn't be super important, the movement makes sure there's
-      only one in_postcopy check, then we are clear on what we do with the
-      two completely differnt use cases (precopy v.s. postcopy).
-
-  (4) Trivial touch up on threshold_size comparision
-
-      Which changes:
-
-      "(!pending_size || pending_size < s->threshold_size)"
-
-      into:
-
-      "(pending_size <= s->threshold_size)"
-
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20250613140801.474264-11-peterx@redhat.com
+Link: https://lore.kernel.org/r/20250613141217.474825-5-peterx@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/migration.c | 57 +++++++++++++++++++++++++++++++------------
- 1 file changed, 42 insertions(+), 15 deletions(-)
+ migration/postcopy-ram.c | 50 ++++++++++++++++++++--------------------
+ migration/trace-events   |  4 ++--
+ 2 files changed, 27 insertions(+), 27 deletions(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index e33e39ac74..923400f801 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3436,33 +3436,60 @@ static MigIterateState migration_iteration_run(MigrationState *s)
-     Error *local_err = NULL;
-     bool in_postcopy = s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE;
-     bool can_switchover = migration_can_switchover(s);
-+    bool complete_ready;
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index 81925532de..ec91821b85 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -112,14 +112,15 @@ void postcopy_thread_create(MigrationIncomingState *mis,
  
-+    /* Fast path - get the estimated amount of pending data */
-     qemu_savevm_state_pending_estimate(&must_precopy, &can_postcopy);
-     pending_size = must_precopy + can_postcopy;
-     trace_migrate_pending_estimate(pending_size, must_precopy, can_postcopy);
+ typedef struct PostcopyBlocktimeContext {
+     /* time when page fault initiated per vCPU */
+-    uint32_t *page_fault_vcpu_time;
++    uint64_t *vcpu_blocktime_start;
++    /* blocktime per vCPU */
++    uint64_t *vcpu_blocktime_total;
+     /* page address per vCPU */
+     uintptr_t *vcpu_addr;
+-    uint32_t total_blocktime;
+-    /* blocktime per vCPU */
+-    uint32_t *vcpu_blocktime;
++    /* total blocktime when all vCPUs are stopped */
++    uint64_t total_blocktime;
+     /* point in time when last page fault was initiated */
+-    uint32_t last_begin;
++    uint64_t last_begin;
+     /* number of vCPU are suspended */
+     int smp_cpus_down;
+     uint64_t start_time;
+@@ -133,9 +134,9 @@ typedef struct PostcopyBlocktimeContext {
  
--    if (pending_size < s->threshold_size) {
--        qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
--        pending_size = must_precopy + can_postcopy;
--        trace_migrate_pending_exact(pending_size, must_precopy, can_postcopy);
-+    if (in_postcopy) {
-+        /*
-+         * Iterate in postcopy until all pending data flushed.  Note that
-+         * postcopy completion doesn't rely on can_switchover, because when
-+         * POSTCOPY_ACTIVE it means switchover already happened.
-+         */
-+        complete_ready = !pending_size;
-+    } else {
-+        /*
-+         * Exact pending reporting is only needed for precopy.  Taking RAM
-+         * as example, there'll be no extra dirty information after
-+         * postcopy started, so ESTIMATE should always match with EXACT
-+         * during postcopy phase.
-+         */
-+        if (pending_size < s->threshold_size) {
-+            qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
-+            pending_size = must_precopy + can_postcopy;
-+            trace_migrate_pending_exact(pending_size, must_precopy,
-+                                        can_postcopy);
-+        }
+ static void destroy_blocktime_context(struct PostcopyBlocktimeContext *ctx)
+ {
+-    g_free(ctx->page_fault_vcpu_time);
++    g_free(ctx->vcpu_blocktime_start);
++    g_free(ctx->vcpu_blocktime_total);
+     g_free(ctx->vcpu_addr);
+-    g_free(ctx->vcpu_blocktime);
+     g_free(ctx);
+ }
+ 
+@@ -151,13 +152,14 @@ static struct PostcopyBlocktimeContext *blocktime_context_new(void)
+     MachineState *ms = MACHINE(qdev_get_machine());
+     unsigned int smp_cpus = ms->smp.cpus;
+     PostcopyBlocktimeContext *ctx = g_new0(PostcopyBlocktimeContext, 1);
+-    ctx->page_fault_vcpu_time = g_new0(uint32_t, smp_cpus);
 +
-+        /* Should we switch to postcopy now? */
-+        if (must_precopy <= s->threshold_size &&
-+            can_switchover && qatomic_read(&s->start_postcopy)) {
-+            if (postcopy_start(s, &local_err)) {
-+                migrate_set_error(s, local_err);
-+                error_report_err(local_err);
-+            }
-+            return MIG_ITERATE_SKIP;
-+        }
-+
-+        /*
-+         * For precopy, migration can complete only if:
-+         *
-+         * (1) Switchover is acknowledged by destination
-+         * (2) Pending size is no more than the threshold specified
-+         *     (which was calculated from expected downtime)
-+         */
-+        complete_ready = can_switchover && (pending_size <= s->threshold_size);
-     }
- 
--    if ((!pending_size || pending_size < s->threshold_size) && can_switchover) {
-+    if (complete_ready) {
-         trace_migration_thread_low_pending(pending_size);
-         migration_completion(s);
-         return MIG_ITERATE_BREAK;
-     }
- 
--    /* Still a significant amount to transfer */
--    if (!in_postcopy && must_precopy <= s->threshold_size && can_switchover &&
--        qatomic_read(&s->start_postcopy)) {
--        if (postcopy_start(s, &local_err)) {
--            migrate_set_error(s, local_err);
--            error_report_err(local_err);
--        }
--        return MIG_ITERATE_SKIP;
--    }
++    ctx->vcpu_blocktime_start = g_new0(uint64_t, smp_cpus);
++    ctx->vcpu_blocktime_total = g_new0(uint64_t, smp_cpus);
+     ctx->vcpu_addr = g_new0(uintptr_t, smp_cpus);
+-    ctx->vcpu_blocktime = g_new0(uint32_t, smp_cpus);
 -
-     /* Just another iteration step */
-     qemu_savevm_state_iterate(s->to_dst_file, in_postcopy);
-     return MIG_ITERATE_RESUME;
+     ctx->exit_notifier.notify = migration_exit_cb;
+     ctx->start_time = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
+     qemu_add_exit_notifier(&ctx->exit_notifier);
++
+     return ctx;
+ }
+ 
+@@ -168,7 +170,7 @@ static uint32List *get_vcpu_blocktime_list(PostcopyBlocktimeContext *ctx)
+     int i;
+ 
+     for (i = ms->smp.cpus - 1; i >= 0; i--) {
+-        QAPI_LIST_PREPEND(list, ctx->vcpu_blocktime[i]);
++        QAPI_LIST_PREPEND(list, (uint32_t)ctx->vcpu_blocktime_total[i]);
+     }
+ 
+     return list;
+@@ -191,12 +193,12 @@ void fill_destination_postcopy_migration_info(MigrationInfo *info)
+     }
+ 
+     info->has_postcopy_blocktime = true;
+-    info->postcopy_blocktime = bc->total_blocktime;
++    info->postcopy_blocktime = (uint32_t)bc->total_blocktime;
+     info->has_postcopy_vcpu_blocktime = true;
+     info->postcopy_vcpu_blocktime = get_vcpu_blocktime_list(bc);
+ }
+ 
+-static uint32_t get_postcopy_total_blocktime(void)
++static uint64_t get_postcopy_total_blocktime(void)
+ {
+     MigrationIncomingState *mis = migration_incoming_get_current();
+     PostcopyBlocktimeContext *bc = mis->blocktime_ctx;
+@@ -816,11 +818,9 @@ static int get_mem_fault_cpu_index(uint32_t pid)
+     return -1;
+ }
+ 
+-static uint32_t get_low_time_offset(PostcopyBlocktimeContext *dc)
++static uint64_t get_low_time_offset(PostcopyBlocktimeContext *dc)
+ {
+-    int64_t start_time_offset = qemu_clock_get_ms(QEMU_CLOCK_REALTIME) -
+-                                    dc->start_time;
+-    return start_time_offset < 1 ? 1 : start_time_offset & UINT32_MAX;
++    return (uint64_t)qemu_clock_get_ms(QEMU_CLOCK_REALTIME) - dc->start_time;
+ }
+ 
+ /*
+@@ -837,7 +837,7 @@ void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
+     int cpu;
+     MigrationIncomingState *mis = migration_incoming_get_current();
+     PostcopyBlocktimeContext *dc = mis->blocktime_ctx;
+-    uint32_t low_time_offset;
++    uint64_t low_time_offset;
+ 
+     if (!dc || ptid == 0) {
+         return;
+@@ -853,7 +853,7 @@ void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
+     }
+ 
+     dc->last_begin = low_time_offset;
+-    dc->page_fault_vcpu_time[cpu] = low_time_offset;
++    dc->vcpu_blocktime_start[cpu] = low_time_offset;
+     dc->vcpu_addr[cpu] = addr;
+ 
+     /*
+@@ -862,7 +862,7 @@ void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
+      */
+     assert(!ramblock_recv_bitmap_test(rb, (void *)addr));
+ 
+-    trace_mark_postcopy_blocktime_begin(addr, dc, dc->page_fault_vcpu_time[cpu],
++    trace_mark_postcopy_blocktime_begin(addr, dc->vcpu_blocktime_start[cpu],
+                                         cpu);
+ }
+ 
+@@ -901,7 +901,7 @@ static void mark_postcopy_blocktime_end(uintptr_t addr)
+     unsigned int smp_cpus = ms->smp.cpus;
+     int i, affected_cpu = 0;
+     bool vcpu_total_blocktime = false;
+-    uint32_t read_vcpu_time, low_time_offset;
++    uint64_t read_vcpu_time, low_time_offset;
+ 
+     if (!dc) {
+         return;
+@@ -913,9 +913,9 @@ static void mark_postcopy_blocktime_end(uintptr_t addr)
+      * optimal, more optimal algorithm is keeping tree or hash
+      * where key is address value is a list of  */
+     for (i = 0; i < smp_cpus; i++) {
+-        uint32_t vcpu_blocktime = 0;
++        uint64_t vcpu_blocktime = 0;
+ 
+-        read_vcpu_time = dc->page_fault_vcpu_time[i];
++        read_vcpu_time = dc->vcpu_blocktime_start[i];
+         if (dc->vcpu_addr[i] != addr || read_vcpu_time == 0) {
+             continue;
+         }
+@@ -929,14 +929,14 @@ static void mark_postcopy_blocktime_end(uintptr_t addr)
+             vcpu_total_blocktime = true;
+         }
+         /* continue cycle, due to one page could affect several vCPUs */
+-        dc->vcpu_blocktime[i] += vcpu_blocktime;
++        dc->vcpu_blocktime_total[i] += vcpu_blocktime;
+     }
+ 
+     dc->smp_cpus_down -= affected_cpu;
+     if (vcpu_total_blocktime) {
+         dc->total_blocktime += low_time_offset - dc->last_begin;
+     }
+-    trace_mark_postcopy_blocktime_end(addr, dc, dc->total_blocktime,
++    trace_mark_postcopy_blocktime_end(addr, dc->total_blocktime,
+                                       affected_cpu);
+ }
+ 
+diff --git a/migration/trace-events b/migration/trace-events
+index 917f521e88..02cdb6e7cc 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -285,8 +285,8 @@ postcopy_nhp_range(const char *ramblock, void *host_addr, size_t offset, size_t
+ postcopy_place_page(void *host_addr) "host=%p"
+ postcopy_place_page_zero(void *host_addr) "host=%p"
+ postcopy_ram_enable_notify(void) ""
+-mark_postcopy_blocktime_begin(uint64_t addr, void *dd, uint32_t time, int cpu) "addr: 0x%" PRIx64 ", dd: %p, time: %u, cpu: %d"
+-mark_postcopy_blocktime_end(uint64_t addr, void *dd, uint32_t time, int affected_cpu) "addr: 0x%" PRIx64 ", dd: %p, time: %u, affected_cpu: %d"
++mark_postcopy_blocktime_begin(uint64_t addr, uint64_t time, int cpu) "addr: 0x%" PRIx64 ", time: %" PRIu64 ", cpu: %d"
++mark_postcopy_blocktime_end(uint64_t addr, uint64_t time, int affected_cpu) "addr: 0x%" PRIx64 ", time: %" PRIu64 ", affected_cpus: %d"
+ postcopy_pause_fault_thread(void) ""
+ postcopy_pause_fault_thread_continued(void) ""
+ postcopy_pause_fast_load(void) ""
 -- 
 2.35.3
 
