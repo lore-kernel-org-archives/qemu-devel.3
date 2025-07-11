@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C89C8C8303C
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 09:24:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFF4CC83F1D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 09:24:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua9zB-0001iD-OV; Fri, 11 Jul 2025 05:24:06 -0400
+	id 1ua9yR-0000hi-Ft; Fri, 11 Jul 2025 05:23:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1ua9xa-00008o-Eq
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:22:26 -0400
+ id 1ua9xU-0008WU-Dt
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:22:21 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1ua9xP-0003rT-D5
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:22:25 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1ua9xM-0003qt-VI
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:22:19 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8BxLHLD13Bonh8nAQ--.48297S3;
- Fri, 11 Jul 2025 17:22:11 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxlnDB13BolB8nAQ--.16712S3;
+ Fri, 11 Jul 2025 17:22:09 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCxdOS813Bo5owSAA--.39837S6;
- Fri, 11 Jul 2025 17:22:10 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJCxdOS813Bo5owSAA--.39837S3;
+ Fri, 11 Jul 2025 17:22:09 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: maobibo@loongson.cn
 Cc: qemu-devel@nongnu.org,
 	philmd@linaro.org,
 	jiaxun.yang@flygoat.com
-Subject: [PATCH v5 04/11] loongarch: add a advance interrupt controller device
-Date: Fri, 11 Jul 2025 16:59:08 +0800
-Message-Id: <20250711085915.3042395-5-gaosong@loongson.cn>
+Subject: [PATCH v5 01/11] target/loongarch: move some machine define to virt.h
+Date: Fri, 11 Jul 2025 16:59:05 +0800
+Message-Id: <20250711085915.3042395-2-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20250711085915.3042395-1-gaosong@loongson.cn>
 References: <20250711085915.3042395-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxdOS813Bo5owSAA--.39837S6
+X-CM-TRANSID: qMiowJCxdOS813Bo5owSAA--.39837S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,166 +66,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add Loongarch  advance interrupt controller device base Definition.
+move some machine define to virt.h
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 ---
- hw/intc/Kconfig                  |  3 ++
- hw/intc/loongarch_avec.c         | 68 ++++++++++++++++++++++++++++++++
- hw/intc/meson.build              |  1 +
- hw/loongarch/Kconfig             |  1 +
- include/hw/intc/loongarch_avec.h | 35 ++++++++++++++++
- 5 files changed, 108 insertions(+)
- create mode 100644 hw/intc/loongarch_avec.c
- create mode 100644 include/hw/intc/loongarch_avec.h
+ include/hw/loongarch/virt.h | 19 +++++++++++++++++++
+ target/loongarch/cpu.h      | 21 ---------------------
+ 2 files changed, 19 insertions(+), 21 deletions(-)
 
-diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
-index 7547528f2c..b9266dc269 100644
---- a/hw/intc/Kconfig
-+++ b/hw/intc/Kconfig
-@@ -109,3 +109,6 @@ config LOONGARCH_PCH_MSI
+diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+index 602feab0f0..7120b46714 100644
+--- a/include/hw/loongarch/virt.h
++++ b/include/hw/loongarch/virt.h
+@@ -13,6 +13,25 @@
+ #include "hw/block/flash.h"
+ #include "hw/loongarch/boot.h"
  
- config LOONGARCH_EXTIOI
-     bool
++#define IOCSRF_TEMP             0
++#define IOCSRF_NODECNT          1
++#define IOCSRF_MSI              2
++#define IOCSRF_EXTIOI           3
++#define IOCSRF_CSRIPI           4
++#define IOCSRF_FREQCSR          5
++#define IOCSRF_FREQSCALE        6
++#define IOCSRF_DVFSV1           7
++#define IOCSRF_GMOD             9
++#define IOCSRF_VM               11
 +
-+config LOONGARCH_AVEC
-+    bool
-diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
-new file mode 100644
-index 0000000000..5a3e7ecc03
---- /dev/null
-+++ b/hw/intc/loongarch_avec.c
-@@ -0,0 +1,68 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * QEMU Loongson  Advance interrupt controller.
-+ *
-+ * Copyright (C) 2025 Loongson Technology Corporation Limited
-+ */
++#define VERSION_REG             0x0
++#define FEATURE_REG             0x8
++#define VENDOR_REG              0x10
++#define CPUNAME_REG             0x20
++#define MISC_FUNC_REG           0x420
++#define IOCSRM_EXTIOI_EN        48
++#define IOCSRM_EXTIOI_INT_ENCODE 49
 +
-+#include "qemu/osdep.h"
-+#include "hw/sysbus.h"
-+#include "hw/irq.h"
-+#include "hw/intc/loongarch_pch_msi.h"
-+#include "hw/intc/loongarch_pch_pic.h"
-+#include "hw/intc/loongarch_avec.h"
-+#include "hw/pci/msi.h"
-+#include "hw/misc/unimp.h"
-+#include "migration/vmstate.h"
-+#include "trace.h"
-+#include "hw/qdev-properties.h"
-+
-+
-+static void loongarch_avec_realize(DeviceState *dev, Error **errp)
-+{
-+    LoongArchAVECClass *lac = LOONGARCH_AVEC_GET_CLASS(dev);
-+
-+    Error *local_err = NULL;
-+    lac->parent_realize(dev, &local_err);
-+    if (local_err) {
-+        error_propagate(errp, local_err);
-+        return;
-+    }
-+
-+    return;
-+}
-+
-+static void loongarch_avec_unrealize(DeviceState *dev)
-+{
-+    return;
-+}
-+
-+static void loongarch_avec_init(Object *obj)
-+{
-+    return;
-+}
-+
-+static void loongarch_avec_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    LoongArchAVECClass *lac = LOONGARCH_AVEC_CLASS(klass);
-+
-+    dc->unrealize = loongarch_avec_unrealize;
-+    device_class_set_parent_realize(dc, loongarch_avec_realize,
-+                                    &lac->parent_realize);
-+}
-+
-+static const TypeInfo loongarch_avec_info = {
-+    .name          = TYPE_LOONGARCH_AVEC,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(LoongArchAVECState),
-+    .instance_init = loongarch_avec_init,
-+    .class_init    = loongarch_avec_class_init,
-+};
-+
-+static void loongarch_avec_register_types(void)
-+{
-+    type_register_static(&loongarch_avec_info);
-+}
-+
-+type_init(loongarch_avec_register_types)
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index 3137521a4a..cf2c47cd53 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -80,3 +80,4 @@ specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_MSI', if_true: files('loongarch_pch_
- specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI', if_true: files('loongarch_extioi.c', 'loongarch_extioi_common.c'))
- specific_ss.add(when: ['CONFIG_KVM', 'CONFIG_LOONGARCH_EXTIOI'],
-                if_true: files('loongarch_extioi_kvm.c'))
-+specific_ss.add(when: 'CONFIG_LOONGARCH_AVEC', if_true: files('loongarch_avec.c'))
-diff --git a/hw/loongarch/Kconfig b/hw/loongarch/Kconfig
-index bb2838b7b5..1bf240b1e2 100644
---- a/hw/loongarch/Kconfig
-+++ b/hw/loongarch/Kconfig
-@@ -15,6 +15,7 @@ config LOONGARCH_VIRT
-     select LOONGARCH_PCH_PIC
-     select LOONGARCH_PCH_MSI
-     select LOONGARCH_EXTIOI
-+    select LOONGARCH_AVEC
-     select LS7A_RTC
-     select SMBIOS
-     select ACPI_CPU_HOTPLUG
-diff --git a/include/hw/intc/loongarch_avec.h b/include/hw/intc/loongarch_avec.h
-new file mode 100644
-index 0000000000..92e2ca9590
---- /dev/null
-+++ b/include/hw/intc/loongarch_avec.h
-@@ -0,0 +1,35 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * LoongArch  Advance interrupt controller definitions
-+ *
-+ * Copyright (C) 2025 Loongson Technology Corporation Limited
-+ */
-+
-+#include "qom/object.h"
-+#include "hw/sysbus.h"
-+#include "hw/loongarch/virt.h"
-+
-+
-+#define NR_VECTORS     256
-+
-+#define TYPE_LOONGARCH_AVEC "loongarch_avec"
-+OBJECT_DECLARE_TYPE(LoongArchAVECState, LoongArchAVECClass, LOONGARCH_AVEC)
-+
-+typedef struct AVECCore {
-+    CPUState *cpu;
-+    qemu_irq parent_irq;
-+    uint64_t arch_id;
-+} AVECCore;
-+
-+struct LoongArchAVECState {
-+    SysBusDevice parent_obj;
-+    AVECCore *cpu;
-+    uint32_t num_cpu;
-+};
-+
-+struct LoongArchAVECClass {
-+    SysBusDeviceClass parent_class;
-+
-+    DeviceRealize parent_realize;
-+    DeviceUnrealize parent_unrealize;
-+};
+ #define LOONGARCH_MAX_CPUS      256
+ 
+ #define VIRT_FWCFG_BASE         0x1e020000UL
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 9538e8d61d..56fc4a1459 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -21,27 +21,6 @@
+ #include "cpu-csr.h"
+ #include "cpu-qom.h"
+ 
+-#define IOCSRF_TEMP             0
+-#define IOCSRF_NODECNT          1
+-#define IOCSRF_MSI              2
+-#define IOCSRF_EXTIOI           3
+-#define IOCSRF_CSRIPI           4
+-#define IOCSRF_FREQCSR          5
+-#define IOCSRF_FREQSCALE        6
+-#define IOCSRF_DVFSV1           7
+-#define IOCSRF_GMOD             9
+-#define IOCSRF_VM               11
+-
+-#define VERSION_REG             0x0
+-#define FEATURE_REG             0x8
+-#define VENDOR_REG              0x10
+-#define CPUNAME_REG             0x20
+-#define MISC_FUNC_REG           0x420
+-#define IOCSRM_EXTIOI_EN        48
+-#define IOCSRM_EXTIOI_INT_ENCODE 49
+-
+-#define IOCSR_MEM_SIZE          0x428
+-
+ #define FCSR0_M1    0x1f         /* FCSR1 mask, Enables */
+ #define FCSR0_M2    0x1f1f0000   /* FCSR2 mask, Cause and Flags */
+ #define FCSR0_M3    0x300        /* FCSR3 mask, Round Mode */
 -- 
 2.34.1
 
