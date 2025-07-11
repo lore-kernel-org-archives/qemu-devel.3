@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59DECC83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 14:51:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98CB7C83F1B
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 15:03:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaF5g-0001UA-CY; Fri, 11 Jul 2025 10:51:08 -0400
+	id 1uaFGr-0003Sc-HW; Fri, 11 Jul 2025 11:02:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uaEqi-0004G6-EG
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:35:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uaF2Z-0006yq-FU
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:47:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uaEqd-0003PH-Ss
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:35:38 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uaF2V-0005fX-3F
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:47:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752244534;
+ s=mimecast20190719; t=1752245267;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GUkGjbaxVsbvPQsgz276snRgwCE5oM4+6BMtuVeSGVM=;
- b=KQH8PMplERBgURqh6uifEgYpDt/QH/LLGLfBtQUzEaMGgCTpqk1p+j6hzaRc2b2sEUU//s
- sOScvxRtA+e3LecB9aWLF4hrJ/7EMLnW8wGMHmScvY1qOlUC8VxPSFavfvsx6ib+Zqe2Db
- FMrQa4zUSf4+OnO7FvgQ4n3G5XqhO4A=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=CcLf7RPBGZWS3JvRxki85GIWm+Flls34Eod+sx2lJL8=;
+ b=R+YeTKbU3mv9lm9GvAnuoC+wOLo6hi79vXO8PdY6WTsCIWMYv880v+tdVvYCzSRsAVr5nB
+ +Cvws34ndIaXqN+GQFOFhmIDNlrO/5EwXYVvnSXThTnDJBbGemeiFqgemtKmg5bneml/Oz
+ D8dW6a6DvZbXJsTPOne/jHGF7UscWpQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-137-iQiKVl1uPEmgA59LDaq6cg-1; Fri,
- 11 Jul 2025 10:35:31 -0400
-X-MC-Unique: iQiKVl1uPEmgA59LDaq6cg-1
-X-Mimecast-MFC-AGG-ID: iQiKVl1uPEmgA59LDaq6cg_1752244530
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-404-UaC8JkYBMWOePx-XHz1dcg-1; Fri,
+ 11 Jul 2025 10:47:44 -0400
+X-MC-Unique: UaC8JkYBMWOePx-XHz1dcg-1
+X-Mimecast-MFC-AGG-ID: UaC8JkYBMWOePx-XHz1dcg_1752245263
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3EB6B19560B2; Fri, 11 Jul 2025 14:35:30 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6D93D1801207; Fri, 11 Jul 2025 14:47:43 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5A0DA19560A3; Fri, 11 Jul 2025 14:35:29 +0000 (UTC)
+ id F385219560A3; Fri, 11 Jul 2025 14:47:42 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id AEE2B21E6A27; Fri, 11 Jul 2025 16:35:26 +0200 (CEST)
+ id 56EDB21E6A27; Fri, 11 Jul 2025 16:47:40 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: Steve Sistare <steven.sistare@oracle.com>
 Cc: qemu-devel@nongnu.org,  John Snow <jsnow@redhat.com>,  Cleber Rosa
@@ -55,19 +54,18 @@ Cc: qemu-devel@nongnu.org,  John Snow <jsnow@redhat.com>,  Cleber Rosa
  Eduardo Habkost <eduardo@habkost.net>,  Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>,  Philippe Mathieu-Daude
  <philmd@linaro.org>
-Subject: Re: [PATCH V4 1/3] qom: qom-list-get
-In-Reply-To: <1752164694-215567-2-git-send-email-steven.sistare@oracle.com>
- (Steve Sistare's message of "Thu, 10 Jul 2025 09:24:52 -0700")
+Subject: Re: [PATCH V4 2/3] python: use qom-list-get
+In-Reply-To: <1752164694-215567-3-git-send-email-steven.sistare@oracle.com>
+ (Steve Sistare's message of "Thu, 10 Jul 2025 09:24:53 -0700")
 References: <1752164694-215567-1-git-send-email-steven.sistare@oracle.com>
- <1752164694-215567-2-git-send-email-steven.sistare@oracle.com>
-Date: Fri, 11 Jul 2025 16:35:26 +0200
-Message-ID: <87bjpqx0b5.fsf@pond.sub.org>
+ <1752164694-215567-3-git-send-email-steven.sistare@oracle.com>
+Date: Fri, 11 Jul 2025 16:47:40 +0200
+Message-ID: <871pqmwzqr.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -94,184 +92,81 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Steve Sistare <steven.sistare@oracle.com> writes:
 
-> Define the qom-list-get command, which fetches all the properties and
-> values for a list of paths.  This is faster than qom-list plus qom-get,
-> especially when fetching a large subset of the QOM tree.  Some managers
-> do so when starting a new VM, and this cost can be a substantial fraction
-> of start-up time.
-
-You give such nice rationale in your cover letter...  What about this:
-
-  Using qom-list and qom-get to get all the nodes and property values in
-  a QOM tree can take multiple seconds because it requires 1000's of
-  individual QOM requests.  Some managers fetch the entire tree or a
-  large subset of it when starting a new VM, and this cost is a
-  substantial fraction of start up time.
-
-  Define the qom-list-get command, which fetches all the properties and
-  values for a list of paths.  This can be much faster than qom-list
-  plus qom-get.  When getting an entire QOM tree, I measured a 10x
-  speedup in elapsed time.
-
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-
-I think you missed
-
-  Tested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-
-> ---
->  qapi/qom.json      | 50 ++++++++++++++++++++++++++++++++++++++++++++++++=
-++
->  qom/qom-qmp-cmds.c | 53 ++++++++++++++++++++++++++++++++++++++++++++++++=
-+++++
->  2 files changed, 103 insertions(+)
+> Use qom-list-get to speed up the qom-tree command.
 >
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index b133b06..49214d2 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -46,6 +46,34 @@
->              '*default-value': 'any' } }
->=20=20
->  ##
-> +# @ObjectPropertyValue:
-> +#
-> +# @name: the name of the property.
-> +#
-> +# @type: the type of the property, as described in @ObjectPropertyInfo.
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
-`ObjectPropertyInfo`
+Quick test...  Differences in output before and after match expectations
+(see appended diff).
 
-See John Snow's "[PATCH 00/18] QAPI: add cross-references to qapi docs"
-rewrites things so they become links in generated HTML.
+New version:
 
-> +#
-> +# @value: the value of the property.  Absent when the property cannot
-> +#     be read.
-> +#
-> +# Since 10.1
-> +##
-> +{ 'struct': 'ObjectPropertyValue',
-> +  'data': { 'name': 'str',
-> +            'type': 'str',
-> +            '*value': 'any' } }
-> +
-> +##
-> +# @ObjectPropertiesValues:
-> +#
-> +# @properties: a list of properties.
-> +#
-> +# Since 10.1
-> +##
-> +{ 'struct': 'ObjectPropertiesValues',
-> +  'data': { 'properties': [ 'ObjectPropertyValue' ] }}
-> +
-> +
-> +##
->  # @qom-list:
->  #
->  # This command will list any properties of a object given a path in
-> @@ -126,6 +154,28 @@
->    'allow-preconfig': true }
->=20=20
->  ##
-> +# @qom-list-get:
-> +#
-> +# List properties and their values for each object path in the input
-> +# list.
-> +#
-> +# @paths: The absolute or partial path for each object, as described
-> +#     in `qom-get`.
-> +#
-> +# Errors:
-> +#     - If any path is not valid or is ambiguous
-> +#
-> +# Returns: A list where each element is the result for the
-> +#     corresponding element of @paths.
-> +#
-> +# Since 10.1
-> +##
-> +{ 'command': 'qom-list-get',
-> +  'data': { 'paths': [ 'str' ] },
-> +  'returns': [ 'ObjectPropertiesValues' ],
-> +  'allow-preconfig': true }
-> +
-> +##
->  # @qom-set:
->  #
->  # This command will set a property from a object model path.
-> diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
-> index 293755f..57f1898 100644
-> --- a/qom/qom-qmp-cmds.c
-> +++ b/qom/qom-qmp-cmds.c
-> @@ -69,6 +69,59 @@ ObjectPropertyInfoList *qmp_qom_list(const char *path,=
- Error **errp)
->      return props;
->  }
->=20=20
-> +static void qom_list_add_property_value(Object *obj, ObjectProperty *pro=
-p,
-> +                                        ObjectPropertyValueList **props)
-> +{
-> +    ObjectPropertyValue *item =3D g_new0(ObjectPropertyValue, 1);
-> +
-> +    QAPI_LIST_PREPEND(*props, item);
-> +
-> +    item->name =3D g_strdup(prop->name);
-> +    item->type =3D g_strdup(prop->type);
-> +    item->value =3D object_property_get_qobject(obj, prop->name, NULL);
-> +}
-> +
-> +static ObjectPropertyValueList *qom_get_property_value_list(const char *=
-path,
-> +                                                            Error **errp)
-> +{
-> +    Object *obj;
-> +    ObjectProperty *prop;
-> +    ObjectPropertyIterator iter;
-> +    ObjectPropertyValueList *props =3D NULL;
-> +
-> +    obj =3D qom_resolve_path(path, errp);
-> +    if (obj =3D=3D NULL) {
-> +        return NULL;
-> +    }
-> +
-> +    object_property_iter_init(&iter, obj);
-> +    while ((prop =3D object_property_iter_next(&iter))) {
-> +        qom_list_add_property_value(obj, prop, &props);
-> +    }
-> +
-> +    return props;
-> +}
-> +
-> +ObjectPropertiesValuesList *qmp_qom_list_get(strList *paths, Error **err=
-p)
-> +{
-> +    ObjectPropertiesValuesList *head =3D NULL, **tail =3D &head;
-> +    strList *path;
-> +
-> +    for (path =3D paths; path; path =3D path->next) {
-> +        ObjectPropertiesValues *item =3D g_new0(ObjectPropertiesValues, =
-1);
-> +
-> +        QAPI_LIST_APPEND(tail, item);
-> +
-> +        item->properties =3D qom_get_property_value_list(path->value, er=
-rp);
-> +        if (!item->properties) {
-> +            qapi_free_ObjectPropertiesValuesList(head);
-> +            return NULL;
-> +        }
-> +    }
-> +
-> +    return head;
-> +}
-> +
->  void qmp_qom_set(const char *path, const char *property, QObject *value,
->                   Error **errp)
->  {
+    real    0m0.446s
+    user    0m0.062s
+    sys     0m0.017s
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Old version barfs a stack backtrace (appended), and is ~18x slower:
+
+    real    0m8.176s
+    user    0m0.395s
+    sys     0m0.126s
+
+Did you see the stack backtrace, too?
+
+Regardless
+Acked-by: Markus Armbruster <armbru@redhat.com>
+
+
+
+$ diff old new
+59c59
+<   rtc-time: {'tm_year': 125, 'tm_sec': 24, 'tm_hour': 14, 'tm_min': 39, 'tm_mon': 6, 'tm_mday': 11} (struct tm)
+---
+>   rtc-time: {'tm_year': 125, 'tm_sec': 28, 'tm_hour': 14, 'tm_min': 40, 'tm_mon': 6, 'tm_mday': 11} (struct tm)
+486c486
+<   date: {'tm_year': 125, 'tm_sec': 25, 'tm_hour': 14, 'tm_min': 39, 'tm_mon': 6, 'tm_mday': 11} (struct tm)
+---
+>   date: {'tm_year': 125, 'tm_sec': 28, 'tm_hour': 14, 'tm_min': 40, 'tm_mon': 6, 'tm_mday': 11} (struct tm)
+832c832
+<   legacy-memory: <EXCEPTION: Property 'qemu64-x86_64-cpu.legacy-memory' is not readable> (str)
+---
+>   legacy-memory: <EXCEPTION: property could not be read> (str)
+1109c1109
+<   crash-information: <EXCEPTION: No crash occurred> (GuestPanicInformation)
+---
+>   crash-information: <EXCEPTION: property could not be read> (GuestPanicInformation)
+1554c1554
+<   legacy-i8042: <EXCEPTION: Property 'vmmouse.legacy-i8042' is not readable> (str)
+---
+>   legacy-i8042: <EXCEPTION: property could not be read> (str)
+2436c2436
+<   legacy-iothread: <EXCEPTION: Property 'virtio-blk-device.legacy-iothread' is not readable> (str)
+---
+>   legacy-iothread: <EXCEPTION: property could not be read> (str)
+2493c2493
+<   legacy-iothread: <EXCEPTION: Property 'virtio-blk-device.legacy-iothread' is not readable> (str)
+---
+>   legacy-iothread: <EXCEPTION: property could not be read> (str)
+
+
+Exception ignored in: <function QEMUMonitorProtocol.__del__ at 0x7fcfcd080d60>
+Traceback (most recent call last):
+  File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.py", line 310, in __del__
+    self.close()
+  File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.py", line 281, in close
+    self._sync(
+  File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.py", line 102, in _sync
+    return self._aloop.run_until_complete(
+  File "/usr/lib64/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+  File "/usr/lib64/python3.13/asyncio/tasks.py", line 507, in wait_for
+    return await fut
+  File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protocol.py", line 399, in disconnect
+    await self._wait_disconnect()
+  File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protocol.py", line 719, in _wait_disconnect
+    await all_defined_tasks  # Raise Exceptions from the bottom half.
+  File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protocol.py", line 870, in _bh_loop_forever
+    await async_fn()
+RuntimeError: cannot reuse already awaited coroutine
 
 
