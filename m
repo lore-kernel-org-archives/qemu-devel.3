@@ -4,82 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A99B9C8303C
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 12:34:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A20E4C8303C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 12:34:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaCwQ-00086V-5X; Fri, 11 Jul 2025 08:33:26 -0400
+	id 1uaCwk-0000A2-55; Fri, 11 Jul 2025 08:33:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
- id 1uaCwK-0007rP-0Q
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 08:33:20 -0400
-Received: from mail-io1-xd36.google.com ([2607:f8b0:4864:20::d36])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
- id 1uaCwH-0005Ix-02
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 08:33:19 -0400
-Received: by mail-io1-xd36.google.com with SMTP id
- ca18e2360f4ac-874a68f6516so185686639f.2
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 05:33:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1752237193; x=1752841993; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=LW1lYEiAMLIEUwxfqjqDWqr5o3JxEe/oQ91DIyFoNMU=;
- b=BuUUs+2cgNYYoJU7n1Ky0fKA0lDPEjdHMy4vLpA+tTacoIT+lxZ13RmwSd4O2Ua75k
- /lmHJ9ryyUHHEqDwz+wgeu40DWstn1ElROh3gvK+bKOTFzUCTHRHY4+Me/TALtpUXJo+
- gOjeQV08hhite1A7GaY9Py82LadaXy735crlma9XV1CoLOhRaZDG26Xk5zmbyssSQ+L+
- OfhYFgX6vZpPAWj4wgdaBuIVnOpZ62aMsIodrnfjSIygm4HjIbi1A/azt+KXPqzSXVrs
- KeCOMnohHt+jCrZZRzRG+KDQAPBLn1x8jUCJE9PJ3ATC6+DagAtqu7MO2iq2RpzFhN/i
- d7YA==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uaCwe-000050-Q6
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 08:33:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uaCwY-0005Jm-SH
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 08:33:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752237206;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hbN2BdsccbwZLre1Ycit6b6TGOo3YENoILN0xCnAjBk=;
+ b=YSrS/jYTRGRuXm9pDE2ZaLrFHP5Mk7++R8J+i72bSFv8cez97xGS/aUUW2w89pU+W7YUjI
+ yBs00uPjbOb7Oooc72u/PRvWT0KWFXuKDpsUKc18TS/k39Y7nu3Up95/47PK2Jmq1YtpW5
+ 7/WRGKjlJmcMcgkdGo8Zo+kyD9X1YRE=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-635-nm_7A1HeOh2C3RSt2Cnu5g-1; Fri, 11 Jul 2025 08:33:25 -0400
+X-MC-Unique: nm_7A1HeOh2C3RSt2Cnu5g-1
+X-Mimecast-MFC-AGG-ID: nm_7A1HeOh2C3RSt2Cnu5g_1752237204
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a58939191eso1076891f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 05:33:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752237193; x=1752841993;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1752237204; x=1752842004;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=LW1lYEiAMLIEUwxfqjqDWqr5o3JxEe/oQ91DIyFoNMU=;
- b=W3QKMzXdMkNlpbthTYQ/CQ7cLhhhlc5duUkqNqxXDJNqqs3guTTc9cj68qku1LmIlR
- 4h120EgT+KmpoOhY3eMmt6F7jReu22StDZefFFZFs6m4yDxUPcWo3oEyuuzWt5r99+eo
- ohjnWN4r3XCI0HWN/u/2VIQsyWfSgDbVbe6G8hgpV7vNPFZwBJeGXvKr97S2yYH/ZPPA
- cf4bvzRJKR+uXn6dR1HX9oLeesFFPLQrwU6V5tf2wtG+WlCjBKnyp0RkuG7qfo+9t5MG
- dVuQcwoaz5xK2Z5Nlj55Kn30f8Y3wIwB3ai/PfBB5H2IC3ShZy949Yfa8Mplunow3xsh
- nong==
-X-Gm-Message-State: AOJu0YyHNm89GGSylSaakAY33U3hAEqxoJX5R5biYSILwH2r8atF9XmA
- aoK4HboV0RYW3Hh3FMWaId/sVaJfco/egAzvQV+QJO04U6rdPXinDQUndc3H/E/oxZclu5koSTt
- +cDQxvMVJiHJBe2xgpoarLxjXfRmjGduzkw==
-X-Gm-Gg: ASbGncuQ0DuJ9M4vabBkv/guVMKprw7C0nGkXAjyj84F4aX15mREWeW2Bu+VcQmo2Yf
- Q6QJbmL+27jdwMkxw1lAUZIQZAV7aXGeIm6Utz7iieKep7GhZXChwOUz7Gg/Rnm1UU2TSFb396L
- EGsdbp3hs4DIZNJBZd4yHsLf6hh9RQ0Z4Ad2QxB8BpT1ZuwMA4z/YsF3e1Nair6jVDZk7T3Nr+c
- l+uopaq
-X-Google-Smtp-Source: AGHT+IEuw47HSBfq1N/uF4qXuWS8tarUgJeRwxnHoKCSSR06tB4Fz2PmCSTGIwk1upPyyJ5l0yhDK+kkNpz3wnS7RXk=
-X-Received: by 2002:a05:6e02:152d:b0:3d8:2085:a188 with SMTP id
- e9e14a558f8ab-3e253278dddmr37447225ab.1.1752237192748; Fri, 11 Jul 2025
- 05:33:12 -0700 (PDT)
+ bh=hbN2BdsccbwZLre1Ycit6b6TGOo3YENoILN0xCnAjBk=;
+ b=co28J3vryevDjky7DZwRvXRZNVrl/HJumW/3+Fhj7TEkAT5tJ9/E59M4kg57mANB8C
+ OPlv/XI7dPc5r+0mvyxht7o7wjlOCtqShneBtIT19LdvnZWqE558gGFOIY5aFc9ff0Z/
+ XCfZXyq2vGaDgd8ibkOPUYPS8z8nU0EZdSJ7ttEAc2MBl6am4lCjlQHNhnTlsy5ALrdl
+ iI24ZSVRjUzpiZOkbRQTU7yLxuodTftCv+3vmx+PN58jRwk6GXUGIxx3auH6Y6OK+4UR
+ W6CfPr/vn1tF0rWLWIes75lbBRz7yohkcYpRjrvHAPb7lXi6lTwUOcGyHEvXK61q9ivI
+ /qGg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUagDLrj0IANYEMWvNeyFepmTGl+/A9hqW5a8diRVvkihNjWkdqe31KLMN1f/iWFtXZ9RBKkTe8gWaz@nongnu.org
+X-Gm-Message-State: AOJu0YzTlmO9AoPE2mMn8SBY9ykf6QoZlq2h6qQevZycULKHiRRHFSKi
+ 2i9PBZDX+9lAauUA+MjY/xpvtQOkV1RN21JDr0tiL97vHRIgdID3WSVYhbEmeW6lqi/dIwKkBPq
+ KJVdpha8FMcYv+Bm+lQdwYzBWRV1V+fbzFpPVFHqxmOmj83u6RqJBONF6
+X-Gm-Gg: ASbGncsJFt88NPvSZjzzSchh60O3EVXskfsV3A8Ai4GgeZzxvo0MENJH2T84gxVtav2
+ dm7dpHdNF139mzo1R0gLd5mtyG87iz99Xho25qj5pUALijNnGfjyL9gZ4A5KoFQuVmKQvu+AkVl
+ BgR5ckQy9KzcK0oOmuGgB0gPJBytfbx8oebc/BHCkJkKxX5dW0YEdEiR+H2jsgAqbXg2O8QqHQR
+ 65ykhwkTOq9beBd0aOTgLpVzwbg5ceVQFkpTLe/pVFlpw7VHtydvMZ0Kv909sWAKDTGYG3NN1nN
+ jiFrygf3heych4DZFoJi/Zpgp2vYh0+fgknxCbF1POl6e+MiS0zfZLdqUb4T3RF/B0ZVZtnSkIP
+ 9utZao9WPeSQ=
+X-Received: by 2002:adf:9d8e:0:b0:3a4:dfc2:bb60 with SMTP id
+ ffacd0b85a97d-3b5f189df70mr2833162f8f.26.1752237204146; 
+ Fri, 11 Jul 2025 05:33:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEKJYB7bbf61nne4kkkypi4BEqL8QMQSDG0VUizzJlfUq/jgqQKJORSTEyVeneI/gu9d50qjg==
+X-Received: by 2002:adf:9d8e:0:b0:3a4:dfc2:bb60 with SMTP id
+ ffacd0b85a97d-3b5f189df70mr2833120f8f.26.1752237203703; 
+ Fri, 11 Jul 2025 05:33:23 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b5e8e0d77asm4436732f8f.58.2025.07.11.05.33.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 11 Jul 2025 05:33:22 -0700 (PDT)
+Message-ID: <333016ec-f279-433e-8b1b-89647d68cb90@redhat.com>
+Date: Fri, 11 Jul 2025 14:33:21 +0200
 MIME-Version: 1.0
-References: <20250711110626.624534-1-jcksn@duck.com>
- <20250711110626.624534-2-jcksn@duck.com>
- <CAFEAcA8Z4OVDXUO+ZNe4sv2u=_vtuK_yv4vX44LjsiZKpjz4dw@mail.gmail.com>
-In-Reply-To: <CAFEAcA8Z4OVDXUO+ZNe4sv2u=_vtuK_yv4vX44LjsiZKpjz4dw@mail.gmail.com>
-From: Jackson Donaldson <jackson88044@gmail.com>
-Date: Fri, 11 Jul 2025 08:33:01 -0400
-X-Gm-Features: Ac12FXwBX43gmsPck6hLX6HUi5qurFG_XCE4QS2xRwGguyn3EaMBBAJnIhnUUAA
-Message-ID: <CAMyd1rRsf+ZEx9ZsHosOnMuEyQVK5TvOKZytm+P08CphByR2LA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] docs/system: arm: Add max78000 board description
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000006fa4620639a68388"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d36;
- envelope-from=jackson88044@gmail.com; helo=mail-io1-xd36.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 21/36] hw/arm/virt-acpi-build: Let non hotplug ports
+ support static acpi-index
+Content-Language: en-US
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, Jonathan.Cameron@huawei.com,
+ gustavo.romero@linaro.org, anisinha@redhat.com, mst@redhat.com,
+ shannon.zhaosl@gmail.com, pbonzini@redhat.com, philmd@linaro.org,
+ alex.bennee@linaro.org
+References: <20250708142437.1344644-1-eric.auger@redhat.com>
+ <20250708142437.1344644-22-eric.auger@redhat.com>
+ <20250711140335.7ba3c87c@fedora>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250711140335.7ba3c87c@fedora>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,60 +120,88 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006fa4620639a68388
-Content-Type: text/plain; charset="UTF-8"
 
-Confirmed.
--Jackson
 
-On Fri, Jul 11, 2025, 8:29 AM Peter Maydell <peter.maydell@linaro.org>
-wrote:
-
-> On Fri, 11 Jul 2025 at 12:06, Jackson Donaldson <jackson88044@gmail.com>
-> wrote:
-> >
-> > This adds the target guide for the max78000FTHR
-> >
-> > Signed-off-by: Jackson Donaldson <jcksn@duck.com>
-> > ---
+On 7/11/25 2:03 PM, Igor Mammedov wrote:
+> On Tue,  8 Jul 2025 16:23:03 +0200
+> Eric Auger <eric.auger@redhat.com> wrote:
 >
-> Checkpatch wants an SPDX line for this new file -- can
-> you confirm that I can mark it as GPL-2.0-or-later like
-> the C files, please?
+>> hw/arm/virt-acpi-build: Let non hotplug ports support static acpi-index
+>>
+>> Add the requested ACPI bits requested to support static acpi-index
+>> for non hotplug ports.
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+>> ---
+>>  hw/arm/virt-acpi-build.c | 12 ++++++++++++
+>>  hw/arm/Kconfig           |  2 ++
+>>  2 files changed, 14 insertions(+)
+>>
+>> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+>> index a2f31be9ec..1f936516b3 100644
+>> --- a/hw/arm/virt-acpi-build.c
+>> +++ b/hw/arm/virt-acpi-build.c
+>> @@ -34,6 +34,7 @@
+>>  #include "hw/core/cpu.h"
+>>  #include "hw/acpi/acpi-defs.h"
+>>  #include "hw/acpi/acpi.h"
+>> +#include "hw/acpi/pcihp.h"
+>>  #include "hw/nvram/fw_cfg_acpi.h"
+>>  #include "hw/acpi/bios-linker-loader.h"
+>>  #include "hw/acpi/aml-build.h"
+>> @@ -883,6 +884,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>>      const int *irqmap = vms->irqmap;
+>>      AcpiTable table = { .sig = "DSDT", .rev = 2, .oem_id = vms->oem_id,
+>>                          .oem_table_id = vms->oem_table_id };
+>> +    Aml *pci0_scope;
+>>  
+>>      acpi_table_begin(&table, table_data);
+>>      dsdt = init_aml_allocator();
+>> @@ -936,6 +938,16 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>>  
+>>      aml_append(dsdt, scope);
+>>  
+>> +    pci0_scope = aml_scope("\\_SB.PCI0");
+>> +
+>> +    aml_append(pci0_scope, build_pci_bridge_edsm());
+>> +    build_append_pci_bus_devices(pci0_scope, vms->bus);
+>> +    if (object_property_find(OBJECT(vms->bus), ACPI_PCIHP_PROP_BSEL)) {
+>> +        build_append_pcihp_slots(pci0_scope, vms->bus);
+>> +    }
+> this part seems to be hotplug specific, is it really necessary in this patch?
+Well I put this because it does not depend on
+ACPI_PM_PROP_ACPI_PCIHP_BRIDGE GED property as opposed to the other
+pieces added in [PATCH v6 23/36] hw/arm/virt-acpi-build: Modify the DSDT
+ACPI table to enable ACPI PCI hotplug and rather depends on the bus
+
+ACPI_PCIHP_PROP_BSEL property.
+
+The initial comment was to move that code generation outside of the
+ACPI_PM_PROP_ACPI_PCIHP_BRIDGE GED check. Thanks Eric
 >
-> thanks
-> -- PMM
->
+>> +
+>> +    aml_append(dsdt, pci0_scope);
+>> +
+>>      /* copy AML table into ACPI tables blob */
+>>      g_array_append_vals(table_data, dsdt->buf->data, dsdt->buf->len);
+>>  
+>> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+>> index 6ea86534d5..50153331ed 100644
+>> --- a/hw/arm/Kconfig
+>> +++ b/hw/arm/Kconfig
+>> @@ -34,6 +34,8 @@ config ARM_VIRT
+>>      select ACPI_HW_REDUCED
+>>      select ACPI_APEI
+>>      select ACPI_VIOT
+>> +    select ACPI_PCIHP
+>> +    select ACPI_PCI_BRIDGE
+>>      select VIRTIO_MEM_SUPPORTED
+>>      select ACPI_CXL
+>>      select ACPI_HMAT
 
---0000000000006fa4620639a68388
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div>Confirmed.</div><div dir=3D"auto">-Jackson<br><br><d=
-iv class=3D"gmail_quote gmail_quote_container" dir=3D"auto"><div dir=3D"ltr=
-" class=3D"gmail_attr">On Fri, Jul 11, 2025, 8:29 AM Peter Maydell &lt;<a h=
-ref=3D"mailto:peter.maydell@linaro.org">peter.maydell@linaro.org</a>&gt; wr=
-ote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;=
-border-left:1px #ccc solid;padding-left:1ex">On Fri, 11 Jul 2025 at 12:06, =
-Jackson Donaldson &lt;<a href=3D"mailto:jackson88044@gmail.com" target=3D"_=
-blank" rel=3D"noreferrer">jackson88044@gmail.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; This adds the target guide for the max78000FTHR<br>
-&gt;<br>
-&gt; Signed-off-by: Jackson Donaldson &lt;<a href=3D"mailto:jcksn@duck.com"=
- target=3D"_blank" rel=3D"noreferrer">jcksn@duck.com</a>&gt;<br>
-&gt; ---<br>
-<br>
-Checkpatch wants an SPDX line for this new file -- can<br>
-you confirm that I can mark it as GPL-2.0-or-later like<br>
-the C files, please?<br>
-<br>
-thanks<br>
--- PMM<br>
-</blockquote></div></div></div>
-
---0000000000006fa4620639a68388--
 
