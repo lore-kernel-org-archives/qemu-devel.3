@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3300C83F1B
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 13:40:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5B32C83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 13:40:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaDul-0005tA-4x; Fri, 11 Jul 2025 09:35:47 -0400
+	id 1uaDuy-0006gz-MU; Fri, 11 Jul 2025 09:36:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uaDu5-0004X8-1H
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:35:07 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1uaDuA-0004YB-Cj
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:35:12 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uaDu2-0003BB-N0
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:35:04 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3a510432236so1586098f8f.0
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 06:35:02 -0700 (PDT)
+ id 1uaDu7-0003PO-Cu
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:35:10 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4555f89b236so6495285e9.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 06:35:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752240901; x=1752845701; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752240906; x=1752845706; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=uTXqJiKgfiB3QVh055cqmNddLyPU05fki5TAKLA/ZXA=;
- b=bP4punfSNMliHszV4JtUpntRws9here+yeHCGzeZVXVC9O/uggG6U+jIBg9eZqLf88
- wbE6YA4CjjK/NZ6+pL9vwji6D+RbT44UVBripiGqIKv3rYThrKkoAjDaBYnhmpnXwfA+
- 9uPfN/4HC8xEQpmiHpVm1UGbxkL+rbuLNB3xNvknsP0vxPC2CmFJEjbcrgudvdHellHB
- Mb3G0mnCzVEyutmVoWvGPcPUnDHvTlSnOwlG7pEoTF5laxI9a9q50GQJGNMkCyLHih7T
- NXTUnzo71g701OdAF2X/muXRcdwfQ39IinNfYqYQNrD6t9ZXWM9+TYdnkDWFjCCrS40K
- /5CA==
+ :reply-to; bh=rt9y+/Q3kbLfenOke8pPv0fzPqohcdD2CUbik7idoc0=;
+ b=kgZ2YKtZBprQR4OyaTQv1ymLgXxFzYe25ThgNJ4EFCh4A24na/SyyCiAUedxyLcfIU
+ BLDM+jfAxS3RIKGy44s6G8OGthu9/NQv5X7fxzBoALxNAZ5jQCLy4HHzArBGQjAhqaGw
+ ltep/kHyhXT8TcLcgdUSOfjBCAkonXAHJTg3rNOnvVET2isRNUr7LE8YgkXf1/0OK3H+
+ OBVApXd69BA4mYzCFQsjurXlWyM56Gt92Wa6p5pvDLefjZFE37XfDWbZBF0VC1WMflHx
+ 3qW0eKDhFqEhX9wPzE0cSYjGxhcWZLRN1TvnSVK2KHrlxSz79m+ADSyeVsbUflM6JzRR
+ GMqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752240901; x=1752845701;
+ d=1e100.net; s=20230601; t=1752240906; x=1752845706;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uTXqJiKgfiB3QVh055cqmNddLyPU05fki5TAKLA/ZXA=;
- b=E9xKkRiz22ZnTbnuFzEkdyeZb2eJGT1lOSeztSbqeJAs10ZzkPexsQJ5Rhlg8aqYjM
- 3//u2/G4weiq8TXvrsg4CN6WaszOfhcjfu/XPeTjyyjYcMPEe3WnHRYFeggl3j2kKxe4
- J0JJe0g2anCxLF7rEYg4camMv6J8djLVIDe4WFRdgDuKMEXTRrVJbHhqfLjA/Icon4fb
- QKilj936lr2XnDRSJAsH7kqaru1mV/BJ7Dvx9qyrBCFcWkp9kQ1YHxA4Vrq3DcB/PM3U
- x1RpjBYmiYdljUX/tao1uZ2D+P21nzBQiAN2JNflNfVPifd4TD4qpfVvqJ6No880sg3m
- w7MA==
-X-Gm-Message-State: AOJu0YzcGs7lYZ9yQZaFuhJGzyclBo8QuX0Q0RvzT/n4+1wU2oUmLISN
- 7NdX4HuCaSL6nIuDlhQRusBUlzydT1e96ltCCRXACf1qDERt/QEFTwOKem64b7yDaBbXQk3im/5
- AwAm5
-X-Gm-Gg: ASbGncuIEEiFM1zsVO0LssyI1I7bgdfgubyVxWDhdQxhnKA78598NUY9hElsKWLq1O3
- CF6qBCxtJ96ie7mBAcXlvyjAaPS6nDxhmwrxU03kRhnwSo3az4B3BDMAVZ682/cLEZ0c1a6ZNlo
- 3zYjcI7z6DP1irZtKVqSlocY1W+ccNC/Xfw1C6Ag/5djlDdi9snL5d6dcnA2aWR5vsW2weBddPy
- KUy8tySx8xibKg6fSC3wwUdSmsor0HjHGZYGTqGozNpFv0ERpoOWnEQ5PB3fQ7aUzmj92+5jnYG
- SSJz9K7lciIBM9X24JatmvRjxVBO6JAmCwaMWfOTfj8yn+oWOGOuGTk5Edva7iMXCzlsaxqA+Gz
- ejLD482Nxx8jxu5f8GSEL1YQKclGa
-X-Google-Smtp-Source: AGHT+IE3ZGbVoWSIwDYDfxvxpuao+ZOWXY94HhVG7gXy/mK6vcCN3d5Jcac2K/D1PuW2dV/Eel99lQ==
-X-Received: by 2002:a05:6000:2089:b0:3a6:e1bb:a083 with SMTP id
- ffacd0b85a97d-3b5f2dd2e52mr2849125f8f.25.1752240900941; 
- Fri, 11 Jul 2025 06:35:00 -0700 (PDT)
+ bh=rt9y+/Q3kbLfenOke8pPv0fzPqohcdD2CUbik7idoc0=;
+ b=ULLT99CQRnFrseHGTlCMxrPZp+cNnj1+E91euRj2hsvKLt+/SMoOGDckJhDpL+J95T
+ mpixQ078WhTeUlNPrB1fY3/06Lbm7A9SC71HB9+W8egcweU6CHEwqU4qCWNOTBp/iLfs
+ PhVsqTuQIyYG94dCPCZ1l1Z+813SKzziYClQfeutEWKkveOa3shSA5d03h0VPl+w5DBS
+ D15m687sNIWgs3dyuEN+YCFa7iSC9qZEBf19q85d+7pN+ES2Nz3FUuTvAvEr5GgDpHbw
+ ti3mpdEyiQ3LiQrEqg1hvALGm2TM89bLRQnHkBeDofNc7ZAchKsVIm6rL6gnGGNNSATl
+ YMnA==
+X-Gm-Message-State: AOJu0YySFznZS6RAcXjIEkOtSXA2CK5cTAm+DgB+aME/Mx3Q5c98cZGI
+ 6lQz73TvBPnYAjJKoHNKCaefX6WcQdp8LC7NPDSD8Ib5VxYMi5q1jIiXO+2jG5UapgpYqsRWssS
+ +fnxN
+X-Gm-Gg: ASbGncv99khjugq8Imt/q7VF1X9AsyvwzIkJgQIVRUCcKfJakqmoCFHCo44F5T4v8KV
+ X+QqHmDKP4aeUy/3kK3fIGusvvPWNBrRwBdbssH+t1g9FJqkpgdEDlzYB/2fjeyoRwdkYNVHr+k
+ Ku54yOeGft2bmvbX8w6/7n4vnbgOJQ7W4hahy18bAWbwNS/nEpZuS7JfKiLTC7mx1VZxK2I1J9A
+ kxHvHrxvdVjYxEm6mSOOPL6TMs8HOW31aWpIIzrV2TCBtw0DYvPlNjJUKWCBrLoO3KJHGhLDSoF
+ nVAiG7WkswIeg5LEmf9y/MDhf2QjpHuGPak7ZyLH7vMn6E7Agz14Axhs0hk8Z4ooY0C1lBdbkNo
+ UyzwMug1ovP+LQ6VVEpjas7LE4Pe9HTjnrSD+x7g=
+X-Google-Smtp-Source: AGHT+IHCB//tHl9uAR1WVTQAjs3fDJrj+1/k6lV2nQkDwoFQxDNzEqrgDWqFN8s6mWaAZX0jDaTCzg==
+X-Received: by 2002:a05:600c:3595:b0:442:f8e7:25ef with SMTP id
+ 5b1f17b1804b1-454ec15e5c5mr30323905e9.11.1752240905739; 
+ Fri, 11 Jul 2025 06:35:05 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454d50df0cdsm89734145e9.25.2025.07.11.06.35.00
+ 5b1f17b1804b1-454d50df0cdsm89734145e9.25.2025.07.11.06.35.04
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Jul 2025 06:35:00 -0700 (PDT)
+ Fri, 11 Jul 2025 06:35:05 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 28/36] target/arm/kvm: Add helper to detect EL2 when using KVM
-Date: Fri, 11 Jul 2025 14:34:21 +0100
-Message-ID: <20250711133429.1423030-29-peter.maydell@linaro.org>
+Subject: [PULL 33/36] hw/arm/virt-acpi-build: Don't create ITS id mappings by
+ default
+Date: Fri, 11 Jul 2025 14:34:26 +0100
+Message-ID: <20250711133429.1423030-34-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250711133429.1423030-1-peter.maydell@linaro.org>
 References: <20250711133429.1423030-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,73 +100,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Haibo Xu <haibo.xu@linaro.org>
+From: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 
-Introduce query support for KVM_CAP_ARM_EL2.
+Commit d6afe18b7242 ("hw/arm/virt-acpi-build: Fix ACPI IORT and MADT tables
+when its=off") moved ITS group node generation under the its=on condition.
+However, it still creates rc_its_idmaps unconditionally, which results in
+duplicate ID mappings in the IORT table.
 
-Signed-off-by: Haibo Xu <haibo.xu@linaro.org>
-Signed-off-by: Miguel Luis <miguel.luis@oracle.com>
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250707164129.1167837-3-eric.auger@redhat.com
+Fixes:d6afe18b7242 ("hw/arm/virt-acpi-build: Fix ACPI IORT and MADT tables when its=off")
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Donald Dutile <ddutile@redhat.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/kvm_arm.h  | 7 +++++++
- target/arm/kvm-stub.c | 5 +++++
- target/arm/kvm.c      | 5 +++++
- 3 files changed, 17 insertions(+)
+ hw/arm/virt-acpi-build.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index 7dc83caed5c..b4cad051551 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -191,6 +191,13 @@ bool kvm_arm_sve_supported(void);
-  */
- bool kvm_arm_mte_supported(void);
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index c3b9b3f6ea4..0dfb8ec2c35 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -358,12 +358,6 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+         /* Sort the smmu idmap by input_base */
+         g_array_sort(rc_smmu_idmaps, iort_idmap_compare);
  
-+/**
-+ * kvm_arm_el2_supported:
-+ *
-+ * Returns true if KVM can enable EL2 and false otherwise.
-+ */
-+bool kvm_arm_el2_supported(void);
-+
- /**
-  * kvm_arm_get_max_vm_ipa_size:
-  * @ms: Machine state handle
-diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
-index 34e57fab011..c93462c5b9b 100644
---- a/target/arm/kvm-stub.c
-+++ b/target/arm/kvm-stub.c
-@@ -47,6 +47,11 @@ bool kvm_arm_mte_supported(void)
-     return false;
- }
+-        /*
+-         * Knowing the ID ranges from the RC to the SMMU, it's possible to
+-         * determine the ID ranges from RC that are directed to the ITS.
+-         */
+-        create_rc_its_idmaps(rc_its_idmaps, rc_smmu_idmaps);
+-
+         nb_nodes = 2; /* RC and SMMUv3 */
+         rc_mapping_count = rc_smmu_idmaps->len;
  
-+bool kvm_arm_el2_supported(void)
-+{
-+    return false;
-+}
-+
- /*
-  * These functions should never actually be called without KVM support.
-  */
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 8ab0d692d36..9fdf354f3bc 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -1763,6 +1763,11 @@ bool kvm_arm_aarch32_supported(void)
-     return kvm_check_extension(kvm_state, KVM_CAP_ARM_EL1_32BIT);
- }
- 
-+bool kvm_arm_el2_supported(void)
-+{
-+    return kvm_check_extension(kvm_state, KVM_CAP_ARM_EL2);
-+}
-+
- bool kvm_arm_sve_supported(void)
- {
-     return kvm_check_extension(kvm_state, KVM_CAP_ARM_SVE);
 -- 
 2.43.0
 
