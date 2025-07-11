@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61521C8303C
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:27:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1407FC83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:27:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaAwr-0000DN-19; Fri, 11 Jul 2025 06:25:45 -0400
+	id 1uaAws-0000JJ-VO; Fri, 11 Jul 2025 06:25:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uaAw8-00089C-1r
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:25:01 -0400
+ id 1uaAwG-0008DX-Nc
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:25:16 -0400
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uaAw5-0003Ck-TG
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:24:59 -0400
+ id 1uaAw9-0003HM-S8
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:25:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752229498; x=1783765498;
+ t=1752229502; x=1783765502;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=/dbJpXZ+WoEY+wWTUOHZZkTlAY66zw+zpoaPJAtvbjw=;
- b=KB5eJ/lhCbbZLWYhSzFGmHmepd5w3/URsTdPEWm47frT4PGpJCRhRMri
- CKLKY/Gj0Kpz0z8YboYBtOg0qCdn2WP+G44xCgGdFA1H81mVRj08W5MV1
- VqYFf7IkZr47nglcmFu3yWZwMwHR6AEKFdGSAVtbmnAGrUgz4nnvpuK0G
- Eo51FIksami26GHDs5woCkxHCdDVqJz/r4YmGTwGZNlAhqUyzm7zlKyuP
- LjOB7cGHV+EfscXLZNR4G+LMKba61ExyTJY4rzefrn5Ia+Cl9J/R85JW0
- 4fdknKOasEqrh52u/Tq2ognp86zaZXAnCyradOKfVW1EuHH8dLjvP5jwE Q==;
-X-CSE-ConnectionGUID: hugTJbURRXW2DrFtDmh99A==
-X-CSE-MsgGUID: WIEyWdgJQQi8TSMz40YYXA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11490"; a="65875719"
-X-IronPort-AV: E=Sophos;i="6.16,303,1744095600"; d="scan'208";a="65875719"
+ bh=5ap8zvZO5z+/80DTYVSm+1mfgstbSCOBY4FaHeUUS1Y=;
+ b=U7gRUad1fE1JLyQGJk3u0E884iBtvxlETSML2g8XdGxI2EpodwJAjn3k
+ Cb0DptN1wnk3uClujOEG0zMkijtV44zq0LBrdmki1fKWTB/e1MjqFgljq
+ FEcux0eA2OSG8pNNDYIcmDBWD2fnIqrW9EnWgQwybMpB7G/lypre7wUmq
+ bbUecgU244zBlwRrfUYtVF6LhyqmQ71h/YrMvTmn3wqm/0UkXrv4NoNCX
+ 9DKNQTsHDD1GYLLFxcjEzm4bMYlVJ+Tc0NpfD40h9vrBI+q2oRZ38tjWS
+ OzvNeEGzm64bfakU2l89cxVXU1Gzq5x5WnAG+3hUZSBzTDMZ+wcpvk/h/ g==;
+X-CSE-ConnectionGUID: N4a3gMf4SI2l3Uw4u1a10A==
+X-CSE-MsgGUID: FOZn7dcjSn2/xe6eVWX6RA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11490"; a="65875724"
+X-IronPort-AV: E=Sophos;i="6.16,303,1744095600"; d="scan'208";a="65875724"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Jul 2025 03:24:57 -0700
-X-CSE-ConnectionGUID: 09HYi2rTTCyvfFtcl4+bRQ==
-X-CSE-MsgGUID: Igb0fkN8SVuowwA6URQ3Iw==
+ 11 Jul 2025 03:25:00 -0700
+X-CSE-ConnectionGUID: dlZAN31cS/an2evuITFD1A==
+X-CSE-MsgGUID: ActYxfrtS0OdUP0UNmAd8Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,303,1744095600"; d="scan'208";a="156894398"
+X-IronPort-AV: E=Sophos;i="6.16,303,1744095600"; d="scan'208";a="156894404"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa008.fm.intel.com with ESMTP; 11 Jul 2025 03:24:54 -0700
+ by fmviesa008.fm.intel.com with ESMTP; 11 Jul 2025 03:24:57 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -55,9 +55,9 @@ Cc: Ewan Hai <ewanhai-oc@zhaoxin.com>, Jason Zeng <jason.zeng@intel.com>,
  Tejus GK <tejus.gk@nutanix.com>, Manish Mishra <manish.mishra@nutanix.com>,
  qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>
-Subject: [PATCH v2 5/9] i386/cpu: Add a "x-force-cpuid-0x1f" property
-Date: Fri, 11 Jul 2025 18:45:59 +0800
-Message-Id: <20250711104603.1634832-6-zhao1.liu@intel.com>
+Subject: [PATCH v2 6/9] i386/cpu: Enable 0x1f leaf for SierraForest by default
+Date: Fri, 11 Jul 2025 18:46:00 +0800
+Message-Id: <20250711104603.1634832-7-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250711104603.1634832-1-zhao1.liu@intel.com>
 References: <20250711104603.1634832-1-zhao1.liu@intel.com>
@@ -88,61 +88,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manish Mishra <manish.mishra@nutanix.com>
+Host SierraForest CPU has 0x1f leaf by default, so that enable it for
+Guest CPU by default as well.
 
-Add a "x-force-cpuid-0x1f" property so that CPU models can enable it and
-have 0x1f CPUID leaf natually as the Host CPU.
-
-The advantage is that when the CPU model's cache model is already
-consistent with the Host CPU, for example, SRF defaults to l2 per
-module & l3 per package, 0x1f can better help users identify the
-topology in the VM.
-
-Adding 0x1f for specific CPU models should not cause any trouble in
-principle. This property is only enabled for CPU models that already
-have 0x1f leaf on the Host, so software that originally runs normally on
-the Host won't encounter issues in the Guest with corresponding CPU
-model. Conversely, some software that relies on checking 0x1f might
-have problems in the Guest due to the lack of 0x1f [*]. In
-summary, adding 0x1f is also intended to further emulate the Host CPU
-environment.
-
-[*]: https://lore.kernel.org/qemu-devel/PH0PR02MB738410511BF51B12DB09BE6CF6AC2@PH0PR02MB7384.namprd02.prod.outlook.com/
-
-Signed-off-by: Manish Mishra <manish.mishra@nutanix.com>
-Co-authored-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-[Integrated and rebased 2 previous patches (ordered by post time)]
+Suggested-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 Tested-by: Yi Lai <yi1.lai@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Note:
-  This patch integrates the idea from 2 previous posted patches (ordered
-by post time)[1] [2], following the s-o-b policy of "Re-starting
-abandoned work" in docs/devel/code-provenance.rst.
-
-[1]: From Manish: https://lore.kernel.org/qemu-devel/20240722101859.47408-1-manish.mishra@nutanix.com/
-[2]: From Xiaoyao: https://lore.kernel.org/qemu-devel/20240813033145.279307-1-xiaoyao.li@intel.com/
----
 Changes since RFC:
- * Rebase and rename the property as "x-force-cpuid-0x1f". (Igor)
+ * Rename the property to "x-force-cpuid-0x1f". (Igor)
 ---
- target/i386/cpu.c | 1 +
- 1 file changed, 1 insertion(+)
+ target/i386/cpu.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 5676e5526f40..d27eeb1cb718 100644
+index d27eeb1cb718..2f19726a9397 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -9940,6 +9940,7 @@ static const Property x86_cpu_properties[] = {
-     DEFINE_PROP_BOOL("x-intel-pt-auto-level", X86CPU, intel_pt_auto_level,
-                      true),
-     DEFINE_PROP_BOOL("x-l1-cache-per-thread", X86CPU, l1_cache_per_core, true),
-+    DEFINE_PROP_BOOL("x-force-cpuid-0x1f", X86CPU, force_cpuid_0x1f, false),
- };
- 
- #ifndef CONFIG_USER_ONLY
+@@ -5387,8 +5387,11 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+             },
+             {
+                 .version = 3,
+-                .note = "with srf-sp cache model",
++                .note = "with srf-sp cache model and 0x1f leaf",
+                 .cache_info = &xeon_srf_cache_info,
++                .props = (PropValue[]) {
++                    { "x-force-cpuid-0x1f", "on" },
++                }
+             },
+             { /* end of list */ },
+         },
 -- 
 2.34.1
 
