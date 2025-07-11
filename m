@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44AF1C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4BEAC83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:26:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaAvx-0007oR-HR; Fri, 11 Jul 2025 06:24:49 -0400
+	id 1uaAw5-00087N-Sh; Fri, 11 Jul 2025 06:24:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uaAvu-0007bc-Jm
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:24:46 -0400
+ id 1uaAw1-00080k-AE
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:24:53 -0400
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uaAvs-0003CN-Es
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:24:46 -0400
+ id 1uaAvy-0003Ck-Ux
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:24:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752229484; x=1783765484;
+ t=1752229491; x=1783765491;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=KIr2g0JnKDMwV4ZoKQsQF3kouerwie0L3KI9Fyd0AeI=;
- b=GaEY7YXorXjQCjNb5h7qgcS5xqVKhOZ2w29QoeePrrcOWyNK8aXpqGCd
- U2rXEbMOVTehCu1vB4emost1GZq6eVivtlYj8t3z+L4c3o3E1U+F7WgaD
- QCugP8T8cEuxTx8VhNITkE0CNS0UlExXJZD/qhGkOqRFGpKMMiZLtyFmh
- VVw00CErkgtu/CsZ3DApNH9BQSQgv5b45jWvPCWAHCCH+oRnQs0GYhYNb
- 3V8gK6RObENvNAnaKfKD2GaKoapN5bEriux+6Lyq4OM/7mRynFqbia7TJ
- WfsBg0dRa68yRlvIsWqUJdhXZ6MAYQy7v+t9LkuKugP3bwe1diu8BDSqO g==;
-X-CSE-ConnectionGUID: uvmBqg5WRNuS+BRoRSn3jQ==
-X-CSE-MsgGUID: yItsatedTwSduRL5TqqbNQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11490"; a="65875698"
-X-IronPort-AV: E=Sophos;i="6.16,303,1744095600"; d="scan'208";a="65875698"
+ bh=06OcXVaxydeMp3sy0wKbWkoF3mbKesOZtzyfFSAZLRw=;
+ b=jGF8qoSLqueMnu1BtuzwlGxwAOHy0OV4MHe5eWXcnmdFIEkyRFinihnb
+ wne47u1KObveFg76YEx/B4UqrEqn8oDqh5O83M1czgyEDL3KkI5btOlqn
+ 4JWYpjr8i1gQIIAcAwC1PGkXokVa9K6X8AA7Ik/v6e6EBYCUP54AUao+9
+ ortW1WK978qTi7OlaqE6vZeT+byiyu1cnKfhYtmrOWVTWEXRCDnKAXwow
+ IZmN4x4Xfo+d+8peiBM6ig0QLERC1OvwudTusCaT6EtGOXXtfrMeAecVN
+ kzenvK1vtPn0MiuzujYGV6JJx3Oes4XjpI0ZDyi1pqnTwFNzgXHYus1R/ Q==;
+X-CSE-ConnectionGUID: Dvo9zlOJQNOYR5awB/cxzg==
+X-CSE-MsgGUID: DcHPtLUaQgaCollonLgKwQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11490"; a="65875708"
+X-IronPort-AV: E=Sophos;i="6.16,303,1744095600"; d="scan'208";a="65875708"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Jul 2025 03:24:43 -0700
-X-CSE-ConnectionGUID: wrI5XKviTy6Bt+nM7K14bA==
-X-CSE-MsgGUID: Ns3+FlWyT0CUlFiyZfF5Zg==
+ 11 Jul 2025 03:24:50 -0700
+X-CSE-ConnectionGUID: 1X/Rxy0oRcOUEC31dT+taA==
+X-CSE-MsgGUID: S5Gbzhy/TA+8p0gI5AEzPg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,303,1744095600"; d="scan'208";a="156894352"
+X-IronPort-AV: E=Sophos;i="6.16,303,1744095600"; d="scan'208";a="156894379"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa008.fm.intel.com with ESMTP; 11 Jul 2025 03:24:39 -0700
+ by fmviesa008.fm.intel.com with ESMTP; 11 Jul 2025 03:24:47 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -55,9 +55,9 @@ Cc: Ewan Hai <ewanhai-oc@zhaoxin.com>, Jason Zeng <jason.zeng@intel.com>,
  Tejus GK <tejus.gk@nutanix.com>, Manish Mishra <manish.mishra@nutanix.com>,
  qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, Tao Su <tao1.su@linux.intel.com>
-Subject: [PATCH v2 1/9] i386/cpu: Introduce cache model for SierraForest
-Date: Fri, 11 Jul 2025 18:45:55 +0800
-Message-Id: <20250711104603.1634832-2-zhao1.liu@intel.com>
+Subject: [PATCH v2 3/9] i386/cpu: Introduce cache model for SapphireRapids
+Date: Fri, 11 Jul 2025 18:45:57 +0800
+Message-Id: <20250711104603.1634832-4-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250711104603.1634832-1-zhao1.liu@intel.com>
 References: <20250711104603.1634832-1-zhao1.liu@intel.com>
@@ -89,17 +89,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the cache model to SierraForest (v3) to better emulate its
+Add the cache model to SapphireRapids (v4) to better emulate its
 environment.
 
-The cache model is based on SierraForest-SP (Scalable Performance):
+The cache model is based on SapphireRapids-SP (Scalable Performance):
 
       --- cache 0 ---
       cache type                         = data cache (1)
       cache level                        = 0x1 (1)
       self-initializing cache level      = true
       fully associative cache            = false
-      maximum IDs for CPUs sharing cache = 0x0 (0)
+      maximum IDs for CPUs sharing cache = 0x1 (1)
+      maximum IDs for cores in pkg       = 0x3f (63)
+      system coherency line size         = 0x40 (64)
+      physical line partitions           = 0x1 (1)
+      ways of associativity              = 0xc (12)
+      number of sets                     = 0x40 (64)
+      WBINVD/INVD acts on lower caches   = false
+      inclusive to lower caches          = false
+      complex cache indexing             = false
+      number of sets (s)                 = 64
+      (size synth)                       = 49152 (48 KB)
+      --- cache 1 ---
+      cache type                         = instruction cache (2)
+      cache level                        = 0x1 (1)
+      self-initializing cache level      = true
+      fully associative cache            = false
+      maximum IDs for CPUs sharing cache = 0x1 (1)
       maximum IDs for cores in pkg       = 0x3f (63)
       system coherency line size         = 0x40 (64)
       physical line partitions           = 0x1 (1)
@@ -110,54 +126,38 @@ The cache model is based on SierraForest-SP (Scalable Performance):
       complex cache indexing             = false
       number of sets (s)                 = 64
       (size synth)                       = 32768 (32 KB)
-      --- cache 1 ---
-      cache type                         = instruction cache (2)
-      cache level                        = 0x1 (1)
-      self-initializing cache level      = true
-      fully associative cache            = false
-      maximum IDs for CPUs sharing cache = 0x0 (0)
-      maximum IDs for cores in pkg       = 0x3f (63)
-      system coherency line size         = 0x40 (64)
-      physical line partitions           = 0x1 (1)
-      ways of associativity              = 0x8 (8)
-      number of sets                     = 0x80 (128)
-      WBINVD/INVD acts on lower caches   = false
-      inclusive to lower caches          = false
-      complex cache indexing             = false
-      number of sets (s)                 = 128
-      (size synth)                       = 65536 (64 KB)
       --- cache 2 ---
       cache type                         = unified cache (3)
       cache level                        = 0x2 (2)
       self-initializing cache level      = true
       fully associative cache            = false
-      maximum IDs for CPUs sharing cache = 0x7 (7)
+      maximum IDs for CPUs sharing cache = 0x1 (1)
       maximum IDs for cores in pkg       = 0x3f (63)
       system coherency line size         = 0x40 (64)
       physical line partitions           = 0x1 (1)
       ways of associativity              = 0x10 (16)
-      number of sets                     = 0x1000 (4096)
+      number of sets                     = 0x800 (2048)
       WBINVD/INVD acts on lower caches   = false
       inclusive to lower caches          = false
       complex cache indexing             = false
-      number of sets (s)                 = 4096
-      (size synth)                       = 4194304 (4 MB)
+      number of sets (s)                 = 2048
+      (size synth)                       = 2097152 (2 MB)
       --- cache 3 ---
       cache type                         = unified cache (3)
       cache level                        = 0x3 (3)
       self-initializing cache level      = true
       fully associative cache            = false
-      maximum IDs for CPUs sharing cache = 0x1ff (511)
+      maximum IDs for CPUs sharing cache = 0x7f (127)
       maximum IDs for cores in pkg       = 0x3f (63)
       system coherency line size         = 0x40 (64)
       physical line partitions           = 0x1 (1)
-      ways of associativity              = 0xc (12)
-      number of sets                     = 0x24000 (147456)
+      ways of associativity              = 0xf (15)
+      number of sets                     = 0x10000 (65536)
       WBINVD/INVD acts on lower caches   = false
       inclusive to lower caches          = false
       complex cache indexing             = true
-      number of sets (s)                 = 147456
-      (size synth)                       = 113246208 (108 MB)
+      number of sets (s)                 = 65536
+      (size synth)                       = 62914560 (60 MB)
       --- cache 4 ---
       cache type                         = no more caches (0)
 
@@ -173,17 +173,14 @@ Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
  1 file changed, 96 insertions(+)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 7f88fe0c8697..a97ee3c2af43 100644
+index 4ce063fb6492..e9f3434b096c 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -2878,6 +2878,97 @@ static const CPUCaches epyc_turin_cache_info = {
-         .no_invd_sharing = true,
-         .complex_indexing = false,
-         .share_level = CPU_TOPOLOGY_LEVEL_DIE,
-+    }
-+};
-+
-+static const CPUCaches xeon_srf_cache_info = {
+@@ -2881,6 +2881,97 @@ static const CPUCaches epyc_turin_cache_info = {
+     }
+ };
+ 
++static const CPUCaches xeon_spr_cache_info = {
 +    .l1d_cache = &(CPUCacheInfo) {
 +        /* CPUID 0x4.0x0.EAX */
 +        .type = DATA_CACHE,
@@ -193,7 +190,7 @@ index 7f88fe0c8697..a97ee3c2af43 100644
 +        /* CPUID 0x4.0x0.EBX */
 +        .line_size = 64,
 +        .partitions = 1,
-+        .associativity = 8,
++        .associativity = 12,
 +
 +        /* CPUID 0x4.0x0.ECX */
 +        .sets = 64,
@@ -203,7 +200,7 @@ index 7f88fe0c8697..a97ee3c2af43 100644
 +        .inclusive = false,
 +        .complex_indexing = false,
 +
-+        .size = 32 * KiB,
++        .size = 48 * KiB,
 +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
 +    },
 +    .l1i_cache = &(CPUCacheInfo) {
@@ -218,14 +215,14 @@ index 7f88fe0c8697..a97ee3c2af43 100644
 +        .associativity = 8,
 +
 +        /* CPUID 0x4.0x1.ECX */
-+        .sets = 128,
++        .sets = 64,
 +
 +        /* CPUID 0x4.0x1.EDX */
 +        .no_invd_sharing = false,
 +        .inclusive = false,
 +        .complex_indexing = false,
 +
-+        .size = 64 * KiB,
++        .size = 32 * KiB,
 +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
 +    },
 +    .l2_cache = &(CPUCacheInfo) {
@@ -240,15 +237,15 @@ index 7f88fe0c8697..a97ee3c2af43 100644
 +        .associativity = 16,
 +
 +        /* CPUID 0x4.0x2.ECX */
-+        .sets = 4096,
++        .sets = 2048,
 +
 +        /* CPUID 0x4.0x2.EDX */
 +        .no_invd_sharing = false,
 +        .inclusive = false,
 +        .complex_indexing = false,
 +
-+        .size = 4 * MiB,
-+        .share_level = CPU_TOPOLOGY_LEVEL_MODULE,
++        .size = 2 * MiB,
++        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
 +    },
 +    .l3_cache = &(CPUCacheInfo) {
 +        /* CPUID 0x4.0x3.EAX */
@@ -259,32 +256,35 @@ index 7f88fe0c8697..a97ee3c2af43 100644
 +        /* CPUID 0x4.0x3.EBX */
 +        .line_size = 64,
 +        .partitions = 1,
-+        .associativity = 12,
++        .associativity = 15,
 +
 +        /* CPUID 0x4.0x3.ECX */
-+        .sets = 147456,
++        .sets = 65536,
 +
 +        /* CPUID 0x4.0x3.EDX */
 +        .no_invd_sharing = false,
 +        .inclusive = false,
 +        .complex_indexing = true,
 +
-+        .size = 108 * MiB,
++        .size = 60 * MiB,
 +        .share_level = CPU_TOPOLOGY_LEVEL_SOCKET,
-     },
- };
- 
-@@ -5003,6 +5094,11 @@ static const X86CPUDefinition builtin_x86_defs[] = {
++    },
++};
++
+ static const CPUCaches xeon_gnr_cache_info = {
+     .l1d_cache = &(CPUCacheInfo) {
+         /* CPUID 0x4.0x0.EAX */
+@@ -4887,6 +4978,11 @@ static const X86CPUDefinition builtin_x86_defs[] = {
                      { /* end of list */ }
                  }
              },
 +            {
-+                .version = 3,
-+                .note = "with srf-sp cache model",
-+                .cache_info = &xeon_srf_cache_info,
++                .version = 4,
++                .note = "with spr-sp cache model",
++                .cache_info = &xeon_spr_cache_info,
 +            },
-             { /* end of list */ },
-         },
+             { /* end of list */ }
+         }
      },
 -- 
 2.34.1
