@@ -4,90 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A248C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:46:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F81CC83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 11:01:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaBG9-00079N-Mu; Fri, 11 Jul 2025 06:45:41 -0400
+	id 1uaBUg-0002R7-Dp; Fri, 11 Jul 2025 07:00:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaBFl-000740-9b
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:45:19 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaBFh-00088J-M8
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:45:17 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-451d3f72391so19498685e9.3
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 03:45:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752230712; x=1752835512; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jF06BaIoqQ4o5qrjHCHKDptQ8Bx8plMl4UyhaNJzVwU=;
- b=Q8tDCLlW3++fyJlig2HeYmlEQohwHNHMwCMT69uP+I88o1A38bwUQSoVTW872HIKqS
- bA1Bwiks/I7/qSb+EkGpLajYl/Tz9UGt3DE2rLy+3kdNtgcLEG18zrLhaHtNdu7lDW95
- BYXtwkJgNIWOGDtn1Jm5kGm5l2NdK0IYlgMVQri9+6QqQwVkgqOfvRwrttusy8PuyDlB
- ni4Pepa+AtHC1hzH4hcwuuOvxLSeNRJTACNyqlZm2HTVPyHk7Rw0RqMY3d0ez6LGK7pP
- o08b+dqgGc/7O+yeyGEzSNhJJkZDkx/X+C/jErk2nYwdQITtpwFFqKuJ/4MjSJTzMbcz
- EgWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752230712; x=1752835512;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jF06BaIoqQ4o5qrjHCHKDptQ8Bx8plMl4UyhaNJzVwU=;
- b=fpQGTan/C3E2m0Ig7AdCKCJ9N3R/WeLwBekhsEQZ5qOmSvkPeOHljell3OjKuipcY0
- 9+TDJhXPa9Wu4uVoP5NHzrDrntIsDpF6j10OeGc9/88obKroPve0TR/nuKew8rO9jFOG
- knsifS2nC4a/p+dEofmySRMcY5So/bQRkApEByLZRRfYL3TaNS7JW5/j5TG68HOx42BH
- MpMGfbACVFLnz/Gafbfq2W45UROH/E2TN7HVPXuy2PhWyj0dSfgNv4LpBU+/QyxUBFrh
- ophYNiDkS0nmnqW+XCJpwxWlNjFesxooWHJ0RxUASpKHnA3nniq1seCYyvTEsjRgVr8H
- CskA==
-X-Gm-Message-State: AOJu0Yxdf6X2NhOxrsvvpRMVROfpThJpLzTE8KjItTbnpVANfC4PimZY
- PTcRhO/GiI30K4rCutuowyhmE0T0ElWKhlCyOM5HCV314nsSnxT0VwjW7LoTKbLKevo=
-X-Gm-Gg: ASbGnct4y94DwMVA4dpTWPfuoyHZmH8tSFVwiVlapZya414u4J8Llu5kfofod2bi9b2
- Tok2foq6MuDUd0MQbgqoz5d/p+k8zLlnC13dYcBqYA/xvAor9IdqfWafd+dGuWUxhWPybXtUspA
- 9Crul5f3sOhs2s2ookr+c26H06eBHh7juGl0QUeD3a41w9qQXG7RtY2Y8wPwZOl1/s//W4XaQU5
- g/Cn493OG52Hyem3IBiqYKgwdVtDnttX5AHiEEMaXeA2o+lHD+3IO21MX/YRrAu8jBt3EhjWycQ
- l9Zdx8yNfF1oau7tU4vvmhX3BwbZZGWbak/pTrNqCHOmGP544LOT24/Adw3ROV/l1t6AC9+FWH1
- Jpeso0dEaDAb9BoW3hjJOmUl2g6SqUFDkt4BE9VTMgrg54DrqUlm1PEWy8aqWvi1g3jrTxZseqC
- Pc8fZj
-X-Google-Smtp-Source: AGHT+IEAlBc/SiofnuLerJTNNIMWGHIeBqYEYsVL7S8eYentnkT4kTA1eiz1utBHFePEp2OYvmk5Jg==
-X-Received: by 2002:a05:600c:1c95:b0:453:86cc:739c with SMTP id
- 5b1f17b1804b1-454ec14a50bmr22232225e9.1.1752230711651; 
- Fri, 11 Jul 2025 03:45:11 -0700 (PDT)
-Received: from [192.168.1.47] (lfbn-mon-1-587-20.w2-4.abo.wanadoo.fr.
- [2.4.165.20]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e0d5f5sm4155257f8f.56.2025.07.11.03.45.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Jul 2025 03:45:11 -0700 (PDT)
-Message-ID: <9a4e5e05-f96c-4e8f-8b8a-a5480267e789@linaro.org>
-Date: Fri, 11 Jul 2025 12:45:10 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 09/36] accel/tcg: Unregister the RCU before exiting RR
- thread
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uaBUd-0002PE-Vv
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 07:00:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uaBUb-0002Sj-3W
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 07:00:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752231633;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rLCWNxUXPPMawzGWT7m+bukimor9vbjEs2nl2e45Qfk=;
+ b=a50aQC1CGjHeydR7jAixaNR4knSJSJbWGXQXNv6smaFwRnGrT4tIRuQJpvqG4LG9yC7vgG
+ Vtqwj2tN57WqDeKxowYwp0p4hjETgSIPbirciml0+itr6aho6YPS7Lf5bVTBbspBbcpuo8
+ utdbmTzsKtUCFkhW0NXfUBTPoVkxvpY=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-393-ZPruonX7Mbqxx-J9LEPlBQ-1; Fri,
+ 11 Jul 2025 07:00:31 -0400
+X-MC-Unique: ZPruonX7Mbqxx-J9LEPlBQ-1
+X-Mimecast-MFC-AGG-ID: ZPruonX7Mbqxx-J9LEPlBQ_1752231630
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 33CD019560AA; Fri, 11 Jul 2025 11:00:30 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.102])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 083D91977000; Fri, 11 Jul 2025 11:00:27 +0000 (UTC)
+Date: Fri, 11 Jul 2025 12:00:24 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20250704132439.25743-1-philmd@linaro.org>
- <20250704132439.25743-3-philmd@linaro.org>
- <CAFEAcA8e4jcoBup890sjNFmOkSJqCdC4JpDJT1H_OZS6n6=xhg@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA8e4jcoBup890sjNFmOkSJqCdC4JpDJT1H_OZS6n6=xhg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH] meson: Add most 3rd-party includes as system includes
+Message-ID: <aHDuyBl4rc4eWvIn@redhat.com>
+References: <20250617203435.41490-1-shentey@gmail.com>
+ <CAFEAcA_cfg5je7Nx-qsQoB=cY7KRYan1+wXhWztoLydnjpg15Q@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+In-Reply-To: <CAFEAcA_cfg5je7Nx-qsQoB=cY7KRYan1+wXhWztoLydnjpg15Q@mail.gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,56 +88,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/7/25 16:33, Peter Maydell wrote:
-> On Fri, 4 Jul 2025 at 14:25, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> Although unreachable, still unregister the RCU before exiting
->> the thread, as documented in "qemu/rcu.h":
->>
->>   /*
->>    * Important !
->>    *
->>    * Each thread containing read-side critical sections must be registered
->>    * with rcu_register_thread() before calling rcu_read_lock().
->>    * rcu_unregister_thread() should be called before the thread exits.
->>    */
->>
->> Unregister the RCU to be on par with what is done for other
->> accelerators.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Acked-by: Richard Henderson <richard.henderson@linaro.org>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
->> Message-Id: <20250702185332.43650-66-philmd@linaro.org>
->> ---
->>   accel/tcg/tcg-accel-ops-rr.c | 2 ++
->>   1 file changed, 2 insertions(+)
->>
->> diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
->> index 6eec5c9eee9..a578698d071 100644
->> --- a/accel/tcg/tcg-accel-ops-rr.c
->> +++ b/accel/tcg/tcg-accel-ops-rr.c
->> @@ -302,6 +302,8 @@ static void *rr_cpu_thread_fn(void *arg)
->>           rr_deal_with_unplugged_cpus();
->>       }
->>
->> +    rcu_unregister_thread();
->> +
->>       g_assert_not_reached();
->>   }
+On Fri, Jul 11, 2025 at 11:45:08AM +0100, Peter Maydell wrote:
+> On Tue, 17 Jun 2025 at 21:35, Bernhard Beschow <shentey@gmail.com> wrote:
+> >
+> > When compiling QEMU against fuse3-3.17.1 with --enable-werror the build fails
+> > with:
+> >
+> >   In file included from ../src/block/export/fuse.c:33:
+> >   /usr/include/fuse3/fuse.h:959:5: error: redundant redeclaration of ‘fuse_main_real_versioned’ [-Werror=redundant-decls]
+> >     959 | int fuse_main_real_versioned(int argc, char *argv[],
+> >         |     ^~~~~~~~~~~~~~~~~~~~~~~~
+> >   /usr/include/fuse3/fuse.h:885:5: note: previous declaration of ‘fuse_main_real_versioned’ with type ‘int(int,  char **, const struct fuse_operations *, size_t,  struct libfuse_version *, void *)’ {aka ‘int(int,  char **, const struct fuse_operations *, long unsigned int,  struct libfuse_version *, void *)’}
+> >     885 | int fuse_main_real_versioned(int argc, char *argv[],
+> >         |     ^~~~~~~~~~~~~~~~~~~~~~~~
+> >   cc1: all warnings being treated as errors
+> >
+> > That is, a fuse header triggers a warning within itself. Since QEMU adds the
+> > fuse3 include path via `-I`, the compiler thinks that the header is part of the
+> > QEMU project, and thus raises a warning. The compiler can be told to ignore
+> > warnings within 3rd party headers by adding these paths via `-isystem`. Fix the
+> > above build failure by marking fuse as system dependency. While at it mark
+> > every 3rd-party dependency as system dependency to prevent similar issues in the
+> > future but skip glib since that results in glib include paths to be omitted from
+> > bindgen in case of a Rust build.
 > 
-> This has reintroduced CID 1547782 (unreachable code).
+> The problem with this is that -isystem does not only do "suppress
+> warnings in these headers" -- it also alters the search order
+> for includes, in a way that can sometimes cause problems:
+> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70129
+> So this isn't completely risk-free, though I think meson tries to
+> avoid some of this by doing something a bit more complex than a
+> pure 's/-I/-isystem/'.
 > 
-> We can't get to this point, so why are we trying to call a
-> function here ? This is not a place where the thread can exit.
+> We would also lose the warnings about e.g. use of deprecated
+> functions in our dependencies.
+> 
+> All that said, this might still be the best tradeoff.
 
-The goal is to unify accelerators vcpu thread logic and
-eventually remove AccelOpsClass::create_vcpu_thread(), superseded
-by AccelOpsClass::cpu_thread_routine(). I couldn't finish RR for
-10.1 but squeezed this patch in. Let's revert it, and I'll
-re-commit it later.
+FWIW, the actual bug mentioned here is a clear regression & mistake in
+libfuse3 3.17.1 only, that they really should fix. I've filed this:
+
+  https://github.com/libfuse/libfuse/issues/1282
+
+and will likely send a PR too later.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
