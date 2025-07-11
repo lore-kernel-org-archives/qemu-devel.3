@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D6E9C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 12:30:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A99B9C8303C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 12:34:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaCsu-0004Q5-I6; Fri, 11 Jul 2025 08:29:48 -0400
+	id 1uaCwQ-00086V-5X; Fri, 11 Jul 2025 08:33:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uaCsm-0004OO-HX
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 08:29:42 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
+ id 1uaCwK-0007rP-0Q
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 08:33:20 -0400
+Received: from mail-io1-xd36.google.com ([2607:f8b0:4864:20::d36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uaCsi-0004f8-M2
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 08:29:39 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-70f147b5a52so15435877b3.3
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 05:29:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
+ id 1uaCwH-0005Ix-02
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 08:33:19 -0400
+Received: by mail-io1-xd36.google.com with SMTP id
+ ca18e2360f4ac-874a68f6516so185686639f.2
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 05:33:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752236973; x=1752841773; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1752237193; x=1752841993; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Pu2rmRk0Olg5YPTNdz5DW+mcZTwlyaKbAfAMIV/bNaU=;
- b=VuaidlsQomUfOfBaG2R4KhytmKNXJTpIlAGMssh7TR9sPek3JJ/3VUJ/TxcmdNYfZd
- LECwd32gcVmxbLfS6n36KLmYclR6Iw0xLGjzySkHTSGxqBQJ5NfA73nRAUVi/bzCbO6z
- AXLDzSUB71buUgKjL7i63LWM+uXCtpXXQWuOd8/6vOf0ogXsbFJ9gNxnGmO15cVtENGu
- 1x3vX+a8qr3WK6Zi2meMkXTpysLvAktQaO4DmzYbDivEioL5KeUOZ8fHs1h3C10T9McB
- duOmKQUpb6Ba8GBvugsewhbsScpvi68iwt+AfUyPoojbAHf6yaTDcej8J5G5YE1OYZTp
- F2xQ==
+ bh=LW1lYEiAMLIEUwxfqjqDWqr5o3JxEe/oQ91DIyFoNMU=;
+ b=BuUUs+2cgNYYoJU7n1Ky0fKA0lDPEjdHMy4vLpA+tTacoIT+lxZ13RmwSd4O2Ua75k
+ /lmHJ9ryyUHHEqDwz+wgeu40DWstn1ElROh3gvK+bKOTFzUCTHRHY4+Me/TALtpUXJo+
+ gOjeQV08hhite1A7GaY9Py82LadaXy735crlma9XV1CoLOhRaZDG26Xk5zmbyssSQ+L+
+ OfhYFgX6vZpPAWj4wgdaBuIVnOpZ62aMsIodrnfjSIygm4HjIbi1A/azt+KXPqzSXVrs
+ KeCOMnohHt+jCrZZRzRG+KDQAPBLn1x8jUCJE9PJ3ATC6+DagAtqu7MO2iq2RpzFhN/i
+ d7YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752236973; x=1752841773;
+ d=1e100.net; s=20230601; t=1752237193; x=1752841993;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Pu2rmRk0Olg5YPTNdz5DW+mcZTwlyaKbAfAMIV/bNaU=;
- b=aOUfeIvuPw0l0jXu6WKwrhNm193Hw6+ntGAWc+sUm2pjSm33M3gED5Ciao6Uq3xbmP
- XLx+YYTmgWPK8GUmvx33G+1/CQjZOiJ1kiEg9C4k6QeTnNfVOGvJXhTYIA7OCwnpxWpQ
- mR6pbeduZXEg/hSCzqwZU3JuJNf5ZlVKjjxjEj8hUTKHRRFTbCseqfDOXB5gFo1d8Jzh
- CWaVfE4jpD5f0q7O62kt2qhTjnPncy78lJMsHSKOEVsKYu+nMVkBLpsmhjCS4MdKAE76
- mErXBT0tFeRTKm7uzuZdxt7888uC3h9UuVGsvYxIJvhuGPH5H1/sU4M8Ykq6UJOjZ3ft
- 2L7g==
-X-Gm-Message-State: AOJu0YxpUftYa/Mb08PsIy2EHKm74IllggQ4SyUvi+fgBRLBgu8IMH3+
- EgF1zMB6x+1qfQyZzuynTD3NJl00DSyB3y3tDcWg0cdbmRH0SObf/2AepLsu3+MfVHo7gBhcXrP
- kRMmwPbvHWIJZqyAhLXrvq2PBsWfxqVc/zxwacfqyWg==
-X-Gm-Gg: ASbGncvt8UezdPswrnJ0FAGOJkD5LrQlG4ngWojIp21hysHQ1Vat1PIzvx0QDbTchPB
- NaqBEZhBsg+ZuwNie6PjTlCoTzVJlG5bfs6JtsgJdqDMG69aAO2LaRY7kCl79NGFMVUk5Khcgdd
- TH7HyyfjaptkYcLK/VlqN4dkkLQSmaw/cmOsfqhSaJ7drq9ANDQgsgQHT0Gla89x6SqX0B9Zj5C
- bxWtW/+cRUV7BlNsoU=
-X-Google-Smtp-Source: AGHT+IG2JbxVB6p4br7UQpomjMopPjH3pk0HinwXKuQOXMwoXZI9h9z4pdJ2R7M5rhsJOiQ6HPzdMoCDyoqNcVFj6mY=
-X-Received: by 2002:a05:690c:fd0:b0:70e:731f:d4c7 with SMTP id
- 00721157ae682-717d5b81533mr51180427b3.8.1752236973511; Fri, 11 Jul 2025
- 05:29:33 -0700 (PDT)
+ bh=LW1lYEiAMLIEUwxfqjqDWqr5o3JxEe/oQ91DIyFoNMU=;
+ b=W3QKMzXdMkNlpbthTYQ/CQ7cLhhhlc5duUkqNqxXDJNqqs3guTTc9cj68qku1LmIlR
+ 4h120EgT+KmpoOhY3eMmt6F7jReu22StDZefFFZFs6m4yDxUPcWo3oEyuuzWt5r99+eo
+ ohjnWN4r3XCI0HWN/u/2VIQsyWfSgDbVbe6G8hgpV7vNPFZwBJeGXvKr97S2yYH/ZPPA
+ cf4bvzRJKR+uXn6dR1HX9oLeesFFPLQrwU6V5tf2wtG+WlCjBKnyp0RkuG7qfo+9t5MG
+ dVuQcwoaz5xK2Z5Nlj55Kn30f8Y3wIwB3ai/PfBB5H2IC3ShZy949Yfa8Mplunow3xsh
+ nong==
+X-Gm-Message-State: AOJu0YyHNm89GGSylSaakAY33U3hAEqxoJX5R5biYSILwH2r8atF9XmA
+ aoK4HboV0RYW3Hh3FMWaId/sVaJfco/egAzvQV+QJO04U6rdPXinDQUndc3H/E/oxZclu5koSTt
+ +cDQxvMVJiHJBe2xgpoarLxjXfRmjGduzkw==
+X-Gm-Gg: ASbGncuQ0DuJ9M4vabBkv/guVMKprw7C0nGkXAjyj84F4aX15mREWeW2Bu+VcQmo2Yf
+ Q6QJbmL+27jdwMkxw1lAUZIQZAV7aXGeIm6Utz7iieKep7GhZXChwOUz7Gg/Rnm1UU2TSFb396L
+ EGsdbp3hs4DIZNJBZd4yHsLf6hh9RQ0Z4Ad2QxB8BpT1ZuwMA4z/YsF3e1Nair6jVDZk7T3Nr+c
+ l+uopaq
+X-Google-Smtp-Source: AGHT+IEuw47HSBfq1N/uF4qXuWS8tarUgJeRwxnHoKCSSR06tB4Fz2PmCSTGIwk1upPyyJ5l0yhDK+kkNpz3wnS7RXk=
+X-Received: by 2002:a05:6e02:152d:b0:3d8:2085:a188 with SMTP id
+ e9e14a558f8ab-3e253278dddmr37447225ab.1.1752237192748; Fri, 11 Jul 2025
+ 05:33:12 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250711110626.624534-1-jcksn@duck.com>
  <20250711110626.624534-2-jcksn@duck.com>
-In-Reply-To: <20250711110626.624534-2-jcksn@duck.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 11 Jul 2025 13:29:22 +0100
-X-Gm-Features: Ac12FXycUjD9WBzp9Rx-nPWpBDphkypd-14NuNCFEX3fMF-6SQnvE4K8GWUKu58
-Message-ID: <CAFEAcA8Z4OVDXUO+ZNe4sv2u=_vtuK_yv4vX44LjsiZKpjz4dw@mail.gmail.com>
+ <CAFEAcA8Z4OVDXUO+ZNe4sv2u=_vtuK_yv4vX44LjsiZKpjz4dw@mail.gmail.com>
+In-Reply-To: <CAFEAcA8Z4OVDXUO+ZNe4sv2u=_vtuK_yv4vX44LjsiZKpjz4dw@mail.gmail.com>
+From: Jackson Donaldson <jackson88044@gmail.com>
+Date: Fri, 11 Jul 2025 08:33:01 -0400
+X-Gm-Features: Ac12FXwBX43gmsPck6hLX6HUi5qurFG_XCE4QS2xRwGguyn3EaMBBAJnIhnUUAA
+Message-ID: <CAMyd1rRsf+ZEx9ZsHosOnMuEyQVK5TvOKZytm+P08CphByR2LA@mail.gmail.com>
 Subject: Re: [PATCH v2 1/2] docs/system: arm: Add max78000 board description
-To: Jackson Donaldson <jackson88044@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: multipart/alternative; boundary="0000000000006fa4620639a68388"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d36;
+ envelope-from=jackson88044@gmail.com; helo=mail-io1-xd36.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -93,17 +95,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 11 Jul 2025 at 12:06, Jackson Donaldson <jackson88044@gmail.com> wrote:
->
-> This adds the target guide for the max78000FTHR
->
-> Signed-off-by: Jackson Donaldson <jcksn@duck.com>
-> ---
+--0000000000006fa4620639a68388
+Content-Type: text/plain; charset="UTF-8"
 
-Checkpatch wants an SPDX line for this new file -- can
-you confirm that I can mark it as GPL-2.0-or-later like
-the C files, please?
+Confirmed.
+-Jackson
 
-thanks
--- PMM
+On Fri, Jul 11, 2025, 8:29 AM Peter Maydell <peter.maydell@linaro.org>
+wrote:
+
+> On Fri, 11 Jul 2025 at 12:06, Jackson Donaldson <jackson88044@gmail.com>
+> wrote:
+> >
+> > This adds the target guide for the max78000FTHR
+> >
+> > Signed-off-by: Jackson Donaldson <jcksn@duck.com>
+> > ---
+>
+> Checkpatch wants an SPDX line for this new file -- can
+> you confirm that I can mark it as GPL-2.0-or-later like
+> the C files, please?
+>
+> thanks
+> -- PMM
+>
+
+--0000000000006fa4620639a68388
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div>Confirmed.</div><div dir=3D"auto">-Jackson<br><br><d=
+iv class=3D"gmail_quote gmail_quote_container" dir=3D"auto"><div dir=3D"ltr=
+" class=3D"gmail_attr">On Fri, Jul 11, 2025, 8:29 AM Peter Maydell &lt;<a h=
+ref=3D"mailto:peter.maydell@linaro.org">peter.maydell@linaro.org</a>&gt; wr=
+ote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;=
+border-left:1px #ccc solid;padding-left:1ex">On Fri, 11 Jul 2025 at 12:06, =
+Jackson Donaldson &lt;<a href=3D"mailto:jackson88044@gmail.com" target=3D"_=
+blank" rel=3D"noreferrer">jackson88044@gmail.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; This adds the target guide for the max78000FTHR<br>
+&gt;<br>
+&gt; Signed-off-by: Jackson Donaldson &lt;<a href=3D"mailto:jcksn@duck.com"=
+ target=3D"_blank" rel=3D"noreferrer">jcksn@duck.com</a>&gt;<br>
+&gt; ---<br>
+<br>
+Checkpatch wants an SPDX line for this new file -- can<br>
+you confirm that I can mark it as GPL-2.0-or-later like<br>
+the C files, please?<br>
+<br>
+thanks<br>
+-- PMM<br>
+</blockquote></div></div></div>
+
+--0000000000006fa4620639a68388--
 
