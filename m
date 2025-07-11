@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E169C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:29:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB940C83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:31:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaAzq-0001np-Go; Fri, 11 Jul 2025 06:28:50 -0400
+	id 1uaB2N-00056e-VN; Fri, 11 Jul 2025 06:31:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaAzn-0001j3-B9
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:28:47 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaB2M-00054u-Ow
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:31:27 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaAzh-00054V-Cg
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:28:47 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-455b00339c8so2747145e9.3
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 03:28:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaB2K-0005VC-Lm
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:31:26 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3a51481a598so1111554f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 03:31:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752229719; x=1752834519; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752229881; x=1752834681; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=INfsuQXW2NSGThUPwFh45vtsrXF85sl+ip8yKq9Mo1c=;
- b=q9+U7KKD4P9K5b3dffb4ZFXJim4eHXuQbJilMjEn2k5rqrHD/HLjFsKuJxAst1TKzY
- ocNayUVYwjMlXvIT+XY65p7U5GKiucJK9zwaiOFhLgf2LdfR6LAfrxAEB4xsS1UR42PD
- 3yLvG0xIOENqEvhuEJEwn+kq7stm2gaFva5bP+gV4kdQQwF1YB+UxwzTzTKkgY1NWAlW
- y2bVO+1/vCXinZ0CGR5/IaugQHpeQ8nrm2hn3GGUXgnuCJk3rbhBPvMv3xyaORIvrFxY
- mcixy3PQfjbZjspW2D+zWHFauZ5enF4LyGWTqVr4JCgvAoR/eNp8e9wQwFSqX1idW1Vl
- uj8A==
+ bh=C1Z7EpQ03VjvO9kvsktGSJv6yXbrBXhvwHDJoTwCanE=;
+ b=y1y/PsxBAWOD2RkMZTWIiR/twjfz6DWRQddor2GTFj5un2PMDF7/VtAupgu3D82QY4
+ wwFbdC7P8kdFq4VeITON5I2V6HomTUKIhsJ5PdtKZvsNwQUV6RNJBt6Awr7OA1pLSr8X
+ Z2rRnzMypxwQy1bKqFIBNq0ttBJBPl7IqP1qyUc6IeLDMYWE7HJS1De9WVZjkuefZ/5C
+ CwMpX45wtB/wlctQgKmw8aS/urYiqvhuDAQ2KJjU7hvhlxHEu2ZMkL81uUdY7ObIGIxW
+ Xa4XarSpr/BKfXVP5Xf9ZYgUo6KsT09xkNJS9Va6VctaNl0vkpQFWDgXg3XPCnXRfy/Z
+ jUgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752229719; x=1752834519;
+ d=1e100.net; s=20230601; t=1752229881; x=1752834681;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=INfsuQXW2NSGThUPwFh45vtsrXF85sl+ip8yKq9Mo1c=;
- b=jIBXAUWwsnWLjEHkf2AwRhfENsFHnrx6zE1aGfyZGc8JymonrNWpLn0pl5KGEtCTU6
- bMr7Z+A+x9YZxh12c8x35FbENx/3l5fMJ51lizyCWbaoRknxdUEe0kATHNPsxwIRBX5I
- A2iwQr47WQ9MkUsQicOCyDQo5XEwTr3mBNzCeyWeTjif2SDugv3whVpYTYhtcpdN9dRp
- oX7YiVdXZRhCX5H0PmOwkmPX2n2A0+eE+w2L8L1XZnZ5GgVotyiTqk02vZMm8TrMtXP3
- 5heypS3Cysq24UOX3FDOZcJZTHrLaI/92y4nARVh7Dx8bAgTp9P5/PYBQFNY2v/zQJ9p
- dh6A==
+ bh=C1Z7EpQ03VjvO9kvsktGSJv6yXbrBXhvwHDJoTwCanE=;
+ b=ZwBsP5IA8nUxEKXXAfy1b/FecA5eMqVrBMmYX3Rn/YMQ2qoMGd5CsKChprpOd0Upau
+ m3ClUae/kGas60iHR3m3XKaZi3nOh+kHRVR7uNcOxusqPV5OtIYfRhfSw458sVtC5zUZ
+ SI376g27Hb8DAvUOi98KLWRAphBhlTWVxZRBIKNXRlG/8Kz8epGm6rtIuRHuGIaXpqyk
+ GXXSxBe+CGEazMeAZWaB8rd+X7fzLljrjRY098LI3rNPesivWJG88cCwJ2F/p5wBvKQy
+ 4SFz/ECsL5JYlMynKvxdhZneoq7n5gHH0RXpX4BmbyNHWUGlN/Rut9yLzULk2iYLz2NJ
+ +dxQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUIY3yIbYYxnGKKaKzAmNUiLDpTp21Ey0ziZfhuCZfuIMeN3s+ywpMNF8k3zzdyWSV6n5RxzcmVnMwY@nongnu.org
-X-Gm-Message-State: AOJu0Yw1Q08DP84wkNyYOjIkO3G/+6N3kjgOclk43Wsl40zaiSCGfSVB
- IrJm4ehce0LwKsv4qSOXRpa/1Zt28gBtnzmIVkvu/lqIQGTxz8hft3Uc4vgK0ZFL7Zo=
-X-Gm-Gg: ASbGncuXoaUzfOKrQojghLZRYUHQpFQobg4eoPUXeVdO8PhAHM96QmNHi0qJx6rXyIB
- fx7KKgsX+7V4NtyDfEyqnnY/Voj88l3axAkqPO4G1dmQzzQrTj0gpUsjCj4ZaqKHYR6ciwZmCp6
- rvpm5B4u0W3KfmDfnc7p6nMcdU7RvSViPn5Cwg5BXtyG6+9pUC1FflxPIEV/5n5xc5d8c0BWigu
- hiMupd5Dk006yyrgjaCFfmEji5AdovPlwQgolVcXRmtPploxdAnGksoXe8VsTF4jOz71/EoFO6f
- SgDKgfMI/41zAI9p2MCp7Uk0DCar6rUjQ9huFXk3hSdFCbuwEsa3drT1rXXQ2GEA7C//jOTV0Mk
- Ij+yM48CdVKa2E6nKngv6vyJjiVEm56W7M3YPvCmJswbG6cYGgNZQnebFEec+QKafCC3IkQ==
-X-Google-Smtp-Source: AGHT+IHKCpIitgbQMMVm46yPW9JmmBST0bNe1ag5G7PXf8ACvOTkwHKyIj5WkQAzrJhk4wjjtBx7RQ==
-X-Received: by 2002:a05:600c:8b33:b0:441:d4e8:76cd with SMTP id
- 5b1f17b1804b1-454f42744fbmr22879665e9.29.1752229719121; 
- Fri, 11 Jul 2025 03:28:39 -0700 (PDT)
+ AJvYcCVFj7AxFx3Gw+Jdxkwo6S+6y9/O05GkIevTklUY7J3b2K3fjMjFSeA716LOCDsP6kriYWsOZz+JjM4/@nongnu.org
+X-Gm-Message-State: AOJu0YzWcbgXma85nJKER2pFai0am9N1N8vdeyLIXtoA6SkFPSIfEvlk
+ 2eJHoe9+RZSYkWaHMJ6I3S/M7P68dS4k2jUwfDJsnC6YmjZK3Fs1qGaOBqDnP9A7bGQ=
+X-Gm-Gg: ASbGncuLqJLvUv7Nn8c16sMgcsQ4o2AUc2IScUsbSw2OpyMejOniU/iIl50PJVR6Wcd
+ S643me02WwaVyFm1shaonC5NFYcPXrkttgJPM6gjZWA3IuCWHsbLDAJFag7rKton48zlENBjH8J
+ Jw6rY8mKzY2TWgmWabng8Z+HdsLH0idM/fkelc1vrVaCrT4xaIKC/x0Mu5hrgeT99LYntSXLK/9
+ ++QBJL9OmVwLrtrghSt4g4hAYnmMH0AV/9i80ZvLGdj+5+Dow7u+5bMeci15FNnCOHry2/W2mbw
+ 1yJTuXk0w7sokU97s5PG1OdTQuAJUSusejVY+TyIfg39a5xfMLjBJd4zc4o+n63LSj66Xq3A6HE
+ WTkJ+/qhzsXt9CD41ct15eeXk0O1xG+12AXhBNh4heUm+uSYkAFPS0Z1ZKRs7M/Nqg80AkQ==
+X-Google-Smtp-Source: AGHT+IFLc86d1MD3DUlHHWjO47T0nAW09FCUdyZBg8+h1/8jiYrM3tqPnkUQQdtwgFEuj/aUV7JQ8w==
+X-Received: by 2002:a05:6000:240e:b0:3a4:eef9:818a with SMTP id
+ ffacd0b85a97d-3b5f2dfd79dmr1571212f8f.27.1752229880677; 
+ Fri, 11 Jul 2025 03:31:20 -0700 (PDT)
 Received: from [192.168.1.47] (lfbn-mon-1-587-20.w2-4.abo.wanadoo.fr.
  [2.4.165.20]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454dd54115bsm43934155e9.31.2025.07.11.03.28.37
+ 5b1f17b1804b1-454d5053725sm84337835e9.16.2025.07.11.03.31.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Jul 2025 03:28:37 -0700 (PDT)
-Message-ID: <9179aa9b-52e2-4706-8dce-12dc20a05bb6@linaro.org>
-Date: Fri, 11 Jul 2025 12:28:37 +0200
+ Fri, 11 Jul 2025 03:31:20 -0700 (PDT)
+Message-ID: <4c6ba00b-a90f-42a4-b4ce-1efdc87b7e03@linaro.org>
+Date: Fri, 11 Jul 2025 12:31:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 18/18] hw/i386/isapc.c: replace rom_memory with
- system_memory
+Subject: Re: [PATCH v5 03/19] hw/i386/pc_piix.c: inline pc_xen_hvm_init_pci()
+ into pc_xen_hvm_init()
 To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, pbonzini@redhat.com,
  mst@redhat.com, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
  imammedo@redhat.com, qemu-devel@nongnu.org
-References: <20250710085308.420774-1-mark.caveayland@nutanix.com>
- <20250710085308.420774-19-mark.caveayland@nutanix.com>
- <8e9e90f3-eb41-47db-8286-9d96a97c9cac@linaro.org>
- <695cf9b8-3e5e-4560-9847-688917796648@linaro.org>
- <6e04c7fc-f390-4245-be27-f5f37924943e@nutanix.com>
+References: <20250711095812.543857-1-mark.caveayland@nutanix.com>
+ <20250711095812.543857-4-mark.caveayland@nutanix.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <6e04c7fc-f390-4245-be27-f5f37924943e@nutanix.com>
+In-Reply-To: <20250711095812.543857-4-mark.caveayland@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,108 +104,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/7/25 17:35, Mark Cave-Ayland wrote:
-> On 10/07/2025 12:05, Philippe Mathieu-Daudé wrote:
+On 11/7/25 11:57, Mark Cave-Ayland wrote:
+> This helps to simplify the initialisation of the Xen hvm machine.
 > 
->> On 10/7/25 12:53, Philippe Mathieu-Daudé wrote:
->>> On 10/7/25 10:52, Mark Cave-Ayland wrote:
->>>> Now that we can guarantee the isapc machine will never have a PCI 
->>>> bus, any
->>>> instances of rom_memory can be replaced by system_memory and rom_memory
->>>> removed completely.
->>>>
->>>> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
->>>> ---
->>>>   hw/i386/isapc.c | 3 +--
->>>>   1 file changed, 1 insertion(+), 2 deletions(-)
->>>>
->>>> diff --git a/hw/i386/isapc.c b/hw/i386/isapc.c
->>>> index bb22083821..27c075b5f3 100644
->>>> --- a/hw/i386/isapc.c
->>>> +++ b/hw/i386/isapc.c
->>>> @@ -35,7 +35,6 @@ static void pc_init_isa(MachineState *machine)
->>>>       ISABus *isa_bus;
->>>>       GSIState *gsi_state;
->>>>       MemoryRegion *ram_memory;
->>>> -    MemoryRegion *rom_memory = system_memory;
->>>>       DriveInfo *hd[MAX_IDE_BUS * MAX_IDE_DEVS];
->>>>       uint32_t irq;
->>>>       int i;
->>>> @@ -73,7 +72,7 @@ static void pc_init_isa(MachineState *machine)
->>>>       /* allocate ram and load rom/bios */
->>>>       if (!xen_enabled()) {
->>>> -        pc_memory_init(pcms, system_memory, rom_memory, 0);
->>>> +        pc_memory_init(pcms, system_memory, system_memory, 0);
->>>
->>> I'd prefer just call here:
->>>
->>>    x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, true);
->>>
->>> and in pc_system_firmware_init(): assert(pcmc->pci_enabled).
->>>
->>> WDYT?
->>
->> What I have in mind (untested):
->>
->> -- >8 --
->> diff --git a/hw/i386/isapc.c b/hw/i386/isapc.c
->> index 27c075b5f32..a7c2146916c 100644
->> --- a/hw/i386/isapc.c
->> +++ b/hw/i386/isapc.c
->> @@ -74,3 +74,4 @@ static void pc_init_isa(MachineState *machine)
->>       if (!xen_enabled()) {
->> -        pc_memory_init(pcms, system_memory, system_memory, 0);
->> +        pc_memory_init(pcms, system_memory, NULL, 0);
->> +        x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", 
->> system_memory, true);
->>       } else {
->> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
->> index b2116335752..2952d3ee4ff 100644
->> --- a/hw/i386/pc.c
->> +++ b/hw/i386/pc.c
->> @@ -811,3 +811,3 @@ void pc_memory_init(PCMachineState *pcms,
->>                       MemoryRegion *system_memory,
->> -                    MemoryRegion *rom_memory,
->> +                    MemoryRegion *pci_memory,
->>                       uint64_t pci_hole64_size)
->> @@ -826,2 +826,3 @@ void pc_memory_init(PCMachineState *pcms,
->>
->> +    assert(pcmc->pci_enabled ^ !!pci_memory);
->>       assert(machine->ram_size == x86ms->below_4g_mem_size +
->> @@ -955,3 +956,5 @@ void pc_memory_init(PCMachineState *pcms,
->>       /* Initialize PC system firmware */
->> -    pc_system_firmware_init(pcms, rom_memory);
->> +    if (pcmc->pci_enabled) {
->> +        pc_system_firmware_init(pcms, pci_memory);
->> +    }
->>
->> @@ -969,3 +972,3 @@ void pc_memory_init(PCMachineState *pcms,
->>           }
->> -        memory_region_add_subregion_overlap(rom_memory,
->> +        memory_region_add_subregion_overlap(pci_memory,
->>                                               PC_ROM_MIN_VGA,
->> diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
->> index 821396c16e9..0c29e4188fc 100644
->> --- a/hw/i386/pc_sysfw.c
->> +++ b/hw/i386/pc_sysfw.c
->> @@ -221,6 +221,3 @@ void pc_system_firmware_init(PCMachineState *pcms,
->>
->> -    if (!pcmc->pci_enabled) {
->> -        x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, 
->> true);
->> -        return;
->> -    }
->> +    assert(pcmc->pci_enabled);
-> 
-> I think that's a good idea, however the original aim of this series was 
-> just to do the basic split and tidy-up work (hopefully in time for 10.1).
-> 
-> There is certainly more tidy-up that is possible w.r.t. pc.c, but I 
-> didn't want to start unraveling that thread right now for fear of this 
-> series getting too large :/
-
-Fair enough.
+> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+or S-o-b per 
+https://lore.kernel.org/qemu-devel/3ebf1793-6d55-4e07-a2b6-cb738d8634fb@linaro.org/ 
+;) I don't mind.
+
+> ---
+>   hw/i386/pc_piix.c | 13 ++++---------
+>   1 file changed, 4 insertions(+), 9 deletions(-)
 
 
