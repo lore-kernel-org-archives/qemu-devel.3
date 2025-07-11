@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F04EAC83F1D
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 20:51:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 011ECC83F1B
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 20:52:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaKgO-0005mW-0S; Fri, 11 Jul 2025 16:49:27 -0400
+	id 1uaKgw-0006LN-Ef; Fri, 11 Jul 2025 16:49:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uaKe9-0003SV-1k; Fri, 11 Jul 2025 16:47:08 -0400
+ id 1uaKec-0003ak-GD; Fri, 11 Jul 2025 16:47:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uaKe7-0003oy-BR; Fri, 11 Jul 2025 16:47:04 -0400
+ id 1uaKeX-0003wT-Ju; Fri, 11 Jul 2025 16:47:31 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D6C0F135D0A;
- Fri, 11 Jul 2025 23:46:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 14432135D0D;
+ Fri, 11 Jul 2025 23:46:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B676723FF44;
+ by tsrv.corpit.ru (Postfix) with ESMTP id DD55523FF47;
  Fri, 11 Jul 2025 23:46:32 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.19 11/15] target/arm: Fix SME vs AdvSIMD exception
- priority
-Date: Fri, 11 Jul 2025 23:46:26 +0300
-Message-ID: <20250711204632.1804872-11-mjt@tls.msk.ru>
+Subject: [Stable-7.2.19 14/15] target/arm: Fix PSEL size operands to
+ tcg_gen_gvec_ands
+Date: Fri, 11 Jul 2025 23:46:29 +0300
+Message-ID: <20250711204632.1804872-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-7.2.19-20250711111933@cover.tls.msk.ru>
 References: <qemu-stable-7.2.19-20250711111933@cover.tls.msk.ru>
@@ -62,34 +62,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-We failed to raise an exception when
-sme_excp_el == 0 and fp_excp_el == 1.
+Gvec only operates on size 8 and multiples of 16.
+Predicates may be any multiple of 2.
+Round up the size using the appropriate function.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 3d74825f4d6 ("target/arm: Add SME enablement checks")
+Fixes: 598ab0b24c0 ("target/arm: Implement PSEL")
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250704142112.1018902-2-richard.henderson@linaro.org
+Message-id: 20250704142112.1018902-8-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit f9b0f69304071384b12912bf9dd78e9ffd261cec)
-(Mjt: compensate for target/arm/translate-a64.c => target/arm/tcg/
- files move by v7.2.0-1632-gf0984d4040c3)
+(cherry picked from commit 3801c5b75ffc60957265513338e8fd5f8b6ce8a1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/translate-a64.c b/target/arm/translate-a64.c
-index 190574cb29..74237ef6f9 100644
---- a/target/arm/translate-a64.c
-+++ b/target/arm/translate-a64.c
-@@ -1251,7 +1251,8 @@ bool sme_enabled_check(DisasContext *s)
-      * to be zero when fp_excp_el has priority.  This is because we need
-      * sme_excp_el by itself for cpregs access checks.
-      */
--    if (!s->fp_excp_el || s->sme_excp_el < s->fp_excp_el) {
-+    if (s->sme_excp_el
-+        && (!s->fp_excp_el || s->sme_excp_el <= s->fp_excp_el)) {
-         bool ret = sme_access_check(s);
-         s->fp_access_checked = (ret ? 1 : -1);
-         return ret;
+diff --git a/target/arm/translate-sve.c b/target/arm/translate-sve.c
+index 02302abfbd..a6371345f5 100644
+--- a/target/arm/translate-sve.c
++++ b/target/arm/translate-sve.c
+@@ -7501,6 +7501,7 @@ static bool trans_PSEL(DisasContext *s, arg_psel *a)
+     tcg_gen_neg_i64(tmp, tmp);
+ 
+     /* Apply to either copy the source, or write zeros. */
++    pl = size_for_gvec(pl);
+     tcg_gen_gvec_ands(MO_64, pred_full_reg_offset(s, a->pd),
+                       pred_full_reg_offset(s, a->pn), tmp, pl, pl);
+ 
 -- 
 2.47.2
 
