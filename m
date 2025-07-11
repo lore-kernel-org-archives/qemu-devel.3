@@ -4,72 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7306C8303C
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 12:10:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06168C8303C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 12:18:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaCZd-00015N-RY; Fri, 11 Jul 2025 08:09:53 -0400
+	id 1uaChC-000792-6F; Fri, 11 Jul 2025 08:17:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uaCZT-00014l-C2
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 08:09:45 -0400
-Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
+ id 1uaCgr-0006sq-BA
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 08:17:25 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uaCZQ-0000sC-QP
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 08:09:42 -0400
-Received: by mail-yb1-xb2c.google.com with SMTP id
- 3f1490d57ef6-e81826d5b72so1769596276.3
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 05:09:39 -0700 (PDT)
+ id 1uaCgn-0002MS-8t
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 08:17:20 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-71173646662so21580127b3.2
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 05:17:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752235778; x=1752840578; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=zmGhLPOug29OVLJE0P2qLGwbOURKNr34ADed+0HuJmE=;
- b=ICC30TbhR1OvXKHL5enJYe6d8O2PQXD6GfS2aNHG4g7oCr9N0gp6bPJW/h4UxUq18M
- QXsHfcsXwQp0db0bLwfoVvzcrd/+i2EDcdlrIK/+d5kGy2IyQI3CxxPs3JZmG705JVhA
- 6vxN9QiDDykBGBo3Ce64uMZ3OKJHHc8Y017wctceLP/EsRZrmLRvrRwXzb3vgR19zinF
- SZxaIgY6FCA2pkK1gEMKVVYYZ3ssuF7QXR4bd2dXZ/7iX/agxb1lJEN8B5F/d33bSLyB
- +plZisQbr1GYeylc7nqFrSZPqhvIvgUwxf+Ykm8P4BqXGpvcVC74B03Y7QnrfI5N98JM
- S/FA==
+ d=linaro.org; s=google; t=1752236234; x=1752841034; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=J05MeQp7wPaUUuYCLiT42agKKg8NYCskjR2Bj0HYmPU=;
+ b=HBxyOPKC7+HcgPy4NpYfoDDKPRh/d4OU7rj3cBnAXVTGUNa/uaCz0imSRA4kAcLzNH
+ 0cgWZECUS1Y/VW7ZQ8o/WWEQoCbLfP7zQTj+wurCc3YsgYkCwMHO9Z4ZHG4L+eya8I2q
+ 3TzaIpM5a6Qvh2t+ptGzO4qjmBlYI/hrm2jVChO9Jpa7iWYYPr1wiF/rQpDFgCl2xRoU
+ /v0J4cQ5VjNhUbsicMszJI86VcI16rWTe0jk+9qZ02tUkQSgCdRVwHbtMBByjjWZYrHg
+ unewPtODYdNPYi4YdLNGKDMUjmiUAhI5WGb8tGwKqUcdAukTsA2HRzd8WmHJocfOg+aS
+ rQqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752235778; x=1752840578;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zmGhLPOug29OVLJE0P2qLGwbOURKNr34ADed+0HuJmE=;
- b=edvTiD403d3TgjvC6o2/Aw9TMCoNbOnpLc55khjWPlbfW8j27K98A1s8jlvYViMdSC
- xcWFv3xIuqL560i0/ssT1CUwqH9nIBxMGxWlPUse7+WJHeHt3c1bi2uU+n+tJopzHskK
- 25TD1F34OMYnxZP5vwbmSCbEIIT9D+2jrGnPPWkA7Ftf5T9DlFB+Lv7nod4lFEg4ixAd
- 6/cClj7r1E5ti7rn4muj1fDLnV61Gs+pBiF/4L79nWr0RD+sPEcOgSaQHePDwrxABM/k
- psr+IjU4nCtQZIYzRLAAh5M6KsA+qM7On2piMCW7gWaCIKncsnY4F058Cm7lLuyuqVGQ
- y2bA==
-X-Gm-Message-State: AOJu0Ywr+pJxs/xCQ3coq7prHLC/CJOj9i/1HYngxwsyleSqUxdHuJce
- ia1CtwLk3GliIpt3GzZaMkN1GfV1CS/ZVfawDP/Ile696ySuBAHfq+DagyOR3gVeycBxEqsjQJ6
- NJPV4jeYIXlQUiDFnY/hpklxIQXKgqEGa+KlrS77Rqw==
-X-Gm-Gg: ASbGncvx8f5NZTMt7jXGmoPCt9SYluQIDrUUvYXkOR9gC3eQ+2C8DMGAHzIevlTKUxK
- KOABVbofdw7Nk4Fe4m93ZeNP3j2r6J1yWsJOUSywgAbS2/hDlD5CrcG1RdjuwiKWji7JNb8RYUP
- lwi2FWCTI9Pnn6QeZBdutK/CAYR57b8ivpPB01hHjgtNYz7VIRAVwy0mvuSnmKW+VfWZgkJZ4cN
- kM4frZ3
-X-Google-Smtp-Source: AGHT+IFmNjc+PS0kJuUG8o30plOV/EjLdhJVvSJDsGNXI7a2S1u/z7iF8Pb5sfCYVNS6ZB7CfUw7irczvqrxB28U5pw=
-X-Received: by 2002:a05:690c:6a12:b0:70e:1d14:2b76 with SMTP id
- 00721157ae682-717d5dc93aemr50294957b3.23.1752235778296; Fri, 11 Jul 2025
- 05:09:38 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752236234; x=1752841034;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=J05MeQp7wPaUUuYCLiT42agKKg8NYCskjR2Bj0HYmPU=;
+ b=xVgzfDIaPy9upE4dQfXwGrWhrFcekZ5GLC6ECdAWdegMiSwQOm4Ks9SK9XfPWkYKUy
+ hZhbtScpBni0/MBiyed7oT/JLaz4v5DS81FsBaTzmaC4+sjQ7cVXG/mC/SPk4JJW+Eso
+ AntKAYRQup5AoBxHzLctnr+/oQkpI6+7HX9R7SUOwlO7H7WysFPS3irONU+4p7ajwgXc
+ ViqniuC8LlTaTt8+EhbC1k0luu+3s/0lVxVY3IaDxYl0W9gLp/Fr3bYFQWV+pB8m+E37
+ fovdc4XUIysCgDlWtI9RNRnsyxwgOSBxfm0jDgO1FMVJTA2s3lyZC5Xzh5axg+S3aMqh
+ MhQA==
+X-Gm-Message-State: AOJu0YwNJPjuwsLC38y4bIq8q1iSxfeN+XKqTeJe41NcQQFtsf9gqyoW
+ whRtt5QH5H06+AeIBAhNREFVwxjaAybDMJmH+kUS01SiquDGDISBdgAVg9koDpn2oGf1XLqfBcj
+ avOLgdcQNGWXfU+O8a27QLPEAAE4Zu0J6zRoanS4Uug==
+X-Gm-Gg: ASbGncu3JuT9NBikB/FC1B7LqhwKLJN7nFYNBX5QxsFaIR4UB6RkCLpf6hrc+rQiF6b
+ FoeZpaCAORKZgsI5udW4Rzj1Xl/jnz1kWUbWnTXUYBJ//+mJ6rONd5A17MEw7nvW/NcoMN4EyxU
+ Y3qqiebybnd/dap8gSBXF6VobyPFqjoc8SrJtLuea/UzklOYEMZcixrWQmjWwt701g7xczNHZEj
+ Kg5u93Q
+X-Google-Smtp-Source: AGHT+IEfm2KQDWdqxZ7z+IqxY8rSP0vZ+tVApEhPl12Lbi7n0KccdOMXDwBGFAgyJste07YVS4KAYx0szqMkQvis0KU=
+X-Received: by 2002:a05:690c:4a0a:b0:70e:2cba:868c with SMTP id
+ 00721157ae682-717d5bc3e39mr57040937b3.11.1752236234328; Fri, 11 Jul 2025
+ 05:17:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250711110626.624534-1-jcksn@duck.com>
-In-Reply-To: <20250711110626.624534-1-jcksn@duck.com>
+References: <20250704132439.25743-1-philmd@linaro.org>
+ <20250704132439.25743-3-philmd@linaro.org>
+ <CAFEAcA8e4jcoBup890sjNFmOkSJqCdC4JpDJT1H_OZS6n6=xhg@mail.gmail.com>
+ <9a4e5e05-f96c-4e8f-8b8a-a5480267e789@linaro.org>
+In-Reply-To: <9a4e5e05-f96c-4e8f-8b8a-a5480267e789@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 11 Jul 2025 13:09:26 +0100
-X-Gm-Features: Ac12FXz2Lc1XEojo48PdrP02p1isdL-_PJ_xdN_iOE254Fkva2PWz1vCj7nBGCI
-Message-ID: <CAFEAcA9bfXn52L52EZyOfj-HNAzYHjSbS4eJDm+rcoauWB-1AA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] MAX78000: documentation and test
-To: Jackson Donaldson <jackson88044@gmail.com>
+Date: Fri, 11 Jul 2025 13:17:02 +0100
+X-Gm-Features: Ac12FXx8-0H-nGPzTAGroBRxl9fTYS3kHmff13CnOTSQCXXEXZ5ObeBRCGYK5Bs
+Message-ID: <CAFEAcA82HR8TPdjQNwyFgdj4GExRLFK0h4pBBMPoUYh_Kn0_Bg@mail.gmail.com>
+Subject: Re: [PULL v2 09/36] accel/tcg: Unregister the RCU before exiting RR
+ thread
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,22 +98,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 11 Jul 2025 at 12:06, Jackson Donaldson <jackson88044@gmail.com> wrote:
+On Fri, 11 Jul 2025 at 11:45, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> v2:
-> Docs now build. Sorry about that
+> On 10/7/25 16:33, Peter Maydell wrote:
+> > This has reintroduced CID 1547782 (unreachable code).
+> >
+> > We can't get to this point, so why are we trying to call a
+> > function here ? This is not a place where the thread can exit.
 >
-> v1:
-> Adds .rST documentation and a functional test for the MAX78000FTHR machine
-> as requested by Peter Maydell.
->
-> Jackson Donaldson (2):
->   docs/system: arm: Add max78000 board description
->   tests/functional: Add a test for the MAX78000 arm machine
+> The goal is to unify accelerators vcpu thread logic and
+> eventually remove AccelOpsClass::create_vcpu_thread(), superseded
+> by AccelOpsClass::cpu_thread_routine(). I couldn't finish RR for
+> 10.1 but squeezed this patch in. Let's revert it, and I'll
+> re-commit it later.
 
+When you do have a need for it, note that rcu_unregister_thread()
+is probably not the only call you need here -- see commit
+da7510b720591. We used to also have an equally unreachable
+rcu_remove_force_rcu_notifier() call.
 
-
-Applied to target-arm.next, thanks.
-
+thanks
 -- PMM
 
