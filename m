@@ -4,71 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63AFEC8303C
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 05:16:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFD3FC83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 05:34:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua66j-00031A-7I; Fri, 11 Jul 2025 01:15:37 -0400
+	id 1ua6Ni-0000WZ-GI; Fri, 11 Jul 2025 01:33:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ua66g-0002vS-AD
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 01:15:34 -0400
-Received: from mgamail.intel.com ([192.198.163.17])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1ua6Ng-0000P3-L3
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 01:33:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ua66d-00019f-6G
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 01:15:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752210931; x=1783746931;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=MHqe8QAVGW14hW2TuVHbPnrxaaaU2pez3Fp4gtwSO1s=;
- b=E/KQKM/QXw6GGN3biMAqGxj3YE+B8dHSmZSNglyNlOJ4JNY/XgLmmZCx
- CYv/vEvi/ceyt2w37NEiNBm1TZaEAUlSML4k8DXUzf+oHEyoRhIPRir3r
- C5DfM2Iheaw7vaX5O3jY3kIlFts6ffyQ8shd/WS506/kEkKe3nRm1vMOB
- er78bLmq0kt4H7WgLMlkzCoiRsn/9rXP5YyontM5DYiOWorzdqfUU7xAL
- 2n+N4v7GBZy537aGVTmzS08qgI4be8ZLccvmvrYADf6QT0ETSDoWoctub
- XLEa09xjuCl5F1wnzD/6qQO9/CZzClwMteAJFQBRBP8iAmloXr4U66dtY g==;
-X-CSE-ConnectionGUID: ahTmVYcwRHW9nPe9ab80NA==
-X-CSE-MsgGUID: 8SI0elZ1T4at5vi1XvQWKg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11490"; a="54441274"
-X-IronPort-AV: E=Sophos;i="6.16,302,1744095600"; d="scan'208";a="54441274"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Jul 2025 22:15:26 -0700
-X-CSE-ConnectionGUID: kM5rtqH7Sn6SNUZLJnRgVA==
-X-CSE-MsgGUID: KXCWAsTZSHWrn6prEkFQbQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,302,1744095600"; d="scan'208";a="187277801"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa002.jf.intel.com with ESMTP; 10 Jul 2025 22:15:25 -0700
-Date: Fri, 11 Jul 2025 13:36:53 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, xiaoyao.li@intel.com
-Subject: Re: [PATCH 2/4] target/i386: nvmm, whpx: add accel/CPU class that
- sets host vendor
-Message-ID: <aHCi9TOICIdg1Qg/@intel.com>
-References: <20250711000603.438312-1-pbonzini@redhat.com>
- <20250711000603.438312-3-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1ua6Nd-0006XU-VP
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 01:33:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752211984;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BtO/ck079/6DHbiQZCw9opQLCI78fBKU3CtVeGZH7xU=;
+ b=eAcRmjFlkcmnnAeMLbT+OaLEziTpYKfUuyhG89F0IrRLvD2IwAQ6uKzMiWpcruefps1sYY
+ C1SfnQrupvE3qXfucHq+RIlNyxeEHpQ0ZQ74jRb3+cYe4nPzxrp0z1YRTRzfge4kmiSIIU
+ sg14wbtR0bN/XoZ09G+rysp9gMQONzg=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-474-KYQ54VWGMwCMpOB_zt56eg-1; Fri, 11 Jul 2025 01:33:01 -0400
+X-MC-Unique: KYQ54VWGMwCMpOB_zt56eg-1
+X-Mimecast-MFC-AGG-ID: KYQ54VWGMwCMpOB_zt56eg_1752211981
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-b39280167fdso1482921a12.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Jul 2025 22:33:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752211981; x=1752816781;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BtO/ck079/6DHbiQZCw9opQLCI78fBKU3CtVeGZH7xU=;
+ b=aoe5LXlzqbooVepUnSgMEiMj0/7cFA1cDfwzxoJ2bezed1A87VNPu1MY7psujMkitY
+ JObXzh0UCFKA42Q2gKYCBbE4na4ObmGV+d47MZFweQaQNiMI32lyHQIqDyHbVcaeEYcw
+ xou6VbNWvJbtzgPR8RAl79JwsO+buvxnnJPbME2ZdYKpRXVqYaxRGFxlMHqu/2fUHkWA
+ HmnHkQ6zd0ZEWPVia11p8Of83X3QXg3fhgJYfWhj/DaE9sdHaBgLsccSq/y5m5RIauZ/
+ n0phWMhgqJrnk5+Ioks5GsbSwj4SsHlAOX9g0NlMnLgI/+dripqhF7Lz7l79C8Pnwqib
+ XFbw==
+X-Gm-Message-State: AOJu0Yz25QvuESCq+XJAXhqlsWG/ULW0xoj4KD8o0OZs57ut1wpgtl65
+ 72FS1CtH8cI3D4Ek7w2cEcYiDfPkwE/RNdN7dIsd0x7dZGVA6HVCBKSAtzYUoXQ0UNyH9mU/mKP
+ FK5Wp1L0AoTnp8RHi+MXCl+RrwauDprI1rhkoVOR6mKokOz5YTJreVmIcbJfakyX2WIKsyEztFO
+ tNvKMiLgtHi9KiAEQkm3qr9mffFD83cyI=
+X-Gm-Gg: ASbGncuw6xgMaIY3Y0T4gtcesavpeFOzrOv/wrO6x7PO6MUu73nY9Bto08Yk7oYloE7
+ tjViNhZdqSGmaiKdFQnfKJhf2RSmfJd68ly4dmGdp/9jmZzbfxWGDOQhIuthoH0VA389beDCXVw
+ 8FtXOrWR8Fz5J/MDWmSboAq7xO8pl9Br5C9gqLYBVtZES2LAIRkk+j
+X-Received: by 2002:a17:90b:2b88:b0:301:9f62:a944 with SMTP id
+ 98e67ed59e1d1-31c50e4661cmr1588766a91.33.1752211980760; 
+ Thu, 10 Jul 2025 22:33:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFZ0ZiQ6+liwShKB1Rp9IvyiL20O7wzIQGbX4PXL93uwfk+7+KmbFnl/BMas7AtEfzclnVMSsfz8MzyDOdcvFU=
+X-Received: by 2002:a17:90b:2b88:b0:301:9f62:a944 with SMTP id
+ 98e67ed59e1d1-31c50e4661cmr1588703a91.33.1752211980259; Thu, 10 Jul 2025
+ 22:33:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250711000603.438312-3-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+References: <20250613203620.1283814-1-jsnow@redhat.com>
+ <20250613203620.1283814-9-jsnow@redhat.com>
+ <87zfdnow6f.fsf@pond.sub.org>
+In-Reply-To: <87zfdnow6f.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Fri, 11 Jul 2025 01:32:48 -0400
+X-Gm-Features: Ac12FXzyLIrqmGT3j4fjmP1myyw2orXCKojWoSbuDvegetJQowA-aMZ7MX4iZgk
+Message-ID: <CAFn=p-YDQ8T_ukjZiwo=tQEYU0Nm3cvdVsOApxWRdXPRcAOKNQ@mail.gmail.com>
+Subject: Re: [PATCH 08/18] qapi: add cross-references to migration.json
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Eric Blake <eblake@redhat.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Lukas Straub <lukasstraub2@web.de>, Ani Sinha <anisinha@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Fabiano Rosas <farosas@suse.de>, Jason Wang <jasowang@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,95 +116,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 11, 2025 at 02:06:01AM +0200, Paolo Bonzini wrote:
-> Date: Fri, 11 Jul 2025 02:06:01 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 2/4] target/i386: nvmm, whpx: add accel/CPU class that sets
->  host vendor
-> X-Mailer: git-send-email 2.50.0
-> 
-> NVMM and WHPX are virtualizers, and therefore they need to use
-> (at least by default) the host vendor for the guest CPUID.
+On Wed, Jul 2, 2025 at 4:04=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
+> wrote:
+>
+> John Snow <jsnow@redhat.com> writes:
+>
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  qapi/migration.json | 62 ++++++++++++++++++++++-----------------------
+> >  1 file changed, 31 insertions(+), 31 deletions(-)
+> >
+> > diff --git a/qapi/migration.json b/qapi/migration.json
+> > index d7c5047462e..fec6479a23e 100644
+> > --- a/qapi/migration.json
+> > +++ b/qapi/migration.json
+>
+> [...]
+>
+> > @@ -646,10 +646,10 @@
+> >  #     memory-backend-epc is not supported.  The VM must be started
+> >  #     with the '-machine aux-ram-share=3Don' option.
+> >  #
+> > -#     When using -incoming defer, you must issue the migrate command
+> > +#     When using -incoming defer, you must issue the `migrate` command
+> >  #     to old QEMU before issuing any monitor commands to new QEMU.
+> >  #     However, new QEMU does not open and read the migration stream
+> > -#     until you issue the migrate incoming command.
+> > +#     until you issue the `migrate` incoming command.
+>
+> I suspect this should be `migrate-incoming`.
+>
+> >  #
+> >  #     (since 10.0)
+> >  ##
+>
+> [...]
+>
+> > @@ -1733,8 +1733,8 @@
+> >  #     list connected to a destination interface endpoint.
+> >  #
+> >  # @exit-on-error: Exit on incoming migration failure.  Default true.
+> > -#     When set to false, the failure triggers a MIGRATION event, and
+> > -#     error details could be retrieved with query-migrate.
+> > +#     When set to false, the failure triggers a :qapi:event:`MIGRATION=
+`
+>
+> When and why do we need :qapi:event:?
 
-Here's a comment of about why the vendor needs to be overridden in KVM:
+/home/jsnow/src/qemu/qapi/migration.json:1737: WARNING: more than one
+target found for 'any' cross-reference 'MIGRATION': could be
+:std:ref:`Migration framework` or
+:qapi:event:`QMP:migration.MIGRATION` [ref.any]
 
-(in x86_cpu_load_model())
-
-    /* sysenter isn't supported in compatibility mode on AMD,
-     * syscall isn't supported in compatibility mode on Intel.
-     * Normally we advertise the actual CPU vendor, but you can
-     * override this using the 'vendor' property if you want to use
-     * KVM's sysenter/syscall emulation in compatibility mode and
-     * when doing cross vendor migration
-     */
-
-This is a KVM default-vendor hack since the 1st KVM commit [*].
-
-I guess that this hack might have been related to the immaturity of
-vDSO at the time (it's been so long, I just took a quick look at the
-general time, maybe linux v2.6), or just to reduce overhead.
-
-Now, both KVM's emulation and vDSO seem to be quite stable. Do you
-think QEMU KVM still needs to keep this hack today?
-
-Maybe it's difficult to change for QEMU KVM because it's been a
-long-time practice, but other accels don't seem to need to inherit KVM's
-history. What do you think?
-
-[*]: 1201818980-27534-7-git-send-email-aliguori@us.ibm.com
-
-> Add a cpu_instance_init implementation to these accelerators.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  target/i386/cpu.c           |  8 +++++++-
->  target/i386/nvmm/nvmm-all.c | 23 +++++++++++++++++++++++
->  target/i386/whpx/whpx-all.c | 23 +++++++++++++++++++++++
->  3 files changed, 53 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 624cebc3ff7..69bdffbfe46 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -43,6 +43,7 @@
->  #include "hw/boards.h"
->  #include "hw/i386/sgx-epc.h"
->  #endif
-> +#include "system/qtest.h"
->  #include "tcg/tcg-cpu.h"
->  
->  #include "disas/capstone.h"
-> @@ -1943,7 +1944,7 @@ uint32_t xsave_area_size(uint64_t mask, bool compacted)
->  
->  static inline bool accel_uses_host_cpuid(void)
->  {
-> -    return kvm_enabled() || hvf_enabled();
-> +    return !tcg_enabled() && !qtest_enabled();
->  }
-
-I was considerreing whether we could check this helper and call
-host_cpu_instance_init(cpu) directly in x86_cpu_load_model().
-
-However, this goes against the original intent of moving this hack to
-the KVM-specific code. But when it can cover almost all accels, it
-becomes a general case...
-
-...
-
-So in summary, the benefits of having all accels override the vendor now
-include:
-
-the behavior of -cpu NAMED_CPU is consistent across all accels (except
-TCG), and all showing the same vendor as the Host.
-
-The possible issue would be: 
- * This changes the previous behavior of these accels, which might not
-   have required setting the vendor before, but now the vendor has
-   changed... (I'm unsure if these accels are used in migration
-   scenarios, but it's better to add a compat option?)
- * expand the scope of historical KVM hack (if it's still a hack?)
-
-Thanks,
-Zhao
+>
+> > +#     event, and error details could be retrieved with `query-migrate`=
+.
+> >  #     (since 9.1)
+> >  #
+> >  # Since: 2.3
+>
+> [...]
+>
 
 
