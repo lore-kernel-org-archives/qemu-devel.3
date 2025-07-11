@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24A39C83F1D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0467C83F1A
 	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 09:45:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaAJ0-0005T2-9Q; Fri, 11 Jul 2025 05:44:34 -0400
+	id 1uaAJ0-0005Sn-LX; Fri, 11 Jul 2025 05:44:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel@iogearbox.net>)
- id 1uaAIw-0005Mu-DS
+ id 1uaAIw-0005Lj-Qm
  for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:44:30 -0400
 Received: from www62.your-server.de ([213.133.104.62])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel@iogearbox.net>)
- id 1uaAIs-0001Hk-VB
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:44:30 -0400
+ id 1uaAIs-0001HT-VF
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:44:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:MIME-Version:
  References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:
  Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
  Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=+FXXGCu+8Zv0lrHnKAikMxZytmitnVKUXew1wyyq5Yc=; b=Bn/eTHx5CW3mf6fLfGpE49IbrW
- 1osYKXDFlAe25cVxXUWraWOgtapEm6D9mzx/zlMiYr8iWjqO65/mOCtlGT2vgvjTpUDEtZ1ZtGEFE
- rxAmlLxMZj7IcqPLklyFjj8yrhwJQI+OHfhRlaskQZWEAYwVf5N4GOZU5PWB76zRGLFPa4asAYvu/
- iViGNXjNCsZ+JsqdbQjMHComQHHxzbrdPnceIcTYVsnFmps22TxZsuNE6wal14wD3yOGO2ao/Sbvj
- drXkLeZVv8OicfyNJHXMeYG7IBgBK1Gl9leFYqMQ1k40or+CbI3Df9BZ+725bAx9ALuY6bbH2W8Vr
- 98ZKS7XA==;
+ bh=+bM6KO5lxBHz9WehrdiB7lnSkdK2h0w2rTSXUNi1Fd0=; b=M4B9ZgfAi4nIfGJOP+4NSq/zm6
+ NcA9b8SpvsEEb7fn3kExpjPggt8JiYL7VawANowpFLRw364YEa4f+XHqV7DGSkUzt1TYymyN+0ILJ
+ KiZGH10+LF8ISqcpWc3RoYjcg6OIfxEStyI4mz+r7SZyRKUfcxgmK897VPLXybHBc0rrp7gAc1hLx
+ WAmSYUEQn8Z1/G9IfIDIyDH6NCJOuHPvCBZ4S5yDx/enQZ0RfQyFqGL7quSgD1VNyUstNQSt3bkJD
+ hpgFONsqszglkGHdwCOIY+Z63320oBntkDR7P+qOBTdNWyUJULLndMqD7nhyeEH0PWH5QPaCcpUEE
+ 0xmibmkA==;
 Received: from localhost ([127.0.0.1])
  by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96.2) (envelope-from <daniel@iogearbox.net>)
- id 1uaAIk-0002nE-0v; Fri, 11 Jul 2025 11:44:18 +0200
+ id 1uaAIj-0002n5-2T; Fri, 11 Jul 2025 11:44:17 +0200
 To: qemu-devel@nongnu.org
 Cc: daniel@iogearbox.net, Ilya Maximets <i.maximets@ovn.org>,
  Jason Wang <jasowang@redhat.com>, Anton Protopopov <aspsk@isovalent.com>
-Subject: [PATCH v5 3/3] net/af-xdp: Support pinned map path for AF_XDP sockets
-Date: Fri, 11 Jul 2025 11:44:16 +0200
-Message-ID: <20250711094416.247125-3-daniel@iogearbox.net>
+Subject: [PATCH v5 2/3] net/af-xdp: Fix up cleanup path upon failure in queue
+ creation
+Date: Fri, 11 Jul 2025 11:44:15 +0200
+Message-ID: <20250711094416.247125-2-daniel@iogearbox.net>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250711094416.247125-1-daniel@iogearbox.net>
 References: <20250711094416.247125-1-daniel@iogearbox.net>
@@ -74,316 +75,70 @@ From:  Daniel Borkmann via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend 'inhibit=on' setting with the option to specify a pinned XSK map
-path along with a starting index (default 0) to push the created XSK
-sockets into. Example usage:
+While testing, it turned out that upon error in the queue creation loop,
+we never trigger the af_xdp_cleanup() handler. This is because we pass
+errp instead of a local err pointer into the various AF_XDP setup functions
+instead of a scheme like:
 
-  # ./build/qemu-system-x86_64 [...] \
-   -netdev af-xdp,ifname=enp2s0f0np0,id=net0,mode=native,queues=2,start-queue=14,inhibit=on,map-path=/sys/fs/bpf/xsks_map,map-start-index=14 \
-   -device virtio-net-pci,netdev=net0 [...]
+    bool fn(..., Error **errp)
+    {
+        Error *err = NULL;
 
-This is useful for the case where an existing XDP program with XSK map
-is present on the AF_XDP supported phys device and the XSK map is not
-yet populated. For example, the former could have been pre-loaded onto
-the netdevice by a control plane, which later launches QEMU to populate
-it with XSK sockets.
+        foo(arg, &err);
+        if (err) {
+            handle the error...
+            error_propagate(errp, err);
+            return false;
+        }
+        ...
+    }
 
-Normally, the main idea behind 'inhibit=on' is that the QEMU instance
-doesn't need to have a lot of privileges to use the pre-loaded program
-and the pre-created sockets, but this mentioned use-case here is different
-where QEMU still needs privileges to create the sockets.
+The same is true for the attachment probing with bpf_xdp_query_id(). With a
+conversion into the above format, the af_xdp_cleanup() handler is called as
+expected. Note the error_propagate() handles a NULL err internally.
 
-The 'map-start-index' parameter is optional and defaults to 0. It allows
-flexible placement of the XSK sockets, and is up to the user to specify
-when the XDP program with XSK map was already preloaded. In the simplest
-case the queue-to-map-slot mapping is just 1:1 based on ctx->rx_queue_index
-but the user might as well have a different scheme (or smaller map size,
-e.g. ctx->rx_queue_index % max_size) to push the inbound traffic to one
-of the XSK sockets.
-
-Note that the bpf_xdp_query_id() is now only tested for 'inhibit=off'
-since only in the latter case the libxdp takes care of installing the
-XDP program which was installed based on the s->xdp_flags pointing to
-either driver or skb mode. For 'inhibit=on' we don't make any assumptions
-and neither go down the path of probing all possible options in which
-way the user installed the XDP program.
-
+Fixes: cb039ef3d9e3 ("net: add initial support for AF_XDP network backend")
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
 Cc: Ilya Maximets <i.maximets@ovn.org>
 Cc: Jason Wang <jasowang@redhat.com>
 Cc: Anton Protopopov <aspsk@isovalent.com>
 ---
- net/af-xdp.c    | 83 ++++++++++++++++++++++++++++++++++++++++++++++---
- qapi/net.json   | 29 +++++++++++------
- qemu-options.hx | 23 ++++++++++++--
- 3 files changed, 118 insertions(+), 17 deletions(-)
+ net/af-xdp.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/net/af-xdp.c b/net/af-xdp.c
-index 1692efe9f2..f8017a5b67 100644
+index c5d3b6a953..1692efe9f2 100644
 --- a/net/af-xdp.c
 +++ b/net/af-xdp.c
-@@ -51,6 +51,10 @@ typedef struct AFXDPState {
- 
-     uint32_t             xdp_flags;
-     bool                 inhibit;
-+
-+    char                 *map_path;
-+    int                  map_fd;
-+    uint32_t             map_start_index;
- } AFXDPState;
- 
- #define AF_XDP_BATCH_SIZE 64
-@@ -260,6 +264,7 @@ static void af_xdp_send(void *opaque)
- static void af_xdp_cleanup(NetClientState *nc)
- {
-     AFXDPState *s = DO_UPCAST(AFXDPState, nc, nc);
-+    int idx;
- 
-     qemu_purge_queued_packets(nc);
- 
-@@ -273,6 +278,18 @@ static void af_xdp_cleanup(NetClientState *nc)
-     s->umem = NULL;
-     qemu_vfree(s->buffer);
-     s->buffer = NULL;
-+
-+    if (s->map_fd >= 0) {
-+        idx = nc->queue_index + s->map_start_index;
-+        if (bpf_map_delete_elem(s->map_fd, &idx)) {
-+            fprintf(stderr, "af-xdp: unable to remove AF_XDP socket from map"
-+                    " %s\n", s->map_path);
-+        }
-+        close(s->map_fd);
-+        s->map_fd = -1;
-+    }
-+    g_free(s->map_path);
-+    s->map_path = NULL;
- }
- 
- static int af_xdp_umem_create(AFXDPState *s, int sock_fd, Error **errp)
-@@ -336,7 +353,6 @@ static int af_xdp_socket_create(AFXDPState *s,
-     };
-     int queue_id, error = 0;
- 
--    s->inhibit = opts->has_inhibit && opts->inhibit;
-     if (s->inhibit) {
-         cfg.libxdp_flags |= XSK_LIBXDP_FLAGS__INHIBIT_PROG_LOAD;
-     }
-@@ -387,6 +403,35 @@ static int af_xdp_socket_create(AFXDPState *s,
-     return 0;
- }
- 
-+static int af_xdp_update_xsk_map(AFXDPState *s, Error **errp)
-+{
-+    int xsk_fd, idx, error = 0;
-+
-+    if (!s->map_path) {
-+        return 0;
-+    }
-+
-+    s->map_fd = bpf_obj_get(s->map_path);
-+    if (s->map_fd < 0) {
-+        error = errno;
-+    } else {
-+        xsk_fd = xsk_socket__fd(s->xsk);
-+        idx = s->nc.queue_index + s->map_start_index;
-+        if (bpf_map_update_elem(s->map_fd, &idx, &xsk_fd, 0)) {
-+            error = errno;
-+        }
-+    }
-+
-+    if (error) {
-+        error_setg_errno(errp, error,
-+                         "failed to insert AF_XDP socket into map %s",
-+                         s->map_path);
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
- /* NetClientInfo methods. */
- static NetClientInfo net_af_xdp_info = {
-     .type = NET_CLIENT_DRIVER_AF_XDP,
-@@ -435,12 +480,14 @@ int net_init_af_xdp(const Netdev *netdev,
- {
-     const NetdevAFXDPOptions *opts = &netdev->u.af_xdp;
-     NetClientState *nc, *nc0 = NULL;
-+    int32_t map_start_index;
-     unsigned int ifindex;
-     uint32_t prog_id = 0;
-     g_autofree int *sock_fds = NULL;
-     int64_t i, queues;
-     Error *err = NULL;
-     AFXDPState *s;
-+    bool inhibit;
- 
-     ifindex = if_nametoindex(opts->ifname);
-     if (!ifindex) {
-@@ -456,8 +503,28 @@ int net_init_af_xdp(const Netdev *netdev,
-         return -1;
-     }
- 
--    if ((opts->has_inhibit && opts->inhibit) != !!opts->sock_fds) {
--        error_setg(errp, "'inhibit=on' requires 'sock-fds' and vice versa");
-+    inhibit = opts->has_inhibit && opts->inhibit;
-+    if (inhibit && !opts->sock_fds && !opts->map_path) {
-+        error_setg(errp, "'inhibit=on' requires 'sock-fds' or 'map-path'");
-+        return -1;
-+    }
-+    if (!inhibit && (opts->sock_fds || opts->map_path)) {
-+        error_setg(errp, "'sock-fds' and 'map-path' require 'inhibit=on'");
-+        return -1;
-+    }
-+    if (opts->sock_fds && opts->map_path) {
-+        error_setg(errp, "'sock-fds' and 'map-path' are mutually exclusive");
-+        return -1;
-+    }
-+    if (!opts->map_path && opts->has_map_start_index) {
-+        error_setg(errp, "'map-start-index' requires 'map-path'");
-+        return -1;
-+    }
-+
-+    map_start_index = opts->has_map_start_index ? opts->map_start_index : 0;
-+    if (map_start_index < 0) {
-+        error_setg(errp, "'map-start-index' cannot be negative (%d)",
-+                   map_start_index);
-         return -1;
-     }
- 
-@@ -481,14 +548,20 @@ int net_init_af_xdp(const Netdev *netdev,
- 
+@@ -482,9 +482,8 @@ int net_init_af_xdp(const Netdev *netdev,
          pstrcpy(s->ifname, sizeof(s->ifname), opts->ifname);
          s->ifindex = ifindex;
-+        s->inhibit = inhibit;
-+
-+        s->map_path = g_strdup(opts->map_path);
-+        s->map_start_index = map_start_index;
-+        s->map_fd = -1;
  
-         if (af_xdp_umem_create(s, sock_fds ? sock_fds[i] : -1, &err) ||
--            af_xdp_socket_create(s, opts, &err)) {
-+            af_xdp_socket_create(s, opts, &err) ||
-+            af_xdp_update_xsk_map(s, &err)) {
+-        if (af_xdp_umem_create(s, sock_fds ? sock_fds[i] : -1, errp)
+-            || af_xdp_socket_create(s, opts, errp)) {
+-            error_propagate(errp, err);
++        if (af_xdp_umem_create(s, sock_fds ? sock_fds[i] : -1, &err) ||
++            af_xdp_socket_create(s, opts, &err)) {
              goto err;
          }
      }
- 
--    if (nc0) {
-+    if (nc0 && !inhibit) {
+@@ -492,7 +491,7 @@ int net_init_af_xdp(const Netdev *netdev,
+     if (nc0) {
          s = DO_UPCAST(AFXDPState, nc, nc0);
          if (bpf_xdp_query_id(s->ifindex, s->xdp_flags, &prog_id) || !prog_id) {
-             error_setg_errno(&err, errno,
-diff --git a/qapi/net.json b/qapi/net.json
-index 97ea183981..740a088a96 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -454,25 +454,34 @@
- #     (default: 0).
- #
- # @inhibit: Don't load a default XDP program, use one already loaded
--#     to the interface (default: false).  Requires @sock-fds.
-+#     to the interface (default: false).  Requires @sock-fds or @map-path.
- #
- # @sock-fds: A colon (:) separated list of file descriptors for
- #     already open but not bound AF_XDP sockets in the queue order.
- #     One fd per queue.  These descriptors should already be added
--#     into XDP socket map for corresponding queues.  Requires
--#     @inhibit.
-+#     into XDP socket map for corresponding queues.  @sock-fds and
-+#     @map-path are mutually exclusive.  Requires @inhibit.
-+#
-+# @map-path: The path to a pinned xsk map to push file descriptors
-+#     for bound AF_XDP sockets into.  @map-path and @sock-fds are
-+#     mutually exclusive.  Requires @inhibit.  (Since 10.1)
-+#
-+# @map-start-index: Use @map-path to insert xsk sockets starting from
-+#     this index number (default: 0).  Requires @map-path.  (Since 10.1)
- #
- # Since: 8.2
- ##
- { 'struct': 'NetdevAFXDPOptions',
-   'data': {
--    'ifname':       'str',
--    '*mode':        'AFXDPMode',
--    '*force-copy':  'bool',
--    '*queues':      'int',
--    '*start-queue': 'int',
--    '*inhibit':     'bool',
--    '*sock-fds':    'str' },
-+    'ifname':           'str',
-+    '*mode':            'AFXDPMode',
-+    '*force-copy':      'bool',
-+    '*queues':          'int',
-+    '*start-queue':     'int',
-+    '*inhibit':         'bool',
-+    '*sock-fds':        'str',
-+    '*map-path':        'str',
-+    '*map-start-index': 'int32' },
-   'if': 'CONFIG_AF_XDP' }
+-            error_setg_errno(errp, errno,
++            error_setg_errno(&err, errno,
+                              "no XDP program loaded on '%s', ifindex: %d",
+                              s->ifname, s->ifindex);
+             goto err;
+@@ -506,6 +505,7 @@ int net_init_af_xdp(const Netdev *netdev,
+ err:
+     if (nc0) {
+         qemu_del_net_client(nc0);
++        error_propagate(errp, err);
+     }
  
- ##
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 1f862b19a6..1351617ee2 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -2909,6 +2909,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
- #ifdef CONFIG_AF_XDP
-     "-netdev af-xdp,id=str,ifname=name[,mode=native|skb][,force-copy=on|off]\n"
-     "         [,queues=n][,start-queue=m][,inhibit=on|off][,sock-fds=x:y:...:z]\n"
-+    "         [,map-path=/path/to/socket/map][,map-start-index=i]\n"
-     "                attach to the existing network interface 'name' with AF_XDP socket\n"
-     "                use 'mode=MODE' to specify an XDP program attach mode\n"
-     "                use 'force-copy=on|off' to force XDP copy mode even if device supports zero-copy (default: off)\n"
-@@ -2916,6 +2917,8 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
-     "                with inhibit=on,\n"
-     "                  use 'sock-fds' to provide file descriptors for already open AF_XDP sockets\n"
-     "                  added to a socket map in XDP program.  One socket per queue.\n"
-+    "                  use 'map-path' to provide the socket map location to populate AF_XDP sockets with,\n"
-+    "                  and use 'map-start-index' to specify the starting index for the map (default: 0) (Since 10.1)\n"
-     "                use 'queues=n' to specify how many queues of a multiqueue interface should be used\n"
-     "                use 'start-queue=m' to specify the first queue that should be used\n"
- #endif
-@@ -3610,7 +3613,7 @@ SRST
-         # launch QEMU instance
-         |qemu_system| linux.img -nic vde,sock=/tmp/myswitch
- 
--``-netdev af-xdp,id=str,ifname=name[,mode=native|skb][,force-copy=on|off][,queues=n][,start-queue=m][,inhibit=on|off][,sock-fds=x:y:...:z]``
-+``-netdev af-xdp,id=str,ifname=name[,mode=native|skb][,force-copy=on|off][,queues=n][,start-queue=m][,inhibit=on|off][,sock-fds=x:y:...:z][,map-path=/path/to/socket/map][,map-start-index=i]``
-     Configure AF_XDP backend to connect to a network interface 'name'
-     using AF_XDP socket.  A specific program attach mode for a default
-     XDP program can be forced with 'mode', defaults to best-effort,
-@@ -3650,7 +3653,8 @@ SRST
-             -netdev af-xdp,id=n1,ifname=eth0,queues=1,start-queue=1
- 
-     XDP program can also be loaded externally.  In this case 'inhibit' option
--    should be set to 'on' and 'sock-fds' provided with file descriptors for
-+    should be set to 'on'.  Either 'sock-fds' or 'map-path' can be used with
-+    'inhibit' enabled.  'sock-fds' can be provided with file descriptors for
-     already open but not bound XDP sockets already added to a socket map for
-     corresponding queues.  One socket per queue.
- 
-@@ -3659,6 +3663,21 @@ SRST
-         |qemu_system| linux.img -device virtio-net-pci,netdev=n1 \\
-             -netdev af-xdp,id=n1,ifname=eth0,queues=3,inhibit=on,sock-fds=15:16:17
- 
-+    For the 'inhibit' option set to 'on' used together with 'map-path' it is
-+    expected that the XDP program with the socket map is already loaded on
-+    the networking device and the map pinned into BPF file system.  The path
-+    to the pinned map is then passed to QEMU which then creates the file
-+    descriptors and inserts them into the existing socket map.
-+
-+    .. parsed-literal::
-+
-+        |qemu_system| linux.img -device virtio-net-pci,netdev=n1 \\
-+            -netdev af-xdp,id=n1,ifname=eth0,queues=2,inhibit=on,map-path=/sys/fs/bpf/xsks_map
-+
-+    Additionally, 'map-start-index' can be used to specify the start offset
-+    for insertion into the socket map.  The combination of 'map-path' and
-+    'sock-fds' together is not supported.
-+
- ``-netdev vhost-user,chardev=id[,vhostforce=on|off][,queues=n]``
-     Establish a vhost-user netdev, backed by a chardev id. The chardev
-     should be a unix domain socket backed one. The vhost-user uses a
+     return -1;
 -- 
 2.43.0
 
