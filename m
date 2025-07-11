@@ -4,79 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34E6BC83F1D
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 09:23:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E51EC8303C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 09:23:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua9xD-0008ES-D9; Fri, 11 Jul 2025 05:22:04 -0400
+	id 1ua9xv-0000D1-0l; Fri, 11 Jul 2025 05:22:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ua9wp-00088S-9P
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:21:45 -0400
-Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ua9wh-0003kh-Md
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:21:37 -0400
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-e8600a33792so1298066276.0
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 02:21:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752225686; x=1752830486; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=JBK3ePEWjvVjPev4cHFtsdsiP/pjj5vJWvBnCJvZz/o=;
- b=eJVN/jSi+gLSeWncmv89nfQ3pwUtfj+na0ZhiMbMqDyonh0rcR2w7IuwVhrke/iioi
- mFZFT7s9FE4SziS5PuN+YTPhCYXLdgRAEX0GWYMmMOb7+eJZgK/DpkV0QjQPnCUfY+Tb
- 2W/YGkuEa9P/CIRKZX3IJGC4q6YXm4cPpT58tGkTg0Paz4DLqjrgYUcXW8b8RLDC/yvB
- hTtew7ZQtgbkd881invLnUmYhsfMTacuMWxbSKYuqS13LkCbGNQIML54pWpnHpyabAYA
- WOpQHUmJQOExUhwoSX+pSp7WoR40THYsD0evbC5MTIG1V5+zCvTI7+iO7eVUJbdCDkkQ
- kFdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752225686; x=1752830486;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JBK3ePEWjvVjPev4cHFtsdsiP/pjj5vJWvBnCJvZz/o=;
- b=llG5hV9Uyh6lFkdfDJQ8lH1X225iGt96uamuC/9AJRSaXegNPF/SuRYGz8MD0d68kW
- JcLjttY0iSu4T3NX5LUvFMxPZY/i7AvWqRa6lFGzia56OUWlVSCCy7wtrRIsQRMsFb+L
- oYixbHyyEe4/+Q38MBR1GJwHjrnpg1yHTyPf5uikUai+p3bVmgkqVbRt2yJXeRk1zF7y
- i7+XPwlkQNQ9Y+Lv1W3baKIDm3ejV2rQVWUh6G8MedFesHzQ2Qubtdtos4kl6ql6Pwem
- T8q6Ov/riGR5KrdxGNIGan44+/b8oZaJSFgsgp5Dzh4nU9k/H5K1PWaCfXqu/Zyzv8iC
- Rv5Q==
-X-Gm-Message-State: AOJu0YzdG+i78IsX7nVynQjSqog8bLbHZWfaK6rArtgT+9SA/U1IdZNh
- UQ/ZP6JdfEOqLt2D7QZft0gkA8KZlz/JnO/HoN96R3ti79kO2DY2lwFYIzhZrTlemUMuSBHRp8a
- hIOsyeT8J5SElDZnchzN+6ubRKYHGll29cH6r8Pxbmw==
-X-Gm-Gg: ASbGnctWb6vneFkMBSWbdoVUV5YAV9f1+s/OKBDdMvJcD5fMaGBPDFkkSVRjMGQamXw
- AtQYVcKPotx9vH0l0D8EgXvbKl19XhaUS8qD0ErBf4CV2aDGM3SIWmQJql3ap1tjr2Pniyl72/A
- O+V9j4IIk8xDzKKgZMCYG9e5GTvgSjJ+JuE8KdYEOfb5fjzoI9DrN58+NOhAloB/AMcc49SU5HA
- y97+LcX
-X-Google-Smtp-Source: AGHT+IGhScNy1QoZ9V7SEoU1ko5x8tugAFMtojRlU87mWt+pS3iCOkgsRmnR0gYtRg+QbdkVDe1qyJl7cMXPQCHWfdE=
-X-Received: by 2002:a05:690c:4c01:b0:70e:a1e:d9f8 with SMTP id
- 00721157ae682-717d5dade00mr42174647b3.22.1752225686442; Fri, 11 Jul 2025
- 02:21:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1ua9xY-000079-PN
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:22:25 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1ua9xP-0003rL-Qu
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:22:24 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8CxdXDD13Bopx8nAQ--.41898S3;
+ Fri, 11 Jul 2025 17:22:11 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowJCxdOS813Bo5owSAA--.39837S9;
+ Fri, 11 Jul 2025 17:22:11 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: maobibo@loongson.cn
+Cc: qemu-devel@nongnu.org,
+	philmd@linaro.org,
+	jiaxun.yang@flygoat.com
+Subject: [PATCH v5 07/11] hw/loongarch: Implement avec controller imput and
+ output pins
+Date: Fri, 11 Jul 2025 16:59:11 +0800
+Message-Id: <20250711085915.3042395-8-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20250711085915.3042395-1-gaosong@loongson.cn>
+References: <20250711085915.3042395-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-References: <20250710173945.115428-1-richard.henderson@linaro.org>
-In-Reply-To: <20250710173945.115428-1-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 11 Jul 2025 10:21:14 +0100
-X-Gm-Features: Ac12FXw7FjjTpKMhpqKvQDQMei6e4MRrjqENgG4HjSGfcA1xYsESkSozoAt7Ibs
-Message-ID: <CAFEAcA_w5jTEjNWmk-RSCvS1H5HJGKsB5_KDmsikqAjXq25_Cw@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: Remove helper_sme2_luti4_4b
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJCxdOS813Bo5owSAA--.39837S9
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,22 +67,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 10 Jul 2025 at 18:39, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> This function isn't used.
->
-> Resolves: Coverity CID 1612139
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/tcg/helper.h     | 1 -
->  target/arm/tcg/vec_helper.c | 1 -
->  2 files changed, 2 deletions(-)
->
+the AVEC controller supports 256*256 irqs input, all the irqs connect CPU INT_AVEC irq
 
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ hw/intc/loongarch_avec.c | 20 ++++++++++++++++++++
+ hw/loongarch/virt.c      | 11 +++++++++--
+ target/loongarch/cpu.h   |  3 ++-
+ 3 files changed, 31 insertions(+), 3 deletions(-)
 
+diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
+index 253bab5461..1f9f376898 100644
+--- a/hw/intc/loongarch_avec.c
++++ b/hw/intc/loongarch_avec.c
+@@ -38,7 +38,12 @@ static const MemoryRegionOps loongarch_avec_ops = {
+ 
+ static void loongarch_avec_realize(DeviceState *dev, Error **errp)
+ {
++    LoongArchAVECState *s = LOONGARCH_AVEC(dev);
+     LoongArchAVECClass *lac = LOONGARCH_AVEC_GET_CLASS(dev);
++    MachineState *machine = MACHINE(qdev_get_machine());
++    MachineClass *mc = MACHINE_GET_CLASS(machine);
++    const CPUArchIdList  *id_list;
++    int i;
+ 
+     Error *local_err = NULL;
+     lac->parent_realize(dev, &local_err);
+@@ -47,6 +52,21 @@ static void loongarch_avec_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
++    assert(mc->possible_cpu_arch_ids);
++    id_list = mc->possible_cpu_arch_ids(machine);
++    s->num_cpu = id_list->len;
++    s->cpu = g_new(AVECCore, s->num_cpu);
++    if (s->cpu == NULL) {
++        error_setg(errp, "Memory allocation for AVECCore fail");
++        return;
++    }
++
++    for (i = 0; i < s->num_cpu; i++) {
++        s->cpu[i].arch_id = id_list->cpus[i].arch_id;
++        s->cpu[i].cpu = CPU(id_list->cpus[i].cpu);
++        qdev_init_gpio_out(dev, &s->cpu[i].parent_irq, 1);
++    }
++
+     return;
+ }
+ 
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index b420d1def9..e3ab165cc5 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -380,7 +380,7 @@ static void virt_cpu_irq_init(LoongArchVirtMachineState *lvms)
+     }
+ }
+ 
+-static void virt_irq_init(LoongArchVirtMachineState *lvms)
++static void virt_irq_init(LoongArchVirtMachineState *lvms, MachineState *ms)
+ {
+     DeviceState *pch_pic, *pch_msi;
+     DeviceState *ipi, *extioi, *avec;
+@@ -470,6 +470,13 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+         sysbus_realize_and_unref(SYS_BUS_DEVICE(avec), &error_fatal);
+         memory_region_add_subregion(get_system_memory(), VIRT_AVEC_BASE,
+                         sysbus_mmio_get_region(SYS_BUS_DEVICE(avec), 0));
++        CPUState *cpu_state;
++        DeviceState *cpudev;
++        for (int cpu = 0; cpu < ms->smp.cpus; cpu++) {
++            cpu_state = qemu_get_cpu(cpu);
++            cpudev = DEVICE(cpu_state);
++            qdev_connect_gpio_out(avec, cpu, qdev_get_gpio_in(cpudev, INT_AVEC));
++        }
+     }
+ 
+     /* Create EXTIOI device */
+@@ -838,7 +845,7 @@ static void virt_init(MachineState *machine)
+     }
+ 
+     /* Initialize the IO interrupt subsystem */
+-    virt_irq_init(lvms);
++    virt_irq_init(lvms, machine);
+     lvms->machine_done.notify = virt_done;
+     qemu_add_machine_init_done_notifier(&lvms->machine_done);
+      /* connect powerdown request */
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 208d3e0cd3..556e9dabb9 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -217,9 +217,10 @@ FIELD(CSR_CRMD, WE, 9, 1)
+ extern const char * const regnames[32];
+ extern const char * const fregnames[32];
+ 
+-#define N_IRQS      13
++#define N_IRQS      15
+ #define IRQ_TIMER   11
+ #define IRQ_IPI     12
++#define INT_AVEC    14
+ 
+ #define LOONGARCH_STLB         2048 /* 2048 STLB */
+ #define LOONGARCH_MTLB         64   /* 64 MTLB */
+-- 
+2.34.1
 
-Applied to target-arm.next, thanks.
-
--- PMM
 
