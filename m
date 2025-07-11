@@ -4,54 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0B8FC83F1D
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 09:35:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2C0AC83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 09:35:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaA9X-00018T-QO; Fri, 11 Jul 2025 05:34:50 -0400
+	id 1uaA97-0000pJ-8T; Fri, 11 Jul 2025 05:34:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uaA9A-0000tv-PD
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:34:26 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uaA8m-0000k3-A5
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:34:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uaA92-00076G-60
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:34:23 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uaA8k-00073x-Cu
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 05:34:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752226453;
+ s=mimecast20190719; t=1752226437;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ptvW/ewWOyq1av2bdjh/PPm80fNqpscUZ/kler952q0=;
- b=d5RQU80/bR+X5iOm998BpWE4kNjCHnGFwBfZqcaaP+OPrAxua6Rf7avYN6GEsY9MzJpFXn
- tzMJj1ZzXJUHGRiqi8v6nbPyPXD/F/130SIj0lc7YJ524Aye/pttb0/JA80Ot5GejEqg/g
- Bzib0cEcPtlJifoGu+27B1iBHC/hAF0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=1pSu3CoNT0iMxPLfLo8zoxuE/uI04rY3P4g6LTMpEQM=;
+ b=YHVgrh89qo8dWG8N3MIh5xg+gWwPnvSMJNf2oAdwJYUA4upMiXNcg+7OEV+UlEh//x9K+d
+ WXgFE0TOakfFIOHhKYQ9NQIWjowesNK3NzyGJt2xcGHaaWtXPKFuQl8bNVglOrqQoQgiYj
+ 68hTwOFzvrTQCyuQQGlo7HPoAPSe4Ak=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-ShF6T77nNk2tllxLQ1GhyA-1; Fri,
- 11 Jul 2025 05:34:10 -0400
-X-MC-Unique: ShF6T77nNk2tllxLQ1GhyA-1
-X-Mimecast-MFC-AGG-ID: ShF6T77nNk2tllxLQ1GhyA_1752226449
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-277-x73Ktt7yOJGSDA6gllk-cA-1; Fri,
+ 11 Jul 2025 05:33:53 -0400
+X-MC-Unique: x73Ktt7yOJGSDA6gllk-cA-1
+X-Mimecast-MFC-AGG-ID: x73Ktt7yOJGSDA6gllk-cA_1752226432
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9B11C1953950; Fri, 11 Jul 2025 09:34:03 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 981FF1800268; Fri, 11 Jul 2025 09:33:52 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.54])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C9D2719560A3; Fri, 11 Jul 2025 09:34:01 +0000 (UTC)
+ id CBEBF19560A3; Fri, 11 Jul 2025 09:33:49 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Jared Rossi <jrossi@linux.ibm.com>
-Subject: [PULL 07/15] pc-bios/s390-ccw: Add a boot menu for booting via
- pxelinux.cfg
-Date: Fri, 11 Jul 2025 11:33:32 +0200
-Message-ID: <20250711093340.608485-8-thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>
+Subject: [PULL 03/15] hw/s390x/s390-pci-bus.c: Use g_assert_not_reached() in
+ functions taking an ett
+Date: Fri, 11 Jul 2025 11:33:28 +0200
+Message-ID: <20250711093340.608485-4-thuth@redhat.com>
 In-Reply-To: <20250711093340.608485-1-thuth@redhat.com>
 References: <20250711093340.608485-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -82,61 +84,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Show a simple boot menu for pxelinux.cfg, too, if the user requested it.
+The s390-pci-bus.c code, Coverity complains about a possible overflow
+because get_table_index() can return -1 if the ett value passed in is
+not one of the three permitted ZPCI_ETT_PT, ZPCI_ETT_ST, ZPCI_ETT_RT,
+but the caller in table_translate() doesn't check this and instead
+uses the return value directly in a calculation of the guest address
+to read from.
 
-Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
+In fact this case cannot happen, because:
+ * get_table_index() is called only from table_translate()
+ * the only caller of table_translate() loops through the ett values
+   in the order RT, ST, PT until table_translate() returns 0
+ * table_translate() will return 0 for the error cases and when
+   translate_iscomplete() returns true
+ * translate_iscomplete() is always true for ZPCI_ETT_PT
+
+So table_translate() is always called with a valid ett value.
+
+Instead of having the various functions called from table_translate()
+return a default or dummy value when the ett argument is out of range,
+use g_assert_not_reached() to indicate that this is impossible.
+
+Coverity: CID 1547609
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
+Message-ID: <20250710161552.1287399-1-peter.maydell@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250709083443.41574-5-thuth@redhat.com>
 ---
- pc-bios/s390-ccw/netmain.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ hw/s390x/s390-pci-bus.c | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
-index 6f64323cd84..a9521dff416 100644
---- a/pc-bios/s390-ccw/netmain.c
-+++ b/pc-bios/s390-ccw/netmain.c
-@@ -332,6 +332,28 @@ static int load_kernel_with_initrd(filename_ip_t *fn_ip,
-     return rc;
+diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+index e6aa44531f6..f87d2748b63 100644
+--- a/hw/s390x/s390-pci-bus.c
++++ b/hw/s390x/s390-pci-bus.c
+@@ -384,9 +384,9 @@ static uint64_t get_table_index(uint64_t iova, int8_t ett)
+         return calc_sx(iova);
+     case ZPCI_ETT_RT:
+         return calc_rtx(iova);
++    default:
++        g_assert_not_reached();
+     }
+-
+-    return -1;
  }
  
-+static int net_boot_menu(int num_ent, int def_ent,
-+                         struct pl_cfg_entry *entries)
-+{
-+    bool valid_entries[MAX_BOOT_ENTRIES] = { false };
-+    int idx;
-+
-+    puts("\ns390-ccw pxelinux.cfg boot menu:\n");
-+    printf(" [0] default (%d)\n", def_ent + 1);
-+    valid_entries[0] = true;
-+
-+    for (idx = 1; idx <= num_ent; idx++) {
-+        printf(" [%d] %s\n", idx, entries[idx - 1].label);
-+        valid_entries[idx] = true;
-+    }
-+    putchar('\n');
-+
-+    idx = menu_get_boot_index(valid_entries);
-+    putchar('\n');
-+
-+    return idx;
-+}
-+
- static int net_select_and_load_kernel(filename_ip_t *fn_ip,
-                                       int num_ent, int selected,
-                                       struct pl_cfg_entry *entries)
-@@ -342,6 +364,10 @@ static int net_select_and_load_kernel(filename_ip_t *fn_ip,
-         return -1;
+ static bool entry_isvalid(uint64_t entry, int8_t ett)
+@@ -397,22 +397,24 @@ static bool entry_isvalid(uint64_t entry, int8_t ett)
+     case ZPCI_ETT_ST:
+     case ZPCI_ETT_RT:
+         return rt_entry_isvalid(entry);
++    default:
++        g_assert_not_reached();
      }
+-
+-    return false;
+ }
  
-+    if (menu_is_enabled_enum() && num_ent > 1) {
-+        loadparm = net_boot_menu(num_ent, selected, entries);
-+    }
-+
-     IPL_assert(loadparm <= num_ent,
-                "loadparm is set to an entry that is not available in the "
-                "pxelinux.cfg file!");
+ /* Return true if address translation is done */
+ static bool translate_iscomplete(uint64_t entry, int8_t ett)
+ {
+     switch (ett) {
+-    case 0:
++    case ZPCI_ETT_ST:
+         return (entry & ZPCI_TABLE_FC) ? true : false;
+-    case 1:
++    case ZPCI_ETT_RT:
+         return false;
++    case ZPCI_ETT_PT:
++        return true;
++    default:
++        g_assert_not_reached();
+     }
+-
+-    return true;
+ }
+ 
+ static uint64_t get_frame_size(int8_t ett)
+@@ -424,9 +426,9 @@ static uint64_t get_frame_size(int8_t ett)
+         return 1ULL << 20;
+     case ZPCI_ETT_RT:
+         return 1ULL << 31;
++    default:
++        g_assert_not_reached();
+     }
+-
+-    return 0;
+ }
+ 
+ static uint64_t get_next_table_origin(uint64_t entry, int8_t ett)
+@@ -438,9 +440,9 @@ static uint64_t get_next_table_origin(uint64_t entry, int8_t ett)
+         return get_st_pto(entry);
+     case ZPCI_ETT_RT:
+         return get_rt_sto(entry);
++    default:
++        g_assert_not_reached();
+     }
+-
+-    return 0;
+ }
+ 
+ /**
 -- 
 2.50.0
 
