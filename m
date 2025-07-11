@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 270BFC83F21
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 13:44:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D46CAC83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 13:44:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaDuf-0005aF-Ud; Fri, 11 Jul 2025 09:35:42 -0400
+	id 1uaDuj-0005nX-Fe; Fri, 11 Jul 2025 09:35:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uaDtg-0004Mu-7U
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:34:40 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1uaDtr-0004QA-39
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:34:51 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uaDtd-0002xH-Hz
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:34:39 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-453398e90e9so16213885e9.1
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 06:34:37 -0700 (PDT)
+ id 1uaDto-00032u-Bz
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:34:50 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-454aaade1fbso21792095e9.3
+ for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 06:34:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752240876; x=1752845676; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752240887; x=1752845687; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=wK0R7sFv53iD9d97HEP4+jyy3hoUoi+aPZFmxHOWO04=;
- b=YRJRIjjmKu7Nk/uh3+5+qUvIAF2Le1fSImKnd8dXnOk0tZTQ0tBKimfhewRep1ziQL
- eYUg6AK0dwVcx9PW6F9fX9uZRX3ferRzCjOpgcMf3G/C4ieU7wyh4dhV3xUedWBCOmYy
- TN7akYpU2jRKHYl7F3ZtttCblN1gzCa9skspBjQge4tM16QnGtAFCi7ihjixRtUgDXkO
- 3S65dryY6E6azpvNE2nnK0TSgrleh9iCd18kdhn9laO7huAs4SPuvbKrHP8nRhxHunZc
- PmLc8Ziv43RuteF0x1KVtNaTZ+c56bOqXlPysPFEK+1MowRnZnLJtVy7QTcN6MDPZW1U
- BjQg==
+ :reply-to; bh=554uR+tWHHbPvIB9l177CJtnBAnLDMfIkrvonXqbU0Y=;
+ b=GsfUTWUbXV64bu6TVB7/LMTokB79DhnUrYH32Htk9KTXCMtJy5sXv0lp/k0AmgmLHn
+ dDcbzp6vTlEEUZtq0F+GnDduc/+ziuWHJFNzePSaZkIe1cWiGsm94Ie/AMG4runr6BUH
+ zSeP8tMrtNavuh6QYtxA6r/UHdKTBooDPGhBW8rx2+kH8pfpCTUd68mUcih8MPnFI8MF
+ 8NwbX6RwEcEyWen4HoJ0R+VTHmTjfyzVXdhFP2sE85B2V8c8RUHepKPWhnrX0NPqlrSZ
+ XF+DPEY2bX+TqFOIpcZp+ByWFHzVLlJTopiI7cA7Fz9q2GDerlB0aUFvskf6scc6Xr/e
+ yhxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752240876; x=1752845676;
+ d=1e100.net; s=20230601; t=1752240887; x=1752845687;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wK0R7sFv53iD9d97HEP4+jyy3hoUoi+aPZFmxHOWO04=;
- b=bOBVNEYv7QVf2g3wFAJRIt1YFxNb0POSsfvH73VyjWAZAbGN+u1snI0VroFUDFRCAL
- F1pwnIeYF+0FUVdet3783u3Gj8tK5O9p72hVM96HKEicqERarrOXeWKXUYRLqWJYUtgY
- W5j1Qc8MGbu0gIBcuYeeTLINPkkzTIl/OLiM4rc/CTdxc7MW+mcdViuKgtlZD25Q/r8G
- zihdPYCOL9U3W93RtdRnvlWFmg3x5Py/gTstFKLC+kcG6sOeXuw1PoA8Wiv26eSspttL
- CQ6kJpmvmIr4HCk7rGlU74Q0wlYz9UHn4JRDddyXEuSUenGpOsmfJFbdUa9FNU5oqQEt
- 91VA==
-X-Gm-Message-State: AOJu0YxcgagCZrajiYo4WHWC264FDoIvSLE5qpFvmbNFL56BQehcJA3c
- Aga8dMtOYM8WqZDVrrXvm2VmJc/5X9160vi/OksGy/DrnmZ+KFr4Ee/F82V2Lh5ZofzBIG+y3AS
- TuaUQ
-X-Gm-Gg: ASbGncuB0+NmCXTW6oUX45SwwphPhZUNm5350+XKL/MhfWLn/Jl6v5B9rlPtstT2o+B
- p+5Olpl9NzXLLDvnsxYkbvyAo+LJXeIvCPIPcK/pwWjpyJUzquH7m4GIo8DarWoslQC3/iCvnR6
- Mo8AOpCoTbZpxzmfoAxTpY+Hh2oo1j8rhG426waGfpt8PWH19t+nHBFnscDSZNYfYW7+TQ60F10
- 7nmxjfIIDu49mmXy9gv4fk9zpU3zjbXXqSjcGEuzr6JBsDvN6/BiN18teEDwfTI0rIKTY2qOIRy
- PHs9BOcMXQ7d464q+S9Xiv/NwFt1RNEHAvWYI71uJ5zY6+n3VeV2OngeKXyxQkRGbjKpJtXgOBF
- uLn3xZBqljDkmE6L9dcrRFeub2jdg
-X-Google-Smtp-Source: AGHT+IEwq7yAfVMaXpTHS2+i57yjJLJdPMgTl2peEw7NYc+mqwcxOhqHj/knU5xTTvXHtC/nprAs6w==
-X-Received: by 2002:a05:600c:8483:b0:43d:563:6fef with SMTP id
- 5b1f17b1804b1-455bd879b86mr20466615e9.21.1752240875802; 
- Fri, 11 Jul 2025 06:34:35 -0700 (PDT)
+ bh=554uR+tWHHbPvIB9l177CJtnBAnLDMfIkrvonXqbU0Y=;
+ b=w1/1FhSQoBK7Ce+8gSDl7NR13NV8yS3ixn4R/dPHPyZvwbjTFZ5O1OgK/eUSiYX8rK
+ nnNn/SjfOqF37tOA7MolmtTU7DGHWSgv5ulEEm4n9zlB6iQK9SCw8tVJMdzdFoBx+vmO
+ OVO+HvYxnk1kwk5BMtZ30clUY59lcCXLKeuohEqLlGPzdPqoxqe5G0JFX7m8hOgRQwOn
+ HgxwGWrsq6Ag01WCVdZ2pt9HNrx41k6xP5879DjFNkyNfS/7KlTW0IMxMAsauf7BmJN8
+ wQ+iXxAMUu65ICU9AEMnTqhfOeok2wDl2DrXNYBnlB/sdeA6tFBwGy+unUQDVT0CFpj4
+ VxTw==
+X-Gm-Message-State: AOJu0YxxIxzdoYR740qspuXj0WizIqajtj2zf9AcAaWurU5P4i12rX7p
+ 5zcnd1XCUWBh2FnVIRM72OVgZJb8nVOLG2/yEj1NSpZ0kSe9SddszxdCMgRPrAUrJpbpFgB1pKI
+ Spx3R
+X-Gm-Gg: ASbGnct+gLljrNlDWUJFyXIlvDiSLhLixs0ArlpNNRifx1oj3deUD6FhQE4FbBN1gnP
+ PSISMzWHpVlK/xzq3+uomhmjtzdYFhFjLRIi5drMdsFnfmsqv4E7NvhuC4NIavRVbS/JK7hVI17
+ wyDVdfMlsUz1t6oVxdGCUWY5VTf1cYiBRaF3/SYVdaeMlI9g3iDPZVTLavNb9U5Q4DeAVIZsYc+
+ YUXUnmZ84Buyv9QDi2Vgx53+m/yQu4fVXjbqWXNkxOOIXwlblU+8e+jDyE9GMQuibHK5x35lKpt
+ URKIivqu2ciUgBPggL8y+njzK+JMYBG69Sg5GOYqKCRh48D3CEpoYTo4x2f41L9kCHKkKgsZ3qf
+ g+zWEwFMsW7/Q/YyTxoH8ps2QUHGi
+X-Google-Smtp-Source: AGHT+IHV/SoVnbOTV0TjQ9aK3UDZ4znKLKtl1G00ZdM2vWVxii1XL01+dpEr6lXdVd3Nu3jrLDgl6A==
+X-Received: by 2002:a05:600c:3155:b0:441:ac58:eb31 with SMTP id
+ 5b1f17b1804b1-454f4257e83mr23164205e9.20.1752240886518; 
+ Fri, 11 Jul 2025 06:34:46 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454d50df0cdsm89734145e9.25.2025.07.11.06.34.34
+ 5b1f17b1804b1-454d50df0cdsm89734145e9.25.2025.07.11.06.34.45
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Jul 2025 06:34:35 -0700 (PDT)
+ Fri, 11 Jul 2025 06:34:45 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/36] MAX78000: UART Implementation
-Date: Fri, 11 Jul 2025 14:33:57 +0100
-Message-ID: <20250711133429.1423030-5-peter.maydell@linaro.org>
+Subject: [PULL 14/36] hw/arm/virt: Basic CXL enablement on pci_expander_bridge
+ instances pxb-cxl
+Date: Fri, 11 Jul 2025 14:34:07 +0100
+Message-ID: <20250711133429.1423030-15-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250711133429.1423030-1-peter.maydell@linaro.org>
 References: <20250711133429.1423030-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,437 +100,288 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jackson Donaldson <jackson88044@gmail.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-This commit implements UART support for the MAX78000
+Code based on i386/pc enablement.
+The memory layout places space for 16 host bridge register regions after
+the GIC_REDIST2 in the extended memmap. This is a hole in the current
+map so adding them here has no impact on placement of other memory regions
+(tested with enough CPUs for GIC_REDIST2 to be in use.)
+The high memory map is GiB aligned so the hole is there whatever the
+size of memory or device_memory below this point.
 
-Signed-off-by: Jackson Donaldson <jcksn@duck.com>
+The CFMWs are placed above the extended memmap. Note the existing
+variable highest_gpa is the highest GPA that has been allocated at
+a particular point in setting up the memory map. Whilst this caused
+some confusion in review there are existing comments explaining this
+so nothing is added.
+
+The cxl_devices_state.host_mr provides a small space in which to place
+the individual host bridge register regions for whatever host bridges are
+allocated via -device pxb-cxl on the command line. The existing dynamic
+sysbus infrastructure is not reused because pxb-cxl is a PCI device not
+a sysbus one but these registers are directly in the main memory map,
+not the PCI address space.
+
+Only create the CEDT table if cxl=on set for the machine. Default to off.
+
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Tested-by: Itaru Kitayama <itaru.kitayama@fujitsu.com>
+Tested-by: Li Zhijian <lizhijian@fujitsu.com>
+Message-id: 20250703104110.992379-4-Jonathan.Cameron@huawei.com
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20250704223239.248781-5-jcksn@duck.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/char/max78000_uart.h |  78 +++++++++
- hw/char/max78000_uart.c         | 285 ++++++++++++++++++++++++++++++++
- hw/arm/Kconfig                  |   1 +
- hw/char/Kconfig                 |   3 +
- hw/char/meson.build             |   1 +
- 5 files changed, 368 insertions(+)
- create mode 100644 include/hw/char/max78000_uart.h
- create mode 100644 hw/char/max78000_uart.c
+ docs/system/arm/virt.rst |  9 +++++++++
+ include/hw/arm/virt.h    |  4 ++++
+ hw/arm/virt-acpi-build.c | 34 ++++++++++++++++++++++++++++++++++
+ hw/arm/virt.c            | 30 ++++++++++++++++++++++++++++++
+ 4 files changed, 77 insertions(+)
 
-diff --git a/include/hw/char/max78000_uart.h b/include/hw/char/max78000_uart.h
-new file mode 100644
-index 00000000000..cf90d51dbfa
---- /dev/null
-+++ b/include/hw/char/max78000_uart.h
-@@ -0,0 +1,78 @@
-+/*
-+ * MAX78000 UART
-+ *
-+ * Copyright (c) 2025 Jackson Donaldson <jcksn@duck.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_MAX78000_UART_H
-+#define HW_MAX78000_UART_H
-+
-+#include "hw/sysbus.h"
-+#include "chardev/char-fe.h"
-+#include "qemu/fifo8.h"
-+#include "qom/object.h"
-+
-+#define UART_CTRL       0x0
-+#define UART_STATUS     0x4
-+#define UART_INT_EN     0x8
-+#define UART_INT_FL     0xc
-+#define UART_CLKDIV     0x10
-+#define UART_OSR        0x14
-+#define UART_TXPEEK     0x18
-+#define UART_PNR        0x1c
-+#define UART_FIFO       0x20
-+#define UART_DMA        0x30
-+#define UART_WKEN       0x34
-+#define UART_WKFL       0x38
-+
-+/* CTRL */
-+#define UART_CTF_DIS    (1 << 7)
-+#define UART_FLUSH_TX   (1 << 8)
-+#define UART_FLUSH_RX   (1 << 9)
-+#define UART_BCLKEN     (1 << 15)
-+#define UART_BCLKRDY    (1 << 19)
-+
-+/* STATUS */
-+#define UART_RX_LVL     8
-+#define UART_TX_EM      (1 << 6)
-+#define UART_RX_FULL    (1 << 5)
-+#define UART_RX_EM      (1 << 4)
-+
-+/* PNR (Pin Control Register) */
-+#define UART_CTS        1
-+#define UART_RTS        (1 << 1)
-+
-+/* INT_EN / INT_FL */
-+#define UART_RX_THD     (1 << 4)
-+#define UART_TX_HE      (1 << 6)
-+
-+#define UART_RXBUFLEN   0x100
-+#define TYPE_MAX78000_UART "max78000-uart"
-+OBJECT_DECLARE_SIMPLE_TYPE(Max78000UartState, MAX78000_UART)
-+
-+struct Max78000UartState {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion mmio;
-+
-+    uint32_t ctrl;
-+    uint32_t status;
-+    uint32_t int_en;
-+    uint32_t int_fl;
-+    uint32_t clkdiv;
-+    uint32_t osr;
-+    uint32_t txpeek;
-+    uint32_t pnr;
-+    uint32_t fifo;
-+    uint32_t dma;
-+    uint32_t wken;
-+    uint32_t wkfl;
-+
-+    Fifo8 rx_fifo;
-+
-+    CharBackend chr;
-+    qemu_irq irq;
-+};
-+#endif /* HW_STM32F2XX_USART_H */
-diff --git a/hw/char/max78000_uart.c b/hw/char/max78000_uart.c
-new file mode 100644
-index 00000000000..19506d52ef9
---- /dev/null
-+++ b/hw/char/max78000_uart.c
-@@ -0,0 +1,285 @@
-+/*
-+ * MAX78000 UART
-+ *
-+ * Copyright (c) 2025 Jackson Donaldson <jcksn@duck.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/char/max78000_uart.h"
-+#include "hw/irq.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/qdev-properties-system.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "migration/vmstate.h"
-+#include "trace.h"
-+
-+
-+static int max78000_uart_can_receive(void *opaque)
-+{
-+    Max78000UartState *s = opaque;
-+    if (!(s->ctrl & UART_BCLKEN)) {
-+        return 0;
-+    }
-+    return fifo8_num_free(&s->rx_fifo);
-+}
-+
-+static void max78000_update_irq(Max78000UartState *s)
-+{
-+    int interrupt_level;
-+
-+    interrupt_level = s->int_fl & s->int_en;
-+    qemu_set_irq(s->irq, interrupt_level);
-+}
-+
-+static void max78000_uart_receive(void *opaque, const uint8_t *buf, int size)
-+{
-+    Max78000UartState *s = opaque;
-+
-+    assert(size <= fifo8_num_free(&s->rx_fifo));
-+
-+    fifo8_push_all(&s->rx_fifo, buf, size);
-+
-+    uint32_t rx_threshold = s->ctrl & 0xf;
-+
-+    if (fifo8_num_used(&s->rx_fifo) >= rx_threshold) {
-+        s->int_fl |= UART_RX_THD;
-+    }
-+
-+    max78000_update_irq(s);
-+}
-+
-+static void max78000_uart_reset_hold(Object *obj, ResetType type)
-+{
-+    Max78000UartState *s = MAX78000_UART(obj);
-+
-+    s->ctrl = 0;
-+    s->status = UART_TX_EM | UART_RX_EM;
-+    s->int_en = 0;
-+    s->int_fl = 0;
-+    s->osr = 0;
-+    s->txpeek = 0;
-+    s->pnr = UART_RTS;
-+    s->fifo = 0;
-+    s->dma = 0;
-+    s->wken = 0;
-+    s->wkfl = 0;
-+    fifo8_reset(&s->rx_fifo);
-+}
-+
-+static uint64_t max78000_uart_read(void *opaque, hwaddr addr,
-+                                       unsigned int size)
-+{
-+    Max78000UartState *s = opaque;
-+    uint64_t retvalue = 0;
-+    switch (addr) {
-+    case UART_CTRL:
-+        retvalue = s->ctrl;
-+        break;
-+    case UART_STATUS:
-+        retvalue = (fifo8_num_used(&s->rx_fifo) << UART_RX_LVL) |
-+                    UART_TX_EM |
-+                    (fifo8_is_empty(&s->rx_fifo) ? UART_RX_EM : 0);
-+        break;
-+    case UART_INT_EN:
-+        retvalue = s->int_en;
-+        break;
-+    case UART_INT_FL:
-+        retvalue = s->int_fl;
-+        break;
-+    case UART_CLKDIV:
-+        retvalue = s->clkdiv;
-+        break;
-+    case UART_OSR:
-+        retvalue = s->osr;
-+        break;
-+    case UART_TXPEEK:
-+        if (!fifo8_is_empty(&s->rx_fifo)) {
-+            retvalue = fifo8_peek(&s->rx_fifo);
-+        }
-+        break;
-+    case UART_PNR:
-+        retvalue = s->pnr;
-+        break;
-+    case UART_FIFO:
-+        if (!fifo8_is_empty(&s->rx_fifo)) {
-+            retvalue = fifo8_pop(&s->rx_fifo);
-+            max78000_update_irq(s);
-+        }
-+        break;
-+    case UART_DMA:
-+        /* DMA not implemented */
-+        retvalue = s->dma;
-+        break;
-+    case UART_WKEN:
-+        retvalue = s->wken;
-+        break;
-+    case UART_WKFL:
-+        retvalue = s->wkfl;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+            "%s: Bad offset 0x%"HWADDR_PRIx"\n", __func__, addr);
-+        break;
-+    }
-+
-+    return retvalue;
-+}
-+
-+static void max78000_uart_write(void *opaque, hwaddr addr,
-+                                  uint64_t val64, unsigned int size)
-+{
-+    Max78000UartState *s = opaque;
-+
-+    uint32_t value = val64;
-+    uint8_t data;
-+
-+    switch (addr) {
-+    case UART_CTRL:
-+        if (value & UART_FLUSH_RX) {
-+            fifo8_reset(&s->rx_fifo);
-+        }
-+        if (value & UART_BCLKEN) {
-+            value = value | UART_BCLKRDY;
-+        }
-+        s->ctrl = value & ~(UART_FLUSH_RX | UART_FLUSH_TX);
-+
-+        /*
-+         * Software can manage UART flow control manually by setting hfc_en
-+         * in UART_CTRL. This would require emulating uart at a lower level,
-+         * and is currently unimplemented.
-+         */
-+
-+        return;
-+    case UART_STATUS:
-+        /* UART_STATUS is read only */
-+        return;
-+    case UART_INT_EN:
-+        s->int_en = value;
-+        return;
-+    case UART_INT_FL:
-+        s->int_fl = s->int_fl & ~(value);
-+        max78000_update_irq(s);
-+        return;
-+    case UART_CLKDIV:
-+        s->clkdiv = value;
-+        return;
-+    case UART_OSR:
-+        s->osr = value;
-+        return;
-+    case UART_PNR:
-+        s->pnr = value;
-+        return;
-+    case UART_FIFO:
-+        data = value & 0xff;
-+        /*
-+         * XXX this blocks entire thread. Rewrite to use
-+         * qemu_chr_fe_write and background I/O callbacks
-+         */
-+        qemu_chr_fe_write_all(&s->chr, &data, 1);
-+
-+        /* TX is always empty */
-+        s->int_fl |= UART_TX_HE;
-+        max78000_update_irq(s);
-+
-+        return;
-+    case UART_DMA:
-+        /* DMA not implemented */
-+        s->dma = value;
-+        return;
-+    case UART_WKEN:
-+        s->wken = value;
-+        return;
-+    case UART_WKFL:
-+        s->wkfl = value;
-+        return;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"
-+            HWADDR_PRIx "\n", __func__, addr);
-+    }
-+}
-+
-+static const MemoryRegionOps max78000_uart_ops = {
-+    .read = max78000_uart_read,
-+    .write = max78000_uart_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid.min_access_size = 4,
-+    .valid.max_access_size = 4,
-+};
-+
-+static const Property max78000_uart_properties[] = {
-+    DEFINE_PROP_CHR("chardev", Max78000UartState, chr),
-+};
-+
-+static const VMStateDescription max78000_uart_vmstate = {
-+    .name = TYPE_MAX78000_UART,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_UINT32(ctrl, Max78000UartState),
-+        VMSTATE_UINT32(status, Max78000UartState),
-+        VMSTATE_UINT32(int_en, Max78000UartState),
-+        VMSTATE_UINT32(int_fl, Max78000UartState),
-+        VMSTATE_UINT32(clkdiv, Max78000UartState),
-+        VMSTATE_UINT32(osr, Max78000UartState),
-+        VMSTATE_UINT32(txpeek, Max78000UartState),
-+        VMSTATE_UINT32(pnr, Max78000UartState),
-+        VMSTATE_UINT32(fifo, Max78000UartState),
-+        VMSTATE_UINT32(dma, Max78000UartState),
-+        VMSTATE_UINT32(wken, Max78000UartState),
-+        VMSTATE_UINT32(wkfl, Max78000UartState),
-+        VMSTATE_FIFO8(rx_fifo, Max78000UartState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void max78000_uart_init(Object *obj)
-+{
-+    Max78000UartState *s = MAX78000_UART(obj);
-+    fifo8_create(&s->rx_fifo, 8);
-+
-+    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
-+
-+    memory_region_init_io(&s->mmio, obj, &max78000_uart_ops, s,
-+                          TYPE_MAX78000_UART, 0x400);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
-+}
-+
-+static void max78000_uart_realize(DeviceState *dev, Error **errp)
-+{
-+    Max78000UartState *s = MAX78000_UART(dev);
-+
-+    qemu_chr_fe_set_handlers(&s->chr, max78000_uart_can_receive,
-+                             max78000_uart_receive, NULL, NULL,
-+                             s, NULL, true);
-+}
-+
-+static void max78000_uart_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+
-+    rc->phases.hold = max78000_uart_reset_hold;
-+
-+    device_class_set_props(dc, max78000_uart_properties);
-+    dc->realize = max78000_uart_realize;
-+
-+    dc->vmsd = &max78000_uart_vmstate;
-+}
-+
-+static const TypeInfo max78000_uart_info = {
-+    .name          = TYPE_MAX78000_UART,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(Max78000UartState),
-+    .instance_init = max78000_uart_init,
-+    .class_init    = max78000_uart_class_init,
-+};
-+
-+static void max78000_uart_register_types(void)
-+{
-+    type_register_static(&max78000_uart_info);
-+}
-+
-+type_init(max78000_uart_register_types)
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 035568a085e..7e3610dca8f 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -367,6 +367,7 @@ config MAX78000_SOC
-     bool
-     select ARM_V7M
-     select MAX78000_ICC
-+    select MAX78000_UART
+diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
+index 6a719b95863..10cbffc8a70 100644
+--- a/docs/system/arm/virt.rst
++++ b/docs/system/arm/virt.rst
+@@ -31,6 +31,7 @@ Supported devices
+ The virt board supports:
  
- config RASPI
-     bool
-diff --git a/hw/char/Kconfig b/hw/char/Kconfig
-index 9d517f3e287..020c0a84bb6 100644
---- a/hw/char/Kconfig
-+++ b/hw/char/Kconfig
-@@ -48,6 +48,9 @@ config VIRTIO_SERIAL
-     default y
-     depends on VIRTIO
+ - PCI/PCIe devices
++- CXL Fixed memory windows, root bridges and devices.
+ - Flash memory
+ - Either one or two PL011 UARTs for the NonSecure World
+ - An RTC
+@@ -189,6 +190,14 @@ ras
+ acpi
+   Set ``on``/``off``/``auto`` to enable/disable ACPI.
  
-+config MAX78000_UART
-+    bool
++cxl
++  Set  ``on``/``off`` to enable/disable CXL. More details in
++  :doc:`../devices/cxl`. The default is off.
 +
- config STM32F2XX_USART
-     bool
++cxl-fmw
++  Array of CXL fixed memory windows describing fixed address routing to
++  target CXL host bridges. See :doc:`../devices/cxl`.
++
+ dtb-randomness
+   Set ``on``/``off`` to pass random seeds via the guest DTB
+   rng-seed and kaslr-seed nodes (in both "/chosen" and
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 9a1b0f53d21..4375819ea06 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -36,6 +36,7 @@
+ #include "hw/arm/boot.h"
+ #include "hw/arm/bsa.h"
+ #include "hw/block/flash.h"
++#include "hw/cxl/cxl.h"
+ #include "system/kvm.h"
+ #include "hw/intc/arm_gicv3_common.h"
+ #include "qom/object.h"
+@@ -85,6 +86,7 @@ enum {
+ /* indices of IO regions located after the RAM */
+ enum {
+     VIRT_HIGH_GIC_REDIST2 =  VIRT_LOWMEMMAP_LAST,
++    VIRT_CXL_HOST,
+     VIRT_HIGH_PCIE_ECAM,
+     VIRT_HIGH_PCIE_MMIO,
+ };
+@@ -140,6 +142,7 @@ struct VirtMachineState {
+     bool secure;
+     bool highmem;
+     bool highmem_compact;
++    bool highmem_cxl;
+     bool highmem_ecam;
+     bool highmem_mmio;
+     bool highmem_redists;
+@@ -174,6 +177,7 @@ struct VirtMachineState {
+     char *oem_id;
+     char *oem_table_id;
+     bool ns_el2_virt_timer_irq;
++    CXLState cxl_devices_state;
+ };
  
-diff --git a/hw/char/meson.build b/hw/char/meson.build
-index 4e439da8b9e..a9e1dc26c0f 100644
---- a/hw/char/meson.build
-+++ b/hw/char/meson.build
-@@ -26,6 +26,7 @@ system_ss.add(when: 'CONFIG_AVR_USART', if_true: files('avr_usart.c'))
- system_ss.add(when: 'CONFIG_COLDFIRE', if_true: files('mcf_uart.c'))
- system_ss.add(when: 'CONFIG_DIGIC', if_true: files('digic-uart.c'))
- system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_uart.c'))
-+system_ss.add(when: 'CONFIG_MAX78000_UART', if_true: files('max78000_uart.c'))
- system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_uart.c'))
- system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_aux.c'))
- system_ss.add(when: 'CONFIG_RENESAS_SCI', if_true: files('renesas_sci.c'))
+ #define VIRT_ECAM_ID(high) (high ? VIRT_HIGH_PCIE_ECAM : VIRT_PCIE_ECAM)
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index cd90c47976c..c3b9b3f6ea4 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -39,10 +39,12 @@
+ #include "hw/acpi/aml-build.h"
+ #include "hw/acpi/utils.h"
+ #include "hw/acpi/pci.h"
++#include "hw/acpi/cxl.h"
+ #include "hw/acpi/memory_hotplug.h"
+ #include "hw/acpi/generic_event_device.h"
+ #include "hw/acpi/tpm.h"
+ #include "hw/acpi/hmat.h"
++#include "hw/cxl/cxl.h"
+ #include "hw/pci/pcie_host.h"
+ #include "hw/pci/pci.h"
+ #include "hw/pci/pci_bus.h"
+@@ -119,10 +121,29 @@ static void acpi_dsdt_add_flash(Aml *scope, const MemMapEntry *flash_memmap)
+     aml_append(scope, dev);
+ }
+ 
++static void build_acpi0017(Aml *table)
++{
++    Aml *dev, *scope, *method;
++
++    scope =  aml_scope("_SB");
++    dev = aml_device("CXLM");
++    aml_append(dev, aml_name_decl("_HID", aml_string("ACPI0017")));
++
++    method = aml_method("_STA", 0, AML_NOTSERIALIZED);
++    aml_append(method, aml_return(aml_int(0x0B)));
++    aml_append(dev, method);
++    build_cxl_dsm_method(dev);
++
++    aml_append(scope, dev);
++    aml_append(table, scope);
++}
++
+ static void acpi_dsdt_add_pci(Aml *scope, const MemMapEntry *memmap,
+                               uint32_t irq, VirtMachineState *vms)
+ {
+     int ecam_id = VIRT_ECAM_ID(vms->highmem_ecam);
++    bool cxl_present = false;
++    PCIBus *bus = vms->bus;
+     struct GPEXConfig cfg = {
+         .mmio32 = memmap[VIRT_PCIE_MMIO],
+         .pio    = memmap[VIRT_PCIE_PIO],
+@@ -136,6 +157,14 @@ static void acpi_dsdt_add_pci(Aml *scope, const MemMapEntry *memmap,
+     }
+ 
+     acpi_dsdt_add_gpex(scope, &cfg);
++    QLIST_FOREACH(bus, &vms->bus->child, sibling) {
++        if (pci_bus_is_cxl(bus)) {
++            cxl_present = true;
++        }
++    }
++    if (cxl_present) {
++        build_acpi0017(scope);
++    }
+ }
+ 
+ static void acpi_dsdt_add_gpio(Aml *scope, const MemMapEntry *gpio_memmap,
+@@ -1027,6 +1056,11 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+         }
+     }
+ 
++    if (vms->cxl_devices_state.is_enabled) {
++        cxl_build_cedt(table_offsets, tables_blob, tables->linker,
++                       vms->oem_id, vms->oem_table_id, &vms->cxl_devices_state);
++    }
++
+     if (ms->nvdimms_state->is_enabled) {
+         nvdimm_build_acpi(table_offsets, tables_blob, tables->linker,
+                           ms->nvdimms_state, ms->ram_slots, vms->oem_id,
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 3bcdf92e2ff..394e8b53018 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -57,6 +57,7 @@
+ #include "qemu/error-report.h"
+ #include "qemu/module.h"
+ #include "hw/pci-host/gpex.h"
++#include "hw/pci-bridge/pci_expander_bridge.h"
+ #include "hw/virtio/virtio-pci.h"
+ #include "hw/core/sysbus-fdt.h"
+ #include "hw/platform-bus.h"
+@@ -86,6 +87,8 @@
+ #include "hw/virtio/virtio-md-pci.h"
+ #include "hw/virtio/virtio-iommu.h"
+ #include "hw/char/pl011.h"
++#include "hw/cxl/cxl.h"
++#include "hw/cxl/cxl_host.h"
+ #include "qemu/guest-random.h"
+ 
+ static GlobalProperty arm_virt_compat[] = {
+@@ -220,9 +223,11 @@ static const MemMapEntry base_memmap[] = {
+ static MemMapEntry extended_memmap[] = {
+     /* Additional 64 MB redist region (can contain up to 512 redistributors) */
+     [VIRT_HIGH_GIC_REDIST2] =   { 0x0, 64 * MiB },
++    [VIRT_CXL_HOST] =           { 0x0, 64 * KiB * 16 }, /* 16 UID */
+     [VIRT_HIGH_PCIE_ECAM] =     { 0x0, 256 * MiB },
+     /* Second PCIe window */
+     [VIRT_HIGH_PCIE_MMIO] =     { 0x0, DEFAULT_HIGH_PCIE_MMIO_SIZE },
++    /* Any CXL Fixed memory windows come here */
+ };
+ 
+ static const int a15irqmap[] = {
+@@ -1623,6 +1628,17 @@ static void create_pcie(VirtMachineState *vms)
+     }
+ }
+ 
++static void create_cxl_host_reg_region(VirtMachineState *vms)
++{
++    MemoryRegion *sysmem = get_system_memory();
++    MemoryRegion *mr = &vms->cxl_devices_state.host_mr;
++
++    memory_region_init(mr, OBJECT(vms), "cxl_host_reg",
++                       vms->memmap[VIRT_CXL_HOST].size);
++    memory_region_add_subregion(sysmem, vms->memmap[VIRT_CXL_HOST].base, mr);
++    vms->highmem_cxl = true;
++}
++
+ static void create_platform_bus(VirtMachineState *vms)
+ {
+     DeviceState *dev;
+@@ -1739,6 +1755,12 @@ void virt_machine_done(Notifier *notifier, void *data)
+     struct arm_boot_info *info = &vms->bootinfo;
+     AddressSpace *as = arm_boot_address_space(cpu, info);
+ 
++    cxl_hook_up_pxb_registers(vms->bus, &vms->cxl_devices_state,
++                              &error_fatal);
++
++    if (vms->cxl_devices_state.is_enabled) {
++        cxl_fmws_link_targets(&error_fatal);
++    }
+     /*
+      * If the user provided a dtb, we assume the dynamic sysbus nodes
+      * already are integrated there. This corresponds to a use case where
+@@ -1785,6 +1807,7 @@ static inline bool *virt_get_high_memmap_enabled(VirtMachineState *vms,
+ {
+     bool *enabled_array[] = {
+         &vms->highmem_redists,
++        &vms->highmem_cxl,
+         &vms->highmem_ecam,
+         &vms->highmem_mmio,
+     };
+@@ -1892,6 +1915,9 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
+     if (device_memory_size > 0) {
+         machine_memory_devices_init(ms, device_memory_base, device_memory_size);
+     }
++    vms->highest_gpa = cxl_fmws_set_memmap(ROUND_UP(vms->highest_gpa + 1,
++                                                    256 * MiB),
++                                           BIT_ULL(pa_bits)) - 1;
+ }
+ 
+ static VirtGICType finalize_gic_version_do(const char *accel_name,
+@@ -2343,6 +2369,8 @@ static void machvirt_init(MachineState *machine)
+     memory_region_add_subregion(sysmem, vms->memmap[VIRT_MEM].base,
+                                 machine->ram);
+ 
++    cxl_fmws_update_mmio();
++
+     virt_flash_fdt(vms, sysmem, secure_sysmem ?: sysmem);
+ 
+     create_gic(vms, sysmem);
+@@ -2398,6 +2426,7 @@ static void machvirt_init(MachineState *machine)
+     create_rtc(vms);
+ 
+     create_pcie(vms);
++    create_cxl_host_reg_region(vms);
+ 
+     if (has_ged && aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
+         vms->acpi_dev = create_acpi_ged(vms);
+@@ -3364,6 +3393,7 @@ static void virt_instance_init(Object *obj)
+ 
+     vms->oem_id = g_strndup(ACPI_BUILD_APPNAME6, 6);
+     vms->oem_table_id = g_strndup(ACPI_BUILD_APPNAME8, 8);
++    cxl_machine_init(obj, &vms->cxl_devices_state);
+ }
+ 
+ static const TypeInfo virt_machine_info = {
 -- 
 2.43.0
 
