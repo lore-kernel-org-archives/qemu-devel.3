@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAD68C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 20:52:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80958C83F1D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 20:52:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaKgz-0006WW-4v; Fri, 11 Jul 2025 16:50:01 -0400
+	id 1uaKgO-0005mZ-0V; Fri, 11 Jul 2025 16:49:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uaKe8-0003ST-JG; Fri, 11 Jul 2025 16:47:08 -0400
+ id 1uaKdw-0003Kb-Eg; Fri, 11 Jul 2025 16:46:58 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uaKe6-0003oT-Oz; Fri, 11 Jul 2025 16:47:04 -0400
+ id 1uaKds-0003jE-40; Fri, 11 Jul 2025 16:46:52 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C9B4B135D09;
+ by isrv.corpit.ru (Postfix) with ESMTP id 64908135D02;
  Fri, 11 Jul 2025 23:46:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A7BDD23FF43;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 431D623FF3D;
  Fri, 11 Jul 2025 23:46:32 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.19 10/15] target/arm: Correct KVM & HVF dtb_compatible
- value
-Date: Fri, 11 Jul 2025 23:46:25 +0300
-Message-ID: <20250711204632.1804872-10-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.19 04/15] hw/core/qdev-properties-system: Add missing
+ return in set_drive_helper()
+Date: Fri, 11 Jul 2025 23:46:19 +0300
+Message-ID: <20250711204632.1804872-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-7.2.19-20250711111933@cover.tls.msk.ru>
 References: <qemu-stable-7.2.19-20250711111933@cover.tls.msk.ru>
@@ -63,51 +62,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-Linux kernel knows how to parse "arm,armv8", not "arm,arm-v8".
+Currently, changing the 'drive' property of e.g. a scsi-hd object will
+result in an assertion failure if the aio context of the block node
+it's replaced with doesn't match the current aio context:
 
-See arch/arm64/boot/dts/foundation-v8.dts:
+> bdrv_replace_child_noperm: Assertion `bdrv_get_aio_context(old_bs) ==
+> bdrv_get_aio_context(new_bs)' failed.
 
-  https://github.com/torvalds/linux/commit/90556ca1ebdd
+The problematic scenario is already detected, but a 'return' statement
+was missing.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 26861c7ce06 ("target-arm: Add minimal KVM AArch64 support")
-Fixes: 585df85efea ("hvf: arm: Implement -cpu host")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250623121845.7214-10-philmd@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit a412575837b6a46584fba891e3706e87bd09a3e6)
-(Mjt: the change is in target/arm/kvm64.c, not ../kvm.c)
+Fixes: d1a58c176a ("qdev: allow setting drive property for realized device")
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Message-ID: <20250523070211.280498-1-f.ebner@proxmox.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit eef2dd03f948a512499775043bdc0c5c88d8a2dd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 047cb8fc50..dfce8181f9 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -489,7 +489,7 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-     hv_vcpu_exit_t *exit;
-     int i;
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index d350789e76..15dacbee6d 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -116,6 +116,7 @@ static void set_drive_helper(Object *obj, Visitor *v, const char *name,
+         if (ctx != bdrv_get_aio_context(bs)) {
+             error_setg(errp, "Different aio context is not supported for new "
+                        "node");
++            return;
+         }
  
--    ahcf->dtb_compatible = "arm,arm-v8";
-+    ahcf->dtb_compatible = "arm,armv8";
-     ahcf->features = (1ULL << ARM_FEATURE_V8) |
-                      (1ULL << ARM_FEATURE_NEON) |
-                      (1ULL << ARM_FEATURE_AARCH64) |
-diff --git a/target/arm/kvm64.c b/target/arm/kvm64.c
-index ed85bcfb5c..de69d8ade9 100644
---- a/target/arm/kvm64.c
-+++ b/target/arm/kvm64.c
-@@ -546,7 +546,7 @@ bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-     }
- 
-     ahcf->target = init.target;
--    ahcf->dtb_compatible = "arm,arm-v8";
-+    ahcf->dtb_compatible = "arm,armv8";
- 
-     err = read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64pfr0,
-                          ARM64_SYS_REG(3, 0, 0, 4, 0));
+         aio_context_acquire(ctx);
 -- 
 2.47.2
 
