@@ -4,104 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4E7DC83F1B
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 14:48:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59DECC83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 14:51:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaF2o-00076Y-GN; Fri, 11 Jul 2025 10:48:12 -0400
+	id 1uaF5g-0001UA-CY; Fri, 11 Jul 2025 10:51:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1uaEnJ-0001PU-V8
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:32:10 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uaEqi-0004G6-EG
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:35:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1uaEnG-0002co-Ke
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:32:09 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56BBDROe026463;
- Fri, 11 Jul 2025 14:32:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=0B8VN9
- +A3BbaD3Moiu4eFI57LqO4J5mKzn01bJDi8iQ=; b=brMsSxPncK0ySLcZ0w6Sj9
- Rr8oSzOoLvJO/MdM/Ad+kWyIRUp+CbJ8EEKro9b3ALAXNHrAHFO/MBNbJyNz17oj
- MVrsLfnZCRyhZxpmvCYqsG8IaoYBViJQlYtcjMwYCURMWjHSrp9+lLNZASfNE91K
- gSEgrI8Ap36NbuWgaBhI7GX8i0KDgd3j0bQWKHIoUVdTQ4SkHXPoH8gdGq3vVIUQ
- y48KCuq5ZbH4uIa00zzLB8TZjSJYcOZd36vS8l1O07zWiivD49+Enjfump4dTsaf
- 0ruxEMNyVokyBqjGOOB5miXOZRXcb9Z5QVZtzPj6KGr2jpVPqTNSdvK1nzyY1YPw
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47puk4kcx7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Jul 2025 14:32:01 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56BBVPTg025668;
- Fri, 11 Jul 2025 14:32:00 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47qfcpk4ww-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Jul 2025 14:31:59 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 56BEVwmA29229814
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 11 Jul 2025 14:31:58 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0FED420043;
- Fri, 11 Jul 2025 14:31:58 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D15DA20040;
- Fri, 11 Jul 2025 14:31:57 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 11 Jul 2025 14:31:57 +0000 (GMT)
-Message-ID: <1f1dfa78e9c53769b95ff3a8b58efef7dbafdc8f.camel@linux.ibm.com>
-Subject: Re: [PATCH] tcg: Use uintptr_t in tcg_malloc implementation
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Date: Fri, 11 Jul 2025 16:31:57 +0200
-In-Reply-To: <20250710225053.168169-1-richard.henderson@linaro.org>
-References: <20250710225053.168169-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-1.fc42) 
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uaEqd-0003PH-Ss
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 10:35:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752244534;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GUkGjbaxVsbvPQsgz276snRgwCE5oM4+6BMtuVeSGVM=;
+ b=KQH8PMplERBgURqh6uifEgYpDt/QH/LLGLfBtQUzEaMGgCTpqk1p+j6hzaRc2b2sEUU//s
+ sOScvxRtA+e3LecB9aWLF4hrJ/7EMLnW8wGMHmScvY1qOlUC8VxPSFavfvsx6ib+Zqe2Db
+ FMrQa4zUSf4+OnO7FvgQ4n3G5XqhO4A=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-137-iQiKVl1uPEmgA59LDaq6cg-1; Fri,
+ 11 Jul 2025 10:35:31 -0400
+X-MC-Unique: iQiKVl1uPEmgA59LDaq6cg-1
+X-Mimecast-MFC-AGG-ID: iQiKVl1uPEmgA59LDaq6cg_1752244530
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3EB6B19560B2; Fri, 11 Jul 2025 14:35:30 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5A0DA19560A3; Fri, 11 Jul 2025 14:35:29 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id AEE2B21E6A27; Fri, 11 Jul 2025 16:35:26 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org,  John Snow <jsnow@redhat.com>,  Cleber Rosa
+ <crosa@redhat.com>,  Eric Blake <eblake@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  "Daniel P. Berrange" <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,  Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,  Philippe Mathieu-Daude
+ <philmd@linaro.org>
+Subject: Re: [PATCH V4 1/3] qom: qom-list-get
+In-Reply-To: <1752164694-215567-2-git-send-email-steven.sistare@oracle.com>
+ (Steve Sistare's message of "Thu, 10 Jul 2025 09:24:52 -0700")
+References: <1752164694-215567-1-git-send-email-steven.sistare@oracle.com>
+ <1752164694-215567-2-git-send-email-steven.sistare@oracle.com>
+Date: Fri, 11 Jul 2025 16:35:26 +0200
+Message-ID: <87bjpqx0b5.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzExMDEwMSBTYWx0ZWRfX184/9ryNIvlC
- HVs0ohNcRbgurqPqTlGd9cYyylGGBI0BeZLIRfWxm+OP2OhnhRvQ8GGnMGtIrmxBGchTra8Hdsi
- myJAnLxEUdc1C2yrKQ/QQaIVgQMOrVsg0eoHBAeN0JQzeOEA5BzFqzyNhIwGV4kIrtYvNHTG7Kl
- j/DsmdMVQFdtwFkOVYyk0gQh8SEw2s4G/+tj2YXODNukF3aocmYaPl1tjDmZHmW6BqoEwsBJ+4H
- elepNTcn5cmtYoqoIiOKXMJ8wc3d9YLv1fMvpwhT98PzSvBq4pVI2QHuI2VWzMMOcJxzXjWh9l6
- gHww7w/JwoDFQQTXFbdEGyJbcKJ4MSjWy/bHFPCf8F+L+X7+IH43xrcQ9K2eo/ds17Xvg8Vi3kp
- Kim1VJyPoFlfUB16XpFImvlnXnwL9gdBvKWBZEr8RNIt4jxAZXFjK9bj+aFqTPjhVOP2s/f7
-X-Authority-Analysis: v=2.4 cv=XYeJzJ55 c=1 sm=1 tr=0 ts=68712061 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VnNF1IyMAAAA:8 a=KKAkSRfTAAAA:8
- a=2p5-5N_fjv6BlIB3O1QA:9 a=QEXdDO2ut3YA:10
- a=zZCYzV9kfG8A:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: Nz1u2GbijnWWZ7NPF58WpU21wme6cwjU
-X-Proofpoint-GUID: Nz1u2GbijnWWZ7NPF58WpU21wme6cwjU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-11_04,2025-07-09_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 suspectscore=0
- mlxscore=0 impostorscore=0 phishscore=0 bulkscore=0 clxscore=1015
- spamscore=0 mlxlogscore=688 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507110101
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -119,30 +92,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2025-07-10 at 16:50 -0600, Richard Henderson wrote:
-> Avoid ubsan failure with clang-20,
-> =C2=A0 tcg.h:715:19: runtime error: applying non-zero offset 64 to null
-> pointer
-> by not using pointers.
->=20
-> Cc: Ilya Leoshkevich <iii@linux.ibm.com>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->=20
-> Supercedes: 20250618183759.9197-1-iii@linux.ibm.com
-> ("[PATCH v2] tcg: Remove NULL arithmetic in tcg_malloc()")
->=20
-> Ilya, I think I prefer this solution to &dummy_pool.
-> What do you think?
->=20
->=20
-> r~
->=20
-> ---
-> =C2=A0include/tcg/tcg.h | 6 +++---
-> =C2=A0tcg/tcg.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 9 +++++=
-----
-> =C2=A02 files changed, 8 insertions(+), 7 deletions(-)
+Steve Sistare <steven.sistare@oracle.com> writes:
 
-Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> Define the qom-list-get command, which fetches all the properties and
+> values for a list of paths.  This is faster than qom-list plus qom-get,
+> especially when fetching a large subset of the QOM tree.  Some managers
+> do so when starting a new VM, and this cost can be a substantial fraction
+> of start-up time.
+
+You give such nice rationale in your cover letter...  What about this:
+
+  Using qom-list and qom-get to get all the nodes and property values in
+  a QOM tree can take multiple seconds because it requires 1000's of
+  individual QOM requests.  Some managers fetch the entire tree or a
+  large subset of it when starting a new VM, and this cost is a
+  substantial fraction of start up time.
+
+  Define the qom-list-get command, which fetches all the properties and
+  values for a list of paths.  This can be much faster than qom-list
+  plus qom-get.  When getting an entire QOM tree, I measured a 10x
+  speedup in elapsed time.
+
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+
+I think you missed
+
+  Tested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+
+> ---
+>  qapi/qom.json      | 50 ++++++++++++++++++++++++++++++++++++++++++++++++=
+++
+>  qom/qom-qmp-cmds.c | 53 ++++++++++++++++++++++++++++++++++++++++++++++++=
++++++
+>  2 files changed, 103 insertions(+)
+>
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index b133b06..49214d2 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -46,6 +46,34 @@
+>              '*default-value': 'any' } }
+>=20=20
+>  ##
+> +# @ObjectPropertyValue:
+> +#
+> +# @name: the name of the property.
+> +#
+> +# @type: the type of the property, as described in @ObjectPropertyInfo.
+
+`ObjectPropertyInfo`
+
+See John Snow's "[PATCH 00/18] QAPI: add cross-references to qapi docs"
+rewrites things so they become links in generated HTML.
+
+> +#
+> +# @value: the value of the property.  Absent when the property cannot
+> +#     be read.
+> +#
+> +# Since 10.1
+> +##
+> +{ 'struct': 'ObjectPropertyValue',
+> +  'data': { 'name': 'str',
+> +            'type': 'str',
+> +            '*value': 'any' } }
+> +
+> +##
+> +# @ObjectPropertiesValues:
+> +#
+> +# @properties: a list of properties.
+> +#
+> +# Since 10.1
+> +##
+> +{ 'struct': 'ObjectPropertiesValues',
+> +  'data': { 'properties': [ 'ObjectPropertyValue' ] }}
+> +
+> +
+> +##
+>  # @qom-list:
+>  #
+>  # This command will list any properties of a object given a path in
+> @@ -126,6 +154,28 @@
+>    'allow-preconfig': true }
+>=20=20
+>  ##
+> +# @qom-list-get:
+> +#
+> +# List properties and their values for each object path in the input
+> +# list.
+> +#
+> +# @paths: The absolute or partial path for each object, as described
+> +#     in `qom-get`.
+> +#
+> +# Errors:
+> +#     - If any path is not valid or is ambiguous
+> +#
+> +# Returns: A list where each element is the result for the
+> +#     corresponding element of @paths.
+> +#
+> +# Since 10.1
+> +##
+> +{ 'command': 'qom-list-get',
+> +  'data': { 'paths': [ 'str' ] },
+> +  'returns': [ 'ObjectPropertiesValues' ],
+> +  'allow-preconfig': true }
+> +
+> +##
+>  # @qom-set:
+>  #
+>  # This command will set a property from a object model path.
+> diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
+> index 293755f..57f1898 100644
+> --- a/qom/qom-qmp-cmds.c
+> +++ b/qom/qom-qmp-cmds.c
+> @@ -69,6 +69,59 @@ ObjectPropertyInfoList *qmp_qom_list(const char *path,=
+ Error **errp)
+>      return props;
+>  }
+>=20=20
+> +static void qom_list_add_property_value(Object *obj, ObjectProperty *pro=
+p,
+> +                                        ObjectPropertyValueList **props)
+> +{
+> +    ObjectPropertyValue *item =3D g_new0(ObjectPropertyValue, 1);
+> +
+> +    QAPI_LIST_PREPEND(*props, item);
+> +
+> +    item->name =3D g_strdup(prop->name);
+> +    item->type =3D g_strdup(prop->type);
+> +    item->value =3D object_property_get_qobject(obj, prop->name, NULL);
+> +}
+> +
+> +static ObjectPropertyValueList *qom_get_property_value_list(const char *=
+path,
+> +                                                            Error **errp)
+> +{
+> +    Object *obj;
+> +    ObjectProperty *prop;
+> +    ObjectPropertyIterator iter;
+> +    ObjectPropertyValueList *props =3D NULL;
+> +
+> +    obj =3D qom_resolve_path(path, errp);
+> +    if (obj =3D=3D NULL) {
+> +        return NULL;
+> +    }
+> +
+> +    object_property_iter_init(&iter, obj);
+> +    while ((prop =3D object_property_iter_next(&iter))) {
+> +        qom_list_add_property_value(obj, prop, &props);
+> +    }
+> +
+> +    return props;
+> +}
+> +
+> +ObjectPropertiesValuesList *qmp_qom_list_get(strList *paths, Error **err=
+p)
+> +{
+> +    ObjectPropertiesValuesList *head =3D NULL, **tail =3D &head;
+> +    strList *path;
+> +
+> +    for (path =3D paths; path; path =3D path->next) {
+> +        ObjectPropertiesValues *item =3D g_new0(ObjectPropertiesValues, =
+1);
+> +
+> +        QAPI_LIST_APPEND(tail, item);
+> +
+> +        item->properties =3D qom_get_property_value_list(path->value, er=
+rp);
+> +        if (!item->properties) {
+> +            qapi_free_ObjectPropertiesValuesList(head);
+> +            return NULL;
+> +        }
+> +    }
+> +
+> +    return head;
+> +}
+> +
+>  void qmp_qom_set(const char *path, const char *property, QObject *value,
+>                   Error **errp)
+>  {
+
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+
 
