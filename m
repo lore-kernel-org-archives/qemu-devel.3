@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F850C83F25
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F9BFC83F1A
 	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 20:47:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaKeC-0003SN-NQ; Fri, 11 Jul 2025 16:47:10 -0400
+	id 1uaKe5-0003It-3p; Fri, 11 Jul 2025 16:47:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uaKdq-0003JA-2Q; Fri, 11 Jul 2025 16:46:55 -0400
+ id 1uaKdj-0003He-N1; Fri, 11 Jul 2025 16:46:40 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uaKdm-0003hZ-Bk; Fri, 11 Jul 2025 16:46:44 -0400
+ id 1uaKdh-0003g6-BS; Fri, 11 Jul 2025 16:46:39 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3E62F135D00;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2E4E8135CFF;
  Fri, 11 Jul 2025 23:46:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1B7C923FF3B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0E01823FF3A;
  Fri, 11 Jul 2025 23:46:32 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Huaitong Han <hanht2@chinatelecom.cn>,
- Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>,
- Jidong Xia <xiajd@chinatelecom.cn>, "Michael S. Tsirkin" <mst@redhat.com>,
+Cc: qemu-stable@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.19 02/15] vhost: Don't set vring call if guest notifier
- is unused
-Date: Fri, 11 Jul 2025 23:46:17 +0300
-Message-ID: <20250711204632.1804872-2-mjt@tls.msk.ru>
+Subject: [Stable-7.2.19 01/15] hw/misc/aspeed_hace: Ensure HASH_IRQ is always
+ set to prevent firmware hang
+Date: Fri, 11 Jul 2025 23:46:16 +0300
+Message-ID: <20250711204632.1804872-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-7.2.19-20250711111933@cover.tls.msk.ru>
 References: <qemu-stable-7.2.19-20250711111933@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,74 +62,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Huaitong Han <hanht2@chinatelecom.cn>
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-The vring call fd is set even when the guest does not use MSI-X (e.g., in the
-case of virtio PMD), leading to unnecessary CPU overhead for processing
-interrupts.
+Currently, if the program encounters an unsupported algorithm, it does not set
+the HASH_IRQ bit in the status register and send an interrupt to indicate
+command completion. As a result, the FW gets stuck waiting for a completion
+signal from the HACE module.
 
-The commit 96a3d98d2c("vhost: don't set vring call if no vector") optimized the
-case where MSI-X is enabled but the queue vector is unset. However, there's an
-additional case where the guest uses INTx and the INTx_DISABLED bit in the PCI
-config is set, meaning that no interrupt notifier will actually be used.
+Additionally, in do_hash_operation, if an error occurs within the conditional
+statement, the HASH_IRQ bit is not set in the status register. This causes the
+firmware to continuously send HASH commands, as it is unaware that the HACE
+model has completed processing the command.
 
-In such cases, the vring call fd should also be cleared to avoid redundant
-interrupt handling.
+To fix this, the HASH_IRQ bit in the status register must always be set to
+ensure that the firmware receives an interrupt from the HACE module, preventing
+it from getting stuck or repeatedly sending HASH commands.
 
-Fixes: 96a3d98d2c("vhost: don't set vring call if no vector")
-
-Reported-by: Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>
-Signed-off-by: Jidong Xia <xiajd@chinatelecom.cn>
-Signed-off-by: Huaitong Han <hanht2@chinatelecom.cn>
-Message-Id: <20250522100548.212740-1-hanht2@chinatelecom.cn>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit a9403bfcd93025df7b1924d0cf34fbc408955b33)
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Fixes: c5475b3 ("hw: Model ASPEED's Hash and Crypto Engine")
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250515081008.583578-4-jamin_lin@aspeedtech.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit fb8e59abbe46957cd599bb9aa9221fad1e4e989e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 2f450f6a72..c389172f27 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -1484,7 +1484,7 @@ static void pci_update_mappings(PCIDevice *d)
-     pci_update_vga(d);
+diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
+index 11bd25708e..20f645f49b 100644
+--- a/hw/misc/aspeed_hace.c
++++ b/hw/misc/aspeed_hace.c
+@@ -278,12 +278,6 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+                             iov[i - 1].iov_len, false,
+                             iov[i - 1].iov_len);
+     }
+-
+-    /*
+-     * Set status bits to indicate completion. Testing shows hardware sets
+-     * these irrespective of HASH_IRQ_EN.
+-     */
+-    s->regs[R_STATUS] |= HASH_IRQ;
  }
  
--static inline int pci_irq_disabled(PCIDevice *d)
-+int pci_irq_disabled(PCIDevice *d)
- {
-     return pci_get_word(d->config + PCI_COMMAND) & PCI_COMMAND_INTX_DISABLE;
- }
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index e5e74a7160..a447a2bd0f 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -1040,7 +1040,12 @@ static int virtio_pci_set_guest_notifier(DeviceState *d, int n, bool assign,
- static bool virtio_pci_query_guest_notifiers(DeviceState *d)
- {
-     VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
--    return msix_enabled(&proxy->pci_dev);
+ static uint64_t aspeed_hace_read(void *opaque, hwaddr addr, unsigned int size)
+@@ -358,10 +352,16 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
+                 qemu_log_mask(LOG_GUEST_ERROR,
+                         "%s: Invalid hash algorithm selection 0x%"PRIx64"\n",
+                         __func__, data & ahc->hash_mask);
+-                break;
++        } else {
++            do_hash_operation(s, algo, data & HASH_SG_EN,
++                    ((data & HASH_HMAC_MASK) == HASH_DIGEST_ACCUM));
+         }
+-        do_hash_operation(s, algo, data & HASH_SG_EN,
+-                ((data & HASH_HMAC_MASK) == HASH_DIGEST_ACCUM));
 +
-+    if (msix_enabled(&proxy->pci_dev)) {
-+        return true;
-+    } else {
-+        return pci_irq_disabled(&proxy->pci_dev);
-+    }
- }
++        /*
++         * Set status bits to indicate completion. Testing shows hardware sets
++         * these irrespective of HASH_IRQ_EN.
++         */
++        s->regs[R_STATUS] |= HASH_IRQ;
  
- static int virtio_pci_set_guest_notifiers(DeviceState *d, int nvqs, bool assign)
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index 6ccaaf5154..9c3fe56323 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -749,6 +749,7 @@ void lsi53c8xx_handle_legacy_cmdline(DeviceState *lsi_dev);
- 
- qemu_irq pci_allocate_irq(PCIDevice *pci_dev);
- void pci_set_irq(PCIDevice *pci_dev, int level);
-+int pci_irq_disabled(PCIDevice *d);
- 
- static inline int pci_intx(PCIDevice *pci_dev)
- {
+         if (data & HASH_IRQ_EN) {
+             qemu_irq_raise(s->irq);
 -- 
 2.47.2
 
