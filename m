@@ -4,51 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFE49C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 13:51:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2D8CC83F1B
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 13:51:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaE90-0005Xf-TS; Fri, 11 Jul 2025 09:50:31 -0400
+	id 1uaE9D-0005oA-6e; Fri, 11 Jul 2025 09:50:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <unisono@quyllur.org>)
- id 1uaE3m-000314-7o
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:45:08 -0400
+ id 1uaE3o-00034q-BB
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:45:13 -0400
 Received: from quyllur.org ([185.247.226.42])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
  (Exim 4.90_1) (envelope-from <unisono@quyllur.org>)
- id 1uaE3i-0000Fe-AF
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:45:05 -0400
+ id 1uaE3i-0000GF-AO
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 09:45:06 -0400
 Received: from quyllur.org (localhost [127.0.0.1])
- by quyllur.org (OpenSMTPD) with ESMTP id 24a6eb66;
+ by quyllur.org (OpenSMTPD) with ESMTP id 484662b3;
  Fri, 11 Jul 2025 16:44:25 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=quyllur.org; h=from:to:cc
  :subject:date:message-id:in-reply-to:references:mime-version
- :content-transfer-encoding; s=dkimselector; bh=KTXVkzzIDiRwPLtOZ
- gWY4jQ7ajY=; b=trzivxd+LYazl0lLzin0xJGnjC57ygCQvpunVOuc11KWKlAUZ
- /2hsz/9VVSIfhVj0C84PYI0B4dHcLYRY6y1RHdg+g2JtBXoZTRpS86PTctBOacj8
- Y0v28dt4iAFm7/Ib4dqGaV/lAkYSvmU+cvTgtiB1BJNaOyFeab87bnRRbA=
+ :content-transfer-encoding; s=dkimselector; bh=0rawVHz7ga8LGrdwJ
+ RcO9DN7tng=; b=YEEkX5i4E0NjPiwuqCFoIj6Cs401+vK9PqcP6HJKw5RCvsEhs
+ Zy5O+axfNJkCBoFVNcjc8ngLU+VT0Ae7a1AzKBTW/P5fNN5CehBr12z27OUafv15
+ a0ENvB4/9EHo7qiZlZ7YUqU3WmHU1n1N4m+pRYvxaxOaswCJHzFSoKzc8Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=quyllur.org; h=from:to:cc
  :subject:date:message-id:in-reply-to:references:mime-version
- :content-transfer-encoding; q=dns; s=dkimselector; b=E8cTCRDIebc
- iM+lhYfS3Q1gNIQ1A/eaCDyI6/zKQjHiAtybxJKBElXBKXYoXdmy/yI8Gf04mlnt
- TTJhpcEcGn2BK8wYcn5QzF9qy1y+gun/wWt0zekKaGRzXxJ8mAwjeoyauKHqtJ8o
- ZggfE3A9ZbTZ/SppNoLzMJjA+75CS+5k=
+ :content-transfer-encoding; q=dns; s=dkimselector; b=jypiv2vSbes
+ XBujSaWCuTLH+OSZhHSRm8sWAXBPOEUqc7YZrEwnysQB2ivWDOEe/sfTmCCJO+Ba
+ I8qL9BzA/jmziqFKtUjiz79evBL9/h8lsKHNUcapqCuq0jD9mIzjoMlGypjgQ+TL
+ nO/EkWBq+E1CXxX9OxClw8S4YRD0DrIQ=
 Received: from Rizin (<unknown> [194.127.199.111])
- by quyllur.org (OpenSMTPD) with ESMTPSA id db8dc1ad
+ by quyllur.org (OpenSMTPD) with ESMTPSA id 6e5a0977
  (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO); 
- Fri, 11 Jul 2025 16:44:14 +0300 (EEST)
+ Fri, 11 Jul 2025 16:44:22 +0300 (EEST)
 From: unisono@quyllur.org
 To: alex.bennee@linaro.org
 Cc: atar4qemu@gmail.com, laurent@vivier.eu, mark.cave-ayland@ilande.co.uk,
  philmd@linaro.org, qemu-devel@nongnu.org, Rot127 <unisono@quyllur.org>
-Subject: [PATCH 0/3] Reformatted Sparc GDB XML patches.
-Date: Fri, 11 Jul 2025 08:43:30 -0500
-Message-ID: <20250711134333.56978-1-unisono@quyllur.org>
+Subject: [PATCH 1/3] Adds the GDB register XML files for Sparc64.
+Date: Fri, 11 Jul 2025 08:43:31 -0500
+Message-ID: <20250711134333.56978-2-unisono@quyllur.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <87h5zltojx.fsf@draig.linaro.org>
+In-Reply-To: <20250711134333.56978-1-unisono@quyllur.org>
 References: <87h5zltojx.fsf@draig.linaro.org>
+ <20250711134333.56978-1-unisono@quyllur.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=185.247.226.42; envelope-from=unisono@quyllur.org;
@@ -78,36 +79,154 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Rot127 <unisono@quyllur.org>
 
-Adds Sparc XML register files from GDB.
+Commit 1/3
 
-The xml files are copied from binutils-gdb.
-The `*-core.xml` files are assembled from the sparc32-fpu.xml, sparc32-cp0.xml etc.
-to match the registers defined by QEMU.
-
-The addition is necessary if one wants to use the TCG plugins
-with Sparc, because reading registers via the plugin API
-just queries GDB.
-The GDB stub initializes its register file with the `*-core.xml` files.
-If they don't exist it returns no data.
-Also relevant for debugging I assume.
-
-Rot127 (3):
-  Adds the GDB register XML files for Sparc64.
-  Adds the GDB register XML files for Sparc32.
-  Assign the GDB register XML files of Sparc64 to Sparc32plus.
-
- configs/targets/sparc-linux-user.mak       |  1 +
- configs/targets/sparc-softmmu.mak          |  1 +
- configs/targets/sparc32plus-linux-user.mak |  1 +
- configs/targets/sparc64-linux-user.mak     |  1 +
- configs/targets/sparc64-softmmu.mak        |  1 +
- gdb-xml/sparc32-core.xml                   | 84 ++++++++++++++++++
- gdb-xml/sparc64-core.xml                   | 99 ++++++++++++++++++++++
- target/sparc/cpu.c                         |  2 +
- 8 files changed, 190 insertions(+)
- create mode 100644 gdb-xml/sparc32-core.xml
+Signed-off-by: Rot127 <unisono@quyllur.org>
+---
+ configs/targets/sparc64-linux-user.mak |  1 +
+ configs/targets/sparc64-softmmu.mak    |  1 +
+ gdb-xml/sparc64-core.xml               | 99 ++++++++++++++++++++++++++
+ target/sparc/cpu.c                     |  1 +
+ 4 files changed, 102 insertions(+)
  create mode 100644 gdb-xml/sparc64-core.xml
 
+diff --git a/configs/targets/sparc64-linux-user.mak b/configs/targets/sparc64-linux-user.mak
+index 64ea04e3e2..7c2ecb7be0 100644
+--- a/configs/targets/sparc64-linux-user.mak
++++ b/configs/targets/sparc64-linux-user.mak
+@@ -4,4 +4,5 @@ TARGET_ABI_DIR=sparc
+ TARGET_SYSTBL_ABI=common,64
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
++TARGET_XML_FILES=gdb-xml/sparc64-core.xml
+ TARGET_LONG_BITS=64
+diff --git a/configs/targets/sparc64-softmmu.mak b/configs/targets/sparc64-softmmu.mak
+index 2504e31ae3..d9d51d21e5 100644
+--- a/configs/targets/sparc64-softmmu.mak
++++ b/configs/targets/sparc64-softmmu.mak
+@@ -1,4 +1,5 @@
+ TARGET_ARCH=sparc64
+ TARGET_BASE_ARCH=sparc
+ TARGET_BIG_ENDIAN=y
++TARGET_XML_FILES=gdb-xml/sparc64-core.xml
+ TARGET_LONG_BITS=64
+diff --git a/gdb-xml/sparc64-core.xml b/gdb-xml/sparc64-core.xml
+new file mode 100644
+index 0000000000..375b9bb0cc
+--- /dev/null
++++ b/gdb-xml/sparc64-core.xml
+@@ -0,0 +1,99 @@
++<?xml version="1.0"?>
++<!-- Copyright (C) 2013-2025 Free Software Foundation, Inc.
++
++     Copying and distribution of this file, with or without modification,
++     are permitted in any medium without royalty provided the copyright
++     notice and this notice are preserved.  -->
++
++<!DOCTYPE feature SYSTEM "gdb-target.dtd">
++<feature name="org.gnu.gdb.sparc.core">
++  <reg name="g0" bitsize="64" type="uint64" regnum="0"/>
++  <reg name="g1" bitsize="64" type="uint64" regnum="1"/>
++  <reg name="g2" bitsize="64" type="uint64" regnum="2"/>
++  <reg name="g3" bitsize="64" type="uint64" regnum="3"/>
++  <reg name="g4" bitsize="64" type="uint64" regnum="4"/>
++  <reg name="g5" bitsize="64" type="uint64" regnum="5"/>
++  <reg name="g6" bitsize="64" type="uint64" regnum="6"/>
++  <reg name="g7" bitsize="64" type="uint64" regnum="7"/>
++  <reg name="o0" bitsize="64" type="uint64" regnum="8"/>
++  <reg name="o1" bitsize="64" type="uint64" regnum="9"/>
++  <reg name="o2" bitsize="64" type="uint64" regnum="10"/>
++  <reg name="o3" bitsize="64" type="uint64" regnum="11"/>
++  <reg name="o4" bitsize="64" type="uint64" regnum="12"/>
++  <reg name="o5" bitsize="64" type="uint64" regnum="13"/>
++  <reg name="sp" bitsize="64" type="uint64" regnum="14"/>
++  <reg name="o7" bitsize="64" type="uint64" regnum="15"/>
++  <reg name="l0" bitsize="64" type="uint64" regnum="16"/>
++  <reg name="l1" bitsize="64" type="uint64" regnum="17"/>
++  <reg name="l2" bitsize="64" type="uint64" regnum="18"/>
++  <reg name="l3" bitsize="64" type="uint64" regnum="19"/>
++  <reg name="l4" bitsize="64" type="uint64" regnum="20"/>
++  <reg name="l5" bitsize="64" type="uint64" regnum="21"/>
++  <reg name="l6" bitsize="64" type="uint64" regnum="22"/>
++  <reg name="l7" bitsize="64" type="uint64" regnum="23"/>
++  <reg name="i0" bitsize="64" type="uint64" regnum="24"/>
++  <reg name="i1" bitsize="64" type="uint64" regnum="25"/>
++  <reg name="i2" bitsize="64" type="uint64" regnum="26"/>
++  <reg name="i3" bitsize="64" type="uint64" regnum="27"/>
++  <reg name="i4" bitsize="64" type="uint64" regnum="28"/>
++  <reg name="i5" bitsize="64" type="uint64" regnum="29"/>
++  <reg name="fp" bitsize="64" type="uint64" regnum="30"/>
++  <reg name="i7" bitsize="64" type="uint64" regnum="31"/>
++
++  <reg name="f0" bitsize="32" type="ieee_single" regnum="32"/>
++  <reg name="f1" bitsize="32" type="ieee_single" regnum="33"/>
++  <reg name="f2" bitsize="32" type="ieee_single" regnum="34"/>
++  <reg name="f3" bitsize="32" type="ieee_single" regnum="35"/>
++  <reg name="f4" bitsize="32" type="ieee_single" regnum="36"/>
++  <reg name="f5" bitsize="32" type="ieee_single" regnum="37"/>
++  <reg name="f6" bitsize="32" type="ieee_single" regnum="38"/>
++  <reg name="f7" bitsize="32" type="ieee_single" regnum="39"/>
++  <reg name="f8" bitsize="32" type="ieee_single" regnum="40"/>
++  <reg name="f9" bitsize="32" type="ieee_single" regnum="41"/>
++  <reg name="f10" bitsize="32" type="ieee_single" regnum="42"/>
++  <reg name="f11" bitsize="32" type="ieee_single" regnum="43"/>
++  <reg name="f12" bitsize="32" type="ieee_single" regnum="44"/>
++  <reg name="f13" bitsize="32" type="ieee_single" regnum="45"/>
++  <reg name="f14" bitsize="32" type="ieee_single" regnum="46"/>
++  <reg name="f15" bitsize="32" type="ieee_single" regnum="47"/>
++  <reg name="f16" bitsize="32" type="ieee_single" regnum="48"/>
++  <reg name="f17" bitsize="32" type="ieee_single" regnum="49"/>
++  <reg name="f18" bitsize="32" type="ieee_single" regnum="50"/>
++  <reg name="f19" bitsize="32" type="ieee_single" regnum="51"/>
++  <reg name="f20" bitsize="32" type="ieee_single" regnum="52"/>
++  <reg name="f21" bitsize="32" type="ieee_single" regnum="53"/>
++  <reg name="f22" bitsize="32" type="ieee_single" regnum="54"/>
++  <reg name="f23" bitsize="32" type="ieee_single" regnum="55"/>
++  <reg name="f24" bitsize="32" type="ieee_single" regnum="56"/>
++  <reg name="f25" bitsize="32" type="ieee_single" regnum="57"/>
++  <reg name="f26" bitsize="32" type="ieee_single" regnum="58"/>
++  <reg name="f27" bitsize="32" type="ieee_single" regnum="59"/>
++  <reg name="f28" bitsize="32" type="ieee_single" regnum="60"/>
++  <reg name="f29" bitsize="32" type="ieee_single" regnum="61"/>
++  <reg name="f30" bitsize="32" type="ieee_single" regnum="62"/>
++  <reg name="f31" bitsize="32" type="ieee_single" regnum="63"/>
++
++  <reg name="f32" bitsize="64" type="ieee_double" regnum="64"/>
++  <reg name="f34" bitsize="64" type="ieee_double" regnum="65"/>
++  <reg name="f36" bitsize="64" type="ieee_double" regnum="66"/>
++  <reg name="f38" bitsize="64" type="ieee_double" regnum="67"/>
++  <reg name="f40" bitsize="64" type="ieee_double" regnum="68"/>
++  <reg name="f42" bitsize="64" type="ieee_double" regnum="69"/>
++  <reg name="f44" bitsize="64" type="ieee_double" regnum="70"/>
++  <reg name="f46" bitsize="64" type="ieee_double" regnum="71"/>
++  <reg name="f48" bitsize="64" type="ieee_double" regnum="72"/>
++  <reg name="f50" bitsize="64" type="ieee_double" regnum="73"/>
++  <reg name="f52" bitsize="64" type="ieee_double" regnum="74"/>
++  <reg name="f54" bitsize="64" type="ieee_double" regnum="75"/>
++  <reg name="f56" bitsize="64" type="ieee_double" regnum="76"/>
++  <reg name="f58" bitsize="64" type="ieee_double" regnum="77"/>
++  <reg name="f60" bitsize="64" type="ieee_double" regnum="78"/>
++  <reg name="f62" bitsize="64" type="ieee_double" regnum="79"/>
++
++  <reg name="pc" bitsize="64" type="code_ptr" regnum="80"/>
++  <reg name="npc" bitsize="64" type="code_ptr" regnum="81"/>
++  <reg name="state" bitsize="64" type="uint64" regnum="82"/>
++  <reg name="fsr" bitsize="64" type="uint64" regnum="83"/>
++  <reg name="fprs" bitsize="64" type="uint64" regnum="84"/>
++  <reg name="y" bitsize="64" type="uint64" regnum="85"/>
++</feature>
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index ed7701b02f..245caf2de0 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -1090,6 +1090,7 @@ static void sparc_cpu_class_init(ObjectClass *oc, const void *data)
+     cc->disas_set_info = cpu_sparc_disas_set_info;
+ 
+ #if defined(TARGET_SPARC64) && !defined(TARGET_ABI32)
++    cc->gdb_core_xml_file = "sparc64-core.xml";
+     cc->gdb_num_core_regs = 86;
+ #else
+     cc->gdb_num_core_regs = 72;
 -- 
 2.50.0
 
