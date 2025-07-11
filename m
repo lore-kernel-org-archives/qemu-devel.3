@@ -4,38 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29D4DC83F1A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65192C8303C
 	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:29:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua97o-0006nC-8t; Fri, 11 Jul 2025 04:28:56 -0400
+	id 1ua97j-0006Gr-BV; Fri, 11 Jul 2025 04:28:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ua8z4-0007bI-Uk; Fri, 11 Jul 2025 04:19:54 -0400
+ id 1ua8yZ-0006R5-C4; Fri, 11 Jul 2025 04:19:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ua8z2-0004Lq-Sq; Fri, 11 Jul 2025 04:19:54 -0400
+ id 1ua8yU-00046o-8f; Fri, 11 Jul 2025 04:19:21 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C31CA1356E3;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4FE7C1356DC;
  Fri, 11 Jul 2025 11:17:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BA82523FA58;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3C30423FA51;
  Fri, 11 Jul 2025 11:17:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ethan Chen <ethan84@andestech.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 24/39] qemu-options.hx: Fix reversed description of
- icount sleep behavior
-Date: Fri, 11 Jul 2025 11:16:20 +0300
-Message-ID: <20250711081745.1785806-24-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 17/39] audio: fix size calculation in
+ AUD_get_buffer_size_out()
+Date: Fri, 11 Jul 2025 11:16:13 +0300
+Message-ID: <20250711081745.1785806-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,44 +63,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ethan Chen <ethan84@andestech.com>
+From: Volker Rümelin <vr_qemu@t-online.de>
 
-The documentation for the -icount option incorrectly describes the behavior
-of the sleep suboption. Based on the actual implementation and system
-behavior, the effects of sleep=on and sleep=off were inadvertently reversed.
-This commit updates the description to reflect their intended functionality.
+The buffer size calculated by AUD_get_buffer_size_out() is often
+incorrect. sw->hw->samples * sw->hw->info.bytes_per_frame is the
+size of the mixing engine buffer in audio frames multiplied by
+the size of one frame of the audio backend. Due to resampling or
+format conversion, the size of the frontend buffer can differ
+significantly.
 
-Cc: qemu-stable@nongnu.org
-Fixes: fa647905e6ba ("qemu-options.hx: Fix minor issues in icount documentation")
-Signed-off-by: Ethan Chen <ethan84@andestech.com>
-Message-id: 20250606095728.3672832-1-ethan84@andestech.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit e372214e663a4370fe064f7867f402eade37357e)
+Return the correct buffer size when the mixing engine is used.
+
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
+Message-Id: <20250515054429.7385-3-vr_qemu@t-online.de>
+(cherry picked from commit ccb4fec0e5f233cb61a83b3af59ae11716ea06c0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index dc694a99a3..396eea7ef2 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4936,13 +4936,13 @@ SRST
-     with actual performance.
+diff --git a/audio/audio.c b/audio/audio.c
+index 70ef22b1a4..3f5baf0cc6 100644
+--- a/audio/audio.c
++++ b/audio/audio.c
+@@ -909,6 +909,10 @@ int AUD_get_buffer_size_out(SWVoiceOut *sw)
+         return 0;
+     }
  
-     When the virtual cpu is sleeping, the virtual time will advance at
--    default speed unless ``sleep=on`` is specified. With
--    ``sleep=on``, the virtual time will jump to the next timer
-+    default speed unless ``sleep=off`` is specified. With
-+    ``sleep=off``, the virtual time will jump to the next timer
-     deadline instantly whenever the virtual cpu goes to sleep mode and
-     will not advance if no timer is enabled. This behavior gives
-     deterministic execution times from the guest point of view.
--    The default if icount is enabled is ``sleep=off``.
--    ``sleep=on`` cannot be used together with either ``shift=auto``
-+    The default if icount is enabled is ``sleep=on``.
-+    ``sleep=off`` cannot be used together with either ``shift=auto``
-     or ``align=on``.
++    if (audio_get_pdo_out(sw->s->dev)->mixing_engine) {
++        return sw->resample_buf.size * sw->info.bytes_per_frame;
++    }
++
+     return sw->hw->samples * sw->hw->info.bytes_per_frame;
+ }
  
-     ``align=on`` will activate the delay algorithm which will try to
 -- 
 2.47.2
 
