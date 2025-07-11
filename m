@@ -4,38 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A63FC83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:26:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C17EC8303C
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 08:27:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ua94g-0007Ir-8x; Fri, 11 Jul 2025 04:25:42 -0400
+	id 1ua95r-0001We-Ik; Fri, 11 Jul 2025 04:26:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ua8yd-0006TF-OX; Fri, 11 Jul 2025 04:19:28 -0400
+ id 1ua8zf-0000Qf-2M; Fri, 11 Jul 2025 04:20:32 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ua8yb-0004IY-AL; Fri, 11 Jul 2025 04:19:26 -0400
+ id 1ua8zd-0004dH-2D; Fri, 11 Jul 2025 04:20:30 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 899F51356DF;
- Fri, 11 Jul 2025 11:17:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3F4FE1356E9;
+ Fri, 11 Jul 2025 11:17:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7DFBB23FA54;
- Fri, 11 Jul 2025 11:17:46 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2B3E223FA5E;
+ Fri, 11 Jul 2025 11:17:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 20/39] iotests: fix 240
-Date: Fri, 11 Jul 2025 11:16:16 +0300
-Message-ID: <20250711081745.1785806-20-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Solomon Tan <root@wjsota.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 30/39] target/arm: Make RETA[AB] UNDEF when pauth is
+ not implemented
+Date: Fri, 11 Jul 2025 11:16:26 +0300
+Message-ID: <20250711081745.1785806-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,61 +63,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Solomon Tan <root@wjsota.com>
 
-Commit 2e8e18c2e463 ("virtio-scsi: add iothread-vq-mapping parameter")
-removed the limitation that virtio-scsi devices must successfully set
-the AioContext on their BlockBackends. This was made possible thanks to
-the QEMU multi-queue block layer.
+According to the Arm A-profile A64 Instruction Set Architecture,
+RETA[AB] should be decoded as UNDEF if the pauth feature is not
+implemented.
 
-This change broke qemu-iotests 240, which checks that adding a
-virtio-scsi device with a drive that is already in another AioContext
-will fail.
+We got this right in the initial implementation, but accidentally
+dropped the feature-check when we converted these insns to
+decodetree.
 
-Update the test to take the relaxed behavior into account. I considered
-removing this test case entirely, but the code coverage still seems
-valuable.
-
-Fixes: 2e8e18c2e463 ("virtio-scsi: add iothread-vq-mapping parameter")
-Reported-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Tested-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20250529203147.180338-1-stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 2e887187454e57d04522099d4f04d17137d6e05c)
+Cc: qemu-stable@nongnu.org
+Fixes: 0ebbe9021254f ("target/arm: Convert BRA[AB]Z, BLR[AB]Z, RETA[AB] to decodetree")
+Signed-off-by: Solomon Tan <root@wjsota.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250616171549.59190-1-root@wjsota.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 9a3bf0e0ab628de7051b41a88c4628aa9e4d311b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/240 b/tests/qemu-iotests/240
-index 9b281e1dc0..f8af9ff648 100755
---- a/tests/qemu-iotests/240
-+++ b/tests/qemu-iotests/240
-@@ -81,8 +81,6 @@ class TestCase(iotests.QMPTestCase):
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 39014325df..f6e88eb5f7 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -1821,6 +1821,10 @@ static bool trans_RETA(DisasContext *s, arg_reta *a)
+ {
+     TCGv_i64 dst;
  
-         self.vm.qmp_log('device_del', id='scsi-hd0')
-         self.vm.event_wait('DEVICE_DELETED')
--        self.vm.qmp_log('device_add', id='scsi-hd1', driver='scsi-hd', drive='hd0', bus="scsi1.0")
--
-         self.vm.qmp_log('device_del', id='scsi-hd1')
-         self.vm.event_wait('DEVICE_DELETED')
-         self.vm.qmp_log('blockdev-del', node_name='hd0')
-diff --git a/tests/qemu-iotests/240.out b/tests/qemu-iotests/240.out
-index 89ed25e506..10dcc42e06 100644
---- a/tests/qemu-iotests/240.out
-+++ b/tests/qemu-iotests/240.out
-@@ -46,10 +46,8 @@
- {"execute": "device_add", "arguments": {"bus": "scsi0.0", "drive": "hd0", "driver": "scsi-hd", "id": "scsi-hd0"}}
- {"return": {}}
- {"execute": "device_add", "arguments": {"bus": "scsi1.0", "drive": "hd0", "driver": "scsi-hd", "id": "scsi-hd1"}}
--{"error": {"class": "GenericError", "desc": "Cannot change iothread of active block backend"}}
--{"execute": "device_del", "arguments": {"id": "scsi-hd0"}}
- {"return": {}}
--{"execute": "device_add", "arguments": {"bus": "scsi1.0", "drive": "hd0", "driver": "scsi-hd", "id": "scsi-hd1"}}
-+{"execute": "device_del", "arguments": {"id": "scsi-hd0"}}
- {"return": {}}
- {"execute": "device_del", "arguments": {"id": "scsi-hd1"}}
- {"return": {}}
++    if (!dc_isar_feature(aa64_pauth, s)) {
++        return false;
++    }
++
+     dst = auth_branch_target(s, cpu_reg(s, 30), cpu_X[31], !a->m);
+     gen_a64_set_pc(s, dst);
+     s->base.is_jmp = DISAS_JUMP;
 -- 
 2.47.2
 
