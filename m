@@ -4,92 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC3E3C8303C
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87192C83F1D
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Jul 2025 10:25:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaAtL-0002Pn-Ge; Fri, 11 Jul 2025 06:22:07 -0400
+	id 1uaAw1-00080T-JO; Fri, 11 Jul 2025 06:24:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaAtK-0002NA-22
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:22:06 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaAtH-0002m1-SZ
- for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:22:05 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-451d6ade159so15054845e9.1
- for <qemu-devel@nongnu.org>; Fri, 11 Jul 2025 03:22:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752229321; x=1752834121; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=wffkxJKwAsUxiLcwBkMe8Jp0Df+0TjSq3xrhPv4g5aM=;
- b=pu9vPdWfNneV2M6XEn+dAFDfLnfxe/80Ge8BQhzJGALvxegy/ZOyLFihk28Inpi1fJ
- yTsVbVrqGOO5YbIOW5KZqiMAfcAExFGoPWr3GoQauVct/shgBSkttCieDloiyzRG0N1r
- BrInXjbGLhz2V/x9jmcADmBoj74/xWNvZLCKJ1bPV2eyWHwhfz8EX4CCdhIriS+nj0ez
- jDSlRB6pUsKwfNi/rlGLcQe/YZxT8qYyJW2sjtWMT8bMTtM2GeJHA48Kfykx807/93ib
- ive/fh1iET0Zt+/gOQZ02GO7d7COy2Df0OuVyVQEDITiVX/6dPWfxjN3cLtq1ktLCPKJ
- OY/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752229321; x=1752834121;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wffkxJKwAsUxiLcwBkMe8Jp0Df+0TjSq3xrhPv4g5aM=;
- b=oaRdpQFCUPgMObNpp1xM14mXgr0RjzVzrmAtcBM5HVrae+mUY5WTkCDbFt8rQz4sco
- kbAeXLW5C9+dQNsQICf9Z92byyElSUR790Mfogn6hLi2JMPE0JZ8SaVHF4XPq03s4fDz
- DRxXRJGno4ENKOuICCg2jKKYUydw063XLlmJpWkoLMbBasSuM+xl+z6e+KMsThSD4GPN
- uBE6pHeqNehT7gka3NyjH5UDhMEv5trOggMJSjqrcWlAdnu6u65Kw+omR/+58gZDdl2Z
- vI7Ti5T+mis0lSPfDYVQXrOJr19N1kqYTAE/a0Ktw/iw/jrt00KgXwA+Wkyv9wa407Zz
- /KWA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXg6D5qfXgOOMv4TiTIW1UZ4JfvRsBU+UADQVRhafkNR/3RQWEH02ZA1ssbowDd/hol21FTYensyG2I@nongnu.org
-X-Gm-Message-State: AOJu0YzMC+U7SI2SCKlfGwZRat5GfC5Xgg84QvknsO9APiQ12u4XFcre
- MsOnSc/XS2rHVxltSzvihRUIMVMMg/E1zNX+VjVIUmOuY5qOFnjnZkZYuH74kzVY7Zk=
-X-Gm-Gg: ASbGnctShoKeRgXlGsaLgxjyW72ElvYZYm4raTI31+ESIwucRClhiSvDoHC1Cpf6Dl6
- LjS8khNr6o/EGo1f2oH9eB4AyLhkOgn0PEzG41sdsLuP4Ux4sl8HseJNkb9eidMDgFFwoGx0xgo
- XLr9JC093rILbvuYpX6MjKAmo7AXp9XcZUsMvDGjPzjwSnA/BsZuz7dktpCMd0EpuiVxUBrgl+q
- ESBdtXJbMkHynRyERn2zRjfSQ2FnXIlI2xoLo1KZEvk54ashU4Xrxq7Bd8qL16QHnNf8lcQBdtD
- BrQTl3GW7LOpqptzUL5K+yMopTk3At9EtHor2DE4+qL+dhSvrN2GehGdQAuj89z8EA6fwoumAEF
- 3F6ByHzKsZc6BbYWMIiX4AwkAVBXRLOxsChYEIW5IDv1h/iPm+xnA8IxkfMI/htwrc9KhNQ==
-X-Google-Smtp-Source: AGHT+IH3pYPQmp2LFwrMK3fwqftxfKvy+Wx5EUFZ+GifghqV9ofSaoLg6cx0b9URIEZfeyp4diVoDA==
-X-Received: by 2002:a05:600c:8909:b0:450:d3b9:4ba4 with SMTP id
- 5b1f17b1804b1-455bd87a4c6mr12922695e9.2.1752229320846; 
- Fri, 11 Jul 2025 03:22:00 -0700 (PDT)
-Received: from [192.168.1.47] (lfbn-mon-1-587-20.w2-4.abo.wanadoo.fr.
- [2.4.165.20]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8bd181bsm3990246f8f.7.2025.07.11.03.21.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Jul 2025 03:22:00 -0700 (PDT)
-Message-ID: <eb62a1c3-1aab-4398-831b-1fb82402d67d@linaro.org>
-Date: Fri, 11 Jul 2025 12:21:59 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uaAvy-0007vJ-7e
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:24:50 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uaAvw-0003Ck-2r
+ for qemu-devel@nongnu.org; Fri, 11 Jul 2025 06:24:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1752229488; x=1783765488;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=xpMaIGUvqjVSzZHj/hooB4R21pMjf58x4c9dmm2A7UE=;
+ b=TFdS7Lon8eZNmX0TvRbZv3gIQAJ/Dnz6BcTssJHXF1Jti8EVSfvdg11X
+ x4iz+GZhLIA4yfmbP9tMdrSAu6L1mtk5SsAaIvgBYEG9icb7wLlH98JTI
+ B+jQXCoO235WwhzlNfKyUrL/kTU6q7ttt2ZNUSERL6hpEQ+vRtOzo9aQB
+ YBynUfeXl72TODpaW3NeCHzKiHBI9DxVOFrgxehRlwH15ZPz7ydbkff5K
+ YlZA+bKzzevYCEvy14sXjsTBSeI3/H+TK3WguoAIfcjJ8Tdw7oUqz6jFb
+ h2pG/wdC3HMcCXVsj7LppLCF2m9myDCagZGqDU4EsSVpeC2PFMvV4mzSd w==;
+X-CSE-ConnectionGUID: J1JYt11lRMavqMi2XuC/kQ==
+X-CSE-MsgGUID: +dfn4P88RgS6SxK7vraPsw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11490"; a="65875703"
+X-IronPort-AV: E=Sophos;i="6.16,303,1744095600"; d="scan'208";a="65875703"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Jul 2025 03:24:46 -0700
+X-CSE-ConnectionGUID: 6hnUyf7+SPigmjsIrPHmMQ==
+X-CSE-MsgGUID: PvNQcGkpT+ybdzM28jPvRQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,303,1744095600"; d="scan'208";a="156894366"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by fmviesa008.fm.intel.com with ESMTP; 11 Jul 2025 03:24:43 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+Cc: Ewan Hai <ewanhai-oc@zhaoxin.com>, Jason Zeng <jason.zeng@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Tao Su <tao1.su@intel.com>,
+ Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
+ Tejus GK <tejus.gk@nutanix.com>, Manish Mishra <manish.mishra@nutanix.com>,
+ qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>, Tao Su <tao1.su@linux.intel.com>
+Subject: [PATCH v2 2/9] i386/cpu: Introduce cache model for GraniteRapids
+Date: Fri, 11 Jul 2025 18:45:56 +0800
+Message-Id: <20250711104603.1634832-3-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250711104603.1634832-1-zhao1.liu@intel.com>
+References: <20250711104603.1634832-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/s390x/s390-pci-bus.c: Use g_assert_not_reached() in
- functions taking an ett
-To: Matthew Rosato <mjrosato@linux.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>
-References: <20250710161552.1287399-1-peter.maydell@linaro.org>
- <36819228-b4c2-44a7-bc85-f5630c8412b5@linux.ibm.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <36819228-b4c2-44a7-bc85-f5630c8412b5@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,39 +89,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Matthew,
+Add the cache model to GraniteRapids (v3) to better emulate its
+environment.
 
-On 10/7/25 23:20, Matthew Rosato wrote:
-> On 7/10/25 12:15 PM, Peter Maydell wrote:
->> The s390-pci-bus.c code, Coverity complains about a possible overflow
->> because get_table_index() can return -1 if the ett value passed in is
->> not one of the three permitted ZPCI_ETT_PT, ZPCI_ETT_ST, ZPCI_ETT_RT,
->> but the caller in table_translate() doesn't check this and instead
->> uses the return value directly in a calculation of the guest address
->> to read from.
->>
->> In fact this case cannot happen, because:
->>   * get_table_index() is called only from table_translate()
->>   * the only caller of table_translate() loops through the ett values
->>     in the order RT, ST, PT until table_translate() returns 0
->>   * table_translate() will return 0 for the error cases and when
->>     translate_iscomplete() returns true
->>   * translate_iscomplete() is always true for ZPCI_ETT_PT
->>
->> So table_translate() is always called with a valid ett value.
->>
->> Instead of having the various functions called from table_translate()
->> return a default or dummy value when the ett argument is out of range,
->> use g_assert_not_reached() to indicate that this is impossible.
->>
->> Coverity: CID 1547609
->> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->> ---
->> Disclaimer: only tested with 'make check/make check-functional'
-> 
-> Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-> 
-> Also to sanity check I ran various tests with s390x guests and a few different PCI passthrough devices using a guest IOMMU to drive table_translate frequently.
+The cache model is based on GraniteRapids-SP (Scalable Performance):
 
-Does that mean we can include your Tested-by: tag?
+      --- cache 0 ---
+      cache type                         = data cache (1)
+      cache level                        = 0x1 (1)
+      self-initializing cache level      = true
+      fully associative cache            = false
+      maximum IDs for CPUs sharing cache = 0x1 (1)
+      maximum IDs for cores in pkg       = 0x3f (63)
+      system coherency line size         = 0x40 (64)
+      physical line partitions           = 0x1 (1)
+      ways of associativity              = 0xc (12)
+      number of sets                     = 0x40 (64)
+      WBINVD/INVD acts on lower caches   = false
+      inclusive to lower caches          = false
+      complex cache indexing             = false
+      number of sets (s)                 = 64
+      (size synth)                       = 49152 (48 KB)
+      --- cache 1 ---
+      cache type                         = instruction cache (2)
+      cache level                        = 0x1 (1)
+      self-initializing cache level      = true
+      fully associative cache            = false
+      maximum IDs for CPUs sharing cache = 0x1 (1)
+      maximum IDs for cores in pkg       = 0x3f (63)
+      system coherency line size         = 0x40 (64)
+      physical line partitions           = 0x1 (1)
+      ways of associativity              = 0x10 (16)
+      number of sets                     = 0x40 (64)
+      WBINVD/INVD acts on lower caches   = false
+      inclusive to lower caches          = false
+      complex cache indexing             = false
+      number of sets (s)                 = 64
+      (size synth)                       = 65536 (64 KB)
+      --- cache 2 ---
+      cache type                         = unified cache (3)
+      cache level                        = 0x2 (2)
+      self-initializing cache level      = true
+      fully associative cache            = false
+      maximum IDs for CPUs sharing cache = 0x1 (1)
+      maximum IDs for cores in pkg       = 0x3f (63)
+      system coherency line size         = 0x40 (64)
+      physical line partitions           = 0x1 (1)
+      ways of associativity              = 0x10 (16)
+      number of sets                     = 0x800 (2048)
+      WBINVD/INVD acts on lower caches   = false
+      inclusive to lower caches          = false
+      complex cache indexing             = false
+      number of sets (s)                 = 2048
+      (size synth)                       = 2097152 (2 MB)
+      --- cache 3 ---
+      cache type                         = unified cache (3)
+      cache level                        = 0x3 (3)
+      self-initializing cache level      = true
+      fully associative cache            = false
+      maximum IDs for CPUs sharing cache = 0xff (255)
+      maximum IDs for cores in pkg       = 0x3f (63)
+      system coherency line size         = 0x40 (64)
+      physical line partitions           = 0x1 (1)
+      ways of associativity              = 0x10 (16)
+      number of sets                     = 0x48000 (294912)
+      WBINVD/INVD acts on lower caches   = false
+      inclusive to lower caches          = false
+      complex cache indexing             = true
+      number of sets (s)                 = 294912
+      (size synth)                       = 301989888 (288 MB)
+      --- cache 4 ---
+      cache type                         = no more caches (0)
+
+Suggested-by: Tejus GK <tejus.gk@nutanix.com>
+Suggested-by: Jason Zeng <jason.zeng@intel.com>
+Suggested-by: "Daniel P . Berrangé" <berrange@redhat.com>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Reviewed-by: Tao Su <tao1.su@linux.intel.com>
+Tested-by: Yi Lai <yi1.lai@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ target/i386/cpu.c | 96 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 96 insertions(+)
+
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index a97ee3c2af43..4ce063fb6492 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -2881,6 +2881,97 @@ static const CPUCaches epyc_turin_cache_info = {
+     }
+ };
+ 
++static const CPUCaches xeon_gnr_cache_info = {
++    .l1d_cache = &(CPUCacheInfo) {
++        /* CPUID 0x4.0x0.EAX */
++        .type = DATA_CACHE,
++        .level = 1,
++        .self_init = true,
++
++        /* CPUID 0x4.0x0.EBX */
++        .line_size = 64,
++        .partitions = 1,
++        .associativity = 12,
++
++        /* CPUID 0x4.0x0.ECX */
++        .sets = 64,
++
++        /* CPUID 0x4.0x0.EDX */
++        .no_invd_sharing = false,
++        .inclusive = false,
++        .complex_indexing = false,
++
++        .size = 48 * KiB,
++        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
++    },
++    .l1i_cache = &(CPUCacheInfo) {
++        /* CPUID 0x4.0x1.EAX */
++        .type = INSTRUCTION_CACHE,
++        .level = 1,
++        .self_init = true,
++
++        /* CPUID 0x4.0x1.EBX */
++        .line_size = 64,
++        .partitions = 1,
++        .associativity = 16,
++
++        /* CPUID 0x4.0x1.ECX */
++        .sets = 64,
++
++        /* CPUID 0x4.0x1.EDX */
++        .no_invd_sharing = false,
++        .inclusive = false,
++        .complex_indexing = false,
++
++        .size = 64 * KiB,
++        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
++    },
++    .l2_cache = &(CPUCacheInfo) {
++        /* CPUID 0x4.0x2.EAX */
++        .type = UNIFIED_CACHE,
++        .level = 2,
++        .self_init = true,
++
++        /* CPUID 0x4.0x2.EBX */
++        .line_size = 64,
++        .partitions = 1,
++        .associativity = 16,
++
++        /* CPUID 0x4.0x2.ECX */
++        .sets = 2048,
++
++        /* CPUID 0x4.0x2.EDX */
++        .no_invd_sharing = false,
++        .inclusive = false,
++        .complex_indexing = false,
++
++        .size = 2 * MiB,
++        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
++    },
++    .l3_cache = &(CPUCacheInfo) {
++        /* CPUID 0x4.0x3.EAX */
++        .type = UNIFIED_CACHE,
++        .level = 3,
++        .self_init = true,
++
++        /* CPUID 0x4.0x3.EBX */
++        .line_size = 64,
++        .partitions = 1,
++        .associativity = 16,
++
++        /* CPUID 0x4.0x3.ECX */
++        .sets = 294912,
++
++        /* CPUID 0x4.0x3.EDX */
++        .no_invd_sharing = false,
++        .inclusive = false,
++        .complex_indexing = true,
++
++        .size = 288 * MiB,
++        .share_level = CPU_TOPOLOGY_LEVEL_SOCKET,
++    },
++};
++
+ static const CPUCaches xeon_srf_cache_info = {
+     .l1d_cache = &(CPUCacheInfo) {
+         /* CPUID 0x4.0x0.EAX */
+@@ -4949,6 +5040,11 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+                     { /* end of list */ }
+                 }
+             },
++            {
++                .version = 3,
++                .note = "with gnr-sp cache model",
++                .cache_info = &xeon_gnr_cache_info,
++            },
+             { /* end of list */ },
+         },
+     },
+-- 
+2.34.1
+
 
