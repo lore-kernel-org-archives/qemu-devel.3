@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2C63C83F10
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Jul 2025 08:23:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 115C2C83F10
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Jul 2025 08:26:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaVW2-0005sz-JQ; Sat, 12 Jul 2025 04:23:26 -0400
+	id 1uaVZ6-0000rk-N0; Sat, 12 Jul 2025 04:26:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uaVVt-0005gm-Sj; Sat, 12 Jul 2025 04:23:20 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uaVZ4-0000kI-QR
+ for qemu-devel@nongnu.org; Sat, 12 Jul 2025 04:26:34 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uaVVq-0006nf-3Y; Sat, 12 Jul 2025 04:23:17 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uaVZ2-0008HX-2F
+ for qemu-devel@nongnu.org; Sat, 12 Jul 2025 04:26:34 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 50C3D135EAC;
- Sat, 12 Jul 2025 11:22:13 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2C98D135EB3;
+ Sat, 12 Jul 2025 11:26:01 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 058EF24030B;
- Sat, 12 Jul 2025 11:22:42 +0300 (MSK)
-Message-ID: <f6b2d577-bbbb-40db-bfee-ff90a9874ee7@tls.msk.ru>
-Date: Sat, 12 Jul 2025 11:22:36 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id D608A240310;
+ Sat, 12 Jul 2025 11:26:29 +0300 (MSK)
+Message-ID: <887fbbd8-9e92-45b1-bdac-77d18a9b82bb@tls.msk.ru>
+Date: Sat, 12 Jul 2025 11:26:29 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [Stable-10.0.3 00/39] Patch Round-up for stable 10.0.3, freeze on
- 2025-07-21
-To: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <qemu-stable-10.0.3-20250711105634@cover.tls.msk.ru>
- <4b096e77-ceb0-4bcd-a288-e110565c957c@t-online.de>
+Subject: Re: [PATCH 0/2] ui: fix VNC endian regression & improve tracing
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+References: <20250604162243.452791-1-berrange@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -79,7 +79,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <4b096e77-ceb0-4bcd-a288-e110565c957c@t-online.de>
+In-Reply-To: <20250604162243.452791-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -105,48 +105,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.07.2025 00:51, Volker Rümelin wrote:
-> Am 11.07.25 um 10:15 schrieb Michael Tokarev:
->> The following patches are queued for QEMU stable v10.0.3:
->>
->>    https://gitlab.com/qemu-project/qemu/-/commits/staging-10.0
->>
->> Patch freeze is 2025-07-21, and the release is planned for 2025-07-23:
->>
->>    https://wiki.qemu.org/Planning/10.0
->>
->> Please respond here or CC qemu-stable@nongnu.org on any additional patches
->> you think should (or shouldn't) be included in the release.
+On 04.06.2025 19:22, Daniel P. Berrangé wrote:
 > 
-> Hi Michael,
+> Daniel P. Berrangé (2):
+>    ui: fix setting client_endian field defaults
+>    ui: add trace events for all client messages
 > 
-> I think commit 0f1d6606c2 ("target/i386: fix TB exit logic in
-> gen_movl_seg() when writing to SS") should be included. It fixes a
-> regression in stable-10.0.1.
+>   ui/trace-events | 14 +++++++++++++
+>   ui/vnc.c        | 53 +++++++++++++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 67 insertions(+)
 
-You're exactly right.  I missed this one because it Fixes a commit
-which is after 10.0.0 (e54ef98c8a), but it has also been picked
-up for stable-10.0 (0f1d6606c2).  Included now.
+Hi!
 
-> The patches
-> 
-> 08 7ed96710e82c Daniel P. Berrangé:
->     ui/vnc.c: replace big endian flag with byte order value
-> 09 70097442853c Daniel P. Berrangé:
->     ui/vnc: take account of client byte order in pixman format
-> 10 63d320909220 Daniel P. Berrangé:
->     ui/vnc: fix tight palette pixel encoding for 8/16-bpp formats
-> 
-> 
-> introduce a regression. See the patch at
-> https://lore.kernel.org/qemu-devel/20250604162243.452791-2-berrange@redhat.com/.
-> This patch is correct but it's still missing in the QEMU master branch.
+Has this series been forgotten?  It seems it should be in 10.1
+and in 10.0.3.   It has 2 R-Bs.  Is it time to send a PullReq?
 
-It should be included in 10.1 and in 10.0.3, it looks like.  It also
-looks like it's been forgotten.  I'll ping it now.
-
-Thank you very much for letting me know and for remembering all these
-details.
+Thanks,
 
 /mjt
 
