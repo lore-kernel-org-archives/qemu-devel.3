@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 115C2C83F10
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Jul 2025 08:26:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FC99C83F10
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Jul 2025 10:25:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaVZ6-0000rk-N0; Sat, 12 Jul 2025 04:26:36 -0400
+	id 1uaXPc-0006cz-LO; Sat, 12 Jul 2025 06:24:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uaVZ4-0000kI-QR
- for qemu-devel@nongnu.org; Sat, 12 Jul 2025 04:26:34 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uaVZ2-0008HX-2F
- for qemu-devel@nongnu.org; Sat, 12 Jul 2025 04:26:34 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2C98D135EB3;
- Sat, 12 Jul 2025 11:26:01 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D608A240310;
- Sat, 12 Jul 2025 11:26:29 +0300 (MSK)
-Message-ID: <887fbbd8-9e92-45b1-bdac-77d18a9b82bb@tls.msk.ru>
-Date: Sat, 12 Jul 2025 11:26:29 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaXPX-0006O1-Vi
+ for qemu-devel@nongnu.org; Sat, 12 Jul 2025 06:24:54 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaXPT-0008Jn-TR
+ for qemu-devel@nongnu.org; Sat, 12 Jul 2025 06:24:50 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3a4ef2c2ef3so2270669f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 12 Jul 2025 03:24:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752315885; x=1752920685; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=HSfZDC0vov3/SEuDpR5eeoQwoq2SNjKH4mFg1TnOJS8=;
+ b=SbrJH8LJydbctBJ9UT9irN27la4LpCximkoFnDUxWuy6Fvr69G46kybJdPgsmJBhB4
+ FXgHGLUMISHbtJYRrhckbz0qfzwTgyzweHd1Zz92HtfiqgrNnBp6d4uEs4ilDtrDKW3f
+ xOnHueYuk0uVlOMi1RLoPGvTfSWi1AplEVyMvmKaiRYlQZPClVLK2iDCPQYvDvEPRbF8
+ JLm0gIFP2E78G9FDEVOyB8ZgM2OYaDWnziOggrCPz32QSX2cLn6l9gohzCpyJfLKsRqT
+ dpY2x0It8nUkTN7RDcoHO1q7Q0ZOt0XMhvAPNJEKlRg5dSn/EPk9BLk+U+wk2etDoP4l
+ 5E5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752315885; x=1752920685;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HSfZDC0vov3/SEuDpR5eeoQwoq2SNjKH4mFg1TnOJS8=;
+ b=Du5xQdsZAhmn9za2oWvMxcRz2+ON5ULhyoMOwrtzLQ2F5gf5gFa8x49HhXtXpGD16O
+ y4Jw/s7OO2UhMexB6nbjIy6v9Sn1Hx7ZW+4jdhvTOIvphl+s6HjBg/wFo7rJ2ABjHN8u
+ J6vDhkO9rODLS0bEW/rDXE08ZrYvZB9aTjQC5An5Fz6mgLVUQPVVLU1Qlec9ep+PrKts
+ CBaMNo+ilg/bVvj2tqQH5Q+lCxycyPNw75W/kGbGEe6mHYJc0uVeydpy64iaVUuGPahe
+ ygS5rBJ7QXdddgTJ9/mwDICU+L14iSqseRnBJ/H9wJhxv7nvPG277+t4ebsUw1HUYgr8
+ aJKA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX7FuDsBvSC55/fACR00XoEt3pdJhWv9AgzKloGfEflOqIdtCalD4BQh7FpFi68l5lRI+J/VOThK224@nongnu.org
+X-Gm-Message-State: AOJu0YynPBjXEHFBWrop7swtxZ6ywZ1e90vvJHTfKdhH6fENDudMl+5v
+ RUroULqGkoKRiVtzLF0u6YXyCSrl1ExpNZjgA0a9WbtVqF+JaU7Oz5IRSuLCQrBJ0iNQ2sUIFoT
+ NzCdK
+X-Gm-Gg: ASbGncsfKIee+KYdtlJmEZY7rnljr2uXwQvrR9Hr6mHPAYNtqWeEl6URLUyZHqnyDvX
+ IijdRxR0QjMQVRCuEobvWPLL7NLSBN3X/yGIr9FF0XDx8+22ZTFSM2WIHlYuC4yw0mB6AwNyOZ+
+ rBdSs5mbM69IFwKls1PXpO+G9MEL5td/K9Yy4AhxaDPwRikG3n/TQ+m9FpmTgi89Re6Sw+B69gW
+ Y8RIdBXM0/VZ6VhF5qZS5afDhf4gP5YvcSHr/dIkYpbULquSLPq2adgDER6inlslLgvwexW1sAl
+ r+FZZq6rbn0T8mIQlhX2GRyFz9m731s3Dx4lPH1NXfjWvsSoGGJrubCpQElWIw2DFAYU20faKwk
+ abJ5WmOcLoBazEgiYDUBvF3+bVbmXF/gnGrfnOlgQuwj/zSFjoJXZOtqQjpHMtclbVd6tmtNURP
+ jOui8=
+X-Google-Smtp-Source: AGHT+IGk0JRq8y/ZKQ/apUbVqs1JfegRdAEi633Y+6DiiyFuys2abuyvlMm0TvXtog7V/CHeBqfxNg==
+X-Received: by 2002:a05:6000:2c04:b0:3a3:4baa:3f3d with SMTP id
+ ffacd0b85a97d-3b5f2db14dfmr5198818f8f.6.1752315885383; 
+ Sat, 12 Jul 2025 03:24:45 -0700 (PDT)
+Received: from [192.168.1.117] (lfbn-mon-1-970-120.w86-227.abo.wanadoo.fr.
+ [86.227.5.120]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454dd437fb0sm73613895e9.5.2025.07.12.03.24.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 12 Jul 2025 03:24:43 -0700 (PDT)
+Message-ID: <531271d6-f243-496e-b36b-431eded7ea79@linaro.org>
+Date: Sat, 12 Jul 2025 12:24:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] ui: fix VNC endian regression & improve tracing
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-References: <20250604162243.452791-1-berrange@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250604162243.452791-1-berrange@redhat.com>
+Subject: Re: [PATCH v2 1/9] target/arm: Add prot_check parameter to
+ pmsav8_mpu_lookup
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+References: <20250711224915.62369-1-richard.henderson@linaro.org>
+ <20250711224915.62369-2-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250711224915.62369-2-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,22 +105,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.06.2025 19:22, Daniel P. Berrangé wrote:
+On 12/7/25 00:49, Richard Henderson wrote:
+> Separate the access_type from the protection check.
 > 
-> Daniel P. Berrangé (2):
->    ui: fix setting client_endian field defaults
->    ui: add trace events for all client messages
-> 
->   ui/trace-events | 14 +++++++++++++
->   ui/vnc.c        | 53 +++++++++++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 67 insertions(+)
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/arm/internals.h    |  5 +++--
+>   target/arm/ptw.c          | 11 ++++++-----
+>   target/arm/tcg/m_helper.c |  4 ++--
+>   3 files changed, 11 insertions(+), 9 deletions(-)
 
-Hi!
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Has this series been forgotten?  It seems it should be in 10.1
-and in 10.0.3.   It has 2 R-Bs.  Is it time to send a PullReq?
-
-Thanks,
-
-/mjt
 
