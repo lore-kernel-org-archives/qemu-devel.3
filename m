@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FC99C83F10
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Jul 2025 10:25:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A747C83F20
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Jul 2025 13:29:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaXPc-0006cz-LO; Sat, 12 Jul 2025 06:24:56 -0400
+	id 1uaaHQ-0007fN-Bw; Sat, 12 Jul 2025 09:28:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaXPX-0006O1-Vi
- for qemu-devel@nongnu.org; Sat, 12 Jul 2025 06:24:54 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uaXPT-0008Jn-TR
- for qemu-devel@nongnu.org; Sat, 12 Jul 2025 06:24:50 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3a4ef2c2ef3so2270669f8f.2
- for <qemu-devel@nongnu.org>; Sat, 12 Jul 2025 03:24:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752315885; x=1752920685; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=HSfZDC0vov3/SEuDpR5eeoQwoq2SNjKH4mFg1TnOJS8=;
- b=SbrJH8LJydbctBJ9UT9irN27la4LpCximkoFnDUxWuy6Fvr69G46kybJdPgsmJBhB4
- FXgHGLUMISHbtJYRrhckbz0qfzwTgyzweHd1Zz92HtfiqgrNnBp6d4uEs4ilDtrDKW3f
- xOnHueYuk0uVlOMi1RLoPGvTfSWi1AplEVyMvmKaiRYlQZPClVLK2iDCPQYvDvEPRbF8
- JLm0gIFP2E78G9FDEVOyB8ZgM2OYaDWnziOggrCPz32QSX2cLn6l9gohzCpyJfLKsRqT
- dpY2x0It8nUkTN7RDcoHO1q7Q0ZOt0XMhvAPNJEKlRg5dSn/EPk9BLk+U+wk2etDoP4l
- 5E5A==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uaaHL-0007dl-Es
+ for qemu-devel@nongnu.org; Sat, 12 Jul 2025 09:28:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uaaHJ-00039G-HJ
+ for qemu-devel@nongnu.org; Sat, 12 Jul 2025 09:28:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752326909;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=NvkNgqLKsXpfmLf4idce9IyO9fOJ2IHj3aUNZS4ffhE=;
+ b=dJWhsNzPLp1Q/gEfpFHiKHcuGaS9dPvuDgCEJbZzi93yX7hFBt0yhxKuM5t/E7SRawVDr7
+ 6MzVmvmUvtdjIVbL0qt4Jzu4o/KvY1vWyxVP/3+XXgDgWq2w7VZQQL1JhtlWjO/rjZyatq
+ dpYv2yuxTFkygq15PvEadRjY6xByDoU=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-303-QQIAQQv6PcWV6HB8EuIUbw-1; Sat, 12 Jul 2025 09:28:27 -0400
+X-MC-Unique: QQIAQQv6PcWV6HB8EuIUbw-1
+X-Mimecast-MFC-AGG-ID: QQIAQQv6PcWV6HB8EuIUbw_1752326906
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-451ac1b43c4so15963255e9.0
+ for <qemu-devel@nongnu.org>; Sat, 12 Jul 2025 06:28:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752315885; x=1752920685;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HSfZDC0vov3/SEuDpR5eeoQwoq2SNjKH4mFg1TnOJS8=;
- b=Du5xQdsZAhmn9za2oWvMxcRz2+ON5ULhyoMOwrtzLQ2F5gf5gFa8x49HhXtXpGD16O
- y4Jw/s7OO2UhMexB6nbjIy6v9Sn1Hx7ZW+4jdhvTOIvphl+s6HjBg/wFo7rJ2ABjHN8u
- J6vDhkO9rODLS0bEW/rDXE08ZrYvZB9aTjQC5An5Fz6mgLVUQPVVLU1Qlec9ep+PrKts
- CBaMNo+ilg/bVvj2tqQH5Q+lCxycyPNw75W/kGbGEe6mHYJc0uVeydpy64iaVUuGPahe
- ygS5rBJ7QXdddgTJ9/mwDICU+L14iSqseRnBJ/H9wJhxv7nvPG277+t4ebsUw1HUYgr8
- aJKA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX7FuDsBvSC55/fACR00XoEt3pdJhWv9AgzKloGfEflOqIdtCalD4BQh7FpFi68l5lRI+J/VOThK224@nongnu.org
-X-Gm-Message-State: AOJu0YynPBjXEHFBWrop7swtxZ6ywZ1e90vvJHTfKdhH6fENDudMl+5v
- RUroULqGkoKRiVtzLF0u6YXyCSrl1ExpNZjgA0a9WbtVqF+JaU7Oz5IRSuLCQrBJ0iNQ2sUIFoT
- NzCdK
-X-Gm-Gg: ASbGncsfKIee+KYdtlJmEZY7rnljr2uXwQvrR9Hr6mHPAYNtqWeEl6URLUyZHqnyDvX
- IijdRxR0QjMQVRCuEobvWPLL7NLSBN3X/yGIr9FF0XDx8+22ZTFSM2WIHlYuC4yw0mB6AwNyOZ+
- rBdSs5mbM69IFwKls1PXpO+G9MEL5td/K9Yy4AhxaDPwRikG3n/TQ+m9FpmTgi89Re6Sw+B69gW
- Y8RIdBXM0/VZ6VhF5qZS5afDhf4gP5YvcSHr/dIkYpbULquSLPq2adgDER6inlslLgvwexW1sAl
- r+FZZq6rbn0T8mIQlhX2GRyFz9m731s3Dx4lPH1NXfjWvsSoGGJrubCpQElWIw2DFAYU20faKwk
- abJ5WmOcLoBazEgiYDUBvF3+bVbmXF/gnGrfnOlgQuwj/zSFjoJXZOtqQjpHMtclbVd6tmtNURP
- jOui8=
-X-Google-Smtp-Source: AGHT+IGk0JRq8y/ZKQ/apUbVqs1JfegRdAEi633Y+6DiiyFuys2abuyvlMm0TvXtog7V/CHeBqfxNg==
-X-Received: by 2002:a05:6000:2c04:b0:3a3:4baa:3f3d with SMTP id
- ffacd0b85a97d-3b5f2db14dfmr5198818f8f.6.1752315885383; 
- Sat, 12 Jul 2025 03:24:45 -0700 (PDT)
-Received: from [192.168.1.117] (lfbn-mon-1-970-120.w86-227.abo.wanadoo.fr.
- [86.227.5.120]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454dd437fb0sm73613895e9.5.2025.07.12.03.24.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 12 Jul 2025 03:24:43 -0700 (PDT)
-Message-ID: <531271d6-f243-496e-b36b-431eded7ea79@linaro.org>
-Date: Sat, 12 Jul 2025 12:24:40 +0200
+ d=1e100.net; s=20230601; t=1752326906; x=1752931706;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NvkNgqLKsXpfmLf4idce9IyO9fOJ2IHj3aUNZS4ffhE=;
+ b=ZGyEM64QeXtM2ErLERYFnuxyaNrWL3t9ggvHMfIoRTVfLrxmyXM7936HMqKjQpNrjg
+ AASkPfWwiecmCx3YuoJXL9/ukyH1ut4Dh2RVMCxiEPeUE9h0lOODi+z1nKl2nptKdvhn
+ /gUltjmYVhinq1BiAyqslh4fr+ev8KYToEtIaNvJCvO/m89Kzp2s2P7m6PdAK0zO/+Ia
+ S2wZY0ltkzcbC1keDA+gGM01pzpfAUJeKfPUZy2gemNF6XJIW8MZejuqCvmrh2Gqig8S
+ asfB7oLTMP8pIJLVNglUsEyccumTYpQWrBzxj7K1Wo/ev363muhPhla2wUsjrVkCw9/V
+ P4cQ==
+X-Gm-Message-State: AOJu0YwmCeEjO8+/sEZaq4mKJM0tkNB1pxpQq1IwxUw0/A+8VnakNY4n
+ c9uK5ggosLcCcYKA6za+rsiMlgbXRtdISJv6TyS7WgfquSkt3gyBaO7ZMkTQOICruwslEhJjGsc
+ cRomJjUH+MfgW51QNkUpt7VpNiOZ9Ft6dDIZR7f5aIiJtPgMTqd8jtOGJjh6Wb2BE3BClcD2kIf
+ S+r0wVx5YDaXCasdSTJwNdShYgGINgq8fZrzvejY9g
+X-Gm-Gg: ASbGnctx2Ikw2S10cN3utMOXgMGNNgkAIUaLBfQH7mulMInABK335MYk4e4s+XmVV1K
+ GHZEWTjK1DkOxL//h38P4t76y7B8OcYafYUIMfzv7SHJQo9PdNdz5eK/Ynx7/6m0KMWfKhR2a2q
+ UAAlHPbmhqHYQ6JDVU8fE6qaDKQBUStVOQ4Q/x83UMiqkyMpl1DMWBvgu5sGc8942wLQ/ne1uNC
+ 85cCneZnFrOf4VjN3HUMkZzkTFfkdhkbW4diheQUILQ/x6T6FNGKK8wshxzCLwos4t5x5hcJAEc
+ NG5Wxo/JWlMh3zmTcmEBtUpKMAm5H5hT5A6jhJNzxCQI
+X-Received: by 2002:a05:6000:471d:b0:3a4:dc42:a0c3 with SMTP id
+ ffacd0b85a97d-3b5f18e813amr6826226f8f.56.1752326905733; 
+ Sat, 12 Jul 2025 06:28:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEDeNOwHwqIxUBmVQ8rvcPgFPWN6vaOYTMS4k0W4yXb7fw/y8QJHCJI4d0v2AUvmAfEhA7tLA==
+X-Received: by 2002:a05:6000:471d:b0:3a4:dc42:a0c3 with SMTP id
+ ffacd0b85a97d-3b5f18e813amr6826202f8f.56.1752326905095; 
+ Sat, 12 Jul 2025 06:28:25 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.202.169])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b5e8e26f7bsm7411033f8f.95.2025.07.12.06.28.24
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 12 Jul 2025 06:28:24 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PATCH] tests/vm: bump FreeBSD image to 14.3
+Date: Sat, 12 Jul 2025 15:28:24 +0200
+Message-ID: <20250712132824.69275-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.50.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/9] target/arm: Add prot_check parameter to
- pmsav8_mpu_lookup
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20250711224915.62369-1-richard.henderson@linaro.org>
- <20250711224915.62369-2-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250711224915.62369-2-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,16 +104,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/7/25 00:49, Richard Henderson wrote:
-> Separate the access_type from the protection check.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/arm/internals.h    |  5 +++--
->   target/arm/ptw.c          | 11 ++++++-----
->   target/arm/tcg/m_helper.c |  4 ++--
->   3 files changed, 11 insertions(+), 9 deletions(-)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ tests/vm/freebsd | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+diff --git a/tests/vm/freebsd b/tests/vm/freebsd
+index 74b3b1e520a..2e96c9eba52 100755
+--- a/tests/vm/freebsd
++++ b/tests/vm/freebsd
+@@ -28,8 +28,8 @@ class FreeBSDVM(basevm.BaseVM):
+     name = "freebsd"
+     arch = "x86_64"
+ 
+-    link = "https://download.freebsd.org/releases/CI-IMAGES/14.1-RELEASE/amd64/Latest/FreeBSD-14.1-RELEASE-amd64-BASIC-CI.raw.xz"
+-    csum = "202fe27a05427f0a86d3ebb97712745186f2776ccc4f70d95466dd99a0238ba5"
++    link = "https://download.freebsd.org/releases/CI-IMAGES/14.3-RELEASE/amd64/Latest/FreeBSD-14.3-RELEASE-amd64-BASIC-CI.raw.xz"
++    csum = "ec0f5a4bbe63aa50a725d9fee0f1931f850e9a21cbebdadb991df00f168d6805"
+     size = "20G"
+ 
+     BUILD_SCRIPT = """
+-- 
+2.50.0
 
 
