@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A747C83F20
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 888DCC83F10
 	for <qemu-devel@archiver.kernel.org>; Sat, 12 Jul 2025 13:29:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaaHQ-0007fN-Bw; Sat, 12 Jul 2025 09:28:40 -0400
+	id 1uaaHQ-0007fW-UH; Sat, 12 Jul 2025 09:28:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uaaHL-0007dl-Es
+ id 1uaaHL-0007dn-MG
  for qemu-devel@nongnu.org; Sat, 12 Jul 2025 09:28:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uaaHJ-00039G-HJ
+ id 1uaaHJ-000398-HD
  for qemu-devel@nongnu.org; Sat, 12 Jul 2025 09:28:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752326909;
+ s=mimecast20190719; t=1752326908;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding;
- bh=NvkNgqLKsXpfmLf4idce9IyO9fOJ2IHj3aUNZS4ffhE=;
- b=dJWhsNzPLp1Q/gEfpFHiKHcuGaS9dPvuDgCEJbZzi93yX7hFBt0yhxKuM5t/E7SRawVDr7
- 6MzVmvmUvtdjIVbL0qt4Jzu4o/KvY1vWyxVP/3+XXgDgWq2w7VZQQL1JhtlWjO/rjZyatq
- dpYv2yuxTFkygq15PvEadRjY6xByDoU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NQgnwOxm8SMdCCueXNSX8RnBbLLlgFWSXKeYcZQinkg=;
+ b=IL+Op7NCces+5DUFoMQHZMQi68QBjTvCAN65GNon00RsgKNyqY1/wF37i/fIaCjsmnLNp5
+ gFrstfoJhRSNmeXggdixrAioA4BC9ylRfWVrNFBBWoyNPvFbQ+jtl0sl+2Y5HfVJVhfYVh
+ FYJlCSBbwCJuwj5bV32SPkFt9Ju9+nc=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-303-QQIAQQv6PcWV6HB8EuIUbw-1; Sat, 12 Jul 2025 09:28:27 -0400
-X-MC-Unique: QQIAQQv6PcWV6HB8EuIUbw-1
-X-Mimecast-MFC-AGG-ID: QQIAQQv6PcWV6HB8EuIUbw_1752326906
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-451ac1b43c4so15963255e9.0
- for <qemu-devel@nongnu.org>; Sat, 12 Jul 2025 06:28:27 -0700 (PDT)
+ us-mta-519-RG3E7s5lNkygC1QZ9XeQqg-1; Sat, 12 Jul 2025 09:28:26 -0400
+X-MC-Unique: RG3E7s5lNkygC1QZ9XeQqg-1
+X-Mimecast-MFC-AGG-ID: RG3E7s5lNkygC1QZ9XeQqg_1752326905
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-456106b7c4aso97845e9.0
+ for <qemu-devel@nongnu.org>; Sat, 12 Jul 2025 06:28:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752326906; x=1752931706;
+ d=1e100.net; s=20230601; t=1752326904; x=1752931704;
  h=content-transfer-encoding:mime-version:message-id:date:subject:to
  :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NvkNgqLKsXpfmLf4idce9IyO9fOJ2IHj3aUNZS4ffhE=;
- b=ZGyEM64QeXtM2ErLERYFnuxyaNrWL3t9ggvHMfIoRTVfLrxmyXM7936HMqKjQpNrjg
- AASkPfWwiecmCx3YuoJXL9/ukyH1ut4Dh2RVMCxiEPeUE9h0lOODi+z1nKl2nptKdvhn
- /gUltjmYVhinq1BiAyqslh4fr+ev8KYToEtIaNvJCvO/m89Kzp2s2P7m6PdAK0zO/+Ia
- S2wZY0ltkzcbC1keDA+gGM01pzpfAUJeKfPUZy2gemNF6XJIW8MZejuqCvmrh2Gqig8S
- asfB7oLTMP8pIJLVNglUsEyccumTYpQWrBzxj7K1Wo/ev363muhPhla2wUsjrVkCw9/V
- P4cQ==
-X-Gm-Message-State: AOJu0YwmCeEjO8+/sEZaq4mKJM0tkNB1pxpQq1IwxUw0/A+8VnakNY4n
- c9uK5ggosLcCcYKA6za+rsiMlgbXRtdISJv6TyS7WgfquSkt3gyBaO7ZMkTQOICruwslEhJjGsc
- cRomJjUH+MfgW51QNkUpt7VpNiOZ9Ft6dDIZR7f5aIiJtPgMTqd8jtOGJjh6Wb2BE3BClcD2kIf
- S+r0wVx5YDaXCasdSTJwNdShYgGINgq8fZrzvejY9g
-X-Gm-Gg: ASbGnctx2Ikw2S10cN3utMOXgMGNNgkAIUaLBfQH7mulMInABK335MYk4e4s+XmVV1K
- GHZEWTjK1DkOxL//h38P4t76y7B8OcYafYUIMfzv7SHJQo9PdNdz5eK/Ynx7/6m0KMWfKhR2a2q
- UAAlHPbmhqHYQ6JDVU8fE6qaDKQBUStVOQ4Q/x83UMiqkyMpl1DMWBvgu5sGc8942wLQ/ne1uNC
- 85cCneZnFrOf4VjN3HUMkZzkTFfkdhkbW4diheQUILQ/x6T6FNGKK8wshxzCLwos4t5x5hcJAEc
- NG5Wxo/JWlMh3zmTcmEBtUpKMAm5H5hT5A6jhJNzxCQI
-X-Received: by 2002:a05:6000:471d:b0:3a4:dc42:a0c3 with SMTP id
- ffacd0b85a97d-3b5f18e813amr6826226f8f.56.1752326905733; 
- Sat, 12 Jul 2025 06:28:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEDeNOwHwqIxUBmVQ8rvcPgFPWN6vaOYTMS4k0W4yXb7fw/y8QJHCJI4d0v2AUvmAfEhA7tLA==
-X-Received: by 2002:a05:6000:471d:b0:3a4:dc42:a0c3 with SMTP id
- ffacd0b85a97d-3b5f18e813amr6826202f8f.56.1752326905095; 
- Sat, 12 Jul 2025 06:28:25 -0700 (PDT)
+ bh=NQgnwOxm8SMdCCueXNSX8RnBbLLlgFWSXKeYcZQinkg=;
+ b=VZ7ZglhnsJti0gT8MdUug2ZiNbjPh8IojJaJeXwG0yEQDsG8ai/+6KNH2DZMzBpBaO
+ ZEqH1lp8zLGRK+Oav3nxRsIBVC3vvoHZ7WKLIAj4G5zrB1OUgBx+q48Li8eIpqVZq9MH
+ YzNBO+Tx+cxLTHWDZJsQj1FVitvoipd3Ya+7zFJO+oFyyzw3/KR5aVmqZlXgDzHRJbve
+ pW8FZW3+MuRGGg5vIQvbugKVj3DkieEWnA31Gyruddgrx/Ee7ePYQ6r3E7DftJrSq9q9
+ azWQELoQCIHWCro+OnrQ/EsFAsVmlU62sixolDvxZgFGHEoqpk/BHE0jSDR/X7WoMnWL
+ al+Q==
+X-Gm-Message-State: AOJu0YxTj1ohJCI9UGscjVDa3AqPFIyBVrPSfr8+GmZ/48HzlCc6kvhD
+ 6nlqJykeBiyEMgjHj7AM86/BibtVjW/7MFQ4y64KJq8c4XQYylaEEBaodEgqafAYfAxfX4nh2yj
+ LHV+ZPh7ItpzrNQWBU/qwEthGSFXYSxIy6BVztsOB4ZfDA+p41+rSandoI/qvBaPpFAm6ba9kHT
+ 264QAbKbNe3cyuEhNZnmK5qtaezvQx3oh78Ep57LTP
+X-Gm-Gg: ASbGnct3gKwqjIj5RRv/jhHXe0X6+rCClW1g6Jb2Dxtfs0Ryx1yxQTJuth6KRymRz/4
+ RFOMGf+bv8+zBxi+HENz2K545166XoVmK9oWXimgOhs58IvTeP4aCgJ64YmyZZ3BaRYTdkH0py3
+ I5SzuD3UOZR9WXDPf8YDmflugST1jC1OnxkLNVc7dIVSwQSm+Bx6LYlfDMhP/p2fFM/Xli29myA
+ SbGtEmP5211GdcsA70kr2FKWgINd+ro25zknVXYoXvFTtTJgrwJcZR/8YwNLdG3iYYvdwhqsk6l
+ 7n9hb3x8ZxiIB1q2tmWQ8PmN9r6WiSOjHhlbF5BRCrf+
+X-Received: by 2002:a05:6000:2c0f:b0:3a5:3993:3427 with SMTP id
+ ffacd0b85a97d-3b5f1e95fb8mr7120394f8f.26.1752326904447; 
+ Sat, 12 Jul 2025 06:28:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF3D+5fuXdcxlaFf7zuVs3WV4wxpW3FruQKwQSkVZRzFzf2NBwywMk6b6u7QpI/HGlb4OJVlQ==
+X-Received: by 2002:a05:6000:2c0f:b0:3a5:3993:3427 with SMTP id
+ ffacd0b85a97d-3b5f1e95fb8mr7120368f8f.26.1752326903875; 
+ Sat, 12 Jul 2025 06:28:23 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.202.169])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e26f7bsm7411033f8f.95.2025.07.12.06.28.24
+ ffacd0b85a97d-3b5e8e0d70csm7435748f8f.62.2025.07.12.06.28.22
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 12 Jul 2025 06:28:24 -0700 (PDT)
+ Sat, 12 Jul 2025 06:28:23 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH] tests/vm: bump FreeBSD image to 14.3
-Date: Sat, 12 Jul 2025 15:28:24 +0200
-Message-ID: <20250712132824.69275-1-pbonzini@redhat.com>
+Subject: [PATCH] tests/functional: test_x86_cpu_model_versions: remove dead
+ tests
+Date: Sat, 12 Jul 2025 15:28:22 +0200
+Message-ID: <20250712132822.69236-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.50.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -104,26 +105,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Tests that require machines older than 4.2 are now unconditionally skipped.
+Remove them if they test legacy behavior, or use the latest machine if
+they test current behavior.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- tests/vm/freebsd | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../functional/test_x86_cpu_model_versions.py | 110 ++----------------
+ 1 file changed, 12 insertions(+), 98 deletions(-)
 
-diff --git a/tests/vm/freebsd b/tests/vm/freebsd
-index 74b3b1e520a..2e96c9eba52 100755
---- a/tests/vm/freebsd
-+++ b/tests/vm/freebsd
-@@ -28,8 +28,8 @@ class FreeBSDVM(basevm.BaseVM):
-     name = "freebsd"
-     arch = "x86_64"
+diff --git a/tests/functional/test_x86_cpu_model_versions.py b/tests/functional/test_x86_cpu_model_versions.py
+index bd18acd44fa..36c968f1c0b 100755
+--- a/tests/functional/test_x86_cpu_model_versions.py
++++ b/tests/functional/test_x86_cpu_model_versions.py
+@@ -72,44 +72,11 @@ def validate_variant_aliases(self, cpus):
+         self.assertNotIn("EPYC-IBPB-v1", cpus,
+                          "EPYC-IBPB shouldn't be versioned")
  
--    link = "https://download.freebsd.org/releases/CI-IMAGES/14.1-RELEASE/amd64/Latest/FreeBSD-14.1-RELEASE-amd64-BASIC-CI.raw.xz"
--    csum = "202fe27a05427f0a86d3ebb97712745186f2776ccc4f70d95466dd99a0238ba5"
-+    link = "https://download.freebsd.org/releases/CI-IMAGES/14.3-RELEASE/amd64/Latest/FreeBSD-14.3-RELEASE-amd64-BASIC-CI.raw.xz"
-+    csum = "ec0f5a4bbe63aa50a725d9fee0f1931f850e9a21cbebdadb991df00f168d6805"
-     size = "20G"
+-    def test_4_0_alias_compatibility(self):
+-        """
+-        Check if pc-*-4.0 unversioned CPU model won't be reported as aliases
+-        """
+-        self.set_machine('pc-i440fx-4.0')
+-        # pc-*-4.0 won't expose non-versioned CPU models as aliases
+-        # We do this to help management software to keep compatibility
+-        # with older QEMU versions that didn't have the versioned CPU model
+-        self.vm.add_args('-S')
+-        self.vm.launch()
+-        cpus = dict((m['name'], m) for m in
+-                    self.vm.cmd('query-cpu-definitions'))
+-
+-        self.assertFalse(cpus['Cascadelake-Server']['static'],
+-                         'unversioned Cascadelake-Server CPU model must not be static')
+-        self.assertNotIn('alias-of', cpus['Cascadelake-Server'],
+-                         'Cascadelake-Server must not be an alias')
+-        self.assertNotIn('alias-of', cpus['Cascadelake-Server-v1'],
+-                         'Cascadelake-Server-v1 must not be an alias')
+-
+-        self.assertFalse(cpus['qemu64']['static'],
+-                         'unversioned qemu64 CPU model must not be static')
+-        self.assertNotIn('alias-of', cpus['qemu64'],
+-                         'qemu64 must not be an alias')
+-        self.assertNotIn('alias-of', cpus['qemu64-v1'],
+-                         'qemu64-v1 must not be an alias')
+-
+-        self.validate_variant_aliases(cpus)
+-
+-        # On pc-*-4.0, no CPU model should be reported as an alias:
+-        for name,c in cpus.items():
+-            self.assertNotIn('alias-of', c, "%s shouldn't be an alias" % (name))
+-
+-    def test_4_1_alias(self):
++    def test_unversioned_alias(self):
+         """
+         Check if unversioned CPU model is an alias pointing to right version
+         """
+-        self.set_machine('pc-i440fx-4.1')
++        self.set_machine('pc')
+         self.vm.add_args('-S')
+         self.vm.launch()
  
-     BUILD_SCRIPT = """
+@@ -133,7 +100,7 @@ def test_4_1_alias(self):
+ 
+         self.validate_variant_aliases(cpus)
+ 
+-        # On pc-*-4.1, -noTSX and -IBRS models should be aliases:
++        # On recent PC machines, -noTSX and -IBRS models should be aliases:
+         self.assertEqual(cpus["Haswell"].get('alias-of'),
+                          "Haswell-v1",
+                          "Haswell must be an alias")
+@@ -247,8 +214,8 @@ def get_cpu_prop(self, prop):
+         cpu_path = self.vm.cmd('query-cpus-fast')[0].get('qom-path')
+         return self.vm.cmd('qom-get', path=cpu_path, property=prop)
+ 
+-    def test_4_1(self):
+-        self.set_machine('pc-i440fx-4.1')
++    def test(self):
++        self.set_machine('pc')
+         # machine-type only:
+         self.vm.add_args('-S')
+         self.set_vm_arg('-cpu',
+@@ -256,80 +223,27 @@ def test_4_1(self):
+                         'enforce=off')
+         self.vm.launch()
+         self.assertFalse(self.get_cpu_prop('arch-capabilities'),
+-                         'pc-i440fx-4.1 + Cascadelake-Server should not have arch-capabilities')
++                         'pc + Cascadelake-Server should not have arch-capabilities')
+ 
+-    def test_4_0(self):
+-        self.set_machine('pc-i440fx-4.0')
+-        self.vm.add_args('-S')
+-        self.set_vm_arg('-cpu',
+-                        'Cascadelake-Server,x-force-features=on,check=off,'
+-                        'enforce=off')
+-        self.vm.launch()
+-        self.assertFalse(self.get_cpu_prop('arch-capabilities'),
+-                         'pc-i440fx-4.0 + Cascadelake-Server should not have arch-capabilities')
+-
+-    def test_set_4_0(self):
+-        self.set_machine('pc-i440fx-4.0')
+-        # command line must override machine-type if CPU model is not versioned:
+-        self.vm.add_args('-S')
+-        self.set_vm_arg('-cpu',
+-                        'Cascadelake-Server,x-force-features=on,check=off,'
+-                        'enforce=off,+arch-capabilities')
+-        self.vm.launch()
+-        self.assertTrue(self.get_cpu_prop('arch-capabilities'),
+-                        'pc-i440fx-4.0 + Cascadelake-Server,+arch-capabilities should have arch-capabilities')
+-
+-    def test_unset_4_1(self):
+-        self.set_machine('pc-i440fx-4.1')
++    def test_unset(self):
++        self.set_machine('pc')
+         self.vm.add_args('-S')
+         self.set_vm_arg('-cpu',
+                         'Cascadelake-Server,x-force-features=on,check=off,'
+                         'enforce=off,-arch-capabilities')
+         self.vm.launch()
+         self.assertFalse(self.get_cpu_prop('arch-capabilities'),
+-                         'pc-i440fx-4.1 + Cascadelake-Server,-arch-capabilities should not have arch-capabilities')
++                         'pc + Cascadelake-Server,-arch-capabilities should not have arch-capabilities')
+ 
+-    def test_v1_4_0(self):
+-        self.set_machine('pc-i440fx-4.0')
+-        # versioned CPU model overrides machine-type:
+-        self.vm.add_args('-S')
+-        self.set_vm_arg('-cpu',
+-                        'Cascadelake-Server-v1,x-force-features=on,check=off,'
+-                        'enforce=off')
+-        self.vm.launch()
+-        self.assertFalse(self.get_cpu_prop('arch-capabilities'),
+-                         'pc-i440fx-4.0 + Cascadelake-Server-v1 should not have arch-capabilities')
+-
+-    def test_v2_4_0(self):
+-        self.set_machine('pc-i440fx-4.0')
+-        self.vm.add_args('-S')
+-        self.set_vm_arg('-cpu',
+-                        'Cascadelake-Server-v2,x-force-features=on,check=off,'
+-                        'enforce=off')
+-        self.vm.launch()
+-        self.assertTrue(self.get_cpu_prop('arch-capabilities'),
+-                        'pc-i440fx-4.0 + Cascadelake-Server-v2 should have arch-capabilities')
+-
+-    def test_v1_set_4_0(self):
+-        self.set_machine('pc-i440fx-4.0')
+-        # command line must override machine-type and versioned CPU model:
+-        self.vm.add_args('-S')
+-        self.set_vm_arg('-cpu',
+-                        'Cascadelake-Server-v1,x-force-features=on,check=off,'
+-                        'enforce=off,+arch-capabilities')
+-        self.vm.launch()
+-        self.assertTrue(self.get_cpu_prop('arch-capabilities'),
+-                        'pc-i440fx-4.0 + Cascadelake-Server-v1,+arch-capabilities should have arch-capabilities')
+-
+-    def test_v2_unset_4_1(self):
+-        self.set_machine('pc-i440fx-4.1')
++    def test_v2_unset(self):
++        self.set_machine('pc')
+         self.vm.add_args('-S')
+         self.set_vm_arg('-cpu',
+                         'Cascadelake-Server-v2,x-force-features=on,check=off,'
+                         'enforce=off,-arch-capabilities')
+         self.vm.launch()
+         self.assertFalse(self.get_cpu_prop('arch-capabilities'),
+-                         'pc-i440fx-4.1 + Cascadelake-Server-v2,-arch-capabilities should not have arch-capabilities')
++                         'pc + Cascadelake-Server-v2,-arch-capabilities should not have arch-capabilities')
+ 
+ if __name__ == '__main__':
+     QemuSystemTest.main()
 -- 
 2.50.0
 
