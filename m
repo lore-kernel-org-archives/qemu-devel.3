@@ -4,100 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7549C83F17
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Jul 2025 11:19:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73F9FC83F1D
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Jul 2025 11:54:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uauj5-0000rJ-Ft; Sun, 13 Jul 2025 07:18:35 -0400
+	id 1uavGu-00071r-43; Sun, 13 Jul 2025 07:53:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uauj2-0000r0-GM; Sun, 13 Jul 2025 07:18:32 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uavGr-00071M-M5
+ for qemu-devel@nongnu.org; Sun, 13 Jul 2025 07:53:29 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uauj0-0004Mi-OX; Sun, 13 Jul 2025 07:18:32 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DEAE513634D;
- Sun, 13 Jul 2025 14:18:22 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 970CD245FD7;
- Sun, 13 Jul 2025 14:18:23 +0300 (MSK)
-Message-ID: <199516cc-a180-4859-b10f-17590c8c7f19@tls.msk.ru>
-Date: Sun, 13 Jul 2025 14:18:23 +0300
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uavGo-00035v-Lg
+ for qemu-devel@nongnu.org; Sun, 13 Jul 2025 07:53:29 -0400
+Received: from [157.82.206.39] ([157.82.206.39]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56DBqs5v008236
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sun, 13 Jul 2025 20:53:04 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=6Nu6gtWRB9pwKQY119OYVqFA5/pvFCpiOh/jk2M0fIE=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Date:Subject:Message-Id:To;
+ s=rs20250326; t=1752407584; v=1;
+ b=cWHWVf/ESado64JOp+fYKbSzSSwxxp9MHbTcrchhqqhZvf3kFibUEOCXZZmHwW/e
+ +mvWv7dKBziRCundYD+lAndaMTYn1ZXfcBbYybGtFGojWqCJaEfDUj4qqnFqwN7q
+ aX17Mh8KNK1XY2cL+YCzvggu9fqauxhgT3b/tDNT0/4aDKrNXMZRJeRmVXYFET5b
+ jGMcDVgECWNn5n01zAQyzavza4N2Mqk49dMkw1USyvSOKCW/EdyxbmzgpCm+xHSD
+ u6D8d7tUiJzhRlXlYIGvkjaO8/v4qUjqvpbG24uUSoX3Z4LRp/pF4Msy0x7o/Dch
+ dxOWKA700bt9bQsboRSOOA==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sun, 13 Jul 2025 20:52:43 +0900
+Subject: [PATCH RFC] virtio-net: Fix VLAN filter table initialization
+ timing
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] hw/ppc: Add stub for pnv_chip_find_core()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-ppc@nongnu.org,
- Ani Sinha <anisinha@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20250526112346.48744-1-philmd@linaro.org>
- <20250526112346.48744-4-philmd@linaro.org>
- <eff37ca7-d977-450e-85e0-ca8e4f6f3d5a@redhat.com>
- <ba766eae-e8e0-436a-ad30-625744b872e4@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <ba766eae-e8e0-436a-ad30-625744b872e4@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250713-vlan-v1-1-a3cf0bcfa644@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAAqec2gC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDc0Nj3bKcxDxdi2RDA/NEM9PEFEtDJaDSgqLUtMwKsDHRSkFuzkqxtbU
+ AE16dolsAAAA=
+X-Change-ID: 20250713-vlan-8c107a65ad91
+To: Konstantin Shkolnyy <kshk@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: yin31149@gmail.com, eperezma@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, virtualization@lists.linux.dev,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.14.2
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,32 +76,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi!
+The VLAN filter table was not being properly initialized when the driver
+sets the DRIVER_OK status bit, causing incorrect VLAN filtering behavior
+that could allow unintended VLAN packets to pass through. Correct the
+table initialization timing to fix the issue.
 
-Has this change been forgotten?
+Problem
+-------
 
-Thanks,
+The expected initial state of the table depends on feature negotiation:
 
-/mjt
+With VIRTIO_NET_F_CTRL_VLAN:
+  The table must be empty in accordance with the specification.
+Without VIRTIO_NET_F_CTRL_VLAN:
+  The table should be filled to permit all VLAN traffic.
 
-On 26.05.2025 14:51, Philippe Mathieu-Daudé wrote:
-> On 26/5/25 13:48, Cédric Le Goater wrote:
->> On 5/26/25 13:23, Philippe Mathieu-Daudé wrote:
->>> Since commit 9808ce6d5cb, building QEMU configured with
->>> '--without-default-devices' fails:
->>>
->>>    Undefined symbols for architecture arm64:
->>>      "_pnv_chip_find_core", referenced from:
->>>          _helper_load_sprd in target_ppc_misc_helper.c.o
->>>          _helper_store_sprd in target_ppc_misc_helper.c.o
->>>    ld: symbol(s) not found for architecture arm64
->>>    clang: error: linker command failed with exit code 1
->>> > Fix by adding a stub when CONFIG_POWERNV is not available.
->>
->> The fix would be to add an abstract handler to implement SPRD accesses
->> on the PowerNV machine.
-> 
-> I don't know what "SPRD" is so I'll let someone more familiar with
-> this area do the proper cleanup.
+Prior to commit  ("virtio-net: do not reset vlan filtering at
+set_features"), virtio_net_set_features() always initialized the VLAN
+table. That commit changed the behavior to skip initialization when
+VIRTIO_NET_F_CTRL_VLAN was negotiated, assuming the table would be
+properly cleared during reset and remain stable.
+
+However, this assumption breaks when a driver renegotiates features:
+1. Initial negotiation without VIRTIO_NET_F_CTRL_VLAN (table filled)
+2. Renegotiation with VIRTIO_NET_F_CTRL_VLAN (table will not be cleared)
+
+The problem was exacerbated by commit 0caed25cd171 ("virtio: Call
+set_features during reset"), which triggered virtio_net_set_features()
+during reset, exposing the bug whenever VIRTIO_NET_F_CTRL_VLAN was
+negotiated after a reset.
+
+Solution
+--------
+
+Fix by moving VLAN table initialization to virtio_net_set_status(),
+which sets the DRIVER_OK status bit. This ensures proper table
+initialization regardless of feature negotiation sequence.
+
+Fixes: 06b636a1e2ad ("virtio-net: do not reset vlan filtering at set_features")
+Reported-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+Not tested.
+
+Konstantin, please see if this patch fixes your workload.
+---
+ hw/net/virtio-net.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 221252e00a50a46033d7ec8d18936e7c8196a6ca..6d2a67471e570e1e9b4b4fb5338d87c30e23ae36 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -389,6 +389,12 @@ static int virtio_net_set_status(struct VirtIODevice *vdev, uint8_t status)
+     int i;
+     uint8_t queue_status;
+ 
++    if ((status & VIRTIO_CONFIG_S_DRIVER_OK) &&
++        !(vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)) {
++        bool vlan = virtio_vdev_has_feature(vdev, VIRTIO_NET_F_CTRL_VLAN);
++        memset(n->vlans, vlan ? 0 : 0xff, MAX_VLAN >> 3);
++    }
++
+     virtio_net_vnet_endian_status(n, status);
+     virtio_net_vhost_status(n, status);
+ 
+@@ -998,10 +1004,6 @@ static void virtio_net_set_features(VirtIODevice *vdev, uint64_t features)
+         vhost_net_save_acked_features(nc->peer);
+     }
+ 
+-    if (!virtio_has_feature(features, VIRTIO_NET_F_CTRL_VLAN)) {
+-        memset(n->vlans, 0xff, MAX_VLAN >> 3);
+-    }
+-
+     if (virtio_has_feature(features, VIRTIO_NET_F_STANDBY)) {
+         qapi_event_send_failover_negotiated(n->netclient_name);
+         qatomic_set(&n->failover_primary_hidden, false);
+@@ -3990,7 +3992,6 @@ static void virtio_net_reset(VirtIODevice *vdev)
+     memset(n->mac_table.macs, 0, MAC_TABLE_ENTRIES * ETH_ALEN);
+     memcpy(&n->mac[0], &n->nic->conf->macaddr, sizeof(n->mac));
+     qemu_format_nic_info_str(qemu_get_queue(n->nic), n->mac);
+-    memset(n->vlans, 0, MAX_VLAN >> 3);
+ 
+     /* Flush any async TX */
+     for (i = 0;  i < n->max_queue_pairs; i++) {
+
+---
+base-commit: f0737158b483e7ec2b2512145aeab888b85cc1f7
+change-id: 20250713-vlan-8c107a65ad91
+
+Best regards,
+-- 
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
