@@ -4,95 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83EC6C83F1D
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Jul 2025 21:03:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AD05C83F1D
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Jul 2025 21:16:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ub3qH-0004Oa-OG; Sun, 13 Jul 2025 17:02:37 -0400
+	id 1ub42i-0005hf-H1; Sun, 13 Jul 2025 17:15:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ub3qF-0004LX-D8
- for qemu-devel@nongnu.org; Sun, 13 Jul 2025 17:02:35 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ub42V-0005Wg-9y
+ for qemu-devel@nongnu.org; Sun, 13 Jul 2025 17:15:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ub3qD-0005aa-ET
- for qemu-devel@nongnu.org; Sun, 13 Jul 2025 17:02:35 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ub42S-0006Tw-7d
+ for qemu-devel@nongnu.org; Sun, 13 Jul 2025 17:15:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752440551;
+ s=mimecast20190719; t=1752441310;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=H1APcDbDmqwKK/Ovis7X/z3JXmnMCYjKvi40inkbcWE=;
- b=KOnx8p6IadHDDztG2+Vx3zcyeK26sMKPNKCaSL+8IIOXKDMq5dN3aN17P3S8LL1VFjb275
- XRgFzqruf/plos7ZeSz41kt+pek3cVcILTrbtpVZioiMLhPvSem8MZ4VxaoE6sGjQ015Of
- zzXhypkSWoKqZnjWMYKIQo3/8Tmb8iw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=U1G7ra5Y+NigNoneZd9Tw0ESQ56M07dURYQg0p/KEjc=;
+ b=FNX/sE16iMfs5crRqxi4tp+kEPJNFztPtp+vXPxOt14BJMj5SmJVLQ1P5/YbCG2e3h0Um6
+ lN8zsMTa1aAYnm0yTd2vqxrjAOS3qWsNGxgdKX0emTLFf1BP2tk2F7CWdO+chFUby3J7Cu
+ YY+B1fsqG7cYXaTxY8dnFEMynyzWEcg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-258--i5lESbdO1qsER9mCPm5gQ-1; Sun, 13 Jul 2025 17:02:30 -0400
-X-MC-Unique: -i5lESbdO1qsER9mCPm5gQ-1
-X-Mimecast-MFC-AGG-ID: -i5lESbdO1qsER9mCPm5gQ_1752440549
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4eeed54c2so1955827f8f.3
- for <qemu-devel@nongnu.org>; Sun, 13 Jul 2025 14:02:30 -0700 (PDT)
+ us-mta-310-KIXwVZBfMP2URx9D-2JZzg-1; Sun, 13 Jul 2025 17:15:08 -0400
+X-MC-Unique: KIXwVZBfMP2URx9D-2JZzg-1
+X-Mimecast-MFC-AGG-ID: KIXwVZBfMP2URx9D-2JZzg_1752441307
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-453018b4ddeso18315225e9.3
+ for <qemu-devel@nongnu.org>; Sun, 13 Jul 2025 14:15:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752440549; x=1753045349;
+ d=1e100.net; s=20230601; t=1752441307; x=1753046107;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=H1APcDbDmqwKK/Ovis7X/z3JXmnMCYjKvi40inkbcWE=;
- b=SKMtDgccfLBPZF2txD323RPOC9D/+yFwptBA/Myd6SvRd+MQOUB8dMoy2U1Tw7HWoM
- 7MSna0bdHcUZm08wIoQkt6UiFhCFhdbZvazFGGml4V235R0MGa0/3pHv6J9qt6jSqzAP
- 9RFm4RK51cOjv8SE3hJcPak3Pr0u87/KnKBVEMnCraugCMUHwDa2KigK7sbeFZZxuDrS
- gTGQP9RTinv8XoKeJoM+5cMDPc9gunq5wNLYK+XrUgmwrgy9h3Ig9DvXJp3wiOdOmAbI
- gL5T1V9PnmmWfJ9nhqPi+Eu/TC4B7hkTY1URm0Kcu/Dv68ZVpHt1N7ESl/eDUvPDcTvU
- NwoQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXWDbPNct7+qXtprQR/1AezV/hgmN384tNqsKivk2gF5bwyv/6MxqrdR+I8nMlAM8kGDe8ubHClBFiL@nongnu.org
-X-Gm-Message-State: AOJu0YzPgr4TNdfGUu4jPbqkgt/YcK2x4a6G9/pumbl4s3WNUmRjvbAB
- 56T+3wcvy8bAY+4RMg4c+p3EvZvLlFctX8g/IBeaIIyGzaHSFRNxd+6UGcSMv57JQCZzxFSpo4P
- TSNo6IFJdy9H5ntvjIWglLoy5xroMmKmxTgV2A4SSfHw0fftPcpGGtz/j
-X-Gm-Gg: ASbGncvQhQGHXjstPx+mJPvfF7Iedi6M+wslvR9QiE8E1TbE4EfxUvE6+p01mRMsbf2
- V1QhQs8nW0lDV6JNo5tQl3k5x158kARJUuAlhJISyV+e2STkSoxHtDOd+yY+GsNjO6r8vi/C6ib
- qj8Ps3qyhMvjHVrxWujeZhgByLx8jjnEbheE57sLmRdBqOG6SR0doA6lW9iK/bL7TurqY3HiqjW
- YKjHyACng1jeczAr3r5ighnsPP2QZVlOuSamY2i57BeLLwVUqg8jUvB61Dc28H7/wMvxl2MVMNM
- XMarPlI8H4issc3+jMYzeuMPpgi0aMiL
-X-Received: by 2002:a05:6000:43d7:b0:3a5:2ef8:34f0 with SMTP id
- ffacd0b85a97d-3b5f188e1f9mr6578374f8f.22.1752440548692; 
- Sun, 13 Jul 2025 14:02:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE4MBvVq0zuO0v6G3Y0jfYDFalaDIn5ezEx8DsBqjDrZo70zzi9kD3LNvuIxk6Xt/HVzXEi/w==
-X-Received: by 2002:a05:6000:43d7:b0:3a5:2ef8:34f0 with SMTP id
- ffacd0b85a97d-3b5f188e1f9mr6578353f8f.22.1752440548222; 
- Sun, 13 Jul 2025 14:02:28 -0700 (PDT)
+ bh=U1G7ra5Y+NigNoneZd9Tw0ESQ56M07dURYQg0p/KEjc=;
+ b=WrMWSoSSkAYoHggP6S+Xm6uFnu5Ffq2cdN+I4enMrmitfUAC+JKGOaeoupRl2tsyNT
+ LqqgUU7wlWkOe4JqDpuH2t0bgIrIueUyBTMPu5vbVKFZAb+acS2RYjQgBQZ5go3qdWgD
+ fcz3jteVGm7+d7hoZD6VXAuJncqdCsOpgdM1r4QVDaTIq5wR4EkNkimZdfeftSUtMvc3
+ Cl1o8OPxv92f6ZsvHo1n+8voyEmXG5ShfN7jWU8sjhZS7J2yWnHggTRv8NgYKYnz10JB
+ H+vUXFd7AQlsZpwp1SbXidKbngfFS+C26HkodI4NCLGP5vdelit1AoD9j9S/ML6ELv/n
+ Dnlg==
+X-Gm-Message-State: AOJu0Yzv2KfapzfTsh0tznTmII9UZ6h22I8pmrPSHfULyAevy9nnI711
+ 2b62/uxs+eirvVDlsensX7rnExJXv7wJFiSSgkwA0swpIFI4hbR9YwiBsqwIHmSDf4XlsSnW7DR
+ //ld7eA1QomLyWJWvpmc0aP8hFcqwNLBT19iiH4/WE33NUOwM/ohrSBE0
+X-Gm-Gg: ASbGncsjKYEEBYwwDke4mkU1szHmotOho6ISQkYzit3hjE+E8Vz1wNJejdryh//7uFq
+ 8uTpehiA9LVJ0XYgi/n9yd1aLJpzJ6ADt7qQ9NmpXrV6QpvCFnAgHXrl/gY8+oiT2ALovg5/PX1
+ /yyvkr5+8E1Y9dzCh7OGKCBIwxFqMAKiXKHD2+tOYmeMYwgSfqzZ7wVXgTUlUOpIEfItSmfPsRX
+ Qu3s2ru6f3bph+rLKA6aTPbUytKZa0d9nOv9yFWbQ4deXdiq8s3lOZSEbsrZaxqxaJvabqeWIxF
+ hmE+YVtkIiQ7pfZwk1HKz32xON0TQHy1
+X-Received: by 2002:a05:600c:4e8c:b0:453:606b:daea with SMTP id
+ 5b1f17b1804b1-45565ed6221mr78711535e9.20.1752441306933; 
+ Sun, 13 Jul 2025 14:15:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGhGKAUD0yU7WNeLxx+c9Q0NWlMD/FRj5s19apKgljUaHZ6gcMC5ZsNa+6FwipZYVn7p+MMcg==
+X-Received: by 2002:a05:600c:4e8c:b0:453:606b:daea with SMTP id
+ 5b1f17b1804b1-45565ed6221mr78711315e9.20.1752441306397; 
+ Sun, 13 Jul 2025 14:15:06 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454d50ded8csm150062335e9.20.2025.07.13.14.02.26
+ 5b1f17b1804b1-4560f22cd14sm42504775e9.30.2025.07.13.14.15.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 13 Jul 2025 14:02:27 -0700 (PDT)
-Date: Sun, 13 Jul 2025 17:02:24 -0400
+ Sun, 13 Jul 2025 14:15:05 -0700 (PDT)
+Date: Sun, 13 Jul 2025 17:15:02 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Shaoqin Huang <shahuang@redhat.com>
-Cc: qemu-arm@nongnu.org,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Eric Auger <eauger@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Sergio Lopez <slp@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v9 2/2] hw/i386: Add the ramfb romfile compatibility
-Message-ID: <20250713170200-mutt-send-email-mst@kernel.org>
-References: <20250704030315.2181235-1-shahuang@redhat.com>
- <20250704030315.2181235-3-shahuang@redhat.com>
+To: Alireza Sanaee <alireza.sanaee@huawei.com>
+Cc: qemu-devel@nongnu.org, anisinha@redhat.com, armbru@redhat.com,
+ berrange@redhat.com, dapeng1.mi@linux.intel.com,
+ eric.auger@redhat.com, farman@linux.ibm.com,
+ gustavo.romero@linaro.org, imammedo@redhat.com,
+ jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
+ linuxarm@huawei.com, maobibo@loongson.cn, mtosatti@redhat.com,
+ peter.maydell@linaro.org, philmd@linaro.org, qemu-arm@nongnu.org,
+ richard.henderson@linaro.org, shameerali.kolothum.thodi@huawei.com,
+ shannon.zhaosl@gmail.com, yangyicong@hisilicon.com, zhao1.liu@intel.com
+Subject: Re: [PATCH v14 5/7] hw/acpi: add cache hierarchy to pptt table
+Message-ID: <20250713171146-mutt-send-email-mst@kernel.org>
+References: <20250707121908.155-1-alireza.sanaee@huawei.com>
+ <20250707121908.155-6-alireza.sanaee@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250704030315.2181235-3-shahuang@redhat.com>
+In-Reply-To: <20250707121908.155-6-alireza.sanaee@huawei.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
@@ -118,175 +113,412 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 03, 2025 at 11:03:15PM -0400, Shaoqin Huang wrote:
-> ramfb is a sysbus device so it can only used for machine types where it
-> is explicitly enabled:
+On Mon, Jul 07, 2025 at 01:19:06PM +0100, Alireza Sanaee wrote:
+> Add cache topology to PPTT table. With this patch, both ACPI PPTT table
+> and device tree will represent the same cache topology given users
+> input.
 > 
->   # git grep machine_class_allow_dynamic_sysbus_dev.*TYPE_RAMFB_DEVICE
->   hw/arm/virt.c:    machine_class_allow_dynamic_sysbus_dev(mc,
-> 		  TYPE_RAMFB_DEVICE);
->   hw/i386/microvm.c:    machine_class_allow_dynamic_sysbus_dev(mc,
-> 		  TYPE_RAMFB_DEVICE);
->   hw/i386/pc_piix.c:    machine_class_allow_dynamic_sysbus_dev(m,
-> 		  TYPE_RAMFB_DEVICE);
->   hw/i386/pc_q35.c:    machine_class_allow_dynamic_sysbus_dev(m,
-> 		  TYPE_RAMFB_DEVICE);
->   hw/loongarch/virt.c:    machine_class_allow_dynamic_sysbus_dev(mc,
-> 		  TYPE_RAMFB_DEVICE);
->   hw/riscv/virt.c:    machine_class_allow_dynamic_sysbus_dev(mc,
-> 		  TYPE_RAMFB_DEVICE);
-> 
-> So these six are the only machine types we have to worry about.
-> 
-> The three x86 machine types (pc, q35, microvm) will actually use the rom
-> (when booting with seabios).
-> 
-> For arm/riscv/loongarch virt we want to disable the rom.
-> 
-> This patch sets ramfb romfile option to false by default, except for x86
-> machines types (pc, q35, microvm) which need the rom file when booting
-> with seabios and machine types <= 10.0 (handling the case of arm virt,
-> for compat reasons).
-> 
-> At the same time, set the "use-legacy-x86-rom" property to true on those
-> historical versioned machine types in order to avoid the memory layout
-> being changed.
-> 
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Shaoqin Huang <shahuang@redhat.com>
-
-i386 things look fine.
-
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-
-
-
+> Co-developed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
 > ---
->  hw/core/machine.c             |  2 ++
->  hw/display/ramfb-standalone.c |  2 +-
->  hw/i386/microvm.c             |  3 +++
->  hw/i386/pc_piix.c             | 10 ++++++++++
->  hw/i386/pc_q35.c              |  3 +++
->  hw/vfio/pci.c                 |  2 +-
->  6 files changed, 20 insertions(+), 2 deletions(-)
+>  hw/acpi/aml-build.c            | 248 +++++++++++++++++++++++++++++++--
+>  hw/arm/virt-acpi-build.c       |   8 +-
+>  hw/loongarch/virt-acpi-build.c |   2 +-
+>  include/hw/acpi/aml-build.h    |   4 +-
+>  4 files changed, 249 insertions(+), 13 deletions(-)
 > 
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index e869821b22..a7043e2a34 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -39,6 +39,8 @@
+> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+> index f8f93a9f66..474f3035cb 100644
+> --- a/hw/acpi/aml-build.c
+> +++ b/hw/acpi/aml-build.c
+> @@ -31,6 +31,8 @@
+>  #include "hw/pci/pci_bus.h"
+>  #include "hw/pci/pci_bridge.h"
+>  #include "qemu/cutils.h"
+> +#include "hw/acpi/cpu.h"
+> +#include "hw/core/cpu.h"
 >  
->  GlobalProperty hw_compat_10_0[] = {
->      { "scsi-hd", "dpofua", "off" },
-> +    { "ramfb", "use-legacy-x86-rom", "true"},
-> +    { "vfio-pci", "use-legacy-x86-rom", "true" },
->  };
->  const size_t hw_compat_10_0_len = G_N_ELEMENTS(hw_compat_10_0);
->  
-> diff --git a/hw/display/ramfb-standalone.c b/hw/display/ramfb-standalone.c
-> index 725aef9896..b20a7c57b3 100644
-> --- a/hw/display/ramfb-standalone.c
-> +++ b/hw/display/ramfb-standalone.c
-> @@ -63,7 +63,7 @@ static const VMStateDescription ramfb_dev_vmstate = {
->  
->  static const Property ramfb_properties[] = {
->      DEFINE_PROP_BOOL("x-migrate", RAMFBStandaloneState, migrate,  true),
-> -    DEFINE_PROP_BOOL("use-legacy-x86-rom", RAMFBStandaloneState, use_legacy_x86_rom, true),
-> +    DEFINE_PROP_BOOL("use-legacy-x86-rom", RAMFBStandaloneState, use_legacy_x86_rom, false),
->  };
->  
->  static void ramfb_class_initfn(ObjectClass *klass, const void *data)
-> diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-> index e0daf0d4fc..6666db9e4f 100644
-> --- a/hw/i386/microvm.c
-> +++ b/hw/i386/microvm.c
-> @@ -49,6 +49,7 @@
->  #include "hw/acpi/generic_event_device.h"
->  #include "hw/pci-host/gpex.h"
->  #include "hw/usb/xhci.h"
-> +#include "hw/vfio/pci.h"
->  
->  #include "elf.h"
->  #include "kvm/kvm_i386.h"
-> @@ -633,6 +634,8 @@ GlobalProperty microvm_properties[] = {
->       * so reserving io space is not going to work.  Turn it off.
->       */
->      { "pcie-root-port", "io-reserve", "0" },
-> +    { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
-> +    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "true" },
->  };
->  
->  static void microvm_class_init(ObjectClass *oc, const void *data)
-> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> index ea7572e783..8ec8d8ae6d 100644
-> --- a/hw/i386/pc_piix.c
-> +++ b/hw/i386/pc_piix.c
-> @@ -49,6 +49,7 @@
->  #include "hw/i2c/smbus_eeprom.h"
->  #include "system/memory.h"
->  #include "hw/acpi/acpi.h"
-> +#include "hw/vfio/pci.h"
->  #include "qapi/error.h"
->  #include "qemu/error-report.h"
->  #include "system/xen.h"
-> @@ -77,6 +78,13 @@ static const int ide_iobase2[MAX_IDE_BUS] = { 0x3f6, 0x376 };
->  static const int ide_irq[MAX_IDE_BUS] = { 14, 15 };
->  #endif
->  
-> +static GlobalProperty pc_piix_compat_defaults[] = {
-> +    { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
-> +    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "true" },
-> +};
-> +static const size_t pc_piix_compat_defaults_len =
-> +    G_N_ELEMENTS(pc_piix_compat_defaults);
+>  static GArray *build_alloc_array(void)
+>  {
+> @@ -2141,24 +2143,161 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
+>      }
+>      acpi_table_end(linker, &table);
+>  }
+> +
+> +static void build_cache_nodes(GArray *tbl, CPUCorePPTTCaches *cache,
+> +                              uint32_t next_offset, unsigned int id)
+> +{
+> +    int val;
+> +
+> +    /* Type 1 - cache */
+> +    build_append_byte(tbl, 1);
+> +    /* Length */
+> +    build_append_byte(tbl, 28);
+> +    /* Reserved */
+> +    build_append_int_noprefix(tbl, 0, 2);
+> +    /* Flags - everything except possibly the ID */
+> +    build_append_int_noprefix(tbl, 0xff, 4);
+> +    /* Offset of next cache up */
+> +    build_append_int_noprefix(tbl, next_offset, 4);
+> +    build_append_int_noprefix(tbl, cache->size, 4);
+> +    build_append_int_noprefix(tbl, cache->sets, 4);
+> +    build_append_byte(tbl, cache->associativity);
+> +    val = 0x3;
+> +    switch (cache->type) {
+> +    case INSTRUCTION_CACHE:
+> +        val |= (1 << 2);
+> +        break;
+> +    case DATA_CACHE:
+> +        val |= (0 << 2); /* Data */
+> +        break;
+> +    case UNIFIED_CACHE:
+> +        val |= (3 << 2); /* Unified */
+> +        break;
+> +    }
+> +    build_append_byte(tbl, val);
+> +    build_append_int_noprefix(tbl, cache->linesize, 2);
+> +    build_append_int_noprefix(tbl,
+> +                              (cache->type << 24) | (cache->level << 16) | id,
+> +                              4);
+> +}
+> +
+> +/*
+> + * builds caches from the top level (`level_high` parameter) to the bottom
+> + * level (`level_low` parameter).  It searches for caches found in
+> + * systems' registers, and fills up the table. Then it updates the
+> + * `data_offset` and `instr_offset` parameters with the offset of the data
+> + * and instruction caches of the lowest level, respectively.
+> + */
+> +static bool build_caches(GArray *table_data, uint32_t pptt_start,
+> +                         int num_caches, CPUCorePPTTCaches *caches,
+> +                         int base_id,
+> +                         uint8_t level_high, /* Inclusive */
+> +                         uint8_t level_low,  /* Inclusive */
+> +                         uint32_t *data_offset,
+> +                         uint32_t *instr_offset)
+> +{
+> +    uint32_t next_level_offset_data = 0, next_level_offset_instruction = 0;
+> +    uint32_t this_offset, next_offset = 0;
+> +    int c, level;
+> +    bool found_cache = false;
+> +
+> +    /* Walk caches from top to bottom */
+> +    for (level = level_high; level >= level_low; level--) {
+> +        for (c = 0; c < num_caches; c++) {
+> +            if (caches[c].level != level) {
+> +                continue;
+> +            }
+> +
+> +            /* Assume only unified above l1 for now */
+> +            this_offset = table_data->len - pptt_start;
+> +            switch (caches[c].type) {
+> +            case INSTRUCTION_CACHE:
+> +                next_offset = next_level_offset_instruction;
+> +                break;
+> +            case DATA_CACHE:
+> +                next_offset = next_level_offset_data;
+> +                break;
+> +            case UNIFIED_CACHE:
+> +                /* Either is fine here */
+> +                next_offset = next_level_offset_instruction;
+> +                break;
+> +            }
+> +            build_cache_nodes(table_data, &caches[c], next_offset, base_id);
+> +            switch (caches[c].type) {
+> +            case INSTRUCTION_CACHE:
+> +                next_level_offset_instruction = this_offset;
+> +                break;
+> +            case DATA_CACHE:
+> +                next_level_offset_data = this_offset;
+> +                break;
+> +            case UNIFIED_CACHE:
+> +                next_level_offset_instruction = this_offset;
+> +                next_level_offset_data = this_offset;
+> +                break;
+> +            }
+> +            *data_offset = next_level_offset_data;
+> +            *instr_offset = next_level_offset_instruction;
+> +
+> +            found_cache = true;
+> +        }
+> +    }
+> +
+> +    return found_cache;
+> +}
 > +
 >  /*
->   * Return the global irq number corresponding to a given device irq
->   * pin. We could also use the bus number to have a more precise mapping.
-> @@ -482,6 +490,8 @@ static void pc_i440fx_machine_options(MachineClass *m)
->                                     pc_set_south_bridge);
->      object_class_property_set_description(oc, "x-south-bridge",
->                                       "Use a different south bridge than PIIX3");
-> +    compat_props_add(m->compat_props,
-> +                     pc_piix_compat_defaults, pc_piix_compat_defaults_len);
->  }
+>   * ACPI spec, Revision 6.3
+>   * 5.2.29 Processor Properties Topology Table (PPTT)
+>   */
+>  void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+> -                const char *oem_id, const char *oem_table_id)
+> +                const char *oem_id, const char *oem_table_id,
+> +                int num_caches, CPUCorePPTTCaches *caches)
+>  {
+>      MachineClass *mc = MACHINE_GET_CLASS(ms);
+>      CPUArchIdList *cpus = ms->possible_cpus;
+> -    int64_t socket_id = -1, cluster_id = -1, core_id = -1;
+> -    uint32_t socket_offset = 0, cluster_offset = 0, core_offset = 0;
+> +    uint32_t core_data_offset = 0;
+> +    uint32_t core_instr_offset = 0;
+> +    uint32_t cluster_instr_offset = 0;
+> +    uint32_t cluster_data_offset = 0;
+> +    uint32_t node_data_offset = 0;
+> +    uint32_t node_instr_offset = 0;
+> +    int top_node = 3;
+> +    int top_cluster = 3;
+> +    int top_core = 3;
+> +    int bottom_node = 3;
+> +    int bottom_cluster = 3;
+> +    int bottom_core = 3;
+> +    int64_t socket_id = -1;
+> +    int64_t cluster_id = -1;
+> +    int64_t core_id = -1;
+> +    uint32_t socket_offset = 0;
+> +    uint32_t cluster_offset = 0;
+> +    uint32_t core_offset = 0;
+>      uint32_t pptt_start = table_data->len;
+> +    uint32_t root_offset;
+>      int n;
+> +    uint32_t priv_rsrc[2];
+> +    uint32_t num_priv = 0;
+> +    bool cache_available;
+> +    bool llevel;
+> +
+>      AcpiTable table = { .sig = "PPTT", .rev = 2,
+>                          .oem_id = oem_id, .oem_table_id = oem_table_id };
 >  
->  static void pc_i440fx_machine_10_1_options(MachineClass *m)
-> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-> index 33211b1876..0096eef6f4 100644
-> --- a/hw/i386/pc_q35.c
-> +++ b/hw/i386/pc_q35.c
-> @@ -45,6 +45,7 @@
->  #include "hw/i386/pc.h"
->  #include "hw/i386/amd_iommu.h"
->  #include "hw/i386/intel_iommu.h"
-> +#include "hw/vfio/pci.h"
->  #include "hw/virtio/virtio-iommu.h"
->  #include "hw/display/ramfb.h"
->  #include "hw/ide/pci.h"
-> @@ -67,6 +68,8 @@
+>      acpi_table_begin(&table, table_data);
 >  
->  static GlobalProperty pc_q35_compat_defaults[] = {
->      { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "39" },
-> +    { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
-> +    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "true" },
->  };
->  static const size_t pc_q35_compat_defaults_len =
->      G_N_ELEMENTS(pc_q35_compat_defaults);
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index f4fa8a5610..604b337389 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -3710,7 +3710,7 @@ static const TypeInfo vfio_pci_dev_info = {
+> +    /*
+> +     * Build a root node for all the processor nodes. Otherwise when
+
+This appears to use parts of
+    Message-Id: <20250604115233.1234-4-alireza.sanaee@huawei.com>
+
+which is:
+
+    hw/acpi/aml-build: Build a root node in the PPTT table
+
+
+but this time, without attribution, without documenting the change
+in the commit log, and with worse grammar. What gives?
+
+
+> +     * building a multi-socket system each socket tree are separated
+
+is separated
+
+> +     * and will be hard for the OS like Linux to know whether the
+> +     * system is homogeneous.
+> +     */
+> +    root_offset = table_data->len - pptt_start;
+> +    build_processor_hierarchy_node(table_data,
+> +        (1 << 0) | /* Physical package */
+> +        (1 << 4), /* Identical Implementation */
+> +        0, 0, NULL, 0);
+> +
+>      /*
+>       * This works with the assumption that cpus[n].props.*_id has been
+>       * sorted from top to down levels in mc->possible_cpu_arch_ids().
+> @@ -2171,10 +2310,36 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+>              socket_id = cpus->cpus[n].props.socket_id;
+>              cluster_id = -1;
+>              core_id = -1;
+> +            bottom_node = top_node;
+> +            num_priv = 0;
+> +            cache_available =
+> +                machine_defines_cache_at_topo_level(ms,
+> +                                                  CPU_TOPOLOGY_LEVEL_SOCKET);
+> +            llevel = machine_find_lowest_level_cache_at_topo_level(ms,
+> +                        &bottom_node,
+> +                        CPU_TOPOLOGY_LEVEL_SOCKET);
+> +            if (cache_available && llevel) {
+> +                build_caches(table_data, pptt_start,
+> +                             num_caches, caches,
+> +                             n, top_node, bottom_node,
+> +                             &node_data_offset, &node_instr_offset);
+> +
+> +                priv_rsrc[0] = node_instr_offset;
+> +                priv_rsrc[1] = node_data_offset;
+> +
+> +                if (node_instr_offset || node_data_offset) {
+> +                    num_priv = node_instr_offset == node_data_offset ? 1 : 2;
+> +                }
+> +
+> +                top_cluster = bottom_node - 1;
+> +            }
+> +
+>              socket_offset = table_data->len - pptt_start;
+>              build_processor_hierarchy_node(table_data,
+> -                (1 << 0), /* Physical package */
+> -                0, socket_id, NULL, 0);
+> +                (1 << 0) | /* Physical package */
+> +                (1 << 4), /* Identical Implementation */
+> +                root_offset, socket_id,
+> +                priv_rsrc, num_priv);
+>          }
 >  
->  static const Property vfio_pci_dev_nohotplug_properties[] = {
->      DEFINE_PROP_BOOL("ramfb", VFIOPCIDevice, enable_ramfb, false),
-> -    DEFINE_PROP_BOOL("use-legacy-x86-rom", VFIOPCIDevice, use_legacy_x86_rom, true),
-> +    DEFINE_PROP_BOOL("use-legacy-x86-rom", VFIOPCIDevice, use_legacy_x86_rom, false),
->      DEFINE_PROP_ON_OFF_AUTO("x-ramfb-migrate", VFIOPCIDevice, ramfb_migrate,
->                              ON_OFF_AUTO_AUTO),
->  };
+>          if (mc->smp_props.clusters_supported && mc->smp_props.has_clusters) {
+> @@ -2182,28 +2347,91 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+>                  assert(cpus->cpus[n].props.cluster_id > cluster_id);
+>                  cluster_id = cpus->cpus[n].props.cluster_id;
+>                  core_id = -1;
+> +                bottom_cluster = top_cluster;
+> +                num_priv = 0;
+> +                cache_available =
+> +                    machine_defines_cache_at_topo_level(ms,
+> +                        CPU_TOPOLOGY_LEVEL_CLUSTER);
+> +                llevel = machine_find_lowest_level_cache_at_topo_level(ms,
+> +                            &bottom_cluster,
+> +                            CPU_TOPOLOGY_LEVEL_CLUSTER);
+> +
+> +                if (cache_available && llevel) {
+> +
+> +                    build_caches(table_data, pptt_start,
+> +                                 num_caches, caches, n, top_cluster,
+> +                                 bottom_cluster, &cluster_data_offset,
+> +                                 &cluster_instr_offset);
+> +
+> +                    priv_rsrc[0] = cluster_instr_offset;
+> +                    priv_rsrc[1] = cluster_data_offset;
+> +
+> +                    if (cluster_instr_offset || cluster_data_offset) {
+> +                        num_priv =
+> +                        cluster_instr_offset == cluster_data_offset ? 1 : 2;
+> +                    }
+> +
+> +                    top_core = bottom_cluster - 1;
+> +                } else if (top_cluster == bottom_node - 1) {
+> +                    /* socket cache but no cluster cache */
+> +                    top_core = bottom_node - 1;
+> +                }
+> +
+>                  cluster_offset = table_data->len - pptt_start;
+>                  build_processor_hierarchy_node(table_data,
+> -                    (0 << 0), /* Not a physical package */
+> -                    socket_offset, cluster_id, NULL, 0);
+> +                    (0 << 0) | /* Not a physical package */
+> +                    (1 << 4), /* Identical Implementation */
+> +                    socket_offset, cluster_id,
+> +                    priv_rsrc, num_priv);
+>              }
+>          } else {
+> +            if (machine_defines_cache_at_topo_level(ms,
+> +                    CPU_TOPOLOGY_LEVEL_CLUSTER)) {
+> +                error_setg(&error_fatal, "Not clusters found for the cache");
+> +                return;
+> +            }
+> +
+>              cluster_offset = socket_offset;
+> +            top_core = bottom_node - 1; /* there is no cluster */
+> +        }
+> +
+> +        if (cpus->cpus[n].props.core_id != core_id) {
+> +            bottom_core = top_core;
+> +            num_priv = 0;
+> +            cache_available =
+> +                machine_defines_cache_at_topo_level(ms, CPU_TOPOLOGY_LEVEL_CORE);
+> +            llevel = machine_find_lowest_level_cache_at_topo_level(ms,
+> +                        &bottom_core, CPU_TOPOLOGY_LEVEL_CORE);
+> +
+> +            if (cache_available && llevel) {
+> +                build_caches(table_data, pptt_start,
+> +                             num_caches, caches,
+> +                             n, top_core, bottom_core,
+> +                             &core_data_offset, &core_instr_offset);
+> +
+> +                priv_rsrc[0] = core_instr_offset;
+> +                priv_rsrc[1] = core_data_offset;
+> +
+> +                num_priv = core_instr_offset == core_data_offset ? 1 : 2;
+> +            }
+>          }
+>  
+>          if (ms->smp.threads == 1) {
+>              build_processor_hierarchy_node(table_data,
+>                  (1 << 1) | /* ACPI Processor ID valid */
+>                  (1 << 3),  /* Node is a Leaf */
+> -                cluster_offset, n, NULL, 0);
+> +                cluster_offset, n,
+> +                priv_rsrc, num_priv);
+>          } else {
+>              if (cpus->cpus[n].props.core_id != core_id) {
+>                  assert(cpus->cpus[n].props.core_id > core_id);
+>                  core_id = cpus->cpus[n].props.core_id;
+>                  core_offset = table_data->len - pptt_start;
+>                  build_processor_hierarchy_node(table_data,
+> -                    (0 << 0), /* Not a physical package */
+> -                    cluster_offset, core_id, NULL, 0);
+> +                    (0 << 0) | /* Not a physical package */
+> +                    (1 << 4), /* Identical Implementation */
+> +                    cluster_offset, core_id,
+> +                    priv_rsrc, num_priv);
+>              }
+>  
+>              build_processor_hierarchy_node(table_data,
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index cd90c47976..a9b5aeac49 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -962,6 +962,11 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+>      GArray *tables_blob = tables->table_data;
+>      MachineState *ms = MACHINE(vms);
+>  
+> +    CPUCorePPTTCaches caches[CPU_MAX_CACHES];
+> +    unsigned int num_caches;
+> +
+> +    num_caches = virt_get_caches(vms, caches);
+> +
+>      table_offsets = g_array_new(false, true /* clear */,
+>                                          sizeof(uint32_t));
+>  
+> @@ -983,7 +988,8 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+>      if (!vmc->no_cpu_topology) {
+>          acpi_add_table(table_offsets, tables_blob);
+>          build_pptt(tables_blob, tables->linker, ms,
+> -                   vms->oem_id, vms->oem_table_id);
+> +                   vms->oem_id, vms->oem_table_id,
+> +                   num_caches, caches);
+>      }
+>  
+>      acpi_add_table(table_offsets, tables_blob);
+> diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
+> index 2cd2d9d842..dd34a520c7 100644
+> --- a/hw/loongarch/virt-acpi-build.c
+> +++ b/hw/loongarch/virt-acpi-build.c
+> @@ -552,7 +552,7 @@ static void acpi_build(AcpiBuildTables *tables, MachineState *machine)
+>  
+>      acpi_add_table(table_offsets, tables_blob);
+>      build_pptt(tables_blob, tables->linker, machine,
+> -               lvms->oem_id, lvms->oem_table_id);
+> +               lvms->oem_id, lvms->oem_table_id, 0, NULL);
+>  
+>      acpi_add_table(table_offsets, tables_blob);
+>      build_srat(tables_blob, tables->linker, machine);
+> diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
+> index 6fa2e1eedf..3429cdae71 100644
+> --- a/include/hw/acpi/aml-build.h
+> +++ b/include/hw/acpi/aml-build.h
+> @@ -3,6 +3,7 @@
+>  
+>  #include "hw/acpi/acpi-defs.h"
+>  #include "hw/acpi/bios-linker-loader.h"
+> +#include "hw/cpu/core.h"
+>  
+>  #define ACPI_BUILD_APPNAME6 "BOCHS "
+>  #define ACPI_BUILD_APPNAME8 "BXPC    "
+> @@ -499,7 +500,8 @@ void build_slit(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+>  typedef struct CPUPPTTCaches CPUCorePPTTCaches;
+>  
+>  void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+> -                const char *oem_id, const char *oem_table_id);
+> +                const char *oem_id, const char *oem_table_id,
+> +                int num_caches, CPUCorePPTTCaches *caches);
+>  
+>  void build_fadt(GArray *tbl, BIOSLinker *linker, const AcpiFadtData *f,
+>                  const char *oem_id, const char *oem_table_id);
 > -- 
-> 2.40.1
+> 2.43.0
 
 
