@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40A14C83F1D
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Jul 2025 09:12:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46252C83F1D
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Jul 2025 09:12:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaskB-0003nQ-U3; Sun, 13 Jul 2025 05:11:36 -0400
+	id 1uaskE-00041q-GM; Sun, 13 Jul 2025 05:11:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uask0-0003ZK-QP; Sun, 13 Jul 2025 05:11:25 -0400
+ id 1uasjx-0003VD-Ti; Sun, 13 Jul 2025 05:11:22 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uasjz-000735-4g; Sun, 13 Jul 2025 05:11:24 -0400
+ id 1uasjv-00072S-Pd; Sun, 13 Jul 2025 05:11:21 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F0BC71362E5;
+ by isrv.corpit.ru (Postfix) with ESMTP id D84F21362E4;
  Sun, 13 Jul 2025 12:10:58 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id ACA06245F50;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9550D245F4F;
  Sun, 13 Jul 2025 12:10:59 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 4/6] docs/system/target-i386: Remove the sentence about RHEL 7
- being supported
-Date: Sun, 13 Jul 2025 12:10:46 +0300
-Message-ID: <20250713091059.35165-5-mjt@tls.msk.ru>
+Subject: [PULL 3/6] accel/kvm: Adjust the note about the minimum required
+ kernel version
+Date: Sun, 13 Jul 2025 12:10:45 +0300
+Message-ID: <20250713091059.35165-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250713091059.35165-1-mjt@tls.msk.ru>
 References: <20250713091059.35165-1-mjt@tls.msk.ru>
@@ -63,32 +63,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-According to our "Supported build platforms" policy, RHEL 7 is not
-supported anymore, so let's remove the related sentence from the x86
-documentation.
+Since commit 126e7f78036 ("kvm: require KVM_CAP_IOEVENTFD and
+KVM_CAP_IOEVENTFD_ANY_LENGTH") we require at least kernel 4.5 to
+be able to use KVM. Adjust the upgrade_note accordingly.
+While we're at it, remove the text about kvm-kmod and the
+SourceForge URL since this is not actively maintained anymore.
 
+Fixes: 126e7f78036 ("kvm: require KVM_CAP_IOEVENTFD and KVM_CAP_IOEVENTFD_ANY_LENGTH")
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- docs/system/target-i386.rst | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ accel/kvm/kvm-all.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/docs/system/target-i386.rst b/docs/system/target-i386.rst
-index 43b09c79d6..2374391397 100644
---- a/docs/system/target-i386.rst
-+++ b/docs/system/target-i386.rst
-@@ -37,6 +37,4 @@ OS requirements
- ~~~~~~~~~~~~~~~
- 
- On x86_64 hosts, the default set of CPU features enabled by the KVM
--accelerator require the host to be running Linux v4.5 or newer. Red Hat
--Enterprise Linux 7 is also supported, since the required
--functionality was backported.
-+accelerator require the host to be running Linux v4.5 or newer.
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index a106d1ba0f..78fc2d26fc 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2606,8 +2606,7 @@ static int kvm_init(AccelState *as, MachineState *ms)
+ {
+     MachineClass *mc = MACHINE_GET_CLASS(ms);
+     static const char upgrade_note[] =
+-        "Please upgrade to at least kernel 2.6.29 or recent kvm-kmod\n"
+-        "(see http://sourceforge.net/projects/kvm).\n";
++        "Please upgrade to at least kernel 4.5.\n";
+     const struct {
+         const char *name;
+         int num;
 -- 
 2.47.2
 
