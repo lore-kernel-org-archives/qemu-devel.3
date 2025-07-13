@@ -4,38 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61634C83F1D
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Jul 2025 09:13:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B6DDC83F17
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Jul 2025 09:13:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaskC-0003rr-NU; Sun, 13 Jul 2025 05:11:36 -0400
+	id 1uasjz-0003VG-Gy; Sun, 13 Jul 2025 05:11:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uask3-0003co-Sw; Sun, 13 Jul 2025 05:11:29 -0400
+ id 1uasjt-0003Or-Tf; Sun, 13 Jul 2025 05:11:17 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uask2-00073i-7I; Sun, 13 Jul 2025 05:11:27 -0400
+ id 1uasjh-00070u-C5; Sun, 13 Jul 2025 05:11:17 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 20B0E1362E7;
- Sun, 13 Jul 2025 12:10:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A34D71362E1;
+ Sun, 13 Jul 2025 12:10:58 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D0553245F52;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 65A3A245F4C;
  Sun, 13 Jul 2025 12:10:59 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-trivial@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 6/6] docs/devel/tracing: Update trace.h creation rune to
- include SPDX
-Date: Sun, 13 Jul 2025 12:10:48 +0300
-Message-ID: <20250713091059.35165-7-mjt@tls.msk.ru>
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+	qemu-trivial@nongnu.org
+Subject: [PULL 0/6] Trivial patches for 2025-07-13
+Date: Sun, 13 Jul 2025 12:10:42 +0300
+Message-ID: <20250713091059.35165-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250713091059.35165-1-mjt@tls.msk.ru>
-References: <20250713091059.35165-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,38 +58,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+The following changes since commit 9a4e273ddec3927920c5958d2226c6b38b543336:
 
-checkpatch now checks that new files have an SPDX line. If you use the
-shell rune in tracing.rst to create a trace.h wrapper header, this
-triggers checkpatch to complain.
+  Merge tag 'pull-tcg-20250711' of https://gitlab.com/rth7680/qemu into staging (2025-07-13 01:46:04 -0400)
 
-Although these files are tiny, it's worth having the SPDX line to
-avoid having to add extra exception cases to checkpatch.
+are available in the Git repository at:
 
-Update the rune to include creating an SPDX line.
+  https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- docs/devel/tracing.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+for you to fetch changes up to 0f55ca43cd90eb89193bae45d0907c1b17a1dadd:
 
-diff --git a/docs/devel/tracing.rst b/docs/devel/tracing.rst
-index 043bed7fd0..f4557ee20e 100644
---- a/docs/devel/tracing.rst
-+++ b/docs/devel/tracing.rst
-@@ -76,7 +76,7 @@ The "io/trace.h" file must be created manually with an #include of the
- corresponding "trace/trace-<subdir>.h" file that will be generated in the
- builddir::
- 
--  $ echo '#include "trace/trace-io.h"' >io/trace.h
-+  $ (echo '/* SPDX-License-Identifier: GPL-2.0-or-later */' ; echo '#include "trace/trace-io.h"')  >io/trace.h
- 
- While it is possible to include a trace.h file from outside a source file's own
- sub-directory, this is discouraged in general. It is strongly preferred that
--- 
-2.47.2
+  docs/devel/tracing: Update trace.h creation rune to include SPDX (2025-07-13 12:08:07 +0300)
 
+----------------------------------------------------------------
+trivial patches for 2025-07-13
+
+There aren't anything fancy here, and the amount of patches is
+rather small.  This set has been accumulating for a long time
+but there's only 6 patches in it.
+
+----------------------------------------------------------------
+Andrew Kreimer (1):
+      docs: remove repeated word
+
+Peter Maydell (2):
+      hw/uefi: Create and use trace.h wrapper header
+      docs/devel/tracing: Update trace.h creation rune to include SPDX
+
+Thomas Huth (2):
+      accel/kvm: Adjust the note about the minimum required kernel version
+      docs/system/target-i386: Remove the sentence about RHEL 7 being supported
+
+Thomas Lambertz (1):
+      hw/usb/dev-hid: Support side and extra mouse buttons for usb-tablet
+
+ accel/kvm/kvm-all.c          | 3 +--
+ docs/devel/tracing.rst       | 2 +-
+ docs/system/introduction.rst | 2 +-
+ docs/system/target-i386.rst  | 4 +---
+ hw/uefi/trace.h              | 2 ++
+ hw/uefi/var-service-core.c   | 2 +-
+ hw/uefi/var-service-policy.c | 2 +-
+ hw/uefi/var-service-utils.c  | 2 +-
+ hw/uefi/var-service-vars.c   | 2 +-
+ hw/usb/dev-hid.c             | 6 +++---
+ 10 files changed, 13 insertions(+), 14 deletions(-)
+ create mode 100644 hw/uefi/trace.h
 
