@@ -4,34 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46252C83F1D
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Jul 2025 09:12:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DB3AC83F1D
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Jul 2025 09:12:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaskE-00041q-GM; Sun, 13 Jul 2025 05:11:38 -0400
+	id 1uaskC-0003tM-VK; Sun, 13 Jul 2025 05:11:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uasjx-0003VD-Ti; Sun, 13 Jul 2025 05:11:22 -0400
+ id 1uask1-0003ZM-3P; Sun, 13 Jul 2025 05:11:25 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uasjv-00072S-Pd; Sun, 13 Jul 2025 05:11:21 -0400
+ id 1uasjz-000739-9q; Sun, 13 Jul 2025 05:11:24 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D84F21362E4;
- Sun, 13 Jul 2025 12:10:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 092C01362E6;
+ Sun, 13 Jul 2025 12:10:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9550D245F4F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C455A245F51;
  Sun, 13 Jul 2025 12:10:59 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, qemu-trivial@nongnu.org,
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 3/6] accel/kvm: Adjust the note about the minimum required
- kernel version
-Date: Sun, 13 Jul 2025 12:10:45 +0300
-Message-ID: <20250713091059.35165-4-mjt@tls.msk.ru>
+Subject: [PULL 5/6] hw/uefi: Create and use trace.h wrapper header
+Date: Sun, 13 Jul 2025 12:10:47 +0300
+Message-ID: <20250713091059.35165-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250713091059.35165-1-mjt@tls.msk.ru>
 References: <20250713091059.35165-1-mjt@tls.msk.ru>
@@ -61,37 +60,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Since commit 126e7f78036 ("kvm: require KVM_CAP_IOEVENTFD and
-KVM_CAP_IOEVENTFD_ANY_LENGTH") we require at least kernel 4.5 to
-be able to use KVM. Adjust the upgrade_note accordingly.
-While we're at it, remove the text about kvm-kmod and the
-SourceForge URL since this is not actively maintained anymore.
+The documentation of the trace subsystem (docs/devel/tracing.rst)
+says that each subdirectory which uses trace events should create a
+wrapper trace.h file which includes the trace/trace-foo.h generated
+header, and that .c files then #include "trace.h".
 
-Fixes: 126e7f78036 ("kvm: require KVM_CAP_IOEVENTFD and KVM_CAP_IOEVENTFD_ANY_LENGTH")
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+We didn't follow this pattern in hw/uefi/.  Correct this by creating
+and using the trace.h wrapper header.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- accel/kvm/kvm-all.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ hw/uefi/trace.h              | 2 ++
+ hw/uefi/var-service-core.c   | 2 +-
+ hw/uefi/var-service-policy.c | 2 +-
+ hw/uefi/var-service-utils.c  | 2 +-
+ hw/uefi/var-service-vars.c   | 2 +-
+ 5 files changed, 6 insertions(+), 4 deletions(-)
+ create mode 100644 hw/uefi/trace.h
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index a106d1ba0f..78fc2d26fc 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2606,8 +2606,7 @@ static int kvm_init(AccelState *as, MachineState *ms)
+diff --git a/hw/uefi/trace.h b/hw/uefi/trace.h
+new file mode 100644
+index 0000000000..6aa1c93896
+--- /dev/null
++++ b/hw/uefi/trace.h
+@@ -0,0 +1,2 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#include "trace/trace-hw_uefi.h"
+diff --git a/hw/uefi/var-service-core.c b/hw/uefi/var-service-core.c
+index 4836a0cb81..feec5a5958 100644
+--- a/hw/uefi/var-service-core.c
++++ b/hw/uefi/var-service-core.c
+@@ -12,7 +12,7 @@
+ #include "hw/uefi/var-service-api.h"
+ #include "hw/uefi/var-service-edk2.h"
+ 
+-#include "trace/trace-hw_uefi.h"
++#include "trace.h"
+ 
+ static int uefi_vars_pre_load(void *opaque)
  {
-     MachineClass *mc = MACHINE_GET_CLASS(ms);
-     static const char upgrade_note[] =
--        "Please upgrade to at least kernel 2.6.29 or recent kvm-kmod\n"
--        "(see http://sourceforge.net/projects/kvm).\n";
-+        "Please upgrade to at least kernel 4.5.\n";
-     const struct {
-         const char *name;
-         int num;
+diff --git a/hw/uefi/var-service-policy.c b/hw/uefi/var-service-policy.c
+index 3b1155fe4e..58da4adbeb 100644
+--- a/hw/uefi/var-service-policy.c
++++ b/hw/uefi/var-service-policy.c
+@@ -14,7 +14,7 @@
+ #include "hw/uefi/var-service-api.h"
+ #include "hw/uefi/var-service-edk2.h"
+ 
+-#include "trace/trace-hw_uefi.h"
++#include "trace.h"
+ 
+ static void calc_policy(uefi_var_policy *pol);
+ 
+diff --git a/hw/uefi/var-service-utils.c b/hw/uefi/var-service-utils.c
+index c9ef46570f..258013f436 100644
+--- a/hw/uefi/var-service-utils.c
++++ b/hw/uefi/var-service-utils.c
+@@ -8,7 +8,7 @@
+ 
+ #include "hw/uefi/var-service.h"
+ 
+-#include "trace/trace-hw_uefi.h"
++#include "trace.h"
+ 
+ /* ------------------------------------------------------------------ */
+ 
+diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
+index 7f98d77a38..37d05b71cf 100644
+--- a/hw/uefi/var-service-vars.c
++++ b/hw/uefi/var-service-vars.c
+@@ -12,7 +12,7 @@
+ #include "hw/uefi/var-service-api.h"
+ #include "hw/uefi/var-service-edk2.h"
+ 
+-#include "trace/trace-hw_uefi.h"
++#include "trace.h"
+ 
+ #define EFI_VARIABLE_ATTRIBUTE_SUPPORTED                                \
+     (EFI_VARIABLE_NON_VOLATILE |                                        \
 -- 
 2.47.2
 
