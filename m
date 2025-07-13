@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DB3AC83F1D
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Jul 2025 09:12:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61634C83F1D
+	for <qemu-devel@archiver.kernel.org>; Sun, 13 Jul 2025 09:13:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uaskC-0003tM-VK; Sun, 13 Jul 2025 05:11:37 -0400
+	id 1uaskC-0003rr-NU; Sun, 13 Jul 2025 05:11:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uask1-0003ZM-3P; Sun, 13 Jul 2025 05:11:25 -0400
+ id 1uask3-0003co-Sw; Sun, 13 Jul 2025 05:11:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uasjz-000739-9q; Sun, 13 Jul 2025 05:11:24 -0400
+ id 1uask2-00073i-7I; Sun, 13 Jul 2025 05:11:27 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 092C01362E6;
+ by isrv.corpit.ru (Postfix) with ESMTP id 20B0E1362E7;
  Sun, 13 Jul 2025 12:10:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C455A245F51;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D0553245F52;
  Sun, 13 Jul 2025 12:10:59 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 5/6] hw/uefi: Create and use trace.h wrapper header
-Date: Sun, 13 Jul 2025 12:10:47 +0300
-Message-ID: <20250713091059.35165-6-mjt@tls.msk.ru>
+Subject: [PULL 6/6] docs/devel/tracing: Update trace.h creation rune to
+ include SPDX
+Date: Sun, 13 Jul 2025 12:10:48 +0300
+Message-ID: <20250713091059.35165-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250713091059.35165-1-mjt@tls.msk.ru>
 References: <20250713091059.35165-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,87 +62,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-The documentation of the trace subsystem (docs/devel/tracing.rst)
-says that each subdirectory which uses trace events should create a
-wrapper trace.h file which includes the trace/trace-foo.h generated
-header, and that .c files then #include "trace.h".
+checkpatch now checks that new files have an SPDX line. If you use the
+shell rune in tracing.rst to create a trace.h wrapper header, this
+triggers checkpatch to complain.
 
-We didn't follow this pattern in hw/uefi/.  Correct this by creating
-and using the trace.h wrapper header.
+Although these files are tiny, it's worth having the SPDX line to
+avoid having to add extra exception cases to checkpatch.
+
+Update the rune to include creating an SPDX line.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/uefi/trace.h              | 2 ++
- hw/uefi/var-service-core.c   | 2 +-
- hw/uefi/var-service-policy.c | 2 +-
- hw/uefi/var-service-utils.c  | 2 +-
- hw/uefi/var-service-vars.c   | 2 +-
- 5 files changed, 6 insertions(+), 4 deletions(-)
- create mode 100644 hw/uefi/trace.h
+ docs/devel/tracing.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/uefi/trace.h b/hw/uefi/trace.h
-new file mode 100644
-index 0000000000..6aa1c93896
---- /dev/null
-+++ b/hw/uefi/trace.h
-@@ -0,0 +1,2 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#include "trace/trace-hw_uefi.h"
-diff --git a/hw/uefi/var-service-core.c b/hw/uefi/var-service-core.c
-index 4836a0cb81..feec5a5958 100644
---- a/hw/uefi/var-service-core.c
-+++ b/hw/uefi/var-service-core.c
-@@ -12,7 +12,7 @@
- #include "hw/uefi/var-service-api.h"
- #include "hw/uefi/var-service-edk2.h"
+diff --git a/docs/devel/tracing.rst b/docs/devel/tracing.rst
+index 043bed7fd0..f4557ee20e 100644
+--- a/docs/devel/tracing.rst
++++ b/docs/devel/tracing.rst
+@@ -76,7 +76,7 @@ The "io/trace.h" file must be created manually with an #include of the
+ corresponding "trace/trace-<subdir>.h" file that will be generated in the
+ builddir::
  
--#include "trace/trace-hw_uefi.h"
-+#include "trace.h"
+-  $ echo '#include "trace/trace-io.h"' >io/trace.h
++  $ (echo '/* SPDX-License-Identifier: GPL-2.0-or-later */' ; echo '#include "trace/trace-io.h"')  >io/trace.h
  
- static int uefi_vars_pre_load(void *opaque)
- {
-diff --git a/hw/uefi/var-service-policy.c b/hw/uefi/var-service-policy.c
-index 3b1155fe4e..58da4adbeb 100644
---- a/hw/uefi/var-service-policy.c
-+++ b/hw/uefi/var-service-policy.c
-@@ -14,7 +14,7 @@
- #include "hw/uefi/var-service-api.h"
- #include "hw/uefi/var-service-edk2.h"
- 
--#include "trace/trace-hw_uefi.h"
-+#include "trace.h"
- 
- static void calc_policy(uefi_var_policy *pol);
- 
-diff --git a/hw/uefi/var-service-utils.c b/hw/uefi/var-service-utils.c
-index c9ef46570f..258013f436 100644
---- a/hw/uefi/var-service-utils.c
-+++ b/hw/uefi/var-service-utils.c
-@@ -8,7 +8,7 @@
- 
- #include "hw/uefi/var-service.h"
- 
--#include "trace/trace-hw_uefi.h"
-+#include "trace.h"
- 
- /* ------------------------------------------------------------------ */
- 
-diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
-index 7f98d77a38..37d05b71cf 100644
---- a/hw/uefi/var-service-vars.c
-+++ b/hw/uefi/var-service-vars.c
-@@ -12,7 +12,7 @@
- #include "hw/uefi/var-service-api.h"
- #include "hw/uefi/var-service-edk2.h"
- 
--#include "trace/trace-hw_uefi.h"
-+#include "trace.h"
- 
- #define EFI_VARIABLE_ATTRIBUTE_SUPPORTED                                \
-     (EFI_VARIABLE_NON_VOLATILE |                                        \
+ While it is possible to include a trace.h file from outside a source file's own
+ sub-directory, this is discouraged in general. It is strongly preferred that
 -- 
 2.47.2
 
