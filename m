@@ -4,87 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D8E9C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:56:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 648E7C83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:59:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubHTu-0006Cy-C4; Mon, 14 Jul 2025 07:36:26 -0400
+	id 1ubHes-0001pC-Cu; Mon, 14 Jul 2025 07:47:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH1a-0001yd-Ek
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:07:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1ubH5F-0005t1-EG
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:11:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH1X-0002DH-BI
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:07:10 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1ubH5C-00036r-GC
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:10:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752491225;
+ s=mimecast20190719; t=1752491453;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/iwwKGi8Hmz04XjriQPgEvnyWduNEXOBdPyGuoBdR8c=;
- b=V+r8hAAy17+J4Qo6qkBCOLUoFApPZIc/LcTnmC7rcgl4hOvZKEhZny9JYeJcxW7k9vjPWq
- +DINjBlcm+Cxy1TTJqhTsh0JTj8ttWklYAqyjdkcX0AEHcOGvZI6NchWPQ9Ibub5GRYkbl
- JlMtUcXX4qRxD2xa7cIxNOrVj5t5GC0=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-237-Bv9sYeoCPrGYNed9Z8B5nw-1; Mon, 14 Jul 2025 07:07:04 -0400
-X-MC-Unique: Bv9sYeoCPrGYNed9Z8B5nw-1
-X-Mimecast-MFC-AGG-ID: Bv9sYeoCPrGYNed9Z8B5nw_1752491223
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-455ea9cb0beso21452875e9.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:07:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752491222; x=1753096022;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/iwwKGi8Hmz04XjriQPgEvnyWduNEXOBdPyGuoBdR8c=;
- b=W6dK2f1o+bbXFrAdppoiGpoydCNeMyQ6ApiUXKsH8OHb2LJXgYyy/Rzl8g/ZIgGTGI
- g94iL9iqQgfhxrn/ePlt0kA6+a3gYioWJnXXo+LSS/MluBHYd6eOgmXB//FPmE33nCta
- RDymgABm57fFHxsxmzO2l+SUeYJgfhVN4EAR9Jlc98Yb+1VCGMaxm6LGZRtS0DIQnUgj
- 61HeAZDFstw7oxA/s6JqRx6sHv/wHcK7uipLsqCOpWHs9tsqOPo1vPftLMmQGHfTLtZJ
- XJ5Qy+rIqM0T/l5EVbIXtjAM334L62LZrIjeb2zJ+56zcR1/1/afT4+oPfHhSrFngwC/
- hJeg==
-X-Gm-Message-State: AOJu0Ywoh6jg2deFwfrygeVhi7R7mlnc3qnGIWgW3VIB5sPtXsFJl79E
- g1CujMMOCS9tshIGGU78UvotGDTQoPR08pYA9DlHuyNgFDWHFLbzqXVd7IfNnhfEURPLRrt5J1n
- EQksNN5KORqevRupxhwsWXXEyWLCK7u8Kdj5TMx1vQHyZGJq4nXElnPtpTgTQsLw8/0S+gTgnAl
- GIbwajk8cU3vD2QHkmLhhA+p6bv30hZuUD+2G1NFcM
-X-Gm-Gg: ASbGncvoP+iOmpcsDTQE66IAUAHnUd6SXAl9LGG+S+VD/h66By+rM31081UVuy8hPwJ
- /sxJNAuA3kq/szypE1SCWamEJrgxNpFQa0H9/WOafhPnYNfCDPL3RKYGtWGE591vccdwV9+MiWs
- TIaD8Jh7Qw4G9cDiF85568U4Ct696R3szvU1QuElhl2R0KGKqRYVDBoATTXqP0fkC1X7kOVXhDj
- JiwovVgVrwMtcOf/jmAe6ntxbqhkDe+Wp3zDKoBgrpMrJuDITsNRXgSE301rX1mloDYxyhh6iLC
- mPRr8VSel+TgNAyajCKskAwjPj9CKlgvK+LToH3bcN4=
-X-Received: by 2002:a05:600c:46c8:b0:456:1dd9:943 with SMTP id
- 5b1f17b1804b1-4561dd90c6fmr20936705e9.3.1752491222045; 
- Mon, 14 Jul 2025 04:07:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFMn7YO8uQs1khaKFeeknkibc9dw6LlNSrF3jxMVtMU75VRfP2Gev9P37K1Xb3eFXyMFdmYOA==
-X-Received: by 2002:a05:600c:46c8:b0:456:1dd9:943 with SMTP id
- 5b1f17b1804b1-4561dd90c6fmr20936255e9.3.1752491221574; 
- Mon, 14 Jul 2025 04:07:01 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.73.155])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4561d19a21dsm19903675e9.24.2025.07.14.04.06.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 04:06:59 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ bh=uWyeEHTgdMwBOPbQAhP+8TeJjHS/avrQnveaFbPWxjQ=;
+ b=BpbCspYd9MgQFO0lG+xQFPumt6ZkIOgGb7CIQiyqA8EYbP+qAs0jD22XOTfS1XYESBp3iK
+ vdMhaPxbucKis3cID3oLsTN/OZkTWaTaqt6nKLaC4qppEB/c0jhyHJQRIjsr8xu/5/9KOH
+ m7YINbTvtVwPv6tysU6CrdjqrrOUBWg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-166-D7CdPuvgPDq_PsMdacDsWA-1; Mon,
+ 14 Jul 2025 07:10:52 -0400
+X-MC-Unique: D7CdPuvgPDq_PsMdacDsWA-1
+X-Mimecast-MFC-AGG-ID: D7CdPuvgPDq_PsMdacDsWA_1752491451
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0C9881800290; Mon, 14 Jul 2025 11:10:51 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.9])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 77FBF180035C; Mon, 14 Jul 2025 11:10:47 +0000 (UTC)
+From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Ewan Hai <ewanhai-oc@zhaoxin.com>,
- Yi Lai <yi1.lai@intel.com>
-Subject: [PULL 67/77] i386/cpu: Enable 0x1f leaf for YongFeng by default
-Date: Mon, 14 Jul 2025 13:03:56 +0200
-Message-ID: <20250714110406.117772-68-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250714110406.117772-1-pbonzini@redhat.com>
-References: <20250714110406.117772-1-pbonzini@redhat.com>
+Cc: stefanha@redhat.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 01/13] ui/vnc: Do not copy z_stream
+Date: Mon, 14 Jul 2025 15:10:24 +0400
+Message-ID: <20250714111039.4150419-2-marcandre.lureau@redhat.com>
+In-Reply-To: <20250714111039.4150419-1-marcandre.lureau@redhat.com>
+References: <20250714111039.4150419-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -109,38 +86,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-Host YongFeng CPU has 0x1f leaf by default, so that enable it for
-Guest CPU by default as well.
+vnc_worker_thread_loop() copies z_stream stored in its local VncState to
+the persistent VncState, and the copied one is freed with deflateEnd()
+later. However, deflateEnd() refuses to operate with a copied z_stream
+and returns Z_STREAM_ERROR, leaking the allocated memory.
 
-Suggested-by: Ewan Hai <ewanhai-oc@zhaoxin.com>
-Tested-by: Yi Lai <yi1.lai@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250711104603.1634832-10-zhao1.liu@intel.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Avoid copying the zlib state to fix the memory leak.
+
+Fixes: bd023f953e5e ("vnc: threaded VNC server")
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20250603-zlib-v3-1-20b857bd8d05@rsg.ci.i.u-tokyo.ac.jp>
 ---
- target/i386/cpu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ ui/vnc.h          |  2 +-
+ ui/vnc-enc-zlib.c | 30 +++++++++++++++---------------
+ ui/vnc.c          | 13 ++++++++++---
+ 3 files changed, 26 insertions(+), 19 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 216e0232df4..4f0c9734461 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6548,8 +6548,12 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-             },
-             {
-                 .version = 3,
--                .note = "with the cache model",
-+                .note = "with the cache model and 0x1f leaf",
-                 .cache_info = &yongfeng_cache_info,
-+                .props = (PropValue[]) {
-+                    { "x-force-cpuid-0x1f", "on" },
-+                    { /* end of list */ },
-+                }
-             },
-             { /* end of list */ }
+diff --git a/ui/vnc.h b/ui/vnc.h
+index b3e07269bb..8df0cbab25 100644
+--- a/ui/vnc.h
++++ b/ui/vnc.h
+@@ -342,7 +342,7 @@ struct VncState
+      *  update vnc_async_encoding_start()
+      */
+     VncTight *tight;
+-    VncZlib zlib;
++    VncZlib *zlib;
+     VncHextile hextile;
+     VncZrle *zrle;
+     VncZywrle zywrle;
+diff --git a/ui/vnc-enc-zlib.c b/ui/vnc-enc-zlib.c
+index 900ae5b30f..52e9193eab 100644
+--- a/ui/vnc-enc-zlib.c
++++ b/ui/vnc-enc-zlib.c
+@@ -48,21 +48,21 @@ void vnc_zlib_zfree(void *x, void *addr)
+ 
+ static void vnc_zlib_start(VncState *vs)
+ {
+-    buffer_reset(&vs->zlib.zlib);
++    buffer_reset(&vs->zlib->zlib);
+ 
+     // make the output buffer be the zlib buffer, so we can compress it later
+-    vs->zlib.tmp = vs->output;
+-    vs->output = vs->zlib.zlib;
++    vs->zlib->tmp = vs->output;
++    vs->output = vs->zlib->zlib;
+ }
+ 
+ static int vnc_zlib_stop(VncState *vs)
+ {
+-    z_streamp zstream = &vs->zlib.stream;
++    z_streamp zstream = &vs->zlib->stream;
+     int previous_out;
+ 
+     // switch back to normal output/zlib buffers
+-    vs->zlib.zlib = vs->output;
+-    vs->output = vs->zlib.tmp;
++    vs->zlib->zlib = vs->output;
++    vs->output = vs->zlib->tmp;
+ 
+     // compress the zlib buffer
+ 
+@@ -85,24 +85,24 @@ static int vnc_zlib_stop(VncState *vs)
+             return -1;
          }
+ 
+-        vs->zlib.level = vs->tight->compression;
++        vs->zlib->level = vs->tight->compression;
+         zstream->opaque = vs;
+     }
+ 
+-    if (vs->tight->compression != vs->zlib.level) {
++    if (vs->tight->compression != vs->zlib->level) {
+         if (deflateParams(zstream, vs->tight->compression,
+                           Z_DEFAULT_STRATEGY) != Z_OK) {
+             return -1;
+         }
+-        vs->zlib.level = vs->tight->compression;
++        vs->zlib->level = vs->tight->compression;
+     }
+ 
+     // reserve memory in output buffer
+-    buffer_reserve(&vs->output, vs->zlib.zlib.offset + 64);
++    buffer_reserve(&vs->output, vs->zlib->zlib.offset + 64);
+ 
+     // set pointers
+-    zstream->next_in = vs->zlib.zlib.buffer;
+-    zstream->avail_in = vs->zlib.zlib.offset;
++    zstream->next_in = vs->zlib->zlib.buffer;
++    zstream->avail_in = vs->zlib->zlib.offset;
+     zstream->next_out = vs->output.buffer + vs->output.offset;
+     zstream->avail_out = vs->output.capacity - vs->output.offset;
+     previous_out = zstream->avail_out;
+@@ -147,8 +147,8 @@ int vnc_zlib_send_framebuffer_update(VncState *vs, int x, int y, int w, int h)
+ 
+ void vnc_zlib_clear(VncState *vs)
+ {
+-    if (vs->zlib.stream.opaque) {
+-        deflateEnd(&vs->zlib.stream);
++    if (vs->zlib->stream.opaque) {
++        deflateEnd(&vs->zlib->stream);
+     }
+-    buffer_free(&vs->zlib.zlib);
++    buffer_free(&vs->zlib->zlib);
+ }
+diff --git a/ui/vnc.c b/ui/vnc.c
+index e9c30aad62..ab74154e4c 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -56,6 +56,11 @@
+ #include "io/dns-resolver.h"
+ #include "monitor/monitor.h"
+ 
++typedef struct VncConnection {
++    VncState vs;
++    VncZlib zlib;
++} VncConnection;
++
+ #define VNC_REFRESH_INTERVAL_BASE GUI_REFRESH_INTERVAL_DEFAULT
+ #define VNC_REFRESH_INTERVAL_INC  50
+ #define VNC_REFRESH_INTERVAL_MAX  GUI_REFRESH_INTERVAL_IDLE
+@@ -1362,7 +1367,7 @@ void vnc_disconnect_finish(VncState *vs)
+     vs->magic = 0;
+     g_free(vs->zrle);
+     g_free(vs->tight);
+-    g_free(vs);
++    g_free(container_of(vs, VncConnection, vs));
+ }
+ 
+ size_t vnc_client_io_error(VncState *vs, ssize_t ret, Error *err)
+@@ -3241,11 +3246,13 @@ static void vnc_refresh(DisplayChangeListener *dcl)
+ static void vnc_connect(VncDisplay *vd, QIOChannelSocket *sioc,
+                         bool skipauth, bool websocket)
+ {
+-    VncState *vs = g_new0(VncState, 1);
++    VncConnection *vc = g_new0(VncConnection, 1);
++    VncState *vs = &vc->vs;
+     bool first_client = QTAILQ_EMPTY(&vd->clients);
+     int i;
+ 
+     trace_vnc_client_connect(vs, sioc);
++    vs->zlib = &vc->zlib;
+     vs->zrle = g_new0(VncZrle, 1);
+     vs->tight = g_new0(VncTight, 1);
+     vs->magic = VNC_MAGIC;
+@@ -3268,7 +3275,7 @@ static void vnc_connect(VncDisplay *vd, QIOChannelSocket *sioc,
+ #ifdef CONFIG_PNG
+     buffer_init(&vs->tight->png,      "vnc-tight-png/%p", sioc);
+ #endif
+-    buffer_init(&vs->zlib.zlib,      "vnc-zlib/%p", sioc);
++    buffer_init(&vc->zlib.zlib,      "vnc-zlib/%p", sioc);
+     buffer_init(&vs->zrle->zrle,      "vnc-zrle/%p", sioc);
+     buffer_init(&vs->zrle->fb,        "vnc-zrle-fb/%p", sioc);
+     buffer_init(&vs->zrle->zlib,      "vnc-zrle-zlib/%p", sioc);
 -- 
 2.50.0
 
