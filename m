@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA31FC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:27:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C01C6C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:27:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubHJ0-0003L1-9u; Mon, 14 Jul 2025 07:25:11 -0400
+	id 1ubHEw-0000Xv-Th; Mon, 14 Jul 2025 07:20:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubGzr-00016V-01
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:05:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1ubH1H-0001r0-Mc
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:07:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubGzn-0001sd-MH
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:05:22 -0400
+ id 1ubH1D-00029p-U3
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:06:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752491119;
+ s=mimecast20190719; t=1752491206;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wxMnMbD1XcPxMyEUTBLdpuoI42kvRRrLRupjHn50Puk=;
- b=hOEYfKea9xnhxcbryvlgF0jA39OR395lTJ91j+yQkBjETTLZfbpdusutHiX5FWZpqwuKO6
- YfQZUP7YaVMscmVHA1UsSps48rxFoeddMt1vfvkaQ+UcZ9qK0CyUj/F7y9zNVEQQcgmLhs
- Tyx9U1Kh8M51eIn9w6IHOp3fT4+UQ0Y=
+ bh=IeYVflmQIXuUpiQZZ5dzz4ZXkBFzZ9p/wIY3g9/xKnE=;
+ b=d66Q0z6DhUza/SWQnnV6vZajHR8TAueZSCKSfeGGWZrxSDH8ZUR00f/my4c7xAIJhFtS8o
+ FndBhJD77EM+IQ9eZf5u054FZvEembfnfS61UUOlUwLQzrpAnk8Dpb/mjssujX38y48DjT
+ PyxMXJTTeZKZ8ymyk7sysYcbtEuY9Kk=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-172-TKX0yMhDN4-MUPm4CA-aDQ-1; Mon, 14 Jul 2025 07:05:17 -0400
-X-MC-Unique: TKX0yMhDN4-MUPm4CA-aDQ-1
-X-Mimecast-MFC-AGG-ID: TKX0yMhDN4-MUPm4CA-aDQ_1752491116
+ us-mta-215-vnG5rIWPNe6-3mnEbyKjpQ-1; Mon, 14 Jul 2025 07:06:44 -0400
+X-MC-Unique: vnG5rIWPNe6-3mnEbyKjpQ-1
+X-Mimecast-MFC-AGG-ID: vnG5rIWPNe6-3mnEbyKjpQ_1752491203
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-451d3f03b74so24015985e9.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:05:17 -0700 (PDT)
+ 5b1f17b1804b1-45597cc95d5so15274055e9.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:06:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752491115; x=1753095915;
+ d=1e100.net; s=20230601; t=1752491202; x=1753096002;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wxMnMbD1XcPxMyEUTBLdpuoI42kvRRrLRupjHn50Puk=;
- b=EKys5WK7l5aGmdmFmvE3uBD617BEQQ77ZjimHF9aYZPNkERl3Fx/fwVf73+WsH1fBA
- VXAqyzj/m6nRYf8vFYjihotsY7hKbyKlarrpEw6w2ZYt2o6YCBYyUY6O4mjtfX5pyoaI
- M2oEjw8g3CUL6wDoXYYc5XoRARYeEV26gGzqHjQdTsmsgl2J7fp8wAeXKIyLm/y3kSGo
- KLboL2u6E1oQOSmosBuoIVno/3nmNcLHWx/8vVebNhzrzqiW778dTSDPMsLxLsZS86Yu
- 3X+w4Ke040b4YaFbKBg48n0PJr1tVQrKz6IyVzTVZcVAyxJCR9ewlc8XgO0HGTCn5gHE
- 5J+Q==
-X-Gm-Message-State: AOJu0YykxKJB2Lt84Rk/v1Hd3UAGfuxV5oKQlnGpl+6/d7fzloRyZ04y
- Bvqu/3OJDcgD0GNmCC6+c5myh4ntKWZNV1+wLQKWfMeHDWrExiKnBFkxPJxOGKz9+8xwTTAER/V
- 4N4C4UF0vh5zjuq2KbuBBkam4DIx9bwC+UOwikijc/Ow3VF0j7VaXprWP60DyXlVwqSRPmBoThM
- vM12a2wIg0hBnjAW7jsnPZ5xcHWxioV0EvetN7Hboa
-X-Gm-Gg: ASbGnctGVr6dPUcCo5M4ZvP1ENz78Eosq/McYR7DshxDQCaoTo9HBEPsdSroiZRSqg+
- auekX0w09wOUPxP22YCJsmr2wwwkCvyMBwfq6MT4nu6CDKDvfW459DRhh38k0jbfAzDe9ZLCBzj
- LbsDPs9Ok8XhlmkaYqxXMyuKdCjIQ5s0FpkLRwS/ddDkbi/u4I7SM2jCC42z/HUiAXadPk00M9K
- 1WUrcJhzYMmMW9MX3wBz6KF9S8l/i+vnG5hUyzzfqYnQZeEm6z9l49xj1i34IemBNyfs2jP0PaW
- EVl+/LR7pE6Xv58gChVIaJcLihiJNwHKrhFKjU+vwfk=
-X-Received: by 2002:a05:600c:1c9a:b0:456:1608:c807 with SMTP id
- 5b1f17b1804b1-4561608ca40mr39533915e9.26.1752491114685; 
- Mon, 14 Jul 2025 04:05:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGChAowa4p8SSul2OyJsN5lzkvikbK3vodneNxkz2OcsR7C0Edf+SLbgaeN8K880LzBIhyAmg==
-X-Received: by 2002:a05:600c:1c9a:b0:456:1608:c807 with SMTP id
- 5b1f17b1804b1-4561608ca40mr39533425e9.26.1752491114073; 
- Mon, 14 Jul 2025 04:05:14 -0700 (PDT)
+ bh=IeYVflmQIXuUpiQZZ5dzz4ZXkBFzZ9p/wIY3g9/xKnE=;
+ b=kG89hDzIrM23TsEYMZLMQHFxsXGNDJQntHJ/kHXDrOauYjVSYPnLyQuSnGVkjYzlpu
+ lNuHhjUVln9fNodw6/bvBHHpLB/FfjqOEw3ecDso8gUvlFf7wpV7gfp2qcKNH1c0LX9f
+ gIvDCw31DE2XFHs7/CvI1HAxcGKJzWPwj98TvdMvaVg70vs4A4eVJkw2JKEHfuIDqRpT
+ xv/R4AfL2BF3oE9fMuY3GUazem45Gwb9Mymn6j5da+r710zYpuqalMmq1oO/F+i1oAcE
+ fhH+SG168g4uh6eK7Gcc8zyLH5tzRInO90SiFxsczTw2y/Fu96C0y1Omqnyg9/cIkbx/
+ 5f1w==
+X-Gm-Message-State: AOJu0YykPBpwjNLsDHvrSdH/0DgSJoOsZg+eZehDDyKq8FstH4BKdnfN
+ 9Aj8+73r0jBNgadIFzUqywBms4NcgG8wzIkk5IGyq10CMx5D4Y4NE1f0OFs3OfiQeY/X5RSUnhY
+ 3ca5s86pqCPPImHHQhlHTQyJn4Wr0/xYf1ulilM8/SV/UEVq8JBxYp/bK/HVA0iyXg/QkBM3AQ8
+ kLKCg03k/n9rlr5Ass/1p1ywrc4/umdrDHgqN3wr4J
+X-Gm-Gg: ASbGncsrunQ9tsXhGhRoLlXFFGmUD9fylX9OvJ9agJafRVpPCo9kx2Ssb0jC6zTyxep
+ Ybs4C2KlNSvQ/WoWhbT45DnQrQ63jf9RU6LafWCiQbCngNFZIuW85XoT7t5N02fzSwR3VsaouDu
+ 9XIGt3KHpob6SmGHKVC6OXHUSvrmZBeQ6/qNqLKcmFmPxCvA4x7FxC1szbpdvSzVssZuutIgFRw
+ R4g63sv60IRFBBoYQa2thrOqhuFsHg2+/rniPMv/OV6RJvmij1WC15DOzT5jUsiUkDQDcr2t9gm
+ CaV3rXx6ZaRZKthuB5PaVF6JgPNu8CEQIMaavJjqCUU=
+X-Received: by 2002:a05:600c:4eca:b0:456:1abd:fcfc with SMTP id
+ 5b1f17b1804b1-4561abdff33mr25859685e9.25.1752491201747; 
+ Mon, 14 Jul 2025 04:06:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE7Bwakdv5CcDFJq+10DU82ym/EXEdtr+XNdEpbDjiUmr1YiNkZ1m9ly+DUZbQ99Sb1BwayVQ==
+X-Received: by 2002:a05:600c:4eca:b0:456:1abd:fcfc with SMTP id
+ 5b1f17b1804b1-4561abdff33mr25859345e9.25.1752491201274; 
+ Mon, 14 Jul 2025 04:06:41 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.73.155])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45613c2d84dsm45517715e9.5.2025.07.14.04.05.11
+ ffacd0b85a97d-3b5e8bd180fsm11950860f8f.2.2025.07.14.04.06.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 04:05:12 -0700 (PDT)
+ Mon, 14 Jul 2025 04:06:39 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Gerd Hoffman <kraxel@redhat.com>,
- Pankaj Gupta <pankaj.gupta@amd.com>
-Subject: [PULL 24/77] i386/sev: Refactor setting of reset vector and initial
- CPU state
-Date: Mon, 14 Jul 2025 13:03:13 +0200
-Message-ID: <20250714110406.117772-25-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, Tejus GK <tejus.gk@nutanix.com>,
+ Jason Zeng <jason.zeng@intel.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>, Tao Su <tao1.su@linux.intel.com>,
+ Yi Lai <yi1.lai@intel.com>
+Subject: [PULL 59/77] i386/cpu: Introduce cache model for GraniteRapids
+Date: Mon, 14 Jul 2025 13:03:48 +0200
+Message-ID: <20250714110406.117772-60-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250714110406.117772-1-pbonzini@redhat.com>
 References: <20250714110406.117772-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -112,544 +113,207 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Roy Hopkins <roy.hopkins@randomman.co.uk>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-When an SEV guest is started, the reset vector and state are
-extracted from metadata that is contained in the firmware volume.
+Add the cache model to GraniteRapids (v3) to better emulate its
+environment.
 
-In preparation for using IGVM to setup the initial CPU state,
-the code has been refactored to populate vmcb_save_area for each
-CPU which is then applied during guest startup and CPU reset.
+The cache model is based on GraniteRapids-SP (Scalable Performance):
 
-Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-Acked-by: Gerd Hoffman <kraxel@redhat.com>
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Link: https://lore.kernel.org/r/d3c2debca496c4366a278b135f951908f3b9c341.1751554099.git.roy.hopkins@randomman.co.uk
+      --- cache 0 ---
+      cache type                         = data cache (1)
+      cache level                        = 0x1 (1)
+      self-initializing cache level      = true
+      fully associative cache            = false
+      maximum IDs for CPUs sharing cache = 0x1 (1)
+      maximum IDs for cores in pkg       = 0x3f (63)
+      system coherency line size         = 0x40 (64)
+      physical line partitions           = 0x1 (1)
+      ways of associativity              = 0xc (12)
+      number of sets                     = 0x40 (64)
+      WBINVD/INVD acts on lower caches   = false
+      inclusive to lower caches          = false
+      complex cache indexing             = false
+      number of sets (s)                 = 64
+      (size synth)                       = 49152 (48 KB)
+      --- cache 1 ---
+      cache type                         = instruction cache (2)
+      cache level                        = 0x1 (1)
+      self-initializing cache level      = true
+      fully associative cache            = false
+      maximum IDs for CPUs sharing cache = 0x1 (1)
+      maximum IDs for cores in pkg       = 0x3f (63)
+      system coherency line size         = 0x40 (64)
+      physical line partitions           = 0x1 (1)
+      ways of associativity              = 0x10 (16)
+      number of sets                     = 0x40 (64)
+      WBINVD/INVD acts on lower caches   = false
+      inclusive to lower caches          = false
+      complex cache indexing             = false
+      number of sets (s)                 = 64
+      (size synth)                       = 65536 (64 KB)
+      --- cache 2 ---
+      cache type                         = unified cache (3)
+      cache level                        = 0x2 (2)
+      self-initializing cache level      = true
+      fully associative cache            = false
+      maximum IDs for CPUs sharing cache = 0x1 (1)
+      maximum IDs for cores in pkg       = 0x3f (63)
+      system coherency line size         = 0x40 (64)
+      physical line partitions           = 0x1 (1)
+      ways of associativity              = 0x10 (16)
+      number of sets                     = 0x800 (2048)
+      WBINVD/INVD acts on lower caches   = false
+      inclusive to lower caches          = false
+      complex cache indexing             = false
+      number of sets (s)                 = 2048
+      (size synth)                       = 2097152 (2 MB)
+      --- cache 3 ---
+      cache type                         = unified cache (3)
+      cache level                        = 0x3 (3)
+      self-initializing cache level      = true
+      fully associative cache            = false
+      maximum IDs for CPUs sharing cache = 0xff (255)
+      maximum IDs for cores in pkg       = 0x3f (63)
+      system coherency line size         = 0x40 (64)
+      physical line partitions           = 0x1 (1)
+      ways of associativity              = 0x10 (16)
+      number of sets                     = 0x48000 (294912)
+      WBINVD/INVD acts on lower caches   = false
+      inclusive to lower caches          = false
+      complex cache indexing             = true
+      number of sets (s)                 = 294912
+      (size synth)                       = 301989888 (288 MB)
+      --- cache 4 ---
+      cache type                         = no more caches (0)
+
+Suggested-by: Tejus GK <tejus.gk@nutanix.com>
+Suggested-by: Jason Zeng <jason.zeng@intel.com>
+Suggested-by: "Daniel P . Berrangé" <berrange@redhat.com>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Reviewed-by: Tao Su <tao1.su@linux.intel.com>
+Tested-by: Yi Lai <yi1.lai@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20250711104603.1634832-3-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/sev.h | 110 ++++++++++++++++
- target/i386/sev.c | 326 +++++++++++++++++++++++++++++++++++++++++-----
- 2 files changed, 401 insertions(+), 35 deletions(-)
+ target/i386/cpu.c | 96 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 96 insertions(+)
 
-diff --git a/target/i386/sev.h b/target/i386/sev.h
-index 373669eaace..38caa849f5e 100644
---- a/target/i386/sev.h
-+++ b/target/i386/sev.h
-@@ -55,6 +55,116 @@ typedef struct SevKernelLoaderContext {
-     size_t cmdline_size;
- } SevKernelLoaderContext;
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 3c28e9588af..d1fc74eb0e3 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -2883,6 +2883,97 @@ static const CPUCaches epyc_turin_cache_info = {
+     }
+ };
  
-+/* Save area definition for SEV-ES and SEV-SNP guests */
-+struct QEMU_PACKED sev_es_save_area {
-+    struct vmcb_seg es;
-+    struct vmcb_seg cs;
-+    struct vmcb_seg ss;
-+    struct vmcb_seg ds;
-+    struct vmcb_seg fs;
-+    struct vmcb_seg gs;
-+    struct vmcb_seg gdtr;
-+    struct vmcb_seg ldtr;
-+    struct vmcb_seg idtr;
-+    struct vmcb_seg tr;
-+    uint64_t vmpl0_ssp;
-+    uint64_t vmpl1_ssp;
-+    uint64_t vmpl2_ssp;
-+    uint64_t vmpl3_ssp;
-+    uint64_t u_cet;
-+    uint8_t reserved_0xc8[2];
-+    uint8_t vmpl;
-+    uint8_t cpl;
-+    uint8_t reserved_0xcc[4];
-+    uint64_t efer;
-+    uint8_t reserved_0xd8[104];
-+    uint64_t xss;
-+    uint64_t cr4;
-+    uint64_t cr3;
-+    uint64_t cr0;
-+    uint64_t dr7;
-+    uint64_t dr6;
-+    uint64_t rflags;
-+    uint64_t rip;
-+    uint64_t dr0;
-+    uint64_t dr1;
-+    uint64_t dr2;
-+    uint64_t dr3;
-+    uint64_t dr0_addr_mask;
-+    uint64_t dr1_addr_mask;
-+    uint64_t dr2_addr_mask;
-+    uint64_t dr3_addr_mask;
-+    uint8_t reserved_0x1c0[24];
-+    uint64_t rsp;
-+    uint64_t s_cet;
-+    uint64_t ssp;
-+    uint64_t isst_addr;
-+    uint64_t rax;
-+    uint64_t star;
-+    uint64_t lstar;
-+    uint64_t cstar;
-+    uint64_t sfmask;
-+    uint64_t kernel_gs_base;
-+    uint64_t sysenter_cs;
-+    uint64_t sysenter_esp;
-+    uint64_t sysenter_eip;
-+    uint64_t cr2;
-+    uint8_t reserved_0x248[32];
-+    uint64_t g_pat;
-+    uint64_t dbgctl;
-+    uint64_t br_from;
-+    uint64_t br_to;
-+    uint64_t last_excp_from;
-+    uint64_t last_excp_to;
-+    uint8_t reserved_0x298[80];
-+    uint32_t pkru;
-+    uint32_t tsc_aux;
-+    uint8_t reserved_0x2f0[24];
-+    uint64_t rcx;
-+    uint64_t rdx;
-+    uint64_t rbx;
-+    uint64_t reserved_0x320; /* rsp already available at 0x01d8 */
-+    uint64_t rbp;
-+    uint64_t rsi;
-+    uint64_t rdi;
-+    uint64_t r8;
-+    uint64_t r9;
-+    uint64_t r10;
-+    uint64_t r11;
-+    uint64_t r12;
-+    uint64_t r13;
-+    uint64_t r14;
-+    uint64_t r15;
-+    uint8_t reserved_0x380[16];
-+    uint64_t guest_exit_info_1;
-+    uint64_t guest_exit_info_2;
-+    uint64_t guest_exit_int_info;
-+    uint64_t guest_nrip;
-+    uint64_t sev_features;
-+    uint64_t vintr_ctrl;
-+    uint64_t guest_exit_code;
-+    uint64_t virtual_tom;
-+    uint64_t tlb_id;
-+    uint64_t pcpu_id;
-+    uint64_t event_inj;
-+    uint64_t xcr0;
-+    uint8_t reserved_0x3f0[16];
++static const CPUCaches xeon_gnr_cache_info = {
++    .l1d_cache = &(CPUCacheInfo) {
++        /* CPUID 0x4.0x0.EAX */
++        .type = DATA_CACHE,
++        .level = 1,
++        .self_init = true,
 +
-+    /* Floating point area */
-+    uint64_t x87_dp;
-+    uint32_t mxcsr;
-+    uint16_t x87_ftw;
-+    uint16_t x87_fsw;
-+    uint16_t x87_fcw;
-+    uint16_t x87_fop;
-+    uint16_t x87_ds;
-+    uint16_t x87_cs;
-+    uint64_t x87_rip;
-+    uint8_t fpreg_x87[80];
-+    uint8_t fpreg_xmm[256];
-+    uint8_t fpreg_ymm[256];
++        /* CPUID 0x4.0x0.EBX */
++        .line_size = 64,
++        .partitions = 1,
++        .associativity = 12,
++
++        /* CPUID 0x4.0x0.ECX */
++        .sets = 64,
++
++        /* CPUID 0x4.0x0.EDX */
++        .no_invd_sharing = false,
++        .inclusive = false,
++        .complex_indexing = false,
++
++        .size = 48 * KiB,
++        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
++    },
++    .l1i_cache = &(CPUCacheInfo) {
++        /* CPUID 0x4.0x1.EAX */
++        .type = INSTRUCTION_CACHE,
++        .level = 1,
++        .self_init = true,
++
++        /* CPUID 0x4.0x1.EBX */
++        .line_size = 64,
++        .partitions = 1,
++        .associativity = 16,
++
++        /* CPUID 0x4.0x1.ECX */
++        .sets = 64,
++
++        /* CPUID 0x4.0x1.EDX */
++        .no_invd_sharing = false,
++        .inclusive = false,
++        .complex_indexing = false,
++
++        .size = 64 * KiB,
++        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
++    },
++    .l2_cache = &(CPUCacheInfo) {
++        /* CPUID 0x4.0x2.EAX */
++        .type = UNIFIED_CACHE,
++        .level = 2,
++        .self_init = true,
++
++        /* CPUID 0x4.0x2.EBX */
++        .line_size = 64,
++        .partitions = 1,
++        .associativity = 16,
++
++        /* CPUID 0x4.0x2.ECX */
++        .sets = 2048,
++
++        /* CPUID 0x4.0x2.EDX */
++        .no_invd_sharing = false,
++        .inclusive = false,
++        .complex_indexing = false,
++
++        .size = 2 * MiB,
++        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
++    },
++    .l3_cache = &(CPUCacheInfo) {
++        /* CPUID 0x4.0x3.EAX */
++        .type = UNIFIED_CACHE,
++        .level = 3,
++        .self_init = true,
++
++        /* CPUID 0x4.0x3.EBX */
++        .line_size = 64,
++        .partitions = 1,
++        .associativity = 16,
++
++        /* CPUID 0x4.0x3.ECX */
++        .sets = 294912,
++
++        /* CPUID 0x4.0x3.EDX */
++        .no_invd_sharing = false,
++        .inclusive = false,
++        .complex_indexing = true,
++
++        .size = 288 * MiB,
++        .share_level = CPU_TOPOLOGY_LEVEL_SOCKET,
++    },
 +};
 +
- bool sev_add_kernel_loader_hashes(SevKernelLoaderContext *ctx, Error **errp);
- 
- int sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp);
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index a84f5f5d28a..a13f91e615d 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -50,6 +50,12 @@ OBJECT_DECLARE_TYPE(SevSnpGuestState, SevCommonStateClass, SEV_SNP_GUEST)
- /* hard code sha256 digest size */
- #define HASH_SIZE 32
- 
-+/* Convert between SEV-ES VMSA and SegmentCache flags/attributes */
-+#define FLAGS_VMSA_TO_SEGCACHE(flags) \
-+    ((((flags) & 0xff00) << 12) | (((flags) & 0xff) << 8))
-+#define FLAGS_SEGCACHE_TO_VMSA(flags) \
-+    ((((flags) & 0xff00) >> 8) | (((flags) & 0xf00000) >> 12))
-+
- typedef struct QEMU_PACKED SevHashTableEntry {
-     QemuUUID guid;
-     uint16_t len;
-@@ -89,6 +95,14 @@ typedef struct QEMU_PACKED SevHashTableDescriptor {
-     uint32_t size;
- } SevHashTableDescriptor;
- 
-+typedef struct SevLaunchVmsa {
-+    QTAILQ_ENTRY(SevLaunchVmsa) next;
-+
-+    uint16_t cpu_index;
-+    uint64_t gpa;
-+    struct sev_es_save_area vmsa;
-+} SevLaunchVmsa;
-+
- struct SevCommonState {
-     X86ConfidentialGuest parent_obj;
- 
-@@ -107,9 +121,7 @@ struct SevCommonState {
-     int sev_fd;
-     SevState state;
- 
--    uint32_t reset_cs;
--    uint32_t reset_ip;
--    bool reset_data_valid;
-+    QTAILQ_HEAD(, SevLaunchVmsa) launch_vmsa;
- };
- 
- struct SevCommonStateClass {
-@@ -364,6 +376,172 @@ static struct RAMBlockNotifier sev_ram_notifier = {
-     .ram_block_removed = sev_ram_block_removed,
- };
- 
-+static void sev_apply_cpu_context(CPUState *cpu)
-+{
-+    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-+    X86CPU *x86;
-+    CPUX86State *env;
-+    struct SevLaunchVmsa *launch_vmsa;
-+
-+    /* See if an initial VMSA has been provided for this CPU */
-+    QTAILQ_FOREACH(launch_vmsa, &sev_common->launch_vmsa, next)
-+    {
-+        if (cpu->cpu_index == launch_vmsa->cpu_index) {
-+            x86 = X86_CPU(cpu);
-+            env = &x86->env;
-+
-+            /*
-+             * Ideally we would provide the VMSA directly to kvm which would
-+             * ensure that the resulting initial VMSA measurement which is
-+             * calculated during KVM_SEV_LAUNCH_UPDATE_VMSA is calculated from
-+             * exactly what we provide here. Currently this is not possible so
-+             * we need to copy the parts of the VMSA structure that we currently
-+             * support into the CPU state.
-+             */
-+            cpu_load_efer(env, launch_vmsa->vmsa.efer);
-+            cpu_x86_update_cr4(env, launch_vmsa->vmsa.cr4);
-+            cpu_x86_update_cr0(env, launch_vmsa->vmsa.cr0);
-+            cpu_x86_update_cr3(env, launch_vmsa->vmsa.cr3);
-+            env->xcr0 = launch_vmsa->vmsa.xcr0;
-+            env->pat = launch_vmsa->vmsa.g_pat;
-+
-+            cpu_x86_load_seg_cache(
-+                env, R_CS, launch_vmsa->vmsa.cs.selector,
-+                launch_vmsa->vmsa.cs.base, launch_vmsa->vmsa.cs.limit,
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.cs.attrib));
-+            cpu_x86_load_seg_cache(
-+                env, R_DS, launch_vmsa->vmsa.ds.selector,
-+                launch_vmsa->vmsa.ds.base, launch_vmsa->vmsa.ds.limit,
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ds.attrib));
-+            cpu_x86_load_seg_cache(
-+                env, R_ES, launch_vmsa->vmsa.es.selector,
-+                launch_vmsa->vmsa.es.base, launch_vmsa->vmsa.es.limit,
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.es.attrib));
-+            cpu_x86_load_seg_cache(
-+                env, R_FS, launch_vmsa->vmsa.fs.selector,
-+                launch_vmsa->vmsa.fs.base, launch_vmsa->vmsa.fs.limit,
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.fs.attrib));
-+            cpu_x86_load_seg_cache(
-+                env, R_GS, launch_vmsa->vmsa.gs.selector,
-+                launch_vmsa->vmsa.gs.base, launch_vmsa->vmsa.gs.limit,
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.gs.attrib));
-+            cpu_x86_load_seg_cache(
-+                env, R_SS, launch_vmsa->vmsa.ss.selector,
-+                launch_vmsa->vmsa.ss.base, launch_vmsa->vmsa.ss.limit,
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ss.attrib));
-+
-+            env->gdt.base = launch_vmsa->vmsa.gdtr.base;
-+            env->gdt.limit = launch_vmsa->vmsa.gdtr.limit;
-+            env->gdt.flags =
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.gdtr.attrib);
-+            env->idt.base = launch_vmsa->vmsa.idtr.base;
-+            env->idt.limit = launch_vmsa->vmsa.idtr.limit;
-+            env->idt.flags =
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.idtr.attrib);
-+
-+            cpu_x86_load_seg_cache(
-+                env, R_LDTR, launch_vmsa->vmsa.ldtr.selector,
-+                launch_vmsa->vmsa.ldtr.base, launch_vmsa->vmsa.ldtr.limit,
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ldtr.attrib));
-+            cpu_x86_load_seg_cache(
-+                env, R_TR, launch_vmsa->vmsa.tr.selector,
-+                launch_vmsa->vmsa.ldtr.base, launch_vmsa->vmsa.tr.limit,
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.tr.attrib));
-+
-+            env->dr[6] = launch_vmsa->vmsa.dr6;
-+            env->dr[7] = launch_vmsa->vmsa.dr7;
-+
-+            env->regs[R_EAX] = launch_vmsa->vmsa.rax;
-+            env->regs[R_ECX] = launch_vmsa->vmsa.rcx;
-+            env->regs[R_EDX] = launch_vmsa->vmsa.rdx;
-+            env->regs[R_EBX] = launch_vmsa->vmsa.rbx;
-+            env->regs[R_ESP] = launch_vmsa->vmsa.rsp;
-+            env->regs[R_EBP] = launch_vmsa->vmsa.rbp;
-+            env->regs[R_ESI] = launch_vmsa->vmsa.rsi;
-+            env->regs[R_EDI] = launch_vmsa->vmsa.rdi;
-+#ifdef TARGET_X86_64
-+            env->regs[R_R8] = launch_vmsa->vmsa.r8;
-+            env->regs[R_R9] = launch_vmsa->vmsa.r9;
-+            env->regs[R_R10] = launch_vmsa->vmsa.r10;
-+            env->regs[R_R11] = launch_vmsa->vmsa.r11;
-+            env->regs[R_R12] = launch_vmsa->vmsa.r12;
-+            env->regs[R_R13] = launch_vmsa->vmsa.r13;
-+            env->regs[R_R14] = launch_vmsa->vmsa.r14;
-+            env->regs[R_R15] = launch_vmsa->vmsa.r15;
-+#endif
-+            env->eip = launch_vmsa->vmsa.rip;
-+            env->eflags = launch_vmsa->vmsa.rflags;
-+
-+            cpu_set_fpuc(env, launch_vmsa->vmsa.x87_fcw);
-+            env->mxcsr = launch_vmsa->vmsa.mxcsr;
-+
-+            break;
-+        }
-+    }
-+}
-+
-+static int sev_set_cpu_context(uint16_t cpu_index, const void *ctx,
-+                               uint32_t ctx_len, hwaddr gpa, Error **errp)
-+{
-+    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-+    SevLaunchVmsa *launch_vmsa;
-+    CPUState *cpu;
-+    bool exists = false;
-+
-+    /*
-+     * Setting the CPU context is only supported for SEV-ES and SEV-SNP. The
-+     * context buffer will contain a sev_es_save_area from the Linux kernel
-+     * which is defined by "Table B-4. VMSA Layout, State Save Area for SEV-ES"
-+     * in the AMD64 APM, Volume 2.
-+     */
-+
-+    if (!sev_es_enabled()) {
-+        error_setg(errp, "SEV: unable to set CPU context: Not supported");
-+        return -1;
-+    }
-+
-+    if (ctx_len < sizeof(struct sev_es_save_area)) {
-+        error_setg(errp, "SEV: unable to set CPU context: "
-+                     "Invalid context provided");
-+        return -1;
-+    }
-+
-+    cpu = qemu_get_cpu(cpu_index);
-+    if (!cpu) {
-+        error_setg(errp, "SEV: unable to set CPU context for out of bounds "
-+                     "CPU index %d", cpu_index);
-+        return -1;
-+    }
-+
-+    /*
-+     * If the context of this VP has already been set then replace it with the
-+     * new context.
-+     */
-+    QTAILQ_FOREACH(launch_vmsa, &sev_common->launch_vmsa, next)
-+    {
-+        if (cpu_index == launch_vmsa->cpu_index) {
-+            launch_vmsa->gpa = gpa;
-+            memcpy(&launch_vmsa->vmsa, ctx, sizeof(launch_vmsa->vmsa));
-+            exists = true;
-+            break;
-+        }
-+    }
-+
-+    if (!exists) {
-+        /* New VP context */
-+        launch_vmsa = g_new0(SevLaunchVmsa, 1);
-+        memcpy(&launch_vmsa->vmsa, ctx, sizeof(launch_vmsa->vmsa));
-+        launch_vmsa->cpu_index = cpu_index;
-+        launch_vmsa->gpa = gpa;
-+        QTAILQ_INSERT_TAIL(&sev_common->launch_vmsa, launch_vmsa, next);
-+    }
-+
-+    /* Synchronise the VMSA with the current CPU state */
-+    sev_apply_cpu_context(cpu);
-+
-+    return 0;
-+}
-+
- bool
- sev_enabled(void)
- {
-@@ -998,6 +1176,16 @@ static int
- sev_launch_update_vmsa(SevGuestState *sev_guest)
- {
-     int ret, fw_error;
-+    CPUState *cpu;
-+
-+    /*
-+     * The initial CPU state is measured as part of KVM_SEV_LAUNCH_UPDATE_VMSA.
-+     * Synchronise the CPU state to any provided launch VMSA structures.
-+     */
-+    CPU_FOREACH(cpu) {
-+        sev_apply_cpu_context(cpu);
-+    }
-+
- 
-     ret = sev_ioctl(SEV_COMMON(sev_guest)->sev_fd, KVM_SEV_LAUNCH_UPDATE_VMSA,
-                     NULL, &fw_error);
-@@ -1780,40 +1968,109 @@ sev_es_find_reset_vector(void *flash_ptr, uint64_t flash_size,
-     return sev_es_parse_reset_block(info, addr);
- }
- 
-+
-+static void seg_to_vmsa(const SegmentCache *cpu_seg, struct vmcb_seg *vmsa_seg)
-+{
-+    vmsa_seg->selector = cpu_seg->selector;
-+    vmsa_seg->base = cpu_seg->base;
-+    vmsa_seg->limit = cpu_seg->limit;
-+    vmsa_seg->attrib = FLAGS_SEGCACHE_TO_VMSA(cpu_seg->flags);
-+}
-+
-+static void initialize_vmsa(const CPUState *cpu, struct sev_es_save_area *vmsa)
-+{
-+    const X86CPU *x86 = X86_CPU(cpu);
-+    const CPUX86State *env = &x86->env;
-+
-+    /*
-+     * Initialize the SEV-ES save area from the current state of
-+     * the CPU. The entire state does not need to be copied, only the state
-+     * that is copied back to the CPUState in sev_apply_cpu_context.
-+     */
-+    memset(vmsa, 0, sizeof(struct sev_es_save_area));
-+    vmsa->efer = env->efer;
-+    vmsa->cr0 = env->cr[0];
-+    vmsa->cr3 = env->cr[3];
-+    vmsa->cr4 = env->cr[4];
-+    vmsa->xcr0 = env->xcr0;
-+    vmsa->g_pat = env->pat;
-+
-+    seg_to_vmsa(&env->segs[R_CS], &vmsa->cs);
-+    seg_to_vmsa(&env->segs[R_DS], &vmsa->ds);
-+    seg_to_vmsa(&env->segs[R_ES], &vmsa->es);
-+    seg_to_vmsa(&env->segs[R_FS], &vmsa->fs);
-+    seg_to_vmsa(&env->segs[R_GS], &vmsa->gs);
-+    seg_to_vmsa(&env->segs[R_SS], &vmsa->ss);
-+
-+    seg_to_vmsa(&env->gdt, &vmsa->gdtr);
-+    seg_to_vmsa(&env->idt, &vmsa->idtr);
-+    seg_to_vmsa(&env->ldt, &vmsa->ldtr);
-+    seg_to_vmsa(&env->tr, &vmsa->tr);
-+
-+    vmsa->dr6 = env->dr[6];
-+    vmsa->dr7 = env->dr[7];
-+
-+    vmsa->rax = env->regs[R_EAX];
-+    vmsa->rcx = env->regs[R_ECX];
-+    vmsa->rdx = env->regs[R_EDX];
-+    vmsa->rbx = env->regs[R_EBX];
-+    vmsa->rsp = env->regs[R_ESP];
-+    vmsa->rbp = env->regs[R_EBP];
-+    vmsa->rsi = env->regs[R_ESI];
-+    vmsa->rdi = env->regs[R_EDI];
-+
-+#ifdef TARGET_X86_64
-+    vmsa->r8 = env->regs[R_R8];
-+    vmsa->r9 = env->regs[R_R9];
-+    vmsa->r10 = env->regs[R_R10];
-+    vmsa->r11 = env->regs[R_R11];
-+    vmsa->r12 = env->regs[R_R12];
-+    vmsa->r13 = env->regs[R_R13];
-+    vmsa->r14 = env->regs[R_R14];
-+    vmsa->r15 = env->regs[R_R15];
-+#endif
-+
-+    vmsa->rip = env->eip;
-+    vmsa->rflags = env->eflags;
-+}
-+
-+static void sev_es_set_ap_context(uint32_t reset_addr)
-+{
-+    CPUState *cpu;
-+    struct sev_es_save_area vmsa;
-+    SegmentCache cs;
-+
-+    cs.selector = 0xf000;
-+    cs.base = reset_addr & 0xffff0000;
-+    cs.limit = 0xffff;
-+    cs.flags = DESC_P_MASK | DESC_S_MASK | DESC_CS_MASK | DESC_R_MASK |
-+               DESC_A_MASK;
-+
-+    CPU_FOREACH(cpu) {
-+        if (cpu->cpu_index == 0) {
-+            /* Do not update the BSP reset state */
-+            continue;
-+        }
-+        initialize_vmsa(cpu, &vmsa);
-+        seg_to_vmsa(&cs, &vmsa.cs);
-+        vmsa.rip = reset_addr & 0x0000ffff;
-+        sev_set_cpu_context(cpu->cpu_index, &vmsa,
-+                            sizeof(struct sev_es_save_area),
-+                            0, &error_fatal);
-+    }
-+}
-+
- void sev_es_set_reset_vector(CPUState *cpu)
- {
--    X86CPU *x86;
--    CPUX86State *env;
--    ConfidentialGuestSupport *cgs = MACHINE(qdev_get_machine())->cgs;
--    SevCommonState *sev_common = SEV_COMMON(
--        object_dynamic_cast(OBJECT(cgs), TYPE_SEV_COMMON));
--
--    /* Only update if we have valid reset information */
--    if (!sev_common || !sev_common->reset_data_valid) {
--        return;
-+    if (sev_enabled()) {
-+        sev_apply_cpu_context(cpu);
-     }
--
--    /* Do not update the BSP reset state */
--    if (cpu->cpu_index == 0) {
--        return;
--    }
--
--    x86 = X86_CPU(cpu);
--    env = &x86->env;
--
--    cpu_x86_load_seg_cache(env, R_CS, 0xf000, sev_common->reset_cs, 0xffff,
--                           DESC_P_MASK | DESC_S_MASK | DESC_CS_MASK |
--                           DESC_R_MASK | DESC_A_MASK);
--
--    env->eip = sev_common->reset_ip;
- }
- 
- int sev_es_save_reset_vector(void *flash_ptr, uint64_t flash_size)
- {
--    CPUState *cpu;
-     uint32_t addr;
-     int ret;
--    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
- 
-     if (!sev_es_enabled()) {
-         return 0;
-@@ -1826,14 +2083,12 @@ int sev_es_save_reset_vector(void *flash_ptr, uint64_t flash_size)
-         return ret;
-     }
- 
-+    /*
-+     * The reset vector is saved into a CPU context for each AP but not for
-+     * the BSP. This is applied during guest startup or when the CPU is reset.
-+     */
-     if (addr) {
--        sev_common->reset_cs = addr & 0xffff0000;
--        sev_common->reset_ip = addr & 0x0000ffff;
--        sev_common->reset_data_valid = true;
--
--        CPU_FOREACH(cpu) {
--            sev_es_set_reset_vector(cpu);
--        }
-+        sev_es_set_ap_context(addr);
-     }
- 
-     return 0;
-@@ -2068,6 +2323,7 @@ sev_common_instance_init(Object *obj)
-     object_property_add_uint32_ptr(obj, "reduced-phys-bits",
-                                    &sev_common->reduced_phys_bits,
-                                    OBJ_PROP_FLAG_READWRITE);
-+    QTAILQ_INIT(&sev_common->launch_vmsa);
- }
- 
- /* sev guest info common to sev/sev-es/sev-snp */
+ static const CPUCaches xeon_srf_cache_info = {
+     .l1d_cache = &(CPUCacheInfo) {
+         /* CPUID 0x4.0x0.EAX */
+@@ -4951,6 +5042,11 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+                     { /* end of list */ }
+                 }
+             },
++            {
++                .version = 3,
++                .note = "with gnr-sp cache model",
++                .cache_info = &xeon_gnr_cache_info,
++            },
+             { /* end of list */ },
+         },
+     },
 -- 
 2.50.0
 
