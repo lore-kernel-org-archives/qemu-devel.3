@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4718DC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:49:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B042C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:50:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubLQm-0005TN-5M; Mon, 14 Jul 2025 11:49:29 -0400
+	id 1ubLS1-0000Fl-Po; Mon, 14 Jul 2025 11:50:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ubKEZ-0001R0-PI
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 10:32:48 -0400
-Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1ubKJ9-00045b-ND
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 10:37:34 -0400
+Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ubKEW-0003Sl-Cs
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 10:32:47 -0400
-Received: by mail-yb1-xb2d.google.com with SMTP id
- 3f1490d57ef6-e8600c87293so3376537276.1
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 07:32:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1ubKJ7-00049Q-27
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 10:37:31 -0400
+Received: by mail-qt1-x832.google.com with SMTP id
+ d75a77b69052e-4a442a3a2bfso63485301cf.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 07:37:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752503562; x=1753108362; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=By24n6LEFYBIQMs5AN6ls3Y2G9z3UtnmydD0gpsDIsk=;
- b=wR4w4Iz8XPvaG1NtnNNlYObXvDRB1phi7uN1hy2y7xW4kM/hjYK/8a7A3cRrCYLuMY
- 1L3xCISr8af6zT5CB52OsNOjpoMjGM3pWZw5bq1scqp5zTFCkowyZOdnjprbbnQl9rXV
- LD66RoQm0JVLbJ/r/lY5DIIs8zp894Y7jOgm9fw1KOE5eAR+sSggZypTaxpUNYkPXU/J
- ztCwhhsWxqxLn8k0dyu05x0Doct0InLcpoMEXLMXNSNVzqxKPLIKf9baOOUCO41EnhWu
- qGy0Ns/5hvbGOZxGaf9dNK9iXmdBffe08tOcMvLNkDZ9gF+Agx4pcLOg5YUdrZwdrpmh
- 9qTA==
+ d=gmail.com; s=20230601; t=1752503847; x=1753108647; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=37/kV6oNNr+YsMEoe8w5gieaOrP+vGgou2O1vX6B5t8=;
+ b=FVaXpFACl6xtpZmk2OJellMZe+Rq/KLUjnLEyY5ea1E4wSYl8XTbN0rXSb3iPuLX+Q
+ p/Ygzi5tuRyr4HynxdVa2Fl/72n40LDL7K5QGcSkzGR7cyq4GZP63VPLlng7x+dEx2T1
+ gwvHGhXUixUh1zwbApI49jc/VCLp31JWD9u6NWONj5BOMCZLX13PNWD/XeDxB+HiX8k/
+ KUnEDA5/uHXD+29g6ciOQmcYawcva6IwAzachwSh4pcNQcoKtDuYBcLWZuWLDwB6STVo
+ UYKa6Gmb7PgXr3zvPetKNo+eoInbcS6O8TbLn9OvTxPtSDgewIqs1sTH2mgNBKXTiQ8z
+ /FNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752503562; x=1753108362;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=By24n6LEFYBIQMs5AN6ls3Y2G9z3UtnmydD0gpsDIsk=;
- b=ib7i2cgjWNj6mYNP6zlDcdYDfWxr487w1q37BQfmOGUJfTeAOmhpVOFhPi2NIgPiWf
- EsV/I/fr3bsPDcGI3lo3ELMdA5sXxuS2L8Sp1UvneRum+les29JCNPtlatvS8j+smfW5
- shTE7A9hWudwuWfrDxnOQ86ZSGYvSiJrmcioejWy/5dqoLn7VDnDDcM9PHdDWbtARXmo
- NNR0kePYgb4y4EZNg/Ml6lqRUHCdEb8+7DNTDXVIiCxI49RY6hejIxyxwW6hhiVMDX61
- zQ4CQXtI38/e1Dv0MzSIz00hrTZhPEI1osROHsLR2UBtbSFHDb4IpRTHxvJ5kVvo4hg3
- Cdcg==
-X-Gm-Message-State: AOJu0YzoRJZKgWv4meXVI12OPUwY+HC/GUNKwp5wbZTn8hTtMEq0q3D5
- 9H7KzeEglQtIuki5YVRp2E/REd0+4gHWAXxeVgrQzsNlAsMktHM5tyxSqoIcvplHhQrn8LF8VUB
- 3EbP8a+yCK58qhl1sRh/Dr/Vuqso+T0lPIcV6D7jvNQ==
-X-Gm-Gg: ASbGncvvYKv90ofY6yZbidB/iTmSVv+hDexaMakvVnx/0UpWPVw7kaMUU/dxQi8e6xs
- mRZJ7yfo5eQVpNso9C7t6nVqBVMQKKafPzqILTFWzAxTtjhaTCj7PqPS+8Nf1Hcp8RXZOsxF8DC
- qfcjjfjB8iJJ87MxHRfHLd3GRCW+n6UC2prqWjoMfpmxmF7+ZiQnp551QPyiSSmjzCpCGoPc3R8
- XG1pxJK
-X-Google-Smtp-Source: AGHT+IHjLq5SdwF2gcY85LVfP7Iwun9cMGGGpg+dIGzNcHzhVO5yo0fn1tUsvdMYUPXy6gna33ZCdtewUbesxuJwCGQ=
-X-Received: by 2002:a05:690c:31e:b0:70c:9364:2c62 with SMTP id
- 00721157ae682-717d5dec46bmr190698497b3.25.1752503562097; Mon, 14 Jul 2025
- 07:32:42 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752503847; x=1753108647;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=37/kV6oNNr+YsMEoe8w5gieaOrP+vGgou2O1vX6B5t8=;
+ b=iBxdjtHjQYbdsM4FfDZ8N7b8YLCSK6dbpN2kz2xvelKSw48ymzfeekvNe4Zh9KNtke
+ RRiXGzs/KC5sIiGFmQ9aQ7j1KZffGXe/QpHZbGJ4Y+GaG/J8jQ3XVw49eCKdn3sFxtwY
+ Nbwe/LDLMQDESy+sLYXnH7kmpzC5mtLykuHbB1Vy5UYQXXEjrsGoh1aKBE5dDfkoE+6s
+ 7mFlLD+518eKKxng0J58ZZQ3CZIjVi7YMnojJN7Mlm2MeOYulZOGW+fiBBp37cIOZ4Ix
+ Mhw3NlyegG+0CsXSW16FZG+BYpcMVS4ZTyQqd7/OmFq7ZmqMqu8aORQJ2mkt2D0VPI9f
+ GQNA==
+X-Gm-Message-State: AOJu0YwLWoG+OpF94owZeA7cRcGz1GslgMFGyxW0J/VcAJ2X74QYEXyH
+ K2ZYOjfnVCNFBnDiOqdaMHh2Tjfq/xSV9Q7R7/WCmFbeaTW142hnfuf/a7HbZ5TZv1kZNZDdRKZ
+ jPbAQcU18SeCWepXsTnnqAzriuJogwaQ=
+X-Gm-Gg: ASbGncv2zQ7/TxyMmJBF7fwgF9/H4G2y5S5Wsl6nEkCZNvo+fd97TvfJQWWWEfVA+QZ
+ qukX5fv09x4XDJ7wktHDUeCTGSKw9pROTXOgWHeurbiXZ+eN/IJcKrg5aXn8inSIfY5zZWXGeH4
+ qBaWRTecYv3/w/lLKtrxMKh3WsCvNna0QpN1R79RQUa+uiYBr0bUiew//JiT1bMXIO/b4aBe1TK
+ mCQ/V3AVXvql774dwtZOxQPdOYXdvLZxEi4S8iY
+X-Google-Smtp-Source: AGHT+IE/AAep1Y4N85Tok0o9PscvZ6joFzFzZOWSNi2AQG2mcDArKahXxzXZhE408FPJDQn0G2ZDcKe6VavK/5e31t0=
+X-Received: by 2002:a05:622a:1452:b0:4ab:6bd2:e25 with SMTP id
+ d75a77b69052e-4ab6bd251fcmr67193781cf.25.1752503847373; Mon, 14 Jul 2025
+ 07:37:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <1752503239-222714-1-git-send-email-steven.sistare@oracle.com>
- <1752503239-222714-3-git-send-email-steven.sistare@oracle.com>
-In-Reply-To: <1752503239-222714-3-git-send-email-steven.sistare@oracle.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 14 Jul 2025 15:32:30 +0100
-X-Gm-Features: Ac12FXwTQxuo2cg0SZXfGBRD9vVDlUVqPTkgCGsDBwX58yrOiiBv8WvPcQw4DOs
-Message-ID: <CAFEAcA8yg19zB=xWqcywe+bj57bHjfRaZ5+TBy6GhKwoeJBV-Q@mail.gmail.com>
-Subject: Re: [PATCH V1 2/2] hw/intc/arm_gicv3_kvm: preserve pending interrupts
- during cpr
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Cedric Le Goater <clg@redhat.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>, 
- Alex Williamson <alex.williamson@redhat.com>
+References: <20250714141758.10062-1-weifeng.liu.z@gmail.com>
+In-Reply-To: <20250714141758.10062-1-weifeng.liu.z@gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 14 Jul 2025 18:37:16 +0400
+X-Gm-Features: Ac12FXygrj_OU3-yQ1Ek0XcfNqfYqbnrnherg45poJ4XEYL4Tb0UKzD93Z2IJms
+Message-ID: <CAJ+F1CJZ0-pvt0-dn_5S58GYobG=H+hb_czNRVGnhVU3VA1ybA@mail.gmail.com>
+Subject: Re: [PATCH] gtk: Skip drawing if console surface is NULL
+To: Weifeng Liu <weifeng.liu.z@gmail.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Vivek Kasireddy <vivek.kasireddy@intel.com>, 
+ Dongwon Kim <dongwon.kim@intel.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2d.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x832.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,63 +99,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Jul 2025 at 15:29, Steve Sistare <steven.sistare@oracle.com> wrote:
+On Mon, Jul 14, 2025 at 6:18=E2=80=AFPM Weifeng Liu <weifeng.liu.z@gmail.co=
+m> wrote:
 >
-> Close a race condition that causes cpr-transfer to lose VFIO
-> interrupts on ARM.
+> In gtk draw/render callbacks, add an early NULL check for the console
+> surface and skip drawing if it's NULL. Otherwise, attempting to fetch
+> its width and height crash. This change fixes Coverity CID 1610328.
 >
-> CPR stops VCPUs but does not disable VFIO interrupts, which may continue
-> to arrive throughout the transition to new QEMU.
+> In practice, this case wouldn't happen at all because we always install
+> a placeholder surface to the console when there is nothing to display.
 >
-> CPR calls kvm_irqchip_remove_irqfd_notifier_gsi in old QEMU to force
-> future interrupts to the producer eventfd, where they are preserved.
-> Old QEMU then destroys the old KVM instance.  However, interrupts may
-> already be pended in KVM state.  To preserve them, call ioctl
-> KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES to flush them to guest RAM, where
-> they will be picked up when the new KVM+VCPU instance is created.
->
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> Resolves: Coverity CID 1610328
+> Signed-off-by: Weifeng Liu <weifeng.liu.z@gmail.com>
+
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
 > ---
->  hw/intc/arm_gicv3_kvm.c            | 16 +++++++++++++++-
->  include/hw/intc/arm_gicv3_common.h |  3 +++
->  2 files changed, 18 insertions(+), 1 deletion(-)
+>  ui/gtk-egl.c     | 5 +----
+>  ui/gtk-gl-area.c | 5 +----
+>  2 files changed, 2 insertions(+), 8 deletions(-)
 >
-> diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
-> index 43cba6e3f1..15245af2fd 100644
-> --- a/hw/intc/arm_gicv3_kvm.c
-> +++ b/hw/intc/arm_gicv3_kvm.c
-> @@ -30,6 +30,7 @@
->  #include "gicv3_internal.h"
->  #include "vgic_common.h"
->  #include "migration/blocker.h"
-> +#include "migration/misc.h"
->  #include "qom/object.h"
->  #include "target/arm/cpregs.h"
+> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+> index 0b787bea25..ae9239999c 100644
+> --- a/ui/gtk-egl.c
+> +++ b/ui/gtk-egl.c
+> @@ -72,7 +72,7 @@ void gd_egl_draw(VirtualConsole *vc)
+>  #endif
+>      int ww, wh, pw, ph, gs;
 >
-> @@ -783,6 +784,15 @@ static void vm_change_state_handler(void *opaque, bool running,
+> -    if (!vc->gfx.gls) {
+> +    if (!vc->gfx.gls || !vc->gfx.ds) {
+>          return;
 >      }
->  }
 >
-> +static int kvm_arm_gicv3_notifier(NotifierWithReturn *notifier,
-> +                                  MigrationEvent *e, Error **errp)
-> +{
-> +    if (e->type == MIG_EVENT_PRECOPY_DONE) {
-> +        GICv3State *s = container_of(notifier, GICv3State, cpr_notifier);
-> +        kvm_arm_save_pending_tables(s);
+> @@ -112,9 +112,6 @@ void gd_egl_draw(VirtualConsole *vc)
+>          }
+>  #endif
+>      } else {
+> -        if (!vc->gfx.ds) {
+> -            return;
+> -        }
+>          eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
+>                         vc->gfx.esurface, vc->gfx.ectx);
+>
+> diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+> index 8151cc413c..05fc38096e 100644
+> --- a/ui/gtk-gl-area.c
+> +++ b/ui/gtk-gl-area.c
+> @@ -48,7 +48,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
+>      int fbw, fbh;
+>      int wx_offset, wy_offset;
+>
+> -    if (!vc->gfx.gls) {
+> +    if (!vc->gfx.gls || !vc->gfx.ds) {
+>          return;
+>      }
+>
+> @@ -135,9 +135,6 @@ void gd_gl_area_draw(VirtualConsole *vc)
+>          }
+>  #endif
+>      } else {
+> -        if (!vc->gfx.ds) {
+> -            return;
+> -        }
+>          gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
+>
+>          surface_gl_setup_viewport(vc->gfx.gls, vc->gfx.ds, pw, ph);
+> --
+> 2.49.0
+>
 
-This kvm_arm_gicv3_notifier() function reports an error via
-an Error pointer, and the function we call inside
-kvm_arm_save_pending_tables() can report errors via an
-Error pointer. So I think kvm_arm_save_pending_tables()
-should propagate the Error up, not ignore it.
 
-(Or if there's a good reason we should silently ignore
-the error here, we should have a comment saying why.)
-
-> +    }
-> +    return 0;
-> +}
-
-thanks
--- PMM
+--=20
+Marc-Andr=C3=A9 Lureau
 
