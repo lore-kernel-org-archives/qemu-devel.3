@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBD9CC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:30:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C31B2C83F21
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:30:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSMg-0004Lw-4i; Mon, 14 Jul 2025 19:13:42 -0400
+	id 1ubSMd-0004A9-KM; Mon, 14 Jul 2025 19:13:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSJf-00064g-NN
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:10:37 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSJS-000600-L6
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:10:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSJe-0006Fz-0n
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:10:35 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSJR-00063E-0U
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:10:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534633;
+ s=mimecast20190719; t=1752534619;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=2+Hdc3Q1kzEjtmu1x2KZoQB+ra+Yvhw6yCMQj7TWWZk=;
- b=ZtUKS4MJB1xOXzwKYwbxU9rca/mK/Yg+UZyArr7n+ycst7liyUDKK5vq4YWYASzayVZ10Q
- juogYi4xsENPFo3/jUtMUwqWhhdiIdRa7JVzUHISPoGrMdYcDSnBeltpqs4uTOO9XKYEAy
- G78FScEzg/5H1TXU5/nsp2okW7nwfmo=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=h9YR5w450ZjJ0pBgGMl41SlLEhDoh07LQFY/a0XBD2c=;
+ b=W5Jl/npBER6KTJayFrIXR0Y3Y0gv4IAiUoqR6ZBfmErOpLPDMFARfoCGQ/hIvjONLn1jp2
+ JCaGvnXgpzO0LmunFuUoOiKXN3Yvan04vTxoBpJ4JwQpc35mp2hTdKqPbyIqkoV5bxTyP4
+ /AWpUi3Qzb/Cv/UBrth13ndlYvO5Dwo=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-677-IayyownLOiOqz694ypz4QA-1; Mon, 14 Jul 2025 19:10:31 -0400
-X-MC-Unique: IayyownLOiOqz694ypz4QA-1
-X-Mimecast-MFC-AGG-ID: IayyownLOiOqz694ypz4QA_1752534631
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-451d30992bcso37920425e9.2
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:10:31 -0700 (PDT)
+ us-mta-365-4eJClQlBPXu-qbMjEXMKlg-1; Mon, 14 Jul 2025 19:10:18 -0400
+X-MC-Unique: 4eJClQlBPXu-qbMjEXMKlg-1
+X-Mimecast-MFC-AGG-ID: 4eJClQlBPXu-qbMjEXMKlg_1752534617
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a50049f8eeso2120717f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:10:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534630; x=1753139430;
+ d=1e100.net; s=20230601; t=1752534616; x=1753139416;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2+Hdc3Q1kzEjtmu1x2KZoQB+ra+Yvhw6yCMQj7TWWZk=;
- b=FDd1/DlXrMEZJYJAGDEv1aoGLr6CK8dJgLnec4lUsiyfSexL+Z5NILD/5Uu3hQ8F41
- sANjxHDj8xrq4021mbvBDQKXnhxBo1xcaYqb9HOqePDaAPzOEJMElCw2T5B/92Zf3IAx
- dFQDDM+8LPV4UlkjRyP+E85fzmfa3kcHYWUCApXq0Erck1jKuIxJZTTGOEMh2kvR5tmf
- lSiy978ofXvfZ6sof4gitm4bbpk/YGwD3A6dou94lDgAFNB6LJrO/do1BG/5yokxwF4K
- sdhIFxX1MRojqwXB1mwOOh25/XQrbNQoGXi0ljShRi3uQJv59DvB8hhX7zRTsXLh18HT
- OfMw==
-X-Gm-Message-State: AOJu0YzfFGY+4K685ox3MnM0ZCrtcavSI33Pf8YOx9RYQAbWeve2yM1D
- bHmrYvOqb3riEjqJloAdh1ya22wbijE+D8ijwUk4YtdFz3YTwtkIBhdxhZGvRqzdL1jWu+DTLyx
- Lpi/EZVe2WopjWzX3Jl0CTL7fpIQAW2fjBVyXKMbr+K/8eJzf4DefXCJwZqgNi+YrzBAWvJjofN
- TgEyNxaVTazaRFuMlLJ/Ss0J9DF3LGZzXXcA==
-X-Gm-Gg: ASbGnct+4NYzk8lfeuD0w7AjD59E8JF8gyfvxHXc022RBAIzrsqVkcBA1NFbAxsVWsy
- yCknaIy0C6rfiLIxOcqkUbh9Ikz0qIZaG1ZedFPrZWi1c6VGjCdc9Rn+h5UxsWdwvPBGfNYej7Z
- 7+4B24efB9PPzmwVilVzBsbMfUTaygOjo9w0DBzIV4ywUnJUjya0gmhwmg+VaqIFM5IiwoJz9ww
- d8ioqHU6KNjjR3uLQ1tgrlQfeXFn0vxXI4sUZoWZqMsUJKVxe4rJsmvmsrRF4QdW68bp4UevKVJ
- ZOmbSypruoAwp19wi3UHGQBQZzT7sWua
-X-Received: by 2002:a05:600c:468b:b0:453:1e14:6387 with SMTP id
- 5b1f17b1804b1-456057c68bemr76241465e9.32.1752534630029; 
- Mon, 14 Jul 2025 16:10:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHt5bUFpQrzgBQZEdy/VP1cMAfSJs7Wr8A5rdg2Y8VRM1i1YrXXVpwn7IxVBxuA5aRF3p0Mvg==
-X-Received: by 2002:a05:600c:468b:b0:453:1e14:6387 with SMTP id
- 5b1f17b1804b1-456057c68bemr76241325e9.32.1752534629569; 
- Mon, 14 Jul 2025 16:10:29 -0700 (PDT)
+ bh=h9YR5w450ZjJ0pBgGMl41SlLEhDoh07LQFY/a0XBD2c=;
+ b=m/FMkCY5l/YXWSxtIAd+dmV3UZYd7BwEilzYcEE/+2VYD+ahbCunRQqjaPQYbpvLyP
+ EmG7t26xjIUByvajmA015A3KHp1yV162vl0Ht/D50KGZNx/U5k27Pt9da8ZflE9LcC2C
+ GepFgtzPMlC4IAPGbDHBnFItPZJIBjfEp9NCKJlwNWySfVZQtkjECxSs7kwOt6Mxiv2h
+ OxJt4zMBUERdPfGYCxmqhIUwIYjLkrzXeQC6JNI2iHji+3MY1D91bGKIjtPejlzcuk7i
+ 4XT4gsAsW0ZpWQPxvcDElyw/FbEaEoAoilLvApJHdGh7Jq5eQKeTudfwkPyYc79UnpHV
+ K+1A==
+X-Gm-Message-State: AOJu0YxNGXKFqVRp5qpbD4gcjKhixlaDcMgY/Ml+vX0g6gzo9zxwBICS
+ x9hwGO10Ff52EdPtR3+upp+hH2uWthYWCqKdLeKtpw8mANh0VOQbK9CqhDQ121kdVQmf9TctXUn
+ Y1suWQB5MdvoeyOzttDYtxMzoicWNMfeaFuThmDJmTGlttI3OnLcl7nw13+BCbEJBmn25+f1yJK
+ COMSuPSSUdcy22RXUcVTUJT5GqYaFbN/9+Ug==
+X-Gm-Gg: ASbGncvZ4N1nk5JUVb65EjC5mQDbXuCcfJYQmIoFmFIrb/mcESx6Kz285ZUt2TuAAWF
+ e0tWoRJP3hhRFV1IBzBklvb4mvwgxAsAh1rpLNtTZJZBB5TltgIsN/UzxjcQP5TpUjKE9QK1juz
+ mkp+aR9mwl272FJR3NrbpGWRJzsEi5gl9I2W2Phb9+pjQ0yLCip/YUgx9GWxPlj8xAVq37ZQBc1
+ OYqnRyq6RDnIskgUyDE+lE++iFLzeqRN4uE+Fg3KSb1HgvEi8AQEU6QUuIApJvxbhk3Ob6zyfKh
+ FtO2cPRlFWWiJHV3NPinD935xRyIrbMV
+X-Received: by 2002:a05:6000:d12:b0:3a5:8d0b:d0b8 with SMTP id
+ ffacd0b85a97d-3b5f18e7af8mr10881984f8f.54.1752534616622; 
+ Mon, 14 Jul 2025 16:10:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEyaJCJ6DeYwyDTrWsLhB1aMaEjo9ElFl2Uj0Z0y5ylSRUUqZJ1jGH7FkjN8RhDftwYEXuDaQ==
+X-Received: by 2002:a05:6000:d12:b0:3a5:8d0b:d0b8 with SMTP id
+ ffacd0b85a97d-3b5f18e7af8mr10881967f8f.54.1752534616188; 
+ Mon, 14 Jul 2025 16:10:16 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8bd17b7sm13550755f8f.11.2025.07.14.16.10.28
+ ffacd0b85a97d-3b5e8dc3a54sm13747494f8f.39.2025.07.14.16.10.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:10:29 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:10:27 -0400
+ Mon, 14 Jul 2025 16:10:15 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:10:13 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Anisa Su <anisa.su@samsung.com>, Fan Ni <fan.ni@samsung.com>,
  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PULL 97/97] hw/cxl: mailbox-utils: 0x5605 - FMAPI Initiate DC Release
-Message-ID: <77a8fbb887cb4c00be094aee839a42f72a850950.1752534227.git.mst@redhat.com>
+Subject: [PULL 91/97] hw/cxl: Move definition for dynamic_capacity_uuid and
+ enum for DC event types to header
+Message-ID: <cea6073998e96235893b65894d9896494773fda6.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -111,131 +112,69 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Anisa Su <anisa.su@samsung.com>
 
-FM DCD Management command 0x5605 implemented per CXL r3.2 Spec Section 7.6.7.6.6
+Move definition/enum to cxl_events.h for shared use in next patch
 
 Reviewed-by: Fan Ni <fan.ni@samsung.com>
 Signed-off-by: Anisa Su <anisa.su@samsung.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20250714174509.1984430-12-Jonathan.Cameron@huawei.com>
+Message-Id: <20250714174509.1984430-6-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/cxl/cxl-mailbox-utils.c | 88 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 88 insertions(+)
+ include/hw/cxl/cxl_events.h | 15 +++++++++++++++
+ hw/mem/cxl_type3.c          | 15 ---------------
+ 2 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 5d08525529..68c7cc9891 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -124,6 +124,7 @@ enum {
-         #define SET_DC_REGION_CONFIG        0x2
-         #define GET_DC_REGION_EXTENT_LIST   0x3
-         #define INITIATE_DC_ADD             0x4
-+        #define INITIATE_DC_RELEASE         0x5
- };
+diff --git a/include/hw/cxl/cxl_events.h b/include/hw/cxl/cxl_events.h
+index 38cadaa0f3..758b075a64 100644
+--- a/include/hw/cxl/cxl_events.h
++++ b/include/hw/cxl/cxl_events.h
+@@ -184,4 +184,19 @@ typedef struct CXLEventDynamicCapacity {
+     uint32_t tags_avail;
+ } QEMU_PACKED CXLEventDynamicCapacity;
  
- /* CCI Message Format CXL r3.1 Figure 7-19 */
-@@ -3645,6 +3646,86 @@ static CXLRetCode cmd_fm_initiate_dc_add(const struct cxl_cmd *cmd,
++/* CXL r3.1 Table 8-50: Dynamic Capacity Event Record */
++static const QemuUUID dynamic_capacity_uuid = {
++    .data = UUID(0xca95afa7, 0xf183, 0x4018, 0x8c, 0x2f,
++                 0x95, 0x26, 0x8e, 0x10, 0x1a, 0x2a),
++};
++
++typedef enum CXLDCEventType {
++    DC_EVENT_ADD_CAPACITY = 0x0,
++    DC_EVENT_RELEASE_CAPACITY = 0x1,
++    DC_EVENT_FORCED_RELEASE_CAPACITY = 0x2,
++    DC_EVENT_REGION_CONFIG_UPDATED = 0x3,
++    DC_EVENT_ADD_CAPACITY_RSP = 0x4,
++    DC_EVENT_CAPACITY_RELEASED = 0x5,
++} CXLDCEventType;
++
+ #endif /* CXL_EVENTS_H */
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 6b0889c9ae..52d3910ed9 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -1876,21 +1876,6 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
      }
  }
  
-+#define CXL_EXTENT_REMOVAL_POLICY_MASK 0x0F
-+#define CXL_FORCED_REMOVAL_MASK (1 << 4)
-+/*
-+ * CXL r3.2 Section 7.6.7.6.6:
-+ * Initiate Dynamic Capacity Release (Opcode 5605h)
-+ */
-+static CXLRetCode cmd_fm_initiate_dc_release(const struct cxl_cmd *cmd,
-+                                             uint8_t *payload_in,
-+                                             size_t len_in,
-+                                             uint8_t *payload_out,
-+                                             size_t *len_out,
-+                                             CXLCCI *cci)
-+{
-+    struct {
-+        uint16_t host_id;
-+        uint8_t flags;
-+        uint8_t reg_num;
-+        uint64_t length;
-+        uint8_t tag[0x10];
-+        uint32_t ext_count;
-+        CXLDCExtentRaw extents[];
-+    } QEMU_PACKED *in = (void *)payload_in;
-+    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-+    int i, rc;
-+
-+    switch (in->flags & CXL_EXTENT_REMOVAL_POLICY_MASK) {
-+        case CXL_EXTENT_REMOVAL_POLICY_PRESCRIPTIVE: {
-+            CXLDCExtentList updated_list;
-+            uint32_t updated_list_size;
-+            g_autofree CXLUpdateDCExtentListInPl *list =
-+                g_malloc0(sizeof(*list) +
-+                    in->ext_count * sizeof(*list->updated_entries));
-+
-+            convert_raw_extents(in->extents, list, in->ext_count);
-+            rc = cxl_detect_malformed_extent_list(ct3d, list);
-+            if (rc) {
-+                return rc;
-+            }
-+
-+            /*
-+             * Fail with Invalid PA if an extent is pending and Forced Removal
-+             * flag not set.
-+             */
-+            if (!(in->flags & CXL_FORCED_REMOVAL_MASK)) {
-+                for (i = 0; i < in->ext_count; i++) {
-+                    CXLDCExtentRaw ext = in->extents[i];
-+                    /*
-+                     * Check requested extents don't overlap with pending
-+                     * extents.
-+                     */
-+                    if (cxl_extent_groups_overlaps_dpa_range(
-+                            &ct3d->dc.extents_pending,
-+                            ext.start_dpa,
-+                            ext.len)) {
-+                        return CXL_MBOX_INVALID_PA;
-+                    }
-+                }
-+            }
-+
-+            rc = cxl_dc_extent_release_dry_run(ct3d,
-+                                               list,
-+                                               &updated_list,
-+                                               &updated_list_size);
-+            if (rc) {
-+                return rc;
-+            }
-+            cxl_create_dc_event_records_for_extents(ct3d,
-+                                                    DC_EVENT_RELEASE_CAPACITY,
-+                                                    in->extents,
-+                                                    in->ext_count);
-+            return CXL_MBOX_SUCCESS;
-+        }
-+        default: {
-+            qemu_log_mask(LOG_UNIMP,
-+                "CXL extent removal policy not supported.\n");
-+            return CXL_MBOX_INVALID_INPUT;
-+        }
-+    }
-+}
-+
- static const struct cxl_cmd cxl_cmd_set[256][256] = {
-     [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
-         cmd_infostat_bg_op_abort, 0, 0 },
-@@ -3779,6 +3860,13 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
-         CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
-         CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
-         CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
-+    [FMAPI_DCD_MGMT][INITIATE_DC_RELEASE] = { "INIT_DC_RELEASE",
-+        cmd_fm_initiate_dc_release, ~0,
-+        (CXL_MBOX_CONFIG_CHANGE_COLD_RESET |
-+         CXL_MBOX_CONFIG_CHANGE_CONV_RESET |
-+         CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
-+         CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
-+         CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
- };
- 
+-/* CXL r3.1 Table 8-50: Dynamic Capacity Event Record */
+-static const QemuUUID dynamic_capacity_uuid = {
+-    .data = UUID(0xca95afa7, 0xf183, 0x4018, 0x8c, 0x2f,
+-                 0x95, 0x26, 0x8e, 0x10, 0x1a, 0x2a),
+-};
+-
+-typedef enum CXLDCEventType {
+-    DC_EVENT_ADD_CAPACITY = 0x0,
+-    DC_EVENT_RELEASE_CAPACITY = 0x1,
+-    DC_EVENT_FORCED_RELEASE_CAPACITY = 0x2,
+-    DC_EVENT_REGION_CONFIG_UPDATED = 0x3,
+-    DC_EVENT_ADD_CAPACITY_RSP = 0x4,
+-    DC_EVENT_CAPACITY_RELEASED = 0x5,
+-} CXLDCEventType;
+-
  /*
+  * Check whether the range [dpa, dpa + len - 1] has overlaps with extents in
+  * the list.
 -- 
 MST
 
