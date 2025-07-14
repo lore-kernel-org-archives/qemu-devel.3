@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EACFC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:11:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39857C83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:11:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSHd-0006ta-0P; Mon, 14 Jul 2025 19:08:29 -0400
+	id 1ubSIS-00036P-8f; Mon, 14 Jul 2025 19:09:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGJ-0003Lx-6I
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSHC-00068q-Cx
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:08:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGG-0005Rp-WA
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:06 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSHA-0005ct-Mo
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:08:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534424;
+ s=mimecast20190719; t=1752534478;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=L6nMveUbGLrix9Gi4Nv9/DgFcJ4qjPzRjbMU6l4MMKE=;
- b=IemNU1LBE+FYN/STm+itbe+tnZKWW5OMbRhN3WG8mBx/Xz2AHRlcLgvmPtgXfa7hCR0W9B
- FldVAw0W/0vLlq/NWudBlscNFAD1wemod34DZxR7C1eiKuS0t7kCl8y3g4CwC3r8VLg53Q
- V9/r8iDxYE44Fo5u2R8aFeVPWmvqUfo=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ZnCiPK9qjMPW1GxC0I9MN0RmWn7FrkbvPqd5JVEOfwc=;
+ b=KRJRy+kAbNevPqbjUSbhZakhfWXQjNopxkhjpTl8Sn++Umfl0J1U/MBylgiiHa4x9HMIlA
+ 98J39OLG8eFAP0J9Ju21E1IFNXZ8wjlRcqZppMGoc2QS5apHqhZiA6w+IA/GP2uZhp4D5k
+ Eb49a3lomYetDQWLB09BbzQy5m/4KFY=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-66-HSh_MKSmNw-W1CBz6GSKzw-1; Mon, 14 Jul 2025 19:07:03 -0400
-X-MC-Unique: HSh_MKSmNw-W1CBz6GSKzw-1
-X-Mimecast-MFC-AGG-ID: HSh_MKSmNw-W1CBz6GSKzw_1752534422
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4561bc2f477so9105785e9.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:07:03 -0700 (PDT)
+ us-mta-282-Oqz4j4abOIeaxu6RviGqiA-1; Mon, 14 Jul 2025 19:07:56 -0400
+X-MC-Unique: Oqz4j4abOIeaxu6RviGqiA-1
+X-Mimecast-MFC-AGG-ID: Oqz4j4abOIeaxu6RviGqiA_1752534474
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4eeed54c2so2649442f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:07:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534422; x=1753139222;
+ d=1e100.net; s=20230601; t=1752534474; x=1753139274;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=L6nMveUbGLrix9Gi4Nv9/DgFcJ4qjPzRjbMU6l4MMKE=;
- b=adVBNYBmMpUlc9Tif46diJz//5GXja7TYwjmzBqYQ3pGZZ2f63NdpRs9AacQoDeE9d
- TYYzbcpkUfKG2BiNg9KrXmbfaFKeh/uBCRhb1P2NzzzHOFNCRaw1RiYJNKqg2TvatsEn
- d7pQUbx7XhmoJihv9vjs1tQB9dhP8fZttScJrv4UlxzfLow2u67jJ/qwnkQfxT1CNwO1
- G/vFY8NOyJbHNhz8qG1P+jJv8IFvTd4Tccv5/77QBTVsOnF1+HhzGWQxxgJ7RKWQAnfv
- jApNgWkODrjGsXFl8ZRJH3euj1hRx1P0z1jtH3oy2DXWEaqIMTq63N9P+o/fMbh5ZbC1
- 4uKw==
-X-Gm-Message-State: AOJu0Yz54Dj1BtlZusZZxwEtVQ6m55Xcb4IynIZCRwIsASC1bzwV6+bH
- VkYBqL+XDG9j+H+6cGD5fo3lnNJqpxHhIHiO2+FJub++KpgFqU98bKyyRYZ8bB06HCYAzTpA27t
- 07LzsMaSk9wY5gRu//P0aXyPA+aNtZwx0VALM/ebBj1iKnbOlVo5RaR0kqTmJYmGrhhel7CneJq
- fkWfm8BQA2WtD0XTJJYnG+61No56zxFzfp/w==
-X-Gm-Gg: ASbGncueANbZJlSy4klGURDjezIjjeJquvFERhS9I8GVHU1jgG/wT8Zt6jSIWlCU4j8
- XFfpe9AfLwyA5HD8JF6XfdNo2KvhSMNUiCfMgyngn3lh3GgYW7q+reWBAiutFfRoMJgqx+pv6Em
- cqrRNwnFysYk9jhtnRhFpH5lUxED774B3oQfWDcWbbGXYsOJ1pQlWcZZa3gT0/EkyChFrT28CVH
- IkhbrN9tPB2SLkpjM9NhM/Rh23rYP1ohJ8QFZLFgGGssyJoszgIT679vM0+6TtGrFD3OzMWiReM
- flAaaJ4VknZA2UiOtuZ1UiSZ+0ScV60U
-X-Received: by 2002:a05:600c:1546:b0:456:58e:31af with SMTP id
- 5b1f17b1804b1-456058e33b9mr111509005e9.14.1752534421657; 
- Mon, 14 Jul 2025 16:07:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEyylURUBM3LIWdMLMxKD/hA1FAGQUvUOFHLCGzEzYdB0A8DxTgBP8nfxqlcrOEzw1UWV/How==
-X-Received: by 2002:a05:600c:1546:b0:456:58e:31af with SMTP id
- 5b1f17b1804b1-456058e33b9mr111508755e9.14.1752534421199; 
- Mon, 14 Jul 2025 16:07:01 -0700 (PDT)
+ bh=ZnCiPK9qjMPW1GxC0I9MN0RmWn7FrkbvPqd5JVEOfwc=;
+ b=YgFaFku5IVgJg4ajM9YUYFdjcNSp8nhlVzHWJ0+Tes836zMwSNQRmjOBrSeS0M2ALt
+ ZLEWXv4//tL9u3c276UU4JkrvPd/AmtOnvDyxH4FvVUe+iXn999wJKXOwG52nr1Y7EdU
+ xS7nVi8IHNJ55ENfSBgv1DofR9RDVDNkBTsiHMsyjhhd/B8/FyKH6Kc2evEf0bv7/ZHa
+ PS08P9JlDM74aZoqbsu3M5aDpTNpw/S46J+zltayXM3+eRbWCk6BtZiPfeeXFVhCOKL6
+ JgzB6w85B7A9Rj0cnGtSTI3lhZgOyMYU+ZvrVibtxdaAlWtw0Ck4vORdOjYMXSOavvpk
+ hNPg==
+X-Gm-Message-State: AOJu0YxiXVY7KaEwcNC7hbYJ8QjLH67ggQXR4sN14ihy+LTeUhRYVkqu
+ fMsTIjoa/Pzg9qpZB0wEg6+RD/J02KcuZtStNmKV0TNn6psMCsBdfNYQXF3b0uBJi7dJqMJxaLy
+ TBA1U3OA8DK9lkVHN0Kq/aSOmozlkbs+ZKV0XbVnUgOEsEZSlUTDnR2G1ikUiJWpzWQWsC0QWbq
+ nMjbBtEurn3i3L4Qb7OHYtw0b8lqXz9shrcw==
+X-Gm-Gg: ASbGncuc3qOrsIeGdBzw1XCBccjAMYuDTlEQNHEJM+SDxO5wAFO0OsTA4OAKSaX/ySF
+ KHj9iXwWPLzkzaTbAmODgy0TDRRnM0O1sDF6VdelDfCAkNOf17yLCDRNG0w78J3saV/oQt5RWzU
+ KB7TYu5CEnEM8mvQVt+u/H5u5OBfzt3GVv2Pxj5bKCefZUavj+7ayXo4EHwFSl9UkRPVlXonEes
+ uHei5bU3AdfJA4Rh9flA1r1enP2FD3mJ4e1eCVqbc7eJDx1SGzg1nZz402xHc9iOFZllmqOOLoN
+ 2UBTa/XXf8ku4pFSK7JDVHnX2xTAUz+m
+X-Received: by 2002:a05:6000:2c0f:b0:3a4:d4cd:b06 with SMTP id
+ ffacd0b85a97d-3b5f18d98c1mr14125309f8f.34.1752534473771; 
+ Mon, 14 Jul 2025 16:07:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE6pEKK3EPDqVZib5+SFZk7ZHqkDLC3XsS5JHU/WFt9XPKUX9gOExa/rRNntoFfMnO/iCOwCA==
+X-Received: by 2002:a05:6000:2c0f:b0:3a4:d4cd:b06 with SMTP id
+ ffacd0b85a97d-3b5f18d98c1mr14125284f8f.34.1752534473285; 
+ Mon, 14 Jul 2025 16:07:53 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45619fbcff8sm48845765e9.2.2025.07.14.16.07.00
+ ffacd0b85a97d-3b5e8bd180fsm13366964f8f.2.2025.07.14.16.07.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:07:00 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:06:59 -0400
+ Mon, 14 Jul 2025 16:07:52 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:07:50 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- qemu-stable@nongnu.org, Vasant Hegde <vasant.hegde@amd.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 18/97] amd_iommu: Fix Device ID decoding for
- INVALIDATE_IOTLB_PAGES command
-Message-ID: <c63b8d1425ba8b3b08ee4f7346457fd8a7f12a24.1752534227.git.mst@redhat.com>
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 38/97] intel_iommu: Add support for ATS
+Message-ID: <47c3dcd3ffc6d187b97fe494a14fb61dd3911ccd.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -114,45 +113,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
 
-The DeviceID bits are extracted using an incorrect offset in the call to
-amdvi_iotlb_remove_page(). This field is read (correctly) earlier, so use
-the value already retrieved for devid.
-
-Cc: qemu-stable@nongnu.org
-Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Message-Id: <20250617150427.20585-3-alejandro.j.jimenez@oracle.com>
+Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Message-Id: <20250628180226.133285-11-clement.mathieu--drif@eviden.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/amd_iommu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/i386/intel_iommu.c | 63 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 63 insertions(+)
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 963aa2450c..c27efa504d 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -508,7 +508,7 @@ static void amdvi_inval_inttable(AMDVIState *s, uint64_t *cmd)
- static void iommu_inval_iotlb(AMDVIState *s, uint64_t *cmd)
- {
- 
--    uint16_t devid = extract64(cmd[0], 0, 16);
-+    uint16_t devid = cpu_to_le16(extract64(cmd[0], 0, 16));
-     if (extract64(cmd[1], 1, 1) || extract64(cmd[1], 3, 1) ||
-         extract64(cmd[1], 6, 6)) {
-         amdvi_log_illegalcom_error(s, extract64(cmd[0], 60, 4),
-@@ -521,7 +521,7 @@ static void iommu_inval_iotlb(AMDVIState *s, uint64_t *cmd)
-                                     &devid);
-     } else {
-         amdvi_iotlb_remove_page(s, cpu_to_le64(extract64(cmd[1], 12, 52)) << 12,
--                                cpu_to_le16(extract64(cmd[1], 0, 16)));
-+                                devid);
-     }
-     trace_amdvi_iotlb_inval();
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 1b1b0b5632..fe9a5f2872 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -4738,6 +4738,68 @@ static AddressSpace *vtd_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
+     return &vtd_as->as;
  }
+ 
++static IOMMUTLBEntry vtd_iommu_ats_do_translate(IOMMUMemoryRegion *iommu,
++                                                hwaddr addr,
++                                                IOMMUAccessFlags flags)
++{
++    IOMMUTLBEntry entry;
++    VTDAddressSpace *vtd_as = container_of(iommu, VTDAddressSpace, iommu);
++
++    if (vtd_is_interrupt_addr(addr)) {
++        vtd_report_ir_illegal_access(vtd_as, addr, flags & IOMMU_WO);
++        entry.target_as = &address_space_memory;
++        entry.iova = 0;
++        entry.translated_addr = 0;
++        entry.addr_mask = ~VTD_PAGE_MASK_4K;
++        entry.perm = IOMMU_NONE;
++        entry.pasid = PCI_NO_PASID;
++    } else {
++        entry = vtd_iommu_translate(iommu, addr, flags, 0);
++    }
++
++    return entry;
++}
++
++static ssize_t vtd_ats_request_translation(PCIBus *bus, void *opaque,
++                                           int devfn, uint32_t pasid,
++                                           bool priv_req, bool exec_req,
++                                           hwaddr addr, size_t length,
++                                           bool no_write, IOMMUTLBEntry *result,
++                                           size_t result_length,
++                                           uint32_t *err_count)
++{
++    IntelIOMMUState *s = opaque;
++    VTDAddressSpace *vtd_as;
++    IOMMUAccessFlags flags = IOMMU_ACCESS_FLAG_FULL(true, !no_write, exec_req,
++                                                    priv_req, false, false);
++    ssize_t res_index = 0;
++    hwaddr target_address = addr + length;
++    IOMMUTLBEntry entry;
++
++    vtd_as = vtd_find_add_as(s, bus, devfn, pasid);
++    *err_count = 0;
++
++    while ((addr < target_address) && (res_index < result_length)) {
++        entry = vtd_iommu_ats_do_translate(&vtd_as->iommu, addr, flags);
++        entry.perm &= ~IOMMU_GLOBAL; /* Spec 4.1.2: Global Mapping never set */
++
++        if ((entry.perm & flags) != flags) {
++            *err_count += 1; /* Less than expected */
++        }
++
++        result[res_index] = entry;
++        res_index += 1;
++        addr = (addr & (~entry.addr_mask)) + (entry.addr_mask + 1);
++    }
++
++    /* Buffer too small */
++    if (addr < target_address) {
++        return -ENOMEM;
++    }
++
++    return res_index;
++}
++
+ static void vtd_init_iotlb_notifier(PCIBus *bus, void *opaque, int devfn,
+                                     IOMMUNotifier *n, IOMMUNotify fn,
+                                     void *user_opaque)
+@@ -4787,6 +4849,7 @@ static PCIIOMMUOps vtd_iommu_ops = {
+     .init_iotlb_notifier = vtd_init_iotlb_notifier,
+     .register_iotlb_notifier = vtd_register_iotlb_notifier,
+     .unregister_iotlb_notifier = vtd_unregister_iotlb_notifier,
++    .ats_request_translation = vtd_ats_request_translation,
+ };
+ 
+ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
 -- 
 MST
 
