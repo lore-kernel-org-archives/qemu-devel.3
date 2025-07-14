@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78D3CC83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:29:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71670C83F21
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:29:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSLd-0008T0-I2; Mon, 14 Jul 2025 19:12:44 -0400
+	id 1ubSMP-0002Xd-K7; Mon, 14 Jul 2025 19:13:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSIl-0004m8-KJ
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSJ0-0004pX-5F
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSIh-0005ue-VS
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:38 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSIx-0005x0-EK
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534575;
+ s=mimecast20190719; t=1752534590;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=0rpEe4Ya0FUWqHztCZx1kne7sIio/ZH524H7ccN5+II=;
- b=UPu61Nv5y49+SukWJTh0ZHFQBcyqYMPr+GgwDkN7acigMfsmS3HRgI1OOmrgkMry2eM8NY
- Kjvmi363DxwsnMuxdP+1/vrhMk3R7HKf85Jm25T5zq1N4cXQ3ysyfoCeqq6mX/CE5YPFTW
- 8FqBo8sFwexjX80T9WcuMiH0DuW6zts=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QqTJ16m3W94kcOoIuD8eqXOCXfhNBwJpPqGbqHsBKLU=;
+ b=fPlHT2haEIS6HpqcsLpjC68S3ZTBvfn+CRzYpdhqA1qIHI3KJLQn6g7U8CrwQXYrgP8sNr
+ Wch2wQCeFSWVGcv/3FXzaTKH7YmO48YmKKs5kIUKzjNcqgxhzrpCzbERi5dvEXmxu8qik3
+ bX5/g3EeAperrEJhVCnuRljQel8jIZE=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-232-F7YDCXgVNZWd_WHId9YkYg-1; Mon, 14 Jul 2025 19:09:34 -0400
-X-MC-Unique: F7YDCXgVNZWd_WHId9YkYg-1
-X-Mimecast-MFC-AGG-ID: F7YDCXgVNZWd_WHId9YkYg_1752534573
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4f858bc5eso3632369f8f.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:09:34 -0700 (PDT)
+ us-mta-569-fGaD2fZYM5au_GhMthOB3Q-1; Mon, 14 Jul 2025 19:09:49 -0400
+X-MC-Unique: fGaD2fZYM5au_GhMthOB3Q-1
+X-Mimecast-MFC-AGG-ID: fGaD2fZYM5au_GhMthOB3Q_1752534588
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-451d2037f1eso30883875e9.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:09:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534573; x=1753139373;
+ d=1e100.net; s=20230601; t=1752534587; x=1753139387;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0rpEe4Ya0FUWqHztCZx1kne7sIio/ZH524H7ccN5+II=;
- b=gCDCRlem21zy5fmDKYbKO5mpwMxQYgKr7m7HSWlBB+NstlOFDtjZugwVC036jx9jxV
- fSySUpmLCsMgJq2OpFIZ/Knk7gqVF3WfKGX5DO+NyFu81C108HQbsxo9fALQO62Pa34Q
- Ck3gtUE62MqXd9pHszIF4uQ3HWr95K3JF3xaydYg4qU53eW8JiAV0uIHp0cD1vNZrVWA
- Ge9++NPIKCAb4c2f7Vvb/lhlhE+xTkuAi4nsXAQsUSsUNSx/LzL02s7YoQJwQSreb8Pg
- SnbckLMzyNgu84ApQFgRlGfkAY+77RWDRVDCwvINVZi4PvnFEf6d/k4zj9DbDTVruQvQ
- 6CBA==
-X-Gm-Message-State: AOJu0YyqQhB9yDVdNiKPwFNTlyu3xY+t8pd4ciZ8sBGIJ8pD7VXLhbwj
- tr9MieD5SQRUBQ3VONbY6sGLhNGYefKsuU0o5IYjX6TDgr1kEzwgI9UBo953rgVHhVbPOdcMFGR
- 2ISgiq23EFeH02Ezuny6ByESwHpxreI+yxo/IxSzInvP0dRkzEN7auzSm0GEJqAV0VcrfWM0Z9e
- i0O6hhoU4zGo0uvoaMsWLwCWeF2Q8Ns/AoeA==
-X-Gm-Gg: ASbGncsoPCVMLofbHY7LDxASwwvFpqO1G+YM+9W4XbIINm92oYIr6ZNevPBFSuk1afa
- ELUcd3Xdrwa4PekbcJAYQVDFgDvvESwvqv9AzrdUYpY/wGd8e+UdXEqI49iAGc1CLtGViIApYY/
- qE8iugN2/ZvwNhF1DJ/MsGMcbxDFt9tWoFPBhXoY0XHywdSO0TXAdZ8re2pHGqEzbHqc3dq8DSQ
- T8W4FRpSR4KaOkabU6Y2CE1o5Jc4eA0a0drh6S7tjptyHGjJF5d0OP8Tpr0gaccQIBO1em1ZS8f
- MAn67LyfV/Lk60OOHVjN121PmQyKm0GO
-X-Received: by 2002:a05:6000:4606:b0:3a4:f72a:b18a with SMTP id
- ffacd0b85a97d-3b5f2dd2b82mr11501203f8f.26.1752534572818; 
- Mon, 14 Jul 2025 16:09:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGH7vlAm3oGq5yZ3p3JuGb4UNA/mb4v8bBju/0aLwHLYMFwrCvQzI8Gc6hwukw3Ib513pWX9w==
-X-Received: by 2002:a05:6000:4606:b0:3a4:f72a:b18a with SMTP id
- ffacd0b85a97d-3b5f2dd2b82mr11501180f8f.26.1752534572299; 
- Mon, 14 Jul 2025 16:09:32 -0700 (PDT)
+ bh=QqTJ16m3W94kcOoIuD8eqXOCXfhNBwJpPqGbqHsBKLU=;
+ b=t/M9SRghVfJopPcdVhGUJAdr/o4LalCKFMDqC1GwdzzQhsItfVvobu5TqfCffVUtmw
+ hONGXca3rwr9e+KVCqYApG3V0FGSeYZcWEnUizNmoBvJhcoq5BS0PEAjCORL8E7ovl9F
+ hcAEpTjEP+5krVLPmqmP98HbZHixj7/qmHUnAv1LW7t6suymSx8xjplQGYMX9xaTXUw6
+ OZ2oEpN+eNuGVLiaGezrlzpLjLEgIW5T+rxjflDs/VzmbpkgcbzaoHH/gWZeXhdOVIB4
+ qRqoC8H/rLEQOMFbmvevsE9zOQ1LC4BtoYdvm3zfIcwAfGlhN3o6vH8TUbJNtDv3TegX
+ nYWg==
+X-Gm-Message-State: AOJu0Yw0wBOZ/ISJD9J6z0YfJyo1Oa8VruOUgVqPU20u4G3JM0hQKCvm
+ mmmrxvhh4Y7oFvVmAcvyNJT3o9YAyEV2q8ZQ9I+cGZ8zskL5dPtaL4UHqgp3GRKv9mMJH+8w/dS
+ PDfKr7WhSCh4woDrOtK5Vd9y0Op6PMfJy4HjLcVUj4oGvfNuq6kZyMO1KGEr0ACVKg6NbBh09hN
+ T0noqkvfwtezT1S/wJ3Ayj6sT0JwBGP00CgA==
+X-Gm-Gg: ASbGncuCCQ11q/YHz8W9EZR6UMQyciV2zUnYJW/svs345GDCoCQD/zDhyVxiiii2Ik9
+ O4v6RhBwvke2ys2h6MG2h/EJLBlFMxgYeEpnegPe050k/id1vM6lXb3lnQyvZ/TQe7MqZZEXpD5
+ oNI+tqsZLBQ/hhqOf54roPfySYhiBcdJUBF6aOpGLCJ2fiiZPGTZmJey/VLzqLGgw5M3S52UeC/
+ kJ/w/IVqCe50ysCvRn8OWnK49l6+Yrv88bpFOlK88Z2AyeC6T99bMFxVJM72VzZvxoBF+p3tzFc
+ WJ/x5An3vSUgjYEatPpIkf/mB4Gdn9JT
+X-Received: by 2002:a05:600c:1e04:b0:456:c48:491f with SMTP id
+ 5b1f17b1804b1-4560c484fbbmr105519465e9.10.1752534587555; 
+ Mon, 14 Jul 2025 16:09:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFsoPaJGvE6lvlB6QXLaHNsv2urzMPx770IGVf42omrNkzGIp9onEx5jfb7qH2r2ms9kZSlgw==
+X-Received: by 2002:a05:600c:1e04:b0:456:c48:491f with SMTP id
+ 5b1f17b1804b1-4560c484fbbmr105519235e9.10.1752534587046; 
+ Mon, 14 Jul 2025 16:09:47 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e0d4b5sm13749186f8f.53.2025.07.14.16.09.29
+ 5b1f17b1804b1-4560394e061sm87585675e9.31.2025.07.14.16.09.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:09:31 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:09:29 -0400
+ Mon, 14 Jul 2025 16:09:46 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:09:43 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>,
  Jonathan Cameron <jonathan.cameron@huawei.com>,
- Prasad Pandit <pjp@fedoraproject.org>, Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 75/97] hw/acpi/ged: Support migration of AcpiPciHpState
-Message-ID: <6778bd7c1cc29188497691cd3290c195a9ebea11.1752534227.git.mst@redhat.com>
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 80/97] tests/qtest/bios-tables-test: Add aarch64 ACPI PCI
+ hotplug test
+Message-ID: <9b25d58455d7a78c4e58ce1401c9ee7f84c0e51b.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -85,7 +87,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1752534227.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -110,59 +112,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Gustavo Romero <gustavo.romero@linaro.org>
 
-Add a subsection to migrate the AcpiPciHpState state.
+Add 2 new tests:
+- test_acpi_aarch64_virt_acpi_pci_hotplug tests the acpi pci hotplug
+  using -global acpi-ged.acpi-pci-hotplug-with-bridge-support=on
+- test_acpi_aarch64_virt_pcie_root_port_hpoff tests static-acpi index
+  on a root port with disabled hotplug
 
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
-Message-Id: <20250714080639.2525563-30-eric.auger@redhat.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20250714080639.2525563-35-eric.auger@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/acpi/generic_event_device.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ tests/qtest/bios-tables-test.c | 52 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
-diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-index 7535d07737..95682b79a2 100644
---- a/hw/acpi/generic_event_device.c
-+++ b/hw/acpi/generic_event_device.c
-@@ -417,6 +417,25 @@ static const VMStateDescription vmstate_ghes_state = {
-     }
- };
+diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+index 4701975c05..6aec68decc 100644
+--- a/tests/qtest/bios-tables-test.c
++++ b/tests/qtest/bios-tables-test.c
+@@ -1643,6 +1643,54 @@ static void test_acpi_aarch64_virt_tcg_memhp(void)
  
-+static bool pcihp_needed(void *opaque)
+ }
+ 
++static void test_acpi_aarch64_virt_acpi_pci_hotplug(void)
 +{
-+    AcpiGedState *s = opaque;
-+    return s->pcihp_state.use_acpi_hotplug_bridge;
++    test_data data = {
++        .machine = "virt",
++        .arch = "aarch64",
++        .tcg_only = true,
++        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
++        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
++        .ram_start = 0x40000000ULL,
++        .scan_len = 256ULL * MiB,
++        .variant = ".acpipcihp",
++    };
++
++   /* Use ACPI PCI Hotplug */
++   test_acpi_one(" -global acpi-ged.acpi-pci-hotplug-with-bridge-support=on"
++                 " -cpu cortex-a57"
++                 " -device pcie-root-port,id=pcie.1,bus=pcie.0,chassis=0,slot=1,addr=7.0"
++                 " -device pci-testdev,bus=pcie.1",
++                 &data);
++
++    free_test_data(&data);
 +}
 +
-+static const VMStateDescription vmstate_pcihp_state = {
-+    .name = "acpi-ged/pcihp",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = pcihp_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_PCI_HOTPLUG(pcihp_state,
-+                            AcpiGedState,
-+                            NULL, NULL),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
++static void test_acpi_aarch64_virt_pcie_root_port_hpoff(void)
++{
++    test_data data = {
++        .machine = "virt",
++        .arch = "aarch64",
++        .tcg_only = true,
++        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
++        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
++        .ram_start = 0x40000000ULL,
++        .scan_len = 256ULL * MiB,
++        .variant = ".hpoffacpiindex",
++    };
 +
- static const VMStateDescription vmstate_acpi_ged = {
-     .name = "acpi-ged",
-     .version_id = 1,
-@@ -429,6 +448,7 @@ static const VMStateDescription vmstate_acpi_ged = {
-         &vmstate_memhp_state,
-         &vmstate_cpuhp_state,
-         &vmstate_ghes_state,
-+        &vmstate_pcihp_state,
-         NULL
-     }
- };
++   /* turn hotplug off on the pcie-root-port and use static acpi-index*/
++   test_acpi_one(" -device pcie-root-port,id=pcie.1,chassis=0,"
++                                          "slot=1,hotplug=off,addr=7.0"
++                 " -device pci-testdev,bus=pcie.1,acpi-index=12"
++                 " -cpu cortex-a57",
++                 &data);
++
++    free_test_data(&data);
++}
++
+ static void test_acpi_microvm_prepare(test_data *data)
+ {
+     data->machine = "microvm";
+@@ -2708,6 +2756,10 @@ int main(int argc, char *argv[])
+             qtest_add_func("acpi/virt/numamem",
+                            test_acpi_aarch64_virt_tcg_numamem);
+             qtest_add_func("acpi/virt/memhp", test_acpi_aarch64_virt_tcg_memhp);
++            qtest_add_func("acpi/virt/acpipcihp",
++                           test_acpi_aarch64_virt_acpi_pci_hotplug);
++            qtest_add_func("acpi/virt/hpoffacpiindex",
++                          test_acpi_aarch64_virt_pcie_root_port_hpoff);
+             qtest_add_func("acpi/virt/pxb", test_acpi_aarch64_virt_tcg_pxb);
+             qtest_add_func("acpi/virt/oem-fields",
+                            test_acpi_aarch64_virt_oem_fields);
 -- 
 MST
 
