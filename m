@@ -4,70 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CAD7C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 08:51:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DD1AC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 08:54:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubEsW-00046g-VB; Mon, 14 Jul 2025 04:49:41 -0400
+	id 1ubEvz-0006Hn-4G; Mon, 14 Jul 2025 04:53:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1ubEU5-0007Gp-7h
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:24:26 -0400
-Received: from p-east1-cluster6-host10-snip4-3.eps.apple.com ([57.103.90.224]
- helo=outbound.ci.icloud.com)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1ubEX2-0004Ms-Ea
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:27:29 -0400
+Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1ubEU3-0006jb-67
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:24:24 -0400
-Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
- by outbound.ci.icloud.com (Postfix) with ESMTPS id 4CA0B18001E1;
- Mon, 14 Jul 2025 08:24:18 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
- bh=3HNl1XRwXoKAkX0cmOsH9ur/HirNWHt2xH48gEitwfk=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=OeBhwY8lp32/NPJT5uD5N3PW51c3p0a/DKCMr+Q8OmAZ0nzE9ggpmLZbPv2qDbY8CCm4i1W61SFEF5oclZCtuYKrdSxzbNj3qC9JEKO/SfaSFouGRlh6VDeeTGzNV24DwgLmc1au4fn/eIDFROHVnbSF1R5QLxqD0Cd5WIqRN/O2XvWv2zwHiRT6KRxHOr7Vbqie/pZxd83EUGAW5RBNX5ZkJTY30iaQ9oQZyVqW5hMQXfK7gplNHodnkO+uPFfqZ8TfSrFbgD5aAt7RTjfXnDf2rK8/oKsWL0yS1ullLg2fcg+z10U1MZoK0e0v6WtPpoUsggWaWyymePKED4gekw==
-Received: from smtpclient.apple (ci-asmtp-me-k8s.p00.prod.me.com
- [17.57.156.36])
- by outbound.ci.icloud.com (Postfix) with ESMTPSA id 28F2D18001AB;
- Mon, 14 Jul 2025 08:24:17 +0000 (UTC)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [PATCH] hvf: arm: Remove $pc from trace_hvf_data_abort()
-From: Mads Ynddal <mads@ynddal.dk>
-In-Reply-To: <20250713154719.4248-1-zenghui.yu@linux.dev>
-Date: Mon, 14 Jul 2025 10:24:04 +0200
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, agraf@csgraf.de,
- peter.maydell@linaro.org
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1ubEX0-0007YO-7W
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:27:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1752481646; x=1784017646;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=ulxwXnCarJ/lEri4I9QD+wDA4PxCaZqW3dZhn2Jg+Qw=;
+ b=FmAVkrHHMBueIuwjZKwHsda3ODvtxJmlzMPY2Zz7c0W3C5FBrrTfNMVQ
+ CMpm6+is6mxFmFMKRHglAdcpA0rTFXD3lCWp9n/m94P0fT3hLlczur4L8
+ nFSBZc4nIwTDLmuPimYmf3lctUcj8hUI+gq6r5/4aAPkykeIV4qectjCQ
+ B8R7YRPzgZUGuSroao5wFQbB0Bd/ydNp10zze9ZJKscCjKTY3tEp3FXpz
+ EWlP5EZl6qqeZV9lgQMpMQAFSw3rDG0gIb3v/YQ55V8G4gJorVEeEf4Lr
+ k+XdySu60b+PQPDCnJaUlPSbdv52dRqnRC+NdPsuj3cPG+vG0MKYfvjVq A==;
+X-CSE-ConnectionGUID: BBFQsTz8SLy2IkswBoEPeg==
+X-CSE-MsgGUID: BVBXZULSQImIpRH9NQdj5Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="54525289"
+X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; d="scan'208";a="54525289"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jul 2025 01:27:24 -0700
+X-CSE-ConnectionGUID: Q6VCSHHtTjuZLjh9OyYkqg==
+X-CSE-MsgGUID: V/MSKFOGSlSS31jYDDA7Ew==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; d="scan'208";a="157431131"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jul 2025 01:27:20 -0700
+Message-ID: <42817b7d-445f-4940-9070-e3c939a6e90f@intel.com>
+Date: Mon, 14 Jul 2025 16:27:16 +0800
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/7] i386/cpu: Mark CPUID 0x80000008 ECX bits[0:7] &
+ [12:15] as reserved for Intel/Zhaoxin
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>
+Cc: Ewan Hai <ewanhai-oc@zhaoxin.com>, Tao Su <tao1.su@intel.com>,
+ Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
+ qemu-devel@nongnu.org, Tao Su <tao1.su@linux.intel.com>
+References: <20250714080859.1960104-1-zhao1.liu@intel.com>
+ <20250714080859.1960104-3-zhao1.liu@intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250714080859.1960104-3-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <29299A8B-CF64-4D61-97E6-23EE6BA00E15@ynddal.dk>
-References: <20250713154719.4248-1-zenghui.yu@linux.dev>
-To: Zenghui Yu <zenghui.yu@linux.dev>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
-X-Proofpoint-ORIG-GUID: Qwt-Be2CQ6vCJ5_Xa2GnD7zowCgZcubc
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE0MDA0OSBTYWx0ZWRfXyIgusRhrjhCb
- io/ERNEYQogNbnJo5O6ltdVfHOMME0VxJ2zX4+HE7g+dB+BqAxuKTn8Ze9YUVQQ8Lt+OR1FElrH
- VtwoG8cmM12sVe5AS+ttP5Z+zEu3nEM+Q3/QrthhMnxIF35daBJoPvuXhc4jqvDP9k//I66P19F
- gjwbcWZU7rbl+KQ1dM3pV9xZd7Sb1KMQdwztmrENccCzTd6E9tDCbzmX/4XO9ic9W3r+7e31fI6
- OubGU8q4tKSG6np6AZOfbWhgyuBpa9XSW9w/1iKafXBQ9lx16p7zxqVXqXS0jTyYNnE97gq2c=
-X-Proofpoint-GUID: Qwt-Be2CQ6vCJ5_Xa2GnD7zowCgZcubc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-14_01,2025-07-09_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- malwarescore=0 mlxscore=0 clxscore=1030 phishscore=0 mlxlogscore=691
- suspectscore=0 spamscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506060001 definitions=main-2507140049
-Received-SPF: pass client-ip=57.103.90.224; envelope-from=mads@ynddal.dk;
- helo=outbound.ci.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+Received-SPF: pass client-ip=198.175.65.19; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,20 +91,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-> On 13 Jul 2025, at 17.47, Zenghui Yu <zenghui.yu@linux.dev> wrote:
+On 7/14/2025 4:08 PM, Zhao Liu wrote:
+> Per SDM,
 > 
-> We don't synchronize vcpu registers from the hardware accelerator (e.g., by
-> cpu_synchronize_state()) in the Dabort handler, so env->pc points to the
-> instruction which has nothing to do with the Dabort at all.
+> 80000008H EAX Linear/Physical Address size.
+>                Bits 07-00: #Physical Address Bits*.
+>                Bits 15-08: #Linear Address Bits.
+>                Bits 31-16: Reserved = 0.
+>            EBX Bits 08-00: Reserved = 0.
+>                Bit 09: WBNOINVD is available if 1.
+>                Bits 31-10: Reserved = 0.
+>            ECX Reserved = 0.
+>            EDX Reserved = 0.
 > 
-> And it doesn't seem to make much sense to log PC in every Dabort handler,
-> let's just remove it from this trace event.
+> ECX/EDX in CPUID 0x80000008 leaf are reserved.
 > 
-> Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
+> Currently, in QEMU, only ECX bits[0:7] and ECX bits[12:15] are encoded,
+> and both are emulated in QEMU.
+> 
+> Considering that Intel and Zhaoxin are already using the 0x1f leaf to
+> describe CPU topology, which includes similar information, Intel and
+> Zhaoxin will not implement ECX bits[0:7] and bits[12:15] of 0x80000008.
+> 
+> Therefore, mark these two fields as reserved and clear them for Intel
+> and Zhaoxin guests.
+> 
+> Reviewed-by: Tao Su <tao1.su@linux.intel.com>
+> Tested-by: Yi Lai <yi1.lai@intel.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+> Changes Since v1:
+>   * Consider Zhaoxin (Ewan).
+>   * Only clear ECX bits[0:7] and bits[12:15] for Intel/Zhaoxin, and do
+>     not cover other bits.
+> ---
+>   target/i386/cpu.c | 22 ++++++++++++++++------
+>   1 file changed, 16 insertions(+), 6 deletions(-)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 37e4bf51d890..abd529d587ba 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -8387,15 +8387,25 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>                *eax |= (cpu->guest_phys_bits << 16);
+>           }
+>           *ebx = env->features[FEAT_8000_0008_EBX];
+> +
+>           if (threads_per_pkg > 1) {
+>               /*
+> -             * Bits 15:12 is "The number of bits in the initial
+> -             * Core::X86::Apic::ApicId[ApicId] value that indicate
+> -             * thread ID within a package".
+> -             * Bits 7:0 is "The number of threads in the package is NC+1"
+> +             * Don't emulate Bits [7:0] & Bits [15:12] for Intel/Zhaoxin, since
+> +             * they're using 0x1f leaf.
+>                */
+> -            *ecx = (apicid_pkg_offset(topo_info) << 12) |
+> -                   (threads_per_pkg - 1);
+> +            if (cpu->vendor_cpuid_only_v2 &&
+> +                (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) {
+> +                    *ecx = 0;
+> +            } else {
+> +                /*
+> +                 * Bits 15:12 is "The number of bits in the initial
+> +                 * Core::X86::Apic::ApicId[ApicId] value that indicate
+> +                 * thread ID within a package".
+> +                 * Bits 7:0 is "The number of threads in the package is NC+1"
+> +                 */
+> +                *ecx = (apicid_pkg_offset(topo_info) << 12) |
+> +                       (threads_per_pkg - 1);
+> +            }
+>           } else {
+>               *ecx = 0;
+>           }
 
-I agree. Unless cpu_synchronize_state(cpu) is called, the value in env->pc is
-stale.
+I prefer below:
 
-Reviewed-by: Mads Ynddal <mads@ynddal.dk>
+	if ((cpu->vendor_cpuid_only_v2 &&
+	    (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) ||
+	    threads_per_pkg < 2) {
+		*ecx = 0;
+	} else {
+		...
+	}
+
 
