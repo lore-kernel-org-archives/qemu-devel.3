@@ -4,63 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F0B2C83F27
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:08:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD1FAC83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:09:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubKmz-0006B4-2C; Mon, 14 Jul 2025 11:08:30 -0400
+	id 1ubKmc-0005tI-5R; Mon, 14 Jul 2025 11:07:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJUl-0000NP-RB
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:45:28 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJUg-0000Lz-6Y
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:45:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJUW-0003d2-Sw
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:45:26 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJUT-0003bR-VT
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:45:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752500711;
+ s=mimecast20190719; t=1752500708;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=R1qX+mpYmZpUc+5wPTF7mRZVR+Q4ffPDdQeCnNltIEk=;
- b=Db+OmPdyJHHp5fmvGHZKgylPunMUi+icMLHlkDB6vsziCoyBtlre2h3VqimqwFzKGAyvgM
- m7L6J6uf88GhdzOVR+0LWGGR5FDXxJ6xOk7U36WmKFawCrYYzFSa5OJtkuJdostlMI0wwy
- g5La894PgvzVLrykT0pHvpnFu9KsBnU=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=3q/bW+GcuB7r8oOsorennTkn1NwHdWIIWWCKtwf0KS4=;
+ b=KMgLm4/9mFmsIuaQOjeM7qJ3bFp5d+a4UUitp9PX91SBoJBJqJCVGbEDLLKFphiJDXBZhr
+ SH7YvrGttMVH/Dm5604eUhywOuiRZ94nx98jGfmz1lOBM3Dg4x8bj40BjxkiHQEkH7YYSR
+ V4ztiUxkmbpTUv9yBhamR44OWMT80iA=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-NWIY2ZLHPPmOCjfrFPd27Q-1; Mon,
- 14 Jul 2025 09:45:09 -0400
-X-MC-Unique: NWIY2ZLHPPmOCjfrFPd27Q-1
-X-Mimecast-MFC-AGG-ID: NWIY2ZLHPPmOCjfrFPd27Q_1752500708
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-577-jvXizUH7MbG6lTYKPIL-Kw-1; Mon,
+ 14 Jul 2025 09:45:06 -0400
+X-MC-Unique: jvXizUH7MbG6lTYKPIL-Kw-1
+X-Mimecast-MFC-AGG-ID: jvXizUH7MbG6lTYKPIL-Kw_1752500705
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 935CF195605C
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:45:08 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A67A419560B9
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:45:05 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 478671803AF2
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:45:08 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 538271977000
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:45:05 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1A4C421E65CE; Mon, 14 Jul 2025 15:44:59 +0200 (CEST)
+ id CE9B121E6773; Mon, 14 Jul 2025 15:44:58 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
-	John Snow <jsnow@redhat.com>
-Subject: [PULL 22/32] qapi: add cross-references to QOM
-Date: Mon, 14 Jul 2025 15:44:48 +0200
-Message-ID: <20250714134458.2991097-23-armbru@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 06/32] qapi: Clean up "This command will do ..." command
+ descriptions
+Date: Mon, 14 Jul 2025 15:44:32 +0200
+Message-ID: <20250714134458.2991097-7-armbru@redhat.com>
 In-Reply-To: <20250714134458.2991097-1-armbru@redhat.com>
 References: <20250714134458.2991097-1-armbru@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -69,8 +71,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,97 +88,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Snow <jsnow@redhat.com>
+Use imperative mood "Do ..." instead.
 
-Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20250711054005.60969-12-jsnow@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20250708072828.105185-2-armbru@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- qapi/qdev.json |  4 ++--
- qapi/qom.json  | 13 +++++++------
- 2 files changed, 9 insertions(+), 8 deletions(-)
+ qapi/control.json   |  9 +++++----
+ qapi/misc-i386.json | 11 +++++------
+ qapi/qom.json       | 10 ++++------
+ 3 files changed, 14 insertions(+), 16 deletions(-)
 
-diff --git a/qapi/qdev.json b/qapi/qdev.json
-index 6441357e00..e14a0c9259 100644
---- a/qapi/qdev.json
-+++ b/qapi/qdev.json
-@@ -97,10 +97,10 @@
- #    from the guest.  Hot removal is an operation that requires guest
- #    cooperation.  This command merely requests that the guest begin
- #    the hot removal process.  Completion of the device removal
--#    process is signaled with a DEVICE_DELETED event.  Guest reset
-+#    process is signaled with a `DEVICE_DELETED` event.  Guest reset
- #    will automatically complete removal for all devices.  If a
- #    guest-side error in the hot removal process is detected, the
--#    device will not be removed and a DEVICE_UNPLUG_GUEST_ERROR event
-+#    device will not be removed and a `DEVICE_UNPLUG_GUEST_ERROR` event
- #    is sent.  Some errors cannot be detected.
+diff --git a/qapi/control.json b/qapi/control.json
+index ab0b3a3bbe..5fed0701f8 100644
+--- a/qapi/control.json
++++ b/qapi/control.json
+@@ -160,10 +160,11 @@
+ ##
+ # @quit:
+ #
+-# This command will cause the QEMU process to exit gracefully.  While
+-# every attempt is made to send the QMP response before terminating,
+-# this is not guaranteed.  When using this interface, a premature EOF
+-# would not be unexpected.
++# Request graceful QEMU process termination.
++#
++# While every attempt is made to send the QMP response before
++# terminating, this is not guaranteed.  When using this interface, a
++# premature EOF would not be unexpected.
  #
  # Since: 0.14
+ #
+diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
+index 5fefa0a484..b53ed39288 100644
+--- a/qapi/misc-i386.json
++++ b/qapi/misc-i386.json
+@@ -6,9 +6,9 @@
+ ##
+ # @rtc-reset-reinjection:
+ #
+-# This command will reset the RTC interrupt reinjection backlog.  Can
+-# be used if another mechanism to synchronize guest time is in effect,
+-# for example QEMU guest agent's guest-set-time command.
++# Reset the RTC interrupt reinjection backlog.  Can be used if another
++# mechanism to synchronize guest time is in effect, for example QEMU
++# guest agent's guest-set-time command.
+ #
+ # Use of this command is only applicable for x86 machines with an RTC,
+ # and on other machines will silently return without performing any
+@@ -233,8 +233,7 @@
+ ##
+ # @sev-inject-launch-secret:
+ #
+-# This command injects a secret blob into memory of a SEV/SEV-ES
+-# guest.
++# Inject a secret blob into a SEV/SEV-ES guest's memory.
+ #
+ # This is only valid on x86 machines configured with KVM and the
+ # 'sev-guest' confidential virtualization object.  SEV-SNP guests do
+@@ -272,7 +271,7 @@
+ ##
+ # @query-sev-attestation-report:
+ #
+-# This command is used to get the SEV attestation report.
++# Get the SEV attestation report.
+ #
+ # This is only valid on x86 machines configured with KVM and the
+ # 'sev-guest' confidential virtualization object.  The attestation
 diff --git a/qapi/qom.json b/qapi/qom.json
-index aa09eddbf9..4e85baae47 100644
+index f68f72fbbc..6c38e865a6 100644
 --- a/qapi/qom.json
 +++ b/qapi/qom.json
-@@ -52,7 +52,7 @@
- #
- # List properties of a object given a path in the object model.
- #
--# @path: the path within the object model.  See @qom-get for a
-+# @path: the path within the object model.  See `qom-get` for a
- #     description of this parameter.
- #
- # Returns: a list that describe the properties of the object.
-@@ -129,12 +129,12 @@
- #
- # Set a property value.
- #
--# @path: see @qom-get for a description of this parameter
-+# @path: see `qom-get` for a description of this parameter
- #
- # @property: the property name to set
- #
- # @value: a value who's type is appropriate for the property type.
--#     See @qom-get for a description of type mapping.
-+#     See `qom-get` for a description of type mapping.
- #
- # Since: 1.2
- #
-@@ -153,7 +153,7 @@
+@@ -50,8 +50,7 @@
  ##
- # @ObjectTypeInfo:
+ # @qom-list:
  #
--# This structure describes a search result from @qom-list-types
-+# This structure describes a search result from `qom-list-types`
+-# This command will list any properties of a object given a path in
+-# the object model.
++# List properties of a object given a path in the object model.
  #
- # @name: the type name found in the search
+ # @path: the path within the object model.  See @qom-get for a
+ #     description of this parameter.
+@@ -78,8 +77,7 @@
+ ##
+ # @qom-get:
  #
-@@ -193,6 +193,7 @@
+-# This command will get a property from a object model path and return
+-# the value.
++# Get a property value.
  #
- # @typename: the type name of an object
+ # @path: The path within the object model.  There are two forms of
+ #     supported paths--absolute and partial paths.
+@@ -130,7 +128,7 @@
+ ##
+ # @qom-set:
  #
-+#
- # .. note:: Objects can create properties at runtime, for example to
- #    describe links between different devices and/or objects.  These
- #    properties are not included in the output of this command.
-@@ -787,7 +788,7 @@
+-# This command will set a property from a object model path.
++# Set a property value.
  #
- # Properties for x-remote-object objects.
+ # @path: see @qom-get for a description of this parameter
  #
--# @fd: file descriptor name previously passed via 'getfd' command
-+# @fd: file descriptor name previously passed via `getfd` command
+@@ -173,7 +171,7 @@
+ ##
+ # @qom-list-types:
  #
- # @devid: the id of the device to be associated with the file
- #     descriptor
-@@ -816,7 +817,7 @@
+-# This command will return a list of types given search parameters
++# Return a list of types given search parameters.
  #
- # Properties for iommufd objects.
- #
--# @fd: file descriptor name previously passed via 'getfd' command,
-+# @fd: file descriptor name previously passed via `getfd` command,
- #     which represents a pre-opened /dev/iommu.  This allows the
- #     iommufd object to be shared across several subsystems (VFIO,
- #     VDPA, ...), and the file descriptor to be shared with other
+ # @implements: if specified, only return types that implement this
+ #     type name
 -- 
 2.49.0
 
