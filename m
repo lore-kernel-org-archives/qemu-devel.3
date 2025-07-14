@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36D82C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A0FBC83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:22:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubKpo-000409-QK; Mon, 14 Jul 2025 11:11:16 -0400
+	id 1ubKqo-0007Sr-RS; Mon, 14 Jul 2025 11:12:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJUW-0000GO-8K
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:45:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJUa-0000IX-Rv
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:45:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJUS-0003bN-Qo
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:45:11 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJUU-0003bc-4O
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:45:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752500707;
+ s=mimecast20190719; t=1752500708;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SyZcrwnCLaLvW4YdnG8ypJUNcE3idD2PpbQHZael9Bc=;
- b=USwX3p5pNUeDP8CH4Pob/lZt77/XXntDu7JqZ+a0ZV9icf3KaJImNDM+113rxP0auTI7+D
- +cddbxZk3wXaExqXyf73686vHyw3pZTn2VsqKMBB05lQPaEcTOHwqU4TnsAVuBT9om4Z3O
- n6WVifJFPY7afUPWjr480OWudPPvBgs=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=RqyqnGFyQnvq7sX2524kZSsjnQQSwOQe+Q3tvKbYFEQ=;
+ b=IolPY4nNTKY5Nr2PKgKKAHdEY9QXCpToSPSFUmdp8r0dtWNrq4P1AVNOksnfmkcMgrpB+f
+ 47/5DGLDy6yD8+xdQI94O5kB2cLUyrO7MEz7nBEuzotY/IDBjIgzppWp1OK9hjkFS9tqOi
+ eZ1VBijLjw1RPo0tIBNgt3bmEfrsNP0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-467-Lymspn52NVSjdBWiBwC6RQ-1; Mon,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-648-wPHNHk-zPUqH-Q9tTDojFw-1; Mon,
  14 Jul 2025 09:45:06 -0400
-X-MC-Unique: Lymspn52NVSjdBWiBwC6RQ-1
-X-Mimecast-MFC-AGG-ID: Lymspn52NVSjdBWiBwC6RQ_1752500705
+X-MC-Unique: wPHNHk-zPUqH-Q9tTDojFw-1
+X-Mimecast-MFC-AGG-ID: wPHNHk-zPUqH-Q9tTDojFw_1752500705
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 714E5180029F
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CE7D21809C8A
  for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:45:05 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 26A7718002B2
+ id 356381800264
  for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:45:05 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D260221E6774; Mon, 14 Jul 2025 15:44:58 +0200 (CEST)
+ id DB23A21E6779; Mon, 14 Jul 2025 15:44:58 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 07/32] qapi: Clean up a few Errors: sections
-Date: Mon, 14 Jul 2025 15:44:33 +0200
-Message-ID: <20250714134458.2991097-8-armbru@redhat.com>
+	John Snow <jsnow@redhat.com>
+Subject: [PULL 09/32] qapi: Fix undocumented return values by generating
+ something
+Date: Mon, 14 Jul 2025 15:44:35 +0200
+Message-ID: <20250714134458.2991097-10-armbru@redhat.com>
 In-Reply-To: <20250714134458.2991097-1-armbru@redhat.com>
 References: <20250714134458.2991097-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,57 +88,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the conventional "- If <error-condition>" phrasing, optionally
-with ", <error-class>".
+From: John Snow <jsnow@redhat.com>
 
+Generated command documentation lacks information on return value in
+several cases, e.g. query-tpm.
+
+The obvious fix would be to require a Returns: section when a command
+returns something.
+
+However, note that many existing Returns: sections are pretty useless:
+the description is basically the return type, which then gets rendered
+like "Return: <Type> – <basically the return type>".  This suggests
+that a description is often not really necessary, and requiring one
+isn't useful.
+
+Instead, generate the obvious minimal thing when Returns: is absent:
+"Return: <Type>".
+
+This auto-generated Return documentation is placed is as follows:
+
+1. If we have arguments, return goes right after them.
+2. Else if we have errors, return goes right before them.
+3. Else if we have features, return goes right before them.
+4. Else return goes right after the intro
+
+To facilitate this algorithm, a "TODO:" hack line is used to separate
+the intro from the remainder of the documentation block in cases where
+there are no other sections to separate the intro from e.g. examples and
+additional detail meant to appear below the key sections of interest.
+
+Signed-off-by: John Snow <jsnow@redhat.com>
+Message-ID: <20250711051045.51110-3-jsnow@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+[_insert_near_kind() code replaced by something simpler, commit
+message amended to explain why we're doing this]
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20250708072828.105185-3-armbru@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- qapi/misc-i386.json | 7 +++----
- qapi/qom.json       | 4 ++--
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ docs/sphinx/qapidoc.py | 14 ++++++++------
+ qapi/machine.json      |  2 ++
+ scripts/qapi/parser.py | 37 +++++++++++++++++++++++++++++++++++++
+ scripts/qapi/schema.py |  3 +++
+ 4 files changed, 50 insertions(+), 6 deletions(-)
 
-diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
-index b53ed39288..24a2e143f6 100644
---- a/qapi/misc-i386.json
-+++ b/qapi/misc-i386.json
-@@ -283,10 +283,9 @@
- # Returns: SevAttestationReport objects.
+diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+index b794cde697..c2f09bac16 100644
+--- a/docs/sphinx/qapidoc.py
++++ b/docs/sphinx/qapidoc.py
+@@ -258,16 +258,18 @@ def visit_feature(self, section: QAPIDoc.ArgSection) -> None:
+     def visit_returns(self, section: QAPIDoc.Section) -> None:
+         assert isinstance(self.entity, QAPISchemaCommand)
+         rtype = self.entity.ret_type
+-        # q_empty can produce None, but we won't be documenting anything
+-        # without an explicit return statement in the doc block, and we
+-        # should not have any such explicit statements when there is no
+-        # return value.
++        # return statements will not be present (and won't be
++        # autogenerated) for any command that doesn't return
++        # *something*, so rtype will always be defined here.
+         assert rtype
+ 
+         typ = self.format_type(rtype)
+         assert typ
+-        assert section.text
+-        self.add_field("return", typ, section.text, section.info)
++
++        if section.text:
++            self.add_field("return", typ, section.text, section.info)
++        else:
++            self.add_lines(f":return-nodesc: {typ}", section.info)
+ 
+     def visit_errors(self, section: QAPIDoc.Section) -> None:
+         # If the section text does not start with a space, it means text
+diff --git a/qapi/machine.json b/qapi/machine.json
+index af00a20b1f..2d6a137f21 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1303,6 +1303,8 @@
+ # Return the amount of initially allocated and present hotpluggable
+ # (if enabled) memory in bytes.
  #
- # Errors:
--#     - This will return an error if the attestation report is
--#       unavailable, either due to an invalid guest configuration
--#       or if the guest has not reached the required SEV state,
--#       GenericError
-+#     - If the attestation report is unavailable, either due to an
-+#       invalid guest configuration or because the guest has not
-+#       reached the required SEV state, GenericError
++# TODO: This line is a hack to separate the example from the body
++#
+ # .. qmp-example::
  #
- # Since: 6.1
- #
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 6c38e865a6..fbf94b9e09 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -1261,7 +1261,7 @@
- # Create a QOM object.
- #
- # Errors:
--#     - Error if @qom-type is not a valid class name
-+#     - If @qom-type is not a valid class name
- #
- # Since: 2.0
- #
-@@ -1283,7 +1283,7 @@
- # @id: the name of the QOM object to remove
- #
- # Errors:
--#     - Error if @id is not a valid id for a QOM object
-+#     - If @id is not a valid id for a QOM object
- #
- # Since: 2.0
- #
+ #     -> { "execute": "query-memory-size-summary" }
+diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+index d43a123cd7..2529edf81a 100644
+--- a/scripts/qapi/parser.py
++++ b/scripts/qapi/parser.py
+@@ -804,6 +804,43 @@ def connect_feature(self, feature: 'QAPISchemaFeature') -> None:
+                                % feature.name)
+         self.features[feature.name].connect(feature)
+ 
++    def ensure_returns(self, info: QAPISourceInfo) -> None:
++
++        def _insert_near_kind(
++            kind: QAPIDoc.Kind,
++            new_sect: QAPIDoc.Section,
++            after: bool = False,
++        ) -> bool:
++            for idx, sect in enumerate(reversed(self.all_sections)):
++                if sect.kind == kind:
++                    pos = len(self.all_sections) - idx - 1
++                    if after:
++                        pos += 1
++                    self.all_sections.insert(pos, new_sect)
++                    return True
++            return False
++
++        if any(s.kind == QAPIDoc.Kind.RETURNS for s in self.all_sections):
++            return
++
++        # Stub "Returns" section for undocumented returns value
++        stub = QAPIDoc.Section(info, QAPIDoc.Kind.RETURNS)
++
++        if any(_insert_near_kind(kind, stub, after) for kind, after in (
++                # 1. If arguments, right after those.
++                (QAPIDoc.Kind.MEMBER, True),
++                # 2. Elif errors, right *before* those.
++                (QAPIDoc.Kind.ERRORS, False),
++                # 3. Elif features, right *before* those.
++                (QAPIDoc.Kind.FEATURE, False),
++        )):
++            return
++
++        # Otherwise, it should go right after the intro. The intro
++        # is always the first section and is always present (even
++        # when empty), so we can insert directly at index=1 blindly.
++        self.all_sections.insert(1, stub)
++
+     def check_expr(self, expr: QAPIExpression) -> None:
+         if 'command' in expr:
+             if self.returns and 'returns' not in expr:
+diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+index cbe3b5aa91..3abddea352 100644
+--- a/scripts/qapi/schema.py
++++ b/scripts/qapi/schema.py
+@@ -1062,6 +1062,9 @@ def connect_doc(self, doc: Optional[QAPIDoc] = None) -> None:
+             if self.arg_type and self.arg_type.is_implicit():
+                 self.arg_type.connect_doc(doc)
+ 
++            if self.ret_type and self.info:
++                doc.ensure_returns(self.info)
++
+     def visit(self, visitor: QAPISchemaVisitor) -> None:
+         super().visit(visitor)
+         visitor.visit_command(
 -- 
 2.49.0
 
