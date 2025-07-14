@@ -4,85 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8493C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:56:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0BD2C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:57:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubLX3-00056k-Of; Mon, 14 Jul 2025 11:55:57 -0400
+	id 1ubLY2-00073l-AD; Mon, 14 Jul 2025 11:56:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ubKVv-0000Wp-3f
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 10:50:45 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ubKVs-0006ex-Hf
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 10:50:42 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3a6e2d85705so2570604f8f.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 07:50:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752504636; x=1753109436; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=iQWEhht4mYkxS+fB/JlwS8jEaHQbe2nCEP41K+cHwbQ=;
- b=LFnFFcrDDQBAHodDmcvccJafsC8+i7/wKBQ35wMobI4iAK/zqXDjP/achNKrRYydpC
- rMA2yDGolCHoA4+/umUCZJhfe9TnyVDDPwUZOx/x0vdKJHtgM1in5BW234goDGpG9iVN
- +yVIQOcKvFfU9EBhK3ywQIbiNsyPHeUFImVR7GHXFip0+PkvC16c6Rk4XXds9biMHS7e
- SQozNKjL3BZ4HvkeeHIOzdId32TISbgbK58fF4sGSSKTpD0ApCS8B1suzyUHV8JApuBZ
- 2ZZh78xeU1nx2ZPs7UDM8rkNYPgoe81uoaXleMBkcNscOachtApO4x3e4JEZFwSXBklM
- 6HVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752504636; x=1753109436;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=iQWEhht4mYkxS+fB/JlwS8jEaHQbe2nCEP41K+cHwbQ=;
- b=COVTL7C0nO3xgu02W3jnQpoqUQVfcnbapqlSjoLfCImkxLFiyTEnSK2G8QlYZbvkF9
- cNBRnAmLOvzSMSZwZMfiK/QCouJ1JbZF+gRKxzXhllmnCCE5h5juZIMb8wN4n4GQ4hxa
- 5TroCUbsenDS6O4N7CoyJgLX0xu5/H9qyckz+E5FodycN96291odMyTBmxPYfnTCo1eH
- nM4/VyoG2x68kP4YLZNzL2FAI084zwBG11KW4Re+lZqLXi3MkK/GjEtUYXGS+7ouNhab
- uUzQTWrU5YLDzqNMldT4VGKM02uW4QSLmCXmVwMQQs8uMk4/kytcjczaOZ0gtQkVpKwO
- +kMw==
-X-Gm-Message-State: AOJu0YzbJozxDuksJTu1xkWyp2PUjzujxoo50Epmh/pA/U8lF+mir+fI
- IGkk+94OWBMr08u/Dq4gWfISrEymM1Cr574JDaKryexbaAklaGPkkRLGF41qnVbBqexWvVNSjt6
- 7yxsG
-X-Gm-Gg: ASbGncva8Qe47dJBP+KYf5rD4q76uRCzahOrc79WSSrRsjQYLhac2asUryXoqk7mTlC
- 29N1YG9R4kuxKnNFcHV3Kc/U2Z0aMWGdbm1nslDtlLI/T30ljpZrJmVcveS9+SXC1xsFrwTfSMx
- 871ehnRK7UzAHEKppxp18+2+qhzs/sLJpk6T26kmpYkn0tLhhYjw2TgP92I8hY77XXoty4ZA2uf
- sBAVxfjKXuIxpBCHajDmDceW/kjCZx5kQ5CjUuYjiATukAvJzjvnH1VBPd9Fv+hhfQ54N0TVbSu
- tfBASw7rlrEhhv/kMc8YM//PTSJgrZRPDiZHNYk4p0VSZN2C8LNeKUijo+BMS41choIo2is9tof
- Xtb5wCSE5/OYturK2KI6H1eq3qSYy
-X-Google-Smtp-Source: AGHT+IGZnqPAgYguUVOQFSqFJ7GqO9+SvEgngVHp/2ualqM8efDUwLet4FMiINUfrpaLLR5xRMdHUQ==
-X-Received: by 2002:adf:e191:0:b0:3a4:cfbf:51a0 with SMTP id
- ffacd0b85a97d-3b5f35317a3mr10379367f8f.21.1752504635930; 
- Mon, 14 Jul 2025 07:50:35 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e26f45sm12757578f8f.92.2025.07.14.07.50.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 07:50:35 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>
-Subject: [PATCH] host-utils: Drop workaround for buggy Apple Clang
- __builtin_subcll()
-Date: Mon, 14 Jul 2025 15:50:33 +0100
-Message-ID: <20250714145033.1908788-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1ubKZo-0003HH-Gz; Mon, 14 Jul 2025 10:54:44 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1ubKZm-00071o-2o; Mon, 14 Jul 2025 10:54:44 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56E6S5gw008825;
+ Mon, 14 Jul 2025 14:54:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=jURorE
+ ojdPOr+SZetn2oQy6EpdD0K/o+SBjLaQsr47g=; b=Bxx9Nb1cCMTGSWp0QX7gyE
+ wKXuJnUkXkmobtYK3TYIdxWufzOixJ2ENXNqmi8HHFV1Jf77m/stAEIu0e9dl73n
+ ylG5EyvHKyCjQMIsgYpuwEkV0jk7CQ2Xx+W2t2EF7DsE/409JsVndKfS3uyYmuf+
+ +nf1HH3YhMN1qz6ZemIo+1c982AuP7rvEC3l0jTAHXPRguJbPwlbxfqVXtPDOHmt
+ LBglkjlYc0QE6K6ObAqbj01NPcM8iYA4s+5KtI9C9x85YR/PstNJghNZirsavJ7D
+ WHog8eieu6jkrev6K7tNWajLEUQbGe19PxWlQdO4moYz26pKUq/G2sZ32ZqCRViQ
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47uf7ctb40-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 14 Jul 2025 14:54:35 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56EETuxj008909;
+ Mon, 14 Jul 2025 14:54:34 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47v3hme80g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 14 Jul 2025 14:54:34 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 56EEsWW631130270
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 14 Jul 2025 14:54:33 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D3C8F58055;
+ Mon, 14 Jul 2025 14:54:32 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7694658063;
+ Mon, 14 Jul 2025 14:54:31 +0000 (GMT)
+Received: from [9.61.75.155] (unknown [9.61.75.155])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 14 Jul 2025 14:54:31 +0000 (GMT)
+Message-ID: <80ebd632-5b56-4391-b60d-f6a64f311e7f@linux.ibm.com>
+Date: Mon, 14 Jul 2025 10:54:30 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 20/28] pc-bios/s390-ccw: Add signature verification for
+ secure IPL in audit mode
+To: Collin Walling <walling@linux.ibm.com>, Zhuoying Cai
+ <zycai@linux.ibm.com>, thuth@redhat.com,
+ berrange@redhat.com, richard.henderson@linaro.org, david@redhat.com,
+ pbonzini@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com
+References: <20250711211105.439554-1-zycai@linux.ibm.com>
+ <20250711211105.439554-21-zycai@linux.ibm.com>
+ <eccbac31-7c1d-4b75-a284-a46ad98675db@linux.ibm.com>
+Content-Language: en-US
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <eccbac31-7c1d-4b75-a284-a46ad98675db@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 32AjINsE4p7dyd6ME5ytgkHFfvNL9Zme
+X-Authority-Analysis: v=2.4 cv=LoGSymdc c=1 sm=1 tr=0 ts=68751a2b cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=URZce_mYXXF1vBoKqvAA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 32AjINsE4p7dyd6ME5ytgkHFfvNL9Zme
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE0MDA4NyBTYWx0ZWRfX0jRw22KgJpyP
+ dVpxKHjp+nIQo/ADHzNltnJy4xKhY4eBs/M7MbQAwZjjjDdq4D+0zls2yYQuFhgkafpZvy42tcN
+ XO7HecIPk2iCE33Axrnw2CTxp0gn0CZf5wdrtvdVAa8H4gV84kihgixROCVYCSJToHcGD3jLWvQ
+ UTdfxxustY068IOK9uNbULmD4oPgPuL180Q4KiEO1MH5X4a/rhMLfimUDhAo03pgLsvsvwUYq5e
+ 8mv9rXrbI7EN0X9D7d2zT60OzlQkYjQ7c29BjArFhbVhTZcYcN3hRiAPM0La6WmXy1yk/m0QuEa
+ IGg/8MpwJzMPqjQomUD8eV6Dyl/koWqnAmG+7TgZ4gBuSWy5r1KcnjLOg/X9vfIVShPOKVAF+La
+ s2X6i9l4WBv+2JunyX5whkfcfj0/p8DBWt5YovfNNipzjFu0cWje/3SdYCwLnnYiEolP0G21
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-14_01,2025-07-14_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0
+ lowpriorityscore=0 spamscore=0 malwarescore=0 impostorscore=0
+ clxscore=1015 phishscore=0 mlxlogscore=999 priorityscore=1501
+ suspectscore=0 mlxscore=0 adultscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507140087
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,64 +127,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In commit b0438861efe ("host-utils: Avoid using __builtin_subcll on
-buggy versions of Apple Clang") we added a workaround for a bug in
-Apple Clang 14 where its __builtin_subcll() implementation was wrong.
-This bug was only present in Apple Clang 14, not in upstream clang,
-and is not present in Apple Clang versions 15 and newer.
 
-Since commit 4e035201 we have required at least Apple Clang 15, so we
-no longer build with the buggy versions.  We can therefore drop the
-workaround. This is effectively a revert of b0438861efe.
+[snip...]
+>> +
+>> +        entry++;
+>> +
+>> +        if ((uint8_t *)(&entry[1]) > tmp_sec + MAX_SECTOR_SIZE) {
+>> +            puts("Wrong entry value");
+>> +            return -EINVAL;
+>> +        }
+> Can someone who is more informed than I am of the IPL process please
+> explain to me what is the purpose of the above check?  Why does it check
+> if the next entry, the one which isn't going to be inspected/loaded, is
+> within the bounds of tmp_sec?  This has been here since this file's
+> inception and I can't find any documentation or mention that supports it.
+>
+> This code precludes any of the secure IPL changes.
+>
+> Was this actually meant to be entry[0] to ensure the actual entry we
+> want to work on is not outside the bounds of tmp_sec?  Or perhaps it was
+> meant to be done before the increment to entry?
+>
 
-This should not be backported to stable branches, which may still
-need to support Apple Clang 14.
+I noticed that as well and came to the same conclusions as you, which is 
+to say,
+it has always been that way and it is not clear what the purpose is, but 
+it does
+not appear to have any impact on the proposed secure IPL functionality.  
+I agree
+that it seems somehow strange, but I believe any changes/fixes would be 
+outside
+the scope of this item.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3030
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- include/qemu/compiler.h   | 13 -------------
- include/qemu/host-utils.h |  2 +-
- 2 files changed, 1 insertion(+), 14 deletions(-)
+In my opinion, since this is already a large patch series, it is better 
+to leave
+it alone for now unless we find a compelling reason to change it 
+immediately.
 
-diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
-index 65b89958d36..1c2b673c058 100644
---- a/include/qemu/compiler.h
-+++ b/include/qemu/compiler.h
-@@ -182,19 +182,6 @@
- #define QEMU_DISABLE_CFI
- #endif
- 
--/*
-- * Apple clang version 14 has a bug in its __builtin_subcll(); define
-- * BUILTIN_SUBCLL_BROKEN for the offending versions so we can avoid it.
-- * When a version of Apple clang which has this bug fixed is released
-- * we can add an upper bound to this check.
-- * See https://gitlab.com/qemu-project/qemu/-/issues/1631
-- * and https://gitlab.com/qemu-project/qemu/-/issues/1659 for details.
-- * The bug never made it into any upstream LLVM releases, only Apple ones.
-- */
--#if defined(__apple_build_version__) && __clang_major__ >= 14
--#define BUILTIN_SUBCLL_BROKEN
--#endif
--
- #if __has_attribute(annotate)
- #define QEMU_ANNOTATE(x) __attribute__((annotate(x)))
- #else
-diff --git a/include/qemu/host-utils.h b/include/qemu/host-utils.h
-index 4d28fa22cfa..dd558589cb5 100644
---- a/include/qemu/host-utils.h
-+++ b/include/qemu/host-utils.h
-@@ -677,7 +677,7 @@ static inline uint64_t uadd64_carry(uint64_t x, uint64_t y, bool *pcarry)
-  */
- static inline uint64_t usub64_borrow(uint64_t x, uint64_t y, bool *pborrow)
- {
--#if __has_builtin(__builtin_subcll) && !defined(BUILTIN_SUBCLL_BROKEN)
-+#if __has_builtin(__builtin_subcll)
-     unsigned long long b = *pborrow;
-     x = __builtin_subcll(x, y, b, &b);
-     *pborrow = b & 1;
--- 
-2.43.0
-
+Regards,
+Jared Rossi
 
