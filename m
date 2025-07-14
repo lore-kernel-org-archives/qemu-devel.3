@@ -4,94 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 145EAC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 10:33:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15ABBC83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 10:36:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubGUx-0000o6-72; Mon, 14 Jul 2025 06:33:27 -0400
+	id 1ubGXL-0001y4-J5; Mon, 14 Jul 2025 06:35:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1ubGUu-0000l9-TY
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:33:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1ubGUn-0005GH-MV
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:33:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752489194;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=kFFc1PDICEOXI6I1qmM+LC4bafF9hi3ehm+wlWDYz0Y=;
- b=EGfIBus3UY8MSgpQ9zGFrpEAJzwydVxSBUI21rCl5hbSf2YydCSOzzkh1G54zKc2SOUJ8o
- JAZPW1zhQqbiqQoQnvJPtLHuFxeu1whDZ1hroSFsC1wur5iWfqCqcEhvkt5Rxo2N1R8J88
- mFOmN2WAnHEeUTtnjlTntZ6Q2MmBmf0=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-651-weBxiB3UPnmzb3t9dfKOTw-1; Mon, 14 Jul 2025 06:33:13 -0400
-X-MC-Unique: weBxiB3UPnmzb3t9dfKOTw-1
-X-Mimecast-MFC-AGG-ID: weBxiB3UPnmzb3t9dfKOTw_1752489192
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-70f841fb19dso55265047b3.1
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 03:33:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1ubGXA-0001sW-W4
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:35:49 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1ubGX8-0005jR-4X
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:35:44 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4550709f2c1so17483775e9.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 03:35:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1752489339; x=1753094139; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fyhmpBhtu/dcZmXEZP88zisIC/3WBB2s7sZSZUR3Zbw=;
+ b=l4hv2qcsqz9DjMJIeox6DhhK9lH/mR/RePvhCKS9JvV6iYWVl3iBFjJrCfh1631eb+
+ wY15Ia97lfrJe+9umWE7OVHqzGwDrV+Gz9MAoT1sMDGnwQOn7yROahfu9SA7iaiUKarK
+ YGtEKfocZJA8UEwe44STbYPEX94ymPlNX2Z9OBWCeP+th3+BkQX0XA2vVGCPLNO6ga2j
+ JFTM+31c8+UX7MuusBZp43PpmdiMq9feJpby7RJd+t8ggyDe73QTggdf+GR/WaPaCX2O
+ oCtgPhdNZGkBXTl6aq7TFzuE5lFI12FgjH8OxkP9Fbx+jGqDd9O2+4ZeifXxyMAhS7R8
+ 397w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752489192; x=1753093992;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kFFc1PDICEOXI6I1qmM+LC4bafF9hi3ehm+wlWDYz0Y=;
- b=k55y5emPEwXQ5eKA8dBWH/AxuKHtfdvwDjpzSdwPFYZYDmiDwjRYEVsPYeSoho8DtB
- 0G0b+zTMIISeb2sV5nPK4xaoXUyB5KnXjQ/SoXTHAk5GN8UABcOb3fD/0ud1FZ9J6u1C
- MzM860wMxN5OXeb5rJPrPZ1K7gaqyvEp1jtq5jBsEq5lc8hLI1rKVAkUuaez+WY7i4qU
- ofGrDEoBOv3k+w/0cH5aCbgFST1VOqxYbIJA7WpmqSVed9/KgyadWc4OWF/5DXiq7Xai
- EsgMWWtDORDeJ6XnLht7WV9HOln/KRlh7XLrWXBAeS/WDQNFFWs8BgtJxkJFfMrT2zGR
- XnOg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWR0f/K5amu2gne2g8Ogaqd/wtP/6AzqUOivdN2IIMYj5Pw8CsxvD9hYK3GLgSX6xWEqFRfs2u6eLVX@nongnu.org
-X-Gm-Message-State: AOJu0YxserXGLrHGb9syDtjy+yRJUvT27dBxE06gBklVLtsZcTb7fofn
- 4GdR080ZEPFgJ08VGHwOMsF0xb1+gSJfFqSRrujJIbLa7tV7Btv35NrPHEifDQUSaR7mEjAQ3k6
- 9o5/yTpjXZnPZsDboC6UDp2YGtPrNnudaqg0rXVJgB4HrgSMwVdV+pa4DcGjcmucz6F0jbfwGGM
- eFgBmnf4wVclOdvj5hN3eoiBk+t7iNcMc=
-X-Gm-Gg: ASbGncu1mCgcEkVSIC/ZcVK37iyMV0WfeLskqwtZqXXJmvH07T2XT0ddqPn2lNwViZW
- NUiwhdBKQOCoO82LhTqKMQL5hDM0unZwO0rEjI71SdBg090MQBpo2otp7lLfzndlpr6yiSboWeH
- hAVukgEl2f1onLjBxIlCFnJA==
-X-Received: by 2002:a05:690c:d18:b0:710:e7ad:9d52 with SMTP id
- 00721157ae682-717dad97268mr158916817b3.14.1752489192422; 
- Mon, 14 Jul 2025 03:33:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG+JPIc1O1rjKemgdiRBfQ0/uZwEPmSbfY1zJMtRG1CwNr44liLO9V8tMilOkz62pFbjc3YW9JdynL+jvGMxXY=
-X-Received: by 2002:a05:690c:d18:b0:710:e7ad:9d52 with SMTP id
- 00721157ae682-717dad97268mr158916547b3.14.1752489192001; Mon, 14 Jul 2025
- 03:33:12 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAFEAcA816sEoqZOzSwX9q1zzJEQ_mMpenLW7fBu5MEbM=aFymQ@mail.gmail.com>
- <20250710123945-mutt-send-email-mst@kernel.org>
- <rwmbufb2zk6grtmrksfthav6ntm7ddsodqfrpjwjt6njbacx62@7hikurlwh3kl>
- <CAFEAcA-jqjuC+a7AH1wgde8=y_yTc_iE-MriwzT+RZMP7U070Q@mail.gmail.com>
-In-Reply-To: <CAFEAcA-jqjuC+a7AH1wgde8=y_yTc_iE-MriwzT+RZMP7U070Q@mail.gmail.com>
-From: Stefano Garzarella <sgarzare@redhat.com>
-Date: Mon, 14 Jul 2025 12:33:00 +0200
-X-Gm-Features: Ac12FXyXIPHYtsrcTBLirN5B55BvJfsdXRJp6HLqFcyaAr7gy7NLlWmSZHzuOBM
-Message-ID: <CAGxU2F7ndXZN0Kzadk8doCV-9s_FyHhxkoH_rpyD7XQzLs=Cdw@mail.gmail.com>
-Subject: Re: vhost-vdpa potential fd leak (coverity issue)
+ d=1e100.net; s=20230601; t=1752489339; x=1753094139;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fyhmpBhtu/dcZmXEZP88zisIC/3WBB2s7sZSZUR3Zbw=;
+ b=q5gPjYPVsrxOPXi/bJxy0lOOGumK8maXW7/S2Ibmn8C6g/l+Embg5tDi3SDRSB3jQv
+ DapDIsbUHSHP8SHpTjBVw92Y4l21jz/4PQvkbpSkChrmMj+92eMxqQ8M0Pmx050XqMtC
+ 7GHC7diW+7mZfdJoRRNXrao6OLh9ABSqHI8JE7eVzL/GS9hA7to/e8B962dwM8MtGIN3
+ Br7Eyb5YmRfWonJ4MhieoWSrE66gDDnREaWgUP0hohKUYBTFsWAju6FHCz6ezA9FAvJT
+ I8jEISoOQEiaibBl4R6xcLo61jVUQOCqNqXkQTV0f2Fjc8KWrHSLEtRJW2D/4U+o8TK2
+ dW9A==
+X-Gm-Message-State: AOJu0Yzhx3EMoXwymmAtRFmzpaAgxnQOMpMBFz8iJQ7+vC6UUoy+BKu4
+ 3H/kEZT1bJvzRU6Uq3tfaoLsxl4iZ08gux7fo81tOi3cYDvq+u8+qNPr
+X-Gm-Gg: ASbGncvkKEoSkV8mv87TyAuFdu1zfwKNCl/Cy2HWEe25gf37xRUCTiKe9nzMqwvBGd0
+ dvPJh5GhrsYG14MZIk/uQP+yBmN6LQ/xUb1PxQFVQQu3VkCJkuX6AWqgCnT4j85YnC6ZxOPXF8d
+ /QC40jJ9VTMQoT3eoINwfbLhrbB5s6CfGMcMjBH1cvP69PyX+huwZwia6fKzuxQVDcIKwa6Mc92
+ VMNqEhgjdVKzsujZe3BAe213+af3zp24feZUGS00B9YGI1QFv6EoSe99EQhrSi26RpZwtb1yDoR
+ CLnoDvdFHMbE/ymVziuc9V6VGX8jCI7ocu7Pz6FblBi5tAVs2bzuZlzWV+G85x/ZpeFFY0CYMwi
+ ioZ/nH/ppVqbAqtyA
+X-Google-Smtp-Source: AGHT+IFUqayIul5yGNi/zIzslnz+1SUoQCfEw+W8PEEuqDX92z1ObGRwYUfEMV9gy38bGFBQUOG+zA==
+X-Received: by 2002:a05:600c:4f4e:b0:455:f380:32e2 with SMTP id
+ 5b1f17b1804b1-455f38034f0mr102318015e9.18.1752489338636; 
+ Mon, 14 Jul 2025 03:35:38 -0700 (PDT)
+Received: from [127.0.0.1] ([62.214.191.67]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b5e8dc2131sm11798352f8f.29.2025.07.14.03.35.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Jul 2025 03:35:38 -0700 (PDT)
+Date: Mon, 14 Jul 2025 10:35:36 +0000
+From: Bernhard Beschow <shentey@gmail.com>
 To: Peter Maydell <peter.maydell@linaro.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- QEMU Developers <qemu-devel@nongnu.org>, Jason Wang <jasowang@redhat.com>,
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+CC: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH] meson: Add most 3rd-party includes as system includes
+In-Reply-To: <CAFEAcA_cfg5je7Nx-qsQoB=cY7KRYan1+wXhWztoLydnjpg15Q@mail.gmail.com>
+References: <20250617203435.41490-1-shentey@gmail.com>
+ <CAFEAcA_cfg5je7Nx-qsQoB=cY7KRYan1+wXhWztoLydnjpg15Q@mail.gmail.com>
+Message-ID: <34C24785-7D0B-4C31-B303-90DBC7E9D05B@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,30 +101,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Jul 2025 at 11:51, Peter Maydell <peter.maydell@linaro.org> wrote:
+
+
+Am 11=2E Juli 2025 10:45:08 UTC schrieb Peter Maydell <peter=2Emaydell@lin=
+aro=2Eorg>:
+>On Tue, 17 Jun 2025 at 21:35, Bernhard Beschow <shentey@gmail=2Ecom> wrot=
+e:
+>>
+>> When compiling QEMU against fuse3-3=2E17=2E1 with --enable-werror the b=
+uild fails
+>> with:
+>>
+>>   In file included from =2E=2E/src/block/export/fuse=2Ec:33:
+>>   /usr/include/fuse3/fuse=2Eh:959:5: error: redundant redeclaration of =
+=E2=80=98fuse_main_real_versioned=E2=80=99 [-Werror=3Dredundant-decls]
+>>     959 | int fuse_main_real_versioned(int argc, char *argv[],
+>>         |     ^~~~~~~~~~~~~~~~~~~~~~~~
+>>   /usr/include/fuse3/fuse=2Eh:885:5: note: previous declaration of =E2=
+=80=98fuse_main_real_versioned=E2=80=99 with type =E2=80=98int(int,  char *=
+*, const struct fuse_operations *, size_t,  struct libfuse_version *, void =
+*)=E2=80=99 {aka =E2=80=98int(int,  char **, const struct fuse_operations *=
+, long unsigned int,  struct libfuse_version *, void *)=E2=80=99}
+>>     885 | int fuse_main_real_versioned(int argc, char *argv[],
+>>         |     ^~~~~~~~~~~~~~~~~~~~~~~~
+>>   cc1: all warnings being treated as errors
+>>
+>> That is, a fuse header triggers a warning within itself=2E Since QEMU a=
+dds the
+>> fuse3 include path via `-I`, the compiler thinks that the header is par=
+t of the
+>> QEMU project, and thus raises a warning=2E The compiler can be told to =
+ignore
+>> warnings within 3rd party headers by adding these paths via `-isystem`=
+=2E Fix the
+>> above build failure by marking fuse as system dependency=2E While at it=
+ mark
+>> every 3rd-party dependency as system dependency to prevent similar issu=
+es in the
+>> future but skip glib since that results in glib include paths to be omi=
+tted from
+>> bindgen in case of a Rust build=2E
 >
-> On Mon, 14 Jul 2025 at 10:19, Stefano Garzarella <sgarzare@redhat.com> wrote:
-> > On Thu, Jul 10, 2025 at 12:40:43PM -0400, Michael S. Tsirkin wrote:
-> > >> Q: should this file be listed in the "vhost" subcategory of
-> > >> MAINTAINERS?
-> > >> At the moment it only gets caught by "Network device backends".
-> >
-> > Maybe yes, but it's really virtio-net specific.
-> > @Michael WDYT?
+>The problem with this is that -isystem does not only do "suppress
+>warnings in these headers" -- it also alters the search order
+>for includes, in a way that can sometimes cause problems:
+>https://gcc=2Egnu=2Eorg/bugzilla/show_bug=2Ecgi?id=3D70129
+>So this isn't completely risk-free, though I think meson tries to
+>avoid some of this by doing something a bit more complex than a
+>pure 's/-I/-isystem/'=2E
 >
-> You could create a new virtio-net subsection if that works
-> better (and we could move the two virtio-net* files
-> currently listed under "Network devices" into it).
-> The aim here should really be to ensure that the people
-> interested in reviewing/queueing patches get cc'd.
+>We would also lose the warnings about e=2Eg=2E use of deprecated
+>functions in our dependencies=2E
 
-Just added net/vhost* filese under vhost section:
-https://lore.kernel.org/qemu-devel/20250714102626.34431-1-sgarzare@redhat.com/T/#u
+AFAIU the include_type parameter only affects how QEMU itself is built but=
+ doesn't affect Meson subprojects=2E Therefore, we should still see depreca=
+tion warnings from dependencies in our own code=2E
 
-Not sure about virtio-net subsection, I'm not really involved, so I'd
-leave to someone else.
+Best regards,
+Bernhard
 
-Thanks,
-Stefano
-
+>
+>All that said, this might still be the best tradeoff=2E
+>
+>thanks
+>-- PMM
 
