@@ -4,73 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C3BAC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 08:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0FF2C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 08:13:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubEF8-00082V-3U; Mon, 14 Jul 2025 04:08:58 -0400
+	id 1ubEFn-0001iv-Db; Mon, 14 Jul 2025 04:09:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ubDul-0004hR-TA; Mon, 14 Jul 2025 03:47:57 -0400
-Received: from mgamail.intel.com ([198.175.65.15])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ubE87-0001vE-9k; Mon, 14 Jul 2025 04:01:43 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ubDuj-0007PE-4a; Mon, 14 Jul 2025 03:47:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752479273; x=1784015273;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=kyWOgqzyhXDVI0FLB8lOYszjGjxHQhFNvTwZMHeMzIw=;
- b=nymWJ6NkdYFm3rBAoZuzAlki4JYk06h+CUe3z5Mkhgy2lPnaRR3ReAeG
- tqibSDPx/krxULtfhsbLNoIrmECHxXSMQTONUbUKZs8IsmtN48JK6XjH2
- kvCptXMQPYo79nKYMaSwkxPdoqNOan9cAolioaAxYB5JFqE5NcAblfU13
- B80hIBGSxYGCAcug4f+WBKEoCau7S5/ZMtq8rtRPTMDB8kMPr/UxUHoKb
- 6hslyuwuxCmA/E7QM6VImWTzdhg3ERjoLIhjjiVgriPR//sN6SjsycJ8u
- kjUDStBIoEN86Ta7t/sJ3Fuxl5QvCoj8xWVO54vXghuBxhHhZgW84RgHV w==;
-X-CSE-ConnectionGUID: dfgEoJigSzmFh6ZttH/2BQ==
-X-CSE-MsgGUID: YdZXevuiTgup7At/zr7t0Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="58324678"
-X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; d="scan'208";a="58324678"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jul 2025 00:47:49 -0700
-X-CSE-ConnectionGUID: sMrB7yBiTE2zQzvZYzoTCQ==
-X-CSE-MsgGUID: YSIESPIHRAyFGaaXISbsPQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; d="scan'208";a="156952218"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa007.jf.intel.com with ESMTP; 14 Jul 2025 00:47:46 -0700
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>
-Cc: Ewan Hai <ewanhai-oc@zhaoxin.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- Tao Su <tao1.su@intel.com>, Yi Lai <yi1.lai@intel.com>,
- Dapeng Mi <dapeng1.mi@intel.com>, qemu-devel@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>, Qian Wen <qian.wen@intel.com>,
- qemu-stable@nongnu.org
-Subject: [PATCH v2 5/7] i386/cpu: Fix cpu number overflow in
- CPUID.01H.EBX[23:16]
-Date: Mon, 14 Jul 2025 16:08:57 +0800
-Message-Id: <20250714080859.1960104-6-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250714080859.1960104-1-zhao1.liu@intel.com>
-References: <20250714080859.1960104-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ubE85-0001lO-3p; Mon, 14 Jul 2025 04:01:42 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 67D86136606;
+ Mon, 14 Jul 2025 11:01:34 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id C719E246A48;
+ Mon, 14 Jul 2025 11:01:36 +0300 (MSK)
+Message-ID: <7dafb6f1-690f-4adb-8fb7-99db7cc625c7@tls.msk.ru>
+Date: Mon, 14 Jul 2025 11:01:36 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] qemu-img: add sub-command --remove-all to 'qemu-img
+ bitmap'
+To: "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+References: <20250707205822.614350-1-den@openvz.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250707205822.614350-1-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,87 +105,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Qian Wen <qian.wen@intel.com>
+On 07.07.2025 23:58, Denis V. Lunev via wrote:
+>  From time to time it is needed to remove all bitmaps from the image.
+> Before this patch the process is not very convinient. One should
+> perform
+>      qemu-img info
+> and parse the output to obtain all names. After that one should
+> sequentially call
+>      qemu-img bitmap --remove
+> for each present bitmap.
 
-The legacy topology enumerated by CPUID.1.EBX[23:16] is defined in SDM
-Vol2:
+I'd very much love to add more commands/options to qemu-img *after*
+my big patchset to it is either accepted or rejected.  It's been in
+the queue for over the years, and I have to rebase it painfully after
+each change (thankfully there weren't many).
 
-Bits 23-16: Maximum number of addressable IDs for logical processors in
-this physical package.
+https://lore.kernel.org/qemu-devel/20250531171609.197078-1-mjt@tls.msk.ru/
 
-When threads_per_socket > 255, it will 1) overwrite bits[31:24] which is
-apic_id, 2) bits [23:16] get truncated.
+Thanks,
 
-Specifically, if launching the VM with -smp 256, the value written to
-EBX[23:16] is 0 because of data overflow. If the guest only supports
-legacy topology, without V2 Extended Topology enumerated by CPUID.0x1f
-or Extended Topology enumerated by CPUID.0x0b to support over 255 CPUs,
-the return of the kernel invoking cpu_smt_allowed() is false and APs
-(application processors) will fail to bring up. Then only CPU 0 is online,
-and others are offline.
-
-For example, launch VM via:
-qemu-system-x86_64 -M q35,accel=kvm,kernel-irqchip=split \
-    -cpu qemu64,cpuid-0xb=off -smp 256 -m 32G \
-    -drive file=guest.img,if=none,id=virtio-disk0,format=raw \
-    -device virtio-blk-pci,drive=virtio-disk0,bootindex=1 --nographic
-
-The guest shows:
-    CPU(s):               256
-    On-line CPU(s) list:  0
-    Off-line CPU(s) list: 1-255
-
-To avoid this issue caused by overflow, limit the max value written to
-EBX[23:16] to 255 as the HW does.
-
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Signed-off-by: Qian Wen <qian.wen@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
-Changes Since New v1 [**]:
- * Rebase.
-
-Changes Since Original v4 [*]:
- * Rebase on addressable ID fixup.
- * Drop R/b tags since the code base changes.
-
-[*] original v4: https://lore.kernel.org/qemu-devel/20230829042405.932523-2-qian.wen@intel.com/
-[**]: new v1: https://lore.kernel.org/qemu-devel/20250227062523.124601-3-zhao1.liu@intel.com/
----
- target/i386/cpu.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 7fcb6c144d94..67a371e23b22 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -7869,6 +7869,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         }
-         *edx = env->features[FEAT_1_EDX];
-         if (threads_per_pkg > 1) {
-+            uint32_t num;
-+
-             /*
-              * For CPUID.01H.EBX[Bits 23-16], AMD requires logical processor
-              * count, but Intel needs maximum number of addressable IDs for
-@@ -7876,10 +7878,13 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-              */
-             if (cpu->vendor_cpuid_only_v2 &&
-                 (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) {
--                *ebx |= 1 << apicid_pkg_offset(topo_info) << 16;
-+                num = 1 << apicid_pkg_offset(topo_info);
-             } else {
--                *ebx |= threads_per_pkg << 16;
-+                num = threads_per_pkg;
-             }
-+
-+            /* Fixup overflow: max value for bits 23-16 is 255. */
-+            *ebx |= MIN(num, 255) << 16;
-         }
-         break;
-     case 2: { /* cache info: needed for Pentium Pro compatibility */
--- 
-2.34.1
+/mjt
 
 
