@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 920C6C83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:12:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C45B8C83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:12:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubKq9-0005Iw-MU; Mon, 14 Jul 2025 11:11:37 -0400
+	id 1ubKoZ-0008Ap-Qe; Mon, 14 Jul 2025 11:10:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJUr-0000RX-3B
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJUr-0000RY-4w
  for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:45:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJUa-0003ds-Ko
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJUX-0003cd-Hg
  for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:45:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752500714;
+ s=mimecast20190719; t=1752500711;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Gu0Nw++4SHJ8XHnnfrFj2RqSLlAToFmeOtmbH8TIShk=;
- b=f1iSGj0D8ylXEdK/K7Bt1tGifFofVaivD3c7KIMityimFUv/mIGbUC1ddP4i+oW2IysMkr
- Uu3sEwDy9Xmk2r4lOR9H7dGMsTjnK8Xfrp/gojVy0bSOKjHaJqHeGitcxg9Pw+zlACjIPP
- 7PsRj3vLJbASvRg51MD3e0BqnHooNdQ=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=4BoFyE5dL2mNyl4j/PQnX2SGzfHS9btqDC8HtT6vSAc=;
+ b=eCJTPwetL+gIP8fMnB5PpSJyUfGXi7Z896hg5T8aq5MzKZqaB3HlfUkrNPn1vQW0zNZBU6
+ 8HUQJaqYJhw8w4fCgg5MqPB79pJonSs4J3m7U7j76YfqNNNImnRZMRiIJ9pSbqwwaaBxsW
+ ya4z79ylZcGCzu/IX4K5oU/jbijHHcE=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-631--JazQtFrPjO2jY91WI6GnQ-1; Mon,
- 14 Jul 2025 09:45:10 -0400
-X-MC-Unique: -JazQtFrPjO2jY91WI6GnQ-1
-X-Mimecast-MFC-AGG-ID: -JazQtFrPjO2jY91WI6GnQ_1752500708
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-kl4wRxLlNPuGLs8mOGn8QQ-1; Mon,
+ 14 Jul 2025 09:45:09 -0400
+X-MC-Unique: kl4wRxLlNPuGLs8mOGn8QQ-1
+X-Mimecast-MFC-AGG-ID: kl4wRxLlNPuGLs8mOGn8QQ_1752500709
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D38DF19560AA
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:45:08 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 17B4919560BC
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:45:09 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4DD17195609D
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 88CB030001A1
  for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:45:08 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0ACE521E6617; Mon, 14 Jul 2025 15:44:59 +0200 (CEST)
+ id 34B8621E6147; Mon, 14 Jul 2025 15:44:59 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 18/32] qapi: add cross-references to Machine core
-Date: Mon, 14 Jul 2025 15:44:44 +0200
-Message-ID: <20250714134458.2991097-19-armbru@redhat.com>
+Subject: [PULL 29/32] qapi: add cross-references to misc modules
+Date: Mon, 14 Jul 2025 15:44:55 +0200
+Message-ID: <20250714134458.2991097-30-armbru@redhat.com>
 In-Reply-To: <20250714134458.2991097-1-armbru@redhat.com>
 References: <20250714134458.2991097-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -88,345 +88,273 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
+These modules don't have specific maintainers, so they're lumped in
+together here as miscellaneous.
+
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20250711054005.60969-8-jsnow@redhat.com>
+Message-ID: <20250711054005.60969-19-jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/machine-common.json | 20 +++++-----
- qapi/machine.json        | 80 ++++++++++++++++++++--------------------
- 2 files changed, 50 insertions(+), 50 deletions(-)
+ qapi/control.json    |  2 +-
+ qapi/ebpf.json       |  2 +-
+ qapi/introspect.json | 24 ++++++++++++------------
+ qapi/misc-arm.json   |  2 +-
+ qapi/misc-i386.json  |  2 +-
+ qapi/misc.json       | 12 ++++++------
+ qapi/stats.json      |  8 ++++----
+ 7 files changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/qapi/machine-common.json b/qapi/machine-common.json
-index 0f01599130..ed3d20a2fb 100644
---- a/qapi/machine-common.json
-+++ b/qapi/machine-common.json
-@@ -28,29 +28,29 @@
+diff --git a/qapi/control.json b/qapi/control.json
+index 931a860b30..9a5302193d 100644
+--- a/qapi/control.json
++++ b/qapi/control.json
+@@ -13,7 +13,7 @@
  #
- # @thread: thread level, which would also be called SMT level or
- #     logical processor level.  The @threads option in
--#     SMPConfiguration is used to configure the topology of this
-+#     `SMPConfiguration` is used to configure the topology of this
- #     level.
+ # Enable QMP capabilities.
  #
--# @core: core level.  The @cores option in SMPConfiguration is used
-+# @core: core level.  The @cores option in `SMPConfiguration` is used
- #     to configure the topology of this level.
- #
--# @module: module level.  The @modules option in SMPConfiguration is
-+# @module: module level.  The @modules option in `SMPConfiguration` is
- #     used to configure the topology of this level.
- #
--# @cluster: cluster level.  The @clusters option in SMPConfiguration
-+# @cluster: cluster level.  The @clusters option in `SMPConfiguration`
- #     is used to configure the topology of this level.
- #
--# @die: die level.  The @dies option in SMPConfiguration is used to
-+# @die: die level.  The @dies option in `SMPConfiguration` is used to
- #     configure the topology of this level.
- #
- # @socket: socket level, which would also be called package level.
--#     The @sockets option in SMPConfiguration is used to configure
-+#     The @sockets option in `SMPConfiguration` is used to configure
- #     the topology of this level.
- #
--# @book: book level.  The @books option in SMPConfiguration is used
-+# @book: book level.  The @books option in `SMPConfiguration` is used
- #     to configure the topology of this level.
- #
--# @drawer: drawer level.  The @drawers option in SMPConfiguration is
-+# @drawer: drawer level.  The @drawers option in `SMPConfiguration` is
- #     used to configure the topology of this level.
- #
- # @default: default level.  Some architectures will have default
-@@ -104,9 +104,9 @@
+-# @enable: An optional list of QMPCapability values to enable.  The
++# @enable: An optional list of `QMPCapability` values to enable.  The
+ #     client must not enable any capability that is not mentioned in
+ #     the QMP greeting message.  If the field is not provided, it
+ #     means no QMP capabilities will be enabled.  (since 2.12)
+diff --git a/qapi/ebpf.json b/qapi/ebpf.json
+index d45054e666..f0257955fa 100644
+--- a/qapi/ebpf.json
++++ b/qapi/ebpf.json
+@@ -34,7 +34,7 @@
  ##
- # @SmpCachePropertiesWrapper:
+ # @EbpfProgramID:
  #
--# List wrapper of SmpCacheProperties.
-+# List wrapper of `SmpCacheProperties`.
+-# The eBPF programs that can be gotten with request-ebpf.
++# The eBPF programs that can be gotten with `request-ebpf`.
  #
--# @caches: the list of SmpCacheProperties.
-+# @caches: the list of `SmpCacheProperties`.
- #
- # Since 9.2
+ # @rss: Receive side scaling, technology that allows steering traffic
+ #     between queues by calculation hash.  Users may set up
+diff --git a/qapi/introspect.json b/qapi/introspect.json
+index be8511b067..53100714a8 100644
+--- a/qapi/introspect.json
++++ b/qapi/introspect.json
+@@ -18,11 +18,11 @@
  ##
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 2364893cba..f9bfda2151 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -188,7 +188,7 @@
- # @acpi: machine type supports ACPI (since 8.0)
+ # @query-qmp-schema:
  #
- # @compat-props: The machine type's compatibility properties.  Only
--#     present when query-machines argument @compat-props is true.
-+#     present when `query-machines` argument @compat-props is true.
- #     (since 9.1)
+-# Command query-qmp-schema exposes the QMP wire ABI as an array of
+-# SchemaInfo.  This lets QMP clients figure out what commands and
++# Command `query-qmp-schema` exposes the QMP wire ABI as an array of
++# `SchemaInfo`.  This lets QMP clients figure out what commands and
+ # events are available in this QEMU, and their parameters and results.
  #
- # Features:
-@@ -377,7 +377,7 @@
- #
- # Wake up guest from suspend.  If the guest has wake-up from suspend
- # support enabled (wakeup-suspend-support flag from
--# query-current-machine), wake-up guest from suspend if the guest is
-+# `query-current-machine`), wake-up guest from suspend if the guest is
- # in SUSPENDED state.  Return an error otherwise.
- #
- # Since: 1.1
-@@ -589,7 +589,7 @@
- #
- # List of CXL Fixed Memory Windows.
- #
--# @cxl-fmw: List of CXLFixedMemoryWindowOptions
-+# @cxl-fmw: List of `CXLFixedMemoryWindowOptions`
- #
- # Since: 7.1
+-# However, the SchemaInfo can't reflect all the rules and restrictions
++# However, the `SchemaInfo` can't reflect all the rules and restrictions
+ # that apply to QMP.  It's interface introspection (figuring out
+ # what's there), not interface specification.  The specification is in
+ # the QAPI schema.
+@@ -56,7 +56,7 @@
  ##
-@@ -644,10 +644,10 @@
+ # @SchemaMetaType:
+ #
+-# This is a @SchemaInfo's meta type, i.e. the kind of entity it
++# This is a `SchemaInfo`'s meta type, i.e. the kind of entity it
+ # describes.
+ #
+ # @builtin: a predefined type such as 'int' or 'bool'.
+@@ -82,7 +82,7 @@
  ##
- # @NumaCpuOptions:
+ # @SchemaInfo:
  #
--# Option "-numa cpu" overrides default cpu to node mapping.  It
--# accepts the same set of cpu properties as returned by
--# query-hotpluggable-cpus[].props, where node-id could be used to
--# override default node mapping.
-+# Option "-numa cpu" overrides default cpu to node mapping.  It accepts
-+# the same set of cpu properties as returned by
-+# `query-hotpluggable-cpus[].props <query-hotpluggable-cpus>`, where
-+# node-id could be used to override default node mapping.
- #
- # Since: 2.10
+-# @name: the entity's name, inherited from @base.  The SchemaInfo is
++# @name: the entity's name, inherited from @base.  The `SchemaInfo` is
+ #     always referenced by this name.  Commands and events have the
+ #     name defined in the QAPI schema.  Unlike command and event
+ #     names, type names are not part of the wire ABI.  Consequently,
+@@ -113,7 +113,7 @@
  ##
-@@ -661,7 +661,7 @@
- # The memory hierarchy in the System Locality Latency and Bandwidth
- # Information Structure of HMAT (Heterogeneous Memory Attribute Table)
+ # @SchemaInfoBuiltin:
  #
--# For more information about @HmatLBMemoryHierarchy, see chapter
-+# For more information about `HmatLBMemoryHierarchy`, see chapter
- # 5.2.27.4: Table 5-146: Field "Flags" of ACPI 6.3 spec.
+-# Additional SchemaInfo members for meta-type 'builtin'.
++# Additional `SchemaInfo` members for meta-type 'builtin'.
  #
- # @memory: the structure represents the memory performance
-@@ -683,7 +683,7 @@
- # Data type in the System Locality Latency and Bandwidth Information
- # Structure of HMAT (Heterogeneous Memory Attribute Table)
+ # @json-type: the JSON type used for this type on the wire.
  #
--# For more information about @HmatLBDataType, see chapter 5.2.27.4:
-+# For more information about `HmatLBDataType`, see chapter 5.2.27.4:
- # Table 5-146: Field "Data Type" of ACPI 6.3 spec.
- #
- # @access-latency: access latency (nanoseconds)
-@@ -710,7 +710,7 @@
- # Set the system locality latency and bandwidth information between
- # Initiator and Target proximity Domains.
- #
--# For more information about @NumaHmatLBOptions, see chapter 5.2.27.4:
-+# For more information about `NumaHmatLBOptions`, see chapter 5.2.27.4:
- # Table 5-146 of ACPI 6.3 spec.
- #
- # @initiator: the Initiator Proximity Domain.
-@@ -746,7 +746,7 @@
- # Cache associativity in the Memory Side Cache Information Structure
- # of HMAT
- #
--# For more information of @HmatCacheAssociativity, see chapter
-+# For more information of `HmatCacheAssociativity`, see chapter
- # 5.2.27.5: Table 5-147 of ACPI 6.3 spec.
- #
- # @none: None (no memory side cache in this proximity domain, or cache
-@@ -767,7 +767,7 @@
- # Cache write policy in the Memory Side Cache Information Structure of
- # HMAT
- #
--# For more information of @HmatCacheWritePolicy, see chapter 5.2.27.5:
-+# For more information of `HmatCacheWritePolicy`, see chapter 5.2.27.5:
- # Table 5-147: Field "Cache Attributes" of ACPI 6.3 spec.
- #
- # @none: None (no memory side cache in this proximity domain, or cache
-@@ -787,7 +787,7 @@
- #
- # Set the memory side cache information for a given memory domain.
- #
--# For more information of @NumaHmatCacheOptions, see chapter 5.2.27.5:
-+# For more information of `NumaHmatCacheOptions`, see chapter 5.2.27.5:
- # Table 5-147: Field "Cache Attributes" of ACPI 6.3 spec.
- #
- # @node-id: the memory proximity domain to which the memory belongs.
-@@ -964,7 +964,7 @@
- #
- # The ids other than the node-id specify the position of the CPU
- # within the CPU topology (as defined by the machine property "smp",
--# thus see also type @SMPConfiguration)
-+# thus see also type `SMPConfiguration`)
- #
- # @node-id: NUMA node ID the CPU belongs to
- #
-@@ -992,7 +992,7 @@
- # Since: 2.7
+@@ -154,7 +154,7 @@
  ##
- { 'struct': 'CpuInstanceProperties',
--  # Keep these in sync with the properties device_add accepts
-+  # Keep these in sync with the properties `device_add` accepts
-   'data': { '*node-id': 'int',
-             '*drawer-id': 'int',
-             '*book-id': 'int',
-@@ -1008,19 +1008,19 @@
+ # @SchemaInfoEnum:
+ #
+-# Additional SchemaInfo members for meta-type 'enum'.
++# Additional `SchemaInfo` members for meta-type 'enum'.
+ #
+ # @members: the enum type's members, in no particular order.
+ #     (since 6.2)
+@@ -194,7 +194,7 @@
  ##
- # @HotpluggableCPU:
+ # @SchemaInfoArray:
  #
--# @type: CPU object type for usage with device_add command
-+# @type: CPU object type for usage with `device_add` command
+-# Additional SchemaInfo members for meta-type 'array'.
++# Additional `SchemaInfo` members for meta-type 'array'.
  #
- # @props: list of properties to pass for hotplugging a CPU with
--#     device_add
-+#     `device_add`
+ # @element-type: the array type's element type.
  #
--# @vcpus-count: number of logical VCPU threads @HotpluggableCPU
-+# @vcpus-count: number of logical VCPU threads `HotpluggableCPU`
- #     provides
- #
- # @qom-path: link to existing CPU object if CPU is present or omitted
- #     if CPU is not present.
- #
- # .. note:: Management should be prepared to pass through additional
--#    properties with device_add.
-+#    properties with `device_add`.
- #
- # Since: 2.7
+@@ -208,7 +208,7 @@
  ##
-@@ -1179,7 +1179,7 @@
- # @BALLOON_CHANGE:
+ # @SchemaInfoObject:
  #
- # Emitted when the guest changes the actual BALLOON level.  This value
--# is equivalent to the @actual field return by the 'query-balloon'
-+# is equivalent to the @actual field return by the `query-balloon`
- # command
+-# Additional SchemaInfo members for meta-type 'object'.
++# Additional `SchemaInfo` members for meta-type 'object'.
  #
- # @actual: the logical size of the VM in bytes.  Formula used:
-@@ -1965,7 +1965,7 @@
- #
- # The result of a CPU model baseline.
- #
--# @model: the baselined CpuModelInfo.
-+# @model: the baselined `CpuModelInfo`.
- #
- # Since: 2.8
+ # @members: the object type's (non-variant) members, in no particular
+ #     order.
+@@ -273,7 +273,7 @@
  ##
-@@ -2014,28 +2014,28 @@
+ # @SchemaInfoAlternate:
  #
- # * QEMU version: CPU models may look different depending on the QEMU
- #   version.  (Except for CPU models reported as "static" in
--#   query-cpu-definitions.)
-+#   `query-cpu-definitions`.)
- # * machine-type: CPU model may look different depending on the
- #   machine-type.  (Except for CPU models reported as "static" in
--#   query-cpu-definitions.)
-+#   `query-cpu-definitions`.)
- # * machine options (including accelerator): in some architectures,
- #   CPU models may look different depending on machine and accelerator
- #   options.  (Except for CPU models reported as "static" in
--#   query-cpu-definitions.)
-+#   `query-cpu-definitions`.)
- # * "-cpu" arguments and global properties: arguments to the -cpu
- #   option and global properties may affect expansion of CPU models.
--#   Using query-cpu-model-expansion while using these is not advised.
-+#   Using `query-cpu-model-expansion` while using these is not advised.
+-# Additional SchemaInfo members for meta-type 'alternate'.
++# Additional `SchemaInfo` members for meta-type 'alternate'.
  #
- # Some architectures may not support comparing CPU models.  s390x
- # supports comparing CPU models.
+ # @members: the alternate type's members, in no particular order.  The
+ #     members' wire encoding is distinct, see
+@@ -301,7 +301,7 @@
+ ##
+ # @SchemaInfoCommand:
  #
- # @modela: description of the first CPU model to compare, referred to
--#     as "model A" in CpuModelCompareResult
-+#     as "model A" in `CpuModelCompareResult`
+-# Additional SchemaInfo members for meta-type 'command'.
++# Additional `SchemaInfo` members for meta-type 'command'.
  #
- # @modelb: description of the second CPU model to compare, referred to
--#     as "model B" in CpuModelCompareResult
-+#     as "model B" in `CpuModelCompareResult`
+ # @arg-type: the name of the object type that provides the command's
+ #     parameters.
+@@ -323,7 +323,7 @@
+ ##
+ # @SchemaInfoEvent:
  #
--# Returns: a CpuModelCompareInfo describing how both CPU models
-+# Returns: a `CpuModelCompareInfo` describing how both CPU models
- #     compare
+-# Additional SchemaInfo members for meta-type 'event'.
++# Additional `SchemaInfo` members for meta-type 'event'.
  #
- # Errors:
-@@ -2068,17 +2068,17 @@
+ # @arg-type: the name of the object type that provides the event's
+ #     parameters.
+diff --git a/qapi/misc-arm.json b/qapi/misc-arm.json
+index f9dd743b52..f921d740f1 100644
+--- a/qapi/misc-arm.json
++++ b/qapi/misc-arm.json
+@@ -30,7 +30,7 @@
+ ##
+ # @query-gic-capabilities:
  #
- # * QEMU version: CPU models may look different depending on the QEMU
- #   version.  (Except for CPU models reported as "static" in
--#   query-cpu-definitions.)
-+#   `query-cpu-definitions`.)
- # * machine-type: CPU model may look different depending on the
- #   machine-type.  (Except for CPU models reported as "static" in
--#   query-cpu-definitions.)
-+#   `query-cpu-definitions`.)
- # * machine options (including accelerator): in some architectures,
- #   CPU models may look different depending on machine and accelerator
- #   options.  (Except for CPU models reported as "static" in
--#   query-cpu-definitions.)
-+#   `query-cpu-definitions`.)
- # * "-cpu" arguments and global properties: arguments to the -cpu
- #   option and global properties may affect expansion of CPU models.
--#   Using query-cpu-model-expansion while using these is not advised.
-+#   Using `query-cpu-model-expansion` while using these is not advised.
+-# It will return a list of GICCapability objects that describe its
++# It will return a list of `GICCapability` objects that describe its
+ # capability bits.
  #
- # Some architectures may not support baselining CPU models.  s390x
- # supports baselining CPU models.
-@@ -2087,7 +2087,7 @@
+ # On non-ARM targets this command will report an error as the GIC
+diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
+index 282bd3627b..c8c91a241c 100644
+--- a/qapi/misc-i386.json
++++ b/qapi/misc-i386.json
+@@ -26,7 +26,7 @@
+ ##
+ # @SevState:
  #
- # @modelb: description of the second CPU model to baseline
+-# An enumeration of SEV state information used during @query-sev.
++# An enumeration of SEV state information used during `query-sev`.
  #
--# Returns: a CpuModelBaselineInfo describing the baselined CPU model
-+# Returns: a `CpuModelBaselineInfo` describing the baselined CPU model
+ # @uninit: The guest is uninitialized.
  #
- # Errors:
- #     - if baselining CPU models is not supported by the target
-@@ -2107,7 +2107,7 @@
+diff --git a/qapi/misc.json b/qapi/misc.json
+index 7dbc29dbd6..28c641fe2f 100644
+--- a/qapi/misc.json
++++ b/qapi/misc.json
+@@ -23,7 +23,7 @@
+ #     "@dbus-display" or the name of a character device (e.g. from
+ #     -chardev id=XXXX)
  #
- # The result of a cpu model expansion.
+-# @fdname: file descriptor name previously passed via 'getfd' command
++# @fdname: file descriptor name previously passed via `getfd` command
  #
--# @model: the expanded CpuModelInfo.
-+# @model: the expanded `CpuModelInfo`.
+ # @skipauth: whether to skip authentication.  Only applies to "vnc"
+ #     and "spice" protocols
+@@ -228,7 +228,7 @@
+ #    Known limitations:
  #
- # @deprecated-props: an optional list of properties that are flagged as
- #     deprecated by the CPU vendor.  The list depends on the
-@@ -2136,17 +2136,17 @@
+ #    * This command is stateless, this means that commands that depend
+-#      on state information (such as getfd) might not work.
++#      on state information (such as `getfd`) might not work.
  #
- # * QEMU version: CPU models may look different depending on the QEMU
- #   version.  (Except for CPU models reported as "static" in
--#   query-cpu-definitions.)
-+#   `query-cpu-definitions`.)
- # * machine-type: CPU model may look different depending on the
- #   machine-type.  (Except for CPU models reported as "static" in
--#   query-cpu-definitions.)
-+#   `query-cpu-definitions`.)
- # * machine options (including accelerator): in some architectures,
- #   CPU models may look different depending on machine and accelerator
- #   options.  (Except for CPU models reported as "static" in
--#   query-cpu-definitions.)
-+#   `query-cpu-definitions`.)
- # * "-cpu" arguments and global properties: arguments to the -cpu
- #   option and global properties may affect expansion of CPU models.
--#   Using query-cpu-model-expansion while using these is not advised.
-+#   Using `query-cpu-model-expansion` while using these is not advised.
+ #    * Commands that prompt the user for data don't currently work.
  #
- # Some architectures may not support all expansion types.  s390x
- # supports "full" and "static".  Arm only supports "full".
-@@ -2155,7 +2155,7 @@
+@@ -255,7 +255,7 @@
+ # .. note:: If @fdname already exists, the file descriptor assigned to
+ #    it will be closed and replaced by the received file descriptor.
  #
- # @type: expansion type, specifying how to expand the CPU model
+-#    The 'closefd' command can be used to explicitly close the file
++#    The `closefd` command can be used to explicitly close the file
+ #    descriptor when it is no longer needed.
  #
--# Returns: a CpuModelExpansionInfo describing the expanded CPU model
-+# Returns: a `CpuModelExpansionInfo` describing the expanded CPU model
+ # .. qmp-example::
+@@ -282,7 +282,7 @@
+ # .. note:: If @fdname already exists, the file descriptor assigned to
+ #    it will be closed and replaced by the received file descriptor.
  #
- # Errors:
- #     - if expanding CPU models is not supported
-@@ -2194,7 +2194,7 @@
- #     from running in the current host.  (since 2.8)
+-#    The 'closefd' command can be used to explicitly close the file
++#    The `closefd` command can be used to explicitly close the file
+ #    descriptor when it is no longer needed.
  #
- # @typename: Type name that can be used as argument to
--#     @device-list-properties, to introspect properties configurable
-+#     `device-list-properties`, to introspect properties configurable
- #     using -cpu or -global.  (since 2.9)
+ # .. qmp-example::
+@@ -475,7 +475,7 @@
  #
- # @alias-of: Name of CPU model this model is an alias for.  The target
+ # @name: parameter name
+ #
+-# @type: parameter @CommandLineParameterType
++# @type: parameter `CommandLineParameterType`
+ #
+ # @help: human readable text string, not suitable for parsing.
+ #
+@@ -497,7 +497,7 @@
+ #
+ # @option: option name
+ #
+-# @parameters: an array of @CommandLineParameterInfo
++# @parameters: an array of `CommandLineParameterInfo`
+ #
+ # Since: 1.5
+ ##
+diff --git a/qapi/stats.json b/qapi/stats.json
+index b63a7369dd..151ac43c48 100644
+--- a/qapi/stats.json
++++ b/qapi/stats.json
+@@ -89,7 +89,7 @@
+ # @StatsRequest:
+ #
+ # Indicates a set of statistics that should be returned by
+-# query-stats.
++# `query-stats`.
+ #
+ # @provider: provider for which to return statistics.
+ #
+@@ -114,7 +114,7 @@
+ ##
+ # @StatsFilter:
+ #
+-# The arguments to the query-stats command; specifies a target for
++# The arguments to the `query-stats` command; specifies a target for
+ # which to request statistics and optionally the required subset of
+ # information for that target.
+ #
+@@ -185,7 +185,7 @@
+ # Return runtime-collected statistics for objects such as the VM or
+ # its vCPUs.
+ #
+-# The arguments are a StatsFilter and specify the provider and objects
++# The arguments are a `StatsFilter` and specify the provider and objects
+ # to return statistics about.
+ #
+ # Returns: a list of statistics, one for each provider and object
+@@ -205,7 +205,7 @@
+ #
+ # @name: name of the statistic; each element of the schema is uniquely
+ #     identified by a target, a provider (both available in
+-#     @StatsSchema) and the name.
++#     `StatsSchema`) and the name.
+ #
+ # @type: kind of statistic.
+ #
 -- 
 2.49.0
 
