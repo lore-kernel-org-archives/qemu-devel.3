@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76DB9C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 18:40:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA91FC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 18:44:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubO6a-0004Mb-Kv; Mon, 14 Jul 2025 14:40:48 -0400
+	id 1ubO9o-0006BQ-EP; Mon, 14 Jul 2025 14:44:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1ubN1x-0000tU-Lw
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 13:32:06 -0400
+ id 1ubN48-00020U-Lg
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 13:34:12 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1ubN1v-00068C-OF
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 13:31:57 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bgq905jqjz6L5CC;
- Tue, 15 Jul 2025 01:30:44 +0800 (CST)
+ id 1ubN45-0006FH-7l
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 13:34:11 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bgqCV4TK1z6M56p;
+ Tue, 15 Jul 2025 01:32:54 +0800 (CST)
 Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id E293A14038F;
- Tue, 15 Jul 2025 01:31:49 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 5E8061402ED;
+ Tue, 15 Jul 2025 01:34:07 +0800 (CST)
 Received: from a2303103017.china.huawei.com (10.81.206.233) by
  frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 14 Jul 2025 19:31:48 +0200
+ 15.1.2507.39; Mon, 14 Jul 2025 19:34:06 +0200
 To: <qemu-devel@nongnu.org>, <mst@redhat.com>
 CC: <anisinha@redhat.com>, <gaosong@loongson.cn>, <imammedo@redhat.com>,
  <jiaxun.yang@flygoat.com>, <jonathan.cameron@huawei.com>,
  <linuxarm@huawei.com>, <maobibo@loongson.cn>, <peter.maydell@linaro.org>,
  <prime.zeng@hisilicon.com>, <shameerali.kolothum.thodi@huawei.com>,
  <wangyanan55@huawei.com>, <yangyicong@hisilicon.com>
-Subject: [PATCH v7 0/4] Building PPTT with root node and identical
- implementation flag
-Date: Mon, 14 Jul 2025 18:31:42 +0100
-Message-ID: <20250714173146.511-1-alireza.sanaee@huawei.com>
+Subject: [PATCH v7 4/4] tests: virt: Update expected ACPI tables for virt test
+Date: Mon, 14 Jul 2025 18:31:46 +0100
+Message-ID: <20250714173146.511-5-alireza.sanaee@huawei.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250714173146.511-1-alireza.sanaee@huawei.com>
+References: <20250714173146.511-1-alireza.sanaee@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -75,49 +76,260 @@ From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-OS like Linux is using PPTT processor node's identical implementation
-flag [1] to infer whether the whole system or a certain CPU cluster is
-homogeneous or not [2]. QEMU currently only support building homogeneous
-system, set the flag to indicate the fact. Build a root node in PPTT for
-indicates the identical implementation which is needed for a
-multi-socket system. Update the related PPTT tables as well.
+Update the ACPI tables according to the acpi aml_build change, also
+empty bios-tables-test-allowed-diff.h.
 
-We observed an issue interacting with Loongarch with this patchset, and
-there was a discussion about it in [3], and eventually thanks to Bibo we
-have a patchset that fixed the interactions with Loongarch in the [4].
+The disassembled differences between actual and expected PPTT shows
+below. Only about the root node adding and identification flag set
+as expected.
 
-History:
-    * v6->v7: Rebased on top of MST's v11-14-07-2025 branch, and added
-      loongarch64 PPTT and PPTT.topology test files.
-    * v5->v6: Rebased on 09be8a511a2e278b45729d7b065d30c68dd699d0
-    * v4->v5: fixed a typo
-    * v3->v4: PPTT rev to 2
-    * v2->v3: rebase to 10
+Diff regarding Loongarch64:
 
-[1] ACPI 6.5 Table 5.158: Processor Structure Flags
-[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/acpi/pptt.c?h=v6.11-rc1#n810
-[3] https://lore.kernel.org/all/99a37f40-56dc-ab7a-86ff-1a9dcb3cc711@loongson.cn/
-[4] https://lore.kernel.org/qemu-devel/20250604065502.1114098-1-maobibo@loongson.cn/
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20230628 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+- * Disassembly of tests/data/acpi/loongarch64/virt/PPTT, Mon Jul 14 16:15:12 2025
++ * Disassembly of /tmp/aml-4A0092, Mon Jul 14 16:15:12 2025
+  *
+  * ACPI Data Table [PPTT]
+  *
+  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
+  */
 
-DEPEND-ON: Message-ID: <20250604065502.1114098-1-maobibo@loongson.cn>
+ [000h 0000 004h]                   Signature : "PPTT"    [Processor Properties Topology Table]
+-[004h 0004 004h]                Table Length : 0000004C
++[004h 0004 004h]                Table Length : 00000060
+ [008h 0008 001h]                    Revision : 02
+-[009h 0009 001h]                    Checksum : A8
++[009h 0009 001h]                    Checksum : 27
+ [00Ah 0010 006h]                      Oem ID : "BOCHS "
+ [010h 0016 008h]                Oem Table ID : "BXPC    "
+ [018h 0024 004h]                Oem Revision : 00000001
+ [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
+ [020h 0032 004h]       Asl Compiler Revision : 00000001
 
-Alireza Sanaee (1):
-  tests: virt: Update expected ACPI tables for virt test
+ [024h 0036 001h]               Subtable Type : 00 [Processor Hierarchy Node]
+ [025h 0037 001h]                      Length : 14
+ [026h 0038 002h]                    Reserved : 0000
+-[028h 0040 004h]       Flags (decoded below) : 00000001
++[028h 0040 004h]       Flags (decoded below) : 00000011
+                             Physical package : 1
+                      ACPI Processor ID valid : 0
+                        Processor is a thread : 0
+                               Node is a leaf : 0
+-                    Identical Implementation : 0
++                    Identical Implementation : 1
+ [02Ch 0044 004h]                      Parent : 00000000
+ [030h 0048 004h]           ACPI Processor ID : 00000000
+ [034h 0052 004h]     Private Resource Number : 00000000
 
-Yicong Yang (3):
-  tests: virt: Allow changes to PPTT test table
-  hw/acpi/aml-build: Set identical implementation flag for PPTT
-    processor nodes
-  hw/acpi/aml-build: Build a root node in the PPTT table
+ [038h 0056 001h]               Subtable Type : 00 [Processor Hierarchy Node]
+ [039h 0057 001h]                      Length : 14
+ [03Ah 0058 002h]                    Reserved : 0000
+-[03Ch 0060 004h]       Flags (decoded below) : 0000000A
++[03Ch 0060 004h]       Flags (decoded below) : 00000011
++                            Physical package : 1
++                     ACPI Processor ID valid : 0
++                       Processor is a thread : 0
++                              Node is a leaf : 0
++                    Identical Implementation : 1
++[040h 0064 004h]                      Parent : 00000024
++[044h 0068 004h]           ACPI Processor ID : 00000000
++[048h 0072 004h]     Private Resource Number : 00000000
++
++[04Ch 0076 001h]               Subtable Type : 00 [Processor Hierarchy Node]
++[04Dh 0077 001h]                      Length : 14
++[04Eh 0078 002h]                    Reserved : 0000
++[050h 0080 004h]       Flags (decoded below) : 0000000A
+                             Physical package : 0
+                      ACPI Processor ID valid : 1
+                        Processor is a thread : 0
+                               Node is a leaf : 1
+                     Identical Implementation : 0
+-[040h 0064 004h]                      Parent : 00000024
+-[044h 0068 004h]           ACPI Processor ID : 00000000
+-[048h 0072 004h]     Private Resource Number : 00000000
++[054h 0084 004h]                      Parent : 00000038
++[058h 0088 004h]           ACPI Processor ID : 00000000
++[05Ch 0092 004h]     Private Resource Number : 00000000
 
- hw/acpi/aml-build.c                           |  24 +++++++++++++++---
- tests/data/acpi/aarch64/virt/PPTT             | Bin 76 -> 96 bytes
- .../data/acpi/aarch64/virt/PPTT.acpihmatvirt  | Bin 156 -> 176 bytes
- tests/data/acpi/aarch64/virt/PPTT.topology    | Bin 336 -> 356 bytes
- tests/data/acpi/loongarch64/virt/PPTT         | Bin 76 -> 96 bytes
- .../data/acpi/loongarch64/virt/PPTT.topology  | Bin 176 -> 196 bytes
- 6 files changed, 20 insertions(+), 4 deletions(-)
+-Raw Table Data: Length 76 (0x4C)
++Raw Table Data: Length 96 (0x60)
 
+-    0000: 50 50 54 54 4C 00 00 00 02 A8 42 4F 43 48 53 20  // PPTTL.....BOCHS
++    0000: 50 50 54 54 60 00 00 00 02 27 42 4F 43 48 53 20  // PPTT`....'BOCHS
+     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
+-    0020: 01 00 00 00 00 14 00 00 01 00 00 00 00 00 00 00  // ................
+-    0030: 00 00 00 00 00 00 00 00 00 14 00 00 0A 00 00 00  // ................
+-    0040: 24 00 00 00 00 00 00 00 00 00 00 00              // $...........
++    0020: 01 00 00 00 00 14 00 00 11 00 00 00 00 00 00 00  // ................
++    0030: 00 00 00 00 00 00 00 00 00 14 00 00 11 00 00 00  // ................
++    0040: 24 00 00 00 00 00 00 00 00 00 00 00 00 14 00 00  // $...............
++    0050: 0A 00 00 00 38 00 00 00 00 00 00 00 00 00 00 00  // ....8...........
+
+Diff regarding ARM64:
+/*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20200925 (64-bit version)
+  * Copyright (c) 2000 - 2020 Intel Corporation
+  *
+- * Disassembly of tests/data/acpi/aarch64/virt/PPTT, Thu Apr 24 11:02:39 2025
++ * Disassembly of /tmp/aml-E0RF52, Thu Apr 24 11:02:39 2025
+  *
+  * ACPI Data Table [PPTT]
+  *
+  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue
+  */
+
+ [000h 0000   4]                    Signature : "PPTT"    [Processor Properties Topology Table]
+-[004h 0004   4]                 Table Length : 0000004C
++[004h 0004   4]                 Table Length : 00000060
+ [008h 0008   1]                     Revision : 02
+-[009h 0009   1]                     Checksum : A8
++[009h 0009   1]                     Checksum : 27
+ [00Ah 0010   6]                       Oem ID : "BOCHS "
+ [010h 0016   8]                 Oem Table ID : "BXPC    "
+ [018h 0024   4]                 Oem Revision : 00000001
+ [01Ch 0028   4]              Asl Compiler ID : "BXPC"
+ [020h 0032   4]        Asl Compiler Revision : 00000001
+
+ [024h 0036   1]                Subtable Type : 00 [Processor Hierarchy Node]
+ [025h 0037   1]                       Length : 14
+ [026h 0038   2]                     Reserved : 0000
+-[028h 0040   4]        Flags (decoded below) : 00000001
++[028h 0040   4]        Flags (decoded below) : 00000011
+                             Physical package : 1
+                      ACPI Processor ID valid : 0
+                        Processor is a thread : 0
+                               Node is a leaf : 0
+-                    Identical Implementation : 0
++                    Identical Implementation : 1
+ [02Ch 0044   4]                       Parent : 00000000
+ [030h 0048   4]            ACPI Processor ID : 00000000
+ [034h 0052   4]      Private Resource Number : 00000000
+
+ [038h 0056   1]                Subtable Type : 00 [Processor Hierarchy Node]
+ [039h 0057   1]                       Length : 14
+ [03Ah 0058   2]                     Reserved : 0000
+-[03Ch 0060   4]        Flags (decoded below) : 0000000A
++[03Ch 0060   4]        Flags (decoded below) : 00000011
++                            Physical package : 1
++                     ACPI Processor ID valid : 0
++                       Processor is a thread : 0
++                              Node is a leaf : 0
++                    Identical Implementation : 1
++[040h 0064   4]                       Parent : 00000024
++[044h 0068   4]            ACPI Processor ID : 00000000
++[048h 0072   4]      Private Resource Number : 00000000
++
++[04Ch 0076   1]                Subtable Type : 00 [Processor Hierarchy Node]
++[04Dh 0077   1]                       Length : 14
++[04Eh 0078   2]                     Reserved : 0000
++[050h 0080   4]        Flags (decoded below) : 0000000A
+                             Physical package : 0
+                      ACPI Processor ID valid : 1
+                        Processor is a thread : 0
+                               Node is a leaf : 1
+                     Identical Implementation : 0
+-[040h 0064   4]                       Parent : 00000024
+-[044h 0068   4]            ACPI Processor ID : 00000000
+-[048h 0072   4]      Private Resource Number : 00000000
++[054h 0084   4]                       Parent : 00000038
++[058h 0088   4]            ACPI Processor ID : 00000000
++[05Ch 0092   4]      Private Resource Number : 00000000
+
+-Raw Table Data: Length 76 (0x4C)
++Raw Table Data: Length 96 (0x60)
+
+-    0000: 50 50 54 54 4C 00 00 00 02 A8 42 4F 43 48 53 20  // PPTTL.....BOCHS
++    0000: 50 50 54 54 60 00 00 00 02 27 42 4F 43 48 53 20  // PPTT`....'BOCHS
+     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
+-    0020: 01 00 00 00 00 14 00 00 01 00 00 00 00 00 00 00  // ................
+-    0030: 00 00 00 00 00 00 00 00 00 14 00 00 0A 00 00 00  // ................
+-    0040: 24 00 00 00 00 00 00 00 00 00 00 00              // $...........
++    0020: 01 00 00 00 00 14 00 00 11 00 00 00 00 00 00 00  // ................
++    0030: 00 00 00 00 00 00 00 00 00 14 00 00 11 00 00 00  // ................
++    0040: 24 00 00 00 00 00 00 00 00 00 00 00 00 14 00 00  // $...............
++    0050: 0A 00 00 00 38 00 00 00 00 00 00 00 00 00 00 00  // ....8...........
+
+Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+---
+ tests/data/acpi/aarch64/virt/PPTT              | Bin 76 -> 96 bytes
+ tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt | Bin 156 -> 176 bytes
+ tests/data/acpi/aarch64/virt/PPTT.topology     | Bin 336 -> 356 bytes
+ tests/data/acpi/loongarch64/virt/PPTT          | Bin 76 -> 96 bytes
+ tests/data/acpi/loongarch64/virt/PPTT.topology | Bin 176 -> 196 bytes
+ tests/qtest/bios-tables-test-allowed-diff.h    |   5 -----
+ 6 files changed, 5 deletions(-)
+
+diff --git a/tests/data/acpi/aarch64/virt/PPTT b/tests/data/acpi/aarch64/virt/PPTT
+index 7a1258ecf123555b24462c98ccbb76b4ac1d0c2b..15598a9b8a3cc0cdd50bc1f77c73ae0ba728a272 100644
+GIT binary patch
+literal 96
+zcmWFt2nk7GU|?WUck*}k2v%^42yj*a0!E-1hz+6{L>L$ZK{PUeim9N9aRK=jNMZmJ
+Cwg&+K
+
+delta 38
+kcmYfB;R*-{3GrcIU|?D?kxP!15y)bg=qSvi0%AY`0D`Lo$p8QV
+
+diff --git a/tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt b/tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt
+index 4eef303a5b6168c6bc3795c2e2c53f65b4c4cfd4..7b613ddaf4b8cfa13821aa2e835d290077221897 100644
+GIT binary patch
+literal 176
+zcmWFt2npH1z`(%7>*Vk35v<@85#X!<1dKp25F11@h%hh+f@ov_6;nYI;{x(6aEO7;
+b0?8riMHU0;EdgRCkQxvGs)LC!Lqr$=thxyS
+
+literal 156
+zcmWFt2nm_Pz`(%t&&l7}BUr&HBEVSz2pEB4AU23*5Mf{d(;zks0L8d~Y!w(EL?em8
+b)g$Re76a)`0AeN}1_P+x1R#eQBEkRwWK9VH
+
+diff --git a/tests/data/acpi/aarch64/virt/PPTT.topology b/tests/data/acpi/aarch64/virt/PPTT.topology
+index 3fbcae5ff08aaf16fedf4da45e941661d79c1174..6b864f035c9f48845e9a3beb482c5171074864a5 100644
+GIT binary patch
+literal 356
+zcmWFt2nk7HWME*L?&R<65v<@85#X!<1VAAM5F11@h%hh+f@ov_6;nYI69Dopu!#Af
+ziSYsX2{^>Sc7o)9c7V(S=|vU;>74__Oh60<Ky@%NW+X9~TafjF#BRXUfM}@RH$Wx}
+cOdLs!6-f-H7uh_Jy&6CPHY9a0F?OgJ00?&w0RR91
+
+literal 336
+zcmWFt2nh*bWME*baq@Te2v%^42yj*a0-z8Bhz+6{L>L&rG>8oYKrs+dflv?<DrSKu
+z#s}p4;1GkGi=-D>45YUMh?!vef$Csl%t&G&Cde(wdO>1GKm-gx_1*yTS+Iz)B8h>R
+aAic=uf$S9l3b27BK>%tVNQ@mK!T<mOd=3Es
+
+diff --git a/tests/data/acpi/loongarch64/virt/PPTT b/tests/data/acpi/loongarch64/virt/PPTT
+index 7a1258ecf123555b24462c98ccbb76b4ac1d0c2b..15598a9b8a3cc0cdd50bc1f77c73ae0ba728a272 100644
+GIT binary patch
+literal 96
+zcmWFt2nk7GU|?WUck*}k2v%^42yj*a0!E-1hz+6{L>L$ZK{PUeim9N9aRK=jNMZmJ
+Cwg&+K
+
+delta 38
+kcmYfB;R*-{3GrcIU|?D?kxP!15y)bg=qSvi0%AY`0D`Lo$p8QV
+
+diff --git a/tests/data/acpi/loongarch64/virt/PPTT.topology b/tests/data/acpi/loongarch64/virt/PPTT.topology
+index d91e55b2399d9949dbb8e4c8cf634af1a0e56df4..7fc92984694d2cac7bf867c7fea696e135f8c758 100644
+GIT binary patch
+literal 196
+zcmWFt2njjDz`($y<>c?|5v<@85#X!<1dKp25F11@h%hh+f@ov_6;nYI69Dop(8TzF
+jd><TQVDmw8K=WXFk;OoIJAjx8qy_|l>R@8b5D^9dn=lFi
+
+literal 176
+zcmWFt2npH1z`($y@8s|75v<@85#X!<1dKp25F11@h%hjKX%HI*fMOt^0-+!zP>c`A
+cvcMq*Hv>s8vKUBj2@o^E^h3=9i7`XP0J3}u0RR91
+
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 5c3ff47748..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,6 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/aarch64/virt/PPTT",
+-"tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt",
+-"tests/data/acpi/aarch64/virt/PPTT.topology",
+-"tests/data/acpi/loongarch64/virt/PPTT",
+-"tests/data/acpi/loongarch64/virt/PPTT.topology",
 -- 
 2.43.0
 
