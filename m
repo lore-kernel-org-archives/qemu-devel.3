@@ -4,72 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B943C83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 09:46:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CAC4C83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 09:47:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubFjH-0002xk-0U; Mon, 14 Jul 2025 05:44:11 -0400
+	id 1ubFmQ-0005om-49; Mon, 14 Jul 2025 05:47:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ubFTm-000137-Lx
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 05:28:19 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1ubFlk-0005Of-IY; Mon, 14 Jul 2025 05:46:53 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ubFTk-0003EU-6H
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 05:28:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752485288; x=1784021288;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=BpfZqeedCcgSEGxeIlGdqTtbkaF5iKh1zX1XRjAMOIo=;
- b=QnUXVF3drP72gYkxRtBzEtEwVXT8hmICFOpB8jhg9DIDGCEYGO50Ycs0
- LGBmMvhnNIM8V89upWV/5DMIiOr0K0/cGxgMLQAsO4mWFJ9OoPX6ZvL5R
- 1yohTKgA+n9xdL3y0N9EHC3dG5HRRSycA9hEaPQGHIZ1/xz3qwcf/0zv7
- T8YyGMqcOPp7qdmREBHhh1DNo/w63PRmN0Jofkj0/VAb6gSdysvDLgGp3
- zB/QTeknAvSm7m4GOaieHvItOAOjhezVYS4EBiKAXYNK0AsRxkHvx+asK
- /tm8c0Q/ux5xIgv1V3hVr7FQcGg3Hqv0SNIk3mjjeGbDKysqLVcvHyqUj w==;
-X-CSE-ConnectionGUID: 75RA3QtPQD+ti5o5ERnn4g==
-X-CSE-MsgGUID: JnbN6WOQRCe2QZbzbHLSog==
-X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="66029296"
-X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; d="scan'208";a="66029296"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jul 2025 02:28:06 -0700
-X-CSE-ConnectionGUID: AFiNJOUJQ12h6p+tKzXmAw==
-X-CSE-MsgGUID: LeXLREfPQJyVnUYjPleTsg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; d="scan'208";a="187882747"
-Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa002.jf.intel.com with ESMTP; 14 Jul 2025 02:28:06 -0700
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,
-	Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH 4/5] qemu-options: Add confidential-guest-support to machine
- options
-Date: Mon, 14 Jul 2025 17:19:52 +0800
-Message-ID: <20250714091953.448226-5-xiaoyao.li@intel.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250714091953.448226-1-xiaoyao.li@intel.com>
-References: <20250714091953.448226-1-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1ubFli-0006GK-CR; Mon, 14 Jul 2025 05:46:44 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1ubFlW-00000000gfq-1UiZ; Mon, 14 Jul 2025 11:46:30 +0200
+Message-ID: <59a87a67-9283-4dd0-a29b-dae58fffe9ea@maciej.szmigiero.name>
+Date: Mon, 14 Jul 2025 11:46:25 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [PATCH 0/3] VFIO multifd device state transfer patches for QEMU
+ 10.1
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Avihai Horon <avihaih@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+References: <cover.1750787338.git.maciej.szmigiero@oracle.com>
+Content-Language: en-US
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <cover.1750787338.git.maciej.szmigiero@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.10; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,47 +104,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"confidential-guest-support" is the recommended property to configure
-machine with confidential computing technology instead of
-"memory-encryption".
+On 24.06.2025 19:51, Maciej S. Szmigiero wrote:
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> 
+> When VFIO multifd device state transfer support was merged in QEMU 10.0
+> some of patches were separated for the future QEMU release after the
+> spring cleanup.
+> 
+> Since QEMU 10.1 code freeze is getting closer let's have them reviewed
+> now.
+> 
 
-Add "confidential-guest-support" to machine options and call out
-explicitly "memory-encryption" is the alias of it and not recommended.
+Hey Cédric,
 
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
----
- qemu-options.hx | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+I see these patches in your "vfio-10.1" GitHub tree but I don't see them
+as a pull request on the qemu-devel mailing list.
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 27b7b79c6cad..5c400114c2e5 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -36,7 +36,8 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
-     "                dea-key-wrap=on|off controls support for DEA key wrapping (default=on)\n"
-     "                suppress-vmdesc=on|off disables self-describing migration (default=off)\n"
-     "                nvdimm=on|off controls NVDIMM support (default=off)\n"
--    "                memory-encryption=@var{} memory encryption object to use (default=none)\n"
-+    "                confidential-guest-support='object-id' specifies confidential guest support object (default=none)\n"
-+    "                memory-encryption='object-id' (memory-encryption is the alias of confidential-guest-support, recommend to use confidential-guest-support)\n"
-     "                hmat=on|off controls ACPI HMAT support (default=off)\n"
- #ifdef CONFIG_POSIX
-     "                aux-ram-share=on|off allocate auxiliary guest RAM as shared (default: off)\n"
-@@ -99,8 +100,12 @@ SRST
-     ``nvdimm=on|off``
-         Enables or disables NVDIMM support. The default is off.
- 
-+    ``confidential-guest-support=``
-+        confidential guest support object to use. The default is none.
-+
-     ``memory-encryption=``
--        Memory encryption object to use. The default is none.
-+        The alias of ``confidential-guest-support``. Recommend to use
-+        confidential-guest-support.
- 
-     ``hmat=on|off``
-         Enables or disables ACPI Heterogeneous Memory Attribute Table
--- 
-2.43.0
+Are you going to post them? - the soft code freeze is tomorrow.
 
+Thanks,
+Maciej
 
