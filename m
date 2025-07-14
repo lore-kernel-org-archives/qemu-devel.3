@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 535FFC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 10:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23961C83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 10:55:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubGja-0007EL-W7; Mon, 14 Jul 2025 06:48:36 -0400
+	id 1ubGq0-0002Qh-Dt; Mon, 14 Jul 2025 06:55:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ubGiO-0006ga-6b
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:47:25 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ubGpQ-0002Jg-Sr
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:54:42 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ubGiL-0007DX-4q
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:47:19 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-717b580ff2aso34342457b3.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 03:47:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ubGpP-0008HN-4Y
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:54:36 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-ae223591067so730619966b.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 03:54:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752490036; x=1753094836; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=7zW9BdP+iWwUNifc/+YSmce2H3wcNzFu018ZMLhSB3M=;
- b=bwdofn5PRYEoEP45unihi99oGknUUyHzxz/r3rkxaK0cJE5JoFqzhA0AJG7EWV+Hew
- sFa7vwitAAaV83SjbE0Qb8tICMFEPi0mIlQFmWvRtWblp0zia4lyyCuanyWgmb8WBZxw
- MX/Uy+UnbMT8Ysr27kEDa3d/TC05J0JCPF69L5QZxZyvM5V5RgT1fvSiHhOdNlp2mkSS
- vd0w2i+xPLzEEr5XeC62Qa393m+ptHLQvt5NWYjVMCfD38ErZ430/npR3aozFMoViuDO
- YKoVQGol26hGESFHCNTUHTApPEyjrEnNJO2RCWcbMESMHl2WEDGSbv1M/2vWBZBgkGex
- PWwg==
+ d=linaro.org; s=google; t=1752490472; x=1753095272; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=I+gqGwh/OcgeJvVbaiN95K2S7MGxZqAqfm1OoJ3oZ1Y=;
+ b=QZjkkXnFFCWZ42Gfi/ZNdZqyL40FkGlJwk7JFa20bXRSh7/HnmeZXOSNWeUMAISG0o
+ dxn51ZFDYMR3h94P4fWkDw9pzFSvgNSsfjKhseyGJxtmNXQUHttUUKeg6EcEvonBtMLU
+ F5Drq90n6tdi9r/53AG8uk+9rkB3nFfF8dmASGiodGOCrKB1xur1ZbYrcePFQ+8N6k3q
+ ZyIqslZpsoe128HZ5A1+01lqC/+N6syTmYwKLK+I4/8S0yyS44bOVwOI/Fo29JctPGNi
+ aPG2oWb4xIvyvkAAgggAJxxRJaX9jm4nJrHpjAdsO9vVkvcFvlv6N0dJk6EhYvmNYaJU
+ 9ReQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752490036; x=1753094836;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7zW9BdP+iWwUNifc/+YSmce2H3wcNzFu018ZMLhSB3M=;
- b=gvLcY3mIAVCHZ32Ry5/hpBnXYXT3KXQR3Bel60bHatXJ6Xs3Ttv1HvA+gTLRq61PvN
- Rm4GUFZZ+WJMyqBi06JGWl8cUPivLW+D1eKaZ8YB3WQZWa2otcutCP0HwroVVTWRrFrC
- ceAbUC/GlhW2cpvpVBxtOZxDrM3pNZankzmOuN/xvLBb1yvtrnR3e16Ckxm1JPGdgqmb
- uJbQWxxfmdOP352Uf789P0FO7osEVgpWdLftQkr841L78G3F4YQW8RwLpTohI7lsC4ZE
- uYxqJfxLTk0g5WQT7GjRs8yVAJSL6l9DE/lvajbBEm2dz7ArMzkeL5+MQSrjjtmfRFDD
- eJsg==
-X-Gm-Message-State: AOJu0YxMpaUdsQbf0PFNYjaRrdBaIRvS/qW/LG+586J2al3AQRdkY327
- 0l/xcW7tu30k6wHKrzQlaypnUtYx3Fp8WCLIIVEaV6MWG868s4Sk62QTKmvBkGQc6w/kWd0hxd2
- pXOAhnnzAdsxZy6s1ziJRhkPed4mYAoV9N4kLtVjwAQ==
-X-Gm-Gg: ASbGncvoi6Z8+6aYVfkzr4BjBwYnDlrwxV086q0IwI4xMpNj+/Zzd5u5fJqK1b4iiFG
- nm4T8mRQJj/b2K/TruzTGtDFDMyEels5/0DwYx1uO+mltbHOPcBwW2pvFrGnm6g6f8OEnsSsQRX
- PBkaFdPNtUpzP+tBE+Gszx1b95uc84+rGnIVysabtNbMrlTHdfxZ4SGJZ+2yL87pjAK95LXUWCJ
- dN7451wFtRVxeOYpLU=
-X-Google-Smtp-Source: AGHT+IEExIuUGWsNkhb77avZpYO4dIuZ14TigNRUb+0z7OC5SVqM6MTggLbvCNTUBTeJXXLwL/W5VqjAmUDDhHRcsss=
-X-Received: by 2002:a05:690c:30b:b0:70e:779:7e6a with SMTP id
- 00721157ae682-717dae75f30mr145024697b3.22.1752490035591; Mon, 14 Jul 2025
- 03:47:15 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752490472; x=1753095272;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=I+gqGwh/OcgeJvVbaiN95K2S7MGxZqAqfm1OoJ3oZ1Y=;
+ b=F667qlCUxEd3TQWS7XHOpFaVUwHCPYnICjE4I5GwMwbioe/thfri4yE4cXGCzmqh4t
+ zbtb9TvM1HlJrrXG5YuW89P+6CpOr/70ua+GCK/QPQ44fN/+F/uRJfWn/PovkZ6Aw9TK
+ xYgBW5fkeEBCMDfPjvpvqoLGdRIQfeawhcdy6TabmdajbCexABtu96aJq/lFeZM+gb92
+ 59Fzyvtb9Be9qZhVaMCgHZL6I4luGzYrJr8dJStxLBsMbdFtJacG5d3tLr1CnWMfWbmO
+ brW4DSfCjZ6kPwgybRJIF0dnBSzZ+tNXhmHavosV4xjLg5OcFHdsqBea8b1WjhlymjvK
+ Qspg==
+X-Gm-Message-State: AOJu0YylsNUEOJP+2SNpD/8Iyh0gh78r0y1SyEJB+r5v5LGe5F8ZHOPX
+ A9kFnlsUf8IZu0IuS6PlvAnQFAIOk4N6/wciOt6VLOLiM5dtHHJKjLxVT9/pryWfXveqnZUemex
+ oWdJ8bNz+vY44tAPE2a28ea+esCEepeJFXQasc7YBEw==
+X-Gm-Gg: ASbGncsKvk4fFQntw1ChvipjduojNOV4i0++OK7DB/7TMncswwpsShPGA99izJSTfSj
+ FU/0SLsy/tMCTOT6bEh9mL5I82nGFG/EtPwGVz20EGcUqLKNLME3MSIZayPXBW3WhvH7j0xjezX
+ wS6vOcc5z2vWStR7xOhpazTEyndtl1KsXX36azuO7YB79mE5ZiiCok48jEt5iyRrDs93Z1Br8dy
+ tqHvw==
+X-Google-Smtp-Source: AGHT+IFaoXwmMVNEenA9W5/M637XowyqOcXlwV3lTC9i7frD6HazsMttT4TTBjWAiEhwjr3UD5ZkgkQMgtHiyCAXnGM=
+X-Received: by 2002:a17:906:fe0c:b0:ae3:5212:c906 with SMTP id
+ a640c23a62f3a-ae6fbe13960mr1399309566b.10.1752490472321; Mon, 14 Jul 2025
+ 03:54:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250711141031.423-1-farosas@suse.de>
- <20250711141031.423-26-farosas@suse.de>
-In-Reply-To: <20250711141031.423-26-farosas@suse.de>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 14 Jul 2025 11:47:03 +0100
-X-Gm-Features: Ac12FXxIl9Iet-t7iLJkdxbTWCgyo-VYsD_NtMJtshKfrbmS8zOJWv8fInxgvps
-Message-ID: <CAFEAcA-_2a5CUspXhy8UErA86EnZ3_s=P2DQ9DPdrMDwNWF4FQ@mail.gmail.com>
-Subject: Re: [PULL 25/26] migration/postcopy: Add latency distribution report
- for blocktime
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>
+References: <20250714102626.34431-1-sgarzare@redhat.com>
+In-Reply-To: <20250714102626.34431-1-sgarzare@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Mon, 14 Jul 2025 13:54:06 +0300
+X-Gm-Features: Ac12FXxsSd3D2J8LVQxPG_kXU65HoHSUI0dKWkZrkHynScC3Qm8YZlyp4Puf-kw
+Message-ID: <CAAjaMXaHxzoouZm+7OLJ4n+59ndoFONWmKHLHKkak31GTi=pcg@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: add net/vhost* files under `vhost`
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,59 +95,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 11 Jul 2025 at 15:20, Fabiano Rosas <farosas@suse.de> wrote:
+On Mon, Jul 14, 2025 at 1:30=E2=80=AFPM Stefano Garzarella <sgarzare@redhat=
+.com> wrote:
 >
-> From: Peter Xu <peterx@redhat.com>
+> From: Stefano Garzarella <sgarzare@redhat.com>
 >
-> Add the latency distribution too for blocktime, using order-of-two buckets.
-> It accounts for all the faults, from either vCPU or non-vCPU threads.  With
-> prior rework, it's very easy to achieve by adding an array to account for
-> faults in each buckets.
+> net/vhost* files should be interesting for vhost maintainers/reviewers.
 >
-> Sample output for HMP (while for QMP it's simply an array):
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+> ---
+>  MAINTAINERS | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> Postcopy Latency Distribution:
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index e88ed2c0a9..045a896d08 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2321,6 +2321,7 @@ F: include/*/vhost*
+>  F: subprojects/libvhost-user/
+>  F: block/export/vhost-user*
+>  F: util/vhost-user-server.c
+> +F: net/vhost*
+>
+>  vhost-shadow-virtqueue
+>  R: Eugenio P=C3=A9rez <eperezma@redhat.com>
+> --
+> 2.50.1
+>
+>
 
-Hi; Coverity points out that there is a bug here (CID 1612248):
-
-> +static const gchar *format_time_str(uint64_t us)
-> +{
-> +    const char *units[] = {"us", "ms", "sec"};
-> +    int index = 0;
-> +
-> +    while (us > 1000) {
-> +        us /= 1000;
-> +        if (++index >= (sizeof(units) - 1)) {
-
-sizeof(units) is the size in bytes, which in this case is
-24, as it is an array of three 8-byte pointers. So it's
-not the right thing to use in bounds checking the array index.
-
-You probably wanted ARRAY_SIZE(units). Also, the ++index
-inside the comparison here seems unnecessarily confusing.
-I would suggest something like
-
-    while (us > 1000 && index + 1 < ARRAY_SIZE(units)) {
-        us /= 1000;
-        index++;
-    }
-
-which puts into the while condition the two conditions under
-which we are OK to shift down a unit, and keeps it
-clear that we maintain the invariant of "when we shift
-down a unit we also divide the value by 1000".
-
-> +            break;
-> +        }
-> +    }
-> +
-> +    return g_strdup_printf("%"PRIu64" %s", us, units[index]);
-
-Otherwise this units[index] access could be off the end of
-the array.
-
-> +}
-
-thanks
--- PMM
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
