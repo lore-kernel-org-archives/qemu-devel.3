@@ -4,114 +4,172 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0BD2C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:57:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46FB0C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:58:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubLY2-00073l-AD; Mon, 14 Jul 2025 11:56:59 -0400
+	id 1ubLZL-0001j5-F6; Mon, 14 Jul 2025 11:58:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1ubKZo-0003HH-Gz; Mon, 14 Jul 2025 10:54:44 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
+ id 1ubKbn-0004Jj-1g
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 10:56:48 -0400
+Received: from mail-co1nam11on2047.outbound.protection.outlook.com
+ ([40.107.220.47] helo=NAM11-CO1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1ubKZm-00071o-2o; Mon, 14 Jul 2025 10:54:44 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56E6S5gw008825;
- Mon, 14 Jul 2025 14:54:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=jURorE
- ojdPOr+SZetn2oQy6EpdD0K/o+SBjLaQsr47g=; b=Bxx9Nb1cCMTGSWp0QX7gyE
- wKXuJnUkXkmobtYK3TYIdxWufzOixJ2ENXNqmi8HHFV1Jf77m/stAEIu0e9dl73n
- ylG5EyvHKyCjQMIsgYpuwEkV0jk7CQ2Xx+W2t2EF7DsE/409JsVndKfS3uyYmuf+
- +nf1HH3YhMN1qz6ZemIo+1c982AuP7rvEC3l0jTAHXPRguJbPwlbxfqVXtPDOHmt
- LBglkjlYc0QE6K6ObAqbj01NPcM8iYA4s+5KtI9C9x85YR/PstNJghNZirsavJ7D
- WHog8eieu6jkrev6K7tNWajLEUQbGe19PxWlQdO4moYz26pKUq/G2sZ32ZqCRViQ
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47uf7ctb40-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Jul 2025 14:54:35 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56EETuxj008909;
- Mon, 14 Jul 2025 14:54:34 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47v3hme80g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Jul 2025 14:54:34 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 56EEsWW631130270
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 14 Jul 2025 14:54:33 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D3C8F58055;
- Mon, 14 Jul 2025 14:54:32 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7694658063;
- Mon, 14 Jul 2025 14:54:31 +0000 (GMT)
-Received: from [9.61.75.155] (unknown [9.61.75.155])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 14 Jul 2025 14:54:31 +0000 (GMT)
-Message-ID: <80ebd632-5b56-4391-b60d-f6a64f311e7f@linux.ibm.com>
-Date: Mon, 14 Jul 2025 10:54:30 -0400
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
+ id 1ubKbi-0007Qd-2t
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 10:56:45 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=euXvK3kuvwkYiVAZW53yQNose04SBIx0u8KWMsjruUgGaf7G6YbkGhdZfL+EMxPIf5tABv4YPmwIxCcLNH36mqhVsj4lZct8At7ayRMZxvRrk78zCLR6lfAPIUqqyiZc5r7cwRtuCdbCQ5xe8oaKyxd25LHLQs8FsGe9g1BCE06a+6NqTVwfX7iX9Q47+7SLPgvclQROb10ylOSQXyCMGQ9mtSZvOvewqTToti9BdhLJgx/MekNZWapMAIQZIXkvHygWzkahtU81Ebp4MV56B9PFuV5dMbuWbg1qspx63S8AWsjHKBPw4gM3/bCDYaQGS3ia0ZS+hnnUmvbl4x404Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=er6OQ+zVSJC6QEesqnH1lr9kfAl5Uh/oDP5dFtynqgU=;
+ b=TjZMqqF0xBUGqsCBkMWMEHQKSXQd/1Lv4i7LRly2h5BF2/bH5rInA8LRn67Sh0XSRRhDQSDhzjsF13T4n9nYWy9X9s05FC1gWZGddz6k3yaRgTiNnbAymuWpXZgu6dTzwZO7qJv7kwQCxACkKhK7W7FcT/ZN8xP6vQv7VpEdX5Xz2Lj1iGeuXEHRi+eNqa/qF1LOVQhVZX9vVTjNVWmp9Nv21zjTU9BxZdfhrP+3s1q4mQ8GcozSqkiLPfJwcOt4KjSnJVRljNB2yU0KBkS6aMLr2hFMA6FmJ1vW35bgRWfcInsdEqLk0Q28Xr5NB08qoEdfAT+LjHdh2jNz626xVQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=er6OQ+zVSJC6QEesqnH1lr9kfAl5Uh/oDP5dFtynqgU=;
+ b=TSwY4IjxbpaDVWT5OngPjEE55/9aETTNPgwd3FMQAQ05XDj2ldHDCWDh4f2L9twfHRu8k1l46Nut88xrqKx/soGGJ3q/1PLjrSgTmzRddnBNSAQriPexeVZqhfl1hu/7YnZC4Xti4LRbDWalFSAXIXXntlLG5vzxwwJVXpPcNvo=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
+ by BL1PR12MB5707.namprd12.prod.outlook.com (2603:10b6:208:386::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8922.33; Mon, 14 Jul
+ 2025 14:51:30 +0000
+Received: from MW3PR12MB4553.namprd12.prod.outlook.com
+ ([fe80::b0ef:2936:fec1:3a87]) by MW3PR12MB4553.namprd12.prod.outlook.com
+ ([fe80::b0ef:2936:fec1:3a87%3]) with mapi id 15.20.8922.028; Mon, 14 Jul 2025
+ 14:51:30 +0000
+Message-ID: <d19082cc-6662-4299-89c6-94657ce672f7@amd.com>
+Date: Mon, 14 Jul 2025 09:51:25 -0500
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 20/28] pc-bios/s390-ccw: Add signature verification for
- secure IPL in audit mode
-To: Collin Walling <walling@linux.ibm.com>, Zhuoying Cai
- <zycai@linux.ibm.com>, thuth@redhat.com,
- berrange@redhat.com, richard.henderson@linaro.org, david@redhat.com,
- pbonzini@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com
-References: <20250711211105.439554-1-zycai@linux.ibm.com>
- <20250711211105.439554-21-zycai@linux.ibm.com>
- <eccbac31-7c1d-4b75-a284-a46ad98675db@linux.ibm.com>
+Subject: Re: [PATCH v2 7/7] i386/cpu: Honor maximum value for
+ CPUID.8000001DH.EAX[25:14]
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>
+Cc: Ewan Hai <ewanhai-oc@zhaoxin.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Tao Su <tao1.su@intel.com>, Yi Lai <yi1.lai@intel.com>,
+ Dapeng Mi <dapeng1.mi@intel.com>, qemu-devel@nongnu.org
+References: <20250714080859.1960104-1-zhao1.liu@intel.com>
+ <20250714080859.1960104-8-zhao1.liu@intel.com>
 Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <eccbac31-7c1d-4b75-a284-a46ad98675db@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 32AjINsE4p7dyd6ME5ytgkHFfvNL9Zme
-X-Authority-Analysis: v=2.4 cv=LoGSymdc c=1 sm=1 tr=0 ts=68751a2b cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=URZce_mYXXF1vBoKqvAA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 32AjINsE4p7dyd6ME5ytgkHFfvNL9Zme
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE0MDA4NyBTYWx0ZWRfX0jRw22KgJpyP
- dVpxKHjp+nIQo/ADHzNltnJy4xKhY4eBs/M7MbQAwZjjjDdq4D+0zls2yYQuFhgkafpZvy42tcN
- XO7HecIPk2iCE33Axrnw2CTxp0gn0CZf5wdrtvdVAa8H4gV84kihgixROCVYCSJToHcGD3jLWvQ
- UTdfxxustY068IOK9uNbULmD4oPgPuL180Q4KiEO1MH5X4a/rhMLfimUDhAo03pgLsvsvwUYq5e
- 8mv9rXrbI7EN0X9D7d2zT60OzlQkYjQ7c29BjArFhbVhTZcYcN3hRiAPM0La6WmXy1yk/m0QuEa
- IGg/8MpwJzMPqjQomUD8eV6Dyl/koWqnAmG+7TgZ4gBuSWy5r1KcnjLOg/X9vfIVShPOKVAF+La
- s2X6i9l4WBv+2JunyX5whkfcfj0/p8DBWt5YovfNNipzjFu0cWje/3SdYCwLnnYiEolP0G21
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-14_01,2025-07-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0
- lowpriorityscore=0 spamscore=0 malwarescore=0 impostorscore=0
- clxscore=1015 phishscore=0 mlxlogscore=999 priorityscore=1501
- suspectscore=0 mlxscore=0 adultscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507140087
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+From: "Moger, Babu" <babu.moger@amd.com>
+In-Reply-To: <20250714080859.1960104-8-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SA1P222CA0101.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:806:35e::9) To MW3PR12MB4553.namprd12.prod.outlook.com
+ (2603:10b6:303:2c::19)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|BL1PR12MB5707:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3e1c0738-2b1b-4dcb-5281-08ddc2e5eb15
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|7416014|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?VVk3Yk0rRXpYS3VlNXRKa0lYUEwxWGpDdW1EU05DMVdRTCtNQUlFUExoNmRK?=
+ =?utf-8?B?NXozQW1ISmJLYnRSclAwN3NEZFJ0U2IvbEZTU0R4TElybHVoem9BWEZKQUZq?=
+ =?utf-8?B?eEZkNHhGUm1YTytjL0NLbzBuVXJMdlAvVXRKMklibGNBMjdwNTZMRzN5SDVV?=
+ =?utf-8?B?SlgvbzBrbDJHTWZCSDZBMEhXenduVm5jcktWRFRnTDNHZFNrS1E1aUVXSkk4?=
+ =?utf-8?B?QUZyRG1yY1hpeE0xY0JRdGQ0L3pFQ3NUMm42aS9yRmY5YkVlcHpaNGUxSTZm?=
+ =?utf-8?B?aThCSUJlNFc4ZW1KK0psejM5OWVpaGZ1b29kT01NckpXTXJGWDdQcHBuanBp?=
+ =?utf-8?B?TVFVSko1RmFjRU9CUEp3SkZPcEl1a2FFUlg1NEtCL00xa09yTUFkZXBsaUU1?=
+ =?utf-8?B?OEhEQ0MvTURTYXZDOUtBQS9iNnIwRVZ3N1lwbllEaFY3Tm1QTXIwUGtYbVdo?=
+ =?utf-8?B?Q1BPT3hyZ01VTEM0M3BRTDV1TXl4VEpRNk1OenlCZDB1bndJNXhOd1FwTDBF?=
+ =?utf-8?B?Q0xYcDlITWs5N0lGSmdzMS9jU3NvdTJPanN1d0pucml4dFVUWVRyamxMdEp3?=
+ =?utf-8?B?TVF0amx2ZlRwL0pWeGs2bkdlTmhZdUl0aVU3SjhSdTRZSXlPZ0pvcVhJOWs3?=
+ =?utf-8?B?MDd1ZElDZGhZcEZTRlowMWhob0ZVM2xDeHRCb3RDSjQxb3JlL1h1MTN1WGdB?=
+ =?utf-8?B?M0ZDenBKb0VQZ3JHUThMcnJmV2oyR0JWV01wU0g1SThSQUJTcGpPWW9GU2Nj?=
+ =?utf-8?B?UWFLNEtDRWZWR2dyU0RPZWF5TFFEdUhQQi9Pd25iOXBGU2YxejdyRkI2Vy8r?=
+ =?utf-8?B?SjlMbHZNSk50M3BGWDh6NytqYjJrdCsvL0NtZFdwTnNaM1p5a1Fja3paMTcw?=
+ =?utf-8?B?M3hYbzVmOEdQWW55UWlMRXNYYTkwckVucHpQZnNlN3lsRVRZN3BSczJza25t?=
+ =?utf-8?B?QVFGMlFvWExWWEVRRG1SVDArLzNiUTFCdlBINkpCbHgwSkhmOHFNZlFoMjY0?=
+ =?utf-8?B?R3I0OS9MY3ZUaTlnTUgwOEFERkN2RXVhUDNnQ0JkZVRKODhPYzlNTUJ0SnEz?=
+ =?utf-8?B?dXNyT0s3MStNa2FNbDN1a2NFZ2lyV3dkY3dwWHI4bTlqb0lkL1lqcVBpc0lF?=
+ =?utf-8?B?TjVkYzZXNStyQWVyVVI0L1phRUNjbDE3cFMvVGRGdnBFaitucTdwdTJjaW5w?=
+ =?utf-8?B?Z212ZUhvaE1qbmNaK3RVMUxROWVaZk13SjhaZXhUeEFFZkhFQkhFd0Zpc2Zv?=
+ =?utf-8?B?YlZET25mUXpjbkUvSHZiNXNJVGFKUkd0aW1sc2d0MGlTUGpZTHRmcUFrMnJK?=
+ =?utf-8?B?Si81T0lMMjNKYTFVVkM2UExTd1J6VUdyUlJwYTVKOC9QbldESTd3Ulc1UU1M?=
+ =?utf-8?B?S0k5eGc1Qk1Yc0hZVDNBQ3FZRFVCZFhVTitjbVN6b0M2RDlmN0tDaURRdlBl?=
+ =?utf-8?B?K1lUaDB6YmN6bFh6VGpIbVU4eWo1RWUrcFNsaHl6UzdwNkFYU3BhcGUvM0tJ?=
+ =?utf-8?B?RlgvbnpKMGw4Q04vV2h4SzA3N1c3bC9iMDFhUkZmQlljbmRXNHJuUm1xSmxV?=
+ =?utf-8?B?QTdmT2ErVFljeTVJcVRMNGk3Z0FQN2piaGQ1d3VZVnFCbUFOZzcvQUxEUklk?=
+ =?utf-8?B?R1kvbWpNSjRwWjJMbURodlRmRDc1Vm9qZzBwYlhCUHZrczdsR2FaeVA3MEVF?=
+ =?utf-8?B?S3lGd1FrR0pFc0R4SEJYTlh6TlhoT1pzdXUzaDYwRzBxNkNLa3lqQ3VUSnAz?=
+ =?utf-8?B?TXBVbUZQWmhtd09EQWpJc3lOYzZrb1lmeHA0M1ZmWmtZRE14UmZyYm1sQmZU?=
+ =?utf-8?B?ekNCSUZCZEdSSzhLMWFBb2ZyYkVEeDU1Vy96WHl1V1d0blNleFpxVUNoN2Na?=
+ =?utf-8?B?aXhsbEt2MWUybndGWnFaYzZXZWp5bVVwcUo4UEhwaG5qUzN4TEk4aFRod0pv?=
+ =?utf-8?Q?VkFun1Mn1v8=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:MW3PR12MB4553.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(7416014)(7053199007); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NytFVDhwZmhoeFFscnY2V0EveEhna3AvYzF6WkhzV2dxL1cwQUpidmM3Z1ZS?=
+ =?utf-8?B?blZMeSttR0hkVTVsWE9XYmpXZUdhMWVGOWU3MGVXU1MrRUJRaDNZWCtIMTlD?=
+ =?utf-8?B?TSs2T0pYelBiQWVlMVcyc3lodXhUS0ttV1ArL2tPU3ZwZU5ENEVXSFdQWGQx?=
+ =?utf-8?B?elovaStReTg0SXh0UFBzazkvMk9rNXl5NG9XVmJMQWh5N2xyRlh2SlhIQllN?=
+ =?utf-8?B?V29YcWNXV0pxZ3hERk83UXdyUGlId2pDNkVsVlloNHV4TG83LzNteElKRUtl?=
+ =?utf-8?B?L0t5bGwvNFBtYWlHaDlaM3pBak13SkFyNFF6Z01Ha2cwY2hvaGpCMmNEdEV1?=
+ =?utf-8?B?OUd2MjJ5YTNuTjVjdWFoOHAzakxvUkIrVmV4amdhTVRtT1RnQmJkYk54Vk5u?=
+ =?utf-8?B?cnJlNGZQNW1VWkxOOG1LSkV4cW5uYWpWOXI4UUpjcjRUaE1BN3plcmRDWC83?=
+ =?utf-8?B?cEM1T21VMXRrd1dLZFBFYVdHNUkzQ3ZxRjdBcW9hK3pZYW1WcFQrdk5nUk1Q?=
+ =?utf-8?B?ZUxPbmZmRjdsTjFQaFc5cjBvellxOUd1QndPeGlBaTE1YkRQNnd4NjNmV0JC?=
+ =?utf-8?B?eFplQ1U4WlRMbTRnR09qUFllK0UxUEx3WWhkNmhncUNYZnBwRDV4R2NQOFdY?=
+ =?utf-8?B?TnIrVmZzdUtocXZqdUQxVkY2Yk1rMFV4OUx6QlZYZWE3OEtabVJqVDNzYzdY?=
+ =?utf-8?B?c0E0OXNnbUJ2Z2VEVzZ1YkhuM1M3ZjgzMWZvdnU3cS9ZSnErSDE2clVQcHZW?=
+ =?utf-8?B?SDBia01CMGJNREpjT2JnZ1EyZXdvNFZKL284ZW9DTThLdXZhVndIMWRpV1ZW?=
+ =?utf-8?B?MnU2NURpd2hVNnN6eThSVWlLWUhEWitDRHgwSWtOWWs5cHhzRTZlMCtzT0s4?=
+ =?utf-8?B?Z3A4K0dSektWK1ZwWGZIdjFoODNERkdGc0xTMllXN3dHK3Q0aVNEM2FwUVBh?=
+ =?utf-8?B?K1l0UnllbktsVWFSMUNDVHFQVC8yT0ZiU3FiazA3VEZWd0Yxa0ErTDd6NS9n?=
+ =?utf-8?B?a2lEK3FHbFdkZWlXWEczYmlBQ2RNWGU1c2tHNXBROW1xenJWQlJQNmhCZmlv?=
+ =?utf-8?B?a0p5N09meHlpU3FtZU0vZzFGWnM3Um5MUDFwMG1icWlwY0ZxMSsyYkszbEFF?=
+ =?utf-8?B?WGxOTHlpM3d4M05FQWlRWHExbVI1THBkc1VJYkkwZjM4UWlUTE5CUit6RXNx?=
+ =?utf-8?B?ejE2NmttZUJGZndSeCtSdFFTTHJoZUw4SVRoY0NQeDdNWlQyMTBJNzdsZlVJ?=
+ =?utf-8?B?N2VGTUVFVE54Q3ZQMHJjbEx5U1FaRHM4bTNiQ0piY0JYQmtTd1o4eEp6bVZ6?=
+ =?utf-8?B?UHdtM1dMTGlnMmFPYy8wSWFLL1RjOEdSaDBzQ3JhLzRGSnNkdnFjYlpTN053?=
+ =?utf-8?B?U3FPbmN5TnZoZDVHbmRLM2o5RUdVUnh1OXJVOENWbGNmSnNsNUxwSk5uQ0F6?=
+ =?utf-8?B?K2J3b1czK0dvY2REWWkrdkRQN01qOHJIL2hEZ3A2a2RCYWN4bHU5LzNQVDJZ?=
+ =?utf-8?B?aHZ3L1J0aHNUR1NMZ0dJTjFTNlI5QkhJNFR0RzZ2MklLVXdobG52UGFEUnJm?=
+ =?utf-8?B?MXJneEpKR05saWVFdFJ3UFZ1c0M0U1lxS3NVL243UnkxTEVWYVdDZ2phT1Vx?=
+ =?utf-8?B?Q2VDcFlmaGxJc09JVER6SXRUKzZKaG1INzlJSTdua3VLV2FIQzdUMTBwTCtF?=
+ =?utf-8?B?Vy9EMXhvRDlPRzBGRFpwRVRsNHZuMnpQZmhtZXphM2NzR1duNXZhYjRpdjIx?=
+ =?utf-8?B?bjlYZHV4MDZpbFYzenVxVVU3UEFETXNSOFJLNmJxQy9vc3hPUTA5Mm84bFFW?=
+ =?utf-8?B?QzcxVWxkYkYvNFgzdkhvRFFycjFBUG4yK2ZlRHcwOHEvSkY0dEtWTEltL01l?=
+ =?utf-8?B?dHNtaER4b3MzU1lHNU00ZHRlbUVRWDgvaVNlWmJQVXJKdDlrYU1kbHJ1OUJz?=
+ =?utf-8?B?WEpYYWJyeVhYN0RPYkFqUlZkT25NQXNHTnBwNnZyNDVOU3duQjRUVWlQVmpC?=
+ =?utf-8?B?bXdieTh0am5CZXRJUkJFMzYwa1ZjK0pPZ2NNbnJpdUtMRzEycmR3Zk9RVzda?=
+ =?utf-8?B?YkNCNm5XR3Q5c0JlRGxoSDlrWVVldmx4bngvY3BmU0VoWC9UNGF5cEQ0TGM5?=
+ =?utf-8?Q?Zwpo=3D?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3e1c0738-2b1b-4dcb-5281-08ddc2e5eb15
+X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jul 2025 14:51:30.5549 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: paPzOocI3FJQmCij5RbQvDpa3UtKNnPCBU5toOuctLJ4zRAFSm2uaDgUHCC0yEJV
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5707
+Received-SPF: permerror client-ip=40.107.220.47;
+ envelope-from=Babu.Moger@amd.com;
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,46 +182,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: babu.moger@amd.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Zhao,
 
-[snip...]
->> +
->> +        entry++;
->> +
->> +        if ((uint8_t *)(&entry[1]) > tmp_sec + MAX_SECTOR_SIZE) {
->> +            puts("Wrong entry value");
->> +            return -EINVAL;
->> +        }
-> Can someone who is more informed than I am of the IPL process please
-> explain to me what is the purpose of the above check?  Why does it check
-> if the next entry, the one which isn't going to be inspected/loaded, is
-> within the bounds of tmp_sec?  This has been here since this file's
-> inception and I can't find any documentation or mention that supports it.
->
-> This code precludes any of the secure IPL changes.
->
-> Was this actually meant to be entry[0] to ensure the actual entry we
-> want to work on is not outside the bounds of tmp_sec?  Or perhaps it was
-> meant to be done before the increment to entry?
->
+On 7/14/25 03:08, Zhao Liu wrote:
+> CPUID.8000001DH:EAX[25:14] is "NumSharingCache", and the number of
+> logical processors sharing this cache is the value of this field
+> incremented by 1. Because of its width limitation, the maximum value
+> currently supported is 4095.
+> 
+> Though at present Q35 supports up to 4096 CPUs, by constructing a
+> specific topology, the width of the APIC ID can be extended beyond 12
+> bits. For example, using `-smp threads=33,cores=9,modules=9` results in
+> a die level offset of 6 + 4 + 4 = 14 bits, which can also cause
+> overflow. Check and honor the maximum value as CPUID.04H did.
+> 
+> Cc: Babu Moger <babu.moger@amd.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+> Changes Since RFC v1 [*]:
+>  * Correct the RFC's description, now there's the overflow case. Provide
+>    an overflow example.
+> 
+> RFC:
+>  * Although there are currently no overflow cases, to avoid any
+>    potential issue, add the overflow check, just as I did for Intel.
+> 
+> [*]: https://lore.kernel.org/qemu-devel/20250227062523.124601-5-zhao1.liu@intel.com/
+> ---
+>  target/i386/cpu.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index fedeeea151ee..eceda9865b8f 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -558,7 +558,8 @@ static void encode_cache_cpuid8000001d(CPUCacheInfo *cache,
+>  
+>      *eax = CACHE_TYPE(cache->type) | CACHE_LEVEL(cache->level) |
+>                 (cache->self_init ? CACHE_SELF_INIT_LEVEL : 0);
+> -    *eax |= max_thread_ids_for_cache(topo_info, cache->share_level) << 14;
+> +    /* Bits 25:14 - NumSharingCache: maximum 4095. */
+> +    *eax |= MIN(max_thread_ids_for_cache(topo_info, cache->share_level), 4095) << 14;
 
-I noticed that as well and came to the same conclusions as you, which is 
-to say,
-it has always been that way and it is not clear what the purpose is, but 
-it does
-not appear to have any impact on the proposed secure IPL functionality.  
-I agree
-that it seems somehow strange, but I believe any changes/fixes would be 
-outside
-the scope of this item.
+Will this be more meaningful?
 
-In my opinion, since this is already a large patch series, it is better 
-to leave
-it alone for now unless we find a compelling reason to change it 
-immediately.
+*eax |=
+ max_thread_ids_for_cache(topo_info, cache->share_level) & 0xFFF << 14
 
-Regards,
-Jared Rossi
+>  
+>      assert(cache->line_size > 0);
+>      assert(cache->partitions > 0);
+
+-- 
+Thanks
+Babu Moger
 
