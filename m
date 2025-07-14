@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 751B0C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 08:19:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E932C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 08:19:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubEOh-0008BG-Jt; Mon, 14 Jul 2025 04:18:52 -0400
+	id 1ubEOx-0008KO-RW; Mon, 14 Jul 2025 04:19:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ubEEx-0007ff-GZ
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:08:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1ubEDI-0005xU-8r
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:07:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ubEEu-0003QI-0q
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:08:47 -0400
+ id 1ubEDE-00035K-IJ
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:07:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752480523;
+ s=mimecast20190719; t=1752480412;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GrqRU8FrjhTv/vWWYTtVoqmGML+LYfzLo/IegkWdilM=;
- b=Xv/9AkYOuWDaOlX6jFiFPmsCTGbeYLKIGwV4ZyuIozrdm+2p41l0NGnmoZtKTWDhX27LCL
- n6ciXF1BHGOXhu/gm/yg8ON0mSb4ZWHlgoCywS9yGByLV4JqJYL//ckCKf9F7A9RuV//Gi
- 8nup+OhVHGhvrdRlAHQ/ZH2PA052PNs=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=hlx9+CpSB/6T1kuI2TFe5j1QXEpeIwzCx+e+vMDBV3I=;
+ b=akQ4bCSq7lTX4R47EW/HS2ABTRok5pn+TbRTPavmlwlHFpmnEmHErAxt3l6vfPR/ibXK3Y
+ Z0YuxWn81Zd5c9MhrQ3K8jolfl24DyQFefHHPKjAEE2+oMkTHH2d9hmq/fWOWsPjzGKr4/
+ va7UUuzW/0DibRb1odqPFr5uypP56Tc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-612-pKvw5VJLPeSDaur2NULG1A-1; Mon,
- 14 Jul 2025 04:08:40 -0400
-X-MC-Unique: pKvw5VJLPeSDaur2NULG1A-1
-X-Mimecast-MFC-AGG-ID: pKvw5VJLPeSDaur2NULG1A_1752480518
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-513-zWrnSNCDMAmMGcBaoJ6X9w-1; Mon,
+ 14 Jul 2025 04:06:48 -0400
+X-MC-Unique: zWrnSNCDMAmMGcBaoJ6X9w-1
+X-Mimecast-MFC-AGG-ID: zWrnSNCDMAmMGcBaoJ6X9w_1752480407
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B02CF18011FE; Mon, 14 Jul 2025 08:08:38 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E2A7C1808985; Mon, 14 Jul 2025 08:06:46 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.32.221])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 50D7B1977000; Mon, 14 Jul 2025 08:08:34 +0000 (UTC)
+ id D846F1977000; Mon, 14 Jul 2025 08:06:41 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
@@ -55,16 +54,14 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: pbonzini@redhat.com,
 	philmd@linaro.org,
 	alex.bennee@linaro.org
-Subject: [PATCH v7 22/36] tests/qtest/bios-tables-test: Update ARM DSDT
- reference blobs
-Date: Mon, 14 Jul 2025 10:05:06 +0200
-Message-ID: <20250714080639.2525563-23-eric.auger@redhat.com>
-In-Reply-To: <20250714080639.2525563-1-eric.auger@redhat.com>
-References: <20250714080639.2525563-1-eric.auger@redhat.com>
+Subject: [PATCH v7 00/36] ACPI PCI Hotplug support on ARM
+Date: Mon, 14 Jul 2025 10:04:44 +0200
+Message-ID: <20250714080639.2525563-1-eric.auger@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -89,159 +86,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-    Changes relate to the introduction of pieces related to
-    acpi-index static support along with root ports with no hotplug.
+This series enables ACPI PCI hotplug/hotunplug on ARM.
+It is not enabled by default and ACPI PCI hotplug can
+be selected by setting: 
 
-+
-+    Scope (\_SB.PCI0)
-+    {
-+        Method (EDSM, 5, Serialized)
-+        {
-+            If ((Arg2 == Zero))
-+            {
-+                Local0 = Buffer (One)
-+                    {
-+                         0x00                                             // .
-+                    }
-+                If ((Arg0 != ToUUID ("e5c937d0-3553-4d7a-9117-ea4d19c3434d") /* Device Labeling Interface */))
-+                {
-+                    Return (Local0)
-+                }
-+
-+                If ((Arg1 < 0x02))
-+                {
-+                    Return (Local0)
-+                }
-+
-+                Local0 [Zero] = 0x81
-+                Return (Local0)
-+            }
-+
-+            If ((Arg2 == 0x07))
-+            {
-+                Local0 = Package (0x02)
-+                    {
-+                        Zero,
-+                        ""
-+                    }
-+                Local1 = DerefOf (Arg4 [Zero])
-+                Local0 [Zero] = Local1
-+                Return (Local0)
-+            }
-+        }
-+
-+        Device (S00)
-+        {
-+            Name (_ADR, Zero)  // _ADR: Address
-+        }
-+
-+        Device (S08)
-+        {
-+            Name (_ADR, 0x00010000)  // _ADR: Address
-+        }
-+
-+        Device (S10)
-+        {
-+            Name (_ADR, 0x00020000)  // _ADR: Address
-+        }
-+    }
- }
+-global acpi-ged.acpi-pci-hotplug-with-bridge-support=on
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
----
- tests/qtest/bios-tables-test-allowed-diff.h   |   6 ------
- tests/data/acpi/aarch64/virt/DSDT             | Bin 5158 -> 5293 bytes
- .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5244 -> 5379 bytes
- tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6519 -> 6654 bytes
- tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7603 -> 7768 bytes
- tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5360 -> 5495 bytes
- tests/data/acpi/aarch64/virt/DSDT.viot        | Bin 5158 -> 5310 bytes
- 7 files changed, 6 deletions(-)
+Expected benefits should be similar to those listed in [1],
+ie. removal of some racy behaviors, improved latencies.
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index 023fbc6059..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,7 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/aarch64/virt/DSDT",
--"tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt",
--"tests/data/acpi/aarch64/virt/DSDT.memhp",
--"tests/data/acpi/aarch64/virt/DSDT.pxb",
--"tests/data/acpi/aarch64/virt/DSDT.topology",
--"tests/data/acpi/aarch64/virt/DSDT.viot",
-diff --git a/tests/data/acpi/aarch64/virt/DSDT b/tests/data/acpi/aarch64/virt/DSDT
-index acab6e65febbc210158d4c39be0680bbb90250f5..18d97e8f22979411a528705c0e314acb424bbfa5 100644
-GIT binary patch
-delta 156
-zcmZ3cu~w7ICD<iotq21H)2oeKG9vW?ZX7Xs@xe~<0nVNVBHpa7F2TOM3(O{GF%$?g
-zGcqJBkeW0(Lr|DY;DY(dr@^LGz7xe?`AQyk_Fa;&fPHEv7t@l20<Ol61O|pB2@7N<
-zXK}F?2(dCT@G>M6G<W1MFeDZvLL{S`xPuK0;yL0SU4j^*oA`qbEaExhIUHSrco-NM
-F82~q;ELZ>l
+The infrastructure used in x86 is heavily reused and a
+huge part of the series consists in moving code from
+hw/i386/acpi-build.c to a generic place and slightly
+adapting it to make it usable on ARM. The DSDT table is
+augmented to support ACPI PCI hotplug elements.
 
-delta 19
-acmZ3hxlDu0CD<iIO@x7g>C8qh84&<B2?Wsq
+On ARM we use use a GED event to notify the OS about
+hotplug events.
 
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt b/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt
-index 54c27e7d95b4956ed1b5dee0d299ccb08dc2a73e..2cef095bcc1bb404f8cd9ec77a879ed81c191875 100644
-GIT binary patch
-delta 156
-zcmeyP(X7Sg66_MfEXu&Zv}_|+kx0FO8%K;@e6Uk|fU~E8h&QXNORz8R0<+0k3<ZMB
-zj0_12q$W+y5ESMTxL|(rX|QRP??mxezLJNXeU~IGV4s@F#k3@$fUB`1fq`L3!UCDe
-zSzPP|Laa;-ybK8i%^f)m42cDa5XtB!?qCChc#e2Smmr4dCjMXpi+GNB4o8<D9tH+R
-F1_1j$EA9XQ
+Best Regards 
 
-delta 19
-acmZqH`lG?+66_LEBf`MI)VYzXNCW^oYz1ck
+Eric
 
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.memhp b/tests/data/acpi/aarch64/virt/DSDT.memhp
-index 4330bc97cba0950191c45ac833533db7a190db81..372ca3d7fb1e2927c7c12f97eec406d597f294ab 100644
-GIT binary patch
-delta 156
-zcmexv^v{^fCD<k8pCkhV6Zb~0T*-O?H;x#+_+Y2_0B27F5pPykmtbGs1!j}87zzZL
-z85t55NKKlYAt=lxaKZfK(_qso--+U{d?gP%`z}dXz&<sTi)l$h0as&30t3U6gatB_
-zv$)s`gjksvco`B3nmckB7!nH-A(GKe+`$G0@f`7vE<p^@P5i+I7V#YM9F8tQJPZts
-F3;>E4EZYD8
+This series can be found at:
+https://github.com/eauger/qemu/tree/arm-acpi-pcihp-v7
 
-delta 19
-acmexo{N0GlCD<jTT#|u->Fq|YTuA^&WCm0K
+previous series:
+https://github.com/eauger/qemu/tree/arm-acpi-pcihp-v6
 
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.pxb b/tests/data/acpi/aarch64/virt/DSDT.pxb
-index 7fdbc03e2bf9fb7d35704779253de36e362f0bf9..c2779882494e16920787b8ab7b4cb3c3b70f224b 100644
-GIT binary patch
-delta 168
-zcmdmNeZz*!CD<h-LXLrf$!jCmN?BzA7p@q+_+Y2_0B27F5pPykmtbGs1!j}87zzZL
-z85t55NKKl&K}IZRNx}m5shM0%OA-pW8aomg7?va~keQst#a<x9%EZ9SkWkRvk;A}{
-uSda*jjBer%HZX|ih<9`eVu)^%2{y2RaCjIP7#YxH`GXCiN_iL<m>2+L6)WZd
+History:
+v6 -> v7:
+- rebased after minor contextual conflict introduced
+  by "hw/arm/virt: Basic CXL enablement on pci_expander_bridge
+  instances pxb-cxl" in hw/arm/virt-acpi-build.c
+  (hw/pci-host/gpex-acpi: Use GED acpi pcihp property)
+- collected last Igor's and Prasad's R-bs
 
-delta 19
-acmca%v)P)<CD<iovn&Gx)9sC1D`f#g-Uey_
+v5 -> v6:
+- collected Jonathan's R-bs
+- cropped last 2 patch commit messages (Jonathan)
 
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.topology b/tests/data/acpi/aarch64/virt/DSDT.topology
-index 969b4f6560d3ae39f5b7e0064b7122905476fce8..ebbeedc1ed30d811315c350f4cb42f8aa265af73 100644
-GIT binary patch
-delta 156
-zcmeyM`CW_4CD<jTT$F)<>HJ2nXCn0iZX7Xs@xe~<0nVNVBHpa7F2TOM3(O{GF%$?g
-zGcqJBkeW0(Lr|DY;DY(dr@^LGz7xe?`AQyk_Fa;&fPHEv7t@l20<Ol61O|pB2@7N<
-zXK}F?2(dCT@G>M6G<W1MFeDZvLL{S`xPuK0;yL0SU4j^*oA`qbEaExhIUHSrco-NM
-F8359@EocA$
+v4 -> v5:
+- Collected Jonathan's R-bs (many thanks!)
+- fixed the tests/qtest/bios-tables-test issue by
+  creating a variant for the viot test
+- use the 3 phase reset API
+- fixed qom-test failures that were due to unconditionnal
+  fetches of the GED property
 
-delta 19
-acmeya^+A)%CD<k8g9rly)25AF&qM%8i3Z^S
+v3 -> v4:
+- toook into account all comments on v3
+- static acpi-index is now supported unconditionally
+  from acpi pcihp option. See indiviual patches.
+- I hit a problem with ref block generation at
+  [19/32] tests/qtest/bios-tables-test: Update ARM DSDT reference
+  blobs: despite I regenerate the blobs, I get some errors.
 
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.viot b/tests/data/acpi/aarch64/virt/DSDT.viot
-index acab6e65febbc210158d4c39be0680bbb90250f5..b897d667971500da4732000091a6f0828d05d89e 100644
-GIT binary patch
-delta 173
-zcmZ3cu}_oBCD<iop9lj3Q_n^&8IgJccg`5S_+Y2_0B27F5pPykmtbGs1!j}87zzZL
-z85t55NKKlYAt=lxaKZfK(_qso--+U{d?gP%`z}dXz&<sTi)l$h0as&30t3U6gatB_
-zv$)s`gjksvco`B3nmckB7!nH-A(GKe+`$G0@f`7vE<p^@P5i+I7V#YMl8!DxJPZts
-OU=c&8G!Fv<69WJ)j4yfs
+v2 -> v3:
+- lot of changes taking into account various feedbacks
+  (many thanks to all reviewers). Please refer to
+  individual patches for details. Main changes:
+  - no more machine option, acpi pci hp is not set by
+    default.
+  - removal of 2 unused variables in the osc method
+  - introduction of GED property to set the bus
+  - rework of the init/reset sequence
+  - fix virtio-mem-pci hotplug regression
 
-delta 19
-acmdm|xlDu0CD<iIO@x7g>C8qh84&<COa$Tp
+v1 -> v2:
+- collected a bunch of R-bs from Gustavo (many thanks!)
+- Fixed the breakage of bios-tables-test in TCG mode by
+  incorporating Gustavo's patches (part of
+  [PATCH 0/5] ACPI tests for PCI Hotplug on ARM
+  https://lore.kernel.org/all/20250526053123.1434204-1-gustavo.romero@linaro.org/)
+- Tweeked the dsdt aml changes to avoid any dsdt blob difference when
+  acpi-pcihp is off.
+
+RFC -> v1:
+- First 3 trivial patches were pulled separately
+- Fix of the register region size (0x18), ie. ACPI_PCIHP_SIZE
+- addition of aml_pci_edsm which was not called in RFC
+- acpi-index feature is now fixed. vms->bus was not set on
+  acpi_pcihp_init. The init sequence is still hacky though. Suggestions
+  are welcome.
+
+[1] [PATCH v6 0/6] Use ACPI PCI hot-plug for Q35
+https://lore.kernel.org/all/20210713004205.775386-1-jusual@redhat.com/
+
+Eric Auger (32):
+  hw/i386/acpi-build: Make aml_pci_device_dsm() static
+  hw/acpi: Rename and move build_x86_acpi_pci_hotplug to pcihp
+  hw/pci-host/gpex-acpi: Add native_pci_hotplug arg to
+    acpi_dsdt_add_pci_osc
+  hw/pci-host/gpex-acpi: Split host bridge OSC and DSM generation
+  hw/acpi/ged: Add a acpi-pci-hotplug-with-bridge-support property
+  hw/pci-host/gpex-acpi: Use GED acpi pcihp property
+  hw/i386/acpi-build: Turn build_q35_osc_method into a generic method
+  hw/pci-host/gpex-acpi: Use build_pci_host_bridge_osc_method
+  tests/qtest/bios-tables-test: Update DSDT blobs after GPEX _OSC change
+  hw/i386/acpi-build: Introduce build_append_pcihp_resources() helper
+  hw/acpi/pcihp: Add an AmlRegionSpace arg to build_acpi_pci_hotplug
+  hw/i386/acpi-build: Move build_append_notification_callback to pcihp
+  hw/i386/acpi-build: Move build_append_pci_bus_devices/pcihp_slots to
+    pcihp
+  hw/i386/acpi-build: Use AcpiPciHpState::root in acpi_set_pci_info
+  hw/i386/acpi-build: Move aml_pci_edsm to a generic place
+  qtest/bios-tables-test: Prepare for fixing the aarch64 viot test
+  qtest/bios-tables-test: Add a variant to the aarch64 viot test
+  qtest/bios-tables-test: Generate DSDT.viot
+  hw/arm/virt-acpi-build: Let non hotplug ports support static
+    acpi-index
+  tests/qtest/bios-tables-test: Update ARM DSDT reference blobs
+  hw/arm/virt-acpi-build: Modify the DSDT ACPI table to enable ACPI PCI
+    hotplug
+  hw/acpi/ged: Add a bus link property
+  hw/arm/virt: Pass the bus on the ged creation
+  hw/acpi/ged: Call pcihp plug callbacks in hotplug handler
+    implementation
+  hw/acpi/pcihp: Remove root arg in acpi_pcihp_init
+  hw/acpi/ged: Prepare the device to react to PCI hotplug events
+  hw/acpi/ged: Support migration of AcpiPciHpState
+  hw/core/sysbus: Introduce sysbus_mmio_map_name() helper
+  hw/arm/virt: Minor code reshuffling in create_acpi_ged
+  hw/arm/virt: Let virt support pci hotplug/unplug GED event
+  qtest/bios-tables-test: Generate reference blob for
+    DSDT.hpoffacpiindex
+  qtest/bios-tables-test: Generate reference blob for DSDT.acpipcihp
+
+Gustavo Romero (4):
+  tests/qtest/bios-tables-test: Prepare for changes in the DSDT table
+  tests/qtest/bios-tables-test: Prepare for changes in the arm virt DSDT
+    table
+  tests/qtest/bios-tables-test: Prepare for addition of acpi pci hp
+    tests
+  tests/qtest/bios-tables-test: Add aarch64 ACPI PCI hotplug test
+
+ hw/i386/acpi-build.h                          |   4 -
+ include/hw/acpi/generic_event_device.h        |  17 +-
+ include/hw/acpi/pci.h                         |   5 +-
+ include/hw/acpi/pcihp.h                       |  17 +-
+ include/hw/arm/virt.h                         |   1 +
+ include/hw/pci-host/gpex.h                    |   1 +
+ include/hw/sysbus.h                           |   1 +
+ hw/acpi/acpi-pci-hotplug-stub.c               |   2 +-
+ hw/acpi/generic_event_device.c                |  77 +++
+ hw/acpi/ich9.c                                |   7 +-
+ hw/acpi/pci-bridge.c                          |  54 ++
+ hw/acpi/pci.c                                 |  50 ++
+ hw/acpi/pcihp.c                               | 439 ++++++++++++++-
+ hw/acpi/piix4.c                               |   5 +-
+ hw/arm/virt-acpi-build.c                      |  38 ++
+ hw/arm/virt.c                                 |  27 +-
+ hw/core/sysbus.c                              |  11 +
+ hw/i386/acpi-build.c                          | 532 +-----------------
+ hw/pci-host/gpex-acpi.c                       |  74 +--
+ tests/qtest/bios-tables-test.c                |  53 ++
+ hw/arm/Kconfig                                |   2 +
+ hw/pci-host/Kconfig                           |   1 +
+ tests/data/acpi/aarch64/virt/DSDT             | Bin 5196 -> 5293 bytes
+ .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5282 -> 5379 bytes
+ tests/data/acpi/aarch64/virt/DSDT.acpipcihp   | Bin 0 -> 6202 bytes
+ .../acpi/aarch64/virt/DSDT.hpoffacpiindex     | Bin 0 -> 5347 bytes
+ tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6557 -> 6654 bytes
+ tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7679 -> 7768 bytes
+ tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5398 -> 5495 bytes
+ tests/data/acpi/aarch64/virt/DSDT.viot        | Bin 0 -> 5310 bytes
+ tests/data/acpi/riscv64/virt/DSDT             | Bin 3576 -> 3538 bytes
+ tests/data/acpi/x86/microvm/DSDT.pcie         | Bin 3023 -> 2985 bytes
+ 32 files changed, 811 insertions(+), 607 deletions(-)
+ create mode 100644 tests/data/acpi/aarch64/virt/DSDT.acpipcihp
+ create mode 100644 tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex
+ create mode 100644 tests/data/acpi/aarch64/virt/DSDT.viot
 
 -- 
 2.49.0
