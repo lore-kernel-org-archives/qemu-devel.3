@@ -4,94 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81EB1C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 02:13:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAF92C83F1D
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 02:14:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ub8gU-0004uh-8N; Sun, 13 Jul 2025 22:12:50 -0400
+	id 1ub8iB-0006uE-Il; Sun, 13 Jul 2025 22:14:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1ub8gJ-0004pR-2B
- for qemu-devel@nongnu.org; Sun, 13 Jul 2025 22:12:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1ub8i8-0006q6-Vn
+ for qemu-devel@nongnu.org; Sun, 13 Jul 2025 22:14:33 -0400
+Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1ub8gG-00079o-VS
- for qemu-devel@nongnu.org; Sun, 13 Jul 2025 22:12:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752459155;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=c1jYc9smeyo7EeooRqNPFsCI0KnfvamMk31E3P62jrg=;
- b=Rw9ZM9DutWLVBtSvgi3DmOavYFHe+ZnvBHrbzLbjtHwxLEWnlaZmHH2Bh7YcZVyj2sDLTP
- kB+1q7+ZI6kt98k6HyApvOODnMOqin5CxW2DTSRSrnSxogonqKnOXiMg99o6Fhg9DKg0nH
- iwhTwEVrfVhIVzQOGBMROmDmELGwa5E=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-121-k2JNKAaRM8OPhxyuiegQBg-1; Sun, 13 Jul 2025 22:12:33 -0400
-X-MC-Unique: k2JNKAaRM8OPhxyuiegQBg-1
-X-Mimecast-MFC-AGG-ID: k2JNKAaRM8OPhxyuiegQBg_1752459153
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-31215090074so7274753a91.0
- for <qemu-devel@nongnu.org>; Sun, 13 Jul 2025 19:12:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752459152; x=1753063952;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=c1jYc9smeyo7EeooRqNPFsCI0KnfvamMk31E3P62jrg=;
- b=u3whZd5r0icd6H+85eHMflxpel2bNZA+p4X5L7+iAen0iKiZUZqJNatSY88DQoe6Mk
- 7t8YGV0Yh/mcwQNril+RWCsHqZRk8OmWHxPdDzsTTWv/D0ERX+j8l7T1sRy/7iMllPSz
- 2Wie5QlC8mxwweLFoUMwnZq4WmF3CL8zoTNYx3EaD5LQo7LqE6fn/y8C+q8HtiqmQtOD
- mHSxbZlxQYrH7mC+tLlGBWPFyE0ouk4QkogPxq5fbkPflHizbUS973isCM/lejJIFljo
- hRzJdKzzTuZT/H6EuKyedf/b3UwCX3IVXS7aAD4MxblYl8r/h8+Gau18h0nGylf40SG1
- n8/Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX8lu2j8Hh4NlPnATO4eeedQz8vIBZsq3re80UQHFovauk34GCmWLrUoNjFDlNaO5YguJu656Q+1dEb@nongnu.org
-X-Gm-Message-State: AOJu0YzxpuUlsxorS14ZFQAe3WcMm7qtat4z9LWGrigvFIrN327XbOJ7
- c3YQtb2o+Yj4KI4H0XOFLjc25YuX368u2pDPPZZqGDJELJ0iRpjsylUsd8+6mgWbLTJEw3n6FTV
- YzR3VdfTs+v6/MSOWsy6zW6DfPAyLb10l1QTuGeM6M55evFtmx0jh6g7UJ6b1JgMjeWRnzvympo
- RMobMx+qyHE1DfRhMQ4+4HXxO+JCfOQXCbU1+3nH50WQ==
-X-Gm-Gg: ASbGncv2Ae1kUl40iEibyiziupUKSlXvPoOyLJbojMifXzfMCf4eRAfK8JAFx8pPHTH
- VOtdamLd+kJOdGZ/owWSW184B5vEVYo6tBRNtEPY+aZ+k/gGatJZ4lQPIt1AI/0nTCgVryHhg8d
- aNiP+A2VgYx4fUmKSOni9E
-X-Received: by 2002:a17:90b:5710:b0:312:e731:5a66 with SMTP id
- 98e67ed59e1d1-31c4f4b56b7mr16247756a91.3.1752459152359; 
- Sun, 13 Jul 2025 19:12:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGUd9L24/naFtX3s4qi7gU/2Vu95uSTWo6po91q1JtdHAbg/7nT3+a6at2WXiDVZDZw3e2BpURfbAS0+co7Pa4=
-X-Received: by 2002:a17:90b:5710:b0:312:e731:5a66 with SMTP id
- 98e67ed59e1d1-31c4f4b56b7mr16247721a91.3.1752459151885; Sun, 13 Jul 2025
- 19:12:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1ub8i6-0007a4-7h
+ for qemu-devel@nongnu.org; Sun, 13 Jul 2025 22:14:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1752459271; x=1783995271;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=HRVqwjo/sUcMRBRRlPeumOnSGG3iOiRC73GSgqSZB1g=;
+ b=JRXd6Eg5r8a51CQxalQTi1fY9JrLM0nnZss+lzF+a94w2eo0xb0jsrOQ
+ nSenm6ZgaLv42mUp682hZ2uwxq2Dsoa9hKcbEIPWkgxl5BGYTy/pVON+R
+ xL6CUXogprNK0Xjj1zUA8fxFg7LTf/QEPw8loNtIWWhJhc/B1sCnD6im1
+ a48T8PQ2iw6L2w9TlqAwPHi+WkwC5RRsceugg5YVzRR2vOthhc1BAU8Kh
+ y55yddShEbvNZbRqMLK4llQz8udaS1HO91/SbF5URWncL79xAc1iBvWeq
+ w05iGe+kGOJs679PMUqNlPhtYC1YK16ZN6rWJELpLtKU+3srrsFx3mzls w==;
+X-CSE-ConnectionGUID: 9vvxgMU9Th6Tyr191FfeqA==
+X-CSE-MsgGUID: hzo6KlAKQzeffC2ER33JSg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="54781334"
+X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; d="scan'208";a="54781334"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Jul 2025 19:14:27 -0700
+X-CSE-ConnectionGUID: n/fwqHXaRaCNrrZ1LIZ6yQ==
+X-CSE-MsgGUID: sOxpYQfBQlSd1+04/xh3uw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; d="scan'208";a="157304989"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.240.57])
+ ([10.124.240.57])
+ by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Jul 2025 19:14:22 -0700
+Message-ID: <2c2ea3ae-30ea-4ff3-848a-fed6a86c0c53@linux.intel.com>
+Date: Mon, 14 Jul 2025 10:14:18 +0800
 MIME-Version: 1.0
-References: <20250703105508.2380494-1-vsementsov@yandex-team.ru>
- <d7a66374-12d3-4b4b-975f-90202d83cbdf@yandex-team.ru>
- <CACGkMEv8rvoDS3PHKjBQeA4qi35BVZF0__FP04EwEeM3frPUnw@mail.gmail.com>
- <40114688-ffc6-4f33-9928-a383d69c9320@yandex-team.ru>
-In-Reply-To: <40114688-ffc6-4f33-9928-a383d69c9320@yandex-team.ru>
-From: Jason Wang <jasowang@redhat.com>
-Date: Mon, 14 Jul 2025 10:12:19 +0800
-X-Gm-Features: Ac12FXz5F0-zeDJR7KYuvQszrKBlI6Jmw38OsLUo-CuqqvREnMa8KXV5ZnaNFg4
-Message-ID: <CACGkMEt8cFEc_sv=TLcCARNjAUsQm6p=Hz_ihBy19yKk9DoZjA@mail.gmail.com>
-Subject: Re: [PATCH] net/tap: drop too small packets
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/18] i386/cpu: Add default cache model for Intel CPUs
+ with level < 4
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Babu Moger <babu.moger@amd.com>, Ewan Hai <ewanhai-oc@zhaoxin.com>,
+ Pu Wen <puwen@hygon.cn>, Tao Su <tao1.su@intel.com>,
+ Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+References: <20250711102143.1622339-1-zhao1.liu@intel.com>
+ <20250711102143.1622339-4-zhao1.liu@intel.com>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20250711102143.1622339-4-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=198.175.65.16;
+ envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,64 +96,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 9, 2025 at 10:43=E2=80=AFPM Vladimir Sementsov-Ogievskiy
-<vsementsov@yandex-team.ru> wrote:
->
-> On 07.07.25 06:49, Jason Wang wrote:
-> > On Thu, Jul 3, 2025 at 10:59=E2=80=AFPM Daniil Tatianin
-> > <d-tatianin@yandex-team.ru> wrote:
-> >>
-> >> On 7/3/25 1:55 PM, Vladimir Sementsov-Ogievskiy wrote:
-> >>
-> >>> Theoretically tap_read_packet() may return size less than
-> >>> s->host_vnet_hdr_len, and next, we'll work with negative size
-> >>> (in case of !s->using_vnet_hdr). Let's avoid it.
-> >>>
-> >>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.r=
-u>
-> >>> ---
-> >>>    net/tap.c | 5 +++++
-> >>>    1 file changed, 5 insertions(+)
-> >>>
-> >>> diff --git a/net/tap.c b/net/tap.c
-> >>> index ae1c7e39832..20d0dc2eb35 100644
-> >>> --- a/net/tap.c
-> >>> +++ b/net/tap.c
-> >>> @@ -172,6 +172,11 @@ static void tap_send(void *opaque)
-> >>>                break;
-> >>>            }
-> >>>
-> >>> +        if (s->host_vnet_hdr_len && size < s->host_vnet_hdr_len) {
->
-> Should it be better to s/</<=3D/ here? To skip size =3D=3D s->host_vnet_h=
-dr_len as well?
 
-It would be better.
+On 7/11/2025 6:21 PM, Zhao Liu wrote:
+> Old Intel CPUs with CPUID level < 4, use CPUID 0x2 leaf (if available)
+> to encode cache information.
+>
+> Introduce a cache model "legacy_intel_cpuid2_cache_info" for the CPUs
+> with CPUID level < 4, based on legacy_l1d_cache, legacy_l1i_cache,
+> legacy_l2_cache_cpuid2 and legacy_l3_cache. But for L2 cache, this
+> cache model completes self_init, sets, partitions, no_invd_sharing and
+> share_level fields, referring legacy_l2_cache, to avoid someone
+> increases CPUID level manually and meets assert() error. But the cache
+> information present in CPUID 0x2 leaf doesn't change.
+>
+> This new cache model makes it possible to remove legacy_l2_cache_cpuid2
+> in X86CPUState and help to clarify historical cache inconsistency issue.
+>
+> Furthermore, apply this legacy cache model to all Intel CPUs with CPUID
+> level < 4. This includes not only "pentium2" and "pentium3" (which have
+> 0x2 leaf), but also "486" and "pentium" (which only have 0x1 leaf, and
+> cache model won't be presented, just for simplicity).
+>
+> A legacy_intel_cpuid2_cache_info cache model doesn't change the cache
+> information of the above CPUs, because they just depend on 0x2 leaf.
+>
+> Only when someone adjusts the min-level to >=4 will the cache
+> information in CPUID leaf 4 differ from before: previously, the L2
+> cache information in CPUID leaf 0x2 and 0x4 was different, but now with
+> legacy_intel_cpuid2_cache_info, the information they present will be
+> consistent. This case almost never happens, emulating a CPUID that is
+> not supported by the "ancient" hardware is itself meaningless behavior.
+>
+> Therefore, even though there's the above difference (for really rare
+> case) and considering these old CPUs ("486", "pentium", "pentium2" and
+> "pentium3") won't be used for migration, there's no need to add new
+> versioned CPU models
+>
+> Tested-by: Yi Lai <yi1.lai@intel.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>  target/i386/cpu.c | 65 +++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 65 insertions(+)
+>
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 75932579542a..f85e087bf7df 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -710,6 +710,67 @@ static CPUCacheInfo legacy_l3_cache = {
+>      .share_level = CPU_TOPOLOGY_LEVEL_DIE,
+>  };
+>  
+> +/*
+> + * Only used for the CPU models with CPUID level < 4.
+> + * These CPUs (CPUID level < 4) only use CPUID leaf 2 to present
+> + * cache information.
+> + *
+> + * Note: This cache model is just a default one, and is not
+> + *       guaranteed to match real hardwares.
+> + */
+> +static const CPUCaches legacy_intel_cpuid2_cache_info = {
+> +    .l1d_cache = &(CPUCacheInfo) {
+> +        .type = DATA_CACHE,
+> +        .level = 1,
+> +        .size = 32 * KiB,
+> +        .self_init = 1,
+> +        .line_size = 64,
+> +        .associativity = 8,
+> +        .sets = 64,
+> +        .partitions = 1,
+> +        .no_invd_sharing = true,
+> +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
+> +    },
+> +    .l1i_cache = &(CPUCacheInfo) {
+> +        .type = INSTRUCTION_CACHE,
+> +        .level = 1,
+> +        .size = 32 * KiB,
+> +        .self_init = 1,
+> +        .line_size = 64,
+> +        .associativity = 8,
+> +        .sets = 64,
+> +        .partitions = 1,
+> +        .no_invd_sharing = true,
+> +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
+> +    },
+> +    .l2_cache = &(CPUCacheInfo) {
+> +        .type = UNIFIED_CACHE,
+> +        .level = 2,
+> +        .size = 2 * MiB,
+> +        .self_init = 1,
+> +        .line_size = 64,
+> +        .associativity = 8,
+> +        .sets = 4096,
+> +        .partitions = 1,
+> +        .no_invd_sharing = true,
+> +        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
+> +    },
+> +    .l3_cache = &(CPUCacheInfo) {
+> +        .type = UNIFIED_CACHE,
+> +        .level = 3,
+> +        .size = 16 * MiB,
+> +        .line_size = 64,
+> +        .associativity = 16,
+> +        .sets = 16384,
+> +        .partitions = 1,
+> +        .lines_per_tag = 1,
+> +        .self_init = true,
+> +        .inclusive = true,
+> +        .complex_indexing = true,
+> +        .share_level = CPU_TOPOLOGY_LEVEL_DIE,
+> +    },
+> +};
+> +
+>  /* TLB definitions: */
+>  
+>  #define L1_DTLB_2M_ASSOC       1
+> @@ -3043,6 +3104,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+>              I486_FEATURES,
+>          .xlevel = 0,
+>          .model_id = "",
+> +        .cache_info = &legacy_intel_cpuid2_cache_info,
+>      },
+>      {
+>          .name = "pentium",
+> @@ -3055,6 +3117,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+>              PENTIUM_FEATURES,
+>          .xlevel = 0,
+>          .model_id = "",
+> +        .cache_info = &legacy_intel_cpuid2_cache_info,
+>      },
+>      {
+>          .name = "pentium2",
+> @@ -3067,6 +3130,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+>              PENTIUM2_FEATURES,
+>          .xlevel = 0,
+>          .model_id = "",
+> +        .cache_info = &legacy_intel_cpuid2_cache_info,
+>      },
+>      {
+>          .name = "pentium3",
+> @@ -3079,6 +3143,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+>              PENTIUM3_FEATURES,
+>          .xlevel = 0,
+>          .model_id = "",
+> +        .cache_info = &legacy_intel_cpuid2_cache_info,
+>      },
+>      {
+>          .name = "athlon",
 
-Thanks
+Reviewed-by:  Dapeng Mi <dapeng1.mi@linux.intel.com>
 
->
-> >>> +            /* Invalid packet */
-> >>> +            break;
-> >>> +        }
-> >>> +
-> >>>            if (s->host_vnet_hdr_len && !s->using_vnet_hdr) {
-> >>>                buf  +=3D s->host_vnet_hdr_len;
-> >>>                size -=3D s->host_vnet_hdr_len;
-> >>
-> >> Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-> >
-> > Queued.
-> >
-> > Thanks
-> >
-> >>
-> >>
-> >
->
-> --
-> Best regards,
-> Vladimir
->
 
 
