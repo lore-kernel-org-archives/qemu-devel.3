@@ -4,92 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F62AC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 16:31:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A012C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 16:35:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubM4g-0007kr-Sg; Mon, 14 Jul 2025 12:30:42 -0400
+	id 1ubM8U-0002wg-8x; Mon, 14 Jul 2025 12:34:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ubL9m-0008Nw-1N
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 11:31:54 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ubL9j-0004JG-LL
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 11:31:53 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-739b3fe7ce8so3866548b3a.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 08:31:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752507110; x=1753111910; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=w+XCHuvqEWoKHh0e8TjkTEIwLPUiMtDfVFO9vyDJur0=;
- b=P16Qdiw070xkWNZDQffC0lZotxIf1pWTcQunRF5rH47qdWO5kF71O8YDwp13micfOK
- R14/9eI2pwYzy6E31N7iDdd7BvsNUL0urAGESPjHfMQY7IYu5QX2Klzw90md/NZIR+Z4
- PaEhipmqD/I8tEWebh5iiT6QDGGJRewVQpIdCa4sApPHXzQZqEFHNiQTLY42ooGUFOPO
- sbs1+YJZSCJRtXeGgPcPMVuICAcQ+6oO6YWuk5LCQZuTmJ1yJDtT9nIkOrj9R3fSmmOC
- mx1wi7mrexHVOffGbCqaDunN7IVpyyV2dWgAjtPGp4fWedWaOoVgwx6EvjoFHhXHaDOz
- tB2w==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ubLCR-00036L-T3
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 11:34:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ubLCP-0004VO-Q8
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 11:34:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752507274;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=qMUktZ3W6Hd9R0RM2Dxyy7jk9fiFT3p5cT6jYvg5Vcs=;
+ b=GmLHtYkhyMI17C1hbo7eRCEWto6C45RuhLSk5LzdX4JZtUnpGiZehVzEtUHWxGunOZMSpV
+ c1efl2lK9S4MLkm+ck1D4lTePXkUNviXijy3pw6p/rmqT8AEjeOJRR1zb+xDQrcXQTfr1M
+ Y1UhoRIcqmQJFyyLI3PkJJsZhFIBJlU=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-423-A-7PF9lQPiK-JonZU5oayA-1; Mon, 14 Jul 2025 11:34:33 -0400
+X-MC-Unique: A-7PF9lQPiK-JonZU5oayA-1
+X-Mimecast-MFC-AGG-ID: A-7PF9lQPiK-JonZU5oayA_1752507272
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a4f7ebfd00so1743224f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 08:34:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752507110; x=1753111910;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w+XCHuvqEWoKHh0e8TjkTEIwLPUiMtDfVFO9vyDJur0=;
- b=YsrcaB42CBmocH7XrBaAkeqV3N7r98LfJbojnbhf0O3k6TAKPG4FDGje6X0Oiiufec
- qxjE8woPe0jBBSaVo3yMcLNt5ZhHHlMD7QrRqWUqAvZLtBnUor/9B1vxYzLLuRrCZsc2
- Kki4/7NJ0hsxGo0s8mu8y/8gumowQsSQlGHj80TKQ34j3nC89ayZPWRJ+yRWyMZZiXlG
- ZObDONmTE5TLyysaGSxwggwJ8fZvY14BQ84mkdh2WdH9Ccf4Thw9GJDSdLfidQg8J3Be
- +VTFpYD2SPlgx+LJtmhRcHyAGgp4ya+iy5+enoUOjy/NGHDjXguhRrxb8/S9zWMq3/1d
- u53w==
+ d=1e100.net; s=20230601; t=1752507272; x=1753112072;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qMUktZ3W6Hd9R0RM2Dxyy7jk9fiFT3p5cT6jYvg5Vcs=;
+ b=Heay+XGj172aoDjt1kxl6c5IqOnxuoyPta9yzGBinMbPEBsYjHPCBMFOir4CpQyST8
+ dypdsQQKUM3cOmgrvhttJciBTl/YkLbtjtzRLTuG4I6C1KQdVlSFMov+AAjOpcgJmhs5
+ I42dsjosFu+SykXhNQU4zDQ8n2e0OToMoSLJ4wnI/CLvL5ELJY+erRO/r1qvmWNG2V2P
+ 22P3GfQt8DfrqVK/kzp+M6jSnEmpZM0e7NRN8ePKa5hyK/UF4HQy9HKVxHfqucJmn+yy
+ JNZZ3HRddVXqpk4Ymym9zIeDtI5lzNZRmcNp+ZMbqAFY9Fk7WcXSq6CDrS2BBKDT3KNU
+ /Ocg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWDKamiKp2dokAw3vPrbNjBTj1JjCmoFCH6hwutDt7jXflFdm0vCEoHbO01Mk2TSr04HIrIYD9cgqOb@nongnu.org
-X-Gm-Message-State: AOJu0YyoQ8qfRbmko+9zL7VNlXTTJag0dGqb/zvgOHZ59/ZcYmcO7Fot
- UA6KPPz0c4XepzlOUHpdj1RIKMSjccauPrYSsIwV3bpwm2C8QXhiFNHTHe/oNbmIN7Y=
-X-Gm-Gg: ASbGnctQA+uKPxvmKtUD2eNC/3R/Du2ZNY/RMdBPu7AZv1VzIQMNNC24un3CkqCTKqh
- idWeb/3x0eIyIvi72XXzlKN1DE1oRtkIq46gVKyQeH4RSiuPnD5oSuS8SeZjhxTzbfYGCyTXOOB
- gd2Zmt8z29CBxovSiCrrf8boZUF0vprj37kyF5+UtfudjoUkDp2B4m9TNbm8MRoa833TzHVL420
- gT0+vSTuTL9CoHAp0zCY5IjRAibBGYbkF1Y1CxuBypJw6c3yTH0KpOt6ESj3vFZuh32hXKNi8CZ
- Sor7nnRGnjKJmSfzM67kBrfIrkyjA9zgdDpJQvrq5arvhEgi+qu6cJQS2WyfXf5aX2rW9IP/8Ov
- PSBTPHvjPDbMo7Wp0p3z7PKkmXHxh+64yJEE=
-X-Google-Smtp-Source: AGHT+IEj9kImh2b6Ual47lsgq+9XBsPlQLjsNBbOzTu6vbSIihYJ90uQ1ds+r6IFHmUEkc8/Ey1ZsA==
-X-Received: by 2002:a05:6a20:6a24:b0:232:a762:def with SMTP id
- adf61e73a8af0-232a7625735mr18670217637.30.1752507109733; 
- Mon, 14 Jul 2025 08:31:49 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b3bbe731effsm8924001a12.77.2025.07.14.08.31.49
+ AJvYcCVIQSSbZ9LoJhOg8zvKh1gvigVq9+Qurzk4+vSIGz72PYBEF6CwHWxNbY/0rjGb/9QxO/MaRLC57e1t@nongnu.org
+X-Gm-Message-State: AOJu0YzI88m9Cv4mU8ikG7aJARKnwjwDQ8vktioLJnmC6gDeasEctLr6
+ j1qRaGN5/eBy7xdwZclcA2nIufwS+FjrKgABbxu/EEzVTXJGH1EO99OyFGla6HyYWyJysB6YE+G
+ NohaGM1zKB7HPIcxeDOHmdd9aHWkifUUEceDXsEq0gAN9xMWYA1hBmGzC
+X-Gm-Gg: ASbGncvZx73KpaqYro/qq1vU9CnSXJnN3XZjxfokGCQEieqqOSOwQH4kfdnzkPr50id
+ FCBxyExlSxU+Aah8VALyihh0wkCKpAHOjTBlDJwq6uH/UVva8I1J9Q+Lw1PO/JDw7+I67wPLdNO
+ FhPPK3AgIRAAy0OpocuEonUyNvWt3PkFvYr6dZfarD2yknDk6zI19BHn80GAsvB7eH2C3xQzL8W
+ CNZHoXkqzV+GZf/+oAsO4YCj452VkECAH/YNNkGqnzLYcVrZZtl2tEU4oSjVJcVIxJrNg8uxZDM
+ tcrdBMayAvwW7prFA3+3PnsfupjiQ4UrC43DXcMEX+WYxdVFx2Y3SEfGHHBm1DKkRDy3LxOZcoO
+ TH/bn
+X-Received: by 2002:a5d:5f55:0:b0:3a4:dcfb:3118 with SMTP id
+ ffacd0b85a97d-3b5f187599dmr11139975f8f.10.1752507272203; 
+ Mon, 14 Jul 2025 08:34:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFRPPEQ/O+nx8slrLBlbNmLGWnscMamlItdS9EG5HUKNtZb2/UyPTTv5o1gQtS9yv9Rx1dfpg==
+X-Received: by 2002:a5d:5f55:0:b0:3a4:dcfb:3118 with SMTP id
+ ffacd0b85a97d-3b5f187599dmr11139953f8f.10.1752507271739; 
+ Mon, 14 Jul 2025 08:34:31 -0700 (PDT)
+Received: from [192.168.0.6] (ltea-047-064-114-106.pools.arcor-ip.net.
+ [47.64.114.106]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45617dc1fccsm45392655e9.5.2025.07.14.08.34.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Jul 2025 08:31:49 -0700 (PDT)
-Message-ID: <0b438773-01b9-42e1-8edf-2330e50387f8@linaro.org>
-Date: Mon, 14 Jul 2025 08:31:48 -0700
+ Mon, 14 Jul 2025 08:34:31 -0700 (PDT)
+Message-ID: <2c1bd3f0-731c-4ca7-9f43-50c3c572aaa6@redhat.com>
+Date: Mon, 14 Jul 2025 17:34:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Provide always-false kvm_arm_*_supported()
- stubs for usermode
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20250714135152.1896214-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH v4 20/28] pc-bios/s390-ccw: Add signature verification for
+ secure IPL in audit mode
+To: Jared Rossi <jrossi@linux.ibm.com>, Collin Walling
+ <walling@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
+ berrange@redhat.com, richard.henderson@linaro.org, david@redhat.com,
+ pbonzini@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com
+References: <20250711211105.439554-1-zycai@linux.ibm.com>
+ <20250711211105.439554-21-zycai@linux.ibm.com>
+ <eccbac31-7c1d-4b75-a284-a46ad98675db@linux.ibm.com>
+ <80ebd632-5b56-4391-b60d-f6a64f311e7f@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250714135152.1896214-1-peter.maydell@linaro.org>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <80ebd632-5b56-4391-b60d-f6a64f311e7f@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,49 +161,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/14/25 6:51 AM, Peter Maydell wrote:
-> If you try to build aarch64-linux-user with clang and --enable-debug then it
-> fails to compile:
+On 14/07/2025 16.54, Jared Rossi wrote:
 > 
->   ld: libqemu-aarch64-linux-user.a.p/target_arm_cpu64.c.o: in function `cpu_arm_set_sve':
->   ../../target/arm/cpu64.c:321:(.text+0x1254): undefined reference to `kvm_arm_sve_supported'
+> [snip...]
+>>> +
+>>> +        entry++;
+>>> +
+>>> +        if ((uint8_t *)(&entry[1]) > tmp_sec + MAX_SECTOR_SIZE) {
+>>> +            puts("Wrong entry value");
+>>> +            return -EINVAL;
+>>> +        }
+>> Can someone who is more informed than I am of the IPL process please
+>> explain to me what is the purpose of the above check?  Why does it check
+>> if the next entry, the one which isn't going to be inspected/loaded, is
+>> within the bounds of tmp_sec?  This has been here since this file's
+>> inception and I can't find any documentation or mention that supports it.
+>>
+>> This code precludes any of the secure IPL changes.
+>>
+>> Was this actually meant to be entry[0] to ensure the actual entry we
+>> want to work on is not outside the bounds of tmp_sec?  Or perhaps it was
+>> meant to be done before the increment to entry?
+>>
 > 
-> This is a regression introduced in commit f86d4220, which switched
-> the kvm-stub.c file away from being built for all arm targets to only
-> being built for system emulation binaries.  It doesn't affect gcc,
-> presumably because even at -O0 gcc folds away the always-false
-> kvm_enabled() condition but clang does not.
-> 
-> We would prefer not to build kvm-stub.c once for usermode and once
-> for system-emulation binaries, and we can't build it just once for
-> both because it includes cpu.h.  So instead provide always-false
-> versions of the five functions that are valid to call without KVM
-> support in kvm_arm.h.
-> 
-> Fixes: f86d42205c2eba ("target/arm/meson: accelerator files are not needed in user mode")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3033
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> I'm never sure when we prefer to use stub-functions in separate C files
-> vs when we prefer to have ifdeffed stubs in headers. There are several
-> ways we could fix this compile error, so I just picked one...
-> ---
->   target/arm/kvm_arm.h | 35 +++++++++++++++++++++++++++++++++++
->   1 file changed, 35 insertions(+)
->
+> I noticed that as well and came to the same conclusions as you, which is to 
+> say,
+> it has always been that way and it is not clear what the purpose is, but it 
+> does
+> not appear to have any impact on the proposed secure IPL functionality.
 
-Thanks Peter, clang with --enable-debug is indeed a combination I didn't 
-try. I'll test this too now. Going through this topic, yes I noticed 
-that gcc always folds the any if (0) condition, and, based on a Richard 
-comment (I can't find now) it seems that we used to rely on that for 
-other parts of the code.
+I think it's meant as a check for the *end* of entry[0], so it's likely just 
+a quirky way of saying:
 
-The fix you propose works well (initial goal was just to remove 
-CONFIG_KVM, so having CONFIG_USER_ONLY is ok), but I wonder if there is 
-something specific affecting clang in this case and preventing the folding.
+    if (((uint8_t *)entry) + sizeof(*entry) > tmp_sec + MAX_SECTOR_SIZE)
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+?
 
-Thanks,
-Pierrick
+  Thomas
+
 
