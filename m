@@ -4,62 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C75E8C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:42:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C96C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:42:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubLJK-00029y-Vi; Mon, 14 Jul 2025 11:41:47 -0400
+	id 1ubLJc-0002mJ-03; Mon, 14 Jul 2025 11:42:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ubJxn-0007O8-Py
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 10:15:28 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ubJxf-00089f-Mf
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 10:15:25 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bgkp922H0z6L5gG;
- Mon, 14 Jul 2025 22:14:09 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id EE019140371;
- Mon, 14 Jul 2025 22:15:13 +0800 (CST)
-Received: from localhost (10.122.19.247) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 14 Jul
- 2025 16:15:13 +0200
-Date: Mon, 14 Jul 2025 15:15:12 +0100
-To: "Michael S. Tsirkin" <mst@redhat.com>
-CC: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>,
- <linux-cxl@vger.kernel.org>, <linuxarm@huawei.com>, Anisa Su
- <anisa.su@samsung.com>
-Subject: Re: [PATCH qemu 07/11] hw/cxl: mailbox-utils: 0x5602 - FMAPI Set DC
- Region Config
-Message-ID: <20250714151512.00000a2a@huawei.com>
-In-Reply-To: <20250714150218.00006c95@huawei.com>
-References: <20250702160219.989731-1-Jonathan.Cameron@huawei.com>
- <20250702160219.989731-8-Jonathan.Cameron@huawei.com>
- <20250714052757-mutt-send-email-mst@kernel.org>
- <20250714150218.00006c95@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
+ id 1ubK0a-0008Hn-Ew
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 10:18:21 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
+ id 1ubK0X-0000PK-1c
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 10:18:18 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-b3182c6d03bso5023683a12.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 07:18:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1752502694; x=1753107494; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=BnEv1rhPyuqGeOqhJG81aiCKY6SFUNUyQxrFxmuLHBA=;
+ b=Zzh0iTJmPsHWoZCPV95c1h5Fkq6N2KZdgNSPxge6muAG/qm5IaCJb8NwwULbluPasI
+ OIpUPuJ00TOGFqyCRNx5DbrMkvwuHBXL5vlnbsNlzlN+GVjtIkao7LZ3PyiO7TqOdXxn
+ SYN+3KWuEgduLJhGqgzC4JXH6Ul82Z1p9RSnMzR3kFo3mcoHvPusyuckC02WXkEHzwPK
+ ceOW5CHVAExSTajZq6ZRk6lAO1Y5PIVv5+U8w4tEzNl8vv74sm7h0jY4YrQ19cDvboLJ
+ fi0v+VrnFEabECwqwHm56k0UPIWzZawo8/sCpTjRKCMYWTLuCnjGlSg6Dj3ZKZuhGxa0
+ dGrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752502694; x=1753107494;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BnEv1rhPyuqGeOqhJG81aiCKY6SFUNUyQxrFxmuLHBA=;
+ b=erAletC3WmBf7705FZabSq8kN8NH0Ph4qJS1JOTStJYMeKqDmOhogK5IF+sqIJTU4o
+ I2mwE/1E1yHM7BzDXA59v4JWzThB4CxfURI4vV9lHLkcTqty4CX7sOksq2X8C6KLS0Cm
+ +B75jmAvC/dOm7NcB+GFBz8T47vQJtdBIoACE2Jx2fhE3v9RKV2mRHsVKJW27bbmj6fR
+ Na7CJBoX1ztjhPRiYR9tc0bRRksXnOBExbNnVRf+KUnI4q5lHDOJnXa4bTI0BOXVoMRR
+ a6KapAle15WzlVj05hX86zZytiUjT5ATBuXFCfypr0sD7m0OMxiXC6bs5eF15lFZFjPy
+ /jbg==
+X-Gm-Message-State: AOJu0YyTLcbY+sWq+oqs+RRJqk1g552mMUd2wBvq2Lk3pHFzTn0caf0i
+ 790ZeSZA8pYTrikBrSKQ1uGngaJcpD0e725fBXDcUhwUKzD0eYPriFi/waa8s+WGS5w=
+X-Gm-Gg: ASbGnctPWCmLiCHKp5aQ6fcjSpKc17amMPoX5ddXL79wVFYAV7d6P0KzWN+qFYf3MFR
+ 1P5QFfKZEJgklgjEFCGJ+OzR9DS3qwMyv2BIO7/Kz0kM3v5rFMG3/xMqtDwwT8osVdafH3LCyIy
+ 8iIaaARzLYNeSBk+3RPQyOEd46Ar8GX1qgAfmbh0DXBt/r7eoILBkYNk+s4IanO8QxSeEIlLLho
+ RVuAhN8M3XT9Fgn87nD/iwS/uwzNqThQk7JEX/3dYQkoNzgJOIT1MrPBncAdlUyecym+d/Tmmfh
+ m3Z6h8vKjkL/48hAXkuXUHG9+2SNiEqbPm3hHv/mdtjQYBxy8yGR5qDkpW8NsL3m1ZFa94ARVjM
+ k5BqcNeD3zKWFB8eE0NM2xmAJz/s=
+X-Google-Smtp-Source: AGHT+IE/Si003LAV3ECTYELp+xDAVyo3ipn/4u8D1TlcNQiKgtZYwgCeWgKREFnmKQY9apmmVyDKNA==
+X-Received: by 2002:a17:90b:4c0a:b0:313:17e3:7ae0 with SMTP id
+ 98e67ed59e1d1-31c4cd5618dmr17698480a91.34.1752502693722; 
+ Mon, 14 Jul 2025 07:18:13 -0700 (PDT)
+Received: from localhost ([103.192.224.247]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-31c3e973e75sm10663890a91.16.2025.07.14.07.18.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Jul 2025 07:18:12 -0700 (PDT)
+From: Weifeng Liu <weifeng.liu.z@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Weifeng Liu <weifeng.liu.z@gmail.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Vivek Kasireddy <vivek.kasireddy@intel.com>,
+ Dongwon Kim <dongwon.kim@intel.com>
+Subject: [PATCH] gtk: Skip drawing if console surface is NULL
+Date: Mon, 14 Jul 2025 22:17:54 +0800
+Message-ID: <20250714141758.10062-1-weifeng.liu.z@gmail.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=weifeng.liu.z@gmail.com; helo=mail-pg1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,126 +99,70 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Jul 2025 15:02:18 +0100
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+In gtk draw/render callbacks, add an early NULL check for the console
+surface and skip drawing if it's NULL. Otherwise, attempting to fetch
+its width and height crash. This change fixes Coverity CID 1610328.
 
-> On Mon, 14 Jul 2025 05:32:19 -0400
-> "Michael S. Tsirkin" <mst@redhat.com> wrote:
->=20
-> > On Wed, Jul 02, 2025 at 05:02:13PM +0100, Jonathan Cameron wrote: =20
-> > > From: Anisa Su <anisa.su@samsung.com>
-> > >=20
-> > > FM DCD Management command 0x5602 implemented per CXL r3.2 Spec Sectio=
-n 7.6.7.6.3
-> > >=20
-> > > Reviewed-by: Fan Ni <fan.ni@samsung.com>
-> > > Signed-off-by: Anisa Su <anisa.su@samsung.com>
-> > > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com> =20
->=20
->=20
-> > > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> > > index bf1710b251..1fc453f70d 100644
-> > > --- a/hw/cxl/cxl-mailbox-utils.c
-> > > +++ b/hw/cxl/cxl-mailbox-utils.c =20
->=20
-> > > +/* CXL r3.2 section 7.6.7.6.3: Set Host DC Region Configuration (Opc=
-ode 5602) */
-> > > +static CXLRetCode cmd_fm_set_dc_region_config(const struct cxl_cmd *=
-cmd,
-> > > +                                              uint8_t *payload_in,
-> > > +                                              size_t len_in,
-> > > +                                              uint8_t *payload_out,
-> > > +                                              size_t *len_out,
-> > > +                                              CXLCCI *cci)
-> > > +{
-> > > +    struct {
-> > > +        uint8_t reg_id;
-> > > +        uint8_t rsvd[3];
-> > > +        uint64_t block_sz;
-> > > +        uint8_t flags;
-> > > +        uint8_t rsvd2[3];
-> > > +    } QEMU_PACKED *in =3D (void *)payload_in;
-> > > +    CXLType3Dev *ct3d =3D CXL_TYPE3(cci->d);
-> > > +    CXLEventDynamicCapacity dcEvent =3D {};
-> > > +    CXLDCRegion *region =3D &ct3d->dc.regions[in->reg_id];
-> > > +
-> > > +    /*
-> > > +     * CXL r3.2 7.6.7.6.3: Set DC Region Configuration
-> > > +     * This command shall fail with Unsupported when the Sanitize on=
- Release
-> > > +     * field does not match the region=E2=80=99s configuration... an=
-d the device
-> > > +     * does not support reconfiguration of the Sanitize on Release s=
-etting.
-> > > +     *
-> > > +     * Currently not reconfigurable, so always fail if sanitize bit =
-(bit 0)
-> > > +     * doesn't match.
-> > > +     */
-> > > +    if ((in->flags & 0x1) !=3D (region->flags & 0x1)) {
-> > > +        return CXL_MBOX_UNSUPPORTED;
-> > > +    }
-> > > +
-> > > +    if (in->reg_id >=3D DCD_MAX_NUM_REGION) {
-> > > +        return CXL_MBOX_UNSUPPORTED;
-> > > +    }
-> > > +
-> > > +    /* Check that no extents are in the region being reconfigured */
-> > > +    if (!bitmap_empty(region->blk_bitmap, region->len / region->bloc=
-k_size)) {
-> > > +        return CXL_MBOX_UNSUPPORTED;
-> > > +    }
-> > > +
-> > > +    /* Check that new block size is supported */
-> > > +    if (!test_bit(BIT((int) log2(in->block_sz)),
-> > > +                  &region->supported_blk_size_bitmask)) {
-> > > +        return CXL_MBOX_INVALID_INPUT;
-> > > +    }   =20
-> >=20
-> > This does not work: test_bit works on unsigned long, while
-> > supported_blk_size_bitmask is uint64_t.
-> >=20
-> > Why so funky? what is wrong with:
-> >=20
-> > if (!(BIT_ULL(log2(in->block_sz)) & region->supported_blk_size_bitmask))
-> >=20
-> > And BTW why cast to int here? =20
-This became obvious when your suggestion didn't build :(
+In practice, this case wouldn't happen at all because we always install
+a placeholder surface to the console when there is nothing to display.
 
-./../hw/cxl/cxl-mailbox-utils.c: In function =E2=80=98cmd_fm_set_dc_region_=
-config=E2=80=99:
-/home/jic23/src/qemu/include/qemu/bitops.h:25:39: error: invalid operands t=
-o binary << (have =E2=80=98long long unsigned int=E2=80=99 and =E2=80=98dou=
-ble=E2=80=99)
-   25 | #define BIT_ULL(nr)             (1ULL << (nr))
-      |                                       ^~ ~~~~
-../../hw/cxl/cxl-mailbox-utils.c:3436:11: note: in expansion of macro =E2=
-=80=98BIT_ULL=E2=80=99
- 3436 |     if (!(BIT_ULL(log2(in->block_sz)) & region->supported_blk_size_=
-bitmask)) {
-      |           ^~~~~~~
+Resolves: Coverity CID 1610328
+Signed-off-by: Weifeng Liu <weifeng.liu.z@gmail.com>
+---
+ ui/gtk-egl.c     | 5 +----
+ ui/gtk-gl-area.c | 5 +----
+ 2 files changed, 2 insertions(+), 8 deletions(-)
 
-Now I look again, this is effectively 2**(log_2(x)) or x. So
-if (in->block_sz & region->supporte_blk_size_bitmask)
-Should work as long as we know block_size is a power of 2 (which the specif=
-ication
-says it must be).
-
-Anisa?
-
->=20
-> Change looks fine to me, so I'll prepare an updated set with this
-> and the missing semi colon.  Anisa if you can have a look at this
-> that would be great.=20
->=20
-> Sorry I seem to have missed Anisa off the cc for this!
->=20
-> Jonathan
->=20
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index 0b787bea25..ae9239999c 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -72,7 +72,7 @@ void gd_egl_draw(VirtualConsole *vc)
+ #endif
+     int ww, wh, pw, ph, gs;
+ 
+-    if (!vc->gfx.gls) {
++    if (!vc->gfx.gls || !vc->gfx.ds) {
+         return;
+     }
+ 
+@@ -112,9 +112,6 @@ void gd_egl_draw(VirtualConsole *vc)
+         }
+ #endif
+     } else {
+-        if (!vc->gfx.ds) {
+-            return;
+-        }
+         eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
+                        vc->gfx.esurface, vc->gfx.ectx);
+ 
+diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+index 8151cc413c..05fc38096e 100644
+--- a/ui/gtk-gl-area.c
++++ b/ui/gtk-gl-area.c
+@@ -48,7 +48,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
+     int fbw, fbh;
+     int wx_offset, wy_offset;
+ 
+-    if (!vc->gfx.gls) {
++    if (!vc->gfx.gls || !vc->gfx.ds) {
+         return;
+     }
+ 
+@@ -135,9 +135,6 @@ void gd_gl_area_draw(VirtualConsole *vc)
+         }
+ #endif
+     } else {
+-        if (!vc->gfx.ds) {
+-            return;
+-        }
+         gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
+ 
+         surface_gl_setup_viewport(vc->gfx.gls, vc->gfx.ds, pw, ph);
+-- 
+2.49.0
 
 
