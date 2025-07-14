@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C31B2C83F21
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:30:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3388CC83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:30:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSMd-0004A9-KM; Mon, 14 Jul 2025 19:13:39 -0400
+	id 1ubSMj-0004NS-RR; Mon, 14 Jul 2025 19:13:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSJS-000600-L6
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:10:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSJB-00059n-0z
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:10:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSJR-00063E-0U
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:10:22 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSJ9-0005zG-3V
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:10:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534619;
+ s=mimecast20190719; t=1752534602;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=h9YR5w450ZjJ0pBgGMl41SlLEhDoh07LQFY/a0XBD2c=;
- b=W5Jl/npBER6KTJayFrIXR0Y3Y0gv4IAiUoqR6ZBfmErOpLPDMFARfoCGQ/hIvjONLn1jp2
- JCaGvnXgpzO0LmunFuUoOiKXN3Yvan04vTxoBpJ4JwQpc35mp2hTdKqPbyIqkoV5bxTyP4
- /AWpUi3Qzb/Cv/UBrth13ndlYvO5Dwo=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NpoaHNSgFo/RDoo9oflmiOTFn5UaMvPYbywQP0NYLfY=;
+ b=fJTVUSVvdPBAAMfbE8JIH1TdMNsLo8wjinHuDb6xjVMttgUBjxynfeyb5lPIEaYWOpJLD5
+ y1/F9OKs3obeTGom943NzRgzR4c5skrlLtRA7AlNOAEQm6+piay1DWSiKrOdAD5QKE1NcZ
+ lMjvUON9vTxfDDtP/tkAt2BrGRk5X28=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-365-4eJClQlBPXu-qbMjEXMKlg-1; Mon, 14 Jul 2025 19:10:18 -0400
-X-MC-Unique: 4eJClQlBPXu-qbMjEXMKlg-1
-X-Mimecast-MFC-AGG-ID: 4eJClQlBPXu-qbMjEXMKlg_1752534617
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a50049f8eeso2120717f8f.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:10:17 -0700 (PDT)
+ us-mta-668-SXnuwyGxP8KkwAfp2BBo8A-1; Mon, 14 Jul 2025 19:10:01 -0400
+X-MC-Unique: SXnuwyGxP8KkwAfp2BBo8A-1
+X-Mimecast-MFC-AGG-ID: SXnuwyGxP8KkwAfp2BBo8A_1752534600
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a50816cc58so1639376f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:10:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534616; x=1753139416;
+ d=1e100.net; s=20230601; t=1752534599; x=1753139399;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=h9YR5w450ZjJ0pBgGMl41SlLEhDoh07LQFY/a0XBD2c=;
- b=m/FMkCY5l/YXWSxtIAd+dmV3UZYd7BwEilzYcEE/+2VYD+ahbCunRQqjaPQYbpvLyP
- EmG7t26xjIUByvajmA015A3KHp1yV162vl0Ht/D50KGZNx/U5k27Pt9da8ZflE9LcC2C
- GepFgtzPMlC4IAPGbDHBnFItPZJIBjfEp9NCKJlwNWySfVZQtkjECxSs7kwOt6Mxiv2h
- OxJt4zMBUERdPfGYCxmqhIUwIYjLkrzXeQC6JNI2iHji+3MY1D91bGKIjtPejlzcuk7i
- 4XT4gsAsW0ZpWQPxvcDElyw/FbEaEoAoilLvApJHdGh7Jq5eQKeTudfwkPyYc79UnpHV
- K+1A==
-X-Gm-Message-State: AOJu0YxNGXKFqVRp5qpbD4gcjKhixlaDcMgY/Ml+vX0g6gzo9zxwBICS
- x9hwGO10Ff52EdPtR3+upp+hH2uWthYWCqKdLeKtpw8mANh0VOQbK9CqhDQ121kdVQmf9TctXUn
- Y1suWQB5MdvoeyOzttDYtxMzoicWNMfeaFuThmDJmTGlttI3OnLcl7nw13+BCbEJBmn25+f1yJK
- COMSuPSSUdcy22RXUcVTUJT5GqYaFbN/9+Ug==
-X-Gm-Gg: ASbGncvZ4N1nk5JUVb65EjC5mQDbXuCcfJYQmIoFmFIrb/mcESx6Kz285ZUt2TuAAWF
- e0tWoRJP3hhRFV1IBzBklvb4mvwgxAsAh1rpLNtTZJZBB5TltgIsN/UzxjcQP5TpUjKE9QK1juz
- mkp+aR9mwl272FJR3NrbpGWRJzsEi5gl9I2W2Phb9+pjQ0yLCip/YUgx9GWxPlj8xAVq37ZQBc1
- OYqnRyq6RDnIskgUyDE+lE++iFLzeqRN4uE+Fg3KSb1HgvEi8AQEU6QUuIApJvxbhk3Ob6zyfKh
- FtO2cPRlFWWiJHV3NPinD935xRyIrbMV
-X-Received: by 2002:a05:6000:d12:b0:3a5:8d0b:d0b8 with SMTP id
- ffacd0b85a97d-3b5f18e7af8mr10881984f8f.54.1752534616622; 
- Mon, 14 Jul 2025 16:10:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEyaJCJ6DeYwyDTrWsLhB1aMaEjo9ElFl2Uj0Z0y5ylSRUUqZJ1jGH7FkjN8RhDftwYEXuDaQ==
-X-Received: by 2002:a05:6000:d12:b0:3a5:8d0b:d0b8 with SMTP id
- ffacd0b85a97d-3b5f18e7af8mr10881967f8f.54.1752534616188; 
- Mon, 14 Jul 2025 16:10:16 -0700 (PDT)
+ bh=NpoaHNSgFo/RDoo9oflmiOTFn5UaMvPYbywQP0NYLfY=;
+ b=LqcvvbeUpWPcziX2XAmr9oxMQLEYe/KhuSyT1bdZjiMnY5nJj4BeUOSXe6hORqr2PD
+ ORTjvsBMgU5n4WibBxdO7snBJD3rDTelPjgLw7IVJGSASPYguIbz2Cj9iHQsmLMCqheY
+ r4RQtqevq7SBjfKV+utQNpQ7Y0uDL0Xqd7v3YFYqTM8OZu0JAJ6E5mM4FUDMWb2TPPaH
+ humjHrZZ+/dOVb7u2XnLzR+vXAoYPiURuu2jzLCixhntj16T9XDBtuU4FOhDdaiKlep7
+ VjfWOIOX1p/j0Am+7zQCAMKDs3ZLKAmveg0iL14fNW7NSbiQNGg6DIE/Vh4yt6YEcuNc
+ KMAQ==
+X-Gm-Message-State: AOJu0YxnBRD+HKQB19I5y+YHa7uyD6P1O11GW+1aJzH8v/fKIfYPhQKY
+ d7gSTBpS73dUH1TBNcfQR1gl+ipqtucVzZ+4Z+L32dPwvRcWIq6w8OBWzYom5MfXH0byvXqUf7i
+ T1GHZRnUGOmeWhEv8U+37GHbn97cRVXfBLnx3wMRiBZrrBRT0sxKB3Kpj6ErRYfVaIaluc5oHfy
+ dmr/7piQH/4Ic6ZMHk3V9PHMph91FlB0B8tA==
+X-Gm-Gg: ASbGncuHaNq15HftNWgaFVAJXu48v2k7SmczirR0mw/H0ewnuuqaSeewqRyVYg12nPo
+ 0XP3Z4iOlRmn6+g3lbE8GE95eqXpradkqqZiVs6UOPCq8dd+jt74JtXH+mEpGUdNFe5bflF2EOt
+ PMd0f/+r1ujsTYAT0oIN7/KKlcdEQXCzBgmc2W8WvtAI+ADkpN6PQbCayiaSPNPDclFoC4D1lWV
+ uq2wkZG3kRWMlAoWpWPBBqppHAfVdouaT6KLAVBmGEaIH/W62IwS5m2Hb61s1auRXuSEC+z5X26
+ Cfr95tmdwLskgoWEDy67qfC0ZhC2usH5
+X-Received: by 2002:a05:6000:18a5:b0:3b6:936:92fa with SMTP id
+ ffacd0b85a97d-3b6093692fcmr1427777f8f.52.1752534599557; 
+ Mon, 14 Jul 2025 16:09:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHa/zKJlHlDjvyC04ek9MWlqg66e75MVMANvHHuFYHEV11RWQeuftJ7uNiUHqvUfvAeR8YXow==
+X-Received: by 2002:a05:6000:18a5:b0:3b6:936:92fa with SMTP id
+ ffacd0b85a97d-3b6093692fcmr1427753f8f.52.1752534599117; 
+ Mon, 14 Jul 2025 16:09:59 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8dc3a54sm13747494f8f.39.2025.07.14.16.10.14
+ ffacd0b85a97d-3b5e8e1e8b1sm13431957f8f.82.2025.07.14.16.09.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:10:15 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:10:13 -0400
+ Mon, 14 Jul 2025 16:09:58 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:09:57 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Anisa Su <anisa.su@samsung.com>, Fan Ni <fan.ni@samsung.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PULL 91/97] hw/cxl: Move definition for dynamic_capacity_uuid and
- enum for DC event types to header
-Message-ID: <cea6073998e96235893b65894d9896494773fda6.1752534227.git.mst@redhat.com>
+ Yicong Yang <yangyicong@hisilicon.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Alireza Sanaee <alireza.sanaee@huawei.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 85/97] hw/acpi/aml-build: Build a root node in the PPTT table
+Message-ID: <a8a0315535d93aa9eb343550f2bf434198e5fa8b.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -85,7 +86,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1752534227.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -110,71 +111,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anisa Su <anisa.su@samsung.com>
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-Move definition/enum to cxl_events.h for shared use in next patch
+Currently we build the PPTT starting from the socket node and each
+socket will be a separate tree. For a multi-socket system it'll
+be hard for the OS to know the whole system is homogeneous or not
+(actually we're in the current implementation) since no parent node
+to telling the identical implementation informentation. Add a
+root node for indicating this.
 
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-Signed-off-by: Anisa Su <anisa.su@samsung.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20250714174509.1984430-6-Jonathan.Cameron@huawei.com>
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+Message-Id: <20250714173146.511-4-alireza.sanaee@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/cxl/cxl_events.h | 15 +++++++++++++++
- hw/mem/cxl_type3.c          | 15 ---------------
- 2 files changed, 15 insertions(+), 15 deletions(-)
+ hw/acpi/aml-build.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/cxl/cxl_events.h b/include/hw/cxl/cxl_events.h
-index 38cadaa0f3..758b075a64 100644
---- a/include/hw/cxl/cxl_events.h
-+++ b/include/hw/cxl/cxl_events.h
-@@ -184,4 +184,19 @@ typedef struct CXLEventDynamicCapacity {
-     uint32_t tags_avail;
- } QEMU_PACKED CXLEventDynamicCapacity;
+diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+index 9b9be4ea0f..1e685f982f 100644
+--- a/hw/acpi/aml-build.c
++++ b/hw/acpi/aml-build.c
+@@ -2152,12 +2152,25 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+     int64_t socket_id = -1, cluster_id = -1, core_id = -1;
+     uint32_t socket_offset = 0, cluster_offset = 0, core_offset = 0;
+     uint32_t pptt_start = table_data->len;
++    uint32_t root_offset;
+     int n;
+     AcpiTable table = { .sig = "PPTT", .rev = 2,
+                         .oem_id = oem_id, .oem_table_id = oem_table_id };
  
-+/* CXL r3.1 Table 8-50: Dynamic Capacity Event Record */
-+static const QemuUUID dynamic_capacity_uuid = {
-+    .data = UUID(0xca95afa7, 0xf183, 0x4018, 0x8c, 0x2f,
-+                 0x95, 0x26, 0x8e, 0x10, 0x1a, 0x2a),
-+};
-+
-+typedef enum CXLDCEventType {
-+    DC_EVENT_ADD_CAPACITY = 0x0,
-+    DC_EVENT_RELEASE_CAPACITY = 0x1,
-+    DC_EVENT_FORCED_RELEASE_CAPACITY = 0x2,
-+    DC_EVENT_REGION_CONFIG_UPDATED = 0x3,
-+    DC_EVENT_ADD_CAPACITY_RSP = 0x4,
-+    DC_EVENT_CAPACITY_RELEASED = 0x5,
-+} CXLDCEventType;
-+
- #endif /* CXL_EVENTS_H */
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 6b0889c9ae..52d3910ed9 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1876,21 +1876,6 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
-     }
- }
+     acpi_table_begin(&table, table_data);
  
--/* CXL r3.1 Table 8-50: Dynamic Capacity Event Record */
--static const QemuUUID dynamic_capacity_uuid = {
--    .data = UUID(0xca95afa7, 0xf183, 0x4018, 0x8c, 0x2f,
--                 0x95, 0x26, 0x8e, 0x10, 0x1a, 0x2a),
--};
--
--typedef enum CXLDCEventType {
--    DC_EVENT_ADD_CAPACITY = 0x0,
--    DC_EVENT_RELEASE_CAPACITY = 0x1,
--    DC_EVENT_FORCED_RELEASE_CAPACITY = 0x2,
--    DC_EVENT_REGION_CONFIG_UPDATED = 0x3,
--    DC_EVENT_ADD_CAPACITY_RSP = 0x4,
--    DC_EVENT_CAPACITY_RELEASED = 0x5,
--} CXLDCEventType;
--
- /*
-  * Check whether the range [dpa, dpa + len - 1] has overlaps with extents in
-  * the list.
++    /*
++     * Build a root node for all the processor nodes. Otherwise when
++     * building a multi-socket system each socket tree is separated
++     * and will be hard for the OS like Linux to know whether the
++     * system is homogeneous.
++     */
++    root_offset = table_data->len - pptt_start;
++    build_processor_hierarchy_node(table_data,
++        (1 << 0) | /* Physical package */
++        (1 << 4), /* Identical Implementation */
++        0, 0, NULL, 0);
++
+     /*
+      * This works with the assumption that cpus[n].props.*_id has been
+      * sorted from top to down levels in mc->possible_cpu_arch_ids().
+@@ -2174,7 +2187,7 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+             build_processor_hierarchy_node(table_data,
+                 (1 << 0) | /* Physical package */
+                 (1 << 4), /* Identical Implementation */
+-                0, socket_id, NULL, 0);
++                root_offset, socket_id, NULL, 0);
+         }
+ 
+         if (mc->smp_props.clusters_supported && mc->smp_props.has_clusters) {
 -- 
 MST
 
