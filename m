@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39857C83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:11:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAE35C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:11:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSIS-00036P-8f; Mon, 14 Jul 2025 19:09:20 -0400
+	id 1ubSHd-00072I-5R; Mon, 14 Jul 2025 19:08:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSHC-00068q-Cx
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:08:05 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGs-00056O-JZ
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSHA-0005ct-Mo
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:08:02 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGq-0005Zh-MG
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534478;
+ s=mimecast20190719; t=1752534460;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ZnCiPK9qjMPW1GxC0I9MN0RmWn7FrkbvPqd5JVEOfwc=;
- b=KRJRy+kAbNevPqbjUSbhZakhfWXQjNopxkhjpTl8Sn++Umfl0J1U/MBylgiiHa4x9HMIlA
- 98J39OLG8eFAP0J9Ju21E1IFNXZ8wjlRcqZppMGoc2QS5apHqhZiA6w+IA/GP2uZhp4D5k
- Eb49a3lomYetDQWLB09BbzQy5m/4KFY=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=LY1CafZoPIMOlw/PLwu/eKU/EDB03DMpyVt647qA4CY=;
+ b=az0e0lVchND8xE7rJr2wcUCHm3lyzkA4k7aG/uJRIuBV1UDpix3fcIjDRyS/r/poCdwuIf
+ idNwC8NsuQeR0XtQg+KWPUeNLzkqllrExpFo5/pKZ/dAD62dVPpQRCAfIAZB7bbkDiexvs
+ lp6k74JMQIFsG0n0n3LowJeS0iX++BM=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-282-Oqz4j4abOIeaxu6RviGqiA-1; Mon, 14 Jul 2025 19:07:56 -0400
-X-MC-Unique: Oqz4j4abOIeaxu6RviGqiA-1
-X-Mimecast-MFC-AGG-ID: Oqz4j4abOIeaxu6RviGqiA_1752534474
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4eeed54c2so2649442f8f.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:07:55 -0700 (PDT)
+ us-mta-488-_dugEBA7MVO0qakTdqpjSg-1; Mon, 14 Jul 2025 19:07:38 -0400
+X-MC-Unique: _dugEBA7MVO0qakTdqpjSg-1
+X-Mimecast-MFC-AGG-ID: _dugEBA7MVO0qakTdqpjSg_1752534458
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4561bc2f477so9107445e9.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:07:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534474; x=1753139274;
+ d=1e100.net; s=20230601; t=1752534457; x=1753139257;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZnCiPK9qjMPW1GxC0I9MN0RmWn7FrkbvPqd5JVEOfwc=;
- b=YgFaFku5IVgJg4ajM9YUYFdjcNSp8nhlVzHWJ0+Tes836zMwSNQRmjOBrSeS0M2ALt
- ZLEWXv4//tL9u3c276UU4JkrvPd/AmtOnvDyxH4FvVUe+iXn999wJKXOwG52nr1Y7EdU
- xS7nVi8IHNJ55ENfSBgv1DofR9RDVDNkBTsiHMsyjhhd/B8/FyKH6Kc2evEf0bv7/ZHa
- PS08P9JlDM74aZoqbsu3M5aDpTNpw/S46J+zltayXM3+eRbWCk6BtZiPfeeXFVhCOKL6
- JgzB6w85B7A9Rj0cnGtSTI3lhZgOyMYU+ZvrVibtxdaAlWtw0Ck4vORdOjYMXSOavvpk
- hNPg==
-X-Gm-Message-State: AOJu0YxiXVY7KaEwcNC7hbYJ8QjLH67ggQXR4sN14ihy+LTeUhRYVkqu
- fMsTIjoa/Pzg9qpZB0wEg6+RD/J02KcuZtStNmKV0TNn6psMCsBdfNYQXF3b0uBJi7dJqMJxaLy
- TBA1U3OA8DK9lkVHN0Kq/aSOmozlkbs+ZKV0XbVnUgOEsEZSlUTDnR2G1ikUiJWpzWQWsC0QWbq
- nMjbBtEurn3i3L4Qb7OHYtw0b8lqXz9shrcw==
-X-Gm-Gg: ASbGncuc3qOrsIeGdBzw1XCBccjAMYuDTlEQNHEJM+SDxO5wAFO0OsTA4OAKSaX/ySF
- KHj9iXwWPLzkzaTbAmODgy0TDRRnM0O1sDF6VdelDfCAkNOf17yLCDRNG0w78J3saV/oQt5RWzU
- KB7TYu5CEnEM8mvQVt+u/H5u5OBfzt3GVv2Pxj5bKCefZUavj+7ayXo4EHwFSl9UkRPVlXonEes
- uHei5bU3AdfJA4Rh9flA1r1enP2FD3mJ4e1eCVqbc7eJDx1SGzg1nZz402xHc9iOFZllmqOOLoN
- 2UBTa/XXf8ku4pFSK7JDVHnX2xTAUz+m
-X-Received: by 2002:a05:6000:2c0f:b0:3a4:d4cd:b06 with SMTP id
- ffacd0b85a97d-3b5f18d98c1mr14125309f8f.34.1752534473771; 
- Mon, 14 Jul 2025 16:07:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE6pEKK3EPDqVZib5+SFZk7ZHqkDLC3XsS5JHU/WFt9XPKUX9gOExa/rRNntoFfMnO/iCOwCA==
-X-Received: by 2002:a05:6000:2c0f:b0:3a4:d4cd:b06 with SMTP id
- ffacd0b85a97d-3b5f18d98c1mr14125284f8f.34.1752534473285; 
- Mon, 14 Jul 2025 16:07:53 -0700 (PDT)
+ bh=LY1CafZoPIMOlw/PLwu/eKU/EDB03DMpyVt647qA4CY=;
+ b=qiv9gWED1li7HJucDB/o65omZd1V+DPUXh4fzk3Jiyc8moWzhF/RkSHNgfiU/tEvOa
+ RJ3vfN8A+TDblTPu/CFMqoxmshCjPlEx0jRIvg6N56sFONXfIkNHryHMID6j0U+fQzG6
+ 5PAlxL/aBEP6w+935etQCUJM55hnp02EWqXwx9otjjMlBaVIIZIixhd+bQuyQ9T4rITI
+ vXst/EGB2xdSCQpxQuCqc4hmw10/3J7RMq+bY2EAL+BigG+XQEpnZK8Ntp4ewnRXSMW4
+ SEvajIGVGCU/qkRD+mMYhJH/ZHEurj7f4ohxkfAr7EsHhggzPmVdi4uCaFcwru4P+sDL
+ ssHg==
+X-Gm-Message-State: AOJu0Yw2WmzspmJ92Zpl82g9Gfr/pIVvPJ3nzMQna4N3DWnzLoigjAHn
+ 8qKjg2YEF2s5NWnsJP6cCFDtBc9WrzBddnTJFTVblA+VF7gsyc4PNeBADt8aFWC6o3+WyW1SjSk
+ 4ILMUDhisO/F/num8NnKbTmZAy3pjEp/0HxZblL6jprGxMffQgP6htweKlZyiYfeshRuPlTEah7
+ oIHv8ACqvyBXZX2Y/KdZz6APqfahPU0CufCQ==
+X-Gm-Gg: ASbGncuo5W/Pez0Nse4WYvfkvDZyQMPLHgAzBKHQZK2sj+xWwffVUA8mAn0rm9nMWq4
+ WEKWlmXAVs22IvZLy9cyGWXUilkoMyTYwp9w5OvtCQNqQRzOQBDTYdo2rCNlPWSIuHhY5n1igE3
+ aZVsvaJRnvvStpRi3k1k9oVmnXkCcRjj96GkyOgIj4cTPKfR52OvWLMSQeNAs97ECSrkFZ7w+S0
+ p4mj/+tRyIi8y7an7lBbXBGgmqsQgAg2ZcM0gM2Ag+QySsVOZYNSCGlWzXyRPgh5eQdql9UdGEY
+ DG5ZGxc5Gk6OGWRpFC8K4zh8t16k4RCv
+X-Received: by 2002:a05:600c:5304:b0:456:207e:fd83 with SMTP id
+ 5b1f17b1804b1-456207efef8mr37274975e9.4.1752534457334; 
+ Mon, 14 Jul 2025 16:07:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHcFYybJggufEbzOX96y2d2esVowJa8RFy3Jo8JJYmaYVQSByVesTs8TgD2sFEsOnGtO76Xcg==
+X-Received: by 2002:a05:600c:5304:b0:456:207e:fd83 with SMTP id
+ 5b1f17b1804b1-456207efef8mr37274715e9.4.1752534456835; 
+ Mon, 14 Jul 2025 16:07:36 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8bd180fsm13366964f8f.2.2025.07.14.16.07.51
+ ffacd0b85a97d-3b5e8dc2025sm13799780f8f.31.2025.07.14.16.07.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:07:52 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:07:50 -0400
+ Mon, 14 Jul 2025 16:07:35 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:07:33 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -79,8 +79,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 38/97] intel_iommu: Add support for ATS
-Message-ID: <47c3dcd3ffc6d187b97fe494a14fb61dd3911ccd.1752534227.git.mst@redhat.com>
+Subject: [PULL 32/97] intel_iommu: Fill the PASID field when creating an
+ IOMMUTLBEntry
+Message-ID: <6d968a2728ec46bb18eaa4c7e5f1ccea8987927f.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -115,95 +116,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
 
+PASID value must be used by devices as a key (or part of a key)
+when populating their ATC with the IOTLB entries returned by the IOMMU.
+
 Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
-Message-Id: <20250628180226.133285-11-clement.mathieu--drif@eviden.com>
+Message-Id: <20250628180226.133285-5-clement.mathieu--drif@eviden.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/intel_iommu.c | 63 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 63 insertions(+)
+ hw/i386/intel_iommu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 1b1b0b5632..fe9a5f2872 100644
+index 69d72ad35c..0fb4350d48 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -4738,6 +4738,68 @@ static AddressSpace *vtd_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
-     return &vtd_as->as;
+@@ -2503,6 +2503,7 @@ static void vtd_iotlb_page_invalidate_notify(IntelIOMMUState *s,
+                         .translated_addr = 0,
+                         .addr_mask = size - 1,
+                         .perm = IOMMU_NONE,
++                        .pasid = vtd_as->pasid,
+                     },
+                 };
+                 memory_region_notify_iommu(&vtd_as->iommu, 0, event);
+@@ -3090,6 +3091,7 @@ static void do_invalidate_device_tlb(VTDAddressSpace *vtd_dev_as,
+     event.entry.iova = addr;
+     event.entry.perm = IOMMU_NONE;
+     event.entry.translated_addr = 0;
++    event.entry.pasid = vtd_dev_as->pasid;
+     memory_region_notify_iommu(&vtd_dev_as->iommu, 0, event);
  }
  
-+static IOMMUTLBEntry vtd_iommu_ats_do_translate(IOMMUMemoryRegion *iommu,
-+                                                hwaddr addr,
-+                                                IOMMUAccessFlags flags)
-+{
-+    IOMMUTLBEntry entry;
-+    VTDAddressSpace *vtd_as = container_of(iommu, VTDAddressSpace, iommu);
-+
-+    if (vtd_is_interrupt_addr(addr)) {
-+        vtd_report_ir_illegal_access(vtd_as, addr, flags & IOMMU_WO);
-+        entry.target_as = &address_space_memory;
-+        entry.iova = 0;
-+        entry.translated_addr = 0;
-+        entry.addr_mask = ~VTD_PAGE_MASK_4K;
-+        entry.perm = IOMMU_NONE;
-+        entry.pasid = PCI_NO_PASID;
-+    } else {
-+        entry = vtd_iommu_translate(iommu, addr, flags, 0);
-+    }
-+
-+    return entry;
-+}
-+
-+static ssize_t vtd_ats_request_translation(PCIBus *bus, void *opaque,
-+                                           int devfn, uint32_t pasid,
-+                                           bool priv_req, bool exec_req,
-+                                           hwaddr addr, size_t length,
-+                                           bool no_write, IOMMUTLBEntry *result,
-+                                           size_t result_length,
-+                                           uint32_t *err_count)
-+{
-+    IntelIOMMUState *s = opaque;
-+    VTDAddressSpace *vtd_as;
-+    IOMMUAccessFlags flags = IOMMU_ACCESS_FLAG_FULL(true, !no_write, exec_req,
-+                                                    priv_req, false, false);
-+    ssize_t res_index = 0;
-+    hwaddr target_address = addr + length;
-+    IOMMUTLBEntry entry;
-+
-+    vtd_as = vtd_find_add_as(s, bus, devfn, pasid);
-+    *err_count = 0;
-+
-+    while ((addr < target_address) && (res_index < result_length)) {
-+        entry = vtd_iommu_ats_do_translate(&vtd_as->iommu, addr, flags);
-+        entry.perm &= ~IOMMU_GLOBAL; /* Spec 4.1.2: Global Mapping never set */
-+
-+        if ((entry.perm & flags) != flags) {
-+            *err_count += 1; /* Less than expected */
-+        }
-+
-+        result[res_index] = entry;
-+        res_index += 1;
-+        addr = (addr & (~entry.addr_mask)) + (entry.addr_mask + 1);
-+    }
-+
-+    /* Buffer too small */
-+    if (addr < target_address) {
-+        return -ENOMEM;
-+    }
-+
-+    return res_index;
-+}
-+
- static void vtd_init_iotlb_notifier(PCIBus *bus, void *opaque, int devfn,
-                                     IOMMUNotifier *n, IOMMUNotify fn,
-                                     void *user_opaque)
-@@ -4787,6 +4849,7 @@ static PCIIOMMUOps vtd_iommu_ops = {
-     .init_iotlb_notifier = vtd_init_iotlb_notifier,
-     .register_iotlb_notifier = vtd_register_iotlb_notifier,
-     .unregister_iotlb_notifier = vtd_unregister_iotlb_notifier,
-+    .ats_request_translation = vtd_ats_request_translation,
- };
+@@ -3672,6 +3674,7 @@ static IOMMUTLBEntry vtd_iommu_translate(IOMMUMemoryRegion *iommu, hwaddr addr,
+     IOMMUTLBEntry iotlb = {
+         /* We'll fill in the rest later. */
+         .target_as = &address_space_memory,
++        .pasid = vtd_as->pasid,
+     };
+     bool success;
  
- static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
 -- 
 MST
 
