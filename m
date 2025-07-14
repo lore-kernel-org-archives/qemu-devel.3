@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1563FC83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:13:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CD73C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:13:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSHg-0007Ow-53; Mon, 14 Jul 2025 19:08:32 -0400
+	id 1ubSHb-0006hK-1Q; Mon, 14 Jul 2025 19:08:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGh-00040r-UW
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:32 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGX-0003dg-Kd
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGg-0005XE-5W
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:31 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGW-0005Uq-3r
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534449;
+ s=mimecast20190719; t=1752534439;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=m9bYQ5u6pgRJHAntarcEw+lqU/yhh0ZBAg0JEBQxhXo=;
- b=ax55UOrvu0gao6V0kztua9lA3AgE2zQ5IxTK2ICr3Zgn8OsbVj/XVjY2VWXDMy0oJQH/yH
- 9XjfECJ2YfjorgH3kkU51YB1v/HNuQjlJXyqUyp5FRVlDZ9XVdKpMzs9ApfaDre5XSwnd6
- Y5k+UI2LNpx8VLvgXvajpsCIYgYuozA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4I4y8d1dQyBgPX2DNvcPSwOHDWsxQQcjuy3NVZekjJE=;
+ b=LcNmT4kcYhB0v3C7kXDSPv3RktP3gN49TIqLZmAkHXXZYxjC+DuxF1sHPaPOqArfIwLihq
+ xUjwzD/VVSaFjxoYB9bBE7h2io7JYVzEH1w9l4HKW9IIUa8EvW7CvHFqZ4aRFe7kyjQHlh
+ MnKTeXnLC0dGqvU245UJ3JEvvvFpG9s=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-621-V5Gz25wzPH-GDepb5GsNpg-1; Mon, 14 Jul 2025 19:07:28 -0400
-X-MC-Unique: V5Gz25wzPH-GDepb5GsNpg-1
-X-Mimecast-MFC-AGG-ID: V5Gz25wzPH-GDepb5GsNpg_1752534447
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45626532e27so1766495e9.1
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:07:27 -0700 (PDT)
+ us-mta-231-j3Yc66qLOYeFIKBJrXLQUQ-1; Mon, 14 Jul 2025 19:07:18 -0400
+X-MC-Unique: j3Yc66qLOYeFIKBJrXLQUQ-1
+X-Mimecast-MFC-AGG-ID: j3Yc66qLOYeFIKBJrXLQUQ_1752534437
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a4fac7fa27so1746326f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:07:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534447; x=1753139247;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=m9bYQ5u6pgRJHAntarcEw+lqU/yhh0ZBAg0JEBQxhXo=;
- b=NJd3CHrqDztZTSkc05UFzNVDvCCTU+ses3yXijGVrhnIEZxhIeAsgGr1GMOVoujujQ
- DjyqVj063kzrbKDMetjj3SkhDzB9ZzxZppeEJ6n0bellcK5FuilXvt04gXlDEPcIvAC0
- 3KpKquA22T2N8cU3Y2XFRUczEmnERrBL3THWPG0E6TFuh9MkdI+7FhYo6g4hiPkmRsAV
- LvvnYBUosPyZ60kjmqmXbW7eRGGls//CtL62ha3FaiBOtoBFZtPx5mXYgvNlnqvCuGRB
- rk1eccY0mZ5/5xqDsIw/Ta9u05krpeaTnqSeF1fHBO3CFTHYdZcqjhHD5qypj52LGKCh
- 8LrA==
-X-Gm-Message-State: AOJu0Yxmob2clV2JLD7y07LRbet8bG+5pG8WZzUBkMxhBXSCcVa0W7Ov
- dhaUIyRBQzdD2y7PpQX1hF9o3ItAEWTumcWDmcl5tnJx25ypeqyEsYpCTsyqG20qoTz/nIQAdM5
- q/EQnxqOSMiSNFyTqCmm+++zX+ak7y+zDhSeDppAEY/bAf5VMtF1Zq7K0pL+CgbfNoxvqyegKWZ
- mJZNwUcXmqy8tyf6oq0kgeYUC1i+ZZMtT+6A==
-X-Gm-Gg: ASbGncvHr1xg/7pJGr8o4XGco+Xk3YGKTl2QZjptON7e56bbokz0Ptp1YXwjgJ9JM6L
- cgwLirQLWbdo8QcPm7PHvXpqvUMf3luiZr0eOkgqiqy0+W1iR3e9li6ntss+gtLOR+kju3NHwQ7
- WNXGEOfXJKKf9HI42fDsMCjZid83Hl3Wluj5g7xOSykR82YeKd8dHyO5yw8HR4YyQzmp9bjVFCR
- 7pMOURPgX6GPklOMuPKaKmpY3dqAYqcMa/qKd6Wal1aGyoKzE9NbnPJu6sT+tgCbiQk52yGHdue
- dlp0SxEwtyRHYbFM6dNZsgdtrR+qsol6
-X-Received: by 2002:a05:600c:46c5:b0:442:f4a3:b5f2 with SMTP id
- 5b1f17b1804b1-4555f895bb0mr129278545e9.6.1752534446650; 
- Mon, 14 Jul 2025 16:07:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEl/PhahyPwKcaZ9Lf3VUbFnCA7UevHuv+u45o4ZgPQ45GdGCRRRpU0cp498vZ+Au0xGwD20A==
-X-Received: by 2002:a05:600c:46c5:b0:442:f4a3:b5f2 with SMTP id
- 5b1f17b1804b1-4555f895bb0mr129278355e9.6.1752534446185; 
- Mon, 14 Jul 2025 16:07:26 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752534437; x=1753139237;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4I4y8d1dQyBgPX2DNvcPSwOHDWsxQQcjuy3NVZekjJE=;
+ b=pPberbd3CsBnBK48lc2l4w274yEuIRDORaeqTvDjd/42eIlDnx6tlr9OboGriW/ZvN
+ Z+EEN1oxlOH8le9qm5hBSzuSHFhqm3XnIrioOZWvpsTmKuSu2DtMQJgtgFJmiYciAyDg
+ WAZkGVxjvGNUMXQlYzLyewWJ4A9ADZFDn+YyvdL0BEg0eDK5RdegOtZvIIRJqdXK2G3k
+ cwKlFyyWPHYszSTCN7KP4+iM6ya6T/xAeMwnfiY8sN8N45iWUhHqnuwX3J4uBhsU5fES
+ UgqYGCTOJj/bnofBQwNYLVzClw7gMPHPZFjq45Q6+0ZBP+SJXqnsLx1myy3IglerKmdt
+ tfJA==
+X-Gm-Message-State: AOJu0YyizYzLriBnIOFvtMPgcv/pczeS6H13nViSDj8acPAC210KIlD2
+ ogq62EMhO0CXgkUh+9rlDUErqhd6hcSxJh4nCQ3QIbvGhSEDNC9zhX7WV3qznuUOWFQb3WffLIO
+ ZJmNxg1EnWeJZ0H8k6/O4hRSxDXgzilbjYhC9SLiGoiZuAHySXv70ZVVSP8bDVx7k9oQjzne358
+ dolLBATIzk1IZThR3IojLor1sgesN88QUtpA==
+X-Gm-Gg: ASbGnctV5DKI8tAo17yh0TrlspQO2mfSUdIaHsEEcc/1Plt2xthRbQXMq28xEPdF45a
+ 2HckjFXzNyBhlmDQ9PnROWNlYDom/amXuoDslsQHFr2lRe1xSuTSa2PZuYzFD7XQiXSIRz7Zgey
+ LiUdX9LE+Bru1GSc0qlIf/nA8LgrNWP5CRjZYFw2g8FP/yVe5W+yWcCytpnhPh6DQEcWVkyx/Co
+ y0hDnBEX/KXVa11L2OPT2caf6BiofN08x8Dg1BduFp1FFKrjBr+J13P4rKMcHjizEaI2JPT3ogR
+ BBn++K9VvhllGwAlpTYi0ju8k2VI2/s3
+X-Received: by 2002:a05:6000:2913:b0:3a4:f744:e00c with SMTP id
+ ffacd0b85a97d-3b5f2dfd84cmr10701493f8f.29.1752534436789; 
+ Mon, 14 Jul 2025 16:07:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHcRXJuoYvrhIKEld4juKp2oTrJXNbCSreIBXLecet80NJ2Dw0qFx/qmojN2NM6Je5MypYWpQ==
+X-Received: by 2002:a05:6000:2913:b0:3a4:f744:e00c with SMTP id
+ ffacd0b85a97d-3b5f2dfd84cmr10701473f8f.29.1752534436331; 
+ Mon, 14 Jul 2025 16:07:16 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-455f222e4f4sm104491225e9.10.2025.07.14.16.07.25
+ ffacd0b85a97d-3b5e8e26c8bsm13388117f8f.88.2025.07.14.16.07.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:07:25 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:07:24 -0400
+ Mon, 14 Jul 2025 16:07:15 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:07:13 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org
-Subject: [PULL 28/97] rust: bindings: allow any number of params
-Message-ID: <04130b3dc5af620213a90d300933517b39f43bba.1752534227.git.mst@redhat.com>
+ Ethan Milon <ethan.milon@eviden.com>, qemu-stable@nongnu.org,
+ Vasant Hegde <vasant.hegde@amd.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 24/97] amd_iommu: Fix truncation of oldval in amdvi_writeq
+Message-ID: <5788929e05e18ed5f76dc8ade4210f022c9ba5a1.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1752534227.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -110,63 +113,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We are going to be adding more parameters, and this makes
-rust unhappy:
-    Functions with lots of parameters are considered bad style and reduce
-    readability (“what does the 5th parameter mean?”). Consider grouping
-    some parameters into a new type.
+From: Ethan Milon <ethan.milon@eviden.com>
 
-Specifically:
+The variable `oldval` was incorrectly declared as a 32-bit `uint32_t`.
+This could lead to truncation and incorrect behavior where the upper
+read-only 32 bits are significant.
 
-error: this function has too many arguments (8/7)
-    --> /builds/mstredhat/qemu/build/rust/qemu-api/rust-qemu-api-tests.p/structured/bindings.inc.rs:3840:5
-     |
-3840 | /     pub fn new_bitfield_1(
-3841 | |         secure: std::os::raw::c_uint,
-3842 | |         space: std::os::raw::c_uint,
-3843 | |         user: std::os::raw::c_uint,
-...    |
-3848 | |         address_type: std::os::raw::c_uint,
-3849 | |     ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
-     | |____________________________________________^
-     |
-     = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#too_many_arguments
-     = note: `-D clippy::too-many-arguments` implied by `-D warnings`
-     = help: to override `-D warnings` add `#[allow(clippy::too_many_arguments)]`
+Fix the type of `oldval` to match the return type of `ldq_le_p()`.
 
-I didn't want to disable this globally, so I just shut it off for this
-file.
-
-Message-Id: <a4c65fb2b735740bda2874c86de31d29a5ae24d2.1752530758.git.mst@redhat.com>
+Cc: qemu-stable@nongnu.org
+Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
+Signed-off-by: Ethan Milon <ethan.milon@eviden.com>
+Message-Id: <20250617150427.20585-9-alejandro.j.jimenez@oracle.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- rust/qemu-api/src/bindings.rs | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ hw/i386/amd_iommu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.rs
-index 057de4b646..b4692f9b4b 100644
---- a/rust/qemu-api/src/bindings.rs
-+++ b/rust/qemu-api/src/bindings.rs
-@@ -18,11 +18,15 @@
- 
- //! `bindgen`-generated declarations.
- 
--#[cfg(MESON)]
--include!("bindings.inc.rs");
-+#[allow(clippy::too_many_arguments)]
-+mod gen {
-+    #[cfg(MESON)]
-+    include!("bindings.inc.rs");
- 
--#[cfg(not(MESON))]
--include!(concat!(env!("OUT_DIR"), "/bindings.inc.rs"));
-+    #[cfg(not(MESON))]
-+    include!(concat!(env!("OUT_DIR"), "/bindings.inc.rs"));
-+}
-+pub use gen::*;
- 
- // SAFETY: these are implemented in C; the bindings need to assert that the
- // BQL is taken, either directly or via `BqlCell` and `BqlRefCell`.
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 92f94dc788..5a24c17548 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -140,7 +140,7 @@ static void amdvi_writeq(AMDVIState *s, hwaddr addr, uint64_t val)
+ {
+     uint64_t romask = ldq_le_p(&s->romask[addr]);
+     uint64_t w1cmask = ldq_le_p(&s->w1cmask[addr]);
+-    uint32_t oldval = ldq_le_p(&s->mmior[addr]);
++    uint64_t oldval = ldq_le_p(&s->mmior[addr]);
+     stq_le_p(&s->mmior[addr],
+             ((oldval & romask) | (val & ~romask)) & ~(val & w1cmask));
+ }
 -- 
 MST
 
