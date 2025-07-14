@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B994C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 17:08:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26D82C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 17:10:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubMf9-0002bD-Fc; Mon, 14 Jul 2025 13:08:23 -0400
+	id 1ubMfK-0002zw-BL; Mon, 14 Jul 2025 13:08:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ubLZr-00032U-7u
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 11:58:54 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1ubLZw-00036K-Oz
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 11:58:59 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ubLZp-0007nO-37
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 11:58:50 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-74b54cead6cso3054733b3a.1
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 08:58:48 -0700 (PDT)
+ id 1ubLZs-0007nv-NI
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 11:58:56 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-7490702fc7cso2728126b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 08:58:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752508728; x=1753113528; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752508730; x=1753113530; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aPqXxRNnNWAbziuZoBkDR4oxusC2l92qyE2WQUEMyYI=;
- b=fBwP9Y3HFRwdLSRvY4I0S+pLaWNxAijGv5t8yTV0HGQR9tSsyebxTJb/SFCEkrJsws
- rUf0Dbn4XX7GS0gr6SudzdvsJv/oyNH1U5oncurDP6OryxGrf7yuoh02CYTfdL1IOuuK
- Dr5BzrLfxQLx9ZPaJBWqb7g5azcTZxVyWWhq97tgxEYLsW9NtcSlaQ2NCvUM0GkLTirE
- /6a4corpgOQzjputO2YxCJWurkvyTnA0PPTPgJT6Z3D9tVo2D4/Q5BUppQQL7pXkFgqf
- pxpcAijg03/kChxPVi6OdK78V11psd5wzcdxmw3fuSVRIrb7j5zCRkdqpKEB2W/5qb0q
- M0mQ==
+ bh=IkWKrmPvGxfDEFpWqVjHc4jDew6BiM/rgpCdg4haG3g=;
+ b=hQmNG5+h6hcMxfB7nPhkK6WlT/4pHPVHWh+IK4uNLIqvcAnEPUQJieS349fbN0EjlY
+ p87UaEnA3IOq/BS1eYWn5IjbtEOdPO6pgoHsf7bidD7OVRQlCIuzDLvhboVjfA4WauD9
+ 6qmgmDFyYDDIwuz9nYxrREvc3lZnsDGZoCOPL3otZh6tzB7R8Dgc9lCN+7C7mSWZbdPd
+ iyhBWQOpXNc2RVCA9FPkLzAt7LZ89AFpPrjQzEfcV5OcKR/PdpWC37bDaNBqcRomYZXh
+ 4OIK+N6ZfWVPa3eFMPDfjnVhVEga0z3f1ihYUV0YOzuJ2hMAOq3Sv7hu3sORLsgH+Cbe
+ wF0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752508728; x=1753113528;
+ d=1e100.net; s=20230601; t=1752508730; x=1753113530;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aPqXxRNnNWAbziuZoBkDR4oxusC2l92qyE2WQUEMyYI=;
- b=jCaVxgL/zJ8ATcYwD229L5bBoP0uPb5yQFvW+6j9dctpDhEDUv+tADuxuQkEp5dtqp
- Yd7A8LbPtqdHg92u+W7wuHjliRZTBzaM1Dr2jiHtLcRrWUa4G5WqdDJMq7txJfv5xsEY
- cQ2uJF4oo5eAqe4YKix+Ju5xxryytqPpprWBEJZy+S93HghfRCx/Skb0ZMPfSor9u+D0
- J5MgZL1d0yQ3GN7xM3x7iT5eoyN0E04aQDFhv6a4pv6mV1WccnhhcxrWuRUIn2AqaSiD
- hRpvOcPYbGrCY26xBQOVoEHi7sQ/Uj5J7anP0Fc8m4yJapzD6v2UJMqCtjGalloUUyqR
- 06XQ==
-X-Gm-Message-State: AOJu0YwzRz7SoezdRmRAAaCMnFn40opq0b4iGqYDwBfPYZOQL2QJdKtu
- CCwVvNletDpqp/JMfsTpOCP0I1Z5FvWL0dlrilm/bc1SOP/uutcr2VPD7XG5MI/4WE7IOrAivYf
- c1qIgJu4=
-X-Gm-Gg: ASbGnctt9+z5X6ylJcGBVXPov8M7QPlfTAKV2na0RfrRgtsueY02Z4u4Hh+XWWPc8Dy
- Kvgag4Ljdrfe3nDzylczX8Og1FDYJal5U8mLZKQTMD0Km08D5UTkib6yTYP0ImDJQNAQjGfBXCG
- tKOD9DEiNhv3MI5dr2WYXjSBXcI0yNuunMST+8IDHgEXFCl+HimOYRZLidrsGE55kwm8ez2RryX
- sgS5SWhyqF0DZgaAnoRMrQ46vUvo4DFtYWyVEbS6TNBJDScKivYz3XoU5T9bQcrcrtTdbhnptlK
- KnqPI63P17HTXZ5zcZWSix6fxLwVhPDGUoaJvH2T8ShtGCrddTqBUC9MvxKbIpyha8WY+7lJ46r
- MiqUcSek0oet9vxyFqzkaKprB3Pr91HoWdn1yrL3pV5Vk4u9VC3Sc
-X-Google-Smtp-Source: AGHT+IH35RFtL6/01kctCj62hqhId9u1Sp0NYbDXnVKIzr52Z/vm7gbCRVBDrvt9IHoDuuhqnV7/bA==
-X-Received: by 2002:a05:6a00:2395:b0:742:8d52:62f1 with SMTP id
- d2e1a72fcca58-74ee109a1admr21673010b3a.8.1752508727436; 
- Mon, 14 Jul 2025 08:58:47 -0700 (PDT)
+ bh=IkWKrmPvGxfDEFpWqVjHc4jDew6BiM/rgpCdg4haG3g=;
+ b=fik4p+xWWRzya5ui8sa0QqQFTWWUOr+JDFCl5W1UwZWdDhFc0fCGqnNOAonXDKc4Uj
+ CBs5e4VZPBjDRxR4zxY7khr+k+5XZMCz7KxXpnNhT9fdrVsNpRy85XFLU1qAKuGl8Ztx
+ TeCftd9LnyoxtySvwsPmiaDPi/NrBwa964K3V7JJDTmDIZfypSioyQzPam3YJBebOOh9
+ G4P+dkbj+Ls/QYx5GU0UTZO1G5Vf4yB9mhH0Yrc47ndZrG7fNjLOYIo0g5Dd2N+FwIkd
+ Z2p5GBKC5aq42YgZPC7X+LrXSbZjqvtwgSIRKlfpT3tq8XyXUWuJ1FPRVryNe6OdDPKl
+ yFpQ==
+X-Gm-Message-State: AOJu0YyustHO6EKwtD9bJttXNk30b1mxNJn6Ix5MGc0zq5odHIzfdt+M
+ CfwlxIVPGiwLmGbJ4R3pIrSb7RcAZgtMWHJ/hxWU95zJUSv+WpRHFU8cheJYTjkX5fIs8mMc8uO
+ juplHDQ0=
+X-Gm-Gg: ASbGncsHCCibzXxj51L873akLgb6pQSX/+nmyX4bv15wfDLxSBgpwXdTLADUrPAXyQU
+ xd3bp0NnF9OqYAbkuyFDj17HPAZlztRcp4O9gEMdf+jpsTTB08J3wlWGs73I14KlfCLSNwg9PdM
+ 9ID5d0nQqUOGemZAz75cPZH9rgJGC5ciZu1pE5QO53I8aQGQkz536IyOvwZ+OHGOQsDdj66j4A/
+ +P3FLBKZL2sa9CXW5420fSYOpV9KiSsl6byKHP/bULB7xDWSyfttGW+z4pg0zJ1t9HuselI45ok
+ CrxctbGFyGLdKZe9QUMZVkFC7fxnQqY9kxyyYNa6RMucIcK0FGVkU/zojGftLGnUiqsoRlObvoY
+ nJQ6T1cfe4KCrWx+H2nieIBhmGSi+5a1ADOj2BdMjMDhG3vsuJlU7
+X-Google-Smtp-Source: AGHT+IHfmBQlKD4ALYecIjfAcPpmaBP9JhC0yN54QvKl6q3SkuX8unuLX17/AxwPnc/WGamMjplJJg==
+X-Received: by 2002:a05:6a00:b42:b0:73d:fefb:325 with SMTP id
+ d2e1a72fcca58-74f1beebda4mr15825909b3a.5.1752508730066; 
+ Mon, 14 Jul 2025 08:58:50 -0700 (PDT)
 Received: from stoup.. ([172.56.179.167]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74eb9f8f24dsm10265805b3a.156.2025.07.14.08.58.45
+ d2e1a72fcca58-74eb9f8f24dsm10265805b3a.156.2025.07.14.08.58.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 08:58:47 -0700 (PDT)
+ Mon, 14 Jul 2025 08:58:49 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, gustavo.romero@linaro.org, pierrick.bouvier@linaro.org
-Subject: [PATCH v8 2/4] target/arm: Implement FEAT_TCR2 and enable with -cpu
- max
-Date: Mon, 14 Jul 2025 09:58:33 -0600
-Message-ID: <20250714155836.1514748-3-richard.henderson@linaro.org>
+Subject: [PATCH v8 3/4] target/arm: Implement FEAT_MEC registers
+Date: Mon, 14 Jul 2025 09:58:34 -0600
+Message-ID: <20250714155836.1514748-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250714155836.1514748-1-richard.henderson@linaro.org>
 References: <20250714155836.1514748-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -102,243 +101,235 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Gustavo Romero <gustavo.romero@linaro.org>
 
-Add FEAT_TCR2, which introduces the TCR2_EL1 and TCR2_EL2 registers.
-These registers are extensions of the TCR_ELx registers and provide
-top-level control of the EL10 and EL20 translation regimes.
+Add all FEAT_MEC registers.  Enable access to the registers via the
+SCTLR2 and TCR2 control bits.  Add the two new cache management
+instructions, which are nops in QEMU because we do not model caches.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Message-ID: <20250711140828.1714666-5-gustavo.romero@linaro.org>
+Message-ID: <20250711140828.1714666-3-gustavo.romero@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-[rth: Remove FEAT_MEC code; handle SCR and HCRX enable bits.]
+[rth: Squash 3 patches to add all registers at once.]
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu-features.h     |  5 +++
- target/arm/cpu.h              |  2 ++
- target/arm/internals.h        | 19 ++++++++++
- target/arm/cpu.c              |  3 ++
- target/arm/helper.c           | 68 +++++++++++++++++++++++++++++++++++
- target/arm/tcg/cpu64.c        |  1 +
- docs/system/arm/emulation.rst |  1 +
- 7 files changed, 99 insertions(+)
+ target/arm/cpu-features.h |   5 ++
+ target/arm/cpu.h          |  10 ++++
+ target/arm/internals.h    |   3 ++
+ target/arm/cpu.c          |   3 ++
+ target/arm/helper.c       | 103 ++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 124 insertions(+)
 
 diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index e372543bf3..8ec8c3feb3 100644
+index 8ec8c3feb3..9579d93cec 100644
 --- a/target/arm/cpu-features.h
 +++ b/target/arm/cpu-features.h
-@@ -904,6 +904,11 @@ static inline bool isar_feature_aa64_nv2(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64MMFR2, NV) >= 2;
+@@ -914,6 +914,11 @@ static inline bool isar_feature_aa64_sctlr2(const ARMISARegisters *id)
+     return FIELD_EX64_IDREG(id, ID_AA64MMFR3, SCTLRX) != 0;
  }
  
-+static inline bool isar_feature_aa64_tcr2(const ARMISARegisters *id)
++static inline bool isar_feature_aa64_mec(const ARMISARegisters *id)
 +{
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR3, TCRX) != 0;
++    return FIELD_EX64_IDREG(id, ID_AA64MMFR3, MEC) != 0;
 +}
 +
- static inline bool isar_feature_aa64_sctlr2(const ARMISARegisters *id)
+ static inline bool isar_feature_aa64_pmuv3p1(const ARMISARegisters *id)
  {
-     return FIELD_EX64_IDREG(id, ID_AA64MMFR3, SCTLRX) != 0;
+     return FIELD_EX64_IDREG(id, ID_AA64DFR0, PMUVER) >= 4 &&
 diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index dda5f275fb..0e247f50c7 100644
+index 0e247f50c7..5156120b50 100644
 --- a/target/arm/cpu.h
 +++ b/target/arm/cpu.h
-@@ -366,6 +366,7 @@ typedef struct CPUArchState {
-         uint64_t vsttbr_el2; /* Secure Virtualization Translation Table. */
-         /* MMU translation table base control. */
-         uint64_t tcr_el[4];
-+        uint64_t tcr2_el[3];
-         uint64_t vtcr_el2; /* Virtualization Translation Control.  */
-         uint64_t vstcr_el2; /* Secure Virtualization Translation Control. */
-         uint32_t c2_data; /* MPU data cacheable bits.  */
-@@ -1726,6 +1727,7 @@ static inline void xpsr_write(CPUARMState *env, uint32_t val, uint32_t mask)
- #define SCR_HXEN              (1ULL << 38)
- #define SCR_TRNDR             (1ULL << 40)
- #define SCR_ENTP2             (1ULL << 41)
-+#define SCR_TCR2EN            (1ULL << 43)
+@@ -578,6 +578,15 @@ typedef struct CPUArchState {
+ 
+         /* NV2 register */
+         uint64_t vncr_el2;
++
++        /* MEC registers */
++        uint64_t mecid_p0_el2;
++        uint64_t mecid_a0_el2;
++        uint64_t mecid_p1_el2;
++        uint64_t mecid_a1_el2;
++        uint64_t mecid_rl_a_el3;
++        uint64_t vmecid_p_el2;
++        uint64_t vmecid_a_el2;
+     } cp15;
+ 
+     struct {
+@@ -1730,6 +1739,7 @@ static inline void xpsr_write(CPUARMState *env, uint32_t val, uint32_t mask)
+ #define SCR_TCR2EN            (1ULL << 43)
  #define SCR_SCTLR2EN          (1ULL << 44)
  #define SCR_GPF               (1ULL << 48)
++#define SCR_MECEN             (1ULL << 49)
  #define SCR_NSE               (1ULL << 62)
+ 
+ /* Return the current FPSCR value.  */
 diff --git a/target/arm/internals.h b/target/arm/internals.h
-index fcaad39371..b4cd03df69 100644
+index b4cd03df69..6c1112e641 100644
 --- a/target/arm/internals.h
 +++ b/target/arm/internals.h
-@@ -201,6 +201,24 @@ FIELD(CPTR_EL3, TCPAC, 31, 1)
- #define TTBCR_SH1    (1U << 28)
- #define TTBCR_EAE    (1U << 31)
+@@ -2007,4 +2007,7 @@ void vfp_clear_float_status_exc_flags(CPUARMState *env);
+ void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask);
+ bool arm_pan_enabled(CPUARMState *env);
  
-+#define TCR2_PNCH    (1ULL << 0)
-+#define TCR2_PIE     (1ULL << 1)
-+#define TCR2_E0POE   (1ULL << 2)
-+#define TCR2_POE     (1ULL << 3)
-+#define TCR2_AIE     (1ULL << 4)
-+#define TCR2_D128    (1ULL << 5)
-+#define TCR2_PTTWI   (1ULL << 10)
-+#define TCR2_HAFT    (1ULL << 11)
-+#define TCR2_AMEC0   (1ULL << 12)
-+#define TCR2_AMEC1   (1ULL << 13)
-+#define TCR2_DISCH0  (1ULL << 14)
-+#define TCR2_DISCH1  (1ULL << 15)
-+#define TCR2_A2      (1ULL << 16)
-+#define TCR2_FNG0    (1ULL << 17)
-+#define TCR2_FNG1    (1ULL << 18)
-+#define TCR2_FNGNA0  (1ULL << 20)
-+#define TCR2_FNGNA1  (1ULL << 21)
++/* Used in FEAT_MEC to set the MECIDWidthm1 field in the MECIDR_EL2 register. */
++#define MECID_WIDTH 16
 +
- FIELD(VTCR, T0SZ, 0, 6)
- FIELD(VTCR, SL0, 6, 2)
- FIELD(VTCR, IRGN0, 8, 2)
-@@ -232,6 +250,7 @@ FIELD(VTCR, SL2, 33, 1)
- #define HCRX_CMOW     (1ULL << 9)
- #define HCRX_MCE2     (1ULL << 10)
- #define HCRX_MSCEN    (1ULL << 11)
-+#define HCRX_TCR2EN   (1ULL << 14)
- #define HCRX_SCTLR2EN (1ULL << 15)
- 
- #define HPFAR_NS      (1ULL << 63)
+ #endif
 diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 2ee895fbc4..e709ca74da 100644
+index e709ca74da..34638ea100 100644
 --- a/target/arm/cpu.c
 +++ b/target/arm/cpu.c
-@@ -645,6 +645,9 @@ void arm_emulate_firmware_reset(CPUState *cpustate, int target_el)
-             if (cpu_isar_feature(aa64_fgt, cpu)) {
-                 env->cp15.scr_el3 |= SCR_FGTEN;
-             }
-+            if (cpu_isar_feature(aa64_tcr2, cpu)) {
-+               env->cp15.scr_el3 |= SCR_TCR2EN;
-+            }
+@@ -651,6 +651,9 @@ void arm_emulate_firmware_reset(CPUState *cpustate, int target_el)
              if (cpu_isar_feature(aa64_sctlr2, cpu)) {
                  env->cp15.scr_el3 |= SCR_SCTLR2EN;
              }
++            if (cpu_isar_feature(aa64_mec, cpu)) {
++                env->cp15.scr_el3 |= SCR_MECEN;
++            }
+         }
+ 
+         if (target_el == 2) {
 diff --git a/target/arm/helper.c b/target/arm/helper.c
-index d0cfef1dd6..1e0e747146 100644
+index 1e0e747146..dd7beba079 100644
 --- a/target/arm/helper.c
 +++ b/target/arm/helper.c
-@@ -741,6 +741,9 @@ static void scr_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
-         if (cpu_isar_feature(aa64_ecv, cpu)) {
-             valid_mask |= SCR_ECVEN;
-         }
-+        if (cpu_isar_feature(aa64_tcr2, cpu)) {
-+            valid_mask |= SCR_TCR2EN;
-+        }
-         if (cpu_isar_feature(aa64_sctlr2, cpu)) {
-             valid_mask |= SCR_SCTLR2EN;
-         }
-@@ -3922,6 +3925,9 @@ static void hcrx_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     if (cpu_isar_feature(aa64_xs, cpu)) {
-         valid_mask |= HCRX_FGTNXS | HCRX_FNXS;
-     }
-+    if (cpu_isar_feature(aa64_tcr2, cpu)) {
-+        valid_mask |= HCRX_TCR2EN;
-+    }
-     if (cpu_isar_feature(aa64_sctlr2, cpu)) {
-         valid_mask |= HCRX_SCTLR2EN;
-     }
-@@ -4524,6 +4530,8 @@ static void define_arm_vh_e2h_redirects_aliases(ARMCPU *cpu)
-           "TTBR1_EL1", "TTBR1_EL2", "TTBR1_EL12" },
-         { K(3, 0,  2, 0, 2), K(3, 4,  2, 0, 2), K(3, 5, 2, 0, 2),
-           "TCR_EL1", "TCR_EL2", "TCR_EL12" },
-+        { K(3, 0,  2, 0, 3), K(3, 4,  2, 0, 3), K(3, 5, 2, 0, 3),
-+          "TCR2_EL1", "TCR2_EL2", "TCR2_EL12", isar_feature_aa64_tcr2 },
-         { K(3, 0,  4, 0, 0), K(3, 4,  4, 0, 0), K(3, 5, 4, 0, 0),
-           "SPSR_EL1", "SPSR_EL2", "SPSR_EL12" },
-         { K(3, 0,  4, 0, 1), K(3, 4,  4, 0, 1), K(3, 5, 4, 0, 1),
-@@ -6068,6 +6076,62 @@ static const ARMCPRegInfo sctlr2_reginfo[] = {
-       .fieldoffset = offsetof(CPUARMState, cp15.sctlr2_el[3]) },
+@@ -5207,6 +5207,93 @@ static const ARMCPRegInfo nmi_reginfo[] = {
+       .resetfn = arm_cp_reset_ignore },
  };
  
-+static CPAccessResult tcr2_el2_access(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                      bool isread)
++static CPAccessResult mecid_access(CPUARMState *env,
++                                   const ARMCPRegInfo *ri, bool isread)
 +{
-+    if (arm_current_el(env) < 3
-+        && arm_feature(env, ARM_FEATURE_EL3)
-+        && !(env->cp15.scr_el3 & SCR_TCR2EN)) {
-+        return CP_ACCESS_TRAP_EL3;
++    int el = arm_current_el(env);
++
++    if (el == 2) {
++        if (arm_security_space(env) != ARMSS_Realm) {
++	    return CP_ACCESS_UNDEFINED;
++	}
++
++        if (!(env->cp15.scr_el3 & SCR_MECEN)) {
++            return CP_ACCESS_TRAP_EL3;
++        }
 +    }
++
 +    return CP_ACCESS_OK;
 +}
 +
-+static CPAccessResult tcr2_el1_access(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                      bool isread)
++static void mecid_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                        uint64_t value)
 +{
-+    CPAccessResult ret = access_tvm_trvm(env, ri, isread);
-+    if (ret != CP_ACCESS_OK) {
-+        return ret;
-+    }
-+    if (arm_current_el(env) < 2 && !(arm_hcrx_el2_eff(env) & HCRX_TCR2EN)) {
-+        return CP_ACCESS_TRAP_EL2;
-+    }
-+    return tcr2_el2_access(env, ri, isread);
-+}
-+
-+static void tcr2_el1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                           uint64_t value)
-+{
-+    uint64_t valid_mask = 0;
-+
-+    value &= valid_mask;
++    value = extract64(value, 0, MECID_WIDTH);
 +    raw_write(env, ri, value);
 +}
 +
-+static void tcr2_el2_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                           uint64_t value)
++static CPAccessResult cipae_access(CPUARMState *env, const ARMCPRegInfo *ri,
++                                   bool isread)
 +{
-+    uint64_t valid_mask = 0;
-+
-+    value &= valid_mask;
-+    raw_write(env, ri, value);
++    switch (arm_security_space(env)) {
++    case ARMSS_Root:  /* EL3 */
++    case ARMSS_Realm: /* Realm EL2 */
++        return CP_ACCESS_OK;
++    default:
++        return CP_ACCESS_UNDEFINED;
++    }
 +}
 +
-+static const ARMCPRegInfo tcr2_reginfo[] = {
-+    { .name = "TCR2_EL1", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 3, .opc1 = 0, .opc2 = 3, .crn = 2, .crm = 0,
-+      .access = PL1_RW, .accessfn = tcr2_el1_access,
-+      .writefn = tcr2_el1_write, .fgt = FGT_TCR_EL1,
-+      .nv2_redirect_offset = 0x270 | NV2_REDIR_NV1,
-+      .fieldoffset = offsetof(CPUARMState, cp15.tcr2_el[1]) },
-+    { .name = "TCR2_EL2", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 3, .opc1 = 4, .opc2 = 3, .crn = 2, .crm = 0,
-+      .access = PL2_RW, .accessfn = tcr2_el2_access,
-+      .writefn = tcr2_el2_write,
-+      .fieldoffset = offsetof(CPUARMState, cp15.tcr2_el[2]) },
++static const ARMCPRegInfo mec_reginfo[] = {
++    { .name = "MECIDR_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .opc2 = 7, .crn = 10, .crm = 8,
++      .access = PL2_R, .type = ARM_CP_CONST, .resetvalue = MECID_WIDTH - 1 },
++    { .name = "MECID_P0_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .opc2 = 0, .crn = 10, .crm = 8,
++      .access = PL2_RW, .accessfn = mecid_access,
++      .writefn = mecid_write,
++      .fieldoffset = offsetof(CPUARMState, cp15.mecid_p0_el2) },
++    { .name = "MECID_A0_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .opc2 = 1, .crn = 10, .crm = 8,
++      .access = PL2_RW, .accessfn = mecid_access,
++      .writefn = mecid_write,
++      .fieldoffset = offsetof(CPUARMState, cp15.mecid_a0_el2) },
++    { .name = "MECID_P1_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .opc2 = 2, .crn = 10, .crm = 8,
++      .access = PL2_RW, .accessfn = mecid_access,
++      .writefn = mecid_write,
++      .fieldoffset = offsetof(CPUARMState, cp15.mecid_p1_el2) },
++    { .name = "MECID_A1_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .opc2 = 3, .crn = 10, .crm = 8,
++      .access = PL2_RW, .accessfn = mecid_access,
++      .writefn = mecid_write,
++      .fieldoffset = offsetof(CPUARMState, cp15.mecid_a1_el2) },
++    { .name = "MECID_RL_A_EL3", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 6, .opc2 = 1, .crn = 10, .crm = 10,
++      .access = PL3_RW, .accessfn = mecid_access,
++      .writefn = mecid_write,
++      .fieldoffset = offsetof(CPUARMState, cp15.mecid_rl_a_el3) },
++    { .name = "VMECID_P_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .opc2 = 0, .crn = 10, .crm = 9,
++      .access = PL2_RW, .accessfn = mecid_access,
++      .writefn = mecid_write,
++      .fieldoffset = offsetof(CPUARMState, cp15.vmecid_p_el2) },
++    { .name = "VMECID_A_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .opc2 = 1, .crn = 10, .crm = 9,
++      .access = PL2_RW, .accessfn = mecid_access,
++      .writefn = mecid_write,
++      .fieldoffset = offsetof(CPUARMState, cp15.vmecid_a_el2) },
++    { .name = "DC_CIPAE", .state = ARM_CP_STATE_AA64,
++      .opc0 = 1, .opc1 = 4, .crn = 7, .crm = 14, .opc2 = 0,
++      .access = PL2_W, .accessfn = cipae_access, .type = ARM_CP_NOP },
 +};
 +
- void register_cp_regs_for_features(ARMCPU *cpu)
++static const ARMCPRegInfo mec_mte_reginfo[] = {
++    { .name = "DC_CIGDPAE", .state = ARM_CP_STATE_AA64,
++      .opc0 = 1, .opc1 = 4, .crn = 7, .crm = 14, .opc2 = 7,
++      .access = PL2_W, .accessfn = cipae_access, .type = ARM_CP_NOP },
++};
++
+ #ifndef CONFIG_USER_ONLY
+ /*
+  * We don't know until after realize whether there's a GICv3
+@@ -6045,6 +6132,9 @@ static void sctlr2_el2_write(CPUARMState *env, const ARMCPRegInfo *ri,
  {
-     /* Register all the coprocessor registers based on feature bits */
-@@ -7301,6 +7365,10 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-         define_arm_cp_regs(cpu, sctlr2_reginfo);
+     uint64_t valid_mask = 0;
+ 
++    if (cpu_isar_feature(aa64_mec, env_archcpu(env))) {
++        valid_mask |= SCTLR2_EMEC;
++    }
+     value &= valid_mask;
+     raw_write(env, ri, value);
+ }
+@@ -6054,6 +6144,9 @@ static void sctlr2_el3_write(CPUARMState *env, const ARMCPRegInfo *ri,
+ {
+     uint64_t valid_mask = 0;
+ 
++    if (cpu_isar_feature(aa64_mec, env_archcpu(env))) {
++        valid_mask |= SCTLR2_EMEC;
++    }
+     value &= valid_mask;
+     raw_write(env, ri, value);
+ }
+@@ -6114,6 +6207,9 @@ static void tcr2_el2_write(CPUARMState *env, const ARMCPRegInfo *ri,
+ {
+     uint64_t valid_mask = 0;
+ 
++    if (cpu_isar_feature(aa64_mec, env_archcpu(env))) {
++        valid_mask |= TCR2_AMEC0 | TCR2_AMEC1;
++    }
+     value &= valid_mask;
+     raw_write(env, ri, value);
+ }
+@@ -7369,6 +7465,13 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+         define_arm_cp_regs(cpu, tcr2_reginfo);
      }
  
-+    if (cpu_isar_feature(aa64_tcr2, cpu)) {
-+        define_arm_cp_regs(cpu, tcr2_reginfo);
++    if (cpu_isar_feature(aa64_mec, cpu)) {
++        define_arm_cp_regs(cpu, mec_reginfo);
++        if (cpu_isar_feature(aa64_mte, cpu)) {
++            define_arm_cp_regs(cpu, mec_mte_reginfo);
++        }
 +    }
 +
      if (cpu_isar_feature(any_predinv, cpu)) {
          define_arm_cp_regs(cpu, predinv_reginfo);
      }
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index f4efff03a5..4eb51420ef 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1248,6 +1248,7 @@ void aarch64_max_tcg_initfn(Object *obj)
-     SET_IDREG(isar, ID_AA64MMFR2, t);
- 
-     t = GET_IDREG(isar, ID_AA64MMFR3);
-+    t = FIELD_DP64(t, ID_AA64MMFR3, TCRX, 1);       /* FEAT_TCR2 */
-     t = FIELD_DP64(t, ID_AA64MMFR3, SCTLRX, 1);     /* FEAT_SCTLR2 */
-     t = FIELD_DP64(t, ID_AA64MMFR3, SPEC_FPACC, 1); /* FEAT_FPACC_SPEC */
-     SET_IDREG(isar, ID_AA64MMFR3, t);
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 66043b0747..1c597d8673 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -149,6 +149,7 @@ the following architecture extensions:
- - FEAT_SPECRES (Speculation restriction instructions)
- - FEAT_SSBS (Speculative Store Bypass Safe)
- - FEAT_SSBS2 (MRS and MSR instructions for SSBS version 2)
-+- FEAT_TCR2 (Support for TCR2_ELx)
- - FEAT_TGran16K (Support for 16KB memory translation granule size at stage 1)
- - FEAT_TGran4K (Support for 4KB memory translation granule size at stage 1)
- - FEAT_TGran64K (Support for 64KB memory translation granule size at stage 1)
 -- 
 2.43.0
 
