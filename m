@@ -4,91 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBAACC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:02:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A824CC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:07:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubGuU-0005YZ-5P; Mon, 14 Jul 2025 06:59:50 -0400
+	id 1ubH0d-0001X3-8x; Mon, 14 Jul 2025 07:06:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ubGto-0004ea-Ed
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:59:08 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ubGtl-0000Ob-K8
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:59:08 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-60700a745e5so8661283a12.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 03:59:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752490742; x=1753095542; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DMCmcbuCKLVos6OaO5KzhJUCYu/ekY28SJCk7fUDf60=;
- b=faVGjmGeOjEXwo0nVFV6NtxBdlffXurjqssXZKGraNT7dfIp4IW3rlowVyNRk/XdQu
- IIXuGQqmYB7brmspNM5NonQZtrA54V0tfZ0gPAJ5WKNzSv7k5WDtbVL8elXLAt4TiPHb
- 9G64/2H0FgrRUB86PnpG/zJww1idAd3UNPvdTzP6dAa9YokT6bwFCbwshTs4pfhiv2Vg
- QivEOEPA9Fh3oNRuKeYAJUBxcdo14/nH2//eC706prs0msmSgDzIiv/Ac7HGIsIpbjRo
- 60drAd8fLkr+6jIFQOjC1o2AxsQkRWz/qLNxeHWNYNTKj4dKVhBbB0bEKiLNCHM0Qjwj
- 2Nlw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ubGyx-0000Yl-05
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:04:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ubGys-0001VA-Mp
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:04:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752491060;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=667vf6t5S/DRVJXbv1nK/TLEey3e0SHyQWAEBT4VGFU=;
+ b=Vn1STIslWmF1PlI5/MQbjVlBTwDxUBSwxi/y/tgMNjOIk6sTDX1gT1xCIEAzjbTKD1q2ku
+ Kg7qBCRGsWKgQZhxIsl7//4xt38sMSqCbCX8FnifiBM1koHgwMC9UaWnCePQr/mPr6qKg4
+ Ndw0makRvgbdWz5a7WjJSWIxRwoSHB0=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-60-BsZT-daePcyIhRE6hL-uKA-1; Mon, 14 Jul 2025 07:04:17 -0400
+X-MC-Unique: BsZT-daePcyIhRE6hL-uKA-1
+X-Mimecast-MFC-AGG-ID: BsZT-daePcyIhRE6hL-uKA_1752491057
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4538a2f4212so24419835e9.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:04:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752490742; x=1753095542;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=DMCmcbuCKLVos6OaO5KzhJUCYu/ekY28SJCk7fUDf60=;
- b=W+L6fEaD04a9WtgLZLBQpDzziS8C7WuUaHW3LftdYUXA0Pcmw4HBZx0H/OxpGidA76
- FsPOz2lotIKshNzTCspcp0uqb4HM+yVtGv76Vjm4y8IA9T6IUW/WLKa6YPe/TpvytarA
- kTDIsS7YjNfoEpcU5g0KX4eypMuXMyem4hFXFrNju9hjVaSYbWnJ8ep0vV36GAAZrQ8N
- o+3jGk5gEZ1DX3WNZ2n5oQAjXKzi+bE0Z8BRY64ucmrslQy7gSk/cPPZeQkSw1n6D14S
- 08MnZYviVC6BZp2tq6GONZIO0dRP+2EiPaL9xTzM069q3gwot5v8zAuObi8X5ekKeOlo
- AbKw==
-X-Gm-Message-State: AOJu0Yxa6T7syQRUzLJpKO+YheZHdSVUpBLTSW730smFz/jNJarxp2lv
- fhfuf8z06eEayxi0mIkAeatPiX/uUMyf28luO9ZEws7qlHViXty+fcVVK9saaP0FG78=
-X-Gm-Gg: ASbGncuqDETS/Lr8PbpupIk9EfsRUBmP0F86ptCdwtYnoFBW0VskI2SpdMqIpkNUzZ8
- SGhMk39xdR6mpGB/azqxj4IDzYhtcTwUDohPsqkD3imuL8dI2X216Clo3dUSlvIdqB7mBf2qbJ7
- N/vfrmk/3q0j5PNgyJ4wn1IBHcJagAMyHLRuyn/mpllgAhJGoqH3xG4ZB81jkNVK5zjHWTcKFF5
- HezKV9sQkgRXFBZueexWwUUhGBUXS2arqEQUkR/FeIF+3s2OhzM5ClZMZPDR6Wc9NWdT0mxL2gE
- JOpJz+xpyAeFk1OUFnicEpyLfV6tzN9XI+wjXTAt5S3+mpdnW0A4/RbJg7lVBiYmWIqHT5s3JVK
- Qc+TEn9ubfQr+Xz7StLkA7RI=
-X-Google-Smtp-Source: AGHT+IGSD7ogTkKlOeWFG5xOo0gotygW1eBUKOIzlWNTednm/ypEhvSB7a1vwKhtEpnLE5MDvy8U+g==
-X-Received: by 2002:a17:907:fdca:b0:ae1:1a30:6682 with SMTP id
- a640c23a62f3a-ae6fca47eafmr1532296866b.18.1752490742132; 
- Mon, 14 Jul 2025 03:59:02 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae6e7eead7csm812794166b.62.2025.07.14.03.59.01
+ d=1e100.net; s=20230601; t=1752491056; x=1753095856;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=667vf6t5S/DRVJXbv1nK/TLEey3e0SHyQWAEBT4VGFU=;
+ b=tOIx1iwTO8sqR21wQ7NC4RHm+spJrYrU6VKXMQzHz8Py0nqOLsnSG/9TdOYQZGHfgG
+ yiNveOdZjjT7Z+MZkxPWsNd6U0BtYzbiUMaNtBhu7dsPHK3ejsy5X5Hwp7xHhCcIdEZq
+ y6D/X7DB3Kl/AY6RLzHRIQp9IAfBYefa3lGo+hMdxzCXuXpMZIbu9arO9KwbvKIz0IFc
+ 5gzlARQqyXJOFxr69elg6BTTmLL+VTtXENCdm6t+J3RihhJbySQvlK6WPZvO1NegC3D8
+ /7ZfapB4+JvXUyq1/B06rv9A46xcsWBmTJho/kESnAzvXJEToXEIlYzNq/EAn2LWx7F8
+ Li6Q==
+X-Gm-Message-State: AOJu0YwrmrM4Mf4Fr9NvlPARKK6A87kU1Ye+Y/Ug+vnLB+hV3XIedwD1
+ kUJbhMGiiVEjX81BGh4SKWcJ988mYshF7WxSH0aX64DIaKjKL0kc8eZB2PtDmIgL126S3P5Jccw
+ Be64VswiE9dBoOqUmkX8gC8wicVnB+ccPKrKpZtBbfLfvHOCE7FjXC+hMmPR333YRAkEI3qkbtL
+ tRbONQyt6WhXVpCKPjvjcxJpJhrIKSGE1lhyAl8a/u
+X-Gm-Gg: ASbGncvM0NYEAQvKSu7REa9iXY8OijfpP3LQe3jPigA56bnCfoNRwBo6hYOTJav0kGp
+ b4gPgvp6Cm9MS8KH2In8QYHTOUdyWWdVBU8KhTf3wvedZ0MCkgq3B41ArSSsLxlubPBgbVjlZM/
+ nN4epuj810ChQ1CSRkulSWXFEPeKATrnilCy+uByoF5Nn81U6OF1ZIBOA9Bdftez5G4peC3u03g
+ 40ARQfFFc1HE23qgZUOT7DvViP3fU0Jd8Z9DwNkl9vat6bWPZkCTlghPH2GxL705I4xMb3vG0QU
+ PoXikanJwEcB5kamCBEgwMCESrKmTFFAu5uurZB/CXM=
+X-Received: by 2002:a05:600c:8b84:b0:450:cabd:160 with SMTP id
+ 5b1f17b1804b1-454f42722a5mr124104255e9.3.1752491055897; 
+ Mon, 14 Jul 2025 04:04:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IESGHhWjE5RGHheDZpoOGG9ItJcpJ+IT9iQEwtKaRvBuRBbQHltbJRogO3jLz3kt8zqbTgK/w==
+X-Received: by 2002:a05:600c:8b84:b0:450:cabd:160 with SMTP id
+ 5b1f17b1804b1-454f42722a5mr124103845e9.3.1752491055339; 
+ Mon, 14 Jul 2025 04:04:15 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.73.155])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4561d19a21dsm19827075e9.24.2025.07.14.04.04.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 03:59:01 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 97D235F78F;
- Mon, 14 Jul 2025 11:59:00 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: unisono@quyllur.org
-Cc: qemu-devel@nongnu.org,  atar4qemu@gmail.com,  laurent@vivier.eu,
- mark.cave-ayland@ilande.co.uk,  philmd@linaro.org
-Subject: Re: [PATCH v2 0/3] Reformatted Sparc GDB XML patches.
-In-Reply-To: <20250711155141.62916-1-unisono@quyllur.org>
- (unisono@quyllur.org's message of "Fri, 11 Jul 2025 10:51:38 -0500")
-References: <20250711155141.62916-1-unisono@quyllur.org>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Mon, 14 Jul 2025 11:59:00 +0100
-Message-ID: <87h5zf11jf.fsf@draig.linaro.org>
+ Mon, 14 Jul 2025 04:04:14 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PULL 03/77] rust/bindings: allow unnecessary_transmutes (1.88)
+Date: Mon, 14 Jul 2025 13:02:52 +0200
+Message-ID: <20250714110406.117772-4-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.50.0
+In-Reply-To: <20250714110406.117772-1-pbonzini@redhat.com>
+References: <20250714110406.117772-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,36 +108,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-unisono@quyllur.org writes:
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-> From: Rot127 <unisono@quyllur.org>
->
-> Adds Sparc XML register files from GDB.
-<snip>
->   Adds the GDB register XML files for Sparc32.
->   Assign the GDB register XML files of Sparc64 to Sparc32plus.
+This is a new lint introduced in Rust 1.88. It does not affect
+compilation when using a previous version or our MSRV, 1.77. But with
+1.88 compilation fails because we deny all warnings:
 
-I'm holding of these two until I can get sparc32-linux-user tested. Our
-coverage isn't currently great due to not having cross compilers. For
-sparc32plus specifically is the sparc64 xml going to work given it is
-using a 32 bit ABI.
+  error: unnecessary transmute
+     --> rust/qemu-api/libqemu_api.rlib.p/structured/bindings.inc.rs:729:18
+      |
+  729 |         unsafe { ::std::mem::transmute(self._bitfield_1.get(0usize, 24u8) as u32) }
+      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: replace this with: `u32::cast_signed(self._bitfield_1.get(0usize, 24u8) as u32)`
+      |
+      = note: `-D unnecessary-transmutes` implied by `-D warnings`
+      = help: to override `-D warnings` add `#[allow(unnecessary_transmutes)]`
 
-What testing have you done with these two?
+Allow this lint, which even though it does not exist in previous
+versions, it works because we allow for `unknown_lints` in
+rust/Cargo.toml.
 
->
->  configs/targets/sparc-linux-user.mak       |  1 +
->  configs/targets/sparc-softmmu.mak          |  1 +
->  configs/targets/sparc32plus-linux-user.mak |  1 +
->  configs/targets/sparc64-linux-user.mak     |  1 +
->  configs/targets/sparc64-softmmu.mak        |  1 +
->  gdb-xml/sparc32-core.xml                   | 84 ++++++++++++++++++
->  gdb-xml/sparc64-core.xml                   | 99 ++++++++++++++++++++++
->  target/sparc/cpu.c                         |  2 +
->  8 files changed, 190 insertions(+)
->  create mode 100644 gdb-xml/sparc32-core.xml
->  create mode 100644 gdb-xml/sparc64-core.xml
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Link: https://lore.kernel.org/r/20250703-rust_bindings_allow_unnecessary_transmutes-v1-1-692ca210d331@linaro.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/qemu-api/src/bindings.rs | 1 +
+ 1 file changed, 1 insertion(+)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.rs
+index 057de4b6467..3cdad0f0ec6 100644
+--- a/rust/qemu-api/src/bindings.rs
++++ b/rust/qemu-api/src/bindings.rs
+@@ -6,6 +6,7 @@
+     non_camel_case_types,
+     non_snake_case,
+     non_upper_case_globals,
++    unnecessary_transmutes,
+     unsafe_op_in_unsafe_fn,
+     clippy::pedantic,
+     clippy::restriction,
+-- 
+2.50.0
+
 
