@@ -4,100 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74E62C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 14:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 516D1C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:04:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubKQj-0003v7-ME; Mon, 14 Jul 2025 10:45:22 -0400
+	id 1ubKhY-0007y5-0r; Mon, 14 Jul 2025 11:02:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubIvt-0004ex-Ej
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:09:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubIvq-0005WH-E7
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:09:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752498557;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=d9N0wITcK5nFg/kSgon6hwyI1m1FIJrWlz9I+YSu+kE=;
- b=PXIiL3xHw4kAfdhNhXB/CbXkoPypLlU78sarMsyTNDdTpc0QCTD+/6bQ41i9fdENnjTSRm
- QVg9noOcsqhUtVKem1XhDe7MyT2L9Xa6XhAhu8lNCQIN/jje8Jro6iUZZmyY4UNdYHEPDK
- 6iHEN4MmbgD26uODK+EiMgJ2GnHvnkQ=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-267-uxumEz_iPyO7L4SfG_E39w-1; Mon, 14 Jul 2025 09:09:15 -0400
-X-MC-Unique: uxumEz_iPyO7L4SfG_E39w-1
-X-Mimecast-MFC-AGG-ID: uxumEz_iPyO7L4SfG_E39w_1752498555
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a52bfda108so2163966f8f.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 06:09:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ubJPz-0005eI-Sa
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:40:32 -0400
+Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ubJPt-0002uE-1x
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:40:30 -0400
+Received: by mail-oa1-x35.google.com with SMTP id
+ 586e51a60fabf-2ea6dd628a7so2419937fac.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 06:40:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752500423; x=1753105223; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pOXwTc0IzXLffaiIKWgQKIln/ahq1DKPYM+fwaRdUqE=;
+ b=lfLIgJnMMNTSWUBCCUT9YMFO22qs/47Zmq3FRmxOS7h1wXZB7ie8TeNbxoxHwG2g7P
+ o20sM4ArxrDNR40cRygz8SB6wB4DiE0AVhVNkRw0QTE3XPjVcveZCsnGiEnxyBeJeOxi
+ E5m2Ze9a1oYeAxqacLIp/r40A3l5tW9pSSeNWCyzenuPFS7wM57DRVUUw9m+IFV+UlGX
+ /VEz0/8NLg7AXK9SXTcynqh06GKhYVx1poOQBc49yzz+EvccKqi49SsKB0Yv0N9GSdQf
+ WAEDyhOzXssq970ebuQDaplvzVD1EpfA/UBWg8ElH88u0cWfQ6TbSConqegUB32yBptq
+ yfDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752498554; x=1753103354;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=d9N0wITcK5nFg/kSgon6hwyI1m1FIJrWlz9I+YSu+kE=;
- b=syEtA0JEoMPd8LcPN52dQdz3XVKrQWc3uTvqZDlt+FwH264JeEuh6tqm4zO6fVP8Kr
- z2jRfOaKWVnFtmx+AZquQq4j85a2zhtpUg+7YvLWV3Ll0qRMWwUzva4+v/WCkbe+Ccsl
- RRMznyAVZ/lj5v99q68t++GBYXNeiicyTd3pWePdAjdu940bKmrov9jC2TndJWA2QVJS
- WcUSjwxaPADQPI5P3iOn2W4YOwSku12Ut/suifRXTj8N2dwjmc+46BeQa+bbmWzbu1G4
- KWs3gFTMcD1rvTnwjUgJXjir5nZRY5wJog/ABj5XyG62lTZbkrzK6zUFHF1kbfAWsjJW
- 9nvQ==
+ d=1e100.net; s=20230601; t=1752500423; x=1753105223;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pOXwTc0IzXLffaiIKWgQKIln/ahq1DKPYM+fwaRdUqE=;
+ b=EJSXK3ryaZ29S6l69SFPNCZA7dF6AvPK/nHInEyLG224Qfcy0h3sb31VfD0aIK2OGV
+ B/+fYXvEqQ+6iJ9k2ueUFNpJeNOUHptXd0MpcHdAoSoN5jnbTa01zY2bF1LlyOdtNJdO
+ JwxqJJIyBQPJRrQWzGVWIUwF20Qpts9MQ0EMUOA95MmKfCA6kTPHnd6m9STUPpsQYLyx
+ pVMOi1/GCZ2MwFAllmcept1CKLubkMrJFkCZu17qTBMZzxseQJGusyR4lCtjhZfyAQmZ
+ fh/X1eGHp0tz0riU/PxY7dfW0iWa44uTKpkmrM7gUpl+J3L1nzMI5gSoMicL8Btxqkp/
+ rFOw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXq25ZWHwNJ+2Uct3BdQXAwuPWKoOnw3r7+020JFjWxRKPFU02XlVOs5oQPf2jF35omVPuq1JBCaA0j@nongnu.org
-X-Gm-Message-State: AOJu0Yy2SwPMfXBBoANdrSQuoA0kkJ9gsPny9AAiQimvaaWsgLdAsIxG
- Qe5SsQ32d5ko8WFBZXDPgsGQhGcT8ucgQVQPy5lL6HjbdABUNlxis0nXJNhG0g0K2yq4soFxcVC
- F4KuUmKFgB7YyiRfqcJAHGB4jrfGYAQCSc0M3+9O4BLQtvo7E1xk3dh7N
-X-Gm-Gg: ASbGncv7cR+RHKdBCi32z9SfTuBS9ICLAdIuphFwfsb/FH5Ebpxxra2sXajQfHgSySV
- ZWpLKHv9tH7tLB4byUj4zMc6utReoqhj1db5YoYcaqSo0hBTTz5IaUQIp4jQWzFXsdS663Gvwoh
- 5WR/CpMOXLUjhxqRrptWGwQqEvYCskeehJzOzC+bLozeC4dq0lDzSD2YvkoVQ9ohNh0WWUlqc8F
- iUnfbwC16lS7twXftxp7SqbWcDsjyySz39zgRfuOubdTLiCmyMzpNhjtOSGJ9CdLrGvio2/BUIN
- 1DbM2xWwC1uGYUO0uHEbnZqLrCGuK1+1
-X-Received: by 2002:a05:6000:144b:b0:3b2:ef53:5818 with SMTP id
- ffacd0b85a97d-3b5f351e561mr10086504f8f.5.1752498554359; 
- Mon, 14 Jul 2025 06:09:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHoQD9Ho3k1I73zw5t5mB19KW2sR6IMwILqGPakeR1nAQlcLLjYOj1XSNqX+jCnF2w/W+FRLQ==
-X-Received: by 2002:a05:6000:144b:b0:3b2:ef53:5818 with SMTP id
- ffacd0b85a97d-3b5f351e561mr10086480f8f.5.1752498553876; 
- Mon, 14 Jul 2025 06:09:13 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45624651a09sm1472665e9.12.2025.07.14.06.09.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 06:09:13 -0700 (PDT)
-Date: Mon, 14 Jul 2025 09:09:10 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-Cc: anisinha@redhat.com, imammedo@redhat.com, jonathan.cameron@huawei.com,
- linuxarm@huawei.com, peter.maydell@linaro.org,
- prime.zeng@hisilicon.com, qemu-devel@nongnu.org,
- shameerali.kolothum.thodi@huawei.com, wangyanan55@huawei.com,
- yangyicong@hisilicon.com, maobibo@loongson.cn, gaosong@loongson.cn,
- jiaxun.yang@flygoat.com
-Subject: Re: [PATCH v6 3/4] hw/acpi/aml-build: Build a root node in the PPTT
- table
-Message-ID: <20250714090807-mutt-send-email-mst@kernel.org>
-References: <20250604115233.1234-1-alireza.sanaee@huawei.com>
- <20250604115233.1234-4-alireza.sanaee@huawei.com>
+ AJvYcCWw1ppf62zjVU0jM6yahw4dwYZol8qzhgrbj3OWqXK4ZHoOqBXXp/b/JRikwV/B/0T6h41HarWvOSe7@nongnu.org
+X-Gm-Message-State: AOJu0YxDsAVqN3VRQ3ATbU/W2ajMbaYn+dCTZ4UxD4sqDB5mLV8d7M5r
+ 7Ltv6u+IYrtNrQrpIfd7GipyrF1BSbF9Cnb5ld+B4OzuF90DeoARa21unLn0WOrKHlM=
+X-Gm-Gg: ASbGncufyebWVGLFxP10pokhbFxfH3FWYwiAroRq68aR3q6MRrPg/Kh6viRBa1uWsQy
+ kWgoQX8G1nNkPzVcFpceHQKmzSs1n8pJgwtvm4r6ZHn2o2/YI/q704PusGp7G6Mlxz/65QmEWsT
+ ZOwDDKphpwxxsanjLLemYlAFHkyyr8qqw+a8g3m3CvARHn2IBOSrB5lwqlb64e6RBJWxiALZhx5
+ 4cyBq548WmbisuHON4ZPVGHEBMwaKo84Gqwl4ILg+POetrQXRhRHYW4dzRcYcTEJEYLR8uDbTZX
+ 6QsRy9vMJyXtbLXoeWpvfelwD3+3miAWXkpg1gKR0bgPKUPheUcDLUoNLD/9IKy6mLEOKf0Sonq
+ WTcIiWk4GQ9ITFZE8Rdz6hGgQK4Mfflh15CAUZxhdaM37BOfBX+/zoinlSm319RUFFeqPRBobuy
+ U7eDeLEnHpgbs=
+X-Google-Smtp-Source: AGHT+IGoJAliJRXV5uSJmiyEJLZ3YAfH6RuzJBvB2IlZ5DCL4OyewqBLf0JUKrrvJSN3s6L7VQKooQ==
+X-Received: by 2002:a05:6870:3805:b0:2df:a9d0:1dc9 with SMTP id
+ 586e51a60fabf-2ff269c22eemr8197805fac.37.1752500422703; 
+ Mon, 14 Jul 2025 06:40:22 -0700 (PDT)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-2ff111c4f8asm1902317fac.6.2025.07.14.06.40.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Jul 2025 06:40:22 -0700 (PDT)
+Message-ID: <22834f14-4fb0-4cf1-94a4-0c53ab094765@linaro.org>
+Date: Mon, 14 Jul 2025 07:40:19 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250604115233.1234-4-alireza.sanaee@huawei.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv: do not call GETPC() in
+ check_ret_from_m_mode()
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
+References: <20250714133739.1248296-1-dbarboza@ventanamicro.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250714133739.1248296-1-dbarboza@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::35;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,69 +106,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 04, 2025 at 12:52:32PM +0100, Alireza Sanaee wrote:
-> From: Yicong Yang <yangyicong@hisilicon.com>
+On 7/14/25 07:37, Daniel Henrique Barboza wrote:
+> GETPC() should always be called from the top level helper, e.g. the
+> first helper that is called by the translation code. We stopped doing
+> that in commit 3157a553ec, and then we introduced problems when
+> unwinding the exceptions being thrown by helper_mret(), as reported by
+> [1].
 > 
-> Currently we build the PPTT starting from the socket node and each
-> socket will be a separate tree. For a multi-socket system it'll
-> be hard for the OS to know the whole system is homogeneous or not
-> (actually we're in the current implementation) since no parent node
-> to telling the identical implementation informentation. Add a
-> root node for indicating this.
+> Call GETPC() at the top level helper and pass the value along.
 > 
-> Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+> [1]https://gitlab.com/qemu-project/qemu/-/issues/3020
+> 
+> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
+> Fixes: 3157a553ec ("target/riscv: Add Smrnmi mnret instruction")
+> Closes:https://gitlab.com/qemu-project/qemu/-/issues/3020
+> Signed-off-by: Daniel Henrique Barboza<dbarboza@ventanamicro.com>
 > ---
->  hw/acpi/aml-build.c | 15 ++++++++++++++-
->  1 file changed, 14 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-> index 560cee12a2..76a4157a18 100644
-> --- a/hw/acpi/aml-build.c
-> +++ b/hw/acpi/aml-build.c
-> @@ -2153,12 +2153,25 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
->      int64_t socket_id = -1, cluster_id = -1, core_id = -1;
->      uint32_t socket_offset = 0, cluster_offset = 0, core_offset = 0;
->      uint32_t pptt_start = table_data->len;
-> +    uint32_t root_offset;
->      int n;
->      AcpiTable table = { .sig = "PPTT", .rev = 2,
->                          .oem_id = oem_id, .oem_table_id = oem_table_id };
->  
->      acpi_table_begin(&table, table_data);
->  
-> +    /*
-> +     * Build a root node for all the processor nodes. Otherwise when
-> +     * building a multi-socket system each socket tree is separated
-> +     * and will be hard for the OS like Linux to know whether the
-> +     * system is homogeneous.
-> +     */
-> +    root_offset = table_data->len - pptt_start;
-> +    build_processor_hierarchy_node(table_data,
-> +        (1 << 0) | /* Physical package */
-> +        (1 << 4), /* Identical Implementation */
-> +        0, 0, NULL, 0);
-> +
->      /*
->       * This works with the assumption that cpus[n].props.*_id has been
->       * sorted from top to down levels in mc->possible_cpu_arch_ids().
-> @@ -2175,7 +2188,7 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
->              build_processor_hierarchy_node(table_data,
->                  (1 << 0) | /* Physical package */
->                  (1 << 4), /* Identical Implementation */
-> -                0, socket_id, NULL, 0);
-> +                root_offset, socket_id, NULL, 0);
->          }
->  
->          if (mc->smp_props.clusters_supported && mc->smp_props.has_clusters) {
+>   target/riscv/op_helper.c | 15 +++++++++------
+>   1 file changed, 9 insertions(+), 6 deletions(-)
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-This function is also used by loongarch64, but you do not update the
-loongarch64 expected files:
-https://gitlab.com/mstredhat/qemu/-/jobs/10672661860
-
-> -- 
-> 2.43.0
-
+r~
 
