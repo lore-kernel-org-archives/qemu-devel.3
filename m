@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00CAEC83F21
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:16:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DECE1C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:16:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSIo-0004b9-3x; Mon, 14 Jul 2025 19:09:51 -0400
+	id 1ubSGn-0004U0-NN; Mon, 14 Jul 2025 19:07:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSIB-0002RT-Cy
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:03 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGU-0003cO-JC
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSI9-0005nc-Gx
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:03 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGQ-0005Sr-5y
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534541;
+ s=mimecast20190719; t=1752534429;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=wLsKPagMrSSZ7Gtre3WseVjTbI6weoA/9UfazL/iDaA=;
- b=Ti5jXVrKcHJBL3uDbWfOcAuTHRl2YD32RFQBxB63KUA5+kTCHWGXte0s6aXjh3K9n5SieC
- PffirW7IJcmmOUxZu+W4WS9xjjFXpErv4dOuijRHuoDOrZJpOCCmIeVZ6oqFgFNjnyVvQj
- uxWN5MxsPlbzjpiImrEmP/tQnmZ+kys=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ac5kQC28Wz5sTKphFJUv5ORfXNQ3SuWxyn60B2NigdE=;
+ b=RuymoIwPz9vqwBhuDEWmjr3DUE4oqtS5eT+Hj7M3dLE0LsU2y4J2wzmOcgSvABp1ENP6ZS
+ EaTmDF0oYWSwS6pXg+hWVn9Rr5fZMoQgLAxf8N7J/2IBcE0z4LisMUhnONmn7HgiiAv9MZ
+ oAZiiwm7hurfJX5TF0XNiSlGqsNMXtk=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-52-tNNn0RtFNpitIIh7k1ho0g-1; Mon, 14 Jul 2025 19:08:59 -0400
-X-MC-Unique: tNNn0RtFNpitIIh7k1ho0g-1
-X-Mimecast-MFC-AGG-ID: tNNn0RtFNpitIIh7k1ho0g_1752534538
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a4eee2398bso2323773f8f.1
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:08:59 -0700 (PDT)
+ us-mta-472-eCo8oCsqOJCDagnVij05SQ-1; Mon, 14 Jul 2025 19:07:08 -0400
+X-MC-Unique: eCo8oCsqOJCDagnVij05SQ-1
+X-Mimecast-MFC-AGG-ID: eCo8oCsqOJCDagnVij05SQ_1752534427
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45626e0d3e1so1099985e9.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:07:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534538; x=1753139338;
+ d=1e100.net; s=20230601; t=1752534427; x=1753139227;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wLsKPagMrSSZ7Gtre3WseVjTbI6weoA/9UfazL/iDaA=;
- b=X5FyYnasFMo+cJseTF0aGjd/LBaODfrIPvHD0OP9Z8/aqcVn5gX70j7XckJ/bABu8+
- 1t/c3hu5beXPVO49uGbNUA1z7whbw1YYSrCtOSTDskT3t0mXEgAKDRj0p3itvdpJdunZ
- eCtrU1n6jOrvTbyPsV9cUK3jFcTMlYFU8lUXisst47WRlJx3ZsaOk/i0J6tGxbcJiBDI
- Awonc41yrJmyn+qsuGaKpA3jzPefp8pH3MAqODTTCe5MMUysV1ynHJcwa0tRiPIZRgWI
- +q0SHP5eNOtt/jPHZU/Nptc/ZHf197MR8Mr+gsubSvmpIICJXnBjxHT79hFPGugjLZr8
- L+pw==
-X-Gm-Message-State: AOJu0YwCBHttS2hiBvGl7HFFwGjDw7OidJ2fxngmXXAI76Ty1Ui3lNXR
- AlpQrXe+7WQJgqyI62/k0u9hg3J+//yUdYYyKPVzN2r1uqbf3/g+YawB8vzxCZBkyvHybi/kxPK
- PsS6bmp2newTZJujukskOx+cuHaAPRlUwvFMMYS1qAkTO0hujNL0acNDevXz9y3LFOi37jSGYCS
- 3nZ7xRSaIbPbky/WplqSCNaRi63Lf7+L8c2Q==
-X-Gm-Gg: ASbGncscMCDTm1Z3883Av/pLlWxe/gV5LrXS2gYJgVWfBmRxSsqCwe75Zw5Tn4N6zAu
- k7he3AKzsyJ5eGR3IBgC9tzOWB/Gy+xzaV5exoxV0mM7YQU6OIQAei2egKmi6VXLCwiFiRq7o4l
- ztwfoZMkKyCO5ocZWszXxXtGwO2QxwwGMlNmKC98P9NGhKfuiSLFFXB82TbewI1sOmjJwFHm5/+
- mbbt0m9FwnMMIJvRKcgUswlMtf4MKe9Q2HuZclpoHZ79weZ5Zq/Gdb522vq7XX2Kn2BZD6WU9Hd
- bV/oa97ThY0x39RCV27mFh7M4AWxE499
-X-Received: by 2002:a05:6000:290b:b0:3b3:9c75:acc6 with SMTP id
- ffacd0b85a97d-3b5f359d08dmr10954228f8f.59.1752534538108; 
- Mon, 14 Jul 2025 16:08:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEHKYf9TfWNzQ38nWLMICaaq3N5Ev1KPs2u1gk9NTXmbaUObqSLZdBsF0lwPSGkenEO6y/srg==
-X-Received: by 2002:a05:6000:290b:b0:3b3:9c75:acc6 with SMTP id
- ffacd0b85a97d-3b5f359d08dmr10954205f8f.59.1752534537594; 
- Mon, 14 Jul 2025 16:08:57 -0700 (PDT)
+ bh=ac5kQC28Wz5sTKphFJUv5ORfXNQ3SuWxyn60B2NigdE=;
+ b=O8BnFpF04VcGvCEiEQhgIKq06BxSx1oyPOAfbIKAMnTQrp5rVrvCOxRuKR/Hnw+YEI
+ GjFqWXOkrQUrywnPR4pdURYq8jj0+81PVI0UrQ0ig2qINo0qY9l+zElZo4Uo3bqylm//
+ qwWFZkjhYCnkbav9bKvG0caKQaRAU3SIFn7q75wAHhVqa6zZ/+26mOmdl2zygBtf2xBN
+ tQVZ3Dkp8hMu2x2LJ4V19oPtCfonqYzCUl0Ok2fGZkaZ+J9KK3Eu6HA0JQ3m6J3by3OA
+ vBKiNzdw7plWmVNNcbZJCj14uMrbwQJ4ieeHIk0ap93zWzlX3Ua3+zAHATtSq5WY6ZOk
+ aDjw==
+X-Gm-Message-State: AOJu0YzJIPJZUGSzcGBQfhRc57cFpnkmMPZzWugviIbU++kWmOFXgVBq
+ 70VmKj5UoS/OnLAFqnl62qMbgVQF0BCCPirobLKc2txTYS+zQ30nbkl0tX+Hdht3EHu6Yue740j
+ pT0hd9pOuxGXi6KOW0fYyyF0RTsQ2IBHDf19Vow6G1uyODTjbL5vvyZCGw9m7bNQByE4m97YEA7
+ 5vho2Mols6ztG3x2ymbxmy/asVVq+0pdj9yg==
+X-Gm-Gg: ASbGncs5X44nauBknJHsLLyrLI64OZ+DYJX7LovnE3WdacaAOIQFqQuYajt12xPwWRv
+ ZaQSqCp/MFXDdOPBOS6FWrRau1G8eGWUYHzyXI6ncWaCNutP38kAuMDFXjym2EGVP/zKUmhjXsI
+ 8dfC3Mc10IIl3cMhuVjmapZo/L8lUiL+0Tlin61Ul7ZZofIFLyiYBHXHRupflCXgryvT7jh5ct7
+ 7dPow4ls4r1puZuMYmKxCVDfrqiEqJwJl0ctoFjeWsCOfRVUWz/JLPMq9Uq5H7zEzGL4L3BTEIE
+ xEtTREb3L6YVSMws45cDDMlwOQV5khZG
+X-Received: by 2002:a05:6000:25ec:b0:3b4:b4d:6861 with SMTP id
+ ffacd0b85a97d-3b5f18d98b6mr12383639f8f.27.1752534426591; 
+ Mon, 14 Jul 2025 16:07:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEhYjAS7nT/tYn58BN90w7GQ3aYvFmL+bStO/Kug1Q39DEg+brolPNLe35tZEZvDfYfh8UoYg==
+X-Received: by 2002:a05:6000:25ec:b0:3b4:b4d:6861 with SMTP id
+ ffacd0b85a97d-3b5f18d98b6mr12383618f8f.27.1752534426126; 
+ Mon, 14 Jul 2025 16:07:06 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4560538da14sm87693425e9.23.2025.07.14.16.08.55
+ ffacd0b85a97d-3b5e8e0d785sm13820674f8f.59.2025.07.14.16.07.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:08:56 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:08:54 -0400
+ Mon, 14 Jul 2025 16:07:05 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:07:03 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ qemu-stable@nongnu.org, Vasant Hegde <vasant.hegde@amd.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 62/97] hw/i386/acpi-build: Move aml_pci_edsm to a generic place
-Message-ID: <7b96127b8213b9222074aa7eb9f03f6ad3e46e80.1752534227.git.mst@redhat.com>
+Subject: [PULL 20/97] amd_iommu: Fix masks for various IOMMU MMIO Registers
+Message-ID: <108e10ff69099c3ebe147f505246be7c2ad2a499.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -98,7 +97,8 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,178 +114,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-Move aml_pci_edsm to pci-bridge.c since we want to reuse that for
-ARM and acpi-index support. Also rename it into build_pci_bridge_edsm.
+Address various issues with definitions of the MMIO registers e.g. for the
+Device Table Address Register, the size mask currently encompasses reserved
+bits [11:9], so change it to only extract the bits [8:0] encoding size.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20250714080639.2525563-17-eric.auger@redhat.com>
+Convert masks to use GENMASK64 for consistency, and make unrelated
+definitions independent.
+
+Cc: qemu-stable@nongnu.org
+Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Message-Id: <20250617150427.20585-5-alejandro.j.jimenez@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/acpi/pci.h |  1 +
- hw/acpi/pci-bridge.c  | 54 ++++++++++++++++++++++++++++++++++++++++
- hw/i386/acpi-build.c  | 57 ++-----------------------------------------
- 3 files changed, 57 insertions(+), 55 deletions(-)
+ hw/i386/amd_iommu.h | 38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/include/hw/acpi/pci.h b/include/hw/acpi/pci.h
-index 69bae95eac..20b672575f 100644
---- a/include/hw/acpi/pci.h
-+++ b/include/hw/acpi/pci.h
-@@ -42,5 +42,6 @@ void build_pci_bridge_aml(AcpiDevAmlIf *adev, Aml *scope);
- void build_srat_generic_affinity_structures(GArray *table_data);
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index aacb29b617..988a485f80 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -68,34 +68,34 @@
  
- Aml *build_pci_host_bridge_osc_method(bool enable_native_pcie_hotplug);
-+Aml *build_pci_bridge_edsm(void);
+ #define AMDVI_MMIO_SIZE               0x4000
  
- #endif
-diff --git a/hw/acpi/pci-bridge.c b/hw/acpi/pci-bridge.c
-index 7baa7034a1..394a919479 100644
---- a/hw/acpi/pci-bridge.c
-+++ b/hw/acpi/pci-bridge.c
-@@ -35,3 +35,57 @@ void build_pci_bridge_aml(AcpiDevAmlIf *adev, Aml *scope)
-         }
-     }
- }
+-#define AMDVI_MMIO_DEVTAB_SIZE_MASK   ((1ULL << 12) - 1)
+-#define AMDVI_MMIO_DEVTAB_BASE_MASK   (((1ULL << 52) - 1) & ~ \
+-                                       AMDVI_MMIO_DEVTAB_SIZE_MASK)
++#define AMDVI_MMIO_DEVTAB_SIZE_MASK     GENMASK64(8, 0)
++#define AMDVI_MMIO_DEVTAB_BASE_MASK     GENMASK64(51, 12)
 +
-+Aml *build_pci_bridge_edsm(void)
-+{
-+    Aml *method, *ifctx;
-+    Aml *zero = aml_int(0);
-+    Aml *func = aml_arg(2);
-+    Aml *ret = aml_local(0);
-+    Aml *aidx = aml_local(1);
-+    Aml *params = aml_arg(4);
-+
-+    method = aml_method("EDSM", 5, AML_SERIALIZED);
-+
-+    /* get supported functions */
-+    ifctx = aml_if(aml_equal(func, zero));
-+    {
-+        /* 1: have supported functions */
-+        /* 7: support for function 7 */
-+        const uint8_t caps = 1 | BIT(7);
-+        build_append_pci_dsm_func0_common(ifctx, ret);
-+        aml_append(ifctx, aml_store(aml_int(caps), aml_index(ret, zero)));
-+        aml_append(ifctx, aml_return(ret));
-+    }
-+    aml_append(method, ifctx);
-+
-+    /* handle specific functions requests */
-+    /*
-+     * PCI Firmware Specification 3.1
-+     * 4.6.7. _DSM for Naming a PCI or PCI Express Device Under
-+     *        Operating Systems
-+     */
-+    ifctx = aml_if(aml_equal(func, aml_int(7)));
-+    {
-+       Aml *pkg = aml_package(2);
-+       aml_append(pkg, zero);
-+       /* optional, if not impl. should return null string */
-+       aml_append(pkg, aml_string("%s", ""));
-+       aml_append(ifctx, aml_store(pkg, ret));
-+
-+       /*
-+        * IASL is fine when initializing Package with computational data,
-+        * however it makes guest unhappy /it fails to process such AML/.
-+        * So use runtime assignment to set acpi-index after initializer
-+        * to make OSPM happy.
-+        */
-+       aml_append(ifctx,
-+           aml_store(aml_derefof(aml_index(params, aml_int(0))), aidx));
-+       aml_append(ifctx, aml_store(aidx, aml_index(ret, zero)));
-+       aml_append(ifctx, aml_return(ret));
-+    }
-+    aml_append(method, ifctx);
-+
-+    return method;
-+}
-+
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index fe8bc62c03..423c4959fe 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -338,59 +338,6 @@ build_facs(GArray *table_data)
-     g_array_append_vals(table_data, reserved, 40); /* Reserved */
- }
+ #define AMDVI_MMIO_DEVTAB_ENTRY_SIZE  32
+ #define AMDVI_MMIO_DEVTAB_SIZE_UNIT   4096
  
--static Aml *aml_pci_edsm(void)
--{
--    Aml *method, *ifctx;
--    Aml *zero = aml_int(0);
--    Aml *func = aml_arg(2);
--    Aml *ret = aml_local(0);
--    Aml *aidx = aml_local(1);
--    Aml *params = aml_arg(4);
--
--    method = aml_method("EDSM", 5, AML_SERIALIZED);
--
--    /* get supported functions */
--    ifctx = aml_if(aml_equal(func, zero));
--    {
--        /* 1: have supported functions */
--        /* 7: support for function 7 */
--        const uint8_t caps = 1 | BIT(7);
--        build_append_pci_dsm_func0_common(ifctx, ret);
--        aml_append(ifctx, aml_store(aml_int(caps), aml_index(ret, zero)));
--        aml_append(ifctx, aml_return(ret));
--    }
--    aml_append(method, ifctx);
--
--    /* handle specific functions requests */
--    /*
--     * PCI Firmware Specification 3.1
--     * 4.6.7. _DSM for Naming a PCI or PCI Express Device Under
--     *        Operating Systems
--     */
--    ifctx = aml_if(aml_equal(func, aml_int(7)));
--    {
--       Aml *pkg = aml_package(2);
--       aml_append(pkg, zero);
--       /* optional, if not impl. should return null string */
--       aml_append(pkg, aml_string("%s", ""));
--       aml_append(ifctx, aml_store(pkg, ret));
--
--       /*
--        * IASL is fine when initializing Package with computational data,
--        * however it makes guest unhappy /it fails to process such AML/.
--        * So use runtime assignment to set acpi-index after initializer
--        * to make OSPM happy.
--        */
--       aml_append(ifctx,
--           aml_store(aml_derefof(aml_index(params, aml_int(0))), aidx));
--       aml_append(ifctx, aml_store(aidx, aml_index(ret, zero)));
--       aml_append(ifctx, aml_return(ret));
--    }
--    aml_append(method, ifctx);
--
--    return method;
--}
--
- /*
-  * build_prt - Define interrupt routing rules
-  *
-@@ -937,7 +884,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
-         dev = aml_device("PCI0");
-         aml_append(dev, aml_name_decl("_HID", aml_eisaid("PNP0A03")));
-         aml_append(dev, aml_name_decl("_UID", aml_int(pcmc->pci_root_uid)));
--        aml_append(dev, aml_pci_edsm());
-+        aml_append(dev, build_pci_bridge_edsm());
-         aml_append(sb_scope, dev);
-         aml_append(dsdt, sb_scope);
+ /* some of this are similar but just for readability */
+ #define AMDVI_MMIO_CMDBUF_SIZE_BYTE       (AMDVI_MMIO_COMMAND_BASE + 7)
+ #define AMDVI_MMIO_CMDBUF_SIZE_MASK       0x0f
+-#define AMDVI_MMIO_CMDBUF_BASE_MASK       AMDVI_MMIO_DEVTAB_BASE_MASK
+-#define AMDVI_MMIO_CMDBUF_HEAD_MASK       (((1ULL << 19) - 1) & ~0x0f)
+-#define AMDVI_MMIO_CMDBUF_TAIL_MASK       AMDVI_MMIO_EVTLOG_HEAD_MASK
++#define AMDVI_MMIO_CMDBUF_BASE_MASK       GENMASK64(51, 12)
++#define AMDVI_MMIO_CMDBUF_HEAD_MASK       GENMASK64(18, 4)
++#define AMDVI_MMIO_CMDBUF_TAIL_MASK       GENMASK64(18, 4)
  
-@@ -952,7 +899,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
-         aml_append(dev, aml_name_decl("_CID", aml_eisaid("PNP0A03")));
-         aml_append(dev, aml_name_decl("_UID", aml_int(pcmc->pci_root_uid)));
-         aml_append(dev, build_pci_host_bridge_osc_method(!pm->pcihp_bridge_en));
--        aml_append(dev, aml_pci_edsm());
-+        aml_append(dev, build_pci_bridge_edsm());
-         aml_append(sb_scope, dev);
-         if (mcfg_valid) {
-             aml_append(sb_scope, build_q35_dram_controller(&mcfg));
+ #define AMDVI_MMIO_EVTLOG_SIZE_BYTE       (AMDVI_MMIO_EVENT_BASE + 7)
+-#define AMDVI_MMIO_EVTLOG_SIZE_MASK       AMDVI_MMIO_CMDBUF_SIZE_MASK
+-#define AMDVI_MMIO_EVTLOG_BASE_MASK       AMDVI_MMIO_CMDBUF_BASE_MASK
+-#define AMDVI_MMIO_EVTLOG_HEAD_MASK       (((1ULL << 19) - 1) & ~0x0f)
+-#define AMDVI_MMIO_EVTLOG_TAIL_MASK       AMDVI_MMIO_EVTLOG_HEAD_MASK
++#define AMDVI_MMIO_EVTLOG_SIZE_MASK       0x0f
++#define AMDVI_MMIO_EVTLOG_BASE_MASK       GENMASK64(51, 12)
++#define AMDVI_MMIO_EVTLOG_HEAD_MASK       GENMASK64(18, 4)
++#define AMDVI_MMIO_EVTLOG_TAIL_MASK       GENMASK64(18, 4)
+ 
+-#define AMDVI_MMIO_PPRLOG_SIZE_BYTE       (AMDVI_MMIO_EVENT_BASE + 7)
+-#define AMDVI_MMIO_PPRLOG_HEAD_MASK       AMDVI_MMIO_EVTLOG_HEAD_MASK
+-#define AMDVI_MMIO_PPRLOG_TAIL_MASK       AMDVI_MMIO_EVTLOG_HEAD_MASK
+-#define AMDVI_MMIO_PPRLOG_BASE_MASK       AMDVI_MMIO_EVTLOG_BASE_MASK
+-#define AMDVI_MMIO_PPRLOG_SIZE_MASK       AMDVI_MMIO_EVTLOG_SIZE_MASK
++#define AMDVI_MMIO_PPRLOG_SIZE_BYTE       (AMDVI_MMIO_PPR_BASE + 7)
++#define AMDVI_MMIO_PPRLOG_SIZE_MASK       0x0f
++#define AMDVI_MMIO_PPRLOG_BASE_MASK       GENMASK64(51, 12)
++#define AMDVI_MMIO_PPRLOG_HEAD_MASK       GENMASK64(18, 4)
++#define AMDVI_MMIO_PPRLOG_TAIL_MASK       GENMASK64(18, 4)
+ 
+ #define AMDVI_MMIO_EXCL_ENABLED_MASK      (1ULL << 0)
+ #define AMDVI_MMIO_EXCL_ALLOW_MASK        (1ULL << 1)
+-#define AMDVI_MMIO_EXCL_LIMIT_MASK        AMDVI_MMIO_DEVTAB_BASE_MASK
++#define AMDVI_MMIO_EXCL_LIMIT_MASK        GENMASK64(51, 12)
+ #define AMDVI_MMIO_EXCL_LIMIT_LOW         0xfff
+ 
+ /* mmio control register flags */
+@@ -132,14 +132,14 @@
+ #define AMDVI_DEV_TRANSLATION_VALID       (1ULL << 1)
+ #define AMDVI_DEV_MODE_MASK               0x7
+ #define AMDVI_DEV_MODE_RSHIFT             9
+-#define AMDVI_DEV_PT_ROOT_MASK            0xffffffffff000
++#define AMDVI_DEV_PT_ROOT_MASK            GENMASK64(51, 12)
+ #define AMDVI_DEV_PT_ROOT_RSHIFT          12
+ #define AMDVI_DEV_PERM_SHIFT              61
+ #define AMDVI_DEV_PERM_READ               (1ULL << 61)
+ #define AMDVI_DEV_PERM_WRITE              (1ULL << 62)
+ 
+ /* Device table entry bits 64:127 */
+-#define AMDVI_DEV_DOMID_ID_MASK          ((1ULL << 16) - 1)
++#define AMDVI_DEV_DOMID_ID_MASK             GENMASK64(15, 0)
+ 
+ /* Event codes and flags, as stored in the info field */
+ #define AMDVI_EVENT_ILLEGAL_DEVTAB_ENTRY  (0x1U << 12)
+@@ -197,7 +197,7 @@
+ #define AMDVI_PAGE_SIZE  (1ULL << AMDVI_PAGE_SHIFT)
+ 
+ #define AMDVI_PAGE_SHIFT_4K 12
+-#define AMDVI_PAGE_MASK_4K  (~((1ULL << AMDVI_PAGE_SHIFT_4K) - 1))
++#define AMDVI_PAGE_MASK_4K      GENMASK64(63, 12)
+ 
+ #define AMDVI_MAX_GVA_ADDR      (2UL << 5)
+ #define AMDVI_MAX_PH_ADDR       (40UL << 8)
 -- 
 MST
 
