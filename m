@@ -4,67 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09C83C83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 09:37:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B492BC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 09:44:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubFce-0006FG-HE; Mon, 14 Jul 2025 05:37:20 -0400
+	id 1ubFj7-0002uJ-9B; Mon, 14 Jul 2025 05:44:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1ubFcN-0005lT-P5
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 05:37:05 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1ubFcL-0004sD-3Y
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 05:37:03 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxHHK4z3RosCYpAQ--.20158S3;
- Mon, 14 Jul 2025 17:36:56 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJAxT+a2z3Ro76MWAA--.58185S3;
- Mon, 14 Jul 2025 17:36:56 +0800 (CST)
-Subject: Re: [PATCH v5 05/11] target/loongarch: add msg interrupt CSR registers
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
-References: <20250711085915.3042395-1-gaosong@loongson.cn>
- <20250711085915.3042395-6-gaosong@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <dc73c6e3-40a7-e7a3-8e43-a8ec036c30c6@loongson.cn>
-Date: Mon, 14 Jul 2025 17:35:16 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1ubFTq-00013h-EQ
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 05:28:22 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1ubFTl-0003Eh-0R
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 05:28:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1752485289; x=1784021289;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=FB0fZNdTYpwcn9/HGH9AHlXJ8al41jgEAb5jOqIWwek=;
+ b=SDHntWmMfsoojmLcr9hO8jd4e3DFFz/kBsUCDRsX41IRW2az4+y2mUVF
+ /pVIxX8N4JROko3wFWY6pHldBb144Sx+WIpAuQLrhjJlWWUl3YOuvnujC
+ 8k8X5MUfeU1LxZjUudpXmHplqT38afhBXmb4TYcnDAtJ7pWcgEmLbZBtt
+ lA2Vu/kDimxWBZsW9Z7IYx716Pc/CAQgyJ18J22wkWXBo4/itw7MMY+38
+ Dn63wqLuGJuSXn/aL9N2xzv0xL/gc6genj6tQhYS7f1rY4kYd4kz3txIz
+ E/m6hQSSXJ0Lm3gIcb45jwvCnlMUyWTA33/YNMLhCPUhgPkynCTK/cUAb g==;
+X-CSE-ConnectionGUID: tYYVb4HOQSC3xrfW9VnRAw==
+X-CSE-MsgGUID: aE3IaogYTXmNvzlHX4b2Cw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="66029286"
+X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; d="scan'208";a="66029286"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jul 2025 02:28:05 -0700
+X-CSE-ConnectionGUID: Nux5FFbGQUK2xF+uUmY9cw==
+X-CSE-MsgGUID: uvtkfgdiT9m8qKVNzuyl6A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; d="scan'208";a="187882743"
+Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
+ by orviesa002.jf.intel.com with ESMTP; 14 Jul 2025 02:28:04 -0700
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,
+	Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PATCH 3/5] qemu-options: Change memory-encryption to
+ confidential-guest-support in the example
+Date: Mon, 14 Jul 2025 17:19:51 +0800
+Message-ID: <20250714091953.448226-4-xiaoyao.li@intel.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250714091953.448226-1-xiaoyao.li@intel.com>
+References: <20250714091953.448226-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-In-Reply-To: <20250711085915.3042395-6-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxT+a2z3Ro76MWAA--.58185S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxAr1UtF1DZFyUtw45Cr4kAFc_yoWrJryUpr
- sxAFyUKFW8trWSv3WfJ345XFsxWr1xGw429a12kryxKFW5Gr40grykt39FvF1rJa4Fgr10
- 9F18A34UCF47Z3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUAVWUtwAv7VC2z280aVAF
- wI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07jOb18U
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -38
-X-Spam_score: -3.9
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
 X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.992,
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,128 +85,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+"confidential-guest-support" is the recommended property instead of
+"memory-encryption". Switch to "confidential-guest-support" in the
+example of sev-guest.
 
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+---
+ qemu-options.hx | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-On 2025/7/11 下午4:59, Song Gao wrote:
-> include CSR_MSGIS0-3, CSR_MSGIR and CSR_MSGIE.
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   target/loongarch/cpu-csr.h |  3 +++
->   target/loongarch/cpu.h     | 10 ++++++++++
->   target/loongarch/machine.c | 27 +++++++++++++++++++++++++--
->   3 files changed, 38 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
-> index 0834e91f30..4792677086 100644
-> --- a/target/loongarch/cpu-csr.h
-> +++ b/target/loongarch/cpu-csr.h
-> @@ -186,6 +186,9 @@ FIELD(CSR_MERRCTL, ISMERR, 0, 1)
->   
->   #define LOONGARCH_CSR_CTAG           0x98 /* TagLo + TagHi */
->   
-> +#define LOONGARCH_CSR_MSGIS(N)       (0xa0 + N)
-> +#define LOONGARCH_CSR_MSGIR               0xa4
-> +
->   /* Direct map windows CSRs*/
->   #define LOONGARCH_CSR_DMW(N)         (0x180 + N)
->   FIELD(CSR_DMW, PLV0, 0, 1)
-> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-> index 56fc4a1459..208d3e0cd3 100644
-> --- a/target/loongarch/cpu.h
-> +++ b/target/loongarch/cpu.h
-> @@ -233,6 +233,12 @@ FIELD(TLB_MISC, ASID, 1, 10)
->   FIELD(TLB_MISC, VPPN, 13, 35)
->   FIELD(TLB_MISC, PS, 48, 6)
->   
-> +/*Msg interrupt registers */
-> +FIELD(CSR_MSGIS, IS, 0, 63)
-> +FIELD(CSR_MSGIR, INTNUM, 0, 8)
-> +FIELD(CSR_MSGIR, ACTIVE, 31, 1)
-> +FIELD(CSR_MSGIE, PT, 0, 8)
-> +
->   #define LSX_LEN    (128)
->   #define LASX_LEN   (256)
->   
-> @@ -350,6 +356,10 @@ typedef struct CPUArchState {
->       uint64_t CSR_DBG;
->       uint64_t CSR_DERA;
->       uint64_t CSR_DSAVE;
-> +    /* Msg interrupt registers */
-> +    uint64_t CSR_MSGIS[4];
-It will better if there is macro replaced with 4.
-
-> +    uint64_t CSR_MSGIR;
-> +    uint64_t CSR_MSGIE;
->       struct {
->           uint64_t guest_addr;
->       } stealtime;
-> diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
-> index 4e70f5c879..9eddb9341a 100644
-> --- a/target/loongarch/machine.c
-> +++ b/target/loongarch/machine.c
-> @@ -10,6 +10,7 @@
->   #include "migration/cpu.h"
->   #include "system/tcg.h"
->   #include "vec.h"
-> +#include "hw/loongarch/virt.h"
->   
->   static const VMStateDescription vmstate_fpu_reg = {
->       .name = "fpu_reg",
-> @@ -45,6 +46,27 @@ static const VMStateDescription vmstate_fpu = {
->       },
->   };
->   
-> +static bool msg_needed(void *opaque)
-> +{
-> +    MachineState *ms = MACHINE(qdev_get_machine());
-> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
-> +
-> +    return !!(lvms->misc_feature & BIT(IOCSRF_AVEC));
-how about use virt_has_avecintc() like this?
-    return virt_has_avecintc(lvms);
-
-> +}
-> +
-> +static const VMStateDescription vmstate_msg = {
-> +    .name = "cpu/msg",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = msg_needed,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_UINT64_ARRAY(env.CSR_MSGIS, LoongArchCPU, 4),
-ditto, it will be better if there is macro replaced with 4.
-
-Regards
-Bibo Mao
-> +        VMSTATE_UINT64(env.CSR_MSGIR, LoongArchCPU),
-> +        VMSTATE_UINT64(env.CSR_MSGIE, LoongArchCPU),
-> +        VMSTATE_END_OF_LIST()
-> +    },
-> +};
-> +
->   static const VMStateDescription vmstate_lsxh_reg = {
->       .name = "lsxh_reg",
->       .version_id = 1,
-> @@ -168,8 +190,8 @@ static const VMStateDescription vmstate_tlb = {
->   /* LoongArch CPU state */
->   const VMStateDescription vmstate_loongarch_cpu = {
->       .name = "cpu",
-> -    .version_id = 3,
-> -    .minimum_version_id = 3,
-> +    .version_id = 4,
-> +    .minimum_version_id = 4,
->       .fields = (const VMStateField[]) {
->           VMSTATE_UINTTL_ARRAY(env.gpr, LoongArchCPU, 32),
->           VMSTATE_UINTTL(env.pc, LoongArchCPU),
-> @@ -245,6 +267,7 @@ const VMStateDescription vmstate_loongarch_cpu = {
->           &vmstate_tlb,
->   #endif
->           &vmstate_lbt,
-> +        &vmstate_msg,
->           NULL
->       }
->   };
-> 
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 740323f22bc2..27b7b79c6cad 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -5986,7 +5986,7 @@ SRST
+              # |qemu_system_x86| \\
+                  ...... \\
+                  -object sev-guest,id=sev0,cbitpos=47,reduced-phys-bits=1 \\
+-                 -machine ...,memory-encryption=sev0 \\
++                 -machine ...,confidential-guest-support=sev0 \\
+                  .....
+ 
+     ``-object authz-simple,id=id,identity=string``
+-- 
+2.43.0
 
 
