@@ -4,68 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F6E3C83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 12:03:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71AA0C83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 12:03:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubHil-0004aw-Gp; Mon, 14 Jul 2025 07:51:47 -0400
+	id 1ubHk0-0005jl-1Y; Mon, 14 Jul 2025 07:53:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1ubH5s-0006Jc-7E
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:11:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1ubH6M-0006xL-HD
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:12:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1ubH5l-0003Eu-OZ
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:11:32 -0400
+ id 1ubH6K-0003RD-CK
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:12:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752491489;
+ s=mimecast20190719; t=1752491523;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9vemcN2IltHES9sWVXSbrdPiFkkw6mhPtXJ2qDHWzdY=;
- b=DjUwYkXmMdd+jYKWcyReyIi6PIECUUjFmZePrGgvBqyl/q9kfAFZ6hm4LxZxKFy6wwpULJ
- g9E/Wzu9+++bDHIhhThBdkwyrNVsoALQk/nnnQfezRTivrTtoVzyH2u0gNjhaKc94299aL
- 7ubCrP5k5iE/ofJaOQpf2ph91YUTQoo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=/4myqjH/Kdl7ZWCnYA3d+VdEmgMCkL9UEwDV1RI1+bc=;
+ b=CJpYAaRTWfPlUfkeYcMwvLQh+gxcyZ9l+HvTabiDXPFEG7Rky3tUWy7H4dZ1QMy8FqowQW
+ uDGHexBMDwJckUBqjlPiN2LZSBRaeo4oev073dak2YvrvP2+mM43f0KByApaPxox0KANnR
+ borMbovzD2O43pto1DcPZJSEMbym9i8=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-97-ZYMHX0psMQibY5KGmGRtCg-1; Mon,
- 14 Jul 2025 07:11:25 -0400
-X-MC-Unique: ZYMHX0psMQibY5KGmGRtCg-1
-X-Mimecast-MFC-AGG-ID: ZYMHX0psMQibY5KGmGRtCg_1752491484
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-644--CDi-feGM_KNAB9sB405tA-1; Mon,
+ 14 Jul 2025 07:12:00 -0400
+X-MC-Unique: -CDi-feGM_KNAB9sB405tA-1
+X-Mimecast-MFC-AGG-ID: -CDi-feGM_KNAB9sB405tA_1752491519
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E35E71956094; Mon, 14 Jul 2025 11:11:23 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2AF8119560B6; Mon, 14 Jul 2025 11:11:59 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.9])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9DFE71977000; Mon, 14 Jul 2025 11:11:21 +0000 (UTC)
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D4E221956094; Mon, 14 Jul 2025 11:11:57 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, Vivek Kasireddy <vivek.kasireddy@intel.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
+Cc: stefanha@redhat.com, Weifeng Liu <weifeng.liu.z@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>,
- Michael Scherle <michael.scherle@rz.uni-freiburg.de>
-Subject: [PULL 06/13] ui/spice: Add an option to submit gl_draw requests at
- fixed rate
-Date: Mon, 14 Jul 2025 15:10:29 +0400
-Message-ID: <20250714111039.4150419-7-marcandre.lureau@redhat.com>
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: [PULL 12/13] ui/gtk: Add scale option
+Date: Mon, 14 Jul 2025 15:10:35 +0400
+Message-ID: <20250714111039.4150419-13-marcandre.lureau@redhat.com>
 In-Reply-To: <20250714111039.4150419-1-marcandre.lureau@redhat.com>
 References: <20250714111039.4150419-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -91,216 +87,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vivek Kasireddy <vivek.kasireddy@intel.com>
+From: Weifeng Liu <weifeng.liu.z@gmail.com>
 
-In the specific case where the display layer (virtio-gpu) is using
-dmabuf, and if remote clients are enabled (-spice gl=on,port=xxxx),
-it makes sense to limit the maximum (streaming) rate (refresh rate)
-to a fixed value using the GUI refresh timer. Otherwise, the updates
-or gl_draw requests would be sent as soon as the Guest submits a new
-frame which is not optimal as it would lead to increased network
-traffic and wastage of GPU cycles if the frames get dropped.
+Allow user to set a preferred scale (defaulting to 1) of the virtual
+display. Along with zoom-to-fix=false, this would be helpful for users
+running QEMU on hi-dpi host desktop to achieve pixel to pixel display --
+e.g., if the scale factor of a user's host desktop is set to 200%, then
+they can set a 0.5 scale for the virtual display to avoid magnification
+that might cause blurriness.
 
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Frediano Ziglio <freddy77@gmail.com>
-Cc: Dongwon Kim <dongwon.kim@intel.com>
-Cc: Michael Scherle <michael.scherle@rz.uni-freiburg.de>
+Signed-off-by: Weifeng Liu <weifeng.liu.z@gmail.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Message-Id: <20250617043546.1022779-5-vivek.kasireddy@intel.com>
+Tested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-Id: <20250601045245.36778-3-weifeng.liu.z@gmail.com>
 ---
- include/ui/spice-display.h |  1 +
- ui/spice-core.c            | 12 ++++++++
- ui/spice-display.c         | 62 ++++++++++++++++++++++++++++++++------
- qemu-options.hx            |  5 +++
- 4 files changed, 70 insertions(+), 10 deletions(-)
+ qapi/ui.json     |  5 ++++-
+ include/ui/gtk.h |  1 +
+ ui/gtk.c         | 46 +++++++++++++++++++++++++++++-----------------
+ 3 files changed, 34 insertions(+), 18 deletions(-)
 
-diff --git a/include/ui/spice-display.h b/include/ui/spice-display.h
-index 6c55f38c8b..9bdde78266 100644
---- a/include/ui/spice-display.h
-+++ b/include/ui/spice-display.h
-@@ -152,6 +152,7 @@ struct SimpleSpiceCursor {
+diff --git a/qapi/ui.json b/qapi/ui.json
+index 9e496b4835..a465d671c7 100644
+--- a/qapi/ui.json
++++ b/qapi/ui.json
+@@ -1338,6 +1338,8 @@
+ # @keep-aspect-ratio: Keep width/height aspect ratio of guest content when
+ #     resizing host window.  Defaults to "on". (Since 10.1)
+ #
++# @scale: Set preferred scale of the display.  Defaults to 1.0.  (Since 10.1)
++#
+ # Since: 2.12
+ ##
+ { 'struct'  : 'DisplayGTK',
+@@ -1345,7 +1347,8 @@
+                 '*zoom-to-fit'       : 'bool',
+                 '*show-tabs'         : 'bool',
+                 '*show-menubar'      : 'bool',
+-                '*keep-aspect-ratio' : 'bool'  } }
++                '*keep-aspect-ratio' : 'bool',
++                '*scale'             : 'number'  } }
  
- extern bool spice_opengl;
- extern bool spice_remote_client;
-+extern int spice_max_refresh_rate;
+ ##
+ # @DisplayEGLHeadless:
+diff --git a/include/ui/gtk.h b/include/ui/gtk.h
+index b7cfbf218e..3e6ce3cb48 100644
+--- a/include/ui/gtk.h
++++ b/include/ui/gtk.h
+@@ -41,6 +41,7 @@ typedef struct VirtualGfxConsole {
+     DisplaySurface *ds;
+     pixman_image_t *convert;
+     cairo_surface_t *surface;
++    double preferred_scale;
+     double scale_x;
+     double scale_y;
+ #if defined(CONFIG_OPENGL)
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 9104509ee1..e91d093a49 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -67,6 +67,7 @@
+ #define VC_TERM_X_MIN     80
+ #define VC_TERM_Y_MIN     25
+ #define VC_SCALE_MIN    0.25
++#define VC_SCALE_MAX       4
+ #define VC_SCALE_STEP   0.25
  
- int qemu_spice_rect_is_empty(const QXLRect* r);
- void qemu_spice_rect_union(QXLRect *dest, const QXLRect *r);
-diff --git a/ui/spice-core.c b/ui/spice-core.c
-index 5e585ed958..5477950a5e 100644
---- a/ui/spice-core.c
-+++ b/ui/spice-core.c
-@@ -56,6 +56,8 @@ struct SpiceTimer {
-     QEMUTimer *timer;
- };
+ #ifdef GDK_WINDOWING_X11
+@@ -272,15 +273,11 @@ static void gd_update_geometry_hints(VirtualConsole *vc)
+         if (!vc->gfx.ds) {
+             return;
+         }
+-        if (s->free_scale) {
+-            geo.min_width  = surface_width(vc->gfx.ds) * VC_SCALE_MIN;
+-            geo.min_height = surface_height(vc->gfx.ds) * VC_SCALE_MIN;
+-            mask |= GDK_HINT_MIN_SIZE;
+-        } else {
+-            geo.min_width  = surface_width(vc->gfx.ds) * vc->gfx.scale_x;
+-            geo.min_height = surface_height(vc->gfx.ds) * vc->gfx.scale_y;
+-            mask |= GDK_HINT_MIN_SIZE;
+-        }
++        double scale_x = s->free_scale ? VC_SCALE_MIN : vc->gfx.scale_x;
++        double scale_y = s->free_scale ? VC_SCALE_MIN : vc->gfx.scale_y;
++        geo.min_width  = surface_width(vc->gfx.ds) * scale_x;
++        geo.min_height = surface_height(vc->gfx.ds) * scale_y;
++        mask |= GDK_HINT_MIN_SIZE;
+         geo_widget = vc->gfx.drawing_area;
+         gtk_widget_set_size_request(geo_widget, geo.min_width, geo.min_height);
  
-+#define DEFAULT_MAX_REFRESH_RATE 30
-+
- static SpiceTimer *timer_add(SpiceTimerFunc func, void *opaque)
- {
-     SpiceTimer *timer;
-@@ -491,6 +493,9 @@ static QemuOptsList qemu_spice_opts = {
-         },{
-             .name = "video-codec",
-             .type = QEMU_OPT_STRING,
-+        },{
-+            .name = "max-refresh-rate",
-+            .type = QEMU_OPT_NUMBER,
-         },{
-             .name = "agent-mouse",
-             .type = QEMU_OPT_BOOL,
-@@ -806,6 +811,13 @@ static void qemu_spice_init(void)
-         spice_server_set_streaming_video(spice_server, SPICE_STREAM_VIDEO_OFF);
+@@ -1579,8 +1576,8 @@ static void gd_menu_full_screen(GtkMenuItem *item, void *opaque)
+         }
+         s->full_screen = FALSE;
+         if (vc->type == GD_VC_GFX) {
+-            vc->gfx.scale_x = 1.0;
+-            vc->gfx.scale_y = 1.0;
++            vc->gfx.scale_x = vc->gfx.preferred_scale;
++            vc->gfx.scale_y = vc->gfx.preferred_scale;
+             gd_update_windowsize(vc);
+         }
+     }
+@@ -1636,8 +1633,8 @@ static void gd_menu_zoom_fixed(GtkMenuItem *item, void *opaque)
+     GtkDisplayState *s = opaque;
+     VirtualConsole *vc = gd_vc_find_current(s);
+ 
+-    vc->gfx.scale_x = 1.0;
+-    vc->gfx.scale_y = 1.0;
++    vc->gfx.scale_x = vc->gfx.preferred_scale;
++    vc->gfx.scale_y = vc->gfx.preferred_scale;
+ 
+     gd_update_windowsize(vc);
+ }
+@@ -1651,8 +1648,8 @@ static void gd_menu_zoom_fit(GtkMenuItem *item, void *opaque)
+         s->free_scale = TRUE;
+     } else {
+         s->free_scale = FALSE;
+-        vc->gfx.scale_x = 1.0;
+-        vc->gfx.scale_y = 1.0;
++        vc->gfx.scale_x = vc->gfx.preferred_scale;
++        vc->gfx.scale_y = vc->gfx.preferred_scale;
      }
  
-+    spice_max_refresh_rate = qemu_opt_get_number(opts, "max-refresh-rate",
-+                                                 DEFAULT_MAX_REFRESH_RATE);
-+    if (spice_max_refresh_rate <= 0) {
-+        error_report("max refresh rate/fps is invalid");
-+        exit(1);
-+    }
-+
-     spice_server_set_agent_mouse
-         (spice_server, qemu_opt_get_bool(opts, "agent-mouse", 1));
-     spice_server_set_playback_compression
-diff --git a/ui/spice-display.c b/ui/spice-display.c
-index 0fb72f6d6f..e409b6bdb2 100644
---- a/ui/spice-display.c
-+++ b/ui/spice-display.c
-@@ -32,6 +32,7 @@
- 
- bool spice_opengl;
- bool spice_remote_client;
-+int spice_max_refresh_rate;
- 
- int qemu_spice_rect_is_empty(const QXLRect* r)
- {
-@@ -844,12 +845,32 @@ static void qemu_spice_gl_block_timer(void *opaque)
-     warn_report("spice: no gl-draw-done within one second");
+     gd_update_windowsize(vc);
+@@ -2243,6 +2240,11 @@ static void gl_area_realize(GtkGLArea *area, VirtualConsole *vc)
  }
+ #endif
  
-+static void spice_gl_draw(SimpleSpiceDisplay *ssd,
-+                           uint32_t x, uint32_t y, uint32_t w, uint32_t h)
++static bool gd_scale_valid(double scale)
 +{
-+    uint64_t cookie;
-+
-+    cookie = (uintptr_t)qxl_cookie_new(QXL_COOKIE_TYPE_GL_DRAW_DONE, 0);
-+    spice_qxl_gl_draw_async(&ssd->qxl, x, y, w, h, cookie);
++    return scale >= VC_SCALE_MIN && scale <= VC_SCALE_MAX;
 +}
 +
- static void spice_gl_refresh(DisplayChangeListener *dcl)
- {
-     SimpleSpiceDisplay *ssd = container_of(dcl, SimpleSpiceDisplay, dcl);
--    uint64_t cookie;
+ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
+                               QemuConsole *con, int idx,
+                               GSList *group, GtkWidget *view_menu)
+@@ -2252,8 +2254,18 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
  
--    if (!ssd->ds || qemu_console_is_gl_blocked(ssd->dcl.con)) {
-+    if (!ssd->ds) {
-+        return;
-+    }
-+
-+    if (qemu_console_is_gl_blocked(ssd->dcl.con)) {
-+        if (spice_remote_client && ssd->gl_updates && ssd->have_scanout) {
-+            glFlush();
-+            spice_gl_draw(ssd, 0, 0,
-+                          surface_width(ssd->ds), surface_height(ssd->ds));
-+            ssd->gl_updates = 0;
-+            /* E.g, to achieve 60 FPS, update_interval needs to be ~16.66 ms */
-+            dcl->update_interval = 1000 / spice_max_refresh_rate;
-+        }
-         return;
-     }
- 
-@@ -857,11 +878,8 @@ static void spice_gl_refresh(DisplayChangeListener *dcl)
-     if (ssd->gl_updates && ssd->have_surface) {
-         qemu_spice_gl_block(ssd, true);
-         glFlush();
--        cookie = (uintptr_t)qxl_cookie_new(QXL_COOKIE_TYPE_GL_DRAW_DONE, 0);
--        spice_qxl_gl_draw_async(&ssd->qxl, 0, 0,
--                                surface_width(ssd->ds),
--                                surface_height(ssd->ds),
--                                cookie);
-+        spice_gl_draw(ssd, 0, 0,
-+                      surface_width(ssd->ds), surface_height(ssd->ds));
-         ssd->gl_updates = 0;
-     }
- }
-@@ -954,6 +972,20 @@ static void qemu_spice_gl_scanout_disable(DisplayChangeListener *dcl)
-     SimpleSpiceDisplay *ssd = container_of(dcl, SimpleSpiceDisplay, dcl);
- 
-     trace_qemu_spice_gl_scanout_disable(ssd->qxl.id);
-+
-+    /*
-+     * We need to check for the case of "lost" updates, where a gl_draw
-+     * was not submitted because the timer did not get a chance to run.
-+     * One case where this happens is when the Guest VM is getting
-+     * rebooted. If the console is blocked in this situation, we need
-+     * to unblock it. Otherwise, newer updates would not take effect.
-+     */
-+    if (qemu_console_is_gl_blocked(ssd->dcl.con)) {
-+        if (spice_remote_client && ssd->gl_updates && ssd->have_scanout) {
-+            ssd->gl_updates = 0;
-+            qemu_spice_gl_block(ssd, false);
+     vc->label = qemu_console_get_label(con);
+     vc->s = s;
+-    vc->gfx.scale_x = 1.0;
+-    vc->gfx.scale_y = 1.0;
++    vc->gfx.preferred_scale = 1.0;
++    if (s->opts->u.gtk.has_scale) {
++        if (gd_scale_valid(s->opts->u.gtk.scale)) {
++            vc->gfx.preferred_scale = s->opts->u.gtk.scale;
++        } else {
++            error_report("Invalid scale value %lf given, being ignored",
++                         s->opts->u.gtk.scale);
++            s->opts->u.gtk.has_scale = false;
 +        }
 +    }
-     spice_server_gl_scanout(&ssd->qxl, NULL, 0, 0, NULL, NULL, 0, DRM_FORMAT_INVALID,
-                             DRM_FORMAT_MOD_INVALID, false);
-     qemu_spice_gl_monitor_config(ssd, 0, 0, 0, 0);
-@@ -1061,7 +1093,6 @@ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
-     EGLint fourcc = 0;
-     bool render_cursor = false;
-     bool y_0_top = false; /* FIXME */
--    uint64_t cookie;
-     uint32_t width, height, texture;
++    vc->gfx.scale_x = vc->gfx.preferred_scale;
++    vc->gfx.scale_y = vc->gfx.preferred_scale;
  
-     if (!ssd->have_scanout) {
-@@ -1159,8 +1190,19 @@ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
-     trace_qemu_spice_gl_update(ssd->qxl.id, w, h, x, y);
-     qemu_spice_gl_block(ssd, true);
-     glFlush();
--    cookie = (uintptr_t)qxl_cookie_new(QXL_COOKIE_TYPE_GL_DRAW_DONE, 0);
--    spice_qxl_gl_draw_async(&ssd->qxl, x, y, w, h, cookie);
-+
-+    /*
-+     * In the case of remote clients, the submission of gl_draw request is
-+     * deferred here, so that it can be submitted later (to spice server)
-+     * from spice_gl_refresh() timer callback. This is done to ensure that
-+     * Guest updates are submitted at a steady rate (e.g. 60 FPS) instead
-+     * of submitting them arbitrarily.
-+     */
-+    if (spice_remote_client) {
-+        ssd->gl_updates++;
-+    } else {
-+        spice_gl_draw(ssd, x, y, w, h);
-+    }
- }
- 
- static const DisplayChangeListenerOps display_listener_gl_ops = {
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 8f6a228a89..ac09abfd71 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -2282,6 +2282,7 @@ DEF("spice", HAS_ARG, QEMU_OPTION_spice,
-     "       [,disable-agent-file-xfer=on|off][,agent-mouse=[on|off]]\n"
-     "       [,playback-compression=[on|off]][,seamless-migration=[on|off]]\n"
-     "       [,video-codec=<codec>\n"
-+    "       [,max-refresh-rate=rate\n"
-     "       [,gl=[on|off]][,rendernode=<file>]\n"
-     "                enable spice\n"
-     "                at least one of {port, tls-port} is mandatory\n",
-@@ -2377,6 +2378,10 @@ SRST
-         would be used as default. And, for the case where gl=off, the
-         default codec to be used is determined by the Spice server.
- 
-+    ``max-refresh-rate=rate``
-+        Provide the maximum refresh rate (or FPS) at which the encoding
-+        requests should be sent to the Spice server. Default would be 30.
-+
-     ``gl=[on|off]``
-         Enable/disable OpenGL context. Default is off.
- 
+ #if defined(CONFIG_OPENGL)
+     if (display_opengl) {
 -- 
 2.50.0
 
