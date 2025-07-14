@@ -4,80 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 990F5C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:06:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F0B2C83F27
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:08:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubKlH-0003SD-Q2; Mon, 14 Jul 2025 11:06:36 -0400
+	id 1ubKmz-0006B4-2C; Mon, 14 Jul 2025 11:08:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJQL-0005mA-2F
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:40:55 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJUl-0000NP-RB
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:45:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJQI-00031K-IP
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:40:52 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJUW-0003d2-Sw
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:45:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752500447;
+ s=mimecast20190719; t=1752500711;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vhvI6iEHiSuvP1SBzLnbUovE+ukDH+3w63y7QhiCTTY=;
- b=VsA2N8c4qRHB6ry65EyTf2JWoTOF0A4ZRhCAs2hEMkasJxwuJfgXfJcrO1Bz4Tf5UB20Js
- +FVp4HHmM5tNddwJe1qMBmmoIY+K7Is8PM/Fcw7ajN06/2o050j9jynHjeiEeid9Y54t6w
- Xdxz7UKz0HL7A0yPbLkpvZXmtnrY2Dg=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=R1qX+mpYmZpUc+5wPTF7mRZVR+Q4ffPDdQeCnNltIEk=;
+ b=Db+OmPdyJHHp5fmvGHZKgylPunMUi+icMLHlkDB6vsziCoyBtlre2h3VqimqwFzKGAyvgM
+ m7L6J6uf88GhdzOVR+0LWGGR5FDXxJ6xOk7U36WmKFawCrYYzFSa5OJtkuJdostlMI0wwy
+ g5La894PgvzVLrykT0pHvpnFu9KsBnU=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-403-oNLZYJuMMCC9F_CvnGxung-1; Mon,
- 14 Jul 2025 09:40:44 -0400
-X-MC-Unique: oNLZYJuMMCC9F_CvnGxung-1
-X-Mimecast-MFC-AGG-ID: oNLZYJuMMCC9F_CvnGxung_1752500441
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-NWIY2ZLHPPmOCjfrFPd27Q-1; Mon,
+ 14 Jul 2025 09:45:09 -0400
+X-MC-Unique: NWIY2ZLHPPmOCjfrFPd27Q-1
+X-Mimecast-MFC-AGG-ID: NWIY2ZLHPPmOCjfrFPd27Q_1752500708
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DEFF319560B6; Mon, 14 Jul 2025 13:40:38 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 935CF195605C
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:45:08 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CF19B19560A3; Mon, 14 Jul 2025 13:40:35 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 478671803AF2
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:45:08 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0F4B721E6A27; Mon, 14 Jul 2025 15:40:33 +0200 (CEST)
+ id 1A4C421E65CE; Mon, 14 Jul 2025 15:44:59 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  Jiri Pirko <jiri@resnulli.us>,  Markus Armbruster
- <armbru@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,  Ani Sinha
- <anisinha@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>,  Peter Xu
- <peterx@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Fabiano Rosas
- <farosas@suse.de>,  qemu-block@nongnu.org,  "Gonglei (Arei)"
- <arei.gonglei@huawei.com>,  Laurent Vivier <laurent@vivier.eu>,  Jason
- Wang <jasowang@redhat.com>,  Yanan Wang <wangyanan55@huawei.com>,
- qemu-trivial@nongnu.org,  Stefan Hajnoczi <stefanha@redhat.com>,  Mads
- Ynddal <mads@ynddal.dk>,  Lukas Straub <lukasstraub2@web.de>,  Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>,  Kevin Wolf <kwolf@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,  Michael
- Tokarev <mjt@tls.msk.ru>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Hanna
- Reitz <hreitz@redhat.com>,  Zhenwei Pi <pizhenwei@bytedance.com>,  Stefan
- Berger <stefanb@linux.vnet.ibm.com>,  Michael Roth <michael.roth@amd.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v6 0/4] qapi: add auto-generated return docs
-In-Reply-To: <20250711051045.51110-1-jsnow@redhat.com> (John Snow's message of
- "Fri, 11 Jul 2025 01:10:41 -0400")
-References: <20250711051045.51110-1-jsnow@redhat.com>
-Date: Mon, 14 Jul 2025 15:40:33 +0200
-Message-ID: <871pqirium.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+To: qemu-devel@nongnu.org
+Cc: stefanha@redhat.com,
+	John Snow <jsnow@redhat.com>
+Subject: [PULL 22/32] qapi: add cross-references to QOM
+Date: Mon, 14 Jul 2025 15:44:48 +0200
+Message-ID: <20250714134458.2991097-23-armbru@redhat.com>
+In-Reply-To: <20250714134458.2991097-1-armbru@redhat.com>
+References: <20250714134458.2991097-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -103,6 +86,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued for 10.1.  Thanks!
+From: John Snow <jsnow@redhat.com>
+
+Signed-off-by: John Snow <jsnow@redhat.com>
+Message-ID: <20250711054005.60969-12-jsnow@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ qapi/qdev.json |  4 ++--
+ qapi/qom.json  | 13 +++++++------
+ 2 files changed, 9 insertions(+), 8 deletions(-)
+
+diff --git a/qapi/qdev.json b/qapi/qdev.json
+index 6441357e00..e14a0c9259 100644
+--- a/qapi/qdev.json
++++ b/qapi/qdev.json
+@@ -97,10 +97,10 @@
+ #    from the guest.  Hot removal is an operation that requires guest
+ #    cooperation.  This command merely requests that the guest begin
+ #    the hot removal process.  Completion of the device removal
+-#    process is signaled with a DEVICE_DELETED event.  Guest reset
++#    process is signaled with a `DEVICE_DELETED` event.  Guest reset
+ #    will automatically complete removal for all devices.  If a
+ #    guest-side error in the hot removal process is detected, the
+-#    device will not be removed and a DEVICE_UNPLUG_GUEST_ERROR event
++#    device will not be removed and a `DEVICE_UNPLUG_GUEST_ERROR` event
+ #    is sent.  Some errors cannot be detected.
+ #
+ # Since: 0.14
+diff --git a/qapi/qom.json b/qapi/qom.json
+index aa09eddbf9..4e85baae47 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -52,7 +52,7 @@
+ #
+ # List properties of a object given a path in the object model.
+ #
+-# @path: the path within the object model.  See @qom-get for a
++# @path: the path within the object model.  See `qom-get` for a
+ #     description of this parameter.
+ #
+ # Returns: a list that describe the properties of the object.
+@@ -129,12 +129,12 @@
+ #
+ # Set a property value.
+ #
+-# @path: see @qom-get for a description of this parameter
++# @path: see `qom-get` for a description of this parameter
+ #
+ # @property: the property name to set
+ #
+ # @value: a value who's type is appropriate for the property type.
+-#     See @qom-get for a description of type mapping.
++#     See `qom-get` for a description of type mapping.
+ #
+ # Since: 1.2
+ #
+@@ -153,7 +153,7 @@
+ ##
+ # @ObjectTypeInfo:
+ #
+-# This structure describes a search result from @qom-list-types
++# This structure describes a search result from `qom-list-types`
+ #
+ # @name: the type name found in the search
+ #
+@@ -193,6 +193,7 @@
+ #
+ # @typename: the type name of an object
+ #
++#
+ # .. note:: Objects can create properties at runtime, for example to
+ #    describe links between different devices and/or objects.  These
+ #    properties are not included in the output of this command.
+@@ -787,7 +788,7 @@
+ #
+ # Properties for x-remote-object objects.
+ #
+-# @fd: file descriptor name previously passed via 'getfd' command
++# @fd: file descriptor name previously passed via `getfd` command
+ #
+ # @devid: the id of the device to be associated with the file
+ #     descriptor
+@@ -816,7 +817,7 @@
+ #
+ # Properties for iommufd objects.
+ #
+-# @fd: file descriptor name previously passed via 'getfd' command,
++# @fd: file descriptor name previously passed via `getfd` command,
+ #     which represents a pre-opened /dev/iommu.  This allows the
+ #     iommufd object to be shared across several subsystems (VFIO,
+ #     VDPA, ...), and the file descriptor to be shared with other
+-- 
+2.49.0
 
 
