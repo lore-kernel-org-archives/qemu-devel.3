@@ -4,83 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DC2EC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 10:28:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27AA7C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 10:30:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubGPf-0004qV-6p; Mon, 14 Jul 2025 06:28:00 -0400
+	id 1ubGRE-0006D1-34; Mon, 14 Jul 2025 06:29:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ubGJU-0000BA-CC
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:21:36 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ubGJR-0003MQ-Qp
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:21:36 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-60c01f70092so6964531a12.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 03:21:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752488491; x=1753093291; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qGzgXvVaNT4LpgWQpuwa5zMopP3wW3htxaD9+4IULfg=;
- b=NkJlm2OEf6UuOOHnPIZqahlwNT+52eiSWoR9wTF7O/i1XqFfFPfzhMj4/hAbS7i2QM
- rjtv21s1IwFGkVXD7LusCGvXFHTvkCMGAqMqlnq338Xmo1ok/qv8spFzAfTxaHbNBkNn
- ceGEESI0ToeeVYBsDzOB3Wd4ZJdk801GnMAfU9doO1ECNXEyWukUjGTlt//Z1NdRAh9u
- 9vCZAnBiRBHeE0rhG9J+8zuYSUXp2Xo60t89GRdJ6JisDCt0ccpeh8RkJhD3kylRnL0U
- eNuw87oJTDUEORDYJsVPJixWqT4jTDgptXUPFOe/EyiA5DJaiS6VAlNRA6wfXVhVpaks
- F/0w==
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1ubGON-0004X3-79
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:26:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1ubGOK-0004PW-II
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:26:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752488793;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=yz4vOS2fmmgscDI3pPEkDat/uO4epkzlY9i37k2Fmm8=;
+ b=APJrmiqbZILqEYT1mZ3CmUrr38gFtrX+rCo/aOzJ6I/vjg4Sd5/Iz2sZKqAJafn3FpfGm/
+ 2ETRbFQNtff9CUWei85LpBn7y1r3BbeIpjgw6fiiONyVz5LFmk1r7lXCR/7GEVw8po/YGS
+ 0fVFEiAo+ZHRTiZpkxp5NlM8nIcR7S0=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-281-8fu9k7nrM_eMsCriJdppmg-1; Mon, 14 Jul 2025 06:26:31 -0400
+X-MC-Unique: 8fu9k7nrM_eMsCriJdppmg-1
+X-Mimecast-MFC-AGG-ID: 8fu9k7nrM_eMsCriJdppmg_1752488790
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4f65a705dso2684364f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 03:26:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752488491; x=1753093291;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qGzgXvVaNT4LpgWQpuwa5zMopP3wW3htxaD9+4IULfg=;
- b=NzbO2p8CCoYROJy+dRIiS/t7qoVCL1+5iLKVBdeQ/t6g4SiuB//nCONp2nptPPWjKQ
- ukLBDjRKNuuzBR0Py4HcYzgwDxJbiZv7ZGcufIjvF4uAkGuJ6tXYj26kHsc4hZXeLgBl
- fgvTUs9fksa5ATG0nRVQV+GEa6EC9JSkPqDRrCRp2satT7tJusfMRhLiQCESO/BFDTqe
- 3KiV/7sszl6LZGvIF9sQvtIsagxu3vyfu/flSYLZLRfnd9DAayWtXjGTpvLEKIDLUBUy
- Yzs9N5l+KEfaENKk8zztmEwTNHSQVyJJHi8xMndpAYMK9FIbhnx2O+BOJPyIVXnMGUVq
- gStA==
-X-Gm-Message-State: AOJu0YzUmxe2fWFWd5ByYzKOAhpdNmSe2QyaH6ZQ/I/BzFQODBl64h4j
- VxYJyhOCwfXK0+V9jh7BH7zDkdtqRRNJzDreb5o2LcDx9fEghYiJxY5GU0paxiM/cTmC2OsQzAW
- bcare2gztqnb9rqKdb1re8BhdSZYzlYZfFE9yQiG5oM4a+3Xo5F6AKcg=
-X-Gm-Gg: ASbGncvN2SYhzXuQqVcjcaxAIU4XJnyW3e4x9kecREFd2l9VYt1U8+wK91H727T/NpZ
- JlSqXi8Fkwit8edWajnH+D10FMUfifXzn/zaxchfStsjk0q6e2V+FVrjcjLepY7ceYugxfV0Y+V
- 2tNPlCGLwx1ZoCn2p/Sj+/gNa0qKqhWqaqY7f53iIgOcu/46dVrb7wmKRbTmvsbeGuA8sLgJYqc
- gGppg==
-X-Google-Smtp-Source: AGHT+IFg1o7YlRdhPcdidbOZpD1SDz2uXVycBuEiIhon8qpdHU5G+UCABKPTle0az8tds1dj03xHiGGixhQ3+6Vn9t8=
-X-Received: by 2002:a50:cc89:0:b0:607:f63b:aa31 with SMTP id
- 4fb4d7f45d1cf-611e760f113mr8278086a12.6.1752488490676; Mon, 14 Jul 2025
- 03:21:30 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752488789; x=1753093589;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yz4vOS2fmmgscDI3pPEkDat/uO4epkzlY9i37k2Fmm8=;
+ b=JNEETwp7BinGu2J41QOSVO1o6+9OCY1I18IjiAr53SLimmbjC6WN4KapUGGftAuxp0
+ jf9NcUje4T9wUa1ssirlO2mjdI8x9WKCj2ikgFhBjy+fWU7AOCO8TYQhrt0Jb0XIbrVJ
+ zb6xmMrcbjBk966/p3Y67wqtcBTcJ/Tv6ZjXyISe3YgEBePcp2VsRAt1j2ylGpNtiMgr
+ h29Yx6kojPLOmyJXzPzY1Mxu1Xydz6iPvB4vh5/Fs5vkRNuLntg7ezWHzeyJ4Jg7xCUa
+ xm/rIJHjQpzj+gLhPelzJ/low6K5NVumYOZk+fAvS0SZXGfkMUYJruZ8A0VMUEz0lYbH
+ aEHA==
+X-Gm-Message-State: AOJu0YyM8r4nUw1lTeFuTSs1CLae6w7DcIaHyw+sBmsSwUi5KN4S509I
+ Y/BRVjs7nxwJuM4uXwANNzd6SYM/JlA9Cc65iMg8acFYhCj+bhnIhiFPTUEzsklTOyusPr5kgkV
+ GR2GVfpQo7QDa1TKLJoV/uzbpjgmByWjIQRN2xbjaAX+WtPxRjfuQKPoF4Vf9znnPQgS1QbEtsn
+ 3G4vFhdoXZyfmb+r4OvNHl3FBjGXVUQr4Xw5yF6yHd
+X-Gm-Gg: ASbGncvK1siF7SJUt+gVOvoS4sbxWnVSWlH/4VZk3xNvPDVKZ77vzS2ZIkkVuD0oPI/
+ TUOrUWM7kGfmbygpdGcVyq1b4foY3QhWra2YTen/ozN8uX8APemc7n6JR2p6J4GnZ6Ht+SQb9EF
+ /vwE6GX8II0AYOVokF/v4DYf+4KGx89qZxxW5eIBHvRjxhR9OS+AWLLUCQajFY2nX+apCyZjlm4
+ M0OmKHi9fDrNpfFDfnwMnPCaCYaz8Y13Xc/3s2yIsX4WET83v+yfOCIIlqSVyjX4qMzKiSl+uMW
+ N1dz5fWoQCCezAMg9tJSsrrfgsLvgA+DjyEt
+X-Received: by 2002:a05:6000:22c1:b0:3a4:e6e6:a026 with SMTP id
+ ffacd0b85a97d-3b5f2e1b3d4mr10028768f8f.28.1752488789232; 
+ Mon, 14 Jul 2025 03:26:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEQ6mcxeczwUVzP65wbzm9SbozOcYmPw7bUBGvyuQm74x4U7KBsjvaF7eyGnLGJt+CBoK4ocw==
+X-Received: by 2002:a05:6000:22c1:b0:3a4:e6e6:a026 with SMTP id
+ ffacd0b85a97d-3b5f2e1b3d4mr10028732f8f.28.1752488788619; 
+ Mon, 14 Jul 2025 03:26:28 -0700 (PDT)
+Received: from stex1.lan ([193.207.162.97]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b5e8e14cfcsm12193531f8f.67.2025.07.14.03.26.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Jul 2025 03:26:27 -0700 (PDT)
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH] MAINTAINERS: add net/vhost* files under `vhost`
+Date: Mon, 14 Jul 2025 12:26:23 +0200
+Message-ID: <20250714102626.34431-1-sgarzare@redhat.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-References: <20250714101156.30024-1-sgarzare@redhat.com>
-In-Reply-To: <20250714101156.30024-1-sgarzare@redhat.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 14 Jul 2025 13:21:04 +0300
-X-Gm-Features: Ac12FXxIlXOh-GAyLCx6o5UJt0FymhiE1facYzFNhiyEThkcGQanvLR196pPkQ0
-Message-ID: <CAAjaMXZj+RYFhV0oPVvF9+=Tbay-Fi+rPJBNNe5MM7WXA2s05Q@mail.gmail.com>
-Subject: Re: [PATCH] net/vdpa: fix potential fd leak in net_init_vhost_vdpa()
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,59 +107,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 14, 2025 at 1:14=E2=80=AFPM Stefano Garzarella <sgarzare@redhat=
-.com> wrote:
->
-> From: Stefano Garzarella <sgarzare@redhat.com>
->
-> Coverity reported a file descriptor leak (CID 1490785) that happens if
-> `vhost_vdpa_get_max_queue_pairs()` returns 0, since in that case
-> net_host_vdpa_init(), which should take ownership of the fd, is never
-> called.
->
-> vhost_vdpa_get_max_queue_pairs() returns 1 if VIRTIO_NET_F_MQ is not
-> negotiated, or a negative error if the ioctl() fails, or the maximum
-> number of queue pairs exposed by the device in the config space in the
-> `max_virtqueue_pairs` field. In the VIRTIO spec we have:
->      The device MUST set max_virtqueue_pairs to between 1 and 0x8000
->      inclusive, if it offers VIRTIO_NET_F_MQ.
->
-> So, if `vhost_vdpa_get_max_queue_pairs()` returns 0, it's really an
-> error since the device is violating the VIRTIO spec.
->
-> Treat also `queue_pairs =3D=3D 0` as an error, and jump to the `err` labe=
-l,
-> to return a negative value to the caller in any case.
->
-> Coverity: CID 1490785
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-> ---
->  net/vhost-vdpa.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
->
-> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-> index 58d738945d..9dc7d2cb23 100644
-> --- a/net/vhost-vdpa.c
-> +++ b/net/vhost-vdpa.c
-> @@ -1813,9 +1813,8 @@ int net_init_vhost_vdpa(const Netdev *netdev, const=
- char *name,
->
->      queue_pairs =3D vhost_vdpa_get_max_queue_pairs(vdpa_device_fd, featu=
-res,
->                                                   &has_cvq, errp);
-> -    if (queue_pairs < 0) {
-> -        qemu_close(vdpa_device_fd);
-> -        return queue_pairs;
-> +    if (queue_pairs <=3D 0) {
-> +        goto err;
->      }
->
->      r =3D vhost_vdpa_get_iova_range(vdpa_device_fd, &iova_range);
-> --
-> 2.50.1
->
->
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+net/vhost* files should be interesting for vhost maintainers/reviewers.
+
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index e88ed2c0a9..045a896d08 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2321,6 +2321,7 @@ F: include/*/vhost*
+ F: subprojects/libvhost-user/
+ F: block/export/vhost-user*
+ F: util/vhost-user-server.c
++F: net/vhost*
+ 
+ vhost-shadow-virtqueue
+ R: Eugenio Pérez <eperezma@redhat.com>
+-- 
+2.50.1
+
 
