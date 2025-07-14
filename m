@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 006BFC83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:08:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E72E4C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:08:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSGw-0005KS-4q; Mon, 14 Jul 2025 19:07:46 -0400
+	id 1ubSFw-0002L4-Pp; Mon, 14 Jul 2025 19:06:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGV-0003cT-Ev
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSFt-00023N-AX
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:06:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGU-0005UD-0n
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:19 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSFr-0005NL-FO
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:06:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534437;
+ s=mimecast20190719; t=1752534398;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ZL6gIy6E1EGKwHnookoXDuH71GEOS/u/ejdom3UITfo=;
- b=I2hnDO9MtfsZ7iPWBw/kQf4qa2Zz2jMj2ETqJp14cilgf2yYqTrIHKl7Bdj1ytrVTwj01J
- 4Z8VxDBJPFF4kHUerZKV4b+u6UGBsQtEg5dJLWbIRj9TDUWTxrNaK+CxhPhKpizkQXJOZ3
- KxcTQaGSMmXPu8LvRIngBUYeMOnWmX8=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=gJuqhChPRmOX5xRXsCyEYU8+IpMhen8QYBWBgrWseb8=;
+ b=CfwezSMjq9t7neOiT1LrO3G3K+mJadIGM3EvdOVcYzQKKWD7345O6W+YkoIWtKQx41oXaY
+ NBVDECu5zobHeQx2jxImi32ELrBcA3fKp8DbEFTkBUZUjplXeracowE1rhPi3f2Yqpu3QJ
+ dFNQZ0I3CGcODw9dPS0gMTDkwunc5Ms=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-275-wMQ1kxtANfmWDXuQ0q2aSQ-1; Mon, 14 Jul 2025 19:07:15 -0400
-X-MC-Unique: wMQ1kxtANfmWDXuQ0q2aSQ-1
-X-Mimecast-MFC-AGG-ID: wMQ1kxtANfmWDXuQ0q2aSQ_1752534435
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45597cc95d5so18204875e9.1
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:07:15 -0700 (PDT)
+ us-mta-516-wufOlXSNPWeMpxNn2lG5Rw-1; Mon, 14 Jul 2025 19:06:37 -0400
+X-MC-Unique: wufOlXSNPWeMpxNn2lG5Rw-1
+X-Mimecast-MFC-AGG-ID: wufOlXSNPWeMpxNn2lG5Rw_1752534396
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a4f3796779so2162776f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:06:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534434; x=1753139234;
+ d=1e100.net; s=20230601; t=1752534396; x=1753139196;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZL6gIy6E1EGKwHnookoXDuH71GEOS/u/ejdom3UITfo=;
- b=uPAZxB52T9oLZKRwmh4BhAg8JAQwxUunh0IJjjmTM3uDSV+HXsg75FaGiQosBVpOS8
- +/HOUz/i1F90y4Je3qEMrodSDOF6d2juC8cG+MoNIUa6zht1jlCpfKoGmrfPpjQRb3LU
- jlGRAnJZga56VtdPUqTnpklWzbY/BjlHhezYj8PDpSsDxdQ4gcCeTRY3ARU4Qg7v3q5E
- mthwF2avwbsYKigCWDHPhLQX50MA33gRdqlbPFvKYXvTrVmtCmV00VCESWUC7OR0AvZ7
- O6o6xEf/2BC0eczLfljjh5qwprXsL/lfm8KCO1jLyCJviQR9QHrxzWIuULJNAA3fygu5
- El+Q==
-X-Gm-Message-State: AOJu0Yxkjswndj6MdgkdiY1i0mAfkAdrZVOQF07i2avxAfoi6Z4njaH8
- FMccrhLYn0vQZX4xk39Ak0IghPR+Isml8YambrEN51rPKxSZMlyHlB/0bDn/LzQtHPx4zjDlVxD
- 4+/TawKXnAJ1YD3NFcefz2Qt6ewrkV7MI/hdAq7gUVvndyIpUQZ00f3f2sGkx6GACyv4iEYEGVO
- 76jmeSMaAApeG6rh5C1Rxgeo/d5GsYoheYtw==
-X-Gm-Gg: ASbGncsHvC2fR0zxO6nBLMKfi5P4na6GAIf8/3PoLA4myl7VGkqQTPfDHyinTbflzqR
- O9sDqXAiwpIeZJPZ9saKraltpnON+s1Pin7DV7nJlTNLvHH/etol9U+IoySBu9dYXplKZYAcuEX
- PbKASXoccQqyt0qMe54ez+LiA73CNnJsXsvfTDyfEi4NjKxU52UOOxsUJfNgCEwGYMpVTWFjO4+
- LJxgTMffjG0G9Mv3Y0ikcAGSwm/1JxMyZ74zMJJF+g/1373US0YRh6XKcNdI1AlkjBWhDGIhB4d
- 0O8s5iCBa+1POMLPF2h+hnlVkyLQkrYH
-X-Received: by 2002:a05:600c:1c8f:b0:456:2212:46b8 with SMTP id
- 5b1f17b1804b1-45622124965mr25396005e9.28.1752534434233; 
- Mon, 14 Jul 2025 16:07:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEWXWVjb6PpjXQxUk5m6v4U91+cq9IAujqFHfVmaLDKbzY/WsKleJ6cWB3JtIfiBtW/skWimg==
-X-Received: by 2002:a05:600c:1c8f:b0:456:2212:46b8 with SMTP id
- 5b1f17b1804b1-45622124965mr25395805e9.28.1752534433739; 
- Mon, 14 Jul 2025 16:07:13 -0700 (PDT)
+ bh=gJuqhChPRmOX5xRXsCyEYU8+IpMhen8QYBWBgrWseb8=;
+ b=Jftl4E9cVCkX45vX6SsL8J9L4P8uneKFL9Hlq0mTamIZchovFwabjfefy9t4VempVV
+ vu8SylR5Oz4z2hTl7is7EJNf4iCKr/TPG1N4hJmei2Wnu3TtBhL9GxZvC204w1zPQuBe
+ cfpxsfmTGcFW0EsmAhw6wPW806DpIY89EjGeWjTz5lZPLOBe9fuaSZ3/T5465DaHViDp
+ 2mSqNlUpeXmY4VPy3JtQW6XCd9Ti1J9Y9xyNzNpBtYhH4Ir987AOToSDowaHBqm4ZKjF
+ SdgtJb++myAUqVAmlA6we7uucxINCpuiuqD7tFj3V4+JlxC+aFPaiKjt9fULP7B4EGWT
+ UD6A==
+X-Gm-Message-State: AOJu0Yyk/yCkbB1B4SFI9oSVQTxz59uiBLWKG+QB4ohsJnr/Q0Y/2crj
+ 6rw7wN6YwOUyCZkPIE1AvB7ooOpVeHr0EbRTb5JFrkosNpkGg/pzaDzkKtAJEUlobAp7Y58QeSo
+ +014kGmWBH0aXmr1jqde0eqAQjHRPHf+lB06wzTZs8RbJZZ76TVKmLJqUfqKvCwJqMX5fQF1Ryr
+ J7A66l9p5oyZMbCBfyoYFWBVXlSfumvfSAbA==
+X-Gm-Gg: ASbGncttq0Ookd6jTZC081JjHMMwLFb89z1kYIIhIV4VAqOVqdSrhwX3vvQ9HV+lnZj
+ KKD1rgvtx1McrqAnsPGei/+lYpIOGhid1/VWpgOuy4UuigYdIPy2Wtcb8wyDHkryx5jX+NTviQS
+ 1S1nfllkTLdIX1Jw77pV3pIQnuQ9UYp/mmxhfanBR1JO2FSOc+INkGnpn5ptC3pODQclqxzKEBt
+ pQKEDf6sadOazarVTtL86V2XhV0gLhyne5PJLCsKjj/cd7piYFBmxkYiogyqYMHQxm6EeijcVoB
+ pSlPqC06mYZOKPFAtLpu7GmXnvsqZ97+
+X-Received: by 2002:a5d:60ca:0:b0:3a5:2a24:fbf5 with SMTP id
+ ffacd0b85a97d-3b60a15700amr197361f8f.18.1752534395907; 
+ Mon, 14 Jul 2025 16:06:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFQOFl1MFDKvX4Qy4Ii82y2NGJiGxSDTtb+K+1NBFlF1rTvbUllIyCQwqQhRNN+ot736otvDw==
+X-Received: by 2002:a5d:60ca:0:b0:3a5:2a24:fbf5 with SMTP id
+ ffacd0b85a97d-3b60a15700amr197347f8f.18.1752534395475; 
+ Mon, 14 Jul 2025 16:06:35 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454d50fa9b4sm188290535e9.27.2025.07.14.16.07.11
+ ffacd0b85a97d-3b5e8e1e135sm13638629f8f.72.2025.07.14.16.06.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:07:12 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:07:10 -0400
+ Mon, 14 Jul 2025 16:06:35 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:06:33 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Vasant Hegde <vasant.hegde@amd.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 23/97] amd_iommu: Remove duplicated definitions
-Message-ID: <5959b641c98b5ae9677e2c1d89902dac31b344d9.1752534227.git.mst@redhat.com>
+ Daniil Tatianin <d-tatianin@yandex-team.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 08/97] softmmu/runstate: add a way to detect force shutdowns
+Message-ID: <260f826cf8f2fe54f3cf4de541d761cf616e15ea.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -88,7 +85,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1752534227.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -113,34 +110,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-No functional change.
+This can be useful for devices that might take too long to shut down
+gracefully, but may have a way to shutdown quickly otherwise if needed
+or explicitly requested by a force shutdown.
 
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Message-Id: <20250617150427.20585-8-alejandro.j.jimenez@oracle.com>
+For now we only consider SIGTERM or the QMP quit() command a force
+shutdown, since those bypass the guest entirely and are equivalent to
+pulling the power plug.
+
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Message-Id: <20250609212547.2859224-2-d-tatianin@yandex-team.ru>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/amd_iommu.h | 4 ----
- 1 file changed, 4 deletions(-)
+ include/system/runstate.h |  1 +
+ system/runstate.c         | 10 ++++++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index 96fc5b621e..8b42913ed8 100644
---- a/hw/i386/amd_iommu.h
-+++ b/hw/i386/amd_iommu.h
-@@ -206,10 +206,6 @@
- /* Completion Wait data size */
- #define AMDVI_COMPLETION_DATA_SIZE    8
+diff --git a/include/system/runstate.h b/include/system/runstate.h
+index fdd5c4a517..b406a3960e 100644
+--- a/include/system/runstate.h
++++ b/include/system/runstate.h
+@@ -107,6 +107,7 @@ void qemu_system_vmstop_request(RunState reason);
+ void qemu_system_vmstop_request_prepare(void);
+ bool qemu_vmstop_requested(RunState *r);
+ ShutdownCause qemu_shutdown_requested_get(void);
++bool qemu_force_shutdown_requested(void);
+ ShutdownCause qemu_reset_requested_get(void);
+ void qemu_system_killed(int signal, pid_t pid);
+ void qemu_system_reset(ShutdownCause reason);
+diff --git a/system/runstate.c b/system/runstate.c
+index 38900c935a..e18eb8cb0c 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -437,6 +437,7 @@ static ShutdownCause reset_requested;
+ static ShutdownCause shutdown_requested;
+ static int shutdown_exit_code = EXIT_SUCCESS;
+ static int shutdown_signal;
++static bool force_shutdown;
+ static pid_t shutdown_pid;
+ static int powerdown_requested;
+ static int debug_requested;
+@@ -457,6 +458,11 @@ ShutdownCause qemu_shutdown_requested_get(void)
+     return shutdown_requested;
+ }
  
--#define AMDVI_COMMAND_SIZE   16
--/* Completion Wait data size */
--#define AMDVI_COMPLETION_DATA_SIZE    8
--
- #define AMDVI_COMMAND_SIZE   16
++bool qemu_force_shutdown_requested(void)
++{
++    return force_shutdown;
++}
++
+ ShutdownCause qemu_reset_requested_get(void)
+ {
+     return reset_requested;
+@@ -805,6 +811,7 @@ void qemu_system_killed(int signal, pid_t pid)
+      * we are in a signal handler.
+      */
+     shutdown_requested = SHUTDOWN_CAUSE_HOST_SIGNAL;
++    force_shutdown = true;
+     qemu_notify_event();
+ }
  
- #define AMDVI_INT_ADDR_FIRST    0xfee00000
+@@ -820,6 +827,9 @@ void qemu_system_shutdown_request(ShutdownCause reason)
+     trace_qemu_system_shutdown_request(reason);
+     replay_shutdown_request(reason);
+     shutdown_requested = reason;
++    if (reason == SHUTDOWN_CAUSE_HOST_QMP_QUIT) {
++        force_shutdown = true;
++    }
+     qemu_notify_event();
+ }
+ 
 -- 
 MST
 
