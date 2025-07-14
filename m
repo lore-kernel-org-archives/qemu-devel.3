@@ -4,109 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F9D8C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 21:23:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BA54C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 21:23:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubQd7-0005sh-OY; Mon, 14 Jul 2025 17:22:33 -0400
+	id 1ubQda-00070r-7t; Mon, 14 Jul 2025 17:23:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel@iogearbox.net>)
- id 1ubP3Z-0002es-TC
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 15:41:52 -0400
-Received: from www62.your-server.de ([213.133.104.62])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel@iogearbox.net>)
- id 1ubP3X-0002GW-3Q
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 15:41:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
- :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=unP8NaYcfGWst2Rck95LtACnkFlPr2QzLR31vkz89uk=; b=VuiE9+oLStvl7h1Qg5f+d9efbE
- M7K5zRU3vAwIcuQba29O54t0NpyfGeSRCr4L40OySGJSbtcR2MW/77ZhQWuG/382J/5LD902wd4ys
- KT9OgOkumOTMxILPUr7ZepB0+y6oxvzU8EbdR+4T5qeMn/r93NCzDaXGKtgR16u8ku6KtDAGLaPnT
- piLt/DrIdCIKOv7erJPWlet8MuYqjWFJHosSYHXh/KQ/5uyfzsNQMQcpCcaz9G8SLB6RDaQpnT+3s
- CKp5tVYD1vvSE1hALZpxGE1Jk1SGrFmHaTuwca2+YcklSXk3SHz1wFyXDL5eJxjgr5oHCWiqnY8sw
- VQCscXDg==;
-Received: from sslproxy07.your-server.de ([78.47.199.104])
- by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96.2) (envelope-from <daniel@iogearbox.net>)
- id 1ubP3O-000IBA-0d; Mon, 14 Jul 2025 21:41:34 +0200
-Received: from localhost ([127.0.0.1])
- by sslproxy07.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96) (envelope-from <daniel@iogearbox.net>)
- id 1ubP3N-0008kd-1t; Mon, 14 Jul 2025 21:41:33 +0200
-Message-ID: <72157bbf-5501-472c-ad3c-2d560bf91d8d@iogearbox.net>
-Date: Mon, 14 Jul 2025 21:41:33 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubP1r-0000KX-8e
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 15:40:05 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubP1o-0001ol-8p
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 15:39:59 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4561a4a8bf2so14441765e9.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 12:39:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752521994; x=1753126794; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=AYDsqCZbbKRVXIcGD0Th75rw6R7pwd0G284BdPZrU50=;
+ b=DPG8rbwgEecZXr+usZxENV877vZiSdxYvRN602lL9EmHnjB/xwVbTOlZiB7nyjYrla
+ x8ci+bReD5vAS9aGbFlGwBIiFtE9S8UJg/sCwLorv45hh7aXY9aMXuGxe5rHEW4EgkqI
+ G0eKpX6oR+koLQuIwVFm7LPmv+tft3qg2QjDrnqzgZuCuBtLBwlxe22mHFQYgOby6QXM
+ L9lyfVBJIHEmJwu2otV4538fwbQ8023O9Uod6fM0YzMT6YE1E8cjQkXLITsOD0VNmtYy
+ 8zzVclXs7kpxtV5HITF27B17HRgL3EwBfoa3BJhQD0WFz/a12NHUNE14gz9ID7NGGRMo
+ hQvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752521994; x=1753126794;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=AYDsqCZbbKRVXIcGD0Th75rw6R7pwd0G284BdPZrU50=;
+ b=Rp0SG2VpVMIgRmwvg7OkAWBAjv6sKsMkC97b3ztFtkcdh6O6984uo2DzdKdCzeBGtY
+ upmzv1La+AiJzElN9AwVioy6eHLD5y6RFbBExx+wh6R0ATgT+LxxxKqpTjV/FWvwcDwm
+ 60LdLOioFTJVoLWgMdcpZubKLkjcpRz1VzCqXMT0NSDRmWhBa2yKQSNOJjmh0xZbAjuK
+ wY3pCy/ECGAxvnuxCnVVYRJsrG4Er2+Kw+Jnk/jwGzVpCoAi1IMJss4Y9q3kEhKmapYi
+ sHuZUdEQYqLwoZri466Nfu/NdU69ZmzODm+I+25AAH9gC4nPOn91dR9oix0Nwed98obB
+ 8jpw==
+X-Gm-Message-State: AOJu0Yz9UgRTEq/ePehU6Q18ekb16pSgAtWPz33Td7v0OKJn/th84egd
+ IcAA01YkBdj/QoqFKXDesAWbrauR4Tra1XybgfIpxNua9Bf45HY6vP937GqvkWeH3zU=
+X-Gm-Gg: ASbGncsaNk1mM7K6YeJ7uWstDabs7Sg+CdSdTL7W7ZRh+cj34vbXy2yVzegQGbnsW9s
+ M9rZOuJqB9IkPtoOqPF/Q/2VEsVhnGcFvmAaOq5kxbIHvoKB9rcrS19RmgvRrkHaOqRuqkHTKsz
+ KDZqBjShyYFQhOYtlBV+X3gjU7ajmezGC9cZ119rYgWimZdl+iUxVZccN20KqU24X60TtENfu40
+ +/5Waf1BjRn5nzKDyO7eQfPMcwvP1T3pKeVIjTf+LGzk0aNRLsVwzjiD6p1Yejy5jnK22U/IkRH
+ o5J2Guh6o7Dpnw8935KRxveo5u6x6qcJH1Jm7en1gkoGqNFXnvCHAIQEXWcHWFpxAcE1GwbkhOW
+ hiIHWb8JWZbKyLmJ5tn0HggBl5kuVCU0vYYWXk7uujsndeXutWqhTUYMCpaXbSNg57w==
+X-Google-Smtp-Source: AGHT+IF8A4P7ufgns2DRXYYrVgvrp3BY2Zac9qPAIbYYB5fdRLWJ37QhofYWOJjeAUeMkeryksI9MA==
+X-Received: by 2002:a05:600c:548b:b0:456:11cc:360d with SMTP id
+ 5b1f17b1804b1-45611cc3924mr68490555e9.9.1752521993886; 
+ Mon, 14 Jul 2025 12:39:53 -0700 (PDT)
+Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4561dd90af8sm28898255e9.15.2025.07.14.12.39.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Jul 2025 12:39:52 -0700 (PDT)
+Message-ID: <06db4d26-f12e-4589-977b-750311c92bea@linaro.org>
+Date: Mon, 14 Jul 2025 21:39:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/3] net/af-xdp: Support pinned map path for AF_XDP
- sockets
-To: Ilya Maximets <i.maximets@ovn.org>, qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Anton Protopopov <aspsk@isovalent.com>
-References: <20250711094416.247125-1-daniel@iogearbox.net>
- <20250711094416.247125-3-daniel@iogearbox.net>
- <b067d5e5-0113-4b22-8bc5-484c8e83ca1f@ovn.org>
+Subject: Re: [PULL 25/26] migration/postcopy: Add latency distribution report
+ for blocktime
+To: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>
+References: <20250711141031.423-1-farosas@suse.de>
+ <20250711141031.423-26-farosas@suse.de>
+ <CAFEAcA-_2a5CUspXhy8UErA86EnZ3_s=P2DQ9DPdrMDwNWF4FQ@mail.gmail.com>
 Content-Language: en-US
-Autocrypt: addr=daniel@iogearbox.net; keydata=
- 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
-In-Reply-To: <b067d5e5-0113-4b22-8bc5-484c8e83ca1f@ovn.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA-_2a5CUspXhy8UErA86EnZ3_s=P2DQ9DPdrMDwNWF4FQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: Clear (ClamAV 1.0.7/27699/Mon Jul 14 10:54:31 2025)
-Received-SPF: pass client-ip=213.133.104.62; envelope-from=daniel@iogearbox.net;
- helo=www62.your-server.de
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,60 +101,67 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Daniel Borkmann <daniel@iogearbox.net>
-From:  Daniel Borkmann via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/14/25 5:12 PM, Ilya Maximets wrote:
-> On 7/11/25 11:44 AM, Daniel Borkmann wrote:
->> Extend 'inhibit=on' setting with the option to specify a pinned XSK map
->> path along with a starting index (default 0) to push the created XSK
->> sockets into. Example usage:
+On 14/7/25 12:47, Peter Maydell wrote:
+> On Fri, 11 Jul 2025 at 15:20, Fabiano Rosas <farosas@suse.de> wrote:
 >>
->>    # ./build/qemu-system-x86_64 [...] \
->>     -netdev af-xdp,ifname=enp2s0f0np0,id=net0,mode=native,queues=2,start-queue=14,inhibit=on,map-path=/sys/fs/bpf/xsks_map,map-start-index=14 \
->>     -device virtio-net-pci,netdev=net0 [...]
+>> From: Peter Xu <peterx@redhat.com>
 >>
->> This is useful for the case where an existing XDP program with XSK map
->> is present on the AF_XDP supported phys device and the XSK map is not
->> yet populated. For example, the former could have been pre-loaded onto
->> the netdevice by a control plane, which later launches QEMU to populate
->> it with XSK sockets.
+>> Add the latency distribution too for blocktime, using order-of-two buckets.
+>> It accounts for all the faults, from either vCPU or non-vCPU threads.  With
+>> prior rework, it's very easy to achieve by adding an array to account for
+>> faults in each buckets.
 >>
->> Normally, the main idea behind 'inhibit=on' is that the QEMU instance
->> doesn't need to have a lot of privileges to use the pre-loaded program
->> and the pre-created sockets, but this mentioned use-case here is different
->> where QEMU still needs privileges to create the sockets.
+>> Sample output for HMP (while for QMP it's simply an array):
 >>
->> The 'map-start-index' parameter is optional and defaults to 0. It allows
->> flexible placement of the XSK sockets, and is up to the user to specify
->> when the XDP program with XSK map was already preloaded. In the simplest
->> case the queue-to-map-slot mapping is just 1:1 based on ctx->rx_queue_index
->> but the user might as well have a different scheme (or smaller map size,
->> e.g. ctx->rx_queue_index % max_size) to push the inbound traffic to one
->> of the XSK sockets.
->>
->> Note that the bpf_xdp_query_id() is now only tested for 'inhibit=off'
->> since only in the latter case the libxdp takes care of installing the
->> XDP program which was installed based on the s->xdp_flags pointing to
->> either driver or skb mode. For 'inhibit=on' we don't make any assumptions
->> and neither go down the path of probing all possible options in which
->> way the user installed the XDP program.
->>
->> Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
->> Cc: Ilya Maximets <i.maximets@ovn.org>
->> Cc: Jason Wang <jasowang@redhat.com>
->> Cc: Anton Protopopov <aspsk@isovalent.com>
->> ---
->>   net/af-xdp.c    | 83 ++++++++++++++++++++++++++++++++++++++++++++++---
->>   qapi/net.json   | 29 +++++++++++------
->>   qemu-options.hx | 23 ++++++++++++--
->>   3 files changed, 118 insertions(+), 17 deletions(-)
+>> Postcopy Latency Distribution:
 > 
-> Still works.  Thanks!
+> Hi; Coverity points out that there is a bug here (CID 1612248):
 > 
-> Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+>> +static const gchar *format_time_str(uint64_t us)
+>> +{
+>> +    const char *units[] = {"us", "ms", "sec"};
+>> +    int index = 0;
+>> +
+>> +    while (us > 1000) {
+>> +        us /= 1000;
+>> +        if (++index >= (sizeof(units) - 1)) {
+> 
+> sizeof(units) is the size in bytes, which in this case is
+> 24, as it is an array of three 8-byte pointers. So it's
+> not the right thing to use in bounds checking the array index.
+> 
+> You probably wanted ARRAY_SIZE(units). Also, the ++index
+> inside the comparison here seems unnecessarily confusing.
+> I would suggest something like
+> 
+>      while (us > 1000 && index + 1 < ARRAY_SIZE(units)) {
+>          us /= 1000;
+>          index++;
+>      }
+> 
+> which puts into the while condition the two conditions under
+> which we are OK to shift down a unit, and keeps it
+> clear that we maintain the invariant of "when we shift
+> down a unit we also divide the value by 1000".
+> 
+>> +            break;
+>> +        }
+>> +    }
+>> +
+>> +    return g_strdup_printf("%"PRIu64" %s", us, units[index]);
+> 
+> Otherwise this units[index] access could be off the end of
+> the array.
+> 
+>> +}
 
-Awesome, thanks Ilya!
+As a follow-up, this method could be declared in "qemu/cutils.h"
+along with size_to_str() and freq_to_str(), maybe timeus_to_str()?
+
+Regards,
+
+Phil.
 
