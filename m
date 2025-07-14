@@ -4,80 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 082D7C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 10:44:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76215C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 10:48:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubGf0-0005S7-7s; Mon, 14 Jul 2025 06:43:50 -0400
+	id 1ubGis-0006wA-Kg; Mon, 14 Jul 2025 06:47:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ubGar-0004Hx-FV
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:39:34 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ubGap-0006BK-KK
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:39:33 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-70e3e0415a7so34794587b3.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 03:39:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752489569; x=1753094369; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Ei4SD5y8jqVtlTDsI7wyp9CH/LyVovq+fEsPt5A2vgU=;
- b=kGddQ3Q/rzpBxZ7He+9CS0zNe+6Fgio8EOANwr30BzA82iZoGTeuJhJWJD9Zhbsy01
- j3LCSY/b8Ht6cnk6t/LSKGtknGmxQ+0EQ7OO6Pc22Ckmyq9bGsmUCKYXZ8InZzs2AQwF
- BiB/umhYw7qwNMo9BrI59m/hrW1zgALlOjUH+ZvNznkM1uwt3AoeB+6WN9mKSz9wITh4
- iZ+6N/VV4jz49uJWrFiRDYHzAIY85h0KsUjgfjUIkqk6MFoj9qqU+Ip0+dYa3g11NCIT
- xEudL8h7yYbI8gyQvCAVWShHxuXcYr5fxymPaVcIAt6mPQDzAzB3LHEwo3un8yTz38ta
- pZ+g==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubGdN-00050Y-RD
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:42:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubGdH-0006e2-NE
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:42:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752489717;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hPAkTAaIy889P9aYpRLXTKByB/dQEP/Oc6mdMhiTbsU=;
+ b=el9zx58Z3L+ebdVRLNyDWRWe7HtYPceSeXaF8a/xEU6hvOKyOiymBIDSBVmb51CZCxy8FO
+ vQ20bRUrJUWawZGKiLDAMl6rQQE9pWkgGbSyhnOBFChsXqCZDfXmTVNCp5wNItKzHcAnBO
+ i0ijjRXI2YCQJ/GX32sHFcRjAr+llqE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-553-61XW7XVhPcyBDqD5ozQ-6w-1; Mon, 14 Jul 2025 06:41:56 -0400
+X-MC-Unique: 61XW7XVhPcyBDqD5ozQ-6w-1
+X-Mimecast-MFC-AGG-ID: 61XW7XVhPcyBDqD5ozQ-6w_1752489715
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-453018b4ddeso21236045e9.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 03:41:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752489569; x=1753094369;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Ei4SD5y8jqVtlTDsI7wyp9CH/LyVovq+fEsPt5A2vgU=;
- b=T8EFNN+7z32TeheNEcnpL+73xwn4vFk93RU6VXgjlFmx4bO7w+YGhSso1K4IYdOgu0
- ebDSvPMuykNxqoOPeTQl1j03NxWs2FpzUbasXlOMcwle69qBqK8c14+3vmC7nOPSgT0a
- fWovyUcL1MpVw6aN3TtpZDFGgskSAP7ErNG+SIvZ9OAmwQOTstxrdGzpnqYLs0G2pq+L
- a7cKi2B4cUTgBG2w3I0om2QpxfG475wYh/CpIKck+iEnv/9VGRWxZ/9+pjf9wwDv5Mwo
- WVQhjTA5xHHo1xQc94F67kJ+D8RiGqwQR9Qcz3I/DNYKnE1HV3cqIozxg2mcmNgMZ+x7
- 811w==
-X-Gm-Message-State: AOJu0Yx7oED5xMQxpmU78bNQq9pPoxcOsVsbOOFy6OazX7pNJM5buKmn
- 8Fa6yJZg7cQV0h9anW6W+0D8Zk2VAV04OcJw8tzGJKNPVTMooEhgc15nDibxV0CLWI7BUS/7qYE
- G9ZTcDjXZ63qTBeh0EIx/y0USOLVWuqtu4IGsDFyt7Q==
-X-Gm-Gg: ASbGnctqid4mk+XlJuxloyt40Owmqz222pZBR17bi8f3bS59Yk3Na87TqsG1U01XU0A
- UAxxETZVTK+rZUkN39AF95bg0/fHKJbp3qMP3LFGXKx0yY3cj33pucwNw8ntUfOy+N9/uEw60H/
- VbXaOsZN1R/outReye4v1yH7TZN2FCITE1Jkw6Pvjbc1SV6cFTjPjRC4kjyb2lILrXiahyGreFI
- TRTEJ8lHuBDSJgLJnY=
-X-Google-Smtp-Source: AGHT+IEhjwN/GOGD1EEZ9VBFvTTlLWJw40fiGVqbu6HWeBw4SUm2v2ZisIgOjiJgZjbwjb+x9bg6fg5hsTHPnSt3zdg=
-X-Received: by 2002:a05:690c:7484:b0:70e:61b:afed with SMTP id
- 00721157ae682-717d68748ddmr179642787b3.7.1752489568715; Mon, 14 Jul 2025
- 03:39:28 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752489715; x=1753094515;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hPAkTAaIy889P9aYpRLXTKByB/dQEP/Oc6mdMhiTbsU=;
+ b=vCfQkuBadrS06W09bbfmZbR5/eoHti5YGzMEu9fC0MIQhDHm3PGSJzju7Y6cP4+Dcy
+ U8Vl6ZJ5dFIpRhzc2sIRlJtPQwohEl0HHxf65QMkA2krMe6D0LCsQZ+R4T+amJEBpRQN
+ 14hydJ09Fik9olxEbLGC+/LqP2rpdBfWsSuJ+gK2Tdh9TbGBLnQL1C78khSKEMdy6CaE
+ mXE8abuuo/2xg5Cajt1mIYIxUH6IIcj4wL1dxfcAuh9BvZOAaa0KQONegu2aSsFQYqKD
+ dJ9hP7ir8CbYGFm6ebMiH6CYxYYPOHJYeSdtnYsN02omv9HE/203Vtt0Dc+e7GFNJan2
+ kEPQ==
+X-Gm-Message-State: AOJu0YzNUJAgSWRd/2TuXCSWu7UFHB8+YS7AXszy+8gJVUlI+sCPa6DP
+ xRatbfuRzACjMJm2eJNvrdiXtFPEdpo5IUA8TpclFwjb20xj+iytTE77Fil6/SOg4/GooczNMyy
+ +4PbdyqmoRRG1BYo6xUF/QuF+Z3oGCi+agD2k7H0np621oeP3flG3liqk
+X-Gm-Gg: ASbGncsQsZS+rsqSW8brHvN4+TLAQsUCIKXm6/J0ORwxZ45DAVNfE6H+5rFwqCnMRo1
+ oLoVEiXmiECJO2BnNrtTcAre4fYjpnyRvspjpWXb9DH0L9tNU7SEz7cZgJq6J/V9cuaW2ZDBnK7
+ fRFK0sGble/9xUvIRGjdZJcmyY/ZnAxt93bMl5piV0OVx7uOME+Iql5rO8YMeC1yoMyVjwN69Zh
+ BO4yA9t1/n3LU/O1AjIbbnXqvGaIdnpxZ+5HoRuvxL+gPIPM1MH6GIGPb6SoAYwoowjigwJb1Bl
+ rtb+bNX8AVBQRoTPDeMCIJLMnxjoZ0iv
+X-Received: by 2002:a05:600c:8b70:b0:456:fc1:c286 with SMTP id
+ 5b1f17b1804b1-4560fc1c49amr45435545e9.1.1752489715093; 
+ Mon, 14 Jul 2025 03:41:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGpmfUJGJnjzI1HHy8gI/3LD4+H4VhPR82va2p+Eymc35k6ON0jiNdtPVYzEVuGDjZeLV7yMg==
+X-Received: by 2002:a05:600c:8b70:b0:456:fc1:c286 with SMTP id
+ 5b1f17b1804b1-4560fc1c49amr45435295e9.1.1752489714598; 
+ Mon, 14 Jul 2025 03:41:54 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4562360c989sm2596075e9.37.2025.07.14.03.41.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Jul 2025 03:41:54 -0700 (PDT)
+Date: Mon, 14 Jul 2025 06:41:51 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, fam@euphon.net,
+ pbonzini@redhat.com, jasowang@redhat.com, hreitz@redhat.com,
+ kwolf@redhat.com, sgarzare@redhat.com, raphael@enfabrica.net
+Subject: Re: [PATCH 0/4] vhost: drop backend_features
+Message-ID: <20250714062807-mutt-send-email-mst@kernel.org>
+References: <20250703124713.2530079-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-References: <20250704223239.248781-1-jcksn@duck.com>
- <20250704223239.248781-11-jcksn@duck.com>
-In-Reply-To: <20250704223239.248781-11-jcksn@duck.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 14 Jul 2025 11:39:16 +0100
-X-Gm-Features: Ac12FXx9JwX8grI0kwUJmeJTlBwIDz4RDYnOpc0epejx1rki7QMR4Tltk6Zgr0E
-Message-ID: <CAFEAcA9iQtisF6FO6bSDLs6sUnpQxW9jRZeMa2ZgLUbvbWnLFQ@mail.gmail.com>
-Subject: Re: [PATCH v4 10/11] MAX78000: AES implementation
-To: Jackson Donaldson <jackson88044@gmail.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250703124713.2530079-1-vsementsov@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,53 +106,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 4 Jul 2025 at 23:32, Jackson Donaldson <jackson88044@gmail.com> wrote:
->
-> This commit implements AES for the MAX78000
->
-> Signed-off-by: Jackson Donaldson <jcksn@duck.com>
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+On Thu, Jul 03, 2025 at 03:47:08PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> This field is mostly unused and sometimes confusing (we even have
+> a TODO-like comment to drop it). Let's finally do.
 
-Hi; now this is upstream Coverity Scan noticed a possible
-issue in this function (CID 1612247):
+Breaks make check with UBSAN enabled:
+32/109 /arm/virt/virtio-mmio/virtio-bus/virtio-net-device/virtio-net/virtio-net-tests/vhost-user/flags-mismatch - ERROR:../tests/qtest/qos-test.c:189:subprocess_run_one_test: child process (/arm/virt/virtio-mmio/virtio-bus/virtio-net-device/virtio-net/virtio-net-tests/vhost-user/flags-mismatch/subprocess [9701]) failed unexpectedly FAIL       
 
-> +static void max78000_aes_do_crypto(Max78000AesState *s)
-> +{
-> +    int keylen = 256;
-> +    uint8_t *keydata = s->key;
-> +    if ((s->ctrl & KEY_SIZE) == 0) {
-> +        keylen = 128;
-> +        keydata += 16;
-> +    } else if ((s->ctrl & KEY_SIZE) == 1 << 6) {
-> +        keylen = 192;
-> +        keydata += 8;
-> +    }
-> +
-> +    AES_KEY key;
-> +    if ((s->ctrl & TYPE) == 0) {
-> +        AES_set_encrypt_key(keydata, keylen, &key);
-> +        AES_set_decrypt_key(keydata, keylen, &s->internal_key);
-> +        AES_encrypt(s->data, s->result, &key);
 
-Here we call AES_set_encrypt_key() and AES_set_decrypt_key()
-before calling AES_encrypt()...
 
-> +        s->result_index = 16;
-> +    } else if ((s->ctrl & TYPE) == 1 << 8) {
-> +        AES_set_decrypt_key(keydata, keylen, &key);
-> +        AES_set_decrypt_key(keydata, keylen, &s->internal_key);
-> +        AES_decrypt(s->data, s->result, &key);
+https://gitlab.com/mstredhat/qemu/-/jobs/10668177755
 
-...here we call AES_set_decrypt_key() twice before
-calling AES_decrypt(). This looks a bit odd: should we either
-(a) call both AES_set_decrypt_key() and AES_set_encrypt_key()
-in each half of the if(), or (b) call AES_set_encyrypt_key()
-twice in the AES_encrypt() code path ?
 
-(Coverity is sometimes wrong, as it's only using a heuristic
-here, so the other option is "the code as written is correct",
-but in that case a comment might be helpful for human readers.)
+To trigger, configure with:
 
-thanks
--- PMM
+./configure '--cc=clang' '--cxx=clang++' '--enable-ubsan' '--extra-cflags=-fno-sanitize-recover=undefined -fno-sanitize=pointer-overflow' '--target-list=arm-softmmu' 
+
+make
+make check
+
+
+> Vladimir Sementsov-Ogievskiy (4):
+>   vhost: introduce vhost_ops->vhost_set_vring_enable_supported method
+>   vhost-user: stop use backend_features
+>   vhost_net: stop use backend_features
+>   hw/vhost: finally drop vhost_dev.backend_features field
+> 
+>  hw/block/vhost-user-blk.c         |  1 -
+>  hw/net/vhost_net.c                | 14 ++++++--------
+>  hw/scsi/vhost-scsi.c              |  1 -
+>  hw/scsi/vhost-user-scsi.c         |  1 -
+>  hw/virtio/vdpa-dev.c              |  1 -
+>  hw/virtio/vhost-user.c            | 25 ++++++++++++++++---------
+>  hw/virtio/vhost.c                 | 15 ++++++---------
+>  hw/virtio/virtio-qmp.c            |  2 --
+>  include/hw/virtio/vhost-backend.h |  2 ++
+>  include/hw/virtio/vhost.h         |  7 -------
+>  10 files changed, 30 insertions(+), 39 deletions(-)
+> 
+> -- 
+> 2.48.1
+
 
