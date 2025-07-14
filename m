@@ -4,87 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C35F5C83F17
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D21FDC83F27
 	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:27:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSJl-00067N-OT; Mon, 14 Jul 2025 19:10:45 -0400
+	id 1ubSNa-0005yb-1C; Mon, 14 Jul 2025 19:14:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSHv-0000st-UO
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:08:48 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSJI-0005Zm-Ax
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:10:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSHu-0005lK-42
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:08:47 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSJF-00061d-AR
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:10:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534525;
+ s=mimecast20190719; t=1752534608;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=E82N8uMrxYhqX3KZPSCakRCqzr2EespoSFv7KAFnOcU=;
- b=IWO0CsqPnq2EnDbIXfA1KzCq75csJHgaLiGng/F11fuCmSQS8L7X4RBKJENjJBUDHWRJVN
- +CSKfnYTnI+Fxfp9l/tX8qtM3mXMlCvQGPG5wIuUYWxUKlWlCBzEZzYTVphiu56UDZjOcs
- NwjnhS1kJr0jFdB/VbKZGUDWQoLnF/Q=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OvfcGX14yJ1JFvseFzHSJO7Gq6S+o9Stfivp/MgLhas=;
+ b=euqRkCDkPAspd30CsoqxDMzNXgkl7467xT4B0kncxd2ksvbBQAkfhbttKuDp7EiacBMo2o
+ b+vDgVnCoCgfxgkHj9NaoTalYFMTEhLmmVS0bsvp5TwKa0gnYAHl/0G8vEVykKtwy9fBge
+ RudI2E6E/5tmvdPYLyUbAGbzkIZ5lrs=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-509-12NsChnYPnmABp9uQvTiKg-1; Mon, 14 Jul 2025 19:08:44 -0400
-X-MC-Unique: 12NsChnYPnmABp9uQvTiKg-1
-X-Mimecast-MFC-AGG-ID: 12NsChnYPnmABp9uQvTiKg_1752534523
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4538f375e86so39566155e9.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:08:43 -0700 (PDT)
+ us-mta-25-WcW4vDAoMqai6hMml2Rc5w-1; Mon, 14 Jul 2025 19:10:07 -0400
+X-MC-Unique: WcW4vDAoMqai6hMml2Rc5w-1
+X-Mimecast-MFC-AGG-ID: WcW4vDAoMqai6hMml2Rc5w_1752534606
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a5058f9ef4so2002117f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:10:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534522; x=1753139322;
+ d=1e100.net; s=20230601; t=1752534606; x=1753139406;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=E82N8uMrxYhqX3KZPSCakRCqzr2EespoSFv7KAFnOcU=;
- b=Ii7qyxn8xuM5TFnLj2UYy2lTCH1HUezUTFb6gxYp4qZ9nPUalvTd4Dkr8Lr2DmwV9V
- L7mn8mxkCg6EOOtMGhmP3b+xWGaxDIYlEqgZLBul9kt78802gcn3PjCVSKhNvx6zp14Q
- Qyvpycwi2FN/3XxoW2uG7ipRmgetSFtnIGtXuZqM6z1pl4HbmIv4r1JB51Y9/0tFoTe6
- ElPHXwzy5MQoCGkXkZZn0kNRsPpJy6fRytl18UNiI6tmrSdL+bwqpUOuzsGSxBEj+4Nu
- GrErAA5EZx75qdjE3rRIopFvUo5fXugV6eyqoxtMrGDdjn3DqmLM3VvcJOfbUKRG84Tj
- YEMQ==
-X-Gm-Message-State: AOJu0YxnLGA7ybgfL4UaP3O1i+MuaVE54mBSlT/nFVuoMFAs9fTE2v8U
- phaVnlWf/siAYlgibS1nREIDkU7LEiakW9Bo1wPAOsszZpiQZZXvn/Wbh4Fy4syIPuclasr/V22
- UftV8glMBf5ZnBVyy+aGJcRb7hL5JxUFNsiVAi7rqcMrGvECTIGdmGffySkFeSYM+R1plBseFX+
- MbhspJ4H1vLc1D1XXFhGn7beM10JoHYhNLGg==
-X-Gm-Gg: ASbGncthWskyJyADBk+LRkWyeasVwUiTwAuyQAi9ZwsPOsIWk1D/ekqaCFFKvIzsnkU
- jgzv07hJJ9dqGLmXVq4cat9Xo03xfbf3ZXorid7mnZeB7VuJjkqgYwDu6rkYYB8FScpFxh+vXDS
- vdNclXgXwutyN+GKtTg3UWE1JT2sMvwJKnXNh9p8so5LTKtJPhvRBsMuQ5f3KHpefS3hPUNY444
- g/iAptDZYM564uP3mquPn92SELVLlMbN5GS6dKko4V2R/ImpykHbu1XOSB4EOJZp4YLKN73O2xJ
- azseHQKsE+BFl4sxSGaKDRYa3hJvy+AZ
-X-Received: by 2002:a05:600c:34c3:b0:43c:fc04:6d35 with SMTP id
- 5b1f17b1804b1-456272d2519mr3743915e9.4.1752534522568; 
- Mon, 14 Jul 2025 16:08:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFqrrhGRaR7onCaVgzSmXjg7LgwAN4MIfbe/hR5vxBDf5UyHeB6/rvD+udUh25lmotQUFWI8g==
-X-Received: by 2002:a05:600c:34c3:b0:43c:fc04:6d35 with SMTP id
- 5b1f17b1804b1-456272d2519mr3743645e9.4.1752534522082; 
- Mon, 14 Jul 2025 16:08:42 -0700 (PDT)
+ bh=OvfcGX14yJ1JFvseFzHSJO7Gq6S+o9Stfivp/MgLhas=;
+ b=nG72NyfYJou74LS+XaeqEfQlq++oEqx0td+0KHv8hG6l3TeK3pYdNdptRaUqMsGztn
+ H8BZ1bDH782CsRwNzg4mIhysvIvo5fl/sY1yccj5Lw6tm64bRtfp8E3bDdQcgcTtVtmC
+ 8N/S0/zUNY/1dOgJWb8Oaf5X5LADxztAmXnVBDV3tnZfp+Z5xrfG1Cx/H7AH/YK6Ot2L
+ +9MhhBVbLn9Fliie3DERveBGF47pfLDjjJsburseBDO5WO/rTg9rKCaWhRbABYfFEoWX
+ gjzUZZuqx4aHxQozXw1cohm15B8Ah31GM2GTu+sQLTpsBPipIgihtZ9DZ8kBKPuZKVb7
+ 7L4g==
+X-Gm-Message-State: AOJu0YzL9UWcTRPrMJJpKlzgIMk8gAKBmPp1/Mf8W7njRiVfuDMpSbU+
+ n0FApY7iwVUEHNnLS1YPwzz90bKaP18nqtbbtMwatobnCNBiWjx55nwX/uS6ZqKXzDsUE6rT92H
+ b3tQQbYCqCQFd3tEsUcZ8GP31UmM7dpc3HQKuVaX1lRBHZi/OlQfc33vEj4evpJCFAkcd/IBDmj
+ c+L95Fez43+XMTXK5BSujHZM/18MAwto6i4A==
+X-Gm-Gg: ASbGnct7R0X7MQ0zGyma3eKnQ+1HSOvvNjuZijdYzo/dfFu/K1PZa7tRwxGEb4mc0Mh
+ a1LPECa2EOiXpRDaLY88OBi+p4ZwjAuCXXWQ6DX3X8QUwYbh7GcS9xfGCRGozStMvimV/P8FdXL
+ BTTBRaffsNz8P/joTp2FlZX2AY06TEBL6nfUZHLstxmbHRgfFZhF3jT8DoFmKF/GSrVw3W9FZgX
+ iAOFXSWZHSq3x0b45fA+EuGyHA5dCRry/mlBDSew9bgOFt58HM11bftZK8n6MyBx6m4Kb66BIA2
+ AJmodx85LXrc/lYhYahjxQ5sz5BhMX53
+X-Received: by 2002:a05:6000:491b:b0:3b5:e244:52f9 with SMTP id
+ ffacd0b85a97d-3b5f35857d0mr12724137f8f.40.1752534605597; 
+ Mon, 14 Jul 2025 16:10:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHQJ1zQfDlH7LCUhuorj87Vr6qEQRi11dV9ZpgEhbZIs5/SL+pmhe82gGuMKK/ZDRi4xy4/Jg==
+X-Received: by 2002:a05:6000:491b:b0:3b5:e244:52f9 with SMTP id
+ ffacd0b85a97d-3b5f35857d0mr12724108f8f.40.1752534605012; 
+ Mon, 14 Jul 2025 16:10:05 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e1e2cfsm13369771f8f.75.2025.07.14.16.08.40
+ ffacd0b85a97d-3b5e8e14ce6sm13747797f8f.68.2025.07.14.16.10.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:08:41 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:08:39 -0400
+ Mon, 14 Jul 2025 16:10:04 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:10:02 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 57/97] hw/i386/acpi-build: Introduce
- build_append_pcihp_resources() helper
-Message-ID: <f5ffd909a6cce8a1804922d7d99a4b6b8a3d294e.1752534227.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PULL 87/97] hw/cxl: fix DC extent capacity tracking
+Message-ID: <6193623faba991085521cb9b5b76b48b8a610403.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -117,93 +108,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Fan Ni <fan.ni@samsung.com>
 
-Extract the code that reserves resources for ACPI PCI hotplug
-into a new helper named build_append_pcihp_resources() and
-move it to pcihp.c. We will reuse it on ARM.
+Per cxl r3.2 Section 9.13.3.3, extent capacity tracking should include
+extents in different states including added, pending, etc.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Message-Id: <20250714080639.2525563-12-eric.auger@redhat.com>
+Before the change, for the in-device extent number tracking purpose, we only
+have "total_extent_count" defined, which only tracks the number of
+extents accepted. However, we need to track number of extents in other
+states also, for now it is extents pending-to-add.
+
+To fix that, we introduce a new counter for dynamic capacity
+"nr_extents_accepted" which explicitly tracks number of the extents
+accepted by the hosts, and fix "total_extent_count" to include
+both accepted and pending extents counting.
+
+Signed-off-by: Fan Ni <fan.ni@samsung.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-Id: <20250714174509.1984430-2-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/acpi/pcihp.h |  2 ++
- hw/acpi/pcihp.c         | 18 ++++++++++++++++++
- hw/i386/acpi-build.c    | 15 ++-------------
- 3 files changed, 22 insertions(+), 13 deletions(-)
+ include/hw/cxl/cxl_device.h |  3 ++-
+ hw/cxl/cxl-mailbox-utils.c  | 26 ++++++++++++++++++--------
+ hw/mem/cxl_type3.c          |  1 +
+ 3 files changed, 21 insertions(+), 9 deletions(-)
 
-diff --git a/include/hw/acpi/pcihp.h b/include/hw/acpi/pcihp.h
-index 971451e8ea..8a46a414cc 100644
---- a/include/hw/acpi/pcihp.h
-+++ b/include/hw/acpi/pcihp.h
-@@ -75,6 +75,8 @@ void acpi_pcihp_device_unplug_request_cb(HotplugHandler *hotplug_dev,
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index ed6cd50c67..a151e19da8 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -618,6 +618,7 @@ struct CXLType3Dev {
+         CXLDCExtentList extents;
+         CXLDCExtentGroupList extents_pending;
+         uint32_t total_extent_count;
++        uint32_t nr_extents_accepted;
+         uint32_t ext_list_gen_seq;
  
- void build_acpi_pci_hotplug(Aml *table, uint64_t pcihp_addr);
- void build_append_pci_dsm_func0_common(Aml *ctx, Aml *retvar);
-+void build_append_pcihp_resources(Aml *table,
-+                                  uint64_t io_addr, uint64_t io_len);
+         uint8_t num_regions; /* 0-8 regions */
+@@ -696,7 +697,7 @@ CXLDCExtentGroup *cxl_insert_extent_to_extent_group(CXLDCExtentGroup *group,
+                                                     uint16_t shared_seq);
+ void cxl_extent_group_list_insert_tail(CXLDCExtentGroupList *list,
+                                        CXLDCExtentGroup *group);
+-void cxl_extent_group_list_delete_front(CXLDCExtentGroupList *list);
++uint32_t cxl_extent_group_list_delete_front(CXLDCExtentGroupList *list);
+ void ct3_set_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
+                                  uint64_t len);
+ void ct3_clear_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 299f232f26..0b615ea37a 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -2750,7 +2750,7 @@ static CXLRetCode cmd_dcd_get_dyn_cap_ext_list(const struct cxl_cmd *cmd,
+     uint16_t out_pl_len, size;
+     CXLDCExtent *ent;
  
- /* Called on reset */
- void acpi_pcihp_reset(AcpiPciHpState *s);
-diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
-index cbe7e01385..5ca36c8619 100644
---- a/hw/acpi/pcihp.c
-+++ b/hw/acpi/pcihp.c
-@@ -685,6 +685,24 @@ void build_acpi_pci_hotplug(Aml *table, uint64_t pcihp_addr)
-     aml_append(table, scope);
+-    if (start_extent_id > ct3d->dc.total_extent_count) {
++    if (start_extent_id > ct3d->dc.nr_extents_accepted) {
+         return CXL_MBOX_INVALID_INPUT;
+     }
+ 
+@@ -2761,7 +2761,7 @@ static CXLRetCode cmd_dcd_get_dyn_cap_ext_list(const struct cxl_cmd *cmd,
+     out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
+ 
+     stl_le_p(&out->count, record_count);
+-    stl_le_p(&out->total_extents, ct3d->dc.total_extent_count);
++    stl_le_p(&out->total_extents, ct3d->dc.nr_extents_accepted);
+     stl_le_p(&out->generation_num, ct3d->dc.ext_list_gen_seq);
+ 
+     if (record_count > 0) {
+@@ -2883,16 +2883,20 @@ void cxl_extent_group_list_insert_tail(CXLDCExtentGroupList *list,
+     QTAILQ_INSERT_TAIL(list, group, node);
  }
  
-+/* Reserve PCIHP resources */
-+void build_append_pcihp_resources(Aml *scope /* \\_SB.PCI0 */,
-+                                  uint64_t io_addr, uint64_t io_len)
-+{
-+    Aml *dev, *crs;
-+
-+    dev = aml_device("PHPR");
-+    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0A06")));
-+    aml_append(dev,
-+               aml_name_decl("_UID", aml_string("PCI Hotplug resources")));
-+    /* device present, functioning, decoding, not shown in UI */
-+    aml_append(dev, aml_name_decl("_STA", aml_int(0xB)));
-+    crs = aml_resource_template();
-+    aml_append(crs, aml_io(AML_DECODE16, io_addr, io_addr, 1, io_len));
-+    aml_append(dev, aml_name_decl("_CRS", crs));
-+    aml_append(scope, dev);
-+}
-+
- const VMStateDescription vmstate_acpi_pcihp_pci_status = {
-     .name = "acpi_pcihp_pci_status",
-     .version_id = 1,
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 91945f716c..52cef834ed 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -1432,19 +1432,8 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+-void cxl_extent_group_list_delete_front(CXLDCExtentGroupList *list)
++uint32_t cxl_extent_group_list_delete_front(CXLDCExtentGroupList *list)
+ {
+     CXLDCExtent *ent, *ent_next;
+     CXLDCExtentGroup *group = QTAILQ_FIRST(list);
++    uint32_t extents_deleted = 0;
  
-     /* reserve PCIHP resources */
-     if (pm->pcihp_io_len && (pm->pcihp_bridge_en || pm->pcihp_root_en)) {
--        dev = aml_device("PHPR");
--        aml_append(dev, aml_name_decl("_HID", aml_string("PNP0A06")));
--        aml_append(dev,
--            aml_name_decl("_UID", aml_string("PCI Hotplug resources")));
--        /* device present, functioning, decoding, not shown in UI */
--        aml_append(dev, aml_name_decl("_STA", aml_int(0xB)));
--        crs = aml_resource_template();
--        aml_append(crs,
--            aml_io(AML_DECODE16, pm->pcihp_io_base, pm->pcihp_io_base, 1,
--                   pm->pcihp_io_len)
--        );
--        aml_append(dev, aml_name_decl("_CRS", crs));
--        aml_append(scope, dev);
-+        build_append_pcihp_resources(scope,
-+                                      pm->pcihp_io_base, pm->pcihp_io_len);
+     QTAILQ_REMOVE(list, group, node);
+     QTAILQ_FOREACH_SAFE(ent, &group->list, node, ent_next) {
+         cxl_remove_extent_from_extent_list(&group->list, ent);
++        extents_deleted++;
      }
-     aml_append(dsdt, scope);
+     g_free(group);
++
++    return extents_deleted;
+ }
  
+ /*
+@@ -3011,7 +3015,7 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
+     CXLUpdateDCExtentListInPl *in = (void *)payload_in;
+     CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+     CXLDCExtentList *extent_list = &ct3d->dc.extents;
+-    uint32_t i;
++    uint32_t i, num;
+     uint64_t dpa, len;
+     CXLRetCode ret;
+ 
+@@ -3020,7 +3024,8 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
+     }
+ 
+     if (in->num_entries_updated == 0) {
+-        cxl_extent_group_list_delete_front(&ct3d->dc.extents_pending);
++        num = cxl_extent_group_list_delete_front(&ct3d->dc.extents_pending);
++        ct3d->dc.total_extent_count -= num;
+         return CXL_MBOX_SUCCESS;
+     }
+ 
+@@ -3051,10 +3056,12 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
+ 
+         cxl_insert_extent_to_extent_list(extent_list, dpa, len, NULL, 0);
+         ct3d->dc.total_extent_count += 1;
++        ct3d->dc.nr_extents_accepted += 1;
+         ct3_set_region_block_backed(ct3d, dpa, len);
+     }
+     /* Remove the first extent group in the pending list */
+-    cxl_extent_group_list_delete_front(&ct3d->dc.extents_pending);
++    num = cxl_extent_group_list_delete_front(&ct3d->dc.extents_pending);
++    ct3d->dc.total_extent_count -= num;
+ 
+     return CXL_MBOX_SUCCESS;
+ }
+@@ -3160,7 +3167,7 @@ free_and_exit:
+         }
+         *updated_list_size = 0;
+     } else {
+-        *updated_list_size = ct3d->dc.total_extent_count + cnt_delta;
++        *updated_list_size = ct3d->dc.nr_extents_accepted + cnt_delta;
+     }
+ 
+     return ret;
+@@ -3222,7 +3229,10 @@ static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
+         ct3_set_region_block_backed(ct3d, ent->start_dpa, ent->len);
+         cxl_remove_extent_from_extent_list(&updated_list, ent);
+     }
+-    ct3d->dc.total_extent_count = updated_list_size;
++    ct3d->dc.total_extent_count += (updated_list_size -
++                                    ct3d->dc.nr_extents_accepted);
++
++    ct3d->dc.nr_extents_accepted = updated_list_size;
+ 
+     return CXL_MBOX_SUCCESS;
+ }
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 94e7274912..f283178d88 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -2076,6 +2076,7 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
+     }
+     if (group) {
+         cxl_extent_group_list_insert_tail(&dcd->dc.extents_pending, group);
++        dcd->dc.total_extent_count += num_extents;
+     }
+ 
+     /*
 -- 
 MST
 
