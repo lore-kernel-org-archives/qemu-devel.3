@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C9C7C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 08:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33D06C83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 08:17:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubENK-000572-R4; Mon, 14 Jul 2025 04:17:27 -0400
+	id 1ubEM7-00043G-G2; Mon, 14 Jul 2025 04:16:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ubEER-0006ro-Dq
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:08:15 -0400
+ id 1ubEDu-00068W-OE
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:07:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ubEEM-0003Gc-Ai
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:08:14 -0400
+ id 1ubEDp-00039w-Kl
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:07:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752480489;
+ s=mimecast20190719; t=1752480457;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hOnk6tUF8BEtgoK/DOmMaR/Km0pJrk/2ZiEFOx7CRQU=;
- b=iLN2dbiLoLaSH1FTGvjPcQSEKIGbwR5AiYArtWymAf1SIeE5cHn6P7GEFhfQos2U5VURFe
- +ZyCP1QCBwEyYy5zOS33ql3G2preaHfBRT0wT0XZI+vY8RoOhpmEufAtvSrTn+DCwNwwUa
- L+kSx3b0ATdCsSp6Y2oonlwpmF1x9ek=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=QM187LTqh66mz9nDTkv5Uwarxaf5Ee/ezdUTTwFgH/4=;
+ b=EMULuqxR/hgu7VMElh6fC2MrtnAkZkhzLER0RflUi10t6D1CFkrb47IhGH9/3aPer9AaUP
+ 2/07VnxEn5/i/U0WT2wxOCHmolePBk7cY6H/CwQLe1nOwhlqdLnIxDp75vZVpO/PSoavyj
+ TGGwwMuw5hpxXOoxM4l29nMa/HlTxnA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-670-Sq1E1nGkOoK7Up2V1d64Cw-1; Mon,
- 14 Jul 2025 04:08:05 -0400
-X-MC-Unique: Sq1E1nGkOoK7Up2V1d64Cw-1
-X-Mimecast-MFC-AGG-ID: Sq1E1nGkOoK7Up2V1d64Cw_1752480484
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-274-Fmo1WoX7O-muxnbxj9nzFQ-1; Mon,
+ 14 Jul 2025 04:07:30 -0400
+X-MC-Unique: Fmo1WoX7O-muxnbxj9nzFQ-1
+X-Mimecast-MFC-AGG-ID: Fmo1WoX7O-muxnbxj9nzFQ_1752480448
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F2AE519560AD; Mon, 14 Jul 2025 08:08:03 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BAEB61800287; Mon, 14 Jul 2025 08:07:28 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.32.221])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 535AF1977000; Mon, 14 Jul 2025 08:07:59 +0000 (UTC)
+ id 699D61977000; Mon, 14 Jul 2025 08:07:24 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
@@ -55,10 +55,10 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: pbonzini@redhat.com,
 	philmd@linaro.org,
 	alex.bennee@linaro.org
-Subject: [PATCH v7 15/36] hw/i386/acpi-build: Use AcpiPciHpState::root in
- acpi_set_pci_info
-Date: Mon, 14 Jul 2025 10:04:59 +0200
-Message-ID: <20250714080639.2525563-16-eric.auger@redhat.com>
+Subject: [PATCH v7 08/36] hw/i386/acpi-build: Turn build_q35_osc_method into a
+ generic method
+Date: Mon, 14 Jul 2025 10:04:52 +0200
+Message-ID: <20250714080639.2525563-9-eric.auger@redhat.com>
 In-Reply-To: <20250714080639.2525563-1-eric.auger@redhat.com>
 References: <20250714080639.2525563-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -89,68 +89,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-pcihp acpi_set_pci_info() generic code currently uses
-acpi_get_i386_pci_host() to retrieve the pci host bridge.
+GPEX acpi_dsdt_add_pci_osc() does basically the same as
+build_q35_osc_method().
 
-To make it work also on ARM we get rid of that call and
-directly use AcpiPciHpState::root.
+Rename build_q35_osc_method() into build_pci_host_bridge_osc_method()
+and move it into hw/acpi/pci.c. In a subsequent patch we will
+use this later in place of acpi_dsdt_add_pci_osc().
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Suggested-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
 ---
 
 v2 -> v3:
-- Use AcpiPciHpState::root
-
-v1 -> v2
-- described the fact we changed the implementation of
-  acpi_get_pci_host() in the commit msg.
+- move to hw/acpi/pci.c instead of aml-build.c (Igor)
 ---
- hw/acpi/pcihp.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ include/hw/acpi/pci.h |  2 ++
+ hw/acpi/pci.c         | 50 +++++++++++++++++++++++++++++++++++++++
+ hw/i386/acpi-build.c  | 54 ++-----------------------------------------
+ 3 files changed, 54 insertions(+), 52 deletions(-)
 
-diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
-index 2c76edeb15..2db2f16940 100644
---- a/hw/acpi/pcihp.c
-+++ b/hw/acpi/pcihp.c
-@@ -99,10 +99,10 @@ static void *acpi_set_bsel(PCIBus *bus, void *opaque)
-     return info;
+diff --git a/include/hw/acpi/pci.h b/include/hw/acpi/pci.h
+index ab0187a894..8a328b580c 100644
+--- a/include/hw/acpi/pci.h
++++ b/include/hw/acpi/pci.h
+@@ -42,4 +42,6 @@ void build_pci_bridge_aml(AcpiDevAmlIf *adev, Aml *scope);
+ 
+ void build_srat_generic_affinity_structures(GArray *table_data);
+ 
++Aml *build_pci_host_bridge_osc_method(bool enable_native_pcie_hotplug);
++
+ #endif
+diff --git a/hw/acpi/pci.c b/hw/acpi/pci.c
+index d511a85029..2228f1245e 100644
+--- a/hw/acpi/pci.c
++++ b/hw/acpi/pci.c
+@@ -301,3 +301,53 @@ void build_srat_generic_affinity_structures(GArray *table_data)
+     object_child_foreach_recursive(object_get_root(), build_acpi_generic_port,
+                                    table_data);
+ }
++
++Aml *build_pci_host_bridge_osc_method(bool enable_native_pcie_hotplug)
++{
++    Aml *if_ctx;
++    Aml *if_ctx2;
++    Aml *else_ctx;
++    Aml *method;
++    Aml *a_cwd1 = aml_name("CDW1");
++    Aml *a_ctrl = aml_local(0);
++
++    method = aml_method("_OSC", 4, AML_NOTSERIALIZED);
++    aml_append(method, aml_create_dword_field(aml_arg(3), aml_int(0), "CDW1"));
++
++    if_ctx = aml_if(aml_equal(
++        aml_arg(0), aml_touuid("33DB4D5B-1FF7-401C-9657-7441C03DD766")));
++    aml_append(if_ctx, aml_create_dword_field(aml_arg(3), aml_int(4), "CDW2"));
++    aml_append(if_ctx, aml_create_dword_field(aml_arg(3), aml_int(8), "CDW3"));
++
++    aml_append(if_ctx, aml_store(aml_name("CDW3"), a_ctrl));
++
++    /*
++     * Always allow native PME, AER (no dependencies)
++     * Allow SHPC (PCI bridges can have SHPC controller)
++     * Disable PCIe Native Hot-plug if ACPI PCI Hot-plug is enabled.
++     */
++    aml_append(if_ctx, aml_and(a_ctrl,
++        aml_int(0x1E | (enable_native_pcie_hotplug ? 0x1 : 0x0)), a_ctrl));
++
++    if_ctx2 = aml_if(aml_lnot(aml_equal(aml_arg(1), aml_int(1))));
++    /* Unknown revision */
++    aml_append(if_ctx2, aml_or(a_cwd1, aml_int(0x08), a_cwd1));
++    aml_append(if_ctx, if_ctx2);
++
++    if_ctx2 = aml_if(aml_lnot(aml_equal(aml_name("CDW3"), a_ctrl)));
++    /* Capabilities bits were masked */
++    aml_append(if_ctx2, aml_or(a_cwd1, aml_int(0x10), a_cwd1));
++    aml_append(if_ctx, if_ctx2);
++
++    /* Update DWORD3 in the buffer */
++    aml_append(if_ctx, aml_store(a_ctrl, aml_name("CDW3")));
++    aml_append(method, if_ctx);
++
++    else_ctx = aml_else();
++    /* Unrecognized UUID */
++    aml_append(else_ctx, aml_or(a_cwd1, aml_int(4), a_cwd1));
++    aml_append(method, else_ctx);
++
++    aml_append(method, aml_return(aml_arg(3)));
++    return method;
++}
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 4f8572eebe..91945f716c 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -1111,56 +1111,6 @@ static Aml *build_q35_dram_controller(const AcpiMcfgInfo *mcfg)
+     return dev;
  }
  
--static void acpi_set_pci_info(bool has_bridge_hotplug)
-+static void acpi_set_pci_info(AcpiPciHpState *s)
+-static Aml *build_q35_osc_method(bool enable_native_pcie_hotplug)
+-{
+-    Aml *if_ctx;
+-    Aml *if_ctx2;
+-    Aml *else_ctx;
+-    Aml *method;
+-    Aml *a_cwd1 = aml_name("CDW1");
+-    Aml *a_ctrl = aml_local(0);
+-
+-    method = aml_method("_OSC", 4, AML_NOTSERIALIZED);
+-    aml_append(method, aml_create_dword_field(aml_arg(3), aml_int(0), "CDW1"));
+-
+-    if_ctx = aml_if(aml_equal(
+-        aml_arg(0), aml_touuid("33DB4D5B-1FF7-401C-9657-7441C03DD766")));
+-    aml_append(if_ctx, aml_create_dword_field(aml_arg(3), aml_int(4), "CDW2"));
+-    aml_append(if_ctx, aml_create_dword_field(aml_arg(3), aml_int(8), "CDW3"));
+-
+-    aml_append(if_ctx, aml_store(aml_name("CDW3"), a_ctrl));
+-
+-    /*
+-     * Always allow native PME, AER (no dependencies)
+-     * Allow SHPC (PCI bridges can have SHPC controller)
+-     * Disable PCIe Native Hot-plug if ACPI PCI Hot-plug is enabled.
+-     */
+-    aml_append(if_ctx, aml_and(a_ctrl,
+-        aml_int(0x1E | (enable_native_pcie_hotplug ? 0x1 : 0x0)), a_ctrl));
+-
+-    if_ctx2 = aml_if(aml_lnot(aml_equal(aml_arg(1), aml_int(1))));
+-    /* Unknown revision */
+-    aml_append(if_ctx2, aml_or(a_cwd1, aml_int(0x08), a_cwd1));
+-    aml_append(if_ctx, if_ctx2);
+-
+-    if_ctx2 = aml_if(aml_lnot(aml_equal(aml_name("CDW3"), a_ctrl)));
+-    /* Capabilities bits were masked */
+-    aml_append(if_ctx2, aml_or(a_cwd1, aml_int(0x10), a_cwd1));
+-    aml_append(if_ctx, if_ctx2);
+-
+-    /* Update DWORD3 in the buffer */
+-    aml_append(if_ctx, aml_store(a_ctrl, aml_name("CDW3")));
+-    aml_append(method, if_ctx);
+-
+-    else_ctx = aml_else();
+-    /* Unrecognized UUID */
+-    aml_append(else_ctx, aml_or(a_cwd1, aml_int(4), a_cwd1));
+-    aml_append(method, else_ctx);
+-
+-    aml_append(method, aml_return(aml_arg(3)));
+-    return method;
+-}
+-
+ static void build_acpi0017(Aml *table)
  {
-     static bool bsel_is_set;
--    Object *host = acpi_get_i386_pci_host();
-+    bool has_bridge_hotplug = s->use_acpi_hotplug_bridge;
-     PCIBus *bus;
-     BSELInfo info = { .bsel_alloc = ACPI_PCIHP_BSEL_DEFAULT,
-                       .has_bridge_hotplug = has_bridge_hotplug };
-@@ -112,11 +112,8 @@ static void acpi_set_pci_info(bool has_bridge_hotplug)
-     }
-     bsel_is_set = true;
+     Aml *dev, *scope, *method;
+@@ -1231,7 +1181,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+         aml_append(dev, aml_name_decl("_HID", aml_eisaid("PNP0A08")));
+         aml_append(dev, aml_name_decl("_CID", aml_eisaid("PNP0A03")));
+         aml_append(dev, aml_name_decl("_UID", aml_int(pcmc->pci_root_uid)));
+-        aml_append(dev, build_q35_osc_method(!pm->pcihp_bridge_en));
++        aml_append(dev, build_pci_host_bridge_osc_method(!pm->pcihp_bridge_en));
+         aml_append(dev, aml_pci_edsm());
+         aml_append(sb_scope, dev);
+         if (mcfg_valid) {
+@@ -1353,7 +1303,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+                 aml_append(dev, aml_name_decl("_CID", aml_eisaid("PNP0A03")));
  
--    if (!host) {
--        return;
--    }
- 
--    bus = PCI_HOST_BRIDGE(host)->bus;
-+    bus = s->root;
-     if (bus) {
-         /* Scan all PCI buses. Set property to enable acpi based hotplug. */
-         pci_for_each_bus_depth_first(bus, acpi_set_bsel, NULL, &info);
-@@ -266,7 +263,7 @@ static void acpi_pcihp_update(AcpiPciHpState *s)
- 
- void acpi_pcihp_reset(AcpiPciHpState *s)
- {
--    acpi_set_pci_info(s->use_acpi_hotplug_bridge);
-+    acpi_set_pci_info(s);
-     acpi_pcihp_update(s);
- }
- 
+                 /* Expander bridges do not have ACPI PCI Hot-plug enabled */
+-                aml_append(dev, build_q35_osc_method(true));
++                aml_append(dev, build_pci_host_bridge_osc_method(true));
+             } else {
+                 aml_append(dev, aml_name_decl("_HID", aml_eisaid("PNP0A03")));
+             }
 -- 
 2.49.0
 
