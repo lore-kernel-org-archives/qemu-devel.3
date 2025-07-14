@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E932C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 08:19:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA00EC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 08:20:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubEOx-0008KO-RW; Mon, 14 Jul 2025 04:19:10 -0400
+	id 1ubEPc-0000VG-1B; Mon, 14 Jul 2025 04:19:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ubEDI-0005xU-8r
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:07:06 -0400
+ id 1ubEDR-00060V-De
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:07:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ubEDE-00035K-IJ
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:07:03 -0400
+ id 1ubEDN-000376-On
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:07:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752480412;
+ s=mimecast20190719; t=1752480428;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=hlx9+CpSB/6T1kuI2TFe5j1QXEpeIwzCx+e+vMDBV3I=;
- b=akQ4bCSq7lTX4R47EW/HS2ABTRok5pn+TbRTPavmlwlHFpmnEmHErAxt3l6vfPR/ibXK3Y
- Z0YuxWn81Zd5c9MhrQ3K8jolfl24DyQFefHHPKjAEE2+oMkTHH2d9hmq/fWOWsPjzGKr4/
- va7UUuzW/0DibRb1odqPFr5uypP56Tc=
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=X76P9T7rfToMdRO+4/neesROUS3j61xqlfm9Z1lq87E=;
+ b=AtW9VHWsypvXxGsg+fTvEO+VPFqi83BPVKSrRn5aNqRqPn97Jud2M2M5PH+nP4jVlSSZM4
+ AlsG9WhY+bStUgGDhdmYm0HrLUDNyYS/VMu1uxq5F3Xa0D0xiJ7zeKs4MR3+NpeCKYCHVh
+ oqa2UMfvHyFz5knM4KCnPYCVkT2+JJA=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-513-zWrnSNCDMAmMGcBaoJ6X9w-1; Mon,
- 14 Jul 2025 04:06:48 -0400
-X-MC-Unique: zWrnSNCDMAmMGcBaoJ6X9w-1
-X-Mimecast-MFC-AGG-ID: zWrnSNCDMAmMGcBaoJ6X9w_1752480407
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-6FqTl5fPP5-iD-w_XX9-BQ-1; Mon,
+ 14 Jul 2025 04:07:03 -0400
+X-MC-Unique: 6FqTl5fPP5-iD-w_XX9-BQ-1
+X-Mimecast-MFC-AGG-ID: 6FqTl5fPP5-iD-w_XX9-BQ_1752480417
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E2A7C1808985; Mon, 14 Jul 2025 08:06:46 +0000 (UTC)
+ id 72FC71808985; Mon, 14 Jul 2025 08:06:57 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.32.221])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D846F1977000; Mon, 14 Jul 2025 08:06:41 +0000 (UTC)
+ id F18D51977029; Mon, 14 Jul 2025 08:06:52 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
@@ -54,11 +55,13 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: pbonzini@redhat.com,
 	philmd@linaro.org,
 	alex.bennee@linaro.org
-Subject: [PATCH v7 00/36] ACPI PCI Hotplug support on ARM
-Date: Mon, 14 Jul 2025 10:04:44 +0200
-Message-ID: <20250714080639.2525563-1-eric.auger@redhat.com>
+Subject: [PATCH v7 02/36] hw/acpi: Rename and move build_x86_acpi_pci_hotplug
+ to pcihp
+Date: Mon, 14 Jul 2025 10:04:46 +0200
+Message-ID: <20250714080639.2525563-3-eric.auger@redhat.com>
+In-Reply-To: <20250714080639.2525563-1-eric.auger@redhat.com>
+References: <20250714080639.2525563-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
@@ -70,7 +73,7 @@ X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,178 +89,484 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series enables ACPI PCI hotplug/hotunplug on ARM.
-It is not enabled by default and ACPI PCI hotplug can
-be selected by setting: 
+We plan to reuse build_x86_acpi_pci_hotplug() implementation
+for ARM so let's move the code to generic pcihp.
 
--global acpi-ged.acpi-pci-hotplug-with-bridge-support=on
+Associated static aml_pci_pdsm() helper is also moved along.
+build_x86_acpi_pci_hotplug is renamed into build_acpi_pci_hotplug().
 
-Expected benefits should be similar to those listed in [1],
-ie. removal of some racy behaviors, improved latencies.
+No code change intended.
 
-The infrastructure used in x86 is heavily reused and a
-huge part of the series consists in moving code from
-hw/i386/acpi-build.c to a generic place and slightly
-adapting it to make it usable on ARM. The DSDT table is
-augmented to support ACPI PCI hotplug elements.
+Also fix the reference to acpi_pci_hotplug.rst documentation
 
-On ARM we use use a GED event to notify the OS about
-hotplug events.
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 
-Best Regards 
-
-Eric
-
-This series can be found at:
-https://github.com/eauger/qemu/tree/arm-acpi-pcihp-v7
-
-previous series:
-https://github.com/eauger/qemu/tree/arm-acpi-pcihp-v6
-
-History:
-v6 -> v7:
-- rebased after minor contextual conflict introduced
-  by "hw/arm/virt: Basic CXL enablement on pci_expander_bridge
-  instances pxb-cxl" in hw/arm/virt-acpi-build.c
-  (hw/pci-host/gpex-acpi: Use GED acpi pcihp property)
-- collected last Igor's and Prasad's R-bs
-
-v5 -> v6:
-- collected Jonathan's R-bs
-- cropped last 2 patch commit messages (Jonathan)
-
-v4 -> v5:
-- Collected Jonathan's R-bs (many thanks!)
-- fixed the tests/qtest/bios-tables-test issue by
-  creating a variant for the viot test
-- use the 3 phase reset API
-- fixed qom-test failures that were due to unconditionnal
-  fetches of the GED property
-
-v3 -> v4:
-- toook into account all comments on v3
-- static acpi-index is now supported unconditionally
-  from acpi pcihp option. See indiviual patches.
-- I hit a problem with ref block generation at
-  [19/32] tests/qtest/bios-tables-test: Update ARM DSDT reference
-  blobs: despite I regenerate the blobs, I get some errors.
-
-v2 -> v3:
-- lot of changes taking into account various feedbacks
-  (many thanks to all reviewers). Please refer to
-  individual patches for details. Main changes:
-  - no more machine option, acpi pci hp is not set by
-    default.
-  - removal of 2 unused variables in the osc method
-  - introduction of GED property to set the bus
-  - rework of the init/reset sequence
-  - fix virtio-mem-pci hotplug regression
+---
 
 v1 -> v2:
-- collected a bunch of R-bs from Gustavo (many thanks!)
-- Fixed the breakage of bios-tables-test in TCG mode by
-  incorporating Gustavo's patches (part of
-  [PATCH 0/5] ACPI tests for PCI Hotplug on ARM
-  https://lore.kernel.org/all/20250526053123.1434204-1-gustavo.romero@linaro.org/)
-- Tweeked the dsdt aml changes to avoid any dsdt blob difference when
-  acpi-pcihp is off.
+- s/spec/specs in reference to rst (Gustavo)
+- fixed double space in commit msg (Gustavo)
 
-RFC -> v1:
-- First 3 trivial patches were pulled separately
-- Fix of the register region size (0x18), ie. ACPI_PCIHP_SIZE
-- addition of aml_pci_edsm which was not called in RFC
-- acpi-index feature is now fixed. vms->bus was not set on
-  acpi_pcihp_init. The init sequence is still hacky though. Suggestions
-  are welcome.
+rfc -> v1:
+- make build_append_pci_dsm_func0_common non static and move it to
+  pcihp
+---
+ hw/i386/acpi-build.h    |   4 -
+ include/hw/acpi/pcihp.h |   7 ++
+ hw/acpi/pcihp.c         | 174 ++++++++++++++++++++++++++++++++++++++-
+ hw/i386/acpi-build.c    | 176 +---------------------------------------
+ 4 files changed, 182 insertions(+), 179 deletions(-)
 
-[1] [PATCH v6 0/6] Use ACPI PCI hot-plug for Q35
-https://lore.kernel.org/all/20210713004205.775386-1-jusual@redhat.com/
-
-Eric Auger (32):
-  hw/i386/acpi-build: Make aml_pci_device_dsm() static
-  hw/acpi: Rename and move build_x86_acpi_pci_hotplug to pcihp
-  hw/pci-host/gpex-acpi: Add native_pci_hotplug arg to
-    acpi_dsdt_add_pci_osc
-  hw/pci-host/gpex-acpi: Split host bridge OSC and DSM generation
-  hw/acpi/ged: Add a acpi-pci-hotplug-with-bridge-support property
-  hw/pci-host/gpex-acpi: Use GED acpi pcihp property
-  hw/i386/acpi-build: Turn build_q35_osc_method into a generic method
-  hw/pci-host/gpex-acpi: Use build_pci_host_bridge_osc_method
-  tests/qtest/bios-tables-test: Update DSDT blobs after GPEX _OSC change
-  hw/i386/acpi-build: Introduce build_append_pcihp_resources() helper
-  hw/acpi/pcihp: Add an AmlRegionSpace arg to build_acpi_pci_hotplug
-  hw/i386/acpi-build: Move build_append_notification_callback to pcihp
-  hw/i386/acpi-build: Move build_append_pci_bus_devices/pcihp_slots to
-    pcihp
-  hw/i386/acpi-build: Use AcpiPciHpState::root in acpi_set_pci_info
-  hw/i386/acpi-build: Move aml_pci_edsm to a generic place
-  qtest/bios-tables-test: Prepare for fixing the aarch64 viot test
-  qtest/bios-tables-test: Add a variant to the aarch64 viot test
-  qtest/bios-tables-test: Generate DSDT.viot
-  hw/arm/virt-acpi-build: Let non hotplug ports support static
-    acpi-index
-  tests/qtest/bios-tables-test: Update ARM DSDT reference blobs
-  hw/arm/virt-acpi-build: Modify the DSDT ACPI table to enable ACPI PCI
-    hotplug
-  hw/acpi/ged: Add a bus link property
-  hw/arm/virt: Pass the bus on the ged creation
-  hw/acpi/ged: Call pcihp plug callbacks in hotplug handler
-    implementation
-  hw/acpi/pcihp: Remove root arg in acpi_pcihp_init
-  hw/acpi/ged: Prepare the device to react to PCI hotplug events
-  hw/acpi/ged: Support migration of AcpiPciHpState
-  hw/core/sysbus: Introduce sysbus_mmio_map_name() helper
-  hw/arm/virt: Minor code reshuffling in create_acpi_ged
-  hw/arm/virt: Let virt support pci hotplug/unplug GED event
-  qtest/bios-tables-test: Generate reference blob for
-    DSDT.hpoffacpiindex
-  qtest/bios-tables-test: Generate reference blob for DSDT.acpipcihp
-
-Gustavo Romero (4):
-  tests/qtest/bios-tables-test: Prepare for changes in the DSDT table
-  tests/qtest/bios-tables-test: Prepare for changes in the arm virt DSDT
-    table
-  tests/qtest/bios-tables-test: Prepare for addition of acpi pci hp
-    tests
-  tests/qtest/bios-tables-test: Add aarch64 ACPI PCI hotplug test
-
- hw/i386/acpi-build.h                          |   4 -
- include/hw/acpi/generic_event_device.h        |  17 +-
- include/hw/acpi/pci.h                         |   5 +-
- include/hw/acpi/pcihp.h                       |  17 +-
- include/hw/arm/virt.h                         |   1 +
- include/hw/pci-host/gpex.h                    |   1 +
- include/hw/sysbus.h                           |   1 +
- hw/acpi/acpi-pci-hotplug-stub.c               |   2 +-
- hw/acpi/generic_event_device.c                |  77 +++
- hw/acpi/ich9.c                                |   7 +-
- hw/acpi/pci-bridge.c                          |  54 ++
- hw/acpi/pci.c                                 |  50 ++
- hw/acpi/pcihp.c                               | 439 ++++++++++++++-
- hw/acpi/piix4.c                               |   5 +-
- hw/arm/virt-acpi-build.c                      |  38 ++
- hw/arm/virt.c                                 |  27 +-
- hw/core/sysbus.c                              |  11 +
- hw/i386/acpi-build.c                          | 532 +-----------------
- hw/pci-host/gpex-acpi.c                       |  74 +--
- tests/qtest/bios-tables-test.c                |  53 ++
- hw/arm/Kconfig                                |   2 +
- hw/pci-host/Kconfig                           |   1 +
- tests/data/acpi/aarch64/virt/DSDT             | Bin 5196 -> 5293 bytes
- .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5282 -> 5379 bytes
- tests/data/acpi/aarch64/virt/DSDT.acpipcihp   | Bin 0 -> 6202 bytes
- .../acpi/aarch64/virt/DSDT.hpoffacpiindex     | Bin 0 -> 5347 bytes
- tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6557 -> 6654 bytes
- tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7679 -> 7768 bytes
- tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5398 -> 5495 bytes
- tests/data/acpi/aarch64/virt/DSDT.viot        | Bin 0 -> 5310 bytes
- tests/data/acpi/riscv64/virt/DSDT             | Bin 3576 -> 3538 bytes
- tests/data/acpi/x86/microvm/DSDT.pcie         | Bin 3023 -> 2985 bytes
- 32 files changed, 811 insertions(+), 607 deletions(-)
- create mode 100644 tests/data/acpi/aarch64/virt/DSDT.acpipcihp
- create mode 100644 tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex
- create mode 100644 tests/data/acpi/aarch64/virt/DSDT.viot
-
+diff --git a/hw/i386/acpi-build.h b/hw/i386/acpi-build.h
+index 275ec058a1..8ba3c33e48 100644
+--- a/hw/i386/acpi-build.h
++++ b/hw/i386/acpi-build.h
+@@ -5,10 +5,6 @@
+ 
+ extern const struct AcpiGenericAddress x86_nvdimm_acpi_dsmio;
+ 
+-/* PCI Hot-plug registers' base. See docs/specs/acpi_pci_hotplug.rst */
+-#define ACPI_PCIHP_SEJ_BASE 0x8
+-#define ACPI_PCIHP_BNMR_BASE 0x10
+-
+ void acpi_setup(void);
+ Object *acpi_get_i386_pci_host(void);
+ 
+diff --git a/include/hw/acpi/pcihp.h b/include/hw/acpi/pcihp.h
+index cdc0cb8e43..971451e8ea 100644
+--- a/include/hw/acpi/pcihp.h
++++ b/include/hw/acpi/pcihp.h
+@@ -33,6 +33,10 @@
+ #define ACPI_PCIHP_IO_BASE_PROP "acpi-pcihp-io-base"
+ #define ACPI_PCIHP_IO_LEN_PROP "acpi-pcihp-io-len"
+ 
++/* PCI Hot-plug registers bases. See docs/specs/acpi_pci_hotplug.rst */
++#define ACPI_PCIHP_SEJ_BASE 0x8
++#define ACPI_PCIHP_BNMR_BASE 0x10
++
+ typedef struct AcpiPciHpPciStatus {
+     uint32_t up;
+     uint32_t down;
+@@ -69,6 +73,9 @@ void acpi_pcihp_device_unplug_request_cb(HotplugHandler *hotplug_dev,
+                                          AcpiPciHpState *s, DeviceState *dev,
+                                          Error **errp);
+ 
++void build_acpi_pci_hotplug(Aml *table, uint64_t pcihp_addr);
++void build_append_pci_dsm_func0_common(Aml *ctx, Aml *retvar);
++
+ /* Called on reset */
+ void acpi_pcihp_reset(AcpiPciHpState *s);
+ 
+diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
+index 497281ae20..cbe7e01385 100644
+--- a/hw/acpi/pcihp.c
++++ b/hw/acpi/pcihp.c
+@@ -26,7 +26,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "hw/acpi/pcihp.h"
+-
++#include "hw/acpi/aml-build.h"
+ #include "hw/pci-host/i440fx.h"
+ #include "hw/pci/pci.h"
+ #include "hw/pci/pci_bridge.h"
+@@ -513,6 +513,178 @@ void acpi_pcihp_init(Object *owner, AcpiPciHpState *s, PCIBus *root_bus,
+                                    OBJ_PROP_FLAG_READ);
+ }
+ 
++void build_append_pci_dsm_func0_common(Aml *ctx, Aml *retvar)
++{
++    Aml *UUID, *ifctx1;
++    uint8_t byte_list[1] = { 0 }; /* nothing supported yet */
++
++    aml_append(ctx, aml_store(aml_buffer(1, byte_list), retvar));
++    /*
++     * PCI Firmware Specification 3.1
++     * 4.6.  _DSM Definitions for PCI
++     */
++    UUID = aml_touuid("E5C937D0-3553-4D7A-9117-EA4D19C3434D");
++    ifctx1 = aml_if(aml_lnot(aml_equal(aml_arg(0), UUID)));
++    {
++        /* call is for unsupported UUID, bail out */
++        aml_append(ifctx1, aml_return(retvar));
++    }
++    aml_append(ctx, ifctx1);
++
++    ifctx1 = aml_if(aml_lless(aml_arg(1), aml_int(2)));
++    {
++        /* call is for unsupported REV, bail out */
++        aml_append(ifctx1, aml_return(retvar));
++    }
++    aml_append(ctx, ifctx1);
++}
++
++static Aml *aml_pci_pdsm(void)
++{
++    Aml *method, *ifctx, *ifctx1;
++    Aml *ret = aml_local(0);
++    Aml *caps = aml_local(1);
++    Aml *acpi_index = aml_local(2);
++    Aml *zero = aml_int(0);
++    Aml *one = aml_int(1);
++    Aml *not_supp = aml_int(0xFFFFFFFF);
++    Aml *func = aml_arg(2);
++    Aml *params = aml_arg(4);
++    Aml *bnum = aml_derefof(aml_index(params, aml_int(0)));
++    Aml *sunum = aml_derefof(aml_index(params, aml_int(1)));
++
++    method = aml_method("PDSM", 5, AML_SERIALIZED);
++
++    /* get supported functions */
++    ifctx = aml_if(aml_equal(func, zero));
++    {
++        build_append_pci_dsm_func0_common(ifctx, ret);
++
++        aml_append(ifctx, aml_store(zero, caps));
++        aml_append(ifctx,
++            aml_store(aml_call2("AIDX", bnum, sunum), acpi_index));
++        /*
++         * advertise function 7 if device has acpi-index
++         * acpi_index values:
++         *            0: not present (default value)
++         *     FFFFFFFF: not supported (old QEMU without PIDX reg)
++         *        other: device's acpi-index
++         */
++        ifctx1 = aml_if(aml_lnot(
++                     aml_or(aml_equal(acpi_index, zero),
++                            aml_equal(acpi_index, not_supp), NULL)
++                 ));
++        {
++            /* have supported functions */
++            aml_append(ifctx1, aml_or(caps, one, caps));
++            /* support for function 7 */
++            aml_append(ifctx1,
++                aml_or(caps, aml_shiftleft(one, aml_int(7)), caps));
++        }
++        aml_append(ifctx, ifctx1);
++
++        aml_append(ifctx, aml_store(caps, aml_index(ret, zero)));
++        aml_append(ifctx, aml_return(ret));
++    }
++    aml_append(method, ifctx);
++
++    /* handle specific functions requests */
++    /*
++     * PCI Firmware Specification 3.1
++     * 4.6.7. _DSM for Naming a PCI or PCI Express Device Under
++     *        Operating Systems
++     */
++    ifctx = aml_if(aml_equal(func, aml_int(7)));
++    {
++       Aml *pkg = aml_package(2);
++
++       aml_append(ifctx, aml_store(aml_call2("AIDX", bnum, sunum), acpi_index));
++       aml_append(ifctx, aml_store(pkg, ret));
++       /*
++        * Windows calls func=7 without checking if it's available,
++        * as workaround Microsoft has suggested to return invalid for func7
++        * Package, so return 2 elements package but only initialize elements
++        * when acpi_index is supported and leave them uninitialized, which
++        * leads elements to being Uninitialized ObjectType and should trip
++        * Windows into discarding result as an unexpected and prevent setting
++        * bogus 'PCI Label' on the device.
++        */
++       ifctx1 = aml_if(aml_lnot(aml_lor(
++                    aml_equal(acpi_index, zero), aml_equal(acpi_index, not_supp)
++                )));
++       {
++           aml_append(ifctx1, aml_store(acpi_index, aml_index(ret, zero)));
++           /*
++            * optional, if not impl. should return null string
++            */
++           aml_append(ifctx1, aml_store(aml_string("%s", ""),
++                                        aml_index(ret, one)));
++       }
++       aml_append(ifctx, ifctx1);
++
++       aml_append(ifctx, aml_return(ret));
++    }
++
++    aml_append(method, ifctx);
++    return method;
++}
++
++void build_acpi_pci_hotplug(Aml *table, uint64_t pcihp_addr)
++{
++    Aml *scope;
++    Aml *field;
++    Aml *method;
++
++    scope =  aml_scope("_SB.PCI0");
++
++    aml_append(scope,
++        aml_operation_region("PCST", AML_SYSTEM_IO, aml_int(pcihp_addr), 0x08));
++    field = aml_field("PCST", AML_DWORD_ACC, AML_NOLOCK, AML_WRITE_AS_ZEROS);
++    aml_append(field, aml_named_field("PCIU", 32));
++    aml_append(field, aml_named_field("PCID", 32));
++    aml_append(scope, field);
++
++    aml_append(scope,
++        aml_operation_region("SEJ", AML_SYSTEM_IO,
++                             aml_int(pcihp_addr + ACPI_PCIHP_SEJ_BASE), 0x04));
++    field = aml_field("SEJ", AML_DWORD_ACC, AML_NOLOCK, AML_WRITE_AS_ZEROS);
++    aml_append(field, aml_named_field("B0EJ", 32));
++    aml_append(scope, field);
++
++    aml_append(scope,
++        aml_operation_region("BNMR", AML_SYSTEM_IO,
++                             aml_int(pcihp_addr + ACPI_PCIHP_BNMR_BASE), 0x08));
++    field = aml_field("BNMR", AML_DWORD_ACC, AML_NOLOCK, AML_WRITE_AS_ZEROS);
++    aml_append(field, aml_named_field("BNUM", 32));
++    aml_append(field, aml_named_field("PIDX", 32));
++    aml_append(scope, field);
++
++    aml_append(scope, aml_mutex("BLCK", 0));
++
++        method = aml_method("PCEJ", 2, AML_NOTSERIALIZED);
++    aml_append(method, aml_acquire(aml_name("BLCK"), 0xFFFF));
++    aml_append(method, aml_store(aml_arg(0), aml_name("BNUM")));
++    aml_append(method,
++        aml_store(aml_shiftleft(aml_int(1), aml_arg(1)), aml_name("B0EJ")));
++    aml_append(method, aml_release(aml_name("BLCK")));
++    aml_append(method, aml_return(aml_int(0)));
++    aml_append(scope, method);
++
++    method = aml_method("AIDX", 2, AML_NOTSERIALIZED);
++    aml_append(method, aml_acquire(aml_name("BLCK"), 0xFFFF));
++    aml_append(method, aml_store(aml_arg(0), aml_name("BNUM")));
++    aml_append(method,
++        aml_store(aml_shiftleft(aml_int(1), aml_arg(1)), aml_name("PIDX")));
++    aml_append(method, aml_store(aml_name("PIDX"), aml_local(0)));
++    aml_append(method, aml_release(aml_name("BLCK")));
++    aml_append(method, aml_return(aml_local(0)));
++    aml_append(scope, method);
++
++    aml_append(scope, aml_pci_pdsm());
++
++    aml_append(table, scope);
++}
++
+ const VMStateDescription vmstate_acpi_pcihp_pci_status = {
+     .name = "acpi_pcihp_pci_status",
+     .version_id = 1,
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index f59026524f..4f8572eebe 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -361,32 +361,6 @@ static Aml *aml_pci_device_dsm(void)
+     return method;
+ }
+ 
+-static void build_append_pci_dsm_func0_common(Aml *ctx, Aml *retvar)
+-{
+-    Aml *UUID, *ifctx1;
+-    uint8_t byte_list[1] = { 0 }; /* nothing supported yet */
+-
+-    aml_append(ctx, aml_store(aml_buffer(1, byte_list), retvar));
+-    /*
+-     * PCI Firmware Specification 3.1
+-     * 4.6.  _DSM Definitions for PCI
+-     */
+-    UUID = aml_touuid("E5C937D0-3553-4D7A-9117-EA4D19C3434D");
+-    ifctx1 = aml_if(aml_lnot(aml_equal(aml_arg(0), UUID)));
+-    {
+-        /* call is for unsupported UUID, bail out */
+-        aml_append(ifctx1, aml_return(retvar));
+-    }
+-    aml_append(ctx, ifctx1);
+-
+-    ifctx1 = aml_if(aml_lless(aml_arg(1), aml_int(2)));
+-    {
+-        /* call is for unsupported REV, bail out */
+-        aml_append(ifctx1, aml_return(retvar));
+-    }
+-    aml_append(ctx, ifctx1);
+-}
+-
+ static Aml *aml_pci_edsm(void)
+ {
+     Aml *method, *ifctx;
+@@ -647,96 +621,6 @@ static bool build_append_notification_callback(Aml *parent_scope,
+     return !!nr_notifiers;
+ }
+ 
+-static Aml *aml_pci_pdsm(void)
+-{
+-    Aml *method, *ifctx, *ifctx1;
+-    Aml *ret = aml_local(0);
+-    Aml *caps = aml_local(1);
+-    Aml *acpi_index = aml_local(2);
+-    Aml *zero = aml_int(0);
+-    Aml *one = aml_int(1);
+-    Aml *not_supp = aml_int(0xFFFFFFFF);
+-    Aml *func = aml_arg(2);
+-    Aml *params = aml_arg(4);
+-    Aml *bnum = aml_derefof(aml_index(params, aml_int(0)));
+-    Aml *sunum = aml_derefof(aml_index(params, aml_int(1)));
+-
+-    method = aml_method("PDSM", 5, AML_SERIALIZED);
+-
+-    /* get supported functions */
+-    ifctx = aml_if(aml_equal(func, zero));
+-    {
+-        build_append_pci_dsm_func0_common(ifctx, ret);
+-
+-        aml_append(ifctx, aml_store(zero, caps));
+-        aml_append(ifctx,
+-            aml_store(aml_call2("AIDX", bnum, sunum), acpi_index));
+-        /*
+-         * advertise function 7 if device has acpi-index
+-         * acpi_index values:
+-         *            0: not present (default value)
+-         *     FFFFFFFF: not supported (old QEMU without PIDX reg)
+-         *        other: device's acpi-index
+-         */
+-        ifctx1 = aml_if(aml_lnot(
+-                     aml_or(aml_equal(acpi_index, zero),
+-                            aml_equal(acpi_index, not_supp), NULL)
+-                 ));
+-        {
+-            /* have supported functions */
+-            aml_append(ifctx1, aml_or(caps, one, caps));
+-            /* support for function 7 */
+-            aml_append(ifctx1,
+-                aml_or(caps, aml_shiftleft(one, aml_int(7)), caps));
+-        }
+-        aml_append(ifctx, ifctx1);
+-
+-        aml_append(ifctx, aml_store(caps, aml_index(ret, zero)));
+-        aml_append(ifctx, aml_return(ret));
+-    }
+-    aml_append(method, ifctx);
+-
+-    /* handle specific functions requests */
+-    /*
+-     * PCI Firmware Specification 3.1
+-     * 4.6.7. _DSM for Naming a PCI or PCI Express Device Under
+-     *        Operating Systems
+-     */
+-    ifctx = aml_if(aml_equal(func, aml_int(7)));
+-    {
+-       Aml *pkg = aml_package(2);
+-
+-       aml_append(ifctx, aml_store(aml_call2("AIDX", bnum, sunum), acpi_index));
+-       aml_append(ifctx, aml_store(pkg, ret));
+-       /*
+-        * Windows calls func=7 without checking if it's available,
+-        * as workaround Microsoft has suggested to return invalid for func7
+-        * Package, so return 2 elements package but only initialize elements
+-        * when acpi_index is supported and leave them uninitialized, which
+-        * leads elements to being Uninitialized ObjectType and should trip
+-        * Windows into discarding result as an unexpected and prevent setting
+-        * bogus 'PCI Label' on the device.
+-        */
+-       ifctx1 = aml_if(aml_lnot(aml_lor(
+-                    aml_equal(acpi_index, zero), aml_equal(acpi_index, not_supp)
+-                )));
+-       {
+-           aml_append(ifctx1, aml_store(acpi_index, aml_index(ret, zero)));
+-           /*
+-            * optional, if not impl. should return null string
+-            */
+-           aml_append(ifctx1, aml_store(aml_string("%s", ""),
+-                                        aml_index(ret, one)));
+-       }
+-       aml_append(ifctx, ifctx1);
+-
+-       aml_append(ifctx, aml_return(ret));
+-    }
+-
+-    aml_append(method, ifctx);
+-    return method;
+-}
+-
+ /*
+  * build_prt - Define interrupt routing rules
+  *
+@@ -1227,62 +1111,6 @@ static Aml *build_q35_dram_controller(const AcpiMcfgInfo *mcfg)
+     return dev;
+ }
+ 
+-static void build_x86_acpi_pci_hotplug(Aml *table, uint64_t pcihp_addr)
+-{
+-    Aml *scope;
+-    Aml *field;
+-    Aml *method;
+-
+-    scope =  aml_scope("_SB.PCI0");
+-
+-    aml_append(scope,
+-        aml_operation_region("PCST", AML_SYSTEM_IO, aml_int(pcihp_addr), 0x08));
+-    field = aml_field("PCST", AML_DWORD_ACC, AML_NOLOCK, AML_WRITE_AS_ZEROS);
+-    aml_append(field, aml_named_field("PCIU", 32));
+-    aml_append(field, aml_named_field("PCID", 32));
+-    aml_append(scope, field);
+-
+-    aml_append(scope,
+-        aml_operation_region("SEJ", AML_SYSTEM_IO,
+-                             aml_int(pcihp_addr + ACPI_PCIHP_SEJ_BASE), 0x04));
+-    field = aml_field("SEJ", AML_DWORD_ACC, AML_NOLOCK, AML_WRITE_AS_ZEROS);
+-    aml_append(field, aml_named_field("B0EJ", 32));
+-    aml_append(scope, field);
+-
+-    aml_append(scope,
+-        aml_operation_region("BNMR", AML_SYSTEM_IO,
+-                             aml_int(pcihp_addr + ACPI_PCIHP_BNMR_BASE), 0x08));
+-    field = aml_field("BNMR", AML_DWORD_ACC, AML_NOLOCK, AML_WRITE_AS_ZEROS);
+-    aml_append(field, aml_named_field("BNUM", 32));
+-    aml_append(field, aml_named_field("PIDX", 32));
+-    aml_append(scope, field);
+-
+-    aml_append(scope, aml_mutex("BLCK", 0));
+-
+-    method = aml_method("PCEJ", 2, AML_NOTSERIALIZED);
+-    aml_append(method, aml_acquire(aml_name("BLCK"), 0xFFFF));
+-    aml_append(method, aml_store(aml_arg(0), aml_name("BNUM")));
+-    aml_append(method,
+-        aml_store(aml_shiftleft(aml_int(1), aml_arg(1)), aml_name("B0EJ")));
+-    aml_append(method, aml_release(aml_name("BLCK")));
+-    aml_append(method, aml_return(aml_int(0)));
+-    aml_append(scope, method);
+-
+-    method = aml_method("AIDX", 2, AML_NOTSERIALIZED);
+-    aml_append(method, aml_acquire(aml_name("BLCK"), 0xFFFF));
+-    aml_append(method, aml_store(aml_arg(0), aml_name("BNUM")));
+-    aml_append(method,
+-        aml_store(aml_shiftleft(aml_int(1), aml_arg(1)), aml_name("PIDX")));
+-    aml_append(method, aml_store(aml_name("PIDX"), aml_local(0)));
+-    aml_append(method, aml_release(aml_name("BLCK")));
+-    aml_append(method, aml_return(aml_local(0)));
+-    aml_append(scope, method);
+-
+-    aml_append(scope, aml_pci_pdsm());
+-
+-    aml_append(table, scope);
+-}
+-
+ static Aml *build_q35_osc_method(bool enable_native_pcie_hotplug)
+ {
+     Aml *if_ctx;
+@@ -1394,7 +1222,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+         aml_append(dsdt, sb_scope);
+ 
+         if (pm->pcihp_bridge_en || pm->pcihp_root_en) {
+-            build_x86_acpi_pci_hotplug(dsdt, pm->pcihp_io_base);
++            build_acpi_pci_hotplug(dsdt, pm->pcihp_io_base);
+         }
+         build_piix4_pci0_int(dsdt);
+     } else if (q35) {
+@@ -1438,7 +1266,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+         aml_append(dsdt, sb_scope);
+ 
+         if (pm->pcihp_bridge_en) {
+-            build_x86_acpi_pci_hotplug(dsdt, pm->pcihp_io_base);
++            build_acpi_pci_hotplug(dsdt, pm->pcihp_io_base);
+         }
+         build_q35_pci0_int(dsdt);
+     }
 -- 
 2.49.0
 
