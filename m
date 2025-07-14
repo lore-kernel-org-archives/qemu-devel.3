@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BEEDC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:34:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB68DC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:35:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSHh-0007Yd-Ic; Mon, 14 Jul 2025 19:08:33 -0400
+	id 1ubSHZ-0006QI-NI; Mon, 14 Jul 2025 19:08:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGm-0004Ph-1X
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGE-0003Cv-BB
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGk-0005Yb-BW
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:35 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGC-0005QX-PA
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534453;
+ s=mimecast20190719; t=1752534419;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=L7vnOqE9vYNzXZo7bToAkIslT5GpERjhTAHR0WEOusY=;
- b=Zd8eogKraZla5l/0zG8hi5Prn60+PDd5Lxyxa+QfHJ2dGE292DjCWeW3+om8a+HAs0tcr6
- CIj12Fqvc/2SxsE+ChfKoc4cjCf8K8vXUfRsoLJvGdTSghq9fBgGp8pB++lEFEovldB01w
- LSsLeUJwJ3/EjyQ9/SvDQX21Ith4ijw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4CnxIUW7kVE0GjlDwzMxMW/1BUSPeNP58LvpQij6V/w=;
+ b=DrF5jLJj8Aqy/P66mPTdHXpqi5VVMD0uQtt+8iw8hhktSLBs3NMYSSlSUGWJNRLo826mjS
+ ZBeXL1yEpN0DuLwdmBIp+mYVvvbREWSUeaBw5cjKhsTsIuX8e/Wx+XvRYmbwglbMNdYgn+
+ qHuP1eIH5N23oYzSH8pTCC09L7VPBnU=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-681-6tKhiRKWOYK-UbkGmFMcXA-1; Mon, 14 Jul 2025 19:07:32 -0400
-X-MC-Unique: 6tKhiRKWOYK-UbkGmFMcXA-1
-X-Mimecast-MFC-AGG-ID: 6tKhiRKWOYK-UbkGmFMcXA_1752534452
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4538f375e86so39562005e9.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:07:32 -0700 (PDT)
+ us-mta-442-THazAMQUMIKvc41pE2mVCw-1; Mon, 14 Jul 2025 19:06:58 -0400
+X-MC-Unique: THazAMQUMIKvc41pE2mVCw-1
+X-Mimecast-MFC-AGG-ID: THazAMQUMIKvc41pE2mVCw_1752534417
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4538f375e86so39559925e9.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:06:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534451; x=1753139251;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=L7vnOqE9vYNzXZo7bToAkIslT5GpERjhTAHR0WEOusY=;
- b=Cit84Lxw2q4p1LC0juOTVNCgq+aZS4svLTf26YCnEr1ipOp2mOc0fjpi9fqBndhErQ
- FsQAy4eCr7XWFm2w8SL+B3bLQmVLCM87PX2AWXQmLO9vRXffBZCDD9ERyoZpH95wlLT3
- Bu3Sfh57jCRDSxG22AVhi4SCH+SmXnB/F7tkl8aAxUunZvJQldotWIE7yu2pluyzEZjE
- jTt6JEdRwW5DTNfuVgq6Us4g/QR4cnrWNCBas+UU0If1wxF2fw6VzoNW6hRh/zbmtkFw
- Vg9jgB98+yvIx5K61j8R5WQwcJBzAjIyJ4N24UxrtOYQkTRCSPyYGCTejbzwwSeU3dek
- nP/A==
-X-Gm-Message-State: AOJu0YxHqD9oIyd/8pBsT2ZS/GTkey3gQLad337aIgDfBFDLtQVG1oNe
- V4JEOAEcA9fSkV0zpnY2hbNGsgWsZAchwa3uRq0NLP8khPkbkB71el8TVUDd7Hj7PJH4N1vb2d2
- COW4LiDuNJ+urQu+WWjbQVbQousSgXGrkz9lWyaZpEwujrLf+njD5SHdJp3kBU6nns8Q6ClTPYL
- KU7URxPzT1kHHnS4LPSDzSYwCYQZ3JqmJh6w==
-X-Gm-Gg: ASbGncuFJtPzEeOl4MXqdcbdnwpRhnUEJOH0Zl1Hf9fmGvDhQUdpLm5QHhH+R6kVIpd
- tJmtzyBo6Z9FEauY17cacL6PwI6CM/hXXko+zr1AxEukcCPelATyJlWFg/YrR6IqUpc4l8U3Yv0
- mR9bQJEunjr/Acd9WDT/sMeQea5WErybTW6Eda9BU9jzZ3q1nvaVsVpJKOYsE5roeaU5gaAkiA/
- OpfbFCy7+8xTUDQFQ2p4RYcoP5cVSt2iT0c1gxT59/PLNP6FeNq8bE6FBgwqmt9A1VedQc7D6Yd
- H68RK3HRCQbMScYziE6FIHgbVfk7fXQJ
-X-Received: by 2002:a05:600c:4ecf:b0:456:1dd2:4e47 with SMTP id
- 5b1f17b1804b1-456273e2869mr4110885e9.15.1752534451280; 
- Mon, 14 Jul 2025 16:07:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEMOWjx9YuSIHblq9C7KVh/Aeqjo2JAvJlZGv5t2sJVY748iPKsynCobQ31Mm0vyfik5lavfQ==
-X-Received: by 2002:a05:600c:4ecf:b0:456:1dd2:4e47 with SMTP id
- 5b1f17b1804b1-456273e2869mr4110685e9.15.1752534450739; 
- Mon, 14 Jul 2025 16:07:30 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752534417; x=1753139217;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4CnxIUW7kVE0GjlDwzMxMW/1BUSPeNP58LvpQij6V/w=;
+ b=ljIE0O5NUKosFwDYr2/NBa1b9yEA2gGv2WCX/b2puC47Ic5A6Mqoln9sJRTfnJzpLa
+ GwBXekbJ3LwOTTXAuuViMf/qNB/239YcOrATRLL5YoqlnDqRbRptPhIAptgst3fYtQ7P
+ wh18pZqOcIr+Zd5he2Wsb+EBVt2Ge5spRaG3MdlIlry641u2kpDIv63cjoEELKwvEpar
+ +for+m9Rb3rEgLZyxWfhCMGYIeCl8D2ir49jVE8CCMi+AvzR+G0DoO98jx104+GblF/g
+ NRPIZ2iYQvw7n2p96/R7LR3Hch4iEKJ0xAj0Y12CJnS/dypw/zR/ROzn55A8ZNopuPY7
+ W22Q==
+X-Gm-Message-State: AOJu0YxSWmAPNXdvqRF2yNRVuQF43lLOlGc+1bxzaeE9LU5DI2J7Z5po
+ y1hAO8C8Y4bRtdfZuaIMDk43D2KaLL4oOBqhomlP+Gbuq2lPUNHwS+ei1FiWUd7kqLboGG1uNuO
+ /pd7xip+zPPAe8bQD7BoUXgrcNSLi7skLfy9VvZLcrGa9ysZMKFXZ+DwGtZmLYFY6KmX4MihnrN
+ X++8GwymrGOaFvTzNFRq6iXW3UNsRgEZ4aLA==
+X-Gm-Gg: ASbGncvkEgO/W/i1YT9AURZ6/47po2xdifj8U2Nu/OgKHiF/pi6f3M7uAFAubPcKwlA
+ XHj8dSvLrSlkjSSSmmBYa7aTg4DzB6DQyRPhWRGmsin035JyY0jnssfceY59Y6/QjcxGz9dGe32
+ Y1VpkCmFzRjjqLkJHGA5ygQ0xRAd9TSwuziydIMex08fntki8+IlURQ7QsGP4Osx9ZQ6Q+Ohz+R
+ tdHOPW+IiHXUEiFFAMxaLNThXddSplezNshewQ+gdnQZgLKstaSsfG9hGGRqOg8MPNb8pW8ZVHM
+ hkgFFVXuGM2PhVsBBgu9rRG5oAfkGAO7
+X-Received: by 2002:a5d:5f50:0:b0:3a5:5270:c38f with SMTP id
+ ffacd0b85a97d-3b60a0dd825mr294252f8f.0.1752534417058; 
+ Mon, 14 Jul 2025 16:06:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGKkMQw45iVsa2Z2HX4ouQwGxF7oOjEyF4aMk5G3xI3oGCfGKqGiMu2rfEYYYWHdnKrY7m0Lw==
+X-Received: by 2002:a5d:5f50:0:b0:3a5:5270:c38f with SMTP id
+ ffacd0b85a97d-3b60a0dd825mr294234f8f.0.1752534416573; 
+ Mon, 14 Jul 2025 16:06:56 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454d5050d34sm186355975e9.9.2025.07.14.16.07.28
+ 5b1f17b1804b1-4560733e736sm87742205e9.29.2025.07.14.16.06.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:07:30 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:07:28 -0400
+ Mon, 14 Jul 2025 16:06:55 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:06:54 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 30/97] memory: Add permissions in IOMMUAccessFlags
-Message-ID: <945a6b11323b353f7f404eef748b708f1cb335dc.1752534227.git.mst@redhat.com>
+ Li Zhijian <lizhijian@fujitsu.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>
+Subject: [PULL 16/97] hw/acpi: Fix GPtrArray memory leak in crs_range_merge
+Message-ID: <d7fb5693d9ffbeb9b49c981e1f9774392f1d41e5.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1752534227.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -111,70 +112,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-This will be necessary for devices implementing ATS.
-We also define a new macro IOMMU_ACCESS_FLAG_FULL in addition to
-IOMMU_ACCESS_FLAG to support more access flags.
-IOMMU_ACCESS_FLAG is kept for convenience and backward compatibility.
+This leak was detected by the valgrind.
 
-Here are the flags added (defined by the PCIe 5 specification) :
-    - Execute Requested
-    - Privileged Mode Requested
-    - Global
-    - Untranslated Only
+The crs_range_merge() function unconditionally allocated a GPtrArray
+'even when range->len was zero, causing an early return without freeing
+the allocated array. This resulted in a memory leak when an empty range
+was processed.
 
-IOMMU_ACCESS_FLAG sets the additional flags to 0
+Instead of moving the allocation after the check (as previously attempted),
+use g_autoptr for automatic cleanup. This ensures the array is freed even
+on early returns, and also removes the need for the explicit free at the
+end of the function.
 
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
-Message-Id: <20250628180226.133285-3-clement.mathieu--drif@eviden.com>
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Message-Id: <20250613085110.111204-1-lizhijian@fujitsu.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/system/memory.h | 23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ hw/acpi/aml-build.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 46248d4a52..1672622d70 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -109,15 +109,34 @@ struct MemoryRegionSection {
+diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+index f8f93a9f66..cb817a0f31 100644
+--- a/hw/acpi/aml-build.c
++++ b/hw/acpi/aml-build.c
+@@ -160,7 +160,7 @@ void crs_replace_with_free_ranges(GPtrArray *ranges,
+  */
+ static void crs_range_merge(GPtrArray *range)
+ {
+-    GPtrArray *tmp = g_ptr_array_new_with_free_func(crs_range_free);
++    g_autoptr(GPtrArray) tmp = g_ptr_array_new_with_free_func(crs_range_free);
+     CrsRangeEntry *entry;
+     uint64_t range_base, range_limit;
+     int i;
+@@ -191,7 +191,6 @@ static void crs_range_merge(GPtrArray *range)
+         entry = g_ptr_array_index(tmp, i);
+         crs_range_insert(range, entry->base, entry->limit);
+     }
+-    g_ptr_array_free(tmp, true);
+ }
  
- typedef struct IOMMUTLBEntry IOMMUTLBEntry;
- 
--/* See address_space_translate: bit 0 is read, bit 1 is write.  */
-+/*
-+ * See address_space_translate:
-+ *      - bit 0 : read
-+ *      - bit 1 : write
-+ *      - bit 2 : exec
-+ *      - bit 3 : priv
-+ *      - bit 4 : global
-+ *      - bit 5 : untranslated only
-+ */
- typedef enum {
-     IOMMU_NONE = 0,
-     IOMMU_RO   = 1,
-     IOMMU_WO   = 2,
-     IOMMU_RW   = 3,
-+    IOMMU_EXEC = 4,
-+    IOMMU_PRIV = 8,
-+    IOMMU_GLOBAL = 16,
-+    IOMMU_UNTRANSLATED_ONLY = 32,
- } IOMMUAccessFlags;
- 
--#define IOMMU_ACCESS_FLAG(r, w) (((r) ? IOMMU_RO : 0) | ((w) ? IOMMU_WO : 0))
-+#define IOMMU_ACCESS_FLAG(r, w)     (((r) ? IOMMU_RO : 0) | \
-+                                    ((w) ? IOMMU_WO : 0))
-+#define IOMMU_ACCESS_FLAG_FULL(r, w, x, p, g, uo) \
-+                                    (IOMMU_ACCESS_FLAG(r, w) | \
-+                                    ((x) ? IOMMU_EXEC : 0) | \
-+                                    ((p) ? IOMMU_PRIV : 0) | \
-+                                    ((g) ? IOMMU_GLOBAL : 0) | \
-+                                    ((uo) ? IOMMU_UNTRANSLATED_ONLY : 0))
- 
- struct IOMMUTLBEntry {
-     AddressSpace    *target_as;
+ static void
 -- 
 MST
 
