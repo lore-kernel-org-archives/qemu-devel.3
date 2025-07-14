@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D3F6C83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:17:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC6D1C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:17:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubHAQ-0003Zb-Aw; Mon, 14 Jul 2025 07:16:21 -0400
+	id 1ubHBL-0004Br-OU; Mon, 14 Jul 2025 07:17:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH0C-0001HD-Ru
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:05:46 -0400
+ id 1ubH0Q-0001Na-JY
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:06:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH0A-0001wl-QK
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:05:44 -0400
+ id 1ubH0N-0001y3-JG
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:05:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752491142;
+ s=mimecast20190719; t=1752491153;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9wVutdUCpdUXWQWTx6uVxLNXyVult81NQL9SKeIWPII=;
- b=G79SnrNL/MUbYyqZ0P+bIR7J9uM6lfCn3Of4v6V4UXBPlB4iQZitdOP8o0X0vjt4waeliA
- EF4h2FwnqTx8MEE8c7Sog0CFRJ4rLQjTH7UnxiJH2IirZQ0eYY+y1+SP7/uUHpE26tq38Q
- JLkwt8fQbjaLUBTq0bTblslQsUB+x3Q=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YgTX+tIVcOOQ2a4srBk8j3hWHo73bhiEyasy0Vw94Pc=;
+ b=J9PSiIkS3+kJmtzjaCEWBEJaUdRBg5o504aGIMLrrMny2Wp+WekgmmZ7DhTe9DPRimLX36
+ ZI8J3eb8N23I73OQWsqNHPp+0/G5091JXZPA462H+R1s6hpcvYoEqnxyDhsKGki9J97ksb
+ aPTjykTcjSn5zUdqRhxBqodH0lZoK1c=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-313-FSAkJapGPpmTfs7SofwSAA-1; Mon, 14 Jul 2025 07:05:38 -0400
-X-MC-Unique: FSAkJapGPpmTfs7SofwSAA-1
-X-Mimecast-MFC-AGG-ID: FSAkJapGPpmTfs7SofwSAA_1752491137
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a54a8a0122so2145723f8f.2
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:05:38 -0700 (PDT)
+ us-mta-563-sGPERiTyOmqhDieHR96ZIg-1; Mon, 14 Jul 2025 07:05:49 -0400
+X-MC-Unique: sGPERiTyOmqhDieHR96ZIg-1
+X-Mimecast-MFC-AGG-ID: sGPERiTyOmqhDieHR96ZIg_1752491148
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-453a5d50b81so30307925e9.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:05:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752491136; x=1753095936;
+ d=1e100.net; s=20230601; t=1752491148; x=1753095948;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9wVutdUCpdUXWQWTx6uVxLNXyVult81NQL9SKeIWPII=;
- b=YY54xBfkScAmp0zyZ8jXMfpJephBuPKQZQ1V6vufYKIYu3jgOHlwKTeK4+KG48K6X4
- Crz06KA7S6ZscjcALL47cH5nEAicMtkMucAPkg0M/l4tY2YGze2K62cgPM1Jd+APW132
- l4gggLbtrNEtcIglDkvD8LE8ZT8JlmDwDUNFtMTM1mmN3S8+HJ0lweb6CVxU3IOhTCnc
- vONkKYKFdIg/VN6v7MAeEA/RJBrr5d8w4DG5OpDoiL2igq5xBCuwiYyiDfo3TIqHIoin
- 8nZHi7mYubzSy4xoYz/c0oyn0SN+gS/W412JlSPr1GVk0Qfug74xqjPgacSc1R9o8E4R
- 8pEA==
-X-Gm-Message-State: AOJu0Yw6iWpr6wagxSsi+ab5ROdbD4XcqaXpDMT0C7l14X0RC/vdQms4
- sMus7E9JpiH4WXKoXgvvOXGW5NTIvKOM78H46O2X3odVct3azHS6435k/vG44LiSr4Q7Pr98PfF
- TN3o3aQarY3Ga02QFy7y6msiqJA2ecvuJ/FNka5IsQpNAu5agfhVrWM3RAY0tMIXxxKcTPSUNJF
- fkbweYvcXVmnKxJOb3ohuS+GTLTrZ/4oqaLz4CWnpq
-X-Gm-Gg: ASbGncvWjXyXlj1krG7z056oSpnhWBZak5oxoXLrKZRgaHusXxpVtu01ShZBJ6obUPr
- iq2L4FL64P/21GReK+ycI0H7lOrlvl9JZC4xMrwToPrPu8bD0qdaIa5TOZCC9FpwvDDf6n1nnNI
- zT/eEhJlsXM51mKa0xawAaUy7H2769DrHpq83FhQCHOMsXp3+J3flGjHIhrAtBjm9mXON2A6eT6
- 3DIF4dV9pbsWhq7RnqLHN31Bnfixl4A8HRhLovLc3pbd8FwLiDPZQZG16uriFpnKg0DQTQkol2N
- fdpJJQsyjzrIXPXCdc9Tv0TyKpE+7UyiEdU6TzyQ9TU=
-X-Received: by 2002:a05:6000:250f:b0:3a4:dc32:6cbc with SMTP id
- ffacd0b85a97d-3b5f1880f48mr11152962f8f.20.1752491136457; 
- Mon, 14 Jul 2025 04:05:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEJCI1sBoQ6qBcC7ImXJnqnI2CFv8ld4kNnXzaZ0ADKgUvv1UVyCTMP9q+j4Ij9guCpUDIBtQ==
-X-Received: by 2002:a05:6000:250f:b0:3a4:dc32:6cbc with SMTP id
- ffacd0b85a97d-3b5f1880f48mr11152929f8f.20.1752491135931; 
- Mon, 14 Jul 2025 04:05:35 -0700 (PDT)
+ bh=YgTX+tIVcOOQ2a4srBk8j3hWHo73bhiEyasy0Vw94Pc=;
+ b=TrGE969CpUV2//3wUnr2EMUqTlNbNE7xjVWeo0HiGYVogSk+fI3iBhGWJAsBUZcXlx
+ alc62K7a0kxLnyT90H1DGM8eu3vqWbakqkMr0kIltBoU+Vv7avA8XpceDUXfXwhSKpVF
+ P7Bsu7i7F/iBg6INLGAwm2f0Ht1Jv2a9w7a1utIqjeXM1IeymglXxP2shpNqNsi3j20u
+ lNhA98mpkWCx3XBL5a++aKHABhi0CQNrZ2aKIXHM/HFrl3gnPKYnnWExOlK2gtxpDbZ5
+ PaHXynVJvpeSTmZgkvh4qaO3hgFETYcBatmui63xXJONia5rg9BbTNT+XHpziAZWGST/
+ LVKA==
+X-Gm-Message-State: AOJu0YwnooPcQdxT5eeh4O1N6cotnt09YYFsBlVrN1gCNPOdb2q02hRX
+ Vw0q70HhqpCzyFWu367paLghNBdADChcGeIGKnSMJwWzcxSQiNxWDNDdpquBCIv2+L+ULAKpW0s
+ yJl261EIWg/2HNaDpIhmxBvkQV08XNa5FT5t5VE1btqjVBy/+GNBDEPBKAceJaHh04opn972FzC
+ HQlEVqAacPUAllvjgAyfZw266srMQxZ7tCGXilr4Dg
+X-Gm-Gg: ASbGncvDXkAYOGzpPHNx+AoCB9jUFCDP1EuMiG7K+FIZ2eBNBmsEqkENOIKd5/nj8OA
+ vJyC/+OwJkp2BBtWElDaJtf87DuqY83HkB2J8cZMHW8O8OsGmIrYbmH+nSyf4zJJBP8+nqnvOTY
+ XUBHi1ZMA8MyRCRFH6rKhqZ8N0g5pLowHiq8/hxV1C1KRcclFpQ16rtduJ7T3QZSNyWt6NRhVqi
+ Kk64dYbUpsbzheOu9x0hnmprFTpws9gQV1MgzKBd6vdfwWnB7GDQuOCRJkNckgBLXqjvO9cYtoQ
+ 6ZwBViIGQTTzK8XQ2TmwXduHuAMcOsqWskY+iiXse/U=
+X-Received: by 2002:a05:600c:37c4:b0:456:302:6dc3 with SMTP id
+ 5b1f17b1804b1-456030271bemr65063365e9.26.1752491147413; 
+ Mon, 14 Jul 2025 04:05:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHy4dLgqm1Dk8YPznbMSHiqIweOBKgO0JdPQG+paLDIK3/W0uLMBr4L67oA3QjedLZaMCMKMg==
+X-Received: by 2002:a05:600c:37c4:b0:456:302:6dc3 with SMTP id
+ 5b1f17b1804b1-456030271bemr65063125e9.26.1752491146908; 
+ Mon, 14 Jul 2025 04:05:46 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.73.155])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8bd1792sm12341878f8f.13.2025.07.14.04.05.34
+ 5b1f17b1804b1-456030270f8sm73345715e9.22.2025.07.14.04.05.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 04:05:35 -0700 (PDT)
+ Mon, 14 Jul 2025 04:05:45 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 33/77] i386/cpu: Move the implementation of is_host_cpu_intel()
- host-cpu.c
-Date: Mon, 14 Jul 2025 13:03:22 +0200
-Message-ID: <20250714110406.117772-34-pbonzini@redhat.com>
+Subject: [PULL 37/77] i386/cpu: Unify family,
+ model and stepping calculation for x86 CPU
+Date: Mon, 14 Jul 2025 13:03:26 +0200
+Message-ID: <20250714110406.117772-38-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250714110406.117772-1-pbonzini@redhat.com>
 References: <20250714110406.117772-1-pbonzini@redhat.com>
@@ -111,80 +111,149 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-It's more proper to put is_host_cpu_intel() in host-cpu.c instead of
-vmsr_energy.c.
+There are multiple places where CPUID family/model/stepping info
+are retrieved from env->cpuid_version.
+
+Besides, the calculation of family and model inside host_cpu_vendor_fms()
+doesn't comply to what Intel and AMD define. For family, both Intel
+and AMD define that Extended Family ID needs to be counted only when
+(base) Family is 0xF. For model, Intel counts Extended Model when
+(base) Family is 0x6 or 0xF, while AMD counts EXtended MOdel when
+(base) Family is 0xF.
+
+Introduce generic helper functions to get family, model and stepping
+from the EAX value of CPUID leaf 1, with the correct calculation
+formula.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://lore.kernel.org/r/20250701075738.3451873-3-xiaoyao.li@intel.com
+Link: https://lore.kernel.org/r/20250630080610.3151956-5-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/host-cpu.h        | 1 +
- target/i386/kvm/vmsr_energy.h | 1 -
- target/i386/host-cpu.c        | 9 +++++++++
- target/i386/kvm/vmsr_energy.c | 9 ---------
- 4 files changed, 10 insertions(+), 10 deletions(-)
+ target/i386/cpu.h      | 30 ++++++++++++++++++++++++++++++
+ target/i386/cpu.c      | 12 ++++--------
+ target/i386/host-cpu.c |  6 +++---
+ target/i386/kvm/kvm.c  |  2 +-
+ 4 files changed, 38 insertions(+), 12 deletions(-)
 
-diff --git a/target/i386/host-cpu.h b/target/i386/host-cpu.h
-index b97ec01c9be..10df4b3a3a7 100644
---- a/target/i386/host-cpu.h
-+++ b/target/i386/host-cpu.h
-@@ -17,4 +17,5 @@ bool host_cpu_realizefn(CPUState *cs, Error **errp);
- 
- void host_cpu_vendor_fms(char *vendor, int *family, int *model, int *stepping);
- 
-+bool is_host_cpu_intel(void);
- #endif /* HOST_CPU_H */
-diff --git a/target/i386/kvm/vmsr_energy.h b/target/i386/kvm/vmsr_energy.h
-index 16cc1f4814f..151bcbd6423 100644
---- a/target/i386/kvm/vmsr_energy.h
-+++ b/target/i386/kvm/vmsr_energy.h
-@@ -94,6 +94,5 @@ double vmsr_get_ratio(uint64_t e_delta,
-                       unsigned long long delta_ticks,
-                       unsigned int maxticks);
- void vmsr_init_topo_info(X86CPUTopoInfo *topo_info, const MachineState *ms);
--bool is_host_cpu_intel(void);
- int is_rapl_enabled(void);
- #endif /* VMSR_ENERGY_H */
-diff --git a/target/i386/host-cpu.c b/target/i386/host-cpu.c
-index 3399edc1ad0..e9a49e628f8 100644
---- a/target/i386/host-cpu.c
-+++ b/target/i386/host-cpu.c
-@@ -161,6 +161,15 @@ void host_cpu_instance_init(X86CPU *cpu)
-                             &error_abort);
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index b3bb9888579..a580562b3dc 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2678,6 +2678,36 @@ static inline int32_t x86_get_a20_mask(CPUX86State *env)
+     }
  }
  
-+bool is_host_cpu_intel(void)
++static inline uint32_t x86_cpu_family(uint32_t eax)
 +{
-+    char vendor[CPUID_VENDOR_SZ + 1];
++    uint32_t family = (eax >> 8) & 0xf;
 +
-+    host_cpu_vendor_fms(vendor, NULL, NULL, NULL);
++    if (family == 0xf) {
++        family += (eax >> 20) & 0xff;
++    }
 +
-+    return g_str_equal(vendor, CPUID_VENDOR_INTEL);
++    return family;
 +}
 +
- static void host_cpu_class_init(ObjectClass *oc, const void *data)
++static inline uint32_t x86_cpu_model(uint32_t eax)
++{
++    uint32_t family, model;
++
++    family = x86_cpu_family(eax);
++    model = (eax >> 4) & 0xf;
++
++    if (family >= 0x6) {
++        model += ((eax >> 16) & 0xf) << 4;
++    }
++
++    return model;
++}
++
++static inline uint32_t x86_cpu_stepping(uint32_t eax)
++{
++    return eax & 0xf;
++}
++
+ static inline bool cpu_has_vmx(CPUX86State *env)
  {
-     X86CPUClass *xcc = X86_CPU_CLASS(oc);
-diff --git a/target/i386/kvm/vmsr_energy.c b/target/i386/kvm/vmsr_energy.c
-index d6aad5246b6..58ce3df53a3 100644
---- a/target/i386/kvm/vmsr_energy.c
-+++ b/target/i386/kvm/vmsr_energy.c
-@@ -27,15 +27,6 @@ char *vmsr_compute_default_paths(void)
-     return g_build_filename(state, "run", "qemu-vmsr-helper.sock", NULL);
+     return env->features[FEAT_1_ECX] & CPUID_EXT_VMX;
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index d3d13b14726..b768838b100 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6325,10 +6325,7 @@ static void x86_cpuid_version_get_family(Object *obj, Visitor *v,
+     CPUX86State *env = &cpu->env;
+     uint64_t value;
+ 
+-    value = (env->cpuid_version >> 8) & 0xf;
+-    if (value == 0xf) {
+-        value += (env->cpuid_version >> 20) & 0xff;
+-    }
++    value = x86_cpu_family(env->cpuid_version);
+     visit_type_uint64(v, name, &value, errp);
  }
  
--bool is_host_cpu_intel(void)
--{
--    char vendor[CPUID_VENDOR_SZ + 1];
--
--    host_cpu_vendor_fms(vendor, NULL, NULL, NULL);
--
--    return g_str_equal(vendor, CPUID_VENDOR_INTEL);
--}
--
- int is_rapl_enabled(void)
- {
-     const char *path = "/sys/class/powercap/intel-rapl/enabled";
+@@ -6366,8 +6363,7 @@ static void x86_cpuid_version_get_model(Object *obj, Visitor *v,
+     CPUX86State *env = &cpu->env;
+     uint64_t value;
+ 
+-    value = (env->cpuid_version >> 4) & 0xf;
+-    value |= ((env->cpuid_version >> 16) & 0xf) << 4;
++    value = x86_cpu_model(env->cpuid_version);
+     visit_type_uint64(v, name, &value, errp);
+ }
+ 
+@@ -6401,7 +6397,7 @@ static void x86_cpuid_version_get_stepping(Object *obj, Visitor *v,
+     CPUX86State *env = &cpu->env;
+     uint64_t value;
+ 
+-    value = env->cpuid_version & 0xf;
++    value = x86_cpu_stepping(env->cpuid_version);
+     visit_type_uint64(v, name, &value, errp);
+ }
+ 
+@@ -8155,7 +8151,7 @@ static void mce_init(X86CPU *cpu)
+     CPUX86State *cenv = &cpu->env;
+     unsigned int bank;
+ 
+-    if (((cenv->cpuid_version >> 8) & 0xf) >= 6
++    if (x86_cpu_family(cenv->cpuid_version) >= 6
+         && (cenv->features[FEAT_1_EDX] & (CPUID_MCE | CPUID_MCA)) ==
+             (CPUID_MCE | CPUID_MCA)) {
+         cenv->mcg_cap = MCE_CAP_DEF | MCE_BANKS_DEF |
+diff --git a/target/i386/host-cpu.c b/target/i386/host-cpu.c
+index b1fb6d68161..d5e2bb5e187 100644
+--- a/target/i386/host-cpu.c
++++ b/target/i386/host-cpu.c
+@@ -117,13 +117,13 @@ void host_cpu_vendor_fms(char *vendor, int *family, int *model, int *stepping)
+ 
+     host_cpuid(0x1, 0, &eax, &ebx, &ecx, &edx);
+     if (family) {
+-        *family = ((eax >> 8) & 0x0F) + ((eax >> 20) & 0xFF);
++        *family = x86_cpu_family(eax);
+     }
+     if (model) {
+-        *model = ((eax >> 4) & 0x0F) | ((eax & 0xF0000) >> 12);
++        *model = x86_cpu_model(eax);
+     }
+     if (stepping) {
+-        *stepping = eax & 0x0F;
++        *stepping = x86_cpu_stepping(eax);
+     }
+ }
+ 
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index fc58a23b30d..e8c8be09bae 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2259,7 +2259,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     cpuid_i = kvm_x86_build_cpuid(env, cpuid_data.entries, cpuid_i);
+     cpuid_data.cpuid.nent = cpuid_i;
+ 
+-    if (((env->cpuid_version >> 8)&0xF) >= 6
++    if (x86_cpu_family(env->cpuid_version) >= 6
+         && (env->features[FEAT_1_EDX] & (CPUID_MCE | CPUID_MCA)) ==
+            (CPUID_MCE | CPUID_MCA)) {
+         uint64_t mcg_cap, unsupported_caps;
 -- 
 2.50.0
 
