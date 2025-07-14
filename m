@@ -4,104 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43584C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 17:30:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 350A1C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 17:41:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubMzz-0007Kv-UZ; Mon, 14 Jul 2025 13:29:56 -0400
+	id 1ubNAI-0005bK-M5; Mon, 14 Jul 2025 13:40:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubLxm-0008Kp-Kq
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 12:23:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1ubM2Z-0005T6-5m; Mon, 14 Jul 2025 12:28:32 -0400
+Received: from mail-bn7nam10on2060e.outbound.protection.outlook.com
+ ([2a01:111:f403:2009::60e]
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubLxg-0002u5-RW
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 12:23:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752510207;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vsowap4mFhTCJb6iq6PQM6rBisQC+71dv9lkpYyETCY=;
- b=GfD1fKxxO7aCqzh/+1arbmKCa80KU6H1tMKoGBf/NmDHt5YjrbWQ72yl6KzrIkZBMEyDry
- oZY4/tuflPulhVS8UQpMozD8VgltB6f4d9BI2UsIByoW8iibFeXRmIDwG1hOh342VBglxi
- QTn7thlVwJu1/mTUzJRKdQqWKW88iM4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-230-ixGashENOm2p_CzwHhVAPg-1; Mon, 14 Jul 2025 12:23:24 -0400
-X-MC-Unique: ixGashENOm2p_CzwHhVAPg-1
-X-Mimecast-MFC-AGG-ID: ixGashENOm2p_CzwHhVAPg_1752510203
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45597cc95d5so17001265e9.1
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 09:23:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752510203; x=1753115003;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vsowap4mFhTCJb6iq6PQM6rBisQC+71dv9lkpYyETCY=;
- b=Ic9RZhfokFSbgn7Absx7e21PHJLZtTcCciAPjthS78t9JFDsZodVkH7cTr6nh0UXlt
- Y9/DyeqWo7sXGhM9l5HuNHotUfjT0miDenb+CM5oJ46GdAqWdEwA22u8rJhr4Fn5ba2M
- m6u8nzRFEL/LG5ed8rqXsVR38Yqhflbft8PG7URNs2accyyMpeGH1gihI0ErLXrlvb+Y
- 1Ky2F8mlG/neYAjT0nPS1OEkwiRKLNzUgAIBq13kpbHSjBon0UDwNj4Ez911AIgY2B15
- 8LBSJZSgH/XgNXkjKVFSLxB6HNvov110izsY0zWWIKkpsyDzjcPagfJ0arVMnc+AIwIz
- ViBw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUPFalLcWFy93eAV1nqe7YfKW3Yh4/3HV1S3gxrsvLXio6xjM/CrermDa+QUSeY6Eq9sTibvS1k+9nk@nongnu.org
-X-Gm-Message-State: AOJu0YyBGaeSl5ohZ/ESFLO2e7LEkVFoDSZ2zyjw6IkAF2VcwDnwMerU
- oosM4HS5e4g+HM06DJzAZx9j6L3Ot8+iaGuFpUT8fEaV6ck2POJqqR7Nau0+mlj82HTSLfbnKrO
- 2kZUX3x/SpMDILBHqgNcOrDiP291CT6Pruh9hd7RTRocUBSSouS8X5ktb
-X-Gm-Gg: ASbGncvLVYRIyl9i+QozFKh3mStwH7uXIN2e52CLcwKYIAct+3TioBu6OgZGDw84Fvk
- S5PUVz3jSD832bUt0LIcZkQAVGR5X/mWvHP4aYxyEZjv//Afni1d21ofbyexjgUXfep3x7ES0P5
- ADOOWDoquJrIUdBxe7WarZAZiII59UN3NCrsg/M09uHvCAiNSjnoCEwCfmV/M3XqM0tRcrtIgyb
- Rq8Xymjuwuiw31sDVsw4IOMPleEHQSIC1Dhv7hrB26d/xPaBk7HzEVdOXcyFmi70QfBVEEEDysT
- /2jKI+q+rdVJpWwGXGGv4XznNTXkDrs8
-X-Received: by 2002:a5d:588e:0:b0:3a4:eec5:441c with SMTP id
- ffacd0b85a97d-3b5f2e26bbfmr10518959f8f.47.1752510203248; 
- Mon, 14 Jul 2025 09:23:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHWlWTZp2ApLbp/DdfqeZSeH4WvjlP2OWLno7MFxfTJ4Hc05o0wchKt7jhe0NZZXJ52Mgf/QA==
-X-Received: by 2002:a5d:588e:0:b0:3a4:eec5:441c with SMTP id
- ffacd0b85a97d-3b5f2e26bbfmr10518935f8f.47.1752510202769; 
- Mon, 14 Jul 2025 09:23:22 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:23:49e3:7a5d:209f:1dfc:d594])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8bd1890sm12741740f8f.3.2025.07.14.09.23.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 09:23:22 -0700 (PDT)
-Date: Mon, 14 Jul 2025 12:23:17 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Alireza Sanaee <alireza.sanaee@huawei.com>, anisinha@redhat.com,
- imammedo@redhat.com, linuxarm@huawei.com, peter.maydell@linaro.org,
- prime.zeng@hisilicon.com, qemu-devel@nongnu.org,
- shameerali.kolothum.thodi@huawei.com, wangyanan55@huawei.com,
- yangyicong@hisilicon.com, maobibo@loongson.cn, gaosong@loongson.cn,
- jiaxun.yang@flygoat.com
-Subject: Re: [PATCH v6 3/4] hw/acpi/aml-build: Build a root node in the PPTT
- table
-Message-ID: <20250714122306-mutt-send-email-mst@kernel.org>
-References: <20250604115233.1234-1-alireza.sanaee@huawei.com>
- <20250604115233.1234-4-alireza.sanaee@huawei.com>
- <20250714090807-mutt-send-email-mst@kernel.org>
- <20250714151041.0000599d.alireza.sanaee@huawei.com>
- <20250714115603-mutt-send-email-mst@kernel.org>
- <20250714170945.0000714f@huawei.com>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1ubM2U-0003XN-RX; Mon, 14 Jul 2025 12:28:30 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wB/+1e8QacnBTL5m7gNpWvr7LiwXJfk/YiPXnDjVrwYx6QztS2uG690ZWrdn58aEtoWJLHWhOtDGyBO8aChVr4xRaHtCK3UOD+HQZaJoRD8ntn2G/9EPiQf77n/46pvJoPP2CXcwZL8ys0AkvWUeWDItIjAN2l+RjPz1BjwWL1FGienMQADMzL612Qem1GzbonHBUw0QOfHU3Baf5P41M81pRQG4UhwbnjYUObJ0kNHAqgk3gsxYTEAKzMmNUXRaG94hn8p2HTkqcb7j95DUuvQOpaS6dOUisM+2CvdEfFwuxcvaoNRZhDCt4Q+HTSv5vbDLvWUIR/qIcvgO9x37pg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=CH6Eag7jHbtVmxHPHstgeCNCsAVI+JEcyRx38QkH2RE=;
+ b=LY77rNziHVD43bf9phwnEREAdUDE+3skxs6guEkC64zSBZ8GV7BED4PfL8s1B3/2xgyNdO/rOlcGStr6PljSMvtn7jkSVOFSBUaWxjj584g5D0nTstAoLbMGxBKrsOKCZjhl6peYDT5t12Kq9r/tFOXqIqJFlW+rbfdznbQR1Pu0vDkUAc2EOJTrg42MEhzYgH1g9TyK8ONpZ7/ffromEmw11frD4xzLeJC8LCZ3RLqQlbVPv42alI01GkIhY2R2msROKnNXV9Q+3k0jIe6M5RDjeMq/ejBq98k0WIBD5pOvYou5GfMFsz4LOJrIUGepJZTcOXDjQICe3xuDcFZmBA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=huawei.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=CH6Eag7jHbtVmxHPHstgeCNCsAVI+JEcyRx38QkH2RE=;
+ b=EC+Pe8rAKpnu4u4LuTW4Kf4QSFHd3RNgc+pHYJ2XyK2u5ArakdjQW7DGom2rMykZHCyLwRWVaY3QiQLDbR+PJ1zv3THR0DO1S9TEuxeX5wbeBsev0sn3m2FWA0njq8vRIM+T6Zh2HevY4t4ToiNZjvN31KtourowRSEbE9FHLFLvePDQV0YUdOPGMckSmQ1BbtHwU6rZfJJTaTP5IRDtjWVndmKJhOV20PBqD0KZcGEcIfHoePgCO1dfy2qPCpjuqD6BZudRzSX7Djwf+51JM8gRnLyTDGR8DfNe6d14XREjiLtJLEz7/ek4hGLiLsOcsU27y4wROfiQsvEkLL+kVg==
+Received: from BY5PR17CA0020.namprd17.prod.outlook.com (2603:10b6:a03:1b8::33)
+ by SA3PR12MB7950.namprd12.prod.outlook.com (2603:10b6:806:31c::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.20; Mon, 14 Jul
+ 2025 16:28:19 +0000
+Received: from CO1PEPF000075F0.namprd03.prod.outlook.com
+ (2603:10b6:a03:1b8:cafe::c0) by BY5PR17CA0020.outlook.office365.com
+ (2603:10b6:a03:1b8::33) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8922.32 via Frontend Transport; Mon,
+ 14 Jul 2025 16:28:19 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CO1PEPF000075F0.mail.protection.outlook.com (10.167.249.39) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8922.22 via Frontend Transport; Mon, 14 Jul 2025 16:28:17 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 14 Jul
+ 2025 09:27:57 -0700
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 14 Jul
+ 2025 09:27:56 -0700
+Received: from Asurada-Nvidia (10.127.8.10) by mail.nvidia.com (10.129.68.9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Mon, 14 Jul 2025 09:27:55 -0700
+Date: Mon, 14 Jul 2025 09:27:54 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <jgg@nvidia.com>, <ddutile@redhat.com>,
+ <berrange@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <smostafa@google.com>, <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>,
+ <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
+ <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>,
+ <shameerkolothum@gmail.com>
+Subject: Re: [RFC PATCH v3 02/15] backends/iommufd: Introduce
+ iommufd_vdev_alloc
+Message-ID: <aHUwCgckXCVniagD@Asurada-Nvidia>
+References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
+ <20250714155941.22176-3-shameerali.kolothum.thodi@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20250714170945.0000714f@huawei.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <20250714155941.22176-3-shameerali.kolothum.thodi@huawei.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PEPF000075F0:EE_|SA3PR12MB7950:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5d0db59f-e173-4d2c-e316-08ddc2f3709d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|7416014|1800799024|36860700013|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?4/fTtceWXZgd3Sq2Gl2ttHKhJ2X39DWAjSJgeWMIJLxA/QkhWgN0ceJefL5b?=
+ =?us-ascii?Q?WNcxVuEASscinbk41v4X+YEHhfbRVsyUr2J4wBEp2HfnbxsOJ51wLk+eqKx5?=
+ =?us-ascii?Q?Pv3T4fGItH+YlF5ihKwFB/pTrzxd+0P6BRBVvA6KlDrPjMB57zMLbB25vSVK?=
+ =?us-ascii?Q?k9byBb58DO0XfmNeSIqS9gIs3Y2u7t8pcz/sNlT2wAQIIQNZyAziCJrxqObx?=
+ =?us-ascii?Q?Cw8hK+Ioqhw+FqkCNHCo2YOaTtfh8ckPAFNShQ/X257YsBDgzjE6b6+WNoRC?=
+ =?us-ascii?Q?t3HzNKOvFF5UQ4GGwGBj4FwOoCCqfKuEh96rexu098pT+kuOdKxb9jmqG5uS?=
+ =?us-ascii?Q?AekwKIBWiN6SxLXrWmC7TetkzB8+RvvIsoLl4+Hc3taXcHX++k7+IK1qkTYB?=
+ =?us-ascii?Q?YxXCbxzk3jkFNKjjy127oIrFEfs3jdJIMSVvLvyLnfS4sWgrtAhrNFyF2rA7?=
+ =?us-ascii?Q?t0cjkD32HsetjNfWLzF5NEaygrHulcW/NNF+OfxpNwJ3DElUQ+w4xQtz5dPo?=
+ =?us-ascii?Q?YTFMbDiqtdEjpoNPd0/Q8Gj+XoTVfVTHSvBkdwfkWR2Yy8KFqiG51zkC+tQ4?=
+ =?us-ascii?Q?kpW9aBHZNukwxmDRv750Wab6AgVyjPvdFr4dTTCrysMBTwUGs5tWKfKCDtwP?=
+ =?us-ascii?Q?2oue+RWMwsg2T99ZNMV/F6anPkwm10OwPAhHcRFr1Q53p8ViOykusvXRmAbe?=
+ =?us-ascii?Q?JSV4XUdtOubUzsSdBjVJNHvySy46NMf0XVnChH4mOH2+YQTzh6KKr/maRRB+?=
+ =?us-ascii?Q?ip0lkcK06MDrqT1C8hK5O+Kjb/TmiJDuVxR8sZAPrzzy98fbntJlk8ePftxE?=
+ =?us-ascii?Q?tUCEIJf1QjO2a+89Tub0q7jFeIuYZ2f1BjnXZvciUTMLxb4o/5rrhROMBWXG?=
+ =?us-ascii?Q?1m1kD/fJe42D+E54gAE0XevWTBhh721nlNkmAAqD02it+qjoZ48BEuVAHUBN?=
+ =?us-ascii?Q?2g+HaVkRcGY37QHfMV7svfN1t1VrqFsoOea+Isf87l1c6Lx/8vwCLokheNUb?=
+ =?us-ascii?Q?G3eEpGJ5e6EoUFkrHRNNW1NXU2TOvPpruzQbbaLySP6bhqFKKa2CdyAvRI6C?=
+ =?us-ascii?Q?u8KyjpNIq53va2ayG8JeWB13EkUIzbDbaMzZCRt6h7F1wzbFO70Bn+sIq3kg?=
+ =?us-ascii?Q?E9jAMZ40IqjYb9+ui8xviSg+QUjOLAX1gGkNhdNUvRWGC85oSMRX3/zUD5FT?=
+ =?us-ascii?Q?+OlS9HCBR4UbQKN+FBeCqBFt3rwfio7Tgx2wLyUCK03GDI/+AoWfivLEfq0L?=
+ =?us-ascii?Q?esj54c+Xd/XLiYpwB+FFfFIH5pNC9k0MQZ9NtfK4g7wJzFBSFTm01umjBxMK?=
+ =?us-ascii?Q?sXypGI7kEYbEcBiCpzm3/k0LrTq2zwGChyGzfuw7D2E7PLPxJe4Gr/DSmcVm?=
+ =?us-ascii?Q?lXXk11mGYZDKoWrSvix1WaJa2n46tnjZ5nBN6g8gV4eqqMJTQ3KeOFeulXSE?=
+ =?us-ascii?Q?C6jvXcbFpMdzvVvYxX/DHB3fWSjw9MqjOfIBbwaZoi9I81YvrKJ0DER1U0sS?=
+ =?us-ascii?Q?eoyN8S0AXh6K8kNeIQIYWnYtLK1kUVuPgJgV?=
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(36860700013)(82310400026); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jul 2025 16:28:17.7808 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5d0db59f-e173-4d2c-e316-08ddc2f3709d
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000075F0.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB7950
+Received-SPF: permerror client-ip=2a01:111:f403:2009::60e;
+ envelope-from=nicolinc@nvidia.com;
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,114 +161,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 14, 2025 at 05:09:45PM +0100, Jonathan Cameron wrote:
-> On Mon, 14 Jul 2025 11:57:19 -0400
-> "Michael S. Tsirkin" <mst@redhat.com> wrote:
-> 
-> > On Mon, Jul 14, 2025 at 03:10:41PM +0100, Alireza Sanaee wrote:
-> > > On Mon, 14 Jul 2025 09:09:10 -0400
-> > > "Michael S. Tsirkin" <mst@redhat.com> wrote:
-> > >   
-> > > > On Wed, Jun 04, 2025 at 12:52:32PM +0100, Alireza Sanaee wrote:  
-> > > > > From: Yicong Yang <yangyicong@hisilicon.com>
-> > > > > 
-> > > > > Currently we build the PPTT starting from the socket node and each
-> > > > > socket will be a separate tree. For a multi-socket system it'll
-> > > > > be hard for the OS to know the whole system is homogeneous or not
-> > > > > (actually we're in the current implementation) since no parent node
-> > > > > to telling the identical implementation informentation. Add a
-> > > > > root node for indicating this.
-> > > > > 
-> > > > > Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-> > > > > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > > > Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-> > > > > ---
-> > > > >  hw/acpi/aml-build.c | 15 ++++++++++++++-
-> > > > >  1 file changed, 14 insertions(+), 1 deletion(-)
-> > > > > 
-> > > > > diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-> > > > > index 560cee12a2..76a4157a18 100644
-> > > > > --- a/hw/acpi/aml-build.c
-> > > > > +++ b/hw/acpi/aml-build.c
-> > > > > @@ -2153,12 +2153,25 @@ void build_pptt(GArray *table_data,
-> > > > > BIOSLinker *linker, MachineState *ms, int64_t socket_id = -1,
-> > > > > cluster_id = -1, core_id = -1; uint32_t socket_offset = 0,
-> > > > > cluster_offset = 0, core_offset = 0; uint32_t pptt_start =
-> > > > > table_data->len;
-> > > > > +    uint32_t root_offset;
-> > > > >      int n;
-> > > > >      AcpiTable table = { .sig = "PPTT", .rev = 2,
-> > > > >                          .oem_id = oem_id, .oem_table_id =
-> > > > > oem_table_id }; 
-> > > > >      acpi_table_begin(&table, table_data);
-> > > > >  
-> > > > > +    /*
-> > > > > +     * Build a root node for all the processor nodes. Otherwise
-> > > > > when
-> > > > > +     * building a multi-socket system each socket tree is separated
-> > > > > +     * and will be hard for the OS like Linux to know whether the
-> > > > > +     * system is homogeneous.
-> > > > > +     */
-> > > > > +    root_offset = table_data->len - pptt_start;
-> > > > > +    build_processor_hierarchy_node(table_data,
-> > > > > +        (1 << 0) | /* Physical package */
-> > > > > +        (1 << 4), /* Identical Implementation */
-> > > > > +        0, 0, NULL, 0);
-> > > > > +
-> > > > >      /*
-> > > > >       * This works with the assumption that cpus[n].props.*_id has
-> > > > > been
-> > > > >       * sorted from top to down levels in
-> > > > > mc->possible_cpu_arch_ids(). @@ -2175,7 +2188,7 @@ void
-> > > > > build_pptt(GArray *table_data, BIOSLinker *linker, MachineState
-> > > > > *ms, build_processor_hierarchy_node(table_data, (1 << 0) | /*
-> > > > > Physical package */ (1 << 4), /* Identical Implementation */
-> > > > > -                0, socket_id, NULL, 0);
-> > > > > +                root_offset, socket_id, NULL, 0);
-> > > > >          }
-> > > > >  
-> > > > >          if (mc->smp_props.clusters_supported &&
-> > > > > mc->smp_props.has_clusters) {    
-> > > > 
-> > > > 
-> > > > This function is also used by loongarch64, but you do not update the
-> > > > loongarch64 expected files:
-> > > > https://gitlab.com/mstredhat/qemu/-/jobs/10672661860  
-> > > 
-> > > Hi Michael,
-> > > 
-> > > There are new tests you have brought in the
-> > > tree after mine. 
-> > > https://gitlab.com/mstredhat/qemu/-/commit/9e4f80654cefd051f8f5c220d5447201b6cf1810
-> > > 
-> > > I can try to fix this and resend with updated PPTT files for
-> > > loongarch64. WDYT?  
-> > 
-> > That commit is in master though, right?
-> 
-> Hi Michael,
-> 
-> Which master do you mean? As far as I can tell the above commit isn't
-> anywhere other than your gitlab and, in for failures that were
-> triggering there earlier today, it was later in the tree than this
-> series (so the problem didn't manifest in this series at all)
-> That had Ali and I confused for a while as we couldn't replicate.
+On Mon, Jul 14, 2025 at 04:59:28PM +0100, Shameer Kolothum wrote:
+> +bool iommufd_backend_alloc_vdev(IOMMUFDBackend *be, uint32_t dev_id,
+> +                                uint32_t viommu_id, uint64_t virt_id,
+> +                                uint32_t *out_vdev_id, Error **errp)
+> +{
+> +    int ret, fd = be->fd;
+> +    struct iommu_vdevice_alloc alloc_vdev = {
+> +        .size = sizeof(alloc_vdev),
+> +        .viommu_id = viommu_id,
+> +        .dev_id = dev_id,
+> +        .virt_id = virt_id,
+> +    };
+> +
+> +    ret = ioctl(fd, IOMMU_VDEVICE_ALLOC, &alloc_vdev);
+> +
+> +    trace_iommufd_backend_alloc_vdev(fd, dev_id, viommu_id, virt_id,
+> +                                     alloc_vdev.out_vdevice_id, ret);
+> +
+> +    if (ret) {
+> +        error_setg_errno(errp, errno, "IOMMU_VDEVICE_ALLOC failed");
+> +        return false;
+> +    }
+> +
+> +    *out_vdev_id = alloc_vdev.out_vdevice_id;
 
-You are right, my mistake.
+g_assert(out_vdev_id);
 
-> Anyhow, someone had to do a rebase either way so not a problem.
-> 
-> Jonathan
-> 
-> 
-> > Sounds good, pls do.
-> > 
-> > > >   
-> > > > > -- 
-> > > > > 2.43.0    
-> > > > 
-> > > >   
-> > 
-> > 
-
+Thanks
+Nicolin
 
