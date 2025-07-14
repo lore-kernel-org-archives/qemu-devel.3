@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C1F1C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:13:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1563FC83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:13:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSJB-00058I-CM; Mon, 14 Jul 2025 19:10:05 -0400
+	id 1ubSHg-0007Ow-53; Mon, 14 Jul 2025 19:08:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSIE-0002VL-LY
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGh-00040r-UW
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSIC-0005o5-H7
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:06 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGg-0005XE-5W
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534543;
+ s=mimecast20190719; t=1752534449;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vkrlbrhsKn6eS+sA2oOtiYsJKDGFt+PZH3pEh9q5Hf8=;
- b=LT9A219rIG2GfmGycgFxgyUVnbWxsK60+nlztlnh6lVYfeh28k6jVTmDrbthoI3lCaLrtU
- UCHTXHeiJNnwxMd5aiUhnJsZA70Xbox858Yxc524kZAALc7zQWrSPgC7ipuR18lK0rHw6I
- 4Orm6O4DlsSbT5/EqAvvGD5RlNCOwWI=
+ bh=m9bYQ5u6pgRJHAntarcEw+lqU/yhh0ZBAg0JEBQxhXo=;
+ b=ax55UOrvu0gao6V0kztua9lA3AgE2zQ5IxTK2ICr3Zgn8OsbVj/XVjY2VWXDMy0oJQH/yH
+ 9XjfECJ2YfjorgH3kkU51YB1v/HNuQjlJXyqUyp5FRVlDZ9XVdKpMzs9ApfaDre5XSwnd6
+ Y5k+UI2LNpx8VLvgXvajpsCIYgYuozA=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-gR4Os1bSM3-xIfO74Dhiig-1; Mon, 14 Jul 2025 19:09:02 -0400
-X-MC-Unique: gR4Os1bSM3-xIfO74Dhiig-1
-X-Mimecast-MFC-AGG-ID: gR4Os1bSM3-xIfO74Dhiig_1752534541
+ us-mta-621-V5Gz25wzPH-GDepb5GsNpg-1; Mon, 14 Jul 2025 19:07:28 -0400
+X-MC-Unique: V5Gz25wzPH-GDepb5GsNpg-1
+X-Mimecast-MFC-AGG-ID: V5Gz25wzPH-GDepb5GsNpg_1752534447
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4560a30a793so10161665e9.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:09:02 -0700 (PDT)
+ 5b1f17b1804b1-45626532e27so1766495e9.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:07:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534541; x=1753139341;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vkrlbrhsKn6eS+sA2oOtiYsJKDGFt+PZH3pEh9q5Hf8=;
- b=wNcMYcYS5YfKbUI8AyDU5qZFwO3SdjLvfSqI5wdJjscuGHfmTWiDdXPPM3dB1ltUuV
- ZfyKxtK0MLGR7PLhfdoNk3SYijMHyQAZNH64Pvnk8XPKXX73+Rf7xMviArgbIICu1iRu
- r1NX3FzpaATpJldzF3Z5TNqreZSAY6LjQBskV6uKPceREdMHPLQwzUyWZR4O1JDbAgAx
- 7FXd+3MlzfxzbSfUe1wd5C5CH/bn1aYYK1nF9jQ+aS/lMmMwyzicmqxLzrbi14VKzd+C
- VlAHfS7BRiVpzcQRlm8VU9c7VNkKUdR/PLCKt4owF0vG6k1gnpbk9vQx+NhU4/U4jHvI
- VOWg==
-X-Gm-Message-State: AOJu0Yx80CFEI+djb61HYiZIdy2wUHmn9Y2r4tqFrItkg5q6HH/GRVvR
- FjCl5lLQXE8KlHN6PNOX5u7CvdKWJu0tn7mEGbwk1ovCm5VUDr2Nfj30F6/f2KOq74R466ivAI2
- hzP+4rBGco8DN9/J/90dF4x6urbAIVkbjW/DnJp3rwVEt5OMjbadwWsfbR2b9Aqv4uP+U8OBowb
- r3SMhJU3xw9tg1x6bD62FXvyy8vXKhzBRMJQ==
-X-Gm-Gg: ASbGncsEm00nGrO7kimt7kkM0xyachfuMXO7Dgr0djE5kEH4XUH2z4gqix9c106KrTd
- 5S/HYCISNW7moceRD17m/mf8D7CG7qOg7YLnm4elCz9Wk9NGny6yVox6i7eL+N04fQ9eXRtSG6E
- vE9x9VuWJkWyBTh62iFNJ13p7TFTf9+plYXmbmmA9R+0cy5Qk18zNDsIijvj8pebwNfVVxUyLx5
- 8+Q/SQegGp0eLI7rhec8XYrDmBMXvLyIdDkOuX7KslOS7JiPETq9S8jPg97wClbLNnxp7M/Opmx
- wHmotGRpxeRR1MjOFKpKMNUET/6HPetm
-X-Received: by 2002:a05:600c:1e04:b0:456:c48:491f with SMTP id
- 5b1f17b1804b1-4560c484fbbmr105500325e9.10.1752534540675; 
- Mon, 14 Jul 2025 16:09:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHMfqosGnNpE2JNodrS12kF8YYsT+u8JEf2idso1z5nPAIDS1pJIPJ3iZCom/rbOlNQXjssVw==
-X-Received: by 2002:a05:600c:1e04:b0:456:c48:491f with SMTP id
- 5b1f17b1804b1-4560c484fbbmr105500075e9.10.1752534540177; 
- Mon, 14 Jul 2025 16:09:00 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752534447; x=1753139247;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=m9bYQ5u6pgRJHAntarcEw+lqU/yhh0ZBAg0JEBQxhXo=;
+ b=NJd3CHrqDztZTSkc05UFzNVDvCCTU+ses3yXijGVrhnIEZxhIeAsgGr1GMOVoujujQ
+ DjyqVj063kzrbKDMetjj3SkhDzB9ZzxZppeEJ6n0bellcK5FuilXvt04gXlDEPcIvAC0
+ 3KpKquA22T2N8cU3Y2XFRUczEmnERrBL3THWPG0E6TFuh9MkdI+7FhYo6g4hiPkmRsAV
+ LvvnYBUosPyZ60kjmqmXbW7eRGGls//CtL62ha3FaiBOtoBFZtPx5mXYgvNlnqvCuGRB
+ rk1eccY0mZ5/5xqDsIw/Ta9u05krpeaTnqSeF1fHBO3CFTHYdZcqjhHD5qypj52LGKCh
+ 8LrA==
+X-Gm-Message-State: AOJu0Yxmob2clV2JLD7y07LRbet8bG+5pG8WZzUBkMxhBXSCcVa0W7Ov
+ dhaUIyRBQzdD2y7PpQX1hF9o3ItAEWTumcWDmcl5tnJx25ypeqyEsYpCTsyqG20qoTz/nIQAdM5
+ q/EQnxqOSMiSNFyTqCmm+++zX+ak7y+zDhSeDppAEY/bAf5VMtF1Zq7K0pL+CgbfNoxvqyegKWZ
+ mJZNwUcXmqy8tyf6oq0kgeYUC1i+ZZMtT+6A==
+X-Gm-Gg: ASbGncvHr1xg/7pJGr8o4XGco+Xk3YGKTl2QZjptON7e56bbokz0Ptp1YXwjgJ9JM6L
+ cgwLirQLWbdo8QcPm7PHvXpqvUMf3luiZr0eOkgqiqy0+W1iR3e9li6ntss+gtLOR+kju3NHwQ7
+ WNXGEOfXJKKf9HI42fDsMCjZid83Hl3Wluj5g7xOSykR82YeKd8dHyO5yw8HR4YyQzmp9bjVFCR
+ 7pMOURPgX6GPklOMuPKaKmpY3dqAYqcMa/qKd6Wal1aGyoKzE9NbnPJu6sT+tgCbiQk52yGHdue
+ dlp0SxEwtyRHYbFM6dNZsgdtrR+qsol6
+X-Received: by 2002:a05:600c:46c5:b0:442:f4a3:b5f2 with SMTP id
+ 5b1f17b1804b1-4555f895bb0mr129278545e9.6.1752534446650; 
+ Mon, 14 Jul 2025 16:07:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEl/PhahyPwKcaZ9Lf3VUbFnCA7UevHuv+u45o4ZgPQ45GdGCRRRpU0cp498vZ+Au0xGwD20A==
+X-Received: by 2002:a05:600c:46c5:b0:442:f4a3:b5f2 with SMTP id
+ 5b1f17b1804b1-4555f895bb0mr129278355e9.6.1752534446185; 
+ Mon, 14 Jul 2025 16:07:26 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-456009ec9c8sm91680415e9.39.2025.07.14.16.08.58
+ 5b1f17b1804b1-455f222e4f4sm104491225e9.10.2025.07.14.16.07.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:08:59 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:08:57 -0400
+ Mon, 14 Jul 2025 16:07:25 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:07:24 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 63/97] qtest/bios-tables-test: Prepare for fixing the aarch64
- viot test
-Message-ID: <b04afde07abcd2cb49482ecb7caad88104ee6235.1752534227.git.mst@redhat.com>
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org
+Subject: [PULL 28/97] rust: bindings: allow any number of params
+Message-ID: <04130b3dc5af620213a90d300933517b39f43bba.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1752534227.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -111,34 +110,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+We are going to be adding more parameters, and this makes
+rust unhappy:
+    Functions with lots of parameters are considered bad style and reduce
+    readability (“what does the 5th parameter mean?”). Consider grouping
+    some parameters into a new type.
 
-The test misses a variant and this puts the mess on subsequent
-rebuild-expected-aml.sh where a first DSDT reference blob is
-overriden by another one.
+Specifically:
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20250714080639.2525563-18-eric.auger@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+error: this function has too many arguments (8/7)
+    --> /builds/mstredhat/qemu/build/rust/qemu-api/rust-qemu-api-tests.p/structured/bindings.inc.rs:3840:5
+     |
+3840 | /     pub fn new_bitfield_1(
+3841 | |         secure: std::os::raw::c_uint,
+3842 | |         space: std::os::raw::c_uint,
+3843 | |         user: std::os::raw::c_uint,
+...    |
+3848 | |         address_type: std::os::raw::c_uint,
+3849 | |     ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
+     | |____________________________________________^
+     |
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#too_many_arguments
+     = note: `-D clippy::too-many-arguments` implied by `-D warnings`
+     = help: to override `-D warnings` add `#[allow(clippy::too_many_arguments)]`
+
+I didn't want to disable this globally, so I just shut it off for this
+file.
+
+Message-Id: <a4c65fb2b735740bda2874c86de31d29a5ae24d2.1752530758.git.mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h | 1 +
- tests/data/acpi/aarch64/virt/DSDT.viot      | 0
- 2 files changed, 1 insertion(+)
- create mode 100644 tests/data/acpi/aarch64/virt/DSDT.viot
+ rust/qemu-api/src/bindings.rs | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..7a74beab3d 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,2 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/aarch64/virt/DSDT.viot",
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.viot b/tests/data/acpi/aarch64/virt/DSDT.viot
-new file mode 100644
-index 0000000000..e69de29bb2
+diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.rs
+index 057de4b646..b4692f9b4b 100644
+--- a/rust/qemu-api/src/bindings.rs
++++ b/rust/qemu-api/src/bindings.rs
+@@ -18,11 +18,15 @@
+ 
+ //! `bindgen`-generated declarations.
+ 
+-#[cfg(MESON)]
+-include!("bindings.inc.rs");
++#[allow(clippy::too_many_arguments)]
++mod gen {
++    #[cfg(MESON)]
++    include!("bindings.inc.rs");
+ 
+-#[cfg(not(MESON))]
+-include!(concat!(env!("OUT_DIR"), "/bindings.inc.rs"));
++    #[cfg(not(MESON))]
++    include!(concat!(env!("OUT_DIR"), "/bindings.inc.rs"));
++}
++pub use gen::*;
+ 
+ // SAFETY: these are implemented in C; the bindings need to assert that the
+ // BQL is taken, either directly or via `BqlCell` and `BqlRefCell`.
 -- 
 MST
 
