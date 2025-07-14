@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D04EC83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:13:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 347D7C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:13:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubH6X-0007XK-F6; Mon, 14 Jul 2025 07:12:23 -0400
+	id 1ubH7b-0000NA-E1; Mon, 14 Jul 2025 07:13:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubGz6-0000bn-BG
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:04:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1ubGze-0000sg-Dm
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:05:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubGz2-0001Xx-HR
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:04:34 -0400
+ id 1ubGzb-0001qc-NA
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:05:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752491071;
+ s=mimecast20190719; t=1752491107;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hCVHCI24r7fBMBEIXiJinu8XMfmmZF1IzGCvCSdEy6k=;
- b=WM/5p36stv2m4IhmvEEus+IeX7sCHb4Njaqvn1vpbHWXcnRlQEja8hc9m7gQDhKgnlHY1M
- Ay7x/hR7MHT0lKw3IQ4PVZbyy/eiyDLMv63utQKjRaG44L/aU/epq6PI43NnstQPPLicr6
- aan6s8kEAQmhPXwHYCSZN/gYbLd3nQU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dW2i+oCo9ZpgCYlYnI1btj+lqBMLXuFlBbfwc0ZiH08=;
+ b=eQzyexnHnabrTngUu/kV8FGC4BZJKgqysCrutHaqmdyItcraFFhgpGgdD/3ME9feMuxASp
+ 5KDtBFktfuk7hfV3zdz350jFrW3V1hEtEyqCP3i1Wu50IXXuihoYfWBRwsRCvDuFpMNKwA
+ Gq7PSHLiuob+ur414KhjMBb3IHcO+yo=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-389-zWg07cboOXWk8X5a-eBUWQ-1; Mon, 14 Jul 2025 07:04:30 -0400
-X-MC-Unique: zWg07cboOXWk8X5a-eBUWQ-1
-X-Mimecast-MFC-AGG-ID: zWg07cboOXWk8X5a-eBUWQ_1752491069
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a5058f9ef4so1738564f8f.2
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:04:30 -0700 (PDT)
+ us-mta-536-MmCOkSc_Pti22z63JITDBQ-1; Mon, 14 Jul 2025 07:05:05 -0400
+X-MC-Unique: MmCOkSc_Pti22z63JITDBQ-1
+X-Mimecast-MFC-AGG-ID: MmCOkSc_Pti22z63JITDBQ_1752491105
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-456106b7c4aso4887315e9.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:05:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752491069; x=1753095869;
+ d=1e100.net; s=20230601; t=1752491103; x=1753095903;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hCVHCI24r7fBMBEIXiJinu8XMfmmZF1IzGCvCSdEy6k=;
- b=AVQBAsK1bMbE1mhELZ1CzDxSMR11hb3kf92ld91xkLKxji/1HMa3e+LITPKTGs42Qz
- o5O+l8up7WRH4e53hAuBc/rYKJexDIk0xdhgwcCvkiEgheCNYi0DCX7k775AQiBNAmSa
- IO69wLsv3IMjphMxbuhw8/Eakzb+IpMjqAvL1dNZeN5/Sg1ItIATBAwq8p07ItG9DXCa
- HJ0u2EFw28mHPygAxNPIn51vrKvUcfTvx9VrC1jtPAxOkFFXjhJWHLHNaFZaDxzmj6Zk
- OE80V95RsUH9UsRqPxQV0a6ASAHMCr+YFq3hMnQktrQBitS6jOZ91kE6emrLZTZHz1Pu
- qMvw==
-X-Gm-Message-State: AOJu0YyvX8EDPkfOM0Y+bkRSYGDNqS2iwHGgvuGQIbpoVwp1HHz9sBzg
- +B/ludvWL9wDMgyIaEfX208Fwma1JVHDP6qujNLh835xgJy1qLE5OFNsfaJCqokrw0oRdtsRJXg
- p0vu7PsZLTlVunUOv5A8UI6c73KtkFSg/falaGAraDCQl3NqsKnuwDt7EbVE+EzYv2OsgP4CVCj
- /qxJbh6t61XvtGIJ7UiT2iLZDhOlySZ08AYdmsY0cT
-X-Gm-Gg: ASbGnct93Di08g5//FOPBu9ep+ryrsWBZ03wQaKDRsAi0zfn2IDkSn8+WnDZovrxx31
- BI6GAmJuSvzzr2fa+mYYm8jgJ+EIyPTybrRRgIlhR5vg9LSlcH+vkq3RKQ5OLmh+dCstF5j1/3L
- XsA5L1GSABu8K/c7vgmkZOSaHDtDqM4UjfW8sn7vEoB4E3+TnBlrTBSMHH6s7vQ+DK/0iDETjZa
- Wnqc/2AB8h2Z3SsqHephXEbuWylrs/zNbrK4EyBws5RdW4fg4/STJlQkAFvngCbWpCmjBKwMPg4
- JdPU21iCfC1995a86kSfkNsxKq2YqaaLVMXWDJsr7SE=
-X-Received: by 2002:a05:6000:4310:b0:3b3:a6c2:1a10 with SMTP id
- ffacd0b85a97d-3b5f351eb04mr9261869f8f.12.1752491068660; 
- Mon, 14 Jul 2025 04:04:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF8qBmASoRtbGGlek/AkqVmkwOsFPxJLjOTn+ZdCoWlqVIc1BAPJGvHrLizNX/jTjhEGQowAA==
-X-Received: by 2002:a05:6000:4310:b0:3b3:a6c2:1a10 with SMTP id
- ffacd0b85a97d-3b5f351eb04mr9261827f8f.12.1752491068056; 
- Mon, 14 Jul 2025 04:04:28 -0700 (PDT)
+ bh=dW2i+oCo9ZpgCYlYnI1btj+lqBMLXuFlBbfwc0ZiH08=;
+ b=xU2FuNVmdJHzk1TLWtmTlfaz1cjTSyIwLT3s/8DOIASn+5Qf8r9t/McRNE7rVjqXFX
+ k1njGqFczqHyyr8zCGcuunvyKwRYS6ILeON5s/k/iHdZnnzMcFhXJ32ZFJp0hGUjeYm8
+ OHCWel9sm0wvNczoHJVGtRsC8068aFdWnoC9XAbAUekXMhgHGrRDJEf9gZAg9LDu1tfO
+ TQ8+s8nqYLUUftEsD3J9SwWZoP/wQnJvRmWoxlmP9Idlf+Ogq+iI8eYsFztn4CkJDck8
+ 6DArbw+0xq2lTiMZ/iVgLSCGl7of7AaAg99AggZ3DWdUezGugqq6t+AoVgcF4eRX7FU7
+ 5eCQ==
+X-Gm-Message-State: AOJu0Yxi+BEhdFmWOG0j6uhXaW4+qGz+rmYxLC3Y85Wq4amUw68LwIO5
+ AkAA/SFjQ2qs0y7rtMmRWg1whQGNoTBZodcBzhLyKYOrk5ZHAry3Gn4uPaZJ9osd0KI/FLcGW29
+ 4K3AttG2EsTED1aRkYoB32rg3epaRnbiMSJomvq3H5i83CdCneMd/UcuaLxwZhkZVJTarDJ0rE7
+ RCVxGHRQrzk9+V+lLyCShk2v8tPz71mKy3h/gXOwGA
+X-Gm-Gg: ASbGnctWRBeDOtFuiQJDtCo4RKSCRaInODsEjr2mvnV6VjjPeoUUuOzIe3OMjHesNdo
+ bi7z1u+0+FJulu54JCiFGTt40JFBMrUNGmmKo5MG6pSUTghpaLdogPfqk9hC22d74KJrSVs4k0a
+ qUIh0AEMTqiF7ZXBC4IEM+phpWkYrV6zMT7EHeHjDiLCasucE2KGxZB6RsZ7VCfPgb2MiVPqk4V
+ FmD9NRlTrMIjx4EPbIRX6Hb0+TcqE3D809pg54fKEnkvMwMRMFrFcbYc7CC78WWX4DT6uPJAeG5
+ HvOddTRlOSfXz1dFJBQXai87CRtpLmHM4EmRGrRu7w4=
+X-Received: by 2002:a05:600c:4746:b0:453:7713:476c with SMTP id
+ 5b1f17b1804b1-455bd8e63aemr95401805e9.2.1752491102764; 
+ Mon, 14 Jul 2025 04:05:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEF63REqR+7VypwkWaTIETl4dxA0iNTNvqaX+oeW7jJvqR3o0LBX2hgxJRtc3C5Jq0MuJbOIA==
+X-Received: by 2002:a05:600c:4746:b0:453:7713:476c with SMTP id
+ 5b1f17b1804b1-455bd8e63aemr95401475e9.2.1752491102236; 
+ Mon, 14 Jul 2025 04:05:02 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.73.155])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e0d719sm12234549f8f.54.2025.07.14.04.04.25
+ ffacd0b85a97d-3b5e8e26ee3sm12333742f8f.96.2025.07.14.04.05.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 04:04:25 -0700 (PDT)
+ Mon, 14 Jul 2025 04:05:01 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 07/77] target/i386: move max_features to class
-Date: Mon, 14 Jul 2025 13:02:56 +0200
-Message-ID: <20250714110406.117772-8-pbonzini@redhat.com>
+Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>,
+ Gerd Hoffman <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 20/77] hw/i386: Add igvm-cfg object and processing for IGVM
+ files
+Date: Mon, 14 Jul 2025 13:03:09 +0200
+Message-ID: <20250714110406.117772-21-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250714110406.117772-1-pbonzini@redhat.com>
 References: <20250714110406.117772-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -109,133 +111,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-max_features is always set to true for instances created by -cpu max or
--cpu host; it's always false for other classes.  Therefore it can be
-turned into a field in the X86CPUClass.
+From: Roy Hopkins <roy.hopkins@randomman.co.uk>
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+An IGVM file contains configuration of guest state that should be
+applied during configuration of the guest, before the guest is started.
+
+This patch allows the user to add an igvm-cfg object to an X86 machine
+configuration that allows an IGVM file to be configured that will be
+applied to the guest before it is started.
+
+If an IGVM configuration is provided then the IGVM file is processed at
+the end of the board initialization, before the state transition to
+PHASE_MACHINE_INITIALIZED.
+
+Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
+Acked-by: Gerd Hoffman <kraxel@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+Link: https://lore.kernel.org/r/23bc66ae4504ba5cf2134826e055b25df3fc9cd9.1751554099.git.roy.hopkins@randomman.co.uk
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.h         | 2 +-
- target/i386/cpu.c         | 7 ++++---
- target/i386/hvf/hvf-cpu.c | 3 ++-
- target/i386/kvm/kvm-cpu.c | 5 +++--
- 4 files changed, 10 insertions(+), 7 deletions(-)
+ include/hw/i386/x86.h |  3 +++
+ hw/i386/pc.c          | 12 ++++++++++++
+ hw/i386/pc_piix.c     | 10 ++++++++++
+ hw/i386/pc_q35.c      | 10 ++++++++++
+ qemu-options.hx       | 28 ++++++++++++++++++++++++++++
+ 5 files changed, 63 insertions(+)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 51e10139dfd..be3ae6d546e 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2196,7 +2196,6 @@ struct ArchCPU {
-     bool expose_tcg;
-     bool migratable;
-     bool migrate_smi_count;
--    bool max_features; /* Enable all supported features automatically */
-     uint32_t apic_id;
+diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
+index fc460b82f82..8755cad50a3 100644
+--- a/include/hw/i386/x86.h
++++ b/include/hw/i386/x86.h
+@@ -25,6 +25,7 @@
+ #include "hw/intc/ioapic.h"
+ #include "hw/isa/isa.h"
+ #include "qom/object.h"
++#include "system/igvm-cfg.h"
  
-     /* Enables publishing of TSC increment and Local APIC bus frequencies to
-@@ -2349,6 +2348,7 @@ struct X86CPUClass {
+ struct X86MachineClass {
+     MachineClass parent;
+@@ -92,6 +93,8 @@ struct X86MachineState {
+      * which means no limitation on the guest's bus locks.
       */
-     const X86CPUModel *model;
+     uint64_t bus_lock_ratelimit;
++
++    IgvmCfg *igvm;
+ };
  
-+    bool max_features; /* Enable all supported features automatically */
-     bool host_cpuid_required;
-     int ordering;
-     bool migration_safe;
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 0d35e95430f..4d4e5234246 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6187,6 +6187,7 @@ static void max_x86_cpu_class_init(ObjectClass *oc, const void *data)
+ #define X86_MACHINE_SMM              "smm"
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index b2116335752..432ab288a87 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1833,6 +1833,18 @@ static void pc_machine_class_init(ObjectClass *oc, const void *data)
+     object_class_property_add_bool(oc, "fd-bootchk",
+         pc_machine_get_fd_bootchk,
+         pc_machine_set_fd_bootchk);
++
++#if defined(CONFIG_IGVM)
++    object_class_property_add_link(oc, "igvm-cfg",
++                                   TYPE_IGVM_CFG,
++                                   offsetof(X86MachineState, igvm),
++                                   object_property_allow_set_link,
++                                   OBJ_PROP_LINK_STRONG);
++    object_class_property_set_description(oc, "igvm-cfg",
++                                          "Set IGVM configuration");
++#endif
++
++
+ }
  
-     xcc->ordering = 9;
- 
-+    xcc->max_features = true;
-     xcc->model_description =
-         "Enables all features supported by the accelerator in the current host";
- 
-@@ -6201,7 +6202,6 @@ static void max_x86_cpu_initfn(Object *obj)
-     /* We can't fill the features array here because we don't know yet if
-      * "migratable" is true or false.
-      */
--    cpu->max_features = true;
-     object_property_set_bool(OBJECT(cpu), "pmu", true, &error_abort);
- 
-     /*
-@@ -8282,6 +8282,7 @@ static void x86_cpu_enable_xsave_components(X86CPU *cpu)
-  */
- void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
- {
-+    X86CPUClass *xcc = X86_CPU_GET_CLASS(cpu);
-     CPUX86State *env = &cpu->env;
-     FeatureWord w;
-     int i;
-@@ -8301,12 +8302,12 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
-         }
+ static const TypeInfo pc_machine_info = {
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index ea7572e7831..3184ea1b378 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -366,6 +366,16 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+                                x86_nvdimm_acpi_dsmio,
+                                x86ms->fw_cfg, OBJECT(pcms));
      }
++
++#if defined(CONFIG_IGVM)
++    /* Apply guest state from IGVM if supplied */
++    if (x86ms->igvm) {
++        if (IGVM_CFG_GET_CLASS(x86ms->igvm)
++                ->process(x86ms->igvm, machine->cgs, &error_fatal) < 0) {
++            g_assert_not_reached();
++        }
++    }
++#endif
+ }
  
--    /*TODO: Now cpu->max_features doesn't overwrite features
-+    /* TODO: Now xcc->max_features doesn't overwrite features
-      * set using QOM properties, and we can convert
-      * plus_features & minus_features to global properties
-      * inside x86_cpu_parse_featurestr() too.
-      */
--    if (cpu->max_features) {
-+    if (xcc->max_features) {
-         for (w = 0; w < FEATURE_WORDS; w++) {
-             /* Override only features that weren't set explicitly
-              * by the user.
-diff --git a/target/i386/hvf/hvf-cpu.c b/target/i386/hvf/hvf-cpu.c
-index dfdda701268..2b991f2fc8e 100644
---- a/target/i386/hvf/hvf-cpu.c
-+++ b/target/i386/hvf/hvf-cpu.c
-@@ -61,13 +61,14 @@ static void hvf_cpu_xsave_init(void)
- static void hvf_cpu_instance_init(CPUState *cs)
- {
-     X86CPU *cpu = X86_CPU(cs);
-+    X86CPUClass *xcc = X86_CPU_GET_CLASS(cpu);
- 
-     host_cpu_instance_init(cpu);
- 
-     /* Special cases not set in the X86CPUDefinition structs: */
-     /* TODO: in-kernel irqchip for hvf */
- 
--    if (cpu->max_features) {
-+    if (xcc->max_features) {
-         hvf_cpu_max_instance_init(cpu);
+ typedef enum PCSouthBridgeOption {
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 33211b1876f..6990e1c6695 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -325,6 +325,16 @@ static void pc_q35_init(MachineState *machine)
+                                x86_nvdimm_acpi_dsmio,
+                                x86ms->fw_cfg, OBJECT(pcms));
      }
++
++#if defined(CONFIG_IGVM)
++    /* Apply guest state from IGVM if supplied */
++    if (x86ms->igvm) {
++        if (IGVM_CFG_GET_CLASS(x86ms->igvm)
++                ->process(x86ms->igvm, machine->cgs, &error_fatal) < 0) {
++            g_assert_not_reached();
++        }
++    }
++#endif
+ }
  
-diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-index 16bde4de01e..0fb88a239d4 100644
---- a/target/i386/kvm/kvm-cpu.c
-+++ b/target/i386/kvm/kvm-cpu.c
-@@ -41,6 +41,7 @@ static void kvm_set_guest_phys_bits(CPUState *cs)
- static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
- {
-     X86CPU *cpu = X86_CPU(cs);
-+    X86CPUClass *xcc = X86_CPU_GET_CLASS(cpu);
-     CPUX86State *env = &cpu->env;
-     bool ret;
+ #define DEFINE_Q35_MACHINE(major, minor) \
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 1f862b19a67..f4c05b388b5 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -5992,6 +5992,34 @@ SRST
+                  -machine ...,memory-encryption=sev0 \\
+                  .....
  
-@@ -63,7 +64,7 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
-      *   check/update ucode_rev, phys_bits, guest_phys_bits, mwait
-      *   cpu_common_realizefn() (via xcc->parent_realize)
-      */
--    if (cpu->max_features) {
-+    if (xcc->max_features) {
-         if (enable_cpu_pm) {
-             if (kvm_has_waitpkg()) {
-                 env->features[FEAT_7_0_ECX] |= CPUID_7_0_ECX_WAITPKG;
-@@ -216,7 +217,7 @@ static void kvm_cpu_instance_init(CPUState *cs)
-         x86_cpu_apply_props(cpu, kvm_default_props);
-     }
- 
--    if (cpu->max_features) {
-+    if (xcc->max_features) {
-         kvm_cpu_max_instance_init(cpu);
-     }
- 
++    ``-object igvm-cfg,file=file``
++        Create an IGVM configuration object that defines the initial state
++        of the guest using a file in that conforms to the Independent Guest
++        Virtual Machine (IGVM) file format.
++
++        This is currently only supported by ``-machine q35`` and
++        ``-machine pc``.
++
++        The ``file`` parameter is used to specify the IGVM file to load.
++        When provided, the IGVM file is used to populate the initial
++        memory of the virtual machine and, depending on the platform, can
++        define the initial processor state, memory map and parameters.
++
++        The IGVM file is expected to contain the firmware for the virtual
++        machine, therefore an ``igvm-cfg`` object cannot be provided along
++        with other ways of specifying firmware, such as the ``-bios``
++        parameter on x86 machines.
++
++        e.g to launch a machine providing the firmware in an IGVM file
++
++        .. parsed-literal::
++
++             # |qemu_system_x86| \\
++                 ...... \\
++                 -object igvm-cfg,id=igvm0,file=bios.igvm \\
++                 -machine ...,igvm-cfg=igvm0 \\
++                 .....
++
+     ``-object authz-simple,id=id,identity=string``
+         Create an authorization object that will control access to
+         network services.
 -- 
 2.50.0
 
