@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D8EFC83F17
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68069C83F1B
 	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:13:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSMJ-000223-KF; Mon, 14 Jul 2025 19:13:20 -0400
+	id 1ubSHn-0008J8-IX; Mon, 14 Jul 2025 19:08:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSIr-0004nL-9x
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:51 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGu-0005El-7i
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSIl-0005uw-Db
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:42 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGs-0005aE-Mj
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534578;
+ s=mimecast20190719; t=1752534462;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=7VVYFAZpDz35U6k3Zkt3LihPzSlnPDiy3RZ7fk4hpjY=;
- b=OcRKHWbmHVTnh/pHMIRJtuGAd3iIrhhDGsZf0Qppe3hXrWGaC1jtlOnajgvG7UtN5wLCPr
- 8oGofGy3B0Jxt1JOatIWObT1iH0f7JnefhVtOop1NTG1lLQZSk97W4AtY2QzJPk5cyy5gN
- 8s3M0MYRHQcIQw8KZ2qb4wWdjSYe8Pg=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/e0EHOrB7ZCBA2nwdmyUuJgNrg4LS48+Pg1+NbLqEN8=;
+ b=BseU2w+Uv0FkoGl2zNqPYDRhHbnJHQkJB4144k3/3pvlJmYt+gDK1buIb+UTpxdNBUlg92
+ tArNMiC9mLgM9rgjHLkLx8xRLoWqz1jgEkK3zBWuOSSgbiYMrGRzNx91l3JUgT6E91k/y4
+ pAtiJ+5KLbtxoGyNl4qyV1lYpL3PodE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-MdXefwbnM5WLgqV0WKweag-1; Mon, 14 Jul 2025 19:09:36 -0400
-X-MC-Unique: MdXefwbnM5WLgqV0WKweag-1
-X-Mimecast-MFC-AGG-ID: MdXefwbnM5WLgqV0WKweag_1752534576
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-451d2037f1eso30883505e9.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:09:36 -0700 (PDT)
+ us-mta-152-4Mr7tG7pNhyc-3YyRAb0Dw-1; Mon, 14 Jul 2025 19:07:40 -0400
+X-MC-Unique: 4Mr7tG7pNhyc-3YyRAb0Dw-1
+X-Mimecast-MFC-AGG-ID: 4Mr7tG7pNhyc-3YyRAb0Dw_1752534460
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4561611dc2aso14152445e9.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:07:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534575; x=1753139375;
+ d=1e100.net; s=20230601; t=1752534459; x=1753139259;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7VVYFAZpDz35U6k3Zkt3LihPzSlnPDiy3RZ7fk4hpjY=;
- b=ad6TRbtuiM9bQJYRyPAJAe9DgvYUrJn/NJcdVUmNqF4izoNxQVoJR/xfZAqjBbS+Tr
- 481c05WfXNrYNxLqvpcCTeTOm+QYAqVPknYcLmM9Y8gSgfhplRikuE8FCWKZjLr732t6
- IK/Ued7OeeY8c8b1i7W3TnmI5E3qDZPELf9V+O9OO/mw66nK0s3aXTTHZBullOmAJRCQ
- CBqDoPFNB5yFaRjubSzrXk/Yuv5ctMb+uMScrBztZSXg2S3F4KToLdCrsTtycAQohQkd
- 5RbmF6ht3QHKl3zVsGesGbyhB7g1kBW0nqw9h2ckjyDsL45tyAuZ96b2kUQoMOg3iyc6
- 1ouA==
-X-Gm-Message-State: AOJu0Yy+lxA97+elZvU535g7QxlAqOEkthRsOGYTk3a6QvdsA+4R8jwj
- nc2tvKiqOxxQOvabc4S/snEFSeVcicI65mL9hjInowtbNGRY0Pkamk28TyMgX/vcwBnJZpW35/i
- DvLvy3L/tLVFjhHRuf5ZdlHM/L8WmNIJ6Jx0aNkSieBOyD2iyeXCx6fjy+bb6wxYuBCoeJ/pgII
- PM4OAHF42fPVHIoMXQ72mMFKM0G14/pHMfNA==
-X-Gm-Gg: ASbGncurzwZRkxzhTmEfI78cox+SQsksfOs9ajxDBnyH/V1v2IbWPuoE/+FWwMg2G69
- xgEVYXTnititro3j0N4AfFP6/3C/UeMELTT4UgywLxlsenMohI0TFTx/k0eB1Dr8YvzP8VzCIrw
- T3ES6UH8ibvSyIGSzZCGYqG47jsl0Zso0zYyNKd3NQ4gVRfzbc/BiXYdB7oF6vMAF8jnctkkzUJ
- oWdJB9yiTzg9gUJ4+LTp6A7yqcjpbVC/9cYZ1UnbhV6Ezm8GzjD2Q7LN+4s7YpAb+e22Vt/B8oS
- iyG3B/5qKiyQZXsJy7HQP4jYGfTYoLqi
-X-Received: by 2002:a05:600c:1c10:b0:456:1e5a:885e with SMTP id
- 5b1f17b1804b1-4561e5a8f83mr39095745e9.3.1752534575476; 
- Mon, 14 Jul 2025 16:09:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGCaGuCUzpnOO1L1GfLPMZrDCnMsDId2hz+FtM4lmOzBw+ihjturbDq374aErhiXb5sRkon0A==
-X-Received: by 2002:a05:600c:1c10:b0:456:1e5a:885e with SMTP id
- 5b1f17b1804b1-4561e5a8f83mr39095525e9.3.1752534575014; 
- Mon, 14 Jul 2025 16:09:35 -0700 (PDT)
+ bh=/e0EHOrB7ZCBA2nwdmyUuJgNrg4LS48+Pg1+NbLqEN8=;
+ b=qMoz16UCQlM0fjZaD7WIUod9OVa0tws/C5Lx2SFLuERrsR6mMyI5L1ZpIDKEEy8DoH
+ 210OaDIzVPUK3p8b+YOVJSTVU4+codhyoexMzsI+tBfcQfLfAAco0CD1s5sht8jbsiwz
+ ZVWztmKTQPZgNaZ42emU3FVhC2iWK+nT0EHJwlmjl/fOcXPB+12+22RsNGUDapKiVnKE
+ cy+wWoWOxaw04qPaJgCfERbinWw7IqW0H2CT6FtXKcxTZcw6IikGQMVmBApEZKhc8rgO
+ C4awN/gq4AaPs5HGVO12OZBdws2L500Qhg0tPcFSbHRsPMv4x1HB+cuxh0whLyDWne3t
+ cTeQ==
+X-Gm-Message-State: AOJu0Yx34DI1CyEPghE2i2k+KhgzCm1BMnhri+Pdil7Bir0SZJJdj73P
+ F+lAZmkm8uOlYcKgdlh06KBNDFMw43mrgJCXmTObWtYGgt+dW35wVwfYaQzSkNS7NKxygU/Ae3J
+ VBiregXziEHggT1+OTaMNKnlbH+hI8jxw0WDoYaXZpjvERTwpyqiZzGJ35+yN4KkiJmeF5j1bHv
+ b23bam5iKOje3l75xNuJynuQJ1V/tjwQmVSw==
+X-Gm-Gg: ASbGncuWrtwI3xQSasGXagol90+MUzubOj1LXOSPl4vO/YferKxI5ieh5iTiBadrhSh
+ EKZWkCpmJjaw23ZbZTHXBd99WfMeNFRI9e31ZnFESrjmagThV9Fot2AmcsXKMJG8WO+0YWEYEKT
+ 5KkN+tEgruxZgtCwTkHGq9NvmcB/GW4O0Oi4hYvThtbOZOYI5Et6x2cpXDEX1xs0e9BpJxhQocv
+ DpofkdkqPzzslw+r4khG9cBEtY5ruQfujnE3vUoLxiJnxlTyF7rz57QOkGAqVF5WoWF9m+/VC7E
+ B9kRgF3AIS8IjvcsAdkK8cU/oqg7m/1F
+X-Received: by 2002:a05:6000:bcc:b0:3a5:1222:ac64 with SMTP id
+ ffacd0b85a97d-3b60a195aaemr190736f8f.38.1752534459401; 
+ Mon, 14 Jul 2025 16:07:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGcHhHVFLiZUb8hcieSC3bxuB3oIa+/Rf9chOWSeUD8xSlPXFGzD9eKwWBCXhGW1HPKy/uIhQ==
+X-Received: by 2002:a05:6000:bcc:b0:3a5:1222:ac64 with SMTP id
+ ffacd0b85a97d-3b60a195aaemr190721f8f.38.1752534458966; 
+ Mon, 14 Jul 2025 16:07:38 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454dd474a9csm144014855e9.16.2025.07.14.16.09.33
+ ffacd0b85a97d-3b5e8e285e0sm13239143f8f.101.2025.07.14.16.07.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:09:34 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:09:32 -0400
+ Mon, 14 Jul 2025 16:07:38 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:07:37 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 76/97] hw/core/sysbus: Introduce sysbus_mmio_map_name() helper
-Message-ID: <eb71cd8a131ba9ecf51890292b9db5155f216167.1752534227.git.mst@redhat.com>
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 33/97] intel_iommu: Declare supported PASID size
+Message-ID: <f4326d5089b52e581d8c5404ceac85324cf1772d.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -112,61 +113,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
 
-Some sysbus devices have conditional mmio regions. This
-happens for instance with the hw/acpi/ged device. In that case
-it becomes difficult to predict which index a specific MMIO
-region corresponds to when one needs to mmio map the region.
-Introduce a new helper that takes the name of the region instead
-of its index. If the region is not found this returns -1.
-Otherwise it maps the corresponding index and returns this latter.
+the PSS field of the extended capabilities stores the supported PASID
+size minus 1. This commit adds support for 8bits PASIDs (limited by
+MemTxAttrs::pid).
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20250714080639.2525563-31-eric.auger@redhat.com>
+Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Message-Id: <20250628180226.133285-6-clement.mathieu--drif@eviden.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/sysbus.h |  1 +
- hw/core/sysbus.c    | 11 +++++++++++
- 2 files changed, 12 insertions(+)
+ hw/i386/intel_iommu_internal.h | 1 +
+ hw/i386/intel_iommu.c          | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/sysbus.h b/include/hw/sysbus.h
-index 7dc88aaa27..18fde8a7b4 100644
---- a/include/hw/sysbus.h
-+++ b/include/hw/sysbus.h
-@@ -82,6 +82,7 @@ void sysbus_connect_irq(SysBusDevice *dev, int n, qemu_irq irq);
- bool sysbus_is_irq_connected(SysBusDevice *dev, int n);
- qemu_irq sysbus_get_connected_irq(SysBusDevice *dev, int n);
- void sysbus_mmio_map(SysBusDevice *dev, int n, hwaddr addr);
-+int sysbus_mmio_map_name(SysBusDevice *dev, const char*name, hwaddr addr);
- void sysbus_mmio_map_overlap(SysBusDevice *dev, int n, hwaddr addr,
-                              int priority);
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index e8b211e8b0..360e937989 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -192,6 +192,7 @@
+ #define VTD_ECAP_SC                 (1ULL << 7)
+ #define VTD_ECAP_MHMV               (15ULL << 20)
+ #define VTD_ECAP_SRS                (1ULL << 31)
++#define VTD_ECAP_PSS                (7ULL << 35) /* limit: MemTxAttrs::pid */
+ #define VTD_ECAP_PASID              (1ULL << 40)
+ #define VTD_ECAP_SMTS               (1ULL << 43)
+ #define VTD_ECAP_SLTS               (1ULL << 46)
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 0fb4350d48..71497f1936 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -4590,7 +4590,7 @@ static void vtd_cap_init(IntelIOMMUState *s)
+     }
  
-diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
-index e71367adfb..ec69e877a2 100644
---- a/hw/core/sysbus.c
-+++ b/hw/core/sysbus.c
-@@ -151,6 +151,17 @@ void sysbus_mmio_map(SysBusDevice *dev, int n, hwaddr addr)
-     sysbus_mmio_map_common(dev, n, addr, false, 0);
+     if (s->pasid) {
+-        s->ecap |= VTD_ECAP_PASID;
++        s->ecap |= VTD_ECAP_PASID | VTD_ECAP_PSS;
+     }
  }
  
-+int sysbus_mmio_map_name(SysBusDevice *dev, const char *name, hwaddr addr)
-+{
-+    for (int i = 0; i < dev->num_mmio; i++) {
-+        if (!strcmp(dev->mmio[i].memory->name, name)) {
-+            sysbus_mmio_map(dev, i, addr);
-+            return i;
-+        }
-+    }
-+    return -1;
-+}
-+
- void sysbus_mmio_map_overlap(SysBusDevice *dev, int n, hwaddr addr,
-                              int priority)
- {
 -- 
 MST
 
