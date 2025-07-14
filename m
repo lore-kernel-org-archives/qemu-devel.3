@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D549C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 17:12:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36396C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 17:14:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubMht-0006xO-9i; Mon, 14 Jul 2025 13:11:13 -0400
+	id 1ubMkv-0001SO-TR; Mon, 14 Jul 2025 13:14:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1ubLc2-0005Cl-H5; Mon, 14 Jul 2025 12:01:09 -0400
+ id 1ubLdD-0005di-UF; Mon, 14 Jul 2025 12:02:20 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1ubLc0-0008I7-46; Mon, 14 Jul 2025 12:01:05 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bgn5T0yhpz6L5M0;
- Mon, 14 Jul 2025 23:57:33 +0800 (CST)
+ id 1ubLdC-0008RE-1E; Mon, 14 Jul 2025 12:02:19 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bgn6s60dbz6L5Mj;
+ Mon, 14 Jul 2025 23:58:45 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 74C2B14033F;
- Tue, 15 Jul 2025 00:01:00 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 301ED14044F;
+ Tue, 15 Jul 2025 00:02:13 +0800 (CST)
 Received: from A2303104131.china.huawei.com (10.203.177.241) by
  frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 14 Jul 2025 18:00:51 +0200
+ 15.1.2507.39; Mon, 14 Jul 2025 18:02:04 +0200
 To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
 CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
  <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
@@ -35,10 +35,10 @@ CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
  <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
  <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
  <zhenzhong.duan@intel.com>, <shameerkolothum@gmail.com>
-Subject: [RFC PATCH v3 05/15] hw/arm/smmuv3-accel: Introduce smmuv3 accel
- device
-Date: Mon, 14 Jul 2025 16:59:31 +0100
-Message-ID: <20250714155941.22176-6-shameerali.kolothum.thodi@huawei.com>
+Subject: [RFC PATCH v3 13/15] hw/arm/smmuv3: Forward invalidation commands to
+ hw
+Date: Mon, 14 Jul 2025 16:59:39 +0100
+Message-ID: <20250714155941.22176-14-shameerali.kolothum.thodi@huawei.com>
 X-Mailer: git-send-email 2.12.0.windows.1
 In-Reply-To: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
 References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
@@ -76,173 +76,123 @@ From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Also setup specific PCIIOMMUOps for accel SMMUv3 as accel
-SMMUv3 will have different handling for those ops callbacks
-in subsequent patches.
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-The "accel" property is not yet added, so users cannot set it at this
-point. It will be introduced in a subsequent patch once the necessary
-support is in place.
+Use the provided smmuv3-accel helper functions to issue the
+invalidation commands to host SMMUv3.
 
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 ---
- hw/arm/meson.build           |  3 +-
- hw/arm/smmu-common.c         |  6 +++-
- hw/arm/smmuv3-accel.c        | 66 ++++++++++++++++++++++++++++++++++++
- hw/arm/smmuv3-accel.h        | 19 +++++++++++
- include/hw/arm/smmu-common.h |  3 ++
- 5 files changed, 95 insertions(+), 2 deletions(-)
- create mode 100644 hw/arm/smmuv3-accel.c
- create mode 100644 hw/arm/smmuv3-accel.h
+ hw/arm/smmuv3-internal.h | 11 +++++++++++
+ hw/arm/smmuv3.c          | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index dc68391305..6126eb1b64 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -61,7 +61,8 @@ arm_common_ss.add(when: 'CONFIG_ARMSSE', if_true: files('armsse.c'))
- arm_common_ss.add(when: 'CONFIG_FSL_IMX7', if_true: files('fsl-imx7.c', 'mcimx7d-sabre.c'))
- arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP', if_true: files('fsl-imx8mp.c'))
- arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: files('imx8mp-evk.c'))
--arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
-+arm_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
-+arm_ss.add(when: ['CONFIG_ARM_SMMUV3', 'CONFIG_IOMMUFD'], if_true: files('smmuv3-accel.c'))
- arm_common_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
- arm_common_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
- arm_ss.add(when: 'CONFIG_XEN', if_true: files(
-diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index 3a1080773a..6a58f574d3 100644
---- a/hw/arm/smmu-common.c
-+++ b/hw/arm/smmu-common.c
-@@ -938,7 +938,11 @@ static const PCIIOMMUOps *smmu_iommu_ops_by_type(SMMUState *s)
+diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+index 8cb6a9238a..f3aeaf6375 100644
+--- a/hw/arm/smmuv3-internal.h
++++ b/hw/arm/smmuv3-internal.h
+@@ -233,6 +233,17 @@ static inline bool smmuv3_gerror_irq_enabled(SMMUv3State *s)
+ #define Q_CONS_WRAP(q) (((q)->cons & WRAP_MASK(q)) >> (q)->log2size)
+ #define Q_PROD_WRAP(q) (((q)->prod & WRAP_MASK(q)) >> (q)->log2size)
+ 
++static inline int smmuv3_q_ncmds(SMMUQueue *q)
++{
++    uint32_t prod = Q_PROD(q);
++    uint32_t cons = Q_CONS(q);
++
++    if (Q_PROD_WRAP(q) == Q_CONS_WRAP(q))
++        return prod - cons;
++    else
++        return WRAP_MASK(q) - cons + prod;
++}
++
+ static inline bool smmuv3_q_full(SMMUQueue *q)
  {
-     SMMUBaseClass *sbc;
+     return ((q->cons ^ q->prod) & WRAP_INDEX_MASK(q)) == WRAP_MASK(q);
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index c94bfe6564..97ecca0764 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -1285,10 +1285,17 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+     SMMUCmdError cmd_error = SMMU_CERROR_NONE;
+     SMMUQueue *q = &s->cmdq;
+     SMMUCommandType type = 0;
++    SMMUCommandBatch batch = {};
++    uint32_t ncmds;
  
--    sbc = ARM_SMMU_CLASS(object_class_by_name(TYPE_ARM_SMMU));
-+    if (s->accel) {
-+        sbc = ARM_SMMU_CLASS(object_class_by_name(TYPE_ARM_SMMUV3_ACCEL));
-+    } else {
-+        sbc = ARM_SMMU_CLASS(object_class_by_name(TYPE_ARM_SMMU));
+     if (!smmuv3_cmdq_enabled(s)) {
+         return 0;
+     }
++
++    ncmds = smmuv3_q_ncmds(q);
++    batch.cmds = g_new0(Cmd, ncmds);
++    batch.cons = g_new0(uint32_t, ncmds);
++
+     /*
+      * some commands depend on register values, typically CR0. In case those
+      * register values change while handling the command, spec says it
+@@ -1383,6 +1390,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+ 
+             trace_smmuv3_cmdq_cfgi_cd(sid);
+             smmuv3_flush_config(sdev);
++            smmuv3_accel_batch_cmd(sdev->smmu, sdev, &batch, &cmd, &q->cons);
+             break;
+         }
+         case SMMU_CMD_TLBI_NH_ASID:
+@@ -1406,6 +1414,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+             trace_smmuv3_cmdq_tlbi_nh_asid(asid);
+             smmu_inv_notifiers_all(&s->smmu_state);
+             smmu_iotlb_inv_asid_vmid(bs, asid, vmid);
++            smmuv3_accel_batch_cmd(bs, NULL, &batch, &cmd, &q->cons);
+             break;
+         }
+         case SMMU_CMD_TLBI_NH_ALL:
+@@ -1433,6 +1442,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+             trace_smmuv3_cmdq_tlbi_nsnh();
+             smmu_inv_notifiers_all(&s->smmu_state);
+             smmu_iotlb_inv_all(bs);
++            smmuv3_accel_batch_cmd(bs, NULL, &batch, &cmd, &q->cons);
+             break;
+         case SMMU_CMD_TLBI_NH_VAA:
+         case SMMU_CMD_TLBI_NH_VA:
+@@ -1441,6 +1451,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+                 break;
+             }
+             smmuv3_range_inval(bs, &cmd, SMMU_STAGE_1);
++            smmuv3_accel_batch_cmd(bs, NULL, &batch, &cmd, &q->cons);
+             break;
+         case SMMU_CMD_TLBI_S12_VMALL:
+         {
+@@ -1499,12 +1510,29 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+         queue_cons_incr(q);
+     }
+ 
++    qemu_mutex_lock(&s->mutex);
++    if (!cmd_error && batch.ncmds) {
++        if (!smmuv3_accel_issue_cmd_batch(bs, &batch)) {
++            if (batch.ncmds) {
++                q->cons = batch.cons[batch.ncmds - 1];
++            } else {
++                q->cons = batch.cons[0]; /* FIXME: Check */
++            }
++            qemu_log_mask(LOG_GUEST_ERROR, "Illegal command type: %d\n",
++                          CMD_TYPE(&batch.cmds[batch.ncmds]));
++            cmd_error = SMMU_CERROR_ILL;
++        }
 +    }
-     assert(sbc->iommu_ops);
++    qemu_mutex_unlock(&s->mutex);
++
+     if (cmd_error) {
+         trace_smmuv3_cmdq_consume_error(smmu_cmd_string(type), cmd_error);
+         smmu_write_cmdq_err(s, cmd_error);
+         smmuv3_trigger_irq(s, SMMU_IRQ_GERROR, R_GERROR_CMDQ_ERR_MASK);
+     }
  
-     return sbc->iommu_ops;
-diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-new file mode 100644
-index 0000000000..2eac9c6ff4
---- /dev/null
-+++ b/hw/arm/smmuv3-accel.c
-@@ -0,0 +1,66 @@
-+/*
-+ * Copyright (c) 2025 Huawei Technologies R & D (UK) Ltd
-+ * Copyright (C) 2025 NVIDIA
-+ * Written by Nicolin Chen, Shameer Kolothum
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+
-+#include "hw/arm/smmuv3.h"
-+#include "smmuv3-accel.h"
-+
-+static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *bs, SMMUPciBus *sbus,
-+                                                PCIBus *bus, int devfn)
-+{
-+    SMMUDevice *sdev = sbus->pbdev[devfn];
-+    SMMUv3AccelDevice *accel_dev;
-+
-+    if (sdev) {
-+        accel_dev = container_of(sdev, SMMUv3AccelDevice, sdev);
-+    } else {
-+        accel_dev = g_new0(SMMUv3AccelDevice, 1);
-+        sdev = &accel_dev->sdev;
-+
-+        sbus->pbdev[devfn] = sdev;
-+        smmu_init_sdev(bs, sdev, bus, devfn);
-+    }
-+
-+    return accel_dev;
-+}
-+
-+static AddressSpace *smmuv3_accel_find_add_as(PCIBus *bus, void *opaque,
-+                                              int devfn)
-+{
-+    SMMUState *bs = opaque;
-+    SMMUPciBus *sbus;
-+    SMMUv3AccelDevice *accel_dev;
-+    SMMUDevice *sdev;
-+
-+    sbus = smmu_get_sbus(bs, bus);
-+    accel_dev = smmuv3_accel_get_dev(bs, sbus, bus, devfn);
-+    sdev = &accel_dev->sdev;
-+
-+    return &sdev->as;
-+}
-+
-+static const PCIIOMMUOps smmuv3_accel_ops = {
-+    .get_address_space = smmuv3_accel_find_add_as,
-+};
-+
-+static void smmuv3_accel_class_init(ObjectClass *oc, const void *data)
-+{
-+    SMMUBaseClass *sbc = ARM_SMMU_CLASS(oc);
-+
-+    sbc->iommu_ops = &smmuv3_accel_ops;
-+}
-+
-+static const TypeInfo types[] = {
-+    {
-+        .name = TYPE_ARM_SMMUV3_ACCEL,
-+        .parent = TYPE_ARM_SMMUV3,
-+        .class_init = smmuv3_accel_class_init,
-+    }
-+};
-+DEFINE_TYPES(types)
-diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-new file mode 100644
-index 0000000000..4cf30b1291
---- /dev/null
-+++ b/hw/arm/smmuv3-accel.h
-@@ -0,0 +1,19 @@
-+/*
-+ * Copyright (c) 2025 Huawei Technologies R & D (UK) Ltd
-+ * Copyright (C) 2025 NVIDIA
-+ * Written by Nicolin Chen, Shameer Kolothum
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_ARM_SMMUV3_ACCEL_H
-+#define HW_ARM_SMMUV3_ACCEL_H
-+
-+#include "hw/arm/smmu-common.h"
-+#include CONFIG_DEVICES
-+
-+typedef struct SMMUv3AccelDevice {
-+    SMMUDevice  sdev;
-+} SMMUv3AccelDevice;
-+
-+#endif /* HW_ARM_SMMUV3_ACCEL_H */
-diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-index eb94623555..c459d24427 100644
---- a/include/hw/arm/smmu-common.h
-+++ b/include/hw/arm/smmu-common.h
-@@ -162,6 +162,7 @@ struct SMMUState {
-     uint8_t bus_num;
-     PCIBus *primary_bus;
-     bool smmu_per_bus; /* SMMU is specific to the primary_bus */
-+    bool accel; /* SMMU has accelerator support */
- };
- 
- struct SMMUBaseClass {
-@@ -178,6 +179,8 @@ struct SMMUBaseClass {
- #define TYPE_ARM_SMMU "arm-smmu"
- OBJECT_DECLARE_TYPE(SMMUState, SMMUBaseClass, ARM_SMMU)
- 
-+#define TYPE_ARM_SMMUV3_ACCEL "arm-smmuv3-accel"
-+
- /* Return the SMMUPciBus handle associated to a PCI bus number */
- SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num);
++    g_free(batch.cmds);
++    g_free(batch.cons);
+     trace_smmuv3_cmdq_consume_out(Q_PROD(q), Q_CONS(q),
+                                   Q_PROD_WRAP(q), Q_CONS_WRAP(q));
  
 -- 
 2.34.1
