@@ -4,67 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D05BC83F1D
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 02:20:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5816CC83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 02:40:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ub8mp-0002Up-4S; Sun, 13 Jul 2025 22:19:23 -0400
+	id 1ub96V-00034S-Ba; Sun, 13 Jul 2025 22:39:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1ub8lD-0001O5-GO; Sun, 13 Jul 2025 22:17:43 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>)
- id 1ub8lA-00080j-VQ; Sun, 13 Jul 2025 22:17:43 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8AxnOK7aHRoc+koAQ--.50089S3;
- Mon, 14 Jul 2025 10:17:32 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJDx_8O5aHRoyDcWAA--.56259S3;
- Mon, 14 Jul 2025 10:17:31 +0800 (CST)
-Subject: Re: [PATCH] target/loongarch: Fix valid virtual address checking
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <20250714015446.746163-1-maobibo@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <419f967a-dd43-52fa-fca7-adae747ea0c9@loongson.cn>
-Date: Mon, 14 Jul 2025 10:20:26 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <oenhan@gmail.com>)
+ id 1ub94P-00011s-9y; Sun, 13 Jul 2025 22:37:33 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <oenhan@gmail.com>)
+ id 1ub94L-0002ZY-W4; Sun, 13 Jul 2025 22:37:32 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-3122a63201bso2880177a91.0; 
+ Sun, 13 Jul 2025 19:37:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1752460648; x=1753065448; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1XEVO24rPMbQgNbO5DJJcRqLXXAX+wfY4X+88PJAaoc=;
+ b=E539AmxoAcmWtAv0XmL9vDjUj4FC/swSK3fh2ga8hilOSIhYRweXL3mJxurDkog0Qs
+ rbUmMsNsrNl3yZF1aA36XxeVpvbGKdM+Pqv7z9B+taXylyJyNvT04yJFtDxFkZwBBGuW
+ S8NZ0F2/YRF/oN63COBtkirRynxXLZHI+di9zu7VgEHDjarZ/6yGjoFmW9iRfQB5C+5g
+ XQ0XReTjkSfFEjKweXpYAVS9ejAZdPPAHsK+TtHuMakgLVTKAwoE3GgjdwFuHjV1+/MZ
+ C2EHP6/jQS9b8PbE1Qn4QYmCq+L3nNvDDC1fedK7Xl93jx+N04x1RSVDiUgg/NS5420f
+ oGYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752460648; x=1753065448;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1XEVO24rPMbQgNbO5DJJcRqLXXAX+wfY4X+88PJAaoc=;
+ b=tiY5ouRScj8vcby2ZzpQecy6Z8zbCijMmOCa6iNWa/9wLD2/t1r6GVeVswLnfuCyXd
+ WNjwXmR6a3DEOGEb5aDYvdPKVL5ohn1ejYOb1FOIqr1m5S08voWmxoZjqH9CZr+Idkhz
+ pdf7aNkhWamYvvGdeZZif7RGNZm9deQTt3ewMbJM/itz0J1U0vhbCRlZyh+bevwDJwWo
+ e34fNZMSh3VZ5H+PzKl6dLSEUeg821p2Qt+Czbvd1Nyaqefr/V5h8N7HYhryYNNZrRd9
+ Vqyyrs5TLnhtdq8pXHZ9hKWjfv4KkQMXPKX+l1qQL//q1pa8tCXf49x8Cbwkd+yMvsxx
+ mItg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV+F+zml7PM9p8pOkAtK88rcwuTkPys0zQi5UJYhX/TAIs3tP1BRYZY3xLQ1cd2iTs6vdTwyFkj9GuUvRk=@nongnu.org,
+ AJvYcCVNTRBKz227rNwAoRMVk34cppLyB9HNKFyDL0ZZTJx6cfC2gScLJdRkdBWpGjccvaEsniSaxgGuiP2e@nongnu.org
+X-Gm-Message-State: AOJu0YxCx+Ob25zJkPQYbgZ/acnDE2GGnUaBfWmnprp8RuKpFtJWRFUh
+ lz+6FRVMxCQndGyTRG1bQepBHMEzTZuvIWgcapkmMZx525w97iIFSWp5uJz7/1WeSDZslmtT9Hz
+ KwDHkJ81VMozp97qm6YWUfyeiWTaZyFo=
+X-Gm-Gg: ASbGnctfWLeZCRGAgS0IP2r1m/hCSWF8jz4R0rI95fLCAYv0F+1EZ6MtMHsm868Vl2v
+ e1UZ13kjtiG5NLxrhlzwnIp02sEJaaTrgVdyvQ1TjCXQ6mexhXq0q8VtUGV/JL+/Qbd2nZ2givF
+ Dh3St6x5IueCjtDBIynmyrwJSNxJ2vbHstf8hu6KcRuUwWBAXqllTV+Cd+DKOtF4Rg6BQkILcge
+ Ogd3KA=
+X-Google-Smtp-Source: AGHT+IGT0rta7/EFr6gBAkglyA/cFgE/5A3G1ZBwAkrBW+PEJUJRg0+NxTA92BqR0qqnmdWab1JtMnEavOk6N5zSk+4=
+X-Received: by 2002:a17:90a:d407:b0:311:ea13:2e63 with SMTP id
+ 98e67ed59e1d1-31c4f4b80d9mr16136299a91.13.1752460647754; Sun, 13 Jul 2025
+ 19:37:27 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20250714015446.746163-1-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowJDx_8O5aHRoyDcWAA--.56259S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7Zw48KF18JrykZFyUZr1rKrX_yoW8Ary7pF
- 93Ar1rKF4kGFZrJa1jvayYgrW5tr1DC3W7Xanrtryjkan8Xr1xuFWjkw4jgFsrZ348Cr4I
- q3WIkFW2vF15XagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CP
- fJUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-1.992, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20250605083338.1845911-1-chenhgs@chinatelecom.cn>
+ <238cce11-3050-4ec8-acbd-b1605f9dc4a1@tls.msk.ru>
+In-Reply-To: <238cce11-3050-4ec8-acbd-b1605f9dc4a1@tls.msk.ru>
+From: Huaitong Han <oenhan@gmail.com>
+Date: Mon, 14 Jul 2025 10:37:15 +0800
+X-Gm-Features: Ac12FXwbW9wXAB_Wa8ofSS0i6URYxRvO_j3BEUBnLvRTTZFkiEi3sAVzq8mOYDA
+Message-ID: <CAAuJbe+dNpdA62CjfQfGq0Ph72w+Nooyax=WdRuYCRTPRngvxg@mail.gmail.com>
+Subject: Re: [PATCH] vfio, migration: save device parent pci config
+To: mst@redhat.com, clg@redhat.com
+Cc: mjt@tls.msk.ru, qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
+ Huguanshen Chen <chenhgs@chinatelecom.cn>,
+ Heng Zhang <zhangh121@chinatelecom.cn>, 
+ Huaitong Han <hanht2@chinatelecom.cn>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=oenhan@gmail.com; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,55 +99,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ÔÚ 2025/7/14 ÉÏÎç9:54, Bibo Mao Ð´µÀ:
-> On LoongArch64 system, the high 32 bit of 64 bit virtual address should be
-> 0x00000[0-7]yyy or 0xffff8yyy. The bit from 47 to 63 should be all 0 or
-> all 1.
->
-> Function get_physical_address() only checks bit 48 to 63, there will be
-> problem with the following test case. On physical machine, there is bus
-> error report and program exits abnormally. However on qemu TCG system
-> emulation mode, the program runs normally. The virtual address
-> 0xffff000000000000ULL + addr and addr are treated the same on TLB entry
-> checking. This patch fixes this issue.
->
-> void main()
-> {
->          void *addr, *addr1;
->          int val;
->
->          addr = malloc(100);
->          *(int *)addr = 1;
->          addr1 = 0xffff000000000000ULL + addr;
->          val = *(int *)addr1;
->          printf("val %d \n", val);
-> }
->
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->   target/loongarch/cpu_helper.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-Acked-by: Song Gao <gaosong@loongson.cn>
+Hi, mst, clg
 
-thanks.
-Song Gao
-> diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
-> index e172b11ce1..b5f732f15b 100644
-> --- a/target/loongarch/cpu_helper.c
-> +++ b/target/loongarch/cpu_helper.c
-> @@ -196,8 +196,8 @@ int get_physical_address(CPULoongArchState *env, hwaddr *physical,
->       }
->   
->       /* Check valid extension */
-> -    addr_high = sextract64(address, TARGET_VIRT_ADDR_SPACE_BITS, 16);
-> -    if (!(addr_high == 0 || addr_high == -1)) {
-> +    addr_high = (int64_t)address >> (TARGET_VIRT_ADDR_SPACE_BITS - 1);
-> +    if (!(addr_high == 0 || addr_high == -1ULL)) {
->           return TLBRET_BADADDR;
->       }
->   
->
-> base-commit: 9a4e273ddec3927920c5958d2226c6b38b543336
+Any comments?
 
+Thanks.
+Huaitong Han
+
+Michael Tokarev <mjt@tls.msk.ru> =E4=BA=8E2025=E5=B9=B47=E6=9C=8813=E6=97=
+=A5=E5=91=A8=E6=97=A5 17:12=E5=86=99=E9=81=93=EF=BC=9A
+
+>
+> Ping?  Has this been forgotten?
+>
+> Thanks,
+>
+> /mjt
+>
+> On 05.06.2025 11:33, oenhan@gmail.com wrote:
+> > From: Huguanshen Chen <chenhgs@chinatelecom.cn>
+> >
+> > On arm64 virtualization platform, vfio-user devices lose their interrup=
+ts after
+> > migration to the destination. This issue occurs because qemu fails to d=
+eliver
+> > the msi device id to the vGIC. The error device id is calculated based =
+on the
+> > device's parent bus, so it is essential to save the parent pci config t=
+o
+> > prevent this issue.
+> >
+> > Backtrace:
+> > QEMU:
+> >   #0 qdev_get_parent_bus
+> >   #1 pci_dev_bus_num
+> >   #2 pci_req_id_cache_extract
+> >   #3 pci_requester_id
+> >   #4 kvm_irqchip_update_msi_route delivers 0(error id) to vGIC
+> >
+> > KVM:
+> >   #0 find_its_device returns error
+> >   #1 find_ite
+> >   #2 vgic_its_resolve_lpi
+> >   #3 vgic_its_trigger_msi
+> >   #4 vgic_its_inject_msi
+> >   #5 kvm_set_msi
+> >   #6 kvm_send_userspace_msi
+> >
+> > Reported-by: Heng Zhang <zhangh121@chinatelecom.cn>
+> > Signed-off-by: Huguanshen Chen <chenhgs@chinatelecom.cn>
+> > Signed-off-by: Huaitong Han <hanht2@chinatelecom.cn>
+> > ---
+> >   hw/vfio/pci.c | 11 +++++++++++
+> >   1 file changed, 11 insertions(+)
+> >
+> > diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> > index a1bfdfe375..442113d0b7 100644
+> ...
 
