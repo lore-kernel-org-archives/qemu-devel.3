@@ -4,81 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7210CC83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 14:02:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D8D8C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 14:38:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubJj5-0007vz-PD; Mon, 14 Jul 2025 10:00:21 -0400
+	id 1ubKJM-00046t-Fg; Mon, 14 Jul 2025 10:37:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1ubIJR-00063e-Vl
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:29:46 -0400
-Received: from mail-qt1-x831.google.com ([2607:f8b0:4864:20::831])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ubIlG-0005z8-0p
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:58:28 -0400
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1ubIJP-0007ot-GY
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:29:41 -0400
-Received: by mail-qt1-x831.google.com with SMTP id
- d75a77b69052e-4ab7384b108so5024571cf.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 05:29:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ubIlC-0003w6-V0
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:58:25 -0400
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-40aef72f252so1166060b6e.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 05:58:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1752496177; x=1753100977; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=m3p9+D77WQL2SxtSAMAv5J4Cjw5KswjPok6KJO2TJKY=;
- b=i0L9ab5oK6DWdFcPn6NjBPnHqHJmv7g00LtTbYgoi6i8WVYnDJbhVX4M5ped6Ng3t0
- g3VKD7788IrmBaaSFhfpD8j7NGTPGfOoTLvzIubRhgZXz4cYi6bqRlZ4om7x+uj//WWz
- 8UkOQAzagvyh+JwaO1FeRXNpuKK4CMzrMceEwL6JHHNFb4SBsEDiZL4Ow7nBm3pb03tL
- wZcfepkYFC3yRnqMexTPGj/kV80Cp2XG+lWwfwPm53swPbhq8WOTUTRUCHrviXTdm1PU
- 5jRw2Q3I5fT8Ds0r4JUUniuex4Cz+LiBunFEartrBZAP2pFABMA6fKwpegpbB4u48F4Q
- e8iQ==
+ d=linaro.org; s=google; t=1752497898; x=1753102698; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CrCt1f2GP78Tba1HZzoGya3Pie2iZyg4IuKHkDRggtI=;
+ b=ajSpzTQixJGMgZGZs0ZmJjlc/3tBoIu+wL49Bvb7W7fSBHHnzSpEIInN+woFMw19qr
+ a7VSPCuhAYbU3smpQ8fiuQM4YSENOJAM9G8uSgdG/+ORYT7DDKdqp/Rxxrpe8DE+gbh8
+ mv5YxluzV053BuonNEz90CUwc5ar9QYpKV7uUE1sCYspACJCXKPfKByt/OUedmCdo+dr
+ yq0gmJuXCcPRQEEGsKpazsbRdJdGzgVH3qbxbjSW9zK3+teNs1wDuHb+ofghjcXJFOmq
+ FuUK5jucYS0zVuIikRKY5T5evDQJCMOJ0q8/sueZXLOBAHmeWB3HfOV+kq8bpx2jI2OE
+ 6f6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752496177; x=1753100977;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=m3p9+D77WQL2SxtSAMAv5J4Cjw5KswjPok6KJO2TJKY=;
- b=pKnPTjcYw2tGm5B8H7cso8px+i1iy9T7YRt9nl72gpeIwMjKZ5IOESGpTDRKoiHvk1
- Nyk4JJ0rRL93HEFcmcH2ESrcunIq6lOSthGiV9/Vlcqlt3WGhw2ZbuaIgmVZHpd1L8uz
- XRiBj++nh4CSW8Hl6JlskByC7Re/ftvZaRDXOmOmfI7jR4YaM720QpVwCgb01Upuu1VB
- AiYJHcXQUQfuai4d47BKoTHqlaxlGipuHnSf2ITp7Po6TaWpHHohPyVk5FvbI+NrNBDW
- VIxPDQlaqGdlJqVvX8hol4mC/TiCeAcu8g+98IxRiL/F6CMRoXRADY+rR/g/zUf0YGgi
- c9dw==
-X-Gm-Message-State: AOJu0YzcENAbtEFcNyACQZzl+KPpG93dKWxPoJlZSKtmUZYX9FZxGzRF
- bamtTjTR4rrmXd7zHKuMeHixpasgF52K5hCoCafzKpX+AkOVPtP7ct3TSiZFKj6JHDKd1IUhAD8
- sg0O5YdS0zFVzIJb5MFqVPCumktKL/lGhN3uqh+Y2vg==
-X-Gm-Gg: ASbGncv1AzIM6/J25k0QsFYu4643S6J9D8AN6oNTQaExytaq/Jfj6ShhDwMuqaPL3ng
- tvH4fRE0f0YWMVNgs4BNJE9WYPfal4nU396dQr7In0aaVNsEi4hCe2XPN5G7bAz7O4+7IkaPNiV
- r/IwBzuzrQpcjGAGlV22Oisl18SeEYuUXOwACuKLUofqehMkUtsClFFnyA2krwTOnH7Hiab7fkV
- Ju0Fc3qbhZRGR1luw5ryGsun/xdvGZmA3/iqKlE
-X-Google-Smtp-Source: AGHT+IF4LJPMIzBawqWO2PbRqqkoUInZcnsFMMKnLc3vZce++7TRsR1Nbt/0WvBx4Ky2lBScFC84hk9DNyjox7jN/Bk=
-X-Received: by 2002:ac8:59c1:0:b0:4ab:7755:ad8e with SMTP id
- d75a77b69052e-4ab7755b4f4mr15321121cf.34.1752496176849; Mon, 14 Jul 2025
- 05:29:36 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752497898; x=1753102698;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=CrCt1f2GP78Tba1HZzoGya3Pie2iZyg4IuKHkDRggtI=;
+ b=AUE/K7hYOLRmKQBboQTGMCrSUXegPRyUeqKo5dsrht/AUURA1F2qCIFysIrZZjNtIl
+ coyRmeac0L0zaMU/XzrLyuZADrYrQcLM1/7WsJuDPudPtptEiWjhtctWCpLpz1b6vyuy
+ WQJL8kvwP3DYwOr1ifbV0JbwTO6VsSo9oErKA0WmzhjODE1D4HShyL0lEQIKqxC6xPud
+ htfqkYUkJha1eUZjYZ9FoOaC0UDMwp/Ox/DMBt8K/l9vTWwtOF6b7kRZtO2Qb5Sb/ozz
+ arrOvz1eUD+vU8ckdBKPeFGhbm7kTACtuIT3xYqmkXok+OTFsb3HdXQzKWOo8rkhUelq
+ ttCQ==
+X-Gm-Message-State: AOJu0YyjdNXi0VK8xJFBAcw40F31T0nFZDvVxfI09vGS6Wjv4TQyQzy6
+ RAp9HZpScEoeOkMDyve1QfL6gPH1LMe/QGpcqCFcQOV/1VOpfJnmUbJoNgwvMxftLCY=
+X-Gm-Gg: ASbGncvv6jQ1AMahKjXK0gPwV10x7oKkvCf63AnsXItA7e0rpKpiWAiXYZT/5A01ISW
+ 84SXfDHzFIh+ycbJO2TbdnBKv8Et8LoLT48SvW1MTyw4H81xO0YF7BWoys0s9umnHQsi3W8w3l5
+ 5qlxaQCOmv4FwSankWq5VaqpZ82GqcA2FzbN1wUwH/qcqrwqH3zrTNUHCUqCdnfPiaSDIFm9eA0
+ QMWHwonrNwRTdUrGtM1DPnKHA9rpv2sQcaR3wBaLE4+MPYke48gTUnn+MwZMhcFCARH5g8oHkWm
+ 1QSRMR6C+WNMU7tRZa3ulP4zrSZqHlFmPyVcRppDlzkT/QOPME2zS5McCQw9etlAcDWEVGmY+AV
+ h/GBwfnefVvbu9GdlO1+t0gvjvzH6hDPGcg2U6Ct0sWVxFJyLs8CY9tNM6yjVTSd0MzWP6ryV+V
+ Jl
+X-Google-Smtp-Source: AGHT+IFwMYmiYmYdrlThntJieSU7SPATuB3z4suxOYR+VlJbtTt2lPkFNYNDq4BkBNiDkkTkrWs3bw==
+X-Received: by 2002:a05:6808:524c:b0:40d:547d:397 with SMTP id
+ 5614622812f47-4150f5ba480mr9388435b6e.23.1752497897835; 
+ Mon, 14 Jul 2025 05:58:17 -0700 (PDT)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-4141bdc823bsm1532992b6e.24.2025.07.14.05.58.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Jul 2025 05:58:17 -0700 (PDT)
+Message-ID: <f18a652e-b64c-4a33-bd60-63dfa93ffdbd@linaro.org>
+Date: Mon, 14 Jul 2025 06:58:13 -0600
 MIME-Version: 1.0
-References: <20250714111039.4150419-1-marcandre.lureau@redhat.com>
-In-Reply-To: <20250714111039.4150419-1-marcandre.lureau@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 14 Jul 2025 16:29:25 +0400
-X-Gm-Features: Ac12FXz0zHhsZemoPKyveP3ebTdK5tV6VwGu_2OcEmhIIHHss7F2VY_Rd6V6ues
-Message-ID: <CAJ+F1C+SsUmNYVxMgRMBor+gxv+Yc6dz=4ZnmkY7pNisdgf+sw@mail.gmail.com>
-Subject: Re: [PULL 00/13] Ui patches
-To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::831;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x831.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 4/6] target/arm: Add FEAT_TCR2
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org
+Cc: qemu-devel@nongnu.org
+References: <20250711140828.1714666-1-gustavo.romero@linaro.org>
+ <20250711140828.1714666-5-gustavo.romero@linaro.org>
+ <21bfbfaa-f0df-413d-bad6-b69688ac381a@linaro.org>
+ <65e20340-e164-4424-bc60-52d78b9a17b8@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <65e20340-e164-4424-bc60-52d78b9a17b8@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,101 +106,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 14, 2025 at 3:45=E2=80=AFPM <marcandre.lureau@redhat.com> wrote=
-:
->
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> The following changes since commit 9a4e273ddec3927920c5958d2226c6b38b5433=
-36:
->
->   Merge tag 'pull-tcg-20250711' of https://gitlab.com/rth7680/qemu into s=
-taging (2025-07-13 01:46:04 -0400)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pull-request
->
-> for you to fetch changes up to c99b7e6d4aa8bcc12d47483ebe81072168de56fb:
->
->   tpm: "qemu -tpmdev help" should return success (2025-07-14 15:02:00 +04=
-00)
->
-> ----------------------------------------------------------------
-> UI-related for 10.1
->
-> - [PATCH v3 0/2] ui/vnc: Do not copy z_stream
-> - [PATCH v6 0/7] ui/spice: Enable gl=3Don option for non-local or remote =
-clients
-> - [PATCH v6 0/1] Allow injection of virtio-gpu EDID name
-> - [PATCH 0/2] ui/gtk: Add keep-aspect-ratio and scale option
->
-> ----------------------------------------------------------------
->
-> Akihiko Odaki (2):
->   ui/vnc: Do not copy z_stream
->   ui/vnc: Introduce the VncWorker type
->
-> Andrew Keesler (1):
->   hw/display: Allow injection of virtio-gpu EDID name
->
-> Marc-Andr=C3=A9 Lureau (1):
->   tpm: "qemu -tpmdev help" should return success
->
-> Vivek Kasireddy (7):
->   ui/egl-helpers: Error check the fds in egl_dmabuf_export_texture()
->   ui/spice: Enable gl=3Don option for non-local or remote clients
->   ui/spice: Add an option for users to provide a preferred video codec
->   ui/spice: Add an option to submit gl_draw requests at fixed rate
->   ui/console-gl: Add a helper to create a texture with linear memory
->     layout
->   ui/spice: Create a new texture with linear layout when gl=3Don is
->     specified
->   ui/spice: Blit the scanout texture if its memory layout is not linear
->
-> Weifeng Liu (2):
->   ui/gtk: Add keep-aspect-ratio option
->   ui/gtk: Add scale option
+On 7/14/25 00:21, Pierrick Bouvier wrote:
+> On 7/13/25 2:59 PM, Richard Henderson wrote:
+>> On 7/11/25 08:08, Gustavo Romero wrote:
+>>> Add FEAT_TCR2, which introduces the TCR2_EL1 and TCR2_EL2 registers.
+>>> These registers are extensions of the TCR_ELx registers and provide
+>>> top-level control of the EL10 and EL20 translation regimes.
+>>>
+>>> Since the bits in these registers depend on other CPU features, and only
+>>> FEAT_MEC is supported at the moment, the FEAT_TCR2 only implements the
+>>> AMEC bits for now.
+>>>
+>>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+>> This causes a regression in tests/functional/test_aarch64_device_passthrough.py, by
+>> continually trapping on an access to TCR2_EL1 while the HCRX_EL2 enable bit is not set.
+>>
+>> Unlike the similar SCTRL2 failure, it's not 100% clear to me how the guest and nested
+>> guest kernels are related.  But it is clear that the outer kernel does not does not
+>> support TCR2_EL1 (and also doesn't manipulate ID_AA64MMFR3_EL1 to hide FEAT_TCR2), but the
+>> nested guest kernel does support TCR2_EL1.
+>>
+> 
+> The same kernel is used for host and guest.
+> Maybe it's related to kvm support?
 
-NACK, will resend because when Spice is not recent enough:
-../ui/spice-core.c: In function 'qemu_spice_init':
-../ui/spice-core.c:673:17: error: unused variable 'video_codec'
-[-Werror=3Dunused-variable]
-
->
->  qapi/ui.json                        |  15 +-
->  qapi/virtio.json                    |  18 +-
->  include/hw/display/edid.h           |   2 +
->  include/hw/qdev-properties-system.h |   5 +
->  include/hw/virtio/virtio-gpu.h      |   3 +
->  include/ui/console.h                |   3 +
->  include/ui/gtk.h                    |   2 +
->  include/ui/spice-display.h          |   5 +
->  include/ui/surface.h                |   1 +
->  ui/vnc.h                            |  49 +--
->  hw/core/qdev-properties-system.c    |  44 +++
->  hw/display/virtio-gpu-base.c        |  27 ++
->  system/tpm.c                        |   5 +-
->  ui/console-gl.c                     |  54 ++++
->  ui/egl-helpers.c                    |   6 +
->  ui/gtk.c                            |  58 ++--
->  ui/spice-core.c                     |  31 ++
->  ui/spice-display.c                  | 226 +++++++++++++-
->  ui/vnc-enc-tight.c                  | 456 +++++++++++++++-------------
->  ui/vnc-enc-zlib.c                   |  47 +--
->  ui/vnc-enc-zrle.c                   | 122 ++++----
->  ui/vnc-jobs.c                       |  13 +-
->  ui/vnc.c                            |  83 +++--
->  ui/vnc-enc-zrle.c.inc               |  20 +-
->  qemu-options.hx                     |  13 +
->  25 files changed, 882 insertions(+), 426 deletions(-)
->
-> --
-> 2.50.0
->
->
+Oops, no, the patch fails to enable HCRX_TCR2EN in hcrx_write or SCR_TCR2EN in scr_write.
+The same is true for the previous patch with HCRX_SCTLR2EN and SCR_SCTLR2EN.
 
 
---=20
-Marc-Andr=C3=A9 Lureau
+r~
 
