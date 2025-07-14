@@ -4,65 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71AA0C83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 12:03:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1D7DC83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 12:03:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubHk0-0005jl-1Y; Mon, 14 Jul 2025 07:53:04 -0400
+	id 1ubHam-0003BL-3x; Mon, 14 Jul 2025 07:43:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1ubH6M-0006xL-HD
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:12:07 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ubH1j-00027P-LI
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:07:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1ubH6K-0003RD-CK
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:12:06 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ubH1h-0002GC-1f
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:07:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752491523;
+ s=mimecast20190719; t=1752491235;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/4myqjH/Kdl7ZWCnYA3d+VdEmgMCkL9UEwDV1RI1+bc=;
- b=CJpYAaRTWfPlUfkeYcMwvLQh+gxcyZ9l+HvTabiDXPFEG7Rky3tUWy7H4dZ1QMy8FqowQW
- uDGHexBMDwJckUBqjlPiN2LZSBRaeo4oev073dak2YvrvP2+mM43f0KByApaPxox0KANnR
- borMbovzD2O43pto1DcPZJSEMbym9i8=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-644--CDi-feGM_KNAB9sB405tA-1; Mon,
- 14 Jul 2025 07:12:00 -0400
-X-MC-Unique: -CDi-feGM_KNAB9sB405tA-1
-X-Mimecast-MFC-AGG-ID: -CDi-feGM_KNAB9sB405tA_1752491519
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2AF8119560B6; Mon, 14 Jul 2025 11:11:59 +0000 (UTC)
-Received: from localhost (unknown [10.45.242.9])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D4E221956094; Mon, 14 Jul 2025 11:11:57 +0000 (UTC)
-From: marcandre.lureau@redhat.com
+ bh=NQgnwOxm8SMdCCueXNSX8RnBbLLlgFWSXKeYcZQinkg=;
+ b=NDi6FecKBgcgxr1LtnnMYqgk5iPHdGyZAm63MkW1rW9rT4VPalwFuWkNsdzdU1qtr/4T5R
+ p/Gv1F92MSqiX1E9SD4ZuQe6fLC4yHbFgvUBfi+UAT8/oOPsw2BRaGN7X1qxAWy3Whf33a
+ uxYOTfHM5OFNRZDMwlkiv/myDZE/FFk=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-344-5tJmpG5-O3qpMolxSA9wrw-1; Mon, 14 Jul 2025 07:07:14 -0400
+X-MC-Unique: 5tJmpG5-O3qpMolxSA9wrw-1
+X-Mimecast-MFC-AGG-ID: 5tJmpG5-O3qpMolxSA9wrw_1752491233
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3b5fe97af5fso422425f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:07:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752491232; x=1753096032;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NQgnwOxm8SMdCCueXNSX8RnBbLLlgFWSXKeYcZQinkg=;
+ b=rt5GzcfYq5R+ct4s1mfsOo86JlZ1VmKLShulPY8zntfAz/cFh4Njy+TBc3diFDkCf8
+ /DV2wvv3D6qCh78oOUBlUooHtijHXD9GbbQ0bLcTNTA/1D3lpwBY9/ySHCtyIHDPZcAI
+ UtAncZ6sorwaFdvE8rJ0iPrX3qdUqg8b6DDXfFbhAK9Py4Bak98Qrl7Tet1kzQyWnzKt
+ 1EcVKArGUu2nZbZ+UL32VrgJOVq3bjcpnwOy67DLHE7yUNWf+Cf1Z67+vTC7IPYBxAq1
+ eOz/QD8cHrYXG1vF4N3scSwJ1gDAw8p55HAtR00pn/5SwZrDLXyPAeyFH8z/fyQqRS3V
+ Rm5w==
+X-Gm-Message-State: AOJu0YwGPnB0hFgSFGDTdnfGaQz9K18KTXvyPjqwkFCSPsOYaggKnSUQ
+ l1TCDFjyZGGKfLSAAA9kns0SirTfiWhw2rqtijPVdgUGSJLCgDA8BCRWyCa9GU6sk606cZC08F3
+ 79OWNKz/cidsj0/n3PqeiKUXjc9BYypDOxDOuyO1ep+EqfBDoMj+KQFpuLNC9tuANYYNWayNf8O
+ ApWbq3CWIjklEu2PJYoAftgANatZms/8V7LT9ibLrT
+X-Gm-Gg: ASbGncunlCxdhSFEtKmlJfM5l5mtQRHKlhIRr0MN47DNKmC3p2gEYWxBiHRxZmty/Ec
+ RxrO6NUg11eQrnrsRknqKvJJ6cQFkXnIAAizLEU034YWZbK0LVjCTPQ7ZbV6SFU+b8ZSBAM8LiK
+ 1ueaOe8n5R+i9Z5ZGZay+qSVLLl7QBuLT3VOVFFjXprdaREgHIby5lOiob+BbFrVz2GktSHuiiJ
+ HetfkSUXZ5DPRuyY26AYATTZLoFHUO5hCa16ORl159D46D2tOaWOlir4NJk3LnkinHpul3SjWbS
+ Oc02dhqqJZn6OU4jV4HAS++zDMCYVitU9Kgm0Bjx+RA=
+X-Received: by 2002:a05:6000:2d09:b0:3a6:d967:380e with SMTP id
+ ffacd0b85a97d-3b5f187eb90mr7211842f8f.3.1752491231935; 
+ Mon, 14 Jul 2025 04:07:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHVQXd3d7/7yqLaRZct+uWPNhQxB2eIwxMFqqZlpk1TrWexlIzulZk/PRVlU3xs3m9IzIFVRw==
+X-Received: by 2002:a05:6000:2d09:b0:3a6:d967:380e with SMTP id
+ ffacd0b85a97d-3b5f187eb90mr7211812f8f.3.1752491231163; 
+ Mon, 14 Jul 2025 04:07:11 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.73.155])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b5e8bd1736sm12262538f8f.15.2025.07.14.04.07.09
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Jul 2025 04:07:09 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, Weifeng Liu <weifeng.liu.z@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 12/13] ui/gtk: Add scale option
-Date: Mon, 14 Jul 2025 15:10:35 +0400
-Message-ID: <20250714111039.4150419-13-marcandre.lureau@redhat.com>
-In-Reply-To: <20250714111039.4150419-1-marcandre.lureau@redhat.com>
-References: <20250714111039.4150419-1-marcandre.lureau@redhat.com>
+Subject: [PULL 71/77] tests/functional: test_x86_cpu_model_versions: remove
+ dead tests
+Date: Mon, 14 Jul 2025 13:04:00 +0200
+Message-ID: <20250714110406.117772-72-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.50.0
+In-Reply-To: <20250714110406.117772-1-pbonzini@redhat.com>
+References: <20250714110406.117772-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,159 +109,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Weifeng Liu <weifeng.liu.z@gmail.com>
+Tests that require machines older than 4.2 are now unconditionally skipped.
+Remove them if they test legacy behavior, or use the latest machine if
+they test current behavior.
 
-Allow user to set a preferred scale (defaulting to 1) of the virtual
-display. Along with zoom-to-fix=false, this would be helpful for users
-running QEMU on hi-dpi host desktop to achieve pixel to pixel display --
-e.g., if the scale factor of a user's host desktop is set to 200%, then
-they can set a 0.5 scale for the virtual display to avoid magnification
-that might cause blurriness.
-
-Signed-off-by: Weifeng Liu <weifeng.liu.z@gmail.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Tested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20250601045245.36778-3-weifeng.liu.z@gmail.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- qapi/ui.json     |  5 ++++-
- include/ui/gtk.h |  1 +
- ui/gtk.c         | 46 +++++++++++++++++++++++++++++-----------------
- 3 files changed, 34 insertions(+), 18 deletions(-)
+ .../functional/test_x86_cpu_model_versions.py | 110 ++----------------
+ 1 file changed, 12 insertions(+), 98 deletions(-)
 
-diff --git a/qapi/ui.json b/qapi/ui.json
-index 9e496b4835..a465d671c7 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -1338,6 +1338,8 @@
- # @keep-aspect-ratio: Keep width/height aspect ratio of guest content when
- #     resizing host window.  Defaults to "on". (Since 10.1)
- #
-+# @scale: Set preferred scale of the display.  Defaults to 1.0.  (Since 10.1)
-+#
- # Since: 2.12
- ##
- { 'struct'  : 'DisplayGTK',
-@@ -1345,7 +1347,8 @@
-                 '*zoom-to-fit'       : 'bool',
-                 '*show-tabs'         : 'bool',
-                 '*show-menubar'      : 'bool',
--                '*keep-aspect-ratio' : 'bool'  } }
-+                '*keep-aspect-ratio' : 'bool',
-+                '*scale'             : 'number'  } }
+diff --git a/tests/functional/test_x86_cpu_model_versions.py b/tests/functional/test_x86_cpu_model_versions.py
+index bd18acd44fa..36c968f1c0b 100755
+--- a/tests/functional/test_x86_cpu_model_versions.py
++++ b/tests/functional/test_x86_cpu_model_versions.py
+@@ -72,44 +72,11 @@ def validate_variant_aliases(self, cpus):
+         self.assertNotIn("EPYC-IBPB-v1", cpus,
+                          "EPYC-IBPB shouldn't be versioned")
  
- ##
- # @DisplayEGLHeadless:
-diff --git a/include/ui/gtk.h b/include/ui/gtk.h
-index b7cfbf218e..3e6ce3cb48 100644
---- a/include/ui/gtk.h
-+++ b/include/ui/gtk.h
-@@ -41,6 +41,7 @@ typedef struct VirtualGfxConsole {
-     DisplaySurface *ds;
-     pixman_image_t *convert;
-     cairo_surface_t *surface;
-+    double preferred_scale;
-     double scale_x;
-     double scale_y;
- #if defined(CONFIG_OPENGL)
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 9104509ee1..e91d093a49 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -67,6 +67,7 @@
- #define VC_TERM_X_MIN     80
- #define VC_TERM_Y_MIN     25
- #define VC_SCALE_MIN    0.25
-+#define VC_SCALE_MAX       4
- #define VC_SCALE_STEP   0.25
+-    def test_4_0_alias_compatibility(self):
+-        """
+-        Check if pc-*-4.0 unversioned CPU model won't be reported as aliases
+-        """
+-        self.set_machine('pc-i440fx-4.0')
+-        # pc-*-4.0 won't expose non-versioned CPU models as aliases
+-        # We do this to help management software to keep compatibility
+-        # with older QEMU versions that didn't have the versioned CPU model
+-        self.vm.add_args('-S')
+-        self.vm.launch()
+-        cpus = dict((m['name'], m) for m in
+-                    self.vm.cmd('query-cpu-definitions'))
+-
+-        self.assertFalse(cpus['Cascadelake-Server']['static'],
+-                         'unversioned Cascadelake-Server CPU model must not be static')
+-        self.assertNotIn('alias-of', cpus['Cascadelake-Server'],
+-                         'Cascadelake-Server must not be an alias')
+-        self.assertNotIn('alias-of', cpus['Cascadelake-Server-v1'],
+-                         'Cascadelake-Server-v1 must not be an alias')
+-
+-        self.assertFalse(cpus['qemu64']['static'],
+-                         'unversioned qemu64 CPU model must not be static')
+-        self.assertNotIn('alias-of', cpus['qemu64'],
+-                         'qemu64 must not be an alias')
+-        self.assertNotIn('alias-of', cpus['qemu64-v1'],
+-                         'qemu64-v1 must not be an alias')
+-
+-        self.validate_variant_aliases(cpus)
+-
+-        # On pc-*-4.0, no CPU model should be reported as an alias:
+-        for name,c in cpus.items():
+-            self.assertNotIn('alias-of', c, "%s shouldn't be an alias" % (name))
+-
+-    def test_4_1_alias(self):
++    def test_unversioned_alias(self):
+         """
+         Check if unversioned CPU model is an alias pointing to right version
+         """
+-        self.set_machine('pc-i440fx-4.1')
++        self.set_machine('pc')
+         self.vm.add_args('-S')
+         self.vm.launch()
  
- #ifdef GDK_WINDOWING_X11
-@@ -272,15 +273,11 @@ static void gd_update_geometry_hints(VirtualConsole *vc)
-         if (!vc->gfx.ds) {
-             return;
-         }
--        if (s->free_scale) {
--            geo.min_width  = surface_width(vc->gfx.ds) * VC_SCALE_MIN;
--            geo.min_height = surface_height(vc->gfx.ds) * VC_SCALE_MIN;
--            mask |= GDK_HINT_MIN_SIZE;
--        } else {
--            geo.min_width  = surface_width(vc->gfx.ds) * vc->gfx.scale_x;
--            geo.min_height = surface_height(vc->gfx.ds) * vc->gfx.scale_y;
--            mask |= GDK_HINT_MIN_SIZE;
--        }
-+        double scale_x = s->free_scale ? VC_SCALE_MIN : vc->gfx.scale_x;
-+        double scale_y = s->free_scale ? VC_SCALE_MIN : vc->gfx.scale_y;
-+        geo.min_width  = surface_width(vc->gfx.ds) * scale_x;
-+        geo.min_height = surface_height(vc->gfx.ds) * scale_y;
-+        mask |= GDK_HINT_MIN_SIZE;
-         geo_widget = vc->gfx.drawing_area;
-         gtk_widget_set_size_request(geo_widget, geo.min_width, geo.min_height);
+@@ -133,7 +100,7 @@ def test_4_1_alias(self):
  
-@@ -1579,8 +1576,8 @@ static void gd_menu_full_screen(GtkMenuItem *item, void *opaque)
-         }
-         s->full_screen = FALSE;
-         if (vc->type == GD_VC_GFX) {
--            vc->gfx.scale_x = 1.0;
--            vc->gfx.scale_y = 1.0;
-+            vc->gfx.scale_x = vc->gfx.preferred_scale;
-+            vc->gfx.scale_y = vc->gfx.preferred_scale;
-             gd_update_windowsize(vc);
-         }
-     }
-@@ -1636,8 +1633,8 @@ static void gd_menu_zoom_fixed(GtkMenuItem *item, void *opaque)
-     GtkDisplayState *s = opaque;
-     VirtualConsole *vc = gd_vc_find_current(s);
+         self.validate_variant_aliases(cpus)
  
--    vc->gfx.scale_x = 1.0;
--    vc->gfx.scale_y = 1.0;
-+    vc->gfx.scale_x = vc->gfx.preferred_scale;
-+    vc->gfx.scale_y = vc->gfx.preferred_scale;
+-        # On pc-*-4.1, -noTSX and -IBRS models should be aliases:
++        # On recent PC machines, -noTSX and -IBRS models should be aliases:
+         self.assertEqual(cpus["Haswell"].get('alias-of'),
+                          "Haswell-v1",
+                          "Haswell must be an alias")
+@@ -247,8 +214,8 @@ def get_cpu_prop(self, prop):
+         cpu_path = self.vm.cmd('query-cpus-fast')[0].get('qom-path')
+         return self.vm.cmd('qom-get', path=cpu_path, property=prop)
  
-     gd_update_windowsize(vc);
- }
-@@ -1651,8 +1648,8 @@ static void gd_menu_zoom_fit(GtkMenuItem *item, void *opaque)
-         s->free_scale = TRUE;
-     } else {
-         s->free_scale = FALSE;
--        vc->gfx.scale_x = 1.0;
--        vc->gfx.scale_y = 1.0;
-+        vc->gfx.scale_x = vc->gfx.preferred_scale;
-+        vc->gfx.scale_y = vc->gfx.preferred_scale;
-     }
+-    def test_4_1(self):
+-        self.set_machine('pc-i440fx-4.1')
++    def test(self):
++        self.set_machine('pc')
+         # machine-type only:
+         self.vm.add_args('-S')
+         self.set_vm_arg('-cpu',
+@@ -256,80 +223,27 @@ def test_4_1(self):
+                         'enforce=off')
+         self.vm.launch()
+         self.assertFalse(self.get_cpu_prop('arch-capabilities'),
+-                         'pc-i440fx-4.1 + Cascadelake-Server should not have arch-capabilities')
++                         'pc + Cascadelake-Server should not have arch-capabilities')
  
-     gd_update_windowsize(vc);
-@@ -2243,6 +2240,11 @@ static void gl_area_realize(GtkGLArea *area, VirtualConsole *vc)
- }
- #endif
+-    def test_4_0(self):
+-        self.set_machine('pc-i440fx-4.0')
+-        self.vm.add_args('-S')
+-        self.set_vm_arg('-cpu',
+-                        'Cascadelake-Server,x-force-features=on,check=off,'
+-                        'enforce=off')
+-        self.vm.launch()
+-        self.assertFalse(self.get_cpu_prop('arch-capabilities'),
+-                         'pc-i440fx-4.0 + Cascadelake-Server should not have arch-capabilities')
+-
+-    def test_set_4_0(self):
+-        self.set_machine('pc-i440fx-4.0')
+-        # command line must override machine-type if CPU model is not versioned:
+-        self.vm.add_args('-S')
+-        self.set_vm_arg('-cpu',
+-                        'Cascadelake-Server,x-force-features=on,check=off,'
+-                        'enforce=off,+arch-capabilities')
+-        self.vm.launch()
+-        self.assertTrue(self.get_cpu_prop('arch-capabilities'),
+-                        'pc-i440fx-4.0 + Cascadelake-Server,+arch-capabilities should have arch-capabilities')
+-
+-    def test_unset_4_1(self):
+-        self.set_machine('pc-i440fx-4.1')
++    def test_unset(self):
++        self.set_machine('pc')
+         self.vm.add_args('-S')
+         self.set_vm_arg('-cpu',
+                         'Cascadelake-Server,x-force-features=on,check=off,'
+                         'enforce=off,-arch-capabilities')
+         self.vm.launch()
+         self.assertFalse(self.get_cpu_prop('arch-capabilities'),
+-                         'pc-i440fx-4.1 + Cascadelake-Server,-arch-capabilities should not have arch-capabilities')
++                         'pc + Cascadelake-Server,-arch-capabilities should not have arch-capabilities')
  
-+static bool gd_scale_valid(double scale)
-+{
-+    return scale >= VC_SCALE_MIN && scale <= VC_SCALE_MAX;
-+}
-+
- static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
-                               QemuConsole *con, int idx,
-                               GSList *group, GtkWidget *view_menu)
-@@ -2252,8 +2254,18 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
+-    def test_v1_4_0(self):
+-        self.set_machine('pc-i440fx-4.0')
+-        # versioned CPU model overrides machine-type:
+-        self.vm.add_args('-S')
+-        self.set_vm_arg('-cpu',
+-                        'Cascadelake-Server-v1,x-force-features=on,check=off,'
+-                        'enforce=off')
+-        self.vm.launch()
+-        self.assertFalse(self.get_cpu_prop('arch-capabilities'),
+-                         'pc-i440fx-4.0 + Cascadelake-Server-v1 should not have arch-capabilities')
+-
+-    def test_v2_4_0(self):
+-        self.set_machine('pc-i440fx-4.0')
+-        self.vm.add_args('-S')
+-        self.set_vm_arg('-cpu',
+-                        'Cascadelake-Server-v2,x-force-features=on,check=off,'
+-                        'enforce=off')
+-        self.vm.launch()
+-        self.assertTrue(self.get_cpu_prop('arch-capabilities'),
+-                        'pc-i440fx-4.0 + Cascadelake-Server-v2 should have arch-capabilities')
+-
+-    def test_v1_set_4_0(self):
+-        self.set_machine('pc-i440fx-4.0')
+-        # command line must override machine-type and versioned CPU model:
+-        self.vm.add_args('-S')
+-        self.set_vm_arg('-cpu',
+-                        'Cascadelake-Server-v1,x-force-features=on,check=off,'
+-                        'enforce=off,+arch-capabilities')
+-        self.vm.launch()
+-        self.assertTrue(self.get_cpu_prop('arch-capabilities'),
+-                        'pc-i440fx-4.0 + Cascadelake-Server-v1,+arch-capabilities should have arch-capabilities')
+-
+-    def test_v2_unset_4_1(self):
+-        self.set_machine('pc-i440fx-4.1')
++    def test_v2_unset(self):
++        self.set_machine('pc')
+         self.vm.add_args('-S')
+         self.set_vm_arg('-cpu',
+                         'Cascadelake-Server-v2,x-force-features=on,check=off,'
+                         'enforce=off,-arch-capabilities')
+         self.vm.launch()
+         self.assertFalse(self.get_cpu_prop('arch-capabilities'),
+-                         'pc-i440fx-4.1 + Cascadelake-Server-v2,-arch-capabilities should not have arch-capabilities')
++                         'pc + Cascadelake-Server-v2,-arch-capabilities should not have arch-capabilities')
  
-     vc->label = qemu_console_get_label(con);
-     vc->s = s;
--    vc->gfx.scale_x = 1.0;
--    vc->gfx.scale_y = 1.0;
-+    vc->gfx.preferred_scale = 1.0;
-+    if (s->opts->u.gtk.has_scale) {
-+        if (gd_scale_valid(s->opts->u.gtk.scale)) {
-+            vc->gfx.preferred_scale = s->opts->u.gtk.scale;
-+        } else {
-+            error_report("Invalid scale value %lf given, being ignored",
-+                         s->opts->u.gtk.scale);
-+            s->opts->u.gtk.has_scale = false;
-+        }
-+    }
-+    vc->gfx.scale_x = vc->gfx.preferred_scale;
-+    vc->gfx.scale_y = vc->gfx.preferred_scale;
- 
- #if defined(CONFIG_OPENGL)
-     if (display_opengl) {
+ if __name__ == '__main__':
+     QemuSystemTest.main()
 -- 
 2.50.0
 
