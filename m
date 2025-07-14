@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC477C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:30:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B2E0C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:30:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSNf-0006Pk-EW; Mon, 14 Jul 2025 19:14:43 -0400
+	id 1ubSKM-0007mM-TS; Mon, 14 Jul 2025 19:11:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSJM-0005sV-An
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:10:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSIR-00036v-Kk
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSJJ-00062X-Qi
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:10:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSIP-0005pm-3f
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534612;
+ s=mimecast20190719; t=1752534556;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=iMzsCuiK+55U/XfyyU1n4164I7WWpM53lulxxbvT5hg=;
- b=BiJQhfpTVd4BtEUoDhiVvzYKKp02h++qBZ3HdP3P67ZXAv7mjD1xjUZXh5eCqqnxteGm00
- C4MBDTkPO+T4U9DnuHOn6J7nnNBQZQ8Dox77RGN/v7Ro/1kXhLPgz8wUMvpXPWViFkvogU
- GRN/vgYXXZzzzkIYu8ofuAtIYzSCZNc=
+ bh=yxYpO+9d8NYemWvnw8rBAwgNT88syJ5YYAjBvVO7KoE=;
+ b=B/SG3HbYtRKOyw6BPSBisFbeN3MCzQB2D/zb0d24cyvfG3Bqzt/t03XaYab+bogFf35D5x
+ awjCPLE+1Ar+zFQynMgky4JrOQN82PBKmkp09cfqnrYKAXOU4zfxJ0NEEfdZyBP3MRvDzs
+ +LwQkR54BuJsh/t5iGISw6e1c9WcYcU=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-341-5WV9DPTkNQKEIzp7onslNA-1; Mon, 14 Jul 2025 19:10:11 -0400
-X-MC-Unique: 5WV9DPTkNQKEIzp7onslNA-1
-X-Mimecast-MFC-AGG-ID: 5WV9DPTkNQKEIzp7onslNA_1752534610
+ us-mta-680-l-BLSmhrOiGI1OZoFstRPw-1; Mon, 14 Jul 2025 19:09:15 -0400
+X-MC-Unique: l-BLSmhrOiGI1OZoFstRPw-1
+X-Mimecast-MFC-AGG-ID: l-BLSmhrOiGI1OZoFstRPw_1752534554
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-45626e0d3e1so1112275e9.1
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:10:10 -0700 (PDT)
+ 5b1f17b1804b1-4561dbbcc7eso4646985e9.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:09:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534609; x=1753139409;
+ d=1e100.net; s=20230601; t=1752534553; x=1753139353;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iMzsCuiK+55U/XfyyU1n4164I7WWpM53lulxxbvT5hg=;
- b=qfSgSjL+a/0fxon4E4aNYOXizSqhZ2g6LxE1IysTiXvKux84LrA6RXwQcry9rRoC6D
- XY/Kqdu7DLFXjNt6TKOpiXf0n6w3UI4llt4T9TbF8yKpO+m+AzoqzKrsVt8MZkQ129hD
- GRAorPB1E1AvgfcP5rjmQCvfjHrqwQazm1HlQkY7VnJKXgq4rdDGH9tghOi2UwpftmY8
- UsLJkQ7DOiO2drw8lESotT+JZFEqnVUaKC4cJccilPOaHyZyLLMNDwtOfH5EmlJvRu+U
- 8L3rw8IzC8j/VVYg+gXS7MjPrEreXTvqRa8tgr/5owsEx8YvFCZirCXTRPTXa9n5Fwm2
- B+qw==
-X-Gm-Message-State: AOJu0Yz0o2O6hpNuFMMArh8QJIX6A0qV2iH9D5I3zeC+17uaybn+TnKM
- CJa8UeZg1wXM3qoxu+/CsFj3K0aPJRPYJzwKm1eAp4sQ1hVYL/GZED6IUxrX8A6KcgbF893E1C8
- FWWXB70Qgsxge6iyToY48oGBUTLQ076BNRNXL+fe8Ivtn5swCpVU1OSI6B4POkG1a9KWNxlXSTP
- 8Pmy9SH1+C75jEbTVM+jZoDMJs+cZbjs7ydw==
-X-Gm-Gg: ASbGncsEZs32OYD66abqSSnYrafOnVbRv8xQ9jQoTKFljOlzJ01TzzKiD8EKybBgUE9
- GkTaSedHoHd4I8uyKO8xH8Ix236oQl8rV8rXySYfpe6jPFjw3YjcVThBb+rBCv6mKjHyxCXGKJz
- TcL2jfOlwb4s1iGHL0EPx7pOjJTgpxxWM+ytXh88sai8GEI4wUdy53uHrf89zgHBcNlfQY/YhKl
- gp4uo85Nvuv3UoD0nnXTzbsgFndtbQqIm0YCq2jqmuR/qozjaYTU7aQFOpsY+sb9H2DNMvXXhLz
- 3Mz2zPp6dE1TDinzV4+Zhn5kf27RRFS+
-X-Received: by 2002:a05:600c:6387:b0:441:b3eb:574e with SMTP id
- 5b1f17b1804b1-455fffb208fmr88849015e9.5.1752534609158; 
- Mon, 14 Jul 2025 16:10:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFmAqTARcSqdyi2afWeAgzoXUFSMsJvsdXD2LL8EatnBz6C6Mo3c7nZmS06XuHPndbJJHwhIw==
-X-Received: by 2002:a05:600c:6387:b0:441:b3eb:574e with SMTP id
- 5b1f17b1804b1-455fffb208fmr88848835e9.5.1752534608732; 
- Mon, 14 Jul 2025 16:10:08 -0700 (PDT)
+ bh=yxYpO+9d8NYemWvnw8rBAwgNT88syJ5YYAjBvVO7KoE=;
+ b=vUBibsRkK++KDJ9uLyobNO4ojn5teZnqIqoCqzXCrAwhORGX61vynYkgrsskgP3G5F
+ U51ktgiXlyCv+1urGFkbABvujrPQjF0e9iwH35JcwAMb9D1U9miD+fG6ko1ow7YJqJkj
+ mNbOz8BVzv102DwUBD5Ih397dKVST7uKNAB3xZvlvHAH+ysyHWq+EImEnLMZ5vY7Zved
+ gpURI8ZUCrV0QFPk7+iJQg2NJcoCNcLJBtw1qLlL/GVnlljVNjllZmtT1Z1CiO14uPWj
+ ru4njWEQE+bCkgKlRKX3VUS6C2/7VRsXREOcsdzWopUZ2NocbYj++1CeyAkyetHrYeWi
+ PeEA==
+X-Gm-Message-State: AOJu0YztNWUjly64B2nE9nb8dCHpHnK/6p9pVPZj+FM+mCbQqB3tAnR1
+ jjN9Kq4f1GsafWjqMnbTRTKJgXP6Q6apDQTODYtinEzBbjd3QrA24S/TlNd83eI657iwvzcAoxE
+ ZpHAd4ZcNPJvd8rxfQq0HB2n23ahv6rIcZuJGSKIkg+6Ys29+Oin+KITbS7XgRS3qKVsyM0w1Ju
+ jrmzt++vc4/YUlNk+PK8wYufScsAsmlb8mKQ==
+X-Gm-Gg: ASbGncvWWhSKwm9eu25NwyGA7vbWgLr4xQivb9kuelWXKUURqVvCnH+6GM3Q/cUSSEA
+ 9bwu0glhdJcuRM6mEePlFO5WB1TDt9kqddj3HR4RVCQ3A+Aqld0Qs3LOxyIKaMWXe8c7o6lzWGJ
+ iy00TBMhLRT1b81+jejghPiL0oHT85ugwQTAeAmMlcTLchOqgW5zzZ2c40mJZoOSlIDFeLbP/Gu
+ RYuWOc2mdXaruYYcuH3rVQ4d9xRZQA3qrDZ0TO6aLhxgVvnN4HAuk82sSRmoAtiffNAih7mC6m1
+ m/AXGGphtGgl8DaEjQEF9Fy0vgr+OFFl
+X-Received: by 2002:a05:600c:6748:b0:456:11cb:b9c7 with SMTP id
+ 5b1f17b1804b1-45611cbbb91mr61929445e9.25.1752534553473; 
+ Mon, 14 Jul 2025 16:09:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFlsxKttcUxs4SQflWwpEy8Exp5FM5PqGA/NTSZxu9E3zh9nU+jZxrXQXYHQh5snj/BuwSzrQ==
+X-Received: by 2002:a05:600c:6748:b0:456:11cb:b9c7 with SMTP id
+ 5b1f17b1804b1-45611cbbb91mr61929295e9.25.1752534553056; 
+ Mon, 14 Jul 2025 16:09:13 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-455f222e4f4sm104527975e9.10.2025.07.14.16.10.06
+ ffacd0b85a97d-3b600a39281sm5851601f8f.73.2025.07.14.16.09.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:10:07 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:10:05 -0400
+ Mon, 14 Jul 2025 16:09:12 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:09:10 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Anisa Su <anisa.su@samsung.com>, Fan Ni <fan.ni@samsung.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PULL 88/97] hw/cxl: mailbox-utils: 0x5600 - FMAPI Get DCD Info
-Message-ID: <505870dd7a0fd4756319ddfe6e3a4497b1ebf266.1752534227.git.mst@redhat.com>
+ Eric Auger <eric.auger@redhat.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 68/97] tests/qtest/bios-tables-test: Update ARM DSDT reference
+ blobs
+Message-ID: <4e9b11c0057a0b8494f53eb56d9503f80f1c8b92.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -84,7 +86,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1752534227.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -109,162 +111,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anisa Su <anisa.su@samsung.com>
+From: Eric Auger <eric.auger@redhat.com>
 
-FM DCD Management command 0x5600 implemented per CXL 3.2 Spec Section 7.6.7.6.1.
+    Changes relate to the introduction of pieces related to
+    acpi-index static support along with root ports with no hotplug.
 
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-Signed-off-by: Anisa Su <anisa.su@samsung.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20250714174509.1984430-3-Jonathan.Cameron@huawei.com>
++
++    Scope (\_SB.PCI0)
++    {
++        Method (EDSM, 5, Serialized)
++        {
++            If ((Arg2 == Zero))
++            {
++                Local0 = Buffer (One)
++                    {
++                         0x00                                             // .
++                    }
++                If ((Arg0 != ToUUID ("e5c937d0-3553-4d7a-9117-ea4d19c3434d") /* Device Labeling Interface */))
++                {
++                    Return (Local0)
++                }
++
++                If ((Arg1 < 0x02))
++                {
++                    Return (Local0)
++                }
++
++                Local0 [Zero] = 0x81
++                Return (Local0)
++            }
++
++            If ((Arg2 == 0x07))
++            {
++                Local0 = Package (0x02)
++                    {
++                        Zero,
++                        ""
++                    }
++                Local1 = DerefOf (Arg4 [Zero])
++                Local0 [Zero] = Local1
++                Return (Local0)
++            }
++        }
++
++        Device (S00)
++        {
++            Name (_ADR, Zero)  // _ADR: Address
++        }
++
++        Device (S08)
++        {
++            Name (_ADR, 0x00010000)  // _ADR: Address
++        }
++
++        Device (S10)
++        {
++            Name (_ADR, 0x00020000)  // _ADR: Address
++        }
++    }
+ }
+
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20250714080639.2525563-23-eric.auger@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/cxl/cxl_device.h |  1 +
- hw/cxl/cxl-mailbox-utils.c  | 59 +++++++++++++++++++++++++++++++++++++
- hw/mem/cxl_type3.c          |  4 +++
- 3 files changed, 64 insertions(+)
+ tests/qtest/bios-tables-test-allowed-diff.h   |   6 ------
+ tests/data/acpi/aarch64/virt/DSDT             | Bin 5158 -> 5293 bytes
+ .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5244 -> 5379 bytes
+ tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6519 -> 6654 bytes
+ tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7603 -> 7768 bytes
+ tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5360 -> 5495 bytes
+ tests/data/acpi/aarch64/virt/DSDT.viot        | Bin 5158 -> 5310 bytes
+ 7 files changed, 6 deletions(-)
 
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index a151e19da8..7eade9cf8a 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -530,6 +530,7 @@ typedef struct CXLDCRegion {
-     uint32_t dsmadhandle;
-     uint8_t flags;
-     unsigned long *blk_bitmap;
-+    uint64_t supported_blk_size_bitmask;
- } CXLDCRegion;
- 
- typedef struct CXLSetFeatureInfo {
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 0b615ea37a..3304048922 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -23,6 +23,7 @@
- #include "qemu/uuid.h"
- #include "system/hostmem.h"
- #include "qemu/range.h"
-+#include "qapi/qapi-types-cxl.h"
- 
- #define CXL_CAPACITY_MULTIPLIER   (256 * MiB)
- #define CXL_DC_EVENT_LOG_SIZE 8
-@@ -117,6 +118,8 @@ enum {
-         #define GET_PHYSICAL_PORT_STATE     0x1
-     TUNNEL = 0x53,
-         #define MANAGEMENT_COMMAND     0x0
-+    FMAPI_DCD_MGMT = 0x56,
-+        #define GET_DCD_INFO    0x0
- };
- 
- /* CCI Message Format CXL r3.1 Figure 7-19 */
-@@ -3237,6 +3240,52 @@ static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
-     return CXL_MBOX_SUCCESS;
- }
- 
-+/* CXL r3.2 section 7.6.7.6.1: Get DCD Info (Opcode 5600h) */
-+static CXLRetCode cmd_fm_get_dcd_info(const struct cxl_cmd *cmd,
-+                                      uint8_t *payload_in,
-+                                      size_t len_in,
-+                                      uint8_t *payload_out,
-+                                      size_t *len_out,
-+                                      CXLCCI *cci)
-+{
-+    struct {
-+        uint8_t num_hosts;
-+        uint8_t num_regions_supported;
-+        uint8_t rsvd1[2];
-+        uint16_t supported_add_sel_policy_bitmask;
-+        uint8_t rsvd2[2];
-+        uint16_t supported_removal_policy_bitmask;
-+        uint8_t sanitize_on_release_bitmask;
-+        uint8_t rsvd3;
-+        uint64_t total_dynamic_capacity;
-+        uint64_t region_blk_size_bitmasks[8];
-+    } QEMU_PACKED *out = (void *)payload_out;
-+    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-+    CXLDCRegion *region;
-+    int i;
-+
-+    out->num_hosts = 1;
-+    out->num_regions_supported = ct3d->dc.num_regions;
-+    stw_le_p(&out->supported_add_sel_policy_bitmask,
-+             BIT(CXL_EXTENT_SELECTION_POLICY_PRESCRIPTIVE));
-+    stw_le_p(&out->supported_removal_policy_bitmask,
-+             BIT(CXL_EXTENT_REMOVAL_POLICY_PRESCRIPTIVE));
-+    out->sanitize_on_release_bitmask = 0;
-+
-+    stq_le_p(&out->total_dynamic_capacity,
-+             ct3d->dc.total_capacity / CXL_CAPACITY_MULTIPLIER);
-+
-+    for (i = 0; i < ct3d->dc.num_regions; i++) {
-+        region = &ct3d->dc.regions[i];
-+        memcpy(&out->region_blk_size_bitmasks[i],
-+               &region->supported_blk_size_bitmask,
-+               sizeof(out->region_blk_size_bitmasks[i]));
-+    }
-+
-+    *len_out = sizeof(*out);
-+    return CXL_MBOX_SUCCESS;
-+}
-+
- static const struct cxl_cmd cxl_cmd_set[256][256] = {
-     [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
-         cmd_infostat_bg_op_abort, 0, 0 },
-@@ -3350,6 +3399,11 @@ static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
-                                      cmd_tunnel_management_cmd, ~0, 0 },
- };
- 
-+static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
-+    [FMAPI_DCD_MGMT][GET_DCD_INFO] = { "GET_DCD_INFO",
-+        cmd_fm_get_dcd_info, 0, 0 },
-+};
-+
- /*
-  * While the command is executing in the background, the device should
-  * update the percentage complete in the Background Command Status Register
-@@ -3624,7 +3678,12 @@ void cxl_initialize_t3_fm_owned_ld_mctpcci(CXLCCI *cci, DeviceState *d,
-                                            DeviceState *intf,
-                                            size_t payload_max)
- {
-+    CXLType3Dev *ct3d = CXL_TYPE3(d);
-+
-     cxl_copy_cci_commands(cci, cxl_cmd_set_t3_fm_owned_ld_mctp);
-+    if (ct3d->dc.num_regions) {
-+        cxl_copy_cci_commands(cci, cxl_cmd_set_fm_dcd);
-+    }
-     cci->d = d;
-     cci->intf = intf;
-     cxl_init_cci(cci, payload_max);
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index f283178d88..d898cfd617 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -8,6 +8,7 @@
-  *
-  * SPDX-License-Identifier: GPL-v2-only
-  */
-+#include <math.h>
- 
- #include "qemu/osdep.h"
- #include "qemu/units.h"
-@@ -634,6 +635,8 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
-     uint64_t region_len;
-     uint64_t decode_len;
-     uint64_t blk_size = 2 * MiB;
-+    /* Only 1 block size is supported for now. */
-+    uint64_t supported_blk_size_bitmask = blk_size;
-     CXLDCRegion *region;
-     MemoryRegion *mr;
-     uint64_t dc_size;
-@@ -679,6 +682,7 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
-             .block_size = blk_size,
-             /* dsmad_handle set when creating CDAT table entries */
-             .flags = 0,
-+            .supported_blk_size_bitmask = supported_blk_size_bitmask,
-         };
-         ct3d->dc.total_capacity += region->len;
-         region->blk_bitmap = bitmap_new(region->len / region->block_size);
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 023fbc6059..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,7 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/aarch64/virt/DSDT",
+-"tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt",
+-"tests/data/acpi/aarch64/virt/DSDT.memhp",
+-"tests/data/acpi/aarch64/virt/DSDT.pxb",
+-"tests/data/acpi/aarch64/virt/DSDT.topology",
+-"tests/data/acpi/aarch64/virt/DSDT.viot",
+diff --git a/tests/data/acpi/aarch64/virt/DSDT b/tests/data/acpi/aarch64/virt/DSDT
+index acab6e65febbc210158d4c39be0680bbb90250f5..18d97e8f22979411a528705c0e314acb424bbfa5 100644
+GIT binary patch
+delta 156
+zcmZ3cu~w7ICD<iotq21H)2oeKG9vW?ZX7Xs@xe~<0nVNVBHpa7F2TOM3(O{GF%$?g
+zGcqJBkeW0(Lr|DY;DY(dr@^LGz7xe?`AQyk_Fa;&fPHEv7t@l20<Ol61O|pB2@7N<
+zXK}F?2(dCT@G>M6G<W1MFeDZvLL{S`xPuK0;yL0SU4j^*oA`qbEaExhIUHSrco-NM
+F82~q;ELZ>l
+
+delta 19
+acmZ3hxlDu0CD<iIO@x7g>C8qh84&<B2?Wsq
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt b/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt
+index 54c27e7d95b4956ed1b5dee0d299ccb08dc2a73e..2cef095bcc1bb404f8cd9ec77a879ed81c191875 100644
+GIT binary patch
+delta 156
+zcmeyP(X7Sg66_MfEXu&Zv}_|+kx0FO8%K;@e6Uk|fU~E8h&QXNORz8R0<+0k3<ZMB
+zj0_12q$W+y5ESMTxL|(rX|QRP??mxezLJNXeU~IGV4s@F#k3@$fUB`1fq`L3!UCDe
+zSzPP|Laa;-ybK8i%^f)m42cDa5XtB!?qCChc#e2Smmr4dCjMXpi+GNB4o8<D9tH+R
+F1_1j$EA9XQ
+
+delta 19
+acmZqH`lG?+66_LEBf`MI)VYzXNCW^oYz1ck
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.memhp b/tests/data/acpi/aarch64/virt/DSDT.memhp
+index 4330bc97cba0950191c45ac833533db7a190db81..372ca3d7fb1e2927c7c12f97eec406d597f294ab 100644
+GIT binary patch
+delta 156
+zcmexv^v{^fCD<k8pCkhV6Zb~0T*-O?H;x#+_+Y2_0B27F5pPykmtbGs1!j}87zzZL
+z85t55NKKlYAt=lxaKZfK(_qso--+U{d?gP%`z}dXz&<sTi)l$h0as&30t3U6gatB_
+zv$)s`gjksvco`B3nmckB7!nH-A(GKe+`$G0@f`7vE<p^@P5i+I7V#YM9F8tQJPZts
+F3;>E4EZYD8
+
+delta 19
+acmexo{N0GlCD<jTT#|u->Fq|YTuA^&WCm0K
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.pxb b/tests/data/acpi/aarch64/virt/DSDT.pxb
+index 7fdbc03e2bf9fb7d35704779253de36e362f0bf9..c2779882494e16920787b8ab7b4cb3c3b70f224b 100644
+GIT binary patch
+delta 168
+zcmdmNeZz*!CD<h-LXLrf$!jCmN?BzA7p@q+_+Y2_0B27F5pPykmtbGs1!j}87zzZL
+z85t55NKKl&K}IZRNx}m5shM0%OA-pW8aomg7?va~keQst#a<x9%EZ9SkWkRvk;A}{
+uSda*jjBer%HZX|ih<9`eVu)^%2{y2RaCjIP7#YxH`GXCiN_iL<m>2+L6)WZd
+
+delta 19
+acmca%v)P)<CD<iovn&Gx)9sC1D`f#g-Uey_
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.topology b/tests/data/acpi/aarch64/virt/DSDT.topology
+index 969b4f6560d3ae39f5b7e0064b7122905476fce8..ebbeedc1ed30d811315c350f4cb42f8aa265af73 100644
+GIT binary patch
+delta 156
+zcmeyM`CW_4CD<jTT$F)<>HJ2nXCn0iZX7Xs@xe~<0nVNVBHpa7F2TOM3(O{GF%$?g
+zGcqJBkeW0(Lr|DY;DY(dr@^LGz7xe?`AQyk_Fa;&fPHEv7t@l20<Ol61O|pB2@7N<
+zXK}F?2(dCT@G>M6G<W1MFeDZvLL{S`xPuK0;yL0SU4j^*oA`qbEaExhIUHSrco-NM
+F8359@EocA$
+
+delta 19
+acmeya^+A)%CD<k8g9rly)25AF&qM%8i3Z^S
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.viot b/tests/data/acpi/aarch64/virt/DSDT.viot
+index acab6e65febbc210158d4c39be0680bbb90250f5..b897d667971500da4732000091a6f0828d05d89e 100644
+GIT binary patch
+delta 173
+zcmZ3cu}_oBCD<iop9lj3Q_n^&8IgJccg`5S_+Y2_0B27F5pPykmtbGs1!j}87zzZL
+z85t55NKKlYAt=lxaKZfK(_qso--+U{d?gP%`z}dXz&<sTi)l$h0as&30t3U6gatB_
+zv$)s`gjksvco`B3nmckB7!nH-A(GKe+`$G0@f`7vE<p^@P5i+I7V#YMl8!DxJPZts
+OU=c&8G!Fv<69WJ)j4yfs
+
+delta 19
+acmdm|xlDu0CD<iIO@x7g>C8qh84&<COa$Tp
+
 -- 
 MST
 
