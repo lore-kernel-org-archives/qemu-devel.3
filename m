@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9949BC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:05:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD3E0C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:05:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubKji-0001Mm-WA; Mon, 14 Jul 2025 11:04:59 -0400
+	id 1ubKjr-0001ai-OG; Mon, 14 Jul 2025 11:05:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ubJL9-0003Rn-TF
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:35:32 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1ubJLj-0003fI-BD
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:36:08 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ubJL2-0001yn-LS
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:35:31 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-747c2cc3419so3494969b3a.2
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 06:35:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1ubJLg-00023G-FR
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:36:07 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-7426c44e014so3996084b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 06:36:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1752500121; x=1753104921; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752500160; x=1753104960; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+sKk50Mo4QGxo3A1JEraQgJ7dZKu6iCqoahIO2s8CZw=;
- b=TLVzrpbz2cierE1ts0dW0in7fw9CTqaMJwW3iQiyuxXvxsKE5N1iWSxr4uV4n6emLD
- 68CBPOMHx6Jg7KDdQ2qb4UHhrujMYq3G3Rf8KETqOuQNRnYlzbZ9O458TaHQ1CGzJp98
- yOah6vjRDTYpGTTTYDYvIxWS2bICrjhToYXhfiZ1zazZBF3KzZIPBKJJBNqGFEezx3uo
- YRA5bKHJZOgMt0GRSS3rWWoVq5c78PXRcHceKsFdTltfzRKCAvoC/i3EkuJnQULKfRIN
- 0k0JvJ6A/KP0NU1MJDyYeGcSczO3iSaNj2VPJLpE1VTnsQ7MRxSRLHcXUaiLfFpKP2/D
- 9R3A==
+ bh=xRdIBPORR2L6dl477UWcK22j6l8WxApGJI0v6hHwTAc=;
+ b=sFOhM7FkJesJPlnolYEv6cyYWnLiloR6SeLVMpEC6ohMDawNF52y2XcK7EXrK6oLU5
+ TMYSf98a6p/dbCny1VzvoGAWXwr5pWyvJFjFaqhnGjr94jg2UAzR1Y3Zpwl/tpoWRn/K
+ lSiCrVKJ7FzSwy/AkNydNhVx3+gN1dm2dpR41zUhwjqeDgY29q5UpH4LijfVxgCW4nUg
+ Ur9PBSPovAtdjoCczcEkWcA2tstXeVCnKFwWxTUYkgr8NFDLpCtJVWKEAwA/p8jb/K/7
+ FxI/E1HdZri8CEuug4PPhwc23ZlNZg2fMSEfcWt/YeldvuNP+htJBJMydp3N10WO8f1e
+ lOCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752500121; x=1753104921;
+ d=1e100.net; s=20230601; t=1752500160; x=1753104960;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+sKk50Mo4QGxo3A1JEraQgJ7dZKu6iCqoahIO2s8CZw=;
- b=L0gODj3Yb1f766HP1i2JBq+7fr8pGA0r90lI8Y1N/taJpmb0aWQSmYIePwy44ZpA6O
- vlzW/z9du4ANizPgT6CpT00G56fOIdmBZHeHkh7G2bkH1vFmUXUbSiUWxb83NW8hZER4
- R4jI4WHn3cWBtS5xsbpp9LgscDTAXvEjONRbEyTRo9WWlEeulTLHA3rAmC7rvvOvq+rW
- Xc9bZjdE0gLxLIfK0Jbzf2KvFn//ClDZaXNO4IjmjogwJbTlNokcaPe+0W6Dv7Vb1/XY
- a7idiUZZR/1NO/fF49KLHSr7WOfw1RNOHsRuYt8ADsGt5FhFnMdoK/Ks1JC/QdwYfFgE
- Xznw==
-X-Gm-Message-State: AOJu0YwS4yJOSaKGlo6QhKl8aVywlIzH1i3u7atKNANQl0nhQ0fDjLwN
- i6eLikHO5C4MEfYPFw3HEhzI6NrR0SS5t5wVS6G5oScNhofbnqviHhtAob1G18PgJvJ3an/mEA8
- KkvyW
-X-Gm-Gg: ASbGncuej0euOTJsoCHHqJAl9d9cmoucBZxX6e62U+GdxjoNXyeQ93iZF3if8BHie1n
- a25xPH7Zl1mnenPNqblLTnWpuFV4xG3e0hWoARWJOHQLzcKmUkmAw2Cz/vTGTkKPE5g0lV1WZqD
- u1lJZrX/tOP+wTxN/+LXzUjZH7WUTqVkliSmSK3pHfFQ5Tuf33yJL577uVJwnu4VDmlcsygENZ7
- QYA6fMPY+txCMKjFxNpCNFdexZwiIduC0pmhXELFS2ovDw/0z1tOWaWahlm5RDwM+HlPVRWCnRK
- 0RBlWILzsQPXbLd+ccwzLfuMjwUVs/bwQCyEdlusoLY952eB1QebeySV4W8SOOAwwL89p4DlNfP
- EzfnEeo91n0JS14SYhIYzHiXq4zMFzsdUmXmQVg==
-X-Google-Smtp-Source: AGHT+IGS/4lFxPF9rwRlRd16lyhSm3s12ssZ3HK6jYY2yEo16zTSS4YfcrefEmt8DbJKDjAxnh5nAg==
-X-Received: by 2002:a05:6a00:2d12:b0:748:e4f6:ff31 with SMTP id
- d2e1a72fcca58-74ee129846cmr22352316b3a.8.1752500121018; 
- Mon, 14 Jul 2025 06:35:21 -0700 (PDT)
-Received: from [192.168.68.110] ([177.170.118.252])
+ bh=xRdIBPORR2L6dl477UWcK22j6l8WxApGJI0v6hHwTAc=;
+ b=aKef83lUY7Q6U3Bi7e9HoCPEObkVKU4rwoaPEEjeOZ65Hsl1O3mMMhEsRlu8xm38Q9
+ Lt06wAfd/fBfcFNTTxoTTyCvkCO8w6cXkeEKxi8YT7AT/eMLMYGxIt/u6X0dQ3eRQBQ6
+ RNEDx6G9ol3Z5y5Kd7gbyfU7zwsO5rzF+B29ZL2Zl9Yfvu4r6BHLubkZGJMXrr2bA6TB
+ gBTl+30cauObmXfw0ecrp1E7X8DCHUQmQX5vBgYihdS9tXnWLCsVq1EezRsdfWRFSGYZ
+ Djv1120uf1Jvoi/wQB1F4E9wTjllpM9N4GID7UHclrHw4B9mJA54+/P/ZVI3j7usVWR9
+ +a7g==
+X-Gm-Message-State: AOJu0YzhHswicUPpmHmrc3Q/1E7DF7WoouJqJUwQMyO0f2IRjh++AxdM
+ /7WyNCoftHj56fhnc/OoUuQ7FcwweCg0Ops6O1t/hX27MQQXAsDVPWGqX5OuDOmfQw0=
+X-Gm-Gg: ASbGncuMsz2MJ5EZQoowJOOlAw0n676aHX5s/KXU+sQbxqrl+4uJC7ZmPX101G+6pqP
+ YmYcmfv5Z084Kf6JyYWnByFO26yf2/hL3jy08aMAgPVd6o/V5NcUHZ5pfJy4UncRdFSoCYTzXO9
+ H87kfI2Ag1qD37PUkLQpTLs6IqJdYBJ0sEVJRHKD6iy/mXp4yKTuszsvsNE3TDooDCzqrtRJlC1
+ bvriovlp+YYuFK0QmrTHuYqog5YkoAYBevpbgckS6oju4k6zcL5vcFYOWu8Cuymw/pIstaQvHwq
+ uj9V2ldBekZ3t3/fO4yCn7Gk/mo9psJuytYv/dUgH6AnZa6scELR5EsGxiRK94xSefK8yXSwJxp
+ r8EL86q7vHTmjpSKarJLnqkFqJf70rqf6PC5v05K3j0sstTk2wV/EB4qRF45dIuv7
+X-Google-Smtp-Source: AGHT+IHRCkohjCmeCWv7MFFIq0idXCb8pqy+rUdbl/bdmVpwz1BxW5jXtgbUlaGmlTdaAx2+3SM1gw==
+X-Received: by 2002:a05:6a00:ac8:b0:746:2ae9:fc42 with SMTP id
+ d2e1a72fcca58-74f1ebce5d2mr18847257b3a.19.1752500160105; 
+ Mon, 14 Jul 2025 06:36:00 -0700 (PDT)
+Received: from [192.168.0.102] (189-47-46-41.dsl.telesp.net.br. [189.47.46.41])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74eb9f5c7f7sm11005711b3a.142.2025.07.14.06.35.18
+ d2e1a72fcca58-74eb9f8b984sm10516158b3a.150.2025.07.14.06.35.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Jul 2025 06:35:20 -0700 (PDT)
-Message-ID: <24b7c6e7-4594-4978-8e00-e40d72bccb14@ventanamicro.com>
-Date: Mon, 14 Jul 2025 10:35:16 -0300
+ Mon, 14 Jul 2025 06:35:59 -0700 (PDT)
+Message-ID: <e5e99747-00c2-494b-b959-2d56f451d1ad@linaro.org>
+Date: Mon, 14 Jul 2025 10:36:49 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: set mtval = 0 for illegal_inst if no opcode
- avail
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
- richard.henderson@linaro.org
-References: <20250714120822.1243870-1-dbarboza@ventanamicro.com>
+Subject: Re: [PATCH v7 4/6] target/arm: Add FEAT_TCR2
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org
+Cc: qemu-devel@nongnu.org
+References: <20250711140828.1714666-1-gustavo.romero@linaro.org>
+ <20250711140828.1714666-5-gustavo.romero@linaro.org>
+ <21bfbfaa-f0df-413d-bad6-b69688ac381a@linaro.org>
+ <65e20340-e164-4424-bc60-52d78b9a17b8@linaro.org>
+ <f18a652e-b64c-4a33-bd60-63dfa93ffdbd@linaro.org>
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250714120822.1243870-1-dbarboza@ventanamicro.com>
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <f18a652e-b64c-4a33-bd60-63dfa93ffdbd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x430.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,100 +106,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Hi Richard,
+
+On 7/14/25 09:58, Richard Henderson wrote:
+> On 7/14/25 00:21, Pierrick Bouvier wrote:
+>> On 7/13/25 2:59 PM, Richard Henderson wrote:
+>>> On 7/11/25 08:08, Gustavo Romero wrote:
+>>>> Add FEAT_TCR2, which introduces the TCR2_EL1 and TCR2_EL2 registers.
+>>>> These registers are extensions of the TCR_ELx registers and provide
+>>>> top-level control of the EL10 and EL20 translation regimes.
+>>>>
+>>>> Since the bits in these registers depend on other CPU features, and only
+>>>> FEAT_MEC is supported at the moment, the FEAT_TCR2 only implements the
+>>>> AMEC bits for now.
+>>>>
+>>>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+>>> This causes a regression in tests/functional/test_aarch64_device_passthrough.py, by
+>>> continually trapping on an access to TCR2_EL1 while the HCRX_EL2 enable bit is not set.
+>>>
+>>> Unlike the similar SCTRL2 failure, it's not 100% clear to me how the guest and nested
+>>> guest kernels are related.  But it is clear that the outer kernel does not does not
+>>> support TCR2_EL1 (and also doesn't manipulate ID_AA64MMFR3_EL1 to hide FEAT_TCR2), but the
+>>> nested guest kernel does support TCR2_EL1.
+>>>
+>>
+>> The same kernel is used for host and guest.
+>> Maybe it's related to kvm support?
+> 
+> Oops, no, the patch fails to enable HCRX_TCR2EN in hcrx_write or SCR_TCR2EN in scr_write.
+> The same is true for the previous patch with HCRX_SCTLR2EN and SCR_SCTLR2EN.
+
+Thanks for the investigation. I'm just taking a look at it right now. I'll send a v8 fixing it.
 
 
-Please disregard this patch. Richard taught me how to fix the unwinding instead.
-
-
-Thanks,
-
-Daniel
-
-On 7/14/25 9:08 AM, Daniel Henrique Barboza wrote:
-> There is no guarantee that we'll able to get a proper opcode to put into
-> mtval for illegal inst exceptions, as demonstrated in [1].
-> 
-> The 'proper opcode' would be retrieved via unwinding the CPU state (via
-> cpu_restore_state(), down to riscv_restore_state_to_opc()) after
-> riscv_raise_exception(). There are cases where that doesn't happen:
-> we'll see a failure in cpu_restore_state(), where in_code_gen_buffer()
-> will return 'false' even for a 'host_pc' that is retrieved via GETPC()
-> and not in an instruction fetch context.
-> 
-> Hopefully we don't have to always provide mtval in these cases. The
-> RISC-V priv ISA says that mtval for illegal_inst exceptions are
-> optional, and the faulting instruction address will be reported in
-> env->mepc.
-> 
-> The ISA also says that we can set mtval to ILEN/MXLEN bits of the
-> faulting insn address, and we could do that when we're not able to fetch
-> the opcode. But that would add inconsistency in how we behave since
-> mtval would have either the opcode or the insn addr, and no easy way of
-> knowing which one we have, and software would need to check it with mepc
-> regardless. Zeroing mtval when we don't have the opcode is clearer.
-> 
-> And yes, zeroing mtval due to an unwind failure isn't ideal either, but
-> it's less worse than reporting a wrong mtval. Until we figure out a way
-> to fix the unwinding in this case, let's clear mtval and let software
-> know that it must find the faulting opcode via other means.
-> 
-> [1] https://gitlab.com/qemu-project/qemu/-/issues/3020
-> 
-> Closes: https://gitlab.com/qemu-project/qemu/-/issues/3020
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->   target/riscv/cpu_helper.c |  5 +++++
->   target/riscv/op_helper.c  | 21 +++++++++++++++++++++
->   2 files changed, 26 insertions(+)
-> 
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 3479a62cc7..1cd1849a1d 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -2243,6 +2243,11 @@ void riscv_cpu_do_interrupt(CPUState *cs)
->               break;
->           case RISCV_EXCP_ILLEGAL_INST:
->           case RISCV_EXCP_VIRT_INSTRUCTION_FAULT:
-> +            /*
-> +             * Note: we'll set tval = 0 for illegal_inst cases
-> +             * where we failed to unwind and to get the proper
-> +             * opcode. See riscv_raise_exception() for more info.
-> +             */
->               tval = env->bins;
->               break;
->           case RISCV_EXCP_BREAKPOINT:
-> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-> index 15460bf84b..930981a076 100644
-> --- a/target/riscv/op_helper.c
-> +++ b/target/riscv/op_helper.c
-> @@ -40,6 +40,27 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
->                             env->pc);
->   
->       cs->exception_index = exception;
-> +
-> +    /*
-> +     * There is no guarantee that we'll be able to unwind
-> +     * and set env->bins (the opcode for the current PC)
-> +     * properly via the cpu_restore_state() path. The RISC-V
-> +     * priv ISA says that:
-> +     *
-> +     * "The mtval register can optionally also be used to return
-> +     * the faulting instruction bits on an illegal-instruction
-> +     * exception (mepc points to the faulting instruction in
-> +     * memory)."
-> +     *
-> +     * It's not ideal to set mtval != 0 in some cases and zero
-> +     * in others due to unwind failures, but it's way better
-> +     * than to set mtval to a bogus env->bins opcode from
-> +     * the last successful unwinding.
-> +     */
-> +    if (cs->exception_index == RISCV_EXCP_ILLEGAL_INST) {
-> +        env->bins = 0;
-> +    }
-> +
->       cpu_loop_exit_restore(cs, pc);
->   }
->   
-
+Cheers,
+Gustavo
 
