@@ -4,87 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1D7DC83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 12:03:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 319D1C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 12:08:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubHam-0003BL-3x; Mon, 14 Jul 2025 07:43:32 -0400
+	id 1ubHj9-0004wh-A7; Mon, 14 Jul 2025 07:52:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH1j-00027P-LI
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:07:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1ubH6D-0006a6-DD
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:11:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH1h-0002GC-1f
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:07:18 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1ubH6A-0003JY-Cb
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:11:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752491235;
+ s=mimecast20190719; t=1752491513;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NQgnwOxm8SMdCCueXNSX8RnBbLLlgFWSXKeYcZQinkg=;
- b=NDi6FecKBgcgxr1LtnnMYqgk5iPHdGyZAm63MkW1rW9rT4VPalwFuWkNsdzdU1qtr/4T5R
- p/Gv1F92MSqiX1E9SD4ZuQe6fLC4yHbFgvUBfi+UAT8/oOPsw2BRaGN7X1qxAWy3Whf33a
- uxYOTfHM5OFNRZDMwlkiv/myDZE/FFk=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-344-5tJmpG5-O3qpMolxSA9wrw-1; Mon, 14 Jul 2025 07:07:14 -0400
-X-MC-Unique: 5tJmpG5-O3qpMolxSA9wrw-1
-X-Mimecast-MFC-AGG-ID: 5tJmpG5-O3qpMolxSA9wrw_1752491233
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3b5fe97af5fso422425f8f.2
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:07:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752491232; x=1753096032;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NQgnwOxm8SMdCCueXNSX8RnBbLLlgFWSXKeYcZQinkg=;
- b=rt5GzcfYq5R+ct4s1mfsOo86JlZ1VmKLShulPY8zntfAz/cFh4Njy+TBc3diFDkCf8
- /DV2wvv3D6qCh78oOUBlUooHtijHXD9GbbQ0bLcTNTA/1D3lpwBY9/ySHCtyIHDPZcAI
- UtAncZ6sorwaFdvE8rJ0iPrX3qdUqg8b6DDXfFbhAK9Py4Bak98Qrl7Tet1kzQyWnzKt
- 1EcVKArGUu2nZbZ+UL32VrgJOVq3bjcpnwOy67DLHE7yUNWf+Cf1Z67+vTC7IPYBxAq1
- eOz/QD8cHrYXG1vF4N3scSwJ1gDAw8p55HAtR00pn/5SwZrDLXyPAeyFH8z/fyQqRS3V
- Rm5w==
-X-Gm-Message-State: AOJu0YwGPnB0hFgSFGDTdnfGaQz9K18KTXvyPjqwkFCSPsOYaggKnSUQ
- l1TCDFjyZGGKfLSAAA9kns0SirTfiWhw2rqtijPVdgUGSJLCgDA8BCRWyCa9GU6sk606cZC08F3
- 79OWNKz/cidsj0/n3PqeiKUXjc9BYypDOxDOuyO1ep+EqfBDoMj+KQFpuLNC9tuANYYNWayNf8O
- ApWbq3CWIjklEu2PJYoAftgANatZms/8V7LT9ibLrT
-X-Gm-Gg: ASbGncunlCxdhSFEtKmlJfM5l5mtQRHKlhIRr0MN47DNKmC3p2gEYWxBiHRxZmty/Ec
- RxrO6NUg11eQrnrsRknqKvJJ6cQFkXnIAAizLEU034YWZbK0LVjCTPQ7ZbV6SFU+b8ZSBAM8LiK
- 1ueaOe8n5R+i9Z5ZGZay+qSVLLl7QBuLT3VOVFFjXprdaREgHIby5lOiob+BbFrVz2GktSHuiiJ
- HetfkSUXZ5DPRuyY26AYATTZLoFHUO5hCa16ORl159D46D2tOaWOlir4NJk3LnkinHpul3SjWbS
- Oc02dhqqJZn6OU4jV4HAS++zDMCYVitU9Kgm0Bjx+RA=
-X-Received: by 2002:a05:6000:2d09:b0:3a6:d967:380e with SMTP id
- ffacd0b85a97d-3b5f187eb90mr7211842f8f.3.1752491231935; 
- Mon, 14 Jul 2025 04:07:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHVQXd3d7/7yqLaRZct+uWPNhQxB2eIwxMFqqZlpk1TrWexlIzulZk/PRVlU3xs3m9IzIFVRw==
-X-Received: by 2002:a05:6000:2d09:b0:3a6:d967:380e with SMTP id
- ffacd0b85a97d-3b5f187eb90mr7211812f8f.3.1752491231163; 
- Mon, 14 Jul 2025 04:07:11 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.73.155])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8bd1736sm12262538f8f.15.2025.07.14.04.07.09
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 04:07:09 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ bh=s0DW657PuEuVKjB0hxciKKT0eQfi++HEcWHyzhRvOag=;
+ b=Uzh0tEZNfHEOZm/ySI5GbjBUCxnKOu2oR8UeTayiKnXrWvyn1gVu56FWt4LAxY0lrCmqiE
+ w6U/XDbn5gkNd/QJCGaqL+54nlfyDyl7XKUq/O84pEyUZSGCmZ6T/JprN9gK/pxSlO3gxh
+ fAwvBhngyOhdIandpw6HEEm0K9sU8lI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-6YZXFW-1Pmm3AA4UjAhicA-1; Mon,
+ 14 Jul 2025 07:11:49 -0400
+X-MC-Unique: 6YZXFW-1Pmm3AA4UjAhicA-1
+X-Mimecast-MFC-AGG-ID: 6YZXFW-1Pmm3AA4UjAhicA_1752491508
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2F3D118002ED; Mon, 14 Jul 2025 11:11:48 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.9])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 427A219560A3; Mon, 14 Jul 2025 11:11:45 +0000 (UTC)
+From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Subject: [PULL 71/77] tests/functional: test_x86_cpu_model_versions: remove
- dead tests
-Date: Mon, 14 Jul 2025 13:04:00 +0200
-Message-ID: <20250714110406.117772-72-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250714110406.117772-1-pbonzini@redhat.com>
-References: <20250714110406.117772-1-pbonzini@redhat.com>
+Cc: stefanha@redhat.com, Andrew Keesler <ankeesler@google.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: [PULL 10/13] hw/display: Allow injection of virtio-gpu EDID name
+Date: Mon, 14 Jul 2025 15:10:33 +0400
+Message-ID: <20250714111039.4150419-11-marcandre.lureau@redhat.com>
+In-Reply-To: <20250714111039.4150419-1-marcandre.lureau@redhat.com>
+References: <20250714111039.4150419-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -109,174 +93,276 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tests that require machines older than 4.2 are now unconditionally skipped.
-Remove them if they test legacy behavior, or use the latest machine if
-they test current behavior.
+From: Andrew Keesler <ankeesler@google.com>
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Thanks to 72d277a7, 1ed2cb32, and others, EDID (Extended Display
+Identification Data) is propagated by QEMU such that a virtual display
+presents legitimate metadata (e.g., name, serial number, preferred
+resolutions, etc.) to its connected guest.
+
+This change adds the ability to specify the EDID name for a particular
+virtio-vga display. Previously, every virtual display would have the same
+name: "QEMU Monitor". Now, we can inject names of displays in order to test
+guest behavior that is specific to display names. We provide the ability to
+inject the display name from the frontend since this is guest visible
+data. Furthermore, this makes it clear where N potential display outputs
+would get their name from (which will be added in a future change).
+
+Note that we have elected to use a struct here for output data for
+extensibility - we intend to add per-output fields like resolution in a
+future change.
+
+It should be noted that EDID names longer than 12 bytes will be truncated
+per spec (I think?).
+
+Testing: verified that when I specified 2 outputs for a virtio-gpu with
+edid_name set, the names matched those that I configured with my vnc
+display.
+
+  -display vnc=localhost:0,id=aaa,display=vga,head=0 \
+  -display vnc=localhost:1,id=bbb,display=vga,head=1 \
+  -device '{"driver":"virtio-vga",
+            "max_outputs":2,
+            "id":"vga",
+            "outputs":[
+              {
+                 "name":"AAA"
+              },
+              {
+                 "name":"BBB"
+              }
+            ]}'
+
+Signed-off-by: Andrew Keesler <ankeesler@google.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-Id: <20250709121126.2946088-2-ankeesler@google.com>
 ---
- .../functional/test_x86_cpu_model_versions.py | 110 ++----------------
- 1 file changed, 12 insertions(+), 98 deletions(-)
+ qapi/virtio.json                    | 18 ++++++++++--
+ include/hw/display/edid.h           |  2 ++
+ include/hw/qdev-properties-system.h |  5 ++++
+ include/hw/virtio/virtio-gpu.h      |  3 ++
+ hw/core/qdev-properties-system.c    | 44 +++++++++++++++++++++++++++++
+ hw/display/virtio-gpu-base.c        | 27 ++++++++++++++++++
+ 6 files changed, 97 insertions(+), 2 deletions(-)
 
-diff --git a/tests/functional/test_x86_cpu_model_versions.py b/tests/functional/test_x86_cpu_model_versions.py
-index bd18acd44fa..36c968f1c0b 100755
---- a/tests/functional/test_x86_cpu_model_versions.py
-+++ b/tests/functional/test_x86_cpu_model_versions.py
-@@ -72,44 +72,11 @@ def validate_variant_aliases(self, cpus):
-         self.assertNotIn("EPYC-IBPB-v1", cpus,
-                          "EPYC-IBPB shouldn't be versioned")
+diff --git a/qapi/virtio.json b/qapi/virtio.json
+index 73df718a26..5e658a7033 100644
+--- a/qapi/virtio.json
++++ b/qapi/virtio.json
+@@ -963,17 +963,31 @@
+ { 'struct': 'IOThreadVirtQueueMapping',
+   'data': { 'iothread': 'str', '*vqs': ['uint16'] } }
  
--    def test_4_0_alias_compatibility(self):
--        """
--        Check if pc-*-4.0 unversioned CPU model won't be reported as aliases
--        """
--        self.set_machine('pc-i440fx-4.0')
--        # pc-*-4.0 won't expose non-versioned CPU models as aliases
--        # We do this to help management software to keep compatibility
--        # with older QEMU versions that didn't have the versioned CPU model
--        self.vm.add_args('-S')
--        self.vm.launch()
--        cpus = dict((m['name'], m) for m in
--                    self.vm.cmd('query-cpu-definitions'))
--
--        self.assertFalse(cpus['Cascadelake-Server']['static'],
--                         'unversioned Cascadelake-Server CPU model must not be static')
--        self.assertNotIn('alias-of', cpus['Cascadelake-Server'],
--                         'Cascadelake-Server must not be an alias')
--        self.assertNotIn('alias-of', cpus['Cascadelake-Server-v1'],
--                         'Cascadelake-Server-v1 must not be an alias')
--
--        self.assertFalse(cpus['qemu64']['static'],
--                         'unversioned qemu64 CPU model must not be static')
--        self.assertNotIn('alias-of', cpus['qemu64'],
--                         'qemu64 must not be an alias')
--        self.assertNotIn('alias-of', cpus['qemu64-v1'],
--                         'qemu64-v1 must not be an alias')
--
--        self.validate_variant_aliases(cpus)
--
--        # On pc-*-4.0, no CPU model should be reported as an alias:
--        for name,c in cpus.items():
--            self.assertNotIn('alias-of', c, "%s shouldn't be an alias" % (name))
--
--    def test_4_1_alias(self):
-+    def test_unversioned_alias(self):
-         """
-         Check if unversioned CPU model is an alias pointing to right version
-         """
--        self.set_machine('pc-i440fx-4.1')
-+        self.set_machine('pc')
-         self.vm.add_args('-S')
-         self.vm.launch()
++##
++# @VirtIOGPUOutput:
++#
++# Describes configuration of a VirtIO GPU output.
++#
++# @name: the name of the output
++#
++# Since: 10.1
++##
++
++{ 'struct': 'VirtIOGPUOutput',
++  'data': { 'name': 'str' } }
++
+ ##
+ # @DummyVirtioForceArrays:
+ #
+ # Not used by QMP; hack to let us use IOThreadVirtQueueMappingList
+-# internally
++# and VirtIOGPUOutputList internally
+ #
+ # Since: 9.0
+ ##
  
-@@ -133,7 +100,7 @@ def test_4_1_alias(self):
+ { 'struct': 'DummyVirtioForceArrays',
+-  'data': { 'unused-iothread-vq-mapping': ['IOThreadVirtQueueMapping'] } }
++  'data': { 'unused-iothread-vq-mapping': ['IOThreadVirtQueueMapping'],
++            'unused-virtio-gpu-output': ['VirtIOGPUOutput'] } }
  
-         self.validate_variant_aliases(cpus)
+ ##
+ # @GranuleMode:
+diff --git a/include/hw/display/edid.h b/include/hw/display/edid.h
+index 520f8ec202..91c0a428af 100644
+--- a/include/hw/display/edid.h
++++ b/include/hw/display/edid.h
+@@ -1,6 +1,8 @@
+ #ifndef EDID_H
+ #define EDID_H
  
--        # On pc-*-4.1, -noTSX and -IBRS models should be aliases:
-+        # On recent PC machines, -noTSX and -IBRS models should be aliases:
-         self.assertEqual(cpus["Haswell"].get('alias-of'),
-                          "Haswell-v1",
-                          "Haswell must be an alias")
-@@ -247,8 +214,8 @@ def get_cpu_prop(self, prop):
-         cpu_path = self.vm.cmd('query-cpus-fast')[0].get('qom-path')
-         return self.vm.cmd('qom-get', path=cpu_path, property=prop)
++#define EDID_NAME_MAX_LENGTH 12
++
+ typedef struct qemu_edid_info {
+     const char *vendor; /* http://www.uefi.org/pnp_id_list */
+     const char *name;
+diff --git a/include/hw/qdev-properties-system.h b/include/hw/qdev-properties-system.h
+index b921392c52..9601a11a09 100644
+--- a/include/hw/qdev-properties-system.h
++++ b/include/hw/qdev-properties-system.h
+@@ -32,6 +32,7 @@ extern const PropertyInfo qdev_prop_cpus390entitlement;
+ extern const PropertyInfo qdev_prop_iothread_vq_mapping_list;
+ extern const PropertyInfo qdev_prop_endian_mode;
+ extern const PropertyInfo qdev_prop_vmapple_virtio_blk_variant;
++extern const PropertyInfo qdev_prop_virtio_gpu_output_list;
  
--    def test_4_1(self):
--        self.set_machine('pc-i440fx-4.1')
-+    def test(self):
-+        self.set_machine('pc')
-         # machine-type only:
-         self.vm.add_args('-S')
-         self.set_vm_arg('-cpu',
-@@ -256,80 +223,27 @@ def test_4_1(self):
-                         'enforce=off')
-         self.vm.launch()
-         self.assertFalse(self.get_cpu_prop('arch-capabilities'),
--                         'pc-i440fx-4.1 + Cascadelake-Server should not have arch-capabilities')
-+                         'pc + Cascadelake-Server should not have arch-capabilities')
+ #define DEFINE_PROP_PCI_DEVFN(_n, _s, _f, _d)                   \
+     DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_pci_devfn, int32_t)
+@@ -110,4 +111,8 @@ extern const PropertyInfo qdev_prop_vmapple_virtio_blk_variant;
+                          qdev_prop_vmapple_virtio_blk_variant, \
+                          VMAppleVirtioBlkVariant)
  
--    def test_4_0(self):
--        self.set_machine('pc-i440fx-4.0')
--        self.vm.add_args('-S')
--        self.set_vm_arg('-cpu',
--                        'Cascadelake-Server,x-force-features=on,check=off,'
--                        'enforce=off')
--        self.vm.launch()
--        self.assertFalse(self.get_cpu_prop('arch-capabilities'),
--                         'pc-i440fx-4.0 + Cascadelake-Server should not have arch-capabilities')
--
--    def test_set_4_0(self):
--        self.set_machine('pc-i440fx-4.0')
--        # command line must override machine-type if CPU model is not versioned:
--        self.vm.add_args('-S')
--        self.set_vm_arg('-cpu',
--                        'Cascadelake-Server,x-force-features=on,check=off,'
--                        'enforce=off,+arch-capabilities')
--        self.vm.launch()
--        self.assertTrue(self.get_cpu_prop('arch-capabilities'),
--                        'pc-i440fx-4.0 + Cascadelake-Server,+arch-capabilities should have arch-capabilities')
--
--    def test_unset_4_1(self):
--        self.set_machine('pc-i440fx-4.1')
-+    def test_unset(self):
-+        self.set_machine('pc')
-         self.vm.add_args('-S')
-         self.set_vm_arg('-cpu',
-                         'Cascadelake-Server,x-force-features=on,check=off,'
-                         'enforce=off,-arch-capabilities')
-         self.vm.launch()
-         self.assertFalse(self.get_cpu_prop('arch-capabilities'),
--                         'pc-i440fx-4.1 + Cascadelake-Server,-arch-capabilities should not have arch-capabilities')
-+                         'pc + Cascadelake-Server,-arch-capabilities should not have arch-capabilities')
++#define DEFINE_PROP_VIRTIO_GPU_OUTPUT_LIST(_name, _state, _field) \
++    DEFINE_PROP(_name, _state, _field, qdev_prop_virtio_gpu_output_list, \
++                VirtIOGPUOutputList *)
++
+ #endif
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index a42957c4e2..9f16f89a36 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -20,6 +20,7 @@
+ #include "hw/virtio/virtio.h"
+ #include "qemu/log.h"
+ #include "system/vhost-user-backend.h"
++#include "qapi/qapi-types-virtio.h"
  
--    def test_v1_4_0(self):
--        self.set_machine('pc-i440fx-4.0')
--        # versioned CPU model overrides machine-type:
--        self.vm.add_args('-S')
--        self.set_vm_arg('-cpu',
--                        'Cascadelake-Server-v1,x-force-features=on,check=off,'
--                        'enforce=off')
--        self.vm.launch()
--        self.assertFalse(self.get_cpu_prop('arch-capabilities'),
--                         'pc-i440fx-4.0 + Cascadelake-Server-v1 should not have arch-capabilities')
--
--    def test_v2_4_0(self):
--        self.set_machine('pc-i440fx-4.0')
--        self.vm.add_args('-S')
--        self.set_vm_arg('-cpu',
--                        'Cascadelake-Server-v2,x-force-features=on,check=off,'
--                        'enforce=off')
--        self.vm.launch()
--        self.assertTrue(self.get_cpu_prop('arch-capabilities'),
--                        'pc-i440fx-4.0 + Cascadelake-Server-v2 should have arch-capabilities')
--
--    def test_v1_set_4_0(self):
--        self.set_machine('pc-i440fx-4.0')
--        # command line must override machine-type and versioned CPU model:
--        self.vm.add_args('-S')
--        self.set_vm_arg('-cpu',
--                        'Cascadelake-Server-v1,x-force-features=on,check=off,'
--                        'enforce=off,+arch-capabilities')
--        self.vm.launch()
--        self.assertTrue(self.get_cpu_prop('arch-capabilities'),
--                        'pc-i440fx-4.0 + Cascadelake-Server-v1,+arch-capabilities should have arch-capabilities')
--
--    def test_v2_unset_4_1(self):
--        self.set_machine('pc-i440fx-4.1')
-+    def test_v2_unset(self):
-+        self.set_machine('pc')
-         self.vm.add_args('-S')
-         self.set_vm_arg('-cpu',
-                         'Cascadelake-Server-v2,x-force-features=on,check=off,'
-                         'enforce=off,-arch-capabilities')
-         self.vm.launch()
-         self.assertFalse(self.get_cpu_prop('arch-capabilities'),
--                         'pc-i440fx-4.1 + Cascadelake-Server-v2,-arch-capabilities should not have arch-capabilities')
-+                         'pc + Cascadelake-Server-v2,-arch-capabilities should not have arch-capabilities')
+ #include "standard-headers/linux/virtio_gpu.h"
+ #include "standard-headers/linux/virtio_ids.h"
+@@ -128,6 +129,7 @@ struct virtio_gpu_base_conf {
+     uint32_t xres;
+     uint32_t yres;
+     uint64_t hostmem;
++    VirtIOGPUOutputList *outputs;
+ };
  
- if __name__ == '__main__':
-     QemuSystemTest.main()
+ struct virtio_gpu_ctrl_command {
+@@ -167,6 +169,7 @@ struct VirtIOGPUBaseClass {
+ 
+ #define VIRTIO_GPU_BASE_PROPERTIES(_state, _conf)                       \
+     DEFINE_PROP_UINT32("max_outputs", _state, _conf.max_outputs, 1),    \
++    DEFINE_PROP_VIRTIO_GPU_OUTPUT_LIST("outputs", _state, _conf.outputs), \
+     DEFINE_PROP_BIT("edid", _state, _conf.flags, \
+                     VIRTIO_GPU_FLAG_EDID_ENABLED, true), \
+     DEFINE_PROP_UINT32("xres", _state, _conf.xres, 1280), \
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index 24e145d870..1f810b7ddf 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -1299,3 +1299,47 @@ const PropertyInfo qdev_prop_vmapple_virtio_blk_variant = {
+     .set   = qdev_propinfo_set_enum,
+     .set_default_value = qdev_propinfo_set_default_value_enum,
+ };
++
++/* --- VirtIOGPUOutputList --- */
++
++static void get_virtio_gpu_output_list(Object *obj, Visitor *v,
++    const char *name, void *opaque, Error **errp)
++{
++    VirtIOGPUOutputList **prop_ptr =
++        object_field_prop_ptr(obj, opaque);
++
++    visit_type_VirtIOGPUOutputList(v, name, prop_ptr, errp);
++}
++
++static void set_virtio_gpu_output_list(Object *obj, Visitor *v,
++    const char *name, void *opaque, Error **errp)
++{
++    VirtIOGPUOutputList **prop_ptr =
++        object_field_prop_ptr(obj, opaque);
++    VirtIOGPUOutputList *list;
++
++    if (!visit_type_VirtIOGPUOutputList(v, name, &list, errp)) {
++        return;
++    }
++
++    qapi_free_VirtIOGPUOutputList(*prop_ptr);
++    *prop_ptr = list;
++}
++
++static void release_virtio_gpu_output_list(Object *obj,
++    const char *name, void *opaque)
++{
++    VirtIOGPUOutputList **prop_ptr =
++        object_field_prop_ptr(obj, opaque);
++
++    qapi_free_VirtIOGPUOutputList(*prop_ptr);
++    *prop_ptr = NULL;
++}
++
++const PropertyInfo qdev_prop_virtio_gpu_output_list = {
++    .type = "VirtIOGPUOutputList",
++    .description = "VirtIO GPU output list [{\"name\":\"<name>\"},...]",
++    .get = get_virtio_gpu_output_list,
++    .set = set_virtio_gpu_output_list,
++    .release = release_virtio_gpu_output_list,
++};
+diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
+index 9eb806b71f..7269477a1c 100644
+--- a/hw/display/virtio-gpu-base.c
++++ b/hw/display/virtio-gpu-base.c
+@@ -19,6 +19,7 @@
+ #include "qemu/error-report.h"
+ #include "hw/display/edid.h"
+ #include "trace.h"
++#include "qapi/qapi-types-virtio.h"
+ 
+ void
+ virtio_gpu_base_reset(VirtIOGPUBase *g)
+@@ -56,6 +57,8 @@ void
+ virtio_gpu_base_generate_edid(VirtIOGPUBase *g, int scanout,
+                               struct virtio_gpu_resp_edid *edid)
+ {
++    size_t output_idx;
++    VirtIOGPUOutputList *node;
+     qemu_edid_info info = {
+         .width_mm = g->req_state[scanout].width_mm,
+         .height_mm = g->req_state[scanout].height_mm,
+@@ -64,6 +67,14 @@ virtio_gpu_base_generate_edid(VirtIOGPUBase *g, int scanout,
+         .refresh_rate = g->req_state[scanout].refresh_rate,
+     };
+ 
++    for (output_idx = 0, node = g->conf.outputs;
++         output_idx <= scanout && node; output_idx++, node = node->next) {
++        if (output_idx == scanout && node->value && node->value->name) {
++            info.name = node->value->name;
++            break;
++        }
++    }
++
+     edid->size = cpu_to_le32(sizeof(edid->edid));
+     qemu_edid_generate(edid->edid, sizeof(edid->edid), &info);
+ }
+@@ -172,6 +183,8 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
+                                VirtIOHandleOutput cursor_cb,
+                                Error **errp)
+ {
++    size_t output_idx;
++    VirtIOGPUOutputList *node;
+     VirtIODevice *vdev = VIRTIO_DEVICE(qdev);
+     VirtIOGPUBase *g = VIRTIO_GPU_BASE(qdev);
+     int i;
+@@ -181,6 +194,20 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
+         return false;
+     }
+ 
++    for (output_idx = 0, node = g->conf.outputs;
++         node; output_idx++, node = node->next) {
++        if (output_idx == g->conf.max_outputs) {
++            error_setg(errp, "invalid outputs > %d", g->conf.max_outputs);
++            return false;
++        }
++        if (node->value && node->value->name &&
++            strlen(node->value->name) > EDID_NAME_MAX_LENGTH) {
++            error_setg(errp, "invalid output name '%s' > %d",
++                       node->value->name, EDID_NAME_MAX_LENGTH);
++            return false;
++        }
++    }
++
+     if (virtio_gpu_virgl_enabled(g->conf)) {
+         error_setg(&g->migration_blocker, "virgl is not yet migratable");
+         if (migrate_add_blocker(&g->migration_blocker, errp) < 0) {
 -- 
 2.50.0
 
