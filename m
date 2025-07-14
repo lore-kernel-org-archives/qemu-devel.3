@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E782AC83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:21:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47EFCC83F21
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:22:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubHEn-000067-Os; Mon, 14 Jul 2025 07:20:52 -0400
+	id 1ubH7U-0008UK-GY; Mon, 14 Jul 2025 07:13:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH1E-0001pb-7O
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:07:09 -0400
+ id 1ubGzY-0000pO-RG
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:05:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH19-000290-Rf
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:06:45 -0400
+ id 1ubGzT-0001dd-LZ
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:05:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752491202;
+ s=mimecast20190719; t=1752491098;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=U3MRbm7BiwFLJpNktHCZXz82/ZMpqoQ6Olp5sQUIC0g=;
- b=eXsOzVVIoCxm4TJ8YVOURFjC3xSI96PSX6Olxsz0F/1vEHjkUwzIstCYKZQxeowRFd7vhm
- kr79r/aRIYqPk+KHGpAO9mySPn1weg/uL/59EtW9ND6KU2sN2sN8dlrO9QBLSYhjsC2xQJ
- vdB4ZMxm0Bax1FDEIX6tjGfJYfRArj8=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TvaPDebJQqrXFfnLyyiynRkEMunN2jwXGo43DBM4hqM=;
+ b=RGToYhc2dZ68NY69GPTP1EHogzzDDkOoIn4T39Zx0JTuggoL7t0LSCBTLXqshRs8NDScEx
+ NqJLsu7s40E87Ll5zGykqEJld6zZla9QmHxfzukD3AIyaHLChUHfDrtDakYL98VgrQrAW0
+ xjVc4RyAa2XTe5ATp7ORauKpt9k0ur0=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-500-nUheGkeNN2i-GOpudfc_kA-1; Mon, 14 Jul 2025 07:06:41 -0400
-X-MC-Unique: nUheGkeNN2i-GOpudfc_kA-1
-X-Mimecast-MFC-AGG-ID: nUheGkeNN2i-GOpudfc_kA_1752491200
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a58939191eso1556654f8f.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:06:41 -0700 (PDT)
+ us-mta-260-TI1Zl6mEMgS7hx2Au5kZ6w-1; Mon, 14 Jul 2025 07:04:57 -0400
+X-MC-Unique: TI1Zl6mEMgS7hx2Au5kZ6w-1
+X-Mimecast-MFC-AGG-ID: TI1Zl6mEMgS7hx2Au5kZ6w_1752491096
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-455f7b86aeeso12296545e9.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:04:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752491199; x=1753095999;
+ d=1e100.net; s=20230601; t=1752491095; x=1753095895;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=U3MRbm7BiwFLJpNktHCZXz82/ZMpqoQ6Olp5sQUIC0g=;
- b=oqczGzOLGyc5E0s3ZblkJcvtK7MjfV0hN6/7zFGWEUb4SLfhTbhx+ODKxrAu6hMWlP
- CkXdyOvg9DKQlcywbrSNLd/E5YXrte8kCMGdDWijqJy3rwKKUGiGDSONLhuCs6moaaw2
- MbD5JVq771atxFt+JxZKNY0aC4uZxTxBG3BVAa8LQC3cc983PhQ2MororMbZbtZ7PEX7
- tuCxDcQvfrLZdPpBltz3AkhXgP2ty2Sydwis6WHZ2VZ4k3qvey1M1h5YA4T5TNQ9KApu
- 61Ej7wzGMXOCTVeazzVNUw7QGTuFa2h9e+gnD//YuLYHFUI67f1noVUU8fgsBOdIb0Kt
- wRkQ==
-X-Gm-Message-State: AOJu0YzWtNwmpqf1v53K3BuI4IM1lR09mE9loUG6pE6ffVXyyynz+lNC
- taa6q/t1gndOvYC1htdKcE5SRM+T2FGUCG7NnfVecVgw7mRHD7BTD6U5IhkfMweGL9GrZ34+YmV
- UWBNmo6KyIfKu7tkwOhF0XoXtsNd+eTqZ7ZfBGhkCve1UXEAXYhBljQBoJgDs/VKA/PWA6lCLEy
- be+tGjYzwpcoGK9XpDlyEJr5Hw8pl8MsFf6ld7wIU1
-X-Gm-Gg: ASbGncsrTkMABDdcZw8oXRv5rtTMeDKzFQfWhs8omfSnF/uN6D4YeHnEybhgLQAUqdT
- ljtJX+orB7ZkcLl24tc67Y6YSLENPucebLi4vpSNM9IFpw9XcpkgiX2FXvQc80QDMJ0rM27mqJo
- IjASG6To+n75gEeCXCvmuWYXkd8JAzugFEtSZN/+vzfzyo0ahXdK2P8MdIze6MYJBg0qC6pqiB3
- tnvc+/ZyN33/4C4jebqj58YFtBjKWH4LXp/2EVlNrL5X+9huonfyaTo6yVjug3/KrLOm6CACekI
- sSoWSwpwriSBps1NmSv8TG7KYZAe+YXiHzbXQmg+FkU=
-X-Received: by 2002:a05:6000:2d09:b0:3a6:d967:380e with SMTP id
- ffacd0b85a97d-3b5f187eb90mr7210640f8f.3.1752491199411; 
- Mon, 14 Jul 2025 04:06:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF67G9i7Tyo+jccD5Nb39QANLKCSVYm1N7GVZq5PQoZW8t9MZAVfcxI0ik7QQpsPQBtQmebCQ==
-X-Received: by 2002:a05:6000:2d09:b0:3a6:d967:380e with SMTP id
- ffacd0b85a97d-3b5f187eb90mr7210601f8f.3.1752491198724; 
- Mon, 14 Jul 2025 04:06:38 -0700 (PDT)
+ bh=TvaPDebJQqrXFfnLyyiynRkEMunN2jwXGo43DBM4hqM=;
+ b=uddZGCCCbpA1vnGCBo24YafrvAcEJFvP0nARSAEv7deEYb40UiS5M5Zkf6IRVCEA9e
+ xAKaw43+lq9ZDNT2vRKnsN97Ake2OzvXaVYCCJ11y5b3Tz761q1p6jb1NGFN2M5EK1kL
+ SQihV7E6OOHKeVY+mdGhUa50A3/cpU6ng1nbZLhjVPP8FJuWdkHgpZ3YZuYNPg2KW7nv
+ wJJVcEUfs/Dvw74+AGVNvZlrgu/JBTHWLhKEFynDgy4xUyd80rS0/dmari50aSP3vkZl
+ kAub2HiZAD7SfbvrS8P/Wztzm4SGHsFlOkhgDGzpGJqgaDqAlqP/zLCV+mXJ/XU3v5Vv
+ YoSg==
+X-Gm-Message-State: AOJu0YzSOhysREXF9P6yIxfEY12+gKjIpQeK+k0xDDG/8MzYVtG6eNRx
+ 4xXASgI156XdTc0pTJ52kMUZFHDSlInPKRki+qs6loSPuJZxqHl9Lnmn8df+jjNdpebqBBNHq46
+ pQvWjxWc6eZ56NAoebFJTOqBhpOwnmsKMvHGYu+J7Mi+tkTQwAoY3eXi+UIVPq/5lVLDi871xF3
+ xPAwrCr6Lk09hum+et8y2W/SVMlT6gDhnlgZrSnxHK
+X-Gm-Gg: ASbGnct+MZtgvCrbmdIR9nklDyDZK7MotxKgVQLglaAijVIvBtDZv6zVbel3jNpX+vV
+ ZihvuiqfPhtlVRUvwE4QEKi+w9Oenm6hbsMHyD2LjD66mR1vCwk12+FMA2hVbkJq2TQ/H75NX3T
+ mLGY/hXmXQga9OJGXK8qjpJNRTCfHCmzJRaCMCrPE/EkOGkAWZ6eeOhXFNctLDTJ7RWUzuTBrFF
+ 6TUF000V0Sso7S9v0o7HV8ZCwhd5JQQ9zKK5O+DcZKgGN705QkB5pF/TuK/CwUXsMcC0Ov+Qctd
+ FwnucAmLqFyULb50iO3vX+p/PT7R+LFfQPPRXE4ZuIE=
+X-Received: by 2002:a05:6000:2088:b0:3b3:a6e1:135c with SMTP id
+ ffacd0b85a97d-3b5f2e32f4fmr8643404f8f.42.1752491094902; 
+ Mon, 14 Jul 2025 04:04:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH9XRIDEC+alv0gL1xVW/RCLAQXcrsdsbZhO0y1skcuB05+k8bqSJfKl5Abficiw+qZ/rYbpg==
+X-Received: by 2002:a05:6000:2088:b0:3b3:a6e1:135c with SMTP id
+ ffacd0b85a97d-3b5f2e32f4fmr8643376f8f.42.1752491094316; 
+ Mon, 14 Jul 2025 04:04:54 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.73.155])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e1e8b1sm12007521f8f.82.2025.07.14.04.06.36
+ 5b1f17b1804b1-45614aeba29sm43525615e9.11.2025.07.14.04.04.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 04:06:37 -0700 (PDT)
+ Mon, 14 Jul 2025 04:04:52 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Tejus GK <tejus.gk@nutanix.com>,
- Jason Zeng <jason.zeng@intel.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, Tao Su <tao1.su@linux.intel.com>,
- Yi Lai <yi1.lai@intel.com>
-Subject: [PULL 58/77] i386/cpu: Introduce cache model for SierraForest
-Date: Mon, 14 Jul 2025 13:03:47 +0200
-Message-ID: <20250714110406.117772-59-pbonzini@redhat.com>
+Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffman <kraxel@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 17/77] meson: Add optional dependency on IGVM library
+Date: Mon, 14 Jul 2025 13:03:06 +0200
+Message-ID: <20250714110406.117772-18-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250714110406.117772-1-pbonzini@redhat.com>
 References: <20250714110406.117772-1-pbonzini@redhat.com>
@@ -113,207 +112,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Roy Hopkins <roy.hopkins@randomman.co.uk>
 
-Add the cache model to SierraForest (v3) to better emulate its
-environment.
+The IGVM library allows Independent Guest Virtual Machine files to be
+parsed and processed. IGVM files are used to configure guest memory
+layout, initial processor state and other configuration pertaining to
+secure virtual machines.
 
-The cache model is based on SierraForest-SP (Scalable Performance):
+This adds the --enable-igvm configure option, enabled by default, which
+attempts to locate and link against the IGVM library via pkgconfig and
+sets CONFIG_IGVM if found.
 
-      --- cache 0 ---
-      cache type                         = data cache (1)
-      cache level                        = 0x1 (1)
-      self-initializing cache level      = true
-      fully associative cache            = false
-      maximum IDs for CPUs sharing cache = 0x0 (0)
-      maximum IDs for cores in pkg       = 0x3f (63)
-      system coherency line size         = 0x40 (64)
-      physical line partitions           = 0x1 (1)
-      ways of associativity              = 0x8 (8)
-      number of sets                     = 0x40 (64)
-      WBINVD/INVD acts on lower caches   = false
-      inclusive to lower caches          = false
-      complex cache indexing             = false
-      number of sets (s)                 = 64
-      (size synth)                       = 32768 (32 KB)
-      --- cache 1 ---
-      cache type                         = instruction cache (2)
-      cache level                        = 0x1 (1)
-      self-initializing cache level      = true
-      fully associative cache            = false
-      maximum IDs for CPUs sharing cache = 0x0 (0)
-      maximum IDs for cores in pkg       = 0x3f (63)
-      system coherency line size         = 0x40 (64)
-      physical line partitions           = 0x1 (1)
-      ways of associativity              = 0x8 (8)
-      number of sets                     = 0x80 (128)
-      WBINVD/INVD acts on lower caches   = false
-      inclusive to lower caches          = false
-      complex cache indexing             = false
-      number of sets (s)                 = 128
-      (size synth)                       = 65536 (64 KB)
-      --- cache 2 ---
-      cache type                         = unified cache (3)
-      cache level                        = 0x2 (2)
-      self-initializing cache level      = true
-      fully associative cache            = false
-      maximum IDs for CPUs sharing cache = 0x7 (7)
-      maximum IDs for cores in pkg       = 0x3f (63)
-      system coherency line size         = 0x40 (64)
-      physical line partitions           = 0x1 (1)
-      ways of associativity              = 0x10 (16)
-      number of sets                     = 0x1000 (4096)
-      WBINVD/INVD acts on lower caches   = false
-      inclusive to lower caches          = false
-      complex cache indexing             = false
-      number of sets (s)                 = 4096
-      (size synth)                       = 4194304 (4 MB)
-      --- cache 3 ---
-      cache type                         = unified cache (3)
-      cache level                        = 0x3 (3)
-      self-initializing cache level      = true
-      fully associative cache            = false
-      maximum IDs for CPUs sharing cache = 0x1ff (511)
-      maximum IDs for cores in pkg       = 0x3f (63)
-      system coherency line size         = 0x40 (64)
-      physical line partitions           = 0x1 (1)
-      ways of associativity              = 0xc (12)
-      number of sets                     = 0x24000 (147456)
-      WBINVD/INVD acts on lower caches   = false
-      inclusive to lower caches          = false
-      complex cache indexing             = true
-      number of sets (s)                 = 147456
-      (size synth)                       = 113246208 (108 MB)
-      --- cache 4 ---
-      cache type                         = no more caches (0)
+The library is added to the system_ss target in backends/meson.build
+where the IGVM parsing will be performed by the ConfidentialGuestSupport
+object.
 
-Suggested-by: Tejus GK <tejus.gk@nutanix.com>
-Suggested-by: Jason Zeng <jason.zeng@intel.com>
-Suggested-by: "Daniel P . Berrangé" <berrange@redhat.com>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Reviewed-by: Tao Su <tao1.su@linux.intel.com>
-Tested-by: Yi Lai <yi1.lai@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250711104603.1634832-2-zhao1.liu@intel.com
+Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Gerd Hoffman <kraxel@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+Link: https://lore.kernel.org/r/45945a83a638c3f08e68c025f378e7b7f4f6d593.1751554099.git.roy.hopkins@randomman.co.uk
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 96 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 96 insertions(+)
+ meson.build                   | 8 ++++++++
+ backends/meson.build          | 3 +++
+ meson_options.txt             | 2 ++
+ scripts/meson-buildoptions.sh | 3 +++
+ 4 files changed, 16 insertions(+)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index ca6e4120242..3c28e9588af 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -2880,6 +2880,97 @@ static const CPUCaches epyc_turin_cache_info = {
-         .no_invd_sharing = true,
-         .complex_indexing = false,
-         .share_level = CPU_TOPOLOGY_LEVEL_DIE,
-+    }
-+};
-+
-+static const CPUCaches xeon_srf_cache_info = {
-+    .l1d_cache = &(CPUCacheInfo) {
-+        /* CPUID 0x4.0x0.EAX */
-+        .type = DATA_CACHE,
-+        .level = 1,
-+        .self_init = true,
-+
-+        /* CPUID 0x4.0x0.EBX */
-+        .line_size = 64,
-+        .partitions = 1,
-+        .associativity = 8,
-+
-+        /* CPUID 0x4.0x0.ECX */
-+        .sets = 64,
-+
-+        /* CPUID 0x4.0x0.EDX */
-+        .no_invd_sharing = false,
-+        .inclusive = false,
-+        .complex_indexing = false,
-+
-+        .size = 32 * KiB,
-+        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-+    },
-+    .l1i_cache = &(CPUCacheInfo) {
-+        /* CPUID 0x4.0x1.EAX */
-+        .type = INSTRUCTION_CACHE,
-+        .level = 1,
-+        .self_init = true,
-+
-+        /* CPUID 0x4.0x1.EBX */
-+        .line_size = 64,
-+        .partitions = 1,
-+        .associativity = 8,
-+
-+        /* CPUID 0x4.0x1.ECX */
-+        .sets = 128,
-+
-+        /* CPUID 0x4.0x1.EDX */
-+        .no_invd_sharing = false,
-+        .inclusive = false,
-+        .complex_indexing = false,
-+
-+        .size = 64 * KiB,
-+        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-+    },
-+    .l2_cache = &(CPUCacheInfo) {
-+        /* CPUID 0x4.0x2.EAX */
-+        .type = UNIFIED_CACHE,
-+        .level = 2,
-+        .self_init = true,
-+
-+        /* CPUID 0x4.0x2.EBX */
-+        .line_size = 64,
-+        .partitions = 1,
-+        .associativity = 16,
-+
-+        /* CPUID 0x4.0x2.ECX */
-+        .sets = 4096,
-+
-+        /* CPUID 0x4.0x2.EDX */
-+        .no_invd_sharing = false,
-+        .inclusive = false,
-+        .complex_indexing = false,
-+
-+        .size = 4 * MiB,
-+        .share_level = CPU_TOPOLOGY_LEVEL_MODULE,
-+    },
-+    .l3_cache = &(CPUCacheInfo) {
-+        /* CPUID 0x4.0x3.EAX */
-+        .type = UNIFIED_CACHE,
-+        .level = 3,
-+        .self_init = true,
-+
-+        /* CPUID 0x4.0x3.EBX */
-+        .line_size = 64,
-+        .partitions = 1,
-+        .associativity = 12,
-+
-+        /* CPUID 0x4.0x3.ECX */
-+        .sets = 147456,
-+
-+        /* CPUID 0x4.0x3.EDX */
-+        .no_invd_sharing = false,
-+        .inclusive = false,
-+        .complex_indexing = true,
-+
-+        .size = 108 * MiB,
-+        .share_level = CPU_TOPOLOGY_LEVEL_SOCKET,
-     },
- };
+diff --git a/meson.build b/meson.build
+index b5f74aa37a7..200352c2448 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1424,6 +1424,12 @@ if host_os == 'linux' and (have_system or have_tools)
+                        method: 'pkg-config',
+                        required: get_option('libudev'))
+ endif
++igvm = not_found
++if not get_option('igvm').auto() or have_system
++  igvm = dependency('igvm', version: '>= 0.3.0',
++                    method: 'pkg-config',
++                    required: get_option('igvm'))
++endif
  
-@@ -5005,6 +5096,11 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-                     { /* end of list */ }
-                 }
-             },
-+            {
-+                .version = 3,
-+                .note = "with srf-sp cache model",
-+                .cache_info = &xeon_srf_cache_info,
-+            },
-             { /* end of list */ },
-         },
-     },
+ mpathlibs = [libudev]
+ mpathpersist = not_found
+@@ -2601,6 +2607,7 @@ config_host_data.set('CONFIG_CFI', get_option('cfi'))
+ config_host_data.set('CONFIG_SELINUX', selinux.found())
+ config_host_data.set('CONFIG_XEN_BACKEND', xen.found())
+ config_host_data.set('CONFIG_LIBDW', libdw.found())
++config_host_data.set('CONFIG_IGVM', igvm.found())
+ if xen.found()
+   # protect from xen.version() having less than three components
+   xen_version = xen.version().split('.') + ['0', '0']
+@@ -4965,6 +4972,7 @@ summary_info += {'seccomp support':   seccomp}
+ summary_info += {'GlusterFS support': glusterfs}
+ summary_info += {'hv-balloon support': hv_balloon}
+ summary_info += {'TPM support':       have_tpm}
++summary_info += {'IGVM support':      igvm}
+ summary_info += {'libssh support':    libssh}
+ summary_info += {'lzo support':       lzo}
+ summary_info += {'snappy support':    snappy}
+diff --git a/backends/meson.build b/backends/meson.build
+index 9b88d226851..ac0fac78458 100644
+--- a/backends/meson.build
++++ b/backends/meson.build
+@@ -34,6 +34,9 @@ if have_vhost_user_crypto
+ endif
+ system_ss.add(when: gio, if_true: files('dbus-vmstate.c'))
+ system_ss.add(when: 'CONFIG_SGX', if_true: files('hostmem-epc.c'))
++if igvm.found()
++  system_ss.add(igvm)
++endif
+ 
+ system_ss.add(when: 'CONFIG_SPDM_SOCKET', if_true: files('spdm-socket.c'))
+ 
+diff --git a/meson_options.txt b/meson_options.txt
+index a442be29958..1e429311a2d 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -117,6 +117,8 @@ option('tpm', type : 'feature', value : 'auto',
+        description: 'TPM support')
+ option('valgrind', type : 'feature', value: 'auto',
+        description: 'valgrind debug support for coroutine stacks')
++option('igvm', type: 'feature', value: 'auto',
++       description: 'Independent Guest Virtual Machine (IGVM) file support')
+ 
+ # Do not enable it by default even for Mingw32, because it doesn't
+ # work on Wine.
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 73e0770f42b..78515404450 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -130,6 +130,7 @@ meson_options_help() {
+   printf "%s\n" '  hv-balloon      hv-balloon driver (requires Glib 2.68+ GTree API)'
+   printf "%s\n" '  hvf             HVF acceleration support'
+   printf "%s\n" '  iconv           Font glyph conversion support'
++  printf "%s\n" '  igvm            IGVM file support'
+   printf "%s\n" '  jack            JACK sound support'
+   printf "%s\n" '  keyring         Linux keyring support'
+   printf "%s\n" '  kvm             KVM acceleration support'
+@@ -346,6 +347,8 @@ _meson_option_parse() {
+     --iasl=*) quote_sh "-Diasl=$2" ;;
+     --enable-iconv) printf "%s" -Diconv=enabled ;;
+     --disable-iconv) printf "%s" -Diconv=disabled ;;
++    --enable-igvm) printf "%s" -Digvm=enabled ;;
++    --disable-igvm) printf "%s" -Digvm=disabled ;;
+     --includedir=*) quote_sh "-Dincludedir=$2" ;;
+     --enable-install-blobs) printf "%s" -Dinstall_blobs=true ;;
+     --disable-install-blobs) printf "%s" -Dinstall_blobs=false ;;
 -- 
 2.50.0
 
