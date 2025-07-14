@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DF30C83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:32:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CC20C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:33:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubHLp-0007Ac-NZ; Mon, 14 Jul 2025 07:28:06 -0400
+	id 1ubHGR-0001nO-HI; Mon, 14 Jul 2025 07:22:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH0c-0001XN-Pv
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:06:11 -0400
+ id 1ubH1b-0001zY-Ms
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:07:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH0a-00023m-M5
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:06:10 -0400
+ id 1ubH1Z-0002Dv-N7
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:07:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752491167;
+ s=mimecast20190719; t=1752491227;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vKAR39+Qoo2PsRjRakDp2hLXY0ic7nZQK21Qh2O4ItU=;
- b=G5XioyEvHzSxzA92vQ3XOkVrWB7BHx9dUKbi9UN5EjEFfq4BamuUwqugjGTFN2/OyuDNuN
- ibqkfEuQEPuAPmoEUJ6Eql8CVTLv8tt+xf/yLiHGS+miHVwKWyuAiIGzmss2F3Kiozuf9x
- oQ0pjw4paH11hCw0FK9xxb/f9JfIH2Y=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=eoimDhc5l0wVHOgJ1eysYl454HfMabPmsqsHxip4lQg=;
+ b=LTekUaOpwkNhFCHsiFvfo+bd83UhDBmrCFqMARIhLZonVD243LQCmJPjvVpwi9zMWDp1JU
+ 9MWr5qhyX8gZTLXTB+yp1kXvo2GzHmwjNGPU624+dZ2Qr5qHZXlQ+ExGXg1IhHY7I6qtgG
+ u12mVmqWp1LdqKDM7QoVYzrchCrhLDw=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-390-FDVUJ1EgNW-S1qlN8g6VZg-1; Mon, 14 Jul 2025 07:06:06 -0400
-X-MC-Unique: FDVUJ1EgNW-S1qlN8g6VZg-1
-X-Mimecast-MFC-AGG-ID: FDVUJ1EgNW-S1qlN8g6VZg_1752491165
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-45597cc95d5so15271085e9.1
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:06:06 -0700 (PDT)
+ us-mta-684-b7P0X1cUMnuxNfR21EL4-A-1; Mon, 14 Jul 2025 07:07:06 -0400
+X-MC-Unique: b7P0X1cUMnuxNfR21EL4-A-1
+X-Mimecast-MFC-AGG-ID: b7P0X1cUMnuxNfR21EL4-A_1752491225
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-456175dba68so8249865e9.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:07:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752491164; x=1753095964;
+ d=1e100.net; s=20230601; t=1752491224; x=1753096024;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vKAR39+Qoo2PsRjRakDp2hLXY0ic7nZQK21Qh2O4ItU=;
- b=Pn1iv6Pvjpa7O8gR9jcMdUjYWSgKMPoQOHMZEVWnTuYpJH5mToMOAigsC/65E41H6o
- eZSZCW0n7OmV6KcT7ENV/Od+ekCPTn7qNSKVYEsmCTyyiwRKcjykaVAqcCvqRNLCmdVG
- n8rjhI6FQhnYNS0L1nuG6QkFPqLkSq8iP9DyoY6tQXZ/6QZofiWDEDHWXa08Yql81KgG
- SK3WnCquU9GisNLLEHISrSZO2QJmDwe97hry+hYMWjcKVszu2y7lOLPIeCiH+7meYE+r
- 8f99RejGbwm/pWcoLhLCvh/cYiLRrgTK9cxsWfFsdVcHvd3eoleyapHAeBuDl3BujVnO
- Bqpw==
-X-Gm-Message-State: AOJu0YwhMe2Tz9Vm75fGKxCgMRWAV9SZ5M5cXBdIcV4pe7XqIp0FXB0j
- vklY3nur/DzPI78xzqBuVF5Wq4BZ+0FbOdfEFlihxPuEjXurYsYoZa36l2xHNGHxF7MdZccd+De
- 8uXnqY7dsg5eZHlVmcKgNMqjCRtA0pONy5EKIhtfYeGLO6SeQu6f6y6ZgfOdmk/VQRA7RrYb+9B
- vTSjF/YbadM+6ziIXW/94NfkAbBf+FqLyf5gTLu1XI
-X-Gm-Gg: ASbGnctaXr9efXwPDbSeX1hTHQk2+3uSbTKQj0oRivUFy15+0dWQIc8f5KEdu3fxx77
- 7oShUSmdbk1bE1Wc5CHVik1qkKuP2hwHk3wTBXka/IhIs3i9+LV8RcdKLvuInn/JpfaaMicw/QH
- LAlYp4a9/S8q2KV9fM3xWo0SdMlVwvCG4o8rlXqHYN5zSXtprxfNHlgi8pWrHP/FnkCsoAs6JTv
- qDw0m0bnvAWIXMhCU+Gl7cZkRak7zV84sozHKUPSq1E+817BH3J7zdD6hPJp/aFtl1cCjfrFgUK
- +TvIAZLhYpVqZO0QHnslzvd27NJtIfo+JCyWkGlSrpc=
-X-Received: by 2002:a05:600c:1c83:b0:43e:bdf7:7975 with SMTP id
- 5b1f17b1804b1-455e7135bbdmr86658495e9.32.1752491164343; 
- Mon, 14 Jul 2025 04:06:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEyfT5lVSL5La+qRe6r0wBd2hXC09EXivpjtDrdt0XxI0V3wtxzODpSi4/VDmYyCO3qds9YzA==
-X-Received: by 2002:a05:600c:1c83:b0:43e:bdf7:7975 with SMTP id
- 5b1f17b1804b1-455e7135bbdmr86658095e9.32.1752491163746; 
- Mon, 14 Jul 2025 04:06:03 -0700 (PDT)
+ bh=eoimDhc5l0wVHOgJ1eysYl454HfMabPmsqsHxip4lQg=;
+ b=XiSNay2p2td08OWXekB22OMMn3TPjSuYUIz70qSve/tADv5Y5U42T7l3beuI9AACqd
+ RZavRyQrGPzutrfu1zPMwGnXGZbCGBycK1/WSBzrjN05eJsSgkhwIiGVdhzjG6Ijn4eG
+ 48m7o7EPr8cr2QcDvQpGSpg3mQhxt16whUW7dqIp6h8SjtaT8fQya7p3vC4MvIN4Pamr
+ v+oSWYuLqg3X7BTZTM1+MZ/ONo7M/F8RKK/eW4AYy1bjQK6y1hOaNjN+ph06uQr/s0Wv
+ rdod5+EyedRqUhGrdTFn0TJLyXm856t4K6PCL1xaIkM/+O79KXt5g4mu9X84e7eROSuW
+ 6Hww==
+X-Gm-Message-State: AOJu0Yyoh3PaKO+OXoNiNHv+jOBZigwxyKowcuA2lWiIaBSRXAM9t8ou
+ Tp1mJcODKIarA4OGshkRJSAWHKSsRab8nf1Rt1vZMrB9MxpdZQY23CWkoJv0On62oMSI9HiYO5D
+ btClZxRC01ej7YbYIdcRLq3pS91+XzTnq+4HoNnIPZ03IsVQS4MyL2YIMb0KAZVxT/vUlbtzDFi
+ DDmwTIwvm5TOUoKmBU2421NgFHQcneRsXTtWYWUROz
+X-Gm-Gg: ASbGnctvXeqU/QnIxLgN1FSUl72tEZQn79ZcxfzvPiS28x2TUjY+QuR6RY0P1PTWwRH
+ iVo0PRG+Lj0i5iANCULWlAfgA0A+RmfKB61sfNGEbCc6i03ESzLzajkcJnRi+4i/QNIifpcoSTI
+ kGQDJq1zzPfPPC2MDonIemSsRbky2LD2icDzXYlqtg/U0vel58RerMdqPWuKjJWOgAlsZkZm5nk
+ oayKUHCCoYIPL29xOuo2E3+8hLD+b0JLnO33pl+bNToQZtXif/z1rJfxP18tCq3JE6LyKBDaWMl
+ 0vTiW7EKbtyg+boSKYYB77wgWxUdWUxhWaxETmUM4Fw=
+X-Received: by 2002:a05:600c:4e51:b0:455:eda0:8a8e with SMTP id
+ 5b1f17b1804b1-455eda08c8dmr89470205e9.27.1752491224243; 
+ Mon, 14 Jul 2025 04:07:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGZbyNgVFefir52iWnM2DErV6Xh7OJJ9HWLIGYkGB98qDWZHSRYPuBTJmZLre/jKF1S91GeMQ==
+X-Received: by 2002:a05:600c:4e51:b0:455:eda0:8a8e with SMTP id
+ 5b1f17b1804b1-455eda08c8dmr89469925e9.27.1752491223816; 
+ Mon, 14 Jul 2025 04:07:03 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.73.155])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454dd43912dsm130739785e9.2.2025.07.14.04.06.01
+ 5b1f17b1804b1-4560ddf5e0esm63678815e9.18.2025.07.14.04.07.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 04:06:02 -0700 (PDT)
+ Mon, 14 Jul 2025 04:07:02 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>,
- Yi Lai <yi1.lai@intel.com>
-Subject: [PULL 44/77] i386/cpu: Consolidate CPUID 0x4 leaf
-Date: Mon, 14 Jul 2025 13:03:33 +0200
-Message-ID: <20250714110406.117772-45-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>,
+	Tao Su <tao1.su@linux.intel.com>
+Subject: [PULL 68/77] i386/cpu: Mark EBX/ECX/EDX in CPUID 0x80000000 leaf as
+ reserved for Intel
+Date: Mon, 14 Jul 2025 13:03:57 +0200
+Message-ID: <20250714110406.117772-69-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250714110406.117772-1-pbonzini@redhat.com>
 References: <20250714110406.117772-1-pbonzini@redhat.com>
@@ -111,107 +112,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Modern Intel CPUs use CPUID 0x4 leaf to describe cache information
-and leave space in 0x2 for prefetch and TLBs (even TLB has its own leaf
-CPUID 0x18).
+Per SDM,
 
-And 0x2 leaf provides a descriptor 0xFF to instruct software to check
-cache information in 0x4 leaf instead.
+80000000H EAX Maximum Input Value for Extended Function CPUID Information.
+          EBX Reserved.
+          ECX Reserved.
+          EDX Reserved.
 
-Therefore, follow this behavior to encode 0xFF when Intel CPU has 0x4
-leaf with "x-consistent-cache=true" for compatibility.
+EBX/ECX/EDX in CPUID 0x80000000 leaf are reserved. Intel is using 0x0
+leaf to encode vendor.
 
-In addition, for older CPUs without 0x4 leaf, still enumerate the cache
-descriptor in 0x2 leaf, except the case that there's no descriptor
-matching the cache model, then directly encode 0xFF in 0x2 leaf. This
-makes sense, as in the 0x2 leaf era, all supported caches should have
-the corresponding descriptor.
-
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Tested-by: Yi Lai <yi1.lai@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250711102143.1622339-6-zhao1.liu@intel.com
+Reviewed-by: Tao Su <tao1.su@linux.intel.com>
+Link: https://lore.kernel.org/r/20250627035129.2755537-2-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 48 ++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 37 insertions(+), 11 deletions(-)
+ target/i386/cpu.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 1f27fcf3ee0..812e85b952f 100644
+index 4f0c9734461..ae508fa962d 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -225,7 +225,7 @@ struct CPUID2CacheDescriptorInfo cpuid2_cache_descriptors[] = {
-  * Return a CPUID 2 cache descriptor for a given cache.
-  * If no known descriptor is found, return CACHE_DESCRIPTOR_UNAVAILABLE
-  */
--static uint8_t cpuid2_cache_descriptor(CPUCacheInfo *cache)
-+static uint8_t cpuid2_cache_descriptor(CPUCacheInfo *cache, bool *unmacthed)
- {
-     int i;
- 
-@@ -242,9 +242,44 @@ static uint8_t cpuid2_cache_descriptor(CPUCacheInfo *cache)
-             }
-     }
- 
-+    *unmacthed |= true;
-     return CACHE_DESCRIPTOR_UNAVAILABLE;
- }
- 
-+/* Encode cache info for CPUID[2] */
-+static void encode_cache_cpuid2(X86CPU *cpu,
-+                                uint32_t *eax, uint32_t *ebx,
-+                                uint32_t *ecx, uint32_t *edx)
-+{
-+    CPUX86State *env = &cpu->env;
-+    CPUCaches *caches = &env->cache_info_cpuid2;
-+    int l1d, l1i, l2, l3;
-+    bool unmatched = false;
-+
-+    *eax = 1; /* Number of CPUID[EAX=2] calls required */
-+    *ebx = *ecx = *edx = 0;
-+
-+    l1d = cpuid2_cache_descriptor(caches->l1d_cache, &unmatched);
-+    l1i = cpuid2_cache_descriptor(caches->l1i_cache, &unmatched);
-+    l2 = cpuid2_cache_descriptor(caches->l2_cache, &unmatched);
-+    l3 = cpuid2_cache_descriptor(caches->l3_cache, &unmatched);
-+
-+    if (!cpu->consistent_cache ||
-+        (env->cpuid_min_level < 0x4 && !unmatched)) {
-+        /*
-+         * Though SDM defines code 0x40 for cases with no L2 or L3. It's
-+         * also valid to just ignore l3's code if there's no l2.
-+         */
-+        if (cpu->enable_l3_cache) {
-+            *ecx = l3;
-+        }
-+        *edx = (l1d << 16) | (l1i <<  8) | l2;
-+    } else {
-+        *ecx = 0;
-+        *edx = CACHE_DESCRIPTOR_UNAVAILABLE;
-+    }
-+}
-+
- /* CPUID Leaf 4 constants: */
- 
- /* EAX: */
-@@ -7446,16 +7481,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-             *eax = *ebx = *ecx = *edx = 0;
-             break;
-         }
--        *eax = 1; /* Number of CPUID[EAX=2] calls required */
--        *ebx = 0;
--        if (!cpu->enable_l3_cache) {
--            *ecx = 0;
--        } else {
--            *ecx = cpuid2_cache_descriptor(env->cache_info_cpuid2.l3_cache);
--        }
--        *edx = (cpuid2_cache_descriptor(env->cache_info_cpuid2.l1d_cache) << 16) |
--               (cpuid2_cache_descriptor(env->cache_info_cpuid2.l1i_cache) <<  8) |
--               (cpuid2_cache_descriptor(env->cache_info_cpuid2.l2_cache));
-+        encode_cache_cpuid2(cpu, eax, ebx, ecx, edx);
+@@ -8280,9 +8280,15 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
          break;
-     case 4:
-         /* cache info: needed for Core compatibility */
+     case 0x80000000:
+         *eax = env->cpuid_xlevel;
+-        *ebx = env->cpuid_vendor1;
+-        *edx = env->cpuid_vendor2;
+-        *ecx = env->cpuid_vendor3;
++
++        if (cpu->vendor_cpuid_only_v2 &&
++            (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) {
++            *ebx = *ecx = *edx = 0;
++        } else {
++            *ebx = env->cpuid_vendor1;
++            *edx = env->cpuid_vendor2;
++            *ecx = env->cpuid_vendor3;
++        }
+         break;
+     case 0x80000001:
+         *eax = env->cpuid_version;
 -- 
 2.50.0
 
