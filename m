@@ -4,89 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C96C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:42:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE529C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:42:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubLJc-0002mJ-03; Mon, 14 Jul 2025 11:42:04 -0400
+	id 1ubLJh-00030o-MI; Mon, 14 Jul 2025 11:42:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
- id 1ubK0a-0008Hn-Ew
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 10:18:21 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
- id 1ubK0X-0000PK-1c
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 10:18:18 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-b3182c6d03bso5023683a12.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 07:18:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1752502694; x=1753107494; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=BnEv1rhPyuqGeOqhJG81aiCKY6SFUNUyQxrFxmuLHBA=;
- b=Zzh0iTJmPsHWoZCPV95c1h5Fkq6N2KZdgNSPxge6muAG/qm5IaCJb8NwwULbluPasI
- OIpUPuJ00TOGFqyCRNx5DbrMkvwuHBXL5vlnbsNlzlN+GVjtIkao7LZ3PyiO7TqOdXxn
- SYN+3KWuEgduLJhGqgzC4JXH6Ul82Z1p9RSnMzR3kFo3mcoHvPusyuckC02WXkEHzwPK
- ceOW5CHVAExSTajZq6ZRk6lAO1Y5PIVv5+U8w4tEzNl8vv74sm7h0jY4YrQ19cDvboLJ
- fi0v+VrnFEabECwqwHm56k0UPIWzZawo8/sCpTjRKCMYWTLuCnjGlSg6Dj3ZKZuhGxa0
- dGrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752502694; x=1753107494;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BnEv1rhPyuqGeOqhJG81aiCKY6SFUNUyQxrFxmuLHBA=;
- b=erAletC3WmBf7705FZabSq8kN8NH0Ph4qJS1JOTStJYMeKqDmOhogK5IF+sqIJTU4o
- I2mwE/1E1yHM7BzDXA59v4JWzThB4CxfURI4vV9lHLkcTqty4CX7sOksq2X8C6KLS0Cm
- +B75jmAvC/dOm7NcB+GFBz8T47vQJtdBIoACE2Jx2fhE3v9RKV2mRHsVKJW27bbmj6fR
- Na7CJBoX1ztjhPRiYR9tc0bRRksXnOBExbNnVRf+KUnI4q5lHDOJnXa4bTI0BOXVoMRR
- a6KapAle15WzlVj05hX86zZytiUjT5ATBuXFCfypr0sD7m0OMxiXC6bs5eF15lFZFjPy
- /jbg==
-X-Gm-Message-State: AOJu0YyTLcbY+sWq+oqs+RRJqk1g552mMUd2wBvq2Lk3pHFzTn0caf0i
- 790ZeSZA8pYTrikBrSKQ1uGngaJcpD0e725fBXDcUhwUKzD0eYPriFi/waa8s+WGS5w=
-X-Gm-Gg: ASbGnctPWCmLiCHKp5aQ6fcjSpKc17amMPoX5ddXL79wVFYAV7d6P0KzWN+qFYf3MFR
- 1P5QFfKZEJgklgjEFCGJ+OzR9DS3qwMyv2BIO7/Kz0kM3v5rFMG3/xMqtDwwT8osVdafH3LCyIy
- 8iIaaARzLYNeSBk+3RPQyOEd46Ar8GX1qgAfmbh0DXBt/r7eoILBkYNk+s4IanO8QxSeEIlLLho
- RVuAhN8M3XT9Fgn87nD/iwS/uwzNqThQk7JEX/3dYQkoNzgJOIT1MrPBncAdlUyecym+d/Tmmfh
- m3Z6h8vKjkL/48hAXkuXUHG9+2SNiEqbPm3hHv/mdtjQYBxy8yGR5qDkpW8NsL3m1ZFa94ARVjM
- k5BqcNeD3zKWFB8eE0NM2xmAJz/s=
-X-Google-Smtp-Source: AGHT+IE/Si003LAV3ECTYELp+xDAVyo3ipn/4u8D1TlcNQiKgtZYwgCeWgKREFnmKQY9apmmVyDKNA==
-X-Received: by 2002:a17:90b:4c0a:b0:313:17e3:7ae0 with SMTP id
- 98e67ed59e1d1-31c4cd5618dmr17698480a91.34.1752502693722; 
- Mon, 14 Jul 2025 07:18:13 -0700 (PDT)
-Received: from localhost ([103.192.224.247]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31c3e973e75sm10663890a91.16.2025.07.14.07.18.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 07:18:12 -0700 (PDT)
-From: Weifeng Liu <weifeng.liu.z@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Weifeng Liu <weifeng.liu.z@gmail.com>, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Vivek Kasireddy <vivek.kasireddy@intel.com>,
- Dongwon Kim <dongwon.kim@intel.com>
-Subject: [PATCH] gtk: Skip drawing if console surface is NULL
-Date: Mon, 14 Jul 2025 22:17:54 +0800
-Message-ID: <20250714141758.10062-1-weifeng.liu.z@gmail.com>
-X-Mailer: git-send-email 2.49.0
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1ubJzK-0007oM-C5; Mon, 14 Jul 2025 10:17:04 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1ubJzH-0000D8-Dz; Mon, 14 Jul 2025 10:17:01 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56E8KRlB014677;
+ Mon, 14 Jul 2025 14:16:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=/fnawL
+ bQb+PXjZBgC2TuPEOK6bDpsfugctixtUEIsVE=; b=NvNGKG6udbIccXswUHJ/c5
+ us8YH2t0e3iF//eY+xOsoVOhGExntMBaSFPD1hUZDiARZwNWOBaZ4lzq8H3iRnzm
+ 9u8NE4bgBki6z+SnIf09UMi4zx4Bs7hLHwcuJgJjA+vZmrDxM4yQKZHW1rcaGBfO
+ kZY0dA7VAkfobtkAVPxKqSaSXBfdwDQ4exRYQRgixV4D05zVtgYuclSvv1nWuzSM
+ JZcDyBr7wuTZehpB9vc2uNNIcyoG2H1DF29t1m7rlK47xTDaBNJXeELwmvN/f9Uy
+ G+wmDvZj8z1ouqOCVzBP77bADpQOeqgdX1zmV77+3hSuE+jEwW68XwNB/Np5oGNQ
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47ue4tsypq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 14 Jul 2025 14:16:51 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 56EEGp21013484;
+ Mon, 14 Jul 2025 14:16:51 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47ue4tsynt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 14 Jul 2025 14:16:51 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56EAO9mc000890;
+ Mon, 14 Jul 2025 14:16:39 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 47v48kwxyd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 14 Jul 2025 14:16:39 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 56EEGces10420910
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 14 Jul 2025 14:16:38 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8E2135805B;
+ Mon, 14 Jul 2025 14:16:38 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 038D558059;
+ Mon, 14 Jul 2025 14:16:38 +0000 (GMT)
+Received: from [9.61.243.238] (unknown [9.61.243.238])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 14 Jul 2025 14:16:37 +0000 (GMT)
+Message-ID: <e0d7a518-7736-4de1-814c-578f14e591f2@linux.ibm.com>
+Date: Mon, 14 Jul 2025 09:16:37 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=weifeng.liu.z@gmail.com; helo=mail-pg1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v2] virtio-net: Fix VLAN filter table reset timing
+Content-Language: en-US
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: yin31149@gmail.com, eperezma@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, virtualization@lists.linux.dev, qemu-stable@nongnu.org
+References: <20250714-vlan-v2-1-2d589ba4dcd3@rsg.ci.i.u-tokyo.ac.jp>
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+In-Reply-To: <20250714-vlan-v2-1-2d589ba4dcd3@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=baBrUPPB c=1 sm=1 tr=0 ts=68751153 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VnNF1IyMAAAA:8 a=zTvvzZXkgg2YcvmaeiIA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: IcQvpBd0K6heh5JHYXw0CLJmsRLAFejt
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE0MDA4NCBTYWx0ZWRfX6us/9Ep8psvq
+ XmNb8LlKntk+i/WPSmaEnf0uHFPwofz4QUV19KsY5ppgTHiBfGYTkQbnQzHjJ9EEIOANhXOtwQh
+ A4mJcxLQ8p0KPI2qgbWy4XTYI0USCTQSfO02im+hHNF3TRNXsNpsyWc1dOJXzAAlCNWu2QLeIzo
+ BC9fhrHlvpiuCKHMTA+YMN3wssmDpYtFUXXD/uSD6bbh9tIS9upL8/1NSEa0fdXIUa4mxdoZXSq
+ 5vecXKRdJPrr4ZYw5R/0ZwEKASWYYgeVo4+UPIjrh4B0yymdcmslSBIs/sUcgDs/XaStiZGwEl/
+ GMAbE6J/h8bqaWL9EuWUvhYLL0LrcUSP+ra+qV3aLGYGmfFUOE0lrHQZVfQUTTr6rP+SYu+6Pin
+ qoR19TjgyH2F8dP5h4V74j6DSQu/gsO16mmnPx/AFDe7zpSIkatmWZEB1///M/BXyz3JvEt6
+X-Proofpoint-ORIG-GUID: 2JsllPUEY_zbtj7GU-rpwZg30iJKfoYP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
+ definitions=2025-07-14_01,2025-07-14_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 mlxlogscore=857
+ suspectscore=0 adultscore=0 impostorscore=0 phishscore=0
+ lowpriorityscore=0 priorityscore=1501 clxscore=1011 mlxscore=0
+ malwarescore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507140084
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=kshk@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,67 +128,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In gtk draw/render callbacks, add an early NULL check for the console
-surface and skip drawing if it's NULL. Otherwise, attempting to fetch
-its width and height crash. This change fixes Coverity CID 1610328.
+On 14-Jul-25 04:31, Akihiko Odaki wrote:
+> Konstantin, I would also want you to test this new version. Please also
+> give it Tested-by, and, if possible, Reviewed-by.
 
-In practice, this case wouldn't happen at all because we always install
-a placeholder surface to the console when there is nothing to display.
+It works as expected during the boot. All bits in vlans[] remain set 
+until virtio_pci_common_write(VIRTIO_PCI_GUEST_FEATURES) comes with 
+VIRTIO_NET_F_CTRL_VLAN set, and clears vlans[]. Then I see 
+virtio_net_set_status(0xb) and virtio_net_set_status(0xf).
 
-Resolves: Coverity CID 1610328
-Signed-off-by: Weifeng Liu <weifeng.liu.z@gmail.com>
----
- ui/gtk-egl.c     | 5 +----
- ui/gtk-gl-area.c | 5 +----
- 2 files changed, 2 insertions(+), 8 deletions(-)
+I can't test migration because currently it's not supported on s390 for 
+PCI devices.
 
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index 0b787bea25..ae9239999c 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -72,7 +72,7 @@ void gd_egl_draw(VirtualConsole *vc)
- #endif
-     int ww, wh, pw, ph, gs;
- 
--    if (!vc->gfx.gls) {
-+    if (!vc->gfx.gls || !vc->gfx.ds) {
-         return;
-     }
- 
-@@ -112,9 +112,6 @@ void gd_egl_draw(VirtualConsole *vc)
-         }
- #endif
-     } else {
--        if (!vc->gfx.ds) {
--            return;
--        }
-         eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
-                        vc->gfx.esurface, vc->gfx.ectx);
- 
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index 8151cc413c..05fc38096e 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -48,7 +48,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
-     int fbw, fbh;
-     int wx_offset, wy_offset;
- 
--    if (!vc->gfx.gls) {
-+    if (!vc->gfx.gls || !vc->gfx.ds) {
-         return;
-     }
- 
-@@ -135,9 +135,6 @@ void gd_gl_area_draw(VirtualConsole *vc)
-         }
- #endif
-     } else {
--        if (!vc->gfx.ds) {
--            return;
--        }
-         gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
- 
-         surface_gl_setup_viewport(vc->gfx.gls, vc->gfx.ds, pw, ph);
--- 
-2.49.0
+Tested-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
 
 
