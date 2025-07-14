@@ -4,84 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F8B3C83F1B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 004F6C83F21
 	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:29:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSG0-0002hV-Rr; Mon, 14 Jul 2025 19:06:51 -0400
+	id 1ubSIM-0002eb-Ub; Mon, 14 Jul 2025 19:09:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSFu-0002Fp-WB
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:06:43 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSHE-00069c-DB
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:08:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSFt-0005NZ-9H
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:06:42 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSHC-0005dm-9J
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:08:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534400;
+ s=mimecast20190719; t=1752534481;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jIH1CkCCFSXcgs6SwD/lkBtxMtFMYESPhTMyWu2YSEw=;
- b=TWkaqVjNg3KtfMFt0WrzOqt0U6S1heptWdBQGrqqSESAQt0oV2cDzZxGpMegW4vNeZztpM
- NEBy5jzC1mMZCeUanHnW1RRNVoKEegO6AlKs8aA6VYfDKZA1F7I6LrSrJYwANYVFzCC+4V
- dra8q67ZLpsf7t+7en4LvLUfahcz+AI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xk9frtw4E7yOISGuoGDzjA1OizOnzV8VR73+E5OqM0w=;
+ b=SDg9pFz0u9vkC0BE2mFTv3y6/DexY7zdarIeyZtG7g0DvesTCOgV8k1mFVR+jgbL5QAqfh
+ 7XOoVwAf8rsTFYqw4osjtiEACO1eS5woozoddZNCR9XNPOR9Y2Oo7OczU+akWGE2HD3zsI
+ tyRhsmZh2HD+OOUOvvzNLl0ije4kbh0=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-526-DFyKStcbNAC0RLdd1Z8HKw-1; Mon, 14 Jul 2025 19:06:39 -0400
-X-MC-Unique: DFyKStcbNAC0RLdd1Z8HKw-1
-X-Mimecast-MFC-AGG-ID: DFyKStcbNAC0RLdd1Z8HKw_1752534398
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45359bfe631so29214725e9.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:06:39 -0700 (PDT)
+ us-mta-466-X523O4J_NAiWP9dFmCAU8w-1; Mon, 14 Jul 2025 19:08:00 -0400
+X-MC-Unique: X523O4J_NAiWP9dFmCAU8w-1
+X-Mimecast-MFC-AGG-ID: X523O4J_NAiWP9dFmCAU8w_1752534479
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a4f8192e2cso2713147f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:08:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534398; x=1753139198;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jIH1CkCCFSXcgs6SwD/lkBtxMtFMYESPhTMyWu2YSEw=;
- b=LSWAVKqly2yh3coiumfXVJPhtZxoX8h36GJxGr3++zP7/kAJVP7Ap5dcbqr6T1npP6
- QcMshRV4Jdc1zKPnobVVIWtYOZnTAQGySLhz4CVb/M4Gd9BUKkxXYx95U1BvbSdeu1wK
- 9PCmY6sgaNPS2rTqLj4JQ4mdp+XVcJH5Qq2qUzOKK7c/JrTYlMUJlzgFApJ5OwrtG1vW
- bnE4cLLKDWRreUy+kKF919hjJevS0q7MvNt0ceoEqK6PHbOg1lQQt1jimsA4Asaz3lPV
- L2SWMBAV5qA6MomB2GZYQ5wBPwfrwGSeknyy3Iizs78E79ZWedPT9etv85Cr6gsjcgsD
- YISQ==
-X-Gm-Message-State: AOJu0YwtzxPTIe+6eXd8Dt6/ABHflV48OQyEyTf1PZm+cwk9EdysE1kk
- XULD/t0+5QY4Z6TcrEbDEKOvaOyHsaE1p6Q2qtxWcXnVdvzJI1KpvSafA/zPvRY9ZHdvUzZJnyZ
- 8OMAHHEYeQ9AKwY/BbAcR9aHEw8kusK3TK7O5bwoJvd+u0+w7Mv76iNtSTGLf5QZZ4ggeLkcOEJ
- 80AXOinWavURgQe4uXvF3hof2mLJ6vpiuGhg==
-X-Gm-Gg: ASbGncuWbNPe8CozvJwN65G2I2loRTBfdlHnvaTb0HHpHiXlHVpFLtcbK5huldNfT31
- hQbFZGPR575Ve1A3EtKrbfR6yTrTlkHms+BZgMUd6g1J/6deUXdpUODqzfw9ab1r6G1vht8H3z2
- 37vFBYkkXeWh4ppdq9Z9kcLjL3sm80NgUXwdDFLFR/363TK3smUJdtmXSj2EuBWm8rafTakLmwi
- uP/bx4m7Vyaw0Pc6b2eLdyPqfZyumJrR7i/kirnbYt40VRrSkGy5jZd+MinAyJv3yWn9bY/GOQ5
- 75/jc/5BZoCYB5INBONuH7ChGhSidND8
-X-Received: by 2002:a05:600c:8b21:b0:43d:42b:e186 with SMTP id
- 5b1f17b1804b1-454f427c7a3mr147535745e9.8.1752534397872; 
- Mon, 14 Jul 2025 16:06:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEN8SfCBdNXDgKWYDMwQdzn82ZtYJ6VggooxMWqvitHxa9yFK5df/3iCQaRkYLeVks4Wlxggg==
-X-Received: by 2002:a05:600c:8b21:b0:43d:42b:e186 with SMTP id
- 5b1f17b1804b1-454f427c7a3mr147535485e9.8.1752534397398; 
- Mon, 14 Jul 2025 16:06:37 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752534479; x=1753139279;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xk9frtw4E7yOISGuoGDzjA1OizOnzV8VR73+E5OqM0w=;
+ b=Gq7aeaYbi/hB5E9jWz++/8IDU++4BKhThYwnsJ53Bk2kSGXP0jDDF/9uIyeWTyh4Od
+ 3a2E4skyxtn8tgQkr9Ou3ALwuZJdkiPbBDi/PvuI6n01XSUs6jVsdt23gOIhqoKLoa2n
+ FtttTD0BB9GGhyQoWU5p4apdhoHYU5DARIGOnESbP4Qpm81pnF3dFJBriHxUdrzvZpV5
+ WQQe9tAZpFKOsXrIpLud4yQs29WNWrPLYFkAWeOLxjnvWf1Se13LqlHbhB1Ks3WiIaJG
+ sans8MfmxysgtVpyuHlzlzCiKaELPX3aMsuaU5BHGTKJMmnaOVjoSl1Os+JJs8ZIa52l
+ +trw==
+X-Gm-Message-State: AOJu0YzNFhdcb1+rwh29xcw1ebXOxHPCF6PaQ/kDpj2aPS36aikDe5Vc
+ gtmopVniU2mhQ8Zv1S+skFhL9uc3cNPYtLZcDyQgAWLcz/C6TdfGblIeQwyLFFEh0helRNuaSJP
+ HJ86IfP5VfU/nyXlbAR7k1Z+wjP53u25ceV1kXSD+EJvtmLs8Uq6H2r+H2elUO6Ao0Vp3RsBV80
+ 9FpGY/2r486Sh6SJPYJ8yWcjKsTq0l7n2/rg==
+X-Gm-Gg: ASbGncuRgrqBrncRGlpHBB3Uzw7UWv4miqukwrFrwxMTl5e4tH4+Y3ScgJf5DW+v/g5
+ NakaOdtEmrOtzjPFBwz/xGHzbOMaVIoYbudI2sI96omDGFJkj/KW3wOPMWFpGeBTY84ZGcAjBFT
+ t2S5AOysOwZ+OmCmXNq956irJgaT1OmLB4I4t6Cq1b9C7fbsZE0iEHn/8PLpGM65UqdgK1Fayru
+ kbik0rnOgbr+T/pmoY6XhuPDqEIEwo716edeGB6rVynG2ZIfueFpR6RqpcGWM7jH5FfHPDi2RrL
+ VUrgO3ZF4OjBLxjJPoG+aczxX7z4PbcX
+X-Received: by 2002:a05:6000:4389:b0:3b3:9c85:6b17 with SMTP id
+ ffacd0b85a97d-3b5f2dfd8c0mr10430325f8f.34.1752534478836; 
+ Mon, 14 Jul 2025 16:07:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFFbMrBFuQ03LH212VroaJbgOLNKTIAVsJmeSymGBKRazZ8RvYU7P4DlT+HnQc4Qzf6/ZzbOw==
+X-Received: by 2002:a05:6000:4389:b0:3b3:9c85:6b17 with SMTP id
+ ffacd0b85a97d-3b5f2dfd8c0mr10430303f8f.34.1752534478281; 
+ Mon, 14 Jul 2025 16:07:58 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e0d785sm13819909f8f.59.2025.07.14.16.06.36
+ 5b1f17b1804b1-456101b616csm72731345e9.4.2025.07.14.16.07.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:06:37 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:06:35 -0400
+ Mon, 14 Jul 2025 16:07:57 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:07:55 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Daniil Tatianin <d-tatianin@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 09/97] vhost: add a helper for force stopping a device
-Message-ID: <2f527fff460a2c67fd37298dbd7fe42fffdb738b.1752534227.git.mst@redhat.com>
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 40/97] qemu/target-info: Factor target_arch() out
+Message-ID: <777aa9af48426cf40f6262a3fca2b3c67a916b14.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1752534227.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -110,152 +115,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-This adds an ability to skip GET_VRING_BASE during device stop entirely,
-and thus the expensive drain operation that this call entails as well,
-which may be useful during a non-graceful shutdown in case the guest
-operating system hangs or refuses to react to a previously requested
-ACPI shutdown for whatever reason.
+To keep "qemu/target-info.h" self-contained to native
+types, declare target_arch() -- which returns a QAPI
+type -- in "qemu/target-info-qapi.h".
 
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Message-Id: <20250609212547.2859224-3-d-tatianin@yandex-team.ru>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+No logical change.
+
+Keeping native types in "qemu/target-info.h" is necessary
+to keep building tests such tests/tcg/plugins/mem.c, as
+per the comment added in commit ecbcc9ead2f ("tests/tcg:
+add a system test to check memory instrumentation"):
+
+/*
+ * plugins should not include anything from QEMU aside from the
+ * API header. However as this is a test plugin to exercise the
+ * internals of QEMU and we want to avoid needless code duplication we
+ * do so here. bswap.h is pretty self-contained although it needs a
+ * few things provided by compiler.h.
+ */
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20250708215320.70426-3-philmd@linaro.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/virtio/vhost.h | 15 +++++++++++
- hw/virtio/vhost.c         | 52 +++++++++++++++++++++++++++++----------
- 2 files changed, 54 insertions(+), 13 deletions(-)
+ include/qemu/target-info-qapi.h | 21 +++++++++++++++++++++
+ include/qemu/target-info.h      |  2 +-
+ hw/core/machine-qmp-cmds.c      |  8 +++-----
+ target-info.c                   |  8 ++++++++
+ 4 files changed, 33 insertions(+), 6 deletions(-)
+ create mode 100644 include/qemu/target-info-qapi.h
 
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index 38800a7156..eb3dd7616b 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -237,6 +237,21 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
-  */
- int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
- 
-+/**
-+ * vhost_dev_force_stop() - force stop the vhost device
-+ * @hdev: common vhost_dev structure
-+ * @vdev: the VirtIODevice structure
-+ * @vrings: true to have vrings disabled in this call
+diff --git a/include/qemu/target-info-qapi.h b/include/qemu/target-info-qapi.h
+new file mode 100644
+index 0000000000..a337c867bf
+--- /dev/null
++++ b/include/qemu/target-info-qapi.h
+@@ -0,0 +1,21 @@
++/*
++ * QEMU target info API (returning QAPI types)
 + *
-+ * Force stop the vhost device. After the device is stopped the notifiers
-+ * can be disabled (@vhost_dev_disable_notifiers) and the device can
-+ * be torn down (@vhost_dev_cleanup). Unlike @vhost_dev_stop, this doesn't
-+ * attempt to flush in-flight backend requests by skipping GET_VRING_BASE
-+ * entirely.
++ *  Copyright (c) Linaro
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+int vhost_dev_force_stop(struct vhost_dev *hdev, VirtIODevice *vdev,
-+                         bool vrings);
 +
- /**
-  * DOC: vhost device configuration handling
++#ifndef QEMU_TARGET_INFO_EXTRA_H
++#define QEMU_TARGET_INFO_EXTRA_H
++
++#include "qapi/qapi-types-machine.h"
++
++/**
++ * target_arch:
++ *
++ * Returns: QAPI SysEmuTarget enum (e.g. SYS_EMU_TARGET_X86_64).
++ */
++SysEmuTarget target_arch(void);
++
++#endif
+diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
+index 850a2958b9..dde0e7d968 100644
+--- a/include/qemu/target-info.h
++++ b/include/qemu/target-info.h
+@@ -1,5 +1,5 @@
+ /*
+- * QEMU target info API
++ * QEMU target info API (returning native types)
   *
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index c87861b31f..c30ea1156e 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1354,25 +1354,30 @@ fail_alloc_desc:
-     return r;
- }
+  *  Copyright (c) Linaro
+  *
+diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+index d82043e1c6..cd98daedd1 100644
+--- a/hw/core/machine-qmp-cmds.c
++++ b/hw/core/machine-qmp-cmds.c
+@@ -19,7 +19,7 @@
+ #include "qapi/qobject-input-visitor.h"
+ #include "qapi/type-helpers.h"
+ #include "qemu/uuid.h"
+-#include "qemu/target-info.h"
++#include "qemu/target-info-qapi.h"
+ #include "qom/qom-qobject.h"
+ #include "system/hostmem.h"
+ #include "system/hw_accel.h"
+@@ -37,8 +37,7 @@ CpuInfoFastList *qmp_query_cpus_fast(Error **errp)
+     MachineState *ms = MACHINE(qdev_get_machine());
+     MachineClass *mc = MACHINE_GET_CLASS(ms);
+     CpuInfoFastList *head = NULL, **tail = &head;
+-    SysEmuTarget target = qapi_enum_parse(&SysEmuTarget_lookup, target_name(),
+-                                          -1, &error_abort);
++    SysEmuTarget target = target_arch();
+     CPUState *cpu;
  
--int vhost_virtqueue_stop(struct vhost_dev *dev,
--                         struct VirtIODevice *vdev,
--                         struct vhost_virtqueue *vq,
--                         unsigned idx)
-+static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
-+                                   struct VirtIODevice *vdev,
-+                                   struct vhost_virtqueue *vq,
-+                                   unsigned idx, bool force)
+     CPU_FOREACH(cpu) {
+@@ -139,8 +138,7 @@ QemuTargetInfo *qmp_query_target(Error **errp)
  {
-     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
-     struct vhost_vring_state state = {
-         .index = vhost_vq_index,
-     };
--    int r;
-+    int r = 0;
+     QemuTargetInfo *info = g_malloc0(sizeof(*info));
  
-     if (virtio_queue_get_desc_addr(vdev, idx) == 0) {
-         /* Don't stop the virtqueue which might have not been started */
-         return 0;
-     }
+-    info->arch = qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
+-                                 &error_abort);
++    info->arch = target_arch();
  
--    r = dev->vhost_ops->vhost_get_vring_base(dev, &state);
--    if (r < 0) {
--        VHOST_OPS_DEBUG(r, "vhost VQ %u ring restore failed: %d", idx, r);
-+    if (!force) {
-+        r = dev->vhost_ops->vhost_get_vring_base(dev, &state);
-+        if (r < 0) {
-+            VHOST_OPS_DEBUG(r, "vhost VQ %u ring restore failed: %d", idx, r);
-+        }
-+    }
-+
-+    if (r < 0 || force) {
-         /* Connection to the backend is broken, so let's sync internal
-          * last avail idx to the device used idx.
-          */
-@@ -1401,6 +1406,14 @@ int vhost_virtqueue_stop(struct vhost_dev *dev,
-     return r;
+     return info;
+ }
+diff --git a/target-info.c b/target-info.c
+index 16fdca7aaa..9ebabec988 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -8,7 +8,9 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/target-info.h"
++#include "qemu/target-info-qapi.h"
+ #include "qemu/target-info-impl.h"
++#include "qapi/error.h"
+ 
+ const char *target_name(void)
+ {
+@@ -20,6 +22,12 @@ unsigned target_long_bits(void)
+     return target_info()->long_bits;
  }
  
-+int vhost_virtqueue_stop(struct vhost_dev *dev,
-+                         struct VirtIODevice *vdev,
-+                         struct vhost_virtqueue *vq,
-+                         unsigned idx)
++SysEmuTarget target_arch(void)
 +{
-+    return do_vhost_virtqueue_stop(dev, vdev, vq, idx, false);
++    return qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
++                           &error_abort);
 +}
 +
- static int vhost_virtqueue_set_busyloop_timeout(struct vhost_dev *dev,
-                                                 int n, uint32_t timeout)
+ const char *target_cpu_type(void)
  {
-@@ -2119,7 +2132,8 @@ fail_features:
- }
- 
- /* Host notifiers must be enabled at this point. */
--int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-+static int do_vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev,
-+                             bool vrings, bool force)
- {
-     int i;
-     int rc = 0;
-@@ -2141,10 +2155,11 @@ int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-         vhost_dev_set_vring_enable(hdev, false);
-     }
-     for (i = 0; i < hdev->nvqs; ++i) {
--        rc |= vhost_virtqueue_stop(hdev,
--                                   vdev,
--                                   hdev->vqs + i,
--                                   hdev->vq_index + i);
-+        rc |= do_vhost_virtqueue_stop(hdev,
-+                                      vdev,
-+                                      hdev->vqs + i,
-+                                      hdev->vq_index + i,
-+                                      force);
-     }
-     if (hdev->vhost_ops->vhost_reset_status) {
-         hdev->vhost_ops->vhost_reset_status(hdev);
-@@ -2164,6 +2179,17 @@ int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-     return rc;
- }
- 
-+int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-+{
-+    return do_vhost_dev_stop(hdev, vdev, vrings, false);
-+}
-+
-+int vhost_dev_force_stop(struct vhost_dev *hdev, VirtIODevice *vdev,
-+                         bool vrings)
-+{
-+    return do_vhost_dev_stop(hdev, vdev, vrings, true);
-+}
-+
- int vhost_net_set_backend(struct vhost_dev *hdev,
-                           struct vhost_vring_file *file)
- {
+     return target_info()->cpu_type;
 -- 
 MST
 
