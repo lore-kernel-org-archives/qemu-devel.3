@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB20EC83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:17:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 371EDC83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:18:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSJz-0006C9-CD; Mon, 14 Jul 2025 19:10:57 -0400
+	id 1ubSK9-0006RM-2V; Mon, 14 Jul 2025 19:11:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSIM-0002lu-4M
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSI7-0002Kn-Uo
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSIK-0005p5-Bq
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:13 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSI6-0005nD-AZ
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:08:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534551;
+ s=mimecast20190719; t=1752534537;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=vkLKjSQD4q3ibgj4rK/BB/V8wVj/Bt38mK7Hzew+pao=;
- b=RgR+7CdG5qC4V5OvylliwM+zUYmAx9ILpWznh7pwCMLfLVo5Kn8vLCcyhn7ibgIkwxck3e
- /WKcEYP6mluunNRedLT77Uqe8tELpLE2u3Wx/TISjv57BHgx1npRD+fZ0UQsMt88T9km8i
- 1Y+rFihu6m4pcrvL+hFCFWmYhfyljCw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=n2/RU4fBClmDZksI0BLHkAVpRgw7V4hSQeqiSZKZskI=;
+ b=gylU1A5BjSzYMAr1hbJdtIDPnMvzXxMFf0JDHKfJS4SXbkJA80S3RCqWA/CMJWKdiHP8nC
+ CJpURsSfFdK2paxhnUJOISo9z9ObRhNPvZmpEin8f9LCSC/WJMuP7Y1at/mrbnpBx66+Pz
+ aBQkYKtEVEKP3qnXMF+uhFuhtJOlHQo=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-191--_6JxA4VPIW0iPfHL35EBQ-1; Mon, 14 Jul 2025 19:09:10 -0400
-X-MC-Unique: -_6JxA4VPIW0iPfHL35EBQ-1
-X-Mimecast-MFC-AGG-ID: -_6JxA4VPIW0iPfHL35EBQ_1752534549
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a579058758so1906076f8f.1
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:09:10 -0700 (PDT)
+ us-mta-416-Ius2eIjcMjekE_x6j0HSCw-1; Mon, 14 Jul 2025 19:08:56 -0400
+X-MC-Unique: Ius2eIjcMjekE_x6j0HSCw-1
+X-Mimecast-MFC-AGG-ID: Ius2eIjcMjekE_x6j0HSCw_1752534535
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-45526e19f43so12573015e9.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:08:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534549; x=1753139349;
+ d=1e100.net; s=20230601; t=1752534535; x=1753139335;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vkLKjSQD4q3ibgj4rK/BB/V8wVj/Bt38mK7Hzew+pao=;
- b=F1u1uiD5LLLvKB4tkoccyW6T1bXX7dn0kJOb0p1L6uQ8iav8GwYco4AVbvrYtRojt5
- CK702GclayHz2WQ/X7toJWz39X9AkXuEKS2G/ENMplQvKcP8dtZ2tdm23cHbbtVIgF11
- Yp0FtrdsdGyTm396pWOvTNNPc3uSWw+9xrxkUS8WGM3Pid+8ev73JOUgmiVj4ekIKmZK
- g0m6lwYTJxKdPRlCsGR4rR2dzsH/+vrP2dRqVWP2lSCl/2f9jp8usDGoL3dQSlghP6aJ
- oK7Ly2iwvaEJRZOqFSFboud3JeJ2XM4jp73b0bbAm4fhsXdaAOUsocII9nO33ATivVGx
- ruzw==
-X-Gm-Message-State: AOJu0YzM0c06wBw6+Kh1X97N/SFsxNNUVNOdRRu7npCp8QFigoI7+7nd
- mlIbS9jwwrOw7KE3nKih72P48zLlsNXdpFdI5bEWldOBIzjadReGEhj9z9din58r6c9jRGU87eQ
- tQeY4yOwt1nD50U9MeeT6Cf8QF9dfhvxFF0ASOnJ7MMuoPinl7/B225qBqZ3C9+6dHWnbj4u+xD
- aCT3gQwMTjYc+1pPX5CITG51pRedF/WE1mZw==
-X-Gm-Gg: ASbGnct09Iq11cePJ6COju9P6OGgzmyfswkbE0t9IELfCL7PgjkDERjIgMGBnsULgOC
- ymOb3GWW4Yuyw60I1vtiTt5OkEZE+M/BpP3tJFaBB8QXabxSQNQ5ZkylKl4RWXLFOfgmb6HdXCk
- OLX8aXOg5mm6tju8/ja+oDUZYD7xMTznoZcSeLDDOmuQpHapICybXlhC3jb0v6BWZlHGx79JXW7
- oMCnieeFweXDs3y4egpXcSfN5uS//nguFD/9+B3HgqR8i18ewE0ogo9e/ENS7H7OtTvQ/Zx4X7v
- 085YcH8Rn5rfDfFKdsBkKIR0zWsSBpbJ
-X-Received: by 2002:a05:6000:2110:b0:3a5:39ee:2619 with SMTP id
- ffacd0b85a97d-3b5f18eb674mr9949845f8f.47.1752534548802; 
- Mon, 14 Jul 2025 16:09:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHAt1O2/sCEjT+OkJeSHrZL4Ta8F85I7UbSKgoOB2S4oBnYybrmdYuG4xVtp+6wfTuBnjqQ+Q==
-X-Received: by 2002:a05:6000:2110:b0:3a5:39ee:2619 with SMTP id
- ffacd0b85a97d-3b5f18eb674mr9949832f8f.47.1752534548420; 
- Mon, 14 Jul 2025 16:09:08 -0700 (PDT)
+ bh=n2/RU4fBClmDZksI0BLHkAVpRgw7V4hSQeqiSZKZskI=;
+ b=Wz4RYFzZniAFMPdTJX+aLj8naQmnHWUTzBpv3vWwRm9TpCmjrZ4RzVzwpDV1OTzThf
+ 78RcdJ7qg30/NFWoseHiR5iS3aTz2c0xYhzqvBB7hFL527c4VFQQxqRQY81/5MxvBxaM
+ KKZwmuHQBQN35l7RGsRbXzNj3c3ZE4KxGmuLOw1FtVmjgGxABbKIpdMu3ufDWcTjOljA
+ H+7Kkzh3atfWzh28/xD1DiUk4B12kFOW+brVqyKV+Abb8gGB2QpDzkNAO0w4UeaC6/3z
+ je+vojhhAA0budDsJy2cic2CGU5dQaqrY5rTKde3HAHmbRBi5iRqoxl3IcDQ38x6XEf6
+ fIJQ==
+X-Gm-Message-State: AOJu0Yy6/+T6685I/YwK+w6cxq0hTDAMds2jsSVp2kVmkNHqPjmK4NVa
+ tddGIfjs0uGGw+m06aiLuxX2769+2akwUDBzKGxhyt9B+eY5j87EcVXUbzql4p7/JSypNYLYmYD
+ lgpcjyZYWXWmb5Hg2eICVx0K6OAlvyFr2ye6JbzDyMA2p5SeuSbsUN0lCKa1To5s0h+ZMEa+Fps
+ /tsqJXKUsORRBODWZVbbt5fyQlymRYSqVYUA==
+X-Gm-Gg: ASbGnctyaIlGtuAJRt/IhA/DN3Jb6m/tkL+m3k3ZaoSzGA+5n1dR/EgsLZnz+crdi8z
+ q+mZ2NBdaf8wlGckY2hthstgVGPtGqF2+fwWLhkDznrkhxCrozMbUsdzWHGJ/5jkyChMZq1kWQ2
+ dZVK2OjfbyDIDAdhg1RCl/AHNNoc0JY1kFYjL57Qf9WVkOrjkQ+f9179YIuUAHvi0cHvXhaTN+w
+ F9TqVX0BDUIdxKPqDGvdv0XHrVB64O1U07YBZlPYioaXv2Pl1/aXED4FTGn2Nx72hhUCrZRPtw5
+ lbzumwTDTia/074f/2kk3jbbpL2x6WPi
+X-Received: by 2002:a5d:5f09:0:b0:3a4:d274:1d9b with SMTP id
+ ffacd0b85a97d-3b5f18922bbmr12252968f8f.25.1752534535224; 
+ Mon, 14 Jul 2025 16:08:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGITCH4fHn+3HpV4LbGWtcqE4C7ouV+p6FyJhmq5sQQfR9QhPkr7xtl8gGcgTSq3L+QOOnl8w==
+X-Received: by 2002:a5d:5f09:0:b0:3a4:d274:1d9b with SMTP id
+ ffacd0b85a97d-3b5f18922bbmr12252946f8f.25.1752534534771; 
+ Mon, 14 Jul 2025 16:08:54 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8bd1997sm13798384f8f.10.2025.07.14.16.09.06
+ ffacd0b85a97d-3b5e8dc1f70sm13409581f8f.27.2025.07.14.16.08.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:09:07 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:09:05 -0400
+ Mon, 14 Jul 2025 16:08:53 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:08:51 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
+ Eric Auger <eric.auger@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Jonathan Cameron <jonathan.cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 66/97] tests/qtest/bios-tables-test: Prepare for changes in
- the arm virt DSDT table
-Message-ID: <f3566c4c4995f2c7e6d32de0b540d47ea006eaff.1752534227.git.mst@redhat.com>
+ Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 61/97] hw/i386/acpi-build: Use AcpiPciHpState::root in
+ acpi_set_pci_info
+Message-ID: <37419d72af412c3bf32f22dbe7a048789ab8f62b.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -87,7 +86,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1752534227.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -112,34 +111,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gustavo Romero <gustavo.romero@linaro.org>
+From: Eric Auger <eric.auger@redhat.com>
 
-This commit adds DSDT blobs to the whilelist in the prospect to
-allow changes in the arm virt DSDT method.
+pcihp acpi_set_pci_info() generic code currently uses
+acpi_get_i386_pci_host() to retrieve the pci host bridge.
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+To make it work also on ARM we get rid of that call and
+directly use AcpiPciHpState::root.
+
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Suggested-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20250714080639.2525563-21-eric.auger@redhat.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Message-Id: <20250714080639.2525563-16-eric.auger@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ hw/acpi/pcihp.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..023fbc6059 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,7 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/aarch64/virt/DSDT",
-+"tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt",
-+"tests/data/acpi/aarch64/virt/DSDT.memhp",
-+"tests/data/acpi/aarch64/virt/DSDT.pxb",
-+"tests/data/acpi/aarch64/virt/DSDT.topology",
-+"tests/data/acpi/aarch64/virt/DSDT.viot",
+diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
+index 2c76edeb15..2db2f16940 100644
+--- a/hw/acpi/pcihp.c
++++ b/hw/acpi/pcihp.c
+@@ -99,10 +99,10 @@ static void *acpi_set_bsel(PCIBus *bus, void *opaque)
+     return info;
+ }
+ 
+-static void acpi_set_pci_info(bool has_bridge_hotplug)
++static void acpi_set_pci_info(AcpiPciHpState *s)
+ {
+     static bool bsel_is_set;
+-    Object *host = acpi_get_i386_pci_host();
++    bool has_bridge_hotplug = s->use_acpi_hotplug_bridge;
+     PCIBus *bus;
+     BSELInfo info = { .bsel_alloc = ACPI_PCIHP_BSEL_DEFAULT,
+                       .has_bridge_hotplug = has_bridge_hotplug };
+@@ -112,11 +112,8 @@ static void acpi_set_pci_info(bool has_bridge_hotplug)
+     }
+     bsel_is_set = true;
+ 
+-    if (!host) {
+-        return;
+-    }
+ 
+-    bus = PCI_HOST_BRIDGE(host)->bus;
++    bus = s->root;
+     if (bus) {
+         /* Scan all PCI buses. Set property to enable acpi based hotplug. */
+         pci_for_each_bus_depth_first(bus, acpi_set_bsel, NULL, &info);
+@@ -266,7 +263,7 @@ static void acpi_pcihp_update(AcpiPciHpState *s)
+ 
+ void acpi_pcihp_reset(AcpiPciHpState *s)
+ {
+-    acpi_set_pci_info(s->use_acpi_hotplug_bridge);
++    acpi_set_pci_info(s);
+     acpi_pcihp_update(s);
+ }
+ 
 -- 
 MST
 
