@@ -4,62 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9EC0C83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28728C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:44:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubHaQ-0001ia-Mq; Mon, 14 Jul 2025 07:43:21 -0400
+	id 1ubHLK-0005YU-7H; Mon, 14 Jul 2025 07:27:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1ubH5D-0005sa-8i
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:11:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ubH0R-0001Nt-3r
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:06:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1ubH59-000353-7R
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:10:54 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ubH0O-0001zO-Ia
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:05:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752491448;
+ s=mimecast20190719; t=1752491155;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=1/yB//fEMd3x9i/nIaNCrmI8ELBKw+cDelwMVR9cfko=;
- b=TLUwKKDEr4pspDew6+SJbzMCUBYPVKg/v4bc1h5i6O/04taV7agm6qOXSWsXcNGCYkxQbd
- j7EJ+2IxCHLKxn3STHHdJDI1wgNe3Urx3WmdgYWVYDy+XneKiuwDYE60S2OsiYmnLVofvv
- /GN8FU2+KIBANu5k9HB6qWI1za9ChP0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-297-XoZPOV7kNxGszR3cyRemhQ-1; Mon,
- 14 Jul 2025 07:10:44 -0400
-X-MC-Unique: XoZPOV7kNxGszR3cyRemhQ-1
-X-Mimecast-MFC-AGG-ID: XoZPOV7kNxGszR3cyRemhQ_1752491444
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0620919560AA
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 11:10:44 +0000 (UTC)
-Received: from localhost (unknown [10.45.242.9])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BCA8C19560A3; Mon, 14 Jul 2025 11:10:42 +0000 (UTC)
-From: marcandre.lureau@redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=H++7bFZZz0BdH8FF5Yhc/WS1RX64LTDufArp4gDgK4o=;
+ b=dJCmbhBi932eyQ87b/IQ8hx1UhTgA8byC+A94PFArFhBpwVbUDoawfmCQXK+lDU2DZY8fd
+ MYvqnSJZrSI5nwQL4v+4NckVyIalPEZfav7N0/5ZDdt+oNZJ5Awjp3XtC92UBvWxZhLwBC
+ xhQhDDl8oCSfZyAavqAxq6VnZvGGGv8=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-310-QCEMveEvOlWWZL5H0ZwIVw-1; Mon, 14 Jul 2025 07:05:54 -0400
+X-MC-Unique: QCEMveEvOlWWZL5H0ZwIVw-1
+X-Mimecast-MFC-AGG-ID: QCEMveEvOlWWZL5H0ZwIVw_1752491153
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-451ecc3be97so22101655e9.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:05:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752491153; x=1753095953;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=H++7bFZZz0BdH8FF5Yhc/WS1RX64LTDufArp4gDgK4o=;
+ b=vRo1my5gf/Vt1nV5+8GiWsrIxS5MU2TRAXo72hd+0SWuXMQLKDlcxXFJ+LlkqTy0sn
+ hTDytZLTuReGiqWAPlxTVYMLYLAMtgz9T2XxMVNgi65w3PreKDDbJ8qEF9KwBgADXQ7j
+ uABxUzGafFz1ryttoBb701Sjd7D9y/ok4dK0TZGbY56joEv558J7CbRMWt+mufR+jV2P
+ wIYT2WQLNY4afWkJajQsFdFaIgHEQmwzfpUAyRXWCgnut529PKxlS9qIm1+vD7++x748
+ adkTavQoSQSUCZu68ecD4uPjgQptO5J6KSSng24933XOhvegq5faSy7NVDCqm+9LyMcU
+ 8jTQ==
+X-Gm-Message-State: AOJu0YxU53iv48niSVtPcyIyZ7U9NIRzDSz6KbdGjp6DaRwUOVteH+5v
+ 2NTvebA6TZgdvUil9eWLfp05eUUxl08OmKuMQ5zKbwvLM6rze5hNadttVnGcB5LAQnLaX0hvy23
+ zEwHuMXUPzBRHkdZ8sYgizqSyfJJ+7Kqu+CbV4RCYLlk/YytuJhKfipYPyAlQuNPMah80hCqufT
+ HUrbfe3ydWQggJ5G5/Z9K5WYSSCPuF2w2MHFjkLWdl
+X-Gm-Gg: ASbGnctsP1E8iiSaXRs062j9kYkSNaGNRvxNYRDGYyqn+qmTzS76Lhu9t8W1WJmoL6a
+ OSWcEj4w3UhxnjPy3QtDBgdfXkZWONnuHtIauKPkfW+kjwZpNwIIogvs8HWp3iDsImc+xvSYX4d
+ BmQuZGElf/hd2gwUDWmbIy53C6sZhNvM2rDtri0RJQOIzIO/jzi/TsjN8BE3g1U8OonHUdbw8OF
+ /dG6RrvNp3jm4iNn1cQzOVP6gDd7p/kFXv1NK1V07rX8tkSw8ytkXgr1e4nUEu4aphgAmbndAaI
+ zrOmvyFqXdO4b1b6UDEN+4uQtRTAqVZ6hpFq8lB+JpA=
+X-Received: by 2002:a05:600c:34c5:b0:43c:fe5e:f040 with SMTP id
+ 5b1f17b1804b1-45565edc8f4mr99187415e9.23.1752491152433; 
+ Mon, 14 Jul 2025 04:05:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEEVLM3vTpeynBS77usHfWMNhE2tboZqaO3bZMr/ImTuMBrQQ7nqF9KAqtYPV/W60Pzy1FexQ==
+X-Received: by 2002:a05:600c:34c5:b0:43c:fe5e:f040 with SMTP id
+ 5b1f17b1804b1-45565edc8f4mr99187165e9.23.1752491151874; 
+ Mon, 14 Jul 2025 04:05:51 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.73.155])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454d50ded8csm166809555e9.20.2025.07.14.04.05.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Jul 2025 04:05:48 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 00/13] Ui patches
-Date: Mon, 14 Jul 2025 15:10:23 +0400
-Message-ID: <20250714111039.4150419-1-marcandre.lureau@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
+	Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 39/77] i386/tdx: Don't mask off CPUID_EXT_PDCM
+Date: Mon, 14 Jul 2025 13:03:28 +0200
+Message-ID: <20250714110406.117772-40-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.50.0
+In-Reply-To: <20250714110406.117772-1-pbonzini@redhat.com>
+References: <20250714110406.117772-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -84,82 +109,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-The following changes since commit 9a4e273ddec3927920c5958d2226c6b38b543336:
+It gets below warning when booting TDX VMs:
 
-  Merge tag 'pull-tcg-20250711' of https://gitlab.com/rth7680/qemu into staging (2025-07-13 01:46:04 -0400)
+  warning: TDX forcibly sets the feature: CPUID[eax=01h].ECX.pdcm [bit 15]
 
-are available in the Git repository at:
+Because CPUID_EXT_PDCM is fixed1 for TDX, and MSR_IA32_PERF_CAPABILITIES is
+supported for TDX guest unconditioanlly.
 
-  https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pull-request
+Don't mask off CPUID_EXT_PDCM for TDX.
 
-for you to fetch changes up to c99b7e6d4aa8bcc12d47483ebe81072168de56fb:
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20250625035710.2770679-1-xiaoyao.li@intel.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/cpu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-  tpm: "qemu -tpmdev help" should return success (2025-07-14 15:02:00 +0400)
-
-----------------------------------------------------------------
-UI-related for 10.1
-
-- [PATCH v3 0/2] ui/vnc: Do not copy z_stream
-- [PATCH v6 0/7] ui/spice: Enable gl=on option for non-local or remote clients
-- [PATCH v6 0/1] Allow injection of virtio-gpu EDID name
-- [PATCH 0/2] ui/gtk: Add keep-aspect-ratio and scale option
-
-----------------------------------------------------------------
-
-Akihiko Odaki (2):
-  ui/vnc: Do not copy z_stream
-  ui/vnc: Introduce the VncWorker type
-
-Andrew Keesler (1):
-  hw/display: Allow injection of virtio-gpu EDID name
-
-Marc-André Lureau (1):
-  tpm: "qemu -tpmdev help" should return success
-
-Vivek Kasireddy (7):
-  ui/egl-helpers: Error check the fds in egl_dmabuf_export_texture()
-  ui/spice: Enable gl=on option for non-local or remote clients
-  ui/spice: Add an option for users to provide a preferred video codec
-  ui/spice: Add an option to submit gl_draw requests at fixed rate
-  ui/console-gl: Add a helper to create a texture with linear memory
-    layout
-  ui/spice: Create a new texture with linear layout when gl=on is
-    specified
-  ui/spice: Blit the scanout texture if its memory layout is not linear
-
-Weifeng Liu (2):
-  ui/gtk: Add keep-aspect-ratio option
-  ui/gtk: Add scale option
-
- qapi/ui.json                        |  15 +-
- qapi/virtio.json                    |  18 +-
- include/hw/display/edid.h           |   2 +
- include/hw/qdev-properties-system.h |   5 +
- include/hw/virtio/virtio-gpu.h      |   3 +
- include/ui/console.h                |   3 +
- include/ui/gtk.h                    |   2 +
- include/ui/spice-display.h          |   5 +
- include/ui/surface.h                |   1 +
- ui/vnc.h                            |  49 +--
- hw/core/qdev-properties-system.c    |  44 +++
- hw/display/virtio-gpu-base.c        |  27 ++
- system/tpm.c                        |   5 +-
- ui/console-gl.c                     |  54 ++++
- ui/egl-helpers.c                    |   6 +
- ui/gtk.c                            |  58 ++--
- ui/spice-core.c                     |  31 ++
- ui/spice-display.c                  | 226 +++++++++++++-
- ui/vnc-enc-tight.c                  | 456 +++++++++++++++-------------
- ui/vnc-enc-zlib.c                   |  47 +--
- ui/vnc-enc-zrle.c                   | 122 ++++----
- ui/vnc-jobs.c                       |  13 +-
- ui/vnc.c                            |  83 +++--
- ui/vnc-enc-zrle.c.inc               |  20 +-
- qemu-options.hx                     |  13 +
- 25 files changed, 882 insertions(+), 426 deletions(-)
-
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index b768838b100..f9e6bc8d0e6 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -28,6 +28,7 @@
+ #include "system/hvf.h"
+ #include "hvf/hvf-i386.h"
+ #include "kvm/kvm_i386.h"
++#include "kvm/tdx.h"
+ #include "sev.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+@@ -8336,7 +8337,8 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+         }
+     }
+ 
+-    if (!cpu->enable_pmu) {
++    /* PDCM is fixed1 bit for TDX */
++    if (!cpu->enable_pmu && !is_tdx_vm()) {
+         mark_unavailable_features(cpu, FEAT_1_ECX,
+                                   env->user_features[FEAT_1_ECX] & CPUID_EXT_PDCM,
+                                   "This feature is not available due to PMU being disabled");
 -- 
 2.50.0
 
