@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E388C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:13:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C1F1C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:13:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSKJ-0007Kc-9n; Mon, 14 Jul 2025 19:11:15 -0400
+	id 1ubSJB-00058I-CM; Mon, 14 Jul 2025 19:10:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSIX-0003un-IJ
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSIE-0002VL-LY
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSIV-0005rj-U1
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:25 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSIC-0005o5-H7
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534563;
+ s=mimecast20190719; t=1752534543;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=abIfIiNx1s306ZzyGHCdWRc0FqHz4inGvPBZMZGML7I=;
- b=cGD6TNGvLjHx1umhj8rtphMG9YFxL1v4Gwq8vqV5mcZs2m8IpXLMaDhcHcS06hYni/DMHJ
- hfV6oDOuqL4jylZ62R1Fecnebg/irVtqseSu9MTFDG1rPIHep8qAfr53RIqeJnOtJGZLiF
- 8GgGdXXyO7GB5Bg/b67SYPPgerur1lw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vkrlbrhsKn6eS+sA2oOtiYsJKDGFt+PZH3pEh9q5Hf8=;
+ b=LT9A219rIG2GfmGycgFxgyUVnbWxsK60+nlztlnh6lVYfeh28k6jVTmDrbthoI3lCaLrtU
+ UCHTXHeiJNnwxMd5aiUhnJsZA70Xbox858Yxc524kZAALc7zQWrSPgC7ipuR18lK0rHw6I
+ 4Orm6O4DlsSbT5/EqAvvGD5RlNCOwWI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-13-pDe2bfncMXGAf1C4gtkZrQ-1; Mon, 14 Jul 2025 19:09:21 -0400
-X-MC-Unique: pDe2bfncMXGAf1C4gtkZrQ-1
-X-Mimecast-MFC-AGG-ID: pDe2bfncMXGAf1C4gtkZrQ_1752534560
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-451d2037f1eso30883115e9.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:09:20 -0700 (PDT)
+ us-mta-692-gR4Os1bSM3-xIfO74Dhiig-1; Mon, 14 Jul 2025 19:09:02 -0400
+X-MC-Unique: gR4Os1bSM3-xIfO74Dhiig-1
+X-Mimecast-MFC-AGG-ID: gR4Os1bSM3-xIfO74Dhiig_1752534541
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4560a30a793so10161665e9.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:09:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534559; x=1753139359;
+ d=1e100.net; s=20230601; t=1752534541; x=1753139341;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=abIfIiNx1s306ZzyGHCdWRc0FqHz4inGvPBZMZGML7I=;
- b=X0jtWKSsv85pvwn6bID+kv7ZwzgOgPbMJ5G32cjBpisM+N93fTcpstTinDyJ283Ncl
- 1/wL7WoxiEMxSV+TBNptlGaMNiqa51Xpq/dQ7byhGhV7urhQTOuJ2VjJOTXf8m2W0Q5G
- vspxqg4mIYhqEJR90913qNaD35BnVszWqDINUueUEMfQZ0HFP5OrJQGdB3xQqOap/ik0
- Xx+0/UOKTuCZsrFuexovWfDmDZrzfKOSrx/wGv1GiAyowOtGcjYXtp+L6IOZ70WbBh6U
- /C0+sEW9Uridqq4N11XgdzkGhQTsVX0b0G9qwEFr7DgFek5PT1Z+gobUth9hr59+00oW
- eqmg==
-X-Gm-Message-State: AOJu0YxymPWVPkewPIKK2Jkx6PogDeU7jfgc3GIvm8YdI8Az1rEvw8Yp
- x/rI0ITajOu70R0stCm/PnVTyhVOKTgEIkRjjwhwT6KrqzaB/OceljiFZbwvZrRfQAP3NW9NUkX
- c/rlAaryh0k0l4jHcMyIpB7z5rLKSLJ62RrEyoT6NtWHQCwjhOS+7Zc3yYNqy9fTm578oTHll0U
- HDQiWGKO72MEDsJ8RZe3NOMJ+nQh9AyYqFAw==
-X-Gm-Gg: ASbGncve2ppLZCW5XkDXVyEdbs69rUlNxa4oMm25/93rUlCSWtdwRps34RiQkY0HWqF
- IFDlb7+IcLbJ0f8jPPd4CJIma905CO8XRjVkQGmCaDv4bqKhGgu0UeWyVKdUxWe/9Ptc1T0sri8
- cJpK6NiIW+TLfbsU7li520lmttijwGdja0LYVp129Hen2dRuEVkBVfUu3QEyI2VlCpMspLsyAis
- AV2h3qYRrJUV1l4oIZJB5V8OMKfdPe36M6qTXshMzX5lFiYhEJo64O0AhBrPidt5YT7JlQnxCwJ
- W16QXZg9fzrYw64iNK8ieTLUTBCxfbdu
-X-Received: by 2002:a05:600c:3d89:b0:450:d30e:ff96 with SMTP id
- 5b1f17b1804b1-455f30bfc7dmr130563755e9.0.1752534559462; 
- Mon, 14 Jul 2025 16:09:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFIFbkMAPSgyKo4pac+uDc6SV8ZtgSYpPq6yKxRgX1NUPh6ez12s8bhpaYBSJbKDWdgQG109g==
-X-Received: by 2002:a05:600c:3d89:b0:450:d30e:ff96 with SMTP id
- 5b1f17b1804b1-455f30bfc7dmr130563565e9.0.1752534559043; 
- Mon, 14 Jul 2025 16:09:19 -0700 (PDT)
+ bh=vkrlbrhsKn6eS+sA2oOtiYsJKDGFt+PZH3pEh9q5Hf8=;
+ b=wNcMYcYS5YfKbUI8AyDU5qZFwO3SdjLvfSqI5wdJjscuGHfmTWiDdXPPM3dB1ltUuV
+ ZfyKxtK0MLGR7PLhfdoNk3SYijMHyQAZNH64Pvnk8XPKXX73+Rf7xMviArgbIICu1iRu
+ r1NX3FzpaATpJldzF3Z5TNqreZSAY6LjQBskV6uKPceREdMHPLQwzUyWZR4O1JDbAgAx
+ 7FXd+3MlzfxzbSfUe1wd5C5CH/bn1aYYK1nF9jQ+aS/lMmMwyzicmqxLzrbi14VKzd+C
+ VlAHfS7BRiVpzcQRlm8VU9c7VNkKUdR/PLCKt4owF0vG6k1gnpbk9vQx+NhU4/U4jHvI
+ VOWg==
+X-Gm-Message-State: AOJu0Yx80CFEI+djb61HYiZIdy2wUHmn9Y2r4tqFrItkg5q6HH/GRVvR
+ FjCl5lLQXE8KlHN6PNOX5u7CvdKWJu0tn7mEGbwk1ovCm5VUDr2Nfj30F6/f2KOq74R466ivAI2
+ hzP+4rBGco8DN9/J/90dF4x6urbAIVkbjW/DnJp3rwVEt5OMjbadwWsfbR2b9Aqv4uP+U8OBowb
+ r3SMhJU3xw9tg1x6bD62FXvyy8vXKhzBRMJQ==
+X-Gm-Gg: ASbGncsEm00nGrO7kimt7kkM0xyachfuMXO7Dgr0djE5kEH4XUH2z4gqix9c106KrTd
+ 5S/HYCISNW7moceRD17m/mf8D7CG7qOg7YLnm4elCz9Wk9NGny6yVox6i7eL+N04fQ9eXRtSG6E
+ vE9x9VuWJkWyBTh62iFNJ13p7TFTf9+plYXmbmmA9R+0cy5Qk18zNDsIijvj8pebwNfVVxUyLx5
+ 8+Q/SQegGp0eLI7rhec8XYrDmBMXvLyIdDkOuX7KslOS7JiPETq9S8jPg97wClbLNnxp7M/Opmx
+ wHmotGRpxeRR1MjOFKpKMNUET/6HPetm
+X-Received: by 2002:a05:600c:1e04:b0:456:c48:491f with SMTP id
+ 5b1f17b1804b1-4560c484fbbmr105500325e9.10.1752534540675; 
+ Mon, 14 Jul 2025 16:09:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHMfqosGnNpE2JNodrS12kF8YYsT+u8JEf2idso1z5nPAIDS1pJIPJ3iZCom/rbOlNQXjssVw==
+X-Received: by 2002:a05:600c:1e04:b0:456:c48:491f with SMTP id
+ 5b1f17b1804b1-4560c484fbbmr105500075e9.10.1752534540177; 
+ Mon, 14 Jul 2025 16:09:00 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e0d719sm13690284f8f.54.2025.07.14.16.09.16
+ 5b1f17b1804b1-456009ec9c8sm91680415e9.39.2025.07.14.16.08.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:09:18 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:09:15 -0400
+ Mon, 14 Jul 2025 16:08:59 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:08:57 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Eric Auger <eric.auger@redhat.com>,
  Jonathan Cameron <jonathan.cameron@huawei.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 70/97] hw/acpi/ged: Add a bus link property
-Message-ID: <4b37deb11bd7e03238ae0bfc1fd6abdea1eb9a18.1752534227.git.mst@redhat.com>
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 63/97] qtest/bios-tables-test: Prepare for fixing the aarch64
+ viot test
+Message-ID: <b04afde07abcd2cb49482ecb7caad88104ee6235.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -85,7 +86,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1752534227.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -112,40 +113,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Eric Auger <eric.auger@redhat.com>
 
-This property will be set by the machine code on the object
-creation. It will be used by acpi pcihp hotplug code.
+The test misses a variant and this puts the mess on subsequent
+rebuild-expected-aml.sh where a first DSDT reference blob is
+overriden by another one.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Message-Id: <20250714080639.2525563-25-eric.auger@redhat.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20250714080639.2525563-18-eric.auger@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/acpi/generic_event_device.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+ tests/data/acpi/aarch64/virt/DSDT.viot      | 0
+ 2 files changed, 1 insertion(+)
+ create mode 100644 tests/data/acpi/aarch64/virt/DSDT.viot
 
-diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-index 7831db412b..ef1c1ec51f 100644
---- a/hw/acpi/generic_event_device.c
-+++ b/hw/acpi/generic_event_device.c
-@@ -13,6 +13,7 @@
- #include "qapi/error.h"
- #include "hw/acpi/acpi.h"
- #include "hw/acpi/generic_event_device.h"
-+#include "hw/pci/pci.h"
- #include "hw/irq.h"
- #include "hw/mem/pc-dimm.h"
- #include "hw/mem/nvdimm.h"
-@@ -320,6 +321,8 @@ static const Property acpi_ged_properties[] = {
-     DEFINE_PROP_UINT32("ged-event", AcpiGedState, ged_event_bitmap, 0),
-     DEFINE_PROP_BOOL(ACPI_PM_PROP_ACPI_PCIHP_BRIDGE, AcpiGedState,
-                      pcihp_state.use_acpi_hotplug_bridge, 0),
-+    DEFINE_PROP_LINK("bus", AcpiGedState, pcihp_state.root,
-+                     TYPE_PCI_BUS, PCIBus *),
- };
- 
- static const VMStateDescription vmstate_memhp_state = {
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..7a74beab3d 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,2 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/aarch64/virt/DSDT.viot",
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.viot b/tests/data/acpi/aarch64/virt/DSDT.viot
+new file mode 100644
+index 0000000000..e69de29bb2
 -- 
 MST
 
