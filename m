@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0395DC83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:49:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FCBFC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:49:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubLQ0-0004gQ-Pj; Mon, 14 Jul 2025 11:48:40 -0400
+	id 1ubLQ4-0004kS-FQ; Mon, 14 Jul 2025 11:48:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1ubKBA-00082p-7s; Mon, 14 Jul 2025 10:29:16 -0400
+ id 1ubKB7-00080U-RI; Mon, 14 Jul 2025 10:29:13 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1ubKB6-0002fY-1O; Mon, 14 Jul 2025 10:29:15 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56E9Z6CK001413;
- Mon, 14 Jul 2025 14:27:24 GMT
+ id 1ubKB5-0002fb-MS; Mon, 14 Jul 2025 10:29:13 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56E9Z5rg018811;
+ Mon, 14 Jul 2025 14:27:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=tk5fkxSAtSKuWs98ycJFlpz1H4LyUdJVzy8KeuvCkF4=; b=
- XaouKilcSnQD72WWImPRy53la6FtGTuinvgMsnu+9uuwdY/1tJLIgt/wuTMDuBgt
- B1hIxOjTgECRV47BTfbUSZfs3WyTGw5AhhSKCTo88X0XKSZvAkIT130Hv1Uus/Ig
- YisfVFQ+vBh54bWwMehOaHJblSMsXN4fY10XeDcPk+gOBrmgQWTEa3S49iC8likz
- TkqiK9IKTOCn/CBl01TRjyiZpzh8PhDVmmh3LROCqBKGUXSxBHaDvNyQjhwtSkmR
- dXS/gP16k6T4IZkiP8zUrOuO6tQmjptPa9HzdQVTKdVfLabeQwRRWb3pRLx+qqIc
- esZ5LgVJnGJUI8jGyyg7oQ==
+ corp-2025-04-25; bh=y6Nmd3tVgLtNyhYPxy1OmFOi5aAoV//jGNLOQhVL6/k=; b=
+ Zp+yAdm2v3lN3bIfLF5Xw59cdui5aO7M/nqzi3Zk2A4cLOedAQVxPgRkYByokA7c
+ d0fAjapBt6W1kJajjkQ/FuriKU4fXocftwjwn++xdAnbjrcwnHgKya77xfc7Qril
+ KiaoUXjm8U6jCkSgl0PEd2L9e5RIo4WwyS9OpJtSqq4CF2aOad7SkOPqU7OX2lM5
+ phinMY7WjtOq09dPM/MWn85PbtmCkpJ3L4iTliI41iP37LgzVjQGlCcOwSkpBUaG
+ gcgtEB/UTYKoK6Jl3n61E8fZ3/ReLDgqhowD/CGk+TLI2NlHCP1y+oeagyS71Vjk
+ 8XDF1VPvzDk8N4sI9g9ctQ==
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47uk8fv846-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47ufnqn14a-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 14 Jul 2025 14:27:23 +0000 (GMT)
+ Mon, 14 Jul 2025 14:27:24 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 56EEOjaB010901; Mon, 14 Jul 2025 14:27:22 GMT
+ with ESMTP id 56EDdFP1011597; Mon, 14 Jul 2025 14:27:23 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 47ue58kgq4-1
+ 47ue58kgqp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 14 Jul 2025 14:27:22 +0000
+ Mon, 14 Jul 2025 14:27:23 +0000
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56EERLK4040396;
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56EERLK6040396;
  Mon, 14 Jul 2025 14:27:22 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 47ue58kgnu-2; Mon, 14 Jul 2025 14:27:21 +0000
+ ESMTP id 47ue58kgnu-3; Mon, 14 Jul 2025 14:27:22 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -58,9 +58,10 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V1 1/2] hw/intc/arm_gicv3_kvm: subroutine for save pending
-Date: Mon, 14 Jul 2025 07:27:18 -0700
-Message-Id: <1752503239-222714-2-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V1 2/2] hw/intc/arm_gicv3_kvm: preserve pending interrupts
+ during cpr
+Date: Mon, 14 Jul 2025 07:27:19 -0700
+Message-Id: <1752503239-222714-3-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1752503239-222714-1-git-send-email-steven.sistare@oracle.com>
 References: <1752503239-222714-1-git-send-email-steven.sistare@oracle.com>
@@ -72,19 +73,19 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  mlxlogscore=999 adultscore=0 phishscore=0 bulkscore=0 suspectscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2507140085
-X-Proofpoint-ORIG-GUID: QfPB42MKEDsw1Csq1H6a0P7rJqtJMoen
-X-Authority-Analysis: v=2.4 cv=Of+YDgTY c=1 sm=1 tr=0 ts=687513cb b=1 cx=c_pps
+X-Proofpoint-GUID: 0i1nAnriJwqYc6tACAu7tqMuV5JCDIVu
+X-Proofpoint-ORIG-GUID: 0i1nAnriJwqYc6tACAu7tqMuV5JCDIVu
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE0MDA4NSBTYWx0ZWRfX5Zlkg0zbi4K8
+ Irk6rBMUEBkLtIgaRlVuwz28VEyKAdDXgWbUghJYdYt9vipstKbBx4I9TJWppu6flN/ZQ1t8Uc1
+ WYef2VvFC6F6vyNfxwB3z3KBAx9HJtKonnQTcQM0nzKQZXaqfEmauVbybSd3HHi103of8QGASz3
+ xVPCTI1mMAEOqQ2VC7okUZylrcu00QH4ad6pTlFOXycp4dlS7q3qrAM1dU8wmsZN7qjZKhI2xLl
+ LsN4SRyTSPpQGPur81CiVZJB2jT7nIU43Rd8VomCE1S669q10n31H1MKvo7z+yCmiEN9I6rv7aL
+ cAcPU8Ib5beBOYDL2XtEGNCFX0URiucPn/gpqlQ5BLmA8GvSdCpbpru5Sr0zVoK6PIdY1FmZEW8
+ u+fEO8t+9sMLtlvhzcIEAWL6YR+dCQYuOOfrPo1LaH+zkH0fLlSoPxFNHebb+kkdTTRMjQH+
+X-Authority-Analysis: v=2.4 cv=U9ySDfru c=1 sm=1 tr=0 ts=687513cc b=1 cx=c_pps
  a=qoll8+KPOyaMroiJ2sR5sw==:117 a=qoll8+KPOyaMroiJ2sR5sw==:17
- a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=gMFKxlV9jZ9YN_hqq3IA:9 cc=ntf
+ a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=-1ppJrQcysB06QCxmjEA:9 cc=ntf
  awl=host:12062
-X-Proofpoint-GUID: QfPB42MKEDsw1Csq1H6a0P7rJqtJMoen
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE0MDA4NSBTYWx0ZWRfXxP6FW0nkvTJD
- uH1a/IaqIPh9h3tBqMGwflCZk29/ZFyzO77oA1qCTI7aVhdGV0NFPAxt8qvcsBd04CrJiheF8qV
- 2YRUY8h/Pou6kThP3/ulLk2SJxm/75jFe/5D628g5PFv6UE4qs9R98nrAHtvUQUVzlVjn3GYLSv
- wMSM/5yvzqaW/yloF6Dnsbc7hhn2S1xbkMA88p6EiWRtfJdcVoBUPn+BkQaVXHdxK+k817Iq3Qe
- cBYvFnlpuW6YMMKfuPEkiFwypiCh+Fnu4cvVwhsF4mG3uDg/sGihZMG/0UwmVHYLL4gfg9DBbXW
- 7VxvLVqmEvduDCKjz153ZPtnxeMP4MUdDaML29L+OahPFgHQIhdrh1AhZptaMhYFbiwJzv9+NLG
- x/QJI5SbwidohLn6qWKqDDT1SQFRLA1s1mpKVX1BFjcy4Ea3tdwYUenncFQmh3jUtiJ/PoFV
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -110,61 +111,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extract a subroutine for KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES.
-No functional change.
+Close a race condition that causes cpr-transfer to lose VFIO
+interrupts on ARM.
+
+CPR stops VCPUs but does not disable VFIO interrupts, which may continue
+to arrive throughout the transition to new QEMU.
+
+CPR calls kvm_irqchip_remove_irqfd_notifier_gsi in old QEMU to force
+future interrupts to the producer eventfd, where they are preserved.
+Old QEMU then destroys the old KVM instance.  However, interrupts may
+already be pended in KVM state.  To preserve them, call ioctl
+KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES to flush them to guest RAM, where
+they will be picked up when the new KVM+VCPU instance is created.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- hw/intc/arm_gicv3_kvm.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ hw/intc/arm_gicv3_kvm.c            | 16 +++++++++++++++-
+ include/hw/intc/arm_gicv3_common.h |  3 +++
+ 2 files changed, 18 insertions(+), 1 deletion(-)
 
 diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
-index 3be3bf6c28..43cba6e3f1 100644
+index 43cba6e3f1..15245af2fd 100644
 --- a/hw/intc/arm_gicv3_kvm.c
 +++ b/hw/intc/arm_gicv3_kvm.c
-@@ -749,6 +749,20 @@ static const ARMCPRegInfo gicv3_cpuif_reginfo[] = {
-     },
+@@ -30,6 +30,7 @@
+ #include "gicv3_internal.h"
+ #include "vgic_common.h"
+ #include "migration/blocker.h"
++#include "migration/misc.h"
+ #include "qom/object.h"
+ #include "target/arm/cpregs.h"
+ 
+@@ -783,6 +784,15 @@ static void vm_change_state_handler(void *opaque, bool running,
+     }
+ }
+ 
++static int kvm_arm_gicv3_notifier(NotifierWithReturn *notifier,
++                                  MigrationEvent *e, Error **errp)
++{
++    if (e->type == MIG_EVENT_PRECOPY_DONE) {
++        GICv3State *s = container_of(notifier, GICv3State, cpr_notifier);
++        kvm_arm_save_pending_tables(s);
++    }
++    return 0;
++}
+ 
+ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
+ {
+@@ -889,13 +899,17 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
+                                GICD_CTLR)) {
+         error_setg(&s->migration_blocker, "This operating system kernel does "
+                                           "not support vGICv3 migration");
+-        if (migrate_add_blocker(&s->migration_blocker, errp) < 0) {
++        if (migrate_add_blocker_modes(&s->migration_blocker, MIG_MODE_NORMAL,
++                                      MIG_MODE_CPR_TRANSFER, errp) < 0) {
+             return;
+         }
+     }
+     if (kvm_device_check_attr(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CTRL,
+                               KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES)) {
+         qemu_add_vm_change_state_handler(vm_change_state_handler, s);
++        migration_add_notifier_mode(&s->cpr_notifier,
++                                    kvm_arm_gicv3_notifier,
++                                    MIG_MODE_CPR_TRANSFER);
+     }
+ }
+ 
+diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
+index a3d6a0e507..75bbc403c7 100644
+--- a/include/hw/intc/arm_gicv3_common.h
++++ b/include/hw/intc/arm_gicv3_common.h
+@@ -27,6 +27,7 @@
+ #include "hw/sysbus.h"
+ #include "hw/intc/arm_gic_common.h"
+ #include "qom/object.h"
++#include "qemu/notify.h"
+ 
+ /*
+  * Maximum number of possible interrupts, determined by the GIC architecture.
+@@ -270,6 +271,8 @@ struct GICv3State {
+     GICv3CPUState *cpu;
+     /* List of all ITSes connected to this GIC */
+     GPtrArray *itslist;
++
++    NotifierWithReturn cpr_notifier;
  };
  
-+static int kvm_arm_save_pending_tables(GICv3State *s)
-+{
-+    Error *err = NULL;
-+    int ret;
-+
-+    ret = kvm_device_access(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CTRL,
-+                            KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES,
-+                            NULL, true, &err);
-+    if (err) {
-+        error_report_err(err);
-+    }
-+    return ret;
-+}
-+
- /**
-  * vm_change_state_handler - VM change state callback aiming at flushing
-  * RDIST pending tables into guest RAM
-@@ -758,20 +772,12 @@ static const ARMCPRegInfo gicv3_cpuif_reginfo[] = {
- static void vm_change_state_handler(void *opaque, bool running,
-                                     RunState state)
- {
--    GICv3State *s = (GICv3State *)opaque;
--    Error *err = NULL;
-     int ret;
- 
-     if (running) {
-         return;
-     }
--
--    ret = kvm_device_access(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CTRL,
--                           KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES,
--                           NULL, true, &err);
--    if (err) {
--        error_report_err(err);
--    }
-+    ret = kvm_arm_save_pending_tables(opaque);
-     if (ret < 0 && ret != -EFAULT) {
-         abort();
-     }
+ #define GICV3_BITMAP_ACCESSORS(BMP)                                     \
 -- 
 2.39.3
 
