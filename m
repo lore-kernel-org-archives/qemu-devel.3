@@ -4,60 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C36EDC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 17:10:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A87B1C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 17:10:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubMgj-0004u1-Uk; Mon, 14 Jul 2025 13:10:02 -0400
+	id 1ubMh9-0005aE-Ed; Mon, 14 Jul 2025 13:10:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1ubLh3-0000Wr-0E
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 12:06:17 -0400
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1ubLbw-00052o-IO; Mon, 14 Jul 2025 12:01:00 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1ubLh1-0000av-1X
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 12:06:16 -0400
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1ubLbt-0008HH-CZ; Mon, 14 Jul 2025 12:00:59 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bgnCT5g6Mz6L5Mx;
- Tue, 15 Jul 2025 00:02:45 +0800 (CST)
-Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id 285E81402ED;
- Tue, 15 Jul 2025 00:06:13 +0800 (CST)
-Received: from localhost (10.81.206.233) by frapeml500003.china.huawei.com
- (7.182.85.28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 14 Jul
- 2025 18:06:11 +0200
-Date: Mon, 14 Jul 2025 17:06:05 +0100
-To: "Michael S. Tsirkin" <mst@redhat.com>
-CC: <anisinha@redhat.com>, <imammedo@redhat.com>,
- <jonathan.cameron@huawei.com>, <linuxarm@huawei.com>,
- <peter.maydell@linaro.org>, <prime.zeng@hisilicon.com>,
- <qemu-devel@nongnu.org>, <shameerali.kolothum.thodi@huawei.com>,
- <wangyanan55@huawei.com>, <yangyicong@hisilicon.com>, <maobibo@loongson.cn>,
- <gaosong@loongson.cn>, <jiaxun.yang@flygoat.com>
-Subject: Re: [PATCH v6 3/4] hw/acpi/aml-build: Build a root node in the PPTT
- table
-Message-ID: <20250714170605.00003cb5.alireza.sanaee@huawei.com>
-In-Reply-To: <20250714115603-mutt-send-email-mst@kernel.org>
-References: <20250604115233.1234-1-alireza.sanaee@huawei.com>
- <20250604115233.1234-4-alireza.sanaee@huawei.com>
- <20250714090807-mutt-send-email-mst@kernel.org>
- <20250714151041.0000599d.alireza.sanaee@huawei.com>
- <20250714115603-mutt-send-email-mst@kernel.org>
-Organization: Huawei
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bgn7t5sMHz6M4Wm;
+ Mon, 14 Jul 2025 23:59:38 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 766801402ED;
+ Tue, 15 Jul 2025 00:00:51 +0800 (CST)
+Received: from A2303104131.china.huawei.com (10.203.177.241) by
+ frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 14 Jul 2025 18:00:42 +0200
+To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
+ <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
+ <nathanc@nvidia.com>, <mochs@nvidia.com>, <smostafa@google.com>,
+ <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
+ <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
+ <zhenzhong.duan@intel.com>, <shameerkolothum@gmail.com>
+Subject: [RFC PATCH v3 04/15] hw/arm/smmu-common: Introduce
+ smmu_iommu_ops_by_type() helper
+Date: Mon, 14 Jul 2025 16:59:30 +0100
+Message-ID: <20250714155941.22176-5-shameerali.kolothum.thodi@huawei.com>
+X-Mailer: git-send-email 2.12.0.windows.1
+In-Reply-To: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
+References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.81.206.233]
-X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
- frapeml500003.china.huawei.com (7.182.85.28)
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.203.177.241]
+X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
+ frapeml500008.china.huawei.com (7.182.85.71)
 X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
 Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
@@ -78,109 +72,90 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via <qemu-devel@nongnu.org>
+Reply-to:  Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Jul 2025 11:57:19 -0400
-"Michael S. Tsirkin" <mst@redhat.com> wrote:
+Allows to retrieve the PCIIOMMUOps based on the SMMU type. This will be
+useful when we add support for accelerated SMMUV3 in subsequent patches
+as that requires a different set of callbacks for iommu ops.
 
-> On Mon, Jul 14, 2025 at 03:10:41PM +0100, Alireza Sanaee wrote:
-> > On Mon, 14 Jul 2025 09:09:10 -0400
-> > "Michael S. Tsirkin" <mst@redhat.com> wrote:
-> >   
-> > > On Wed, Jun 04, 2025 at 12:52:32PM +0100, Alireza Sanaee wrote:  
-> > > > From: Yicong Yang <yangyicong@hisilicon.com>
-> > > > 
-> > > > Currently we build the PPTT starting from the socket node and
-> > > > each socket will be a separate tree. For a multi-socket system
-> > > > it'll be hard for the OS to know the whole system is
-> > > > homogeneous or not (actually we're in the current
-> > > > implementation) since no parent node to telling the identical
-> > > > implementation informentation. Add a root node for indicating
-> > > > this.
-> > > > 
-> > > > Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-> > > > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > > Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-> > > > ---
-> > > >  hw/acpi/aml-build.c | 15 ++++++++++++++-
-> > > >  1 file changed, 14 insertions(+), 1 deletion(-)
-> > > > 
-> > > > diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-> > > > index 560cee12a2..76a4157a18 100644
-> > > > --- a/hw/acpi/aml-build.c
-> > > > +++ b/hw/acpi/aml-build.c
-> > > > @@ -2153,12 +2153,25 @@ void build_pptt(GArray *table_data,
-> > > > BIOSLinker *linker, MachineState *ms, int64_t socket_id = -1,
-> > > > cluster_id = -1, core_id = -1; uint32_t socket_offset = 0,
-> > > > cluster_offset = 0, core_offset = 0; uint32_t pptt_start =
-> > > > table_data->len;
-> > > > +    uint32_t root_offset;
-> > > >      int n;
-> > > >      AcpiTable table = { .sig = "PPTT", .rev = 2,
-> > > >                          .oem_id = oem_id, .oem_table_id =
-> > > > oem_table_id }; 
-> > > >      acpi_table_begin(&table, table_data);
-> > > >  
-> > > > +    /*
-> > > > +     * Build a root node for all the processor nodes. Otherwise
-> > > > when
-> > > > +     * building a multi-socket system each socket tree is
-> > > > separated
-> > > > +     * and will be hard for the OS like Linux to know whether
-> > > > the
-> > > > +     * system is homogeneous.
-> > > > +     */
-> > > > +    root_offset = table_data->len - pptt_start;
-> > > > +    build_processor_hierarchy_node(table_data,
-> > > > +        (1 << 0) | /* Physical package */
-> > > > +        (1 << 4), /* Identical Implementation */
-> > > > +        0, 0, NULL, 0);
-> > > > +
-> > > >      /*
-> > > >       * This works with the assumption that cpus[n].props.*_id
-> > > > has been
-> > > >       * sorted from top to down levels in
-> > > > mc->possible_cpu_arch_ids(). @@ -2175,7 +2188,7 @@ void
-> > > > build_pptt(GArray *table_data, BIOSLinker *linker, MachineState
-> > > > *ms, build_processor_hierarchy_node(table_data, (1 << 0) | /*
-> > > > Physical package */ (1 << 4), /* Identical Implementation */
-> > > > -                0, socket_id, NULL, 0);
-> > > > +                root_offset, socket_id, NULL, 0);
-> > > >          }
-> > > >  
-> > > >          if (mc->smp_props.clusters_supported &&
-> > > > mc->smp_props.has_clusters) {    
-> > > 
-> > > 
-> > > This function is also used by loongarch64, but you do not update
-> > > the loongarch64 expected files:
-> > > https://gitlab.com/mstredhat/qemu/-/jobs/10672661860  
-> > 
-> > Hi Michael,
-> > 
-> > There are new tests you have brought in the
-> > tree after mine. 
-> > https://gitlab.com/mstredhat/qemu/-/commit/9e4f80654cefd051f8f5c220d5447201b6cf1810
-> > 
-> > I can try to fix this and resend with updated PPTT files for
-> > loongarch64. WDYT?  
-> 
-> That commit is in master though, right?
-> Sounds good, pls do.
+No special handling is required for now and returns the default ops
+in base SMMU Class.
 
-I do NOT think it is on the master. It is on v11-14-07-2025
+No functional changes intended.
 
-I am trying to work it out on the most recent branch now.
-> 
-> > >   
-> > > > -- 
-> > > > 2.43.0    
-> > > 
-> > >   
-> 
-> 
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+---
+ hw/arm/smmu-common.c         | 17 +++++++++++++++--
+ include/hw/arm/smmu-common.h |  1 +
+ 2 files changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+index 0f1a06cec2..3a1080773a 100644
+--- a/hw/arm/smmu-common.c
++++ b/hw/arm/smmu-common.c
+@@ -934,6 +934,16 @@ void smmu_inv_notifiers_all(SMMUState *s)
+     }
+ }
+ 
++static const PCIIOMMUOps *smmu_iommu_ops_by_type(SMMUState *s)
++{
++    SMMUBaseClass *sbc;
++
++    sbc = ARM_SMMU_CLASS(object_class_by_name(TYPE_ARM_SMMU));
++    assert(sbc->iommu_ops);
++
++    return sbc->iommu_ops;
++}
++
+ static void smmu_base_realize(DeviceState *dev, Error **errp)
+ {
+     SMMUState *s = ARM_SMMU(dev);
+@@ -962,6 +972,7 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
+      */
+     if (pci_bus_is_express(pci_bus) && pci_bus_is_root(pci_bus) &&
+         object_dynamic_cast(OBJECT(pci_bus)->parent, TYPE_PCI_HOST_BRIDGE)) {
++        const PCIIOMMUOps  *iommu_ops;
+         /*
+          * This condition matches either the default pcie.0, pxb-pcie, or
+          * pxb-cxl. For both pxb-pcie and pxb-cxl, parent_dev will be set.
+@@ -974,10 +985,11 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
+             }
+         }
+ 
++        iommu_ops = smmu_iommu_ops_by_type(s);
+         if (s->smmu_per_bus) {
+-            pci_setup_iommu_per_bus(pci_bus, &smmu_ops, s);
++            pci_setup_iommu_per_bus(pci_bus, iommu_ops, s);
+         } else {
+-            pci_setup_iommu(pci_bus, &smmu_ops, s);
++            pci_setup_iommu(pci_bus, iommu_ops, s);
+         }
+         return;
+     }
+@@ -1018,6 +1030,7 @@ static void smmu_base_class_init(ObjectClass *klass, const void *data)
+     device_class_set_parent_realize(dc, smmu_base_realize,
+                                     &sbc->parent_realize);
+     rc->phases.exit = smmu_base_reset_exit;
++    sbc->iommu_ops = &smmu_ops;
+ }
+ 
+ static const TypeInfo smmu_base_info = {
+diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+index c6f899e403..eb94623555 100644
+--- a/include/hw/arm/smmu-common.h
++++ b/include/hw/arm/smmu-common.h
+@@ -171,6 +171,7 @@ struct SMMUBaseClass {
+     /*< public >*/
+ 
+     DeviceRealize parent_realize;
++    const PCIIOMMUOps *iommu_ops;
+ 
+ };
+ 
+-- 
+2.34.1
 
 
