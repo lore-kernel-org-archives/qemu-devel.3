@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2BF2C83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 12:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75A6BC83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 12:56:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubIgf-0000zC-EX; Mon, 14 Jul 2025 08:53:41 -0400
+	id 1ubIgK-0000rO-A5; Mon, 14 Jul 2025 08:53:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ubHtT-0007AC-4D
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:02:54 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1ubHtP-000772-QU
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:02:48 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ubHtL-0003s9-42
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:02:50 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-60c60f7eeaaso6523372a12.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 05:02:42 -0700 (PDT)
+ id 1ubHtL-0003rf-Hw
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:02:47 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-ae0dd7ac1f5so877734966b.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 05:02:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752494561; x=1753099361; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752494558; x=1753099358; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6OYoWcuxiMWJ8Rae1ld8RgNow2XtJPy/ataGh1UigGU=;
- b=ZEuPsEXsLtcfH3qe0tVRcxTSUONppqNKPFGwVNxNmqgHFuWM+J4PbxTht8Q+v4lZL5
- 7HMUoQYy4Fy9Ka4jvZv8Wu/Jawhu2EeCzcwnok5lJaR7RTutK94QLZkruzf+AeORfE/0
- qg5AKVN9R1zwG98IZCpLpqorLq9XiFx175uV6qxkJDiJ7tQkzPnE7IrccKyJDR9miWKw
- sk1DPw4RlXPnutNj0lJqDnoydowrScj8VMKCqLynikcc5wh4B6ucW/HTj6wlkj6cRvKU
- wtFGe+G2vOgz5eBK6/Inwk+ONMQ2gmXxVOEUth4mVY5sZ27C1zn/pP0oMLWVWRF8SI6k
- xxzw==
+ bh=8sj9iVmDpEf+chfg1RrFtaVPsqCvpCBDEdTqoin79mM=;
+ b=xDp2P9MpUe6bevc0CQqbAs9mFOQFHNZxkmsiIfzN9PaWqRma7Qx0YPIR7TEqIV9VAS
+ YrwZyM/EEfb/OxXkqRhWZ7dPkghieuBB532Q7sDBRYcJBLKuqOJrtqRoz+oQfBx71Upr
+ v1dqACQtzsrolyHADkQOvsiOaJUJSXI5yfLr38X82/D4fnrrratU62NQAIZEIsx+7T6+
+ Z3tDxkvaaZAUbZjJkwptcm/z4tYR6G5PF09fXD/e6PPT9mCyT1WDjwa7BvRlYf0tgav2
+ 7BIeHFtdWMC9ja/0Urn9AGCyxV6ABqfW07yU1KESZ0w2lW6OV2M5pGcut9WNdMU42wui
+ 4vCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752494561; x=1753099361;
+ d=1e100.net; s=20230601; t=1752494558; x=1753099358;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6OYoWcuxiMWJ8Rae1ld8RgNow2XtJPy/ataGh1UigGU=;
- b=KhWMib2UGV9r8pQ/TbxDWi22n7G+RIvwKDBo9hiE95h1nyxPf86vS2O41G7r2MA/zL
- dAYlDrtFTYrVoKGZ+cE8h3XHlDQNWnGMBJhKhrgpHu08DNdjyXHQEj7TLn+WbPPXhBK0
- 909pfuLbBq/7Jp/e6xculd1NpovRFTXfVAxrG4sLoaNBnBUJWuWzjgH0OvVZbtrymn8X
- gz/RWgAxe3TzntJNy8yoBhS3J3f52GO4bpojJLqtMqNpW7f5wbfoCBvbB1be39zjRcyh
- A47jaVTFUUx6YzP7e5QNDKc+g/wHGy8dlpsmO2gIiiLLLmJMkLd0yKdIb4T4uVOt9xR2
- FO0g==
-X-Gm-Message-State: AOJu0Ywwuwdeg1xKF92h7WkTZOVEOtDoJF2UbzNHCY+ecX3eN5+JHlSo
- PHP5wcZg29MCiukfA00pDoqFfzuiyGhfgPQgKjemAOeaMQaO+fsztS27i16A8+WBk2U=
-X-Gm-Gg: ASbGncseZAKcBuPN/UY6jSLnSOh9paVqm2DlZ3eFX8bLNN3rfohvo4altg/ZsvjAdzC
- zz/5Peb/Fd2J2x2Q9Nf8YjSsPo6NZtz1HjuME1IDBiDtu+zHAnjxu4KsDO7YQA/HDWYCJR7gKlM
- u2II98kjhsBfs0cBd1+F51I9v6jGNjqo1cWEQSX4FGdTZydmP3o/Ox6gWl+VfItzCVwfcwCfkrG
- dlHpYtl6IgRFekZh3664/mGQjxomyfyJf8EJadI+Jnv8cBgQ68LErW3DE7hDi80HUsjcZUQD35f
- 8A/EhWXemUYTDexkrSOkkgNTWxxx1LwwZtuEcldFQ+51+tRgyqOCF9sgOo8pSIZnO59XiIMc363
- yCftV+QE31hz4MQYpYZJCoNJMC23hkR+Qfg==
-X-Google-Smtp-Source: AGHT+IHTjnP1EwGeIENOfxAxmDLF0XL0xxOUUZIf8lTb9DHWxYwkM7kSbjdJ28WukOqZnwaSEqCZBA==
-X-Received: by 2002:a17:907:3da3:b0:ae0:b46b:decd with SMTP id
- a640c23a62f3a-ae6fbf7143cmr1357447866b.31.1752494560980; 
- Mon, 14 Jul 2025 05:02:40 -0700 (PDT)
+ bh=8sj9iVmDpEf+chfg1RrFtaVPsqCvpCBDEdTqoin79mM=;
+ b=PaY2MNtVX7tTZGMQseCFED9HtP3mqRX9UnHYHvHiK2H2SsT89I/1Y0sXjHN7nZMTNQ
+ +L3iUoz20+3an/XRypA6K1oLYxaJR7T3cSiMhLIBY3Z7NwyBItrsuaOJiYpSv8hCYfZQ
+ JgUJcXH8vW+SgAZDsYkGfZJl0LTzVjHP42dQMsuz/AWohTM0tQJzqZr1r9qwDakkqd+N
+ 0HGJtoBI3Q5AW8rGJ23nM4tAqqsmMOWpPbbal+gZngZr+3N7nM/qkBrhdRFpOvoNhfPs
+ SOlygpkz9YoYrduetl0mLuzu4Vf2ij/WQFeguQE1Xhdt2JJnxo0iVzsHGt+lpiQQNs3x
+ MlCA==
+X-Gm-Message-State: AOJu0YzNP7kKDiETFa0HLvA2z52veSZsOc0oLb81ZWkUkBmx5OCAHOs+
+ hp6B47CaV5isTI7SmxcbtjJZfcsg8JDPbS47o4vD+w+FfcsaHItRxdZ+fKphjFiDoi0=
+X-Gm-Gg: ASbGnctl7V6l3GtIpYlCbWXMFdiJdWeyWOTmt1KmuaW9TdNjQ9g5CWlyL2BxH+46l0v
+ cxvcP5naMwj/dB+Q/INxSYDQYEXPSVkBzGMHQL7yMea6E2MFEI93DtJVvrVP4F+4ZpS9F+1KHua
+ IcmNWk68GrfUWaehsqHRFZIHY9DUdvfPMa2Qjo9nZ7tr+vCeEYyYnr+7AOwff7cQduuAtvTrHXq
+ zptFe4q5I1rGXvc+UwgE+4C45OVRdkLMeYtwLAnaiSr+bFqVMw5KVX2rdFcJfd+h/MG9uIWI73I
+ Ky6NfT2n5CBjLVEDiUxELEdlVI7pWGutOAapk7dlOX4gI/uZh+wjo3HQymTjkXe/BYuFemtc1qA
+ vAFlkNQ4LEaLU9n6GpQ7hqR0=
+X-Google-Smtp-Source: AGHT+IEVaGKdoJJic6qKtm9BhXBkLMSjcg4IVYuFlNOwRIJn+wLGGuc8I9PxmKQa1fJFCuwBau26WA==
+X-Received: by 2002:a17:907:bd94:b0:ae3:b2b7:7f2f with SMTP id
+ a640c23a62f3a-ae6fc0f31demr1421381466b.40.1752494558362; 
+ Mon, 14 Jul 2025 05:02:38 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae6e82df641sm818261266b.170.2025.07.14.05.02.37
+ a640c23a62f3a-ae6e829629dsm815882266b.138.2025.07.14.05.02.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 05:02:39 -0700 (PDT)
+ Mon, 14 Jul 2025 05:02:35 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4E6B55F8C8;
- Mon, 14 Jul 2025 13:02:35 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id C97CA5F89A;
+ Mon, 14 Jul 2025 13:02:34 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PULL 6/8] docs: use :kbd: role in sphinx docs
-Date: Mon, 14 Jul 2025 13:02:32 +0100
-Message-ID: <20250714120234.1524401-7-alex.bennee@linaro.org>
+Subject: [PULL 1/8] gitlab: use argparse in check-units script
+Date: Mon, 14 Jul 2025 13:02:27 +0100
+Message-ID: <20250714120234.1524401-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250714120234.1524401-1-alex.bennee@linaro.org>
 References: <20250714120234.1524401-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
  DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,181 +105,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Modernise the argument parsing so we can easily add to the script.
 
-Sphinx supports the :kbd: role for notating keyboard input. They get
-formatted as <kbd> HTML elements in the readthedocs theme we currently
-use for Sphinx.
-
-Besides the better visual formatting, it also helps with accessibility
-as screen readers can announce the semantics of the <kbd> element to the
-user.
-
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-ID: <20250709-docs_rst_improvements-v2-1-cb5096ad0022@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20250710104531.3099313-7-alex.bennee@linaro.org>
+Message-ID: <20250710104531.3099313-2-alex.bennee@linaro.org>
 
-diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
-index 6b18ed875c..2b5cb0c148 100644
---- a/docs/devel/testing/main.rst
-+++ b/docs/devel/testing/main.rst
-@@ -604,9 +604,9 @@ below steps to debug it:
- 2. Add "V=1" to the command line, try again, to see the verbose output.
- 3. Further add "DEBUG=1" to the command line. This will pause in a shell prompt
-    in the container right before testing starts. You could either manually
--   build QEMU and run tests from there, or press Ctrl-D to let the Docker
-+   build QEMU and run tests from there, or press :kbd:`Ctrl+d` to let the Docker
-    testing continue.
--4. If you press Ctrl-D, the same building and testing procedure will begin, and
-+4. If you press :kbd:`Ctrl+d`, the same building and testing procedure will begin, and
-    will hopefully run into the error again. After that, you will be dropped to
-    the prompt for debug.
+diff --git a/.gitlab-ci.d/check-units.py b/.gitlab-ci.d/check-units.py
+index 268a4118d5..cdc62ae5ee 100755
+--- a/.gitlab-ci.d/check-units.py
++++ b/.gitlab-ci.d/check-units.py
+@@ -8,8 +8,10 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
-diff --git a/docs/system/images.rst b/docs/system/images.rst
-index a5551173c9..43706969fd 100644
---- a/docs/system/images.rst
-+++ b/docs/system/images.rst
-@@ -30,7 +30,7 @@ Snapshot mode
- If you use the option ``-snapshot``, all disk images are considered as
- read only. When sectors in written, they are written in a temporary file
- created in ``/tmp``. You can however force the write back to the raw
--disk images by using the ``commit`` monitor command (or C-a s in the
-+disk images by using the ``commit`` monitor command (or :kbd:`Ctrl+a s` in the
- serial console).
+ from os import access, R_OK, path
+-from sys import argv, exit
++from sys import exit
+ import json
++import argparse
++from pathlib import Path
+ from collections import Counter
  
- .. _vm_005fsnapshots:
-diff --git a/docs/system/keys.rst.inc b/docs/system/keys.rst.inc
-index 59966a3fe7..c28ae1a227 100644
---- a/docs/system/keys.rst.inc
-+++ b/docs/system/keys.rst.inc
-@@ -1,36 +1,37 @@
- During the graphical emulation, you can use special key combinations from
--the following table to change modes. By default the modifier is Ctrl-Alt
-+the following table to change modes. By default the modifier is :kbd:`Ctrl+Alt`
- (used in the table below) which can be changed with ``-display`` suboption
- ``mod=`` where appropriate. For example, ``-display sdl,
--grab-mod=lshift-lctrl-lalt`` changes the modifier key to Ctrl-Alt-Shift,
--while ``-display sdl,grab-mod=rctrl`` changes it to the right Ctrl key.
-+grab-mod=lshift-lctrl-lalt`` changes the modifier key to :kbd:`Ctrl+Alt+Shift`,
-+while ``-display sdl,grab-mod=rctrl`` changes it to the right :kbd:`Ctrl` key.
  
--Ctrl-Alt-f
--   Toggle full screen
-+.. list-table:: Multiplexer Keys
-+  :widths: 10 90
-+  :header-rows: 1
+@@ -51,16 +53,17 @@ def analyse_units(build_units):
  
--Ctrl-Alt-+
--   Enlarge the screen
-+  * - Key Sequence
-+    - Action
  
--Ctrl-Alt\--
--   Shrink the screen
-+  * - :kbd:`Ctrl+Alt+f`
-+    - Toggle full screen
- 
--Ctrl-Alt-u
--   Restore the screen's un-scaled dimensions
-+  * - :kbd:`Ctrl+Alt++`
-+    - Enlarge the screen
- 
--Ctrl-Alt-n
--   Switch to virtual console 'n'. Standard console mappings are:
-+  * - :kbd:`Ctrl+Alt+-`
-+    - Shrink the screen
- 
--   *1*
--      Target system display
-+  * - :kbd:`Ctrl+Alt+u`
-+    - Restore the screen's un-scaled dimensions
- 
--   *2*
--      Monitor
-+  * - :kbd:`Ctrl+Alt+n`
-+    - Switch to virtual console 'n'. Standard console mappings are:
- 
--   *3*
--      Serial port
-+      - *1*: Target system display
-+      - *2*: Monitor
-+      - *3*: Serial port
-+  * - :kbd:`Ctrl+Alt+g`
-+    - Toggle mouse and keyboard grab.
- 
--Ctrl-Alt-g
--   Toggle mouse and keyboard grab.
--
--In the virtual consoles, you can use Ctrl-Up, Ctrl-Down, Ctrl-PageUp and
--Ctrl-PageDown to move in the back log.
-+In the virtual consoles, you can use :kbd:`Ctrl+Up`, :kbd:`Ctrl+Down`, :kbd:`Ctrl+PageUp` and
-+:kbd:`Ctrl+PageDown` to move in the back log.
-diff --git a/docs/system/linuxboot.rst b/docs/system/linuxboot.rst
-index 2328b4a73d..f7573ab80a 100644
---- a/docs/system/linuxboot.rst
-+++ b/docs/system/linuxboot.rst
-@@ -26,5 +26,5 @@ virtual serial port and the QEMU monitor to the console with the
-    |qemu_system| -kernel bzImage -drive file=rootdisk.img,format=raw \
-                     -append "root=/dev/sda console=ttyS0" -nographic
- 
--Use Ctrl-a c to switch between the serial console and the monitor (see
-+Use :kbd:`Ctrl+a c` to switch between the serial console and the monitor (see
- :ref:`GUI_keys`).
-diff --git a/docs/system/mux-chardev.rst.inc b/docs/system/mux-chardev.rst.inc
-index 84ea12cbf5..c87ba31362 100644
---- a/docs/system/mux-chardev.rst.inc
-+++ b/docs/system/mux-chardev.rst.inc
-@@ -1,27 +1,33 @@
- During emulation, if you are using a character backend multiplexer
- (which is the default if you are using ``-nographic``) then several
- commands are available via an escape sequence. These key sequences all
--start with an escape character, which is Ctrl-a by default, but can be
-+start with an escape character, which is :kbd:`Ctrl+a` by default, but can be
- changed with ``-echr``. The list below assumes you're using the default.
- 
--Ctrl-a h
--   Print this help
-+.. list-table:: Multiplexer Keys
-+  :widths: 20 80
-+  :header-rows: 1
- 
--Ctrl-a x
--   Exit emulator
-+  * - Key Sequence
-+    - Action
- 
--Ctrl-a s
--   Save disk data back to file (if -snapshot)
-+  * - :kbd:`Ctrl+a h`
-+    - Print this help
- 
--Ctrl-a t
--   Toggle console timestamps
-+  * - :kbd:`Ctrl+a x`
-+    - Exit emulator
- 
--Ctrl-a b
--   Send break (magic sysrq in Linux)
-+  * - :kbd:`Ctrl+a s`
-+    - Save disk data back to file (if -snapshot)
- 
--Ctrl-a c
--   Rotate between the frontends connected to the multiplexer (usually
--   this switches between the monitor and the console)
-+  * - :kbd:`Ctrl+a t`
-+    - Toggle console timestamps
- 
--Ctrl-a Ctrl-a
--   Send the escape character to the frontend
-+  * - :kbd:`Ctrl+a b`
-+    - Send break (magic sysrq in Linux)
+ if __name__ == "__main__":
+-    if len(argv) != 2:
+-        script_name = path.basename(argv[0])
+-        print(f"Usage: {script_name} <path_to_compile_commands.json>")
+-        exit(1)
++    parser = argparse.ArgumentParser(
++        description="analyse number of build units in compile_commands.json")
++    parser.add_argument("cc_path", type=Path, default=None,
++                        help="Path to compile_commands.json")
 +
-+  * - :kbd:`Ctrl+a c`
-+    - Rotate between the frontends connected to the multiplexer (usually this switches between the monitor and the console)
-+
-+  * - :kbd:`Ctrl+a Ctrl+a`
-+    - Send the escape character to the frontend
++    args = parser.parse_args()
+ 
+-    cc_path = argv[1]
+-    if path.isfile(cc_path) and access(cc_path, R_OK):
+-        units = extract_build_units(cc_path)
++    if path.isfile(args.cc_path) and access(args.cc_path, R_OK):
++        units = extract_build_units(args.cc_path)
+         analyse_units(units)
+         exit(0)
+     else:
+-        print(f"{cc_path} doesn't exist or isn't readable")
++        print(f"{args.cc_path} doesn't exist or isn't readable")
+         exit(1)
 -- 
 2.47.2
 
