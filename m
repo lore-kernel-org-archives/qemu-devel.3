@@ -4,96 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEE5CC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 20:44:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 607ABC83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 20:44:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubQ1N-0000CN-UF; Mon, 14 Jul 2025 16:43:34 -0400
+	id 1ubQ2A-0002OG-JS; Mon, 14 Jul 2025 16:44:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1ubOX0-0001Mv-KE
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 15:08:14 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1ubOWw-00061I-Kc
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 15:08:05 -0400
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56EGv9Dv019054;
- Mon, 14 Jul 2025 19:07:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:message-id:subject:to; s=corp-2025-04-25; bh=mhrRcNGI
- 0gDZ/gk/VphnZlX1PzSw52CrVs8CCFG2lrs=; b=N8fiNVMU/kWYqa4ZPId4QMWV
- WeJmpz/xthTClXkMP/JHGWka0TrzdRzOY4ZPSNV07lKPxaKUSY8QQovYc0RBqGJl
- 2EgiQD+6d05qqmyYVMCOjfW5eZNlPdZDI5M9dBwXYqrGAQxXtKtx6y+q938vHnDE
- gs3riOGPM7YM0oYVR+WFtra+1SoYIFaj0dZf4R271W8yaUps+Gh/3G+S+ue2dk21
- CVYvkyPC4J1m8aa8D/b0mVESWSyaKfyE409nZkefe5VANX1aj8TKsvnOhr8WB2M1
- Mnu52WipjeuO0PtsTpy9LbKeyLsm4NZCN/1REdNXGD1xExFSWC8Uk5ZiWHFCPw==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47uk1avygp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 14 Jul 2025 19:07:59 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 56EIUC4k013741; Mon, 14 Jul 2025 19:07:58 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 47ue58fb7y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 14 Jul 2025 19:07:58 +0000
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56EJ7wBE032364;
- Mon, 14 Jul 2025 19:07:58 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 47ue58fb7g-1; Mon, 14 Jul 2025 19:07:58 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH 59/59] vfio: fix sub-page bar after cpr
-Date: Mon, 14 Jul 2025 12:07:57 -0700
-Message-Id: <1752520077-223287-1-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-14_02,2025-07-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxscore=0 malwarescore=0
- phishscore=0 spamscore=0 mlxlogscore=999 bulkscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2507140124
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE0MDEyNCBTYWx0ZWRfX36Ax6vKd25EU
- OWANjBCpkBlid2Ctn1aBeVZ6/3vm8JQtn5rZPih8PkCp/iD8UQ4RKiQ6REb0T6aL5/3yiIZ0Rgs
- 4QcFF1IqCmbjH9Vau40KRn6iObeenM4itr/c8/KXpH7+X9YcJ15vJdHugboeuV2WtG5W3dQhvmK
- qwhBIDGeAKf7QjlmMhUtXofDkDWdZS5kGpCed4VTmpbcQK09MBiVe+ExYGIgsMHO30oR48w5PUM
- 2bVj+k6jKWjj9pUo/k6lPxRlE6PZiC3JS3e8kjAi6JJg7qhl1LcG375a37v2ifMMdybM13mkMKt
- 22hd5+e3bJ+zrVRrAoJ2MBeXKX8yfvfuiWlSZR8JnidNy+UVhCsBLtHX2ZiXuPAMU9DeEAHUIVw
- VKpTUQeOb0c+xrSnlPXsIlSP5xilox46V2JVoEm08WRVJvHmpY8j09cOtVMpYjghNBfDAZoX
-X-Proofpoint-GUID: 0rCqLWBwR71PCQFHbBxk8bqHOEkJCtW7
-X-Proofpoint-ORIG-GUID: 0rCqLWBwR71PCQFHbBxk8bqHOEkJCtW7
-X-Authority-Analysis: v=2.4 cv=J8mq7BnS c=1 sm=1 tr=0 ts=6875558f b=1 cx=c_pps
- a=zPCbziy225d3KhSqZt3L1A==:117 a=zPCbziy225d3KhSqZt3L1A==:17
- a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=Dgv3TXsNM4mSNUuXrVQA:9 cc=ntf
- awl=host:12061
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ubOaI-0003WE-Fw
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 15:11:31 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ubOaE-0006d2-M6
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 15:11:29 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 636C22124B;
+ Mon, 14 Jul 2025 19:11:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1752520281; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MXva1BX8OnPP1ycvBL0ZAjIAPSSsMeapa/XK97VNWkQ=;
+ b=KkqG9xLGBerh6MFGTgDyrCyitGHk46hrmEWZ3lJRFNg7zMa4QfB5AlLxni8Fa0xSF23Ru+
+ BJIaSvMEs7txyN2EisXsbo5tgUqnh02RzznaSbIYJ+Okhex+519C5jhCiFEQOILNN8OdO4
+ tAHGfFpycdHVwn2rJLUuYAk39Ps9CT8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1752520281;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MXva1BX8OnPP1ycvBL0ZAjIAPSSsMeapa/XK97VNWkQ=;
+ b=eMBphLGLkXrp8+3zwjWjL2S9NuVXZAyQL3lHw55VVmjKWSg1dPXVMCakdkM2NBPqxV0PUG
+ ghBvu7SgxVYtTTCw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1752520281; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MXva1BX8OnPP1ycvBL0ZAjIAPSSsMeapa/XK97VNWkQ=;
+ b=KkqG9xLGBerh6MFGTgDyrCyitGHk46hrmEWZ3lJRFNg7zMa4QfB5AlLxni8Fa0xSF23Ru+
+ BJIaSvMEs7txyN2EisXsbo5tgUqnh02RzznaSbIYJ+Okhex+519C5jhCiFEQOILNN8OdO4
+ tAHGfFpycdHVwn2rJLUuYAk39Ps9CT8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1752520281;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MXva1BX8OnPP1ycvBL0ZAjIAPSSsMeapa/XK97VNWkQ=;
+ b=eMBphLGLkXrp8+3zwjWjL2S9NuVXZAyQL3lHw55VVmjKWSg1dPXVMCakdkM2NBPqxV0PUG
+ ghBvu7SgxVYtTTCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D046F138A1;
+ Mon, 14 Jul 2025 19:11:20 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id TI4kI1hWdWjDdgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 14 Jul 2025 19:11:20 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, "Dr . David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PULL 25/26] migration/postcopy: Add latency distribution
+ report for blocktime
+In-Reply-To: <CAFEAcA-_2a5CUspXhy8UErA86EnZ3_s=P2DQ9DPdrMDwNWF4FQ@mail.gmail.com>
+References: <20250711141031.423-1-farosas@suse.de>
+ <20250711141031.423-26-farosas@suse.de>
+ <CAFEAcA-_2a5CUspXhy8UErA86EnZ3_s=P2DQ9DPdrMDwNWF4FQ@mail.gmail.com>
+Date: Mon, 14 Jul 2025 16:11:18 -0300
+Message-ID: <875xfumvu1.fsf@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email, linaro.org:email,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,81 +117,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Regions for sub-page BARs are normally mapped here, in response to the
-guest writing to PCI config space:
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-  vfio_pci_write_config()
-    pci_default_write_config()
-      pci_update_mappings()
-        memory_region_add_subregion()
-    vfio_sub_page_bar_update_mapping()
-      ... vfio_dma_map()
+> On Fri, 11 Jul 2025 at 15:20, Fabiano Rosas <farosas@suse.de> wrote:
+>>
+>> From: Peter Xu <peterx@redhat.com>
+>>
+>> Add the latency distribution too for blocktime, using order-of-two buckets.
+>> It accounts for all the faults, from either vCPU or non-vCPU threads.  With
+>> prior rework, it's very easy to achieve by adding an array to account for
+>> faults in each buckets.
+>>
+>> Sample output for HMP (while for QMP it's simply an array):
+>>
+>> Postcopy Latency Distribution:
+>
+> Hi; Coverity points out that there is a bug here (CID 1612248):
+>
+>> +static const gchar *format_time_str(uint64_t us)
+>> +{
+>> +    const char *units[] = {"us", "ms", "sec"};
+>> +    int index = 0;
+>> +
+>> +    while (us > 1000) {
+>> +        us /= 1000;
+>> +        if (++index >= (sizeof(units) - 1)) {
+>
+> sizeof(units) is the size in bytes, which in this case is
+> 24, as it is an array of three 8-byte pointers. So it's
+> not the right thing to use in bounds checking the array index.
+>
+> You probably wanted ARRAY_SIZE(units). Also, the ++index
+> inside the comparison here seems unnecessarily confusing.
+> I would suggest something like
+>
+>     while (us > 1000 && index + 1 < ARRAY_SIZE(units)) {
+>         us /= 1000;
+>         index++;
+>     }
+>
+> which puts into the while condition the two conditions under
+> which we are OK to shift down a unit, and keeps it
+> clear that we maintain the invariant of "when we shift
+> down a unit we also divide the value by 1000".
+>
+>> +            break;
+>> +        }
+>> +    }
+>> +
+>> +    return g_strdup_printf("%"PRIu64" %s", us, units[index]);
+>
+> Otherwise this units[index] access could be off the end of
+> the array.
+>
+>> +}
 
-However, after CPR, the guest does not reconfigure the device and the
-code path above is not taken.  To fix, in vfio_cpr_pci_post_load, call
-vfio_sub_page_bar_update_mapping for each sub-page BAR with a valid
-address.
-
-Fixes: 7e9f21411302 ("vfio/container: restore DMA vaddr")
-
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- hw/vfio/pci.h |  1 +
- hw/vfio/cpr.c |  2 ++
- hw/vfio/pci.c | 14 ++++++++++++++
- 3 files changed, 17 insertions(+)
-
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 495fae7..cb1310d 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -228,6 +228,7 @@ void vfio_pci_write_config(PCIDevice *pdev,
- uint64_t vfio_vga_read(void *opaque, hwaddr addr, unsigned size);
- void vfio_vga_write(void *opaque, hwaddr addr, uint64_t data, unsigned size);
- 
-+void vfio_sub_page_bar_update_mappings(VFIOPCIDevice *vdev);
- bool vfio_opt_rom_in_denylist(VFIOPCIDevice *vdev);
- bool vfio_config_quirk_setup(VFIOPCIDevice *vdev, Error **errp);
- void vfio_vga_quirk_setup(VFIOPCIDevice *vdev);
-diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
-index af0f12a..384b56c 100644
---- a/hw/vfio/cpr.c
-+++ b/hw/vfio/cpr.c
-@@ -116,6 +116,8 @@ static int vfio_cpr_pci_post_load(void *opaque, int version_id)
-     PCIDevice *pdev = &vdev->pdev;
-     int nr_vectors;
- 
-+    vfio_sub_page_bar_update_mappings(vdev);
-+
-     if (msix_enabled(pdev)) {
-         vfio_pci_msix_set_notifiers(vdev);
-         nr_vectors = vdev->msix->entries;
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 1093b28..9c616bd 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2826,6 +2826,20 @@ static int vfio_pci_load_config(VFIODevice *vbasedev, QEMUFile *f)
-     return ret;
- }
- 
-+void vfio_sub_page_bar_update_mappings(VFIOPCIDevice *vdev)
-+{
-+    PCIDevice *pdev = &vdev->pdev;
-+    int page_size = qemu_real_host_page_size();
-+    int bar;
-+
-+    for (bar = 0; bar < PCI_ROM_SLOT; bar++) {
-+        PCIIORegion *r = &pdev->io_regions[bar];
-+        if (r->addr != PCI_BAR_UNMAPPED && r->size > 0 && r->size < page_size) {
-+            vfio_sub_page_bar_update_mapping(pdev, bar);
-+        }
-+    }
-+}
-+
- static VFIODeviceOps vfio_pci_ops = {
-     .vfio_compute_needs_reset = vfio_pci_compute_needs_reset,
-     .vfio_hot_reset_multi = vfio_pci_hot_reset_multi,
--- 
-1.8.3.1
-
+Thanks for the report. Peter Xu is not available at the moment, I'll
+work on this.
 
