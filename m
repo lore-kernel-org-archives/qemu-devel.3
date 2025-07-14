@@ -4,94 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27AA7C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 10:30:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15F80C83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 10:31:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubGRE-0006D1-34; Mon, 14 Jul 2025 06:29:36 -0400
+	id 1ubGSw-0007EB-IP; Mon, 14 Jul 2025 06:31:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1ubGON-0004X3-79
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:26:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1ubGOK-0004PW-II
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:26:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752488793;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=yz4vOS2fmmgscDI3pPEkDat/uO4epkzlY9i37k2Fmm8=;
- b=APJrmiqbZILqEYT1mZ3CmUrr38gFtrX+rCo/aOzJ6I/vjg4Sd5/Iz2sZKqAJafn3FpfGm/
- 2ETRbFQNtff9CUWei85LpBn7y1r3BbeIpjgw6fiiONyVz5LFmk1r7lXCR/7GEVw8po/YGS
- 0fVFEiAo+ZHRTiZpkxp5NlM8nIcR7S0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-281-8fu9k7nrM_eMsCriJdppmg-1; Mon, 14 Jul 2025 06:26:31 -0400
-X-MC-Unique: 8fu9k7nrM_eMsCriJdppmg-1
-X-Mimecast-MFC-AGG-ID: 8fu9k7nrM_eMsCriJdppmg_1752488790
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4f65a705dso2684364f8f.2
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 03:26:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ubGS7-0006zJ-KJ
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:30:34 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ubGS3-000500-1H
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 06:30:28 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-713fba639f3so34043927b3.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 03:30:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752489025; x=1753093825; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=RHFJzzPUS+Gs190sJ8Y1X0wq++eR9FYpLgnW758cBt4=;
+ b=BEoFo1lI1zOCML1z26gkJVWoJXu3AQ4vm6zKp2Ak1BmVbQGyjQqF6D/AQmqZ67/C9+
+ kkiziSlX7UsXvha1Xxn3LPQdwcuUr01WCX8JYtWNkBKJFyDwVhoFu1fY2CHigfvRCHOA
+ EXmEwxwjZXP9hCfVpV4jfTwJcveNIE+qX1+iHOuSoc1qTC0Z66BwEB+oNqYMGEMt934z
+ YA2gU8wc5gOi0zovOX8cXAeZ9Wu4vDzpdafKHxKHfY9X4SUYU8Y0s6zNfqWprxTkhOfl
+ ka7qfKENiFECncIFyPI7IHVuZPoZxhZgsEnash070nfIMmMF6MTHQvYmOxrAoNq2qzX4
+ nVnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752488789; x=1753093589;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1752489025; x=1753093825;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=yz4vOS2fmmgscDI3pPEkDat/uO4epkzlY9i37k2Fmm8=;
- b=JNEETwp7BinGu2J41QOSVO1o6+9OCY1I18IjiAr53SLimmbjC6WN4KapUGGftAuxp0
- jf9NcUje4T9wUa1ssirlO2mjdI8x9WKCj2ikgFhBjy+fWU7AOCO8TYQhrt0Jb0XIbrVJ
- zb6xmMrcbjBk966/p3Y67wqtcBTcJ/Tv6ZjXyISe3YgEBePcp2VsRAt1j2ylGpNtiMgr
- h29Yx6kojPLOmyJXzPzY1Mxu1Xydz6iPvB4vh5/Fs5vkRNuLntg7ezWHzeyJ4Jg7xCUa
- xm/rIJHjQpzj+gLhPelzJ/low6K5NVumYOZk+fAvS0SZXGfkMUYJruZ8A0VMUEz0lYbH
- aEHA==
-X-Gm-Message-State: AOJu0YyM8r4nUw1lTeFuTSs1CLae6w7DcIaHyw+sBmsSwUi5KN4S509I
- Y/BRVjs7nxwJuM4uXwANNzd6SYM/JlA9Cc65iMg8acFYhCj+bhnIhiFPTUEzsklTOyusPr5kgkV
- GR2GVfpQo7QDa1TKLJoV/uzbpjgmByWjIQRN2xbjaAX+WtPxRjfuQKPoF4Vf9znnPQgS1QbEtsn
- 3G4vFhdoXZyfmb+r4OvNHl3FBjGXVUQr4Xw5yF6yHd
-X-Gm-Gg: ASbGncvK1siF7SJUt+gVOvoS4sbxWnVSWlH/4VZk3xNvPDVKZ77vzS2ZIkkVuD0oPI/
- TUOrUWM7kGfmbygpdGcVyq1b4foY3QhWra2YTen/ozN8uX8APemc7n6JR2p6J4GnZ6Ht+SQb9EF
- /vwE6GX8II0AYOVokF/v4DYf+4KGx89qZxxW5eIBHvRjxhR9OS+AWLLUCQajFY2nX+apCyZjlm4
- M0OmKHi9fDrNpfFDfnwMnPCaCYaz8Y13Xc/3s2yIsX4WET83v+yfOCIIlqSVyjX4qMzKiSl+uMW
- N1dz5fWoQCCezAMg9tJSsrrfgsLvgA+DjyEt
-X-Received: by 2002:a05:6000:22c1:b0:3a4:e6e6:a026 with SMTP id
- ffacd0b85a97d-3b5f2e1b3d4mr10028768f8f.28.1752488789232; 
- Mon, 14 Jul 2025 03:26:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEQ6mcxeczwUVzP65wbzm9SbozOcYmPw7bUBGvyuQm74x4U7KBsjvaF7eyGnLGJt+CBoK4ocw==
-X-Received: by 2002:a05:6000:22c1:b0:3a4:e6e6:a026 with SMTP id
- ffacd0b85a97d-3b5f2e1b3d4mr10028732f8f.28.1752488788619; 
- Mon, 14 Jul 2025 03:26:28 -0700 (PDT)
-Received: from stex1.lan ([193.207.162.97]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e14cfcsm12193531f8f.67.2025.07.14.03.26.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 03:26:27 -0700 (PDT)
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH] MAINTAINERS: add net/vhost* files under `vhost`
-Date: Mon, 14 Jul 2025 12:26:23 +0200
-Message-ID: <20250714102626.34431-1-sgarzare@redhat.com>
-X-Mailer: git-send-email 2.50.1
+ bh=RHFJzzPUS+Gs190sJ8Y1X0wq++eR9FYpLgnW758cBt4=;
+ b=blBaM6n+Mnziy6FYu7Y0IdjwKa9F/IINyqucoF8eNPkAt4cHqdWTEB464lisoKDh6r
+ QTtoc1v+hhyS3ZYhvQQo2uEqmZI2z42qtYlSAr3wD3NeiX4VRXwGDddG+lssUWqaeTq4
+ dYBBPoFp/yjBeER4zXPbX+qJzNSKyQvuwoiB1qdpCCPZY9n6VWyaCe2rrKeyF9D4Z9mD
+ 9VPjphxpPD010leSUpRtD6QkIXC00lGQSwEczOvkt1T8Z27GhrdjfW7UT/+ODMhj3zIx
+ slt7Fv6vVsIGK4l9N+7bMFUE1p5Lp4ZhaHHHGlCMDbIkG21hJWwWZJsGycP64D44h5ZD
+ 4e5A==
+X-Gm-Message-State: AOJu0Yw05ZfHcq12xID6hwtN4i5z35OcDKQjnCRAdm53qdnuNSaSVIyD
+ LjV3WHzrcJoe6qeO/TlaNohrQ11GgxjX+sTN13gCRbbRdoYfN8Q88Yv9ELzLS4siKD0lG2eA13X
+ HNhhGEVYS0FEbQel10pn5VTDpDFkXpzRv9hmWbM8IgA==
+X-Gm-Gg: ASbGncvKEbKV43ixrjXJSRO50Sch2UV24jtJL92w3O6JcIObZF0FDs99KenXhzGHjpY
+ rkVF2IuI/6U1TRNvKhQ2FzTK7NEr4XyTK7InQXYf2p8p1QCnefn6U4gsoL6gShUuGeyfdQLlMWr
+ Chb/GigyCzXHOR6s2HK581Tzh65Nee41NSsJPH1w6MTHszCphIRnJ0aZvpGDs4MJvj/jUNWLSCu
+ 1bKYhY1
+X-Google-Smtp-Source: AGHT+IF/1PZQfyNKUKY9/JKK21GzNep90DtLeukMklB5HyBuYzxgU5Bpg9CdMcpMgby1Q3hKTblp+RVHUoLP9yWzpmk=
+X-Received: by 2002:a05:690c:6e8c:b0:70e:326:6aeb with SMTP id
+ 00721157ae682-717d5d79352mr202330897b3.10.1752489025356; Mon, 14 Jul 2025
+ 03:30:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250708221438.347643-1-vacha.bhavsar@oss.qualcomm.com>
+In-Reply-To: <20250708221438.347643-1-vacha.bhavsar@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 14 Jul 2025 11:30:14 +0100
+X-Gm-Features: Ac12FXxuip6fbIRFmyr9PkajDrZf9InpSwHdpc2BYKgN-cpb0_7NfOsEFvTD02I
+Message-ID: <CAFEAcA926Tur8wSvSyMQYJ6XXdiU9mNJZ=weW5x67sJJhjvBtA@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: Added support for SME register exposure to GDB
+To: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,29 +92,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+On Tue, 8 Jul 2025 at 23:14, Vacha Bhavsar
+<vacha.bhavsar@oss.qualcomm.com> wrote:
+>
+> The QEMU GDB stub does not expose the ZA storage SME register to GDB via
+> the remote serial protocol, which can be a useful functionality to debug SME
+> code. To provide this functionality in Aarch64 target, this patch registers the
+> SME register set with the GDB stub. To do so, this patch implements the
+> aarch64_gdb_get_sme_reg() and aarch64_gdb_set_sme_reg() functions to
+> specify how to get and set the SME registers, and the
+> arm_gen_dynamic_smereg_feature() function to generate the target
+> description in XML format to indicate the target architecture supports SME.
+> Finally, this patch includes a dyn_smereg_feature structure to hold this
+> GDB XML description of the SME registers for each CPU.
+>
+> Signed-off-by: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
 
-net/vhost* files should be interesting for vhost maintainers/reviewers.
 
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
----
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e88ed2c0a9..045a896d08 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2321,6 +2321,7 @@ F: include/*/vhost*
- F: subprojects/libvhost-user/
- F: block/export/vhost-user*
- F: util/vhost-user-server.c
-+F: net/vhost*
- 
- vhost-shadow-virtqueue
- R: Eugenio Pérez <eperezma@redhat.com>
--- 
-2.50.1
+> +int aarch64_gdb_set_sme_reg(CPUState *cs, uint8_t *buf, int reg)
+> +{
+> +    ARMCPU *cpu = ARM_CPU(cs);
+> +    CPUARMState *env = &cpu->env;
+> +
+> +    /* The first 32 registers are the zregs */
+> +    switch (reg) {
+> +    /* The first 32 registers are the zregs */
 
+You don't need the same comment twice, and it also doesn't
+look like it makes sense here, because the zregs are
+SVE regs, not SME regs.
+
+> +    case 0:
+> +    {
+> +        /* cannot set svg via gdbstub */
+> +        return 0;
+> +    }
+> +    case 1:
+> +        env->svcr = *buf & 0x03;
+
+This will update env->svcr but won't have the correct effects
+on the CPU (e.g. zeroing the ZA storage); I think you need to
+call aarch64_set_svcr() here. Also you've declared
+SVCR in the XML as a 64-bit register, so you should read it out
+of the buffer as a 64-bit value, not short-cut by reading just
+one byte.
+
+> +        return 8;
+> +    case 2:
+> +        int vq, len = 0;
+> +        int svl = cpu->sve_max_vq * 16;
+> +        uint64_t *p = (uint64_t *) buf;
+
+I know this is what the existing SVE code does, but does
+this really do the right thing on a big-endian host ?
+
+> +        for (int i = 0; i < svl; i++) {
+> +            for (vq = 0; vq < cpu->sve_max_vq; vq++) {
+> +                env->za_state.za[i].d[vq * 2 + 1] = *p++;
+> +                env->za_state.za[i].d[vq * 2] = *p++;
+> +                len += 16;
+> +            }
+> +        }
+> +        return len;
+> +    default:
+> +        /* gdbstub asked for something out our range */
+
+"out of"
+
+> +        break;
+> +    }
+> +
+> +    return 0;
+> +}
+
+(PS: I would consider this close enough to being a bugfix to be
+OK with putting it into 10.1 in the first rc cycle or so even
+if it misses softfreeze.)
+
+thanks
+-- PMM
 
