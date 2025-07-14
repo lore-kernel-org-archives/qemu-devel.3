@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2442DC83F1A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 981A1C83F22
 	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 13:04:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubIqS-0008Mk-GP; Mon, 14 Jul 2025 09:03:48 -0400
+	id 1ubIqN-0008HG-IJ; Mon, 14 Jul 2025 09:03:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ubHtY-0007NA-Fu
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:02:57 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ id 1ubHtN-00073X-P9
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:02:46 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ubHtN-0003sU-36
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:02:56 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-ae04d3d63e6so834903366b.2
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 05:02:44 -0700 (PDT)
+ id 1ubHtH-0003rU-Sq
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:02:45 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-60c9d8a169bso7463098a12.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 05:02:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752494563; x=1753099363; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752494557; x=1753099357; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=T5v8OdxmzrjgwOi1V8ZOJSO/d9q/kYU1/NXLZZAou+A=;
- b=kZLFTi+3akDoEeINK2wSxeMPqMkv8SFQb3kjm+RBh8TxNQyCMc7whTUE1wM7PZkXSI
- cA4mniRue1gO/BPIclHENQ2auoEcXTOgRQOrNL9amEPiWRZjySg+GYEtFjqiGyLbSsHI
- GNvZWmvMASiltbTa7vhsnFZA/JE87AV0s1zLI92UxtP8ddh0MXOSeZWKIQmN9f6ggGVL
- niAMPLAC4Mk01pmfjYjm5T/1QpANmCXjPLWuNoiY1hv4XM3ZuwMdGoTvVTqLShYjLaCY
- 6bzLHUpgIo6MpF3/D655DpJyu9Cb/z49zLmmyQU2T4iAy019GGfUjZ3BygxnTI5Z5UKn
- C6kw==
+ bh=QiZnRDIM6/kZEbxqRnf//fPQu15IWBfB/VoqA6cAXpE=;
+ b=viZ8meUO60XoxjQeBoF1ccsZvF9KXuAusyfFdZrmariqjBUXvs2jyIZ43nC3RE0iHs
+ uYRB0/RcUEtMZ/q3dO62YnfPs0AiRF3iehsJA+kxHDp12XhBNjKFEQx8e1ZriM+JFoDJ
+ FPpOzw3LNEJlXi7wpwpCEt9fx3N13rsTaSZpBuSzQMrLImNyN2wcvW4siRIDzM4a4Xos
+ t7lDYNJW15VcAvXIGS3LfoV834zsX6HoJoAH3+5CDQ1nE3+nz/me25ruQhhUTZTEGfF5
+ 6ElHSRMDTpYcFvhUbkncZHnQx/aPzNcUpIYT6IyRSBWEfBFrYpVEyzJT/N7g9Jn7Rn5p
+ YXBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752494563; x=1753099363;
+ d=1e100.net; s=20230601; t=1752494557; x=1753099357;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=T5v8OdxmzrjgwOi1V8ZOJSO/d9q/kYU1/NXLZZAou+A=;
- b=ZjEjTppsNcoRYU5rtSlzfUO36Yx6ftVt7i8CFlzjfFeNPg5h1ZxeVBjysfyeAwu85+
- 8dPFk8LpZ5eNxCMTzB1p0qRmH2vXOU2JLcEVbVpHwPY0VH3pr8khzSaLtjBx2VY+c1XE
- ZUJx2Xub+bloCqexO6Jql6mIrLxpxHycUfwYLZC2v9hVIxYStn0JEwPqPABNYFpN8lHs
- WqmcbZ93K4fEK0KJ5ut6RAk2W/O1FZTK7cT3RXhuozNxI+AAMIE53lZ3CO0xbfTBnllw
- ic/IjzK/BDwb5nn87QLzU8S8S9NL7Of3gOD7g8y0otWUpf68nWRZLHAyT7iu8Ngngp7H
- 8o7A==
-X-Gm-Message-State: AOJu0YzhY1dJv9f0Qeerzzd11YDqkzzcPwzfU0ytZ97wSbzabWbB1Uy9
- yARemL8b3+2Hto+QQ66IkVsW2bL8cv+/f1DuOjZA6noRONizhZmLnie8R+aRde4Kpmw=
-X-Gm-Gg: ASbGnctD6JqTfRaabniSvU4y7jVF18jYYlKw4A/HTZ8w1rnO2eMOZUePaQ2vv1n1PsM
- F+xv6EetJGTSMLa5EV3qPZXNyVu4IiB4iHf2oixZKy0/BVLXHE9rWzTa2n3ppjAg2AfwhxdaR3U
- TKaIGjD5E6VU9zR+MxckD6VdNDGsM9UB42vhrWbgb4hri6KWjLrh4MPux3YZffSwoT05Efy3UKM
- aOMaBeONRnl5uom4bdPbXjq3sZBxdvo6VQ10r98/Ho2e9/HFHh8ETD0ja8Yuo/54giHS/zmMomt
- goHJ2fdNRePCosNEj72eJqNWHhdb0gBNlQdF6Gws7OypYABUBpZlICvnpLNT7mYzqJfFY7PdubR
- Ylo7PHBAXNjDZx9yA4z2yAcUzIlReqNVzsQ==
-X-Google-Smtp-Source: AGHT+IF2pHp10QssnRsFCaTjz94XN9989zxU4tILODRi+Ref9jRPb5xYP3ekZ6fMMxqiNyDs1lQo5Q==
-X-Received: by 2002:a17:907:9627:b0:ae3:6028:e4d0 with SMTP id
- a640c23a62f3a-ae6fbc13b26mr1329290066b.7.1752494562484; 
- Mon, 14 Jul 2025 05:02:42 -0700 (PDT)
+ bh=QiZnRDIM6/kZEbxqRnf//fPQu15IWBfB/VoqA6cAXpE=;
+ b=l7vRFeV1b2WrKRogPxhgKsQcK1b4v3xAdLAgjRQVXGdWREtILYokW6r7aaB/OR0fju
+ sO7Z1vdH4OkMplbUyKOT1+TKJKgWaWxw56sq9+iQToE0Fs/9OcQwTPNtx/MU/E9NS4oE
+ 4MeQHQQLzpXK7IKrl37nEOWxrq5YMgqF9rEeardFZtnCwk2HnruFgNinOYuLS9O1czAl
+ foD9YUv6o1jnpeAhJUSvcS/sbvk347k3HkMJSNJiJX/BZfjuqiaJA+p1Q01AZ64aY++1
+ rnZiVXqPUQPoV8aBjULOCl5AvFhOS5fZZ4hTqHuSScz2qz6AjSXwbb3HL/WSX3AZZBdI
+ N0IQ==
+X-Gm-Message-State: AOJu0YwcklU+t2i8tOmAOyIC82j7iG6dJ9EjDh4/1rVwQD0mP9ji3CwI
+ 1dV63J42hjFyxtYQHqVv4uihMHcm+2aVoZ4u83CqoBHQ0HT+qVIsXm6K+aGyByFuMRI=
+X-Gm-Gg: ASbGncvr1z7AbpVTm1y2mIjCgBu0mc4tZkKDFzVeK1TBB9OIKExWb4SiAIZBUgRGmrA
+ WvBKIKEPu0l4OWCgMOR2AMA7Pp9/f9dQkgJwlqc36309D7cb/Z/OQaChTfnRVXR7mLZuFakYf+t
+ Y+hl2F2OSmlqkKN2o5kVsXnU0c6le7JbAXQylN1wPCd4UVrp+Tn654a/X6SHlQL3C7OdDaC70az
+ JI+vAdArL6py1CPAlhdSJT4wBKVvTLk+SKjykC6NS//xVfTrVTO+OP2jyrdn2X/p9cYjIJlfyX6
+ VjJOiV1UCE87U5EYu/vgVcxnpdDWz2HbOw8cqoqXila9074g+K6UImQxk8AgZppBxjRrdKyTSyb
+ JZEW7Y/OLcJYeoMgsX/8gAGQ=
+X-Google-Smtp-Source: AGHT+IGe87kPbPhRwhjhjG8iP6popYMstJSM/pIvirnQQUVpwHchFlDLX8uNaln+LCbbd1pcAaRAKQ==
+X-Received: by 2002:a17:907:72cc:b0:ae3:ce75:afd8 with SMTP id
+ a640c23a62f3a-ae6fca6d396mr1218906066b.30.1752494557091; 
+ Mon, 14 Jul 2025 05:02:37 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae6e7e90a07sm811640066b.6.2025.07.14.05.02.37
+ a640c23a62f3a-ae6e82645fdsm820902666b.97.2025.07.14.05.02.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 05:02:39 -0700 (PDT)
+ Mon, 14 Jul 2025 05:02:35 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7D25B5F8E1;
- Mon, 14 Jul 2025 13:02:35 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id DD19F5F89B;
+ Mon, 14 Jul 2025 13:02:34 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Rot127 <unisono@quyllur.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: [PULL 8/8] gdbstub: add the GDB register XML files for sparc64.
-Date: Mon, 14 Jul 2025 13:02:34 +0100
-Message-ID: <20250714120234.1524401-9-alex.bennee@linaro.org>
+ Thomas Huth <thuth@redhat.com>
+Subject: [PULL 2/8] gitlab: add -n option to check-units script
+Date: Mon, 14 Jul 2025 13:02:28 +0100
+Message-ID: <20250714120234.1524401-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250714120234.1524401-1-alex.bennee@linaro.org>
 References: <20250714120234.1524401-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
-X-Spam_score_int: 16
-X-Spam_score: 1.6
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
 X-Spam_bar: +
-X-Spam_report: (1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_SBL_CSS=3.335,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,150 +104,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Rot127 <unisono@quyllur.org>
+Mostly a developer aid for those who want to look at the full backlog
+of multiple build units.
 
-Signed-off-by: Rot127 <unisono@quyllur.org>
-Message-ID: <20250711155141.62916-2-unisono@quyllur.org>
-[AJB: clean up commit msg]
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-ID: <20250710104531.3099313-3-alex.bennee@linaro.org>
 
-diff --git a/configs/targets/sparc64-linux-user.mak b/configs/targets/sparc64-linux-user.mak
-index 64ea04e3e2..7c2ecb7be0 100644
---- a/configs/targets/sparc64-linux-user.mak
-+++ b/configs/targets/sparc64-linux-user.mak
-@@ -4,4 +4,5 @@ TARGET_ABI_DIR=sparc
- TARGET_SYSTBL_ABI=common,64
- TARGET_SYSTBL=syscall.tbl
- TARGET_BIG_ENDIAN=y
-+TARGET_XML_FILES=gdb-xml/sparc64-core.xml
- TARGET_LONG_BITS=64
-diff --git a/configs/targets/sparc64-softmmu.mak b/configs/targets/sparc64-softmmu.mak
-index 2504e31ae3..d9d51d21e5 100644
---- a/configs/targets/sparc64-softmmu.mak
-+++ b/configs/targets/sparc64-softmmu.mak
-@@ -1,4 +1,5 @@
- TARGET_ARCH=sparc64
- TARGET_BASE_ARCH=sparc
- TARGET_BIG_ENDIAN=y
-+TARGET_XML_FILES=gdb-xml/sparc64-core.xml
- TARGET_LONG_BITS=64
-diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-index ed7701b02f..245caf2de0 100644
---- a/target/sparc/cpu.c
-+++ b/target/sparc/cpu.c
-@@ -1090,6 +1090,7 @@ static void sparc_cpu_class_init(ObjectClass *oc, const void *data)
-     cc->disas_set_info = cpu_sparc_disas_set_info;
+diff --git a/.gitlab-ci.d/check-units.py b/.gitlab-ci.d/check-units.py
+index cdc62ae5ee..cebef0e8be 100755
+--- a/.gitlab-ci.d/check-units.py
++++ b/.gitlab-ci.d/check-units.py
+@@ -30,7 +30,7 @@ def extract_build_units(cc_path):
+     return build_units
  
- #if defined(TARGET_SPARC64) && !defined(TARGET_ABI32)
-+    cc->gdb_core_xml_file = "sparc64-core.xml";
-     cc->gdb_num_core_regs = 86;
- #else
-     cc->gdb_num_core_regs = 72;
-diff --git a/gdb-xml/sparc64-core.xml b/gdb-xml/sparc64-core.xml
-new file mode 100644
-index 0000000000..375b9bb0cc
---- /dev/null
-+++ b/gdb-xml/sparc64-core.xml
-@@ -0,0 +1,99 @@
-+<?xml version="1.0"?>
-+<!-- Copyright (C) 2013-2025 Free Software Foundation, Inc.
-+
-+     Copying and distribution of this file, with or without modification,
-+     are permitted in any medium without royalty provided the copyright
-+     notice and this notice are preserved.  -->
-+
-+<!DOCTYPE feature SYSTEM "gdb-target.dtd">
-+<feature name="org.gnu.gdb.sparc.core">
-+  <reg name="g0" bitsize="64" type="uint64" regnum="0"/>
-+  <reg name="g1" bitsize="64" type="uint64" regnum="1"/>
-+  <reg name="g2" bitsize="64" type="uint64" regnum="2"/>
-+  <reg name="g3" bitsize="64" type="uint64" regnum="3"/>
-+  <reg name="g4" bitsize="64" type="uint64" regnum="4"/>
-+  <reg name="g5" bitsize="64" type="uint64" regnum="5"/>
-+  <reg name="g6" bitsize="64" type="uint64" regnum="6"/>
-+  <reg name="g7" bitsize="64" type="uint64" regnum="7"/>
-+  <reg name="o0" bitsize="64" type="uint64" regnum="8"/>
-+  <reg name="o1" bitsize="64" type="uint64" regnum="9"/>
-+  <reg name="o2" bitsize="64" type="uint64" regnum="10"/>
-+  <reg name="o3" bitsize="64" type="uint64" regnum="11"/>
-+  <reg name="o4" bitsize="64" type="uint64" regnum="12"/>
-+  <reg name="o5" bitsize="64" type="uint64" regnum="13"/>
-+  <reg name="sp" bitsize="64" type="uint64" regnum="14"/>
-+  <reg name="o7" bitsize="64" type="uint64" regnum="15"/>
-+  <reg name="l0" bitsize="64" type="uint64" regnum="16"/>
-+  <reg name="l1" bitsize="64" type="uint64" regnum="17"/>
-+  <reg name="l2" bitsize="64" type="uint64" regnum="18"/>
-+  <reg name="l3" bitsize="64" type="uint64" regnum="19"/>
-+  <reg name="l4" bitsize="64" type="uint64" regnum="20"/>
-+  <reg name="l5" bitsize="64" type="uint64" regnum="21"/>
-+  <reg name="l6" bitsize="64" type="uint64" regnum="22"/>
-+  <reg name="l7" bitsize="64" type="uint64" regnum="23"/>
-+  <reg name="i0" bitsize="64" type="uint64" regnum="24"/>
-+  <reg name="i1" bitsize="64" type="uint64" regnum="25"/>
-+  <reg name="i2" bitsize="64" type="uint64" regnum="26"/>
-+  <reg name="i3" bitsize="64" type="uint64" regnum="27"/>
-+  <reg name="i4" bitsize="64" type="uint64" regnum="28"/>
-+  <reg name="i5" bitsize="64" type="uint64" regnum="29"/>
-+  <reg name="fp" bitsize="64" type="uint64" regnum="30"/>
-+  <reg name="i7" bitsize="64" type="uint64" regnum="31"/>
-+
-+  <reg name="f0" bitsize="32" type="ieee_single" regnum="32"/>
-+  <reg name="f1" bitsize="32" type="ieee_single" regnum="33"/>
-+  <reg name="f2" bitsize="32" type="ieee_single" regnum="34"/>
-+  <reg name="f3" bitsize="32" type="ieee_single" regnum="35"/>
-+  <reg name="f4" bitsize="32" type="ieee_single" regnum="36"/>
-+  <reg name="f5" bitsize="32" type="ieee_single" regnum="37"/>
-+  <reg name="f6" bitsize="32" type="ieee_single" regnum="38"/>
-+  <reg name="f7" bitsize="32" type="ieee_single" regnum="39"/>
-+  <reg name="f8" bitsize="32" type="ieee_single" regnum="40"/>
-+  <reg name="f9" bitsize="32" type="ieee_single" regnum="41"/>
-+  <reg name="f10" bitsize="32" type="ieee_single" regnum="42"/>
-+  <reg name="f11" bitsize="32" type="ieee_single" regnum="43"/>
-+  <reg name="f12" bitsize="32" type="ieee_single" regnum="44"/>
-+  <reg name="f13" bitsize="32" type="ieee_single" regnum="45"/>
-+  <reg name="f14" bitsize="32" type="ieee_single" regnum="46"/>
-+  <reg name="f15" bitsize="32" type="ieee_single" regnum="47"/>
-+  <reg name="f16" bitsize="32" type="ieee_single" regnum="48"/>
-+  <reg name="f17" bitsize="32" type="ieee_single" regnum="49"/>
-+  <reg name="f18" bitsize="32" type="ieee_single" regnum="50"/>
-+  <reg name="f19" bitsize="32" type="ieee_single" regnum="51"/>
-+  <reg name="f20" bitsize="32" type="ieee_single" regnum="52"/>
-+  <reg name="f21" bitsize="32" type="ieee_single" regnum="53"/>
-+  <reg name="f22" bitsize="32" type="ieee_single" regnum="54"/>
-+  <reg name="f23" bitsize="32" type="ieee_single" regnum="55"/>
-+  <reg name="f24" bitsize="32" type="ieee_single" regnum="56"/>
-+  <reg name="f25" bitsize="32" type="ieee_single" regnum="57"/>
-+  <reg name="f26" bitsize="32" type="ieee_single" regnum="58"/>
-+  <reg name="f27" bitsize="32" type="ieee_single" regnum="59"/>
-+  <reg name="f28" bitsize="32" type="ieee_single" regnum="60"/>
-+  <reg name="f29" bitsize="32" type="ieee_single" regnum="61"/>
-+  <reg name="f30" bitsize="32" type="ieee_single" regnum="62"/>
-+  <reg name="f31" bitsize="32" type="ieee_single" regnum="63"/>
-+
-+  <reg name="f32" bitsize="64" type="ieee_double" regnum="64"/>
-+  <reg name="f34" bitsize="64" type="ieee_double" regnum="65"/>
-+  <reg name="f36" bitsize="64" type="ieee_double" regnum="66"/>
-+  <reg name="f38" bitsize="64" type="ieee_double" regnum="67"/>
-+  <reg name="f40" bitsize="64" type="ieee_double" regnum="68"/>
-+  <reg name="f42" bitsize="64" type="ieee_double" regnum="69"/>
-+  <reg name="f44" bitsize="64" type="ieee_double" regnum="70"/>
-+  <reg name="f46" bitsize="64" type="ieee_double" regnum="71"/>
-+  <reg name="f48" bitsize="64" type="ieee_double" regnum="72"/>
-+  <reg name="f50" bitsize="64" type="ieee_double" regnum="73"/>
-+  <reg name="f52" bitsize="64" type="ieee_double" regnum="74"/>
-+  <reg name="f54" bitsize="64" type="ieee_double" regnum="75"/>
-+  <reg name="f56" bitsize="64" type="ieee_double" regnum="76"/>
-+  <reg name="f58" bitsize="64" type="ieee_double" regnum="77"/>
-+  <reg name="f60" bitsize="64" type="ieee_double" regnum="78"/>
-+  <reg name="f62" bitsize="64" type="ieee_double" regnum="79"/>
-+
-+  <reg name="pc" bitsize="64" type="code_ptr" regnum="80"/>
-+  <reg name="npc" bitsize="64" type="code_ptr" regnum="81"/>
-+  <reg name="state" bitsize="64" type="uint64" regnum="82"/>
-+  <reg name="fsr" bitsize="64" type="uint64" regnum="83"/>
-+  <reg name="fprs" bitsize="64" type="uint64" regnum="84"/>
-+  <reg name="y" bitsize="64" type="uint64" regnum="85"/>
-+</feature>
+ 
+-def analyse_units(build_units):
++def analyse_units(build_units, top_n):
+     """
+     Analyse the build units and report stats and the top 10 rebuilds
+     """
+@@ -44,7 +44,7 @@ def analyse_units(build_units):
+                                 reverse=True)
+ 
+     print("Most rebuilt units:")
+-    for unit, count in sorted_build_units[:20]:
++    for unit, count in sorted_build_units[:top_n]:
+         print(f"  {unit} built {count} times")
+ 
+     print("Least rebuilt units:")
+@@ -57,12 +57,14 @@ def analyse_units(build_units):
+         description="analyse number of build units in compile_commands.json")
+     parser.add_argument("cc_path", type=Path, default=None,
+                         help="Path to compile_commands.json")
++    parser.add_argument("-n", type=int, default=20,
++                        help="Dump the top <n> entries")
+ 
+     args = parser.parse_args()
+ 
+     if path.isfile(args.cc_path) and access(args.cc_path, R_OK):
+         units = extract_build_units(args.cc_path)
+-        analyse_units(units)
++        analyse_units(units, args.n)
+         exit(0)
+     else:
+         print(f"{args.cc_path} doesn't exist or isn't readable")
 -- 
 2.47.2
 
