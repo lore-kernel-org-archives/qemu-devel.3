@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCCB2C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 08:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 811D9C83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 08:09:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubEEm-0007M6-Lf; Mon, 14 Jul 2025 04:08:36 -0400
+	id 1ubEEz-0007jN-TN; Mon, 14 Jul 2025 04:08:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ubDug-0004fB-Jf
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 03:47:53 -0400
+ id 1ubDub-0004eP-1i
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 03:47:50 -0400
 Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ubDub-0007Nf-Rs
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 03:47:48 -0400
+ id 1ubDuW-0007Nw-5M
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 03:47:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752479266; x=1784015266;
+ t=1752479260; x=1784015260;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Hvh/A+yOwx0QCfyh4UllySxlS3/GqY27LJpwlrbxYuw=;
- b=TsgHl5lJP3Op/srSj3Ijrebk6BKLq6JKxI2Zk8hYSvnmV36eqoMLAtdd
- ayNcRXJFei0KgpPOAHHQlaEqawIYGbceqVVhwbgCHH7y19TiJZJGwnwgc
- Rm4ADNF4E6+RxlvmJy0O/vMKkwovNCfB58WD9ZkXRjMWL7nDeUNPau+WY
- oQJLPcqWz9qloym2ilgHgEaFNQnd7Jl4eG/JhXxdEvMGzHMo0hj61+6nz
- DSSZ2fk93a21slYyNLQq9u8Iw1XxDaUUIw1ggPpsgNb9fxRZjcL+eF1Ds
- XfxWOGT5bSAlqPLocRHTNxiJgELaSjkzmhGf6QgYexUbxOoHUKLiyVS2r A==;
-X-CSE-ConnectionGUID: 2jYWYuaURre5U0OkQO8maQ==
-X-CSE-MsgGUID: e3QJKrZvRM6NTDiXYmknjA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="58324661"
-X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; d="scan'208";a="58324661"
+ bh=rAK1cNES//VTulXNgnL3pRWZtHvlKpyYfxsqm/cm01E=;
+ b=KyYgqkl7IhUA2DK0p2/a6AiQ/2HBw3cfOJja0GOZzukkB8jYi+l+H+Nc
+ RW7V28ANRdp7jzW/dhCZKpmbth1nKS+1F1Iwn8z+NOzFK7gkXUBQs+abF
+ +e3qwqf0ry6ztV+LSpNfsYLDjMWumgt6XuQBFBQzSo7egF+t+lkUxP6Kg
+ j/Comhv61/OS3WrKTz3NRNTeQfuaF2cfI95ufvl0Qx2loBkD4IrpTLTeL
+ cVFjov8BlndFc11ivF+LWKA+f71ZtWVpdwMYgLoaOTGgT2gnYdB4iX/IH
+ FkfGTPtgOmbThKzynSA08VRlhfI95GGjxKa4Fph0Va921JK/YoySIXm62 w==;
+X-CSE-ConnectionGUID: btqI5TFzQRCaMVjEy4XlYQ==
+X-CSE-MsgGUID: lHHaq7/LQdiXsLLGCIyeEA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="58324645"
+X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; d="scan'208";a="58324645"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jul 2025 00:47:42 -0700
-X-CSE-ConnectionGUID: R6L+n91VQ0KH47xfzwEVlQ==
-X-CSE-MsgGUID: sKB9RHYfQx2EJpRwCDcT8Q==
+ 14 Jul 2025 00:47:36 -0700
+X-CSE-ConnectionGUID: e50Lk58dQFOxAl+J24uy5Q==
+X-CSE-MsgGUID: HMSFVuL6QoCea0EqMfWzew==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; d="scan'208";a="156952198"
+X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; d="scan'208";a="156952190"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa007.jf.intel.com with ESMTP; 14 Jul 2025 00:47:40 -0700
+ by orviesa007.jf.intel.com with ESMTP; 14 Jul 2025 00:47:34 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -52,10 +52,11 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
 Cc: Ewan Hai <ewanhai-oc@zhaoxin.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
  Tao Su <tao1.su@intel.com>, Yi Lai <yi1.lai@intel.com>,
  Dapeng Mi <dapeng1.mi@intel.com>, qemu-devel@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 3/7] i386/cpu: Reorder CPUID leaves in cpu_x86_cpuid()
-Date: Mon, 14 Jul 2025 16:08:55 +0800
-Message-Id: <20250714080859.1960104-4-zhao1.liu@intel.com>
+ Zhao Liu <zhao1.liu@intel.com>, Tao Su <tao1.su@linux.intel.com>
+Subject: [PATCH v2 1/7] i386/cpu: Mark EBX/ECX/EDX in CPUID 0x80000000 leaf as
+ reserved for Intel
+Date: Mon, 14 Jul 2025 16:08:53 +0800
+Message-Id: <20250714080859.1960104-2-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250714080859.1960104-1-zhao1.liu@intel.com>
 References: <20250714080859.1960104-1-zhao1.liu@intel.com>
@@ -86,113 +87,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sort the CPUID leaves strictly by index to facilitate checking and
-changing.
+Per SDM,
 
+80000000H EAX Maximum Input Value for Extended Function CPUID Information.
+          EBX Reserved.
+          ECX Reserved.
+          EDX Reserved.
+
+EBX/ECX/EDX in CPUID 0x80000000 leaf are reserved. Intel and Zhaoxin are
+already using 0x0 leaf to encode vendor.
+
+Reviewed-by: Tao Su <tao1.su@linux.intel.com>
+Tested-by: Yi Lai <yi1.lai@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/cpu.c | 60 +++++++++++++++++++++++------------------------
- 1 file changed, 30 insertions(+), 30 deletions(-)
+Changes Since v1:
+ * Consider Zhaoxin CPU. (Ewan)
+---
+ target/i386/cpu.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index abd529d587ba..9e110e49ab8a 100644
+index 8d67cadec2f2..37e4bf51d890 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -8050,21 +8050,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         assert(!(*eax & ~0x1f));
-         *ebx &= 0xffff; /* The count doesn't need to be reliable. */
+@@ -8278,9 +8278,15 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
          break;
--    case 0x1C:
--        if (cpu->enable_pmu && (env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_LBR)) {
--            x86_cpu_get_supported_cpuid(0x1C, 0, eax, ebx, ecx, edx);
--            *edx = 0;
--        }
--        break;
--    case 0x1F:
--        /* V2 Extended Topology Enumeration Leaf */
--        if (!x86_has_cpuid_0x1f(cpu)) {
--            *eax = *ebx = *ecx = *edx = 0;
--            break;
--        }
--
--        encode_topo_cpuid1f(env, count, topo_info, eax, ebx, ecx, edx);
--        break;
-     case 0xD: {
-         /* Processor Extended State */
-         *eax = 0;
-@@ -8205,6 +8190,12 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         }
-         break;
-     }
-+    case 0x1C:
-+        if (cpu->enable_pmu && (env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_LBR)) {
-+            x86_cpu_get_supported_cpuid(0x1C, 0, eax, ebx, ecx, edx);
-+            *edx = 0;
-+        }
-+        break;
-     case 0x1D: {
-         /* AMX TILE, for now hardcoded for Sapphire Rapids*/
-         *eax = 0;
-@@ -8242,6 +8233,15 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         }
-         break;
-     }
-+    case 0x1F:
-+        /* V2 Extended Topology Enumeration Leaf */
-+        if (!x86_has_cpuid_0x1f(cpu)) {
-+            *eax = *ebx = *ecx = *edx = 0;
-+            break;
-+        }
+     case 0x80000000:
+         *eax = env->cpuid_xlevel;
+-        *ebx = env->cpuid_vendor1;
+-        *edx = env->cpuid_vendor2;
+-        *ecx = env->cpuid_vendor3;
 +
-+        encode_topo_cpuid1f(env, count, topo_info, eax, ebx, ecx, edx);
-+        break;
-     case 0x24: {
-         *eax = 0;
-         *ebx = 0;
-@@ -8465,6 +8465,21 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-             *edx = 0;
-         }
-         break;
-+    case 0x8000001F:
-+        *eax = *ebx = *ecx = *edx = 0;
-+        if (sev_enabled()) {
-+            *eax = 0x2;
-+            *eax |= sev_es_enabled() ? 0x8 : 0;
-+            *eax |= sev_snp_enabled() ? 0x10 : 0;
-+            *ebx = sev_get_cbit_position() & 0x3f; /* EBX[5:0] */
-+            *ebx |= (sev_get_reduced_phys_bits() & 0x3f) << 6; /* EBX[11:6] */
++        if (cpu->vendor_cpuid_only_v2 &&
++            (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) {
++            *ebx = *ecx = *edx = 0;
++        } else {
++            *ebx = env->cpuid_vendor1;
++            *edx = env->cpuid_vendor2;
++            *ecx = env->cpuid_vendor3;
 +        }
-+        break;
-+    case 0x80000021:
-+        *eax = *ebx = *ecx = *edx = 0;
-+        *eax = env->features[FEAT_8000_0021_EAX];
-+        *ebx = env->features[FEAT_8000_0021_EBX];
-+        break;
-     case 0x80000022:
-         *eax = *ebx = *ecx = *edx = 0;
-         /* AMD Extended Performance Monitoring and Debug */
-@@ -8497,21 +8512,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         *ecx = 0;
-         *edx = 0;
          break;
--    case 0x8000001F:
--        *eax = *ebx = *ecx = *edx = 0;
--        if (sev_enabled()) {
--            *eax = 0x2;
--            *eax |= sev_es_enabled() ? 0x8 : 0;
--            *eax |= sev_snp_enabled() ? 0x10 : 0;
--            *ebx = sev_get_cbit_position() & 0x3f; /* EBX[5:0] */
--            *ebx |= (sev_get_reduced_phys_bits() & 0x3f) << 6; /* EBX[11:6] */
--        }
--        break;
--    case 0x80000021:
--        *eax = *ebx = *ecx = *edx = 0;
--        *eax = env->features[FEAT_8000_0021_EAX];
--        *ebx = env->features[FEAT_8000_0021_EBX];
--        break;
-     default:
-         /* reserved values: zero */
-         *eax = 0;
+     case 0x80000001:
+         *eax = env->cpuid_version;
 -- 
 2.34.1
 
