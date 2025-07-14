@@ -4,87 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1181EC83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:44:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9EC0C83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:44:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubHXL-0000YJ-Gs; Mon, 14 Jul 2025 07:40:00 -0400
+	id 1ubHaQ-0001ia-Mq; Mon, 14 Jul 2025 07:43:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH1V-0001xn-Ab
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:07:11 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1ubH5D-0005sa-8i
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:11:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH1P-0002Bt-7A
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:07:01 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1ubH59-000353-7R
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:10:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752491217;
+ s=mimecast20190719; t=1752491448;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=84v5GMox428L8Z2lGKdNxuVp+eJI5ucAEsNT/SLxcFs=;
- b=iIV9RLtj+/pV8bc6gOAPvtyj7Cf4y58SJpmye27CCVP3R+gaTGyoJ/Kh4Gs9kYFoyazCzo
- S0OVH+n6GpN0/CsqxMBB/76jeq6+UVPEQf/VYxjN5LJujXbfYIKp3AgOfonOo71tlh8hMx
- Uc5L2sfioGzXSSFWNhRB0z3QoFH2AyY=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-203-jiyigXauNS2BNyFo1oe9dQ-1; Mon, 14 Jul 2025 07:06:56 -0400
-X-MC-Unique: jiyigXauNS2BNyFo1oe9dQ-1
-X-Mimecast-MFC-AGG-ID: jiyigXauNS2BNyFo1oe9dQ_1752491215
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a4e713e05bso1834083f8f.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:06:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752491214; x=1753096014;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=84v5GMox428L8Z2lGKdNxuVp+eJI5ucAEsNT/SLxcFs=;
- b=FdswvxFC5fLrR0HgbIGbpkTnO7Z6KBFFajYLsFJZYqi0L+Jq6HC+uxnPJ8bzcvu2jM
- Q0XFXI31kkwg1tZqjNp+e5rlHcMVowJobGrkOF2x23oJ09bWca7WPFz+8FAaVlMmYeaz
- kWfwlvZ1uq1Fd9GNBb3HZzfslfIGt8QFfYWQ16u4kXddbpYQJQug3QjlnezhWt03Qwws
- sm+WeGYUdDG31pVkrRGqXEiDaLz7BQlpMm3ZSGyTo5qpruI20XfyB1WH7+fVfPGxNXoM
- S/rwehA5j8PrTSCQDqedExHtYPMkQbxbEeES+KC0xUs71x0KQfbTAOK5Ptv/LFQ72nfR
- wWWQ==
-X-Gm-Message-State: AOJu0Yxi2Ke46AcGjCADM6BrH54CNath/xODC4c6W3FLS4gufsY1Nkgr
- PsH9USSPu4CJr08dw303NPIeLtHmGZkQV9hztuFbnQSEaFycr59ZzPsS3cnAwYoY9rxJ7h6ubpn
- u68CtHwgmz7WMyy8jKFwoIshsqQGvv2BAslqqpDiJc4Xu65bTBQ+cWs6QzThwthXFspbz5O2dyg
- r3OxDCIjU4Dq42PJ9LYarESQGaV4xCjnUMCgMaefDi
-X-Gm-Gg: ASbGncvnKScsnc0YHMdLbRbjScxi8jCjIlf/JmfI5KXZ3XywHX8L1MMuDNSAs80Meax
- u/XTvLM240SX5mOvFcwuDJi4oHVCHvlNSOicPtkTZellXUtS9N9J/CQ0kpgCkn8yvfnGWTg1Txy
- qOWQ9rRA0GIGh3WxrddHEBjqCty4vou5DV7rx8bePQYMjlPBqiKB1mMtdW7fEhjX8jO6Fr593X/
- g8GUAmQDCbrV4DhO6rA0JjMReEj1rwT9UdtlsgfIu77AmyDIwuvzcgyIwApk5OSnLiK7t95Ii85
- zqEnLUFLSnpwEmN1CHIXz0SzS23zLgJQ7ykVMPx54OE=
-X-Received: by 2002:a05:6000:2c09:b0:3a4:f66a:9d31 with SMTP id
- ffacd0b85a97d-3b5f2dc2becmr9584386f8f.16.1752491214001; 
- Mon, 14 Jul 2025 04:06:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFVcspJNQHPtRlUemC6njmJYF/Eg9SFzEzJ81zURpNKGu0W/N+/GmmXytL3LxUS7ZVMkb7FjQ==
-X-Received: by 2002:a05:6000:2c09:b0:3a4:f66a:9d31 with SMTP id
- ffacd0b85a97d-3b5f2dc2becmr9584355f8f.16.1752491213563; 
- Mon, 14 Jul 2025 04:06:53 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.73.155])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e26f45sm12230405f8f.92.2025.07.14.04.06.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 04:06:51 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=1/yB//fEMd3x9i/nIaNCrmI8ELBKw+cDelwMVR9cfko=;
+ b=TLUwKKDEr4pspDew6+SJbzMCUBYPVKg/v4bc1h5i6O/04taV7agm6qOXSWsXcNGCYkxQbd
+ j7EJ+2IxCHLKxn3STHHdJDI1wgNe3Urx3WmdgYWVYDy+XneKiuwDYE60S2OsiYmnLVofvv
+ /GN8FU2+KIBANu5k9HB6qWI1za9ChP0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-297-XoZPOV7kNxGszR3cyRemhQ-1; Mon,
+ 14 Jul 2025 07:10:44 -0400
+X-MC-Unique: XoZPOV7kNxGszR3cyRemhQ-1
+X-Mimecast-MFC-AGG-ID: XoZPOV7kNxGszR3cyRemhQ_1752491444
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0620919560AA
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 11:10:44 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.9])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BCA8C19560A3; Mon, 14 Jul 2025 11:10:42 +0000 (UTC)
+From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, Yi Lai <yi1.lai@intel.com>
-Subject: [PULL 64/77] i386/cpu: Enable 0x1f leaf for SierraForest by default
-Date: Mon, 14 Jul 2025 13:03:53 +0200
-Message-ID: <20250714110406.117772-65-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250714110406.117772-1-pbonzini@redhat.com>
-References: <20250714110406.117772-1-pbonzini@redhat.com>
+Cc: stefanha@redhat.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 00/13] Ui patches
+Date: Mon, 14 Jul 2025 15:10:23 +0400
+Message-ID: <20250714111039.4150419-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -109,33 +84,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Host SierraForest CPU has 0x1f leaf by default, so that enable it for
-Guest CPU by default as well.
+The following changes since commit 9a4e273ddec3927920c5958d2226c6b38b543336:
 
-Suggested-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Tested-by: Yi Lai <yi1.lai@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250711104603.1634832-7-zhao1.liu@intel.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/cpu.c | 1 +
- 1 file changed, 1 insertion(+)
+  Merge tag 'pull-tcg-20250711' of https://gitlab.com/rth7680/qemu into staging (2025-07-13 01:46:04 -0400)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 668f3e63b7b..c15082e8afa 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -5393,6 +5393,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-                 .cache_info = &xeon_srf_cache_info,
-                 .props = (PropValue[]) {
-                     { "x-force-cpuid-0x1f", "on" },
-+                    { /* end of list */ },
-                 }
-             },
-             { /* end of list */ },
+are available in the Git repository at:
+
+  https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pull-request
+
+for you to fetch changes up to c99b7e6d4aa8bcc12d47483ebe81072168de56fb:
+
+  tpm: "qemu -tpmdev help" should return success (2025-07-14 15:02:00 +0400)
+
+----------------------------------------------------------------
+UI-related for 10.1
+
+- [PATCH v3 0/2] ui/vnc: Do not copy z_stream
+- [PATCH v6 0/7] ui/spice: Enable gl=on option for non-local or remote clients
+- [PATCH v6 0/1] Allow injection of virtio-gpu EDID name
+- [PATCH 0/2] ui/gtk: Add keep-aspect-ratio and scale option
+
+----------------------------------------------------------------
+
+Akihiko Odaki (2):
+  ui/vnc: Do not copy z_stream
+  ui/vnc: Introduce the VncWorker type
+
+Andrew Keesler (1):
+  hw/display: Allow injection of virtio-gpu EDID name
+
+Marc-André Lureau (1):
+  tpm: "qemu -tpmdev help" should return success
+
+Vivek Kasireddy (7):
+  ui/egl-helpers: Error check the fds in egl_dmabuf_export_texture()
+  ui/spice: Enable gl=on option for non-local or remote clients
+  ui/spice: Add an option for users to provide a preferred video codec
+  ui/spice: Add an option to submit gl_draw requests at fixed rate
+  ui/console-gl: Add a helper to create a texture with linear memory
+    layout
+  ui/spice: Create a new texture with linear layout when gl=on is
+    specified
+  ui/spice: Blit the scanout texture if its memory layout is not linear
+
+Weifeng Liu (2):
+  ui/gtk: Add keep-aspect-ratio option
+  ui/gtk: Add scale option
+
+ qapi/ui.json                        |  15 +-
+ qapi/virtio.json                    |  18 +-
+ include/hw/display/edid.h           |   2 +
+ include/hw/qdev-properties-system.h |   5 +
+ include/hw/virtio/virtio-gpu.h      |   3 +
+ include/ui/console.h                |   3 +
+ include/ui/gtk.h                    |   2 +
+ include/ui/spice-display.h          |   5 +
+ include/ui/surface.h                |   1 +
+ ui/vnc.h                            |  49 +--
+ hw/core/qdev-properties-system.c    |  44 +++
+ hw/display/virtio-gpu-base.c        |  27 ++
+ system/tpm.c                        |   5 +-
+ ui/console-gl.c                     |  54 ++++
+ ui/egl-helpers.c                    |   6 +
+ ui/gtk.c                            |  58 ++--
+ ui/spice-core.c                     |  31 ++
+ ui/spice-display.c                  | 226 +++++++++++++-
+ ui/vnc-enc-tight.c                  | 456 +++++++++++++++-------------
+ ui/vnc-enc-zlib.c                   |  47 +--
+ ui/vnc-enc-zrle.c                   | 122 ++++----
+ ui/vnc-jobs.c                       |  13 +-
+ ui/vnc.c                            |  83 +++--
+ ui/vnc-enc-zrle.c.inc               |  20 +-
+ qemu-options.hx                     |  13 +
+ 25 files changed, 882 insertions(+), 426 deletions(-)
+
 -- 
 2.50.0
 
